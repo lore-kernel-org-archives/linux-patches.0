@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213994;
-	b=VviI6OxoiVMcTZGPZZVwrf/ikoPIPyNka0uaDRuTw3DN3AJOh08RZkPlAkuzUR1gJzbr
-	 hDi6nh0Aah5IQdSDdhYGHTkzkia84DAZLpkit9LVuvOJQTWtGPHLEKHN1oVskY1KEvUQJ
-	 s57HbFzvUBgRKk3u3rFeauYy5OaEmaAgjvCyu4pFZ1CJUGjV2lOvxyvx0HKGAOMoiy40U
-	 pn0+4BZSmiUB/iiJ0qbI9pM1++Lc0oVbyvU8IJkZBIZI8wthulXySKv58s0qKHFu/QGSR
-	 HKT8yCg25eAsnJcjbacmoVkC/aM97Rw41k6HqUOjmajJDMe4PWqidRJ+Hb5CvxFoVhA==
+	t=1793213997;
+	b=YSArCkA2FaSTiTROctoT/saSZwQ14RUFuG9oC4ROa0VBGsHympj0OaQ5sdeM87n/PXlJ
+	 Yz9anAnqVWU48nBbYTtnvJu5TRamIly0C1veD7FDWOlTUQ4Vjm7jSaV9QlnLxU1PFIzy3
+	 58OzolAozvmmuKaASz0G9AhhbComVIkC2yuPCiNzI7qRuMs4QLfRi6OXSWhn5tII9yE//
+	 Uey2IgSq6alxFjp4OBG80m3bJASpz1pOXvGwTMaXIiUICod1mIkGYSV95a96w8yrpZ6Q9
+	 W4RDTckHNuvSafJh79ou3c3w3dNot9Pr6fB4BRdACKN8LxSYAbP8aHJMLEQWTnN8QNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213997;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3sE47rjx1K9/Ex6s+NbrCNldqdQNSyhifrKxTrS3MsY=;
-	b=BKon9YM1RBxh9DaNtkT9QwKIKqux9zgjGIBzM0HcneTwkDgBfSAX8HkHX63m0zbFC3OH
-	 EyjmHXvWO8aLFz674aRRXHWFdiMp5TUI8e6V+I5gRjqjRK0B+hNiJqMdKarKyIGL4DI58
-	 UyLDoiX/SAYgh4ZDH6otKRYiIEbIyuzvRUV3fpCrz6kdMRImENJVq5qImVA59LMN3wDWN
-	 +fdDIZJPXZsvAKiBG8w/QoS3lsY/x/Tg2r2lXM26GRtdmR4ML7xS+ckog670t7qw1q1Ii
-	 0AWPoAlPQY84u5lS5SxQ41DTRhhLW7+ydPrIexetUYRipjbinKmMjvaXa4F8nizCcvQ==
+	bh=iswk2nA935ZMxq3JkrrU3yn3XNk3DJprbZVdgqyIyDY=;
+	b=hG4aOIEOR3q9u59jUctDibBeOXlIb2YOtE/iqpaARv9IrIHyJxDhaMxOclM0htEQlfw3
+	 UQuC9RamDKSb1Nuyew395UzLpRjhMP+tK9p85iWP8CaI8fRMJVjZvL+WC9jY5QdRHS20E
+	 SpNKD4piemYb8OVcQfsIult3zaHMLMj1tIwyWbQXA8/JjolhAv8/umrpvBSmWaaJEj8yI
+	 fK3hbruW7eAf7zSf/0jG5yyrxgLuQmIa0vX2BJLgcAymLd4LBz82bFec39fsJGao5ca6k
+	 snKKcVp8QyPD0AjtEfktRB9q2Ou2TNUdynnQZgW6oyDGlbHncNmqB8TiRT3lGo7SY7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTzSv4Bg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vyj38NtG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB34B606A331;
-	Wed, 28 Oct 2026 18:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF9260A2609;
+	Wed, 28 Oct 2026 18:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nTzSv4Bg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DE21F031E2;
-	Wed, 28 Oct 2026 18:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vyj38NtG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F1C1F01825;
+	Wed, 28 Oct 2026 18:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213993;
-	bh=3sE47rjx1K9/Ex6s+NbrCNldqdQNSyhifrKxTrS3MsY=;
+	s=korg; t=1793213996;
+	bh=iswk2nA935ZMxq3JkrrU3yn3XNk3DJprbZVdgqyIyDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nTzSv4BgXz8xaGilYPFaPBReXEiI6NUuc5h1klwk88K85v8fpCqHfs9rAr88e5zuI
-	 JpOgPlp8B2vaAVTQ5gFEqAYVe/X9W/XXGST/GXA8iyUt0gcJoTpsTTWcRi9+oD+0Jm
-	 brqHowaEARhFX/MxVwr6gllQAiw4FvZE3mETY0iE=
+	b=vyj38NtG0IcNKCke2W36ggTFSP+yzZy/bYcYD6kAyGUGifgqYT+u5/MqW5YyPuDXG
+	 ADP7EwcA9gdTfEeYZU62gaRSvPf9XsP8+El9NF0hi6mmqmwC2Q24pxioM6251OPEvI
+	 6rQLR/Rgy1Oe3KqTfDORYm+4O7+O1Z2irWRcgIAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Raghavendra Rao Ananta <rananta@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0701/1887] KVM: arm64: Get rid of userspace_irqchip_in_use
-Date: Wed, 28 Oct 2026 17:46:37 +0100
-Message-ID: <20261028170515.361941942@linuxfoundation.org>
+Subject: [PATCH 6.1 0702/1887] nfsd: release svc_expkey/svc_export with rcu_work
+Date: Wed, 28 Oct 2026 17:46:38 +0100
+Message-ID: <20261028170515.385848532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,175 +69,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raghavendra Rao Ananta <rananta@google.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit 38d7aacca09230fdb98a34194fec2af597e8e20d ]
+[ Upstream commit f8c989a0c89a75d30f899a7cabdc14d72522bb8d ]
 
-Improper use of userspace_irqchip_in_use led to syzbot hitting the
-following WARN_ON() in kvm_timer_update_irq():
+The last reference for `cache_head` can be reduced to zero in `c_show`
+and `e_show`(using `rcu_read_lock` and `rcu_read_unlock`). Consequently,
+`svc_export_put` and `expkey_put` will be invoked, leading to two
+issues:
 
-WARNING: CPU: 0 PID: 3281 at arch/arm64/kvm/arch_timer.c:459
-kvm_timer_update_irq+0x21c/0x394
-Call trace:
-  kvm_timer_update_irq+0x21c/0x394 arch/arm64/kvm/arch_timer.c:459
-  kvm_timer_vcpu_reset+0x158/0x684 arch/arm64/kvm/arch_timer.c:968
-  kvm_reset_vcpu+0x3b4/0x560 arch/arm64/kvm/reset.c:264
-  kvm_vcpu_set_target arch/arm64/kvm/arm.c:1553 [inline]
-  kvm_arch_vcpu_ioctl_vcpu_init arch/arm64/kvm/arm.c:1573 [inline]
-  kvm_arch_vcpu_ioctl+0x112c/0x1b3c arch/arm64/kvm/arm.c:1695
-  kvm_vcpu_ioctl+0x4ec/0xf74 virt/kvm/kvm_main.c:4658
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:907 [inline]
-  __se_sys_ioctl fs/ioctl.c:893 [inline]
-  __arm64_sys_ioctl+0x108/0x184 fs/ioctl.c:893
-  __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
-  invoke_syscall+0x78/0x1b8 arch/arm64/kernel/syscall.c:49
-  el0_svc_common+0xe8/0x1b0 arch/arm64/kernel/syscall.c:132
-  do_el0_svc+0x40/0x50 arch/arm64/kernel/syscall.c:151
-  el0_svc+0x54/0x14c arch/arm64/kernel/entry-common.c:712
-  el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
-  el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
+1. The `svc_export_put` will directly free ex_uuid. However,
+   `e_show`/`c_show` will access `ex_uuid` after `cache_put`, which can
+   trigger a use-after-free issue, shown below.
 
-The following sequence led to the scenario:
- - Userspace creates a VM and a vCPU.
- - The vCPU is initialized with KVM_ARM_VCPU_PMU_V3 during
-   KVM_ARM_VCPU_INIT.
- - Without any other setup, such as vGIC or vPMU, userspace issues
-   KVM_RUN on the vCPU. Since the vPMU is requested, but not setup,
-   kvm_arm_pmu_v3_enable() fails in kvm_arch_vcpu_run_pid_change().
-   As a result, KVM_RUN returns after enabling the timer, but before
-   incrementing 'userspace_irqchip_in_use':
-   kvm_arch_vcpu_run_pid_change()
-       ret = kvm_arm_pmu_v3_enable()
-           if (!vcpu->arch.pmu.created)
-               return -EINVAL;
-       if (ret)
-           return ret;
-       [...]
-       if (!irqchip_in_kernel(kvm))
-           static_branch_inc(&userspace_irqchip_in_use);
- - Userspace ignores the error and issues KVM_ARM_VCPU_INIT again.
-   Since the timer is already enabled, control moves through the
-   following flow, ultimately hitting the WARN_ON():
-   kvm_timer_vcpu_reset()
-       if (timer->enabled)
-          kvm_timer_update_irq()
-              if (!userspace_irqchip())
-                  ret = kvm_vgic_inject_irq()
-                      ret = vgic_lazy_init()
-                          if (unlikely(!vgic_initialized(kvm)))
-                              if (kvm->arch.vgic.vgic_model !=
-                                  KVM_DEV_TYPE_ARM_VGIC_V2)
-                                      return -EBUSY;
-                  WARN_ON(ret);
+   ==================================================================
+   BUG: KASAN: slab-use-after-free in svc_export_show+0x362/0x430 [nfsd]
+   Read of size 1 at addr ff11000010fdc120 by task cat/870
 
-Theoretically, since userspace_irqchip_in_use's functionality can be
-simply replaced by '!irqchip_in_kernel()', get rid of the static key
-to avoid the mismanagement, which also helps with the syzbot issue.
+   CPU: 1 UID: 0 PID: 870 Comm: cat Not tainted 6.12.0-rc3+ #1
+   Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+   1.16.1-2.fc37 04/01/2014
+   Call Trace:
+    <TASK>
+    dump_stack_lvl+0x53/0x70
+    print_address_description.constprop.0+0x2c/0x3a0
+    print_report+0xb9/0x280
+    kasan_report+0xae/0xe0
+    svc_export_show+0x362/0x430 [nfsd]
+    c_show+0x161/0x390 [sunrpc]
+    seq_read_iter+0x589/0x770
+    seq_read+0x1e5/0x270
+    proc_reg_read+0xe1/0x140
+    vfs_read+0x125/0x530
+    ksys_read+0xc1/0x160
+    do_syscall_64+0x5f/0x170
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+   Allocated by task 830:
+    kasan_save_stack+0x20/0x40
+    kasan_save_track+0x14/0x30
+    __kasan_kmalloc+0x8f/0xa0
+    __kmalloc_node_track_caller_noprof+0x1bc/0x400
+    kmemdup_noprof+0x22/0x50
+    svc_export_parse+0x8a9/0xb80 [nfsd]
+    cache_do_downcall+0x71/0xa0 [sunrpc]
+    cache_write_procfs+0x8e/0xd0 [sunrpc]
+    proc_reg_write+0xe1/0x140
+    vfs_write+0x1a5/0x6d0
+    ksys_write+0xc1/0x160
+    do_syscall_64+0x5f/0x170
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+   Freed by task 868:
+    kasan_save_stack+0x20/0x40
+    kasan_save_track+0x14/0x30
+    kasan_save_free_info+0x3b/0x60
+    __kasan_slab_free+0x37/0x50
+    kfree+0xf3/0x3e0
+    svc_export_put+0x87/0xb0 [nfsd]
+    cache_purge+0x17f/0x1f0 [sunrpc]
+    nfsd_destroy_serv+0x226/0x2d0 [nfsd]
+    nfsd_svc+0x125/0x1e0 [nfsd]
+    write_threads+0x16a/0x2a0 [nfsd]
+    nfsctl_transaction_write+0x74/0xa0 [nfsd]
+    vfs_write+0x1a5/0x6d0
+    ksys_write+0xc1/0x160
+    do_syscall_64+0x5f/0x170
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+2. We cannot sleep while using `rcu_read_lock`/`rcu_read_unlock`.
+   However, `svc_export_put`/`expkey_put` will call path_put, which
+   subsequently triggers a sleeping operation due to the following
+   `dput`.
+
+   =============================
+   WARNING: suspicious RCU usage
+   5.10.0-dirty #141 Not tainted
+   -----------------------------
+   ...
+   Call Trace:
+   dump_stack+0x9a/0xd0
+   ___might_sleep+0x231/0x240
+   dput+0x39/0x600
+   path_put+0x1b/0x30
+   svc_export_put+0x17/0x80
+   e_show+0x1c9/0x200
+   seq_read_iter+0x63f/0x7c0
+   seq_read+0x226/0x2d0
+   vfs_read+0x113/0x2c0
+   ksys_read+0xc9/0x170
+   do_syscall_64+0x33/0x40
+   entry_SYSCALL_64_after_hwframe+0x67/0xd1
+
+Fix these issues by using `rcu_work` to help release
+`svc_expkey`/`svc_export`. This approach allows for an asynchronous
+context to invoke `path_put` and also facilitates the freeing of
+`uuid/exp/key` after an RCU grace period.
+
+Fixes: 9ceddd9da134 ("knfsd: Allow lockless lookups of the exports")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h |  2 --
- arch/arm64/kvm/arch_timer.c       |  3 +--
- arch/arm64/kvm/arm.c              | 18 +++---------------
- 3 files changed, 4 insertions(+), 19 deletions(-)
+ fs/nfsd/export.c | 31 +++++++++++++++++++++++++------
+ fs/nfsd/export.h |  4 ++--
+ 2 files changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 0935f98495104..f57f02a52a84d 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -64,8 +64,6 @@ enum kvm_mode {
- };
- enum kvm_mode kvm_get_mode(void);
+diff --git a/fs/nfsd/export.c b/fs/nfsd/export.c
+index a9d794cfd10e0..191842a5d7ee7 100644
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -40,15 +40,24 @@
+ #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
+ #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
  
--DECLARE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
--
- extern unsigned int kvm_sve_max_vl;
- extern unsigned int kvm_host_sve_max_vl;
- int kvm_arm_init_sve(void);
-diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
-index bb24a76b4224b..52df63aa73a13 100644
---- a/arch/arm64/kvm/arch_timer.c
-+++ b/arch/arm64/kvm/arch_timer.c
-@@ -161,8 +161,7 @@ static void get_timer_map(struct kvm_vcpu *vcpu, struct timer_map *map)
- 
- static inline bool userspace_irqchip(struct kvm *kvm)
+-static void expkey_put(struct kref *ref)
++static void expkey_put_work(struct work_struct *work)
  {
--	return static_branch_unlikely(&userspace_irqchip_in_use) &&
--		unlikely(!irqchip_in_kernel(kvm));
-+	return unlikely(!irqchip_in_kernel(kvm));
+-	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
++	struct svc_expkey *key =
++		container_of(to_rcu_work(work), struct svc_expkey, ek_rcu_work);
+ 
+ 	if (test_bit(CACHE_VALID, &key->h.flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
+ 		path_put(&key->ek_path);
+ 	auth_domain_put(key->ek_client);
+-	kfree_rcu(key, ek_rcu);
++	kfree(key);
++}
++
++static void expkey_put(struct kref *ref)
++{
++	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
++
++	INIT_RCU_WORK(&key->ek_rcu_work, expkey_put_work);
++	queue_rcu_work(system_wq, &key->ek_rcu_work);
  }
  
- static void soft_timer_start(struct hrtimer *hrt, u64 ns)
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index b589ed95c89e6..4ef70acabb9e3 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -56,7 +56,6 @@ DECLARE_KVM_NVHE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
- static bool vgic_present;
+ static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -351,16 +360,26 @@ static void export_stats_destroy(struct export_stats *stats)
+ 					     EXP_STATS_COUNTERS_NUM);
+ }
  
- static DEFINE_PER_CPU(unsigned char, kvm_arm_hardware_enabled);
--DEFINE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
- 
- int kvm_arch_vcpu_should_kick(struct kvm_vcpu *vcpu)
+-static void svc_export_put(struct kref *ref)
++static void svc_export_put_work(struct work_struct *work)
  {
-@@ -384,9 +383,6 @@ void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu)
+-	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
++	struct svc_export *exp =
++		container_of(to_rcu_work(work), struct svc_export, ex_rcu_work);
++
+ 	path_put(&exp->ex_path);
+ 	auth_domain_put(exp->ex_client);
+ 	nfsd4_fslocs_free(&exp->ex_fslocs);
+ 	export_stats_destroy(exp->ex_stats);
+ 	kfree(exp->ex_stats);
+ 	kfree(exp->ex_uuid);
+-	kfree_rcu(exp, ex_rcu);
++	kfree(exp);
++}
++
++static void svc_export_put(struct kref *ref)
++{
++	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
++
++	INIT_RCU_WORK(&exp->ex_rcu_work, svc_export_put_work);
++	queue_rcu_work(system_wq, &exp->ex_rcu_work);
+ }
  
- void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu)
- {
--	if (vcpu_has_run_once(vcpu) && unlikely(!irqchip_in_kernel(vcpu->kvm)))
--		static_branch_dec(&userspace_irqchip_in_use);
--
- 	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
- 	kvm_timer_vcpu_terminate(vcpu);
- 	kvm_pmu_vcpu_destroy(vcpu);
-@@ -609,14 +605,6 @@ int kvm_arch_vcpu_run_pid_change(struct kvm_vcpu *vcpu)
- 	if (ret)
- 		return ret;
+ static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
+diff --git a/fs/nfsd/export.h b/fs/nfsd/export.h
+index f73e23bb24a1e..fa545d8dcc369 100644
+--- a/fs/nfsd/export.h
++++ b/fs/nfsd/export.h
+@@ -75,7 +75,7 @@ struct svc_export {
+ 	u32			ex_layout_types;
+ 	struct nfsd4_deviceid_map *ex_devid_map;
+ 	struct cache_detail	*cd;
+-	struct rcu_head		ex_rcu;
++	struct rcu_work		ex_rcu_work;
+ 	struct export_stats	*ex_stats;
+ };
  
--	if (!irqchip_in_kernel(kvm)) {
--		/*
--		 * Tell the rest of the code that there are userspace irqchip
--		 * VMs in the wild.
--		 */
--		static_branch_inc(&userspace_irqchip_in_use);
--	}
--
- 	/*
- 	 * Initialize traps for protected VMs.
- 	 * NOTE: Move to run in EL2 directly, rather than via a hypercall, once
-@@ -829,7 +817,7 @@ static bool kvm_vcpu_exit_request(struct kvm_vcpu *vcpu, int *ret)
- 	 * state gets updated in kvm_timer_update_run and
- 	 * kvm_pmu_update_run below).
- 	 */
--	if (static_branch_unlikely(&userspace_irqchip_in_use)) {
-+	if (unlikely(!irqchip_in_kernel(vcpu->kvm))) {
- 		if (kvm_timer_should_notify_user(vcpu) ||
- 		    kvm_pmu_should_notify_user(vcpu)) {
- 			*ret = -EINTR;
-@@ -948,7 +936,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
- 			vcpu->mode = OUTSIDE_GUEST_MODE;
- 			isb(); /* Ensure work in x_flush_hwstate is committed */
- 			kvm_pmu_sync_hwstate(vcpu);
--			if (static_branch_unlikely(&userspace_irqchip_in_use))
-+			if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
- 				kvm_timer_sync_user(vcpu);
- 			kvm_vgic_sync_hwstate(vcpu);
- 			local_irq_enable();
-@@ -994,7 +982,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
- 		 * we don't want vtimer interrupts to race with syncing the
- 		 * timer virtual interrupt state.
- 		 */
--		if (static_branch_unlikely(&userspace_irqchip_in_use))
-+		if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
- 			kvm_timer_sync_user(vcpu);
+@@ -91,7 +91,7 @@ struct svc_expkey {
+ 	u32			ek_fsid[6];
  
- 		kvm_arch_vcpu_ctxsync_fp(vcpu);
+ 	struct path		ek_path;
+-	struct rcu_head		ek_rcu;
++	struct rcu_work		ek_rcu_work;
+ };
+ 
+ #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
 -- 
 2.53.0
 
