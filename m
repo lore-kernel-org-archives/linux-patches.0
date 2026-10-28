@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212141;
-	b=nyI3UlzzJ9Z3v2q0XY805dQua+qmri5N2tYMVchwriplqf/ErzRYdqUSZYBP2audoXk0
-	 yipG9kL8/KID3OB2vE33lIXPPWgRzl544pufnkM/1uwuupnzOD1t+9DvxcK3aSKgV/0Mz
-	 6CYw0AjYNZeXq8WNHwlWwuTGw3EIpvjUfGWBxXrDEk5YrC7E5MdPQarN5ugTX7agVn7qH
-	 jBgUbBKjfigY+5DVdzcsi8pRyKVdLFdK3QywQWp28Ul6q+oTuTyxsSLR8gtoo2zs7zwdh
-	 4jRxYvtvCqgSbahaabXTEu+smN64gr0G79CK2urSf0NPzjAjmPQP4jJtR3hzkW5Osug==
+	t=1793212144;
+	b=tS/uJMz7lFfb+g9NTNG3Nh3SgPBJfYdjjrZ+rehbn/cawgKIIKKbs1aQ8doXZkV4fDgr
+	 7b85my0bfyznBP3cxmMt6D9rJtd6vVGhREWkIseusgKOBGb7BSyPuLZXXZpNPBxzXBA59
+	 FQvxuZODDj7ar6dkGG5XV5T86dNdLiWFgE+LH2MXmQTg2Asc0OKjgVj+dfnScP/HQB4Da
+	 PwkbuVJBnUtYy/4xcvvJIYupjBP+knt9DZD4ZO0V3p5UxvXaFmuPAqXjWM5LcAdlAcpWW
+	 u5BKsgTwQhnN7WHkDL3Tl9B+/DspsCsrRK+lpYdeLOAEDjR+NDCVl46UR6569nT1X0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212144;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=4tkOXNpVYSZLKrEA0Ve0AGh/Zfjxwg6ZTJBf1cMkaLM=;
-	b=Uby7YKabuXRcnYMgYXL9gIR45NBqlRo+MI6e3X1ITPxFaqSlqxrbXyC8TEGWaz/jgfC0
-	 3yAnN/K3LJDpW+bC2XoCmgVYnOJ4HqokHaLllCQh0SNDTDHIL8PhWbQYBi4cDWQKv2Xjh
-	 kNW7Di0Ln2T28VkJtVcJsLvehAOJFjsrV/rnGyCzP7iDmzO2cnM/JGLTXzfKo+89/mX5N
-	 t2NDQYhmWIjcpS44Yp2vk4k2EOFIVIgpd/EPD9JkkPVUAXLvTqFvPxTjtW2AKwxpz0sOt
-	 csRL9R5RDdP+Xupla2/AgGRUbRWUABGiw6YnJQ4Rfofd4DuL6rBi6SsvGnZBq/9zwjg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=rvioDNIuytI123GbGu/IbvAzZPyGlgPM4ejcPjsZegY=;
+	b=pCmHH/VK7lYeklX8iGdQr4fQbWy6a+1ELECFHcuvIEUFlIpoVCkMMc2L4Hsyq2XYmZ/R
+	 X3HmFhYfEOeKS1Zqxvzd7iaR6rEolPCr9g2Nc115PPjr34cIKahS4+bthGWFjBRLFe/Dd
+	 AO6spUrsggfzEoarD2UveTlwcirzcFaSdevffVJ2t/WN0QTwutKuBLLTffkF4FpZn5mae
+	 0olNmYv22DWTAke5zxAVCJHWiPo1qmkMx/8NYTbThFclpLQORNSRQnXnCHXdeNk1BakYf
+	 WhCqDb/s/O8Zxk4Az9qRKewYv092r53fR5s0LKaOczmu8irVJqkCtkkH7BmDg9aXuAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pqisNNNn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fN24odb6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55213606A323;
-	Wed, 28 Oct 2026 18:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293D0606A320;
+	Wed, 28 Oct 2026 18:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pqisNNNn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EFA1F01825;
-	Wed, 28 Oct 2026 18:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fN24odb6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460BE1F01825;
+	Wed, 28 Oct 2026 18:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212140;
-	bh=4tkOXNpVYSZLKrEA0Ve0AGh/Zfjxwg6ZTJBf1cMkaLM=;
+	s=korg; t=1793212143;
+	bh=rvioDNIuytI123GbGu/IbvAzZPyGlgPM4ejcPjsZegY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pqisNNNny5ju7ZDGeNtZFJBjdzX0uWCjyaZWmU1In9QM2YGRfAGZo7OFbEAWXDFuK
-	 KNtd5gOWUMeVr/ueD/CSo7FDuANB1bJbI+zlePV9DTqlfkeYNp0VOD0abWtgw7Ydrd
-	 OuM5mLPfLK6hPaEvOEhMEhpEawx8tFi/Ux9ajHig=
+	b=fN24odb6FAL2kKVUHkiPgbJ3Brp5JD2eauIjiRw7GCECOPz+Tz6+1hPvWxLqegH3r
+	 pWEemxa/ngFzB1Ycz7I4bdE/qC2dr8MLLnZI/A1de+ZslzOrnACcjGsV1aVYCI+EDq
+	 KrjHjqegkkqxRPhomI7uUcTpG4EfGZD87hWIkNPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+8eacd4fa193b1b28@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Kijo Park <red993688@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0051/1887] ALSA: usb-audio: Clamp implicit feedback packet count to URB capacity
-Date: Wed, 28 Oct 2026 17:35:47 +0100
-Message-ID: <20261028170500.389005414@linuxfoundation.org>
+Subject: [PATCH 6.1 0052/1887] exec: Cleanup POSIX timers right after de_thread()
+Date: Wed, 28 Oct 2026 17:35:48 +0100
+Message-ID: <20261028170500.411389431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -63,114 +65,126 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 76a986c980bb502c7688d605ac7a67fd257a9a1b ]
+[ Upstream commit acb03d3881818581052924a9bbbe92b8741ed448 ]
 
-data_ep_set_params() allocates each data URB for exactly u->packets
-isochronous frames, so urb->iso_frame_desc[] has u->packets slots and
-ctx->packets is the driver's only record of that limit. For an implicit
-feedback sink, snd_usb_queue_pending_output_urbs() overwrites it with the
-sync source's packet count, which is calculated independently from the
-capture endpoint's parameters. When that count is larger,
-prepare_playback_urb() and prepare_silent_urb() can write
-iso_frame_desc[] past the allocation; their existing bounds limit payload
-bytes, not the descriptor index.
+A per-thread CPU timer holds a reference to the PID of the thread it is
+attached to and, while it is armed, its node is queued in that thread's
+posix_cputimers. The task is looked up by that PID.
 
-The reproducer uses a high-speed UAC2 device declaring bInterval 1 for
-implicit feedback capture (8 packets) and bInterval 4 for playback
-(1 packet). On the first capture completion after the stream starts, it
-accesses seven descriptors spanning 112 bytes beyond the one-packet URB:
+When a non-leader thread exec()s, de_thread() changes which task owns
+that PID. pid_task(timer->it.cpu.pid, PIDTYPE_PID) then returns NULL,
+but the node is still queued on tsk, which is alive. timer_lock_sighand()
+takes a failed lookup to mean that the node is already dequeued, so it
+has nothing to undo.
 
-  BUG: KASAN: slab-out-of-bounds in prepare_playback_urb (sound/usb/pcm.c:1560)
-  Write of size 4 at addr ffff88801e696ad0 by task vhci_rx/178
-   prepare_playback_urb (sound/usb/pcm.c:1560)
-   prepare_outbound_urb (sound/usb/endpoint.c:340)
-   snd_usb_queue_pending_output_urbs (sound/usb/endpoint.c:501)
-   snd_complete_urb (sound/usb/endpoint.c:1834)
-   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
-   usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
-   vhci_rx_loop (drivers/usb/usbip/vhci_rx.c:107)
-   kthread (kernel/kthread.c:436)
-  The buggy address belongs to the object at ffff88801e696a00
-   which belongs to the cache kmalloc-256 of size 256
-  The buggy address is located 0 bytes to the right of
-   allocated 208-byte region [ffff88801e696a00, ffff88801e696ad0)
+begin_new_exec() calls posix_cpu_timers_exit(me) right after
+exec_task_namespaces() and that removes the leftover node, so the state
+normally stays invisible. But bprm->point_of_no_return is set before
+de_thread(), so if unshare_files(), set_mm_exe_file(), exec_mmap() or
+exec_task_namespaces() fails, the task dies before it gets there.
+exit_itimers() then frees the k_itimer while its node is still queued,
+and reaping tsk later erases that freed node from the rbtree.
 
-Record the allocated packet count per endpoint and clamp both the adopted
-count and the packet-size copy to it. Fold the Format Type II delimiter
-into urb_packs before the allocation loop so the recorded limit matches
-every URB.
+In short:
 
-Fixes: cf044e441902 ("ALSA: usb-audio: Update the number of packets properly at receiving")
-Reported-by: co+8eacd4fa193b1b28@bugs.sh
-Closes: https://lore.kernel.org/all/22xPn8drvIUtYgVeQnBiNqXuevOTpBAjepLz%40bugs.sh/
+      the non-leader thread B           the parent
+
+  timer_create(CLOCK_THREAD_CPUTIME_ID)
+  timer_settime()
+    arm_timer()            // the node is queued on B
+  execve()
+    de_thread(B)
+      exchange_tids(B, leader)  // B's PID now belongs to the leader
+      release_task(leader)
+        __exit_signal(leader)
+          posix_cpu_timers_exit(leader)  // cleans leader's queue, not B's
+          __unhash_process(leader)  // that PID has no task anymore
+    exec_mmap()
+      mmap_read_lock_killable(old_mm)
+                                kill(B, SIGKILL)
+      // -EINTR
+  get_signal()
+    do_exit()
+      exit_itimers()
+        posix_timer_delete()
+          posix_cpu_timer_del()
+        posix_timer_unhash_and_free()  // freed while still queued
+                                wait4()
+                                  release_task(B)
+                                    posix_cpu_timers_exit(B)
+                                      cleanup_timerqueue()
+                                        timerqueue_del()  // use-after-free
+
+Move the POSIX timer cleanup right after de_thread() before any of the
+later failure conditions brings the task into do_exit().
+
+[ tglx: Move the cleanup right after de_thread() ]
+
+Fixes: 55e8c8eb2c7b ("posix-cpu-timers: Store a reference to a pid not a task")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Kijo Park <red993688@gmail.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260912200530.1955491-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/ao7Q8miiuLAPVnWv@v4bel
+Link: https://patch.msgid.link/20260911090541.627712075@kernel.org
+[ kept timer cleanup inline instead of introducing upstream’s posixtimer_exec() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/card.h     |  1 +
- sound/usb/endpoint.c | 12 +++++++-----
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ fs/exec.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/sound/usb/card.h b/sound/usb/card.h
-index ac5505ce046de..0d860c57d9d9d 100644
---- a/sound/usb/card.h
-+++ b/sound/usb/card.h
-@@ -115,6 +115,7 @@ struct snd_usb_endpoint {
- 	unsigned int phase;		/* phase accumulator */
- 	unsigned int maxpacksize;	/* max packet size in bytes */
- 	unsigned int maxframesize;      /* max packet size in frames */
-+	unsigned int max_urb_packs;	/* packets allocated per data URB */
- 	unsigned int max_urb_frames;	/* max URB size in frames */
- 	unsigned int curpacksize;	/* current packet size in bytes (for capture) */
- 	unsigned int curframesize;      /* current packet size in frames (for capture) */
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 6cde8455da37b..dd81c94cbb520 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -497,9 +497,10 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
+diff --git a/fs/exec.c b/fs/exec.c
+index 6ff6367793b9e..7391ec00a1cc1 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -1268,6 +1268,21 @@ int begin_new_exec(struct linux_binprm * bprm)
+ 	if (retval)
+ 		goto out;
  
- 		/* copy over the length information */
- 		if (implicit_fb) {
--			ctx->packets = packet->packets;
-+			ctx->packets = min_t(int, packet->packets,
-+					     ep->max_urb_packs);
- 			memcpy(ctx->packet_size, packet->packet_size,
--			       packet->packets * sizeof(packet->packet_size[0]));
-+			       ctx->packets * sizeof(packet->packet_size[0]));
- 		}
- 
- 		/* call the data handler to fill in playback data */
-@@ -1252,15 +1253,16 @@ static int data_ep_set_params(struct snd_usb_endpoint *ep)
- 		ep->nurbs = min(max_urbs, urbs_per_period * ep->cur_buffer_periods);
- 	}
- 
-+	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
-+		urb_packs++; /* for transfer delimiter */
-+	ep->max_urb_packs = urb_packs;
++	/*
++	 * This must be done here to ensure that POSIX CPU timers which were
++	 * armed on the current task are dequeued from me::posix_cputimers.
++	 * Otherwise in case of a TID switch the deletion of the related POSIX
++	 * timer would not remove an enqueued timer because the TID lookup
++	 * of the old TID fails.
++	 */
++#ifdef CONFIG_POSIX_TIMERS
++	spin_lock_irq(&me->sighand->siglock);
++	posix_cpu_timers_exit(me);
++	spin_unlock_irq(&me->sighand->siglock);
++	exit_itimers(me);
++	flush_itimer_signals();
++#endif
 +
- 	/* allocate and initialize data urbs */
- 	for (i = 0; i < ep->nurbs; i++) {
- 		struct snd_urb_ctx *u = &ep->urb[i];
- 		u->index = i;
- 		u->ep = ep;
- 		u->packets = urb_packs;
+ 	/*
+ 	 * Cancel any io_uring activity across execve
+ 	 */
+@@ -1316,14 +1331,6 @@ int begin_new_exec(struct linux_binprm * bprm)
+ 
+ 	bprm->mm = NULL;
+ 
+-#ifdef CONFIG_POSIX_TIMERS
+-	spin_lock_irq(&me->sighand->siglock);
+-	posix_cpu_timers_exit(me);
+-	spin_unlock_irq(&me->sighand->siglock);
+-	exit_itimers(me);
+-	flush_itimer_signals();
+-#endif
 -
--		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
--			u->packets++; /* for transfer delimiter */
- 		u->buffer_size = maxsize * u->packets;
- 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
- 		if (!u->urb)
+ 	/*
+ 	 * Make the signal table private.
+ 	 */
 -- 
 2.53.0
 
