@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214825;
-	b=0hPye31RGPl1J2Y8fM31vSsUd7D05e6j1w98djSeHmBScdAuasaAh5NVJB+w8LUDYAVy
-	 jiletXgVR9LL5eUfK0894IusAgVE/8bKTrgga8kn9veR/GuRwKre4EnrAXV5/zAbctCYV
-	 kelugEllaabUcq9SahZuhpSwwp4bFCF0ysmtBBN4KtEWL9orfYkWDv5K1iQ/MMx/JoCs7
-	 reyuVB4vhwo2Dn+MP5grWSNCEYhjhX3aH88VnQ+JPQWB8BoifDwEouApuWX/kQjmhF4Oi
-	 vmEdiYW4nFGXPRcxoP4L8EW5GXXlzTCkI20QxHdK0bHgk/abUzSndBNgoann1rbK6wg==
+	t=1793214827;
+	b=GMQr9G7cduVU40m0M5Rho8bT4AJ9DR6XPjaGuAXO+50GUr4z/YXDS4+e1zox5Pw8ck+0
+	 TpWS88Bx45spyPDGm3+5xcqaxFoq1OTktgHGYy609gv8Iv3fHw241WICdgXYDX6Z87CuK
+	 nX4jWULJpgzXVwO4RkhuCyIFRrRXdeXhOHsBSVreJCaALf3uCNq66IB5gEEjwb9wqb+CD
+	 e8e3ozMfnJIS+mPrtucC5ZWXrNmNNxU9W432GBA4Nv7mPVxKqRk0uqz/IT9RlyPTNknuz
+	 e2Cn/+RFklM7QWgYq9yY61Vv7KzOy1EpoMLeAf/dVcVjD3LhJz49+zk6ZamV/aqI1vA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214825;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kOuEtKxxiWTmZpW8MCtBWcc9AKwJ+fMXrX9hKw4qNj0=;
-	b=tjN+hV7/gWi8oMv4kJLwolh6yGFU+RcmIAw/ub7Sw9FM45mOiEDSUA/jV28NJlEpCx3/
-	 iLoSvi69vc+X7PahQ3+lN/c+XplxyL7IMMyFUM7jiFp9KRCilHr7QjQ5DEezHrz08JOHV
-	 UZAqz4vfl+1YcQZ/Ta0pvipWA0bwa7Mgs0TECoVQRIaYv/+zxYGNBjgZJVf703YyeQqAb
-	 SKlGyR7e1LlaOzdIS00zzRN27BNZKxUf2KBWJeWc3+QS4TrWVdFGOMBpiFeMWBL/igjAC
-	 0nmgQtpll8enIKjEWgxuVOipz8G6Hwkky/u3NWgk+IBUbeJ/AdnhQjXVEJsLLb03VxA==
+	bh=QZbaiA2gZ/s+4IYzsG6M5lncvIgptxCxZcIgYgZr58k=;
+	b=WEnOU1EYgLbHbJmQKhj4/8HSjG5Es42Ohnnu1JRIrdg2dEoxhV8PAS/75kkSXC+55Mtr
+	 fJJx1Qtf/Y71392I3ROuBpsWOgyo2fZKFAUi2+WZC725InoIZZBxRACt6iNdGGY4pEqpb
+	 xAEfnoP26m5sOQma3MUj//MAaaR16xNbTnLLN/Awm1YQu4qbPtQ01D2BxiYyt+KRtDM0t
+	 KvPWbd+hu5V3ZdWvLgoEboLlid7+F0Q7+s+NYSPvA1Y8+vnNtSrXoFEMR0S0m8DhzMRYh
+	 Ed5Txr9f2xefRY1b1QkjBCrlpqeW13JO3P6IW6Zay/39ILa2SiGgZE2Mx3D1y7ilbPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0o4NOkyO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nr20J+BB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3454606A320;
-	Wed, 28 Oct 2026 19:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9B9606AB13;
+	Wed, 28 Oct 2026 19:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0o4NOkyO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0513B1F01825;
-	Wed, 28 Oct 2026 19:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nr20J+BB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D035C1F01825;
+	Wed, 28 Oct 2026 19:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214824;
-	bh=kOuEtKxxiWTmZpW8MCtBWcc9AKwJ+fMXrX9hKw4qNj0=;
+	s=korg; t=1793214827;
+	bh=QZbaiA2gZ/s+4IYzsG6M5lncvIgptxCxZcIgYgZr58k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0o4NOkyOEv8sSHkLPDOCv2kDMmG7+hm3oEELJZ8fNZU4LvhIrnCviAjEQmvelcNQ4
-	 jKL0kbs5kxlVDcEWB+fcIwSgRSKowSVZeh5X3FinDH1kXRYt+FI/dx3+JVS1DK9ycf
-	 psCKF3hZYppC070uZU5d/O300qOldodQO0xWkReA=
+	b=nr20J+BB6mQdnLr2q+O8K+M5bLLGSyzSMPN4tziz43aPZZBYJ3aWfGmhRBGR6DUGe
+	 14aj6ScHd9LXPgDofe9/CPAUYdFIgQICerFYioqGOa+hwSgBei9OTUapZb8741+Ydv
+	 JyQmYcb7qHUAChrUSYNvuyeeh26gbUcsvdQJuyrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Simon Horman <horms@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0951/1887] iavf: fix out-of-bounds writes in iavf_get_ethtool_stats()
-Date: Wed, 28 Oct 2026 17:50:47 +0100
-Message-ID: <20261028170521.046938990@linuxfoundation.org>
+Subject: [PATCH 6.1 0952/1887] nvmet: move async event work off nvmet-wq
+Date: Wed, 28 Oct 2026 17:50:48 +0100
+Message-ID: <20261028170521.068980804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,156 +69,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit fecacfc95f195b99c71c579a472120d0b4ed65fa ]
+[ Upstream commit 2922e3507f6d5caa7f1d07f145e186fc6f317a4e ]
 
-iavf incorrectly uses real_num_tx_queues for ETH_SS_STATS. Since the
-value could change in runtime, we should use num_tx_queues instead.
+For target nvmet_ctrl_free() flushes ctrl->async_event_work.
+If nvmet_ctrl_free() runs on nvmet-wq, the flush re-enters workqueue
+completion for the same worker:-
 
-Moreover iavf_get_ethtool_stats() uses num_active_queues while
-iavf_get_sset_count() and iavf_get_stat_strings() use
-real_num_tx_queues, which triggers out-of-bounds writes when we do
-"ethtool -L" and "ethtool -S" simultaneously [1].
+A. Async event work queued on nvmet-wq (prior to disconnect):
+  nvmet_execute_async_event()
+     queue_work(nvmet_wq, &ctrl->async_event_work)
 
-For example when we change channels from 1 to 8, Thread 3 could be
-scheduled before Thread 2, and out-of-bounds writes could be triggered
-in Thread 3:
+  nvmet_add_async_event()
+     queue_work(nvmet_wq, &ctrl->async_event_work)
 
-Thread 1 (ethtool -L)       Thread 2 (work)        Thread 3 (ethtool -S)
-iavf_set_channels()
-...
-iavf_alloc_queues()
--> num_active_queues = 8
-iavf_schedule_finish_config()
-                                                   iavf_get_sset_count()
-                                                   real_num_tx_queues: 1
-                                                   -> buffer for 1 queue
-                                                   iavf_get_ethtool_stats()
-                                                   num_active_queues: 8
-                                                   -> out-of-bounds!
-                            iavf_finish_config()
-                            -> real_num_tx_queues = 8
+B. Full pre-work chain (RDMA CM path):
+  nvmet_rdma_cm_handler()
+     nvmet_rdma_queue_disconnect()
+       __nvmet_rdma_queue_disconnect()
+         queue_work(nvmet_wq, &queue->release_work)
+           process_one_work()
+             lock((wq_completion)nvmet-wq)  <--------- 1st
+             nvmet_rdma_release_queue_work()
 
-Use immutable num_tx_queues in all related functions to avoid the issue.
+C. Recursive path (same worker):
+  nvmet_rdma_release_queue_work()
+     nvmet_rdma_free_queue()
+       nvmet_sq_destroy()
+         nvmet_ctrl_put()
+           nvmet_ctrl_free()
+             flush_work(&ctrl->async_event_work)
+               __flush_work()
+                 touch_wq_lockdep_map()
+                 lock((wq_completion)nvmet-wq) <--------- 2nd
 
-[1]
- BUG: KASAN: vmalloc-out-of-bounds in iavf_add_one_ethtool_stat+0x200/0x270
- Write of size 8 at addr ffffc900031c9080 by task ethtool/5800
+Lockdep splat:
 
- CPU: 1 UID: 0 PID: 5800 Comm: ethtool Not tainted 6.19.0-enjuk-08403-g8137e3db7f1c #241 PREEMPT(full)
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x6f/0xb0
-  print_report+0x170/0x4f3
-  kasan_report+0xe1/0x180
-  iavf_add_one_ethtool_stat+0x200/0x270
-  iavf_get_ethtool_stats+0x14c/0x2e0
-  __dev_ethtool+0x3d0c/0x5830
-  dev_ethtool+0x12d/0x270
-  dev_ioctl+0x53c/0xe30
-  sock_do_ioctl+0x1a9/0x270
-  sock_ioctl+0x3d4/0x5e0
-  __x64_sys_ioctl+0x137/0x1c0
-  do_syscall_64+0xf3/0x690
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
- RIP: 0033:0x7f7da0e6e36d
- ...
-  </TASK>
+  ============================================
+  WARNING: possible recursive locking detected
+  6.19.0-rc3nvme+ #14 Tainted: G                 N
+  --------------------------------------------
+  kworker/u192:42/44933 is trying to acquire lock:
+  ffff888118a00948 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x26/0x90
 
- The buggy address belongs to a 1-page vmalloc region starting at 0xffffc900031c9000 allocated at __dev_ethtool+0x3cc9/0x5830
- The buggy address belongs to the physical page: page: refcount:1 mapcount:0 mapping:0000000000000000
- index:0xffff88813a013de0 pfn:0x13a013
- flags: 0x200000000000000(node=0|zone=2)
- raw: 0200000000000000 0000000000000000 dead000000000122 0000000000000000
- raw: ffff88813a013de0 0000000000000000 00000001ffffffff 0000000000000000
- page dumped because: kasan: bad access detected
+  but task is already holding lock:
+  ffff888118a00948 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x53e/0x660
 
- Memory state around the buggy address:
-  ffffc900031c8f80: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-  ffffc900031c9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- >ffffc900031c9080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-                    ^
-  ffffc900031c9100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-  ffffc900031c9180: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+  3 locks held by kworker/u192:42/44933:
+   #0: ffff888118a00948 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x53e/0x660
+   #1: ffffc9000e6cbe28 ((work_completion)(&queue->release_work)){+.+.}-{0:0}, at: process_one_work+0x1c5/0x660
+   #2: ffffffff82d4db60 (rcu_read_lock){....}-{1:3}, at: __flush_work+0x62/0x530
 
-Fixes: 64430f70ba6f ("iavf: Fix displaying queue statistics shown by ethtool")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+  Workqueue: nvmet-wq nvmet_rdma_release_queue_work [nvmet_rdma]
+  Call Trace:
+   __flush_work+0x268/0x530
+   nvmet_ctrl_free+0x140/0x310 [nvmet]
+   nvmet_cq_put+0x74/0x90 [nvmet]
+   nvmet_rdma_free_queue+0x23/0xe0 [nvmet_rdma]
+   nvmet_rdma_release_queue_work+0x19/0x50 [nvmet_rdma]
+   process_one_work+0x206/0x660
+   worker_thread+0x184/0x320
+   kthread+0x10c/0x240
+   ret_from_fork+0x319/0x390
+
+Move async event work to a dedicated nvmet-aen-wq to avoid reentrant
+flush on nvmet-wq.
+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/iavf/iavf_ethtool.c    | 31 +++++++++----------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ drivers/nvme/target/admin-cmd.c |  2 +-
+ drivers/nvme/target/core.c      | 14 ++++++++++++--
+ drivers/nvme/target/nvmet.h     |  1 +
+ drivers/nvme/target/rdma.c      |  1 +
+ 4 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-index f4ac2b164b3e9..630d93e0512d8 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-@@ -333,14 +333,13 @@ static int iavf_get_sset_count(struct net_device *netdev, int sset)
- {
- 	/* Report the maximum number queues, even if not every queue is
- 	 * currently configured. Since allocation of queues is in pairs,
--	 * use netdev->real_num_tx_queues * 2. The real_num_tx_queues is set
--	 * at device creation and never changes.
-+	 * use netdev->num_tx_queues * 2. The num_tx_queues is set at
-+	 * device creation and never changes.
- 	 */
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 74445bead85fc..5e88f2f5ae8ba 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -988,7 +988,7 @@ void nvmet_execute_async_event(struct nvmet_req *req)
+ 	ctrl->async_event_cmds[ctrl->nr_async_event_cmds++] = req;
+ 	mutex_unlock(&ctrl->lock);
  
- 	if (sset == ETH_SS_STATS)
- 		return IAVF_STATS_LEN +
--			(IAVF_QUEUE_STATS_LEN * 2 *
--			 netdev->real_num_tx_queues);
-+		       (IAVF_QUEUE_STATS_LEN * 2 * netdev->num_tx_queues);
- 	else if (sset == ETH_SS_PRIV_FLAGS)
- 		return IAVF_PRIV_FLAGS_STR_LEN;
- 	else
-@@ -367,19 +366,19 @@ static void iavf_get_ethtool_stats(struct net_device *netdev,
- 	iavf_add_ethtool_stats(&data, adapter, iavf_gstrings_stats);
- 
- 	rcu_read_lock();
--	/* As num_active_queues describe both tx and rx queues, we can use
--	 * it to iterate over rings' stats.
-+	/* Use num_tx_queues to report stats for the maximum number of queues.
-+	 * Queues beyond num_active_queues will report zero.
- 	 */
--	for (i = 0; i < adapter->num_active_queues; i++) {
--		struct iavf_ring *ring;
-+	for (i = 0; i < netdev->num_tx_queues; i++) {
-+		struct iavf_ring *tx_ring = NULL, *rx_ring = NULL;
- 
--		/* Tx rings stats */
--		ring = &adapter->tx_rings[i];
--		iavf_add_queue_stats(&data, ring);
-+		if (i < adapter->num_active_queues) {
-+			tx_ring = &adapter->tx_rings[i];
-+			rx_ring = &adapter->rx_rings[i];
-+		}
- 
--		/* Rx rings stats */
--		ring = &adapter->rx_rings[i];
--		iavf_add_queue_stats(&data, ring);
-+		iavf_add_queue_stats(&data, tx_ring);
-+		iavf_add_queue_stats(&data, rx_ring);
- 	}
- 	rcu_read_unlock();
+-	queue_work(nvmet_wq, &ctrl->async_event_work);
++	queue_work(nvmet_aen_wq, &ctrl->async_event_work);
  }
-@@ -416,9 +415,9 @@ static void iavf_get_stat_strings(struct net_device *netdev, u8 *data)
- 	iavf_add_stat_strings(&data, iavf_gstrings_stats);
  
- 	/* Queues are always allocated in pairs, so we just use
--	 * real_num_tx_queues for both Tx and Rx queues.
-+	 * num_tx_queues for both Tx and Rx queues.
- 	 */
--	for (i = 0; i < netdev->real_num_tx_queues; i++) {
-+	for (i = 0; i < netdev->num_tx_queues; i++) {
- 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
- 				      "tx", i);
- 		iavf_add_stat_strings(&data, iavf_gstrings_queue_stats,
+ void nvmet_execute_keep_alive(struct nvmet_req *req)
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index e1bfab6c21e0f..f9939a6076c26 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -23,6 +23,8 @@ static DEFINE_IDA(cntlid_ida);
+ 
+ struct workqueue_struct *nvmet_wq;
+ EXPORT_SYMBOL_GPL(nvmet_wq);
++struct workqueue_struct *nvmet_aen_wq;
++EXPORT_SYMBOL_GPL(nvmet_aen_wq);
+ 
+ /*
+  * This read/write semaphore is used to synchronize access to configuration
+@@ -209,7 +211,7 @@ void nvmet_add_async_event(struct nvmet_ctrl *ctrl, u8 event_type,
+ 	list_add_tail(&aen->entry, &ctrl->async_events);
+ 	mutex_unlock(&ctrl->lock);
+ 
+-	queue_work(nvmet_wq, &ctrl->async_event_work);
++	queue_work(nvmet_aen_wq, &ctrl->async_event_work);
+ }
+ 
+ static void nvmet_add_to_changed_ns_log(struct nvmet_ctrl *ctrl, __le32 nsid)
+@@ -1670,9 +1672,14 @@ static int __init nvmet_init(void)
+ 	if (!nvmet_wq)
+ 		goto out_free_buffered_work_queue;
+ 
++	nvmet_aen_wq = alloc_workqueue("nvmet-aen-wq",
++			WQ_MEM_RECLAIM | WQ_UNBOUND, 0);
++	if (!nvmet_aen_wq)
++		goto out_free_nvmet_work_queue;
++
+ 	error = nvmet_init_discovery();
+ 	if (error)
+-		goto out_free_nvmet_work_queue;
++		goto out_free_nvmet_aen_work_queue;
+ 
+ 	error = nvmet_init_configfs();
+ 	if (error)
+@@ -1681,6 +1688,8 @@ static int __init nvmet_init(void)
+ 
+ out_exit_discovery:
+ 	nvmet_exit_discovery();
++out_free_nvmet_aen_work_queue:
++	destroy_workqueue(nvmet_aen_wq);
+ out_free_nvmet_work_queue:
+ 	destroy_workqueue(nvmet_wq);
+ out_free_buffered_work_queue:
+@@ -1697,6 +1706,7 @@ static void __exit nvmet_exit(void)
+ 	nvmet_exit_configfs();
+ 	nvmet_exit_discovery();
+ 	ida_destroy(&cntlid_ida);
++	destroy_workqueue(nvmet_aen_wq);
+ 	destroy_workqueue(nvmet_wq);
+ 	destroy_workqueue(buffered_io_wq);
+ 	destroy_workqueue(zbd_wq);
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 90c63971402a4..5194e1bb0cca7 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -397,6 +397,7 @@ extern struct kmem_cache *nvmet_bvec_cache;
+ extern struct workqueue_struct *buffered_io_wq;
+ extern struct workqueue_struct *zbd_wq;
+ extern struct workqueue_struct *nvmet_wq;
++extern struct workqueue_struct *nvmet_aen_wq;
+ 
+ static inline void nvmet_set_result(struct nvmet_req *req, u32 result)
+ {
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 0dfe264968ff1..380c0aea840df 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -2098,6 +2098,7 @@ static void nvmet_rdma_remove_one(struct ib_device *ib_device, void *client_data
+ 	mutex_unlock(&nvmet_rdma_queue_mutex);
+ 
+ 	flush_workqueue(nvmet_wq);
++	flush_workqueue(nvmet_aen_wq);
+ }
+ 
+ static struct ib_client nvmet_rdma_ib_client = {
 -- 
 2.53.0
 
