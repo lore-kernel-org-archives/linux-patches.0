@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207588;
-	b=0Ed3xk+BzyuFJUpy4xnw7NIEaW0u76CAv0csUKnUAeKcpkSyFSZYvosfRYEdp29p8rFc
-	 unB4PEigqRMj0AGPjUr/F92d5Dtj444c3e1QbZzFvzCzzAyL87YkLwI4BhtnSOCLmRFA4
-	 SGhfY5YFpjifr+P/7Z1JYOeoZ9jhQ/JPBKZXo8JLZPGynea3A7wW/M7V0+0BXf+90j78I
-	 /gLcehAHVZh4MOKdWxRdV+gfYQ8hIGXQp/6vDeXPZMToETSrWhXu2JRYF4R5jJNCleDW0
-	 /vZYfDX76bbbX4SH8sZeK42LJcrl4qaegxS58rbagQrEcO0/coT+yzrBYavepMDSghg==
+	t=1793207591;
+	b=lZw3NVC9w+X9jbxb8PYmI1jZqYJDpLRwXklVzJbtQKO5OG/hUq6DGc7ezt+ZcK9VM64W
+	 8nX2L3We4wT58LaHkekVFEOOLeQ7Xepx4/yx1xQUlYkL/IGSFCZIh8qmMrLQQg0shte38
+	 XfwwtnKTcQk9Y4I8einBxfyiRexDHhv3ZD0nWrxHmbHxchortjn7gAiHprSexCpB7FcpN
+	 8zSsFDtmgURFJOORsY+TUG55bP8qXiMeLdxg0XPzc07t183zwt9wVYfU0JRIzl7iW4ozA
+	 /QxmErePZQ9aqGV0OYmggl3g8ZpfkXD3VF/vloEZgxc9rGQbxm9eCE2v9oO5YNNHN+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sf6M4HLCC6edJmQURybIZrMHWxD9v3qqzQoGF4qIBM0=;
-	b=cykMzrFM8qlrK7Dbw5IhrpZUBF+8HE8x+hP39PNwzL9ZftAcLJJ1GJFrCPhxj3h2+HFe
-	 mb5E1TXAvOBU9ETmRsU5x1Ow3PLn2wAfqUI1kjMXyWaGoQhsDULgFrd9VLbUHgl7Jpp7d
-	 0gSjXJFfduG6N9ilYcgp/77/Z9RSDbVEoI6c/FP3V+a9HixO1UdckOsfy/pjJEsyRPtRw
-	 z+Ro2WYDXOTJy5P12pJbJHELTTXqPaJMwEg3uGmfNRC5rglC5xdMqHTHwG1BtZZbZ3q/o
-	 CqJPocT0thtZnyYAsj/iaQT4+53JM+9UCE/hJAAFr7wt/JSft35RH9Bq1AVeaBNSmsQ==
+	bh=0h41NWYGQA8+5DTzOxEHN2RnYeflYdUuMRAMBMf9Gj0=;
+	b=Nap/g7RA7YLTQdVBy3nzmN302olV/S2JQQv8ineCIfAvpoBr933xB3inP9jO4sL2Yc/2
+	 KpfiMw2uv+8LwAetn5dmP2ilCSDj1SV/R4ciMfiVOIDgSy/rcKgocATedqJU5dIdaEj0x
+	 PQ2Tu4D8uwxIugX0PCZifiwrNzT1rcrpKAL0bHRzIr6r6kk/Un9P2kqG1mOWaGu9eJJod
+	 RtNfATQlbhPrrzf/6VlsbhVy5DvWHj7jNr7LVN0HXsId49EiyprFioB0+PE/5PKvlDBZl
+	 p+AQiKL/eQv24RubtmlBZMUlxpY7b/GUm/XjQRo8352NFWP2vnW254LUKSkii/RO0bQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mew6ZWRT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTWiXnzS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F34606A335;
-	Wed, 28 Oct 2026 17:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE36606A31D;
+	Wed, 28 Oct 2026 17:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mew6ZWRT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A52B1F031E3;
-	Wed, 28 Oct 2026 17:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTWiXnzS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2441F01828;
+	Wed, 28 Oct 2026 17:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207588;
-	bh=sf6M4HLCC6edJmQURybIZrMHWxD9v3qqzQoGF4qIBM0=;
+	s=korg; t=1793207590;
+	bh=0h41NWYGQA8+5DTzOxEHN2RnYeflYdUuMRAMBMf9Gj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mew6ZWRT6tp3fz0QG/QWl1ZRZ2K5VaHWgzH9AAyBJkcvNK7VmSH33bjK24CLsKxr/
-	 FPY5uz82SqR5houT6maFJqaHtS1CWfKmnJFM4m0mswJLOyso4qMaWQ/2ckpHKwKlmo
-	 x3GK4LK52YTlEiAJTj79ND2w0p9TyCpSwkerHHUg=
+	b=BTWiXnzSK9xLhMqODvcodn7gj7Enzv5yqz4cwmKZHXQQrFu5qT18zK0dvlsFWl3wk
+	 GA7VGWLHJZAqhjfJICDkFk0G7FtOoxMBwvTTYWnr6bXO6iRo3Qh//HrMwmPbZqz1dq
+	 JsT2eHidYInXEbZDFp+Ri6OqCZvVseCox4N64GuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Aviv Vaknin <vaknins33@gmail.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 068/247] pid_namespace: make zap_pid_ns_processes() freezable
-Date: Wed, 28 Oct 2026 17:57:51 +0100
-Message-ID: <20261028165949.000691679@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 069/247] eventfs: Free the eventfs_inode after an rcu grace period too
+Date: Wed, 28 Oct 2026 17:57:52 +0100
+Message-ID: <20261028165949.023987343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -69,69 +67,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aviv Vaknin <vaknins33@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 81933038f5e273d17ed22792f906889393b204c5 upstream.
+commit 2cd88c498ecff8e22bf4c397b8eb226db70ac343 upstream.
 
-When the init of a pid namespace exits, zap_pid_ns_processes() waits
-until all other pids in the namespace are freed. A tracer outside the
-namespace that does not reap its traced zombies keeps those pids
-allocated, so this wait has no upper bound, and while it lasts every
-suspend attempt fails:
+tracefs_d_revalidate() reads ->is_freed of the eventfs_inode that
+dentry->d_fsdata points to, and ->d_revalidate() is called in rcu
+pathwalk mode with nothing but rcu_read_lock() held. The dentry itself
+stays around for such a walker, but tracefs_d_release() drops its
+reference to the eventfs_inode when the dentry is killed, and
+release_ei() then frees it after a grace period of eventfs_srcu. An
+SRCU grace period doesn't wait for rcu_read_lock() sections, so the
+walker can read an eventfs_inode that is already gone.
 
-  Freezing user space processes failed after 20.006 seconds (2 tasks refusing to freeze, wq_busy=0):
+With a pathwalk held up in tracefs_d_revalidate() while the dentry goes
+away:
 
-Neither wait is freezable. The first loop sleeps in do_wait(), which
-returns -ERESTARTSYS on the freezer's fake signal; the loop then clears
-TIF_SIGPENDING and waits again without ever freezing. The final loop
-sleeps in TASK_INTERRUPTIBLE, and since nothing clears TIF_SIGPENDING
-there, schedule() returns immediately after the first freeze attempt
-and the task spins until the wait ends.
+  BUG: KASAN: slab-use-after-free in tracefs_d_revalidate+0x76/0x90
+  Read of size 1 at addr ff1100010152d8d0 by task walker/97
+  Call Trace:
+   <TASK>
+   tracefs_d_revalidate+0x76/0x90
+   lookup_fast+0x320/0x640
+   path_lookupat+0x160/0xb00
+   filename_lookup+0x1f1/0x5b0
+   vfs_statx+0xd7/0x3b0
+   vfs_fstatat+0x4d/0x90
+   __do_sys_newfstatat+0xa0/0x100
+   do_syscall_64+0x10e/0x5e0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  [...]
+  Allocated by task 1:
+   __kmalloc_cache_noprof+0x249/0x560
+   eventfs_create_dir+0x7a/0x590
+   event_create_dir+0x2fb/0xcf0
+   trace_add_event_call+0xbf/0x150
+  [...]
+  Freed by task 11:
+   kfree+0x1db/0x5b0
+   srcu_invoke_callbacks+0x3a3/0x620
+   process_one_work+0x937/0x1810
+   worker_thread+0x4f1/0xd60
 
-Sleep in TASK_INTERRUPTIBLE | TASK_FREEZABLE in do_wait(), so that the
-freezer can freeze tasks waiting there directly, and in TASK_IDLE |
-TASK_FREEZABLE in the final loop, like coredump_task_exit() does.
+Before commit 8e556432477e ("eventfs: Use SRCU for freeing
+eventfs_inodes") release_ei() used call_rcu(), which covered the walker,
+while eventfs_iterate() needs the SRCU grace period. Wait for both and
+chain call_rcu() from the SRCU callback.
 
-This was hit with Chromium-based browsers: crashpad ptrace-attaches the
-threads of a crashed renderer, which is a pid namespace init, and does
-not reap those killed during the dump.
-
-Fixes: 3eb07c8c8adb ("pid namespaces: destroy pid namespace on init's death")
-Fixes: b9a985db9896 ("pid_ns: Sleep in TASK_INTERRUPTIBLE in zap_pid_ns_processes")
-Cc: stable@vger.kernel.org # 6.1+
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Aviv Vaknin <vaknins33@gmail.com>
-Link: https://patch.msgid.link/20261002202820.3433318-1-vaknins33@gmail.com
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: stable@vger.kernel.org
+Fixes: 8e556432477e ("eventfs: Use SRCU for freeing eventfs_inodes")
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-4-7446d2d335e6@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c          |    2 +-
- kernel/pid_namespace.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/tracefs/event_inode.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -1696,7 +1696,7 @@ static long do_wait(struct wait_opts *wo
- 	add_wait_queue(&current->signal->wait_chldexit, &wo->child_wait);
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -91,6 +91,14 @@ static void free_ei_rcu(struct rcu_head
+ 	}
+ }
  
- 	do {
--		set_current_state(TASK_INTERRUPTIBLE);
-+		set_current_state(TASK_INTERRUPTIBLE | TASK_FREEZABLE);
- 		retval = __do_wait(wo);
- 		if (retval != -ERESTARTSYS)
- 			break;
---- a/kernel/pid_namespace.c
-+++ b/kernel/pid_namespace.c
-@@ -246,7 +246,7 @@ void zap_pid_ns_processes(struct pid_nam
- 	 * free_pid() will awaken this task.
- 	 */
- 	for (;;) {
--		set_current_state(TASK_INTERRUPTIBLE);
-+		set_current_state(TASK_IDLE | TASK_FREEZABLE);
- 		if (pid_ns->pid_allocated == init_pids)
- 			break;
- 		schedule();
++/* read under eventfs_srcu and, by tracefs_d_revalidate(), in rcu pathwalk */
++static void free_ei_srcu(struct rcu_head *rcu)
++{
++	struct eventfs_inode *ei = container_of(rcu, struct eventfs_inode, rcu);
++
++	call_rcu(&ei->rcu, free_ei_rcu);
++}
++
+ /*
+  * eventfs_inode reference count management.
+  *
+@@ -112,7 +120,7 @@ static void release_ei(struct kref *ref)
+ 			entry->release(entry->name, ei->data);
+ 	}
+ 
+-	call_srcu(&eventfs_srcu, &ei->rcu, free_ei_rcu);
++	call_srcu(&eventfs_srcu, &ei->rcu, free_ei_srcu);
+ }
+ 
+ static inline void put_ei(struct eventfs_inode *ei)
 
 
