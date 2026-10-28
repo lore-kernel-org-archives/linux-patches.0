@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212413;
-	b=fhXiL1rvJPB58A4vH1L8kk1YL7bj8t0ndBTJcnPU0uTVjMWyI8fkSgxzoIdzr1M3Rt/T
-	 E4HYNYFo1lvo+ZnfzwmtAvzoWF37Vj/ZPnuivZOsxrjzH+pFx/pqW9dulrHJIu0UqE+Rw
-	 WSBXQFemPMIzq/pa4pNko1ACN82HHPkGhUaZhwa43dN9mONaQYEuEU+BkpWoz+iiHH411
-	 0CkQMRHlQW2DdLTohCcnwH5adEc1oGRLQpF2iSDpWXrRrKGVObcMckjuvzfVY42MC6urI
-	 SxnNNf2/V4mmL47APDWUEoK8o4owRJ8nf6SooJZPSeC2UaPtIFNM7Re+9DZk9ZGMWrw==
+	t=1793212416;
+	b=e65Vi9w8qGp8HMR41IzuRLvM24gxubVsdQlybLuTde+UbAZtmLXi9gT7VJL6gWrHE5lS
+	 B/5EoiZ7gtHG4d6A5Dl75JAVqYmFlh8oeEvLWiPlaseIcAyRJNjiFPXdfSrLtZwu2whNk
+	 rzkwZRDQNK/tQjwrQ64k3EMtI+1HxgBUKAMfPQTDIShGJIFF6VAKxn46D2ofA57PnEQKB
+	 XNcpxXblafOGpqFKPLqPDvQoJi5JA2NGRfOS0E9Gh5xP83EL+oSNMpiZj8B057iRu011N
+	 6/KdAt9CpV6KTE0cBBxm7L+OiQxp4yKy1EvfJ1f3YG2oGfvrvu36U+uj89f3wHgPyqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212413;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mzuAeTp/JB2G7NyMILd52fZlFVeT63RDLcqWTMka3Bw=;
-	b=mvme8WFSPN+c7N0rUk8k/k3Kkbqa8GOGq5lOGsUDGd2jjzA94Z+BeoADeUyOzN+VLFhr
-	 Zh+m4GDee+9TItvEuhDm1XkB44/185RGNP7O7P+/sjKFaQtBM2iI3p/f5ASGqJkr9xf4c
-	 5gijNixepq1EL3oiEyABnQZw13+ZDIxay5/WM7QPLmRw4gKu+9sgn4wNQ3h6oKEVlzTTk
-	 6lLJBBr4Njas4p4XAhi0ZcDTMgr91UwGDTrbm/LZjf7hQaQ7zUil3TDQ+n3v0/SdYxaG4
-	 fTcUm+H9QZu0Ut/adzdB3a556K0LMRw6AlrdGAnk9iP+nMaTHiBdWNDYa8HH2HRJeqw==
+	bh=52jHojn1fbc7JcgUC6gpb4PbtmanR81LbVHbgARVvKE=;
+	b=20Iwc1WHcV2Bf6m4dwvXxy11X5H2OnIsjizmcRZHhFKjbOrYMP3DHoweN/MP4H8G1mX4
+	 HJ/6BzGHXCJxAobYt8dMSNK8p7FUt7cgGPct96ndhwWWAPaVXKkyXBIE713akqMmrJRG4
+	 Urkda/DWOifS+xODtbBhKUyYntSbvp3wM+Nml5vvQvpfTh5LvmnVIOXIqZgl1vaPXg8VS
+	 b6KJsqZjUQ3SMSp0lXrB9L4IWNP5GsVYfBGnE2mAexJm6Ja2wS7QBl3u0VTP8hvJ91efY
+	 TAtT0PIZRFV2n8Eb9dcIKTmfW/SOwG7OxqJlb6yGizzbPg0kbytVewzsAKKNKaJFiAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yw6+jWGL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iqmWzp52;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59439606A31E;
-	Wed, 28 Oct 2026 18:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3047B606A324;
+	Wed, 28 Oct 2026 18:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yw6+jWGL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DF31F01825;
-	Wed, 28 Oct 2026 18:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iqmWzp52
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812211F031E0;
+	Wed, 28 Oct 2026 18:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212413;
-	bh=mzuAeTp/JB2G7NyMILd52fZlFVeT63RDLcqWTMka3Bw=;
+	s=korg; t=1793212416;
+	bh=52jHojn1fbc7JcgUC6gpb4PbtmanR81LbVHbgARVvKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yw6+jWGLrt/kwDZS+E44YzTSSVyX2DhwQdk8rs84a0IHEA8nZZ5en5+sA1+7rfUdw
-	 mkxRnhpCZeGDJ9GfJJOre+RAExGN5yTHq4HGkcw+R0B+HSfQTlKMXNvYWMql7JqPlX
-	 ZwnvGuh9zh1BueXIenFCYh7fesHsOoRGNltIh5vs=
+	b=iqmWzp52XncMUd2P/8eKFv4eIbtMcCDVXridIW1AO27YpfBWpAfy53b5Z/9fLmeCU
+	 1T6j3KVvFLbq22XTbVp5xkw6m6r/LyzO5tStjX+OXdwRz68xXP2tY72LLf/gAH26xb
+	 0gcrROx4O2oKXzI9pwkSLkW1Ca8X0HPQer2Zjsa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaewook You <jaewook376@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
+	Florian Westphal <fw@strlen.de>,
+	Aaron Conole <aconole@redhat.om>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0144/1887] mm/hugetlb: preserve mremap address delta when skipping page tables
-Date: Wed, 28 Oct 2026 17:37:20 +0100
-Message-ID: <20261028170502.513619733@linuxfoundation.org>
+Subject: [PATCH 6.1 0145/1887] openvswitch: prepare for stolen verdict coming from conntrack and nat engine
+Date: Wed, 28 Oct 2026 17:37:21 +0100
+Message-ID: <20261028170502.536525682@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -72,75 +69,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaewook You <jaewook376@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 9bdad082d44bdcf93716973dcba6be77e8a06e7b ]
+[ Upstream commit c7f79f2620b7776586c626edf21eb6ed6ed3d1eb ]
 
-move_hugetlb_page_tables() optimizes mremap() by advancing to the last
-entry in the page table when the source page table does not exist, either
-initially or after unsharing a PMD table.  The common loop increment then
-steps to the first entry in the next page table.
+At this time, conntrack either returns NF_ACCEPT or NF_DROP.
+To improve debuging it would be nice to be able to replace NF_DROP
+verdict with NF_DROP_REASON() helper,
 
-However, the code advances both the source and destination addresses to
-the last entries in their respective page tables, which is wrong.  The
-destination address must be advanced only by the same amount as the source
-address.
+This helper releases the skb instantly (so drop_monitor can pinpoint
+precise location) and returns NF_STOLEN.
 
-If the source and destination offsets within their page tables differ, the
-destination address can be advanced too far, causing follow-up issues.
-Fix this by advancing the destination address by the source advance
-distance.
+Prepare call sites to deal with this before introducing such changes
+in conntrack and nat core.
 
-With a reproducer, we were able to trigger a kernel panic on x86-64.  With
-this fix in place, we can no longer reproduce the issue.
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Aaron Conole <aconole@redhat.om>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 
-Link: https://lore.kernel.org/20260914132352.472-1-jaewook376@gmail.com
-Fixes: e95a9851787b ("hugetlb: skip to end of PT page mapping when pte not present")
-Fixes: 4ddb4d91b82f ("hugetlb: do not update address in huge_pmd_unshare")
-Signed-off-by: Jaewook You <jaewook376@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Assisted-by: LLM
-[ Adjusted context to retain huge_pte_offset() instead of hugetlb_walk(). ]
+[Stable 6.1 adaptation: retain the local NAT implementation, which already
+updates the flow key only on NF_ACCEPT, and return before restoring skb
+headers on NF_STOLEN. Rename the existing OVS helper and pass its existing
+connection and ctinfo explicitly so the following helper-UAF fix can use
+the upstream call signature without importing the shared-helper refactor.
+Use a single-evaluation verdict_to_errno macro instead of adding a function.
+Remove the dead add_helper flag and align the helper-call condition with
+1a4151e6be57; the flag was set only for unconfirmed connections but tested
+only for confirmed ones. The helper relocation itself remains in the target.]
+
+Stable-dep-of: 1a4151e6be57 ("net: openvswitch: conntrack: fix helper UAF due to extensions realloc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/openvswitch/conntrack.c | 56 ++++++++++++++++++++++---------------
+ 1 file changed, 34 insertions(+), 22 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index bfcb936084e85..a44a6602659cf 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5278,18 +5278,21 @@ int move_hugetlb_page_tables(struct vm_area_struct *vma,
- 	hugetlb_vma_lock_write(vma);
- 	i_mmap_lock_write(mapping);
- 	for (; old_addr < old_end; old_addr += sz, new_addr += sz) {
-+		const unsigned long offset_to_last_entry =
-+			(old_addr | last_addr_mask) - old_addr;
+diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
+index a7bb9e360ed37..8c5f6602af44a 100644
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -435,16 +435,14 @@ static int ovs_ct_set_labels(struct nf_conn *ct, struct sw_flow_key *key,
+ }
+ 
+ /* 'skb' should already be pulled to nh_ofs. */
+-static int ovs_ct_helper(struct sk_buff *skb, u16 proto)
++static int nf_ct_helper(struct sk_buff *skb, struct nf_conn *ct,
++			enum ip_conntrack_info ctinfo, u16 proto)
+ {
+ 	const struct nf_conntrack_helper *helper;
+ 	const struct nf_conn_help *help;
+-	enum ip_conntrack_info ctinfo;
+ 	unsigned int protoff;
+-	struct nf_conn *ct;
+ 	int err;
+ 
+-	ct = nf_ct_get(skb, &ctinfo);
+ 	if (!ct || ctinfo == IP_CT_RELATED_REPLY)
+ 		return NF_ACCEPT;
+ 
+@@ -799,7 +797,7 @@ static void ovs_nat_update_key(struct sw_flow_key *key,
+ 
+ /* Modelled after nf_nat_ipv[46]_fn().
+  * range is only used for new, uninitialized NAT state.
+- * Returns either NF_ACCEPT or NF_DROP.
++ * Returns NF_ACCEPT, NF_DROP or NF_STOLEN.
+  */
+ static int ovs_ct_nat_execute(struct sk_buff *skb, struct nf_conn *ct,
+ 			      enum ip_conntrack_info ctinfo,
+@@ -874,6 +872,9 @@ static int ovs_ct_nat_execute(struct sk_buff *skb, struct nf_conn *ct,
+ 
+ 	err = nf_nat_packet(ct, ctinfo, hooknum, skb);
+ push:
++	if ((err & NF_VERDICT_MASK) == NF_STOLEN)
++		return err;
 +
- 		src_pte = huge_pte_offset(mm, old_addr, sz);
- 		if (!src_pte) {
--			old_addr |= last_addr_mask;
--			new_addr |= last_addr_mask;
-+			old_addr += offset_to_last_entry;
-+			new_addr += offset_to_last_entry;
- 			continue;
- 		}
- 		if (huge_pte_none(huge_ptep_get(src_pte)))
- 			continue;
+ 	skb_push_rcsum(skb, nh_off);
  
- 		if (huge_pmd_unshare(&tlb, vma, old_addr, src_pte)) {
--			old_addr |= last_addr_mask;
--			new_addr |= last_addr_mask;
-+			old_addr += offset_to_last_entry;
-+			new_addr += offset_to_last_entry;
- 			continue;
+ 	/* Update the flow key if NAT successful. */
+@@ -951,6 +952,14 @@ static int ovs_ct_nat(struct net *net, struct sw_flow_key *key,
+ }
+ #endif
+ 
++/* Translate netfilter verdicts without evaluating the argument twice. */
++#define verdict_to_errno(verdict) ({					\
++	unsigned int __verdict = (verdict) & NF_VERDICT_MASK;		\
++									\
++	__verdict == NF_ACCEPT ? 0 :					\
++	__verdict == NF_STOLEN ? -EINPROGRESS : -EINVAL;			\
++})
++
+ /* Pass 'skb' through conntrack in 'net', using zone configured in 'info', if
+  * not done already.  Update key with new CT state after passing the packet
+  * through conntrack.
+@@ -1001,7 +1010,7 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
+ 
+ 		err = nf_conntrack_in(skb, &state);
+ 		if (err != NF_ACCEPT)
+-			return -ENOENT;
++			return verdict_to_errno(err);
+ 
+ 		/* Clear CT state NAT flags to mark that we have not yet done
+ 		 * NAT after the nf_conntrack_in() call.  We can actually clear
+@@ -1015,8 +1024,6 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
+ 
+ 	ct = nf_ct_get(skb, &ctinfo);
+ 	if (ct) {
+-		bool add_helper = false;
+-
+ 		/* Packets starting a new connection must be NATted before the
+ 		 * helper, so that the helper knows about the NAT.  We enforce
+ 		 * this by delaying both NAT and helper calls for unconfirmed
+@@ -1028,9 +1035,12 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
+ 		 * the key->ct_state.
+ 		 */
+ 		if (info->nat && !(key->ct_state & OVS_CS_F_NAT_MASK) &&
+-		    (nf_ct_is_confirmed(ct) || info->commit) &&
+-		    ovs_ct_nat(net, key, info, skb, ct, ctinfo) != NF_ACCEPT) {
+-			return -EINVAL;
++		    (nf_ct_is_confirmed(ct) || info->commit)) {
++			int err = ovs_ct_nat(net, key, info, skb, ct, ctinfo);
++
++			err = verdict_to_errno(err);
++			if (err)
++				return err;
  		}
  
+ 		/* Userspace may decide to perform a ct lookup without a helper
+@@ -1045,7 +1055,6 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
+ 							    GFP_ATOMIC);
+ 			if (err)
+ 				return err;
+-			add_helper = true;
+ 
+ 			/* helper installed, add seqadj if NAT is required */
+ 			if (info->nat && !nfct_seqadj(ct)) {
+@@ -1055,15 +1064,15 @@ static int __ovs_ct_lookup(struct net *net, struct sw_flow_key *key,
+ 		}
+ 
+ 		/* Call the helper only if:
+-		 * - nf_conntrack_in() was executed above ("!cached") or a
+-		 *   helper was just attached ("add_helper") for a confirmed
+-		 *   connection, or
++		 * - nf_conntrack_in() was executed above ("!cached"), or
+ 		 * - When committing an unconfirmed connection.
+ 		 */
+-		if ((nf_ct_is_confirmed(ct) ? !cached || add_helper :
+-					      info->commit) &&
+-		    ovs_ct_helper(skb, info->family) != NF_ACCEPT) {
+-			return -EINVAL;
++		if ((nf_ct_is_confirmed(ct) ? !cached : info->commit)) {
++			int err = nf_ct_helper(skb, ct, ctinfo, info->family);
++
++			err = verdict_to_errno(err);
++			if (err)
++				return err;
+ 		}
+ 
+ 		if (nf_ct_protonum(ct) == IPPROTO_TCP &&
+@@ -1291,10 +1300,9 @@ static int ovs_ct_commit(struct net *net, struct sw_flow_key *key,
+ 	/* This will take care of sending queued events even if the connection
+ 	 * is already confirmed.
+ 	 */
+-	if (nf_conntrack_confirm(skb) != NF_ACCEPT)
+-		return -EINVAL;
++	err = nf_conntrack_confirm(skb);
+ 
+-	return 0;
++	return verdict_to_errno(err);
+ }
+ 
+ /* Trim the skb to the length specified by the IP/IPv6 header,
+@@ -1357,6 +1365,10 @@ int ovs_ct_execute(struct net *net, struct sk_buff *skb,
+ 	else
+ 		err = ovs_ct_lookup(net, key, info, skb);
+ 
++	/* conntrack core returned NF_STOLEN */
++	if (err == -EINPROGRESS)
++		return err;
++
+ 	skb_push_rcsum(skb, nh_ofs);
+ 	if (err)
+ 		kfree_skb(skb);
 -- 
 2.53.0
 
