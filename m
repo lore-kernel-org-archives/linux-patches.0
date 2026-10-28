@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207730;
-	b=5U/oqKbuBJik50ujaFP9nZ8EhI5/RHceHiOLk/isVQMuKmKkspEgCEcqbsqPU4aPL4dB
-	 vZXe0W9N41dHQw5G9nM6Sw9T1vHXEu/VIQfzwIKapGi4V2XngjvkPYaygkxzJHGPkO2fc
-	 7pEb7zruvTK7EYwiDysNusUU5OtXKAOffzm/YxIZmXRqnVImhwy381O+1SdRVOKiuEGXh
-	 R4UMCl6lx4JRjf7wwjqgyRXck7mlLYHom0HOKAAwRs680fKJPBAoLr0tCl4f37VwLwtUq
-	 Otc2qjVUUpiqpmwoU8KmGYkbAEVUjC00E7RAqIEnxuNi7WJo4cpY9itr4PajnNqWGLw==
+	t=1793207733;
+	b=a7/s3Ih44d9u+gWYg9NIAtokPndSLvY4LqLB7dDs/vyzGqbHvbjPPsLxcd7CjoLuIFZV
+	 FYP0GLjGT9zgV4prw9yDM0yCE7CY0iGXLaP1m2wL4UQl1T3diKnqm4+jOJ+eVqdEuM1Rg
+	 dbHLep15tdMbnxRAwYGbyRT0HhbZe9kd/C8f37PR3I899f067vYQyoDLhOFuTJbFwrrh8
+	 Q5fyH22ltMI3TX6aKR803wX1pWpfPyX+0qLxVPoZpPYUntoHduOYYYcnBrIyU0tEsJV2D
+	 vGDdj3hNpx3bEuaZgNG38wAzdAmKjxiZKRDVBX3iituTHhl8Om9Ftz0pC6OPs8F16fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NSD65Yew0i3iZpoG68NslzQAjrAYYwos5h4TJmfCFRw=;
-	b=SMHdsN7bL5oi1JkSJ+cwthrpyS8kcC867P4wLkNEzf1IvjdHzsssUhXjBD00FALjP7uy
-	 Mx4NWeI045E8/aIMswAhrKjNMG/erzT3HkPG5TO8JlIdrjTiyVBVfD2qVR5q/PdenkcC9
-	 WIdd8ZrnkGOP9tYVblECKpXDUyesrAE2gIHRBKANk4VzrSa37Eft1T2DSFXHGkzxF19+A
-	 bzAnQCeDTe+3tCmR5vKScoc94wTZHkpeh/xKYS5aN66fxGEm74kDJYr68UGoyg2jsIeYy
-	 FM8NE85QvA2xzOUfZSXMc0/YOqM7BXy+dJUtcVUUGpXBMuMcpbh68HhFqfZZ9vgK+0A==
+	bh=U4qRTtxT3EtV+50UMpzaFDBy3bTfhHVxxqrpRyXN1jE=;
+	b=cfIoU5htsihS3emwLvG02vy9y/s09x1/Xav05ez1188Xd7mCOwuS5c4dECiqBnnr7cKx
+	 fqf3BadfppzlqMng1nRvmhPxjZE0Qr/tPlmlVd3ks3UkTMZYjYPX6cO4Oo6bqqtRRbpzf
+	 Chv9Tm7HGvFKjwH2/PhWjxP66zRHvYIHBcaWeHa5hAijzVDUJfRYFxRGZBSyWsps46ZNs
+	 D59uXzMG5wZCM9peduiumYPljqtVBX/TnfmUES8Nl0sYqJXCV8p4cPdqizFRPegYvnXB/
+	 gBQqHFqZfWKnGlXESDhFpWAt00+ZQ9dhkzrorX3T2mRZy5rppOi/H4vI25T9w5RAU1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Y/3RXb2J";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jxZN7C05;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C09606A325;
-	Wed, 28 Oct 2026 17:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43723606A324;
+	Wed, 28 Oct 2026 17:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y/3RXb2J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4371F01828;
-	Wed, 28 Oct 2026 17:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jxZN7C05
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535831F01828;
+	Wed, 28 Oct 2026 17:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207730;
-	bh=NSD65Yew0i3iZpoG68NslzQAjrAYYwos5h4TJmfCFRw=;
+	s=korg; t=1793207732;
+	bh=U4qRTtxT3EtV+50UMpzaFDBy3bTfhHVxxqrpRyXN1jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/3RXb2JCuTQdUGmInUk0jcsu3PhWBLPTKyHCUFIKBZRcFI/gAhTNn4ZCPHJS2jlO
-	 eC/L9krNbXB69eMGq8pOKY5WcW3GdXKF9YpIa93a5D4IX4pKAgFLrZcrqkrnP8o7Lx
-	 n788TW0NBUr0uvZGzdIJrfeyrrdf3hBYvaSLL87k=
+	b=jxZN7C05qnp3mSNwfQX4xZo/96fCyrOfm+oOWmUxaNpaX5/ccCWgpM+pS/vKII/vu
+	 B4nksfuYdoar4SpKYm4BGmVhcyKSCLX9+fh6njDc71gZfjrUmstgq+gvwQqVrFZl04
+	 rWojI2y4nt3q+tBNUVcc1yr/hiNjEmTuJ6oBEfHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"kernelci.org bot" <bot@kernelci.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/247] Revert "s390/mm: Add missing secure storage access fixups for donated memory"
-Date: Wed, 28 Oct 2026 17:58:41 +0100
-Message-ID: <20261028165950.195224804@linuxfoundation.org>
+	Michal Kubecek <mkubecek@suse.cz>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	stable+noautosel@kernel.org
+Subject: [PATCH 6.12 119/247] netfilter: nft_byteorder: remove multi-register support
+Date: Wed, 28 Oct 2026 17:58:42 +0100
+Message-ID: <20261028165950.217793167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,39 +70,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 74ccc099f1baa9236b8fb600406457a0870c83a9.
+From: Florian Westphal <fw@strlen.de>
 
-Reported-by: kernelci.org bot <bot@kernelci.org>
-Link: https://lore.kernel.org/all/179258034449.241924.15241097267562754477@kernelci.org/
+[ Upstream commit bb061d3de41707415269be75ebf700efb03ec212 ]
+
+64bit byteorder conversion is broken when several registers need to be
+converted because the source register array advances in steps for 4 bytes
+instead of 8:
+
+  for (i = ...
+      src64 = nft_reg_load64(&src[i]);
+                             ~~~~~ u32 *src
+      nft_reg_store64(&dst64[i],
+
+Remove the multi-register support, it has other issues as well:
+
+Pablo points out that commit
+caf3ef7468f7 ("netfilter: nf_tables: prevent OOB access in nft_byteorder_eval")
+alters semantics: before the loop operated on registers, i.e.
+ for ( ... )
+   dst32[i] = htons((u16)src32[i])
+
+ .. but after the patch it will operate on bytes, which makes this
+ useless to convert e.g. concatenations, which store each compound
+ in its own register.
+
+Multi-convert of u32 has one theoretical application:
+
+ct mark . meta mark . tcp dport @intervalset
+
+Because ct mark and meta mark are host byte order, use with
+intervals has to convert the byteorder for ct/meta mark value
+to network byte order (bigendian).
+
+nftables emits this:
+ [ meta load mark => reg 1 ]
+ [ byteorder reg 1 = hton(reg 1, 4, 4) ]
+ [ ct load mark => reg 9 ]
+ [ byteorder reg 9 = hton(reg 9, 4, 4) ]
+ ...
+
+I.e. two separate calls.  Theoretically it could be changed to do:
+ [ meta load mark => reg 1 ]
+ [ ct load mark => reg 9 ]
+ [ byteorder reg 1 = htonl(reg 1, 4, 8) ]
+ ...
+
+But then all it would take to change the set to
+meta mark . tcp dport . ct mark
+
+... and we'd be back to two "byteorder" calls. IOW, support to
+convert a range of registers is both dysfunctional and dubious.
+
+Simplify this: remove the feature.
+
+Pablo Neira Ayuso points out that nftables before 1.1.0 can generate
+incorrect byteorder conversions, see 9fe58952c45a,
+"evaluate: skip byteorder conversion for selector smaller than 2 bytes"
+in nftables.git).  Affected rulesets fail to load with this change and
+old userspace due to 'len != size' check.
+
+Fixes: c301f0981fdd ("netfilter: nf_tables: fix pointer math issue in nft_byteorder_eval()")
+Cc: <stable+noautosel@kernel.org> # may break rule load with old nftables versions
+Reported-by: Michal Kubecek <mkubecek@suse.cz>
+Link: https://lore.kernel.org/netfilter-devel/20240206104336.ctigqpkunom2ufmn@lion.mk-sys.cz/
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/fault.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ net/netfilter/nft_byteorder.c | 51 ++++++++++++++---------------------
+ 1 file changed, 20 insertions(+), 31 deletions(-)
 
-diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
-index 2d03af60ed88f..f907e916aa20d 100644
---- a/arch/s390/mm/fault.c
-+++ b/arch/s390/mm/fault.c
-@@ -443,17 +443,10 @@ void do_secure_storage_access(struct pt_regs *regs)
- 		folio = phys_to_folio(addr);
- 		if (unlikely(!folio_try_get(folio)))
- 			return;
--		rc = uv_convert_from_secure(folio_to_phys(folio));
--		if (!rc)
--			clear_bit(PG_arch_1, &folio->flags.f);
-+		rc = arch_make_folio_accessible(folio);
- 		folio_put(folio);
--		/*
--		 * There are some valid fixup types for kernel
--		 * accesses to donated secure memory. zeropad is one
--		 * of them.
--		 */
- 		if (rc)
--			return handle_fault_error_nolock(regs, 0);
-+			BUG();
- 	} else {
- 		if (faulthandler_disabled())
- 			return handle_fault_error_nolock(regs, 0);
+diff --git a/net/netfilter/nft_byteorder.c b/net/netfilter/nft_byteorder.c
+index 74548b4c114b9..391aade36ef3c 100644
+--- a/net/netfilter/nft_byteorder.c
++++ b/net/netfilter/nft_byteorder.c
+@@ -19,7 +19,6 @@ struct nft_byteorder {
+ 	u8			sreg;
+ 	u8			dreg;
+ 	enum nft_byteorder_ops	op:8;
+-	u8			len;
+ 	u8			size;
+ };
+ 
+@@ -28,13 +27,8 @@ void nft_byteorder_eval(const struct nft_expr *expr,
+ 			const struct nft_pktinfo *pkt)
+ {
+ 	const struct nft_byteorder *priv = nft_expr_priv(expr);
+-	u32 *src = &regs->data[priv->sreg];
++	const u32 *src = &regs->data[priv->sreg];
+ 	u32 *dst = &regs->data[priv->dreg];
+-	u16 *s16, *d16;
+-	unsigned int i;
+-
+-	s16 = (void *)src;
+-	d16 = (void *)dst;
+ 
+ 	switch (priv->size) {
+ 	case 8: {
+@@ -43,18 +37,14 @@ void nft_byteorder_eval(const struct nft_expr *expr,
+ 
+ 		switch (priv->op) {
+ 		case NFT_BYTEORDER_NTOH:
+-			for (i = 0; i < priv->len / 8; i++) {
+-				src64 = nft_reg_load64(&src[i]);
+-				nft_reg_store64(&dst64[i],
+-						be64_to_cpu((__force __be64)src64));
+-			}
++			src64 = nft_reg_load64(src);
++
++			nft_reg_store64(dst64, be64_to_cpu((__force __be64)src64));
+ 			break;
+ 		case NFT_BYTEORDER_HTON:
+-			for (i = 0; i < priv->len / 8; i++) {
+-				src64 = (__force __u64)
+-					cpu_to_be64(nft_reg_load64(&src[i]));
+-				nft_reg_store64(&dst64[i], src64);
+-			}
++			src64 = (__force __u64)cpu_to_be64(nft_reg_load64(src));
++
++			nft_reg_store64(dst64, src64);
+ 			break;
+ 		}
+ 		break;
+@@ -62,24 +52,20 @@ void nft_byteorder_eval(const struct nft_expr *expr,
+ 	case 4:
+ 		switch (priv->op) {
+ 		case NFT_BYTEORDER_NTOH:
+-			for (i = 0; i < priv->len / 4; i++)
+-				dst[i] = ntohl((__force __be32)src[i]);
++			*dst = ntohl((__force __be32)*src);
+ 			break;
+ 		case NFT_BYTEORDER_HTON:
+-			for (i = 0; i < priv->len / 4; i++)
+-				dst[i] = (__force __u32)htonl(src[i]);
++			*dst = (__force __u32)htonl(*src);
+ 			break;
+ 		}
+ 		break;
+ 	case 2:
+ 		switch (priv->op) {
+ 		case NFT_BYTEORDER_NTOH:
+-			for (i = 0; i < priv->len / 2; i++)
+-				d16[i] = ntohs((__force __be16)s16[i]);
++			nft_reg_store16(dst, ntohs(nft_reg_load_be16(src)));
+ 			break;
+ 		case NFT_BYTEORDER_HTON:
+-			for (i = 0; i < priv->len / 2; i++)
+-				d16[i] = (__force __u16)htons(s16[i]);
++			nft_reg_store_be16(dst, htons(nft_reg_load16(src)));
+ 			break;
+ 		}
+ 		break;
+@@ -137,20 +123,22 @@ static int nft_byteorder_init(const struct nft_ctx *ctx,
+ 	if (err < 0)
+ 		return err;
+ 
+-	priv->len = len;
++	/* no longer support multi-reg conversions */
++	if (len != size)
++		return -EOPNOTSUPP;
+ 
+ 	err = nft_parse_register_load(ctx, tb[NFTA_BYTEORDER_SREG], &priv->sreg,
+-				      priv->len);
++				      len);
+ 	if (err < 0)
+ 		return err;
+ 
+ 	err = nft_parse_register_store(ctx, tb[NFTA_BYTEORDER_DREG],
+ 				       &priv->dreg, NULL, NFT_DATA_VALUE,
+-				       priv->len);
++				       len);
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (nft_reg_overlap(priv->sreg, priv->dreg, priv->len))
++	if (nft_reg_overlap(priv->sreg, priv->dreg, len))
+ 		return -EINVAL;
+ 
+ 	return 0;
+@@ -167,10 +155,11 @@ static int nft_byteorder_dump(struct sk_buff *skb,
+ 		goto nla_put_failure;
+ 	if (nla_put_be32(skb, NFTA_BYTEORDER_OP, htonl(priv->op)))
+ 		goto nla_put_failure;
+-	if (nla_put_be32(skb, NFTA_BYTEORDER_LEN, htonl(priv->len)))
+-		goto nla_put_failure;
+ 	if (nla_put_be32(skb, NFTA_BYTEORDER_SIZE, htonl(priv->size)))
+ 		goto nla_put_failure;
++	/* compatibility for old userspace which permitted size != len */
++	if (nla_put_be32(skb, NFTA_BYTEORDER_LEN, htonl(priv->size)))
++		goto nla_put_failure;
+ 	return 0;
+ 
+ nla_put_failure:
 -- 
 2.53.0
 
