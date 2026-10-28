@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207903;
-	b=42DE1LWqMAozSzods9lp7UrO3cR9sjmGgGEWmKsfBbuLNndPm2soUUbK7H4JY8bSEFP4
-	 02YSQdexcoWj94jtRZx9GD5CaXuOtBWzggtMJuYq0Qn1NnS1ksMJHS1sScjKvuH80Mwaa
-	 vrsKqp3sP2nYmxEdrhgHltkTdaio4dh38WHXZNGPdqLhfBemOHCOIxSkwChYQ9mT4qYxa
-	 46/wYK1NPZEIgGlG7NXs572dov4dCM9omJbv1YhqslxkuutpzopWANWPolFB0XitIJvyv
-	 9OxHhZeWbp+w2Cw4aeiREkERwNT/MiW8lajmy2GDYurEvWGj1rjT5GYOCF+LehHy8Nw==
+	t=1793207906;
+	b=GYnSMsQC7KBDGxdz87LbTnuYg01xGMwqTRiD4EE3FklbDq0ToZvazbYYYB5+KdVCfWvg
+	 h2XQVWxmVHzZNqNJurnY5SS4yQIFQUAXNuKEtLQM3KMjaYfFo9VDbixewJkvK2rfajrB/
+	 +veU03biRZ8CftcnuscVgHYDqECzrPwoC5MlWtVF1xhZ1jtbh3tsg4JcuY/bgPu0UGZhL
+	 sKGDfFHMDbV4g3GpWr5Sk9HNGgjPqdWnUYwQd8bMKWF/Cc6YI2hve7bUl69Zmn0teDaoq
+	 gX5E261tVyAagSaHeAbT0Oia9mmujUF3ebD1i6yMcD4NkdyABfgI5lvL0JEGPVE+mdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tCWNXo6llDi4s2Jd/UexJKI+sCdz6s7NrLZatjwovss=;
-	b=0UhJIWfHUKrKaw9wYGnpnejyuDbuGOCinwOCQ2sqk52EswIMqrcluQvvWqR4wV0BGqG6
-	 AUkQTSFzmQtEV6izEeMlR9zhPGGfAprOFiR/xtLb3rRk16ZM+p0Pjkdl+z2nGRTg2QIFZ
-	 +JQ9dT7TC26+ZK8UatxN+v+K6mo2R4Ux1g4yB/++7AxiuVWLdKFKRRMdjxMom74OEk0Vc
-	 CKpTYwgiYF1xUTsUoTG44SCwh4uJtUMaq6SjWzG4PnOtI40g1b96xbFdBRAk+62etf13e
-	 zWEfnSQA8rz2Q8jTAn8mOfdY6EAAky9ceM6FopZxJ9JvMBEGKuWtIUT3bNDbVKZ3QaQ==
+	bh=hZqyXtnZTz88a116rKtedxPNep676er3ahEZoQAK6DA=;
+	b=Sf/OlBXHIC/95Qm75scXRF5mKo23gigNtvF8SY0i7UvxX+geAeFiVkHVl2txOKS0L0NU
+	 5LByYKX/dLY4/BSge8lTR+D6xeyMm5gBVuTR6bI3mD/Meg+Xp5Qpl3PjubOIj2TF3ajUO
+	 pE+PYK/8KNSLVRm7lHrMkKIysg+KWsAPXlKdoJc8RtpIlnIODmACj22Zh5YqA59Qt07sn
+	 7o8xAwCiQAcw2pvVqQhsZEtsr96ftrPXF6kNFXGb5Xf8xeCLuVRFDbnDbWstcE5L4WU/N
+	 ryTT1OzxDheiu6esumSYPq3CAuQuodkU+S13XXJGGuZ8WmTO61IMxBHmajSnoLaEg6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaBg9LG7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="EfFfnH/O";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB6E606A31D;
-	Wed, 28 Oct 2026 17:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C12606A31A;
+	Wed, 28 Oct 2026 17:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zaBg9LG7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97131F01825;
-	Wed, 28 Oct 2026 17:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfFfnH/O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45171F01825;
+	Wed, 28 Oct 2026 17:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207903;
-	bh=tCWNXo6llDi4s2Jd/UexJKI+sCdz6s7NrLZatjwovss=;
+	s=korg; t=1793207906;
+	bh=hZqyXtnZTz88a116rKtedxPNep676er3ahEZoQAK6DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zaBg9LG7mQvm7xgiDQSuFr8PLdFUNzV2LxI4ffdNTGblMbT/Pv1TNjx4JXnFig8Mz
-	 wDQHbLX/rZ7N93hOXEBFk4xM+Wv+ccgj4eMMnQvgHb31z0Zwur3YGL75We9GLE4wT3
-	 ryKO8tqaBTtRkzqlsE1c2b6lI3+Fi8uZ76vnzjCY=
+	b=EfFfnH/ON/itfXPWkVZpe0qzUJTih0yoplFcy0Vay9L9y6iYSRnspt/iIt495Ry4H
+	 mcw2y4KUpRVexSxLSaAynbmqxNdqFQKuOq0ZnR1SAiF5wB5Dp6IX/KfpdT4IO2wBR5
+	 zivoDudOZd0nx/qqsvjmAY1Kr5TNdeysXQ0DtW2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 127/247] net/sched: cls_flower: validate mask pointer after nla_next()
-Date: Wed, 28 Oct 2026 17:58:50 +0100
-Message-ID: <20261028165950.412079828@linuxfoundation.org>
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 174/247] ax25: read the connections ax25_dev only once when walking ax25_list
+Date: Wed, 28 Oct 2026 17:59:37 +0100
+Message-ID: <20261028165951.541723205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,61 +67,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit fee10655709c5c597e8e9f722f3035d9ea31ff3a upstream.
+ax25_kill_by_device() detaches a connection from a device that goes
+down by setting s->ax25_dev to NULL. It does so after it has dropped
+ax25_list_lock, while the connection is still on ax25_list.
 
-fl_set_enc_opt() iterates the key's nested tunnel-option attributes
-with nla_for_each_attr() while advancing a single mask pointer via
-nla_next() at the bottom of each loop, so the mask cursor is driven
-by the number of key attributes rather than by the mask's own
-attributes.  The nla_ok() added by commit c96adff956191 ("cls_flower:
-call nla_ok() before nla_next()") only validates the mask pointer
-that was just consumed; the pointer produced by nla_next() is used by
-the next iteration (fl_set_geneve_opt() and siblings) without any
-validation.
+__ax25_find_cb() and ax25_find_listener() walk that list and test
+s->ax25_dev against NULL before they dereference it, but they load the
+pointer a second time for the dereference. ax25_send_to_raw()
+dereferences it without any test. If ax25_kill_by_device() clears the
+pointer in between, the walker dereferences NULL:
 
-The mask's nested attributes are validated with NL_VALIDATE_LIBERAL,
-which merely warns on trailing bytes that do not form a complete
-attribute.  A mask carrying one valid attribute plus 1-3 residue
-bytes (or a non-aligned attribute length making msk_depth negative)
-therefore reaches the next iteration with msk_depth != 0, so neither
-the !msk_depth check in fl_set_enc_opt() nor the !depth check in the
-per-type helpers fires.  nla_type() then reads past the mask payload
-and nla_parse_nested_deprecated() iterates with an nla_len taken
-from those bytes, reading well beyond the mask attribute (KASAN:
-slab-out-of-bounds read in __nla_validate_parse from fl_change()).
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+  RIP: 0010:ax25_find_cb+0x121/0x330 [ax25]
+   ax25_send_frame+0xdc/0x980 [ax25]
+   rose_send_frame+0xce/0x270 [rose]
+   rose_transmit_restart_request+0x1b3/0x260 [rose]
+   rose_transmit_link+0x31d/0x560 [rose]
+   rose_write_internal+0x3ab/0x15b0 [rose]
+   rose_release+0x2b2/0x4b0 [rose]
 
-Validate the advanced mask pointer as well: when the mask is not
-legitimately exhausted (msk_depth != 0) and the new pointer fails
-nla_ok(), reject the filter with -EINVAL.  An exactly exhausted mask
-still skips the check, preserving exact-match behaviour for the
-remaining key attributes.
+Load the pointer once in the three walkers and use that value, and add
+the missing NULL test to ax25_send_to_raw(). The ax25_dev itself cannot
+go away under the walker: ax25_kill_by_device() has to take
+ax25_list_lock again, in ax25_cb_del(), before the device teardown gets
+as far as freeing it.
 
-Fixes: c96adff95619 ("cls_flower: call nla_ok() before nla_next()")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Link: https://patch.msgid.link/20260826025123.62758-1-ljp1205831794@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The oops above was obtained on 6.12.94 with KASAN, after 382 seconds of
+the syzbot C reproducer of the ax25_find_cb() use-after-free report,
+with the interface brought up again in a loop, while testing an earlier
+version of the next patch. With this series the same test runs for 600
+seconds without an oops.
+
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit 3696f3cf8690e335a2cc7e8103f018bc205de738)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/ax25/af_ax25.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -1707,6 +1707,11 @@ static int fl_set_enc_opt(struct nlattr
- 			return -EINVAL;
- 		}
- 		nla_opt_msk = nla_next(nla_opt_msk, &msk_depth);
-+
-+		if (msk_depth && !nla_ok(nla_opt_msk, msk_depth)) {
-+			NL_SET_ERR_MSG(extack, "A mask attribute is invalid");
-+			return -EINVAL;
-+		}
- 	}
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 9f7bda3b511e3..0a5cd835d289d 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -91,7 +91,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 			if (!sk) {
+ 				spin_unlock_bh(&ax25_list_lock);
+ 				ax25_disconnect(s, ENETUNREACH);
+-				s->ax25_dev = NULL;
++				WRITE_ONCE(s->ax25_dev, NULL);
+ 				ax25_cb_del(s);
+ 				spin_lock_bh(&ax25_list_lock);
+ 				goto again;
+@@ -100,7 +100,7 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 			spin_unlock_bh(&ax25_list_lock);
+ 			lock_sock(sk);
+ 			ax25_disconnect(s, ENETUNREACH);
+-			s->ax25_dev = NULL;
++			WRITE_ONCE(s->ax25_dev, NULL);
+ 			if (sk->sk_socket) {
+ 				netdev_put(ax25_dev->dev,
+ 					   &s->dev_tracker);
+@@ -172,6 +172,7 @@ void ax25_cb_add(ax25_cb *ax25)
+ struct sock *ax25_find_listener(ax25_address *addr, int digi,
+ 	struct net_device *dev, int type)
+ {
++	ax25_dev *ax25_dev;
+ 	ax25_cb *s;
  
- 	return 0;
+ 	spin_lock(&ax25_list_lock);
+@@ -181,7 +182,8 @@ struct sock *ax25_find_listener(ax25_address *addr, int digi,
+ 		if (s->sk && !ax25cmp(&s->source_addr, addr) &&
+ 		    s->sk->sk_type == type && s->sk->sk_state == TCP_LISTEN) {
+ 			/* If device is null we match any device */
+-			if (s->ax25_dev == NULL || s->ax25_dev->dev == dev) {
++			ax25_dev = READ_ONCE(s->ax25_dev);
++			if (ax25_dev == NULL || ax25_dev->dev == dev) {
+ 				sock_hold(s->sk);
+ 				spin_unlock(&ax25_list_lock);
+ 				return s->sk;
+@@ -226,14 +228,16 @@ static ax25_cb *__ax25_find_cb(const ax25_address *src_addr,
+ 			       ax25_address *dest_addr, ax25_digi *digi,
+ 			       struct net_device *dev)
+ {
++	ax25_dev *ax25_dev;
+ 	ax25_cb *s;
+ 
+ 	ax25_for_each(s, &ax25_list) {
+ 		if (s->sk && s->sk->sk_type != SOCK_SEQPACKET)
+ 			continue;
+-		if (s->ax25_dev == NULL)
++		ax25_dev = READ_ONCE(s->ax25_dev);
++		if (ax25_dev == NULL)
+ 			continue;
+-		if (ax25cmp(&s->source_addr, src_addr) == 0 && ax25cmp(&s->dest_addr, dest_addr) == 0 && s->ax25_dev->dev == dev) {
++		if (ax25cmp(&s->source_addr, src_addr) == 0 && ax25cmp(&s->dest_addr, dest_addr) == 0 && ax25_dev->dev == dev) {
+ 			if (digi != NULL && digi->ndigi != 0) {
+ 				if (s->digipeat == NULL)
+ 					continue;
+@@ -293,15 +297,17 @@ ax25_cb *ax25_cb_add_unique(ax25_cb *ax25)
+ 
+ void ax25_send_to_raw(ax25_address *addr, struct sk_buff *skb, int proto)
+ {
++	ax25_dev *ax25_dev;
+ 	ax25_cb *s;
+ 	struct sk_buff *copy;
+ 
+ 	spin_lock(&ax25_list_lock);
+ 	ax25_for_each(s, &ax25_list) {
++		ax25_dev = READ_ONCE(s->ax25_dev);
+ 		if (s->sk != NULL && ax25cmp(&s->source_addr, addr) == 0 &&
+ 		    s->sk->sk_type == SOCK_RAW &&
+ 		    s->sk->sk_protocol == proto &&
+-		    s->ax25_dev->dev == skb->dev &&
++		    ax25_dev && ax25_dev->dev == skb->dev &&
+ 		    atomic_read(&s->sk->sk_rmem_alloc) <= s->sk->sk_rcvbuf) {
+ 			if ((copy = skb_clone(skb, GFP_ATOMIC)) == NULL)
+ 				continue;
+-- 
+2.53.0
+
 
 
