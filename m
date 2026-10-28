@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214065;
-	b=QYhKP6Tsmz+XXZPgMJOmU3TlK3GBP8iI5fcQGyJkmdEQRiL5tiu0SQjqT8OgVZeo+AMI
-	 HZH+T6nvJu6lEf+h7ysX7yq/OrLyz5FjDWMJ+iuMWxLt9JIykfbsX5TujS22wyhHxnpQv
-	 Pyy00hihuVBDb2uvRRVNZu9R/wpiSn6t2VLnJkeIyU0u4cMSC8laTKolWn62i6S/SkKA/
-	 vBnZppI9Lvf1BHiZGFfopm51bRB31i1rKeAZYg2tQw+em3wI6z7VMjiNRFJ9jAkJG4kyx
-	 2LvOFpo1gKYCd8NjxEzlLd9qksvYEJ35fogZ2UQ8Clts8oZY42IZX5zYd8KqJ2XzomQ==
+	t=1793214068;
+	b=wwMpb1rDNY4+EourcvMgV405naG4tVovJyZE4EB0jQtIr4cnNdRoUuUylf57aH5JrcGi
+	 9Ko0F+mgcRVOtnY1Fu48HGJPP2KRT/NuKz4zScfnAFdekQUC7MP/T0Y4KnZAAJOgH3C1q
+	 PFqJ/2KlIuq0zus+PDK2Emb/CxYgSNLzJ3u1LlWa2RVVG8gwGYZktCH3Y211esC3rESXN
+	 KTEEoH/BE9eLv5Oos38vqB7MOhjDiYbGO6UzAnrIPoSObsLWLu6AyTa51UCeexsxxa+FH
+	 tfN/P2ALUShydh6tEKccOgcDMS8iRqHsO5t9+AMwWbQPOyBEQdTdr39u0e5L2pc8TJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=LN0Wt/o2XCeBVeIjgyT3dF+ZT64q6SGWHeHyChH9hA4=;
-	b=iPLczkGxJaVGtl2cv46fqgd4LyekQs2KEZsr1bt6Zwe3G5xdzJuY9X+L9FsDAYJmJ/gV
-	 O2s/zNVhKKG1yDFkIr2RQM9Ns9eOM8cgLTOnL9SM7yfQxft/HSbDbXpkAEInTBzOP0pRT
-	 goOLdLXqZC6DY99PGVrnePt0ssDGhNBGAF/jCp7NrRDok4agot/+QB+W/nheMG2PnNecA
-	 7wrZNZlMi9E7gdUTWQHkcPF/DsrvGos9asDaOAy5o7rkOlhe/s2q5vRY3ztPUpNitn+NZ
-	 gtesv4l+AojsrGuHwuhhRf4EMi/ggWV2dyHaPjYq7csNhnnhaun5O+wCJbmcozTdItA==
+	bh=fkX/poUEUOmMH9AGvrXa1+O4+934p9lp90sQug8vLok=;
+	b=NHO4pZAjz62CJrPjqJP24XmN86OLckjKaE4oXHVuhHLIzZqXit1z7t4FQw+XLpbr9sKy
+	 mWW98/Xq/+McBBPkM71PSmGbBpWOMKk0xsR+Bf43bciUmGzJkNCqj2aFBVn6mLIL6gPE9
+	 HKMvNQ9EWaYcwk+KDg77w9iWman0SWBbBZgd5BVNgqyWoSwi+xL7aNifGkqrX0IhLcVSW
+	 Ljhm3QU72gTPnX3a65z4Kzr9fags1b4yH1b0sfiZT9kEl/GLuK4j5CGM2H9mJspl/Xb41
+	 NqzeH1gTRTuc9Zg7ip9Snzv9oY8iOF9t2oWtyAxD8Q+vbBqhuB6RgGF8LqaDaGn4gZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWqO1jXo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1qB/2262";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBC3606A31E;
-	Wed, 28 Oct 2026 19:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417D4606A334;
+	Wed, 28 Oct 2026 19:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWqO1jXo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF14E1F01825;
-	Wed, 28 Oct 2026 19:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1qB/2262
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FBD1F01825;
+	Wed, 28 Oct 2026 19:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214065;
-	bh=LN0Wt/o2XCeBVeIjgyT3dF+ZT64q6SGWHeHyChH9hA4=;
+	s=korg; t=1793214068;
+	bh=fkX/poUEUOmMH9AGvrXa1+O4+934p9lp90sQug8vLok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tWqO1jXo9htEj/b6e1ocXHVI/K9fG7Qo74iITNw+wu8egqxg87Pbe+JV4VgZhz7jM
-	 sExDmjefB7cX3cvZxYJtFwAXU0ZzcphklSBT0CvpVzb0jm6O0cKuQngZ6m8WHhn6iB
-	 Di64VnowS2mkq8M55dYCRnjQCVINjcSbsg8xXqMQ=
+	b=1qB/2262KF9wx5vVRhUbRiufSLnd4PfPftxmQwyniGhlTOq7psdQSteV+3OlugwIk
+	 NDwG2yqqx+27lT/9KdfPoopdO1FOS9KdVVwuVoPUXSzKoiJeR1BgGvc39mKTKtg96L
+	 pH033cGoEBGQ1qStpJkvsB0UQe/R7wN/+q3B4EO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0728/1887] PCI: dwc: ep: Prevent changing BAR size/flags in pci_epc_set_bar()
-Date: Wed, 28 Oct 2026 17:47:04 +0100
-Message-ID: <20261028170516.017103919@linuxfoundation.org>
+Subject: [PATCH 6.1 0729/1887] ASoC: SOF: Intel: hda-dai: Ensure DAI widget is valid during params
+Date: Wed, 28 Oct 2026 17:47:05 +0100
+Message-ID: <20261028170516.040787334@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,69 +72,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 3708acbd5f169ebafe1faa519cb28adc56295546 ]
+[ Upstream commit 569922b82ca660f8b24e705f6cf674e6b1f99cc7 ]
 
-In commit 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update
-inbound map address") set_bar() was modified to support dynamically
-changing the backing physical address of a BAR that was already configured.
+Each cpu DAI should associate with a widget. However, the topology might
+not create the right number of DAI widgets for aggregated amps. And it
+will cause NULL pointer deference.
+Check that the DAI widget associated with the CPU DAI is valid to prevent
+NULL pointer deference due to missing DAI widgets in topologies with
+aggregated amps.
 
-This means that set_bar() can be called twice, without ever calling
-clear_bar() (as calling clear_bar() would clear the BAR's PCI address
-assigned by the host).
-
-This can only be done if the new BAR size/flags does not differ from the
-existing BAR configuration. Add these missing checks.
-
-If we allow set_bar() to set e.g. a new BAR size that differs from the
-existing BAR size, the new address translation range will be smaller than
-the BAR size already determined by the host, which would mean that a read
-past the new BAR size would pass the iATU untranslated, which could allow
-the host to read memory not belonging to the new struct pci_epf_bar.
-
-While at it, add comments which clarifies the support for dynamically
-changing the physical address of a BAR. (Which was also missing.)
-
-Fixes: 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update inbound map address")
-Link: https://lore.kernel.org/r/20241213143301.4158431-10-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: stable@vger.kernel.org
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Link: https://patch.msgid.link/20241203104853.56956-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ sound/soc/sof/intel/hda.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 3b3f079d0d2dd..32a04ff86c5c5 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -247,6 +247,23 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
+index b7d6a54bbb634..4ba7c4be670dd 100644
+--- a/sound/soc/sof/intel/hda.c
++++ b/sound/soc/sof/intel/hda.c
+@@ -128,6 +128,11 @@ static int sdw_params_stream(struct device *dev,
+ 	struct snd_soc_dapm_widget *w;
  
- 	func_offset = dw_pcie_ep_func_select(ep, func_no);
- 
-+	/*
-+	 * Certain EPF drivers dynamically change the physical address of a BAR
-+	 * (i.e. they call set_bar() twice, without ever calling clear_bar(), as
-+	 * calling clear_bar() would clear the BAR's PCI address assigned by the
-+	 * host).
-+	 */
-+	if (ep->epf_bar[bar]) {
-+		/*
-+		 * We can only dynamically change a BAR if the new BAR size and
-+		 * BAR flags do not differ from the existing configuration.
-+		 */
-+		if (ep->epf_bar[bar]->barno != bar ||
-+		    ep->epf_bar[bar]->size != size ||
-+		    ep->epf_bar[bar]->flags != flags)
-+			return -EINVAL;
+ 	w = snd_soc_dai_get_widget(d, params_data->stream);
++	if (!w) {
++		dev_err(dev, "%s widget not found, check amp link num in the topology\n",
++			d->name);
++		return -EINVAL;
 +	}
-+
- 	reg = PCI_BASE_ADDRESS_0 + (4 * bar) + func_offset;
+ 	data.dai_index = (params_data->link_id << 8) | d->id;
+ 	data.dai_data = params_data->alh_stream_id;
  
- 	if (!(flags & PCI_BASE_ADDRESS_SPACE))
 -- 
 2.53.0
 
