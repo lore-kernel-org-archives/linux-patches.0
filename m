@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216427;
-	b=lEaqh+8qoYtKgwX6VBSS5GYr72+7+2ChBmYjPKP+ULcov8AulY67adFDEqLVcmYYTgM/
-	 +tJH4fQmsHprK+2mZo3GB6TQhRRhsImGkhfck7bIDRwcUmfJIJ5sGjTRBtIZx6V63l5WV
-	 3aujtdDcP+9vqH3BCa2rA7sn5iPPvsCbuuQsADTH0Bh/W35pfRm4FsnFIByZddPqr0nMB
-	 k/F4//xEl0FUwVW3IFkiWdcSWdowZi2JH+lb8vXNYeBzn67vOFow+9SikFXFnSKWY2GF3
-	 MmdSkrjy6jCQyCeSqZQaiDaUVqxzIiv8MXaiWyqEO9N7OYm6dnBQoToqOxj6mF547Lg==
+	t=1793216430;
+	b=SZM2nUjqIQg/2FSceqIr0A6rpesZxldL7x0/ZsOkPm3zD1ZeS1p1Z6nLdNCMYQwAInyr
+	 BShI6lQj3UoA0OJprNm5MtOhjAt+pGRm+2au+w1jI5jrunraeOPsANXRy4xvkxxe1fWes
+	 BInn92WWJ7V7FS11rjCBBlmtXnyHI8Dn6oCgCmrtKVxJ8yAFJex9OFU/XVNrtJgVAIwJ4
+	 YbdeKRrMc5icxL9DxqETgLiqia6iI1AQZm/MbTQUlWOC5JtziLYdqKx2xGtisrkaKBAZ0
+	 P7mB6SWKeKQ3CZgrF3DObCIwFJ/3UlbShRgjzVueVBfc1Um/OOrj1O8r5xbuC4HuIdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216427;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216430;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mp8jJGdGfOf24SWXbqLelzmyZ7jwrceuUYItyhNDZUI=;
-	b=c4KJKMVfomw2I1C6z9+1cwnWTpZBSdcnlIqeMq+XM8hCkdd2ZXsx3ujOopdknIcBkRbs
-	 zJpTm7CHleEm7THHXyMU3OGT3hZpUaYHnln6zrNaikmrklVWHn074dqwxwcEsv/v53Ig0
-	 JzrS61rrj1A7WgXOXelqDjb8Dy1LWyzGGEkViy4Rlow0c1kVvCpbJgTz4gEeuNhrqfsyc
-	 CFXb+TjREMtFL8DT1U7C4l5AdCrdTfDurt2r+YjnxS/nJxsWghzGur6vQCmiLVVC8ev9B
-	 o7POFWVTeKmJb/vLNstuhUZT/CUVdmjpXkwXUAMq4sJcs64YgzzPpg5xmvVs0Ik6coA==
+	bh=bZBfsk77rsQKFmgQI+6q1xM2k1LlK6LZIAtg9+uSL0U=;
+	b=oq6e2LIOmbrtUeeQVu3t9cGRD8gmcY8h5OACsjkkDHK8N7uoABb1UCf1W5BM56omDusg
+	 LYuVlsu/w1UAsVQlRS4+cWJW2rkR8q2ILak5Qc2YvruLW6I455Y7tqZZUdtpLyI+YGO7k
+	 G2jUoBeMnQiAXBn7+vuYVhadj0nlDsbJXbCPfVc/pREiuBciiiMMnZutootF7taz4V40p
+	 z3ExyFU1JMOesg4PQmQkXRjjLzJvh7/VkrqibO672tgrohDCZtjQDJ7xM2vwB/B0+rIRk
+	 7OciOntuHlzO8Vx/cid/frRTBItF8gc7qp/3JTYdpwezO/6MCRE58fwC7c1K8uPfTQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqcWB5gr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ECnOnUW/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116EF606A323;
-	Wed, 28 Oct 2026 19:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4434606A321;
+	Wed, 28 Oct 2026 19:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqcWB5gr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E061F01825;
-	Wed, 28 Oct 2026 19:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECnOnUW/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DDC1F01825;
+	Wed, 28 Oct 2026 19:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216426;
-	bh=mp8jJGdGfOf24SWXbqLelzmyZ7jwrceuUYItyhNDZUI=;
+	s=korg; t=1793216429;
+	bh=bZBfsk77rsQKFmgQI+6q1xM2k1LlK6LZIAtg9+uSL0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oqcWB5grbZ/Tz/scqD1cnFbSbZEgmrVvwsbuS4bwzOxLyMYQfyhbdbfgk7EC+Exal
-	 H4NKLKmr6Pw7hnU+L40No/nNMjdGu784Sd5RoI788Dh1zIY7MRKhF9xargbAnFi4dG
-	 f7aef0FgsYUaLTG4eQhLENOv7J2VdUh7S6YgTOPw=
+	b=ECnOnUW/ENhJyowrddn0KwEof2ND/O0droqRbOxZO5MxpD5zN5HJXrl9O4FQpg/Bo
+	 BGC1JLVs0Bd9oTzvfo0Bxr/kpH00TKFvHuoglVOUglZXVsXQZZ8Oo1IMpUWiGM7u75
+	 bMAQcaWnSDh/Vj4GkZTfAzlHn1BpVPBSn7dOwt9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1509/1887] NFSD: Prevent client use-after-free during close_lru reaping
-Date: Wed, 28 Oct 2026 18:00:05 +0100
-Message-ID: <20261028170533.803649819@linuxfoundation.org>
+Subject: [PATCH 6.1 1510/1887] HID: sony: clean up device list on probe failure
+Date: Wed, 28 Oct 2026 18:00:06 +0100
+Message-ID: <20261028170533.825689640@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,56 +68,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-[ Upstream commit 2330b788d732f43668b965b3105b37ceb276dfea ]
+[ Upstream commit 7c65699a3a311198a07659a614fe64d45924839e ]
 
-An nfs4_openowner left on nn->close_lru after its final CLOSE keeps
-its last closed stateid in oo_last_closed_stid, holding only a raw
-pointer to its nfs4_client. The laundromat reaps timed-out entries,
-drops nn->client_lock, and calls nfs4_put_stid(), which dereferences
-the client through cl_lock. Nothing pins the client across that
-window, so a concurrent force_expire_client() can free it and
-nfs4_put_stid() reads freed memory. __destroy_client() hits the same
-race, walking clp->cl_openowners without cl_lock.
+sony_input_configured() adds some controllers to sony_device_list before
+HID core registers their input devices. input_register_device() can fail
+after the callback returns successfully. sony_probe() then observes that
+HID_CLAIMED_INPUT is clear and unwinds, but only stops the HID hardware.
+The devres-managed sony_sc is freed while its list node remains linked, so
+the next matching controller traverses freed memory.
 
-Pin the client with cl_rpc_users before dropping client_lock, and
-skip clients already expiring. __destroy_client() then cleans up its
-own close_lru entries through release_last_closed_stateid(), so
-teardown no longer races the laundromat.
+Initialize the list node and device ID to inactive states. Make list
+removal idempotent and run the driver-private cleanup on every probe
+failure path. This also makes a second cleanup safe when
+sony_input_configured() already unwound a partial initialization before
+sony_probe() handles the missing input claim.
 
-Fixes: 217526e7ecc9 ("nfsd: protect the close_lru list and oo_last_closed_stid with client_lock")
+Found by 0sec (https://0sec.ai) using automated source analysis;
+verified against the HID input registration and probe unwind paths.
+
+Fixes: 4f967f6d7374 ("HID: sony: Fix memory issue when connecting device using both Bluetooth and USB")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260709-cel-v4-8-1d519d9be0cb@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://lore.kernel.org/linux-input/20260724143925.007D61F00A3A@smtp.kernel.org/
+Assisted-by: 0sec:multi-model
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/hid-sony.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index d6f1b9f572bf9..ec37aca0949af 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6336,11 +6336,18 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		if (!state_expired(&lt, oo->oo_time))
- 			break;
- 		list_del_init(&oo->oo_close_lru);
-+		clp = oo->oo_owner.so_client;
-+		if (is_client_expired(clp))
-+			continue;
- 		stp = oo->oo_last_closed_stid;
- 		oo->oo_last_closed_stid = NULL;
-+		atomic_inc(&clp->cl_rpc_users);
- 		spin_unlock(&nn->client_lock);
- 		nfs4_put_stid(&stp->st_stid);
- 		spin_lock(&nn->client_lock);
-+		if (atomic_dec_and_test(&clp->cl_rpc_users) &&
-+		    is_client_expired(clp))
-+			wake_up_all(&expiry_wq);
+diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
+index 01745b5df2e4e..f1a861cb99edb 100644
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -2564,13 +2564,10 @@ static int sony_check_add_dev_list(struct sony_sc *sc)
+ 
+ static void sony_remove_dev_list(struct sony_sc *sc)
+ {
+-	unsigned long flags;
++	guard(spinlock_irqsave)(&sony_dev_list_lock);
+ 
+-	if (sc->list_node.next) {
+-		spin_lock_irqsave(&sony_dev_list_lock, flags);
+-		list_del(&(sc->list_node));
+-		spin_unlock_irqrestore(&sony_dev_list_lock, flags);
+-	}
++	if (!list_empty(&sc->list_node))
++		list_del_init(&sc->list_node);
+ }
+ 
+ static int sony_get_bt_devaddr(struct sony_sc *sc)
+@@ -2736,6 +2733,13 @@ static inline void sony_cancel_work_sync(struct sony_sc *sc)
  	}
- 	spin_unlock(&nn->client_lock);
+ }
+ 
++static void sony_cleanup(struct sony_sc *sc)
++{
++	sony_cancel_work_sync(sc);
++	sony_remove_dev_list(sc);
++	sony_release_device_id(sc);
++}
++
+ static int sony_input_configured(struct hid_device *hdev,
+ 					struct hid_input *hidinput)
+ {
+@@ -2968,9 +2972,7 @@ static int sony_input_configured(struct hid_device *hdev,
+ 		device_remove_file(&sc->hdev->dev, &dev_attr_firmware_version);
+ 	if (sc->hw_version_created)
+ 		device_remove_file(&sc->hdev->dev, &dev_attr_hardware_version);
+-	sony_cancel_work_sync(sc);
+-	sony_remove_dev_list(sc);
+-	sony_release_device_id(sc);
++	sony_cleanup(sc);
+ 	return ret;
+ }
+ 
+@@ -2996,6 +2998,8 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	}
+ 
+ 	spin_lock_init(&sc->lock);
++	INIT_LIST_HEAD(&sc->list_node);
++	sc->device_id = -1;
+ 
+ 	sc->quirks = quirks;
+ 	hid_set_drvdata(hdev, sc);
+@@ -3024,6 +3028,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	ret = hid_hw_start(hdev, connect_mask);
+ 	if (ret) {
+ 		hid_err(hdev, "hw start failed\n");
++		sony_cleanup(sc);
+ 		return ret;
+ 	}
+ 
+@@ -3075,7 +3080,7 @@ static int sony_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 
+ err:
+ 	usb_free_urb(sc->ghl_urb);
+-
++	sony_cleanup(sc);
+ 	hid_hw_stop(hdev);
+ 	return ret;
+ }
+@@ -3102,12 +3107,7 @@ static void sony_remove(struct hid_device *hdev)
+ 	if (sc->hw_version_created)
+ 		device_remove_file(&sc->hdev->dev, &dev_attr_hardware_version);
+ 
+-	sony_cancel_work_sync(sc);
+-
+-	sony_remove_dev_list(sc);
+-
+-	sony_release_device_id(sc);
+-
++	sony_cleanup(sc);
+ 	hid_hw_stop(hdev);
+ }
  
 -- 
 2.53.0
