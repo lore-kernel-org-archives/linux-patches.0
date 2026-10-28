@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213459;
-	b=Nnd/askjVXkepm1HmilCCD1uMIWvMsAl1FEoVZXfte3DnBFFsrtG4jnMNaNcatzXqQ1I
-	 39ndq3u2JkVM/qTZIcRLqwRDtqsEGbW8CrfTiQ9x5ZFbYi4jbXvxyx6EKrGxquwmJjFE+
-	 rz4OG8VJOTeQXVgBxCiY15KuWkkcVSmQFvQ4SEBifiNuY5pI8leXKLqhwpTu+EJ7F9a7T
-	 VLbJugSjrneMcARjQycnOtCKkQQDixRthlXKFrlfLC+8pd5VOo9C2lo5J536ot1QnfJI6
-	 iKSbjTiqEqwSednJD/kztgiifgQ/iGz12G0LsISwAtnAVSBjGTXZo8mxTd21ItqsBZA==
+	t=1793213462;
+	b=y1RhZnTH1aaUEXP9kBSrPL38UvolxctV3jyfSGB80uLxBfp8cD4G2LZsMSmLqQZ8jLwM
+	 4Od7UApQy6H4w2X6f0gjW5wPDdfSiZwzZbv/IGbmZJBrqgrzfxd9SO2xj19OJcVzglyoe
+	 sDQoDl6bdhBhJSTzk9badMFPS19Z5+NA7zSC74T0IezDQV5xJWsAH2jiowe8yeqTZB5dF
+	 L/6OGKvpwmDJ6rCaUUCu5j1mYg6sHDzcSF6OsqGCYMWBVfUwy7iLLB4jJW6AIRqoNtCSj
+	 NeXyr91fzDbY55eSJo/c0pZKklOzhqTIPs17oYD54pAHkZMFsOtTWkGSwg1titL7bUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+RRT+3TbJxMBVrKOzyu/24XFJzG6RiNhyq3XRiXgYJ4=;
-	b=lLc3HGPzw5DaUrUszPvy70aEzBSedkfWWTIjjkl5QtlREw2ntLbcStp7iYVXRSo4c79n
-	 bIk3E47Y3mAZRgPzzD1CSlTOG9cKgFxu+tss8hrw884/J2SIm2s5X6vnvc2RyH7F7RMNU
-	 hh6GmI14I8oHev4VvO54cMxonKbU/E1Cni0/LHK4Lu0cwcwVnj+u68LOjg8sLcrcrlAc1
-	 Ne1BKCEkdSw5wvaLz9/icYcPkR3KH+8DZohY6TYa/MC/UCk9QKKAMGhqmqNB4eootoN7q
-	 HO16idY0nMlNhABM/0bmbhuOv/6IT8XM/2LpY2NNyiSYkpTW0ibSpr3kc6ODBsU1zgw==
+	bh=/LuXQus2Y5t1WgPqrUKU3u06tJQqrtJJmRaKfOE5cU4=;
+	b=M4vngRfN5NbjyQuD7ALRgiisSgu6x8V5qk8/h/4qjn2k1bgI8jqOLGf1r8qVnT8/Hp3B
+	 tFBFBE+jkZ45ZO2Swsc4hnkt54uHEw2tfN1t3G5anQDSSosPmbXBShKa3Dgd3aJ1AbFL8
+	 6DWamoh+pvndhfkl93rYcyZLfvv2HLWGY5n8PecgHz8kyBe1FZLNk1MSxXh1qcbaPC1xn
+	 P6UIW9BveAZfdAHnAuTJB2VcspbuOpLv4M5Y/sUVqAIudkHzJYXAvJlITC481b3lFD/jo
+	 HrFK0ZD8blE6Sf2P1YMNpOgV6n/4nERcod5WhxPj8Q812oOLeMzZSD6YduVa4hYXYYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqGBVAff;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PoZlabuk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3586A606A31C;
-	Wed, 28 Oct 2026 18:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074E0606A31D;
+	Wed, 28 Oct 2026 18:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqGBVAff
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875201F01828;
-	Wed, 28 Oct 2026 18:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PoZlabuk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571EE1F01825;
+	Wed, 28 Oct 2026 18:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213459;
-	bh=+RRT+3TbJxMBVrKOzyu/24XFJzG6RiNhyq3XRiXgYJ4=;
+	s=korg; t=1793213461;
+	bh=/LuXQus2Y5t1WgPqrUKU3u06tJQqrtJJmRaKfOE5cU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tqGBVAffEwZI2i6ltb9scdTrPfpVl3UBdgrRhyoxLb4nq5TqYZAP+eujsEZReuDi2
-	 nhQkgQ8M/GGMhOkWeBdRezy5MhGfl84mbfRsR1POZTHSzoK7PZXPu7TM4vR0G4ycrm
-	 XmzAJdDextshUyhxa3yAQur2Q09PhdS7OmbMody4=
+	b=PoZlabuk8ybYbNjeC7pQQ6Ofolfck4jKDF5JurIcBfdFBOf0b0LdU/lI0x5RmgS3c
+	 EkBIoUV8WDQzI1SmdkSIwgx+MbvWlSEgEDx3Q5gheSmo8Fe7KXIJXD4hFOy3tlwFc8
+	 wl1Frxv9lIZ5W8RmM5NbGPBcDQz/d6Ud6bcE5Hc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Daehyeon Ko <4ncienth@gmail.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0512/1887] ip6_gre: remove obsolete ERSPAN PMTU update
-Date: Wed, 28 Oct 2026 17:43:28 +0100
-Message-ID: <20261028170510.965608686@linuxfoundation.org>
+Subject: [PATCH 6.1 0513/1887] ice: fix metadata_dst refcount handling on representor teardown
+Date: Wed, 28 Oct 2026 17:43:29 +0100
+Message-ID: <20261028170510.989112011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,67 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 8bc60db48e8cba35488bbd6e1f94aa990afa275a ]
+[ Upstream commit 58858b8f14803a7eeac297b3ce20f3b21bf2ff66 ]
 
-A tc tunnel_key action can attach a METADATA_IP_TUNNEL dst to an skb,
-and mirred can redirect it to a native ip6erspan device. The legacy PMTU
-update in ip6erspan_tunnel_xmit() treats that metadata dst as a route.
-Since it has no output device, dst_dev(dst)->mtu dereferences NULL.
+ice_eswitch_release_repr() uses metadata_dst_free() to release the
+representor's metadata_dst.  metadata_dst_free() directly frees the
+underlying memory without checking the dst_entry refcount.
 
-On v7.2 with KASAN, an initial UID/GID 65534 process with CapEff 0 used
-self-created user and network namespaces to trigger:
+When ice_eswitch_port_start_xmit() processes a packet, it takes a
+reference via dst_hold() and attaches the metadata_dst to the skb.
+If the representor is torn down while packets are still queued on
+the lower device (e.g. in a qdisc), the metadata_dst is freed while
+references are still held.
 
-  KASAN: null-ptr-deref
-  RIP: ip6erspan_tunnel_xmit+0x10fc/0x2cc0
-  Kernel panic - not syncing: Fatal exception in interrupt
+Use dst_release() instead, which correctly decrements the refcount
+and only frees the object when all references are dropped.  The dst
+subsystem already handles metadata_dst cleanup in dst_destroy() when
+DST_METADATA is set.
 
-The update is obsolete. Commit fe1a4ca0a2b7 ("ip6_gre: process toobig
-in a better way") changed IPv6 GRE Too Big handling to update the
-underlay route and removed the equivalent block from __gre6_xmit().
-ip6_tnl_xmit() then propagates the underlay PMTU to the overlay route.
+Other drivers sharing this pattern (nfp, airoha, bnxt) already use
+dst_release() for their metadata_dst lifecycle.
 
-Remove the stale ERSPAN copy and its now-unused dst variable. This
-eliminates the metadata-dst dereference and keeps ERSPAN aligned with
-IPv6 GRE PMTU handling.
-
-Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
+Fixes: f5396b8a663f7 ("ice: switchdev slow path")
 Cc: stable@vger.kernel.org
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261002033058.358137-1-4ncienth@gmail.com
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260928230429.495442-5-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adapted the removal to the PMTU check using dst->dev->mtu directly. ]
+[ sashal: Adapted repr->dst access to vf->repr->dst in ice_eswitch_release_reprs(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_eswitch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 950d5e74b094e..73ec4641f2201 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -962,7 +962,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- {
- 	struct ip_tunnel_info *tun_info = NULL;
- 	struct ip6_tnl *t = netdev_priv(dev);
--	struct dst_entry *dst = skb_dst(skb);
- 	bool truncate = false;
- 	int encap_limit = -1;
- 	__u8 dsfield = false;
-@@ -1094,10 +1093,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 	/* Push GRE header. */
- 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
+diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+index 7de4a8a4b563c..569d1b95ec1ef 100644
+--- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
++++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+@@ -235,7 +235,7 @@ ice_eswitch_release_reprs(struct ice_pf *pf, struct ice_vsi *ctrl_vsi)
+ 			continue;
  
--	/* TooBig packet may have updated dst->dev's mtu */
--	if (!t->parms.collect_md && dst && dst_mtu(dst) > dst->dev->mtu)
--		dst->ops->update_pmtu(dst, NULL, skb, dst->dev->mtu, false);
--
- 	err = ip6_tnl_xmit(skb, dev, dsfield, &fl6, encap_limit, &mtu,
- 			   NEXTHDR_GRE);
- 	if (err != 0) {
+ 		ice_vsi_update_security(vsi, ice_vsi_ctx_set_antispoof);
+-		metadata_dst_free(vf->repr->dst);
++		dst_release(&vf->repr->dst->dst);
+ 		vf->repr->dst = NULL;
+ 		ice_fltr_add_mac_and_broadcast(vsi, vf->hw_lan_addr.addr,
+ 					       ICE_FWD_TO_VSI);
 -- 
 2.53.0
 
