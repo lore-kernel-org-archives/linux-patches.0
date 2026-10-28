@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793214031;
-	b=jD4TXvoHAPw4co7wcSBAR4IobFGVjDv3VALaw1Z23n24F/1MlyzmS3cltdtPi0ungUgu
-	 NlM9AICG2WD0qafk/26+H2PrESPlHfdd2LmPACEcFu+VPHsThgdyuA0Sj6U15iYw2435D
-	 OkxzHsvpw282M8IDNu/9+H1uwoJ7BOmjVKLttoyLjpi48CbI17xd+G64nhYPlcEL6l62j
-	 I/8qA5I5OF34k1CFlVw4+uO99K7suSs6OlDruRYUpqDpaC+rW75Nc900q/6FsfwTOfwhm
-	 mSjGKBtiTr0HQIsN8qCsObk353tN+thNaBMmQXFe3LuhrwuGu35zitHQyPqVfU9zHeA==
+	b=P/b/RKG4PDv0ybiMQFN08e4XC/hT70o/Z2qH5MKpE5E/3UnViVbtrmMxWzHhkFKLOkkM
+	 fdPtfLtFq2FLajXv/S++lKg+KoBV8qnW3OxhGl1vTHoXwF8vBguPKMncwY3Ypgo8jcsMd
+	 0vHLzfZ2YZY8iMZ5kDzdJ/hV+4rDKZHOlH+qbnjUFWfVEmumRMMQFvslk+mIn012r0i2u
+	 0EvNiK5hyW+zUtoeOxOv8RTezRWUD/21Or+1E1/CJxv34kJefl61N8cKmg37cohCKkWAE
+	 WXUGpvey6DBEW5gMJyDulhXEQ/sIdc5GoqUjZrSVtvGpeU1xRwiusnFUYh0DMBWuDVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793214031;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TlxREeUAjQPCnbe4S4HUVk7uGFrUubcdcbgkt2T3XlE=;
-	b=SpIY1M6FT+eK7At3ScTxv6pW48a3G8HEbgqNvTTBotMjKGSMq7RCS745r9pTCRtTUBys
-	 wo+Q4TQhFdc1DXiK5lGOEwTwwLyADrdimkUrqnTrn3+IB1ZVpDspo7yP1HHRUbqNAKE5T
-	 opsePbnucL2TqUZ4eR3V0QBpZrJ9nkWF8NtjDS/M258iZ+uQ/eyIIIICptOVUtKTmjyyg
-	 +NbeypzCjQLZQW/EqVZbv4LfhdFKnF+m4e6CeMKID60K+/it1LObsljgV9DRKkLkgTXGm
-	 jxR8V0BDadQCIoBiOQJGpcR8tZVZu7MPa9iO0SWh2jgLByptkD3v3GlfJrdzwjy5/bg==
+	bh=HSXIjuBz1oEIkpdK92E+5aFSz/lXgQMOmMGpuN8udOA=;
+	b=CQTlLgBP4dHBeBoSYuR4CN9hmtCuxnBVgUbLMbMrFgA9s3q0zdgif0niOhpKAdP2BB8Y
+	 Ze/7p+bXvuYUOwGo6nGAik9s7kyawXa+yNiYRhfxDwhnrqB7nZLTcs4XUeS1ek4eJEwL9
+	 EaQQpudOnn6jzRV46vR+6ci+iBBNAoiQZuMVquwHWDKiKhuaKzYT8yKDLBAUqkBY2Ta1D
+	 Zzi9HNLHjB0MFQxQJoPqmi8Q+FUDdGYFlSG9qZVbiRZsqk9swbUnbcnwb30A0hllDhRPx
+	 lsKULUNRWXRKgHANWNoumJjHRH4mx5zyCRVFiII5wJQUp1yS2VcF2AvvLDm8rfOGQ0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKcrQeNA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e0Y1SUTh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59462606A332;
-	Wed, 28 Oct 2026 19:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2ED160A381B;
+	Wed, 28 Oct 2026 19:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKcrQeNA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AFE1F031E6;
-	Wed, 28 Oct 2026 19:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e0Y1SUTh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4311F01828;
+	Wed, 28 Oct 2026 19:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214023;
-	bh=TlxREeUAjQPCnbe4S4HUVk7uGFrUubcdcbgkt2T3XlE=;
+	s=korg; t=1793214014;
+	bh=HSXIjuBz1oEIkpdK92E+5aFSz/lXgQMOmMGpuN8udOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mKcrQeNAq2LMDQEnKLhTW9gFzjtUGzzKMkU5EN7+Qbzm9ABZ7jlSh1YlwIp2uutqx
-	 xyDt2QfZu+lJsYPgitRocfs1HB4htmYfLZETJGvX3YDbO2aLE8LGbaG+u6sZ83mkh3
-	 Pb+RBN8x2hX8Rbjy56mKiOOmPdWGywLfFbWBSu3s=
+	b=e0Y1SUThKWTPWB96xBhcCZr3+xH3KpkWuiOr1AOxDWmz4ZiWH/FQydgzkxsw2PK3d
+	 9tqkMtPxMdAjNvkUUmbyT02fxWKXj+eCWhROb43Sbr3SDkTRZwaZixqzntqc4shUpA
+	 8GiXndbJHKQ5UbtOYMPy/WVz+rasIH++G0Sblbcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	John Garry <john.garry@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0710/1887] scsi: hisi_sas: Add SATA_DISK_ERR bit handling for v3 hw
-Date: Wed, 28 Oct 2026 17:46:46 +0100
-Message-ID: <20261028170515.577932500@linuxfoundation.org>
+Subject: [PATCH 6.1 0672/1887] drm/amd/display: Check null pointers before using them
+Date: Wed, 28 Oct 2026 17:46:08 +0100
+Message-ID: <20261028170514.704516981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,177 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 930d97dabdd56681aef752a35475f0212a171741 ]
+[ Upstream commit 1ff12bcd7deaeed25efb5120433c6a45dd5504a8 ]
 
-When CQ header dw3 SATA_DISK_ERR is set it means this SATA disk is in error
-state and the current IPTT is invalid. An invalid IPTT does not correspond
-to any slot.
+[WHAT & HOW]
+These pointers are null checked previously in the same function,
+indicating they might be null as reported by Coverity. As a result,
+they need to be checked when used again.
 
-In this scenario, new I/Os that delivered to disk will be rejected by the
-controller and all I/Os remaining in the disk should be aborted, which we
-add here with the sas_ata_device_link_abort() call.
+This fixes 3 FORWARD_NULL issue reported by Coverity.
 
-In hisi_sas_abort_task() we don't want to issue a soft reset as it may
-cause info to be lost in the target disk for the ATA EH autopsy. In this
-case, just release resources - the disk won't return other I/Os normally
-after NCQ Error, so this is safe.
-
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Signed-off-by: John Garry <john.garry@huawei.com>
-Link: https://lore.kernel.org/r/1665998435-199946-4-git-send-email-john.garry@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 9f564f15f884 ("scsi: hisi_sas: Create all dump files during debugfs initialization")
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas.h       |  1 +
- drivers/scsi/hisi_sas/hisi_sas_main.c  | 18 +++++++++-
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 48 ++++++++++++++++++++++++--
- 3 files changed, 64 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
-index 2ecf97f7ae525..423af1dc36487 100644
---- a/drivers/scsi/hisi_sas/hisi_sas.h
-+++ b/drivers/scsi/hisi_sas/hisi_sas.h
-@@ -104,6 +104,7 @@ enum {
- enum dev_status {
- 	HISI_SAS_DEV_INIT,
- 	HISI_SAS_DEV_NORMAL,
-+	HISI_SAS_DEV_NCQ_ERR,
- };
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 53ec5f3a8e6f3..14f2cfcba5f65 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8628,9 +8628,10 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
  
- enum {
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index ae7383e9e5fc1..2f13bb9771d64 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1631,13 +1631,26 @@ static int hisi_sas_abort_task(struct sas_task *task)
- 	} else if (task->task_proto & SAS_PROTOCOL_SATA ||
- 		task->task_proto & SAS_PROTOCOL_STP) {
- 		if (task->dev->dev_type == SAS_SATA_DEV) {
-+			struct ata_queued_cmd *qc = task->uldd_task;
-+
- 			rc = hisi_sas_internal_task_abort_dev(sas_dev, false);
- 			if (rc < 0) {
- 				dev_err(dev, "abort task: internal abort failed\n");
- 				goto out;
- 			}
- 			hisi_sas_dereg_device(hisi_hba, device);
--			rc = hisi_sas_softreset_ata_disk(device);
-+
-+			/*
-+			 * If an ATA internal command times out in ATA EH, it
-+			 * need to execute soft reset, so check the scsicmd
-+			 */
-+			if ((sas_dev->dev_status == HISI_SAS_DEV_NCQ_ERR) &&
-+			    qc && qc->scsicmd) {
-+				hisi_sas_do_release_task(hisi_hba, task, slot);
-+				rc = TMF_RESP_FUNC_COMPLETE;
-+			} else {
-+				rc = hisi_sas_softreset_ata_disk(device);
-+			}
+ 			DRM_INFO("[HDCP_DM] hdcp_update_display enable_encryption = %x\n", enable_encryption);
+ 
+-			hdcp_update_display(
+-				adev->dm.hdcp_workqueue, aconnector->dc_link->link_index, aconnector,
+-				new_con_state->hdcp_content_type, enable_encryption);
++			if (aconnector->dc_link)
++				hdcp_update_display(
++					adev->dm.hdcp_workqueue, aconnector->dc_link->link_index, aconnector,
++					new_con_state->hdcp_content_type, enable_encryption);
  		}
- 	} else if (slot && task->task_proto & SAS_PROTOCOL_SMP) {
- 		/* SMP */
-@@ -1756,6 +1769,9 @@ static int hisi_sas_I_T_nexus_reset(struct domain_device *device)
- 	struct device *dev = hisi_hba->dev;
- 	int rc;
- 
-+	if (sas_dev->dev_status == HISI_SAS_DEV_NCQ_ERR)
-+		sas_dev->dev_status = HISI_SAS_DEV_NORMAL;
-+
- 	rc = hisi_sas_internal_task_abort_dev(sas_dev, false);
- 	if (rc < 0) {
- 		dev_err(dev, "I_T nexus reset: internal abort (%d)\n", rc);
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 3db206c743831..2b19c515acdeb 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -408,6 +408,11 @@
- #define CMPLT_HDR_CMPLT_MSK		(0x3 << CMPLT_HDR_CMPLT_OFF)
- #define CMPLT_HDR_ERROR_PHASE_OFF   2
- #define CMPLT_HDR_ERROR_PHASE_MSK   (0xff << CMPLT_HDR_ERROR_PHASE_OFF)
-+/* bit[9:2] Error Phase */
-+#define ERR_PHASE_RESPONSE_FRAME_REV_STAGE_OFF	\
-+					8
-+#define ERR_PHASE_RESPONSE_FRAME_REV_STAGE_MSK	\
-+	(0x1 << ERR_PHASE_RESPONSE_FRAME_REV_STAGE_OFF)
- #define CMPLT_HDR_RSPNS_XFRD_OFF	10
- #define CMPLT_HDR_RSPNS_XFRD_MSK	(0x1 << CMPLT_HDR_RSPNS_XFRD_OFF)
- #define CMPLT_HDR_RSPNS_GOOD_OFF	11
-@@ -427,8 +432,15 @@
- #define CMPLT_HDR_DEV_ID_OFF		16
- #define CMPLT_HDR_DEV_ID_MSK		(0xffff << CMPLT_HDR_DEV_ID_OFF)
- /* dw3 */
-+#define CMPLT_HDR_SATA_DISK_ERR_OFF	16
-+#define CMPLT_HDR_SATA_DISK_ERR_MSK	(0x1 << CMPLT_HDR_SATA_DISK_ERR_OFF)
- #define CMPLT_HDR_IO_IN_TARGET_OFF	17
- #define CMPLT_HDR_IO_IN_TARGET_MSK	(0x1 << CMPLT_HDR_IO_IN_TARGET_OFF)
-+/* bit[23:18] ERR_FIS_ATA_STATUS */
-+#define FIS_ATA_STATUS_ERR_OFF		18
-+#define FIS_ATA_STATUS_ERR_MSK		(0x1 << FIS_ATA_STATUS_ERR_OFF)
-+#define FIS_TYPE_SDB_OFF		31
-+#define FIS_TYPE_SDB_MSK		(0x1 << FIS_TYPE_SDB_OFF)
- 
- /* ITCT header */
- /* qw0 */
-@@ -2160,6 +2172,18 @@ static irqreturn_t fatal_axi_int_v3_hw(int irq_no, void *p)
- 	return IRQ_HANDLED;
- }
- 
-+static bool is_ncq_err_v3_hw(struct hisi_sas_complete_v3_hdr *complete_hdr)
-+{
-+	u32 dw0, dw3;
-+
-+	dw0 = le32_to_cpu(complete_hdr->dw0);
-+	dw3 = le32_to_cpu(complete_hdr->dw3);
-+
-+	return (dw0 & ERR_PHASE_RESPONSE_FRAME_REV_STAGE_MSK) &&
-+	       (dw3 & FIS_TYPE_SDB_MSK) &&
-+	       (dw3 & FIS_ATA_STATUS_ERR_MSK);
-+}
-+
- static bool
- slot_err_v3_hw(struct hisi_hba *hisi_hba, struct sas_task *task,
- 	       struct hisi_sas_slot *slot)
-@@ -2400,14 +2424,34 @@ static irqreturn_t  cq_thread_v3_hw(int irq_no, void *p)
- 	while (rd_point != wr_point) {
- 		struct hisi_sas_complete_v3_hdr *complete_hdr;
- 		struct device *dev = hisi_hba->dev;
--		u32 dw1;
-+		u32 dw0, dw1, dw3;
- 		int iptt;
- 
- 		complete_hdr = &complete_queue[rd_point];
-+		dw0 = le32_to_cpu(complete_hdr->dw0);
- 		dw1 = le32_to_cpu(complete_hdr->dw1);
-+		dw3 = le32_to_cpu(complete_hdr->dw3);
- 
- 		iptt = dw1 & CMPLT_HDR_IPTT_MSK;
--		if (likely(iptt < HISI_SAS_COMMAND_ENTRIES_V3_HW)) {
-+		if (unlikely((dw0 & CMPLT_HDR_CMPLT_MSK) == 0x3) &&
-+			     (dw3 & CMPLT_HDR_SATA_DISK_ERR_MSK)) {
-+			int device_id = (dw1 & CMPLT_HDR_DEV_ID_MSK) >>
-+					CMPLT_HDR_DEV_ID_OFF;
-+			struct hisi_sas_itct *itct =
-+				&hisi_hba->itct[device_id];
-+			struct hisi_sas_device *sas_dev =
-+				&hisi_hba->devices[device_id];
-+			struct domain_device *device = sas_dev->sas_device;
-+
-+			dev_err(dev, "erroneous completion disk err dev id=%d sas_addr=0x%llx CQ hdr: 0x%x 0x%x 0x%x 0x%x\n",
-+				device_id, itct->sas_addr, dw0, dw1,
-+				complete_hdr->act, dw3);
-+
-+			if (is_ncq_err_v3_hw(complete_hdr))
-+				sas_dev->dev_status = HISI_SAS_DEV_NCQ_ERR;
-+
-+			sas_ata_device_link_abort(device, true);
-+		} else if (likely(iptt < HISI_SAS_COMMAND_ENTRIES_V3_HW)) {
- 			slot = &hisi_hba->slot_info[iptt];
- 			slot->cmplt_queue_slot = rd_point;
- 			slot->cmplt_queue = queue;
+ 	}
+ #endif
 -- 
 2.53.0
 
