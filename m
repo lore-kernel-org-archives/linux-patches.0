@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793210455;
-	b=LGjXbIEZV3OvEuIYu/B6H7tEJmdUaodEI3Z1Z7WKe8REQHRReB06sRjHPU4gPHLJT67a
-	 +AEf2c15kXf5FKbhXnJfd//mY6n4tSliJVpVYrndqm2D56Geg10x9HgxuFAKosl9Yls/0
-	 1goMxj3aTRMHl82pgq4oW3+JXHfRW2Q8x73TbGH2MIgaBQH/pV2HdoP3doLSxHl6Xa73m
-	 WYD7TjvG5wYT5/GzdgTu09sL1lYmCKzx4KzGSHlHJtGMT+mbihvpbe6D5d9qCBUbnaWHM
-	 rHINY5ft4p2MONmVkQxYTsGTPHqO6UTcO0paCq9C++/ED+GB7KVkS7clqGkbRDxh3vQ==
+	t=1793210458;
+	b=0xA6JkKFCctD9zXaUU8CMolKctEsLp1amwz+cxQk1Qf+Wu1tUsAxBZCQADd3SX7TmHn9
+	 aaUrNjYJT20wnHCQym5APJyZFvpJjfOPj1h8thL+ybGRbm0TbMJwwqxHgIoNV8vxppChh
+	 IipRpj6xRYWs8AmFjgVYkxwNEOCIjuzHyHdYBQybKbuo2ZmRzL+uFpubS9oYHh0Qbygx5
+	 fdEy66akoSDfecFJgIaIyTVOFtpM32QtN8FJrmNR/TsCpwIN4v6mSyd/xWhdVKMannLrh
+	 oiQ3gEXGa4efHdYDeUdsjeOKbVHniQFp5YMAVmTaUY6RN0sT9Bur+9N9sU0DsXBc0JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793210455;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793210458;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CvQLetR2AS9uPHtx//nt/ffC/QH04pAv1gaMExR31lg=;
-	b=dRa4UQwSCOCzcfx5gH0otkbrDtRH5RtCo3BVemQEC/jPMiG2/Rkh5gQaV6lBdI+2GAp5
-	 r5R+E7MgFp+0CZtZ5pST3x40sA4TiuV7yaGBO1oE0Yx06ybUv3jIEEIo6+2u4UI21q5uS
-	 6ipASdnpJSqXTc1+ql0/mPrHJBSmnMQSR1EkwkTpoLrDIlIUHT5J8bRTP5zCnVj5vM3Zw
-	 xahrxNKqZAEqrEvfP6RPOH5g3aspXYF1bu3P+RwwP0LFV9YThAy5nXKWJum7b4ZIhewhc
-	 u+ldljl0h+k+zydo3jRlRYsHOPXX+Qzn87bgMXTqzvNJATdHXY88fLP/2xAA/kEm3bQ==
+	bh=s2Jmo/iKvo6gT3tbGZabmLxzTFHFUs7mMQOXw2iRuss=;
+	b=kxssP4Mb8VafqITioAmBECWgWlkhaDBv7GMHt85ghlq1Vszm8I5kg5+30tPwowoWH4LO
+	 Rr87R3ctpzUuaauPGS5n5l9XkGRRUhj5cWPuaIrdqkkK0Y+8egDBZCahShhKrcwdLO5Vk
+	 CcN8o+frm69qJY8vJnpg37mU22nTUk0qOg3NFVycgY174YeMW5put2j69TBjQkKqqmqce
+	 A291s8lfqcCZXTLm055jBw5FU6va5JN4KLHVBWjU247h0CpoOxkreXYgybOeGAFjZ72r+
+	 P9D8lzG/t+xXuC7Eq+U3cUeo8Ez9jzQCl09qf6M6Vi0p+Okobf2h525Dy/Ong6QSe9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fmmx09yL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POFLJiPg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E677606A32D;
-	Wed, 28 Oct 2026 18:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED511606A32C;
+	Wed, 28 Oct 2026 18:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fmmx09yL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5DC1F01825;
-	Wed, 28 Oct 2026 18:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POFLJiPg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492CD1F01825;
+	Wed, 28 Oct 2026 18:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793210455;
-	bh=CvQLetR2AS9uPHtx//nt/ffC/QH04pAv1gaMExR31lg=;
+	s=korg; t=1793210457;
+	bh=s2Jmo/iKvo6gT3tbGZabmLxzTFHFUs7mMQOXw2iRuss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fmmx09yL57k7Sj7HvGkbjnz/rhFvdHHf97VzbNmjJW4QQAB3GPQlchYQfYVr/xXt8
-	 xWgu8hHBaz1e6sYT+yc3omgFwGoOwV2cRUh1l+lSUgHK91/b+P0P6+1zoFg87O7cp7
-	 8U9Vz7L9hPLqTMuVutYaT9kV1ZQOeS/CxRGUEZOA=
+	b=POFLJiPgo8sZeS32+kGlfd1CUCRxJrGDrcnL0dZlRm08capzZu5KLSg9rWnLaMYRz
+	 zKDqm5Hk6BkgwFXz/EDNzIk4hH2kTwX/pIEzb2+EwnvjXR1PD6EvrWRERumsLE38Ub
+	 ANzC8pjze1FigHNDz3Iawh+u85s4VvEkVE7922e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2eb3d983669d3e49d4fa@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/571] io_uring/rw: end write accounting from ->ki_complete
-Date: Wed, 28 Oct 2026 17:52:58 +0100
-Message-ID: <20261028170008.761945530@linuxfoundation.org>
+Subject: [PATCH 5.15 004/571] device property: fix infinite loop in fwnode_for_each_child_node()
+Date: Wed, 28 Oct 2026 17:52:31 +0100
+Message-ID: <20261028170008.121698248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -69,80 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 796aa0547557e63338657ed1c487906f9fac4c73 ]
+[ Upstream commit 1900692555826753adab8799a1a8d50bb1ee200c ]
 
-Commit b000145e9907 moved both the fsnotify calls and the write
-accounting out of the kiocb completion handler and into the
-io_req_rw_complete() task_work. However, only the fsnotify part actually
-needed to move as it may sleep. Ending the write accounting is just a
-percpu_up_read() on the superblock writers sem.
+When iterate over children of a fwnode that has a secondary fwnode,
+fwnode_get_next_child_node() can enter an infinite loop if the secondary
+fwnode has more than one child.
 
-Deferring it is a problem, because it makes dropping SB_FREEZE_WRITE
-protection depend on the ring owner getting to running task_work. But
-the task may be blocked in freeze_super(), causing it to never get to
-that:
+                       Parent        Child
+      (Primary fwnode)   FWa:   {FWa1, FWa2, FWa3}
+    (Secondary fwnode)   FWb:   {FWb1, FWb2}
 
-  task                             io-wq worker
-  --------------------------------------------------------------
-  io_write()
-    io_kiocb_start_write()         (takes sb_writers, hidden from
-                                    lockdep by __sb_writers_release)
-    write_iter() -> -EIOCBQUEUED
-  ioctl(FS_IOC_SHUTDOWN)
-    bdev_freeze()
-      freeze_super()
-        percpu_down_write()        <- waits for the reader above
-                                   io_write()
-                                     kiocb_start_write()
-                                       percpu_down_read()  <- queued
-                                                              behind the
-                                                              writer
-  <bio completes>
-    io_complete_rw()
-      queues io_req_rw_complete()  <- never runs, task is in D state
+In this case:
 
-End the write from io_complete_rw() instead, and leave only the fsnotify
-calls in task_work.
+ ┌─> fwnode_get_next_child_node(FWa, FWa1)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa1) returns FWa2
+ │
+ │   ...
+ │
+ │   fwnode_get_next_child_node(FWa, FWa3)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWa3) returns NULL
+ │    - fwnode_call_ptr_op(FWb, get_next_child_node, FWa3) returns FWb1
+ │
+ │   fwnode_get_next_child_node(FWa, FWb1)
+ │    - fwnode_call_ptr_op(FWa, get_next_child_node, FWb1) returns FWa1
+ └────┘
 
-Reported-by: syzbot+2eb3d983669d3e49d4fa@syzkaller.appspotmail.com
+This cause fwnode_for_each_child_node() to loop indefinitely, reapeatedly
+output {FWa1, FWa2, FWa3, FWb1, FWa1, ...}.
+
+The root cause is that when the current child (FWb1) belongs to the
+secondary fwnode, calling get_next_child_node() on the parimary fwnode
+incorrectly returns the first child (FWa1) again instead of NULL.
+
+Fix this by dynamically checking the parent fwnode of the current child
+before calling get_next_child_node(). This approach follows the pattern
+established in commit b5b41ab6b0c1 ("device property: Check
+fwnode->secondary in fwnode_graph_get_next_endpoint()").
+
+Fixes: 2692c614f8f0 ("device property: Allow secondary lookup in fwnode_get_next_child_node()")
 Cc: stable@vger.kernel.org
-Fixes: b000145e9907 ("io_uring/rw: defer fsnotify calls to task context")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ placed write-accounting release after __io_complete_rw_common() to accommodate the older retry path’s early return. ]
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260611203537.1786399-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/base/property.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 8747c585a0770..8d5791d8f4031 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2797,7 +2797,10 @@ static void io_req_task_complete(struct io_kiocb *req, bool *locked)
- 
- static void io_req_rw_complete(struct io_kiocb *req, bool *locked)
+diff --git a/drivers/base/property.c b/drivers/base/property.c
+index e490166261d9a..262e43a9e8bad 100644
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -748,18 +748,31 @@ struct fwnode_handle *
+ fwnode_get_next_child_node(const struct fwnode_handle *fwnode,
+ 			   struct fwnode_handle *child)
  {
--	io_req_io_end(req);
-+	if (req->rw.kiocb.ki_flags & IOCB_WRITE)
-+		fsnotify_modify(req->file);
-+	else
-+		fsnotify_access(req->file);
- 	io_req_task_complete(req, locked);
++	const struct fwnode_handle *parent;
++	struct fwnode_handle *child_parent __free(fwnode_handle) = NULL;
+ 	struct fwnode_handle *next;
+ 
+-	if (IS_ERR_OR_NULL(fwnode))
++	/*
++	 * If this function is in a loop and the previous iteration returned
++	 * an child from fwnode->secondary, then we need to use the secondary
++	 * as parent rather than @fwnode.
++	 */
++	if (child) {
++		child_parent = fwnode_get_parent(child);
++		parent = child_parent;
++	} else {
++		parent = fwnode;
++	}
++	if (IS_ERR_OR_NULL(parent))
+ 		return NULL;
+ 
+ 	/* Try to find a child in primary fwnode */
+-	next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
++	next = fwnode_call_ptr_op(parent, get_next_child_node, child);
+ 	if (next)
+ 		return next;
+ 
+ 	/* When no more children in primary, continue with secondary */
+-	return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
++	return fwnode_get_next_child_node(parent->secondary, NULL);
  }
+ EXPORT_SYMBOL_GPL(fwnode_get_next_child_node);
  
-@@ -2807,6 +2810,10 @@ static void io_complete_rw(struct kiocb *kiocb, long res, long res2)
- 
- 	if (__io_complete_rw_common(req, res))
- 		return;
-+	/* ring owner may block in freeze_super() before task_work runs */
-+	if (kiocb->ki_flags & IOCB_WRITE)
-+		io_req_end_write(req);
-+
- 	req->result = io_fixup_rw_res(req, res);
- 	req->io_task_work.func = io_req_rw_complete;
- 	io_req_task_work_add(req);
 -- 
 2.53.0
 
