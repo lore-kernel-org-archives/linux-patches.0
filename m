@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211453;
-	b=V39sjv41AsazyyCrv/FehdXlU8TcNPATVu9Vp0fP5fzDMTYiYBV3CH2ZJ8IM++iO0614
-	 gyPmo+j7d+Y78zV2WuQtPvi3nYxeYGlOmTaVKX669LHBOXC01wesW0X4N1/C5wYtzKfnh
-	 tqspRw1tjZpEGTyCbP/GUx2suuJjKMS99OUpY0vk+3PO2sY924ajCNFmpwubpb55hxSsr
-	 bhlnP9I2twU9WqFIX/GC5JwOhEpincAcgC1zC06riHDRo1DoCeH7XjoBsaruqpVC9CE7d
-	 +FiRQauh4rx8B7EDmo9HUuddO9BjDvjl0UP1L1YYUQIJpejs8pt1xeOmFVyOuAt7fdQ==
+	t=1793211456;
+	b=kjj+nVpX/jCO1CwZAmVdMQIphvB/SaI3ZweIg+iUxsBPeXFPxoG1aEjD2DWp3hm4u4Ih
+	 Lw96DMeVrAU4acfdcG4uwQyIXXadFJpUfJoKHm0FZitUNF/c3ZpEzpPsw0f/8M8ATH4I4
+	 5cFKDNGqOXiVo+GArzWuJKIE2yDhjosBRii21Idknnwj2ubauqA8PGal0AMZ0SNZeRd5F
+	 /jIcqZRBdC2/frD3OnX8FP11WGN4LRghcGXcQgdEK3ho65N9dJtDye+xUPoJ7UFB43AqO
+	 I2bUF2TW7ZibOZTT1XmMU1TbA2UwmQqDiaoCkfK9P/IXxkIostPUcXq7tscE1sZg6yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211456;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fwqyWZ0DbnliVszS5zbMFhdQu29UltdRjtPdgTqi0gA=;
-	b=tT6FdZouAM5Byh+QOpWyBxejf2anyWoyAuQglfgOeZL+Ymb9iSUCgACoOmAZpDfEwBas
-	 2pGsiIcdqVOOC770DeyFQMxZbutrXCTbmg322JsxnqJMvxy37Uobf89flvKLg1adCCuo0
-	 ZcbosN/fUoNODnx8HGKeZNXlaCmmdGFuA6y1jL9wnAcqa5JeB5l0yCumxG8/7OhJtImLW
-	 PRpErzVthNaUVCq3EFzLTN+Tr5UOpPjHWyuXYB4ibOXwJzsxkUqVsr/q+bToRM8XmF7dz
-	 Zy5mPg5BPJ9Exx3g7aBZn1kkaEGiZI5JYB0zOXWHfq9QVauDShXEyPjMPGCxJcjukag==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=l1NrrT+B2njHeBip697B/XnIyRIPDlAdv8EbKv6rako=;
+	b=MlrRYJqolh6HVKilx3obNWY1/OqvUfIsGjeGH5YmcLKA47Jo5WgrzVGu7wXVCpdt4Eh1
+	 kxf4/EPKtm0Whto/l/FGWIkSaLrP9elekr+KTpBAAEX5kifsIiHn2PvepewdeX/riEgnj
+	 qncK0Kgtm/qUQe3xiq02cAi2xsr5ZUuBG3BXQKzyuKGQ3CEdZQy0MHpeOCEz2Nav+2AiS
+	 bn8NHUwL9sBYIBKtZMX2s++rZkHm6FT5l5zCyTELy6l4jx5+OdLleT89+gv6SsBhK8atU
+	 2Jpk1nKYWYguzSnRKICZho3f2R2/ila38bGYAQFtPvypdhn3SbE3jvLZh6fKwQZKKqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1UTw5IF7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQA35deX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D60A606A31C;
-	Wed, 28 Oct 2026 18:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEAE606A31E;
+	Wed, 28 Oct 2026 18:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1UTw5IF7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAE21F01825;
-	Wed, 28 Oct 2026 18:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQA35deX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798531F01825;
+	Wed, 28 Oct 2026 18:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211453;
-	bh=fwqyWZ0DbnliVszS5zbMFhdQu29UltdRjtPdgTqi0gA=;
+	s=korg; t=1793211456;
+	bh=l1NrrT+B2njHeBip697B/XnIyRIPDlAdv8EbKv6rako=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1UTw5IF7HJQSJgxAElFA3Cgaecfn6moT21fIez5iTze3VYMoaiVAm9Baga3gE9faT
-	 b06nzfk8WN11XHoTeVV6WYGCjj2u468IYq51UBnse+jAgxAVeAUPVhU1s1pGLQvPbR
-	 k0O8w+NaoPlJsy7jo4HUET8uK1ZZ/Xy17oAcvSpU=
+	b=XQA35deX3gIO6HNo+2Gg+j6DzAf5WFVyo0SsCzMisWVO35+3l7oinDUuA9FcmwBGW
+	 Xgmz1om5kJaKVpmLNUhqpCv6wdoc2gUmB5YK8bdZycMbqFTYu3d3Dt5OfBcXshPe1L
+	 pvoolploREsLwk3w+WqabSJKrmeZF9AcWID2AKdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 5.15 384/571] drm/vc4: drain the hangcheck timer and works on V3D unbind
-Date: Wed, 28 Oct 2026 17:58:51 +0100
-Message-ID: <20261028170017.126111464@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.15 367/571] mmc: cavium-octeon: destroy slot platform devices on remove
+Date: Wed, 28 Oct 2026 17:58:34 +0100
+Message-ID: <20261028170016.723887241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -62,72 +61,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 94cf5971b1d04c6382437387c4dc3836cc7a1437 upstream.
+commit 0f4d4424fc1d651ec3fa63a0a8060ba9087eb0ec upstream.
 
-Nothing stops the hangcheck timer that submitted jobs arm, or the
-job_done_work that the render-done interrupt queues, at teardown:
-vc4_irq_disable() cancels only overflow_mem_work, and vc4_gem_destroy()
-runs from the drm-managed release, after vc4_v3d_unbind() has already
-uninstalled the V3D interrupt and cleared vc4->v3d. A timer still armed
-by then reads V3D registers through the NULL vc4->v3d pointer, and the
-late callbacks run on the vc4_dev embedding them after it has been
-freed.
+octeon_mmc_probe() creates host->slot_pdev[i] with
+of_platform_device_create(), while octeon_mmc_remove() does not destroy
+the child platform devices.
 
-Drain them in vc4_v3d_unbind(): shut the timer down and cancel
-reset_work before the interrupt is taken down, because its
-vc4_irq_reset() re-enables it, then flush job_done_work so that
-completions queued at teardown still release their jobs.
+The probe failure path removes each MMC slot and destroys its associated
+platform device, but the normal remove path only removes the MMC slot.
+As a result, the child platform devices remain registered after the
+Octeon MMC controller is removed.
 
-This issue was found by an in-house static analysis tool.
+Destroy each slot platform device during removal after cleaning up the
+corresponding MMC slot, matching the probe failure cleanup path.
 
-Fixes: d5b1a78a772f ("drm/vc4: Add support for drawing 3D frames.")
-Cc: stable@vger.kernel.org # 6.2+
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260915095103.156007-1-fanwu01@zju.edu.cn
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+This issue was found by manual code inspection.
+
+Fixes: 01d95843335c ("mmc: cavium: Add MMC support for Octeon SOCs.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_v3d.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mmc/host/cavium-octeon.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -9,6 +9,7 @@
- #include <linux/component.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
-+#include <linux/timer.h>
+--- a/drivers/mmc/host/cavium-octeon.c
++++ b/drivers/mmc/host/cavium-octeon.c
+@@ -300,9 +300,12 @@ static int octeon_mmc_remove(struct plat
+ 	u64 dma_cfg;
+ 	int i;
  
- #include "vc4_drv.h"
- #include "vc4_regs.h"
-@@ -476,8 +477,15 @@ static void vc4_v3d_unbind(struct device
+-	for (i = 0; i < CAVIUM_MAX_MMC; i++)
++	for (i = 0; i < CAVIUM_MAX_MMC; i++) {
+ 		if (host->slot[i])
+ 			cvm_mmc_of_slot_remove(host->slot[i]);
++		if (host->slot_pdev[i])
++			of_platform_device_destroy(&host->slot_pdev[i]->dev, NULL);
++	}
  
- 	pm_runtime_disable(dev);
- 
-+	/* A straggler vc4_reset() re-enables the interrupt. */
-+	timer_shutdown_sync(&vc4->hangcheck.timer);
-+	cancel_work_sync(&vc4->hangcheck.reset_work);
-+
- 	vc4_irq_uninstall(drm);
- 
-+	/* Flush rather than cancel, so queued completions release their jobs. */
-+	flush_work(&vc4->job_done_work);
-+
- 	/* Disable the binner's overflow memory address, so the next
- 	 * driver probe (if any) doesn't try to reuse our old
- 	 * allocation.
+ 	dma_cfg = readq(host->dma_base + MIO_EMM_DMA_CFG(host));
+ 	dma_cfg &= ~MIO_EMM_DMA_CFG_EN;
 
 
