@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209565;
-	b=0ZdTARGBuGhzm5qUCzjgyn03IkkTyfVZXEIbHYls0CuLXRnc0yw+9R0sDX5ZdSVK3KqJ
-	 /BpSP4OnVJsN3vyvEi22PlxwMp7AN7DCp/bwIW/VnLofMU855r5ru2D8suWxwbsibitYZ
-	 I2Vr1NA4LzYDYVrBA8H5mc746U6v4T4oLr5TLy3eFCAiyfRo+vdWLu1um5mChZw+f8kBs
-	 JuOtV7skS/g2hHO9KkZo2+5XFDPC6hZLwr9eqQR4/4b94tAdTcbGeYHbYXHZnEocZOLH+
-	 iEj3KRuUMoOluINExaTspbm4wNfbvWECzJKxJHTEznk08Jgm9tK6iCma7ck1sT+T4lg==
+	t=1793209568;
+	b=i9l+vMjk1RSTkwDGuL8EStfrI37vT1mm/02EC7NCMGEqfkvsolsDEkomCtNCF7nJnb5P
+	 NaJneMkWa8JTyRHPIivvOXjxvA0K+ZhxHTSa7jUs9Zx3HXtS2jj5uwexeWgiC4Cn+EGaE
+	 oiqLmZL4BVqiuHKE1D2faNVQK5gwCrx9TkIYEULNw6vHyUNtAkwCiNFl0lsBI3NfFDTDy
+	 epelw8vWF47Y9yfdIPN+0o3H2EkXbcVlTjY96CpdPPleeEJZwi6vyeo0ObtbIPFuZEpOd
+	 BpLinSy52D85Obr7fMtm0L9boWTuwkYcmh85UrBfRPSPrh8MnNb8yk0P2ePMzRm7jwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tm9coUt8jdhNC0XwijNIYd+RPn1Y61U6hfbOzodh0Ss=;
-	b=09etXaZg10EXNHIfCLxrEr4k18YXASRiPYeuaCg//rwUcKhyIQXWutww9ASppyLWqQTc
-	 B2LtzH9qGnzSsGqw1w5sI7FrTLRizGJut96GNw8Xx62HbA9kxeRLxXDgWbzTCMRjRq418
-	 9rfR5M2ezF34IFlAqANSQXFHeoznfRx9WWOCWd+0r44FpEbedk408+Ye6GjsltzQuv59e
-	 tIOipDWcNHmD75WVbwn12hIoy0No71+inF/Ad5wu5lcXaiIsTNzf1Ox8l/qh5KppbhiQ8
-	 wO3FnCsQxPEE+2GkDQP/vf1GNZY6apvW+fsFp92PRbu7hexeTgR02Ee6OLgc7/Z2x6A==
+	bh=7pImRQHxedjHPPQDtuRmVDXiNIia2MGWCh/UoyMB4gk=;
+	b=pmkf2QBW8lAjEFJ+H4CW2H8fTtrcy0/FBA6UXQm0av43yLedbtO8RdzjeH7IFIEcShUC
+	 1l9udzRWDpC5aUxB5Yv4Zs7KVxOnyrkei40LN/bcr1h5/vbxVlarUZ3PrFJeTUhU+IP+Z
+	 l1kAmBgvlzOYea7RovYr9WmGR6aw3gI9JtM8bnXj1Q4lMaIce2/kVAn2rr6jSQPbvj825
+	 inplNs5gxSEkWJCqw6UT6tlm76LORjVNPR40ohCjSbYESgkqZtTlfIxokFuK5umbeW+y2
+	 irOhkseX0lf2hepacxDcH/j8ng/cqzU3nvCISAtOC415a8R+nQVAHjkeYLqTeiYLztg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=azqzJxzI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F/4esZZ4";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955A3606A31D;
-	Wed, 28 Oct 2026 17:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A003606A31D;
+	Wed, 28 Oct 2026 17:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=azqzJxzI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64131F01825;
-	Wed, 28 Oct 2026 17:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F/4esZZ4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7341F01825;
+	Wed, 28 Oct 2026 17:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209565;
-	bh=tm9coUt8jdhNC0XwijNIYd+RPn1Y61U6hfbOzodh0Ss=;
+	s=korg; t=1793209568;
+	bh=7pImRQHxedjHPPQDtuRmVDXiNIia2MGWCh/UoyMB4gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=azqzJxzIN9Vd2+LcRlDf3p007sTsGQ0VBix8r7wuiCQNkNVjmcCFuoPhLfT4l5LZZ
-	 QO/9RwqvXLSisTPW1ekC0VsG8tUdqW+cc4ZPGrsv5KOUGWJlvzumCB0QVVuCe67Txt
-	 FeW7no87ulrOMs6VtgtHPcPKCzYCvHVFLBMZ8YXY=
+	b=F/4esZZ4dmBJOmOVBxRr51CykYQig8JS7mylawebAKauvdFTLQsa3e7/M11KI0GTM
+	 wIt2bKmrF8lyaiK6ZR7wq3lejv0bu121YHxf5KyWkHbe5rnJjUVezdr7yS6Gjjm9xU
+	 RGkLb5+6Yo1TvK9n5a2Y98l0M56B/ClLfxSme06Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 473/516] ipv4: avoid divide by zero in fib_rebalance
-Date: Wed, 28 Oct 2026 18:00:25 +0100
-Message-ID: <20261028170014.687165675@linuxfoundation.org>
+	Hao Sun <sunhao.th@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Sasha Levin <sashal@kernel.org>,
+	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>
+Subject: [PATCH 5.10 474/516] bpf: Reject variable offset alu on PTR_TO_FLOW_KEYS
+Date: Wed, 28 Oct 2026 18:00:26 +0100
+Message-ID: <20261028170014.710458875@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -70,43 +70,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Hao Sun <sunhao.th@gmail.com>
 
-commit 5046d2880fec7d49ebed2fd2866747ee1d06ad71 upstream.
+[ Upstream commit 22c7fa171a02d310e3a3f6ed46a698ca8a0060ed ]
 
-fib_rebalance() computes the total eligible nexthop weight in one pass
-and programs upper bounds in a second pass. A concurrent change to
-ignore_routes_with_linkdown can make the first pass return zero while
-the second pass sees an eligible nexthop, resulting in division by zero.
+For PTR_TO_FLOW_KEYS, check_flow_keys_access() only uses fixed off
+for validation. However, variable offset ptr alu is not prohibited
+for this ptr kind. So the variable offset is not checked.
 
-If the first pass reports a zero total, set each nexthop upper bound to
--1 and skip the division. This matches the IPv6 fix in commit
-d2c26c2911dd ("ipv6: avoid divide by zero in rt6_multipath_rebalance")
-and preserves the lock-free rebalance path.
+The following prog is accepted:
 
-Fixes: 0e884c78ee19 ("ipv4: L3 hash-based multipath")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260827182514.4667-2-zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  func#0 @0
+  0: R1=ctx() R10=fp0
+  0: (bf) r6 = r1                       ; R1=ctx() R6_w=ctx()
+  1: (79) r7 = *(u64 *)(r6 +144)        ; R6_w=ctx() R7_w=flow_keys()
+  2: (b7) r8 = 1024                     ; R8_w=1024
+  3: (37) r8 /= 1                       ; R8_w=scalar()
+  4: (57) r8 &= 1024                    ; R8_w=scalar(smin=smin32=0,
+  smax=umax=smax32=umax32=1024,var_off=(0x0; 0x400))
+  5: (0f) r7 += r8
+  mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1
+  mark_precise: frame0: regs=r8 stack= before 4: (57) r8 &= 1024
+  mark_precise: frame0: regs=r8 stack= before 3: (37) r8 /= 1
+  mark_precise: frame0: regs=r8 stack= before 2: (b7) r8 = 1024
+  6: R7_w=flow_keys(smin=smin32=0,smax=umax=smax32=umax32=1024,var_off
+  =(0x0; 0x400)) R8_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=1024,
+  var_off=(0x0; 0x400))
+  6: (79) r0 = *(u64 *)(r7 +0)          ; R0_w=scalar()
+  7: (95) exit
+
+This prog loads flow_keys to r7, and adds the variable offset r8
+to r7, and finally causes out-of-bounds access:
+
+  BUG: unable to handle page fault for address: ffffc90014c80038
+  [...]
+  Call Trace:
+   <TASK>
+   bpf_dispatcher_nop_func include/linux/bpf.h:1231 [inline]
+   __bpf_prog_run include/linux/filter.h:651 [inline]
+   bpf_prog_run include/linux/filter.h:658 [inline]
+   bpf_prog_run_pin_on_cpu include/linux/filter.h:675 [inline]
+   bpf_flow_dissect+0x15f/0x350 net/core/flow_dissector.c:991
+   bpf_prog_test_run_flow_dissector+0x39d/0x620 net/bpf/test_run.c:1359
+   bpf_prog_test_run kernel/bpf/syscall.c:4107 [inline]
+   __sys_bpf+0xf8f/0x4560 kernel/bpf/syscall.c:5475
+   __do_sys_bpf kernel/bpf/syscall.c:5561 [inline]
+   __se_sys_bpf kernel/bpf/syscall.c:5559 [inline]
+   __x64_sys_bpf+0x73/0xb0 kernel/bpf/syscall.c:5559
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+Fix this by rejecting ptr alu with variable offset on flow_keys.
+Applying the patch rejects the program with "R7 pointer arithmetic
+on flow_keys prohibited".
+
+Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
+Signed-off-by: Hao Sun <sunhao.th@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/20240115082028.9992-1-sunhao.th@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -851,7 +851,7 @@ static void fib_rebalance(struct fib_inf
- 	change_nexthops(fi) {
- 		int upper_bound;
- 
--		if (nexthop_nh->fib_nh_flags & RTNH_F_DEAD) {
-+		if (!total || nexthop_nh->fib_nh_flags & RTNH_F_DEAD) {
- 			upper_bound = -1;
- 		} else if (ip_ignore_linkdown(nexthop_nh->fib_nh_dev) &&
- 			   nexthop_nh->fib_nh_flags & RTNH_F_LINKDOWN) {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 50bcf15eaa171..9eda0b168a7c7 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6284,6 +6284,10 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
+ 		verbose(env, "R%d pointer arithmetic on %s prohibited, null-check it first\n",
+ 			dst, reg_type_str[ptr_reg->type]);
+ 		return -EACCES;
++	case PTR_TO_FLOW_KEYS:
++		if (known)
++			break;
++		fallthrough;
+ 	case CONST_PTR_TO_MAP:
+ 		/* smin_val represents the known value */
+ 		if (known && smin_val == 0 && opcode == BPF_ADD)
+-- 
+2.53.0
+
 
 
