@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216940;
-	b=agCdAj3d/0aX0XjfbB7X/1ruNGEF/+SFOuJB+yUlu1riedUe06bxUsFs8rZAA0dx9UJ9
-	 iEpEY7vqgrqOdpTbPjl5uB07jDyjKv2ppGJNjpzQbENd0JXoZOOyoDPuAH5SSeGWgtRU3
-	 oPRuMCIwgrUEx/7pPTJ9TX8BovsE2/K2P9QHKsJ/oG5TXTe4BB/WNk0jFYXWAN5eus6oK
-	 QSE5WdVBcom0C13lbGtkabxY25PYsw3qMc+B6Psw7OVYl651vx51/JFhaYb7YPgV0miJe
-	 rAu7NliD1bWasPwmXtxS5JLET3/tLuHJcUeUhq76s1UnmVr6OTd8Os4NXxJkxj+x17w==
+	t=1793216942;
+	b=5QjPYI4s9A4IGOobNY5MWZSoRN4NL8vIA9uzgqD2ncm5Jk1ptEwtmANmcyRWBO2Qrnlu
+	 zpgudDtwIvKBoh4jBGN1NZzfIZoDV9q6iO5HlJcQsvHefmf4M8chMsWB85Rcp8/j/U5VX
+	 UUz/0aKtu34lEBxD9RDqFKdMDypV5bSBMwAaRzwFzYdV5Mcy1S2L8+GCvHDudIwKliGIJ
+	 +s+Q2klviUwMWcC6bwu+nDAWWD5RT/MoSdhsRztfRYdOO9V3hUjetxKVLPo70gIyecVDp
+	 E0QOrN6eZosxSoFXzGr53XrpvkvXVlFAkneS3Y0i/PZXX8hNTfQvUVcZGcKit0WO1EA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216942;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MbIqIUPRwu2vCOyRM1Nx6lw0d2oVUMP/EFDNEe8CIEY=;
-	b=uNH2po4/BVLSU+sfc0IKUL1Pr81blFNWYhipACrqIRaysTAxAhxttUsg2nws1NUVgZJE
-	 mO+mv/IzCmqOjxeIMgJhoy1B/jHRe1ZgRZ/ZxGJ9zGZ/xypBHm37HOelnXzUviPnsb0sV
-	 +4CtW0pLSK+hlT9VnLEG5x5+fvbb32rBH7JsmmLBKxKkkUj38hyHaCkHrXktciGYcpiiG
-	 CRZ6t8xdU+3IPDlmsXtC6RqcxIW+oXMrGSAZuXwPTUuGSfFrlnL6WX/nn2erHF8qero4Y
-	 zmja1RPYdcmR/24qCzm2RM4c322hXiOhSKWztcLDX14y5rDxMI5Vsklu4/TPM3pzzlQ==
+	bh=BuQyNnvWnUZv4hsOHgEMDojjF7Y8URZt+Amn2VibRSY=;
+	b=ZSJdS+Cr+nY0OAyjNEM66PTc8wSnSACEwoGRlQPbyze+bUUdaQmyF+ynZAChv45AeTBF
+	 t0+ksTH6oYh7qGjcs4ICnLiOd9pLgWiAirdXQa7aVZIJNOFfH1T3TWti3SBbSkRzZi0y6
+	 ZnVPuRRDOVKdY+SFSibxz/kvRQ6iL1r9vWRUt3wvCNPqzDGxqZKmqoeeCkQErrp0OQg38
+	 uPEzYt2UplNIcbtxZVkBLKOl5FzNtuVs8qmFZl2eDcFtBj1LPqwLq1lf6kQNtlTjDzPJU
+	 o+5CBPY+cfZ+Y7eZrVqcwoCBhYURQJit1rjTPlCG1SfEE8lRbQmUg/QoJYsrR1nd+0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQm7RCJa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TtAML0bv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71C3606A324;
-	Wed, 28 Oct 2026 19:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9497E606A336;
+	Wed, 28 Oct 2026 19:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQm7RCJa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A901F01825;
-	Wed, 28 Oct 2026 19:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TtAML0bv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58401F031E1;
+	Wed, 28 Oct 2026 19:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216939;
-	bh=MbIqIUPRwu2vCOyRM1Nx6lw0d2oVUMP/EFDNEe8CIEY=;
+	s=korg; t=1793216942;
+	bh=BuQyNnvWnUZv4hsOHgEMDojjF7Y8URZt+Amn2VibRSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vQm7RCJacR6tVO9z+856V4wRnze1bQ7oO+x2ZPDNSA+mWyeSavi4xTL/wPHdYupXv
-	 ee6RLBTShtUH9pQftR/mGX98yNZcyYQFpqun2cqazOdj/8hLhaJvNFPCzX4roxavkp
-	 488A2SRa3VdX3a3P6ZJu25xFORgfqhxs8d0uNXWU=
+	b=TtAML0bvx25N8Kcv0FPTy9W9pr46RwcoQZp/dPrJnDaCJkiRT5e0BrZ7YBNlBaoxa
+	 YIgSEW9SD0Is+oZXgjShGJVM+XILYMwjxaBzuR4e6LoRKs3h3mXAQQjTfWAPMnRdnP
+	 a9Y1QeUWdbE5n1w+qTYr5Tn2RKH0FeKsv2k9fjks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1730/1887] gpio: mxc: fix wakeup_pads bit operations
-Date: Wed, 28 Oct 2026 18:03:46 +0100
-Message-ID: <20261028170538.823529571@linuxfoundation.org>
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
+	Ian Kent <raven@themaw.net>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.1 1731/1887] autofs: ignore notification errors from a replaced pipe
+Date: Wed, 28 Oct 2026 18:03:47 +0100
+Message-ID: <20261028170538.845781460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,83 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 170aeff46fb54f41545c85a72aec525aebc79d44 ]
+commit 65676cd4203c0e41a94caf54080a7f0a95434bda upstream.
 
-gpio_set_wake_irq() can be called concurrently for different pins on
-the same port. The writer-vs-writer race is the concern: two concurrent
-gpio_set_wake_irq() calls for different pins on the same port both do
-a non-atomic read-modify-write on the same wakeup_pads word. The old
-|= and &= compile to separate load/modify/store instructions that can
-interleave, losing one CPU's update.
+autofs_notify_daemon() takes a reference to the current notification
+pipe under wq_mutex, then drops the mutex before writing the request. The
+write can block while the daemon enters catatonic mode and installs a
+replacement pipe.
 
-assign_bit() uses an atomic RMW instruction, so concurrent writers to
-different bits in the same word are safe.
+If the old pipe's reader is then closed, the delayed write returns -EPIPE
+and the generic error path enters catatonic mode again. That transition
+acts on the current superblock state, closes the replacement pipe, and
+releases the new daemon generation's wait queues.
 
-The reader side (for_each_set_bit in noirq_suspend, wakeup_pads > 0)
-runs in noirq context where no concurrent writer can execute, so
-reader atomicity is not needed.
+Only enter catatonic mode when the pipe which failed is still the current
+pipe. Factor the already-locked transition so the identity check and state
+change are atomic with respect to another replacement.
 
-wakeup_pads is a u32, while assign_bit() operates on unsigned long
-pointers. On 64-bit platforms, this causes an 8-byte read-modify-write
-on a 4-byte field, corrupting the adjacent is_pad_wakeup. So change
-wakeup_pads to unsigned long and reorder to avoid wasting words.
+This was reproduced on v7.3-rc5-337-gff47652a4b66c in a local QEMU guest.
+An unprivileged UID 65534 lookup filled the old packet pipe before a
+normal CATATONIC/SETPIPEFD restart. On the unmodified kernel, the new pipe
+received HUP and both a pending victim lookup and a later lookup failed
+with ENOENT in two out of two fresh-mount runs.
 
-And fix the enable/disable path unconditionally sets/clears the
-wakeup_pads bit even when enable_irq_wake()/disable_irq_wake() fails.
-Only update the bit on success.
+With this change, the new pipe remained active, received an intact
+304-byte request, and both victim lookups completed in two out of two
+runs. Normal lookup and restart-without-a-blocked-writer controls passed.
+No KASAN, oops, refcount, or lock diagnostic was observed. A source
+reproducer and complete local logs are available privately on request.
 
-Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20261013-gpio-mxc-cleanup-v7-3-c4d769587d3e@nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The demonstrated impact is limited to denial of a shared autofs service
+during a legitimate daemon restart. No memory corruption, information leak,
+privilege escalation, or code execution primitive was observed.
+
+Fixes: 8d7b48e0bc5fa ("autofs4: add miscellaneous device for ioctls")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
+Link: https://patch.msgid.link/20261007173542.593624-1-tjdqudcks0424@naver.com
+Acked-by: Ian Kent <raven@themaw.net>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mxc.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/autofs/waitq.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
-index c6e8c0d35723e..36dcd082ef893 100644
---- a/drivers/gpio/gpio-mxc.c
-+++ b/drivers/gpio/gpio-mxc.c
-@@ -70,8 +70,8 @@ struct mxc_gpio_port {
- 	unsigned long both_edges;
- 	struct mxc_gpio_reg_saved gpio_saved_reg;
- 	bool power_off;
--	u32 wakeup_pads;
- 	bool is_pad_wakeup;
-+	unsigned long wakeup_pads;
- 	u32 pad_type[32];
- 	const struct mxc_gpio_hwdata *hwdata;
- };
-@@ -329,16 +329,18 @@ static int gpio_set_wake_irq(struct irq_data *d, u32 enable)
- 			ret = enable_irq_wake(port->irq_high);
- 		else
- 			ret = enable_irq_wake(port->irq);
--		port->wakeup_pads |= BIT(gpio_idx);
- 	} else {
- 		if (port->irq_high && (gpio_idx >= 16))
- 			ret = disable_irq_wake(port->irq_high);
- 		else
- 			ret = disable_irq_wake(port->irq);
--		port->wakeup_pads &= ~BIT(gpio_idx);
- 	}
-+	if (ret)
-+		return ret;
+--- a/fs/autofs/waitq.c
++++ b/fs/autofs/waitq.c
+@@ -12,15 +12,13 @@
+  */
+ static autofs_wqt_t autofs_next_wait_queue = 1;
  
--	return ret;
-+	assign_bit(gpio_idx, &port->wakeup_pads, enable);
+-void autofs_catatonic_mode(struct autofs_sb_info *sbi)
++static void autofs_catatonic_mode_locked(struct autofs_sb_info *sbi)
+ {
+ 	struct autofs_wait_queue *wq, *nwq;
+ 
+-	mutex_lock(&sbi->wq_mutex);
+-	if (sbi->flags & AUTOFS_SBI_CATATONIC) {
+-		mutex_unlock(&sbi->wq_mutex);
++	lockdep_assert_held(&sbi->wq_mutex);
++	if (sbi->flags & AUTOFS_SBI_CATATONIC)
+ 		return;
+-	}
+ 
+ 	pr_debug("entering catatonic mode\n");
+ 
+@@ -40,6 +38,21 @@ void autofs_catatonic_mode(struct autofs
+ 	fput(sbi->pipe);	/* Close the pipe */
+ 	sbi->pipe = NULL;
+ 	sbi->pipefd = -1;
++}
 +
-+	return 0;
++void autofs_catatonic_mode(struct autofs_sb_info *sbi)
++{
++	mutex_lock(&sbi->wq_mutex);
++	autofs_catatonic_mode_locked(sbi);
++	mutex_unlock(&sbi->wq_mutex);
++}
++
++static void autofs_catatonic_mode_for_pipe(struct autofs_sb_info *sbi,
++					   struct file *pipe)
++{
++	mutex_lock(&sbi->wq_mutex);
++	if (sbi->pipe == pipe)
++		autofs_catatonic_mode_locked(sbi);
+ 	mutex_unlock(&sbi->wq_mutex);
  }
  
- static int mxc_gpio_init_gc(struct mxc_gpio_port *port, int irq_base)
--- 
-2.53.0
-
+@@ -170,7 +183,7 @@ static void autofs_notify_daemon(struct
+ 		autofs_wait_release(sbi, wq->wait_queue_token, ret);
+ 		break;
+ 	default:
+-		autofs_catatonic_mode(sbi);
++		autofs_catatonic_mode_for_pipe(sbi, pipe);
+ 		break;
+ 	}
+ 	fput(pipe);
 
 
