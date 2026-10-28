@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207966;
-	b=5fPkyaB6XjTC571IZb9roP8Nn3WO4trN+WCybbRb3pue0lzfzo0+PbYLrutjiLPeXFi/
-	 uEZTWkdPAyLd+x/zuLa73D7BIO1MuyoyUK2iFKnJ+jHWeaTJUillVx+QWaavemrLfQp3l
-	 MH/yCUlDonn7I2AOURg91Nv9MmGaqWiUJDJjOyza52DLmJJNkdaqNbbLSR4kTXBWlCeik
-	 PZnNLZhrJdGpCurF7Q1zu2ys/w5+lXFQAav6ry4kSVVM1UFBU1iE95zhUM5UNXOZ+BI6O
-	 79zmvckeRMg7YBALYpiE+U1tS4dRsQPQW4cJa1KJQjPgWnEVFe6VR4ymwu2CpufsXQw==
+	t=1793207969;
+	b=Ltk7VIvG/cnxV1jERyOxzDDNDs6eSueIgBRlzh42Pp86/VZ3mzaC2Ntbbbzh3ke/qmKd
+	 bbAsyTZJ2mcGCNZL7ijqiXoVopcTkXtRx+183eggv3zQ4lCMd6cd0T2nxVw7T7vtKg2Aq
+	 bOMZ9m2RN4Sx271NqEV4gD2wP2i7vQSaKjyp2hy7y5Ukm2nrYsFHYwOyzk3nB6L/Wwz57
+	 Ule9big8Ey/OesSqG+F1ULTPCxG4LbYj7sEBDIBZYWVCBGyxy/m5mTwUSqA5LQraJBUod
+	 GCXljzyB4eouKQnX3VjsC+EO9duxJNkuDamIoxMAtXIyfnPcJB+6L5MbJwrXImkS/kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207966;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207969;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SGnR+FILBBz5papwOqQbOIimsKg0ssS0i1FvMzAZurk=;
-	b=R/e4IzV9t1DDsUxOl4fvaYOMAboi9DJo1cCv29VP8CC1R0ClxxKLtMXVHCj9CNV/oEHP
-	 eZ63m/ofFbazF29qHv/+vN94iiJV7OLnpp9u5nRNOCdyQp1oXi1Rxu9vyABoZ5xK7Jxtc
-	 v67adkyfKwUehhY/blexDWiS09myD4Qx0V1YS5t9tP7pJlP23Gvsls9pdXIhMttkNnB+i
-	 fYn3ZOiuZsXPyAMo+n48CesRs0WQhv1orDF1bSft/PDiJJNdvvSxHd6vZP+6h35FhdcSO
-	 17AprwlbNwCWiR/cjtqUvdTMq0iHr347rJWZN3xUpeBstYw5CwYxUJCv0StmZquOAug==
+	bh=/7GojxFdk1AV2ydRZ/XHO4YDW3g+aQpRKSId5kW8Lzk=;
+	b=iWx2h4tWrqUZwPsOr5IhDwRNiPn1VFFQDSCZnisexr9Fd/BwnXWByqeKZy7K8HIWNq8k
+	 BK+92tspLG2dEOd+trw6dB+0WXjGK0b1y+vwlS70eu4wqj+7eL6XpRrbunNvDLAMmbkgA
+	 29GoJ5rGDX19sa9RMc03ZxB644kQhVXUMXqNbkWv+8QkZCMIPUFg0nKJAcXWdthFWpgsK
+	 FEVm33hsCXHFWB2AVIJ25uxPMwfH7zQ7ieWZLYNt2/d+QWTOHU9k2ThlVdtGk/r/tMwxH
+	 O1+CMXFraDqeYXgFzt8xkyg5H+YtUU20bo4k9Hvv/nPEooMQ+ydvGxwY8PtOPtPTLFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQ3is9S1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ry22rizY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E7A606A31F;
-	Wed, 28 Oct 2026 17:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25145606A31D;
+	Wed, 28 Oct 2026 17:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQ3is9S1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6981F01825;
-	Wed, 28 Oct 2026 17:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ry22rizY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C8C1F01825;
+	Wed, 28 Oct 2026 17:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207966;
-	bh=SGnR+FILBBz5papwOqQbOIimsKg0ssS0i1FvMzAZurk=;
+	s=korg; t=1793207969;
+	bh=/7GojxFdk1AV2ydRZ/XHO4YDW3g+aQpRKSId5kW8Lzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CQ3is9S1VcmY4tbufMSxaMQA0847qgDPwpWMpTZDB2HGZN+CiGXqOWeEw9S73Q2Xp
-	 Kh/pcpmXx0lQnaNNuyENlw/kmbdbFlxkhkE5ks7iYQ9WVMkKH9E7CSaVlNiyGKwjvw
-	 0f4t9oUeYe5btCp3tsjvBrt/A2YW6Th6fQOY2na4=
+	b=Ry22rizYilQxd0a9sSUx/HYTyKEVKOX7renEdBo/MU6fYlqaJ+n7GwmL/v8iYEgq8
+	 MrGkEZoELZh67Nf9+rq1AMjEgLhbB+IS4hBfk6bbaITb544LoWrMhb0U17EZfM4NVO
+	 pcJuvQ2HHnY/JAikng0F+a62PB5jg65AiS1Sf6RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 202/247] io_uring/poll: dont lose a cancel as io-wq arms poll
-Date: Wed, 28 Oct 2026 18:00:05 +0100
-Message-ID: <20261028165952.203826802@linuxfoundation.org>
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 176/247] ax25: dont accept frames on a device that is going down
+Date: Wed, 28 Oct 2026 17:59:39 +0100
+Message-ID: <20261028165951.590840992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,104 +67,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-Commit 6d2d4c2530e95ff6ddeb98195d49d99dbca14369 upstream.
+ax25_rcv() creates a connection on an incoming SABM, for a listening
+socket or for a callsign registered by ROSE or NET/ROM. Like the ones
+made by ax25_send_frame(), it holds no reference on the ax25_dev and
+relies on ax25_kill_by_device() to detach it before the ax25_dev is
+freed. If it is added to ax25_list after ax25_kill_by_device() has
+walked the list, it is left pointing to a freed ax25_dev.
 
-A request on a pollable file that was forced to io-wq is issued without
-blocking there. If that ends in -EAGAIN, io_wq_submit_work() arms poll
-for it and returns. It looks at IO_WQ_WORK_CANCEL once, before it issues
-the request.
+ax25_rcv() is called from the packet type handler, under
+rcu_read_lock(), and ax25_kill_by_device() now clears device_up and
+waits for the RCU readers before its walk. Drop the frame when
+device_up is clear: a frame that gets past the test is fully processed
+before the walk starts, and none is processed behind it.
 
-Somebody who wants to cancel the request in between finds it running:
+The window is much smaller than for ax25_send_frame(): the core already
+drops what is received on a device that is no longer running, so only a
+frame that was queued before the device was stopped and is processed
+late can hit it. I could not exercise it. The change was checked for
+regressions only: incoming connections still work in the ROSE tests of
+the previous patch, where every AX.25 link is opened by an incoming
+SABM on one side.
 
-  io-wq worker                          io_try_cancel()
-  io_wq_submit_work()
-    IO_WQ_WORK_CANCEL isn't set
-    io_issue_sqe() = -EAGAIN
-                                        io_async_cancel_one()
-                                          sets IO_WQ_WORK_CANCEL
-                                          signals the worker
-                                          = -EALREADY
-                                        io_poll_cancel() = -ENOENT
-                                        ...
-                                        = -ENOENT
-    io_arm_poll_handler() = IO_APOLL_OK
-    return
-
-Nobody looks at the flag again, and the signal doesn't matter to a
-worker that doesn't sleep. The request is armed as if nothing had
-happened:
-
- - a linked timeout completes with -ENOENT, and the request it was
-   meant to limit waits for as long as it takes.
- - IORING_OP_ASYNC_CANCEL returns -EALREADY, and the request stays.
- - IORING_REGISTER_SYNC_CANCEL waits for the request to complete if it
-   gets -EALREADY. Since commit 5623eb1ed035 ("io_uring/tctx: add
-   separate lock for list of tctx's in ctx") it doesn't sleep but spins,
-   so its next attempt finds the armed poll.
-
-The same goes for a multishot poll, recv or accept that is armed from
-io-wq.
-
-With a read of an empty pipe, IOSQE_ASYNC, and a linked timeout of 5ms
-or a cancel in the same submission, in a guest that is slow enough (TCG,
-KASAN), the request is lost in 21 of 24 rounds of 40 or 100 attempts.
-
-While it arms poll from io-wq, __io_arm_poll_handler() owns the request.
-Look at the flag once the request is in the hash table. The table is
-searched and the request is added with ->uring_lock held, and the flag is
-set before the search. So either the search finds the request, or it
-came first and the flag is seen. With the request marked as cancelled, the
-task work that is queued, right away or because ownership can't be
-released, fails it with -ECANCELED.
-
-What the canceller is told doesn't change. In this window a linked timeout
-still completes with -ENOENT rather than -ETIME, a cancel request with
--EALREADY, and one with IORING_ASYNC_CANCEL_ALL or _ANY with a count that
-doesn't include the request. But the request is cancelled, so what is new
-is a request that completes with -ECANCELED after such a result.
-
-This doesn't help in two cases:
-
- - IORING_ASYNC_CANCEL_ALL and _ANY, if the work is flagged after the
-   test added here, while io-wq still has it as the current work of the
-   worker. io_cancel_cb() stamps it with the sequence of the cancel, so the
-   search of the hash table on behalf of the same cancel takes it for
-   done and skips it.
- - requests that are parked elsewhere by io-wq, like IORING_OP_FUTEX_WAIT
-   and IORING_OP_WAITID. They have the same problem.
-
-Fixes: 90fa02883f06 ("io_uring: implement async hybrid mode for pollable requests")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-14-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit 748551f72b27325043eafe969311b15ae1eb0c7c)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/poll.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/ax25/af_ax25.c | 12 ++++++------
+ net/ax25/ax25_in.c |  9 +++++++++
+ 2 files changed, 15 insertions(+), 6 deletions(-)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -656,6 +656,18 @@ static int __io_arm_poll_handler(struct
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 11ac6c83b1442..95224600b5a13 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -84,12 +84,12 @@ static void ax25_kill_by_device(struct net_device *dev)
+ 	WRITE_ONCE(ax25_dev->device_up, false);
  
- 	io_poll_add_hash(req);
+ 	/*
+-	 * ax25_send_frame() creates connections that hold no reference on
+-	 * the ax25_dev: they rely on the walk below to detach them before the
+-	 * ax25_dev is freed. It runs under rcu_read_lock() and gives up when
+-	 * device_up is clear, so once this returns every connection it was
+-	 * setting up is complete and on the list, and no new one can appear
+-	 * behind the walk.
++	 * ax25_send_frame() and ax25_rcv() create connections that hold no
++	 * reference on the ax25_dev: they rely on the walk below to detach
++	 * them before the ax25_dev is freed. Both run under rcu_read_lock()
++	 * and give up when device_up is clear, so once this returns every
++	 * connection they were setting up is complete and on the list, and
++	 * no new one can appear behind the walk.
+ 	 */
+ 	synchronize_rcu();
+ 
+diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
+index 18e15c3c26e46..c81bc8c4563b5 100644
+--- a/net/ax25/ax25_in.c
++++ b/net/ax25/ax25_in.c
+@@ -216,6 +216,15 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb_linearize(skb))
+ 		goto free;
  
 +	/*
-+	 * Whoever tried to cancel the request while io-wq was running it has
-+	 * flagged the work item. If it searched the hash table before the
-+	 * request got there it found nothing, and it won't come back. Both
-+	 * the search and the insertion are done with ->uring_lock held, and
-+	 * the flag is set before the search. If the search came first,
-+	 * the flag is visible by now.
++	 * A connection made below on an incoming SABM holds no reference on
++	 * the ax25_dev either. We are called under rcu_read_lock(), which
++	 * ax25_kill_by_device() waits for after it has cleared device_up:
++	 * leave a device that is going down alone.
 +	 */
-+	if (ipt->owning &&
-+	    (atomic_read(&req->work.flags) & IO_WQ_WORK_CANCEL))
-+		io_poll_mark_cancelled(req);
++	if (!READ_ONCE(ax25_dev->device_up))
++		goto free;
 +
- 	if (mask && (poll->events & EPOLLET) &&
- 	    io_poll_can_finish_inline(req, ipt)) {
- 		__io_poll_execute(req, mask, 0);
+ 	/*
+ 	 *	Parse the address header.
+ 	 */
+-- 
+2.53.0
+
 
 
