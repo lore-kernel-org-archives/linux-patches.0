@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213172;
-	b=X1KYWrwLfbmgC8ZIZgdxsgv/1MdqkiglQehd2aacfR/eb1JMDHWhdQsmC+iRQWJcVJIW
-	 ZDV+fibriJlzb7TuZ6adv5VVpnHLVvndqfFBKcRE+2J2WT8hKrbb+/o89MQn9dXhvk0bT
-	 yzvz3GEfO/72Z1edi2I+KIv6BXQkRMKl+NEG9m7G6QJE6V002Wcgop8hwhEHkSEUyNZjG
-	 jppJOJJcwdZfsobisF99VDg3URyer3ZU0P18V1rMbE6txpmgybtmTFW/i5W1MPUS5bG7j
-	 6YnfbPvHhQAjWpCmq148S8rMYsmdiH4hMv9v+xGAXnZYy5iWX45MiXAn8IJBy1q31YA==
+	t=1793213175;
+	b=CJVd5qvp536YPVzczULScogqRTpvPHE6QOVRBnQqXpbcrpoyUMGF0yrcQS8PZN6rzbw3
+	 eH7RGgyfgLSEKidHhHOjFFuqJEBRGUVyRUguErp0XftsOBdzx1mYecaQmqMvmexC14j76
+	 btHRQdl8jg7XBkGM6q5p+jBD7MPkjzMCfxPjRgXC1CY0Rs3JJ9Av+VqH5hAs6lTZkcSmC
+	 Y2hGcmxsvTqcsa9l1yCKubyxkMmFz+tQ+2N6GSjS49FaBgNtS5l6mws/eq6GvLkNJA38x
+	 htnPsHFfcxdbRsgIACkrw/19SkOqAk7ZZZIc9WiNKvbZVpZjY0B8NKM5qPFzg30Np7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pUZqNtixzDB1/m/sp7dJl9uaHRKNaY7f7yrpD7Uadfs=;
-	b=YkBUYuSaW1P6JAK7cpBNb4RTT059WuWWsyD/bUeG+vdvyALe7PFJ7bJ9Y0gEULLFegH0
-	 WP/3Wfi7h46+XWpBhz+bbkLmtByd8ZZGQFN2Jfj6zOdRGF4+G9YRArYexcflPf/nEY+Uj
-	 I+yo6MRxiVQFe3FvPvr8g8z5kNI6//1ua+Dwy4aM8WT8njhpeWmfaYy1az7Se4k22weYN
-	 RMkrcQiOzaeJsvUDCwiRilZC99jEWP9HXzHEtiUlyBHuMg3OAQ4rfyoG5qG1X/S6oy0Xs
-	 n78mYSoUhph52oIeM3pfI+ujd57LJ9g5vBQL00kd73vBPTfBGYKwq2jXxSbnYu0+xAQ==
+	bh=zo/hbV4xYQssJJbefD1u3Om67ah7J9K2UuRpzUIaUwo=;
+	b=iwbX6g2MBHBV4w9GuswEKgRTyxbQWV3ppQB5QbKdWhOZuPORLAgfmzmJNaVjV4sblBtB
+	 b/xKYzCBih+Jhh32rVmXfXJ+0MX9Kj+nVXFHFAmZKVQSHOhfNSrv70TjhAJPvJI81nTvF
+	 biOVVggjFx6Qj9OO5czBA6tUotRdXVhJvGrmrdFQWbKQNQJpM4yXvxLUl85CxDwXXXygc
+	 F7QZos++t/pSkbyQ2Zqws+cQwosYOeEV+Pi8pB8PGgD3ThOTsz5cQSTdLv3Qu3EX40Uc0
+	 geKcLmyGSdQ8OMALQRLuP33xvGG1I0D2BNqo/g3xztNf0gmovIi3R5ZyTJLYQTLgZ0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mF2qWgRG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTMHSAot;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7E0606A31C;
-	Wed, 28 Oct 2026 18:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BDD606A31C;
+	Wed, 28 Oct 2026 18:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mF2qWgRG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C03D1F01825;
-	Wed, 28 Oct 2026 18:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTMHSAot
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447AA1F01825;
+	Wed, 28 Oct 2026 18:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213172;
-	bh=pUZqNtixzDB1/m/sp7dJl9uaHRKNaY7f7yrpD7Uadfs=;
+	s=korg; t=1793213174;
+	bh=zo/hbV4xYQssJJbefD1u3Om67ah7J9K2UuRpzUIaUwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mF2qWgRGq2BY2bSvzscQelBe79l4XmrPJ/c46UtqMjOI/9ir2HucZsCMi/5jKkGzg
-	 0pW7c8oGfJH0EHxfBafqLKnmbpXOH0/w8SgbQVdzbd9L/E5ukUPaS0gHiYxcNtmUNp
-	 LT+aaJLaPsyRtk4xQDkyFxWLnFJdxhsQp43h5QkU=
+	b=iTMHSAotQXe6CriZrC4cMnXpP8JTkgI4Izrn9HDJWcKsc15Q2zJ5mO2aIJBCC0jJ7
+	 vjJDtINdlAA54UKdgeWVknj5Soz83K+V6AzjPdUcdxX/fkWUa4KzAFIf12A+NtBeFt
+	 iTb0taOz+Yi+qGt+Kp0aJLXqhbyiTc2GpPO8qhto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0412/1887] iio: adc: aspeed: Simplify with dev_err_probe
-Date: Wed, 28 Oct 2026 17:41:48 +0100
-Message-ID: <20261028170508.611944595@linuxfoundation.org>
+Subject: [PATCH 6.1 0413/1887] iio: adc: aspeed: propagate reset deassert errors
+Date: Wed, 28 Oct 2026 17:41:49 +0100
+Message-ID: <20261028170508.634259388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,41 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit dcc3ac29f46fff6775c0a945afc68fd9dece6d34 ]
+[ Upstream commit 95e4eb426b4bd666fa2f37886c0ddf74a0cc6167 ]
 
-Use dev_err_probe() to make error code handling simpler and handle
-deferred probe nicely (avoid spamming logs).
+aspeed_adc_probe() continues to register ADC resources after deasserting
+the shared reset, even if the reset controller reports a failure.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 95e4eb426b4b ("iio: adc: aspeed: propagate reset deassert errors")
+A failed deassertion leaves the hardware unavailable, so stop probing
+before installing the cleanup action and enabling the ADC.
+
+Fixes: edf7550a1f93 ("iio: adc: aspeed: Deassert reset in probe")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/aspeed_adc.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/iio/adc/aspeed_adc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iio/adc/aspeed_adc.c b/drivers/iio/adc/aspeed_adc.c
-index 998e8bcc06e1d..e6a9d8d77af53 100644
+index e6a9d8d77af53..4cb2210cb38d7 100644
 --- a/drivers/iio/adc/aspeed_adc.c
 +++ b/drivers/iio/adc/aspeed_adc.c
-@@ -549,11 +549,10 @@ static int aspeed_adc_probe(struct platform_device *pdev)
- 		return PTR_ERR(data->clk_scaler);
+@@ -553,7 +553,9 @@ static int aspeed_adc_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(data->rst),
+ 				     "invalid or missing reset controller device tree entry");
  
- 	data->rst = devm_reset_control_get_shared(&pdev->dev, NULL);
--	if (IS_ERR(data->rst)) {
--		dev_err(&pdev->dev,
--			"invalid or missing reset controller device tree entry");
--		return PTR_ERR(data->rst);
--	}
-+	if (IS_ERR(data->rst))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(data->rst),
-+				     "invalid or missing reset controller device tree entry");
-+
- 	reset_control_deassert(data->rst);
+-	reset_control_deassert(data->rst);
++	ret = reset_control_deassert(data->rst);
++	if (ret)
++		return ret;
  
  	ret = devm_add_action_or_reset(data->dev, aspeed_adc_reset_assert,
+ 				       data->rst);
 -- 
 2.53.0
 
