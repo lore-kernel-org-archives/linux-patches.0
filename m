@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207125;
-	b=erTrGS6UY+CZkVqpba1bC5zJRiaSqjtDbL3va6RmbpslloPT2IkQ/LfSeKDdjOghbpYP
-	 td6zdGSQsjKZ2Qm2HuBZJVokO+Ch/WMYdgtyD3J4dg14Yqpo6Q8YvlIkIR6oXv9y3j8Jh
-	 gik/IB0ZOc4NicfwRpYARz4PIxFAGH7WkMHt6RQ9COAovCprAJBsJCfw0xAfhM14r4t+3
-	 aOqckT11ErLq28XNaJPNdIWt/YRn3nkdMcNX2/DwoWQrBmqqrJvTyneyw8+K0X4jY6m/v
-	 kLpoebnI7Us3zFPwnyvknVM86LBnAS4PxJyLvpbhYaIPeefbA/ljUVtHrMROjE1kL7Q==
+	t=1793207128;
+	b=BZ2yEWUsgxfoZXxrlZjY8/fRlSqOxkDXx6L9EJ31Dt/pimdKjwhoyd3wiZjkkvGCMouT
+	 uToaqqndcLzeeoKIpqVqKXmqFaKwFh8kdy35+lsDN6UT1MenQHse7EsPQIC/DTG0ZyuHk
+	 al5DfCixninjGvTJdawiSQnnOV62jRPF3QPtzGdKzCee8uFIBJmSwApVECR9rBCLi1lCs
+	 ObyQyIwPd5BDD144LpFZqYlRUIuBPdfZHT234VWZ+u3lbB2IF4IymgNHfjDWDkxiu9syh
+	 aVglE1z9L9nMWTpEisoG0XdMX5MI5KjqncRHFWrXSTmK3v3EwJKBHkAKVDtgOmHfUGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207128;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SNJCkW8hB+JZUkPA5B2Ul9Ku/VIpc+obKCfpSw39GtE=;
-	b=Xr6Sed5LkVOFLH49Qq1dn4ij67UYSzmQmrHH444h6cir0oN1JuV3TetcSLKMBuF5TcDw
-	 zyAjCH1IFM76PQkRqXrPECspdpLmuY8vAZB4hgqmAsuw6UHc/9RRR2QJc1UN8NTMrOSZ2
-	 QlpkdYFdlYncIDN7VZ5zpquJHcqOxs8Ccn9VDDx7WYy7JpvuS5WkbkRDv9Q+4V+DODWK1
-	 xrFSTKSDKqpe8rpi+u3BGnVvY6pGclmIO6HPt3nwgFw+Gp4qeitl5HkGXo2axnzLhppbK
-	 R2reEw8Ox+uwUDyrySR9oRJnJlT3WckJBiaNJGrZ6P+UNmleg6SAcxfShqEn2YJkx5g==
+	bh=iTKouuMYXwMjdps9isSrJ5Z2Rn4TKanPvKHn9qVQEzs=;
+	b=Vl6Dh5IYI7u9BK9+vdzHChqoiPnu1rgeBPunTjtqp/D+nswW4jnFfgYcrVb5rLxhSLLq
+	 +1sQkFBj7L0kzZ5XifUDQ40uRKVWd/FHY4JcUtLFjtFTH+f37q3tScqc1VTgzOPm0+vQx
+	 7y/bB4p1CqfAjEhnqC0/Q2ma1R4XjgU0NNKd3PmnWe25bRyLhzLwaV1y1CU1is85PeCsu
+	 qZdh5GV2a3sGxXyJx4TGLHnq3hVLRguAd/OqNla4PVXTQYIby6setEE2W3HZE3b+S6WqW
+	 HA3xGuIkqlBMH3YoFvzWAM3a4Erz/WsqmVXr6uilFcQ/zrqLuwhGn+Pdc/4U8cPKfIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNFd4DFo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=htkGoIHk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C731606A31A;
-	Wed, 28 Oct 2026 17:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE0F606A31E;
+	Wed, 28 Oct 2026 17:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNFd4DFo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E59D1F01825;
-	Wed, 28 Oct 2026 17:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=htkGoIHk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A1B1F01825;
+	Wed, 28 Oct 2026 17:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207125;
-	bh=SNJCkW8hB+JZUkPA5B2Ul9Ku/VIpc+obKCfpSw39GtE=;
+	s=korg; t=1793207127;
+	bh=iTKouuMYXwMjdps9isSrJ5Z2Rn4TKanPvKHn9qVQEzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CNFd4DFoGLixjwBt7ylnZT3nQObQamvzWaHgTCR9k3SL6jg5mFtKjyiipGU8LnHsH
-	 GErlwr7Uwz+w74o+uM0TWhzgeG6pCUbMbWRP6Eqxx/FFjtET2AK+IW+IjvFW12BVmJ
-	 WPauMG8l0IKdVzFKL8FL9XPkgjHDoOAf3XK4ELIs=
+	b=htkGoIHkv735n2g9tcCcJCqwkTn1TEFj5A9w+R4ndj5ZvyE1OHUGf6Sr4RoimuyO9
+	 DF4LKnN7EVgKQy4qV6UHsq7bg+TqT+xBxIQihd4tYKYW/pe89EYe1toH6mXI5udUGI
+	 RqQIwg8N2Cw7IPTuG5kHjQjKPOms4rsPeTv24ZTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
+	Chris Mason <mason@kernel.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 33/38] ptrace: refuse to change the signal mask of a user worker
-Date: Wed, 28 Oct 2026 18:00:20 +0100
-Message-ID: <20261028165941.238493111@linuxfoundation.org>
+Subject: [PATCH 7.3 34/38] fork: release the files of a failed fork after sched_cancel_fork()
+Date: Wed, 28 Oct 2026 18:00:21 +0100
+Message-ID: <20261028165941.262001995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
 References: <20261028165940.394092994@linuxfoundation.org>
@@ -69,54 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit cabc249e6560bee7bdfee9fbcb7ce4e951dcfd41 upstream.
+commit 296a98c1fa50778c3b31eebed1a3f903f9684349 upstream.
 
-A user worker is created with every signal other than SIGKILL and
-SIGSTOP blocked. It never runs user code and that mask is what keeps
-get_signal() from dequeuing anything else for it. complete_signal()
-never picks a thread that blocks the signal, tkill() queues on the
-worker but nothing dequeues it. ptrace_signal() requeues an injected
-signal that the tracee blocks.
+Reorder copy_process() cleanup so sched_fork() taking scx_fork_rwsem
+scx_pre_fork() is safe and isn't held around exiting files. Right now, a
+fork that fails while another thread closed the bpf link fd will
+deadlock against its own read side. It also blocks every fork on the
+system:
 
-PTRACE_SETSIGMASK is the only way to change that mask from the outside.
-A tracer that clears it makes the worker eligible for every signal.
-Whatever the worker then dequeues it can only act on by leaving.
+    copy_process()                  holds scx_fork_rwsem for read
+      exit_files()
+        close_files()
+          filp_close_sync()
+            bpf_scx_unreg()
+              kthread_flush_work()  waits for the disable work
+                scx_root_disable()
+                  percpu_down_write(&scx_fork_rwsem)
 
-Refuse PTRACE_SETSIGMASK for a user worker with -EPERM, the way
-ptrace_attach() refuses a kernel thread. A worker is guaranteed to only
-ever dequeue SIGKILL or SIGSTOP and an injected signal stays pending on
-it, which is what already happens when the mask isn't touched.
+Simply release the child's files after sched_cancel_fork() dropped the
+lock. The task starts out as a copy of its parent so p->files points to
+the parent's table until copy_files() replaces it. exit_files() must not
+run for a fork that failed before that. Clear p->files up front so
+exit_files() is a no-op for those and make copy_files() set it
+explicitly for CLONE_FILES.
 
-Taking the request and quietly leaving the mask alone was the other
-option, the way set_current_blocked() keeps SIGKILL and SIGSTOP
-unblocked whatever userspace asks for. But then a tracer gets success
-back with nothing changed and no way to tell that apart from a mask that
-took effect.
-
-Fixes: e8b33b8cfafc ("Revert "kernel: treat PF_IO_WORKER like PF_KTHREAD for ptrace/signals"")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-9-8e4adb1619e6@kernel.org
-Acked-by: Oleg Nesterov <oleg@redhat.com>
+Reported-by: Chris Mason <mason@kernel.org>
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-7-8e4adb1619e6@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/ptrace.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/fork.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/kernel/ptrace.c
-+++ b/kernel/ptrace.c
-@@ -1227,6 +1227,12 @@ int ptrace_request(struct task_struct *c
- 	case PTRACE_SETSIGMASK: {
- 		sigset_t new_set;
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1685,6 +1685,7 @@ static int copy_files(u64 clone_flags, s
  
-+		/* A user worker only ever takes SIGKILL and SIGSTOP. */
-+		if (child->flags & PF_USER_WORKER) {
-+			ret = -EPERM;
-+			break;
-+		}
-+
- 		if (addr != sizeof(sigset_t)) {
- 			ret = -EINVAL;
- 			break;
+ 	if (clone_flags & CLONE_FILES) {
+ 		atomic_inc(&oldf->count);
++		tsk->files = oldf;
+ 		return 0;
+ 	}
+ 
+@@ -2208,6 +2209,8 @@ __latent_entropy struct task_struct *cop
+ 	INIT_LIST_HEAD(&p->sibling);
+ 	rcu_copy_process(p);
+ 	p->vfork_done = NULL;
++	/* Set by copy_files(), exit_files() on the error path skips NULL. */
++	p->files = NULL;
+ 	spin_lock_init(&p->alloc_lock);
+ 
+ 	init_sigpending(&p->pending);
+@@ -2311,7 +2314,7 @@ __latent_entropy struct task_struct *cop
+ 			 (args->umh ? COPY_FS_UMH : 0) |
+ 			 (args->idle ? COPY_FS_IDLE : 0));
+ 	if (retval)
+-		goto bad_fork_cleanup_files;
++		goto bad_fork_cleanup_semundo;
+ 	retval = copy_sighand(clone_flags, p);
+ 	if (retval)
+ 		goto bad_fork_cleanup_fs;
+@@ -2625,8 +2628,6 @@ bad_fork_cleanup_sighand:
+ 	__cleanup_sighand(p->sighand);
+ bad_fork_cleanup_fs:
+ 	exit_fs(p); /* blocking */
+-bad_fork_cleanup_files:
+-	exit_files(p); /* blocking */
+ bad_fork_cleanup_semundo:
+ 	exit_sem(p);
+ bad_fork_cleanup_security:
+@@ -2637,6 +2638,8 @@ bad_fork_cleanup_perf:
+ 	perf_event_free_task(p);
+ bad_fork_sched_cancel_fork:
+ 	sched_cancel_fork(p);
++	/* ->release() of a file may need scx_fork_rwsem for write. */
++	exit_files(p); /* blocking */
+ bad_fork_cleanup_policy:
+ 	lockdep_free_task(p);
+ #ifdef CONFIG_NUMA
 
 
