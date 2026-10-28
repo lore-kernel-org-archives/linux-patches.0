@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207705;
-	b=smfd8INL0MkHR50o7u3KIjWNdofN3R/5cSACETWEAbkA3S4aVYVpE21PlpcIoRmKJ8e9
-	 O7ImEhnG+/9I9aANFGu/oqTn6A7sEumZF/oSp+iP1PLNWk4TEUd57BayFkde6KlMjNz15
-	 mZxnR1BGlXW+7+VKWShS2HVym8qZCvyp3iD2ZXRkYYe4Ra+8s9LXkfxTbMHDEiIOgnQe7
-	 PYQNi3tmh3ocw3IWwVgDaCSjg2R1cmQklEYEvZ/VMjuCAzKXy1AP3eXdaEBO2mxv6cLyq
-	 P2GzAUzsvf7xde5Sl1qUAnqr5olEmjkO6TmKuTnvzpyryOJwLpOVQ7fbpHtW6ImV7ZQ==
+	t=1793207708;
+	b=gxOUqUn+/wWemGsgbtBb1beYPlrf3dblEt37jy0sWL9/k2/NAKnFxQ03fTYZ/cEpBVrb
+	 oWQxDHJ5JAFKzrONz9vtPSCJ+n/loxZHi11eWOqXcrHjHh80fwOVoFNgxtBMlg0HgO78t
+	 Yot5ipmRuysOWF6g01qBalxHXd27g4xVajtLuIWA0av21VZB0+zfSDWuCcmHfENiVHT4y
+	 wDKDFmxhSr1LPcwGf0QGKO7CqNVo6eJhSmi8yHzYvSr343bRv2vYng51fFdiVfd/6dikv
+	 Ni7Z9nRsPMSsws2MVKBMqlPx+q0ldsD1UqsE9bufSRd1/Ilft/oa1pUJSzEjlWzBwYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207705;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207708;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xyk5f3X6Mnt5ZVhyk+sH0M8DHBpzPB88Ck0g3lDqGXg=;
-	b=4gOgX+jB/YFvtOclDTkN1jzFxXXoYCDJneaPqufWRKqB1sYFu0nw/52BQ25Vl5LrrRmr
-	 WuUpTox3VPdhxs6/8hLW7lsZjEf4IaF7y4gzxngKfSqUVyJGIVhuIRFmMuzj0nEnNRyJq
-	 UEtfgE2z/ldMyJjYk8bvmvpyWUauot6z3/aJ9PD2x9JsDGYBjQVa2wutrd0RPSnMtArxZ
-	 fYPmhPNAraocfLcidaIXbyLOQo5kajyhFSr0s71cpPBKRi6zU4i4pUsMTqkqHAVPmG74Y
-	 tk8S/eUGLI2I/dYxUdjPdB3Oa4B4AqBflJUtMPaRpl4QeuTdOuc+0JU5iPpgWApjn3A==
+	bh=Ukz5ACLFOB5F0HpFRTOjfpZEEum5kbzISQ4GgZBMTNA=;
+	b=SxaDQXLNcUw7OTq6vGFLqkI82q2Dupwb264dokmfuoAVr2vaydd06zZ3kauOMWSrc4O9
+	 NN1BJ6IP/X2Xnql31qsnlSk1K8RqUlB1WyBrBF+wLea5GwtMXHplo+RLUSiZNHMXHyj6V
+	 y4m7AVRQCa3cEvhEfkZrCnv1vX5LLtW3TNSFcNjDYaaw/MZZAtJYC19khZf4n6P978ZnW
+	 aTtIEmwrLQjVdrOvpD9n2UJ77sZYxLxCHED2eoUnTNSAYqiLEWBljEOJEbumLLMKfwwuc
+	 cqg1t13YTZwAAA39COKf0zD9GIXvjKA1t91pUMV6Oz8dtetTzyr2fpsfLNMAwllgoLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2yGQ1+d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m3D/U/BT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B612F606A329;
-	Wed, 28 Oct 2026 17:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1127606A325;
+	Wed, 28 Oct 2026 17:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2yGQ1+d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F4F1F01825;
-	Wed, 28 Oct 2026 17:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m3D/U/BT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC66A1F031E4;
+	Wed, 28 Oct 2026 17:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207704;
-	bh=xyk5f3X6Mnt5ZVhyk+sH0M8DHBpzPB88Ck0g3lDqGXg=;
+	s=korg; t=1793207707;
+	bh=Ukz5ACLFOB5F0HpFRTOjfpZEEum5kbzISQ4GgZBMTNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G2yGQ1+d1RgAXD/81dLQIG5X1thN6TeWQqfKBQDldl+RUArNX4LfE3BSexQEzxXAR
-	 2v1Mfxh1Y+JHaniBtk77/tzm3I+tOecEuayb49yn0BhZtxhxDz8MLz9PliWzxYD+Hp
-	 7HJzEw3M6leQ+LK/nMonLhF96oQjQCVC63fdn4jc=
+	b=m3D/U/BTtFzp5nC5gl9ByAP43CrBJAb82SyG8h261ZgwRGckK8ZzYuQXKg3IzCfmO
+	 eaPmBmEJpopvOnxecy+X/cAogecgxKIYdNQzSTGY4F5Y3a6tUBAdtOiMRu7IXXbJif
+	 IZX4+UlwlkpeyLJ6/DkQJfEQ3Qsr0pNlDyElNRzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Juergen Gross <jgross@suse.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.12 083/247] scsi: xen/scsifront: Check for a NULL shadow entry on a backend response
-Date: Wed, 28 Oct 2026 17:58:06 +0100
-Message-ID: <20261028165949.359752434@linuxfoundation.org>
+	Charles Vosburgh <theminershive@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 110/247] sctp: validate chunk length in the inqueue parser
+Date: Wed, 28 Oct 2026 17:58:33 +0100
+Message-ID: <20261028165950.004327575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -68,47 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Charles Vosburgh <theminershive@gmail.com>
 
-commit 8c8222c255772713eb36cde695777a1fce224917 upstream.
+commit 6cfc1b90cb86f4aabc69fb8e30128e07e2cdfa3a upstream.
 
-scsifront_do_response() validates the rqid in a backend response against
-VSCSIIF_MAX_REQS before using it to index info->shadow[], but then
-dereferences the entry to test ->inflight without checking that the slot
-is populated.  Shadow slots are NULL before a command is submitted (the
-host private area is zeroed at allocation) and are reset to NULL in
-_scsifront_put_rqid() once a request completes, so an in-range rqid that
-does not correspond to an outstanding request makes the frontend
-dereference a NULL pointer.
+SCTP chunks always include a four-byte generic header, but
+sctp_inq_pop() currently accepts shorter declared lengths. A zero-length
+chunk leaves chunk_end at the current header.
 
-A malicious or buggy backend can thus crash the guest by returning a
-response whose rqid is in range but not in flight -- for example a
-spurious response before any command has been issued, or a duplicate of
-one already completed.  The ring has only VSCSIIF_MAX_REQS (16) slots,
-so before the first command every in-range rqid selects a NULL slot.
+When ASCONF is covered by the association's SCTP-AUTH policy,
+sctp_assoc_bh_rcv() can continue before the state machine performs its
+normal chunk-length check. sctp_inq_pop() then returns the same malformed
+chunk repeatedly and the receive softirq can lock up.
 
-Reject a response whose shadow slot is not populated.
+A remote SCTP peer can trigger this after establishing an association on
+a kernel built with CONFIG_IP_SCTP and configured with
+net.sctp.addip_enable=1 and net.sctp.auth_enable=1. The reproducer did
+not require application credentials, a shared SCTP AUTH key, or
+net.sctp.addip_noauth_enable=1.
 
-Fixes: 6d1c2f48f3fc ("xen/scsifront: harden driver against malicious backend")
+On commit f967455fb2a5 ("seg6: reset IP6CB after IPv6 decapsulation"),
+one zero-length ASCONF caused repeated
+watchdog soft-lockup reports in a two-vCPU KVM guest. All 3 pre-trigger
+health probes succeeded, while 36 of 37 post-trigger probes failed. With
+this change, all 37 post-trigger probes succeeded and no equivalent
+soft-lockup signature appeared.
+
+Reject chunks shorter than the generic SCTP header at the shared inqueue
+parser boundary. Mark the packet for discard before either caller can
+continue processing it, while preserving the four-byte generic minimum.
+Declared-length 1 through 4 controls and kernel-generated ASCONF traffic
+remained healthy. The patched sctp_hello selftest passed for IPv4 and
+IPv6.
+
+The complete private reproducer and validation evidence are available
+directly to maintainers on request.
+
+Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20261005123555.253995-1-yhlee@isslab.korea.ac.kr
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Charles Vosburgh <theminershive@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260827-sctp-zero-chunk-inqueue-v2-1-2e7669c6a6cb@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/xen-scsifront.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/inqueue.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/xen-scsifront.c
-+++ b/drivers/scsi/xen-scsifront.c
-@@ -367,6 +367,7 @@ static void scsifront_do_response(struct
- 	struct vscsifrnt_shadow *shadow;
- 
- 	if (ring_rsp->rqid >= VSCSIIF_MAX_REQS ||
-+	    !info->shadow[ring_rsp->rqid] ||
- 	    !info->shadow[ring_rsp->rqid]->inflight) {
- 		scsifront_set_error(info, "illegal rqid returned by backend!");
- 		return;
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -212,8 +212,10 @@ new_skb:
+ 	chunk->chunk_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));
+ 	skb_pull(chunk->skb, sizeof(*ch));
+ 	chunk->subh.v = NULL; /* Subheader is no longer valid.  */
+-
+-	if (chunk->chunk_end + sizeof(*ch) <= skb_tail_pointer(chunk->skb)) {
++	if (unlikely(ntohs(ch->length) < sizeof(*ch))) {
++		chunk->pdiscard = 1;
++	} else if (chunk->chunk_end + sizeof(*ch) <=
++		   skb_tail_pointer(chunk->skb)) {
+ 		/* This is not a singleton */
+ 		chunk->singleton = 0;
+ 	} else if (chunk->chunk_end > skb_tail_pointer(chunk->skb)) {
 
 
