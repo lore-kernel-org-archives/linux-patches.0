@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793211507;
-	b=k5vGLEpOIJW5oTUYgBlB6HLEn7pO1Z4ufalEVKGkT56v56wT/bm0tLEwG0JJGfnraDvr
-	 aXMR00Izi6mUk7EC9fU3XrCT5/K/pnDq7y0SfYMtION1HhFHUvQ4upI1k7R+MNktBhSDs
-	 DsMPKqfW9FkEuSr54CGY18BKehMd9AA6hjM7Bf38oqcuYwqen5xUOFZpkRcx+ot+mXFXZ
-	 XaRmxmMJWgIU5avs7wnMzVYkeb/K9hmrguQaRdYSeUeFkSVl1HDU9cwVRT84Gbqg54A6t
-	 deZqTvJY9tFuSJ2O4fJCGHqgvP25ladFEHegUiLyN6F0jbYOmbrVq6mFTwk68ybFjsw==
+	t=1793211510;
+	b=xPYaREdrRKWYNkkbUmtuPJA5uTSYkWBuMOqJ6eVsJnH5jTqkBvoKIz+/WueRmKcoXiBA
+	 alvxtrAv45wNaK4hDnKjAGkTndd2fow0LRsn4aXJlt24AW1Rb0hOp0BofprBMUbUU0Zxu
+	 zriwSewI4SmpsvuyScudkKYIJAoRO81XHzS0mhM9VWRhdmaWhfctLUSRY1AQ3xPli7kKm
+	 dMPjK+ex3ccWg6sab2z3xu7d5521dldp2eOdI61gO7By8409kGev9hPPt7lwkVAMQS38M
+	 IDAK+Kj+1F+GDOiIPfbRHnULUOrjPEnvZXuFjY2yeX6HJVBsh5OJaEs7iEeURp74u+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4QqPAzbAe3uZNpIJzunsyCN+RTidlntwZcbNHwB9VJw=;
-	b=gDVrM7Hk4odukSs95b1YAV753JpWpcUorpVJD8LxghKXglZyjQnsyse+oWu+otkwIpUz
-	 +GPsO2PHzu5F6oVyf2Bym6DLi4LAEYNdcWCc4K+5Yu+VKCWE+QeZXEAJGiVQixsdT1Y6Z
-	 NhrVXG6nF3tyeuMgSDw5YeJXXczGk0vrRc6ii5bX07d9pvjHs1C73D+xa0pdaQnatD3/B
-	 DjVc3F0EV4QBgOxicRUa5Y1w+bxK++tLS03YnhXla2EYgo0JJiXySytucQACqai+nDzCf
-	 uV+s/OnuQfeFvz7KxArlCiUBB/eZq8dt7Y9libnPAcbhsFCLkh4NRDNTkjpOsk6I13Q==
+	bh=CpB9nXVSpXE5Knn/nihweLcm9roZkaSBEjWSrEvcpO0=;
+	b=uuujwJdCkswXGMXI7k2766JUimXbCTsF/d8kjM/ErxPEuhKjBPyUV4KzVaF01z1qpEMC
+	 gQyZGa0zZrKaQ9INzkC39602SGC8V7dGxDqG6DOYYKdn/RtSUWqtwHYkJHZqND/eu60Eq
+	 sfQTaZgiduxeWa3vSCflUJPeppxG4TXJCPQ/vsjlDovOYTO3n4qPRVF80qSUaUB5d6S6v
+	 cHnZfHEWKVsjO6xOU/N4zWwRjs9jr0hNMtY0sIodqP37QMmvNLkL47lq/3ZX2kgwp3x1i
+	 EFe00IcIMgSvlcOSMUgkY+n9W9z4GSaQtseyX/sBDbtJ+cAfK+b600sk+oP0wb5ltzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=igzbYFWr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NSj4AP/+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6669E606A31D;
-	Wed, 28 Oct 2026 18:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D36606A31A;
+	Wed, 28 Oct 2026 18:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=igzbYFWr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F631F01825;
-	Wed, 28 Oct 2026 18:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NSj4AP/+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EE51F01825;
+	Wed, 28 Oct 2026 18:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793211507;
-	bh=4QqPAzbAe3uZNpIJzunsyCN+RTidlntwZcbNHwB9VJw=;
+	s=korg; t=1793211510;
+	bh=CpB9nXVSpXE5Knn/nihweLcm9roZkaSBEjWSrEvcpO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=igzbYFWr5tqeHK6HfTMPkQINGeHeqd70CFBy+Bh4bp2K5RCZ7P5GU058Vp6Ft2XIV
-	 rV1obKbOpB8kDkl2ynG0WVj+oh4/rjeipjN3daCqlRnyw95pumQgCK+6OecZDWH2mM
-	 +wkyv0k7e77ToIoJsZ0ye1pcyNgG936auivkfKHs=
+	b=NSj4AP/+lgMNxcfYVY+E5QUV1Ezewp2T2JW1MT9Eg0exPjY2Sz7b1MEOYzxKRSqkx
+	 IgrId+LG767p2UTw5a01I1hBHAzsScBfAn6yR8fICaTgTZRB+HH1h4jyYiMCeEctoZ
+	 SFqvaIOVu4kPrrJapWGomgHaXkKHwoj4GMBLHuYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 401/571] flow_dissector: avoid u16 truncation of hlen in bpf_flow_dissect()
-Date: Wed, 28 Oct 2026 17:59:08 +0100
-Message-ID: <20261028170017.526969348@linuxfoundation.org>
+Subject: [PATCH 5.15 402/571] net/mlx5e: Order ICOSQ cc update after CQ doorbell
+Date: Wed, 28 Oct 2026 17:59:09 +0100
+Message-ID: <20261028170017.550798622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170008.009143722@linuxfoundation.org>
 References: <20261028170008.009143722@linuxfoundation.org>
@@ -68,50 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit f202578efc738b883cfa04889eb97328914265a7 ]
+[ Upstream commit b056ca4d3742d0769f91137bb1ce3215428398f7 ]
 
-bpf_flow_dissect() sanitizes the offsets returned by the BPF program
-with clamp_t(u16, ..., hlen).
+mlx5e_poll_ico_cq() requires sq->cc to be updated only after
+mlx5_cqwq_update_db_record(), otherwise a CQ overrun may occur.
 
-If hlen is bigger than 65535, the upper bound is truncated before
-the comparison. For instance, with hlen == 65536, both nhoff and
-thoff are forced to zero, even if the program returned sane values.
+The current implementation updates sq->cc before the CQ doorbell
+record, violating this ordering requirement.
 
-This is the same class of bug as the one fixed in commit 99bda1ecbd56
-("flow_dissector: avoid u16 truncation of skb->len when computing
-thoff"). That fix does not cover the BPF path, because
-__skb_flow_dissect() returns early when a BPF flow dissector
-handles the packet.
+Update the CQ doorbell record first and use dma_wmb() before updating
+sq->cc. This ensures that the CQ space is released to the device
+before the corresponding ICOSQ consumer index is updated by software.
 
-struct bpf_flow_keys stores nhoff and thoff as u16, so cap hlen
-to U16_MAX before clamping.
-
-Found by sashiko while reviewing the commit above.
-
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261007045616.445596-1-edumazet@kernel.org
+Fixes: fd9b4be8002c ("net/mlx5e: RX, Support multiple outstanding UMR posts")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261006105820.257208-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index b23f37aea1fb5..d1b975818bc94 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -895,6 +895,8 @@ bool bpf_flow_dissect(struct bpf_prog *prog, struct bpf_flow_dissector *ctx,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index b4a0af5a1ef0b..129ffaa209563 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -704,10 +704,12 @@ int mlx5e_poll_ico_cq(struct mlx5e_cq *cq)
+ 		} while (!last_wqe);
+ 	} while ((++i < MLX5E_TX_CQ_POLL_BUDGET) && (cqe = mlx5_cqwq_get_cqe(&cq->wq)));
  
- 	result = bpf_prog_run_pin_on_cpu(prog, ctx);
+-	sq->cc = sqcc;
+-
+ 	mlx5_cqwq_update_db_record(&cq->wq);
  
-+	/* bpf_flow_keys offsets are u16: do not let @hlen be truncated. */
-+	hlen = min_t(int, hlen, U16_MAX);
- 	flow_keys->nhoff = clamp_t(u16, flow_keys->nhoff, nhoff, hlen);
- 	flow_keys->thoff = clamp_t(u16, flow_keys->thoff,
- 				   flow_keys->nhoff, hlen);
++	/* ensure cq space is freed before enabling more cqes */
++	dma_wmb();
++
++	sq->cc = sqcc;
+ 	return i;
+ }
+ 
 -- 
 2.53.0
 
