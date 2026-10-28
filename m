@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216768;
-	b=YNWMH0O7qRfouO85ODQVfKdSPAjAuur3ma/Zm7Y1TDs6TkC8/U/6LytetlGcxla2AXaZ
-	 IYzRTv/ymsGXLJltRlwRYZ3xr9xk/j3bMmWnNlGYhNLgfEVJfsJCpXduewMcjrNC2x6rn
-	 hx7H9eee4jrn9qOCBkQAHWbBUEk/Qb98qmZP/iwKoVcJ7VUifx4m0Ir6d6rlbQNpyaY6j
-	 Ie4sw9hMGvj+WS7+u3hp8/DSDgxrzSvNuPdYDMcBr7dKzspGAhxWa1JK+EnL/93F+fSl1
-	 /qQstNdrUbl9+QdUlP54K4m9JLn+g343Rx9DTjsNsWPlOagfAhda5Lvfop0nVgIA4LQ==
+	t=1793216771;
+	b=iQux2N6h071o8Hy5vtUC0lqap0nMlFJBH08pzcNncbFKBlh2H/Ewl389nWDMDVwU7FWM
+	 MvFXZ9b6DQajNoFKo6cZ+MzHufozWCgn74/782eFhs4QGbDDecc9UB9a9JKUat2A7KHUg
+	 p8L9E3C/nfOQjMrytpHpEsvjmRgX/A9uZPlXC5jGFhAstJgjtj2Uz7RgzXN0+YgqiQuJM
+	 cQ74hXhHhT/jmBxRBKSAwi2c45/dHSW2FGCuvD7g183kzNUBtCJm7/LTKyCXSm/0BUYsW
+	 jdPk+lC7XqggGXwrV1SaldLs1M4qKcVb0ju+082n2lmfdhAQw24vRki22YQS+Xzlfvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216768;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216771;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GhbEuH1nZ9vG+eBpceznND9DcKWWtuHGmqB383Jl11w=;
-	b=SfXKuakhm2jrt2ptO+P+ku/1eArXqn43JKnGOrIsVYxE4N15trenLkv0xqNHpH5f5T02
-	 ysvZI3WoFB1X7fbNrVF/7R1pYAGAsD0dSBoKit/wy1fwvIL5yujdKKqhvLZbzsDNJ7BRg
-	 MOB+5kOPEVMGoKb/KhMc28igFP+9eD/64tm699+wmtWjkOnLiKu+D0EvGOnPY3cDnPJ2l
-	 nCc7mFuIhm2+0LyAYZYN04POsR6/brKL+VcfHUkesHvF8chNoMXBetyxinSsv2gD6RLdb
-	 K1a3DpEAb8kyfCYJ4Z2M8TZBXxY2s/9KunzWOWpvO1hejOJPYBgwe9IuPrGsZl8kUog==
+	bh=6Ya//te1NAVl966Sh7DUfmh+M5E6hafRlaT/jsxcAuw=;
+	b=emxmy3nh7yDL/CQdpP6Y4OVLW3Xzf7TiaCNV4NqxfZbkh/IwRQqeN/CKg4VsZSdOGjpF
+	 Ghmw4pXbF85Poj6mKLCpNTGGBrs4nGIycXSNfIuVJlymyq6JEVwEG+bRZsz6X8sL6gtaw
+	 HuamBpAR85lg8PugYsakxFzgKrOeCh4hopQgb8wYTT6WOZDT714z3fJlNVI6ZZIpqwF4j
+	 Pm2aEJShCu3HuZHqRYu8Hjsiy+3QtsGNGOHvYgqHukiuSKZu9+QAbGX6pXUjBUZKfI2Y0
+	 LDUmPKvDCoeQJSG0XR9tlLJv8YZlT/FYK8qmnkfPI1ZKctpS/am3qqfaUYELXXYgzKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kz6UTrHZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1UKTjnM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5960B606A31A;
-	Wed, 28 Oct 2026 19:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FC9606A31A;
+	Wed, 28 Oct 2026 19:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kz6UTrHZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A613D1F01825;
-	Wed, 28 Oct 2026 19:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1UKTjnM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B431F01825;
+	Wed, 28 Oct 2026 19:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216768;
-	bh=GhbEuH1nZ9vG+eBpceznND9DcKWWtuHGmqB383Jl11w=;
+	s=korg; t=1793216771;
+	bh=6Ya//te1NAVl966Sh7DUfmh+M5E6hafRlaT/jsxcAuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kz6UTrHZcVuRuLnH09HRofLdulsdHxLzZ4iuAcuYNjIEsnkAuJLlH7Rp0FLLdSNCk
-	 KAQ0u7xL+EM0KKE7lLOI/xmnpy4bZTdqgRdhsIAvjIPscfo0sYOZWZfw7MnyAyFRPr
-	 KJO6bXCpXPRi8TAU6jim4SDJo4V5SdlAy35XA89M=
+	b=G1UKTjnMX9tqeahdncpuvwtsB7WridTo9qA+8cVKn/BG22qfW7sqfJuJDf5Mhahro
+	 fcQT5SPN1G2Hi+qy2sqCHff7bx0s/7emAL9tcPXVdvyWzObvA8+4DTvQ76iNs0gwOf
+	 WRDi/ZCxa9U6kZlpVJknrn1RmHPwBgMuwdNO49qA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1672/1887] drm/amd: Use attribute groups for PSP flashing attributes
-Date: Wed, 28 Oct 2026 18:02:48 +0100
-Message-ID: <20261028170537.505531209@linuxfoundation.org>
+Subject: [PATCH 6.1 1646/1887] i3c: master: Fix recursive locking during device registration
+Date: Wed, 28 Oct 2026 18:02:22 +0100
+Message-ID: <20261028170536.921534010@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,62 +69,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 521289d2a279b2fbea0450d5e8e6a01cf70a80b3 ]
+[ Upstream commit 456f832e5fc26fbfd3b8200fd4553eee520cc377 ]
 
-Individually creating attributes can be racy, instead make attributes
-using attribute groups and control their visibility with an is_visible
-callback to only show when using appropriate products.
+i3c_master_register_new_i3c_devs() registers newly discovered devices
+while holding i3c_bus_normaluse_lock(), a down_read().  device_register()
+can immediately probe the device, and probe callbacks typically invoke
+I3C helpers that take i3c_bus_normaluse_lock() again, leading to a
+recursive acquisition of the same rwsem.  rwsems do not support recursive
+read locking and can deadlock when a writer is waiting.  See the
+"Recursive read locks" section of Documentation/locking/lockdep-design.rst.
 
-v2: squash in fix for PSP 13.0.10
+For example, with Intel LPSS I3C, LOCKDEP generates a WARNING like:
+  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/unbind
+  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/bind
+  WARNING: possible recursive locking detected
+  kworker/5:1/94 is trying to acquire lock:
+  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_device_match_id+0x45/0x370
+  but task is already holding lock:
+  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_master_reg_work_fn+0x21/0x5f0
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix this by separating device creation from device registration.
+Populate desc->dev under the maintenance lock, collect the devices that
+still need registration into a local list, then release the lock before
+calling device_register().  Finally retake the lock and clean up any
+devices that failed to register.
 
-Only the relocation of the vbflash binary attribute definition ahead of the
-status handler is carried over; the attribute group conversion is not needed
-here and is dropped.
+Use the maintenance lock rather than the normal-use lock while adding
+device objects.  A write-side maintenance lock prevents readers from
+observing a partially initialized desc->dev during initial device
+population, or desc->dev disappearing if registration fails.
 
-Stable-dep-of: 6229898d46c0 ("drm/amdgpu: fix buffer overflow during vBIOS update")
+The local list requires a list node, so add a list node member to struct
+i3c_device.
+
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260807145638.168865-2-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/i3c/master.c       | 38 ++++++++++++++++++++++++++------------
+ include/linux/i3c/master.h |  3 +++
+ 2 files changed, 29 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index c85c5c159554b..f049b625e8988 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -3614,6 +3614,13 @@ static ssize_t amdgpu_psp_vbflash_read(struct file *filp, struct kobject *kobj,
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index cbc3f2d24b618..62d0bbcf560f9 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1615,12 +1615,15 @@ static int i3c_master_early_i3c_dev_add(struct i3c_master_controller *master,
+ static void
+ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
+ {
++	struct i3c_device *i3cdev, *tmp;
+ 	struct i3c_dev_desc *desc;
++	LIST_HEAD(i3c_unreg_devs);
+ 	int ret;
+ 
+ 	if (!master->init_done)
+ 		return;
+ 
++	i3c_bus_maintenance_lock(&master->bus);
+ 	i3c_bus_for_each_i3cdev(&master->bus, desc) {
+ 		if (desc->dev || !desc->info.dyn_addr || desc == master->this)
+ 			continue;
+@@ -1641,15 +1644,30 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
+ 		if (desc->boardinfo)
+ 			desc->dev->dev.of_node = desc->boardinfo->of_node;
+ 
+-		ret = device_register(&desc->dev->dev);
+-		if (ret) {
+-			dev_err(&master->dev,
+-				"Failed to add I3C device (err = %d)\n", ret);
+-			desc->dev->desc = NULL;
+-			put_device(&desc->dev->dev);
+-			desc->dev = NULL;
+-		}
++		list_add_tail(&desc->dev->node, &i3c_unreg_devs);
++	}
++
++	i3c_bus_maintenance_unlock(&master->bus);
++
++	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
++		ret = device_register(&i3cdev->dev);
++		if (ret)
++			dev_err(&master->dev, "Failed to add I3C device (err = %d)\n", ret);
++		else
++			list_del_init(&i3cdev->node);
+ 	}
++
++	i3c_bus_maintenance_lock(&master->bus);
++
++	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
++		list_del(&i3cdev->node);
++		desc = i3cdev->desc;
++		i3cdev->desc = NULL;
++		put_device(&i3cdev->dev);
++		desc->dev = NULL;
++	}
++
++	i3c_bus_maintenance_unlock(&master->bus);
+ }
+ 
+ /**
+@@ -1678,9 +1696,7 @@ int i3c_master_do_daa(struct i3c_master_controller *master)
+ 	if (ret)
+ 		return ret;
+ 
+-	i3c_bus_normaluse_lock(&master->bus);
+ 	i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
+ 
  	return 0;
  }
+@@ -2852,9 +2868,7 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	 * register I3C devices discovered during the initial DAA.
+ 	 */
+ 	master->init_done = true;
+-	i3c_bus_normaluse_lock(&master->bus);
+ 	i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
  
-+static const struct bin_attribute psp_vbflash_bin_attr = {
-+	.attr = {.name = "psp_vbflash", .mode = 0660},
-+	.size = 0,
-+	.write = amdgpu_psp_vbflash_write,
-+	.read = amdgpu_psp_vbflash_read,
-+};
-+
- static ssize_t amdgpu_psp_vbflash_status(struct device *dev,
- 					 struct device_attribute *attr,
- 					 char *buf)
-@@ -3631,13 +3638,6 @@ static ssize_t amdgpu_psp_vbflash_status(struct device *dev,
- 	return sysfs_emit(buf, "0x%x\n", vbflash_status);
- }
+ 	return 0;
  
--static const struct bin_attribute psp_vbflash_bin_attr = {
--	.attr = {.name = "psp_vbflash", .mode = 0660},
--	.size = 0,
--	.write = amdgpu_psp_vbflash_write,
--	.read = amdgpu_psp_vbflash_read,
--};
--
- static DEVICE_ATTR(psp_vbflash_status, 0440, amdgpu_psp_vbflash_status, NULL);
+diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
+index 2f731c6c16ea8..6f8635a13b617 100644
+--- a/include/linux/i3c/master.h
++++ b/include/linux/i3c/master.h
+@@ -219,6 +219,8 @@ struct i3c_dev_desc {
+  *	  every time the I3C device is rediscovered with a different dynamic
+  *	  address assigned
+  * @bus: I3C bus this device is attached to
++ * @node: unregistered device list node, only for use by
++ *	  i3c_master_register_new_i3c_devs(), it is not protected by a lock
+  *
+  * I3C device object exposed to I3C device drivers. The takes care of linking
+  * this object to the relevant &struct_i3c_dev_desc one.
+@@ -229,6 +231,7 @@ struct i3c_device {
+ 	struct device dev;
+ 	struct i3c_dev_desc *desc;
+ 	struct i3c_bus *bus;
++	struct list_head node;
+ };
  
- int amdgpu_psp_sysfs_init(struct amdgpu_device *adev)
+ /*
 -- 
 2.53.0
 
