@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793208699;
-	b=KGG08WCxh5jQBMh6NfQaxIAm7X0Ce+p+7QCQAfJYjVbBi918OIMHBspWo5lhk/HGJ2ug
-	 1omDIKxgxB8uTVdM87ereX99fizJ+KLjogC9Iw6TTY129rmfjnhZ7p5T001Pd+qE8DTUm
-	 idE+Ql594F+hKxDGeK4Z3WdmaCUpRDqc6BYNqA78+j57xcw5jOv71h77l5QAMeyCRVc78
-	 krLQVQM1ie0sKBppwTMNYG/dqiM+tWaHm+Rq6qWH6vez28AvTILljwJCdWl6WnLQp8UkT
-	 NOWMKevq0jFFswGVj30L42/8F9sZ2SjOGNJB4FaE3/fjzWoA4iMXQrJKdgTVveYgnsA==
+	t=1793208702;
+	b=emeEwE0Oeb0119y4EGSbl0mex/7dDBdfPITh275zmiub5pBM4kEV4bzlrbA5q1sLPfKo
+	 DRVX4e/ia8Kruu9olMfxp6hc8ZVtl3dVIleTjnR7C9aymEZ7E8kUrydrvu3QFgw5OnRoy
+	 uQyIJDAoKjtdyKaOIztF5euTNKazGaQUePwDaoP+QHVqyphqdbP7R+dPwb3LZWd3b3rjG
+	 NGES5f/Tbf8M72ZbJYmQXbho13P4azy2TP0aQjbEr6YUig7ZnTVUkTy/a/Kx5FTrhJNYL
+	 bhTPYoadkBwGacRQZwWI/0ooBXPkHhzKlnPw4HYhACboSFQFiOvZP0xsSPkII6W58Fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793208699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793208702;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4NMtL2pLeKBlY8crPKe8quJWrQpbWvFFNU97UzBuJkY=;
-	b=ybvtE79TlfAVkVg1z0UFVdKKC5euKQWFA63g8UQUyzTz/MfH6t7xMKTv5Gs5/9/1i47g
-	 r21B6xjxcV60LKcPiDPyqkKL3NSrLs3CI5YOAUACueC2yoAyeoHv+XxPlRTf9iwhJM3af
-	 Tf/NBAO13Z9rPro7ReGl3fbgo70Fw4QlgDBnO1LMGAuZB7Y/ABXBpK1Hs9kfs0Vvc25O9
-	 2vam+g8IXuoy0DGi2ULqh10g9zmz6LBJdTycn0J6g74/R/gtwlOLueGPQUgPYGluzjpLk
-	 iarnDF2G2pyy2Osr3R5qHfwMF4WHahoIikdEKmxZgfI3a/HIrEx+SZBkuIb2eC4jBfw==
+	bh=QTnFaiBzozxk6l2y1zg0xEF0iodS2Npf4Ozybr1SYMQ=;
+	b=Etha7MJFobyFHM4pw5nerPjT8aD5I356XiJsPVp4J/uREVi9VdBxoavy1JduN++diEX5
+	 f7vKwK/R5zR7on8Ddh43gOo13LC9Li3PspKP5wfDrDk6sVgOWoT/kKlglkLWd8/q1FKQe
+	 U8Cri7Pn9ivjKuAknVOak10Bzuf7TPl3xHcGT8lFKUpTl/rbN4Z9UBspgYczAKBTFcrrN
+	 Z4HRp+cLsQBFfgp58BZXEeN3Dlhwh1ICeuQvE7EFURlTE037Xey3vTemWQcvLiPHA5Hk6
+	 SVS6RmgNrIDuN2iMjq5jCpPJAdOmsxqgV5s+lzVsLxko2zGsJAyy3cy2lP1OXE8Dh6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ANT5DhPb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEhoyQrz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173C2606A31A;
-	Wed, 28 Oct 2026 17:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEA0606A31A;
+	Wed, 28 Oct 2026 17:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ANT5DhPb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688C11F01825;
-	Wed, 28 Oct 2026 17:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEhoyQrz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444FB1F01825;
+	Wed, 28 Oct 2026 17:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793208698;
-	bh=4NMtL2pLeKBlY8crPKe8quJWrQpbWvFFNU97UzBuJkY=;
+	s=korg; t=1793208701;
+	bh=QTnFaiBzozxk6l2y1zg0xEF0iodS2Npf4Ozybr1SYMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ANT5DhPbuGKNJ+NbASGP7FdocleOoRK1gnr1qEv0Tqf9sxznpQ5tCfTuCoEOQ/g/i
-	 5eRn05qXcxyBh62ep/QS6dy9KXmY6CyG5agIcPNKGFElzwz2a+g8JjWYcpK4pdOEJu
-	 1cYY7rtvJan+IInrHCitUYBGlTjuloQIDax3h5gA=
+	b=JEhoyQrz+xQZ2kY/MBPCHW5Cf7+2Ev/NgY9qRdosD8b7OH1EX8mfTcc2suzOMucME
+	 d6cJ1KV/LXluvVvXkaE+yHEH9ZMXHSnzBALgct6yU9wd03nOo2xmj5aoeiBWeGl48a
+	 iChYfpk1ycVFfxmtTf7vlkmpYGIqguHjsffIIy1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 211/516] Bluetooth: hci_core: Serialize ACL scheduling with channel deletion
-Date: Wed, 28 Oct 2026 17:56:03 +0100
-Message-ID: <20261028170008.499130353@linuxfoundation.org>
+Subject: [PATCH 5.10 212/516] Bluetooth: btintel: fix buffer over-read in btintel_hw_error()
+Date: Wed, 28 Oct 2026 17:56:04 +0100
+Message-ID: <20261028170008.521987921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -67,97 +67,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 
-commit f4845ab191a4f686a5da481fbba90ed73bb693b0 upstream.
+commit 40eb4b18ad167b63644c27fa67a7400ba050379a upstream.
 
-hci_chan_sent() selects a channel under RCU but drops the read lock before
-accessing chan->conn and returning the channel. The ACL and LE schedulers
-then use its packet queue and update its transmit counters without any
-protection against channel deletion.
+The "Exception info %s" print uses skb->data + 1, but the 12-byte
+payload is not guaranteed to be NUL-terminated and can be read past
+its end.
 
-After TX selects a channel and releases RCU, a disconnect command timeout
-on the separate request workqueue can run hci_conn_failed() and
-l2cap_conn_del(). hci_chan_del() can then unlink the channel, complete
-synchronize_rcu(), purge its queue and free it before TX resumes. This
-causes use-after-free both in hci_chan_sent() and in its callers.
+Bound the print with "%.*s" and skb->len - 1.
 
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in hci_chan_sent+0x892/0x9b0
-  Workqueue: hci0 hci_tx_work
-  Call Trace:
-   hci_chan_sent+0x892/0x9b0
-   hci_tx_work+0x5e6/0xb70
-  Allocated by task 91:
-   hci_chan_create+0xe3/0x350
-   l2cap_conn_add.part.0+0x12/0xa30
-   l2cap_chan_connect+0x110d/0x1b60
-   l2cap_sock_connect+0x310/0x530
-  Freed by task 99:
-   hci_chan_del+0x11f/0x170
-   l2cap_conn_del+0x4f1/0x800
-   l2cap_connect_cfm+0x88c/0xd30
-   hci_conn_failed+0x150/0x250
-   hci_abort_conn_sync+0x3e3/0x800
-   hci_cmd_sync_run+0x7e/0xc0
-   hci_abort_conn+0x105/0x1f0
-   disconnect_sync+0x157/0x290
-   hci_cmd_sync_work+0x13c/0x290
-
-Hold the existing device mutex across channel selection and transmission
-in both schedulers to serialize them with channel teardown. Keep timeout
-handling outside the critical sections because hci_link_tx_to() acquires
-the same mutex. This also permits the transmit path to sleep, unlike
-extending the RCU read-side critical section across packet submission.
-
-Fixes: 3eff45eaf817 ("Bluetooth: convert tx_task to workqueue")
+Fixes: 973bb97e5aee ("Bluetooth: btintel: Add generic function for handling hardware errors")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/bluetooth/btintel.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4599,6 +4599,8 @@ static void hci_sched_acl_pkt(struct hci
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -210,7 +210,8 @@ void btintel_hw_error(struct hci_dev *hd
+ 		return;
+ 	}
  
- 	__check_timeout(hdev, cnt, ACL_LINK);
+-	bt_dev_err(hdev, "Exception info %s", (char *)(skb->data + 1));
++	bt_dev_err(hdev, "Exception info %.*s", (int)(skb->len - 1),
++		   (char *)(skb->data + 1));
  
-+	hci_dev_lock(hdev);
-+
- 	while (hdev->acl_cnt &&
- 	       (chan = hci_chan_sent(hdev, ACL_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-@@ -4630,6 +4632,8 @@ static void hci_sched_acl_pkt(struct hci
- 
- 	if (cnt != hdev->acl_cnt)
- 		hci_prio_recalculate(hdev, ACL_LINK);
-+
-+	hci_dev_unlock(hdev);
+ 	kfree_skb(skb);
  }
- 
- static void hci_sched_acl_blk(struct hci_dev *hdev)
-@@ -4724,6 +4728,8 @@ static void hci_sched_le(struct hci_dev
- 
- 	__check_timeout(hdev, *cnt, LE_LINK);
- 
-+	hci_dev_lock(hdev);
-+
- 	tmp = *cnt;
- 	while (*cnt && (chan = hci_chan_sent(hdev, LE_LINK, &quote))) {
- 		u32 priority = (skb_peek(&chan->data_q))->priority;
-@@ -4752,6 +4758,8 @@ static void hci_sched_le(struct hci_dev
- 
- 	if (*cnt != tmp)
- 		hci_prio_recalculate(hdev, LE_LINK);
-+
-+	hci_dev_unlock(hdev);
- }
- 
- static void hci_tx_work(struct work_struct *work)
 
 
