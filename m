@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212911;
-	b=oT0NQBryYji5Sj+l2ocjEJeVPX/0lbjLqkVkFmqTeaKXur5leaqjhkLrvRJl8T3triQv
-	 oQgicsJ9poJyZ77MKFLI6S+TCDhFlRIpZ8/5brqaELZVGwPOBYIXroWuDa7YC6NL537sk
-	 9pHHK1C18JMD2bzW68iJSXz8wtdksi3fc4dJsH3erDk3fPZntTQsWzx4bi03PWTjXbDOE
-	 goVc7jR/A0vNDvzyrpo30lCJQKZejbI2gdnd520s3jLlUS/fRu7haqD4ln+eG/oO1/iSK
-	 htTSuEUwLXCtEzvLG9Iwrah58o05I85RpaAKGAr8zIA8EWUa+KnUl17mnke4ZyhYA6g==
+	t=1793212914;
+	b=N56ZkN2kWuJ/fYDbHILcbWmxigxaIPMwsDg/61AV2U15RVptmwNfvKtf0lVjmcnIoP+4
+	 7egbfkZvqiGEl1TWKwr7dKbBJkwGcpHwarnMUaZXp+8hfSSFSE0fmnVrPV7tcZjn+f5Bv
+	 Nups4Dcuz4rAZnyoxsBuV82js0v/+pPYI6YgRVnWNmP+50f8XxMobWQKPsugMuKZooZWG
+	 UlVfWySwvZN2qgwUe3uT7asJSTyijfDm7nwJb0+5U2+Ww8dSs+6zm5CEBFLGW5J3X0yg6
+	 9xkVRbze/JEhf5jz2mLXrT/M9OZm322uNhbzIxgyxVzxyIh3AIV1p0d4e0uldZItlVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212911;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212914;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z6LSc6xmNOo/J10OGrfD0NuuREudgkxrv6qhnn75OeU=;
-	b=HdXGajy2fR6qeKR4vM2ggGr1ma+c21L1hnV1tI2Coa43WPqVXPDtcqpNxLH5VZUvE9DR
-	 eUrlQII2ecQSzRCzufK6hE1M9kCBqbSFYtcyqu5EMjzmLHHiJhn3n4hI1RneVn4eWVHAJ
-	 xI3iVqVSCZjhEU+ylFx4rSRMRf+spKgQOG684hOhQ5Sq6Y79q8orwIIKeHfNA27uoH+PH
-	 I0wHL8mZnX/rtb4VPxlhVGTD/b8iowCBzSbDLo4iwMagSH4l1LOLsoofxdBWEdeV4U9kU
-	 lOdRgXyV4TleB7c1XZtqD5NwYELVLkb9pAVKIrfOt/7pmmcRM5rnJwCqAsQd3zEkm8Q==
+	bh=sUifrdCEb0SqhtXe6gIWIAS0Nc4PcwWudFk2GEk9BKw=;
+	b=HpWBkGQLboYvCRrQCbUuE1Rwr42RAdqA0o634y7pzjm4age3azPIyYBg+5sieiQGeSBv
+	 eD369d52sPSrsro43jt5M+cQeCrRXkJMumDRXOH3Ctj3Erkz1CyX+WI23IiZ2yI9cvZ8h
+	 cWt5Z1eYS1Zh8ebRbgfT2FM/h4adVknNhXkKlsJiZIaOu2JCPTKT0LmaK5YG2OAH/N+hl
+	 Vh029rItJRe9GPxvQJRvniRu2r+lpwk3+TgUMs2NgRzRRWmpdKpQgg8htE3KAfOwSo60E
+	 /rw4HWeUEQkiRUrihWvMHFyKYWFzX0Szrr3T0EG4RQAKNDxEj6Vq2E9rYz6XmfZGZ0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msauKHpw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJ2Aa4CA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E5260A2600;
-	Wed, 28 Oct 2026 18:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5C560A2604;
+	Wed, 28 Oct 2026 18:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msauKHpw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4701F01825;
-	Wed, 28 Oct 2026 18:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJ2Aa4CA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5651F01825;
+	Wed, 28 Oct 2026 18:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212910;
-	bh=z6LSc6xmNOo/J10OGrfD0NuuREudgkxrv6qhnn75OeU=;
+	s=korg; t=1793212913;
+	bh=sUifrdCEb0SqhtXe6gIWIAS0Nc4PcwWudFk2GEk9BKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=msauKHpwyQ4omOPshOigWMZLDgBdCfP/unyCFVl7Tsymkcl2DuAFqcOLcLdvV1LEQ
-	 MKx6PyQQr+tqKJI6Xz/kXL5AQxiXClvbh1OhSfBsZQodI+uv9R4vB2Wi7K10ZRfhjx
-	 x1hS9F+NJh2uab1uVbaacWX9C6BK8GfIeGFxyyW4=
+	b=OJ2Aa4CARp3UQ/L0UY8ecWR0lQTrgV98I9e4sWtylA5WwSbF1lTA+PRVX1TRf14qa
+	 SSPTBLds4lx5HA6hOU6cH89XbzKj/qWtEBiPpmgp46rnUkDvWBMjO3stME6I5AGbqD
+	 xGzVIm9ijCOkxRXW1QQXcIEpcUjBggZknamyuGHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bill Pemberton <wfp5p@virginia.edu>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 0320/1887] USB: serial: quatech2: fix baud rate overflow
-Date: Wed, 28 Oct 2026 17:40:16 +0100
-Message-ID: <20261028170506.510058309@linuxfoundation.org>
+Subject: [PATCH 6.1 0321/1887] USB: serial: ssu100: fix baud rate overflow
+Date: Wed, 28 Oct 2026 17:40:17 +0100
+Message-ID: <20261028170506.532997278@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,54 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit ec06546b43b612cefc851558981b4955c0ef9e46 upstream.
+commit afc235a217360c6859068d2e37a4df305c4d1be2 upstream.
 
 The requested baud rate is incorrectly truncated to 16 bits so that
 line speeds above 65535 bps cannot be set.
 
-Use 32 bits for the rate while rejecting rates outside of
-[50,921600] to avoid having the 16-bit divisor overflow.
+Use 32 bits for the rate and remainder while rejecting rates outside of
+[50,460800] to avoid having the divisor or remainder overflow.
 
-Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
-Cc: stable@vger.kernel.org	# 3.5
+This issue was flagged by an LLM.
+
+Fixes: 52af95459939 ("USB: add USB serial ssu100 driver")
+Cc: stable@vger.kernel.org	# 2.6.36
 Cc: Bill Pemberton <wfp5p@virginia.edu>
+Assisted-by: LLM
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/quatech2.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/usb/serial/ssu100.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/quatech2.c
-+++ b/drivers/usb/serial/quatech2.c
-@@ -54,6 +54,7 @@
- #define QT2_XMIT_FLUSH      0x05  /* no following info */
- #define QT2_CONTROL_ESCAPE  0xff  /* pass through previous 2 control bytes */
+--- a/drivers/usb/serial/ssu100.c
++++ b/drivers/usb/serial/ssu100.c
+@@ -34,6 +34,7 @@
+ 
+ #define  SERIAL_EVEN_PARITY         (UART_LCR_PARITY | UART_LCR_EPAR)
  
 +#define  MIN_BAUD_RATE              50
- #define  MAX_BAUD_RATE              921600
- #define  DEFAULT_BAUD_RATE          9600
+ #define  MAX_BAUD_RATE              460800
  
-@@ -158,7 +159,7 @@ static inline int calc_baud_divisor(int
- 
- static inline int qt2_set_port_config(struct usb_device *dev,
- 				      unsigned char port_number,
--				      u16 baudrate, u16 lcr)
-+				      speed_t baudrate, u16 lcr)
+ #define ATC_DISABLED                0x00
+@@ -219,9 +220,10 @@ static void ssu100_set_termios(struct tt
  {
- 	int divisor = calc_baud_divisor(baudrate);
- 	u16 index = ((u16) (lcr << 8) | (u16) (port_number));
-@@ -267,9 +268,9 @@ static void qt2_set_termios(struct tty_s
  	struct usb_device *dev = port->serial->dev;
- 	struct qt2_port_private *port_priv;
  	struct ktermios *termios = &tty->termios;
--	u16 baud;
+-	u16 baud, divisor, remainder;
++	speed_t baud, remainder;
  	unsigned int cflag = termios->c_cflag;
- 	u16 new_lcr = 0;
-+	speed_t baud;
- 	int status;
+ 	u16 urb_value = 0; /* will hold the new flags */
++	u16 divisor;
+ 	int result;
  
- 	port_priv = usb_get_serial_port_data(port);
-@@ -287,6 +288,18 @@ static void qt2_set_termios(struct tty_s
+ 	if (cflag & PARENB) {
+@@ -237,6 +239,18 @@ static void ssu100_set_termios(struct tt
  	if (!baud)
  		baud = 9600;
  
@@ -132,17 +127,17 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +			baud = 9600;
 +	}
 +
- 	status = qt2_set_port_config(dev, port_priv->device_port, baud,
- 				     new_lcr);
- 	if (status < 0)
-@@ -383,7 +396,7 @@ static int qt2_open(struct tty_struct *t
- 	port_priv->device_port = (u8) device_port;
+ 	dev_dbg(&port->dev, "%s - got baud = %d\n", __func__, baud);
+ 
+ 
+@@ -312,7 +326,7 @@ static int ssu100_open(struct tty_struct
+ 		dev_dbg(&port->dev, "%s - set uart failed\n", __func__);
  
  	if (tty)
--		qt2_set_termios(tty, port, &tty->termios);
-+		qt2_set_termios(tty, port, NULL);
+-		ssu100_set_termios(tty, port, &tty->termios);
++		ssu100_set_termios(tty, port, NULL);
  
- 	return 0;
- 
+ 	return usb_serial_generic_open(tty, port);
+ }
 
 
