@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216794;
-	b=YoAJU0rrnPUoB/hgxR2xm9L+vYzkArtkHVR/VGx3juJpqkpPKXrBNs/brKepjtIKvlXB
-	 GqxOJ8aWu0aVpWlpsSdC1AFe9wzEmOpAeQrCJNQzflIe1IU/kbRuCxN1qditQRV0D4RKb
-	 pVt6AGYrYRidrzB6pS2gHdYfYUgV/nEnhvn6m/g86VVb5Cd5PA/YnIbqlQQ7gK9KHtFud
-	 CUqKnNxZcSViZOT0xupvPu0dk08X7KqMTMWLEN5yxLCGtW89+McZURyQXLRgO9iGaAoCq
-	 IWCPzRmGAAxlPmtKSZu7wsDJZunFcF3tJOIvlA2H/xX0oz6xH8U2tJGav91K7AiWwgA==
+	t=1793216797;
+	b=xNIl/Z3NUj6bocqP1hyBm2MDso9Wac0deHbn3zEMMxZpdIOASrYzCNGBPXzm9SnhfwHV
+	 CgN8jsK0lAJgkMc9hxZUMJAXGwqUB53UiXURUN4w3TDElwOaZMliVxTzOPs6fIxbXBQih
+	 90MFWSiW/3MVBszzpbOVSO27QPQ7Uc2Y4u7pUi4+HrjOOMh9xHyLgs4VZzFL8GAP5axSw
+	 SNM8fOurYmb6lFZmf/mhfeD4oeRcsfnhAq+pTFL23Ard7NDpyYQq0X+e7ziPisylkTp90
+	 +3Stos4y3N+G4KvhM3nI+6CEUD+vdkX58qRkz56iFA1DitQvxZs0Kq96a+p4oezOgYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QTibB32Q2aX0j3cNIxlBnw8REqxUIMT6PpG10DomGlE=;
-	b=Xpbm5GJIsJDWNki8r7xAoeWV2Fjes3aCocrodFy2p7RaVC+4IvpubP/nZzjxsDGOySAz
-	 KJKm88xXWAnn7zbv5dMYV7Cwf6H1vBiDawz+JCJkYA9xIM9rk29Mb3VKnCVekZ8t4VEAf
-	 XSc0+zFZi7lS8toVO1mPeGD6zPNFUFgoFGd9PIHSBY4d+XKMIt1sk31QNvwCd+jlWNVD/
-	 d7dhgxbhu28T8Z4Uoyj0i8h1xKNgns+9fWNUmTRmyz4CuhNMawnaRfnR4Wgach/vH8mci
-	 I8dAMzd5KRE8NvHr75MDmD3KTOpIabt/9IAhMyL4ig9Z6S2m3tya3yBUs6hf2ofxjMw==
+	bh=fcx7ttRFpvAy3RFEuzWwoBD4plFdWow38QQ9KMu2ih4=;
+	b=QHH/5eDtJmuncpBDI8/xy70+QeCl8z4ed4zGJucGOVYBjTlgjTCVBvhR/FSSMZk5PlkW
+	 zEpAvIZWCSV2a8N3Biphb3fxUk/pacDmIIbkPIoP6rMHRRt0S6vgbtAaxuU83AS4zRZCm
+	 XT32FvpYxELmg/wF7YigWsJuAX0fBSP+z/NCsbgGB87VMpVPw9FtuiFdUhWuyDLdVuUN0
+	 Zvqe3h9uUlWgN0Wc9Uaw6wva4F6CPvrS+IuwKc/EIjn1Gt7ama9aqdRMLZaeFAyvKAjfH
+	 J//ZSqiTTQKsuYFhcZcd0WiXTEBV0v2qEns6W1JOFkE75GaAo0lQyBs3CZH3L8ehjnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aY2cJOWy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nW1usuZ9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E750606A31C;
-	Wed, 28 Oct 2026 19:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E9C606A31D;
+	Wed, 28 Oct 2026 19:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aY2cJOWy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE071F01825;
-	Wed, 28 Oct 2026 19:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nW1usuZ9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4382C1F01825;
+	Wed, 28 Oct 2026 19:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216793;
-	bh=QTibB32Q2aX0j3cNIxlBnw8REqxUIMT6PpG10DomGlE=;
+	s=korg; t=1793216796;
+	bh=fcx7ttRFpvAy3RFEuzWwoBD4plFdWow38QQ9KMu2ih4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aY2cJOWyJpuWG1fWf1gpg/bqqjr9n/CebHiP9Nml3Swd3HG2n2orhp37AqcEUDyRW
-	 fiFzSXvOaBTaUujujQjWIotksX2AfgKaprdG8HcIiATBbl4PS2Cju+IOxZbRJ2bf2O
-	 WjBlIql4scPY5u5UHrgfmqh6KXOtk955FozWNEO0=
+	b=nW1usuZ9bReqckfWilCjNJsyOtzhRWVqwiTzES3YSISs2cjR9jUg+qxUF6X1nQtwt
+	 c8wUOZegEJMqUV4Qwp9lqEHtZ1tt4IX9s2ulXCOLWeNkVWY5Lfrw933G1uTXNKGUvn
+	 3nGyLpFV42LMwmO5pgAfHa0UEP8itrYPgcPpRLKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1680/1887] wifi: rtw89: phy: check length before parsing PHY status IE
-Date: Wed, 28 Oct 2026 18:02:56 +0100
-Message-ID: <20261028170537.688314980@linuxfoundation.org>
+Subject: [PATCH 6.1 1681/1887] pinctrl: mediatek: paris: bypass pinctrl GPIO layer in set GPIO direction
+Date: Wed, 28 Oct 2026 18:02:57 +0100
+Message-ID: <20261028170537.711447059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,45 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 884495c39de1a02f42bd40051b921e2311d6ac91 ]
+[ Upstream commit c87c9046c4e00d599454e033a477176c4d73ac2a ]
 
-Hardware might report PHY status IE with unexpected length, and parser
-might access out of range. Check the length ahead.
+pinctrl_gpio_direction_input() / pinctrl_gpio_direction_output() take
+the pinctrl mutex. This causes a gpiochip operations to need to sleep.
+Worse yet, the .can_sleep field in the gpiochip is not set. This causes
+the shared GPIO proxy to trip over, as it uses gpiod_cansleep() to check
+whether it can use a spinlock or needs a mutex. In this case, it ends
+up taking a spinlock, then calls pinctrl_gpio_direction_output(), which
+takes a mutex. This causes a huge warning.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260506131000.1706298-12-pkshih@realtek.com
+While this class of Mediatek hardware does not have separate clear/set
+registers, the pinctrl context has a spinlock that is taken whenever
+a register read-modify-write is done. Also, once the GPIO function is
+selected / muxed in, further GPIO operations do not involve pinctrl
+operations or state. The GPIO direction and level values do not require
+toggling the pinmux or any other pin config options.
+
+Switch to directly calling mtk_pinmux_gpio_set_direction() in the GPIO
+set direction callbacks to avoid taking the pinctrl mutex. Drop the
+.gpio_set_direction field in mtk_pmxops to signal we are no longer using
+the pinctrl GPIO layer for setting the direction.
+
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-paris.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index ff3a31bf3a87d..ec9712b74876f 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -1258,14 +1258,18 @@ static int rtw89_core_rx_parse_phy_sts(struct rtw89_dev *rtwdev,
- 	pos = (u8 *)phy_ppdu->buf + PHY_STS_HDR_LEN;
- 	end = (u8 *)phy_ppdu->buf + phy_ppdu->len;
- 	while (pos < end) {
--		ie_len = rtw89_core_get_phy_status_ie_len(rtwdev, pos);
--		rtw89_core_process_phy_status_ie(rtwdev, pos, phy_ppdu);
-+		u8 *iehdr = pos;
-+
-+		ie_len = rtw89_core_get_phy_status_ie_len(rtwdev, iehdr);
- 		pos += ie_len;
- 		if (pos > end || ie_len == 0) {
- 			rtw89_debug(rtwdev, RTW89_DBG_TXRX,
- 				    "phy status parse failed\n");
-+
- 			return -EINVAL;
- 		}
-+
-+		rtw89_core_process_phy_status_ie(rtwdev, iehdr, phy_ppdu);
- 	}
+diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
+index 464bedc0fe454..bb9c70a1333be 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.c
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
+@@ -770,7 +770,6 @@ static const struct pinmux_ops mtk_pmxops = {
+ 	.get_function_name	= mtk_pmx_get_func_name,
+ 	.get_function_groups	= mtk_pmx_get_func_groups,
+ 	.set_mux		= mtk_pmx_set_mux,
+-	.gpio_set_direction	= mtk_pinmux_gpio_set_direction,
+ 	.gpio_request_enable	= mtk_pinmux_gpio_request_enable,
+ };
  
- 	return 0;
+@@ -899,7 +898,7 @@ static int mtk_gpio_direction_input(struct gpio_chip *chip, unsigned int gpio)
+ 	if (gpio >= hw->soc->npins)
+ 		return -EINVAL;
+ 
+-	return pinctrl_gpio_direction_input(chip, gpio);
++	return mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, true);
+ }
+ 
+ static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
+@@ -912,7 +911,7 @@ static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
+ 
+ 	mtk_gpio_set(chip, gpio, value);
+ 
+-	return pinctrl_gpio_direction_output(chip, gpio);
++	return mtk_pinmux_gpio_set_direction(hw->pctrl, NULL, gpio, false);
+ }
+ 
+ static int mtk_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
 -- 
 2.53.0
 
