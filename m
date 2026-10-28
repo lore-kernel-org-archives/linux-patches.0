@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212806;
-	b=CsIY/Sbv4bDHfLmabNvfSWt+HNms3wyZHEJGLGujWKYRhe8CM9du5espD1akRoyzbHUR
-	 Kqo/uhYLrypaIYgaZhwHmAd0uM5c3jIIOIoRfuBCAYf1JbsZWE+2xAjjtZFhGxdOrmbVt
-	 KFNfsqtRpWMdUWQFtbv0+6kfcUUcHQfLBPNlZRp3B2bFcp8tfm2LXHul2SIirup/XwZls
-	 3BpxdB9S03WLCH/Uo4i6APLRRkvoGtoKBuu0yUzOfPlASrbGqqH6Fl0DHMNkDFFQcqoWg
-	 S6WcB2DNCfCicFcvs67cPpyuC76aUAUcon5CwVETZ8yjEKzMtz3d7c51dUGBrlbC4IA==
+	t=1793212809;
+	b=bmHNHndEAzKbY0eorbbL88S1s4nUM9FWukk5RXm4h5/DfYzA8rL7vzYhsG8q0EeLL7iy
+	 RPoyqoOwAdqIVsB/aEGgEQSyjNq2/Y5YQKX0DKyyxYzCNTVdz+Z2+etkl/ZdumP1YLF5h
+	 HRkpImdtEWZ1jz9oSJnb6s35v/rQJDUQ+bByM4y1Xvjqdhs8p8QlqG0CRmpE9wCkvi5BX
+	 9pl0jugUGxSABFUiWsOQzbuS1BzRfEEhUZ3BkvKRrhySxLkaax3O3moBKLgGyA97z5MVy
+	 dTXW69Y4Tx57fyyZWZB0mte3AA0zyS5WA29a07fQqHQbxZkvYz+fLj6oiI526W129AA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212806;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212809;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xAUYlzakDLTIdEOIa94jCvNEWncLpPiY1ErEZhdIw1c=;
-	b=Is9gvguHqcF7yNBZ9bAscvqay/C0wO8vi5G+/9DkvRhOeNqBsUWnCqZVh30NTbIvyiBi
-	 VQB9J1md7E0D2/r+IPgYAiQTxCXOlrJ0rNN0SWAb/XffO0ZSk46oj7nm1LRnD1SI0hCLu
-	 Jl3QjD08xuK08/MdwCPZJeV3iZ1JnhnwPSh7pMi7/RP52szgnu7rvsgrTA/9WIgg2Snd3
-	 3Gd75Ulu47ebCkOwzuaWMM7dwL4J9tphhxM72z40cHn0L9dsllNlGASDqWViUBOwDl0hW
-	 d4p+nvCkpvXNnD1iBp4iELoykKmm3jPBCTTqk+lQzKE6WK4ZePcoBXI7z4VIXo9trGA==
+	bh=7ngmm8K9ntSQv9/zHVdCq47Qbp2rLQao5Hd+RZJETpE=;
+	b=2vF5WmXVN9imyshl9bBu3ipj4chBfyjoX7RYA2Q5g5YfgZbo1kfN3eUV0L92LP7/+Ztu
+	 0Yx0HfqjzitvrajYISj3YcbEZx6MTd8JbVBiD39V4sUCBmdHFIStPQ/DvtgSZbp986z6Y
+	 qT6KAU6hhAt7Vl1anSXYtL71LlmGKCaha/nnMtttxNOBZf74fjfTsJGr5/yWbo5ZfwJJu
+	 CIXyjV3nOU0B0/YzSleezVa3+lNtz2aiqTzr1+A6i/v6vCdO1Fr9XC/pV9mh0Vd1dDf9k
+	 yVmz6mC3PVNYLPwAgd5rFQlPLdmnL81JUbhVhiPjkwtXHgmn5cbbgrqGUcsgxRGD2hQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVtSlEhn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p3tTrtKw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45676606A31A;
-	Wed, 28 Oct 2026 18:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA87606A31A;
+	Wed, 28 Oct 2026 18:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVtSlEhn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922191F01825;
-	Wed, 28 Oct 2026 18:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p3tTrtKw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEC11F01825;
+	Wed, 28 Oct 2026 18:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212806;
-	bh=xAUYlzakDLTIdEOIa94jCvNEWncLpPiY1ErEZhdIw1c=;
+	s=korg; t=1793212809;
+	bh=7ngmm8K9ntSQv9/zHVdCq47Qbp2rLQao5Hd+RZJETpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JVtSlEhnH6Z8Ejwfx0dy/ruSAmaE4qRv4w/fLG2Af4PImMD0quS0iis2cHLU4T4mo
-	 b3Cq3lasH0U62ZES9f7axZzu9anvhmLt8GEgD1s6gpiB8JZl9mhEkovQ52O8rLJJJd
-	 rlimA+rif3MkX+kNzkHfoDWEjDx1SHHq0pMd+gxY=
+	b=p3tTrtKwvOTx4+0Pj3XLKiP4s6Kcfvemx3thila8sZgZRMkciWNVzyzF4og7IHcy/
+	 Ib7uGT/wr+wCpHuuYTMevM9B/X862AtOGHXze6JnTPGT/HF+YwRWYjpR1Q1IPdya+m
+	 IhrpC/7HdWN5xep8NeECXCFPCDTXkbSi6UhGJqa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Hui Peng <benquike@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 0282/1887] usb: core: clear both ep_in and ep_out for non-ep0 control endpoints
-Date: Wed, 28 Oct 2026 17:39:38 +0100
-Message-ID: <20261028170505.645936356@linuxfoundation.org>
+	Amit Sunil Dhamne <amitsd@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 0283/1887] usb: typec: tcpm: recover after failure to start the frs ams
+Date: Wed, 28 Oct 2026 17:39:39 +0100
+Message-ID: <20261028170505.668974615@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,64 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-commit 0e8baa78d872f2db440d8b9ded946ab8dceb89eb upstream.
+commit 90156585765b29304f07b0e4a1c56a969876fcfc upstream.
 
-In usb_enable_endpoint(), non-zero control endpoints (where
-usb_endpoint_xfer_control(&ep->desc) is true) populate both
-dev->ep_in[epnum] and dev->ep_out[epnum] with the same struct
-usb_host_endpoint pointer.
+Reset the port if the tcpm fails to start the FAST_ROLE_SWAP AMS by
+initiating error recovery on it.
 
-However, usb_disable_endpoint() only clears either dev->ep_out[epnum] or
-dev->ep_in[epnum] depending on the direction bit of epaddr when
-reset_hardware is set, leaving the opposite direction's array slot
-pointing to the disabled/freed endpoint.
+This helps in cases where some cables (incorrectly) signal an FRS to
+an FRS capable port during disconnection. The TCPC autonomously starts
+sourcing VBUS on detecting the FRS signal. However, the VBUS sourcing is
+left on when the FAST_ROLE_SWAP AMS fails to start (as tcpm_sink_tx_ok
+is 0 as CC is open due to the cable disconnect). This is because the
+code sets the state to INVALID_STATE without resetting the port state.
 
-Clear both dev->ep_out[epnum] and dev->ep_in[epnum] when disabling a
-non-ep0 control endpoint with reset_hardware set, and update the
-function kerneldoc accordingly.
+Log snippet before changes:
+[  101.401960] AMS FAST_ROLE_SWAP start
+[  101.401971] Sink TX No Go
+[  101.401982] sourcing vbus
+[  101.401987] VBUS on
+[  101.402159] VBUS on
+[  109.257809] CC1: 0 -> 0, CC2: 5 -> 0 [state SNK_READY, polarity 1, disconnected]
+[  111.267442] VBUS on
 
-Tested in QEMU against Linux 7.3.0-rc3 using dummy_hcd and raw-gadget to
-enumerate a USB device with a non-zero control endpoint
-(bEndpointAddress 0x01, bmAttributes USB_ENDPOINT_XFER_CONTROL),
-verifying that both dev->ep_in[1] and dev->ep_out[1] are cleared when
-the interface is disabled.
+After changes:
+[   70.541211] AMS FAST_ROLE_SWAP start
+[   70.541220] Sink TX No Go
+[   70.541228] state change SNK_READY -> ERROR_RECOVERY [rev3 NONE_AMS]
+[   70.541362] VBUS on
+[   70.541365] sourcing vbus
+[   70.541367] VBUS on
+[   70.541374] state change ERROR_RECOVERY -> PORT_RESET [rev3 NONE_AMS]
+[   70.541410] disable vbus discharge ret:0
+[   70.543028] Setting usb_comm capable false
+[   70.544009] Setting voltage/current limit 0 mV 0 mA
+[   70.544034] polarity 0
+[   70.544239] Requesting mux state 0, usb-role 0, orientation 0
+[   70.555550] cc:=0
+[   70.555595] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev3 NONE_AMS]
+[   70.555697] VBUS off
+[   70.555702] VBUS VSAFE0V
+[   70.555762] CC1: 5 -> 0, CC2: 0 -> 0 [state PORT_RESET, polarity 0, disconnected]
+[   70.587794] VBUS off
+[   70.587799] VBUS VSAFE0V
+[   70.655672] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
+[   70.655682] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [rev3 NONE_AMS]
+[   70.655686] Start toggling
+[   70.656274] CC1: 0 -> 0, CC2: 0 -> 0 [state TOGGLING, polarity 0, disconnected]
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 0908c5aca31e ("usb: typec: tcpm: AMS and Collision Avoidance")
 Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260920231702.110963-1-benquike@gmail.com
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260903-frs-error-handling-v1-1-ad0fee541847@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/message.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -1331,7 +1331,8 @@ static void remove_intf_ep_devs(struct u
-  *
-  * Disables the endpoint for URB submission and nukes all pending URBs.
-  * If @reset_hardware is set then also deallocates hcd/hardware state
-- * for the endpoint.
-+ * for the endpoint (clearing both ep_in and ep_out pointers for
-+ * bidirectional non-ep0 control endpoints).
-  */
- void usb_disable_endpoint(struct usb_device *dev, unsigned int epaddr,
- 		bool reset_hardware)
-@@ -1352,6 +1353,11 @@ void usb_disable_endpoint(struct usb_dev
- 			dev->ep_in[epnum] = NULL;
- 	}
- 	if (ep) {
-+		if (reset_hardware && epnum != 0 &&
-+		    usb_endpoint_xfer_control(&ep->desc)) {
-+			dev->ep_out[epnum] = NULL;
-+			dev->ep_in[epnum] = NULL;
-+		}
- 		ep->enabled = 0;
- 		usb_hcd_flush_endpoint(dev, ep);
- 		if (reset_hardware)
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -5540,7 +5540,7 @@ static void tcpm_pd_event_handler(struct
+ 				port->upcoming_state = FR_SWAP_SEND;
+ 				ret = tcpm_ams_start(port, FAST_ROLE_SWAP);
+ 				if (ret == -EAGAIN)
+-					port->upcoming_state = INVALID_STATE;
++					tcpm_set_state(port, ERROR_RECOVERY, 0);
+ 			} else {
+ 				tcpm_log(port, "Discarding FRS_SIGNAL! Not in sink ready");
+ 			}
 
 
