@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213612;
-	b=QqqfWIsdP1EXtPsAosXYz2aQ1xScctQhFnfPQpJ2W4SR0IW1OjmRJAoJs/jXyiZqJR+O
-	 R/nWM7KJfKCgtNRfVDxqUB24kDk1jfznolVv5wnxxFS22R9uzGbzoR1mweJv83xcqooUW
-	 DRMDOfTW4ormy0ZAU/zlQ2VIsg0W5CyuOz5n7ZdPwrxfYzw0gknMyumnjy3eayJIt06j/
-	 wYWD551iaQ2zo+FouG1IVuwnKnlDknhgm7UDBkv7CKSCfVVh1yTj0jeilgrr3974hIxQ2
-	 k6SvKaiZRlbflW1KJpSyqZnfbXHVSUaslDg+jF/+8ijrA3pTnLiTn1yNnMj7x1zSkvw==
+	t=1793213615;
+	b=dxwCKQSXTpHBYE6ii4fHkkwrVzx3FIYdA2xT1fn3A5A7v+L2EsqL75yn0s5ilPlTKLkB
+	 ADRZpwvW+BGc3+apnqXOil8pEt7ylzIpF/q9KId5EckoSX0xNpDEVcgC1dad6b7xug1OC
+	 M0Z9r5/JdPCg9UMtKNcDuBqY0+R+i3Md5YITE6OSg0f9iczfOAJMNpUFkDXUDrtD2aPcN
+	 lfL82CWNYGMft1Y7LHh5UXaoZ03xXw/DO4i9oHSEGBsqM5Lgsg5PvmUq2AwBPbKnOPvfR
+	 lW2WUbs29Ux3kITSIweNVtLmeosZqqeayXg3orVIZkNE+shOz8MrXUIkA3VLCyDuwdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+BIv/KHTx8o/+Ek5sm2BfOX2kmvevg17Uc8AqajxEFU=;
-	b=vntjLHCesHLWd8vFJhhDgVr6ssVMDyiK7+lLFo1/sZXxxEgSScKVwL3Ae1OKR9MUo7ZR
-	 fiG9uAadKNQLEUk68Ud+WIiouyhbETry0ezXaDs8RDo5jOQ/D6tTwHxT+WIxyAj0LI50p
-	 jXkG070uj/VL7HoD8NRVRJf5t1nzqb+Jd/YREtfn6jpK2l2jqAVeq3ambduc1D+i6XDD1
-	 Q0aGanBXxLpC58UYyZnptFsbPxItNPrt88hUfYWa9nZaJFrWbPfEXmojd7gqLTfiktmzY
-	 kZxdQ5JtAPUSWvMXQMdBcmAaNpVgpqV/UEgM30gWCCy4PtYMtpOfn302Hf2eckUrkpg==
+	bh=ocLTIfhTJB1cUz9RmZndxKSUseFLUJsi0Bei3Hrb5P0=;
+	b=CfXNl2ur8oZNMtKYHnjKF0zbhk8uVLl9igJMKmnWr2mPN3DCAC171rUbvsHXNshi+1Gz
+	 H/nvVqYobljv9pWwa3lqe9nH5YQsgUQfvTlj40DwCJbTWAUuRDx67S8CwLtkMzcvR3Y2T
+	 howybdQmbUJuIKPqpNCSIErG54nFSj5Kqu504Lg3GVfBpex+biahX3iUxgTJM6X/STn4j
+	 patrQ7V0c11qOWvfeuNTeYwUIt4aUIHm9TwvO0iYJ1Hv9Y+H4B0WFHdQD3vDuHPPxT+MN
+	 U96NYKNxfA/p0uhNraYDHQ+SxH5hFQW11JGNa8N4KDVgppwVaHvwYmbEfDkIU0pD2dA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sjlvGg41;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fxCHplPr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3498A606A31A;
-	Wed, 28 Oct 2026 18:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01D3606A321;
+	Wed, 28 Oct 2026 18:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sjlvGg41
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22431F01828;
-	Wed, 28 Oct 2026 18:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fxCHplPr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B930D1F01825;
+	Wed, 28 Oct 2026 18:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213611;
-	bh=+BIv/KHTx8o/+Ek5sm2BfOX2kmvevg17Uc8AqajxEFU=;
+	s=korg; t=1793213614;
+	bh=ocLTIfhTJB1cUz9RmZndxKSUseFLUJsi0Bei3Hrb5P0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sjlvGg41RNVclkT8i4X0oDoCeZLGMEB3+2MRpI+pa0U1k1fI7wH/evryrCM7P7SIS
-	 IfCBQFmZmh6P7vTTufTTsaHO5m3FBEdWvzi56iu0gHCheBie5Msvm9P9Bcar8EauUQ
-	 vCJgnvnVHkfiKPi9v0PSYA3Qx63ve489IaFEH6u8=
+	b=fxCHplPrm2E36XkLjmffeilNbHPnUvIH8LjM1T+pAQD7v5T+XkjRb3YDNgzh58Sui
+	 HaCz0a745+WLsE0IpUiMi7sj+i07UfHuAj6QMAeplLzGQPJzBm4KsalPDKP2wsx/g6
+	 biBP7IMHzQ7lj0Pw7LJnigmqGIkYELnw2choWQ/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+d015b6c2fbb5c383bf08@syzkaller.appspotmail.com,
 	Chao Yu <chao@kernel.org>,
-	Yangtao Li <frank.li@vivo.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0566/1887] f2fs: fix to set flush_merge opt and show noflush_merge
-Date: Wed, 28 Oct 2026 17:44:22 +0100
-Message-ID: <20261028170512.275999520@linuxfoundation.org>
+Subject: [PATCH 6.1 0567/1887] f2fs: dont reset unchangable mount option in f2fs_remount()
+Date: Wed, 28 Oct 2026 17:44:23 +0100
+Message-ID: <20261028170512.300220412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,64 +69,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 967eaad1fed5f6335ea97a47d45214744dc57925 ]
+[ Upstream commit 458c15dfbce62c35fefd9ca637b20a051309c9f1 ]
 
-Some minor modifications to flush_merge and related parameters:
+syzbot reports a bug as below:
 
-  1.The FLUSH_MERGE opt is set by default only in non-ro mode.
-  2.When ro and merge are set at the same time, an error is reported.
-  3.Display noflush_merge mount opt.
+general protection fault, probably for non-canonical address 0xdffffc0000000009: 0000 [#1] PREEMPT SMP KASAN
+RIP: 0010:__lock_acquire+0x69/0x2000 kernel/locking/lockdep.c:4942
+Call Trace:
+ lock_acquire+0x1e3/0x520 kernel/locking/lockdep.c:5691
+ __raw_write_lock include/linux/rwlock_api_smp.h:209 [inline]
+ _raw_write_lock+0x2e/0x40 kernel/locking/spinlock.c:300
+ __drop_extent_tree+0x3ac/0x660 fs/f2fs/extent_cache.c:1100
+ f2fs_drop_extent_tree+0x17/0x30 fs/f2fs/extent_cache.c:1116
+ f2fs_insert_range+0x2d5/0x3c0 fs/f2fs/file.c:1664
+ f2fs_fallocate+0x4e4/0x6d0 fs/f2fs/file.c:1838
+ vfs_fallocate+0x54b/0x6b0 fs/open.c:324
+ ksys_fallocate fs/open.c:347 [inline]
+ __do_sys_fallocate fs/open.c:355 [inline]
+ __se_sys_fallocate fs/open.c:353 [inline]
+ __x64_sys_fallocate+0xbd/0x100 fs/open.c:353
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Suggested-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
+The root cause is race condition as below:
+- since it tries to remount rw filesystem, so that do_remount won't
+call sb_prepare_remount_readonly to block fallocate, there may be race
+condition in between remount and fallocate.
+- in f2fs_remount(), default_options() will reset mount option to default
+one, and then update it based on result of parse_options(), so there is
+a hole which race condition can happen.
+
+Thread A			Thread B
+- f2fs_fill_super
+ - parse_options
+  - clear_opt(READ_EXTENT_CACHE)
+
+- f2fs_remount
+ - default_options
+  - set_opt(READ_EXTENT_CACHE)
+				- f2fs_fallocate
+				 - f2fs_insert_range
+				  - f2fs_drop_extent_tree
+				   - __drop_extent_tree
+				    - __may_extent_tree
+				     - test_opt(READ_EXTENT_CACHE) return true
+				    - write_lock(&et->lock) access NULL pointer
+ - parse_options
+  - clear_opt(READ_EXTENT_CACHE)
+
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+d015b6c2fbb5c383bf08@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/20230522124203.3838360-1-chao@kernel.org
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 458c15dfbce6 ("f2fs: don't reset unchangable mount option in f2fs_remount()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/f2fs/super.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
 diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index dc06771fb1e9e..83b376afcd420 100644
+index 83b376afcd420..a86200f7d9101 100644
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -1400,6 +1400,12 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
- 		return -EINVAL;
- 	}
+@@ -2104,9 +2104,22 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
+ 	return 0;
+ }
  
-+	if ((f2fs_sb_has_readonly(sbi) || f2fs_readonly(sbi->sb)) &&
-+		test_opt(sbi, FLUSH_MERGE)) {
-+		f2fs_err(sbi, "FLUSH_MERGE not compatible with readonly mode");
-+		return -EINVAL;
+-static void default_options(struct f2fs_sb_info *sbi)
++static void default_options(struct f2fs_sb_info *sbi, bool remount)
+ {
+ 	/* init some FS parameters */
++	if (!remount) {
++		set_opt(sbi, READ_EXTENT_CACHE);
++		clear_opt(sbi, DISABLE_CHECKPOINT);
++
++		if (f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi))
++			set_opt(sbi, DISCARD);
++
++		if (f2fs_sb_has_blkzoned(sbi))
++			F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_SECTION;
++		else
++			F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_BLOCK;
 +	}
 +
- 	if (f2fs_sb_has_readonly(sbi) && !f2fs_readonly(sbi->sb)) {
- 		f2fs_err(sbi, "Allow to mount readonly mode only");
- 		return -EROFS;
-@@ -1997,8 +2003,10 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
- 		seq_puts(seq, ",inline_dentry");
+ 	if (f2fs_sb_has_readonly(sbi))
+ 		F2FS_OPTION(sbi).active_logs = NR_CURSEG_RO_TYPE;
  	else
- 		seq_puts(seq, ",noinline_dentry");
--	if (!f2fs_readonly(sbi->sb) && test_opt(sbi, FLUSH_MERGE))
-+	if (test_opt(sbi, FLUSH_MERGE))
- 		seq_puts(seq, ",flush_merge");
-+	else
-+		seq_puts(seq, ",noflush_merge");
- 	if (test_opt(sbi, NOBARRIER))
- 		seq_puts(seq, ",nobarrier");
- 	if (test_opt(sbi, FASTBOOT))
-@@ -2125,7 +2133,8 @@ static void default_options(struct f2fs_sb_info *sbi)
+@@ -2127,23 +2140,16 @@ static void default_options(struct f2fs_sb_info *sbi)
+ 	set_opt(sbi, INLINE_XATTR);
+ 	set_opt(sbi, INLINE_DATA);
+ 	set_opt(sbi, INLINE_DENTRY);
+-	set_opt(sbi, READ_EXTENT_CACHE);
+ 	set_opt(sbi, NOHEAP);
+-	clear_opt(sbi, DISABLE_CHECKPOINT);
  	set_opt(sbi, MERGE_CHECKPOINT);
  	F2FS_OPTION(sbi).unusable_cap = 0;
  	sbi->sb->s_flags |= SB_LAZYTIME;
--	set_opt(sbi, FLUSH_MERGE);
-+	if (!f2fs_sb_has_readonly(sbi) && !f2fs_readonly(sbi->sb))
-+		set_opt(sbi, FLUSH_MERGE);
- 	if (f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi))
- 		set_opt(sbi, DISCARD);
- 	if (f2fs_sb_has_blkzoned(sbi)) {
+ 	if (!f2fs_sb_has_readonly(sbi) && !f2fs_readonly(sbi->sb))
+ 		set_opt(sbi, FLUSH_MERGE);
+-	if (f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi))
+-		set_opt(sbi, DISCARD);
+-	if (f2fs_sb_has_blkzoned(sbi)) {
++	if (f2fs_sb_has_blkzoned(sbi))
+ 		F2FS_OPTION(sbi).fs_mode = FS_MODE_LFS;
+-		F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_SECTION;
+-	} else {
++	else
+ 		F2FS_OPTION(sbi).fs_mode = FS_MODE_ADAPTIVE;
+-		F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_BLOCK;
+-	}
+ 
+ #ifdef CONFIG_F2FS_FS_XATTR
+ 	set_opt(sbi, XATTR_USER);
+@@ -2320,7 +2326,7 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
+ 			clear_sbi_flag(sbi, SBI_NEED_SB_WRITE);
+ 	}
+ 
+-	default_options(sbi);
++	default_options(sbi, true);
+ 
+ 	/* parse mount options */
+ 	err = parse_options(sb, data, true);
+@@ -4252,7 +4258,7 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
+ 		sbi->s_chksum_seed = f2fs_chksum(sbi, ~0, raw_super->uuid,
+ 						sizeof(raw_super->uuid));
+ 
+-	default_options(sbi);
++	default_options(sbi, false);
+ 	/* parse mount options */
+ 	options = kstrdup((const char *)data, GFP_KERNEL);
+ 	if (data && !options) {
 -- 
 2.53.0
 
