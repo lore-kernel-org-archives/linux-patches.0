@@ -1,61 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216095;
-	b=ZSqmyErXKXZNmBRE4X2YauduwXyyVbhRXjn7QbM0XwyXRQiswHhh9L7UBCYDz2Zhwb91
-	 +XkyRMzmOi7kTrPPW6WWz3fha4rQWq0RM1yDf5kM/hYCkxk0fCQR9Cc9YQtjrEL6lRva8
-	 e9hlaM5ZrYGu+fKhuZj6tHh4hz33gFP09lpiVKrSMEn3j+NyKeCe5PiK6Q/zAqooX7foK
-	 jdquDZqT2WAPrrxI+gtNhL0lWmKfDgdcsvI5cmNpDkmq1kGqGBFlGU8rf9TdgxjYjH6g/
-	 CqfKQc42r5v1T/LjKRI/DBJ9ReKvYowD2dh3fBdR6GhuxPGtkBs52IoHSGkS4toorQA==
+	t=1793216098;
+	b=drGucO/XuSC3keIioeU5EHsrGJCCTJAwWxfmaIv7nd+zmM1KsTzXRI7Ki68NLvW9JMhZ
+	 /b6rtrA40yQJ3mS1eDDyZu3FpvRm/AwqM+HKICxg3hcqmL6idL5GuofV8jaRBpt+9vrn4
+	 /M/HqAGBIuYAxxuf/7zt7GVa8jh59wGlTuFTiALErTnKMoXKHtdr6DQmHmdLU3UjWXDee
+	 HExt3DK3jGmyPA+M8v21Em4or62iqeZmyohrilqrhTl1CrNjMbTQ/P53BzrbeLUIpw+vH
+	 SUr6HDUJceUf/jpfrSEwigHAeJ7cHHHIQ2HJvC4RYblUTszSvLVMFPdN54NsGrvZ6lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216095;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216098;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H6KdFZ7QuhlSTa9wnoky2N981nLXlO0ELlOgo/eIQjU=;
-	b=vmvlQu+cnr4F2DLzjQAY/x58jBS2JtBOWueWiSA/6Gti6jy3yQEzyMHD/Q+zyHwEAzBq
-	 3L0yaFGwrHl/tdlkRvUxax+WVu5hb5HUTYpfxQVtidAQshuubvW1QMvmpzWbGX/HCk5Fx
-	 J83c/a92dZgYvd6R9VbfDCGPyMYOz+Fx1/sNs8qDF8h5Tj0s3PlQKaFGtJQiOiaSInYWT
-	 uDXJRkEHcvOD2ZnAarzwu15cV4+EP7isduGoIngD7qg/BXhru/AN2+69/R/3aBLSkCQW9
-	 va0fT3XL81sCGtnhPcLobGSIAAvZHT5bxmw6FmkzCDra6E+rjDtwALhiJUFX7ZnhlAA==
+	bh=zGzhWuuQXHseVwpHkFOrni3wjqxBx3dk+lX3VkFbOAE=;
+	b=2eTYKEvx3iNtrz6tU8tf9LzSuMHAH389iNvG/34OmNJIJfD5eCNRATjuO2XmwdShAl0a
+	 kI+XeVXH9lvkMtfYOCZD2v1OnT9vJFPVavLbTouN8Ec0ICbKYuvgQLMqAu3XsiHOOhFjl
+	 VORU7v5bjURYwokL21BCzVSmTdxXzbWO6tmgUgvcojFPy8VLMcacd5bDEAAYQLRGqAbVh
+	 cm7YHGdtDwM+XRycpat5zkDzWIT+fSTpItzToe04A8CZBbsGI6xMIX8Dh0HNOS9PEU1WQ
+	 2hxBHTeM6JB4fb5+MY2qiNoeOp76rFR67vbb7zVm22KCrH+PrkcgxYAf6F6Sxtfp3Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JxIE2WxH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HOMTIe00;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D246606A31C;
-	Wed, 28 Oct 2026 19:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CB3606A31D;
+	Wed, 28 Oct 2026 19:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JxIE2WxH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66561F01825;
-	Wed, 28 Oct 2026 19:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HOMTIe00
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999F91F01825;
+	Wed, 28 Oct 2026 19:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216095;
-	bh=H6KdFZ7QuhlSTa9wnoky2N981nLXlO0ELlOgo/eIQjU=;
+	s=korg; t=1793216098;
+	bh=zGzhWuuQXHseVwpHkFOrni3wjqxBx3dk+lX3VkFbOAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JxIE2WxHJ2RelZ7NBWvqRz4VJTPlW1UNO3M/N080srF8+OVepdeTve0DXX9i+k1fN
-	 WHjVuqGhcnHOgqDUuSUM+Fx0qgnV7CVPFbdJEL7U5L4yF+UtWqS4o7jV3xQINPgqzU
-	 gai3vY2JFTjXViHBa1uqRBeTG8y7b+QODT7oijwE=
+	b=HOMTIe00/4XJF802d3nx620BIJTPmsouaDngO+tJa3k3CyaefU0uHsSMysjX1ifeV
+	 VXJQH3ny0WajV4lLOfArDyLxahZYn7oxZHM0gaw5wbkeDupcMzX+lyI+KeZwKe5ZOn
+	 n6H/GJwVNwuIjL2piS3pVNgaQJaXj4YKXz5o9Vg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Don Dutile <ddutile@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	William Kucharski <william.kucharski@oracle.com>,
-	Zhenyu Zhang <zhenyzha@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1439/1887] mm/shmem: disable PMD-sized page cache if needed
-Date: Wed, 28 Oct 2026 17:58:55 +0100
-Message-ID: <20261028170532.205956397@linuxfoundation.org>
+Subject: [PATCH 6.1 1440/1887] RDMA/hns: Fix soft lockup under heavy CEQE load
+Date: Wed, 28 Oct 2026 17:58:56 +0100
+Message-ID: <20261028170532.228830209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -77,109 +68,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavin Shan <gshan@redhat.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 9fd154ba926b34c833b7bfc4c14ee2e931b3d743 ]
+[ Upstream commit 2fdf34038369c0a27811e7b4680662a14ada1d6b ]
 
-For shmem files, it's possible that PMD-sized page cache can't be
-supported by xarray.  For example, 512MB page cache on ARM64 when the base
-page size is 64KB can't be supported by xarray.  It leads to errors as the
-following messages indicate when this sort of xarray entry is split.
+CEQEs are handled in interrupt handler currently. This may cause the
+CPU core staying in interrupt context too long and lead to soft lockup
+under heavy load.
 
-WARNING: CPU: 34 PID: 7578 at lib/xarray.c:1025 xas_split_alloc+0xf8/0x128
-Modules linked in: binfmt_misc nft_fib_inet nft_fib_ipv4 nft_fib_ipv6   \
-nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject        \
-nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4  \
-ip_set rfkill nf_tables nfnetlink vfat fat virtio_balloon drm fuse xfs  \
-libcrc32c crct10dif_ce ghash_ce sha2_ce sha256_arm64 sha1_ce virtio_net \
-net_failover virtio_console virtio_blk failover dimlib virtio_mmio
-CPU: 34 PID: 7578 Comm: test Kdump: loaded Tainted: G W 6.10.0-rc5-gavin+ #9
-Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20240524-1.el9 05/24/2024
-pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-pc : xas_split_alloc+0xf8/0x128
-lr : split_huge_page_to_list_to_order+0x1c4/0x720
-sp : ffff8000882af5f0
-x29: ffff8000882af5f0 x28: ffff8000882af650 x27: ffff8000882af768
-x26: 0000000000000cc0 x25: 000000000000000d x24: ffff00010625b858
-x23: ffff8000882af650 x22: ffffffdfc0900000 x21: 0000000000000000
-x20: 0000000000000000 x19: ffffffdfc0900000 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000018000000000 x15: 52f8004000000000
-x14: 0000e00000000000 x13: 0000000000002000 x12: 0000000000000020
-x11: 52f8000000000000 x10: 52f8e1c0ffff6000 x9 : ffffbeb9619a681c
-x8 : 0000000000000003 x7 : 0000000000000000 x6 : ffff00010b02ddb0
-x5 : ffffbeb96395e378 x4 : 0000000000000000 x3 : 0000000000000cc0
-x2 : 000000000000000d x1 : 000000000000000c x0 : 0000000000000000
-Call trace:
- xas_split_alloc+0xf8/0x128
- split_huge_page_to_list_to_order+0x1c4/0x720
- truncate_inode_partial_folio+0xdc/0x160
- shmem_undo_range+0x2bc/0x6a8
- shmem_fallocate+0x134/0x430
- vfs_fallocate+0x124/0x2e8
- ksys_fallocate+0x4c/0xa0
- __arm64_sys_fallocate+0x24/0x38
- invoke_syscall.constprop.0+0x7c/0xd8
- do_el0_svc+0xb4/0xd0
- el0_svc+0x44/0x1d8
- el0t_64_sync_handler+0x134/0x150
- el0t_64_sync+0x17c/0x180
+Handle CEQEs in BH workqueue and set an upper limit for the number of
+CEQE handled by a single call of work handler.
 
-Fix it by disabling PMD-sized page cache when HPAGE_PMD_ORDER is larger
-than MAX_PAGECACHE_ORDER.  As Matthew Wilcox pointed, the page cache in a
-shmem file isn't represented by a multi-index entry and doesn't have this
-limitation when the xarry entry is split until commit 6b24ca4a1a8d ("mm:
-Use multi-index entries in the page cache").
-
-Link: https://lkml.kernel.org/r/20240627003953.1262512-5-gshan@redhat.com
-Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
-Signed-off-by: Gavin Shan <gshan@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Don Dutile <ddutile@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: William Kucharski <william.kucharski@oracle.com>
-Cc: Zhenyu Zhang <zhenyzha@redhat.com>
-Cc: <stable@vger.kernel.org>	[5.17+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a5073d6054f7 ("RDMA/hns: Add eq support of hip08")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240710133705.896445-3-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h |  1 +
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 87 ++++++++++++---------
+ 2 files changed, 53 insertions(+), 35 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 2034b9b3fb718..cfc573e04327c 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -462,8 +462,8 @@ static bool shmem_confirm_swap(struct address_space *mapping,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index 0607970013536..fec4084e2dfff 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -718,6 +718,7 @@ struct hns_roce_eq {
+ 	int				shift;
+ 	int				event_type;
+ 	int				sub_type;
++	struct work_struct		work;
+ };
  
- static int shmem_huge __read_mostly = SHMEM_HUGE_NEVER;
- 
--bool shmem_is_huge(struct vm_area_struct *vma, struct inode *inode,
--		   pgoff_t index, bool shmem_huge_force)
-+static bool __shmem_is_huge(struct vm_area_struct *vma, struct inode *inode,
-+			    pgoff_t index, bool shmem_huge_force)
- {
- 	loff_t i_size;
- 
-@@ -495,6 +495,15 @@ bool shmem_is_huge(struct vm_area_struct *vma, struct inode *inode,
- 	}
+ struct hns_roce_eq_table {
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 1775120634745..538b3261614a1 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -36,6 +36,7 @@
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
+ #include <linux/types.h>
++#include <linux/workqueue.h>
+ #include <net/addrconf.h>
+ #include <rdma/ib_addr.h>
+ #include <rdma/ib_cache.h>
+@@ -6217,32 +6218,11 @@ static struct hns_roce_ceqe *next_ceqe_sw_v2(struct hns_roce_eq *eq)
+ 		!!(eq->cons_index & eq->entries)) ? ceqe : NULL;
  }
  
-+bool shmem_is_huge(struct vm_area_struct *vma, struct inode *inode,
-+		   pgoff_t index, bool shmem_huge_force)
+-static irqreturn_t hns_roce_v2_ceq_int(struct hns_roce_dev *hr_dev,
+-				       struct hns_roce_eq *eq)
++static irqreturn_t hns_roce_v2_ceq_int(struct hns_roce_eq *eq)
+ {
+-	struct hns_roce_ceqe *ceqe = next_ceqe_sw_v2(eq);
+-	irqreturn_t ceqe_found = IRQ_NONE;
+-	u32 cqn;
+-
+-	while (ceqe) {
+-		/* Make sure we read CEQ entry after we have checked the
+-		 * ownership bit
+-		 */
+-		dma_rmb();
+-
+-		cqn = hr_reg_read(ceqe, CEQE_CQN);
+-
+-		hns_roce_cq_completion(hr_dev, cqn);
+-
+-		++eq->cons_index;
+-		ceqe_found = IRQ_HANDLED;
++	queue_work(system_highpri_wq, &eq->work);
+ 
+-		ceqe = next_ceqe_sw_v2(eq);
+-	}
+-
+-	update_eq_db(eq);
+-
+-	return IRQ_RETVAL(ceqe_found);
++	return IRQ_HANDLED;
+ }
+ 
+ static irqreturn_t hns_roce_v2_msix_interrupt_eq(int irq, void *eq_ptr)
+@@ -6253,7 +6233,7 @@ static irqreturn_t hns_roce_v2_msix_interrupt_eq(int irq, void *eq_ptr)
+ 
+ 	if (eq->type_flag == HNS_ROCE_CEQ)
+ 		/* Completion event interrupt */
+-		int_work = hns_roce_v2_ceq_int(hr_dev, eq);
++		int_work = hns_roce_v2_ceq_int(eq);
+ 	else
+ 		/* Asynchronous event interrupt */
+ 		int_work = hns_roce_v2_aeq_int(hr_dev, eq);
+@@ -6628,6 +6608,33 @@ static int hns_roce_v2_create_eq(struct hns_roce_dev *hr_dev,
+ 	return ret;
+ }
+ 
++static void hns_roce_ceq_work(struct work_struct *work)
 +{
-+	if (HPAGE_PMD_ORDER > MAX_PAGECACHE_ORDER)
-+		return false;
++	struct hns_roce_eq *eq = from_work(eq, work, work);
++	struct hns_roce_ceqe *ceqe = next_ceqe_sw_v2(eq);
++	struct hns_roce_dev *hr_dev = eq->hr_dev;
++	int ceqe_num = 0;
++	u32 cqn;
 +
-+	return __shmem_is_huge(vma, inode, index, shmem_huge_force);
++	while (ceqe && ceqe_num < hr_dev->caps.ceqe_depth) {
++		/* Make sure we read CEQ entry after we have checked the
++		 * ownership bit
++		 */
++		dma_rmb();
++
++		cqn = hr_reg_read(ceqe, CEQE_CQN);
++
++		hns_roce_cq_completion(hr_dev, cqn);
++
++		++eq->cons_index;
++		++ceqe_num;
++
++		ceqe = next_ceqe_sw_v2(eq);
++	}
++
++	update_eq_db(eq);
 +}
 +
- #if defined(CONFIG_SYSFS)
- static int shmem_parse_huge(const char *str)
+ static int __hns_roce_request_irq(struct hns_roce_dev *hr_dev, int irq_num,
+ 				  int comp_num, int aeq_num, int other_num)
  {
+@@ -6658,21 +6665,24 @@ static int __hns_roce_request_irq(struct hns_roce_dev *hr_dev, int irq_num,
+ 			 "hns-ceq-%d", j - other_num - aeq_num);
+ 
+ 	for (j = 0; j < irq_num; j++) {
+-		if (j < other_num)
++		if (j < other_num) {
+ 			ret = request_irq(hr_dev->irq[j],
+ 					  hns_roce_v2_msix_interrupt_abn,
+ 					  0, hr_dev->irq_names[j], hr_dev);
+-
+-		else if (j < (other_num + comp_num))
++		} else if (j < (other_num + comp_num)) {
++			INIT_WORK(&eq_table->eq[j - other_num].work,
++				  hns_roce_ceq_work);
+ 			ret = request_irq(eq_table->eq[j - other_num].irq,
+ 					  hns_roce_v2_msix_interrupt_eq,
+ 					  0, hr_dev->irq_names[j + aeq_num],
+ 					  &eq_table->eq[j - other_num]);
+-		else
++		} else {
+ 			ret = request_irq(eq_table->eq[j - other_num].irq,
+ 					  hns_roce_v2_msix_interrupt_eq,
+ 					  0, hr_dev->irq_names[j - comp_num],
+ 					  &eq_table->eq[j - other_num]);
++		}
++
+ 		if (ret) {
+ 			dev_err(hr_dev->dev, "request irq error!\n");
+ 			goto err_request_failed;
+@@ -6682,12 +6692,16 @@ static int __hns_roce_request_irq(struct hns_roce_dev *hr_dev, int irq_num,
+ 	return 0;
+ 
+ err_request_failed:
+-	for (j -= 1; j >= 0; j--)
+-		if (j < other_num)
++	for (j -= 1; j >= 0; j--) {
++		if (j < other_num) {
+ 			free_irq(hr_dev->irq[j], hr_dev);
+-		else
+-			free_irq(eq_table->eq[j - other_num].irq,
+-				 &eq_table->eq[j - other_num]);
++			continue;
++		}
++		free_irq(eq_table->eq[j - other_num].irq,
++			 &eq_table->eq[j - other_num]);
++		if (j < other_num + comp_num)
++			cancel_work_sync(&eq_table->eq[j - other_num].work);
++	}
+ 
+ err_kzalloc_failed:
+ 	for (i -= 1; i >= 0; i--)
+@@ -6708,8 +6722,11 @@ static void __hns_roce_free_irq(struct hns_roce_dev *hr_dev)
+ 	for (i = 0; i < hr_dev->caps.num_other_vectors; i++)
+ 		free_irq(hr_dev->irq[i], hr_dev);
+ 
+-	for (i = 0; i < eq_num; i++)
++	for (i = 0; i < eq_num; i++) {
+ 		free_irq(hr_dev->eq_table.eq[i].irq, &hr_dev->eq_table.eq[i]);
++		if (i < hr_dev->caps.num_comp_vectors)
++			cancel_work_sync(&hr_dev->eq_table.eq[i].work);
++	}
+ 
+ 	for (i = 0; i < irq_num; i++)
+ 		kfree(hr_dev->irq_names[i]);
 -- 
 2.53.0
 
