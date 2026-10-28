@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209307;
-	b=fnw9dC/LGyGfB8dwMWo/k81laM0HuyH2/Ch3J4HOjss1saZDLXykfSG1ZVn4CTHBkT1L
-	 beB0h+kkU3I45b/DKO0mAMf64yp030XUf3rycO1I8agnOboHYiAkFUU9eAd5UJR1C2lR/
-	 fNv7rnxR2pHOXKL8vJ+ayuytGopxoS6W1j72hVlx1qe5aKGKdE4gsapfTDuSgDY6Bei2o
-	 g6kHeI2msRvB06P3FZg8Ts9zc63MOu4t+ZBKe8q7SKjGcdKJQYm2JigE07CCuN/5bQ5du
-	 qckiYVrco+QmSY3g7opyFGvuNfuT93Hv+U2wV+3eJpcij1Gxg0T1GDB53zM2+oPBCVQ==
+	t=1793209310;
+	b=DoQb6+Xn43gU9vgek43GQ37Pbg481IWoOOSAQwYdd5H+6fgmekp3f+t9df/yNSyx7+xC
+	 DJpX806JXwngnCSg6G8D4vo3dDX2VGLAp9HBgrtAqa9HIS97ry92yCc7nDt8zLGeDC1oj
+	 sFzVOF/j4ScoPWd8Erwii+Esejr7TvkR/+d1fOavSQcgp38cSuJlIIPc0hGfqG9aXvvKt
+	 ttGRppb45eFnfvxZmSK34fSgg9y655h1ulDMnbd8l1EbWwGyHlSdf/51gMDEHXgiLyG6N
+	 lE2ggZNZQbaunRD0eYw6qhdM3mebi76ESE7pfIsjcVSkS+LXvSLH4FlVtBGv80fT6Ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209307;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209310;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T9DUowpNYdRgAd9tcKGycFcTFZUYD0Qrl/nigXkxDQg=;
-	b=hAiEsa04qCF8FLXXqk5BJESTv03z87bET6/pyliqVHI1UOHIJyab8TYFyFT0zM0W4WJV
-	 TlDPHK5riIBOlLh3qReGPO5PGXw6mVrXugXzwwIQMVTxxYjEvO4pOXqZYGChSLdzx7Rrd
-	 GcFIzwy1c/UGePMcPB3gimTGsFFWVJQw34Kl9hfsWL4sub7onQX6F6OVu/ZCC0xjZfOjb
-	 hg8TqO9qDrdH7iABcm88w1zdGXdmZxjI/DE9DFEButskYOQgnAbUV2evUHDLRi6Zf/pUL
-	 JBgQJ5zZpoMtzDTOfgPPisNvUeHb/PnSGSG6psBJt6Gpbya7YA0nMr/qXKVNu627+NQ==
+	bh=e44ipic5qT9glKScfFFrlV4xI75wMWhSnMmsgWxrvsU=;
+	b=0piHioYz1J2v6XyPqFgVaVuGSfbHzoxJ1cJRv9xJxevQHSebHlSmEj/CTJNjxIQASY4q
+	 6Wj98bwMWBrSzhAsVdd+dwE8HUBm3qYRWEbOl98Hv0stIj0HH0e9BTNufZYABys790aO/
+	 sD1w/HsnM4wCyDFnJ85cay5LJJULfwOPFyyYS5zA61hlCbN4/vXbkKSYvC8oYjZJhCxnF
+	 YE0NuiQAxQXPl1rH7J7WGK3yfT5JkgF59maGtM/LTkUgzQs0zo0wyzWmBAOXxGyDvoD74
+	 Dy45TOsKEdJSZfP6xguiyOombVapWKpSaRLJDvRib92ImWZf3nuDWB6txWe/wahf8lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wC0Yn4ei;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Gd//ZBOK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FC8606A31D;
-	Wed, 28 Oct 2026 17:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091EE606A31C;
+	Wed, 28 Oct 2026 17:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wC0Yn4ei
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84FA81F01825;
-	Wed, 28 Oct 2026 17:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gd//ZBOK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC9D1F01825;
+	Wed, 28 Oct 2026 17:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209307;
-	bh=T9DUowpNYdRgAd9tcKGycFcTFZUYD0Qrl/nigXkxDQg=;
+	s=korg; t=1793209309;
+	bh=e44ipic5qT9glKScfFFrlV4xI75wMWhSnMmsgWxrvsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wC0Yn4eifEs6WHEixtSfl7FB4878BpSrkTFKRJO7BeezCUtvXOSRFblxY8MKcck9M
-	 xBmqoBNdfx7yXWRGVZtSe2soWpMYHvN2ZkbaeqV9b1CUSoiuA6lu45eCU/bV4sM0oy
-	 jx2BtkXBZZukDadLt2WZanURHdcG2k9W6uVlTtW0=
+	b=Gd//ZBOKy8b/E9lRbXMenAQtvpTWZmlll+0ve5kqhHHYgP9/nPBc5K0yevSI52egK
+	 WTjPHdfnP2rEr/Q9QSd9oFnBYb9J09Z1Fd6YWda09/ie1fxDaiKVIDh0nd3Wvcof+Z
+	 eK1SF04sYN92XzaIFJk8IAZpw3u2zbBm1OrsGxwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michele Dionisio <michele.dionisio@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 372/516] wifi: brcmfmac: fix P2P device removal race in brcmf_detach()
-Date: Wed, 28 Oct 2026 17:58:44 +0100
-Message-ID: <20261028170012.298816721@linuxfoundation.org>
+Subject: [PATCH 5.10 419/516] xfs: rearrange code in xfs_buf_item.c
+Date: Wed, 28 Oct 2026 17:59:31 +0100
+Message-ID: <20261028170013.413818361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -69,136 +70,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michele Dionisio <michele.dionisio@gmail.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 08a3f02fea636e97a7422d1512f76dacdb5b0887 ]
+[ Upstream commit d2fe5c4c8d25999862d615f616aea7befdd62799 ]
 
-When the driver is removed while the user space process that created
-the P2P device (e.g. wpa_supplicant) is still exiting, the P2P device
-interface is removed twice and the kernel crashes.
+The code to initialise, release and free items is all the way down
+the bottom of the file. Upcoming fixes need to these functions
+earlier in the file, so move them to the top.
 
-The two paths are:
+There is one code change in this move - the parameter to
+xfs_buf_item_relse() is changed from the xfs_buf to the
+xfs_buf_log_item - the thing that the function is releasing.
 
- - wpa_supplicant, on exit, sends NL80211_CMD_DEL_INTERFACE for the P2P
-   device. nl80211_del_interface() holds RTNL and the wiphy mutex and
-   calls brcmf_p2p_del_vif(), which disables discovery and waits up to
-   1.5 s for BRCMF_E_IF_DEL. Then it calls brcmf_remove_interface(),
-   which unregisters the wdev and frees the vif and the ifp.
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 
- - brcmf_detach() sets the bus down, so BRCMF_E_IF_DEL never arrives,
-   and calls brcmf_remove_interface(ifp, false) for the same ifp.
-   brcmf_p2p_ifp_removed() reads ifp->vif and then blocks on
-   rtnl_lock(). When brcmf_p2p_del_vif() releases RTNL, it calls
-   cfg80211_unregister_wdev() on the wdev that was already unregistered
-   and freed.
+6.6:
 
-The second list_del_rcu() of wdev->list faults on LIST_POISON2:
+Fixed conflict due to the following missing commits:
+	[Continuous range: 10634530f7ba^..d4c75a1b40cd]
+	d4c75a1b40cd ("xfs: convert remaining kmem_free() to kfree()")
+	49292576136f ("xfs: convert kmem_free() for kvmalloc users to kvfree()")
+	afdc115559c5 ("xfs: move kmem_to_page()")
+	f078d4ea8276 ("xfs: convert kmem_alloc() to kmalloc()")
+	10634530f7ba ("xfs: convert kmem_zalloc() to kzalloc()")
 
-  brcmfmac: brcmf_p2p_del_vif delete P2P vif
-  brcmfmac: brcmf_p2p_deinit_discovery enter
-  brcmfmac: brcmf_p2p_del_vif P2P: GO_NEG_PHASE status cleared
-  brcmfmac: brcmf_detach Enter
-  brcmfmac: brcmf_bus_change_state 1 -> 0
-  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
-  [1.5 s later, brcmf_p2p_del_vif() timed out]
-  brcmfmac: brcmf_remove_interface Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_del_if Enter, bsscfgidx=1, ifidx=0
-  brcmfmac: brcmf_p2p_ifp_removed P2P: device interface removed
-  Unable to handle kernel paging request at virtual address dead000000000122
-  Internal error: Oops: 96000044 [#1] PREEMPT_RT SMP
-  pc : _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
-  Call trace:
-   _cfg80211_unregister_wdev+0x6c/0x264 [cfg80211]
-   cfg80211_unregister_wdev+0x10/0x1c [cfg80211]
-   brcmf_p2p_ifp_removed+0x84/0xb0 [brcmfmac]
-   brcmf_remove_interface+0x1f4/0x254 [brcmfmac]
-   brcmf_detach+0x88/0x180 [brcmfmac]
-   brcmf_sdio_remove+0x90/0x7b0 [brcmfmac]
-   brcmf_sdiod_remove+0x20/0xa0 [brcmfmac]
-   brcmf_ops_sdio_remove+0xbc/0x12c [brcmfmac]
-   sdio_bus_remove+0x38/0x144
-   device_release_driver_internal+0x1e8/0x2c0
-   device_release_driver+0x14/0x20
-   brcmf_sdio_bus_remove+0x2c/0x40 [brcmfmac]
-   brcmf_fwvid_unregister_vendor+0xd8/0x170 [brcmfmac]
-   __exit_compat+0x18/0x418 [brcmfmac_cyw]
-   __arm64_sys_delete_module+0x1ac/0x244
+Removed ASSERT in favour of existing atomic_read-and-return in
+xfs_buf_item_relse() due to the following missing commit:
+	3762113b597f ("xfs: don't lose solo superblock counter update transactions")
 
-The log was taken with debug=0x406 on an i.MX 8M Plus board with a
-CYW55513 (Sona IF513) on SDIO. The driver is the Ezurio backport of
-brcmfmac from v6.18.22 on a 5.4-rt kernel. The code involved is the same
-in mainline.
+5.15:
 
-To reproduce:
+Fixed conflict due to the following missing commit:
+	182696fb021f ("xfs: rename _zone variables to _cache")
 
-  1. Start wpa_supplicant on wlan0 and let it associate. It creates the
-     P2P device (iw dev shows "type P2P-device").
-  2. Stop wpa_supplicant and remove the driver without waiting for
-     wpa_supplicant to exit:
-
-       kill $(pidof wpa_supplicant)
-       rmmod brcmfmac_cyw brcmfmac
-
-The crash is reproducible on that board.
-
-For the interface without a netdev (the P2P device), take RTNL and the
-wiphy mutex in brcmf_detach() before reading iflist, and remove it with
-locked=true. If brcmf_p2p_del_vif() runs first, brcmf_detach() finds the
-slot empty. If brcmf_detach() runs first, nl80211 does not find the wdev
-any more. The interfaces with a netdev are removed as before, because
-brcmf_del_if() takes RTNL on its own for the primary interface.
-
-Fixes: 9831bcb987df ("brcmfmac: Deleting of p2p device is leaking memory.")
-Cc: stable@vger.kernel.org
-Assisted-by: claude-opus-5-5
-Signed-off-by: Michele Dionisio <michele.dionisio@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260924123027.4122909-2-michele.dionisio@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: Removed unavailable wiphy_lock() and wiphy_unlock() calls to rely solely on RTNL locking. ]
+Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmfmac/core.c        | 25 +++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_buf_item.c | 118 +++++++++++++++++++++---------------------
+ fs/xfs/xfs_buf_item.h |   1 -
+ 2 files changed, 60 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-index b763495317f6c..309799d9ca433 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -1476,8 +1476,29 @@ void brcmf_detach(struct device *dev)
- 	brcmf_bus_change_state(bus_if, BRCMF_BUS_DOWN);
- 	/* make sure primary interface removed last */
- 	for (i = BRCMF_MAX_IFS - 1; i > -1; i--) {
--		if (drvr->iflist[i])
--			brcmf_remove_interface(drvr->iflist[i], false);
-+		struct brcmf_if *ifp = drvr->iflist[i];
-+
-+		if (!ifp)
-+			continue;
-+
-+		if (ifp->ndev) {
-+			brcmf_remove_interface(ifp, false);
-+			continue;
-+		}
-+
-+		/* The P2P device interface has no netdev. Its removal can
-+		 * race with NL80211_CMD_DEL_INTERFACE issued by a user space
-+		 * process that is exiting (e.g. wpa_supplicant), which ends
-+		 * in brcmf_p2p_del_vif() under RTNL. If
-+		 * both paths remove the interface, the wdev is unregistered
-+		 * twice and the vif is used after being freed. Take the same
-+		 * lock and re-read iflist, so only one path removes it.
-+		 */
-+		rtnl_lock();
-+		ifp = drvr->iflist[i];
-+		if (ifp)
-+			brcmf_remove_interface(ifp, true);
-+		rtnl_unlock();
- 	}
- 	brcmf_bus_stop(drvr->bus_if);
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index f864e0b8a8055..3124f96ad6b32 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -31,6 +31,63 @@ static inline struct xfs_buf_log_item *BUF_ITEM(struct xfs_log_item *lip)
+ 	return container_of(lip, struct xfs_buf_log_item, bli_item);
+ }
  
++static void
++xfs_buf_item_get_format(
++	struct xfs_buf_log_item	*bip,
++	int			count)
++{
++	ASSERT(bip->bli_formats == NULL);
++	bip->bli_format_count = count;
++
++	if (count == 1) {
++		bip->bli_formats = &bip->__bli_format;
++		return;
++	}
++
++	bip->bli_formats = kmem_zalloc(count * sizeof(struct xfs_buf_log_format),
++				0);
++}
++
++static void
++xfs_buf_item_free_format(
++	struct xfs_buf_log_item	*bip)
++{
++	if (bip->bli_formats != &bip->__bli_format) {
++		kmem_free(bip->bli_formats);
++		bip->bli_formats = NULL;
++	}
++}
++
++static void
++xfs_buf_item_free(
++	struct xfs_buf_log_item	*bip)
++{
++	xfs_buf_item_free_format(bip);
++	kmem_free(bip->bli_item.li_lv_shadow);
++	kmem_cache_free(xfs_buf_item_zone, bip);
++}
++
++/*
++ * xfs_buf_item_relse() is called when the buf log item is no longer needed.
++ */
++static void
++xfs_buf_item_relse(
++	struct xfs_buf_log_item	*bip)
++{
++	struct xfs_buf		*bp = bip->bli_buf;
++
++	trace_xfs_buf_item_relse(bp, _RET_IP_);
++
++	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
++
++	if (atomic_read(&bip->bli_refcount))
++		return;
++
++	bp->b_log_item = NULL;
++	xfs_buf_rele(bp);
++	xfs_buf_item_free(bip);
++}
++
+ /* Is this log iovec plausibly large enough to contain the buffer log format? */
+ bool
+ xfs_buf_log_check_iovec(
+@@ -481,7 +538,7 @@ xfs_buf_item_unpin(
+ 			ASSERT(list_empty(&bp->b_li_list));
+ 		} else {
+ 			xfs_trans_ail_delete(lip, SHUTDOWN_LOG_IO_ERROR);
+-			xfs_buf_item_relse(bp);
++			xfs_buf_item_relse(bip);
+ 			ASSERT(bp->b_log_item == NULL);
+ 		}
+ 		xfs_buf_relse(bp);
+@@ -591,7 +648,7 @@ xfs_buf_item_put(
+ 	 */
+ 	if (aborted)
+ 		xfs_trans_ail_delete(lip, 0);
+-	xfs_buf_item_relse(bip->bli_buf);
++	xfs_buf_item_relse(bip);
+ 	return true;
+ }
+ 
+@@ -711,33 +768,6 @@ static const struct xfs_item_ops xfs_buf_item_ops = {
+ 	.iop_push	= xfs_buf_item_push,
+ };
+ 
+-STATIC void
+-xfs_buf_item_get_format(
+-	struct xfs_buf_log_item	*bip,
+-	int			count)
+-{
+-	ASSERT(bip->bli_formats == NULL);
+-	bip->bli_format_count = count;
+-
+-	if (count == 1) {
+-		bip->bli_formats = &bip->__bli_format;
+-		return;
+-	}
+-
+-	bip->bli_formats = kmem_zalloc(count * sizeof(struct xfs_buf_log_format),
+-				0);
+-}
+-
+-STATIC void
+-xfs_buf_item_free_format(
+-	struct xfs_buf_log_item	*bip)
+-{
+-	if (bip->bli_formats != &bip->__bli_format) {
+-		kmem_free(bip->bli_formats);
+-		bip->bli_formats = NULL;
+-	}
+-}
+-
+ /*
+  * Allocate a new buf log item to go with the given buffer.
+  * Set the buffer's b_log_item field to point to the new
+@@ -959,34 +989,6 @@ xfs_buf_item_dirty_format(
+ 	return false;
+ }
+ 
+-STATIC void
+-xfs_buf_item_free(
+-	struct xfs_buf_log_item	*bip)
+-{
+-	xfs_buf_item_free_format(bip);
+-	kmem_free(bip->bli_item.li_lv_shadow);
+-	kmem_cache_free(xfs_buf_item_zone, bip);
+-}
+-
+-/*
+- * xfs_buf_item_relse() is called when the buf log item is no longer needed.
+- */
+-void
+-xfs_buf_item_relse(
+-	struct xfs_buf	*bp)
+-{
+-	struct xfs_buf_log_item	*bip = bp->b_log_item;
+-
+-	trace_xfs_buf_item_relse(bp, _RET_IP_);
+-	ASSERT(!test_bit(XFS_LI_IN_AIL, &bip->bli_item.li_flags));
+-
+-	if (atomic_read(&bip->bli_refcount))
+-		return;
+-	bp->b_log_item = NULL;
+-	xfs_buf_rele(bp);
+-	xfs_buf_item_free(bip);
+-}
+-
+ void
+ xfs_buf_item_done(
+ 	struct xfs_buf		*bp)
+@@ -1006,5 +1008,5 @@ xfs_buf_item_done(
+ 	xfs_trans_ail_delete(&bp->b_log_item->bli_item,
+ 			     (bp->b_flags & _XBF_LOGRECOVERY) ? 0 :
+ 			     SHUTDOWN_CORRUPT_INCORE);
+-	xfs_buf_item_relse(bp);
++	xfs_buf_item_relse(bp->b_log_item);
+ }
+diff --git a/fs/xfs/xfs_buf_item.h b/fs/xfs/xfs_buf_item.h
+index 50aa0f5ef9590..e3ccbf3ca8014 100644
+--- a/fs/xfs/xfs_buf_item.h
++++ b/fs/xfs/xfs_buf_item.h
+@@ -51,7 +51,6 @@ struct xfs_buf_log_item {
+ 
+ int	xfs_buf_item_init(struct xfs_buf *, struct xfs_mount *);
+ void	xfs_buf_item_done(struct xfs_buf *bp);
+-void	xfs_buf_item_relse(struct xfs_buf *);
+ bool	xfs_buf_item_put(struct xfs_buf_log_item *);
+ void	xfs_buf_item_log(struct xfs_buf_log_item *, uint, uint);
+ bool	xfs_buf_item_dirty_format(struct xfs_buf_log_item *);
 -- 
 2.53.0
 
