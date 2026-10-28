@@ -1,68 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214383;
-	b=K8qVb3DekIstJbkvm3chrnwWf7O9DmYm90eucDywCDvmpMwp9VvBGpUFrhOOgM+3ZN2l
-	 wqWB9T089XKVqNkHtwBZNJAQVxV0aa1cQ+sOir45YOV6VuR0bfN6rPoY3zuYW/bPS4R12
-	 ZXkdgQu0fIaesFPqZSY86m7TGs8SeW4rE+Io3PKOYBeBz6zXo62tH4opNGlZ5GBaEOULs
-	 Muv/qJeNhK4B8tYnD2vrWZUO2MP//RRwungBP3RKXfSRDH1jkIEFAjA3skVFSIZadTRvw
-	 dXttKpFaDzlC82bKjo6eQq5IV045+lWpmFLbMPEa/Gd5B3neWc079iAOeld8iXPVt6A==
+	t=1793214385;
+	b=g18Kkc3cCs8pXE4ro0+3mgh3apTHTzPYG09q6Eq6qDJRH2/6LaTWOIcZn6x7dtKMzHyH
+	 y3dj6ltuwaGY1Aj9bNb4cnod9+x/6osS+U2N2Xt8H4yAzl0RoDe2bl8mykacHWoACRWSZ
+	 uke3ksWCE8E50lirUYx9iPUVwfJygyGIRPim9VH4Zt4A8cleFqqcvZ4cH4rRQuyG4o5ne
+	 PPLr6FJF944dziGpquBDG2ZeHnS8sK1aoLGH9JTvdonn6PhIza/GaIb6BB672LE9g4HI8
+	 Y1jrMwjpMQvKXc+GSkcFBJbGxeGY9BuOAUifDMXWuxFsDjFo3xfjKDo5CmrAaPTrk4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HCOazxDGeOTNkGpAX9w3vECCzj/VoJ2H6j8kyMFnUbo=;
-	b=oCmeM4dZlwwbf7/i+GChg9wOtK4rUCHwcp8hmXsmHyY2PWhPf4pF0wckVJC+BfG9Hpll
-	 v/G+DKU2gyxbOI3eQ9G63EPQ5Y0RBgnP0SiRvmyjwGaqIk47160wqm2OYaSZJgeAaFIF0
-	 2OIxTi277wqPvyByEUJnluDNBWJ9BKA/QMNFoeKCss5uCBpZjRsGuryG7+RclPVibBMfr
-	 DmSRhHhcq6ptGv7ZJKpCZUii7+pKE66Z/KGMhSi4OabT4Y5jMM9cYHS4EGeg7505OeIdE
-	 aMgFCMaNU9BoPztO5caFK300R+GCrf+7mbXqUge2tPPY5NiZlXSSBm+kqEjBGI1aBPw==
+	bh=aF2m6HKpy5I/XrBGh/FEargoxj3s3vSGVNCM+tE8AA8=;
+	b=NAMXJ2+jsa29WsZva6l8EcDwVzw7Re0K5fbL9c36J6jiZvpX5+8CviRr0v497hQslkTa
+	 SB395zAmPTiOgdVGiLGiRjmMtsJWej6AIv7zRsoDSoJbldsvrRATlpNu/5cOnzePSVXvt
+	 8c2YUXGsZTBLoeHq39G52Gigtey3lSbPCT4GyF+0UNYcL1jSXMXqeKHQAz0EKvDcEFuns
+	 6A3oL8o6IsKUlz/GvxkU1Jjk9UmCmkRIk3jEw8GvGXSxI8qACjd3BDh1tpE9O3T0u4Yl8
+	 IVR5e+z7/8xri7xZgjzMx0gIzyjkN57N2VL9bxNNfrpTQb9oZoAxlkRj3TXzlZGc6+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8yAOVIL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C04606A33D;
-	Wed, 28 Oct 2026 19:06:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8yAOVIL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D438F1F01828;
-	Wed, 28 Oct 2026 19:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC6260A3826;
+	Wed, 28 Oct 2026 19:06:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DD01F01828;
+	Wed, 28 Oct 2026 19:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214382;
-	bh=HCOazxDGeOTNkGpAX9w3vECCzj/VoJ2H6j8kyMFnUbo=;
+	s=korg; t=1793214385;
+	bh=aF2m6HKpy5I/XrBGh/FEargoxj3s3vSGVNCM+tE8AA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y8yAOVILiOar87QnbmXM0/HhHPm7rKoTHsgPhZRvC9FL58aA5DmugieDqAXKrTV38
-	 /60oVQxd4NnxpJ5nmtg1T11qV7zK5s3kqqH0hs4HGcB2zPBCYlrP3wO8MLNCaNzXH2
-	 gxMVFvigd/p/jhA/GN0JDuRMX0y8/fcVJNf5/Xik=
+	b=cN0kcrHt8AE/+HssPMcng4gLgQxa0skznpUrsa5L3CLhZeLRsRGRVTiAphP2jjA0s
+	 z1NDcqrAtZvlDENtyZFdsgzqoaY0kInf8Ue6WemsWmAdTvOM4uf5BAJyvuTHgiF/Vs
+	 Fgmk0IoVpRaL92R+TgLLJiPam4V1/+95FhE6cUYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrei Vagin <avagin@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Brahmajit Das <brahmajit.xyz@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	David Rientjes <rientjes@google.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Hugh Dickins <hughd@google.com>,
-	Joern Engel <joern@logfs.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Kanglong Wang <wangkanglong@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0838/1887] mm/smaps: fix race between smaps_hugetlb_range and migration
-Date: Wed, 28 Oct 2026 17:48:54 +0100
-Message-ID: <20261028170518.496932996@linuxfoundation.org>
+Subject: [PATCH 6.1 0839/1887] LoongArch: Optimize module load time by optimizing PLT/GOT counting
+Date: Wed, 28 Oct 2026 17:48:55 +0100
+Message-ID: <20261028170518.519960608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -84,71 +65,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Kanglong Wang <wangkanglong@loongson.cn>
 
-[ Upstream commit 45d19b4b6c2d422771c29b83462d84afcbb33f01 ]
+[ Upstream commit 63dbd8fb2af3a89466538599a9acb2d11ef65c06 ]
 
-smaps_hugetlb_range() handles the pte without holdling ptl, and may be
-concurrenct with migration, leaing to BUG_ON in pfn_swap_entry_to_page().
-The race is as follows.
+When enabling CONFIG_KASAN, CONFIG_PREEMPT_VOLUNTARY_BUILD and
+CONFIG_PREEMPT_VOLUNTARY at the same time, there will be soft deadlock,
+the relevant logs are as follows:
 
-smaps_hugetlb_range              migrate_pages
-  huge_ptep_get
-                                   remove_migration_ptes
-				   folio_unlock
-  pfn_swap_entry_folio
-    BUG_ON
+rcu: INFO: rcu_sched self-detected stall on CPU
+...
+Call Trace:
+[<900000000024f9e4>] show_stack+0x5c/0x180
+[<90000000002482f4>] dump_stack_lvl+0x94/0xbc
+[<9000000000224544>] rcu_dump_cpu_stacks+0x1fc/0x280
+[<900000000037ac80>] rcu_sched_clock_irq+0x720/0xf88
+[<9000000000396c34>] update_process_times+0xb4/0x150
+[<90000000003b2474>] tick_nohz_handler+0xf4/0x250
+[<9000000000397e28>] __hrtimer_run_queues+0x1d0/0x428
+[<9000000000399b2c>] hrtimer_interrupt+0x214/0x538
+[<9000000000253634>] constant_timer_interrupt+0x64/0x80
+[<9000000000349938>] __handle_irq_event_percpu+0x78/0x1a0
+[<9000000000349a78>] handle_irq_event_percpu+0x18/0x88
+[<9000000000354c00>] handle_percpu_irq+0x90/0xf0
+[<9000000000348c74>] handle_irq_desc+0x94/0xb8
+[<9000000001012b28>] handle_cpu_irq+0x68/0xa0
+[<9000000001def8c0>] handle_loongarch_irq+0x30/0x48
+[<9000000001def958>] do_vint+0x80/0xd0
+[<9000000000268a0c>] kasan_mem_to_shadow.part.0+0x2c/0x2a0
+[<90000000006344f4>] __asan_load8+0x4c/0x120
+[<900000000025c0d0>] module_frob_arch_sections+0x5c8/0x6b8
+[<90000000003895f0>] load_module+0x9e0/0x2958
+[<900000000038b770>] __do_sys_init_module+0x208/0x2d0
+[<9000000001df0c34>] do_syscall+0x94/0x190
+[<900000000024d6fc>] handle_syscall+0xbc/0x158
 
-To fix it, hold ptl lock in smaps_hugetlb_range().
+After analysis, this is because the slow speed of loading the amdgpu
+module leads to the long time occupation of the cpu and then the soft
+deadlock.
 
-Link: https://lkml.kernel.org/r/20250724090958.455887-1-tujinjiang@huawei.com
-Link: https://lkml.kernel.org/r/20250724090958.455887-2-tujinjiang@huawei.com
-Fixes: 25ee01a2fca0 ("mm: hugetlb: proc: add hugetlb-related fields to /proc/PID/smaps")
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Andrei Vagin <avagin@gmail.com>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Brahmajit Das <brahmajit.xyz@gmail.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Joern Engel <joern@logfs.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+When loading a module, module_frob_arch_sections() tries to figure out
+the number of PLTs/GOTs that will be needed to handle all the RELAs. It
+will call the count_max_entries() to find in an out-of-order date which
+counting algorithm has O(n^2) complexity.
+
+To make it faster, we sort the relocation list by info and addend. That
+way, to check for a duplicate relocation, it just needs to compare with
+the previous entry. This reduces the complexity of the algorithm to O(n
+ log n), as done in commit d4e0340919fb ("arm64/module: Optimize module
+load time by optimizing PLT counting"). This gives sinificant reduction
+in module load time for modules with large number of relocations.
+
+After applying this patch, the soft deadlock problem has been solved,
+and the kernel starts normally without "Call Trace".
+
+Using the default configuration to test some modules, the results are as
+follows:
+
+Module              Size
+ip_tables           36K
+fat                 143K
+radeon              2.5MB
+amdgpu              16MB
+
+Without this patch:
+Module              Module load time (ms)	Count(PLTs/GOTs)
+ip_tables           18				59/6
+fat                 0				162/14
+radeon              54				1221/84
+amdgpu              1411			4525/1098
+
+With this patch:
+Module              Module load time (ms)	Count(PLTs/GOTs)
+ip_tables           18				59/6
+fat                 0				162/14
+radeon              22				1221/84
+amdgpu              45				4525/1098
+
+Fixes: fcdfe9d22bed ("LoongArch: Add ELF and module support")
+Signed-off-by: Kanglong Wang <wangkanglong@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/task_mmu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/kernel/module-sections.c | 36 ++++++++++++-------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index 484886cdd272c..eb002adf9f59f 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -727,7 +727,9 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
- 	struct mem_size_stats *mss = walk->private;
- 	struct vm_area_struct *vma = walk->vma;
- 	struct page *page = NULL;
-+	spinlock_t *ptl;
+diff --git a/arch/loongarch/kernel/module-sections.c b/arch/loongarch/kernel/module-sections.c
+index d296a70b758fd..10969d242f44d 100644
+--- a/arch/loongarch/kernel/module-sections.c
++++ b/arch/loongarch/kernel/module-sections.c
+@@ -6,6 +6,7 @@
+ #include <linux/elf.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
++#include <linux/sort.h>
  
-+	ptl = huge_pte_lock(hstate_vma(vma), walk->mm, pte);
- 	if (pte_present(*pte)) {
- 		page = vm_normal_page(vma, addr, *pte);
- 	} else if (is_swap_pte(*pte)) {
-@@ -742,6 +744,7 @@ static int smaps_hugetlb_range(pte_t *pte, unsigned long hmask,
- 		else
- 			mss->private_hugetlb += huge_page_size(hstate_vma(vma));
- 	}
-+	spin_unlock(ptl);
- 	return 0;
+ Elf_Addr module_emit_got_entry(struct module *mod, Elf_Addr val)
+ {
+@@ -59,39 +60,38 @@ Elf_Addr module_emit_plt_entry(struct module *mod, Elf_Addr val)
+ 	return (Elf_Addr)&plt[nr];
  }
- #else
+ 
+-static int is_rela_equal(const Elf_Rela *x, const Elf_Rela *y)
+-{
+-	return x->r_info == y->r_info && x->r_addend == y->r_addend;
+-}
++#define cmp_3way(a, b)  ((a) < (b) ? -1 : (a) > (b))
+ 
+-static bool duplicate_rela(const Elf_Rela *rela, int idx)
++static int compare_rela(const void *x, const void *y)
+ {
+-	int i;
++	int ret;
++	const Elf_Rela *rela_x = x, *rela_y = y;
+ 
+-	for (i = 0; i < idx; i++) {
+-		if (is_rela_equal(&rela[i], &rela[idx]))
+-			return true;
+-	}
++	ret = cmp_3way(rela_x->r_info, rela_y->r_info);
++	if (ret == 0)
++		ret = cmp_3way(rela_x->r_addend, rela_y->r_addend);
+ 
+-	return false;
++	return ret;
+ }
+ 
+ static void count_max_entries(Elf_Rela *relas, int num,
+ 			      unsigned int *plts, unsigned int *gots)
+ {
+-	unsigned int i, type;
++	unsigned int i;
++
++	sort(relas, num, sizeof(Elf_Rela), compare_rela, NULL);
+ 
+ 	for (i = 0; i < num; i++) {
+-		type = ELF_R_TYPE(relas[i].r_info);
+-		switch (type) {
++		if (i && !compare_rela(&relas[i-1], &relas[i]))
++			continue;
++
++		switch (ELF_R_TYPE(relas[i].r_info)) {
+ 		case R_LARCH_SOP_PUSH_PLT_PCREL:
+ 		case R_LARCH_B26:
+-			if (!duplicate_rela(relas, i))
+-				(*plts)++;
++			(*plts)++;
+ 			break;
+ 		case R_LARCH_GOT_PC_HI20:
+-			if (!duplicate_rela(relas, i))
+-				(*gots)++;
++			(*gots)++;
+ 			break;
+ 		default:
+ 			break; /* Do nothing. */
 -- 
 2.53.0
 
