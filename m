@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217406;
-	b=qe5LrUSr17/3R+3ZH6n2PXo64/7EyFO0jxhomezhxpYqDATvYvDyZXUUMghZnjqJZUbk
-	 rf2KtrLLxixZyvb8GVl1GZhz77mrKu4+/UdGv7rNyRV2G0zpUq4EomhMczLqt5HBJ3TCM
-	 LPCkjPKe+n6iAm5cAgpT3Q20cItRcyry6Una6iw/elA7UpF7+7ae4LPbUozIMzgtoziAa
-	 G9pgs28J3AFM5oie7QVSYNU+cLH/CCiGdkAizTgxk8PoXAVn2qC0gGhQfWJPxO7HbfEyw
-	 AdRkfRtq7QOXqu8XL56rlFDPoR/Pz2g4qm2jirCOz8q5tC5jmop6aQ1NthkVR1h4lag==
+	t=1793217403;
+	b=n4RC6g4g9NJUaWwmCWJqMiKMLxpNhBfppOrWH1F+0CrqjpZMzu/OUetyJezi2fCj7eys
+	 9SQG8p7uo64ZQxu9OeSKQJYVKEqFxIWVM9NR8kkIakdL8bYXStOfwVBiYIwk5Jrvc58AO
+	 cpJ4wLdZRWi1RKYO4tI3qVvFOsw9gQG7jk4hEXE66nyHnQTjZ6m8wCBO3a4WyZfmHMJ6T
+	 512W4Q++tLMDRGW272p6y2M3q/vjIfR86Wn3qI2evDluphTP/+zOXbcagr+FVeZTorgJ9
+	 1YIGS9E9bqDrMzGCjBYaf74CN1TU2YsmPACOrqhLfM1/5GU4FjyDQ3KjsjaDflFFAdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8DrLHwr63wdE96HUlzUcQsKab3qbwyThsh+Adn1j+wI=;
-	b=0GL9Okg7J8QPUBTtpzHoq9WQQwFpK3Kd3xEeI2qANiy133dQRB4u05pH/H0IBGdWh36g
-	 /o7YPbDP058L85mOFZRdNyQzunXtQilEKRCIzuxN2+8/u1yS4dGKaSY7Pg2OgaD4F1bDz
-	 5Zau6FCbsHxZscEByjKmWNKIzOci2mhuq5fobmmlYc9fc+pbK7d34M3PryWzPN/P7XEeX
-	 WVA7AT+8TTphWGdOZ8cyqoP1hIkJtKVf2SdTyNrrAOrujNIlA4M/+DrM92+86et2lvS8V
-	 Lsr9S0liYuc61/9CZpbWYxBbr/jOek48IUtLUPgYEoYPPYz/QmZRyA8wNe5kkHw8IeQ==
+	bh=A+utrLaNEJck9Hkmws4SisPQYRstgMxpiFg7DFYFPSA=;
+	b=y3IcrE5sl9P+TZ5EQwHAnRMqA9Ca7VjmDRnARZKipJC5xqRI5vBgn1I0TQpx0d5YHmCt
+	 FRMwuEcmCv3CQhOjUx9ao1DPKfo9k99WEczv2skAV7/krs9KqUkf+S11DpknjpTTsDZfN
+	 ucafQQeg8bHGqNJIll3sHASblB/DJB7ij80Bd0i+er4tW9zKQKS8Hq3KA4u50cc2XF09Q
+	 ZnFtakyoFpffBmEGBplaOA0SvNNhazqYK3a2SQDtiiwMPnQPTkGR4QpPrzYwt8VWBrDN1
+	 bhzYb4L8b2Nn9IF1NwWuduScC/b4guZeTeomqtU5olAU0nKtz6yonTyruAlj3SO5B2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBB79LyB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMSCpOQI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B50606A31A;
-	Wed, 28 Oct 2026 19:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F3B606A31C;
+	Wed, 28 Oct 2026 19:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBB79LyB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7D01F01825;
-	Wed, 28 Oct 2026 19:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMSCpOQI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DF41F031E1;
+	Wed, 28 Oct 2026 19:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217406;
-	bh=8DrLHwr63wdE96HUlzUcQsKab3qbwyThsh+Adn1j+wI=;
+	s=korg; t=1793217403;
+	bh=A+utrLaNEJck9Hkmws4SisPQYRstgMxpiFg7DFYFPSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DBB79LyBp/jCtSoJ4hMCFPefx/8tJ24uZqCAQKa28JUxQ/WEyUI7lBjgNLh0KQQwB
-	 5tdP/2YNOW4twGVNdn1/5rA7OnRxSxDC/okNP0J1Uotfj7EMzN1BGSX2uj0wrszAQY
-	 gbzcVi+MMXe5W2Y5HVe2NF3loqP5E9fOghAxwbA8=
+	b=GMSCpOQIDn5Z53wlY2Ue7h+A0A7BMNDifgLor/3QFpvu6P/lO0tuRkNP5TwgyWDAa
+	 K08xv1DPjVXwpX9rlPALmxBKC2cz4XOLBdZojemOTP0kOrwg4IUtfRBUFX+NLeDB48
+	 CUnwwr+bKM6YNahozExeiPyLk0E63Wq3/22qO6d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
 	Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1886/1887] pinctrl: freescale: Fix a memory out of bounds when num_configs is 1
-Date: Wed, 28 Oct 2026 18:06:22 +0100
-Message-ID: <20261028170542.375558293@linuxfoundation.org>
+Subject: [PATCH 6.1 1885/1887] gpio: mxc: map Both Edge pad wakeup to Rising Edge
+Date: Wed, 28 Oct 2026 18:06:21 +0100
+Message-ID: <20261028170542.353340786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,46 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit 9063777ca1e2e895c5fdd493ee0c3f18fa710ed4 ]
+[ Upstream commit c720fb57d56274213d027b3c5ab99080cf62a306 ]
 
-The config passed in by pad wakeup is 1, when num_configs is 1,
-Configuration [1] should not be fetched, which will be detected
-by KASAN as a memory out of bounds condition. Modify to get
-configs[1] when num_configs is 2.
+Suspend may fail on i.MX8QM when Falling Edge is used as a pad wakeup
+trigger due to a hardware bug in the detection logic. Since the hardware
+does not support Both Edge wakeup, remap requests for Both Edge to Rising
+Edge by default to avoid hitting this issue.
+
+A warning is emitted when Falling Edge is selected on i.MX8QM.
 
 Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+cc: stable@vger.kernel.org
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230504233736.3766296-1-xiaolei.wang@windriver.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://patch.msgid.link/20260324192129.2797237-1-shenwei.wang@nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/freescale/pinctrl-scu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-mxc.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/freescale/pinctrl-scu.c b/drivers/pinctrl/freescale/pinctrl-scu.c
-index 59b5f8a35111b..c38ec7ee439d6 100644
---- a/drivers/pinctrl/freescale/pinctrl-scu.c
-+++ b/drivers/pinctrl/freescale/pinctrl-scu.c
-@@ -77,7 +77,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
- 	struct imx_sc_msg_req_pad_set msg;
- 	struct imx_sc_rpc_msg *hdr = &msg.hdr;
- 	unsigned int mux = configs[0];
--	unsigned int conf = configs[1];
-+	unsigned int conf;
- 	unsigned int val;
- 	int ret;
+diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
+index 36dcd082ef893..97186bce32bba 100644
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -541,12 +541,13 @@ static bool mxc_gpio_set_pad_wakeup(struct mxc_gpio_port *port, bool enable)
+ 	unsigned long config;
+ 	bool ret = false;
+ 	int i, type;
++	bool is_imx8qm = of_device_is_compatible(port->dev->of_node, "fsl,imx8qm-gpio");
  
-@@ -85,6 +85,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
- 	 * Set mux and conf together in one IPC call
- 	 */
- 	WARN_ON(num_configs != 2);
-+	conf = configs[1];
- 
- 	val = conf | BM_PAD_CTL_IFMUX_ENABLE | BM_PAD_CTL_GP_ENABLE;
- 	val |= mux << BP_PAD_CTL_IFMUX;
+ 	static const u32 pad_type_map[] = {
+ 		IMX_SCU_WAKEUP_OFF,		/* 0 */
+ 		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_RISING */
+ 		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_FALLING */
+-		IMX_SCU_WAKEUP_FALL_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
++		IMX_SCU_WAKEUP_RISE_EDGE,	/* IRQ_TYPE_EDGE_BOTH */
+ 		IMX_SCU_WAKEUP_HIGH_LVL,	/* IRQ_TYPE_LEVEL_HIGH */
+ 		IMX_SCU_WAKEUP_OFF,		/* 5 */
+ 		IMX_SCU_WAKEUP_OFF,		/* 6 */
+@@ -561,6 +562,13 @@ static bool mxc_gpio_set_pad_wakeup(struct mxc_gpio_port *port, bool enable)
+ 				config = pad_type_map[type];
+ 			else
+ 				config = IMX_SCU_WAKEUP_OFF;
++
++			if (is_imx8qm && config == IMX_SCU_WAKEUP_FALL_EDGE) {
++				dev_warn_once(port->dev,
++					      "No falling-edge support for wakeup on i.MX8QM\n");
++				config = IMX_SCU_WAKEUP_OFF;
++			}
++
+ 			ret |= mxc_gpio_generic_config(port, i, config);
+ 		}
+ 	}
 -- 
 2.53.0
 
