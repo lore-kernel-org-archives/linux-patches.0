@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207423;
-	b=RtzRYe1VnVLkEz1oIZn7bNGMUQjTvs3pc3oQxpkzTkiCPV/yPDYiIBeI7c23m0sQic8p
-	 p1qa8O8Dfl0AbKuqlXcd3aUbwoJFeTTAubre4ulp+jOqCFX10y9B3NBArbk349dY7wJuL
-	 gSilhtpKxoa0ip+35WDVFdZ7qLu7fW6NlJTjpr8gBPML9j5AJKzF1Pb5ZivJ2gd12fqtf
-	 cquLur9B3Fu+s0NvjyugGpesXnCFjPtJAEEaRvRp0RktYaE0THIJNs1w2zBke3SZJnVv3
-	 XXJplJbCXZWV4Mx3C7BOh0VcIMPTrncv+5CgF90XZBjR7V0pw65WNfN3phO9/YVwu0A==
+	t=1793207425;
+	b=qVcI/O5oLshxpf49CNtUnELvJHEunCKVXcwRWHifNw3TLVjfeDs3CQDgcFX0gm0ottjr
+	 AWcS7BSnzKwiHoHNmUC/yTRjkftRYSVnTOx2F/qoFp84jU/SJ53jpNm5vhlfKPu7q+zXZ
+	 FNOcM6V1v1uGU9hqXOHPJjIY4Qhhg7x0xnEWaHqWp8B9iRPIg1kwkQzWdmJy0HM1dh3GL
+	 8rtEBxjzhfJJTeidI/gSWrLHRUMulevYXAhN2Z9KJNfk+Vbp3/+8cAR7kvqzYzwx6liku
+	 ZV/mFv1adATOoUSGHmd5UimFGqCYOiAGzYFIqTvpSNLAwS4Cv/wvYlyP71xTpsgv37A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207423;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207425;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z2MUYgtcEfZ2twziw9ik3lTqkUmSLYR6xUncPC8kPpY=;
-	b=vx1Iw6c6wH1Yi4n0Dlm34vQk7igtZ+FuCBMwaWuJqruFYJdBXplgLONHf6xlcdla1mg5
-	 2wOw/g1uLCesJ181BBIOel5kmAnA1YZGcmjCR97bAD8du0HjtZ6GJpdi7xueE8YUrAMPQ
-	 5ZhVTuDWg4YIQwierzD3JZQd2qRG5RzvpZYAvQukBmIkZqMER7ZVlgGO4ZHwVV/lfym0V
-	 dseiFIvtpcqpL+cv0OJTb3Hc80Fhbue6EvjyIHLcjlcvaGbXsHP1Zuf09UYC84Kr/mRny
-	 ZzMPCmbcUedNLApqHB3MWv6eEVWoAZTYVtGapkqVApH/xI+AWPUtPLjIV1uiIA/NI0w==
+	bh=bCa2jVl/fVVqt0MEpa5HWlnz2GeeCNC9BeizKB5+wAQ=;
+	b=oHG5K6v5qB5rnYPtIv4gRvJ1CFk7xiu3yLkDNfRsF22R0AaFAXLBBoatv2JLDxW526Kd
+	 T1JM0SPAl7Qd0WvZjeV+fvneTvoDROW31tFeazwQoQci+5+CSvLwcjgzETkvIUJclpgtc
+	 BLeM+NceUVmnVlV+Uj+UswwU/MjdVeUu6p54w4KNiOeDONcEDljJz0z6OGfA0gqM3F1wv
+	 XFTEWiY5JcuZvBSs0HBdzaRBcyMC0JQ7mHF+RCogB9d5XopezdU4d+ZaaIxIev4SOfSyt
+	 htq0AfnlYyzsASThjd5Z7/z0wpKx6OlWdA0V2f+HRud89j7mWHerfWXTu5GngbaqADw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJClwlPm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LIFWp4DO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A145F606A31C;
-	Wed, 28 Oct 2026 17:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C743606A31C;
+	Wed, 28 Oct 2026 17:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJClwlPm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0ADF1F01825;
-	Wed, 28 Oct 2026 17:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LIFWp4DO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8321F01825;
+	Wed, 28 Oct 2026 17:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793207422;
-	bh=z2MUYgtcEfZ2twziw9ik3lTqkUmSLYR6xUncPC8kPpY=;
+	s=korg; t=1793207425;
+	bh=bCa2jVl/fVVqt0MEpa5HWlnz2GeeCNC9BeizKB5+wAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XJClwlPm9PhgBHsMXbovA189jY4qC6f9B3C+VjEvWmdbyo8L/PJiY/XqUJfsa3G7h
-	 qKK92MsIG60SPAztTeO4NtVzeXqpZpGSBjJ2UemEM0/R4NsLpYPNrtQd+RJq8W8kLq
-	 9MWBIAnlOMqq6rv8/eKhnxby6UVvsZQrlIda5nOw=
+	b=LIFWp4DOlJJHfTjHPCyB09DVLA8AuI8glqCpDeiEGTOPjg2jzMc5uoZdUcToYrwvi
+	 D6/nRolYHchJZqq8hvNXg6aUCjKRWze+IKzBiE+LW/SK9+He4vj3zA3Hkw24QnmBLt
+	 3fAj6XoObNGgcty4+vVwvAPGBz4veIjnHGYc3FHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Abdul Wasey <w453y.me@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/247] rose: purge rose_neigh->queue on final teardown
-Date: Wed, 28 Oct 2026 17:56:55 +0100
-Message-ID: <20261028165947.648237807@linuxfoundation.org>
+Subject: [PATCH 6.12 013/247] mptcp: move the OoO check back into __mptcp_try_fallback()
+Date: Wed, 28 Oct 2026 17:56:56 +0100
+Message-ID: <20261028165947.672036696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 References: <20261028165947.349197979@linuxfoundation.org>
@@ -67,72 +67,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Abdul Wasey <w453y.me@gmail.com>
 
-rose_transmit_link() queues an outgoing frame on rose_neigh->queue
-instead of sending it immediately whenever the neighbour isn't
-"restarted" yet (link not up) -- notably the CLEAR_REQUEST built by
-rose_write_internal() when a socket is released (e.g. its owning
-process is killed) while the underlying AX.25 link to that neighbour
-is still coming up.
+The 6.12.y backport of upstream commit 1bba3f219c5e ("mptcp: do not
+fallback when OoO is present") put the out-of-order queue check
+in __mptcp_finish_join() instead of __mptcp_try_fallback().
 
-rose_neigh_put() already tears down both timers and drops the ax25/
-digipeat references before freeing the neighbour, but never empties
-this queue. kfree(rose_neigh) only frees the rose_neigh struct itself
-(the sk_buff_head embedded in it is just three next/prev/len words),
-not the skbs still linked into it -- every frame still queued here at
-that point leaks for good.
+So the fix itself is missing, as fallback still happens with OoO data
+queued. Worse, the passive side now refuses every MP_JOIN while its
+OoO queue is not empty, which is the normal state of a connection
+already sending data over more than one subflow. The joining subflow
+is reset, so such a connection can't add a new path, and a path that
+comes back after an outage can't rejoin while data is in flight.
 
-rose_remove_neigh() (rose_route.c) already purges this same queue, but
-it is only one of about two dozen call sites that can drop the last
-reference and trigger the real kfree() in rose_neigh_put() -- every
-socket releasing its own rose->neighbour reference (af_rose.c,
-rose_in.c, rose_timer.c) can just as well be the one that does. Doing
-the purge once, centrally, in rose_neigh_put() itself covers all of
-them regardless of which call site happens to be last, rather than
-relying on whichever caller happened to remember it.
+Move the check to __mptcp_try_fallback(), as upstream does.
 
-Matches a leak pattern observed and documented back in May 2026
-(mailbbs killed -> rose_release() -> rose_write_internal() ->
-rose_transmit_link() queues the CLEAR_REQUEST -> skb never freed),
-never root-caused until now.
+Tested on 6.12.113 in netns: 6 connections (5 uploading) over two paths,
+then a third endpoint added mid-transfer. Without this patch only the
+idle connection gets a subflow on the new path and the other 5 joins
+are reset. With it, all 6 join. Same result in 3 of 3 runs each.
 
-Deployed and running since 2026-09-13/15 on three independent nodes
-(f6bvp-12, f6bvp-8, f6bvp-10 -- three different kernel bases,
-6.12.94/6.18.46/6.18.34), no regression observed.
-
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit e59e4523182e4f58f4f29b5e4bce44c1ef152d70)
+Fixes: aab400cf8e35 ("mptcp: do not fallback when OoO is present")
+Signed-off-by: Abdul Wasey <w453y.me@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rose.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/mptcp/protocol.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/rose.h b/include/net/rose.h
-index 0d957b8dd0ba3..49140668b3dd0 100644
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -180,6 +180,18 @@ static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
- 		 */
- 		timer_shutdown_sync(&rose_neigh->ftimer);
- 		timer_shutdown_sync(&rose_neigh->t0timer);
-+		/* rose_transmit_link() queues a frame here instead of sending
-+		 * it immediately whenever the neighbour isn't "restarted" yet
-+		 * (link not up) -- e.g. the CLEAR_REQUEST built by
-+		 * rose_write_internal() when a socket is released while its
-+		 * underlying AX.25 link is still coming up. If this neighbour
-+		 * is freed before that link ever comes up, nothing else ever
-+		 * empties this queue: kfree() below only frees the
-+		 * rose_neigh struct itself (including the three next/prev/len
-+		 * words of the sk_buff_head), not the skbs it points to,
-+		 * leaking every frame still queued here.
-+		 */
-+		skb_queue_purge(&rose_neigh->queue);
- 		if (rose_neigh->ax25)
- 			ax25_cb_put(rose_neigh->ax25);
- 		kfree(rose_neigh->digipeat);
--- 
-2.53.0
-
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -74,6 +74,13 @@ bool __mptcp_try_fallback(struct mptcp_s
+ 	if (__mptcp_check_fallback(msk))
+ 		return true;
+ 
++	/* The caller possibly is not holding the msk socket lock, but
++	 * in the fallback case only the current subflow is touching
++	 * the OoO queue.
++	 */
++	if (!RB_EMPTY_ROOT(&msk->out_of_order_queue))
++		return false;
++
+ 	spin_lock_bh(&msk->fallback_lock);
+ 	if (!msk->allow_infinite_fallback) {
+ 		spin_unlock_bh(&msk->fallback_lock);
+@@ -943,13 +950,6 @@ static bool __mptcp_finish_join(struct m
+ 	if (sk->sk_state != TCP_ESTABLISHED)
+ 		return false;
+ 
+-	/* The caller possibly is not holding the msk socket lock, but
+-	 * in the fallback case only the current subflow is touching
+-	 * the OoO queue.
+-	 */
+-	if (!RB_EMPTY_ROOT(&msk->out_of_order_queue))
+-		return false;
+-
+ 	spin_lock_bh(&msk->fallback_lock);
+ 	if (!msk->allow_subflows) {
+ 		spin_unlock_bh(&msk->fallback_lock);
 
 
