@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793214793;
-	b=5KB4zMD+F+tPO2avgx+806dF0MRUv1KpUreolnPzP8LNGEHew4/p9kzIYbquNql3dp8a
-	 BvqP8oNjJAuTNFVKTztsBRxmlLOfC7DZmPq9Vu/jmJ8YvlirmfD5SGrg01DHsjCAXt7qs
-	 Kzc80OiiMrpw+Oy3ElSMTUOJyu5vi9ElI5mittZqI8Z5tOITDismaRWQtVCweHmEo7kBZ
-	 5Uw6MavfQE8qPNzHAMV8JT3AsQuu8y1EfR1tYkkrBj4v0F2gCwWN/viG0LSu+fKpl+pTU
-	 NE2pbYpcg0eXPAOI6SoHxNpSuTaRMZLH0fHWUV1pSTlEvE5EWefOlFyfbjSYKegpOjA==
+	t=1793214799;
+	b=3Mo/sGBBp43S4p+xQ85whseDcOICk6iDYioYfsq8Yp5Cjlq6cBouAcH4dfA/99E6lmP5
+	 L/r/xPiq3d32PQKPZB8IzkV3T9arKrp+qqTFpGzqMfBHBQxTNuGj1kJfZ9ifQf/N2Wdon
+	 /NiVtTygAjj9MVtp8sdoTBHrEQpfPEk4Dh6jBDBeOfyckzgYsA4opOBtAqW6uK0bLOyge
+	 CI9HDuKV57uU5YVYVLdZQzq2/BsDVzvwFT1nxeA0PCQ+EtK0sOMot3pw/n3WXzS3E7Ydy
+	 lqoFPH+w4DtR9ZeoqdhuSWFD02ETKcx4AiZZHF/+/uM4S9C7kPcQE2i5xh0Xmxn2XuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793214793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793214799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jKp2zs5iQglS37TlXcjms0bE4fabdkCXai7xwDqDps8=;
-	b=jWpc/R+XyUlRQs4SN8/kaIY2Nzzgk7PomWeohhxOixhW+Q9HGvcCkhz80ec2d7DUWGci
-	 yQIqk5r7xyCQYYI0fnI/ORG5UY1+IZyywrrUfvxZBFif91s+ggu8U3EW9aW0gHFs3RP6/
-	 DCulrPSNaw86+10d36+Tr4oDwobdl3BvJ4WdevHgcDvzx31kUvEANdA3d/W0wfGq4dEfj
-	 0gx4bzTFegVxr99O9yQyz9D1DpfMUtvEiZaqG17c1qamXYXh2jXrdT4FOZKlqRxknGGvv
-	 1gtAOmSVjUULoNWhl1oLOd1aoLXiP5yfQUP4KWzAHhHw+UyOlfVmTHIWkJ8zVceQrzg==
+	bh=PBxBV+7q6J1XmCq/sDdAy4fnl4baTRk4YQ4lrd6TXdM=;
+	b=WpAZ0Xa3KagRJlNb+o1cfYOp3EevHtXMRnU6MIYwJ88mfniLPgM2E4lUI+O7sPm3hQI6
+	 MlOxMcvalVixYmqLkaQB/+HoBs5LtB9gZJrHDVT1zQiAmRmcarTkwbxbufG8mvU63+yh4
+	 DWjOaM+eAS8B4tq44TRNF3JQuEBnXXkFJLhPN0YOnWJZuL8iO8q0YX+uBIyVOJUsmPdWQ
+	 llMBxIwykVS0NiKqfVCUMg3CmG/QF+ujSfnbf0S0G2hbkXLuqqBXSdo1+Uan5qye2vAUD
+	 MXYZR4CdSftGsuX5OuNuBeabAEs67nz88qCzL+omdOSjjdGocMo/G701sfdc4ssDt2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsB7uiRm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1OpGDQsA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDA9606A32F;
-	Wed, 28 Oct 2026 19:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463C0606A335;
+	Wed, 28 Oct 2026 19:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsB7uiRm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38BA1F01825;
-	Wed, 28 Oct 2026 19:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1OpGDQsA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962AA1F01825;
+	Wed, 28 Oct 2026 19:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793214793;
-	bh=jKp2zs5iQglS37TlXcjms0bE4fabdkCXai7xwDqDps8=;
+	s=korg; t=1793214799;
+	bh=PBxBV+7q6J1XmCq/sDdAy4fnl4baTRk4YQ4lrd6TXdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JsB7uiRmA34aL6mzLumNSzsBAA27ynL4dahsxzPC6z1gUTnQI34GAg+j7IZfM9cES
-	 9uV+4Mdk4OPfayA9rB2gN2oVTpVrOUiBy5zrY+odZ8NdhXmlbYMOtibGrRj6tjl97H
-	 giIvBOLNt2x54Yp2k1Z+7EacaWCxeJ880+A2RqJY=
+	b=1OpGDQsAWCjRBQ3MnseWSXcCl6Sb5d4+D8cf9YBEFdeUy8AI0bFS8zPGWjA/Yafl4
+	 L9HPwyrZ2iQz/Fz5gmKCbteBjlwGgyCJ/d4uqgiMDiBnLkdm+v8JrDjrRerezwvqf+
+	 lfxEOAU6Y5Y2l+rgafGZWhrefAqM+hSgyOqPijXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keenan Dong <keenanat2000@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0983/1887] xfrm: account XFRMA_IF_ID in aevent size calculation
-Date: Wed, 28 Oct 2026 17:51:19 +0100
-Message-ID: <20261028170521.780011401@linuxfoundation.org>
+Subject: [PATCH 6.1 0985/1887] Bluetooth: hci_sync: annotate data-races around hdev->req_status
+Date: Wed, 28 Oct 2026 17:51:21 +0100
+Message-ID: <20261028170521.825076390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,59 +68,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keenan Dong <keenanat2000@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 7081d46d32312f1a31f0e0e99c6835a394037599 ]
+[ Upstream commit b6807cfc195ef99e1ac37b2e1e60df40295daa8c ]
 
-xfrm_get_ae() allocates the reply skb with xfrm_aevent_msgsize(), then
-build_aevent() appends attributes including XFRMA_IF_ID when x->if_id is
-set.
+__hci_cmd_sync_sk() sets hdev->req_status under hdev->req_lock:
 
-xfrm_aevent_msgsize() does not include space for XFRMA_IF_ID. For states
-with if_id, build_aevent() can fail with -EMSGSIZE and hit BUG_ON(err < 0)
-in xfrm_get_ae(), turning a malformed netlink interaction into a kernel
-panic.
+    hdev->req_status = HCI_REQ_PEND;
 
-Account XFRMA_IF_ID in the size calculation unconditionally and replace
-the BUG_ON with normal error unwinding.
+However, several other functions read or write hdev->req_status without
+holding any lock:
 
-Fixes: 7e6526404ade ("xfrm: Add a new lookup key to match xfrm interfaces.")
-Reported-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+  - hci_send_cmd_sync() reads req_status in hci_cmd_work (workqueue)
+  - hci_cmd_sync_complete() reads/writes from HCI event completion
+  - hci_cmd_sync_cancel() / hci_cmd_sync_cancel_sync() read/write
+  - hci_abort_conn() reads in connection abort path
+
+Since __hci_cmd_sync_sk() runs on hdev->req_workqueue while
+hci_send_cmd_sync() runs on hdev->workqueue, these are different
+workqueues that can execute concurrently on different CPUs. The plain
+C accesses constitute a data race.
+
+Add READ_ONCE()/WRITE_ONCE() annotations on all concurrent accesses
+to hdev->req_status to prevent potential compiler optimizations that
+could affect correctness (e.g., load fusing in the wait_event
+condition or store reordering).
+
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_request.c |  2 +-
+ net/bluetooth/hci_sync.c    | 20 ++++++++++----------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 6fb79def144c8..9041a9885854f 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2366,7 +2366,8 @@ static inline unsigned int xfrm_aevent_msgsize(struct xfrm_state *x)
- 	       + nla_total_size_64bit(sizeof(struct xfrm_lifetime_cur))
- 	       + nla_total_size(sizeof(struct xfrm_mark))
- 	       + nla_total_size(4) /* XFRM_AE_RTHR */
--	       + nla_total_size(4); /* XFRM_AE_ETHR */
-+	       + nla_total_size(4) /* XFRM_AE_ETHR */
-+	       + nla_total_size(sizeof(x->if_id)); /* XFRMA_IF_ID */
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index cf69e973b724f..303fb14fdfad9 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -46,7 +46,7 @@ void hci_req_purge(struct hci_request *req)
+ 
+ bool hci_req_status_pend(struct hci_dev *hdev)
+ {
+-	return hdev->req_status == HCI_REQ_PEND;
++	return READ_ONCE(hdev->req_status) == HCI_REQ_PEND;
  }
  
- static int build_aevent(struct sk_buff *skb, struct xfrm_state *x, const struct km_event *c)
-@@ -2467,7 +2468,12 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	c.portid = nlh->nlmsg_pid;
+ static int req_run(struct hci_request *req, hci_req_complete_t complete,
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 4295c803cfd4a..9529dd7e2a352 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -24,11 +24,11 @@ static void hci_cmd_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
+ {
+ 	bt_dev_dbg(hdev, "result 0x%2.2x", result);
  
- 	err = build_aevent(r_skb, x, &c);
--	BUG_ON(err < 0);
-+	if (err < 0) {
-+		spin_unlock_bh(&x->lock);
-+		xfrm_state_put(x);
-+		kfree_skb(r_skb);
-+		return err;
-+	}
+-	if (hdev->req_status != HCI_REQ_PEND)
++	if (READ_ONCE(hdev->req_status) != HCI_REQ_PEND)
+ 		return;
  
- 	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, NETLINK_CB(skb).portid);
- 	spin_unlock_bh(&x->lock);
+ 	hdev->req_result = result;
+-	hdev->req_status = HCI_REQ_DONE;
++	WRITE_ONCE(hdev->req_status, HCI_REQ_DONE);
+ 
+ 	if (skb) {
+ 		struct sock *sk = hci_skb_sk(skb);
+@@ -163,20 +163,20 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 
+ 	hci_cmd_sync_add(&req, opcode, plen, param, event, sk);
+ 
+-	hdev->req_status = HCI_REQ_PEND;
++	WRITE_ONCE(hdev->req_status, HCI_REQ_PEND);
+ 
+ 	err = hci_req_sync_run(&req);
+ 	if (err < 0)
+ 		return ERR_PTR(err);
+ 
+ 	err = wait_event_interruptible_timeout(hdev->req_wait_q,
+-					       hdev->req_status != HCI_REQ_PEND,
++					       READ_ONCE(hdev->req_status) != HCI_REQ_PEND,
+ 					       timeout);
+ 
+ 	if (err == -ERESTARTSYS)
+ 		return ERR_PTR(-EINTR);
+ 
+-	switch (hdev->req_status) {
++	switch (READ_ONCE(hdev->req_status)) {
+ 	case HCI_REQ_DONE:
+ 		err = -bt_to_errno(hdev->req_result);
+ 		break;
+@@ -190,7 +190,7 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 		break;
+ 	}
+ 
+-	hdev->req_status = 0;
++	WRITE_ONCE(hdev->req_status, 0);
+ 	hdev->req_result = 0;
+ 	skb = hdev->req_skb;
+ 	hdev->req_skb = NULL;
+@@ -696,9 +696,9 @@ void hci_cmd_sync_cancel(struct hci_dev *hdev, int err)
+ {
+ 	bt_dev_dbg(hdev, "err 0x%2.2x", err);
+ 
+-	if (hdev->req_status == HCI_REQ_PEND) {
++	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND) {
+ 		hdev->req_result = err;
+-		hdev->req_status = HCI_REQ_CANCELED;
++		WRITE_ONCE(hdev->req_status, HCI_REQ_CANCELED);
+ 
+ 		queue_work(hdev->workqueue, &hdev->cmd_sync_cancel_work);
+ 	}
+@@ -714,12 +714,12 @@ void hci_cmd_sync_cancel_sync(struct hci_dev *hdev, int err)
+ {
+ 	bt_dev_dbg(hdev, "err 0x%2.2x", err);
+ 
+-	if (hdev->req_status == HCI_REQ_PEND) {
++	if (READ_ONCE(hdev->req_status) == HCI_REQ_PEND) {
+ 		/* req_result is __u32 so error must be positive to be properly
+ 		 * propagated.
+ 		 */
+ 		hdev->req_result = err < 0 ? -err : err;
+-		hdev->req_status = HCI_REQ_CANCELED;
++		WRITE_ONCE(hdev->req_status, HCI_REQ_CANCELED);
+ 
+ 		wake_up_interruptible(&hdev->req_wait_q);
+ 	}
 -- 
 2.53.0
 
