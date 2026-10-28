@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209617;
-	b=HQQSco5Zr+TFcu/z3Hkys4Odv8rrYIg3ZKG0SC+plmVRkX7pzMzMdWDo2TNmeZfqppWQ
-	 CYYt9GJ68Ht3Q54uIM2TFy5jB+3VMDGz/bNbiIG4uJyk0BoND3Ocww6fCuBTKpSZy3/Uv
-	 TYi75ia05cuU1zkm46VCtGPfpwo6wXonESUzxqBOVjRdnji4e7RftHLjuf7Fvaaio4c+z
-	 7lIbrOAfNILUbVLyV5spNDcLIcwC1UQ23t0J8xSrFaCQ5xcjm/TcpiKahIYtDwpWmS+Sn
-	 jGbkDMAW0I7kkFlnJtHBbxwpf8D2NDaBg4gjGr64BcBvmfcWaO0t+iQg4YooTolFfOw==
+	t=1793209620;
+	b=EfaXFeJVGvimkOUJbpyUmeOi4QhdOOsmI2Ep0Zvo05+eChGixqpkb6SitoTOFvhvM3t8
+	 iE6TH9qwWecoT2X3ntxnt+FEuLJBDxJCtDf0xNqNmMDTnYLzDMvq6bkAEdL8a0/OMYScH
+	 bwwh2qK88Lw8xDhBR2dIR/il2NOquRpKTX3WzDtFoYHT9bu44uLSe0+cZ4FEw60odYnNz
+	 3+ctmrSkqpUZlrKVWUG0EahOsZ+Iiscor/1ksABnxsr5iUH1+1Oz31HoMIMPbBz2tSLJ/
+	 ZzNYRFqKhA1R1zU58KAidVCi8H5NRGq+4B1YW2/9DPJPbsR3AB9ogAWacBSIjniAF3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kxOVPn1PKvRRVOHRYxfHjQMD4ndJtYwVeDitP52Ei8k=;
-	b=GOpNtiEQkS2d/Juk+sjzaRiPyRlVQwycACKBclsaL4YsfyxixBNkTt+M/rFKKOco81NR
-	 iOlmA7Wh5jzqnmlg1XVMLz8MbG/kPcqfxRegQ98xsZVmahugNS1f81Kxiv9PXsTW2Xj89
-	 pOuEJTTzPsNaJCyyGTwkALeodi8K4/vyrQAEYz60eoR6aowZ+TvjYb21S5G/9w52aa/wf
-	 kqheFTEsVDB9Yr6c60LM4/VuRsJY2m/13i6Qx4QutLszRNgal+ATrVa2n/SWpkSB0a3sF
-	 edw45NeiqdWtM5iV+B4U4B9ld5a+CEB+FSGrfxveogG//N1wtggDVv6nXNcweVrPCvg==
+	bh=Fq437t2+1a//pouX+eqiI1WH75A+GShtNm+o1/juryM=;
+	b=J3oZkpKtit/v7KrIWawknCMZoQOZvOdXpuLo3cOHSQwRmbRMb4EKqu5yzoQrknlj6kEe
+	 lonjkvSNQugzOm2atBYsy9tLlE35DfuuIwehh+PQ+cLzQM307SlIUJqCMH0YkeYD2nfe3
+	 3nWPIwit1U9Mr08TZUHxc0klhwSfWZ/eS1BmKKgtAebtGwMJG+N+nBTHmIaLZ3WKCeok7
+	 JvrjdmywWs01KCe8mTP43wPcp6IKNO2ZnGMMmb/F92Z5bBavgti9xyvD/yIlOtaO7siVj
+	 5Vls0QgqHoDb1d0kYHXfqGjNjBVLGZYjLqLwsuHEh+p4CsBPZwO7DrUSWVdflKl00Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmkCwUcD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQKiBiON;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9F4606A31A;
-	Wed, 28 Oct 2026 17:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E36606A31A;
+	Wed, 28 Oct 2026 17:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmkCwUcD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EAB91F01825;
-	Wed, 28 Oct 2026 17:46:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQKiBiON
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA0D1F01825;
+	Wed, 28 Oct 2026 17:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209616;
-	bh=kxOVPn1PKvRRVOHRYxfHjQMD4ndJtYwVeDitP52Ei8k=;
+	s=korg; t=1793209619;
+	bh=Fq437t2+1a//pouX+eqiI1WH75A+GShtNm+o1/juryM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DmkCwUcDZDn8ynMED6QTAsrLwrEBvin0D/o0eT1isk8jkrQE0nH7amooF6NU/BsJl
-	 yDsbE46W6m2fBCP19y89/zuS2IZJuAuuM5QQR+1GpyHu9UKbiPwttWkQVUkekyctDj
-	 bzzKI1Xdg2D/KY6I55D/pC+z6u4DsvNxSM8rypvU=
+	b=PQKiBiON+kc45l4VPRXKeQTO+LrHHZdyE2ySj6SkTOKCA8FM1+yStgwtckr14YLIT
+	 DeH8s+QPK6upDjP2lBDSk67G4UXIwx2YHhyato13mGkg5do32ciGVOftjtb0X2JaDX
+	 lKHXQLyN2IghkbLVjQIcXaDCTbDS46Su3YxKfpm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 018/109] rose: clear through routes when a neighbour is removed from the tables
-Date: Wed, 28 Oct 2026 18:00:02 +0100
-Message-ID: <20261028165942.795585588@linuxfoundation.org>
+Subject: [PATCH 6.18 019/109] rose: restart the link of a neighbour created over a live AX.25 connection
+Date: Wed, 28 Oct 2026 18:00:03 +0100
+Message-ID: <20261028165942.818073050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,123 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-When the last route using a neighbour is deleted (SIOCDELRT) or all
-routes are cleared (SIOCRSCLRRT), rose_del_node() and
-rose_clear_routes() take the neighbour out of rose_neigh_list, but the
-through routes in rose_route_list that still use it are left alone.
-No frame can reach them any more, so they stay in the table for ever,
-holding their neighbour references, and neither end of the relayed
-connection is told: the caller and the called station keep a circuit
-that goes nowhere. rose_clear_routes() even says it keeps neighbours
-with active connections, which it does not.
+A new neighbour starts with restarted == 0 and waits for the first frame
+sent to it to start the restart procedure. But when a neighbour is
+removed from the routing tables and added back (SIOCDELRT then
+SIOCADDRT, or SIOCRSCLRRT followed by a reload of the routes), the AX.25
+connection to it outlives the old entry. The other end has seen nothing:
+it still regards the link as restarted and will not restart it. On this
+end rose_get_neigh() only hands out restarted neighbours to through
+calls, so no frame is ever sent to the new neighbour and nothing starts
+the restart either. Every call relayed through that neighbour is then
+refused until one of the two ends happens to originate a call of its own
+over the link, or the AX.25 connection drops.
 
-This shows up on every node that relays traffic when its routing
-daemon restarts: FPAC clears and reloads the routes, the neighbours are
-recreated under new numbers, and the old through routes remain listed
-with neighbours that no longer exist.
+This happens on a relay node each time its routing daemon restarts: FPAC
+clears and reloads the routes, the neighbours come back as "restart no"
+while /proc/net/ax25 still shows their connections established.
 
-Clear them when the neighbour is removed, as rose_link_failed() does
-when a link fails, but send the CLEAR to both halves since the removed
-neighbour's link may still be up, and cut the local connections using
-it. rose_route_list_lock is taken under rose_node_list_lock and
-rose_neigh_list_lock, the order rose_route_frame() and
-rose_link_failed() already use.
+When rose_add_node() creates a neighbour and an AX.25 connection to it
+already exists, send the RESTART REQUEST right away and start T0, as
+rose_transmit_link() does for the first frame. Nothing changes when
+there is no connection yet: the link is still brought up on demand.
 
 Tested in QEMU with a lockdep and KASAN kernel, three nodes A - B - C
-with A calling C through B: before, the through route stays on B after
-SIOCDELRT or SIOCRSCLRRT and A is never told; after, the entry is gone
-and both A and C get a CLEAR (cause 0x09) within a second. No lockdep,
-KASAN or refcount report.
+with A calling C through B, then B removing and re-adding its route to
+C (or clearing and reloading all its routes): before, the neighbour
+stays "restart no" on B and A's calls to C are refused for as long as
+the test runs; after, the neighbour is restarted within three seconds
+and the first call goes through. No lockdep, KASAN or refcount report.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-(cherry picked from commit 065ae03f519c147d5ee7b87acb2d21fe93ae0007)
+(cherry picked from commit 411b950c8862277a53f4afc6c6c5b3ab00b814be)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_route.c | 49 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 47 insertions(+), 2 deletions(-)
+ include/net/rose.h    |  1 +
+ net/rose/rose_link.c  | 20 ++++++++++++++++++++
+ net/rose/rose_route.c | 10 ++++++++++
+ 3 files changed, 31 insertions(+)
 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index fd196f2e2fd64..87844cc195f8d 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -285,6 +285,49 @@ static void rose_remove_route(struct rose_route *rose_route)
- 	}
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 49140668b3dd0..f5b23c8a11e4d 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -237,6 +237,7 @@ void rose_link_rx_restart(struct sk_buff *, struct rose_neigh *,
+ 			  unsigned short);
+ void rose_transmit_clear_request(struct rose_neigh *, unsigned int,
+ 				 unsigned char, unsigned char);
++void rose_link_restart(struct rose_neigh *neigh);
+ void rose_transmit_link(struct sk_buff *, struct rose_neigh *);
+ 
+ /* rose_loopback.c */
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index 36b6778d8e545..20057a39bafaa 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -259,6 +259,26 @@ void rose_transmit_clear_request(struct rose_neigh *neigh, unsigned int lci, uns
+ 		kfree_skb(skb);
  }
  
 +/*
-+ *	A neighbour is being removed from the tables while its link may still
-+ *	be up (route deleted or routes cleared by the configuration). Clear the
-+ *	through routes using it, on both sides since both can still be reached,
-+ *	instead of leaving them in rose_route_list for ever: no frame can reach
-+ *	them once the neighbour is gone. Local connections using it are cut too,
-+ *	as rose_link_failed() does.
-+ *
-+ *	Caller is holding rose_node_list_lock and rose_neigh_list_lock, taken
-+ *	before rose_route_list_lock as in rose_route_frame() and
-+ *	rose_link_failed().
++ * A neighbour has just been created while an AX.25 connection to it is
++ * already up, e.g. it was removed from the routing tables and added back.
++ * The other end still regards the link as restarted and will not restart it,
++ * and through calls only use restarted neighbours, so nothing would ever
++ * restart it from this end either: do it now.
 + */
-+static void rose_neigh_clear_routes(struct rose_neigh *rose_neigh)
++void rose_link_restart(struct rose_neigh *neigh)
 +{
-+	struct rose_route *rose_route, *s;
++	if (neigh->loopback || neigh->restarted || rose_t0timer_running(neigh))
++		return;
 +
-+	spin_lock_bh(&rose_route_list_lock);
++	if (!rose_link_up(neigh))
++		return;
 +
-+	rose_route = rose_route_list;
-+	while (rose_route != NULL) {
-+		s = rose_route->next;
-+
-+		if (rose_route->neigh1 == rose_neigh ||
-+		    rose_route->neigh2 == rose_neigh) {
-+			if (rose_route->neigh1 != NULL)
-+				rose_transmit_clear_request(rose_route->neigh1,
-+							    rose_route->lci1,
-+							    ROSE_OUT_OF_ORDER, 0);
-+			if (rose_route->neigh2 != NULL)
-+				rose_transmit_clear_request(rose_route->neigh2,
-+							    rose_route->lci2,
-+							    ROSE_OUT_OF_ORDER, 0);
-+			rose_remove_route(rose_route);
-+		}
-+
-+		rose_route = s;
-+	}
-+
-+	spin_unlock_bh(&rose_route_list_lock);
-+
-+	rose_kill_by_neigh(rose_neigh);
++	rose_transmit_restart_request(neigh);
++	neigh->dce_mode = 0;
++	rose_start_t0timer(neigh);
 +}
 +
- /*
-  *	"Delete" a node. Strictly speaking remove a route to a node. The node
-  *	is only deleted if no routes are left to it.
-@@ -333,6 +376,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
- 			rose_neigh_put(rose_neigh);
+ void rose_transmit_link(struct sk_buff *skb, struct rose_neigh *neigh)
+ {
+ 	unsigned char *dptr;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 87844cc195f8d..7ae3552c19267 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -53,6 +53,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ {
+ 	struct rose_node  *rose_node, *rose_tmpn, *rose_tmpp;
+ 	struct rose_neigh *rose_neigh;
++	bool new_neigh = false;
+ 	int i, res = 0;
  
- 			if (rose_neigh->count == 0) {
-+				rose_neigh_clear_routes(rose_neigh);
- 				rose_remove_neigh(rose_neigh);
- 				rose_neigh_put(rose_neigh);
- 			}
-@@ -547,8 +591,8 @@ void rose_route_device_down(struct net_device *dev)
- #endif
+ 	spin_lock_bh(&rose_node_list_lock);
+@@ -125,6 +126,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
  
- /*
-- *	Clear all nodes and neighbours out, except for neighbours with
-- *	active connections going through them.
-+ *	Clear all nodes and neighbours out, with the through routes and
-+ *	connections using those neighbours.
-  *  Do not clear loopback neighbour and nodes.
-  */
- static int rose_clear_routes(void)
-@@ -579,6 +623,7 @@ static int rose_clear_routes(void)
- 		rose_neigh = rose_neigh->next;
+ 		rose_neigh->next = rose_neigh_list;
+ 		rose_neigh_list  = rose_neigh;
++		new_neigh        = true;
+ 	}
  
- 		if (!s->loopback) {
-+			rose_neigh_clear_routes(s);
- 			rose_remove_neigh(s);
- 			rose_neigh_put(s);
- 		}
+ 	/*
+@@ -192,6 +194,14 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ 	}
+ 
+ out:
++	/*
++	 * The AX.25 connection of a neighbour that was removed from the tables
++	 * outlives it. If it is still there, the other end will not restart
++	 * the link: do it from here.
++	 */
++	if (new_neigh && res == 0)
++		rose_link_restart(rose_neigh);
++
+ 	spin_unlock_bh(&rose_neigh_list_lock);
+ 	spin_unlock_bh(&rose_node_list_lock);
+ 
 -- 
 2.53.0
 
