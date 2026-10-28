@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209654;
-	b=Dif//pZJl1l1E8SZv8NvNw4fYn1dkoljFqL2b4IXeijkMyyGC33ZBLdUYCOW4h2XQqbf
-	 zsthGTsaxYNnHvYBdTuGUR+iQ9oKv1AJJQgk2OBAEWrsrkW8K9r4W8LABWwnwe9JZYppg
-	 amX3SuTJLOWEieku3RAPCO1rewENakojPviSyn0/LhiTIeSRUKQ5QexAs/bru+GQwyEPA
-	 xGxpvgwP9SmZjNTIPgKU6hWg2zEjBOYHei5cVN6eY6do6vlae2DKR/2GZrHuoK3wQfUTm
-	 DnByDum4dJM+O7GC+H23JyH53YWxHAen7X+xLKMp+iiR5hxtXNx4rVYKL7zbL28vh6A==
+	t=1793209657;
+	b=BJsQ8RWQXK2Wis4Q4f7w1pJ0ssI/4BH49wCVByMPfahQ8cG2gmMMkETPztpfYgibeM1s
+	 KByEN4XozgDJElzsBUvhPPnj4+2G+LhzN8c8F5fNoBcEJPwLb83y/9cupJtZ7hrvUaYUK
+	 O+Zq6GSrsQL36KQlQ0GTgmg1NkXnwV7IItcIUfgeSEUdPEkRwik09V9FAqU38Jts3aZY3
+	 t3CuuGdNCfd9Bag4dr0nsp3Vl3JBpUtk9g9ru6RtzqvG33+zZ1GsWsaCN2RMUXe7vOF/b
+	 +tEwFmSvCetkKuVOl2hZdu3LCgRE8eaHEMxZar4RHB0G7hngnbBogcKympPHIF10hmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209657;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xQRsfhb5QOhCZDR5AK8oaRacPiUzboakpMyPdq6sTys=;
-	b=y5GLWcJLVogzTY1jw67JwY43SL5EhwTW15Fg6Sj7dJi02rgRsU3i20tFq/jGQOciQEC2
-	 UvZBUDhPcwFKdi6gzw8Wrt0oNDRkeqA5uisSCkUWEoBjzXxV22a5mRhk12o8dLpPCuE5J
-	 MEUHB7wI0mUK6MZ6VDmGCLX7ld8J0e6wgBY8DHwQXwGzfRCh/VCmWGCEBvZtGwhm+QTGF
-	 I7PsW6zMyOi6zwRghjZGgGrCu6LY+1C68O0Yjo8l7+tsxCgGORyxieRrcYhQ9bozmRQm3
-	 ZsgW7pbyXUJ1vD91LUpZOhd8ZUk4knf7RRsIX2YYlSUhYw2bQwo87xK9GgK3RwO8OQA==
+	bh=zzK6SQLXrBkQjcT6FWldb38jm3v2supWylM/S16F5Iw=;
+	b=WaY69YtPHUa1H0s7QsdzvFNRPqlgBC2IARmI4GmRczho/wYQR4zZaMhsJTLBdu55cu3s
+	 J3hxUQTePMadsiAIKM03zGPSp3N0Ltf+TeoDHZfYOdL9uG8MW9CDM6xD39MY7Aj635Cg7
+	 cMMr0vA345Q59MKFJ+d3M2kFsmjNQMKPxqNabPiS+8nSNiPojGaVOf/33gXvTrQWNZLP6
+	 L2XAQfTbh5WoiaQHD6R6c2g48NRJgcCbThx2Q4K+kp44XZTOQVBKNd2wGROxWVsN7KR3a
+	 w6j/o3BI2GbhliNl+suaaJ6KkqnCIGLFgPdRJlOoNv060bRMfIZtB2zkuFeoTEwepgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CM46x7gi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PLOTz3/c";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E41606A31A;
-	Wed, 28 Oct 2026 17:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532C3606A31C;
+	Wed, 28 Oct 2026 17:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CM46x7gi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16611F01828;
-	Wed, 28 Oct 2026 17:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PLOTz3/c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775211F01825;
+	Wed, 28 Oct 2026 17:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209654;
-	bh=xQRsfhb5QOhCZDR5AK8oaRacPiUzboakpMyPdq6sTys=;
+	s=korg; t=1793209657;
+	bh=zzK6SQLXrBkQjcT6FWldb38jm3v2supWylM/S16F5Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CM46x7gijWbQ78Q1VunDJWpaq8RupxxxJBAewzO9Oe8Va1myOiAFfurWoVKcVtTFb
-	 x1e9rRl/dN6dSnZx0DM4meCiwl2N3sr3vRStgcQ8hWY3PkZNfy2xvcgVgyyvej38ug
-	 wwvdsLcyiu9qLwUcQOzUB0zTeIbcNTCLw6mc2VBU=
+	b=PLOTz3/cLGQ9JKJYXaAIjHqA1Qbs7Umhn7uRfDtUW4O0Qsnf2xbeqXb7JqqukYvAO
+	 cxLxrzTQ3+FX/jQWvW62NjLf07i6QFYYczl5cIcrP7m/ePPqhifp4qHWVubqPrx6jQ
+	 cB2x7Da9AphY+5xszwmqEHh+3JEmBdmeChIzEfXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/109] ice: fix rxq info registering in mbuf packets
-Date: Wed, 28 Oct 2026 17:59:47 +0100
-Message-ID: <20261028165942.439776619@linuxfoundation.org>
+Subject: [PATCH 6.18 030/109] ax25: dont free an incoming SABM skb left on the listeners queue
+Date: Wed, 28 Oct 2026 18:00:14 +0100
+Message-ID: <20261028165943.071796272@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028165942.357251485@linuxfoundation.org>
 References: <20261028165942.357251485@linuxfoundation.org>
@@ -69,121 +67,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit 02852b47c706772af795d3e28fca99fc9b923b2c ]
+When a SABM comes in for a listening socket, ax25_rcv() creates the new
+socket, puts the skb on the listener's receive queue and only then
+allocates the digipeater path. If that allocation fails, the skb is
+freed with kfree_skb() while it is still linked on the queue, and the
+accept backlog count taken by sk_acceptq_added() is never given back.
+The next accept() or the close of the listener then walks a queue that
+contains a freed skb.
 
-XDP RxQ info contains frag_size, which depends on the MTU. This makes the
-old way of registering RxQ info before calculating new buffer sizes
-invalid. Currently, it leads to frag_size being outdated, making it
-sometimes impossible to grow tailroom in a mbuf packet. E.g. fragments are
-actually 3K+, but frag size is still as if MTU was 1500.
+Allocate the path before the skb is queued, so that the error path only
+has to free an skb nobody else knows about and to destroy the new
+socket. The later allocation remains for a connection that has no
+listening socket.
 
-Always register new XDP RxQ info after reconfiguring memory pools.
+Only reachable when the atomic allocation fails for a call that comes
+through digipeaters. Regression tested in QEMU (6.12.94 with lockdep
+and KASAN): 14 incoming connections to a listening socket, each
+accepted, served and closed, before and after; no report.
 
-Fixes: 2fba7dc5157b ("ice: Add support for XDP multi-buffer on Rx side")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://patch.msgid.link/20260305111253.2317394-4-larysa.zaremba@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+(cherry picked from commit 2d67e8e9f3d627327114fb946c3a28ef72becb2d)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_base.c    | 26 ++++++--------------
- drivers/net/ethernet/intel/ice/ice_ethtool.c |  1 +
- drivers/net/ethernet/intel/ice/ice_txrx.c    |  4 ++-
- drivers/net/ethernet/intel/ice/ice_xsk.c     |  3 +++
- 4 files changed, 14 insertions(+), 20 deletions(-)
+ net/ax25/ax25_in.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
-index 2d3d23450783c..cefd0a18c4c04 100644
---- a/drivers/net/ethernet/intel/ice/ice_base.c
-+++ b/drivers/net/ethernet/intel/ice/ice_base.c
-@@ -604,23 +604,12 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 
- 	if (ring->vsi->type == ICE_VSI_PF || ring->vsi->type == ICE_VSI_SF ||
- 	    ring->vsi->type == ICE_VSI_LB) {
--		if (!xdp_rxq_info_is_reg(&ring->xdp_rxq)) {
--			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
--						 ring->q_index,
--						 ring->q_vector->napi.napi_id,
--						 ring->rx_buf_len);
--			if (err)
--				return err;
--		}
--
- 		ice_rx_xsk_pool(ring);
- 		err = ice_realloc_rx_xdp_bufs(ring, ring->xsk_pool);
- 		if (err)
- 			return err;
- 
- 		if (ring->xsk_pool) {
--			xdp_rxq_info_unreg(&ring->xdp_rxq);
--
- 			rx_buf_len =
- 				xsk_pool_get_rx_frame_size(ring->xsk_pool);
- 			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
-@@ -648,14 +637,13 @@ static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 			ring->truesize = fq.truesize;
- 			ring->rx_buf_len = fq.buf_len;
- 
--			if (!xdp_rxq_info_is_reg(&ring->xdp_rxq)) {
--				err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
--							 ring->q_index,
--							 ring->q_vector->napi.napi_id,
--							 ring->rx_buf_len);
--				if (err)
--					goto err_destroy_fq;
--			}
-+			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
-+						 ring->q_index,
-+						 ring->q_vector->napi.napi_id,
-+						 ring->rx_buf_len);
-+			if (err)
-+				goto err_destroy_fq;
-+
- 			xdp_rxq_info_attach_page_pool(&ring->xdp_rxq,
- 						      ring->pp);
+diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
+index c81bc8c4563b5..1bcb5e321467d 100644
+--- a/net/ax25/ax25_in.c
++++ b/net/ax25/ax25_in.c
+@@ -383,6 +383,24 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
  		}
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 428118475e2ff..53284959eda01 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -3313,6 +3313,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
- 		rx_rings[i].cached_phctime = pf->ptp.cached_phc_time;
- 		rx_rings[i].desc = NULL;
- 		rx_rings[i].xdp_buf = NULL;
-+		rx_rings[i].xdp_rxq = (struct xdp_rxq_info){ };
  
- 		/* this is to allow wr32 to have something to write to
- 		 * during early allocation of Rx buffers
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index cc3c07847c35c..9752d61a0a5f1 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -542,7 +542,9 @@ void ice_clean_rx_ring(struct ice_rx_ring *rx_ring)
- 			i = 0;
- 	}
- 
--	if (rx_ring->vsi->type == ICE_VSI_PF &&
-+	if ((rx_ring->vsi->type == ICE_VSI_PF ||
-+	     rx_ring->vsi->type == ICE_VSI_SF ||
-+	     rx_ring->vsi->type == ICE_VSI_LB) &&
- 	    xdp_rxq_info_is_reg(&rx_ring->xdp_rxq)) {
- 		xdp_rxq_info_detach_mem_model(&rx_ring->xdp_rxq);
- 		xdp_rxq_info_unreg(&rx_ring->xdp_rxq);
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 989ff1fd91103..102631398af3c 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -900,6 +900,9 @@ void ice_xsk_clean_rx_ring(struct ice_rx_ring *rx_ring)
- 	u16 ntc = rx_ring->next_to_clean;
- 	u16 ntu = rx_ring->next_to_use;
- 
-+	if (xdp_rxq_info_is_reg(&rx_ring->xdp_rxq))
-+		xdp_rxq_info_unreg(&rx_ring->xdp_rxq);
+ 		ax25 = sk_to_ax25(make);
 +
- 	while (ntc != ntu) {
- 		struct xdp_buff *xdp = *ice_xdp_buf(rx_ring, ntc);
++		/*
++		 * Get the digipeater path before the skb goes on the
++		 * listener's queue: once queued it belongs to that queue
++		 * and cannot simply be freed if the allocation fails.
++		 */
++		if (dp.ndigi && !ax25->digipeat) {
++			ax25->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC);
++			if (!ax25->digipeat) {
++				kfree_skb(skb);
++				ax25_destroy_socket(ax25);
++				bh_unlock_sock(sk);
++				sock_put(sk);
++
++				return 0;
++			}
++		}
++
+ 		skb_set_owner_r(skb, make);
+ 		skb_queue_head(&sk->sk_receive_queue, skb);
+ 
+@@ -406,14 +424,13 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	ax25->dest_addr   = src;
+ 
+ 	/*
+-	 *	Sort out any digipeated paths.
++	 *	Sort out any digipeated paths. A socket made from a listener
++	 *	already has its path allocated, see above.
+ 	 */
+ 	if (dp.ndigi && !ax25->digipeat &&
+ 	    (ax25->digipeat = kmalloc(sizeof(ax25_digi), GFP_ATOMIC)) == NULL) {
+ 		kfree_skb(skb);
+ 		ax25_destroy_socket(ax25);
+-		if (sk)
+-			sock_put(sk);
+ 		return 0;
+ 	}
  
 -- 
 2.53.0
