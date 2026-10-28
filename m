@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793213189;
-	b=EXqKtHZgybU3hwgr0cVJkQup5QGdURp3wvc0V+9V2rx9XX0NjBfF3D/1qJqGlF4MoxqU
-	 RslAodIBPfB00wCoTXX04PRYV1gGGyEUTP8LprnVW2Yn6Iu7Znq2Qbmh3BCPXuznrr6rc
-	 N0d7iNcYtLuKLH8vPsWdvcpjq4nRyecvxd+5CjsGPn8pKOz7ouXxrisGQAgAYgxe8Tnlo
-	 FI1zuGaQ2aLfvOWPS9RKsmzAvowVs2esLDdfawUb3jM+VU5JTkpG3CuFmwfrCJIObnHOD
-	 LvRplOQ7qCVXEBSTTI02vhQqpJej9zhG0EV3GxyphnbKL1cmBI/riDpNX+KvVCZiZOw==
+	t=1793213192;
+	b=pr9ZQ0rcIPJffHFxpl0iCfc/Okaoswkiq06UlLdVIMExpZxgXnGGwL1exVqJl9QOy7Jf
+	 yqqzVIJ6TOTl0oJdzjTFB0czxhyNCJrGXYqfRc4RA6TeaOPIy39VNuCKEb9ByQNpL+m3l
+	 PItcPe/RJxkc+0rt3qgLzBl4OE1bWbmAJZoTMcVJGqCz6AEj1shTIE2tX/sXUtaPIZAO1
+	 Hrjv6FMgxAQJWc9SthbM2UWXS4YuyqgsmBB8KTaoVkxjx+59brdZy2yAHmlwMn6xVTR3P
+	 0HyuCHRfSrkMRfFfLduQmpihZKzJdFNLhvXVVP2oxsuz13+irdsCiD7pw3tE3E6Z+xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793213189;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793213192;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jT892G+M3gkLEnuXTOx090i9FSAst2patIGngYsq5b4=;
-	b=IMKkj/VCByapZ8YLPpQRa5A6dcaHNLp0ewKA2zWODznySZ4Fwnu5wWaQAPwj5TvvIKV/
-	 5l3cyMprPlW0+O1ly4lzz6hKXfkdLLe8gDGUB08SdQuwmA13PeQ8csuQDyzoCCAbnfgCT
-	 F9tPokypMkVLuoZHbknBHBGzL4ucXDKisTRlHfi040XKPsqFRcVbnxYd12x41ZUWMUV87
-	 IlHGij6/ETMaBiKMHDWwXVrld+w2ocEtlk+/8QJh2pLAsPRjp119KhEDNNzn85xErg0cM
-	 qKEXu+2F1DIN8eStfk3R4SBLklqUN6tK/iINL8I+t8kq5NisZzsHBG/O5ZW7eJzZ98g==
+	bh=3Hu7714SRhbyt3IAKVyz/kRRbYPu1uerVJXt+zfaqeY=;
+	b=uvWCxDOkwb2I6D1dWgnaGHFBI6Z4riq7JfMNEhcoJTUm7vKIKndaUasQl5YP7CVlt2ee
+	 qOqNjioB0fVKvuAtvspXBKmnLMY4q/n84nO/wv5nn1PsochTJJKcPvyQWh3PrKZR9EFp7
+	 y/DtyZXUzzRdGQ7EkSEud2u1TWcIWtM8gpjYwiJZOtlOlGndHuKyfaTX8/4Zy7jbVEpW+
+	 56KSuiENYukT8Z3HgM6RKnEmgSQ0c8VVzITZ63+6xN4hfX5KaMjM6OCIHPX9bqgUAdWry
+	 Wbs3SbkaNnURmZ0O5SKhLFUcvmlD5PNyC17KFhliL1ZyChPC1rCA8XuZZA1qWn+bI5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="An/qsDvf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zOyE+EwG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41930606A31C;
-	Wed, 28 Oct 2026 18:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2348F606A31A;
+	Wed, 28 Oct 2026 18:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=An/qsDvf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9071F01825;
-	Wed, 28 Oct 2026 18:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zOyE+EwG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EC41F01828;
+	Wed, 28 Oct 2026 18:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793213189;
-	bh=jT892G+M3gkLEnuXTOx090i9FSAst2patIGngYsq5b4=;
+	s=korg; t=1793213192;
+	bh=3Hu7714SRhbyt3IAKVyz/kRRbYPu1uerVJXt+zfaqeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=An/qsDvfEYOY/IWJASqw9ZsrONxLG0+kP5pn9nxPGDW7OUXT7K4mp/IMVl3Lp/sQz
-	 d3Pmzszp5X0hS8hLA72oGDrEclzVG7civX1j9iNh1Oz+WKWv9R0U5OFKuT9hZ/VWtL
-	 RfUq/UncSBtx6rSTxyywe50l/vNDGo8FUi3x0084=
+	b=zOyE+EwGxNyZurMNMJC9UQy1uCT3Dz9jxpTHMX/cAAlcbLDNWN1WhTtb73arTHIoa
+	 ERPiEfoDj37ta8fXn0LUaBWBPbjLL8sb+Rc1qE2ROm9Ln8FNCrr9oycJZ+aF1G1R+C
+	 abIieMpIbr6ZoCsdoXEMgPu7HQJh2HKPPe3ydM0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	stable@kernel.org,
-	Johan Hovold <johan@kernel.org>,
+	lei lu <llfamsec@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Nikita Nagornyi <nagornyi@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0391/1887] serial: fix TIOCMIWAIT race
-Date: Wed, 28 Oct 2026 17:41:27 +0100
-Message-ID: <20261028170508.133217128@linuxfoundation.org>
+Subject: [PATCH 6.1 0418/1887] fs/ntfs3: Add more checks in mi_enum_attr (part 2)
+Date: Wed, 28 Oct 2026 17:41:54 +0100
+Message-ID: <20261028170508.747906112@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,45 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 40adffec8c0090533dfaa863ced7901b60bbf1dc ]
+[ Upstream commit a8f659ce14f8f734894227ba2c5ca78c8451501e ]
 
-The task state must be updated before checking the wakeup condition to
-avoid missing a racing modem status update.
+Add offset check before access to attr->non_res field as mentioned in [1].
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/r/20260904115542.E20D11F00A3D@smtp.kernel.org
-Cc: stable@kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260910130816.642699-4-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: adjusted context for direct spinlock calls instead of uart_port locking helpers ]
+[1] https://lore.kernel.org/ntfs3/20241010110005.42792-1-llfamsec@gmail.com/
+
+Suggested-by: lei lu <llfamsec@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Nikita Nagornyi <nagornyi@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ntfs3/record.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index 2704eb8af5880..dafbd24b91484 100644
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -1222,12 +1222,12 @@ static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index bfb1f4c2f271b..d8d43f6a96fd0 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -206,7 +206,7 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 			return NULL;
  
- 	add_wait_queue(&port->delta_msr_wait, &wait);
- 	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
+ 		if (off >= used || off < MFTRECORD_FIXUP_OFFSET_1 ||
+-		    !IS_ALIGNED(off, 4)) {
++		    !IS_ALIGNED(off, 8)) {
+ 			return NULL;
+ 		}
+ 
+@@ -230,8 +230,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		off += asize;
+ 	}
+ 
+-	/* Can we use the first field (attr->type). */
+-	/* NOTE: this code also checks attr->size availability. */
++	/*
++	 * Can we use the first fields:
++	 * attr->type,
++	 * attr->size
++	 */
+ 	if (off + 8 > used) {
+ 		static_assert(ALIGN(sizeof(enum ATTR_TYPE), 8) == 8);
+ 		return NULL;
+@@ -253,10 +256,17 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 
+ 	asize = le32_to_cpu(attr->size);
+ 
++	if (!IS_ALIGNED(asize, 8))
++		return NULL;
 +
- 		spin_lock_irq(&uport->lock);
- 		memcpy(&cnow, &uport->icount, sizeof(struct uart_icount));
- 		spin_unlock_irq(&uport->lock);
+ 	/* Check overflow and boundary. */
+ 	if (off + asize < off || off + asize > used)
+ 		return NULL;
  
--		set_current_state(TASK_INTERRUPTIBLE);
--
- 		if (((arg & TIOCM_RNG) && (cnow.rng != cprev.rng)) ||
- 		    ((arg & TIOCM_DSR) && (cnow.dsr != cprev.dsr)) ||
- 		    ((arg & TIOCM_CD)  && (cnow.dcd != cprev.dcd)) ||
++	/* Can we use the field attr->non_res. */
++	if (off + 9 > used)
++		return NULL;
++
+ 	/* Check size of attribute. */
+ 	if (!attr->non_res) {
+ 		/* Check resident fields. */
 -- 
 2.53.0
 
