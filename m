@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216609;
-	b=xRSVeuChlrA5dNvDQr7cihcG3Ey+7Bm6/x8asLDZlT6qwlUtUYoyFzdGWIYHgkggvuvL
-	 Q9W8tehxgC+eN2Gq0zyMb5X1fbY+4QNHVLHEDZCjrjsEENeoefhNmncgQ1PbMFtNPhCgi
-	 bfLoiI3CB9noUs89Ejxk1m3bLfmbAWybb8JiKkYIo4x8Rzy8ewvuMjJsv0wJT7XhkgHzy
-	 23BUyZGAWFydaS5DL91L2okcL/HEtu18xPXfus/TnhtYSyiiK7mQTixmDY0bhyL+bB7BZ
-	 nvvCYtMowN9suDN3+DFPpRKDsCTYmsX30s/lDagHfaI/t2GZDnXPx/0IeDrPtWEiKZQ==
+	t=1793216612;
+	b=nmG7GrwkK8gOVFnyBA5xvg9emgbcziB5RJQh/GiiHVRY7gzjUtAXTfdEPjQrO5huFHsj
+	 afnCkaQWk1WqJ1W279AEGByHAv1F6vvPvWNR13K2vPS2a2TmrZYnX/bxQba7i5x71wBPu
+	 8csczkh8x925oKiKd1QdH1XiU9rwGGFqMr7Rwp8DdvPjYej/dog8jKiR38Tm/NY2zwdyj
+	 EVrGPorPX/p8syN1p0n1FztqgO5XCfoteVfPCWbFSSnG9bLtTlV7tAA3XDxYq4xJWMX5G
+	 zTzlaRS/Fl2u00Egg4iR3TcIv/4cJ0GgHq11jvtaJVzR/THN8EefbxF1HeNk1++UWgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216609;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dAr8GxYN/Y7yHG559iG4NluLDJc4SD7SajXhD8x8acE=;
-	b=2BWt3ckn7XhFBivG+U42wQU58xCjay15zhLQsAiuws0p7hdY9leGuBnljEgfE+Ybg2vc
-	 O/vcLjBKIQeJIAYsIN41ITjO+252094grC3heEGcvukljBVvMrsacH7riKQIYk4SmKWdC
-	 IzUFN9c/eyjJmekpcyHFSenF8ap+vKguTXISqtByku00M2Fq2W13zfabYuwBoLmvL9X5B
-	 0uRPihJ2zRemV6rGQWdZ9y6KqHpX+/0vr0lKbGGuZ/aqrXDTicC9t0xjyP8QmUamIYybO
-	 fcWlMlxNumHKtZLJnvrJLjLBQyJr8G4kYgpiiER9gnfojTcdponH5h6kQOMtGJudaAQ==
+	bh=pAZRHh/e59UjGlqQFIzHahRuD5m6Y9u3bAASncod4Lo=;
+	b=AqpbiYOjeJX6FlSGNlgQOmy4i0YhJsbgxPn02BrJ1QzUkDvOjzFHdilqTMrYVgXepjQS
+	 IIvFDOFjKmHr4em200lu1VqoLttrm2B7BqI7ixQFoVBfJnwdnXIBiMmcIUpgq89wHkDlW
+	 eYwxsLlot4i6CGpBxVgvxCisfzOCF9wAJQ4wA3ejU7fffvYzaeiOwASHredI59Rlwqevs
+	 fuAMaQe7xrfCGeomkb+cCKrDdjnfNqX8VgsDJ6V+ueC0riawzAKbIQv994ZEY57ua+b9R
+	 jSi60n0j43zJzgMjR34oEia2SYv6bHuVeRhqEdqnPjDivKkRbKbsbGyqbJa+2Q+3GFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BM3v5wlo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Njk04i9q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7F4606A31A;
-	Wed, 28 Oct 2026 19:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B055606A322;
+	Wed, 28 Oct 2026 19:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BM3v5wlo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44EA21F01825;
-	Wed, 28 Oct 2026 19:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Njk04i9q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326C31F01825;
+	Wed, 28 Oct 2026 19:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216608;
-	bh=dAr8GxYN/Y7yHG559iG4NluLDJc4SD7SajXhD8x8acE=;
+	s=korg; t=1793216611;
+	bh=pAZRHh/e59UjGlqQFIzHahRuD5m6Y9u3bAASncod4Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BM3v5wlorY7qG2R4qPIvlXzNKChs+N9xOmURchx/3av0IgOONSpYuejnf5xekE4YJ
-	 JX0nGOh/15SRO9ynNqM32zBlP2IVLCWs1wUzcPL0Gqxj9wP0t0zsdDnWLCKgdHKDUl
-	 qIi3eX8T0SZK2Flh3/X1N3Wto8aVxAZ/DqJkJaxk=
+	b=Njk04i9qeAKftIFNEMmNvK3zYW9EnCn6ky7MmYmZ4vkWYXRjise/LAe6cWboLZeL/
+	 ou1pd1bq+5ziQ+3CYWg1Bysn3Xn7Dyg/NtLiu2+U9wIRzEraL1qHk3UQD2mT9YvNsp
+	 EGNMkayHj7SG7dq1qoh5E5esi8X0vIPS6icrp6P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1599/1887] x86/ftrace: Remove SYSTEM_BOOTING exceptions
-Date: Wed, 28 Oct 2026 18:01:35 +0100
-Message-ID: <20261028170535.858179920@linuxfoundation.org>
+Subject: [PATCH 6.1 1617/1887] bpf: Zero queue and stack outputs on lock failure
+Date: Wed, 28 Oct 2026 18:01:53 +0100
+Message-ID: <20261028170536.265559574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -67,66 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit eb7d389d5b2b3c453332abc41c3eea73290cc006 ]
+[ Upstream commit 7ac6e1ae41a09f1dd4baeeff1d028ae49ee01232 ]
 
-Now that text_poke is available before ftrace, remove the
-SYSTEM_BOOTING exceptions.
+Queue and stack pop/peek helpers accept an uninitialized output buffer
+because the verifier expects the helper to initialize it. The empty-map
+error path clears the buffer, but a failed lock acquisition returns
+-EBUSY without writing it.
 
-Specifically, this cures a W+X case during boot.
+Clear the output before returning -EBUSY so BPF programs cannot observe
+uninitialized stack contents after a failed helper call.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20221025201057.945960823@infradead.org
-Stable-dep-of: 863f3ddd0b8a ("bpf: Fix potential UAF when reading bpf link info")
+Fixes: a34a9f1a19af ("bpf: Avoid deadlock when using queue and stack maps from NMI")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260719125419.1782196-1-memxor@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/alternative.c | 10 ----------
- arch/x86/kernel/ftrace.c      |  3 +--
- 2 files changed, 1 insertion(+), 12 deletions(-)
+ kernel/bpf/queue_stack_maps.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index 3bc6be6404d23..af47ab50e7c1c 100644
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -1976,11 +1976,6 @@ void __ref text_poke_queue(void *addr, const void *opcode, size_t len, const voi
- {
- 	struct text_poke_loc *tp;
+diff --git a/kernel/bpf/queue_stack_maps.c b/kernel/bpf/queue_stack_maps.c
+index a8fe640318c6c..a088132163b1e 100644
+--- a/kernel/bpf/queue_stack_maps.c
++++ b/kernel/bpf/queue_stack_maps.c
+@@ -103,8 +103,10 @@ static int __queue_map_get(struct bpf_map *map, void *value, bool delete)
+ 	void *ptr;
  
--	if (unlikely(system_state == SYSTEM_BOOTING)) {
--		text_poke_early(addr, opcode, len);
--		return;
--	}
--
- 	text_poke_flush(addr);
+ 	if (in_nmi()) {
+-		if (!raw_spin_trylock_irqsave(&qs->lock, flags))
++		if (!raw_spin_trylock_irqsave(&qs->lock, flags)) {
++			memset(value, 0, qs->map.value_size);
+ 			return -EBUSY;
++		}
+ 	} else {
+ 		raw_spin_lock_irqsave(&qs->lock, flags);
+ 	}
+@@ -138,8 +140,10 @@ static int __stack_map_get(struct bpf_map *map, void *value, bool delete)
+ 	u32 index;
  
- 	tp = &tp_vec[tp_vec_nr++];
-@@ -2002,11 +1997,6 @@ void __ref text_poke_bp(void *addr, const void *opcode, size_t len, const void *
- {
- 	struct text_poke_loc tp;
- 
--	if (unlikely(system_state == SYSTEM_BOOTING)) {
--		text_poke_early(addr, opcode, len);
--		return;
--	}
--
- 	text_poke_loc_init(&tp, addr, opcode, len, emulate);
- 	text_poke_bp_batch(&tp, 1);
- }
-diff --git a/arch/x86/kernel/ftrace.c b/arch/x86/kernel/ftrace.c
-index 48cf91625a169..c20422367f82c 100644
---- a/arch/x86/kernel/ftrace.c
-+++ b/arch/x86/kernel/ftrace.c
-@@ -415,8 +415,7 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
- 	/* ALLOC_TRAMP flags lets us know we created it */
- 	ops->flags |= FTRACE_OPS_FL_ALLOC_TRAMP;
- 
--	if (likely(system_state != SYSTEM_BOOTING))
--		set_memory_ro((unsigned long)trampoline, npages);
-+	set_memory_ro((unsigned long)trampoline, npages);
- 	set_memory_x((unsigned long)trampoline, npages);
- 	return (unsigned long)trampoline;
- fail:
+ 	if (in_nmi()) {
+-		if (!raw_spin_trylock_irqsave(&qs->lock, flags))
++		if (!raw_spin_trylock_irqsave(&qs->lock, flags)) {
++			memset(value, 0, qs->map.value_size);
+ 			return -EBUSY;
++		}
+ 	} else {
+ 		raw_spin_lock_irqsave(&qs->lock, flags);
+ 	}
 -- 
 2.53.0
 
