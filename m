@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215686;
-	b=gZ1liEnWhkuSJboiaO6zO9Zi9HKvUVeg8V76oZZtAor+/d7jG74k+jiGp7EF74TjrEJP
-	 lquiFuUFiqI7hzSGUfOUC1lbL1p6jYbzssmUQUAil4Zoh+o/uZdZS4f+hqxpzS4+8+zE8
-	 kkCJ6S2HW3g3Rlnqq8aM42Evoz4TT0N7ztarSCIrmsKNCHcY1qc+irqzy2/xEgqe5shtf
-	 HTatybiPs5gu+AnFvKNN1/COSwAlmZTfsVPPNucXUbkrpWp0yqAk28f7+aFyOv+A43ptz
-	 eKVmpu+0XFIgSXR6hsQA6VuX7MOOGL4v/JSTcbC1OvoOmESlX7MK+6XifW8JMjBzlwQ==
+	t=1793215689;
+	b=qhuOtCaBeUJ6Wc3rS//4VgvBc51PbvDKktkiY9iFALANyVah/nLurg0lTZfC80iXNqTp
+	 Pndm4f/wZTzdi1DthaIeP74qpaQkF6yFAaM4/z7QTd7tA/wav9xgsbs2q5yoQ4WT309/k
+	 XL3wQ/lpeOa8x55MCTjBXiBrVAdO2/FkFSZHaxa57PMx+qcZAZjp3uT8nJqEVfD+dxval
+	 qfp2NOdti3h8HnSQLZZGy+1DgNOrsx2x/Oq71N6txMcXItaErScnESryK3GDRC/hiRF4o
+	 qT4mwaC7j4Im1UChBVOmKEhg6th+5EjYP8oZFctA9p0pXgXUWhsroixzKWjTDA0kAKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793215689;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=lSzoOViyj/Lsd/o6wsA23WaLRuhrRjYW2u8uErSn6zw=;
-	b=ZoHaaNc5ywGUz2VNf0JETSVXZDc4rCQdMcr5c2pLP8ZAb35yizJM8lHtkKCZvXh+83lp
-	 ILMAYhVkPN6SDUVfg6sBQbSPQb0qQHxYzbRZrSi5pfIgnszvuuLFlJsbHorQUBzeAaq4k
-	 gciZODbrYD/9blLr/lBZhrvps/s2qtbxFc0i0qs2iw8vPaTdPY7aN+5ezRSvyo8yX//tC
-	 H+gRZyFHllZiY4qfE63bR6P/dkF5/kDc78MGkhYmdkgGq82AbTpP55z4GlSD4W00zYdpS
-	 Kc/x+pmYc5cqhWN3+UzTrdmeoC8ipmp+cq4BodbkL7CGtxWIhS03CklTINRRDLAVztA==
+	bh=ymPF7ru09a3vqygT9FYYDt/BKAf9+6zXwAaWkafmZSs=;
+	b=BbGEKKp59QzFwTC7R9bxL+tB34CfstzpjYVHodgnzUnGN2rJ5zAJ5duQk9potgDqGXx8
+	 o+NnwIu98GmFqu+uDBQ0TNHR9XPdw2yLiNOOgKYePVgtfQuCYf50U73T8PGMcNl8qrQww
+	 s99DaQp1wLsQJiyRfZoYv2u9Bxf717ZZetQ5y6H8qz5sLXJ2lsMWKrUJ96X3EermE2E4G
+	 OYVeozq8IL/JaIVp0HR78YWduGUKNaPyBg4BUmcnSv/XSIxG0ujTcJ6FjjwvYu77HRi87
+	 cV036HSc8K26Z65l3buLNLocolsQlFz6++UJR83CrL6pwOZP1IGtxdsI2MeHmp0ufNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BaQ6LMF1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwAEaYlw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D978606A324;
-	Wed, 28 Oct 2026 19:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5311606A31A;
+	Wed, 28 Oct 2026 19:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BaQ6LMF1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE6F1F01825;
-	Wed, 28 Oct 2026 19:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwAEaYlw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B9B1F01825;
+	Wed, 28 Oct 2026 19:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793215685;
-	bh=lSzoOViyj/Lsd/o6wsA23WaLRuhrRjYW2u8uErSn6zw=;
+	s=korg; t=1793215688;
+	bh=ymPF7ru09a3vqygT9FYYDt/BKAf9+6zXwAaWkafmZSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BaQ6LMF1Qh4xkSyD2YSxk9u9KCau//6Bk1kfYintf1b7JxSp6gk46TcGQXYNCmNzz
-	 SYncYZpTQTkqxmZ/OZmLUF5pwq94FxSpzbnUUhRQzyLyukmxigU6zKy9bi0QP+Mwc9
-	 nCfWDhSg4G1BEepxcshLmTO0RwlhzvXVp+HEq3+w=
+	b=LwAEaYlwkOdynERZy7lAi71NxpTHC0Z8O+J5fqxY2W1TMG1GzVsESxqqNrAj/2zpQ
+	 vV60Te5+beEqQo0vnUbYMs5HSoHY8HvuBRaW9NLEwU7WnGWM+siXoNIvKQYZ2LnQyy
+	 K44nuUUCTrNSBXIrIPmZTGcPe4CeNe+1YrW6foWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
+	Shuang Li <shuali@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
 	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1297/1887] net: sched: cls_api: fix slab-use-after-free in fl_dump_key
-Date: Wed, 28 Oct 2026 17:56:33 +0100
-Message-ID: <20261028170528.939222642@linuxfoundation.org>
+Subject: [PATCH 6.1 1298/1887] net: sched: refine software bypass handling in tc_run
+Date: Wed, 28 Oct 2026 17:56:34 +0100
+Message-ID: <20261028170528.963499628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,193 +72,326 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 2ecd487b670fcbb1ad4893fff1af4aafdecb6023 ]
+[ Upstream commit a12c76a03386e32413ae8eaaefa337e491880632 ]
 
-The filter counter is updated under the protection of cb_lock in the
-cited commit. While waiting for the lock, it's possible the filter is
-being deleted by other thread, and thus causes UAF when dump it.
+This patch addresses issues with filter counting in block (tcf_block),
+particularly for software bypass scenarios, by introducing a more
+accurate mechanism using useswcnt.
 
-Fix this issue by moving tcf_block_filter_cnt_update() after
-tfilter_put().
+Previously, filtercnt and skipswcnt were introduced by:
 
- ==================================================================
- BUG: KASAN: slab-use-after-free in fl_dump_key+0x1d3e/0x20d0 [cls_flower]
- Read of size 4 at addr ffff88814f864000 by task tc/2973
+  Commit 2081fd3445fe ("net: sched: cls_api: add filter counter") and
+  Commit f631ef39d819 ("net: sched: cls_api: add skip_sw counter")
 
- CPU: 7 PID: 2973 Comm: tc Not tainted 6.9.0-rc2_for_upstream_debug_2024_04_02_12_41 #1
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x7e/0xc0
-  print_report+0xc1/0x600
-  ? __virt_addr_valid+0x1cf/0x390
-  ? fl_dump_key+0x1d3e/0x20d0 [cls_flower]
-  ? fl_dump_key+0x1d3e/0x20d0 [cls_flower]
-  kasan_report+0xb9/0xf0
-  ? fl_dump_key+0x1d3e/0x20d0 [cls_flower]
-  fl_dump_key+0x1d3e/0x20d0 [cls_flower]
-  ? lock_acquire+0x1c2/0x530
-  ? fl_dump+0x172/0x5c0 [cls_flower]
-  ? lockdep_hardirqs_on_prepare+0x400/0x400
-  ? fl_dump_key_options.part.0+0x10f0/0x10f0 [cls_flower]
-  ? do_raw_spin_lock+0x12d/0x270
-  ? spin_bug+0x1d0/0x1d0
-  fl_dump+0x21d/0x5c0 [cls_flower]
-  ? fl_tmplt_dump+0x1f0/0x1f0 [cls_flower]
-  ? nla_put+0x15f/0x1c0
-  tcf_fill_node+0x51b/0x9a0
-  ? tc_skb_ext_tc_enable+0x150/0x150
-  ? __alloc_skb+0x17b/0x310
-  ? __build_skb_around+0x340/0x340
-  ? down_write+0x1b0/0x1e0
-  tfilter_notify+0x1a5/0x390
-  ? fl_terse_dump+0x400/0x400 [cls_flower]
-  tc_new_tfilter+0x963/0x2170
-  ? tc_del_tfilter+0x1490/0x1490
-  ? print_usage_bug.part.0+0x670/0x670
-  ? lock_downgrade+0x680/0x680
-  ? security_capable+0x51/0x90
-  ? tc_del_tfilter+0x1490/0x1490
-  rtnetlink_rcv_msg+0x75e/0xac0
-  ? if_nlmsg_stats_size+0x4c0/0x4c0
-  ? lockdep_set_lock_cmp_fn+0x190/0x190
-  ? __netlink_lookup+0x35e/0x6e0
-  netlink_rcv_skb+0x12c/0x360
-  ? if_nlmsg_stats_size+0x4c0/0x4c0
-  ? netlink_ack+0x15e0/0x15e0
-  ? lockdep_hardirqs_on_prepare+0x400/0x400
-  ? netlink_deliver_tap+0xcd/0xa60
-  ? netlink_deliver_tap+0xcd/0xa60
-  ? netlink_deliver_tap+0x1c9/0xa60
-  netlink_unicast+0x43e/0x700
-  ? netlink_attachskb+0x750/0x750
-  ? lock_acquire+0x1c2/0x530
-  ? __might_fault+0xbb/0x170
-  netlink_sendmsg+0x749/0xc10
-  ? netlink_unicast+0x700/0x700
-  ? __might_fault+0xbb/0x170
-  ? netlink_unicast+0x700/0x700
-  __sock_sendmsg+0xc5/0x190
-  ____sys_sendmsg+0x534/0x6b0
-  ? import_iovec+0x7/0x10
-  ? kernel_sendmsg+0x30/0x30
-  ? __copy_msghdr+0x3c0/0x3c0
-  ? entry_SYSCALL_64_after_hwframe+0x46/0x4e
-  ? lock_acquire+0x1c2/0x530
-  ? __virt_addr_valid+0x116/0x390
-  ___sys_sendmsg+0xeb/0x170
-  ? __virt_addr_valid+0x1ca/0x390
-  ? copy_msghdr_from_user+0x110/0x110
-  ? __delete_object+0xb8/0x100
-  ? __virt_addr_valid+0x1cf/0x390
-  ? do_sys_openat2+0x102/0x150
-  ? lockdep_hardirqs_on_prepare+0x284/0x400
-  ? do_sys_openat2+0x102/0x150
-  ? __fget_light+0x53/0x1d0
-  ? sockfd_lookup_light+0x1a/0x150
-  __sys_sendmsg+0xb5/0x140
-  ? __sys_sendmsg_sock+0x20/0x20
-  ? lock_downgrade+0x680/0x680
-  do_syscall_64+0x70/0x140
-  entry_SYSCALL_64_after_hwframe+0x46/0x4e
- RIP: 0033:0x7f98e3713367
- Code: 0e 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b9 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
- RSP: 002b:00007ffc74a64608 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
- RAX: ffffffffffffffda RBX: 000000000047eae0 RCX: 00007f98e3713367
- RDX: 0000000000000000 RSI: 00007ffc74a64670 RDI: 0000000000000003
- RBP: 0000000000000008 R08: 0000000000000000 R09: 0000000000000000
- R10: 00007f98e360c5e8 R11: 0000000000000246 R12: 00007ffc74a6a508
- R13: 00000000660d518d R14: 0000000000484a80 R15: 00007ffc74a6a50b
-  </TASK>
+  filtercnt tracked all tp (tcf_proto) objects added to a block, and
+  skipswcnt counted tp objects with the skipsw attribute set.
 
- Allocated by task 2973:
-  kasan_save_stack+0x20/0x40
-  kasan_save_track+0x10/0x30
-  __kasan_kmalloc+0x77/0x90
-  fl_change+0x27a6/0x4540 [cls_flower]
-  tc_new_tfilter+0x879/0x2170
-  rtnetlink_rcv_msg+0x75e/0xac0
-  netlink_rcv_skb+0x12c/0x360
-  netlink_unicast+0x43e/0x700
-  netlink_sendmsg+0x749/0xc10
-  __sock_sendmsg+0xc5/0x190
-  ____sys_sendmsg+0x534/0x6b0
-  ___sys_sendmsg+0xeb/0x170
-  __sys_sendmsg+0xb5/0x140
-  do_syscall_64+0x70/0x140
-  entry_SYSCALL_64_after_hwframe+0x46/0x4e
+The problem is: a single tp can contain multiple filters, some with skipsw
+and others without. The current implementation fails in the case:
 
- Freed by task 283:
-  kasan_save_stack+0x20/0x40
-  kasan_save_track+0x10/0x30
-  kasan_save_free_info+0x37/0x50
-  poison_slab_object+0x105/0x190
-  __kasan_slab_free+0x11/0x30
-  kfree+0x111/0x340
-  process_one_work+0x787/0x1490
-  worker_thread+0x586/0xd30
-  kthread+0x2df/0x3b0
-  ret_from_fork+0x2d/0x70
-  ret_from_fork_asm+0x11/0x20
+  When the first filter in a tp has skipsw, both skipswcnt and filtercnt
+  are incremented, then adding a second filter without skipsw to the same
+  tp does not modify these counters because tp->counted is already set.
 
- Last potentially related work creation:
-  kasan_save_stack+0x20/0x40
-  __kasan_record_aux_stack+0x9b/0xb0
-  insert_work+0x25/0x1b0
-  __queue_work+0x640/0xc90
-  rcu_work_rcufn+0x42/0x70
-  rcu_core+0x6a9/0x1850
-  __do_softirq+0x264/0x88f
+  This results in bypass software behavior based solely on skipswcnt
+  equaling filtercnt, even when the block includes filters without
+  skipsw. Consequently, filters without skipsw are inadvertently bypassed.
 
- Second to last potentially related work creation:
-  kasan_save_stack+0x20/0x40
-  __kasan_record_aux_stack+0x9b/0xb0
-  __call_rcu_common.constprop.0+0x6f/0xac0
-  queue_rcu_work+0x56/0x70
-  fl_mask_put+0x20d/0x270 [cls_flower]
-  __fl_delete+0x352/0x6b0 [cls_flower]
-  fl_delete+0x97/0x160 [cls_flower]
-  tc_del_tfilter+0x7d1/0x1490
-  rtnetlink_rcv_msg+0x75e/0xac0
-  netlink_rcv_skb+0x12c/0x360
-  netlink_unicast+0x43e/0x700
-  netlink_sendmsg+0x749/0xc10
-  __sock_sendmsg+0xc5/0x190
-  ____sys_sendmsg+0x534/0x6b0
-  ___sys_sendmsg+0xeb/0x170
-  __sys_sendmsg+0xb5/0x140
-  do_syscall_64+0x70/0x140
-  entry_SYSCALL_64_after_hwframe+0x46/0x4e
+To address this, the patch introduces useswcnt in block to explicitly count
+tp objects containing at least one filter without skipsw. Key changes
+include:
 
-Fixes: 2081fd3445fe ("net: sched: cls_api: add filter counter")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+  Whenever a filter without skipsw is added, its tp is marked with usesw
+  and counted in useswcnt. tc_run() now uses useswcnt to determine software
+  bypass, eliminating reliance on filtercnt and skipswcnt.
+
+  This refined approach prevents software bypass for blocks containing
+  mixed filters, ensuring correct behavior in tc_run().
+
+Additionally, as atomic operations on useswcnt ensure thread safety and
+tp->lock guards access to tp->usesw and tp->counted, the broader lock
+down_write(&block->cb_lock) is no longer required in tc_new_tfilter(),
+and this resolves a performance regression caused by the filter counting
+mechanism during parallel filter insertions.
+
+  The improvement can be demonstrated using the following script:
+
+  # cat insert_tc_rules.sh
+
+    tc qdisc add dev ens1f0np0 ingress
+    for i in $(seq 16); do
+        taskset -c $i tc -b rules_$i.txt &
+    done
+    wait
+
+  Each of rules_$i.txt files above includes 100000 tc filter rules to a
+  mlx5 driver NIC ens1f0np0.
+
+  Without this patch:
+
+  # time sh insert_tc_rules.sh
+
+    real    0m50.780s
+    user    0m23.556s
+    sys	    4m13.032s
+
+  With this patch:
+
+  # time sh insert_tc_rules.sh
+
+    real    0m17.718s
+    user    0m7.807s
+    sys     3m45.050s
+
+Fixes: 047f340b36fc ("net: sched: make skip_sw actually skip software")
+Reported-by: Shuang Li <shuali@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Reviewed-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Tested-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+
+[ Adapted to this tree: it has no tc_run() software bypass, so only the
+  useswcnt accounting and the tcf_sw_enabled_key definition are kept and
+  the tc_run() hunk is dropped. ]
+
 Stable-dep-of: a347304b2ca1 ("net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/pkt_cls.h     | 13 ++++++++++++
+ include/net/sch_generic.h |  4 ++--
+ net/core/dev.c            |  5 +++++
+ net/sched/cls_api.c       | 43 +++++++++++++++++++++++----------------
+ net/sched/cls_bpf.c       |  2 ++
+ net/sched/cls_flower.c    |  2 ++
+ net/sched/cls_matchall.c  |  2 ++
+ net/sched/cls_u32.c       |  4 ++++
+ 8 files changed, 55 insertions(+), 20 deletions(-)
 
+diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
+index 42ddb2689b8ec..2ef3c220d52ca 100644
+--- a/include/net/pkt_cls.h
++++ b/include/net/pkt_cls.h
+@@ -70,6 +70,10 @@ static inline bool tcf_block_non_null_shared(struct tcf_block *block)
+ 	return block && block->index;
+ }
+ 
++#ifdef CONFIG_NET_CLS_ACT
++DECLARE_STATIC_KEY_FALSE(tcf_sw_enabled_key);
++#endif
++
+ static inline struct Qdisc *tcf_block_q(struct tcf_block *block)
+ {
+ 	WARN_ON(tcf_block_shared(block));
+@@ -762,6 +766,15 @@ tc_cls_common_offload_init(struct flow_cls_common_offload *cls_common,
+ 		cls_common->extack = extack;
+ }
+ 
++static inline void tcf_proto_update_usesw(struct tcf_proto *tp, u32 flags)
++{
++	if (tp->usesw)
++		return;
++	if (tc_skip_sw(flags) && tc_in_hw(flags))
++		return;
++	tp->usesw = true;
++}
++
+ #if IS_ENABLED(CONFIG_NET_TC_SKB_EXT)
+ static inline struct tc_skb_ext *tc_skb_ext_alloc(struct sk_buff *skb)
+ {
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 58235cbd14084..9310e02d27c88 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -430,6 +430,7 @@ struct tcf_proto {
+ 	spinlock_t		lock;
+ 	bool			deleting;
+ 	bool			counted;
++	bool			usesw;
+ 	refcount_t		refcnt;
+ 	struct rcu_head		rcu;
+ 	struct hlist_node	destroy_ht_node;
+@@ -478,8 +479,7 @@ struct tcf_block {
+ 	struct flow_block flow_block;
+ 	struct list_head owner_list;
+ 	bool keep_dst;
+-	atomic_t filtercnt; /* Number of filters */
+-	atomic_t skipswcnt; /* Number of skip_sw filters */
++	atomic_t useswcnt;
+ 	atomic_t offloadcnt; /* Number of oddloaded filters */
+ 	unsigned int nooffloaddevcnt; /* Number of devs unable to do offload */
+ 	unsigned int lockeddevcnt; /* Number of devs that require rtnl lock. */
+diff --git a/net/core/dev.c b/net/core/dev.c
+index c8d0f98d375e6..06f4f0f2421b4 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2121,6 +2121,11 @@ void net_dec_egress_queue(void)
+ EXPORT_SYMBOL_GPL(net_dec_egress_queue);
+ #endif
+ 
++#ifdef CONFIG_NET_CLS_ACT
++DEFINE_STATIC_KEY_FALSE(tcf_sw_enabled_key);
++EXPORT_SYMBOL(tcf_sw_enabled_key);
++#endif
++
+ DEFINE_STATIC_KEY_FALSE(netstamp_needed_key);
+ EXPORT_SYMBOL(netstamp_needed_key);
+ #ifdef CONFIG_JUMP_LABEL
 diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 99eec1f27d878..c645d89cf4fba 100644
+index c645d89cf4fba..ad8514da40c80 100644
 --- a/net/sched/cls_api.c
 +++ b/net/sched/cls_api.c
-@@ -2226,10 +2226,10 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 	err = tp->ops->change(net, skb, tp, cl, t->tcm_handle, tca, &fh,
- 			      flags, extack);
- 	if (err == 0) {
--		tcf_block_filter_cnt_update(block, &tp->counted, true);
+@@ -285,6 +285,7 @@ static struct tcf_proto *tcf_proto_create(const char *kind, u32 protocol,
+ 	tp->protocol = protocol;
+ 	tp->prio = prio;
+ 	tp->chain = chain;
++	tp->usesw = !tp->ops->reoffload;
+ 	spin_lock_init(&tp->lock);
+ 	refcount_set(&tp->refcnt, 1);
+ 
+@@ -305,21 +306,31 @@ static void tcf_proto_get(struct tcf_proto *tp)
+ 	refcount_inc(&tp->refcnt);
+ }
+ 
+-static void tcf_block_filter_cnt_update(struct tcf_block *block, bool *counted, bool add)
++static void tcf_proto_count_usesw(struct tcf_proto *tp, bool add)
+ {
+-	lockdep_assert_not_held(&block->cb_lock);
+-
+-	down_write(&block->cb_lock);
+-	if (*counted != add) {
+-		if (add) {
+-			atomic_inc(&block->filtercnt);
+-			*counted = true;
+-		} else {
+-			atomic_dec(&block->filtercnt);
+-			*counted = false;
++#ifdef CONFIG_NET_CLS_ACT
++	struct tcf_block *block = tp->chain->block;
++	bool counted = false;
++
++	if (!add) {
++		if (tp->usesw && tp->counted) {
++			if (!atomic_dec_return(&block->useswcnt))
++				static_branch_dec(&tcf_sw_enabled_key);
++			tp->counted = false;
+ 		}
++		return;
+ 	}
+-	up_write(&block->cb_lock);
++
++	spin_lock(&tp->lock);
++	if (tp->usesw && !tp->counted) {
++		counted = true;
++		tp->counted = true;
++	}
++	spin_unlock(&tp->lock);
++
++	if (counted && atomic_inc_return(&block->useswcnt) == 1)
++		static_branch_inc(&tcf_sw_enabled_key);
++#endif
+ }
+ 
+ static void tcf_chain_put(struct tcf_chain *chain);
+@@ -328,7 +339,7 @@ static void tcf_proto_destroy(struct tcf_proto *tp, bool rtnl_held,
+ 			      bool sig_destroy, struct netlink_ext_ack *extack)
+ {
+ 	tp->ops->destroy(tp, rtnl_held, extack);
+-	tcf_block_filter_cnt_update(tp->chain->block, &tp->counted, false);
++	tcf_proto_count_usesw(tp, false);
+ 	if (sig_destroy)
+ 		tcf_proto_signal_destroyed(tp->chain, tp);
+ 	tcf_chain_put(tp->chain);
+@@ -2229,7 +2240,7 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
  		tfilter_notify(net, skb, n, tp, block, q, parent, fh,
  			       RTM_NEWTFILTER, false, rtnl_held, extack);
  		tfilter_put(tp, fh);
-+		tcf_block_filter_cnt_update(block, &tp->counted, true);
+-		tcf_block_filter_cnt_update(block, &tp->counted, true);
++		tcf_proto_count_usesw(tp, true);
  		/* q pointer is NULL for shared blocks */
  		if (q)
  			q->flags &= ~TCQ_F_CAN_BYPASS;
+@@ -3321,8 +3332,6 @@ static void tcf_block_offload_inc(struct tcf_block *block, u32 *flags)
+ 	if (*flags & TCA_CLS_FLAGS_IN_HW)
+ 		return;
+ 	*flags |= TCA_CLS_FLAGS_IN_HW;
+-	if (tc_skip_sw(*flags))
+-		atomic_inc(&block->skipswcnt);
+ 	atomic_inc(&block->offloadcnt);
+ }
+ 
+@@ -3331,8 +3340,6 @@ static void tcf_block_offload_dec(struct tcf_block *block, u32 *flags)
+ 	if (!(*flags & TCA_CLS_FLAGS_IN_HW))
+ 		return;
+ 	*flags &= ~TCA_CLS_FLAGS_IN_HW;
+-	if (tc_skip_sw(*flags))
+-		atomic_dec(&block->skipswcnt);
+ 	atomic_dec(&block->offloadcnt);
+ }
+ 
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index 00159978c4501..ff0a8dd0b9548 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -507,6 +507,8 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
+ 	if (!tc_in_hw(prog->gen_flags))
+ 		prog->gen_flags |= TCA_CLS_FLAGS_NOT_IN_HW;
+ 
++	tcf_proto_update_usesw(tp, prog->gen_flags);
++
+ 	if (oldprog) {
+ 		idr_replace(&head->handle_idr, prog, handle);
+ 		list_replace_rcu(&oldprog->link, &prog->link);
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 42234a0101e78..67e0a9799bd0c 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -2240,6 +2240,8 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
+ 	if (!tc_in_hw(fnew->flags))
+ 		fnew->flags |= TCA_CLS_FLAGS_NOT_IN_HW;
+ 
++	tcf_proto_update_usesw(tp, fnew->flags);
++
+ 	spin_lock(&tp->lock);
+ 
+ 	/* tp was deleted concurrently. -EAGAIN will cause caller to lookup
+diff --git a/net/sched/cls_matchall.c b/net/sched/cls_matchall.c
+index 43f8df5847414..d4bb817b3658a 100644
+--- a/net/sched/cls_matchall.c
++++ b/net/sched/cls_matchall.c
+@@ -226,6 +226,8 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
+ 	if (!tc_in_hw(new->flags))
+ 		new->flags |= TCA_CLS_FLAGS_NOT_IN_HW;
+ 
++	tcf_proto_update_usesw(tp, new->flags);
++
+ 	*arg = head;
+ 	rcu_assign_pointer(tp->root, new);
+ 	return 0;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index d1f2d194d2267..599563b43def0 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -964,6 +964,8 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		if (!tc_in_hw(new->flags))
+ 			new->flags |= TCA_CLS_FLAGS_NOT_IN_HW;
+ 
++		tcf_proto_update_usesw(tp, new->flags);
++
+ 		u32_replace_knode(tp, tp_c, new);
+ 		tcf_unbind_filter(tp, &n->res);
+ 		tcf_exts_get_net(&n->exts);
+@@ -1196,6 +1198,8 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		if (!tc_in_hw(n->flags))
+ 			n->flags |= TCA_CLS_FLAGS_NOT_IN_HW;
+ 
++		tcf_proto_update_usesw(tp, n->flags);
++
+ 		ins = &ht->ht[TC_U32_HASH(handle)];
+ 		for (pins = rtnl_dereference(*ins); pins;
+ 		     ins = &pins->next, pins = rtnl_dereference(*ins))
 -- 
 2.53.0
 
