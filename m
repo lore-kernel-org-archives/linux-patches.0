@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212718;
-	b=wKkBR/wcK4Vfx256YAnKGRHoOKLN4GW4IUZAL8o5nQyEFuKKvU9ARMWSyxPydgC2ZroA
-	 DzrI6G3b1B9ud++YlC6tAJ/AylHxxXSBQPaGZdFYya0TJdznUkDzgQb/gRpKasmWvOv+b
-	 4a7C/6AaK7rjqtMDYg8WwDf/V9BQbfvjRzmKpSxzAnf5NRXldhJH4Jd/tLbWfagqYqBNl
-	 HsbDkkP4CYVjKMumw3aGlL5gDGDvx9GH07xDFl4jbDlB4H0dPnwAmBPkK66/d5QILy/iA
-	 HXHDTs2uGSORHgFY3e9mnTIptLKV/1AGl+FaKX7ysD3ZsRQG1xv9BEaFPrUfxIb5r7g==
+	t=1793212721;
+	b=Bu7VROxKocINUox/RTRkCKIWXfRev7hvKo1kUdkE6FFqQWKHrFkOTeaIu/S4Iufl+ljl
+	 jY8/XoNuCvnmMNBRPwvhwE1Qep+rOxWwBt146BdjussrfM3C6ZkTOPBWLXE00p4cPO69m
+	 7SEwiOmj9NDzGAASxNpTbt3H/QWbSqMSRuXhhWpWkD9t9a7ORvRnMWltVNAvadpLuPyZy
+	 fU4Xuo4sHYAewKy1P7+x4I3ZZcX/K9jNHwS5Kg/sOrG/SMS+VLtRr5ifZCHZbsoaP1RC9
+	 XeL+TlsYir2o3U8No78geBtZSKobM3yaLrcuJAqVpbviXCmzTVajQVw551qXztiQblA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212718;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212721;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eFsNsc1fkN3iC73+nfkkCAK4c3KIpluM2YwDiMR9wII=;
-	b=NzDmXHhFeRX2lTOJboOWpc9P1H6e3HxCdgWn18e5Zs1Dn3rez9K/I3if9dZzC0MlzU8u
-	 3cXPROzFphmaG2kai/I8gMRPFhydUFuQZxx9VQTdCMYjpaEBFnfbMtzcCiY4bIBfw+Ryc
-	 0Vr3qnS7fCpUBaLsa/aPSabRXmMEDp116hXTLVviNzUeeBsuRq7B24CBw2IYwqGRgvrrt
-	 50QP0XjrSZATBRvMSFsO/8WGGyfoVJc8RgFSIOnDtOEdXj2dofHTWPX4HZA6aWyWe0OVD
-	 jZXzOn9gEO6XDl3thikS7b5KXQMZQRUn1NCC2Np/d595cUxUHlTD+Lx3UEOGJDQ5N7A==
+	bh=w8w3Wx44zsaFtIORIHh8hupNF63JdysQc0Ghv/hUXfg=;
+	b=emBt6mUdMRxZ8RxA+ampxTwDHrA2aUJZiwvNGX33ke4WhkJ/R/EPsbB0mIzoE070F39o
+	 DAw9qpeBjIOn0wax1tYYDNO3ftx6/hGz7LGvWg9cQDqZ7UkMy+t5FgZlvZxR8PlTqU5ly
+	 z2wzdS0PMx/C9I9GBqPmhoHzunjZn0aRq1zuLfENsF80sy/z5ZcYFa1T2r1EvCH+3++sn
+	 aupefcgIVXJ1MpHx32Wg9Qnb2zsvTPqRIMXKgk2RT7/kdDJlK5sH5272tLwcIu6BptXEa
+	 iYbwSOOUA2gwDXOQ4Vi3muwNFIKyq7L4IG9XQA5iZIOIC1NGbr1TNsjVKhbhsE8Q2yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=flFkPD4k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPPwYASq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AAB60A2605;
-	Wed, 28 Oct 2026 18:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF8D606A326;
+	Wed, 28 Oct 2026 18:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=flFkPD4k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E12D1F01825;
-	Wed, 28 Oct 2026 18:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPPwYASq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1F31F01825;
+	Wed, 28 Oct 2026 18:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212717;
-	bh=eFsNsc1fkN3iC73+nfkkCAK4c3KIpluM2YwDiMR9wII=;
+	s=korg; t=1793212720;
+	bh=w8w3Wx44zsaFtIORIHh8hupNF63JdysQc0Ghv/hUXfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=flFkPD4kt6obeBtgJ/8XMYmnNxmjlLBZsvBCB/w3l76hTSwcBoJ8A8ZdZAFZiQ507
-	 XUxooB6kz3pmWssU+zjazJvvVT3p2NugEFu5D6liCke/frIFllSA0YMGqqgMFt6yAI
-	 Mwl+rLI32g1WgPOdsNqQKCpViDJ6S1B4GR3B9uyQ=
+	b=wPPwYASqAqq9QV3RPRhPNdxiwNkaPFIN/vxAIPcEvnM7E2PUVI7e3Uog5Fjcb2/8c
+	 4/PoUAmOkx//NzQJxe/0KEYIDNB/XQR2oYCfiTOGG83mma/r5Gv/P6JcLZG4uvldbk
+	 qX6hi+fPAr3PqgCN94FaPg2zlz1AeYMNch4SVuM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0208/1887] perf/x86/amd/lbr: Fix kernel address leakage
-Date: Wed, 28 Oct 2026 17:38:24 +0100
-Message-ID: <20261028170503.968349096@linuxfoundation.org>
+Subject: [PATCH 6.1 0209/1887] drm/tegra: gr2d/gr3d: Initialize address register map before HOST1X client is registered
+Date: Wed, 28 Oct 2026 17:38:25 +0100
+Message-ID: <20261028170503.991626133@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -70,66 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 2a892294b83f541115c94b0bb637f39bef187657 ]
+[ Upstream commit c4ef5ba1131346159e31f4ef858525cf377380a6 ]
 
-A user-only branch stack can contain branches that originate from
-the kernel. As a result, kernel addresses are exposed to user space
-even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
-supporting X86_FEATURE_AMD_LBR_V2, perf can still report SYSRET/ERET
-entries for which the branch-from addresses are in the kernel.
+The host1x_client_register() function is called just prior to register map
+initialization loop, making the device available to userspace. This may
+result in userspace attempting to submits a job before the register map is
+initialized. Address this by moving register initialization before host1x
+client registration.
 
-E.g.
-
-  $ perf record -e cycles -o - -j any,save_type,u -- \
-        perf bench syscall basic --loop 1000 | \
-        perf script -i - -F brstack|tr ' ' '\n'| \
-        grep -E '0x[89a-f][0-9a-f]{15}'
-
-  ...
-  0xffffffff81001268/0x717a90a38f1a/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a39157/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a2c628/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a41b60/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a8bef1c30/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a8e4d3c90/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  ...
-
-The reason is that the hardware filter only considers the privilege
-level applicable to the branch target. Extend software filtering to
-also validate the branch-from addresses against br_sel, so that any
-branch record whose branch-from address is in the kernel is dropped
-when PERF_SAMPLE_BRANCH_USER is requested.
-
-Fixes: f4f925dae741 ("perf/x86/amd/lbr: Add LbrExtV2 hardware branch filter support")
-Reported-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://patch.msgid.link/a898a29725f6b2f30518354cdc2e432db66c43cf.1783680119.git.sandipan.das@amd.com
+Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260517091450.46728-2-clamor95@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/lbr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tegra/gr2d.c | 8 ++++----
+ drivers/gpu/drm/tegra/gr3d.c | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/events/amd/lbr.c b/arch/x86/events/amd/lbr.c
-index 48f4095f500d4..6096fb6925f66 100644
---- a/arch/x86/events/amd/lbr.c
-+++ b/arch/x86/events/amd/lbr.c
-@@ -124,7 +124,8 @@ static void amd_pmu_lbr_filter(void)
- 		}
+diff --git a/drivers/gpu/drm/tegra/gr2d.c b/drivers/gpu/drm/tegra/gr2d.c
+index e3bb4c99ed39f..9deed8345d76d 100644
+--- a/drivers/gpu/drm/tegra/gr2d.c
++++ b/drivers/gpu/drm/tegra/gr2d.c
+@@ -282,16 +282,16 @@ static int gr2d_probe(struct platform_device *pdev)
+ 	if (err)
+ 		return err;
  
- 		/* If type does not correspond, then discard */
--		if (type == X86_BR_NONE || (br_sel & type) != type) {
-+		if (type == X86_BR_NONE || (br_sel & type) != type ||
-+		    (!(br_sel & X86_BR_KERNEL) && kernel_ip(cpuc->lbr_entries[i].from))) {
- 			cpuc->lbr_entries[i].from = 0;	/* mark invalid */
- 			compress = true;
- 		}
++	/* initialize address register map */
++	for (i = 0; i < ARRAY_SIZE(gr2d_addr_regs); i++)
++		set_bit(gr2d_addr_regs[i], gr2d->addr_regs);
++
+ 	err = host1x_client_register(&gr2d->client.base);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to register host1x client: %d\n", err);
+ 		return err;
+ 	}
+ 
+-	/* initialize address register map */
+-	for (i = 0; i < ARRAY_SIZE(gr2d_addr_regs); i++)
+-		set_bit(gr2d_addr_regs[i], gr2d->addr_regs);
+-
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/tegra/gr3d.c b/drivers/gpu/drm/tegra/gr3d.c
+index a1fd3113ea96e..98dc2ed35915d 100644
+--- a/drivers/gpu/drm/tegra/gr3d.c
++++ b/drivers/gpu/drm/tegra/gr3d.c
+@@ -536,6 +536,10 @@ static int gr3d_probe(struct platform_device *pdev)
+ 	if (err)
+ 		return err;
+ 
++	/* initialize address register map */
++	for (i = 0; i < ARRAY_SIZE(gr3d_addr_regs); i++)
++		set_bit(gr3d_addr_regs[i], gr3d->addr_regs);
++
+ 	err = host1x_client_register(&gr3d->client.base);
+ 	if (err < 0) {
+ 		dev_err(&pdev->dev, "failed to register host1x client: %d\n",
+@@ -543,10 +547,6 @@ static int gr3d_probe(struct platform_device *pdev)
+ 		return err;
+ 	}
+ 
+-	/* initialize address register map */
+-	for (i = 0; i < ARRAY_SIZE(gr3d_addr_regs); i++)
+-		set_bit(gr3d_addr_regs[i], gr3d->addr_regs);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
