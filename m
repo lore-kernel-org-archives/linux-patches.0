@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212564;
-	b=qnhpqL+8cmbcTgR/qfj0aEpgTC25URwxRWZENL+GDWgFI+MhfSXBJ5Tpr99W3RrJGb8s
-	 oc3AFqwC42v0eV7+33xSQ2jKxSwywI3f+4VADvbJ6Jf630s+Z8p7eNzQFTYG0vxr0BsTE
-	 7Xmi8LYTIk1GP6EN49C3iQw+T1A8mID2DYzN4AS85PnA2uTe3o8jBitKiC0TC+/cJDmJ6
-	 wU7cWtbxyV23U0OF098N3GtlupEFn1XR3bjhzITuWlywwsoVtP/VtQmPYIashzl70Hyo0
-	 vmONXgmvVZlYwM1jKJKsWY8WrD7q8deGna2T9ESGzMuiUnQp/sEdlNHC0xqAPcThvjw==
+	t=1793212567;
+	b=cuPyRmiysWAlULGze1uJOOh9YzpXDTB1NucNzvw2+oGpYd4mRJXij0pnO5T5JjWIehqa
+	 QQ8WlS1FRQVKyHm5heLQpeqQ2elBn/h8PCGCeKzkaxgOEReucHKmEw+vuRjOsQPx3mSIf
+	 WLfoD2EbbE5HynOI6d97Vp9BZgpiquUbIIjLSs9uI+lwpi9eQazUrKI0lhJHGiOwZM1u2
+	 lOMVzB5xc3lieyfvxa88nkmnqDsvoqlSjbPAAMmtQEupfrh8rckO7kdfOmEdc7lHhmXcK
+	 hpcnWpvXv2mwktWTRQdnbVv3ct/qVpp8Sx7HA1H4C6/0fvqtKB5uGL6YsnGwq6KcQGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KBHrJJLwjNh1eHyjydDFovQw5Zc0v/nMi1Vm1PzYZmA=;
-	b=1pzCMAaa7Y5KrjIJGxkwQpmHM/6nlFa20MCFnWkkaPKws0z0QQzlDi3/LRGG8ih85Fq2
-	 h9FDkL3v1A0sFBjmH65odTHgHohWae6lgesvpw/7ounVki5wyua0xeZ+OmWVAUhMzAbIC
-	 Tijy7aM0ei0yZnpp97/ku7MTCsxmPTpJnzszj5HMN8/ThK9RB8x2h4DwJHVC2vgON7/tT
-	 nIF+W7lBU2Vs6t5l+6DndroVEwZna+dpEYrxnKhSkzlzS9XyhU7rMxk0FIuvf0M2Vvupm
-	 QTkC7Rz8VGLaK5Pwyw9hFveNJ07dVEvrbzN/YMxuoxK9yxGdEMnj8MPb+8LL70+/PmA==
+	bh=O79oHiDNpCAfbATvB8X79QJtIG9KVapsQF8jxm/Y6ig=;
+	b=FMiRwngMgcaYeZifAqYdfO0OJyF8aIR4NzPxBIWLmZvLsjMYM7d0EzsVq7MOEVK39nkc
+	 wm/jNMcB/wG98AfGaG8t0/OtQR46MCGaT4NMKykUxUBW5/ZPtEHEtonKdn13xo1tT82xB
+	 1OqROud8qgGCyEHx7RyWLAkZB/3O06ezK4pW6TZA06xW27pjRscA+EPehObbNO6nEWCJy
+	 zmG7j+SGdrI/vH0qMw8Qc0CXhkfwNIHOUkvbpG6kknUPd1r13k4veLttoI4tvGCn59BBO
+	 J/ReP9nr7XP3IlOUE/qpy0oezKmxXnuab0sCCPanlrg527gDo2zb+T9PJNvH+jpLVLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POPiR0aX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRSSA+Xf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A38606A31C;
-	Wed, 28 Oct 2026 18:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A36606A31D;
+	Wed, 28 Oct 2026 18:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POPiR0aX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4484D1F01825;
-	Wed, 28 Oct 2026 18:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRSSA+Xf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A541F01825;
+	Wed, 28 Oct 2026 18:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212563;
-	bh=KBHrJJLwjNh1eHyjydDFovQw5Zc0v/nMi1Vm1PzYZmA=;
+	s=korg; t=1793212566;
+	bh=O79oHiDNpCAfbATvB8X79QJtIG9KVapsQF8jxm/Y6ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=POPiR0aXRnIPz+OKxmrGY/Ch8X0Nvv9dQoZzPT5eK0am4gYCssH4WavsDxz4UBQvK
-	 b7zLGZ/lU0Z3FevSztf6/st6WqdMe1q5L/+28nonMoEw9JbkhJQSYuq5klBuvCWUum
-	 i2E/p+EVNdfi1Wps1JW5QcLd/xknGe9lfuAUiAOM=
+	b=yRSSA+XfgmfytNatUH741PvUBJ/mYRROCAZjiqNwWWHdx+GZeytT/0RD2fwWsTxyk
+	 s68gBXs0NkR0qv3x607o/spfnPyZCzC+DmhM3FXMnC50neVuL3WdnEI7NlWf899rIi
+	 sHNIquY9jC0SVzjSsGYhayBAHX5NHlXVWB1M27Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0196/1887] media: av7110: fix a spectre vulnerability
-Date: Wed, 28 Oct 2026 17:38:12 +0100
-Message-ID: <20261028170503.696008656@linuxfoundation.org>
+Subject: [PATCH 6.1 0197/1887] ethtool: fail closed if we cant get max channel used in indirection tables
+Date: Wed, 28 Oct 2026 17:38:13 +0100
+Message-ID: <20261028170503.718544251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,120 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 458ea1c0be991573ec436aa0afa23baacfae101a ]
+[ Upstream commit 2899d58462ba868287d6ff3acad3675e7adf934f ]
 
-As warned by smatch:
-	drivers/staging/media/av7110/av7110_ca.c:270 dvb_ca_ioctl() warn: potential spectre issue 'av7110->ci_slot' [w] (local cap)
+Commit 0d1b7d6c9274 ("bnxt: fix crashes when reducing ring count with
+active RSS contexts") proves that allowing indirection table to contain
+channels with out of bounds IDs may lead to crashes. Currently the
+max channel check in the core gets skipped if driver can't fetch
+the indirection table or when we can't allocate memory.
 
-There is a spectre-related vulnerability at the code. Fix it.
+Both of those conditions should be extremely rare but if they do
+happen we should try to be safe and fail the channel change.
 
-[ Backport to 6.1.y: added the explicit linux/nospec.h include required
-  by the older source. ]
+[ Backport to 6.1.y: kept the older int-returning
+  ethtool_get_max_rxfh_channel() and propagated its errors at both
+  channel-change call sites instead of the upstream u32/U32_MAX
+  conversion. A failure now returns the helper's errno (-ENOMEM or the
+  driver's get_rxfh() error) rather than -EINVAL, and -EOPNOTSUPP also
+  fails closed; on 6.1 IFF_RXFH_CONFIGURED can only be set via set_rxfh
+  paths that require a non-zero indirection table size. ]
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20240710174043.754664-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/deprecated/saa7146/av7110/av7110.h  |  4 ++-
- .../deprecated/saa7146/av7110/av7110_ca.c     | 26 +++++++++++++------
- 2 files changed, 21 insertions(+), 9 deletions(-)
+ net/ethtool/channels.c |  9 ++++++---
+ net/ethtool/ioctl.c    | 11 +++++++----
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/staging/media/deprecated/saa7146/av7110/av7110.h b/drivers/staging/media/deprecated/saa7146/av7110/av7110.h
-index 9fde69b38f1ce..c2956c23d9c1e 100644
---- a/drivers/staging/media/deprecated/saa7146/av7110/av7110.h
-+++ b/drivers/staging/media/deprecated/saa7146/av7110/av7110.h
-@@ -86,6 +86,8 @@ struct infrared {
- 	u32			ir_config;
- };
+diff --git a/net/ethtool/channels.c b/net/ethtool/channels.c
+index 4031588620115..05f3068ec0fe3 100644
+--- a/net/ethtool/channels.c
++++ b/net/ethtool/channels.c
+@@ -191,9 +191,12 @@ int ethnl_set_channels(struct sk_buff *skb, struct genl_info *info)
+ 	/* ensure the new Rx count fits within the configured Rx flow
+ 	 * indirection table settings
+ 	 */
+-	if (netif_is_rxfh_configured(dev) &&
+-	    !ethtool_get_max_rxfh_channel(dev, &max_rx_in_use) &&
+-	    (channels.combined_count + channels.rx_count) <= max_rx_in_use) {
++	if (netif_is_rxfh_configured(dev)) {
++		ret = ethtool_get_max_rxfh_channel(dev, &max_rx_in_use);
++		if (ret)
++			goto out_ops;
++	}
++	if (channels.combined_count + channels.rx_count <= max_rx_in_use) {
+ 		ret = -EINVAL;
+ 		GENL_SET_ERR_MSG(info, "requested channel counts are too low for existing indirection table settings");
+ 		goto out_ops;
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 1f64ff5f3f21c..439871dd1ca83 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -1832,10 +1832,13 @@ static noinline_for_stack int ethtool_set_channels(struct net_device *dev,
  
-+#define MAX_CI_SLOTS	2
-+
- /* place to store all the necessary device information */
- struct av7110 {
+ 	/* ensure the new Rx count fits within the configured Rx flow
+ 	 * indirection table settings */
+-	if (netif_is_rxfh_configured(dev) &&
+-	    !ethtool_get_max_rxfh_channel(dev, &max_rx_in_use) &&
+-	    (channels.combined_count + channels.rx_count) <= max_rx_in_use)
+-	    return -EINVAL;
++	if (netif_is_rxfh_configured(dev)) {
++		ret = ethtool_get_max_rxfh_channel(dev, &max_rx_in_use);
++		if (ret)
++			return ret;
++	}
++	if (channels.combined_count + channels.rx_count <= max_rx_in_use)
++		return -EINVAL;
  
-@@ -166,7 +168,7 @@ struct av7110 {
- 
- 	/* CA */
- 
--	struct ca_slot_info	ci_slot[2];
-+	struct ca_slot_info	ci_slot[MAX_CI_SLOTS];
- 
- 	enum av7110_video_mode	vidmode;
- 	struct dmxdev		dmxdev;
-diff --git a/drivers/staging/media/deprecated/saa7146/av7110/av7110_ca.c b/drivers/staging/media/deprecated/saa7146/av7110/av7110_ca.c
-index c1338e074a3dc..642af03fbac81 100644
---- a/drivers/staging/media/deprecated/saa7146/av7110/av7110_ca.c
-+++ b/drivers/staging/media/deprecated/saa7146/av7110/av7110_ca.c
-@@ -12,6 +12,7 @@
-  */
- 
- #include <linux/kernel.h>
-+#include <linux/nospec.h>
- #include <linux/types.h>
- #include <linux/delay.h>
- #include <linux/fs.h>
-@@ -26,23 +27,28 @@
- 
- void CI_handle(struct av7110 *av7110, u8 *data, u16 len)
- {
-+	unsigned slot_num;
-+
- 	dprintk(8, "av7110:%p\n",av7110);
- 
- 	if (len < 3)
- 		return;
- 	switch (data[0]) {
- 	case CI_MSG_CI_INFO:
--		if (data[2] != 1 && data[2] != 2)
-+		if (data[2] != 1 && data[2] != MAX_CI_SLOTS)
- 			break;
-+
-+		slot_num = array_index_nospec(data[2] - 1, MAX_CI_SLOTS);
-+
- 		switch (data[1]) {
- 		case 0:
--			av7110->ci_slot[data[2] - 1].flags = 0;
-+			av7110->ci_slot[slot_num].flags = 0;
- 			break;
- 		case 1:
--			av7110->ci_slot[data[2] - 1].flags |= CA_CI_MODULE_PRESENT;
-+			av7110->ci_slot[slot_num].flags |= CA_CI_MODULE_PRESENT;
- 			break;
- 		case 2:
--			av7110->ci_slot[data[2] - 1].flags |= CA_CI_MODULE_READY;
-+			av7110->ci_slot[slot_num].flags |= CA_CI_MODULE_READY;
- 			break;
- 		}
- 		break;
-@@ -264,15 +270,19 @@ static int dvb_ca_ioctl(struct file *file, unsigned int cmd, void *parg)
- 	case CA_GET_SLOT_INFO:
- 	{
- 		struct ca_slot_info *info=(struct ca_slot_info *)parg;
-+		unsigned int slot_num;
- 
- 		if (info->num < 0 || info->num > 1) {
- 			mutex_unlock(&av7110->ioctl_mutex);
- 			return -EINVAL;
- 		}
--		av7110->ci_slot[info->num].num = info->num;
--		av7110->ci_slot[info->num].type = FW_CI_LL_SUPPORT(av7110->arm_app) ?
--							CA_CI_LINK : CA_CI;
--		memcpy(info, &av7110->ci_slot[info->num], sizeof(struct ca_slot_info));
-+		slot_num = array_index_nospec(info->num, MAX_CI_SLOTS);
-+
-+		av7110->ci_slot[slot_num].num = info->num;
-+		av7110->ci_slot[slot_num].type = FW_CI_LL_SUPPORT(av7110->arm_app) ?
-+						 CA_CI_LINK : CA_CI;
-+		memcpy(info, &av7110->ci_slot[slot_num],
-+		       sizeof(struct ca_slot_info));
- 		break;
- 	}
- 
+ 	/* Disabling channels, query zero-copy AF_XDP sockets */
+ 	from_channel = channels.combined_count +
 -- 
 2.53.0
 
