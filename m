@@ -1,60 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216371;
-	b=WGuYonX9G2BxEO+LtPPJHandisFkhLBggHD/zTC0ICX/Y4rWKnac5pLcNPSgQKyTPBtK
-	 Zez8RCAqk3X+bhS3x86rCFF6eHkki0uDZT4SAoR0GGzFyf5zA35/+kqucpZyqRtDwS/jM
-	 dGJw2bJv3djVNusGhJopt0+XmYhnal5uuezWw+mQa3XVHEHNrvwQHhxpS3Fr8z0XLK0rD
-	 mXP8QRjo4jJe+0L8npmHnLe0T+0xj58RncSQuQIJwmKNO1RgcvZeTz1WUlFT7uSgJ1LJQ
-	 ofwyDFlyOQq1G7VeWSLuEgqur6reK/xg13GFhCc+zbB5tY/Cmjrjkg3AJkIgaM19krg==
+	t=1793216374;
+	b=jnxL9Qg1nzPTFPZL/EY8n3e1Ym538Fk3sVKpEOz3zATzWxBVXKazQJHpQBPRZueXheK8
+	 hR7i4+ZQEFBD65O4N/1lbRu/Px+vdj//s14hLrbkyiXSPTy2b4ff42U7LakRzPVk3q9ES
+	 s1YpvpYR8K32flOpuqqx1YJ6l+BRrmyyCvkOdfqlnKGPzgSZoxlz94nCmXDmUJ/tw75vo
+	 db1KcV8cxlqdgEF/RW78nfmO/xWyQhrJoIm+FTIejR1NRRp+SdaDcXjhtFxz9v45U/FwY
+	 R3MK16P0pZut92amg4LaHmDZtPmB+FU9gPt2aAJ1TFrobGT7m0CqibKPZLtutdia92g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mHuCE8vuNnnr1D114vTCZQijCl93yh191EhmaMW/R8g=;
-	b=CP/cYGDws0fvuMWA6nxLbkJc5CqXUcqBNLcBAKa6QLm6XBXLk+WTr5YAvPWxo1jfCoxi
-	 7oXc5wQM65o26rMb/21HTthkz7NsPn74oiW80URiBbS+XJv6cqrEJLFe4hQrTK2QbrqJy
-	 ZeIKnjNwnB9AE3e9fwfvYUAXdATWwVpac9Fp/8rUSz5ibM/qNjxDxwJYO2eBbFD8nfyOu
-	 tX+vDr0dWlR1CH4DIJ4thvYw8ZzY+evm2AOMC8gB8fig3UIzpfW16DlfEFVOfUQNyau85
-	 hIHbQj5RzvHvMUfRI/bIYk+M8U6Sji1GEUVjOsmgfjUmox4X8yZ5xvjMlAtDToiyLaw==
+	bh=CBnX2U456DB2DFHdREKtkl6t/Nv2moM3Hga8bl7H2+Q=;
+	b=ABx2LaxJzKscrIN5KXI7R+n15HqMhAGDrZOps+26HCovxfKhl7zZX/DFBmxjLu+Wp+SQ
+	 b+XC8Ai0HayrEaDy3v3GFUxD6zWsz5w7NY36BbTRwmxLvqel5Y0IL4oBsVD04Npxzrzji
+	 Kj62a9y+vk/kmhSKeHrvmwYDPgXA7TiKbmwt42B+Q1/A0KsQHVhN6dDe5m6tS//siMzTw
+	 p6zH6xCwfTcsBAv3oX5rh5L2XumyccjZRQr4fdDTqSkLmLBvNw4wFm68IlYENlrKT6dVC
+	 iJzqc+Z4dLVSm1hlFq9UKwkCSiVJ8uOAPSNhe3+ojQAkpiz4jFXDi4raZLfTdlMTuQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLJG14xs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hm3pFeV6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238F2606A31E;
-	Wed, 28 Oct 2026 19:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D604606A31C;
+	Wed, 28 Oct 2026 19:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLJG14xs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611C01F01825;
-	Wed, 28 Oct 2026 19:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hm3pFeV6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CC61F01825;
+	Wed, 28 Oct 2026 19:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216371;
-	bh=mHuCE8vuNnnr1D114vTCZQijCl93yh191EhmaMW/R8g=;
+	s=korg; t=1793216374;
+	bh=CBnX2U456DB2DFHdREKtkl6t/Nv2moM3Hga8bl7H2+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fLJG14xskKct/UC4DC5EzfLrQzlMfXlMzGmtR9vQ9+nFsx1JmZX7rFof7rqoaq7GA
-	 HVQfgWhEgBMy/nwWNyYSKHQiHeZmRyky+5wGiXD0weN9A+ijgb+qmkvhK47F1rMpVC
-	 epMPkn7l857omo/tCiahNuZwLBhVb36fK6RIUovI=
+	b=Hm3pFeV6/Cv2G8CstzUzg67HgtzIaVgAPuynmUQ9TICF1aEDik5v9T+RW+Mffgsmc
+	 DXoBuCrBC7/vXMz58bx15lICMjjyPlquvHJVmIypPd+j/nzZ4SMTujF9DBifG7NUH7
+	 C8t3H+gonIdhyQPOarLaPCbVBXTAkcu4ulGPj0s0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@keeping.me.uk>,
-	Peter Chen <peter.chen@nxp.com>,
-	Hulk Robot <hulkci@huawei.com>,
-	Allen Pais <allen.lkml@gmail.com>,
-	Will McVicker <willmcvicker@google.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	linux-usb@vger.kernel.org,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1507/1887] usb: gadget: f_midi: Annotate struct f_midi with __counted_by
-Date: Wed, 28 Oct 2026 18:00:03 +0100
-Message-ID: <20261028170533.754830730@linuxfoundation.org>
+Subject: [PATCH 6.1 1534/1887] pnfs/blocklayout: Fix device leaks on parse failure
+Date: Wed, 28 Oct 2026 18:00:30 +0100
+Message-ID: <20261028170534.372699773@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -76,69 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 182717026e2c8e6cc3b5757f601c3fee15f64ecb ]
+[ Upstream commit c056f817e4200fb18079d5052c273a22f191ff0a ]
 
-Prepare for the coming implementation by GCC and Clang of the __counted_by
-attribute. Flexible array members annotated with __counted_by can have
-their accesses bounds-checked at run-time checking via CONFIG_UBSAN_BOUNDS
-(for array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
-functions).
+bl_parse_concat() and bl_parse_stripe() allocate a child device array and
+then parse each child in turn.  If parsing a child fails, the failed child is
+not counted in nr_children and the parent may be left with a children array
+that bl_free_device() will not release when nr_children is zero.
 
-As found with Coccinelle[1], add __counted_by for struct f_midi.
-Additionally, since the element count member must be set before accessing
-the annotated flexible array member, move its initialization earlier.
+Release the failed child and the already parsed children before returning the
+error.  Also make bl_free_device() release the child array whenever the
+children pointer is set, so that partially initialised concat or stripe
+devices are cleaned up correctly.
 
-[1] https://github.com/kees/kernel-tools/blob/trunk/coccinelle/examples/counted_by.cocci
+bl_parse_scsi() can also fail after assigning d->bdev_file and dropping the
+file reference.  Clear the pointer after fput() so that an outer cleanup path
+does not put it again.
 
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: John Keeping <john@keeping.me.uk>
-Cc: Peter Chen <peter.chen@nxp.com>
-Cc: Hulk Robot <hulkci@huawei.com>
-Cc: Allen Pais <allen.lkml@gmail.com>
-Cc: Will McVicker <willmcvicker@google.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Zhang Qilong <zhangqilong3@huawei.com>
-Cc: linux-usb@vger.kernel.org
-Reviewed-by: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20230915195938.never.611-kees@kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Stable-dep-of: 7e07d3e4c389 ("usb: gadget: f_midi: initialize work in f_midi_alloc()")
+Fixes: 5c83746a0cf2 ("pnfs/blocklayout: in-kernel GETDEVICEINFO XDR parsing")
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_midi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/blocklayout/dev.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_midi.c b/drivers/usb/gadget/function/f_midi.c
-index 3b4ec6c0a39b3..c060e797de6f4 100644
---- a/drivers/usb/gadget/function/f_midi.c
-+++ b/drivers/usb/gadget/function/f_midi.c
-@@ -99,7 +99,7 @@ struct f_midi {
- 	unsigned int in_last_port;
- 	unsigned char free_ref;
+diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
+index fc64139536002..09f4d9d1960a1 100644
+--- a/fs/nfs/blocklayout/dev.c
++++ b/fs/nfs/blocklayout/dev.c
+@@ -16,12 +16,14 @@
+ static void
+ bl_free_device(struct pnfs_block_dev *dev)
+ {
+-	if (dev->nr_children) {
++	if (dev->children) {
+ 		int i;
  
--	struct gmidi_in_port	in_ports_array[/* in_ports */];
-+	struct gmidi_in_port	in_ports_array[] __counted_by(in_ports);
- };
+ 		for (i = 0; i < dev->nr_children; i++)
+ 			bl_free_device(&dev->children[i]);
+ 		kfree(dev->children);
++		dev->children = NULL;
++		dev->nr_children = 0;
+ 	} else {
+ 		if (dev->pr_registered) {
+ 			const struct pr_ops *ops =
+@@ -34,8 +36,10 @@ bl_free_device(struct pnfs_block_dev *dev)
+ 				pr_err("failed to unregister PR key.\n");
+ 		}
  
- static inline struct f_midi *func_to_midi(struct usb_function *f)
-@@ -1360,6 +1360,7 @@ static struct usb_function *f_midi_alloc(struct usb_function_instance *fi)
- 		status = -ENOMEM;
- 		goto setup_fail;
+-		if (dev->bdev)
++		if (dev->bdev) {
+ 			blkdev_put(dev->bdev, FMODE_READ | FMODE_WRITE);
++			dev->bdev = NULL;
++		}
  	}
-+	midi->in_ports = opts->in_ports;
+ }
  
- 	for (i = 0; i < opts->in_ports; i++)
- 		midi->in_ports_array[i].cable = i;
-@@ -1370,7 +1371,6 @@ static struct usb_function *f_midi_alloc(struct usb_function_instance *fi)
- 		status = -ENOMEM;
- 		goto midi_free;
- 	}
--	midi->in_ports = opts->in_ports;
- 	midi->out_ports = opts->out_ports;
- 	midi->index = opts->index;
- 	midi->buflen = opts->buflen;
+@@ -375,6 +379,7 @@ bl_parse_scsi(struct nfs_server *server, struct pnfs_block_dev *d,
+ 
+ out_blkdev_put:
+ 	blkdev_put(d->bdev, FMODE_READ | FMODE_WRITE);
++	d->bdev = NULL;
+ 	return error;
+ }
+ 
+@@ -410,8 +415,11 @@ bl_parse_concat(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	for (i = 0; i < v->concat.volumes_count; i++) {
+ 		ret = bl_parse_deviceid(server, &d->children[i],
+ 				volumes, v->concat.volumes[i], gfp_mask);
+-		if (ret)
++		if (ret) {
++			bl_free_device(&d->children[i]);
++			bl_free_device(d);
+ 			return ret;
++		}
+ 
+ 		d->nr_children++;
+ 		d->children[i].start += len;
+@@ -439,8 +447,11 @@ bl_parse_stripe(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	for (i = 0; i < v->stripe.volumes_count; i++) {
+ 		ret = bl_parse_deviceid(server, &d->children[i],
+ 				volumes, v->stripe.volumes[i], gfp_mask);
+-		if (ret)
++		if (ret) {
++			bl_free_device(&d->children[i]);
++			bl_free_device(d);
+ 			return ret;
++		}
+ 
+ 		d->nr_children++;
+ 		len += d->children[i].len;
 -- 
 2.53.0
 
