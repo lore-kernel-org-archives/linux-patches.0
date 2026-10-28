@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212206;
-	b=Yli5j4PfAOqtSp2nR3EKG3Bugav3CHsLg1Zb1hYhpAv1fC5dVImtBQwz9rzXh7I1gGnG
-	 EiflZ2+v2okyf/fNX57BQ+wl1L8g7I9Peh4dvBYZ+h/YrdN1ptc/pzYoLp7o4xNNaYe18
-	 4cLiim53nWCZxGlIKm6Kgcy1/gLXZ6qiUeEZIyRKSDjvgiAh4B51YZbE/ikBdktvWgqbT
-	 AZZJ20wBs6oaL98gWChUJ9dfhbd4+uVMAZD0Via10Bp4Rn518646YBoQL0tHGQzNG6Jl+
-	 pbDUjbHvIas7PVBj2hookf0IAR+ua8dDwnJiOvsEpG8+M69jMXKG9iCzcAXw6LJt0Vw==
+	t=1793212209;
+	b=aiq/prv7yfo8FBGZwaGKeXnPfDsCKwwKl0Av21WV3FgCXR7tMXeyQzKGQdSWE8ETkCda
+	 xoj1FHne4fosxI+QtvLPCAxuv0PrwBoVJeFKoFdJP6KSo8SHPNuuAyUoZT46qUs7tY+32
+	 3HEXFgx2UWk+wmFu2l9ew+GwNZAneD2jBBfIweDM+NemBrl8vEntVcyWeSrkE/CPtv6g5
+	 7myEYBxsBPLGaZM4zpnLzsEJghMYcTzJOahRFYAd3z4GnBgF5sA5kxghNZhHHivuHiK9K
+	 MIq9m0nG4/BmGDuDlyLxk5vGJPU+NlPDUwjY7TjvNfzg2fAzy09knacNSkom8QHvpkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212206;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212209;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Caz8Y9R8N3qGuIW74WNNFWSVpuwass7UQ3sTPIh4eoc=;
-	b=L8gbw8pmkBiF+aFmP+ixadRdYrcz2RyPeH/iOWwIDOwG7SBmr8gUqdH64bWIiIokeEPl
-	 /GjWHW02eWtNzRID6IMg8VcKMDgaSI+UXnU4XSdJgf+xauEbkSQzdz949wpye9yXgVrx5
-	 +DA6L4KJGOM6OsdRpflHg3qzk9D5Hz4ihMxRpDGWs8yb32Dg0KkoDBn6QmzjNy7ayaNWV
-	 5WzKLDPSJ7UwI2ImrUk2RFZwmObN+DHWiOtd/6twxtVjFtqYJmFpovglcRgLjuA5nQh58
-	 GVi+SsLJw6QO0/pM2nahEw3Rz1Fx2jR0EbRZFqzS4r5hkXlmEZkzGOPyAEwXiixBEMg==
+	bh=s2eSCJ7SLow10u0YdapddpUVBPUUzT5zlOgYzvbw/dU=;
+	b=AaFc7VSvzgBsmPLvJj3+3ii7hNEf+1762nDc+j7XSgQKD9cIi4xMK+SIEXWeoBgTn6wC
+	 hf2baBUTWqcpveB69rwvRJbqtb1ODvXG/0OCBFJZeawjiZR+kXNTxwxqasjN2lMIYAK57
+	 oskKWtRU4i96h5o7kdqYbrGP1N3hreu6vV4CFB/F8aQ4NNMl7YJ6aBsrG2MlpusN+Z9OH
+	 AgCLiOnwZtAyBfyVeXbTHJDiidE0HRZbxV3BzKs31nS7tCmhNKRbgdrrOTpnuzxuqK91Y
+	 yiNug3E71/jqrmVURgEHaIaS00S6DV04KunkdLqwhHUcdPQs38vgKL5IE70+oBNoeCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JUOvuxXJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kkwiphqs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA0F606A31D;
-	Wed, 28 Oct 2026 18:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7346A606A31A;
+	Wed, 28 Oct 2026 18:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JUOvuxXJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6131F01825;
-	Wed, 28 Oct 2026 18:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kkwiphqs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D08D1F01825;
+	Wed, 28 Oct 2026 18:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212206;
-	bh=Caz8Y9R8N3qGuIW74WNNFWSVpuwass7UQ3sTPIh4eoc=;
+	s=korg; t=1793212209;
+	bh=s2eSCJ7SLow10u0YdapddpUVBPUUzT5zlOgYzvbw/dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JUOvuxXJuR5uwACdywEI8JrSk11Zot2lqdLXKQ7SRYDvlZUK3gBYF1CdAN8vW2sdG
-	 /6b7QAUSJ4//exEUuQ9OWgqU/Nm3Q9onwwF2Qnkj7PDFaShjIz3aVudzlMZ3Psu6Zh
-	 SdAGwcuh8gwtKQMMagt5EcEMJbdXGA/DBF6CSh5U=
+	b=KkwiphqsICuKFSDqPnLfsvNXK79gYZ1piczkSOHjH22bN7khVzZZSgihhS0bPBNLD
+	 higk7ewdCdpHKmA8cZnXWuP6IC7VIFM/XiN2DxnPqZH1RARLFRiG0/y6u81BnVuqJ/
+	 BQa2IK81NbxgSGCyEKZgL6Pv7OZhpnjoBUysqZfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Miroslav Benes <mbenes@suse.cz>,
 	Luis Chamberlain <mcgrof@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0076/1887] kernel/params.c: Use kstrtobool() instead of strtobool()
-Date: Wed, 28 Oct 2026 17:36:12 +0100
-Message-ID: <20261028170500.964308925@linuxfoundation.org>
+Subject: [PATCH 6.1 0077/1887] params: Do not go over the limit when getting the string length
+Date: Wed, 28 Oct 2026 17:36:13 +0100
+Message-ID: <20261028170500.986159152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,48 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit def7b92efd868a6c78da86770704c1a03506016e ]
+[ Upstream commit fd0cd057a1b7351604daa6ffc91dfe28adf7225d ]
 
-strtobool() is the same as kstrtobool().
-However, the latter is more used within the kernel.
+We can use strnlen() even on early stages and it prevents from
+going over the string boundaries in case it's already too long.
 
-In order to remove strtobool() and slightly simplify kstrtox.h, switch to
-the other function name.
-
-While at it, include the corresponding header file (<linux/kstrtox.h>)
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Miroslav Benes <mbenes@suse.cz>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20231120151419.1661807-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Stable-dep-of: 3dfaae04243c ("params: fix charp corruption on allocation failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/params.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/params.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/params.c b/kernel/params.c
-index 82109c0cf9918..e6df4c2ef097c 100644
+index e6df4c2ef097c..89c139e861faf 100644
 --- a/kernel/params.c
 +++ b/kernel/params.c
-@@ -4,6 +4,7 @@
+@@ -264,7 +264,10 @@ EXPORT_SYMBOL_GPL(param_set_uint_minmax);
  
- */
- #include <linux/kernel.h>
-+#include <linux/kstrtox.h>
- #include <linux/string.h>
- #include <linux/errno.h>
- #include <linux/module.h>
-@@ -310,7 +311,7 @@ int param_set_bool(const char *val, const struct kernel_param *kp)
- 	if (!val) val = "1";
+ int param_set_charp(const char *val, const struct kernel_param *kp)
+ {
+-	if (strlen(val) > 1024) {
++	size_t len, maxlen = 1024;
++
++	len = strnlen(val, maxlen + 1);
++	if (len == maxlen + 1) {
+ 		pr_err("%s: string parameter too long\n", kp->name);
+ 		return -ENOSPC;
+ 	}
+@@ -274,7 +277,7 @@ int param_set_charp(const char *val, const struct kernel_param *kp)
+ 	/* This is a hack.  We can't kmalloc in early boot, and we
+ 	 * don't need to; this mangled commandline is preserved. */
+ 	if (slab_is_available()) {
+-		*(char **)kp->arg = kmalloc_parameter(strlen(val)+1);
++		*(char **)kp->arg = kmalloc_parameter(len + 1);
+ 		if (!*(char **)kp->arg)
+ 			return -ENOMEM;
+ 		strcpy(*(char **)kp->arg, val);
+@@ -512,7 +515,7 @@ int param_set_copystring(const char *val, const struct kernel_param *kp)
+ {
+ 	const struct kparam_string *kps = kp->str;
  
- 	/* One of =[yYnN01] */
--	return strtobool(val, kp->arg);
-+	return kstrtobool(val, kp->arg);
- }
- EXPORT_SYMBOL(param_set_bool);
- 
+-	if (strlen(val)+1 > kps->maxlen) {
++	if (strnlen(val, kps->maxlen) == kps->maxlen) {
+ 		pr_err("%s: string doesn't fit in %u chars.\n",
+ 		       kp->name, kps->maxlen-1);
+ 		return -ENOSPC;
 -- 
 2.53.0
 
