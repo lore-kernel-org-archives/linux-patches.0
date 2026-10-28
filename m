@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216788;
-	b=0mH6pm/7gr3vc3m9DuBTH6K6IgKSNt+ALaEDvoPgGYD2wrZ0ZEbeAuDlJRMplWUph1ie
-	 KxaqmAvtRlsplSisNqr2iCiI/WziKxPrshnA8EuxumvFA9rdH+0dDwqxyCa/yux6h4Qqm
-	 ELnW4VQqIQzp7YxL76aDoS0aUd/QX26x3xND8Q5rnmbPmC5MKwSfKImzVZdUYYi+M0+Ab
-	 /bhbG/kZgeHRk+dgXqf7eEUqtRAlMhhRdtjg7LaoAAi14l7U8JogIY3zifxZM8nBDc7xc
-	 t9qiZ7gNjQPyu5/Brrjbtk4HE662VhHuupuZAn80t6xBfmdTz8Jjla2qHDiLEGnvqRA==
+	t=1793216791;
+	b=0RY8eOXUH6io82bUS6TBx7JRAtSuEBCRxoqRzO7UEUaIgdcsIUuVTM80UxxHCDVjYu+h
+	 zI6Gqsav5uU0kuNBIMUTPIwLmvjkbzj9OczXYB95VRmcIqxgwF2cixEH8ucS06euJ0O4j
+	 8mJ5Je0j8u2E/Zk+0h+rZZcuWfTOaWlyoh+7nbJ7IGt7B+0nUnV3AzLTwTSxAVksEwv2p
+	 AmE53lXpWPRoJZPV4DGpr/5OWLsy9bULkZ2KgnU9WneAPn3DZeSp6B4iHtbNQLotEwsTi
+	 UN5IL/9rTZN3TMQ6v7zthPgGWkfB/NiKfD+wUi18Ik/wDcELr/fHWV/vtyvExd7KYig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WJT+ceGqMuHrOXdjAj2uodi3nJvManGx3xAEIiQu+3w=;
-	b=AgP4tidkQ+j8g9qrH/Zxo52b2YxHdL76bmMoaIl8VoYIQpfPVf67DjtveJYQqNcLnqmp
-	 h5K3ULGpkc06w2l8dR/GDZJvXlSNIVcQinKPhB661SsEm8wwwYWTuX6Xg04BYYsPyKBzq
-	 9CWQxgNhkf/1L/DdXowr4VlRrdFZRR8k4WLDgQHdS3fTr+/BH+n4iic3edE7yco+wHmX6
-	 LW0MOFl4oU8FhUbTtBwOvwjOdYNFuaW1BbJFlNu93r48js0E/RkEOS0d/e3xJPlapBIAk
-	 SiIEbcsNL+Xo7QUu2ccxT1IfuSdBKeRsTlYQaRUtXatPeYxftQzd8oL6kiyNNC7UjhA==
+	bh=Jzll+Rm5pTT5+loMfezFbOp5HgI27MSVtdqRx0MbGWA=;
+	b=oKsr5Gbe7Nk/Xrwo3GLT/PJBBXf2Lw43cCOcDOT7Xf214HcEHofQ9Q37FUeCScyi9gvB
+	 ufoGv1ee7ft4JfCb31cMrvlEjK/d8M1ZYtRn7vgMxvQo2xXglhcMVBH1JsA4HZSXl54T5
+	 GV5CJPtpAKHLLaqOLVfIyIYqIsOmzhL9+H4nI6pcZCD63JKPqbphBrtUrHhrABCJbRk4F
+	 2lhEh+CiUCEUNKl1wcyyDkprGIT5OXB3dszLr9LulVVrWS+Q8luVjs+ro1kreIXvR95j2
+	 sGi7bPC0gowluPFV8mXMWlct5yNECN46EtcTOd3w5wffHWgghHwVpatsHxGmrMYr3cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jsj2NL/4";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cntWeUTZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BC8606A31A;
-	Wed, 28 Oct 2026 19:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301A4606A31C;
+	Wed, 28 Oct 2026 19:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jsj2NL/4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81BB1F01825;
-	Wed, 28 Oct 2026 19:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cntWeUTZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC681F01825;
+	Wed, 28 Oct 2026 19:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216788;
-	bh=WJT+ceGqMuHrOXdjAj2uodi3nJvManGx3xAEIiQu+3w=;
+	s=korg; t=1793216791;
+	bh=Jzll+Rm5pTT5+loMfezFbOp5HgI27MSVtdqRx0MbGWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jsj2NL/4qLFg/dg7L4aMT0i+oFhlnCGDe9UZuubu91oRKdFHjdXhgn4/nFdbMP4xp
-	 YSUfZD4D4+ISspreiIpeA2Curvp0n4Qb3ZGUlfy/tsAbNx4KnpsR7GOt4wGCp/ebG5
-	 tTFpvW42rXACLjjXMlZu4jsPFOtAx+OqZqf+JM+o=
+	b=cntWeUTZgDyWpkDsqc1t612FuDOnt/nL+8hr1BQAVJbaq0XVEA0kQRujy11vqIFxw
+	 zqFEnB2SFJgApbkgGIiLjtKCTeojbJcoPZQTJ1rppF3z4VMEdgK4oXPqFmYH5otgMe
+	 OR+7JMNo877DoaxitDJu0GNu0WWX9hT8FlIHHb1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1678/1887] drm/amdgpu: Bound GPIO I2C table entry count from VBIOS
-Date: Wed, 28 Oct 2026 18:02:54 +0100
-Message-ID: <20261028170537.644440406@linuxfoundation.org>
+Subject: [PATCH 6.1 1679/1887] drm/amdgpu: validate and share PSP fw_pri_buf copies via psp_copy_fw
+Date: Wed, 28 Oct 2026 18:02:55 +0100
+Message-ID: <20261028170537.665988820@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -71,66 +71,256 @@ Content-Transfer-Encoding: 8bit
 
 From: Candice Li <candice.li@amd.com>
 
-[ Upstream commit a99cd231cd924b7160fecb9fb3a94b801522323b ]
+[ Upstream commit d1f9f5839bd785a3a06335a01d53282e80f8e5fa ]
 
-Reject undersized tables and cap the derived entry count
-to AMDGPU_MAX_I2C_BUS so we do not overrun adev->i2c_bus[]
-or walk an absurd number of entries on corrupt size fields.
+Change psp_copy_fw from void to int: return -ENODEV when drm_dev_enter
+fails, and -EINVAL when the image size is zero or larger than the
+1 MiB PSP private buffer.
+
+Replace open-coded memset/memcpy into fw_pri_buf with psp_copy_fw.
 
 Signed-off-by: Candice Li <candice.li@amd.com>
 Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c | 21 ++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c  | 32 ++++++++++++++++++------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h  |  2 +-
+ drivers/gpu/drm/amd/amdgpu/psp_v11_0.c   |  8 ++++--
+ drivers/gpu/drm/amd/amdgpu/psp_v12_0.c   |  8 ++++--
+ drivers/gpu/drm/amd/amdgpu/psp_v13_0.c   | 14 +++++------
+ drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c | 14 +++++------
+ drivers/gpu/drm/amd/amdgpu/psp_v3_1.c    |  8 ++++--
+ 7 files changed, 56 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-index 6511ece584760..679473a48d996 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atombios.c
-@@ -43,6 +43,21 @@ static void amdgpu_atombios_lookup_i2c_gpio_quirks(struct amdgpu_device *adev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index e7ed99560ffb1..b489a97ba4ce2 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -737,7 +737,11 @@ static int psp_load_toc(struct psp_context *psp,
+ 	struct psp_gfx_cmd_resp *cmd = acquire_psp_cmd_buf(psp);
  
+ 	/* Copy toc to psp firmware private buffer */
+-	psp_copy_fw(psp, psp->toc.start_addr, psp->toc.size_bytes);
++	ret = psp_copy_fw(psp, psp->toc.start_addr, psp->toc.size_bytes);
++	if (ret) {
++		release_psp_cmd_buf(psp);
++		return ret;
++	}
+ 
+ 	psp_prep_load_toc_cmd_buf(cmd, psp->fw_pri_mc_addr, psp->toc.size_bytes);
+ 
+@@ -958,8 +962,11 @@ static int psp_rl_load(struct amdgpu_device *adev)
+ 
+ 	cmd = acquire_psp_cmd_buf(psp);
+ 
+-	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
+-	memcpy(psp->fw_pri_buf, psp->rl.start_addr, psp->rl.size_bytes);
++	ret = psp_copy_fw(psp, psp->rl.start_addr, psp->rl.size_bytes);
++	if (ret) {
++		release_psp_cmd_buf(psp);
++		return ret;
++	}
+ 
+ 	cmd->cmd_id = GFX_CMD_ID_LOAD_IP_FW;
+ 	cmd->cmd.cmd_load_ip_fw.fw_phy_addr_lo = lower_32_bits(psp->fw_pri_mc_addr);
+@@ -1166,8 +1173,12 @@ int psp_ta_load(struct psp_context *psp, struct ta_context *context)
+ 
+ 	cmd = acquire_psp_cmd_buf(psp);
+ 
+-	psp_copy_fw(psp, context->bin_desc.start_addr,
+-		    context->bin_desc.size_bytes);
++	ret = psp_copy_fw(psp, context->bin_desc.start_addr,
++			  context->bin_desc.size_bytes);
++	if (ret) {
++		release_psp_cmd_buf(psp);
++		return ret;
++	}
+ 
+ 	psp_prep_ta_load_cmd_buf(cmd, psp->fw_pri_mc_addr, context);
+ 
+@@ -3508,17 +3519,24 @@ static ssize_t psp_usbc_pd_fw_sysfs_write(struct device *dev,
+ 	return count;
  }
  
-+/* VBIOS-reported table size is unchecked against the image; cap iterations and
-+ * adev->i2c_bus[] indexing to AMDGPU_MAX_I2C_BUS.
-+ */
-+static int amdgpu_atombios_gpio_i2c_num_entries(uint16_t size)
-+{
-+	u32 bytes;
-+
-+	if (size < sizeof(ATOM_COMMON_TABLE_HEADER))
-+		return 0;
-+
-+	bytes = size - sizeof(ATOM_COMMON_TABLE_HEADER);
-+	return (int)min_t(u32, bytes / sizeof(ATOM_GPIO_I2C_ASSIGMENT),
-+			  AMDGPU_MAX_I2C_BUS);
-+}
-+
- static struct amdgpu_i2c_bus_rec amdgpu_atombios_get_bus_rec_for_i2c_gpio(ATOM_GPIO_I2C_ASSIGMENT *gpio)
+-void psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size)
++int psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size)
  {
- 	struct amdgpu_i2c_bus_rec i2c;
-@@ -103,8 +118,7 @@ struct amdgpu_i2c_bus_rec amdgpu_atombios_lookup_i2c_gpio(struct amdgpu_device *
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
+ 	int idx;
  
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
+ 	if (!drm_dev_enter(adev_to_drm(psp->adev), &idx))
+-		return;
++		return -ENODEV;
++
++	if (!bin_size || bin_size > PSP_1_MEG) {
++		dev_err(psp->adev->dev, "PSP firmware is invalid\n");
++		drm_dev_exit(idx);
++		return -EINVAL;
++	}
  
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
-@@ -137,8 +151,7 @@ void amdgpu_atombios_i2c_init(struct amdgpu_device *adev)
- 	if (amdgpu_atom_parse_data_header(ctx, index, &size, NULL, NULL, &data_offset)) {
- 		i2c_info = (struct _ATOM_GPIO_I2C_INFO *)(ctx->bios + data_offset);
+ 	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
+ 	memcpy(psp->fw_pri_buf, start_addr, bin_size);
  
--		num_indices = (size - sizeof(ATOM_COMMON_TABLE_HEADER)) /
--			sizeof(ATOM_GPIO_I2C_ASSIGMENT);
-+		num_indices = amdgpu_atombios_gpio_i2c_num_entries(size);
+ 	drm_dev_exit(idx);
++	return 0;
+ }
  
- 		gpio = &i2c_info->asGPIO_Info[0];
- 		for (i = 0; i < num_indices; i++) {
+ static DEVICE_ATTR(usbc_pd_fw, 0644,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
+index 58ce3ebb446cf..4b36f6bf97a47 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.h
+@@ -515,7 +515,7 @@ int psp_get_fw_attestation_records_addr(struct psp_context *psp,
+ 
+ int psp_load_fw_list(struct psp_context *psp,
+ 		     struct amdgpu_firmware_info **ucode_list, int ucode_count);
+-void psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size);
++int psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size);
+ 
+ int is_psp_fw_valid(struct psp_bin_desc bin);
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c b/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c
+index 9518b4394a6e7..589052f9be138 100644
+--- a/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/psp_v11_0.c
+@@ -296,7 +296,9 @@ static int psp_v11_0_bootloader_load_component(struct psp_context  	*psp,
+ 		return ret;
+ 
+ 	/* Copy PSP System Driver binary to memory */
+-	psp_copy_fw(psp, bin_desc->start_addr, bin_desc->size_bytes);
++	ret = psp_copy_fw(psp, bin_desc->start_addr, bin_desc->size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the sys driver to bootloader */
+ 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
+@@ -342,7 +344,9 @@ static int psp_v11_0_bootloader_load_sos(struct psp_context *psp)
+ 		return ret;
+ 
+ 	/* Copy Secure OS binary to PSP memory */
+-	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
++	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the PSP secure OS to bootloader */
+ 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
+diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v12_0.c b/drivers/gpu/drm/amd/amdgpu/psp_v12_0.c
+index 0b2ac418e4ac4..b829f7ef67c4e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/psp_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/psp_v12_0.c
+@@ -148,7 +148,9 @@ static int psp_v12_0_bootloader_load_sysdrv(struct psp_context *psp)
+ 		return ret;
+ 
+ 	/* Copy PSP System Driver binary to memory */
+-	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
++	ret = psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the sys driver to bootloader */
+ 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
+@@ -187,7 +189,9 @@ static int psp_v12_0_bootloader_load_sos(struct psp_context *psp)
+ 		return ret;
+ 
+ 	/* Copy Secure OS binary to PSP memory */
+-	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
++	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the PSP secure OS to bootloader */
+ 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
+diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c b/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c
+index c7cb30efe43de..c44d79b90b5df 100644
+--- a/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c
+@@ -182,10 +182,9 @@ static int psp_v13_0_bootloader_load_component(struct psp_context  	*psp,
+ 	if (ret)
+ 		return ret;
+ 
+-	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
+-
+-	/* Copy PSP KDB binary to memory */
+-	memcpy(psp->fw_pri_buf, bin_desc->start_addr, bin_desc->size_bytes);
++	ret = psp_copy_fw(psp, bin_desc->start_addr, bin_desc->size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the PSP KDB to bootloader */
+ 	WREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_36,
+@@ -251,10 +250,9 @@ static int psp_v13_0_bootloader_load_sos(struct psp_context *psp)
+ 	if (ret)
+ 		return ret;
+ 
+-	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
+-
+-	/* Copy Secure OS binary to PSP memory */
+-	memcpy(psp->fw_pri_buf, psp->sos.start_addr, psp->sos.size_bytes);
++	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the PSP secure OS to bootloader */
+ 	WREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_36,
+diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c b/drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c
+index 321089dfa7dbf..6764ceded08dd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c
++++ b/drivers/gpu/drm/amd/amdgpu/psp_v13_0_4.c
+@@ -115,10 +115,9 @@ static int psp_v13_0_4_bootloader_load_component(struct psp_context  	*psp,
+ 	if (ret)
+ 		return ret;
+ 
+-	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
+-
+-	/* Copy PSP KDB binary to memory */
+-	memcpy(psp->fw_pri_buf, bin_desc->start_addr, bin_desc->size_bytes);
++	ret = psp_copy_fw(psp, bin_desc->start_addr, bin_desc->size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the PSP KDB to bootloader */
+ 	WREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_36,
+@@ -178,10 +177,9 @@ static int psp_v13_0_4_bootloader_load_sos(struct psp_context *psp)
+ 	if (ret)
+ 		return ret;
+ 
+-	memset(psp->fw_pri_buf, 0, PSP_1_MEG);
+-
+-	/* Copy Secure OS binary to PSP memory */
+-	memcpy(psp->fw_pri_buf, psp->sos.start_addr, psp->sos.size_bytes);
++	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the PSP secure OS to bootloader */
+ 	WREG32_SOC15(MP0, 0, regMP0_SMN_C2PMSG_36,
+diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v3_1.c b/drivers/gpu/drm/amd/amdgpu/psp_v3_1.c
+index 01f3bcc62a6c7..953a59df53874 100644
+--- a/drivers/gpu/drm/amd/amdgpu/psp_v3_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/psp_v3_1.c
+@@ -104,7 +104,9 @@ static int psp_v3_1_bootloader_load_sysdrv(struct psp_context *psp)
+ 		return ret;
+ 
+ 	/* Copy PSP System Driver binary to memory */
+-	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
++	ret = psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the sys driver to bootloader */
+ 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
+@@ -143,7 +145,9 @@ static int psp_v3_1_bootloader_load_sos(struct psp_context *psp)
+ 		return ret;
+ 
+ 	/* Copy Secure OS binary to PSP memory */
+-	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
++	ret = psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
++	if (ret)
++		return ret;
+ 
+ 	/* Provide the PSP secure OS to bootloader */
+ 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
 -- 
 2.53.0
 
