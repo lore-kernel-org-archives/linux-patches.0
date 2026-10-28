@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793212618;
-	b=U37FNRDoXUGZt3auNuEWTtYyglupE2ByrK2LTUJ8UgJUMznzjI/dks023hlJ0DZuxM/a
-	 OCB9iDbeJ2QvrYdFl+5P5bswY6G51KRW5NadP2Rn1kAAFr4gop1dprKWahTxc5AStqc8i
-	 iMHoBEWd+KOsU91F1SJ7DJY7ZiMRS0KxZ8rvOuUmQ1lnUdqubez3VO19+ywD+PnXRESo0
-	 f1zMGSsEeacKYlSZOiYP6YBgGQMTbCKRhoKhanf1UAX8K+iDOtQJgA7zobEpraSBfDU20
-	 pwqol4TQU3WRpYapfSo/JQ0C83I24BHNesnW/HUE7IWADsn0fp7w/7XzKAKNHXb3MDw==
+	t=1793212621;
+	b=xCpnJFcwdez9AjuYwGE9Z6tPXNvJ/y8J7F5eKIsktaNmNXth3dQbEP3qLGoNUoDJyuJS
+	 hIw1NhPdvHqUzB+dfTzsXBdzZHPcThxd0zPQAy95SMZEKLjF11piKCXfDLVO0IistNvPd
+	 +MPCt+vDP4G8+ULuxfA7zRWaTAa+4nBFwba417NeOdYhsCqaw5ea/6P1CSWBEPpH4j9iR
+	 57GK9CJBTti205y7NMTXUVyJouT2F9jdRr0imgd8jsKrDd8kD5Qy3LcgczVCrpLX8eOXE
+	 XadWVQcy82CC9YyL8+v6HESPVxOasnMvqZqhR6wRK8rIuaQpt6KEEFvF3GsKafFeLwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793212618;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793212621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kwryuhbd1ANA4XK3q7lYeES2UGu6Oa9p3dIB5hfTVyA=;
-	b=4iii6sy/7QzWfr+YLWOKcTCiY4PCrKfktTi1IXBxcQ/jq+Q9JSUThIlFC0A1wEgGU8YW
-	 Xoyf85F1zzca77hLJ7oMETGT+YozTKkYapUmNzgU4KCtRw2esnsC91UQt+6xz0YK7I1U5
-	 0OlUNQHNoiidaM5fcn119+e8iv6kSGXN0JZxMwOmXTAqOYnV4HgzBShpWsPIQ35jOBFfs
-	 fJKym87XQ8tTaZlCwEwRm/KSkI1RGNZ628PWVLPd+2yrKdKWZFAC+ZvFOq8Gc2g9gEtiw
-	 slqWD6GT3E7LYI6dG0Gpy6ozR3Sv4mtI3gVsuaOfjqUS6rMvNtWoUisqoBdiKY8RC1w==
+	bh=rpwbee0U/rNXpxgFgtqO3i+pQ1PVzX9+9Jo6veC7JGM=;
+	b=O2l9O/3U7rtG+8o/O3qmrk3ckH4RejVhuFr49+9qdRgIPL0YCeQI5NOOT5a5ql+2u5TK
+	 5U9UvdN8UbbaC3Cc31UtERmltsICfU2xIdUUFraKx+3ytJQsxPRy8pEF8Urs06j63SEcF
+	 Wh5XVAkomLt47iPP++9ZV+rrl21y0GX16XJ++C2veZx4hXkDoUaxmQW9kP8ywr0W3BKMJ
+	 DaDzy12gnxWpcVxZYyfW7Qovr2Smm4FKbobXQ/aibztQfk+7ICd0dzNv5GFZJcPjq0FlW
+	 A0hVlv8RJIu0v1osA8Vw4NtlYAXzLnnb02qAv69iDWFLBGUqoiKxImkJcpDk4uRJ+xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3CmhdbF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Md6Bpr4I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127B4606A31A;
-	Wed, 28 Oct 2026 18:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD05606A320;
+	Wed, 28 Oct 2026 18:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3CmhdbF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5AD1F01825;
-	Wed, 28 Oct 2026 18:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Md6Bpr4I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413E21F01825;
+	Wed, 28 Oct 2026 18:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793212617;
-	bh=Kwryuhbd1ANA4XK3q7lYeES2UGu6Oa9p3dIB5hfTVyA=;
+	s=korg; t=1793212620;
+	bh=rpwbee0U/rNXpxgFgtqO3i+pQ1PVzX9+9Jo6veC7JGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B3CmhdbFu8JQ7tXsdszDSlj8vrpa96Zp+u9HA9V8MAHQzq30A24YV2t9wQ7VzMuPY
-	 9BHikbVT6lH/IHjNIUQQK1IYhrpxVx4BtRtgv72gPUiXdcoAYIEMiqu74DmJdgob1l
-	 Ia1/mLtb+qi9Jq1+Gck0VYRDXl/5Y8EL90ODfC4w=
+	b=Md6Bpr4IkDCIpi6qJU7zTXSb3q+7jlrF69VCdb6wLy5pNYXexrbteFOSrt/GxLV8h
+	 Yae1ZYVwd7rHvncILAjfVoI89/vlMjqQpCYSJHmEQ71D4gtsct72m7DeNBkRrPNruT
+	 efZlV7kGggSJdSiYQb/lqem4GtJUafrtvpPcwiTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0218/1887] of/overlay: dont create "//" paths for fragments targeting the root
-Date: Wed, 28 Oct 2026 17:38:34 +0100
-Message-ID: <20261028170504.193165360@linuxfoundation.org>
+Subject: [PATCH 6.1 0219/1887] ASoC: wm8903: Move the DRC QR threshold to the register that holds it
+Date: Wed, 28 Oct 2026 17:38:35 +0100
+Message-ID: <20261028170504.214880133@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,44 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 21c89ff1fc86ffa517f3a9ca1ba5c48e9e37c1ba ]
+[ Upstream commit e31ae4aeb049983fe3be0cf1e12c8074811a7685 ]
 
-dup_and_fixup_symbol_prop() rewrites a symbol value by replacing its
-"/fragment/__overlay__" prefix with the fragment's target path. When
-the fragment targets the root node the target path is "/" and the
-result starts with "//", which __of_find_node_by_full_path() cannot
-resolve: symbols pointing into such fragments silently stop
-resolving.
+The DRC_THRESH_QR field is bits 7 and 6 of DRC_1, but the control sits on
+DRC_0. Its shift and max are right for the field, only the register is
+wrong.
 
-Drop the target path when it is the root and the tail is non-empty. A
-value naming the fragment root itself (empty tail) keeps the "/".
+Those bits of DRC_0 belong to DRC_STARTUP_GAIN, which "DRC Startup
+Volume" claims as bits 10 to 6. So the two controls share bits 7 and 6.
+Writing either one moves the other, and the quick release threshold is
+never reached at all.
 
-Fixes: d1651b03c2df ("of: overlay: add overlay symbols to live device tree")
-Assisted-by: Claude:claude-fable-5 [Claude Code]
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://patch.msgid.link/20260831-nh-of-alias-overlay-v7-7-02754604805a@nexthop.ai
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+The six fields of DRC_1 tile it exactly, so there is nowhere else the
+threshold could live. Point the control at DRC_1.
+
+Found by a sweep for two controls claiming the same bits of one
+register. No board with this codec was to hand, the register map is
+the driver's own wm8903.h.
+
+Fixes: f1c0a02f32f8 ("ALSA: ASoC: Add WM8903 CODEC driver")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260920135327.3628704-1-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/overlay.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/codecs/wm8903.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
-index ebd712dcf34fc..7d8205b7e5631 100644
---- a/drivers/of/overlay.c
-+++ b/drivers/of/overlay.c
-@@ -241,6 +241,9 @@ static struct property *dup_and_fixup_symbol_prop(
- 	if (!target_path)
- 		return NULL;
- 	target_path_len = strlen(target_path);
-+	/* a root target renders as "/"; drop it to avoid "//" results */
-+	if (target_path_len == 1 && target_path[0] == '/' && path_tail_len)
-+		target_path_len = 0;
- 
- 	new_prop = kzalloc(sizeof(*new_prop), GFP_KERNEL);
- 	if (!new_prop)
+diff --git a/sound/soc/codecs/wm8903.c b/sound/soc/codecs/wm8903.c
+index 41346e5ec5ad4..aebe47e9dc0d3 100644
+--- a/sound/soc/codecs/wm8903.c
++++ b/sound/soc/codecs/wm8903.c
+@@ -678,7 +678,7 @@ SOC_ENUM("DRC Decay Rate", drc_decay),
+ SOC_ENUM("DRC FF Delay", drc_ff_delay),
+ SOC_SINGLE("DRC Anticlip Switch", WM8903_DRC_0, 1, 1, 0),
+ SOC_SINGLE("DRC QR Switch", WM8903_DRC_0, 2, 1, 0),
+-SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_0, 6, 3, 0, drc_tlv_max),
++SOC_SINGLE_TLV("DRC QR Threshold Volume", WM8903_DRC_1, 6, 3, 0, drc_tlv_max),
+ SOC_ENUM("DRC QR Decay Rate", drc_qr_decay),
+ SOC_SINGLE("DRC Smoothing Switch", WM8903_DRC_0, 3, 1, 0),
+ SOC_SINGLE("DRC Smoothing Hysteresis Switch", WM8903_DRC_0, 0, 1, 0),
 -- 
 2.53.0
 
