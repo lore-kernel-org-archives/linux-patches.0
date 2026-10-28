@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793216484;
-	b=BJtQYfr+J5C/2Lx1EpatnLanP2b0K/dlLgUpN3BNIoYsnVe9eGAHMCRS38QyWodlBI+i
-	 gGpYqVtTIK0XAYNOJMkfJyx7kC9quRZQnz53Pmj06z2exoWAj1my7cOieA1ynb1jgbjKg
-	 KDWOzbTZxABhsC9BVJ5Ar8DUzIW1PlCGNyHc59mdbqfHY6ez1SDTeUwXi7vUulNktltvN
-	 RTcRiWhjJNYsUf3Ez+9wolY685yKmuv5qi5rH5YEGVkEJNMvVIwi4tXdOo0qxnMovnZXB
-	 so7yHcV4rZdm30AE0n4tU+jq2hzzW+Q4Fj0l4xVDNpaN/9nyVTk2gVvqoQ+qVtkAf7Q==
+	t=1793216487;
+	b=FgdmjEJJNEqepxGblyv04i2XRuqWFUhZGu7ti4qQ3z+qUwgu3VRknNgpq/vmHVSqnDTO
+	 4is6svGQ8R7xgbEKfJSP3hu/p9FLnfP0OdVtZTkfPTXWUDKF5DEqfZiiSbpt9KU8RAhnT
+	 no3puTe8XlQVNY89arwO/JRg2JPFOthaF/N/OdfVEOnPxs/YPGwaIES1FcRcPrst607Ik
+	 RHVXogPgHQ0wToXafxBhl1jE9kG9+hHjt5fl74YgNF71eZtLw1d8lIOnOBKnh54I6mZrG
+	 frBA9Cam7WWA2eT34IUsun1pQ+tOcZOOwh2UlwgvLlxBs0FHNdiPYVETbExuhE+8VOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793216484;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793216487;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=679N6Kh6KKPQ4zGYlEHRFqcNd73TJZaBARRe0e8zlbY=;
-	b=sFoz4sEvqXZC+lINaYkAGto8FRsz/YMqEdVNm9n34twjhtqJLuV8A35usqoNh9EtQYuv
-	 sV7SdYMYtG+oZuP2HSvevMaARt8xZXQo6Y65lOQK0i+7HPozt1jLPjmJxYq3x3OGr8zzH
-	 5Qnfsd/RVXcBYzaTNJlOyZ1xwGGXA7djU20rQBdceE9uPSFg8nwt2qz19t/6wosEFWwpT
-	 /YPrLw+xaok3voZEZschL0rlQQLnJ8FtSdMvv6U56BY2Dxp9PQ2pdXeYvBRBSFSS3BX4J
-	 L+DErhoG8KSw31Qx3UI4khqEeOKQCGNwltvz7FbQCwtuBs9O64LPwB2xBo5uLGlTs9w==
+	bh=lNO4RREIdNTvlOz7xEb4gWgcqMqnlSsz3a/xSduQywQ=;
+	b=gxYMx1zOlbe+4rlI96TbUMDs8t+8fyEu7GgUGK91dVh6bv/PtCaHlUDta7deLGsRVOjP
+	 MAU9/U8dkQxUob5swMq/OA1HltvXB7ldt+PIsBiAEZc5GwHl0bj+xLY7Z+OJqstUhmppA
+	 TJzanxrhlTEeWarGKqSVU06aoy40GirlMCA/rFRdWDs3xJ1TiQktXBvygakJ4E7J2Ej8S
+	 AawCjOCVgVf1WGDp1RQORETb2+8b1dFHvkQCLsNMAsVekNit0+JlbAxV2pfwBWNmTSDGt
+	 iWNc2vF1yA8rz2L84O3fMrWinFYieC9p7F3+apedVVm6MJPTTeuRXxa7jUlfk3YVTRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oj5ScrEc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gm+vxKjs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF067606A31C;
-	Wed, 28 Oct 2026 19:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E5D606A31C;
+	Wed, 28 Oct 2026 19:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oj5ScrEc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08EEC1F01825;
-	Wed, 28 Oct 2026 19:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gm+vxKjs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59891F01825;
+	Wed, 28 Oct 2026 19:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793216483;
-	bh=679N6Kh6KKPQ4zGYlEHRFqcNd73TJZaBARRe0e8zlbY=;
+	s=korg; t=1793216486;
+	bh=lNO4RREIdNTvlOz7xEb4gWgcqMqnlSsz3a/xSduQywQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oj5ScrEcbO66igIQVS5/w52sU3QH8JRkDXBcqWM0nVvHoh4yLrkIZKF09URqyk34L
-	 pn1Ee32bm83DDBOSICfgg7SnhEnMddrrjOz42eTpOh728UdG7DC3v2k5+ocH0lQQZ3
-	 /Ll3iP287rrPpeAX+snMIh7yfvvZx9WR4UoF2j5s=
+	b=gm+vxKjsDhHaqLEgBSepVkUGz/990mkuJjiBfhmP6H238Z/zoSvjPbjMZf/PyOgEm
+	 7am3L780aNG0FPXWCAGpMQGlMtuXkGDxtKpTaCUvbvc6TF8ohwcqd06bm5ZQkdUuLP
+	 RQOrp2400b/f/v3rGP7saLY6LNG55YVGzurs7h10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1572/1887] coresight: etm4x: missing cscfg_csdev_disable_active_config() in perf enable
-Date: Wed, 28 Oct 2026 18:01:08 +0100
-Message-ID: <20261028170535.239623977@linuxfoundation.org>
+Subject: [PATCH 6.1 1573/1887] drm/amd/display: Resize MST HDCP per-connector arrays to 32
+Date: Wed, 28 Oct 2026 18:01:09 +0100
+Message-ID: <20261028170535.262715676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -69,102 +71,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 0a47f0be6557b4a851addd430383a4dc7ee08752 ]
+[ Upstream commit 261e0fe4e2c99f687114b64b10b98db964b475f4 ]
 
-In the perf enable path, there are missing cases where
-cscfg_csdev_disable_active_config() is not called:
+AMDGPU_DM_MAX_DISPLAY_INDEX is 31. It suggest a maximum number of
+32 connectors. But the way it's used is like MAX_DISPLAY_COUNT.
+Hence we're off by one with DRM core, which supports a max of 32
+connectors.
 
-  - Branch broadcast is selected but not supported by the hardware
-  - etm4_enable_hw() fails
+Rename AMDGPU_DM_MAX_DISPLAY_INDEX to AMDGPU_DM_MAX_DISPLAY_COUNT
+to match its actual use, and increase the size to 32 to match the
+originally intended size.
 
-This can lead to a leak of config_desc->active_cnt.
-Fix this by properly calling cscfg_csdev_disable_active_config()
-in these error paths.
-
-Fixes: 810ac401db1f ("coresight: etm4x: Add complex configuration handlers to etmv4")
-Suggested-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260725113645.57519-6-yeoreum.yun@arm.com
+Fixes: 82986fd631fa ("drm/amd/display: save restore hdcp state when display is unplugged from mst hub")
+Assisted-by: Copilot:claude-opus-4.8
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm4x-core.c          | 38 +++++++++++--------
- 1 file changed, 22 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h      |  2 +-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c | 10 +++++-----
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h |  8 ++++----
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 32be2cd1b3b7d..0b77c180d8557 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -669,8 +669,6 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
- 	struct etmv4_config *config = &drvdata->config;
- 	struct perf_event_attr *attr = &event->attr;
--	unsigned long cfg_hash;
--	int preset;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 12385b6f8443b..6036b138245ba 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -43,7 +43,7 @@
+  * in amdgpu_dm_kms.h file
+  */
  
- 	/* Clear configuration from previous run */
- 	memset(config, 0, sizeof(struct etmv4_config));
-@@ -740,20 +738,6 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
- 		/* bit[12], Return stack enable bit */
- 		config->cfg |= TRCCONFIGR_RS;
+-#define AMDGPU_DM_MAX_DISPLAY_INDEX 31
++#define AMDGPU_DM_MAX_DISPLAY_COUNT 32
  
--	/*
--	 * Set any selected configuration and preset.
--	 *
--	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
--	 * in the perf attributes defined in coresight-etm-perf.c.
--	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
--	 * A zero configid means no configuration active, preset = 0 means no preset selected.
--	 */
--	if (attr->config2 & GENMASK_ULL(63, 32)) {
--		cfg_hash = (u32)(attr->config2 >> 32);
--		preset = attr->config & 0xF;
--		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
--	}
--
- 	/* branch broadcast - enable if selected and supported */
- 	if (attr->config & BIT(ETM_OPT_BRANCH_BROADCAST)) {
- 		if (!drvdata->trcbb) {
-@@ -777,6 +761,9 @@ static int etm4_enable_perf(struct coresight_device *csdev,
- {
- 	int ret = 0;
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+	struct perf_event_attr *attr = &event->attr;
-+	unsigned long cfg_hash = 0;
-+	int preset;
+ #define AMDGPU_DM_MAX_CRTC 6
  
- 	if (WARN_ON_ONCE(drvdata->cpu != smp_processor_id())) {
- 		ret = -EINVAL;
-@@ -787,8 +774,27 @@ static int etm4_enable_perf(struct coresight_device *csdev,
- 	ret = etm4_parse_event_config(csdev, event);
- 	if (ret)
- 		goto out;
-+
-+	/*
-+	 * Set any selected configuration and preset.
-+	 *
-+	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
-+	 * in the perf attributes defined in coresight-etm-perf.c.
-+	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
-+	 * A zero configid means no configuration active, preset = 0 means no preset selected.
-+	 */
-+	if (attr->config2 & GENMASK_ULL(63, 32)) {
-+		cfg_hash = (u32)(attr->config2 >> 32);
-+		preset = attr->config & 0xF;
-+		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
-+		if (ret)
-+			goto out;
-+	}
-+
- 	/* And enable it */
- 	ret = etm4_enable_hw(drvdata);
-+	if (ret && cfg_hash)
-+		cscfg_csdev_disable_active_config(csdev);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+index 6110d88efdbba..678ee48075e99 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+@@ -256,7 +256,7 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
  
- out:
- 	return ret;
+ 	cancel_delayed_work(&hdcp_w->property_validate_dwork);
+ 
+-	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT; conn_index++) {
+ 		hdcp_w->encryption_status[conn_index] =
+ 			MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
+ 		if (hdcp_w->aconnector[conn_index]) {
+@@ -303,7 +303,7 @@ static void event_property_update(struct work_struct *work)
+ 	struct drm_connector *connector;
+ 	struct drm_connector_state *conn_state;
+ 
+-	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT; conn_index++) {
+ 		aconnector = hdcp_work->aconnector[conn_index];
+ 
+ 		if (!aconnector)
+@@ -375,7 +375,7 @@ static void event_property_validate(struct work_struct *work)
+ 
+ 	guard(mutex)(&hdcp_work->mutex);
+ 
+-	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX;
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_COUNT;
+ 	     conn_index++) {
+ 		aconnector = hdcp_work->aconnector[conn_index];
+ 
+@@ -753,10 +753,10 @@ struct hdcp_workqueue *hdcp_create_workqueue(struct amdgpu_device *adev,
+ 
+ 		memset(hdcp_work[i].aconnector, 0,
+ 		       sizeof(struct amdgpu_dm_connector *) *
+-			       AMDGPU_DM_MAX_DISPLAY_INDEX);
++			       AMDGPU_DM_MAX_DISPLAY_COUNT);
+ 		memset(hdcp_work[i].encryption_status, 0,
+ 		       sizeof(enum mod_hdcp_encryption_status) *
+-			       AMDGPU_DM_MAX_DISPLAY_INDEX);
++			       AMDGPU_DM_MAX_DISPLAY_COUNT);
+ 	}
+ 
+ 	cp_psp->funcs.update_stream_config = update_config;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+index 69b445b011c8c..d18c4cc7d69f3 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+@@ -43,7 +43,7 @@ struct hdcp_workqueue {
+ 	struct delayed_work callback_dwork;
+ 	struct delayed_work watchdog_timer_dwork;
+ 	struct delayed_work property_validate_dwork;
+-	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_COUNT];
+ 	struct mutex mutex;
+ 
+ 	struct mod_hdcp hdcp;
+@@ -51,7 +51,7 @@ struct hdcp_workqueue {
+ 	struct mod_hdcp_display display;
+ 	struct mod_hdcp_link link;
+ 
+-	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_COUNT];
+ 	/* when display is unplugged from mst hub, connctor will be
+ 	 * destroyed within dm_dp_mst_connector_destroy. connector
+ 	 * hdcp perperties, like type, undesired, desired, enabled,
+@@ -61,9 +61,9 @@ struct hdcp_workqueue {
+ 	 * will be retrieved from hdcp_work within dm_dp_mst_get_modes
+ 	 */
+ 	/* un-desired, desired, enabled */
+-	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	unsigned int content_protection[AMDGPU_DM_MAX_DISPLAY_COUNT];
+ 	/* hdcp1.x, hdcp2.x */
+-	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_INDEX];
++	unsigned int hdcp_content_type[AMDGPU_DM_MAX_DISPLAY_COUNT];
+ 
+ 	uint8_t max_link;
+ 
 -- 
 2.53.0
 
