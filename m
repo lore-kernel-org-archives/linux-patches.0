@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793217037;
-	b=tEWtfycoWks6MErOTcAt10mN7gkDxKPQ2XNeSgjwIPWK2Kv1H905Thzhqr0w6noAzMG8
-	 VUMGCcgjpnJBLy0W6TgkMdYbMYgx7yx6YWKAy7gg8m0rXKcNeWBERTZwTy18mDOP+/9G9
-	 XM1ffwtEU8A8T9Pq73rbp76V09aBiv3FnDR9VzFFL3CD/f3F2WPeqTz2Xn5Enp1RuubY9
-	 pjNUbJXx8TmuuR8p2KxT1njLeXn+D10AMGCpvECHZA03mUufitT/FltTSohMm6Vp9mKbZ
-	 jDFw92RknhRrQoAB7f1cPCcMY1GcoHIWRml5BbCVz7N4RCuwRIfLkLDcHFMcvyPP3gA==
+	t=1793217040;
+	b=zQyo/YVTRE5KtvdEq6w1Q/Jg0ubRNCPnjJNrOVlaQyP6XbUztoLjIwM6n3B3b/4Lldfm
+	 OF182FLo6FbOYNnZqM8vkDg09IC6hdWpwsDFTWyK8jtSf7xmF6CaW8pKI7s4aZlXTSSpR
+	 V4xmh3eBxDA0fKVx5p0Ea+8aO2/6y6pqEBizTPUEZcYVQHpgEEBAfFWNiMg0DoRorzomP
+	 XebstyZVx0aK+4x9VTj5hnHLBO85PVig2RLVzGFEoKfVtn5qRkAEJSGqT1wJFC8zJ5r33
+	 E5KaW73SVj0CIbocv0q4L+a8GvduOesg2j9ip40zOYNCZ+PUZczE+oJ1zhgwHHEJ4sA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793217037;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793217040;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OffEVIDy/nzOvR4qCiCbjY8ydkFwXTdjFkoxZR02vxM=;
-	b=oJqdfgL79CEveNzClfP95nSREU7oI5MBdsAceW6jrALCZXFk0SbwXrMoU8CusMNMch6S
-	 VLYMkya221hAtxqbYGvHhtIr0o0YgaQpG4wKgThFerMEvSDtG/AxQ9ZMWfR003/CsjyIs
-	 0eSzIjFQYYeDM1zFB+nP8KqvBpc0JvFD/7wfuVDXXac4zDv2oQaeqwMXKfP2hd9YQGPc6
-	 Mc9HyW4g/2wQcPcKrCnDZj1LdU0tuj0uywRz/QCdCVkKjjQVscHg20WG+LJHDKzJAeMut
-	 5yy36ysamsJXm084QAAgln32zSEgB/lQS+y/5HssAAzq1N7zydNhZ1KOLMNYZg7V2Lw==
+	bh=kpa6XD+8AZSpB8cLYcQtKhwlzyOabdckmOqUf5GyNAY=;
+	b=OkS7np/48nI6/tgQhvD5bc9vbXNWhANvW01UzTVlvVlWq1y+YNn2EDrvHgjHw/L80EEF
+	 v/L1MhHPy69mNA4fqgleihHi03E/u6csMxJX39Jx6S/z1f43dg/STJw+vooJe5E2TKT7r
+	 Tmp06gLHaVD9F2jRyYfvxQ+LmJNL/HgL2XysUNKkX3XTguRCMNbTajcXDICcBE/vQX8SS
+	 LLXPQblfuvwXmmLIKeFh+9IGNbQ76EbRVGvQ4B23G9nxzfmIaBXFJ1ysj2TlVFx54pnUf
+	 YqGXY+B8BSYdmTlRxys6XGwOsLCWSJQ2/P6bh8tEyA8Kie4uz9nLEm7LdhHMKOJ0DLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfUIEQzn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNggmBYO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA6C606A321;
-	Wed, 28 Oct 2026 19:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46444606A33C;
+	Wed, 28 Oct 2026 19:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfUIEQzn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75E51F01825;
-	Wed, 28 Oct 2026 19:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNggmBYO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9368A1F01825;
+	Wed, 28 Oct 2026 19:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793217037;
-	bh=OffEVIDy/nzOvR4qCiCbjY8ydkFwXTdjFkoxZR02vxM=;
+	s=korg; t=1793217040;
+	bh=kpa6XD+8AZSpB8cLYcQtKhwlzyOabdckmOqUf5GyNAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfUIEQznJ1sqUZinkCxTywJOTUNSSyxAC5P4ibpbvynM3jlcG8EjQ+r5BPGphpkWE
-	 H9+c6dOunNOlf7WNl0NPFeAsoj8dT8ztgJD9EtxdpZIv0RI8no3of0f063aTGtZ8KW
-	 RneiqlqBXSXyy7uULIQGWeQiE1CgKFcLNcDIDL14=
+	b=jNggmBYO8Nx3KgVQEcNBPe6god+esuCSav1KUbirwjIXOh132l7eJHRcK1IdnSwQO
+	 Dm9IBjjTG7+N0Sy07Gtbn/yCAir37F9maEgvltAWGGPdBC4YBs4e9V2VDqr0bjzZml
+	 M2vJZhd14/8izg6coTyITTp71eLnhlZ62mfQGOlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	David Rosca <david.rosca@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1766/1887] drm/amdgpu: Fix VCE 3 ring align_mask
-Date: Wed, 28 Oct 2026 18:04:22 +0100
-Message-ID: <20261028170539.643587886@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.1 1740/1887] i2c: qcom-cci: Fix HALT_ACK reset request being dropped
+Date: Wed, 28 Oct 2026 18:03:56 +0100
+Message-ID: <20261028170539.050924161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170459.200466217@linuxfoundation.org>
 References: <20261028170459.200466217@linuxfoundation.org>
@@ -68,39 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit 2ee9836545e690c9e66ec203445d7705959fd7a8 ]
+commit 195f3d74b5de98969dc4fad956393bb00787efd1 upstream.
 
-The largest frame is 20 dwords, so 0xf mask is too small.
-This was always wrong, but we were lucky with the VCE_CMD_END
-commands inserted after fence and vm_flush.
+A HALT_ACK interrupt indicates that the corresponding I2C master has
+entered the halted state and must be reset before further operation.
 
-Fixes: 8897ea8c761b ("drm/amdgpu: Implement insert_end for VCE 3")
-Cc: stable@vger.kernel.org
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The M0 and M1 HALT_ACK status bits may be asserted simultaneously in a
+single interrupt. However, the interrupt handler currently overwrites
+the reset mask when processing each HALT_ACK condition, causing the
+first reset request to be lost if both events are reported together.
+
+Accumulate reset requests instead of overwriting them so that both
+masters are properly reset when M0 and M1 HALT_ACK events occur in the
+same interrupt.
+
+Fixes: e517526195de4 ("i2c: Add Qualcomm CCI I2C driver")
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20261012-cci-fixes-v1-1-8cd4eb1fc5f9@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vce_v3_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-qcom-cci.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-index eff6e2f1c482e..27b2c4c7c63ee 100644
---- a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-@@ -959,7 +959,7 @@ static const struct amdgpu_ring_funcs vce_v3_0_ring_phys_funcs = {
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -168,12 +168,12 @@ static irqreturn_t cci_isr(int irq, void
+ 	}
  
- static const struct amdgpu_ring_funcs vce_v3_0_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCE,
--	.align_mask = 0xf,
-+	.align_mask = 0x1f,
- 	.nop = VCE_CMD_NO_OP,
- 	.support_64bit_ptrs = false,
- 	.no_user_fence = true,
--- 
-2.53.0
-
+ 	if (unlikely(val & CCI_IRQ_STATUS_0_I2C_M0_Q0Q1_HALT_ACK)) {
+-		reset = CCI_RESET_CMD_M0_MASK;
++		reset |= CCI_RESET_CMD_M0_MASK;
+ 		ret = IRQ_HANDLED;
+ 	}
+ 
+ 	if (unlikely(val & CCI_IRQ_STATUS_0_I2C_M1_Q0Q1_HALT_ACK)) {
+-		reset = CCI_RESET_CMD_M1_MASK;
++		reset |= CCI_RESET_CMD_M1_MASK;
+ 		ret = IRQ_HANDLED;
+ 	}
+ 
 
 
