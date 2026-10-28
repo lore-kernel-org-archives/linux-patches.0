@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793209557;
-	b=PE0huI5tQ+aUaNb2ACBF4iYDbc9y65exPMlHhx2sLDQX7fAgk9ZE1s6qMVxvdhQDMoFH
-	 rJhX5ZEsbuuv2BGfPVVwpO2/RWPl734fndhuCYNvPCGp6Kq4oIhzrD5YJerP+wgfxifTH
-	 K+2AfoVObLunQscroRzyPmJgdGSp/n8crY1g0nf60KiIGCIXYc2U9S9FsZS0mcp4/l0Ac
-	 KHxJdIyYMkqsB+L6MfgbDd0pgGqSF3U0ZzPTEfbUIH85ZjU8L8JjTtQxH/wQL1EeK94IE
-	 uCFhDDfxlbCCh9bqt0s9NTDDZBKC9ZRLgV/VfGyDeSsJT/+ekBdaUrKLcoVYXSv8MEg==
+	t=1793209560;
+	b=vULzmfTW5+ZaZw281w9fcgu4MOKWtHPZhpGg2VSd4uzPi8d5HiSXxvt7C96/r879i266
+	 HaFXOobTpBon9r2CmqGxJj+lALGbfcXdrcxTfwtp7Xqo5U0Yj6SLmXwnxkqm4j72YdB32
+	 3HDcZgUbRKRbZFBdS8+N/mD6GwS7dSYhRw2xF+MRxlEbjFI6wnIvYD6porqIDuhjuerD2
+	 ycMdYjX2QKnF3XpPx2mFCdX9M/aH+6BKLwp34W1BWadnRe+WuzC39rLQcPMkEhTHWzWd7
+	 oJ0kHSJjME9fuqOptlX30TrREJAoflTRyrfJll43ySS4gFGUtB51Zpdf4fR41AAA8xQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793209557;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793209560;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eYfF6kWFCqu/DjJrMlw0cWWbkHnBCYrJKNl3w5OTBmI=;
-	b=uBeFj07fTz0R3oedH7efFeq+o1xd9z+mWQmvKqVvbzuS/ngWpl8cW06HgHMbrL/xapw3
-	 p/7B5tVHG5LqE/VZNxFmk6VcbaY1dwMVQh4hWc+PBzQEiWNgiFfK41XpyaHa1A6ukAeQQ
-	 EfsawRT4+RtO+AN9Ei9oqisZHlX1oXHls2qF4svsiNVNjawZ5cD+ef2XNRqd4Z9pNtUZ5
-	 NpvuXvkGsOZEwD04fQQjWdfbc2yd1l0/aF+3NifIL8r8rntotQ8qI5bCykiDM4JsXKs92
-	 pQhMRX91jRHJMRC9noa5XQvfit48YACg838++SNs4b92g2T1LcoxXS1GsTQ0GZmn2Zg==
+	bh=Vtt69r2od9Gu0CcXenq4/oMZgkz2IjeUKZF5xNsJXyA=;
+	b=s5ndpDbcLPLlHj2WXyjsq/OllOjhnDl1XOcXeruJBOD76TnPU6K5UU0z3mAxFm67qsuE
+	 xaLxscDovSMzIlPrPelWTrLipaKNcs4rh1JWwmzAugXEVjRN6FE3ljwifz2+dSlSKeJAG
+	 CD+n28QBm8GzMJIj0UZKHY8yUPMflPInJmvN9xS0DZelFknIlmua7+vY4gISZPKUxRI4B
+	 lXlFCsTNRLd3P+AeJ8ATxYZ3WeSrk+nI3ddHNjrczgOW9jY28VaoVwQ1PyUCaZ683LyZ5
+	 5MEF26VhOllCfZdwuWcHwWaZyd0R96oT0FEC8HGm+2KaDnzkrO/nUhGESBOCZrT7p1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o9eKRaO4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FZgNRBGs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A604606A31A;
-	Wed, 28 Oct 2026 17:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F202606A31C;
+	Wed, 28 Oct 2026 17:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o9eKRaO4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8321F01825;
-	Wed, 28 Oct 2026 17:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FZgNRBGs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6352D1F01825;
+	Wed, 28 Oct 2026 17:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793209557;
-	bh=eYfF6kWFCqu/DjJrMlw0cWWbkHnBCYrJKNl3w5OTBmI=;
+	s=korg; t=1793209559;
+	bh=Vtt69r2od9Gu0CcXenq4/oMZgkz2IjeUKZF5xNsJXyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o9eKRaO4Xrro/AMP6HSZk1q8m3EmdlyxNFE0BLyLu0drp38mrXHvD28ldumG7g6GU
-	 nu7soE9Qm6DrfVj7jZ/+/F/jcJMVgZhsCt9mXi5qbG73jGfVYJizS6HodvCE5gOOoO
-	 TCpl+IG4bB+OWXRj4itWjS9ctVxXk6q/xML3zkkQ=
+	b=FZgNRBGsO6QmfiJnDNWnubMQubtMjzdfo+DkJrEUJakxGPxENBtQvDYytl4pYRc0U
+	 ZCEXIbyJBOKOUpxgM9TiAkhjtTSij6Gz/tm+1Af9aCPgmVh2x5N5fRjvN4lOyxlfQK
+	 tFEr7SpX3BtHsQOKaAlNhLDCAIC1dNnVOtq69bls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Vosburgh <theminershive@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Aswin Karuvally <aswin@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 470/516] sctp: validate chunk length in the inqueue parser
-Date: Wed, 28 Oct 2026 18:00:22 +0100
-Message-ID: <20261028170014.616198363@linuxfoundation.org>
+Subject: [PATCH 5.10 471/516] s390/ctcm: Prevent XID null dereference
+Date: Wed, 28 Oct 2026 18:00:23 +0100
+Message-ID: <20261028170014.638951323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261028170003.522232767@linuxfoundation.org>
 References: <20261028170003.522232767@linuxfoundation.org>
@@ -68,67 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Vosburgh <theminershive@gmail.com>
+From: Aswin Karuvally <aswin@linux.ibm.com>
 
-commit 6cfc1b90cb86f4aabc69fb8e30128e07e2cdfa3a upstream.
+commit b264d8422779d69febce914efc47a92a85cc382c upstream.
 
-SCTP chunks always include a four-byte generic header, but
-sctp_inq_pop() currently accepts shorter declared lengths. A zero-length
-chunk leaves chunk_end at the current header.
+The mpc_validate_xid() function sets grp->saved_xid2->xid2_flag2 to 0x40
+to signal XID validation error. If peer XID is NULL or r/w channel
+pairing mismatch happens, grp->saved_xid2 is never initialized. An
+attempt to set the flag in such case leads to NULL dereference.
 
-When ASCONF is covered by the association's SCTP-AUTH policy,
-sctp_assoc_bh_rcv() can continue before the state machine performs its
-normal chunk-length check. sctp_inq_pop() then returns the same malformed
-chunk repeatedly and the receive softirq can lock up.
+Fix this by using the always available priv->xid->xid2_flag2 instead of
+grp->saved_xid2->xid2_flag2 for validation errors.
 
-A remote SCTP peer can trigger this after establishing an association on
-a kernel built with CONFIG_IP_SCTP and configured with
-net.sctp.addip_enable=1 and net.sctp.auth_enable=1. The reproducer did
-not require application credentials, a shared SCTP AUTH key, or
-net.sctp.addip_noauth_enable=1.
-
-On commit f967455fb2a5 ("seg6: reset IP6CB after IPv6 decapsulation"),
-one zero-length ASCONF caused repeated
-watchdog soft-lockup reports in a two-vCPU KVM guest. All 3 pre-trigger
-health probes succeeded, while 36 of 37 post-trigger probes failed. With
-this change, all 37 post-trigger probes succeeded and no equivalent
-soft-lockup signature appeared.
-
-Reject chunks shorter than the generic SCTP header at the shared inqueue
-parser boundary. Mark the packet for discard before either caller can
-continue processing it, while preserving the four-byte generic minimum.
-Declared-length 1 through 4 controls and kernel-generated ASCONF traffic
-remained healthy. The patched sctp_hello selftest passed for IPv4 and
-IPv6.
-
-The complete private reproducer and validation evidence are available
-directly to maintainers on request.
-
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
+Fixes: 293d984f0e36 ("ctcm: infrastructure for replaced ctc driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Charles Vosburgh <theminershive@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260827-sctp-zero-chunk-inqueue-v2-1-2e7669c6a6cb@gmail.com
+Signed-off-by: Aswin Karuvally <aswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260827063408.2168914-1-aswin@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/inqueue.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/s390/net/ctcm_mpc.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -205,8 +205,10 @@ new_skb:
- 	chunk->chunk_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));
- 	skb_pull(chunk->skb, sizeof(*ch));
- 	chunk->subh.v = NULL; /* Subheader is no longer valid.  */
--
--	if (chunk->chunk_end + sizeof(*ch) <= skb_tail_pointer(chunk->skb)) {
-+	if (unlikely(ntohs(ch->length) < sizeof(*ch))) {
-+		chunk->pdiscard = 1;
-+	} else if (chunk->chunk_end + sizeof(*ch) <=
-+		   skb_tail_pointer(chunk->skb)) {
- 		/* This is not a singleton */
- 		chunk->singleton = 0;
- 	} else if (chunk->chunk_end > skb_tail_pointer(chunk->skb)) {
+--- a/drivers/s390/net/ctcm_mpc.c
++++ b/drivers/s390/net/ctcm_mpc.c
+@@ -838,7 +838,7 @@ static void mpc_action_go_ready(fsm_inst
+ 
+ 	fsm_deltimer(&grp->timer);
+ 
+-	if (grp->saved_xid2->xid2_flag2 == 0x40) {
++	if (priv->xid->xid2_flag2 == 0x40) {
+ 		priv->xid->xid2_flag2 = 0x00;
+ 		if (grp->estconnfunc) {
+ 			grp->estconnfunc(grp->port_num, 1,
+@@ -1647,7 +1647,6 @@ done:
+ 			"The XID used in the MPC protocol is not valid, "
+ 			"rc = %d\n", rc);
+ 		priv->xid->xid2_flag2 = 0x40;
+-		grp->saved_xid2->xid2_flag2 = 0x40;
+ 	}
+ 
+ 	return rc;
 
 
