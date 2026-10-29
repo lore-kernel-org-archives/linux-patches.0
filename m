@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793288057;
-	b=BuZZsXebDuTrbQlbWUCSi/gLl59bmfU0/YaIFNDW798sircHtIxk0cnMhSnqCCo4zaC8
-	 xoFzbZUTh1DwCLI5je9wN810V12Y7LQASxTTXwqe8EoJgOaVqvDqsSCJmb1rpeFFENw6g
-	 pDhhMemQ/+i/H3Vf5//gAUNfBcEJ63YLk6P1C8kv/I6WDDKk9WdE04uvI+Ke1n3lA21Tf
-	 ILFSu9KtIWvr6cWj4cpuyMhxaf0//K/7y8J2oyfXQY3AIXVvXxdRV5+HChk4NOMPAwepz
-	 Uf1PQMpxwdu3i9j5aZ6A0ypHX6DNpLJeCcgTFGVPXK0OCmztmAqp06oW8MSeGxpbfGg==
+	t=1793288277;
+	b=TKYkB5DDH3wIyu6QACaQaxe/0xeX9HFu3juC6+sBgJVp6czYCbYZvcx17lkJkcV7ENyE
+	 TaZDkjoVUM89SRy8qMXIEQjXze/jiu5LkzknoSBJP4tBiroReG/t6Uafsv71x8QdcNzUt
+	 DfBuroURHs2nrICQrOO2lYQEtN3iEnNNXPql4pXBcYZJhUbkWr5DCZHjaaUDtOT3VsoJI
+	 JXHpJOlM46tF1ZLE9OAJhqXXJsi30UxFzUsWsdsUHt3ebb1mMDMzcMmO3AMY6D6MPenFG
+	 GSWkTPz51cnxN6OsueEEDXguiT9/F56FIXhSrcx5ImNS5iu2NqSJtE7mdh8aPkGa0eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793288057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793288277;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
 	bh=2V4JLnzK67IJcCHq2My/KdT+6D1UK3FIaHGDhvNAL2Q=;
-	b=244PUrhB0sO3840iIilEtZSldmOZPct1E/WW2frfA/vSjlbvRhraC/UfBRwkSY4LpqYm
-	 zzKwuyVvSAQOoHdz0xP/ZEA77f7UcmZ8KkP0/pEPfxYlwmi1ohoXWQxN6s5Zn+y0+7Q6Y
-	 Ecjs0soaNP8Lx6alv6QTwSTOVTgZ7oAkmmAhVLxXA2OnC3OaLmP3BdxFOehyqqSfkMQaV
-	 G5iLyRtp2lLTFwUrJJlD1hq/aMsJfXaZPGghoeZL+iArlz4HIOF+Mr/MgXNGtHJi4r+f7
-	 TGO1mzm4K9sc2J6HKtaoVMmZwUoRV51uR0rfr+6jGT1dY5s/U+T2E9Os1LlvSBgzk1w==
+	b=WmKOsBGGkw3AO71M1LYj7xD71EjAD4uEsdTRjzudKct8AYSu8uOp6pYXgMybtXCT3j9A
+	 xB53bHhykxKx3LRlQrP/R+rDnd9o03JEWP+RhtuBQ0DEU9GRiKJwk1vZc/M5+bpjPgI42
+	 EeiEKDB40GzI9MW9xJ1TGsBQS5A3WF8MLzMEh37pJp+m6NrI6JO7dduVeBJqtFaRtrgBp
+	 lxxl3lK7WpPAAmNIwoojZd7SdfwQ4svZA4l85bGEPgQzbGlZo35L5rkYc6xFQeGB+9vNw
+	 WOmxtu/5P/vf/2a9Yi+IojBRLtilVSGNgh1D6TSbtiAKC8wE1374yConEWuzLjGDOXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linuxfoundation.org;
 	spf=pass smtp.mailfrom=linuxfoundation.org;
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=Nf85amXx;
-	arc=none smtp.remote-ip=209.85.161.47
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=FwsjFvhB;
+	arc=none smtp.remote-ip=209.85.218.53
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E57C606A31C
-	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 15:34:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4E57C606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61753606A31F
+	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 15:37:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 61753606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=Nf85amXx
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-6fe4372c5f3so1534936eaf.3
-        for <patches@lists.linux.dev>; Thu, 29 Oct 2026 08:34:16 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=FwsjFvhB
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c4697404c2bso312168466b.2
+        for <patches@lists.linux.dev>; Thu, 29 Oct 2026 08:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1793288055; x=1793892855; darn=lists.linux.dev;
+        d=linuxfoundation.org; s=google; t=1793288275; x=1793893075; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
         bh=2V4JLnzK67IJcCHq2My/KdT+6D1UK3FIaHGDhvNAL2Q=;
-        b=Nf85amXxvegY4dWc+hCk6z97Y3xy5eU+Lp9pSCMUQGS6X8xVSrA8N+z81Dk86TqZBL
-         8/Wrom4oqBHRuB7e8vC/odwYOls7JW4NuNTfhlJj+0Lsd2McUMmpHssyKICiX1zfAqom
-         mUFkJfD6fgtuJmYtWIp/QAjoO5k+9/huLJMRM=
+        b=FwsjFvhB+hyQp10cbRl5m1ryYXmvY247IfmtSk2kBXyN8BXDlI2jRBA1E2naClcxod
+         J6qR0UQuVtFCb44H2A57k+HnTkWrEuv8qWlOkvYvytnlYp6ejcFH/gKPMqlwKH8lcrVd
+         Z9HUfS2/ffmyOzVRCR+tEW83dlwLOW5xpBhO8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793288055; x=1793892855;
+        d=1e100.net; s=20260707; t=1793288275; x=1793893075;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
         bh=2V4JLnzK67IJcCHq2My/KdT+6D1UK3FIaHGDhvNAL2Q=;
-        b=hrDL8O2Qakh1sm20EivqNUFrAv0aLIg9ts0iw341wCVlb+YhH2RjvpOX4ytZeCWNW5
-         5DgzfN1jfOmhxqJ8XHmu+m0r9kU8Hq0LXWYkpMm6/MFujQ3nbBNo+RoXv/8bNZUwfT6j
-         Axmt2RdnqTpw0puaOPjA8ihIqlbToOUnmvadrWpGdGpSGhKrEsHP8I7OuWZTbeEQ2Nsp
-         g42Ov9xmvGRYChM6vVuGbY7KCo2L081IIkP8ssUVTsLwD7xfMp0XEXgud64uIPhV/4wF
-         hfqdYByY5xVGhwXOt/LPyGux2aIm7QX55TCZNHgccjRMQXDBCmy84RC4STw0E25dO24Z
-         as2w==
-X-Gm-Message-State: AFq9FYLk7Yslvj3zYWIR2kRD5ATgN65ru/W5fuUVJaDp8tnIQJsSLNEq
-	TK59G09SPUF+djPAgJQAb7U2NAVX61t6ydAjE2qB6GZr3xa6hvhDhs3Sx6MkyYZs38Q=
-X-Gm-Gg: AYBFou0LEIZKaQoOz7UWG6OXietlpf03P+dxG1cYuN9FAhWpvxmO5zgmkB9oe/1aajZ
-	ChdYxyGWuR9TE6afcl6a61MYki/kK7lokTCMwhrBeaVRKDYAdlSkdRmNnn/3gDXafL0l3A3UzDy
-	fInRNTm94cIKdK8LO5HF/V1EO+MDGE8CdbgYkL0oLEPRB3+ey1x1P0gTcaCUqbeabYgWtK6dhT3
-	sqvlwW3UAEhJnp9nFIXmi624hF7hH4JD3U+/wi5kNdfdOB10xkYI3B2G1FjmVPiTFHFAIWT+JYg
-	/iQ5JpSu1qhAzCqk8RMbTnqg+9iYC5sPDXNEHNHBUVszsYDIQ8T0XVf0FDcy0obIsDzLazHnHvj
-	QxgNHNCAbU0DjfaswU5eOj2jLHfGPeQD0Z/1VayYb/k0e8so72A1nt8fl0tzdOaMy8FIcNw20aW
-	N6Rnu7a9nxLoPep8OFMGJYFKE7HqhnWPAAr0F1py6ZCWM+hd+gtLYNXV6wvXNEKPE0y17Scfigq
-	OwGXyrQ/WAXCQBxjAiaVgn5Q8fEV6LN9gAK7/B1np4g45u1PwwP3SXx2uZJ8LBmBmGSsqyqpqC7
-	o0p7AsxofidW6zmpCWaubYDLFw2rfdxqWjJRuQ==
-X-Received: by 2002:a05:6820:7093:10b0:6d8:462d:2759 with SMTP id 006d021491bc7-713ef924163mr2829588eaf.90.1793288055258;
-        Thu, 29 Oct 2026 08:34:15 -0700 (PDT)
+        b=sSdbsVr5xh8cbnYwD7R/+q0pnsHqlu/eKdhQ3/GjTgy/Cz2FAF+cVF93xzU7ACpbUa
+         x6abXpRWS2Ngw6lRXEFsV3JtHsn+MvomPuS6dBjSdWFJFMpwYzUmJWv9lSQK4mXmjduF
+         kI+LSwegw9dnxSGoZwci2k4vf33JWWG4weG7aUPCd16P7tm+upJmClTypQTcpaeaktrj
+         4KooAUceQxIut4WFImCmKTC0Ve5+BOqloGblyDk9knHocI6GIb2tfW3/zZIdS60XFYPF
+         RL9Vc1F3zInlp+wRx4yZXTmQL+6L2pjEXLJSYWZASX8HZmkm0uoBgWbin6+qq4Pyt+7R
+         qSQw==
+X-Gm-Message-State: AFq9FYKMdCHb75PSPfkfhEsSuyfyQmFJYPwq2LW/XC7+EXr1UEq6FxXf
+	AWND/zaC+NMX/C/nf8YGHbxyyLwB3zesruEO/ctnganQcBW9vaC1p/IRP2jauh7imp8=
+X-Gm-Gg: AYBFou2u8yn+k34mClhoZg741VjsKc8vLTzEyNPt6I0gDlnekL8J8GVVCwQ+Addx04Z
+	t2Wt1osOkqqdJRTGrLYuGkSs8by9MfbvmFfuzeI8QA+Y3juO2t0fvf7pestWTvBp80mbHYNM/6C
+	bobowmXT+6Gcv0L+8fbc0SjcdxHpKOh3c2kFlpB7bbQXHPAwF0iUJgX34mDF5EVYwb95ZEvrWT4
+	WVFk6m7er04ytDCgG/aNc7sJbwlcfGSNJ4gF7eytug09R6FCZBg/kJzKhWG5AbJ9bIgGqq7aG/x
+	1LF+nuxOZRNuJ0K1y1WamIMx/ZHes5sTfGiilUsLdSnLOVYBd3d/hG1oGt7J3F4AbqMbVYUOD+N
+	wEzuxJ5CZVeEA07pPWm59/9ChMb5VAbwywsClCsYYaPJaOrT3lIcIXLwbsABUf/BRUvJLNSgGRo
+	joHw/BOJHmqwnEuo4Wi9BdSCj5vxVJ+WcoEiyq63nsRT8UlC55MAGEksFeMsTSem1Bb1bJ31poU
+	ka4Ay6R5d0OGV+xX2njF0UE0uASgN0Yyq9XRSihixppaV12q5QZSo1/j3kKqb4ikIqv2nT/Z17G
+	Lh9XYS4I5mRKxc1bUxJujuuhSL09Wz7mypeJcg==
+X-Received: by 2002:a17:907:3f88:b0:c40:80eb:c54e with SMTP id a640c23a62f3a-c49bddac533mr513399766b.4.1793288274113;
+        Thu, 29 Oct 2026 08:37:54 -0700 (PDT)
 Received: from [192.168.1.128] ([38.15.57.99])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-85d3400540asm79447a34.19.2026.10.29.08.34.10
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4ca26498edsm3437966b.21.2026.10.29.08.37.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Oct 2026 08:34:14 -0700 (PDT)
-Message-ID: <03dcc5c7-5d14-412f-bf6c-723af54a3b77@linuxfoundation.org>
-Date: Thu, 29 Oct 2026 09:34:09 -0600
+        Thu, 29 Oct 2026 08:37:52 -0700 (PDT)
+Message-ID: <5ad973b7-4e0f-4122-8abf-5c5d59b51ee6@linuxfoundation.org>
+Date: Thu, 29 Oct 2026 09:37:45 -0600
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
