@@ -1,104 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.52
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793282931;
-	b=5MEqeTfUetTKsNdT77XgyQQgCSRtaBTcpeszgponvHQ1mtrKtUS0OhdB2I9xWjTNsudu
-	 KayEsswGYB7XGdFPSUr9SwJ9WEMv5VEVc+L483ZYhiMlIz0aelFPw82UgkXfY7SVzhpWN
-	 63FrJGCzfWuQUXub6UF9Rnpelbv4BpwgaD1sENZHBnXpH0P8pa/6saDRsxyXBMSh0n/cO
-	 5Ok83GLzFgcEX8QEyHyurjkNdXxKxGp8uiCo2WfNaHAi+9BylSXU9zrtJ03Dat8bn9Nxq
-	 AQVgQIEvfAolKewSzx7+Tg42o5+Qgmrq+kzGoI+CIZIEYCvVtaX2vUIytwjlBVBQ7Wg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793282931;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=H7Sot6fFV/mqoa6U1RpNz1ThNjxhsXi7WSqRiEBh7pk=;
-	b=EIuSdeQUsHhE7bgJzlI9yrhkMz5IERBI0C5Zos2BTiQENhFdpF7Wn4vBihHogMvvHCpi
-	 2ISf6+UMuAwlQpbbG8qABFLHsZXNidyjMyAgBT0D3Ur1qjUbv7KnStNz94wZ9iJOCU4Jd
-	 FUcM8WWQ9qUgTFFPHDUmP08lV3SZ3rRedCiShX7Wc18DmjzRp7mxxQ2+X4q9Nan8vLNJa
-	 RJLlwI5j66wpd9mDTucWtiKj1Sy1Pp5TJYUDw8/JQnGQTDOs1vmJoBkiH8Ykm3enep/q8
-	 p7z67Mxb7QsBAT5yDCv8GC+jUwTcCjSK3psOSH+PqSFc1wO4gEdjTFv8HevjgSab4CA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=UKPeO9+2;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.52
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.39
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793283138;
+	b=XfXnOkqEG0/O6iIPsleD5XoWYfqujapyGAKoVrSTXSdsR7pu6KQhttrapTRmWaWW6Xcn
+	 rE/RAY2trbm1qcg68vi+H+JQvDVmIBt5X+pgYQc8Gv7HBzeYUrcY5Cp0vDPI1+QUVvuNT
+	 WcKhLq4PJwyd5AxbrIaHZFYQxND67qckslllXhzwdg4erW+qC0bOkSRAIw20BWJWfjvd2
+	 0jfWbuqWVy/9XIjRWlRiMmtmXASj3FiUMii2+Iyiwft4O6ToJodjqHat/IcCkr30yVEq2
+	 JYtptmiB+R8JhABEYkT5TGyQ6mGLT9Bs4aTDICG7jQsK+bA2Oiaf6Dj/Gbcp+S+GFZw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793283138;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=CUu4JKG/T0VbWw91uFo3a8pQJkxWXhnnzdDiZtsSrPE=;
+	b=kvIRXl8+z5bIkltYhVyLNFfw57tFZ5vu2VkJzCsygNoLKXea0bIL5OBeN05pyddJI0uC
+	 IsQv4Kl6m5klOdX3WuLDzZ75DmEZ5Mc8Akbs33PXUKivqMD0DVMFryOudjVR6irbQP13c
+	 mo91tGVXNWhBW2BmrwRLldscmWPD6fwYsynC9m11U07ocCtLDQE2cWVT+E6BdFA966Kke
+	 fg1ZTMdT3W6zfme8Q6fZRkY5rpRy7qezTqybIt6MpHVdLtiQpBHY7nT63ybIo0mUlD1aC
+	 9neBByh2+bgigo4EYT4rmV4yZWVaMnzGKBmrRqup1j0J8hNzJvA1QmJD3w5Ww7YHTdQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=w6rz.net;
+	spf=pass smtp.mailfrom=w6rz.net;
+	dkim=pass header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=hYTwS7w1;
+	arc=none smtp.remote-ip=44.202.169.39
+Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8836606A31E
-	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 14:08:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B8836606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2030606A321
+	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 14:12:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2030606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=UKPeO9+2
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-91c7a706b1fso10437396d6.1
-        for <patches@lists.linux.dev>; Thu, 29 Oct 2026 07:08:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793282930; cv=none;
-        d=google.com; s=arc-20260327;
-        b=aisNo6VAotWXu6Mi2W2umGfY6h7tD6vLRsIU/b5n10l7xTrQBCBnogeQ/1miBvHB5c
-         N6qaBNNqaPwUdffKBxF5e9rskQ9/Z6faTkKUfTMN8tZ0tW0CRc8whckdwcgLlCLyotp9
-         TEOzXjv95lwJmqN04215SO46/so0JcDEeHy3RgRi9sUbKkmlwEF1x9tSx/4jiGzI840L
-         kM8UQNClGO3+Ep2jHM9iDaV7wAZ64RAzKS/HlRTTMH0PSzoGRFleaYzm6S0YtYauUkNq
-         oun90vukVMZ6d0vBGKN/7QQq8aLP/ugwEa3ACSbwgQHNRBfamRI9MnhBDjE6W+x7WyCs
-         kSqg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=H7Sot6fFV/mqoa6U1RpNz1ThNjxhsXi7WSqRiEBh7pk=;
-        fh=xWM+ZidqsnmY24j/49pvxZlisOG7zD/Lu9ou1X8EgBE=;
-        b=gABDzqaYFJPiulocki3qLADFZFa+qmaH5SxigPesM9wLBiTq2FK7JzrDVQmSBkx2/r
-         PHcyz79RkywKmziWUjMc2pqgPugEJm+vPOSF8QGGlLANYEaUkFOYTVeJSel+nq35bQBJ
-         ObvEL+JUL1RWwXcz67rLHoyeK4kPB2KEg2pH1vYof4vPLizLmGRrxa0b3/TqPD3LZFhv
-         8dPg6Q6rPzITYxcVZAwmfqWuU3xz2TJnmI54OrwSQFCQNzwzjf6pn+1bjsBDHUPHD4+A
-         WH0tNiUt9VJTPXWOB/5eQaK+RnItMdtGbQ4sJLl9IIdaqRp0bOC5FHyTEyTlMcRa3iPP
-         quTw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1793282930; x=1793887730; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=H7Sot6fFV/mqoa6U1RpNz1ThNjxhsXi7WSqRiEBh7pk=;
-        b=UKPeO9+2qc7xiP4MPR/7cBIz6CgSwDcTHk45ktToipsszvxPHPiYYVGrSoRIEsYOKU
-         yYIUyssYdajaP0O1EwL1yGuyxeVszaFRgMqvjX8eBPT2JHtAkbYe1rFqa9KXjCcpw2x8
-         R9BCKatTJWQ12u7STYp8MgIywDsCnxTKlDdYyy1ssXR5RPPDLFnmI0vS/ZFO5xwr+Tke
-         9YedEadMsVQhl6mRgcIi7Al38f4wOuA/sJooJuiTpoZzzXvlHcdvIuCrjORUBK/zV5He
-         KHxVsz8eHJZenkpFoIjQesAuAmJvnc3UG00g2gASZwaQIgUE/h+ufl5rsYsl+gy7OEbW
-         IoTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793282930; x=1793887730;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=H7Sot6fFV/mqoa6U1RpNz1ThNjxhsXi7WSqRiEBh7pk=;
-        b=bYiEkdMfibbj7f7YnkWaEcjxRHOGxzjBmoNu2flsR7SfrZSEi/cNxebf+r9tEKxMC9
-         7HAOdHOwMwKjIQWvic/7mWEqmUrfLQNgzM/WeT3tXCC1DMvM41XvgJbAYm8A9ilUaNTd
-         i2YxNUndpMYe4eNa/KH+p1bVL+ulR5EwiXp1Vc4UF/f4TaDvc7QDulS+71t/ZGGUGuBj
-         cASGtz9Py8SU/kiASsM/YaStHHEdKZ9JxW+xgVgNLFY0YH0QVbtwienMntaIrTGqYuvX
-         CVXTo7ujvJhC2kxbhzgluP+4rYzvuNyTW9I8+CDxTNoWCvMsnEvUuKiBlU4hxhIjhJXj
-         ++5g==
-X-Forwarded-Encrypted: i=1; AKwUvByCOEMn9feFgdyiA70q2WeXZwdYugxe+JlaACDEHe1UvyQ4zIeCyp4GUlwZazP8RmjQalL/3UQc@lists.linux.dev
-X-Gm-Message-State: AFq9FYLwmfdDmvfl0vDQUgN/AXEXsgeci3qceOT7E47HJwWpm9BnvrmP
-	9pmfKlZKZ1qAW6uKXzzOPlEdQeD0NaJz/Y0X432EL61ME2GXj0ORaDxws7Kz1hYriXX5ePQyUJ1
-	UKvx/yugpZHMd+HpqUUGwwF+BB21xLdjGiKFap5e8
-X-Gm-Gg: AYBFou3O3OxopUW4/pC/JxkBStAsxm+/nrowYvqngw7Ec9fcpQh+GcxWCdHyT93Edu2
-	oUWAi/jiOYQld9RiT0gsXBGHexsh9NgrO+DeM4C7y4qlvdDj9Y6u0S+fTkIgGZQop0JX4tlt2Rs
-	ncTFEcyrNckQb3mmZxM1IVZZLv0UBuqUcH5qbLlBpZl0v0AQ4yh5jguzo8ctdQGFSXdp/p4Um1d
-	1/fAp/KnUY+jH0Zn3Ub9JqgnYLx4vHRbrdfdReNVCnCiHrGBHlmG+WQ5uSe0kstP8//FyhjLW5D
-	qLEY7iV5wxEdWNTkdTLDXc5DyM6W/MLudun7aP15Z+8pY+RL/bZcjWN4Ox1u7wqpn66jR6bO5M1
-	tL63wITOPbRJdCPFddlQjFGnj3q67n/f99NIqGDizJx3M/4oflez1U9erTbkyVvzVew==
-X-Received: by 2002:ad4:5dc3:0:b0:917:9703:48b5 with SMTP id
- 6a1803df08f44-91c90742c32mr40775726d6.26.1793282928607; Thu, 29 Oct 2026
- 07:08:48 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 29 Oct 2026 07:08:47 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <20261017073149.1303738-1-aneesh.kumar@kernel.org>
-References: <20261017073149.1303738-1-aneesh.kumar@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=hYTwS7w1
+Received: from eig-obgw-5006b.ext.cloudfilter.net ([10.0.29.217])
+	by cmsmtp with ESMTPS
+	id MPLuxAOsYMylkMQrYxVqG8; Thu, 29 Oct 2026 14:12:16 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id MQrXx96R2NSXiMQrYxmfAg; Thu, 29 Oct 2026 14:12:16 +0000
+X-Authority-Analysis: v=2.4 cv=JvXxrN4C c=1 sm=1 tr=0 ts=6ae35440
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=GxnsrCybi4LwF3y-YhAA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=CUu4JKG/T0VbWw91uFo3a8pQJkxWXhnnzdDiZtsSrPE=; b=hYTwS7w1HWTtmwdAsUQCzG8Hy5
+	fTX4LXitEA2jlOVQdrlilV5UozyshTvfw/l7ljcwZJMO7PYOjSMH6hejr2fcRVCFsa9f0sRFyYGpE
+	eVGPxW5MgGuQIbpiJcSstU/o8mmm5l2kOkONWlt7fI/iAvq2itpj8L6KP+7EPGPbehrZW/X+oTtqd
+	tgdJ0Sxz6/hnUnzo9Mh2SHtcuEmlfjCAW8JyXH+UhAXXlL5PV4qYtTwoNbr658SX17WWSzaqUbFkD
+	wpW412wH3/Voa55zYTIYlvYq4pW403M1VDQgGvT1JLiNHzv48l1cMP2e4r97FONbx4IDopoxhhw33
+	6FbTKi5Q==;
+Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:51934 helo=[10.0.1.180])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.100.1)
+	(envelope-from <re@w6rz.net>)
+	id 1xMQrX-00000003vJe-1B8e;
+	Thu, 29 Oct 2026 08:12:15 -0600
+Message-ID: <96b99a72-219e-40a9-bc88-5d21571fa5f7@w6rz.net>
+Date: Thu, 29 Oct 2026 07:12:13 -0700
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -108,114 +76,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Date: Thu, 29 Oct 2026 07:08:47 -0700
-X-Gm-Features: AclHuK_fk7ikZ1Ry_rR0lNw1rkr7m6j782yki2DT2D_WNr6A4h89KzpbSsJWlnU
-Message-ID: <CAEvNRgFb5zLkTph_9k3io=7UD6S-j3QPnjE3qVTvzeGZxEJSHg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 00/13] KVM/VFIO: guest_memfd support for device
- MMIO resources
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>, linux-coco@lists.linux.dev
-Cc: Alex Williamson <alex@shazbot.org>, David Woodhouse <dwmw2@infradead.org>, 
-	David Hildenbrand <david@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>, "Joerg Roedel (AMD)" <joro@8bytes.org>, 
-	Kevin Tian <kevin.tian@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
-	Robin Murphy <robin.murphy@arm.com>, Sean Christopherson <seanjc@google.com>, Will Deacon <will@kernel.org>, 
-	Alexey Kardashevskiy <aik@amd.com>, Xu Yilun <yilun.xu@linux.intel.com>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	Steven Price <steven.price@arm.com>, Fred Griffoul <griffoul@gmail.com>, iommu@lists.linux.dev, 
-	kvm@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.3 00/38] 7.3.1-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261028165940.394092994@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.206.103
+X-Source-L: No
+X-Exim-ID: 1xMQrX-00000003vJe-1B8e
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:51934
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 18
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfMUT8jcv31AyVydPWT3e5SaHIu/90aeAqFzLHjwIH9x77A/OI35ggZxo0t9WVLe3y1FPu6y8TCxdOkbJjsmuKKrrOiH6qMoJcjLVXVoZ76LMDUDZn/LD
+ 7/wMFwPweASjXLQFLKwOcOJFu0/z8LAUgr9GA4X+EBZNzkH8YkIfztw+a9+wwKkqaIqc6WIBYr/jiQ==
 
-"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> writes:
-
-> This series adds a guest_memfd device-resource framework for exposing PCI
-> BAR memory to guests. The intended use is confidential device assignment,
-> where KVM needs to coordinate private device mappings with shared access
-> through VFIO. The Arm CCA backend is provided separately; these patches
-> contain the guest_memfd, VFIO and IOMMUFD interfaces it uses.
-
-Thank you for this revision to guest_memfd + VFIO support!
-
+On 10/28/26 09:59, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.3.1 release.
+> There are 38 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> The guest_memfd framework and Arm CCA backend are available together at:
+> Responses should be made by Fri, 30 Oct 2026 16:59:22 +0000.
+> Anything received after that time might be too late.
 >
->   https://git.gitlab.arm.com/linux-arm/linux-cca.git cca/topics/cca-da-gmem-backend
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.1-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
+> and the diffstat can be found below.
 >
-> Userspace creates a device-backed guest_memfd using the ordinary VFIO
-> device fd as resource_fd, with GUEST_MEMFD_FLAG_USE_RESOURCE and
-> GUEST_MEMFD_FLAG_INIT_SHARED.
-> The resource mapping superblock selects its
-> provider; get_pfn identifies PFN-backed memory. Eligible BAR intervals are
-> registered as guest_memfd memslots.
-
-> File offsets use the existing VFIO
-> region-offset namespace,
-
-Yes, this is great, thank you. I think we should have guest_memfd and
-VFIO share the same offset to PFN mapping.
-
-> allowing one guest_memfd to cover multiple BAR
-> intervals.
-
-Yes, this is an advantage I see of using guest_memfd to wrap VFIO too,
-instead of requiring separate memslots for each shared/private range.
-
-> The device-backed guest_memfd fd rejects mmap and fallocate;
-> shared guest faults obtain bare BAR PFNs from the provider instead of
-> resolving the memslot HVA or allocating folios.
+> thanks,
 >
-> IOMMUFD resolves and pins the device's existing vDEVICE after its backend
-> validates the VM association. Its MMIO mutex coordinates conversion and
-> device state changes. VFIO supplies BAR PFNs, validates eligible ranges
-> and excludes dma-buf exports while a guest_memfd provider is attached.
->
-> Without GUEST_MEMFD_FLAG_MMAP, attachment rejects existing VFIO BAR VMAs,
-> and new VFIO mmap calls. With the flag, existing and new BAR VMAs are
-> allowed through the VFIO fd. Attachment invalidates existing BAR mappings,
-> including huge mappings. Subsequent faults use base-page mappings so each
-> page's shared-range attributes are checked separately. Mapping the
-> PFN-backed guest_memfd fd remains disabled (We can decide on this later).
->
+> greg k-h
 
-I saw your other email regarding how to handle read/write/faulting
-(mmap). I still think we should have all these be blocked on the wrapped
-VFIO fd and have it handled through guest_memfd.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-The gmem_device_host_accessible() function in this series has a comment
-that explains this, which is that the shared/private attribute is
-guarded by filemap_invalidate_lock() in guest_memfd, and so having
-providers call back into guest_memfd is probably going to cause locking
-issues. That's also what I figured when I was trying to implement the
-integration with the sample memory provider in [1].
+Tested-by: Ron Economos <re@w6rz.net>
 
-[1] https://lore.kernel.org/all/20261022-gmem-alternative-providers-v2-45-5dd1dc6c660a@google.com/
-
-> VFIO BAR read/write, ioeventfd and userspace mapping faults check the
-> requested range's guest_memfd attributes.
->
-
-Thanks for calling out ioeventfd, this is one other backdoor to possibly
-access guest-private memory. To avoid calling back into guest_memfd to
-check shared/private status, I have these suggestions:
-
-1. Treat the ioeventfd setup as yet another "mapping" alongside stage 2,
-   host userspace, IOMMU page tables. For IOMMU page tables, guest_memfd
-   will have to do mappings eagerly on conversion to shared since the
-   IOMMU cannot handle faults. We could also "zap" the eventfd-to-VFIO
-   connection on conversion to private and "map" the connection back on
-   conversion to shared.
-2. Take a shortcut for now and say that if the VFIO is wrapped by
-   guest_memfd, always block ioeventfd setup.
-
-> This series depends on:
-> * Ackerley Tng's "Allow guest_memfd to be created using a resource (pool)
->   fd" RFC, which provides the tmpfs resource-provider API:
->   https://lore.kernel.org/all/20260925-gmem-tmpfs-backend-v1-0-d36159822d18@google.com/
-> * The IOMMUFD/TSM series, which provides the vIOMMU and vDEVICE interfaces:
->   https://lore.kernel.org/all/20261008055955.4014342-1-aneesh.kumar@kernel.org/
->
-
-For easier testing, is there a VFIO sample we could use? How about mdpy?
-Is mdpy representative enough for selftests?
-
->
-> [...snip...]
->
