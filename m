@@ -1,73 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793251813;
-	b=pCWD0jeTV5JKDwsu01emfRfKG0iQTqJsnuCTUkvU+Gh3VAvKVH+Dz4j/PrsPJ7HaSeiD
-	 lwzsE6adR2F7JxfckhejJ1B1dF4p8uGkdnEYIqzHAIXMu1nXmaAUVBP6XkM96cDaSEO1B
-	 z8zGDFX3Y9c6H8/5kY7rxH2YaAQr1Z6HSdj+T0Kw1YZ74mq6ogJSyk1x0oIjo7K+snjQw
-	 A0+iN5sroopnYFLD4jhDTHQ/EPaKtR6Bn8xC38eQU2r6PIBXRyu1jNqzjY5svj7Hh1R38
-	 PrUwME+8Kg9cRBalEZn9J9eIIFLt8uFiiGnVp0ER2PXLmSp67BtfU57y4InWMXmLRXw==
+	t=1793254664;
+	b=Hje1C9VhxKBwI4kQ0gPcEuRWaDdyEBCfUbK2LoC7iCIr7P/marVmBrMSO5zNEnTpWqgv
+	 rxafNPTUUg/WqVc7zUuSVFZBZkqKGnUJvwb6ZeFRyydLCvxRbAUS0SJb4zDsljvs9IRcL
+	 yoLS9Sr6spPzougD+vMuKp5Gf+O14TGcJkyfvne5E3gNRHeo/cqqDjNelBOnklvoHXLMs
+	 5pPL7I81aNnuwRmHjJ+Cdwd5dBVMPApHoY/9NCsSgSs/gKsNrGAKxLYCaYsdqMAvx3E0V
+	 4esvGBWjDajjwS0x7+/PSVtQCoDlcR+W5QkT58MJ5QSnUlr9nji8B1qMBZUv8n6TohQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793251813;
-	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=eRsa7Nuxwuuj+/qV5ip5IGQIJP2OU2Hvd4m6ivmoiEo=;
-	b=jT0x6Dzi59rE50zQLAOAUwILsY4bO0uEafo/cr2/D/j/yLkXs0JuTiSjaMs7c7Olay2b
-	 zJMBgEf0JyNJ1hu7K9ImTIiemvKe5q/fHEz5YQfgInq4Ro9e0xsSAosN4+oq7RrKhguOR
-	 1SgVo/uKzqGsruUUoHgh1kAUgYT2HqLuwXOs7b4M5mCElUCVsbQC34ZyBmUZ9lPNsr83o
-	 A4XVa3pRutUqTPCZq0i14MAzAytUiD1teHrON7gxrWeVqFBBlo6zQaFq1JlnA0xZw/mig
-	 0D6wwOlE4kxGXdFpaglrRwc/uakAZvLUJJzxJuQi7DjeppdFvX712SLrG0T0DSK/Jqg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793254664;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=mYlcUSaYWpVPYtfz0pyW45L2HYD9vrtuExdJX7usMSg=;
+	b=rKb1g+ripQV977/kmOFzR9TPfuZSAPOLC6L6c1VszXfFeNUm71OwKaBAl7LIwu9mLt6I
+	 08Wq3bxMfmAWcemt8c5gP4mDmhYKtv7AHDnkOCh4zwZ/8E7eyS7/8/222HQA1kUonYNGi
+	 nJXQdtuIrlWdtEYpC/CKR1f61jdAH6bdtlppf+NvJjm2hl4eMEZC1JkGRnYzcCz0IxPnc
+	 y+iav/Wg+KpSW81CXs2atLC7jrk4j20NF8uMpYZHkca+4yxiMF5yzbSotzWQPKKyNVDE8
+	 BgrnC/S795ktRLLsu4HgljYQ64Jqbj/Sd14nXd1nVa/mwaNCV9croav3cSKmQo0suKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WHxtq9Zk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DF4l3Bg9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B12606A31A;
-	Thu, 29 Oct 2026 05:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897CB606A31C;
+	Thu, 29 Oct 2026 06:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WHxtq9Zk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A6E1F01825;
-	Thu, 29 Oct 2026 05:30:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793251812;
-	bh=eRsa7Nuxwuuj+/qV5ip5IGQIJP2OU2Hvd4m6ivmoiEo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=WHxtq9ZkHpkGaJZ+D3E+m73w1q/uxVP0mkcrYxNJhOWOoSZn7dM2kVPFOab4xIQPS
-	 YoTSOnVOHffrGm+Zat0RtURppiKMZXXZCybQv66lcGaV+8Yx0ZbYoqu2zSYfL6Zl1k
-	 TQotYYsSVxRS1lu+oD6RVNFumlSTwgGb5x91ZZtcHj3HUozwlNnb8iFsFbbPzfyQAS
-	 Y8LLZnHC+Z9RPGfDQL655OpEe8bntUKtUC1pwQmylHU2eN67DEBp8h5DiksHiVHjbj
-	 vPYjBkK1FMLxTCAdm03hn2IKvpTA0hVl+ruFg+TLsMw4PPWn/ECifUVP+3Q7raoRka
-	 y+MQ5hThU423A==
-X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
-From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-To: Dave Jiang <dave.jiang@intel.com>, linux-coco@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>
-Cc: Jiri Pirko <jiri@resnulli.us>, Kevin Tian <kevin.tian@intel.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	John Allen <john.allen@amd.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>, patches@lists.linux.dev
-Subject: Re: [RFC PATCH v1 08/11] PCI/TSM: Bind CTLV attestation to
- connected and locked contexts
-In-Reply-To: <9ff72d51-3933-4f2e-a854-c0f9695c0c04@intel.com>
-References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
- <20261028152618.1356860-9-aneesh.kumar@kernel.org>
- <9ff72d51-3933-4f2e-a854-c0f9695c0c04@intel.com>
-Date: Thu, 29 Oct 2026 11:00:03 +0530
-Message-ID: <yq5ajyn1axb8.fsf@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DF4l3Bg9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490971F01825;
+	Thu, 29 Oct 2026 06:17:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1793254663;
+	bh=mYlcUSaYWpVPYtfz0pyW45L2HYD9vrtuExdJX7usMSg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=DF4l3Bg9PbAdaokN5m/oQoyH75+XfyOSnr+YEjckoAbLBySSAtLTta6QO62Xgj8XW
+	 NpD+qSoEz97JS5nPpmWL3NFJcuK5BnRgrYGp/B8UU43HIHP8qSmfG0fZSnxRLwOmMv
+	 nxbsUE+zVuMnGV0SY+OA8U6ejO9UuWIiWlXNCxJc=
+Date: Thu, 29 Oct 2026 07:17:39 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Peter Schneider <pschneider1968@googlemail.com>
+Cc: Brett A C Sheffield <bacs@librecast.net>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@nabladev.com,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.1 0000/1887] 6.1.191-rc1 review
+Message-ID: <2026102927-unbundle-overshot-4e48@gregkh>
+References: <20261028170459.200466217@linuxfoundation.org>
+ <auJTCcqMDEmAS7Q_@karahi.librecast.net>
+ <auJem0IIOw9Ibiw-@karahi.librecast.net>
+ <3965e950-1e5c-4b52-82f0-9fe92806654f@googlemail.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -77,78 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3965e950-1e5c-4b52-82f0-9fe92806654f@googlemail.com>
 
-Dave Jiang <dave.jiang@intel.com> writes:
+On Thu, Oct 29, 2026 at 01:25:45AM +0100, Peter Schneider wrote:
+> Am 28.10.2026 um 21:44 schrieb Brett A C Sheffield:
+> > On 2026-10-28 20:54, Brett A C Sheffield wrote:
+> > > On 2026-10-28 17:34, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 6.1.191 release.
+> > > > There are 1887 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > 
+> > > Build failure on amd64 with amdgpu:
+> > > 
+> > >    CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn315.o
+> > >    CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn316.o
+> > >    CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn32.o
+> > >    LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
+> > >    AR      drivers/gpu/built-in.a
+> > >    AR      drivers/built-in.a
+> > > make: *** [Makefile:2040: .] Error 2
+> > > 
+> > > No time to bisect just now but will try to have a look tomorrow.
+> > 
+> > Fortunately it was a build failure, so I just left that running:
+> > 
+> > git bisect start
+> > # status: waiting for both 'good' and 'bad' commits
+> > # bad: [adc8e434cf08c73b0f02dab2c15319315f07172f] Linux 6.12.115-rc1
+> > git bisect bad adc8e434cf08c73b0f02dab2c15319315f07172f
+> > # status: waiting for 'good' commit(s), 'bad' commit known
+> > # good: [85d82e0d7c2dfd3e75d34f35b7ebbf41f45c9c4e] Linux 6.12.114
+> > git bisect good 85d82e0d7c2dfd3e75d34f35b7ebbf41f45c9c4e
+> > # good: [0e1dbd1409918dbd331cd9c382ce64736dcf3272] ksmbd: fill in FileSysIdentifier in FS_POSIX_INFORMATION
+> > git bisect good 0e1dbd1409918dbd331cd9c382ce64736dcf3272
+> > # good: [617f27c3fa85742e9d468a2145e3676af6b2498d] Bluetooth: L2CAP: refuse __l2cap_chan_add if chan already has conn
+> > git bisect good 617f27c3fa85742e9d468a2145e3676af6b2498d
+> > # good: [1476a3a7d286ad7763025337f20bb841b24c72ea] io_uring: don't pass restart error codes to userspace
+> > git bisect good 1476a3a7d286ad7763025337f20bb841b24c72ea
+> > # good: [be00113e49ff42c2c007993dd05cf4bdd1c2bfeb] keys: Protect the type name while describing a key
+> > git bisect good be00113e49ff42c2c007993dd05cf4bdd1c2bfeb
+> > # good: [6270098a65994bdf26b736b2ad6614e5b9078ad6] coredump: hold RCU while releasing parked threads
+> > git bisect good 6270098a65994bdf26b736b2ad6614e5b9078ad6
+> > # good: [41af0a793777ede3f1839bcd8abae92a5c901fe4] fork: release the files of a failed fork after sched_cancel_fork()
+> > git bisect good 41af0a793777ede3f1839bcd8abae92a5c901fe4
+> > # good: [6da107042aaa43b05f4c16bee65afc2e9b5f7561] signal: allow taks to temporarily block TIF_NOTIFY_SIGNAL
+> > git bisect good 6da107042aaa43b05f4c16bee65afc2e9b5f7561
+> > # good: [da1419eb5d34caf39c1f3abad5b95a601a35114f] fanotify: Fix crash in fanotify_init(2)
+> > git bisect good da1419eb5d34caf39c1f3abad5b95a601a35114f
+> > # first 'bad' commit: [adc8e434cf08c73b0f02dab2c15319315f07172f] Linux 6.12.115-rc1
+> 
+> 
+> Brett, you are reporting against 6.1.191-rc1. Are you on the wrong branch?
 
-> On 10/28/26 8:26 AM, Aneesh Kumar K.V (Arm) wrote:
->
-
- [ ... 232 lines skipped ... ] 
-
->> +	ops = tsm->tsm_dev->pci_ops;
->> +	if (!ops->refresh_evidence)
->> +		return -EOPNOTSUPP;
->> +
->> +	ret = ops->refresh_evidence(tsm, type, 0, (void *)challenge, length);
->> +	/* Even a failed refresh may have changed device state. Retire all verdicts. */
->> +	if (ret)
->> +		tsm->error = true;
->
-> Does this make any refresh failure fatal until unlock? The CCA refresh
-> in 11/11 says "failure preserve the old cache", but with tsm->error
-> set I don't think the cache can be read or accepted?
->
-
-Yes. The generic layer treats an evidence refresh failure as fatal. The
-backend can decide how to present that failure.
-
->
-> The cached evidence is still the lock's evidence, collected after the
-> lock. And per the cover letter a failed refresh already invalidates
-> the earlier generations. Should the backend decide instead, and set
-> tsm->error itself when it can't tell what happened to the device?
->
-
-For the CCA backend, evidence is replaced only after successful
-validation. If validation fails, the cached evidence remains unchanged.
-However, we could instead discard the existing evidence cache when a
-refresh starts.
-
->
-> Also, this builds on struct pci_tsm_evidence from Dan's March posting
-> [1]. The TDX guest RFC [2] and AMD's SEV-TIO guest RFC [3] both use
-> device_evidence_create() from his July posting [4]. Is the plan to go
-> with pci_tsm_evidence and drop device_evidence? Would help to know
-> which one to build the TDX guest side on.
->
-> [1] https://lore.kernel.org/all/20260303000207.1836586-1-dan.j.williams@intel.com/
-> [2] https://lore.kernel.org/all/20260924041032.1096569-1-zhenzhong.duan@intel.com/
-> [3] https://lore.kernel.org/all/20260916115159.1938195-16-aik@amd.com/
-> [4] https://lore.kernel.org/all/20260705220819.2472765-1-djbw@kernel.org/
->
-
-The include/linux/attestation.h do cover
-
-enum attestation_device_trust_state {
-	ATTESTATION_DEVICE_TRUST_UNSET =
-		CTLV_ATTESTATION_DEVICE_TRUST_STATE_UNSET,
-	ATTESTATION_DEVICE_TRUST_NONE =
-		CTLV_ATTESTATION_DEVICE_TRUST_STATE_NONE,
-	ATTESTATION_DEVICE_TRUST_ADVERSARY =
-		CTLV_ATTESTATION_DEVICE_TRUST_STATE_ADVERSARY,
-	ATTESTATION_DEVICE_TRUST_AUTO =
-		CTLV_ATTESTATION_DEVICE_TRUST_STATE_AUTO,
-	ATTESTATION_DEVICE_TRUST_TCB = CTLV_ATTESTATION_DEVICE_TRUST_STATE_TCB,
-};
-
-I am still unclear how this will interact with generic device trust. We
-can only determine that after reviewing the device trust series.
-
-Leon,
-are there any plans to post it?
-
-For the current PCI/TSM CTLV implementation, however, it makes sense to
-treat evidence as local to the TSM and keep it in pci_tsm_evidence.
-
--aneesh
+Yeah, somthing looks wrong here :)
