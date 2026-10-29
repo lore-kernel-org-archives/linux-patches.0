@@ -1,53 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=62.210.214.84
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793264843;
-	b=rt1LRycCp918ylYBegUFlCrY8v0UnNhEKa9ZQnavHs3hkDQFSTzThZoyK/0bHC2tug7v
-	 yMWmLbgB+959Pm7mUs9L2QO7Po+4pUubHp6QDCBVp67kgSY5moFfPQAeeLFrI5ctnSS9T
-	 tg2mLMW++CmSlwLUBdpD5JylOIUR5RzlOwdf5hxyiPDjqFarM0BnlpeCfy74YYhGj58ul
-	 tGf3K9tRpMvaq6Q0iqMuddpnkw7XLrSkkEem9vUL3Cr7e4YuAGW7JyQ50Ak8vpIZEbwG6
-	 HC2MQ4yqGuDssmAT965J62Lef+HRAxIyegk7SoJCOsxBeAnjrYrU4WQ47/I3v0JJVfg==
+	t=1793265630;
+	b=iHtx5o3NNpP35rNn1t6viFcldUaE5nfeHtJJ0l5maiPnNIj68unA1mTJl5g61ako9bi3
+	 jzwhBOCeucr/NrVkTwsAVwvQnCFho7+MfNhOdIlHAR/ZS31LNQLdAm6KVXK8UEDByWCXi
+	 zjhpfUC3xJBUHPi2cR6ErMuXpkwp549Gvl6d9SWo0MRVIV9gQzhvkefFIuDH+CYQH644q
+	 NRHHae9zz2Jyg4+5BIUo20DrCukWNAe6Ms0b3ZgudMTknnYAVCSnpl0UqRrtUV86h9hwS
+	 o28gxs2KDJowp/DHhj/cirnjrhmfQ+MMF0VKyATU+OzG2cmcD0lIqcVjpYE0rPIX/eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793264843;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=aeD2rvRr8yCH9Pyjyd9soiL1vIOgxA2CdjNlALkdgBI=;
-	b=YpKx8ax/DRQZKqV4SpqEQLc51gRQgDTqWc560Eb6TSfgbr6sVyo9QMdrr7+8FvGaDWHE
-	 slSqVPkKOOqbLDykodzzvVOrsLxFJrhaxxbKsnh1QO7IXSayKxY7XTJERzMeCLLiDGqfp
-	 mFYgLbN4vQgxCRm608H7UChxURhV4ztYMVIbssLZKl/pD0UZVOfNE/Aqkt/A68gMnM856
-	 jQGlMO0fVoYNc+wUZmx+2Y1gP9S20leF9RfzuhzK3OsukDtsHx/HKQj8mJr/1Hh2O4VW2
-	 kS+35NkXx1OgT9cvGRHbobVcbk37X287/BMasQC+gO2SXGUtOmmdjB+kGV93NuAcWww==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793265630;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=hSSHckiP3MA8HyhGdwTljIsGuCQYdGee9x9CnEq+2kc=;
+	b=bl4L8/QgnyQpQGCmMUW+ZVi8XLYldPLYI3WfJRmtnxnSy+YGiRjJIqYz2I8GJoXQ9UOH
+	 hXpfH6JAr7/0R/q3qUqY4wgFMuU43KH9aA+ddDoZd7GyTvulSoZ0GxbUpa8MshkjLEcha
+	 uoCn0RYRTIEvfgFdbgdt35OuPhA6nOnyF2KpmrZEWITw0ZxSW/yoW6IkM3IYBPDBqHZu6
+	 1Jic3az3Nwr6DLIGT3q/8GOORx9VtEr1HDcG+cLJ+kEktO4aM4LRCwdyOIPSfGwMfy/Le
+	 nXaxMPh8i6RmwmD6NpjreoIQs/LOBni/GPU9AlHIHxw1tcfbnIyqWV5hLb1BAWPPNGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vzu/LSSD";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=codewreck.org;
+	spf=pass smtp.mailfrom=codewreck.org;
+	dkim=pass header.d=codewreck.org header.i=@codewreck.org header.a=rsa-sha256 header.s=2 header.b=SnXzLZIm;
+	arc=none smtp.remote-ip=62.210.214.84
+Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137C8606A31A;
-	Thu, 29 Oct 2026 09:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8946606A31D
+	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 09:20:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B8946606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzu/LSSD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07ABC1F01825;
-	Thu, 29 Oct 2026 09:07:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793264842;
-	bh=aeD2rvRr8yCH9Pyjyd9soiL1vIOgxA2CdjNlALkdgBI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=vzu/LSSDz5PzODr/uiHsZUS9uQB8SnQ8cd6S/p7ZBlANBDin1lQ4bPhb3MvZxgZje
-	 QDpfzrkCiNBlUMOa3iFOfcxlWui5GJoSENUViD3c3nKn7aCBVbx52g16N9NnuV7MZF
-	 SLXrDLGDTXveOQHV/aWdTsH+Fe1sPtKOz3jrLO1o=
-Date: Thu, 29 Oct 2026 10:07:19 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jiri Slaby <jirislaby@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=codewreck.org header.i=@codewreck.org header.a=rsa-sha256 header.s=2 header.b=SnXzLZIm
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id A723214C2D6;
+	Thu, 29 Oct 2026 10:20:19 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1793265625;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hSSHckiP3MA8HyhGdwTljIsGuCQYdGee9x9CnEq+2kc=;
+	b=SnXzLZImQqN+E5KmMINbDXvL/oJTdd+GesYuXj/vZsKi65fs08pg0/wlXGp50QtnkKS6Ay
+	VIq85tth8y5UdyrRewdEfPqAqNE7VfIyiEcBTkvk8GhkZc1BLFqVa5DMmHN1/o5IjPyjWC
+	XlNxtSDIeNwwbUF4psbCILNNNhvsD0T+Dar5YtcupjOL3rOchgbxXIv2RbB9ugP8E0ntPT
+	GT+Pjpa5V5nrNwHnuEoFgWuVE5OdjnGgcdigaWvxGWZt/ckABFCHyuODn/kV6TvbY5wODC
+	Qgklg/1P41FYYM8M4DEv1PrLNZRtw5IR1SWC5vH6Db0D0ueM3bBBdpi4VVZlMQ==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id cc75f923;
+	Thu, 29 Oct 2026 09:20:17 +0000 (UTC)
+Date: Thu, 29 Oct 2026 18:20:02 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Juanlu Herrero <juanlu@fastmail.com>,
-	Anand Natarajan <anand@meta.com>, Jens Axboe <axboe@kernel.dk>
-Subject: Re: [PATCH 7.3 14/38] io_uring/poll: avoid retry wakeup loss when
- dropping ownership
-Message-ID: <2026102946-stubborn-magical-d432@gregkh>
-References: <20261028165940.394092994@linuxfoundation.org>
- <20261028165940.759766255@linuxfoundation.org>
- <9eb403db-31da-4b6e-a2b5-69f311c05d00@kernel.org>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/247] 6.12.115-rc1 review
+Message-ID: <auMPwqvPslViDOgu@codewreck.org>
+References: <20261028165947.349197979@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -57,31 +73,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <9eb403db-31da-4b6e-a2b5-69f311c05d00@kernel.org>
+In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 
-On Thu, Oct 29, 2026 at 08:53:12AM +0100, Jiri Slaby wrote:
-> Hi,
+Greg Kroah-Hartman wrote on Wed, Oct 28, 2026 at 05:56:43PM +0100:
+> This is the start of the stable review cycle for the 6.12.115 release.
+> There are 247 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On 28. 10. 26, 18:00, Greg Kroah-Hartman wrote:
-> > 7.3-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Juanlu Herrero <juanlu@fastmail.com>
-> > 
-> > commit 937d38dcacd675dc0572d6c9b6743960df3128ed upstream.
+> Responses should be made by Fri, 30 Oct 2026 16:59:22 +0000.
+> Anything received after that time might be too late.
 > 
-> Our machinery flags this is needed as a fix:
-> 67bb1ad9a517 ("io_uring/poll: don't loop on HUP with multiple references")
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.115-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
 
-Thanks, I missed that one.
+Tested adc8e434cf08 ("Linux 6.12.115-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
+- arm64 i.MX8ULP (Armadillo IoT A9E)
 
-And for some reason it was given a different commit id in the backports
-that Jens gave me, so it's already in the older queues, and I'll go fix
-up the id there to match this one.
-
-thanks,
-
-greg k-h
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+-- 
+Dominique Martinett
