@@ -1,60 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.137.202.133
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793305591;
-	b=GWl75yLGexkXCu8lg4NS80BUMZ8QodRThDI+IiI6z1n4YIYOtel0PGh4NtexKctmEqEB
-	 KHN7s6QqXUFB0w3T7vJ46i3++etBZkE12ZqiNKBd191PTEBEgRDKqMZeXHIUJU9fqgVkS
-	 0OjIrazn1O/8ESQP6/NgWdGvzeaRCsHfbaGw8mSsx7pxks3eNqcnIQOwpb6pE01Us/aNi
-	 jqOgxRtZ9qnBZHPHwcDbE7eaWPPR1cNxYXqgzmQyKLhaE3aE6oOjPS92LTi5xHGeVQt06
-	 HbzAOR1zWMOMo9eUD4AGIj0qM8bzFg1sMQgEKVr8SKxD411H/SINwhY4rWa6f1uBByw==
+	b=zmIfOJGvTZXX0PkeIWGlHJBRD3oLtiMlVTCfbG+r2VgFWnrfvKUllvhBTCo0KkwfvBPN
+	 4K5bVPA1lEklnYPZjAb39SxrtGevNGzIszdzBvCFP+I/pfO1LLKiD1sGupcgYmgzvxsOT
+	 1f3Ycr2tK+EqFYE0xkFqhw67LGhXky/RWz92jefXUQGvaNeIlegtghcbFEVbE0Z2qnM9d
+	 uK9GbkzRyoWFHvPkGliSc6eLdYoaZx431teGhXUFPqFbfLHFgIi+7jO1LIfjt+XO7/fy2
+	 QeqP/zj1NX98CXOp+XbZtTXeBibW+F5cxJv4tWTrTZBuJtrP09oUg/uxDTkVUX67j/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793305591;
 	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
 	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=em+eDkKHMBqO7CuYUMqXJnhqq7+NpV32/QiONBtUPj4=;
-	b=E8cbo/MyyzyPnatK8jrSBgw2HUORTmEjxLeERrKNDv+cm4Xwf5EadY0w+lCq8BW+w2hL
-	 piOSiChbqpd7TIMC/dxD1VwgvnS5OEbfUxbZq5EmGbPrTRdKEGPpdy4Zjzj/hIVxc8cNk
-	 xhsFywD5l7FBwwuaAbeNBMnOgjlufpiDWsWksfH7RUUFsxc0F6xKftReMkVfd8Ui5lMqX
-	 PkWdDjxc7nLJrq7GwGTcblzjQisCE0OVEyK3qGKMzp47ZORwmTiI51RGjTC2o4ZKl/Rse
-	 Ch3C5XK7pz/6InnBtOjBXBGREg0CoLDJCPLElJtRfuToChnow8wlRszV7daJWm9EKNA==
+	bh=aEfbkM7G3/fLiHwfdz9aDuJ089LeDutDgsdfd1xWO7g=;
+	b=wXyzDC2boMGXVVifDGjKzpbDDuKWHuOhHoe1BRJmyTo7nxMpnQE7zW+9o5p5YpI8ZK/F
+	 4ehgplCAP1GmvY86aEccn9+LdbrlrE7ugG4DDSgCkXdqVzeKxkDu+1K2/5P3dEK0H8ZfV
+	 dN6LIRRnNmPefLD7PG7Cod7U/tXSXhj4DpKiWwIHSjA8+Sg7zFdrlfSoLctNEnYsCi88h
+	 A/pzqSGZIJ1/oJBDBT2glLjMCRdkNn62geVYaWcN3fKSYQ0WdWVvx+J4Y5n+LyXYFhMEU
+	 HNMfErK100UDyYXE4cF7CqQT5Bg37OzVHgoxDBPNfYHrvXZHgL9CkNUZwY7YVE9Cncg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=infradead.org;
 	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=oYLN09+E;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=WIjwpIOg;
 	arc=none smtp.remote-ip=198.137.202.133
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D72606A31E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BBA606A31D;
 	Thu, 29 Oct 2026 20:26:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1D72606A31E
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2BBA606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=oYLN09+E
+	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=WIjwpIOg
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
 	:Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=em+eDkKHMBqO7CuYUMqXJnhqq7+NpV32/QiONBtUPj4=; b=oYLN09+EIi0gXFi0rg4lUcGxew
-	RmejWKFv1DjhPLkWFokX0R+pO55DEzWt9BGsVO188Hg6FxCpqgE12mTmL2pelwsag96pH5KFb9QhL
-	2AQOWE303MzDuzT1tSYBVxtwDnBxGMepOyYaCARqYpSzDAxFXidYztnF66rZBPiPXTj6wJMUOak0b
-	/mJRqIvPoF7KCzy4lfoTpglXIJVYYx+W8AQXUAi1d7xlw9QqarpunBSGhewHrUvJWzJHzVKQ19/ll
-	243OdeevW4b1Eve8Fuln5ajYLy/LOBT1nFSxUse2cn5cZ18avr2N3q76kdtEdhqRmkJC1XK9Get+X
-	8SeaSB/w==;
+	bh=aEfbkM7G3/fLiHwfdz9aDuJ089LeDutDgsdfd1xWO7g=; b=WIjwpIOgHHQoDO2a6WJtD8oDlf
+	TalY5HSurO7RGslf4Bs6VhLYZwcJzcrL0SaamDoVOSky1+o1YbwhJIIgNTAz5rIi8DKMU4v4xZbIH
+	TN4UF5ra/KbCJRqqEH+sdvBxQ/K0wmp6OqLBvv4zn0z8EN2CIt0X4EIo1UAev/uBqxZbSnd+ipMnz
+	f8SnTgVi70Rn3xw+hXJtPUzVKCzXzCKk29cJOCABMqdkL05oVPBQuyU/O4q728C72ffQzYnX4DYOq
+	XfsFj8fYtsBYIKWC06OyJ4RHoQadFBDKOHV/a+2x5ZaGvG+J+yXfdFqOj1QkRtsBPXgls/hBnDgnD
+	AnUmktVQ==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xMWhi-0000000AJot-2HDL;
+	id 1xMWhi-0000000AJot-1RiK;
 	Thu, 29 Oct 2026 20:26:30 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: patches@lists.linux.dev
 Cc: Randy Dunlap <rdunlap@infradead.org>,
 	Guo Ren <guoren@kernel.org>,
 	linux-csky@vger.kernel.org
-Subject: [PATCH 3/4] csky: kernel/process: add missing prototype
-Date: Thu, 29 Oct 2026 13:26:23 -0700
-Message-ID: <20261029202624.2685097-4-rdunlap@infradead.org>
+Subject: [PATCH 2/4] csky: perf_event: add missing prototypes
+Date: Thu, 29 Oct 2026 13:26:22 -0700
+Message-ID: <20261029202624.2685097-3-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261029202624.2685097-1-rdunlap@infradead.org>
 References: <20261029202624.2685097-1-rdunlap@infradead.org>
@@ -69,26 +69,39 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Include <linux/cpu.h> to provide a function prototype that was missing:
+Add missing perf_event prototypes to prevent build warnings:
 
-arch/csky/kernel/process.c:90:6: warning: no previous prototype for 'arch_cpu_idle' [-Wmissing-prototypes]
-   90 | void arch_cpu_idle(void)
+arch/csky/kernel/perf_event.c:90:10: warning: no previous prototype for 'csky_pmu_read_cc' [-Wmissing-prototypes]
+   90 | uint64_t csky_pmu_read_cc(void)
+arch/csky/kernel/perf_event.c:878:6: warning: no previous prototype for 'csky_pmu_event_set_period' [-Wmissing-prototypes]
+  878 | int  csky_pmu_event_set_period(struct perf_event *event)
+arch/csky/kernel/perf_event.c:1197:5: warning: no previous prototype for 'init_hw_perf_events' [-Wmissing-prototypes]
+ 1197 | int init_hw_perf_events(void)
+arch/csky/kernel/perf_event.c:1292:5: warning: no previous prototype for 'csky_pmu_device_probe' [-Wmissing-prototypes]
+ 1292 | int csky_pmu_device_probe(struct platform_device *pdev,
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 ---
 Cc: Guo Ren <guoren@kernel.org>
 Cc: linux-csky@vger.kernel.org
 
- arch/csky/kernel/process.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/csky/include/asm/perf_event.h |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- linext-2026-1007.orig/arch/csky/kernel/process.c
-+++ linext-2026-1007/arch/csky/kernel/process.c
-@@ -5,6 +5,7 @@
- #include <linux/sched.h>
- #include <linux/sched/task_stack.h>
- #include <linux/sched/debug.h>
-+#include <linux/cpu.h>
- #include <linux/delay.h>
- #include <linux/kallsyms.h>
- #include <linux/uaccess.h>
+--- linext-2026-1007.orig/arch/csky/include/asm/perf_event.h
++++ linext-2026-1007/arch/csky/include/asm/perf_event.h
+@@ -11,4 +11,14 @@
+ 	asm volatile("mov %0, sp\n":"=r"((regs)->usp)); \
+ }
+ 
++struct perf_event;
++struct platform_device;
++struct of_device_id;
++
++uint64_t csky_pmu_read_cc(void);
++int csky_pmu_event_set_period(struct perf_event *event);
++int init_hw_perf_events(void);
++int csky_pmu_device_probe(struct platform_device *pdev,
++			  const struct of_device_id *of_table);
++
+ #endif /* __ASM_PERF_EVENT_ELF_H */
