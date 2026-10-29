@@ -1,86 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793296089;
-	b=4AUN75ZMnGBaDKJZu48Ou5wO7Ueei4SWz41HpWzQyoJHWbZ8FJXwt6p4UMmGZRNYw0jh
-	 05jnCv7t3G3JUBTgCcrjk/yPqwdbuyBwoqTCIHym80Y2LTnnRM4YkRNNm5rQjK7fhRgYM
-	 qiBlTR4s0TiEdzcmFaIoZLKSqVZ9AuleztjvmwfOivrYwEV/HrM/a/dXPZj8fiNhP4cGI
-	 cuPqp0K88YGy5InRJgK7kYkxjPAKtZghuZ4grjP6beujZDqn7BJ8FOBqaeyUTyFm+g9V8
-	 Bo5b5FBVRGxVFTIgSJJO5bO235GCr1YwLtUqWAHxG4/vcYZr3WD6SzeSgntGi2T5Pow==
+	t=1793297804;
+	b=Lw1fzuHnE750RA5/bzg/wyoBw+sMAGkAdpUrrBNEx6NZzX5u7Nbpe3xMY3UkN70QKXsu
+	 sfhHKFmGBn3L6iR6tcCP+ybq+3y+AUbu/PU27KPMPr8OttvEkhn+4oRIm5QqYHvgbDC4x
+	 5vPqZQRwtVU8j/iiO5y4fLukxCWhetnIdf80vTvxHCms0HBx7Q/NhaQmf/Rjc7IJdrY1R
+	 tXVwJSW/C3AVgqy8iJInQJPvw77wgrMIoNROQLimbo+DkWA2PH8I97sHagTPbAeiOAXzC
+	 x3gCvuh7LC/l+Rvk/9+T9ll6iZN0cju7lyNvTT2GpfS92KsnHu1lmahLqFD+/g1jSpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793296089;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793297804;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=HaforV2IeP0NmgJIChxLqIjhpAm5azYdHH9oA6zE+e0=;
-	b=oihPueigwYR5196EAkvya22ePTRpCUGFtLk2iFC8pTL+0EX2mPbPitn1FpHS+R/03usT
-	 JhivIHhIqbqKgRE7JMakpJRWDMWASRqzq+Ovdts2P3KQTfU38zLfyMZM6PR7ZApxlJ4Jy
-	 X4B6zftMV1QPjU79jNbj2RKUQ6OlfRCu1WoLskMc8zNxKXcULv2zric1OcQy4izIwsU+Y
-	 qf6awlWRepeqsTDWWje6DDjBTA4P+VPx7ewgPWyvhTBftYkN+Id2arS2oC1Ss3woybj7z
-	 +V7wf6ciiPyZLfJyVO+frn9mqmm+eD6BE1aJTt4Kclc4MwI9fsTZCEaBPM8cvyCZHZQ==
+	bh=99z/FjcazCZQi4D66B/SibaBChuRIkU7h/mfNRp/Qdw=;
+	b=oyvNVlCClY5cS5tsC6qc5nXJNkSBdExHOWSoWhe6B27odQmGZ7V4uPEAi+oAhUBdRSy4
+	 Zr1PBQAWFs1cYHhfkN9WMSlAZ5MhEyVAXVjiRLkiQhuZtwPdlmAJL4dZL1N0vraGZKDzf
+	 L1zX/c3qwoA6z38tXzX6hb4f3Gl+x48nd+4gHCWJhvcgAQcAWQ5ovifDb3clM1WE/mxqG
+	 WD806xe97TH+9BD191YZ9zR0LtLCrXkj1YaLR6hmi+fPOKDjc/MdpPsAkQ04XLXyDPAS5
+	 WUvfZtc7UwJNByk+IDfl8eXTFBiOY/pKkQMSSQDUdJrLmgxD8UHWHdmo2Ih2T0cIGhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=b4qcRkOK;
-	arc=none smtp.remote-ip=209.85.222.182
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aDaSDe1m;
+	arc=none smtp.remote-ip=209.85.210.176
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F73606A31D
-	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 17:48:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0F73606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEE460A380D
+	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 18:16:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7CEE460A380D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=b4qcRkOK
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-93f30660e69so176198385a.0
-        for <patches@lists.linux.dev>; Thu, 29 Oct 2026 10:48:08 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aDaSDe1m
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8a06e79e152so1413265b3a.0
+        for <patches@lists.linux.dev>; Thu, 29 Oct 2026 11:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793296087; x=1793900887; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1793297804; x=1793902604; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HaforV2IeP0NmgJIChxLqIjhpAm5azYdHH9oA6zE+e0=;
-        b=b4qcRkOKgNy/EZKYAPKtmKQ37Wk1qX7Qt5Eq3AsV2SpRyVjtF4cefZuEGM/AmiaCBs
-         Vha5OpLlr1okfcI1d+uxAWkGIXO5Od4Gbl8CC3qDoli9KlASSHWLN+SZChp6y1renCIP
-         w1WsAQh3HnggAB7zetDC4UmhQKp5/calAjjPi+GdiwKuczSwczZmvCGDy2gUQyIeI0Ta
-         YYI7N69HI2aQnjnk8LWVeepOmXAEMs8ltfEkgB2JIb+u+AnwSdJoCQKakw7xx2bRdbRo
-         Knhag5XThMk5FFNTeqZZTvBPIXVArxlErjOJCO/AKdFW0Gms3FJbXSPedUIeOdMms4vy
-         Ngsw==
+        bh=99z/FjcazCZQi4D66B/SibaBChuRIkU7h/mfNRp/Qdw=;
+        b=aDaSDe1mceIxHEo9GBIrTLLZEa9AbCH9HQ6Ije/q3+S2TCjA32KsG4iOhpd9SdlrrJ
+         ciauFPhi5+a0yUWGQ1RjP++18exkSigNpAIESYuV7Ls7WJZdseClXziFXLSPrOe1RK37
+         ajI3vXEdy/wONBYhgad7GwoC7BKlUbNziKi0adDE/URBEtN82gWK1m49/5kETLW2pZ9q
+         AQfRja/rrd7/ntrcG073sd5KvB23zoH8Ilkxcr17ZkaeWJapgcie2EJJS8oMLP/M3cZA
+         Ot29aaAqhB0QPCQOZxGVRa7RI2mTI/WBPHsqL5Md7N9c3tEVR4mcqAZqTBwfKVW9GPcL
+         DLvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793296088; x=1793900888;
+        d=1e100.net; s=20260707; t=1793297804; x=1793902604;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=HaforV2IeP0NmgJIChxLqIjhpAm5azYdHH9oA6zE+e0=;
-        b=dKXUwdqw6OWI5Ou/wjXtSpfRM1jbgy7oGiextq2Hncn/SNXR5fTwFgOE0e93d6nPh9
-         R3G+irXa0ba97Gw9TY5kUi+kxAp2GYltDL3+mlQMRKExUDchWkYgeI4rAUXotiNTnQwa
-         40Tt0mkREfdijMy4SC2X9A2duFf2Gtu1GKicOzIwCEit45QymsbGBepxGq0wmtXsW0h2
-         J9ejfSBxlGuz9rHx5ikFlMaEtsVH5T8oDNF9vuhlkXFZH9cbhETpRyfsnHJ504Cr6gvd
-         3XZZnPq/dJHJWSX1OXpqwVIAeAQn/qDoScxslvv2HQZxR9vClSEtzXxzPEw+SjwrsIdP
-         ikow==
-X-Gm-Message-State: AFq9FYLAsGtrbbjdRhCTmQn+CzSm6W4nGawcpc/5wV+Z3Nq0y75fh40u
-	WrqqufioFvzh8b+QRIcETn/K8bfsnxMBm3EOXvPKUzPhPwVSQZL8lokv
-X-Gm-Gg: AYBFou3DUzmDiRtjI09IBicuLZzNcJbm8wd3rkCRt0Taq4P99/fVxNDKDM3KMmNdkx4
-	GW0YHm/hSd1+Uj57ZL15rAu4nhrCT6yYBGWTISznaNW2hatWKKhNypboAQeYKK5JgwQBsBMKsk2
-	LFxtpHH994yKH+csrd9DeKl/yhlzoS9+9xC373FcSgjWC01XmTaLacU4u46deqd75Kx9Txul8jY
-	gFjMuTqLcLTGTvgRKo2QYhYPvNEokjs/RDC6EMooH9uWIBUip4mpjBZDKpR+ZvGvZKsm9+T4xzX
-	RR19P54Vs6ulWvduPvrCsiwu1Cq9ya7+TuNyB25wuUufY8GY44vkej1IS0YJq34CNYdzIRn10U7
-	mvS8AB8IbRAduSahBKehzpmxB3DeplrWfbBJHAghrsxbXvEzae5Fcp/T6tXmNKxZiYhGxqQ+vFF
-	gsDHA5sCrj3bMtY3B6AX1FR/ySi9TuYo6oR87w9IOIX1D4nmYO2mrYeYgxZUuOHYbNNUFQ4x/37
-	0FgWvwR3AAIHJJPYnK0k+QaC6LLtyoquWktxT8eD4cE2YZYrhYaUuDiOH0cDIrrQDzA5qexd/AV
-	5tI1tEy8oKd5ffFzVRemk/xx2OiRx7wzfkzyE307NQ==
-X-Received: by 2002:a05:620a:44c2:b0:93b:e578:583d with SMTP id af79cd13be357-94408aa1416mr958437485a.21.1793296087475;
-        Thu, 29 Oct 2026 10:48:07 -0700 (PDT)
+        bh=99z/FjcazCZQi4D66B/SibaBChuRIkU7h/mfNRp/Qdw=;
+        b=vzBE8B7P2UDGBQHJ+sSipc4JWmKOeWf/QbVhvHA9rlxiv7VCJ+Bnmw5oH+AEDZ3lIP
+         Aco2SXZMMjaCE86Gmy8CB9URfZIFw4id9e076ZjRiwNF1QapuB1T6P7URnMSceP4aSNs
+         TNkwJtaERlS15cfvRInG2Afea2c0qa5Ha/ATa15+NmahSCIYrWyDOYT6fW9e05hKSwPW
+         +ceeEsaEDAgTfR26e+Ssorp8Yyx+Y7kPWf+Fxan2Eih9ZgAnenzZGwVOu8zBYveenlsm
+         PMGxb8isg2X0qjyS/c3T/Ysqnad1Fwz+vKt1NiDhpFObj7ir+qs/VqmRwk6xqUoYjAAA
+         5z/A==
+X-Gm-Message-State: AFq9FYJh8SI4EiHp7WlwTN6p38PM6S7whhfWPP5Gznar0aHxDXQgkVUR
+	wMFg/5cDUZE/oNRXbwN5EmOplomK1nPMnBs9jdOwTkFliM4foMvPcjFB
+X-Gm-Gg: AYBFou3YA5SC+uiyqdCUI72voyb0gNECxhsitwkMzNfb9EVZH82nWe/3XduTB7k38S3
+	7on9kNtvOL/1TtnXCDAOZbWdSK6w/4IURnhRNir32wqnMpUP91od+aSRe3MkFFsJqhrnqbYlXCU
+	/43xMZPYCnz58LBKPw/FCPvn3VSyJjADfR5ZgtRp5U9OY5WkD6IXnqzmqP4WMDh+sAVCiAonXID
+	oKAdTtcSJHi7V8523nP7FyZj+P2fiDhH9WTRaIo4ap4h4pbrsOC46jFzaA7OK04UihoPord3uBh
+	5Wye2dn7aW0pnv9DJktnXVn2rLsKcvR8saPpTuF73Fuv4/d65esK7VuKnmG6n+76kYV3k7mVvDV
+	0WPTXuKTqvXfElYpScvFcsqQOndg5uDBKq40Y5F60giG91qpBbPGA8NzWykIwnFhotnapBJ3MOj
+	FJg1iclrsX5YopvHXhwU/UyF3Fx5St3JTL1vFroGmYhX9E+XZowcxdLvwp7z7yW5TPfjtBpuuQf
+	NESGhFbbpDuZzFgEEUW2TOBjJVUb2oe266U6Zr6DohcXmnq5Ogc+H7Y761+kwt8UfZbPH/SMqAO
+	l9QoGhcKu4qYADUYdA15lZ/jyCS2FZd1ueOrKpCKgbCi55T23x/7gnUS
+X-Received: by 2002:a05:6300:8044:b0:3de:5302:e92a with SMTP id adf61e73a8af0-3e928953719mr74781637.17.1793297803762;
+        Thu, 29 Oct 2026 11:16:43 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-944210e6a20sm4958285a.4.2026.10.29.10.48.03
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a98a0bd09fsm192069b3a.51.2026.10.29.11.16.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Oct 2026 10:48:05 -0700 (PDT)
-Message-ID: <9921a8c1-ee84-4886-a96d-6a38f36ae46f@gmail.com>
-Date: Thu, 29 Oct 2026 10:48:01 -0700
+        Thu, 29 Oct 2026 11:16:43 -0700 (PDT)
+Message-ID: <654c7978-3771-4c09-89f8-c5d23bba42de@gmail.com>
+Date: Thu, 29 Oct 2026 11:16:41 -0700
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -91,7 +91,7 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 00/38] 7.3.1-rc1 review
+Subject: Re: [PATCH 6.1 0000/1879] 6.1.191-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -100,35 +100,41 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
  hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
  sr@sladewatkins.com
-References: <20261028165940.394092994@linuxfoundation.org>
+References: <20261029073135.159947193@linuxfoundation.org>
 Content-Language: en-US, fr-FR
 From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20261028165940.394092994@linuxfoundation.org>
+In-Reply-To: <20261029073135.159947193@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/28/26 09:59, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.3.1 release.
-> There are 38 patches in this series, all will be posted as a response
+On 10/29/26 00:33, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.191 release.
+> There are 1879 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Fri, 30 Oct 2026 16:59:22 +0000.
+> Responses should be made by Sat, 31 Oct 2026 07:28:30 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.1-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.191-rc2.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+There is a problem with the SCMI fixes that have been back ported: 
+scmi_device_request_notifier()'s REQUEST/UNREQUEST cases are empty and 
+scmi_probe() never calls scmi_device_create() for DT protocol nodes, so 
+no SCMI protocol devices get created and clock consumers defer forever.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+We are missing ee5dcedaf72d ("firmware: arm_scmi: Introduce a new 
+lifecycle for protocol devices"), with that one cherry picking cleanly, 
+the boards work as expected.
+
+Thanks!
 -- 
 Florian
