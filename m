@@ -1,88 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793233548;
-	b=cVawBDGwYMnqjyHfHMMMc5yavyfKf1FjTZASbX4/a3yDGR4lUBvUhxWRzDIFSjDNan5E
-	 IsyrpnZ6fYW9NuSwIj+v/PgeWhS8YA7bOLLIzVfeQn/RShcVNxQDo7L/c61kNFzkR0PZj
-	 HPBjJm54OZxj+K/EbM3jhAqSkYjcad6ZvMKTPJxa+NsnOVE2fiTTiSvz4WrSKJfIyA9I6
-	 jMva4N5hKUFvU/8Kw9CRMATf7kGdQckussYZjhvQrtFSYIyCMBpxYMP0KsGmjwvBdcynS
-	 GlaIluy2DvYhgibQfRY8vdCDC1u7qbjgW2r9u/AuqU1PirgDDVEqSIukATqsAfcox0w==
+	t=1793240119;
+	b=SxRUJdQU7uTjtxZoS3JwwTeqNJvFayCTK4gSnDKaEv8sm2CqOe2Ve84iduXccFV1kUOZ
+	 02KhPmRGchmz6bSLuGhQwFFisfsJIkmjyTU2H0TeK0NSpelKlJBK+WBCSUQYM/U9UThX9
+	 qyczU5Nd6IgmuP2C9O/boZpywtK91UIbC1pjZufn2/XSXImkpdeKV/NZ7ZiuwKc2kgBMx
+	 xye1ZChmC2mohAlrOn1AB69QJfpfohWxMugnRb3psR02by3bgKRpg2Xl14cGNYxsMHhpb
+	 86/IMO/Wcf22bpaS66s1V9XY/uFjQlIIHUNXEPxyul8pcDUBbdlFOHtL8zwOFVq3TsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793233548;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793240119;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:To:
-	 Cc:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=/jZ0or5mPuMmlK3Yd/rWF09QUTFe+FBPEVbKQ0lAhZk=;
-	b=KVLPOYnvq7t7wDgBr8sOOuki0wCk59jhJ6Ol9z9L3z8lptSUFpws7VBRSmJEVPZ2lXOk
-	 typ3Svw+xj41N/okHya4m/0vsWt2yGgDjx1UVqeJ1pEbcZANNTHYOUry0OmmdExugeaS3
-	 JoQAschBcyyJhmbODdRwa5BZyDMrECgU6do6XorpHqOUehKZADbUlVd4CRSjNUDM4EFXU
-	 Kk1SiPdevAlWpgJYT3GjwBifKf+cms5A4J1QLdybKqDcfLFAtDO3/cndyZqelxocppCSJ
-	 CSNYrJmu8mp9WD0L7QqhutaMMktfSxkA2FRVP1SiXe+GX/cOi9SGQuKv0ig0wj6z1Aw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=dhqqpxGxhV+d9yusyc+fq0FJI6GkW6OrpwpzJ7OfA8I=;
+	b=lyvlx1Hy5rAYa9lF5k/xo6DcrOeNhWun+GjPgkuCq771S1YyeCLfTnHeq+rCsTcM76QQ
+	 foaJhH2eN2igcUQBK3hxghx0FFBQm1fpY0ZPlOw88IErXg4+Q/wwcWTa7a9KvQImaRm5/
+	 f/soBN2D2QmwvmEQZKs/Db5+3gFrqbOKs0SNqKkEv9E/mZVw/pz4VPRTVL7fTTQxdZj5h
+	 5DHEXEOxfBKYoqyr0Rht/87ljzOXTklh7OtHjsDcXOiEJWiOkQ6qxChZQfZ3kadXgryMd
+	 2IXj6FpxEF68FgStPwxtjJq5fM5jWESol3+WopANpnLSjLsdA82nJW1s07eU0bn7UbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=googlemail.com;
 	spf=pass smtp.mailfrom=googlemail.com;
-	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=q0cUvpe0;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=Bwaxbw6Y;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853A8606A326
-	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 00:25:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 853A8606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BCC606A31F
+	for <patches@lists.linux.dev>; Thu, 29 Oct 2026 02:15:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86BCC606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=q0cUvpe0
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a20a37703bso12782385e9.1
-        for <patches@lists.linux.dev>; Wed, 28 Oct 2026 17:25:48 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=Bwaxbw6Y
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a7992e2f7dso13917475e9.3
+        for <patches@lists.linux.dev>; Wed, 28 Oct 2026 19:15:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20260707; t=1793233547; x=1793838347; darn=lists.linux.dev;
+        d=googlemail.com; s=20260707; t=1793240118; x=1793844918; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/jZ0or5mPuMmlK3Yd/rWF09QUTFe+FBPEVbKQ0lAhZk=;
-        b=q0cUvpe0Ct0HBpiIkqGmm0d9LrZ8sLvZOFStQJla5azKOKNUOXto8XE8tRrj9Yyg3I
-         KrZRZZmeX/zjtyFqO2lmISadXaPThTXeRs1HkqUxHL62GUbRsJF9q2DMumEkVstJy6oM
-         bjhx/d0sqPUEP4zryjWbLZzUaTnyxREpLpVHghouAbBEDA0qtPwoKn6GlVnLjSYW1vK/
-         jlUv6PuEeu+cGInVEY0t514PkX7lkRWjoaMGsXNnwx6tEqZRSzUuf0VSFyV2Yl0noE9Y
-         MvHVhty/QnqO7fMKyckAMIt3UYstkdhD2ru4i+YwmKq0uIw+iC3/R57Axscf7mT4v8/n
-         42Yg==
+        bh=dhqqpxGxhV+d9yusyc+fq0FJI6GkW6OrpwpzJ7OfA8I=;
+        b=Bwaxbw6YtiHG/lLYthDfZYV0ZRijXMZmo0hbEPV+xtQLm4iUqYMS0buprDLCabzJIx
+         pvlRlxviFSHJUTEGOnfIAn5690XcsOybFjkT+OpTxec2+IMaoGAptn+IIiOUHvjDkw0t
+         P0ftt2fS8VctxA59Bkey3XsMCdopZ4Vn38PuY7IZTBZV3LrCE7fnojEAhjkpqXQC2g04
+         s9aaFSBj4FONyo80WIvwjFPHNw7ltFlfMIRfdyFXxc9vzUmwrVX7Oc+4zdI7vxYbHouK
+         V4xrTuBGA9dYMFgFId8hAEC7biW6OdZjKBgYFEZdpR2tgIUlQClANdYaFqDu1Q3ek94g
+         dwGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793233547; x=1793838347;
+        d=1e100.net; s=20260707; t=1793240118; x=1793844918;
         h=content-transfer-encoding:content-type:in-reply-to:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=/jZ0or5mPuMmlK3Yd/rWF09QUTFe+FBPEVbKQ0lAhZk=;
-        b=1okcHnHpsXbsBYZNzroDQiDu0V20VtgzLLDwhkErhEXEvNso2E0Jx4bQvUTNX/mV9A
-         2ItyuivLVQcUK18GHkYwt0JVFTI7b2j4JEzCBGxMjlC7Aaj+/n1GBq96xbRbMJCmWbe6
-         nt5HFZRdC4L8csP/y+0H7RcjwBLOjS3zb7p/5fDn4KNx8QGo2bDdfJ8iFuoJKrkOQavI
-         Gq/pm3SJ83AncBOjAipGXpdTkcMgkCcxQOxd8VSMxmXdkHJKsILsMTrvb78Fe59nchTG
-         j36IIJtmnLDI86nhA+YPMCf0/ydHbzAGo7KJpq6XBEoOVBAjUE5y8XCa5tj93K0k6K1z
-         LerQ==
-X-Forwarded-Encrypted: i=1; AKwUvBykentIa4qy5iVIUfIpC/kq6EuuPsxllvmK10rHWWo5butel5Un22rxVm+a8LzoZSLhPze/FbqN@lists.linux.dev
-X-Gm-Message-State: AFq9FYKO9GTSofcDlYt9CXwvGUSW9MuHpH/HtpOxXauRUk61C2p+tD+Q
-	JXoVzld969Db9VQrBOjKN7IxgdaQyIadd7iQyQ4KmrKDTIXrYCTWTxk=
-X-Gm-Gg: AYBFou3Wl0bWSaWiOi2EXZrtvAAvpQB3WaWNk+VTofAthc/lyDaFkriO7OMzaRaW2R8
-	EEc/qT/83/1y43tifxx6s8Dq7KM4HuaKfDQtUG2cBK7EI4D0fWR0148gmkr8hIji4OYzclSwRZd
-	oKM+WY0LNzTAMkgONhihe95lK4jrA1o7vvSzXDzDyN6+VsA1FQoudriRBXlT9cgyfU6VYrgq7ve
-	SLMjnk/GjaTy46Hoj8nXKGHI3n/Tn8iSaiCT5HN+pq46xGbdViDaV7ScOJChdRVmeCycPO/De9O
-	GizuBMXV8Ypw8Vij/0CccF2DKcqFRq9FF1bIUHXKJaMAPbMidKzPvP5U9FI/0D4zuWytRjAj/+5
-	Nf1myKw5MK1eB5ATajkm4/w3UYiWyJ5LtR6KMJvBcY+NhMxkNWGY4+HhCtru8yHRoIEB33AqXBK
-	4Zg7eQV7Zvqx/JQMewmVUgelBkymfH3Vywgy7dksXLKKM8ONt0lQ6LLbbueYlcTXFKNdKXzypb3
-	z9pDXyhxxgmtrzNBDmgl85IMaA0QhK+5rRtE4Tiz2rldViXtgr0/c+LIU2in4ba+JJewynVDw25
-	yWYmUvo0dOX4y4DRoypZ+94xrVJjY2VRsDObxS0t4git0UFY8uyOEY/x83AUP5l1+FodtZmijVc
-	RQf/ZRG4=
-X-Received: by 2002:a05:600c:1987:b0:4a1:dfaf:f465 with SMTP id 5b1f17b1804b1-4a9656224e0mr93824485e9.4.1793233546791;
-        Wed, 28 Oct 2026 17:25:46 -0700 (PDT)
+        bh=dhqqpxGxhV+d9yusyc+fq0FJI6GkW6OrpwpzJ7OfA8I=;
+        b=B+pXECO8/9Rgm8aENObv0WkPo7pc0u+Ul78PVN5Hod74hCeKr6xAZhjpY+I7N72c7V
+         8I3AaW5F0FUVHpGeFnmHLoZSjmj+rDuol8XHmQT3Ff13roJF/i8c2dDv6tuOil7C1PXx
+         HjUpL2jq95yX5BWu4OR7IWKAgRAbT/Jq3JjJaEuA2R8r4Yn8kL/C5XRAjDRnNSCbAaWl
+         qQudVm7vmVfAKYcMHPGHOCDyWn5KWUTKjXKb6+fFSVQBBgOw8VfrPFWpcjRCqnzoSojv
+         0N1VaV9zzuzEQoe3fQFMoxV0W+nZ3iYH0Gt6uDZQWRpx+0qLdktfuvgtTfg+Xp86a78Y
+         iUww==
+X-Gm-Message-State: AFq9FYLTU9R+DuB4WajDUqW947Wt0fcf7UL5/CPVaCqApCcCsNoc2Ftv
+	i0b2S4/Kuv4MnSZ3WlEZPc5S8IAx9XwrzV9Aq+Eyy6xgBpr/135AMZI=
+X-Gm-Gg: AYBFou2wXCzziFa9WFUU7+f9riqPekauDPuFVMDrYTh7SMXflfliBEjzBoeZXOVMPU2
+	kHOFIdNAE+pNE48XU+PhxA6DqJ18Yxxp5wOTbnW/JQHzODTGgykiMx4kACBKRs2S9e1dYMTrr3x
+	XMY63m2vVu/XyTOGIvxpC3RXLNays7eCFaRE2cgLE6WxVFS2W8HyDssqVY/vjEwgagVhAnzJQFd
+	pvxM6Wk1FMfnH1aI8QJl8vaZeb6x23UB6QsaLHcT6wu8Ky7A507Ff6srZOiRH6MDNgcnqx+cMJf
+	qTLqzF9f35e42DycthSRWcOo9f4u+L03VszwGt60gNx+35njqCAI73DCTfY4EX1JLIYHI71gISs
+	IcCAuZg4kiPqaN25VUYL1JHtqML8FyRfGCqsPV4lS5JlUAADAPmhE6d4jLzQxosq7VIymP+X9Pp
+	ySeta/RKhHjsTbWqGAVgEpFPiSkHqDWxSjbc1KzXUIFsA2zoJv/JZFhzVCu2wohr9a/Vu/g3Ig6
+	ZhPA+Rs8M/rqX3KkkgyGyM92JDhxH84QLCKRX7CQa3uFLeyS4NpbKkCUbxUSRxbMHRt1zUBDyyG
+	rIooSw1EX2kEODK6EXSEdct2a0PV8V04VQEXiHncgc9G0WC6MTMxW+AsOVCY0H8DvkhcDGMOEG/
+	3Wky9xaaP6TvpMm9m9OH0xHUavyE=
+X-Received: by 2002:a05:600d:11:b0:4a0:b6:4619 with SMTP id 5b1f17b1804b1-4a974528f91mr69963645e9.0.1793240117667;
+        Wed, 28 Oct 2026 19:15:17 -0700 (PDT)
 Received: from [192.168.1.3] (p5b2acd9f.dip0.t-ipconnect.de. [91.42.205.159])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa7c1302f6sm29180125e9.0.2026.10.28.17.25.45
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4aa7f7f50d3sm46337915e9.8.2026.10.28.19.15.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Oct 2026 17:25:46 -0700 (PDT)
-Message-ID: <3965e950-1e5c-4b52-82f0-9fe92806654f@googlemail.com>
-Date: Thu, 29 Oct 2026 01:25:45 +0100
+        Wed, 28 Oct 2026 19:15:17 -0700 (PDT)
+Message-ID: <054aab03-ce22-4beb-9d7e-b6d8264fadb3@googlemail.com>
+Date: Thu, 29 Oct 2026 03:15:13 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -93,74 +91,32 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.1 0000/1887] 6.1.191-rc1 review
+Subject: Re: [PATCH 6.12 000/247] 6.12.115-rc1 review
 Content-Language: de-DE
-To: Brett A C Sheffield <bacs@librecast.net>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20261028170459.200466217@linuxfoundation.org>
- <auJTCcqMDEmAS7Q_@karahi.librecast.net>
- <auJem0IIOw9Ibiw-@karahi.librecast.net>
+References: <20261028165947.349197979@linuxfoundation.org>
 From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <auJem0IIOw9Ibiw-@karahi.librecast.net>
+In-Reply-To: <20261028165947.349197979@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Am 28.10.2026 um 21:44 schrieb Brett A C Sheffield:
-> On 2026-10-28 20:54, Brett A C Sheffield wrote:
->> On 2026-10-28 17:34, Greg Kroah-Hartman wrote:
->>> This is the start of the stable review cycle for the 6.1.191 release.
->>> There are 1887 patches in this series, all will be posted as a response
->>> to this one.  If anyone has any issues with these being applied, please
->>> let me know.
->>
->> Build failure on amd64 with amdgpu:
->>
->>    CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn315.o
->>    CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn316.o
->>    CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn32.o
->>    LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
->>    AR      drivers/gpu/built-in.a
->>    AR      drivers/built-in.a
->> make: *** [Makefile:2040: .] Error 2
->>
->> No time to bisect just now but will try to have a look tomorrow.
-> 
-> Fortunately it was a build failure, so I just left that running:
-> 
-> git bisect start
-> # status: waiting for both 'good' and 'bad' commits
-> # bad: [adc8e434cf08c73b0f02dab2c15319315f07172f] Linux 6.12.115-rc1
-> git bisect bad adc8e434cf08c73b0f02dab2c15319315f07172f
-> # status: waiting for 'good' commit(s), 'bad' commit known
-> # good: [85d82e0d7c2dfd3e75d34f35b7ebbf41f45c9c4e] Linux 6.12.114
-> git bisect good 85d82e0d7c2dfd3e75d34f35b7ebbf41f45c9c4e
-> # good: [0e1dbd1409918dbd331cd9c382ce64736dcf3272] ksmbd: fill in FileSysIdentifier in FS_POSIX_INFORMATION
-> git bisect good 0e1dbd1409918dbd331cd9c382ce64736dcf3272
-> # good: [617f27c3fa85742e9d468a2145e3676af6b2498d] Bluetooth: L2CAP: refuse __l2cap_chan_add if chan already has conn
-> git bisect good 617f27c3fa85742e9d468a2145e3676af6b2498d
-> # good: [1476a3a7d286ad7763025337f20bb841b24c72ea] io_uring: don't pass restart error codes to userspace
-> git bisect good 1476a3a7d286ad7763025337f20bb841b24c72ea
-> # good: [be00113e49ff42c2c007993dd05cf4bdd1c2bfeb] keys: Protect the type name while describing a key
-> git bisect good be00113e49ff42c2c007993dd05cf4bdd1c2bfeb
-> # good: [6270098a65994bdf26b736b2ad6614e5b9078ad6] coredump: hold RCU while releasing parked threads
-> git bisect good 6270098a65994bdf26b736b2ad6614e5b9078ad6
-> # good: [41af0a793777ede3f1839bcd8abae92a5c901fe4] fork: release the files of a failed fork after sched_cancel_fork()
-> git bisect good 41af0a793777ede3f1839bcd8abae92a5c901fe4
-> # good: [6da107042aaa43b05f4c16bee65afc2e9b5f7561] signal: allow taks to temporarily block TIF_NOTIFY_SIGNAL
-> git bisect good 6da107042aaa43b05f4c16bee65afc2e9b5f7561
-> # good: [da1419eb5d34caf39c1f3abad5b95a601a35114f] fanotify: Fix crash in fanotify_init(2)
-> git bisect good da1419eb5d34caf39c1f3abad5b95a601a35114f
-> # first 'bad' commit: [adc8e434cf08c73b0f02dab2c15319315f07172f] Linux 6.12.115-rc1
+Am 28.10.2026 um 17:56 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.12.115 release.
+> There are 247 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
 
-Brett, you are reporting against 6.1.191-rc1. Are you on the wrong branch?
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+
 
 Beste Grüße,
 Peter Schneider
