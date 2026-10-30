@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.137.202.133
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793378826;
-	b=mQ6W21RCyQ0WVHNzH7wc3LxcMrLNaOW1fFltehWYl4zs5EUfMfYaQ4hopgWrpP7XfU8g
-	 tGhm0asuW+CDTzrLKI90QkNLudt1YdbL4+TQX8waH0AbVBL6+HZQV1L4okOZKQDM2XNzO
-	 vhrY8mdfR2fUCORt+zHGRHNgl0+ZRcPSpWTKBi4XFEe0eWA4P7vxNNlrNIannixrNmTbL
-	 74UR0Q7EVP6PRL1gszSuLlkcslx8PHfJfub+kzpBtsXAy7/oYj/42qQX5W4abHJuVFHpu
-	 QyEEzB4TbrIQTqCAsqw6656hxFJirIvFYFh1OgmAon56RiRR5+q2thV9hoUrgpGbt+w==
+	b=G3IgYNCxncezEtOzhJn5C2ByaKCUTCiHZ12wqHIYXKUjAFd8tCIefqP2ARbLO0DechyW
+	 zOLsCL+f7IVDCCguvNKvl0v4vMSfxLYYXDKXDOpWbTikhhjztmH7awLvOc+97dgk+lp0P
+	 vZY93CX8sCQa+EEcfp2YEpw1ijK0Ak2e734QbKVFbR3R/ZADm4iihCHVOdfDPCOa/By+j
+	 SwsWJe4fnBCp5VB3LES/2lwiYS2iDfvBiV7D1Ts4oTGPCOmikLEn5aEOV0c5iiVWj0AIK
+	 IZ2eKxFwwFwbMyF+o5Zd2A8dUFUs09di3KOFNJCM1lNIqzNWNb6HKk5bEP0nA9mW1Ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793378826;
 	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=XUE9Za/x16rpxRJDuuxaoR/vN4NrR3EBaPfLI6kVNBQ=;
-	b=IwwWhliDAojyhHDg+11plrqpExOxCP49RBCrIwqtdlojj5sslOsSHhR7MxPJMHeEo1BO
-	 5bOMTSoPv8wV5QrCZLKr+X0QoszF/Jhk0Kpu5xz3mxswokzyCXnqPqkgE8h80HEwlD0jb
-	 bub5GxVd7JJ/ys8Dxm+HbWFdhDPZ13Xg31oUZalReMJ8X6nOv+CWXdrieVbI8PlxBgVHc
-	 pDDFc9W7jIiXI1su+Q/jBmY8R05sZr9i6tq4hgmQt5/fp052eJ7SfKJCiugeBysAwlLzy
-	 qNSWguWrMvxgSWUZSl7hNMj+p8AeaR4h7XOA+FSTMjzIPF3BAMcGQJ+M6Z5h9RgFQiA==
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=Q/wiJjG67NUjUqOdEl7qK8HsyH5Ucf+j1POGNfCKhKo=;
+	b=1d+8FYX8s9YXTBunsUzfXNms1YbPinK9iaPwRotWdK3YsnBezot766raux0450DADyT+
+	 4ePktJensjyrXAO0ga2XR1Y9IJsl1jx3SU2ajVBcN7FFJTtY0ZMSojca02XNWsQjlV7K2
+	 4nCL+w1FJlRrMpNbXbf4wUpV55xIK8yuI7vrslyW6K0TfecWOmvLl+GztBw+lguwvk04d
+	 y38ylYewcNLmvZnC6RdactcyYvESx/1+VfZBwz1vZoPkrimyMukvJMGbtIoErJYkDwJwT
+	 mCCb9SyV58BKZ+EJP+skpEf0PlLOHFITW6aeyrihvfyM3p6sdvI6Cns4gBqM0d+yONQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=infradead.org;
 	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=CtePEMfc;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=0PMKCuFU;
 	arc=none smtp.remote-ip=198.137.202.133
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAD1606A31D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB6D606A31E;
 	Fri, 30 Oct 2026 16:47:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CAD1606A31D
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CB6D606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=CtePEMfc
+	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=0PMKCuFU
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=XUE9Za/x16rpxRJDuuxaoR/vN4NrR3EBaPfLI6kVNBQ=; b=CtePEMfcEorHY2ZWc4nYrXDUYa
-	/z8mF9g5JT55suvr8lwFzi2D4kCeF57Ee7yLQ4szfudAAlcM9aWtiqAYlJOAjhNum0WLeTYxZJ9xO
-	nIifJSdub8TDjBQfk17NomOtHQGEb9eJMH2vhaWBqnX++rS6XEFceANlbPUMB7ZiThEB0RocBkwGh
-	rLYCTfxK45CkoBhUO3Bipd0v9mqHCGzM4cVtYWHwAv4jx1tcZoXA1ZJC8s38UxuwQRyHpP7Cp2Bpf
-	x5Sd1COLgyNgEalWW2rRGd18gK/kVSkUuWeqt/tkUx0nhFCAKwPhMIa1DYKK7z0UOfs9CHLMtFPNk
-	fwHMa1yg==;
+	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
+	:Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=Q/wiJjG67NUjUqOdEl7qK8HsyH5Ucf+j1POGNfCKhKo=; b=0PMKCuFUyceLQ23jiv3MPch0xv
+	E89b2EAIXbpQrLjHao16JL3JvHela8qiCmfORA+YtHTcuwNPqiZo8PAiL2w/NJkIyNXVjkx0vmTYc
+	lwaVz78zE+mAPuZRZiIACBtLWdONO9yiwaOEM6WjCTbjQ5UW7GuQUmcjkGY+lC6FrKvDPMYxRhD5o
+	8sPLmPIskp+5UgxwnvP9Oh63ke9w6q4rW1P+egonUMBBMwhiCv6tMRp4qTL5w4CCr3v4CqlZzq+4h
+	anK0FrRUl40FTp3J29tKPDEQ/9WUNmdYGpNCteKWbiV9QGYGfPGhuF1BcHwEtpjiJW6WlPTJ69z4i
+	Rh4XIaCQ==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xMpko-0000000C9vQ-2kpb;
-	Fri, 30 Oct 2026 16:46:58 +0000
+	id 1xMpkp-0000000C9vQ-0a4Y;
+	Fri, 30 Oct 2026 16:46:59 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: patches@lists.linux.dev
 Cc: Randy Dunlap <rdunlap@infradead.org>,
@@ -53,10 +54,12 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
 	linux-mips@vger.kernel.org,
 	linux-edac@vger.kernel.org,
 	linux-watchdog@vger.kernel.org
-Subject: [PATCH 0/8] MIPS: Octeon: fix missing function prototype warnings
-Date: Fri, 30 Oct 2026 09:46:49 -0700
-Message-ID: <20261030164657.2808262-1-rdunlap@infradead.org>
+Subject: [PATCH 2/8] MIPS: Octeon: cvmx-helper: fix missing function prototype warning
+Date: Fri, 30 Oct 2026 09:46:51 -0700
+Message-ID: <20261030164657.2808262-3-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261030164657.2808262-1-rdunlap@infradead.org>
+References: <20261030164657.2808262-1-rdunlap@infradead.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -68,38 +71,39 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add missing function prototypes to header files in most cases;
-use the header files in the C source files.
-In 2 cases, make the functions static so that no prototype is
-needed.
+The missing function prototype is already in cvmx-helper-errata.h.
+Use that header file in cvmx-helper.c and cvmx-helper-errata.c
+to eliminate a build warning:
 
+arch/mips/cavium-octeon/executive/cvmx-helper-errata.c:49:6: warning: no previous prototype for '__cvmx_helper_errata_qlm_disable_2nd_order_cdr' [-Wmissing-prototypes]
+   49 | void __cvmx_helper_errata_qlm_disable_2nd_order_cdr(int qlm)
 
- [PATCH 1/8] MIPS: mm/c-octeon: fix missing function prototype warnings
- [PATCH 2/8] MIPS: Octeon: cvmx-helper: fix missing function prototype warning
- [PATCH 3/8] MIPS: Octeon: cvmx-interrupt: fix missing function prototype warning
- [PATCH 4/8] MIPS: c-octeon: fix missing function prototype warning
- [PATCH 5/8] MIPS: Octeon: octeon-platform: fix missing function prototype warning
- [PATCH 6/8] MIPS: msi-octeon: fix missing function prototype warning
- [PATCH 7/8] MIPS: Octeon: pci: fix missing function prototype warnings
- [PATCH 8/8] MIPS: Octeon: octeon.h: fix missing function prototype warning
-
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+---
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: linux-mips@vger.kernel.org
 
  arch/mips/cavium-octeon/executive/cvmx-helper-errata.c |    1 +
  arch/mips/cavium-octeon/executive/cvmx-helper.c        |    1 +
- arch/mips/cavium-octeon/executive/cvmx-interrupt-rsl.c |    2 --
- arch/mips/cavium-octeon/setup.c                        |    2 --
- arch/mips/include/asm/octeon/cvmx-gmxx-defs.h          |    1 +
- arch/mips/include/asm/octeon/octeon.h                  |    3 +++
- arch/mips/include/asm/r4kcache.h                       |    3 +++
- arch/mips/mm/c-octeon.c                                |    1 -
- arch/mips/pci/msi-octeon.c                             |    2 +-
- arch/mips/pci/pci-octeon.c                             |    2 +-
- arch/mips/pci/pcie-octeon.c                            |    2 +-
- drivers/edac/octeon_edac-pc.c                          |    4 +---
- 12 files changed, 13 insertions(+), 11 deletions(-)
+ 2 files changed, 2 insertions(+)
 
-
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: linux-mips@vger.kernel.org
-Cc: linux-edac@vger.kernel.org
-Cc: linux-watchdog@vger.kernel.org
+--- linux-next-20261028.orig/arch/mips/cavium-octeon/executive/cvmx-helper.c
++++ linux-next-20261028/arch/mips/cavium-octeon/executive/cvmx-helper.c
+@@ -42,6 +42,7 @@
+ #include <asm/octeon/cvmx-spi.h>
+ #include <asm/octeon/cvmx-helper.h>
+ #include <asm/octeon/cvmx-helper-board.h>
++#include <asm/octeon/cvmx-helper-errata.h>
+ 
+ #include <asm/octeon/cvmx-pip-defs.h>
+ #include <asm/octeon/cvmx-asxx-defs.h>
+--- linux-next-20261028.orig/arch/mips/cavium-octeon/executive/cvmx-helper-errata.c
++++ linux-next-20261028/arch/mips/cavium-octeon/executive/cvmx-helper-errata.c
+@@ -37,6 +37,7 @@
+ 
+ #include <asm/octeon/octeon.h>
+ 
++#include <asm/octeon/cvmx-helper-errata.h>
+ #include <asm/octeon/cvmx-helper-jtag.h>
+ 
+ /**
