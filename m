@@ -1,83 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793348948;
-	b=LeMFjBjSPXLX0Eb7Fy9I+QmGLWxBvWB3884XvF88389JyghJMh9Spf3iTGONyCPlcSNc
-	 gIuIL5TprMRzus/7ZXIwMjPeM0VO18kFEyEWOLnCU9xHEiqYmOnQ66uvp+vXlvzMJzj0j
-	 zcEKKiSbSeEXnvmnfFdJ+8ztqtgdSkPCHPXn6y/AACB0BuKVe8CRzRas0GutwCMHM0fc7
-	 MCqbYxqv8V2w3d8T3tIsNx3og/NWxhvvII+iR5gOr+mvgtU5wZ7Md8EkCDEQIz+CH0wHg
-	 5Otj0LxLbT8MZuzXXVBoAHq7C9mn1dgE/dJNaFENludbz3fFySODLXp0CaWz7ByS3JQ==
+	t=1793350069;
+	b=pHAG2wlaVfqq88XiSzzdvHK7gM3Cj7DlD2CWEUCvLXdbdSTVfAhi7bp99WqLzZG0iN4H
+	 I6xTzw62gE9cNpDJnLanQNudULN1kcVMNVBZd4BWPNNtciNHTNFm9xfBD7kYbWxh4cN4y
+	 GyzNIlniaN0AagRqbiqzCy78rkeAu/SMzUTcT2X3YxaVDJHao+JRGga9bUxXEFafsaWeE
+	 wFqBJJxQUgu6RLhS5pLM/Di+AKZbIZVhxWqt1zXQxs6H/tVOoRCNnzixR8xxTrvMfFqu9
+	 +o6FIpx9JDrid/VqElB+NiiJeyQ7LvV1kRLGKlkwmaFb/AnboNTHS7Ksk/UOQBcf6Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793348948;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:To:Cc:
-	 Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:
-	 X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=S6icTSJoX+H0mkq2r9K7dhGu04auJXQZtSzWsa6ywM8=;
-	b=4f+IgKXby/zwqMIKMXU8zHksCBGe2rWsLLTlbI0pn9gtCBdeNAula5g1Yc/k3UHX3/3R
-	 1ZtcudNdFchVivd0462SJxMk2H2Ww/hFrIU/rp04D3dfqFgUFIBccgsm1AEHKj/8gBllT
-	 YFsc7fhkwCZadFpS98mBcxMMKpoRdGcLGrsn6Ugpb2vIVwcspraLyN1bUepp124DoEgKX
-	 GI+gmAWZTMwYIxYwOdQlZIajDO/IQTrWIl8S6NM4pDirLRwbDx61BPJkMFdOvjRi9LtDz
-	 WqSXDcY27jLGFzRPREeMIGa21dFupvK/kOPOxlOx8jFW5KdD3oinYIYovHMOI2xUfMg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793350069;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=7YaKGspHB5GS35jplRQRbcvZMjoY3F4PRMoOVWpJOkE=;
+	b=VGBlVXV0fXAwCVGeOjHW9mFRzt6hpLVW/WMWQ7M9cjQRMXhXsp3+AYxTuFf3u3Hb02Zx
+	 WICgUPVuqN9xDfowJ4r/PAp+2lmCYe65JGXBaj0ptYgRzd/mmXOIrWv4aLKfVIr1gCmzi
+	 7PEqG5d9kb8Kkkg08WCctD/S9NKXcQoAiaKg/f7Aiozfy5+pZUvPTKlolgQE7T6WGOVGc
+	 2TjWcTG55Rzme2m6Oermogye/xOAiwY6qoYQGtLWBf0gFTbVUCDr0xKB0j4Tgf5Rcbt8K
+	 rBsq+oUPlS58RJnO4zoFeEcSsmgoXbqtHVBfa4BDsaFS6yjmF2tbiWeYdOZYfD8y36A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=uniontech.com;
-	spf=pass smtp.mailfrom=uniontech.com;
-	dkim=pass header.d=uniontech.com header.i=@uniontech.com header.a=rsa-sha256 header.s=onoh2408 header.b="ky/Io1pL";
-	arc=none smtp.remote-ip=54.254.200.128
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzT5IG1Z;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA6B606A31A
-	for <patches@lists.linux.dev>; Fri, 30 Oct 2026 08:29:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EAA6B606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BEB606A31A;
+	Fri, 30 Oct 2026 08:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=uniontech.com header.i=@uniontech.com header.a=rsa-sha256 header.s=onoh2408 header.b=ky/Io1pL
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1793348927;
-	bh=S6icTSJoX+H0mkq2r9K7dhGu04auJXQZtSzWsa6ywM8=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=ky/Io1pLlYQjG/bMGQm8P+xiYQB6o3xeqYa+xzQdV1Q/O0eFmbIEx8iOd23+3NMP8
-	 Q8MTyM6xFFyFboeU7oybSlBGzO+aNYTXw3vt9GmI+MY8ypb+d21UjnQI294yV6CXgs
-	 P+NFBVhQjCmTQh/e6qN7NuUbF+bUX8k4ORi0k3gU=
-X-QQ-mid: esmtpsz19t1793348921t836fef7b
-X-QQ-Originating-IP: 3z9nJH5sjaTFKjVPNzs2/PxgNbOo2hmbalbccp788xI=
-Received: from localhost.localdomain ( [61.183.83.60])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 30 Oct 2026 16:28:37 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 14936512090500505238
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.6 000/168] 6.6.161-rc1 review
-Date: Fri, 30 Oct 2026 16:28:35 +0800
-Message-Id: <20261030082835.297423-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20261028165943.089486480@linuxfoundation.org>
-References: <20261028165943.089486480@linuxfoundation.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzT5IG1Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12DB1F0093A;
+	Fri, 30 Oct 2026 08:47:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1793350068;
+	bh=7YaKGspHB5GS35jplRQRbcvZMjoY3F4PRMoOVWpJOkE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=IzT5IG1ZtTFp1qfqwn/zoJZ3CHZh6dqnkMBuk/K6fbBVGfRF6FSYykp/zho3bPTAf
+	 wkJw2N3s7YK7ggewbIQlDm6b46t02u1WVgoa9UHvgpxVr3+9xl4qaM8WmNhLJ8c+K7
+	 8YCm5+UdMK0lcWDz7NQ9I3HCpvwvwCF6IDWo4Rwk=
+Date: Fri, 30 Oct 2026 09:47:45 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.1 0000/1879] 6.1.191-rc2 review
+Message-ID: <2026103040-pursuit-pacifism-87c9@gregkh>
+References: <20261029073135.159947193@linuxfoundation.org>
+ <654c7978-3771-4c09-89f8-c5d23bba42de@gmail.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -87,39 +60,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OOYO4i1Nbl+HBmiIRd/geZimNjXs4x7eTz6yCFrazXApJ+KY4RnLqGoa
-	pfqRYN66B/09/B5hQ3dZs56IgbRVkVMeG8vNmPA8r5MnOt0KjBdhEAGy6KEFcTArjdEydGm
-	Sq/drt07yjR+N0aeWtY9fdbuPOXlzSMGvs4TQwoyo/AHlapYyd/MqsGTL8iwH1/CtPTwV/z
-	poReiA81wzIitwwAOkT9+l1Tk3X/cA+gyPShMmGvzXRoITh4NwNnwEzHANOXBC+XoFuCDal
-	bG67AcvRdn4T63hkLRhDJsudRwM3e7gOq4wGM4xVepheF/QCFhYGvuVdx788CGvjTWZXf5b
-	i/4WGRoqz6Mn4XRTxKFAUXcnmTNxgEuYIVNPrU2CJfClbQh3TzIxGLyVW7l6DzFCJDeDjaC
-	3FuXdC/fgyrMv1IA5+FET2CWgILQfKjxqb0/0ML32uj4lXMTxURilxTJL/h+NbM35TarfbZ
-	z8MlMFp20li1dq7IIhjvWMyDQSMECfVsLRpn4AG5MY3B6XKbAKdjkmHQWBFn4lmbm+jZSxm
-	hBaZcvTllkoYaTzdPt7mbgwTyUnovbT4Z+ev3K7ugWLhqrhZQtXIivKLW0XIDQKjTId5+QN
-	GHhRFYNZCDwP/0wHcqyu0Qo0mPrbkxs8i8TK0kXOZ1oSEUVlzIjnM+/dMDKovq4uVMFbk+V
-	ty6Nyp4NjrzBj3Zhpp37e51r049cYvDBPes/Wy5wEp7WkbLvySU7GjtOWbR8TZF7btqwv93
-	pPO+BQ85Sa34IUF2Jts61TWQf5iN9JUbJkgJY5qZnpu5BXQpJptoVYAFFuEYQez1+/pYcJi
-	xoHSK4FyT63nMav46ygFIdXbFSAERi1A+pMwj/UiTmdmQipdu4alhQE/LkJaAWFfnj6rDCW
-	9bcmY0cEOJTn3mJm4/+MpWKk0RcTi/0kDYDdQUQCwAPZR35zbgrG0+SEMeIcJBPnvYToSZD
-	S6VGPm07pQ7ULCNO/kjxx5h6wFDqDRjpmNwwOMh3cNdi1K+7NAg61tafwh5o685cHjaMaLF
-	t7P3r85/XAILbhwW3/koPzN2373AC9B1SLEudvLQHS8oFtZZ3KBowzl3q/NnmxdJE5LE+pr
-	SRJQvqaGkAaNADujyWGQJN8SpmryrNkXIfiXRtePm4TYw99K0ixOqHRvIinzgUYeg==
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <654c7978-3771-4c09-89f8-c5d23bba42de@gmail.com>
 
-Build tested in our x86,arm64,loongarch,riscv config successfully without error.
+On Thu, Oct 29, 2026 at 11:16:41AM -0700, Florian Fainelli wrote:
+> On 10/29/26 00:33, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.191 release.
+> > There are 1879 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sat, 31 Oct 2026 07:28:30 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.191-rc2.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> There is a problem with the SCMI fixes that have been back ported:
+> scmi_device_request_notifier()'s REQUEST/UNREQUEST cases are empty and
+> scmi_probe() never calls scmi_device_create() for DT protocol nodes, so no
+> SCMI protocol devices get created and clock consumers defer forever.
+> 
+> We are missing ee5dcedaf72d ("firmware: arm_scmi: Introduce a new lifecycle
+> for protocol devices"), with that one cherry picking cleanly, the boards
+> work as expected.
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+Now queued up, thanks!
 
-Best Regards
-Wentao Guan
-
-Log:
-Linux version 6.6.161-rc1-arm64-desktop-hwe-gb6e2b2f6f7e1 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT Fri Oct 30 12:05:39 CST 2026
-Linux version 6.6.161-rc1-loong64-desktop-hwe-gb6e2b2f6f7e1 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT Fri Oct 30 12:26:10 CST 2026
-Linux version 6.6.161-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP Fri Oct 30 12:45:00 CST 2026
-Linux version 6.6.161-rc1-amd64-desktop-hwe-gb6e2b2f6f7e1 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin18) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Fri Oct 30 11:47:08 CST 2026
-
+greg k-h
