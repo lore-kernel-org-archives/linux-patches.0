@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793362543;
-	b=ZDLAT2Ofaku9L13gnTbm9Bd77LV2l/2iNX24j6zwQU2HXqkiVaZC/43hCgUX6ITOBaHI
-	 S36CsNmQoC9if3YxFz+1G9SvdjRi4Qiu9qRGy6+pITJgAYUiSvljmsjRV5wYMnmIsTq0u
-	 QHX8kJQKnR0FmmVSGH2j8ncRnA0TfoLcU7lYzO7rgw19A2t+JORazScGU4Gmjj2qlEBX3
-	 41beNYecShyiy96KcjFsla2Kp460WUZt8t/TR8AAcHEs/vgLksOT9ssRgtdb9r+5Mcp3y
-	 5OqgLUxFQrC2OrLHi3q4p3MdF8cPCQ7YITQrxfeROThpAyPLRXjFvhDaT7oulKRTUsg==
+	t=1793362546;
+	b=KkaxxQIfMsOUwXv+UNEhQvyo9W20t8Xh6HKWnn16//O3/Y7IgM8FPMkpxdbHLYhATipo
+	 76EnW8+9d8KtEzxz0Ld1qpDuWtuYnlghUK6Rxu45H8nk2GlpbG/3xOWAIkBg0utpfEUcF
+	 s9OSCtJDlP5bdv581/slITjeoU2TOzUm9LvepLx6pA9cxHKaLRAxPnH97OA1Kpl4BiUne
+	 41LYXVO1uyqXD8oBAcXA/BatpH9RRoy7sYlkiuKa9AVk/w210ejIHp2KKpNn6m1yr6wZF
+	 78oWqbiDdFJRHDcT89b8tcowv1raek2OP4rw/olYNQ6EVrGNxw5rIFPEagOfrsRJofQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793362543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793362546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Az3MSkVLvoT6XV3rKoxcl4KQhuANw1rx0a9BEoi4YqU=;
-	b=Bokl/hdwsK7PgyEdOTdJfOsb+UKlDtVc5GFuTvieqQ9Q7O8ZlZqLpdX6lM71Qa6w0tQH
-	 DAxECcLVjDbdLA/enxsK1taE0jRW4ntX7tXCvS/WwsAaTDRfSp9+NZT/lHra7moFGp5Xl
-	 tfrO1Q1gnrQ2d+gN9uZ5e7axbPAn8ZykVPuiLd5T6yEXkjTsSuh/EJtGrw4qfGykY6chB
-	 5QFSp1LhOP6PDMDMzz9mO8rVpsLXdtntc0p/j6zDRY8GrKItt3YL0DDod6q+6jMG1dQoG
-	 juqx76w1C+STXspZGHWNJxJRPGtM5en/WVDso3QNimskSSffvEWl8JtbmNU3bxjFw4A==
+	bh=NXjYXberEjivtZAJ8LgyzM3G3UWRNkdqkSI3z4XS5s0=;
+	b=sTcwDS3DXS/lqklfymMwhKlXdGuohzOZiwpVup9mwzJntl0+BZMz9DUZtKVWUXYWvXbL
+	 7nHWhMaRoUCccaqIKSPSy/OfA+Hle7X5uBUl0WIQLNsjmVfm6lQ8eQV13GPkdB/hJ9PRo
+	 uLYogGIZ8N6ZZrvM2r/2JBja25b0SCZIUFKfYBV/Vnk2y39FRriAU9svOKD8W9HGdBoIV
+	 LQhH9v9dYLn6tgZRrkdWbjPZ4Mzh6qXFAWP4Q53IseXZOA3weeKqyEtUYBY3wT/mKept0
+	 aUbGny4WwbkFvIf7Nj3kYiSX9wtwQiVAcsYdTB/zbd9ZbmIAjs3BSVC882MduMsocag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJy45gc2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UzJUqvWO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C4F606A31A;
-	Fri, 30 Oct 2026 12:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B7D606A31A;
+	Fri, 30 Oct 2026 12:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJy45gc2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A2B1F000C1;
-	Fri, 30 Oct 2026 12:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UzJUqvWO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32301F000C1;
+	Fri, 30 Oct 2026 12:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793362542;
-	bh=Az3MSkVLvoT6XV3rKoxcl4KQhuANw1rx0a9BEoi4YqU=;
+	s=korg; t=1793362545;
+	bh=NXjYXberEjivtZAJ8LgyzM3G3UWRNkdqkSI3z4XS5s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJy45gc2QLGjJHmDo8UWbyfNFfW1eOCnDUbjKq9b4kVilPVm7DnwDtsdK7oFoAgiX
-	 WUI6zyEfhFPxWZOkeZPRR3+QA9azt+MNQiD9wzu5ZZDKmNW71Wv0nJOv6AtJ0/XPPN
-	 860y3MnHF6CziEy/vViU7Z8ilKcFc5wtqpDt4x8c=
+	b=UzJUqvWOuN/nD4JVGfcmv/ManODpFa+W72QwsJWsz9dNnjrqX3rFpkAv5qLF1szt+
+	 NZ/N14cH3wyT5fnf1BlmTKbUEeCNTGKHVkVBrFKWBJAcV8MRLmY+vmn2o1oCp+BxRr
+	 G3sqZwnhTJ0eZVqSYy4PTmVuOZ3G/9G8FqrcjapU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleg Nesterov <oleg@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 08/10] exec: cancel io_uring requests before de_thread()
-Date: Fri, 30 Oct 2026 13:15:09 +0100
-Message-ID: <20261030121255.458912244@linuxfoundation.org>
+Subject: [PATCH 7.2 10/10] fork: dont create io threads once PF_POSTCOREDUMP is set
+Date: Fri, 30 Oct 2026 13:15:11 +0100
+Message-ID: <20261030121255.505690422@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261030121255.257615100@linuxfoundation.org>
 References: <20261030121255.257615100@linuxfoundation.org>
@@ -71,67 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit b42c85c20d84ff3e4f0f027d6596c3b3b4a20657 ]
+[ Upstream commit 1f978881ce6c9ac4f4d4a7b6a6e52339eadcd350 ]
 
-begin_new_exec() cancels the exec'ing thread's io_uring requests after
-de_thread() made it the only thread in the thread-group. Now
-io_uring_task_cancel() runs task work after. If it runs a
-create_worker_cb() item then a io-wq queued on the thread before the
-exec creates a new io-wq worker thread.
+zap_process() skips every thread that already has PF_POSTCOREDUMP set.
+Such a thread is past synchronize_group_exit(), so a coredump can't
+catch it anymore. It isn't counted in core_state->threads_remaining and
+it isn't sent SIGKILL.
 
-Said thread joins the thread-group which de_thread() just took down. The
-io-iwq sticks around until it notices that its workqueue is dying. But
-code after de_thread() relies on being single-threaded.
+do_exit() sets PF_POSTCOREDUMP in synchronize_group_exit() and calls
+io_uring_files_cancel() right after that. The cancellation runs task
+work and a create_worker_cb() that io-wq queued before the exit creates
+a new io-wq worker from there. If another thread started a coredump in
+the meantime that worker joins a thread-group which is already being
+dumped. zap_process() never saw it so it was never counted. But when it
+exits it sees signal->core_state in synchronize_group_exit() and
+decrements threads_remaining like any other thread.
 
-Move io_uring_task_cancel() before de_thread() but behind the point of
-no return. Any worker created during task work run from
-io_uring_task_cancel() is just a sibling thread that de_thread() will
-take down and reap.
+So the count reaches zero one thread early and the dumper leaves
+coredump_wait_inactive() while a thread it counted is still running.
 
-Once io_uring_task_cancel() returned the thread has neither a task
-context nor a workqueue left so nothing can add a thread behind
-de_thread()'s back anymore.
+The task has no fatal signal pending because zap_process() deliberately
+didn't send it one, and it never went through get_signal() so it doesn't
+have PF_SIGNALED either.
 
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/aq0_lvHDViIpX_Mu@redhat.com
-Fixes: 3bfe6106693b ("io-wq: fork worker threads from original task")
+Refuse to create an io thread when the creator has PF_POSTCOREDUMP.
+That costs nothing. io_uring_files_cancel() raises IO_WQ_BIT_EXIT
+before it runs any task work, so a worker created from there only ever
+gets to exit again, and io_should_retry_thread() doesn't retry -EINTR.
+
+Clearing PF_POSTCOREDUMP for the new thread in copy_process() was the
+other option. It makes the worker a thread like any other, but it only
+helps while the dump hasn't started. A worker born after zap_process()
+has run is invisible to it whatever its flags say and still decrements
+threads_remaining on the way out. Refusing to create it covers both, and
+then no task is ever born with the flag, so there is nothing to clear.
+
+Moving io_uring_files_cancel() ahead of synchronize_group_exit() closes
+the same window. It runs the cancellation, and whatever that can block
+on, before the thread announces itself to the dumper. A thread that
+blocks there never reaches coredump_task_exit() at all, so the dumper
+ends up waiting for a thread that never parks. Refusing the creation
+leaves the cancellation where it is. But it's very ugly to run io_uring
+work even before we did all the generic exit work.
+
+Fixes: 92307383082d ("coredump:  Don't perform any cleanups before dumping core")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-12-8e4adb1619e6@kernel.org
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-14-8e4adb1619e6@kernel.org
 Acked-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ kernel/fork.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1145,6 +1145,13 @@ int begin_new_exec(struct linux_binprm *
- 	 */
- 	bprm->point_of_no_return = true;
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -2689,8 +2689,8 @@ struct task_struct *create_io_thread(int
+ 		.user_worker	= 1,
+ 	};
  
-+	/*
-+	 * Cancel any io_uring activity across execve. This runs task work
-+	 * that may still create an io-wq worker, so do it while de_thread()
-+	 * can still zap it.
-+	 */
-+	io_uring_task_cancel();
-+
- 	/* Make this the only thread in the thread group */
- 	retval = de_thread(me);
- 	if (retval)
-@@ -1161,10 +1168,6 @@ int begin_new_exec(struct linux_binprm *
+-	/* A creator past its fatal signal gets no thread. */
+-	if (current->flags & PF_SIGNALED)
++	/* A creator past its fatal signal or its coredump point gets no thread. */
++	if (current->flags & (PF_SIGNALED | PF_POSTCOREDUMP))
+ 		return ERR_PTR(-EINTR);
  
- 	/* see the comment in check_unsafe_exec() */
- 	current->fs->in_exec = 0;
--	/*
--	 * Cancel any io_uring activity across execve
--	 */
--	io_uring_task_cancel();
- 
- 	/* Ensure the files table is not shared. */
- 	retval = unshare_files();
+ 	return copy_process(NULL, 0, node, &args);
 
 
