@@ -1,58 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793362517;
-	b=fEf69bF+IF3qDVNngFtF/TJ60CblS4hLBrvlNjaiGbxkRId6BPIaOX11zDLa7u1miLjv
-	 ZNceIl4hT1r5D4+v5+xVfRRd0+Qz3mz52EoCbeEWvlJgY73xsHO9pLwlBpHT+m3gwoZoj
-	 WeOp4RxpyLk6701NQqsB7CkWB1rxeuZiQEjZN8sli5EdymPkohit9RSYuPm27g67iMFof
-	 iek6jy2iogJk4raA+4DgyG5FDcSx5tb2P2PB5OB87mMKHImrcdDVHXW0zsPJIb4lfSRN8
-	 n+HqPMvYvtuZ/r+bJkCG9J9qIUuDGmrSP8/5eijDmhuzlWqX6d+FT14anXNjjE8iscw==
+	t=1793362520;
+	b=15fCD71Gd7uDz0ZhMPgnUxYl9sONEohinulmZ/PdT3dupLWpqEnYYrHY9J9LmUR2OKd5
+	 /SaWIyIGYR9umXq6h4wCzFbsgyHP+gWFoSKP0rfMpu4oFLF5kXOHCgHF5FMqJH2lIfBBf
+	 U2n99KXPXTY9Si9zsPvyBOxyDMqC/UMsoZEZYZERLUazoRQYA0+iCygGhB0Dht6BaJ2z1
+	 MLMwxRAgqm1/N60lp8F5kfhQI9NaSxdDCj6V3eemIFjI+RnAlU4TuZhbtcrpP+0Asqjax
+	 RR37QKpx2CNClW2Xg3swsc+Tj9FPVYhLIHQkfmn8qs7vl1e7gqNYrGKG+x1wMh4k1Uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793362517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793362520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=tGU2gN2dl/OXHHZknLIYOc27Cgw/TNxUKpLc/NlIc5E=;
-	b=KRh6RcRTEzQh0ul0yOHKONikGGgB1fchME95V7gDk8ybvMoarsBsp8yAWjWf4mpMGDX8
-	 XQcsJVeYABxltcicSU9n7sGz5Lzj4vnKHEm1u6m77mP4E0O0XYCa9v4EoWYD90JM0k9Nv
-	 Zw7dxpbnnIzW2t6J5SDy0eBAIJ7Ot14k/YOOB4ghHkRsGGDeD2JT/jSnmunGG6iM4jdwj
-	 scCIqxDa1OCMo5cv/OqLUzNzw75oHXhbAqZKX8y6rFjkeJ6q4Uf81xwu6qSIriKhyzj39
-	 F7EuiQZ3X7WDpbefv+leP8L5wlmFJLcnB4rMh2aELNFwu+0VMtH3FJe2AULV2dyOUJQ==
+	 MIME-Version:User-Agent:X-stable:X-Patchwork-Hint:X-KernelTest-Patch:
+	 X-KernelTest-Tree:X-KernelTest-Branch:X-KernelTest-Patches:
+	 X-KernelTest-Version:X-KernelTest-Deadline:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=zduN4WfUYv01Llk6xJOg5uu/XzefVpEyKeRryIQDT+Y=;
+	b=yiM9fRmC/BDIlphx0KshFPXZWDJfibmTbFtmjR3+pHq8yv0Dpr3UA0h5djOPkzx20UKs
+	 07tQMMhnOpXVkuABGRC2mYxz5u0fhzUzJi5bi/5bB01GgxYtEds+L5R0jgdDJ8FTKv9lK
+	 +jlI1sfuSmFbQyRJzzgL0VCbbmJ+n3hlow7wc0bsBmDZIW6E/gGYt8eTSiOKhupcYsIR1
+	 7wU1Yj4blpI/ulwfoiBdxmSyKWLSVU0/qhK4MXK2ntITy4uZMu+x26gyzyP+geK1/ARcN
+	 z955UHqhGpv9JcUPxx4yI+qcd03I5VQ4bBVFQUDTxkkXqzFoEyUOYTrMhmWyawaBsrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXKj5w9j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2bMC73my;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6446D606A31F;
-	Fri, 30 Oct 2026 12:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5F6606A31D;
+	Fri, 30 Oct 2026 12:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXKj5w9j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B4C1F000C1;
-	Fri, 30 Oct 2026 12:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2bMC73my
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B49D1F000C1;
+	Fri, 30 Oct 2026 12:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793362516;
-	bh=tGU2gN2dl/OXHHZknLIYOc27Cgw/TNxUKpLc/NlIc5E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FXKj5w9j+EJ8/3zDKDnNSdXwtW/O7h0bZokcpLQZghmEZj+xLUQOGP4qbbGcTqwGq
-	 AkMvdIjKQLYAAz2QSME5SDSyJFoR5D8KVttC0MR1ari602S+9uLS5H1asXtnyAoRI1
-	 t5l6OtKkiZfzDUNuNHZAc+fsgEZKvXZfHZzBXZ+g=
+	s=korg; t=1793362519;
+	bh=zduN4WfUYv01Llk6xJOg5uu/XzefVpEyKeRryIQDT+Y=;
+	h=From:To:Cc:Subject:Date;
+	b=2bMC73mycUo6Qc7xiMztRNLHXVrZbJXFwFEUEZ7oqYk+2Yjd7+owIc6UZCk9CkDA4
+	 E4PPMuVrLb0Ry9NgpN0iYEvFnjC2bCf4mfekMWLW0WOUyfVTmwz/3vCmzpUHjg5xGj
+	 bHKhfCvXc4RRYlMFUUvmN7m+6PhrRQHPLwBEKWRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ihopenre-eng <ihopenre@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 01/10] ksmbd: wait for negotiation before receiving another PDU
-Date: Fri, 30 Oct 2026 13:15:02 +0100
-Message-ID: <20261030121255.294253042@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 7.2 00/10] 7.2.15-rc1 review
+Date: Fri, 30 Oct 2026 13:15:01 +0100
+Message-ID: <20261030121255.257615100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261030121255.257615100@linuxfoundation.org>
-References: <20261030121255.257615100@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,62 +73,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.15-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-7.2.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 7.2.15-rc1
+X-KernelTest-Deadline: 2026-11-01T12:12+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 7.2.15 release.
+There are 10 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sun, 01 Nov 2026 12:12:50 +0000.
+Anything received after that time might be too late.
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.15-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
+and the diffstat can be found below.
 
-[ Upstream commit 68f410faedaf6ee74d81e574733c50ebcc1bd8ed ]
+thanks,
 
-The receive thread queues a request and can read the next PDU before
-the negotiation worker finishes. While need_neg is set, the next PDU
-can cause ksmbd_init_smb_server() to replace conn->ops. A pipelined
-SMB2 request can therefore make the worker handle an earlier, shorter
-SMB1 request with SMB2 operations and read beyond its buffer.
+greg k-h
 
-An SMB1 multi-protocol negotiate may be followed by an SMB2 NEGOTIATE
-that changes conn->ops again. Wait for work queued while the connection
-is new or needs negotiation to complete before reading another PDU.
-This keeps the operations stable for both stages of negotiation without
-changing when need_neg is cleared.
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: dc8289f91238 ("ksmbd: fix slab-out-of-bounds in init_smb2_rsp_hdr")
-Reported-by: ihopenre-eng <ihopenre@gmail.com>
-Reviewed-by: ihopenre-eng <ihopenre@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- fs/smb/server/server.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 7.2.15-rc1
 
-diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index e113b23d96f94..e36e82b94a047 100644
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -371,6 +371,7 @@ static void handle_ksmbd_work(struct work_struct *wk)
- static int queue_ksmbd_work(struct ksmbd_conn *conn)
- {
- 	struct ksmbd_work *work;
-+	bool wait_for_neg = ksmbd_conn_new(conn) || ksmbd_conn_need_negotiate(conn);
- 	int err;
- 
- 	err = ksmbd_init_smb_server(conn);
-@@ -393,6 +394,10 @@ static int queue_ksmbd_work(struct ksmbd_conn *conn)
- 	conn->last_active = jiffies;
- 	INIT_WORK(&work->work, handle_ksmbd_work);
- 	ksmbd_queue_work(work);
-+	/* Negotiation can change conn->ops, finish it before reading another PDU. */
-+	if (wait_for_neg)
-+		wait_event(conn->req_running_q,
-+			   atomic_read(&conn->req_running) == 0);
- 	return 0;
- }
- 
--- 
-2.53.0
+Christian Brauner <brauner@kernel.org>
+    fork: don't create io threads once PF_POSTCOREDUMP is set
 
+Christian Brauner <brauner@kernel.org>
+    fork: move the coredump and exec checks into create_io_thread()
+
+Christian Brauner <brauner@kernel.org>
+    exec: cancel io_uring requests before de_thread()
+
+André Draszik <andre.draszik@linaro.org>
+    kbuild: link-vmlinux.sh: improve detection of third pass requirement
+
+Ridham Khurana <khurana.ridham222@gmail.com>
+    platform: cznic: turris-omnia-mcu: Add missing MODULE_DEVICE_TABLE()
+
+Daniel Schaefer <dhs@frame.work>
+    iio: hid-sensor: als: scale each channel individually
+
+Stefan Metzmacher <metze@samba.org>
+    smb: smbdirect: don't hand out already failed sockets in smbdirect_socket_accept()
+
+Stefan Metzmacher <metze@samba.org>
+    smb: smbdirect: release failed pending sockets of a listener
+
+Stefan Metzmacher <metze@samba.org>
+    smb: smbdirect: don't wait for RDMA_CM_EVENT_DISCONNECTED in smbdirect_socket_destroy_sync()
+
+Namjae Jeon <linkinjeon@kernel.org>
+    ksmbd: wait for negotiation before receiving another PDU
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                       |   4 +-
+ drivers/iio/light/hid-sensor-als.c             |  22 +--
+ drivers/platform/cznic/turris-omnia-mcu-base.c |   1 +
+ fs/exec.c                                      |  11 +-
+ fs/smb/server/server.c                         |   5 +
+ fs/smb/smbdirect/accept.c                      | 227 ++++++++++++++++++-------
+ fs/smb/smbdirect/connection.c                  |  12 +-
+ fs/smb/smbdirect/internal.h                    |   2 +
+ fs/smb/smbdirect/listen.c                      | 137 +++++++++++++--
+ fs/smb/smbdirect/socket.c                      | 113 ++++++++++--
+ fs/smb/smbdirect/socket.h                      |  42 +++++
+ kernel/fork.c                                  |   4 +
+ scripts/link-vmlinux.sh                        |  20 ++-
+ 13 files changed, 489 insertions(+), 111 deletions(-)
 
 
