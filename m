@@ -1,106 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793395143;
-	b=omn0ATOUYU1Bqd2BweQBagLjZ+88XYkjgNmzjDNWJKPdURfKK+MTEIRdmMl+r5vrN6WE
-	 r/TbQIP0ww21ZiYxivKyW1nipMY7znrHqkEtIdvSgPEHT1xqaE5v7/svam1hoxNuBMxk4
-	 fJMMlcFQeHHBbNjWo0CW0Qx9kybOVDNYCgUEpWHdiFOxFdbguRsWwZsIhn9ItoHAqr84W
-	 1zbwrR1LqDoATc3uJ0A+OCsprjBGDDF0WI0PDMgYsdJOdyh6/wONROgN+0yb4qzk9bHSi
-	 4FkRHR1KCiJp3IezGXEsfr9nN4ptCQxGtEFHGosmBwyW93yE3Kf4+eMvH7jxeChofHw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793395143;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793398002;
+	b=DG2tqXIOVekrx16ZCEKpC0D7TqQdRKZygfPqNWmR591dyGCalVt7r+YrkdQG2iWlHu19
+	 yYzMK+kAvvMzzNZZoPb/YccEsKsTLUwZOWFWpMHEHzG1Ks28PfF23V6usX/xpJliNaFN5
+	 ecEDdXfV23OnTEx6bh8TfSUASV1VVoAzDNyMCE0Ot7gNOW5RcPhxl4xERbShguqbk1k2d
+	 PQeSjeIA5YUXhJphtM+UX0AG0daVObI2LYniACRWLD+oJFlqquayAWtpsByW+kByit4ln
+	 aznu0BovFpTPXZ8LoAj1DZ8UCFUi4kalyZQ1e3EUPsgHZfNXE2CS0kkQQYAPN/zzXDw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793398002;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=HU3pvitpwZLUJMJVILFp+Zu6v1bdImGs94yE/HOyndg=;
-	b=g/7wF8KCnlEf47wGY1/Xhyx5cfA4ZYZjwo+TqRC6q/KV45sMSAmR6c6WzdM3ZC4eIcVK
-	 V92JHXpj4PGKSLLsyBUyzAb0H5UyzUSOt/bY1ao/AQ9LGOlhCEWXAotR75aejbOYdmD6T
-	 nbtzleYoauzbcg0wAdwWyZDms7pgxfmmzKcQdudZLto15MQcXALDnV8z3b6PRZhGz/q2X
-	 eF+VFy332p1bMkynkmk8VkACoo7urzaWMJHtM9Vw6SKZtjK8RIskFXu9SoHDRaBaoQF5+
-	 NypRhKE2sGwME9QNxSROufMwbalk7gcoPqY8CM+JRUG/s2gXAZyLYBxUW5JJfIhTRVg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=dIB2Yomh;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.44
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=VallrhWYbAQ8j+mRUozNpVRyDn2TOg/EyzhjcGGEMLE=;
+	b=mIvsSPByIPQqsuBhzPmISBMVLYK3SE/SZhOH3UtCH0/QpEJlg1VwJfuu+LKFTkdBiwEw
+	 hWPQ//KRAf/7SsmNQkOFe8c5oAL9lcc7V6doGsmu8JxxFCbcTDj2LtXIR1D97eQeGmkoF
+	 GVigC8+mafFDBIoEPLKq/+ypE1QAR1eYrW2Xq03mpZ7RFwKNfW2JzgC25/tyH+rfzVfBg
+	 agiVsLsKCZanEXK033ttOBmduix7c68d4OozMQNo/Rmp9Zu/xLiwLRl+S65QNaUeLBYqR
+	 jOsPmv8N3LPuifweiTO5URx4pgfww+df6FUdgu97AN2FT1JFdRWMvJr9dacsg66qRGg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vQD91ogK;
+	arc=none smtp.remote-ip=74.125.82.180
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B567C606A31C
-	for <patches@lists.linux.dev>; Fri, 30 Oct 2026 21:19:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B567C606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BB2606A31E
+	for <patches@lists.linux.dev>; Fri, 30 Oct 2026 22:06:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9BB2606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=dIB2Yomh
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-91b8306b9f8so19258896d6.3
-        for <patches@lists.linux.dev>; Fri, 30 Oct 2026 14:19:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793395142; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ATCT8rexseogu+vn+ib/qyQqPizm7m3+HQrGULjizLameN2lzVsUFhRKVTk24HKSUz
-         ZqIBEnZUQ2EIiLXVgNW2iU5L4+sIkFNcpINm5+O8i38WxPL9J9b8nwxNYK+ADWYCB/fr
-         yhHimsaEIvHALkhWvYsdZTGrfdML7BtKsGk8wJi8rqdAv4eAWSUhYbbcw7OSo9Bb1eMr
-         lC/dg1xLIGYh70WRKaw0kLZEfoTcwkSI1YWmPmWjJCC3xbGpF2sOjfxPXbp+jS3PWECp
-         p2j/577rEAof390ELtPe0S+H7d+0sTSIvhAaZuOHnvZ7MkAO+1me+9aDeF8z5IDoFIQ2
-         ekcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=HU3pvitpwZLUJMJVILFp+Zu6v1bdImGs94yE/HOyndg=;
-        fh=mItfAq8kMhE944NXV2mU6+7rCo635gq43KQ5cDxQys0=;
-        b=JZikPxXB8Zkg/sQP/J62TNAFfw09lTRs+KbUTQE6kTTsy99CyVAlKR6FyIH2HWYknO
-         lgs8AVCAPJCMK3g6qrEb6VYP29N7kYSBWdgkaijN5AAu+T9hudD9TscSiBk7BOssXbDG
-         BykYxIw/aMCnWnXaqSGH12nc2tYcqzCgtY6+oyoAAKJdPs5iYImy5Y4gGzMmvJsESr9i
-         f7NdIVf5Sl9geQppicyS4WK8XAUv97mybS1pYnaNOjrH+nIzgO0oRz8Mn7xB5LmZClLL
-         dI9YsfC2LvN5mRS2jmlqonCoBLq5fo3fGNanaP8tCyjve5lcXBDgKb2R0wdmIySfDCb6
-         VS0w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vQD91ogK
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-33fb4680717so310719eec.1
+        for <patches@lists.linux.dev>; Fri, 30 Oct 2026 15:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1793395142; x=1793999942; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1793397996; x=1794002796; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HU3pvitpwZLUJMJVILFp+Zu6v1bdImGs94yE/HOyndg=;
-        b=dIB2YomhttqFpyro1ApK4LTiU968266c5ZO4LOm/iRURcPtEckqyO4+blAdV9acpMW
-         JZ92DvWKbO1BNZjpTb4O3aNi2knj6vKNYHh2FJYP/mTtMWGZcp1G47efjR6iXjVMbUTn
-         ZWbEC3uiljE7a6U0YFeBft610grI94+ZQSqV2KDy9zu7IaQXQVPhKIJDfJJjsqIOezLS
-         1cnGlzxUqbQD4gO5rhKNFFCNdIYQSeAoFfDarxO+dJgWRYvKWE9Tmt1/tEmFFsNVl4Ss
-         2Lj4ykNzZQeu+zb2liSdeMYs3juBlhn14Jx0pvPnGLQ38i4vX4Ulz7hrdFIUnHOVDe0w
-         qP5Q==
+        bh=VallrhWYbAQ8j+mRUozNpVRyDn2TOg/EyzhjcGGEMLE=;
+        b=vQD91ogKidtRNkCvTb8tJBX6/EfQ+Oa/IujW3UKyuFTe3+rQUayb+kEse8tY/iMMwk
+         sYHjPfejhG2tH/QJi+f78kSrn0SEIE3uWnwAljVr1TLjsZWafH3oA7oxbhApHa2a2Fae
+         NE2++hqPLeaLQ1V0c0k7j2PE0SlzW/XU3nfUvSuw4eeLCzaqUSKCRd+hTDPvoW61z801
+         Ysdxd4z/yTP9+5seIUphorVDpghJbe+27OHsFK4KdhL66NgbizXQg9ARr8ia2YBaJeZb
+         0UI+h1ImYII4nLRW3X5HRA/upMVSpCVvxuwPe+1tIJtBtWx2OjjyHQnuLOw1aUuAt4tQ
+         rSvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793395142; x=1793999942;
-        h=content-type:cc:to:subject:message-id:date:mime-version:references
-         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1793397996; x=1794002796;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=HU3pvitpwZLUJMJVILFp+Zu6v1bdImGs94yE/HOyndg=;
-        b=ouqUBSSUCu0/xtmOWwTc0j/IlVqXdOxsdgyg1ufUWdHxNyXwZc7hbjEs5luY+WFl9k
-         YaEgQPMt+fMdKEkDvIfL2jn6Pi5NUZ6esONU2rcwUyiDpkrmbal9IrQpxoWqGKqCkyJu
-         T07KXw6W+GxGbVktoxByUACiYR86DIUYzFhjEB8fnwvGLKL4+1v+hZgLSYWHA4vL8yJn
-         P/NnR8Ua+7aZG16YiX6S+wpjpb1sDjCBSVJXqmi3/g3L0gVLGP+klr5S4bG+TbiaEs7P
-         6feR44Ox507HbX4c41NF3UUGyiSWBrsjMqa2epGiJHQD59pLdzPTv514yDJrknmxvju2
-         AEqA==
-X-Forwarded-Encrypted: i=1; AKwUvBzkHrwEHM+AJKkeyVs2UrdbDQp9TxDxilQsoDamykkfpkVx79uYVtE0Far6PrnCO5BXAm7HnNs1@lists.linux.dev
-X-Gm-Message-State: AFq9FYLO+zwtAy2ZCFPExxERbILSY5vMAVSY/7ph2byPB9fTx4D5ciz3
-	brJvwcWZp8K8Z9wBJUjoyfzGqi5sSWszM1yuEa9cvDgUSHz/YOcoTj4FLHs1qucWwfk5mELGQGJ
-	zsrE3a2mnMLjYdloKcrledjeWqS+Q/Gr6OC75POew
-X-Gm-Gg: AYBFou3OtlE84fgb6E9BhQoDwHRBjMAfkGuZ2b2JPSZKx8o+N68hsO96KbBHbEiiOlJ
-	sE3u5qUlEPTKOswQlgm5ONlNe2n9N38vY9ufxcbUIkOxSr39zhXLmIHXZTMICn3PQ9+xZhBBUnt
-	t454rNO8PtuhaTVIVcljJ4CoNmhZeBVC6yRQ0WmMdaq0WHhtquoKZKy3yJpx7LBQ5jpK5cX4yuQ
-	uLikYvC4xL9GbTVB0t5re1ixdNHEyaQ4cyb9ZWDz1thJp82V5+wObURZtIhfxHxSVXkUnk95kR6
-	+bz+btC+sPkFjuoTWZfqrJHpR8uvqCmlHZ4nDrP07sY+wNeG5poPxQGXkAEnmdzW9sqzuGpo5g4
-	DtmAkm9dH2sc3ed5FKFfWck8Kv/A/wZCtDzUKdKMz97iInGND1p2kDdrxTU6CiZzCuJ5ZCwe2Xn
-	TxpARBzBkRGX1AHG2dUQPTrw==
-X-Received: by 2002:a05:6214:240a:b0:91c:450d:8f34 with SMTP id
- 6a1803df08f44-91ca4bce34emr58846786d6.46.1793395141110; Fri, 30 Oct 2026
- 14:19:01 -0700 (PDT)
-Received: from 176938342045 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 30 Oct 2026 14:19:00 -0700
-From: Ackerley Tng <ackerleytng@google.com>
-In-Reply-To: <CAEvNRgEh3E7NBc5_3Wq66Fss-mAYT6+4FWP5+=Co6+OVfVnQQQ@mail.gmail.com>
-References: <20261017073149.1303738-1-aneesh.kumar@kernel.org>
- <20261017073149.1303738-3-aneesh.kumar@kernel.org> <CAEvNRgEh3E7NBc5_3Wq66Fss-mAYT6+4FWP5+=Co6+OVfVnQQQ@mail.gmail.com>
+        bh=VallrhWYbAQ8j+mRUozNpVRyDn2TOg/EyzhjcGGEMLE=;
+        b=i4TeuZ2GbHyEHKes9i8nANB1NU+hovfZThE0qat5FgQDCGBDOdRohuk2afWYbYQ7+j
+         M9DLo1QIVcsbzSGgLBGvkesabLLUEjzOwmFr6hijkzvCLfYoEus9QO3QEkl06inMrtjt
+         LBskhfMiFz7cnU0BgUtqJ7QOULBEA0uF6k1qhKWSQhcYHoAovghmZqw7j+H4bWNxxdbz
+         TpaRVEwirhADWA97CJgr2oIb8ere4SzVaZQ6w/yH6E+6ALxfiEd2KL2KM5DxlWvGzXaX
+         cbclfRsi6xmj6df0Z0IXu1Q3cp6mZcGN/9IT6RbEev8HQ0Isj3q/KkCljfu3rseP7Mj1
+         luIw==
+X-Gm-Message-State: AFq9FYLROCmNKG9OyMgKOeftQL7/bzoxmpjSNNKBmEufge3lqHl8DEpt
+	4SmszrXDeZ3Kuv/fGtUg0OcTEOMyz+x31MpQcGbRhW30ITyXNejdaBU9
+X-Gm-Gg: AYBFou0e7k+9xrN2HwOifG9ylLMDMgm+q0vSc4bRgDLWsN1MdKK/p5FwvRGyBpT1z3A
+	O/GkScNGPjX4/68I4zmH27+J2HUi/oMOpkKMa+HX/YrKU14ivJHevVc/xhHAOwf1M6WEGnDsXim
+	j8+4UIlg8BVn2X+WGvUbraIW5XjVuXoUMfN8Kz8Bh3puwSj6OGUUfFwz+S1WhrkoHfsduzNWn6E
+	DahN00JtynBud9f8KfzQBk8bbcPZdv0oj5mBG3b5YMgx6rcbRDr2EEe7cBF98ODFHUc+h02jgeh
+	btcvJIeDOabwv2rTfMaEs7XdAdaNe2ucoUk5n3ET16PaKZAlWCJuC2wkZU6wq+1csp6+0Uhvhgw
+	SuaxwB5gOlbuB6RwjnwAdW8RXVVUAuMsXiYtc8ukqh6A1KEY+409iRSi9B+gWNPlA4YfeAVdpo8
+	vH3VYgcqEwwM2Z2g/ZPXe5v9NSV+CWZNd6rOsgqNBwV6f90f49PFQgAA3rCT6ftjRq9oWdOT6h6
+	Mm3C3N6BO+AG+32brY2yZyyE+W88IYnn1S9ySaOSxkJh2HQIdKquddPKbbacVf55X7XT87Eo1/w
+	Z6ERgwXUkjqk5RW35sFni+uEwQEzhp4yk/DA4ecCB6iQGh4+/2DgJsdHVHQtuuKr4s1rF4G+um5
+	Pqg==
+X-Received: by 2002:a05:7300:8e:b0:36a:119d:a099 with SMTP id 5a478bee46e88-36a422062f9mr5616341eec.5.1793397995862;
+        Fri, 30 Oct 2026 15:06:35 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a429018casm8965957eec.14.2026.10.30.15.06.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Oct 2026 15:06:34 -0700 (PDT)
+Message-ID: <547303c0-478a-4ee4-9c9c-281e62ac4a69@gmail.com>
+Date: Fri, 30 Oct 2026 15:06:32 -0700
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -110,162 +91,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Date: Fri, 30 Oct 2026 14:19:00 -0700
-X-Gm-Features: AclHuK8aNtmB7JK_qHjJeH9V34MC2DCp5vnYn4fAUI82UUtxS3pHz4MfNJXrVPA
-Message-ID: <CAEvNRgFEKqVZcNYCL0LpB6BTyBFe+ot1x1nFfEqOrSTsu134PQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 02/13] KVM: guest_memfd: Support private/shared
- conversion of device memory
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>, linux-coco@lists.linux.dev
-Cc: Alex Williamson <alex@shazbot.org>, David Woodhouse <dwmw2@infradead.org>, 
-	David Hildenbrand <david@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>, "Joerg Roedel (AMD)" <joro@8bytes.org>, 
-	Kevin Tian <kevin.tian@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
-	Robin Murphy <robin.murphy@arm.com>, Sean Christopherson <seanjc@google.com>, Will Deacon <will@kernel.org>, 
-	Alexey Kardashevskiy <aik@amd.com>, Xu Yilun <yilun.xu@linux.intel.com>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	Steven Price <steven.price@arm.com>, Fred Griffoul <griffoul@gmail.com>, iommu@lists.linux.dev, 
-	kvm@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.2 00/10] 7.2.15-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20261030121255.257615100@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20261030121255.257615100@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Ackerley Tng <ackerleytng@google.com> writes:
+On 10/30/26 05:15, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.2.15 release.
+> There are 10 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 01 Nov 2026 12:12:50 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.15-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-> "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> writes:
->
->>
->> [...snip...]
->>
->> +static int kvm_gmem_device_convert(struct inode *inode, pgoff_t start,
->> +		pgoff_t nr_pages, const struct guest_memfd_device_request *req,
->> +		const struct kvm_memory_slot *slot)
->> +{
->> +	struct gmem_inode *gi = GMEM_I(inode);
->> +	u64 attrs = req ? KVM_MEMORY_ATTRIBUTE_PRIVATE : 0;
->> +	bool prepared = false;
->> +	int ret;
->> +
->> +	MA_STATE(mas, &gi->attributes, start, start + nr_pages - 1);
->> +
->> +	filemap_invalidate_lock(inode->i_mapping);
->> +	if (__kvm_gmem_range_has_attributes(inode, start, nr_pages, attrs)) {
->> +		ret = 0;
->> +		goto out;
->> +	}
->> +
->> +	if (req && !__kvm_gmem_range_has_attributes(inode, start, nr_pages, 0)) {
->> +		ret = -EEXIST;
->> +		goto out;
->> +	}
->> +
->> +	ret = kvm_gmem_mas_preallocate(&mas, attrs, start, nr_pages);
->> +	if (ret)
->> +		goto out;
->> +
->> +	kvm_gmem_invalidate_start(inode, start, start + nr_pages, KVM_FILTER_SHARED);
->> +	if (req && READ_ONCE(gi->device.kvm->vm_dead))
->> +		ret = -EIO;
->> +	else
->> +		ret = gi->provider_ops->prepare_conversion(gi->provider, req);
->> +	if (!ret) {
->> +		prepared = true;
->> +		if (req)
->> +			ret = kvm_gmem_device_make_private(inode, slot, req, nr_pages);
->
-> Is there a way to avoid making private from within the conversion flow?
->
-> kvm_gmem_device_map() below already does it as part of vcpu_run.
->
-> If we do the above, we'd be aligned with regular conversions, where
-> to-shared conversions eagerly update arch state (make_shared) but
-> to-private notifications to the firmware are done lazily.
->
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-I was a bit confused above. IIUC to handle
-RMI_EXIT_VDEV_VALIDATE_MAPPING, the conversion is not done from outside
-the kernel, instead it is done in the vcpu_run completion hook.
-
-Can we make the flow that userspace is required to do the conversion
-request from userspace after an exit due to
-RMI_EXIT_VDEV_VALIDATE_MAPPING, and then just do the delegate + map +
-validate in the vcpu_run completion hook?
-
-
-The rest are a little outside the guest_memfd field, but I'll make the
-suggestion anyway.
-
-It looks like delegate and map don't need the vcpu context, only
-validate does, so validate has to be done in the vcpu_run completion
-hook.
-
-Delegate needs the host physical addresses, so we'd need to translate
-the IPAs to PAs, could that be a VM ioctl? It could look up the memslots
-and translate IPA to PA?
-
-RMI_RTT_DEV_MAP also doesn't need the vcpu context, IIUC it does need
-the VM context so it could be a VM ioctl too? If it looks up the
-memslot, it'll also find the guest_memfd, where it can find the device
-information.
-
-I'm just thinking that the vcpu_run completion context is doing too
-much, and there are so many possible errors that could be better
-communicated to userspace if they're separate ioctls.
-
-Or perhaps at least delegate + map could be one required ioctl call by
-userspace before doing vcpu_run to continue after a
-RMI_EXIT_VDEV_VALIDATE_MAPPING exit.
-
->> +		else
->> +			ret = kvm_gmem_device_make_shared(inode, start, start + nr_pages);
->> +	}
->> +	if (!ret) {
->> +		mas_store_prealloc(&mas, xa_mk_value(attrs));
->> +		kvm_gmem_device_update_private(gi);
->> +	} else {
->> +		mas_destroy(&mas);
->> +	}
->> +
->> +	kvm_gmem_invalidate_end(inode, start, start + nr_pages);
->> +	if (prepared)
->> +		gi->provider_ops->finish_conversion(gi->provider, req);
->> +out:
->> +	filemap_invalidate_unlock(inode->i_mapping);
->> +	return ret;
->> +}
->> +
->> +int kvm_gmem_device_map(struct kvm *kvm, u64 gpa, u64 size, u64 pa, u64 vdev_id)
->> +{
->> +	struct guest_memfd_device_request req = { gpa, pa, vdev_id };
->> +	struct kvm_memory_slot *slot;
->> +	gfn_t gfn = gpa >> PAGE_SHIFT;
->> +	struct file *file;
->> +	int ret;
->> +
->> +	if (!size)
->> +		return -EINVAL;
->> +
->> +	if (!PAGE_ALIGNED(gpa | size | pa))
->> +		return -EINVAL;
->> +
->> +	/* Caller holds SRCU across the pending architecture request. */
->> +	slot = gfn_to_memslot(kvm, gfn);
->> +	if (!slot || (slot->flags & KVM_MEMSLOT_INVALID))
->> +		return -EINVAL;
->> +
->> +	if (!(slot->flags & KVM_MEMSLOT_GMEM_DEVICE))
->> +		return -EINVAL;
->> +
->> +	if ((size >> PAGE_SHIFT) > slot->npages - (gfn - slot->base_gfn))
->> +		return -EINVAL;
->> +
->> +	file = kvm_gmem_get_file(slot);
->> +	if (!file)
->> +		return -ENOENT;
->> +	ret = kvm_gmem_device_convert(file_inode(file),
->> +				      kvm_gmem_get_index(slot, gfn),
->> +				      size >> PAGE_SHIFT, &req, slot);
->> +	fput(file);
->> +	return ret;
->> +}
->> +EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_gmem_device_map);
->> +
->>
->> [...snip...]
->>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
