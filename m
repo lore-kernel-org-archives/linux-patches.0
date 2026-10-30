@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793362531;
-	b=X8oaWwlmklryDMuyLG0SJfBsW3RVEflD3CksG9qLnaRrP+y5vw8btQOS5p0N0U7WUY6n
-	 p5TISlvhReNhMNqlB50I105/B+W2vO3v+VOj/IDzPFoH0Mc7jwWBG4NVtxqyGhzp3FCuD
-	 8Bbfl1pELXdhBAh2po5MdQkLu3gmW+ZHn0Wq2pdMDNKA/yldTc0+ZAfDUh+7KIEY2ehun
-	 KOZOSKiAgzzgOo+XcWOy3Tu/pN37gEbDC0t5WdlStP44lvEmpc0yyH6+u8mZjR/5HVb4I
-	 YblM+IZGgs4it2R3Xhl/T6vjWhoioDA+kvkYuWrKim3iXeDl9QZP3BhkOr0S/SQrnuQ==
+	t=1793362534;
+	b=t6BG3+K7pXq/3ShbEoqXuEfXGq+enCeg56BP6IuW1/teaBmLPfAj5/n/whPfF3Pbfc0W
+	 3QfFexsq13DBE7Um9sgzEERrW5jZ6SYaZ3EzIwDFCtmaPXdVLmRsi2VOSlDykBx1DkOQR
+	 f7pPoniCZjjT1vA40aUKx0Wa17Rgmt3SpON4tF9X2ZYRdm40RYwJuXMqFV7l2O+RCVbpc
+	 INbM89Zxa3MxV+B4ZjPaeWvdqmgfSXUlhKfVltX+HetxGgUI4nrjenLm+a5a2CfgNMndA
+	 j8gQL52FEuYh6vpRCpOxmqQS8PELrt6MRSQvHOohqXrdbX1rfWTwYzuj9xIL/Nh5+ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793362531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793362534;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=vCeRnsGnnvvqmvc4nw1TDOUG/pyhEzsGR71rgsCX1z8=;
-	b=Q63o9/6n5DuZT3VLToSWWqaLCFanF8PK7V4XjVX7XxytgEdy7ETkBaNHw6EZeZ6oayw5
-	 FMLf0hzSVv69t1iTIPa1S+evMDHwu8L3QCKW+dxQA42c1Lq0J2bopwhlJX9V+yRoAFIq8
-	 l8IFPC+ZtYNmh+4kPuIwon2r8ge+s7OLiHe4wjshjDCMt9vKs1nnb/pwFDIIU+vjT7+2o
-	 ASm3NzIOb2AS2yiRZWaOL2+5HWrUlkpvsath5F4CGY1W/w1HKceKW1JXN1o39+b8GyW8Q
-	 g5KAEyaWpwvcW/XfEYkIXyGmUocwMsFTc0KHIILR0dJkkbUkjLb4Ui+nxv6pxov2kjg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=yaVOupTyQAA/rc5SeYu0OHmiZJ2E3J0bcnwqmltxpbI=;
+	b=o+6V9YmmBJkOgOBA68YypiKRP3oePf1vT/hxgwBQgVjb676G9CUw5ziRIwwT9YwSSMlm
+	 8pamBCRtis9GSGNPPcH+4t9U+5ugYisY42hS7EWhOxHLh6Dcr4gsgv6spXQ5rE12EZjc+
+	 +Zjz9ao3R4CnJFtcZXiGLVEvwQXouenPOIQ/TzIupMAXIqDN1Zvfm3lHom3SyuDZqPHi0
+	 9srVTqb9VKBj99T7UfdksaMQ6F77qQ676UlorKwBcg1QXUwXsHIRIL5QGCzq2CAgftS2h
+	 0cWIxLWjYjMU6AZrlmg7cD/gYPqsP6WS6Uaxf+UUCboUd/AAoO5mlea9Z0Fhqy4qZfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McbJ+Fxs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U4peag2i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCC3606A335;
-	Fri, 30 Oct 2026 12:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24EF606A31A;
+	Fri, 30 Oct 2026 12:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McbJ+Fxs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADCE1F0093A;
-	Fri, 30 Oct 2026 12:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U4peag2i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E21B1F00A02;
+	Fri, 30 Oct 2026 12:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793362530;
-	bh=vCeRnsGnnvvqmvc4nw1TDOUG/pyhEzsGR71rgsCX1z8=;
+	s=korg; t=1793362533;
+	bh=yaVOupTyQAA/rc5SeYu0OHmiZJ2E3J0bcnwqmltxpbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McbJ+FxsjwUu+jWo7sRN3BGYH6a7PJfYAzozTv+CPFXcYKs8dxrTp9tWhLF1D+EVK
-	 OfAGHEa9sVBkRfKBFhKWDunPb8bzd9AW7ddjFaaCJ7HvsMqedDLKR+x87iOsFA4xiY
-	 84nPNoscbeb1YhtSxGgebAauZffMAbOxOgs84M7U=
+	b=U4peag2ihIyW/bsunkfsG1/oEI13YhnRLpZ06WnyMiwfx3I8zqPTeBtL4z2QOR/8U
+	 BFk0826mniU517hZSDx5VC0/1ryJpo/j9Gp5AaV3p7T/c3taxmVkP1OnycmZ/dje8O
+	 YDWfmqAmdI1jUX8E7tbYozp7RDkfT1O9dzcjuDbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot+sashiko@kernel.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 04/10] smb: smbdirect: dont hand out already failed sockets in smbdirect_socket_accept()
-Date: Fri, 30 Oct 2026 13:15:05 +0100
-Message-ID: <20261030121255.365084170@linuxfoundation.org>
+	Daniel Schaefer <dhs@frame.work>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Sven=20Vaink=C3=BCla?= <sven@xn--vainkla-r2a.ee>
+Subject: [PATCH 7.2 05/10] iio: hid-sensor: als: scale each channel individually
+Date: Fri, 30 Oct 2026 13:15:06 +0100
+Message-ID: <20261030121255.387630811@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261030121255.257615100@linuxfoundation.org>
 References: <20261030121255.257615100@linuxfoundation.org>
@@ -67,191 +64,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Daniel Schaefer <dhs@frame.work>
 
-[ Upstream commit 5c171c90c446bdce80ebaecfc5ed2c410bcc7427 ]
+[ Upstream commit cad928dad9a4c26aa56b4223dc2a29bca517fb5f ]
 
-A socket on the ready list is in SMBDIRECT_SOCKET_NEGOTIATE_RUNNING,
-but it may fail before smbdirect_socket_accept() picks it up, e.g.
-RDMA_CM_EVENT_DISCONNECTED already moved it to
-SMBDIRECT_SOCKET_DISCONNECTED.
+Some sensors have multiple channels (not just brightness but color ALS
+sensors) with different scaling factors.
 
-smbdirect_socket_accept() unconditionally overwrote the status with
-SMBDIRECT_SOCKET_CONNECTED and handed out the already disconnected
-socket. smbdirect_socket_cleanup_work() then called rdma_disconnect()
-on it again, and before the recent commit
-smbdirect_socket_destroy_sync() waited forever for an
-RDMA_CM_EVENT_DISCONNECTED that already happened.
-
-Now we check first_error and change the status to
-SMBDIRECT_SOCKET_CONNECTED only via cmpxchg() from
-SMBDIRECT_SOCKET_NEGOTIATE_RUNNING, while we still hold listen.lock.
-If the socket already failed, we move it to the orphaned list and
-queue purge_orphaned_work, like smbdirect_listen_orphan_socket() does,
-and try the next one. If we only found failed sockets, we wait for
-the next one.
-
-Fixes: dc691b91ad16 ("smb: smbdirect: introduce smbdirect_socket_{listen,accept}()")
-Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
-Closes: https://sashiko.dev/#/patchset/cover.1791224972.git.metze%40samba.org
-Closes: https://sashiko.dev/#/bug/linux-f9dbca09-30a7-4145-9bdb-4676759982c8
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Paulo Alcantara <pc@manguebit.org>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Link: https://gitlab.freedesktop.org/hadess/iio-sensor-proxy/-/merge_requests/413
+Tested-by: Sven Vainküla <sven@xn--vainkla-r2a.ee> #Asus ProArt PX13 laptop.
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/smbdirect/accept.c | 84 +++++++++++++++++++++++++++++++++------
- 1 file changed, 72 insertions(+), 12 deletions(-)
+ drivers/iio/light/hid-sensor-als.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/fs/smb/smbdirect/accept.c b/fs/smb/smbdirect/accept.c
-index 66db978bd8f73..d1bc08ac97575 100644
---- a/fs/smb/smbdirect/accept.c
-+++ b/fs/smb/smbdirect/accept.c
-@@ -835,7 +835,11 @@ static long smbdirect_socket_wait_for_accept(struct smbdirect_socket *lsc, long
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/iio/light/hid-sensor-als.c b/drivers/iio/light/hid-sensor-als.c
+index 6bf1bc9a38fe6..8f2affb226a35 100644
+--- a/drivers/iio/light/hid-sensor-als.c
++++ b/drivers/iio/light/hid-sensor-als.c
+@@ -33,9 +33,9 @@ struct als_state {
+ 		u32 illum[CHANNEL_SCAN_INDEX_MAX];
+ 		aligned_s64 timestamp;
+ 	} scan;
+-	int scale_pre_decml;
+-	int scale_post_decml;
+-	int scale_precision;
++	int scale_pre_decml[CHANNEL_SCAN_INDEX_MAX];
++	int scale_post_decml[CHANNEL_SCAN_INDEX_MAX];
++	int scale_precision[CHANNEL_SCAN_INDEX_MAX];
+ 	int value_offset;
+ 	int num_channels;
+ 	s64 timestamp;
+@@ -175,9 +175,11 @@ static int als_read_raw(struct iio_dev *indio_dev,
+ 		ret_type = IIO_VAL_INT;
+ 		break;
+ 	case IIO_CHAN_INFO_SCALE:
+-		*val = als_state->scale_pre_decml;
+-		*val2 = als_state->scale_post_decml;
+-		ret_type = als_state->scale_precision;
++		if (chan->scan_index >= CHANNEL_SCAN_INDEX_MAX)
++			return -EINVAL;
++		*val = als_state->scale_pre_decml[chan->scan_index];
++		*val2 = als_state->scale_post_decml[chan->scan_index];
++		ret_type = als_state->scale_precision[chan->scan_index];
+ 		break;
+ 	case IIO_CHAN_INFO_OFFSET:
+ 		*val = als_state->value_offset;
+@@ -331,6 +333,10 @@ static int als_parse_report(struct platform_device *pdev,
+ 		};
+ 		++index;
  
--	return 0;
-+	/*
-+	 * Return the remaining timeout, so the caller can carry it
-+	 * over to the next smbdirect_socket_wait_for_accept() call.
-+	 */
-+	return ret;
++		st->scale_precision[i] = hid_sensor_format_scale(usage_id,
++					&st->als[i], &st->scale_pre_decml[i],
++					&st->scale_post_decml[i]);
++
+ 		dev_dbg(&pdev->dev, "als %x:%x\n", st->als[i].index,
+ 			st->als[i].report_id);
+ 	}
+@@ -340,10 +346,6 @@ static int als_parse_report(struct platform_device *pdev,
+ 	if (index)
+ 		ret = 0;
+ 
+-	st->scale_precision = hid_sensor_format_scale(usage_id,
+-				&st->als[CHANNEL_SCAN_INDEX_INTENSITY],
+-				&st->scale_pre_decml, &st->scale_post_decml);
+-
+ 	return ret;
  }
  
- struct smbdirect_socket *smbdirect_socket_accept(struct smbdirect_socket *lsc,
-@@ -845,6 +849,7 @@ struct smbdirect_socket *smbdirect_socket_accept(struct smbdirect_socket *lsc,
- 	struct smbdirect_socket *nsc;
- 	unsigned long flags;
- 
-+again:
- 	if (lsc->status != SMBDIRECT_SOCKET_LISTENING) {
- 		arg->err = -EINVAL;
- 		return NULL;
-@@ -856,7 +861,7 @@ struct smbdirect_socket *smbdirect_socket_accept(struct smbdirect_socket *lsc,
- 	}
- 
- 	if (list_empty_careful(&lsc->listen.ready)) {
--		int ret;
-+		long ret;
- 
- 		if (timeo == 0) {
- 			arg->err = -EAGAIN;
-@@ -864,16 +869,64 @@ struct smbdirect_socket *smbdirect_socket_accept(struct smbdirect_socket *lsc,
- 		}
- 
- 		ret = smbdirect_socket_wait_for_accept(lsc, timeo);
--		if (ret) {
-+		if (ret < 0) {
- 			arg->err = ret;
- 			return NULL;
- 		}
-+		/*
-+		 * Carry the remaining timeout over, so that a stream of
-+		 * failed connections that we orphan and skip (goto again)
-+		 * can't reset the caller's timeout and wait forever.
-+		 */
-+		timeo = ret;
- 	}
- 
- 	spin_lock_irqsave(&lsc->listen.lock, flags);
--	nsc = list_first_entry_or_null(&lsc->listen.ready,
--				       struct smbdirect_socket,
--				       accept.list);
-+	/*
-+	 * Recheck under the lock.
-+	 */
-+	if (lsc->status != SMBDIRECT_SOCKET_LISTENING) {
-+		arg->err = -EINVAL;
-+		spin_unlock_irqrestore(&lsc->listen.lock, flags);
-+		return NULL;
-+	}
-+	if (lsc->first_error) {
-+		arg->err = lsc->first_error;
-+		spin_unlock_irqrestore(&lsc->listen.lock, flags);
-+		return NULL;
-+	}
-+
-+	while ((nsc = list_first_entry_or_null(&lsc->listen.ready,
-+					       struct smbdirect_socket,
-+					       accept.list))) {
-+		/*
-+		 * nsc may have failed after it was moved
-+		 * to the ready list, e.g. RDMA_CM_EVENT_DISCONNECTED
-+		 * already moved it to SMBDIRECT_SOCKET_DISCONNECTED.
-+		 * We must not overwrite that with
-+		 * SMBDIRECT_SOCKET_CONNECTED and hand
-+		 * out an already disconnected socket.
-+		 *
-+		 * Doing this under listen.lock means nsc
-+		 * still belongs to us, so we can just move
-+		 * a failed socket to the orphaned list,
-+		 * like smbdirect_listen_orphan_socket() does,
-+		 * and try the next one.
-+		 */
-+		if (!READ_ONCE(nsc->first_error) &&
-+		    cmpxchg(&nsc->status,
-+			    SMBDIRECT_SOCKET_NEGOTIATE_RUNNING,
-+			    SMBDIRECT_SOCKET_CONNECTED) ==
-+		    SMBDIRECT_SOCKET_NEGOTIATE_RUNNING)
-+			break;
-+
-+		smbdirect_log_rdma_event(nsc, SMBDIRECT_LOG_INFO,
-+			"orphaning failed socket status=%s first_error=%1pe\n",
-+			smbdirect_socket_status_string(nsc->status),
-+			SMBDIRECT_DEBUG_ERR_PTR(nsc->first_error));
-+		list_move_tail(&nsc->accept.list, &lsc->listen.orphaned);
-+		queue_work(lsc->workqueues.cleanup, &lsc->listen.purge_orphaned_work);
-+	}
- 	if (nsc) {
- 		WRITE_ONCE(nsc->accept.listener, NULL);
- 		list_del_init_careful(&nsc->accept.list);
-@@ -881,8 +934,13 @@ struct smbdirect_socket *smbdirect_socket_accept(struct smbdirect_socket *lsc,
- 	}
- 	spin_unlock_irqrestore(&lsc->listen.lock, flags);
- 	if (!nsc) {
--		arg->err = -EAGAIN;
--		return NULL;
-+		/*
-+		 * If we only found failed sockets or no socket,
-+		 * we wait for the next one.
-+		 *
-+		 * A possible -EAGAIN/-ETIMEOUT is handled above.
-+		 */
-+		goto again;
- 	}
- 
- 	/*
-@@ -891,12 +949,14 @@ struct smbdirect_socket *smbdirect_socket_accept(struct smbdirect_socket *lsc,
- 	 * so it didn't grant any credits to us.
- 	 *
- 	 * The caller expects a connected socket
--	 * now as there are no credits anyway.
-+	 * now as there are no credits anyway,
-+	 * above we already changed to SMBDIRECT_SOCKET_CONNECTED
-+	 * under the lsc->listen.lock and with cmpxchg.
- 	 *
--	 * Then we send the negotiation response in
--	 * order to grant credits to the peer.
-+	 * Now we send the negotiation response in
-+	 * order to grant credits to the peer,
-+	 * as the socket is now visible to the application layer.
- 	 */
--	nsc->status = SMBDIRECT_SOCKET_CONNECTED;
- 	smbdirect_accept_negotiate_finish(nsc, 0);
- 
- 	return nsc;
 -- 
 2.53.0
 
