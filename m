@@ -1,88 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.9
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793364051;
-	b=TtoiG7tQ5GY5wUUqgD42YtNySoJLkDadB2Ihd08jjVG3VpXIk4HvpW7s20XazcJip3vF
-	 BjOrVpV8gFu2yVtRPdFP3EVrklo6mPPH96IhLXPSFOo1UIqzFLCtlSspl3d//9Mmge8rG
-	 qC+oi0VSaiTowBv8ZGDvGBvQvHuFIDJHm0vLnzRO2DE7Oz+ir0xanz1+G8gTtcuRXWfUl
-	 vVhdAw5q/kQqBNU0sxt4gO46mpTKQzwlO5KQxiwedjB7L5ytSD+gsPyupPCvRPHCxb0ah
-	 SsXjVj1l8/s9+QYTF3HV1Aq2sC5jNXlSNWxL2k8xXOro7rzkQxZDvgpvpDYk+KbeglA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793364051;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=QsWRUULncElOkf1r1RZbOEtc8LMV1HSqJrWBMqyS57U=;
-	b=2KYAW2XGO3JwCT9XN0xNi04dxJXx54K2E2tlhc8+PiReNK8cMkJBDqTtMGlEnKJQ8b28
-	 mIdLGao+w2v3M5G9Ch7tJB85wiiCEhfvqmJ9kXHQ7w6hrEMVmtX2OKPuN8Jk//0bumV/S
-	 YZcLU5eL98U5zPak0zm7V91pIqNbc9tpRmSfBLvnJLOaW4Kl2G98GQ1ROzE93Nbry/yFP
-	 jxxY8T1hlhdm6y/cjk6OssfHsUXlD3aIEBrtbPNvUWLPyHh7RaNFlTwJ+AyoC3unWwOCK
-	 agvLl1MW/2eW98rOeyls8KBIU9k5dpsq0/ZAPee14n677WdgQGWrmPzye7Qmnv6kSPg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=CARRhfvX;
-	arc=none smtp.remote-ip=198.175.65.9
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.47
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793364171;
+	b=zm+xUVJUpOCHbVHUvFOD0WxECmyxO64KPARWonU2A73he/Ug0639uUboMKiS3Extzdiu
+	 TLlQY7uJZQF5ZkMhLqwNsqLaPpQ+on+JVe/dnvN7ZwbhN8BYfUUnDIuep8OCTCKyr05R4
+	 C5NlHXh2XcDLL7cHXkS/s2HSPkTIe0BxiRaf8I0jYhT3+7YVVPpJl5F3T+Hv2lT2vAntS
+	 fCmcjK62IjJC66Lu4fcQ/CPbGXLgb2TzqxAizr1gG4wZYluiRWtDYkQQkI6LM+sTEvgmo
+	 HIvSo3+sIyGbrl34XvDCYyHdhnz+Yq5HaVizZRWULKCdqo/bb2RYpmtulnCtUAd74Kg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793364171;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=dRLoK9jlTNJJs7zPjgVZeCjp+dpCJB+jK2/EPp3bJqQ=;
+	b=I4cKll+7PoQqWVZClQg1cyyHcVjZ7w/huf0eQMfCHGpZBgazNh/mxxBE2akDqSBpGV5v
+	 QPalLLpC7D5IDORz1aRdnDQQhqpp5NPcoC2FpY2Yvhyyr7nTVFRIL81gWup5HKapf/UOo
+	 Dju/LV/ecYxNnLKb2N5aX+cdC01hiqWFGVL6jqzMXGW5xOuAxs3EB16f737sE/8NUWA2g
+	 0sXRNpZHb5Nai0nmfoHmBJINZghLfPhFdBpVmVjv778AGMiVxS06ve7eTi2WNejrjUfWR
+	 GpQsoIMmD+Vya5s9lCd5xIAVac3+JOyrPWddWzR1zdwcN0GGbxhSlpZIhCxMYzd2A3Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WvdBpWPF;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.47
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E261606A31A;
-	Fri, 30 Oct 2026 12:40:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E261606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0CE606A31E
+	for <patches@lists.linux.dev>; Fri, 30 Oct 2026 12:42:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C0CE606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=CARRhfvX
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793364050; x=1824900050;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=v+IH6Hjh/zaqusOfU2SkygwiLiSOjdHEjEXEunjq998=;
-  b=CARRhfvXwuYN9wBdKYvByF2CASCslPQguxvue6AUwJzk4YP97lAVsMxJ
-   S943BnpvgsQqIiz8o3J+LorFgfE78J4BFvt7jRJCJ4lFissOiZPp2zdHk
-   RVpK4D37qerJ164xrVCSw7S1+pQVlItcqVq++l2BJY/VxYW00T83hapf9
-   sMJblsbBI1v5c0lgFFWm4fLDMjen22yDyPFIqgDH8mYXEDmAtpCas7OTe
-   RcJxkiZWfVvh0Q9k4w+BDovVreL+Ri5ytNfharncS28QoFm5kZBhSri+B
-   X73J4yydLn9v5vp+GBXu74tSABh/j0hyN/qgwwUNslSDmlbPVy5Qetvaa
-   Q==;
-X-CSE-ConnectionGUID: lPlN6YzhSn2ApKKzkKc13Q==
-X-CSE-MsgGUID: v9iswvrqRrmyMijG9VK8VA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11950"; a="2013001"
-X-IronPort-AV: E=Sophos;i="6.27,186,1787036400"; 
-   d="scan'208";a="2013001"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2026 05:40:49 -0700
-X-CSE-ConnectionGUID: ZQoqx4s9QtuK3Odqwp4X7Q==
-X-CSE-MsgGUID: Ktwj/kB9S0CI7FWevtP+gQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,186,1787036400"; 
-   d="scan'208";a="5512269"
-Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost) ([10.239.47.46])
-  by orviesa009.jf.intel.com with ESMTP; 30 Oct 2026 05:40:45 -0700
-Date: Fri, 30 Oct 2026 20:34:28 +0800
-From: Xu Yilun <yilun.xu@linux.intel.com>
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
-Cc: linux-coco@lists.linux.dev, Jiri Pirko <jiri@resnulli.us>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	John Allen <john.allen@amd.com>, Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>, patches@lists.linux.dev
-Subject: Re: [RFC PATCH v1 00/11] PCI/TSM: Add CTLV attestation
-Message-ID: <auSO1IDQ8iN6wHVv@yilunxu-OptiPlex-7050>
-References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WvdBpWPF
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6af8620a7d2so739375a12.0
+        for <patches@lists.linux.dev>; Fri, 30 Oct 2026 05:42:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793364169; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Y4ajmSmFM8t14xC9KX6BflSMOFCFfqNR8YVzUHP1jGMgrAzkzfpPTVgzVc0wDxO+MK
+         Xm3dFbqFKvTMJvXjePK5ZGkBZf2BJNypl519IhThM1zqw54ZL0EprxW4GsDg/Yr0LW6A
+         h9/tzM882C7y/qShhwwswHbbx1QUIh43yWAIrBdwu6T2FG80qPKXoovKFwKI5L8inQm0
+         LjLWM34MWrpDqvSQmiUBsyO92nmCj8sJNrlRJE11TpEEwpOS2mjUMcK8byH1bBgciezn
+         q4ZvEMseOzRypfk1rNnHBhgquhgIl76vGVUnJpxqA1iMmYW/CaFBbm5IwfM0lmCuRI5s
+         LLhQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=dRLoK9jlTNJJs7zPjgVZeCjp+dpCJB+jK2/EPp3bJqQ=;
+        fh=pPeSRI9MXiXKi5xnCYT5Q7ng9vsxBoSx+HMWy5fLMCk=;
+        b=gQdSRksXRu+bkDjuD4ZD03fhSEEF5+G1Wir+2EHIH7AcoZeHzUShHu5btD/33BTI+5
+         6Py26g9lZb6AiuvYRY4PvrHzLppaJRnvMRCeQTgzLIqmKD/uiUER7NTpF4ePrDYm8+hz
+         P/9WFr3qZsD1d/Z8GnSq4MRbC9GskhGpmXD6IhzpbWgJ+z1OB/ws/4WWX0VTL9b4Jd1X
+         ZIRrUAVfSwNigSrgHfY9JYsOXKbLopJ5VYsvKoQOCc+YhzzRJi421wClwbkve/8TkZsh
+         rVcBmjivhMt53gb9IiV78A1u9CR/owx2/ejMn8KfQk0N84INEUzU+p08bjeBZfhOVT4Y
+         ti/w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793364169; x=1793968969; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=dRLoK9jlTNJJs7zPjgVZeCjp+dpCJB+jK2/EPp3bJqQ=;
+        b=WvdBpWPFgcJPjNryX2K/Be3+MDC9LqxdLBnmkvIOp/rnLWN5o/Z9Tn558co9aQ9pD+
+         /sBFxLsYfN4M20lC/LCraLGXsRhjLFS2PAxUdw67JLnvr6UzzBQ2NiLzaMWir9FWLka+
+         Bbi85+G0fNRFF5wOKn7fy61KrD6bZu3ZZysWyuW0VYV0ZoWN3a5d9tCsuYPwMpXW/Y5V
+         AFtAF+JAsZ55xf/fbeNaewISMAu1H4bfpQHl6e+ECXEAGkurPNjDu9eOrHsuT3+sf0Bp
+         zNAm/Ms3nfU04oldBW0hCxVsDjw/qKS6K++4wntph47cDSuhsaAYF3L5B2FQ0L9Dhhrm
+         XDRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793364169; x=1793968969;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dRLoK9jlTNJJs7zPjgVZeCjp+dpCJB+jK2/EPp3bJqQ=;
+        b=h457lwI7PSFqiblHPoOm7KwHG9BNNE7x+pib22CUgGluUfAKGnefIZuL9DPT/suhDM
+         zZ/TWOeWm+DZZw+KzFiDLQ2nYPhupgP8UXzB+3SQrv4qq9gFa/3SSWP54PWsNmOjpkbn
+         1dK9q96q3lUW+c60LMjYZgKPxmD8eWPc/BsharymGjR8u4C69N5Esa/HMG4gprq+DA+g
+         uXdVFsS5KnQ6keIE5M/DopRJSI2cHczRoiLppJ5vLo8LRNMveScnEUbtImbMy8drSb6e
+         b1etQViBdsFkkgYFU7cI6E+GPYS4vzgnDoQwG33Te60Uwmt8rAQocA2K3jd5pR/557iN
+         W2Fg==
+X-Forwarded-Encrypted: i=1; AKwUvBwfYck6L0OnmlErxn0z6kmkUrrqql2e7HvzZjf3xumFX/LKoHs+VwXEKvfgIBgFq4ib3Ya0P4yJ@lists.linux.dev
+X-Gm-Message-State: AFq9FYIzOgbJKUNuokcn+k3FerAMIe0tTxfjopNbJrcn/80dX6rUcBdv
+	VA1O8mri21FYoOgR23fmzr8+CxobxUDO5HGYuMw0fbzB8MCZVJzd1T7vNFQSk4Y9FY9rj2DXJ99
+	v/GJr22vDsgudx4/J1kjdu0O8hAHwo94=
+X-Gm-Gg: AYBFou3ctYJ7uVegCnk49pOVuY2+iKI1pamBtII9gMjdqu60pbTPiK+QJTJEQm7H5+C
+	S5u2lmICRDxfLlm5YN6loOZdiK3P+Y06DooEbXh7GggPGPg0Js4qg41g30f1mtZ3l7ggHixM1Z0
+	5UVs2AC4kdxGULOBe9YjEPbOozowelaqzNMlbQADT94quGATQpt3LKegabru7NRW+CzcsbW5axk
+	acy2UWftyUI/0UqvxXXOgEIBRnLeJ9LFMuGvYF8I5Poy+9bSHzc8/CKiz4oNr5LSfddVeZ+1yW9
+	+FL/XB/HLIIY4EWAJhT38pJqzYDK+ZWYWpUibCZVc901P2r9TyhSf2A53M7E8VxInsPTsdBizbF
+	d9SU+hTxA7o5UhWKLZi7I8UtuLe55gz+ygpqHotlwyCqm1+/IETcI07mAmFDk/2YCKTlVIe4Brf
+	QpsbAmfH57IwaaUVjzbg==
+X-Received: by 2002:a05:6402:44c8:b0:6b1:e87d:5b60 with SMTP id
+ 4fb4d7f45d1cf-6b4d4686cc2mr1271118a12.15.1793364168541; Fri, 30 Oct 2026
+ 05:42:48 -0700 (PDT)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -92,225 +105,838 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
+References: <20261030121255.257615100@linuxfoundation.org> <20261030121255.340929047@linuxfoundation.org>
+In-Reply-To: <20261030121255.340929047@linuxfoundation.org>
+From: =?UTF-8?B?7J207ISx7ZiE?= <ihopenre@gmail.com>
+Date: Fri, 30 Oct 2026 19:42:36 +0700
+X-Gm-Features: AclHuK_OHGVjNArrfT-XDMiHY3ZkV98D-6dtJnTj0YyqP88y2MaTBsOnzKj9YMI
+Message-ID: <CANTrAmwxWR3z+M=QQ66FJShrF0EBR7Akxvxqm5U_cE0FuutGGA@mail.gmail.com>
+Subject: Re: [PATCH 7.2 03/10] smb: smbdirect: release failed pending sockets
+ of a listener
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Sashiko <sashiko-bot+sashiko@kernel.org>, Namjae Jeon <linkinjeon@kernel.org>, 
+	Paulo Alcantara <pc@manguebit.org>, Tom Talpey <tom@talpey.com>, linux-cifs@vger.kernel.org, 
+	samba-technical@lists.samba.org, Stefan Metzmacher <metze@samba.org>, 
+	Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 28, 2026 at 08:56:07PM +0530, Aneesh Kumar K.V (Arm) wrote:
-> This series connects PCI/TSM to the common CTLV attestation interface.
-> Userspace can discover a device's evidence objects, retrieve them, and
-> accept the evidence before the kernel establishes a secure link or moves
-> a guest device into TDISP RUN. It replaces the PCI/TSM netlink evidence
-> interface while retaining connect, disconnect, lock and unlock in sysfs.
-> 
-> This series builds on the CTLV attestation series [1] and Arm CCA
-> device-assignment support. It covers PCI/TSM attestation through
-> certificate slot-zero.
-> 
-> The development tree is available at:
-> 
->   https://gitlab.arm.com/linux-arm/linux-cca.git cca/topics/cca-da-attestation
-> 
-> That branch also includes the follow-up Rust SPDM certificate-slot
-> discovery work, generic attestation fixes, and CTLV tooling fixes.
-> 
-> [1] https://lore.kernel.org/all/20261015145053.3664509-1-jiri@resnulli.us
-> 
-> The host flow separates identity collection from session and IDE setup:
-> 
->   sysfs connect
->     -> collect and cache the certificate chain
->   DEVICE_GET / EVIDENCE_GET
->     -> discover available objects and retrieve the chain for verification
+Hi Greg and Stefan,
 
-Is it possible that these two steps combined to one? They collect, cache
-the certificates, then hand over the cache to userspace when requested. Why
-not just use one user interface to collect and hand over the certificates?
+Thank you for fixing the SMB Direct listener backlog issue and
+for considering the fix for 7.2-stable.
 
-And I see a further action is to use kernel native SPDM (rust SPDM) to
-finish these 2 steps, so they will have nothing to do with TSM any more.
+I also appreciate you preserving my Reported-by credit.
 
+Best regards,
+Lee Seong Hyeon
 
-Could the flow be:
-
-1. DEVICE_GET/EVIDENCE_GET
-	-> collect and retrieve the certificates via native SPDM
-2. sysfs connect
-	-> establish the *TSM-based* secure session and IDE streams
-3. sysfs disconnect
-	-> release the *TSM-based* streams and identity context
-
-This way we don't even touch the existing host side TSM.
-
->   EVIDENCE_ACCEPT
->     -> establish the secure session and IDE streams
->   sysfs disconnect
->     -> release the identity context and any established streams
-> 
-> Both AMD SEV-TIO and Arm CCA host drivers implement this flow using their
-> existing firmware interfaces. AMD pauses the firmware SPDM exchange after
-> collecting the certificate chain, before sending authentication or session
-> establishment requests. CCA creates the PDEV and collects its certificate
-> chain during connect, then completes session and stream setup on acceptance.
-> After both conversions, every link driver must supply an evidence_accept
-> callback; connect collects identity evidence without establishing streams.
-> 
-> This is the slot-zero baseline: the AMD and CCA host drivers expose their
-> slot-zero certificate chains. A follow-up series adds shared SPDM identity
-> discovery and selection among discovered certificate slots. The common
-> interface supports any certificate slot advertised by the driver, and the
-> same evidence-get and evidence-accept commands apply to both series.
-> 
-> For a guest device, sysfs lock collects the initial evidence and creates
-> the CTLV instance. Userspace can optionally refresh supported objects,
-> retrieve the cached evidence, verify it, and issue EVIDENCE_ACCEPT to enter
-> RUN. The CCA guest driver supports refreshing measurements with a 32-byte
-> challenge or an interface report without a challenge. It checks the new
-> bytes against trusted digests and device state before replacing the
-> selected cached object. Refresh is disabled after the device enters RUN.
-> 
-> EVIDENCE_GET reads the cached snapshot, so its challenge attribute becomes
-> optional. EVIDENCE_REFRESH requests new evidence and invalidates previous
-> evidence generations and acceptance. A failed backend refresh also
-> invalidates them and requires recovery.
-> 
-> EVIDENCE_ACCEPT replaces the separate DEVSEC_RUN operation. Clearing
-> acceptance leaves the hardware state unchanged: a guest device can remain
-> in RUN, and host IDE streams remain established. DEVSEC_STATE_GET therefore
-> continues to report acceptance and device state separately. Disconnect and
-> unlock perform teardown.
-> 
-> The common attestation changes let each instance expose the operations and
-> evidence objects its device supports. This allows host links and guest
-> devices to share the PCI attestation implementation while advertising
-> different capabilities. Additional locking and generation helpers let
-> PCI/TSM coordinate state changes, evidence invalidation and notifications
-> with CTLV operations.
-> 
-> The PCI child family adds STATE_GET and EVIDENCE_REFRESH to the inherited
-> attestation operations. An instance appears only after a successful connect
-> or lock and is removed on disconnect or unlock. DEVICE_GET includes the
-> PCI name so userspace can associate an instance with its device.
-> 
-> The first five patches prepare the common attestation interface. The next
-> three define and implement the PCI integration, including its locking
-> helpers. The final three convert AMD and CCA host link setup and add CCA
-> guest evidence refresh. The series builds on the existing CTLV attestation
-> and PCI/TSM device-assignment support.
-> 
-> Notes:
-> * I used Codex to help implement, review and organize the series.
-> 
-> Cc: Jiri Pirko <jiri@resnulli.us>
-> Cc: Kevin Tian <kevin.tian@intel.com>
-> Cc: Alexey Kardashevskiy <aik@amd.com>
-> Cc: Xu Yilun <yilun.xu@linux.intel.com>
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-> Cc: Steven Price <steven.price@arm.com>
-> Cc: Kiryl Shutsemau <kas@kernel.org>
-> Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>
-> Cc: Dave Hansen <dave.hansen@linux.intel.com>
-> Cc: Jonathan Cameron <jic23@kernel.org>
-> Cc: Jason Gunthorpe <jgg@nvidia.com>
-> Cc: Bjorn Helgaas <bhelgaas@google.com>
-> Cc: Ashish Kalra <ashish.kalra@amd.com>
-> Cc: Tom Lendacky <thomas.lendacky@amd.com>
-> Cc: John Allen <john.allen@amd.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: patches@lists.linux.dev
-> 
-> Aneesh Kumar K.V (Arm) (11):
->   attestation: Restrict inherited operations per instance
->   attestation: Filter evidence objects per instance
->   attestation: Enter secure operation when evidence is accepted
->   attestation: Bind object selection to accepted evidence snapshots
->   attestation: Make the evidence-get challenge attribute optional
->   PCI/TSM: Describe the PCI attestation control family
->   attestation: Add attestation helpers for PCI/TSM integration
->   PCI/TSM: Bind CTLV attestation to connected and locked contexts
->   crypto/ccp: Defer SEV-TIO link setup until evidence acceptance
->   virt: coco: arm-cca-host: Publish slot zero and establish streams
->     after acceptance
->   virt: coco: arm-cca-guest: Refresh selected evidence against trusted
->     digests
-> 
->  Documentation/ABI/testing/sysfs-bus-pci       |  108 +-
->  Documentation/ABI/testing/sysfs-class-tsm     |    9 +-
->  .../ctlv/abi/ctlv-attestation-pci.yaml        |   43 +
->  Documentation/ctlv/abi/ctlv-attestation.yaml  |   59 +-
->  Documentation/ctlv/abi/families.registry.yaml |    1 +
->  Documentation/ctlv/families.yaml              |    1 +
->  Documentation/ctlv/generated-files.yaml       |   11 +
->  .../ctlv/specs/ctlv-attestation-pci.yaml      |   79 +
->  .../ctlv/specs/ctlv-attestation.yaml          |   40 +-
->  Documentation/driver-api/attestation.rst      |   56 +
->  Documentation/driver-api/pci/tsm.rst          |  160 +-
->  Documentation/netlink/specs/pci-tsm.yaml      |  151 --
->  drivers/attestation/core/core.c               |  123 +-
->  drivers/attestation/core/ctlv.c               |  156 +-
->  drivers/attestation/core/internal.h           |    3 +
->  .../generated/ctlv_attestation_gen.c          |   45 +-
->  .../generated/ctlv_attestation_gen.h          |   76 +-
->  drivers/attestation/providers/sim.c           |   40 +-
->  drivers/attestation/tests/core_kunit.c        |   72 +-
->  drivers/crypto/ccp/sev-dev-tio.c              |   17 +-
->  drivers/crypto/ccp/sev-dev-tio.h              |    5 +
->  drivers/crypto/ccp/sev-dev-tsm.c              |  188 +-
->  drivers/pci/Kconfig                           |    3 +
->  drivers/pci/tsm/Makefile                      |    6 +-
->  drivers/pci/tsm/attestation.c                 |  525 +++++
->  drivers/pci/tsm/core.c                        |  431 +++--
->  drivers/pci/tsm/ctlv_attestation_pci_gen.c    |  111 ++
->  drivers/pci/tsm/ctlv_attestation_pci_gen.h    |  100 +
->  drivers/pci/tsm/evidence.c                    |  274 ---
->  drivers/pci/tsm/internal.h                    |   26 +
->  drivers/pci/tsm/netlink.c                     |   43 -
->  drivers/pci/tsm/netlink.h                     |   23 -
->  drivers/virt/coco/arm-cca-guest/main.c        |  168 +-
->  drivers/virt/coco/arm-cca-guest/rsi-da.c      |   16 +-
->  drivers/virt/coco/arm-cca-host/main.c         |  143 +-
->  drivers/virt/coco/arm-cca-host/rmi-da.c       |    7 +-
->  drivers/virt/coco/arm-cca-host/rmi-da.h       |    2 +
->  include/linux/attestation.h                   |   93 +-
->  include/linux/pci-tsm.h                       |   86 +-
->  include/linux/pci.h                           |    2 +
->  include/uapi/linux/ctlv_attestation_gen.h     |   25 +-
->  include/uapi/linux/ctlv_attestation_pci_gen.h |   74 +
->  include/uapi/linux/ctlv_families_gen.h        |    1 +
->  include/uapi/linux/pci-tsm-netlink.h          |  101 -
->  samples/devsec/common.c                       |    1 -
->  samples/devsec/link_tsm.c                     |   17 +-
->  samples/devsec/tsm.c                          |   32 +-
->  tools/ctlv/tests/support.py                   |    3 +-
->  tools/ctlv/tests/test_outputs.py              |    6 +-
->  tools/ctlv/tests/test_semantics.py            |   38 +
->  tools/ctlv/tests/test_spec.py                 |    1 +
->  .../selftests/attestation/attestation_test.c  |   32 +-
->  .../ctlv_attestation_pci_user_gen.c           | 1697 +++++++++++++++++
->  .../ctlv_attestation_pci_user_gen.h           |  230 +++
->  .../ctlv_attestation_sim_user_gen.c           |  161 +-
->  .../ctlv_attestation_tdx_user_gen.c           |  161 +-
->  .../attestation/ctlv_attestation_user_gen.c   |  161 +-
->  .../attestation/ctlv_attestation_user_gen.h   |   70 +-
->  .../attestation/tdx_attestation_test.c        |    9 +-
->  59 files changed, 4678 insertions(+), 1644 deletions(-)
->  create mode 100644 Documentation/ctlv/abi/ctlv-attestation-pci.yaml
->  create mode 100644 Documentation/ctlv/specs/ctlv-attestation-pci.yaml
->  delete mode 100644 Documentation/netlink/specs/pci-tsm.yaml
->  create mode 100644 drivers/pci/tsm/attestation.c
->  create mode 100644 drivers/pci/tsm/ctlv_attestation_pci_gen.c
->  create mode 100644 drivers/pci/tsm/ctlv_attestation_pci_gen.h
->  delete mode 100644 drivers/pci/tsm/evidence.c
->  create mode 100644 drivers/pci/tsm/internal.h
->  delete mode 100644 drivers/pci/tsm/netlink.c
->  delete mode 100644 drivers/pci/tsm/netlink.h
->  create mode 100644 include/uapi/linux/ctlv_attestation_pci_gen.h
->  delete mode 100644 include/uapi/linux/pci-tsm-netlink.h
->  create mode 100644 tools/testing/selftests/attestation/ctlv_attestation_pci_user_gen.c
->  create mode 100644 tools/testing/selftests/attestation/ctlv_attestation_pci_user_gen.h
-> 
-> -- 
-> 2.43.0
-> 
+On Fri, Oct 30, 2026 at 7:15=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 7.2-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>
+> ------------------
+>
+> From: Stefan Metzmacher <metze@samba.org>
+>
+> [ Upstream commit 328c7e307e8411899e2f90beae83da9e4c45d700 ]
+>
+> A child of a listener only left the listen.pending or listen.ready
+> list via smbdirect_socket_accept() or when the listener was
+> destroyed. So every connection that failed before it was accepted
+> (negotiate timeout, peer disconnect, invalid negotiate request, ...)
+> stayed on the list and counted against the backlog until the listener
+> was destroyed. After about backlog (10 for ksmbd) such connections
+> smbdirect_listen_connect_request() rejected every new connection with
+> -EBUSY, so an unauthenticated peer was able to permanently stop
+> ksmbd from accepting SMB-Direct connections.
+>
+> Now a failed child moves itself to a new listen.orphaned list at the
+> end of smbdirect_socket_cleanup_work(), after the disconnect was
+> started, and queues listen.purge_orphaned_work, which releases it
+> with smbdirect_socket_release(), without holding the listener's
+> rdma_lock_handler() lock, in the same way smbdirect_socket_destroy()
+> does for the remaining children. Orphaned sockets still count against
+> the backlog until they are released.
+>
+> sc->accept.listener is now only changed under listener->listen.lock
+> and whoever clears it is responsible for releasing the socket:
+> smbdirect_socket_accept(), purge_orphaned_work or the destroy of the
+> listener.
+>
+> In order to make that work:
+>
+> - a struct smbdirect_socket that is a listener is now freed via
+>   kfree_rcu(), so that a child can dereference sc->accept.listener
+>   under rcu_read_lock(), even if the listener is released concurrently.
+>
+> - smbdirect_listen_connect_request() adds nsc to the listen.pending
+>   list and sets nsc->accept.listener before it calls
+>   smbdirect_accept_connect_request(), and always returns 0 so the
+>   rdma_cm core keeps the connection id and nsc owns it. On a non-zero
+>   return it schedules nsc's teardown with
+>   smbdirect_socket_schedule_cleanup(), which orphans it off the
+>   listener so that purge_orphaned_work releases it; nsc destroys its
+>   own connection id with rdma_destroy_id() in that teardown. The
+>   teardown has to be deferred because the rdma_cm core holds nsc's
+>   id_priv->handler_mutex across the handler, so nsc->rdma.cm_id must
+>   not be destroyed synchronously from here. That same handler_mutex
+>   (and the listener's) also guarantees nsc can't go away under us,
+>   so setting the listener before the call is safe and lets a failure
+>   orphan nsc.
+>
+> - smbdirect_accept_negotiate_recv_work() no longer moves a socket to
+>   the ready list if it already failed or no longer belongs to the
+>   listener. Every accepting socket has a listener, so if
+>   sc->accept.listener is already cleared, it no longer sends a
+>   negotiate response, as the socket is about to be released.
+>
+> - smbdirect_socket_destroy() of the listener disables
+>   purge_orphaned_work and also releases the orphaned sockets.
+>
+> Fixes: dc691b91ad16 ("smb: smbdirect: introduce smbdirect_socket_{listen,=
+accept}()")
+> Reported-by: Lee Seong Hyeon <ihopenre@gmail.com>
+> Closes: https://lore.kernel.org/linux-cifs/CANTrAmxL5sWU8Sn29JAGZvSq5PBB2=
+OA+VKA0MHsZJMesagtfzA@mail.gmail.com/
+> Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+> Closes: https://sashiko.dev/#/patchset/cover.1791224972.git.metze%40samba=
+.org
+> Closes: https://sashiko.dev/#/patchset/cover.1791229120.git.metze%40samba=
+.org
+> Cc: Namjae Jeon <linkinjeon@kernel.org>
+> Cc: Paulo Alcantara <pc@manguebit.org>
+> Cc: Tom Talpey <tom@talpey.com>
+> Cc: linux-cifs@vger.kernel.org
+> Cc: samba-technical@lists.samba.org
+> Assisted-by: Claude:claude-opus-5-5
+> Signed-off-by: Stefan Metzmacher <metze@samba.org>
+> Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/smb/smbdirect/accept.c   | 141 +++++++++++++++++++++++-------------
+>  fs/smb/smbdirect/internal.h |   2 +
+>  fs/smb/smbdirect/listen.c   | 137 ++++++++++++++++++++++++++++++++---
+>  fs/smb/smbdirect/socket.c   |  57 ++++++++++++++-
+>  fs/smb/smbdirect/socket.h   |  42 +++++++++++
+>  5 files changed, 314 insertions(+), 65 deletions(-)
+>
+> diff --git a/fs/smb/smbdirect/accept.c b/fs/smb/smbdirect/accept.c
+> index 039c9bfbd8acd..66db978bd8f73 100644
+> --- a/fs/smb/smbdirect/accept.c
+> +++ b/fs/smb/smbdirect/accept.c
+> @@ -19,15 +19,33 @@ int smbdirect_accept_connect_request(struct smbdirect=
+_socket *sc,
+>                                      const struct rdma_conn_param *param)
+>  {
+>         struct smbdirect_socket_parameters *sp =3D &sc->parameters;
+> -       struct smbdirect_recv_io *recv_io;
+> +       struct smbdirect_recv_io *recv_io =3D NULL;
+>         u8 peer_initiator_depth;
+>         u8 peer_responder_resources;
+>         struct rdma_conn_param conn_param;
+>         __be32 ird_ord_hdr[2];
+>         int ret;
+>
+> -       if (SMBDIRECT_CHECK_STATUS_WARN(sc, SMBDIRECT_SOCKET_CREATED))
+> -               return -EINVAL;
+> +       /*
+> +        * Install the real event handler (and the event we expect next)
+> +        * before anything that can fail. On an early error the caller
+> +        * (smbdirect_listen_connect_request()) only schedules our deferr=
+ed
+> +        * cleanup and returns 0 to the rdma_cm core, which keeps the cm_=
+id, so
+> +        * the cm_id must already carry smbdirect_accept_rdma_event_handl=
+er():
+> +        * it turns any unexpected event (e.g. RDMA_CM_EVENT_DEVICE_REMOV=
+AL)
+> +        * into a clean smbdirect_socket_schedule_cleanup(). Otherwise th=
+e
+> +        * placeholder smbdirect_socket_rdma_event_handler() installed by
+> +        * smbdirect_socket_init_accepting() stays in place and returns -=
+ESTALE,
+> +        * which makes the rdma_cm core destroy the cm_id behind the back=
+ of our
+> +        * pending teardown.
+> +        */
+> +       sc->rdma.expected_event =3D RDMA_CM_EVENT_ESTABLISHED;
+> +       sc->rdma.cm_id->event_handler =3D smbdirect_accept_rdma_event_han=
+dler;
+> +
+> +       if (SMBDIRECT_CHECK_STATUS_WARN(sc, SMBDIRECT_SOCKET_CREATED)) {
+> +               ret =3D -EINVAL;
+> +               goto cleanup;
+> +       }
+>
+>         /*
+>          * First set what the we as server are able to support
+> @@ -47,7 +65,7 @@ int smbdirect_accept_connect_request(struct smbdirect_s=
+ocket *sc,
+>                 smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_ERR,
+>                         "smbdirect_accept_init_params() failed %1pe\n",
+>                         SMBDIRECT_DEBUG_ERR_PTR(ret));
+> -               goto init_params_failed;
+> +               goto cleanup;
+>         }
+>
+>         ret =3D smbdirect_connection_create_qp(sc);
+> @@ -55,7 +73,7 @@ int smbdirect_accept_connect_request(struct smbdirect_s=
+ocket *sc,
+>                 smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_ERR,
+>                         "smbdirect_connection_create_qp() failed %1pe\n",
+>                         SMBDIRECT_DEBUG_ERR_PTR(ret));
+> -               goto create_qp_failed;
+> +               goto cleanup;
+>         }
+>
+>         ret =3D smbdirect_connection_create_mem_pools(sc);
+> @@ -63,7 +81,7 @@ int smbdirect_accept_connect_request(struct smbdirect_s=
+ocket *sc,
+>                 smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_ERR,
+>                         "smbdirect_connection_create_mem_pools() failed %=
+1pe\n",
+>                         SMBDIRECT_DEBUG_ERR_PTR(ret));
+> -               goto create_mem_failed;
+> +               goto cleanup;
+>         }
+>
+>         recv_io =3D smbdirect_connection_get_recv_io(sc);
+> @@ -72,7 +90,7 @@ int smbdirect_accept_connect_request(struct smbdirect_s=
+ocket *sc,
+>                 smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_ERR,
+>                         "smbdirect_connection_get_recv_io() failed %1pe\n=
+",
+>                         SMBDIRECT_DEBUG_ERR_PTR(ret));
+> -               goto get_recv_io_failed;
+> +               goto cleanup;
+>         }
+>         recv_io->cqe.done =3D smbdirect_accept_negotiate_recv_done;
+>
+> @@ -86,7 +104,7 @@ int smbdirect_accept_connect_request(struct smbdirect_=
+socket *sc,
+>                 smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_ERR,
+>                         "smbdirect_connection_post_recv_io() failed %1pe\=
+n",
+>                         SMBDIRECT_DEBUG_ERR_PTR(ret));
+> -               goto post_recv_io_failed;
+> +               goto cleanup;
+>         }
+>         /*
+>          * From here recv_io is known to the RDMA QP and needs ib_drain_q=
+p and
+> @@ -122,14 +140,12 @@ int smbdirect_accept_connect_request(struct smbdire=
+ct_socket *sc,
+>         /* explicitly set above */
+>         WARN_ON_ONCE(sc->status !=3D SMBDIRECT_SOCKET_RDMA_CONNECT_NEEDED=
+);
+>         sc->status =3D SMBDIRECT_SOCKET_RDMA_CONNECT_RUNNING;
+> -       sc->rdma.expected_event =3D RDMA_CM_EVENT_ESTABLISHED;
+> -       sc->rdma.cm_id->event_handler =3D smbdirect_accept_rdma_event_han=
+dler;
+>         ret =3D rdma_accept(sc->rdma.cm_id, &conn_param);
+>         if (ret) {
+>                 smbdirect_log_rdma_event(sc, SMBDIRECT_LOG_ERR,
+>                         "rdma_accept() failed %1pe\n",
+>                         SMBDIRECT_DEBUG_ERR_PTR(ret));
+> -               goto rdma_accept_failed;
+> +               goto cleanup;
+>         }
+>
+>         /*
+> @@ -143,31 +159,25 @@ int smbdirect_accept_connect_request(struct smbdire=
+ct_socket *sc,
+>
+>         return 0;
+>
+> -rdma_accept_failed:
+> +cleanup:
+>         /*
+> -        * The recv_io posted above is now owned by the QP (recv_io was s=
+et to
+> -        * NULL after a successful post).  smbdirect_connection_destroy_q=
+p()
+> -        * calls ib_drain_qp(), whose completion
+> -        * (smbdirect_accept_negotiate_recv_done) returns the recv_io to =
+the
+> -        * free list via smbdirect_connection_put_recv_io().  It therefor=
+e MUST
+> -        * run BEFORE smbdirect_connection_destroy_mem_pools(): otherwise=
+ the
+> -        * posted recv_io is still outstanding when kmem_cache_destroy() =
+runs
+> -        * ("Slab cache still has objects") and is later freed into an
+> -        * already-destroyed mempool (mempool_free_bulk NULL-ptr-deref).
+> +        * No RDMA state is torn down here, and in particular sc is not
+> +        * released: the caller (smbdirect_listen_connect_request()) owns=
+ that
+> +        * decision and schedules sc's teardown via
+> +        * smbdirect_socket_schedule_cleanup() on a non-zero return. All =
+of the
+> +        * RDMA state - the QP, the memory pools and the cm_id itself - i=
+s then
+> +        * torn down asynchronously by smbdirect_socket_cleanup_work() ->
+> +        * smbdirect_socket_release() -> smbdirect_socket_destroy(), whic=
+h
+> +        * drains the QP (returning any posted recv_io to the pool) befor=
+e
+> +        * destroying the memory pools and destroys the cm_id with
+> +        * rdma_destroy_id(), all in the correct order.
+> +        *
+> +        * The only resource not reachable by that teardown is a recv_io =
+that
+> +        * was taken from the pool but not yet posted to the QP (recv_io =
+is set
+> +        * to NULL after a successful post), so hand it back here.
+>          */
+> -       smbdirect_connection_destroy_qp(sc);
+> -       smbdirect_connection_destroy_mem_pools(sc);
+> -       return ret;
+> -post_recv_io_failed:
+> -       /* post failed: recv_io was not accepted by the QP, still in hand=
+ */
+>         if (recv_io)
+>                 smbdirect_connection_put_recv_io(recv_io);
+> -get_recv_io_failed:
+> -       smbdirect_connection_destroy_mem_pools(sc);
+> -create_mem_failed:
+> -       smbdirect_connection_destroy_qp(sc);
+> -create_qp_failed:
+> -init_params_failed:
+>         return ret;
+>  }
+>
+> @@ -301,6 +311,7 @@ static void smbdirect_accept_negotiate_recv_work(stru=
+ct work_struct *work)
+>         struct smbdirect_socket *sc =3D
+>                 container_of(work, struct smbdirect_socket, connect.work)=
+;
+>         struct smbdirect_socket_parameters *sp =3D &sc->parameters;
+> +       struct smbdirect_socket *lsc;
+>         struct smbdirect_recv_io *recv_io;
+>         struct smbdirect_negotiate_req *nreq;
+>         unsigned long flags;
+> @@ -463,29 +474,55 @@ static void smbdirect_accept_negotiate_recv_work(st=
+ruct work_struct *work)
+>          */
+>         sp->max_fragmented_send_size =3D max_fragmented_size;
+>
+> -       if (sc->accept.listener) {
+> -               struct smbdirect_socket *lsc =3D sc->accept.listener;
+> -               unsigned long flags;
+> +       /*
+> +        * Every accepting socket was created by
+> +        * smbdirect_listen_connect_request() and has a
+> +        * listener. If it's already cleared, the listener
+> +        * (or its purge_orphaned_work) is responsible for
+> +        * releasing us, so we must not send a negotiate
+> +        * response.
+> +        *
+> +        * The memory of the listener is freed via kfree_rcu(),
+> +        * see smbdirect_listen_orphan_socket().
+> +        */
+> +       rcu_read_lock();
+> +       lsc =3D READ_ONCE(sc->accept.listener);
+> +       if (!lsc) {
+> +               rcu_read_unlock();
+> +               return;
+> +       }
+>
+> -               spin_lock_irqsave(&lsc->listen.lock, flags);
+> -               list_del(&sc->accept.list);
+> -               list_add_tail(&sc->accept.list, &lsc->listen.ready);
+> +       spin_lock_irqsave(&lsc->listen.lock, flags);
+> +       /*
+> +        * The listener (or its purge_orphaned_work)
+> +        * may have cleared sc->accept.listener in the
+> +        * meantime and is responsible for releasing us.
+> +        *
+> +        * If we already failed, we're either
+> +        * already on the orphaned list or
+> +        * smbdirect_socket_cleanup_work() will
+> +        * move us there.
+> +        *
+> +        * In both cases we must not move us
+> +        * to the ready list.
+> +        */
+> +       if (sc->accept.listener =3D=3D lsc && !READ_ONCE(sc->first_error)=
+) {
+> +               list_move_tail(&sc->accept.list, &lsc->listen.ready);
+>                 wake_up(&lsc->listen.wait_queue);
+> -               spin_unlock_irqrestore(&lsc->listen.lock, flags);
+> -
+> -               /*
+> -                * smbdirect_socket_accept() will call
+> -                * smbdirect_accept_negotiate_finish(nsc, 0);
+> -                *
+> -                * So that we don't send the negotiation
+> -                * response that grants credits to the peer
+> -                * before the socket is accepted by the
+> -                * application.
+> -                */
+> -               return;
+>         }
+> +       spin_unlock_irqrestore(&lsc->listen.lock, flags);
+> +       rcu_read_unlock();
+>
+> -       ntstatus =3D le32_to_cpu(STATUS_SUCCESS);
+> +       /*
+> +        * smbdirect_socket_accept() will call
+> +        * smbdirect_accept_negotiate_finish(nsc, 0);
+> +        *
+> +        * So that we don't send the negotiation
+> +        * response that grants credits to the peer
+> +        * before the socket is accepted by the
+> +        * application.
+> +        */
+> +       return;
+>
+>  not_supported:
+>         smbdirect_accept_negotiate_finish(sc, ntstatus);
+> @@ -838,7 +875,7 @@ struct smbdirect_socket *smbdirect_socket_accept(stru=
+ct smbdirect_socket *lsc,
+>                                        struct smbdirect_socket,
+>                                        accept.list);
+>         if (nsc) {
+> -               nsc->accept.listener =3D NULL;
+> +               WRITE_ONCE(nsc->accept.listener, NULL);
+>                 list_del_init_careful(&nsc->accept.list);
+>                 arg->is_empty =3D list_empty_careful(&lsc->listen.ready);
+>         }
+> diff --git a/fs/smb/smbdirect/internal.h b/fs/smb/smbdirect/internal.h
+> index e9959e6dc13ae..69d0c9f899dec 100644
+> --- a/fs/smb/smbdirect/internal.h
+> +++ b/fs/smb/smbdirect/internal.h
+> @@ -74,6 +74,8 @@ void __smbdirect_socket_schedule_cleanup(struct smbdire=
+ct_socket *sc,
+>
+>  void smbdirect_socket_destroy_sync(struct smbdirect_socket *sc);
+>
+> +void smbdirect_listen_orphan_socket(struct smbdirect_socket *sc);
+> +
+>  int smbdirect_socket_wait_for_credits(struct smbdirect_socket *sc,
+>                                       enum smbdirect_socket_status expect=
+ed_status,
+>                                       int unexpected_errno,
+> diff --git a/fs/smb/smbdirect/listen.c b/fs/smb/smbdirect/listen.c
+> index 2f78bcaedbf82..3c91f00d95ce4 100644
+> --- a/fs/smb/smbdirect/listen.c
+> +++ b/fs/smb/smbdirect/listen.c
+> @@ -10,6 +10,78 @@
+>  static int smbdirect_listen_rdma_event_handler(struct rdma_cm_id *id,
+>                                                struct rdma_cm_event *even=
+t);
+>
+> +/*
+> + * This is called by a socket that failed while it
+> + * is still on the pending or ready list of its
+> + * listener, typically at the end of
+> + * smbdirect_socket_cleanup_work(), when the
+> + * disconnect was already started.
+> + *
+> + * It moves itself to the orphaned list and
+> + * lets smbdirect_listen_purge_orphaned_work()
+> + * release it. Otherwise it would stay on the
+> + * pending or ready list until the listener is
+> + * destroyed and fill up the backlog, so that
+> + * no new connections would be accepted.
+> + *
+> + * It's fine to call this more than once.
+> + */
+> +void smbdirect_listen_orphan_socket(struct smbdirect_socket *sc)
+> +{
+> +       struct smbdirect_socket *lsc;
+> +       unsigned long flags;
+> +
+> +       /*
+> +        * The memory of the listener is freed via
+> +        * kfree_rcu(), so it's safe to dereference it
+> +        * under rcu_read_lock(), even if sc->accept.listener
+> +        * is cleared and the listener is released concurrently.
+> +        */
+> +       rcu_read_lock();
+> +       lsc =3D READ_ONCE(sc->accept.listener);
+> +       if (!lsc) {
+> +               rcu_read_unlock();
+> +               return;
+> +       }
+> +
+> +       spin_lock_irqsave(&lsc->listen.lock, flags);
+> +       if (sc->accept.listener =3D=3D lsc) {
+> +               list_move_tail(&sc->accept.list, &lsc->listen.orphaned);
+> +               queue_work(lsc->workqueues.cleanup, &lsc->listen.purge_or=
+phaned_work);
+> +       }
+> +       spin_unlock_irqrestore(&lsc->listen.lock, flags);
+> +       rcu_read_unlock();
+> +}
+> +
+> +static void smbdirect_listen_purge_orphaned_work(struct work_struct *wor=
+k)
+> +{
+> +       struct smbdirect_socket *lsc =3D
+> +               container_of(work, struct smbdirect_socket, listen.purge_=
+orphaned_work);
+> +       struct smbdirect_socket *psc, *tsc;
+> +       LIST_HEAD(orphaned_list);
+> +       unsigned long flags;
+> +
+> +       /*
+> +        * Clearing accept.listener under listen.lock
+> +        * makes us responsible for releasing them.
+> +        */
+> +       spin_lock_irqsave(&lsc->listen.lock, flags);
+> +       list_splice_tail_init(&lsc->listen.orphaned, &orphaned_list);
+> +       list_for_each_entry(psc, &orphaned_list, accept.list)
+> +               WRITE_ONCE(psc->accept.listener, NULL);
+> +       spin_unlock_irqrestore(&lsc->listen.lock, flags);
+> +
+> +       /*
+> +        * We don't hold the listener's rdma_lock_handler()
+> +        * lock here, see smbdirect_socket_destroy()
+> +        * for why that's important.
+> +        */
+> +       list_for_each_entry_safe(psc, tsc, &orphaned_list, accept.list) {
+> +               list_del_init(&psc->accept.list);
+> +               smbdirect_socket_release(psc);
+> +       }
+> +}
+> +
+>  int smbdirect_socket_listen(struct smbdirect_socket *sc, int backlog)
+>  {
+>         int ret;
+> @@ -47,6 +119,9 @@ int smbdirect_socket_listen(struct smbdirect_socket *s=
+c, int backlog)
+>         sc->rdma.cm_id->event_handler =3D smbdirect_listen_rdma_event_han=
+dler;
+>         rdma_unlock_handler(sc->rdma.cm_id);
+>
+> +       INIT_WORK(&sc->listen.purge_orphaned_work,
+> +                 smbdirect_listen_purge_orphaned_work);
+> +
+>         ret =3D rdma_listen(sc->rdma.cm_id, backlog);
+>         if (ret) {
+>                 sc->first_error =3D ret;
+> @@ -214,6 +289,7 @@ static int smbdirect_listen_connect_request(struct sm=
+bdirect_socket *lsc,
+>         size_t backlog =3D max_t(size_t, 1, lsc->listen.backlog);
+>         size_t psockets;
+>         size_t rsockets;
+> +       size_t osockets;
+>         int ret;
+>
+>         if (!smbdirect_frwr_is_supported(&new_id->device->attrs)) {
+> @@ -254,14 +330,21 @@ static int smbdirect_listen_connect_request(struct =
+smbdirect_socket *lsc,
+>         spin_lock_irqsave(&lsc->listen.lock, flags);
+>         psockets =3D list_count_nodes(&lsc->listen.pending);
+>         rsockets =3D list_count_nodes(&lsc->listen.ready);
+> +       /*
+> +        * Orphaned sockets still count against
+> +        * the backlog until they are released by
+> +        * smbdirect_listen_purge_orphaned_work().
+> +        */
+> +       osockets =3D list_count_nodes(&lsc->listen.orphaned);
+>         spin_unlock_irqrestore(&lsc->listen.lock, flags);
+>
+>         if (psockets > backlog ||
+>             rsockets > backlog ||
+> -           (psockets + rsockets) > backlog) {
+> +           osockets > backlog ||
+> +           (psockets + rsockets + osockets) > backlog) {
+>                 smbdirect_log_rdma_event(lsc, SMBDIRECT_LOG_ERR,
+> -                       "Backlog[%d][%zu] full pending[%zu] ready[%zu]\n"=
+,
+> -                       lsc->listen.backlog, backlog, psockets, rsockets)=
+;
+> +                       "Backlog[%d][%zu] full pending[%zu] ready[%zu] or=
+phaned[%zu]\n",
+> +                       lsc->listen.backlog, backlog, psockets, rsockets,=
+ osockets);
+>                 return -EBUSY;
+>         }
+>
+> @@ -279,22 +362,54 @@ static int smbdirect_listen_connect_request(struct =
+smbdirect_socket *lsc,
+>         if (ret)
+>                 goto set_settings_failed;
+>
+> +       /*
+> +        * Publish nsc on the pending list with accept.listener set befor=
+e
+> +        * smbdirect_accept_connect_request() calls rdma_accept(). Once t=
+he
+> +        * connection can establish, smbdirect_accept_negotiate_recv_work=
+()
+> +        * may run and it must observe accept.listener, otherwise nsc wou=
+ld
+> +        * be left stranded on the pending list forever.
+> +        *
+> +        * The listener's handler_mutex is held while we're called, so
+> +        * smbdirect_socket_destroy() of the listener can't reach nsc on =
+the
+> +        * pending list before we're done.
+> +        *
+> +        * From here nsc is published on the pending list: on failure of
+> +        * smbdirect_accept_connect_request() below we schedule nsc's tea=
+rdown,
+> +        * which orphans nsc off the listener so
+> +        * smbdirect_listen_purge_orphaned_work() -> smbdirect_socket_rel=
+ease()
+> +        * releases it.
+> +        */
+>         spin_lock_irqsave(&lsc->listen.lock, flags);
+>         list_add_tail(&nsc->accept.list, &lsc->listen.pending);
+> -       nsc->accept.listener =3D lsc;
+> +       WRITE_ONCE(nsc->accept.listener, lsc);
+>         spin_unlock_irqrestore(&lsc->listen.lock, flags);
+>
+>         ret =3D smbdirect_accept_connect_request(nsc, &event->param.conn)=
+;
+> -       if (ret)
+> -               goto accept_connect_failed;
+> +       if (ret) {
+> +               /*
+> +                * The rdma_cm core holds both the listener's and nsc's
+> +                * id_priv->handler_mutex across this CONNECT_REQUEST han=
+dler,
+> +                * so neither can go away under us here and nsc cannot re=
+ceive
+> +                * any rdma event: it is safe to hand nsc to its teardown=
+.
+> +                *
+> +                * That teardown must be deferred though: nsc->rdma.cm_id
+> +                * (=3D new_id) has its handler_mutex held by us, so it c=
+annot be
+> +                * destroyed synchronously from here.
+> +                * smbdirect_socket_schedule_cleanup() only queues work;
+> +                * smbdirect_socket_cleanup_work() then orphans nsc off t=
+he
+> +                * listener and smbdirect_listen_purge_orphaned_work() re=
+leases
+> +                * it, destroying nsc's cm_id with rdma_destroy_id().
+> +                */
+> +               smbdirect_socket_schedule_cleanup(nsc, ret);
+> +       }
+>
+> +       /*
+> +        * Always return 0 so the rdma_cm core keeps new_id: nsc owns it =
+now.
+> +        * On success it stays connected; on failure its deferred teardow=
+n
+> +        * above destroys it.
+> +        */
+>         return 0;
+>
+> -accept_connect_failed:
+> -       spin_lock_irqsave(&lsc->listen.lock, flags);
+> -       list_del_init(&nsc->accept.list);
+> -       nsc->accept.listener =3D NULL;
+> -       spin_unlock_irqrestore(&lsc->listen.lock, flags);
+>  set_settings_failed:
+>  set_params_failed:
+>         /*
+> diff --git a/fs/smb/smbdirect/socket.c b/fs/smb/smbdirect/socket.c
+> index c36cb7cc0088b..e270e36b3145e 100644
+> --- a/fs/smb/smbdirect/socket.c
+> +++ b/fs/smb/smbdirect/socket.c
+> @@ -319,6 +319,15 @@ void __smbdirect_socket_schedule_cleanup(struct smbd=
+irect_socket *sc,
+>          * (smbdirect_socket_destroy) to reap.
+>          */
+>         if (sc->listen.backlog !=3D -1) { /* was a listener */
+> +               /*
+> +                * We don't move them to the orphaned list here,
+> +                * each child does that itself at the end of its
+> +                * smbdirect_socket_cleanup_work(), see
+> +                * smbdirect_listen_orphan_socket(). Only that checks
+> +                * accept.listener, which is still NULL for a child
+> +                * that smbdirect_listen_connect_request() is still
+> +                * setting up and will release itself on failure.
+> +                */
+>                 spin_lock_irqsave(&sc->listen.lock, flags);
+>                 list_splice_init(&sc->listen.ready, &sc->listen.pending);
+>                 list_for_each_entry_safe(psc, tsc, &sc->listen.pending, a=
+ccept.list)
+> @@ -427,6 +436,15 @@ static void smbdirect_socket_cleanup_work(struct wor=
+k_struct *work)
+>          * instances of one class -- harmless, but lockdep cannot tell).
+>          */
+>         if (sc->listen.backlog !=3D -1) { /* was a listener */
+> +               /*
+> +                * We don't move them to the orphaned list here,
+> +                * each child does that itself at the end of its
+> +                * smbdirect_socket_cleanup_work(), see
+> +                * smbdirect_listen_orphan_socket(). Only that checks
+> +                * accept.listener, which is still NULL for a child
+> +                * that smbdirect_listen_connect_request() is still
+> +                * setting up and will release itself on failure.
+> +                */
+>                 spin_lock_irqsave(&sc->listen.lock, flags);
+>                 list_splice_init(&sc->listen.ready, &sc->listen.pending);
+>                 list_for_each_entry_safe(psc, tsc, &sc->listen.pending, a=
+ccept.list)
+> @@ -486,6 +504,18 @@ static void smbdirect_socket_cleanup_work(struct wor=
+k_struct *work)
+>          * in order to notice the broken connection.
+>          */
+>         smbdirect_socket_wake_up_all(sc);
+> +
+> +       /*
+> +        * If we're still on the pending or ready list
+> +        * of a listener, we started the disconnect
+> +        * as far as possible above, so we move ourself
+> +        * to the orphaned list of the listener,
+> +        * which will release us.
+> +        *
+> +        * This is a no-op internally if
+> +        * sc->accept.listener is NULL.
+> +        */
+> +       smbdirect_listen_orphan_socket(sc);
+>  }
+>
+>  static void smbdirect_socket_destroy(struct smbdirect_socket *sc)
+> @@ -544,6 +574,7 @@ static void smbdirect_socket_destroy(struct smbdirect=
+_socket *sc)
+>         disable_work_sync(&sc->recv_io.posted.refill_work);
+>         disable_work_sync(&sc->idle.immediate_work);
+>         disable_delayed_work_sync(&sc->idle.timer_work);
+> +       disable_work_sync(&sc->listen.purge_orphaned_work);
+>
+>         if (sc->rdma.cm_id)
+>                 rdma_lock_handler(sc->rdma.cm_id);
+> @@ -607,6 +638,19 @@ static void smbdirect_socket_destroy(struct smbdirec=
+t_socket *sc)
+>         spin_lock_irqsave(&sc->listen.lock, flags);
+>         list_splice_tail_init(&sc->listen.ready, &pending_list);
+>         list_splice_tail_init(&sc->listen.pending, &pending_list);
+> +       /*
+> +        * purge_orphaned_work is already disabled above,
+> +        * so we also need to release the orphaned sockets.
+> +        *
+> +        * Clearing accept.listener under listen.lock
+> +        * makes us responsible for releasing them and
+> +        * prevents them from moving themselves to
+> +        * the orphaned list via
+> +        * smbdirect_listen_orphan_socket().
+> +        */
+> +       list_splice_tail_init(&sc->listen.orphaned, &pending_list);
+> +       list_for_each_entry(psc, &pending_list, accept.list)
+> +               WRITE_ONCE(psc->accept.listener, NULL);
+>         spin_unlock_irqrestore(&sc->listen.lock, flags);
+>
+>         /* It's not possible for upper layer to get to reassembly */
+> @@ -650,7 +694,6 @@ static void smbdirect_socket_destroy(struct smbdirect=
+_socket *sc)
+>                         "release %zu pending sockets\n", psockets);
+>         list_for_each_entry_safe(psc, tsc, &pending_list, accept.list) {
+>                 list_del_init(&psc->accept.list);
+> -               psc->accept.listener =3D NULL;
+>                 smbdirect_socket_release(psc);
+>         }
+>         if (sc->listen.backlog !=3D -1) /* was a listener */
+> @@ -777,7 +820,17 @@ static void smbdirect_socket_release_destroy(struct =
+kref *kref)
+>          * in DESTROYED state, before we free the memory.
+>          */
+>         smbdirect_socket_destroy_sync(sc);
+> -       kfree(sc);
+> +
+> +       /*
+> +        * Only a listener (backlog !=3D -1) is ever dereferenced
+> +        * via sc->accept.listener under rcu_read_lock(), see
+> +        * smbdirect_listen_orphan_socket(). Other sockets can be
+> +        * freed immediately.
+> +        */
+> +       if (sc->listen.backlog !=3D -1) /* was a listener */
+> +               kfree_rcu(sc, refs.rcu);
+> +       else
+> +               kfree(sc);
+>  }
+>
+>  void smbdirect_socket_release(struct smbdirect_socket *sc)
+> diff --git a/fs/smb/smbdirect/socket.h b/fs/smb/smbdirect/socket.h
+> index c09eddd8ad16d..14114a2567a2e 100644
+> --- a/fs/smb/smbdirect/socket.h
+> +++ b/fs/smb/smbdirect/socket.h
+> @@ -151,6 +151,12 @@ struct smbdirect_socket {
+>                  * the disconnect refcount.
+>                  */
+>                 struct kref destroy;
+> +
+> +               /*
+> +                * smbdirect_socket_release_destroy() uses
+> +                * kfree_rcu(), see accept.listener.
+> +                */
+> +               struct rcu_head rcu;
+>         } refs;
+>
+>         /* RDMA related */
+> @@ -216,6 +222,16 @@ struct smbdirect_socket {
+>                  * only be > 0.
+>                  */
+>                 int backlog;
+> +               /*
+> +                * Sockets on pending or ready that failed
+> +                * move themselves to orphaned and queue
+> +                * purge_orphaned_work, which releases them.
+> +                * So that they are freed while the listener
+> +                * is still alive. They still count against
+> +                * the backlog until they are released.
+> +                */
+> +               struct list_head orphaned;
+> +               struct work_struct purge_orphaned_work;
+>         } listen;
+>
+>         /*
+> @@ -226,7 +242,30 @@ struct smbdirect_socket {
+>          * connection.
+>          */
+>         struct {
+> +               /*
+> +                * This is only set, protected by
+> +                * listener->listen.lock, while the socket
+> +                * is owned by the listener (on its pending,
+> +                * ready or orphaned list). The one who clears
+> +                * it is responsible for releasing the socket.
+> +                *
+> +                * The memory of a struct smbdirect_socket is
+> +                * freed via kfree_rcu(), so the listener
+> +                * can be dereferenced under rcu_read_lock(),
+> +                * even if accept.listener is cleared and
+> +                * the listener is released concurrently.
+> +                */
+>                 struct smbdirect_socket *listener;
+> +               /*
+> +                * Linkage on one of the listener's
+> +                * listen.{pending,ready,orphaned} lists.
+> +                *
+> +                * accept.list and accept.listener are set
+> +                * together under listener->listen.lock before
+> +                * smbdirect_accept_connect_request() is called,
+> +                * so whenever the socket is on one of those lists
+> +                * accept.listener is that listener (never NULL).
+> +                */
+>                 struct list_head list;
+>         } accept;
+>
+> @@ -588,6 +627,9 @@ static __always_inline void smbdirect_socket_init(str=
+uct smbdirect_socket *sc)
+>         spin_lock_init(&sc->listen.lock);
+>         INIT_LIST_HEAD(&sc->listen.pending);
+>         INIT_LIST_HEAD(&sc->listen.ready);
+> +       INIT_LIST_HEAD(&sc->listen.orphaned);
+> +       INIT_WORK(&sc->listen.purge_orphaned_work, __smbdirect_socket_dis=
+abled_work);
+> +       disable_work_sync(&sc->listen.purge_orphaned_work);
+>         sc->listen.backlog =3D -1; /* not a listener */
+>         init_waitqueue_head(&sc->listen.wait_queue);
+>
+> --
+> 2.53.0
+>
+>
+>
