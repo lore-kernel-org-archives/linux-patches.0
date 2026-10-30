@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793362537;
-	b=FWSda9Rjr8IpEyvjTDqP+DAjmjuh9gnJilXjfphUxneRfhsVnSFwk5Dqi+6YVFO0OV4c
-	 cpCQE+3U5h7IdJkvK1eTiqJhmKv18e/tg+Ro11nK1JHX9ts4uvS+awVLHiN6qwC1a95es
-	 4JazSPp3tdrnH5lRWC5T+DEV+UyyqOhICX4GDlANDs1//MI5jGDpE+TU4voKm+GteEHTp
-	 5lxa6JysauwoY6SvHmaFzonarKNTyx1dXIamj4CzRNcoma/8IozTVd0K4gA/hsZz0YnOE
-	 gZ5s7p7s5SvJ6AEBQKQPti2tEuAj63OEHrBFYaxiVVa/lnyqQ1qOp+CsduRxGzifi1w==
+	t=1793362540;
+	b=Ih8sl4Q6qB4V3ovyRwpBVGH8iAM9cdpDegM4Y0KATayzYN/tbKL+d3QgcoCxnimgQBIl
+	 7VBsC5U6t8WIW/f/xsCx/yKmD+RcDpDLPCXpNBC/PS+HKM49zAjQjJi3NkxvfYgpDIaZ7
+	 WmTAawI77cwTYisFGnlaAlRh062xLkSHlCAB9ir9STGFllzOGVAIgaZq4qHvevx5ZPcrC
+	 HysjNABDefI//oOPgrBVzQh46N0Uj4rGTQLkGyN/Rh0mN4N6tzUBRCWfi6UF7nw+gSr4y
+	 GyTjS1JzW0dX6ucx+XrkEo6gf24AnSdyZqFEnwO2Ig5yt4/MIw3hd85Q0Yve+XZZ19g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793362537;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793362540;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=zCJGbXx4nQJdQFzOVuQqurNzKd08mBS8p1zMiS/8xyw=;
-	b=NgfmuqF2uO4aKuVCgcMwc+gWWH5AiAlursWD8GwURT//9IdEY5gqjXqy29fFh0LP23tc
-	 u7+N9P0ZXqO+mL16IvV+xIl+ih9wVg8onz4iYyvam38jZ9WpAHxvQnfRmvqu2MFMX1Kc/
-	 ehnUbyWpHqPpsEzEo5djRmJM4K2w38kMEOKjFuLG2L0r8Iz6VCtdmF5iyHIifDUwx1hNl
-	 vFi7e4prxWT+QfTAAVNIm2pThme44geu6Amiqf12RClDmOjQzcdjLwIRMo6MbX9+h5ZJZ
-	 rhrrBDOC0pqMV9EwEWx7ZIbBKxdsQitAEaDtECsUkvki+ga++8syn7y7MRmr79wqVTg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=+ChWnRDfm75DU6tFeqkpqunSUflt5Kc60va/+iNuvBw=;
+	b=lqoztwwk+bjXT+amTx+6iVkYJcLHkZjizFyxlR9lGGB67VFKmaedYTBP/7Xz6xah1rIR
+	 opLyqqc4d6+GRsQP+1xPQkpfwAGTbinDumed/a+jLjX4eS4E9o9vGZO7KCLTcAAragiX+
+	 PLEI3kVZ7lI5ZUT9b5qHlHK3Jr290O0awUzJtxXiXkX06RuxtTH0JxVKs8Aek+d9mEbSv
+	 QzS5zJU/EI6b7vU0/QteaBM8zzr6Fj/a4tJd2B37D4xI0jCFFINbo9uTIZN/Y0CRNCyWP
+	 MKTTrooQw2ri+vmFA9RWzj4YnFjfWinBSbW42nrEjis0VSYgvIi3BbwmJVXLkGKtfBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s6/CxYQo";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2CyvzfRi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DFE606A31D;
-	Fri, 30 Oct 2026 12:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35538606A31D;
+	Fri, 30 Oct 2026 12:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6/CxYQo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A96B1F000C1;
-	Fri, 30 Oct 2026 12:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2CyvzfRi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305361F000C1;
+	Fri, 30 Oct 2026 12:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793362536;
-	bh=zCJGbXx4nQJdQFzOVuQqurNzKd08mBS8p1zMiS/8xyw=;
+	s=korg; t=1793362539;
+	bh=+ChWnRDfm75DU6tFeqkpqunSUflt5Kc60va/+iNuvBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s6/CxYQo3/gY5ZeGujD4ZHwem43e+FSn9A0KbA9qFqeA5kFoX80lzDTqDPukvDXGR
-	 VzAw0wvsNI7ZW03Qml90YA0LHBj2ko6iRKihCs9uHDdjfyLMvt3bffJFtHPB/TnrkF
-	 2qeTnA9DqdpOqyiZZvNjmrMRLK3P7qtk55TjOsAs=
+	b=2CyvzfRieCpry3VGBSMyOKsYi0wCdqAleEp6FIUxGDN0nVf+I4SwNW4u1PQWPeKwj
+	 b1MrPZXAbF0Pdkhz2z+e38/pQRe0td8g9rI7kH0fOflRaJu6anMSBqk4AAkdxutAgp
+	 NuX8/6aGSXqwK8wtbFUDFBOUR4o7LnyHfpViXqJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 06/10] platform: cznic: turris-omnia-mcu: Add missing MODULE_DEVICE_TABLE()
-Date: Fri, 30 Oct 2026 13:15:07 +0100
-Message-ID: <20261030121255.413697430@linuxfoundation.org>
+Subject: [PATCH 7.2 07/10] kbuild: link-vmlinux.sh: improve detection of third pass requirement
+Date: Fri, 30 Oct 2026 13:15:08 +0100
+Message-ID: <20261030121255.437290861@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261030121255.257615100@linuxfoundation.org>
 References: <20261030121255.257615100@linuxfoundation.org>
@@ -62,50 +63,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 59797443846bc2451c35816026bbb79d281c9f23 ]
+[ Upstream commit 14b8b4bf2d7bd5d58c17adbeed0edfda1dfc1a7f ]
 
-The driver wires of_omnia_mcu_match into the i2c_driver's
-.of_match_table but never exports it with MODULE_DEVICE_TABLE(), so no
-module alias is generated and the module is not autoloaded when the MCU
-is probed from the device tree.
+It can happen that symbol sizes within .tmp_vmlinux1.kallsyms.o and
+.tmp_vmlinux2.kallsyms.o differ, without affecting file size on disk
+because of section alignment and/or padding emitted by the assembler.
 
-Found by code inspection. Not tested on the hardware itself; with the
-module built, the alias lookup
+link-vmlinux.sh doesn't detect this case currently and keeps using
+.tmp_vmlinux2.kallsyms.o to link the final vmlinux. Due to the
+different symbol sizes, other symbols are shifted within the final
+image compared to .tmp_vmlinux2, and the final comparison of System.map
+against "${kallsyms_sysmap}" fails with the message:
 
-  $ modprobe -R 'of:Nsystem-controllerT(null)Ccznic,turris-omnia-mcu'
+    Inconsistent kallsyms data
+    Try "make KALLSYMS_EXTRA_PASS=1" as a workaround
 
-reports no match before this change and resolves to turris_omnia_mcu
-after it.
+This can happen in particular if the linker emits additional symbols
+that might have different names between our (re-)linking steps, e.g.
+because those names depend on the virtual address of the symbol. Linker
+stubs for ARM errata work-arounds are one such case.
 
-Fixes: 992f1a3d4e88 ("platform: cznic: Add preliminary support for Turris Omnia MCU")
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260921204204.797294-1-khurana.ridham222@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+These changed symbol names can cause the output of the token
+compression of kallsyms.c to change due to the changed symbol substring
+count, which in turn can change the size of the kallsyms_names symbol
+itself, causing the potential shift of subsequent symbol addresses in
+.tmp_vmlinux2.kallsyms.o and therefore the final image.
+
+Update link-vmlinux.sh to not rely on file size of
+.tmp_vmlinux?.kallsyms.o alone but to also consider symbol offsets
+within to resolve this, and do a third pass if required.
+
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/cznic/turris-omnia-mcu-base.c | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/link-vmlinux.sh | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/cznic/turris-omnia-mcu-base.c b/drivers/platform/cznic/turris-omnia-mcu-base.c
-index e8fc0d7b33434..f0416302a1f3c 100644
---- a/drivers/platform/cznic/turris-omnia-mcu-base.c
-+++ b/drivers/platform/cznic/turris-omnia-mcu-base.c
-@@ -403,6 +403,7 @@ static const struct of_device_id of_omnia_mcu_match[] = {
- 	{ .compatible = "cznic,turris-omnia-mcu" },
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, of_omnia_mcu_match);
+diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+index f99e196abeea4..a032560eda0e8 100755
+--- a/scripts/link-vmlinux.sh
++++ b/scripts/link-vmlinux.sh
+@@ -106,6 +106,18 @@ vmlinux_link()
+ 		${kallsymso} ${btf_vmlinux_bin_o} ${arch_vmlinux_o} ${ldlibs}
+ }
  
- static struct i2c_driver omnia_mcu_driver = {
- 	.probe		= omnia_mcu_probe,
++# Check if kallsymso_prev and kallsymso differ
++# If symbol sizes within ${kallsymso} change, any symbols within vmlinux are
++# likely to shift, invalidating ${kallsymso}.
++# Since file size can remain unchanged even if symbol sizes change, compare the
++# actual symbols instead of relying on file size only.
++kallsymso_changed()
++{
++	${NM} -n "${kallsymso_prev}" > "${kallsymso_prev}.sym"
++	${NM} -n "${kallsymso}" > "${kallsymso}.sym"
++	! cmp -s "${kallsymso_prev}.sym" "${kallsymso}.sym"
++}
++
+ # Create ${2}.o file with all symbols from the ${1} object file
+ kallsyms()
+ {
+@@ -126,6 +138,7 @@ kallsyms()
+ 	${CC} ${NOSTDINC_FLAGS} ${LINUXINCLUDE} ${KBUILD_CPPFLAGS} \
+ 	      ${KBUILD_AFLAGS} ${KBUILD_AFLAGS_KERNEL} -c -o "${2}.o" "${2}.S"
+ 
++	kallsymso_prev="${kallsymso:-}"
+ 	kallsymso=${2}.o
+ }
+ 
+@@ -255,7 +268,12 @@ if is_enabled CONFIG_KALLSYMS; then
+ 	sysmap_and_kallsyms .tmp_vmlinux2
+ 	size2=$(${CONFIG_SHELL} "${srctree}/scripts/file-size.sh" ${kallsymso})
+ 
+-	if [ $size1 -ne $size2 ] || [ -n "${KALLSYMS_EXTRA_PASS}" ]; then
++	# Due to alignment, file size of the kallsymso object file might remain
++	# unchanged even if individual symbols within change size. Changed
++	# symbol sizes can still shift other symbols, though. Therefore, don't
++	# rely on file size alone.
++	if [ $size1 -ne $size2 ] || kallsymso_changed || \
++			[ -n "${KALLSYMS_EXTRA_PASS}" ]; then
+ 		vmlinux_link .tmp_vmlinux3
+ 		sysmap_and_kallsyms .tmp_vmlinux3
+ 	fi
 -- 
 2.53.0
 
