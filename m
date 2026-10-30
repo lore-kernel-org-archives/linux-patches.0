@@ -1,87 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793398002;
-	b=DG2tqXIOVekrx16ZCEKpC0D7TqQdRKZygfPqNWmR591dyGCalVt7r+YrkdQG2iWlHu19
-	 yYzMK+kAvvMzzNZZoPb/YccEsKsTLUwZOWFWpMHEHzG1Ks28PfF23V6usX/xpJliNaFN5
-	 ecEDdXfV23OnTEx6bh8TfSUASV1VVoAzDNyMCE0Ot7gNOW5RcPhxl4xERbShguqbk1k2d
-	 PQeSjeIA5YUXhJphtM+UX0AG0daVObI2LYniACRWLD+oJFlqquayAWtpsByW+kByit4ln
-	 aznu0BovFpTPXZ8LoAj1DZ8UCFUi4kalyZQ1e3EUPsgHZfNXE2CS0kkQQYAPN/zzXDw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793398002;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.180
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793400299;
+	b=H//etXp2GttDXvjiI70hnjQKEEtzCB+kDRZd1xAYhQJOA8XATuyUELpbABRvzLomqIlV
+	 Dm8yFGCejSzKjcUk2NnnKpCAgxHSjGmuQuJ29/rKqSSlTSBEE+TppitfBJFXu3W3U9W5Y
+	 84Z2Vm/CeLRDicUBOLSlHBExt6GDhhk1xA2mtEzhmDy2HpirqpjEDgAVJq9h1I6Mp3hFV
+	 LcH49DEc+2OG+n1Nu2q9h7Y9G+9059a053PGBcHd+7+evYkyLjAVPcHjxlA8BrmrAQ6kh
+	 /7y2BWjMbavBE6PRLAOXnKWYL+cmf+frpkyckWZ8CzoAFLr+Vccp81Ek/NUByQW5TIQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793400299;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=VallrhWYbAQ8j+mRUozNpVRyDn2TOg/EyzhjcGGEMLE=;
-	b=mIvsSPByIPQqsuBhzPmISBMVLYK3SE/SZhOH3UtCH0/QpEJlg1VwJfuu+LKFTkdBiwEw
-	 hWPQ//KRAf/7SsmNQkOFe8c5oAL9lcc7V6doGsmu8JxxFCbcTDj2LtXIR1D97eQeGmkoF
-	 GVigC8+mafFDBIoEPLKq/+ypE1QAR1eYrW2Xq03mpZ7RFwKNfW2JzgC25/tyH+rfzVfBg
-	 agiVsLsKCZanEXK033ttOBmduix7c68d4OozMQNo/Rmp9Zu/xLiwLRl+S65QNaUeLBYqR
-	 jOsPmv8N3LPuifweiTO5URx4pgfww+df6FUdgu97AN2FT1JFdRWMvJr9dacsg66qRGg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vQD91ogK;
-	arc=none smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:In-Reply-To:References:MIME-Version:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=NYbItPhQApEJbZKga/APWqgHEBqrEwP9FLrG/rlKxD8=;
+	b=LoccafT+6InQqxafIuXCyGp+ABFvgQPZguaG4dNUpEdtKhRAerrMGlUf8bRP5ER77Lki
+	 9gLO86BsGLDN6VkZPBugJpUmVMyVbLssMi/3F8g59t1vpBg//95j4hLtfVdlkL8RwziBy
+	 4XgN6ue131M7xbQB5Ee8BhnOE0wcOSQeSZcK+kznug8D0B3Ryw67oHUsJ8oKOU8izLu/J
+	 iwW19X1JfC3cJ+gHd0QjhA+BdHjBgPB0VLHnYv4XBvOGDxAY4wYb9KJ4rm4115IwUJ/Q1
+	 NMAhB0un+4GU7/GyMuTqCfZgrxeg/MR2Ea9FAieAQa7CVhWBBsJg71pkrC0pA5o7nvQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=AQlexJGn;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.180
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BB2606A31E
-	for <patches@lists.linux.dev>; Fri, 30 Oct 2026 22:06:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9BB2606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FCE606A31F
+	for <patches@lists.linux.dev>; Fri, 30 Oct 2026 22:44:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7FCE606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vQD91ogK
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-33fb4680717so310719eec.1
-        for <patches@lists.linux.dev>; Fri, 30 Oct 2026 15:06:36 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=AQlexJGn
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-93f30660e69so91703285a.0
+        for <patches@lists.linux.dev>; Fri, 30 Oct 2026 15:44:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793400298; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YHO1ocac2Anfq6S/wLr4WQq+rBt2K54tzv3+FNmkzdiGzj5A8AkmtAGpW3JiA5bKeM
+         GYOKXIfXdgZXwvU0FzV/4RNTkeN4soYf279/v+c0SQuAh3LNNLWLJF+vS3LQIpo4+st3
+         gZSZgXiRppW5uI1rLYkaFCWOUskO13vCpS1tOZOyCId4sBGr1Vw+NyoMM3jHGmRz7kKb
+         CW+oyU54P202W8HzBDZVgl5g80/qx1dTbBXEVey6WYC47ooEq3eHkYAjf2FoOKdzs8GO
+         WpqOy0YVR3PiVjY0whZ7tfijyDCcWoIhU+5niXrqN8OTLfS9mezfh1LsITvkK0IYpOk5
+         JUbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=NYbItPhQApEJbZKga/APWqgHEBqrEwP9FLrG/rlKxD8=;
+        fh=+ciU4vHRZww9jZLAWHZFzUjMz3fjncYOQnLobt82eXo=;
+        b=FU2XYsN7rbx3ciRvu4pu/arAB/GPuLJJkvlwXElczr71rCLilIWT7PUDdjLne4nkVg
+         d/mK0s+eXlLyr5D2q7B7hIwqIYRjo4b4dxY4G65II/EWUA0HhSIzSdyI12eicPHt5hy9
+         /DaWLXYvbLX10yPgxIUQrQdIwa9NzHzf3XnFZQU0aY2getiLlNH3aBlShoJxDe//3dJP
+         ibiVbtPVMkV4utbFhKWjL+l9jHDPDVLSxyjoOAHnqAn3noaeU1wfGiL9ll3wKgitWyuz
+         JyyqNksh+5fvTdovnwXfYbIp46X8567HQKRZvWwEBkv1WnesCvXNiqCT2gnfPkK1goWu
+         1ywQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793397996; x=1794002796; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20260707; t=1793400298; x=1794005098; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VallrhWYbAQ8j+mRUozNpVRyDn2TOg/EyzhjcGGEMLE=;
-        b=vQD91ogKidtRNkCvTb8tJBX6/EfQ+Oa/IujW3UKyuFTe3+rQUayb+kEse8tY/iMMwk
-         sYHjPfejhG2tH/QJi+f78kSrn0SEIE3uWnwAljVr1TLjsZWafH3oA7oxbhApHa2a2Fae
-         NE2++hqPLeaLQ1V0c0k7j2PE0SlzW/XU3nfUvSuw4eeLCzaqUSKCRd+hTDPvoW61z801
-         Ysdxd4z/yTP9+5seIUphorVDpghJbe+27OHsFK4KdhL66NgbizXQg9ARr8ia2YBaJeZb
-         0UI+h1ImYII4nLRW3X5HRA/upMVSpCVvxuwPe+1tIJtBtWx2OjjyHQnuLOw1aUuAt4tQ
-         rSvg==
+        bh=NYbItPhQApEJbZKga/APWqgHEBqrEwP9FLrG/rlKxD8=;
+        b=AQlexJGnqwgyK/J4WlzIYgsBi6ad2vrDlfymYN+RjMFh+nTd+esYMCCyX2jg16e0sD
+         JDRfhf3391NK7UA/tTzJeBNOOz4QzeH9eYj5jK4ZVEWqooiZUUm3vdGYfT4KX+sR5cV2
+         CUseiC5PmwDrKnURHzkqVaUxgQNIj+eMY6lWV5kEcgeGM4eFU2v68RiodxidZxf4u1m0
+         rywaBQdgrwOfeL1IMjiIEWdkgteyAFFToGwcqz+ZXydYkEkPyMtWMU3LZeSDwJMYvQBw
+         ytoBWbVlMN/hWeyMeK6kqGVSipM0Ar+c5MsFst5GuQINqeCh02iVqUcj2YlKs9LP+9oQ
+         Tqtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793397996; x=1794002796;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1793400298; x=1794005098;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=VallrhWYbAQ8j+mRUozNpVRyDn2TOg/EyzhjcGGEMLE=;
-        b=i4TeuZ2GbHyEHKes9i8nANB1NU+hovfZThE0qat5FgQDCGBDOdRohuk2afWYbYQ7+j
-         M9DLo1QIVcsbzSGgLBGvkesabLLUEjzOwmFr6hijkzvCLfYoEus9QO3QEkl06inMrtjt
-         LBskhfMiFz7cnU0BgUtqJ7QOULBEA0uF6k1qhKWSQhcYHoAovghmZqw7j+H4bWNxxdbz
-         TpaRVEwirhADWA97CJgr2oIb8ere4SzVaZQ6w/yH6E+6ALxfiEd2KL2KM5DxlWvGzXaX
-         cbclfRsi6xmj6df0Z0IXu1Q3cp6mZcGN/9IT6RbEev8HQ0Isj3q/KkCljfu3rseP7Mj1
-         luIw==
-X-Gm-Message-State: AFq9FYLROCmNKG9OyMgKOeftQL7/bzoxmpjSNNKBmEufge3lqHl8DEpt
-	4SmszrXDeZ3Kuv/fGtUg0OcTEOMyz+x31MpQcGbRhW30ITyXNejdaBU9
-X-Gm-Gg: AYBFou0e7k+9xrN2HwOifG9ylLMDMgm+q0vSc4bRgDLWsN1MdKK/p5FwvRGyBpT1z3A
-	O/GkScNGPjX4/68I4zmH27+J2HUi/oMOpkKMa+HX/YrKU14ivJHevVc/xhHAOwf1M6WEGnDsXim
-	j8+4UIlg8BVn2X+WGvUbraIW5XjVuXoUMfN8Kz8Bh3puwSj6OGUUfFwz+S1WhrkoHfsduzNWn6E
-	DahN00JtynBud9f8KfzQBk8bbcPZdv0oj5mBG3b5YMgx6rcbRDr2EEe7cBF98ODFHUc+h02jgeh
-	btcvJIeDOabwv2rTfMaEs7XdAdaNe2ucoUk5n3ET16PaKZAlWCJuC2wkZU6wq+1csp6+0Uhvhgw
-	SuaxwB5gOlbuB6RwjnwAdW8RXVVUAuMsXiYtc8ukqh6A1KEY+409iRSi9B+gWNPlA4YfeAVdpo8
-	vH3VYgcqEwwM2Z2g/ZPXe5v9NSV+CWZNd6rOsgqNBwV6f90f49PFQgAA3rCT6ftjRq9oWdOT6h6
-	Mm3C3N6BO+AG+32brY2yZyyE+W88IYnn1S9ySaOSxkJh2HQIdKquddPKbbacVf55X7XT87Eo1/w
-	Z6ERgwXUkjqk5RW35sFni+uEwQEzhp4yk/DA4ecCB6iQGh4+/2DgJsdHVHQtuuKr4s1rF4G+um5
-	Pqg==
-X-Received: by 2002:a05:7300:8e:b0:36a:119d:a099 with SMTP id 5a478bee46e88-36a422062f9mr5616341eec.5.1793397995862;
-        Fri, 30 Oct 2026 15:06:35 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a429018casm8965957eec.14.2026.10.30.15.06.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Oct 2026 15:06:34 -0700 (PDT)
-Message-ID: <547303c0-478a-4ee4-9c9c-281e62ac4a69@gmail.com>
-Date: Fri, 30 Oct 2026 15:06:32 -0700
+        bh=NYbItPhQApEJbZKga/APWqgHEBqrEwP9FLrG/rlKxD8=;
+        b=R6nOBEoyekTAJLMRP+GMyvVQXVsm2eQOHkH/SWPNeWMtj+aaY9sa/7aZqXW9dWZfv7
+         yIqOXaRyE1yLOWxs1yXBW8t3VSHhIa/CGWV/I8y3VylzMwRntzke3/jpebGhPj/ggCpr
+         Ozc8mhM4bXWOyHhQtfbmcEzj8prvjbMwHVeB+sF+a/vAmAxq5QpjHZX/vcHc7vUgW5MP
+         V7PmBMSisLQQBkZpSQ53UGRDKOcg1mdxyqhpoCP4X5QoJiMxCp7pooyZx3zUHCcEvrIf
+         xdiNuR7wytVfuxGw9WD9772owdei2Z9rTbmZNN8HbUuY2hb+ged/d7GCwob4R8lwKf8a
+         wUSA==
+X-Forwarded-Encrypted: i=1; AKwUvBwTPlYA/OJ5yPyjITmzniplrrvcL3djo8uBJE/EQJzZGTwQlaavhIpg92F4hexkWntGMId3LXZb@lists.linux.dev
+X-Gm-Message-State: AFq9FYJfDrwY2YZgUjz92QWfkuczsdfYeikOOUaFOKyc3Hb5ieQpzLWQ
+	PXcRiMhvDvttVw1Ib+A8CNlWaJ9nd28g3RWjK2VUuZphmnCDrFxiZykLXTvcbaDXofkDQLtDynY
+	yGrEMagDZ1vzWVOH50yLV6cLHo4TghgPW9xEUuETs
+X-Gm-Gg: AYBFou1z7MXWACF/JixiYY7t6N3zJ4HbCPdvSkJsrUY8uLtc+CW6jbY291xqKozB1+l
+	YM8xXtmt6lZi3fOJJn+MbAJovNz0nF1qJUooQNK3+vH0vW73FEJ2up2qwZLP09mTjx+IDvNhIwo
+	TV1xygThZA7qFTerzhadfVegllV1gdgCTCVUN0+y1d5KrsTHjqq1ZIxVhCg9yaAQCLRCxceGQNF
+	JpcG4fS4OIE1DvPQ65YpLXtwXj7QtemZSfnjX3zEzRKXb+d38VEMdO8S+M+ZPPt7rDx4n8IeFf0
+	9czBP8YghIHskUxNiHezHW91DFezNtMzX56108Xr5JT0D1HRu/20n4EWnpPGZCVM/QE1erRwoBU
+	urkI1CHPwRIB0tHB6/QVTrxfUw1Lo0bkTN6eOHiaMxwjuFootiBTDgRQwX0AKVaO5bJBkWesjL1
+	6zdhop5KyhFsrXxUHWHiSi6nw=
+X-Received: by 2002:a05:620a:4594:b0:93e:c12c:4409 with SMTP id
+ af79cd13be357-944217cece5mr652996085a.69.1793400297298; Fri, 30 Oct 2026
+ 15:44:57 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 30 Oct 2026 15:44:56 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <CAEvNRgFEKqVZcNYCL0LpB6BTyBFe+ot1x1nFfEqOrSTsu134PQ@mail.gmail.com>
+References: <20261017073149.1303738-1-aneesh.kumar@kernel.org>
+ <20261017073149.1303738-3-aneesh.kumar@kernel.org> <CAEvNRgEh3E7NBc5_3Wq66Fss-mAYT6+4FWP5+=Co6+OVfVnQQQ@mail.gmail.com>
+ <CAEvNRgFEKqVZcNYCL0LpB6BTyBFe+ot1x1nFfEqOrSTsu134PQ@mail.gmail.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -91,45 +111,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.2 00/10] 7.2.15-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20261030121255.257615100@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20261030121255.257615100@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Fri, 30 Oct 2026 15:44:56 -0700
+X-Gm-Features: AclHuK9AHtuqcVSSdHgG8WAhHla8voZ5Eh8lYfAwHP3Alygt10O_4piQhjU1tlA
+Message-ID: <CAEvNRgH5TH8MDaRQaVczv4m6fJZKVmf=MtKzhmHs_px8+r=8bA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 02/13] KVM: guest_memfd: Support private/shared
+ conversion of device memory
+To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>, linux-coco@lists.linux.dev
+Cc: Alex Williamson <alex@shazbot.org>, David Woodhouse <dwmw2@infradead.org>, 
+	David Hildenbrand <david@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>, "Joerg Roedel (AMD)" <joro@8bytes.org>, 
+	Kevin Tian <kevin.tian@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+	Robin Murphy <robin.murphy@arm.com>, Sean Christopherson <seanjc@google.com>, Will Deacon <will@kernel.org>, 
+	Alexey Kardashevskiy <aik@amd.com>, Xu Yilun <yilun.xu@linux.intel.com>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
+	Steven Price <steven.price@arm.com>, Fred Griffoul <griffoul@gmail.com>, iommu@lists.linux.dev, 
+	kvm@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 10/30/26 05:15, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.2.15 release.
-> There are 10 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 01 Nov 2026 12:12:50 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.15-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Ackerley Tng <ackerleytng@google.com> writes:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+>
+> [...snip...]
+>
+>>
+>> Is there a way to avoid making private from within the conversion flow?
+>>
+>> kvm_gmem_device_map() below already does it as part of vcpu_run.
+>>
+>> If we do the above, we'd be aligned with regular conversions, where
+>> to-shared conversions eagerly update arch state (make_shared) but
+>> to-private notifications to the firmware are done lazily.
+>>
+>
+> I was a bit confused above. IIUC to handle
+> RMI_EXIT_VDEV_VALIDATE_MAPPING, the conversion is not done from outside
+> the kernel, instead it is done in the vcpu_run completion hook.
+>
+> Can we make the flow that userspace is required to do the conversion
+> request from userspace after an exit due to
+> RMI_EXIT_VDEV_VALIDATE_MAPPING, and then just do the delegate + map +
+> validate in the vcpu_run completion hook?
+>
+>
+> The rest are a little outside the guest_memfd field, but I'll make the
+> suggestion anyway.
+>
+> It looks like delegate and map don't need the vcpu context, only
+> validate does, so validate has to be done in the vcpu_run completion
+> hook.
+>
+> Delegate needs the host physical addresses, so we'd need to translate
+> the IPAs to PAs, could that be a VM ioctl? It could look up the memslots
+> and translate IPA to PA?
+>
+> RMI_RTT_DEV_MAP also doesn't need the vcpu context, IIUC it does need
+> the VM context so it could be a VM ioctl too? If it looks up the
+> memslot, it'll also find the guest_memfd, where it can find the device
+> information.
+>
+> I'm just thinking that the vcpu_run completion context is doing too
+> much, and there are so many possible errors that could be better
+> communicated to userspace if they're separate ioctls.
+>
+> Or perhaps at least delegate + map could be one required ioctl call by
+> userspace before doing vcpu_run to continue after a
+> RMI_EXIT_VDEV_VALIDATE_MAPPING exit.
+>
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+The delegate+map actually seems really similar to the
+KVM_ARM_RMI_POPULATE ioctl. KVM_ARM_RMI_POPULATE already calls into gmem
+using kvm_gmem_populate(), which can do delegate+map, can that be
+reused/extended as part of RMI_EXIT_VDEV_VALIDATE_MAPPING handling?
+
+>>>
+>>> [...snip...]
+>>>
