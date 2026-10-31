@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793420580;
-	b=O9xM8LaRtFBWQZKiFGFfXXfDNQ4uhFksBOqcGkEIeUkRh/q7sLWg01RRNS/+r3xUKV+l
-	 RxW84u43zdmdlV4ulX1JKYvbAwAfk0/+viLtdx+m1f+BxK5plJBULvRzegdK7nBRnBhKf
-	 RD1HeQfqLE8kP8/3Adq6Hk4uXkMr0Iy5oY6KoAzr0qd1jD0Xv3iu0d/3wwQl1XegIaNdX
-	 0VqPRd/hYnhSUTuYDEFlo+V/LijBqFqjFChJFJPanR/ZrnG9X21DDaSoJ4Lg91NFol3hO
-	 vHGr8tpjnNT1XJ8g6OKjJ8dbBSzqCwd9i0Ki0XwP4bvNT0nLWaLiv0chkvp50FVWyjg==
+	t=1793427898;
+	b=riIIk29WhBLLZPI2nKCTEn8Ggz/SOCgceGN1JjjDaKHFYuJNT6/tWGBd1GDXFHLWLJlh
+	 eAR5InKGErcJwUmSUFQpvAtjdL06NNnsqHttit6zUkqCtp3zda1P+jFaPzewd+8f6GOYw
+	 PnaH21BOg+vp2ZLWrIdEZN8yDcSsIIN7rAdyBpz2LyUD538oDLb/HTAoML7KAoKevF5+Q
+	 pnhDqdzI3T+r/H0vhnqZS4OsHUeyNQAigB46HosObxTXe9zYiTiGbF5TBex3zqSMuY21N
+	 huU2TQfVsxVATnz1HXwnhkyfkjUXDoSP+WQf8SMVPd69o8rU51v1ABmkfwdHCk7vcfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793420580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793427898;
 	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
 	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=y17QqyZ0paSAAwIfU9VJ0tKNbNczajCrLLkqe8QM/Pc=;
-	b=k946kY1lavqfZVUuZp7aUKiFe+7S2VaRKdfjd+UXLuY0tn5D6BFeBsaaMOp5ijwiUkzR
-	 G91J3G8V3Q8Cl60eTNaienCd4gd4EB0qfW5WlMm+5jES04UnxfUC5RsIo+yybrUS+i+QV
-	 Dvh44GAl7/GPyXVySFexQwqO2soUUJ85TTsZkStLN8FRzzUs+WuEpAkOWiwibJfVa1ouB
-	 QHEoXuwwgDwGFejPDNIgCkNjhR0fFgpY59mSH/Z2nc+C42mS5XQsAorGh4laKMWqGR/Wf
-	 aFixqZSJHUSNX6Ogu6lr4/Zqn+nLMGI59VkmFUSYTYqbeaFE4f5fG5BKy2MslDjClyw==
+	bh=HqKPasDyHVzgQf6STvy+cgNCVVhZ8yNZrvR7X75yp+0=;
+	b=DAPK5ahUYwva5PFsfe6uCrc88GV7z4O7j9n4M6mEkzse3oz+UCv77S5Y/r/CaBHdWKdV
+	 souJTQtOO2fBaLMgH2OtFIp7fvSVvI2HwNRB9g2Hh7vgdkA8WXLmYHtKpsAO4vMlLIP/c
+	 KHnAENYBJB/VzN7mt8qw3/cyerq6tpgaC6SntlYzaPxlUapN77Q1jcXwEf37MMpXVsVW1
+	 R+qlQMb389ieZKNGUJsWzgwHIt7KMbfO7Yhd1fZ6qGPJs3t3k2VX5JnUNNQRM8mC0nS8N
+	 G0AEUA+WaUq68crpKEOzbg5JlPsgiFFdFgE2BmMZcpDEgQA6fIKXlDaDJpLcbgivYnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Tzw1prkG;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nmqv8eKA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC08606A31A;
-	Sat, 31 Oct 2026 04:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB86606A31A;
+	Sat, 31 Oct 2026 06:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Tzw1prkG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535E21F000C1;
-	Sat, 31 Oct 2026 04:22:52 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nmqv8eKA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87AE1F000C1;
+	Sat, 31 Oct 2026 06:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793420579;
-	bh=y17QqyZ0paSAAwIfU9VJ0tKNbNczajCrLLkqe8QM/Pc=;
+	s=k20260515; t=1793427897;
+	bh=HqKPasDyHVzgQf6STvy+cgNCVVhZ8yNZrvR7X75yp+0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=Tzw1prkG5Pe1czYFf4Tq17pVkdWFhJdX3z0gOgZyLLPIFRAW6Ptak3qZnqKBV25LS
-	 dvovvDkTVSkOSlufzW0o1T5miGSJ9n0cOa9leoxxUiOXOVyiPaCbNfj0Uuh8Bq3kIC
-	 VuXHZLnDJXghbqoaqApP3IGImMgkMPi8iuC6/M3xM5nCKJukUEXcY5+pY+gPIy7bst
-	 IzIAQWMqY+IWOZABaGL4UQkpphOt5SI3ka82Ie909cL149K7HPboJQdWznHwniuCzL
-	 RwUasQjzu6YbZVkeA0/2u0JuO9WarfGL1HF/VOnG8H7Fk/PbLHKX7dyvJ0lU5mvH03
-	 A3w3WZWtNLYag==
+	b=nmqv8eKAdIp60xqNWfQ2JKRLItA/s39epbi/y2PtHLL3Ps4M3pJAlOKfjFfgBXKuo
+	 pCRVwOvbLF1RxQqS+VfhRgKTtpaA/jgd1ZGNTngUBKstrzK9xFo/RCnuKv5/qAtls1
+	 6T4qBzSDW6ASEmMNVGpM2Vj5CcKa+VeufHs7B/a8QhqKEJ2HUZg8DmD7xH5QiCv6dm
+	 TVOGtlJKELZFUJcB3+FXTcA30N3HHmA7fzuO34bjgl5TatKOySGb3gyzGhYeUul3L6
+	 glShjySBZpIbw06ZEbr0zCDP/qSNBw3lkjRDh0sjArn/AjmR7fF2g7jfCUSzLHqXtK
+	 s3+BMsGy+Bw+w==
 X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
 From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
 To: Jiri Pirko <jiri@resnulli.us>
@@ -58,16 +58,15 @@ Cc: linux-coco@lists.linux.dev, Kevin Tian <kevin.tian@intel.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	John Allen <john.allen@amd.com>,
 	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>, patches@lists.linux.dev,
-	Dan Williams <djbw@kernel.org>
-Subject: Re: [RFC PATCH v1 06/11] PCI/TSM: Describe the PCI attestation
- control family
-In-Reply-To: <auShvL2m00S70H3d@FV6GYCPJ69>
+	Mark Rutland <mark.rutland@arm.com>, patches@lists.linux.dev
+Subject: Re: [RFC PATCH v1 02/11] attestation: Filter evidence objects per
+ instance
+In-Reply-To: <auSe3YzgKX-lu27G@FV6GYCPJ69>
 References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
- <20261028152618.1356860-7-aneesh.kumar@kernel.org>
- <auShvL2m00S70H3d@FV6GYCPJ69>
-Date: Sat, 31 Oct 2026 09:52:48 +0530
-Message-ID: <yq5ah5i2a487.fsf@kernel.org>
+ <20261028152618.1356860-3-aneesh.kumar@kernel.org>
+ <auSe3YzgKX-lu27G@FV6GYCPJ69>
+Date: Sat, 31 Oct 2026 11:54:47 +0530
+Message-ID: <yq5aecd69ykw.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -81,101 +80,56 @@ Content-Type: text/plain
 
 Jiri Pirko <jiri@resnulli.us> writes:
 
-> Wed, Oct 28, 2026 at 04:26:13PM +0100, aneesh.kumar@kernel.org wrote:
+> Wed, Oct 28, 2026 at 04:26:09PM +0100, aneesh.kumar@kernel.org wrote:
+>>Allow an attestation instance to expose only the evidence objects its
+>>device supports. Add an optional evidence_object_supported() callback
+>>and use it both when building DEVICE_GET capabilities and when checking
+>>EVIDENCE_GET requests.
+>>
+>>The following PCI/TSM patch uses one attestation implementation for
+>>devices that support different evidence objects. Its list includes
+>>certificate slots 0-7, SPDM VCA, measurements, and a TDISP interface
+>>report. Each device must expose only the objects it supports, for
+>>example:
+>>
+>>  Instance                  Supported evidence objects
+>>  ------------------------  ------------------------------------------
+>>  Host link using slot zero Certificate slot 0
+>>  CCA guest device          Certificate slot 0, VCA, measurements,
+>>                            TDISP interface report
+>>  Host PF0 after discovery  Certificate slots reported populated by SPDM
+>>
+>>PCI/TSM checks the TSM driver's evidence_types bitmap or, after SPDM
+>>discovery on a host PF0, the populated-slot bitmap. The preceding patch
+>>controls whether EVIDENCE_GET is enabled; this patch controls which
+>>objects that operation can retrieve.
 >
+> For SPDM slots, I think it would make sense to distinguish supported
+> slot addresses from discovered population. DEVICE_GET describes fixed
+> object tuples, formats and limits; SPDM_GET reports the populated
+> slots and their certificate digests. An empty supported slot
+> returns -ENOENT.
+>
+> Fixed differences between backend instances can be selected before
+> publication. Please do not make the capability set follow a
+> populated-slot bitmap that can change during the instance lifetime.
 >
 > [..]
->
->
->>diff --git a/Documentation/ctlv/specs/ctlv-attestation-pci.yaml b/Documentation/ctlv/specs/ctlv-attestation-pci.yaml
->>new file mode 100644
->>index 000000000000..edb35cede0c2
->>--- /dev/null
->>+++ b/Documentation/ctlv/specs/ctlv-attestation-pci.yaml
->>@@ -0,0 +1,79 @@
->>+# SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause)
->>+%YAML 1.2
->>+---
->>+family:
->>+  name: ctlv-attestation-pci
->>+  inherits: ctlv-attestation
->>+  pre-init: true
->>+
->>+attr-groups:
->>+  - name: pci
->>+    attrs:
->>+      - name: name
->>+        type: string
->>+        min-length: 1
->>+        max-length: 31
->>+      - name: generation
->>+        type: uint
->>+        max: 4294967295
->>+      - name: tsm-id
->>+        type: uint
->>+        max: 2147483647
->>+      - name: connected
->>+        type: uint
->>+        max: 1
->>+      - name: locked
->>+        type: uint
->>+        max: 1
->>+      - name: accepted
->>+        type: uint
->>+        max: 1
->>+      - name: dsm
->>+        type: string
->>+        min-length: 1
->>+        max-length: 31
->>+
->>+      - name: object
->>+        enum: evidence-blob-class
->>+      - name: challenge
->>+        type: binary
->>+        min-length: 32
->>+        max-length: 32
->>+
->>+attr-sets:
->>+  - name: device-info
->>+    attrs: pci.name
->>+  - name: change-reply
->>+    attrs: pci.generation
->>+  - name: state-reply
->>+    attrs:
->>+      - pci.generation
->>+      - pci.connected
->>+      - pci.locked
->>+      - pci.accepted
->>+    optional-attrs:
->>+      - pci.tsm-id
->>+      - pci.dsm
->>+
->>+  - name: refresh-request
->>+    attrs:
->>+      - pci.generation
->>+      - pci.object
->>+    optional-attrs:
->>+      - pci.challenge
->>+
->>+ops:
->>+  - name: state-get
->>+    type: action
->>+    fd-access: read
->>+    reply:
->>+      attrs: state-reply
->>+  - name: evidence-refresh
->
-> I'm missing why exactly you need this op. Can't you do whatever is
-> needed in the provider evidence_get implementation? Why it needs to be 2
-> step.
->
-> Also, why do you think this is provider-specific op?
->
 
-I was considering evidence-get to return the evidence generated by
-evidence-refresh. Without an explicit refresh, evidence-get would return
-the previously fetched evidence. There is no particular reason for this
-two-step approach; evidence-get could always fetch fresh evidence,
-making evidence-refresh redundant.
+
+We still need to filter objects such as measurements and the interface
+report based on the backend instance. Are you suggesting that we do this
+in attestation_evidence_object_find()? 
+
+supported = attestation_evidence_object_find(att, blob_class, has_instance,
+					     instance, format);
+if (!supported || !attestation_representation_in(supported, representation)) {
+	kfree(objects);
+	return -EOPNOTSUPP;
+}
+
+So the backend will have some way to indicate which objects it supports,
+such as the TSM driver's evidence_types bitmap, with the host setting it
+to indicate support for only CERT_CHAIN[0-7]?
 
 -aneesh
