@@ -1,87 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793408500;
-	b=NIBFydbYCRpT9NfogBae+axGvSUGkfIGMcO5SsrcsIJnC4h/di9mlrFL6RcZLXozZr7l
-	 1xXebT+y864Fku2N4qCYEdxBRoHGIVY861d+0F+7wGaKAYNhjCH/gc7rn2rvdhjev3oWi
-	 YWaz3E2fyyBmzy5c9QqnqrlrN0J5T2BbxFbrHDLSK7E7oUS8YhElT31xP+vbXm+zSjgCf
-	 YLARLAFOKNUHkrIhMKEcWBK/PdMAWnFgdh0Hk5KfoHgVh48NGQbtd1c1dNH1ccyE7Eykb
-	 0nPfB/ror0SWB1vwW79USjAN1xt1Nl7tE1OrLQ83Zggj+EVLpU14dECuG/5HoRN++1A==
+	t=1793418448;
+	b=Y4jgYy8OyYb/wWa84PRZOBD+PHRupct4mIk/k483pgbPTbnxHtk0uKo4s2qTIBCEhIyL
+	 5B3H/gpFIxtDH1CVimW0Po5KOEv2/w4/7RtvBqY2Mz8PzmNd6m00KYPeWBokvZfZ06aHk
+	 8kgvmsYXMz2uBHg+qEP8X4vhxOO6XxrZURpZIweAz8qLUyzk6AzkEsJYuAiSNPAs0zAkS
+	 n88v4/6esVWN1pu3naXvDqe6B428Wd76CgUWb8p3y7XLkUJoSK59iloelLe0Zb8287lQZ
+	 bLGmBYdByO6o41fN3vg33qyv2umpK3fzNZm4g2BePDhVGwGPU6HRhk0V6a+wYQXQf+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793408500;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=LZfsTBRamD15PPndPrII3yvEWmYbhtdxrXyNeJy7iMk=;
-	b=pRI9rJ5tqS1L0FRczIDBUbQUxpohd1j32P81KRj7D1HuQQgHgUBDAg1uomHojwLgN2me
-	 nPubnkubY6JMJ9wowxUYt8mnWXSYrZIoAaHc4a1xlfgXR8/1Z3OBjAuAlMAxfHU7VyMD5
-	 gPFnUyfNJrddeW9HA4LQqY/cqcTjpVXEm82BTAIAuvuRndnFLY4gM1LhHzrpHFLPnXw1a
-	 YQgT4Vb9BhkgdFF6JoYUudUk5KlBJ5LHb7MrjxWXng/YNiLyx7PUeYcGdgiUfKz6We3nS
-	 Mr4fzrnuTs7gadYW5NSFM6wNuknx8yqPRSRraXMGj0hYQM2KsxIgxnFyTTKJbFsJ9dQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793418448;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=lAyFehja7OD0VUj3jcp5uuBLtC+WD4jEdKJehzZg+yE=;
+	b=R/5CWHmr4kVp1HZP+hTiMVjwxLftyHgH3u4pqBAFR85VeJTGye+mqXcEn7BoADgeOhK+
+	 K3ilpPjVwAirDAFhFGVi8yb3IuI4eLTlbMg2MJNVxXZw/Ay2BqKj1JGqgKMb0ggURGQtg
+	 /RynfKqOZ10N2pg6o98XzmTUfklkaPzLSiUSQ+WyHlFYpM+umYP4dWFPQ2qsLeRpOqW3/
+	 A9DUBq2Td5ZD2/Odlg+DQk9l/Ee8kAkYSmBsBGwUTf1lV0yjsZJ5GkSkSEsNiCUf1gDK8
+	 IpIIfQZonPdy9/1T2hr88VRsM5Q1Mci2yg7lv353B813ERYRnUDeRCIv1sM83cqrLfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=googlemail.com;
-	spf=pass smtp.mailfrom=googlemail.com;
-	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=JV6TBLkG;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=H5orrxw3;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CED7606A31A
-	for <patches@lists.linux.dev>; Sat, 31 Oct 2026 01:01:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5CED7606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821DF606A31A;
+	Sat, 31 Oct 2026 03:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=JV6TBLkG
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a2084d62cdso11396845e9.1
-        for <patches@lists.linux.dev>; Fri, 30 Oct 2026 18:01:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20260707; t=1793408499; x=1794013299; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LZfsTBRamD15PPndPrII3yvEWmYbhtdxrXyNeJy7iMk=;
-        b=JV6TBLkG4xUWiy6P7KLS2wdfF7xekO/P5f4wE8759OuJLw/lPYk1Mg2NCuk+TD4t7X
-         2PPTo+iZYV4VfSkyDfbQj0zfg/UIFz20/P3TJhssMWaqDUT6S9ROBVmLzz0TNoxXgctO
-         qAAxD7LyYKBuHNWYUZAnYHqRm1EPe1baMjH2D+IQa9BVxOHCJZb3N9ypV/x5sDgrxUvl
-         1oiVr8bqvUFdXPAIoroAIaZDEC56sbmv73wPSXdh/Y7yIBkRNawRO3KPo5E6dkVVIHgN
-         JOPriHIgckTCMkdSSA93VE/wGafpRHV5MCby+jQjKfzI1JEjh4potUjQtH0INTNTcC0u
-         7+JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793408499; x=1794013299;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=LZfsTBRamD15PPndPrII3yvEWmYbhtdxrXyNeJy7iMk=;
-        b=s+rET7gbvPxMGw6I0grAu/vbmR6cyjSlJSyihVGiW3gbcg4ouq1q6NXRakad4wTQIW
-         8eM7yzGVWkrZZ1dyyIFUvAEwM0kVvHxRxohPtgnjxOD2iXkTTvolRc1vR62/hNUFx10J
-         xP36+XSbEakmAHhd1WC9SwWFhlwIJd9TTpa7yEDtI3QKURsR5qOvFaklN6r7QKHw5u5L
-         WunDE3AZ365rmmanBMbwO6snPbQqTclr/C2YoKkRRUmAcP3Uz0tbWgnSrO43n//WPkL5
-         NkkvkQFOA2Ud8ZUjDMSz/oMWHyetDTbY8bvg12h6AhMuJUG4TUz1MaOHmeUo+zss7DbI
-         VhMw==
-X-Gm-Message-State: AFq9FYJvOZeGfpiWYYzopvJmHv4SWX4l3XDTaqK+VgOMhG+t43AV03Ul
-	6mVnkFTainVPbBelcQh+xZyE+VqNt2zGokc7HzUM28Fu+EuXbq5Oe8I=
-X-Gm-Gg: AYBFou1iAz3Lox250feVgupaeExrDISiY9Za9a8jAa+J7gAdEZKdHn018LGOXYdf8sy
-	DISe7e6hEaaz89Cn9dLnih5hJLKpTN5y4g146CeTuI91B9PmHhcj/2XCmEe1Lq6JyH4EV2LQCvC
-	+VNX3k63CR0zFYvwDt/OkwTas7oqq9+vAN2/5HvDzUoZMKBzrmvS/1XERKopnwsgIbSI4rIJ5/q
-	mPF0PFKbItSoO6F2FSNT9AoeLR+81xn62OVYddxp/RBGKWOkPUtT7JUnfTWptXKu1ODXktHwBg8
-	inlq8CHQf10MJHQrpE1sT8iY62+10ycw/Ji68PuyeoYZ+RfclLNKoURUfI2+WcBD0+nXlvf95Jd
-	u6BJfrdLdEQD/StYfloS1sXSJgLkZjw0bfp2AScS5TyUEAjvX9j51njYj9nXIyh0VhRt2ZhAIIS
-	E9F8s4AkY1V8BP8SVnk36YerHsi86pA0q3arkS+mSjtKdVrnByxzCApp1mxtHpAOi22mI7/of7s
-	tuCAfvPn5QSoDolRfqxxmT/rQ8PIbpg14p9w0Yf5RppLUOZ5zUQD8nNKFqZyMq4g5T6JZA4+gig
-	Sg/P/vAchCoBd817Nbp2Cjo/O9J5wK3RzwlnNGwQKuGepw8BsVNbKo0alqPotx3A2uFibm/B1IT
-	R6+E=
-X-Received: by 2002:a05:600c:198c:b0:4a2:5ca:767f with SMTP id 5b1f17b1804b1-4ac151a9a36mr94244865e9.4.1793408498561;
-        Fri, 30 Oct 2026 18:01:38 -0700 (PDT)
-Received: from [192.168.1.3] (p5b057761.dip0.t-ipconnect.de. [91.5.119.97])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4abf5b27e46sm146688815e9.3.2026.10.30.18.01.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Oct 2026 18:01:38 -0700 (PDT)
-Message-ID: <0db80581-4d82-4771-a495-4dd1c4a1c282@googlemail.com>
-Date: Sat, 31 Oct 2026 02:01:37 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=H5orrxw3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8511F000C1;
+	Sat, 31 Oct 2026 03:47:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793418448;
+	bh=lAyFehja7OD0VUj3jcp5uuBLtC+WD4jEdKJehzZg+yE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=H5orrxw3pLs6YCFvL5Y31Rg+6dF3jR3nw5RoZ1qgUlK/djyvjIiZcjk+Dx/lkZuDs
+	 cYcKA8bGVpqP/Xt46y2mI4gf57jGHGJexmBA2y8Wcgh/Pk1XYpsKk/bHL0B5gYUum2
+	 ocXZLuvG8WODhP/EOEIMDoXDNvo76zJaLtvKtQRj7VIsrXQYwPOtQs/JOYq4ZW5l28
+	 jlz9qWuG9SyE6zV1B07c/6lqVzPPQGs4Vcj22IIqpoYY80OsIs3lyIrjwa+j6z/nx5
+	 61pqQ3/l26bshsS5WlN8cIWgJP4gIYidRsoMvnYa2Nrd1qLqRyIKmzS1XBi9uOoukD
+	 0V09SNtNHpgUQ==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>, "Reshetova,
+	Elena" <elena.reshetova@intel.com>
+Cc: "Jiang, Dave" <dave.jiang@intel.com>,
+	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
+	Jiri Pirko <jiri@resnulli.us>, "Tian,
+	Kevin" <kevin.tian@intel.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Kiryl Shutsemau <kas@kernel.org>, "Edgecombe,
+	Rick P" <rick.p.edgecombe@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	John Allen <john.allen@amd.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [RFC PATCH v1 10/11] virt: coco: arm-cca-host: Publish slot
+ zero and establish streams after acceptance
+In-Reply-To: <20261030131543.GH3734323@nvidia.com>
+References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
+ <20261028152618.1356860-11-aneesh.kumar@kernel.org>
+ <26c24a66-be3d-40ac-8cb4-294deb0108db@intel.com>
+ <20261029171053.GD3734323@nvidia.com>
+ <DS4PPFA84FA90FC768B30DCFEBDE71F31CFE76D2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261030131543.GH3734323@nvidia.com>
+Date: Sat, 31 Oct 2026 09:17:17 +0530
+Message-ID: <yq5apkwqa5ve.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -91,43 +83,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 7.2 00/10] 7.2.15-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261030121255.257615100@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20261030121255.257615100@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Am 30.10.2026 um 13:15 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 7.2.15 release.
-> There are 10 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Jason Gunthorpe <jgg@nvidia.com> writes:
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
+> On Fri, Oct 30, 2026 at 09:58:03AM +0000, Reshetova, Elena wrote:
+>> > > It can't defer the session. The TDX Module runs the whole SPDM
+>> > > session setup inside TDH.SPDM.CONNECT, and the host relays its DOE
+>> > > messages without interpreting them, so there is no defined point to
+>> > > stop after the certificates. The chains come back in the device info
+>> > > only once TDH.SPDM.CONNECT completes (TDX Connect ABI Reference Spec
+>> > > 2.1 v0.66, 4.2.20.1).
+>> > 
+>> > Yeah, its fine. TDX will have to do what Aneesh proposed for ARM, and
+>> > use use the Rust SPDM Driver to operate DOE prior to calling
+>> > TDH.SPDM.CONNECT. This will allow discovering what is in the slots and
+>> > passing that information to userspace.
+>> 
+>> I am somewhat confused by this. 
+>> 
+>> 1. You are saying that prior to establishing a
+>> secure SPDM session, you will use unsecure DOE mechanism to discover
+>> available cert chains. Here you have to take into account that anything you
+>> get at this step is not trusted. A malicious device could send you any cert
+>> chains from another legitimate device.
+>
+> I poked at this with AI for a while.. While nothing about SPDM slots seems
+> particularly clean it can be made to work. It looks like 1.4 improves
+> things meaningfully.
+>
+>> 2. Next, you will choose a cert slot to be used for SPDM authentication and
+>> secure session establishment (slot 0 initially in this patch) and allow
+>> everything to happen.
+>
+> Yep
+>
+>> Now, who guarantees that a cert chain that you saw
+>> at step 1 for the selected slot is the same that is going to be used
+>> in actual SPDM connection? Who is verifying/ensuring this?
+>> Kernel? Userspace? 
+>
+> Not sure, it would make sense if the kernel can do some of this with
+> rustspdm, but there are alot of details here that I can't guess what
+> is best.
+>
+> AI tells me there are a couple of reasonable ways to implement slot
+> selection and avoid downgrade attacks:
+>
+> 1) With 1.4 match GET_DIGESTS and MULTI_KEY_CONN_RSP=true
+>    1) Do via RustSPDM:
+>         GET_DIGESTS / DIGESTS
+>         GET_CERTIFICATE / CERTIFICATE
+>    2) Userspace selects slots
+>    3) TSM module does startup and also issues 'GET_DIGESTS' as part of
+>       the signed transcript
+>    4) Confirm that the digests from #1 match the digests from #2 in
+>       the TSM transcript.
+>
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+I am currently doing something similar to the above.
+
+https://git.gitlab.arm.com/linux-arm/linux-cca/-/commit/0657d167aee1ba43dd2765d99b5e3244b83c6ea6
 
 
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+-aneesh
