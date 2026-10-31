@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793419536;
-	b=hgjD9tTPgMOMPT1HJSkHiTjmRwrVCFpHHcWjKMFO5Ivl2x5DGwA84Utw8Mo6DkxwgySu
-	 QZNlMOpq6er3MMtTYmQMVQMGBlVPvODxV5X4gvWA+GvQN7GVWjcVmrU/Vo4JFlDx3V/zU
-	 RAak0k0KuTIc3KEjxtqjD1LD/z3MzODi+3nncgI/t9jb/YEKib3GmO+Ssb19b3WD/Hvb5
-	 HK3akUj4+VaUEdzIJY9RI1HDBYN7uKqMnZjPkmwv2KeVRsO8yfW/SwmumctMUKOFGlomL
-	 GJQkqas6eCgMhDXs2WyPhre0qU/Zw3T9pnLHBN+91fNzO7lP6h6S7wb9menJ+LQNYsw==
+	t=1793419781;
+	b=NKgd0bhk/QgiLS4GS/jB7zkkWR2tAks3Vc13r6bqvPHDmt2CjbiE2Cl9O/Zc+bvwwBpe
+	 bQq7Pc3bZePQmkpiugnPZUwk1JIKnY5kTZouC4A9g0CNgL2t2f8SUPvaogVzHl1mp2k6D
+	 4Bi4fGlxvX+i7wX93p6/eFD4Tx371QE5pEVbcANFl6nSbIXUZ+PsYU1uTJugKb/tUBWhp
+	 s90iAn/FScypAkMBB8HklleumHLE3OgBRFl2XlFypfkBZF3IvcAzRHclik6xEuu5MUnW2
+	 VGGJMcuC+Rz431aIjcUOX7u5mc/aAc1YZnsGb6LBQYdizU6YNx921Vykdl1ZJnM1Ccw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793419536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793419781;
 	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
 	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=dFnZPgvflLjsrwu/FDjqzm0I9a4+jjDoB6+AUQ7O/rw=;
-	b=J4nqXUfy2vUjCUbTymiugpUDlAp2AHNDHot26mNnIeo1nVVQbSPHpATM6UK85nNq33v/
-	 J2GtFYiiB6WvjHRB9+XtCy5mrN+qtWQAjFcyKw41Vh95/xxhgtXW1eTK3JBCZN5YDkLjd
-	 0q+lJI9Eq8RgeL3DP8Hpk0/bpuxf9CVWwd7qa+ejbF8bSG3uKDPcPdiqkDqMhQf0bCjdD
-	 B8sFTLuvbDk08UudHe2Nrh4ULIY6V8Z9kCa31inl46JuKVIhpuYN8k+3fVEPnKKRpDDQR
-	 vzl8zs/oAwcI9GGdqZE6Vd/m0z377rD/U4fITPHrQZxM2e5WtxoP/OeZ2C1dA1xHA/w==
+	bh=aAFd1Osv5M7suApYUvHmPaqN8qPqZG2Y5RH+DfHeAcs=;
+	b=cxjaTCwElP57Mt3ByREwyY7N4+cHEG4+wDMzX253GD2kIJHHfGScpAAjVV6euuxqLEg2
+	 OzHEyrmVJIChPp5ODCfmKH/BbvUbA2pIQKm1kwEsc44PQ0ZxIeI4K7MLkhQbmPEy07BfP
+	 DRsFCJTBrP06ipckwdI1UBve4EZIFMCdPmkUrIHUPQTxqPm5eFoWS/01jtvGgEszWquQl
+	 KMhLSJ6/CfSDAD7LAbtbEze75B2LYVXoWD/kf4nqgW0rRd7VWUNcy2NSE9ygKtOLuP7c3
+	 rzs3H2yT1UA0spcGREKu7KyGqiB1PDYlxD1hXx0WSVeY/K0Qd3tYv2p0+3FYKhh4eiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BQ1+eoL3;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ljqG8MMC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30A5606A31A;
-	Sat, 31 Oct 2026 04:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05892606A31A;
+	Sat, 31 Oct 2026 04:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BQ1+eoL3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD951F000C1;
-	Sat, 31 Oct 2026 04:05:29 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ljqG8MMC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1FF1F0093A;
+	Sat, 31 Oct 2026 04:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793419535;
-	bh=dFnZPgvflLjsrwu/FDjqzm0I9a4+jjDoB6+AUQ7O/rw=;
+	s=k20260515; t=1793419780;
+	bh=aAFd1Osv5M7suApYUvHmPaqN8qPqZG2Y5RH+DfHeAcs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=BQ1+eoL3qAyujN8BGDsy5syVs82lurL5jewSrUYVdu9xVp4RyzEZVqXSBcGBRvZBR
-	 xqgoq1q4FnYgGQHDCWatxIPYxmzuDIX7KZN8X98C3ZMBMWH5mBjSMb/ZtX9iX0/b/r
-	 B1JSp8k7btstRwjEpP5u0o5ZHyi3KR4FWbie2plVjJ/nlkxLlTEIL7tPUmvLI9tk34
-	 KdskqUPgt5L0bep49O01Yzu9Gq6w0Uc059tNdBOz4kcDkhAPBZxRR8rdYFi2H7IWRx
-	 PM66F/1T4AKhHqfQqVSAGC8zGSitw/oT0bHlaRjUv5Fztp8SmhTIinzEQlzHDs3yr7
-	 0qhRSvVlMs8dg==
+	b=ljqG8MMC79nHvUXZ/IIOV+wC3qH5qMF0nxrAPXkp6HlIdVSzYCLO2+g5vdWKcmlSG
+	 GZV6m2TzgqaWQdNs3EMFAvqPJD+jf9kw04WGuUCebWy9hp+TLnCEb8dgwoS0PON/Xa
+	 SOeRCX3X1+Mj0L56vE1QpBna3sak7HstiZdURwbTwRhIhV1ORdiX8x3z9WnSmOpXRb
+	 dgh9Leag/hnWQrkBMKA8itSCZH09ldieZ9wuA3Cbip36ejE4hYx8e7s/Emuh9+7k56
+	 pPlPi3pZvmXFVPYEh8Q/u2pGMHd+QtsYz/LzQVzspWWFN4BO5/OhrUg7UVas88liEH
+	 3tQDLI2sPOGqw==
 X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
 From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
 To: Jiri Pirko <jiri@resnulli.us>
@@ -58,16 +58,15 @@ Cc: linux-coco@lists.linux.dev, Kevin Tian <kevin.tian@intel.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	John Allen <john.allen@amd.com>,
 	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>, patches@lists.linux.dev,
-	Dan Williams <djbw@kernel.org>
-Subject: Re: [RFC PATCH v1 06/11] PCI/TSM: Describe the PCI attestation
- control family
-In-Reply-To: <auShvL2m00S70H3d@FV6GYCPJ69>
+	Mark Rutland <mark.rutland@arm.com>, patches@lists.linux.dev
+Subject: Re: [RFC PATCH v1 03/11] attestation: Enter secure operation when
+ evidence is accepted
+In-Reply-To: <auSfroz-gNb62nMG@FV6GYCPJ69>
 References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
- <20261028152618.1356860-7-aneesh.kumar@kernel.org>
- <auShvL2m00S70H3d@FV6GYCPJ69>
-Date: Sat, 31 Oct 2026 09:35:26 +0530
-Message-ID: <yq5amrrua515.fsf@kernel.org>
+ <20261028152618.1356860-4-aneesh.kumar@kernel.org>
+ <auSfroz-gNb62nMG@FV6GYCPJ69>
+Date: Sat, 31 Oct 2026 09:39:30 +0530
+Message-ID: <yq5ajymya4ud.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -81,128 +80,28 @@ Content-Type: text/plain
 
 Jiri Pirko <jiri@resnulli.us> writes:
 
-> Wed, Oct 28, 2026 at 04:26:13PM +0100, aneesh.kumar@kernel.org wrote:
+> Wed, Oct 28, 2026 at 04:26:10PM +0100, aneesh.kumar@kernel.org wrote:
+>>Use EVIDENCE_ACCEPT to enter secure operation after userspace has
+>>checked the evidence. Check the referenced device and evidence
+>>generations before calling the driver, and record acceptance on success.
+>>
+>>Remove the separate DEVSEC_RUN command and callback.
+>>
+>>Keep DEVSEC_STATE_GET so userspace can read both evidence acceptance and
+>>device state. Clearing acceptance does not undo the device state change.
+>>For example, with the following PCI/TSM patches:
 >
->
-> [..]
->
->
->>diff --git a/Documentation/ctlv/specs/ctlv-attestation-pci.yaml b/Documentation/ctlv/specs/ctlv-attestation-pci.yaml
->>new file mode 100644
->>index 000000000000..edb35cede0c2
->>--- /dev/null
->>+++ b/Documentation/ctlv/specs/ctlv-attestation-pci.yaml
->>@@ -0,0 +1,79 @@
->>+# SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause)
->>+%YAML 1.2
->>+---
->>+family:
->>+  name: ctlv-attestation-pci
->>+  inherits: ctlv-attestation
->>+  pre-init: true
->>+
->>+attr-groups:
->>+  - name: pci
->>+    attrs:
->>+      - name: name
->>+        type: string
->>+        min-length: 1
->>+        max-length: 31
->>+      - name: generation
->>+        type: uint
->>+        max: 4294967295
->>+      - name: tsm-id
->>+        type: uint
->>+        max: 2147483647
->>+      - name: connected
->>+        type: uint
->>+        max: 1
->>+      - name: locked
->>+        type: uint
->>+        max: 1
->>+      - name: accepted
->>+        type: uint
->>+        max: 1
->>+      - name: dsm
->>+        type: string
->>+        min-length: 1
->>+        max-length: 31
->>+
->>+      - name: object
->>+        enum: evidence-blob-class
->>+      - name: challenge
->>+        type: binary
->>+        min-length: 32
->>+        max-length: 32
->>+
->>+attr-sets:
->>+  - name: device-info
->>+    attrs: pci.name
->>+  - name: change-reply
->>+    attrs: pci.generation
->>+  - name: state-reply
->>+    attrs:
->>+      - pci.generation
->>+      - pci.connected
->>+      - pci.locked
->>+      - pci.accepted
->>+    optional-attrs:
->>+      - pci.tsm-id
->>+      - pci.dsm
->>+
->>+  - name: refresh-request
->>+    attrs:
->>+      - pci.generation
->>+      - pci.object
->>+    optional-attrs:
->>+      - pci.challenge
->>+
->>+ops:
->>+  - name: state-get
->>+    type: action
->>+    fd-access: read
->>+    reply:
->>+      attrs: state-reply
->>+  - name: evidence-refresh
->
-> I'm missing why exactly you need this op. Can't you do whatever is
-> needed in the provider evidence_get implementation? Why it needs to be 2
-> step.
->
-> Also, why do you think this is provider-specific op?
->
->
->
->>+    type: action
->>+    fd-access: read-write
->>+    availability: dynamic
->>+    optional: true
->>+    request:
->>+      attrs: refresh-request
->>+    reply:
->>+      attrs: change-reply
->
->
-> This differs from what I had in mind: a transport-neutral
-> ctlv-attestation-spdm family with SPDM_GET and SPDM_AUTHENTICATE.
->
-> SPDM_GET would report discovery BaseHash, discovered slots and their
-> certificate digests, authentication state, and the effective
-> authentication slot. SPDM_AUTHENTICATE would take device-generation and
-> the selected slot. EVIDENCE_GET would retrieve CERT_CHAIN with
-> blob-instance=slot without selecting the authentication slot.
->
-> That discovery view is not present in the posted schema; STATE_GET does
-> not provide it.
->
-> Would this split work here? It would also allow non-PCI SPDM adapters to
-> share the contract. I understand that multi-slot discovery is deferred,
-> but a slot-zero implementation could still use this family and operation
-> layout.
+> Note that the published wip_attestation_all_1 baseline still
+> has DEVSEC_RUN. I am planning this merge into EVIDENCE_ACCEPT for
+> my next revision, which is not pushed yet.
 >
 
-The only point that remains unclear to me is the distinction between
-EVIDENCE_ACCEPT and SPDM_AUTHENTICATE. Also, would EVIDENCE_GET retrieve
-fresh evidence on every call? If so, we do not need evidence-refresh.
+I agree with your comments here and in the other emails regarding
+attestation. I will wait for the next revision of your attestation
+series. If you can accommodate these changes there, I can rework my
+patches accordingly.
+
+Could you also add the ctlv-attestation-spdm family so that I can base
+the PCI/TSM changes on top of it?
 
 -aneesh
