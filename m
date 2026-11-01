@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.137.202.133
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793576830;
-	b=fqtjPY0v+QvpzhimftipivgTVB4zdnwHtv8mgKy1JBdVuiCpbiKpRabspSRXdCTc4a44
-	 XXvk2zFaF5szJNFCVmr6CAiED+C/gaQndoBLvnZGGgd1uJzr4nSjOA8Qjw2e+vq87hZPs
-	 uIMywIRHXRUXpFg0EDCgjyWtiZeONElxz3ZtFKFCfwZBmL4MaI8l1NSQDcVvUSkpv9jTz
-	 ku5opD3Cmocy3sQ6DJMlmtPT2KCdT6oLKgXRspaLRlHYpkieDEoKghDGa84rTCvuyAbU+
-	 W+/VGXIN77Spduk8Ta2TDMzR+leVinpyn9H/BE1npJhCFtdEal0QBlqWJHGDJyYgUdg==
+	t=1793576829;
+	b=VU32FxraonO+gSzwLVxUjaxlzADx+Q/NEPBeQmmiYaCX+opc8jB9yBcF1s9QdnnZVBqv
+	 TFQt/7caU1PzAb553Jlm1jVxHxPGHgTp28Dr/Wg52WilPauwMEj4beu93/CHc7cPgLxUy
+	 92FlCu0mmfSEQUEc8iZRV8ZaX10+EjUrbzCmnVYJ2HYXrT+J9ampai2b+DUTFqAOgKxwX
+	 oX2Pktu/n7/wI5tEuKgGwhWB2y8vLRWEG+iJYbBsc74L/kOsYXfFmBADz408JT0bAzPp5
+	 Riy/xVsp1RdvH+EeHnJ4grQj47tkhhgKdswwmKtGNMSNMczs75y2X1HANzLaVD4K91g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793576830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793576829;
 	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
 	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=iABvmnx8biHsTNwiu9W7lYmmi7QOdUYecJ/DcrfciEw=;
-	b=V27bd507UEsGWmZwlOchvSBQgVcYbcsY9Vy93nn2RZFPp1GcckMkYhTVQoEZvGmrw5l4
-	 XG10/OpR8OrnJCI/npE8NQC8JTM7uFDwcD1fNfJUEGfxr1iWpwtj3qQdPv/BHHbZ1wwqQ
-	 TfOj7vcl4nprljKt+hQFLyilmtAiwBAZZFiY88oVuX3v2+uFoPtawl62+SdndkhZAOvLt
-	 WRmbkRovwcwiLbZLgJ2WM6DiasATNM/Dfiqzp3alvVNaB+/j7JjrG2OGL7cD7Wx57HG3V
-	 C0orBqRYxEFI01OANUNY0P5KJRpAUIfg3e4TH0BW1SW0/XjLJ5fge2WUq7fJW8nwBhA==
+	bh=DlbTwK82u35GatECwdx50xlJp0xNuQ58zeclGnjbOeg=;
+	b=1uLsUm4lEAoWZO8LGrUEQanJB9xOYjW34trGsG9Lfh7aIT4gWGCrTvRD/dbP5mhFNM3J
+	 Al67lze1Xqbf6JLNJ4BjRT3oUlh7pVZrgZVdN9YqRmCX57hGHHqOylwlv0RRFVn30XnBX
+	 z+ITasP7wFWmZDJuthOLpPOzibcIbFiuwDQ/+H3rJFm+Dl0Hto/ebbRw+H3/JxLkJjWHT
+	 FkKkRoNORZsU4zNx+4hMc7vF1ZZU9CsIt2A1Kz95WiefNt3YTqeBXeYQrzrrjc/xrLh3/
+	 65lzedJe47fRwqscGkt2dL6IfakKHM1T7NH6DjYHIoHJZxaPLJoEqy2FFHcvBaT1yew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=infradead.org;
 	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=jIcCwpZL;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=fJRz9EYn;
 	arc=none smtp.remote-ip=198.137.202.133
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C18C606A32E;
-	Sun,  1 Nov 2026 23:47:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0C18C606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A681A606A32F;
+	Sun,  1 Nov 2026 23:47:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A681A606A32F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=jIcCwpZL
+	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=fJRz9EYn
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
 	:Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=iABvmnx8biHsTNwiu9W7lYmmi7QOdUYecJ/DcrfciEw=; b=jIcCwpZLCPTMwexnyY1q0/pi8t
-	4lXsJBBJCAtPvJTTml7edW7M6vSrmkQjDChEVL/M5JTJZ4TLCwjEC8+ebVNMvK1XoZc41dCbcSpFi
-	u2yyrfx6HPe+BJARH/LOMu3pGxePyJmZq+O/L829Suy41yHlmbAIPQ4gHN2jyg6LeYgWZKsCaT53o
-	0HsRECvdSdCArW0OK7+Ep23vbw09/XH5iRkYnLfJ8+fqPQTaiMA99YhzZ+i0KT6cAcZSMIpAREqxs
-	RqKzzsXyPSE0hit6g+6uiaOb5f6jl2Pf0z5KuodhBOZCRY5dt3wvTqV+8SV9LIQQRD5IyYnGWXLCu
-	nnw8xaQg==;
+	bh=DlbTwK82u35GatECwdx50xlJp0xNuQ58zeclGnjbOeg=; b=fJRz9EYnlRxG+6TWihFMc5QJSW
+	S9PrJP9WguxxSY2gdSKR45IqMLqgUAgiJAxPIjHrWf+ykVa/Dket2QWd0CLDlWZ78VIiOCPw1hk8Q
+	hLMQi/ZxSq7/3sM+t6ecPiVRPzTm3I8cfFZO8okWe7NLTxCjxQM6cmRO8CKsx5cYRJ5wJLIx28rj6
+	mH2Di6I+ikUlgrcJsc/9VAbXg7vrp7pnCF4WMxHxFRaEJR8t5Is9kNlQlJwL0HZ/RpwjGrQXTEtae
+	H0SQjnJmVC65FIf10e0YL01OkFUGJmru5UTiCcLGYAdK68YCtSM6cWPw/ikwoyzhJ8F6a+Qz14Afj
+	Mrp0/r2Q==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xNfGO-0000000FGD8-3Qde;
-	Sun, 01 Nov 2026 23:47:00 +0000
+	id 1xNfGP-0000000FGD8-3sb5;
+	Sun, 01 Nov 2026 23:47:01 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: patches@lists.linux.dev
 Cc: Randy Dunlap <rdunlap@infradead.org>,
@@ -54,9 +54,9 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
 	linux-mips@vger.kernel.org,
 	linux-edac@vger.kernel.org,
 	linux-watchdog@vger.kernel.org
-Subject: [PATCH v2 3/8] MIPS: Octeon: cvmx-interrupt: fix missing function prototype warning
-Date: Sun,  1 Nov 2026 15:46:52 -0800
-Message-ID: <20261101234657.1820661-4-rdunlap@infradead.org>
+Subject: [PATCH v2 7/8] MIPS: Octeon: pci: fix missing function prototype warnings
+Date: Sun,  1 Nov 2026 15:46:56 -0800
+Message-ID: <20261101234657.1820661-8-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261101234657.1820661-1-rdunlap@infradead.org>
 References: <20261101234657.1820661-1-rdunlap@infradead.org>
@@ -71,12 +71,13 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the missing interrupt function prototype to <asm/octeon/cvmx-gmxx-defs.h>
-and remove the local prototype from cvmx-interrupt-rsl.c to eliminate
-a build warning:
+The octeon_pci[e]_pcibios_map_irq() functions are not used outside of
+their source files, so they can be static to eliminate build warnings:
 
-arch/mips/cavium-octeon/executive/cvmx-interrupt-decodes.c:53:6: warning: no previous prototype for '__cvmx_interrupt_gmxx_rxx_int_en_enable' [-Wmissing-prototypes]
-   53 | void __cvmx_interrupt_gmxx_rxx_int_en_enable(int index, int block)
+arch/mips/pci/pci-octeon.c:234:12: warning: no previous prototype for 'octeon_pci_pcibios_map_irq' [-Wmissing-prototypes]
+  234 | int __init octeon_pci_pcibios_map_irq(const struct pci_dev *dev,
+arch/mips/pci/pcie-octeon.c:1471:5: warning: no previous prototype for 'octeon_pcie_pcibios_map_irq' [-Wmissing-prototypes]
+ 1471 | int octeon_pcie_pcibios_map_irq(const struct pci_dev *dev, u8 slot, u8 pin)
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 ---
@@ -85,28 +86,29 @@ v2: no change
 Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Cc: linux-mips@vger.kernel.org
 
- arch/mips/cavium-octeon/executive/cvmx-interrupt-rsl.c |    2 --
- arch/mips/include/asm/octeon/cvmx-gmxx-defs.h          |    1 +
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ arch/mips/pci/pci-octeon.c  |    2 +-
+ arch/mips/pci/pcie-octeon.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- linux-next-20261028.orig/arch/mips/include/asm/octeon/cvmx-gmxx-defs.h
-+++ linux-next-20261028/arch/mips/include/asm/octeon/cvmx-gmxx-defs.h
-@@ -339,6 +339,7 @@ static inline uint64_t CVMX_GMXX_TX_XAUI
- }
- 
- void __cvmx_interrupt_gmxx_enable(int interface);
-+void __cvmx_interrupt_gmxx_rxx_int_en_enable(int index, int block);
- 
- union cvmx_gmxx_hg2_control {
- 	uint64_t u64;
---- linux-next-20261028.orig/arch/mips/cavium-octeon/executive/cvmx-interrupt-rsl.c
-+++ linux-next-20261028/arch/mips/cavium-octeon/executive/cvmx-interrupt-rsl.c
-@@ -39,8 +39,6 @@
- #define PRINT_ERROR(format, ...)
- #endif
- 
--void __cvmx_interrupt_gmxx_rxx_int_en_enable(int index, int block);
--
- /**
-  * Enable ASX error interrupts that exist on CN3XXX, CN50XX, and
-  * CN58XX.
+--- linux-next-20261028.orig/arch/mips/pci/pcie-octeon.c
++++ linux-next-20261028/arch/mips/pci/pcie-octeon.c
+@@ -1468,7 +1468,7 @@ static int cvmx_pcie_rc_initialize(int p
+  *		 as it goes through each bridge.
+  * Returns Interrupt number for the device
+  */
+-int octeon_pcie_pcibios_map_irq(const struct pci_dev *dev, u8 slot, u8 pin)
++static int octeon_pcie_pcibios_map_irq(const struct pci_dev *dev, u8 slot, u8 pin)
+ {
+ 	/*
+ 	 * The EBH5600 board with the PCI to PCIe bridge mistakenly
+--- linux-next-20261028.orig/arch/mips/pci/pci-octeon.c
++++ linux-next-20261028/arch/mips/pci/pci-octeon.c
+@@ -231,7 +231,7 @@ const char *octeon_get_pci_interrupts(vo
+  *		 as it goes through each bridge.
+  * Returns Interrupt number for the device
+  */
+-int __init octeon_pci_pcibios_map_irq(const struct pci_dev *dev,
++static int __init octeon_pci_pcibios_map_irq(const struct pci_dev *dev,
+ 				      u8 slot, u8 pin)
+ {
+ 	int irq_num;
