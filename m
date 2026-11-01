@@ -1,49 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793517684;
-	b=qX+baJ+aAHXzfSiHn7jSqlbXLHdgxd1XU4YKbWEk5KpqbJrvlhVuo/S31F5+NjHJvOnO
-	 5TYqTksmVCr0sEGev/CQPbxX2yU4mHvkC9qIIwpVUCDw3Ot8DuRLESrZlx1dwipo2rVZA
-	 LmJ928GhOYyel7GedjPeJohxlgNYrv379ZR8bxllY7B4ENRzE2iJoGcfXgxnvBTCcorwL
-	 A3oYzXmKlnu4DstVtUYErXr5Xm3TbOzK1sffP1h3ld86VYUyu7Lg/WlNRbKtlZxECWwhF
-	 YsPZMAU9q/3kES4lAzkb3Wl260Dv2BUwoIskm1GYLtSJPjmKNxSXzVTKE62HfXk3dmg==
+	t=1793518139;
+	b=ZVX0KqF9/8rySpjRvapEpmmeN+ePYqYLVS89KoHvXgNda+EwUUyjY4tsgeCw6NP2wxCt
+	 pWvqgrmvoo3yYS9yqJsjptN1b25/bPPWcrAULR/QzioU9QwMufPlfXkrVQvIaWKMTL4Mc
+	 k3CGnDEn0Gb/QNN3UE0QwTFFFLnN2U6pJIfpj1Co4dJJLqGHYpiAvNgv4dGPZOFN6Y+ut
+	 rbLR1xkpMnq/VFkfxsI9D8FVOKsHahwY0NtXebIshtMNdmcinKEsGE4ZJmBxtXRtAEf9T
+	 cRXukCTt3XYMlCPzmufSNht1l8nmMZ93G0S/ol19igjY/LGoMh9pUoE6+bBX1VwEOrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793517684;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=CnxSQSFjhZxe9NmxENfG/6Wbtj2Pz639pTmWBCT8kqk=;
-	b=kxxieN3ecWAjK2W12OE6OFwv9ERIJEZkKQfcBbPkJH0CundkweHsekHM6vM0YCRJa/9P
-	 7iaWbf2Eg05mT22Z0fMyOXL6TvCU83HcOAqZ6yxLP00ZpaFNjOq+juAq4q/pIpy/MlON5
-	 76aG95nR9egxwo3xw+bibXaTQca+mxtZuZgLWETqfAsXmLKgbQ5mX5hUoCD4AchCEGPOT
-	 rFk04IffX1XYyDDChnnsS9EA1Bo8kXt48T7ern98MM88STfzniABDklT+iOBTuO5xhw4Y
-	 GKXtNgByLccjPAFSW4psm9llyJezZusywRxcYoATvvne8tuDrJLSjsUrTIzw8Vz6xTA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793518139;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=ZEkTE9TgeFOprp8X/PqQu5dF595QKTp33C0W7LGmaFo=;
+	b=fpN8Grzt2ZfCFC4oybytFQn7IyTR4wiFYtIKaRKvHhMA6QTjnGNE6aN61o1Epa/03Vvk
+	 lMq50r424h8TyQCd8hTiji0CiZ/kq1yH8ukMM5sdThDkQk/ILgIs9dguQyB33seKC8WMq
+	 AmBNAbDf3EGAj4Tlo27JPt0sYz90J+TqSkScCnsldRKZQx8uRyN5ejOHQbq8EREOQ6RrL
+	 Aa3Xe0EknjT8T2sH18ZVJXUSyo2hEUEGYyVmT5tPKoUKlyxQkD54Xg4691LhtyX74QjbQ
+	 i4UA3GhBFAFKqX6tp0j31ChqRulblFaJ1f136HPkKojwPWyuzQ2imAcAIgrei2tfprg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HPK+0Yfs;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K8xgiLEf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73D9606A324;
-	Sun,  1 Nov 2026 07:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EA6606A324;
+	Sun,  1 Nov 2026 07:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HPK+0Yfs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6343D1F000C1;
-	Sun,  1 Nov 2026 07:21:16 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K8xgiLEf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734D41F000C1;
+	Sun,  1 Nov 2026 07:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793517683;
-	bh=CnxSQSFjhZxe9NmxENfG/6Wbtj2Pz639pTmWBCT8kqk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPK+0YfsNec0hVI9LHu79lAkoTO4nTXpjPa4OCqL+HXaFaS77bq2FqzmljkXGGmJd
-	 lP5rW/wTrabPqKhI6Z/Ww8bvtvDGALqaWPqzWq/S37H18F7mvGl9a6+urbj4xs1XRn
-	 mTpP3x2VPuKT9CLB/QoZHK2p8xNmtIUnE/WY0iVul+UWWXiDSMjPbxxvEL3+lnKh7x
-	 hOJ/NK2uvc50fh9y0Mwtj0joChmTglDdYKt1LI7gYEd47O0qndHT8bK9n4MWT+0sfi
-	 znUGJwPxyyyGBnLnflI34Eyl08vake8TL9lKLirqEqqY/GbYBvIsHH627cN0cQoSkS
-	 wa0/Qy0tHgw7g==
-From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
-To: linux-coco@lists.linux.dev
-Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Alex Williamson <alex@shazbot.org>,
+	s=k20260515; t=1793518138;
+	bh=ZEkTE9TgeFOprp8X/PqQu5dF595QKTp33C0W7LGmaFo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=K8xgiLEfZj/gyEaaz2uZMZEtINC0VjibSRUzhyA0UtxtVj7GBaePTRNRR5fWz/W9l
+	 xbPqnCcpLaOo0aRXU3RMM0zMN4VGVdy0m0nQmDoPizWSzBvPjHm9AkJpHifvSWqqVA
+	 3G7EEBcuXL7pKNXHrvz/ow7TSqx7rpRsWv4eFNlxaGzKnkewO7xsNcu8elCrWHzfjo
+	 eLhX7+EkulhuuyBzXYopkKEo5/fGiKchuInGtrXvWKoy/dUVy+Lb++wylvey4+ztZE
+	 9G8ROFw68lG4BH3Zg1puVCJ4P6+9BpO4NxGFID+CzmVs+ykCBaiKornyJlcnjea3/t
+	 x5PLjVjP9f2vg==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Ackerley Tng <ackerleytng@google.com>, linux-coco@lists.linux.dev
+Cc: Alex Williamson <alex@shazbot.org>,
 	David Woodhouse <dwmw2@infradead.org>,
 	David Hildenbrand <david@kernel.org>,
 	Jason Gunthorpe <jgg@ziepe.ca>,
@@ -58,16 +57,17 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Steven Price <steven.price@arm.com>,
-	Fred Griffoul <griffoul@gmail.com>,
-	iommu@lists.linux.dev,
-	kvm@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [RFC PATCH v3 13/13] KVM: guest_memfd: Invalidate guest_memfd mappings before removing memslot bindings
-Date: Sun,  1 Nov 2026 12:49:27 +0530
-Message-ID: <20261101071928.2462549-14-aneesh.kumar@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261101071928.2462549-1-aneesh.kumar@kernel.org>
-References: <20261101071928.2462549-1-aneesh.kumar@kernel.org>
+	Fred Griffoul <griffoul@gmail.com>, iommu@lists.linux.dev,
+	kvm@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [RFC PATCH v2 02/13] KVM: guest_memfd: Support private/shared
+ conversion of device memory
+In-Reply-To: <CAEvNRgFEKqVZcNYCL0LpB6BTyBFe+ot1x1nFfEqOrSTsu134PQ@mail.gmail.com>
+References: <20261017073149.1303738-1-aneesh.kumar@kernel.org>
+ <20261017073149.1303738-3-aneesh.kumar@kernel.org>
+ <CAEvNRgEh3E7NBc5_3Wq66Fss-mAYT6+4FWP5+=Co6+OVfVnQQQ@mail.gmail.com>
+ <CAEvNRgFEKqVZcNYCL0LpB6BTyBFe+ot1x1nFfEqOrSTsu134PQ@mail.gmail.com>
+Date: Sun, 01 Nov 2026 12:58:48 +0530
+Message-ID: <yq5a33tl9fin.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -77,61 +77,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Unmap guest_memfd ranges before removing their offset-to-GPA bindings.
-Invalidate shared and private mappings while holding inode and provider
-exclusion, using the same common invalidation path as revocation.
+Ackerley Tng <ackerleytng@google.com> writes:
 
-Do not convert device attributes when deleting a memslot. Private file
-attributes continue to block TDI UNLOCK after unbind; userspace must
-explicitly share those ranges or release the last file reference.
+> Ackerley Tng <ackerleytng@google.com> writes:
+>
+>> "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> writes:
+>>
+>>>
+>>> [...snip...]
+>>>
+>>> +static int kvm_gmem_device_convert(struct inode *inode, pgoff_t start,
+>>> +		pgoff_t nr_pages, const struct guest_memfd_device_request *req,
+>>> +		const struct kvm_memory_slot *slot)
+>>> +{
+>>> +	struct gmem_inode *gi = GMEM_I(inode);
+>>> +	u64 attrs = req ? KVM_MEMORY_ATTRIBUTE_PRIVATE : 0;
+>>> +	bool prepared = false;
+>>> +	int ret;
+>>> +
+>>> +	MA_STATE(mas, &gi->attributes, start, start + nr_pages - 1);
+>>> +
+>>> +	filemap_invalidate_lock(inode->i_mapping);
+>>> +	if (__kvm_gmem_range_has_attributes(inode, start, nr_pages, attrs)) {
+>>> +		ret = 0;
+>>> +		goto out;
+>>> +	}
+>>> +
+>>> +	if (req && !__kvm_gmem_range_has_attributes(inode, start, nr_pages, 0)) {
+>>> +		ret = -EEXIST;
+>>> +		goto out;
+>>> +	}
+>>> +
+>>> +	ret = kvm_gmem_mas_preallocate(&mas, attrs, start, nr_pages);
+>>> +	if (ret)
+>>> +		goto out;
+>>> +
+>>> +	kvm_gmem_invalidate_start(inode, start, start + nr_pages, KVM_FILTER_SHARED);
+>>> +	if (req && READ_ONCE(gi->device.kvm->vm_dead))
+>>> +		ret = -EIO;
+>>> +	else
+>>> +		ret = gi->provider_ops->prepare_conversion(gi->provider, req);
+>>> +	if (!ret) {
+>>> +		prepared = true;
+>>> +		if (req)
+>>> +			ret = kvm_gmem_device_make_private(inode, slot, req, nr_pages);
+>>
+>> Is there a way to avoid making private from within the conversion flow?
+>>
+>> kvm_gmem_device_map() below already does it as part of vcpu_run.
+>>
+>> If we do the above, we'd be aligned with regular conversions, where
+>> to-shared conversions eagerly update arch state (make_shared) but
+>> to-private notifications to the firmware are done lazily.
+>>
+>
+> I was a bit confused above. IIUC to handle
+> RMI_EXIT_VDEV_VALIDATE_MAPPING, the conversion is not done from outside
+> the kernel, instead it is done in the vcpu_run completion hook.
+>
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
-Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
----
- virt/kvm/guest_memfd.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+All of that has changed in the latest series.
+kvm_complete_vdev_map_validate() now does the following. For the dependent
+changes in other subsystems, you may want to fetch the Git branch
+mentioned in the cover letter.
 
-diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 22793d3c6aff..e31234212dcf 100644
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -1860,6 +1860,8 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	unsigned long start = slot->gmem.pgoff;
- 	unsigned long end = start + slot->npages;
- 	struct gmem_file *f;
-+	struct gmem_inode *gi;
-+	enum kvm_gfn_range_filter filter;
- 
- 	/*
- 	 * Nothing to do if the underlying file was _already_ closed, as
-@@ -1879,8 +1881,13 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	 * drops slots_lock, so there's no need to verify the file is live.
- 	 */
- 	f = file->private_data;
-+	gi = GMEM_I(file_inode(file));
-+	filter = kvm_gmem_get_all_gfns_filter(file_inode(file));
- 
- 	filemap_invalidate_lock(file->f_mapping);
-+	gmem_provider_lock(gi);
-+	__kvm_gmem_invalidate_start(f, start, end, filter);
-+	__kvm_gmem_invalidate_end(f, start, end);
- 	xa_store_range(&f->bindings, start, end - 1, NULL, GFP_KERNEL);
- 
- 	/*
-@@ -1888,6 +1895,7 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	 * cannot see this memslot.
- 	 */
- 	WRITE_ONCE(slot->gmem.file, NULL);
-+	gmem_provider_unlock(gi);
- 	filemap_invalidate_unlock(file->f_mapping);
- }
- 
--- 
-2.43.0
+static void kvm_complete_vdev_map_validate(struct kvm_vcpu *vcpu)
+{
+	struct kvm *kvm = vcpu->kvm;
+	struct realm_rec *rec = &vcpu->arch.rec;
+	struct realm *realm = &kvm->arch.realm;
+	struct kvm_memory_slot *slot;
+	unsigned long start = rec->run->exit.dev_mem_base;
+	unsigned long top = rec->run->exit.dev_mem_top;
+	unsigned long rd = virt_to_phys(realm->rd);
+	unsigned long rec_phys = virt_to_phys(rec->rec_page);
+	int idx, ret;
 
+	if (vcpu->run->cca_exit.response != KVM_ARM64_TIO_RESPONSE_APPROVE ||
+	    top <= start || !PAGE_ALIGNED(start | top | rec->run->exit.dev_mem_pa) ||
+	    !kvm_realm_is_private_address(realm, start) ||
+	    !kvm_realm_is_private_address(realm, top - 1))
+		goto reject;
+	idx = srcu_read_lock(&kvm->srcu);
+	slot = gfn_to_memslot(kvm, gpa_to_gfn(start));
+	if (!slot || (slot->flags & KVM_MEMSLOT_INVALID) ||
+	    !(slot->flags & KVM_MEMSLOT_GMEM_DEVICE) ||
+	    gpa_to_gfn(top - 1) >= slot->base_gfn + slot->npages ||
+	    slot->arch.device.vdev_id != rec->run->exit.vdev_id_1)
+		goto out_reject;
+	/* Userspace installs the mapping through guest_memfd before approval. */
+	if (!kvm_gmem_range_has_attributes(slot, gpa_to_gfn(start),
+					   gpa_to_gfn(top), KVM_MEMORY_ATTRIBUTE_PRIVATE))
+		goto out_reject;
+	while (start < top) {
+		unsigned long next, rmi_ret;
+
+		ret = rmi_rtt_dev_validate(rd, rec_phys, start, top, &next, &rmi_ret);
+		if (ret || rmi_ret || next <= start || next > top)
+			goto out_reject;
+		start = next;
+	}
+	srcu_read_unlock(&kvm->srcu, idx);
+	return;
+out_reject:
+	srcu_read_unlock(&kvm->srcu, idx);
+reject:
+	rec->run->enter.flags |= REC_ENTER_FLAG_DEV_MEM_RESPONSE;
+}
+
+
+-aneesh
