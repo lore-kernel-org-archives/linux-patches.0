@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793517653;
-	b=eQ3gVMJkU9DNdRV+bx54YFvTSWKPPfI4WCzAW/NB+gkW6oc7vsEnIT5LKZ+YyPkGy1vq
-	 4rEqXcL6ZLjsxxMPee9PgslU9yRD9kPYnASDfYfgmciw4ruMcUCD95OY/xjhSCTqHr5Pi
-	 GxdGy+EkfoH0MxaqrWmUVXYK93t2GpeDT4WcxRirQTpzsXTK+Zw6FL9YjqTjTcHhZkhWY
-	 9RN6ODsHsyCcq57AvP2ITP645/KuywHrPg99+Aq8Z/zjfrq0HcMz1sl8SvJHzFNmcX6Km
-	 OT680rbJcpw/TQpwEi43AtVedPN86aJKol2Oxw67p8ZmkSOOqbqZn2HLy9sg0+piaxQ==
+	t=1793517661;
+	b=B7iPNd2i/tkK3UqVewz9rpaHA0DXsB8pFEDZpCbJsMnNe3klDeLLxxBytXA7SePdLbZZ
+	 OTw74RG2fPKT84Z5/MCrNoy4PZ8WcFPrvKxqGGApaexR1lHOgASrpd4fGmxKgJLaqielN
+	 6Z56ERCkubLhKQMUlMqcRZEUXew03+uJfU+RZpHT/DxO9pPh1ySqe/Zs7+kzGC0ggzhhJ
+	 8+TXYc0FA6bseAmtQGNBGw9OfcFZ16K7oDOw7SiPhLeCy0RMISxXQaVX77JBI4xWoZCXg
+	 a6QXVHH2ZyZIDMRsOcuqp+XQEP8gAwaVwoTgkyAZwF0/AtxvhcW83OKW0SqPTFqVdNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793517653;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793517661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=OIH8u8cHvk9eCLl7Fc4Rcyfd0REhWze1TpO0WPerFwQ=;
-	b=JvPrMjgHpkbxj9OfEvNKTmTTHVFYzee4nEA5lPm3VGIIKTT0DdjGiOxyjJOppA+FmRNF
-	 nvCYHOStS5/TCQtuN2yR4X53TFr9jovlUSAvS8omrdoudu+M35vZWdDV5zkE6l/OaKaY7
-	 rFZKd5yl4OdGgNmz02Jk6crrtiIVjSmurENtz94oXwOPRs1vtPIfmVT2dfKo8iZLmLfKR
-	 8+flM731gXZoVQ3vAFA3TXDhP00DaOVIrAI5NFO5txS2UZTQXqNWLn9ofRH/ATHeM5Ob1
-	 y/ubjiSHdcqLnlfhhyVPebyovaOvAgQdEzRmBQexT/ylraGBxm0PWkMAW4ivkYoi9XA==
+	bh=u1laEzhqisY7pHnGKooi8T+fUD4JLukk8Z0xutpnDl4=;
+	b=ct/5ld9D3qQu3BHOeeFpGNlY6RgEpiZZO+pyTMLV4ZSmqGK+jg9NCIscWdQFJU5PVWiM
+	 SqsrbYh80PilYbvhwLJwcynRUfj9TODTbLEYtmk7ukdYsjm/XnYU/f79Le2AHIcNP0ZlI
+	 PySSa5BJ+cVHVSQx/YAXi/j5z8qyHwfcujY8gtIGJ2WlOirS8qtwEftqu0OFJDj1sONmf
+	 XFDO4THWPEOsMAKxZyC1mX+9CDO/agZtLFxtdddMsDCg3SjWwHBS8tzrkfESp+32mTb5k
+	 gbbXF88FRq820t77xIDFnI7PjbolMT8jm8iSvlRBPl1y5nKxV1uhGrWTSSVf8Y71ksQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VUe9aFfC;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=m31iUhtL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D10D606A327;
-	Sun,  1 Nov 2026 07:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB92606A324;
+	Sun,  1 Nov 2026 07:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VUe9aFfC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAFE1F000C1;
-	Sun,  1 Nov 2026 07:20:45 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=m31iUhtL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590BD1F00A02;
+	Sun,  1 Nov 2026 07:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793517652;
-	bh=OIH8u8cHvk9eCLl7Fc4Rcyfd0REhWze1TpO0WPerFwQ=;
+	s=k20260515; t=1793517660;
+	bh=u1laEzhqisY7pHnGKooi8T+fUD4JLukk8Z0xutpnDl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VUe9aFfChFX8vrLUQ2+0wt+PyMuQ+MDFGECPV/V+XNAFuWzfktQBobXxE7ZCcYNO/
-	 5zhNXBlbnUmBztCEAKTwxs+zWpY0pd03Cydah8+YoCwo+Sf9ESy/MLTeoAUMXMOTA3
-	 U6bK/o+lY+IId/Np8XEjO3Ei3bldm8r9Dtd/j8yafF6Zqj9tp1TAKI0cB4Rn4dOyYT
-	 cegcE3mMbY+YWrbDZsAQNgjgnse0rQCtbgr2XL1wHfMK6D82a9WFhfKDN3r4EpGAAF
-	 fq7jksgx6GEfUPf+6GF2HTzIR2fq52kzYOhYcAtlh7upTYLH5+jjsBnTUXveJYD3j8
-	 mDbnzfk1S4C1w==
+	b=m31iUhtLwfx9ui1wywLA1l9wNDrbK9zteSv9ze8CvgQdqkOU91SjNJ3ysdjkAJSma
+	 mp5xZrhBPjWWf707mYGHZOyVj/5lJJkkOIG2dKmsZ4jPUwIouD0B+1/cWFirO+dQsW
+	 2WZ92LWqs16oFl9eym/WXaB5CaqYQZd7byYuhVV6Z801SlQQPMC45eTupTGq/dwYMJ
+	 SXX6rnn/lGFy6feWbCgFGYk0WvruZ6fRXrOhJkrSQfCVqf0SBSrc5QpeNATwRfsYIh
+	 Nh2YEcQ8dbXnKbGcyIqF+GAUAzeL3pOKgKjuBw0TllJlB1iv8dFx6ufPAiljoeRukO
+	 Cs3R6Pyy9C+DQ==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -62,9 +62,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v3 09/13] KVM: guest_memfd: Expose device provider private state
-Date: Sun,  1 Nov 2026 12:49:23 +0530
-Message-ID: <20261101071928.2462549-10-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v3 10/13] KVM: guest_memfd: Support range revocation of device mappings
+Date: Sun,  1 Nov 2026 12:49:24 +0530
+Message-ID: <20261101071928.2462549-11-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261101071928.2462549-1-aneesh.kumar@kernel.org>
 References: <20261101071928.2462549-1-aneesh.kumar@kernel.org>
@@ -79,81 +79,65 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Expose a callback to query whether private ranges remain. Initialize it
-before attaching the device provider so the vDEVICE can coordinate
-protected cleanup. Keep the summary inode-owned and valid until release;
-providers may access the VM only during attach and core callbacks.
+Give device backing a revoke operation that removes host and both shared
+and private guest translations under provider exclusion, without reclaiming
+MMIO PFNs or changing attributes. Keep fallocate and hole punching
+unsupported for device memory.
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
+Range revocation does not exclude new faults after returning. Providers
+must preserve the underlying resource and call without provider locks held,
+since inode exclusion precedes provider exclusion. Private attributes
+continue to describe ownership until explicitly changed or the file closes.
+
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- include/linux/guest_memfd.h |  7 +++++++
- virt/kvm/guest_memfd.c      | 10 ++++++++++
- 2 files changed, 17 insertions(+)
+ virt/kvm/guest_memfd.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-index 8a93004aa9e7..5e5725398ab0 100644
---- a/include/linux/guest_memfd.h
-+++ b/include/linux/guest_memfd.h
-@@ -24,12 +24,19 @@ struct guest_memfd_device_binding {
-  * @flags: GUEST_MEMFD_FLAG_* creation flags
-  * @binding: Mapping owner and device ID set by attach(), with the underlying
-  *           resources pinned until release()
-+ * @has_private: Check whether any committed private ranges remain
-+ *
-+ * The VM is valid during attach() and core-initiated callbacks. Providers
-+ * must not use this pointer for asynchronous VM access.
-+ * release() may run after the VM reference has been dropped. Inode-owned
-+ * metadata, including the private-range summary, remains valid until then.
-  */
- struct guest_memfd_device {
- 	struct kvm *kvm;
- 	u64 size;
- 	u64 flags;
- 	struct guest_memfd_device_binding binding;
-+	bool (*has_private)(struct guest_memfd_device *gmem);
- };
- 
- /**
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index af1e4798ace1..1322576350b8 100644
+index 1322576350b8..cfb7f34c0180 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -85,6 +85,7 @@ static bool gmem_provider_is_device(struct gmem_inode *gi)
- 
- static void kvm_gmem_device_update_attributes(struct inode *inode);
- static int kvm_gmem_device_make_private(struct inode *inode, pgoff_t start, pgoff_t end);
-+static bool gmem_device_has_private(struct guest_memfd_device *gdev);
- 
- struct guest_memfd_device *kvm_gmem_get_device(struct inode *inode)
- {
-@@ -176,6 +177,7 @@ static int kvm_gmem_attach_resource(struct kvm *kvm, struct file *file,
- 			gi->device.kvm = kvm;
- 			gi->device.size = i_size_read(inode);
- 			gi->device.flags = gi->flags;
-+			gi->device.has_private = gmem_device_has_private;
- 		}
- 		provider = ops->attach(inode, resource_file);
- 	}
-@@ -1510,6 +1512,14 @@ int __weak kvm_arch_gmem_device_map(struct kvm *kvm,
- 	return -EOPNOTSUPP;
+@@ -559,6 +559,18 @@ static int kvm_gmem_ram_pfn_revoke(struct inode *inode, pgoff_t start, pgoff_t e
+ 	return 0;
  }
  
-+/* The attribute tree owns mapping state; this summary is read under provider locks. */
-+static bool gmem_device_has_private(struct guest_memfd_device *gdev)
++static int kvm_gmem_device_revoke(struct inode *inode, pgoff_t start, pgoff_t end,
++		const unsigned long *pfn, bool put_pfn_range)
 +{
-+	struct gmem_inode *gi = container_of(gdev, struct gmem_inode, device);
-+
-+	return READ_ONCE(gi->device_has_private);
++	/*
++	 * Common invalidation handles shared and private guest mappings. Only
++	 * host userspace mappings need to be unmapped here; MMIO has no RAM
++	 * pages to reclaim or provider allocations to release.
++	 */
++	unmap_mapping_pages(inode->i_mapping, start, end - start, true);
++	return 0;
 +}
 +
- static void kvm_gmem_device_update_attributes(struct inode *inode)
- {
- 	struct gmem_inode *gi = GMEM_I(inode);
+ static int __kvm_gmem_revoke(struct inode *inode, pgoff_t start,
+ 			      size_t nr_pages, const unsigned long *pfn,
+ 			      bool put_pfn_range)
+@@ -622,7 +634,11 @@ static long kvm_gmem_punch_hole(struct inode *inode, loff_t offset, loff_t len)
+  *
+  * Must be called before accessing memory contents. Keeping the mapping from
+  * @start to @pfn constant is the responsibility of the caller.
+- * .put_pfn_range() will not be called.
++ * .put_pfn_range() will not be called. For device memory, this revokes host
++ * and both shared and private guest mappings under provider exclusion, without
++ * changing attributes or releasing BAR PFNs. Call without provider locks held:
++ * inode exclusion precedes provider exclusion. This does not exclude new faults
++ * after returning; the provider must preserve the backing resource.
+  *
+  * Return: 0 on success, or a negative error code on failure.
+  */
+@@ -1185,6 +1201,7 @@ static const struct kvm_gmem_backing_ops kvm_gmem_ram_pfn_backing_ops = {
+ };
+ 
+ static const struct kvm_gmem_backing_ops kvm_gmem_device_backing_ops = {
++	.revoke = kvm_gmem_device_revoke,
+ 	.prepare_attributes = kvm_gmem_pfn_prepare_attributes,
+ 	.make_private = kvm_gmem_device_make_private,
+ 	.make_shared = kvm_gmem_noop_conversion,
 -- 
 2.43.0
 
