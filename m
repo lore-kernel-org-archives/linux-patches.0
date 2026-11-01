@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793517645;
-	b=Q4eHSlo3UwHbGHe3ieu17S+9UleyxNVP9oRtxJmJMeLeQqE3uDOs/YmPAGjcB/g27fCB
-	 IuNroM4xoH/3AJJi2dLM3E5QbXAuqSWP8YQU8jbYxUl7t3TW3JUGNlilpgUEGhmOEiEu9
-	 IpRr4vIpkntvnY0RopR4kz00e886OZAEbjzHtaIijKT53CcmQa0cECajjQj6iA6p+Qb1x
-	 uDsjpEt7FvnSnDluzR/gcnU6QyCIT4fbFkHSmkvM358qAWdoZzMODfAEjrvuYLz67haqk
-	 ryoGNB2cSSEYFeFaXdSoMIcjqyNM9Hu3/eQrYIj6+2P2gC43n//BZL2wb6TDsLQ1lpw==
+	t=1793517653;
+	b=eQ3gVMJkU9DNdRV+bx54YFvTSWKPPfI4WCzAW/NB+gkW6oc7vsEnIT5LKZ+YyPkGy1vq
+	 4rEqXcL6ZLjsxxMPee9PgslU9yRD9kPYnASDfYfgmciw4ruMcUCD95OY/xjhSCTqHr5Pi
+	 GxdGy+EkfoH0MxaqrWmUVXYK93t2GpeDT4WcxRirQTpzsXTK+Zw6FL9YjqTjTcHhZkhWY
+	 9RN6ODsHsyCcq57AvP2ITP645/KuywHrPg99+Aq8Z/zjfrq0HcMz1sl8SvJHzFNmcX6Km
+	 OT680rbJcpw/TQpwEi43AtVedPN86aJKol2Oxw67p8ZmkSOOqbqZn2HLy9sg0+piaxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793517645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793517653;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=cDLMhPREWdiiuVrlPViYI+QhD9Z6i4FxtLJ9bFe56UU=;
-	b=SU90L1TsA+VSm4wiKdLkiO+83Al0zyAyZLpgHRK8ww3a6UPAuVQjhPLCOb2HyEg+eB03
-	 7F9UxoUVBPizkdX48FtH/FAeqd4UD0fXJO8N+NAoEHKHCoJwZINu7sjfCQZ9J8GAlIH+v
-	 yLs8oVgnhHJ/fwRV/I7Ec+MhAuYYP1X+58/sJ0poiG4D1MP+A2OnS1H3WzN4vGGPsC2A8
-	 7LNr/j0cTf2tld+Eyn9WuQy/EayZyWd9OPqMDs4Iarxnbb8f9xdQ5Ld+5NJhQmBBkn6mg
-	 T0eqv0ixm6wlKnSJtB1Fu7NomjjghR3hOX7v6TmsNgBWtWFA07dWkQYGyGNJ+brvLCg==
+	bh=OIH8u8cHvk9eCLl7Fc4Rcyfd0REhWze1TpO0WPerFwQ=;
+	b=JvPrMjgHpkbxj9OfEvNKTmTTHVFYzee4nEA5lPm3VGIIKTT0DdjGiOxyjJOppA+FmRNF
+	 nvCYHOStS5/TCQtuN2yR4X53TFr9jovlUSAvS8omrdoudu+M35vZWdDV5zkE6l/OaKaY7
+	 rFZKd5yl4OdGgNmz02Jk6crrtiIVjSmurENtz94oXwOPRs1vtPIfmVT2dfKo8iZLmLfKR
+	 8+flM731gXZoVQ3vAFA3TXDhP00DaOVIrAI5NFO5txS2UZTQXqNWLn9ofRH/ATHeM5Ob1
+	 y/ubjiSHdcqLnlfhhyVPebyovaOvAgQdEzRmBQexT/ylraGBxm0PWkMAW4ivkYoi9XA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=L2SuKdwE;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VUe9aFfC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C13E606A325;
-	Sun,  1 Nov 2026 07:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D10D606A327;
+	Sun,  1 Nov 2026 07:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=L2SuKdwE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08751F000C1;
-	Sun,  1 Nov 2026 07:20:37 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VUe9aFfC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAFE1F000C1;
+	Sun,  1 Nov 2026 07:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793517645;
-	bh=cDLMhPREWdiiuVrlPViYI+QhD9Z6i4FxtLJ9bFe56UU=;
+	s=k20260515; t=1793517652;
+	bh=OIH8u8cHvk9eCLl7Fc4Rcyfd0REhWze1TpO0WPerFwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L2SuKdwEgKz8FpgVJseBeORDCG+wswZwlVZcE5hpvbnX+3rjIqKZZDOoT2LELI47y
-	 AX1YRoVm4qYzU7GrXR5hE+cuXgGxkIASWh38PYmx9bk7yfZqbEeZxE1eIW9BUOhJ+c
-	 RCERJr3f310SAQlRDKGUXS00EYmXetgRUrUI6Njot34SoMYuWZaRR81ilHwVCAnAIz
-	 sutHH9QQif/hVk7iIwzcq0Q7ToQ3Mxs5y5OcGauaVXWQnhA9/LHaP60lUxdqxq3s9m
-	 FdmkeGhtOLMTBts+kFUZRHa3emvsbi5z142HwtgTu3HEYAJkCTgmW8pcnnyQUj63Lb
-	 S6DDesHcWh/xw==
+	b=VUe9aFfChFX8vrLUQ2+0wt+PyMuQ+MDFGECPV/V+XNAFuWzfktQBobXxE7ZCcYNO/
+	 5zhNXBlbnUmBztCEAKTwxs+zWpY0pd03Cydah8+YoCwo+Sf9ESy/MLTeoAUMXMOTA3
+	 U6bK/o+lY+IId/Np8XEjO3Ei3bldm8r9Dtd/j8yafF6Zqj9tp1TAKI0cB4Rn4dOyYT
+	 cegcE3mMbY+YWrbDZsAQNgjgnse0rQCtbgr2XL1wHfMK6D82a9WFhfKDN3r4EpGAAF
+	 fq7jksgx6GEfUPf+6GF2HTzIR2fq52kzYOhYcAtlh7upTYLH5+jjsBnTUXveJYD3j8
+	 mDbnzfk1S4C1w==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -62,9 +62,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v3 08/13] KVM: guest_memfd: Track private device ranges after attribute updates
-Date: Sun,  1 Nov 2026 12:49:22 +0530
-Message-ID: <20261101071928.2462549-9-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v3 09/13] KVM: guest_memfd: Expose device provider private state
+Date: Sun,  1 Nov 2026 12:49:23 +0530
+Message-ID: <20261101071928.2462549-10-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261101071928.2462549-1-aneesh.kumar@kernel.org>
 References: <20261101071928.2462549-1-aneesh.kumar@kernel.org>
@@ -79,20 +79,10 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The following device access callbacks need to report whether any private
-ranges remain without acquiring the inode invalidate lock under a
-provider lock.
-
-Add device_has_private as a cached summary of the committed attributes.
-Add an optional update_attributes() backing operation and call it after
-storing new attributes on successful conversion. Device backing scans
-the attribute tree to refresh the summary; folio and RAM PFN backing
-leave the operation unset.
-
-Run the hook after both private and shared conversions, before releasing
-conversion locks. The scan must see the newly stored attributes, including
-the removal of the last private range. Keep this bookkeeping separate
-from the architecture mapping operations.
+Expose a callback to query whether private ranges remain. Initialize it
+before attaching the device provider so the vDEVICE can coordinate
+protected cleanup. Keep the summary inode-owned and valid until release;
+providers may access the VM only during attach and core callbacks.
 
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Sean Christopherson <seanjc@google.com>
@@ -101,92 +91,69 @@ Cc: kvm@vger.kernel.org
 Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- virt/kvm/guest_memfd.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ include/linux/guest_memfd.h |  7 +++++++
+ virt/kvm/guest_memfd.c      | 10 ++++++++++
+ 2 files changed, 17 insertions(+)
 
+diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
+index 8a93004aa9e7..5e5725398ab0 100644
+--- a/include/linux/guest_memfd.h
++++ b/include/linux/guest_memfd.h
+@@ -24,12 +24,19 @@ struct guest_memfd_device_binding {
+  * @flags: GUEST_MEMFD_FLAG_* creation flags
+  * @binding: Mapping owner and device ID set by attach(), with the underlying
+  *           resources pinned until release()
++ * @has_private: Check whether any committed private ranges remain
++ *
++ * The VM is valid during attach() and core-initiated callbacks. Providers
++ * must not use this pointer for asynchronous VM access.
++ * release() may run after the VM reference has been dropped. Inode-owned
++ * metadata, including the private-range summary, remains valid until then.
+  */
+ struct guest_memfd_device {
+ 	struct kvm *kvm;
+ 	u64 size;
+ 	u64 flags;
+ 	struct guest_memfd_device_binding binding;
++	bool (*has_private)(struct guest_memfd_device *gmem);
+ };
+ 
+ /**
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 3bf26490f4e9..af1e4798ace1 100644
+index af1e4798ace1..1322576350b8 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -44,6 +44,8 @@ struct kvm_gmem_backing_ops {
- 	/* Prepare private RAM state after lookup, before returning a guest PFN. */
- 	int (*prepare_private_pfn)(struct kvm *kvm, gfn_t gfn, kvm_pfn_t pfn,
- 				   kvm_pfn_t nr_pages);
-+	/* Called after the common code stores the new attributes. */
-+	void (*update_attributes)(struct inode *inode);
- };
+@@ -85,6 +85,7 @@ static bool gmem_provider_is_device(struct gmem_inode *gi)
  
- struct gmem_inode {
-@@ -56,6 +58,7 @@ struct gmem_inode {
- 	const struct kvm_gmem_backing_ops *backing_ops;
- 
- 	struct guest_memfd_device device;
-+	bool device_has_private;
- 
- 	u64 flags;
- 	/*
-@@ -80,6 +83,7 @@ static bool gmem_provider_is_device(struct gmem_inode *gi)
- 	return gi->provider_ops && gi->provider_ops->device_memory;
- }
- 
-+static void kvm_gmem_device_update_attributes(struct inode *inode);
+ static void kvm_gmem_device_update_attributes(struct inode *inode);
  static int kvm_gmem_device_make_private(struct inode *inode, pgoff_t start, pgoff_t end);
++static bool gmem_device_has_private(struct guest_memfd_device *gdev);
  
  struct guest_memfd_device *kvm_gmem_get_device(struct inode *inode)
-@@ -1182,6 +1186,7 @@ static const struct kvm_gmem_backing_ops kvm_gmem_device_backing_ops = {
- 	.prepare_attributes = kvm_gmem_pfn_prepare_attributes,
- 	.make_private = kvm_gmem_device_make_private,
- 	.make_shared = kvm_gmem_noop_conversion,
-+	.update_attributes = kvm_gmem_device_update_attributes,
- };
- 
- static const struct kvm_gmem_backing_ops *
-@@ -1241,8 +1246,11 @@ static int __kvm_gmem_set_attributes(struct inode *inode, pgoff_t start,
- 	kvm_gmem_invalidate_start(inode, start, end, filter);
- 
- 	r = kvm_gmem_convert_attributes(inode, start, end, attrs);
--	if (!r)
-+	if (!r) {
- 		mas_store_prealloc(&mas, xa_mk_value(attrs));
-+		if (gi->backing_ops->update_attributes)
-+			gi->backing_ops->update_attributes(inode);
-+	}
- 
- 	if (r)
- 		mas_destroy(&mas);
-@@ -1502,6 +1510,24 @@ int __weak kvm_arch_gmem_device_map(struct kvm *kvm,
+ {
+@@ -176,6 +177,7 @@ static int kvm_gmem_attach_resource(struct kvm *kvm, struct file *file,
+ 			gi->device.kvm = kvm;
+ 			gi->device.size = i_size_read(inode);
+ 			gi->device.flags = gi->flags;
++			gi->device.has_private = gmem_device_has_private;
+ 		}
+ 		provider = ops->attach(inode, resource_file);
+ 	}
+@@ -1510,6 +1512,14 @@ int __weak kvm_arch_gmem_device_map(struct kvm *kvm,
  	return -EOPNOTSUPP;
  }
  
-+static void kvm_gmem_device_update_attributes(struct inode *inode)
++/* The attribute tree owns mapping state; this summary is read under provider locks. */
++static bool gmem_device_has_private(struct guest_memfd_device *gdev)
 +{
-+	struct gmem_inode *gi = GMEM_I(inode);
-+	void *entry;
-+	bool private = false;
++	struct gmem_inode *gi = container_of(gdev, struct gmem_inode, device);
 +
-+	MA_STATE(mas, &gi->attributes, 0, 0);
-+
-+	mas_for_each(&mas, entry, ULONG_MAX) {
-+		if (kvm_gmem_get_attributes(&gi->vfs_inode, entry) &
-+		    KVM_MEMORY_ATTRIBUTE_PRIVATE) {
-+			private = true;
-+			break;
-+		}
-+	}
-+	WRITE_ONCE(gi->device_has_private, private);
++	return READ_ONCE(gi->device_has_private);
 +}
 +
- /* The inode lock protects attributes and the offset-to-GPA bindings. */
- static int kvm_gmem_device_make_private(struct inode *inode, pgoff_t start,
- 					pgoff_t end)
-@@ -2042,6 +2068,7 @@ static struct inode *kvm_gmem_alloc_inode(struct super_block *sb)
- 	gi->provider_ops = NULL;
- 	gi->backing_ops = NULL;
- 	memset(&gi->device, 0, sizeof(gi->device));
-+	gi->device_has_private = false;
- 	INIT_LIST_HEAD(&gi->gmem_file_list);
- 	return &gi->vfs_inode;
- }
+ static void kvm_gmem_device_update_attributes(struct inode *inode)
+ {
+ 	struct gmem_inode *gi = GMEM_I(inode);
 -- 
 2.43.0
 
