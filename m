@@ -1,58 +1,73 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793539337;
-	b=3s4VVZfbBBzo4sPjp9HEADMAa094rELzg1cYq4n30RCz66dWIP1VIN7N8A6LLOz32Umf
-	 MjRAYpixiFOyZjASh5orXGEH92eh2IWKVCq0b383T3SuePTmFOVZrrzKA3//qgkjrOmw3
-	 CQk4MMWdJonQ1JeWB7CEzTIq6qfFoxpaenAQUCRelJXgEh96YuQELi1CehWOfCk2Ty9Gk
-	 BGQ7ooa+xvgjbFcZYIbcvkzI95OsES++h7e2ER24BEUX+hhR6F7xlrsmX7m+oBUsd9gIo
-	 L6fIGabz4mHZr6Y8CmjvwsfKbQGLLEO+SE3/IIH39NsTA0k/gT1QsNPLrbb1oTdNMpg==
+	t=1793544241;
+	b=Xpp5ue6X8e/y/bb/A8cGf0aFpJc4eaoFZ35ABvvqYPfeAL0o9Z7gzCtO6rVF4wKIr83U
+	 FGr7bEN2e09RaWAlvKwDOql5ZJNBEz4rWqozoQ6WOJOKciVcGfcLygipPT25PiEiQp/Fw
+	 w5n/S2Wr3BKbWhCANZWFEuDL/96Lihe8zS965/NOD2sxhgFW02vwF6dcWEyGyXTwgITA1
+	 9HkMnUr5A4CZh0gWEqnNKvAjV8ZVpc7ZCHN1nylrqWJVD92qwhmYFC0KMmYBY7Imgv1/0
+	 8+BtDbcmJAnH+dinmuQhyGQgGmfegTVz/G/7h4DtDjewX6m40mS5HFGiju+DpVgi/EQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793539337;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=geaEcMEl+ei9wD9S1s+3XncmzaUwEsl7gr6NPS3NXfE=;
-	b=iMDmGMOX2eYDsyPQAgzJMy5kbc283/k7wswtWJbLy+G8VlbcVD/ADNRArnNLtzqWvEn3
-	 jVJwyE7daeJsU8El5cZ7c5uJN0uEBu5KGTvwDADKpq/292l1sdBTZ7TQtzVWT+z1KaC5U
-	 aCbY3aEO7ExGwckQgMARv3/sSKe0SENEuRZ9VMJwgTeeD7BiYuexqjThLFCSWEAoFY3Gk
-	 FVbzlVM99zEQfVcMGrEjPCGA79QWZfAsLUmolpE/mXfp6aPLNMLfPElQ+ew+p8N46fMhK
-	 xr+sWZX+zSabfaC/wdwQ1YpJA0+N5QjIYVxG9Ng/UbI8pTEOAL38H5DCc0qkrzp3Ytg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793544241;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=oUyTfJUNz75/QBEP7R/YNu/IVgJrEDsKO2KorAjSqnY=;
+	b=36VTFYB3xNQPHFRPvIkwlfbMrN+dPCdZrPJVCW3FBypkdSbf6jPKZJTl7K3g9RYz3HjJ
+	 tjo60uObJerrDG5HcVBhaNYKCIQdiYW8SXE+/ikd0xN6C7X7waSkhrYqNMBB/EjpyLCvT
+	 mOPGbQk+VcNM1x+rpOGtrvva47LfJ5Dp7XOgTCzq9dCDi/Vc4iB7gMsDkDaVcIXb5Jj4R
+	 i59FtoLJandg0amfI8YyDIXOd9Uu5xDhWWpadN2MxwnU3veVbSw4m6tetp70zpc9+UdC5
+	 uLaBRS/du5Nmfp+AeeUL4kQDMkkdt2coupvot7TcTzmB1bfbgid0D2kG0CfQEf1vPAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVrvuxww;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cEjC3pSU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228C7606A324;
-	Sun,  1 Nov 2026 13:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFF9606A324;
+	Sun,  1 Nov 2026 14:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVrvuxww
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276FE1F000C1;
-	Sun,  1 Nov 2026 13:22:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793539336;
-	bh=geaEcMEl+ei9wD9S1s+3XncmzaUwEsl7gr6NPS3NXfE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=cVrvuxww8pnRK8W8x2t2hHp3nWnOObG7ci5vh7APplcjlzy9fqeTywZQJf+Xmu24J
-	 XFRDFRwlcj5L1TgovuM5MJ/rsQAK9Y/dkxsQPRsq3lCJ1yoKJjTldceJSuvSdkxzgn
-	 e37XNI70rypRxMH116kaNz3AUqiNODedec8pJk8Q=
-Date: Sun, 1 Nov 2026 14:22:10 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@nabladev.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	achill@achill.org, sr@sladewatkins.com, linux-tegra@vger.kernel.org,
-	stable@vger.kernel.org
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cEjC3pSU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69071F000C1;
+	Sun,  1 Nov 2026 14:43:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793544241;
+	bh=oUyTfJUNz75/QBEP7R/YNu/IVgJrEDsKO2KorAjSqnY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=cEjC3pSUU65PYApD34HbwzC2MMmjLmYi6OlWjZaCqRLnkqHw38435lbVOow767vyy
+	 zy9AIbrOycA8tktJCpz1ZwTwI1cr2O7rVBiQS0aaKFzWth0JR4Gvblq7EwGZ+FWCXi
+	 bfEDeU+C/ozQu2drzvaNV1EcGPLJBv44ENgQmsSLD4ldB+WzUbZanB03tRQfu01gOV
+	 nMgPxYFf9Vp9F3qZRdor51md7/9l0v6KdN6EkGZsRWJAZoGNa+ndvD1RpSW5yuL+hv
+	 Tg3mpKHau7GJiEhTebcirVwOkrQXRcJiNpeoQnsp9jwMLZSqCLaHAzce3RPQj496Q6
+	 MB7WD3KCXUNvA==
+From: Sasha Levin <sashal@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Sasha Levin <sashal@kernel.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	linux-tegra@vger.kernel.org,
+	stable@vger.kernel.org,
+	Jon Hunter <jonathanh@nvidia.com>
 Subject: Re: [PATCH 6.1 0000/1879] 6.1.191-rc2 review
-Message-ID: <2026110101-carnivore-harsh-fe38@gregkh>
-References: <20261029073135.159947193@linuxfoundation.org>
- <b85e0697-d669-4b14-859f-52ee295264e4@rnnvmail201.nvidia.com>
- <80816b31-948c-45a8-9f98-4cc55f5bd530@nvidia.com>
- <7e927599-10b7-44f4-828f-e50c0caf5f27@nvidia.com>
+Date: Sun,  1 Nov 2026 09:43:55 -0500
+Message-ID: <2026-11-01-1-daily-reply-0001-stmmac-tegra-6-1@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <7e927599-10b7-44f4-828f-e50c0caf5f27@nvidia.com>
+References: <7e927599-10b7-44f4-828f-e50c0caf5f27@nvidia.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,69 +77,29 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7e927599-10b7-44f4-828f-e50c0caf5f27@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-On Sat, Oct 31, 2026 at 02:41:43PM +0000, Jon Hunter wrote:
-> Hi Greg,
-> 
-> On 31/10/2026 09:26, Jon Hunter wrote:
-> 
-> ...
-> 
-> > On 31/10/2026 09:24, Jon Hunter wrote:
-> >> On Thu, 29 Oct 2026 08:33:04 +0100, Greg Kroah-Hartman wrote:
-> >>> This is the start of the stable review cycle for the 6.1.191 release.
-> >>> There are 1879 patches in this series, all will be posted as a response
-> >>> to this one.  If anyone has any issues with these being applied, please
-> >>> let me know.
-> >>>
-> >>> Responses should be made by Sat, 31 Oct 2026 07:28:30 +0000.
-> >>> Anything received after that time might be too late.
-> >>>
-> >>> The whole patch series can be found in one patch at:
-> >>> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.191-rc2.gz
-> >>> or in the git tree and branch at:
-> >>> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> >>> and the diffstat can be found below.
-> >>>
-> >>> thanks,
-> >>>
-> >>> greg k-h
-> >>
-> >> Failures detected for Tegra ...
-> >>
-> >> Test results for stable-v6.1:
-> >>     builds:	9 pass, 0 fail
-> >>     boots:	28 pass, 4 fail
-> >>     tests:	83 pass, 7 fail
-> >>
-> >> Linux version:	6.1.191-rc2-g3b00df762ebc
-> >> Boards tested:	tegra20-ventana
-> >>                 tegra30-cardhu-a04
-> >>                 tegra124-jetson-tk1
-> >>                 tegra210-p2371-2180
-> >>                 tegra210-p3450-0000
-> >>                 tegra186-p2771-0000
-> >>                 tegra186-p3509-0000+p3636-0001
-> >>                 tegra194-p2972-0000
-> >>                 tegra194-p3509-0000+p3668-0000
-> >>
-> >> Boot failures:	tegra186-p2771-0000, tegra186-p3509-0000+p3636-0001,
-> >>                 tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000
-> >>
-> >> Test failures:	tegra124-jetson-tk1: pm-system-suspend.sh
-> >>                 tegra20-ventana: pm-system-suspend.sh
-> >>                 tegra30-cardhu-a04: pm-system-suspend.sh
-> > I am looking into the above boot and suspend issues and will let you
-> > know what I find.
-> 
 > Bisecting is pointing to the below commit and reverting it fixes
 > the above issues ...
-> 
+>
 > # first bad commit: [26c5e136ba4e94ad708333c9bd34039a1de397b0] net: stmmac: protect updates of 64-bit statistics counters
 
-Thanks, I've reverted that one now.
+Thanks for bisecting. 6.1 is missing a prerequisite for that backport.
 
-greg k-h
+38cc3c6dcc09 ("net: stmmac: protect updates of 64-bit statistics
+counters") allocates priv->xstats.pcpu_stats in stmmac_dvr_probe().
+6.1 does not have 2eb85b750512 ("net: stmmac: don't clear network
+statistics in .ndo_open()"), so the memset() of priv->xstats in
+__stmmac_open() zeroes that pointer on every ifup, and the first DMA
+interrupt on a dwmac4 device (Tegra186/194 EQOS) dereferences a NULL
+percpu pointer.
+
+Greg has queued a revert of the backport for 6.1, so this goes away in
+the next 6.1 release. 38cc3c6dcc09 can come back to 6.1 later together
+with 2eb85b750512.
+
+Could you test if adding in 2eb85b750512 fixes the issue?
+
+-- 
+Thanks,
+Sasha
