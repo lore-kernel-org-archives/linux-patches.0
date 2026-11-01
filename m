@@ -1,48 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793516619;
-	b=XA+aPVIJOtb/KP0v8qe3FbtVq2SD3CMR32D60lQBjXP/sR7rc0zSPgguF1hCRn22yGei
-	 qZ5RslQDy8shWNEmLMtuzvUeb6aFX5SSA3DfsRPN1FqfDxBHrOv/Wos7nFtwcfME0mH/O
-	 FbIEvu3Vz5LwcmKR/Vrx+Ug1ClWLr00maxsbIIcwo7OcI3T+yBc+PsR831crqnRxId13z
-	 E2KnxOt0A1oRvRsofHAALJl/+nnXtM66IdICNyL4/GP4CwSMozwoPvdtzmBIOz2+gcX0m
-	 spT+vuMQtEl6FuDpSC9oVLH6/uamCIYTkOaCdTEdmi0z4ZS9rCWAANxDb3xSPIvzi2g==
+	t=1793517584;
+	b=3UxpehzezCGXx9tAQ2GYyS42bbVg+38/Jk/dEadw5uqOKhj6QsM0rXb8Bb3uc3SvXWzG
+	 uetWlXO/5YjcLUPz9W9VR3seypnF6gGG9094/g9SraDWfCMKlwVk4u3hNCwhUPluRejyB
+	 vlpT+QrHh5g66ZiQCHYJG5jc8FtfS5lhMv2qeWwpyXt3Eb9YnevGRQIuiqAAOXC2hlycb
+	 9sRv5bSDrNgniSjWCIloE2j8b0bC4RbncD2ZcxHjOIGzwozkAU72waNp9rKWlBrOxzLMY
+	 E1OfcRh7jBYI5hatsYvroZPwhK7YkWVV/fppw0EjcFVH3IHJxMvFoHb9qVD2Q+WIBPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793516619;
-	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=aBPW+if3xv2lqj7+6aGESHtQB9tLz+SKlXoVbeeuHIQ=;
-	b=z+XR5TlNcJf3OulfDnPKxpjNarn/jD/G1kkoiUQ1ihdOWsDcQeDxEGt1uCLY4aySAHd7
-	 0TBkfaPgWkAEQ6oAK6Yl0zMb9wo9cINoBX6mGIrReCt4krj6f6wKy7ciK0IGBTTxWCwyC
-	 1EaNVcyKkbz2JsYX1wIq/zXtDLDWdGSwSY+ajBDQQTanRqJign7sozvJVm/AGQ0IeP+ZZ
-	 ATSOPS3L40E7+EBS19Ks1m1OQS0W22ihW0riEergz0p2LDsiee2Q/XEh5lJrjZwNKkno/
-	 SrOMKDMHOpTxVyxzByOAJATYRodNido2T/K+f/bDbaywaBlrZGPqRzdb/rgxwqASecw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793517584;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=OiA++KVOcAAt1XjVBpM3SgjQo9cp64mQ4Jp+CeE0vuo=;
+	b=iT0PC6T/CWM82sw3Z2/p1lrUn+jcSfDhf+sgziucCaJpZ5GBrRyzRWpHO1h5EracJYLG
+	 nbhUAc3KiiwOLjMoXCM3ewDXrcwDyev57zi6RU44rhd6BPQNduRCyHm2+c4clkIW2/q0s
+	 Mq7iM1qVPdNZ7NGJkkSQiMJh2Ix7O7voZ8jIyqT83eUVO6aqe8MFn2xr5J6kAvdQ86f/V
+	 CYVAHwb+s7LOQ3Qz0cG45uCy/RjM/MItmKLFcMpSeXGBhjRZVatinWh1FI3cSpgyOUVq9
+	 aDreb3+Wo96E6/Q/WYMkbHCwd8cxQXhIGHqSQFvSQ4rFtxjXQkhEl+VAtRw+k2NpBYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fXICk8Dv;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jhnWeLVY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE131606A324;
-	Sun,  1 Nov 2026 07:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C68606A324;
+	Sun,  1 Nov 2026 07:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fXICk8Dv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226661F000C1;
-	Sun,  1 Nov 2026 07:03:31 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jhnWeLVY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667CC1F000C1;
+	Sun,  1 Nov 2026 07:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793516618;
-	bh=aBPW+if3xv2lqj7+6aGESHtQB9tLz+SKlXoVbeeuHIQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=fXICk8DvsdDAguqgDH5cWG31mUlCM3VSL8AmHsZsgeJPMYv+PU9RUOGZvib9mAgdd
-	 dMZ9bBMxgqPIFTzJo31A3qfLVUJrg6O7P1uGSMf9sRo8G1NP/Iqpqg2352qgRpuBQn
-	 U+R9f+eu55EjwrjLyO6BDp6UoQo0eBdQzDaBk78ev+gYBL8SYUH3HcmMzniKLIMqAz
-	 CPWIVNE6qOcKXHeLDCFcxB4YWT2ThtrduI5zBZGnc23rgEisa0f3hiLoG8yAatMkHY
-	 FoFJ7Hla8A1/3lc4kgtW5ahSYYHKQNzJlW5QMF6Al2NtROWmlxW/xhI599k3KoLXFY
-	 AmkEcbHOftl0g==
-X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
-From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-To: Ackerley Tng <ackerleytng@google.com>, linux-coco@lists.linux.dev
-Cc: Alex Williamson <alex@shazbot.org>,
+	s=k20260515; t=1793517583;
+	bh=OiA++KVOcAAt1XjVBpM3SgjQo9cp64mQ4Jp+CeE0vuo=;
+	h=From:To:Cc:Subject:Date;
+	b=jhnWeLVY0zKULho6+joy1cTY3NNgHE7oGtdq13aeEz0CyTfwCMtptzstvW5AW3tBz
+	 kttsJZLrfM1DrsiCxE3tQQVl007VB9PloTUP0uwShMeogofjyEA1Or757rDgyW+3s6
+	 lp2nPUUZTFRgNU9lEzpHVm5Y+Q8uy2W43l65aDw4u6ckuEQr2OqLJsFJJHOs3yzHAI
+	 814DeGyLvoK8nRgH2qDt8CRZkz5PocMw0xWcMFz8B/doWhGs7LAuP+E8cWpXWPhCuF
+	 idpLeUJYezPG4fl8JAlPHrJ+zpPOSv7ccdeOJIXgNXv4Gm8dj6GgfJ9cQvGZDROGKu
+	 RTXrx4wAlkt1Q==
+From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
+To: linux-coco@lists.linux.dev
+Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Alex Williamson <alex@shazbot.org>,
 	David Woodhouse <dwmw2@infradead.org>,
 	David Hildenbrand <david@kernel.org>,
 	Jason Gunthorpe <jgg@ziepe.ca>,
@@ -57,16 +58,14 @@ Cc: Alex Williamson <alex@shazbot.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Steven Price <steven.price@arm.com>,
-	Fred Griffoul <griffoul@gmail.com>, iommu@lists.linux.dev,
-	kvm@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [RFC PATCH v2 02/13] KVM: guest_memfd: Support private/shared
- conversion of device memory
-In-Reply-To: <CAEvNRgEh3E7NBc5_3Wq66Fss-mAYT6+4FWP5+=Co6+OVfVnQQQ@mail.gmail.com>
-References: <20261017073149.1303738-1-aneesh.kumar@kernel.org>
- <20261017073149.1303738-3-aneesh.kumar@kernel.org>
- <CAEvNRgEh3E7NBc5_3Wq66Fss-mAYT6+4FWP5+=Co6+OVfVnQQQ@mail.gmail.com>
-Date: Sun, 01 Nov 2026 12:33:28 +0530
-Message-ID: <yq5a5wyh9gov.fsf@kernel.org>
+	Fred Griffoul <griffoul@gmail.com>,
+	iommu@lists.linux.dev,
+	kvm@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [RFC PATCH v3 00/13] KVM: guest_memfd: Add a common framework for device memory providers
+Date: Sun,  1 Nov 2026 12:49:14 +0530
+Message-ID: <20261101071928.2462549-1-aneesh.kumar@kernel.org>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -76,67 +75,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Ackerley Tng <ackerleytng@google.com> writes:
+Confidential device assignment needs guest_memfd to manage device MMIO as
+well as RAM. Device resources such as PCI BARs supply PFNs directly, and
+their protected mappings need architecture-specific map and unmap
+operations.
 
-> "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> writes:
->
->>
->> [...snip...]
->>
->> +static int kvm_gmem_device_convert(struct inode *inode, pgoff_t start,
->> +		pgoff_t nr_pages, const struct guest_memfd_device_request *req,
->> +		const struct kvm_memory_slot *slot)
->> +{
->> +	struct gmem_inode *gi = GMEM_I(inode);
->> +	u64 attrs = req ? KVM_MEMORY_ATTRIBUTE_PRIVATE : 0;
->> +	bool prepared = false;
->> +	int ret;
->> +
->> +	MA_STATE(mas, &gi->attributes, start, start + nr_pages - 1);
->> +
->> +	filemap_invalidate_lock(inode->i_mapping);
->> +	if (__kvm_gmem_range_has_attributes(inode, start, nr_pages, attrs)) {
->> +		ret = 0;
->> +		goto out;
->> +	}
->> +
->> +	if (req && !__kvm_gmem_range_has_attributes(inode, start, nr_pages, 0)) {
->> +		ret = -EEXIST;
->> +		goto out;
->> +	}
->> +
->> +	ret = kvm_gmem_mas_preallocate(&mas, attrs, start, nr_pages);
->> +	if (ret)
->> +		goto out;
->> +
->> +	kvm_gmem_invalidate_start(inode, start, start + nr_pages, KVM_FILTER_SHARED);
->> +	if (req && READ_ONCE(gi->device.kvm->vm_dead))
->> +		ret = -EIO;
->> +	else
->> +		ret = gi->provider_ops->prepare_conversion(gi->provider, req);
->> +	if (!ret) {
->> +		prepared = true;
->> +		if (req)
->> +			ret = kvm_gmem_device_make_private(inode, slot, req, nr_pages);
->
-> Is there a way to avoid making private from within the conversion flow?
->
-> kvm_gmem_device_map() below already does it as part of vcpu_run.
->
-> If we do the above, we'd be aligned with regular conversions, where
-> to-shared conversions eagerly update arch state (make_shared) but
-> to-private notifications to the firmware are done lazily.
->
+This series adds the common guest_memfd support needed by device memory
+providers. It builds on the resource-provider API [1] and the existing
+folio and RAM PFN backing support.
 
-For the TDISP flow, the vdev must be mapped before the guest can issue
-evidence accept. The flow I am currently trying to follow is: the guest
-requests validation of the MMIO range, triggering a VM exit; VFIO
-validates the range and then converts it to private via
-kvm_gmem_set_attributes_ioctl().
+The VFIO provider, IOMMUFD integration and Arm CCA implementation are
+available together at:
 
-In my new series, I have added a backend operation that abstracts this
-across folios, RAM PFNs, and device PFNs.
+  https://git.gitlab.arm.com/linux-arm/linux-cca.git cca/topics/cca-da-gmem-backend
 
--aneesh
+This series depends on the resource-provider groundwork from:
+[1] https://lore.kernel.org/all/20261022-gmem-alternative-providers-v2-0-5dd1dc6c660a@google.com
+
+Notes:
+* Codex assisted with implementation, review and series organization.
+
+Changes from v2:
+https://lore.kernel.org/all/20261017073149.1303738-1-aneesh.kumar@kernel.org
+* Rebase on the v2 alternative-provider series and separate the common
+  guest_memfd framework from the VFIO, IOMMUFD and Arm CCA integration.
+* Introduce backing operations to separate folio, RAM PFN and device MMIO
+  handling while sharing locking, invalidation and attribute updates.
+* Replace prepare_conversion()/finish_conversion() with non-failing
+  lock()/unlock() callbacks.
+* Convert device memory through ordinary file-offset attribute updates.
+  Derive GPA from memslot bindings and PA from provider PFNs, removing the
+  device request object.
+* Allow shared and private device PFN lookup in the common layer. Include
+  both mapping types in generic invalidation and leave architecture
+  mapping policy to the backend.
+* Support device range revocation through the common revoke path without
+  reclaiming MMIO PFNs or changing attributes.
+* Add shared device mmap through the existing get_pfn() fault path. Keep
+  VMA protections and flags in the core
+* Require only get_pfn() for device providers; lookup_pfn_range() remains
+  required for RAM PFN providers.
+
+Changes from v1:
+https://lore.kernel.org/all/20261010072504.536230-1-aneesh.kumar@kernel.org
+* Require GUEST_MEMFD_FLAG_MMAP to allow VFIO BAR mmap while a provider is
+  attached; disable it by default.
+* Use the common guest_memfd_provider_operations for folio and PFN
+  providers. Select operations through the resource mapping superblock
+  and forward VFIO operations to the device driver.
+
+Cc: Ackerley Tng <ackerleytng@google.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: David Woodhouse <dwmw2@infradead.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: "Joerg Roedel (AMD)" <joro@8bytes.org>
+Cc: Kevin Tian <kevin.tian@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Alexey Kardashevskiy <aik@amd.com>
+Cc: Xu Yilun <yilun.xu@linux.intel.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Steven Price <steven.price@arm.com>
+Cc: Fred Griffoul <griffoul@gmail.com>
+Cc: iommu@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Cc: patches@lists.linux.dev
+
+
+Aneesh Kumar K.V (Arm) (13):
+  KVM: guest_memfd: Let providers prepare memory regions
+  KVM: guest_memfd: Dispatch attribute conversion through backing
+    operations
+  KVM: guest_memfd: Let providers coordinate mapping changes
+  KVM: guest_memfd: Dispatch revocation through backing operations
+  KVM: guest_memfd: Split population by backing type
+  KVM: guest_memfd: Support device-backed PFN providers
+  KVM: guest_memfd: Support private/shared conversion of device memory
+  KVM: guest_memfd: Track private device ranges after attribute updates
+  KVM: guest_memfd: Expose device provider private state
+  KVM: guest_memfd: Support range revocation of device mappings
+  KVM: guest_memfd: Add shared device mmap through PFN providers
+  KVM: guest_memfd: Remove device mappings on final close
+  KVM: guest_memfd: Invalidate guest_memfd mappings before removing
+    memslot bindings
+
+ Documentation/virt/kvm/api.rst |  21 +-
+ include/linux/guest_memfd.h    |  84 +++-
+ include/linux/kvm_host.h       |   7 +
+ virt/kvm/guest_memfd.c         | 690 ++++++++++++++++++++++++++-------
+ 4 files changed, 660 insertions(+), 142 deletions(-)
+
+-- 
+2.43.0
+
