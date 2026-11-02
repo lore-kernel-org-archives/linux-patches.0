@@ -1,139 +1,116 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.12
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793640054;
-	b=yM1yF0cArbd7pVqh/RN6lDiY8fA3hfNrxBsffd8u37d9yFppqLNMc8aOgLf7Ckp7uCt/
-	 ixlCrjMQ70I5+Bzm77mfZSJSppyv2s4O+RU0n7qtfb195X7Qg2T0C9V06Yye3gOzL+alh
-	 pEbujQvQdsAOe2xjKIqmmVkwlvCYFFVaF/+cy36ygS7Kmz1zeDg+DC3bkdh7qwns1NUsA
-	 ZIUdaGTZQ7GIPd/WwSv+XJQJXvMHHykSW4i1K9TqO0hE2LLYxSwydajIzjFcYG+zOhzls
-	 Ga9+MxFih75QpHGPikoIcwX9Al6slQ9HsJxI8C0uCbMPrIDvMbpcbh6s/8WmCZAEhaQ==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793640407;
+	b=HooIwLPw3qU8d2ked5hZfy1CPZDyG+fJ+blZFc0K9XjCyDSYOplwQNyYf86rlPoJyZtC
+	 yHICQXGb9UNjOZbAZ72XnCuBSniGNwL5eEqnRCgnxYOOp3dQNhyHv+wiKZDSeB27b8+bL
+	 8FxW+N6Vw93TyKSBFwzktD2scFpVkLpZY/eZs9YcvubQRoUOcT9brTE7o3np6C9mKF0Sz
+	 lusNMBBJ4tUCWAZ/gk1i1b15GGgZSSjIE3osB2NnJnb9zLjBaVhq5DINNCnS7bTU8eM5R
+	 mAq/8lYw9Jp53UwzI6a88au2gW8ujDfdZYDdeITyoIix4yDNodxwEOvfsVgrki6P3iA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793640054;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793640407;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=/dtNOcWWA1xUV4+gfaF8Y6jQTYl2+OJzIWQS1EKXSSw=;
-	b=YfPYALTmgeY8hjhxawCkk1VQtUruQQqFN4E4/Rh/KjOq/YQUHqdnvRnmIDNFSVfevNZt
-	 aIscj2A0SmO3zAr1LP1gutsTIznCxRFQrLgiPzWvNshf4CEqnOsPw3dkM2jQQbiyfiA3C
-	 3MbA5qSQQaBH3s4RA7R2tsHXt2ffuGQcUmvtLDLixEDzDRI1j2CAx/LG3wd2+CixE5zoL
-	 QwU4PD9jMvqSdjV6iPzTpOFmpJJJB2uObeQ1s0P3OpoRegv3KmStWvkCMb1mEO2RRzZ+f
-	 ep+QuqIn1mtl9NEYHKG1hlRzLU2qxSPu3Y/5BNv4tlhbtTFcVpYEfzAPw7lSeTC9v5w==
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=GNgYisBMxaiOII22aYsrZYaBrpunAGhWTw5T83M78js=;
+	b=ketBHQ6HrqatIkxUQB9o6ZRLzRz+EEuv4fBOyzTNj+FV4v8cH/IcSFPyEP12j/g/tfip
+	 3vHoJK2pnzG3ySudOva2Poz3l0XizVe0IKG54nvnmP01MCM3qk+hF3trZXqOMmq/YAta6
+	 B192UCnJdOaCU1AJZvNJrxoz3fzpmoH55wj9hcJAtwGG2Y1HNR3U59Gi8p9ptogoXxSO+
+	 kvSq2ySHKVOSrqTDUH6e2jMxPbn9ojXnX6TmRMKVmSIgvkJ/FFdG1p9Dn0QlmOlv4hH8o
+	 g63A9WQwnx3qvSNZE3fsxT+g2PJ3TnQLb4kTUVbMjFYR7fQzez91ySdPgBFwJujE5bQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=erQhudjB;
-	arc=fail smtp.remote-ip=192.198.163.12
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b="UbMw/O9Y";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.48
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012048.outbound.protection.outlook.com [52.101.53.48])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8393860A34C5
-	for <patches@lists.linux.dev>; Mon,  2 Nov 2026 17:20:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8393860A34C5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36756606A329;
+	Mon,  2 Nov 2026 17:26:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36756606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=erQhudjB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793640053; x=1825176053;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=bFiQbJMI5h0YTn0Q6kpKz8C2yqXPCm/49WOWM45So+E=;
-  b=erQhudjBbRHDVjVgOJO9iKKdnphqxWdMEqzz8PtFKLZLvvVYSJfJfWJe
-   ale62qY00gzvQNbaAa6q1DTIiKmAqTVmaU9g6xHDuF74FxJKXUqZBUHia
-   bL7NBfUPyEHtENeM8IHv8tCZF+2OcY2M8VUgo4NcZpKeheKDyM4CBf+Xl
-   9bBXTEF/nKIQE7Qz6c/qpiVMBnbF3Rgf51UNljWr/Mq3Zfnt9DRR7oceA
-   b+Yvt7Yc2nkhfAzadSkSyWG8TOYF+W0jioGDDSWjvtvQHFs03LGwc78B1
-   kF2vS0bUATQgedldCW77v7h4Dr1QcV/9GbAIvOX9CE1QsjKIZLBCxlOrg
-   w==;
-X-CSE-ConnectionGUID: QHOy4HqaSfmHfUB70BUHEA==
-X-CSE-MsgGUID: PXUmWsW3TyiSBoYstltq4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2235124"
-X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
-   d="scan'208";a="2235124"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 09:20:52 -0800
-X-CSE-ConnectionGUID: eIEcnW0bSUu8DPoQyhYeKQ==
-X-CSE-MsgGUID: um+hs1NbS+OmsOwbFdDIrQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
-   d="scan'208";a="6720292"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 09:20:52 -0800
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Mon, 2 Nov 2026 09:20:52 -0800
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Mon, 2 Nov 2026 09:20:52 -0800
-Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.33) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Mon, 2 Nov 2026 09:20:51 -0800
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=UbMw/O9Y
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bXJBCCDMFmC5V3ITNyuuP4jkkK8bqsJbY/nYdQoiGaq7CWPpZhyoBgClNEY52KDJRq3D+qIAGThPFZU2FaVRf4Jb/Az6BkoinoBiA8zMuHVAEI0ZrrhTrRMks/Nw+ILSJaSpmMnNDBeBrrn15Sp+67/dGNZ6vRBbFwswMgavh9mJM/gUedswFNbhYIXf9aI0slu2k5ba+PCmJGJ+iYgH1HeTSjPLvapEx9lR1jDEgtPD4anApy+Ta8bigs2cRgzqjW1jL5IdyGtBY79Ygq4gT6kIihpbX/frlcrWjM5s6AGUtAdAo/Nsyj+bi9JlOkLc0COrkFs5Q8B6pcE0qC8B5g==
+ b=VFxz9fFvqysLjXYSTJWA0VfNhhwh/yOcY8mng2WQBfVtoHiAUUIDyKHnNFrgjxhrrIYuu80L9X/Hg2yfQ8r5T0t636JirWECvG/0TKt46AvIxk/TCVNw9R+C29fXqbFATsypBaneQyvtBFOcQQNbzPIHsn29vi1W+b9zn7gHDUH0sWR+YuK56b6VsdIohl5g1ppMbEs/TytV8Gdi8nduuKCbVq4I65UvdSCMAIhVS4FmwBfwknrrGXJ+VYmHWsYCvOsmJ8KqcCr42k0LQJdfKGFcSHKrp91Er9EbT+pSzmkxem8QDrT1AgMx3Eh23b8JMs9O6GjyQsPKQQTIpQhrJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/dtNOcWWA1xUV4+gfaF8Y6jQTYl2+OJzIWQS1EKXSSw=;
- b=QO6e3HuJlJqAl0DB4vkbf77VsmeNPYo31imiLHUrZODLGBboUKjPRpcxuHnB2v5Wg9+IV7hsijRxmzFBXcYS18EEOjQ5NsdVTEDmpmXSefy8DxJ9qbFtTitziHBKAD1XCsS50OGk5SpF3KlZoxn/QGBJyb70eQKoDw+OW+7ALlSQSKflu+gL7zXo0TEiy0r7ivAPW34o1GjEzWgLYypnS50B6o9hQH9fJRwRaMuTu3Cb0zCYgfzSoaJBjyNx8N1cZJ0xeXVmNrbseiRV6/yAofeeC2FhYCIkcxs7Yqn+1GTCx6F80W7vYHGmVpPexu+wfeGHr7IaSFJbjFvJ5fAsbA==
+ bh=GNgYisBMxaiOII22aYsrZYaBrpunAGhWTw5T83M78js=;
+ b=UdD9jwWwqV0EvOixLXeGBTyVg5EKWu50luRUvXVL2BezLizU/xHqBDLlmeYjxQgayRsvGvYH0Eq/ClQPXfiNFIDBiPlxGGLHHPd30AnqbVICJ/wTXpCuyfblm0F9wEuLkH3DypaR5T35pi/RTN+3zqDkwgWhdMpzlUF6PzKwyqnUGT2Q2dzksZp6qCel65T32LUIHmdovIF9/8/ahdA/iakVtLEpmWVb859tIU5B93/vD6gqRyQ0+S5ce0uu81X7oblDY3LG4yPmsRz9a5h+qndZSjp0Y15lAqs/EOn7hsBzPSaeBV8Qlywmx2nEdlyEDNXhfcB184JCDHN9mLG0eQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GNgYisBMxaiOII22aYsrZYaBrpunAGhWTw5T83M78js=;
+ b=UbMw/O9YMv7LAmJjlI2hwzrt3UsWUNBD3MKlIUlngKUrRk6gKoxNra7mAm/l/+vhMnsIw1DfmMcX7zAX6K61nLU4v6J5SRYn5o9gGQ0XTzu5z0mBe9MNjHkfBU8GgnQNI9/LtUOuBMtgh7OVHHhT+H4HW9E0q6utKl70iXWXO1gXkwB+8Bbyb41fPpkNaeiB//NiNJQFjz6FQOWCLHEUsukyVISAByL3oJDTRxRPbi7PjvFxrNtIOYFNdAMihXWOVWv3wmvwvdK3ivpoH8TsZr6YcXzkywL1/jyT6Pc1JSOmLZNJosSsPJuzHJZVNOeA5fsS5slci8Jj3IrtooNT0g==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com (2603:10b6:a03:540::20)
- by SA2PR11MB5163.namprd11.prod.outlook.com (2603:10b6:806:113::20) with
- Microsoft SMTP Server (version=TLS1_2,
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CHBPR12MB731189.namprd12.prod.outlook.com
+ (2603:10b6:610:33d::12) by IA1PR12MB8239.namprd12.prod.outlook.com
+ (2603:10b6:208:3f7::19) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
- 2026 17:20:44 +0000
-Received: from SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc]) by SJ2PR11MB8370.namprd11.prod.outlook.com
- ([fe80::b6cf:ce77:3cdf:7cc%6]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
- 17:20:44 +0000
-Message-ID: <3a06c4c8-51cb-4636-b95e-d6decf33d9a5@intel.com>
-Date: Mon, 2 Nov 2026 09:20:42 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 04/10] arm_mpam: resctrl: Split control and
- monitoring domain setup into helpers
-To: "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>, "ben.horgan@arm.com"
-	<ben.horgan@arm.com>, "james.morse@arm.com" <james.morse@arm.com>,
-	"Dave.Martin@arm.com" <Dave.Martin@arm.com>, "fenghuay@nvidia.com"
-	<fenghuay@nvidia.com>
-CC: "tony.luck@intel.com" <tony.luck@intel.com>, "yu.c.chen@intel.com"
-	<yu.c.chen@intel.com>, "babu.moger@amd.com" <babu.moger@amd.com>,
-	"fustini@kernel.org" <fustini@kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-References: <20621c28067916be2709fc4437473f1ccad7e334.1792443633.git.reinette.chatre@intel.com>
- <TY4PR01MB16930DAEC61D558A935F8C27E8B6A2@TY4PR01MB16930.jpnprd01.prod.outlook.com>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <TY4PR01MB16930DAEC61D558A935F8C27E8B6A2@TY4PR01MB16930.jpnprd01.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0008.namprd03.prod.outlook.com
- (2603:10b6:303:8f::13) To SJ2PR11MB8370.namprd11.prod.outlook.com
- (2603:10b6:a03:540::20)
+ 2026 17:26:41 +0000
+Received: from CHBPR12MB731189.namprd12.prod.outlook.com
+ ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
+ ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
+ 17:26:41 +0000
+Date: Mon, 2 Nov 2026 13:26:40 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: "Reshetova, Elena" <elena.reshetova@intel.com>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	"Jiang, Dave" <dave.jiang@intel.com>,
+	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
+	Jiri Pirko <jiri@resnulli.us>, "Tian, Kevin" <kevin.tian@intel.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	John Allen <john.allen@amd.com>, Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [RFC PATCH v1 10/11] virt: coco: arm-cca-host: Publish slot zero
+ and establish streams after acceptance
+Message-ID: <20261102172640.GB274202@nvidia.com>
+References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
+ <20261028152618.1356860-11-aneesh.kumar@kernel.org>
+ <26c24a66-be3d-40ac-8cb4-294deb0108db@intel.com>
+ <20261029171053.GD3734323@nvidia.com>
+ <DS4PPFA84FA90FC768B30DCFEBDE71F31CFE76D2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261030131543.GH3734323@nvidia.com>
+ <yq5apkwqa5ve.fsf@kernel.org>
+ <DS4PPFA84FA90FCEFB18E5620217FDCA728E76A2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DS4PPFA84FA90FCEFB18E5620217FDCA728E76A2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+X-ClientProxiedBy: YT4PR01CA0383.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:fd::29) To CHBPR12MB731189.namprd12.prod.outlook.com
+ (2603:10b6:610:33d::12)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -144,170 +121,381 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB8370:EE_|SA2PR11MB5163:EE_
-X-MS-Office365-Filtering-Correlation-Id: 535597d3-c07c-446d-de39-08df3905a088
+X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|IA1PR12MB8239:EE_
+X-MS-Office365-Filtering-Correlation-Id: c0e9556f-480b-49b1-deac-08df39067567
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014|23010399003|18002099003|56012099006|261102123227099003|22082099003|261009223027099003|261022075727099003|261022105027099003|261021121427099003|11063799006|4143699003|10067099003|261028144727099003|261026121527099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info: DcDUq+pTxMmY7gN7VTY89Y3L7QeVLdryi973bq7Q+jHJ84BqvsX5sKEe+L0ZN5V+BrjWVajROz178HRCZEXXiktLKoiIwjVgElgTgu6wEBWiBNNSXPIvNRpP5xYwcuELPrLGFZ+ccTevxD0+m2i8KZWhdDVCiV9dnUQBWCXJADzn405wkxBn+/Y5Yj38s+aaQZTtATx8cBINYieBH842xs3ui65ic0/enrD34hEFt/9kg9/0PSnFYx4SV5iLyCaRia9un3gIDcSCo072ePY1gL4Eo9jb/KeO4pTeMCZeFHCWGXqhg9SyapEef6yuO8MXuiWPTCAZQ5NocL0zFrW957J2nyf+Eeqy2oCPFM7PO5jyeoFqNINCbaxA7oL206pHDG9o4zpP4iFxRoemqFO6FC7uKWjx8IwtkxotFwc6/hjJnAyEg2ZyuIJ+bXD+LJ1F9SdvhDlH7CwDLagujP0Y8jVzkuDBAf6Gs69qcZS0sOQoBaDp17TLNsR9r/sI9tmfiCuBlj/5XFOBEU/ZAee2zmKD5oT6WfMyGjhblfBv/3TU+cgquPg8DHIY3nwVzm1nE+yiL1hhyeZWXbbZe+0Dg0ssSVkkZ/8m3LQDt51WBMngReYRUxEPQYpA3Dsgha5CNAGH0BbvSpghXDamdsE6wOfiPG+0+cC94yzqrXoh6sI=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8370.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(18002099003)(56012099006)(261102123227099003)(22082099003)(261009223027099003)(261022075727099003)(261022105027099003)(261021121427099003)(11063799006)(4143699003)(10067099003)(261028144727099003)(261026121527099003)(261026140227099003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|1800799024|366016|376014|23010399003|6133799003|18002099003|22082099003|56012099006|261102123227099003|3023799007|10067099003|261009223027099003|261009221227099003|261022105027099003|261022113327099003|261021123027099003|261021121427099003|261021135927099003|261022075727099003|4143699003|11063799006|5023799004|261028144727099003|261026140227099003|261026121527099003;
+X-Microsoft-Antispam-Message-Info:
+	C8vbDxAwun8Eo18tPTNpOaQmoxxj/gIHvai00JczL9dx2cGIpUbBNnqJMeGmsaoTDonb73FRt/SFPsCIrSIj2FkB5FdhouKRx8LFHXTPex+V2IK/61t6CMoy75bEB5p9lTQlfN+el33YFXGJtZz3oJvW7yqVI6NJNPmf6yD9VQwKxcYGvQwmXv6RVMt2R9EfrgaV1tSOCUK+Op6yQIMSisOGvYX9Ffm8lVxdNdTnCnMx5a4hjJUlFTKdIJSwCup8m/dYCcLw0oUN71YjiKEsChi9jqHnQPYy1RpK1dEorIjOhxbXHQskNl0x+c0LEsH1FElOFDv+5L2QaQh1785hXRy3FjtqEzNFL15skVYRl9wsbYSemy17U8fimfCh/dFSZncY+uDc2cO0NcSwwjchsZDkvC7nDmix2qqNvRiGs0UtgeGDM/S61dp2b730giru4HOdJ4HQknqauU1LntRh3qtphqgPVMwMUnU1s7q3f0XOG3gbrN7Bd25kHUJURbF2KSw56xL3LdV2ky048fZLtZ7ktn/DDYFqqZIvTe1CxFLHSN2pn1K1ZfvWV8GfT95OL8I8DEmlK2sRitZCPTCgR7Ko9igVCoSrZG0sBONOtugs0oZVzOvkYXE5+P1lzws3ye47ciNI8w5prenRg+cGH3js/M2aSevwGsq24vI783Y=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(366016)(376014)(23010399003)(6133799003)(18002099003)(22082099003)(56012099006)(261102123227099003)(3023799007)(10067099003)(261009223027099003)(261009221227099003)(261022105027099003)(261022113327099003)(261021123027099003)(261021121427099003)(261021135927099003)(261022075727099003)(4143699003)(11063799006)(5023799004)(261028144727099003)(261026140227099003)(261026121527099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b3NTVlF2b1drZEZKVVVZOFBocjNsSjNUVWJzV1MxUVB4b3Zxb2hTNldGeUtF?=
- =?utf-8?B?cFN6ejJob3Rqa1ZJMFk0VXpyRE5CVGlyMFRRa3phbTgzejhNQmRrY01ndmRq?=
- =?utf-8?B?Rk96cEMrcnVlQm12ZkN1RnBCZ2swelVEck9hNG5YTmt1WXJXc2ZHRklxQ2oz?=
- =?utf-8?B?dlVRd3FBZDU4c3Azam9FdHNlaXdJaU5ES1Mya1oxM1JiMTVRTGxrWVp1WGVH?=
- =?utf-8?B?NGIxOHB2VGU2NTdkcy9DRENkNUxHTEduK2VlT0dkMk0vMitzdXdCenY1dkpI?=
- =?utf-8?B?Y1QveFQrVU1xYzJjTjJhZ2NMYVNMQ2tLUE8zaEs4eVlhWnlocm1JejJlNlVF?=
- =?utf-8?B?YWlZeTBIS2hHU0wwaDVvckdiUGVXV1lORnFtdWF6ZHp3N2ZZUFpBUU9sRmlT?=
- =?utf-8?B?dHdiVVJUQ3dYY1l2cDNkeU93aHhGNUYvbkx2SFJvQXNRZ1B0MHAxcUNsa0gx?=
- =?utf-8?B?M0JCcWRlWlVvd3lhSlRMRE1ibXFQM1FsRklNbDRWTmhNckRxYTk3UzdtZ1BZ?=
- =?utf-8?B?TnNsOXMzcGZaTFV6SDBGM3lJMHBUeC9TRXUvVlRGU2k3ZFJHNFphNnFFZXBM?=
- =?utf-8?B?S3lHdWY0dkNHQzBSTUNZbmdUbXBwU09icEQ3SVlZWnE3OGY5VG1GK3Rpak1D?=
- =?utf-8?B?clpWaDdDeWR2WTNmQ1BYS0lZditxTzBYbkZBTXZPUXNkU1MzTW9Ed0ZtcVR5?=
- =?utf-8?B?TUFDUmJwZXZqUys5dW4rVkw1dytybVRFOHNabktEQklBU1k2RXo0Ym9qeTBC?=
- =?utf-8?B?dXRpc3BIeVJidHk4RjNpY09wNHIyRXJ4WVpxWGtGek5Ga2JjbXAvQi83MEpu?=
- =?utf-8?B?VElhQzZhckVrOXJyeC9Kemc1Yi9MMG5wM0d6QU44bGxoUE9JZ28vN1l0THpE?=
- =?utf-8?B?MHMrMktJWkpCU3RpaWdvc3BqeGN3Q3BxUDdtL2J1QWMrcnFuWnhZbXFieTRU?=
- =?utf-8?B?NDV4SkZXM0ZjcWc3UXY2MUhBcGFJU1RXM2JEcmlncEU2WWNNQVNlTU9Qamho?=
- =?utf-8?B?THI0S3Iwb1FQL3FSWlRNbEtXbHc2UGUydHJJVXlxbzlxbFU0V3Z0ZVlXUEgw?=
- =?utf-8?B?ZmpWNEhBajZWbjlLS0h6Mk9VWVZmVWZtc3J0Z3Z0UTR2azhLVlZKNXdzWE1x?=
- =?utf-8?B?MWJzaVRqN1BiVEgrWDZBSXdxRk04MmhacUJhYTJsYUhwS3FOZW12U25EK1Vl?=
- =?utf-8?B?dmF0Y1NoVzdBNHhva1Z1Mml4MFZNcmRkNk1wRG51T2gyTGovbHNGTnZEK2w1?=
- =?utf-8?B?OUI4ZGluaWs5d1JMSGlTL2FFUzNnWGdQVzRnTzc1a0lyRWlBSXVEUU5xNUh3?=
- =?utf-8?B?N2hqYSt1akpzTkMyU1BXRUdwSDNlU0dyNjdONEszbmtxYklVdTNwVkh6RkpX?=
- =?utf-8?B?R1FCVVBBVHQ4ci82YmYrQlcxVU5pTTR6Y2JDWE1WdUFudjlDdjdIM2FyY2Nq?=
- =?utf-8?B?MEVCNkNxMWhnYlBvT2V2V0d5Q05FTjhmMGVWOHJGMEdZbVZFY0Zmd1l1ajBI?=
- =?utf-8?B?bkFCMmhOWHFLS0FMSGxqMFU3RXlPM3Q3SWYxYXBoQ2Jnbmxlb1ZyaGxuWHFQ?=
- =?utf-8?B?T1FTUEtDQzFueUJtZHlzRk1aK3p5UUR3b0hNL1dEeFZOeWNHS3lXNFRUcE1p?=
- =?utf-8?B?aEpFNXp6Z3F3VVVNTms2SnU2R3AyY0taaG5zUENNQnBUT21xSTFEQkxtQWM0?=
- =?utf-8?B?dTRKbzRWY2pwK3M4S1JRZ3YyL3RIcWJIWlJSR204SUNrbXpvcDNtV2hkQ1g4?=
- =?utf-8?B?RlVzSGhPZXB1UkpCRDZLTm43dm12bVFpdkFQT0drQjdmQWMxeGhwMTJoSXEz?=
- =?utf-8?B?M2xBUzZ3MmJWOCtHZzRRS3lkdjJSVW9ZUkNDNWRodEpBOVpyV29CVDBSUlZN?=
- =?utf-8?B?Qkh4U2g5WTk2ZkwrRXZSZ3Y0andlVmFiSHllZDRxTU5ib2VSU01lY05YWmJ1?=
- =?utf-8?B?WExRaVIxNjN5MUoxVStBMmpqTWp4WkllS295QUlCTkRsd0VkQ1N1dWZHRHVZ?=
- =?utf-8?B?ZHRiL0dZakd4aDJ6S29IcEthSFJSbHJQSnd1bVZjRmtDc2k5ZVpkbnpibTdt?=
- =?utf-8?B?MXppR2NmNm9nQURQNEMzbmhpdFJFOTRQNm1lR2ZxbndDWThsMHQ3ajVNWUJM?=
- =?utf-8?B?TXB0SjNOdkRIajVNOVdFaGZmT1lsL1pjWnRjci9ESWMyVHVGQVVWdnR1ZFlP?=
- =?utf-8?B?TCs1T013ZGV3eE0xbkptUW5ScmlvcnVPbitzbnU1aTVCVyswT3JlQ09mYS9Q?=
- =?utf-8?B?N0N5Zk5BeDJIYWFJLy80am53dno1OWcwSzlqTW5PYWVvT1pHNHFaT3ZrNzh1?=
- =?utf-8?B?aEthU0VQQlVwTDhQdC9jQngvQzl5SmgwMURWNGMxS0Q4UUJCQ3phN3RSSzFj?=
- =?utf-8?Q?mo8vfDI0lh1D5UjY=3D?=
-X-Exchange-RoutingPolicyChecked: twD7gWT2djvzOQ4fqvRgMIQ56T+2/7VW73A0Ll55fyQL+dV6ZXbBTBqM2B0EBKEfzC7ZPzobh1UGflXaIaeZZMS/dyCuPi4Xkz5Wh+DKqorOs2QO7oxyr5p/bapUokCUIeSZoC6fg9a/sfvp9Rw6wNse1287zw40QCIpjnsxLAhyN3mkBdHDr6nHFqg5cyjSJ2xVV0V9jVsLD2N0O8ya3Co4WsxmRnDidMCKBwsNDtRdfGhwQ1HoT8/cSSP6IrY9qGGJURWlYj1hW0ycaZOw++kuerJYVtuc+o3mm7ZZfCeRAAXtspssvPqGyduIYoEPQTyoDJegDj9h/udRlgukLw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 535597d3-c07c-446d-de39-08df3905a088
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8370.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?yQP512tZAsa8oMiUIfv5MrBFNxppa8o/gQoMinc7i/aTY1xuqws/Mlm/5zuA?=
+ =?us-ascii?Q?RebkZn3ZkheY+whvpPiI+RkPd0inedd3Q5Dg1apEVEk3EA0mgucYy5lPK1wU?=
+ =?us-ascii?Q?mrIVqFDUIUzVKwoTDWMoWLvywI2myvgcE+pkqTNmM0GSfxiRdsLEVAS7R/OC?=
+ =?us-ascii?Q?JDMmBg0dgpxVy4ZXZvviiJRmZUOAvhWnyC5m60dk/HteDS/jZmSwLpsmsUe9?=
+ =?us-ascii?Q?qvZBHQ5nztjnWvuRnvp/jDsted716ncWEp6vhwNp77eSm4/qrKTZBk4BoXoH?=
+ =?us-ascii?Q?xn7Yhu0c59e1i8adWN2RS3/uNV235C58rWHu0ijtLrAVKVS4E3RDbWMwmdpt?=
+ =?us-ascii?Q?RdJEdjF2z90JwnI//BSi+Mit8rBPJFIaS0q1rrB3XUpK2FQCmKMfya71Zo6x?=
+ =?us-ascii?Q?aN8/ih+tsgb5hHlUwPekR8pLZ3gvnRgc8xNMEZAtvItWeTezVGR56cH++DV5?=
+ =?us-ascii?Q?StntIYAvRmQccSa8Uz0pPJFBt7iD9ZrT0AKOJH0yWCUJk1cylWALuMbAE+qA?=
+ =?us-ascii?Q?5FLyH3db050MKt5WFvDref7GPs8LShMtEC6BuhSyyjXC5hPXXPjFLrKPiRu1?=
+ =?us-ascii?Q?NRx6/RgaB+1ofq9BqlylFtqcEWWrLVI0k9cOPQZTpdEnfqfsSYTx3AiRB1XA?=
+ =?us-ascii?Q?PI2Y8xmFVKMy5G44AoHI31bo0IIb3GuOcwqHJFqWpb/l3yvZXqZ+dW2bDBfM?=
+ =?us-ascii?Q?GtER1K0MgV4ge2vjC4yp3EluM2Gz34FkGAQZtXUafK81Z/mMe0SVqtw7KJNS?=
+ =?us-ascii?Q?qWayP+RKgBsJCpEny+C1a0ZSzriEVjIPhIDI7TLF2YN/QGDDonMmzXk8qPDs?=
+ =?us-ascii?Q?Jg6DCxeK6I/Zm6Q83ML/0xZAZ3kQlnE6trUtRtHpwt8V0hmVhwepcoh77xnE?=
+ =?us-ascii?Q?LvcsCX6E/AAHkSYc6swuj8ft7PxwawrWTFtWHx2phspv/T3UMmIf0G7vzI3K?=
+ =?us-ascii?Q?1tG8zUsEL76R+84WVAhWbg5itN+wQSxurmmplA3ODl+9I7MFW3EaMIeEtti5?=
+ =?us-ascii?Q?aLh1UTq1BYb+YXRLgdI+oSOZJ1dDPxGlhq1XftPY5TbhQLU0bKh/101FNSaC?=
+ =?us-ascii?Q?OlSvKyrKy4OfGNo4KSTrRGkyMDdjLozpQ/SSRXadkU5vUjwyXidRouIEJMjN?=
+ =?us-ascii?Q?VSdGyPjJIZMa0v7XATrJlQXLIaezXtNXp2Tw47Gw7hPAcs8EjG7FgMyb56yw?=
+ =?us-ascii?Q?7OzyWjIWPmxGBNgPjDTO1ximdMe8Rav2FY1d2r+5USg9Vfkw0kzTjekGtsJe?=
+ =?us-ascii?Q?iDlMOIkFOGZ1rMBKEIB5PpZljelGLZ7Xv0eAmdHx8d01dBQlkdlxBCHJ/1VL?=
+ =?us-ascii?Q?UVJKrRjB4fxa2SwZQ6k1ahvorwUz/nAFJuSd5m++6Jrl+I2L9/cN3RG8NDf/?=
+ =?us-ascii?Q?YJw66nr4I7MfBKh08vSISUXEH0CJV296cLBYvtxHtFY1tm3xljlT1dBXUHM7?=
+ =?us-ascii?Q?7zsN6zPQQOHfTP7ZHFr4mUDFt6uQyD/VWf1Sfhku3kM+LHqo84FwPkOfBcqa?=
+ =?us-ascii?Q?+P+O+ayzIy6IrD/3Aod+oXufWZCuS1QsUdbUbchWHsc/PHOaT9gydG6nog6k?=
+ =?us-ascii?Q?Kt79/ZcYee+rMIm1F93pnJXdFIzQ4um6S6pouLwsbX4ww5SNHSLlLexLYLGa?=
+ =?us-ascii?Q?+rYFzRt4SGYdauxgQpG8g1xlrwLLk4Otw/fPbYZ1T9h0EnBxT/76Mly8tHor?=
+ =?us-ascii?Q?YxstjCaHRtcujIQ26Obh31aARx2KfZYZfa6hybPX8i7vnVmj?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c0e9556f-480b-49b1-deac-08df39067567
+X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 17:20:44.2104
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 17:26:41.3930
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qPhk/RbCY8IzfYz946Gr/FMZOBrBQqZCGoYBToMm2Xx8vHen146pswPeWNdyYuqqnvakG99xihLVUyQeza08Rscyya4eEhZiz/GITVCP7vk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB5163
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4PoSprJfcqr10u/gZZRhDFSJVsq+p/XsR9v0I4TkIK27p7KmYYB440/fHowOYrTk
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8239
 
-Hi Shaopeng,
-
-Thank you very much for taking a look.
-
-On 11/1/26 9:41 PM, Shaopeng Tan (Fujitsu) wrote:
-
-...
-
->> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
->> index dc442851fd7e..246560247a28 100644
->> --- a/drivers/resctrl/mpam_resctrl.c
->> +++ b/drivers/resctrl/mpam_resctrl.c
->> @@ -1615,13 +1615,77 @@ static struct mpam_component *find_component(struct mpam_class *class, int cpu)
->>          return NULL;
->>  }
->>  
->> +static int mpam_resctrl_setup_ctrl_domain(unsigned int cpu,
->> +                                         struct rdt_resource *r,
->> +                                         struct mpam_component *comp,
->> +                                         struct mpam_resctrl_dom *dom)
->> +{
->> +       struct rdt_ctrl_domain *ctrl_d = &dom->resctrl_ctrl_dom;
->> +       int err;
->> +
->> +       dom->ctrl_comp = comp;
->> +
->> +       mpam_resctrl_domain_hdr_init(cpu, comp, r->rid, &ctrl_d->hdr);
->> +       ctrl_d->hdr.type = RESCTRL_CTRL_DOMAIN;
->> +       err = resctrl_online_ctrl_domain(r, ctrl_d);
->> +       if (err)
->> +               return err;
->> +
->> +       mpam_resctrl_domain_insert(&r->ctrl_domains, &ctrl_d->hdr);
->> +
->> +       return 0;
->> +}
->> +
->> +static int mpam_resctrl_setup_mon_domain(unsigned int cpu,
->> +                                        struct rdt_resource *r,
->> +                                        struct mpam_resctrl_dom *dom)
->> +{
->> +       struct rdt_l3_mon_domain *mon_d = &dom->resctrl_mon_dom;
->> +       struct mpam_component *any_mon_comp = NULL;
->> +       enum resctrl_event_id eventid;
->> +       struct mpam_resctrl_mon *mon;
->> +       int err;
->> +
->> +       /*
->> +        * Even if the monitor domain is backed by a different
->> +        * component, the L3 component IDs need to be used... only
->> +        * there may be no ctrl_comp for the L3.
->> +        * Search each event's class list for a component with
->> +        * overlapping CPUs and set up the dom->mon_comp array.
->> +        */
->> +
->> +       for_each_mpam_resctrl_mon(mon, eventid) {
->> +               struct mpam_component *mon_comp;
->> +
->> +               if (!mon->class)
->> +                       continue;       // dummy resource
->> +
->> +               mon_comp = find_component(mon->class, cpu);
->> +               dom->mon_comp[eventid] = mon_comp;
->> +               if (mon_comp)
->> +                       any_mon_comp = mon_comp;
->> +       }
->> +       if (!any_mon_comp) {
->> +               WARN_ON_ONCE(0);
->> +               return -EFAULT;
->> +       }
->> +
->> +       mpam_resctrl_domain_hdr_init(cpu, any_mon_comp, r->rid, &mon_d->hdr);
->> +       mon_d->hdr.type = RESCTRL_MON_DOMAIN;
->> +       err = resctrl_online_mon_domain(r, &mon_d->hdr);
->> +       if (err)
->> +               return err;
->> +
->> +       mpam_resctrl_domain_insert(&r->mon_domains, &mon_d->hdr);
->> +
->> +       return 0;
->> +}
->> +
+On Mon, Nov 02, 2026 at 10:11:44AM +0000, Reshetova, Elena wrote:
+> > > AI tells me there are a couple of reasonable ways to implement slot
+> > > selection and avoid downgrade attacks:
+> > >
+> > > 1) With 1.4 match GET_DIGESTS and MULTI_KEY_CONN_RSP=true
+> > >    1) Do via RustSPDM:
+> > >         GET_DIGESTS / DIGESTS
+> > >         GET_CERTIFICATE / CERTIFICATE
+> > >    2) Userspace selects slots
+> > >    3) TSM module does startup and also issues 'GET_DIGESTS' as part of
+> > >       the signed transcript
+> > >    4) Confirm that the digests from #1 match the digests from #2 in
+> > >       the TSM transcript.
+> > >
+> > 
+> > I am currently doing something similar to the above.
+> > 
+> > https://git.gitlab.arm.com/linux-arm/linux-cca/-
+> > /commit/0657d167aee1ba43dd2765d99b5e3244b83c6ea6
 > 
-> Currently, it returns success even when the domain fails to be inserted. Is there a specific reason for this design?
-> I believe it would be safer if mpam_resctrl_domain_insert() returned an int to indicate success or failure. 
-> 
-> For example:
-> 	static int mpam_resctrl_domain_insert(struct list_head *list,
-> 					       struct rdt_domain_hdr *new)
+> If I understand this correctly, this is not quite the option 1 that
+> Jason proposed above. You dont use GET_DIGESTS and I dont see
+> a binding between cert chain discovered prior to TSM SPDM
+> session and the one during the TSM SPDM session. 
+> Or am I misunderstanding it? 
 
-Could mpam_resctrl_domain_insert() ever fail? A domain is only created
-after the lookup found none for this CPU. For a control domain the lookup is by
-the component's CPU affinity while the insert checks the domain id, but the id
-is the component's id and component affinities within a class do not overlap, so
-absence of one implies absence of the other. For a monitoring domain both are
-the L3 cache id.
+Right..
 
-For mpam_resctrl_domain_insert() to return a failure an insert would have found
-an existing domain which means a domain appeared _after_ it was found to be absent.
-That would be a driver bug rather than a runtime error. The WARN_ON_ONCE() reports
-it. Handling it would add unwind code for a state that cannot occur.
+I have poked at this alot more and it seems a bit different than I
+originally was told, especially if we narrow it to RMM only.
 
-This is how I understand the flow and believe this is why the existing code
-does not report it. 
+For SPDM 1.2 AI found me this statement:
 
-Reinette
+ SPDM 1.2 para 304 (and 1.4 para 369 when multi-key is off) says the
+ device "shall contain a single public-private key pair per supported
+ algorithm for its leaf certificate, regardless of how many certificate
+ chains are stored".
+
+Since there is only ever one private key active, the only thing we are
+trying to do here is to prevent a "fake" certificate chain
+that isn't actually installed in the device. The 1.2 spec provides
+CHALLENGE which solves this issue, it signs all the certificates with
+the single device key.
+
+So "all" we need to do is get the certificates with RustSPDM and then
+use CHALLENGE to get it signed by the single key in the device.
+
+This is the best RMM supporting SPDM 1.2 can do.
+
+This is almost simple, except that RMM and Rust SPDM may negotiate
+different algorithms and may see different certificates and private
+keys because of this. The main challenge will be synchronizing so that
+RustSPDM uses the same algorithms as RMM. The spec didn't really
+expect this split, it was supposed to be one session as far as I can
+tell. So it's hard.
+
+RMM will need an ECN to have an optional negotiable feature to support
+1.3 multikey/multislot. In this flow RMM must do the
+GET_DIGESTS/CERTIFICATES as part of its signed transcript when
+supporting multi-key.
+
+So the logical design is to have RMM run its FSM past CERTIFICATES and
+then stop. Userspace gets to see all the stuff it collected and select
+the slot. Probably via RMI_PDEV_SET_PUBKEY we tell RMM the correct
+slot and mulit-key to use with KEY_EXCHANGE, instead of telling it
+during PDEV_CREATE.
+
+From there it is a small step for RMM to support 1.2 devices by also
+having it issue the GET_DIGESTS/CERTIFICATES/CHALLENGE flow in the
+same way.
+
+Further, if you have a transcript that includes GET_DIGESTS then you
+don't *have* to select the slot early. The early slot selection mixes
+the certificate hash into the KEY_EXCHANGE, but if we did GET_DIGESTS
+then we already have that mixed in. Once you have a signed GET_DIGESTS
+then you can just request measurements on whatever slot you like
+without any relay attack.
+
+Unfortunately RMM doesn't provide an API for the guest to select the
+slot during GET_MEASUREMENTs and we don't have any way to pass the
+certificates from other slots to the guest. So from a guest RMM
+perspective the slot is fixed, attestation subsystem should report the
+single fixed slot (maybe not zero) and the other slots are blocked.
+
+Anyhow, below is some AI assisted flow how you can incorporate rust
+spdm and properly bind the CHALLENGE. I'm not really sure this is
+worth implementing, I'd like to hear from ARM spec folks what the plan
+is for multi-slot and multi-key. Proper spec support, including guest
+discovery is far better.
+
+So.. I think we should start with slot undiscoverable and effectively
+wired to zero. TSMs that want to support discoverable slot really
+should to incorporate the above into their spec'd SPDM flow and it
+will work without requiring RustSPDM.
+
+RustSPDM Should be used to demonstrate the flow where we start a
+session, get to CERTIFICATES, stop, then let userspace select the
+slot, then continue to KEY_EXCHANGE. This guarentees that the
+certificates are hashed into the KEY_EXCHANGE for multi-key, so the
+uAPI must support this kind of flow.
+
+Elena is it OK?
+
+Jason
+
+Host-side slot selection. The host is always responsible to choose the slot.
+RustSPDM controls slot selection, but the RMM establishes the operational SPDM
+session.
+
+With a single device key, the slot chooses a certificate chain, not a key.
+Slot selection is therefore about getting the right certificate chain hashed
+into the RMM's transcript (H(chain[S]) in TH1) and attested as
+identity_digest. The goal is to make sure that chain is the one userspace
+selected, from a complete and untampered list of the device's chains. No
+attacker on the path can steer the selection by hiding slots, or substitute a
+different chain into the RMM's transcript.
+
+The selected slot S defines the RMM's transcript: KEY_EXCHANGE(S) puts
+H(chain[S]) into TH1, and the RMM records chain[S] as identity_digest. With a
+single key, though, S does not decide which key the guest trusts. Every slot
+certifies the same K, and K is what the RMM attests (pubkey_digest) and what
+signs the session and measurements. The guest is not limited to chain[S]: any
+other slot's chain whose leaf is K is equally usable by the guest to establish
+trust in K, if the guest can learn those certificates. Those chains need no
+RMM attestation, because they authenticate themselves against K. The guest
+only has to check that the leaf is K and that the chain passes its policy.
+The host decides which chain the RMM attests, not which identities the guest
+may accept. Today RHI only delivers chain[S] (RHI_DA_DEV_CERTIFICATE), so
+other chains need a new RHI object or an out-of-band path. Since they do not
+need attestation, an unauthenticated delivery is fine.
+
+The attacker is anything on the host<->device path (DOE mailbox, switches,
+interposers) that cannot sign with the device's leaf key. The host itself is
+not defended against, that is the guest's problem.
+
+Approach: require a single leaf key. Without MULTI_KEY, SPDM mandates one
+public-private key pair per supported algorithm for all slots (SPDM 1.2 para
+304, SPDM 1.4 para 369). Slots only differ in which CA chain vouches for that
+key. The binding rule is then:
+
+  The key the RMM verifies at KEY_EXCHANGE must be the same key K that signed
+  RustSPDM's CHALLENGE_AUTH.
+
+RustSPDM and the RMM run separate SPDM connections, sequentially.
+
+Scope: this design is only for connections where MULTI_KEY_CONN_RSP is false:
+ - SPDM 1.2 and older devices, which have no multi-key support.
+ - SPDM 1.3+ devices with MULTI_KEY_CAP=00b.
+ - SPDM 1.3+ devices with MULTI_KEY_CAP=10b when the RMM leaves
+   ResponderMultiKeyConn clear.
+
+We expect an RMM ABI change before the RMM supports multi-key. The kernel
+must explicitly opt in to it, for example via a PDEV creation flag, and the
+default must remain ResponderMultiKeyConn clear. A kernel that does not opt in
+then always gets a single-key connection, and this design stays valid. A
+kernel that opts in takes on the DIGESTS-in-TH1 flow below and does not use
+this design. Until that ABI exists, check that ResponderMultiKeyConn is clear
+in the RMM's ALGORITHMS anyway (#3), and fail if it is not.
+
+SPDM 1.3 added multi-key, and with it the right way to do this. When
+MULTI_KEY_CONN_RSP is true and the requester issues GET_DIGESTS immediately
+after VCA, that DIGESTS is included in TH1 (SPDM 1.4 section 12.4, para 1239):
+  TH1 = VCA || DIGESTS || H(chain[S]) || KEY_EXCHANGE || KEY_EXCHANGE_RSP
+The KEY_EXCHANGE_RSP signature by slot S's key then covers the whole slot
+inventory, with freshness from the RMM's KEY_EXCHANGE random. No RustSPDM
+CHALLENGE is needed, and if the RMM cached and attested DIGESTS, the guest
+could verify the inventory too, without the replay problem in Limitation 4.
+However RMM 2.1-alp2 does not issue GET_DIGESTS (it was removed by
+FENIMORE-868). Using this needs an RMM spec change: issue GET_DIGESTS
+immediately after VCA when MultiKeyConn is negotiated, and cache and attest
+DIGESTS alongside the VCA.
+
+Part of the multi-key enhancement for RMM must include moving the slot selectg
+from PDEV_CRETATE to later, after the RMM has issued
+GET_DIGESTS/GET_CERTIFICATES. Possibly to RMI_PDEV_SET_PUBKEY. This will avoid
+any need for RustSPDM on multi-key devices.
+
+1. Run this sequence through RustSPDM:
+
+    GET_VERSION / VERSION                          (VCA: Version)
+    GET_CAPABILITIES / CAPABILITIES                (VCA: Capabilities)
+    NEGOTIATE_ALGORITHMS / ALGORITHMS              (VCA: Algorithms)
+    GET_DIGESTS / DIGESTS
+    GET_CERTIFICATE / CERTIFICATE                  (every slot in the slot mask, all chunks)
+    CHALLENGE(slot 0, fresh nonce) / CHALLENGE_AUTH
+
+   M2 = VCA || DIGESTS || all CERTIFICATE || CHALLENGE/CHALLENGE_AUTH, the
+   (A1, B1, C1) ordering in SPDM 1.2 Table 38.
+
+   NEGOTIATE_ALGORITHMS should offer the same BaseAsymAlgo/BaseHashAlgo set
+   and version ceiling as the RMM's request, so both connections converge on
+   the same algorithm and therefore the same key. A mismatch is not a security
+   problem, it just makes #4 fail. Only offer algorithms that are acceptable,
+   because each one is a separate key that an attacker could steer towards.
+
+   For 1.3+ responders:
+    - MULTI_KEY_CAP=01b (always multikey): Cannot be supported without RMM
+      support, fail.
+    - MULTI_KEY_CAP=10b (requester chooses multikey): leave
+      ResponderMultiKeyConn clear.
+
+   Verify:
+    - The CHALLENGE_AUTH signature verifies with slot 0's leaf key. Call this
+      key K.
+    - CHALLENGE_AUTH Param2 slot mask matches DIGESTS, and CertChainHash ==
+      H(chain[0]).
+    - H(chain[n]) == DIGESTS[n] for every slot in the slot mask.
+    - Every chain[n] validates, and its leaf public key == K. This is the
+      single key check that the whole design rests on. If it fails, the device
+      is either multi-key or violating para 304, so reject it.
+
+   Retain the VCA, DIGESTS, all certificates, K and the CHALLENGE transcript
+   immutably as part of the SPDM connection.
+
+2. Provide the slot certificate information to userspace so it can select a
+   slot S.
+
+3. Initialize the RMM with the selected slot. From here on RustSPDM must not
+   send anything to the device. The RMM's GET_VERSION ends RustSPDM's
+   connection.
+
+    RMI_PDEV_CREATE(id_index = S)
+    RMM  GET_VERSION / VERSION                     (RMM VCA)
+    RMM  GET_CAPABILITIES / CAPABILITIES           (RMM VCA)
+    RMM  NEGOTIATE_ALGORITHMS / ALGORITHMS         (RMM VCA)
+    RMM  GET_CERTIFICATE / CERTIFICATE             (slot S, all chunks)
+
+   The RMM asks the host to cache RMI_DEV_PROTOCOL_DATA (the VCA) and
+   RMI_DEV_IDENTITY (chain[S]). Check:
+    - For 1.3+ responders, ResponderMultiKeyConn is clear in the RMM's
+      ALGORITHMS.
+    - The DER certificates in the RMM's chain are byte-identical to chain[S]
+      from #1. RootHash may differ if the RMM negotiated a different
+      BaseHashAlgo, so compare the certificates portion. This check only
+      confirms that userspace's view matches. It is not the security check,
+      TH1 in #4 is.
+
+   Retain the RMM's VCA immutably on the SPDM connection.
+
+4. When the RMM reaches PDEV_NEEDS_KEY, call RMI_PDEV_SET_PUBKEY with K from
+   #1. Do not extract the key from the RMM's cached RMI_DEV_IDENTITY. The RMM
+   does not parse X.509, it only checks that the key encoding fits the
+   negotiated algorithm (RmiPublicKeyParamsIsValid).
+
+    RMM  KEY_EXCHANGE(slot S) / KEY_EXCHANGE_RSP   (clear text)
+    RMM  FINISH / FINISH_RSP                       (in session, opaque to host)
+
+   The RMM verifies the KEY_EXCHANGE_RSP signature with K over:
+     TH1 = RMM VCA || H(RMM's chain[S]) || KEY_EXCHANGE || KEY_EXCHANGE_RSP
+           (excluding Signature and ResponderVerifyData)
+   The device computes TH1 with H(its own chain[S]), so a substituted chain,
+   a modified VCA or a device without K all fail here.
+
+   If RustSPDM and the RMM negotiated different algorithms, or the RMM
+   negotiated MultiKeyConn and slot S uses a different key, SET_PUBKEY or
+   KEY_EXCHANGE fails.
+
+   KEY_EXCHANGE and KEY_EXCHANGE_RSP are clear text, so the host can also
+   verify this signature with K. This is defence in depth against RMM bugs
+   and makes the retained transcript self-verifying. It is not required by
+   the security argument, which relies on the RMM's verification (DEN0137
+   IZJNMR).
+
+5. Report to userspace that the connection is open with slot S, and allow it
+   to view the immutable data from the connection: all #1 certificates, the
+   slot layout and the RMM's negotiated version and algorithms.
+
+   The kernel retains the #1 CHALLENGE transcript and the RMM's
+   KEY_EXCHANGE/KEY_EXCHANGE_RSP transcript. They are not needed by userspace,
+   which trusts the kernel's verification. They exist for debugging and for
+   a possible future RHI object that lets the guest verify the inventory
+   itself (Limitation 4).
+
+Security argument: K signs RustSPDM's slot discovery (VCA, DIGESTS, every
+certificate) and, through TH1, the RMM's VCA and selected chain. An attacker
+without K cannot:
+ - hide or alter a slot in #1, because DIGESTS and the slot mask are signed by K;
+ - substitute the chain the RMM fetches, because Ct in TH1 is signed by K;
+ - alter either connection's negotiation, because both VCAs are signed by K;
+ - put a different device behind the RMM, because it cannot sign with K.
+The single key check in #1 ensures K is the key behind every slot, so the
+slot 0 challenge vouches for the whole inventory, including S.
+
+The CHALLENGE is mandatory because it is the only thing that proves the
+certificate list is untampered. Each chain authenticates itself against K, so
+a modified or added chain already fails chain validation or the leaf == K
+check. Removal is different: without the signed DIGESTS and slot mask, an
+attacker can silently drop slots. The CHALLENGE proves the list userspace sees
+is complete and was produced by the device holding K, at the time of #1.
+Policies that depend on what is present, for example "the owner slot must be
+provisioned" or "reject if the vendor chain carries attribute X", or tooling
+that confirms a SET_CERTIFICATE took effect, rely on that completeness.
+
+The host hands
+K to the RMM at PDEV_NEEDS_KEY, which binds the RMM's session to the device
+and inventory that userspace selected from. Trust in K comes from the selected
+chain passing the verifier's trust policy.
+
+Limitations:
+1) Connections with MULTI_KEY_CONN_RSP true are not supported. They should use
+   DIGESTS in TH1 (see Scope), which needs RMM support.
+2) Slots only differ in which CA vouches for K. They protect against a
+   compromised CA, not a compromised device key. A leaked K lets an attacker
+   impersonate the entire device and SPDM session so everything is broken.
+3) Trust in K comes only from the verifier's policy on the chain. An attacker
+   holding any CA the verifier accepts can impersonate the whole device, with
+   its own key and a self-consistent inventory that hides the other slots.
+   Signing the inventory cannot detect this. Only policy (pinning the expected
+   root/slot per device) can.
+4) The guest only sees id_index, chain[S] (identity_digest), K (pubkey_digest)
+   and the RMM's VCA (protocol_data_digest). The RMM never captures DIGESTS,
+   so the guest cannot see the inventory directly.
+   With a single key this only matters to guest policies that depend on
+   completeness (see Security argument). Which key is trusted does not
+   depend on it. Every slot certifies the same K, so the host can hand the
+   guest any other chain for K unauthenticated, and the guest just checks
+   that its leaf is K. The host can still withhold chains, though.
+   Partial fix for completeness: give the guest the #1 CHALLENGE transcript over RHI. This
+   needs a new RHI object type, because RHI 1.0-bet3 only has VCA,
+   CERTIFICATE, MEASUREMENTS and INTERFACE_REPORT. It is signed by K, and K
+   is RMM-attested, so the guest can verify the inventory.
+   However the host chooses the nonce, so the host could replay an older
+   inventory.
+5) Requires slot 0 to be provisioned (SPDM says it is by default) and the
+   responder to set CHAL_CAP.
