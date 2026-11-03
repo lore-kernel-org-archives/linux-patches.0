@@ -1,66 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.11
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793741002;
-	b=gOLB0vhAmtvG+Lk0A5Ms8d9LqRY/t5UuPDuDOBrJcpJyRAeQOeSvcYQSIEvPsWg5lYG2
-	 3ws5Oc1Je0AKG/oGt8VsHks6magLgtQeilly55pFPDkvgm7PirQy3u3iycFFjtTQ5XqK8
-	 8UsiEKe/lLYbf7dTshGavanK5bzcePGacYAgzu8lwwlMwBit0P47BRV1mdaAqhMYL9F88
-	 ZYFCL2L5/1c+XSQvYDP3M5RkPnMfFHdZZW3FoIbs1rhRV+hd7oriVH3gOJ3PHaJsVlj6R
-	 oL7yYr+gPlgat7IBG9Ie9r1lxrqqg3hfTeb2pqmlqnUFs/NNZdK7n+erNHMutbzgnBw==
+	t=1793741007;
+	b=I54WtjesTv0G6OaKu4sU248txLuTelg0tWej1vNTGF5FuBfY0DXDIzNJMBq9kZOz0IUV
+	 piugsGCihC7XYjgWPIztXVKBMpsnGDMduYdLJR8eiLFYZ+Mukgd1IUKVIfezLmbmfvMY8
+	 5sRvf428WQWCBaLtPeBWxiJxeuxsJ+uRTIpOqzHiiBzQ8F0apNbpFs1SftZQNOodJUPuO
+	 2OYfT9T9QmYKShDtXkVgt6X6IsDWGp54Ob9p6K0a8+RqtAX1ideFMLRsCm9T8WT/RbDVY
+	 eeBZ3DgkZPxsDXAAlwSp8PbNgUUC6ZBrLXQXMLSZ3HA0Cmx/3oSEQYFzAEjVAH2iPzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793741002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793741007;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=3oGDVZCbhDYSAm8svmjDBj8www6GvSfpJIKzPDKRcqA=;
-	b=gtTAh+a/dLs5e8Dn7/sP3rdSNYyIm76p2LuTw56stULScYNUj4OEoJdipxrImp0LVZoO
-	 Ya9tPstcEFJdCqg9G39VVbXJ3Q6yv0EizJGq3qWSIyRGAFXLBo8pRYrwnCv3Wnmpf7cG6
-	 2uHpncO/6vd1J56KwguVowXBes+clg5onfYLySsIcugqSNXOWbgol+f76dGf2xpp5A/57
-	 sFMvNo3X3nQbIAQmAve1p5zoAWB2+M9Tu+4s0NZLfeWd54xaFyqNzrdmAX/z2jzta1yfZ
-	 n8qwQR00GyobKRCHosxR/EDIX+nFgWZjDYDwvCDvV0hyTjcOn1owb/bjMN7djeO1q/Q==
+	bh=qwFCnqxhI3HCa7IEzFiD/bkQACIPFRKxiXo1fSbcp3U=;
+	b=ur6057ca1Bm+gg9pUaAf2sSEcCNg0211pFyHpjKq1VdnwQ5WspXlpX0rif3n8GRHWG62
+	 BRmEGCVRPtavLpmaReXeYHEuoAGFtfFtb+KsKUSKam6+qKgBNiME3Cj9aS2ojfXPq7sLg
+	 tdvO18kMj+vwlGDpQkM3bvqSriwbfvbTaKEA8ySr/DQbmFPksAEHRl5mIyg2WnF+iNUCM
+	 gevZ33ybkojfI3iVh/qV/02Vp+hU7moSlsjDGwUqu90wS9A9g2PzT8skewyup+2b1wMT0
+	 F2Uuc4wv3OB4Q7OB3hyek0NwUaOqTdrRsSrXr1R1p4adFxtS6v/gOdeZon9NKcy5phw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eGqshn8K;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YgPbeuoX;
 	arc=none smtp.remote-ip=192.198.163.11
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3292606EE87
-	for <patches@lists.linux.dev>; Tue,  3 Nov 2026 21:23:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3292606EE87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A92606D815
+	for <patches@lists.linux.dev>; Tue,  3 Nov 2026 21:23:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55A92606D815
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eGqshn8K
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YgPbeuoX
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793741001; x=1825277001;
+  t=1793740997; x=1825276997;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=MW56v4zMC4f37LZGqlv+/gFWWRjTDR661pjk1iSp824=;
-  b=eGqshn8Kq1cujPpYdrzyDr0XpROaxoMmBi8/F9txtx+zzmQbgy5r6twS
-   O0g6JljzAvL1WdOEWa1paXlj4p7jLJC2ggACIYJKNhfhgm+MvpKLfUhEV
-   GDufapMMV9yJqSTlPoOljWAzjbwaF6oK2TGlkMDMG+5TaQub3eTfyB+kj
-   D4y4c/4fpEAN1O4KR880PNelFRaN2yCCvLG0DWuMMJpdy24PHpMcdE8j5
-   m8vUAZakzz6Dwyv0f7/3PHW3TL0cW623Ocm/wKj44yQQD0WJCSkPWjupH
-   BTiMAENzRtejv5JCgvwslYru+NQstQTGItC5aB0aYdLSaGrnIqqnDGiD+
-   g==;
-X-CSE-ConnectionGUID: gSGv/r1qRS+3w26le0gVMA==
-X-CSE-MsgGUID: ib5T/DIQSBWp2f6/QzhL/Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11955"; a="2393544"
+  bh=ySFhl5S4vdesBmOfLe0QvgEJ1WbFvYAQaaCxyAR2HME=;
+  b=YgPbeuoXo9crrcm9cAI+mfuO1iENrZF3cHEcyWQCHrYiTB2a3s2wX5vQ
+   nx99iw/Tx+qkn/eumyGgFbkNaieEjgTXyC4wxCft/I346kU8foOGngF9l
+   z5rNqd2xSwk+NONakvREjYlfMrIxo04CgOhBsrltm+jRRfegV15iaVyN5
+   YL789MkPGcnmckhSt9qrp47IkLsNhGD1zP4Z25i+x5GwTqbimljk+MAMY
+   764R6VoAsUB2ezHoQEhkfAwpdCd2Yd5En+q0BTZOH4YpqBPKiX3ARzBNx
+   lokZcs11Dou2oL2LGpHN1HKXPHqKWdg8wN+7NhiYvf19/pXVc+95tS7BS
+   Q==;
+X-CSE-ConnectionGUID: hWHPy5LsSimOXXTTVBJNnw==
+X-CSE-MsgGUID: kFAKoX0zQ4O2sRYStI2/jA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11955"; a="2393534"
 X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
-   d="scan'208";a="2393544"
+   d="scan'208";a="2393534"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 13:23:12 -0800
-X-CSE-ConnectionGUID: cmbyD4tfQ9upZJfM21RFBg==
-X-CSE-MsgGUID: WakLz13mQza9jxSML+2SoQ==
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 13:23:11 -0800
+X-CSE-ConnectionGUID: tYbgpQ7uTbKRM/o5KYevog==
+X-CSE-MsgGUID: Sun0kJu6Tsuv0YjgKQ0E6A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
-   d="scan'208";a="6624599"
+   d="scan'208";a="6624591"
 Received: from rosenzwe-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.124])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 13:23:11 -0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 13:23:10 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -75,9 +75,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [RFC PATCH v2 11/11] fs/resctrl: Document asymmetric L2 allocation options
-Date: Tue,  3 Nov 2026 13:22:54 -0800
-Message-ID: <20261103212254.18314-12-tony.luck@intel.com>
+Subject: [RFC PATCH v2 09/11] x86/resctrl: Accept asymmetric RDT allocation features
+Date: Tue,  3 Nov 2026 13:22:52 -0800
+Message-ID: <20261103212254.18314-10-tony.luck@intel.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261103212254.18314-1-tony.luck@intel.com>
 References: <20261103212254.18314-1-tony.luck@intel.com>
@@ -92,47 +92,31 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The rdt= kernel parameter accepts separate options for asymmetric L2 CAT and
-CDP. On asymmetric systems, info/L2/cbm_mask represents the minimum cache
-bitmask across domains.
+Some systems expose asymmetric allocation features without setting the
+X86_FEATURE_RDT_A bit for symmetric allocation.
 
-Document the l2cat_asym and l2cdp_asym options and clarify the meaning of
-cbm_mask.
+Allow resctrl to probe allocation resources when either the symmetric or
+asymmetric allocation feature is enabled.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- Documentation/admin-guide/kernel-parameters.txt | 3 ++-
- Documentation/filesystems/resctrl.rst           | 3 +++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 0b3c140babd9..a16f84bed8f9 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -6460,7 +6460,8 @@ Kernel parameters
- 	rdt=		[HW,X86,RDT]
- 			Turn on/off individual RDT features. List is:
- 			cmt, mbmtotal, mbmlocal, l3cat, l3cdp, l2cat, l2cdp,
--			mba, smba, bmec, abmc, sdciae, energy[:guid],
-+			l2cat_asym, l2cdp_asym, mba, smba, bmec, abmc, sdciae,
-+			energy[:guid],
- 			perf[:guid].
- 			E.g. to turn on cmt and turn off mba use:
- 				rdt=cmt,!mba
-diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
-index 524ad062a6d9..241461e0612b 100644
---- a/Documentation/filesystems/resctrl.rst
-+++ b/Documentation/filesystems/resctrl.rst
-@@ -91,6 +91,9 @@ related to allocation:
- "cbm_mask":
- 		The bitmask which is valid for this resource.
- 		This mask is equivalent to 100%.
-+		On systems that support asymmetric, per-domain,
-+		cache allocation bitmasks this is the minimum
-+		mask across all domains.
- "min_cbm_bits":
- 		The minimum number of consecutive bits which
- 		must be set when writing a mask.
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 197d50b795bc..aa0bb32d191e 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -1063,7 +1063,8 @@ static __init bool get_rdt_alloc_resources(void)
+ 	if (rdt_alloc_capable)
+ 		return true;
+ 
+-	if (!cpu_feature_enabled(X86_FEATURE_RDT_A))
++	if (!cpu_feature_enabled(X86_FEATURE_RDT_A) &&
++	    !cpu_feature_enabled(X86_FEATURE_RDT_A_ASYM))
+ 		return false;
+ 
+ 	if (rdt_cpu_has(X86_FEATURE_CAT_L3)) {
 -- 
 2.56.0
 
