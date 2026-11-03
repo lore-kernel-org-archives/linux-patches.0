@@ -1,112 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.11
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793734733;
-	b=FU/et0vP6hcsPYC9aBIunOlh9ivRxoDjJvXWtHhTRRxO3IaiWwarKgChmjQg94g0aEfw
-	 0PdvQeox6Ij3WVtNcd6ukltVEl4r4uqTjTwSKR/rfGgB0pXQWKmIFwTvWAWa7kHFKcxys
-	 SQAcfJY2xMfmt4MBrlBoiBSCPp/j2viumrqpwG98W2zC707pgwUYrMLgaH4HyxczxY8pJ
-	 44jE5xK1HEoptPEE3vD0HrVP9ziowYF4Xt2vaK05asX7GidtvloOcRHdjKq30hSlAyU3s
-	 LxCcg+vnsyICr+1uNcR7uMqy2Fx1Hp5uW8gZbJp7/hyW/wCQmi8fmfanVANWxm2B97g==
+	t=1793740992;
+	b=oNi5pNvWmYWgLgtr9nULHofR2shzKXZg9fHLhD0BBbRAYWsZF9IsFSbAwv2gEw6Y9jCK
+	 15fu7Tb49FoEon6z3j3h2TOLXR0KheIMedXIe32wKSqkEdWBdJe2Zpa/2WQyQKxusjEzA
+	 rQi9MFsPkMs68SxUNQJm2o2XQW2qnh/dXNsb36IcB8ehlNeKZ0EQ6e+pRKRSuaYjQqrM1
+	 4SRcuVG5NnJ3AXhYd3VDR4yXrFvQV86CIACIYWJSAcDItEoV8aWU8XVGmLsxBeGVMJmWz
+	 IA782BhymxNObbAjR+PjGxzPNzhSgoeneGaNXEOqgikdDTFgZXWtnxh8xUOJgzOvMvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793734733;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=TK3utwnIPX37GwcC6jBJrNjTtS9pS+ECr0ZBshoSLgk=;
-	b=wTCf7xTZfjmy/P9JlgohyifbIlDZczyxY6yW21asx7L5SRYwPDh5EQSqtDBZle2Jc3jW
-	 4zUcIVOF7oVXBmmn+ds2l1VImt7NolzC/leCIrm/i9Rp/CcfGHPOlc1ks3Rnlcrl4pdsl
-	 nQS6yzWTAoJV0/J8Ml/3ebkrFwhATntE1T7CK0dEymsvbrugfjVdOePRnBcsglPt8NZkK
-	 C3/TQlHxEuB4x3AEQNmdFkPCdJUWhNDpS31rL080Gb6VIWYmKT1Q7w2jfdGGtWc4nT3Hx
-	 DrloGtDk6Srsw38ylSVOp9uqZwfcl+Ai8OfTqvmm+f9KbQdJrLG1XaHgJkdg2tZhg4A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793740992;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=fwJS2tr1Rxb89A2TFS7+CmwlHzGipvKA6NK3QGClmVg=;
+	b=Z+SJdUGEIGGxJviyceCFmabfNnkLLXLN/yaE3iGxgO5eKCJ53UGyC9u9NFqHEPR/RVcx
+	 mzFc7mNjtxlQWtHuqi/hzmah6LyessaakJhsu1QF7J0VnG3o2o2hOh7ORoqiNx4+IIu8K
+	 3pVBF+dME4n5jCa+VXG/HNOM/f7LRG7O4uLBRh0/AGw2icbUnU3juOB/31Solf40mtSq3
+	 u9q9WznnJlwq4ZJdhWKYklA8PutatBGF62238DZ2hM7XGrUbO56OCPU0L0VZDJ5HnZ+xZ
+	 QXCoGcp4Kj1jgVByxJ8DEq6fvWrHvzPSeo00W8drwc4cV3/ZiAnQ0RqNjDEYImdbFmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TX+afQ5O;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LfTyP40c;
+	arc=none smtp.remote-ip=192.198.163.11
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC5B606A328
-	for <patches@lists.linux.dev>; Tue,  3 Nov 2026 19:38:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ECC5B606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31DD606A328
+	for <patches@lists.linux.dev>; Tue,  3 Nov 2026 21:23:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D31DD606A328
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TX+afQ5O
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a2072b9832so6732905e9.1
-        for <patches@lists.linux.dev>; Tue, 03 Nov 2026 11:38:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793734731; x=1794339531; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=TK3utwnIPX37GwcC6jBJrNjTtS9pS+ECr0ZBshoSLgk=;
-        b=TX+afQ5OtmLi0K/jNFhb5EjLFNdHPjZexNLXbOdK2n5L5lLYEavfh1RJezjq0Ewnb8
-         uMFSW+ADG6GkMoE/+t5MPs5slp/rIsftxgRNBloTBYJpOSWoXuI4lnWWgjjMc7c6i9r/
-         FnpsINYLolXqce+OhmVw3GnOSYu1JyZW1mcc2VUzZ4QJQrjJUKVletpO7pdts0qA+O2O
-         G64bKp/+JAcwyQhOzFhvtfXS6xX1pIfP+/0ZTBb2utw+aMk+4705defFpSoGrnDRuwZ7
-         MShz/Pjj0dmSZj29lOYd/kbI3ZRBb66RbEb/ATVdtDsufZXApjfvENXVLF/vHz2g4Z74
-         7ktA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793734731; x=1794339531;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=TK3utwnIPX37GwcC6jBJrNjTtS9pS+ECr0ZBshoSLgk=;
-        b=NFgrdTSHrg++VzIeFw9VdXAKWOUC5Z/nGjaK4TTI6/ZRGyhhmYCalvquIG+nTN8OZT
-         0rTUAie89MwR5brXNxvSvyvdxHSUh2Sk3wno6DVAqzUAqbGEs22K987b/96JHfvE7zX1
-         rPsfpDLVkUdcOM+nDfY7bn0jObShKd1lmxLFK4e7o6deBgOxGqHz8xUHtAD4HVW2WO1N
-         mBm+L/QQkbbMP45uGVt9LuMispbKE0WuCi0yOFTHdB7ikgzBFLIf+zYBf1TuFcYjXW+H
-         aGBPNCc9SpcWK+gpwM+BqUxy+EdTmyIjia9m6hu/Ep1xpDTrdGR2u/c5ocU2TDpntP4q
-         gNWA==
-X-Forwarded-Encrypted: i=1; AKwUvBwxXgN8Qt/A67FDFj/MMyolLWoGcI4z5AtuNhjWX7BRvy9gvaIROJS/CkX9eFK/+c8fIuunAtAx@lists.linux.dev
-X-Gm-Message-State: APuU4Z+GKIl6iaZ1Ci1mwWxWr5UBCm6QZazmfSLQ0IrwdUR4p5fsKy6W
-	KKP4gMKGtff9Hhl1LntoMLSYuDCNX7tem7uLGed4XatrYZaQPnnDTjKQ
-X-Gm-Gg: AYBFou2e9NWgYNFu1Zof3KVp47hdGquyq1+f2+9wG3Cjh7FW8y00bGUaoK6hC1ZEm+Y
-	gUoPn0rgOWnNccNKF4ApF6RGY0oyYdf48JmcgjrV1j8P/eUkGj50P3Blxa4iVE5OgzoXUqc2q2w
-	uZvXrUpfFchJcQ+78+s1OrJzgd8vNMDCP4Y8+MlZ7z3GJSgWuwKRbDht8DCQDnKsKl+oDJYiuEP
-	HQezVoxSIF1h0NlxJoNa8o2xTJqoejwvRmsQ4upSg/h2eLrdLMILlIoOIwHCo33CHMr32nXHiKU
-	OAaj6ManL32DYC7Ps50KFNK/LhC6zgLozGj5cYAAxUEog10RCW39TJeSXDhs/hw5g8qnVPiA/j9
-	RKkBbKwENWinZ0eDJjPpljCkhDmlOOLeL4D118nn8LEy1hEGSC64ZDjxk6hbdwC8d+DIVVQbe/Q
-	eZgofv6qC8XWDhDm5pPkjlJ31dJDcEe6QI25YNCuwyh4GyflN2VoY8WF7iGmCq/eQaPWcS9iVoq
-	OEVB+YiUqiGDOYtgIdVvFF537g2MYjHJ52d9gcuqDfYjyz9pGR4m9Zhnczdx4EFuVD8Q/fIBqpW
-	5d/0P5M/skF1lqnkW6GZENFe/O+4BFLC1d2kCQvhugHxzh8VtYN0Fjfg4nryFTZc9bICNdTmFZ3
-	UcwgWXutnSqjZ2IWgv6LqbgR/Ou5deiJh35QZSgc1S8RVhqnpVdYoSIjF1ISaM9n5Vw==
-X-Received: by 2002:a05:600c:848c:b0:4a3:5da2:38ae with SMTP id 5b1f17b1804b1-4ac17a3628emr326325635e9.14.1793734731206;
-        Tue, 03 Nov 2026 11:38:51 -0800 (PST)
-Received: from dev-dsk-fgriffo-1c-93421965.eu-west-1.amazon.com (54-240-197-234.amazon.com. [54.240.197.234])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a5372d8bsm87303325e9.0.2026.11.03.11.38.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Nov 2026 11:38:50 -0800 (PST)
-From: Fred Griffoul <griffoul@gmail.com>
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	linux-coco@lists.linux.dev
-Cc: Ackerley Tng <ackerleytng@google.com>,
-	Alex Williamson <alex@shazbot.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	"Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Will Deacon <will@kernel.org>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	iommu@lists.linux.dev,
-	kvm@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [RFC PATCH v3 07/13] KVM: guest_memfd: Support private/shared conversion of device memory
-Date: Tue,  3 Nov 2026 19:38:50 +0000
-Message-ID: <20261103193850.15363-1-griffoul@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261101071928.2462549-8-aneesh.kumar@kernel.org>
-References: <20261101071928.2462549-8-aneesh.kumar@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LfTyP40c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793740991; x=1825276991;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=5fsFBAMfv8hiL1Az+0v+EZko0qrMcQRRQnWCy199kIo=;
+  b=LfTyP40cq8bK6Pc/R+isagMnV2rRt8UmceySfW2A+vFqTTPl5I8v2Ves
+   jkqwhMxEc7KvpIFSn5aRO7/nD4gU7DDWe22ebnsHhcBl13wO9PANqx1MD
+   XLVs1svKNKhY3qt/p5+G4NPHlRJtmFTS3FzS6TGRozgCNu3nw5AbDwj7g
+   zJ3Hzwr/bSu0f/Xx7jZOFxDKDyGod2ndKRKt2UgRKjEUxyC9x3v8fgIzy
+   lLZGvyJE8grNKqf84qcqxIIohe+miiyquwpCmzuurxlK21FxH17fRTkWz
+   1glYguertXmC/YOlrgtejCUR4zeO3NYfPWFsDd8aKXN0/pUz0ZR0Fvtav
+   A==;
+X-CSE-ConnectionGUID: jM1dKuJNTTCMcM9riqmeWw==
+X-CSE-MsgGUID: wAVdwQskRfOqgOpoVMH/eg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11955"; a="2393466"
+X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
+   d="scan'208";a="2393466"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 13:23:10 -0800
+X-CSE-ConnectionGUID: wESkskv1QdKHqGmfiRw12w==
+X-CSE-MsgGUID: mg/ht22LR7Oo094rPbZOlw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
+   d="scan'208";a="6624561"
+Received: from rosenzwe-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.124])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 13:23:07 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [RFC PATCH v2 02/11] x86/resctrl: Disable symmetric L2 CAT on Panther Lake
+Date: Tue,  3 Nov 2026 13:22:45 -0800
+Message-ID: <20261103212254.18314-3-tony.luck@intel.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261103212254.18314-1-tony.luck@intel.com>
+References: <20261103212254.18314-1-tony.luck@intel.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -118,25 +92,31 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> writes:
+Panther Lake reports L2 CAT in the symmetric CPUID leaf even though the
+feature differs between P-cores and E-cores.
 
-> +			if (!slot)
-> +				return -EINVAL;
+Disable the symmetric l2cat option for Panther Lake so resctrl does not
+enumerate this asymmetric feature as symmetric.
 
-[...]
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/kernel/cpu/resctrl/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> +			ret = kvm_arch_gmem_device_map(gi->device.kvm, slot, gpa,
-> +						       (u64)(high - first) << PAGE_SHIFT,
-> +						       PFN_PHYS(pfn));
-> +			if (ret)
-> +				return ret;
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 7951cfd20da4..709075ffc706 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -1128,6 +1128,9 @@ static __init void __check_quirks_intel(void)
+ 	case INTEL_BROADWELL_X:
+ 		intel_rdt_mbm_apply_quirk();
+ 		break;
++	case INTEL_PANTHERLAKE_L:
++		set_rdt_options("!l2cat");
++		break;
+ 	}
+ }
+ 
+-- 
+2.56.0
 
-Unless I'm missing something, these returns leave the pieces already
-mapped in place, while the attributes stay shared. A later conversion
-to shared would then find nothing to do, and a retry of this
-conversion would run into the pieces that are mapped.
-
-Would it make sense for the error path to unmap what was mapped, e.g.
-with kvm_gmem_invalidate_start() and KVM_FILTER_PRIVATE on the range?
-
-Fred
