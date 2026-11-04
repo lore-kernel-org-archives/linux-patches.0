@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827063;
-	b=5lJj4Zn8iWfZJYmgw/BjfoYYNwVxCZcW70uQU560UGClPTZnr6WSy6C8SPwCWxH/Eopx
-	 AVmwDpBDI4LfLlKo2ZJWJ1rzGmiuz4kDw9eW1f/uL2mDxqU0Bb1133Koj2HPTwVgqU5dw
-	 Q6mg62DDHKeNhyTmE8aAkxEVVKXLjAYeyPzRQOTGWjtssS0ABK0jvkV0w4waSaUSubZyg
-	 bMawr9K5g6N2rgw3R3OwlP7DS0dN6hRtXRvM3vDaqHDDuONW6kZbzY/56VaWfezTf1JRF
-	 Kl3TMsTjv0TgsvisJdBEpVD4SExjqhUfmUmZ5NU8zAclOsAi704Df0JaN0QWCy+3a3w==
+	t=1793827064;
+	b=2nP5S2Kh503M8BzXtGYq1cpW6PNPwUwIgdktXgrX9q9bnvGYPeb/apd0URel5XrTYjSM
+	 a2abLd092UO1T4JPoRyYPrqZx1nAGtKIV6VItrszm7FJapGGpDHqM5bKFi3l8ASB034lr
+	 laC9epAQgFTffqal2eiw2MWgXIJlNDFLOcGXFesgJKT+TjxdSmlKPwCYlpVdUNYBElp7J
+	 JDmRNZ2fvlJH0PP5wjJ9RGStT0+iByFbqVHJ+jfQBa02oT3DGE+fgH/Mcj6zb+z9y825g
+	 FiilmBo3M+MYk15uSHVHwX7EPXIKdZCKf6MmsL+Jt1AzKpsLAyS9qK9J9dR9mzwuPfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827063;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pM52fU7HsiAflvYvIK8QdmmqRWXX5NnVKLqLiC2g2Q4=;
-	b=JSmpCf62c0ZtPZFgjy6+CYaWkzN8E43uO8SzbqaEXI/fRkeMyIrK9n2UgaIMgrrzlOci
-	 t94JvdJSBYOZVXjxQwrRb364mDtGMV7eYFwc7IeKwxqfGY0Sp/GSztjKVxrmzITXbcGav
-	 /2cEdwkYKXmMWmduG2VKHQQpDwVbQ2WqKjbvP29pjqU/ooAYmOeeTx17c/pIe6W+Njj7t
-	 kzugZzlHRuEaDLFiuF9wHw/xkfIMDdPH355/73M6BCdicvjJHRJDzy6BuyyGmMzdcsrsy
-	 j/TxnX15FgOn/kdwpCBoqL8+xRy8eBjWJFyVGfSMIpfZmGFrUBknsQ/uwYXAZF89s2w==
+	bh=ErlfdbcAl13x1ZSjhsJWdp2Z/rM4DWwkeQG0qAOxJec=;
+	b=28IvJaTSPnrCsHI0Bxj3Yi+86w7GlgruFqWXXw4cZQYbvMcX4jVHt+7KXW1Xu3tOKDJ9
+	 swmm8Hahud7qmSHMeua9AvHMykezdlud4nHOx4HOlY+/n3JstMXuQ+1bV81g7SCnZ8hRD
+	 SLlbS7NO8GNt9MsQG9FyGwCkAp03ACPbkGX4SBWIwWhtYigWct2TdszscT7wxmf7Naxfp
+	 uZnGjqqX45Pb5JpLHMyk8H3y24X6elxU0YXN5P7aNLKEwUQNfr41joDvPnW1g5q2LMK5A
+	 K0hpsZkFLMU1efqH9VW1lqaz0vTsm10u6PINNsHx2D1E4IYTZqedBBPzwvyja1bE95Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suDvdfFy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FvV3hJ/F";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E30606AE17;
-	Wed,  4 Nov 2026 21:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F174606AE17;
+	Wed,  4 Nov 2026 21:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suDvdfFy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CC91F00A15;
-	Wed,  4 Nov 2026 21:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvV3hJ/F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4CE1F00A17;
+	Wed,  4 Nov 2026 21:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827062;
-	bh=pM52fU7HsiAflvYvIK8QdmmqRWXX5NnVKLqLiC2g2Q4=;
+	s=korg; t=1793827064;
+	bh=ErlfdbcAl13x1ZSjhsJWdp2Z/rM4DWwkeQG0qAOxJec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=suDvdfFyGULoaos8D6VP7J7J/6pMqmXkwOMMSPxkMrwjYkojYy/VAsz8BwvpUoETi
-	 EqCxUco7Tyymz+FMWDyCzTnt/k3G4Dv36qLHGTehFo1iI2PMdNQ7yiLUabrpedFfXc
-	 Y2J2Ha4DeK5l43mlDasdYkapIp7txBSkTRwKYSQw=
+	b=FvV3hJ/FCbtDX331SzbR0vYAu04Zxt4X+iEQDd9N10ke3JzmwVBA9Ue1sX/zX7DsJ
+	 XghcF33Mbh360nLdHMTboENUmUTmLlcqR1b//g7kEfQsrKFeQLxXIklqLwowVoIVXI
+	 3XuPTT6O8Cddemt9TyROVaaKuGl2SsZU/MqH3RkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Tobias Schumacher <ts@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 7.3 171/547] s390/pci: Fix resource leak in zpci MSI setup
-Date: Wed,  4 Nov 2026 16:05:55 -0500
-Message-ID: <20261104211043.007362023@linuxfoundation.org>
+Subject: [PATCH 7.3 172/547] s390/pci: Fix use-after-free race in zpci floating interrupt cleanup
+Date: Wed,  4 Nov 2026 16:05:56 -0500
+Message-ID: <20261104211043.035658687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,45 +70,191 @@ Content-Transfer-Encoding: 8bit
 
 From: Tobias Schumacher <ts@linux.ibm.com>
 
-commit 4a185d99179a307d856dc43610cfe72395d0c42a upstream.
+commit 422d75ad5bc96b8eb9cb3cfd9d68fc685a0a9b75 upstream.
 
-If airq_iv_create() fails in __alloc_airq(), the zpci_sbv bit allocated
-by airq_iv_alloc_bit() is never freed. This permanently leaks one of the
-ZPCI_NR_DEVICES summary bits, reducing system capacity with each failed
-device hotplug. In systems with repeated device insertion failures or
-under memory pressure, all summary bits can be exhausted, preventing new
-PCI devices from being added until reboot.
+zpci_clear_irq() stops the adapter from raising new interrupts for the
+function, but a zpci_floating_irq_handler() already running on another CPU
+can still be scanning zdev->aibv when zpci_msi_teardown_floating() releases
+it.
 
-Add proper error handling to free the zpci_sbv bit and reset zdev->aisb
-if the AIBV creation fails.
+Clear the zpci_ibv[] entry so no further handler picks the vector up, then
+wait for a grace period before releasing it. The handler runs inside the
+rcu_read_lock() section that do_airq_interrupt() holds across
+airq->handler(), so synchronize_rcu() drains any handler still in flight.
+Release the vector and free the summary bit only after the grace period, so
+neither can be reused while a reader still holds the old pointer.
+
+zpci_ibv served both delivery modes, indexed by function under
+FLOATING and by cpu under DIRECTED. Only the floating vectors are
+published to and torn down under the interrupt handler, so split the
+directed vectors out into zpci_dibv and annotate zpci_ibv __rcu, which
+lets sparse check the accessors above.
 
 Fixes: f770950a4709 ("s390/pci: Migrate s390 IRQ logic to IRQ domain API")
 Cc: stable@vger.kernel.org
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Tobias Schumacher <ts@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_irq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/s390/pci/pci_irq.c | 58 +++++++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 26 deletions(-)
 
 diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
-index c9520a16ca75..134f8f4a5cfa 100644
+index d5763c5feb09..c5fabad38139 100644
 --- a/arch/s390/pci/pci_irq.c
 +++ b/arch/s390/pci/pci_irq.c
-@@ -313,8 +313,11 @@ static int __alloc_airq(struct zpci_dev *zdev, int msi_vecs,
- 		zdev->aibv = airq_iv_create(msi_vecs,
- 					    AIRQ_IV_PTR | AIRQ_IV_DATA | AIRQ_IV_BITLOCK,
- 					    NULL);
--		if (!zdev->aibv)
-+		if (!zdev->aibv) {
-+			airq_iv_free_bit(zpci_sbv, *bit);
-+			zdev->aisb = -1UL;
- 			return -ENOMEM;
-+		}
+@@ -22,12 +22,11 @@ static enum {FLOATING, DIRECTED} irq_delivery;
+  */
+ static struct airq_iv *zpci_sbv;
+ 
+-/*
+- * interrupt bit vectors
+- * FLOATING - interrupt bit vector per function
+- * DIRECTED - interrupt bit vector per cpu
+- */
+-static struct airq_iv **zpci_ibv;
++/* FLOATING - interrupt bit vector per function */
++static struct airq_iv __rcu **zpci_ibv;
++
++/* DIRECTED - interrupt bit vector per cpu */
++static struct airq_iv **zpci_dibv;
+ 
+ /* Modify PCI: Register floating adapter interruptions */
+ static int zpci_set_airq(struct zpci_dev *zdev)
+@@ -169,7 +168,7 @@ static struct irq_chip zpci_irq_chip = {
+ 
+ static void zpci_handle_cpu_local_irq(bool rescan)
+ {
+-	struct airq_iv *dibv = zpci_ibv[smp_processor_id()];
++	struct airq_iv *dibv = zpci_dibv[smp_processor_id()];
+ 	union zpci_sic_iib iib = {{0}};
+ 	struct irq_domain *msi_domain;
+ 	irq_hw_number_t hwirq;
+@@ -279,7 +278,9 @@ static void zpci_floating_irq_handler(struct airq_struct *airq,
+ 		}
+ 
+ 		/* Scan the adapter interrupt vector for this device. */
+-		aibv = zpci_ibv[si];
++		aibv = rcu_dereference(zpci_ibv[si]);
++		if (!aibv)
++			continue;
+ 		for (ai = 0;;) {
+ 			ai = airq_iv_scan(aibv, ai, airq_iv_end(aibv));
+ 			if (ai == -1UL)
+@@ -299,7 +300,7 @@ static int __alloc_airq(struct zpci_dev *zdev, int msi_vecs,
+ {
+ 	if (irq_delivery == DIRECTED) {
+ 		/* Allocate cpu vector bits */
+-		*bit = airq_iv_alloc(zpci_ibv[0], msi_vecs);
++		*bit = airq_iv_alloc(zpci_dibv[0], msi_vecs);
+ 		if (*bit == -1UL)
+ 			return -EIO;
+ 	} else {
+@@ -320,7 +321,7 @@ static int __alloc_airq(struct zpci_dev *zdev, int msi_vecs,
+ 		}
  
  		/* Wire up shortcut pointer */
- 		zpci_ibv[*bit] = zdev->aibv;
+-		zpci_ibv[*bit] = zdev->aibv;
++		rcu_assign_pointer(zpci_ibv[*bit], zdev->aibv);
+ 		/* Each function has its own interrupt vector */
+ 		*bit = 0;
+ 	}
+@@ -342,13 +343,16 @@ static struct airq_struct zpci_airq = {
+ 
+ static void zpci_msi_teardown_directed(struct zpci_dev *zdev)
+ {
+-	airq_iv_free(zpci_ibv[0], zdev->msi_first_bit, zdev->msi_nr_irqs);
++	airq_iv_free(zpci_dibv[0], zdev->msi_first_bit, zdev->msi_nr_irqs);
+ 	zdev->msi_first_bit = -1U;
+ 	zdev->msi_nr_irqs = 0;
+ }
+ 
+ static void zpci_msi_teardown_floating(struct zpci_dev *zdev)
+ {
++	rcu_assign_pointer(zpci_ibv[zdev->aisb], NULL);
++	synchronize_rcu();
++
+ 	airq_iv_release(zdev->aibv);
+ 	zdev->aibv = NULL;
+ 	airq_iv_free_bit(zpci_sbv, zdev->aisb);
+@@ -428,9 +432,9 @@ static int zpci_msi_domain_alloc(struct irq_domain *domain, unsigned int virq,
+ 
+ 		if (irq_delivery == DIRECTED) {
+ 			for_each_possible_cpu(cpu) {
+-				airq_iv_set_ptr(zpci_ibv[cpu], bit + i,
++				airq_iv_set_ptr(zpci_dibv[cpu], bit + i,
+ 						(unsigned long)zbus->msi_parent_domain);
+-				airq_iv_set_data(zpci_ibv[cpu], bit + i, hwirq + i);
++				airq_iv_set_data(zpci_dibv[cpu], bit + i, hwirq + i);
+ 			}
+ 		} else {
+ 			airq_iv_set_ptr(zdev->aibv, bit + i,
+@@ -455,8 +459,8 @@ static void zpci_msi_clear_airq(struct irq_data *d, int i)
+ 
+ 	if (irq_delivery == DIRECTED) {
+ 		for_each_possible_cpu(cpu) {
+-			airq_iv_set_ptr(zpci_ibv[cpu], bit + i, 0);
+-			airq_iv_set_data(zpci_ibv[cpu], bit + i, 0);
++			airq_iv_set_ptr(zpci_dibv[cpu], bit + i, 0);
++			airq_iv_set_data(zpci_dibv[cpu], bit + i, 0);
+ 		}
+ 	} else {
+ 		airq_iv_set_ptr(zdev->aibv, bit + i, 0);
+@@ -550,7 +554,7 @@ static void __init cpu_enable_directed_irq(void *unused)
+ 	union zpci_sic_iib iib = {{0}};
+ 	union zpci_sic_iib ziib = {{0}};
+ 
+-	iib.cdiib.dibv_addr = virt_to_phys(zpci_ibv[smp_processor_id()]->vector);
++	iib.cdiib.dibv_addr = virt_to_phys(zpci_dibv[smp_processor_id()]->vector);
+ 
+ 	zpci_set_irq_ctrl(SIC_IRQ_MODE_SET_CPU, 0, &iib);
+ 	zpci_set_irq_ctrl(SIC_IRQ_MODE_D_SINGLE, PCI_ISC, &ziib);
+@@ -570,8 +574,8 @@ static int __init zpci_directed_irq_init(void)
+ 	iib.diib.disb_addr = virt_to_phys(zpci_sbv->vector);
+ 	zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
+ 
+-	zpci_ibv = kzalloc_objs(*zpci_ibv, num_possible_cpus());
+-	if (!zpci_ibv)
++	zpci_dibv = kzalloc_objs(*zpci_dibv, num_possible_cpus());
++	if (!zpci_dibv)
+ 		return -ENOMEM;
+ 
+ 	for_each_possible_cpu(cpu) {
+@@ -579,12 +583,12 @@ static int __init zpci_directed_irq_init(void)
+ 		 * Per CPU IRQ vectors look the same but bit-allocation
+ 		 * is only done on the first vector.
+ 		 */
+-		zpci_ibv[cpu] = airq_iv_create(cache_line_size() * BITS_PER_BYTE,
+-					       AIRQ_IV_PTR |
+-					       AIRQ_IV_DATA |
+-					       AIRQ_IV_CACHELINE |
+-					       (!cpu ? AIRQ_IV_ALLOC : 0), NULL);
+-		if (!zpci_ibv[cpu])
++		zpci_dibv[cpu] = airq_iv_create(cache_line_size() * BITS_PER_BYTE,
++						AIRQ_IV_PTR |
++						AIRQ_IV_DATA |
++						AIRQ_IV_CACHELINE |
++						(!cpu ? AIRQ_IV_ALLOC : 0), NULL);
++		if (!zpci_dibv[cpu])
+ 			return -ENOMEM;
+ 	}
+ 	on_each_cpu(cpu_enable_directed_irq, NULL, 1);
+@@ -660,10 +664,12 @@ void __init zpci_irq_exit(void)
+ 
+ 	if (irq_delivery == DIRECTED) {
+ 		for_each_possible_cpu(cpu) {
+-			airq_iv_release(zpci_ibv[cpu]);
++			airq_iv_release(zpci_dibv[cpu]);
+ 		}
++		kfree(zpci_dibv);
++	} else {
++		kfree(zpci_ibv);
+ 	}
+-	kfree(zpci_ibv);
+ 	if (zpci_sbv)
+ 		airq_iv_release(zpci_sbv);
+ 	unregister_adapter_interrupt(&zpci_airq);
 -- 
 2.56.0
 
