@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827002;
-	b=xmIeP2rMbOYEoCPWoJcsIpf/cTRU+5ovo/ZuV6PORc7kWgxf//MDfcrZkit/z/Wzd7w6
-	 RJvCzOAMs/ko2jU5KF73NbMoOGU6jcQz7A27vEM/2hmQIEFQSU6vXIu6xd2iRRyV9UDHo
-	 hPMcu8LheY5zcTfE5/37ogC0/YCFfmMCLs7B/OYe+2ytagrWkdMbGYYDHhS6CMGjIm7rt
-	 XR/q2+jcdCDK+5J+gkv98DlV/r1EuC7ohlrvOIiHj48A4S8msPPNefO925OiifTu0jLu/
-	 pc7h0BRoFUY0F0mbeEwjngpe/1djE9CZtnY3laIzIT9Uy0lS8eEpbH1ffMb7d705qnw==
+	t=1793827004;
+	b=uwpIR333KQpgTJc2/uFoEIrMehxdKEoTQDLQaS3BCas/AjrhMieUNyvnO8tj9YVy+/Cw
+	 cGlthoDnOBH/z5AZInKdASITCYroBO3UyJ4mVXdtrHjiV2OJGf4HdcOcZxmtou7YH5hfA
+	 mDe9dkFHn9Cph7Xsk4ko1v5kJKAu/1bvKXXMnMHu0z1QMq2Ud+ymsaO3wqyENZXFdS1nC
+	 0MufwoIRmokW4Hl+olOuprP/fau4W2U9LNMRcdZclKFtueb9jDrI6tandVRz1+GIpu5K3
+	 j7uOM9gehRbbhP2qESs5+2oAJ5+KAvCzwtLZKNfixIabow5L6pGzx9+KNphLm8cNTnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KnhIWLHRH8ILrrCUFIcukGCvjuIjlnwZJ+4TwtLl0xU=;
-	b=UlvwxjDNcZLYlJ0rhgvMtrJXEEzdtEP7hG6f5leFTnGb2RHk5Cs1pXuTVrfLUqw4dUFr
-	 gO+BL29lpb4Wj58o/Hor5Z2i/ZUXgd8yRBOHisoCHYv8p3DzAeGYUATskeLUlAW1b86ua
-	 IjAiIU3dj7rb3b2ZTF0dsunksv0XGgFMQQLJbtYmqfVdtLnJbK55cqR4Vn+SP96EaNltC
-	 vp2ovPM7I+A/dXwfebKMQLHCN49x7iiVvzqBN8DhUq+BDa5LGrsMrNqZrjI7B6VOeXRqP
-	 8R7Idc9gtD9V5H7ZyoYC4KjKHEq8z+BtnPn2Yj3txsnrDhNwGU2NbHz6PB6o1tiX6PQ==
+	bh=BhAIueVk50V8F/Qc7DPWtY/K3l27aUJ7SeFQH96ul1w=;
+	b=rCcc0HRP9y3O/yw0VJ/N/uDph9zkbB/sf8W9aGHLGb4VLuyIBlyzoF/RmctMb2G6Us7F
+	 nQupqiXx/bccgZEufrmaHqVI9GCUrCi2nrysoNqilpzP5sbzHMA3cPNii7b9iDDjS/u84
+	 tpwTrVdAQc4eb+l4awG7tqsiWhE2z97YAvKxAghoIa+B5bAHtz66I+BHC8SYACgx8WXWE
+	 HuvjZBYgJooMPYmHWow5IddR1wvWqU1sXAtyj1OOHAVoDPWNxoSJhHpzvX4xtHZ2451my
+	 8IF53g6U20xf4dzJcVt0RYRMaUGpNvQZ/PDk2qzd4diSP4Evde6mUD93CKP3de+pR5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adMPZiOA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VOWtsE79;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA196086624;
-	Wed,  4 Nov 2026 21:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22716074923;
+	Wed,  4 Nov 2026 21:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=adMPZiOA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CA31F000C1;
-	Wed,  4 Nov 2026 21:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VOWtsE79
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794161F000C1;
+	Wed,  4 Nov 2026 21:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827002;
-	bh=KnhIWLHRH8ILrrCUFIcukGCvjuIjlnwZJ+4TwtLl0xU=;
+	s=korg; t=1793827003;
+	bh=BhAIueVk50V8F/Qc7DPWtY/K3l27aUJ7SeFQH96ul1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adMPZiOA5XPNIZvMy4yL/eBWby8sB0M7Yz6aD6FjSzuD2+FDLKagmXUwZC71rFvzm
-	 EyTilkFUbWwxBxQLYUEGUF7xX2Gmfn6giopBdq9eVWRDStR1B3lth5RsMxboykdtYX
-	 qgd/MQmUmuRhX8UabXfCKkeawahlis/0m2dwgRQk=
+	b=VOWtsE79h6caMNiOrS6FoPkgNtCKPOOMoEdSO09QjCH8GU5SmmOy+2xi0CrKW9hcb
+	 z6calQPOzf/2itRdva8mMoeUepx8YsWfpR540BPAgaa1JVBXQFMNPN4zmeGphDOjA7
+	 O5byxPCtnU6lbAy50B/DhrlEUNAUeEsFKkwsDI30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 133/547] ksmbd: return end of file for reads past a named streams data
-Date: Wed,  4 Nov 2026 16:05:17 -0500
-Message-ID: <20261104211041.953818612@linuxfoundation.org>
+Subject: [PATCH 7.3 134/547] ksmbd: use u8 for SMB2 oplock level values
+Date: Wed,  4 Nov 2026 16:05:18 -0500
+Message-ID: <20261104211041.981213288@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,43 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 626611dc22a3b63b3264a7a797d9dbc530234fcd upstream.
+commit f622fedabbb58c8006ee21373968ae07bf8a9467 upstream.
 
-A READ on a non-empty named stream at or beyond its end fails with
-STATUS_INVALID_PARAMETER. ksmbd_vfs_stream_read() returns -EINVAL when
-the offset is not below the stream length, and smb2_read() maps -EINVAL
-to that status.
+The SMB2 oplock level is an unsigned 8-bit wire value, but
+smb20_oplock_break_ack() stores it in a plain char. On architectures where
+plain char is signed, the value 0xff becomes -1 and cannot compare equal to
+SMB2_OPLOCK_LEVEL_LEASE (0xff). The acknowledgment is consequently rejected
+with STATUS_INVALID_OPLOCK_PROTOCOL instead of the intended
+STATUS_INVALID_PARAMETER.
 
-smb2_read() already turns a zero-byte read into STATUS_END_OF_FILE, the
-status a regular file returns at its end, and an empty stream already
-takes that path. Return 0 instead of -EINVAL so that non-empty streams
-do the same. Clients that read a stream until end of file otherwise get
-an error once they have read all of its data.
+Use u8 for the request and response oplock-level variables. This preserves
+all wire values in their original representation.
 
-The buffered copychunk path converts a zero-byte source read to -EIO,
-as it does for a regular file that shrinks during copying.
-
-Fixes: 2ae1a6cc4302 ("cifsd: fix potential read overflow in ksmbd_vfs_stream_read()")
+Fixes: 80a56d4a826c ("ksmbd: align SMB2 oplock break ack handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |    2 +-
+ fs/smb/server/smb2pdu.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -272,7 +272,7 @@ static int ksmbd_vfs_stream_read(struct
- 		return (int)v_len;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -11488,7 +11488,7 @@ static void smb20_oplock_break_ack(struc
+ 	__le32 status = STATUS_SUCCESS;
+ 	int ret;
+ 	u64 volatile_id, persistent_id;
+-	char req_oplevel = 0, rsp_oplevel = 0;
++	u8 req_oplevel = 0, rsp_oplevel = 0;
  
- 	if (v_len <= *pos) {
--		count = -EINVAL;
-+		count = 0;
- 		goto free_buf;
- 	}
+ 	WORK_BUFFERS(work, req, rsp);
  
 
 
