@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826890;
-	b=lCUf/cdPf9Z96/YwsIU7G2SdWMGSSrld+S3CPd41AeIlp2z08qLV4wfXqPIIO0vsTZpN
-	 10m2asdWo2ar6Ao0VZXBsgvGO1H0B5C/AGCzxkySqXLLewSd9h95uWP3caLJVYL3Y2N6r
-	 4TLF75h7jJsDa2mvUTmG7zOvFmf+shmi6d7LeMalzK4NJRd6/eH2iNRRXHrPye5guBlAz
-	 gX+49EYUZyDdBRqyfAi2bm47C3qsqtJiHlK49Iz+Ia12/bnLRRxRz8eR1Xu5KEzeTiNGD
-	 U/Y0vil6+vcc7NQimOlVNdaWsUoBCbm2xNjmx4O39f2xVAE1lWuCk25u73NG1kWP2Ag==
+	t=1793826891;
+	b=OYl6AuF2BLf6EIW3NNNhP/RSg8TvLb6xi7RvjGSJlVVp46UTELZ9Aeav6vI/wwxl5Xgn
+	 lUoq/IOFbYnEDFQoFmFM+R5EAm/17b5mJoBLzTLb+cVi2OgYgNTkI64FVQgZsPydaDsWE
+	 I3TlxtX3fI0HC8eg7QlsRnC8iBmKX3//3lGTdO6/iPBBVbuiGGFmSM2oiuyCdaT+7j5tV
+	 WNbAxxQrDlxP4G9ipSvZMNF9Xtgh4m2WJyqL9Ep2VAwVLg2ax0TKxwWLco6JV+cKX6YsB
+	 6ZJrBH3JyyxlgvAE7ydo6NfNur1gkdr5zFRmGurq2B9xflQ+783OnVQdo9ALRqncIIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826890;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lgQZUzuKmQKYJMmHJGvwXUOxiL+MscIBeL4exR4rhXY=;
-	b=hpyBJmJA+qUAx9vsMVFzeMbXSKBT/Q2q25c97C/U+97Vr+PsqxIIiu0wyvnp4515b3Sd
-	 MMSPwE0Md7+uEtmVe+MgvrcJwvjC1HWtKVkGiCXt4LEvt0VkRX3/XLRRCTos2RduVKyvp
-	 SSY5AuPLY+M2Saj791/yWyA+coBywMMdwdC06+ocV2xoIg+7okBV9IJkHRU+1lyz6I63y
-	 JlLc1Dq+FVT3MPxfCzgh2yWvyEPLo7BFkVUaX/emaJ1RrJYtHVqlQkb4Ai5nqLjqBZP9S
-	 pAw2w0/tuARtse7A5METrqT8jDrZS60HtASJSAh3zF/pYCeXKC/xCu7I1zsjF9/uG2w==
+	bh=ZQy7mGS2SU9xP5VrYe3UXiuf9Fy084hcEKDQpSEH/UQ=;
+	b=jdquoM7NnYeK6XhtGgTd8jEgvs7T0Bz5i8LUyzDwLPa/8GMET2shuurUd33INkelOAw/
+	 eB9XzFXJy7H/PJUekkzRc31QtH3g7RymuxAIns1N0D9dKdcdTlkSzM/L3d2SPen7nxaIB
+	 y7ECCYE6XiwK8nzk0v5IIoFbzQV/xdO28e7UC2ElW/fHM9OESOqtDtWDV9JvAnvfSZxqe
+	 eZ4GB25cL9EjcRqeaDatn64KITuwZt6KboaDtgPkiYug9D8cqegFtP5O/hd4eIHhKCq58
+	 9SIhMNaidKppH1/qYuCxb25+iIIL7k96jF9Jkn8jhnNLrkuDkEtnJmhlgadp9dzXv1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxQhqcNg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYd5grVa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0914A6070745;
-	Wed,  4 Nov 2026 21:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878C1607075A;
+	Wed,  4 Nov 2026 21:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxQhqcNg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADD11F00919;
-	Wed,  4 Nov 2026 21:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYd5grVa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131831F00919;
+	Wed,  4 Nov 2026 21:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826889;
-	bh=lgQZUzuKmQKYJMmHJGvwXUOxiL+MscIBeL4exR4rhXY=;
+	s=korg; t=1793826891;
+	bh=ZQy7mGS2SU9xP5VrYe3UXiuf9Fy084hcEKDQpSEH/UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YxQhqcNgVM3KRJsimPMdKya8JMYXSVuYLHMB60lRhOJJlsHWh2N1hlCJJlJJEIaf2
-	 co6G4AZsx9RbfIDyZBFAuqNPiKLz+fsccYpP2uNTKbwJiCHyuLVD8ExlGniN3jhB13
-	 vtsShvsUsgXBgsDnyFwZcomNdzEZyY3ScQPiExVw=
+	b=HYd5grVajjhPV0qDL3ifUYE9JoQsDhWnIY6ugGr2Vh67jJHrzTp+JeJQCAdjzeKXl
+	 BglV4COsXpxeP/0jPDUnUE7UgVCLVtJ6PaOF9wZNEoQF2HbAG0yEh1mkDI/8poWelh
+	 4YNLAjJbTvMPdqoN6s8gquWQ37ExSuPe3IBDFgIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radek Podgorny <radek@podgorny.cz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.3 068/547] Bluetooth: forget a peers RPA once it advertises its identity address
-Date: Wed,  4 Nov 2026 16:04:12 -0500
-Message-ID: <20261104211040.198772065@linuxfoundation.org>
+	"ck.chang" <ck.chang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Chris Marshall <deepspace69@gmail.com>
+Subject: [PATCH 7.3 069/547] wifi: mt76: mt7925: fix reset panic caused by the WM2 rx irq mask
+Date: Wed,  4 Nov 2026 16:04:13 -0500
+Message-ID: <20261104211040.225778304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,60 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radek Podgorny <radek@podgorny.cz>
+From: ck.chang <ck.chang@mediatek.com>
 
-commit 3889a5fcd091d2154861c19e9c581f9f04aabd0e upstream.
+commit c182bfe944eb275f7526cc326f81229b0e974a0c upstream.
 
-hci_connect_le() dials the RPA cached in the peer's IRK whenever one is
-set, on the assumption that a peer holding an IRK is on air with a
-resolvable private address. A peer that stops using privacy breaks that
-assumption: it advertises its identity address, the cached RPA keeps the
-value it had before the change, and the host aims at an address the peer
-has abandoned.
+mt7925_irq_map sets wm2_complete_mask, but mt7925_dma_layout has no
+tx done ring, so the MT_RXQ_MCU_WA queue and its NAPI are never set up.
+On a chip reset, mt7925e_mac_reset() calls napi_disable() on that NAPI
+and crashes:
 
-Nothing clears the cache. hci_find_irk_by_rpa() refreshes irk->rpa each
-time an advertisement resolves, so it tracks rotation, but a peer that
-stops sending RPAs stops producing the reports that would update it, and
-the stale address then survives until the adapter is powered off.
+  BUG: kernel NULL pointer dereference, address: 0000000000000a40
+  Workqueue: mt76 mt7925_mac_reset_work [mt7925_common]
+  RIP: 0010:mutex_lock+0x1c/0x50
+  Call Trace:
+   napi_disable+0x1d/0x50
+   mt7925e_mac_reset+0x327/0x420 [mt7925e]
+   mt7925_mac_reset_work+0x9a/0x1a0 [mt7925_common]
 
-On the path that creates the connection object this is currently masked:
-__hci_conn_add() resolves the cached RPA back to the identity address, so
-that is what goes on air. It is not masked on the reuse branch, which
-copies the swapped address straight into an existing conn->dst, and the
-next patch removes the conversion for the case where the controller
-cannot translate an identity address, so the stale RPA would be dialled
-there too.
+Remove the WM2 mask from mt7925_irq_map and from
+MT7925_INT_RX_DONE_ALL.
 
-Clear the cached RPA when the peer is seen on its identity address.
-hci_find_irk_by_addr() only matches public and static random addresses,
-so an unresolved RPA belonging to some other device cannot reach this
-path.
-
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Radek Podgorny <radek@podgorny.cz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: c4edf9e3e0e5 ("wifi: mt76: mt7925: replace shared rx irq masks with per-chip definitions")
+Signed-off-by: ck.chang <ck.chang@mediatek.com>
+Link: https://patch.msgid.link/20260805092409.1489401-1-eason.lai@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Cc: Chris Marshall <deepspace69@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    1 -
+ drivers/net/wireless/mediatek/mt76/mt7925/regs.h |    3 +--
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6311,6 +6311,15 @@ static void process_adv_report(struct hc
- 	if (irk) {
- 		bdaddr = &irk->bdaddr;
- 		bdaddr_type = irk->addr_type;
-+	} else {
-+		/* The peer is on air with its identity address, so whatever
-+		 * RPA is cached for it has been abandoned. Drop it, or
-+		 * hci_connect_le() would swap it back in and dial an address
-+		 * the peer no longer answers.
-+		 */
-+		irk = hci_find_irk_by_addr(hdev, bdaddr, bdaddr_type);
-+		if (irk)
-+			bacpy(&irk->rpa, BDADDR_ANY);
- 	}
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
+@@ -493,7 +493,6 @@ static const struct mt792x_irq_map mt792
+ 		.all_complete_mask = MT7925_INT_RX_DONE_ALL,
+ 		.data_complete_mask = MT7925_INT_RX_DONE_DATA,
+ 		.wm_complete_mask = MT7925_INT_RX_DONE_WM,
+-		.wm2_complete_mask = MT_INT_RX_DONE_WM2,
+ 	},
+ };
  
- 	bdaddr_type = ev_bdaddr_type(hdev, bdaddr_type, &bdaddr_resolved);
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
+@@ -48,8 +48,7 @@
+ #define MT7925_INT_RX_DONE_DATA		HOST_RX_DONE_INT_ENA2
+ #define MT7925_INT_RX_DONE_WM		HOST_RX_DONE_INT_ENA0
+ #define MT7925_INT_RX_DONE_ALL		(MT7925_INT_RX_DONE_DATA | \
+-					 MT7925_INT_RX_DONE_WM | \
+-					 MT_INT_RX_DONE_WM2)
++					 MT7925_INT_RX_DONE_WM)
+ 
+ #define MT7927_INT_RX_DONE_DATA		MT7927_RX_DONE_INT_ENA4
+ #define MT7927_INT_RX_DONE_WM		MT7927_RX_DONE_INT_ENA6
 
 
