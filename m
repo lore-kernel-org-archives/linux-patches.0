@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793827174;
-	b=NcTi9iDM/FL/f92wDCmN2cTg2KrdMcAvyeEV0z9doSroRrcUqpe8QJR0J4KSeV0QHGWD
-	 4Fe1x4EUC7E2bzt0X6QEMF2PlORP+aqbahBlIk2p3BfugTrTCW+3AkoxnupFhaTGa9ojV
-	 E9nN6PnuwB9z9KBcVIbVAEdIQrJH2WOSiyBmyVwCLSXq2+RvuqEPbJK61q6+MMfJC3oSs
-	 csEJ40rpZB+8ejx0FT9S9dOgBpqq30UQvfkckh5xAoBXQGoRcedPzfqLVqev9tBHe9oKS
-	 4eCsxozlj6ttT4nh2CNMEW5N/qFL2YaU1WVSAUFqrO/Y05UXmAa7hl+MsoYDf2gF1+A==
+	b=RnTzd9Jy2m8Io+bAVcEaRt8h38BOJup17LRj/aKhU4O+0RfCuP5ren0tylMHwtnzAwHy
+	 16yE3+RiBKleaFc3BeBb4E/6VFB+9vQX0RR3zvh56IetD3OgbCromDu3QVkrheU2Bipt4
+	 88aoYINQ/35SxxJRqFccsQZhC86kDiZjaIN0SFLyQWMAD62j1A4zFJncLdOiWyytXUjmv
+	 oDrnyXkY2VcxDraLpS7POxmhQT/Qh1W3WQQYlrO769V5CyG2XXDaHBpqxwGxs/C2tlliT
+	 pEimxJjvmUGacxZcJosJ0kukjgqOxN7pbCKYnHM6wTJHMCCsaMRUPIpjjGmTfNwqY9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793827174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QQiPQX9D5x8UF9T9cGNFz+PdDa49FkYHpGLrl3WKXo4=;
-	b=CR8nWQH5IstnHspgCgtM1ZCfN1xF47xcNqqD7j3WBlH40glrOjs4f1eEgJtphqij2CMS
-	 8fKac6fuXPMilPNyZUNOOb6Yoe08uB+A0qczdqV5RT9PHfU5Ls7yVKEDLIiDMVytEHHqk
-	 ou9dbngXyPga4C4z1hgSgvtjhIcQNpzHomTOClQlqZyawryFZ/siUn9o/1Swh5D4q5eyW
-	 COxOvPXpROBO3NPxf3NEDG3rleo7zGpSez3h8zkuvHuNnfD/hJB2jEAOUo2hTumzK/AsQ
-	 /mO7hwKlzwtdFmsO9lbYcaCxGqBvJe/h/t48pISm10PR1if694m1oumEat7JvhSSs6Q==
+	bh=8XCmfzg/PyYYdrTg0vD7sbM4oY+AkDAyC2L5EtPRKCM=;
+	b=UcNI31ovII2BNXkD+XdOgWbABhLj/oTmbTDcyHgoD8TErMi1BECEI9VkMSwDin+XBCNo
+	 eHexV+1QbLCr3Q8rYNRKnQwGYO5fq+e4Z91Z2Yjm0kSNFCfplZM8RuR6HfJF/qoVmEcxD
+	 jNtqIlawfKZYX/Ceg4ZAaQr1jXFUzTu+MJSRHsDSur7cNMKfnTRCuNB27OQSO1GTlkwnd
+	 E4W9+RSql+fi1unwPdr7fAIEMHHgQbNvTP7Xs6e5D8n4eRB3PyMQ0/drZdjL2DuZeWGrt
+	 2VS51gDFZy6lNZ0n+9R57fbD/IGvGksz18XGoSVXUnLWcfSGEWU590cYA5oPFWhNTDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VHXVOwm9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v2+Chv/2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A83C6074FA1;
-	Wed,  4 Nov 2026 21:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0026075241;
+	Wed,  4 Nov 2026 21:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VHXVOwm9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708FD1F00A02;
-	Wed,  4 Nov 2026 21:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v2+Chv/2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54851F000C1;
+	Wed,  4 Nov 2026 21:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827169;
-	bh=QQiPQX9D5x8UF9T9cGNFz+PdDa49FkYHpGLrl3WKXo4=;
+	s=korg; t=1793827174;
+	bh=8XCmfzg/PyYYdrTg0vD7sbM4oY+AkDAyC2L5EtPRKCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VHXVOwm9RZFV1sG+sdjsyeVtHlrpyiOajNWdu+V7YW4QOaWvJ338BsbCRVz4yfT41
-	 IFbmpQdyHJk4h0RSbDhcrn7AHB4SGTXinsIKY236UUfqAGxdqtyapy4XmM7qQd6cFE
-	 MIi7iqsSEqNy2kx2AxeKRb8ukttPhoR2wxYrsmuw=
+	b=v2+Chv/2vlDqDiE0KkDX5l8h2uSOIbQmVM+NieSvkT8gEkirZJRRf/7/+pJb1gti7
+	 Uju68B68LQgQApgy3XI7NSODSQztxmw679fIZ3CZCmuRpL0J3Og9tWYaZ7apSyFTu3
+	 Pt9J7R/dU/Ju0+oZxQ7wrY1OiYqJS391fy2GseTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Yang <yanglincheng@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Zach OKeefe <zokeefe@google.com>
-Subject: [PATCH 7.3 236/547] mm: khugepaged: fix folio is used after folio_put/unlock()
-Date: Wed,  4 Nov 2026 16:07:00 -0500
-Message-ID: <20261104211044.868021283@linuxfoundation.org>
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.3 221/547] iommu/arm-smmu-v3: Disable the impl before disabling the SMMU on shutdown
+Date: Wed,  4 Nov 2026 16:06:45 -0500
+Message-ID: <20261104211044.433161684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -74,86 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vernon Yang <yanglincheng@kylinos.cn>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 9010383e71e6ce75fcd3c8f87133c8ce6c0e6ab4 upstream.
+commit ab0dbf411aced59c04ce86fd8443faf13bdc9936 upstream.
 
-On the rollback path, folio_put() has already dropped the last reference
-of new_folio.  On the success path, new_folio is already unlocked and can
-be freed concurrently.  The trace_mm_khugepaged_collapse_file() is left
-with a dangling folio pointer.
+arm_smmu_device_shutdown() only calls arm_smmu_device_disable(), and never
+the impl_ops->device_disable() hook. On tegra241-cmdqv, that hook quiesces
+every VINTF through tegra241_vintf_hw_deinit(), which issues a CMD_SYNC on
+the shared CMDQ while it is still enabled.
 
-So using the folio_pfn() before dropping the reference, closing
-use-after-free window.
+arm_smmu_disable_action() already runs this hook before disabling the SMMU,
+to cover an unbind or a probe failure, and no devres release ever follows a
+reboot or a kexec to run it again. Have arm_smmu_device_shutdown() call it
+directly, instead of reimplementing part of what it already does.
 
-Link: https://lore.kernel.org/20260909025804.3233645-4-vernon2gm@gmail.com
-Fixes: 4c9473e87e75 ("mm/khugepaged: add tracepoint to collapse_file()")
-Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Zach O'Keefe <zokeefe@google.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 9ff145a25c5c ("iommu/tegra241-cmdqv: Fix CMD_SYNC use-after-free on teardown")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Assisted-by: LLM
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/huge_memory.h |    6 +++---
- mm/khugepaged.c                    |    4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/trace/events/huge_memory.h
-+++ b/include/trace/events/huge_memory.h
-@@ -211,10 +211,10 @@ TRACE_EVENT(mm_khugepaged_scan_file,
- );
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -5633,7 +5633,7 @@ static void arm_smmu_device_shutdown(str
+ {
+ 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
  
- TRACE_EVENT(mm_khugepaged_collapse_file,
--	TP_PROTO(struct mm_struct *mm, struct folio *new_folio, pgoff_t index,
-+	TP_PROTO(struct mm_struct *mm, unsigned long new_pfn, pgoff_t index,
- 			unsigned long addr, bool is_shmem, struct file *file,
- 			int nr, int result),
--	TP_ARGS(mm, new_folio, index, addr, is_shmem, file, nr, result),
-+	TP_ARGS(mm, new_pfn, index, addr, is_shmem, file, nr, result),
- 	TP_STRUCT__entry(
- 		__field(struct mm_struct *, mm)
- 		__field(unsigned long, hpfn)
-@@ -228,7 +228,7 @@ TRACE_EVENT(mm_khugepaged_collapse_file,
- 
- 	TP_fast_assign(
- 		__entry->mm = mm;
--		__entry->hpfn = new_folio ? folio_pfn(new_folio) : -1;
-+		__entry->hpfn = new_pfn;
- 		__entry->index = index;
- 		__entry->addr = addr;
- 		__entry->is_shmem = is_shmem;
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2245,6 +2245,7 @@ static enum scan_result collapse_file(st
- 	struct address_space *mapping = file->f_mapping;
- 	struct page *dst;
- 	struct folio *folio, *tmp, *new_folio;
-+	unsigned long new_pfn = -1;
- 	pgoff_t index = 0, end = start + HPAGE_PMD_NR;
- 	LIST_HEAD(pagelist);
- 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
-@@ -2264,6 +2265,7 @@ static enum scan_result collapse_file(st
- 	result = alloc_charge_folio(&new_folio, mm, cc, HPAGE_PMD_ORDER);
- 	if (result != SCAN_SUCCEED)
- 		goto out;
-+	new_pfn = folio_pfn(new_folio);
- 
- 	mapping_set_update(&xas, mapping);
- 
-@@ -2667,7 +2669,7 @@ rollback:
- 	folio_put(new_folio);
- out:
- 	VM_BUG_ON(!list_empty(&pagelist));
--	trace_mm_khugepaged_collapse_file(mm, new_folio, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
-+	trace_mm_khugepaged_collapse_file(mm, new_pfn, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
- 	return result;
+-	arm_smmu_device_disable(smmu);
++	arm_smmu_disable_action(smmu);
  }
  
+ static const struct of_device_id arm_smmu_of_match[] = {
 
 
