@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831674;
-	b=ClAyXOT+oMMx+dFPCzd2YsTMM4g7eDw6q/d+vhe7F+QBd2TpYjp6ahi/HnkdvthkSRh1
-	 wJc9KrdcUuX9XdxtJ/DXZ/pG/dcMfNz+35MWEvqrEt7JZQIhJ0/gzqfl0X3Te3wlMblcD
-	 27rBNu+2SBbxKqGAfD9RooKCX2Trgt0Lzo+2HIyAndJ2bphodilx3GffiSi85g1hXGIAC
-	 El9I5SE9XUMBYnJUl+7XHp20Y0uJePTmOghbzl5Pc7KESTw6UFjjXBxmwR4a6pcbwqdRM
-	 Tka1VNRU8SWS5yY4Kf0yLdYSMdYLckNjjdHTL+LyPENa/3p+NeFrLBmrVI8NbPnbcrQ==
+	t=1793831675;
+	b=4WNRt3pYlQ0aCTLd/8je0vYjXwhvOieyN29BhwlrlzRSixLEzceWwULEP4v0+spkTXYu
+	 8hKPO1K8YYKVHraHwDJrQ/i7WpFDOL5K+y6H4YC9q+sMlxueUZ+GzBVme126Qb56h9AHt
+	 5gMpJXjUX/2bKcpqe4Y7AzfNo/cth/kA4Au04WOQYBWEn3f74ZfvkdINjf3nTGJfKRZdi
+	 6mELWXQFoFRpRZZArr6Cxrt7Ib8yNiRS+FFNqWqQYRxmMRkKLJclxUNqEwjylfzpJxFOY
+	 BFxvJc/6o6Ww36jwP231PHz9D2V9jwwK8139xeMh1L4KHECshvhWd2ZU+myvzMQ3o/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831674;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RfZf4PFLG8bVoRTCc35B27N52rVntH64T0rYQ8tqdJM=;
-	b=5taN5edpqvx73JUqJF12H7T23NXIhomOsBkmB6/qeoYlQTYjLdGt+m0BlukH8Q87g92w
-	 NFwZukiBhUsN1vnpIsIp9wkqvDmErtLu9TX3opaJIA5flgoupphfiDcOjmF3ndFpwbcNg
-	 pFyCxcbwDEuMCSGd9cu1DytKbWMsUoUSTv5P2Be1ivz/yI3lDHpn2FoZ0SO3fTJxUtUT5
-	 /yrlFM0GWVocXJIfQWadUWxCzDNPNihbT7tb4qUROBLaQ/fSvTv4dElOfFs62lYyEIu6T
-	 cWtsb4lsyHAnHZp6iD/FWYJj5GLyT2OpuXi5IMFt7R4ASyE6fDmnfuu+4kYlT7Fgggw==
+	bh=08F4maF/RngSD/lM+qIwteI1ekk9+x/irJP8QtwwYp4=;
+	b=2oK99MxKwBCuSZHbjOEI34JgjgAJTZnMdClo2iO/EqNKgGcy0UTQE5bp+A9ixWbEwH5U
+	 DbiS3fbmP2Y6bQVg8Z1cvsp//ioS8mlE2T3FNYhaRLZ+K/lxQ0pD3yutkHZ9XK8h4gWVJ
+	 9tjyndEY9hxauRmKmmSheqq8LHezXgtCIWQmIga//b5Mt7+58ql099tXd9uohSvrhnRF9
+	 R5cOXiwcE6S6TemkEtY4ndeEMrDMGTySiqq96zsr3TFDi9zEnAf++YyNrZvGTsU3PrztX
+	 8p4q690shjAd7j9tzZBspeQa0DfAfbvfZ8vmOu6eChVdRFmoQSJkdZoCD83PHJRFtCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6A+ERqu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gxRb0yPy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA6E606A33A;
-	Wed,  4 Nov 2026 22:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F29606A33C;
+	Wed,  4 Nov 2026 22:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6A+ERqu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4384D1F000C1;
-	Wed,  4 Nov 2026 22:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gxRb0yPy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69F81F000C1;
+	Wed,  4 Nov 2026 22:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831673;
-	bh=RfZf4PFLG8bVoRTCc35B27N52rVntH64T0rYQ8tqdJM=;
+	s=korg; t=1793831675;
+	bh=08F4maF/RngSD/lM+qIwteI1ekk9+x/irJP8QtwwYp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6A+ERqu2iRLxegEodO9w9C/eWLCBFZZIwBewIlRIcOguevN5eVjYLSLgV7uXz8Lg
-	 edm8liHZuGaDlnRmonCL4WEMZ68LB/Q9p65tCDZjr1Wt00QvuTzKNImIhMLuh76KJO
-	 yTWp+tWDDyIASpHtkK7XUcFSo+JsLTopWy4Q0r5g=
+	b=gxRb0yPyirkEzTO/JIw0yhorIxSMZlRjcpyUeccoj2Oq3QHvFAbsfEwEqr03W0EBH
+	 +5Vzm8K0HqlKUbtKiBXcXkoEGHWZyZWHiGlWm8PerGYj++ZUGgZ9UU0pAw4DHkywGm
+	 ltxnlUXwQ5w/WLnTzMy7uU0iP8GnzY9QtsfQOfHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0839/1005] xfs: bound da-node entry count against the correct geometry
-Date: Wed,  4 Nov 2026 16:09:32 -0500
-Message-ID: <20261104211106.825157558@linuxfoundation.org>
+Subject: [PATCH 6.18 0848/1005] xfs: dont overrun incore inode when cleaning attr forks
+Date: Wed,  4 Nov 2026 16:09:41 -0500
+Message-ID: <20261104211107.060989871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,62 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 3df5e5aaa3bc0913236c48ab29b7df3a785aa29f upstream.
+commit c28b4b48deac17749ed1ebe4289a4ba73541ddc6 upstream.
 
-xfs_da3_node_verify() bounds the node entry count against the larger of
-the directory and attribute geometries because, as a buffer verifier, it
-cannot tell whether the block belongs to the directory or the attribute
-tree. When the directory block size exceeds the fs block size (e.g.
-mkfs.xfs -n size=64k -b size=4k), an attribute node buffer is a single fs
-block that holds only m_attr_geo->node_ents entries, yet a crafted attr
-node may claim a count up to m_dir_geo->node_ents and still pass the
-verifier.
+LOLLM noticed that xrep_dinode_check_afork doesn't check for a
+di_forkoff value that is so large that the attr fork would begin after
+the end of the inode space.  This causes afork_{ptr,size} to be
+nonsense.  What we really ought to do here is zap the attr fork.
 
-xfs_da3_node_lookup_int() then indexes btree[] up to that count during
-its binary search -- an out-of-bounds read via getxattr/listxattr on a
-mounted crafted image.
-
-The buffer verifier is the wrong place to tighten this: it has no fork
-context, and the transaction-less read path used by getxattr does not run
-xfs_da3_node_set_type() either. xfs_da3_node_lookup_int(), on the other
-hand, always runs on that path and holds args->geo, the geometry of the
-fork actually being searched. Bound the entry count against
-args->geo->node_ents there, before walking the entries.
-
-Fixes: 7ab610f9e0f1 ("xfs: move node entry counts to xfs_da_geometry")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: e744cef2060559 ("xfs: zap broken inode forks")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_da_btree.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/xfs/scrub/inode_repair.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_da_btree.c
-+++ b/fs/xfs/libxfs/xfs_da_btree.c
-@@ -1787,6 +1787,20 @@ xfs_da3_node_lookup_int(
- 		} else
- 			expected_level--;
+--- a/fs/xfs/scrub/inode_repair.c
++++ b/fs/xfs/scrub/inode_repair.c
+@@ -1243,6 +1243,8 @@ xrep_dinode_check_afork(
+ 	if (XFS_DFORK_BOFF(dip) == 0)
+ 		return dip->di_aformat != XFS_DINODE_FMT_EXTENTS ||
+ 		       xfs_dfork_attr_extents(dip) != 0;
++	if (XFS_DFORK_BOFF(dip) >= XFS_LITINO(sc->mp))
++		return true;
  
-+		/*
-+		 * The node verifier cannot tell whether this block belongs to
-+		 * the directory or the attribute tree, so it only bounds the
-+		 * entry count against the larger of the two geometries.  Here
-+		 * args->geo is the geometry of the fork we are actually
-+		 * searching, so reject a count that would walk btree[] off the
-+		 * end of this node buffer.
-+		 */
-+		if (nodehdr.count > args->geo->node_ents) {
-+			xfs_buf_mark_corrupt(blk->bp);
-+			xfs_da_mark_sick(args);
-+			return -EFSCORRUPTED;
-+		}
-+
- 		max = nodehdr.count;
- 		blk->hashval = be32_to_cpu(btree[max - 1].hashval);
- 
+ 	afork_size = XFS_DFORK_SIZE(dip, sc->mp, XFS_ATTR_FORK);
+ 	afork_ptr = XFS_DFORK_PTR(dip, XFS_ATTR_FORK);
 
 
