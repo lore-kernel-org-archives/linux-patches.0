@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827224;
-	b=B15zRBbxDvpAp9b7cG5eKy41mi83hXB0cHqfpk27X0EGDP7jfB0jiA0ininr0Eg4FE3d
-	 DMpLX99JurdfPGiZ90gomD4/fBAkDjFQhyDq13E05Moprf/g6otMubo0Y9WXsQJys/N+1
-	 MNT9OPmC4ITIXvY0vA9HoRkRGqkRy/FGDyrpQYNfyJfGZv7+Ou6pSyzSbJnCcdjnDoXan
-	 JB6oZtObXjuoSNj8tGWCcvf8eqO06gTxV8dXBDUYbRVy+Gh+o+vhNfimuFtQQxEBF1osK
-	 yesPZTRVxGc8LIN+QnUu8P+U8zPziKBZeQfNs6gHlr+0QV9wfQnrV1BLOgcuJqwIqHg==
+	t=1793827226;
+	b=oE53hlQtySxvgDaQaV/im7ZdzD1ll4uN/brnTLpxueGE0ao3561v/BYwU64F8MLUXPxq
+	 FW4ZNjJcDfS35L9b0cs8ExVwEGCUMQyYyj+trz2RVOKHeUA6x98tqNBgQkBcnHB0L0ocZ
+	 opztA9k1UlTKgeL5VEJ4RVZEtH3JuQZcdSiC8DgwZGakxcNff3seApeiJMZSJZ0rv8naX
+	 Ydu84xQlP9go59vwBEcr33Dm0aXQrgCnjIxL+stUxd2lPfpTnAcGYIYXiaiAqlNK1ADS6
+	 344iWjtXxvejMQY2eec62P361zDxfsO6CcKPsPBDIT4OBbtIidh+yxYGhBSeXu1x86Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827226;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9fME2ajxKzboMsO1tpxTxesIsBUtIyjl4nv+OEXZSfU=;
-	b=uy/gPO+wfw1ygWXVqk6szDlgBriG/tx9JrYvBgpDiDtyMfSn53HZMurIqk9m0dJuTMJz
-	 cc7tcGKNekJl8Kjg/1co3Qy5pWSpgEHFEupCSQ7mc1NYblfelJ8/tE173Js53nB62pVTU
-	 H5j3Ov19XmszOdf1jBjFX8mbaMIssHgtSzp05bw89jcOPOfBEyXywo5FZmh6rFj3LSy76
-	 0LDTecXXLOjZ5M4CIeCD3NF0KLBeoRH83LFp0OLxr9Yow2vXPdHCiJHyrnUE7wQoQ24C7
-	 2WP1tCFXB/PT2RmjImgKitz7Ud+dOmfGTbwU9bMUlg7FBqZqPD9xCdY4c0ha5fj/V8g==
+	bh=r0OUqGWLTrZopx84DgAUAtUABb+VYJtqnmpIs9q7+A0=;
+	b=qse6YlQgFVzLVM6p/qxyHjYOOSdlLAmNw/anfxiAOZBe9q1O7CYRGjeH4abKKyUKgHRO
+	 FIYz7XCPmTfT3bsjThuRrUX5awqUiVH8iQDULG+NlKaCT6xjIYmQT81nRG9iTZceOCC4V
+	 0D3I3htteMw6Ag8cN+M4LaVKWZeS9/7bhdsj/DdebwEBIhBcE+oHMEWgRKIeljuzHwzqU
+	 KtYCzWfqCIi7SH5YoQUfedkXGKrdcRPNlPawy52mu6E3FGtDire0FaYvunsa8LkoSpnvN
+	 VIHTWPXaZxrq8tzSDVMIDQOc8Hw6//aVmLjoCC8EBsM41xr68tFuBJJS9cG1d0SpXaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8Hvj6A5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ps6ePTaS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC6C606B3B7;
-	Wed,  4 Nov 2026 21:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10EC608C9B7;
+	Wed,  4 Nov 2026 21:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8Hvj6A5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5821F00919;
-	Wed,  4 Nov 2026 21:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ps6ePTaS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDAD1F000C1;
+	Wed,  4 Nov 2026 21:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827224;
-	bh=9fME2ajxKzboMsO1tpxTxesIsBUtIyjl4nv+OEXZSfU=;
+	s=korg; t=1793827225;
+	bh=r0OUqGWLTrZopx84DgAUAtUABb+VYJtqnmpIs9q7+A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8Hvj6A5ZI3EwuoWwhqO/AXqWxcN7GpLJXuIfR0oZ1/7IxhdsGOwI8WTzXAhzV8IG
-	 JRGXmFbUc3opcsytX16rr2UaaXdK/lIyWnOMHohnYdXDfeKaejrnXed/3R9Le84OJA
-	 N9GFQyp9igO08c9mSBS0932cWrvWRB56KYrZDSRo=
+	b=Ps6ePTaSTx0xWh655q+a0EZzGVLirFLlzl8+ce5lxQKYTVWoNICcA1atPNhp2kbZS
+	 JYrTAc4WqWTHelNRE/mkUw6dSif2o0i/2Z2da0kswxjfIX5szzAkaRWG6L+gZgaiOq
+	 XMew3m6xrcr6By4r0amU0Tgx28ydONT2MrkzKMFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.3 262/547] media: rc: Ensure that rc_unregister_device() does not free input device
-Date: Wed,  4 Nov 2026 16:07:26 -0500
-Message-ID: <20261104211045.635761738@linuxfoundation.org>
+Subject: [PATCH 7.3 271/547] media: rc: Fix ABBA deadlock by making locks more fine grained
+Date: Wed,  4 Nov 2026 16:07:35 -0500
+Message-ID: <20261104211045.889781017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,53 +69,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-commit 61c7ca95d2483c77dfdde1b007cbe846f145dec4 upstream.
+commit c6d68866ad8aa1e957a3e5a6ede971148f1e3d59 upstream.
 
-During or after rc_unregister_device(), IR may still be reported which
-results in a input event being reported. This could result in a null
-pointer deref in rc_keydown() or a use-after-free of the input device if
-the pointer was read before it is set to NULL.
+The ir_raw_event_unregister() function takes the ir_raw_handler_lock
+first and then the rc_dev->lock. Other functions like change_protocol
+do this in the reverse order.
 
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+This means that an ir decoder module unload and writing to the protocol
+sysfs file can cause a deadlock.
+
+ir_raw_handler_lock protects the client list, amongst other things.
+Split this out into a separate lock so we can ensure the locking
+order is always the same.
+
+Fixes: 93cffffc18f6 ("[media] media: rc: fix decoder module unloading")
 Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
 Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/rc-main.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/rc/rc-ir-raw.c |   39 ++++++++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 15 deletions(-)
 
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -1742,7 +1742,7 @@ void rc_free_device(struct rc_dev *dev)
- 	if (!dev)
- 		return;
+--- a/drivers/media/rc/rc-ir-raw.c
++++ b/drivers/media/rc/rc-ir-raw.c
+@@ -10,7 +10,8 @@
+ #include <linux/sched.h>
+ #include "rc-core-priv.h"
  
--	input_free_device(dev->input_dev);
-+	input_put_device(dev->input_dev);
+-/* Used to keep track of IR raw clients, protected by ir_raw_handler_lock */
++/* Used to keep track of IR raw clients, protected by ir_raw_client_lock */
++static DEFINE_MUTEX(ir_raw_client_lock);
+ static LIST_HEAD(ir_raw_client_list);
  
- 	put_device(&dev->dev);
- 
-@@ -1854,6 +1854,8 @@ static int rc_setup_rx_device(struct rc_
- 	if (rc)
- 		return rc;
- 
-+	input_get_device(dev->input_dev);
-+
- 	/*
- 	 * Default delay of 250ms is too short for some protocols, especially
- 	 * since the timeout is currently set to 250ms. Increase it to 500ms,
-@@ -1880,10 +1882,8 @@ static void rc_free_rx_device(struct rc_
- 	if (!dev)
- 		return;
- 
--	if (dev->input_dev) {
-+	if (dev->input_dev)
- 		input_unregister_device(dev->input_dev);
--		dev->input_dev = NULL;
--	}
- 
- 	ir_free_table(&dev->rc_map);
+ /* Used to handle IR raw handler extensions */
+@@ -273,13 +274,6 @@ static int change_protocol(struct rc_dev
+ 	return 0;
  }
+ 
+-static void ir_raw_disable_protocols(struct rc_dev *dev, u64 protocols)
+-{
+-	mutex_lock(&dev->lock);
+-	dev->enabled_protocols &= ~protocols;
+-	mutex_unlock(&dev->lock);
+-}
+-
+ /**
+  * ir_raw_gen_manchester() - Encode data with Manchester (bi-phase) modulation.
+  * @ev:		Pointer to pointer to next free event. *@ev is incremented for
+@@ -615,15 +609,18 @@ int ir_raw_event_register(struct rc_dev
+ {
+ 	struct task_struct *thread;
+ 
++	/* Holding dev->lock could result in a dead-lock */
++	lockdep_assert_not_held(&dev->lock);
++
+ 	thread = kthread_run(ir_raw_event_thread, dev->raw, "rc%u", dev->minor);
+ 	if (IS_ERR(thread))
+ 		return PTR_ERR(thread);
+ 
+ 	dev->raw->thread = thread;
+ 
+-	mutex_lock(&ir_raw_handler_lock);
++	mutex_lock(&ir_raw_client_lock);
+ 	list_add_tail(&dev->raw->list, &ir_raw_client_list);
+-	mutex_unlock(&ir_raw_handler_lock);
++	mutex_unlock(&ir_raw_client_lock);
+ 
+ 	return 0;
+ }
+@@ -656,16 +653,19 @@ void ir_raw_event_unregister(struct rc_d
+ 	kthread_stop(dev->raw->thread);
+ 	timer_delete_sync(&dev->raw->edge_handle);
+ 
+-	mutex_lock(&ir_raw_handler_lock);
++	mutex_lock(&ir_raw_client_lock);
+ 	list_del(&dev->raw->list);
++
++	mutex_lock(&ir_raw_handler_lock);
+ 	list_for_each_entry(handler, &ir_raw_handler_list, list)
+ 		if (handler->raw_unregister &&
+ 		    (handler->protocols & dev->enabled_protocols))
+ 			handler->raw_unregister(dev);
+ 
+ 	lirc_bpf_free(dev);
+-
+ 	mutex_unlock(&ir_raw_handler_lock);
++
++	mutex_unlock(&ir_raw_client_lock);
+ }
+ 
+ /*
+@@ -688,15 +688,24 @@ void ir_raw_handler_unregister(struct ir
+ 	struct ir_raw_event_ctrl *raw;
+ 	u64 protocols = ir_raw_handler->protocols;
+ 
++	mutex_lock(&ir_raw_client_lock);
++
+ 	mutex_lock(&ir_raw_handler_lock);
+ 	list_del(&ir_raw_handler->list);
++	atomic64_andnot(protocols, &available_protocols);
++	mutex_unlock(&ir_raw_handler_lock);
++
+ 	list_for_each_entry(raw, &ir_raw_client_list, list) {
++		mutex_lock(&raw->dev->lock);
++		mutex_lock(&ir_raw_handler_lock);
+ 		if (ir_raw_handler->raw_unregister &&
+ 		    (raw->dev->enabled_protocols & protocols))
+ 			ir_raw_handler->raw_unregister(raw->dev);
+-		ir_raw_disable_protocols(raw->dev, protocols);
++		raw->dev->enabled_protocols &= ~protocols;
++		mutex_unlock(&ir_raw_handler_lock);
++		mutex_unlock(&raw->dev->lock);
+ 	}
+-	atomic64_andnot(protocols, &available_protocols);
+-	mutex_unlock(&ir_raw_handler_lock);
++
++	mutex_unlock(&ir_raw_client_lock);
+ }
+ EXPORT_SYMBOL(ir_raw_handler_unregister);
 
 
