@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827073;
-	b=NQ0TXMbossrO2yHGnkS2S/uEUy4kMVM05+u0p+ORM5k2JvFUXMDtBgGZqWyv8GFJiERW
-	 Y2KZMJXdrbvtkaNKu6B2T1XDedGL5TOxToOAPsgMFsQNtbMACaJX6HWLgxEwI16QrLkut
-	 G+Xon6KCrkbiXO1IEMahbyJKMzGdAdU4qYRjjinKf5Wrs+nna4JwHMxDXnZDDy3q2OgFS
-	 xboXu9eB+udXFy4ADMb9eaUjQvbLyW4BO4Lu2i247SjRtZzTqAGt5ej7P7r81mIhiwiJf
-	 9IuYw5rVBXgXphpv6pzZcnKtqWId/OTh5VPDUKDYbRP3G3CTC3qQi4McfLjSon5lU6w==
+	t=1793827074;
+	b=0WWTLxtVxbxmn84084sNeQ+t+dB3FBs9/e6wmQKzwl3Ja8RcJAqzjF15PryBy2yeuy3H
+	 1ZX8naqN52i3mnd6HTM3zS+k9zF8lcTFgqgijFlBj0LW1XYsnOMmCytRIBigYXWrDKUci
+	 mQjCmBOoB6D2eZlhyTzHYWALNAj9Goi/SDVYqT5T3uXMj8+vGroEZx3jD4DNg+qNvj0Aa
+	 VtvZW/E0KD72iWpe0AAy+80jddVIY4Ng77AymVCPc+a+Q/tVN0VbzBk7qRiW1K4xVTQXP
+	 Xt1dbA0i1UdQjS1bpVV/q6q2CddAdmivMyHSEY8nnGuxnvRqfKPEShnRkI0Ki4ImM1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LF+P32v9rzt2UERuI+ObLeQNYEEyUHQi2uaZGWvHksw=;
-	b=EhtxF/4dlAXc9jGXl9nEfAa7ifdhGZG0SUJOrBf7/6I7N69ES32Kb6b7bhug7/r6QMqO
-	 hv+YR5mRs8NAsTaPx4rhuYdwFr6pNcaD/dmWqveSs6tx/2dWIHmLfOHFPvSHTAs1evoDP
-	 jXwxnZjxDEI3dRUWUXr0jU5sdy+BWqQ7wS+ROvkFG6hbGj7f5Zl8COfG9Y3JkhjP+fCRd
-	 Rgj099rMR+cYdswSLiKAlbjFLJxwOcKswptMiMzOk52TiuJJrnrMxi2rL/NEzlANzuSuT
-	 N31pO67WL6A8+uyxoyfCAIP7OkXowvuSyxTPTa0W7KrJD22z69YI2Ha/P40Rs2RMXXg==
+	bh=k7Qe4RgVYv1jCrxIRfb5vg6jfMPD3q0w/cM3sVe/nUQ=;
+	b=D1jXI6JmhZ24/M9W/wc3oP+oofsYIduJgooklz+0skvELcsmEOzGnx4GDY0NOlB4IPEH
+	 YAA3BFZxRsiyV9osdAGhybnxGGK3PZFAUmHqYPKX96kPJZSlYpi8q+xic8VTaC0oeZfeT
+	 AGxeKL2XKNO8kdAh2tku/X7smNQ5IYwi2jjn/dqI7Mcy77kSTOTMhWm0MJAeyjRE2Zfkv
+	 Evnts3yH+F+8ywvNgzlIEHmZNnjXgKisYKSqJJdrQEWmt1jZiCrGlAaYdMTnfAVtRKt9q
+	 YKL/YXvWRdiK0OVm7NBZppRUp0UovqLezcas3eg9LS4fY8NShob9YF9DiIVPbedelQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L8Iy763/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yugCgxI3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6A4606AE05;
-	Wed,  4 Nov 2026 21:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C08606A86D;
+	Wed,  4 Nov 2026 21:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L8Iy763/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694771F000C1;
-	Wed,  4 Nov 2026 21:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yugCgxI3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFFB1F0093A;
+	Wed,  4 Nov 2026 21:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827072;
-	bh=LF+P32v9rzt2UERuI+ObLeQNYEEyUHQi2uaZGWvHksw=;
+	s=korg; t=1793827074;
+	bh=k7Qe4RgVYv1jCrxIRfb5vg6jfMPD3q0w/cM3sVe/nUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L8Iy763/uYd91Sn+6RHGS5+Rd/N+Ix687aobRO0FOVkzVS+Rpl3JK8TaPnNc+TLtc
-	 jFbA3p4zXNWIVKvK2wOKP702dSLrbM7JLjsq1Ux7/O19R53nlLybGNR22A0k3XBsyY
-	 kOTodyiMXvt1hTfKHv1em2X/jIpoZuHYNY0Rnjv8=
+	b=yugCgxI3zvTJS92YeKsInfSv/iCdsIwIk5E9fChz33ToMBWy1hXXl2jdn5Ahe05Pg
+	 XZwUzrfk2cbqvJP8yjnKvRg6mPvBANIXRAU9xxF0IwLfuZVLE8vG/wOXMwPV+9TOPb
+	 f3MpGjORU361FTjEzglP+uHEQQMQCUO7vF4F4juI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 7.3 176/547] s390/kprobes: Prevent kprobes on instructions with exception table entry
-Date: Wed,  4 Nov 2026 16:06:00 -0500
-Message-ID: <20261104211043.147068374@linuxfoundation.org>
+	Andreas Wendleder <gonsolo@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.3 140/547] wifi: b43: fix use-after-free in b43_bcma_remove()
+Date: Wed,  4 Nov 2026 16:05:24 -0500
+Message-ID: <20261104211042.151993248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,39 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Andreas Wendleder <gonsolo@gmail.com>
 
-commit fc9bb0ecd310b53af5116415952a1fb89d4660b9 upstream.
+commit c6c8bc355657115664131b38c53c5ddf7d93b072 upstream.
 
-The mvcos exception handler ex_handler_ua_mvcos() decodes the faulting
-instruction, assuming it is an mvcos instruction. In case the instruction
-is kprobed the decoded instruction is a breakpoint instruction instead,
-which leads to incorrect instruction decoding and potential register
-corruption.
+b43_one_core_detach() frees the struct b43_wldev it is given the bus
+device of. b43_bcma_remove() then reads wldev->dev again to free the bus
+device, which is a read of freed memory.
 
-Fix this by simply preventing to set a kprobe on such instructions,
-similar like arm64 is doing it.
+b43_ssb_remove() does not have the problem: it takes a copy of wldev->dev
+at the start. Do the same here.
 
-Fixes: c488f5187a24 ("s390/uaccess: Shorten raw_copy_from_user() / raw_copy_to_user() inline assemblies")
+Fixes: 96838d61102a ("b43: Fix memory leaks in b43_bus_dev_ssb_init and b43_bus_dev_bcma_init")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Andreas Wendleder <gonsolo@gmail.com>
+Link: https://patch.msgid.link/20261013000124.48605-1-gonsolo@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/kprobes.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/broadcom/b43/main.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kernel/kprobes.c
-+++ b/arch/s390/kernel/kprobes.c
-@@ -85,6 +85,9 @@ static bool can_probe(unsigned long padd
- 	if (!kallsyms_lookup_size_offset(paddr, NULL, &offset))
- 		return false;
+--- a/drivers/net/wireless/broadcom/b43/main.c
++++ b/drivers/net/wireless/broadcom/b43/main.c
+@@ -5677,6 +5677,7 @@ static void b43_bcma_remove(struct bcma_
+ {
+ 	struct b43_wldev *wldev = bcma_get_drvdata(core);
+ 	struct b43_wl *wl = wldev->wl;
++	struct b43_bus_dev *dev = wldev->dev;
  
-+	if (s390_search_extables(paddr))
-+		return false;
-+
- 	/* Decode instructions */
- 	addr = paddr - offset;
- 	while (addr < paddr) {
+ 	/* We must cancel any work here before unregistering from ieee80211,
+ 	 * as the ieee80211 unreg will destroy the workqueue. */
+@@ -5691,14 +5692,14 @@ static void b43_bcma_remove(struct bcma_
+ 		ieee80211_unregister_hw(wl->hw);
+ 	}
+ 
+-	b43_one_core_detach(wldev->dev);
++	b43_one_core_detach(dev);
+ 
+ 	/* Unregister HW RNG driver */
+ 	b43_rng_exit(wl);
+ 
+ 	b43_leds_unregister(wl);
+ 	ieee80211_free_hw(wl->hw);
+-	kfree(wldev->dev);
++	kfree(dev);
+ }
+ 
+ static struct bcma_driver b43_bcma_driver = {
 
 
