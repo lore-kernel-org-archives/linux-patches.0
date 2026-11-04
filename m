@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829529;
-	b=Me1OdnY9DnXBLBwD6Labb8A/FJZUdc6hJJpiVMgkstR6UhbV3gtkIWGgoi9m1N9USyeX
-	 EH0bHgUGd2Sbn+zBtW90DtWvgvJ+5ss+aKWVxPAJjEnnlTjkTwqIV8PNv7wK8HN2TESGX
-	 7oNR7/3+C1RR62Ccq0TG266TYfVkzyp+x8p8WeZXzXTqLj5TRlSARO9HPPpwpJgvWfKdT
-	 EESV7HqobVh4dmw0UtmLTlJQPTBjgiW3AhvhyC/DTbwIsMWcy+f7Q6JW67yp1/OHUXq/V
-	 CPjkjfi69xJdOGUzCH9fJ1p1hgPwM3G2NDwJafdif21//mqPAMQV0tgLZaG+RpHrteA==
+	t=1793829531;
+	b=dKQ2m0VUNI2sWrC7iRAL+ro1gQTrRIn8yEUnGtQS4jMf8AwS8yBHhBJji57UVHy0Rc69
+	 cn5CtUxbYak6In+O2vRxnzhKKxjPECK0RgaLNbo+A292ZJ36ZfZA4cI59zPNz156JhJ0r
+	 +LT3TXyH5qJxyN8JnXrI4CRJUcdl8qAfFfyFZ0DmJcP+BfoNr7nborP1ue012Fyi/tHT1
+	 zTlhtVAtKwAMb6XGYByWm7TUhlcRvblBRx82H26ZwTlVa7LzftE11Y6OoGMY0co7ylzan
+	 IXICINnNbU7LuK1Kqm6jbGb9pJ9pyQGLaowpxYAwCWtUA+QH3GyFptK1NBK0cH0uUqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829531;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VV86nxHXSIEoKeXnqr0UnhdUOf7dPxFMNMeAKD1JZFA=;
-	b=IP1vaO5lul0MPx3ku1TC73XehKJTfJPbsoL3mwNoztxZ99t2pTAjc4TzTkAfIr+jY32X
-	 6SmMVy9ljgMh7Ic/yUfrs/tkmyFQeyrUyba35Xorc+LPmTTVqodwdqDshpbc9WWMl7c+s
-	 5R6UM1IYdH1LMwlEyrf+26TmzG888ZkS/upwYMcZogYOSHW8ysM0xHA9G80qDntLVUbuT
-	 tthP5J882lTFHpqtA9x1t5BMUdgC/dCgrtW7fEoR/pVLSdtoR4gCldp2QQFW6j4TrTDsm
-	 UBV+OQOspe+EPo/9dVrsx4p4bZuEVsIW6XQZPPNeoVRcdkB2ESUAd+urrgV/j7v/u+w==
+	bh=GXvHj5yNJvbNCV/MLN+1pczmnNb3PTT+R9aRCcM8xJI=;
+	b=ANxHjmEj+iXGRJyXxfc6TYadus2t987lRNMMj8gVpWzOF3OJtfwyRmatZBdk7xT7QF9A
+	 rzqGnX9KwgLnwUaLYAL2J3SEnunBR2WAdcovEvg6uQd8Er1O4I7+t6NeIB2kLugMLzuap
+	 XaydkHCnrE8O7cqqdyoi1KKYVbG3RqpERN3jQq0ujY1a/rLk061ce8Ssny9vyBnwc0rzd
+	 MnUlQM7fMLkLnoGA+otoEScWNX2mqERJFh4+DTmWBbTEynZyqSO094gMaloAHEK/6EQpg
+	 Ar02lGmo1F364OnT+ATyNBMSeXwfKIpSsEndBLc6gCHr0hdoKP+P/qVd5T/7lN8u+PQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQriLhcp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rywRZ6uy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501A0606AB38;
-	Wed,  4 Nov 2026 21:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D72606AB38;
+	Wed,  4 Nov 2026 21:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQriLhcp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14151F00A15;
-	Wed,  4 Nov 2026 21:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rywRZ6uy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674DE1F000C1;
+	Wed,  4 Nov 2026 21:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829529;
-	bh=VV86nxHXSIEoKeXnqr0UnhdUOf7dPxFMNMeAKD1JZFA=;
+	s=korg; t=1793829530;
+	bh=GXvHj5yNJvbNCV/MLN+1pczmnNb3PTT+R9aRCcM8xJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cQriLhcp+sC3dfaYN+QWGYX/fLSN408yzj6C6HCDlNLPO/OyyD0qDGYgcAkgqtTvU
-	 1SfVy8sADYGDfl1cK8gctZVbqewwcPItWcUDlN1UZt3hNPh+DwfQUaq7+HWTtcFbql
-	 YqVeSk4PRAsKTbWkzKeN+TdMSL6UzHJP/NkY79pk=
+	b=rywRZ6uyk7c7U43n4nPKs791W6XkV6FPZlTm3o6M3+kuXyFbwHoo/sgnUE32H0tEy
+	 YgOYl5mmPYS6ohqJvaYZ0nrcdCayp7TdScPigCsnfWibE3S4BhIRg0HpUIogjqvsUM
+	 fJ0rLy1FitASCzuYSf0h8ImdfjLFjHHIa1syNScI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
 	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0176/1005] comedi: ni_atmio16d: Add sanity check to interrupt handler
-Date: Wed,  4 Nov 2026 15:58:29 -0500
-Message-ID: <20261104211048.708083921@linuxfoundation.org>
+Subject: [PATCH 6.18 0185/1005] comedi: pcm816: Fix sanity check in interrupt handler
+Date: Wed,  4 Nov 2026 15:58:38 -0500
+Message-ID: <20261104211048.963973126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -72,43 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 13f4796223489a5349b466ce54bb868f46c9fefd ]
+[ Upstream commit 4fdac5090ce3616283216d9a1d2b9664e8e20747 ]
 
-The driver requests an interrupt handler for the device, after setting
-device registers to disable interrupt generation.  The interrupt handler
-should not be called prematurely unless the user-configured I/O port
-base address and/or IRQ number are incorrect or the hardware is bad.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-For safety, check the dev->attached flag in the interrupt handler to
-ensure the device has been fully set up, avoiding a possible null
-pointer dereference of dev->read_subdev.
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing the devpriv->dma pointer which may be NULL if
+dev->attached is false.  Move the dereference of the devpriv->dma
+pointer after dev->attached has been checked to avoid the possible null
+pointer dereference.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-6-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260618102949.26607-8-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/ni_atmio16d.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/comedi/drivers/pcl816.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/comedi/drivers/ni_atmio16d.c b/drivers/comedi/drivers/ni_atmio16d.c
-index b057b3b3582e1..bf7fb6704710f 100644
---- a/drivers/comedi/drivers/ni_atmio16d.c
-+++ b/drivers/comedi/drivers/ni_atmio16d.c
-@@ -223,6 +223,9 @@ static irqreturn_t atmio16d_interrupt(int irq, void *d)
+diff --git a/drivers/comedi/drivers/pcl816.c b/drivers/comedi/drivers/pcl816.c
+index 28d1a88c50f65..3c295647e2ed5 100644
+--- a/drivers/comedi/drivers/pcl816.c
++++ b/drivers/comedi/drivers/pcl816.c
+@@ -242,7 +242,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
  	struct comedi_subdevice *s = dev->read_subdev;
- 	unsigned short val;
+ 	struct pcl816_private *devpriv = dev->private;
+ 	struct comedi_isadma *dma = devpriv->dma;
+-	struct comedi_isadma_desc *desc = &dma->desc[dma->cur_dma];
++	struct comedi_isadma_desc *desc;
+ 	unsigned int nsamples;
+ 	unsigned int bufptr;
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
-+
- 	val = inw(dev->iobase + AD_FIFO_REG);
- 	comedi_buf_write_samples(s, &val, 1);
- 	comedi_handle_events(dev, s);
+@@ -257,6 +257,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
+ 		return IRQ_HANDLED;
+ 	}
+ 
++	desc = &dma->desc[dma->cur_dma];
+ 	nsamples = comedi_bytes_to_samples(s, desc->size) -
+ 		   devpriv->ai_poll_ptr;
+ 	bufptr = devpriv->ai_poll_ptr;
 -- 
 2.53.0
 
