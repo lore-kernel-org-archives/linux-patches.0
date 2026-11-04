@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831561;
-	b=eBFmuF7bpW/R1l1aavc6/z6IIsMA14R1J4kEo9qmG4f6t9aFusdVB0If+4SCpJJkaYLw
-	 uMr5IkoiE8ZEal1Ytdoe9MYKemBCKgy+U81TFhWmVLdCNEN8eYpbhFyznBtln/ESCCrJP
-	 5vJhMSUFOjE4yPsfKXJPNX8Ol0T5ENJ/+8iugBW4c0AQS8HWtLsn2KGCQII3vWksxcUHI
-	 ZM3nT95N25SJcM6rt3jboKMwXUwwSKXii1JknjV+Z9j6/DbHSLi6esHg+TLqwh8aTusSq
-	 fs6LUH4OSL6KMi0EosZmTAKOHcAcVnts+dpkFhrqqM1ukjNax3Fn/6aO7hGbxUP3W7A==
+	t=1793831562;
+	b=qbaZlzQL/Jc3YKheXxqLGz/Kj3r+9hRGEt62fm/Psv7flbkgqGMlC075/fTdVcpIQ4kg
+	 9ZzTWqBxuNUUTVLcqKJycsbYhBVxxKNSIAUIF/QiN5L2Mn6/aO50BSUItZcwf9pak2exD
+	 tG9ZiMqaWR3WrWhWG94br2COm8pC3+VlPcPr+JQraXymyTCnbWaChuuPnc3SrALoI52sY
+	 i5XIzLfp/pWqc5mj+Djsiw+LegCD6V2hCMN6kHl3+KAJ/gByjmkflhrW/N8rwmjCdXwfH
+	 BPBKKqViS/IyDgBX2RQFmTZV5M+FjvfXPjUs8ODBMOmrnZFlKfb9v1gHl6sNTTG/G5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831562;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WI+bVFNko951wkBK2SGcDMURi+ye0XBnCkrMlWLxxgA=;
-	b=vNTAOoxlVchKhoeCwRnjDTtyqdWZJ1wOmR8B8/TSnK9HYE9L7op3naKOe/OOm2mmDuSR
-	 wfNg51aYrw8uGieUgV6cnGx0BtovaltoorPODOfLX/E02pUs5nBzQ0xfAQjfRLLqt1+S3
-	 dspi0wBsSAgK+Xs9hmGOnCOT4QkOXKVQwLeNdA3r+0A/TFBivnCRG6TKCLkzOPrN4C6Pk
-	 WE8VFZFK6tmFZEo3gmCLpLPR3aqJE1Yz1+9gCCejY9qFa/i/RNu7tLA0YdmBV1ftaG0Bx
-	 bUGZh3aTPDgJlRWgz4teIttHmI5EqZJPizB6Jp3GFppmZLDk6UlqLyxVGlaxLML2H7A==
+	bh=zlOQ+46CkqAeV3KmtIQOFB4Ewt5VDjk7KDxHbprnR5s=;
+	b=hUIw8zgOWNTv/LrwQU9jpE2nFVEfHOTX8UUoG4XYAufxCl1c0eAFtUHShraICqpNNpLq
+	 DB9+DYqlbuG1oQdPOhC/ZpYw03v/o+J4Fm46rqgY+sJqxez8GtsvFT/oyL7s87AGUsQ6J
+	 3x/P0hOLIgOsxHAF/Y0PJvgwIvLMceC5KK2/bDTjNWzspGunoUxrl4GWGTEYUZzPIrIQH
+	 rB+2GobPfLYuJqaojWa4TNYO093PRy1j4u+F96YSRSkUuEBbcDVYIxGNqCL6IdcEOR83D
+	 dTsrYGcOfQcxfb7hXEQRw7YCm0WU41zX6cHO6v1FcwCHAWC6fEQOPuiXVoAU2nFXnfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bjF7HzVB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MPutW52;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC144606A844;
-	Wed,  4 Nov 2026 22:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40270606A844;
+	Wed,  4 Nov 2026 22:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bjF7HzVB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0671A1F00919;
-	Wed,  4 Nov 2026 22:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MPutW52
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6501F000C1;
+	Wed,  4 Nov 2026 22:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831560;
-	bh=WI+bVFNko951wkBK2SGcDMURi+ye0XBnCkrMlWLxxgA=;
+	s=korg; t=1793831561;
+	bh=zlOQ+46CkqAeV3KmtIQOFB4Ewt5VDjk7KDxHbprnR5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bjF7HzVBviP07EgvwkWsTZKBVFD9aDuN9DcCsOF9bhIt0F8jykyI2stP/Ote+fDmI
-	 PrPjhJUa8oxEGptue02GvhhnvWLVuXYrhMuMlhNhxgFYySfDhKlTUxZakE04ICzJOF
-	 7DA5MfoUmhDBYOl3HH0OI3Awjzmf2oPmPG5FT+W8=
+	b=0MPutW52Fop0X/kqeXs4KnV19rTZPdlchY6OS3tMDFvKhB08J+vg9D4DA8/baJe3h
+	 OKgVPjeEGGU3PFlesSQPIroo1Z32NSMqMqBwakvuhqVjsQGODjYZLAvEtVQLiPkLW6
+	 YhVxrUxvJmAAezdUE2AObXbaubBisbMYbXR9uFVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dgc@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0776/1005] xfs: fix ondisk symlink target validation in xrep_dinode_check_dfork
-Date: Wed,  4 Nov 2026 16:08:29 -0500
-Message-ID: <20261104211105.113294450@linuxfoundation.org>
+Subject: [PATCH 6.18 0777/1005] xfs: fix xfs_rename_space_res for non-pptr filesystems
+Date: Wed,  4 Nov 2026 16:08:30 -0500
+Message-ID: <20261104211105.139627829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,116 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit aafe21c23ad8263251085291019d8860ddc51da9 upstream.
+commit a800b926346c3aa2482421f5c0272280ee7d32e8 upstream.
 
-LOLLM noticed that online repair of a broken symlink file could fail
-unnecessarily if a local-format symlink target isn't null terminated.
-The ondisk target isn't required to be null terminated, but repair
-enforces that anyway because it uses the validator for the incore
-symlink target.  (The incore buffer is always null-terminated).  Fix
-this by reverting the changes to xfs_symlink_shortform_verify and adding
-an ondisk-specific helper in inode_repair.c.
+We don't need to reserve space for a parent pointer update for an
+existing target if parent pointers are disabled.  Fix this regression
+(which LOLLM noticed) so that rename reservations go back to what they
+were before parent pointers.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: e744cef2060559 ("xfs: zap broken inode forks")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 5a8338c88284df ("xfs: Add parent pointers to rename")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Dave Chinner <dgc@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_inode_fork.c     |    4 +---
- fs/xfs/libxfs/xfs_symlink_remote.c |    8 ++++++--
- fs/xfs/libxfs/xfs_symlink_remote.h |    2 +-
- fs/xfs/scrub/inode_repair.c        |   26 +++++++++++++++++++++++++-
- 4 files changed, 33 insertions(+), 7 deletions(-)
+ fs/xfs/libxfs/xfs_trans_space.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_inode_fork.c
-+++ b/fs/xfs/libxfs/xfs_inode_fork.c
-@@ -683,9 +683,7 @@ xfs_ifork_verify_local_data(
- 		break;
- 	}
- 	case S_IFLNK: {
--		struct xfs_ifork	*ifp = xfs_ifork_ptr(ip, XFS_DATA_FORK);
--
--		fa = xfs_symlink_shortform_verify(ifp->if_data, ifp->if_bytes);
-+		fa = xfs_symlink_shortform_verify(ip);
- 		break;
- 	}
- 	default:
---- a/fs/xfs/libxfs/xfs_symlink_remote.c
-+++ b/fs/xfs/libxfs/xfs_symlink_remote.c
-@@ -208,11 +208,15 @@ xfs_symlink_local_to_remote(
-  */
- xfs_failaddr_t
- xfs_symlink_shortform_verify(
--	void			*sfp,
--	int64_t			size)
-+	struct xfs_inode	*ip)
- {
-+	struct xfs_ifork	*ifp = xfs_ifork_ptr(ip, XFS_DATA_FORK);
-+	char			*sfp = (char *)ifp->if_data;
-+	int			size = ifp->if_bytes;
- 	char			*endp = sfp + size;
+--- a/fs/xfs/libxfs/xfs_trans_space.c
++++ b/fs/xfs/libxfs/xfs_trans_space.c
+@@ -112,10 +112,10 @@ xfs_rename_space_res(
+ 		if (has_whiteout)
+ 			ret += xfs_parent_calc_space_res(mp, src_namelen);
+ 		ret += 2 * xfs_parent_calc_space_res(mp, target_namelen);
+-	}
  
-+	ASSERT(ifp->if_format == XFS_DINODE_FMT_LOCAL);
-+
- 	/*
- 	 * Zero length symlinks should never occur in memory as they are
- 	 * never allowed to exist on disk.
---- a/fs/xfs/libxfs/xfs_symlink_remote.h
-+++ b/fs/xfs/libxfs/xfs_symlink_remote.h
-@@ -18,7 +18,7 @@ bool xfs_symlink_hdr_ok(xfs_ino_t ino, u
- void xfs_symlink_local_to_remote(struct xfs_trans *tp, struct xfs_buf *bp,
- 				 struct xfs_inode *ip, struct xfs_ifork *ifp,
- 				 void *priv);
--xfs_failaddr_t xfs_symlink_shortform_verify(void *sfp, int64_t size);
-+xfs_failaddr_t xfs_symlink_shortform_verify(struct xfs_inode *ip);
- int xfs_symlink_remote_read(struct xfs_inode *ip, char *link);
- int xfs_symlink_write_target(struct xfs_trans *tp, struct xfs_inode *ip,
- 		xfs_ino_t owner, const char *target_path, int pathlen,
---- a/fs/xfs/scrub/inode_repair.c
-+++ b/fs/xfs/scrub/inode_repair.c
-@@ -1024,6 +1024,30 @@ xrep_dinode_bad_metabt_fork(
- 	return false;
+-	if (target_exists)
+-		ret += xfs_parent_calc_space_res(mp, target_namelen);
++		if (target_exists)
++			ret += xfs_parent_calc_space_res(mp, target_namelen);
++	}
+ 
+ 	return ret;
  }
- 
-+static xfs_failaddr_t
-+xrep_symlink_shortform_verify(
-+	void			*sfp,
-+	int64_t			size)
-+{
-+	/*
-+	 * Zero length symlinks should never occur in memory as they are
-+	 * never allowed to exist on disk.
-+	 */
-+	if (!size)
-+		return __this_address;
-+
-+	/* No negative sizes or overly long symlink targets. */
-+	if (size < 0 || size > XFS_SYMLINK_MAXLEN)
-+		return __this_address;
-+
-+	/* No NULLs in the target either. */
-+	if (memchr(sfp, 0, size))
-+		return __this_address;
-+
-+	/* ondisk symlink target isn't null terminated, unlike incore */
-+	return NULL;
-+}
-+
- /*
-  * Check the data fork for things that will fail the ifork verifiers or the
-  * ifork formatters.
-@@ -1099,7 +1123,7 @@ xrep_dinode_check_dfork(
- 			return true;
- 		/* symlink structure must pass verification. */
- 		if (S_ISLNK(mode) &&
--		    xfs_symlink_shortform_verify(dfork_ptr, data_size) != NULL)
-+		    xrep_symlink_shortform_verify(dfork_ptr, data_size) != NULL)
- 			return true;
- 		break;
- 	case XFS_DINODE_FMT_EXTENTS:
 
 
