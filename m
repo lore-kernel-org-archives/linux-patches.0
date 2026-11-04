@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829628;
-	b=OTz/XSx8j55G084j2uPSaqnqH2UAHSe1UMBQkSDNHOOsTsogOE15xffywlZy+cbhqJAv
-	 A6CokkE58za/h8ToUbpvlvIss90ia5mp7ePRgRZanRLF+S3XjPlclwv69IGH38N+MYVFl
-	 KunU954IyDB7rInterFwQVeTzHY3feNw04nulNXMPjH5F5eYSCCmuaAHCY+RxnIfglKoI
-	 GalM+d1aLmHy0P4dGP45Td6AmrgBdDrRY9LrGd+KrBapY4Aiq2wrKu6+C0PQ8P9kuLRkz
-	 ArZ+zIg6E8ts/kwqrXEaASHg6nfhGWV+uUAzI/1uHkaaXFJOLh1a+e4ugY1lO4FUFFw==
+	t=1793829629;
+	b=cRU3FkHi6MRTLOPH9tKEV0TE3KUt8SnrcxKbxocCiZo5YyRd8+FzCsyogws/Cst7dr9N
+	 393RUtM6YaJPt3E9gAZ0UabNLA1p9OejC6M7Pj7fg7S/ODl+ellNY+Z0zz8IbQ9TdFPBq
+	 I2SS7M/RfNM7NU8oL8xJni3TVMUgbVQw1kFtgYF2C/hA3jo71WmZRC0k0LXMl3UvaCpt8
+	 JsT83Q+SYJzZMXd6Wed48qWm7dfgaP6e/QCRwLHHmL4qT9wVJuHTCvIc1+SDFSqKrsIiM
+	 zLlgmTiJ+9xJ2J0MgglAB1iSnxaJbQsdcHqGG393RQ3DlD0N1WNmbJUQgEOiyAlhrOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tW1Y2YCBkQg7fMdF6G7QVOUtjJDxirwN2mF2QR/I+9c=;
-	b=CsYzxiqmLEWKwr3vUw5r7wm1gYCYMAYsbKZpjABISLzpsgkCfgX4fQfwBbEuKf9fvWxp
-	 VbU4mnMVsvCb2xKphljxp2kmps/dyY+/rwILFBfWiZYMbmO5pqRMiQnyDqJbrEzMnkJZ9
-	 WU+8BTfZuF89XexajkJOaz8MvqSo0IcgDkzFJH5vRHapoFLJyEiQCytM5bjhuEGIB2u/e
-	 fsgxVexFsIzp+sYgygyflVV92Tg0n/7Rk+HM2WMZPdTlA2qMSa8uhC9bfXaPGT7ZFS/Nv
-	 dzNXZDvHP9PzPeyAQVELQpk93deL7V/rpeogAbVGbCdFerdnPMPy6PgPZwEg0Su84Kg==
+	bh=rcgqKZorAUW0PIdzCNLrYUYNGXaP9/sv6pvOSj2w06U=;
+	b=CXOrkWLmzASDmflXLRTVC6YPXwDJxHN91/2D2c7xS1BdkdWQU8OaJ6huhNMJLNWcatgk
+	 lLNB4utjFGTPd7ggtED/DarLSfMdGCXQq+HTmGyGAYTf2GLL3JhOSBa3NWvfNZVOS7vmn
+	 PoDoqAw9FQYMmjey/wiGSth9KRLWsHClCYbel9vPqQ4vf8jXBvTbu6zSCdyD5ejqTYqxz
+	 1zEBZhuHYFkTZ0QpISRYnEDj8AGTqOG8baAehWrtbDpKzH2Oso343G+zdWLnnJHzcMK/E
+	 HEQcbAlLExHkMOxFBuSYt+GIIbf09IVZLRcRtfw4B279gVDUlEyBLPKrd/tI3ktkdmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=prvk+2jE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hUfD6jnF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D50606A84C;
-	Wed,  4 Nov 2026 22:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F4B606A84C;
+	Wed,  4 Nov 2026 22:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=prvk+2jE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C4D1F000C1;
-	Wed,  4 Nov 2026 22:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hUfD6jnF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD18F1F000C1;
+	Wed,  4 Nov 2026 22:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829627;
-	bh=tW1Y2YCBkQg7fMdF6G7QVOUtjJDxirwN2mF2QR/I+9c=;
+	s=korg; t=1793829629;
+	bh=rcgqKZorAUW0PIdzCNLrYUYNGXaP9/sv6pvOSj2w06U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=prvk+2jE53LyY1jU6+H9XBdUNB6DlB2EnVamYOpQjo79M3vl2pgCHSvxN1QIGdCDq
-	 ZbLHJOUI7Hp1INjRx2Pu6WdcAPOCBrpE82A3i6DE2RSO7YRf6kxIS58hqERVoWVTLs
-	 394ZWy/KoWUR3S02odQMaxjx/7jgiEv0NSQMcqYg=
+	b=hUfD6jnFtyLak1n3qKyw812Jd3/1AizG+MPdxA5JUbzbihLEO8DFfamOrEIwwtFMJ
+	 yCWhp7l2KtixkSvkztFQBb7Dfr6+g85lBmQEsKnskPENFvgxMZrRtVCh5kGuPdQV6m
+	 rr8F/Amr8rZKOeP6hd2NQf5d9nZ9mvIQer5sPIKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Senjin <senjin@hatchling.org>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0243/1005] ntfs3: fix info-leak in ntfs_rename()
-Date: Wed,  4 Nov 2026 15:59:36 -0500
-Message-ID: <20261104211050.663911189@linuxfoundation.org>
+Subject: [PATCH 6.18 0244/1005] fs/ntfs3: fix lseek EINVAL on sparse/compressed files with 64-bit clusters
+Date: Wed,  4 Nov 2026 15:59:37 -0500
+Message-ID: <20261104211050.693214548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,64 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Senjin <senjin@hatchling.org>
 
-[ Upstream commit 2fa56613b25d0c983ef3ff6d3e865d4254280abe ]
+[ Upstream commit 789af83e41aef54c1ff1cee16adc27822e0a0d71 ]
 
-Hard to say about copy_to_user_iter(), but at least the first splat
-looks correct. At the end of fill_name_de(), data layout is:
+When CONFIG_NTFS3_64BIT_CLUSTER is enabled, sbi->maxbytes_sparse is set
+to -1. As a signed loff_t this is -1LL, the most negative value. Any
+lseek on a sparse or compressed file passes this as maxsize to
+vfs_setpos(), which returns -EINVAL whenever offset > maxsize, and
+since -1LL is less than any non-negative offset, every seek fails,
+including lseek(fd, 0, SEEK_SET).
 
-struct NTFS_DE *e = buf;
-...
+The intent of -1 here appears to be "no limit" (matching the spirit of
+MAX_LFS_FILESIZE assigned to sbi->maxbytes and sb->s_maxbytes in the
+same block), but the signed type makes it the minimum instead of the
+maximum.
 
-    |<- data_size + sizeof(struct NTFS_DE) ->|<- XXX ->|
-buf |-----------------------------------------------------------
-    |<- ALIGN(data_size, 8) + sizeof(struct NTFS_DE) ->|   ;; e->size
+Fix by assigning MAX_LFS_FILESIZE to sbi->maxbytes_sparse in the
+64-bit cluster path, consistent with the other two limits set there.
 
-If 'buf' was allocated with kmalloc(), XXX remains uninitialized and
-passed as such to memcpy() called from hdr_insert_de().
+Observed on a 16 TB NTFS volume with 0xFFFFFEFF total clusters compiled
+with CONFIG_NTFS3_64BIT_CLUSTER=y. Sequential reads via dd/cp worked
+correctly; any lseek call on sparse files returned EINVAL, preventing
+archive managers and other tools from random-accessing files on the
+volume. The non-64-bit-cluster path correctly sets maxbytes_sparse to
+(1ull << (cluster_bits + 32)) - 1, a large positive value.
 
-So using kzalloc() for all buffers passed to fill_name_de() looks
-the simplest and most safe solution. OTOH if someone would have
-said that an overhead of PAGE_SIZE'd memset() is too large, more
-fine-granted solution is to memset() XXX only.
-
-Reported-by: syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=905d785c4923bea2c1db
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Senjin <senjin@hatchling.org>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/namei.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/ntfs3/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 64cde1a856f44..f547ce82520f8 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -22,7 +22,7 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
- {
- 	int err;
- 	struct NTFS_DE *e = buf;
--	u16 data_size;
-+	u16 data_size, real_size, aligned_size;
- 	struct ATTR_FILE_NAME *fname = (struct ATTR_FILE_NAME *)(e + 1);
- 
- #ifndef CONFIG_NTFS3_64BIT_CLUSTER
-@@ -53,7 +53,12 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
- 	fname->type = FILE_NAME_POSIX;
- 	data_size = fname_full_size(fname);
- 
--	e->size = cpu_to_le16(ALIGN(data_size, 8) + sizeof(struct NTFS_DE));
-+	real_size = data_size + sizeof(struct NTFS_DE);
-+	aligned_size = ALIGN(data_size, 8) + sizeof(struct NTFS_DE);
-+	if (aligned_size > real_size)
-+		memset((char *)buf + real_size, 0, aligned_size - real_size);
-+
-+	e->size = cpu_to_le16(aligned_size);
- 	e->key_size = cpu_to_le16(data_size);
- 	e->flags = 0;
- 	e->res = 0;
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index dc799ebc6c883..74f071ace3ad7 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -1176,7 +1176,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ #ifdef CONFIG_NTFS3_64BIT_CLUSTER
+ 	if (clusters >= (1ull << (64 - cluster_bits)))
+ 		sbi->maxbytes = -1;
+-	sbi->maxbytes_sparse = -1;
++	sbi->maxbytes_sparse = MAX_LFS_FILESIZE;
+ 	sb->s_maxbytes = MAX_LFS_FILESIZE;
+ #else
+ 	/* Maximum size for sparse file. */
 -- 
 2.53.0
 
