@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829329;
-	b=F+MnPxlUDpdrSxp8dgJYhU0bkBiSgf63yDchWUkeV4tIiEyoRBzhr64A0+otVgZ49L88
-	 jS/JKIFy00cHLuqaN3s49UXYoYY0VMduXP3mNP9FV+H/JZYbiiWHbQfJzmM+Rc0bIHTyw
-	 cEz+ZFJP4JMIi5HoNbWb6oow/sd7Fy+lKnO8yHtIBxFRe38CUIOXQC/Kk55Q5Mff/qMRC
-	 2QJYUYxkWDXQOCtJ6/8W8hitZov2CUE5fCVE0EG9Pu8/M0WQsRx/RuceK+7+GL/bKlhGY
-	 ad/lm6qQD1e+iNpBpWOuVTt0QkaYsm10ofWp+h2QRcPux/uYoBvTDnL1aw8onnZQQqg==
+	t=1793829331;
+	b=Pjo/LJ6haYdUgv7YJDctqTVrnAWsQCgrflzay+ZfT7dNay+de/pz74LRdIrdSH1Js6jV
+	 aGI5jqVAFBxaDb0kB+yByyljlEjfm7ari803ykNVmd2FLs8aCf0yHrgH1FRwm5nM26oIc
+	 ZUSCSXAjo2GAPtCbhiKhlC2EoIAuiMZENhgqSqjj33PuhuaJ2sW0nKCW1jdVgP72gvtpK
+	 +erYDVFXBr40fHsRHF1Xvrxm0Fhxy5Ai01nCoyE/28La4jQjYmbsuyqE3i2Pe6SuwrWjR
+	 4N6RFVkJl5jFeEfKdqP7IhcuR8jFDpjkvOrZ8YDKOvjLONohfCQm3O/hlfyHMacmbfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829329;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6BQLIJ7YjZryRw6nE1OSHOb7iAQut2MdZ+fz5jYgcRs=;
-	b=qY574fE+7CBq4FxnneflYLktt662sL+TzMwrGwZ6va38TIz1Y3fkms5e2BEdlDkxKaGA
-	 k6gMWVJUllbtTqrjpFDyyEwzaIwJfg2hs4YeDvSgbds3hkEndqb7q03k9/6FQmvA9ylTW
-	 MbR5Zy++71O58Tpli7xADrAOHI5FlgC4rXuc0jSezjzBZGwyfb6seu9D1VlRPJTlIPxrS
-	 bP+SLPXAEiUAHWdwBlscWLmjeVA8FXyYLQ+0nbsnN1moMlKOMKkMf5ZYBWhM3vzZ//LlR
-	 pTokZAOMB3Pmp24RKw/I6LA+twb3E969E4gVaF6+D0w1pJWbj9sWgUyuai2lSPTnYNg==
+	bh=yXGoauUPj9cPxY7JxQliCaO7oLPa3++Ru9Jw5ettexc=;
+	b=uGUjMMKHbl+Rbq/HZuEIApnvwwJEStmr3WtBYLaYdkfLl9TX3+iXMhNj+uEysEbO+Ojg
+	 5sOgv8giFSvqlzcKAK2CDuYP8TeAWIDPpY0Q7U98T3t0kqSiRosCEukSD3XkuNh2TrxPY
+	 8AlHJ750uZm9YoFnk03yyBkEV+85ALS1KzIIIy8rhfaZVKUweSgqCNJLCLThEDt3V660/
+	 Dg0jqBWvQm09gvaGu5qgVGUovbYs+9r/eatv6YyrNvREXq33QR75irbQSt61o0QqP/csI
+	 /u6rOTtjH1nIxtqBADcqfoyteJ6ZeOAOSZVF1KTns//VXrrsLo4y9UmbXkbF2eITHYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dXw0VUny;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DzwwD32U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D05607491D;
-	Wed,  4 Nov 2026 21:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC41607491D;
+	Wed,  4 Nov 2026 21:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dXw0VUny
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB47D1F00A16;
-	Wed,  4 Nov 2026 21:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DzwwD32U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789341F000C1;
+	Wed,  4 Nov 2026 21:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829329;
-	bh=6BQLIJ7YjZryRw6nE1OSHOb7iAQut2MdZ+fz5jYgcRs=;
+	s=korg; t=1793829330;
+	bh=yXGoauUPj9cPxY7JxQliCaO7oLPa3++Ru9Jw5ettexc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dXw0VUnytYufBDl85jfpPv4HxqJKiYc3Nra6aYV9vcQlMElxEK9oWqVoDStDBKA/d
-	 h+1AmjbAhp4NPoNlU/njDaKdMQZE0Mr5YInNJyvRszB76357uyNH2K54dc7w08iMXR
-	 4zAO1lKCqPmPaGcUsWzuf7rnlr8C96iQW+7NN3Es=
+	b=DzwwD32UStkFcB/glN8Eis66J4uOpKS1liBSLiE6URBFEzXSXq050mJ7+qRCxk14f
+	 91uuuIzS9OAxUPQoFllQsby/XSLLrg//lrsQZ5/meBF3vSwnqahcvBjSREily3GqQo
+	 AgNUIoyYZYiZ2PV7zAkBVsNfGgMVXCCc4ACAjbso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0050/1005] spi: bcm63xx: return error from failed controller suspend
-Date: Wed,  4 Nov 2026 15:56:23 -0500
-Message-ID: <20261104211044.994608952@linuxfoundation.org>
+Subject: [PATCH 6.18 0059/1005] netpoll: do not warn when the best-effort pool refill fails
+Date: Wed,  4 Nov 2026 15:56:32 -0500
+Message-ID: <20261104211045.246817322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,40 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit bbbc1ef5b35341c5122418a14f8924688a4bb954 ]
+[ Upstream commit 84c0ff1efb62b0053aa265b8deb13842f68f1a74 ]
 
-spi_controller_suspend() can fail if the SPI core cannot stop the
-controller. bcm63xx_spi_suspend() ignored that error, disabled the
-controller clock, and returned success.
+refill_skbs() tops up the per-netpoll skb pool with GFP_ATOMIC and
+simply stops on the first allocation failure, leaving the pool partially
+filled; a later refill tops it up once memory frees up. The allocation
+failing is therefore an expected and fully handled condition, but
+without __GFP_NOWARN the page allocator emits a warn_alloc() splat with
+a full stack trace on every miss.
 
-Return the suspend error before tearing down the clock.
+Pass __GFP_NOWARN so the best-effort refill stays quiet, mirroring the
+same change in netconsole's find_skb().
 
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Link: https://patch.msgid.link/tencent_0BD7D4091B90EC17A8B2BA5EBA8803725905@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260629-netpoll_no_warn-v1-2-f380f0b2cd0c@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/core/netpoll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
-index 8d152e906daac..f73dc14533dcc 100644
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -643,8 +643,11 @@ static int bcm63xx_spi_suspend(struct device *dev)
- {
- 	struct spi_controller *host = dev_get_drvdata(dev);
- 	struct bcm63xx_spi *bs = spi_controller_get_devdata(host);
-+	int ret;
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 9ef344a6932f9..a22de992c8024 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -232,7 +232,7 @@ static void refill_skbs(struct netpoll *np)
+ 	skb_pool = &np->skb_pool;
  
--	spi_controller_suspend(host);
-+	ret = spi_controller_suspend(host);
-+	if (ret)
-+		return ret;
- 
- 	clk_disable_unprepare(bs->clk);
+ 	while (READ_ONCE(skb_pool->qlen) < MAX_SKBS) {
+-		skb = alloc_skb(MAX_SKB_SIZE, GFP_ATOMIC);
++		skb = alloc_skb(MAX_SKB_SIZE, GFP_ATOMIC | __GFP_NOWARN);
+ 		if (!skb)
+ 			break;
  
 -- 
 2.53.0
