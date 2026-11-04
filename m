@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829184;
-	b=zGTTgMrsAD0k9nZS6IMev5Ct6dtLdM2LKV0unD4WB/CF0gI1xObgSZkXqrFiM8nfbJeQ
-	 KRACwZDlnT4KCzrJTck6MaIWuBO45WVTNYN21hS+AqVdy796bouOQzrVtbQ8PaOPcdmDp
-	 jb580ESRzh9WFbrYmkbWw7N4jjERuy5A8fcEO19IhPq3pIcW5ES1q2V7/n/+uNLb4VjQD
-	 8Cn9R7HDvnvlDqlDI0k2RFFWpDRzjXwiB/LnhrdCz0ZWtUjafjSOoEvDBp5VP79hCwMqa
-	 LwQ40lsrm49grNsEeayJ4QeJKaX3LA2f8B4XjjVKul5nmL5pXMD6Tp8JLqgD3Ctsmlg==
+	t=1793829185;
+	b=EwbroGepGCcW3/1GiMWrFHoHkr0xnzO5dxV6TSCEKB0oJ1/diSLRHNOB4D4ZDaiPmS5m
+	 l8hydrTXarn92FKCtTyexDuoxjBqaaNZY1eDdVmIzvce6XP/31AvG1bGwR0YS4zOHOsym
+	 6xDImH94mGsHSMmJOeLYwvKQvv+QG22TV5ltsz9eY/0bN5wSRsxMjXDhWUn8Xo6o51Aep
+	 zWg3F5PVyk//moEpcUGaB5bRfitlIRrv51TR7unOtsdj6zObKRRzxN2tOAPDstM+lSY1z
+	 OgOsBH03McHCLDMdXVTCZSqyeChOonjy4GudqYhIqf3/Kge0qq1DUYz/0fkugPcnJ0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829184;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829185;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J6ZiJQSYRmeZ/sqS1Rd92ux5Er1MjUmiWi54afVzqSM=;
-	b=XBY6I6IdwkmEp83QYnecdX2oFmbB+EO4n6JMUYGwnZJuACdWDedIvCK6L1LNm86bQYWJ
-	 Iijt+I/zUWbwAe1A4f92wRDYditrUic00uUWUxGoUh1fE00t4imoPeaH/X/NjKernhVVl
-	 wDDAorkiyCxgWm0Iy5bnUeJj3XIIolhveioY6EtGyvzKm5kFe+vlfZNsYXPJAFd0je57u
-	 hC7xg1JQoXomIXbHr3BmWWX+FaDvX7i6Mr/WMUhqprAIzl28KdtqCg9UOOsO6b/k+vOjL
-	 uGPiZR6cpsbhcs9W60jSugwt1nm7ULUChx/tL8o5rasccf0I1EypEv/2Rn63+LP5IbQ==
+	bh=IJIIp9v82xlqSTZlT0nkGV4/eWiJYPS6QClxdrkFg8s=;
+	b=nVFdYW7lwFvIFiNHvpH9IT9+viSNifBEKCtEfCW+Ajr0gXX1YYHZCWur9DqXTrKexjm4
+	 LuSed7VhlcOTACOzJ2rbZ7AHuWQQ4mIsHPgHEbH1MMqQ9d4f6pFGpVVXXtIwzFHmVGQQ6
+	 Zi+cJcZDDGwREYK/ib/M56o8YfBAw9OxDUGo5CkQMnb+AKJPzJ8xP2CUj1pquV33bQaCd
+	 yF2jF8ElLm33GmthkFknv+0cCZLFgd6x/iuBpHexTeR2lzzMkn53xqDH2qNITYCKTJE5y
+	 9oCcKSG396eiRvctR5/WLywiYpZHNp93DOEuJFc/8kAaNaIKClmKUTsI5kxVdDO4RTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m1NKTYRx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xyk2sQzu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BBC606D806;
-	Wed,  4 Nov 2026 21:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DF0606D817;
+	Wed,  4 Nov 2026 21:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m1NKTYRx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC7C1F0093A;
-	Wed,  4 Nov 2026 21:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xyk2sQzu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACF71F000C1;
+	Wed,  4 Nov 2026 21:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829183;
-	bh=J6ZiJQSYRmeZ/sqS1Rd92ux5Er1MjUmiWi54afVzqSM=;
+	s=korg; t=1793829185;
+	bh=IJIIp9v82xlqSTZlT0nkGV4/eWiJYPS6QClxdrkFg8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m1NKTYRxztC3BXfyrvbTW+CQG1jyLVVv4xQKMFyVYi7D3+1QJ6KbAMgTBHPxeLnZe
-	 7FSo98OIxGXl6L4fpXEjjY4pUqkqjm8J3PMUBV79r5PGuoahgab6s8fvdlmn5+sgVV
-	 dXDD9UG5eKlYGsDA/nzl5zKtGN4tzmxrahOJmqIw=
+	b=xyk2sQzuBBjM7DQWrubj+1VnpBrNfzCX/KZb1vHmssPxF0PZBi7PCr9AFG6BIyWJh
+	 +4NVp5sGuFIBfFP0gGhf2iVfCWxY89IaaFdiLJrHp2gHu09X8tZHK2XIkJA1Msn/it
+	 BnBXkw/EC+jBbxhXsi/9TSxSKfQUymxCSVOCFzw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Tanz <gabor.tanz@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 499/547] HID: quirks: Always poll the Anne Pro 2 with product ID a292
-Date: Wed,  4 Nov 2026 16:11:23 -0500
-Message-ID: <20261104211052.562209997@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 7.3 500/547] HID: roccat: isku: reject short button reports
+Date: Wed,  4 Nov 2026 16:11:24 -0500
+Message-ID: <20261104211052.589540336@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,52 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Tanz <gabor.tanz@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit cbc13a78a89d087252947d0a51048e576cfcb3ef upstream.
+commit 93e5f7f6189af76a2b2e2dfe647838a7b9f99d21 upstream.
 
-The wired Anne Pro 2 identifying as 04d9:a292 stops delivering keyboard
-input after a period of inactivity. Unplugging and reconnecting the
-keyboard restores input.
+The raw event callback runs before HID core validates and zero-pads the
+report.  It passes the buffer to helpers which inspect data[0] and, for a
+button report, read the complete struct isku_report_button.  A truncated
+report can therefore cause an out-of-bounds read.
 
-Keeping ObinsKit running prevents the problem. A read-only userspace
-reader that keeps USB HID interface 1 open also prevents it, as does
-usbhid.quirks=0x04d9:0xa292:0x00000400 without either application running.
+Require enough data for the button report before calling either helper.
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw-event length validation to hid-asus.
 
-Commit ca28aff0e1dc ("HID: quirks: Always poll Obins Anne Pro 2
-keyboard") added HID_QUIRK_ALWAYS_POLL for product ID a293.
-The variant identifying as 04d9:a292 exhibits the same symptom.
-Apply the quirk to this product ID as well.
-
+Fixes: d41c2a7011df ("HID: roccat: Add support for Isku keyboard")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Gabor Tanz <gabor.tanz@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    1 +
- drivers/hid/hid-quirks.c |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/hid/hid-roccat-isku.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -747,6 +747,7 @@
- #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A081	0xa081
- #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A0C2	0xa0c2
- #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096	0xa096
-+#define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292	0xa292
- #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293	0xa293
+--- a/drivers/hid/hid-roccat-isku.c
++++ b/drivers/hid/hid-roccat-isku.c
+@@ -411,6 +411,9 @@ static int isku_raw_event(struct hid_dev
+ 	if (isku == NULL)
+ 		return 0;
  
- #define USB_VENDOR_ID_IMATION		0x0718
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -102,6 +102,7 @@ static const struct hid_device_id hid_qu
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FIGHTING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FLYING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096), HID_QUIRK_NO_INIT_REPORTS },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A), HID_QUIRK_MULTI_INPUT },
++	if (size < sizeof(struct isku_report_button))
++		return 0;
++
+ 	isku_keep_values_up_to_date(isku, data);
+ 
+ 	if (isku->roccat_claimed)
 
 
