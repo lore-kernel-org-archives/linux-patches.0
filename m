@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829109;
-	b=4lpLlMY499jeMbB4tMFmB5w1ZjwZXbECATYwtyoK+tkZw8Jor8r/DeMSHYb4ADldP1tt
-	 amFTYDQL7n1R3bmOhRTDzNGHVv/If7LOwv59JoB8+xwWPnCEYcZ0FbHh794l6WwqD7P4T
-	 StFbau5KLaCVL+crd7DXMaO5Ph8Pxast2F4kMEAymJrFUab+zXcMtVrkqh2Xpc/RLnUWr
-	 yqcPXP8ByV6O1XCgsle1WJ1xj0uger8Ul5S/3eAB/gC61oZLvopOrS7BEgFQx7VDgUUAR
-	 VT+ZqxhuoMWEbm+EM2+tnv4kFbTUdXSoYeXOQvi9JFZcpX8vg4SsTFxl8h7csIvlOeg==
+	t=1793829110;
+	b=GJ1wk5+va+6BqR/G65ofvTA9IgTl8TeXCyXvMWlv5eeYjb5is9KY6K3Y2+y+frULQAgj
+	 U3oAfsW18S87iDf0wKvcR1Qq5BvQG1h1FFyf8WgRS04v/NmwrSUB8Uk0dUwv/aWIncQG2
+	 eAlPlDzjWC7akXCdNzURMK0xO4pinnBbP1nXkM/YAxiPW7AKf9hUM9zihcIgLQWQJVW9i
+	 964IrY9KMxpIuGgOeX412u2z/7pMb95vsfaLwnetbqeQnhbiU1ctCXWCk1jJxSUTd6TrV
+	 XEZl+wAr4rzGE5OfHp//m/A8+EOWIMuU2RxFVyCt3wTUZSjZK1lmbCJuf4/9ipPKKSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829109;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BDOGAd8tcaJlvgCDl6vZR1m+tBTTr+G3/WiBKHK6GTA=;
-	b=oSMBCCwRLbZApGPk/K/Eo7jBzRZgpm5zGUdHc4UDcNZJ1jSElxpVJ8DIyjPp3topk8pb
-	 UD2FznhcK6feOMhkqETpgePmo3YmJ4ZvR1Fdcawe1fAMY26oenezqt8Z6PcNXRnmBKKuD
-	 lO9THKiJOHbP/QQCkDGHqcQ1gTJaiYa3+c6rv72e6HBXvXSFpH9dfFkoSCK5V1ELULWm1
-	 TLstHGnmiRrQAD4W9VKVyXvoAqdvygdbp1JEUKhW6nP4Rv1vi3Pi7hB2DR+23S1njAwx7
-	 vKSHbAOn2Llq7GLWzYGdWmSX9rvJ0j5pJJ1r4a4fqWQcE9uUAhDE88gRloVTw+Pejcg==
+	bh=19VqxPuxk7aOKyJhn8YT1Ce/Gxd7pdLsaojrsNzEMLM=;
+	b=sTVf75KeBAkR1qMAlt7c+5G2k+yxtbpKx5Tae1AD1j+30OQvmdd99fUrx1KhNxu76rXa
+	 LmPRoojVb6uavA9TgUPKXb/lGzs8wM2VWBH8o6TlHTqitZeAVrGYqaTAv/GKLiI03h1E9
+	 CX2OF8PA/qpyw+9X6GUpuPGEVwgIMogMJ7Her07EtRRPIg5eF3pQrLhSUIpDfWu3fH//v
+	 An1SYH6lxzhuVCJEWYtlBWbKBKYIdsleLXiPkaHKGDcs/krBYI7AFzcmi5Ma/Quzn8XK/
+	 sbgkhyBALjYWJuB3BEfP+Pc61RP+R+o65EG2dwr6InNxWVZpNgIhB5U7O/GT48kpNJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ppYacZej;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0OzynzaI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D716072FB2;
-	Wed,  4 Nov 2026 21:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7031C6070757;
+	Wed,  4 Nov 2026 21:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ppYacZej
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A98C1F00A18;
-	Wed,  4 Nov 2026 21:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0OzynzaI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165681F00919;
+	Wed,  4 Nov 2026 21:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829108;
-	bh=BDOGAd8tcaJlvgCDl6vZR1m+tBTTr+G3/WiBKHK6GTA=;
+	s=korg; t=1793829110;
+	bh=19VqxPuxk7aOKyJhn8YT1Ce/Gxd7pdLsaojrsNzEMLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ppYacZej1/CzvL3YoayG9r66L23O7yDR8FL8vo45JCq6hpITEi+Wg7VBTLFDY7lkV
-	 KEggWrKI7N8a9EiUACvyWcQoTdLoH/MGpitLUUN/VETWrjSsIX66VaA9FT7H+nU5FD
-	 nqMd6I/A3kVSFSKnkjlqkxk1MWyRjTNPln0ddeAA=
+	b=0OzynzaIUHhtgukllUChLk4EGhFapx4RJp4VMM+PnpgjZJ6sJXFBgSjxdv3/dbqHZ
+	 lqY9OdhyywCuLv94etuSP7cyH0ITyQ1byzCEiOcyyw4JNDTF39CeeY9jUCqP83p6io
+	 VNRza6QV44j0pY7Ynbael1OKTYMjfudDUalz7Tl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 7.3 451/547] x86/cpuid: Mark CPUID function 0x23 as being indexed
-Date: Wed,  4 Nov 2026 16:10:35 -0500
-Message-ID: <20261104211051.167816105@linuxfoundation.org>
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	syzbot@syzkaller.appspotmail.com,
+	Atish Patra <atishp@meta.com>,
+	Nikunj A Dadhania <nikunj@amd.com>
+Subject: [PATCH 7.3 452/547] x86/mm/pat: Fix effective RW computation in lookup_address_in_pgd_attr()
+Date: Wed,  4 Nov 2026 16:10:36 -0500
+Message-ID: <20261104211051.197401969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,34 +72,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-commit 108775fa28fe04a16f19a828a779689f3d0ea9f0 upstream.
+commit ebaf7c9bbb1e16523d7036e7e1225ad2dfcc6482 upstream.
 
-Add function 0x23 to the set of CPUID functions that are indexed, as per
-the SDM and the many sub-leafs defined in leaf_types.h.
+lookup_address_in_pgd_attr() accumulates the effective NX and RW bits of
+the walked page table levels so that verify_rwx() can detect mappings that
+are both writable and executable.
 
-Closes: https://lore.kernel.org/all/213d614fe73e183a230c8f4e0c8fa1cc3d45df39.camel@intel.com
-Reported-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261022210134.612848-2-seanjc@google.com
+The RW bits are folded into a bool with
+
+	rw &= pXd_flags(*pXd) & _PAGE_RW;
+
+but _PAGE_RW is 0x2. So consider the accumulation line:
+
+        rw &= pXd_flags(*pXd) & _PAGE_RW;
+
+where rw=0x1 and the right side evaluates down to 0x2. It'll end up doing:
+
+        rw = 0x1 & 0x2
+
+and rw always ends up 0.
+
+This way rw becomes false at the first level walked, regardless of the
+actual permissions, and verify_rwx() treats every mapping as non-writable
+and never reports a W^X violation.
+
+Add double negation to the right side to normalize the _PAGE_RW flag to
+0 or 1.
+
+Assisted-by: Copilot:claude-opus-4.8
+Fixes: ceb647b4b529 ("x86/pat: Introduce lookup_address_in_pgd_attr()")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Tested-by: Atish Patra <atishp@meta.com>
+Tested-by: Nikunj A Dadhania <nikunj@amd.com>
+Cc:stable@vger.kernel.org
+Link: https://patch.msgid.link/20260813-cpa-fixes-v2-5-39b4ff90f91d@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpuid/api.h |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/mm/pat/set_memory.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/include/asm/cpuid/api.h
-+++ b/arch/x86/include/asm/cpuid/api.h
-@@ -181,6 +181,7 @@ static __always_inline bool cpuid_functi
- 	case 0x1d:
- 	case 0x1e:
- 	case 0x1f:
-+	case 0x23:
- 	case 0x24:
- 	case 0x8000001d:
- 		return true;
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -754,7 +754,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
+ 
+ 	*level = PG_LEVEL_512G;
+ 	*nx |= pgd_flags(*pgd) & _PAGE_NX;
+-	*rw &= pgd_flags(*pgd) & _PAGE_RW;
++	*rw &= !!(pgd_flags(*pgd) & _PAGE_RW);
+ 
+ 	p4d = p4d_offset(pgd, address);
+ 	if (p4d_none(*p4d))
+@@ -765,7 +765,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
+ 
+ 	*level = PG_LEVEL_1G;
+ 	*nx |= p4d_flags(*p4d) & _PAGE_NX;
+-	*rw &= p4d_flags(*p4d) & _PAGE_RW;
++	*rw &= !!(p4d_flags(*p4d) & _PAGE_RW);
+ 
+ 	pud = pud_offset(p4d, address);
+ 	if (pud_none(*pud))
+@@ -776,7 +776,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
+ 
+ 	*level = PG_LEVEL_2M;
+ 	*nx |= pud_flags(*pud) & _PAGE_NX;
+-	*rw &= pud_flags(*pud) & _PAGE_RW;
++	*rw &= !!(pud_flags(*pud) & _PAGE_RW);
+ 
+ 	pmd = pmd_offset(pud, address);
+ 	if (pmd_none(*pmd))
+@@ -787,7 +787,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
+ 
+ 	*level = PG_LEVEL_4K;
+ 	*nx |= pmd_flags(*pmd) & _PAGE_NX;
+-	*rw &= pmd_flags(*pmd) & _PAGE_RW;
++	*rw &= !!(pmd_flags(*pmd) & _PAGE_RW);
+ 
+ 	return pte_offset_kernel(pmd, address);
+ }
 
 
