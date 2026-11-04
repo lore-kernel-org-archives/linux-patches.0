@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827196;
-	b=lo3sj6cVLL4UCx0q1ZBEACef74VtYMMs66urgBGL7XrvyqDQAgXE91PkI+v90o/zuCLQ
-	 PPZmh0qvG5BiwzkA/9YcRMWY14jfxJPUPIe0d6bgIg5XTaPzOyDJNqs9JOYiNJETCxpDI
-	 +HqGEe9rICoSRFAzvtrQLToGNdK8fgQ6Irptq8uSd2WTgQSRB1ht3woZlhK5VJalUpAwA
-	 XipELVOrMK8xXRfhZdkhb9JW2ja9FvIcE3fCG5CIVr/pSmNmo19gdBMH1UsMuhg5gOtW4
-	 u193qLLdivmo5je3t68XYGgjqkRVEi5FfP8mNT6woScG7QwAJ3aVO//4/duNmffi5cQ==
+	t=1793827198;
+	b=R+3i6Cer0Wpq1mfbgLmad278pbASVjOjEp+5ZTWhrG1ybLjf9duWHwgAMCi5fX5HNivZ
+	 LurTi2z7RuGHlECwOOWbpEOKjNjotRiil/8bX7ILPLBSDdNCCopuTd+BDc1MQXU3HhGNx
+	 BrfILeymSpjfDR7J+6NjTpJu8i0TKhjI9Gmvk5GS1Fz+rjFGzDXgxLMeVfuF8Ygz94Ynj
+	 /fMhCuJnYjBgKUhzrBQEqb7oojpciMBI3IwbdbV3OpowpxXJQTny/vU1QBT1usjPmA8Vy
+	 O1A31tg3HRFtYN3W80MIaJD6y4vakjEe7QdBotFbp/UhWIjsuu0gcilsDyCRcbYl8AQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T9ApCYWHBVDrqzvYCMis/TDfgoQvwLZTbugwLvvBtI8=;
-	b=dQHNPzVPAyHhwfI+tsgHIg6zlml/6MhYLG1X4OKw168Ein5jjB+0M0ZtKvhQtAOUsn3K
-	 wN0Cj4quFnJuCxmgRPRaoUf/amVeHRoxUTHz33pIJLKqeDThS9rVYE4Df0obLDZENjCa8
-	 4XakSy5uYvjq2dIk+4lv3xMbZKUsWLNhtibgWdWwy1KQXCAXHsOapxGuiI6ja6bBvCxK5
-	 E6ianXJPEVNQQ3shsFjidyqT6QYn/ExMSCVW54YDo/BZyxWt4Ln4U1QA3exmzbbCqPsKO
-	 qf+wJX/mKcD6hfsnED2XjHZsi7X/2zL5XsOXIt4OSLqTZ5jqnP7vyoqtTafLZg4yayA==
+	bh=LS6I8kYwwXeICSNnHxDcQY1+x6EnknZ3oDw5SJvylYU=;
+	b=4BqwEDRq+B+2drHrQ4EfVweVW3Hly2IWv+qWhmn1cy+l8upHCpuk+FYBFAPE6rQmYiEs
+	 SqKthYHKNozK5KDDqm8RgQ/4wURUY/Gap4fVQjjMuU2vi6ZJqy4FcNZ7j5ctJjW4aeL3I
+	 9cSCRxYU/l1wgL/09UVh4UsFMbqny2Gxe5Uu/pWc1mEhK8PKKxtS1dL2XMWIdHPSlqRa9
+	 gOqhobbWyamOktLHfgV942MapHwJ2InBfBuE5tsy3gUcbanen4fKSiu9gOW979RYVl23X
+	 ytOUdcWl5MKqeEzL7u9VEudt0SdOOWKgRWKycHTKuVF9mWlVM3Sz9V9+iTElCvStr7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZfkuaMV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecLjEneD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82582606B387;
-	Wed,  4 Nov 2026 21:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AF76075DC3;
+	Wed,  4 Nov 2026 21:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZfkuaMV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2C21F00919;
-	Wed,  4 Nov 2026 21:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecLjEneD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20591F00919;
+	Wed,  4 Nov 2026 21:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827196;
-	bh=T9ApCYWHBVDrqzvYCMis/TDfgoQvwLZTbugwLvvBtI8=;
+	s=korg; t=1793827197;
+	bh=LS6I8kYwwXeICSNnHxDcQY1+x6EnknZ3oDw5SJvylYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZfkuaMVX8yLcvxKkFjzq6udytcizUfY4BiojxM1gMO4+gL8qhr/jdRTk2c1XMicl
-	 9i6I56JOBYliOmZIs4uwaVdLcSlHjIabzg1APRpNk7mKjvwYhX3kG24rEip10bfswm
-	 B1CUychIAgbEw45IYAlGx85WGeG51aCnSBSBvKXM=
+	b=ecLjEneDVs8vZnt+A6y4O7EbqDd/JoiiU0ueucD2VAnUzrwkNPBbHK0B9rR+EkW9S
+	 cavcafUHju9XRZpk0rnre/YmkCyOwBDpNIGZ1/G/epBqSm8iLsXYdLZYEmU5aRJISZ
+	 X9RDwr3l5Z5YoYiWML6ddVPPloNliP6kUKxJkpxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex@shazbot.org>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Ankit Agrawal <ankita@nvidia.com>
-Subject: [PATCH 7.3 251/547] vfio/nvgrace-gpu: Use a core-only open_device in fallback mode
-Date: Wed,  4 Nov 2026 16:07:15 -0500
-Message-ID: <20261104211045.308222840@linuxfoundation.org>
+	syzbot+8496ab5e117502750445@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 7.3 252/547] usb: gadget: fix refcount underflow in gadgetfs_bind() error path
+Date: Wed,  4 Nov 2026 16:07:16 -0500
+Message-ID: <20261104211045.335358314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,113 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>
 
-commit 9c48b994b66d7b585698f9aaee8ff559a7755c0a upstream.
+commit cb3b441f2698455a48e9a023d5f7f4e3fcb94c73 upstream.
 
-When the ACPI memory properties are missing or the C2C link is down, the
-device is exposed through nvgrace_gpu_pci_core_ops.  That table opens
-through nvgrace_gpu_open_device() but closes through
-vfio_pci_core_close_device(), so open and close are not symmetric.
+gadgetfs_bind() calls get_dev() only on the success path, but
+gadgetfs_unbind() called from the enomem error label unconditionally
+calls put_dev().  When bind fails (e.g. ENOMEM), put_dev() fires
+without a matching get_dev(), leaving the refcount unbalanced.
 
-nvgrace_gpu_open_device() registers nvdev->usemem for poison handling
-unconditionally.  In fallback mode usemem.memlength is zero, and
-register_pfn_address_space() inserts a node covering [0, ULONG_MAX].
-Nothing removes it: a second open fails with -EBUSY, and once the device
-is unbound the node outlives the nvdev that contains it.  The next open
-after a rebind reports:
+A subsequent close of the ep0 file descriptor calls dev_release() ->
+put_dev() which hits zero and frees the object; then gadgetfs_kill_sb()
+calls put_dev(the_device) again on the already-freed pointer, triggering
+a refcount underflow and use-after-free.
 
-  BUG: KASAN: slab-use-after-free in interval_tree_iter_first+0x209/0x310
-  Read of size 8 at addr ffff88800894aa30 by task nvgrace_repro/203
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5d/0x80
-   print_report+0x153/0x4c6
-   kasan_report+0xe4/0x1a0
-   interval_tree_iter_first+0x209/0x310
-   register_pfn_address_space+0x97/0x100
-   nvgrace_gpu_open_device+0x21c/0x730
-   vfio_df_open+0x213/0x520
-   vfio_df_ioctl_bind_iommufd+0x3e8/0x6e0
-   vfio_device_fops_unl_ioctl+0x782/0x1570
-   __x64_sys_ioctl+0x13c/0x1c0
-   do_syscall_64+0x106/0x630
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+Fix by calling get_dev() at the start of gadgetfs_bind(), before any
+error path that invokes gadgetfs_unbind(), so the reference is always
+balanced regardless of whether bind succeeds or fails.
 
-  Allocated by task 188:
-   ...
-   _vfio_alloc_device+0x3a/0x500
-   nvgrace_gpu_probe+0xcb/0x660
-   local_pci_probe+0xcf/0x170
-   ...
-
-  Freed by task 188:
-   ...
-   kfree+0x20d/0x600
-   device_release+0xcf/0x250
-   kobject_put+0x152/0x2f0
-   pci_device_remove+0xb0/0x1c0
-   device_release_driver_internal+0x38d/0x540
-   unbind_store+0xde/0x100
-   ...
-
-Give the fallback table its own open_device that only calls
-vfio_pci_core_enable() and vfio_pci_core_finish_enable(), the
-counterpart of vfio_pci_core_close_device().  Fallback mode then never
-touches the nvgrace memory regions, as Alex suggested.
-
-This should be safe because the fallback table uses the vfio-pci core
-read, write and mmap handlers, so nothing there uses the state
-nvgrace_gpu_open_device() sets up.  The one visible difference is that a
-fallback open no longer fails when BAR0 cannot be mapped, which matches
-vfio-pci.
-
-Fixes: e5f19b619fa0 ("vfio/nvgrace-gpu: register device memory for poison handling")
-Cc: stable@vger.kernel.org
-Suggested-by: Alex Williamson <alex@shazbot.org>
-Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Reviewed-by: Ankit Agrawal <ankita@nvidia.com>
-Link: https://lore.kernel.org/r/20261015081937.405320-2-parri.andrea@gmail.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Reported-by: syzbot+8496ab5e117502750445@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://syzkaller.appspot.com/bug?extid=8496ab5e117502750445
+Signed-off-by: Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260811060810.295666-1-khiemtranzo532001@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/nvgrace-gpu/main.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/legacy/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/vfio/pci/nvgrace-gpu/main.c
-+++ b/drivers/vfio/pci/nvgrace-gpu/main.c
-@@ -1083,6 +1083,21 @@ static const struct vfio_device_ops nvgr
- 	.detach_ioas	= vfio_iommufd_physical_detach_ioas,
- };
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -1692,6 +1692,8 @@ static int gadgetfs_bind(struct usb_gadg
+ 	dev->gadget = gadget;
+ 	gadget->ep0->driver_data = dev;
  
-+static int nvgrace_gpu_core_open_device(struct vfio_device *core_vdev)
-+{
-+	struct vfio_pci_core_device *vdev =
-+		container_of(core_vdev, struct vfio_pci_core_device, vdev);
-+	int ret;
++	get_dev (dev);
 +
-+	ret = vfio_pci_core_enable(vdev);
-+	if (ret)
-+		return ret;
-+
-+	vfio_pci_core_finish_enable(vdev);
-+
-+	return 0;
-+}
-+
- static const struct vfio_pci_device_ops nvgrace_gpu_pci_dev_core_ops = {
- 	.get_dmabuf_phys = vfio_pci_core_get_dmabuf_phys,
- };
-@@ -1091,7 +1106,7 @@ static const struct vfio_device_ops nvgr
- 	.name		= "nvgrace-gpu-vfio-pci-core",
- 	.init		= vfio_pci_core_init_dev,
- 	.release	= vfio_pci_core_release_dev,
--	.open_device	= nvgrace_gpu_open_device,
-+	.open_device	= nvgrace_gpu_core_open_device,
- 	.close_device	= vfio_pci_core_close_device,
- 	.ioctl		= vfio_pci_core_ioctl,
- 	.get_region_info_caps = vfio_pci_ioctl_get_region_info,
+ 	/* preallocate control response and buffer */
+ 	dev->req = usb_ep_alloc_request (gadget->ep0, GFP_KERNEL);
+ 	if (!dev->req)
+@@ -1706,7 +1708,6 @@ static int gadgetfs_bind(struct usb_gadg
+ 	spin_lock_irq(&dev->lock);
+ 	dev->state = STATE_DEV_UNCONNECTED;
+ 	spin_unlock_irq(&dev->lock);
+-	get_dev (dev);
+ 	return 0;
+ 
+ enomem:
 
 
