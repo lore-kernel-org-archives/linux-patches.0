@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831808;
-	b=b2TI1YsMwgm1rNS6dX5dMgFJ6ed2o1HBqYdyA1KP9kZtjts3DccGJK0QRuE9iLD0HwW9
-	 dElvJmjrSSW3v/odRGRRsbVnSAqEdpZLUQYW3Bw9wxXdjb1WQgA30L6uA+7XkiW3clQKw
-	 Afm6E8vhUIECDSeZcLokVYVhFI2j4m4qbus/vWw8/ivXvSeEOogA81FAUUQElzqF8UWBF
-	 viQzfs306gDn9gl2rAMf8wIByMZTnEGf56C5wAkRQ5nb/8P7ex2lQvuKwVkRfmqVh4P0L
-	 bCija5I/5358kQiT2FL7mcwNfHOigImjs4Ui1bzb/wpm/qiD9kKb2j7yJq4wePJEYQg==
+	t=1793831810;
+	b=4pfItg9f6X1m8Hy5hqUUyEK5CZ0HduKTnMfckdTdzT26xM2q+pneeJFr+6BA/K6NS0XJ
+	 F1n0YzHu7j3D0srdK8bKp/6uC7fw+I3eC7zpGhyxqMH/bGWYLnHx9vOhi3/pZuOToDsAK
+	 dOVOzOXG+acR+Yj88yF0XEa5We0287j+H8+ia0CS6qDEynBpX0PFH+UH77fWb3kUi/t5L
+	 zm4iZUG7GRRSnX6EDC7jC9hLg9TQVTmp7dt/apnK2agQ50ck0D34vbwz+hNbQ/Kgu/cch
+	 N2kqKdd0B1ogATUgFRI2Mn74K19GEOMDN1LZVGMeJIaNADjcC+swmwVS5q2Kalf/VWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831810;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/QZpiuOF1IqIVVOiuXpKoO1PhvYx5cUt6Z0EiGAc+SI=;
-	b=ZfePnvMOYpe4e/EbPIsouduzj3jZaOHdpOLRktZZ8FtFpogJsDO5k30Kr615Yv/Y4Pzt
-	 LEqiG8ab6vnPkOTl6gwk6Bmw9yGNVRb6idA4m2S4TdFpvI50lFgxAamGOmvfOOvNG0ZgU
-	 x/amOozQI24xOYqDN/z3iIC70fYajZ7DsMCqGeAATwEkgfMWpQNHMWOzI6LDZUdAfF0S+
-	 GJM9H6hkh5GBciyzovEO8m7N/NhBm4EAE7wWgGhhnbSrfGvLVp4ZuCn2sN8JioOWJXP+i
-	 PlkgdYhEzdaH565zZRjjT/sax1KqRaFlQ7qaf+6FD0SJvytyLd+rjUhcrC+bFd56u1w==
+	bh=iJ+B+lRT15iaj5dOaUM14RuspvgUFx4l/miAKyRASUw=;
+	b=pTmyOe9kykZ907sAm81KIP44JbbOZBcFRJzxfbYdnCbbXBY4ZXnW5Q/NMTk4h8jm+Usf
+	 Byk14K4K5yX3q1ThfZbFV+ZGWaWqJeQ3vGFLxrXb7I2h8SIrD+ud/vahFu2mNt80BSAwD
+	 aH1u1QCyAGq59v7oRYXOQQnlpWEZY9oLjH59HG58P+R87o6oi6qm4Ut1d+wCT5e8oMFPJ
+	 TmgU253OP8hX9ntIQ0HCPzLQZexi/+L+9Oq+M3y7fbsOWaPORWxfcHyh446IOSjvdXYiq
+	 ptsRmmtQzTGz2enycoLtHxLFYJoOg0zhfFsMhZ6D7HVGG/2QBomgxvMzdv/xSyVCNrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rnTvTe3I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kqUyQ1no;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9432D606A33D;
-	Wed,  4 Nov 2026 22:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31666606A860;
+	Wed,  4 Nov 2026 22:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rnTvTe3I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FF81F000C1;
-	Wed,  4 Nov 2026 22:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kqUyQ1no
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83801F00919;
+	Wed,  4 Nov 2026 22:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831808;
-	bh=/QZpiuOF1IqIVVOiuXpKoO1PhvYx5cUt6Z0EiGAc+SI=;
+	s=korg; t=1793831810;
+	bh=iJ+B+lRT15iaj5dOaUM14RuspvgUFx4l/miAKyRASUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rnTvTe3IePh0j6ZslZtj8yu/2cdgDe4FGSCqrlnUQrDn8twe/oB9PLkRV9UfDtuGM
-	 hRUWm3J2k7Qjx1XnHO/fhkRABbKiRb7dQYRbYBPxLuBeOsqq8fjoih7aLXVJn0rFoR
-	 mQTwNXLuleLfsruwx1IVNT9o2/7B0OP6ew/ig7I0=
+	b=kqUyQ1noAh5YUG+usWe6AIbnKqTI84znd610CS76Y1hnEY/W1UjYyhJKS8xnjzeb5
+	 slL0qNbW2rCqFWztaKrcSyih0cTdYVVgRoH0bEspRBBEwptpZ/FqNmPDOx9PCFKGrh
+	 s1/quG73jPhWkdHqCcBTG+Uq18cReSwh3YW1tK6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Juergen Gross <jgross@suse.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	syzbot@syzkaller.appspotmail.com,
-	Atish Patra <atishp@meta.com>,
-	Nikunj A Dadhania <nikunj@amd.com>
-Subject: [PATCH 6.18 0924/1005] x86/mm/pat: Fix effective RW computation in lookup_address_in_pgd_attr()
-Date: Wed,  4 Nov 2026 16:10:57 -0500
-Message-ID: <20261104211109.026460924@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 0925/1005] KVM: SVM: Trigger new ASID allocation in both VMCBs on pCPU switch
+Date: Wed,  4 Nov 2026 16:10:58 -0500
+Message-ID: <20261104211109.051255670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -72,88 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit ebaf7c9bbb1e16523d7036e7e1225ad2dfcc6482 upstream.
+commit bf260dc9e7b8bfcd06c1a8e739797b1cf0917c72 upstream.
 
-lookup_address_in_pgd_attr() accumulates the effective NX and RW bits of
-the walked page table levels so that verify_rwx() can detect mappings that
-are both writable and executable.
+When the pCPU where the VMCB was most recently used is switched, reset
+the ASID generation in both VMCBs, triggering new ASID allocation for
+the immediate VMRUN as well as the next VMRUN on the other VMCB.
 
-The RW bits are folded into a bool with
+The ASID is shared between vmcb01 and vmcb02, and gets flushed on every
+nested transition. However, since pCPU tracking is done per VMCB, it is
+possible for one VMCB to allocate a new ASID when migrated to a new
+pCPU, and then the other VMCB reuses that ASID on the old pCPU. This can
+result in the same ASID being used by multiple vCPUs on the old pCPU.
 
-	rw &= pXd_flags(*pXd) & _PAGE_RW;
+Example scenario:
+- vCPU runs on pCPU A, vmcb01 is active, asid=1.
+- vCPU migrates to pCPU B, vmcb01 pCPU changes, new asid=2.
+- Another vCPU runs on pCPU A and allocates asid=2 as well.
+- vCPU migrates back to pCPU A, and then switches to vmcb02 before it
+  runs again with vmcb01.
+- No pCPU switch is detected for vmcb02, so VMRUN is done with asid=2.
+- Two vCPUs end up using asid=2 on the same pCPU.
 
-but _PAGE_RW is 0x2. So consider the accumulation line:
+Keep the VMCB dirtying to the active VMCB only. Clean bits are tracked
+by a pCPU for each VMCB, so do not unnecessarily dirty a VMCB if its
+pCPU does not change.
 
-        rw &= pXd_flags(*pXd) & _PAGE_RW;
+Additionally, initialize the tracked pCPU for vmcb02 to -1 on nested
+enablement as hardening, so that a new ASID allocation is always
+triggered when nested is disabled and re-enabled.
 
-where rw=0x1 and the right side evaluates down to 0x2. It'll end up doing:
+No performance regression was noticed when overcommitting L1 vCPUs in L0
+(to force rescheduling), pinning L1 <-> L2 vCPUs, and running CPUID in a
+tight loop bouncing between 2 vCPUs in L2.
 
-        rw = 0x1 & 0x2
+An alternative (and perhaps more proper) fix would be tracking the ASID
+per-VMCB instead (e.g. [1]). However, that's a more involved change, and
+it would result in having different ASIDs for L1 and L2 without actually
+properly maintaining them. It would probably work because all TLB
+flushes target the current VMCB, and the other VMCB is always flushed on
+nested transitions, but the code ends up in an arguably more fragile
+state. Punt a proper clean fix to an incoming (and overdue) overhaul of
+SVM's ASID usage [2].
 
-and rw always ends up 0.
+[1] https://lore.kernel.org/lkml/20250205182402.2147495-2-yosry.ahmed@linux.dev
+[2] https://lore.kernel.org/kvm/20260728003557.1136583-1-yosry@kernel.org
 
-This way rw becomes false at the first level walked, regardless of the
-actual permissions, and verify_rwx() treats every mapping as non-writable
-and never reports a W^X violation.
-
-Add double negation to the right side to normalize the _PAGE_RW flag to
-0 or 1.
-
-Assisted-by: Copilot:claude-opus-4.8
-Fixes: ceb647b4b529 ("x86/pat: Introduce lookup_address_in_pgd_attr()")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Tested-by: Atish Patra <atishp@meta.com>
-Tested-by: Nikunj A Dadhania <nikunj@amd.com>
-Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813-cpa-fixes-v2-5-39b4ff90f91d@kernel.org
+Cc: stable@vger.kernel.org
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
+Link: https://patch.msgid.link/20260903223258.486034-1-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat/set_memory.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/nested.c |    1 +
+ arch/x86/kvm/svm/svm.c    |   19 +++++++++++++++----
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -753,7 +753,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1346,6 +1346,7 @@ int svm_allocate_nested(struct vcpu_svm
+ 	if (!svm->nested.msrpm)
+ 		goto err_free_vmcb02;
  
- 	*level = PG_LEVEL_512G;
- 	*nx |= pgd_flags(*pgd) & _PAGE_NX;
--	*rw &= pgd_flags(*pgd) & _PAGE_RW;
-+	*rw &= !!(pgd_flags(*pgd) & _PAGE_RW);
++	svm->nested.vmcb02.cpu = -1;
+ 	svm->nested.initialized = true;
+ 	return 0;
  
- 	p4d = p4d_offset(pgd, address);
- 	if (p4d_none(*p4d))
-@@ -764,7 +764,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3613,14 +3613,25 @@ static int pre_svm_run(struct kvm_vcpu *
+ 	struct vcpu_svm *svm = to_svm(vcpu);
  
- 	*level = PG_LEVEL_1G;
- 	*nx |= p4d_flags(*p4d) & _PAGE_NX;
--	*rw &= p4d_flags(*p4d) & _PAGE_RW;
-+	*rw &= !!(p4d_flags(*p4d) & _PAGE_RW);
+ 	/*
+-	 * If the previous vmrun of the vmcb occurred on a different physical
+-	 * cpu, then mark the vmcb dirty and assign a new asid.  Hardware's
+-	 * vmcb clean bits are per logical CPU, as are KVM's asid assignments.
++	 * If the previous VMRUN of the VMCB occurred on a different physical
++	 * cpu, then mark the VMCB dirty as hardware's clean bits are per pCPU.
++	 *
++	 * Reset the ASID generation in both VMCBs. This will lead to assigning
++	 * a new ASID now, and then again when switching to the other VMCB.
++	 * However, this is needed as the ASID is shared between the VMCBs, and
++	 * otherwise it would be possible to use an ASID allocated on one pCPU
++	 * on another, for example:
++	 * - vCPU migrates from pCPU A to pCPU B, allocates a new ASID.
++	 * - vCPU migrates back to pCPU A, and then switches the VMCB.
++	 * - The new VMCB does not detect a pCPU change and runs on pCPU A with
++	 *   the new ASID allocated on pCPU B, which is potentially used by
++	 *   another vCPU/VM.
+ 	 */
+ 	if (unlikely(svm->current_vmcb->cpu != vcpu->cpu)) {
+-		svm->current_vmcb->asid_generation = 0;
+ 		vmcb_mark_all_dirty(svm->vmcb);
+ 		svm->current_vmcb->cpu = vcpu->cpu;
++		svm->vmcb01.asid_generation = 0;
++		svm->nested.vmcb02.asid_generation = 0;
+         }
  
- 	pud = pud_offset(p4d, address);
- 	if (pud_none(*pud))
-@@ -775,7 +775,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
- 
- 	*level = PG_LEVEL_2M;
- 	*nx |= pud_flags(*pud) & _PAGE_NX;
--	*rw &= pud_flags(*pud) & _PAGE_RW;
-+	*rw &= !!(pud_flags(*pud) & _PAGE_RW);
- 
- 	pmd = pmd_offset(pud, address);
- 	if (pmd_none(*pmd))
-@@ -786,7 +786,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
- 
- 	*level = PG_LEVEL_4K;
- 	*nx |= pmd_flags(*pmd) & _PAGE_NX;
--	*rw &= pmd_flags(*pmd) & _PAGE_RW;
-+	*rw &= !!(pmd_flags(*pmd) & _PAGE_RW);
- 
- 	return pte_offset_kernel(pmd, address);
- }
+ 	if (sev_guest(vcpu->kvm))
 
 
