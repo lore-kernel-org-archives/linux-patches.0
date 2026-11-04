@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829606;
-	b=TxD0o1EhYBvil+0zVJVarhSpTAzmXuuzwBCl0anPZuQg8oRiQwouYruFLpObCsA1uMGv
-	 RdiFJfxc9eyoE+HqEU49YRF2Kare9eVcZzr+pfZIGTwqWpR1Ajy/TBBww3hnQruB++J+F
-	 6V4hJ8zCy9BJ6GD0ONmSBiYFCWm6NcK/NuW15rWYmd9w+N63oA3jOznxtnJUo7XMDT5nr
-	 TvYPE0Zppj5jIwYqqld2GBz73esPO37lkqoQnABjImGSzWKH9nGDXYSgtuBWTbucua5PF
-	 oOj29Xs8AMdPdS8kTB7nEoCrSixBRCn57Z4WlTjj5e4RVzPkV5+ilRMJMrCmSk2a/2A==
+	t=1793829607;
+	b=F57BKRa0dqGSTV4i7sszYgw+6dq9rZseBm0d5nXS2H3n+Chqb7zmJMgSMmiMMp/5lD6y
+	 vtYx/sBXHyBUXi3cWMAmM7HO+4R+Re2gY0cs/MM+kWSS99O3y0AIQcfrWar+M8zxzYswm
+	 NDRg4/JrVKDucCOVRbjsnZWLxUao4NaEONAJ5NqeoTXism07EInfwiBPDzq0oN4RInw2b
+	 OgLkIZsszGHPctAXjS1kTaAN7ClMq/lfthPyjK6CBCotiD7TQGPXCrcCoCSXT/pd5Tra+
+	 EtiSNFKGta60NlVcGsCut57R4TrL2W8NqLo36QybTuIqRliJ872/Cr0KUTBq4fUsoHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=98LzNV5fhHHaY7JM8J6Ad2kTAM+ck/CN5+PkC3IHaoQ=;
-	b=Dj9g63z8Y4uvD6Zjw0ecP3EEtHT3Wq8ocFIjAOHs6kLatqcieDQEmtqJoQfk8JeWRFJw
-	 nYkPtGKe4Og4K19c1c6Bg4R7XAFkUfi68FEZAUX3zemvmUI2Ebwcuddh7Hf6NN6kWBcAd
-	 +CmqTv1G+pE8Uehy7YQlpkuCLzD6wJ+JbwYelgvR0NDzf2GdJ9Fu7tovqdzOiBSzgOyEM
-	 suSHK+syBsrkLWuUCjT1f4WtzULdU4QWR3XyBRIr5mzUsF8bn9MyFooC/VEZLkOrV/Xai
-	 TIBoAFLeiKtCHLQkaL66Qa6K+4OGa4wsW0hppppvBSeCq7MIZXDVdbmPnmnk1v3WiWQ==
+	bh=y7ITpCV9ao0YfFrCFV8iebbJAw2Niygh03+Z/g0F7Tc=;
+	b=1ozZp0Op+zlGJGX5vAXLSEtW0yPn05SVQBNY/NCF0WuhIc9611ef5buvPErOD6cWzTfz
+	 30RdsmEyj282T1hfwa8+FKbNrkuDqE+1rZhEf0R5plS10I1voScIG6bfeIZJhgaAgVPPM
+	 k0QeKqHEOWT15nmopkPtFrP75VELHnGwxjQKJJamtLYCktUVNHaW82zigGwqtrpyEoPjm
+	 CU2k0diHCCkYzzTipGNbGgMvkfh+TGPJPFoWoU/25be8UL9P3ZnQUU+1beGPDRhffUKeH
+	 2RRqYf0MiEIl/dW/LYqavicHN+eaWxehUknMVeyasTmNFoofS5o8ywoxZzG9Bhm6yng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO2nv2BU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mWkvHECL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D7F6075DD3;
-	Wed,  4 Nov 2026 22:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8C9606D818;
+	Wed,  4 Nov 2026 22:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO2nv2BU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CAF1F00A02;
-	Wed,  4 Nov 2026 22:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mWkvHECL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA541F000C1;
+	Wed,  4 Nov 2026 22:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829605;
-	bh=98LzNV5fhHHaY7JM8J6Ad2kTAM+ck/CN5+PkC3IHaoQ=;
+	s=korg; t=1793829607;
+	bh=y7ITpCV9ao0YfFrCFV8iebbJAw2Niygh03+Z/g0F7Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bO2nv2BU+muewMzMgxZ9hU3ZbP6omVPqNjul+GMxtzdm+RcPw7LTcLS0JOVGHs5F8
-	 GZ2XnKiO6VNYkQvmAcWifKK8Am/UZC/oU6aVr39ErlulAbOb28Kh33u4KRtjal60vN
-	 xKzB32hi1ZA4xwbfhLoJBiuo6JrWSnRKBpVV6IiM=
+	b=mWkvHECLpw5oRR/xdlBvXuppujUu17RqWLeICuxwMXvKeTUu4B43LL4lYncTF+bcp
+	 36x8OfYI/qI7DCuCj4eXIw+sjt1GvR2quQhKqzJ/KxVpWWjV5nJEsk9uXr4TTepf3t
+	 IwE9EduNjXYQycx0RfkjxldteJKPttxXru4KUt+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Manikanta Pubbisetty <manikanta.pubbisetty@oss.qualcomm.com>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0231/1005] wifi: ath11k: validate regulatory capability phy_id
-Date: Wed,  4 Nov 2026 15:59:24 -0500
-Message-ID: <20261104211050.315430681@linuxfoundation.org>
+Subject: [PATCH 6.18 0232/1005] wifi: ath10k: trigger hardware recovery upon rx failures
+Date: Wed,  4 Nov 2026 15:59:25 -0500
+Message-ID: <20261104211050.343462048@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,45 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Manikanta Pubbisetty <manikanta.pubbisetty@oss.qualcomm.com>
 
-[ Upstream commit f8729a40ebcc94d164be8f154483a21669f3ab52 ]
+[ Upstream commit f78210dd4bea09090b828adc2733cad4b9916306 ]
 
-ath11k_wmi_tlv_ext_hal_reg_caps() copies firmware regulatory
-capability records into soc->hal_reg_cap[] using reg_cap.phy_id as
-the destination index.  The loop count is bounded by num_phy, but the
-phy_id embedded in each record is not checked against the fixed
-MAX_RADIOS-sized destination array.
+When an error occurs during RX packet processing (e.g., MSDU done
+failure), the driver sets rx_confused and drops all subsequent RX
+packets until a Wi-Fi ON/OFF cycle clears the flag. This can leave
+the device in a bad state where it cannot process RX data traffic.
 
-Reject firmware records whose phy_id does not fit soc->hal_reg_cap[]
-before copying the parsed capability.
+Instead of leaving the device in such a state, trigger hardware
+recovery so that such an error state can be reset and the device
+can function again normally.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Tested-on: WCN3990 hw1.0 WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00288-QCARMSWPZ-1
+Tested-on: QCA6174 hw3.2 SDIO WLAN.RMH.4.4.1-00189
+
+Signed-off-by: Manikanta Pubbisetty <manikanta.pubbisetty@oss.qualcomm.com>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260704011040.26233-1-pengpeng@iscas.ac.cn
+Link: https://patch.msgid.link/20260710060406.3323260-1-manikanta.pubbisetty@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/ath/ath10k/htt_rx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 3305ec66ddbf2..c6b9e84b169c9 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -4816,6 +4816,12 @@ static int ath11k_wmi_tlv_ext_hal_reg_caps(struct ath11k_base *soc,
- 			return ret;
- 		}
+diff --git a/drivers/net/wireless/ath/ath10k/htt_rx.c b/drivers/net/wireless/ath/ath10k/htt_rx.c
+index d7e429041065a..e4162d2faae66 100644
+--- a/drivers/net/wireless/ath/ath10k/htt_rx.c
++++ b/drivers/net/wireless/ath/ath10k/htt_rx.c
+@@ -2345,10 +2345,8 @@ static int ath10k_htt_rx_handle_amsdu(struct ath10k_htt *htt)
+ 	if (ret < 0) {
+ 		ath10k_warn(ar, "rx ring became corrupted: %d\n", ret);
+ 		__skb_queue_purge(&amsdu);
+-		/* FIXME: It's probably a good idea to reboot the
+-		 * device instead of leaving it inoperable.
+-		 */
+ 		htt->rx_confused = true;
++		ath10k_core_start_recovery(ar);
+ 		return ret;
+ 	}
  
-+		if (reg_cap.phy_id >= ARRAY_SIZE(soc->hal_reg_cap)) {
-+			ath11k_warn(soc, "invalid reg cap phy_id %u\n",
-+				    reg_cap.phy_id);
-+			return -EINVAL;
-+		}
-+
- 		memcpy(&soc->hal_reg_cap[reg_cap.phy_id],
- 		       &reg_cap, sizeof(reg_cap));
+@@ -3313,6 +3311,7 @@ static int ath10k_htt_rx_in_ord_ind(struct ath10k *ar, struct sk_buff *skb)
+ 	if (ret < 0) {
+ 		ath10k_warn(ar, "failed to pop paddr list: %d\n", ret);
+ 		htt->rx_confused = true;
++		ath10k_core_start_recovery(ar);
+ 		return -EIO;
+ 	}
+ 
+@@ -3346,6 +3345,7 @@ static int ath10k_htt_rx_in_ord_ind(struct ath10k *ar, struct sk_buff *skb)
+ 			ath10k_warn(ar, "failed to extract amsdu: %d\n", ret);
+ 			htt->rx_confused = true;
+ 			__skb_queue_purge(&list);
++			ath10k_core_start_recovery(ar);
+ 			return -EIO;
+ 		}
  	}
 -- 
 2.53.0
