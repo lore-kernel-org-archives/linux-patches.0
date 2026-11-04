@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831499;
-	b=oAo5T85ZfBOhj9ugWDSBu0BSGvmm4+le1+nzDGZ3g3a1HM14UU6Oo/htB9kB7qYecxd3
-	 1g5uUeJVWZDo7HpNwfDBmwE/LoXvnJLLo0F3yeUElsBi7ZxiRjQipX+fUiyv2zuVZ4jdh
-	 dVoJ1hGfMU5vyzbn43PItCtB4NxaYJbrFxROURbsqIwvLfMBQZK7+ZAg2sqkWM5eP5M1c
-	 HmoopBB20HnfqwaM+ZNcu2VwYkXqCLcnG5eScgNrB4Gkk8id9909eweIdp2A/UvUPEudf
-	 3Pnl7WlD7+1tTNtWGjGo9mdsgr529k/bUrI09zUVlbRGT3E0TopzPhZ5kxH0y4sEAlQ==
+	t=1793831500;
+	b=q2VZW3hrX7b8VvAsnZViFyxYcPxGa//SMF1ds/aRKFPA1EA9Y8pNrVJgSENB6JxIhdpE
+	 eNed5At6lCnIAiL4vhLD/sWC5zYMVNn6h8H2P3MYTHCdm39MoZHdxgUl2skJQyjMIvJFQ
+	 22SOszVDaKr5GzRChVGPcYsAhl/LhfUdFgpaFiez4rPQayaUWWrkkB4+T03h4TF5fvTz2
+	 uYmpniUIbx4BG9gJl7xtkTEAT8nj7rkV6H9AlWaPBsmGhhT2MOS1pLijSEfS9UvZg/upE
+	 2vTBX5BLtnfSzO+fxkFv+HGqs0RxETg0WgTijvNoeGkZkaGKsQOaVoyJwxXAuBmKyKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831499;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sA3lSqT1XCcG4ZN7jaPv2DNbkpbkEKDBBfGh1KKWEbo=;
-	b=cEUJrIRwMnJl3yR0p2DwcmamKfoHtedBIX9RggVT+mjqQpKeMG6T/g1sLu1lHlTZc3gT
-	 1RZoc+he/DkAeGpaz4FZc/9Da2aomhOYlhTFmyq0m5n3S6nWyGByRc/TH00w6ZULWAzrn
-	 D9ALKbutdiccBv5NaKeTQ3hDEPSbkZjU/feLjl54nKSEc1GmyuPYYnYASw+qZMZRMZz/Y
-	 n61c3yeNgh8IFKOLUBrJ9h5IPkgM5sHbAZdfG4XBO0o21WL4PVDYedR2Ivz8TNxJNdy6w
-	 z3+Yymgvb0BFxss8iFsNXy0EVTjj4dVTVXgI+V7MKYH9IEiBTyHKNLrQTiYUvfoEkNQ==
+	bh=55KqPSraxOH/yIv5MpcZWHCbSsF8k5lELCyGvtXTG3c=;
+	b=LF/s0WQMyouddnqN4Gl47smRdxj5hpiTX/3L/nb1nJmGpw2674JnY5Vrgj4TA0ZSkTS8
+	 YRIywFKIOthK8s4BHUE8gqfojhyqMJxzcBRs0FEl0YUzSI5tSh0BgPwKrafWE2dYFhnzr
+	 s5lUJRQx7AtohsIP1vLRNvbLpTypJZKiyGum843yrjei3tk4zoK7xm4qGyoKCJ0HIBghX
+	 2kvQKt2CPQ35vXDrSsmFoqIfuhdP0fB5gOT0ZfFrsqM4oC8TaC6Z269kQGeKo49NVogZv
+	 IHcN7UQz2+CUxFNQetZu/Y66qIN5igp6QFFy2UgysV7Lfuj3qxwWlGc8v/FuKPeVGLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruBhRoLR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ayvoEOsP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B736606E826;
-	Wed,  4 Nov 2026 22:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0364606D813;
+	Wed,  4 Nov 2026 22:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruBhRoLR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE8B1F000C1;
-	Wed,  4 Nov 2026 22:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ayvoEOsP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3311F00919;
+	Wed,  4 Nov 2026 22:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831499;
-	bh=sA3lSqT1XCcG4ZN7jaPv2DNbkpbkEKDBBfGh1KKWEbo=;
+	s=korg; t=1793831500;
+	bh=55KqPSraxOH/yIv5MpcZWHCbSsF8k5lELCyGvtXTG3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ruBhRoLRqe4KJpoNnrJniaW4zOWNOK3qLzNLxqclnQUAWepPMSu7zdlWe1HuO0+rn
-	 ffnsPrdV0Iq+oALvWe9/2pNYt2xmdkdaGu/QJqi4ehuhwpGykuUTF9rVJCo6dCWe6f
-	 us5UJMlcgghIAzHr7WPG9CmIHHu0Z0TT/ho4MLJ8=
+	b=ayvoEOsPHc/Zot8OuXOeXii2aeXJAAGYwUp2J8cD7yiBPlr5wuDCsj8j/vxnkiACX
+	 eEbyJIMvXJX/rE83psh/HjEP/t+oNd9y63hi855fH8JuZoV81OCKfxtUSRtzxRF720
+	 T2nPxUUxNtNYp5buRLMBaf+ReV8ISlkyEoLXs6bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Oleg Keri <okerixx@gmail.com>
-Subject: [PATCH 6.18 0740/1005] phy: core: Fix race-condition between _of_phy_get() and try_module_get()
-Date: Wed,  4 Nov 2026 16:07:53 -0500
-Message-ID: <20261104211104.204332989@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.18 0741/1005] power: supply: sbs-battery: disable polling before supply teardown
+Date: Wed,  4 Nov 2026 16:07:54 -0500
+Message-ID: <20261104211104.230963664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,184 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 090055ee629523092688da42428558ba56d4272f upstream.
+commit 5c1c602463d597c5189ddc5a73dece588ba2c57a upstream.
 
-Sashiko asked during a patch review if the existing usage pattern had a
-race condition; specifically in of_phy_get() if it was possible between
-returning from _of_phy_get() and running try_module_get() that a module
-might be unbound leading to use-after-free.
+The managed poll-work cancellation is registered before the power
+supply, so cleanup unregisters the supply before draining polling.
+A pending or running poller can then call power_supply_changed() on
+the released supply.
 
-Looking at the code this appears to be so, there is no linkage between the
-phy and module under a synchronisation primitive.
+Commit 8d59cf3887fb ("power: supply: sbs-battery: Fix use-after-free in
+power_supply_changed()") moved the IRQ request after supply registration,
+but did not change the poll-work cancellation order.
 
-Using the phy_provider_mutex in phy_get() will ensure there is a link between
-the returned phy pointer and the module_get() bumping the module reference
-count.
+Add a later managed action that disables and drains polling before
+supply teardown. Its retained disabled state prevents external-power
+callbacks from rearming the poll work after it has been drained.
+Keep the original autocancel to initialize work before supply callbacks
+can run and to cover failed supply registration.
 
-Amend phy_get(), of_phy_get() and devm_of_phy_get_by_index() to fix the
-same usage pattern.
+The teardown ordering issue was found by static analysis.
 
-phy_provider_unregister() must take the phy_provider_mutex so amending
-phy_get()/of_phy_get() to take that same mutex guarantees there is no
-use-after-free.
-
-Fixes: ff764963479a1 ("drivers: phy: add generic PHY framework")
-Cc: stable@vger.kernel.org
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Tested-by: Oleg Keri <okerixx@gmail.com> # Lenovo Yoga Slim 7x Gen 11 (Glymur)
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://patch.msgid.link/20260918-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v20-1-dc244e124e71@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 6d0c5de2fd84 ("power: supply: Clean-up few drivers by using managed work init")
+Cc: stable@vger.kernel.org # 6.10+
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20261004041019.1123723-1-mhun512@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/phy-core.c |   45 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ drivers/power/supply/sbs-battery.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -124,13 +124,13 @@ static struct phy *phy_find(struct devic
- 	const char *dev_id = dev_name(dev);
- 	struct phy_lookup *p, *pl = NULL;
+--- a/drivers/power/supply/sbs-battery.c
++++ b/drivers/power/supply/sbs-battery.c
+@@ -1060,6 +1060,13 @@ static void sbs_alert(struct i2c_client
+ 	sbs_supply_changed(i2c_get_clientdata(client));
+ }
  
--	mutex_lock(&phy_provider_mutex);
-+	lockdep_assert_held(&phy_provider_mutex);
++static void sbs_disable_work(void *data)
++{
++	struct sbs_info *chip = data;
 +
- 	list_for_each_entry(p, &phys, node)
- 		if (!strcmp(p->dev_id, dev_id) && !strcmp(p->con_id, con_id)) {
- 			pl = p;
- 			break;
- 		}
--	mutex_unlock(&phy_provider_mutex);
- 
- 	return pl ? pl->phy : ERR_PTR(-ENODEV);
- }
-@@ -602,6 +602,8 @@ static struct phy *_of_phy_get(struct de
- 	struct phy *phy = NULL;
- 	struct of_phandle_args args;
- 
-+	lockdep_assert_held(&phy_provider_mutex);
++	disable_delayed_work_sync(&chip->work);
++}
 +
- 	ret = of_parse_phandle_with_args(np, "phys", "#phy-cells",
- 		index, &args);
- 	if (ret)
-@@ -613,11 +615,10 @@ static struct phy *_of_phy_get(struct de
- 		goto out_put_node;
- 	}
+ static void sbs_external_power_changed(struct power_supply *psy)
+ {
+ 	struct sbs_info *chip = power_supply_get_drvdata(psy);
+@@ -1200,6 +1207,10 @@ static int sbs_probe(struct i2c_client *
+ 		return dev_err_probe(&client->dev, PTR_ERR(chip->power_supply),
+ 				     "Failed to register power supply\n");
  
--	mutex_lock(&phy_provider_mutex);
- 	phy_provider = of_phy_provider_lookup(args.np);
- 	if (IS_ERR(phy_provider) || !try_module_get(phy_provider->owner)) {
- 		phy = ERR_PTR(-EPROBE_DEFER);
--		goto out_unlock;
-+		goto out_put_node;
- 	}
- 
- 	if (!of_device_is_available(args.np)) {
-@@ -631,8 +632,6 @@ static struct phy *_of_phy_get(struct de
- out_put_module:
- 	module_put(phy_provider->owner);
- 
--out_unlock:
--	mutex_unlock(&phy_provider_mutex);
- out_put_node:
- 	of_node_put(args.np);
- 
-@@ -656,15 +655,21 @@ struct phy *of_phy_get(struct device_nod
- 	if (con_id)
- 		index = of_property_match_string(np, "phy-names", con_id);
- 
-+	mutex_lock(&phy_provider_mutex);
++	rc = devm_add_action_or_reset(&client->dev, sbs_disable_work, chip);
++	if (rc)
++		return rc;
 +
- 	phy = _of_phy_get(np, index);
- 	if (IS_ERR(phy))
--		return phy;
-+		goto out_unlock;
+ 	if (!chip->gpio_detect)
+ 		goto out;
  
--	if (!try_module_get(phy->ops->owner))
--		return ERR_PTR(-EPROBE_DEFER);
-+	if (!try_module_get(phy->ops->owner)) {
-+		phy = ERR_PTR(-EPROBE_DEFER);
-+		goto out_unlock;
-+	}
- 
- 	get_device(&phy->dev);
- 
-+out_unlock:
-+	mutex_unlock(&phy_provider_mutex);
- 	return phy;
- }
- EXPORT_SYMBOL_GPL(of_phy_get);
-@@ -764,6 +769,7 @@ struct phy *phy_get(struct device *dev,
- 	struct phy *phy;
- 	struct device_link *link;
- 
-+	mutex_lock(&phy_provider_mutex);
- 	if (dev->of_node) {
- 		if (string)
- 			index = of_property_match_string(dev->of_node, "phy-names",
-@@ -774,15 +780,18 @@ struct phy *phy_get(struct device *dev,
- 	} else {
- 		if (string == NULL) {
- 			dev_WARN(dev, "missing string\n");
--			return ERR_PTR(-EINVAL);
-+			phy = ERR_PTR(-EINVAL);
-+			goto out_unlock;
- 		}
- 		phy = phy_find(dev, string);
- 	}
- 	if (IS_ERR(phy))
--		return phy;
-+		goto out_unlock;
- 
--	if (!try_module_get(phy->ops->owner))
--		return ERR_PTR(-EPROBE_DEFER);
-+	if (!try_module_get(phy->ops->owner)) {
-+		phy = ERR_PTR(-EPROBE_DEFER);
-+		goto out_unlock;
-+	}
- 
- 	get_device(&phy->dev);
- 
-@@ -791,6 +800,8 @@ struct phy *phy_get(struct device *dev,
- 		dev_dbg(dev, "failed to create device link to %s\n",
- 			dev_name(phy->dev.parent));
- 
-+out_unlock:
-+	mutex_unlock(&phy_provider_mutex);
- 	return phy;
- }
- EXPORT_SYMBOL_GPL(phy_get);
-@@ -939,15 +950,17 @@ struct phy *devm_of_phy_get_by_index(str
- 	if (!ptr)
- 		return ERR_PTR(-ENOMEM);
- 
-+	mutex_lock(&phy_provider_mutex);
- 	phy = _of_phy_get(np, index);
- 	if (IS_ERR(phy)) {
- 		devres_free(ptr);
--		return phy;
-+		goto out_unlock;
- 	}
- 
- 	if (!try_module_get(phy->ops->owner)) {
- 		devres_free(ptr);
--		return ERR_PTR(-EPROBE_DEFER);
-+		phy = ERR_PTR(-EPROBE_DEFER);
-+		goto out_unlock;
- 	}
- 
- 	get_device(&phy->dev);
-@@ -960,6 +973,8 @@ struct phy *devm_of_phy_get_by_index(str
- 		dev_dbg(dev, "failed to create device link to %s\n",
- 			dev_name(phy->dev.parent));
- 
-+out_unlock:
-+	mutex_unlock(&phy_provider_mutex);
- 	return phy;
- }
- EXPORT_SYMBOL_GPL(devm_of_phy_get_by_index);
 
 
