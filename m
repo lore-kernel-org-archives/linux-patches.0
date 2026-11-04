@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831355;
-	b=LWWLbX1/qYMQA/PZFvP5N0FYVBCPtS6HJ3h0Ce/apJaGmci+CNZ7A7eFpFF6PQx4QdS7
-	 Afpm78G/+NU75j3LWqQuqQwefQsHPTAbM2pFwacA1iwOR7+jz7p5dnV7gLdIldF02reMu
-	 8EkjBtPRektVEoW3TsdtNnudVMUvCx7v2umRSAVssApXQA0kBSjW6hQ1SPxP3HFyXuCHV
-	 ZDjDS8XozFWPG+QgRHwPu8GelSUr5WObR/IxVoCF2WdlgmTmdLoRrZ0s6c5rXkHvGr2GL
-	 ao2slhaSTJX0MwndBU3qUZqYaZ7iXFjDYwMPd2v2nfFeU1qvi6P62n4vjWlnFcMfE4Q==
+	t=1793831357;
+	b=AprdGjyVLJuQ5amLZk/16ZiuQ9fgxuQswrw29sE71SvWabQvoeVAnHDhtrtye6swQP7p
+	 yqpBGeHaJMGD+Auf9vAUxDuGRX1NjdySP2VCueyNdY5k508CJxtFCkyriI7und3YULTxA
+	 wabVlkcBVD1rR2Sm5DAzPt3+FPweVAJgmVnNr3WzaHfqR4jSQGw+7M8DZEpUnkzCRnEId
+	 0wZ8Xjlql4q6tW9lmb6n5ujS0xhuD5WaLFhpYZ0Th2mMOOIecfZIM5Q6i/bJnqE/hKmNM
+	 tk/VleqMV+6x3NVXTac4RhSGCZd7r4qHx7lzl5xjyWgAnBxpAsj0h/DcfUm7ks+uedw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831357;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3ii5/s0VV54db2BimFgMvmy8QQqoaoedKtShAn2rIRc=;
-	b=e7zdjZ3BNpvopNHzeTOjtx8NgGG9yeW7ei21uzyWTVQ+8nBej32FHV1h88qfduoo7Vnf
-	 AYMWJZl9soRmcDds2j637Ib3M7y7CUlXFNFf4QjaCwUdlobaY1uiTIW1vYPDpkBiXa8ZF
-	 6U2/DaAs1UY404/EQXIdVYL9E0KLarB7ZrSYs8oY8WiZuc6o1iSZ3oFLmnnBA5CtafjYs
-	 E0S9UhG9iGzKGN6wKsy2ysDJN08TfoelDJUDxVnrHh75ImxCxtTB1ALUGRSSwAhQXXoym
-	 7hazW+3FlB2XDhZGwnjwumP5qs8tTLCTWiW7NH1mE6SXeXIAIO0N4sfObnuh2xV9dXA==
+	bh=Cr1yXMm4Dp/8XRqbpCXTr6L3IjLzzB0zq8k5R3IKDCQ=;
+	b=W4CtRbAZ7aE76oGnBmnoS0Z9JLyPrSmfMh9kUFgmQCow3lLwHZ20sUBGHRC04RZ3DtgS
+	 fpKcWSNQQzP2C4AJDSyqyVoGLApkxSAG8oyRlyf/iDioa68qkld87dHvgc2PPK9BVpo2k
+	 dv9OsYZDgN0akSUohC4ngerDSHzBvcuuwzk7Qzf4VvaB9NR4NF1liPkNHR3BSngjTLvQp
+	 6/BE0c7BjXo7lSxLaeb9cU70O+FNUQK5dQJJSqkRVu3BBYlGoCqJGFhuc+brGr5NLrMhb
+	 v8pYknZKw8r3fKUE1f/LRhsECDDPTdwnLoNTQA7WUYyI1n8QyD8pOUO+a1IEvd1wsGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0rvk+oB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGdGGpRW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774B4606A336;
-	Wed,  4 Nov 2026 22:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FACB606A336;
+	Wed,  4 Nov 2026 22:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0rvk+oB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098001F00919;
-	Wed,  4 Nov 2026 22:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGdGGpRW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0D71F00919;
+	Wed,  4 Nov 2026 22:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831355;
-	bh=3ii5/s0VV54db2BimFgMvmy8QQqoaoedKtShAn2rIRc=;
+	s=korg; t=1793831356;
+	bh=Cr1yXMm4Dp/8XRqbpCXTr6L3IjLzzB0zq8k5R3IKDCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0rvk+oBdgQAuB8977MYq87JGB9OvOhrj/4syIhkB1aEZ9evYWWe7U+bfvfqMSnRZ
-	 KUaJKFILeT9HlrbMwlt49gwObZKPL34KZAnuJznAtfR+G1R2E0GFogdg7h17A1ix8s
-	 xQMnTo4L6rTnUd3kvz0ErkCaq9O2o56lB+UfTo7Q=
+	b=ZGdGGpRW+wLGOYr1i6B9kVFjcOhqg/TM/BsNgMqteluzN4IwErWy8R6wvQHDSIqCJ
+	 /7ZgAPQqWS52qyipvc1LY8522o/eka0k0mVrmXCb+J/h3sKd11+2hTMCBkPmB2H1kc
+	 Y3zvSmnO7/fHcNTfKasYEIIXcI/qBNn0MlLnUohg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
+	Erik Brangs <erik.brangs@gmx.de>,
+	Christoph Zwerschke <cito@online.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0654/1005] cgroup: serialize migrations of newly forked processes
-Date: Wed,  4 Nov 2026 16:06:27 -0500
-Message-ID: <20261104211102.027798651@linuxfoundation.org>
+Subject: [PATCH 6.18 0655/1005] Revert "Bluetooth: btusb: Add ASUS USB-BT600 for Realtek 8761CU"
+Date: Wed,  4 Nov 2026 16:06:28 -0500
+Message-ID: <20261104211102.052626862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,109 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Christoph Zwerschke <cito@online.de>
 
-[ Upstream commit bf6fbf46b5ff68c4eebad5aa52309eb124f4509c ]
+This reverts commit bce588b4ca081833ed8fc62062291f71d4218278 which is
+commit 6f0624b4427e38c3bb63a951c536cf8adaee1238 upstream.
 
-With favordynmods enabled, a cgroup.procs migration takes the target
-threadgroup's cgroup_threadgroup_rwsem for writing. A process fork holds
-the forking threadgroup's semaphore for reading. These are different
-semaphores when fork creates a new process.
+With the device ID in the table, the adapter is handed over to btrtl,
+which in this tree, together with the backport of commit 4a23ce935f74
+("Bluetooth: btrtl: Add the support for RTL8761CUV"), now requires
+rtl_bt/rtl8761cu_fw.bin. That file is only shipped by linux-firmware
+since 20251111. On systems with older firmware packages, such as
+Debian trixie, the adapter no longer initializes. Without the ID entry
+it binds via the generic Bluetooth class and works on its ROM firmware,
+as it did before the backport.
 
-copy_process() publishes the child's PID before cgroup_post_fork() links
-the child to its css_set. A writer can find the child in that interval,
-take its uncontended semaphore, and migrate it while child->cgroups still
-points to init_css_set and child->cg_list is empty. Migration links the
-node into init_css_set.mg_tasks. cgroup_post_fork() then adds the same
-node to the intended css_set as though it were unlinked, corrupting both
-task lists and their css_set ownership.
+Mainline keeps the ID entry, so this revert is for 6.18.y only, as agreed
+in the regression thread.
 
-This regresses the fork/migration race fixed by commit b12b533fa523
-("cgroups: add lock for child->cgroups in cgroup_post_fork()") and
-restored again in 2012 after the lock had been removed. The old task_lock
-protection was later superseded by global css_set and cgroup threadgroup
-locking. The change identified by the Fixes tag narrowed only the migration
-side back to a per-threadgroup lock, recreating the different-process
-exclusion failure.
-
-Take the new threadgroup's semaphore for reading before the child becomes
-visible and hold it through cgroup_post_fork(). Use a nested lock subclass
-because fork already holds the parent's semaphore. CLONE_THREAD children
-share the parent's signal_struct and remain covered by the existing lock.
-Migrations of unrelated, fully initialized threadgroups remain concurrent.
-
-An AI coding assistant was used to identify and reproduce the regression
-and to develop and test this fix.
-
-Fixes: 0568f89d4fb8 ("cgroup: replace global percpu_rwsem with per threadgroup resem when writing to cgroup.procs")
-Cc: stable@vger.kernel.org # 6.18+
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: Erik Brangs <erik.brangs@gmx.de>
+Closes: https://bugs.debian.org/1149377
+Link: https://lore.kernel.org/all/179104011040.2214689.5921682013387867802@eldamar.lan/
+Signed-off-by: Christoph Zwerschke <cito@online.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/bluetooth/btusb.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 275c335c02a7f..07e1e29228197 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -6702,6 +6702,31 @@ static struct cgroup *cgroup_get_from_file(struct file *f)
- 	return cgrp;
- }
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 3c9d5d0976936..b571918aac953 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -847,8 +847,6 @@ static const struct usb_device_id quirks_table[] = {
+ 	/* Additional Realtek 8761CU Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+-	{ USB_DEVICE(0x0b05, 0x1d70), .driver_info = BTUSB_REALTEK |
+-						     BTUSB_WIDEBAND_SPEECH },
  
-+/*
-+ * A new threadgroup gets its own cgroup_threadgroup_rwsem.  Once its PID is
-+ * visible, a cgroup.procs writer can find the child and lock that rwsem even
-+ * though cgroup_post_fork() has not linked the child to its css_set yet.
-+ *
-+ * cgroup_can_fork() already holds the global read lock, which keeps
-+ * cgroup_enable_per_threadgroup_rwsem stable.  Lock the child's rwsem as a
-+ * nested instance until cgroup_post_fork() finishes.  Threads share their
-+ * parent's signal_struct and are covered by the existing read lock.
-+ */
-+static void cgroup_fork_child_lock(struct task_struct *child)
-+{
-+	if (cgroup_enable_per_threadgroup_rwsem &&
-+	    child->signal != current->signal)
-+		down_read_nested(&child->signal->cgroup_threadgroup_rwsem,
-+				 SINGLE_DEPTH_NESTING);
-+}
-+
-+static void cgroup_fork_child_unlock(struct task_struct *child)
-+{
-+	if (cgroup_enable_per_threadgroup_rwsem &&
-+	    child->signal != current->signal)
-+		up_read(&child->signal->cgroup_threadgroup_rwsem);
-+}
-+
- /**
-  * cgroup_css_set_fork - find or create a css_set for a child process
-  * @kargs: the arguments passed to create the child process
-@@ -6867,6 +6892,7 @@ int cgroup_can_fork(struct task_struct *child, struct kernel_clone_args *kargs)
- 			goto out_revert;
- 	} while_each_subsys_mask();
- 
-+	cgroup_fork_child_lock(child);
- 	return 0;
- 
- out_revert:
-@@ -6901,6 +6927,7 @@ void cgroup_cancel_fork(struct task_struct *child,
- 		if (ss->cancel_fork)
- 			ss->cancel_fork(child, kargs->cset);
- 
-+	cgroup_fork_child_unlock(child);
- 	cgroup_css_set_put_fork(kargs);
- }
- 
-@@ -6998,6 +7025,7 @@ void cgroup_post_fork(struct task_struct *child,
- 	if (unlikely(kill))
- 		do_send_sig_info(SIGKILL, SEND_SIG_NOINFO, child, PIDTYPE_TGID);
- 
-+	cgroup_fork_child_unlock(child);
- 	cgroup_css_set_put_fork(kargs);
- }
- 
+ 	/* Additional Realtek 8821AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
 -- 
 2.53.0
 
