@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831094;
-	b=LOq+tZ+T+ghNmUqApLVW4Y7BvrPM4iZL1Auv/kW6/MijNpx381HzJlC6DWzrRHTxS+bs
-	 x54usWXTIv9zbpRdcEty+218EHO3baTraEAGYvV2fja7GSw2KWvcEnPmoOsbrCVYg4gG4
-	 Q8jI9CyUvgblVogmh19fXXkYEbLH5LcJt2+ZeuyZsEP3zMcz0GhOpKG7n8O+FLNSspYoL
-	 l+kkbL3SyEyDOQYjtJ98uNKvFxBK+G374cJ1AYNhi7+TZWaq4ZS5jwABIAju5hY+/B666
-	 Dti6P6jGH6Ev889fMGm1wvxDEUv7Yd1W4ouG9pjtBpiVezXTz/4T4VHXJDNTeP1+NfQ==
+	t=1793831101;
+	b=0qFlNBS/JVptnUTcop22sF5F+s9WYNmVTLIljgeRh1A7txVFhLtauouL3Hyp2VONsZQF
+	 Gsr5kELNQoAJ0PBgSoxLurFY0cEtcCMgOfxA9VLdERPMSBR7xtRtitf7oF/SEX0pNqVa8
+	 BE5R+1Wm5eC6ju5OrXIZyJx41ZIWfQvNSYdWW5XQrp75bLorn/FGN1US1fkrpE35z3gFL
+	 saqve8aWpjg9dP6scwCx0NYL5YGBJjm3PRvjXuTlvvwjKhGiGlIH78f1QDQgra/DTGarx
+	 rq+9bm1m5SUjG/mgQVoWyb3+O8BAFLV0BlQFaO2USNBXnS/anQ39HfbPdgCpQz9hfKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oSMhyXnF0hHe4HAQzx1Rv2gdVZt07ML///pX8D4gTIE=;
-	b=CQxjmI7NSHVMpVbKQWaeCh/KykI+xIFy4l7yriCazTDE9mZe/DntgsVYwHu9JdeMuxmr
-	 E6fSHdaXI4FBYQ88J1zBPSEObMfAUy2FTrFP/gYrr44wQXeaePlgkjSKFdQFTK4vgnO5C
-	 NFscUokq+YXKNK1GvI5hXKduILfbGItfh2neTYttp3/LSygiwe3aKkg6h8AGTnnjZyINn
-	 k20iqt4tR/kQl43pB4068m/TkP1RhQM9GbNd9Az9q2MAMsTbunfYbOD4Ku63DuHjAgUAv
-	 K2xuvl8K61g8Kd5TCQlu+ej4dLyOqT1Yxptj1nWhCCOgPgNoGgNuyZ7Qh2/BQRRaG5g==
+	bh=x6C5wJPYvcDiP33H+OZL4uQ921arov9CuaTD7GkWxZA=;
+	b=RSU+koUi0yF52H961m9MpUrvTLF2ANeq5lLZYusf0lvdWiih0dKoOzHUen6/jB7xHi2L
+	 X0RrYDuK2x7Y2TbDKt63E3t/Kk1bbw2L3zg2WxBgCSyjJyXJLNGgj0W2K9oaYIoK890eA
+	 YTo4ynx67dGBBVtsb8OzGaQBqitB4tZCIdpN2W+ALb07tMAA1lYM6bq0fa5Iu3QgW/vEP
+	 AZqQmxhVxk+o59LGqJ/6rGSdEWIOfyhdo1N66BN85CcVp2NV7MJPfs7gtdfVeYgoSTibx
+	 Y1ro+NrjeZkLk/cPPgiOSKEIlsy/GiSxXOSBkpu5SqtksvesU66KmSty205t4cLRXKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHFrFG5t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qsv0YCDc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CEC606AC36;
-	Wed,  4 Nov 2026 22:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7FA606A326;
+	Wed,  4 Nov 2026 22:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHFrFG5t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B171F000C1;
-	Wed,  4 Nov 2026 22:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qsv0YCDc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8868E1F000C1;
+	Wed,  4 Nov 2026 22:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831094;
-	bh=oSMhyXnF0hHe4HAQzx1Rv2gdVZt07ML///pX8D4gTIE=;
+	s=korg; t=1793831101;
+	bh=x6C5wJPYvcDiP33H+OZL4uQ921arov9CuaTD7GkWxZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZHFrFG5tw5Nua2LIssWtJF4QoPRLynB/xzTaR0GIPuq7rowdOfkbg+FwrUdVoT+eL
-	 QQ3DvQIjqE+DNLyT7tRRr9HR32fgVFpYStCA4UDo3uTl9aAh/qBrK422KH5pTDU/cL
-	 YGz0Zj6UPCJzkKExa1PuJn/UqCnd9Ncx1S3iSLkU=
+	b=Qsv0YCDcLfl51gOmPmf04OpY7pssy7eCAbzFaTB06MBMAwi6A0e4egaLrgQzVWhEI
+	 M3Yq/rPRPkURdyca7++I/vPL0nDMActOyyJy60eJhOxhdyxAW07j53wrl/zxwTGhYh
+	 yZE9iK0PeBQg3G/JOsDpmc4SvXxi96b71nnRi7Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>,
+	renpanpan <renpanpan@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0500/1005] ALSA: hda/realtek: Fix speakers on ASUS PM3406CHA
-Date: Wed,  4 Nov 2026 16:03:53 -0500
-Message-ID: <20261104211057.952652328@linuxfoundation.org>
+Subject: [PATCH 6.18 0501/1005] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 14-dv1001TU
+Date: Wed,  4 Nov 2026 16:03:54 -0500
+Message-ID: <20261104211057.978915938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,74 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>
+From: renpanpan <renpanpan@kylinos.cn>
 
-[ Upstream commit 0eee030c2c09c7a44be778de5f451d9e7a2f09c1 ]
+[ Upstream commit ece609abc95cc0f75e633d93f3d868b030d9a8fe ]
 
-The ASUS ExpertBook PM3406CHA uses an ALC256 codec with subsystem
-ID 1043:1664. On Linux boot, the internal speakers are silent even
-though playback is routed to the codec and the speaker pin is
-configured for output.
+The HP Pavilion 14-dv1001TU (subsystem ID 103c:8987) uses a Realtek
+ALC287 codec. The mute LED on this machine is controlled by GPIO bit
+0x10, which was verified via hda-verb, but the subsystem ID is missing
+from the quirk table. As a result, the ALC287_FIXUP_HP_GPIO_LED fixup
+that drives GPIO 0x10 is never applied and the mute LED stays off even
+though the associated LED class device toggles correctly.
 
-The codec starts with coefficient 0x10 set to 0x1d20. Writing 0x7f20
-to coefficient 0x10 immediately restores internal speaker output.
+Add the missing SND_PCI_QUIRK entry to map this subsystem ID to
+ALC287_FIXUP_HP_GPIO_LED so the mute LED works as expected.
 
-This was reproduced on the affected hardware from a fresh boot using
-hda-verb. Reducing a larger initialization sequence showed that this
-coefficient write alone is sufficient; no GPIO, EAPD, pin-control, or
-other coefficient changes are required. After applying the coefficient
-in userspace, speaker output also remains functional across suspend
-and resume.
-
-Add a machine-specific HDA fixup that writes the required coefficient.
-
-The fixup has been compile-tested, but could not be boot-tested because
-the affected hardware is no longer available.
-
-Closes: https://bugs.launchpad.net/ubuntu/+source/alsa-driver/+bug/2162718
-Signed-off-by: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>
-Link: https://patch.msgid.link/20260924144512.3989-1-muhtaseem2005@gmail.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221810
+Signed-off-by: renpanpan <renpanpan@kylinos.cn>
+Link: https://patch.msgid.link/20260930065504.24151-1-rppxj178543@163.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index fa5bc54ff083d..a40b85fbaf393 100644
+index a40b85fbaf393..2a466ef894697 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3678,6 +3678,7 @@ enum {
- 	ALC269_FIXUP_SONY_VAIO,
- 	ALC275_FIXUP_SONY_VAIO_GPIO2,
- 	ALC269_FIXUP_DELL_M101Z,
-+	ALC256_FIXUP_ASUS_PM3406CHA,
- 	ALC269_FIXUP_SKU_IGNORE,
- 	ALC269_FIXUP_ASUS_G73JW,
- 	ALC269_FIXUP_ASUS_N7601ZM_PINS,
-@@ -4089,6 +4090,14 @@ static const struct hda_fixup alc269_fixups[] = {
- 			{}
- 		}
- 	},
-+	[ALC256_FIXUP_ASUS_PM3406CHA] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x10 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x7f20 },
-+			{}
-+		}
-+	},
- 	[ALC269_FIXUP_SKU_IGNORE] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc_fixup_sku_ignore,
-@@ -7184,6 +7193,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1652, "ASUS ROG Zephyrus Do 15 SE", ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x1664, "ASUS ExpertBook PM3406CHA", ALC256_FIXUP_ASUS_PM3406CHA),
- 	SND_PCI_QUIRK(0x1043, 0x1683, "ASUS UM3402YAR", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x16a3, "ASUS UX3402VA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x16b2, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
+@@ -6902,6 +6902,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8975, "HP EliteBook x360 840 Aero G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x897d, "HP mt440 Mobile Thin Client U74", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8981, "HP Elite Dragonfly G3", ALC245_FIXUP_CS35L41_SPI_4),
++	SND_PCI_QUIRK(0x103c, 0x8987, "HP Pavilion 14-dv1001TU", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x898e, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x898f, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.53.0
 
