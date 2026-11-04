@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831813;
-	b=3C/oEkNEfg8Sr1stvLgrbbcy2f7G31UsfFDYnEA2vFRdMDM87HJaTeTBddfeApHQZv8k
-	 D4ipfsQhXSaxtx0P0RfGArdiCJ9DeU974cBBpoSvJMHZXmCr5O9xQryrFSCDGG2uAbaF6
-	 fJ6cflBKDrLcoWYx16f2WHrMHXcTQwm2SUEcyOOxiWYLh8WCy3uZEcdKSkbzTVo6sXp7l
-	 FJCL+wwpaLc2mTTOSFuTJGEGxLBsCaahj9H/UioomAWqQgLUv+dVay8n5+WkrwYofGMEq
-	 ydJ3+5Lk96HoBAM5SB4DeJm0PG991xaYsUJDQ6aXPUV+A412KgF+g2IV5Qbce19cFZg==
+	t=1793831815;
+	b=5pcYBK28qFjU/6Zb3q+qJH5d9UFsc5YtJmSKG81xxoMR8oel/qxwvARK4wTYx7oTtjkL
+	 YAZVmElY7yD6C4Bfk/sKteEoHisdvhCdVKRdCb3WmZ/8BFfFAB4KAWZkCowhZTj2p/eUD
+	 RmnoHwZK0xwpUJvj4kfG/F08esNlF+HK8ZgVKiWyOJEwRF8/GkBvrrCXOcjY9cw7ixWtq
+	 VQX1cePcuF2tY/F6seJpBM3FbO4O+bCefSD/pKb5/pBab2Q78TVBNh0eec8XIEKc3gM1U
+	 9ZOQYqfxWWaqmhoSR+IytY4b7uBgcjY/lY0F0oXcsKhBKdsM+Su/WJLCmVaMKbRn7aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dCdrziLKap1h4t7ITgkIZuxWDubJ7l18dGM+slDpggM=;
-	b=K7fAlRATAS5FFZ7tRv+OIkSmU0sEsIG+K1ucS6oi2b0ACUxD8pmDpGHxhi/E+cK6nWIe
-	 az4N7Juo1x2ru+LfwtYptitop6umxYxa/yVT5vU9wZ2//X2tOXzSpOGguS9zvG4pEkPiD
-	 wGPJDM+u8GJlC/Rx91WgWqy5QSkFjljbi7lIO2ny1vDEIXM8b9FYClw3xaPNJTsRHLv05
-	 5OPNQbEJp1VDh9lZL/DvUfaQ1hMJlcUpUnkup5K9SXF0DePfY23wXuv/Du/RkMwU5pCei
-	 Qatz/i1w9+zlCXKWWPPWjGIlYvdmKxRxDOrKY9ONXQF7/PZItd/kHjNx7gjJGTMHkdw==
+	bh=Gm13YmvMaHXyDMXdHzOGtnjVIUwzGC7qKl9ntbSUV6M=;
+	b=35I7kuhD/cbvXhF5udkUK+PJvNnFzk29JRYKud31hf/Jjph+2WQ5+2NtlZG9LJFNj42d
+	 /SmTflTT3/mOhebZ2gZJoSTMiPIhiFyT4QNgBSVKtEUDMb5lJ97Oxmmm4T7+5KDLdLJ1d
+	 rG8P2WEzYvvDGes4AwONRhdQa/e1HpIAewMhsotOp56RBVt4Jetc92i8lbtbbNCmbTB24
+	 abWuXc1Z7+0iXOjIf1o+VeeDNmop3zse2oFHT3qClMIpm4NWVeZblVCssWsQvcphsuF//
+	 mqLRlgH5UknTfZaVo6dlCaNotg47CSWxS2wrnWvsDjP+tpH57JGACf8nhwvC+LrQItg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MmDbyuml;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcWuPjVd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9501A606A86B;
-	Wed,  4 Nov 2026 22:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE815606A86B;
+	Wed,  4 Nov 2026 22:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MmDbyuml
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59C91F000C1;
-	Wed,  4 Nov 2026 22:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcWuPjVd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783BD1F000C1;
+	Wed,  4 Nov 2026 22:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831813;
-	bh=dCdrziLKap1h4t7ITgkIZuxWDubJ7l18dGM+slDpggM=;
+	s=korg; t=1793831814;
+	bh=Gm13YmvMaHXyDMXdHzOGtnjVIUwzGC7qKl9ntbSUV6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MmDbyumlhQicCyjFgvYU24++LeBJ6OqrRB5hP4FVd3YIHo0exlNzW+FhtjmZxJ1pR
-	 BfNZkbUv7uN0n/hla09SS3qLOxeoYUERvc35E9lBC+xhi02qHGF8eoKNeLXpLalw7w
-	 dPuCZkvCUFP5uDzvyKwu85zJwdyxC6K4v3JXaW1w=
+	b=xcWuPjVdS/BQeHvRkhpEUjjNh8x5G6MYojTXdEorZ2frB6i0ttvE6f+jpuSfxNt2L
+	 7fzSj9+o2dpfkr85eHpNh7oebsIFHk0Y8/aWTjpxqxHaCpgn8UxfeZb4JKKkxaNrIB
+	 LxDDg5AWNaxiGZ1tuYPu63sdQhcabOJFtr4AzJWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Ackerley Tng <ackerleytng@google.com>,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 0927/1005] KVM: Use goto to handle errors during memslot preparation
-Date: Wed,  4 Nov 2026 16:11:00 -0500
-Message-ID: <20261104211109.103861261@linuxfoundation.org>
+Subject: [PATCH 6.18 0928/1005] KVM: VMX: Disallow using to_vmx() in common VT code
+Date: Wed,  4 Nov 2026 16:11:01 -0500
+Message-ID: <20261104211109.132748233@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,71 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 23a205797cec86f391d0be886b9bc741e1262063 upstream.
+commit f305fd31f52a8d3ce4d2bf0c88c45bb7a373809c upstream.
 
-Use a goto to unwind early memslot changes if preparing for a memslot
-operation fails.  This will allow moving the creation of guest_memfd
-bindings into kvm_set_memslot() without needing to copy+paste the unwind
-logic.
+Poison to_vmx() in main.c and posted_intr.c so that attempting to interpret
+the vCPU as a VMX vCPU will fail at compile time, as opposed to failing at
+runtime, or worse corrupting state without outright failing.
 
-No functional change intended.
+Note, to_tdx() is buried in tdx.c, i.e. isn't broadly reachable, and so
+doesn't need the same treatment as to_vmx().
 
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Tested-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Ackerley Tng <ackerleytng@google.com>
-Link: https://patch.msgid.link/20260922001332.1121266-3-seanjc@google.com
+Link: https://patch.msgid.link/20260904010353.3175819-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/kvm_main.c |   31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ arch/x86/kvm/vmx/main.c        |    2 ++
+ arch/x86/kvm/vmx/posted_intr.c |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -1937,21 +1937,8 @@ static int kvm_set_memslot(struct kvm *k
- 	}
+--- a/arch/x86/kvm/vmx/main.c
++++ b/arch/x86/kvm/vmx/main.c
+@@ -10,6 +10,8 @@
+ #include "tdx.h"
+ #include "tdx_arch.h"
  
- 	r = kvm_prepare_memory_region(kvm, old, new, change);
--	if (r) {
--		/*
--		 * For DELETE/MOVE, revert the above INVALID change.  No
--		 * modifications required since the original slot was preserved
--		 * in the inactive slots.  Changing the active memslots also
--		 * release slots_arch_lock.
--		 */
--		if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
--			kvm_activate_memslot(kvm, invalid_slot, old);
--			kfree(invalid_slot);
--		} else {
--			mutex_unlock(&kvm->slots_arch_lock);
--		}
--		return r;
--	}
-+	if (r)
-+		goto err;
- 
- 	/*
- 	 * For DELETE and MOVE, the working slot is now active as the INVALID
-@@ -1983,6 +1970,20 @@ static int kvm_set_memslot(struct kvm *k
- 	kvm_commit_memory_region(kvm, old, new, change);
- 
- 	return 0;
++#pragma GCC poison to_vmx
 +
-+err:
-+	/*
-+	 * For DELETE/MOVE, revert the above INVALID change.  No modifications
-+	 * required since the original slot was preserved in the inactive slots.
-+	 * Changing the active memslots also release slots_arch_lock.
-+	 */
-+	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
-+		kvm_activate_memslot(kvm, invalid_slot, old);
-+		kfree(invalid_slot);
-+	} else {
-+		mutex_unlock(&kvm->slots_arch_lock);
-+	}
-+	return r;
- }
+ #ifdef CONFIG_KVM_INTEL_TDX
+ static_assert(offsetof(struct vcpu_vmx, vt) == offsetof(struct vcpu_tdx, vt));
  
- static bool kvm_check_memslot_overlap(struct kvm_memslots *slots, int id,
+--- a/arch/x86/kvm/vmx/posted_intr.c
++++ b/arch/x86/kvm/vmx/posted_intr.c
+@@ -14,6 +14,8 @@
+ #include "vmx.h"
+ #include "tdx.h"
+ 
++#pragma GCC poison to_vmx
++
+ /*
+  * Maintain a per-CPU list of vCPUs that need to be awakened by wakeup_handler()
+  * when a WAKEUP_VECTOR interrupted is posted.  vCPUs are added to the list when
 
 
