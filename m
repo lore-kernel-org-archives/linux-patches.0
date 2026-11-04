@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831368;
-	b=45wBNlL1Xf3yuiqJFVqs6WghH7164Fim1sqq0O9cXARpL9dLv6lDicMXfdKhFiNuVmgM
-	 Rvsmrd7s24emBdVT4+qTYTFjYKXL0j2dwgTC3GXpabYtEH6CioHizyUtJAsjM7Bw0ddAe
-	 b8HWV1TwgNwCQVxO8tdswT91k54nwtYQxxiyHfb45l0xPGap9S2k/QTqRjuVFENUg5Ipy
-	 MgDhEtfqFmElfeb0EPtLbuoa1uiMGSUf+Wta/oLsvDxizSv1GpWIdFuL11E/B8F5wRY0T
-	 GsO50meY249XSI2+e+CGEcR643yBTd28dNL3mQjSQw097ANMakDdEg9cJTyByn552Nw==
+	t=1793831371;
+	b=a11LCKoylenckGv4zbst6BXsXmFtu+GQ49AVNjQ14kzdy8A5uO38pCGroDgep3Bkt+XB
+	 cvNS/2ZcR+R39eXMdTHpKCAC/HntEJHIKCbxuFSSRnOZs/1EoYHrsoT2sH+w/ZA9GNIOp
+	 V08CJJ6rgX4naTlHO1BS3e59wQcJjsoY4zxGNHCROOP9dg49mbmdSoIqYXIZeUsLTQCPk
+	 xZoSrwFW4eve9Wx+gwb9z6uJ/ADwqlENNwYeithlTFhOiYMcBxCZP5osWb5SAkwjZj0/2
+	 soVP3NUUodHd9wUfdhWthmEHU5lvy9wdoCkwEGFsR0l+pYNfL2MxdQJqAkIhXIBw+XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J+NeDLnU+37Ruf0X27b+NDnSCnwbsKpcT6x+dKRdTbs=;
-	b=pL3wRMJH598FidE11tkTolutzxsMaGoAjIWIApr6euGpa45AkmF9FplzzAEdpWsxnAoD
-	 xUEsyzxOYBR/PLT0B2IP4zdmlVqaNU04XDLjAdS+jkxj9djMTyTg1k56wy+vfOIjkV+Cf
-	 yepWYuHxAw8y2BKJ8M/ud6cVXpkdxBHWaZDtjqS9k68vgoVdohddTza3YcVoFRtmvUXcA
-	 HbJ5PeBFN8js6LvhXE4mVghaH9OpTNSuId1rstdzvOH/HEWKoAdZDYeJ/h55R/Q41esrF
-	 oArtjR2J0r6YTfdL5UzRAXP6FltYtOdRWcuzEuWhkvhl5TAbENBR57Vrj8yL0fYccLw==
+	bh=SKSaalMXgvUvzi2M6rZ+SIWOIY1GqlVP7/7iqOoEPcA=;
+	b=gwQsssZpvq7YcgQMNcyrXVWGQ6WLq08Pp3piZjLugWZnmzQAL/8aRkKCAhjxBCb0ETL1
+	 50vxSmYtx3EFrO1v2H693unwA60100eKwSY5WrUR6xwcCwBv3lrYoR+ITpsopjKzKdbyC
+	 7Eqn7K9G6YNGl+c3giu/hPoCJuHXpvwoz59bO5qCJ4dcqfc+okceMXMVd3iQqmFtY00xT
+	 t9jyJ9A5/b6W/Wt8FSgaqtytAF1QKXx9EYpeMYx4C+qnL8lSAAa11/z4v8060nH/+qGhy
+	 8WgleU1oraKTp6wFPs2T1ON+TOEAIbi9cZN1VTUReNZpWJoTMMI+mZoItHBn+7vCzTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDXwE++m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIMMT2oX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6010606A33B;
-	Wed,  4 Nov 2026 22:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7B0606A334;
+	Wed,  4 Nov 2026 22:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDXwE++m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6052D1F000C1;
-	Wed,  4 Nov 2026 22:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIMMT2oX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B6F1F00919;
+	Wed,  4 Nov 2026 22:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831367;
-	bh=J+NeDLnU+37Ruf0X27b+NDnSCnwbsKpcT6x+dKRdTbs=;
+	s=korg; t=1793831370;
+	bh=SKSaalMXgvUvzi2M6rZ+SIWOIY1GqlVP7/7iqOoEPcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PDXwE++mRkOUCmIz2MjQTI8dD6ldau3lG5jBgh59RMkcdoIgnZjQ3KA3Aaf17HX+m
-	 A3TaIz4ICQ0NH0x96zh72fn7iJykpb2Q1EHC5vgZi2NK4cmKQiEnOPKbPww4gjAumU
-	 s7UXA8wk20gVl80S3azbzoBF2T73hCpyG3eluQqg=
+	b=gIMMT2oX8D7lQstivj6pK6nSCuWDXNMnwIRtQWRcAtcW6veOXkRXo9mgTYuQMZkKj
+	 lCdrmeHwjSyNbxsdkWJPGyk31Bx8oNXmW3O6HForrwpYtAegtr+/3vXyoelaBBQlD4
+	 jUaqg6KALBP127lHdrrh0ELW2U6TA+hswaIT1btc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Wendleder <gonsolo@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 0661/1005] wifi: b43: fix use-after-free in b43_bcma_remove()
-Date: Wed,  4 Nov 2026 16:06:34 -0500
-Message-ID: <20261104211102.197730501@linuxfoundation.org>
+	Sashiko Bot <sashiko-bot@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.18 0663/1005] spmi: Fix potential use-after-free by grabbing of_node reference
+Date: Wed,  4 Nov 2026 16:06:36 -0500
+Message-ID: <20261104211102.245672541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,53 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Wendleder <gonsolo@gmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit c6c8bc355657115664131b38c53c5ddf7d93b072 upstream.
+commit f7aa9de4f2b197cdd704cdc476901b68ee128433 upstream.
 
-b43_one_core_detach() frees the struct b43_wldev it is given the bus
-device of. b43_bcma_remove() then reads wldev->dev again to free the bus
-device, which is a read of freed memory.
+As noticed by Sashiko during a review run of an unrelated patch,
+in of_spmi_register_devices(), for_each_available_child_of_node()
+is used to loop through children, and to also assign a node to a
+newly created SPMI child device.
 
-b43_ssb_remove() does not have the problem: it takes a copy of wldev->dev
-at the start. Do the same here.
+Problem is that the refcount is dropped at every iteration so, in
+the specific case of DT overlays, a use-after-free may occur when
+an overlay is dynamically unloaded!
 
-Fixes: 96838d61102a ("b43: Fix memory leaks in b43_bus_dev_ssb_init and b43_bus_dev_bcma_init")
+To resolve this, increase the of_node refcount when assigning (in
+function of_spmi_register_devices) and release the reference in
+spmi_device_remove().
+
+Fixes: bc32bbd04011 ("spmi: Set fwnode for spmi devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andreas Wendleder <gonsolo@gmail.com>
-Link: https://patch.msgid.link/20261013000124.48605-1-gonsolo@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Sashiko Bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260608100949.36309-1-angelogioacchino.delregno@collabora.com?part=2
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/b43/main.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/spmi/spmi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/b43/main.c
-+++ b/drivers/net/wireless/broadcom/b43/main.c
-@@ -5663,6 +5663,7 @@ static void b43_bcma_remove(struct bcma_
+--- a/drivers/spmi/spmi.c
++++ b/drivers/spmi/spmi.c
+@@ -24,6 +24,7 @@ static void spmi_dev_release(struct devi
  {
- 	struct b43_wldev *wldev = bcma_get_drvdata(core);
- 	struct b43_wl *wl = wldev->wl;
-+	struct b43_bus_dev *dev = wldev->dev;
+ 	struct spmi_device *sdev = to_spmi_device(dev);
  
- 	/* We must cancel any work here before unregistering from ieee80211,
- 	 * as the ieee80211 unreg will destroy the workqueue. */
-@@ -5677,14 +5678,14 @@ static void b43_bcma_remove(struct bcma_
- 		ieee80211_unregister_hw(wl->hw);
- 	}
- 
--	b43_one_core_detach(wldev->dev);
-+	b43_one_core_detach(dev);
- 
- 	/* Unregister HW RNG driver */
- 	b43_rng_exit(wl);
- 
- 	b43_leds_unregister(wl);
- 	ieee80211_free_hw(wl->hw);
--	kfree(wldev->dev);
-+	kfree(dev);
++	of_node_put(dev->of_node);
+ 	kfree(sdev);
  }
  
- static struct bcma_driver b43_bcma_driver = {
+@@ -517,7 +518,7 @@ static void of_spmi_register_devices(str
+ 		if (!sdev)
+ 			continue;
+ 
+-		device_set_node(&sdev->dev, of_fwnode_handle(node));
++		device_set_node(&sdev->dev, of_fwnode_handle(of_node_get(node)));
+ 		sdev->usid = (u8)reg[0];
+ 
+ 		err = spmi_device_add(sdev);
 
 
