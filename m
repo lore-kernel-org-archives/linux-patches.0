@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830980;
-	b=lEf6RdDYkcIwLoUc0IhEeUj6IhoiX1HTsiudCKTM3e+9bT5HcrMBMJdKlrYp+n9hVLVR
-	 unzlTrTwo5F8MIn57HzgFEUiWjC9jU0Qkwbln+59+EF8B/bP3ReuNQjEmpBwsdkauZtsG
-	 yz2jtzBiodtzDxhjA945+xqFsIU5z4cg8BFCeuJTO9ncbUSwKDirBlNuIkCDfs/6TNA7E
-	 +ANBU6haT5CFDnnuni1fOLV1BB6pHrISeS3n1DpPkULlm0t2WIWyE+k4fmwDT2uCOK6hO
-	 BEjZRY4mcUyr2PclMi8G2GVy+dDKNyZySd8XPqqb/jVDgBc76XFsE7K8ct+2UWb8Hgw==
+	t=1793830985;
+	b=woUQ31LqRF61m8KL9ibiGep2wMeOiooRtqEiIrU3erMHa4mee2b/98kwfCZjCRHoyk6x
+	 HnLt3EF+93oktLuNMiPrMMqIDZm8pE0srhzLOj0IMWZk4IZRC64WMiwe7On4BnBCT/BiO
+	 U+Far342Zz+cbhBtGXw/bvsou7qIXf/l/ZJQb2gVZzCpm4njAZxFn8Ad8yAXlTULGFMC8
+	 XNf+exD1emM5BXm8hV+dA+pzbUNQZq+JKpROCletWtk6SQoS+u+6ZQSToeufLPGayVZaB
+	 qiIgCa4ajlHKq9X4Hg+GrHJAvZz4dFGCl2SKrr8XGWfhS0L6sxCIxkUrG0eVVa/IuCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UoxaLFlUs0DGfkQ+q0EpQehBOw+eGBX9iDTqLGYFlwo=;
-	b=19Q+JjVFWsGV3MD8csTcEc473qm1rxw4Y5l+fx0EWuMbJ2l9kqBHOVf+C0kKk6KTJS8+
-	 2B8p3VdNB4DkizCQHBp3oM+048WoZdwMbyt0La/7cgTcqDF0LerK7pRFiFGa9u0CSsI6v
-	 U+huhFeaZT0lH2jLHBf8r+EK6vu7t7AQdMGwydUgM8uixu3Oox2kQmVsT5QT1fuDIPtpZ
-	 wdsa0Wm+4BY3tvUWOjqQ4PDuWtpAhDRCJgEW2yqX/2UcScJevU2YtlTkhUBoeO8vwbslm
-	 9APw+wz7llXHkQkur5IXJZo5HQtmWqN3z4QFFGAjjW7WZ/Xs9yNZDEvFBfu9ztGpx6Q==
+	bh=/m9Elk6UBJ8ndsqXB/aPklS+5ieP59Zd1xVSxrj++Ig=;
+	b=C4IG+1lIkgeS20M5D4tCqImBYv2F63UnUexJQvGAMoi27zguf5TPnHj6ZKhQ/j8DY8Yu
+	 x+PXjBhbIFWfzP3snCGmCHVdXaYk/dVaqIKkF+wqGtOS2sbw/krALj0fTDdtjKB9AIDSN
+	 /4ChayyDVr6cJss+9QTrrdJeeqq7NP7XABEn50/ykdIjdBg47KA+K6G9Y4kgi8/AJvuPb
+	 Da+kMffNNLhXHigbUOmTfv/XjqK3Sr/mOHISCnllmocqbP/4UHtzVaLwyYeZskcPrZ/BU
+	 i/MJhDd4TLsHStHoOrh6UrMhj5a5AjBzYjn9PzZMWVHoG4XRQBSlcQa2RAtsRZWQDWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bldJjTog;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PqhN/h8Q";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B1F606AB19;
-	Wed,  4 Nov 2026 22:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CFC606AB19;
+	Wed,  4 Nov 2026 22:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bldJjTog
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5110F1F000C1;
-	Wed,  4 Nov 2026 22:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PqhN/h8Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12CF1F000C1;
+	Wed,  4 Nov 2026 22:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830979;
-	bh=UoxaLFlUs0DGfkQ+q0EpQehBOw+eGBX9iDTqLGYFlwo=;
+	s=korg; t=1793830984;
+	bh=/m9Elk6UBJ8ndsqXB/aPklS+5ieP59Zd1xVSxrj++Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bldJjTog9DLfcLgnxasGFkbWITJAMuxeh/Elp+2WtpdNxwh/RRcg2zzeHEcwsGI4M
-	 ToKP7sKHnamwas2IZsQzqujeRwJ1s6L1fTpij+wZwwzLwrrgayUbu0yDpChn/xIB41
-	 pTZrmkLsgi+ZIcuWvk9PAGocRF289d4L3WDjHv5I=
+	b=PqhN/h8Qgpfzcf/ykVGrf4AINjuYIGb0hSxNXOavcogph5XYju9j+AyWFo3G2uOrm
+	 H9Fga52m2ZRdHxDLOgs6IYKHXKqRS5lchiyyP/GbZdlYSDzwWMsKki5hkdqDwiVy3B
+	 MG3cd7oMPuryahOXAIBBqD0LeBvfTh1hTiSv8Ayw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Szymon Durawa <szymon.durawa@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	Jinqian Yang <yangjinqian1@huawei.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0439/1005] PCI: vmd: Add Nova Lake (NVL) and Dunlow (DNL) Device IDs
-Date: Wed,  4 Nov 2026 16:02:52 -0500
-Message-ID: <20261104211056.374569055@linuxfoundation.org>
+Subject: [PATCH 6.18 0440/1005] virtio_ring: fix infinite loop in virtnet_poll_cleantx when device is broken
+Date: Wed,  4 Nov 2026 16:02:53 -0500
+Message-ID: <20261104211056.399441297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,38 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szymon Durawa <szymon.durawa@linux.intel.com>
+From: Jinqian Yang <yangjinqian1@huawei.com>
 
-[ Upstream commit 55aa45154fe48b7d8e96bc031ad27d5b0edfcdb8 ]
+[ Upstream commit 0d0eff39ceb3dcbf7847a6f4517086c207c60081 ]
 
-Add VMD Device ID Support for Intel NVL/DNL processors.
+virtnet_poll_cleantx() contains a do-while loop that cleans up
+transmitted TX buffers and calls virtqueue_enable_cb_delayed() to check
+whether more buffers need processing. When the virtio backend stops
+responding during guest reboot, used->idx is never updated, so
+virtqueue_enable_cb_delayed() always returns false and the loop never
+terminates. Then it will block reboot process, and the guest will hang.
 
-Suggested-by: Nirmal Patel <nirmal.patel@linux.intel.com>
-Signed-off-by: Szymon Durawa <szymon.durawa@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Nirmal Patel <nirmal.patel@linux.intel.com>
-Cc: Jonathan Derrick <jonathan.derrick@linux.dev>
-Link: https://patch.msgid.link/20260819130523.398493-1-szymon.durawa@linux.intel.com
+The problem occurs during guest reboot under network traffic:
+
+  1. kernel_restart() -> device_shutdown() traverses the device list
+  2. virtio_dev_shutdown() calls virtio_break_device() which sets
+     vq->broken = true
+  3. virtio_dev_shutdown() then calls virtio_synchronize_cbs() to wait
+     for in-flight callbacks to complete
+  4. A virtio interrupt fires, softirq is deferred to ksoftirqd which
+     calls net_rx_action() -> virtnet_poll() -> virtnet_poll_cleantx()
+  5. virtnet_poll_cleantx() enters the do-while loop and never exits
+     because the QEMU backend has stopped updating used->idx, despite
+     vq->broken having been set to true in step 2.
+
+Since the loop runs inside ksoftirqd (a SCHED_OTHER kthread), it is
+visible to the scheduler and does not trigger a hard lockup. However,
+the kthread never leaves the loop, so RCU detects it as a CPU stall
+and reports it periodically. Meanwhile, the reboot process remains
+blocked in device_shutdown() because virtio_dev_shutdown() cannot
+complete its synchronization step, and the guest hangs permanently.
+
+This can be reproduced on a guest with a virtio-net device: run iperf3
+traffic in the guest, then trigger reboot. The reboot occasionally hangs
+permanently with RCU stall on ksoftirqd.
+
+Observed on ARM64 KVM guest:
+
+  CPU#1 RCU stall (ksoftirqd/1), repeated periodically:
+    virtqueue_enable_cb_delayed_split <- virtnet_poll <- __napi_poll <-
+    net_rx_action <- handle_softirqs <- run_ksoftirqd <-
+    smpboot_thread_fn <- kthread
+
+Fix by adding a vq->broken check in virtqueue_enable_cb_delayed(), so
+that the loop exits immediately when the device is broken, allowing
+the device shutdown to proceed.
+
+Signed-off-by: Jinqian Yang <yangjinqian1@huawei.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260716115940.394832-1-yangjinqian1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/virtio/virtio_ring.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index 5d3e6cc7e4feb..aa6d4f56f612a 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -1141,6 +1141,10 @@ static const struct pci_device_id vmd_ids[] = {
-                 .driver_data = VMD_FEATS_CLIENT,},
- 	{PCI_VDEVICE(INTEL, 0xb07f),
-                 .driver_data = VMD_FEATS_CLIENT,},
-+	{PCI_VDEVICE(INTEL, 0xd70b),
-+		.driver_data = VMD_FEATS_CLIENT,},
-+	{PCI_VDEVICE(INTEL, 0xd73b),
-+		.driver_data = VMD_FEATS_CLIENT,},
- 	{0,}
- };
- MODULE_DEVICE_TABLE(pci, vmd_ids);
+diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
+index b8199e578ea98..5c0139f3b9811 100644
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -2667,6 +2667,14 @@ bool virtqueue_enable_cb_delayed(struct virtqueue *_vq)
+ {
+ 	struct vring_virtqueue *vq = to_vvq(_vq);
+ 
++	/*
++	 * When the device is broken there is no point in polling used->idx,
++	 * the backend will never update it. Return true to let callers
++	 * exit their cleanup loops instead of spinning forever.
++	 */
++	if (unlikely(vq->broken))
++		return true;
++
+ 	if (vq->event_triggered)
+ 		data_race(vq->event_triggered = false);
+ 
 -- 
 2.53.0
 
