@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830824;
-	b=GFmx7S+0sHRzV3lgPXe7lVD07emi8UrmPXVFRzJeGzQVq9VNHxi++i5SycmROG9H02PE
-	 w1VVbxp48EP5pVd5Z0pPmIEmag0ke3zI/sMvAKMt70tqK+GY8AjlIBYtRWfzOmWp58hv0
-	 KMY0HGFQeD6xh7I3+la5BB01zppy4KkYOXWBcPkdQOG0PNml3nUPkCbkgxeneAsW2CoTf
-	 D6rnxNKvcrBua65dCiizMTb/QZjhb5ip++vqh6/dcP0REc4AD01kqJIoFpKvGFyRoascR
-	 vjFrebYVfNczYpX6ZhnBrPVLA2VlMW9c64OpljMc6mO4Cdqw91AmmqHO1cXFydySonQ==
+	t=1793830827;
+	b=3/ta6IVI02+IxTHkPbFrSHe0PH8GCty3SyBhGi+nXBBb7pFfOVg91jxHdrcqrda89EfV
+	 kehxZR+RhtcMZAnkk2KDPE+Dc8jsBg60Vw3i0Gy9dNUZZlV9pthaWonkLMw4xIBGhr/L9
+	 zAmYELsFSiaXxKMNOQZmHPClUWA90uyQ79/VCqIpmO9CeB8E8G/HM7WcKJjdmbHOAoUqD
+	 kHorwB9p+cXAutOBkpW4Fp+JOlHqv+GoiXJWYsIv8aeTnigOakUNqiiLOutPsfmJPc3Dy
+	 mpFdH+NMeMc2cLE80K0kptcogpr6YSGwojmJCBnNH6jkn/2GVWr12sjVTv6CU6RgyPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RkzGhh3ffF8+CtVzJH0eYQvRrmPYjEfCZ9XLTUz3kt4=;
-	b=r+8fMgDavcdktUWGxtJYrPOlZntSvtsoUhM8bDk9+xsUyqQfF11bNBRzU9Cr+ibKGN21
-	 69UFZeYfqgQ9kcI/CHCRr90+Mz34fB0ZqtRYv9xYBC8+saXfOviuUdOPSHVgEszKNBFTi
-	 NzfkP+NVC2UqWiJwz0QZGN5tpLPZWlO2bwmYZ+RkXqdMWWr6gbxPNsn4miZX3UOUVh5n1
-	 mJoA/AbbqlDPNif4tEphMQbe+ZgzFrzEKF3qv3DA9h0CWMNbYjjNp4lWL6Q7IytBG5Ysi
-	 iW7UHv/MQDkgNbRwt2Hp9zfoLcA3JKBY/uvcBg6IPD0gycw9+63K8pdfQOG7sbidd6w==
+	bh=A3MBBRVG22YsVonQY3co9MKgHW9XjtVemYIaGUPbFTI=;
+	b=crOoYd8GIDK3Zxm2C1q/kYp0qkoVukQvoWAIDhOIbyOLI7i0j3kBcziYyMF92kM5dxYh
+	 lM+/rxCpX0AOKl/VWgg+iJ1cOXEWBSD5lY3ge6fBboJmqY3EiUod2OkZ0+Kxyo0cDdLSt
+	 N9bOfFRmAWM4RzxZ/G7Tzz1OGKRHbClRnlu1Ck2ADLob0GzjpOF5+heKfmC8zGnZiiL0g
+	 C8lw0V+l778+sdHk8TLi1JgTXiTJa7gA0SnfT2hLZk8DniM0rjf9da/AHmWsjO7PeZME5
+	 LAyT2m+ANjSFFhXS4X4ylmh7gyLCFZlWCBIWxzZS4SsEHDVVZl+9YlX+u3qMp4beX0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P1bzsU2r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWa40NAX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C536C606A326;
-	Wed,  4 Nov 2026 22:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D0D606B2D5;
+	Wed,  4 Nov 2026 22:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P1bzsU2r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CBB61F00919;
-	Wed,  4 Nov 2026 22:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWa40NAX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A511F00919;
+	Wed,  4 Nov 2026 22:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830823;
-	bh=RkzGhh3ffF8+CtVzJH0eYQvRrmPYjEfCZ9XLTUz3kt4=;
+	s=korg; t=1793830826;
+	bh=A3MBBRVG22YsVonQY3co9MKgHW9XjtVemYIaGUPbFTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P1bzsU2rgO8I5zBhXyC16aqksl+t3VQkoxBKhtfYPZT/x4swxGJR7diaHGssu73y+
-	 Wd7H4ugJDmmC9LKxkRtxym8tj8ftZc0OunrbnP75pYu98JfRUt/IT3eCAAG6wOGJQb
-	 0eVL5WFC8u+REnLiV35Ot0esuQxAH8aMRJs/JpnE=
+	b=vWa40NAXEmZlc3cl6H4SRpmksJj9QHD46OEF1r2ltiITXgDS4LEl6SX9Yqt3i9jkB
+	 XH4PM+C1obnwAceuEx05Iv1SiJtCgpveguaYGSZX4/mIzK8sdI4ArxYELbrrjpGPL4
+	 0VE1LgHKIHRksek5kJ6ZjqH9EzAswDf/cU3UsYxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yunye Zhao <yunye.zhao@linux.alibaba.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0305/1005] ASoC: SOF: Intel: mtl: Power down DSP if it is left enabled in pre_fw_run()
-Date: Wed,  4 Nov 2026 16:00:38 -0500
-Message-ID: <20261104211052.469262059@linuxfoundation.org>
+Subject: [PATCH 6.18 0342/1005] md: add cond_resched() to md_do_sync()s skip path
+Date: Wed,  4 Nov 2026 16:01:15 -0500
+Message-ID: <20261104211053.541771243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,68 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Yunye Zhao <yunye.zhao@linux.alibaba.com>
 
-[ Upstream commit 31fd7a0bbfa4b7e8aff11f278e817664c6a5f68b ]
+[ Upstream commit 162eb5ba791f6260fdaabae75fa2df20134f67d8 ]
 
-It is expected that the DSP is in power down state when the firmware boot
-is attempted.
-If the DSP for any reason was left powered up then the DSP boot will
-fail since the ROM boot sequence might not be able to run.
+When sync_request() reports a skipped region (*skipped == 1),
+md_do_sync()'s main loop advances the cursor and takes an early
+continue:
 
-Make sure that the DSP is off before proceeding to boot it up.
+	j += sectors;
+	...
+	if (last_check + window > io_sectors || j == max_sectors)
+		continue;
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20260730122857.5294-3-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If the personality returns a small span per call (raid10 recovery
+returns only 128 sectors), syncing a large, mostly clean array iterates
+this branch an enormous number of times without ever yielding the CPU.
+On a non-preemptive kernel the resync thread then trips the soft-lockup
+watchdog:
+
+  watchdog: BUG: soft lockup - CPU#149 stuck for 313s! [mdX_resync]
+   md_bitmap_start_sync+0x6f/0xe0
+   raid10_sync_request+0x2c9/0x1530 [raid10]
+   md_do_sync+0x810/0x1030
+   md_thread+0xa7/0x150
+
+Add a cond_resched().  This does not reduce the wasted iterations; the
+excessive iteration count is a raid10 problem addressed separately.
+
+Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>
+Link: https://patch.msgid.link/20260723135535.101995-3-yunye.zhao@linux.alibaba.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/mtl.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/md/md.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/mtl.c b/sound/soc/sof/intel/mtl.c
-index 2242c96bfa519..f119e0e0651a2 100644
---- a/sound/soc/sof/intel/mtl.c
-+++ b/sound/soc/sof/intel/mtl.c
-@@ -236,6 +236,17 @@ int mtl_enable_interrupts(struct snd_sof_dev *sdev, bool enable)
- }
- EXPORT_SYMBOL_NS(mtl_enable_interrupts, "SND_SOC_SOF_INTEL_MTL");
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index ce3bd127e3bb3..44f44219ed7fe 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9751,8 +9751,10 @@ void md_do_sync(struct md_thread *thread)
+ 			 */
+ 			md_new_event();
  
-+static bool mtl_dsp_is_enabled(struct snd_sof_dev *sdev)
-+{
-+	int val;
-+
-+	val = snd_sof_dsp_read(sdev, HDA_DSP_BAR, MTL_HFDSSCS);
-+	if (val & MTL_HFDSSCS_CPA_MASK)
-+		return true;
-+
-+	return false;
-+}
-+
- /* pre fw run operations */
- static int mtl_dsp_pre_fw_run(struct snd_sof_dev *sdev)
- {
-@@ -249,6 +260,18 @@ static int mtl_dsp_pre_fw_run(struct snd_sof_dev *sdev)
- 	u32 dsppwrsts;
- 	const struct sof_intel_dsp_desc *chip;
- 
-+	/* Power down the DSP if it is left enabled to ensure clean boot state */
-+	if (mtl_dsp_is_enabled(sdev)) {
-+		dev_dbg(sdev->dev, "powering down DSP first\n");
-+
-+		ret = mtl_power_down_dsp(sdev);
-+		if (ret < 0) {
-+			dev_warn(sdev->dev,
-+				 "%s: failed to power down already-enabled DSP\n", __func__);
-+			/* Continue anyway to attempt recovery */
+-		if (last_check + window > io_sectors || j == max_sectors)
++		if (last_check + window > io_sectors || j == max_sectors) {
++			cond_resched();
+ 			continue;
 +		}
-+	}
-+
- 	chip = get_chip_info(sdev->pdata);
- 	if (chip->hw_ip_version > SOF_INTEL_ACE_2_0) {
- 		dsppwrctl = PTL_HFPWRCTL2;
+ 
+ 		last_check = io_sectors;
+ 	repeat:
 -- 
 2.53.0
 
