@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829451;
-	b=jC+pY3GSnZEwZ+0pMW6jwWFuPANYsEMtptORp5w/83n6Wx6NpZfpPOR2Ag5fYPm3a50x
-	 Fzg+M+PJR3HqP9aob+/l7pIeYwerkEpegml2EblOb6lnrzJRUWhyuZpQoHT+F1y0bhUd8
-	 DnUsqBh2FH8FXF6YX6slVAgxQc9dUu5Oh2sKY8rU8UQHGzjprltI3rVxKZCFogVB6pr/X
-	 buJfciR0JAepzi1VuB+c0KFs9dzQhZ50SckUg3ly4FCfM6b/MORbppcvqHz40y9MYvwXF
-	 EDgVG8R6XNtmNHAmN5KheEm329gkuXBBnsmdrGAX/D6bX7qAHpt/Mlc21ZHAcLj5geg==
+	t=1793829454;
+	b=ksSkRmcTR4/n6poNBz4EZLC3zu/+sGtll5+hei9eeuYsmOEXbQi5f+zbW5a61Q9C13dp
+	 N40sFnlTyp55KNIkxUlq5yPLEPwzHrZYrgzBWMSONB8rNrN+eLGMzc1LKNAZYl84aOJUl
+	 CDVNSoz5QLTWA3NokCd2awbTQ6biDLT2o+dn4p8AGcJq1OxFIfou1HT363lNXjo7YMIX1
+	 QTix0jOh6pztZRdHsLm4SeRrpKqQ32aPiFTHuebmWUpcq8hLXIokUT/rMClY9O0IK1y7H
+	 viXsc2/TQDpJRdkgn1WFs+NCOczA3gayO4vIfKMn1HbKqCCSinfTmyBioguKo0FZu0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qt7nQp+6v6+LoplPhjMKlRkj6OTIzU6Ld2dBIbcA88U=;
-	b=CfnXrJHUlRic+29H7+X2/Zoqn+CqjZ8YQ8BcPUnOWxMN0MTf0AszchOX52LckD200siL
-	 rU9r7u6VOvKFIjyX69MZ+2g5gKiqBWzENzscCFmcPNmA1ciJTHf83i2K7jN82wtZjrNnq
-	 ZR4CB+4Z+awqBGGolvEH9uau9YoRAFgVFoPK0pPmg8B/rdLYOncIsyoQcAR2f9TcN6+WP
-	 QL5Vje+kohStUxYUkNWSeyhejREwViuDnKXTUCCe46Yl89AnVLyDGd9zvcsEHKLjKQOLq
-	 R4tUztmJeNCV+omckt9mHgGaEacxtcdSt0RazTZANcotW37YQxiJbqeONJistcJcsRw==
+	bh=uRoe/3k9FV5xKubSQbfQ8c8rrWMFh1EgsS7cHt10bk0=;
+	b=TkEUGWK0EXdbJFwFd2iCmlTaUVQkDwMxvyU//iJ8wbK+sjOuQ7AUfVERQXYVx/Hz4t0K
+	 A19OJORlxqVb+j6ZjP7DaYKR6e1X94eQAWMnYZDYNvevTzYzmwQHPgi2leRaiX8NmZKRb
+	 Hk5qifUFt226orqySXHWdUpxCxFo/jFjhwlZXnWYs0EsHLhyr+3OSW0hCX+jVwitq1DoH
+	 3Zs3aDGpcTkneVQa42CQ2ABDDNYZVfNEjuN9INROZa0RJ7zkhFxIKKCJo7XUHRdIjCVVU
+	 QhtGIR4fKSWiNs3n0hLuS4PiDy2a7zpbTYCL6Jn8XuFt2+h+fHKti3NSZ6eEFZDIAjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qN8zCN6c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IE5p9ITn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5D1606A862;
-	Wed,  4 Nov 2026 21:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD223606AB0B;
+	Wed,  4 Nov 2026 21:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qN8zCN6c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212B11F000C1;
-	Wed,  4 Nov 2026 21:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IE5p9ITn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427AF1F000C1;
+	Wed,  4 Nov 2026 21:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829451;
-	bh=qt7nQp+6v6+LoplPhjMKlRkj6OTIzU6Ld2dBIbcA88U=;
+	s=korg; t=1793829453;
+	bh=uRoe/3k9FV5xKubSQbfQ8c8rrWMFh1EgsS7cHt10bk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qN8zCN6c+P33GnNyQjS0BPyrPGrzOLSGWK3xFPaHp2z/MJAZjfKdEQx+gWSdNduye
-	 N93YYpt6bSDyQNltR0ZQ3Uuy63my6keOya1xGjFH0nMQSwESn8XGn0kqcbAMBtbMdS
-	 0MbOXOY+077UbF3cf85K/3rgGN6pqLS30TZBIKhs=
+	b=IE5p9ITnty2fm1KEnrpnkZKPEGeddFL9Nhg9sWxS1B0Yu99xEZIKUt5G7HNVrvLTZ
+	 eRgwk5YX6xsTpZaJD46BdIrCbq/iNkcZs6PrgR7agxyD3JH6P0rwToplOedgkxPxfy
+	 ImO06QFuH9k8D6J1AytbYY39/iIPWvbREiv+IIhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Zhiwei Zhang <202275009@qq.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0096/1005] soc: qcom: socinfo: Add SoC ID for SDM850
-Date: Wed,  4 Nov 2026 15:57:09 -0500
-Message-ID: <20261104211046.322019769@linuxfoundation.org>
+Subject: [PATCH 6.18 0097/1005] RDMA/rxe: Check PDs for memory window binds
+Date: Wed,  4 Nov 2026 15:57:10 -0500
+Message-ID: <20261104211046.349603812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,33 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Zhiwei Zhang <202275009@qq.com>
 
-[ Upstream commit 743af1d6a8b4bfa62dd01b5c2d81b1c62ea597f7 ]
+[ Upstream commit fbbe1d5cd7d400a98afcf337969cfdb808cb198f ]
 
-Recognize the SDM850 SoC.
+The IBTA Software Transport Verbs specification requires the QP,
+Memory Window and Memory Region for a Bind Memory Window operation
+to belong to the same HCA and protection domain.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260627-sda850-v2-2-44bf46ade42e@ixit.cz
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+rxe only checked the QP and MW protection domain for type 2 MWs.
+Move the QP/MW PD check to the common bind path and also reject
+binding an MW to an MR from a different PD.
+
+Invalid bind requests continue to fail with IB_WC_MW_BIND_ERR.
+
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Zhiwei Zhang <202275009@qq.com>
+Link: https://patch.msgid.link/tencent_FD4FB25AA4FFA845E63F5AC36CF4A46CDC0A@qq.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/sw/rxe/rxe_mw.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 963772f45489d..79a0defe73227 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -359,6 +359,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(IPQ8078) },
- 	{ qcom_board_id(SDM636) },
- 	{ qcom_board_id(SDA636) },
-+	{ qcom_board_id(SDM850) },
- 	{ qcom_board_id(SDM632) },
- 	{ qcom_board_id(SDA632) },
- 	{ qcom_board_id(SDA450) },
+diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
+index 379e65bfcd49a..bddb7a2578313 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mw.c
++++ b/drivers/infiniband/sw/rxe/rxe_mw.c
+@@ -72,13 +72,6 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ 			return -EINVAL;
+ 		}
+ 
+-		/* C10-72 */
+-		if (unlikely(qp->pd != to_rpd(mw->ibmw.pd))) {
+-			rxe_dbg_mw(mw,
+-				"attempt to bind type 2 MW with qp with different PD\n");
+-			return -EINVAL;
+-		}
+-
+ 		/* o10-37.2.40 */
+ 		if (unlikely(!mr || wqe->wr.wr.mw.length == 0)) {
+ 			rxe_dbg_mw(mw,
+@@ -87,10 +80,21 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ 		}
+ 	}
+ 
+-	/* remaining checks only apply to a nonzero MR */
++	/* C10-72 */
++	if (unlikely(qp->pd != rxe_mw_pd(mw))) {
++		rxe_dbg_mw(mw, "attempt to bind MW with qp with different PD\n");
++		return -EINVAL;
++	}
++
+ 	if (!mr)
+ 		return 0;
+ 
++	/* remaining checks only apply to a nonzero MR */
++	if (unlikely(qp->pd != mr_pd(mr))) {
++		rxe_dbg_mw(mw, "attempt to bind MW/QP to MR with different PD\n");
++		return -EINVAL;
++	}
++
+ 	if (unlikely(mr->access & IB_ZERO_BASED)) {
+ 		rxe_dbg_mw(mw, "attempt to bind MW to zero based MR\n");
+ 		return -EINVAL;
 -- 
 2.53.0
 
