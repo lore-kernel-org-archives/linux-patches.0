@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829384;
-	b=OCZ53UMErGVTLI1wV5qhjSjOXXk1ayp4ZVtcunJoYrInpLrbRDPIGkXRkrZAly+qcL4I
-	 NVHjbqqC1eXQawKHBwWi3kUSZtLwuzFsGrFIUcLJuWKfhLmCPmVNt5GY0RGPw7601YmxQ
-	 OiwPseXKDH3LKan565isPq9vYbtr2BSWPCad17qVAf0ErQE3bQ8ijLpaKyISLVo/ViC/b
-	 uPP5mtm54bHKl/meoqmHLtBGgnaWKy2WobzOhedC8DlXpEZbjj+JiqQnTy2kcV1NuLGht
-	 1wdZRX9LbLP6370NWFUoTQyKQNLBJoxgcK+TabkBo/5n8lHb50X58Qsw2R4KVr/kylQ==
+	t=1793829385;
+	b=1GtrkivHzAJu0NFy1bmFNFemPHzfLWJ9qYH+5rznYDXO2y5RQRBtlUOjeInnit9ORkGa
+	 JNRfIbmnkDQxH6AO2bO7m1as/eHtullNAhY+V61JuQZLsKYOqo++HHzqbpYuB1iIwZ0e8
+	 hR5TPQwjElu/HR/mncLDNnyCNfKJcb/vOeSGcr9cCQVE8jcQqHnizTH2LMwJGz58u6SYy
+	 SvRpqFJTlesc3EvjgaJjO/Gph0ah9S++PCS8NpcPjYmk/oRC+U7GMSwnydpoCMttHVuki
+	 ohgoWFaQZB77XfznAzJ4YAM5syJlkjJbjbdcQmG6uj1BCD03yLrMONeEnQ8p3qUvKYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829384;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MCv8/8NIjuPDguoLEC5cRNYva7maY8UNcjr8OZBhJmg=;
-	b=M5V4pBPc8sYPhfjS+997sCPdj9dodWYLiY4wjgleZMFUkG4dODYFoyOew3mbSSD9wBKt
-	 nASi/UJfOx8xG0hErzoLzCnaW8gPv2uUY+0AqPj3TyGmuzKwR6sKcPYcRI0fJx6ITjb3v
-	 B3cVSS98/X58GhnG/voW2Tz0cnA+LP6crJsu4d5o4yBVIrnXVkCaVp6fxrfF27Fs77Vof
-	 G0GmwEgs6Q5UHuqdTlKpg2+P7Qr4P4/KHbw9cmly1V0mAY9dYv/PAOFLTN2Wm41rpP9Q7
-	 NP+E56pe0i/UODuRFu1P3XLf88HHAaPkqGX9QUsWE1qLHlG6iMJHxTEm4ffAYzVTMog==
+	bh=0w1PyD7jTPQUAfyfUWJwL+1+c+koxkgLUY7eYz55QOA=;
+	b=seaM03dsYUf6RW+IMBt14U+u9xS46HyUt0Y+m9SYhMKA2NObw/lzM3ezpGDB6QUNsder
+	 9023AHIeN2+LU9Kc+hF40sY+XqPiLP37eddIjSzXx3agCi4mlHHVJOMhD8zehQ12k5AEm
+	 AMHOq70IbXso4hPDFgH7MBOwPcgI0t7b0ZhSHsE+g74FM6lWtdNIG1drQ/+DdWRuBpudK
+	 uTzL1LlRcxhnPpqWd78S3E9jZY+5JflPjTvyrXbrhXRZW7Zz56mQ1bqmItq8jyyasqqpY
+	 zsuqtZiHHzdNYOfhFgM21Sg3e49zK0X7zTZiYH/hKwSbwZA/yirFGeyI+Dmz5G+r7lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F3k/4f/l";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eufV30cE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C0B606A865;
-	Wed,  4 Nov 2026 21:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ED86086E66;
+	Wed,  4 Nov 2026 21:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F3k/4f/l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5A31F0093A;
-	Wed,  4 Nov 2026 21:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eufV30cE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CE81F0093A;
+	Wed,  4 Nov 2026 21:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829383;
-	bh=MCv8/8NIjuPDguoLEC5cRNYva7maY8UNcjr8OZBhJmg=;
+	s=korg; t=1793829385;
+	bh=0w1PyD7jTPQUAfyfUWJwL+1+c+koxkgLUY7eYz55QOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F3k/4f/l2ZvRyJi1AM9xBwKiixFkcdgAvV2J9rFBQ2q7D6DK2dVBfpClsr+geHMSn
-	 iXSSrdF3eMBs4pG84UZYMDj0e3fhjKF5sw33b8uTD73VZ0CxmG8xJcm+FxZCWAoq3X
-	 uBzMc+iYLYIWuELKZ7pqYtbE0mHD8qzO5kd3QJYQ=
+	b=eufV30cECVacYa0MfFQFgAxWuQ7DAPrl7bbR742JYX2eNQ+4eQPRDGQJekptMOPq6
+	 KejJxShzJJKkAVG1LT7Zw7Y0cJrWu6wMNzk2OPJ9z4KHNLLFkBj+Yjgrl6gAWOiI9N
+	 hi7+pw/GoMDqb6sIUotXPvT26pj2qE/SC05JBA6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Hansen-Baird <william.hansen.baird@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Jiawen Liu <1298662399@qq.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0090/1005] wifi: rtlwifi: fix disabling of ASPM for RTL8723BE with AER flooding
-Date: Wed,  4 Nov 2026 15:57:03 -0500
-Message-ID: <20261104211046.147863013@linuxfoundation.org>
+Subject: [PATCH 6.18 0054/1005] spi: nxp-fspi: disable runtime PM on probe failures
+Date: Wed,  4 Nov 2026 15:56:27 -0500
+Message-ID: <20261104211045.108008999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,122 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Hansen-Baird <william.hansen.baird@gmail.com>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit 04a46c2dbf3b516c96a1d19b72917b56055ad6c1 ]
+[ Upstream commit 5d14285d60ba95561609a293064654a0c7d7d928 ]
 
-commit 77a6407c6ab2 ("wifi: rtlwifi: disable ASPM for RTL8723BE with subsystem ID 11ad:1723")
-adds code which sets ppsc->support_aspm to false in
-_rtl_pci_update_default_setting() in order to disable ASPM.
-This does not, however, disable ASPM. Rather, it disables driver
-control of ASPM, and blocks calls to rtl_pci_enable_aspm()
-and rtl_pci_disable_aspm().
+nxp_fspi_probe() enables runtime PM and autosuspend before
+several operations that can fail.
 
-In some cases, the pci device supplied to the probe function has
-ASPM enabled. The code would therefore not disable ASPM, as it means to,
-but rather just leave it enabled.
-This was discovered through testing on a Razer Blade 14 2017.
+Some failure paths returned directly before the devm cleanup
+action was installed, leaving runtime PM enabled.
 
-Implement a new __rtl_pci_disable_aspm(hw) function which does not check
-ppsc->support_aspm before disabling and call it from
-rtl_pci_disable_aspm().
+Route those failures through a common runtime PM cleanup path.
+Use pm_runtime_resume_and_get() for the initial clock enable.
 
-Then move the code added in the previous commit to rtl_pci_init_aspm() to
-allow adding a call to __rtl_pci_disable_aspm(hw).
-This makes sure ASPM is disabled while still disabling
-driver control of ASPM to block it from being enabled later.
-
-Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260630141553.785769-2-william.hansen.baird@gmail.com
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Link: https://patch.msgid.link/tencent_8FC0B8DFAF4AE67AEBA20548045D53A77707@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 39 ++++++++++++++--------
- 1 file changed, 26 insertions(+), 13 deletions(-)
+ drivers/spi/spi-nxp-fspi.c | 31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 8fb9604c3c533..f9f05252b890e 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -156,15 +156,6 @@ static void _rtl_pci_update_default_setting(struct ieee80211_hw *hw)
- 				PCI_EXP_LNKCTL_ASPM_L1 | PCI_EXP_LNKCTL_CCC))
- 		ppsc->support_aspm = false;
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index b504a5c86692a..0300f4ae1455d 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -1426,9 +1426,11 @@ static int nxp_fspi_probe(struct platform_device *pdev)
+ 	pm_runtime_use_autosuspend(dev);
  
--	/* RTL8723BE found on some ASUSTek laptops, such as F441U and
--	 * X555UQ with subsystem ID 11ad:1723 are known to output large
--	 * amounts of PCIe AER errors during and after boot up, causing
--	 * heavy lags, poor network throughput, and occasional lock-ups.
--	 */
--	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
--	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
--	     rtlpci->pdev->subsystem_device == 0x1723))
--		ppsc->support_aspm = false;
- }
- 
- static bool _rtl_pci_platform_switch_device_pci_aspm(
-@@ -203,7 +194,7 @@ static void _rtl_pci_switch_clk_req(struct ieee80211_hw *hw, u16 value)
- }
- 
- /*Disable RTL8192SE ASPM & Disable Pci Bridge ASPM*/
--static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
-+static void __rtl_pci_disable_aspm(struct ieee80211_hw *hw)
- {
- 	struct rtl_priv *rtlpriv = rtl_priv(hw);
- 	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
-@@ -215,9 +206,6 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
- 	u16 aspmlevel = 0;
- 	u16 tmp_u1b = 0;
- 
--	if (!ppsc->support_aspm)
--		return;
--
- 	if (pcibridge_vendor == PCI_BRIDGE_VENDOR_UNKNOWN) {
- 		rtl_dbg(rtlpriv, COMP_POWER, DBG_TRACE,
- 			"PCI(Bridge) UNKNOWN\n");
-@@ -240,6 +228,16 @@ static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
- 	_rtl_pci_platform_switch_device_pci_aspm(hw, linkctrl_reg);
- }
- 
-+static void rtl_pci_disable_aspm(struct ieee80211_hw *hw)
-+{
-+	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
-+
-+	if (!ppsc->support_aspm)
-+		return;
-+
-+	__rtl_pci_disable_aspm(hw);
-+}
-+
- /*Enable RTL8192SE ASPM & Enable Pci Bridge ASPM for
-  *power saving We should follow the sequence to enable
-  *RTL8192SE first then enable Pci Bridge ASPM
-@@ -330,10 +328,25 @@ static void rtl_pci_parse_configuration(struct pci_dev *pdev,
- 
- static void rtl_pci_init_aspm(struct ieee80211_hw *hw)
- {
-+	struct rtl_pci *rtlpci = rtl_pcidev(rtl_pcipriv(hw));
- 	struct rtl_ps_ctl *ppsc = rtl_psc(rtl_priv(hw));
-+	struct rtl_priv *rtlpriv = rtl_priv(hw);
- 
- 	_rtl_pci_update_default_setting(hw);
- 
-+	/*
-+	 * RTL8723BE found on some ASUSTek laptops, such as F441U and
-+	 * X555UQ with subsystem ID 11ad:1723 are known to output large
-+	 * amounts of PCIe AER errors during and after boot up, causing
-+	 * heavy lags, poor network throughput, and occasional lock-ups.
-+	 */
-+	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8723BE &&
-+	    (rtlpci->pdev->subsystem_vendor == 0x11ad &&
-+	     rtlpci->pdev->subsystem_device == 0x1723)) {
-+		__rtl_pci_disable_aspm(hw);
-+		ppsc->support_aspm = false;
+ 	/* enable clock */
+-	ret = pm_runtime_get_sync(f->dev);
+-	if (ret < 0)
+-		return dev_err_probe(dev, ret, "Failed to enable clock");
++	ret = pm_runtime_resume_and_get(f->dev);
++	if (ret < 0) {
++		ret = dev_err_probe(dev, ret, "Failed to enable clock");
++		goto err_disable_pm;
 +	}
+ 
+ 	/* Clear potential interrupts */
+ 	reg = fspi_readl(f, f->iobase + FSPI_INTR);
+@@ -1438,18 +1440,24 @@ static int nxp_fspi_probe(struct platform_device *pdev)
+ 	nxp_fspi_default_setup(f);
+ 
+ 	ret = pm_runtime_put_sync(dev);
+-	if (ret < 0)
+-		return dev_err_probe(dev, ret, "Failed to disable clock");
++	if (ret < 0) {
++		ret = dev_err_probe(dev, ret, "Failed to disable clock");
++		goto err_disable_pm;
++	}
+ 
+ 	init_completion(&f->c);
+ 	ret = devm_request_irq(dev, irq,
+ 			nxp_fspi_irq_handler, 0, pdev->name, f);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to request irq\n");
++	if (ret) {
++		ret = dev_err_probe(dev, ret, "Failed to request irq\n");
++		goto err_disable_pm;
++	}
+ 
+ 	ret = devm_mutex_init(dev, &f->lock);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to initialize lock\n");
++	if (ret) {
++		ret = dev_err_probe(dev, ret, "Failed to initialize lock\n");
++		goto err_disable_pm;
++	}
+ 
+ 	ctlr->bus_num = -1;
+ 	ctlr->num_chipselect = NXP_FSPI_MAX_CHIPSELECT;
+@@ -1467,6 +1475,11 @@ static int nxp_fspi_probe(struct platform_device *pdev)
+ 		return ret;
+ 
+ 	return devm_spi_register_controller(&pdev->dev, ctlr);
 +
- 	if (ppsc->reg_rfps_level & RT_RF_PS_LEVEL_ALWAYS_ASPM) {
- 		/*Always enable ASPM & Clock Req. */
- 		rtl_pci_enable_aspm(hw);
++err_disable_pm:
++	pm_runtime_dont_use_autosuspend(dev);
++	pm_runtime_disable(dev);
++	return ret;
+ }
+ 
+ static int nxp_fspi_runtime_suspend(struct device *dev)
 -- 
 2.53.0
 
