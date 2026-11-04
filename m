@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826962;
-	b=nOXTaW+NDzUZb55hMKSSBcqNOdzyyXWmF0rHTTsuIhJPuum2hq+u4hqdmKSAl8cI9eXj
-	 lRE96wx4WAxQFwDsWuGq+7HC9YvbjIzO1EsSHS0fWejfl+/hoMywvP6p6sndMSkvB02WB
-	 iqELw/H+W46ZMkAxDklhvr4VeoruVszBWcITwOcHVGC1z8uPDYHuYLLKDVmXqezko9VsE
-	 6/rl5ydgzHO0/32xp8e1RCAQw4zFyVC8cSkj7UDCQUGuVIJ6rlPoK6ik/pTsfhFuYU+Mr
-	 SlyG9203zj/timhJVOQbdLbX5wIu9HOCX6gjCNdkAS57qiC6ECySmfOluAcbLJ7ETCw==
+	t=1793826964;
+	b=VlZmx/okD2MUBUgRQ2ZPWVW2i/Ty7p/IrKk0fRZYzQ9UAP2+n0RfekBPmOAMdtr/OtEN
+	 oRKUtwh6Qg340eG9y56CRUoC5qEt5KzqR02XbB8sJXB/7s3HXfZbgRxMrtU4Er81+IK1g
+	 TjRwShJ2W6fGIvl/4BzugD8CQNPbz8p1/HTWbvyPKP5+mH+tWqqtDhP/E36oXrIjJztPj
+	 ReH3veIR9VqrMg3/JxkdcyIxRKx8dY/k7IjFfsEEUvjU6ELZelGOfDau2wLf1flk7flSl
+	 ZJDmDSU9mV+WcTCMSVNW3xDQ4x93nujWwNGCmkE/N0YcxjDeUj58aFAJfiChZbp2xww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gwad6wFe9lHTk+Af+8UCMzCmouu2GG6yaRefJmEYPA8=;
-	b=OzrW0FGKoT6TFvaIwoDbknyIKKq8iLkvcoZbSyq30Wz9CWuWVdMartfzVe4gi2DOURm8
-	 Qw8/aHMgmFpnzSjdnhWxjRCbRv2nJ1/Nmrms/xYHax3u/7KrSW6fa8CRrb7sWyW6gwpFR
-	 mfeI5QTsoLwPHDHgmihILv+GWPWFESxy+0xRbMeazRQISrgaNdid2w/isJC+/i6r0rDl1
-	 3P7Zq7BV3BoDIHVo50LTfYWChf8sHzUN64G3RZC505lmDagk/xNI7KTi6f26lchelPhV4
-	 9Dhjk1tbdDL9/6K4VAAt9oAqMezqLq+QbOwldO9pstY4flYlCFTIjdN732ydX6+Fzrw==
+	bh=gF/qiCw3ewFdXLBxi0Zmh22mFHH2ofoUcu4p5jmap8g=;
+	b=Cif6Dq1T2MmcDrp7iFcy+/gLqxhRwBlFISw8xboaY/VF+QqkySBvylqbKuypTbup+6Ln
+	 B2ZgJqGvJOWdxYmu5TYJzyHMMoNvFH+FFINXuConeMcJ/w8rH3NFtPT9rgE+WObaUflm0
+	 LeWrHFjwqEddnJLch/nj3CWsh4nwZ28pNltTQ8IZ4t58fmPup0e+buP2ThUcDrgAMtOg2
+	 y+EnpVq+lPf3YGfT6Pu27K05W2FuodyASyMmMvkkrAeEZjNsezS2FVulHwyfEXYmVbf1h
+	 XXUAKBEbKqCsE5f9XfEKFi9+8CCfw8ykGG3WyqUzClD+oZ1KRhfWBTjgqLkMoyMvhTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMLA0ObW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LO6Mzov9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354EF6073522;
-	Wed,  4 Nov 2026 21:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291EB607031C;
+	Wed,  4 Nov 2026 21:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mMLA0ObW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF5D1F000C1;
-	Wed,  4 Nov 2026 21:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LO6Mzov9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A231F000C1;
+	Wed,  4 Nov 2026 21:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826962;
-	bh=Gwad6wFe9lHTk+Af+8UCMzCmouu2GG6yaRefJmEYPA8=;
+	s=korg; t=1793826963;
+	bh=gF/qiCw3ewFdXLBxi0Zmh22mFHH2ofoUcu4p5jmap8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMLA0ObWmJVGNh3Q5Dxo025VK1vxPEP6ACj6Jv+9EcXzPufcIRVTQEGig/cznKwCZ
-	 DGlF/RdHOMcs9TU0Aq+QPCb6WlMQF5MMqTo2X3JJsFxzQYm5bcF7eYchNf3Do3IjX2
-	 VS7YTyICYI9Bczd2F1CwxdfoNHX/HqYp/gZLdvuI=
+	b=LO6Mzov9O1/hpvS6pxswUs661cF4k8rHbXetr6lUguQSiBpUODXppa8bNFoEmnctF
+	 I0+IDon3rSiCZ0uo+BTR/nDaKfGK2nqB8ytonMaMkNMk5jj77e9fLUClOHp9h+ingA
+	 ZXkzaF8kcFtNb2WJAM5thZenlZrD1HYzx7ZNePLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 7.3 112/547] backlight: qcom-wled: Fix WLED3 brightness register stride
-Date: Wed,  4 Nov 2026 16:04:56 -0500
-Message-ID: <20261104211041.389079419@linuxfoundation.org>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sascha Bischoff <sascha.bischoff@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 095/547] dt-bindings: interrupt-controller: gicv5: Relax IRS properties constraints
+Date: Wed,  4 Nov 2026 16:04:39 -0500
+Message-ID: <20261104211040.926872762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,48 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
 
-commit e60dc9c05e0f415ef8bc63b3179abdd49830a619 upstream.
+[ Upstream commit 1d77e79d62cfe46ad3619d42ee0d1ebd3f0f79f4 ]
 
-WLED3 has a 16-bit brightness register pair per string, at 0x40 + 2*n,
-which is what the pm8941-wled driver wrote to:
+An IRS is architecturally allowed to be stand-alone (ie with no direct
+CPU connection).
 
-	rc = regmap_bulk_write(wled->regmap,
-			wled->addr + WLED3_CTRL_REG_VAL_BASE + 2 * i,
-			v, 2);
+Relax "cpus" and "arm,iaffids" properties constraints allowing a standalone
+IRS configuration.
 
-The restructuring for WLED3 turned that into WLED3_SINK_REG_BRIGHT(n),
-defined as 0x40 + n, so the two byte writes for consecutive strings
-overlap: string 1 overwrites the MSB of string 0 with its own LSB, and
-with the default three strings only string 1 ends up with the requested
-value.
-
-Use the 2 byte stride.
-
-Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260921-qcom-wled-backlight-v4-2-bab8c7ef73cb@ixit.cz
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7d7299bd07c6 ("dt-bindings: interrupt-controller: Add Arm GICv5")
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Sascha Bischoff <sascha.bischoff@arm.com>
+Link: https://patch.msgid.link/20261015-gicv5-irs-no-cpus-v1-1-d4b337b7f000@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/qcom-wled.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/interrupt-controller/arm,gic-v5.yaml        | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -59,7 +59,7 @@
- #define  WLED3_SINK_REG_CURR_SINK_SHFT			5
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml
+index 86ca7f3ac2810..b901e4288816a 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml
+@@ -120,13 +120,14 @@ patternProperties:
  
- /* WLED3 specific per-'string' registers below */
--#define WLED3_SINK_REG_BRIGHT(n)			(0x40 + n)
-+#define WLED3_SINK_REG_BRIGHT(n)			(0x40 + (n * 0x2))
+       cpus:
+         description:
+-          CPUs managed by the IRS.
++          CPUs managed by the IRS. Omit it if the IRS has no associated CPUs.
  
- #define WLED3_SINK_REG_STR_MOD_EN(n)			(0x60 + (n * 0x10))
- #define  WLED3_SINK_REG_STR_MOD_MASK			BIT(7)
+       arm,iaffids:
+         $ref: /schemas/types.yaml#/definitions/uint16-array
+         description:
+           Interrupt AFFinity ID (IAFFID) associated with the CPU whose
+           CPU node phandle is at the same index in the cpus array.
++          Omit it if the IRS has no associated CPUs.
+ 
+     patternProperties:
+       "^its@[0-9a-f]+$":
+@@ -210,12 +211,14 @@ patternProperties:
+           - reg
+           - reg-names
+ 
++    dependencies:
++      cpus: [ "arm,iaffids" ]
++      arm,iaffids: [ cpus ]
++
+     required:
+       - compatible
+       - reg
+       - reg-names
+-      - cpus
+-      - arm,iaffids
+ 
+ additionalProperties: false
+ 
+-- 
+2.53.0
+
 
 
