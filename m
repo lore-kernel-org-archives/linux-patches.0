@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830912;
-	b=HW+MYmU0/7OqVJBD3zZSzs5vp8R95Kxjet914W2f3o9nBYC7IrRPBqXRsU69hVIac+UJ
-	 taeke4Yd+AxkWDDXbyHhRMeGKUBu3yRlnQzTbideUQsk4Yh7X7wCbvlZSnuVEqoXHmQu6
-	 KwswNoAdg6X+hy5mIRIzkkaAYJBjR0DoIBP4PAAt6GNEUVq9yAzZ9cPijjh3rbar8DuAE
-	 ywM4Z1IjME0RjGQfvy3f5sF2jGm4Nu3mXrFJDZG1LObZmqQeNUSsFK0TvUWsDxQR7zd47
-	 N9rAr+Kdmd0GCLjar7vbYoBFnhgZRwVf3GcjglDbcUCVo0qqHnTFjbrQCgR/rdra/mA==
+	t=1793830913;
+	b=XisyvpXBo/yu9UaxgkveVwbAAZ0EN7RANgeRReDnYaS64F9IK62uhVhuBxCVbrID917x
+	 Y/RGlT4FAfZ928uAe1lopZ8b1irhW6qnk6bqr4MebEBl4aNFo1zWa7RHUOdWaXothWwmF
+	 wMyD6iFmm5iYlRpEnb1Du1SAn1vyhlq7bIJ0ze4sx2LVe7w9henrE4j2K+LaV+PmZK1rU
+	 B3ZsICHi7BdmvI3kUJVgAdHnuSheo5qqI0JEmRLHl2JUmb4OcqpO4peQvLOr3I8LMCQd0
+	 ZXDIsimspzza9vhad4Fro9ChmaSZhh6+Ol82A8AmM95jvqzW9ckkeKKjvhQalgOItFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830913;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cx85N+TYERrMInKK5PENOz2LaQJsyZayLhQxvIuZY+M=;
-	b=AJjsVWoMygLVM8/2kmZOVNGiA8EBGpEMXSRbu3O98E8fPy5rSkiJ2AT0Iinr5DAYwjtB
-	 zMQt5vh4UOG1r8sDUNPSEf1Hyydsxy0OzXBzdvo59zfU8apgqC15Sf4RCyNhQNdcQDJSz
-	 O2ntchTZP8cEr6qyqMJWTDaIDnqdNQTWpFO++RmWu6c0F0GiNW/DwzjTY2phTgHWEkqp2
-	 MAofR03VoCsOyUDC6YmQyIGAGeE9AU46HnNA+oEEpt8FA4stGHRAxb54ULQDWC8cbbQLe
-	 PjuIeZbY/6Y9WHnRpueC8zTu6odrlTMbcD9M2qC4P0Fk4idAqPcFlT9BVZxRmayzsGQ==
+	bh=YPDgguWo0+KrFhs9r4BTbhTaMGdgTVG2ClIpYDP8dSw=;
+	b=Eo1ZguJ4My05zT5Ql5y3Gz07hSA9hPL5VYqDp1w8MKwlVxxkSG2YuaIHjSBlwAEk0Tej
+	 keXAZDwhzrFxkkYv65CxLuE7GOwcfoNFnR3g2HwNopWG1NlhxIs0kw1d4Ehm3InEzdFIq
+	 mLE66hLl63y676Jqj3hm6JFE+9ZwO9dX+29h8MN1+C/b7raDV+BLMb1n5RlHNzDBJoC3s
+	 ICNBDEtUKl3UVwCLf8wnH8XaJh6HM5eIylahvBBibbwkxzN7al9o3+sbXWot+tceGhP37
+	 ThAt5ze71s8E/WeweFBESMIb0Kk2/XJBFkjJyNfNK3ZAGlZNv9BJ+Qodd/nISOnuKdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cc0ZJ7uY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzAQcX1Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4A7606A841;
-	Wed,  4 Nov 2026 22:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD41606A841;
+	Wed,  4 Nov 2026 22:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cc0ZJ7uY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C43B1F000C1;
-	Wed,  4 Nov 2026 22:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzAQcX1Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB611F00A16;
+	Wed,  4 Nov 2026 22:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830911;
-	bh=cx85N+TYERrMInKK5PENOz2LaQJsyZayLhQxvIuZY+M=;
+	s=korg; t=1793830913;
+	bh=YPDgguWo0+KrFhs9r4BTbhTaMGdgTVG2ClIpYDP8dSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cc0ZJ7uYtjIMisA/2ILNpdzzJU1rsFK/055YBgRmPSGWYvNGnvr4wAP5QnUFPwHrF
-	 Z1tg1PhYqRpKEIBD7QhKofU6KQMCIAEa5gDw+qj3aCKWGpqC8CYd2/iQ2LGWyAcBlD
-	 W1qwx1o5PnPobt1YMgwl+gZG8ETlTyh8xMCYo/ks=
+	b=VzAQcX1YtRdu0X3LJknV9MY/Ph1bs2UZrK1VtabFPZyWiI9dMgV6xp2yAOnNIBs7I
+	 wrmrzQAwpUJs9W/s5Y6dbaHXmlLiY9FFIaZrETUVJt2he+qH8pRjZqf2yxx95WgOcd
+	 maH5PFOkxyhYk7BUmTBTmBUXC6tVNfQLySazDXTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gaultier Delbarre <Gaultier.Delbarre@amd.com>,
+	Wei Huang <wei.huang2@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Ankit Soni <Ankit.Soni@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0398/1005] gre: fix ERSPAN o_flags race/corruption in xmit and fill_info
-Date: Wed,  4 Nov 2026 16:02:11 -0500
-Message-ID: <20261104211055.218455552@linuxfoundation.org>
+Subject: [PATCH 6.18 0381/1005] iommu/amd: Fix missing CMD_COMPLETE_PPR response for invalid PPR requests
+Date: Wed,  4 Nov 2026 16:01:54 -0500
+Message-ID: <20261104211054.770124263@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,213 +71,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 9958e69b98930834a576e156f6458166d1db1c02 ]
+[ Upstream commit bc1f5ec826bfa510e7138e2be5aad23907850874 ]
 
-For IPv4 ERSPAN:
-In erspan_xmit(), the driver clears IP_TUNNEL_SEQ_BIT (for version 0)
-and IP_TUNNEL_KEY_BIT directly in the shared tunnel->parms.o_flags
-structure. Since transmit paths can run locklessly and concurrently,
-this leads to a data race.
+The AMD IOMMU spec, requires the host to respond with a CMD_COMPLETE_PPR
+command when an EVENT_TYPE_INV_PPR_REQ event is received with the RX bit
+cleared. This response was missing in the current implementation, leaving
+invalid PPR requests unacknowledged.
 
-Furthermore, modifying tunnel->parms.o_flags permanently alters the
-tunnel configuration. To work around this, erspan_fill_info() (which
-reports config to userspace) was setting IP_TUNNEL_KEY_BIT back. If
-erspan_fill_info (running under RTNL) and erspan_xmit (running locklessly)
-race, erspan_xmit might see IP_TUNNEL_KEY_BIT set when it shouldn't,
-leading to GRE header corruption (injecting a key field into the ERSPAN
-GRE header).
+Introduce amd_iommu_report_ppr_err() to handle EVENT_TYPE_INV_PPR_REQ
+events. The new function logs the invalid PPR request and when the RX
+bit is cleared, sends CMD_COMPLETE_PPR response.
 
-Fix this by:
-1) Passing flags as an argument to __gre_xmit().
-2) Using local stack flags in ipgre_xmit(), gre_tap_xmit(), and erspan_xmit()
-   to prevent TOCTOU data races with concurrent configuration updates,
-   and passing them to __gre_xmit().
-3) Removing the racy modification of t->parms.o_flags in erspan_fill_info().
-4) Forcing IP_TUNNEL_KEY_BIT in the reported flags for ERSPAN locally
-   in ipgre_fill_info().
-
-For IPv6 ERSPAN:
-ip6erspan_tunnel_xmit() was locklessly clearing IP_TUNNEL_KEY_BIT in
-t->parms.o_flags even though it does not use these flags for building
-the GRE header (it uses local flags). This permanently corrupts the
-configuration and races with ip6gre_fill_info() which reads it.
-
-Remove the redundant and racy modification.
-This should remove false sharing in a fast path.
-
-Add const qualifiers in ipgre_fill_info(), erspan_fill_info()
-and ip6gre_fill_info() to clarify that these methods are not
-supposed to write any live parameters.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260812142257.21283-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Gaultier Delbarre <Gaultier.Delbarre@amd.com>
+Co-developed-by: Wei Huang <wei.huang2@amd.com>
+Signed-off-by: Wei Huang <wei.huang2@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c  | 42 +++++++++++++++++++++++-------------------
- net/ipv6/ip6_gre.c |  5 ++---
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ drivers/iommu/amd/amd_iommu_types.h |  1 +
+ drivers/iommu/amd/iommu.c           | 38 ++++++++++++++++++++++++-----
+ 2 files changed, 33 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index b15cc4ee0d920..b1ec4f92d3462 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -474,12 +474,9 @@ static int gre_rcv(struct sk_buff *skb)
+diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
+index dee077bd149b7..5f43a0fcdd1e3 100644
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -158,6 +158,7 @@
+ #define EVENT_FLAGS_SHIFT	0x10
+ #define EVENT_FLAG_RW		0x020
+ #define EVENT_FLAG_I		0x008
++#define EVENT_FLAG_PPR_RX	0x001
  
- static void __gre_xmit(struct sk_buff *skb, struct net_device *dev,
- 		       const struct iphdr *tnl_params,
--		       __be16 proto)
-+		       __be16 proto, const unsigned long *flags)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
--	IP_TUNNEL_DECLARE_FLAGS(flags);
--
--	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
+ /* feature control bits */
+ #define CONTROL_IOMMU_EN	0
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index e64e6da08a5f7..49587eafc0a8f 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -883,10 +883,40 @@ static void amd_iommu_report_page_fault(struct amd_iommu *iommu,
+ 		pci_dev_put(pdev);
+ }
  
- 	/* Push GRE header. */
- 	gre_build_header(skb, tunnel->tun_hlen,
-@@ -652,6 +649,7 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 			      struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 	const struct iphdr *tnl_params;
- 
- 	if (!pskb_inet_may_pull(skb))
-@@ -687,11 +685,12 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 		tnl_params = &tunnel->parms.iph;
- 	}
- 
--	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT,
--					      tunnel->parms.o_flags)))
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
++static void amd_iommu_report_ppr_err(struct amd_iommu *iommu, volatile u32 *event,
++				     u16 devid, u64 address, int flags)
++{
++	struct pci_dev *pdev;
++	struct device *dev = iommu->iommu.dev;
++	u32 pasid = PPR_PASID(*((u64 *)event));
++	int tag = event[1] & 0x03FF;
 +
-+	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT, flags)))
- 		goto free_skb;
- 
--	__gre_xmit(skb, dev, tnl_params, skb->protocol);
-+	__gre_xmit(skb, dev, tnl_params, skb->protocol, flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -704,6 +703,7 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 			       struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 	bool truncate = false;
- 	__be16 proto;
- 
-@@ -727,10 +727,12 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 		truncate = true;
- 	}
- 
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
++	dev_err(dev, "Event logged [INVALID_PPR_REQUEST device=%04x:%02x:%02x.%x pasid=0x%05x address=0x%llx flags=0x%04x tag=0x%03x]\n",
++		iommu->pci_seg->id, PCI_BUS_NUM(devid), PCI_SLOT(devid), PCI_FUNC(devid),
++		pasid, address, flags, tag);
 +
- 	/* Push ERSPAN header */
- 	if (tunnel->erspan_ver == 0) {
- 		proto = htons(ETH_P_ERSPAN);
--		__clear_bit(IP_TUNNEL_SEQ_BIT, tunnel->parms.o_flags);
-+		__clear_bit(IP_TUNNEL_SEQ_BIT, flags);
- 	} else if (tunnel->erspan_ver == 1) {
- 		erspan_build_header(skb, ntohl(tunnel->parms.o_key),
- 				    tunnel->index,
-@@ -745,8 +747,8 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 		goto free_skb;
- 	}
- 
--	__clear_bit(IP_TUNNEL_KEY_BIT, tunnel->parms.o_flags);
--	__gre_xmit(skb, dev, &tunnel->parms.iph, proto);
-+	__clear_bit(IP_TUNNEL_KEY_BIT, flags);
-+	__gre_xmit(skb, dev, &tunnel->parms.iph, proto, flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -759,6 +761,7 @@ static netdev_tx_t gre_tap_xmit(struct sk_buff *skb,
- 				struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 
- 	if (!pskb_inet_may_pull(skb))
- 		goto free_skb;
-@@ -768,14 +771,15 @@ static netdev_tx_t gre_tap_xmit(struct sk_buff *skb,
- 		return NETDEV_TX_OK;
- 	}
- 
--	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT,
--					      tunnel->parms.o_flags)))
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
++	/* Skip COMPLETE_PPR_REQUEST response if RX=1 */
++	if (flags & EVENT_FLAG_PPR_RX)
++		return;
 +
-+	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT, flags)))
- 		goto free_skb;
- 
- 	if (skb_cow_head(skb, dev->needed_headroom))
- 		goto free_skb;
- 
--	__gre_xmit(skb, dev, &tunnel->parms.iph, htons(ETH_P_TEB));
-+	__gre_xmit(skb, dev, &tunnel->parms.iph, htons(ETH_P_TEB), flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -1571,12 +1575,15 @@ static size_t ipgre_get_size(const struct net_device *dev)
- 
- static int ipgre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
--	struct ip_tunnel *t = netdev_priv(dev);
--	struct ip_tunnel_parm_kern *p = &t->parms;
-+	const struct ip_tunnel *t = netdev_priv(dev);
-+	const struct ip_tunnel_parm_kern *p = &t->parms;
- 	IP_TUNNEL_DECLARE_FLAGS(o_flags);
- 
- 	ip_tunnel_flags_copy(o_flags, p->o_flags);
- 
-+	if (t->erspan_ver != 0 && !t->collect_md)
-+		__set_bit(IP_TUNNEL_KEY_BIT, o_flags);
++	pdev = pci_get_domain_bus_and_slot(iommu->pci_seg->id, PCI_BUS_NUM(devid),
++					   devid & 0xff);
++	if (!pdev)
++		return;
 +
- 	if (nla_put_u32(skb, IFLA_GRE_LINK, p->link) ||
- 	    nla_put_be16(skb, IFLA_GRE_IFLAGS,
- 			 gre_tnl_flags_to_gre_flags(p->i_flags)) ||
-@@ -1619,12 +1626,9 @@ static int ipgre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- 
- static int erspan_fill_info(struct sk_buff *skb, const struct net_device *dev)
++	if (!dev_iommu_priv_get(&pdev->dev)) {
++		pci_dev_put(pdev);
++		return;
++	}
++
++	amd_iommu_complete_ppr(&pdev->dev, pasid, IOMMU_PAGE_RESP_FAILURE, tag);
++	pci_dev_put(pdev);
++}
++
+ static void iommu_print_event(struct amd_iommu *iommu, void *__evt)
  {
--	struct ip_tunnel *t = netdev_priv(dev);
-+	const struct ip_tunnel *t = netdev_priv(dev);
- 
- 	if (t->erspan_ver <= 2) {
--		if (t->erspan_ver != 0 && !t->collect_md)
--			__set_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags);
--
- 		if (nla_put_u8(skb, IFLA_GRE_ERSPAN_VER, t->erspan_ver))
- 			goto nla_put_failure;
- 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index e3aedef13ceed..c14c76b78b984 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -966,7 +966,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 	if (skb_cow_head(skb, dev->needed_headroom ?: t->hlen))
- 		goto tx_err;
- 
--	__clear_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags);
- 	IPCB(skb)->flags = 0;
- 
- 	/* For collect_md mode, derive fl6 from the tunnel key,
-@@ -2109,8 +2108,8 @@ static size_t ip6gre_get_size(const struct net_device *dev)
- 
- static int ip6gre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
--	struct ip6_tnl *t = netdev_priv(dev);
--	struct __ip6_tnl_parm *p = &t->parms;
-+	const struct ip6_tnl *t = netdev_priv(dev);
-+	const struct __ip6_tnl_parm *p = &t->parms;
- 	IP_TUNNEL_DECLARE_FLAGS(o_flags);
- 
- 	ip_tunnel_flags_copy(o_flags, p->o_flags);
+ 	struct device *dev = iommu->iommu.dev;
+-	int type, devid, flags, tag;
++	int type, devid, flags;
+ 	volatile u32 *event = __evt;
+ 	int count = 0;
+ 	u64 address, ctrl;
+@@ -960,11 +990,7 @@ static void iommu_print_event(struct amd_iommu *iommu, void *__evt)
+ 		amd_iommu_report_rmp_hw_error(iommu, event);
+ 		break;
+ 	case EVENT_TYPE_INV_PPR_REQ:
+-		pasid = PPR_PASID(*((u64 *)__evt));
+-		tag = event[1] & 0x03FF;
+-		dev_err(dev, "Event logged [INVALID_PPR_REQUEST device=%04x:%02x:%02x.%x pasid=0x%05x address=0x%llx flags=0x%04x tag=0x%03x]\n",
+-			iommu->pci_seg->id, PCI_BUS_NUM(devid), PCI_SLOT(devid), PCI_FUNC(devid),
+-			pasid, address, flags, tag);
++		amd_iommu_report_ppr_err(iommu, event, devid, address, flags);
+ 		break;
+ 	default:
+ 		dev_err(dev, "Event logged [UNKNOWN event[0]=0x%08x event[1]=0x%08x event[2]=0x%08x event[3]=0x%08x\n",
 -- 
 2.53.0
 
