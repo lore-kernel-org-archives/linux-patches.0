@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826905;
-	b=qvuQsxmj/FwfdGsFBuBzBdd4yP4jnvzJ8Ia/Ws4zZ/xnfL9Fu3LUNhE7rxltvWP2EYsd
-	 7hEXVvwe/GJu5w7CwsE5EstsTvZRG9hNeumlmimVdO0NhUkXNEsRhPEB40uvrvRgTAFST
-	 nO5nFBC2uzwRCN/Ilk2qjb8kClGA41aMyN5KDa28NEvzz/bpmDzX548nMYrVLYfpyC6bx
-	 Tqm2yCXesz9Nh6OlF73XKXbOTHimQ9MmPFyQfmGcUjSElzWMQNo7L6ygCx2cH7PIVl+Xs
-	 yMjQDA4jdqfggYPX4WGzfXtTQwlMQQHf5MtRDYy3ABMMugf1HGepdGvA7oKsGgr3THw==
+	t=1793826906;
+	b=SgSVl5LYU8Gu+XK9kKvfeTVIRShKWwq3+VRyq4+6HU2T/nm4i/+K86lJ9tMWJDYilB9P
+	 slxFfwLC0viF9GH6vjXUJ1Z8cDA88bsFjek3TmfzRd43wPkMpB82oDuqOS7aZ9rdwGu2K
+	 H0Uau15Iez6hvjXGKIhEVBPwsCbKcEDVIV92fxZIbAdcEkAJVG3iT4ACfs9Y1j3oO6rxD
+	 PfyaJ1nyXNxtd9KbadRIcnMGAfVWh3mEFqVkL+0yrKZa+KuLWrB8xhFdfrE7s7IvMrF/r
+	 peKRqX9fIfxUlQcz1fLf/oNa3lwr7xcpCD613CW8lsg6CYZOQZAbjo2UPBp9fovNgnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5EvyOArRiFH1h/YbOCyxImxNakbrkxsA5gXGDg6kCQ0=;
-	b=ddZhDZHfCICEUYjvZQJRLnGsc0JoMJzEzMnYjd8KzfZsLfVtefpadBQ5grDDpSTxDluw
-	 FmXVGmPYkmnSV8SP6gwDq9yFscYMOqf1ePsz+daoEopChXuVNo3k4BRbpCmzq0zmkSV+y
-	 RoMAN7Yb145NBi8YPyw5kYradmwgXcV8WM1AJOi11U2rCYoX0aP0RVjUSr2XMVDRwrFOU
-	 OWBNQFf20egOxWNivUonFaGUmp2tKopQa18QglHmjNZHhWsxDMAqcP0/dXSzefaYtxYey
-	 KN+HN8oj7fRzaRjTS8IVoI2a59NgGxYPX9OR3lUNKIBmGaxlubCz8RkgYh/GXdV4b9Q==
+	bh=ooZ17kqiFWZ1BQE4a5UYZgZ4uNq93f+nV+p1GxI9Q+c=;
+	b=URZOxFGFqfc+nxdup4izeCWZoZeTW5iUw1zdwECFlEfZ1IQeP8qF90tirooNWKIDm3TP
+	 TKM0deeEBHH5+EAHah3p0lZF8SrwVgxGTBHpRR5bS/Iifc2lYuwphfVyFafnhtsYD8vT3
+	 dtHhYivItlTsht/99juEirRNQWCVLxFCVj6I7FdfbBEo2bfYGqRk+hoYPShGaX4R+RWuO
+	 jQhIEWjPYk6pLYfH5qaFW2z5tkHoQNGWBlSt37D1uIa0GpT5KoA9RRXxfKBtxLyFL/ZqM
+	 8dd/QiI69fFn0ltmLV7KzmRpfSvAva3tG77pIsIMFnna3+nupPkCSj/tsXqjJ6gnDgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGORob95;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KDDx3SAK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93046084B5F;
-	Wed,  4 Nov 2026 21:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BA76070777;
+	Wed,  4 Nov 2026 21:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGORob95
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAD41F0093A;
-	Wed,  4 Nov 2026 21:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KDDx3SAK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FE31F000C1;
+	Wed,  4 Nov 2026 21:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826904;
-	bh=5EvyOArRiFH1h/YbOCyxImxNakbrkxsA5gXGDg6kCQ0=;
+	s=korg; t=1793826906;
+	bh=ooZ17kqiFWZ1BQE4a5UYZgZ4uNq93f+nV+p1GxI9Q+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZGORob95faErVvN90nrcD7EctTGygrp3cbcsn90hqAscvB6PAroKGnVMxS54LHw51
-	 fby/tg4dEH5yHGmO8ZcIXf5g+h5huva6bEC/iVSs22PgYSdQqpYZADs2oGkT4+Oivv
-	 gE8AG7h/oWB+p32/0JIysAg55PSRC9s8+iAaDFQs=
+	b=KDDx3SAK8i5ifubq7isLl+qkfNmtczzvsrKbXG28u9q2IeHFGHbIWEwfhhdnEKw3d
+	 LgIwYRIS2d5gV1+sHqU1ys5BaKOj1+zjFi5Gg5ISM4UzdxMupKx3mUx098QnVUxiK5
+	 +dm57GGSb4eihWILYsFe4YvHewXUfubuLe5eD6HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongjun Gwon <d3bugee@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 076/547] ksmbd: serialize directory emptiness checks with readdir
-Date: Wed,  4 Nov 2026 16:04:20 -0500
-Message-ID: <20261104211040.417243444@linuxfoundation.org>
+	co+25860fb17af97289@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 7.3 077/547] libceph: bound mon_command ack decode to front len
+Date: Wed,  4 Nov 2026 16:04:21 -0500
+Message-ID: <20261104211040.444364990@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,97 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongjun Gwon <d3bugee@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 7220980b2423d06a0604516129bfa4cec8a697ae upstream.
+commit 62b41a16d8603d4d809fda212f15c3e9c783a82b upstream.
 
-SMB2 QUERY_DIRECTORY holds fp->readdir_lock while it calls iterate_dir()
-on fp->filp. An SMB2 SET_INFO request with FILE_DISPOSITION_INFORMATION
-can resolve the same FileId and call ksmbd_vfs_empty_dir() on the same
-filp without that lock.
+handle_command_ack() bounds the decode with msg->front_alloc_len, the size
+of the reply buffer, instead of msg->front.iov_len, the number of bytes the
+monitor sent.  mon_alloc_msg() routes every CEPH_MSG_MON_COMMAND_ACK to
+get_generic_reply(), which returns the preallocated ->reply of whichever
+generic request carries the same tid, so the buffer keeps its fixed size
+however short the reply is.  An ack with hdr.front_len below sizeof(struct
+ceph_mon_request_header) + sizeof(u32), including 0, still passes
+ceph_decode_need(), and ceph_decode_32() returns four bytes that were never
+received: uninitialized slab memory, stale bytes of an earlier message, or
+bytes the peer planted by sending a reply that lands in the same buffer and
+is then rejected.  The read stays within the allocation, so KASAN does not
+flag it.
 
-iterate_dir()'s inode read lock permits concurrent readers and does not
-serialize per-file iterator state. ext4 stores its dx readdir cursor and
-fname RB tree in file->private_data. Concurrent reset or refill can
-therefore free a fname node while the other worker still traverses it or
-retains its RB-tree link, resulting in use-after-free accesses.
+req->result reaches userspace through ceph_monc_do_statfs(),
+ceph_monc_get_version() and ceph_monc_blocklist_add(); rbd hands it back
+from write() on /sys/bus/rbd/add_single_major, and rbd_get_client() passes
+it to ERR_PTR() unchecked, which faults:
 
-An authenticated SMB client with list and delete rights on a directory in
-a writable KSMBD share backed by ext4 can trigger this when the directory
-takes the dx readdir path. The client overlaps an SMB2 QUERY_DIRECTORY
-request with an SMB2 SET_INFO request carrying FILE_DISPOSITION_INFORMATION
-on one live FileId.
-
-In one x86_64 SMP KASAN multi-shot guest using ksmbd-for-next at
-171df27077fb, the unmodified kernel reported a cross-worker use-after-free
-before a panic. The first report's access and free stacks show the two
-request paths directly (trimmed):
-
-  BUG: KASAN: slab-use-after-free in ext4_htree_store_dirent+0x488/0x550
-  Read of size 8 by task kworker/2:0/29
-  Workqueue: ksmbd-io handle_ksmbd_work
+  rbd: failed to get latest osdmap: -186318427
+  BUG: unable to handle page fault for address: fffffbfffe9ca034
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:do_rbd_add (drivers/block/rbd.c:7105)
   Call Trace:
-   ext4_htree_store_dirent+0x488/0x550
-   htree_dirblock_to_tree+0x535/0x990
-   ext4_htree_fill_tree+0x319/0xba0
-   ext4_readdir+0x175a/0x2f40
-   iterate_dir+0x1b6/0x630
-   smb2_query_dir+0x1003/0x1cc0
+   ...
+   kernfs_fop_write_iter (fs/kernfs/file.c:345)
+   vfs_write (fs/read_write.c:595 fs/read_write.c:687)
+   ksys_write (fs/read_write.c:739)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception
 
-  Freed by task 279:
-   free_rb_tree_fname+0x67/0xc0
-   ext4_readdir+0x13a9/0x2f40
-   iterate_dir+0x1b6/0x630
-   ksmbd_vfs_empty_dir+0xa2/0x100
-   smb2_set_info+0x2ffa/0x45d0
+Use msg->front.iov_len, matching handle_subscribe_ack(),
+handle_statfs_reply(), handle_get_version_reply() and handle_auth_reply().
+A well-formed ack has front.iov_len >= 22 and is unaffected; a short one
+takes the existing bad: path.  This applies commit d3c32939fa0e ("libceph:
+bound get_version reply decode to front len") to the last decode-side
+use of front_alloc_len in this file.
 
-Take fp->readdir_lock across the entire emptiness check. This places both
-iterators over that handle's filp in the same lock domain while
-preserving the disposition status handling. The exact code change
-completed a warning-free x86_64 KASAN bzImage build. Tracing three request
-pairs showed that the two iterate_dir() calls no longer overlapped and the
-expected statuses were preserved. A further 1,600 reproducer iterations
-completed with expected statuses and no KASAN report, Oops, or panic.
-
-The reproducer and complete guest configuration are available privately
-to maintainers on request.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Yongjun Gwon <d3bugee@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 6305a3b41515 ("libceph: support for blacklisting clients")
+Reported-by: co+25860fb17af97289@bugs.sh
+Assisted-by: Cursor
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/ceph/mon_client.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8324,6 +8324,7 @@ static int set_file_disposition_info(str
- 				     struct smb2_file_disposition_info *file_info)
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -943,7 +943,7 @@ static void handle_command_ack(struct ce
  {
- 	struct inode *inode;
-+	int err;
+ 	struct ceph_mon_generic_request *req;
+ 	void *p = msg->front.iov_base;
+-	void *const end = p + msg->front_alloc_len;
++	void *const end = p + msg->front.iov_len;
+ 	u64 tid = le64_to_cpu(msg->hdr.tid);
  
- 	if (!(fp->daccess & FILE_DELETE_LE)) {
- 		pr_err("no right to delete : 0x%x\n", fp->daccess);
-@@ -8338,9 +8339,13 @@ static int set_file_disposition_info(str
- 		if (ksmbd_has_stream_without_delete_share(fp))
- 			return -ESHARE;
- 
--		if (S_ISDIR(inode->i_mode) && !ksmbd_stream_fd(fp) &&
--		    ksmbd_vfs_empty_dir(fp) == -ENOTEMPTY)
--			return -EBUSY;
-+		if (S_ISDIR(inode->i_mode) && !ksmbd_stream_fd(fp)) {
-+			mutex_lock(&fp->readdir_lock);
-+			err = ksmbd_vfs_empty_dir(fp);
-+			mutex_unlock(&fp->readdir_lock);
-+			if (err == -ENOTEMPTY)
-+				return -EBUSY;
-+		}
- 		smb_break_all_levII_oplock_for_delete(work, fp);
- 		ksmbd_fd_set_delete_pending(fp);
- 	} else {
+ 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
 
 
