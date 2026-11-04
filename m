@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827083;
-	b=U4/HcCyr9uiacwScRIhvrOKcvBlh0WTDoDJUOnBD1vpvaZJNiwR5TUGjdeqIASaPQtQr
-	 wdvgcyeUy/XV1G8eAQEg2YvPY6gVt4LdSs+r9M2RzM6/5bIaDHpX0XtooMOp2rF0FZ7RR
-	 k5st3UQVYbfVXetFEBjVHMnzdDK2NOTvkAQwEF7OfZV+AuaAsxZm3ApseSjcnlV8rlZU3
-	 x3oB/tay/ZgdI+Ss/rguY1AHseLy5qMy3JOe1toZ1UTIPTvuHxIMN0JVa/d/9C8Mjf2IE
-	 QaILF09u7ZzYoShh2Ai/tyHDpNOndrEwqoDq32QsasMoY6FpKooJzAsUOc6FgqSPRfA==
+	t=1793827084;
+	b=I21vGPDWityPwwfC8f/FcpVB4pkNsW5cCqSiIZj2wwxEF55yJtiYpAUXbOKsh3yHsNZo
+	 sJhJcr0MRyxXELWnPNzm/3HD8ciMne72uyAGF3aEMTg0E0iWeUDTBuP/p/JPwZ3Orr1j8
+	 p82O54hCsmRCMv4xY/qp+WEIyUfXKdsCnjrSAF+1iOeF9Ts1sDwfoEfMwI0EFA/qRjQa+
+	 Nml3B35mc9Q9leknmQ6HjBLl+biKIYjY19OkMDl/R8PsUEl2c7t13/OM5fFwIlhNZQ+2M
+	 UllLrOST7JsR39XvrvyFiZ8wool6vKnQWZj5Ffy14sko3gBkAPZ8Y3NXqY5PbQMqOzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827083;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7g4YAWpyFUBWvmxgXOsGYO8rTzGhsTjEStJqFlKRGt0=;
-	b=KecLu9/0w3gUKDkfvAJmGMlvTnJoKJrwvW7E1HZ9MfWcZ+iYvv3t1Of4uV/Q5LUG4Al8
-	 kj7Qhdf//F5jaF0bMa0x5q3q8FOvimzetpGTHq+4NjLCr2pUkRQ3S++eGBV8uXa7EEqs1
-	 ZUjjKoCbbNGFvpDS0bc6CoUdnZsdpDNmDU+dphSuO93+XXkoIDv0YjiiHBndtBvXtT5XT
-	 xUe/bTh4y18onNjihOCqRR6P9dAZDwqSi3RpQdSTN9xzZ+Vttw244/7hmnBdr8RBnfkTg
-	 rJD51oDT0QoXC7oxydrPsoRteJpfVw4otGyqnqGGQ1C5gy3+3d1/qAgU/f3XzGLBSXQ==
+	bh=UqdNdxS/g/GxjUCDYgrM2QjQHbmSqYytfuSCKgKZcso=;
+	b=wr8xuMHEi1e1W/vo3L4Dg4wMFEydYVu1o0MCh48jRWmXnIvURswQZx3tRWjLa9ZS/U2a
+	 1jO4b6ZHeAhKLs/o1uDOz4U3RXLZYysN9SggbzeYKGGqLg2jIxxcS9i19/t8+xIo4VrnW
+	 qRYSwBYemBBf5P8HPLbci9hAVs1RxDBnClIVp13zdopK3+hh35xbiNeH+Z8iAzsncUeze
+	 aOhjwFDyqKjEvEgI7Kaq6A08uSrLa40205Eox6LBCiZ51K4HIQwAVMOMLHexKC2/7FR2Z
+	 JSrNeHx0uUtUgpLeienuRgyDT3767G7LLz+x3Y8c+uI0BCyNfyjf2VmU/rCj0CT4FXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpdaU33J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ELA1SM9B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5888606A86D;
-	Wed,  4 Nov 2026 21:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4FC606A86D;
+	Wed,  4 Nov 2026 21:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpdaU33J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0911F000C1;
-	Wed,  4 Nov 2026 21:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ELA1SM9B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026711F000C1;
+	Wed,  4 Nov 2026 21:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827082;
-	bh=7g4YAWpyFUBWvmxgXOsGYO8rTzGhsTjEStJqFlKRGt0=;
+	s=korg; t=1793827084;
+	bh=UqdNdxS/g/GxjUCDYgrM2QjQHbmSqYytfuSCKgKZcso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpdaU33JrzMGy01fDLDTiyF9wJiflZDNUPKM3BbF0uMuaeVQm8EQ2h+RgV5k7ujKl
-	 FNq7z+OBmPtKjcLLEvGj8iUDhS8+7DOhFoB5994jbfOyb+ZN1byp4D4DzS2UOxoAXk
-	 0NrB7i+Zw/sVEtiw6pr2mz1wMaaKRLt7wpac6aKo=
+	b=ELA1SM9BEmHkfYPUSUNYGeRZuvf6lJcB7b+Pf3gcckkQhpajc7jeNJfz2sf3vmINY
+	 huE2US1fmFDksn9sLA7h3z1ZciH2Bi+uPxG1li5we46tVnKP/WEvq1TW6cC5lYRYoC
+	 jo6sqRwbd7magvCoqjFxr/Fbcuv2jzMcnzzM2Q3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 135/547] ksmbd: validate AppInstanceId takeover target
-Date: Wed,  4 Nov 2026 16:05:19 -0500
-Message-ID: <20261104211042.009522260@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 7.3 178/547] s390/signal: Fix incorrect return address in signal frame
+Date: Wed,  4 Nov 2026 16:06:02 -0500
+Message-ID: <20261104211043.204014388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,450 +66,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit e0386cd6498b9c63f8c6d10b3e08670b92c0f3f1 upstream.
+commit adc9e872f7350e3ac29c1818d8c68b0760b4ba23 upstream.
 
-AppInstanceId lookup currently selects the first open with the matching
-identifier. CREATE for an unrelated share or path can therefore
-force-close another session's open before authorization of the new
-target. Matching only the base path also conflates alternate data streams
-with the unnamed stream.
+exit_to_user_mode_loop() can call arch_do_signal_or_restart() multiple
+times when signals are pending.
 
-MS-SMB2 requires the old open to match the share and path, belong to a
-different ClientGuid, and be closed only when the requester has
-GENERIC_READ access. Search all opens with the ID and match share,
-resolved path, stream, and the current connection's client GUID. Retain a
-share configuration reference in ksmbd_file and reuse its name instead of
-allocating a name for every open. This keeps matching safe during tree
-connection teardown and preserves name-based matching across configuration
-updates.
+If the first call set up a vDSO system call restart by saving the real
+user return address and adjusting psw.addr so it points to the vDSO stub,
+a second call builds the signal frame with the wrong return address.
 
-Refresh the share reference on durable reconnect and restore the old
-reference if reopening fails. Serialize connection and share comparisons
-with durable disconnect/reconnect, and recheck the target before closing
-it. Keep the original ClientGuid for durable replay and lease checks.
+Restore psw.addr from arch_data, and set the return code to -EINTR before
+building the signal frame.
 
-Check AppInstanceVersion before querying access, even when GENERIC_READ
-is absent, and before disconnected delete-on-close cleanup. Rejected
-CREATE must leave other durable opens untouched. Calculate maximal access
-on the matched open's referenced path so a rename cannot substitute another
-file's authorization. Require read access with the effective VFS
-credentials as well as the NT DACL before takeover. Access denial only
-skips takeover and leaves CREATE to its normal access checks. Restore
-filesystem credentials before returning a takeover error.
+This requires restart_block.arch_data to be properly initialized for all
+tasks. Move the initialization in copy_thread() in front of the kernel
+thread check, so that it also covers kernel threads and their children
+(PID 1, usermode helpers). Only PID 0 is left uninitialized, since it
+never returns to user space.
 
-Handle takeover before checking FILE_CREATE collisions, and re-resolve
-the path after closing the old open. This lets delete-on-close remove the
-old file before a new one is created. Include SYNCHRONIZE in the baseline
-maximal-access mask so read-only files report GENERIC_READ correctly.
-
-Fixes: 16c30649709d ("ksmbd: handle durable v2 app instance id")
+Fixes: df29a7440c4b ("s390/signal: switch to using vdso for sigreturn and syscall restart")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c   |  123 ++++++++++++++++++++++++++++++++++++++++------
- fs/smb/server/vfs.c       |    5 +
- fs/smb/server/vfs_cache.c |   77 ++++++++++++++++++++--------
- fs/smb/server/vfs_cache.h |   10 ++-
- 4 files changed, 175 insertions(+), 40 deletions(-)
+ arch/s390/kernel/process.c |   12 ++++++------
+ arch/s390/kernel/signal.c  |    6 +++++-
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4116,18 +4116,76 @@ static int parse_app_instance_version(st
+--- a/arch/s390/kernel/process.c
++++ b/arch/s390/kernel/process.c
+@@ -131,6 +131,12 @@ int copy_thread(struct task_struct *p, c
+ 	p->thread.hardirq_timer = 0;
+ 	p->thread.softirq_timer = 0;
+ 	p->thread.last_break = 1;
++	/*
++	 * s390 stores the svc return address in arch_data when calling
++	 * sigreturn()/restart_syscall() via vdso. 1 means no valid address
++	 * stored.
++	 */
++	p->restart_block.arch_data = 1;
+ 
+ 	frame->sf.back_chain = 0;
+ 	frame->sf.gprs[11 - 6] = (unsigned long)&frame->childregs;
+@@ -168,12 +174,6 @@ int copy_thread(struct task_struct *p, c
+ 		p->thread.acrs[0] = (unsigned int)(tls >> 32);
+ 		p->thread.acrs[1] = (unsigned int)tls;
+ 	}
+-	/*
+-	 * s390 stores the svc return address in arch_data when calling
+-	 * sigreturn()/restart_syscall() via vdso. 1 means no valid address
+-	 * stored.
+-	 */
+-	p->restart_block.arch_data = 1;
  	return 0;
  }
  
--static int smb2_handle_app_instance_id(struct smb2_create_rsp *rsp,
--				       struct durable_info *dh_info)
-+static int smb2_app_instance_stream_matches(struct ksmbd_file *fp,
-+					    char *stream_name, int s_type,
-+					    bool *matches)
- {
-+	char *xattr_stream_name;
-+	size_t xattr_stream_size;
-+	int rc;
-+
-+	if (!stream_name) {
-+		*matches = !ksmbd_stream_fd(fp);
-+		return 0;
-+	}
-+
-+	rc = ksmbd_vfs_xattr_stream_name(stream_name, &xattr_stream_name,
-+					 &xattr_stream_size, s_type);
-+	if (rc)
-+		return rc;
-+
-+	*matches = fp->stream.name && fp->stream.size >= 0 &&
-+		   (size_t)fp->stream.size == xattr_stream_size &&
-+		   !strncasecmp(fp->stream.name, xattr_stream_name,
-+				xattr_stream_size);
-+	kfree(xattr_stream_name);
-+	return 0;
-+}
-+
-+static int smb2_handle_app_instance_id(struct ksmbd_work *work,
-+				       struct smb2_create_rsp *rsp,
-+				       struct durable_info *dh_info,
-+				       const struct path *path,
-+				       char *stream_name, int s_type,
-+				       bool *closed)
-+{
-+	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_file *old_fp;
--	bool reject = false;
-+	const struct path *old_path;
-+	char *app_instance_id;
-+	__le32 maximal_access = FILE_MAXIMAL_ACCESS_LE;
-+	bool reject = false, stream_matches;
-+	int cursor = 0, rc;
- 
-+	*closed = false;
- 	if (!dh_info->app_instance_id)
- 		return 0;
-+	app_instance_id = dh_info->AppInstanceId;
- 
--	old_fp = ksmbd_lookup_fd_app_instance_id(dh_info->AppInstanceId);
--	if (!old_fp)
--		return 0;
-+	while (true) {
-+		old_fp = ksmbd_lookup_fd_app_instance_id_next(app_instance_id,
-+							      &cursor);
-+		if (!old_fp)
-+			return 0;
-+
-+		if (!ksmbd_app_instance_id_matches(work, old_fp) ||
-+		    !path_equal(&old_fp->filp->f_path, path)) {
-+			ksmbd_put_durable_fd(old_fp);
-+			continue;
-+		}
-+
-+		rc = smb2_app_instance_stream_matches(old_fp, stream_name,
-+						      s_type, &stream_matches);
-+		if (rc) {
-+			ksmbd_put_durable_fd(old_fp);
-+			return rc;
-+		}
-+		if (!stream_matches) {
-+			ksmbd_put_durable_fd(old_fp);
-+			continue;
-+		}
-+		break;
-+	}
- 
- 	if (dh_info->app_instance_version_valid) {
- 		if (old_fp->app_instance_version_valid &&
-@@ -4142,13 +4200,34 @@ static int smb2_handle_app_instance_id(s
- 		reject = true;
- 	}
- 
--	ksmbd_put_durable_fd(old_fp);
- 	if (reject) {
-+		ksmbd_put_durable_fd(old_fp);
- 		rsp->hdr.Status = STATUS_FILE_FORCED_CLOSED;
- 		return -EIO;
- 	}
- 
--	return ksmbd_close_fd_app_instance_id(dh_info->AppInstanceId);
-+	/* Authorize the referenced open even if its name changes meanwhile. */
-+	old_path = &old_fp->filp->f_path;
-+	rc = smb_check_perm_dacl(conn, old_path, &maximal_access, 0,
-+				 work->sess->user->uid, false);
-+	if (rc) {
-+		/* Access denial prevents takeover, not the CREATE itself. */
-+		ksmbd_put_durable_fd(old_fp);
-+		return rc == -EACCES ? 0 : rc;
-+	}
-+	if (maximal_access == FILE_MAXIMAL_ACCESS_LE)
-+		ksmbd_vfs_query_maximal_access(mnt_idmap(old_path->mnt),
-+					       old_path->dentry, &maximal_access);
-+	/* Also require read access with the effective VFS credentials. */
-+	if ((le32_to_cpu(maximal_access) & GENERIC_READ_FLAGS) !=
-+	    GENERIC_READ_FLAGS ||
-+	    inode_permission(mnt_idmap(old_path->mnt),
-+			     d_inode(old_path->dentry), MAY_OPEN | MAY_READ)) {
-+		ksmbd_put_durable_fd(old_fp);
-+		return 0;
-+	}
-+
-+	return ksmbd_close_fd_app_instance_id(work, old_fp, closed);
- }
- 
- /**
-@@ -4188,6 +4267,7 @@ int smb2_open(struct ksmbd_work *work)
- 	char *name = NULL;
- 	char *stream_name = NULL;
- 	bool file_present = false, created = false, already_permitted = false;
-+	bool app_instance_id_checked = false, app_instance_closed;
- 	int share_ret, need_truncate = 0;
- 	u64 time, alloc_size = 0;
- 	umode_t posix_mode = 0;
-@@ -4362,13 +4442,6 @@ int smb2_open(struct ksmbd_work *work)
+--- a/arch/s390/kernel/signal.c
++++ b/arch/s390/kernel/signal.c
+@@ -475,7 +475,11 @@ void arch_do_signal_or_restart(struct pt
  		}
- 	}
- 
--	if (dh_info.app_instance_id && !dh_info.reconnected &&
--	    !dh_info.replay) {
--		rc = smb2_handle_app_instance_id(rsp, &dh_info);
--		if (rc)
--			goto err_out2;
--	}
+ 		/* No longer in a system call */
+ 		clear_pt_regs_flag(regs, PIF_SYSCALL);
 -
- 	if (le32_to_cpu(req->ImpersonationLevel) > le32_to_cpu(IL_DELEGATE)) {
- 		pr_err("Invalid impersonationlevel : 0x%x\n",
- 		       le32_to_cpu(req->ImpersonationLevel));
-@@ -4481,9 +4554,29 @@ int smb2_open(struct ksmbd_work *work)
- 		goto err_out2;
- 	}
- 
-+resolve_path:
-+	file_present = false;
-+	maximal_access = 0;
- 	rc = ksmbd_vfs_kern_path(work, name, LOOKUP_NO_SYMLINKS,
- 				 &path, 1);
- 
-+	/* Validate takeover before disconnected delete-on-close cleanup. */
-+	if (!rc && dh_info.app_instance_id && !dh_info.reconnected &&
-+	    !dh_info.replay && !app_instance_id_checked) {
-+		app_instance_id_checked = true;
-+		rc = smb2_handle_app_instance_id(work, rsp, &dh_info, &path,
-+						 stream_name, s_type,
-+						 &app_instance_closed);
-+		if (rc) {
-+			path_put(&path);
-+			goto err_out1;
++		if (!(current->restart_block.arch_data & 1)) {
++			regs->psw.addr = current->restart_block.arch_data;
++			current->restart_block.arch_data = 1;
++			regs->gprs[2] = -EINTR;
 +		}
-+		if (app_instance_closed) {
-+			path_put(&path);
-+			goto resolve_path;
-+		}
-+	}
-+
- 	/*
- 	 * A durable handle opened with delete-on-close is preserved across a
- 	 * disconnect so it can be reclaimed by a durable reconnect.  When a new
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -122,10 +122,11 @@ static int ksmbd_vfs_path_lookup(struct
- void ksmbd_vfs_query_maximal_access(struct mnt_idmap *idmap,
- 				   struct dentry *dentry, __le32 *daccess)
- {
--	*daccess = cpu_to_le32(FILE_READ_ATTRIBUTES | READ_CONTROL);
-+	*daccess = cpu_to_le32(FILE_READ_ATTRIBUTES | READ_CONTROL |
-+			       SYNCHRONIZE);
- 
- 	if (!inode_permission(idmap, d_inode(dentry), MAY_OPEN | MAY_WRITE))
--		*daccess |= cpu_to_le32(WRITE_DAC | WRITE_OWNER | SYNCHRONIZE |
-+		*daccess |= cpu_to_le32(WRITE_DAC | WRITE_OWNER |
- 				FILE_WRITE_DATA | FILE_APPEND_DATA |
- 				FILE_WRITE_EA | FILE_WRITE_ATTRIBUTES |
- 				FILE_DELETE_CHILD);
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -711,6 +711,7 @@ static void __ksmbd_close_fd(struct ksmb
- 
- 	if (ksmbd_stream_fd(fp))
- 		kfree(fp->stream.name);
-+	ksmbd_share_config_put(fp->share_conf);
- 	kfree(fp->owner.name);
- 
- 	kmem_cache_free(filp_cache, fp);
-@@ -1009,37 +1010,54 @@ bool ksmbd_has_other_active_fd(struct ks
- 	return ret;
- }
- 
--struct ksmbd_file *ksmbd_lookup_fd_app_instance_id(char *app_instance_id)
-+bool ksmbd_app_instance_id_matches(struct ksmbd_work *work,
-+				   struct ksmbd_file *fp)
- {
--	struct ksmbd_file *fp = NULL;
--	unsigned int id;
-+	bool matches;
-+
-+	/* Keep the current connection and share alive across the comparison. */
-+	spin_lock(&fp->f_lock);
-+	matches = READ_ONCE(fp->f_state) == FP_INITED &&
-+		  fp->conn && fp->share_conf &&
-+		  !strcmp(fp->share_conf->name, work->tcon->share_conf->name) &&
-+		  memcmp(fp->conn->ClientGUID, work->conn->ClientGUID,
-+			 SMB2_CLIENT_GUID_SIZE);
-+	spin_unlock(&fp->f_lock);
-+
-+	return matches;
-+}
-+
-+struct ksmbd_file *
-+ksmbd_lookup_fd_app_instance_id_next(char *app_instance_id, int *cursor)
-+{
-+	struct ksmbd_file *fp, *found = NULL;
-+	int id = *cursor;
- 
- 	read_lock(&global_ft.lock);
--	idr_for_each_entry(global_ft.idr, fp, id) {
--		if (!fp->has_app_instance_id)
--			continue;
--		if (!memcmp(fp->app_instance_id, app_instance_id,
-+	while ((fp = idr_get_next(global_ft.idr, &id))) {
-+		*cursor = id + 1;
-+		if (fp->has_app_instance_id &&
-+		    !memcmp(fp->app_instance_id, app_instance_id,
- 			    SMB2_CREATE_GUID_SIZE)) {
--			fp = ksmbd_fp_get(fp);
--			break;
-+			found = ksmbd_fp_get(fp);
-+			if (found)
-+				break;
- 		}
-+		id++;
- 	}
- 	read_unlock(&global_ft.lock);
- 
--	return fp;
-+	return found;
- }
- 
--int ksmbd_close_fd_app_instance_id(char *app_instance_id)
-+int ksmbd_close_fd_app_instance_id(struct ksmbd_work *work,
-+				 struct ksmbd_file *fp, bool *closed)
- {
- 	struct ksmbd_file_table *ft;
--	struct ksmbd_file *fp;
- 	struct oplock_info *opinfo;
- 	int n_to_drop = 0;
- 
--	fp = ksmbd_lookup_fd_app_instance_id(app_instance_id);
--	if (!fp)
--		return 0;
--
-+	*closed = false;
- 	opinfo = opinfo_get(fp);
- 	if (!opinfo)
- 		goto out;
-@@ -1052,7 +1070,8 @@ int ksmbd_close_fd_app_instance_id(char
- 
- 	ft = &opinfo->sess->file_table;
- 	write_lock(&ft->lock);
--	if (fp->f_state == FP_INITED && has_file_id(fp->volatile_id)) {
-+	if (fp->f_state == FP_INITED && has_file_id(fp->volatile_id) &&
-+	    ksmbd_app_instance_id_matches(work, fp)) {
- 		idr_remove(ft->idr, fp->volatile_id);
- 		fp->volatile_id = KSMBD_NO_FID;
- 		n_to_drop = ksmbd_mark_fp_closed(fp);
-@@ -1069,6 +1088,7 @@ int ksmbd_close_fd_app_instance_id(char
- 	list_del_init(&fp->node);
- 	up_write(&fp->f_ci->m_lock);
- 
-+	*closed = true;
- 	if (atomic_sub_and_test(n_to_drop, &fp->refcount)) {
- 		if (fp->conn)
- 			atomic_dec(&fp->conn->stats.open_files_count);
-@@ -1281,6 +1301,8 @@ struct ksmbd_file *ksmbd_open_fd(struct
- 	 */
- 	fp->conn		= ksmbd_conn_get(work->conn);
- 	fp->tcon		= work->tcon;
-+	fp->share_conf		= work->tcon->share_conf;
-+	atomic_inc(&fp->share_conf->refcount);
- 	fp->volatile_id		= KSMBD_NO_FID;
- 	fp->persistent_id	= KSMBD_NO_FID;
- 	fp->f_state		= FP_NEW;
-@@ -1303,6 +1325,7 @@ struct ksmbd_file *ksmbd_open_fd(struct
- err_out:
- 	/* fp->conn was set and refcounted before every branch here. */
- 	ksmbd_conn_put(fp->conn);
-+	ksmbd_share_config_put(fp->share_conf);
- 	kmem_cache_free(filp_cache, fp);
- 	return ERR_PTR(ret);
- }
-@@ -1807,9 +1830,11 @@ static bool session_fd_check(struct ksmb
- 		ksmbd_conn_put(lock_conn);
- 	}
- 
-+	spin_lock(&fp->f_lock);
- 	fp->conn = NULL;
- 	fp->tcon = NULL;
- 	fp->volatile_id = KSMBD_NO_FID;
-+	spin_unlock(&fp->f_lock);
- 
- 	if (fp->durable_timeout)
- 		fp->durable_scavenger_timeout =
-@@ -1904,6 +1929,7 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 	struct ksmbd_inode *ci;
- 	struct oplock_info *op;
- 	struct ksmbd_conn *conn = work->conn;
-+	struct ksmbd_share_config *old_share;
- 	struct ksmbd_lock *smb_lock;
- 	unsigned int old_f_state;
- 
-@@ -1928,21 +1954,29 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 	 * partially-initialized fp.  fp owns a strong reference on the new
- 	 * conn (see ksmbd_open_fd()); undo it on __open_id() failure.
- 	 */
-+	spin_lock(&fp->f_lock);
-+	old_f_state = fp->f_state;
-+	fp->f_state = FP_NEW;
-+	old_share = fp->share_conf;
-+	fp->share_conf = work->tcon->share_conf;
-+	atomic_inc(&fp->share_conf->refcount);
- 	fp->conn = ksmbd_conn_get(conn);
- 	fp->tcon = work->tcon;
-+	spin_unlock(&fp->f_lock);
- 	write_unlock(&global_ft.lock);
- 
--	old_f_state = fp->f_state;
--	fp->f_state = FP_NEW;
--
- 	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
- 	if (!has_file_id(fp->volatile_id)) {
- 		write_lock(&global_ft.lock);
-+		spin_lock(&fp->f_lock);
- 		fp->conn = NULL;
- 		fp->tcon = NULL;
-+		fp->share_conf = old_share;
-+		fp->f_state = old_f_state;
-+		spin_unlock(&fp->f_lock);
- 		write_unlock(&global_ft.lock);
- 		ksmbd_conn_put(conn);
--		fp->f_state = old_f_state;
-+		ksmbd_share_config_put(work->tcon->share_conf);
- 		return -EBADF;
- 	}
- 
-@@ -1969,6 +2003,7 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 	kfree(fp->owner.name);
- 	fp->owner.name = NULL;
- 	spin_unlock(&fp->f_lock);
-+	ksmbd_share_config_put(old_share);
- 
- 	return 0;
- }
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -102,6 +102,8 @@ struct ksmbd_file {
- 	struct oplock_info __rcu	*f_opinfo;
- 	struct ksmbd_conn		*conn;
- 	struct ksmbd_tree_connect	*tcon;
-+	/* Own a share reference independently of tcon; rebind under f_lock. */
-+	struct ksmbd_share_config	*share_conf;
- 
- 	atomic_t			refcount;
- 	__le32				daccess;
-@@ -213,8 +215,12 @@ void ksmbd_put_durable_fd(struct ksmbd_f
- int ksmbd_invalidate_durable_fd(unsigned long long id);
- bool ksmbd_has_other_active_fd(struct ksmbd_file *fp);
- bool ksmbd_has_stream_without_delete_share(struct ksmbd_file *fp);
--struct ksmbd_file *ksmbd_lookup_fd_app_instance_id(char *app_instance_id);
--int ksmbd_close_fd_app_instance_id(char *app_instance_id);
-+bool ksmbd_app_instance_id_matches(struct ksmbd_work *work,
-+				   struct ksmbd_file *fp);
-+struct ksmbd_file *
-+ksmbd_lookup_fd_app_instance_id_next(char *app_instance_id, int *cursor);
-+int ksmbd_close_fd_app_instance_id(struct ksmbd_work *work,
-+				 struct ksmbd_file *fp, bool *closed);
- struct ksmbd_file *ksmbd_lookup_fd_cguid(char *cguid);
- struct ksmbd_file *ksmbd_lookup_fd_inode(struct dentry *dentry);
- bool ksmbd_has_other_nonposix_open(struct dentry *dentry);
+ 		rseq_signal_deliver(&ksig, regs);
+ 		handle_signal(&ksig, oldset, regs);
+ 		return;
 
 
