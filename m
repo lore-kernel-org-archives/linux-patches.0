@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831953;
-	b=OO8ulAuu8DJOyUOOx12QtGvPNoD+2kWHhMDw95/rghS5kIio+8t9KT+8hRzvzDqXQpzt
-	 OhUVCoq898pQ2uI2aZNAszVniMhzZZQvjS9I42u3tN+sgG9ZZw1va70ZCaR80/4wYeCZD
-	 7kTVtnuTq/MzoJy8Et/xgedbAY5jbXgvvnN7SU5LPvA5WCA2DYFyV6a1bytCthOD03V2n
-	 pfIvg7VPQH6hv48PfmDtDjkCQGt3PPdkSAaSodPlQJnndiT417GU47lUDsGGUDTcnn8Wl
-	 mY0+w1qmuBR4AYJrdk7J/A2c4kBve1S3WQJmFAC5fJkPhOw0V43RjVKJpXl5MriOx2A==
+	t=1793831955;
+	b=XDpyHDvLGbu8HyPF/7o81bzErajunjSpq8mOI62WwPMCoEW1C48V7+jbUT71LXBEPsux
+	 2TqAIcFV/duq1gRoYBKM26ABw8fSnjmWa2Ck8ShZDxWVLwGdr3G+nyRPXEDLDzHfinERI
+	 U0UnV6MB1irkqEcu0ANLrcNB20Ii+HTJj15VszwovciW+CJsUp+wlFCxivw8lthCvTrK8
+	 p7I8Bs+3uVCqiMZnOBzLaypFT67hpStGhfJDOeN4/+3TO8/GwUt6UP2j0hKX5/umPOjWL
+	 rG0VgONbzRBmQYTiJsdnvbuKllabk2ecVhACs8b4CvyocRV6OKkDZsg9Kcmzg0Rk70g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831953;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831955;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=26v9iSkZGOfuWbkYVb0zVmZl61VGyt0wd3I9/D9M5zA=;
-	b=TFb06AKMS49r3PPt+WslqEdWrzMbUxZJG1x4q1ywz3Rsa62HP3cXV9nLMIPRRaqGdfJQ
-	 f2bAzjcSF1X8dpogLdYPu7Qy2Q9dQ/8ge1BMWot8TEOGy6yyutIMKrWyAKOih8rChrB0O
-	 YyyDv4m1VmqAnrDpgVwIV1bF/npTcRSkIS25c8qSKc+SsA0vmQAh7re5iMndterpkpPna
-	 IUqPCJ/pcF32Bm19/h85PKjhnELRsvYWnROooezSEz/G1QpWtb3sSOqkVT3K28dolnErr
-	 OHVwYuHAWcCQAlHUOyw4a7IyrfBbi/xdi6J7uZlgzzD1G04AQ1Z4SI0OiVYz0aMgvtw==
+	bh=OJ9nbU9mKCkfb0N0FFvJ1wX8D/7MVn2fPQzrkYAVPjc=;
+	b=u99exlJOFwOgNxVT2tCJqo8qAoe0ie6rZCY34q1GKa5rEf52faeminzK+v4lt5TeQdNZ
+	 rp4+jqkVD6TEoHsNoQ/iDLfk5fNPhByJmIHumcOcVgBxFa/R+xw1DCPhmk3KeRsJToyW/
+	 AWgQEd5Utx1AJuGLz+m7plgw3EznS5ehPjUwglD1jcFkWV4bG2NrqInL7EVbKmQx2g4IC
+	 TZlYMRDELYuLpEe9ey6r4HzoDW5GOtjDUGJNWp8Kc1P0CYBfaPelp6I1i9z050pV/Spfg
+	 kjRlAf0tvjID2ff6XXPzvVNgn1UEBUfUbxr5kUwW8WB03bJ0b9SqPLUxscUvwM3n6rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXHdh66x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzqA0A6G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7053E606A332;
-	Wed,  4 Nov 2026 22:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CBC606A326;
+	Wed,  4 Nov 2026 22:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXHdh66x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090C41F0093A;
-	Wed,  4 Nov 2026 22:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzqA0A6G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A8F1F00919;
+	Wed,  4 Nov 2026 22:39:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831953;
-	bh=26v9iSkZGOfuWbkYVb0zVmZl61VGyt0wd3I9/D9M5zA=;
+	s=korg; t=1793831954;
+	bh=OJ9nbU9mKCkfb0N0FFvJ1wX8D/7MVn2fPQzrkYAVPjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXHdh66xbKCam/L3lXDHWKErPEQWrgDaOy1GBrRLOOTjm/AxpxKswUFoy++Np0zrI
-	 1rP11ezpe39ZsRQFXUSyDta8YIVZu67SxLasG/4DRJ91PSEfzx99MryijPI6oVVGzz
-	 Vl3IrkaqhOiP62d4G6OtxXwWOkACu3KjWz+jeua4=
+	b=vzqA0A6G6TmTBIEJCzEq77WQ6HpIlVYqEYO2Yq0ifOt9djvhveuWAYQ9xX7+JYTRi
+	 msd4KPybfKhKtnHUPqQ7wBn448IBoksyxc3bk2KorND9WRxsKBRgrK864JyFYntIqG
+	 aPj4DuVLaSXkvlBVn3dLCxmgE6s4uPzfyOo4o6P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
+	"Zachariah Mithani (AploSec)" <zachariah@aplosai.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0987/1005] ksmbd: fix session reference leak on compounded SESSION_SETUP
-Date: Wed,  4 Nov 2026 16:12:00 -0500
-Message-ID: <20261104211110.685582284@linuxfoundation.org>
+Subject: [PATCH 6.18 0988/1005] ksmbd: prevent share root removal through empty paths
+Date: Wed,  4 Nov 2026 16:12:01 -0500
+Message-ID: <20261104211110.713843642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,76 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 03bd8f5279e490e15e0c0f0fa388ffbd2fbacd65 ]
+[ Upstream commit 9fd1fcbbf84986a7bcf601a2b90540899069d263 ]
 
-A compound request can place SESSION_SETUP after another command. That
-earlier command leaves a reference to its session in work->sess.
-smb2_sess_setup() then overwrites work->sess with the session it looks up
-or creates, and the dispatcher later puts work->sess only once. The
-inherited reference is never dropped. That leaks the session, together
-with its setup connection and socket, and every repeat of the compound
-leaks another.
+A FileLinkInformation request can supply "/" as the new link name.
+smb2_get_name() strips the trailing slash and passes an empty string to
+ksmbd_vfs_kern_path_start_removing().
 
-  unreferenced object (size 512):
-    __kmalloc_cache_noprof+0x32c/0x3a0
-    ksmbd_smb2_session_create+0xf6/0x9c0 [ksmbd]
-    smb2_sess_setup+0xda4/0x6280 [ksmbd]
-    handle_ksmbd_work+0x88c/0x1cb0 [ksmbd]
+ksmbd_vfs_path_lookup() resolves an empty pathname as the configured share
+path, without LOOKUP_BENEATH. With ReplaceIfExists set, smb2_create_link()
+can therefore remove the share root from its parent before link creation
+fails. An authenticated client with a writable share and DELETE access to
+a file can trigger this if the share root is empty and the mapped user
+has write and search permission on its parent directory.
 
-Save the inherited session on entry. After the request has been
-processed, release it once, but only when smb2_sess_setup() has replaced
-work->sess with its own session or cleared it. Do this after
-ksmbd_conn_unlock() so the put does not run under srv_mutex. An error path
-may instead leave the inherited session in work->sess. Keep it there, so
-the dispatcher still puts it and the error response is still signed or
-encrypted with it as before.
+Return -EINVAL for empty pathnames when for_remove is set, before
+resolving the share path or acquiring removal resources. Ordinary lookups
+continue to accept empty pathnames for opening the share root.
 
-Fixes: 7aa8804c0b67 ("ksmbd: fix user-after-free from session log off")
+Fixes: 74d7970febf7 ("ksmbd: fix racy issue from using ->d_parent and ->d_name")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
+Reported-by: Zachariah Mithani (AploSec) <zachariah@aplosai.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Omitted the installed = true assignment for the absent rejected-binding signature-check block. ]
+[ sashal: Replaced for_remove with the existing do_lock parameter. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/server/vfs.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1698,6 +1698,8 @@ int smb2_sess_setup(struct ksmbd_work *w
- 	struct smb2_sess_setup_req *req;
- 	struct smb2_sess_setup_rsp *rsp;
- 	struct ksmbd_session *sess;
-+	struct ksmbd_session *prev_sess = work->sess;
-+	bool installed = false;
- 	struct negotiate_message *negblob;
- 	unsigned int negblob_len, negblob_off;
- 	int rc = 0;
-@@ -1835,6 +1837,7 @@ int smb2_sess_setup(struct ksmbd_work *w
- 		conn->binding = false;
- 	}
- 	work->sess = sess;
-+	installed = true;
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -78,6 +78,10 @@ static int ksmbd_vfs_path_lookup(struct
+ 	struct dentry *d;
  
- 	negblob_off = le16_to_cpu(req->SecurityBufferOffset);
- 	negblob_len = le16_to_cpu(req->SecurityBufferLength);
-@@ -1988,6 +1991,14 @@ out_err:
- 	}
- 
- 	ksmbd_conn_unlock(conn);
+ 	if (pathname[0] == '\0') {
++		/* The share root must never be removed. */
++		if (do_lock)
++			return -EINVAL;
 +
-+	/*
-+	 * Later in a compound, work->sess holds the reference that an
-+	 * earlier command took. Drop it once this request has installed
-+	 * its own session there or cleared it.
-+	 */
-+	if (prev_sess && (installed || !work->sess))
-+		ksmbd_user_session_put(prev_sess);
- 	return rc;
- }
- 
+ 		pathname = share_conf->path;
+ 		root_share_path = NULL;
+ 	} else {
 
 
