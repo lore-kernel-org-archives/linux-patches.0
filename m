@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829345;
-	b=lfLo2hsGZT00wnFihrmtKDpCzpTdI7lfRkDwBKOXs4KMXqMTPFB2vl3mJXpJOQ2gaESo
-	 Zp7GJ3Y0M6hptwSLmQROKIT0byVmQjwJfge05bznCGWfhx0fl3TPYnO4Ok1ly/h5N4E5a
-	 f28SBF2TgBMOVgwRcv7dz0SuC/cHtrfuyOkR/YU0M0VgLMYbMvRnrgmzackdQID/Mmz3r
-	 XpqmuB5rqlFH9TFu17QeXMmWowP8Z/InpJtQS4ddn4r2bFr33Lf85DxF3SAUpQvKX4XFo
-	 /Tr3TE5RPWZKkYCie0elTGfWz0jbPy3rNrB+Xdw20bP8cjKB5qvICQEQWx87wh21IPg==
+	t=1793829347;
+	b=1pON69JjAU+RfkPq+5g/yeSlXQwSq97K8BQvHBB6IrekCDDGktu9iKiDraJa4q2cr7Id
+	 Cc32P5LRCsYBR0KSR3ir65VvDDetHr3Z37AJ++XsHE+1bsuBLDs7w/kjlLaak6Ur+IrKh
+	 pZEsG0cjjoS6a1r2j3SDndiy9o0q2UUQJ9vGDzPuCTbJUuCNlLOGkX1E7haXm7vJ58KCh
+	 TaaF/Zswwt7M9IS9TNhjtewAEytHlwDr9xEwe4N7mYMxKM1hHkuj2EK1EzVSF+s3FT82t
+	 GeAMr1WxApxR2BBIGpx64EARF3EMfNUfbx0T9ja2kTZ1DEzlQz+RVuHmaAyy9zhK5nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n02kr0RimIzjmb+Qu+5tpqEizuqQ8vu2TL0HtGPBL6Y=;
-	b=AnoZcu9uLOxSsMviva9c84HG/0C7f0kqfphmOBHP+bAjtveD1kddW81EPCexCJqeNDAa
-	 8vgulkRxRaqkqCcUb1XfV9E7cwLlTlkR1OLp9rU1DiDuAORO/loke6hHzGmksOweVIbQQ
-	 qDnEgNR9+z23+kV/dDMV2SMnhRgb31blpFlE4Ln2QvF9uRW85s54ehghOnoQpOaxBc5xa
-	 dlckSqMTGjNjLsGb2ZWQAdkp69Uje1Q585KVfDfbF1t/ku/RwlGxVBYvl/ytOOM3nBqkm
-	 ap8z8bjR4n3FuLtr8JJe77OE+dBMtdZsXbl9iUvauUAyPrFr2/jKsVba2DKbDjVfyUA==
+	bh=oAradKJIXKfHmIYjSOuF1Yyp/juTUA8SRpRCAdWmgqk=;
+	b=fQrFpqjxl4gWu8QQPGLUpw4OP5eMNRpVii4vlnCsC7HYMECLLzOdAZ9Gunr859PTnC9h
+	 fKXjFjY/X6XpgLK4MWhGToTbYozGE8m6rT5JRPer6938+a9xZBVwyzmkBGLTZWhQQVdoK
+	 Uy+YrCIuLhwSRPYlSESEKu+lJJ7uYvCx631ydV20gJM7rTikIoc0PajTYUkskEpzUn96O
+	 tZ6zIRRV/ktMa1xtXKkMgAqph667DEIZy4G2+KlG42VTNkt7UUr1ipqFSa8OFf6F7NU55
+	 Ef84P0Ie7QJHLCxOD1YId1PXJr06vDoAoDBzG6Az/Ox+gzJWjmGXSL6sZEPx0h5PVBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RLaUNyUJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XNxyZ6/d";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4202160A5BDE;
-	Wed,  4 Nov 2026 21:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE50960A6F43;
+	Wed,  4 Nov 2026 21:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RLaUNyUJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AFB1F00919;
-	Wed,  4 Nov 2026 21:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XNxyZ6/d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512861F00A15;
+	Wed,  4 Nov 2026 21:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829345;
-	bh=n02kr0RimIzjmb+Qu+5tpqEizuqQ8vu2TL0HtGPBL6Y=;
+	s=korg; t=1793829346;
+	bh=oAradKJIXKfHmIYjSOuF1Yyp/juTUA8SRpRCAdWmgqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RLaUNyUJCl08RK3Xb3YwwNTV0EYPDbrM+/9pd9OSh2xcCeAX3qB1ljVQoB+tGV/JU
-	 qqYVYhvKcXwidwhGG5LJ6zMyL/bgXDHpxH53qHgEaKwOsDtHCZJSpf+wl8K3/WdCNW
-	 kRNZaC41s24EnObbjZbXKMFSGjldw2QsguSzrFYg=
+	b=XNxyZ6/dusppYA7eRxACG4eebCOyRZehta7S5zlkgVUhpJ+IFpTxVJ92ZcW7gvHcR
+	 H/wmxaVD4HgRahH1SoxTPecDrsllyTsi3T2wB3lRFSD0YnLuAfTTaBP66M4OD09XVa
+	 rbuE8NkUPBXNTMC76yESmIbMw2vNUVBOi6ZV9YOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiawen Liu <1298662399@qq.com>,
+	William Zhang <william.zhang@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0068/1005] drm/amdgpu: Guard reads in pcie state readout
-Date: Wed,  4 Nov 2026 15:56:41 -0500
-Message-ID: <20261104211045.519062681@linuxfoundation.org>
+Subject: [PATCH 6.18 0051/1005] spi: bcm63xx-hsspi: return error from failed controller suspend
+Date: Wed,  4 Nov 2026 15:56:24 -0500
+Message-ID: <20261104211045.021131991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,108 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit 230753e46a4a9d04dad6a9b5dbaeb7fd52add7d0 ]
+[ Upstream commit 3b5414d76a0381db77b9694537254af7acfa187a ]
 
-Internal US/DS switch may not be exposed in passthrough. Guard the
-upstream port reads to avoid a NULL dereference.
+spi_controller_suspend() can fail if the SPI core cannot stop the
+controller. bcm63xx_hsspi_suspend() ignored that error, disabled the
+PLL and core clocks, and returned success.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Return the suspend error before disabling the clocks.
+
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Acked-by: William Zhang <william.zhang@broadcom.com>
+Link: https://patch.msgid.link/tencent_B5A06807924A77C8690730EBF7A052AABE05@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c | 59 +++++++++++++++-------
- 1 file changed, 42 insertions(+), 17 deletions(-)
+ drivers/spi/spi-bcm63xx-hsspi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-index 15e70415c35b4..b73e114206cc1 100644
---- a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-+++ b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-@@ -613,6 +613,29 @@ static struct aqua_reg_list pcie_reg_addrs[] = {
- 	{ smreg_0x1A380088, 6, DW_ADDR_INCR },
- };
- 
-+/*
-+ * Return the GPU's internal US switch port, or NULL if it is not visible
-+ * (e.g. passthrough) or the EP is parented under an unrelated bridge.
-+ */
-+static struct pci_dev *aqua_vanjaram_get_us_pdev(struct amdgpu_device *adev)
-+{
-+	struct pci_dev *ds_pdev, *us_pdev;
-+
-+	ds_pdev = pci_upstream_bridge(adev->pdev);
-+	if (!ds_pdev || ds_pdev->vendor != PCI_VENDOR_ID_ATI ||
-+	    pci_pcie_type(ds_pdev) != PCI_EXP_TYPE_DOWNSTREAM)
-+		return NULL;
-+
-+	us_pdev = pci_upstream_bridge(ds_pdev);
-+	if (!us_pdev ||
-+	    (us_pdev->vendor != PCI_VENDOR_ID_ATI &&
-+	     us_pdev->vendor != PCI_VENDOR_ID_AMD) ||
-+	    pci_pcie_type(us_pdev) != PCI_EXP_TYPE_UPSTREAM)
-+		return NULL;
-+
-+	return us_pdev;
-+}
-+
- static ssize_t aqua_vanjaram_read_pcie_state(struct amdgpu_device *adev,
- 					     void *buf, size_t max_size)
+diff --git a/drivers/spi/spi-bcm63xx-hsspi.c b/drivers/spi/spi-bcm63xx-hsspi.c
+index b8bf8b5be2cf7..719f0dfd96c96 100644
+--- a/drivers/spi/spi-bcm63xx-hsspi.c
++++ b/drivers/spi/spi-bcm63xx-hsspi.c
+@@ -895,8 +895,12 @@ static int bcm63xx_hsspi_suspend(struct device *dev)
  {
-@@ -620,7 +643,7 @@ static ssize_t aqua_vanjaram_read_pcie_state(struct amdgpu_device *adev,
- 	uint32_t start_addr, incrx, num_regs, szbuf;
- 	struct amdgpu_regs_pcie_v1_0 *pcie_regs;
- 	struct amdgpu_smn_reg_data *reg_data;
--	struct pci_dev *us_pdev, *ds_pdev;
-+	struct pci_dev *us_pdev;
- 	int aer_cap, r, n;
- 
- 	if (!buf || !max_size)
-@@ -652,25 +675,27 @@ static ssize_t aqua_vanjaram_read_pcie_state(struct amdgpu_device *adev,
- 		}
- 	}
- 
--	ds_pdev = pci_upstream_bridge(adev->pdev);
--	us_pdev = pci_upstream_bridge(ds_pdev);
-+	us_pdev = aqua_vanjaram_get_us_pdev(adev);
-+	if (us_pdev) {
-+		pcie_capability_read_word(us_pdev, PCI_EXP_DEVSTA,
-+					  &pcie_regs->device_status);
-+		pcie_capability_read_word(us_pdev, PCI_EXP_LNKSTA,
-+					  &pcie_regs->link_status);
+ 	struct spi_controller *host = dev_get_drvdata(dev);
+ 	struct bcm63xx_hsspi *bs = spi_controller_get_devdata(host);
++	int ret;
 +
-+		aer_cap = pci_find_ext_capability(us_pdev, PCI_EXT_CAP_ID_ERR);
-+		if (aer_cap) {
-+			pci_read_config_dword(us_pdev,
-+					      aer_cap + PCI_ERR_COR_STATUS,
-+					      &pcie_regs->pcie_corr_err_status);
-+			pci_read_config_dword(us_pdev,
-+					      aer_cap + PCI_ERR_UNCOR_STATUS,
-+					      &pcie_regs->pcie_uncorr_err_status);
-+		}
++	ret = spi_controller_suspend(host);
++	if (ret)
++		return ret;
  
--	pcie_capability_read_word(us_pdev, PCI_EXP_DEVSTA,
--				  &pcie_regs->device_status);
--	pcie_capability_read_word(us_pdev, PCI_EXP_LNKSTA,
--				  &pcie_regs->link_status);
--
--	aer_cap = pci_find_ext_capability(us_pdev, PCI_EXT_CAP_ID_ERR);
--	if (aer_cap) {
--		pci_read_config_dword(us_pdev, aer_cap + PCI_ERR_COR_STATUS,
--				      &pcie_regs->pcie_corr_err_status);
--		pci_read_config_dword(us_pdev, aer_cap + PCI_ERR_UNCOR_STATUS,
--				      &pcie_regs->pcie_uncorr_err_status);
-+		pci_read_config_dword(us_pdev, PCI_PRIMARY_BUS,
-+				      &pcie_regs->sub_bus_number_latency);
- 	}
+-	spi_controller_suspend(host);
+ 	clk_disable_unprepare(bs->pll_clk);
+ 	clk_disable_unprepare(bs->clk);
  
--	pci_read_config_dword(us_pdev, PCI_PRIMARY_BUS,
--			      &pcie_regs->sub_bus_number_latency);
--
- 	pcie_reg_state->common_header.structure_size = szbuf;
- 	pcie_reg_state->common_header.format_revision = 1;
- 	pcie_reg_state->common_header.content_revision = 0;
 -- 
 2.53.0
 
