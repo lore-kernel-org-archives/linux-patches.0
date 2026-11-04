@@ -1,62 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826799;
-	b=Zs1RJg9a+5+aIs8YAXLCbVXxYh16f+d9q3Qg3jGvHCebl+MrXc3U+HshabU1ZCYnNgyS
-	 YutRU0tcv5CEJFhG5YCt/0oly7xXrbhdWwYcLiReqktpbFcuDjqFPtgYzBWh172WN9e2V
-	 Wo2C0Fy+/Hsiq633qAt4pJrZ6WAcfbAJMIppfkn5IfWlF4NM0p1T9bxfarUMdFK68KjzQ
-	 WsnnU8q2tiCIGsGAG9JDCKjm9Giw6AHpvQps23Mu63WOXzUEG1dmAjMM1cVHFnufjmhL3
-	 FkaYBxPr/zohhpnzgkdQ0iww+0HFmVWhZgoo0ChnviK8N2beuAT9NZB1QE+0pPIkb2Q==
+	t=1793826800;
+	b=CcCHvhqGD8i5oi5Dy7i8g3fsGghaZUc3hrv2jtVeF3J+VSzQzX7kwEAjoBlb3152j+g2
+	 Gn0RsvfA524aJPgabweIdKrqknlB3t1H6GqcqBd3Eoo8JuZ5R1crRZLonMjhGK3h+APyR
+	 54sY47SE0y5p7EkPZumrDOBy5Rs9vRVNWvE6DNQyf57i5tkcyAC76HP/J5KHF5/zvp+Xa
+	 JSE2ZE+3yqz8bvnO4CBT8cITPDQSclsHVmBEVdqXkKu4GBRuEp76AvWN2QByZMMiAL+/3
+	 njkSz6NEqWwPQV3V0nuptcTjH+6IQsLo16Q50nsucpGRbbOAVczkEkj+eLCVmqXEzTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826799;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826800;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vva0MLppiMDR5XaVAhh6s55GcsbDa9naXFFw0GSnoAU=;
-	b=snbnNDG2cMnVJtxdDovCopZuogy1jFe0FkwYj1vm1Hf4d/LyPAF31NXNShIynnoX7ecy
-	 OmWjFP0hJXYdkicebsVE4Snn8VWZYi34fKzhobUWBIsHTl5VWYD84CKjEj07Rb6jAjBC5
-	 HshON0WQBObonfN8VfuqZ8w7HoWtmQ6IcZiNp3BOy7h1vvm70YERdUml/aoyY3UQNUPMU
-	 vFfTr8t8xy2q8IkGdk9gP4UN6lsbHfsCNFFUhhbN+KA6uCG65blJEKGUJ82LSd0PPg1lX
-	 MTr8pGt3TvTPgkwjK7ZEAKfq8+e3VYqIh8r0msok2MHbTrXAkyKK7fY7ow5UMesCUrA==
+	bh=awC3hgdOAnA/1+QXcNNw9QWELoY/t9zewT6V+CMz/uI=;
+	b=C8aYJtqeAQE65vnRVXVNX6Qpkopr+tCAEYj0RCZH9ZrtTY1XbGBBMx7HhJVCNnutstsT
+	 Gf6kLKxUIJDRE7jH/CkWYCoGeeqjpNnXe0lQXuoWoFFwdPlOTK30mnrmnK7a3IgnHiUZe
+	 do5czvUu629VicvljDe+FnYUQOTI3lK8HdTklDqUiUWt/JGgwPlyitpIFtF03TN7US0u0
+	 SB90zqRXi1ABn2BMjrGYIr7mmzJYGPoTr5s2/qhvw/65ZSkTg/FTHuCjENNclFKtIuzsH
+	 4fNarCqrCuEVJIMflqW7F6NMSsx4I8bPzxzjIeGJW4A0CJqExUHBAyDapatpi1RM63w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3sJYdjb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t/RXutzm";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1511606D810;
-	Wed,  4 Nov 2026 21:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3DD606D810;
+	Wed,  4 Nov 2026 21:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3sJYdjb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639841F00A02;
-	Wed,  4 Nov 2026 21:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t/RXutzm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DAD1F0093A;
+	Wed,  4 Nov 2026 21:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826798;
-	bh=vva0MLppiMDR5XaVAhh6s55GcsbDa9naXFFw0GSnoAU=;
+	s=korg; t=1793826800;
+	bh=awC3hgdOAnA/1+QXcNNw9QWELoY/t9zewT6V+CMz/uI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B3sJYdjbOGRI9BzOfrAUocLClm8Ua90FK1feaTFb77Zp9+rgr3L0jdr4LQ13z9Wpb
-	 0VbaYdK5SrM8UgBiuV5HcEmDRyptRdHhNCalz0Mda57Skw2FOqggtVyMTyfq5Hd8A6
-	 ezte6F3FhigYehVGPU3EN0EkySVT/y/Ifg4NbDlM=
+	b=t/RXutzmgpJOqUHRbFvxmJyAAFZFtuYh65PpKml7C59/WNLv7Jh07YGCwjhbf+tXL
+	 JMe0tRAVPEE8BrMi9fM4eLtj2YMcWD52yir5uktzAuIAZeSlP7YiorDheh31a3Xc00
+	 /C7vPQ5WVJOjL2HHrdn47BQRXnknwA2Yn47Slhhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Tonghao Zhang <tonghao@bamaicloud.com>,
-	Struan Bartlett <struan.bartlett@newsnow.co.uk>
-Subject: [PATCH 6.18 0013/1005] net: bonding: move bond_should_notify_peers, e.g. into rtnl lock block
-Date: Wed,  4 Nov 2026 15:55:46 -0500
-Message-ID: <20261104211043.911728049@linuxfoundation.org>
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 0014/1005] ALSA: line6: Clear prev_fbuf on capture buffer release
+Date: Wed,  4 Nov 2026 15:55:47 -0500
+Message-ID: <20261104211043.941133489@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -78,122 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tonghao Zhang <tonghao@bamaicloud.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit 70fc6649b36cf22167bbd7e2a6cc0960b746316e upstream.
+commit aa118c8f61d59387961d58ffae831c5259a9f222 upstream.
 
-This patch tries to avoid the possible peer notify event loss.
+A KASAN slab-use-after-free read was reported in submit_audio_out_urb()
+when generating an impulse test signal:
 
-In bond_mii_monitor()/bond_activebackup_arp_mon(), when we hold the rtnl lock:
-- check send_peer_notif again to avoid unconditionally reducing this value.
-- send_peer_notif may have been reset. Therefore, it is necessary to check
-  whether to send peer notify via bond_should_notify_peers() to avoid the
-  loss of notification events.
+  BUG: KASAN: slab-use-after-free in create_impulse_test_signal sound/usb/line6/playback.c:76 [inline]
+  BUG: KASAN: slab-use-after-free in submit_audio_out_urb+0x1848/0x1b20 sound/usb/line6/playback.c:249
+  Read of size 2 at addr ffff888008d74870 by task syz.2.3214/7785
 
-Cc: Jay Vosburgh <jv@jvosburgh.net>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Hangbin Liu <liuhangbin@gmail.com>
-Cc: Jason Xing <kerneljasonxing@gmail.com>
-Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/78cef328822b94638c97638b89011c507b8bf19e.1768709239.git.tonghao@bamaicloud.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Cc: Struan Bartlett <struan.bartlett@newsnow.co.uk>
+  Allocated by task 11:
+   kmem_cache_alloc_noprof+0x2f0/0x390 mm/slub.c:4144
+   line6_buffer_acquire+0x1a1/0x220 sound/usb/line6/pcm.c:158
+   line6_pcm_acquire+0xb6/0x230 sound/usb/line6/pcm.c:329
+   line6_startup_work+0x3c/0x50 sound/usb/line6/driver.c:728
+
+  Freed by task 7785:
+   kfree+0xf8/0x390 mm/slub.c:6566
+   line6_buffer_release sound/usb/line6/pcm.c:176 [inline]
+   line6_buffer_release+0xa5/0xf0 sound/usb/line6/pcm.c:170
+   __line6_pcm_release sound/usb/line6/pcm.c:305 [inline]
+   line6_pcm_release+0x5a/0x80 sound/usb/line6/pcm.c:313
+   snd_toneport_monitor_put+0x11b/0x190 sound/usb/line6/toneport.c:183
+
+line6pcm->prev_fbuf points into the capture PCM stream buffer
+(line6pcm->in.buffer), which is updated during audio_in_callback() to
+feed rate synchronization, software monitoring, and impulse test signal
+generation on playback side.
+
+When all capture streams are closed, line6_buffer_release() frees
+pstr->buffer with kfree().  However, it does not clear line6pcm->prev_fbuf.
+If playback is subsequently started (e.g. via impulse test signal
+volume control snd_line6_impulse_volume_put()), submit_audio_out_urb()
+dereferences the stale pointer line6pcm->prev_fbuf under in.lock,
+resulting in a slab-use-after-free read.
+
+Clear prev_fbuf and prev_fsize in line6_buffer_release() when releasing
+the capture stream buffer under in.lock, ensuring that no stale buffer
+pointer can be accessed by submit_audio_out_urb().
+
+Fixes: 63e20df1e5b2 ("ALSA: line6: Reorganize PCM stream handling")
+Cc: stable@vger.kernel.org
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261013063554.571-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |   30 +++++++++---------------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
+ sound/usb/line6/pcm.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2887,11 +2887,10 @@ static void bond_mii_monitor(struct work
- {
- 	struct bonding *bond = container_of(work, struct bonding,
- 					    mii_work.work);
--	bool should_notify_peers;
--	bool commit;
--	unsigned long delay;
--	struct slave *slave;
- 	struct list_head *iter;
-+	struct slave *slave;
-+	unsigned long delay;
-+	bool commit;
- 
- 	delay = msecs_to_jiffies(bond->params.miimon);
- 
-@@ -2900,7 +2899,6 @@ static void bond_mii_monitor(struct work
- 
- 	rcu_read_lock();
- 
--	should_notify_peers = bond_should_notify_peers(bond);
- 	commit = !!bond_miimon_inspect(bond);
- 
- 	rcu_read_unlock();
-@@ -2920,12 +2918,8 @@ static void bond_mii_monitor(struct work
- 			bond_miimon_commit(bond);
- 		}
- 
--		if (bond->send_peer_notif) {
--			bond->send_peer_notif--;
--			if (should_notify_peers)
--				call_netdevice_notifiers(NETDEV_NOTIFY_PEERS,
--							 bond->dev);
--		}
-+		if (bond->send_peer_notif)
-+			bond_peer_notify_may_events(bond, true);
- 
- 		rtnl_unlock();	/* might sleep, hold no other locks */
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -173,6 +173,14 @@ static void line6_buffer_release(struct
+ 	clear_bit(type, &pstr->opened);
+ 	if (!pstr->opened) {
+ 		line6_wait_clear_audio_urbs(line6pcm, pstr);
++		if (pstr == &line6pcm->in) {
++			/* prev_fbuf points into the capture buffer we are about
++			 * to free; drop it while no capture URB is in flight.
++			 */
++			guard(spinlock_irqsave)(&line6pcm->in.lock);
++			line6pcm->prev_fbuf = NULL;
++			line6pcm->prev_fsize = 0;
++		}
+ 		kfree(pstr->buffer);
+ 		pstr->buffer = NULL;
  	}
-@@ -3839,7 +3833,6 @@ check_state:
- 
- static void bond_activebackup_arp_mon(struct bonding *bond)
- {
--	bool should_notify_peers = false;
- 	bool should_notify_rtnl = false;
- 	int delta_in_ticks;
- 
-@@ -3850,15 +3843,12 @@ static void bond_activebackup_arp_mon(st
- 
- 	rcu_read_lock();
- 
--	should_notify_peers = bond_should_notify_peers(bond);
--
- 	if (bond_ab_arp_inspect(bond)) {
- 		rcu_read_unlock();
- 
- 		/* Race avoidance with bond_close flush of workqueue */
- 		if (!rtnl_trylock()) {
- 			delta_in_ticks = 1;
--			should_notify_peers = false;
- 			goto re_arm;
- 		}
- 
-@@ -3875,15 +3865,13 @@ re_arm:
- 	if (bond->params.arp_interval)
- 		queue_delayed_work(bond->wq, &bond->arp_work, delta_in_ticks);
- 
--	if (should_notify_peers || should_notify_rtnl) {
-+	if (bond->send_peer_notif || should_notify_rtnl) {
- 		if (!rtnl_trylock())
- 			return;
- 
--		if (should_notify_peers) {
--			bond->send_peer_notif--;
--			call_netdevice_notifiers(NETDEV_NOTIFY_PEERS,
--						 bond->dev);
--		}
-+		if (bond->send_peer_notif)
-+			bond_peer_notify_may_events(bond, true);
-+
- 		if (should_notify_rtnl) {
- 			bond_slave_state_notify(bond);
- 			bond_slave_link_notify(bond);
 
 
