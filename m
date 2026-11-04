@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829561;
-	b=ypvkmicbDtU2hSMv3WBzw74Ak7S58Phf/tXeoR5Lhbs+KRpK2IVJpvXDoZkTcfCJjo2S
-	 9zr79xwX6p/IBt/zQPSH+7nLIsGvco/2yXwRom6bqRepCsiAShjCs4A4cMUiKLqfjw4sR
-	 QR4sxS5G0LWn15t92nBqW250wL1lFgZlp0ec9xzSZxBhdSRa31lOzqZwjXPzYSRkKkQB7
-	 gW3LPPqGQ9PXkx2OXi6AGZpl0BNkuSRW74iy8V6tSyj2GfzMxgY7nhIXlftkUzM/XBzd1
-	 kvttvlpuPOfvFnZ5xbmj9EzhGj99kjh3uJ8K34XKhc89SvjqwToCzn65I0H0bHQCjwA==
+	t=1793829563;
+	b=BNXkUgW6cTcv7Rs9edfg/mDA+jchP67yDZhJYtJRuzl8Sk7OFIYkoOm68xqHDvrEZN/C
+	 YfOJGcznnQCKEKmECSP2wkTQsO5qgqtneP6q5Oa+tvGFcrvcZT4qHXf9YYYBKrAEuloMc
+	 979KFTTYljPKw6adugGpsPEJ74lqoA/CEqPIIWAzLlsdTi8hK94zAtquzq7XxtN+7O7/2
+	 z2flCJBeI9d/0GRC+vQwXzI5jf3MAhFTHcNare9uIRE2VF2Xt/gzmwENuCeyYFh0Zplne
+	 IGs9OEwCS1sY0ipjEy0r3T5lA8elgoQVvAW8rU5UEhuuoBf9PniqY8VIzFvlxKSKEuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829563;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kcs+TRuODpCFQCAaFMu3a5ZFffycNOJAoQbBSm20LSI=;
-	b=KvFMiQYSMUaE+38+bm1tSChY+M2gaNavFjFqqAuy+Pkm8Xy9drCloyNgoHqnz2v/DFXc
-	 vLLKR8mxEcOuAR/NnihvBZcZJm/gWHc6daA+Bvsrf7kvYCi6Wza4LZeJs/U7SvNbHc1kF
-	 E0wjjXDbiicQosT6E45OuhBhTX8+HMzLXIgcNulBEvXj+5ihCvhDZrLqETJr+cWlNL5RB
-	 +UngMnk/QPtn5Ow2yRSpikVYQjok/GpV07gOMlqt3fw7j4K+sEefPA2+dawrcP9Zxroq/
-	 7yofeDIAr3bbT6Ctq50gb9vd3agcwzE7m6kYPedSpPZ7cEuoE014Mq3UzH0nbe6a6cQ==
+	bh=CmYS/qdqQwyKajKofigjMWYHWiDh0i/LJ/Uxe4vimO0=;
+	b=rGPTfuWola9F/NaUx+SsZjx8RHAZAEHZnk6UZOF2TRvTgD+3mxoeAIUuw4Ln4phSkTqA
+	 Azyx2teBKGRM1Hics6jFKJxosusx+X/7xD0j4FYIXl8jxP4GcS4sVPj/P/JafjcJ7S2pN
+	 53E274SKAh446WtrKkK8vfdzJq9ih0ejAqztOTtxja/+X/ttDX2Z2hrejl/Al5O2rw8dg
+	 ZSY3/44Mvqo9+scxEpGKYXsz+fBSH5NDg9Rdjq7gdx1uaw7zI1MQ6esAii/XjWKprPHDk
+	 aUi5O6RpLXCyhDOQeIzTUfeC7ueZCtPSLaaWkstZ8ZLbC25tkVub1WI8ozrbUe+Ld9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w/7w8yAq";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="c/IwjwIw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE68606A843;
-	Wed,  4 Nov 2026 21:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00719606A33E;
+	Wed,  4 Nov 2026 21:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w/7w8yAq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BE21F0093A;
-	Wed,  4 Nov 2026 21:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c/IwjwIw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742291F0093A;
+	Wed,  4 Nov 2026 21:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829561;
-	bh=Kcs+TRuODpCFQCAaFMu3a5ZFffycNOJAoQbBSm20LSI=;
+	s=korg; t=1793829562;
+	bh=CmYS/qdqQwyKajKofigjMWYHWiDh0i/LJ/Uxe4vimO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w/7w8yAqd0dzZO4Lwsm78RJfQwYkhiV0WgGPFIwZDFt25QJDNpxtDvWkoO8r3l65F
-	 PK9NC2WEADpGG3v4iwUuRQA5aN73MWKgRrvjJGLMpckkRt87ecBZVUy55xTJgRAHVd
-	 D/ZEqdY+NXBeFMNAiOlH7hEA93aYghl3XjZ0EJTw=
+	b=c/IwjwIwK7ADaxrYCigpatE5QkUIJrTvBqi9NOcUdwo6lh1OjP9n6MgoLTxCXyJqB
+	 wWNWL6/g5iMf+ukGFeOkGcHdqtWCZ4J0fd4ngB4BgnXhEr/7I9fOffrA9rbBXiJS8a
+	 UA1Sfx3yKJQzbAkULLkicvYHfybYUhXzAS6kU3k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0203/1005] media: go7007: s2250: propagate control I/O failures
-Date: Wed,  4 Nov 2026 15:58:56 -0500
-Message-ID: <20261104211049.480263506@linuxfoundation.org>
+Subject: [PATCH 6.18 0204/1005] drm/panel: panel-edp: Adjust T8 timing for AUO B116XAK01.6 and B140XTK02.4
+Date: Wed,  4 Nov 2026 15:58:57 -0500
+Message-ID: <20261104211049.512130364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,98 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>
 
-[ Upstream commit 59dc14a6cb5ff1ae5ce2f6ebf51fe0139e1c0623 ]
+[ Upstream commit 0d40cab39158704e372240ed9821a00bfe117125 ]
 
-The brightness and contrast paths use oldvalue after read_reg_fp()
-without checking whether the read succeeded.  A failed read leaves
-oldvalue uninitialized and can write arbitrary reserved register bits.
+Screen garbage or flickering can be observed during mode changes (such
+as VT switches) on systems using the AUO B116XAK01.6 and B140XTK02.4
+panels.
 
-Return read and write errors from every control path so failed hardware
-access cannot be reported as a successful control update.
+This occurs because the backlight is enabled before the video signal
+stabilizes. Waveform measurements show that the panel signal takes
+around 140ms to stabilize after a mode change, meaning the previous 50ms T8
+timing was insufficient.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+To resolve this issue, adjust the eDP panel delay entry from
+delay_200_500_e50 to delay_200_500_e200 (increasing T8 from 50ms to 200ms).
+This matches the updated panel specifications from AUO, which now formally
+define T8 as 200ms to mask any display abnormalities during mode changes.
+
+Signed-off-by: Dio Zhang <dioyc_zhang@compal.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260720025358.2781136-1-dioyc_zhang@compal.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/go7007/s2250-board.c | 54 ++++++++++++++++----------
- 1 file changed, 33 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/go7007/s2250-board.c b/drivers/media/usb/go7007/s2250-board.c
-index a155b987282f8..e536964c14e6a 100644
---- a/drivers/media/usb/go7007/s2250-board.c
-+++ b/drivers/media/usb/go7007/s2250-board.c
-@@ -365,36 +365,48 @@ static int s2250_s_ctrl(struct v4l2_ctrl *ctrl)
- 	struct s2250 *state = container_of(ctrl->handler, struct s2250, hdl);
- 	struct i2c_client *client = v4l2_get_subdevdata(&state->sd);
- 	u16 oldvalue;
-+	int ret;
- 
- 	switch (ctrl->id) {
- 	case V4L2_CID_BRIGHTNESS:
--		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
--			     ctrl->val | (oldvalue & ~0xff));
--		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
--			     ctrl->val | (oldvalue & ~0xff));
--		write_reg_fp(client, 0x140, 0x60);
--		break;
-+		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
-+				   ctrl->val | (oldvalue & ~0xff));
-+		if (ret)
-+			return ret;
-+		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
-+				   ctrl->val | (oldvalue & ~0xff));
-+		if (ret)
-+			return ret;
-+		return write_reg_fp(client, 0x140, 0x60);
- 	case V4L2_CID_CONTRAST:
--		read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_CONTRAST0,
--			     ctrl->val | (oldvalue & ~0x3f));
--		read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
--		write_reg_fp(client, VPX322_ADDR_CONTRAST1,
--			     ctrl->val | (oldvalue & ~0x3f));
--		write_reg_fp(client, 0x140, 0x60);
--		break;
-+		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST0,
-+				   ctrl->val | (oldvalue & ~0x3f));
-+		if (ret)
-+			return ret;
-+		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
-+		if (ret)
-+			return ret;
-+		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST1,
-+				   ctrl->val | (oldvalue & ~0x3f));
-+		if (ret)
-+			return ret;
-+		return write_reg_fp(client, 0x140, 0x60);
- 	case V4L2_CID_SATURATION:
--		write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
--		break;
-+		return write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
- 	case V4L2_CID_HUE:
--		write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
--		break;
-+		return write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
- 	default:
- 		return -EINVAL;
- 	}
--	return 0;
- }
- 
- static int s2250_set_fmt(struct v4l2_subdev *sd,
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 0da04d75e4e96..614c63e95c357 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1901,7 +1901,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x145c, &delay_200_500_e50, "B116XAB01.4"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1999, &delay_200_500_e50, "Unknown"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1e9b, &delay_200_500_e50, "B133UAN02.1"),
+-	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e50, "B116XAK01.6"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e200, "B116XAK01.6"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x203d, &delay_200_500_e50, "B140HTN02.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x208d, &delay_200_500_e50, "B140HTN02.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x235c, &delay_200_500_e50, "B116XTN02.3"),
+@@ -1921,7 +1921,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x635c, &delay_200_500_e50, "B116XAN06.3"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x639c, &delay_200_500_e50, "B140HAK02.7"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x643d, &delay_200_500_e50, "B140HAN06.4"),
+-	EDP_PANEL_ENTRY('A', 'U', 'O', 0x67a8, &delay_200_500_e50, "B140XTK02.4"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x67a8, &delay_200_500_e200, "B140XTK02.4"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x723c, &delay_200_500_e50, "B140XTN07.2"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x73aa, &delay_200_500_e50, "B116XTN02.3"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8594, &delay_200_500_e50, "B133UAN01.0"),
 -- 
 2.53.0
 
