@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828975;
-	b=4xujw90NdmhM16P44VTvAI8dOdYEW8IEnO8f82vLCSNLQXvsOL5gZbInzD8MiwVkQMLC
-	 w58jgALT5yYdbHlrMLIIPZD3bTJBMBBll1awJbtROFbAa7YSXT+4quy7W/QToBh8gndzC
-	 HAzHMPmCqeI8DdUouwSBF6ZNHBWEEEeWDozyYa9Wpq3Dr73YKChrNWfbnDVRsK+1gDdeN
-	 UxkLrHLaF1jg8VMfWHFXP3KKISnt6tW89fHruz+W39Rklv4tN05dIYizXch7kI1bmZ2BE
-	 AoIzHOtgkGxOvQrQAYZYrH5dJ3uGIKTDPrQjYhG3pql3t9I/H9azDVg9FR5L2nO3qHw==
+	t=1793828976;
+	b=yBF5m7tmINNuitDU+T1F5PEa1nmsHK02VkZgwEKdAXqloof3Q6Kykv6uwIv2hVOXCyOd
+	 BFAwINvMQCiQDJx/qt2laq6fYbdVw93FjGYdN+sXW+ujr9Ls42+L8xXu38Y+ned+KrGyp
+	 I16VzArZOT6XidaA9nfELr3zd1mycGzo6K++U+wDMs9DlKyQwewpgrnvYXk534RePqeET
+	 Lt/xTbYgRIfRlUiiu3AKxirU/w/VRk/5xQ8KnavRNi6jLyDogKZUFaGgBmmRHPcMzJip4
+	 kpJSxbSW2/7ldQQfs+JVK44H9yce1Zdls2HExEvp3VA3Foq6ARxyTMTbYvxQOE1lCxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828976;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0BFas0GGsBbMn/iIgA9sP7FoxixCQLW/ilJb7Ys/VrY=;
-	b=oNlH587h2gcJ5JRG9MKxd0IvKXeIW4RIVR8HblTA08YZP8Dsa0TQMwHiKC/GVzN3YmhL
-	 kOrbG9skZNHR89HWmCVbX2EDoQfleLUPPxe7G3l6VxTpRHQZesRXyNGeX2Ae/DXA+NGOg
-	 zMHYp9NiP/6E2FjiZMzrVV6EWciIKk0l14tVi6+ZHj4+w1fgnG2psyVw3qXg5I6iOPIE3
-	 WKjDF1UVll+QJYxXGT3nKURz/FD+BSrT1bE5ScETyfVPEYNG34c1VueIqHdEpCnQDKnoQ
-	 P+AT2LWH1xbDgpO/y/rSIy63R98WX33l40iD+l6Iiy58YJIVxNyWmEwrZcfuaw5wMkA==
+	bh=oQI4erhWL6U5aF1TzEBtJ632LgoI2up2y9VBTKdXFAg=;
+	b=yIy0c5kogpdW741oV+fQL+cW1pcAkSff7N9lJlSaHnq8x+1FSfFRp5Ooj0tl8aUSgcfD
+	 aMCNDjJGQ/yqbyn9QpbN0+DSw5Kin0+VorgH1IcO27oBIzwqM460rpqj27VjjhOQLgld0
+	 kfgo40yjuFi6NG8zwEC2r9p+nOfpu0zaFQlkxjKnyjBmiISWiCtPKYTiQzuXRp3dvyUm/
+	 qFvDcp84sYDTMgxNDWCV55Jaa5L8c2IfkG43/N0ytqYjFPkkOIxYm/cDp9MY0gEE7MDbI
+	 cxbkg8s19nTeBaX+j26tQg1X6ekKC+1DyvcHGu+3vcRaNVyDQQaunGMbeRUwz3k08Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlAAfo9j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cc1/jh+G";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04616072665;
-	Wed,  4 Nov 2026 21:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A686072665;
+	Wed,  4 Nov 2026 21:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlAAfo9j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF3E1F000C1;
-	Wed,  4 Nov 2026 21:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cc1/jh+G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97851F00919;
+	Wed,  4 Nov 2026 21:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828974;
-	bh=0BFas0GGsBbMn/iIgA9sP7FoxixCQLW/ilJb7Ys/VrY=;
+	s=korg; t=1793828976;
+	bh=oQI4erhWL6U5aF1TzEBtJ632LgoI2up2y9VBTKdXFAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FlAAfo9jAGanMc0Zq9z2jRze4EjPEuW0O7WqX4VVsS4ZsYT79Bez/fgNJJEyeEMln
-	 zr2a5pfVcYwafSAzzhFVGn0LfI3U+pH/B5RM8YI8Afka60W0cqti8ABsM58n/r6+fR
-	 At8b/Uu00MpGfaEIAaouLMHuqO019Te6xWZEPSSo=
+	b=Cc1/jh+GEGMWEhvo8pfVWpY1Mx01jiVKY35t750Far3PhSQrpyguyvmbLXGT7t/Ym
+	 bTQeEHBzgZGDfpEC1EQ+s+6Qe9DYk2XEX2cZRDVpaFizqbp17orqKzMhNsyXu9vsFf
+	 JP6z6DvkyZvl5lnMMGsE7C31h7ALu3jZyGkgqCb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 364/547] xfs: dont try to scrub self-referential dirent in metapath checker
-Date: Wed,  4 Nov 2026 16:09:08 -0500
-Message-ID: <20261104211048.635586085@linuxfoundation.org>
+Subject: [PATCH 7.3 347/547] xfs: always zero the whole shortform header when zeroing attr fork
+Date: Wed,  4 Nov 2026 16:08:51 -0500
+Message-ID: <20261104211048.126111445@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,40 +70,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1e7337a3ecebab1bb2ba02187d88b94e5146e4f0 upstream.
+commit 52aa50cea408e27454d206cccecbe4f694a6c1e1 upstream.
 
-LOLLM observes that the _ilock_both helper will loop forever trying to
-double-lock the same inode if mpath->dp == sc->ip.  Callers are not
-supposed to call us with parent == child because that makes no sense.
-Trigger an assertion, mark the scan incomplete, and return IO error
-so that this fails noisily.
+LOLLM noticed that xrep_xattr_fork_remove can decide to reset the attr
+fork contents to an empty shortform header, but then fails to zero the
+padding byte in the header.  Fix that.
 
-Cc: stable@vger.kernel.org # v6.13
-Fixes: b3c03efa5972f0 ("xfs: check metadata directory file path connectivity")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: e47dcf113ae348 ("xfs: repair extended attributes")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/metapath.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/xfs/scrub/attr_repair.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/metapath.c
-+++ b/fs/xfs/scrub/metapath.c
-@@ -325,6 +325,13 @@ xchk_metapath(
- 		return 0;
- 	}
- 
-+	/* Callers should not set the parent to the child. */
-+	if (mpath->dp == sc->ip) {
-+		ASSERT(mpath->dp != sc->ip);
-+		xchk_set_incomplete(sc);
-+		return -EIO;
-+	}
-+
- 	xchk_trans_alloc_empty(sc);
- 
- 	error = xchk_metapath_ilock_both(mpath);
+--- a/fs/xfs/scrub/attr_repair.c
++++ b/fs/xfs/scrub/attr_repair.c
+@@ -970,7 +970,7 @@ xrep_xattr_fork_remove(
+ 		ifp->if_format = XFS_DINODE_FMT_LOCAL;
+ 		hdr = xfs_idata_realloc(ip, (int)sizeof(*hdr) - ifp->if_bytes,
+ 				XFS_ATTR_FORK);
+-		hdr->count = 0;
++		memset(hdr, 0, sizeof(*hdr));
+ 		hdr->totsize = cpu_to_be16(sizeof(*hdr));
+ 		xfs_trans_log_inode(sc->tp, ip,
+ 				XFS_ILOG_CORE | XFS_ILOG_ADATA);
 
 
