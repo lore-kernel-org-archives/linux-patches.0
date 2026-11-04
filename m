@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793804719;
-	b=kVc94U0IM/Yy58CgXsrKByAsPism2DhAfpfVdhQgZgBg5t7UlbkunqZTDFNxIod+UbcH
-	 yvnxmPCb4Z8P6RvBHf0KPkzpRikCTaKR+iOKJIrqwaivifdyKuK0370WvgkROtGfQerF1
-	 d12LKv8aAUrUcK+U6MvEbuskpQyhM489665wr2QXlVGyQ4GgoeTY8A184iStyDJhddlo0
-	 fnxQlYU1w3Z8Eltnf5xzrGkZBB85qNkPs2mmmXrPpD9W46aSjIuNMuzRRTYiuR/ryDscY
-	 pqETSVjVGt33OfDjXOSJwix4pl0zEDpJIbe54KOtr+7W4Qx+DhDcZEdfgUcMW2qKEDg==
+	t=1793804725;
+	b=jM07AcCUZUJIqgNN9Td6tCl3X7605HWJlVNPbUZ/Hw+xUI5H0QYliF6yzQnmFSAqMhWo
+	 okmqqfXUIDJqHCOl/NSqVG58SH8h6cAQ8jjgLe/iywZ2Ijjjkt/I09AP/v0XhDqTrOHr3
+	 iR1mYryn/TdS6iOPFvUNntoya5yPgHmFkZsi5YN7YNScWuaRKS7AAvT8Z1LldS0eyJIwx
+	 pBrQQbfQjbeS8RnpzJiyAA7r4b1kHMVIfjzEmjkpNqBLMgE8SbrKgcjxVas+tRK3rLvhy
+	 F0Lws+Pk8+/4DGWGQGU2TYAqe3IO4x3bSp6hP+gL3AbyymSD/CWE5i7Fo+8OiekcAew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793804719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793804725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=yEOAYpdsXgUQ+4ToTTCgX4AT9YMGXDyDncVK6pNXM2Q=;
-	b=r/2nVK5b5TVJQl/QQzjT3U1E5GdeF2i5DTMke4mcDYriQbiL2Y28pnxzxP4Ib9Uap1v4
-	 HS9VOjoqziHvNdlMtBtH8T3mUIP0VysH8tXHP9uynVUbRc2nD1G/l4H+R9AeraR66l1E5
-	 1dI6hdv+i5uFXZvLB17nRo0vLzGg1wLnJr/yV+lVrzzcvqmA7KHmtKmxD1XWk0d/zMn35
-	 wnVWJ89fTndaJthY7NMfsWS4hTOXAQJmzLFtcM9jYlKj9b8pJUEIi/iBFXe6pK5riLHxU
-	 xT1fka9a0RkLjr2u0n89b/lTvgMrLjPI0RaC31XTYeYtVdI6fDnPiEqbPSJd/OJZyAg==
+	bh=K4Ybsg7NuVBeZdLOID1aKeaghXNozmS8Xb6Owb/3lWY=;
+	b=yJ6uTxeoV0X+EP7JRFuMCW0oFLa4EEZweTfXU/7fJSB+lIv0G9GrkrPTURLbQha++dab
+	 ktX70KqTlQvGVlwCwZiR+ygcm+FioSr0mUw02qSKjSZC8qsOSbuUU3tSm517Qgq5mOpoH
+	 0OLu1FiLIPNQClbD3+B5edtYZKgliKmzjbqUcoRA6Z4nyEPJ+VKIzGH6YFSXc+lyy89J2
+	 qV4PTCwMc+EqLaoe9XPV0Zdp0qghPzVc6dTvQeQtK+9TvqBasF0gKjnqH+kX6PmfiprRu
+	 36dhWsUJP1o1Gi1ppFUHLBKWDZuUbF9aDM1gsQR4lrMJwEkAaTtwHmYJV2SmeplXZcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Iqvx1CRl;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HjVrTQA2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E41606A331;
-	Wed,  4 Nov 2026 15:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED4B606A339;
+	Wed,  4 Nov 2026 15:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Iqvx1CRl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F9F1F00A02;
-	Wed,  4 Nov 2026 15:05:12 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HjVrTQA2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4807C1F000C1;
+	Wed,  4 Nov 2026 15:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793804718;
-	bh=yEOAYpdsXgUQ+4ToTTCgX4AT9YMGXDyDncVK6pNXM2Q=;
+	s=k20260515; t=1793804724;
+	bh=K4Ybsg7NuVBeZdLOID1aKeaghXNozmS8Xb6Owb/3lWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iqvx1CRlN5QsMmowZd82bWm23biyoxv2z8ieQd6NZGIwNmCxaOCjImtkWu6mm4vEA
-	 bvQEEZigN2nNph3rLxeZL6di9ZqwNf2mx48oUzQ3J9lHXPb90HXKTCRPbK6IvfUT1Z
-	 oX9kopILynROiua6Y4UAmAyFyhS7db/2VB6RxXLUM3T0QKGNZaZ2ybkQICa3mXli7f
-	 /XoDNAqNRDxqi7nXnau8KduyOhZo2WlJSJZI5XQ9XjtPajrxilAQJ3QFKApd3eIQ4g
-	 dC/CtphNOP/mWruV5id69GaWl8n9DqFgcUjvLjbAUzEGJ4ftgeesA1BfgMFq2d18Js
-	 a7y0MzEKaC5GQ==
+	b=HjVrTQA2WIl27oYZuhYzrM9yHOrMG9lsLWuObTzpUqdrQ2juTItYk809fTG0mi1m3
+	 fJLLAkj9CwsQVlLlQra9eHsp9q3NSeS2ziGEaPh9wXqTNwdt0Ss/iTTQNHqNcYk0dx
+	 9vr5SkwYfHOiR8RfQJLbRrvkhfUE7k2FmtVD6m0TlGTy3klRV11LEZVinZdUvrbbYw
+	 /CHECkpo7YN9b5b5W5BPIdsG3S7reQrVlvOV/fmNsOnbysqwRwLp/IJJdzq6gxRN0R
+	 gPSITSCEGFC5/4stcumOSmsEgPcUVKqpZ8owgiCQpZCYFnIL1wbQvlScSeFMXyT52V
+	 h4jHRfA7g/d7w==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -61,9 +61,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v4 17/25] vfio/pci: Check low-power requests before updating device state
-Date: Wed,  4 Nov 2026 20:33:14 +0530
-Message-ID: <20261104150322.3516320-18-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v4 18/25] vfio/pci: Track userspace BAR mappings
+Date: Wed,  4 Nov 2026 20:33:15 +0530
+Message-ID: <20261104150322.3516320-19-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
 References: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
@@ -78,183 +78,90 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In vfio_pm_config_write(), check requests for D1, D2 or D3hot before
-vfio_default_config_write() updates vconfig. Return -EBUSY if
-vfio_pci_bar_state_change_allowed() returns false. D0 requests and
-writes to unrelated PMCSR fields retain their existing handling.
+Track userspace mappings of PCI BARs so a later patch can reject
+guest_memfd attachment while such mappings exist.
 
-Use vfio_pci_begin_bar_state_change() for D3hot transitions in
-vfio_lock_and_set_power_state(), and return its error to the config
-write caller. On success, retain the existing behavior
-
-In vfio_pci_runtime_pm_entry(), reject explicit low-power entry before
-removing BAR mappings or dropping the runtime-PM reference.
-
-These checks currently allow all requests. Later patches reject
-low-power requests while the device supplies guest_memfd backing,
-because entering a lower power state can make mapped BAR PFNs
-inaccessible.
+Count the initial mmap explicitly because vm_ops->open() is not called
+for it. Use the VMA open and close callbacks to track duplication and
+unmapping, keeping the count nonzero until the last mapping is unmapped.
 
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Sean Christopherson <seanjc@google.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: David Hildenbrand <david@kernel.org>
+Cc: kvm@vger.kernel.org
+Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_config.c | 30 ++++++++++++++++++++++++++----
- drivers/vfio/pci/vfio_pci_core.c   | 30 +++++++++++++++++-------------
- drivers/vfio/pci/vfio_pci_priv.h   |  1 -
- 3 files changed, 43 insertions(+), 18 deletions(-)
+ drivers/vfio/pci/vfio_pci_core.c | 19 +++++++++++++++++++
+ include/linux/vfio_pci_core.h    |  2 ++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
-index 537e7f8bc884..014f865c1eaf 100644
---- a/drivers/vfio/pci/vfio_pci_config.c
-+++ b/drivers/vfio/pci/vfio_pci_config.c
-@@ -755,11 +755,15 @@ static bool vfio_af_flr_requested(int offset, __le32 val)
-  * It takes all the required locks to protect the access of power related
-  * variables and then invokes vfio_pci_set_power_state().
-  */
--static void vfio_lock_and_set_power_state(struct vfio_pci_core_device *vdev,
-+static int vfio_lock_and_set_power_state(struct vfio_pci_core_device *vdev,
- 					  pci_power_t state)
- {
-+	int ret;
-+
- 	if (state >= PCI_D3hot) {
--		vfio_pci_zap_and_down_write_memory_lock(vdev);
-+		ret = vfio_pci_begin_bar_state_change(vdev);
-+		if (ret)
-+			return ret;
- 		vfio_pci_dma_buf_move(vdev, true);
- 	} else {
- 		down_write(&vdev->memory_lock);
-@@ -768,19 +772,34 @@ static void vfio_lock_and_set_power_state(struct vfio_pci_core_device *vdev,
- 	vfio_pci_set_power_state(vdev, state);
- 	if (__vfio_pci_memory_enabled(vdev))
- 		vfio_pci_dma_buf_move(vdev, false);
--	up_write(&vdev->memory_lock);
-+	if (state >= PCI_D3hot)
-+		vfio_pci_end_bar_state_change(vdev);
-+	else
-+		up_write(&vdev->memory_lock);
-+	return 0;
-+}
-+
-+static bool vfio_pm_low_power_requested(int offset, __le32 val)
-+{
-+	return offset == PCI_PM_CTRL &&
-+	       (le32_to_cpu(val) & PCI_PM_CTRL_STATE_MASK);
- }
- 
- static int vfio_pm_config_write(struct vfio_pci_core_device *vdev, int pos,
- 				int count, struct perm_bits *perm,
- 				int offset, __le32 val)
- {
-+	if (vfio_pm_low_power_requested(offset, val) &&
-+	    !vfio_pci_bar_state_change_allowed(vdev))
-+		return -EBUSY;
-+
- 	count = vfio_default_config_write(vdev, pos, count, perm, offset, val);
- 	if (count < 0)
- 		return count;
- 
- 	if (offset == PCI_PM_CTRL) {
- 		pci_power_t state;
-+		int ret;
- 
- 		switch (le32_to_cpu(val) & PCI_PM_CTRL_STATE_MASK) {
- 		case 0:
-@@ -797,7 +816,10 @@ static int vfio_pm_config_write(struct vfio_pci_core_device *vdev, int pos,
- 			break;
- 		}
- 
--		vfio_lock_and_set_power_state(vdev, state);
-+		ret = vfio_lock_and_set_power_state(vdev, state);
-+
-+		if (ret)
-+			return ret;
- 	}
- 
- 	return count;
 diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index f31fbd980f3e..6612728a21a4 100644
+index 6612728a21a4..d4f9ce6b5dc6 100644
 --- a/drivers/vfio/pci/vfio_pci_core.c
 +++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -373,24 +373,30 @@ int vfio_pci_set_power_state(struct vfio_pci_core_device *vdev, pci_power_t stat
- static int vfio_pci_runtime_pm_entry(struct vfio_pci_core_device *vdev,
- 				     struct eventfd_ctx *efdctx)
- {
-+	int ret;
+@@ -1814,7 +1814,23 @@ static vm_fault_t vfio_pci_mmap_page_fault(struct vm_fault *vmf)
+ 	return vfio_pci_mmap_huge_fault(vmf, 0);
+ }
+ 
++static void vfio_pci_mmap_open(struct vm_area_struct *vma)
++{
++	struct vfio_pci_core_device *vdev = vma->vm_private_data;
 +
- 	/*
- 	 * The vdev power related flags are protected with 'memory_lock'
- 	 * semaphore.
- 	 */
--	vfio_pci_zap_and_down_write_memory_lock(vdev);
-+	ret = vfio_pci_begin_bar_state_change(vdev);
-+	if (ret)
-+		return ret;
- 	vfio_pci_dma_buf_move(vdev, true);
++	atomic_inc(&vdev->mmap_count);
++}
++
++static void vfio_pci_mmap_close(struct vm_area_struct *vma)
++{
++	struct vfio_pci_core_device *vdev = vma->vm_private_data;
++
++	atomic_dec(&vdev->mmap_count);
++}
++
+ static const struct vm_operations_struct vfio_pci_mmap_ops = {
++	.open = vfio_pci_mmap_open,
++	.close = vfio_pci_mmap_close,
+ 	.fault = vfio_pci_mmap_page_fault,
+ #ifdef CONFIG_ARCH_SUPPORTS_HUGE_PFNMAP
+ 	.huge_fault = vfio_pci_mmap_huge_fault,
+@@ -1896,6 +1912,8 @@ int vfio_pci_core_mmap(struct vfio_device *core_vdev, struct vm_area_struct *vma
+ 	vm_flags_set(vma, VM_ALLOW_ANY_UNCACHED | VM_IO | VM_PFNMAP |
+ 			VM_DONTEXPAND | VM_DONTDUMP);
+ 	vma->vm_ops = &vfio_pci_mmap_ops;
++	/* Initial mmap does not invoke vm_ops->open(). */
++	vfio_pci_mmap_open(vma);
  
- 	if (vdev->pm_runtime_engaged) {
--		up_write(&vdev->memory_lock);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto out_unlock;
- 	}
- 
--	vdev->pm_runtime_engaged = true;
-+	WRITE_ONCE(vdev->pm_runtime_engaged, true);
- 	vdev->pm_wake_eventfd_ctx = efdctx;
- 	pm_runtime_put_noidle(&vdev->pdev->dev);
--	up_write(&vdev->memory_lock);
-+	ret = 0;
- 
--	return 0;
-+out_unlock:
-+	vfio_pci_end_bar_state_change(vdev);
-+	return ret;
+ 	return 0;
  }
+@@ -2205,6 +2223,7 @@ int vfio_pci_core_init_dev(struct vfio_device *core_vdev)
+ 		return ret;
+ 	INIT_LIST_HEAD(&vdev->dmabufs);
+ 	init_rwsem(&vdev->memory_lock);
++	atomic_set(&vdev->mmap_count, 0);
+ 	xa_init(&vdev->ctx);
  
- static int vfio_pci_core_pm_entry(struct vfio_pci_core_device *vdev, u32 flags,
-@@ -445,7 +451,11 @@ static int vfio_pci_core_pm_entry_with_wakeup(
- static void __vfio_pci_runtime_pm_exit(struct vfio_pci_core_device *vdev)
- {
- 	if (vdev->pm_runtime_engaged) {
--		vdev->pm_runtime_engaged = false;
-+		/*
-+		 * Guest_memfd provider setup reads this flag with READ_ONCE()
-+		 * without memory_lock; runtime resume can clear it concurrently.
-+		 */
-+		WRITE_ONCE(vdev->pm_runtime_engaged, false);
- 		pm_runtime_get_noresume(&vdev->pdev->dev);
+ 	return 0;
+diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
+index 2f3fa2787737..6001fda0e001 100644
+--- a/include/linux/vfio_pci_core.h
++++ b/include/linux/vfio_pci_core.h
+@@ -8,6 +8,7 @@
+  * Author: Tom Lyon, pugs@cisco.com
+  */
  
- 		if (vdev->pm_wake_eventfd_ctx) {
-@@ -1705,12 +1715,6 @@ static void vfio_pci_zap_bars(struct vfio_pci_core_device *vdev)
- 	unmap_mapping_range(core_vdev->inode->i_mapping, start, len, true);
- }
++#include <linux/atomic.h>
+ #include <linux/device.h>
+ #include <linux/mutex.h>
+ #include <linux/pci.h>
+@@ -150,6 +151,7 @@ struct vfio_pci_core_device {
+ 	struct vfio_pci_core_device	*sriov_pf_core_dev;
+ 	struct notifier_block	nb;
+ 	struct rw_semaphore	memory_lock;
++	atomic_t		mmap_count;
+ 	struct list_head	dmabufs;
+ };
  
--void vfio_pci_zap_and_down_write_memory_lock(struct vfio_pci_core_device *vdev)
--{
--	down_write(&vdev->memory_lock);
--	vfio_pci_zap_bars(vdev);
--}
--
- int vfio_pci_begin_bar_state_change(struct vfio_pci_core_device *vdev)
- {
- 	if (!vfio_pci_bar_state_change_allowed(vdev))
-diff --git a/drivers/vfio/pci/vfio_pci_priv.h b/drivers/vfio/pci/vfio_pci_priv.h
-index 0af93f6d9a8a..f7b3178cc890 100644
---- a/drivers/vfio/pci/vfio_pci_priv.h
-+++ b/drivers/vfio/pci/vfio_pci_priv.h
-@@ -75,7 +75,6 @@ void vfio_config_free(struct vfio_pci_core_device *vdev);
- int vfio_pci_set_power_state(struct vfio_pci_core_device *vdev,
- 			     pci_power_t state);
- 
--void vfio_pci_zap_and_down_write_memory_lock(struct vfio_pci_core_device *vdev);
- /* Success retains memory_lock through the hardware operation. */
- int vfio_pci_begin_bar_state_change(struct vfio_pci_core_device *vdev);
- void vfio_pci_end_bar_state_change(struct vfio_pci_core_device *vdev);
 -- 
 2.43.0
 
