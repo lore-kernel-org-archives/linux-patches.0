@@ -1,57 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831958;
-	b=u3dQsw1TdCL7eN3M2qZLB0y65nrZfcaNzeESfMAsT4ca3I3+KpDegmhQ7Blq7fCd99cV
-	 hKUz+BRafcqvb2baEDC9/Nj9kYrjGEl8qK5i0uht09bue83LgT1Hn9tdzlTQ8sTK5C/eq
-	 PqS6x7r/QQQboTF+GTKGhzMUaOzipigEGvY76HCa4QjFjdv6yrpafwlEv8K/WlHM8/mdX
-	 9ouCH6ZLo7LdFyqBhPMEAY95fkix1nEhj7hh082thdboTw9L+aydKPdFzDgfLyLsAb280
-	 Hcfjv8IkZBAKO3qAtPKKkLw4ye8CJR9KsRz7sKxQjdBupuMIeMJFz0phYrNVp8YOeRA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831958;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=aG/5cyztFOcH8kUAr04I+lttdSBH/iBHDUsg2Kddaz0=;
-	b=wxyyVZyz9UZlPlYIypVn8Y2kjSSeVgew405wcwSr4uqS53rmskKcVx/TyiiJnnTXqt6e
-	 Y0kq68XvpgYCNPgumCrfaA2uXPWh0KoN0wSOMEdDWqd1HpsnavGWmAuFwHR2t2jV7VYbU
-	 47A2lpdpA2jI5LpKSOqF0h/rQLXe8PDdvIuvOXxzjLiglDPOS3p1ZZrFCxyF4E0H14ilB
-	 0UC4N7gUTfMrytOpYSBw+UrQMXuXipouFFwQnKxmxtQlO6/mYt8JTnlbMh9ITKqRfIWr/
-	 dY1W9m3YSDqpmlrop9E6izaXuFuiYw2Ijxez9v033jg0RnJPb5yH2QOVKxM0lA24bPQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D3ZD+G45;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.171
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793833505;
+	b=Ya6Y9muoosvYhVIMTfSeQKGQipmcruv0KdTJjrUyoigkBNpg2dI3R2GDxTFPRQoDSp8e
+	 TjDtForNTj1vyW0Nw8mf+QcAW7n7nMK44QGxzWRsM86hPq65Can3fSC14kKR7E9HhkAE3
+	 EsH4JX7WIMG9dYInW+RBLfy+Cyoy4AyUyyrrj5QJWd6gJA4ihLg4+yVB9LlIwoeklNviG
+	 ZS6lvZz0lsPAvBBd+4ZWpS1shT+EBd/cxflUHzZeJ3cT3Es+lbiRQazh1qsptYgzfc8mE
+	 myJrah648UacqQ1ktWc7g9eXdlaiwT2jZ2j8GSKD5BW2nU6EXl77SEJILe9nTgB43Lg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793833505;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=fdKcInFwYxEQdF2Iwzxw4Nto24hXOYR2F5pyiTFVT6A=;
+	b=auaLr5B0cxZhO9S5en0bLy1YLAUAH2E3gV6eQbLU9I2CmvB4HKqalYa51XGJqFZqpenr
+	 MPYtiCYAU9XR8zsRDwOJJxYN+Y+1l1sniePfLRp6HJUprk0JFNNtSKapFBiwe6bWmatOI
+	 YdQIb5mrwR1OsYJrRNFI38srzPCDbKdKVqJXs1+EX8EI8LTstrXt32OlgmyeK0WjGuwUQ
+	 b74jWYOK6Oyge+0isXSCmfgwFYNvTh8SyGTP2X99l1J4B4COFXZAFbCdz4FrrNgkJpp6c
+	 5Rh/lh9YsQbtGbhY2hiiqoZ5Cb14i2Vtzt8vQjmOO6r2gPZBubfCmbkoFDd7zmT0jzQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=u61s0dM3;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.171
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3A1606A850;
-	Wed,  4 Nov 2026 22:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B03606A337
+	for <patches@lists.linux.dev>; Wed,  4 Nov 2026 23:05:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4B03606A337
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D3ZD+G45
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A17A1F000C1;
-	Wed,  4 Nov 2026 22:39:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831957;
-	bh=aG/5cyztFOcH8kUAr04I+lttdSBH/iBHDUsg2Kddaz0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D3ZD+G45kiUKNalNn1rsSp1782EDf8Yl33Te+uPDU1cpF8HA8MBNlLa1KrBUWIQjg
-	 ufSWYSty8KXnaMUJm01qSxPnnFPz7YEABB1sishYsGsAyOdnKYgwntN77/wnNgJaRH
-	 /PoAGZA/uBOCXTBYJ4OO0kOGMUr2nYdQJ2INz5RI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 0980/1005] io_uring/timeout: count cancelled timeouts in cq_timeouts
-Date: Wed,  4 Nov 2026 16:11:53 -0500
-Message-ID: <20261104211110.494623841@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
-References: <20261104211043.516122098@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=u61s0dM3
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-36a0f27c9f4so2324995eec.1
+        for <patches@lists.linux.dev>; Wed, 04 Nov 2026 15:05:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793833504; cv=none;
+        d=google.com; s=arc-20260327;
+        b=eUo16si5nwm79DEPQH/2aFutWHbaJG3Cz1jV2vfcfOcsOjmusKIFkZEQ6LtQLJz3l2
+         Y3SbeDMn0o0ITx3TmRa6FG8MtG4NE2HaoiMt7yf9JunHoSMwpbesf3vUK5DXuxz5HvAl
+         YeREhrEhfQO83f1KDAomiprBdii3yjMnW9I4p4ugxpkVr3dMq5PQ3Y+QyHVZ+QtnU/2l
+         xBBByz9of1loTw1eBzid7pUQELLffNdlbtj6OvIHxP1bsjuioUARSRhvbIp9gxAJbVm3
+         8FlRs4feVtG//UEcCqbNyugdUPuXz9fbOea1NhGnzzZOesCwzF9IeWElhJrSSagnmHCC
+         0o+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=fdKcInFwYxEQdF2Iwzxw4Nto24hXOYR2F5pyiTFVT6A=;
+        fh=eZjNj2mlATjnpbEZ2fOj7v9V9t7IY1RhPJRdnZUW1nM=;
+        b=cmRH/6ieyTaWlZ01mOQVz7AtamIoXJXbiZIsgIzj37AXcsbGx2V/RTSeixaCo6X8GW
+         cVVHCYBakFyPRQEx6LhHvu9oShx61Kmi8rrBkkr1zDAqQVfEkhnoGs3LlnOrYgLVZ2Hy
+         CO/7j+ZwXvArHYwkfgbYM2Ev7uIpLNWNQfVxG/swJ3ljdbmhTolDX+EFo4nTLl0ezVLm
+         mTHIsQ5DMHWqjVqChdd/sLA5pviRhX+AYlclfc42CckBWpYZD4kx8r8RNaYASszm3EQI
+         iYxvxHW+7xe/TQmNl1S0MDkS8VoOTLxrID9eob5GOmraZUupk1fkiCAwFFTLxt/J1QMr
+         HqtQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1793833504; x=1794438304; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=fdKcInFwYxEQdF2Iwzxw4Nto24hXOYR2F5pyiTFVT6A=;
+        b=u61s0dM33tmYpAKfs8ftVMuo/9VWFN4G0YMltN9iHSw7xOGozMDZ0hQb3APM+My8Mt
+         MswcVqHkrbnXCj0JpkAr2g0HcfiUE0m86pWwQgz2RYbxaMLtYlrybFLCo9dn6v++EWd0
+         Qt37Kk2lCASCq2Yr9smOqF7so78/At34ATS+TPpbzI8lEGtgkfw+ceHEk6DKGhG5ZFBg
+         PYF9H0EQLR6tesngggwp/0Ym9fEoXaca5okruYakidXi05j+GE3wX1pb3aYC6Eg5vW5J
+         NGAwZso48oKJqblVffAX8xRC0RYB1tfPwsbkElULBJ4+mv0wxxzw+CS3Bs+6gyDTC3Dm
+         DT3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793833504; x=1794438304;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=fdKcInFwYxEQdF2Iwzxw4Nto24hXOYR2F5pyiTFVT6A=;
+        b=VRvJU8K9eSuLaugvi6HaY2Z3b0u4rkBqQeRvAw+IvlD7cCtOOUU5swzRjUa+HxJzQW
+         JEmZ33WXcDVfcMFX9c2I3x/t3Z1pe8/L3tqG4l4SArA+rv+7DPNsdT32rXVR1gnc1z2C
+         WKE9kCrCO0UYzfy7B0tyjVW586qSDjLMptTw74kCWMC3zANycqh66c0LwynrTXNIKZmL
+         1i4k/4pswbMcZxkLJbevzBTj8G53DEHqTBmna2hAP4J2UHTWc2vFb/zEKGEjtoo/IHLC
+         3VKvA9+zKEiM6FskMSJvj7JFP65/8zpEjBfuLtXxrhXgxSF9LeenYp0UqBv6i5fPAmtG
+         dxzg==
+X-Forwarded-Encrypted: i=1; AKwUvBxbHtE2s9TpntVGOr0XX4/eW86SIbdn6xGOpKwWW7UBLlg70XmuITAOF98QRnsYV4LGr3jkHJsG@lists.linux.dev
+X-Gm-Message-State: APuU4Z/p73nYL/ht6QCprUU1U+HCWQBMDbQ4p8MLrdwP0O8NQ/UzZ3Lp
+	lo1Hm8x+ztUxAMCGFRtHBxlGjPeo29MmrX7Lh1e3xnK4pQiDVv10JLjv4wjeqZFEs++1pmK/+9A
+	4AwfmkEGBsDSZirY36874EWCBlRdV3gnDokZz+3oPOQ==
+X-Gm-Gg: AYBFou3pdepq1iFPIsOY1mSlCt6t8DNVJoU99XXsveRBxhNHFb8slAETarECX9qutA+
+	Wcnn5QryVRZPcFsYeDkjQqV4jLyKE5kQiDktJqzyX+NWMVZi6gL3ldUpxhSzQA9aJ57r4t1TH2Q
+	u9SzzfcTJrawBkSQ8pJGEeARfh2tUT5/E3EdcM+fWDvxMsI2UxjGR8g1pU9LSLdnQaPLueZ4kjS
+	Y+bLZEeYBm2AsdsciExjIn5wv32guM37DkQbRYzcIXnsibahv6qZmp1QT9N9KUn7ywVgWbx2BB7
+	Q8aZXuqOerJ31s4oTFDDmsvj/8yX36e9Cm1Ln3f5vmOUG5MvchbAKqrM1Ef4ZBnXEJ3qvTf59yS
+	7C5nw3dbO+BLXe4tWcrCTtzJhBEj7v24QBpSpS/uxBnD8lBVY5qgunhRKeK2NTV6KXt3MK73cov
+	bMcdTnPoFGEUcEFcQE/aZEHoWWDHAdyJB3QpZVd4Q=
+X-Received: by 2002:a05:7301:4246:b0:368:7c2d:a612 with SMTP id
+ 5a478bee46e88-36a42345878mr25113685eec.10.1793833503438; Wed, 04 Nov 2026
+ 15:05:03 -0800 (PST)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -61,62 +105,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260930152347.700140858@linuxfoundation.org> <20260930152351.156698628@linuxfoundation.org>
+ <auj7ZUcOlNC-rEnk@maple.netwinder.org> <2026110444-preshow-shelter-42d2@gregkh>
+In-Reply-To: <2026110444-preshow-shelter-42d2@gregkh>
+From: Ralph Siemsen <ralph.siemsen@linaro.org>
+Date: Wed, 4 Nov 2026 18:04:50 -0500
+X-Gm-Features: AclHuK9ErX2cQvIR3BHxau2O44hKq4GbcDvQQlooLxeAojfKv2Z3D8f5iBXKHQM
+Message-ID: <CANp-EDaxZTff_UvEwW0o5=0XeDSzO3edT-aPodkXwJ2yuiGN_w@mail.gmail.com>
+Subject: Re: [PATCH 5.10 159/595] gpio: dwapb: Mask interrupts at hardware initialization
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Liang Hao <haohlliang@gmail.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+On Wed, Nov 4, 2026 at 3:52=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Mon, Nov 02, 2026 at 04:06:45PM -0500, Ralph Siemsen wrote:
+> >
+> > This caused a small regression on 5.10, details below.
+> >
+>
+> Can you provide this in a format which we can apply it in?
 
-------------------
+It was submitted by Miguel Gazquez and Sasha has already queued it:
 
-From: Cheng Yongkang <teel4res@gmail.com>
+https://lore.kernel.org/stable/20261103-dwapb-fix-v2-1-9bd3785d1365@bootlin=
+.com/
 
-Commit 1c8b49851543f41fc8bb18bcd1f15cc93d14b530 upstream.
-
-io_timeout_cancel() posts the cancelled timeout's -ECANCELED CQE without
-advancing ctx->cq_timeouts.  io_timeout_fn() and io_kill_timeout()
-advance it for every timeout CQE they post, and io_flush_timeouts()
-computes the number of non-timeout completions as
-
-    seq = cached_cq_tail - cq_timeouts
-
-to compare against each off timeout's target_seq.  The cancelled
-timeout's CQE is therefore counted as a regular completion, so every
-cancellation makes an already armed off timeout fire one completion
-early.
-
-A ring with a keep-alive timeout of off=4 completes it after two NOPs
-when one off=100 victim is cancelled through IORING_OP_ASYNC_CANCEL, and
-before any NOP when two victims are cancelled.  The cancel CQE should
-count, but the cancelled timeouts' -ECANCELED CQEs must not: the
-expected counts are three and two NOPs respectively.
-
-Advance cq_timeouts when io_timeout_extract() succeeds, under
-timeout_lock and before the -ECANCELED completion is queued, matching
-io_timeout_fn() and io_kill_timeout().  The -ENOENT and -EALREADY paths
-post no new timeout CQE and keep their accounting.  Both the
-ASYNC_CANCEL and the TIMEOUT_REMOVE path go through io_timeout_cancel().
-
-Fixes: bfe68a221905 ("io_uring: off timeouts based only on completions")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/179328314078.648427.13761781546953594668@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- io_uring/timeout.c |    3 +++
- 1 file changed, 3 insertions(+)
-
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -327,6 +327,9 @@ int io_timeout_cancel(struct io_ring_ctx
- 
- 	raw_spin_lock_irq(&ctx->timeout_lock);
- 	req = io_timeout_extract(ctx, cd);
-+	if (!IS_ERR(req))
-+		atomic_set(&ctx->cq_timeouts,
-+			   atomic_read(&ctx->cq_timeouts) + 1);
- 	raw_spin_unlock_irq(&ctx->timeout_lock);
- 
- 	if (IS_ERR(req))
-
-
+Regards,
+Ralph
