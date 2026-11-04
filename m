@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793804658;
-	b=FnuYHIBSdG/nRbJLSYXgAOYpRTfoJzqPW02vg0JD/3E6PQ92gDvzXOH58Gw9SG3GAt2E
-	 Rj7r77mIkibB2uUbb4RVT32AAF3kQj3oC9eOMraR8op6PJdBYZZH+FWb8Sh6TOqgqS/Ef
-	 zDXpDkD2hfMOtcovLOvNu9OKIzGn0xT9Rptflp2GknSCfOrd7Prw1NPYrPBPoDLy91oV8
-	 PICilpA2pdBt3CJHSSkpyyRPelbc73SJI2D2o/29z5JEsAtcjb8LRQeTwpbHc073fj0ng
-	 M0uFmxHxJmQlI+2QgxUsAifOr8RjYJKDRQThouS6Iz4/KURogfpG1q4hHVfnahyOciw==
+	t=1793804664;
+	b=nwQbeiXinxo0TD3+5GSQig6nwQzIErMaTW3qo0QiTpOG6TbLEtUmV1kPWeRXwkJVn90x
+	 nWTAAw/r/Np/jdHf4BmL9Zt+pdI4ra1/jAgczMVJNdnyGltVTsnz8UobF9ydLTu5909p7
+	 PWyLeOFfW+C0SGjjK2E0WT+WBCHEPzLGpISxQaAs4Tmo2IGI6MCEBsnS99NQN48j2hHs9
+	 7QnXjL0OLTbWVmgEHeZAWsEA87u4t0LEmu/EOYs0cNWpZdR6FmGBz+qnjffTV0hWB3fUB
+	 QVIfX+n3ek3Zgf9JIokukYlfG4vxnR+s0tEEyyQNg5iAO3nvjGDxY2Iqrq7qBzVFQ4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793804658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793804664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=1xW3x0kyj2+7pO1+5VgAsAS9HPMZi8+Ob6zUqPde52w=;
-	b=bNyZ/fY+dwbQkr5VVpfkhH3gzhGFIZfHqMw95QzxSzOc4CW/RUfubflukcgM2llKTkf4
-	 sNW9BIfGHrRUd+X6WjgdaeEtyCxvFMaO1/vCZQFsJ4tZcFkUDO0R0Vch2tq5VhOTDG1PX
-	 idWKDI30eljLfYXAS1iS9RdCVwC5d1aizqPCrPDm0eYWD4PtzuswliGTZeF2LkXlQV244
-	 Z7/cS70ms6maz69vqf083bE1ztLEdKqrJSTOl5wp5ORgqhodX65HiDskLIveWN0XWyRXo
-	 Z9E2j35sFZylrEoRxvPAWll0TDPnFwAJZJgjSQK2NBYKgtYKVCtKyEyKVpI16umK4dQ==
+	bh=yTfWL4IyzrxKgk9+Qpl3hCJwDvIeCHc5gxMrrKy5QPY=;
+	b=Tt1kMsK9s8QDHe5J1TWHmSM/rPgSuW0wlTtM3uwXXXGvrd001LFd0yQ73rvfKAQcWcT6
+	 IYiWka0Z1alrkeJ9mmTfucXOOCWUAE2drjzHygjP49ATfhBQq55BZlAw+yV9YLUKgiPC9
+	 rXBfnOoFC1Wya8NH+Kt21//uFD4Pjq5IoyOfrvmSg4/6JIbCShTFrIdAxUfdwRFuh1H6p
+	 D0DAU8AMPJ7HbM8X8Ny98acs49uyt3YgmGQb9lbrdUjGgcjv8n9P+5IRm+9vIkPwz7J/W
+	 wXekKhVbm/vUOoVJTtfLwSvgpQmQM20LKflIp+Bt0Kqgv1WioGQM1ivvr5zQV7uuaYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LmRXgPIJ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GxGpTRea;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E24606A33E;
-	Wed,  4 Nov 2026 15:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD87606D804;
+	Wed,  4 Nov 2026 15:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LmRXgPIJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782401F0093A;
-	Wed,  4 Nov 2026 15:04:11 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GxGpTRea
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D641F000C1;
+	Wed,  4 Nov 2026 15:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793804657;
-	bh=1xW3x0kyj2+7pO1+5VgAsAS9HPMZi8+Ob6zUqPde52w=;
+	s=k20260515; t=1793804663;
+	bh=yTfWL4IyzrxKgk9+Qpl3hCJwDvIeCHc5gxMrrKy5QPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LmRXgPIJ0Ee+5Cte3xQgugmBaOS5lH6VI6oCBK0RvpytQEyDeKuzNC19JFZrdmTtP
-	 R+HruY+QVLRRgKyrqF3367Jc5DvA1Ew/wzAs9/7FAAN0DAPjcqksDJlBNE8O6EZCUc
-	 IODN3y6VezAFz7t3pWb46uyqXtx/iHo+s0fBrUASgdv9oKmwXbMfD234Tip/RtE5bu
-	 Cb/nh4X46oGv6QU43bJhpjOVB9d1/9GarspYfnGPDoAmTn4X6066AacsYjFfDc6ziJ
-	 K2qTCNgxfGlJas9D9kwEY9fHJqUPeMUtpmF9KWNKjknpeNKxlOgv+8kJnmP9g8IZ5A
-	 1crvmE29+QN/A==
+	b=GxGpTReaNOgHYmQ4twaILjmq5FXfEyGMn5UfafJ7JBdPfEW/8JVL+fhXXZOaYvnfy
+	 olaQoc9ARVuvpwlWOLXKIhjW3s/YWh416e19j6aD1cveK8jBChcZ/+yHB+VGSjTdBF
+	 SN20WdiCRosD1KAEPt2F4jdM3YfA3vQ20vUDRHA1tgoxbB5KcMFqWfU2xKd/6NDjF2
+	 5HStE55Ed+5GO/TrtTUDUjFZgrKgJYcA4o2C9nM6bYl/fEsrVcebKsNFmzfGzLKonR
+	 bjflfy0RQzXPs2ukNskoX6WcBJQi2eiPK586c2RbrXSjwGBukklZOg4d77tduqAiz7
+	 ZGGlkOyiM/TrQ==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -61,9 +61,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v4 07/25] KVM: guest_memfd: Support private/shared conversion of device memory
-Date: Wed,  4 Nov 2026 20:33:04 +0530
-Message-ID: <20261104150322.3516320-8-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v4 08/25] KVM: guest_memfd: Track private device ranges after attribute updates
+Date: Wed,  4 Nov 2026 20:33:05 +0530
+Message-ID: <20261104150322.3516320-9-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
 References: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
@@ -78,32 +78,19 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Allow device-backed guest_memfd ranges to be converted between shared
-and private memory using file offsets. Use the common attribute conversion
-path for inode locking, maple-tree allocation, guest invalidation and
-attribute publication.
+The following device access callbacks need to report whether any private
+ranges remain without acquiring the inode invalidate lock under a
+provider lock.
 
-Reuse PFN attribute preparation to revoke host mappings before private
-conversion. Resolve guest addresses through memslot bindings and obtain
-physical addresses through the provider's get_pfn() callback.
+Add has_private_ranges to struct guest_memfd_device as a cached summary
+of the committed attributes. Add an optional update_attributes() backing
+operation and call it after storing new attributes on successful
+conversion. Device backing scans the attribute tree to refresh the
+summary; folio and RAM PFN backing leave the operation unset.
 
-Install private device mappings during attribute conversion because
-device mapping validation needs them before the guest's request is
-completed. That validation does not require a preceding guest PFN
-lookup, so a prepare_pfn() callback cannot be the sole place that
-installs mappings. Use the architecture device-map hook before
-publishing private attributes, independently of guest faults. The VMM
-validates guest MMIO requests against its BAR layout before setting the
-corresponding range private.
-
-Sharing also completes before publishing attributes. Generic
-invalidation with KVM_FILTER_PRIVATE has already removed the protected
-device mappings, so the device conversion callback needs no additional
-shared operation. Shared host and guest mappings can be installed by
-their normal fault paths.
-
-Leave revoke() and populate() unset, so full revocation, hole punching
-and preallocation remain unsupported at this point in the series.
+Providers read the summary directly with READ_ONCE(). Device unlock
+checks hold the same lock as the provider lock()/unlock() callbacks
+to serialize with conversion.
 
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Sean Christopherson <seanjc@google.com>
@@ -112,182 +99,99 @@ Cc: kvm@vger.kernel.org
 Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- Documentation/virt/kvm/api.rst |   5 ++
- include/linux/kvm_host.h       |   2 +
- virt/kvm/guest_memfd.c         | 103 ++++++++++++++++++++++++++++++++-
- 3 files changed, 107 insertions(+), 3 deletions(-)
+ include/linux/guest_memfd.h |  5 +++++
+ virt/kvm/guest_memfd.c      | 27 ++++++++++++++++++++++++++-
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index 8455a9c7c971..4482d34ec281 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -6540,6 +6540,11 @@ provider. PFN_MODE selects the PFN callbacks; providers that supply device
- operations additionally require INIT_SHARED and a VM supporting protected
- device mappings.
+diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
+index 6bf44c62b7fe..9869e2ffb4a2 100644
+--- a/include/linux/guest_memfd.h
++++ b/include/linux/guest_memfd.h
+@@ -24,12 +24,17 @@ struct guest_memfd_device_binding {
+  * @flags: GUEST_MEMFD_FLAG_* creation flags
+  * @binding: Mapping owner and device ID set by attach(), with the underlying
+  *           resources pinned until release()
++ * @has_private_ranges: Core-maintained summary of committed private ranges;
++ *                      providers read it with READ_ONCE(). Device unlock
++ *                      checks must hold the same lock as the provider's
++ *                      lock()/unlock() callbacks to serialize with conversion
+  */
+ struct guest_memfd_device {
+ 	struct kvm *kvm;
+ 	u64 size;
+ 	u64 flags;
+ 	struct guest_memfd_device_binding binding;
++	bool has_private_ranges;
+ };
  
-+KVM_SET_MEMORY_ATTRIBUTES2 converts device memory using guest_memfd offsets.
-+For private conversion, KVM resolves the guest address through the memslot
-+binding and obtains the physical address from the provider. Shared conversion
-+removes the protected device mappings before publishing shared attributes.
-+
- When the KVM MMU performs a PFN lookup to service a guest fault, the fault will
- always be consumed from guest_memfd, regardless of whether it is a shared or a
- private fault (unless in-place conversion is disabled and the backing
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index f2dd387ab0fa..c7831356b913 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -2618,6 +2618,8 @@ struct guest_memfd_device_binding;
- bool kvm_arch_gmem_device_supported(struct kvm *kvm);
- void kvm_arch_gmem_device_bind(struct kvm_memory_slot *slot,
- 		const struct guest_memfd_device_binding *binding);
-+int kvm_arch_gmem_device_map(struct kvm *kvm, const struct kvm_memory_slot *slot,
-+			     u64 gpa, u64 size, u64 pa);
- bool kvm_gmem_is_private_gfn(struct kvm *kvm, gfn_t gfn);
- bool kvm_arch_supports_gmem_init_shared(struct kvm *kvm);
- 
+ /**
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 397ead84bdb3..a06abb6dda82 100644
+index a06abb6dda82..54b387d296a0 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -99,6 +99,9 @@ static bool gmem_provider_is_device(struct gmem_inode *gi)
+@@ -63,6 +63,8 @@ struct kvm_gmem_backing_ops {
+ 	 */
+ 	int (*prepare_pfn)(struct kvm *kvm, gfn_t gfn, kvm_pfn_t pfn,
+ 			   kvm_pfn_t nr_pages, u64 attrs);
++	/* Called after the common code stores the new attributes. */
++	void (*update_attributes)(struct inode *inode);
+ };
+ 
+ struct gmem_inode {
+@@ -99,6 +101,7 @@ static bool gmem_provider_is_device(struct gmem_inode *gi)
  	return gi->provider_ops && gi->provider_ops->device_memory;
  }
  
-+static int kvm_gmem_device_convert_attributes(struct inode *inode, pgoff_t start,
-+					      pgoff_t end, u64 attrs);
-+
- static bool kvm_gmem_is_pfn_mode(struct gmem_inode *gi)
- {
- 	return gi->flags & GUEST_MEMFD_FLAG_PFN_MODE;
-@@ -1158,8 +1161,8 @@ static int kvm_gmem_folio_prepare_attributes(struct inode *inode, pgoff_t start,
- 	return 0;
- }
++static void kvm_gmem_device_update_attributes(struct inode *inode);
+ static int kvm_gmem_device_convert_attributes(struct inode *inode, pgoff_t start,
+ 					      pgoff_t end, u64 attrs);
  
--static int kvm_gmem_ram_pfn_prepare_attributes(struct inode *inode, pgoff_t start,
--		size_t nr_pages, u64 attrs, pgoff_t *err_index)
-+static int kvm_gmem_pfn_prepare_attributes(struct inode *inode, pgoff_t start,
-+					   size_t nr_pages, u64 attrs, pgoff_t *err_index)
- {
- 	if (!(attrs & KVM_MEMORY_ATTRIBUTE_PRIVATE))
- 		return 0;
-@@ -1188,14 +1191,22 @@ static const struct kvm_gmem_backing_ops kvm_gmem_folio_backing_ops = {
- static const struct kvm_gmem_backing_ops kvm_gmem_ram_pfn_backing_ops = {
- 	.populate = kvm_gmem_ram_pfn_populate,
- 	.revoke = kvm_gmem_ram_pfn_revoke,
--	.prepare_attributes = kvm_gmem_ram_pfn_prepare_attributes,
-+	.prepare_attributes = kvm_gmem_pfn_prepare_attributes,
- 	.convert_attributes = kvm_gmem_ram_pfn_convert_attributes,
- 	.prepare_pfn = kvm_gmem_ram_prepare_pfn,
+@@ -1199,6 +1202,7 @@ static const struct kvm_gmem_backing_ops kvm_gmem_ram_pfn_backing_ops = {
+ static const struct kvm_gmem_backing_ops kvm_gmem_device_backing_ops = {
+ 	.prepare_attributes = kvm_gmem_pfn_prepare_attributes,
+ 	.convert_attributes = kvm_gmem_device_convert_attributes,
++	.update_attributes = kvm_gmem_device_update_attributes,
  };
  
-+static const struct kvm_gmem_backing_ops kvm_gmem_device_backing_ops = {
-+	.prepare_attributes = kvm_gmem_pfn_prepare_attributes,
-+	.convert_attributes = kvm_gmem_device_convert_attributes,
-+};
-+
  static const struct kvm_gmem_backing_ops *
- kvm_gmem_select_backing_ops(struct gmem_inode *gi)
- {
-+	if (gmem_provider_is_device(gi))
-+		return &kvm_gmem_device_backing_ops;
-+
- 	if (kvm_gmem_is_pfn_mode(gi))
- 		return &kvm_gmem_ram_pfn_backing_ops;
+@@ -1265,8 +1269,11 @@ static int __kvm_gmem_set_attributes(struct inode *inode, pgoff_t start,
+ 	kvm_gmem_invalidate_start(inode, start, end, filter);
  
-@@ -1491,6 +1502,92 @@ void __weak kvm_arch_gmem_device_bind(struct kvm_memory_slot *slot,
- {
+ 	r = kvm_gmem_convert_attributes(inode, start, end, attrs);
+-	if (!r)
++	if (!r) {
+ 		mas_store_prealloc(&mas, xa_mk_value(attrs));
++		if (gi->backing_ops->update_attributes)
++			gi->backing_ops->update_attributes(inode);
++	}
+ 
+ 	if (r)
+ 		mas_destroy(&mas);
+@@ -1509,6 +1516,24 @@ int __weak kvm_arch_gmem_device_map(struct kvm *kvm,
+ 	return -EOPNOTSUPP;
  }
  
-+int __weak kvm_arch_gmem_device_map(struct kvm *kvm,
-+				    const struct kvm_memory_slot *slot,
-+				    u64 gpa, u64 size, u64 pa)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+/*
-+ * Install protected device mappings for the provider PFNs when making a range
-+ * private. Protected device-mapping validation needs these mappings in place
-+ * before the guest's request is completed. That validation does not require a
-+ * preceding kvm_gmem_get_pfn() call, so prepare_pfn() cannot be the sole place
-+ * that installs them. Install them here with kvm_arch_gmem_device_map() before
-+ * publishing private attributes, so validation can use the existing mappings.
-+ *
-+ * Sharing also completes before publishing attributes, but needs no additional
-+ * operation here. kvm_gmem_invalidate_start() has already removed the private
-+ * device mappings with KVM_FILTER_PRIVATE. Shared host and guest mappings can
-+ * then be installed by their normal fault paths.
-+ *
-+ * Caller holds inode->i_mapping->invalidate_lock for write, which protects
-+ * the attributes and offset-to-GPA bindings. The gmem_provider_lock()
-+ * prevents device unlock from racing with conversion and publication of
-+ * attributes.
-+ */
-+static int kvm_gmem_device_convert_attributes(struct inode *inode, pgoff_t start,
-+					      pgoff_t end, u64 attrs)
++static void kvm_gmem_device_update_attributes(struct inode *inode)
 +{
 +	struct gmem_inode *gi = GMEM_I(inode);
-+	struct gmem_file *f;
 +	void *entry;
++	bool private = false;
 +
-+	MA_STATE(mas, &gi->attributes, start, start);
++	MA_STATE(mas, &gi->attributes, 0, 0);
 +
-+	if (!(attrs & KVM_MEMORY_ATTRIBUTE_PRIVATE))
-+		return 0;
-+
-+	mas_for_each(&mas, entry, end - 1) {
-+		pgoff_t first = max(start, mas.index);
-+		pgoff_t last = min(end, mas.last + 1);
-+
-+		if (kvm_gmem_get_attributes(inode, entry) & KVM_MEMORY_ATTRIBUTE_PRIVATE)
-+			continue;
-+
-+		while (first < last) {
-+			struct kvm_memory_slot *slot = NULL;
-+			kvm_pfn_t pfn, next_pfn;
-+			pgoff_t high, next;
-+			u64 gpa;
-+			int ret;
-+
-+			kvm_gmem_for_each_file(f, inode) {
-+				slot = xa_load(&f->bindings, first);
-+				if (slot)
-+					break;
-+			}
-+			if (!slot)
-+				return -EINVAL;
-+
-+			high = min(last, slot->gmem.pgoff + slot->npages);
-+			gpa = (slot->base_gfn + first - slot->gmem.pgoff) << PAGE_SHIFT;
-+			ret = gmem_provider_get_pfn(gi, first, &pfn, NULL);
-+			if (ret)
-+				return ret;
-+
-+			/* Map a contiguous provider PFN run within this binding. */
-+			for (next = first + 1; next < high; next++) {
-+				ret = gmem_provider_get_pfn(gi, next, &next_pfn, NULL);
-+				if (ret)
-+					return ret;
-+				if (next_pfn != pfn + next - first)
-+					break;
-+			}
-+			high = next;
-+			ret = kvm_arch_gmem_device_map(gi->device.kvm, slot, gpa,
-+						       (u64)(high - first) << PAGE_SHIFT,
-+						       PFN_PHYS(pfn));
-+			if (ret)
-+				return ret;
-+
-+			first = high;
++	mas_for_each(&mas, entry, ULONG_MAX) {
++		if (kvm_gmem_get_attributes(&gi->vfs_inode, entry) &
++		    KVM_MEMORY_ATTRIBUTE_PRIVATE) {
++			private = true;
++			break;
 +		}
 +	}
-+	return 0;
++	WRITE_ONCE(gi->device.has_private_ranges, private);
 +}
 +
- static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags, int resource_fd)
- {
- 	static const char *name = "[kvm-gmem]";
+ /*
+  * Install protected device mappings for the provider PFNs when making a range
+  * private. Protected device-mapping validation needs these mappings in place
 -- 
 2.43.0
 
