@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826855;
-	b=n33cBO9oFQw7GP8mGUkvN6oltziwp4YmNrn1iW/QvRixIYoUc7CMzT48+e6tJBxvDp+g
-	 Sl+a5y95mc95Q/NFt1BhfXTTmtt4VsC1tYUZOETsyAKlKHRWo7PY7QE2dwSFWsTcUyOEE
-	 kpSbuUCHpwGgUXTrgaGO4lvBxBa6b8xx9SxgIQbKOxKNeY1JWpfMC6wSzmdwiuadQUt8i
-	 X/EnoqwK8KLpcF3dl0BH2/d5GTrw4aJnk2VVn35UltTX3dTNsMNR+OVRGyfhLU9RyzMTO
-	 g46o5ARxt0b568sasr6+zzHmOw5sM2a9XSjA3Pcb2vpV+ytZzy+ed9xXzb0vXe4DKWw==
+	t=1793826856;
+	b=Zx4+CD0LCF5rmZqhVtcN0y064AKBdfiqIwcSmMc+xrQpRjkWH3NexvBiIzz41F+bW9OO
+	 uuceoN+A6vWsoiaJWzOxCvGHCYMwjRYehRlXhy96vdThHoOBmeodHoz0b2+B63ZGJeYxq
+	 NoBMDw5wLrUxBMqYdbqera5jt7CbkedIHP9P3whBCpWNw4r7vNFnGj6CoVnTqfwDUW/Pb
+	 tgZzTE0r2oMO+CtCKXlaJ9XZ3dXK53xCOnf4rnir1S/dfiYmGMWQtlmtwuOJtDO+OLFCq
+	 MTWpLvnFU5fbb4ILk7CeOwcfu7zvLJdvOaHes47G6YFHUhPhBDvmk1XteM4hFA0jr7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZUsM9tJY+YyrczOnzsgEYB6aM9nf+y69tNQ8CTriaE0=;
-	b=y4TYqR8Ks7wR2VfzIdEpAGB1oSI4ri3A7B/XfJ3PX0hpjXzzgny2KqzNIR9lcPcraXwb
-	 KLJHksKfS+JIhXqNi2Tku2NDvpTdQAecVFjb8Na6QNlaUhgCAxkjAxDI5AlazOBy/O+qk
-	 raiz4+5IvNOeposhbbDCZTKZecgVMMBu3JHs865cSVwL8VfeTo7ZMGHZS8xB0K0mekaeA
-	 B+aKFH1/r6J+FBB+rvsa159nrQ3vlTA6Re/X5FjaV26Xyawvz+9X2F7TYP8pB08qU83T3
-	 FWrG8ahX5KCPOAAu0JFTHlkgXoHF0WncsV8LU6AEFWS4TGz2GlQxeyvswG3bt8Q959w==
+	bh=wA7cquLtU6fjVjO6uN5wBdgpuqCjv21rKx2ZSb4PKIU=;
+	b=cj1XpQ0/2jSsv4ExhZZwzmj2eLU1t3nuxMQ4M5SebYFhV3ozvhkqt6zfPHHwFzsphkZ0
+	 LekcKGZeK4ZD5wizo6t7gBmjYMbxvorPqpGyvOXQ612f3Mz79qlntBfyxoxLUFTYCIPd+
+	 j5wJPEnNESVsQvwMjYeYwU4vTbzKEfd62+EBvMxGGQ2ZmWvSOES0P4dIkAsj42gnftbnd
+	 oMtEPSJOBOI4yJkQldjfUWwtPl2dKUuuHopZnk8fDoyZEL1jWR+2l1177YhpFSVusY/u0
+	 YGEA/FRXG25ElN25YtFnDaFCmc9ccXz+oy9XWUcc29LL67DDlBBGmA4GvZzpQ0lCpow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EnJlNCtQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TA13qP+E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2543607042D;
-	Wed,  4 Nov 2026 21:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6889C607030A;
+	Wed,  4 Nov 2026 21:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EnJlNCtQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE1F1F00A02;
-	Wed,  4 Nov 2026 21:14:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TA13qP+E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C401F00A02;
+	Wed,  4 Nov 2026 21:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826854;
-	bh=ZUsM9tJY+YyrczOnzsgEYB6aM9nf+y69tNQ8CTriaE0=;
+	s=korg; t=1793826856;
+	bh=wA7cquLtU6fjVjO6uN5wBdgpuqCjv21rKx2ZSb4PKIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EnJlNCtQI00j7s8qR79tTY0OaOJW74TTF/uc0E0OPstEQkGtrp+mJw3NaPskIQ3Dy
-	 le2qFvnMm3fbR4GI5ZGcFgmZ7539c5vJaxEHTeMQvQmL5cwqA0+yLzBmQ9o7DVZ0vB
-	 gST44tMzL8sDIUXyTG3FdTi5U47td4W07i12lAws=
+	b=TA13qP+EmuTKzn+glC2qgVITtOLOzyBNsunGDfTklt2Wj4R7p/OacTmSf/5ZNEPOZ
+	 jsqI2C+xCgtlEjig9FSYbgUWwe8NiLK141NRd0adXG/UpHDeN+VdqebuyuhnsZ61l1
+	 6fU0haR0uasPLf9n3/r3lrm1Xv0WXQRQYCVXkNg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 046/547] io_uring/timeout: keep repeat count on multishot update
-Date: Wed,  4 Nov 2026 16:03:50 -0500
-Message-ID: <20261104211039.623707746@linuxfoundation.org>
+Subject: [PATCH 7.3 047/547] io_uring/timeout: use the right clock for ABS updates
+Date: Wed,  4 Nov 2026 16:03:51 -0500
+Message-ID: <20261104211039.649388386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,44 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3dc2a32cd356ee382aa4a8c7d844c53b2c0ad83b ]
+[ Upstream commit dad82eb1805d76c555224e4030319e3844642b64 ]
 
-IORING_TIMEOUT_UPDATE clears ->off of the timeout it updates, to turn a
-timeout that waits for a number of completions into a pure one. For a
-multishot timeout ->off isn't a sequence though, it tells whether the
-number of repeats is limited: io_timeout_finish() only looks at
-->repeats if ->off is set.
+io_parse_user_time() converts an absolute time from the time namespace of
+the caller to the host's view, for the clock given by the flags. The
+flags of IORING_TIMEOUT_UPDATE and IORING_LINK_TIMEOUT_UPDATE can't name
+a clock, the updated timer keeps running on the clock the timeout was
+set up with. So the time is always converted as if it was
+CLOCK_MONOTONIC.
 
-A multishot timeout that was set up to fire N times hence fires forever
-once its interval has been updated. Leave ->off alone for those, they are
-never treated as sequence timeouts anyway.
+In a time namespace with a monotonic offset, that moves the new expiry of
+a CLOCK_REALTIME timeout by that offset, although the clock isn't
+affected by time namespaces at all, and the one of a CLOCK_BOOTTIME
+timeout by the difference between the two offsets.
 
-Fixes: ea97f6c8558e ("io_uring: add support for multishot timeouts")
+Do the conversion when the timeout has been looked up and its clock is
+known. The update is run by the submitter, its SQPOLL thread or one of
+its io-wq workers, all of which share the time namespace.
+
+Fixes: 9cc6bac1bebf ("io_uring/timeout: honour caller's time namespace for IORING_TIMEOUT_ABS")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-30-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-31-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/timeout.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ io_uring/timeout.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/io_uring/timeout.c b/io_uring/timeout.c
-index fbf0ba1ba7f9f..38ee4e966e8e7 100644
+index 38ee4e966e8e7..2385adae72e01 100644
 --- a/io_uring/timeout.c
 +++ b/io_uring/timeout.c
-@@ -475,8 +475,10 @@ static int io_timeout_update(struct io_ring_ctx *ctx, __u64 user_data,
- 	if (IS_ERR(req))
- 		return PTR_ERR(req);
- 
--	timeout->off = 0; /* noseq */
- 	data = req->async_data;
-+	/* for a multishot request this isn't a sequence, keep the repeats */
-+	if (!(data->flags & IORING_TIMEOUT_MULTISHOT))
-+		timeout->off = 0; /* noseq */
+@@ -458,6 +458,8 @@ static int io_linked_timeout_update(struct io_ring_ctx *ctx, __u64 user_data,
+ 	io = req->async_data;
+ 	if (hrtimer_try_to_cancel(&io->timer) == -1)
+ 		return -EALREADY;
++	if (mode == HRTIMER_MODE_ABS)
++		ts = timens_ktime_to_host(io_timeout_get_clock(io), ts);
+ 	hrtimer_setup(&io->timer, io_link_timeout_fn, io_timeout_get_clock(io), mode);
+ 	hrtimer_start(&io->timer, ts, mode);
+ 	return 0;
+@@ -479,6 +481,8 @@ static int io_timeout_update(struct io_ring_ctx *ctx, __u64 user_data,
+ 	/* for a multishot request this isn't a sequence, keep the repeats */
+ 	if (!(data->flags & IORING_TIMEOUT_MULTISHOT))
+ 		timeout->off = 0; /* noseq */
++	if (mode == HRTIMER_MODE_ABS)
++		time = timens_ktime_to_host(io_timeout_get_clock(data), time);
  	data->time = time;
  
  	list_add_tail(&timeout->list, &ctx->timeout_list);
+@@ -511,7 +515,12 @@ int io_timeout_remove_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 				  IORING_TIMEOUT_ABS |
+ 				  IORING_TIMEOUT_IMMEDIATE_ARG))
+ 			return -EINVAL;
+-		ret = io_parse_user_time(&tr->time, READ_ONCE(sqe->addr2), tr->flags);
++		/*
++		 * The clock is that of the timeout to update, an absolute time
++		 * is converted to the host's view once that has been found.
++		 */
++		ret = io_parse_user_time(&tr->time, READ_ONCE(sqe->addr2),
++					 tr->flags & ~IORING_TIMEOUT_ABS);
+ 		if (ret)
+ 			return ret;
+ 	} else if (tr->flags) {
 -- 
 2.53.0
 
