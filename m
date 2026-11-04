@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828943;
-	b=HYTELSpyJno7ad1pHVOTuKFUTEwrwP/nF1TA5oYXPN/7wRhNNhLNfTgr0OUbEoJdBFov
-	 4dvNbgRCTxiT08WM5GWkWrncYx2i2nC4SHFjQds5WscjXvWs4pzqS1Zl5WhE01qDEwHyQ
-	 6B6IiAVdUBr4PWKIGHhWWjMpWXZd5IL7CmOIhcPYK/JnlkHn99bzMW1+2Ln+stGTG9eC9
-	 FJgnWWx1SfD1s3wPfQ3BvqVz0W+gfeHA5VyrH1o9L5GoiYyRfvPVd9t2S3Yq5jaAlxEAt
-	 X0PAFuaPSqp99vYs/L0Mj+F/BsahlwHi4i5ffynTez/C5Un/Q0hKflCuFw5y14HxrSg==
+	t=1793828945;
+	b=434einTWTS6o4TV4hPHQLIEFRyV2GWUdqhkIumMjSwE+2Oed/IViO2wuhYDZHYQGsSFc
+	 ssmlb7/ph7fqC6gjR+0wjUkDtmp8khVeq+qtHoGWH4JmICj6BWNyD6hDiHUK+vjXSqdgn
+	 g+T2dlgWXVsbatyYlLu9GUdWCSG5hrsfeDYpFCMwp//caoWePHrZDn4szah+xEdZ02V63
+	 FUnpjBl+voQ+TWenVVQ7zNFH9ZbGykuuNE1nPzgijcErycstBskPkZExSHX3S321x1B/S
+	 8FN+RLOf9Ld0BMRMt0URM+8nBOcc8MWmgdYsLY1r34fgXOV182bDTO7edZFElEC8k4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QmZkgHrl6NNccs15kJ47LOdRLNOEefT04lh3Vk0vWwc=;
-	b=WzzRry9iDmXbJ3PG5bNAd5dbwRT49ErxIdU4rFn/R9iZ8lfLvcyMCzdTO2cvo6Fbec82
-	 KL4IbeBIhttVsKitfAV7QKlRflBD6SBz+MTEAFrKVL/izC3tnQys9At/2VY8yWiukR3vd
-	 ia0LkQuG0VKmvZ0JbeIk678bx4RwqtY3Z8tFRCde+D0AtwPtp+mBbfzC4bJLUf6yjC6wL
-	 FEI+5vXoPZNJtNr8LkfUfwFOkU204UFgpMxmXxNaXefUiGQQohJ253tddp+8lhOnQsr7r
-	 22DKkGQe4ag+bwZtgdygF7hSMfZQRAWk0C26Ps8tctENmLYsaqBoiMAQYmMyUjhf57w==
+	bh=hpTwHMJwbuc5zF4jc2NsuQGmeARRdCcdF6izqHsS1+8=;
+	b=mdFslG2jFyVcofxQzidg6LXT/PUI4l/fQ1KIq8Sk5Ec6pAqC+SiBd4HEiz4bY3lBoB8v
+	 2RfMjl1133wtSEIE9LyilCEHyGtw+ACgDQfosjDxpDtLNUT6+5tooPuByusNxuO1qESea
+	 FG1hyCsJ5h3mrnifoZfTVYTys6xcp37GJFZgYmdGENqqYozKJsvFraF1AGcaXu1AMNK1D
+	 52oSPkVUzAtofeCQYaqh/aV6yhFAAvfHMXo0nMnf8XA3pkieFXF4LQ2TOffqCqftMuPJt
+	 twUFK9pjbz9Cxlc+W6bJguaQOUQnW0SeKOCAhwEhdj2j2Voiz+g1L1rPg577OyG1i7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+Ga9HLs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDH1fP2M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB60607E490;
-	Wed,  4 Nov 2026 21:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBDF607E49A;
+	Wed,  4 Nov 2026 21:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+Ga9HLs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7811F00919;
-	Wed,  4 Nov 2026 21:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDH1fP2M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC871F00919;
+	Wed,  4 Nov 2026 21:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828943;
-	bh=QmZkgHrl6NNccs15kJ47LOdRLNOEefT04lh3Vk0vWwc=;
+	s=korg; t=1793828944;
+	bh=hpTwHMJwbuc5zF4jc2NsuQGmeARRdCcdF6izqHsS1+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k+Ga9HLsnHBHSTLEgUdTTA8iUaBciXZ/1xp5ycRj14f1/R9/bE0BsE8f53+E35wSv
-	 F1drEW9qLcq7FIoP54oF9TOg1l2SQFHjnJezZlFqioVZkBc2oTxQPFOJmT+2unMm4X
-	 YsZHKLgWUBBDYpDjItWLToF9+Q0rMxE4UQ933dk8=
+	b=SDH1fP2MaVo/S/tH7bvkv9Y2VO2BK2UaRfgDl4wPX6mwBm9MzkfTu1teIMovOFZfL
+	 G+HduPE8mPBTLM5cX5xC5xWB8u9MPigjODzvoKZQ1p/0Y5xC4vXinSTeB7ZbvWk84N
+	 MEtbAefLQmROz66qTq3JvuULLqVjLfKLhygGJgLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 341/547] xfs: rescan the AGs if incore delalloc counter is negative
-Date: Wed,  4 Nov 2026 16:08:45 -0500
-Message-ID: <20261104211047.918038515@linuxfoundation.org>
+Subject: [PATCH 7.3 342/547] xfs: update quota flags on secondary supers when metadir enabled
+Date: Wed,  4 Nov 2026 16:08:46 -0500
+Message-ID: <20261104211047.961497508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,72 +70,180 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 47b1e941bb55f735d82ba2649412260da78b98f8 upstream.
+commit 9d9ea6e6cbc4cb1a36fb79f873d97e1ac2fe1a64 upstream.
 
-LOLLM complains that percpu_counter_sum can return a negative number but
-we instead misinterpret that into a huge unsigned value and do bad
-things to fdblocks.  It shouldn't do that, so let's add a retry loop and
-an attempt to freeze the filesystem to (hopefully) zero out the incore
-delalloc counter.  It probably won't work, but at least failing the
-repair beats doing the wrong thing.
+xfs/085 exposes an interesting bug when metadir is enabled, quotas are
+enabled via mount option, and the primary superblock crc fails
+validation:
 
-Cc: stable@vger.kernel.org # v5.2
-Fixes: 75efa57d0bf5fc ("xfs: add online scrub for superblock counters")
+ Phase 1 - find and verify superblock...
+ bad primary superblock - bad CRC in superblock !!!
+
+ attempting to find secondary superblock...
+ .found candidate secondary superblock...
+ verified secondary superblock...
+ quota accounting and enforcement flags lost
+
+<snip>
+
+ Phase 3 - for each AG...
+         - scan and clear agi unlinked lists...
+         - process known inodes and perform inode discovery...
+         - agno = 0
+         - agno = 1
+         - agno = 2
+ unexpected regular file inode 16908418 with metadata flag will zap
+ cleared inode 16908418
+ unexpected regular file inode 16908419 with metadata flag will zap
+ cleared inode 16908419
+ unexpected regular file inode 16908420 with metadata flag will zap
+ cleared inode 16908420
+         - agno = 3
+         - process newly discovered inodes...
+
+Quota files have been created, but xfs_repair thinks that quotas aren't
+enabled and trashes the quota files.  Looking at the filesystem reveals
+that the quota accounting flags were indeed persisted to the primary
+superblock but not the secondary:
+
+ # xfs_db -c 'sb 0' -c 'print qflags' -c 'sb 1' -c 'print qflags' /dev/sdf
+ Metadata corruption detected at 0x561c68436080, inode 0x81 dinode
+ xfs_db: Failed to load metadir root directory, error 117
+ Metadata corruption detected at 0x561c683f7c80, xfs_agf block 0x1/0x200
+ xfs_db: cannot init perag data (117). Continuing anyway.
+ Metadata CRC error detected at 0x561c6844d1b5, xfs_sb block 0x0/0x200
+ qflags = 0x7cf
+ qflags = 0
+
+On a metadir filesystem, quota state is supposed to persist across
+mount cycles if the sysadmin doesn't provide any quota mount options.
+Therefore, any time we update the quota flags on a metadir filesystem,
+we should write the same change to the secondary supers so that
+xfs_repair will find the quota data if it ever has to restore from a
+secondary.
+
+Cc: stable@vger.kernel.org # v6.13
+Fixes: d5d9dd5b3026a8 ("xfs: persist quota flags with metadir")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/fscounters.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_mount.c |    9 ++++++++-
+ fs/xfs/xfs_qm.c    |   36 +++++++++++++++++++++++++++++++++++-
+ fs/xfs/xfs_quota.h |    9 +++++++++
+ 3 files changed, 52 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/fscounters.c
-+++ b/fs/xfs/scrub/fscounters.c
-@@ -297,7 +297,7 @@ xchk_fscount_aggregate_agcounts(
+--- a/fs/xfs/xfs_mount.c
++++ b/fs/xfs/xfs_mount.c
+@@ -446,6 +446,8 @@ int
+ xfs_mount_reset_sbqflags(
+ 	struct xfs_mount	*mp)
  {
- 	struct xfs_mount	*mp = sc->mp;
- 	struct xfs_perag	*pag = NULL;
--	uint64_t		delayed;
-+	int64_t			delayed;
- 	int			tries = 8;
- 	int			error = 0;
++	int			error;
++
+ 	mp->m_qflags = 0;
  
-@@ -359,6 +359,11 @@ retry:
- 	 * of the computation.
- 	 */
- 	delayed = percpu_counter_sum(&mp->m_delalloc_blks);
-+	if (delayed < 0) {
-+		ASSERT(delayed >= 0);
-+		xchk_set_incomplete(sc);
-+		return -EFSCORRUPTED;
-+	}
- 	fsc->fdblocks -= delayed;
+ 	/* It is OK to look at sb_qflags in the mount path without m_sb_lock. */
+@@ -458,7 +460,12 @@ xfs_mount_reset_sbqflags(
+ 	if (!xfs_fs_writable(mp, SB_FREEZE_WRITE))
+ 		return 0;
  
- 	trace_xchk_fscounters_calc(mp, fsc->icount, fsc->ifree, fsc->fdblocks,
-@@ -412,6 +417,7 @@ xchk_fscount_count_frextents(
- {
- 	struct xfs_mount	*mp = sc->mp;
- 	struct xfs_rtgroup	*rtg = NULL;
-+	int64_t			delayed;
- 	int			error;
+-	return xfs_sync_sb(mp, false);
++	error = xfs_sync_sb(mp, false);
++	if (error)
++		return error;
++
++	xfs_qm_update_secondary_sb(mp);
++	return 0;
+ }
  
- 	fsc->frextents = 0;
-@@ -437,7 +443,14 @@ xchk_fscount_count_frextents(
+ static const char *const xfs_free_pool_name[] = {
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -694,6 +694,32 @@ xfs_qm_create_metadir_qinos(
+ }
+ 
+ /*
++ * For metadir filesystems, quota flag state persists across mounts, so update
++ * secondary superblocks in case xfs_repair ever has to recover the primary
++ * from a secondary.  growfs also updates backup supers so lock against that.
++ * Note that the secondary backups are opportunistic, so we log but do not
++ * return write errors.
++ */
++void
++__xfs_qm_update_secondary_sb(
++	struct xfs_mount	*mp,
++	const char		*func)
++{
++	int			error;
++
++	if (!xfs_has_metadir(mp))
++		return;
++
++	mutex_lock(&mp->m_growlock);
++	error = xfs_update_secondary_sbs(mp);
++	mutex_unlock(&mp->m_growlock);
++
++	if (error)
++		xfs_alert(mp, "%s: Secondary super update failed, err=%d!",
++				func, error);
++}
++
++/*
+  * Add QUOTABIT to sb_versionnum and initialize qflags in preparation for
+  * creating quota files on a metadir filesystem.
+  */
+@@ -718,7 +744,12 @@ xfs_qm_prep_metadir_sb(
+ 	spin_unlock(&mp->m_sb_lock);
+ 	xfs_log_sb(tp);
+ 
+-	return xfs_trans_commit(tp);
++	error = xfs_trans_commit(tp);
++	if (error)
++		return error;
++
++	xfs_qm_update_secondary_sb(mp);
++	return 0;
+ }
+ 
+ /*
+@@ -1683,6 +1714,9 @@ xfs_qm_mount_quotas(
+ 			ASSERT(!(XFS_IS_QUOTA_ON(mp)));
+ 			xfs_alert(mp, "%s: Superblock update failed!",
+ 				__func__);
++		} else {
++			/* Primary update succeeded, try to write secondary */
++			xfs_qm_update_secondary_sb(mp);
  		}
  	}
  
--	fsc->frextents_delayed = percpu_counter_sum(&mp->m_delalloc_rtextents);
-+	delayed = percpu_counter_sum(&mp->m_delalloc_rtextents);
-+	if (delayed < 0) {
-+		ASSERT(delayed >= 0);
-+		xchk_set_incomplete(sc);
-+		return -EFSCORRUPTED;
-+	}
-+	fsc->frextents_delayed = delayed;
-+
- 	return 0;
- }
+--- a/fs/xfs/xfs_quota.h
++++ b/fs/xfs/xfs_quota.h
+@@ -151,6 +151,8 @@ void xfs_dqtrx_hook_setup(struct xfs_dqt
+ 		xfs_trans_mod_dquot((tp), (dqp), (field), (delta))
+ # endif /* CONFIG_XFS_LIVE_HOOKS */
+ 
++void __xfs_qm_update_secondary_sb(struct xfs_mount *mp,
++		const char *func);
  #else
+ static inline int
+ xfs_qm_vop_dqalloc(struct xfs_inode *ip, kuid_t kuid, kgid_t kgid,
+@@ -216,8 +218,15 @@ static inline int xfs_quota_reserve_blkr
+ #  define xfs_dqtrx_hook_disable()		((void)0)
+ # endif /* CONFIG_XFS_LIVE_HOOKS */
+ 
++static inline void __xfs_qm_update_secondary_sb(struct xfs_mount *mp,
++		const char *func)
++{
++}
+ #endif /* CONFIG_XFS_QUOTA */
+ 
++#define xfs_qm_update_secondary_sb(mp) \
++	__xfs_qm_update_secondary_sb((mp), __func__)
++
+ static inline void
+ xfs_quota_unreserve_blkres(struct xfs_inode *ip, uint64_t blocks)
+ {
 
 
