@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831595;
-	b=KlI8tM9C/GCBL81HW4OHKHp6qD/yjU9sRBUlEyk6lFTssv88atsfHQ3mshOTxFeSrH5i
-	 +mvLAGF+Q2gfG/ZQ54XbW4BNwmF8M4WGUIsXRIKlRK2z+PewT+XbyMAJ8rn9dKZy3fzd2
-	 7piu618pzQ70rsde57WVA2zqSeCRTj1C26f6iTLJ3c4AaC0xTWr4eha8J0rrQm/xDI2ST
-	 BGAk3C4DcTzJjst7780b2eLEiYUid7LymXlhc5HXZCOYQxQ9/scJHFDEAgohGMtKnQdSj
-	 5TMfQNI8VpksW9OH7JoPvod5tQwYVsc4ZKAIwx4CGsgPdLvEgC3DGZ9mL6Cf+m7gF2Q==
+	t=1793831596;
+	b=F15D8JvinbkDcXmbjKxdzylrfQDVzjoJJH8M5L4IG4rZzn4I7q6iy1NNbhbkl7wm9iZE
+	 W9WlpMBMOXBG3VDSI/Go07geQNcIowYedXzD4GlKMhlbnY/EPaLhyJ0941XQMaQiTgt7B
+	 u/4dB4l7mWjfLiQ355CanmOrOVGD+OhtZeE9B8ZvBMeBnWGHKjwf+azJYATOz1JHkRAm4
+	 sIitxi6hAxy6Da4U8GcpuolbA+bsmKhAV5T8K4r98LVi23HPthientjZl4DntgAQIHkJZ
+	 brSf1r8NqnV/gxVseOljDB8LJK5V7et4kwBDjk61dV2KT0bJPmGJNbBVhdX+CgaWZYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lxp0ZPZWQ1Q+u33RKfRpYOklmBgwOvzvZspFYnP9Fg8=;
-	b=vPPXqJdqT0E0g8+O4j+KbUKc05Jv/qerkpJybZgb1feMt5RaFE//Eqm/w9xCGl233N7a
-	 /58tjZN0uAyUY1c44BlhLacG48WRNMDgRXbZFzDYHqa2KF/pZRkMrepl1i0h2pCyP038H
-	 DiACm2U/MlflyBNPkCS3ZkKPnK5RKxRGuClQIajiUzcj9+5R24r1vT4QVGcCC20ID+DND
-	 TonfN6CKITJ3nvpnrfZa9dvTaamTcYVOR1DXh7H03/ugvGI0aEvuUi1L3JbXho/3dH7Av
-	 LQ1egAutwvqmg+ZKixJCBR5tcYAjLmbO+a0DGpbTChho20LS8XEAErrDJtAXvxfc0ZQ==
+	bh=9noTO+W2t43pvJN3rZOgCx7z2pEX7120mTXYJ6eWsiw=;
+	b=lOn7Ul8dZrSkHG4Z3a6yXausJ/9mwHVa0Hq5I18EbkjG1WJIc8R7lDsXMM4sQ2yBDZHY
+	 Alfvt5Jho6AHswgIButLuCDDa6Ejc6G9toHtqd3n+eCEGfVwuusdbB7qxuykEmBdIVEvZ
+	 mcT4v86d3M06ESVzFubrvhIb43hmNnXjSGpPCel4yu646NjrrL3o52RaC4TEdB40RzUKe
+	 5mFGY5+IDhmN8hXtRvFrYaow3mQZNy+0BIhfY1NkPU+uEVSUaHv832oqBTK11xg36YS4/
+	 BRl987AKIVayaHzBVPDg4CLv9HJeS4kTQih4EI+H0QifDgBgEgWZSzllsKyyi23+P4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vVWCSx1k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yFf+46O2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CD6606A844;
-	Wed,  4 Nov 2026 22:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC2B606A844;
+	Wed,  4 Nov 2026 22:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vVWCSx1k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560AA1F000C1;
-	Wed,  4 Nov 2026 22:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yFf+46O2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9741F00A15;
+	Wed,  4 Nov 2026 22:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831594;
-	bh=lxp0ZPZWQ1Q+u33RKfRpYOklmBgwOvzvZspFYnP9Fg8=;
+	s=korg; t=1793831596;
+	bh=9noTO+W2t43pvJN3rZOgCx7z2pEX7120mTXYJ6eWsiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vVWCSx1k4gVVR+tQh/791FsPGugO1fiek25O2/KsCFU4tf0ty6YiqvRAUlJQNoAf2
-	 RqCJpb0W/UdJzIwDKAXo1fdPJTK107jmSdebQT49QMKTwZ22bxfUxChaDIspTg3eOi
-	 /XO9IJbucoKoHo+cexE2/I6V6H+fSKTPUw44FQbQ=
+	b=yFf+46O2uDADozEovJC99DbJzVc5Kmb47NHjq/iX9uNkoeo6CZPObZCUgbMMp1YUr
+	 UjrxJhMvLDcO2o+c9Yc1RR6nem7UsFcGkMdADrTpL9FAgMZ2mlPQG4wnlhmJYr2hCk
+	 IJqXolSh7Ng01F/jIzk1m+NTpdDn4xBft0HUrtoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+24c7c12d69e63c6d@bugs.sh,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 0760/1005] smb: client: stop processing a read response after a receive error
-Date: Wed,  4 Nov 2026 16:08:13 -0500
-Message-ID: <20261104211104.716369336@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.18 0761/1005] ovl: set OVL_WHITEOUTS before publishing the upper dir
+Date: Wed,  4 Nov 2026 16:08:14 -0500
+Message-ID: <20261104211104.742317495@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,54 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-commit 51efca72345acdbedc4af76782d464bd15ba50ff upstream.
+commit cbec8610ec5aaf35df50094ff639febc23f20773 upstream.
 
-cifs_read_iter_from_socket() may call cifs_reconnect() before returning an
-error.  The reconnect path aborts pending mids and invokes their callbacks.
-The callback can then release the cifs_io_subrequest containing rdata.
+Listing a directory while it is copied up causes a use-after-free of
+the readdir cache.
 
-cifs_readv_receive() nevertheless continues after a negative return and may
-dereference rdata in cifs_readv_discard().  KASAN reports the resulting
-UAF:
+A merge directory must never be iterated as a real upper directory:
+that mode frees the cache in OVL_I(inode)->cache without looking at
+its refcount, while files opened in merged mode still use it.
+ovl_copy_up_workdir() publishes the upper dentry before it sets
+OVL_WHITEOUTS, and ovl_dir_open() samples both without a lock, so an
+open between the two stores finds the upper directory and takes it
+for a real one.
 
-  BUG: KASAN: slab-use-after-free in cifs_readv_receive
-  Read of size 4 by task cifsd
-  cifs_readv_receive (fs/smb/client/transport.c:1284)
-  cifs_demultiplex_thread (fs/smb/client/connect.c:1355)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
+With a delay between the two stores, an unprivileged process that
+listed a directory during its copy-up saw only "." and "..", and its
+next getdents freed the readdir cache of another descriptor.
 
-  Freed by task 148:
-  netfs_put_subrequest (fs/netfs/objects.c:267)
-  netfs_read_collection (fs/netfs/read_collect.c:460)
-  netfs_wait_for_in_progress (fs/netfs/misc.c:462)
+Fix this by setting OVL_WHITEOUTS before ovl_inode_update(), so that
+ovl_dir_reset() agrees with ovl_dir_open(), and by testing
+OVL_TYPE_MERGE() of the path type in ovl_dir_open(), so that an open
+that observes the upper dentry never iterates a merge dir as a real
+dir, regardless of the order in which it observes the flag.
 
-Return the socket error immediately, as this path did before the iterator
-conversion.  This also avoids adding a negative length to total_read.
-
+Fixes: b79e05aaa166 ("ovl: no direct iteration for dir with origin xattr")
 Cc: stable@vger.kernel.org
-Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
-Reported-by: co+24c7c12d69e63c6d@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: test OVL_TYPE_MERGE() instead of smp_rmb() in ovl_dir_open()]
+Link: https://lore.kernel.org/linux-unionfs/CAOQ4uxh-1J2OBjnDVbrrrjy1puSOW0kABvghN85ih6dtKUBTyA@mail.gmail.com/
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/transport.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/overlayfs/copy_up.c |    2 +-
+ fs/overlayfs/readdir.c |    3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -1312,6 +1312,8 @@ cifs_readv_receive(struct TCP_Server_Inf
- #endif
- 		length = cifs_read_iter_from_socket(server, &rdata->subreq.io_iter,
- 						    data_len);
-+	if (length < 0)
-+		return length;
- 	if (length > 0)
- 		rdata->got_bytes += length;
- 	server->total_read += length;
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -843,9 +843,9 @@ static int ovl_copy_up_workdir(struct ov
+ 
+ 	if (!c->metacopy)
+ 		ovl_set_upperdata(inode);
+-	ovl_inode_update(inode, temp);
+ 	if (S_ISDIR(inode->i_mode))
+ 		ovl_set_flag(OVL_WHITEOUTS, inode);
++	ovl_inode_update(inode, temp);
+ out:
+ 	ovl_end_write(c->dentry);
+ 
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -1053,7 +1053,8 @@ static int ovl_dir_open(struct inode *in
+ 		return PTR_ERR(realfile);
+ 	}
+ 	od->realfile = realfile;
+-	od->is_real = ovl_dir_is_real(inode);
++	od->is_real = !OVL_TYPE_MERGE(type) &&
++		      !ovl_test_flag(OVL_WHITEOUTS, inode);
+ 	od->is_upper = OVL_TYPE_UPPER(type);
+ 	file->private_data = od;
+ 
 
 
