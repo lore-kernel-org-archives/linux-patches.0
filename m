@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827018;
-	b=rvPjmdytbhrBNv0Yef3kust9Hoj/BLQGda2hyI9bWAFjGZWBaom1hWNjWSMN7UPfJjV+
-	 GpMEL3pDEOHubvzTS4aDNJvYhq4IU6LlvAfm39aHeZsleQssD9D+zxD0IuyO3ocnAGPzP
-	 MUjYSvvXncBGzYrqEhavMY2fY+plgN6MtJi0u/U5CcIqjmsbnrAx5xvjzb8C465zi2maG
-	 944WjOkil28tnTr/2b9KwYAv9i4u3MJKfwJ0ofgSQ4pvbNBQimJ5MUS7efOfS0mqIwppl
-	 5w0BHoEpXsSGq4FBl7negxkmVk33aRAa7xMuuwR3Dxn/CwAIpjArcX2I3kY6EZXeYJQ==
+	t=1793827020;
+	b=pyvUfCtDPfCmOOuQZlYWgxK6fJARr9RjaljJPkd7l6QH5ZvH8RWb0HVSket/HFPSuK3P
+	 pFuiZcvPMHR51LhvVS2M9n5pJwE3vbPwsEP+1I3Nx6Jmxm4zPOuoMcBhL1FAkkVTdEN/W
+	 WfaQH92Hx/1a4EkuLiAoH2LSCVOmvWqt9EBdr0jAfzRjplgRBmVZSOjqrm40UyneuXoa5
+	 BwrNF3KLmtnOl668GUGeNc6BWsFR8O4AtwtxzG0q63tpuESz1A56brTPDQaWXl64PQZd5
+	 uz9N6vf6OdwQqic0INMX7qEQhPxFCiBzurpyZziDM0UEN/j68eNcvp60ssQXTqTdb0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4aCNFDlpVofmP8pwDwgAMKjZ2XMynjjdDtdcGdxVeLk=;
-	b=s7g67W4eOgl5a/D/rq1PlBIIThjgpGLtZU9xdFfQT/M2UKVG643jHhIdneyRyYkCVDKc
-	 bZ4lro7cYlL6eJrZ2859EkdLDRWR84Yj0Jn4SlteLExY/uHSbRTto2aIgI0yrD1NZRIlo
-	 bm7P8xZ1XaA66yDF9T9fxyN0wdigDutDC0ogFBRQCeDd8krJ4HhUJP7ZeNuidg/0CjRNG
-	 GBwABXzrHMnxHk8L9uu0k3EkAXIMpH0EuVSojdRuoEtxADRWMy8p6+2IQI1CVGDsreE0J
-	 iRJo4+YtWVav1De1WxMBnIlSLt1V3SFs4v997N5NDcNkohQ+O1tISGzyYygzeaIi+Tg==
+	bh=VOa2QTCuRtzKxhkNPbxE+1nXJ+rjs8ylpw0AG6Qrazg=;
+	b=reg8TehodKOMV28s0mO7QH4iUG6exIePpgBRXOGKJsmTb9fI/TF4Y38U+WGv34+J6AZG
+	 ATF2VsU9MA7xDGVS9ffKzC6QbwcvAcDow+1S/Ui8a/AhqxujWmKf+CRnlFLwhnd8EZJ95
+	 tyzxJ4rpZLevm88FaHgLJUV2ACqxvncU/w24s8XkLdebxV1O5WdQDbsk14x9utjEfp1YA
+	 BcQWZ54YpmKrq+7wJfmX+Zfjs5ypv29OZmcgeGLckx/Zdrpb8Wwm+HvnFPi8zT3L91aDD
+	 8t5JJ7OSl9Uzg3vGNkna2tdht9lJQR0/pIx4iZb9lxPFypHaaRFwkBQEmHdqsNZH+7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wuki42zF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EEV6684T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BA06086E43;
-	Wed,  4 Nov 2026 21:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84FC607490E;
+	Wed,  4 Nov 2026 21:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wuki42zF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8B91F0093A;
-	Wed,  4 Nov 2026 21:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EEV6684T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AA21F00A16;
+	Wed,  4 Nov 2026 21:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827017;
-	bh=4aCNFDlpVofmP8pwDwgAMKjZ2XMynjjdDtdcGdxVeLk=;
+	s=korg; t=1793827019;
+	bh=VOa2QTCuRtzKxhkNPbxE+1nXJ+rjs8ylpw0AG6Qrazg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wuki42zF9+dfwQqo7C7VXT0LFtQD/BsL4+X8RLJFj1O5MP4byhFLrDdH9U9CmaUGo
-	 ocGH29fJ89LO/RCmftfn66a1zDyaj1oST0dUzPdYLHskioTBLZC0ZU3v2vpzbIXtRM
-	 JNELURoDJv0dTyH9Wf5s6obSH6ZB3LmKBv80JWrs=
+	b=EEV6684TKpOmp5sh7q75PKQMX1OmU4sOhKqBayjz5pT9V17p5TIcLdc6Sh3aTPKpJ
+	 QczMq8IbVlSnulhDwL2G3/GVSpY1QP3x4VP7bGwwVJw8rSUMB4tJo85O8ExReVUUtN
+	 SQI7yZHY+3GHQlMAh+7Ya83PklFMPoDhdiKH9jcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deep Shah <deepshah146@gmail.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 7.3 146/547] RDMA/uverbs: Fix DMABUF use-after-free during ufile cleanup
-Date: Wed,  4 Nov 2026 16:05:30 -0500
-Message-ID: <20261104211042.315449828@linuxfoundation.org>
+Subject: [PATCH 7.3 147/547] RDMA/irdma: avoid use-after-free in icrdma_remove
+Date: Wed,  4 Nov 2026 16:05:31 -0500
+Message-ID: <20261104211042.343602107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,218 +67,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deep Shah <deepshah146@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 2854f9025d4ef6c4566f71e52d7f496d9a0f5737 upstream.
+commit 8a8088b899e4cdfe558428cd6113d45df81625be upstream.
 
-The DMABUF release can race with ufile cleanup. When the cleanup holds
-hw_destroy_rwsem for write, uverbs_uobject_release() fails its trylock
-and leaves the uobject on the ufile list, but the dma_buf is freed as
-soon as the release returns. The cleanup then destroys the uobject and
-uses the freed dma_buf:
+icrdma_remove() dereferences iwdev after calling
+irdma_ib_unregister_device():
 
-  BUG: KASAN: slab-use-after-free in uverbs_dmabuf_fd_destroy_uobj+0x46/0x200
-  Read of size 8 at addr ff11000109cf14b0 by task repro/435
-  Call Trace:
-   uverbs_dmabuf_fd_destroy_uobj+0x46/0x200
-   destroy_hw_fd_uobject+0x3f/0x50
-   uverbs_destroy_uobject+0xc5/0x380
-   __uverbs_cleanup_ufile+0x1a8/0x260
-   uverbs_destroy_ufile_hw+0x54/0x160
-   ib_uverbs_close+0x34/0x110
-  Allocated by task 435:
-   dma_buf_export+0x1b5/0x530
-   ib_uverbs_handler_UVERBS_METHOD_DMABUF_ALLOC+0x223/0x3f0
-  Freed by task 436:
-   kfree+0x301/0x530
-   dentry_kill+0x14c/0x560
-   __fput+0x23a/0x4a0
+  irdma_ib_unregister_device(iwdev)
+    -> ib_unregister_device(&iwdev->ibdev)
+      -> __ib_unregister_device()
+        -> ib_dealloc_device()
 
-rdma_user_mmap_entry_remove() dereferences the same pointer.
+irdma registers irdma_ib_dealloc_device() as the dealloc_driver
+callback in its ib_device_ops. The RDMA core explicitly documents
+ib_unregister_device() that when ops.dealloc_driver is used, ib_dev
+will be freed upon return from the function.
 
-Protect the stored dma_buf pointer with a mutex and clear it before
-release returns. Use a shared revoke helper so uobject destruction and
-mmap entry removal both skip a cleared pointer. Hold a temporary uobject
-reference across uverbs_uobject_release() and the pointer update.
+The ib_device is embedded in struct irdma_device and iwdev itself was
+allocated by ib_alloc_device(irdma_device, ibdev). Consequently, once
+irdma_ib_unregister_device() returns, iwdev must no longer be
+dereferenced.
 
-Use a separate mutex because uobject destruction can free the mmap entry
-before release finishes. Map and unmap use attachment->dmabuf directly,
-so they do not need to take the new mutex while holding the reservation
-lock.
+However, icrdma_remove() currently accesses iwdev->rf afterwards when
+deinitializing interrupts, destroying ah_tbl_lock, and freeing rf.
+Although the final ib_device storage is released with kfree_rcu(), the
+object lifetime has already ended and callers must not rely on the RCU
+grace period to continue dereferencing iwdev.
 
-Fixes: 0ac6f4056c4a ("RDMA/uverbs: Add DMABUF object type and operations")
+Save iwdev->rf before unregistering the RDMA device and use the saved
+pointer for the remaining cleanup.
+
+This issue was found by manual code inspection.
+
+Fixes: 8498a30e1b94 ("RDMA/irdma: Register auxiliary driver and implement private channel OPs")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Deep Shah <deepshah146@gmail.com>
-Link: https://patch.msgid.link/20261015083637.200958-3-deepshah146@gmail.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260914122840.1709743-1-lgs201920130244@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/ib_core_uverbs.c          |   10 -----
- drivers/infiniband/core/uverbs.h                  |   37 ++++++++++++++++++++
- drivers/infiniband/core/uverbs_std_types_dmabuf.c |   39 ++++++++++++----------
- 3 files changed, 61 insertions(+), 25 deletions(-)
+ drivers/infiniband/hw/irdma/icrdma_if.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/core/ib_core_uverbs.c
-+++ b/drivers/infiniband/core/ib_core_uverbs.c
-@@ -244,16 +244,8 @@ void rdma_user_mmap_entry_remove(struct
- 	entry->driver_removed = true;
- 	xa_unlock(&entry->ucontext->mmap_xa);
- 	list_for_each_entry_safe(uverbs_dmabuf, tmp, &entry->dmabufs, dmabufs_elm) {
--		dma_resv_lock(uverbs_dmabuf->dmabuf->resv, NULL);
- 		list_del(&uverbs_dmabuf->dmabufs_elm);
--		uverbs_dmabuf->revoked = true;
--		dma_buf_invalidate_mappings(uverbs_dmabuf->dmabuf);
--		dma_resv_wait_timeout(uverbs_dmabuf->dmabuf->resv,
--				      DMA_RESV_USAGE_BOOKKEEP, false,
--				      MAX_SCHEDULE_TIMEOUT);
--		dma_resv_unlock(uverbs_dmabuf->dmabuf->resv);
--		kref_put(&uverbs_dmabuf->kref, ib_uverbs_dmabuf_done);
--		wait_for_completion(&uverbs_dmabuf->comp);
-+		ib_uverbs_dmabuf_revoke(uverbs_dmabuf);
- 	}
- 	mutex_unlock(&entry->dmabufs_lock);
+--- a/drivers/infiniband/hw/irdma/icrdma_if.c
++++ b/drivers/infiniband/hw/irdma/icrdma_if.c
+@@ -318,14 +318,15 @@ static void icrdma_remove(struct auxilia
+ 		container_of(aux_dev, struct iidc_rdma_core_auxiliary_dev, adev);
+ 	struct iidc_rdma_core_dev_info *cdev_info = idc_adev->cdev_info;
+ 	struct irdma_device *iwdev = auxiliary_get_drvdata(aux_dev);
+-	u8 rdma_ver = iwdev->rf->rdma_ver;
++	struct irdma_pci_f *rf = iwdev->rf;
++	u8 rdma_ver = rf->rdma_ver;
  
---- a/drivers/infiniband/core/uverbs.h
-+++ b/drivers/infiniband/core/uverbs.h
-@@ -42,6 +42,8 @@
- #include <linux/mutex.h>
- #include <linux/completion.h>
- #include <linux/cdev.h>
-+#include <linux/dma-buf.h>
-+#include <linux/dma-resv.h>
+ 	ice_rdma_update_vsi_filter(cdev_info, iwdev->vsi_num, false);
+ 	irdma_ib_unregister_device(iwdev);
+-	icrdma_deinit_interrupts(iwdev->rf, cdev_info);
+-	mutex_destroy(&iwdev->rf->ah_tbl_lock);
++	icrdma_deinit_interrupts(rf, cdev_info);
++	mutex_destroy(&rf->ah_tbl_lock);
  
- #include <rdma/ib_verbs.h>
- #include <rdma/ib_umem.h>
-@@ -135,6 +137,13 @@ struct ib_uverbs_completion_event_file {
+-	kfree(iwdev->rf);
++	kfree(rf);
  
- struct ib_uverbs_dmabuf_file {
- 	struct ib_uobject uobj;
-+	/*
-+	 * Serializes users of dmabuf with the dma_buf's release, which sets it
-+	 * to NULL. The uobject can outlive the dma_buf while it waits to be
-+	 * destroyed. The map and unmap callbacks use attachment->dmabuf
-+	 * instead of taking this lock.
-+	 */
-+	struct mutex dmabuf_release_lock;
- 	struct dma_buf *dmabuf;
- 	struct list_head dmabufs_elm;
- 	struct rdma_user_mmap_entry *mmap_entry;
-@@ -359,6 +368,34 @@ static inline void ib_uverbs_dmabuf_done
- 	complete(&priv->comp);
- }
- 
-+/*
-+ * Revoke the dmabuf and wait for all of its DMA mappings to be gone. Must be
-+ * called with the mmap entry's dmabufs_lock held, after the dmabuf has been
-+ * removed from the entry's dmabufs list, so it runs once per dmabuf. Lock
-+ * order is dmabufs_lock, dmabuf_release_lock, then the dma_resv lock.
-+ */
-+static inline void ib_uverbs_dmabuf_revoke(struct ib_uverbs_dmabuf_file *priv)
-+{
-+	mutex_lock(&priv->dmabuf_release_lock);
-+	if (priv->dmabuf) {
-+		dma_resv_lock(priv->dmabuf->resv, NULL);
-+		priv->revoked = true;
-+		dma_buf_invalidate_mappings(priv->dmabuf);
-+		dma_resv_wait_timeout(priv->dmabuf->resv,
-+				      DMA_RESV_USAGE_BOOKKEEP, false,
-+				      MAX_SCHEDULE_TIMEOUT);
-+		dma_resv_unlock(priv->dmabuf->resv);
-+	} else {
-+		/* A released dma_buf has no attachments left to invalidate */
-+		priv->revoked = true;
-+	}
-+	mutex_unlock(&priv->dmabuf_release_lock);
-+
-+	kref_put(&priv->kref, ib_uverbs_dmabuf_done);
-+	/* Wait till all DMA unmaps are completed */
-+	wait_for_completion(&priv->comp);
-+}
-+
- int __uverbs_cleanup_ufile(struct ib_uverbs_file *ufile,
- 			   enum rdma_remove_reason reason);
- 
---- a/drivers/infiniband/core/uverbs_std_types_dmabuf.c
-+++ b/drivers/infiniband/core/uverbs_std_types_dmabuf.c
-@@ -28,7 +28,7 @@ uverbs_dmabuf_map(struct dma_buf_attachm
- 	struct ib_uverbs_dmabuf_file *priv = attachment->dmabuf->priv;
- 	struct sg_table *ret;
- 
--	dma_resv_assert_held(priv->dmabuf->resv);
-+	dma_resv_assert_held(attachment->dmabuf->resv);
- 
- 	if (priv->revoked)
- 		return ERR_PTR(-ENODEV);
-@@ -49,7 +49,7 @@ static void uverbs_dmabuf_unmap(struct d
- {
- 	struct ib_uverbs_dmabuf_file *priv = attachment->dmabuf->priv;
- 
--	dma_resv_assert_held(priv->dmabuf->resv);
-+	dma_resv_assert_held(attachment->dmabuf->resv);
- 	dma_buf_free_sgt(attachment, sgt, dir);
- 	kref_put(&priv->kref, ib_uverbs_dmabuf_done);
- }
-@@ -73,7 +73,25 @@ static void uverbs_dmabuf_release(struct
- 	if (!priv->uobj.context)
- 		return;
- 
-+	/*
-+	 * uverbs_uobject_release() may drop the last reference to the uobject,
-+	 * keep it around until the dmabuf pointer below has been cleared.
-+	 */
-+	uverbs_uobject_get(&priv->uobj);
- 	uverbs_uobject_release(&priv->uobj);
-+
-+	/*
-+	 * The dma_buf is freed once this function returns. If the uobject was
-+	 * not destroyed above, because the ufile is concurrently being cleaned
-+	 * up, it is still reachable through the ufile's uobjects list and the
-+	 * mmap entry's dmabufs list. Make sure those paths are not in the
-+	 * middle of using the dma_buf and cannot use it afterwards.
-+	 */
-+	mutex_lock(&priv->dmabuf_release_lock);
-+	priv->dmabuf = NULL;
-+	mutex_unlock(&priv->dmabuf_release_lock);
-+
-+	uverbs_uobject_put(&priv->uobj);
- }
- 
- static const struct dma_buf_ops uverbs_dmabuf_ops = {
-@@ -99,6 +117,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_
- 	off_t pg_off;
- 	int ret;
- 
-+	mutex_init(&uverbs_dmabuf->dmabuf_release_lock);
-+
- 	ret = uverbs_get_const(&pg_off, attrs, UVERBS_ATTR_ALLOC_DMABUF_PGOFF);
- 	if (ret)
- 		return ret;
-@@ -162,24 +182,11 @@ static void uverbs_dmabuf_fd_destroy_uob
- {
- 	struct ib_uverbs_dmabuf_file *uverbs_dmabuf =
- 		container_of(uobj, struct ib_uverbs_dmabuf_file, uobj);
--	bool wait_for_comp = false;
- 
- 	mutex_lock(&uverbs_dmabuf->mmap_entry->dmabufs_lock);
--	dma_resv_lock(uverbs_dmabuf->dmabuf->resv, NULL);
- 	if (!uverbs_dmabuf->revoked) {
--		uverbs_dmabuf->revoked = true;
- 		list_del(&uverbs_dmabuf->dmabufs_elm);
--		dma_buf_invalidate_mappings(uverbs_dmabuf->dmabuf);
--		dma_resv_wait_timeout(uverbs_dmabuf->dmabuf->resv,
--				      DMA_RESV_USAGE_BOOKKEEP, false,
--				      MAX_SCHEDULE_TIMEOUT);
--		wait_for_comp = true;
--	}
--	dma_resv_unlock(uverbs_dmabuf->dmabuf->resv);
--	if (wait_for_comp) {
--		kref_put(&uverbs_dmabuf->kref, ib_uverbs_dmabuf_done);
--		/* Let's wait till all DMA unmap are completed. */
--		wait_for_completion(&uverbs_dmabuf->comp);
-+		ib_uverbs_dmabuf_revoke(uverbs_dmabuf);
- 	}
- 	mutex_unlock(&uverbs_dmabuf->mmap_entry->dmabufs_lock);
- 
+ 	pr_debug("INIT: Gen[%d] func[%d] device remove success\n",
+ 		 rdma_ver, PCI_FUNC(cdev_info->pdev->devfn));
 
 
