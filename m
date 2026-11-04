@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793827154;
-	b=KKNXcoVMxR2rZKSX6Y/d8dy7TVnvoL6guwzWoJQ24e+LLFaUQ/WpOBGoxTj9grZCVrjc
-	 dRVMux1IUGnCrxfEvPknIEOBffoPkOzyehW+9wT2QmIV8H0dGgGuzJ128iL+kiwz1n0VX
-	 AUolQQuoggOtb0/wRy208mcrsxR9DTlO2PUX5nmtU4J6ikSUAzcFx0eS9k368D06U8nCv
-	 0a1krGTIF2iM5xQsnmXyPPYxqJf4flft69Z/utyrCsv5Uu0VYm7feM2TWfeuh63qbo7Z8
-	 2glqCl4Zcx2/NbeWoTFg2IxeJLu45btKS7JQnzTUoRLt+K6alPwLEVkSwiOm88VuABg==
+	b=PyvjHeM9u6ZWMRMSMB6JhdyX6AC/AL4BeIQ5IgHE7iNXh11dlrx4MIfjx+HlL5tWdejx
+	 U/duFTP4VmFTazpye5nVxRUmolPpLchqpkzTPBLSSq5SXUCPKKKi2NEjX3rcluYwvw4Cf
+	 SfiQjetNqbwGchm722xfVKVb0mViXvgKimF0TRZ4/pxaY9qgSikDHtDoiu1lsKiYBetP9
+	 UX6LCJvodDH/h0Cu/pVOQ+o+Ozouq2+JuQl3z5Q0p26yrixJMRJ1gd+qlJNVQPS7ykEJh
+	 wKK5YpgaF+yDpZCtIInHHJnW1QNgBqhb9gqmBJPv9dVFVdjVTr1GmF9ud44Bp9Yx+EQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793827154;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qoG7fCKKOdZLL6CKVkjWlssucWmYB0aTLSlvGqTxZQE=;
-	b=qdAzYpAnX6m7aTxpQ9pDAhha2DRo2VHBbeLCRvP4WSvz8M6lJQJs2YVj3KM2gTjeDSwq
-	 ewngqW1wnvr6Qc4sKseDoc1T8UuABRiPKYnfFDiya8egKEE/9CDXBN4xX9zT2RFKEKYq7
-	 uiLazEh6csgzNMhOOYmsSmk/lIMXT2LnwTWD3TGBgNw+PdO4wzN4onNvjXZYeXHmZmINg
-	 VT1LiCTsdhmbEgzpmpb9GPmIY6uFOe/YZdqVkUHlE2QhPT0IxrOY1MOr+RJmt7E9f98S7
-	 delUyc0YSourT6ws4dRC5ykoMwPcbmu5PaMoZeov/VHnt4d7x6NTe0GGRrZRfOc7SmQ==
+	bh=KUaK5UVVDAwM2rxv3QQBBOgAkapCEvDQgczFJV8ChOM=;
+	b=Vt+I+cpgrafEE0W5Nxp5gn1CKZvLkcaDzBX05BuJfloTF/yb+fPJxS4JLn3wLEjfBl03
+	 +4dWtzb/4YTWabCWU0tigZPvQ7BZcN/29RGdz04WWU0qQ6o6NtJHrsf0I7Eq/L/YVJAEK
+	 B/+/ombvs/U4ljEjsU1xjSMXwlDlL4wjDIbiXqCwZMXBEcvx6VYeJRxQ2DNKlEsdPj18V
+	 TH6wdcjf1HVhW/ixYAEDbhZMyEEYvRzuMQsiFoT1QSyOvLsABgoesMDXEE+xMUruHsLpy
+	 zAX+WNqHFxpwMUjIzZwh/Xn+SMdg77F+qKmF8axC0HjN6+p/rmxQChAqS4YF1+fdmew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Uw13u/7B";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8KlYy7a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BF3606AB31;
-	Wed,  4 Nov 2026 21:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8816074F82;
+	Wed,  4 Nov 2026 21:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uw13u/7B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF87D1F00919;
-	Wed,  4 Nov 2026 21:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8KlYy7a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD17E1F00A16;
+	Wed,  4 Nov 2026 21:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827149;
-	bh=qoG7fCKKOdZLL6CKVkjWlssucWmYB0aTLSlvGqTxZQE=;
+	s=korg; t=1793827154;
+	bh=KUaK5UVVDAwM2rxv3QQBBOgAkapCEvDQgczFJV8ChOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uw13u/7BeXMED1ax+WQ4V8JKD0zL6WZL6FgPYDBKY9icBm1H1f4H8g5jaAwjGYMm0
-	 znxNrTOdTdAzRjIwXvm+7+kjFf4zvqhjNOr0hJxYJ13GDuHnSYSCwbbHA5R/paMbo2
-	 sHKqkzYVKew1fFyrt59yOJsP0hjpXBGLt3WpXjds=
+	b=r8KlYy7azgt63Bb6OS/5Feo9IQ0haXeTOstRwYI8j+dhpTJYPZrXDgkb3skW3emcs
+	 ULYfcoBmLS2Y0kQl2E9hZ4ZB8djO3h8n6wj+vZ+pUyN+B4P05XrmscFr2OVmaFYbyF
+	 qjr7yeKCZC7weGPyxMV0NqQBAKXOBU0G02SI8wnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Patel <ripatel@wii.dev>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.3 216/547] genirq: Defer kfree(irqaction) until irq_thread_dtor() finishes
-Date: Wed,  4 Nov 2026 16:06:40 -0500
-Message-ID: <20261104211044.290328184@linuxfoundation.org>
+	Brian Foster <bfoster@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.3 220/547] iomap: dont resubmit an ioend after ->writeback_submit() failed
+Date: Wed,  4 Nov 2026 16:06:44 -0500
+Message-ID: <20261104211044.404647898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,147 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Patel <ripatel@wii.dev>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-commit d04adff6860587e843948b0c31174f8ae11b8dfe upstream.
+commit 3f517370076f1fedaa38cd8c78ceb73616b79336 upstream.
 
-When an interrupt thread exits abnormally via do_exit() (e.g. the interrupt
-handler oopses) without returning from irq_thread(), a concurrent call to
-free_irq() could free the irqaction before the irq_thread_dtor() exit task
-work runs.
+iomap_add_to_ioend() submits the pending ioend through
+->writeback_submit() before allocating a new one for the current range.
+When the submission fails the helper completes the ioend with an error,
+but iomap_add_to_ioend() returns the error without clearing
+wpc->wb_ctx.  iomap_writepages() then submits whatever wpc->wb_ctx
+points to, so the already completed ioend is submitted a second time.
 
-  irq thread (oopsed)                 free_irq()
-  -------------------                 ----------
-  do_exit()
-    exit_mm()
-      complete_vfork_done()  -------> kthread_stop() returns
-    exit_files() ...                  kfree(action)
-    exit_task_work()
-      irq_thread_dtor()
-        action->...                   <- use-after-free
+For XFS the second bio_endio() lands in xfs_end_bio(), which
+list_add_tail()s the already linked ioend into ip->i_ioend_list.  This
+corrupts the list and leaves a use-after-free/double-free window against
+the ioend completion worker.  Reproduced with a fault-injected
+->writeback_submit() failure on a reflinked XFS file with several
+CoW writeback ranges in flight: the unfixed kernel hits repeated
+"list_add double add" warnings from __list_add_valid_or_report(),
+the fixed kernel fails writeback cleanly.
 
-Track the pending exit work with the IRQTF_EXIT_WORK thread flag, and have
-__free_irq() wait for the bit to clear before kfree().
+Clear wpc->wb_ctx when ->writeback_submit() fails.  The old
+iomap_submit_ioend() cleared the context unconditionally; that clear was
+lost when submission moved to iomap_ioend_writeback_submit().  The final
+->writeback_submit() call in iomap_writepages() needs no equivalent fix:
+it is the last thing the function does before returning, and every
+caller allocates its iomap_writepage_ctx on the stack for a single call,
+so wpc->wb_ctx is never read again afterwards.
 
-irq_thread_dtor() only runs on irq_thread abnormal exit. If that dtor also
-faults, free_irq() will hang indefinitely, but double IRQ thread faults
-require a reboot anyways.
-
-[ tglx: Add missing include ]
-
-Fixes: ed3e694d78cc ("move exit_task_work() past exit_files() et.al.")
-Signed-off-by: Richard Patel <ripatel@wii.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009145842.1616117-2-ripatel@wii.dev
+Fixes: f4fa7981fa26 ("iomap: hide ioends from the generic writeback code")
+Cc: stable@vger.kernel.org # v6.17
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/90fbd42df4f51306e57a95830d2d53873f630eb9.1790342457.git.parri.andrea@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/internals.h |    2 ++
- kernel/irq/manage.c    |   26 ++++++++++++++++++++------
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ fs/iomap/ioend.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -36,6 +36,7 @@ extern struct irqaction chained_action;
-  * IRQTF_AFFINITY  - irq thread is requested to adjust affinity
-  * IRQTF_FORCED_THREAD  - irq action is force threaded
-  * IRQTF_READY     - signals that irq thread is ready
-+ * IRQTF_EXIT_WORK - irq thread exit task_work is pending
-  */
- enum {
- 	IRQTF_RUNTHREAD,
-@@ -43,6 +44,7 @@ enum {
- 	IRQTF_AFFINITY,
- 	IRQTF_FORCED_THREAD,
- 	IRQTF_READY,
-+	IRQTF_EXIT_WORK,
- };
- 
- /*
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -21,6 +21,7 @@
- #include <linux/sched/isolation.h>
- #include <uapi/linux/sched/types.h>
- #include <linux/task_work.h>
-+#include <linux/wait_bit.h>
- 
- #include "internals.h"
- 
-@@ -1176,17 +1177,14 @@ void wake_threads_waitq(struct irq_desc
- 		wake_up(&desc->wait_for_threads);
- }
- 
--static void irq_thread_dtor(struct callback_head *unused)
-+static void __irq_thread_dtor(struct irqaction *action)
- {
- 	struct task_struct *tsk = current;
- 	struct irq_desc *desc;
--	struct irqaction *action;
- 
- 	if (WARN_ON_ONCE(!(current->flags & PF_EXITING)))
- 		return;
- 
--	action = kthread_data(tsk);
--
- 	pr_err("exiting task \"%s\" (%d) is an active IRQ thread (irq %d)\n",
- 	       tsk->comm, tsk->pid, action->irq);
- 
-@@ -1203,6 +1201,14 @@ static void irq_thread_dtor(struct callb
- 	irq_finalize_oneshot(desc, action);
- }
- 
-+static void irq_thread_dtor(struct callback_head *unused)
-+{
-+	struct irqaction *action = kthread_data(current);
-+
-+	__irq_thread_dtor(action);
-+	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
-+}
-+
- static void irq_wake_secondary(struct irq_desc *desc, struct irqaction *action)
- {
- 	struct irqaction *secondary = action->secondary;
-@@ -1263,6 +1269,7 @@ static int irq_thread(void *data)
- 	else
- 		handler_fn = irq_thread_fn;
- 
-+	set_bit(IRQTF_EXIT_WORK, &action->thread_flags);
- 	init_task_work(&on_exit_work, irq_thread_dtor);
- 	task_work_add(current, &on_exit_work, TWA_NONE);
- 
-@@ -1283,6 +1290,7 @@ static int irq_thread(void *data)
- 	 * oneshot mask bit can be set.
- 	 */
- 	task_work_cancel_func(current, irq_thread_dtor);
-+	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
- 	return 0;
- }
- 
-@@ -1853,6 +1861,12 @@ out_mput:
- 	return ret;
- }
- 
-+static void irq_stop_thread(struct irqaction *action)
-+{
-+	kthread_stop_put(action->thread);
-+	wait_on_bit(&action->thread_flags, IRQTF_EXIT_WORK, TASK_UNINTERRUPTIBLE);
-+}
-+
- /*
-  * Internal function to unregister an irqaction - used to free
-  * regular and special interrupts that are part of the architecture.
-@@ -1958,9 +1972,9 @@ static struct irqaction *__free_irq(stru
- 	 * the same bit to a newly requested action.
- 	 */
- 	if (action->thread) {
--		kthread_stop_put(action->thread);
-+		irq_stop_thread(action);
- 		if (action->secondary && action->secondary->thread)
--			kthread_stop_put(action->secondary->thread);
-+			irq_stop_thread(action->secondary);
+--- a/fs/iomap/ioend.c
++++ b/fs/iomap/ioend.c
+@@ -246,8 +246,16 @@ ssize_t iomap_add_to_ioend(struct iomap_
+ new_ioend:
+ 		if (ioend) {
+ 			error = wpc->ops->writeback_submit(wpc, 0);
+-			if (error)
++			if (error) {
++				/*
++				 * ->writeback_submit() completed the ioend
++				 * with an error, so drop the stale context;
++				 * iomap_writepages() would otherwise submit
++				 * it a second time.
++				 */
++				wpc->wb_ctx = NULL;
+ 				return error;
++			}
+ 		}
+ 		wpc->wb_ctx = ioend = iomap_alloc_ioend(wpc, pos, ioend_flags);
  	}
- 
- 	/* Last action releases resources */
 
 
