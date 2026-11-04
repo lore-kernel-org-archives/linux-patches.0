@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828852;
-	b=HtmANxW0LlMmFUzIBfPviY20HJfdbhNHpShfRlMjhm7jfFEn/ntrSFazfny6ZSK6WO0Q
-	 faysoX6sMeFOJBOxLpLxvziffJIgNX+wDMGQqHSiJObBne3N9Rap0cgl1ixRZ7JkZIRcV
-	 Df0te8OkdTPBenKM3wwcuo20LE8ZC0kv2cGtqJakn3Jsi9qw7WUIE/22sDvxVSLStrqYv
-	 QLwokUQOdPyLQzEa0jXuxO56WkNWuu6lWydG3ETa2jtXJAhRJR5p6dT5pTMiF/alB0VcD
-	 xQTcZDRsCuRf98KdXtunUVOTkVxfGCxI9FmNIgNCGArg/29JdMNl3qVqsvwOn1pqHBQ==
+	t=1793828853;
+	b=NrwMG5oMMWi6FSVPXkuGG/bsUN7k2pcoVa78jYnC6bfJpNebzjWVMy65z0gOrFL1+Fnr
+	 iXDSXljtwwkDPUr9VRLyyFhxcnqF/9PFiN54AUBIs014Yb/U8tP8R7OwcFs+YW2FBGr23
+	 G17C1PcUsl6gtHEOu+T8FBHg5ILNaYqCnVoLSSkTeLvGgI2iu7KYZqoCrY5RAq2gB99aV
+	 b5PgmhBj1MxDI/SJlDCQpZQxGhotMrEmUoEIjU8oCOdmfYPZVhUkiBMtyntCWlJT4gtk7
+	 fms94LI4tv9RsdWj5GlJO+fIloG6giLY6hUtcW3gZfdWaa+VVJcN3+yDnWIkCVFlxTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828852;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828853;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K6rl0+8Tx5GcaqoEuxXMAcaZLgp5RkgENrHn4pIUXag=;
-	b=bAsVD5zTbRG2xlVjmZP4TBvwEJmn+WdKuOxHqyREheN7ttGKl5R9z2K37+VCGixcWskE
-	 5Jg7dJP8SsIvniez6M30Xc4H+37Bc99gQ1z6SobYvWs97rKarlNyLmxyNcmnxsxfaqdbt
-	 yme1VjsUnFddDmXhWJXmvc35CjAMSuJDsr5seVG2BBOtbTN6E8m24eJM4wacKZpmq+puv
-	 8AIw9U1+DcH2reeG016MgpUBXOSfe6ZVxvNIcHHiock4TJLgeanFoCwjt2ZGN19+OvnrN
-	 lJIiyL2sWGlAKA1zBAR/6eNQYIuZvR3Z4nRtOg3SeoPMAyQK1OIXoFQ0wjq0D4qHVRQ==
+	bh=GqS4XGd7VMFWYaLZEmAQLhaP1o5s9DM6n13ME+ehbJU=;
+	b=WqN5KP6/5aHXJbTU1y4UC94Nbe9mliXAC2US1ez534M8dM1S/Cuktriei31Q69pXYNCm
+	 1aRvM1Yssbh5CxiDYZ8Ae+ti7QjLTgDHN6BvUGUeevgks6QTKpzmCmtf3b9cBoCqkiIfZ
+	 ujK7jQUk4GNXtOyeEhE8nFDLhT/JcIgMSsPN+dHu+e4jYweyRu4ztFVenTHmUsUzE0qCh
+	 sJzcJwj9silb9Y11xBs2WJ5Ca+BHzm9YogYZY7sBWAj4RCcXsbV4y613eao12tSI+N3Et
+	 Yp1B4dtEDRSNH6q0nOAqgWnn/dOzcubJMAWWsC2uJ0ewYxEPOLRZyF51++JmQLln0WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPLNqvcy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fysa5NqA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD879606A32D;
-	Wed,  4 Nov 2026 21:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729A7606A32D;
+	Wed,  4 Nov 2026 21:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPLNqvcy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DAC1F000C1;
-	Wed,  4 Nov 2026 21:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fysa5NqA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84D71F000C1;
+	Wed,  4 Nov 2026 21:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828851;
-	bh=K6rl0+8Tx5GcaqoEuxXMAcaZLgp5RkgENrHn4pIUXag=;
+	s=korg; t=1793828853;
+	bh=GqS4XGd7VMFWYaLZEmAQLhaP1o5s9DM6n13ME+ehbJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uPLNqvcyBxSTLgelsB7DpgFNyl7VSXS+KRWJwG+lQ+IS071xzWWO2RwrYdQo0DZ0e
-	 c1yEUh/I1k5ljMrH4NAKuuKf/GQVKwq7M1j1F2+dJGVphr3FSEZdRde0Ite9yRfjDd
-	 qYJnpUZMqj6ysFhYoRDB1gI/e6KjKiX22rHReaCI=
+	b=fysa5NqArZuL+FGvrZCUzDp6S5WCI3XUPml9jWnDSoJvvVLX7Dt0PWW9/v36TNxwZ
+	 H+P6QrlL/zVIHL5KrkLzKE0mwglz6sS/KVBenmCGesiXtGg+0hoTaPIUUrVdG3Dikp
+	 ubViEylDfrstFfD6o3ucPT0UzcFE3ZwdpVhFtzXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.3 263/547] media: rc: Ensure registered is cleared in error path
-Date: Wed,  4 Nov 2026 16:07:27 -0500
-Message-ID: <20261104211045.664031124@linuxfoundation.org>
+	co+24c7c12d69e63c6d@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 281/547] smb: client: stop processing a read response after a receive error
+Date: Wed,  4 Nov 2026 16:07:45 -0500
+Message-ID: <20261104211046.184124800@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,71 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 37efd09ba2c62e46e3a3a793025c186f8cd1a417 upstream.
+commit 51efca72345acdbedc4af76782d464bd15ba50ff upstream.
 
-If rc_register_device() fails, ensure that registered is not set to true.
-If lirc_register() succeeded, then userspace could have an open file
-descriptor open. This leads to a use-after-free.
+cifs_read_iter_from_socket() may call cifs_reconnect() before returning an
+error.  The reconnect path aborts pending mids and invokes their callbacks.
+The callback can then release the cifs_io_subrequest containing rdata.
 
-lirc_unregister() must be called with registered = false, else there is a
-possibility that an fd is open and polling, which would never return
-POLLERR unless registered is false.
+cifs_readv_receive() nevertheless continues after a negative return and may
+dereference rdata in cifs_readv_discard().  KASAN reports the resulting
+UAF:
 
-Note that registered must be changed under dev->lock, many functions
-read registered under lock (e.g. lirc_ioctl).
+  BUG: KASAN: slab-use-after-free in cifs_readv_receive
+  Read of size 4 by task cifsd
+  cifs_readv_receive (fs/smb/client/transport.c:1284)
+  cifs_demultiplex_thread (fs/smb/client/connect.c:1355)
+  kthread (kernel/kthread.c:436)
+  ret_from_fork (arch/x86/kernel/process.c:158)
 
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
-Signed-off-by: Sean Young <sean@mess.org>
+  Freed by task 148:
+  netfs_put_subrequest (fs/netfs/objects.c:267)
+  netfs_read_collection (fs/netfs/read_collect.c:460)
+  netfs_wait_for_in_progress (fs/netfs/misc.c:462)
+
+Return the socket error immediately, as this path did before the iterator
+conversion.  This also avoids adding a negative length to total_read.
+
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
+Reported-by: co+24c7c12d69e63c6d@bugs.sh
+Assisted-by: LLM
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/rc-main.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/smb/client/transport.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -1929,7 +1929,8 @@ int rc_register_device(struct rc_dev *de
- 			goto out_raw;
- 	}
- 
--	dev->registered = true;
-+	scoped_guard(mutex, &dev->lock)
-+		dev->registered = true;
- 
- 	rc = device_add(&dev->dev);
- 	if (rc)
-@@ -1949,7 +1950,7 @@ int rc_register_device(struct rc_dev *de
- 	if (dev->allowed_protocols != RC_PROTO_BIT_CEC) {
- 		rc = lirc_register(dev);
- 		if (rc < 0)
--			goto out_dev;
-+			goto out_lirc;
- 	}
- 
- 	if (dev->driver_type != RC_DRIVER_IR_RAW_TX) {
-@@ -1972,11 +1973,18 @@ int rc_register_device(struct rc_dev *de
- out_rx:
- 	rc_free_rx_device(dev);
- out_lirc:
--	if (dev->allowed_protocols != RC_PROTO_BIT_CEC)
-+	scoped_guard(mutex, &dev->lock)
-+		dev->registered = false;
-+
-+	if (device_is_registered(&dev->lirc_dev))
- 		lirc_unregister(dev);
--out_dev:
- 	device_del(&dev->dev);
-+	/* registered already cleared above */
-+	goto out_free_table;
- out_rx_free:
-+	scoped_guard(mutex, &dev->lock)
-+		dev->registered = false;
-+out_free_table:
- 	ir_free_table(&dev->rc_map);
- out_raw:
- 	ir_raw_event_free(dev);
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1317,6 +1317,8 @@ cifs_readv_receive(struct TCP_Server_Inf
+ #endif
+ 		length = cifs_read_iter_from_socket(server, &rdata->subreq.io_iter,
+ 						    data_len);
++	if (length < 0)
++		return length;
+ 	if (length > 0)
+ 		rdata->got_bytes += length;
+ 	server->total_read += length;
 
 
