@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831326;
-	b=FIyDoxPeTCb2ZbuBoeJhUl1Y/2YjpNtIrg5TEbTdHwk2MolMbBmUlpf9aiKR7af2aBwP
-	 3StG0grAL2k/IUtUmpgs+nL7/xK13fqH1t9FbKJnF/gSonHlX4gQG8eKWg7ui3G+bNrl6
-	 QJIhEer4C9cu4Du3YU9nzS8vrojjVb+6lJBu1a4idsc7TRvf5gzf5bWL5JKfniXNlUJCQ
-	 h4JoK5zxZ4Dj9oWD9CGuLi1vXI3BYSKCfL4QKMsq27oc/ndLFCMh0fe4Ci0KDeFnT3aso
-	 xH0Pjik8zIr9eEGNT3WeLHhiMH43lB9uw6BYIqIuujMsQzwJ6aHz6zjAT+TzKNJMXrQ==
+	t=1793831327;
+	b=1s9nKvoKbCSy2/FQGN+fTqlm75P0siLzXwMZXe8v4HYlojCg66N9IgIq1vfGXwKbHZTv
+	 9LQLjW+m9p3/BjLluLMbGCc4xF/FgjZT91AsV7UIMo+R5IrhcQ6vN2T86VIU8r+/9xTYY
+	 Ipd0CbWmOYIIUOSJoBauYX286m3CefE1lTEJ3YVDfReHfFyzhpQlX6RQnUVsO3W4/vl2I
+	 ic7jkdq0YeteIjMus8wGT1bnHy86jzszgLxgFrzaYIUDHnVgr2JT5BQvuCMpy4R24lq7U
+	 9Kniy4m2HzyIl5u1ZiEzIJTFA0gj+mGnCpvvYaY46Bo/8Ny4QimvublSs7QesADzQ9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831327;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1jUGWuiAiaOE3Ys+6bGHGOWs0rxOeD+kJInZDE0+zuc=;
-	b=RqAYD5H88D30Qf6rDkLQKN5vJ8W15lSKtBDefsxbDl+fnuhqlgtYmBjkLXKCOTEMX8Sz
-	 qkaEK8D+ik8Q5R2qCKw4h2koyfYrPiw9plaI1xdjMQK/CIjHybJE6K8z6Kc5tdTPgyPm6
-	 fMF0txflYeE/nbNIPVGZLMVhszKM9AtXhw+DSdolFM1PBuozF79pds6FLaEqahBu08HG9
-	 DDhR4VCOqL1/AdoZ1dWblx4pxQWI0WuBNpEh8UXJS+JmaBPmhMcAhkBgRMDYfnp4bUPdh
-	 MPvKmL+X1VzQ0VBLHPA+S3OKnMK/vNtnu1zgjQEORHWdrF1mDB9iaQhI8lG988gBlFw==
+	bh=rSPUPYoAqcG3vRo0UUlZ4CoLyb9RQMpOywXL8/NSVmk=;
+	b=EDsXwy9DmlhbrXO7ZJMXLa8XNPQgVYndru5aEdcVJiFW1NvbfVOCLPqfpEB4tCtPqSU9
+	 AAcekna0PgoBlaNDxiwCy+AHH7ZZVK3pMSAp5leeB/Apyd+ozPx2RlRhObbgAV1FA9nFh
+	 R9m1IraO74yHfzSLRZKT64yM5bmRRMwTx9aWZq6/iHDLXAOIJrGum6qZUfvRCZd4ljY1p
+	 UL9lhOvZVu+XbTsLJW1dVvfxUxdxpM6wzRnamr7COA4IBdnJzzD7cQGw49SWt/Do/JKTC
+	 4FaWRrVacjNJnbZI4QxdbWf77RUV0cM9RkllR3E0xaNVSvH7ilxsjyoTJeByznbRuRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGgcDE4P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hc7mVJ31;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C86606A33A;
-	Wed,  4 Nov 2026 22:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77042606A33A;
+	Wed,  4 Nov 2026 22:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGgcDE4P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4101F000C1;
-	Wed,  4 Nov 2026 22:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hc7mVJ31
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF081F000C1;
+	Wed,  4 Nov 2026 22:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831325;
-	bh=1jUGWuiAiaOE3Ys+6bGHGOWs0rxOeD+kJInZDE0+zuc=;
+	s=korg; t=1793831327;
+	bh=rSPUPYoAqcG3vRo0UUlZ4CoLyb9RQMpOywXL8/NSVmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KGgcDE4Par4GNQ06LgxtoURGZ1qljLPpnhRRihRHzsZ85ZK1UchI0EIhPqmaRDU84
-	 OACB6McKHNrPEkrsgsxjOXgIfdF9Mna3iEj7Mx1ZwgEJ7IcrGYmzGonavFbvQS0yyF
-	 5/xg/M1vLculmS1pobDVhDOph76WiTf3WBZmHS5c=
+	b=Hc7mVJ31dURNEFw+AQ4BGjvUzRFrcPcevMJ6OYlEENYUcpEPFSpFNi6CwGrUww4Sa
+	 KCtPP/qie9RFjsCR1sPw49jrFvy2xQoMBh02PXgeVT9kG3roqJMWCH7Peg9S3o6AKi
+	 9oST1iMtCa047CiSWQIifLloZaM4FHxWRBD9RKPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.18 0597/1005] serial: fix ioctl hangup race
-Date: Wed,  4 Nov 2026 16:05:30 -0500
-Message-ID: <20261104211100.580241861@linuxfoundation.org>
+	Xie Bo <xb@ultrarisc.com>,
+	Anup Patel <anup@brainfault.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0588/1005] RISC-V: KVM: Release unused page after MMU invalidation
+Date: Wed,  4 Nov 2026 16:05:21 -0500
+Message-ID: <20261104211100.335434089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,158 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Xie Bo <xb@ultrarisc.com>
 
-[ Upstream commit 8ca59f7baee7c72cf7729950b4ab2e7f910c9549 ]
+[ Upstream commit ed54fdb460a6e81d5f8f38388d1f10b385dd4a58 ]
 
-The tty ioctls can race with hangup and end up calling into a tty
-driver for a device that is already gone or powered down.
+If an MMU invalidation races with a G-stage fault, the fault handler skips
+installing the page but leaves ret set to zero. As a result,
+kvm_release_faultin_page() treats the page as used and can unnecessarily
+mark it dirty.
 
-Add the missing checks to make sure the port has not been hung up before
-accessing the hardware to avoid issues like kernel panic due to
-unclocked accesses.
+Track the invalidation retry separately and release the page as unused,
+while preserving the existing return value so that the vCPU retries the
+fault.
 
-Note that TIOCGSERIAL, TIOCGICOUNT do not access hardware and are
-therefore not affected by the race.
-
-Also note that the initialised check in uart_set_ldisc() added by commit
-2f70e49ed860 ("serial_core: Check for port state when tty is in error
-state") should have been done under the port lock to avoid racing with
-uart_do_autoconfig().
-
-Fixes: 04f378b198da ("tty: BKL pushdown")
-Cc: stable@kernel.org	# 2.6.26
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260910130816.642699-3-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2ed90cb0938a ("KVM: RISC-V: Retry fault if vma_lookup() results become invalid")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260810051544.3953925-2-xb@ultrarisc.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
+[ sashal: Dropped the is_hugetlb context line and used spin_lock/spin_unlock on mmu_lock instead of write_lock/write_unlock, so the unused flag hunks apply to this tree's older kvm_riscv_mmu_map(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c | 41 ++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ arch/riscv/kvm/mmu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index 5b6d4d67beabe..94da7977f6774 100644
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -899,7 +899,7 @@ static int uart_set_info(struct tty_struct *tty, struct tty_port *port,
- 	upf_t old_flags, new_flags;
- 	int retval;
- 
--	if (!uport)
-+	if (!uport || tty_io_error(tty))
- 		return -EIO;
- 
- 	new_port = new_info->port;
-@@ -1126,7 +1126,7 @@ static int uart_break_ctl(struct tty_struct *tty, int break_state)
- 	guard(mutex)(&port->mutex);
- 
- 	uport = uart_port_check(state);
--	if (!uport)
-+	if (!uport || tty_io_error(tty))
- 		return -EIO;
- 
- 	if (uport->type != PORT_UNKNOWN && uport->ops->break_ctl)
-@@ -1151,7 +1151,7 @@ static int uart_do_autoconfig(struct tty_struct *tty, struct uart_state *state)
- 	 */
- 	scoped_cond_guard(mutex_intr, return -ERESTARTSYS, &port->mutex) {
- 		uport = uart_port_check(state);
--		if (!uport)
-+		if (!uport || tty_io_error(tty))
- 			return -EIO;
- 
- 		if (tty_port_users(port) != 1)
-@@ -1206,7 +1206,7 @@ static void uart_enable_ms(struct uart_port *uport)
-  * FIXME: This wants extracting into a common all driver implementation
-  * of TIOCMWAIT using tty_port.
-  */
--static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
-+static int uart_wait_modem_status(struct tty_struct *tty, struct uart_state *state, unsigned long arg)
+diff --git a/arch/riscv/kvm/mmu.c b/arch/riscv/kvm/mmu.c
+index b5a809a091d60..bdc8243e9c947 100644
+--- a/arch/riscv/kvm/mmu.c
++++ b/arch/riscv/kvm/mmu.c
+@@ -308,6 +308,7 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
  {
- 	struct uart_port *uport;
- 	struct tty_port *port = &state->port;
-@@ -1220,11 +1220,21 @@ static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
- 	uport = uart_port_ref(state);
- 	if (!uport)
- 		return -EIO;
-+
-+	mutex_lock(&port->mutex);
-+	if (tty_io_error(tty)) {
-+		mutex_unlock(&port->mutex);
-+		ret = -EIO;
-+		goto out_deref;
+ 	int ret;
+ 	kvm_pfn_t hfn;
++	bool unused = false;
+ 	bool writable;
+ 	short vma_pageshift;
+ 	gfn_t gfn = gpa >> PAGE_SHIFT;
+@@ -394,8 +395,10 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
+ 
+ 	spin_lock(&kvm->mmu_lock);
+ 
+-	if (mmu_invalidate_retry(kvm, mmu_seq))
++	if (mmu_invalidate_retry(kvm, mmu_seq)) {
++		unused = true;
+ 		goto out_unlock;
 +	}
-+
- 	uart_port_lock_irq(uport);
- 	memcpy(&cprev, &uport->icount, sizeof(struct uart_icount));
- 	uart_enable_ms(uport);
- 	uart_port_unlock_irq(uport);
  
-+	mutex_unlock(&port->mutex);
-+
- 	add_wait_queue(&port->delta_msr_wait, &wait);
- 	for (;;) {
- 		set_current_state(TASK_INTERRUPTIBLE);
-@@ -1253,6 +1263,7 @@ static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
- 	}
- 	__set_current_state(TASK_RUNNING);
- 	remove_wait_queue(&port->delta_msr_wait, &wait);
-+out_deref:
- 	uart_port_deref(uport);
+ 	if (writable) {
+ 		mark_page_dirty_in_slot(kvm, memslot, gfn);
+@@ -410,7 +413,8 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
+ 		kvm_err("Failed to map in G-stage\n");
  
+ out_unlock:
+-	kvm_release_faultin_page(kvm, page, ret && ret != -EEXIST, writable);
++	kvm_release_faultin_page(kvm, page,
++				 unused || (ret && ret != -EEXIST), writable);
+ 	spin_unlock(&kvm->mmu_lock);
  	return ret;
-@@ -1577,7 +1588,7 @@ uart_ioctl(struct tty_struct *tty, unsigned int cmd, unsigned long arg)
- 
- 	/* This should only be used when the hardware is present. */
- 	if (cmd == TIOCMIWAIT)
--		return uart_wait_modem_status(state, arg);
-+		return uart_wait_modem_status(tty, state, arg);
- 
- 	/* rs485_config requires more locking than others */
- 	if (cmd == TIOCSRS485)
-@@ -1633,14 +1644,13 @@ static void uart_set_ldisc(struct tty_struct *tty)
- {
- 	struct uart_state *state = tty->driver_data;
- 	struct uart_port *uport;
--	struct tty_port *port = &state->port;
--
--	if (!tty_port_initialized(port))
--		return;
- 
- 	mutex_lock(&state->port.mutex);
- 	uport = uart_port_check(state);
--	if (uport && uport->ops->set_ldisc)
-+	if (!uport || tty_io_error(tty))
-+		return;
-+
-+	if (uport->ops->set_ldisc)
- 		uport->ops->set_ldisc(uport, &tty->termios);
- 	mutex_unlock(&state->port.mutex);
  }
-@@ -1657,7 +1667,7 @@ static void uart_set_termios(struct tty_struct *tty,
- 	guard(mutex)(&state->port.mutex);
- 
- 	uport = uart_port_check(state);
--	if (!uport)
-+	if (!uport || tty_io_error(tty))
- 		return;
- 
- 	/*
-@@ -1810,7 +1820,14 @@ static void uart_wait_until_sent(struct tty_struct *tty, int timeout)
- 	 * 'timeout' / 'expire' give us the maximum amount of time
- 	 * we wait.
- 	 */
--	while (!port->ops->tx_empty(port)) {
-+	for (;;) {
-+		mutex_lock(&state->port.mutex);
-+		if (tty_io_error(tty) || port->ops->tx_empty(port)) {
-+			mutex_unlock(&state->port.mutex);
-+			break;
-+		}
-+		mutex_unlock(&state->port.mutex);
-+
- 		msleep_interruptible(jiffies_to_msecs(char_time));
- 		if (signal_pending(current))
- 			break;
 -- 
 2.53.0
 
