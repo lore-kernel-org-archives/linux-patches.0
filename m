@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830825;
-	b=vJv9XJeOp3d95TT1+Gmtur8FacvxwsgC/auZHGjLzCZbaUf0RUNcT+W/tsuJCoSI4tbO
-	 9QhMHIdTjPVDEzC7a419D0+Nz/7ekUxu9Prp4nN1fcrq1uUUfPqFmP5X6SFgj4erb+BOB
-	 cv7UVTQPzDKjllELtuFuMRJ/ccdLJSyAtIj1KtGp+GTW612Y4e+ApsAeWH/uk8W7NaY/W
-	 gTTPFq6zj0jd5Fd9udJo6Sxl087NMzamHfKwWZBpkNnfXTM6hrmemTnDpdMIHRUOHXTnF
-	 b/BF2v/et7XAukXb7FmaFT3zoKXaUkap5TLc57Nc/jBZkizW9ddq28QbGCj5d+lQdMg==
+	t=1793830831;
+	b=MOBbbPrc1//HgGOTyWaMOrd1M1mfJ2XR55XyCRxLHfNExdkwMUEeiMmy4L5qc+kPIOdv
+	 PnhogXSqagsEYJ098eg28H7pgn8bCFlileMS53PtWYt+LemBu+8qx5qkTjGb0pdNjAtiy
+	 pltrP4raPoO4JV6UTB67FJVjhoKLB6BdYVVj7tFapJawc/myDE6je4zC9cUBGxF0G1Ddt
+	 k0YhSGMno5qgQutH9PvIZYjnu3yRa9ALn88Mf5YR2khYSvQFe8qOLxQgyAzR74qOitQEf
+	 namHUW0bHYrV8aFPmajR54tyvlnHKLRc8sSdH/wDdavqi8ho22V8Vtj/MT2Ppf6cgHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830825;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830831;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mLQNRBT4me249sGyybN1OAaHyTdeDeQKv5MIUBKt2FQ=;
-	b=eakcw3vUOs6L/M9WucYcz/GybC26x213jYzEiOT7iDvuX8769tE4mHcsZSFXr6QRaPiH
-	 0LCmPLfDXuF9XqqzaFaIUf6KS5bKNiRCE0bjzoa3qxgdTmizyGwyIw0lUyXeh9aZcQICg
-	 NKhnqcuydu2m8Fbe5G1n1wlk6aAV9bRlFTR6KHc1vPT/8EYLcRkEhSfCZsWRQWj8c9yVV
-	 hwixXJgXXHQ/50ysopggig4sJTD9qPHvDM4kksiGGqCC5hmw1vcl/EtbsdIK+xF3gfPXd
-	 T4u9tCxtDdcfn0FgNk4cT2xdboeCuWxpllQ7Uf7Q2k/3IZgRm6I6ijCg//vJpw/AvpA==
+	bh=ohkTfzb0s11tcIqH3b8WhmH8CrigP5ZizPMkjVo0wN0=;
+	b=qD5T+336XyfYL7QCwhtiRf5rzbVhkA5UucZqDUmZpFJE8N1NFjaJrONs+qQ/EL7ZEeH/
+	 Lzf0eKY+EBMZkFu2Az0JqVWdGtfz8LRc1JrTm3xk+OsA32yF2QMQUVlnVSYTfiID2VOtH
+	 Fe/lEiDymAtICa+gJ7TGyhxMUU6EmQwstcw3EjdIapIeCu3DKc6TkYI8xnM6sJL6FfZXU
+	 6sU/0DDae1GXUs1caATQRh0S6DEeF5ZcMn/23w3FCRLTUWzSfhkeb4FXmS8LdXpzMDo+R
+	 zROvhzLXQRhYdiJaWn0pLCKDqKWeD2Py0VLK0gqk4aO7ud1MlAsg+oR+kOXA8ufppJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Msyc2S/b";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S7OuCCRQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607FE606B2D7;
-	Wed,  4 Nov 2026 22:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83948606B3AD;
+	Wed,  4 Nov 2026 22:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Msyc2S/b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28551F00919;
-	Wed,  4 Nov 2026 22:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S7OuCCRQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A2B1F00A16;
+	Wed,  4 Nov 2026 22:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830825;
-	bh=mLQNRBT4me249sGyybN1OAaHyTdeDeQKv5MIUBKt2FQ=;
+	s=korg; t=1793830831;
+	bh=ohkTfzb0s11tcIqH3b8WhmH8CrigP5ZizPMkjVo0wN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Msyc2S/bVcOBQB4hroaokyqcAv6Go7Dz55uvWT7eNKMTcaEbgRtkL+eE3BhLjRdBj
-	 mVIhyZsuLZaX52P/IPfw9KNOXr8nq1R1S3QSf8EN5+4XDARdmFHIiubrRY4jRia5se
-	 3vhuYSBxSusM0tjJhg+uvAE+mSCBF6Ds6quS18gI=
+	b=S7OuCCRQC97Xz96q0+lfgU9Pe19wdEGIaKAoxBZ4r/yxDwWZa0uBL58C9AWr/Boee
+	 p82W+lX5yXdQcwjhsG6eLEUwtNNG59RFY3jOwB65VGOCZb5DyVMjBi6cHeurgHywZY
+	 4znapbvT0ZOhnJaecWvCEtS8DMFkrx/csvocK5gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykola Marzhan <mykola@meshstor.io>,
-	Yu Kuai <yukuai@fygo.io>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0341/1005] md: skip bitmap accounting for empty write ranges
-Date: Wed,  4 Nov 2026 16:01:14 -0500
-Message-ID: <20261104211053.511152315@linuxfoundation.org>
+Subject: [PATCH 6.18 0308/1005] wifi: mt76: mt7603: fix U-APSD service period termination
+Date: Wed,  4 Nov 2026 16:00:41 -0500
+Message-ID: <20261104211052.558253950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,70 +67,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 87c10252e3d6c28769d93bea9e6a9b592e5809d1 ]
+[ Upstream commit 697badc27a9b3b2a8d86092abeed767714f735a2 ]
 
-mkfs.ext4 can submit zero-sector flush/FUA bios. These bios are WRITE
-bios for md_write_start() purposes, but they do not cover any data sector
-and must not dirty bitmap bits.
+Frames released from the driver PS queue were all tagged with MORE_DATA
+and none of them ever carried the EOSP bit, so from the client's point of
+view a U-APSD service period was started but never finished. Clients that
+keep their receiver on until EOSP arrives stop sending trigger frames,
+and all downlink traffic for that station stalls until they give up.
+ieee80211_sta_eosp() only cleared the service period state inside
+mac80211, which is why the mismatch went unnoticed.
 
-md bitmap accounting currently passes such bios to bitmap start_write().
-For llbitmap this reaches llbitmap_start_write() with sectors == 0,
-which underflows the end chunk calculation.
+Assign MORE_DATA per frame and set the wire EOSP bit on the last one. If
+the last released frame is a bufferable MMPDU it has no QoS control field
+to carry EOSP, so let mac80211 append a QoS-Null frame instead.
 
-Personality bitmap mapping can also turn a non-empty bio into an empty
-bitmap range when the requested sectors are outside the active bitmap
-geometry. Treat both cases as not started, so the completion path will not
-call end_write() for an empty range.
+Also stop handing the remaining frame budget to
+mt76_release_buffered_frames() once frames have been released from the PS
+queue: both would signal the end of the same service period. Releasing
+fewer frames than requested is allowed, and MORE_DATA tells the client to
+trigger again.
 
-Tested-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260802195038.164272-11-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7603/main.c  | 74 ++++++++++++++++---
+ 1 file changed, 63 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 03d328506b285..ce3bd127e3bb3 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9266,6 +9266,8 @@ static void md_bitmap_start(struct mddev *mddev,
- 		mddev->pers->bitmap_sector(mddev, &md_io_clone->offset,
- 					   &md_io_clone->sectors);
- 
-+	if (!md_io_clone->sectors)
-+		return;
- 	fn(mddev, md_io_clone->offset, md_io_clone->sectors);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/main.c b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
+index 0d7c84941cd0a..f8a43d9f72f95 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
+@@ -423,13 +423,33 @@ mt7603_sta_ps(struct mt76_dev *mdev, struct ieee80211_sta *sta, bool ps)
+ 	mt7603_ps_tx_list(dev, &list);
  }
  
-@@ -9284,7 +9286,8 @@ static void md_end_clone_io(struct bio *bio)
- 	struct bio *orig_bio = md_io_clone->orig_bio;
- 	struct mddev *mddev = md_io_clone->mddev;
++static struct ieee80211_hdr *
++mt7603_ps_skb_hdr(struct sk_buff *skb)
++{
++	return (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
++}
++
++/*
++ * Buffered frames can be recycled into the PS queue by mt7603_filter_tx(), so
++ * both bits have to be assigned, not just set.
++ */
+ static void
+-mt7603_ps_set_more_data(struct sk_buff *skb)
++mt7603_ps_set_flags(struct sk_buff *skb, bool more_data, bool eosp)
+ {
+-	struct ieee80211_hdr *hdr;
++	struct ieee80211_hdr *hdr = mt7603_ps_skb_hdr(skb);
++
++	if (more_data)
++		hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++	else
++		hdr->frame_control &= ~cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++
++	if (!ieee80211_is_data_qos(hdr->frame_control))
++		return;
  
--	if (bio_data_dir(orig_bio) == WRITE && md_bitmap_enabled(mddev, false))
-+	if (bio_data_dir(orig_bio) == WRITE && md_io_clone->sectors &&
-+	    md_bitmap_enabled(mddev, false))
- 		md_bitmap_end(mddev, md_io_clone);
+-	hdr = (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
+-	hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++	if (eosp)
++		*ieee80211_get_qos_ctl(hdr) |= IEEE80211_QOS_CTL_EOSP;
++	else
++		*ieee80211_get_qos_ctl(hdr) &= ~IEEE80211_QOS_CTL_EOSP;
+ }
  
- 	if (bio->bi_status && !orig_bio->bi_status)
-@@ -9308,12 +9311,14 @@ static void md_clone_bio(struct mddev *mddev, struct bio **bio)
- 	md_io_clone = container_of(clone, struct md_io_clone, bio_clone);
- 	md_io_clone->orig_bio = *bio;
- 	md_io_clone->mddev = mddev;
-+	md_io_clone->sectors = 0;
- 	if (blk_queue_io_stat(bdev->bd_disk->queue))
- 		md_io_clone->start_time = bio_start_io_acct(*bio);
- 	else
- 		md_io_clone->start_time = 0;
+ static void
+@@ -442,7 +462,10 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
+ 	struct mt7603_dev *dev = hw->priv;
+ 	struct mt7603_sta *msta = (struct mt7603_sta *)sta->drv_priv;
+ 	struct sk_buff_head list;
+-	struct sk_buff *skb, *tmp;
++	struct sk_buff *skb, *tmp, *last;
++	bool eosp_null, uapsd;
++	u16 pending = 0;
++	u8 last_tid;
  
--	if (bio_data_dir(*bio) == WRITE && md_bitmap_enabled(mddev, false)) {
-+	if (bio_data_dir(*bio) == WRITE && bio_sectors(*bio) &&
-+	    md_bitmap_enabled(mddev, false)) {
- 		md_io_clone->offset = (*bio)->bi_iter.bi_sector;
- 		md_io_clone->sectors = bio_sectors(*bio);
- 		md_io_clone->rw = op_stat_group(bio_op(*bio));
+ 	__skb_queue_head_init(&list);
+ 
+@@ -458,20 +481,49 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
+ 
+ 		skb_set_queue_mapping(skb, MT_TXQ_PSD);
+ 		__skb_unlink(skb, &msta->psq);
+-		mt7603_ps_set_more_data(skb);
+ 		__skb_queue_tail(&list, skb);
+ 		nframes--;
+ 	}
++
++	skb_queue_walk(&msta->psq, skb)
++		pending |= BIT(skb->priority);
+ 	spin_unlock_bh(&dev->ps_lock);
+ 
+-	if (!skb_queue_empty(&list))
+-		ieee80211_sta_eosp(sta);
++	last = skb_peek_tail(&list);
++	if (!last) {
++		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
++					     more_data);
++		return;
++	}
++
++	/*
++	 * End the service period here instead of passing the remaining frame
++	 * budget on to mt76_release_buffered_frames(), which would signal the
++	 * end of the same service period a second time.
++	 */
++	uapsd = reason == IEEE80211_FRAME_RELEASE_UAPSD;
++	more_data |= !!(pending & tids);
++
++	skb_queue_walk(&list, skb)
++		mt7603_ps_set_flags(skb, skb != last || more_data,
++				    skb == last && uapsd);
++
++	/*
++	 * EOSP lives in the QoS control field, so a bufferable MMPDU cannot
++	 * terminate a U-APSD service period on its own. In that case mac80211
++	 * has to append a QoS-Null frame, which ends the SP through its tx
++	 * status.
++	 */
++	eosp_null = uapsd &&
++		    !ieee80211_is_data_qos(mt7603_ps_skb_hdr(last)->frame_control);
++	last_tid = __fls(tids);
+ 
+ 	mt7603_ps_tx_list(dev, &list);
+ 
+-	if (nframes)
+-		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
+-					     more_data);
++	if (eosp_null)
++		ieee80211_send_eosp_nullfunc(sta, last_tid);
++	else
++		ieee80211_sta_eosp(sta);
+ }
+ 
+ static int
 -- 
 2.53.0
 
