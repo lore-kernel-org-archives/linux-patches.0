@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831237;
-	b=geXsoONodP5lXZ+PKNYyJwgxmBgchhlsBc2Ub+wnc7kiXd8ZtYxzAQqrcWk24O0Zt0fW
-	 F9XNPxLukAzNLNPy90H9x0oJwGTvPajBk/jkqLlS31PR7/8mS9HrEEM7J6jrFvrVj3wiU
-	 xHr9VmHXtVz/gESUMels6ey279stNHC1xsndKREjIzkSrnPxmS8Ardqmo4t3ihTz9Xz0j
-	 RRo9bsUF9TI9N+DHCI9n9Is+6TLHPspCPAYB/n98vvXuCcIyMlVy25Ezx4frucSkm7Fpj
-	 lCBopRWGZLbPSr20u/id4Ngo24WM9WzXmSS3Hvw8L3Ix62xWAh+uraVqWzJnSpxXrsA==
+	t=1793831238;
+	b=SvuJwGQJvWzWYDPPmZtmIYyXL9raKKk2TVxgJywI61NyOI0hNuhovf982bPI8H0mIiaN
+	 kQISqfY+3w7DtJSQGNXywnWkr2ThhJbDrku4+K3RSB6Hur+auM8YxKrbt+t2fGgG3JpTb
+	 6D6SPeyphn5SMKJLlFYi42uxf3nfUoW+4wIhVIRxZ2wIYulJtoxi1Bl92tKxctUSHgJv8
+	 BZthSfoZLM6FautqOd781+N4vwmt2YABUeVqJN4ya3PqL6M8T5u6QeNNimjJaE1yYSdI8
+	 xX2xyWy61uHNkFOxpLexRqF++gYRpcKB9t9T2eIH77Ab6c4OWloZBGRsjmulFC/T5vQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831237;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=au3WPyc8pPEgmXHrbT2ikua6+KqlBjfUFZ5VG75t/UQ=;
-	b=pSPhQ/U7vRja27z176zgg6lfrCakcXrfnPtEiIEUMw88e8Fj2+o1Xk4QAReNR2LpWM4R
-	 hlnjzguxDrGij0nw0q2PEJBJtm0aA0jbmT/L4GsAyAWr5akDfERu2lsl5cwc9zODhxgSZ
-	 VdpVk5eGGBHLeEqk4Bb5yM+XM0kZgrBiH5wv98Bid0LPvAN2xM2l8fJz3J7jT49TqVQYK
-	 nLltm72twetiXsvFNRfI82Cn/QkDLQayL8dVbgtewSZfakSC7NHvcJPHlmE1zCzWToRdn
-	 HecwllFkmF2FKE/cYH7LH5tquj+FTEyWRnF95S/U7TmR8NOy1WNhhGPbuZjU97cHOjw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=AdAnYSFm2EKESz6SPNSaGeszbZ0HkjD05ORDvF+7ztE=;
+	b=1Ao2LnlnPpwiyhDfjI5SoS3ix6F8yayEvzTE3jrAcfMOfI47P7oNtxFS/YKGT+BG+k9X
+	 iDReXwDSKeksP1R1km59WXsOIsIotQ1on8azGgq1B1kcRzzWzdj6Yc/J3KZa0qh1gGNC8
+	 +zT/s57OdioJ9FjkAPUd0p5Y0UJ0cs5XAHbvtq2wr3+kZ0oMYiDyAkMT86SszEJ+7v9Y4
+	 6kjzoGzSbedJeZACapNGKRlw1R1CfY/CvzD80B8E6ssPWtez8iZf0dja+JPLvcsNPnHWk
+	 28EX6a9URtRXGSbQhdH8Mc9SVnSAXF1xR3fmk9G3318D9NLsBJaIzBIOiSCE4p6AlOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GmN+leFH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZ+5uuNg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4FE606A842;
-	Wed,  4 Nov 2026 22:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871A1606A842;
+	Wed,  4 Nov 2026 22:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GmN+leFH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C5B1F000C1;
-	Wed,  4 Nov 2026 22:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZ+5uuNg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AB41F000C1;
+	Wed,  4 Nov 2026 22:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831236;
-	bh=au3WPyc8pPEgmXHrbT2ikua6+KqlBjfUFZ5VG75t/UQ=;
+	s=korg; t=1793831238;
+	bh=AdAnYSFm2EKESz6SPNSaGeszbZ0HkjD05ORDvF+7ztE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GmN+leFHPDK5pzsqnTXa5yOELH795SA6ylE6kVl4wMT0RvOxutQa3yFUXlPfu8hja
-	 TdXOGvPhSGjNKp3edWTESXzWonbpVJn4aNetjlGNGjLvPZPHS27bOxPtK5U+g0mejq
-	 tlYHLsG3ExzrLSuFqJvVgpgL7xiA7EGjKLvB2xYQ=
+	b=gZ+5uuNgjY+dCD4YGrO4w0ZxjN/j760LCdp1W9JIY5o/Hd/hvUrNO124rp0zl3/vV
+	 ashtKLdTaOdsKIli5Ie/iBkxqxyJ11zkDElXIrTkLWLB4mTchSCeBVCnUdF7+f3rXQ
+	 M5XBsjZ/F5AbiYm+eC9Yzhm7qF3txJ7w7ysNPghU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Arie Miller <renari@arimil.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Kevin Wang <kevin.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0581/1005] hwmon: (asus_rog_ryujin) Synchronize HID command and report handling
-Date: Wed,  4 Nov 2026 16:05:14 -0500
-Message-ID: <20261104211100.128254403@linuxfoundation.org>
+Subject: [PATCH 6.18 0582/1005] drm/amd/pm: fix gpu metrics energy accumulator for smu 13.0.0/13.0.7
+Date: Wed,  4 Nov 2026 16:05:15 -0500
+Message-ID: <20261104211100.152341119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -63,137 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arie Miller <renari@arimil.com>
+From: Kevin Wang <kevin.wang@amd.com>
 
-[ Upstream commit 06d48355bf41028c1321acda6a4391cd70098be8 ]
+[ Upstream commit 13ddcc7acb9adbed7627e952a61d1d62cd9546fc ]
 
-rog_ryujin_execute_cmd() holds status_report_request_lock while
-reinitializing a completion, intending to exclude raw-event handling.
-However, rog_ryujin_raw_event() does not acquire the lock when it updates
-the completion. A response can therefore race with reinit_completion() and
-be lost, leaving the command to time out.
+GPU metrics v1.3 defines energy_accumulator as a 64‑bit field.
+The unsupported‑firmware code path assigns UINT_MAX, which is neither the
+full‑width invalid value for this field nor its default value.
 
-Hold the lock while parsing reports and updating their completions. Use the
-irqsave variants in both paths because raw-event handling may run in
-interrupt context.
-
-Fixes: ed3e03790c5c ("hwmon: Add driver for ASUS ROG RYUJIN II 360 AIO cooler")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hwmon/20260812104617.858D01F000E9@smtp.kernel.org/
+Fixes: 8de9edb35976 ("drm/amd/pm: remove invalid gpu_metrics.energy_accumulator on smu v13.0.x")
+Signed-off-by: Kevin Wang <kevin.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c2b948c4fe16eb13d98ff5d1371956cb2f55cdc6)
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol sparse
-Signed-off-by: Arie Miller <renari@arimil.com>
-Link: https://patch.msgid.link/20260904022129.97896-3-renari@arimil.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus_rog_ryujin.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 2 --
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c | 4 ++--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/asus_rog_ryujin.c b/drivers/hwmon/asus_rog_ryujin.c
-index 593950802b39d..f352036f0e52e 100644
---- a/drivers/hwmon/asus_rog_ryujin.c
-+++ b/drivers/hwmon/asus_rog_ryujin.c
-@@ -173,6 +173,7 @@ static int rog_ryujin_write_expanded(struct rog_ryujin_data *priv, const u8 *cmd
- static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, int cmd_length,
- 				  struct completion *status_completion)
- {
-+	unsigned long flags;
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+index f5c20f2320621..e463a39efab22 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2169,8 +2169,6 @@ static ssize_t smu_v13_0_0_get_gpu_metrics(struct smu_context *smu,
+ 	if ((mp1_ver == IP_VERSION(13, 0, 0) && smu->smc_fw_version <= 0x004e1e00) ||
+ 	    (mp1_ver == IP_VERSION(13, 0, 10) && smu->smc_fw_version <= 0x00500800))
+ 		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
+-	else
+-		gpu_metrics->energy_accumulator = UINT_MAX;
  
- 	/*
-@@ -180,9 +181,9 @@ static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, i
- 	 * completion. Reinit is done because hidraw could have triggered
- 	 * the raw event parsing and marked the passed in completion as done.
- 	 */
--	spin_lock_bh(&priv->status_report_request_lock);
-+	spin_lock_irqsave(&priv->status_report_request_lock, flags);
- 	reinit_completion(status_completion);
--	spin_unlock_bh(&priv->status_report_request_lock);
-+	spin_unlock_irqrestore(&priv->status_report_request_lock, flags);
+ 	if (metrics->AverageGfxActivity <= SMU_13_0_0_BUSY_THRESHOLD)
+ 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+index 427f3569f1d39..0af98b5bf0ac2 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -2150,8 +2150,8 @@ static ssize_t smu_v13_0_7_get_gpu_metrics(struct smu_context *smu,
+ 					       metrics->Vcn1ActivityPercentage);
  
- 	/* Send command for getting data */
- 	ret = rog_ryujin_write_expanded(priv, cmd, cmd_length);
-@@ -410,15 +411,18 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 				int size)
- {
- 	struct rog_ryujin_data *priv = hid_get_drvdata(hdev);
-+	unsigned long flags;
+ 	gpu_metrics->average_socket_power = metrics->AverageSocketPower;
+-	gpu_metrics->energy_accumulator = smu->smc_fw_version <= 0x00521400 ?
+-		metrics->EnergyAccumulator : UINT_MAX;
++	if (smu->smc_fw_version <= 0x00521400)
++		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
  
- 	if (size < 2 || data[0] != RYUJIN_CMD_PREFIX)
- 		return 0;
- 
-+	spin_lock_irqsave(&priv->status_report_request_lock, flags);
-+
- 	if (data[1] == RYUJIN_GET_COOLER_STATUS_CMD_RESPONSE) {
- 		if (size <= priv->info->temp_offset + 1 ||
- 		    size <= priv->info->pump_speed_offset + 1 ||
- 		    size <= priv->info->fan_speed_offset + 1)
--			return 0;
-+			goto unlock;
- 
- 		/* Received coolant temp and speeds of pump and internal fan */
- 		priv->temp_input[0] = data[priv->info->temp_offset] * 1000 +
-@@ -432,7 +436,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 			complete_all(&priv->cooler_status_received);
- 	} else if (data[1] == RYUJIN_GET_CONTROLLER_SPEED_CMD_RESPONSE) {
- 		if (size <= RYUJIN_CONTROLLER_SPEED_3 + 1)
--			return 0;
-+			goto unlock;
- 
- 		/* Received speeds of four fans attached to the controller */
- 		priv->speed_input[2] = get_unaligned_le16(data + RYUJIN_CONTROLLER_SPEED_1);
-@@ -444,7 +448,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 			complete_all(&priv->controller_status_received);
- 	} else if (data[1] == RYUJIN_GET_COOLER_DUTY_CMD_RESPONSE) {
- 		if (size <= RYUJIN_INTERNAL_FAN_DUTY)
--			return 0;
-+			goto unlock;
- 
- 		/* Received report for pump and internal fan duties (in %) */
- 		if (data[RYUJIN_PUMP_DUTY] == 0 && data[RYUJIN_INTERNAL_FAN_DUTY] == 0) {
-@@ -463,7 +467,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 				 * We're expecting a report, so parse it.
- 				 */
- 				goto read_cooler_duty;
--			return 0;
-+			goto unlock;
- 		}
- read_cooler_duty:
- 		priv->duty_input[0] = rog_ryujin_percent_to_pwm(data[RYUJIN_PUMP_DUTY]);
-@@ -473,7 +477,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 			complete_all(&priv->cooler_duty_received);
- 	} else if (data[1] == RYUJIN_GET_CONTROLLER_DUTY_CMD_RESPONSE) {
- 		if (size <= RYUJIN_CONTROLLER_DUTY)
--			return 0;
-+			goto unlock;
- 
- 		/* Received report for controller duty for fans (in PWM) */
- 		if (data[RYUJIN_CONTROLLER_DUTY] == 0) {
-@@ -492,7 +496,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 				 * We're expecting a report, so parse it.
- 				 */
- 				goto read_controller_duty;
--			return 0;
-+			goto unlock;
- 		}
- read_controller_duty:
- 		priv->duty_input[2] = data[RYUJIN_CONTROLLER_DUTY];
-@@ -501,6 +505,8 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 			complete_all(&priv->controller_duty_received);
- 	}
- 
-+unlock:
-+	spin_unlock_irqrestore(&priv->status_report_request_lock, flags);
- 	return 0;
- }
- 
+ 	if (metrics->AverageGfxActivity <= SMU_13_0_7_BUSY_THRESHOLD)
+ 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
 -- 
 2.53.0
 
