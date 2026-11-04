@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827177;
-	b=Jfjut9vgjNO8FJWr3WKmMCquFonAe38HAljqVePcEpGHsgA7rwjBiGZfOhSZpkxYZFfP
-	 lKEboh1W3g7STMgxL7CdiMHDVj5Eq3tMqYse3UxbMSM6dNmDxOkCsiJE42KUEBvpEL1vz
-	 NJVCsJ+hTMvizIow3sTmKxCkJv691HyAbyJYBBI45amL9u29bAfLtuqlvMYcIpgqJSDg8
-	 msBmXoMDaOTPew4K9IJPfzu4+X4FR94vEg30/wsW7M5Cq82TyHlT/TK2zEQ7H9qm7JQwa
-	 LTgg5ufoDKKfXKHunRYJxP6a2BUjX36dT843AVY8K1Kc2DJ/bgRDXT2fD9+fp5r0YuA==
+	t=1793827179;
+	b=KYvM2l3uN0/0zA72JrWNngukVMY2Ebi8E94SnPbTYjOFKz+u2V9p6+GZ7+zU0vmnV9UJ
+	 rbhjm1buPSP0nN/SutuLn5T84EAlL4kVwjvcYnHlSvjIgpVVEwYCv4j318L13tvxJKEgO
+	 HioQKedN/p7q5gBGdcB/WjKROwWCijR35WCQ56hgc6ZOJXFHIBHLILMWbu3NaDlXIiOcC
+	 G4h8PnrilHC2yOMMCrVGVwJjHuJG3Zjg5iTtArv/4oaXvfb7EqkbUKJNl8Oisy5r+8+VE
+	 ODymk4k52UkN23YQwJzsJ6d/VPMXwb45XjzTI0lLlD9syo5Weto7vHi3UqLlecto8Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k0HIrwd7e1jFCeh2lZCjNAC6q11sl8kRyWCOxm0CVls=;
-	b=YMLhoR40rLSES1SXlUF8gq3WtawzIp9nwhnhDvovTdYZSyrCe2sdhfvzoBzRJ2JFsp80
-	 o86PD6n/JJRD/i1gRsGnajyZWz+JREbv/9p4H2L2mJiRNkQq/kQOKXlaskS7ryrPPry2E
-	 iaFDExuTBTBV+nHUmfMoA93svD6wjJ5SqJg7LP6mqy+RRmufroIm8iq7mqgsLQ8p52WIp
-	 UvTcMlczYvbAB2djQsd60vADihbM4alnIzotRjUq/IagRcF+pwNpIRUrLVhzhK6NcsCsc
-	 79h9KUt5qHcZHaJvBNz633em0yO67O/HwAGW6+sZVasqJ7ZuTPb8Ri3g+HbY45i0wKw==
+	bh=IgpIb25Kf3xQ5fCC4an+44AO5Um1+kvzNpbOYL9Sp5w=;
+	b=ZUhSjQjf7EvkZwoiO1C3aNBETWKh2eFJT6fmZi4kG0eMlzmUInm6k8hg2fsgeqFZy7km
+	 q5MTzjG91smwGMKOkFMDXJ6iUpqXxIXnDjsSB4KrjwevoW/QsBKB9WA5bvccCDQLTclxB
+	 87wkWuOu8i0140aVsYNKOYD0V5fif6KNLKBPkI5HU3dXvlbNoTWEFBtKJ+bLjwRlbP8ya
+	 k6m8pUe+E+E16RJWjAqUXJV9MijLJtMLpxsMRv/TF53ZioKavXyZO8sxcF6XtZiCfPXOl
+	 ehkDLuJGg8kpiFJwi/qrX66r8MKGXgpqHnUEyxXJx0Pmbwkaf5prtyoWtq1I4rk4rYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvIfErJt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEddZR0T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632E56075272;
-	Wed,  4 Nov 2026 21:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD60F606EEB7;
+	Wed,  4 Nov 2026 21:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvIfErJt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6B01F000C1;
-	Wed,  4 Nov 2026 21:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEddZR0T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA051F00919;
+	Wed,  4 Nov 2026 21:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827177;
-	bh=k0HIrwd7e1jFCeh2lZCjNAC6q11sl8kRyWCOxm0CVls=;
+	s=korg; t=1793827178;
+	bh=IgpIb25Kf3xQ5fCC4an+44AO5Um1+kvzNpbOYL9Sp5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qvIfErJtrW+onjbVv767V69tAWEodTSKiwZCyDwnLG+9a8r/ccuy/0CD9cvDs5r8H
-	 MUfrTDZjViodUkUhJjsgGE2KZRTciVhjEdgZLUHkiy2QPc8wSH9rHzJ53RGUr6/oK9
-	 Bo9IGDGDw/yHB/J1rbaxNKFD9gL+LeiKxjRzBozY=
+	b=YEddZR0TSuRZU4Lfco+8DG5roI7cIUE5sUVyXqvQZDoploBcKLX4aQdcnR/wrjb5Y
+	 papKeVcw0tSv1zuNanzkM8fwuwfZJa8wp6u9IXdplpDWCidThQJ4tuTjKt8BHKIRx8
+	 +7JZiV6fsZhfzyZMB8/wKECoeDp50eYdeSDgnQvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 7.3 240/547] mshv_vtl: detach poll waiter on POLLFREE
-Date: Wed,  4 Nov 2026 16:07:04 -0500
-Message-ID: <20261104211044.986389499@linuxfoundation.org>
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 7.3 241/547] mtd: virt-concat: unlink concat node before freeing it
+Date: Wed,  4 Nov 2026 16:07:05 -0500
+Message-ID: <20261104211045.016622540@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,105 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-commit efc5dc4c15713fdd6e87882686a26ed1deb22dab upstream.
+commit 532caaa2f445b22b74b88b4023a810426772db54 upstream.
 
-MSHV_SET_POLL_FILE keeps a poll wait entry after the ioctl returns. A
-file reference does not always pin the registered waitqueue:
-signalfd_poll() uses current->sighand->signalfd_wqh, whose lifetime is
-tied to the task.
+mtd_virt_concat_create_item() links each new mtd_virt_concat_node to
+concat_node_list. mtd_virt_concat_destroy() later frees the node after
+destroying its concatenated MTD device, but fails to unlink it. A later
+list traversal dereferences the freed node, causing a use-after-free.
 
-signalfd_cleanup() sends POLLFREE before the sighand is freed. The MSHV
-callback currently leaves its entry linked, so __wake_up_pollfree()
-warns and a later replacement calls remove_wait_queue() through a stale
-wqh pointer. A source-equivalent KASAN run reproduced:
+Remove the node from concat_node_list before freeing it.
 
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock_irqsave
-  _raw_spin_lock_irqsave
-  remove_wait_queue
-  harness_ioctl [mshv_pollfree_harness]
-
-The object belonged to sighand_cache and had been released through
-slab_free_after_rcu_debug() after __cleanup_sighand().
-
-On POLLFREE, unlink the entry under the provider waitqueue lock. Preserve
-the existing CPU cancellation before publishing a NULL wqh, since a NULL
-load lets a racing replacement reuse the persistent poll state. Use a
-matching acquire load under RCU when removing a normal registration.
-
-The callback takes no mutex and does not sleep, so the existing
-mutex-to-waitqueue-lock order is unchanged.
-
-An LLM assisted the source audit, fix development, and validation of this
-issue.
-
-Fixes: 7bfe3b8ea6e3 ("Drivers: hv: Introduce mshv_vtl driver")
+Fixes: 43db6366fc2d ("mtd: Add driver for concatenating devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Assisted-by: Codex:gpt-5.6, smatch
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/mshv_vtl_main.c |   28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ drivers/mtd/mtd_virt_concat.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hv/mshv_vtl_main.c
-+++ b/drivers/hv/mshv_vtl_main.c
-@@ -17,6 +17,7 @@
- #include <linux/entry-virt.h>
- #include <linux/eventfd.h>
- #include <linux/poll.h>
-+#include <linux/rcupdate.h>
- #include <linux/file.h>
- #include <linux/vmalloc.h>
- #include <asm/debugreg.h>
-@@ -448,12 +449,35 @@ static void mshv_vtl_cancel(int cpu)
- static int mshv_vtl_poll_file_wake(wait_queue_entry_t *wait, unsigned int mode, int sync, void *key)
- {
- 	struct mshv_vtl_poll_file *poll_file = container_of(wait, struct mshv_vtl_poll_file, wait);
-+	__poll_t pollflags = key_to_poll(key);
-+
-+	if (pollflags & POLLFREE)
-+		list_del_init(&wait->entry);
+diff --git a/drivers/mtd/mtd_virt_concat.c b/drivers/mtd/mtd_virt_concat.c
+index da4277ced4d6..4fad0967a96e 100644
+--- a/drivers/mtd/mtd_virt_concat.c
++++ b/drivers/mtd/mtd_virt_concat.c
+@@ -130,6 +130,7 @@ int mtd_virt_concat_destroy(struct mtd_info *mtd)
+ 			mtd_concat_destroy(&concat->mtd);
+ 		}
  
- 	mshv_vtl_cancel(poll_file->cpu);
++		list_del(&item->head);
+ 		for (idx = 0; idx < item->count; idx++)
+ 			of_node_put(item->nodes[idx]);
  
-+	if (pollflags & POLLFREE) {
-+		/* Publish teardown last; pair with acquire in the removal path. */
-+		smp_store_release(&poll_file->wqh, NULL);
-+	}
-+
- 	return 0;
- }
- 
-+static void mshv_vtl_poll_file_remove_wait_queue(struct mshv_vtl_poll_file *poll_file)
-+{
-+	wait_queue_head_t *wqh;
-+
-+	/* POLLFREE providers RCU-delay the waitqueue free. */
-+	rcu_read_lock();
-+	/* Pair with the release store in the POLLFREE callback. */
-+	wqh = smp_load_acquire(&poll_file->wqh);
-+	if (wqh)
-+		remove_wait_queue(wqh, &poll_file->wait);
-+	rcu_read_unlock();
-+	WRITE_ONCE(poll_file->wqh, NULL);
-+}
-+
- static void mshv_vtl_ptable_queue_proc(struct file *file, wait_queue_head_t *wqh, poll_table *pt)
- {
- 	struct mshv_vtl_poll_file *poll_file = container_of(pt, struct mshv_vtl_poll_file, pt);
-@@ -490,9 +514,7 @@ static int mshv_vtl_ioctl_set_poll_file(
- 
- 	mutex_lock(&mshv_vtl_poll_file_lock);
- 
--	if (poll_file->wqh)
--		remove_wait_queue(poll_file->wqh, &poll_file->wait);
--	poll_file->wqh = NULL;
-+	mshv_vtl_poll_file_remove_wait_queue(poll_file);
- 
- 	old_file = poll_file->file;
- 	poll_file->file = file;
+-- 
+2.56.0
+
 
 
