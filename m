@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827004;
-	b=uwpIR333KQpgTJc2/uFoEIrMehxdKEoTQDLQaS3BCas/AjrhMieUNyvnO8tj9YVy+/Cw
-	 cGlthoDnOBH/z5AZInKdASITCYroBO3UyJ4mVXdtrHjiV2OJGf4HdcOcZxmtou7YH5hfA
-	 mDe9dkFHn9Cph7Xsk4ko1v5kJKAu/1bvKXXMnMHu0z1QMq2Ud+ymsaO3wqyENZXFdS1nC
-	 0MufwoIRmokW4Hl+olOuprP/fau4W2U9LNMRcdZclKFtueb9jDrI6tandVRz1+GIpu5K3
-	 j7uOM9gehRbbhP2qESs5+2oAJ5+KAvCzwtLZKNfixIabow5L6pGzx9+KNphLm8cNTnA==
+	t=1793827006;
+	b=V7pwcMNO3LE/dpmhIExTHx8kXcdTevkO48WqKRyb9LHEtxpan1w2n5+j7z6ELd/jOmQ3
+	 0S3FM0RNwdJc5YS9q46hLsuZv71Y6rRrYx6ZxML5fuNx8yzfvSdcn/o8xQ+uiqtU/uckO
+	 okFJ9n1GCpiCkoihiiCgtCfhFw/bHvZVMV32TmcD80FiCBos7Us3UviCeonaQOgedDHTT
+	 Yq0B3c8HmAhEhdoDAguuGy3q6oUZSkoNr5SWtDhlbC/FHdxD478FljCQVcDyjRbTU6CkZ
+	 xpq0yCB8JzqtTQKwop185LhqiJsId/67KNudaL71bb/HiVDb7JmSI7/jFez7sD+Hqzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BhAIueVk50V8F/Qc7DPWtY/K3l27aUJ7SeFQH96ul1w=;
-	b=rCcc0HRP9y3O/yw0VJ/N/uDph9zkbB/sf8W9aGHLGb4VLuyIBlyzoF/RmctMb2G6Us7F
-	 nQupqiXx/bccgZEufrmaHqVI9GCUrCi2nrysoNqilpzP5sbzHMA3cPNii7b9iDDjS/u84
-	 tpwTrVdAQc4eb+l4awG7tqsiWhE2z97YAvKxAghoIa+B5bAHtz66I+BHC8SYACgx8WXWE
-	 HuvjZBYgJooMPYmHWow5IddR1wvWqU1sXAtyj1OOHAVoDPWNxoSJhHpzvX4xtHZ2451my
-	 8IF53g6U20xf4dzJcVt0RYRMaUGpNvQZ/PDk2qzd4diSP4Evde6mUD93CKP3de+pR5Q==
+	bh=ZuEWbGlgiT7oPIUBvHTl9OXgqZEx70Fcn/LM9eSx574=;
+	b=ebaA10ZG3Wiqba9dTxyM4PZ+Xw5fvOrAIm5Kcf4T82glJvnCil5aeRG97FjnRWLYNZ2s
+	 gGUnrTpev22/v0cMkUaJaaPDHfqOBO73bycvwKlz5ybTuDT3NXG0635dw1cVYms+fVRxS
+	 hGSXDXEUFX5RvM6FsFVPHJVQqKaESf9OPhyxzpiHcUHl1jt3315/O9chsl+rFUWcd/UtE
+	 38bQ+EtSUNft+RhW4lGn4STssE0u1NwAOQPg8xXFCyWy82G+kpibGI9Hpi91tYRpn+bGl
+	 3Uj/fg1o1he1OPjb0xqB7dLe0Z1GgCpeDV18Ac79eYy6v18GRIM7kh8+/P88YGGeTAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VOWtsE79;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvQyk3oN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22716074923;
-	Wed,  4 Nov 2026 21:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E306074925;
+	Wed,  4 Nov 2026 21:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VOWtsE79
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794161F000C1;
-	Wed,  4 Nov 2026 21:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvQyk3oN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDBE1F00A02;
+	Wed,  4 Nov 2026 21:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827003;
-	bh=BhAIueVk50V8F/Qc7DPWtY/K3l27aUJ7SeFQH96ul1w=;
+	s=korg; t=1793827005;
+	bh=ZuEWbGlgiT7oPIUBvHTl9OXgqZEx70Fcn/LM9eSx574=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VOWtsE79h6caMNiOrS6FoPkgNtCKPOOMoEdSO09QjCH8GU5SmmOy+2xi0CrKW9hcb
-	 z6calQPOzf/2itRdva8mMoeUepx8YsWfpR540BPAgaa1JVBXQFMNPN4zmeGphDOjA7
-	 O5byxPCtnU6lbAy50B/DhrlEUNAUeEsFKkwsDI30=
+	b=vvQyk3oNiH9SMDpe6xvRO4ZQygx546htylzJSP45+ClbRKXTund13C+x9YYypyUfB
+	 E7wP3vHd7LjoeQxULRi4BDMu/jspHwY1bQelgdeRWsdelP9AwBLLN0cb0jwRHhDj1l
+	 UmybrZZbUQZykwceCXEpdhxdjX6ueASe+bzZOgBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 134/547] ksmbd: use u8 for SMB2 oplock level values
-Date: Wed,  4 Nov 2026 16:05:18 -0500
-Message-ID: <20261104211041.981213288@linuxfoundation.org>
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.3 098/547] net/sched: cls_bpf: accept dev-bound programs on shared blocks
+Date: Wed,  4 Nov 2026 16:04:42 -0500
+Message-ID: <20261104211041.008408695@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,40 +70,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit f622fedabbb58c8006ee21373968ae07bf8a9467 upstream.
+commit d305547d1632a242818c5ebb430c85121a2ed434 upstream.
 
-The SMB2 oplock level is an unsigned 8-bit wire value, but
-smb20_oplock_break_ack() stores it in a plain char. On architectures where
-plain char is signed, the value 0xff becomes -1 and cannot compare equal to
-SMB2_OPLOCK_LEVEL_LEASE (0xff). The acknowledgment is consequently rejected
-with STATUS_INVALID_OPLOCK_PROTOCOL instead of the intended
-STATUS_INVALID_PARAMETER.
+The issue:
+Follow-up to commit 120977e2c096 ("net/sched: cls_bpf: reject dev-bound
+programs bound to a different device"), which derived the target device
+from block->q:
 
-Use u8 for the request and response oplock-level variables. This preserves
-all wire values in their original representation.
+	dev = block->q ? qdisc_dev(block->q) : NULL;
 
-Fixes: 80a56d4a826c ("ksmbd: align SMB2 oplock break ack handling")
+tcf_block_create() leaves block->q NULL for shared blocks, so a
+device-bound program attached through a shared block is rejected with
+-EINVAL even when it is bound to a netdev that owns the block.  The
+offload path (cls_bpf_offload_cmd()) never consults block->q and drives
+the per-device callbacks for shared blocks as before.
+
+The Fix:
+Accept the attach on a shared block when bpf_offload_dev_match() matches
+every netdev bound to the block, and reject an empty block.  Every member
+must match because the offload path broadcasts the program to every
+callback registered on the block, so an any-member check would re-admit
+the wrong-device attach on a mixed block.  Every dev-bound SCHED_CLS
+attach is skip_sw, which becomes err_stop and aborts the offload on the
+first failing callback, so the all-members rule is the offload path's own
+semantics.
+
+Iterate the public block->ports xarray (913b47d3424e, v6.8-rc1) rather
+than block->owner_list, which is private to cls_api.c.  The shared-block
+rejection reports "Program is not bound to every device in the block",
+distinct from the non-shared message, because a member can exist without
+a registered callback (netdevsim registers its block callback
+ingress-only).
+
+Context note:
+This patch is not an independent fix: it re-exposes the shared-block
+replay path that commit 120977e2c096 ("net/sched: cls_bpf: reject
+dev-bound programs bound to a different device") had closed, so patch 1
+must be applied first, including in stable.  A stable tree taking this
+patch alone would re-enable shared-block attaches on a kernel whose
+netdevsim callback is still unchecked.
+
+Conditions to recreate the bug:
+  - CONFIG_NETDEVSIM=y, CONFIG_NET_CLS_BPF=y
+  - load a dev-bound SCHED_CLS program for netdevsim device B
+    (prog_ifindex=B), pin it in bpffs
+  - tc qdisc add dev B ingress_block 22 clsact
+  - tc filter add block 22 ingress bpf da object-pinned <pin> skip_sw
+  Unfixed, the filter add fails with -EINVAL ("Program is bound to a
+  different device"); fixed, it succeeds.  Adding a second, independently
+  backed netdevsim device to the same block makes the attach fail again.
+
+Fixes: 120977e2c096 ("net/sched: cls_bpf: reject dev-bound programs bound to a different device")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/netdev/20260809094418.901607-1-jhs@mojatatu.com/
+Link: https://lore.kernel.org/netdev/QDISC-PYC7.v1.20261003103747@mojatatu.com/
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-PYC7.v2.20261010165947-3@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_bpf.c |   28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -11488,7 +11488,7 @@ static void smb20_oplock_break_ack(struc
- 	__le32 status = STATUS_SUCCESS;
- 	int ret;
- 	u64 volatile_id, persistent_id;
--	char req_oplevel = 0, rsp_oplevel = 0;
-+	u8 req_oplevel = 0, rsp_oplevel = 0;
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -392,11 +392,31 @@ static int cls_bpf_prog_from_efd(struct
+ 	if (bpf_prog_is_dev_bound(fp->aux)) {
+ 		struct tcf_block *block = tp->chain->block;
+ 		struct net_device *dev;
++		unsigned long ifindex;
++		bool match = false;
  
- 	WORK_BUFFERS(work, req, rsp);
- 
+-		dev = block->q ? qdisc_dev(block->q) : NULL;
+-		if (!dev || !bpf_offload_dev_match(fp, dev)) {
+-			NL_SET_ERR_MSG(extack,
+-				       "Program is bound to a different device");
++		/* A shared block has no qdisc of its own, but it may bind
++		 * several netdevs and the program is offloaded to all of them;
++		 * require a match with every member.
++		 */
++		if (!tcf_block_shared(block)) {
++			dev = qdisc_dev(tcf_block_q(block));
++			match = bpf_offload_dev_match(fp, dev);
++			if (!match)
++				NL_SET_ERR_MSG(extack,
++					       "Program is bound to a different device");
++		} else {
++			xa_for_each(&block->ports, ifindex, dev) {
++				match = bpf_offload_dev_match(fp, dev);
++				if (!match)
++					break;
++			}
++			if (!match)
++				NL_SET_ERR_MSG(extack,
++					       "Program is not bound to every device in the block");
++		}
++
++		if (!match) {
+ 			bpf_prog_put(fp);
+ 			return -EINVAL;
+ 		}
 
 
