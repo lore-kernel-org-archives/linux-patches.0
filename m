@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827214;
-	b=gAAjbxFfz+F9GOke3zJPmSpw5J2R83B2C91eqBgmyyUMiaBHsDcMQ52aoaOw/enaWXGv
-	 rPr8FbM2R9KcxzZklWP/LkqGH8UlhrJzUlMUVcSZuru4dZRPNqbhPZsnzw8r9QjmD1zK4
-	 qfInqMEcHmijabey8VnAZNy20aFqNqlZUcAFOu6X+xvfLXhYgdE62ATKFp5ZSPgVtpcWG
-	 LyWpCJsIrVNzAS/0oOxNV6dOampng4D8eoG09wSQ/wkIG0aHFOTcVi8KeSr8uyz7LK33B
-	 Y/f0yDQD8yCl1sx8L6wI98TZS0ZmKr+sU9zb9rOyAobsBHG3BR8oD1SYWveEeUUbxow==
+	t=1793827216;
+	b=dg082xJLh/Ws063tNxcERoBNbk9EoAth0eU0GnlexNmLcAk1iwTBK5z/SJOsqYkIxpiP
+	 7VbUB9PoF4b83y2UGJihHzjTqKqYMSs8Wmn6zzSXAi+i4k6pJ3KUNfy1S9eH+WSxbyCU4
+	 yqsODj1Cem10uuq21rZgd4jVCa3txPtcXYrdUY3ygyRydJclLO2AQVlpkt8Ri+G6kIiYN
+	 56hCfyEkLKRDrS1gX5FM6HS0qs/Ll3DG5thVmDXsLL68QplGyerXUoKuq4gXMsIt8k6nu
+	 Gg9/kPfmcTd90gIsm4jpKwV6Jr1o6ddkUc1io8bwTkcfVNLFKK8pLprRWXdy/h+L/SQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827216;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=xX1GIC4ADiihQuO/xEP+PuoyZYz3T50mRAqRI4+VRCk=;
-	b=xhc0lTh+G22A9lrKCtIDtfy4HgrciGBWxVewTnKWmdERikGBsuh6Ad1vREsrBrRYoWEB
-	 49d8LkdEnRN+kT4PtaTotby1EbdbSoIRmefcWTsThvGEhqZBgcPDrFQq63LxFIsszeIOT
-	 EhhHjkqA3kN+VEO10p+SbYecvy6Vnsd5j8tDtOsUCo2/pX9H6byVbnw7vKCgrW2IJOhst
-	 vJXZ6b6yenhBV4HabUm3Ey4KendqOXnK+35Shh3IP+C/E5McZVnE669tQeZLsXz54gG33
-	 HtIAG9FsPRLp8sEZqEhYVqdnaq0eLp6F4a5vfKxQd3QJIIhyJZE+fkSsiSNtUwYWxgg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=15gY3vpODUe7OD34w8lpAMx5vIrX2MVMyW2gmEoOtSA=;
+	b=v5RPS0JSVnImJ3iRMaNssxiiqBN7Coz9QGJ2IvxLU976+ku4y31HXyHtKonChQ5XKO3J
+	 f2Ck+xNFEU8O4FeK3T80xsUF79JvJ0xTtXfC8gJKjzRg60Jzm5e3sK3OrrKo0xPpxOjXH
+	 OszxnBPfw74BjY7cEQ1Kf+B7HW3LQ68tg4BVrSzwBxy1CMLFe0uSups+GGqQ14kweiq2V
+	 llFwkam7DVy7y2MyBmetxMWLk71O6XM+HBpbtiV2hud/EYLxzopnalM1++XFtGm1tJbkY
+	 LHz98dUYNjPOYsIFW8gWPiJhuxWW+ZELvrnfHRT3WCf6oKUf25qi4EBRGaKjTmLbibw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCx3jDfU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6YyTpVc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4768E606B3B1;
-	Wed,  4 Nov 2026 21:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFC4608C9B5;
+	Wed,  4 Nov 2026 21:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCx3jDfU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA121F00A02;
-	Wed,  4 Nov 2026 21:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6YyTpVc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763BF1F000C1;
+	Wed,  4 Nov 2026 21:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827214;
-	bh=xX1GIC4ADiihQuO/xEP+PuoyZYz3T50mRAqRI4+VRCk=;
+	s=korg; t=1793827215;
+	bh=15gY3vpODUe7OD34w8lpAMx5vIrX2MVMyW2gmEoOtSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FCx3jDfUsBZUB4/oDLH3fnmtq7wJKUnJaugC81K+/cAvJL5GI9pc+bJx05FUHmltI
-	 +/6ypWaoYPcdC+1IcOOOs9YuWMdjHYLGwLs3ZwwCJ1EWApmQDpFJbhsE5BuZtc4kIw
-	 IRvUllXKxRGAa+csL4bPrZJxdYZi6q7prxz7FeEw=
+	b=X6YyTpVcpUGOQAymBzs6k/xGrPzPTMdpq0hc2byIH1V0DISBMp1ujc9T/5Rsp7tGn
+	 wncGUwCXmKdl2UZf1rwDf1MPmfZJw8VmvxseogYx77jK3VwB7OUJUPNVwAgFW778/B
+	 zosp1SThyn1/01WsZdn6LoTRGDegCHcO81UiC0yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.3 224/547] KVM: PPC: Book3S HV: Add SRCU protection for virtual-mode HPT hcalls
-Date: Wed,  4 Nov 2026 16:06:48 -0500
-Message-ID: <20261104211044.518629694@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.3 225/547] media: cx23885: unregister DVB bus when SP2 CI setup fails
+Date: Wed,  4 Nov 2026 16:06:49 -0500
+Message-ID: <20261104211044.548174428@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -62,149 +62,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 61a39797bb136243c48b46e2586d8a9e2cea6a89 upstream.
+commit 22f552ff726a82a086be4ef02ce5099a0e8624b6 upstream.
 
-The virtual-mode HPT hcall handlers (H_ENTER, H_REMOVE, H_BULK_REMOVE,
-H_CLEAR_REF, H_CLEAR_MOD) call into book3s_hv_rm_mmu.c, which accesses
-memslots via kvm_memslots_raw().  kvm_memslots_raw() uses
-rcu_dereference_raw_check() to bypass SRCU lockdep annotation checking.
-This is safe in real mode because the entire guest entry/exit is wrapped
-in srcu_read_lock/unlock inside kvmppc_run_core() and
-kvmhv_run_single_vcpu().
+The DVBSKY S950C, DVBSKY T980C and TechnoTrend CT2-4500 CI paths register
+the DVB bus before attaching their SP2 CI client. If that client cannot be
+created, bound, or pinned, the current error path removes the I2C frontend
+components and only deallocates the frontend list, leaving the registered
+DVB adapter behind. Removing an I2C demod before unregistering the DVB bus
+can also expose the use-after-free ordering fixed for the normal remove
+path.
 
-However, since commit 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual
-mode handlers for HPT hcalls and page faults"), these same handlers are
-also executed in virtual mode via kvmppc_pseries_do_hcall(), which runs
-after SRCU has already been released on guest exit.
+Unregister the DVB bus immediately when SP2 CI setup fails, before the
+existing I2C client cleanup. The bus helper empties the frontend list, so
+the later frontend deallocation has nothing left to release. Keep failures
+from vb2_dvb_register_bus() on the existing cleanup path. Also release an
+unbound SP2 client and propagate the actual I2C creation or CI registration
+error.
 
-A concurrent KVM_SET_USER_MEMORY_REGION deletion or move can therefore
-call synchronize_srcu_expedited() — which does not wait for this thread —
-and then kfree(slot) and vfree(slot->arch.rmap) while the hcall handler
-still holds a raw pointer to the memslot.  lock_rmap() then writes to
-freed vmalloc memory, leading to use-after-free and memory corruption.
-Because kvm_memslots_raw() suppresses lockdep checks, this race is
-entirely silent.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fix this by factoring out the 7 HPT hcall handlers (H_REMOVE, H_ENTER,
-H_READ, H_CLEAR_MOD, H_CLEAR_REF, H_PROTECT, H_BULK_REMOVE) into a
-helper function, kvmppc_pseries_do_hpt_hcall(), and wrapping its call
-site in srcu_read_lock(&kvm->srcu) / srcu_read_unlock(&kvm->srcu, idx).
-Targeting only the HPT hcalls avoids wrapping non-HPT hcalls that sleep
-(such as H_CONFER, H_REGISTER_VPA, H_PAGE_INIT) or handlers that already
-acquire SRCU internally (such as H_RTAS).
-
-Fixes: 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual mode handlers for HPT hcalls and page faults")
-Cc: stable@vger.kernel.org # v5.14+
-Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260928122837.8782-2-amachhiw@linux.ibm.com
+Fixes: 2b0aac3011bc ("[media] cx23885: move CI/MAC registration to a separate function")
+Cc: stable@vger.kernel.org
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kvm/book3s_hv.c |   70 +++++++++++++++++++++----------------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
+ drivers/media/pci/cx23885/cx23885-dvb.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -1159,6 +1159,38 @@ static long kvmppc_h_rpt_invalidate(stru
- 	return H_SUCCESS;
+--- a/drivers/media/pci/cx23885/cx23885-dvb.c
++++ b/drivers/media/pci/cx23885/cx23885-dvb.c
+@@ -1158,8 +1158,12 @@ static int dvb_register_ci_mac(struct cx
+ 		info.platform_data = &sp2_config;
+ 		request_module(info.type);
+ 		client_ci = i2c_new_client_device(&i2c_bus->i2c_adap, &info);
+-		if (!i2c_client_has_driver(client_ci))
++		if (IS_ERR(client_ci))
++			return PTR_ERR(client_ci);
++		if (!client_ci->dev.driver) {
++			i2c_unregister_device(client_ci);
+ 			return -ENODEV;
++		}
+ 		if (!try_module_get(client_ci->dev.driver->owner)) {
+ 			i2c_unregister_device(client_ci);
+ 			return -ENODEV;
+@@ -1202,7 +1206,7 @@ static int dvb_register(struct cx23885_t
+ 	int (*p_set_voltage)(struct dvb_frontend *fe,
+ 			     enum fe_sec_voltage voltage) = NULL;
+ 	int mfe_shared = 0; /* bus not shared by default */
+-	int ret;
++	int ret = -EINVAL;
+ 
+ 	/* Get the first frontend */
+ 	fe0 = vb2_dvb_get_frontend(&port->frontends, 1);
+@@ -2586,8 +2590,10 @@ static int dvb_register(struct cx23885_t
+ 		goto frontend_detach;
+ 
+ 	ret = dvb_register_ci_mac(port);
+-	if (ret)
++	if (ret) {
++		vb2_dvb_unregister_bus(&port->frontends);
+ 		goto frontend_detach;
++	}
+ 
+ 	return 0;
+ 
+@@ -2618,7 +2624,7 @@ frontend_detach:
+ 
+ 	port->gate_ctrl = NULL;
+ 	vb2_dvb_dealloc_frontends(&port->frontends);
+-	return -EINVAL;
++	return ret;
  }
  
-+static long kvmppc_pseries_do_hpt_hcall(struct kvm_vcpu *vcpu, unsigned long req)
-+{
-+	switch (req) {
-+	case H_REMOVE:
-+		return kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
-+				       kvmppc_get_gpr(vcpu, 5),
-+				       kvmppc_get_gpr(vcpu, 6));
-+	case H_ENTER:
-+		return kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
-+				      kvmppc_get_gpr(vcpu, 5),
-+				      kvmppc_get_gpr(vcpu, 6),
-+				      kvmppc_get_gpr(vcpu, 7));
-+	case H_READ:
-+		return kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
-+				     kvmppc_get_gpr(vcpu, 5));
-+	case H_CLEAR_MOD:
-+		return kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
-+					  kvmppc_get_gpr(vcpu, 5));
-+	case H_CLEAR_REF:
-+		return kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
-+					  kvmppc_get_gpr(vcpu, 5));
-+	case H_PROTECT:
-+		return kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
-+					kvmppc_get_gpr(vcpu, 5),
-+					kvmppc_get_gpr(vcpu, 6));
-+	case H_BULK_REMOVE:
-+		return kvmppc_h_bulk_remove(vcpu);
-+	}
-+
-+	return H_FUNCTION;
-+}
-+
- int kvmppc_pseries_do_hcall(struct kvm_vcpu *vcpu)
- {
- 	struct kvm *kvm = vcpu->kvm;
-@@ -1174,47 +1206,15 @@ int kvmppc_pseries_do_hcall(struct kvm_v
- 
- 	switch (req) {
- 	case H_REMOVE:
--		ret = kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5),
--					kvmppc_get_gpr(vcpu, 6));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_ENTER:
--		ret = kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5),
--					kvmppc_get_gpr(vcpu, 6),
--					kvmppc_get_gpr(vcpu, 7));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_READ:
--		ret = kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_CLEAR_MOD:
--		ret = kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_CLEAR_REF:
--		ret = kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_PROTECT:
--		ret = kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5),
--					kvmppc_get_gpr(vcpu, 6));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_BULK_REMOVE:
--		ret = kvmppc_h_bulk_remove(vcpu);
-+		idx = srcu_read_lock(&kvm->srcu);
-+		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
-+		srcu_read_unlock(&kvm->srcu, idx);
- 		if (ret == H_TOO_HARD)
- 			return RESUME_HOST;
- 		break;
+ int cx23885_dvb_register(struct cx23885_tsport *port)
 
 
