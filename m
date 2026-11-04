@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831386;
-	b=iCIK6OUiRSg5bkGAlg083W5vwCbLUTvAWuckB9RsNvXs7dj3usEYbGHRmOXEoiuyfqKa
-	 hZedLiDIbXWlsVnKClpyDh1sO+1tG3LejZs9PBEctfQMxgdT8kpa7oKNs0zZpaAJZFJRu
-	 rnTYN3dDuiMmx6HgOyJKwFu8s6swQIpR2FOj6sRs54Bc0h15FqrnMXzemKsD0ncqPSetj
-	 2XNc7FBMgH3Avi4uVH/QHbLGqfIPNY2TUOmxeVoCoiLHkumI+esCFQdyrDbb4647mJRgs
-	 BudK99KBQ1rZurUbLba9U94CkQNj1lg5pFydWOX2xNA8HpP93NU0wlxrFCGajID3Xjw==
+	t=1793831388;
+	b=q2E73584ZAyOYyYV3KBHTJZGcnw1debV9KM9WgB6kr0l058fUxgW7/IgD34pC4SDMq1Q
+	 lbuLR0ywx/nt1Mq5Ig37zjt0X4ANiXY5TViqeWw3fx8olsIhjWyNaXREzQJpmHkJ5Y9Pr
+	 c3Z8MxS3M9E5but2YjEAigm+2XVzPjTA/oMDznT/KXMpOSGxDd3W2X8cboDC4J33w++6k
+	 g/VX3ojhpxyQFikM39rGA3CMmW8SYT1DA4kuOQq2IUc+hcX66yt/4S2LEvlMbpshInYgh
+	 /ITJIBRc2q/ttZ6NgBmvqgPfrm+WdNkjy4yHQkXQ/EPcX9qtFa21tyxoc3Rno/kRvXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3y+p0FiQ3wu0GYW7GBdZmn6jkfyGk+FlIim1hLleuZQ=;
-	b=4qYWtOjbNzqQxszPJ2qnsYTpapca6BFvXLYa3rl3CeFJTj4V07Lbsm9Euo8zluN7H2qa
-	 g+5xx+DjRjzO+zioWEDDn4Okxfh7FqUN5GJrT8T3J66m8ACfWVjxSAG7GfbUaoWLYl+kB
-	 t7w7dWO2S8lF51nFgqb2AK78IVBsAs6P1UTaxk8H+mmjR8GQZP++CfNdmimx5OadqyepQ
-	 z7oBMmnZszZ8J+zlZfrdOm8jT4Xl/TYp5KSGFNVJmX1HersXbcod4BNtkMgpLxAmw0ATu
-	 5i4NbjA2XBZfRLFvNDWoISYdao6q1TyU851JsCSzIhgjuiG7OCO46xQQc1hVTpU3Ffw==
+	bh=Mr2yJHb/kudPLp8t0b6nJ9GhDBYUtcNhuA9VXzZexlE=;
+	b=vhOF7E/c4N11+iD47zCZOAMCgJG+8qPDNJNrr/2p9ibj5IQUmP80pafXneDAj3RBkuAY
+	 xNBE62a67yw5goi3uVeD4BJu/aZhJ5scp+XkEOvT9kt8VHlrbe5o5iTC0vvJrmdkphWCn
+	 VFqD6eptojuw0kNSLf0YyASS/zLYABv6uisrd9oZySkglvT421oluA7jVlvcCA7cPs1Yq
+	 jjRitTZljLwlz7xDp/iOcPYLAU6WcFlIkA1s1b6dl92oSunr2ZldMV6+t+uPfjAXGqqW5
+	 M+Jv6BTVTAfsj6d8XTDDFlUYs/pNiO3nuGK+zAvI502n3mCTtNAq1zZ/u3yPbfpxJOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vRwOIKPE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TxY3Xfnc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879EF606A337;
-	Wed,  4 Nov 2026 22:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D732A606A87A;
+	Wed,  4 Nov 2026 22:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vRwOIKPE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C851F000C1;
-	Wed,  4 Nov 2026 22:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TxY3Xfnc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7268C1F000C1;
+	Wed,  4 Nov 2026 22:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831386;
-	bh=3y+p0FiQ3wu0GYW7GBdZmn6jkfyGk+FlIim1hLleuZQ=;
+	s=korg; t=1793831387;
+	bh=Mr2yJHb/kudPLp8t0b6nJ9GhDBYUtcNhuA9VXzZexlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vRwOIKPEz1ScBelR/5gwBkvfCmaDQwsSBYTddBE667GvlfpdLMUwjJeAO5pgg2RUV
-	 hjky2iPqPE6V5aVKt+X9zAq6s/fxjqB5NlGczXftTkW8xKcd85E1QnE+MunWanMuc2
-	 bHiHrF2cJZ/H8oYPSTLTFYGqCK3KSN87uBlveHxE=
+	b=TxY3XfnchzvxZfSUcnbFkHk3jgmaEPcdju5MDjjoXRrI3/weOCBAbUd+TnZR+O1LC
+	 //wY/ldxmcgMb+EcSJAJ1XT6pvnG5m+Pt9xilisdtVV/8NHtl7ERxJBAseoiegMu+K
+	 fweVn2Bo5w7BO0ocZeBDtBOfRG+Wo8M1qYUubz5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	David Heidelberg <david@ixit.cz>,
 	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.18 0636/1005] backlight: lm3630a: Cancel delayed work before destroying workqueue
-Date: Wed,  4 Nov 2026 16:06:09 -0500
-Message-ID: <20261104211101.586318603@linuxfoundation.org>
+Subject: [PATCH 6.18 0637/1005] backlight: qcom-wled: Fix NULL pointer dereference in wled_remove()
+Date: Wed,  4 Nov 2026 16:06:10 -0500
+Message-ID: <20261104211101.611055498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,46 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: David Heidelberg <david@ixit.cz>
 
-commit 2cf184caab8b406fdd9db126ee40d62418237456 upstream.
+commit 1dbd46d4b2fb416a8202b1a8e4ef9d0cadbe075f upstream.
 
-The interrupt handler queues delayed work to read the interrupt status.
-After free_irq() stops the producer, this work can still be waiting on its
-timer. destroy_workqueue() cannot drain delayed work that has not yet been
-queued by its timer, so the timer can outlive both the workqueue and the
-devm-allocated chip containing the work.
+wled_probe() doesn't set the driver data for the platform device.
+As a result, platform_get_drvdata() in wled_remove() will return NULL,
+and the first dereference of it crashes on unbind.
 
-Cancel the delayed work synchronously after freeing the IRQ and before
-destroying the workqueue. This also waits for any running status read to
-finish before the chip's resources are released.
+Set the platform device driver data in wled_probe().
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: 0c2a665a648e ("backlight: add Backlight driver for lm3630 chip")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Fixes: feeab87b3072 ("backlight: qcom-wled: Add support for short circuit handling")
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20261003030439.599330-1-mhun512@gmail.com
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260921-qcom-wled-backlight-v4-1-bab8c7ef73cb@ixit.cz
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/backlight/lm3630a_bl.c |    1 +
+ drivers/video/backlight/qcom-wled.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/video/backlight/lm3630a_bl.c
-+++ b/drivers/video/backlight/lm3630a_bl.c
-@@ -591,6 +591,7 @@ static void lm3630a_remove(struct i2c_cl
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1682,6 +1682,7 @@ static int wled_probe(struct platform_de
  
- 	if (pchip->irq) {
- 		free_irq(pchip->irq, pchip);
-+		cancel_delayed_work_sync(&pchip->work);
- 		destroy_workqueue(pchip->irqthread);
- 	}
- }
+ 	wled->regmap = regmap;
+ 	wled->dev = &pdev->dev;
++	platform_set_drvdata(pdev, wled);
+ 
+ 	wled->version = (uintptr_t)of_device_get_match_data(&pdev->dev);
+ 	if (!wled->version) {
 
 
