@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829059;
-	b=VFT8LunIeHwVS9VGX/vkus/SsmiYMl76FBi0aARUbHSBOCneAUXQGw69IZ+yaWxuF0Ji
-	 ir5x0HTIvo1u0FfzJEE/fMnJHPvY06wbHu71t54lc+nBVWB/+a/tDym5Pcr8N9GCGgsM0
-	 itjGti62aMpZ2ekvsg4OxkdgDRHCcPPkw0+O6rymxXvb7LdFO1zlvpP4+VddYyOXvELgp
-	 Mpqo+SIjgE6gLeznBv4+VwXgHOSGY0ITSLFOW/h52fboy3SnpjN3N3SqxvRMoiExn+40T
-	 8IxhFfwBjXdWfhGEwcyCw3vkRLUyF+QMAoe7j0cGDnMOAHbh0RSxt9Z0bhSEVOIvXlw==
+	t=1793829061;
+	b=atOGgvOBjC0gSk7JcXHvWQXlMHcI7lbEV5+Nn5QegbB1VITKYIVNhyM50T/ut3vOJ0Wd
+	 Zp78FH7cYwBfGjs/LNwtUBY4DON70bq4vHcCLiWNp6dzWDnuVELHwwvXyffGe2jMz9zZP
+	 5OGXhLIeLu49UkIqhZFpqzeNWrk6v12bjtlztIpX8C3dYGwvCEmmn613AZmNnKEvg6Hhk
+	 kGymkrRQWO324adjcXEyhyRjrTsKSnbARxp0hSrFzrOBQKk5+tlf4Ld07Ng+GKvnV+fvO
+	 J5RzNSOR3bmg3pvf7RpY9T33J14tGnvV21ZSB6dHiRGV21BDRaQKnxxJJe7nOt6fz4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aoHoR356jO1pz4YAOqLsWgvb012HuviprGgUlkLDdvY=;
-	b=sH0sPrf6Bq63L6W/wNcbNWiOpC7haLjhvLHefOrkdbfqfEBFFIre4sCZi8CVbdGg0GEm
-	 JcVSop2z4R0tWFZGelx7PEi++XSr7JF/dTYapiS0LBmYnj7YcUNoAZ8tmL0PEwxVKrRBI
-	 okJU7q9YQyVtrIRMq7OAnlt8mM6OYrLKPHCJr09WAC7RAewINnIBcAhk6I38Tqvm/Pcih
-	 cIqN1BAI9TiLlXDMciPtG+wj8u8y5Pedlmi850gaXf318uCKGc3sSXOL+uRWC2PA79rf7
-	 +tAOoS3Xrwmjp7x+XfboxMAW4u9RZ0sdRR/0LFwS5qO9V7RDBL0eoSiEDgaXi0d7ifQ==
+	bh=mAB2Y3Ly6PLqW5n68GbKKgYI2JfNO5j+jd8N5GA6smY=;
+	b=C3hxunVOE0MleuxG+Pi4zJkDZoZzIeXSXsg9AlYXw+6UA+10d/+xwDPhxqHTDV++y8A1
+	 DPmfPxrZf8yF96dSL71YhLZuLWEThOQpxS67Q920hRvbuqI6qrR3T57RguZUv2vQZXJvd
+	 t/w80VEBuXENYwlIvSyxn3UDPgcgzWJUbGOpPktCblip+ckF9zAnH3NO+eF6NUwLZyTue
+	 Ejz8cgbWcJ6tvVz6/wSlNmk+xV5lhwTjkHproxB2mvdxse46JOZ54f9JTqas8kxwzeFxD
+	 uezcS+5IIoroSuizBtZncdZP/RCXgQ5dXooy0JKMIz479WRa+prTFySWp9VfruJm55Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pN2Dn0C7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bworpfpe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2B760807A8;
-	Wed,  4 Nov 2026 21:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB56607077C;
+	Wed,  4 Nov 2026 21:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pN2Dn0C7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCF51F00A02;
-	Wed,  4 Nov 2026 21:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bworpfpe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34591F000C1;
+	Wed,  4 Nov 2026 21:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829059;
-	bh=aoHoR356jO1pz4YAOqLsWgvb012HuviprGgUlkLDdvY=;
+	s=korg; t=1793829061;
+	bh=mAB2Y3Ly6PLqW5n68GbKKgYI2JfNO5j+jd8N5GA6smY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pN2Dn0C7o26NZEoxdK3tB2Dwjhb1cLkRF1nPOtVYfo/PX7Gj0PhHbJgCDpRdICFpG
-	 J3EiTKwCe9hT+6vGIrRQ7XgewpawCc3lqYL8YVgummWAoghm1hnyPdjzUM6sIr88p2
-	 9w1A+tQXZcAJYzd68PJBUixY+VNLZmr74/RP/uzs=
+	b=bworpfpetKYWwThk4jiHWZqM/v6qBnYlN3y5ZaFSVAHTtZHyvqUheruCwzk5Iq6aR
+	 f/aEAuFAubG3eZW6FudxqX6AD2bGJ03bShkSNg38fGwFe7Wvdg0e+pkbvfz5tlpgjT
+	 oMMBDp0Ce0c0MyOiFHiGNsFg6N8l6y61LIa4FHEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benji Wiebe <itsme@benjiwiebe.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	David Laight <david.laight.linux@gmail.com>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.3 417/547] nfsd: dont offer flexfiles layouts when NFSv3 isnt being served
-Date: Wed,  4 Nov 2026 16:10:01 -0500
-Message-ID: <20261104211050.170135503@linuxfoundation.org>
+Subject: [PATCH 7.3 418/547] NFSD: Fail a pool_threads read whose reply does not fit
+Date: Wed,  4 Nov 2026 16:10:02 -0500
+Message-ID: <20261104211050.202765684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,45 +67,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-commit 5d28b2c920d9d9d3c45b41769342ad785eb372a7 upstream.
+commit e27c63245903402ccfdb46c576462981a7e032e3 upstream.
 
-The flexfiles layout driver hands out a deviceinfo that names this server
-as an NFSv3 DS (flexfilelayout.c hardcodes da->version = 3). With v3
-disabled, the client can't talk to the DS: it loops on v3 NULL calls that
-the server answers with PROG_MISMATCH, and I/O hangs in D state.
+The reply to a pool_threads read is the list of per-pool thread counts,
+formatted into a buffer of SIMPLE_TRANSACTION_LIMIT bytes. snprintf()
+truncates its last write and strlen() measures only what fit, so a reply
+too long for that buffer ends mid-number with no terminating newline. A
+pool running 4096 threads is reported as 40. Nothing marks the reply as
+incomplete, so an administrator reads a plausible but wrong count.
 
-Skip LAYOUT_FLEX_FILES in nfsd4_setup_layout_type() unless v3 is enabled.
+Take snprintf()'s return value, which reports the truncation strlen()
+cannot see, and fail the read with -ENAMETOOLONG when the list does
+not fit. That is the errno svc_one_xprt_name() already returns for the
+same condition.
 
-Reported-by: Benji Wiebe <itsme@benjiwiebe.com>
-Closes: https://lore.kernel.org/linux-nfs/c734eeb8-8486-4491-bb4d-b9656cbaffbe@app.fastmail.com/
-Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
+Suggested-by: David Laight <david.laight.linux@gmail.com>
+Fixes: eed2965af1ba ("[PATCH] knfsd: allow admin to set nthreads per node")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260904-pnfs-ff-v1-1-5f502cf25401@kernel.org
+Link: https://patch.msgid.link/20260812193349.13347-1-david.laight.linux@gmail.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4layouts.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -127,10 +127,12 @@ nfsd4_set_deviceid(struct nfsd4_deviceid
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -477,7 +477,7 @@ static ssize_t write_pool_threads(struct
+ 	char *mesg = buf;
+ 	int i;
+ 	int rv;
+-	int len;
++	size_t len;
+ 	int npools;
+ 	int *nthreads;
+ 	struct net *net = netns(file);
+@@ -531,9 +531,13 @@ static ssize_t write_pool_threads(struct
  
- void nfsd4_setup_layout_type(struct svc_export *exp)
- {
-+	struct nfsd_net *nn = net_generic(exp->cd->net, nfsd_net_id);
- 	struct super_block *sb = exp->ex_path.mnt->mnt_sb;
- 	expfs_block_layouts_t block_supported = exportfs_layouts_supported(sb);
- 
--	if (IS_ENABLED(CONFIG_NFSD_FLEXFILELAYOUT))
-+	if (IS_ENABLED(CONFIG_NFSD_FLEXFILELAYOUT) &&
-+	    nfsd_vers(nn, 3, NFSD_TEST))
- 		exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
- 	if (IS_ENABLED(CONFIG_NFSD_BLOCKLAYOUT) &&
- 	    (block_supported & EXPFS_BLOCK_IN_BAND_ID))
+ 	mesg = buf;
+ 	size = SIMPLE_TRANSACTION_LIMIT;
+-	for (i = 0; i < npools && size > 0; i++) {
+-		snprintf(mesg, size, "%d%c", nthreads[i], (i == npools-1 ? '\n' : ' '));
+-		len = strlen(mesg);
++	for (i = 0; i < npools; i++) {
++		len = snprintf(mesg, size, "%d%c", nthreads[i],
++			       (i == npools - 1 ? '\n' : ' '));
++		if (len >= size) {
++			rv = -ENAMETOOLONG;
++			goto out_free;
++		}
+ 		size -= len;
+ 		mesg += len;
+ 	}
 
 
