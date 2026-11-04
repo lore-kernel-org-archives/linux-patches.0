@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829528;
-	b=zIF8QJChYNPSyKhvFGHSFtHs+bMc1yZXndAiVP119Rgc2efY35tG7+mVtAVX3NUl85jT
-	 kkYdtGyLu3C5hR1BdsTPIX2G86F1WrUzWXPxp+qFru6Nxxp+MF+4CdtNV0qPTIvAmUPy9
-	 KCHqvDH/asCOMfVYkDDvSUr7RIgPPcDNRoOHQsyjFvaT7ovfh3rSrV2qBehHJWdbCvfmJ
-	 RJ0Ho+W02oiY4w1Ph8EhT7fudraX41pS/5rYjrJeez/jxNQ31ypxb/YLmgHS/NpUNT4Vr
-	 0kELyNFHUUAMC/IweqI60x+CPJ7QqC4Xzu5HGnleepimmcOWL/i7+tt+9p7wrrG8RXA==
+	t=1793829529;
+	b=Me1OdnY9DnXBLBwD6Labb8A/FJZUdc6hJJpiVMgkstR6UhbV3gtkIWGgoi9m1N9USyeX
+	 EH0bHgUGd2Sbn+zBtW90DtWvgvJ+5ss+aKWVxPAJjEnnlTjkTwqIV8PNv7wK8HN2TESGX
+	 7oNR7/3+C1RR62Ccq0TG266TYfVkzyp+x8p8WeZXzXTqLj5TRlSARO9HPPpwpJgvWfKdT
+	 EESV7HqobVh4dmw0UtmLTlJQPTBjgiW3AhvhyC/DTbwIsMWcy+f7Q6JW67yp1/OHUXq/V
+	 CPjkjfi69xJdOGUzCH9fJ1p1hgPwM3G2NDwJafdif21//mqPAMQV0tgLZaG+RpHrteA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KIpdhgSKaM3lBNfIRsS8Ae1L//S4lt6y0Iu2tSo1N2I=;
-	b=ZGMEA9l+XAQbN0JRCdztwBx281T2OEcdXXgsYHdUjnEDU/ZGJv1Bruw9ZDfidBZYF6nE
-	 5Djg075MaPKawS/VcgZ3W3aknSzRXRuzYkfDgMdaeBxj74X47siqBrS3tM87P4Y/ni96C
-	 VR7P2OMFAGtQtP9NcDL+jD7UhvL3nhIafDmeaPSwqpYziQfQBu1t+mDRWy3pzyex+0MWi
-	 Op4wRiDaWbziL75LnarlyvwYNdF0CiugZVJlB9mZ/73LNGealGRAyOMBW8qhzvuivhw4p
-	 NQeIfsQuVCPHtfBxZn5WwOZcq6J2JH0nYSazrfBadUg7DXmrgAI4l2EN4Z5cRacCJZA==
+	bh=VV86nxHXSIEoKeXnqr0UnhdUOf7dPxFMNMeAKD1JZFA=;
+	b=IP1vaO5lul0MPx3ku1TC73XehKJTfJPbsoL3mwNoztxZ99t2pTAjc4TzTkAfIr+jY32X
+	 6SmMVy9ljgMh7Ic/yUfrs/tkmyFQeyrUyba35Xorc+LPmTTVqodwdqDshpbc9WWMl7c+s
+	 5R6UM1IYdH1LMwlEyrf+26TmzG888ZkS/upwYMcZogYOSHW8ysM0xHA9G80qDntLVUbuT
+	 tthP5J882lTFHpqtA9x1t5BMUdgC/dCgrtW7fEoR/pVLSdtoR4gCldp2QQFW6j4TrTDsm
+	 UBV+OQOspe+EPo/9dVrsx4p4bZuEVsIW6XQZPPNeoVRcdkB2ESUAd+urrgV/j7v/u+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f/XPIWXi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQriLhcp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF27606AB38;
-	Wed,  4 Nov 2026 21:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501A0606AB38;
+	Wed,  4 Nov 2026 21:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f/XPIWXi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4761F000C1;
-	Wed,  4 Nov 2026 21:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQriLhcp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14151F00A15;
+	Wed,  4 Nov 2026 21:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829527;
-	bh=KIpdhgSKaM3lBNfIRsS8Ae1L//S4lt6y0Iu2tSo1N2I=;
+	s=korg; t=1793829529;
+	bh=VV86nxHXSIEoKeXnqr0UnhdUOf7dPxFMNMeAKD1JZFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f/XPIWXiRKrl+E1O9LUiRcJODyu3FENnlMUnTeOHr/yMGt/eGg0tjjTtRcgvMJJzy
-	 GUKZDbOICckHDbRDP4h0BpeVPW6+sz1RXvnzZ5CCB8fOi/H/3PyV1SesVz7Jnj2+ne
-	 kb9BGoX7S4yt9Fo8lTNlyx9CLl2yechlXdz4Ka1Q=
+	b=cQriLhcp+sC3dfaYN+QWGYX/fLSN408yzj6C6HCDlNLPO/OyyD0qDGYgcAkgqtTvU
+	 1SfVy8sADYGDfl1cK8gctZVbqewwcPItWcUDlN1UZt3hNPh+DwfQUaq7+HWTtcFbql
+	 YqVeSk4PRAsKTbWkzKeN+TdMSL6UzHJP/NkY79pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0133/1005] pinctrl: sx150x: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 15:57:46 -0500
-Message-ID: <20261104211047.422283879@linuxfoundation.org>
+Subject: [PATCH 6.18 0176/1005] comedi: ni_atmio16d: Add sanity check to interrupt handler
+Date: Wed,  4 Nov 2026 15:58:29 -0500
+Message-ID: <20261104211048.708083921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,40 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 5fe4b12c087db3e565f53b87f1dafdf2f0d1ee0f ]
+[ Upstream commit 13f4796223489a5349b466ce54bb868f46c9fefd ]
 
-The driver has a match table for the i2c bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+The driver requests an interrupt handler for the device, after setting
+device registers to disable interrupt generation.  The interrupt handler
+should not be called prematurely unless the user-configured I/O port
+base address and/or IRQ number are incorrect or the hardware is bad.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+For safety, check the dev->attached flag in the interrupt handler to
+ensure the device has been fully set up, avoiding a possible null
+pointer dereference of dev->read_subdev.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-6-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-sx150x.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/comedi/drivers/ni_atmio16d.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-sx150x.c b/drivers/pinctrl/pinctrl-sx150x.c
-index 1d6760ffe809a..f1647d9114e3b 100644
---- a/drivers/pinctrl/pinctrl-sx150x.c
-+++ b/drivers/pinctrl/pinctrl-sx150x.c
-@@ -850,6 +850,7 @@ static const struct i2c_device_id sx150x_id[] = {
- 	{"sx1509q", (kernel_ulong_t) &sx1509q_device_data },
- 	{}
- };
-+MODULE_DEVICE_TABLE(i2c, sx150x_id);
+diff --git a/drivers/comedi/drivers/ni_atmio16d.c b/drivers/comedi/drivers/ni_atmio16d.c
+index b057b3b3582e1..bf7fb6704710f 100644
+--- a/drivers/comedi/drivers/ni_atmio16d.c
++++ b/drivers/comedi/drivers/ni_atmio16d.c
+@@ -223,6 +223,9 @@ static irqreturn_t atmio16d_interrupt(int irq, void *d)
+ 	struct comedi_subdevice *s = dev->read_subdev;
+ 	unsigned short val;
  
- static const struct of_device_id sx150x_of_match[] = {
- 	{ .compatible = "semtech,sx1501q", .data = &sx1501q_device_data },
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	val = inw(dev->iobase + AD_FIFO_REG);
+ 	comedi_buf_write_samples(s, &val, 1);
+ 	comedi_handle_events(dev, s);
 -- 
 2.53.0
 
