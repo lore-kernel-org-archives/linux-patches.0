@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827114;
-	b=VF5m2yjPVi4+Si8+yk1cox2/b5pjDosXf8n18jpUesZQV+15iIHQThnIOWyTDoW08HhP
-	 x/OiprrKfITsmyU4Lyvse4WF06SvXAgf0Rnp1JSCrudYHBlwTB+Co1nS8s9gESw3SXs/j
-	 BR8k0OFIq1Bh3H/d/Hu/ogwumTzVqCuDPqBGRdKgZga9k0hPhZY/uV50WGUstprinqT6V
-	 FrKOXnA3sXtH1IOK5EZRFVEKVYOsb2QDVjWIKRSporhJBBEdSuraIOOKjxpUB+G0ifGIJ
-	 /vlbc6cEnq9l0PnZw9QmMZiHnqHjCe2nzLKTGih7GqaL5IBaSzg7K0klwezpZDzW1qQ==
+	t=1793827116;
+	b=UveKIKkIQtN/xELk98ucW1+ByZi6WvcMlq0cC8jq3jgs4uh6LnmjUHXEx4qJtP9qgOoQ
+	 6I9cP7qM2wVfcyOOxfvj/ll+za8HsY/fGbK/iUAQ/9dg5eC7CaScOpAGyDY8lAnYmJGtq
+	 CXd0ExMJNKXbZgCmCywNBdv3LOGbeUrD3z+d7d7nQofRiUi64YnmbpE9shxvt8suUOjow
+	 lntnixCP41x4cVk1pFPGd6HWZ8dfuQZ6pI/pNZ+c69r4QuvwNVT96K3lrjVr+0ryqs9Mp
+	 v/adYHbxFDOaroppGYQCUBYfzlT5RPmbtmGWiwGZypCeQ4wagLJ+Nl51b1xps3oKT4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827114;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q1I9B1YC8fn/z1Dv+9pP37iLTHnOLmt9Uo1solpIGnM=;
-	b=065zZALCEt/ts9eUvviEf2C7jj2G22/cUcUmLJaIodCjP7aiiHBhXQ46vdNVmJ/jGaV7
-	 KMCEj24CfzEqQGG1/B0nJQrUfdOgxHkVuxKcNHXzw9+dIpMpAkitnJbhkZXUvOTfnibMa
-	 lkxAcwThR6lRamAjKENoFoCCEbuSWdjURSa0Mcf6jbFzBy79eXJ7SqnX+KMhw1NyZwHyB
-	 r0zv1p3MgG/sBDnu9P5wZvcl8eTswV5MEoo+11FhJvsNNbVtqS/EQM2YIJVF0GyIlu0tN
-	 /UVt4rZwulcpMxQZz+BvZhd8GsW4um3hMScV2Kr8BKArYY4kqTtEdH38xwXhPNXHaFw==
+	bh=h7wgtjjJaCdUpKlEytTaBWCu5szkx81/yu21wToqn6M=;
+	b=Yni77sHkOe2LOHduUt6/rdLdnzoO0azM8Kz+MLkg2JznOiabwvDQOUCS6rsre1r5tMua
+	 muuaOKQBZ2LFccDYn8/NniDo0VpEP0gl1rhAEyswLNwOOF+3QBZ3gHrqCi6sVNu0ri176
+	 ga08SQEgutRj8YVuzDNehGFU4L4awndhg6ZuEomD7gv3R47DlcSWwl7CAoDjG6gaaHrcb
+	 z4Spfo+cZyeOMqIMzL+tX2Kt97D1dtS87s6XcbiCosVUPlb6LPe9+pwtGWM4Z1HE5cw9d
+	 4gaUxOKp5l7t75EP8+UB1yBOrhVF/Ru5V/vBWYh1MXXYUthlomBtEigrvETixuj+ndQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZ8Hdsqs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtAfCz5J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F25606A847;
-	Wed,  4 Nov 2026 21:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE95606A847;
+	Wed,  4 Nov 2026 21:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZ8Hdsqs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C362E1F00A18;
-	Wed,  4 Nov 2026 21:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtAfCz5J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6EE1F00919;
+	Wed,  4 Nov 2026 21:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827114;
-	bh=Q1I9B1YC8fn/z1Dv+9pP37iLTHnOLmt9Uo1solpIGnM=;
+	s=korg; t=1793827115;
+	bh=h7wgtjjJaCdUpKlEytTaBWCu5szkx81/yu21wToqn6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZ8HdsqsYWPUyznTx6GBY5Gpba0t/5H3K4xb6jvCbbU0tsoO3+mazBGo89tcGsA58
-	 UjGxpLwvcu6Af5BShc+5TGjxdu4SEhDHpi7AKDv0R3xiqAtIADdnirWnDsy5we5Ltj
-	 tucKn8pWhA1axuGIhMH1/yqflBAu0sUvaAgi7lHw=
+	b=LtAfCz5JCXXN7E2VnwFyr6uQsyzkWt4WFolYmbZNT5qtoMHNvN62twf9DxEcjJd0H
+	 m5V7NcvDXjh8drWWRBBFXoUfgsv+hly0BG6W95Ev/HfyEwXMX9tS2EjLvaQg2VFDzI
+	 CEatsDL6yekNcrIYIV3EPw3Jgcy2pTpwGlQVpS3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 7.3 182/547] s390/zcrypt: Guard domain index uses against speculative bypass
-Date: Wed,  4 Nov 2026 16:06:06 -0500
-Message-ID: <20261104211043.318444214@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.3 183/547] HID: wacom: Use hdev->product in wacom_setup_touch_input_capabilities
+Date: Wed,  4 Nov 2026 16:06:07 -0500
+Message-ID: <20261104211043.346067335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,109 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 7b88e8b6d714cd1b2b6185e2963c8ec4d98542d0 upstream.
+commit 86472508a7ef74b525e79a79d2d02d911a641d6b upstream.
 
-The previous array_index_nospec() placement only covered the admin
-permission check, leaving ap_test_config_usage_domain() and
-ap_test_config_ctrl_domain() in the CCA path exposed to speculative
-execution.
+Replace the lookup-dependent 'wacom_wac->shared->touch->product' references
+with 'hdev->product' inside wacom_setup_touch_input_capabilities() since
+'hdev' is already available (via container_of) and represents the touch
+device itself.
 
-Move the sanitization to before all permission and config checks in
-both the CCA and EP11 paths. Hold the sanitized domain value in
-another variable so that the later use can choose to use either the
-original value (subject to speculative execution) or the sanitized
-value (which may in case of AUTOSEL_DOM reflect the wrong
-value). Before that, check the domain value to be either AUTOSEL_DOM
-or in range 0...AP_DOMAINS-1 and return with -EINVAL in case this check
-does not pass.
-
-Fixes: e935cd525af4 ("s390/zcrypt: Close speculative mem read possibility")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Ping Cheng <ping.cheng@wacom.com>
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_api.c |   35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ drivers/hid/wacom_wac.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/s390/crypto/zcrypt_api.c
-+++ b/drivers/s390/crypto/zcrypt_api.c
-@@ -854,7 +854,7 @@ static long _zcrypt_send_cprb(u32 xflags
- 			      struct ica_xcRB *xcrb)
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -3966,8 +3966,8 @@ int wacom_setup_pen_input_capabilities(s
+ int wacom_setup_touch_input_capabilities(struct input_dev *input_dev,
+ 					 struct wacom_wac *wacom_wac)
  {
- 	bool userspace = xflags & ZCRYPT_XFLAG_USERSPACE;
--	unsigned int card, domain, func_code = 0;
-+	unsigned int card, domain, _dom, func_code = 0;
- 	unsigned int wgt = 0, pref_wgt = 0;
- 	struct zcrypt_queue *zq, *pref_zq;
- 	struct zcrypt_card *zc, *pref_zc;
-@@ -877,10 +877,17 @@ static long _zcrypt_send_cprb(u32 xflags
- 	print_hex_dump_debug("ccareq: ", DUMP_PREFIX_ADDRESS, 16, 1,
- 			     ap_msg.msg, ap_msg.len, false);
++	struct hid_device *hdev = container_of(wacom_wac, struct wacom, wacom_wac)->hdev;
+ 	struct wacom_features *features = &wacom_wac->features;
+-
+ 	if (!(features->device_type & WACOM_DEVICETYPE_TOUCH))
+ 		return -ENODEV;
  
-+	/* Check domain for either AUTOSEL_DOM or in range 0...AP_DOMAINS-1 */
-+	if (domain != AUTOSEL_DOM && domain >= AP_DOMAINS) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
-+	/* Spectre-v1: sanitize domain unconditionally for later use */
-+	_dom = array_index_nospec(domain, AP_DOMAINS);
-+
- 	if (perms != &ap_perms && domain < AP_DOMAINS) {
- 		if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
--			domain = array_index_nospec(domain, AP_DOMAINS);
--			if (!test_bit_inv(domain, perms->adm)) {
-+			if (!test_bit_inv(_dom, perms->adm)) {
- 				rc = -ENODEV;
- 				goto out;
- 			}
-@@ -893,10 +900,11 @@ static long _zcrypt_send_cprb(u32 xflags
- 	 * If a valid target domain is set and this domain is NOT a usage
- 	 * domain but a control only domain, autoselect target domain.
- 	 */
--	if (domain < AP_DOMAINS &&
--	    !ap_test_config_usage_domain(domain) &&
--	    ap_test_config_ctrl_domain(domain))
--		domain = AUTOSEL_DOM;
-+	if (domain < AP_DOMAINS) {
-+		if (!ap_test_config_usage_domain(_dom) &&
-+		    ap_test_config_ctrl_domain(_dom))
-+			domain = AUTOSEL_DOM;
+@@ -3976,9 +3976,11 @@ int wacom_setup_touch_input_capabilities
+ 	else
+ 		__set_bit(INPUT_PROP_POINTER, input_dev->propbit);
+ 
+-	if (features->type == HID_GENERIC)
++	if (features->type == HID_GENERIC) {
++		hid_dbg(hdev, "generic touch setup\n");
+ 		/* setup has already been done */
+ 		return 0;
 +	}
  
- 	pref_zc = NULL;
- 	pref_zq = NULL;
-@@ -1041,7 +1049,7 @@ static long _zcrypt_send_ep11_cprb(u32 x
- 	struct ep11_target_dev *targets = NULL;
- 	unsigned short target_num;
- 	unsigned int wgt = 0, pref_wgt = 0;
--	unsigned int func_code = 0, domain;
-+	unsigned int func_code = 0, domain, _dom;
- 	struct ap_message ap_msg;
- 	int cpen, qpen, qid = 0, rc;
- 	struct module *mod;
-@@ -1078,10 +1086,17 @@ static long _zcrypt_send_ep11_cprb(u32 x
- 	print_hex_dump_debug("ep11req: ", DUMP_PREFIX_ADDRESS, 16, 1,
- 			     ap_msg.msg, ap_msg.len, false);
+ 	input_dev->evbit[0] |= BIT_MASK(EV_KEY) | BIT_MASK(EV_ABS);
+ 	__set_bit(BTN_TOUCH, input_dev->keybit);
+@@ -4010,19 +4012,17 @@ int wacom_setup_touch_input_capabilities
+ 		input_dev->evbit[0] |= BIT_MASK(EV_SW);
+ 		__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
  
-+	/* Check domain for either AUTOSEL_DOM or in range 0...AP_DOMAINS-1 */
-+	if (domain != AUTOSEL_DOM && domain >= AP_DOMAINS) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
-+	/* Spectre-v1: sanitize domain unconditionally for later use */
-+	_dom = array_index_nospec(domain, AP_DOMAINS);
-+
- 	if (perms != &ap_perms && domain < AP_DOMAINS) {
- 		if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
--			domain = array_index_nospec(domain, AP_DOMAINS);
--			if (!test_bit_inv(domain, perms->adm)) {
-+			if (!test_bit_inv(_dom, perms->adm)) {
- 				rc = -ENODEV;
- 				goto out;
- 			}
+-		if (wacom_wac->shared->touch->product == 0x361) {
++		if (hdev->product == 0x361) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 12440, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+ 					     0, 8640, 4, 0);
+-		}
+-		else if (wacom_wac->shared->touch->product == 0x360) {
++		} else if (hdev->product == 0x360) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 8960, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+ 					     0, 5920, 4, 0);
+-		}
+-		else if (wacom_wac->shared->touch->product == 0x393) {
++		} else if (hdev->product == 0x393) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 6400, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+@@ -4052,8 +4052,8 @@ int wacom_setup_touch_input_capabilities
+ 		fallthrough;
+ 
+ 	case WACOM_27QHDT:
+-		if (wacom_wac->shared->touch->product == 0x32C ||
+-		    wacom_wac->shared->touch->product == 0xF6) {
++		if (hdev->product == 0x32C ||
++		    hdev->product == 0xF6) {
+ 			input_dev->evbit[0] |= BIT_MASK(EV_SW);
+ 			__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
+ 			wacom_wac->has_mute_touch_switch = true;
 
 
