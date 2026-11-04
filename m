@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831231;
-	b=erSHPgCqn03byHUUHXBDpmuUIeqyJWH9fLwPGUAO7FpJDGfxd3UB+AIP1vwwF/BHbqb1
-	 7Z24oxw3J/brpShEOupnxbDaxhGPknatcMoVnmAoaXSrSdyE1eQ3gUlHntVVCXk5OE29o
-	 r06pcgO3FYMpK+1MDx5lMvYqoQTXqAShcgMw+JPZCWt0DxwdKtr/JpThBIumzuy0iPKZ7
-	 99zaIm4LZMLo4i2xBT4zg+7gv7jeCyj80xXl9+l6/JIWKhUz6+a/DTqiSJ35+UzNE/g+a
-	 R+egbw3TujoqJFVMgG7MLp18fjqq+giPoMjHtO880MHbUvKycblkyQpa3E60nS7on/g==
+	t=1793831232;
+	b=ccxUcPfwQGTjW7WtqkyUak2gg2m0l09Dp+bdGWedjT1oDrwSCRGWg7eXe5NMmqr1tLAi
+	 WMPQU9A+PjMboHR9I3STsBDynZ+dsx0nFaQmQUG/zUj+99kroPZ1CoTaJCLgVkChvqHwh
+	 cjbY4rRzkOdzKFI4jcKXbMudzOkVJzJErjqORRxkNrxhyadFwePeOfaJ3eCi6C7WjeUVi
+	 jfBWLc3n6M+O2QmXThBIhF5JlDtQcO40/6myQnCuR3uoZoAqfGcM8uej+rZ6gGD9OCaoE
+	 YiYFgqlChxgkk2QKwRbPzaHY0JZyoZkU++/b1QlfqK83PjmdLQPH4JMPu3BRZ1v59Qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/Q8ENYDYhFfbtZIeUdcEhekfwwEfJfrDg1/Ud0DK/8M=;
-	b=B7L7dhOtJaTnx5Ta/gLFOC9XKz0W9vUQLDjgYQsYxU/8O2cfB4yH3mgya2G+D4xL3gHL
-	 edDk8rCkaCwqsg0xPtvOTKySBc7uaqOoTGfh9SB6mozZvWJGXR6QTEftGDVHrTRRzDgaS
-	 1zTnn7wrwXB0/V1lr3sQDhr4zJczy7GPphbPhlMT5dKbBlZqF2KHNJUmWC+OEGh1C3D5o
-	 e5lgNVitIkcN5YqxSWinXB7V0emVLSYaxkClXO4wBwDrNiLK7nHIatEWXRZx+32EVyRTP
-	 fxqJ1fP4L34ewhhYRi5O2SVceEiWUTK8jHUkUKDWWj7dAwGKHCXq9/AO8KMihOol6EA==
+	bh=oZu5gtvXIxSCkvpGiQgJYG0DJkCiij1WICFBMofiu+4=;
+	b=1gu+lCghXd4s0bSSgRjykScV5is2N7//z5PdlnRjopKxLa0vKrv3UnhuVOrztBv5WBjk
+	 a6JY1UfWukO0xBofmYumhVvz+pxJo8F1wgqHvzkHG3GXS4i9OXYYlD+Pf3o/ML0kZquYh
+	 OprLOu9eUzS2WOsIiqYIE/698GKd1MtTzTiDkizdaZ9PFR5tuYOv28sTYF8c4m52L0CJ6
+	 EQeKClK9jSuuTWJZsD6Xd6t30/hxMuof3TboDChJMr1I4ISo1GQ8z/dx+l+a5fDJcjvoi
+	 kwBKuQGQ+YdLH9b1eFyKbbBYWU6W1OAvr9aVZiabikSELwAA8nPVI3x3emiCd7PseBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OZGSTRvt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X8aTZVBA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC864606AB32;
-	Wed,  4 Nov 2026 22:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A07F606AB32;
+	Wed,  4 Nov 2026 22:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OZGSTRvt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1AF1F000C1;
-	Wed,  4 Nov 2026 22:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X8aTZVBA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB43D1F000C1;
+	Wed,  4 Nov 2026 22:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831230;
-	bh=/Q8ENYDYhFfbtZIeUdcEhekfwwEfJfrDg1/Ud0DK/8M=;
+	s=korg; t=1793831232;
+	bh=oZu5gtvXIxSCkvpGiQgJYG0DJkCiij1WICFBMofiu+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OZGSTRvtm8hcqiah1QdGskwNMK+VyNM4vUER8583u+RMg4BIi2yVhO7y0olZSov3J
-	 s9Iag59/s3ahNZAG73FHIdWU9kpIzZ1NzE0nJfLz7tF01fbUQVK6+1Odo2MzWXFjkc
-	 HBGbYSYWvVSOavlFpAnP0RB55pCsqilYVFq4OwJM=
+	b=X8aTZVBAzuCOrfvy1L9aGjJaop7/cIdFpuosH0bPxdSQRUCaUT8jwUNXy9/Ee9r4l
+	 DouhaxDf9GMBlTI0XRmsN+Eg9VwfMs+TtWmIb7JWvgirdhhJw2vrLHaMFSzIxKZFM5
+	 4F5OIowEGn+/rdpbbgIxYbnhK+EI4Y/ZAtk2TV8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0577/1005] smb: client: fix WSL reparse point uid/gid override
-Date: Wed,  4 Nov 2026 16:05:10 -0500
-Message-ID: <20261104211100.028829428@linuxfoundation.org>
+Subject: [PATCH 6.18 0578/1005] hwmon: (asus_rog_ryujin) Rely on subsystem locking
+Date: Wed,  4 Nov 2026 16:05:11 -0500
+Message-ID: <20261104211100.053187566@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -72,70 +67,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit cd2b2b57921d4caa7875e83198bb2aa71254328b ]
+[ Upstream commit b4306c0c8e24f9e031185fb87de45391bc8c7fe9 ]
 
-wsl_to_fattr() unconditionally overwrites cf_uid/cf_gid with values
-from WSL extended attributes ($LXUID/$LXGID), ignoring the forceuid
-and forcegid mount options.
+Attribute access is now serialized in the hardware monitoring core,
+so locking in the driver code is no longer necessary. Drop it.
 
-Fix this by initializing cf_uid/cf_gid to the mount defaults and
-gating the $LXUID/$LXGID EA parsing on forceuid/forcegid.
-
-Closes: https://sashiko.dev/#/patchset/20260906190803.667489-1-pc%40manguebit.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: stable@vger.kernel.org
-[ sashal: Kept the existing fattr->cf_mode &= ~S_IFMT; line and added the new uid/gid default initialisation after it, and the S_DT() comparison context uses get_unaligned_le32(). ]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 8042312e73c5 ("hwmon: (asus_rog_ryujin) Validate HID report lengths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/hwmon/asus_rog_ryujin.c | 48 +++++++--------------------------
+ 1 file changed, 9 insertions(+), 39 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 2e773a1a67142..124ad21d6dff6 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -1109,11 +1109,15 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
- 			 struct cifs_sb_info *cifs_sb,
- 			 u32 tag, struct cifs_fattr *fattr)
+diff --git a/drivers/hwmon/asus_rog_ryujin.c b/drivers/hwmon/asus_rog_ryujin.c
+index e5e93a20723c4..10a1f5aca988d 100644
+--- a/drivers/hwmon/asus_rog_ryujin.c
++++ b/drivers/hwmon/asus_rog_ryujin.c
+@@ -81,10 +81,6 @@ static const char *const rog_ryujin_speed_label[] = {
+ struct rog_ryujin_data {
+ 	struct hid_device *hdev;
+ 	struct device *hwmon_dev;
+-	/* For locking access to buffer */
+-	struct mutex buffer_lock;
+-	/* For queueing multiple readers */
+-	struct mutex status_report_request_mutex;
+ 	/* For reinitializing the completions below */
+ 	spinlock_t status_report_request_lock;
+ 	struct completion cooler_status_received;
+@@ -153,18 +149,10 @@ static umode_t rog_ryujin_is_visible(const void *data,
+ /* Writes the command to the device with the rest of the report filled with zeroes */
+ static int rog_ryujin_write_expanded(struct rog_ryujin_data *priv, const u8 *cmd, int cmd_length)
  {
-+	unsigned int sbflags = cifs_sb_flags(cifs_sb);
- 	struct smb2_file_full_ea_info *ea;
- 	bool have_xattr_dev = false;
- 	u32 next = 0;
+-	int ret;
+-
+-	mutex_lock(&priv->buffer_lock);
+-
+ 	memcpy_and_pad(priv->buffer, MAX_REPORT_LENGTH, cmd, cmd_length, 0x00);
+-	ret = hid_hw_output_report(priv->hdev, priv->buffer, MAX_REPORT_LENGTH);
+-
+-	mutex_unlock(&priv->buffer_lock);
+-	return ret;
++	return hid_hw_output_report(priv->hdev, priv->buffer, MAX_REPORT_LENGTH);
+ }
  
- 	fattr->cf_mode &= ~S_IFMT;
-+	fattr->cf_uid = cifs_sb->ctx->linux_uid;
-+	fattr->cf_gid = cifs_sb->ctx->linux_gid;
-+
- 	switch (tag) {
- 	case IO_REPARSE_TAG_LX_SYMLINK:
- 		fattr->cf_mode |= S_IFLNK;
-@@ -1150,11 +1154,13 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
- 		nlen = ea->ea_name_length;
- 		v = (void *)((u8 *)ea->ea_data + ea->ea_name_length + 1);
+-/* Assumes priv->status_report_request_mutex is locked */
+ static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, int cmd_length,
+ 				  struct completion *status_completion)
+ {
+@@ -196,14 +184,11 @@ static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, i
  
--		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen))
--			fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
--		else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen))
--			fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
--		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
-+		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen)) {
-+			if (!(sbflags & CIFS_MOUNT_OVERR_UID))
-+				fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
-+		} else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen)) {
-+			if (!(sbflags & CIFS_MOUNT_OVERR_GID))
-+				fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
-+		} else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
- 			/* File type in reparse point tag and in xattr mode must match. */
- 			if (S_DT(fattr->cf_mode) != S_DT(get_unaligned_le32(v)))
- 				return false;
+ static int rog_ryujin_get_status(struct rog_ryujin_data *priv)
+ {
+-	int ret = mutex_lock_interruptible(&priv->status_report_request_mutex);
+-
+-	if (ret < 0)
+-		return ret;
++	int ret;
+ 
+ 	if (!time_after(jiffies, priv->updated + msecs_to_jiffies(STATUS_VALIDITY))) {
+ 		/* Data is up to date */
+-		goto unlock_and_return;
++		return 0;
+ 	}
+ 
+ 	/* Retrieve cooler status */
+@@ -211,36 +196,30 @@ static int rog_ryujin_get_status(struct rog_ryujin_data *priv)
+ 	    rog_ryujin_execute_cmd(priv, get_cooler_status_cmd, GET_CMD_LENGTH,
+ 				   &priv->cooler_status_received);
+ 	if (ret < 0)
+-		goto unlock_and_return;
++		return ret;
+ 
+ 	/* Retrieve controller status (speeds) */
+ 	ret =
+ 	    rog_ryujin_execute_cmd(priv, get_controller_speed_cmd, GET_CMD_LENGTH,
+ 				   &priv->controller_status_received);
+ 	if (ret < 0)
+-		goto unlock_and_return;
++		return ret;
+ 
+ 	/* Retrieve cooler duty */
+ 	ret =
+ 	    rog_ryujin_execute_cmd(priv, get_cooler_duty_cmd, GET_CMD_LENGTH,
+ 				   &priv->cooler_duty_received);
+ 	if (ret < 0)
+-		goto unlock_and_return;
++		return ret;
+ 
+ 	/* Retrieve controller duty */
+ 	ret =
+ 	    rog_ryujin_execute_cmd(priv, get_controller_duty_cmd, GET_CMD_LENGTH,
+ 				   &priv->controller_duty_received);
+-	if (ret < 0)
+-		goto unlock_and_return;
+-
+-	priv->updated = jiffies;
+-
+-unlock_and_return:
+-	mutex_unlock(&priv->status_report_request_mutex);
+ 	if (ret < 0)
+ 		return ret;
+ 
++	priv->updated = jiffies;
+ 	return 0;
+ }
+ 
+@@ -303,14 +282,11 @@ static int rog_ryujin_write_fixed_duty(struct rog_ryujin_data *priv, int channel
+ 		 * Retrieve cooler duty since both pump and internal fan are set
+ 		 * together, then write back with one of them modified.
+ 		 */
+-		ret = mutex_lock_interruptible(&priv->status_report_request_mutex);
+-		if (ret < 0)
+-			return ret;
+ 		ret =
+ 		    rog_ryujin_execute_cmd(priv, get_cooler_duty_cmd, GET_CMD_LENGTH,
+ 					   &priv->cooler_duty_received);
+ 		if (ret < 0)
+-			goto unlock_and_return;
++			return ret;
+ 
+ 		memcpy(set_cmd, set_cooler_duty_cmd, SET_CMD_LENGTH);
+ 
+@@ -329,11 +305,7 @@ static int rog_ryujin_write_fixed_duty(struct rog_ryujin_data *priv, int channel
+ 			set_cmd[RYUJIN_SET_COOLER_FAN_DUTY_OFFSET] = val;
+ 		}
+ 
+-		ret = rog_ryujin_execute_cmd(priv, set_cmd, SET_CMD_LENGTH, &priv->cooler_duty_set);
+-unlock_and_return:
+-		mutex_unlock(&priv->status_report_request_mutex);
+-		if (ret < 0)
+-			return ret;
++		return rog_ryujin_execute_cmd(priv, set_cmd, SET_CMD_LENGTH, &priv->cooler_duty_set);
+ 	} else {
+ 		/*
+ 		 * Controller fan duty (channel == 2). No need to retrieve current
+@@ -538,8 +510,6 @@ static int rog_ryujin_probe(struct hid_device *hdev, const struct hid_device_id
+ 		goto fail_and_close;
+ 	}
+ 
+-	mutex_init(&priv->status_report_request_mutex);
+-	mutex_init(&priv->buffer_lock);
+ 	spin_lock_init(&priv->status_report_request_lock);
+ 	init_completion(&priv->cooler_status_received);
+ 	init_completion(&priv->controller_status_received);
 -- 
 2.53.0
 
