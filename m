@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831346;
-	b=eTba/ZWIG20Z8GgplFSHhndVBsUYhZ6ok5ATJXl5r0u3XYQEkDBv6RVy4Nmb+Y3x5Vj+
-	 /hWEob2HhfmSQVZUWQJkBuS283UZfLA9BWlJ3ufhuws2BS4qvYSKQgTbSkkOYnZvttWLG
-	 7s4QnHy/Fv2XoIKE2QITIMKV04wmxUfp3+upGbIwKhrEvczhwTTXqz7uZ5s4htiYNz13c
-	 w4BzuHeXi66kl16mjSS12WoDI2z2jdy1w7dx4jQyb/a9Vru+fnzpNacJIstVvGWu9wyaF
-	 pOCXVtsEWnK4aUJ0f5nUa/nKAzBuQ/sclouqSsirjnCMwOFO9O3sxu7RA/lSB5afbbA==
+	t=1793831348;
+	b=YhVZ1Hv362gt3ZTa+LFq4iSpivGTXYFA6NOVUSNtrbzpArPrNGbejZAkYw6Aq7QzUNsO
+	 kmfcEP5Ygyqfixw8BCCIpTz/WoTS0Uf8DNYo9UmFa4QIOTAOCVHGirgb2pMuGGBns9JdL
+	 qGWItKFIfLzfqcW01fZxsI6jZa85eobsnpvk/dcs2nAF7Jtusl015qDZwGVWt+TdWhXGQ
+	 u+zf3hVtkWrAb5dI2uUbSi/OZXOlWvU9nTrWOJjpD7HbrAIKrTOfcpPGMaIM+Ti52OYpe
+	 ADbWATzSY4F93OVBgRVqWGJCpgM/iOUfp9/AuvbjuXq5dMk1D+sG+BqzjnJK+U0L3Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831346;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831348;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b6oLNFvvUDaJt/Z76KKE5SEIhB11pTtYgNNkS3UEdDo=;
-	b=KSVnjaxnpsHcOmYQmg7Ga52ZlCLdz2S/zFs7QJr+U8qQtgjwvqKHx3pZ0hmPsYDwk+nT
-	 PmYgJKdRRnG31yHCifrk0gq2ffttxsehWYxle5JeWZyhrJF2xO7aFEorZT8gu8FkKGH2R
-	 HHiXjA+bCW7ZAwjZDsrCc4dWrU0U4Jy9+barkSLxdtc1K92XUA9nRBoHyP7jqVPogZQvY
-	 r0ZeaqWHFxCh5Kdk1Ld6WBmeupnxPova01iBPnww13yJFjWgABAuYqaJnh32Ej1s2mfjK
-	 dYRZFe0zv3zg0a8DMmUOXvtCKIGdhOatJ/fv8mQiOGJVXwJGw5NZ4or+cKRmNaE7IPg==
+	bh=g1IL5uEa2044dNE8seJWbbn7avPVBVCtR2nf1/DlCb8=;
+	b=wRfjRAbtnH0COLg+5YOOp+x3DVQASROokcOcjw9Tz7rkjO16bfvp0pmfhLwX7rRa2rJI
+	 5hWziXZz2SvWzQWzv23N7LLetnZwHnKaa9HszqaZxMkO/gQ+oPFn8ISvoJlZ00Q+6QIxJ
+	 oOYhwCzdH9DTbjmCgcberTjsMzwnMEDehBqOyPn48zJhGzyBLk0jvoEjHpr8c1p+HTwHZ
+	 tJYWfsKifFrCTvCzVzoeaRbCFuwzWdSVNMHni4lU3Z6IYgR4JcHoeGJ2yUbefUj9dAGcq
+	 6EO8W+sgqFfBHg/R6KxdQL0/uUjOf4Qp/t79hCz1kfQSyIqEE/zI6zvYJQUSXOVRjTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsyKBrag;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MezXla7X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84773606D80D;
-	Wed,  4 Nov 2026 22:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3889606D80D;
+	Wed,  4 Nov 2026 22:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsyKBrag
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48571F00919;
-	Wed,  4 Nov 2026 22:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MezXla7X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F46B1F0093A;
+	Wed,  4 Nov 2026 22:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831346;
-	bh=b6oLNFvvUDaJt/Z76KKE5SEIhB11pTtYgNNkS3UEdDo=;
+	s=korg; t=1793831347;
+	bh=g1IL5uEa2044dNE8seJWbbn7avPVBVCtR2nf1/DlCb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JsyKBragL/ELNj5V02sEwoVOZhZQpfzQ34AmGdVVJUDI/E05bWDjDZ6b2ImFL8CC8
-	 hE2iZbdJmcakWzNdJH/TJ7ND0nYy0VmMdEA399WFkqz74DfSpWnOFuPpsScbaww+zt
-	 gANCAnf3rOunyrPXzniSrD0ZdYmbWFufaw8KuMWw=
+	b=MezXla7Xtl87YnAKINXpV+KFPpwvM6LQx1UQPfokGhYBBifa3vNBU1Q26nl+EFSII
+	 NLsiQpGY3It0OYe5SjKQj432Dkh1ggfVqvvfimyYet6IuvvHkKFzGmP+XE/u3oHbhx
+	 cK6lIDVk2gyKa0S7XI8qswvgJpBHS4pbBAw40xT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.18 0649/1005] ksmbd: return end of file for reads past a named streams data
-Date: Wed,  4 Nov 2026 16:06:22 -0500
-Message-ID: <20261104211101.905900721@linuxfoundation.org>
+	Mario Peter <mario.peter@leica-geosystems.com>,
+	Johan Hovold <johan@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 0632/1005] driver core: take parent lock on deferred probe
+Date: Wed,  4 Nov 2026 16:06:05 -0500
+Message-ID: <20261104211101.486918770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,43 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 626611dc22a3b63b3264a7a797d9dbc530234fcd upstream.
+commit 4059f8986c8f50102a04335cc1da4921dfd262d8 upstream.
 
-A READ on a non-empty named stream at or beyond its end fails with
-STATUS_INVALID_PARAMETER. ksmbd_vfs_stream_read() returns -EINVAL when
-the offset is not below the stream length, and smb2_read() maps -EINVAL
-to that status.
+USB interfaces should be probed with the parent USB device lock held,
+but this is not honoured when probe is deferred.
 
-smb2_read() already turns a zero-byte read into STATUS_END_OF_FILE, the
-status a regular file returns at its end, and an empty stream already
-takes that path. Return 0 instead of -EINVAL so that non-empty streams
-do the same. Clients that read a stream until end of file otherwise get
-an error once they have read all of its data.
+Add a new bus_probe_device_deferred() helper to handle deferred probe
+where the parent device lock is not held.
 
-The buffered copychunk path converts a zero-byte source read to -EIO,
-as it does for a regular file that shrinks during copying.
-
-Fixes: 2ae1a6cc4302 ("cifsd: fix potential read overflow in ksmbd_vfs_stream_read()")
-Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: d1c3414c2a9d ("drivercore: Add driver probe deferral mechanism")
+Reported-by: Mario Peter <mario.peter@leica-geosystems.com>
+Link: https://lore.kernel.org/20261007131514.1260696-1-mario.peter@leica-geosystems.com
+Cc: stable@vger.kernel.org	# 3.4
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20261014133109.1392265-3-johan@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/base.h |    1 +
+ drivers/base/bus.c  |   28 +++++++++++++++++++++-------
+ drivers/base/dd.c   |    7 ++++---
+ 3 files changed, 26 insertions(+), 10 deletions(-)
 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -296,7 +296,7 @@ static int ksmbd_vfs_stream_read(struct
- 		return (int)v_len;
+--- a/drivers/base/base.h
++++ b/drivers/base/base.h
+@@ -151,6 +151,7 @@ struct kobject *virtual_device_parent(vo
  
- 	if (v_len <= *pos) {
--		count = -EINVAL;
-+		count = 0;
- 		goto free_buf;
- 	}
+ int bus_add_device(struct device *dev);
+ void bus_probe_device(struct device *dev);
++void bus_probe_device_deferred(struct device *dev);
+ void bus_remove_device(struct device *dev);
+ void bus_notify(struct device *dev, enum bus_notifier_event value);
+ bool bus_is_registered(const struct bus_type *bus);
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -565,13 +565,7 @@ out_put:
+ 	return error;
+ }
  
+-/**
+- * bus_probe_device - probe drivers for a new device
+- * @dev: device to probe
+- *
+- * - Automatically probe for a driver if the bus allows it.
+- */
+-void bus_probe_device(struct device *dev)
++static void __bus_probe_device(struct device *dev)
+ {
+ 	struct subsys_private *sp = bus_to_subsys(dev->bus);
+ 	struct subsys_interface *sif;
+@@ -591,6 +585,26 @@ void bus_probe_device(struct device *dev
+ }
+ 
+ /**
++ * bus_probe_device - probe drivers for a new device
++ * @dev: device to probe
++ *
++ * - Automatically probe for a driver if the bus allows it.
++ */
++void bus_probe_device(struct device *dev)
++{
++	__bus_probe_device(dev);
++}
++
++void bus_probe_device_deferred(struct device *dev)
++{
++	if (dev->type && dev->type->need_parent_lock)
++		device_lock(dev->parent);
++	__bus_probe_device(dev);
++	if (dev->type && dev->type->need_parent_lock)
++		device_unlock(dev->parent);
++}
++
++/**
+  * bus_remove_device - remove device from bus
+  * @dev: device to be removed
+  *
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -86,8 +86,9 @@ static void deferred_probe_work_func(str
+ 	/*
+ 	 * This block processes every device in the deferred 'active' list.
+ 	 * Each device is removed from the active list and passed to
+-	 * bus_probe_device() to re-attempt the probe.  The loop continues
+-	 * until every device in the active list is removed and retried.
++	 * bus_probe_device_deferred() to re-attempt the probe.  The loop
++	 * continues until every device in the active list is removed and
++	 * retried.
+ 	 *
+ 	 * Note: Once the device is removed from the list and the mutex is
+ 	 * released, it is possible for the device get freed by another thread
+@@ -121,7 +122,7 @@ static void deferred_probe_work_func(str
+ 		device_pm_move_to_tail(dev);
+ 
+ 		dev_dbg(dev, "Retrying from deferred list\n");
+-		bus_probe_device(dev);
++		bus_probe_device_deferred(dev);
+ 		mutex_lock(&deferred_probe_mutex);
+ 
+ 		put_device(dev);
 
 
