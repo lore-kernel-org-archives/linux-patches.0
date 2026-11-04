@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826982;
-	b=RVuEuHtGdddoHwSVz24lAY2ouwdNfSSS76bWEmoUSNQ26YjBZtYVHX/JEa7tFCQn1hn2
-	 qd7lrSujfZnPTZxZc42cYu/XtjQwFEp6pzS6SHeZ8Otmup6m9ae99aoBzWCUsrGVB1vIq
-	 sx5V8o+OFvdWQ3iSSBEL8Hq811YJyHEk93VVnHhjnFB1/SZnbMo5KLFdSiuG4AmDGWOad
-	 MDYrhr6NCTiSFpElfpjXue2i+avpL3xUcZ0xy1dwX42KeW/q9h3YA/IXKheeeUFg8Dk9H
-	 PKI9DnxjdEgESz8DfAtG0lpuFK1/Nsoi9uk+SL0DeMkAkI+zBbEN4mpIIGNh6B6giFQ==
+	t=1793826984;
+	b=CT5VjNQd03f+KuRZJcpl6e+huYURyW3veQodT4nQg8e3OBwLmr2IG3jtxEt1zWxVZLhA
+	 2346TRV97uU/qRk10exbXMYJgra7HQyXS9lp4PpFDurviZyB+2HpFG/D86H77bP7DUE4K
+	 uTfirbpH9r/KADfrWUQFZB/W6uFHxHaWQix/1NPy+zGFKpbyY6kdf5uGssSTrJxYRCUiL
+	 z/NUD/w3n/CRDpXbX86LVK5eX08RrkcVnGnTDZnlS9jnZg8BzK5cnfnb2z8lazysWrWoT
+	 T/lP/Hfun6nhsV7W+XHbAzSVbdhJJZyPH/L8BCctaHiLLyIrNUEPyUnvF5U89g9vHMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tm4CMVzzYviwP51wFxzHyQavLL1uRFO7d+/d7PHVuCY=;
-	b=c4Vow0OIyx/2bc4TVngpnagTRBrMHRViDBtNaCd1hFtIgL2OFxqCJAog+mLOwen95TcE
-	 Wn0Ejbq8E07TOaAUc0jY3o1TBikxjVzyd/o/Scdm14zGBzA3M04p6ciYxGuhv5Fi+bBwE
-	 4DUgjb/7aHvKwvu2RktQhr6eGwCahEjLy4AsQwNOhHwwyxVQTFauAtxSVj7peNsMMzeRW
-	 GxbD6M1l2yrRS/CTC/EszyycKN8O7BazjdOivS2YG4vVVF0kAsjbzeb4b7L9+NxaHoH/n
-	 oozVGbSuJzsyYUnYGMCoCVmglcmkMS1lS2iC+jqmDD2gpamZ8GtiILDrGZHRV4CGfhQ==
+	bh=4OTb0FV553+gfRS47gi1NH0x0rQJsBDduIlEahIhwEA=;
+	b=1KIiL5FuGzHSukhc27LADa21scsb1P+D81FEHmufXQfmIbOSonFtzUqMYAOP1kZBF2Z/
+	 NW0HfuTzT8HQ991gywCs2k558STMGMNq5tgWuPWSvLl4qOYJz7pnmSgLE1BwjGCqhRubc
+	 QFhdkuCYRlpMvjwaKOescl660k8kTXXFByQOMAnjOBTBD0CmSouAMRTgb/Goz4olYZwkS
+	 JeZ3wZygtcMvbEQJeT9HKDk7TN9lKjfjGowUaYCjzcIdM5kH6ln6Ed91cA6QV4cLMkh1R
+	 BbEi1fEVJlc/AGrQG4qOCI8CqvuWkgWwiQJlhYShRBfRXvpOMBHkbI8LHaw2bv0dG/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xeRNNwZM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZUYtDK9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF4F6073530;
-	Wed,  4 Nov 2026 21:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4253D606A33B;
+	Wed,  4 Nov 2026 21:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xeRNNwZM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E191F00A1C;
-	Wed,  4 Nov 2026 21:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZUYtDK9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BAE1F00A1C;
+	Wed,  4 Nov 2026 21:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826982;
-	bh=tm4CMVzzYviwP51wFxzHyQavLL1uRFO7d+/d7PHVuCY=;
+	s=korg; t=1793826983;
+	bh=4OTb0FV553+gfRS47gi1NH0x0rQJsBDduIlEahIhwEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xeRNNwZM77VFB1adM2pl2A04ywMfUkkt/5PeHkG6aTBw/iqikebyWmaPF6KhAlmXr
-	 C8v/1WkcSdzRjGlm8UhSYCuynpfIxddRh4HYLtBw+dZMiq5P9HTzqS72nhLrQEc6Mk
-	 5+7poTboEp7WSGKVhxJHj2qV9Jhsh8fp2srkg9Dg=
+	b=jZUYtDK9qXU09awip2P2crntq8lpLwF5eTS3XGPUMBz3WPQsYb7ZufTVSUtoe+iIf
+	 lqJNCwcpzMMQkvyjwC1c2AcWm9AzHbMTJ5uGt+Mv90GKF8jDRVPlJEoB2p7MLwzC5G
+	 LwTB2IxY9HdhxXfImcn+4OGP8043tfd32WP/3TtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sascha Bischoff <sascha.bischoff@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 096/547] irqchip/gic-v5: Fix standalone IRSes OF probe
-Date: Wed,  4 Nov 2026 16:04:40 -0500
-Message-ID: <20261104211040.954362435@linuxfoundation.org>
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.3 123/547] ksmbd: hold a connection reference for each session channel
+Date: Wed,  4 Nov 2026 16:05:07 -0500
+Message-ID: <20261104211041.684934002@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,43 +67,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 64212d63193cfd81849f5948365c7b0ecd011745 ]
+commit add8d7fb04efe564193df73581889c62fc0016f1 upstream.
 
-An IRS is architecturally allowed to be standalone, namely, with no
-direct CPUs connections. Make sure such configuration is allowed on
-OF firmware by skipping "cpus" and "arm,iaffids" IRS node properties
-parsing if they are not present so that the IRS configuration can
-complete successfully.
+ksmbd_session_unregister() removes a session from the global and per-
+connection tables before dropping the table reference. A concurrent
+reference holder can keep the session and its channel list alive after
+those removals.
 
-Fixes: 5cb1b6dab2de ("irqchip/gic-v5: Add GICv5 IRS/SPI support")
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sascha Bischoff <sascha.bischoff@arm.com>
-Link: https://patch.msgid.link/20261015-gicv5-irs-no-cpus-v1-2-d4b337b7f000@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Connection cleanup can no longer find the unpublished session to remove its
+channels. Since a channel only stores a raw conn pointer, the connection
+can be freed while another session reference holder is still accessing it,
+for example during SMB3.1.1 binding or a procfs read.
+
+Take a connection reference when registering a channel and release it on
+insertion failure, channel removal, or final session destruction. Keep the
+channels and signing keys until the session is destroyed so a response can
+still be signed after the session has been unregistered.
+
+Fixes: d7fd1f98607f ("ksmbd: follow SMB2 session expiration semantics")
+Cc: stable@vger.kernel.org
+Reported-by: Abdifatah Suruur <suruurism@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v5-irs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/server/mgmt/user_session.c |    2 ++
+ fs/smb/server/smb2pdu.c           |    3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-gic-v5-irs.c b/drivers/irqchip/irq-gic-v5-irs.c
-index 4486645a4b6f2..fb1cecef613b3 100644
---- a/drivers/irqchip/irq-gic-v5-irs.c
-+++ b/drivers/irqchip/irq-gic-v5-irs.c
-@@ -609,6 +609,10 @@ static int __init gicv5_irs_of_init_affinity(struct device_node *node,
- 	u16 iaffid_mask = GENMASK(iaffid_bits - 1, 0);
- 	int ret, i, ncpus, niaffids;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -273,6 +273,7 @@ static void free_channel_list(struct ksm
+ 	down_write(&sess->chann_lock);
+ 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
+ 		xa_erase(&sess->ksmbd_chann_list, index);
++		ksmbd_conn_put(chann->conn);
+ 		kfree_sensitive(chann);
+ 	}
  
-+	/* An IRS is architecturally allowed to have no cpus associated with it */
-+	if (!of_property_present(node, "cpus") && !of_property_present(node, "arm,iaffids"))
-+		return 0;
-+
- 	ncpus = of_count_phandle_with_args(node, "cpus", NULL);
- 	if (ncpus < 0)
- 		return -EINVAL;
--- 
-2.53.0
-
+@@ -601,6 +602,7 @@ static int ksmbd_chann_del(struct ksmbd_
+ 	if (!chann)
+ 		return -ENOENT;
+ 
++	ksmbd_conn_put(chann->conn);
+ 	kfree_sensitive(chann);
+ 	return 0;
+ }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -116,11 +116,12 @@ static int register_session_channel(stru
+ 		goto out;
+ 	}
+ 
+-	chann->conn = conn;
++	chann->conn = ksmbd_conn_get(conn);
+ 	memcpy(chann->sess_key, sess_key, sizeof(chann->sess_key));
+ 	old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
+ 		       KSMBD_DEFAULT_GFP);
+ 	if (xa_is_err(old)) {
++		ksmbd_conn_put(chann->conn);
+ 		kfree_sensitive(chann);
+ 		rc = xa_err(old);
+ 	}
 
 
