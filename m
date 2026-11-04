@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829433;
-	b=fo52JBTiB1yA75/Zl8F2019cgh0sgZeBPj/PZ+76LBza0CFGZy8EXHpdOq5HIPUd1gDy
-	 gOnQKGm6D5WoBv3p9/O5UO3Brvtamdwwd2M92VGbVu/PP+pDDNDlubFOzvLRWbL0fPUBP
-	 6Fzs1WylaKiRdR3qKE4gylcGCtAZB0C/RCLWWJtfhMpRDRCP6UlCJE50p3FP5lvOk2jza
-	 VXDOF7FeUnKC5IPozRyCvq29Ao3Wuxd9dM8+oKGG+8akp75I3sTucqWQaK95++xiwjaiw
-	 GAyFmZUkTn+VyPt7fR/cCRIs7rgggO5fgH3Cdvidmr1CuDnCLhZr4pwqi00vMaBU8MQ==
+	t=1793829434;
+	b=MRw0vB68D7rWW8GhzUVgSJOBBPfsWp+ZQNNFXMzilqYPTAJGydlMkgsALD+fGjHf1gjF
+	 ZThs1mopyxrLOncC/YcGIGsU0O5AFzykcMSl+8fvvEIpOXPXHSgT7V0NIF4F9suJvEVVI
+	 lSdUZ2jSubpiVYbtIT+PLNP8MqA/Tuic8d1ZZMtwEj14gXX5oJG+IMpmcTvdOU4YBcjAo
+	 OR1dKUZ2xiaThgptk7hY/yKHNLkrUzNa69gUE9IhQU1RP9w50RnCRin/j7tT185+Bp6xK
+	 c2tSpUrUOkcQZa2SHLWHoG6cc/csYQKKO+3VxaEeLPAh0NQorHnui479t7lhBRDhZ0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=soTewUN3duw8sty0gjzWl0bGeAf8eazvpogYAY/Aj+w=;
-	b=2YbORnR1xU4BUHIrPzZI+kza+EL8RWZfSM6KqOApdS0RPZ8jA40wPKT38lrXHYEedEig
-	 r9z5FEpIwXNYSgVZhvwIgNehiItwOqW35bRBCGzxFb/nrAbZGya9EBAPyh0lpcwSBtVNy
-	 fCaAECgU1ht+Yobh93Scz416lNX5GL70OJ5yXT14Vu+IxZjdf4WsbIKJvbk2x3R7RCIrF
-	 Iww0T5mGkLR/xHM6He/Zb3JqhSfRJAADn8I2UKztnBF5jPpYRIsTs1IQFLWz2z+uyqRRP
-	 QkX2XOo5Fr1xMsq+IefnsHfNhI3Od9Tt0wT+EiGjVhhelRzLit823BTyIr6oN/ZXQ1g==
+	bh=V9vY97DsVdxgDLezF79nrE3jwiIRSM4uYm0NPnqb9pA=;
+	b=ZZQaxG/+c0cMEcVPP0sIz9ZQpYeWuOSa/Vm4znITYglU77LZ46LRWSPlE00o8fyyQ0Jo
+	 I7OYrnjTFodqevkzPX4ekZLMbk7aAs8DXo4XiWbBdLcSlgL7u+CtUcFhr3apEGmoFRivs
+	 rihWnfIUNgVr6DGFqTf13NLvWpvkELgXYDUh4ANC2p9BfJjfT8/b4Ib32yf1uJQnYiH+G
+	 BBU3Kmp4w5TgQGi64TaxW9UVTAAoYgT/lVntk+kRZUk8kLLup1JXD8jmC9tSiAauS/iu2
+	 goU+cBGOxkO5ipWw0paRhvsupxOI4eif2SY+O7T6wZoE6jeS5kYwKa7ANf5bHouiqCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LVZQQnnw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TP7LXNeA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29351606AE06;
-	Wed,  4 Nov 2026 21:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BB8606A863;
+	Wed,  4 Nov 2026 21:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LVZQQnnw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FDE1F000C1;
-	Wed,  4 Nov 2026 21:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TP7LXNeA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE1D1F00A1B;
+	Wed,  4 Nov 2026 21:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829433;
-	bh=soTewUN3duw8sty0gjzWl0bGeAf8eazvpogYAY/Aj+w=;
+	s=korg; t=1793829434;
+	bh=V9vY97DsVdxgDLezF79nrE3jwiIRSM4uYm0NPnqb9pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LVZQQnnw1XTLfCyMIiyLNWyaPsZm4EYmezTh5l7F/8zUJkIAvAhGKnRFnt8MgWmn5
-	 EswnRNznnk1TwsL+g3wDVpStsZnSRFt9YGwAwwBN9dV7O9ArMBfAV6kvKRruK1pl0F
-	 WSg38EelQgIxfonAoZ64ZviCnX2bNGdfE8W2nhiY=
+	b=TP7LXNeAJlGZekYmDQ5hFcDh2OQls1oO1/H9b9dJVe02Isz1aN2LEVUzy5kJP++qj
+	 KmETvbxQT/iseAbJVkm/JLHC6r/ShETuw2RVgZBgrnKvtNlMNGdg89vodTw3d439Sq
+	 hCyhELmQpy7qDON7/SY0AmZqC1iRPa84Q6I3dGBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lew <christopher.lew@oss.qualcomm.com>,
-	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0122/1005] rpmsg: char: Check for ongoing chrdev destroy
-Date: Wed,  4 Nov 2026 15:57:35 -0500
-Message-ID: <20261104211047.088639795@linuxfoundation.org>
+Subject: [PATCH 6.18 0123/1005] media: cec: tegra: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 15:57:36 -0500
+Message-ID: <20261104211047.119131242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,59 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lew <christopher.lew@oss.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 1f9c2897afb0fe86c1fdf4f5e23c5fb8f7442f6d ]
+[ Upstream commit 8dcf23edaf4bdf22259f6a47cfddc8bb1467425c ]
 
-A null pointer panic is observed when stopping a remoteproc and closing
-a character device using the RPMSG_DESTROY_EPT_IOCTL. There is a race
-where each context calls rpmsg_chrdev_eptdev_destroy(). The thread that
-runs second will call cdev_device_del() for a second time, which fails
-because the first call already removed the device from sysfs. Add a
-check at the beginning of destroy and exit early if the destroy call
-has already been done.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-[ 26.654130] Call trace
-[ 26.656658] kernfs_find_and_get_ns+0x28/0x8
-[ 26.661140] sysfs_unmerge_group+0x2c/0x7
-[ 26.665357] dpm_sysfs_remove+0x38/0x8
-[ 26.669305] device_del+0xa4/0x3e
-[ 26.672811] cdev_device_del+0x28/0x7
-[ 26.676675] rpmsg_chrdev_eptdev_destroy+0x68/0x98
-[ 26.682765] rpmsg_eptdev_ioctl+0x130/0x11c8
-[ 26.688318] __arm64_sys_ioctl+0xb4/0x10
-[ 26.692448] invoke_syscall+0x50/0x12
-[ 26.696312] el0_svc_common.constprop.0+0xc8/0xf
-[ 26.701151] do_el0_svc+0x24/0x3
-[ 26.704570] el0_svc+0x40/0x17
-[ 26.707810] el0t_64_sync_handler+0x120/0x13
-[ 26.712288] el0t_64_sync+0x1a0/0x1a
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-Signed-off-by: Chris Lew <christopher.lew@oss.qualcomm.com>
-Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260406-rpmsg-char-fix-chrdev-destroy-race-v1-1-7317434fa246@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/rpmsg_char.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/cec/platform/tegra/tegra_cec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index d918cb30db9b0..3edc95f48967b 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -79,6 +79,11 @@ int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
- 	struct rpmsg_eptdev *eptdev = dev_to_eptdev(dev);
+diff --git a/drivers/media/cec/platform/tegra/tegra_cec.c b/drivers/media/cec/platform/tegra/tegra_cec.c
+index 3ed50097262f6..fe66336e734f8 100644
+--- a/drivers/media/cec/platform/tegra/tegra_cec.c
++++ b/drivers/media/cec/platform/tegra/tegra_cec.c
+@@ -458,6 +458,7 @@ static const struct of_device_id tegra_cec_of_match[] = {
+ 	{ .compatible = "nvidia,tegra210-cec", },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, tegra_cec_of_match);
  
- 	mutex_lock(&eptdev->ept_lock);
-+	if (!eptdev->rpdev) {
-+		mutex_unlock(&eptdev->ept_lock);
-+		return 0;
-+	}
-+
- 	eptdev->rpdev = NULL;
- 	if (eptdev->ept) {
- 		/* The default endpoint is released by the rpmsg core */
+ static struct platform_driver tegra_cec_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
