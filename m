@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831823;
-	b=M07qC90Z4bK+x6rhLuGN6TPh6gjt/4H8Psa1F1646N8zoeoD+/eRevrcEx0hSh6P4yrv
-	 OiJvNhh+Mbvd8YudkC+KFdlrjY7FjaaL3JAfwr28Qf+AmOA3x/nEnBNJyiuq8P+EiQMhl
-	 MFruYSRhgDs72VcSsKJmi9KB7a3WNd+gnnE7ADrACaEu2NorQGCTRchJsqb/hSfOmku5R
-	 XGTY68PJlXO1dpLH4cGXMunVtxOCUPMYwUrnemHVY+kBH0nmNk1TZVvEw0PhwRoX9uvIC
-	 PO3qXHSP1UAqu8eQWdJm6j7Nhets8eu7492N5kWbEhJlLkJzHRasTSPiicp/geD0OBQ==
+	t=1793831824;
+	b=bOzUxtlETUoSlG4RZU1XfooNjbTssTLstbIA3Owgle9UcwlKrKH1baDjNwngXKV2b0y4
+	 zs6/vNdxrUj4/S8vKCWntOnj+cITjzD1qJHWnEVcd4OQJtmcQ+T2KIRxP7A9+2nzAB0KO
+	 9VW89s4erD4tIrL6ykipSzLgDkHO+sz3C7qHjbz6H5LdwTNVgNwHiMbCrMeu+iiA9f0OQ
+	 hF0eUGLHZA0C9G6+FBajvlabaZWqDGZIUjeHgCkAhm10xX3JGWhlpG5/hqJ4F4CMlmWTt
+	 GtlYRBdzjYyXjOMLt0Mj6991nS9UX3bh6TR5zXlYf84niet1su+oChBmOEB2a1jLAIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831823;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5/hQFq3fYpaqb9UYsZ/cWyfcZNHxh0s4IXFVrGiVWXo=;
-	b=GHOc9ugvO0Xd7bvfPcZSrXQmVQciH7OwJJW8JDGJCcUemBI3QQtX++Bmflt+iWatDmOp
-	 VD3ke8rWWQcBAXHTQXvyuiLZcmcCGOsl8tKm19f4MpNXvRDs27QJsOyOHbgiVgxAUjZV+
-	 Yi2ORxstMWojwlBUHoof8NRdBMpkUA/lSzczcpWzZuUY+ijapvQd57QM1C1iop0eCRMmz
-	 NX599JXEeM23xQLlJwrFwJlOO8WD9E1eVbI1KON0wZYgtuqncfQD5UsjLYj7IHsT/mVY8
-	 6E+fibWOMF2OLSlgatOraYMfBq3o60quDUqz6lcagBe4lif4KPlGu3Wj4M05DeQWgEg==
+	bh=8H0XHm2dd8/7BnzjqxZIFLZbZHbPRsLIhrjEWDDKWyM=;
+	b=0doslRneduf9rW8Y/3AE5HzwtEy7mwXhvEIAdu3ZLVmj3bEVtW9YDH8FrJ1PPLrpAXvW
+	 wk5ypxmQo1IY+0XpNDBR+lJHO6bEWFcRSMaNuFzJyqK8uAGpId348lGdV0FVRYCcJiaui
+	 GGyDd/RyeYsXBelMRWjExTGvOORZQycsbLLigG9gsBFMlDKG/REPlYcqpmX/+wU3po/ai
+	 Zw6D1jC84jVsBfQW7ihlqcENcbALFQrQsdr7CdkhahcTxHqTC5xXTVs1fGJIZCydvWLZq
+	 v4YRFN9U1/KHFHeZQhLADfNCwQXVbkPodPDpgd36/C92hP+decVnDy9b95vIigkErrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R214D/OZ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHS4ih2T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2A0606A852;
-	Wed,  4 Nov 2026 22:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355AA606A873;
+	Wed,  4 Nov 2026 22:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R214D/OZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478901F000C1;
-	Wed,  4 Nov 2026 22:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHS4ih2T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDB41F000C1;
+	Wed,  4 Nov 2026 22:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831822;
-	bh=5/hQFq3fYpaqb9UYsZ/cWyfcZNHxh0s4IXFVrGiVWXo=;
+	s=korg; t=1793831824;
+	bh=8H0XHm2dd8/7BnzjqxZIFLZbZHbPRsLIhrjEWDDKWyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R214D/OZIQsKMdh1GQONpRoJH3x6SPKT50Cz/V5R5/8T24qI1NT9ABvUgumYCvGEF
-	 F1A7dcWCgeNAIOROV2C4jwZbXviMH1hycWnu2jIxOu3J0EViIdqXdUrPUNK1v8L8iU
-	 GmYh5TJNY3LD54I1JWHt2TpecvGR3I358XWMF33w=
+	b=uHS4ih2TtamOJ4RjHarmfUdf31kAPB+1qx2ZDWagh/mUsQ96obMIIrk7EOmUTEk8W
+	 CH2IyrR8fWK8pIm9gQxk+nkcHNcFpbOnwOPXsTozzpm1zKCA0Dt5GoCvsUpgIZZohk
+	 mAgc+G1/64BhmWoedTaTUWpgpRGP9fCZ1wrIfbjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Paul Durrant <paul@xen.org>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 0933/1005] KVM: x86/xen: Enforce 4-byte alignment of vcpu_info registration
-Date: Wed,  4 Nov 2026 16:11:06 -0500
-Message-ID: <20261104211109.265445840@linuxfoundation.org>
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 0889/1005] NFSD: Dont complete a cld upcall the daemon has not read
+Date: Wed,  4 Nov 2026 16:10:22 -0500
+Message-ID: <20261104211108.124518564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,60 +67,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Chuck Lever <cel@kernel.org>
 
-commit eacdb76c5f04956035c5d7f7e1973028f30684a2 upstream.
+commit 7f4bf851aca4e18940ebf2bddf4ba6783802ee81 upstream.
 
-Xen's map_guest_area() enforces that vcpu_info is aligned to
-sizeof(xen_ulong_t). KVM has no such check, allowing a guest to
-register vcpu_info at an arbitrary byte alignment.
+cld_pipe_downcall() matches a reply to its upcall on the xid alone.
+A write that arrives before the daemon has read that upcall
+completes __cld_pipe_upcall() while its struct rpc_pipe_msg is still
+queued on the pipe. The waiter returns, its stack frame goes away,
+and the pipe keeps a list_head that points into it. The next
+rpc_queue_upcall() walks that pointer:
 
-Enforce unconditional 4-byte alignment regardless of the current
-shinfo mode. This is sufficient because subsequent commits ensure
-that all locked atomic operations on vcpu_info fields use at most
-32-bit accesses. Return -ENXIO on failure, matching Xen's
-map_guest_area() behaviour for unaligned requests.
+  BUG: KASAN: vmalloc-out-of-bounds in __list_add_valid_or_report
+  Read of size 8 at addr ffffc90007027950 by task syz.0.96/13066
+   __list_add_valid_or_report+0x6a/0x130
+   rpc_queue_upcall
+   cld_pipe_upcall
+   nfsd4_cld_grace_start
+   nfsd4_cld_tracking_init
 
-Originally observed in review of an unrelated patch:
-https://lore.kernel.org/all/20260604193554.1BA311F00893@smtp.kernel.org/
+The pipe is mode 0600 in rpc_pipefs, so the trigger is a broken or
+hostile nfsdcld rather than an unprivileged task.
 
+Record whether the daemon has consumed the whole message and
+complete only when it has. cld_pipe_destroy_msg() runs on every path
+by which the pipe releases a message, so it can maintain that flag
+under cn_lock. nfsdcld sends its -EINPROGRESS downcalls only after
+reading the upcall, so the new check does not break the GraceStart
+record stream.
+
+Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
 Cc: stable@vger.kernel.org
-Fixes: 73e69a86347a ("KVM: x86/xen: register vcpu info")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260604193554.1BA311F00893@smtp.kernel.org
-Assisted-by: Kiro:claude-opus-4.6-1m
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Link: https://patch.msgid.link/20260831213632.81023-7-dwmw2@infradead.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/linux-nfs/CA+0ovCjVF58WLeen2ctdzHyWUASAAW3Y=Yjihyq0pFApYawtDg@mail.gmail.com/
+Link: https://patch.msgid.link/20260901-alemi-v2-1-e163f94a3a6e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/xen.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/nfsd/nfs4recover.c |   23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/xen.c
-+++ b/arch/x86/kvm/xen.c
-@@ -926,6 +926,10 @@ int kvm_xen_vcpu_set_attr(struct kvm_vcp
- 				break;
- 			}
- 
-+			r = -ENXIO;
-+			if (!IS_ALIGNED(data->u.gpa, sizeof(u32)))
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -709,6 +709,8 @@ struct cld_upcall {
+ 	struct list_head	 cu_list;
+ 	struct cld_net		*cu_net;
+ 	struct completion	 cu_done;
++	/* daemon has read the whole upcall; protected by cn_lock */
++	bool			 cu_inflight;
+ 	union {
+ 		struct cld_msg_hdr	 cu_hdr;
+ 		struct cld_msg		 cu_msg;
+@@ -869,6 +871,13 @@ cld_pipe_downcall(struct file *filp, con
+ 	spin_lock(&cn->cn_lock);
+ 	list_for_each_entry(tmp, &cn->cn_list, cu_list) {
+ 		if (get_unaligned(&tmp->cu_u.cu_hdr.cm_xid) == xid) {
++			/*
++			 * Completing now would return the waiter
++			 * while its message is still queued on the
++			 * pipe.
++			 */
++			if (!tmp->cu_inflight)
 +				break;
-+
- 			r = kvm_gpc_activate(&vcpu->arch.xen.vcpu_info_cache,
- 					     data->u.gpa, sizeof(struct vcpu_info));
- 		} else {
-@@ -935,6 +939,10 @@ int kvm_xen_vcpu_set_attr(struct kvm_vcp
- 				break;
- 			}
+ 			cup = tmp;
+ 			if (status != -EINPROGRESS)
+ 				list_del_init(&cup->cu_list);
+@@ -877,9 +886,9 @@ cld_pipe_downcall(struct file *filp, con
+ 	}
+ 	spin_unlock(&cn->cn_lock);
  
-+			r = -ENXIO;
-+			if (!IS_ALIGNED(data->u.hva, sizeof(u32)))
-+				break;
+-	/* couldn't find upcall? */
++	/* no upcall to complete? */
+ 	if (!cup) {
+-		dprintk("%s: couldn't find upcall -- xid=%u\n", __func__, xid);
++		dprintk("%s: no completable upcall -- xid=%u\n", __func__, xid);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -899,8 +908,16 @@ cld_pipe_destroy_msg(struct rpc_pipe_msg
+ 	struct cld_msg *cmsg = msg->data;
+ 	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall,
+ 						 cu_u.cu_msg);
++	struct cld_net *cn = cup->cu_net;
 +
- 			r = kvm_gpc_activate_hva(&vcpu->arch.xen.vcpu_info_cache,
- 						 data->u.hva, sizeof(struct vcpu_info));
- 		}
++	/*
++	 * errno >= 0 means the daemon read the whole message and a
++	 * downcall will complete the upcall.
++	 */
++	spin_lock(&cn->cn_lock);
++	cup->cu_inflight = msg->errno >= 0;
++	spin_unlock(&cn->cn_lock);
+ 
+-	/* errno >= 0 means we got a downcall */
+ 	if (msg->errno >= 0)
+ 		return;
+ 
 
 
