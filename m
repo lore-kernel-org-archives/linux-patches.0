@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829275;
-	b=HAvwbcHR0u9qo9e25C6ACXhRayS5z3XoI424VTgEkA0cxfsQ+py8aexpwIgy6r10/7PK
-	 t8xdtLingS5QXsgi4erTCpoaOMttdfkAZEd8ZGl8VDwiXrYVZ4MIWtFmSuQHM4qh2iQXF
-	 ODEPUKWY4WZLRLwsWVjX74AOV/6SbmEuD9tP7hlJ7d3xb/FOlZ8KjFNIH6LoiBwUyLiqD
-	 mJTfvjW0i08F7skjh0lE7xKeTNKvb9S8E465QnoOZvfxmYsSGtQfL3krbjJwN6u3lHO2S
-	 lZe5ZFovstVhonYiOLqdFK7o41MxI8Jj4VRhptfAcgNnFTCdFi2z+p+Z+Q8aWR72qWg==
+	t=1793829277;
+	b=1ZSNfsCdosL3qy0gdcSe2M61fMQdDucl/WsEbU06KCK51N+20FovJhaFIraAZ3527P3G
+	 k+pW3HRtO7U0Gwv6HUknaBTlb6IBg/HtW35aJqSOkfGjTBw4jyRKMA19tVbisKCgECl5/
+	 Ah1uGnhLa/wxdLleCRMzy566BGxmiDN1JoBL+7kX3BZajFvNfYx1XZ6s2TADIQql73oEn
+	 Dm1jluavfnX4MVqPHDKaV+koov2QcChjUTiTlLZl/2ZeQiJRclTPpRTMqoPkZXRczVjto
+	 KFjD6jffgYjHMjk03Hz45nLFN4iT+vg7SxqrP7R+367eujFBm8bJbe1Dqa3qSz35Osw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829277;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N1xKhwIvldbjdHTWLYsdDL7+a2d8caRKsl4U2hW4RM8=;
-	b=3Gdi+C5ZGlEgFcjcGt/F/6d985j6PyivWhX0i5+z3Nk3UCwrLJEbIxRITOmcmaiGwD15
-	 Rna04V6zPfAKFcQHmwIHKFA3qTjfsCQEFPlszQUE8pzqbm/dXvwLbswxflF0w2nNKH/EM
-	 R1q2QkNqIEghTpx5aoCjdMksiEk+M5l3fFoaI6+ymn1mL0O2MwkXpDY5mCOe6KwZ3kIfM
-	 9khx5ofiewTNHlHUzsGmGC7JskcuHIFPdwUvCL54cE8srRuTcRUf1EHnRWZr+jvdv8GDQ
-	 dIIbdM5xQpb03f8x2E+R2Db8ccvaN3qnLxl28xh2DP2MxNDdpqn+0YceyVz+PqryeLQ==
+	bh=RSNGp9/yjMXL7amfdjr+lO8V9JPJGUSiMPZzxkn7XB0=;
+	b=AQpQMabn+HNkrT7hImAcZDXGGm1uJ7kEoPbzAUuJw6/Q5XRSL04z4dxdVBWAYFli9s3r
+	 ndS1a8Y/IyVXZLgQEHm5ri5LtlXm0xsmHKuNYDa7czUEH9AENI0l01jFknuHw/vQjp2Ed
+	 31RNH25H0SOGO1vQU3j23SBBNdR/lQ6e/vn8SWJZZnU8cwfD+UILl+zXQjGulLex6T9Vr
+	 kLL4leNcGjHQOYRCimzgNlZrR4KFxzK5LvCmVHvCUDT6CWcrHP9bca7hwhrnH6qxbjazw
+	 /2XdKGr44h9olvnDSEnilUohUNNBT9U25bTt3bMBgkJ/B/rjtM/bRaRPe8JUjQkW/AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpiUEIwm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fY7+0B/3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD346070AA2;
-	Wed,  4 Nov 2026 21:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A822A6070AA2;
+	Wed,  4 Nov 2026 21:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpiUEIwm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEB31F000C1;
-	Wed,  4 Nov 2026 21:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fY7+0B/3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46EA41F000C1;
+	Wed,  4 Nov 2026 21:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829275;
-	bh=N1xKhwIvldbjdHTWLYsdDL7+a2d8caRKsl4U2hW4RM8=;
+	s=korg; t=1793829276;
+	bh=RSNGp9/yjMXL7amfdjr+lO8V9JPJGUSiMPZzxkn7XB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GpiUEIwmd1gzsQyI0qch7Vlb9NXbfD+j49iQb9QmsK05YhNJUalD/A3QAA/fhEuyT
-	 jwwM8K1nyRsRAiHZXcF30yask1/7u/oiMIcm0jl6h2ZCT37CnasexaLbHC/CC9bDbe
-	 5oscs4/kjaR76MFSWeIU7Rgd6UgvrA1Sy/DrJqow=
+	b=fY7+0B/3ksqQTlFXR/rWUM/5l64HZ9mY9a1gDeVKrPEETf2z1AjOXBq8PuZxl/T2R
+	 Xe/gvWttG42nV+Z1Z+CLuSyUIwIuBqmQ9BtaNvMxVMCViuZl0GwzedIy7M6WN/y1Iw
+	 wn1joA5MYIjawF/I9jTPMkPJ/Uw/upqm+15afDF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daan De Meyer <daan@amutable.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.3 522/547] io_uring/net: dont retry a non-blocking connect() that fails with -EAGAIN
-Date: Wed,  4 Nov 2026 16:11:46 -0500
-Message-ID: <20261104211053.227237617@linuxfoundation.org>
+Subject: [PATCH 7.3 523/547] io_uring: keep the drain active when a deferred drain request is started
+Date: Wed,  4 Nov 2026 16:11:47 -0500
+Message-ID: <20261104211053.254291466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,59 +67,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daan De Meyer <daan@amutable.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-Commit 71537ed811107c514c0342e98902d489d6d2b7cd upstream.
+Commit 2295613cd3713beffc8665e956135a5d48dfc208 upstream.
 
-IORING_OP_CONNECT on an O_NONBLOCK AF_UNIX stream socket retries a
-connect that fails with -EAGAIN because the listener's backlog is full.
-Polling the client socket doesn't help: an unconnected stream socket
-reports EPOLLOUT and EPOLLHUP right away, before the backlog drains. So
-io_uring retries the connect until the apoll retry limit is hit, then
-punts the request to io-wq. With a full backlog, io_connect() runs 128
-times in the submitting task and once more in a new io-wq worker. That
-worker stays in the task's thread group, so a later
-unshare(CLONE_NEWUSER) fails with -EINVAL.
+ecb6817b769f ends the drain when the dispatched drain request has posted
+its CQE and nothing else is deferred. But the deferred list is processed
+in between, and if the request it starts is itself a drain request, the
+drain is over before that one has even run. A request submitted after
+that point then runs ahead of it:
 
-None of this changes the result. __sys_connect_file() adds the socket's
-own O_NONBLOCK to every attempt, so the attempt from io-wq fails with
--EAGAIN as well. That -EAGAIN becomes the CQE result, and connect(2)
-returns the same -EAGAIN.
+  1. P0 in flight, D1 and D2 (both IOSQE_IO_DRAIN) deferred behind it
+  2. P0 completes, D1 is started
+  3. D1 completes, drain_done is set, D2 is started, the list is empty
+  4. IO_RING_F_DRAIN_ACTIVE is cleared with D2 still in flight
 
-Let's complete the request with -EAGAIN right away when the socket has
-O_NONBLOCK set, like connect(2) does. io_accept() already completes
--EAGAIN this way for IORING_ACCEPT_DONTWAIT. -EINPROGRESS still waits
-for the connection to complete. A blocking socket still ends up in
-io-wq, where the connect sleeps until the listener accepts.
+Anything submitted now bypasses the drain. The same happens with D2 as
+the head of a link, as those aren't tracked in ->drain_req at all.
 
-Fixes: f8e85cf255ad ("io_uring: add support for IORING_OP_CONNECT")
-Signed-off-by: Daan De Meyer <daan@amutable.com>
-Link: https://patch.msgid.link/20261027-b4-io-uring-connect-eagain-v1-1-f4e3aaaa49ee@amutable.com
+Have io_queue_deferred() report whether it started a drain request, and
+don't end the drain if it did. Starting non-drain requests and ending it
+is still fine, they were only waiting on the drain request that just
+completed.
+
+Fixes: ecb6817b769f ("io_uring: end the drain when the drain request completes")
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/io-uring/20261027043323.98916-1-kmehltretter@gmail.com/
+Cc: stable@vger.kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ io_uring/io_uring.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1878,6 +1878,17 @@ int io_connect(struct io_kiocb *req, uns
- 			if (connect->seen_econnaborted)
- 				goto out;
- 			connect->seen_econnaborted = true;
-+		} else if (req->file->f_flags & O_NONBLOCK) {
-+			/*
-+			 * __sys_connect_file() adds O_NONBLOCK from the socket
-+			 * to every attempt, so a retry from io-wq fails with
-+			 * -EAGAIN as well. A poll on the socket doesn't wait
-+			 * until a retry can succeed. For example, an AF_UNIX
-+			 * client reports EPOLLOUT right away while the
-+			 * listener's backlog is full. Complete the request
-+			 * with -EAGAIN, like connect(2) does.
-+			 */
-+			goto out;
- 		}
- 		return -EAGAIN;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -474,9 +474,9 @@ unsigned io_linked_nr(struct io_kiocb *r
+ 	return nr;
+ }
+ 
+-static __cold noinline void io_queue_deferred(struct io_ring_ctx *ctx)
++static __cold noinline bool io_queue_deferred(struct io_ring_ctx *ctx)
+ {
+-	bool drain_seen = false, first = true;
++	bool drain_seen = false, first = true, drain_queued = false;
+ 
+ 	lockdep_assert_held(&ctx->uring_lock);
+ 	__io_req_caches_free(ctx);
+@@ -490,17 +490,21 @@ static __cold noinline void io_queue_def
+ 
+ 		drain_seen |= de->req->flags & REQ_F_IO_DRAIN;
+ 		if ((drain_seen || first) && ctx->nr_req_allocated != ctx->nr_drained)
+-			return;
++			return drain_queued;
+ 
+ 		list_del_init(&de->list);
+ 		ctx->nr_drained -= io_linked_nr(de->req);
+-		/* it runs alone, track its completion unless it's a link */
+-		if ((de->req->flags & REQ_F_IO_DRAIN) && !de->req->link)
+-			ctx->drain_req = de->req;
++		if (de->req->flags & REQ_F_IO_DRAIN) {
++			drain_queued = true;
++			/* it runs alone, track its completion unless it's a link */
++			if (!de->req->link)
++				ctx->drain_req = de->req;
++		}
+ 		io_req_task_queue(de->req);
+ 		kfree(de);
+ 		first = false;
+ 	}
++	return drain_queued;
+ }
+ 
+ void __io_commit_cqring_flush(struct io_ring_ctx *ctx)
+@@ -1227,7 +1231,9 @@ void __io_submit_flush_completions(struc
+ 	}
+ 
+ 	if (unlikely(ctx->int_flags & IO_RING_F_DRAIN_ACTIVE)) {
+-		io_queue_deferred(ctx);
++		/* a drain request started from the list keeps the drain going */
++		if (io_queue_deferred(ctx))
++			drain_done = false;
+ 		if (drain_done && list_empty(&ctx->defer_list))
+ 			ctx->int_flags &= ~IO_RING_F_DRAIN_ACTIVE;
  	}
 
 
