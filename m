@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827195;
-	b=nP2tCzEsdsOox1TJtstiAjCK5eseXgn90MkV/DfS/oD3G9Kb43D6SFFyqkw2iYGrXxZa
-	 xIYxD6n/+BY+Yhew8mAZckjnABTt+sRndgAh0JEBWvrMNhFRIvE4FNsvfw5dFmpOUoQEV
-	 /RJ9Mrch4xFNSnINHD80YMHt4P0/t1Z6EhtrMuPXVk8mjasXNnUtul4CnQ/+AzK9XAw3c
-	 YvSXy1EDisk2r7SYppjxGZ+VSaLSKiZ0Ib+G1k2z5EYYzcOI9OI4vD6xF140eiZpV8Bm6
-	 RZaPxEPHaixmDsdGvtTzlNzmHRe7rEQ04hX9i9xaSEC6koJDTXzgyudoVKP7tJfpv4A==
+	t=1793827196;
+	b=lo3sj6cVLL4UCx0q1ZBEACef74VtYMMs66urgBGL7XrvyqDQAgXE91PkI+v90o/zuCLQ
+	 PPZmh0qvG5BiwzkA/9YcRMWY14jfxJPUPIe0d6bgIg5XTaPzOyDJNqs9JOYiNJETCxpDI
+	 +HqGEe9rICoSRFAzvtrQLToGNdK8fgQ6Irptq8uSd2WTgQSRB1ht3woZlhK5VJalUpAwA
+	 XipELVOrMK8xXRfhZdkhb9JW2ja9FvIcE3fCG5CIVr/pSmNmo19gdBMH1UsMuhg5gOtW4
+	 u193qLLdivmo5je3t68XYGgjqkRVEi5FfP8mNT6woScG7QwAJ3aVO//4/duNmffi5cQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+6F/RIDt1camA8P9i4DF0bJC5Z5b43UBopoxwwI8aJc=;
-	b=UAFnbdxfSfybG/PHnC1TGhFkJSwzjxWVDLXI2tJgEzP8j85WZNqX/ywpKqonaxkwu66O
-	 +21ijlZIp5snqXJ2o/pNxL5zrU3pf2iE/yNope83EyKDkX+Icu2JhqI2W9pjHp1ClLrGw
-	 Ec3lZXJhvhTT/nFWq14CBZL8vsovmNMPZPWqkOCPQrcreSXk2Fv8C5VEblT4DpjW+m7kR
-	 o/NadZimDdyrTEPESORRrlA4t38g85/+E9EWC1pzNAb9yu9iqciilfnuIFMpsz8LWvxP3
-	 GrIhR0/HcgkmFghJLlv9G/+0aIRoOMMeCRTOa1zUhXVuHH6fHx2pWzT93yHcBS1wH6g==
+	bh=T9ApCYWHBVDrqzvYCMis/TDfgoQvwLZTbugwLvvBtI8=;
+	b=dQHNPzVPAyHhwfI+tsgHIg6zlml/6MhYLG1X4OKw168Ein5jjB+0M0ZtKvhQtAOUsn3K
+	 wN0Cj4quFnJuCxmgRPRaoUf/amVeHRoxUTHz33pIJLKqeDThS9rVYE4Df0obLDZENjCa8
+	 4XakSy5uYvjq2dIk+4lv3xMbZKUsWLNhtibgWdWwy1KQXCAXHsOapxGuiI6ja6bBvCxK5
+	 E6ianXJPEVNQQ3shsFjidyqT6QYn/ExMSCVW54YDo/BZyxWt4Ln4U1QA3exmzbbCqPsKO
+	 qf+wJX/mKcD6hfsnED2XjHZsi7X/2zL5XsOXIt4OSLqTZ5jqnP7vyoqtTafLZg4yayA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZidNYziT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZfkuaMV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1253606B2C1;
-	Wed,  4 Nov 2026 21:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82582606B387;
+	Wed,  4 Nov 2026 21:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZidNYziT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9064C1F00919;
-	Wed,  4 Nov 2026 21:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZfkuaMV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2C21F00919;
+	Wed,  4 Nov 2026 21:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827194;
-	bh=+6F/RIDt1camA8P9i4DF0bJC5Z5b43UBopoxwwI8aJc=;
+	s=korg; t=1793827196;
+	bh=T9ApCYWHBVDrqzvYCMis/TDfgoQvwLZTbugwLvvBtI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZidNYziTc2NUccBwO+aWbDOs0+xIEKdq0SjiYl8Iq9TXD7rcuameHR0mqNqsJo58i
-	 eA1MCPnZ+okPZqvb9iZBLyas1gRxabXnBdseo4FTsr8CPRExBPheTvOwaZQ3YlDiu4
-	 F1G9EpuF/t2oCew7ulOofhfD4isJnalFmePPTuoc=
+	b=iZfkuaMVX8yLcvxKkFjzq6udytcizUfY4BiojxM1gMO4+gL8qhr/jdRTk2c1XMicl
+	 9i6I56JOBYliOmZIs4uwaVdLcSlHjIabzg1APRpNk7mKjvwYhX3kG24rEip10bfswm
+	 B1CUychIAgbEw45IYAlGx85WGeG51aCnSBSBvKXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+d17c2bc750a9cbbb@bugs.sh,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.3 250/547] virtio_net: atomically disable rx mode work
-Date: Wed,  4 Nov 2026 16:07:14 -0500
-Message-ID: <20261104211045.279640122@linuxfoundation.org>
+	Alex Williamson <alex@shazbot.org>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Ankit Agrawal <ankita@nvidia.com>
+Subject: [PATCH 7.3 251/547] vfio/nvgrace-gpu: Use a core-only open_device in fallback mode
+Date: Wed,  4 Nov 2026 16:07:15 -0500
+Message-ID: <20261104211045.308222840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,153 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-commit 1234707482053f1d1ac7c5756207d2c29057974c upstream.
+commit 9c48b994b66d7b585698f9aaee8ff559a7755c0a upstream.
 
-virtio-net uses a boolean to gate rx_mode_work during device teardown.
-The flag is changed under RTNL, but ndo_set_rx_mode checks it under the
-address-list lock. A callback can therefore pass the check and enqueue work
-after teardown has flushed it. The work is also enabled before late
-probe operations that can fail, allowing probe unwind to free the netdev
-with work still queued.
+When the ACPI memory properties are missing or the C2C link is down, the
+device is exposed through nvgrace_gpu_pci_core_ops.  That table opens
+through nvgrace_gpu_open_device() but closes through
+vfio_pci_core_close_device(), so open and close are not symmetric.
 
-KASAN reports the worker using a virtqueue that probe unwind already freed:
+nvgrace_gpu_open_device() registers nvdev->usemem for poison handling
+unconditionally.  In fallback mode usemem.memlength is zero, and
+register_pfn_address_space() inserts a node covering [0, ULONG_MAX].
+Nothing removes it: a second open fails with -EBUSY, and once the device
+is unbound the node outlives the nvdev that contains it.  The next open
+after a rebind reports:
 
-  BUG: KASAN: slab-use-after-free in virtqueue_add_split
-  Workqueue: events virtnet_rx_mode_work
+  BUG: KASAN: slab-use-after-free in interval_tree_iter_first+0x209/0x310
+  Read of size 8 at addr ffff88800894aa30 by task nvgrace_repro/203
   Call Trace:
-   virtqueue_add_split (drivers/virtio/virtio_ring.c:706)
-   virtqueue_add_sgs (drivers/virtio/virtio_ring.c:2839)
-   virtnet_send_command_reply (drivers/net/virtio_net.c:3565)
-   virtnet_rx_mode_work (drivers/net/virtio_net.c:3833)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3405)
-  Freed by task 119:
-   kfree (mm/slub.c:6625)
-   vp_del_vq.isra.0 (drivers/virtio/virtio_pci_common.c:259)
-   vp_del_vqs (drivers/virtio/virtio_pci_common.c:285)
-   virtnet_probe (drivers/net/virtio_net.c:7129)
+   <TASK>
+   dump_stack_lvl+0x5d/0x80
+   print_report+0x153/0x4c6
+   kasan_report+0xe4/0x1a0
+   interval_tree_iter_first+0x209/0x310
+   register_pfn_address_space+0x97/0x100
+   nvgrace_gpu_open_device+0x21c/0x730
+   vfio_df_open+0x213/0x520
+   vfio_df_ioctl_bind_iommufd+0x3e8/0x6e0
+   vfio_device_fops_unl_ioctl+0x782/0x1570
+   __x64_sys_ioctl+0x13c/0x1c0
+   do_syscall_64+0x106/0x630
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
 
-Use the workqueue disable mechanism to atomically reject new queue attempts
-and drain running work. Keep work disabled until probe succeeds or restore
-has reattached the netdev, then enable it and replay receive-mode state for
-a running interface. Disable it before resource teardown in freeze and
-remove.
+  Allocated by task 188:
+   ...
+   _vfio_alloc_device+0x3a/0x500
+   nvgrace_gpu_probe+0xcb/0x660
+   local_pci_probe+0xcf/0x170
+   ...
 
-Fixes: b9f7425239a0 ("virtio-net: convert rx mode setting to use workqueue")
+  Freed by task 188:
+   ...
+   kfree+0x20d/0x600
+   device_release+0xcf/0x250
+   kobject_put+0x152/0x2f0
+   pci_device_remove+0xb0/0x1c0
+   device_release_driver_internal+0x38d/0x540
+   unbind_store+0xde/0x100
+   ...
+
+Give the fallback table its own open_device that only calls
+vfio_pci_core_enable() and vfio_pci_core_finish_enable(), the
+counterpart of vfio_pci_core_close_device().  Fallback mode then never
+touches the nvgrace memory regions, as Alex suggested.
+
+This should be safe because the fallback table uses the vfio-pci core
+read, write and mmap handlers, so nothing there uses the state
+nvgrace_gpu_open_device() sets up.  The one visible difference is that a
+fallback open no longer fails when BAR0 cannot be mapped, which matches
+vfio-pci.
+
+Fixes: e5f19b619fa0 ("vfio/nvgrace-gpu: register device memory for poison handling")
 Cc: stable@vger.kernel.org
-Reported-by: <co+d17c2bc750a9cbbb@bugs.sh>
+Suggested-by: Alex Williamson <alex@shazbot.org>
 Assisted-by: LLM
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20261017114237.2786302-2-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Reviewed-by: Ankit Agrawal <ankita@nvidia.com>
+Link: https://lore.kernel.org/r/20261015081937.405320-2-parri.andrea@gmail.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |   26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+ drivers/vfio/pci/nvgrace-gpu/main.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -441,9 +441,6 @@ struct virtnet_info {
- 	/* Work struct for setting rx mode */
- 	struct work_struct rx_mode_work;
+--- a/drivers/vfio/pci/nvgrace-gpu/main.c
++++ b/drivers/vfio/pci/nvgrace-gpu/main.c
+@@ -1083,6 +1083,21 @@ static const struct vfio_device_ops nvgr
+ 	.detach_ioas	= vfio_iommufd_physical_detach_ioas,
+ };
  
--	/* OK to queue work setting RX mode? */
--	bool rx_mode_work_enabled;
--
- 	/* Does the affinity hint is set for virtqueues? */
- 	bool affinity_hint_set;
- 
-@@ -710,16 +707,13 @@ static void virtnet_rq_free_buf(struct v
- 
- static void enable_rx_mode_work(struct virtnet_info *vi)
- {
--	rtnl_lock();
--	vi->rx_mode_work_enabled = true;
--	rtnl_unlock();
-+	if (enable_work(&vi->rx_mode_work) && netif_running(vi->dev))
-+		schedule_work(&vi->rx_mode_work);
- }
- 
- static void disable_rx_mode_work(struct virtnet_info *vi)
- {
--	rtnl_lock();
--	vi->rx_mode_work_enabled = false;
--	rtnl_unlock();
-+	disable_work_sync(&vi->rx_mode_work);
- }
- 
- static void virtqueue_napi_schedule(struct napi_struct *napi,
-@@ -3925,8 +3919,7 @@ static void virtnet_set_rx_mode(struct n
- {
- 	struct virtnet_info *vi = netdev_priv(dev);
- 
--	if (vi->rx_mode_work_enabled)
--		schedule_work(&vi->rx_mode_work);
-+	schedule_work(&vi->rx_mode_work);
- }
- 
- static int virtnet_vlan_rx_add_vid(struct net_device *dev,
-@@ -5742,7 +5735,6 @@ static void virtnet_freeze_down(struct v
- 	/* Make sure no work handler is accessing the device */
- 	flush_work(&vi->config_work);
- 	disable_rx_mode_work(vi);
--	flush_work(&vi->rx_mode_work);
- 
- 	if (netif_running(vi->dev)) {
- 		rtnl_lock();
-@@ -5772,8 +5764,6 @@ static int virtnet_restore_up(struct vir
- 
- 	virtio_device_ready(vdev);
- 
--	enable_rx_mode_work(vi);
--
- 	if (netif_running(vi->dev)) {
- 		rtnl_lock();
- 		err = virtnet_open(vi->dev);
-@@ -5785,6 +5775,8 @@ static int virtnet_restore_up(struct vir
- 	netif_tx_lock_bh(vi->dev);
- 	netif_device_attach(vi->dev);
- 	netif_tx_unlock_bh(vi->dev);
++static int nvgrace_gpu_core_open_device(struct vfio_device *core_vdev)
++{
++	struct vfio_pci_core_device *vdev =
++		container_of(core_vdev, struct vfio_pci_core_device, vdev);
++	int ret;
 +
-+	enable_rx_mode_work(vi);
- 	return 0;
- 
- err_destroy_pools:
-@@ -6880,6 +6872,7 @@ static int virtnet_probe(struct virtio_d
- 
- 	INIT_WORK(&vi->config_work, virtnet_config_changed_work);
- 	INIT_WORK(&vi->rx_mode_work, virtnet_rx_mode_work);
-+	disable_work(&vi->rx_mode_work);
- 
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_MRG_RXBUF)) {
- 		vi->mergeable_rx_bufs = true;
-@@ -7038,8 +7031,6 @@ static int virtnet_probe(struct virtio_d
- 	if (vi->has_rss || vi->has_rss_hash_report)
- 		virtnet_init_default_rss(vi);
- 
--	enable_rx_mode_work(vi);
--
- 	for (i = 0; i < ARRAY_SIZE(guest_offloads); i++) {
- 		unsigned int fbit;
- 
-@@ -7143,6 +7134,8 @@ static int virtnet_probe(struct virtio_d
- 		goto free_unregister_netdev;
- 	}
- 
-+	enable_rx_mode_work(vi);
++	ret = vfio_pci_core_enable(vdev);
++	if (ret)
++		return ret;
 +
- 	pr_debug("virtnet: registered device %s with %d RX and TX vq's\n",
- 		 dev->name, max_queue_pairs);
- 
-@@ -7195,7 +7188,6 @@ static void virtnet_remove(struct virtio
- 	/* Make sure no work handler is accessing the device. */
- 	flush_work(&vi->config_work);
- 	disable_rx_mode_work(vi);
--	flush_work(&vi->rx_mode_work);
- 
- 	virtnet_free_irq_moder(vi);
- 
++	vfio_pci_core_finish_enable(vdev);
++
++	return 0;
++}
++
+ static const struct vfio_pci_device_ops nvgrace_gpu_pci_dev_core_ops = {
+ 	.get_dmabuf_phys = vfio_pci_core_get_dmabuf_phys,
+ };
+@@ -1091,7 +1106,7 @@ static const struct vfio_device_ops nvgr
+ 	.name		= "nvgrace-gpu-vfio-pci-core",
+ 	.init		= vfio_pci_core_init_dev,
+ 	.release	= vfio_pci_core_release_dev,
+-	.open_device	= nvgrace_gpu_open_device,
++	.open_device	= nvgrace_gpu_core_open_device,
+ 	.close_device	= vfio_pci_core_close_device,
+ 	.ioctl		= vfio_pci_core_ioctl,
+ 	.get_region_info_caps = vfio_pci_ioctl_get_region_info,
 
 
