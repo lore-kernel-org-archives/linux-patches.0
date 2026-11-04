@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826814;
-	b=svoPhQlEV3sXSlJOiWWbITEe4NnNMvzO/K31RIkZObpa9Gv8PT1jak6+1uLR+IIPfFlw
-	 XK6u7sO67HL1pE4WkugtHMnJR2BeS8WFtXJbjlUEis8ptEmYuFBhZI6yVaXNzpy1BlM98
-	 bm+zrmQCBplycmCjxpA1I3gcHvqDVzKFFpVsvo2XsewG7amezXCxrWVNUfUy2Ehv6/LIM
-	 t7NpV9jR56pyeN5M1tonczOMpw3SOl/ICK+Jb3pjLj0wtHdpKrhFroPbwCLPJySoNGXTp
-	 /u3H+fpIOd4W+/ELtxtLa3keowKO0V1SlZVfubkfkn4eNifsKApTy5+SS/l3iq9ByEw==
+	t=1793826817;
+	b=CR1u5mG5IlfQ2Is5yjrWEQ5VOhIdoV9c0rfCZ5tedBMjBbTVjNEjMKZx6nflot300vP9
+	 0XeFprSAo++rJQmWu7q9PYEttcNCU2qgpwfWbHqeQFwfgKNy3GQK8PC0P6dQXASrhI4hX
+	 8NAkDngVNWDbE/5RarNUc6gatSIfF9+7mD0BYMgwPTpeJzUgJV/lBpNfocGN7HmuY3/ku
+	 vCwNSAl2hUUY426AzA+L1Fp8nx4oEtdLwKoIQ6lT0DlUqzBcuxsgUxdQe0cCCv0U0REm8
+	 O6Em9PndpSiU/s96EKHZLzFKYKWMPNjmzjOI8pDLVtkZSeFCxxt7Ib5qxybPhqMLt7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bLo64trbT3JggTuw+eHNoKrLuFxyEpO/+BAM81tw8rk=;
-	b=XiAapdiofXaWKY968LQs8wuYnBk/q5gqg3KmuZlMCipKFIY8o5adPIdTqEtrn0xVotcs
-	 A+TEIjvW4hJUteciIEZRTI6FDwPKbhMqot0q+ff/6TusmtDNPFOJ3igz43DFmAH7S7pjz
-	 q40JzUpScklCqTs11KxqrfXvIoDhL48+YVNmY0vM97MWdPQARMfBahmhiU6d4AttMrGOT
-	 6N6a2NQ2aFhPH9YarNN0JwT3Ab+XzMAS/+9aTln5iZXQPjluRUQrzOy76HFkwYdOY4exQ
-	 LJzdTJOojyO37XFjfsc/N6YSyXXKhh2eH/nWy06A3ZLuMKJIPaEhXJ5m/Y15m0Kxj4g==
+	bh=6sYlaStV/o7Iv4N+eXb0KPpqhRLwjIxS7YkvEKufw2w=;
+	b=JdNgZUF2qqSY+cnR1tbEJRlW2hi3v723zIeFvdvoB5bFnAG8lD5/mNN8tqMPo7AdUpyz
+	 rKgMhES4GJrVDJ/jHEX/+WqxgykgGl5TiVdpG2M0fQUsw/zzEWyTt3+Lg8T6+r9ZPhFl+
+	 QUOM9xObOyfNxy1JmyxQsPUwF9pwhAkssBwtRMnWnOaeanq6lXdfVC5cJH2iqL8/kL+0g
+	 iUZwILU58owdvy+nzGUKztHwC8uJH7hkQr7SpjFhsbr/yoGr4LBFw7rWVuqgh1yVhqz/5
+	 jNtxSCNVorg8VvLaRrrglFxpgUQj0igigRVtdeq99iE8LGr6oM8qHkBca5O8R/CNcNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=niwu2drd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="I/nD5D2j";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4BA606A338;
-	Wed,  4 Nov 2026 21:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21728606A32D;
+	Wed,  4 Nov 2026 21:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=niwu2drd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEF01F0093A;
-	Wed,  4 Nov 2026 21:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I/nD5D2j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDE91F00A16;
+	Wed,  4 Nov 2026 21:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826814;
-	bh=bLo64trbT3JggTuw+eHNoKrLuFxyEpO/+BAM81tw8rk=;
+	s=korg; t=1793826816;
+	bh=6sYlaStV/o7Iv4N+eXb0KPpqhRLwjIxS7YkvEKufw2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=niwu2drdaH/cGYM6Lc6Fqw2WijL1HO2WaKgSh1EzmVhKwkFZ4jc9FwPsURz6PXDFE
-	 JXddY6L97Md1dnKeDoI3kWjRwWnKQQZScJ5fjhjYwFQNDhFIL7iS23GpfaibvcH1Br
-	 eWHGKMXYU1EuNFPSU+07fDMkKZ0lTc7AquzcNfKE=
+	b=I/nD5D2jW7BCSlA+I7YtkVpPyxBu2RoIUFZzJTT56XjFa/PkUW5xlN3zYy2u9o3sd
+	 fRyj7JfFznJ8h1IHg0z/Ut8BTk/pNchoPa9Em5TGW5Vhd/VNQjiLZe7Pi802p7zLrC
+	 Bs9qnTP29OU5TZ6bYccKryI4Je1KFge50Rixbq2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 024/547] io_uring/cancel: rearm local work wake up before sleep
-Date: Wed,  4 Nov 2026 16:03:28 -0500
-Message-ID: <20261104211039.047116521@linuxfoundation.org>
+Subject: [PATCH 7.3 025/547] io_uring/mpscq: disable preemption while pushing
+Date: Wed,  4 Nov 2026 16:03:29 -0500
+Message-ID: <20261104211039.074348535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,73 +70,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 76a82c666abf155ad52d5f41043eac77dd3e41d8 ]
+[ Upstream commit 68a95c3968895cd198f42baadb23e635fecc5a66 ]
 
-io_uring_try_cancel_requests() sets ->cq_wait_nr to 1 so that the next
-io_req_local_work_add() wakes the cancelling task. The add that takes the
-count to zero is the only one that wakes, later ones see a count <= 0 and
-return. io_uring_cancel_generic() however only becomes
-TASK_INTERRUPTIBLE much later, so the one wake up can be spent on a
-running task. That is fine as long as the entry of that add is still
-queued, as the io_local_work_pending() check then skips the sleep. It is
-not if the add was delayed after queueing its entry:
+A push makes the node the new tail, and then links it to its predecessor.
+In between the queue isn't empty, but mpscq_pop() can't get at the node.
+The consumers deal with that by trying again, with a cond_resched() in
+the loop to give a preempted producer the chance to finish.
 
-CPU0 (submitter in exec or exit)      CPU1 (io_req_local_work_add)
-                                      mpscq_push(req A)
-io_uring_try_cancel_requests()
-  io_run_local_work()  // runs req A
-io_uring_try_cancel_requests()
-  atomic_set(&ctx->cq_wait_nr, 1)
-                                      atomic_read(&ctx->cq_wait_nr) == 1
-                                      count taken, wake_up_state()
-                                        // task is running, no-op
-prepare_to_wait(TASK_INTERRUPTIBLE)
-io_local_work_pending() == false
-schedule()
-                                      mpscq_push(req B)
-                                      cq_wait_nr <= 0, return
+cond_resched() doesn't do that if the consumer has a higher priority than
+the producer and both have to use the same CPU:
 
-Only the sleeping task can run req B, so it is stuck in execve() until a
-signal happens to wake it. An exiting task doesn't even get that.
+  producer (SCHED_OTHER)              consumer (SCHED_FIFO), same CPU
+  io_req_local_work_add()
+    mpscq_push()
+      prev = xchg(&q->tail, node)
+  <preempted>                         io_cqring_wait()
+                                        __io_run_local_work()
+                                      again:
+                                          cond_resched()  // nothing to do
+                                          mpscq_pop()     // NULL
+                                          // work pending, no events yet
+                                          goto again
 
-Arm the count again once the task state is set and before the work list
-is checked, for the rings whose local work this task is the one to run.
+The producer can be any task that is able to queue task_work for the
+ring: an io-wq worker, or somebody who sends a message with
+IORING_OP_MSG_RING. The consumer spins, holding ->uring_lock, until the
+scheduler takes pity on the fair class, which takes about a second with
+the default settings of the fair server, and forever without it. The
+loops in tctx_task_work_run() and io_cancel_local_task_work() have the
+same problem.
 
-Fixes: d46ab2c98aba ("io_uring: switch local task_work to a mpscq")
+Don't allow preemption between the two steps. That bounds the time the
+window is open on the CPU of the producer by what interrupts take, and a
+consumer that waits for that is on another CPU. The cost is a
+preempt_disable()/preempt_enable() pair per push.
+
+Fixes: 50cb44bd0d5f ("io_uring/mpscq: add lockless multi-producer, single-consumer FIFO queue")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-8-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-9-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/cancel.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ io_uring/mpscq.h | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/cancel.c b/io_uring/cancel.c
-index 4f706aff14fc2..03b1f1f3fad16 100644
---- a/io_uring/cancel.c
-+++ b/io_uring/cancel.c
-@@ -636,8 +636,18 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
- 		io_uring_drop_tctx_refs(current);
- 		/* only skip the sleep for local work this task may run */
- 		xa_for_each(&tctx->xa, index, node) {
--			if (io_local_work_pending(node->ctx) &&
--			    io_allowed_defer_tw_run(node->ctx))
-+			if (!(node->ctx->flags & IORING_SETUP_DEFER_TASKRUN) ||
-+			    !io_allowed_defer_tw_run(node->ctx))
-+				continue;
-+			/*
-+			 * The wake up io_uring_try_cancel_requests() asked for
-+			 * may have been issued while we were still running. Ask
-+			 * again now that it can't be missed.
-+			 */
-+			atomic_set(&node->ctx->cq_wait_nr, 1);
-+			/* pairs with the xchg() in mpscq_push() */
-+			smp_mb();
-+			if (io_local_work_pending(node->ctx))
- 				goto end_wait;
- 		}
- 		/*
+diff --git a/io_uring/mpscq.h b/io_uring/mpscq.h
+index f910526766fd8..da9474497cc8e 100644
+--- a/io_uring/mpscq.h
++++ b/io_uring/mpscq.h
+@@ -25,9 +25,10 @@
+  * its predecessor. In between, the tail end of the queue is not yet reachable
+  * from the head. mpscq_pop() detects this and returns NULL, while mpscq_empty()
+  * reports false. The consumer must not treat such a NULL as "queue empty" - it
+- * should retry later. The window is two instructions wide, but a producer can
+- * be preempted inside it, so the consumer must not spin on it while holding
+- * resources the producer might need to make progress.
++ * should retry later. The window is two instructions wide and the producer
++ * can't be preempted inside it, but it can be interrupted, so the consumer must
++ * not spin on it while holding resources the producer might need to make
++ * progress.
+  *
+  * The consumer side only supports a single consumer at a time, callers must
+  * provide their own serialization for it. The stub node is what allows the
+@@ -69,6 +70,12 @@ static inline bool mpscq_push(struct mpscq *q, struct llist_node *node)
+ 	struct llist_node *prev;
+ 
+ 	node->next = NULL;
++	/*
++	 * All the consumer can do about a node that isn't linked yet is to try
++	 * again. If it is what preempted us, and we don't get to run as long
++	 * as it does, that never ends.
++	 */
++	preempt_disable();
+ 	/*
+ 	 * xchg() implies a full barrier, so the initialization of the
+ 	 * entry (including ->next above) is visible before the node can
+@@ -77,6 +84,7 @@ static inline bool mpscq_push(struct mpscq *q, struct llist_node *node)
+ 	 */
+ 	prev = xchg(&q->tail, node);
+ 	WRITE_ONCE(prev->next, node);
++	preempt_enable();
+ 	return prev == &q->stub;
+ }
+ 
 -- 
 2.53.0
 
