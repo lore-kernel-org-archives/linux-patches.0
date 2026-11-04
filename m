@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829692;
-	b=WlLbVWghHH6cDxwAMRZ82VpLyhW7rpKPm7O+xxeDvN0Iuog2wW5RyVbQ9WkINSyf8G0R
-	 jJVrbF2pFRxPGyzzdWNBHQgDqz5nWOL/lDs2Ykfo1UjzEyawXQdG6j4sOae5Q/hU+2gCK
-	 IFKtt3aJJtR/PpIEn3ThdaLHEDtbAb9mTg3qRqj9PH1jFN9h8gyrceYKkzre9lCAoU+ca
-	 qMUzIPKEZaOYgPxkh8Q1Z//KRgUxfAHlwYHJtLkBZwldtmNyyclhTKpiA0gZ7aKUTgxPQ
-	 huZIZ8xedeyLgI//pQvFGMfNxHwypzHW1sNF6oSTcXZLJiDOTyZH8WgiQIgkksMB4Aw==
+	t=1793829694;
+	b=1Pym8KwxxZ1wQ8hXI21yCq5d6vY6vuWMm/u4uUvUuPZKkXkI2F/jnKUv+aac16EJkQ2J
+	 zRj0fJ5Fm3kDTV/kKyPu1gA+aZ4cAP1h7aFUpuCaZdW7LRm6zi4tcUBZj4qw4Gtizt8rA
+	 S6wGqkK5f7Ct1NzkSASbDdATKnX6ffvEivyRntlBinllkZ7/6ONezU4fFPWnRrqN9/wNF
+	 9jFPEUKtYxSYf/2CyeLSUWhp1b3i68HOKT9f9on4tnrob72IudKwPH7Lbs+Qk+O7JvJ4n
+	 AJ5AM19knulHrpkUQX5rLqSluknaWmq7x58O6F9K1wAXv5ezBl67NzmSZg1XXK6FeuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S0OhB79JNe5Yy4em+1360slUSWQNrWWI7iopzGVt3nk=;
-	b=0nGsCa7IZfbkqd79INoF6763ftTX0qRHFNFXsjaWexPVxSe7EVOidqy2sb6i2z0V4x0C
-	 7LTrd0b1ho6IMYQHU0cp5SBMLdjJJ59zEkWWs5spd8ruHawNVH7mwSPI/RX33aNL1l623
-	 UDFBpzCE7tAaIv2vcHircnpmnlFvDJxEJ+Ydwu2bn/q0IOlR0kxFBF2RAeFvXi+YP+DJX
-	 puknCbYenp9KTUsSjikk8E6iLN5Nm7lCV5/zpL61LXw9/CuUdPmPqoPw29qPxdpvZFelt
-	 cwhsTPe57J98VbtUI19ZKsofY5aisxcq62ypBQUKcxAekQFrh2YJ6tHfSALTGYRLVLg==
+	bh=8ZQMA3jFd3UyLIpOZHRrBOOpbOQNjRe2KMFkshG7rw0=;
+	b=Ej3wVmOSyep1hWLRjn2j4VEXnEiSS/ItfUP/RIfOunGSL37BbxFMPkGi/KXJL+FBQXCY
+	 DGiSrSDbOUxLuS/e9I5zWGPh8AB/lMczwwH1e37uw8Dv215u/fEd/2OFpJQeXhpcOV2So
+	 31LA+u5VNgih9sDhCkUFSU/04+Xm22nk2WRb53gjF4MY9AIiO6Ac+Jm1vejR3gvySKtIM
+	 5prwiz/FaN7dKgSisV1M3NEwJbry+eN6QWA1XZoYB14XfonAH1FtlpiYinq+4vJvU6uO6
+	 9VTf+0djHwZWYh0XBg7vGVp/rEAcEqeVDud3I6OoVuwK5gsexRdkPCvoryT51k9O7lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HBksPux;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QADm8bjA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9173F606BA30;
-	Wed,  4 Nov 2026 22:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2019D606BA30;
+	Wed,  4 Nov 2026 22:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HBksPux
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1EC81F00919;
-	Wed,  4 Nov 2026 22:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QADm8bjA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE7F1F00919;
+	Wed,  4 Nov 2026 22:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829692;
-	bh=S0OhB79JNe5Yy4em+1360slUSWQNrWWI7iopzGVt3nk=;
+	s=korg; t=1793829693;
+	bh=8ZQMA3jFd3UyLIpOZHRrBOOpbOQNjRe2KMFkshG7rw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2HBksPuxzSQyf0Ssasu15yuV2+Ct5cuYzKPc5ITNObNOv+Kt2EWk97kZ10oEvgPnT
-	 PlgiLavI9OZz5W86I++ObP0VTvz3y4eDHCvyVv0dawRzcaKmtWujfg3oG1QPdCIyhx
-	 /lz3Fj0n2PDmnBBGu3dS85WlQkmxHH7QPP2lY3kA=
+	b=QADm8bjARdpVFAhhmmTG3XEgwHKTvu0ib+KvXbjcnaFlp9pMUYwp8Oaf2I2GrPM39
+	 e/dSFZKxS0prgmYZkCtgkFgOWbv7qjU8oz+JdP6b9xGjY+07p4q7RvLSjsEK3bvuSk
+	 VqbySqvl1fp4tn+GdNzG8eYNw7FuUNgm74pCQR1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Bob Song <songxiebing@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0283/1005] exfat: free new directory cluster if zeroing fails
-Date: Wed,  4 Nov 2026 16:00:16 -0500
-Message-ID: <20261104211051.822667083@linuxfoundation.org>
+Subject: [PATCH 6.18 0284/1005] ALSA: hda/realtek: add missing NULL check for codec->bus->pci
+Date: Wed,  4 Nov 2026 16:00:17 -0500
+Message-ID: <20261104211051.853641669@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,42 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Bob Song <songxiebing@kylinos.cn>
 
-[ Upstream commit ce12a39bed483008683438962b3a605374e6f803 ]
+[ Upstream commit 3b36ac93739e7b119a30affaee9c2dd41f24efbb ]
 
-exfat_alloc_new_dir() allocates a cluster for a new directory before
-zeroing it.  If exfat_zeroed_cluster() fails, the function returns the
-error but leaves the allocated cluster in use.
+In alc269_probe(), codec->bus->pci is dereferenced without a NULL check
+for the ALC236 vendor ID case. Add the missing check, consistent with
+the existing pattern used elsewhere in the same function.
 
-Free the newly allocated cluster before returning the zeroing error.
-
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Bob Song <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260730015302.253008-2-songxiebing@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/dir.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
-index 1f6cb533a48d1..d82b48722ef76 100644
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -310,7 +310,13 @@ int exfat_alloc_new_dir(struct inode *inode, struct exfat_chain *clu)
- 	if (ret)
- 		return ret;
- 
--	return exfat_zeroed_cluster(inode, clu->dir);
-+	ret = exfat_zeroed_cluster(inode, clu->dir);
-+	if (ret) {
-+		exfat_free_cluster(inode, clu);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- int exfat_calc_num_entries(struct exfat_uni_name *p_uniname)
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 6bf500c0b5f9b..d88627558150f 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -8451,6 +8451,7 @@ static int alc269_probe(struct hda_codec *codec, const struct hda_device_id *id)
+ 		spec->init_hook = alc256_init;
+ 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
+ 		if (codec->core.vendor_id == 0x10ec0236 &&
++		    codec->bus->pci &&
+ 		    codec->bus->pci->vendor != PCI_VENDOR_ID_AMD)
+ 			spec->en_3kpull_low = false;
+ 		break;
 -- 
 2.53.0
 
