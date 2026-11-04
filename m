@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829249;
-	b=UDZvliI/Ef4CNI79pEJyZtE8ZrhzU4jp3nHelvbkNfnscLA4E6WDv+6xtiRM/IbrxtnQ
-	 0ZI7hWnm1kxfu/5FmMJ1CLLBkucC3qW+HKrDHt94ihXxItPqsr71n1ZlYSappPGXv7ApM
-	 6BesiqXni1zAUJajePbl11isHX8SZTVX5xVvg1sleRzsV6Be5arzXqs/0b0NPefUGd+I+
-	 1W6bopFSlwWilWcu0yGbM8mwrTvq1RN6iFqnDFTcrX+CRv+3ICZjgORRCunsW0YWl331Q
-	 2hT3gPDoG0kJTjzXd1Z4xmEkCc5XX+ir4g1WBqZG6vz2HNm8DECLQzHGnRWbnN87xBw==
+	t=1793829251;
+	b=cPAH04A41tNc9NCceY9zJfJoPJF9nGcrR9KQt7cgNccML4FaQrR8qSNhcuHJ0Z9zTBLA
+	 5cuJirChsBsdLi/vEdfQ6gVTpyLkU6VtjPv03iljfO9TBpXzk/Ii47uOebKiWN6qSOPkZ
+	 LfHSeDupFRbuPJCz9BHhaN8Mg0b72uGZdyHqEZ0E0mPFGgLYxdOv8LLpdUOJTuvFspBE9
+	 c1tkVKaCUIWZY6v6Rg7rRfEvx/BsnlgVtM+zF+8nAVbeWh8RVRj9n+LZrr7UhHlmVAb0p
+	 lnt/DQzrwDm52614PQQFa3SN87+1dyFq6bEnlM9vmGALSjdWy3OHQa+w7Dvz9TvXPkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829251;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SldUPQdOsia98FL84W6GxTR4CjT2ZZPghK5an50sqgs=;
-	b=PVtGIeD2qMZKl8x9pgJW2wrkHsuWJJR7DL6D3fIpKcUtKFA3rQgRQKjiAArfk8hJMw2V
-	 Jp7PeJUDo01v9Mw3u53jppJURFptyYII+elMtmtqEQ3TVt4bVIh+AOpOGIQfoGOEa4xqp
-	 BNBeB8xn0rqK9HWQU7ej6muMct46BKzeoCag9XhWPXh4sjM8r3VJ2KbbdjsoaRW5I7yZD
-	 6m/N0qiTpEwciwpyil6iN+B02k7JFDB6VKEPagAVLXgO2GFpPXhknwGfv3zWrVbU5J8Cv
-	 dsbpHPzyjojBI+AK1ch2PA5guKbujeI2WUlPrlKp2u+WivL6DxDPbIOSr/1sfey2TWg==
+	bh=XmOuNny5Y17tAWIGw+SzRAQLbaMg38OBu4rTX79Ihe4=;
+	b=3fVzzXDxuNkAi9rCd6hxYVUbh9InrkepE3qFtRTv6mXrrUBp8At1S7IuWRnpD/HfvTZB
+	 hB5o4H6os3W0wvNKbxbg3aPoH5R6FZ16YmMnhjwHR4Lj/NLW7Skb8H2IrqvhP6xBenBuh
+	 yDsNwJkIV5btGs6vFeCw3KSaj2Abjtxl3y5lMiAMZpN89yJg+08t5+6MXwjXVcuRtxe8J
+	 tqnGGK3fFqFdB69jzGGJW9b34O1izXJiNBacy892k0blmIDXWED9sp+0q8YpP0/ydMXKj
+	 wjSGYkfxPumlox7eDSgBlVWIur92pNpLUTeyjscERKTgtwVy5OU3mhBhOZUXXzthzDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PUjLLR0r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuRxBKny;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EF3607031F;
-	Wed,  4 Nov 2026 21:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04646070A83;
+	Wed,  4 Nov 2026 21:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PUjLLR0r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2ED1F000C1;
-	Wed,  4 Nov 2026 21:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuRxBKny
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D131F000C1;
+	Wed,  4 Nov 2026 21:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829249;
-	bh=SldUPQdOsia98FL84W6GxTR4CjT2ZZPghK5an50sqgs=;
+	s=korg; t=1793829250;
+	bh=XmOuNny5Y17tAWIGw+SzRAQLbaMg38OBu4rTX79Ihe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PUjLLR0rmld7zxqnfIXkCWxl4HaEQC2MKDybKRrEKfq98BVGOuhTRwnXkj0dsyhvx
-	 XmfKs4yZox8kTu0kc7U/YtpOnziqKknh06MLVBA7q+TSKano7+SKP20BMv3DLLfQ8i
-	 NqvcRVA3qhLw65GS9/e3fssLc417hkDnpmZhB4IE=
+	b=CuRxBKnymze59dB7WP+y3J47vK047vQd4ONTWi0PQcAFkJOQXjxFXchTsMp7BtIuF
+	 PgNaNZgx2smUVp8pgkQBAVsr/0iT/uDO8P/UIN5/vznzxDGS9FtPavTjUoaZ/qo57L
+	 33jqv8j5WacnDcN4l51Tzq4FYW2+7lCzeuDBwrYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Pan Guihua <pan.guihua@datatom.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 542/547] ksmbd: fix named stream write and EOF handling
-Date: Wed,  4 Nov 2026 16:12:06 -0500
-Message-ID: <20261104211053.809145814@linuxfoundation.org>
+Subject: [PATCH 7.3 543/547] ksmbd: rebind completed CREATE replays without draining the old channel
+Date: Wed,  4 Nov 2026 16:12:07 -0500
+Message-ID: <20261104211053.835793487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,186 +68,362 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 02165c8d402392278a5cd2cf97645ed73a7ad4a1 ]
+[ Upstream commit 864bbcd5dc5e70d639a3011eae81a872b69ff402 ]
 
-An SMB WRITE to an existing named stream can silently discard data after
-its written range. ksmbd stores streams as xattr values, but the write
-path passes offset + count as the length of the replacement xattr even
-when the old stream is longer. Writing 26 bytes at offset 0 to a 60-byte
-stream reports 26 bytes written while discarding the remaining 34 bytes.
+A completed DurableHandleReqV2 CREATE can be replayed through another
+channel while its original channel is exiting. The existing replay path
+returns the open but leaves its connection and oplock references pointing
+at the old channel. Its open count also stays on that channel, and a
+later CLOSE through the surviving channel decrements the wrong counter.
 
-Keep the existing xattr length when an in-place write ends before EOF.
-Reject writes that cross XATTR_SIZE_MAX rather than storing only the
-portion that fits while reporting the full requested count.
+After checking the owner, lease key and persistent flag, verify that an
+active open is still published in the requesting session's file table.
+Do this even when no oplock was granted, and before processing a consumed
+replay. Do not read a borrowed opinfo session pointer for this check.
 
-Commit 4ea0bb8aaedf ("ksmbd: handle set/get info file for streamed file")
-intentionally skipped ordinary inode truncation for stream handles: an
-EOF SetInfo on an ADS had truncated the base file. That fixed the base
-file corruption but left stream EOF changes reporting success without
-resizing the stream. Handle these requests by resizing only the stream
-xattr; the base file size remains untouched. Zero-fill stream extensions.
-This is needed alongside the write fix: a short write's accidental
-truncation previously masked an ignored explicit EOF change. The stream
-resize helper returns xattr errors directly rather than using the
-base-file truncate path's EBADF conversion.
+Keep a healthy original binding. If the original channel is exiting or
+releasing, move the open and its own oplock references to the requesting
+channel. Serialize this with CLOSE using the session file-table lock,
+and with detach, reconnect and notification snapshots using m_lock.
+The earlier lock index and lease-table changes make their lifetimes
+independent of this connection change. No old-channel r_count wait is
+needed, including when an unrelated request remains active there.
 
-Fixes: f44158485826 ("cifsd: add file operations")
-Fixes: 4ea0bb8aaedf ("ksmbd: handle set/get info file for streamed file")
-Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Account final close against fp->conn in one place, balance durable detach
+and reconnect, and transfer the count with a replay binding change. A
+final global lookup put may run after CLOSE has removed the volatile id;
+unlink the open from the inode list on that final close as well.
+
+A live completed CREATE replay may follow a break that lowered the
+durable open's batch oplock. Apply the batch eligibility check only to
+detached reconnects, while retaining the owner, lease key and persistent
+flag checks for active replays.
+
+Fixes: bb8bf7eb13b5 ("ksmbd: add SMB3 request replay support")
+Reported-by: Pan Guihua <pan.guihua@datatom.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Used non-const mnt_idmap pointers in stream write and truncate helpers to match existing xattr APIs. ]
+
+Retain the file lifetime and connection accounting groundwork needed by
+failed durable reconnect cleanup. Always unlink the open from the inode
+list on final close, including when a global lookup owns the last put.
+Charge that close to the bound connection and balance the count across
+durable detach, reconnect and reconnect failure.
+
+Serialize detach and reconnect with the inode lock, reject reopening a
+closed handle, and detach only the oplock belonging to that open. Preserve
+the existing byte-range lock connection lists and their reference transfers.
+Active CREATE replay rebinding is omitted because the independent lock
+indexing it requires is absent; no new helper is introduced.
+
+Prepare CREATE error cleanup to distinguish an open retained by the request
+from one that has not acquired that reference. Close and complete a retained
+request open explicitly, while preserving the existing put for the other
+case. This supplies the cleanup branch required by the durable reconnect
+unpublication fix without the unrelated tree-disconnect changes.
+
+Assisted-by: LLM
+Stable-dep-of: 248b5819591c ("ksmbd: fix use-after-free after a failed durable reconnect")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    5 ++-
- fs/smb/server/vfs.c     |   72 ++++++++++++++++++++++++++++++++++++++++++------
- fs/smb/server/vfs.h     |    1 
- 3 files changed, 68 insertions(+), 10 deletions(-)
+Depends on <20261103170318.645584-1-sashal@kernel.org>
+
+ fs/smb/server/smb2pdu.c   |   10 +++-
+ fs/smb/server/vfs_cache.c |  101 +++++++++++++++-------------------------------
+ 2 files changed, 41 insertions(+), 70 deletions(-)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -8438,6 +8438,8 @@ static int set_end_of_file_info(struct k
+@@ -5520,8 +5520,14 @@ err_out2:
+ 		if (!rsp->hdr.Status)
+ 			rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
  
- 	newsize = le64_to_cpu(file_eof_info->EndOfFile);
- 	inode = file_inode(fp->filp);
-+	if (ksmbd_stream_fd(fp))
-+		return ksmbd_vfs_stream_truncate(fp, newsize);
+-		if (fp && !dh_info.replay)
+-			ksmbd_fd_put(work, fp);
++		if (fp && !dh_info.replay) {
++			if (work->request_open == fp) {
++				ksmbd_close_fd(work, fp->volatile_id);
++				smb2_complete_request_open(work);
++			} else {
++				ksmbd_fd_put(work, fp);
++			}
++		}
+ 		smb2_set_err_rsp(work);
+ 		ksmbd_debug(SMB, "Error response: %x\n", rsp->hdr.Status);
+ 	}
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -605,7 +605,7 @@ static void __ksmbd_remove_fd(struct ksm
+ 	list_del_init(&fp->node);
+ 	up_write(&fp->f_ci->m_lock);
  
- 	/*
- 	 * If FILE_END_OF_FILE_INFORMATION of set_info_file is called
-@@ -8446,8 +8448,7 @@ static int set_end_of_file_info(struct k
- 	 * truncate of some filesystem like FAT32 fill zero data in
- 	 * truncated range.
+-	if (!has_file_id(fp->volatile_id))
++	if (!ft || !has_file_id(fp->volatile_id))
+ 		return;
+ 
+ 	write_lock(&ft->lock);
+@@ -621,8 +621,7 @@ static void __ksmbd_close_fd(struct ksmb
+ 
+ 	fd_limit_close();
+ 	ksmbd_remove_durable_fd(fp);
+-	if (ft)
+-		__ksmbd_remove_fd(ft, fp);
++	__ksmbd_remove_fd(ft, fp);
+ 
+ 	close_id_del_oplock(fp);
+ 	filp = fp->filp;
+@@ -705,6 +704,7 @@ static void __ksmbd_close_fd(struct ksmb
+ 	 * in which case there is nothing to drop here.
  	 */
--	if (inode->i_sb->s_magic != MSDOS_SUPER_MAGIC &&
--	    ksmbd_stream_fd(fp) == false) {
-+	if (inode->i_sb->s_magic != MSDOS_SUPER_MAGIC) {
- 		ksmbd_debug(SMB, "truncated to newsize %lld\n", newsize);
- 		rc = ksmbd_vfs_truncate(work, fp, newsize);
- 		if (rc) {
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -392,23 +392,21 @@ static int ksmbd_vfs_stream_write(struct
- 	const struct cred *saved_cred;
- 	char *stream_buf = NULL, *wbuf;
- 	struct mnt_idmap *idmap = file_mnt_idmap(fp->filp);
--	size_t size;
-+	size_t size, write_end;
- 	ssize_t v_len;
- 	int err = 0;
- 
- 	ksmbd_debug(VFS, "write stream data pos : %llu, count : %zd\n",
- 		    *pos, count);
- 
--	if (*pos >= XATTR_SIZE_MAX) {
-+	if (*pos < 0 || *pos >= XATTR_SIZE_MAX) {
- 		pr_err("stream write position %lld is out of bounds\n",	*pos);
- 		return -EINVAL;
+ 	if (fp->conn) {
++		atomic_dec(&fp->conn->stats.open_files_count);
+ 		ksmbd_conn_put(fp->conn);
+ 		fp->conn = NULL;
  	}
+@@ -822,22 +822,7 @@ static struct ksmbd_file *__ksmbd_lookup
  
--	size = *pos + count;
--	if (size > XATTR_SIZE_MAX) {
--		size = XATTR_SIZE_MAX;
--		count = XATTR_SIZE_MAX - *pos;
+ static void __put_fd_final(struct ksmbd_work *work, struct ksmbd_file *fp)
+ {
+-	/*
+-	 * Detached durable fp -- session_fd_check() cleared fp->conn at
+-	 * preserve, so this fp is no longer tracked by any conn's
+-	 * stats.open_files_count.  This happens when
+-	 * ksmbd_scavenger_dispose_dh() hands the final close off to an
+-	 * m_fp_list walker (e.g. ksmbd_lookup_fd_inode()) whose work->conn
+-	 * is unrelated to the conn that originally opened the handle; close
+-	 * via the NULL-ft path so we do not underflow that unrelated
+-	 * counter.
+-	 */
+-	if (!fp->conn) {
+-		__ksmbd_close_fd(NULL, fp);
+-		return;
 -	}
-+	if (count > XATTR_SIZE_MAX - *pos)
-+		return -EFBIG;
-+	write_end = *pos + count;
- 
- 	saved_cred = override_creds(fp->filp->f_cred);
- 	v_len = ksmbd_vfs_getcasexattr(idmap,
-@@ -421,6 +419,8 @@ static int ksmbd_vfs_stream_write(struct
- 		err = v_len;
- 		goto out_revert;
- 	}
-+	/* Preserve the tail of an existing stream on an in-place write. */
-+	size = max_t(size_t, v_len, write_end);
- 
- 	if (v_len < size) {
- 		wbuf = kvzalloc(size, KSMBD_DEFAULT_GFP);
-@@ -449,13 +449,69 @@ out_revert:
- 	if (err < 0)
- 		goto out;
- 	else
--		fp->stream.pos = size;
-+		fp->stream.pos = write_end;
- 	err = 0;
- out:
- 	kvfree(stream_buf);
- 	return err;
+-	__ksmbd_close_fd(&work->sess->file_table, fp);
+-	atomic_dec(&work->conn->stats.open_files_count);
++	__ksmbd_close_fd(fp->conn ? &work->sess->file_table : NULL, fp);
  }
  
-+/**
-+ * ksmbd_vfs_stream_truncate() - change the length of a named stream
-+ * @fp:		stream file handle
-+ * @newsize:	new stream length
-+ *
-+ * Resize the stream xattr without changing the base inode size.
-+ *
-+ * Return: 0 on success, otherwise a negative error code
-+ */
-+int ksmbd_vfs_stream_truncate(struct ksmbd_file *fp, loff_t newsize)
-+{
-+	const struct cred *saved_cred;
-+	struct mnt_idmap *idmap = file_mnt_idmap(fp->filp);
-+	char *stream_buf = NULL, *new_buf = NULL;
-+	ssize_t v_len;
-+	int err;
-+
-+	if (newsize < 0)
-+		return -EINVAL;
-+	if (newsize > XATTR_SIZE_MAX)
-+		return -EFBIG;
-+
-+	saved_cred = override_creds(fp->filp->f_cred);
-+	v_len = ksmbd_vfs_getcasexattr(idmap, fp->filp->f_path.dentry,
-+				       fp->stream.name, fp->stream.size,
-+				       &stream_buf);
-+	if (v_len < 0) {
-+		err = v_len;
+ static void set_close_state_blocked_works(struct ksmbd_file *fp)
+@@ -1117,11 +1102,8 @@ int ksmbd_close_fd_app_instance_id(struc
+ 	up_write(&fp->f_ci->m_lock);
+ 
+ 	*closed = true;
+-	if (atomic_sub_and_test(n_to_drop, &fp->refcount)) {
+-		if (fp->conn)
+-			atomic_dec(&fp->conn->stats.open_files_count);
++	if (atomic_sub_and_test(n_to_drop, &fp->refcount))
+ 		__ksmbd_close_fd(NULL, fp);
+-	}
+ 	return 0;
+ 
+ out:
+@@ -1412,7 +1394,7 @@ static int ksmbd_mark_fp_closed(struct k
+ 	return 1;
+ }
+ 
+-static int
++static void
+ __close_file_table_ids(struct ksmbd_session *sess,
+ 		       struct ksmbd_tree_connect *tcon,
+ 		       bool (*skip)(struct ksmbd_tree_connect *tcon,
+@@ -1423,7 +1405,6 @@ __close_file_table_ids(struct ksmbd_sess
+ 	struct ksmbd_file_table *ft = &sess->file_table;
+ 	struct ksmbd_file *fp;
+ 	unsigned int id = 0;
+-	int num = 0;
+ 
+ 	while (1) {
+ 		int n_to_drop;
+@@ -1507,10 +1488,8 @@ __close_file_table_ids(struct ksmbd_sess
+ 		}
+ 
+ 		/*
+-		 * fp->volatile_id is already cleared to prevent stale idr
+-		 * removal from a deferred final close.  Remove fp from
+-		 * m_fp_list here because __ksmbd_remove_fd() will skip the
+-		 * list unlink when volatile_id is KSMBD_NO_FID.
++		 * Stop inode walkers from finding the open after close is committed.
++		 * Final close also unlinks fp if a global lookup owns the last put.
+ 		 */
+ 		down_write(&fp->f_ci->m_lock);
+ 		list_del_init(&fp->node);
+@@ -1529,22 +1508,13 @@ __close_file_table_ids(struct ksmbd_sess
+ 		 *     the original reference until ksmbd_update_fstate()
+ 		 *     observes the cleared volatile id.
+ 		 *
+-		 * If we end up as the final putter, finalize fp and
+-		 * account the open_files_count decrement via the caller's
+-		 * atomic_sub(num, ...).  Otherwise the remaining user's
+-		 * ksmbd_fd_put() reaches __put_fd_final(), which does its
+-		 * own atomic_dec(&open_files_count), so we must not count
+-		 * this fp here -- doing so would double-decrement the
+-		 * connection-wide counter.
++		 * The final close accounts the open against fp->conn,
++		 * including when an in-flight user drops the last reference.
+ 		 */
+-		if (atomic_sub_and_test(n_to_drop, &fp->refcount)) {
++		if (atomic_sub_and_test(n_to_drop, &fp->refcount))
+ 			__ksmbd_close_fd(NULL, fp);
+-			num++;
+-		}
+ 		id++;
+ 	}
+-
+-	return num;
+ }
+ 
+ static inline bool is_reconnectable(struct ksmbd_file *fp)
+@@ -1833,20 +1803,18 @@ static bool session_fd_check(struct ksmb
+ 	 * / ksmbd_reopen_durable_fd()), so conn stays valid for the whole
+ 	 * body of this function regardless of any op->conn puts below.
+ 	 */
+-	conn = fp->conn;
+ 	ci = fp->f_ci;
+ 	down_write(&ci->m_lock);
++	conn = fp->conn;
+ 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry,
+ 				lockdep_is_held(&ci->m_lock)) {
+-		if (op->conn != conn)
++		if (op->o_fp != fp)
+ 			continue;
+ 		ksmbd_conn_put(op->conn);
+ 		op->conn = NULL;
+ 		op->sess = NULL;
+ 		op->session_id = 0;
+ 	}
+-	up_write(&ci->m_lock);
+-
+ 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
+ 		struct ksmbd_conn *lock_conn = smb_lock->conn;
+ 
+@@ -1859,15 +1827,17 @@ static bool session_fd_check(struct ksmb
+ 		ksmbd_conn_put(lock_conn);
+ 	}
+ 
+-	spin_lock(&fp->f_lock);
++	write_lock(&global_ft.lock);
+ 	fp->conn = NULL;
+ 	fp->tcon = NULL;
+ 	fp->volatile_id = KSMBD_NO_FID;
+-	spin_unlock(&fp->f_lock);
+ 
+ 	if (fp->durable_timeout)
+ 		fp->durable_scavenger_timeout =
+ 			jiffies_to_msecs(jiffies) + fp->durable_timeout;
++	atomic_dec(&conn->stats.open_files_count);
++	write_unlock(&global_ft.lock);
++	up_write(&ci->m_lock);
+ 
+ 	/* Drop fp's own reference on conn. */
+ 	ksmbd_conn_put(conn);
+@@ -1876,22 +1846,12 @@ static bool session_fd_check(struct ksmb
+ 
+ void ksmbd_close_tree_conn_fds(struct ksmbd_work *work)
+ {
+-	int num = __close_file_table_ids(work->sess,
+-					 work->tcon,
+-					 tree_conn_fd_check,
+-					 false);
+-
+-	atomic_sub(num, &work->conn->stats.open_files_count);
++	__close_file_table_ids(work->sess, work->tcon, tree_conn_fd_check, false);
+ }
+ 
+ void ksmbd_close_session_fds(struct ksmbd_work *work)
+ {
+-	int num = __close_file_table_ids(work->sess,
+-					 work->tcon,
+-					 session_fd_check,
+-					 true);
+-
+-	atomic_sub(num, &work->conn->stats.open_files_count);
++	__close_file_table_ids(work->sess, work->tcon, session_fd_check, true);
+ }
+ 
+ int ksmbd_init_global_file_table(void)
+@@ -1955,24 +1915,27 @@ int ksmbd_validate_name_reconnect(struct
+ 
+ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
+ {
+-	struct ksmbd_inode *ci;
++	struct ksmbd_inode *ci = fp->f_ci;
+ 	struct oplock_info *op;
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_share_config *old_share;
+ 	struct ksmbd_lock *smb_lock;
+ 	unsigned int old_f_state;
++	int ret = -EBADF;
+ 
++	down_write(&ci->m_lock);
+ 	write_lock(&global_ft.lock);
+-	if ((!fp->is_durable && !fp->is_persistent) || fp->conn || fp->tcon) {
++	if ((!fp->is_durable && !fp->is_persistent) || fp->conn || fp->tcon ||
++	    fp->f_state != FP_INITED) {
+ 		write_unlock(&global_ft.lock);
+ 		pr_err("Invalid durable fd [%p:%p]\n", fp->conn, fp->tcon);
+-		return -EBADF;
 +		goto out;
-+	}
-+	if (v_len == newsize) {
-+		err = 0;
+ 	}
+ 
+ 	if (has_file_id(fp->volatile_id)) {
+ 		write_unlock(&global_ft.lock);
+ 		pr_err("Still in use durable fd: %llu\n", fp->volatile_id);
+-		return -EBADF;
 +		goto out;
-+	}
-+
-+	new_buf = stream_buf;
-+	if (newsize > v_len) {
-+		new_buf = kvzalloc(newsize, KSMBD_DEFAULT_GFP);
-+		if (!new_buf) {
-+			err = -ENOMEM;
-+			goto out;
-+		}
-+		if (v_len)
-+			memcpy(new_buf, stream_buf, v_len);
-+	}
-+
-+	err = ksmbd_vfs_setxattr(idmap, &fp->filp->f_path, fp->stream.name,
-+				 new_buf, newsize, 0, true);
-+	if (new_buf != stream_buf)
-+		kvfree(new_buf);
+ 	}
+ 
+ 	/*
+@@ -1992,6 +1955,7 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 	fp->conn = ksmbd_conn_get(conn);
+ 	fp->tcon = work->tcon;
+ 	spin_unlock(&fp->f_lock);
++	atomic_inc(&conn->stats.open_files_count);
+ 	write_unlock(&global_ft.lock);
+ 
+ 	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
+@@ -2003,10 +1967,11 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 		fp->share_conf = old_share;
+ 		fp->f_state = old_f_state;
+ 		spin_unlock(&fp->f_lock);
++		atomic_dec(&conn->stats.open_files_count);
+ 		write_unlock(&global_ft.lock);
+ 		ksmbd_conn_put(conn);
+ 		ksmbd_share_config_put(work->tcon->share_conf);
+-		return -EBADF;
++		goto out;
+ 	}
+ 
+ 	list_for_each_entry(smb_lock, &fp->lock_list, flist) {
+@@ -2016,8 +1981,6 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 		spin_unlock(&conn->llist_lock);
+ 	}
+ 
+-	ci = fp->f_ci;
+-	down_write(&ci->m_lock);
+ 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry,
+ 				lockdep_is_held(&ci->m_lock)) {
+ 		if (op->conn || op->o_fp != fp)
+@@ -2026,7 +1989,6 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 		op->sess = work->sess;
+ 		op->session_id = work->sess->id;
+ 	}
+-	up_write(&ci->m_lock);
+ 
+ 	spin_lock(&fp->f_lock);
+ 	fp->owner.uid = fp->owner.gid = 0;
+@@ -2035,7 +1997,10 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 	spin_unlock(&fp->f_lock);
+ 	ksmbd_share_config_put(old_share);
+ 
+-	return 0;
++	ret = 0;
 +out:
-+	kvfree(stream_buf);
-+	revert_creds(saved_cred);
-+	return err;
-+}
-+
- /**
-  * ksmbd_vfs_write() - vfs helper for smb file write
-  * @work:	work
---- a/fs/smb/server/vfs.h
-+++ b/fs/smb/server/vfs.h
-@@ -83,6 +83,7 @@ int ksmbd_vfs_read(struct ksmbd_work *wo
- int ksmbd_vfs_write(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		    char *buf, size_t count, loff_t *pos, bool sync,
- 		    ssize_t *written);
-+int ksmbd_vfs_stream_truncate(struct ksmbd_file *fp, loff_t newsize);
- int ksmbd_vfs_fsync(struct ksmbd_work *work, u64 fid, u64 p_id);
- int ksmbd_vfs_remove_file(struct ksmbd_work *work, const struct path *path);
- int ksmbd_vfs_link(struct ksmbd_work *work,
++	up_write(&ci->m_lock);
++	return ret;
+ }
+ 
+ int ksmbd_init_file_table(struct ksmbd_file_table *ft)
 
 
