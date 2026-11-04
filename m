@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829624;
-	b=Qtr8TOlcKV1e0IaePLYKvJbUJJ9xxCncXvT5J4euAlGUd0VZRnmmZrHojvSBxC+uNWCS
-	 /mUkHtbTG4w1bqz8FK+aMugI/DHXe7xcG4n18WCexmMhbjHzT2Ir0Z907NF3i2Z35lRXR
-	 RBY/kagW0iCM2c0ixos2K66qYx3PcY8bRMsWMHa3htMlFbr+9sq0N5zj8uJ3wJg2U91Eg
-	 Gdcjm5TORQFvmYRtda6F9PVezuN/uSKJW6Yrv7veVT08Xx39pNY9mLMT85fRKC4Dtzhj8
-	 QHxgtfgqwQ9B6atlFzQrUJegCGU3zsEBzrdugIcs93BjKowrY2t4GxVdTgbvVh981fQ==
+	t=1793829626;
+	b=ydNpSo4kQdDaQYcLsUB2mAAe2dnTJwlUn0Mwm2O9UY1F1v7knRUoknPFC2TKxeUMzKhp
+	 MUd+l55avzLVVlmdN7GCmCM0ENNhvZZ6xLdvLrfS0aUrg6w6F58xheW9Z739ojPrZEPt9
+	 pQm8TUdRZ60elqMi6U63pnn1RPbHTwo2e3TY2G5FfRVxOoGDOqOEnOGRYmkj8pXZaT5Fr
+	 BvB7XIaVakebXWEQFuuDl0gigiVJDJyZ3aS99Oyw35NGHRRY1vaoiPh0CjVn45wJWvdtK
+	 i1VdErJhovOjMh4kUsM0GIHC5w8RYzHji+Rfz02BIzfpF9f5xmrwgB2WYo22/rNJTTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829624;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wgUycRcJhSQtmKv7SPjHWf2ARfQcLLerW3KdUxQifE8=;
-	b=y+gCM/KLEoy2C4PY5jsZ0yN09VH2CyaxqnP6g0NjTQFgUzPAViguifdgW9+jOLmus89s
-	 Dlyyk+W667vJZZRgRacKZQ9Q/9Os/o9ZfKhhBxui254L4zgvSjpS0twJRy6WIcFJtmTeN
-	 7W+jwZb8ITulCKQhPF8OdqHHVegq1JZWcDLHw9V2fKzhGBgid4tGiBLm1CuvrcZCh8yKT
-	 D8050hzRvM8dOjTPFWnwz5LYUR6Li/pBoFN8+WGO2QvKNDwP0x7wMFgxhQ1cwGeo5S2Es
-	 K4jUedTEUo1zdgxy1xrW2lsSUCT23AJFVCcc7a5yXVgU13FswKionKoOPHpAA//pF9g==
+	bh=tNUN3Cp2MyuQaxizIyg0OQe2oLJ/5w6sdydqd7RLlIY=;
+	b=yVJB3HwCXs7fPrP20c1PHK3b3tBmAa73Q1NQayXHeNzrm7mJpe9wbLcGo0cBOdofcMfv
+	 Wd0WMahZXi9HF+xK7/Wnb1H800U+THXI/RaDATsKVjsckzu18yIqRC5xgBWUPKqW3TnUV
+	 lmr9XwJPKNYmsYn8D5mM8FOP6yBc37FrqpqUC76FckjY/+Mi1TH51fQKqWFArCukKYoao
+	 XCSPuVISYDcDebpURZ2ifx1SHXfCapPgJR0O9oSmRCraKlP6l6gsHOaU156Zpv95FzjOc
+	 PhZxlnPTp/9PKplMDzACOpdF2ZX2w0e1fgswIrX1/ezzlsRFFbtRlGRtMTNsN2nvwag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="r/BOBP92";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2kjN6Fnx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8336D606A84C;
-	Wed,  4 Nov 2026 22:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F947606A84C;
+	Wed,  4 Nov 2026 22:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r/BOBP92
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B12E1F00A02;
-	Wed,  4 Nov 2026 22:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2kjN6Fnx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39B71F0093A;
+	Wed,  4 Nov 2026 22:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829624;
-	bh=wgUycRcJhSQtmKv7SPjHWf2ARfQcLLerW3KdUxQifE8=;
+	s=korg; t=1793829626;
+	bh=tNUN3Cp2MyuQaxizIyg0OQe2oLJ/5w6sdydqd7RLlIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r/BOBP92oCJcn/Fak0xJPeJdec4RePsmRt0HHSs5tLIh3WBlXYrC/nhQz7PnVlE5I
-	 4SNPHCFVf0n8sOg8NIoz3ESu9DAm64In1J4FGWXcx0df0a6a7WyoMNurqw/hQ5rHUo
-	 ehLAHf+GEdmj5xOL+ec9441ALrA0yawW7VP3Oy5M=
+	b=2kjN6FnxJp25Yhl+8SUzK+bAsgDIH+nnUZ+e0icpxHeFvG5fsMkTC57vkKqTA5BXi
+	 hME5JaAlNNHNKpsw87dK5PLgVYN5XAKKPyq1UqxRdTGP6JGwUcIl6bF9G8Eu/PDP4J
+	 2Op8zHTe7nE4BiHjwfFU7xtrxg2CVxJdXtqKClMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
+	Kyle Zeng <kylebot@openai.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0241/1005] PCI/portdrv: Allow probing even without child services
-Date: Wed,  4 Nov 2026 15:59:34 -0500
-Message-ID: <20261104211050.608345814@linuxfoundation.org>
+Subject: [PATCH 6.18 0242/1005] fs/ntfs3: reserve NUL byte when converting UTF-16 names
+Date: Wed,  4 Nov 2026 15:59:35 -0500
+Message-ID: <20261104211050.634967079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,100 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Norris <briannorris@chromium.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 834171efeefffb1a0f2136f32e76669bbc11db86 ]
+[ Upstream commit 4871fedaabbfd574ac0a075b80e75afdd532e11e ]
 
-The PCIe port driver fails to probe if it finds no child services,
-presumably under the assumption that the driver is not useful in that case.
-However, the driver *can* still be useful for power management support --
-namely, it still configures the port for runtime PM / D3, which may be
-important for allowing a bridge to enter low power modes.
+ntfs_utf16_to_nls() appends a trailing NUL to the converted output,
+but it passes the caller-supplied size directly to the conversion loop.
+For the UTF-8 path, utf16s_to_utf8s() can legitimately fill all
+buf_len bytes and return buf_len, after which ntfs_utf16_to_nls()
+writes the terminator one byte past the end of the destination buffer.
 
-Thus, allow probe to succeed even if no IRQs and no child services are
-available. This also mirrors existing behavior for ports that don't support
-any portdrv services (PCIe hotplug, AER, DPC, PME, bwctrl), where we'd also
-probe successfully.
+The same contract problem exists for the NLS path when a converted
+character consumes the last available byte.
 
-This change is a bit more important after commit f5cd8a929c82 ("PCI: dwc:
-Remove MSI/MSIX capability for Root Port if iMSI-RX is used as MSI
-controller"), because it's common for some DWC-based systems to:
+Reserve one byte for the terminator before doing either conversion.
+The function continues to return the number of converted bytes,
+excluding the NUL terminator.
 
-  1. have only the "aer" and "pcie_pme" port services available and
-
-  2. not define legacy INTx interrupts properly in their device tree.
-
-After commit f5cd8a929c82, such systems may fail pcie_init_service_irqs()
-and so exit with -ENODEV.
-
-Link: https://lore.kernel.org/all/nyada24tqwlkzdceyoxbzitzygvp4elvj5oajnqdwb33xkcdwk@76vnrx45fsfd/
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-[bhelgaas: reorder pcie_port_device_register() decls per Lukas]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20260722160942.v4.1.I5fd5d83f518681b3949d8ab2f16ba8244fd3e774@changeid
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/portdrv.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ fs/ntfs3/dir.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pci/pcie/portdrv.c b/drivers/pci/pcie/portdrv.c
-index a0991da482136..91d1482221a8c 100644
---- a/drivers/pci/pcie/portdrv.c
-+++ b/drivers/pci/pcie/portdrv.c
-@@ -330,8 +330,8 @@ static int pcie_device_init(struct pci_dev *pdev, int service, int irq)
-  */
- static int pcie_port_device_register(struct pci_dev *dev)
- {
--	int status, capabilities, i, nr_service;
- 	int irqs[PCIE_PORT_DEVICE_MAXSERVICES];
-+	int status, capabilities, i;
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index 6e1d2ad8c12ea..6d588efaf9fdf 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -24,6 +24,11 @@ int ntfs_utf16_to_nls(struct ntfs_sb_info *sbi, const __le16 *name, u32 len,
  
- 	/* Enable PCI Express port device */
- 	status = pci_enable_device(dev);
-@@ -355,29 +355,29 @@ static int pcie_port_device_register(struct pci_dev *dev)
- 	if (status) {
- 		capabilities &= PCIE_PORT_SERVICE_HP;
- 		if (!capabilities)
--			goto error_disable;
-+			goto out;
- 	}
+ 	static_assert(sizeof(wchar_t) == sizeof(__le16));
  
- 	/* Allocate child services if any */
--	status = -ENODEV;
--	nr_service = 0;
- 	for (i = 0; i < PCIE_PORT_DEVICE_MAXSERVICES; i++) {
- 		int service = 1 << i;
- 		if (!(capabilities & service))
- 			continue;
--		if (!pcie_device_init(dev, service, irqs[i]))
--			nr_service++;
-+		if (pcie_device_init(dev, service, irqs[i]))
-+			capabilities &= ~service;
- 	}
--	if (!nr_service)
--		goto error_cleanup_irqs;
- 
--	return 0;
-+out:
-+	/*
-+	 * With no child services, we shouldn't need bus mastering or any IRQ
-+	 * vectors we allocated.
-+	 */
-+	if (!capabilities) {
-+		pci_free_irq_vectors(dev);
-+		pci_clear_master(dev);
-+	}
- 
--error_cleanup_irqs:
--	pci_free_irq_vectors(dev);
--error_disable:
--	pci_disable_device(dev);
--	return status;
-+	return 0;
- }
- 
- typedef int (*pcie_callback_t)(struct pcie_device *);
++	if (buf_len <= 0)
++		return -EINVAL;
++
++	buf_len -= 1;
++
+ 	if (!nls) {
+ 		/* UTF-16 -> UTF-8 */
+ 		ret = utf16s_to_utf8s((wchar_t *)name, len, UTF16_LITTLE_ENDIAN,
 -- 
 2.53.0
 
