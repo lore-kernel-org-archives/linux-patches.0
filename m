@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826903;
-	b=KSkgdX2RTsUvvmD1qrPHDAOL3RLx6dS+AY0XcEM2mDDGYtDBVnFjTcyY3Ppd1rH5SK+D
-	 ys5025QJOa3H3uBhu1YEXIoYw4lfbzFVs4/x99Qltec6ElErqRP7lB/Y5OMSwBBPJOtWY
-	 TEc9nfo4F9LW7xflivg7r1IfhphMfzVDI1IWhlBpTuQfFFcn2N1sTk7KfSPxaA/UJ2PQT
-	 OqZVShJqsouq09lKbDot6OyEDMcZ20piEipenR/XXsO+BhFtFmpzSh876XRIiazrzJcrv
-	 Rd7hOH3lSv27+wHe78YAxKr7OZ6K/ChDRtAGqEKUB1rS4HKi8dHcQNpid7qyW8ggsWg==
+	t=1793826905;
+	b=qvuQsxmj/FwfdGsFBuBzBdd4yP4jnvzJ8Ia/Ws4zZ/xnfL9Fu3LUNhE7rxltvWP2EYsd
+	 7hEXVvwe/GJu5w7CwsE5EstsTvZRG9hNeumlmimVdO0NhUkXNEsRhPEB40uvrvRgTAFST
+	 nO5nFBC2uzwRCN/Ilk2qjb8kClGA41aMyN5KDa28NEvzz/bpmDzX548nMYrVLYfpyC6bx
+	 Tqm2yCXesz9Nh6OlF73XKXbOTHimQ9MmPFyQfmGcUjSElzWMQNo7L6ygCx2cH7PIVl+Xs
+	 yMjQDA4jdqfggYPX4WGzfXtTQwlMQQHf5MtRDYy3ABMMugf1HGepdGvA7oKsGgr3THw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826905;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RgE8sp2SgWZ2MpXy+XvL7QDHKaXTwRxsyDMFpWoMjPo=;
-	b=RiyXG3aG3sH+pNn9xxQCWSTpazOTpROx1EMpwYCeMEamqXl2Vx/7L4BFq74IZ8Vx5VrZ
-	 DcqNQZ6B/2KePpVjkr9zVvqlzmBH5/HCb+ahFtoR/wLRcjPf5MFj67fcjcCOWn2ZhKfax
-	 wiHr+r0PWHyBv0XQHn5kDoMH+8piqMPD2LsH+VQbeyezdikIUsQaFutE79L5SZjoAqBw0
-	 +in+zBdOQiBOGC9tjfWIWj+qD35N7iNWy3THUTVw17cfKk68z91c3SpBcS1L9gmHyqtRY
-	 w7x1p3BTxa0505krRyDHdvReHnIQxZu1lurXIQVS5V+qpNdkPaH6l1ZHZaFELYrglyw==
+	bh=5EvyOArRiFH1h/YbOCyxImxNakbrkxsA5gXGDg6kCQ0=;
+	b=ddZhDZHfCICEUYjvZQJRLnGsc0JoMJzEzMnYjd8KzfZsLfVtefpadBQ5grDDpSTxDluw
+	 FmXVGmPYkmnSV8SP6gwDq9yFscYMOqf1ePsz+daoEopChXuVNo3k4BRbpCmzq0zmkSV+y
+	 RoMAN7Yb145NBi8YPyw5kYradmwgXcV8WM1AJOi11U2rCYoX0aP0RVjUSr2XMVDRwrFOU
+	 OWBNQFf20egOxWNivUonFaGUmp2tKopQa18QglHmjNZHhWsxDMAqcP0/dXSzefaYtxYey
+	 KN+HN8oj7fRzaRjTS8IVoI2a59NgGxYPX9OR3lUNKIBmGaxlubCz8RkgYh/GXdV4b9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RrXy1tuP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGORob95;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8E36070775;
-	Wed,  4 Nov 2026 21:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93046084B5F;
+	Wed,  4 Nov 2026 21:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RrXy1tuP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55DB1F000C1;
-	Wed,  4 Nov 2026 21:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGORob95
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAD41F0093A;
+	Wed,  4 Nov 2026 21:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826903;
-	bh=RgE8sp2SgWZ2MpXy+XvL7QDHKaXTwRxsyDMFpWoMjPo=;
+	s=korg; t=1793826904;
+	bh=5EvyOArRiFH1h/YbOCyxImxNakbrkxsA5gXGDg6kCQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RrXy1tuPIZ0JbSS17AahoycqNjYOsI0SDsb2fpKQt/obLfWGGGLb8DV3xmWpdMjSx
-	 5aF7yj2gUghk2Fo6hOWHCCHQZSis/7OfcPrHQVqDXGtsapLNQNSdY6YdV/X/nDP5fR
-	 mZ49oMsIu7x+CPctY6boQLr0vAXuNjM8uR4m0GBA=
+	b=ZGORob95faErVvN90nrcD7EctTGygrp3cbcsn90hqAscvB6PAroKGnVMxS54LHw51
+	 fby/tg4dEH5yHGmO8ZcIXf5g+h5huva6bEC/iVSs22PgYSdQqpYZADs2oGkT4+Oivv
+	 gE8AG7h/oWB+p32/0JIysAg55PSRC9s8+iAaDFQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Andrea Parri <parri.andrea@gmail.com>
-Subject: [PATCH 7.3 075/547] kcsan: Avoid division by zero in kcsan_prandom_u32_max()
-Date: Wed,  4 Nov 2026 16:04:19 -0500
-Message-ID: <20261104211040.389473501@linuxfoundation.org>
+	Yongjun Gwon <d3bugee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.3 076/547] ksmbd: serialize directory emptiness checks with readdir
+Date: Wed,  4 Nov 2026 16:04:20 -0500
+Message-ID: <20261104211040.417243444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,80 +67,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Yongjun Gwon <d3bugee@gmail.com>
 
-commit 99b6fcce87037cfb6b5e177848342e97f5141205 upstream.
+commit 7220980b2423d06a0604516129bfa4cec8a697ae upstream.
 
-KCSAN's skip_watch, udelay_task and udelay_interrupt parameters can be
-changed at runtime through /sys/module/kcsan/parameters/, where 0 means
-watching every access or not delaying at all. With the default
-CONFIG_KCSAN_SKIP_WATCH_RANDOMIZE=y and CONFIG_KCSAN_DELAY_RANDOMIZE=y,
-writing 0 to any of them makes the next watchpoint setup divide by zero:
+SMB2 QUERY_DIRECTORY holds fp->readdir_lock while it calls iterate_dir()
+on fp->filp. An SMB2 SET_INFO request with FILE_DISPOSITION_INFORMATION
+can resolve the same FileId and call ksmbd_vfs_empty_dir() on the same
+filp without that lock.
 
-  # echo 0 > /sys/module/kcsan/parameters/udelay_task
-  Oops: divide error: 0000 [#1] SMP NOPTI
-  CPU: 0 UID: 0 PID: 93 Comm: sh Not tainted 7.3.0-rc5 #3 PREEMPT(lazy)
-  RIP: 0010:kcsan_setup_watchpoint+0x1b5/0x410
-  Code: ... 65 89 05 ad 8d 98 02 d3 ee <f7> f6 29 d7 e8 22 0e 0f 01 ...
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-  ...
-   __show_trace_log_lvl+0x1bd/0x315
-   __die_body.cold+0x19/0x2b
-   die+0x34/0x50
-  ...
-  BUG: TASK stack guard page was hit at ffffd3ab001fbfe8 (...)
+iterate_dir()'s inode read lock permits concurrent readers and does not
+serialize per-file iterator state. ext4 stores its dx readdir cursor and
+fname RB tree in file->private_data. Concurrent reset or refill can
+therefore free a fname node while the other worker still traverses it or
+retains its RB-tree link, resulting in use-after-free accesses.
 
-reset_kcsan_skip() and delay_access() pass these values unchecked to
-kcsan_prandom_u32_max(), which returns "state % ep_ro". delay_access()
-halves the delay for compound and assert accesses, so
-udelay_interrupt=1 is enough there.
+An authenticated SMB client with list and delete rights on a directory in
+a writable KSMBD share backed by ext4 can trigger this when the directory
+takes the dx readdir path. The client overlaps an SMB2 QUERY_DIRECTORY
+request with an SMB2 SET_INFO request carrying FILE_DISPOSITION_INFORMATION
+on one live FileId.
 
-The oops path runs instrumented code, which faults again until the stack
-overflows. With skip_watch=0 the guest hangs without printing anything.
+In one x86_64 SMP KASAN multi-shot guest using ksmbd-for-next at
+171df27077fb, the unmodified kernel reported a cross-worker use-after-free
+before a panic. The first report's access and free stacks show the two
+request paths directly (trimmed):
 
-The division came in with commit 71a076f4a61a ("kcsan: Rewrite
-kcsan_prandom_u32_max() without prandom_u32_state()"). Before it, the
-helper scaled the random value with a multiply-shift, which yields 0 for
-ep_ro == 0. Go back to that via reciprocal_scale().
+  BUG: KASAN: slab-use-after-free in ext4_htree_store_dirent+0x488/0x550
+  Read of size 8 by task kworker/2:0/29
+  Workqueue: ksmbd-io handle_ksmbd_work
+  Call Trace:
+   ext4_htree_store_dirent+0x488/0x550
+   htree_dirblock_to_tree+0x535/0x990
+   ext4_htree_fill_tree+0x319/0xba0
+   ext4_readdir+0x175a/0x2f40
+   iterate_dir+0x1b6/0x630
+   smb2_query_dir+0x1003/0x1cc0
 
-Tested in an x86-64 KCSAN guest with virtme-ng: after this patch,
-writing 0 to each parameter, or 1 to udelay_interrupt, no longer
-oopses. skip_watch=0 now watches every access, which is very slow with
-the default delays but completes when they are set to 0.
+  Freed by task 279:
+   free_rb_tree_fname+0x67/0xc0
+   ext4_readdir+0x13a9/0x2f40
+   iterate_dir+0x1b6/0x630
+   ksmbd_vfs_empty_dir+0xa2/0x100
+   smb2_set_info+0x2ffa/0x45d0
 
-Fixes: 71a076f4a61a ("kcsan: Rewrite kcsan_prandom_u32_max() without prandom_u32_state()")
+Take fp->readdir_lock across the entire emptiness check. This places both
+iterators over that handle's filp in the same lock domain while
+preserving the disposition status handling. The exact code change
+completed a warning-free x86_64 KASAN bzImage build. Tracing three request
+pairs showed that the two iterate_dir() calls no longer overlapped and the
+expected statuses were preserved. A further 1,600 reproducer iterations
+completed with expected statuses and no KASAN report, Oops, or panic.
+
+The reproducer and complete guest configuration are available privately
+to maintainers on request.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Reviewed-by: Marco Elver <elver@google.com>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Yongjun Gwon <d3bugee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcsan/core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/kernel/kcsan/core.c
-+++ b/kernel/kcsan/core.c
-@@ -290,8 +290,9 @@ should_watch(struct kcsan_ctx *ctx, cons
- }
- 
- /*
-- * Returns a pseudo-random number in interval [0, ep_ro). Simple linear
-- * congruential generator, using constants from "Numerical Recipes".
-+ * Returns a pseudo-random number in interval [0, ep_ro), or 0 if ep_ro is 0,
-+ * which the runtime-tunable callers may pass. Simple linear congruential
-+ * generator, using constants from "Numerical Recipes".
-  */
- static u32 kcsan_prandom_u32_max(u32 ep_ro)
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8324,6 +8324,7 @@ static int set_file_disposition_info(str
+ 				     struct smb2_file_disposition_info *file_info)
  {
-@@ -300,7 +301,7 @@ static u32 kcsan_prandom_u32_max(u32 ep_
- 	state = 1664525 * state + 1013904223;
- 	this_cpu_write(kcsan_rand_state, state);
+ 	struct inode *inode;
++	int err;
  
--	return state % ep_ro;
-+	return reciprocal_scale(state, ep_ro);
- }
+ 	if (!(fp->daccess & FILE_DELETE_LE)) {
+ 		pr_err("no right to delete : 0x%x\n", fp->daccess);
+@@ -8338,9 +8339,13 @@ static int set_file_disposition_info(str
+ 		if (ksmbd_has_stream_without_delete_share(fp))
+ 			return -ESHARE;
  
- static inline void reset_kcsan_skip(void)
+-		if (S_ISDIR(inode->i_mode) && !ksmbd_stream_fd(fp) &&
+-		    ksmbd_vfs_empty_dir(fp) == -ENOTEMPTY)
+-			return -EBUSY;
++		if (S_ISDIR(inode->i_mode) && !ksmbd_stream_fd(fp)) {
++			mutex_lock(&fp->readdir_lock);
++			err = ksmbd_vfs_empty_dir(fp);
++			mutex_unlock(&fp->readdir_lock);
++			if (err == -ENOTEMPTY)
++				return -EBUSY;
++		}
+ 		smb_break_all_levII_oplock_for_delete(work, fp);
+ 		ksmbd_fd_set_delete_pending(fp);
+ 	} else {
 
 
