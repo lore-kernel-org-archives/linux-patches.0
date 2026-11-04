@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831437;
-	b=jmhyBjK/HXp2RiqHT+mNPgSWkAnbrORu0vqs4WASRu0JgnIGz8zS3Qx8UVkMX6ZMN7H4
-	 jcvuvcLqtY7R4dvLOpZWWqubSChWz83bURauMpKFZkgGS5l8IzybCvNRdd85yM45iVpgZ
-	 3vVmoDdZ0/MecJCqT6tJqHi0Y8EzyJeqEICeZR7e1OAM1aSA6t2im0UQPlUVUpay8i5Rs
-	 os0ZefXpKmuA8Jp77l1F5N+e8+LSgSPCJpjaYqydNbNQb6txstLDeBw9UGsUc6+b/Bcun
-	 i0x7Yfe87D78KRl7o/2x1TOkrFxuF8lM5rzI1JFvn3xAxNpGXBcaQKLhyicf9eFkAvQ==
+	t=1793831438;
+	b=q8n6vzEGbDLMvDUgtLuuRZr1zTktA65Zp/eTwMB0Q0DSxGCMzgrO4HcQ5lXMJ/u9ZK8W
+	 hHJ7LwLkM8b0NrVY5sFgVFekJGHgJrJTWA7J9QY4OHKZKDVqk5F3g+URa1HtWEDDYAi/f
+	 i9ul6aWnO8Y/p+xCJhFM3w5G9oaX1OOX39+gS6oImDrbCMwynoH1/maH1XAqLrXwBazDp
+	 ptGM2hAJHHw2f74T5B3l4aXun7IPPO2BWS2X/r8On9cqFe38aIENhjQbsRnZZh5c25gWe
+	 VnlkBXMel33ljXnzvmLHj2E+AyC2fRTG84DgEN8EU0tM/lM7X3sDoH+AihFimPGX8BA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831438;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nTypuvJESHejxbxSOTHRvvcsU9H4xbBpQ9jQeDTwAXE=;
-	b=5ULlzHqb+3yWMFNpDiL86QnU/udLC7GxiT3GRf2OhkA8+XHfj+62phFNiJArh6ncO8to
-	 prPtfrhE3rlzy8kVLsZN8hzjDJW1gX+GtfWnV59iOs4i+yLibT6euOfq6KV8ok2TnEj7p
-	 DoJ7+uKqCRn0lfPPIFKNbT9AC/3bHULzz1oRc67zW2GCLXTtdIqqsHwh24dWCVLga0YeJ
-	 kfJY/HBA4j54HOEptRxunJ7dgeCcI/oBnubXkQwyOvShz0vVi7Ol3SIfEpjURE2IgFtHb
-	 t9LfEd+TvxNqnVC+9GIFJPzyvVg0ctEGuQnWwD1nTqcUcKXS+e+xCGZXa2IJ37+T6nA==
+	bh=VLiX+sQyoKBSJV3Gcyf2ZToSFi65RDtHUhhPJ8S/S9U=;
+	b=1P9le8KsbAJYyVeE4JUBImI1ZMi3q5lXG+4nKS0dMP6VAp3xxwWY/pTW70G8K1XOscR9
+	 H2p6PViQNISemIyk72Jlznr/sJQ+P3VZ8oid6wwfTLL72maOOdT36Jc8n57xp+XsgC6vW
+	 AWHibOQwHwq96CGfc+TSwdPAy+xl4TYvnu3d57YpkrlzGH8UxkouyBaqs2gf4V3F0xtb7
+	 1L3xTUah2guUvBIl0MAIQLyQt17MAV3dOWaRgJDvuOtCROgQSym77ieP2r9GChFzjhDT+
+	 BqDyWCoAbc9+W5m/2/+7ZX5mweFdCEQ2utIeH2Ki6oF8Fz2yvGRBarBazKhguLZC60w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=og5uPJpK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yY6ISSz9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB154606B385;
-	Wed,  4 Nov 2026 22:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E357606AC00;
+	Wed,  4 Nov 2026 22:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=og5uPJpK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683B41F000C1;
-	Wed,  4 Nov 2026 22:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yY6ISSz9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C351F000C1;
+	Wed,  4 Nov 2026 22:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831436;
-	bh=nTypuvJESHejxbxSOTHRvvcsU9H4xbBpQ9jQeDTwAXE=;
+	s=korg; t=1793831438;
+	bh=VLiX+sQyoKBSJV3Gcyf2ZToSFi65RDtHUhhPJ8S/S9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=og5uPJpK6ohCrYgTNDolXTCqNov8qWbOI604EmjbNs0JAVzwajhxMIIj0NP6/ZmjP
-	 DjERnHAcUp6eYvFdEjOv0GH0cHDxWM3aMYjSy1Q6NANdblKH2dX3ZT9LUqyZhw4zlC
-	 EHqg4kivjXSXYe+LNjwc/yVGdCdSngOR/BFFu1y4=
+	b=yY6ISSz9c/8ds1XxFZuJCymGAsYIQusg1MRC9xGsBXgYj4pHq63Xzl5QuGgnU0CG3
+	 jxdiY4tBehEpmm0pTBF0cFnkgnP0KwfGCwTFU1r3aZKh22WtUrGpULf0QwqJuHj7vh
+	 nNOsNpt3Yq7hUrSP2Lb4+vF3VNxpxDIWe6sn7FEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 0674/1005] media: au0828: fix use-after-free in bulk_timeout timer on disconnect
-Date: Wed,  4 Nov 2026 16:06:47 -0500
-Message-ID: <20261104211102.521993943@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Gary Guo <gary@garyguo.net>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 0701/1005] rust: block: require `Sync` for `Operations::QueueData`
+Date: Wed,  4 Nov 2026 16:07:14 -0500
+Message-ID: <20261104211103.225403995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,46 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Andreas Hindborg <a.hindborg@kernel.org>
 
-commit 521030837bee352515d5ea57cc6a29581db3506e upstream.
+commit 67b7a2728e4873e64405c5564fe50f7123012b71 upstream.
 
-start_urb_transfer() arms dev->bulk_timeout, whose callback
-au0828_bulk_timeout() queues dev->restart_streaming; that work in turn
-calls start_urb_transfer() and re-arms the timer.
+The queue data installed in a `GenDisk` is stored in the request queue and
+handed back to the driver as a shared borrow through the `queue_rq` and
+`commit_rqs` callbacks. Both callbacks obtain that borrow via
+`ForeignOwnable::borrow` and may execute concurrently on several CPUs,
+since the block layer runs one hardware queue per CPU. That means a shared
+reference to the same queue data can be live on multiple threads at once,
+which is only sound when the referent is `Sync`.
 
-au0828_dvb_unregister() cancels restart_streaming on disconnect but does
-not sync bulk_timeout. au0828_usb_release() then frees dev with kfree(),
-so a timer still armed or pending at that point can fire after the free
-and dereference dev through timer_container_of().
+The initial `GenDisk` private data support omitted this bound, so a
+driver could install a non-`Sync` type as queue data and then access
+it concurrently from multiple CPUs without synchronization. Add a
+`Sync` bound to the `QueueData` associated type to rule that out.
 
-Sync the timer with timer_shutdown_sync() before cancel_work_sync().  The
-timer callback queues the work, so the timer must be stopped first; the
-shutdown variant is needed because the work re-arms the timer through
-start_urb_transfer().  The dvb->frontend == NULL early return guards the
-register-failure path where the timer was never set up.
-
-This bug was found by static analysis.
-
-Fixes: 53460c53b761 ("[media] au0828: Add timer to restart TS stream if no data arrives on bulk endpoint")
+Fixes: 90d952fac8ac ("rust: block: add `GenDisk` private data support")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://msgid.link/20260608-queue-data-sync-v1-1-0efff051aaf3@kernel.org
+Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
+Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-9-642a4c1aebd7@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/au0828/au0828-dvb.c |    1 +
- 1 file changed, 1 insertion(+)
+ rust/kernel/block/mq/operations.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/usb/au0828/au0828-dvb.c
-+++ b/drivers/media/usb/au0828/au0828-dvb.c
-@@ -537,6 +537,7 @@ void au0828_dvb_unregister(struct au0828
- 	if (dvb->frontend == NULL)
- 		return;
+--- a/rust/kernel/block/mq/operations.rs
++++ b/rust/kernel/block/mq/operations.rs
+@@ -30,7 +30,7 @@ type ForeignBorrowed<'a, T> = <T as Fore
+ pub trait Operations: Sized {
+     /// Data associated with the `struct request_queue` that is allocated for
+     /// the `GenDisk` associated with this `Operations` implementation.
+-    type QueueData: ForeignOwnable;
++    type QueueData: ForeignOwnable + Sync;
  
-+	timer_shutdown_sync(&dev->bulk_timeout);
- 	cancel_work_sync(&dev->restart_streaming);
- 
- 	dvb_net_release(&dvb->net);
+     /// Called by the kernel to queue a request with the driver. If `is_last` is
+     /// `false`, the driver is allowed to defer committing the request.
 
 
