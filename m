@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829540;
-	b=B4aGTc7hVIFrnN0E8Sd3ljyN1bNeHsAK14PvV4l8VSbKp93Sv7Ptx1CIN2+qp9Gqu1rD
-	 9hze6Z8xp5gMJb0cKhKoLPIXr4d+gNIrLZgqj63JDjB9CvD16gYNukaOgMqRBde+HWg01
-	 ECbszYh/H8Pi6ozaR7maqr21477OEb8RJ5U8up1KpQABNoxniZav6cqDCBJI9qaOhjjdt
-	 srJlbUdIiw3bSyPxzsNvu36IHci0otDfjv/By6VnB+cDCK/eFADPgMpVpfa+2A7Iry3jV
-	 lmYj7tastRGiMko3pRDpLlKHnOSBpBtVn8r3zmSoFyBuVWrFfA8oLfYizOegTXXe5hw==
+	t=1793829535;
+	b=WZayWcV/6PU+VK3T9zQTqXVsZhvQ73kwoxRUAO5C+TnJkmIQ7DWvcGjUxE31tEW69h+P
+	 KmCKy6zfG1957d+YYHkKPl47wuCX35is/Jm5zFtknEz/3LotAnU/J4xNZVBas+lVndwTY
+	 J+YvE0JZPfQanKhuGSL0giO0HvyD3Q/WIbAZGfePZpFRuT96Wk6h/GzmGUFcCxt0KGH1L
+	 LqQ2U4iKG52vrtb7brKY5uq3EO8m2kYvK08pyNfV94A7/VkoOjEqZdkwh0Iej3pgKjCJg
+	 z9RtKYjo5Cx3f1XeQxuMxiUZuBH6EP3N4DIjxiIOQVH8cI3jZzIkiKlQMHImXp0RHbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kUCMq/SJPQAkbiBIulU58vSO/EY+qUkQdYv0bHNUeIg=;
-	b=YPCm9/BZei3qRIjBB56azx8VxkScIzvUWcJ9br3BVtVAu5og4y4mO3ywyikKdSbcobWG
-	 T+fcDPx0J9YkAb337p+Ffd/ELoKkple4S4pbinCL5EchzbBPIOxzhhVlasaWSG4wyAAc8
-	 1YBgvk9zsWfP8oiE4p/Un3RU0RhesSgMUm8E+2tjr0AQqoO+d93ur1XbQnC/T5D4XF6QC
-	 PT/GH16+vQ1VNO7G1d4IcN4rjasCwul7sEohrx2Ers2SAggFjGX3BnyHX0x6/Rb0S3Dnp
-	 iBpulJSYj+9NHx79IWFIMPeW0YyQ9THJ4Tnk9pwfl8gwvizkrPpPZ7FpPfROEJtnGog==
+	bh=EXp9cNueZ99PjMaxUY7d9npQjQTQWJXjboc51Xj3V7k=;
+	b=kEriS5lv4xIHerEYoljp2wvyJwE16GnELllt4QxmtlPlux7yiNCHFUOhFh8QYIc8Ymjk
+	 FDKai2sgZqbA1g9/VI2mCmO1FHXIhZ3925hjVNoAcre3a0zlaN64hxwpCxixhBKBFcO1v
+	 d6oEJngBI1G5m1TABC2YGIz1PZwdtF9E/zLn7cZAgaUINd2UHVTnP3pCvqXB66U3+4sOB
+	 159QDEDFFCokwpaK/gnlJtaO6ccXfETEEStYaaO4wYFqGhyXCf7Qb6U/UKwN7O+9B01LK
+	 7Em+SwTORDvxvYnp9sX1zx78s7e/Fm20eaU5yyVdSZMyIJ19K4H4q/uE0RXffKYFHyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oZJCdOxQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cDzrD3Cc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A09060877DC;
-	Wed,  4 Nov 2026 21:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612B46074FA7;
+	Wed,  4 Nov 2026 21:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oZJCdOxQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B871F00A15;
-	Wed,  4 Nov 2026 21:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cDzrD3Cc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E998E1F00919;
+	Wed,  4 Nov 2026 21:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829539;
-	bh=kUCMq/SJPQAkbiBIulU58vSO/EY+qUkQdYv0bHNUeIg=;
+	s=korg; t=1793829535;
+	bh=EXp9cNueZ99PjMaxUY7d9npQjQTQWJXjboc51Xj3V7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oZJCdOxQTxLkFc3NLd/HfDglW+L5giT3/xC0W18kMBG/c/e/MqNjWN4TEN43fSzCH
-	 jpgHcgC1ysGMRyvlxv6pA1Z/XJabXAZsvM4PX5YZ/ov90peOgfFAVeL1FqaFlsIFkj
-	 p/6KWh0881TIo+bU83g6OKOf4dXBFEy8XkpNxd1c=
+	b=cDzrD3Cc5fpdaJXUIK6IP1YmnZn4ojNHXGf3pIhmAb4CLRX7y6gKsZV4Wq5qJS10S
+	 /oMzj7jfjVb9Rsmv4RbQi1qjmMXd86+FbkP3IU7nSt1Faoa31g9zMYq4twLUwtcKsb
+	 ljVZLUEHtnzTXINm4xltCfTCeFCMxj1uDh+TF+P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0191/1005] greybus: manifest: validate string descriptor header
-Date: Wed,  4 Nov 2026 15:58:44 -0500
-Message-ID: <20261104211049.146117731@linuxfoundation.org>
+Subject: [PATCH 6.18 0188/1005] misc: genwqe: handle a first DMA address of zero
+Date: Wed,  4 Nov 2026 15:58:41 -0500
+Message-ID: <20261104211049.054476244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,38 +67,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 18b6510f642dbcb856c3af8be974d1600f3ba2d3 ]
+[ Upstream commit d401772a9e18e837631450844f835229354528a4 ]
 
-identify_descriptor() computes a string descriptor size from
-desc->string.length.
+genwqe_setup_sgl() uses zero as the initial previous DMA address. DMA
+address zero is valid, so a first entry at that address enters the
+merge path before last_s has been assigned and dereferences NULL.
 
-Require the descriptor to contain the fixed string descriptor header
-before reading the variable string length. The existing descriptor-size
-check then reports the short descriptor.
+Only merge adjacent mappings after an SGL data entry has been created.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706091935.78020-1-pengpeng@iscas.ac.cn
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260630104923.53827-1-alhouseenyousef@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/greybus/manifest.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/misc/genwqe/card_utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/greybus/manifest.c b/drivers/greybus/manifest.c
-index dd7040697bde9..469da3f39afb4 100644
---- a/drivers/greybus/manifest.c
-+++ b/drivers/greybus/manifest.c
-@@ -122,6 +122,8 @@ static int identify_descriptor(struct gb_interface *intf,
- 	switch (desc_header->type) {
- 	case GREYBUS_TYPE_STRING:
- 		expected_size += sizeof(struct greybus_descriptor_string);
-+		if (desc_size < expected_size)
-+			break;
- 		expected_size += desc->string.length;
+diff --git a/drivers/misc/genwqe/card_utils.c b/drivers/misc/genwqe/card_utils.c
+index a2c4a9b4f871c..e3b5fb337182e 100644
+--- a/drivers/misc/genwqe/card_utils.c
++++ b/drivers/misc/genwqe/card_utils.c
+@@ -413,7 +413,7 @@ int genwqe_setup_sgl(struct genwqe_dev *cd, struct genwqe_sgl *sgl,
+ 			size -= size_to_map;
+ 			map_offs = 0;
  
- 		/* String descriptors are padded to 4 byte boundaries */
+-			if (prev_daddr == daddr) {
++			if (last_s && prev_daddr == daddr) {
+ 				u32 prev_len = be32_to_cpu(last_s->len);
+ 
+ 				/* pr_info("daddr combining: "
 -- 
 2.53.0
 
