@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831612;
-	b=EdlU+gRL9gFWQggLsxHGINrrOVxMpOWVHpE+xwaUiKnyiShl913cgRTNnqY2xyFpLMc3
-	 xxSre4MOUqT0jdaqziDx7p1FuL1dlT0wIirj37WcI2+Z/Y6VzEtpNl6td7Kh7CpUeg/Dz
-	 xp2uiRZYERUg2IN2jDuy/dbLMmT0Fda16VfnRJFGtDJq6G24A8T5Js0+2msUjlR1dSIHK
-	 Xs2hsmWnb6WgmsjScusx7nHkG9VReYf37thGHBITER+6NsLUZu9cDQkLtHW9BZURemG8N
-	 0tKouHcQAnGUVP7DkHZip8ynOL9sDHgTE3g+OZNq3gAtLOjR3Lzg1SA3fOcu1PqWMWQ==
+	t=1793831613;
+	b=dKnjIjr2prfMMRu547J1WcSCOrMwqFOswJwph8nw4ObDmikIGeAnrPoFBnTLly/b62kJ
+	 gytz1wPaQVOoxnQl0YHAmaATkMGE8PRCUgXoJ0Fx3BIk63T6Xkp679VIbLARWijnOUi8E
+	 fE5+1gxKgGKsZoe7SPDsFY16OsKPnm8bEOMXEFeB2wVdPi/aaksG3APoR+nPlI4RhLPr8
+	 dF4aK+ymHQ5ByQrkym7Gmio27PFWwlTq2ng/fGLVUfuO3mKA7JDwdgrkQVMGQzWjhmM+V
+	 A5RH/HIwMHZxprT6M4Cn0EDE4JxQW1qXOxu5V+qKOJLekKntrdfo/0wf23gyG7TAu9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JyLYRhPBKxPtItcEScmL4UAasy0gdZ3t62G2y054qPc=;
-	b=fP3JeF8BoiQD73wWmB6BeF4Q6BiBtB7g4KuTfOWeh9FicTrgSPjvBtPZDcPpBvclOcRQ
-	 +rNB5IPM1aNEulGd4Nu3JWkI0n797wQpD8+1HDRbzGwAoDjKW4OhqLtGF+omHxQ7MaW7m
-	 NV8BYlxLldaLCN1dswTNfBNOhdDcrDBoAkDkBSgxJzhms7KgRsFTK+M74fQmGhwX2cS9X
-	 2JE/KLqyTl08lS57hiXBNlrMPSHVkY7CQMTpN/aR449mjCqhwr0yY/LV7k+yCJZ2oxYgQ
-	 pc9+nKpjIDO9yg7H9gLDoNXI50A1aTe6f1kYLPKDqPklbcMl0hP3yWXpcksjS//C7zw==
+	bh=XxLyBOLOX76rtfGtST1r+nJXE2zV5G5KCx0tvuDOeVU=;
+	b=AvLkfuWnDNtxsbe7SSP/Bqbm/nvUIoALhmjeuU0LrBZeGvyD70A9Jqf2Xg40BpiF1lXh
+	 WjtvEO0gPS8/gMXpcHUvCLwQMA2i9uzKRB/gFOzFUFsOf2dQytoxMUQqDga1duz9FaryD
+	 Cdu5Ktk+rIEVA4zAhP6RFH2YZd/MPNOZsw/mh5DS3ISGVpgW3R89Snd+Fd8wSyRBoaXYf
+	 8Zm4ODnXV4y6ydhpmQDSboejIUEGTAMaV5AkKMKeiphcygNtCYyvZq2kyu0Yj20hMNl13
+	 gDdS6femBkhhwIsMMF8EepFLm0yQJ0zP9bHUHX3opEzLjh2YiX5hwDwMYc3LrEVtJCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="c1s8tgD/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yplz0jwo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B10606A326;
-	Wed,  4 Nov 2026 22:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D6D606A326;
+	Wed,  4 Nov 2026 22:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c1s8tgD/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA0A1F00919;
-	Wed,  4 Nov 2026 22:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yplz0jwo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28B31F00919;
+	Wed,  4 Nov 2026 22:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831611;
-	bh=JyLYRhPBKxPtItcEScmL4UAasy0gdZ3t62G2y054qPc=;
+	s=korg; t=1793831613;
+	bh=XxLyBOLOX76rtfGtST1r+nJXE2zV5G5KCx0tvuDOeVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c1s8tgD/q2woYb0xjAzYWyGC9UMS5+0Arn5EsMb7LU5/kJVci2pibzf68dRuKbt4m
-	 6xmWBH+jSfdxOVODQhlbV/91JdEnj3yb9zc0+RDLDrcT2TtmN+bnghDr7SjkVphwG6
-	 MqS+7d6og9/auQyURfhjFn0IpbCxq+aPGOY0jwIg=
+	b=yplz0jwoDbrNjzerplcVdIXy4/61/+q8rDm48PnohszFaj8d+KNjcTdohDBt6I0g5
+	 6CQe98ETZAXpdps5A9h4l7d9uctkHG/cgHKbRMdNFEt7Sq84lmwB4nfDVlk3ErQUke
+	 xD3d+6u/i1vo/YP+DrURhSxET4rrdVqdEKib5K5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Kuba Piecuch <jpiecuch@google.com>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Tong Liu <lyutoon@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0810/1005] sched_ext: Fix scx_flush_disable_work() UAF race
-Date: Wed,  4 Nov 2026 16:09:03 -0500
-Message-ID: <20261104211106.041103861@linuxfoundation.org>
+Subject: [PATCH 6.18 0811/1005] netfilter: disable payload mangling in userns
+Date: Wed,  4 Nov 2026 16:09:04 -0500
+Message-ID: <20261104211106.068654546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,75 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d99f7a32f09dccbe396187370ec1a74a31b73d7e ]
+[ Upstream commit 968cc2c96390f06e56ed6a43f935bfebdefed28f ]
 
-scx_flush_disable_work() calls irq_work_sync() followed by
-kthread_flush_work() to ensure that the disable kthread work has
-fully completed before bpf_scx_unreg() frees the SCX scheduler.
+Several parts of network stack rely on iph->ihl validation
+done by network stack before PRE_ROUTING.
 
-However, a concurrent scx_vexit() (e.g., triggered by a watchdog stall)
-creates a race window between scx_claim_exit() and irq_work_queue():
+Disable this feature for user namespaces for now.
 
-  CPU A (scx_vexit (watchdog))        CPU B (bpf_scx_unreg)
-  ----                                ----
-  scx_claim_exit()
-    atomic_try_cmpxchg(NONE->kind)
-  stack_trace_save()
-  vscnprintf()
-                                      scx_disable()
-                                        scx_claim_exit() -> FAIL
-                                      scx_flush_disable_work()
-                                        irq_work_sync()      // no-op: not queued yet
-                                        kthread_flush_work() // no-op: not queued yet
-                                      kobject_put(&sch->kobj) -> free %sch
-  irq_work_queue() -> UAF on %sch
-  scx_disable_irq_workfn()
-    kthread_queue_work() -> UAF
+tcp option handling is likely safe even for LOCAL_IN, so this
+this leaves tcp option mangling via nft_exthdr.c as-is.
 
-The root cause is that CPU B's scx_flush_disable_work() returns after
-syncing an irq_work that has not yet been queued, while CPU A is still
-executing the code between scx_claim_exit() and irq_work_queue().
+I don't think these are the only means to alter packets, but these
+appear to be relatively prominent.
 
-Loop until exit_kind reaches SCX_EXIT_DONE or SCX_EXIT_NONE, draining
-disable_irq_work and disable_work in each pass. This ensures that any
-work queued after the previous check is caught, while also correctly
-handling cases where no disable was triggered (e.g., the
-scx_sub_enable_workfn() abort path).
+This could be relaxed later.  Example:
+ - allow userns for ingress hook.
+ - allow userns if base is transport header.
 
-Fixes: 510a27055446 ("sched_ext: sync disable_irq_work in bpf_scx_unreg()")
-Reported-by: https://sashiko.dev/#/patchset/20260424100221.32407-1-icheng%40nvidia.com
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ Sync error_irq_work instead of disable_irq_work. ]
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+ Also, we should revalidate or restrict generally:
+ - Don't allow linklayer writes to spill into network header
+ - restrict ipv4 and ipv6 to 'known safe' writes, e.g.
+   saddr/daddr/check/tos
+
+Reported-by: Qi Tang <tpluszz77@gmail.com>
+Reported-by: Tong Liu <lyutoon@gmail.com>
+Tested-by: Qi Tang <tpluszz77@gmail.com>
+Link: https://lore.kernel.org/netfilter-devel/20260515100411.3141-1-fw@strlen.de/
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/netfilter/nfnetlink_queue.c | 6 ++++--
+ net/netfilter/nft_payload.c     | 3 +++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index d2460a88fba35..78f15ddc0aa5a 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4217,8 +4217,13 @@ static void scx_disable(struct scx_sched *sch, enum scx_exit_kind kind)
-  */
- static void scx_flush_disable_work(struct scx_sched *sch)
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index cf545ed26161a..463abfb3fb54e 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -1190,6 +1190,9 @@ nfqnl_mangle(void *data, unsigned int data_len, struct nf_queue_entry *e, int di
  {
--	irq_work_sync(&sch->error_irq_work);
--	kthread_flush_work(&sch->disable_work);
-+	int kind;
-+
-+	do {
-+		irq_work_sync(&sch->error_irq_work);
-+		kthread_flush_work(&sch->disable_work);
-+		kind = atomic_read(&sch->exit_kind);
-+	} while (kind != SCX_EXIT_NONE && kind != SCX_EXIT_DONE);
- }
+ 	struct sk_buff *nskb;
  
- static void dump_newline(struct seq_buf *s)
++	if (e->state.net->user_ns != &init_user_ns)
++		return -EPERM;
++
+ 	if (diff < 0) {
+ 		unsigned int min_len = skb_transport_offset(e->skb);
+ 
+@@ -1592,8 +1595,7 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (nfqnl_mangle(nla_data(nfqa[NFQA_PAYLOAD]),
+ 				 payload_len, entry, diff) < 0)
+ 			verdict = NF_DROP;
+-
+-		if (ct && diff)
++		else if (ct && diff)
+ 			nfnl_ct->seq_adjust(entry->skb, ct, ctinfo, diff);
+ 	}
+ 
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index e07888aaf1475..4034d61e2a135 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -917,6 +917,9 @@ static int nft_payload_set_init(const struct nft_ctx *ctx,
+ 	struct nft_payload_set *priv = nft_expr_priv(expr);
+ 	int err;
+ 
++	if (ctx->net->user_ns != &init_user_ns)
++		return -EPERM;
++
+ 	priv->base        = ntohl(nla_get_be32(tb[NFTA_PAYLOAD_BASE]));
+ 	priv->len         = ntohl(nla_get_be32(tb[NFTA_PAYLOAD_LEN]));
+ 
 -- 
 2.53.0
 
