@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831374;
-	b=p2HTt4b2ZhNUxbDNFKGFkF19U7qxNvmJrHp2LX6vQZsSJNmDCh/k1YDMYkxxj6z38eXx
-	 mtXHTOghQXXM3tj0cooKh8Oa27sKMJ3Tx1ljBs1OzertzopoTsb73fHB+oOJk1McwxmJ9
-	 gWJ97SCpTcLHKbuM+Pk+zGhxW7AQVy1Lj2v0QndmLmu/VlMYgcxDNmLK6rTASygNFQ/28
-	 jgcOrViMe0uRIFHVM8Vuzi0SCbbn8TU4bUWekK7bfo44AaaN6FaRPO3Ey0xErz9cz/g24
-	 7gAFVlnUgk1Owdwym+U0aYHL8JytjeFcfXm1kCjqQHqfN9DZujgXRNbuK28QhLot9aQ==
+	t=1793831375;
+	b=2UPL8DdLbZRouoLtDswEavEkQ0cVK9vmEtXo6EtD3q3GjMiqgeDRd64dDcHY7g0uEd3N
+	 1tRm9DcIYc/sK7095AH4r5Naw1Sew+XN4H88gpWmbuZpM/sCg5FAhMC++ka0bYwCDaofl
+	 6aMEO6tpvo6KX9RUv2eIoEBBRO0xSIS39Nuj7L03fNuAICnRUGw3V5a3hTDsuM424mmXb
+	 V4Yj7XGzSJGUY/zrfo+ZTa8opJKJs1hrPIch8tqu9vuwYTv81VaVpnRXYJyOGdnpU5+KL
+	 kZ75j+QejLsKWSKA5iHvd7I96OwiqoVrkQpINktURkq+QLXcdI2AEQpw/QWlk46/IaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831374;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rI5VayzvB8FbpIIUxTWH+yHzjcjyZs6rRH+mfnihxm0=;
-	b=eB8fsQ09Q0Q1vCeIIRajlt3yfWtNyiA/A5MSfTZGa5nqiaC5EzvGLwaKzdPupIujcONE
-	 Dkd5OgecmoR4S2CcHsV4WlRR0AFqsTLoAU+UpB6yaJbky2CUDm2k8p2lIN6jvEh49nywt
-	 1OiSg0ychJt0ybEgY8mCr9Z1YfhfkpIUXDe8o+rcCwHL/CXpJUK2qe5jXPXSncRU09fGM
-	 EHSKI4EaGfob1jmsXZDfbNjJLh4Y1QtmfE5XsR8USeWNdmZsipx2UC8UAy+1HO8A6g07n
-	 zzSn9xyX8MQsoH+AOWVeafqHTDOvvUjZ5bruOUbG1s1XYFCuKa2cf+qFh4Zt2rvvaZg==
+	bh=gYmle7aS2t1xk0848mDhicu4RHtjxI4haqd96du4XZY=;
+	b=lvNuR50hWPC2GyGXlae1zYx35H7N1+9wmoxWXhQWbG0eT4TBqCqdZcFZacP0091k4CZ3
+	 PLXJGsBAlZmlU6KpyKWeMXLHQzjzkCFxfm3F+frSgygdjNjk9ydcl2HO50xtU6Q7qYgVY
+	 c1s15taKUR87CGz8ybKlCtyVlOfNMWcyfiE43qr4Yia+FAmKUrgSuv3q39gKSwmaDDmhV
+	 fyCLw0R/E78I9QK27eYk1nnopvX9+aFXZ8jmzijW659VofqF74V/CYalX4h/HNCecAlDt
+	 0TT2CwWaV30Ts+hWljlS+BQLq4FlabahUzQ840j7pR9f8w92TN1MDnMl5TcD/aY5Hag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5ZF2D4c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hCMKmXJS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F2D606E816;
-	Wed,  4 Nov 2026 22:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7774A606A337;
+	Wed,  4 Nov 2026 22:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5ZF2D4c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A371F000C1;
-	Wed,  4 Nov 2026 22:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hCMKmXJS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115391F000C1;
+	Wed,  4 Nov 2026 22:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831373;
-	bh=rI5VayzvB8FbpIIUxTWH+yHzjcjyZs6rRH+mfnihxm0=;
+	s=korg; t=1793831375;
+	bh=gYmle7aS2t1xk0848mDhicu4RHtjxI4haqd96du4XZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O5ZF2D4cI3PMkMZa6hhJYOQFZUx5aKW0CB3zu3c15pjs5VkZp6NHU5Tjkcfz0DxBP
-	 dcB44twZcH//c1E7CdC76eEmffRhfcJwAiwMdxoRupaBzDJyoShX45Bg8ssDHzL4d6
-	 yvEaoNg3xMSwUql+n3cl82yxgjX8lx4L2WJMDV7k=
+	b=hCMKmXJS0H8PV6FtbI+/y15Xy8OHpUT6ginMVk5Dqc+Fvruf/K9oRaEB6MiP/7ewZ
+	 WwFDwtfyr6JA+YBBndrlnRiW8msGb7umcdf8VcMAFZ50QZcARCkkrND5zaTCR88K7p
+	 OncLuAjHsKEfACKffiI750tVZmxyG6viQwagJQjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 0665/1005] smb: client: fix use-after-free in cifs_ses_add_channel()
-Date: Wed,  4 Nov 2026 16:06:38 -0500
-Message-ID: <20261104211102.293301310@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.18 0666/1005] RDMA/irdma: avoid use-after-free in icrdma_remove
+Date: Wed,  4 Nov 2026 16:06:39 -0500
+Message-ID: <20261104211102.318041315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,64 +67,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 031278577380e7875d95aed81a2b2bcac39be923 upstream.
+commit 8a8088b899e4cdfe558428cd6113d45df81625be upstream.
 
-The error path of cifs_ses_add_channel() calls cifs_put_tcp_session()
-before cifs_chan_clear_need_reconnect().  The latter reaches
-cifs_ses_get_chan_index(), which dereferences server->terminate; if
-the put was the final reference, TCP_Server_Info is already freed and
-this is a use-after-free.  Same put-then-use pattern as the recently
-fixed sibling in commit 717e0a25036b ("cifs: Fix server use-after-free
-in cifs_chan_skip_or_disable()").
+icrdma_remove() dereferences iwdev after calling
+irdma_ib_unregister_device():
 
-Move the put last, but do not read chan->server after dropping
-chan_lock: chan points into ses->chans[], and once chan_count is
-decremented a concurrent add_channel can reuse the slot and overwrite
-the pointer, so the put would act on the new channel's server.  Cache
-the pointer under chan_lock, clear the reconnect bit and decrement
-chan_count while still holding the reference, and release it after
-the unlock.
+  irdma_ib_unregister_device(iwdev)
+    -> ib_unregister_device(&iwdev->ibdev)
+      -> __ib_unregister_device()
+        -> ib_dealloc_device()
 
-This issue was discovered by Tencent CodeBuddy Security.
+irdma registers irdma_ib_dealloc_device() as the dealloc_driver
+callback in its ib_device_ops. The RDMA core explicitly documents
+ib_unregister_device() that when ops.dealloc_driver is used, ib_dev
+will be freed upon return from the function.
 
-Fixes: ee1d21794e55a ("cifs: handle when server stops supporting multichannel")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+The ib_device is embedded in struct irdma_device and iwdev itself was
+allocated by ib_alloc_device(irdma_device, ibdev). Consequently, once
+irdma_ib_unregister_device() returns, iwdev must no longer be
+dereferenced.
+
+However, icrdma_remove() currently accesses iwdev->rf afterwards when
+deinitializing interrupts, destroying ah_tbl_lock, and freeing rf.
+Although the final ib_device storage is released with kfree_rcu(), the
+object lifetime has already ended and callers must not rely on the RCU
+grace period to continue dereferencing iwdev.
+
+Save iwdev->rf before unregistering the RDMA device and use the saved
+pointer for the remaining cleanup.
+
+This issue was found by manual code inspection.
+
+Fixes: 8498a30e1b94 ("RDMA/irdma: Register auxiliary driver and implement private channel OPs")
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260914122840.1709743-1-lgs201920130244@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/sess.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/irdma/icrdma_if.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -621,12 +621,13 @@ cifs_ses_add_channel(struct cifs_ses *se
+--- a/drivers/infiniband/hw/irdma/icrdma_if.c
++++ b/drivers/infiniband/hw/irdma/icrdma_if.c
+@@ -319,14 +319,15 @@ static void icrdma_remove(struct auxilia
+ 		container_of(aux_dev, struct iidc_rdma_core_auxiliary_dev, adev);
+ 	struct iidc_rdma_core_dev_info *cdev_info = idc_adev->cdev_info;
+ 	struct irdma_device *iwdev = auxiliary_get_drvdata(aux_dev);
+-	u8 rdma_ver = iwdev->rf->rdma_ver;
++	struct irdma_pci_f *rf = iwdev->rf;
++	u8 rdma_ver = rf->rdma_ver;
  
- out:
- 	if (rc && chan->server) {
--		cifs_put_tcp_session(chan->server, 0);
-+		struct TCP_Server_Info *pserver;
+ 	ice_rdma_update_vsi_filter(cdev_info, iwdev->vsi_num, false);
+ 	irdma_ib_unregister_device(iwdev);
+-	icrdma_deinit_interrupts(iwdev->rf, cdev_info);
+-	mutex_destroy(&iwdev->rf->ah_tbl_lock);
++	icrdma_deinit_interrupts(rf, cdev_info);
++	mutex_destroy(&rf->ah_tbl_lock);
  
- 		spin_lock(&ses->chan_lock);
-+		pserver = chan->server;
+-	kfree(iwdev->rf);
++	kfree(rf);
  
- 		/* we rely on all bits beyond chan_count to be clear */
--		cifs_chan_clear_need_reconnect(ses, chan->server);
-+		cifs_chan_clear_need_reconnect(ses, pserver);
- 		ses->chan_count--;
- 		/*
- 		 * chan_count should never reach 0 as at least the primary
-@@ -634,6 +635,7 @@ out:
- 		 */
- 		WARN_ON(ses->chan_count < 1);
- 		spin_unlock(&ses->chan_lock);
-+		cifs_put_tcp_session(pserver, 0);
- 	}
- 
- 	kfree(ctx->UNC);
+ 	pr_debug("INIT: Gen[%d] func[%d] device remove success\n",
+ 		 rdma_ver, PCI_FUNC(cdev_info->pdev->devfn));
 
 
