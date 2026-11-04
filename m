@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831041;
-	b=4TQJpJXSak5d31wrZ9IBFEbNzH1kAWlsV4waWv21XGtJWpt2OX8w+xJyJtjtYl/7H+/A
-	 Kfpm402Ug6tf72DsIufW0VmPU9di9IvNderj7n+OXVKNG9ClE17fuzqm5Lr8V8LxJUx/L
-	 xU6IN2teiZ5/ZQpNAVA5346fUZnoun5XOsWsFHC0gXAYxTy8GYmCNCE8dyrV9tvkF/rrm
-	 2TnT66xtgXO4DBnQZcl6yjxArf6I1LkPsf7O8hMgBTta4+cp7nuD7wJp8mnzY9XDOsaPT
-	 GnWB0WcCvtiBodE7mTthfKfy1jiNHkbMbudbjSsxzr+5AHTOjT7Uprpg1qDJeupLMiA==
+	t=1793831042;
+	b=S7jeGOq90najkBXw+fa1zqdmsStZbd8L58ClhC2+m6jI0PTTcVWrVU/paIGbRKPGrUCO
+	 +5VwsKAPfKnOK5e6G1SyfdbWxtQTn/KEGhjpB3GFURqHBCTy/IPsUqCrLbApWHhRwnk+s
+	 JtD8gnEC0BgyfwKOe6tJbXekbCcCz0aLWdvMGyT28yUEcdZI6oFeDUcsnMX42POwJj0Wn
+	 XZ8EZOA+9FfQltbZ5FIf2AdXSB1kuLGqXW/RCaxPS/LrTylsKlZsCcs3tHesUz1OgeCeI
+	 cz6GCUslqULm5w7jY+yR85ErhqaqaHDwea8SJR2ruDoIeK/Y5KvRTp3zT5+44nkFYJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831041;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tRSo0rRKj2DhbIPR8FDltW00c3hlI3o+ffJ8ALdMl3c=;
-	b=xgHSTYnl+a/ea+BDC5I59XGU20cu48+eYbZSxbkBD9JVh0OFphD6IRRfoa+71InR7s7D
-	 IpbKzNJPtWouGr2FdS9D8TkarWIyCqcS7TBf7/OLjeKKV+UhIUN+2zjvunSZsS+dy1xAI
-	 QUqpcL6DRZES5mN0dkp/giOEN1oT+VMunDqD+KANfE5G1X1rwMPMLM9S+wDYn5yfJo9Ht
-	 IXEMGlYXOryMjFxsA+fxKxhx7ePC2RMad//IAEgRMzhIDY11G72h8iypWJwBy+vXw92FA
-	 pfexF+q9GLGZyDeKTnbMHrJeIlvBLFaeKaRpxmTVO89f+R4vDAqF7c7mphgUz6jJbRg==
+	bh=4+Dr5C2NRh/AgyPfc5nP8rxY5oyeJIxLACB8sUAStOg=;
+	b=5KNJIOf7mkddDg+O8FuaXY0VnYuQF8xWMWhKZ53Cdn+rui6pJSP0flJsUvJFeKvOYqgW
+	 w6YZ/+LcjwvjH3ZgVFkyr7x/C6tXb0n/fAoAzmtAJG3EwcWsxH/08c//cpcpKdRnIk61n
+	 fDa6eT0fnYp/d2TKIMy7+CW7AFg9OPJ1Xv0JSbVfiuKjbbGPHFFi/zHzEDCqm7EUZf5+7
+	 4dZtKu6/DUeb49OwpHch7o7uIEDNs62YIyxjCiz0oYtbJVIflTj4AMosloa+EiuraEdie
+	 LF3wJKcz2pxwx3RlSTDvi6Muw9besB53ozDxPzzkGS2cem/v9yqlUaJYm/QTFJ6HhzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fxn3Z60a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stEC4haE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EC6606A843;
-	Wed,  4 Nov 2026 22:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBA7606A864;
+	Wed,  4 Nov 2026 22:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fxn3Z60a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783FF1F000C1;
-	Wed,  4 Nov 2026 22:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stEC4haE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D091F00919;
+	Wed,  4 Nov 2026 22:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831040;
-	bh=tRSo0rRKj2DhbIPR8FDltW00c3hlI3o+ffJ8ALdMl3c=;
+	s=korg; t=1793831042;
+	bh=4+Dr5C2NRh/AgyPfc5nP8rxY5oyeJIxLACB8sUAStOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fxn3Z60aOpmYWVZ3Di/lR4a3BfmhbborxqL/ljRwhRa0kq7ZGcfT/k4KN7X/RL/Tr
-	 A3ciEygnprRhYpwwCfjwk8UIPrcc+C2TdvbTryGb1VN6Uwoazjs/48ZF8kGav+HmmJ
-	 4saSnrlBatz4+LzMWPRcbpY6mMxH/X05bdgMhIhg=
+	b=stEC4haENrjLEHZC+f9ja6G/UsbFDVF7sRLjHOfcV+uJGx6nijjAxx9tmliTUjRy0
+	 5gEkaYLl/VudowPfZdq3DlPoCBsa4UlNVLOMB2S/rAv1ZrgehG9gtPbFvaihQBkJkq
+	 twCsSkWfaS83JljiEib6qEPcYy86LJpuRvz82S1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Youth Cao <cocoh2os08@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0475/1005] regmap: irq: Free the irqdomain we create
-Date: Wed,  4 Nov 2026 16:03:28 -0500
-Message-ID: <20261104211057.305926684@linuxfoundation.org>
+Subject: [PATCH 6.18 0476/1005] HID: i2c-hid: Add i2c-hid-quirk-bad-input-size quirk for 0911:5288 device
+Date: Wed,  4 Nov 2026 16:03:29 -0500
+Message-ID: <20261104211057.331819575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,41 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Youth Cao <cocoh2os08@gmail.com>
 
-[ Upstream commit 2e42cade8ff1ff579e77976d9869db4df1feaf74 ]
+[ Upstream commit 58d97b45f3f43af0afd9c74e8480d22d36fd3f72 ]
 
-When domain support was added to regmap-irq it was not possible to
-remove domains, this was added later by 8ee99ada293b (irqdomain: Support
-removal of IRQ domains.).  We did update the main removal path to free
-the domain but forgot the error unwinding case during creation that is
-now in regmap_add_irq_chip_fwnode() after some code motion, meaning that
-errors during instantiation result in an unused irqchip being left
-hanging around.  Add the missing irq_remove_domain() call where the
-comment says it should be.
+I have recently acquired a cheap Apollo Lake-based laptop that uses a
+Hynitron CST128-A touchpad controller. While booting from a Debian LiveCD,
+the kernel log is flooded with the following error (though the touchpad
+works well):
 
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Reported-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260901-regmap-irq-deallocate-domain-v1-1-4bfed4aff559@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  i2c_hid_acpi i2c-ALPS0001:00: i2c_hid_get_input: incomplete report (27/42405)
+
+The CST128-A was identified via ACPI as ALPS0001:00, and the I2C HID
+device ID (0911:5288) was shared with the Hantick 5288.
+
+Add the I2C_HID_QUIRK_BAD_INPUT_SIZE quirk option to the existing Hantick
+5288 quirk entry to suppress the kernel log flood.
+
+Signed-off-by: Youth Cao <cocoh2os08@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-irq.c | 2 +-
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
-index 6112d942499be..8c297156ea402 100644
---- a/drivers/base/regmap/regmap-irq.c
-+++ b/drivers/base/regmap/regmap-irq.c
-@@ -941,7 +941,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 	return 0;
- 
- err_domain:
--	/* Should really dispose of the domain but... */
-+	irq_domain_remove(d->domain);
- err_mutex:
- 	mutex_destroy(&d->lock);
- 	lockdep_unregister_key(&d->lock_key);
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 29c4f624f3c5c..e5a4c7deba502 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -123,7 +123,7 @@ static const struct i2c_hid_quirks {
+ 	__u32 quirks;
+ } i2c_hid_quirks[] = {
+ 	{ I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288,
+-		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
++		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET | I2C_HID_QUIRK_BAD_INPUT_SIZE },
+ 	{ I2C_VENDOR_ID_ITE, I2C_DEVICE_ID_ITE_VOYO_WINPAD_A15,
+ 		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
+ 	{ I2C_VENDOR_ID_RAYDIUM, I2C_PRODUCT_ID_RAYDIUM_3118,
 -- 
 2.53.0
 
