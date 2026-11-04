@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831945;
-	b=cBL1PnKKSoPlCRWGGVZJi+g9cD4gRuYcBTNxJB+a6738l5yoyzxrtkAxGDSSmtMB++wb
-	 xbwIGUZD6E4co4pGp4WQ9lQnpxKupkPBp1t1YDwFYahsYDVVaVuSOZZ23nEJM8VYUtrcR
-	 p11n5Cp9HY2XfLUyEE0pLQbQt7ob7Yfow74cdU2o0soq/4IQ+oIn0przbGjnAM4n0GD3X
-	 oqpGfLIVp3tzqcNbfb8wk/albRAbFGvE580vuwbpppbf2TtvHaXz3Mt7rI94f12gEFs3j
-	 wZm1Oduh3QdI6LS4rYANCMNi6XQDcuFX8z0OwYv2oYRrgaC1L31MeOxYI6V8ZqyQJdA==
+	t=1793831947;
+	b=YhCs0Z/ZWD6P2u8SPnc/3NdMwdEgm3v38zR0Sl0mIe9692plBJeekkjkvcJH0qlIR+fH
+	 zo74sJEhURUVaUH4OHSAOVQJvl0exvXPDGA3yJAyG53jc0cz6yxhhzdOi5A+NFTIUwvD+
+	 bCrJvhSz/j0bVxb1GMGFd/a8Zx2m6pKmnxFP66QUcDbKH/rnuoMl0XdMUlgjrP58+6RdR
+	 3MweL3TMw45tvqAOfcB2Cvh2r9s1Qkw/eM13kLaJF9bPqTsMNyYIaDlpiBZH6DxexMIRW
+	 jgiRdzjTDIMf/g8YNNNQJjmxgxaevfl+eesvxpIfYoeRSaxDLPupBNgGuGIFh+yV2+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831947;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uWO2r3F28oD1Ygoub2GqJv+lDrDzwSb0Lin1kGIiJbE=;
-	b=lRNBWWCYM1LgSfygUMuNEEPzpeorUTn6rrYPZZ/uybPi2GymlVzj32E3Gm0SPpYnVw3N
-	 FdspiqooTXI9qj3OwaBwEsIESeHr1fz0jZV7eujehCD+mbkxuIDFXPnhTWhVWWjQFUW/s
-	 AXUPmKmSudOR+GPILtkJkl221uSm4F6KCViMuKm1rCV0z0lQYTsvaTnjwI1hcWOd7TUhz
-	 ZCHKCJFBxXpJczsqTQ83EgKZDzrt9kgnZQuqva6w6cI6NbKYfZNdOm0WVnG755mmWIGfn
-	 92eIqLIx4vifkCYXNg7myKKthcchJ6QSzmR6bF3cLLSNI6a3M2aGGUH916/3lAncPCg==
+	bh=KfNKa79znQ4PymwOhmCfa4nIs0CYHTlrFcc/UixLxrY=;
+	b=ktPwBnsa2m83tL7UYPKtZHWkaQEm8jSn5yUseL5gQGDIDHxjN9QZRwHp9GT1m1i46aDj
+	 Rub9oxn/iaT68v88CvWFH84h4dlhf/0bjYWGr+aHfaNVOVNzTCOyCqGcHuFwJi11YmXi0
+	 DGS652RPWel6MRpFZ1lI/PUGaKPM0niI0ts2tiNEE1mcXforpkdUBOTo+ERotjvp7Vgfr
+	 caLB1XD+LqMPfk0835hAGWUM/uabfGT/6geldkHDQcg9VLibcvZreFVyMZGdC/VR/f4sL
+	 UTgC42NWQFxKItbtFStrHyUmS35DtX9Fzz51ytC0qrUTZhm6DBMDwY12W6FmEJCG5mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bUuMlqTe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2jeYu9Qa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48505606A335;
-	Wed,  4 Nov 2026 22:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2B1606A85B;
+	Wed,  4 Nov 2026 22:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bUuMlqTe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BE21F00919;
-	Wed,  4 Nov 2026 22:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2jeYu9Qa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FF31F00919;
+	Wed,  4 Nov 2026 22:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831945;
-	bh=uWO2r3F28oD1Ygoub2GqJv+lDrDzwSb0Lin1kGIiJbE=;
+	s=korg; t=1793831946;
+	bh=KfNKa79znQ4PymwOhmCfa4nIs0CYHTlrFcc/UixLxrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bUuMlqTewzQC3iPqplDxWwAuN2nyIB37zGa65yRSODPNd990yTWsGOr+1vAW1cSt8
-	 BQeTfJ7hBuwFhYncrPE5Y8zVfLfDq2JOEsZFHwNtDZX1g5FFAtp85cyGROdw6cFIv+
-	 b2wLy01rOLvwhnXNLkkKx6kOmYv8Gaa1t0WgWHeo=
+	b=2jeYu9QalZrQG/UXZA85F/WfQhZ7+FBoKI6fOzAsdh3s9XfpFQmpXXX+CWf9/y2bM
+	 13mWvEDnfJPPJTrCPizY6K4BNWacFBhC4Y6O+cDU/EH8wYDOPVd7NT/Kylsiq1YSV2
+	 Ap0Hn8Du6Iu1ZiWV2hSk2kU12dJmPuSstB/ZDrMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Gauche <scott-dev@scottgauche.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 1005/1005] ALSA: hda/realtek: Fix audio after Windows reboot on ASUS Q423SA
-Date: Wed,  4 Nov 2026 16:12:18 -0500
-Message-ID: <20261104211111.168806158@linuxfoundation.org>
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0983/1005] smb: client: fix early procfs exposure race
+Date: Wed,  4 Nov 2026 16:11:56 -0500
+Message-ID: <20261104211110.580124112@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,77 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Gauche <scott-dev@scottgauche.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 8acd6469f42784f38872ad83b14c41152d986b63 upstream.
+[ Upstream commit 7b1afb631395c958993cda4631002258ef4151ea ]
 
-The ASUS Vivobook S 14 Q423SA-U5512 (DMI family S5406SA) with the
-ALC294 codec has working analog audio when booted directly after a full
-shutdown. After a warm reboot from Windows 11, audio works briefly during
-Linux startup, then both the internal speakers and headphones become
-silent. PCM playback continues without errors.
+Currently, init_cifs() calls cifs_proc_init() near the beginning of
+the function, before INIT_LIST_HEAD, leading to a momentarily
+uninitialized, but exposed, procfs. If a userspace process reads this
+empty procfs, iterating over a zeroed list_head leads to a NULL
+pointer dereference and a kernel oops/panic.
 
-Coefficient 0x1b is 0x4e4b on a direct cold boot, but 0x4a4b after the
-Windows warm reboot. Restoring bit 10 changes it back to 0x4e4b and
-immediately enables both analog outputs. Speaker playback, headphone
-playback, jack switching, cold boot, and suspend/resume were tested
-successfully. The same 0x4a4b state and immediate recovery with 0x4e4b
-were independently confirmed on another S5406SA with subsystem 1043:10c4.
+For example, if a delay is added between cifs_proc_init() and
+INIT_LIST_HEAD, and a userspace process is polling
+/proc/fs/cifs/DebugData, the following oops occurs:
 
-The same coefficient write is already used by
-ALC294_FIXUP_ASUS_COEF_1B for the ASUS UX431DA. That fixup cannot be
-reused here because it chains to ALC289_FIXUP_ASUS_GA401 and applies
-unrelated DAC routing and microphone pin configuration.
+BUG: kernel NULL pointer dereference, address: 0000000000000608
+Oops: Oops: 0000 [#1] SMP PTI
+CPU: 0 UID: 0 PID: 3477 Comm: cat Not tainted
+7.3.0-02212-g4df4d2a577db-dirty #6 PREEMPT(lazy)
+RIP: 0010:cifs_debug_data_proc_show+0x103/0xd80 [cifs]
+Call Trace:
+<TASK>
+ ? seq_read_iter+0x86/0x400
+ ? seq_read_iter+0x86/0x400
+ seq_read_iter+0x183/0x400
+ proc_reg_read_iter+0x62/0x90
+ copy_splice_read+0x215/0x310
+ splice_file_to_pipe+0xec/0x1c0
+ do_splice+0x4b8/0x780
+ __se_sys_splice+0x18f/0x250
+ do_syscall_64+0x109/0x330
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+</TASK>
 
-Add a model-specific fixup for subsystem 1043:10c4 and chain it to the
-existing ALC2XX_FIXUP_HEADSET_MIC fixup instead.
+Fix this by moving cifs_proc_init() down in init_cifs(), ensuring it runs
+only after all internal lists, locks, counters, and workqueues are fully
+ready, but before registering the filesystem. Update the error cleanup
+ladder and exit_cifs() to maintain proper LIFO order.
 
-Link: https://github.com/thesofproject/sof/issues/11051
-Fixes: f2d08f3651fb ("ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA")
-Signed-off-by: Scott Gauche <scott-dev@scottgauche.com>
-Link: https://patch.msgid.link/20261005154017.1164657-1-scott-dev@scottgauche.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Adjusted init_cifs() context because smb1_init_maperror() and smb2_init_maperror() are absent. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ fs/smb/client/cifsfs.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3842,6 +3842,7 @@ enum {
- 	ALC294_FIXUP_ASUS_I2C_HEADSET_MIC,
- 	ALC294_FIXUP_ASUS_SPI_HEADSET_MIC,
- 	ALC294_FIXUP_ASUS_SPK,
-+	ALC294_FIXUP_ASUS_Q423SA,
- 	ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
- 	ALC285_FIXUP_LENOVO_PC_BEEP_IN_NOISE,
- 	ALC255_FIXUP_ACER_HEADSET_MIC,
-@@ -5263,6 +5264,17 @@ static const struct hda_fixup alc269_fix
- 		.chained = true,
- 		.chain_id = ALC294_FIXUP_ASUS_HEADSET_MIC
- 	},
-+	[ALC294_FIXUP_ASUS_Q423SA] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			/* Restore bit 10 lost after reboot from Windows */
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x1b },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x4e4b },
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
-+	},
- 	[ALC295_FIXUP_CHROME_BOOK] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc295_fixup_chromebook,
-@@ -7161,7 +7173,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
--	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS S5406SA/Q423SA", ALC294_FIXUP_ASUS_Q423SA),
- 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1154, "ASUS TP3607SH", ALC287_FIXUP_TAS2781_I2C),
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1972,7 +1972,6 @@ static int __init
+ init_cifs(void)
+ {
+ 	int rc = 0;
+-	cifs_proc_init();
+ 	INIT_LIST_HEAD(&cifs_tcp_ses_list);
+ /*
+  *  Initialize Global counters
+@@ -2021,10 +2020,8 @@ init_cifs(void)
+ 	cifsiod_wq = alloc_workqueue("cifsiod",
+ 				     WQ_FREEZABLE | WQ_MEM_RECLAIM | WQ_PERCPU,
+ 				     0);
+-	if (!cifsiod_wq) {
+-		rc = -ENOMEM;
+-		goto out_clean_proc;
+-	}
++	if (!cifsiod_wq)
++		return -ENOMEM;
+ 
+ 	/*
+ 	 * Consider in future setting limit!=0 maybe to min(num_of_cores - 1, 3)
+@@ -2115,19 +2112,22 @@ init_cifs(void)
+ 	if (rc)
+ 		goto out_cifs_swn_init;
+ 
++	cifs_proc_init();
++
+ 	rc = register_filesystem(&cifs_fs_type);
+ 	if (rc)
+-		goto out_init_cifs_idmap;
++		goto out_clean_proc;
+ 
+ 	rc = register_filesystem(&smb3_fs_type);
+ 	if (rc) {
+ 		unregister_filesystem(&cifs_fs_type);
+-		goto out_init_cifs_idmap;
++		goto out_clean_proc;
+ 	}
+ 
+ 	return 0;
+ 
+-out_init_cifs_idmap:
++out_clean_proc:
++	cifs_proc_clean();
+ 	exit_cifs_idmap();
+ out_cifs_swn_init:
+ #ifdef CONFIG_CIFS_SWN_UPCALL
+@@ -2163,8 +2163,6 @@ out_destroy_decrypt_wq:
+ 	destroy_workqueue(decrypt_wq);
+ out_destroy_cifsiod_wq:
+ 	destroy_workqueue(cifsiod_wq);
+-out_clean_proc:
+-	cifs_proc_clean();
+ 	return rc;
+ }
+ 
+@@ -2174,6 +2172,7 @@ exit_cifs(void)
+ 	cifs_dbg(NOISY, "exit_smb3\n");
+ 	unregister_filesystem(&cifs_fs_type);
+ 	unregister_filesystem(&smb3_fs_type);
++	cifs_proc_clean();
+ 	cifs_release_automount_timer();
+ 	exit_cifs_idmap();
+ #ifdef CONFIG_CIFS_SWN_UPCALL
+@@ -2196,7 +2195,6 @@ exit_cifs(void)
+ 	destroy_workqueue(serverclose_wq);
+ 	destroy_workqueue(cfid_put_wq);
+ 	destroy_workqueue(cifsiod_wq);
+-	cifs_proc_clean();
+ }
+ 
+ MODULE_AUTHOR("Steve French");
 
 
