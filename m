@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829658;
-	b=Itx6oVgq40GN7rBZ9Ik2mSyMYtwtXZtoMl+wajgy/wkw0//uKRxYVHCB40fJo/qdEnqs
-	 ahi9Pbek0z8ZQOVZShN5LBiiRCT4YY/+xy7Gw89APhPxwEGYLJJF8BcT8vL8b6DKc1bBm
-	 EA13sPIekUnVu1/o0mUJCOlM5g3m18ofTSG4vVXwnxqXKM/7dHlDVCMgNQ9zh8yK9I44q
-	 Sal1JC9lKlOlmpU4m72EDxDGugd0GopTQSSASgulc0vy3ocRMYC1FYXtWy3Eza6YPjFTf
-	 wStMgIAljQJ7Lf/qLIN7hEUnHkjMh6/v94ciEBKUn4xam+oL5LdpaGD3f9H0MHXE+OA==
+	t=1793829660;
+	b=C9ZDC853I8EfwXZm8ycfPuwYgml7edv5nY0gnHpvbCizy1POGwKu9NtIParv2ACUzmmj
+	 YLFAP9qSd3FKrc7MiwnAyefjmoKgRh1IMQwuUDFUB3wlhcL/aK/7wUGCplAmauklW3yIf
+	 VT1MalMoPeLZHIQ7JXyZmu3PR1y8vYnL4cN3V31AVf8CB0nlp1SxfjiU0dWQSABbLQYe2
+	 P99Z6qEpH+KqswTXDJvQxmNqW915cE43IjywqY9L5czAhmxGE7lhEWJRECqOD8WqSVK0o
+	 4/3s7NV4dc2ujoXPO2kYTsuAut5XM9k8BM9Cqy5fjuQat7c/dCn9S1iwL7P5FE/ETfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oGqBK3EV4pZrduj6srq0qlMIv4aicsKMF83HsXTYUQY=;
-	b=cloIyru2L20n+7x0KSh9vapZN4eaDEj5rZgkQH5NwrmCElbNW7sHUXwYla2wdtJTigs5
-	 4QdRwAdXkdlT3pE+RSKr2umiZnK9mUKPtTw0JcyvG+kmTykfMVqygh3p9F8zQpL05J8Rk
-	 mEEYcw90XRSDaO4dria5SqruR8BWDfmib6RtAsAgiu/DD4S0cW2MLhGTUP3ICxue2Ym5V
-	 X2b1ZYzYUoFpBSagN+s0a5otbU8Tw4E82p3GsNvfIx5bgztk5DeMskYARfxREWrAhg9Xn
-	 0MibVkk8sFZhkpD5DLRCREbzaMtYsRRG7YwhXWCVsxPyCDpvGOyXUq/C25Vw1WLXcvg==
+	bh=p3tT2U5pbGH1q75DreUvqYOiZ3UM+3qqOWRSXRxZqV0=;
+	b=lKzR0WetgVB+51f3K7gA788k9V9ysePimox7c+mv3qnvL6eiMpzklrG/l/6ConFZI3d3
+	 dQDnorK0D8ktfd9/X4XLYFPHJfVPc4e2+2X6I6BVcrfFQoj8NafS7ccbIVPs1WuvGMF8F
+	 S1ZmDBbJw5sBHQ4zy8BwcYilGt5X6q5hfk3nhwd1BKdzE1i91TPjY3Qc6P7VQmW/qLZAY
+	 +C1gdmkJtjeV+6BFP+Wp2KVHyHZ9FIJ2BAF4Hihd4D/KActU1kdRjFjhOXFFPazalg5sW
+	 qDqWuYVgJyB2J0/nkehtUwsd6JOEk85XqJSt8w3+VaCPIlYL3rSTgvlAso3FcrjtlEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTkALTDf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AlTQsGky;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E97606B2F0;
-	Wed,  4 Nov 2026 22:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAFB606BA0F;
+	Wed,  4 Nov 2026 22:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTkALTDf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177FD1F0093A;
-	Wed,  4 Nov 2026 22:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AlTQsGky
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5671F00A16;
+	Wed,  4 Nov 2026 22:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829658;
-	bh=oGqBK3EV4pZrduj6srq0qlMIv4aicsKMF83HsXTYUQY=;
+	s=korg; t=1793829660;
+	bh=p3tT2U5pbGH1q75DreUvqYOiZ3UM+3qqOWRSXRxZqV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LTkALTDf7Ryl27CCL0Yqe0laJfotR0LUpTrd2fM5wgiXUon2JhVo4ZK3dnCNXlK3V
-	 2Ag4NPufMp2s951mY26xriH90lMjmXDwzPEAY+waadi/gg0MUVu9YBfJBOz0ZkNp00
-	 Ip2BznF8N51IgUgjgwkSJSnBebC70iALLd0QMOIQ=
+	b=AlTQsGkyKd89Qlq2FkWAOPzZMLXtF4vSfk2LbjdrZa2LR2YXsuj/oOQNQlXkUj6Oc
+	 lEllfEki1o8gINgl60eZEw8jz94uHcpFscZ0ys5l18TztkZRTV0GR29wxhnjtvLG/I
+	 UQ8z6burKHcrTcbvPcOOjGTnTq9a4uG/UttDk9Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Esteban Urrutia <esteuwu@proton.me>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0223/1005] ext4: reject mount if clusters/inodes per group are not 8-aligned
-Date: Wed,  4 Nov 2026 15:59:16 -0500
-Message-ID: <20261104211050.065398135@linuxfoundation.org>
+Subject: [PATCH 6.18 0224/1005] iommu/arm-smmu-qcom: Add SM8450 MDSS compatible
+Date: Wed,  4 Nov 2026 15:59:17 -0500
+Message-ID: <20261104211050.093196702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,66 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Esteban Urrutia <esteuwu@proton.me>
 
-[ Upstream commit d42dc7726a003262b73ffef2b744ff57a5488799 ]
+[ Upstream commit d149c8b2c0146a01f1be326ddb1e182b55aee638 ]
 
-The block and inode bitmap checksums are computed over a whole number of
-bytes: ext4_inode_bitmap_csum_*() use EXT4_INODES_PER_GROUP(sb) >> 3 and
-ext4_block_bitmap_csum_*() use EXT4_CLUSTERS_PER_GROUP(sb) / 8 as the
-length passed to ext4_chksum().
+Add the compatible for the MDSS client on the Snapdragon 8 Gen 1 so it can
+be properly configured by the IOMMU driver.
 
-If s_inodes_per_group or s_clusters_per_group is not a multiple of 8, the
-trailing fractional bits are excluded from the checksum.  Those bits are
-then unprotected, and any incremental csum update path that assumes a
-byte-aligned bitmap can compute a checksum inconsistent with the full
-recalculation, corrupting the on-disk bitmap checksum.
+Otherwise, there is an unhandled context fault, because the framebuffer is
+already configured in UEFI.
 
-Reject such filesystems at mount time by adding the missing " & 7"
-alignment checks alongside the existing range validation.
-
-Suggested-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://patch.msgid.link/h3n7jlfhyna64dn5o76qxcspnhxdddcs6crpxftmy7gnl7b3sx@jenszfpcsnit
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260508121539.4174601-1-libaokun%40linux.alibaba.com?part=10
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260608111150.827117-2-libaokun@linux.alibaba.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 3f5e9d825a5e6..b4ff7e692986b 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -4439,8 +4439,9 @@ static int ext4_handle_clustersize(struct super_block *sb)
- 		sbi->s_cluster_bits = 0;
- 	}
- 	sbi->s_clusters_per_group = le32_to_cpu(es->s_clusters_per_group);
--	if (sbi->s_clusters_per_group > sb->s_blocksize * 8) {
--		ext4_msg(sb, KERN_ERR, "#clusters per group too big: %lu",
-+	if (sbi->s_clusters_per_group > sb->s_blocksize * 8 ||
-+	    sbi->s_clusters_per_group & 7) {
-+		ext4_msg(sb, KERN_ERR, "invalid #clusters per group: %lu",
- 			 sbi->s_clusters_per_group);
- 		return -EINVAL;
- 	}
-@@ -5238,8 +5239,9 @@ static int ext4_block_group_meta_init(struct super_block *sb, int silent)
- 		return -EINVAL;
- 	}
- 	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
--	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
--		ext4_msg(sb, KERN_ERR, "invalid inodes per group: %lu\n",
-+	    sbi->s_inodes_per_group > sb->s_blocksize * 8 ||
-+	    sbi->s_inodes_per_group & 7) {
-+		ext4_msg(sb, KERN_ERR, "invalid inodes per group: %lu",
- 			 sbi->s_inodes_per_group);
- 		return -EINVAL;
- 	}
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index f7cb7de80cfb9..b6493e92343be 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -394,6 +394,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+ 	{ .compatible = "qcom,sm6375-mdss" },
+ 	{ .compatible = "qcom,sm8150-mdss" },
+ 	{ .compatible = "qcom,sm8250-mdss" },
++	{ .compatible = "qcom,sm8450-mdss" },
+ 	{ .compatible = "qcom,x1e80100-mdss" },
+ 	{ }
+ };
 -- 
 2.53.0
 
