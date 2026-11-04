@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829564;
-	b=oZurqc34E7aVlByxfKL/WFXzSHahZjTRW/AIjhjvIkwQX8hUkm9dcQF+tu3x4kHV6gAS
-	 USK+3b6EZJbsHPaeMlJwFTdjF0+wvdadh4Fwg4ZX4/iUytphSbyNIiew8qatFW1c+tgaN
-	 BW1gIKLO38Nkp65rezEdAo8OyA4AJil4PRg1GkP7lCsuQPXJF3WyEaIUzhjnircRhuD0O
-	 O/aljxIWhtO+t1K0n4kvQSmDC3G9YILAFZy0aNiKp4VQJWif+Lq+MO9sGiCnc1NmenBAK
-	 ScZk8cUD7pKne+53B/9L5hX8OXVs7mwALpBVLiBJTfdcFmZpERHto/YgS4Ay4cZGDNQ==
+	t=1793829566;
+	b=yr5wsndzXHK9eDppA9lTOxa4310oYDmTroUS+RSVLtP2K3jYcxN+i3SNz6A6URxDAmLO
+	 bHV2BFG2LEtRiGL2pQJXfQFKiAjJtAKEOXcQSUUe9O92FLY4CvywY07AoKt4AZxMIHq9g
+	 xkpnvYZ4rvO9S5s5zy0gUY9zp8RxEJwMwUrzjLB07xK+s1ixuL7cv0v7nkfmIwlvH7bbp
+	 QtlfV4HmPy5x60TROL/3qDGi6twRxfP01RWMrmTWf7qnTeFqidtp/FEDeHWTP87weRYJ+
+	 9ySjGEKP7ypitPFpntuBJ5WQVWABNwvtkQfomul3soi94ajT6ofPBerfHpA+0Y1GUjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829566;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=qJ8YSbv4QI+ZxUIiiWeYJj/6ZlJHBZJAHga+kCDwPvo=;
-	b=fgzHp/uJcN305BMz1BT9sFTtKjJ9tWVOSZbSfEbjg591TGtiVcnRZuI55KMPfIRPMnal
-	 VXavLP8MulWcooMv6F7B2MHxAYAQzhoTt/ixyPTGLs/Crd+0gz9CRG+WUgIXGNGwD2Wvu
-	 ZJWmFAcVnO7NIQ5tqiZYMPFUvehUiDHliCC4h/BXaGHsR7+fP4OCXsB3GheDfaAW46auC
-	 Z0mc8nVDcTyj9a2iNrXMj85oYXohGY6j+gH+C9PkTNaJWYwdidF2HOWbfjVSqSRHNPvOM
-	 LIG7bz0yr0Eo66C1kCljW+qOuRWvnOq7Wt4WQFopJ15H6e2bgD/TOI8L/9+LJSl9aJw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=9hTudvdPyWYoZ2WPjJXimCOiwpfjTPEgxM1dspyZBlY=;
+	b=W92iPydqQ3p/MC7s/h6w9AlmrlsF+wTdL4Liyh/c7u/Qy8u/KqSuPTSk/Uke2gU2skye
+	 fG/siWROREswbCM1dUYRjAbrnn/W/MUOPr4FH+mJdmJ0KNw9pbk2LrXl/sDX498aBejnv
+	 /r4PcVS+UMfVzhJg+RrOjnUThCpYZPZXA5wFPkrBgwGvcfWJJdenGCz/IfOKlQgjspR/g
+	 m8EgEe/ecjC1SpQYJGvR4hS+uBrf0G/smiFrRzp82BfYbyNoclcRy2ep34hbKEhhtOW7I
+	 rYkf81xUjT3QqspTupWAdNLaJDUGR1AYVYrGW/wTimHKG1LQq5XWGMcTZvcACOCiqAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uLxNDDUe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDJyaCDM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53776606A33E;
-	Wed,  4 Nov 2026 21:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160F9606A33E;
+	Wed,  4 Nov 2026 21:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uLxNDDUe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E4C1F00A17;
-	Wed,  4 Nov 2026 21:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDJyaCDM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54AE1F0093A;
+	Wed,  4 Nov 2026 21:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829564;
-	bh=qJ8YSbv4QI+ZxUIiiWeYJj/6ZlJHBZJAHga+kCDwPvo=;
+	s=korg; t=1793829565;
+	bh=9hTudvdPyWYoZ2WPjJXimCOiwpfjTPEgxM1dspyZBlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uLxNDDUe47huViGV+AYwA4hz0W2ET99JBvA0Agedw+oicAnZY1ugXDNt3vsj2ySIW
-	 9FFXHosxd4jBo97Uft5UCPBOGoAw/x8y4j85rvCh6HDmA0X3TikoqLY423m++UTPyv
-	 oL0CmmjJIeZvQ+14rJ/RrqOsRBjeMi8TGvmczZ8s=
+	b=TDJyaCDM8dZKbisWI4rVvCmN9h7/XUaq44WmaGRKlG73lqpwV9R3osaj9SNxew/aH
+	 9xEEKLwSz0QstCDxd8HxCYy5PtTMTwYSVSIWTUwonUN6JdnqTTjtkZIAgfxfIAawAR
+	 DE/1mu6WIcnI+Ds41wnC5tPJDc9/mVQlcsGHacMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>,
+	Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>,
+	Denis Benato <denis.benato@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0178/1005] comedi: pcm818: Fix sanity check in interrupt handler
-Date: Wed,  4 Nov 2026 15:58:31 -0500
-Message-ID: <20261104211048.766294412@linuxfoundation.org>
+Subject: [PATCH 6.18 0205/1005] platform/x86: asus-nb-wmi: map ProArt key (0x8b) to KEY_PROG3
+Date: Wed,  4 Nov 2026 15:58:58 -0500
+Message-ID: <20261104211049.541781918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -61,53 +63,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>
 
-[ Upstream commit 956e8478261a575d1e87490f2e5db1788b8c209d ]
+[ Upstream commit 6303451189a6d8f304221065c44ccd597e0acbe5 ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+The dedicated "ProArt" key on the ASUS ProArt PX13 (HN7306) emits ASUS
+WMI event code 0x8b. This code is absent from the asus-nb-wmi sparse
+keymap, so pressing the key only produces a "Unknown key code 0x8b"
+message and does nothing in userspace.
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing the dev->read_dev pointer which may be NULL if
-dev->attached is false.  Move the check to avoid the possible null
-pointer dereference.
+On this model the key is exposed solely through the WMI interface and has
+no HID scancode, so it can only be handled inside asus-nb-wmi. Map 0x8b
+to KEY_PROG3 so the key emits a bindable event, consistent with the
+existing KEY_PROG3 mapping used for the ASUS programmable/Armoury key.
 
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-9-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>
+Reviewed-by: Denis Benato <denis.benato@linux.dev>
+Link: https://patch.msgid.link/20260719090843.66777-1-nizar.m.kabbani@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcl818.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/x86/asus-nb-wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/comedi/drivers/pcl818.c b/drivers/comedi/drivers/pcl818.c
-index 06fe06396f23a..e8ce34840050a 100644
---- a/drivers/comedi/drivers/pcl818.c
-+++ b/drivers/comedi/drivers/pcl818.c
-@@ -534,13 +534,14 @@ static irqreturn_t pcl818_interrupt(int irq, void *d)
- 	struct comedi_device *dev = d;
- 	struct pcl818_private *devpriv = dev->private;
- 	struct comedi_subdevice *s = dev->read_subdev;
--	struct comedi_cmd *cmd = &s->async->cmd;
-+	struct comedi_cmd *cmd;
- 
- 	if (!dev->attached || !devpriv->ai_cmd_running) {
- 		pcl818_ai_clear_eoc(dev);
- 		return IRQ_HANDLED;
- 	}
- 
-+	cmd = &s->async->cmd;
- 	if (devpriv->ai_cmd_canceled) {
- 		/*
- 		 * The cleanup from ai_cancel() has been delayed
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index 8dad7bdb8f612..a840d16e063e0 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -622,6 +622,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
+ 	{ KE_KEY, 0x86, { KEY_PROG1 } }, /* MyASUS Key */
+ 	{ KE_KEY, 0x88, { KEY_RFKILL  } }, /* Radio Toggle Key */
+ 	{ KE_KEY, 0x8A, { KEY_PROG1 } }, /* Color enhancement mode */
++	{ KE_KEY, 0x8B, { KEY_PROG3 } }, /* ProArt key (PX13/HN7306) */
+ 	{ KE_KEY, 0x8C, { KEY_SWITCHVIDEOMODE } }, /* SDSP DVI only */
+ 	{ KE_KEY, 0x8D, { KEY_SWITCHVIDEOMODE } }, /* SDSP LCD + DVI */
+ 	{ KE_KEY, 0x8E, { KEY_SWITCHVIDEOMODE } }, /* SDSP CRT + DVI */
 -- 
 2.53.0
 
