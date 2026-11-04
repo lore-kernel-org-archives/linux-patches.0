@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831133;
-	b=3Idrn2hjV6HAvDnlKfHkhMM1bWzIeM+QW7VLuvnMSNKp+Xlh+EDQq0KGP2VbdRRPo3Tp
-	 uztsBQzL3F93SV2Pa9j3aRe3jtsXLt0BbWulBz7MW2jMetfiOEGULVRObuHFQo0rYXXTE
-	 ZB6+khh3rbC/UH55+MBMujptdn3NrZjVwK8e5/sCYekDWb4A4CpIV/a6yfsXst/sLv5CI
-	 shJys2GyuPHhy39ABXWm0wKaZ/R19QUPKJybfuZB7P8m+6EJoz9RZKjCD418sK05Gb+/o
-	 MMzdw2plSaU/KVa/XPV2yBs5/ulsCdyuEGWVJOGx+cDqLEFtv3BTO5GQFIgAoYWRyYA==
+	t=1793831135;
+	b=rSHPwRUUNhCyDAGkIOXWYFeKpWxZ3E4OYeOyw54aN65UpsHBwVEWsHLxhHSGaVy0Rrk9
+	 /nw3KKgq8bsYO7SFjJ6vC3h75lEbCGV6X+F4x355Qx9LP9md8Sl14k2x1LVWBAELXoFFr
+	 rLlJKEFyV+jrUNETJSXxcFaxySzQIeCFxv8kjfumrG29lHZ0cDDFedoLwfWGZxC4rvxky
+	 DM+k4ugd7eTUfBa4vT2fL77LQQH70zDfnaM0GsItmD/XXI8ddxnaMy27IRQhuzq6NBelB
+	 oyX/hlrmcJA+2Ra4NFunN1ZyQM2H2Ya9Gshmym8VsYkPlm/9PZm4MmrC/iH7Lv5eNAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831133;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=rEoLhvsN9HAs8sz1zd2NNQ4KwsHQophdyKYKHoC+miE=;
-	b=nIIzQB6Kvb5IPv+A08OHldktC7am6HQfpUrK3vNS/20zGarmaz3PTdbGuuDS7oeOjxLu
-	 HCG0OK8N2z6fzTAQRuUGjzRkmLb8AdZKY6hUopnPxMW69EgiAHNqc8haFaFWj4+sRu12W
-	 mjWaxFqpCITzLgE/ATacijVCrZ0h3KoXSMLAhVJ+pnAIzuBsmr09ob9tAFyfe3iJmuRdV
-	 jY6e1GK63m/F/JpuxUZIS87X5Ux44zTnNp+qk1btlmNk6XzXMyH1DhyRACqySz4aoQjX+
-	 Z33YIJh+3msYnAiFrMg4Sv++BSzdawaoivsA/1qMLuJd6cx6YOXmvQtlVQj9B0L1upw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=JUStYlxBub2NqfkdItWZoYJO0asrgBzKZkyGiXNElfo=;
+	b=j8vTIl/bpjrgofiMG6O/nwh1pj71WPEG1ejJNXwCuWusGS2nOxkqcQd6OmJ37MwVLnum
+	 j8Fkae5yUegs/PU1mlEhJB21L06A102vkb3shZpeFqDwAMY8DZ4OQSvCtEt4mrc/NCU9G
+	 7VwT4P5JNKCtbJVPoHkw4Zn6JFMrNTXoNpGgT6zT7zez0vJo9tNcyAs9G0KtRRpMKQa5S
+	 CkMe52PSRK2IQJEd7ZxNbUbuVya9X9FO5/MYBJVzkdEW+u2lhyZzx/YisI76zXGWTd7Qs
+	 iTHVYOCoVkVnArqwhrMGSHIvweuGrUoFhZgpC7ew4H00Oks5qERpEMOt3utJ/vmeV4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTaxwCEc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=enmgWt5e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB36606B3AF;
-	Wed,  4 Nov 2026 22:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C31F606B3B8;
+	Wed,  4 Nov 2026 22:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTaxwCEc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E7E1F000C1;
-	Wed,  4 Nov 2026 22:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=enmgWt5e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3241F000C1;
+	Wed,  4 Nov 2026 22:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831133;
-	bh=rEoLhvsN9HAs8sz1zd2NNQ4KwsHQophdyKYKHoC+miE=;
+	s=korg; t=1793831134;
+	bh=JUStYlxBub2NqfkdItWZoYJO0asrgBzKZkyGiXNElfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jTaxwCEcJ4S3tDOLp1QUnBB1MHhzT0i2fnsV83mIrgf6EhNJpORwBQCl06mbtcyU0
-	 4MjEnDoPn9mJcWxB8GCQQfoG29cTiLH1uFRiXoVoceD3pLm4u5uYRANIrQK0El/I+S
-	 mgFHJZP5Gcvds2pY7wuYnXDAeharyvRLnft6Yls4=
+	b=enmgWt5eNoBDdf/KDcxYFvmStoIFw/b5uu8J/6tX5zhnf98saamH7Uz8llm6/qseE
+	 zaXlo5xj1mARYXeWMvRM+Wl1mVvfnqlH5DCTUplbhnMtCv9pXKgJwjO37H8S6WoNiN
+	 thyop3hg+ech/X+jwGMItteBGCMMLbOND0hgbEsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 0518/1005] ceph: fail readdir when the MDS reply carries no dirfrag
-Date: Wed,  4 Nov 2026 16:04:11 -0500
-Message-ID: <20261104211058.439308678@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.18 0519/1005] fuse: dont BUG when the copy buffer is exhausted
+Date: Wed,  4 Nov 2026 16:04:12 -0500
+Message-ID: <20261104211058.464321241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,87 +63,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 728c856d7da04fb79f7aa00e974ffb6f55e55995 upstream.
+commit c1338aae7b4054e26f322155423f6aba90aeea23 upstream.
 
-A ceph mount oopses in ceph_readdir() when the MDS answers a READDIR
-request with a reply whose extra blob is empty.  parse_reply_info()
-skips reply blobs whose length is zero, so parse_reply_info_readdir()
-never runs, r_reply_info.dir_dir stays NULL, and the reply still
-parses as successful.  ceph_mdsc_do_request() returns 0 and
-ceph_readdir() then reads rinfo->dir_dir->frag with no NULL check:
+fuse_copy_fill() hits BUG_ON(!err) once the iterator backing the copy
+runs out of pages.  Over io-uring the amount copied is not bounded by the
+payload buffer the server registered, so an unprivileged user can drain
+the iterator and panic the host - mount a FUSE filesystem with small
+payload buffers, then setxattr() a larger value:
 
-	/* extra */
-	ceph_decode_32_safe(&p, end, len, bad);
-	if (len > 0) {
-		...
-		err = parse_reply_info_extra(&p, p + len, req, features, s);
-		...
-	}
+  kernel BUG at fs/fuse/dev.c:1064!
+  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+  CPU: 1 UID: 0 PID: 148 Comm: exploit Not tainted 7.3.0-rc1 #2
+  RIP: 0010:fuse_copy_fill (fs/fuse/dev.c:1033)
+  Call Trace:
+   <TASK>
+   fuse_copy_args (fs/fuse/dev.c:1354 fs/fuse/dev.c:1380)
+   fuse_uring_args_to_ring (fs/fuse/dev_uring.c:891)
+   fuse_uring_prepare_send (fs/fuse/dev_uring.c:940 fs/fuse/dev_uring.c:1057)
+   fuse_uring_send_in_task (fs/fuse/dev_uring.c:1745)
+   tctx_task_work_run (io_uring/tw.c:96)
+   tctx_task_work (io_uring/tw.c:133)
+   task_work_run (kernel/task_work.c:233)
+   io_run_task_work (io_uring/tw.h:84)
+   io_cqring_wait (io_uring/wait.c:278)
+   __do_sys_io_uring_enter (io_uring/io_uring.c:2676)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:61)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-The oops on v7.3.0-rc4-00537-ga3ff15db6820, one getdents64(2) on the
-mount root after an ms_mode=legacy mount, trimmed:
+The reply path can drain it the same way, via the server-supplied
+payload_sz in fuse_uring_copy_from_ring().
 
-BUG: KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-CPU: 1 UID: 0 PID: 266 Comm: ls Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
-RIP: 0010:ceph_readdir+0xbff/0x3ea0
-Call Trace:
- <TASK>
- ? __pfx_ceph_readdir+0x10/0x10
- wrap_directory_iterator+0xa2/0xe0
- iterate_dir+0x1da/0x5d0
- __x64_sys_getdents64+0x13b/0x2a0
- do_syscall_64+0xdd/0x4a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+Return -EIO instead.  All three fuse_copy_fill() callers already
+propagate the error.
 
-The unconditional frag read came in with 81c6aea5275ea ("ceph: handle
-frag mismatch between readdir request and reply"), so the bug is old.
-
-Treat a reply with no dirfrag as a protocol violation: warn once,
-drop the request and return -EIO, the same way ceph_readdir() already
-handles the two malformed-reply cases later in the function.
-
-Tested on v7.3.0-rc4-00537-ga3ff15db6820 (KASAN).  Unpatched, the
-getdents64(2) above takes the machine down (oops=panic) on the first
-READDIR reply.  With the patch it warns once and getdents64(2)
-returns -EIO, no oops, no hang.  A conformant reply for an empty
-directory — dirfrag present, zero entries, FRAG_END|FRAG_COMPLETE —
-still lists "." and ".." and returns EOF on both kernels, so normal
-readdir behavior is unchanged.  The oops is still present in
-v7.3-rc5 (72d3fcf802c45).
-
+Fixes: c090c8abae4b ("fuse: Add io-uring sqe commit and fetch support")
 Cc: stable@vger.kernel.org
-Fixes: 81c6aea5275ea ("ceph: handle frag mismatch between readdir request and reply")
-Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Suggested-by: Joanne Koong <joannelkoong@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/fuse/dev.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -466,6 +466,10 @@ more:
- 		      (int)req->r_reply_info.hash_order);
- 
- 		rinfo = &req->r_reply_info;
-+		if (WARN_ON_ONCE(!rinfo->dir_dir)) {
-+			ceph_mdsc_put_request(req);
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -937,7 +937,8 @@ static int fuse_copy_fill(struct fuse_co
+ 		err = iov_iter_get_pages2(cs->iter, &page, PAGE_SIZE, 1, &off);
+ 		if (err < 0)
+ 			return err;
+-		BUG_ON(!err);
++		if (!err)
 +			return -EIO;
-+		}
- 		if (le32_to_cpu(rinfo->dir_dir->frag) != frag) {
- 			frag = le32_to_cpu(rinfo->dir_dir->frag);
- 			if (!rinfo->hash_order) {
+ 		cs->len = err;
+ 		cs->offset = off;
+ 		cs->pg = page;
 
 
