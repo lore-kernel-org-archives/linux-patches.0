@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827106;
-	b=wpqphW18h3USNmq3uk2Brm7yZyH/DeWqOKSCvZTwju2quEYVeHaQUG8DD7CBFYCDIhAn
-	 iXxoigvLnz66KjRY5x/HS2aLz3ny1I+17c/KoAXUk5dAiPKSMkIbKXSEJS4E6g32BUqdo
-	 MC54Gbo2BBFiaHHsnEpGokG5v1Xlcb6xXKi3PI1YAu3dlp0+qiCY6ToB3sFyDc4IlxqfP
-	 GBouw0BZiaShe7ZBWsJ88rXO1b0mdtFLDZq7nt1sTXVBG04BFf/69+Q4t7EWMTSFVjabJ
-	 WmPUjsk4g4r+E1UN7Q92Rjjm/FInkQdCoRtinGRLA19lXS1+HK+FWi0AD7xaNbcpJfQ==
+	t=1793827107;
+	b=M2iw11elldmAqd0+QnIOnMe6k8paJbm87eF64dBe2eDpszHWzjBjLYfoRX4akd4NCOal
+	 1Rv+pRu9f65O4Li3JDg2PdkQZb/CTgZwPTu7dIVdJt6lpv0Vj330NOiEUNMpFtdJrYHY3
+	 wetDJFP9kWxqey6vCmh57jJPK6P7Lb9RTFPOXYAIKWtjJH2O3haO5OvHOW8swc4kkvbEf
+	 onvqspRDwFg00GTFz4QIoPpAMWQGqjtk99B/E60cmKP5wT7W0mEzK8fzBb3ao4xQYSzZG
+	 n6nZkREGjaPEOKFl9PjJCFGYWPuuoUPNEbWClRbu21k+EWjLpA2yE0/NW0OA4OmffEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827106;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KnIJj4SOmj2iGjCCYza+dO9sWW+L0MHG/GAN8tWNqJ4=;
-	b=1r5dO4ugMbW7+NnM000Z3vviqg//Kn17vEnKm62C2ApKDFlzAa4y91S0bIaQM4vufG+j
-	 TPBMFC0+VcltINDcr8krzpNwm07+tvHR9PoqhX528F7K2gGltjfla2iN0+c6PiKXGP6GF
-	 FHskADh4e1aAPygQg+Y5tpGk9dvcBnS6cKEArBeY5sR6CkWXYa5XaxZUzFDGCzLEP1sKS
-	 TuPF0hYSvHZ6tvLL9sgkDk8RQZw0Apkxu0TYsBaR4lIEYH7CV8Saz437a7GQtBIy2MWdZ
-	 4xqL5LftHKtw8+P2Fi1PeUo7vKNp3YdA7XACJKfgHInc11ZuhMMinj7WUYwC+r0gkEw==
+	bh=tOYzuqQ8ZyUfdV0mKb9W6OYSY2rgDq16VE2zpBtp8oo=;
+	b=FxfXIyLUTpt06ib+gH8ZnL4am6MQpfJPZSxAWZBQyOZArg4CRYF5JwcK05zuAbeGLVpl
+	 idlLR4RHInYM6zRZ41LSJIXXTJIs5BaSF4GOpHp43TOsSWiYoVDq9uulX4g5p2+EaKcIe
+	 2s8OlVjyxsndNN2IGLvVRniR0V6pZv2RwroSqRq8R4ZoMqXR7V9/1lPLIxrQJu37jaJfY
+	 JA9dHzuDpsQCJC9KLIgak6oMGzXyYLm8sdjktWMjduFlkLLOvLKW/bMwziNkJXCP9UZUe
+	 NRfbZ6xKhx/x0EZDbzD6hVp8xxefGs7AlvMV+3cV8jBnxJgESKNZKCCVPY5+ISccI6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jlr8OW5z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEOrYZSC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CE3606A869;
-	Wed,  4 Nov 2026 21:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85315606AE00;
+	Wed,  4 Nov 2026 21:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jlr8OW5z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629031F00A18;
-	Wed,  4 Nov 2026 21:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEOrYZSC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2249A1F00919;
+	Wed,  4 Nov 2026 21:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827105;
-	bh=KnIJj4SOmj2iGjCCYza+dO9sWW+L0MHG/GAN8tWNqJ4=;
+	s=korg; t=1793827107;
+	bh=tOYzuqQ8ZyUfdV0mKb9W6OYSY2rgDq16VE2zpBtp8oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jlr8OW5z3MfT9AA93TPJ9+BdtXw/XrvLrwpn/lsNhnKVHSfzYx7fuRxZJPf1bHDhH
-	 pteAYcKhquPWAlnnAALvX4hZIQM4lhHSLyYb2VX0wTAVExkx8I2S7nh9DRqGj5LURS
-	 yT+ILqT6EvhYod43fJV9fHWykrIcOBCJnphkOplI=
+	b=DEOrYZSCp6HRKaoGmDYVWqAw9qcowz6H7BnMn+5niqb04YeDKBPRkFiZ7vnvYuFX6
+	 eAbfbLzOt52FxvCICEqKmRsq8Rlsh90b8nrVDHrCboHtky37Xs/QHwn+rm5FS0natY
+	 uYk/P7hEHTvsgItJAcvMWXVEr/Zve29WyO0f/q68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>
-Subject: [PATCH 7.3 198/547] rust: bug: update the SAFETY comment for warn_slowpath_fmt() on UML
-Date: Wed,  4 Nov 2026 16:06:22 -0500
-Message-ID: <20261104211043.768074397@linuxfoundation.org>
+	Andreas Hindborg <a.hindborg@kernel.org>
+Subject: [PATCH 7.3 199/547] rust: configfs: fix data offset calculation for subsystem callbacks
+Date: Wed,  4 Nov 2026 16:06:23 -0500
+Message-ID: <20261104211043.797572602@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,44 +66,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FUJITA Tomonori <fujita.tomonori@gmail.com>
+From: Andreas Hindborg <a.hindborg@kernel.org>
 
-commit 5c94956f2bfb87025c1eaded6c51d5841d38d333 upstream.
+commit e84c9b64df615e658e47561b835c1364dc48f0c0 upstream.
 
-The SAFETY comment says that it is always safe to call
-`warn_slowpath_fmt()` with a valid null-terminated string. This is not
-true. The taint argument must also be a valid taint number.
-Commit 951d09ca450c ("rust: bug: pass TAINT_WARN to warn_slowpath_fmt()
-on UML") fixed a bug where it was not.
+`get_group_data()` chooses between `Group::<Parent>::container_of()` and
+`Subsystem::<Parent>::container_of()` based on whether `this` represents
+the root group of a configfs subsystem. It detects this by checking
+`(*this).cg_subsys.is_null()`, but `link_group()` in `fs/configfs/dir.c`
+unconditionally sets `cg_subsys` for every `config_group` attached anywhere
+in a registered subsystem, including the subsystem's own `su_group`. The
+only `config_group` with a NULL `cg_subsys` is the configfs root, on which
+userspace cannot trigger callbacks. The check is therefore always false at
+runtime, and the `Subsystem` branch is dead. Subsystem-level callbacks
+reach the `Group` branch and may read `data` at the wrong offset.
 
-List each condition that the call meets: the file name, the taint
-number, and the null `fmt`.
+Thus change the `is_root` check to correctly identify whether a group is a
+root group by comparing `this` to `subsys.su_group`.
 
-Suggested-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Link: https://patch.msgid.link/20261002104550.2877930-1-tomo@flapping.org
 Cc: stable@vger.kernel.org
-Fixes: dff64b072708 ("rust: Add warn_on macro")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 446cafc295bf ("rust: configfs: introduce rust support for configfs")
+Link: https://msgid.link/20260608-configfs-fix-offset-v1-1-7f01b8fb9e5f@kernel.org
+[ Andreas: Fix clippy warning on 1.85.0 by moving safety comment. ]
+Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/bug.rs |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ rust/kernel/configfs.rs |   43 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 28 insertions(+), 15 deletions(-)
 
---- a/rust/kernel/bug.rs
-+++ b/rust/kernel/bug.rs
-@@ -88,8 +88,10 @@ macro_rules! warn_flags {
-             _ = $flags;
-         }
+--- a/rust/kernel/configfs.rs
++++ b/rust/kernel/configfs.rs
+@@ -297,26 +297,39 @@ unsafe impl<Data> HasGroup<Data> for Gro
+ ///
+ /// `this` must be a valid pointer.
+ ///
+-/// If `this` does not represent the root group of a configfs subsystem,
+-/// `this` must be a pointer to a `bindings::config_group` embedded in a
+-/// `Group<Parent>`.
++/// If `this` is the `su_group` field of a `bindings::configfs_subsystem`, that
++/// `configfs_subsystem` must be embedded in a `Subsystem<Parent>`.
+ ///
+-/// Otherwise, `this` must be a pointer to a `bindings::config_group` that
+-/// is embedded in a `bindings::configfs_subsystem` that is embedded in a
+-/// `Subsystem<Parent>`.
++/// Otherwise, `this` must be a pointer to a `bindings::config_group` embedded
++/// in a `Group<Parent>`.
+ unsafe fn get_group_data<'a, Parent>(this: *mut bindings::config_group) -> &'a Parent {
+     // SAFETY: `this` is a valid pointer.
+-    let is_root = unsafe { (*this).cg_subsys.is_null() };
++    let subsys = unsafe { (*this).cg_subsys };
  
--        // SAFETY: It is always safe to call `warn_slowpath_fmt()`
--        // with a valid null-terminated string.
-+        // SAFETY:
-+        // - The file name is a null-terminated string with `'static` lifetime.
-+        // - `TAINT_WARN` is a valid taint number.
-+        // - `fmt` can be NULL, and NULL is passed.
-         unsafe {
-             $crate::bindings::warn_slowpath_fmt(
-                 $crate::str::CStrExt::as_char_ptr($crate::c_str!(::core::file!())),
+-    if !is_root {
+-        // SAFETY: By C API contact,`this` was returned from a call to
+-        // `make_group`. The pointer is known to be embedded within a
+-        // `Group<Parent>`.
+-        unsafe { &(*Group::<Parent>::container_of(this)).data }
+-    } else {
+-        // SAFETY: By C API contract, `this` is a pointer to the
+-        // `bindings::config_group` field within a `Subsystem<Parent>`.
++    // `link_group()` in `fs/configfs/dir.c` assigns `cg_subsys` for every
++    // `config_group` attached anywhere in a registered subsystem, including
++    // the subsystem's own `su_group` (which gets a pointer to itself). The
++    // only `config_group` with a NULL `cg_subsys` is the configfs root, and
++    // userspace cannot trigger callbacks on it. The group is therefore the
++    // subsystem's `su_group` iff it equals `&cg_subsys->su_group`.
++    let is_root = !subsys.is_null()
++        && core::ptr::eq(
++            this.cast_const(),
++            // SAFETY: For every `config_group` the configfs core dispatches a
++            // callback on, `cg_subsys` was set by `link_group()` at registration time
++            // and points to a valid `configfs_subsystem` that outlives the callback.
++            unsafe { &raw const (*subsys).su_group },
++        );
++
++    if is_root {
++        // SAFETY: By the above, `this` is the `su_group` field of a
++        // `configfs_subsystem` that, by function safety requirements, is
++        // embedded in a `Subsystem<Parent>`.
+         unsafe { &(*Subsystem::container_of(this)).data }
++    } else {
++        // SAFETY: By function safety requirements, `this` is a
++        // `config_group` embedded in a `Group<Parent>`.
++        unsafe { &(*Group::<Parent>::container_of(this)).data }
+     }
+ }
+ 
 
 
