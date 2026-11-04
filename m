@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831257;
-	b=uFUBM541hLLTBOIaa0iLHsTO9v9b2gCFVMx1aBj0r4xV9161GFKDuB9pocCw9tccI8lt
-	 +GWWxdEG8ZkmdUnOmDwjDpSTEv/2NZjPDftFkZ9dzQEhr9u/Xo/VeFqLMl8sr3fal7zv7
-	 OCBiawieSz9hYY+M/Q2LA8kczZLiQErtubCSiyt59LxkLtOSkDX8+syi3foTz4KU7B9Q9
-	 mKfh2SPgwi45apAr7Bj9PRChvOLc4zRg2yLCvMCpJnMW+FuaXYvl2HDEdCELaaq/1iPEi
-	 VM0Cv3YCgpbpAD+Xj5pgSQLJr+soiQ9b2DKcmPjWf3PdCWlAjZRbY6OoVYNmmHxI4PA==
+	t=1793831259;
+	b=f3mvUQzrsIJXJ0hs/t2Uhx3p+23iHAxR68PWYP1NyC+3hlRL3ADcmaSxbFmQDijXQGk4
+	 41jv4GBeEqGzwoojFuPOA5iBT31igMDogvPXo0AhT08QyQw+1xS95hkaay4/0xhL9wgYd
+	 3PDGUg7Ctk5g2w1fPjYIBDmcWgzH+tEfk+a1IFJ+XEAUTnbt7aIgi+vtymwGmZ/4OJKV4
+	 1EinYeI7CYlyfGy8ARpqf2GjEADjY/mp7eiazuSsdIIgjKMSQKlVzH0b6DgBveB3bkfzJ
+	 mJU67QVIbJLCFYVFdWAeKBFNMlx5HKC8a24KiKKl0+UdseR4TRRAWNMBAbUUHlGkFAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831257;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3XiIodtTMr2UOrXmRVNulVddcHifct0FDMekCH0Y6aM=;
-	b=bZmYSDdjUMfuYsNca59Tojuu2240WQ5zTjXje0+EBVmVOMU24CITYYSgpA5RbTquAGy7
-	 ofcrh4pk/h1OlLrle6fUslRrDpMVzU/3Urm6gWiO7s+HvFgBxHMDffCQNTMyz9KrmG5JT
-	 HM7SwJa8v23Lq+unO644mQeHyZuFWBzXXc1k/WTpJB4clH5s/qKyBCpHzsokSeBxIeCYT
-	 b7TolWkqO6wt15yzsnZihldg3/WuNkqpzsKBO8Gn1+d7dcn85w70LR0OATL9T457cpdcR
-	 X0EnmX0wcrNa+/NQIUXW7zwdAv1xxWdtst5TNhKJnTe3qrLWyQf9HjncHPtsm0bs+zw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=HnJppgtbZOGa3HVcRG3ydTFrs5q1wf8UqE06Uk6c9iM=;
+	b=sG7hUkol5J/BNpbg3WIuDQFvODZSHdshapkqgBJGEzFJHrT01ocMCKRng7soBQhdeecE
+	 TTsgI6PMA5DMzdtTD+3lXqptz/ueNgzOED2Ah5qPGvSXvksT56HuhqjvZopFrxhe4B4QG
+	 YLFrU7LjtwIDEHJ96ZzLIxsMi0FCXJLOIPcClLHpymtiKd24r1BEMbC3WkdbWn9ehGX5K
+	 lDD0At6eck2TSPpk99v4vh3mgeyq9ngeKRfF5DVAzPrjq02Qlm0I6MTHPOU2x8lTy6B8l
+	 9HTIB03ciI9DVgqLmR+geyXvirdV3NVCSp83aTkvQkK3m1FnMbXuTKy7BKI9DgCESWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+jsMkx4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1yUIaWJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECA0606A33E;
-	Wed,  4 Nov 2026 22:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FAC606A33E;
+	Wed,  4 Nov 2026 22:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+jsMkx4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03521F0093A;
-	Wed,  4 Nov 2026 22:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1yUIaWJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3361F000C1;
+	Wed,  4 Nov 2026 22:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831257;
-	bh=3XiIodtTMr2UOrXmRVNulVddcHifct0FDMekCH0Y6aM=;
+	s=korg; t=1793831258;
+	bh=HnJppgtbZOGa3HVcRG3ydTFrs5q1wf8UqE06Uk6c9iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k+jsMkx4vxA+cIZmdT97knlFc/5vT838Kg3ImFYoD2m4Xc7DUTo4ZxrHDT4R87FjL
-	 MW3mO3qJgH2MlTgfRFXva+3oPgsBVC8org5C65xo2R/dbeNN2mRSxlPcaUQNoyBlKU
-	 XwpVeMJohFYLrEzTokEJ5llotMo416Cytkv+GoGQ=
+	b=d1yUIaWJWCchsqeEhy7oFgTI0RwrU1xORBrkACRmXBGJBx4fz9PvkAOdnYBcvdWXj
+	 spgDjgunxetxppyn9P9bQtyJ7Ldm359VJIfcFLR8Eu180LjAllGTAiDLCQMdt8LITI
+	 VDKwraE7lAVnqOGAE+kfxGQ4j5oIRAU5elNw8eXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
-	Alec Hall <signshop.alec@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0546/1005] HID: input: read battery capacity from its actual report offset
-Date: Wed,  4 Nov 2026 16:04:39 -0500
-Message-ID: <20261104211059.187260921@linuxfoundation.org>
+Subject: [PATCH 6.18 0589/1005] RISC-V: KVM: Fix sdata leak and stale snapshot_addr in snapshot_set_shmem
+Date: Wed,  4 Nov 2026 16:05:22 -0500
+Message-ID: <20261104211100.364639155@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -63,129 +62,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit d07644524b6511b622ee7b0e2e68c9ee43d522a4 ]
+[ Upstream commit b7749531a9b195f4fd7db92ca3cc49bda1a4dc8d ]
 
-hidinput_query_battery_capacity() assumes the state-of-charge value is
-the first byte following the report ID (buf[1]) and ignores where the
-battery field actually sits within the report.
+A guest may call SBI_PMU_SNAPSHOT_SET_SHMEM repeatedly. Each call
+overwrites kvpmu->sdata without freeing the old buffer (memory leak),
+and if a later kvm_vcpu_write_guest() fails, the error path frees
+sdata but leaves snapshot_addr stale. A subsequent
+SBI_PMU_COUNTER_START then passes the INVALID_GPA check and crashes
+the host with a NULL buffer in kvm_vcpu_read_guest().
 
-An Apple Magic Trackpad 2 precedes the AbsoluteStateOfCharge byte with a
-byte of status flags in its battery reports, so this query returns the
-flags byte instead of the charge level.
+Fix this by clearing the previously installed snapshot area before
+installing a new one, which keeps sdata and snapshot_addr consistent.
+The SBI spec suggests a single invocation but defines no error code
+for repeated calls, so KVM must tolerate them.
 
-The device happens to make that easy to observe, because it exposes the
-same cell twice: its report descriptor declares AbsoluteStateOfCharge in
-two reports (0x90 and 0x9b), so hidinput_setup_battery() registers two
-power supplies. Only the first one is refreshed by hid-magicmouse -- it
-uses hid_get_battery(), which returns the first battery of the list --
-and that refresh goes through the report event path, which parses the
-field correctly. Nothing ever reports the second one, so every read of
-its capacity takes the query path above. On a USB-C Magic Trackpad over
-USB, on an unpatched 7.1.5:
-
-  hid-<serial>-battery-144 = 100%  (Charging)      <- report event path
-  hid-<serial>-battery-155 =   3%  (Discharging)   <- query path
-
-Both are the same physical battery. A raw HIDIOCGINPUT of the two
-reports at that same moment:
-
-  report 0x90 -> [90 03 64]
-  report 0x9b -> [9b 03 64 64 00 00 10 00 00 00 00 00 00 00]
-                     ^flags ^SoC = 0x64 = 100%
-
-The device answers correctly in both cases; only the offset the kernel
-reads the capacity from is wrong. 0x03 is the flags byte (present,
-charging), reported as "3%".
-
-Bluetooth takes the same query path for its capacity, where the trackpad
-reported a bogus near-constant ~4% -- 0b100, the FullyCharged flag --
-regardless of the real charge.
-
-Store the battery field's offset within the report at setup time and use
-it when querying, so the capacity is read from its real position. The
-report event path already parses the field correctly through the HID
-core; only the explicit GET_REPORT query was wrong.
-
-Devices whose capacity field is the first field in the report have a
-report_offset of 0 and are unaffected (buf[1 + 0] == buf[1]).
-
-Fixes: 581c4484769e ("HID: input: map digitizer battery usage")
+Fixes: c2f41ddbcdd756 ("RISC-V: KVM: Implement SBI PMU Snapshot feature")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
-Reviewed-by: Alec Hall <signshop.alec@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ sashal: Adapted to the single-battery layout by using dev->battery_report_offset in struct hid_device instead of bat->report_offset in struct hid_battery, and kept the explicit kfree(buf) handling. ]
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260826064117.58029-1-min_halo@163.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
+[ sashal: Kept the existing GFP_ATOMIC in the kzalloc context line, since __GFP_ACCOUNT isn't present here, and added the snapshot-area clear block unchanged. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 17 +++++++++++++----
- include/linux/hid.h     |  1 +
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ arch/riscv/kvm/vcpu_pmu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index b2fa8c42f09b3..6e1f2bd440eba 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -437,19 +437,27 @@ static int hidinput_query_battery_capacity(struct hid_device *dev)
- {
- 	u8 *buf;
- 	int ret;
-+	/*
-+	 * The capacity field may not be the first field in the report: some
-+	 * devices (e.g. the Apple Magic Trackpad 2 over Bluetooth) precede it
-+	 * with status flags. Read it from its actual byte offset in the report
-+	 * (report_offset is in bits; the leading byte is the report id).
-+	 */
-+	int offset = 1 + dev->battery_report_offset / 8;
-+	int len = offset + 1;
- 
--	buf = kmalloc(4, GFP_KERNEL);
-+	buf = kmalloc(max(len, 4), GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
- 
--	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, 4,
-+	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, max(len, 4),
- 				 dev->battery_report_type, HID_REQ_GET_REPORT);
--	if (ret < 2) {
-+	if (ret < len) {
- 		kfree(buf);
- 		return -ENODATA;
+diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
+index be0c7ecc38e79..d5a0a3a33f6b2 100644
+--- a/arch/riscv/kvm/vcpu_pmu.c
++++ b/arch/riscv/kvm/vcpu_pmu.c
+@@ -437,6 +437,14 @@ int kvm_riscv_vcpu_pmu_snapshot_set_shmem(struct kvm_vcpu *vcpu, unsigned long s
+ 		goto out;
  	}
  
--	ret = hidinput_scale_battery_capacity(dev, buf[1]);
-+	ret = hidinput_scale_battery_capacity(dev, buf[offset]);
- 	kfree(buf);
- 	return ret;
- }
-@@ -567,6 +575,7 @@ static int hidinput_setup_battery(struct hid_device *dev, unsigned report_type,
- 	dev->battery_max = max;
- 	dev->battery_report_type = report_type;
- 	dev->battery_report_id = field->report->id;
-+	dev->battery_report_offset = field->report_offset;
- 	dev->battery_charge_status = POWER_SUPPLY_STATUS_DISCHARGING;
- 
- 	/*
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 29561887bea8c..5c49f29912978 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -679,6 +679,7 @@ struct hid_device {
- 	__s32 battery_max;
- 	__s32 battery_report_type;
- 	__s32 battery_report_id;
-+	__s32 battery_report_offset;
- 	__s32 battery_charge_status;
- 	enum hid_battery_status battery_status;
- 	bool battery_avoid_query;
++	/*
++	 * Clear any previously installed snapshot area to avoid leaking
++	 * the old sdata and to keep sdata/snapshot_addr consistent if
++	 * the re-install fails below.
++	 */
++	if (kvpmu->snapshot_addr != INVALID_GPA)
++		kvm_pmu_clear_snapshot_area(vcpu);
++
+ 	kvpmu->sdata = kzalloc(snapshot_area_size, GFP_ATOMIC);
+ 	if (!kvpmu->sdata) {
+ 		sbiret = SBI_ERR_FAILURE;
 -- 
 2.53.0
 
