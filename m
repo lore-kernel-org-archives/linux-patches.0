@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831725;
-	b=OVYNHd7oJyN7g9EHBb1eZ63Z3PplsrpZDaSsJmn1lNfn/0M+xb19sS/X/rwvtMpBFTho
-	 1vUW3SEGjTJaJH/Lyw5iLXG7lOsCT0H3ZcqgvTdu6bdNvgvik8XC36JEIbJSsdiSlIM7C
-	 TCxfnA/sTUofOJm7brL8rtO9IjiXqlMHsqFI9X54h6WIBis9kzZrEUw/SxG5hbxG/1D7n
-	 3cNGTOYRJP8OhCUs3EJOWctPDGFigPAvbl40XE6t53SWUk+PNBifRNmZthpGmbeS6wG75
-	 dnW94JQaslfQphFtawngVb7YR+v+yp85rhd/ca2qhrPgYPrcIPYW8MjMAuvIzHOS8jA==
+	t=1793831726;
+	b=HSKfKJcaJuU/+BLvyk04NAGcpcAAEiSH8EFcrM4y8Q/+hWqhZuUTS6FYQEMMQCtD/yYp
+	 pkC2FCwekEg2mo7ob2HSlaB5tRtkbQlRKggblazFW7ZhRnv4cPVXO17yZzIwvtVHB3Bnw
+	 GUKzJLYA19/CLY/m+U5Uuw+5MT97ipSZ6365UiEwE35w9b3b3cR2lRoZXZeArs8Di3wxx
+	 GEUERol1sRBQ9Hm+Cq0gH3EXH2kMJ316BKGN+f3q8cq9mvHaoeo+KctzvImOHYeM+WJR7
+	 oJs67YhJQrtUuJx9eqIqNpDKyB/jt405WFosl5hIarb8F2RP099NSEJz99ayLja0waA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831726;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iaWOuU8NK+2UAhrTS2KOq5G9wL349hzrWzTJ+epcexQ=;
-	b=pDwQuZ16Cn6+A+qjRbmHqAqUDoB8zykv2d3PFrP/Kipir/LPznBNAoL+lskTR8HcCdL0
-	 NmJQf9yUGKddlXGCiIL/lSQxOaztmKcmnoTwrJFj1foFsTSlfmuF6TduC+aqAhu1g2j+U
-	 tdtkaO1gJTXCfb3NnCodmYwyWC172QDSnKvMGtzDbCKlJJvNWGfuXJLlFoJ2zcsmPE7vW
-	 ceQD2pmjmOlIYLh3oIGpfi+teSoCjgaQqIozTXoI0yi0KBDvZXroPhuw6BpXUliK2fF6w
-	 JyRRrKDDHwczwfTzkOwPL1o6/e95Sgy04TBiWE1y5g4u1oNwlgZjuzEVC3dRFoHHw+A==
+	bh=3fojTfqAgojNcMHdFyHVxjGoM8XE0fBJ8d3y7aYrZVM=;
+	b=mJRNZvyHCd7xZ4/OdNw6LsSK76JxlmveBon6pnN5oX7NiewRCu6wdNOQ39JNj+j1GBKQ
+	 P7svMDSIau01nPTyP6858JcXLVEKIbVh2yzNGjCh4DV4M6mpUvukftvjYrC8p4fkRlujj
+	 akogw2Twz6HPtjOXJ/ClHhOUavTbY5gkPbakTomj9/4/vNTeouFR/Kr1WjjjBth1WtwWj
+	 jCzQqrx7CacExrMvbdoAe4evBQVwgfxYw3JP0t7dGhh0z4Wf/oXu/EVHbsOhgeL/7wgrc
+	 jwzN3Bmm0cp4xEOjqaS8MiWi1dDV7dNwXvDnsGHdsS729qOgIAsSfVAEOZYabIxqA/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XopRXYQt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uz6TgPOR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8956606A842;
-	Wed,  4 Nov 2026 22:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F27D606A842;
+	Wed,  4 Nov 2026 22:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XopRXYQt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B721F000C1;
-	Wed,  4 Nov 2026 22:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uz6TgPOR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BBC1F000C1;
+	Wed,  4 Nov 2026 22:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831724;
-	bh=iaWOuU8NK+2UAhrTS2KOq5G9wL349hzrWzTJ+epcexQ=;
+	s=korg; t=1793831726;
+	bh=3fojTfqAgojNcMHdFyHVxjGoM8XE0fBJ8d3y7aYrZVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XopRXYQtJBpMVzeyv+/M9p+YfwUjF/qmjVk+uW2vhsK6c92V2bQA3wTsw9iIikBIE
-	 4QfT8QEe7E+0PpZyCLMyxylIpsQQ/skx9Kcaz4E8nDAEO/l7QL14PDUMAFoQb4A8Ee
-	 wPev563CFIBULrCkERgKgagHt4i4XYfIRyWghP9M=
+	b=Uz6TgPORl5Bo44U+/+eQWoQU6hhr3shoOJ043uhDdQYjAZ0wLpJSCwTvG43WuxSwQ
+	 KKb+MbG6ThX4gV1psSRkTV67BXGcoZ0XUwr9UdpcofmgigzeFwIPB9NDu4wawuc2n0
+	 gMZ2pXsYichFWmg7DEy4JClT1Qis+9zu67JwhS/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Benjamin Coddington <bcodding@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.18 0875/1005] NFSv4/pnfs: Free the netid when draining a data-server address list
-Date: Wed,  4 Nov 2026 16:10:08 -0500
-Message-ID: <20261104211107.764149445@linuxfoundation.org>
+Subject: [PATCH 6.18 0876/1005] NFSv4.1/pnfs: suspend pNFS on NFS4ERR_TOOSMALL from LAYOUTGET
+Date: Wed,  4 Nov 2026 16:10:09 -0500
+Message-ID: <20261104211107.790389664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,143 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-commit a7c8e96d1b9fa327cbdea514d047c8295b28d49a upstream.
+commit 28c950413605fb5b6cb3863c5e3274ea69701097 upstream.
 
-nfs4_pnfs_ds_addr_free() releases all three of an address entry's
-allocations, but the four sites that drain a decoded list before it
-reaches a data server open-code the loop and free only da_remotestr and
-the entry, leaking da_netid.  Both layout drivers drain that list when
-nfs4_pnfs_ds_add() returned a data server already in the cache, and
-again on their error exits.
+If the layout for the requested range is larger than the size the
+client advertised in loga_maxcount, RFC 8881 Section 18.43.3 has the
+metadata server return NFS4ERR_TOOSMALL.  The client caps
+loga_maxcount at a single page, so a flexfiles server that stripes a
+layout segment across several dozen data servers produces this error
+today.
 
-Lift the drain into nfs4_pnfs_ds_addr_list_free() so an address list has
-one owner.  A striping mount reaches the cached case on nearly every
-GETDEVICEINFO, since many deviceIDs name the same data servers.
+The client has no handling for it: nfs4_stat_to_errno() maps the
+error to -ETOOSMALL during decode, which nothing in the layoutget
+path recognizes and nfs_error_is_fatal() does not consider fatal, so
+pnfs_update_layout() clears the layout fail bit and returns no
+segment.  The I/O falls back to the MDS, but because no fail bit was
+set, every subsequent pageio attempt sends another LAYOUTGET that is
+doomed to the same NFS4ERR_TOOSMALL.  Files whose layouts do not fit
+the reply buffer never use pNFS and pay an extra round trip on every
+pageio.
 
-Fixes: 4be78d26810b ("NFSv4/pNFS: Store the transport type in struct nfs4_pnfs_ds_addr")
+Map -ETOOSMALL to -EMSGSIZE in the layoutget exception handler and
+have pnfs_update_layout() treat it like NFS4ERR_LAYOUTUNAVAILABLE:
+mark the layout mode as failed and fall back to I/O through the MDS.
+
+Fixes: d600ad1f2bdb ("NFS41: pop some layoutget errors to application")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/filelayout/filelayoutdev.c         |   17 ++---------------
- fs/nfs/flexfilelayout/flexfilelayoutdev.c |   17 ++---------------
- fs/nfs/pnfs.h                             |    1 +
- fs/nfs/pnfs_nfs.c                         |   21 +++++++++++++--------
- 4 files changed, 18 insertions(+), 38 deletions(-)
+ fs/nfs/nfs4proc.c |    8 ++++++++
+ fs/nfs/pnfs.c     |    2 ++
+ 2 files changed, 10 insertions(+)
 
---- a/fs/nfs/filelayout/filelayoutdev.c
-+++ b/fs/nfs/filelayout/filelayoutdev.c
-@@ -177,27 +177,14 @@ nfs4_fl_alloc_deviceid_node(struct nfs_s
- 		trace_fl_getdevinfo(server, &pdev->dev_id, dsaddr->ds_list[i]->ds_remotestr);
- 
- 		/* If DS was already in cache, free ds addrs */
--		while (!list_empty(&dsaddrs)) {
--			da = list_first_entry(&dsaddrs,
--					      struct nfs4_pnfs_ds_addr,
--					      da_node);
--			list_del_init(&da->da_node);
--			kfree(da->da_remotestr);
--			kfree(da);
--		}
-+		nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 	}
- 
- 	folio_put(scratch);
- 	return dsaddr;
- 
- out_err_drain_dsaddrs:
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- out_err_free_deviceid:
- 	nfs4_fl_free_deviceid(dsaddr);
- 	/* stripe_indicies was part of dsaddr */
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -155,26 +155,13 @@ nfs4_ff_alloc_deviceid_node(struct nfs_s
- 		goto out_err_drain_dsaddrs;
- 
- 	/* If DS was already in cache, free ds addrs */
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs,
--				      struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 
- 	folio_put(scratch);
- 	return new_ds;
- 
- out_err_drain_dsaddrs:
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 
- 	kfree(ds_versions);
- out_scratch:
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -426,6 +426,7 @@ int nfs4_pnfs_ds_connect(struct nfs_serv
- struct nfs4_pnfs_ds_addr *nfs4_decode_mp_ds_addr(struct net *net,
- 						 struct xdr_stream *xdr,
- 						 gfp_t gfp_flags);
-+void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs);
- void pnfs_layout_mark_request_commit(struct nfs_page *req,
- 				     struct pnfs_layout_segment *lseg,
- 				     struct nfs_commit_info *cinfo,
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -633,23 +633,28 @@ static void nfs4_pnfs_ds_addr_free(struc
- 	kfree(da);
- }
- 
--static void destroy_ds(struct nfs4_pnfs_ds *ds)
-+void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs)
- {
- 	struct nfs4_pnfs_ds_addr *da;
- 
-+	while (!list_empty(dsaddrs)) {
-+		da = list_first_entry(dsaddrs, struct nfs4_pnfs_ds_addr,
-+				      da_node);
-+		list_del_init(&da->da_node);
-+		nfs4_pnfs_ds_addr_free(da);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(nfs4_pnfs_ds_addr_list_free);
-+
-+static void destroy_ds(struct nfs4_pnfs_ds *ds)
-+{
- 	dprintk("--> %s\n", __func__);
- 	ifdebug(FACILITY)
- 		print_ds(ds);
- 
- 	nfs_put_client(ds->ds_clp);
- 
--	while (!list_empty(&ds->ds_addrs)) {
--		da = list_first_entry(&ds->ds_addrs,
--				      struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		nfs4_pnfs_ds_addr_free(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&ds->ds_addrs);
- 
- 	kfree(ds->ds_remotestr);
- 	kfree(ds);
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -9938,6 +9938,14 @@ nfs4_layoutget_handle_exception(struct r
+ 		status = -EOVERFLOW;
+ 		goto out;
+ 	/*
++	 * NFS4ERR_TOOSMALL means the layout for the requested range
++	 * exceeds what the client advertised in loga_maxcount (see
++	 * RFC8881 section 18.43.3).
++	 */
++	case -ETOOSMALL:
++		status = -EMSGSIZE;
++		goto out;
++	/*
+ 	 * NFS4ERR_LAYOUTTRYLATER is a conflict with another client
+ 	 * (or clients) writing to the same RAID stripe except when
+ 	 * the minlength argument is 0 (see RFC5661 section 18.43.3).
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2319,6 +2319,8 @@ lookup_again:
+ 			break;
+ 		case -ENODATA:
+ 			/* The server returned NFS4ERR_LAYOUTUNAVAILABLE */
++		case -EMSGSIZE:
++			/* The layout exceeded loga_maxcount (NFS4ERR_TOOSMALL) */
+ 			pnfs_layout_set_fail_bit(
+ 				lo, pnfs_iomode_to_fail_bit(iomode));
+ 			lseg = NULL;
 
 
