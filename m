@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831411;
-	b=VjrZJntZIGJ0Dfuo8rGeTsuoujT6aan0SKNEkIYTusURAF74eFX9D9zHtFEalE5mOyxl
-	 PSutKYd1rIwQnCbaoZ4Zd4XsIHBUHRLMmta8sNXohIGZiVA5ioVMKaW3jjHdNDk8d/obn
-	 /uZuBHZ+UGMin3mNIK3RAYnCKbJFL/cNNjFoRxWN3ZYy0eNJZS/Dm6dylDkKB7XmveB+b
-	 a2KKC46tmx0VQkikMnSGTym0J90Vhr20vF+WytOcAhSvxpFjwBLFl6ZLHhE14XohIMEvR
-	 2Ow2k3YbSvU88ADb3KI/RG6FtwnOd2ZlEmkv+VEE6xui9pKA9628fkvA+NDtZ83g0Nw==
+	t=1793831412;
+	b=UDcGlXumH6EXpN108fih99atMoHs1Wd2vClQXPM4OsDjPHGefI+bThQXHqJy4/UIRiqO
+	 1emReEgifjCZIc9ApL8LlhE7qL5hHygdscfbFOhfvo7W3GhQ6dbYyLb/2QZGlVT13Nu2g
+	 HXSNmR75PCyCZYNAh+NrckO/xr3fGi/t3yWchzsIJ9l8DmRISsPpL4u2assYfTFuuThDD
+	 Mzm+Io1hRBrlEI0Xy+L50aG2fs24c5KAJrvDLJ8r7hHJGN/3wv60aOj1BWfLuOKE3T1Vr
+	 wG2l7ZbXCOheiest3N2nFBXOQojeyRWmavFcaEa+CGUJsVSuLo+Yp8dhUbP9TQjP2CA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7Nybc1CuY43XddMuKf3jcvIY74S1y7YsSzT9qkc5UO8=;
-	b=WNnyDNwopwsXOwCt3o6YiG3p8UeryaWAriDsj8LrnKMXeNaSAp9PltdN6p/KccRoDEaN
-	 IZO8hDMoMp6f46NqANAYG6Ob7Im8FgUYUBHCnBHTG7j4Pgii1/1GPalAtfnMCtPRWJz2l
-	 5Wv4v/LoA7GexLA009IAgM0viQ0a88ITphboAjT/Z0fesm1LoYGp3j1aOL42QuOEZcXjW
-	 LswoNg4CNcXwtEYGYbOlab0xzzCyw968hyfE0tvhhLjMYSMKH4lafhvYq29Gx5Q78lkDu
-	 rq+KaBMjLIp3RW04JA8/D0Ri/xwPaz2bY1ayWnYdxJ1hOo4bu6SCu1dRFSK9lB4dtBQ==
+	bh=mfufBmCGbIQF6+1aZvpN1m+7bpj24utAR45fK92Y/lY=;
+	b=RCcY1vuW0InNGvF0EYFpLLkcsy2UUBmxgvKE/KDz0U1RRaXzGUAa2dihAHSv5kPR7F6f
+	 G0u1m4kAJrSLGk/juOMCZsgdIifSP11J+DoQ4iRyIj0LclBg7US4up4F/FJS61cwTsa+g
+	 334iwbzOU7vl6f3dxz8JjZ4tpbIORetFKot7BsTRjP+Tjpv/7PrNOb22P5nU7J3Oo+YTA
+	 Dgpfstp8ibpJORjXgMeqejJ6Bkuol4XYTHeEcXctFA02j682GP2fN6t5Oo43CmirKiMrv
+	 6mku1+maRwQcqYahyzFLGPFlG4rpPdBzMp7DOs1peddC4bjPJ6CLDJ0iDtnpQ8EbJmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apQPIgw0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgSmYAJx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3096B606AB2E;
-	Wed,  4 Nov 2026 22:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714D1606AB04;
+	Wed,  4 Nov 2026 22:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apQPIgw0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD531F000C1;
-	Wed,  4 Nov 2026 22:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgSmYAJx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A59A1F00A16;
+	Wed,  4 Nov 2026 22:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831410;
-	bh=7Nybc1CuY43XddMuKf3jcvIY74S1y7YsSzT9qkc5UO8=;
+	s=korg; t=1793831412;
+	bh=mfufBmCGbIQF6+1aZvpN1m+7bpj24utAR45fK92Y/lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=apQPIgw08VirKNyHU0epuFpUqxj1EifYV7F9Bnak7pCrn5Dnly2SxlQtLxTUco9Q/
-	 dZlAsjf04GUH0HKppThpKdc7TrEuVqCNkgeJXzRI+SdumuZfukpk/W14l5LPRicD/d
-	 yMgo3llJA/aeTBw62byqCpnBoePGTeCnsKIYEhD8=
+	b=IgSmYAJxPLHgAvOtJPv4LZm+Ipy0KCIi6JCouFZGoB8sa6Fyw19xoEyt9nPfaNeb4
+	 ZHR69DTYwXfAu1PGp8ZAfNVqyXaZLYgCNGORTP7buz6OdAEBtQtNBWGMoSP937v1uH
+	 TVKI569wDr810hxaVTOyQzgqSQ9Bunzq6/fh+tDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.18 0689/1005] s390/zcrypt: Fix out-of-bounds ptr advance in cca_query_crypto_facility()
-Date: Wed,  4 Nov 2026 16:07:02 -0500
-Message-ID: <20261104211102.915420486@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 0690/1005] HID: wacom: Use hdev->product in wacom_setup_touch_input_capabilities
+Date: Wed,  4 Nov 2026 16:07:03 -0500
+Message-ID: <20261104211102.942054711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,87 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 9fd7fca66735307fd7afa3450882a55ef80f2add upstream.
+commit 86472508a7ef74b525e79a79d2d02d911a641d6b upstream.
 
-The FQ reply parser code blindly advanced the walk pointer by a length
-value read directly from the hardware reply payload without checking
-that the advance stayed within the allocated reply buffer. A corrupt
-or malicious device response could push ptr beyond the cprbmem region,
-causing an out-of-bounds dereference or kernel memory exposure via the
-subsequent memcpy().
+Replace the lookup-dependent 'wacom_wac->shared->touch->product' references
+with 'hdev->product' inside wacom_setup_touch_input_capabilities() since
+'hdev' is already available (via container_of) and represents the touch
+device itself.
 
-Fix this by tracking the remaining reply buffer space in a variable
-and validating each device-supplied length field against it before
-advancing or dereferencing the pointer.
-
-Fixes: 2004b57cde6b ("s390/zcrypt: code cleanup")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Ping Cheng <ping.cheng@wacom.com>
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_ccamisc.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/hid/wacom_wac.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/s390/crypto/zcrypt_ccamisc.c
-+++ b/drivers/s390/crypto/zcrypt_ccamisc.c
-@@ -1615,6 +1615,7 @@ int cca_query_crypto_facility(u16 cardnr
- 		u8  subfunc_code[2];
- 		u8  lvdata[];
- 	} __packed * prepparm;
-+	size_t datalen;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -3966,8 +3966,8 @@ int wacom_setup_pen_input_capabilities(s
+ int wacom_setup_touch_input_capabilities(struct input_dev *input_dev,
+ 					 struct wacom_wac *wacom_wac)
+ {
++	struct hid_device *hdev = container_of(wacom_wac, struct wacom, wacom_wac)->hdev;
+ 	struct wacom_features *features = &wacom_wac->features;
+-
+ 	if (!(features->device_type & WACOM_DEVICETYPE_TOUCH))
+ 		return -ENODEV;
  
- 	/* get already prepared memory for 2 cprbs with param block each */
- 	rc = alloc_and_prep_cprbmem(parmbsize, &mem,
-@@ -1661,27 +1662,44 @@ int cca_query_crypto_facility(u16 cardnr
- 	prepcblk->rpl_parmb = (u8 __user *)ptr;
- 	prepparm = (struct fqrepparm *)ptr;
- 	ptr = prepparm->lvdata;
-+	datalen = parmbsize - 2 * sizeof(u8);
+@@ -3976,9 +3976,11 @@ int wacom_setup_touch_input_capabilities
+ 	else
+ 		__set_bit(INPUT_PROP_POINTER, input_dev->propbit);
  
- 	/* check and possibly copy reply rule array */
- 	len = *((u16 *)ptr);
-+	if (len > datalen) {
-+		ZCRYPT_DBF_ERR("%s reply rule array len %u exceeds datalen %zu\n",
-+			       __func__, len, datalen);
-+		rc = -EIO;
-+		goto out;
+-	if (features->type == HID_GENERIC)
++	if (features->type == HID_GENERIC) {
++		hid_dbg(hdev, "generic touch setup\n");
+ 		/* setup has already been done */
+ 		return 0;
 +	}
-+	datalen -= sizeof(u16);
-+	ptr += sizeof(u16);
- 	if (len > sizeof(u16)) {
--		ptr += sizeof(u16);
- 		len -= sizeof(u16);
- 		if (rarray && rarraylen && *rarraylen > 0) {
- 			*rarraylen = (len > *rarraylen ? *rarraylen : len);
- 			memcpy(rarray, ptr, *rarraylen);
- 		}
-+		datalen -= len;
- 		ptr += len;
- 	}
- 	/* check and possible copy reply var array */
- 	len = *((u16 *)ptr);
-+	if (len > datalen) {
-+		ZCRYPT_DBF_ERR("%s reply var array len %u exceeds datalen %zu\n",
-+			       __func__, len, datalen);
-+		rc = -EIO;
-+		goto out;
-+	}
-+	datalen -= sizeof(u16);
-+	ptr += sizeof(u16);
- 	if (len > sizeof(u16)) {
--		ptr += sizeof(u16);
- 		len -= sizeof(u16);
- 		if (varray && varraylen && *varraylen > 0) {
- 			*varraylen = (len > *varraylen ? *varraylen : len);
- 			memcpy(varray, ptr, *varraylen);
- 		}
-+		datalen -= len;
- 		ptr += len;
- 	}
  
+ 	input_dev->evbit[0] |= BIT_MASK(EV_KEY) | BIT_MASK(EV_ABS);
+ 	__set_bit(BTN_TOUCH, input_dev->keybit);
+@@ -4010,19 +4012,17 @@ int wacom_setup_touch_input_capabilities
+ 		input_dev->evbit[0] |= BIT_MASK(EV_SW);
+ 		__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
+ 
+-		if (wacom_wac->shared->touch->product == 0x361) {
++		if (hdev->product == 0x361) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 12440, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+ 					     0, 8640, 4, 0);
+-		}
+-		else if (wacom_wac->shared->touch->product == 0x360) {
++		} else if (hdev->product == 0x360) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 8960, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+ 					     0, 5920, 4, 0);
+-		}
+-		else if (wacom_wac->shared->touch->product == 0x393) {
++		} else if (hdev->product == 0x393) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 6400, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+@@ -4052,8 +4052,8 @@ int wacom_setup_touch_input_capabilities
+ 		fallthrough;
+ 
+ 	case WACOM_27QHDT:
+-		if (wacom_wac->shared->touch->product == 0x32C ||
+-		    wacom_wac->shared->touch->product == 0xF6) {
++		if (hdev->product == 0x32C ||
++		    hdev->product == 0xF6) {
+ 			input_dev->evbit[0] |= BIT_MASK(EV_SW);
+ 			__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
+ 			wacom_wac->has_mute_touch_switch = true;
 
 
