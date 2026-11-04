@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831083;
-	b=5Hga2iMutXctcsD8KSv0tdl+9tt2PDT81UnyS24w973bkpev6Ukt8Y+4/j8ltlwKjjEe
-	 4JhqEstBXQa8bexznDTT+tLLI2BanPY8eMQd1hSX1+WiSGLgHteAfxYAEe9BEtgDqHPUM
-	 tHmdyzprDFZ8pNtIf5KyaVb5mQ3XHcUMcsZgJ0AXVnwl4qSyvH7wgDlZZ3RxvV2LHe/Yq
-	 sUygduV2AL/mrd9VkMBNY1L156W/Z48Ofc1ECMiOH6XIH6DAFt7yUkSIOyTXGHJbFtJPI
-	 f+tUS+Mmk8f1yA+uTwe2No9uGW4foV+F/x3q10RB6Do64rpz8gFWG3JZOAm5pLCdtlg==
+	t=1793831084;
+	b=MPLH8kqOUE1hqVatjSKfvaQdxSV/ClUITuKOouSl8kS+nQCokAly3A3Wsjq6/rNQnZmD
+	 ldoAAQJTsqjinbYdhsCmG2PY73jEOaD0Hi8/UZ6twNe4nPqreEIPxFPn1BIQTco9VY1Uq
+	 bPeg7AT+CdTfIqeOZBtMRudPUA3qTEhw6ICxo5nASu7sLFYMdi8xYgi4tbe1VMI1RlV0m
+	 PMTwohUMm8zrS7M02QYWMW/NGOfpUIHDmceJcPP5oKq/O4Eb68+2L/DDf/8PYGvL9KuN2
+	 HxXu9DNdDUvHg/0v9EG3QhjVfM3yrCBxstHSWkDGy+m+dsRsb0VNTplq1XaCSuxd7uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831083;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b1TJHAFL/HJvsvHKSYyvzdbbTNHTbEerZgt1T6XIwhA=;
-	b=bz+784CFlQUy1L8VulDjXU91kE197JaHRkFFP4m8Lh6AE2qx1ZxT54adsFRsO1Kn80OM
-	 pPMla7Nrb/vyXOtZxt1GawbCiru4aYSzGpWh/5FuAYq4undbyA/TMLpZz5y+PHmh3O3YC
-	 ALiSN8TUDqutUgdebSVAaF7u5X/qLcFO2GY0f1/YoS4hcQqwSHKUUfC1nH/mRtmB3SOnk
-	 KFS0rx3hNPd6YlyHwt6C9RKRSIRwQ1JrxkFWR3+vNYjEL/FUsjJHB5IYLpd5Z8xuXvqGt
-	 gJNir2kl9MhJvP5NH5SQYawQUSjPBe2NHUmdgg4mUOiebTK0C93nWVt05feRzzrPFhQ==
+	bh=fs/k/1745fUP0ITiSnVhbQfcuuvbcdbWsJiHomAjUAQ=;
+	b=PYyBXkvuzmWpTdK3SYVMk5+q5uoA8Z7oLH/abol9cbNPc+6Z/m7w6rLXmIKFP0yccPfL
+	 UVE7988gostF6qMoh5vGtS4lEKaTYp/7oPWKdvFoVeuhnwH57vTea0EhrgzT+1nw6G06A
+	 LTdLdEQRVMI3LoU6fjpNSTAgsEUTYvYRAvkvNJovZI1RIwWdczSEPQXUntXkiuqB6vnGJ
+	 FtRgnrpVc/PJAAbm2JN3MV4yj8ZX+aGOCHvFnrMGkniMMHc23LNMZoP4YHkH5LTcFQtXe
+	 4/PaYmgy0ldWeGo1IkMPwXTkrW1Y51KU2iSUq07/MgYjrpkwt9N3Jy++Ca7NEK9J6Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WjQ5AQOp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZgCKui1D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1DE606AC29;
-	Wed,  4 Nov 2026 22:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4E4606AC29;
+	Wed,  4 Nov 2026 22:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WjQ5AQOp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BAA1F000C1;
-	Wed,  4 Nov 2026 22:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZgCKui1D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98881F00A16;
+	Wed,  4 Nov 2026 22:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831082;
-	bh=b1TJHAFL/HJvsvHKSYyvzdbbTNHTbEerZgt1T6XIwhA=;
+	s=korg; t=1793831084;
+	bh=fs/k/1745fUP0ITiSnVhbQfcuuvbcdbWsJiHomAjUAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WjQ5AQOpZjDO2mFJOskLsM5FDw4GsGElurDepXRgteo6lwSQg6+WSl7dgyqFqX3M4
-	 snCwgXayQw+5q4O48snRS4fXDGMXtXWsqlzud3IvXo7E6UsgGryMPlDP/v911zRfGw
-	 8UQzMqx82dgR1pG7lckNte8LHXiHddMqFguD7u30=
+	b=ZgCKui1DGEQU4UHppXP2fZlVQC8wmjOUxsGufabANuooTIq+EiKQA2FZEaojdxjTp
+	 LW2TuYdQg1XDrzfxoeqczRsir4j33gQJl0LPF4OFt+qd+nOLy5XdnvkilrTR7tHL07
+	 KsnHucQVyZSocK62CHHhKyWLlywrcTYgH/0nELOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KIM MinWoo <phrimm136@gmail.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0494/1005] ALSA: hda/realtek: Add quirk for Lenovo ThinkBook 16p Gen 3 ARH (21EK)
-Date: Wed,  4 Nov 2026 16:03:47 -0500
-Message-ID: <20261104211057.801154464@linuxfoundation.org>
+Subject: [PATCH 6.18 0495/1005] ALSA: hda/realtek: Add quirk for Lenovo ThinkBook G8+
+Date: Wed,  4 Nov 2026 16:03:48 -0500
+Message-ID: <20261104211057.826717542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,24 +68,16 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: KIM MinWoo <phrimm136@gmail.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 3867e38b2d4b844d89076f988c7b9741c87a9858 ]
+[ Upstream commit 4322ac247f4ce7932edbd46aa37f3dae62cde424 ]
 
-The ThinkBook 16p Gen 3 ARH (SSID 17aa:3871) has a TI TAS2563
-amplifier device on I2C, exposed by ACPI as INT8866, the same
-arrangement as the Yoga 7 14ARB7 (SSID 17aa:3870). Without a quirk,
-the codec falls back to the vendor-wide Lenovo quirk
-(ALC269_FIXUP_LENOVO_XPAD_ACPI), the amplifier is never bound, and the
-internal speakers stay silent while the headphone output works.
+Fix Bass Speaker volume control on Lenovo ThinkBook G8+ by adding
+quirk 17aa:38dc with ALC285_FIXUP_SPEAKER2_TO_DAC1.
 
-Reuse the Yoga 7 14ARB7 fixup, which binds the INT8866 device as a side
-codec. ALC287_FIXUP_TAS2781_I2C does not work on this machine because it
-looks for a TIAS2781 device.
-
-Assisted-by: LLM
-Signed-off-by: KIM MinWoo <phrimm136@gmail.com>
-Link: https://patch.msgid.link/20260923013756.106033-1-phrimm136@gmail.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221799
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260921124450.639601-1-zhangheng@kylinos.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -93,17 +85,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 10d930d8fed72..b1cb93922c3bc 100644
+index b1cb93922c3bc..6afb35769f746 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7527,6 +7527,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	HDA_CODEC_QUIRK(0x17aa, 0x38a7, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C), /* this must match before PCI SSID 17aa:386f below */
- 	SND_PCI_QUIRK(0x17aa, 0x386f, "Legion Pro 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3870, "Lenovo Yoga 7 14ARB7", ALC287_FIXUP_YOGA7_14ARB7_I2C),
-+	SND_PCI_QUIRK(0x17aa, 0x3871, "Lenovo ThinkBook 16p Gen 3 ARH", ALC287_FIXUP_YOGA7_14ARB7_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3874, "Legion 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3877, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3878, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
+@@ -7572,6 +7572,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38d5, "Yoga S990-16 Pro IMH YC Quad", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d6, "Yoga S990-16 Pro IMH VECO Quad", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d7, "Lenovo Yoga 9 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x38dc, "Lenovo ThinkBook G8", ALC285_FIXUP_SPEAKER2_TO_DAC1),
+ 	SND_PCI_QUIRK(0x17aa, 0x38df, "Yoga Y990 Intel YC Dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38e0, "Yoga Y990 Intel VECO Dual", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38f8, "Yoga Book 9i", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.53.0
 
