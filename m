@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829258;
-	b=KTGWCBNW69H6oOznMGI9ZUy9te5tJGgeXQF99ev6yKuWJuXtwfCPwjUS4rPmaAQTubkL
-	 obqfu19XKYNaOetA8XTqEqP05sWCXPYDsqnINfjPdMviXXqx0UqiGd9fKjhAVzerJdusv
-	 ObLfh2gQAvFbKjZmXjCdO3LC85zQ7klETfWFxuIdrdHcJZ8KXMXA8HRU1APuQhJ3YE70k
-	 CPhZ/Ubw8n8Ce3EkDOBZZeKPAYABjSw39N+S8zA2LWUH0hEa+PlROsaK5NwpU9c37DUgk
-	 zhIZJNJWHPnFzJqCvbPOAMbIp8KYy2bYwlc5PMmYI2uNQa+VOvHuzKG84ECp4f08tWA==
+	t=1793829260;
+	b=3RzDRi1JPiZHHS6e9EbeNlY79QNBHyyS2gwt56OylqUeVMEpY2f2ES7rBzkpijlbm3a0
+	 wUxXxTNsZIU4yXNbPiBAjWNt3XzqQVIimLaYxP4E2aQeCILkvl7EphiP8Ug0LBw45/XRl
+	 O0fgL+IiEEW5WnwRxobxnc/KWUpZaOP85Ta1U+k3SB0uqOo0p95kp4qlMkPC6la3v7G/K
+	 odXgf8zEFKBOqDN3OCyyFiS47N6if4U6cidowhH/wQnO2aCQCxe5M86vR2KS51QwAhN8z
+	 gyjYRKfJzWI5HjUo/QBynz2U6b3rIozyiAbmrQxTAxA6wCVbqqWesfx3m/+WkVtIL+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=On+FNtrbdUEwr9V7MPvIs4BeNLZjGQFoInvjVZIhrgM=;
-	b=2pZQxcjUSskg9vGYtorlUxczTmPlqAkJ7DHiHf0nJVQ8YLm6TzXwC4KoGZCzmthEq1X/
-	 UGKT/18rIM1WU/3eAAAYNpNSZ41Vpq0uQYEkklEY/Q9aMOFhseZ/PH9S5jERecbr09SPe
-	 oeZyQxsq9zLXeomTATTi5yluceAlBIpz1yyI8R9WA63GSX+USf/20vlQRuEPGj69hp5Oo
-	 YPTkNx6TCiOWz7xk6JmtP0cP2K2IixmmU9gnx3KvvOlGUotuIsL43rMLelAT8W9+72Fs6
-	 EEK5G6LPWAN8MT8GgGEozL7XKIznxlfQpvELNNRbLY6cJxO3iJv6SfjTgkx+CoT88Rw==
+	bh=2itmuGFapnXTAnOiZvb9362yULGLhjvqXZJXPful/i8=;
+	b=lHdmWOmKMLwrqIsBA3JRUr/Od7jp9ACnM1lM3O6q2NM9Rpk2o0EFE0wWdNYF9iZts46l
+	 VSzlAUUrZHnHpoQdEj+XIBfgahvFjiZSPrZ1sbhMpKBl6ENFInnFbw53nPDVFXdG3OHlN
+	 7BFq9YWeiFXOCTovnX8COunBYM8n7ZuuObn1N+H2utg9R6lGkRaUNXP68RsaKOB5KCC9D
+	 d5L5CpqCtzVmP0TQ0SICQmumU/kn4FnUy+5H932TkwqrLxTrj8NTTfGeJ+MtE6QL9sZ96
+	 VqKwuEIH3amfEDSXnn5G4+1M6D/cKobxgaFNSoMWKTEWK+WLs1ItfFOxu8/n8m97jWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lBpop7W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUdQBIti;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591FF6074583;
-	Wed,  4 Nov 2026 21:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC24D606A33B;
+	Wed,  4 Nov 2026 21:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lBpop7W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5071F0093A;
-	Wed,  4 Nov 2026 21:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUdQBIti
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DEE1F0093A;
+	Wed,  4 Nov 2026 21:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829258;
-	bh=On+FNtrbdUEwr9V7MPvIs4BeNLZjGQFoInvjVZIhrgM=;
+	s=korg; t=1793829259;
+	bh=2itmuGFapnXTAnOiZvb9362yULGLhjvqXZJXPful/i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2lBpop7WdI+koveEA1+ic3YFQyfT+YOQx+QImC2VcBdBVfGvaAgeZVh9WlnJWpQkL
-	 O4kIZI5IlVpFootjF+cQN8cFKw/LXZUZR1/uvJiC3fJVlx5qoe9tmLvNeB/HDTXOJ9
-	 ufiWcagVO4GhyeSSuksK0p3A9AciM09ZKAJXD2RA=
+	b=vUdQBItisSXmef13gKms+zPTcWgt8kDFvWz5YQoomegrn8dU+AdmK6E2VRpek7siN
+	 mUhGybU3pnh1I2so/hWftnHpoLMU1mGVfOexpAKpyU2an2NxKjYAWJVPADnXywfhW9
+	 QDwV63LZb1jEqPlGWGhkEXk75mCfEW1puBkWexSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 547/547] ksmbd: keep retry timeout clamp bounds constant
-Date: Wed,  4 Nov 2026 16:12:11 -0500
-Message-ID: <20261104211053.944159298@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.3 518/547] io_uring/kbuf: advance head when a pickup empties the buffer ring
+Date: Wed,  4 Nov 2026 16:11:42 -0500
+Message-ID: <20261104211053.111452093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,39 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 146c3fc6540e24eef6296395a35bf5b924182e8b upstream.
+Commit 8742f4b5a472c347fe568a73468a2d9e4d630b33 upstream.
 
-With CONFIG_HZ=1024, msecs_to_jiffies(1200) includes an overflow check
-that calls jiffies_to_msecs(MAX_JIFFY_OFFSET). Its saturation branch
-returns MAX_JIFFY_OFFSET, which exceeds the six-second upper bound.
-GCC 10.5 carries that branch into clamp_t()'s bounds check and fails to
-build ksmbd_tcp_writev() on MIPS.
+io_ring_buffers_peek() flags the request with REQ_F_BL_EMPTY if the
+buffers it picked were the last ones available, comparing head to tail.
+When the loop breaks because max_len was exhausted the buffer was picked,
+but head is left pointing at it, so the flag isn't set if it was the last
+buffer. A bundle receive then retries, finds no buffer, and the request,
+which has received data, is marked as failed on account of the -ENOBUFS.
+That severs a link, and ends a multishot.
 
-Compute the 1200 ms lower bound with DIV_ROUND_UP() instead, so both
-bounds are compile-time constants. The lower bound still rounds up to
-the next jiffy, and the retry interval remains between 1.2 and 6 seconds.
-
-Fixes: c0632d2010ff ("ksmbd: track delivery of queued TCP writes")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610251743.jztr17Ib-lkp@intel.com/
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20261023091711.83481-1-chenyichong@uniontech.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_tcp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/kbuf.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -696,7 +696,7 @@ accepted:
- 		lock_sock(sk);
- 		tx->tracking->retry_after =
- 			clamp_t(unsigned long, 6UL * inet_csk(sk)->icsk_rto,
--				msecs_to_jiffies(1200), 6 * HZ);
-+				DIV_ROUND_UP(1200 * HZ, MSEC_PER_SEC), 6 * HZ);
- 		release_sock(sk);
- 		tx->tracking->valid = true;
- 	}
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -326,8 +326,10 @@ static int io_ring_buffers_peek(struct i
+ 
+ 		arg->out_len += len;
+ 		arg->max_len -= len;
+-		if (!arg->max_len)
++		if (!arg->max_len) {
++			head++;
+ 			break;
++		}
+ 
+ 		buf = io_ring_head_to_buf(br, ++head, bl->mask);
+ 	} while (--nr_iovs);
 
 
