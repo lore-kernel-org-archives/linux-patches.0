@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831124;
-	b=KTCb9qX1dMH2qQSbs2d5SCc7beKVkk1a8FEDc8dfqISG2le+K+DUG87ymTDRFo+Gkf10
-	 w56jUKzgeSAa7gLsQ/tRRKFjlDYJKcCBLdTWJggvcuDGjfiIha5knmd4P7hcWa3nWzK4M
-	 8aDo479pk+7FdDDvQZ26wl/Q0JSY0ymaGTByfZ5VgFt9iOGB3h4DfBnLa+HaUbLsXvbla
-	 nPmR8+SCCeGV/dE78hJHphoESnrRKGislmscq+6Z3kfxXzGTkv4WGK2+4Tdv/Plzztb6g
-	 qrVzQU7FFV26qzOMdlLjUDsMQ8JHhccMJ0llw3ROiqm4/8JDDUBRr5zYpf/IZD4iylQ==
+	t=1793831133;
+	b=3Idrn2hjV6HAvDnlKfHkhMM1bWzIeM+QW7VLuvnMSNKp+Xlh+EDQq0KGP2VbdRRPo3Tp
+	 uztsBQzL3F93SV2Pa9j3aRe3jtsXLt0BbWulBz7MW2jMetfiOEGULVRObuHFQo0rYXXTE
+	 ZB6+khh3rbC/UH55+MBMujptdn3NrZjVwK8e5/sCYekDWb4A4CpIV/a6yfsXst/sLv5CI
+	 shJys2GyuPHhy39ABXWm0wKaZ/R19QUPKJybfuZB7P8m+6EJoz9RZKjCD418sK05Gb+/o
+	 MMzdw2plSaU/KVa/XPV2yBs5/ulsCdyuEGWVJOGx+cDqLEFtv3BTO5GQFIgAoYWRyYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831133;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/ww0ru1yJ7siN6JkkUIjwHGN903AORw6eTAi7qPQEnI=;
-	b=BD329Z9NmxJpU1OOnbr7ximyFiP42k6pkCFuRk/442z1VzzPzXk2pCV4kid9KFkAzK4W
-	 mxDKolPR3loqZRkGJiPbBlUgHucsCjUPLthzKS75F65ssIehK1eeFqx8nuOmvJJr2F/Ww
-	 hlJ7e1xinozccZfFAdX+VfyQDJ7LZpssWys6xvWjgJR1ahriH09YDm8Tmver6ZiRmDlQ3
-	 cpdtzWBXtKjGXi8JRIjYhDD/T7Rf2RvpxDWMQP2AmVTtcjdyuxl7tEwldszHNEEkmz+4U
-	 VRLV1xsjOPBtvmnbrpT+sIn8GRoCi3lsOId+H3KkxDtxL0fmIAGExIGenJeirA4XmtA==
+	bh=rEoLhvsN9HAs8sz1zd2NNQ4KwsHQophdyKYKHoC+miE=;
+	b=nIIzQB6Kvb5IPv+A08OHldktC7am6HQfpUrK3vNS/20zGarmaz3PTdbGuuDS7oeOjxLu
+	 HCG0OK8N2z6fzTAQRuUGjzRkmLb8AdZKY6hUopnPxMW69EgiAHNqc8haFaFWj4+sRu12W
+	 mjWaxFqpCITzLgE/ATacijVCrZ0h3KoXSMLAhVJ+pnAIzuBsmr09ob9tAFyfe3iJmuRdV
+	 jY6e1GK63m/F/JpuxUZIS87X5Ux44zTnNp+qk1btlmNk6XzXMyH1DhyRACqySz4aoQjX+
+	 Z33YIJh+3msYnAiFrMg4Sv++BSzdawaoivsA/1qMLuJd6cx6YOXmvQtlVQj9B0L1upw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nsegK/+C";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTaxwCEc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3DE606B3B8;
-	Wed,  4 Nov 2026 22:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB36606B3AF;
+	Wed,  4 Nov 2026 22:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nsegK/+C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416751F000C1;
-	Wed,  4 Nov 2026 22:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTaxwCEc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E7E1F000C1;
+	Wed,  4 Nov 2026 22:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831123;
-	bh=/ww0ru1yJ7siN6JkkUIjwHGN903AORw6eTAi7qPQEnI=;
+	s=korg; t=1793831133;
+	bh=rEoLhvsN9HAs8sz1zd2NNQ4KwsHQophdyKYKHoC+miE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nsegK/+Ca0K7bQ+eWidQBVokuE8EQtXmqs11o7iXQovcLHER8mgUt1xCMlB/gC+l5
-	 hICHGqMXGJpax1litJ7SJu/uhT4njLQkBiITq0zol9aYsBnGyelvg5tiShw0rj9U64
-	 w9sRE+nBaZE3qCiSgKzFmhbfL4NvJ7MLRMSiMVN4=
+	b=jTaxwCEcJ4S3tDOLp1QUnBB1MHhzT0i2fnsV83mIrgf6EhNJpORwBQCl06mbtcyU0
+	 4MjEnDoPn9mJcWxB8GCQQfoG29cTiLH1uFRiXoVoceD3pLm4u5uYRANIrQK0El/I+S
+	 mgFHJZP5Gcvds2pY7wuYnXDAeharyvRLnft6Yls4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 0517/1005] blk-crypto: fix NULL deref and UAF in __blk_crypto_evict_key()
-Date: Wed,  4 Nov 2026 16:04:10 -0500
-Message-ID: <20261104211058.413177103@linuxfoundation.org>
+	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 0518/1005] ceph: fail readdir when the MDS reply carries no dirfrag
+Date: Wed,  4 Nov 2026 16:04:11 -0500
+Message-ID: <20261104211058.439308678@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,99 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
 
-commit c8c53d669d4e45b3a804013251a34387d7e11bfb upstream.
+commit 728c856d7da04fb79f7aa00e974ffb6f55e55995 upstream.
 
-Sashiko reported a possible NULL pointer dereference, triggered by the
-following flow:
+A ceph mount oopses in ceph_readdir() when the MDS answers a READDIR
+request with a reply whose extra blob is empty.  parse_reply_info()
+skips reply blobs whose length is zero, so parse_reply_info_readdir()
+never runs, r_reply_info.dir_dir stays NULL, and the reply still
+parses as successful.  ceph_mdsc_do_request() returns 0 and
+ceph_readdir() then reads rinfo->dir_dir->frag with no NULL check:
 
-  dm-inlinecrypt ctor            # first use of the fallback
-   ├─ blk_crypto_init_key()      # succeeds, ctx->key.size != 0
-   ├─ blk_crypto_start_using_key()
-   │   ├─ hw-wrapped key: -EOPNOTSUPP
-   │   │    # profile never allocated (NULL)
-   │   └─ raw key: fallback_start_using_mode()
-   │      └─ blk_crypto_fallback_init() fails
-   │         └─ kfree(profile)   # not NULLed
-   ├─ goto bad
-   └─ inlinecrypt_dtr()          # evicts whenever key.size is set
-      └─ blk_crypto_evict_key()
-         └─ blk_crypto_config_supported_natively() = false
-            └─ blk_crypto_fallback_evict_key()
-               └─ __blk_crypto_evict_key(blk_crypto_fallback_profile)
-                  └─ profile->num_slots # BOOM!!!
+	/* extra */
+	ceph_decode_32_safe(&p, end, len, bad);
+	if (len > 0) {
+		...
+		err = parse_reply_info_extra(&p, p + len, req, features, s);
+		...
+	}
 
-This issue can be reproduced using the following commands:
+The oops on v7.3.0-rc4-00537-ga3ff15db6820, one getdents64(2) on the
+mount root after an ms_mode=legacy mount, trimmed:
 
-  dd if=/dev/zero of=/tmp/backing bs=1M count=64
-  LOOP=$(losetup -f --show /tmp/backing)
-  SZ=$(blockdev --getsz $LOOP)
-  KEY=$(head -c 64 /dev/urandom | od -An -tx1 | tr -d ' \n')
-  dmsetup create ic --table "0 $SZ inlinecrypt aes-xts-plain64 \
-    $KEY 0 $LOOP 0 1 keytype:hw-wrapped"
+BUG: KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+CPU: 1 UID: 0 PID: 266 Comm: ls Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
+RIP: 0010:ceph_readdir+0xbff/0x3ea0
+Call Trace:
+ <TASK>
+ ? __pfx_ceph_readdir+0x10/0x10
+ wrap_directory_iterator+0xa2/0xe0
+ iterate_dir+0x1da/0x5d0
+ __x64_sys_getdents64+0x13b/0x2a0
+ do_syscall_64+0xdd/0x4a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-And the following oops is triggered:
+The unconditional frag read came in with 81c6aea5275ea ("ceph: handle
+frag mismatch between readdir request and reply"), so the bug is old.
 
-  ==================================================================
-  blk-crypto: loop0: no support for wrapped keys
-  Oops: general protection fault, probably for non-canonical address
-        0xdffffc000000000b: 0000 [#1] SMP KASAN PTI
-  KASAN: null-ptr-deref in range [0x0000000000000058-0x000000000000005f]
-  CPU: 5 UID: 0 PID: 901 Comm: dmsetup 7.3.0-rc3 #1 PREEMPT(lazy)
-  RIP: 0010:__blk_crypto_evict_key+0x2e/0x3b0
-  Call Trace:
-   blk_crypto_evict_key+0x24c/0x320
-   inlinecrypt_dtr+0xf6/0x160
-   inlinecrypt_ctr+0x2d3/0xbd0
-   dm_table_add_target+0x661/0xf40
-   table_load+0x1c4/0x490
-   ctl_ioctl+0x32f/0x5f0
-   dm_ctl_ioctl+0xe/0x20
-  ==================================================================
+Treat a reply with no dirfrag as a protocol violation: warn once,
+drop the request and return -EIO, the same way ceph_readdir() already
+handles the two malformed-reply cases later in the function.
 
-dm-inlinecrypt is the only caller that can evict a key that was never
-started, as fscrypt frees such a key without evicting it.
+Tested on v7.3.0-rc4-00537-ga3ff15db6820 (KASAN).  Unpatched, the
+getdents64(2) above takes the machine down (oops=panic) on the first
+READDIR reply.  With the patch it warns once and getdents64(2)
+returns -EIO, no oops, no hang.  A conformant reply for an empty
+directory — dirfrag present, zero entries, FRAG_END|FRAG_COMPLETE —
+still lists "." and ".." and returns EOF on both kernels, so normal
+readdir behavior is unchanged.  The oops is still present in
+v7.3-rc5 (72d3fcf802c45).
 
-Fix this by returning early from blk_crypto_fallback_evict_key() when
-tfms_inited[] is not set for the key's mode.  tfms_inited[] is only set
-after blk_crypto_fallback_init() has successfully initialized the
-profile, so the crash above is no longer reachable.
-
-The bug has been latent since commit c984ff1423ae ("blk-crypto:
-dynamically allocate fallback profile") was merged in v6.5, and only
-became actually triggerable when commit e7f57d2c47e2 ("dm-inlinecrypt:
-add target for inline block device encryption") was merged in v7.2.
-
-Fixes: c984ff1423ae ("blk-crypto: dynamically allocate fallback profile")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://patch.msgid.link/sashiko-outbox-167341@kernel.org
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/20261014155131.GB322435@quark
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/20261023081908.3505413-1-libaokun@linux.alibaba.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 81c6aea5275ea ("ceph: handle frag mismatch between readdir request and reply")
+Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-crypto-fallback.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ceph/dir.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/block/blk-crypto-fallback.c
-+++ b/block/blk-crypto-fallback.c
-@@ -465,6 +465,12 @@ bool blk_crypto_fallback_bio_prep(struct
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -466,6 +466,10 @@ more:
+ 		      (int)req->r_reply_info.hash_order);
  
- int blk_crypto_fallback_evict_key(const struct blk_crypto_key *key)
- {
-+	/*
-+	 * Pairs with smp_store_release() in
-+	 * blk_crypto_fallback_start_using_mode()
-+	 */
-+	if (!smp_load_acquire(&tfms_inited[key->crypto_cfg.crypto_mode]))
-+		return 0;
- 	return __blk_crypto_evict_key(blk_crypto_fallback_profile, key);
- }
- 
+ 		rinfo = &req->r_reply_info;
++		if (WARN_ON_ONCE(!rinfo->dir_dir)) {
++			ceph_mdsc_put_request(req);
++			return -EIO;
++		}
+ 		if (le32_to_cpu(rinfo->dir_dir->frag) != frag) {
+ 			frag = le32_to_cpu(rinfo->dir_dir->frag);
+ 			if (!rinfo->hash_order) {
 
 
