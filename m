@@ -1,58 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831535;
-	b=yW9tykghbW7JcrVEn/MUuLEbA2WBAtIhTqTfnjlxTFhtQE0vk0Oq0NV3JjXV58+kepAp
-	 Q+sf9cXHQ0MLkLE5qakgS36OnFfWzhOkXpjg7KNPMKj0z+rCSdvEs9IoPYMM/iz/wctfX
-	 EErNZYWamVksjQkXemUMO+3B7CZbwVcyr/CM1neQYLBoGEml1WlBM3zZK2nYbr8eSDZ30
-	 xb+96fRoR0VsJAHSatPIVSb7jklpWrzfE3H9MuhP5nzY+w65y49f7arIucbVWB5HLO3ip
-	 KLJ4ycmLh+VUPO5IkrEuV9fg41CrsSNVseuj1li0QBZQhd58XvqmbbMom6uOjolAlLQ==
+	t=1793831537;
+	b=D+EYbMuN82yvTa2cArmFzmDW1ma8agYHYT7yGMrl7uiOMjMP84fM6Q1W7I/ov2Xb9J7I
+	 p4IPXoaaZIkmgIA6t355xoXRsfJtFTtVR5SINg+ma/XAasVvdyinLlbS19Qad5YFHeAqm
+	 mmatkNJ9aqDLrEN4FUTR1H6DuJXn+2fYlMwsPsmkoGur0DmSV+FJU1YAbCy+G0TEiYdQL
+	 LRxpw17Sfsk8s8pT9N/NZD+oHMtco4cAFONz74Uq2b+XM3JFkiyOlrmXtd7RQWNUnZ16Q
+	 a1BmvSy4h53hYp54vXWLlrpmEj6JBZaCxnaC0RI246hdWsP3VG+nfmU4T8Ey+52qdUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831537;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WJ5Z6YoAL3up9sqcODqB6GqNgmx8s/pXaL3Yk8THvjo=;
-	b=EHim6v4vNTkgnxgFtEZdgTtvOEh5PCoE55v+miXfoczTeDwn02YeKMg+2z7TnU7N48iP
-	 fJgE5pRQILsLzl/5jhWhu/USB6TQCDz9kVJG982RTk+YT3hAdndEai0zUN+WHk3tsp9Pk
-	 VT0mdT2uDz5E+PO7fnuMIlpBIJEYxnaonfKOl9aRduFcdvvKNxPE3v3QrwS/sGhNT/wkw
-	 9WaZjG49lDj5ocD4fGgYs2kPwOe1az0CdwcwZ0rU6GeCvmaQJYgehHC0NAB8StfLdAOkU
-	 cvlMCqgHvGfjkW7W7kd07QaOFjL7LZJIJzRdMDbjPN2o0N+xrd0gSGpeYaos7WnkqFg==
+	bh=X37FAHOKHmNgZeYBBRuYL3HDWSHMANMHep0xJe6pJXQ=;
+	b=ZXaRVD8LfXvgHYSG8hVmeLJPAfOMplxlfO31jA8EpkgEvNbxuUnYGwIuo2X4t4gAGUEI
+	 aikioMrcJ2tMuzo4qn1Y1qOsDBPT69LpoWgdIuZxtcZhlpj6tBhTuz1adShvScSEZgrEx
+	 N2C7s+B9CqqrFMdeUpEikK5enjPGjn/qal0zKRfdo1sJmXSgZgXnxjWnkg6OvfeGHEv7i
+	 MXtmvGsITconMXf2fquF6RjS/GKbE1gYzkoW7kFptG97yO9guBAD9PbVMfXg7HZGBAP0+
+	 OkPG2FsVh5mG7HihLhPbm1RiMzEv842bcJ7/CbThTFkpRdUPuaFQnBC+Cc6loYigGSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VFuNkhAc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2yd2VZ8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B938606A332;
-	Wed,  4 Nov 2026 22:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32026606A332;
+	Wed,  4 Nov 2026 22:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VFuNkhAc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4421F000C1;
-	Wed,  4 Nov 2026 22:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2yd2VZ8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE63D1F000C1;
+	Wed,  4 Nov 2026 22:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831535;
-	bh=WJ5Z6YoAL3up9sqcODqB6GqNgmx8s/pXaL3Yk8THvjo=;
+	s=korg; t=1793831537;
+	bh=X37FAHOKHmNgZeYBBRuYL3HDWSHMANMHep0xJe6pJXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VFuNkhAcoTyXxzJs3NkzhSXBZJKuLDXTSfqsIk78Mbna2KTPvIGd6iJCtFiY6hf5K
-	 K2zPJUhDMRnW/BlABExUjZOulAwWiSfKGr7sH4OTBXMwgo2DEJv/5Rqe8Q/yGLSVID
-	 2dIjGbBsKxJ/8/lSJTDCPp/OXh9+AeI0tAwA7lIg=
+	b=L2yd2VZ8lB8rYer1HsHOtxLFWV8ZkZ5OLDhgVSMA8KdpwrWvt0gSgC9v0h8YLftrs
+	 h/8fd05ZLiRRCctl00GlO4S2efWcBfS+AdnRLU7tEZI3HocdT73ELEGk0iJ8LM8bft
+	 vJlNl8jo0JbljOxQlY7QaMAww7RaEOmFOjJZyUyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>
-Subject: [PATCH 6.18 0756/1005] ocfs2: fix chunk number of the first chunk in a local quota file
-Date: Wed,  4 Nov 2026 16:08:09 -0500
-Message-ID: <20261104211104.615845770@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.18 0765/1005] ovl: check the casefold flag of directories only
+Date: Wed,  4 Nov 2026 16:08:18 -0500
+Message-ID: <20261104211104.838751995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -74,117 +67,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-commit 4effccfd50baee4f325694964aeee997dca7bd96 upstream.
+commit 1d27da7de3f74405b1de85ad26c5ea90f826114b upstream.
 
-Mounting a crafted OCFS2 image can corrupt kernel memory.  When the
-local quota file header of such an image claims zero chunks, the first
-quota entry allocated during the mount gets a chunk number taken from a
-kernel pointer, and releasing that entry clears a bit far outside the
-chunk bitmap.
+On an overlay over casefolded (case-insensitive) directories, every
+lookup of a file that is not a directory fails with EREMOTE, and the
+first file create triggers a kernel warning. No privilege is needed: an
+unprivileged user can cause both in a user namespace, with the layers on
+a tmpfs that they have mounted with the casefold option.
 
-The write will corrupt the data stored at that address, and the
-corruption may lead to a system crash or damage unrelated data.
-Mounting requires CAP_SYS_ADMIN, so it takes an untrusted image, such
-as removable media or a loop mount of a file from elsewhere.
+Some filesystems support casefolding, which is case-insensitive name
+lookup. It is enabled per directory, and the inode of a casefolded
+directory has the S_CASEFOLD flag.
 
-Since the chunk number comes from a kernel pointer, the address of the
-bit that gets cleared differs from boot to boot, and the issue has been
-reported under several titles:
+overlayfs accepts layers on a filesystem that supports casefolding as
+long as casefolding is enabled on every directory of the layers, or on
+none. The mount records which of the two applies in ofs->casefold.
+ovl_lookup_single() compares the S_CASEFOLD flag of each file that it
+finds against ofs->casefold and returns -EREMOTE on a mismatch.
 
-- BUG: unable to handle kernel paging request in ocfs2_local_release_dquot
-- KASAN: use-after-free Write in ocfs2_local_release_dquot
-- KASAN: slab-out-of-bounds Write in ocfs2_local_release_dquot
-- KASAN: slab-use-after-free Write in ocfs2_local_release_dquot
-- KFENCE: use-after-free write in ocfs2_local_release_dquot
+Filesystems only set S_CASEFOLD on directories, so with casefolded
+layers a regular file, a symlink or a special file never matches and its
+lookup fails.
 
-Note that none of these is a use-after-free in the quota code: the
-chunk and its buffer head are alive.  The bit that gets cleared lies
-far outside the bitmap.  KASAN and KFENCE name each report based on the
-object occupying that address, which explains why the same issue is
-reported under so many different titles.  In the report I sent, the
-address fell in a free page, which KASAN labels use-after-free.
+ovl_get_inode() does the same comparison in a WARN_ON_ONCE() for each
+new overlay inode. A failed lookup never gets that far, so it is the
+first file create that trips the warning.
 
-There are known reproducers.  Both a syzkaller and a C reproducer are
-available from the Google Drive link [1] in my report thread.  The
-issue was found by our modified syzkaller, not a theoretical thing
-found by an LLM.  I have not seen it outside fuzzing, so it is not
-affecting me in the real world.
+Reproduced on an overlay over casefolded tmpfs or ext4 directories, with
+stat() of a regular file, a symlink and a FIFO, and with a file create:
+each stat() failed with EREMOTE. For an unprivileged user in a user
+namespace, on tmpfs, stat() of a regular file failed in the same way,
+and the file create triggered the warning.
 
-The local quota file in OCFS2 is divided into chunks, and each chunk
-begins with a header block holding a bitmap of the quota entries that
-chunk has handed out.  Chunks are numbered from zero, and that number is
-used to convert the file offset of an entry back into a bit position in
-the bitmap.  ocfs2_local_quota_add_chunk() appends a new chunk to the
-in-memory list and numbers it one past the chunk that was last:
+Fix this by limiting both checks to directories.
 
-	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
-	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
-				   struct ocfs2_quota_chunk,
-				   qc_chunk)->qc_num + 1;
-
-The predecessor is looked up after the new chunk is added to the list, so
-if the list was empty, the prev pointer is the list head itself.  The head
-is the dqi_chunk member of struct ocfs2_mem_dqinfo and is not a chunk, so
-reading qc_num through it lands 16 bytes past the start of the head, on
-the dqi_gqinode pointer that follows it.  The first chunk of the file is
-then numbered with the lower half of a kernel pointer instead of 0.
-
-The list is empty when the local quota file header claims the file has no
-chunks.  ocfs2_local_read_info() takes dqi_chunks from that header without
-validating it, so an image with dqi_chunks == 0 takes this path when the
-first quota entry is allocated.
-
-ocfs2_create_local_dquot() turns the bad number into a file offset with
-ol_dqblk_off(), which shifts a 32-bit block number left by the block size
-bits, so the top bits of such a large block number are lost.
-ocfs2_local_release_dquot() turns the offset back into a bit index with
-ol_dqblk_chunk_off(), using the full chunk number, so the lost bits push
-that index far outside the bitmap, and clearing it corrupts unrelated
-memory.
-
-Compute the chunk number before putting the chunk on the list, and use 0
-when the list is empty.
-
-Link: https://lore.kernel.org/20260914034940.4070970-1-r772577952@gmail.com
-Link: https://drive.google.com/drive/folders/1-LzPTgOALEc3eOjmgM6oOfRKkYXJ-bnO?usp=drive_link [1]
-Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://lore.kernel.org/lkml/CANypQFZ05tpth0Xc33gmP6jgPnkY4VuezyHcsajV-SqCsmN_gg@mail.gmail.com/
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: Claude Code:claude-opus-5
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 16754d61dc69 ("ovl: Support mounting case-insensitive enabled layers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/quota_local.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/overlayfs/inode.c |    2 +-
+ fs/overlayfs/namei.c |    3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -1074,10 +1074,13 @@ static struct ocfs2_quota_chunk *ocfs2_l
- 		goto out;
+--- a/fs/overlayfs/inode.c
++++ b/fs/overlayfs/inode.c
+@@ -1280,7 +1280,7 @@ struct inode *ovl_get_inode(struct super
+ 	}
+ 	ovl_fill_inode(inode, realinode->i_mode, realinode->i_rdev);
+ 	ovl_inode_init(inode, oip, ino, fsid);
+-	WARN_ON_ONCE(!!IS_CASEFOLDED(inode) != ofs->casefold);
++	WARN_ON_ONCE(is_dir && !!IS_CASEFOLDED(inode) != ofs->casefold);
+ 
+ 	if (upperdentry && ovl_is_impuredir(sb, upperdentry))
+ 		ovl_set_flag(OVL_IMPURE, inode);
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -260,7 +260,8 @@ static int ovl_lookup_single(struct dent
+ 		goto out_err;
  	}
  
-+	if (list_empty(&oinfo->dqi_chunk))
-+		chunk->qc_num = 0;
-+	else
-+		chunk->qc_num = list_entry(oinfo->dqi_chunk.prev,
-+					   struct ocfs2_quota_chunk,
-+					   qc_chunk)->qc_num + 1;
- 	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
--	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
--				   struct ocfs2_quota_chunk,
--				   qc_chunk)->qc_num + 1;
- 	chunk->qc_headerbh = bh;
- 	*offset = 0;
- 	return chunk;
+-	if (ofs->casefold != ovl_dentry_casefolded(this)) {
++	/* Filesystems set the casefold flag only on directories */
++	if (d_is_dir(this) && ofs->casefold != ovl_dentry_casefolded(this)) {
+ 		warn = "child wrong casefold";
+ 		err = -EREMOTE;
+ 		goto out_warn;
 
 
