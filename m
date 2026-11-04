@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829728;
-	b=PlolwavIE6fikOfOhRStcK9SpP3phDcMChGlMDb5igunnIYPDGSswPObeY75vb4WsN+j
-	 C+b3FVKOZqtnrCetnS7pbXSzZnEc7scPfDSowpdX8j8NDcvDS7yPxrfXEZ4/mklGoLfyP
-	 6tQ8sgjp8758jmeiErWgqXbwmoM+R2BBvDH8jQ8U+FRDZJBayXCgmfY0o/sX/Ds1K4E/U
-	 hBRZ94qtDpA6iUxRNuyEKAHYn3jR9gKRBv3babsVJJHaw8S1KdaidpjvFRQ7rjuX2Eqy3
-	 daZpAxFTr0+bzSVjMqGVTZjcdaYvmNqf+tynyeI1S1KdbkWz0u8cz34YC28Hm1Bo2IQ==
+	t=1793829730;
+	b=HHyduZ4KeJobLs+Yo1AujN/9Pb6VxRpbQxP+QKdJ61ukOK0cEHe3wBvvcqiDuHBZ8jfl
+	 XLUEvkGY5cNChGaEGhNVCsGW8MrDYNPMYLEeowavPu9u5n9FvAaTWwtOwUlda4f31QQLN
+	 S9GPWWGKDpwo5/eGA06QqusB4hDGlvYyerHAL/5/zMjG7/b6KgqKrPZOKGhBY57Fc3CdY
+	 nfK772SoOoYs5TDuX+E7hjydJmfU9qeGGcO34FJFbvj/TmC5G1z+7Kf4zaOvsnuggH3Qg
+	 aDXO96BIHglPSTG/CKIPKzpJGbdSWU4cFzm9Mfh5bfYlY4v92z15FRcSvv79zut0agg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829730;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+6L4XgcqIPeF4nLUp4WtF5x8OFrDhZApDVx8gBRg23o=;
-	b=cUhB0CDCYpKz1a23h/7uJ12w5NLK5wbfPNGNC+dpcQOc4VwQK+2pLlIsUAUJhZam6Kgy
-	 y23O+AIh2FDswmNlKxE2ab6Zb7JxDo/gWBh//t3v5czuJP3KqLVR/JAd8Rp0oQbOIxUEH
-	 hdGnLJ5Z5xGBzY2B+nAGgLGisLPncHCsuaVRwWwcIQpLbN4Y1pawfX9DGH8VjwJ1nMUPo
-	 9vnB8IPt1WAPAql83f026BQsrrQcsn/3xaEHclfOPzgpWTHAfa1DiW7XAkYs80eIj0DvA
-	 IeVHAphstK257y/glHpV0k1EyxbuqzvTWRbrYSvQJ3Hil0EEmfW3QFxHW/SXcLomg0g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=d3fHQULdzYCvBjlHG0Hwlei4cprygueLvZPoQeybEeE=;
+	b=2svVFn3R3q1O5zE3pRqXfVBPnuBroee/VqZBZtxpTsjHtjkX4KTJgvSEfO+Muxiok4Nn
+	 I1EYgHmQlhQrgTMBC4GENmEi83UwaoZsC8K5GlDcRtxTbCUbW1cMbVcSlYgq5/OYz5dMJ
+	 MDrRqKMFkMtE9gzqzRBBz2QU5shbCpJWH55oJT1k5I07fjNUPSyJu8d0vwq+mVHyP1pOT
+	 vRtC9xd6j4cv4U6X1cI0XhE1AR6r7/JuFsUCsLSqOjdZeYJo+eFhC1Gf9m0Rm7MJKoBVq
+	 dyawXJ4AaA1hpDwhY/L7kXg/iaA1G7Eggio8kjCs/A2YvFVEJ4YNueVErThXvBPtMKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyB6ZB+W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wGuajye8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386B1606C90F;
-	Wed,  4 Nov 2026 22:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D94606C5BC;
+	Wed,  4 Nov 2026 22:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyB6ZB+W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F961F000C1;
-	Wed,  4 Nov 2026 22:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wGuajye8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505EF1F000C1;
+	Wed,  4 Nov 2026 22:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829728;
-	bh=+6L4XgcqIPeF4nLUp4WtF5x8OFrDhZApDVx8gBRg23o=;
+	s=korg; t=1793829729;
+	bh=d3fHQULdzYCvBjlHG0Hwlei4cprygueLvZPoQeybEeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OyB6ZB+WTn9QGQIHY5unJlS4Me2JwBi2Hdf2i9s7VcDaH3oV8OFVcAYba6qdRpT6L
-	 g5v0/yUAZ+AHCuW26ORORz8haEwLWhmAOMuAFw0gQNMZurGmv7fuvkMRuIzC6YXgFz
-	 aj1ki1RH3sDMeEV+ivc6mizee18Q+PJ8NjphRmXs=
+	b=wGuajye8sH+7VaJZtppdflOAX7fvA4AYAGmcQwawi3Bc6z+cedbJu5Jg0XWzY/nc3
+	 7JTBhl4p9a/kSiABda2TpxGAUlQ8ljMs3/zhtC8NiPNjFoeVaPoISTPugGv9EK8uzw
+	 Pt8tMVdym1AifJld2oZBGpSMWb3o8KRHxc6MVYvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	=?UTF-8?q?Jonas=20Schw=C3=B6bel?= <jonasschwoebel@yahoo.de>,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
 	Brian Masney <bmasney@redhat.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0266/1005] clk: tegra: support 48MHz clock for pll_p_out1
-Date: Wed,  4 Nov 2026 15:59:59 -0500
-Message-ID: <20261104211051.324691254@linuxfoundation.org>
+Subject: [PATCH 6.18 0267/1005] clk: clocking-wizard: fix clock difference detection
+Date: Wed,  4 Nov 2026 16:00:00 -0500
+Message-ID: <20261104211051.354435327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -65,42 +63,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Osipenko <digetx@gmail.com>
+From: Colin Foster <colin.foster@in-advantage.com>
 
-[ Upstream commit 46e31d69a547530fbef499bde888b6bb45a1deac ]
+[ Upstream commit 006ba909c240b832c876b7aed29c6beec9d1f5e5 ]
 
-UEFI on Surface2 sets pll_p_out1 to 48MHz which is not supported by kernel
-and causes BUG() early on. Add 48MHz clock support for pll_p_out1.
-
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
-Signed-off-by: Jonas Schwöbel <jonasschwoebel@yahoo.de>
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-pll.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/xilinx/clk-xlnx-clock-wizard.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/tegra/clk-pll.c b/drivers/clk/tegra/clk-pll.c
-index 591b9f0c155a0..e48ca3f4b5f86 100644
---- a/drivers/clk/tegra/clk-pll.c
-+++ b/drivers/clk/tegra/clk-pll.c
-@@ -575,6 +575,7 @@ static int _calc_rate(struct clk_hw *hw, struct tegra_clk_pll_freq_table *cfg,
- 		break;
- 	case 9600000:
- 	case 28800000:
-+	case 48000000:
- 		/*
- 		 * PLL_P_OUT1 rate is not listed in PLLA table
- 		 */
+diff --git a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
+index dbef983eb4252..4ef0595f7d993 100644
+--- a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
++++ b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
+@@ -406,7 +406,7 @@ static int clk_wzrd_get_divisors(struct clk_hw *hw, unsigned long rate,
+ 			if (o < omin || o > omax)
+ 				continue;
+ 			freq = DIV_ROUND_CLOSEST_ULL(vco_freq, o);
+-			diff = freq - rate;
++			diff = abs(freq - rate);
+ 			if (diff < best_diff) {
+ 				best_diff = diff;
+ 				divider->m = m >> 3;
 -- 
 2.53.0
 
