@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831452;
-	b=ZqKravhnOAWsYX2D75QnDnfEpo5IqbmG9fiTZOPRDkzfWtXv+ZBvWNHFR2DjSE5kE4We
-	 7cgaVg4MhLD5B2Ee7ZxUledfuu3G8lSnLWQsZDrdRSPJcMnAwMALheoW0ccrKise5yrrG
-	 HvAN2+V1vLbIskfilG4KlmN5UkceaVXEBEyLyQY858ty2D2ouLI7U5iiZM4o8VB21gbhB
-	 vDkdLRj9f2RpPYgAQUAfFnK8oytwZc7ZjXEwFzNN+R2D1pbtEViiaELlOQ9k+BIbt+jZ4
-	 TrESLo4JyYnFGFLoC1VYwNJpl9KxUlb2sv6xj6Wv4rWY6O02PSRAEQpZjnyFuu5gnaQ==
+	t=1793831454;
+	b=1h1bxHqfYJEMYnOEmaW9v4anafA3mGRH9HC4xag83z2bVfyP10ATWw7RW1N/lOtDwYHV
+	 1ru9HUhCPwvmpcyiPO9giAi0OcCHvSWxS52ZNcLeY6Cc9KmW4aZsz6oqvEe+/uHQ94IJ5
+	 /SOlm6x6eFTCn1yVZDdxDE/AgP6cug/LkCI3HLQrFmF6VJQqP84t12ZvRuFEL6hSyhZ2a
+	 7H6/wevGUiY8ff+lso61f+WjpZhSsIhd9CPqwz2oiYbiKGbbaF1H99tK1Nh9iNHlyFUFV
+	 ZXiLZo2rPNJRmhNJMTxT0RJGe+DRP75AFFk6aQhVodv/SxwoKpWFCcC3QD3TgbdGRYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uuBLJdtzuRcJngeSrlWUsIz5hyhxCxOl5bgpgATbaxQ=;
-	b=XOREmEdpsxQVXkmjRzGs53N93MEkItPyaHpnTd9XZ3AhW678Ip+KwvaTCfluEDN+GsdG
-	 EJf71qtOdR1J9ip0jpQ7A8AWvUaOnkUGv1pysYcoL+daQLPoJ7+ptSnJyjBn7yGqAKfmi
-	 9X78LfgR4SoxoYRplXcDazPTUfiisKd4KUgXgAnll4tx7R9ice9PpGdh3Tg46mjKAh2XE
-	 6oz320b1xvqTiL2422aIyAirBQ87z2w1lgVnmbCARJohMnnJ87UgFQxu3mvnslJthWEu6
-	 Qc2CD2CKPzrUhhAyKpW7daNFIj6TSsrHIdkdalzH1y1how9RTUs5qtw1iWdUYl3Y7DQ==
+	bh=kNK9ItAlbP5UtB+DT3O2t6WPlbTq32qVC5boZAjMRyc=;
+	b=svSkpfX9LIcNKnT6JxtrY2kLvRR1HCpqlwS9uZqEmdbBP4bsTbk1b3AV9B5Pa7dGtexD
+	 FG/8jq55G3idDSwTQbDqFgJ5ioAPbknfwdKpKAoYm2ElJs/wSYazULaWar/6SVyzrLoB2
+	 0ys4G2EO4rCPIzZi4xqCzyMwDm5SHTq8LVGaM4sbyj+RDe6PqQjdpWmd+6YG8uMYAxWPg
+	 27Dmg2U9dO2xvCrj9jiP14+fW0SA/0KPyez8PWKhzfHhX+xSq66YDQsA0KNxre7xttjcL
+	 X+qcxDW6KbEIavxOZd2nRFoWL6mzytN+RFRLSPh4rB58dLJoyV2YvaCCQG4ZlmdPoDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=koGQEv7Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTeyeRRR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83084606A328;
-	Wed,  4 Nov 2026 22:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22033606A335;
+	Wed,  4 Nov 2026 22:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=koGQEv7Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0691F000C1;
-	Wed,  4 Nov 2026 22:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTeyeRRR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED4A1F000C1;
+	Wed,  4 Nov 2026 22:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831452;
-	bh=uuBLJdtzuRcJngeSrlWUsIz5hyhxCxOl5bgpgATbaxQ=;
+	s=korg; t=1793831454;
+	bh=kNK9ItAlbP5UtB+DT3O2t6WPlbTq32qVC5boZAjMRyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=koGQEv7YD3VaWJwaAyL45sPIW2CkBy7liss0Wmvy21zqJOoF1Hr5nJx8Hy3FuwINO
-	 Pjf7P3jBRnIPVnQcrbfS5+qrI2TBwSfEEaz0j4KwSGy7tdmNaUtoWgH7DZtpA3OuIB
-	 xJdCDLG/YVDPvHqeGlWyTCjYSLSi6Ajr8V1lkZ/8=
+	b=uTeyeRRR6kt4yaer+x9toTOUc8tLmhMS9ooJ7VJP9OYC74KIlJ9ujOD5Qw0hwmnhg
+	 9Y51Q5jy3Kci4y8bQy8rlDvzC2cMt9F0jtbb7Bx1jkow8U7rI+HkSv/yw/g7QFEswT
+	 N6x/FO4VT/WxGXzHl8NId9GLDxfcYhfCg4MJ7z5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Steven Price <steven.price@arm.com>
-Subject: [PATCH 6.18 0710/1005] drm/panthor: Fix TOCTOU race between GROUP_REGISTERED check and erase
-Date: Wed,  4 Nov 2026 16:07:23 -0500
-Message-ID: <20261104211103.450324721@linuxfoundation.org>
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 0675/1005] media: cx23885: Fix use-after-free in cx23885_finidev due to race condition
+Date: Wed,  4 Nov 2026 16:06:48 -0500
+Message-ID: <20261104211102.549108092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,57 +67,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 7764289d76a38c3a2f9b093bf17e193ab54acd70 upstream.
+commit 75016a992d9b03f5cc6df1414d1da35840d4feeb upstream.
 
-panthor_group_destroy() checks the GROUP_REGISTERED mark and then calls
-xa_erase() without holding the xarray lock across both. If the handle is
-destroyed by another thread in between, and a concurrent GROUP_CREATE
-reuses the freed ID, the first destroy erases and releases the new,
-still-initializing group, leading to a use-after-free in
-panthor_group_create().
+In cx23885_v4l2_dev_notify_init, &dev->cx25840_work is bound with
+cx23885_av_work_handler, and &dev->ir_rx_work and &dev->ir_tx_work
+are bound with cx23885_ir_rx_work_handler and
+cx23885_ir_tx_work_handler. cx23885_irq can schedule these works on
+system_wq when an AV_CORE interrupt is received, and the IR subdevice
+can also schedule the IR works from its interrupt service routine via
+the v4l2_device notify callback.
 
-Do the mark check and erase atomically under xa_lock().
+If we remove the device, cx23885_finidev makes cleanup and the memory
+allocated for dev is released by kfree(dev), while the works mentioned
+above may still be pending or running. The sequence of operations that
+may lead to a UAF bug is as follows:
 
-Fixes: eec7e23d848d ("drm/panthor: Prevent potential UAF in group creation")
-Assisted-by: Claude:claude-opus-5.5
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+CPU0                                      CPU1
+
+                                          | cx23885_irq
+                                          | schedule_work(&dev->cx25840_work)
+cx23885_finidev                           |
+cx23885_input_fini(dev)                   |
+cx23885_ir_fini(dev)                      |
+cx23885_shutdown(dev)                     |
+free_irq(pci_dev->irq, dev)               |
+pci_disable_device(pci_dev)               |
+cx23885_dev_unregister(dev)               |
+v4l2_device_unregister(v4l2_dev)          |
+kfree(dev)                                |
+// dev is freed                           |
+                                          | cx23885_av_work_handler
+                                          | // use dev (use-after-free)
+
+Fix it by canceling the works after the IRQ handler that can schedule
+them has been stopped, and before proceeding with the remaining
+cleanup in cx23885_finidev.
+
+Note that the flush_work() calls in cx23885_input_ir_stop() do not
+close this race: they only wait for works that are already queued or
+running at that moment, they do not prevent the IRQ handler, which is
+still registered at that point, from scheduling the works again
+afterwards, and they are skipped entirely when dev->sd_ir is NULL.
+The cancel_work_sync() calls are therefore placed after free_irq(),
+the only point at which no new work can be scheduled.
+
+Fixes: e5514f104d87 ("V4L/DVB: cx23885: Move AV Core irq handling to a work handler")
 Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20261008100935.3059587-1-osama.abdelkader@gmail.com
+Assisted-by: Codex:deepseek-v4-flash
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/media/pci/cx23885/cx23885-core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -3664,12 +3664,18 @@ int panthor_group_destroy(struct panthor
- 	struct panthor_group_pool *gpool = pfile->groups;
- 	struct panthor_device *ptdev = pfile->ptdev;
- 	struct panthor_scheduler *sched = ptdev->scheduler;
--	struct panthor_group *group;
-+	struct panthor_group *group = NULL;
+--- a/drivers/media/pci/cx23885/cx23885-core.c
++++ b/drivers/media/pci/cx23885/cx23885-core.c
+@@ -2233,6 +2233,10 @@ static void cx23885_finidev(struct pci_d
+ 	/* unregister stuff */
+ 	free_irq(pci_dev->irq, dev);
  
--	if (!xa_get_mark(&gpool->xa, group_handle, GROUP_REGISTERED))
--		return -EINVAL;
-+	/*
-+	 * Check the mark and erase the entry atomically, so a concurrent
-+	 * destroy + create can't make us erase a group that's still being
-+	 * initialized and happens to reuse the same handle.
-+	 */
-+	xa_lock(&gpool->xa);
-+	if (xa_get_mark(&gpool->xa, group_handle, GROUP_REGISTERED))
-+		group = __xa_erase(&gpool->xa, group_handle);
-+	xa_unlock(&gpool->xa);
++	cancel_work_sync(&dev->cx25840_work);
++	cancel_work_sync(&dev->ir_rx_work);
++	cancel_work_sync(&dev->ir_tx_work);
++
+ 	pci_disable_device(pci_dev);
  
--	group = xa_erase(&gpool->xa, group_handle);
- 	if (!group)
- 		return -EINVAL;
- 
+ 	cx23885_dev_unregister(dev);
 
 
