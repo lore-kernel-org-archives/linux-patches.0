@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831277;
-	b=h6CHawvpQUG06OafS0BN+ezoBsa3mKwODohnj9LyZ5D+ZYA0ktG8H2aFrZ2s9fXeLjVI
-	 VVun+7w7zwUwUzBHVvEEYEjmDbAY6jGm+6d3VTYl6JwwzZ9dZmkdYbZ4LEuHdCsbsHDCZ
-	 WZOuDJNIm/UQWXrPd/hsyBhj212qIfh2QdefvY2e/6VzXVxmc+dAE/BpIUzojYICHOsyH
-	 BdN3uHLr1DR0aOJcauLSvpm4M8aIlrIkIe4ph46DWhu+Ky1jW5BCmfCRKwy+KnnpKTRTE
-	 pfZy8DvWasRpN3eCHWvOI+Gw1cHRTFtDhQbCHbsjC8AFTmqCUvkllOR2nN7mfwH1PQw==
+	t=1793831279;
+	b=MY+FL4gOz9X14zDf2l6JrIM1ASPCDReauH1xdf10TOXbys9fcvWPgaae+j9wE7p845mi
+	 Jb+eTXN9j/SA20LZaCbNSpkwPgQeN3u0OXbXQCW+SpjlHD/xi8SY8vai3e4d4/JWsjcdH
+	 ss+ilzcCubk09h36bEUUMp7+nina17B/ciEhSdsgSpYvmNRXp+JHpVcIcU7DNzuNjMAu/
+	 WEWn7HfE170CWzba0jMQs9JyNQ8bKSbvZ+kNuGkv4Z2cfLcbnUukkBiwyV0aqnWSQAaSr
+	 I7KxB021C2aaEx/alR2cy227rLHHyMG68vr2NsQVOqNI98PCJ8pc1K2LbBd5l9/I5yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MBeYXpzUXXNJUquJCHgf+ZrPmpNLO1iDNd/YXnqyTvY=;
-	b=wmajloRPth7/URO/qxsYjJM6RJpFN0XOK0rF9XWbJOvjJTRddOlP3E2X6XDayn72itfg
-	 GyDVCJd8hwzEJzTUGljrAAn3ZvLDm5RTZ5siLslyZs6YqvnxDW4UTQseRzRuevz6NdLqB
-	 fc26KaJwnJvSxoJEKOMv83d4veu1hx1Z0A4hBWwIjod3Zgcrlw3s7vfqSkCcpc22EfEd+
-	 DQlcDCS4t4BDErTWX3K0UOIRqev1AzAHX7h02LGxFLh6cdwkyUJWD5EnwMN2qZZc3mkMz
-	 aKPIsZWIuCd89ORuP8KGjHGN5pxTiqDuGnftkD1zPjladqT0QKwZK79GHBWT0qXlWYw==
+	bh=nVPznJKyp64HFwo87GfzQHIuNJD1Otx9zz/SIXctIHw=;
+	b=vb5Z47seSzU3vwKepaDgV/W6A72WEBKjw68j6qLV8uMS+u4+IP4P0EHgp2pmKZMlWYVE
+	 bpOtIfwc82ulkNOzYFlbASuycTzOo3YPP+DB9btFs5Ljb+iDyPXTUsFcC8NIOA9E6R5w0
+	 mNS00Y1xV/YQJOlerN1qy//hDlUO4612P0PDYncfh2jTsQfFCisHN1Ou5G91kt/BH5M7B
+	 8ge++cEPmRrxMvO0tfnwbwItua1b4I4keW54T7Q6THpilmc0m/7pUksz2TK0XQt/BoGg1
+	 S+D3PG38I3WMOiXTtf5vxdXc/yq2R7q2l30h+NEEhkLJD6rkIuAYdW6tWDahvMdlzng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPI4SrPA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iagrm4BH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8E1606A329;
-	Wed,  4 Nov 2026 22:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A1A606AC16;
+	Wed,  4 Nov 2026 22:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPI4SrPA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9661F00919;
-	Wed,  4 Nov 2026 22:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iagrm4BH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213F81F000C1;
+	Wed,  4 Nov 2026 22:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831276;
-	bh=MBeYXpzUXXNJUquJCHgf+ZrPmpNLO1iDNd/YXnqyTvY=;
+	s=korg; t=1793831278;
+	bh=nVPznJKyp64HFwo87GfzQHIuNJD1Otx9zz/SIXctIHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FPI4SrPAiPuLSHgT6KocE4F1rqvxVi5U5Bw2K2ccF4fMpJp73Y7OoDSSQoExErrCY
-	 lj9DYSOWut4Ak/AlvfPwwR5yTwYi+esIiUypadoCOKm6d1y6fvEFWn+a4X5ai7mnPf
-	 4Dt7GGCcMP51gZBNv/NDZK0T9FqRT6NXfLT1IXEQ=
+	b=iagrm4BHbB9NwAzbsFhpYn+stDwJBNPzLM2m8yOP4o8ZUHUeziSVvrW02JKUcZBv6
+	 fkvBbJrzKAOjllielO4/89tPwS75p9Bahm6Ppwqd8OFNlhgC+iLS4k6k/br+WKVGnM
+	 9Bgaeuw3mhFcoM4rBBi2C6pGmrksDC2NdMBtF2Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0590/1005] xfs: dont cross reference rmapbt with bitmaps if theyre incomplete
-Date: Wed,  4 Nov 2026 16:05:23 -0500
-Message-ID: <20261104211100.392365863@linuxfoundation.org>
+Subject: [PATCH 6.18 0608/1005] smb: client: require stable pages for signed connections
+Date: Wed,  4 Nov 2026 16:05:41 -0500
+Message-ID: <20261104211100.878751459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,64 +75,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit d7b92cbe566f6fe54368f62e4b515d9f80c43a18 ]
+[ Upstream commit 53c5c2c1095eb21e214811fec16cd75f89d72ee2 ]
 
-LOLLM points out that runtime errors (e.g. ENOMEM) when we're trying to
-compute space usag bitmaps are silently dropped by the rmapbt scrubber.
-We ought to flag that as an incomplete scrub instead of reporting
-cross-referencing errors based on faulty data.
+When signing, cifs computes the SMB signature over the pagecache folios
+in place and then hands those same folios to the socket.  If a buffered
+write mutates a folio while a write subrequest is still in flight, the
+signature no longer matches the data that follows it, the server rejects
+the write with STATUS_ACCESS_DENIED (-EACCES), and the error is latched
+in the mapping, so the next fsync()/fallocate() returns -EIO.
 
-Cc: stable@vger.kernel.org # v6.4
-Fixes: fed050f3452da0 ("xfs: cross-reference rmap records with ag btrees")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Mark the mapping for stable writes so netfs_perform_write() waits for
+writeback to complete before modifying an in-flight folio.  This is
+only needed when the connection is signed.
+
+Fixes: 3ee1a1fc3981 ("cifs: Cut over to using netfslib")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
+[ sashal: Replaced upstream's tcon->ses->server->sign with cifs_sb_master_tcon(cifs_sb)->ses->server->sign, because cifs_set_ops() has no tcon local variable in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/rmap.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ fs/smb/client/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/xfs/scrub/rmap.c b/fs/xfs/scrub/rmap.c
-index 39e9ad7cd8aea..bd792b304af68 100644
---- a/fs/xfs/scrub/rmap.c
-+++ b/fs/xfs/scrub/rmap.c
-@@ -493,11 +493,18 @@ xchk_rmapbt_walk_ag_metadata(
- 	 * If there's an error, set XFAIL and disable the bitmap
- 	 * cross-referencing checks, but proceed with the scrub anyway.
- 	 */
--	if (error)
--		xchk_btree_xref_process_error(sc, sc->sa.rmap_cur,
--				sc->sa.rmap_cur->bc_nlevels - 1, &error);
--	else
--		cr->bitmaps_complete = true;
-+	if (error) {
-+		if (!xchk_btree_xref_process_error(sc, sc->sa.rmap_cur,
-+				sc->sa.rmap_cur->bc_nlevels - 1, &error)) {
-+			/* only set incomplete if we didn't set xfail */
-+			if (error)
-+				xchk_set_incomplete(sc);
-+		}
-+
-+		return 0;
-+	}
-+
-+	cr->bitmaps_complete = true;
- 	return 0;
- }
- 
-@@ -567,7 +574,8 @@ xchk_rmapbt(
- 	if (error)
- 		goto out;
- 
--	xchk_rmapbt_check_bitmaps(sc, cr);
-+	if (cr->bitmaps_complete)
-+		xchk_rmapbt_check_bitmaps(sc, cr);
- 
- out:
- 	xagb_bitmap_destroy(&cr->refcbt_owned);
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 382e83735da28..7c638b8d5490f 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -87,6 +87,8 @@ static void cifs_set_ops(struct inode *inode)
+ 		else
+ 			inode->i_data.a_ops = &cifs_addr_ops;
+ 		mapping_set_large_folios(inode->i_mapping);
++		if (cifs_sb_master_tcon(cifs_sb)->ses->server->sign)
++			mapping_set_stable_writes(inode->i_mapping);
+ 		break;
+ 	case S_IFDIR:
+ 		if (IS_AUTOMOUNT(inode)) {
 -- 
 2.53.0
 
