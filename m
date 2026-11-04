@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826918;
-	b=R1aAynkvgHd+vt8zQOgtayHOGNoza4RStNMbSK4qOMPMDlZBGWXkcrUFsZ99LzEAdtOH
-	 9rECOW+3h+jWTzOmsvYLYfMeNhgNoiOBaec7fmFyrGxIN/09zWgL932c3+HcW2Ntez26s
-	 ULlIDmaS5pdZjvKqiMO2KvrF9pmfyPNKlFODtu4iOhl7O61OzA9jefw/LL2t5bBx9lm+Z
-	 9joCPXKH+L/lnjRMHBLPZ+i9X2iE81sun2RpifBsImInF/zAjxvWpfcXjEN0XSrmCIxEY
-	 ouuN/AlCtjElzcKwhe+eUoDTMvqrdNrsEz/T7mH3XdCnvTNAwRzkU0OkjWWPhiCvEFg==
+	t=1793826919;
+	b=UGLsVen9HdZyRjH2hS7/JPXFxKQq0bJHAf4eQRM5pe1+n40J8MOCLWVdLH7PMtFP8qR6
+	 rsS0g6DL3eYhMMpeFp7rSRBIi4EYetXMMS6uQ2qY5nff/2INL+YXZ+bUQ2JUmHdbfSHkb
+	 zWDsWu/Y9Qe51XKBp68xUKQu7mzGIzgjEzIC/5tfNBEltoXbgq4FJM9LdDL/ajkHjjr6B
+	 9cDcz8bn4D+Bl6lzd89MgK6R8eliIO+C24qwk2e582uq5Lo1oMV22LiMK9zRyhTJV7293
+	 T1ADLOuqo/5pLLlXbdzdVhw7gaAPLMpv4ptUgyClNddIA7JYnU5jKBwCozWmcgH1fkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826919;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7xEIKrHjaZ1Q3diZZ6GS5J5o4qfBxm9fH+vCmnNah4E=;
-	b=IIS4BX/A6Iy2C7taB54TyICzDVYCxr1TcR0uJoclQEj3TnYCbjMq5KfKHIAgdarUzoJT
-	 GNkrKdO6EJgomE1DOekuv6swMwIbHQHB4NZtsS/Vr8Bx+ptYedaqHEG89lxnWG1oHaRgk
-	 hY/oNL6KhrEivX6ZXShxW2mW5Efo8PtkoPqD/H4NBFpprV6Zwmjuw0bxnwWyFOzr4F7oD
-	 Hdw+SwXH5gBqIB3HX2R5xYu8jqHeFYq/TNXKYiYa6NvBobG0nuvQdGfvprvsRex2F8z+K
-	 P2wLZsW2eWxif2vfajwM0Ok9z79sTafLzaszvHQMQ5CRjxFCCcT5+hXRFrj8WLVgYiw==
+	bh=dVtFgunb6R8/DNmYd2c9RcX5/oSG7uxMZaj/z0WzXik=;
+	b=FC2FldFlQHpR7yRnkfTa/wMK5cPHGtJvud1KQLyyXneoU5grNm0e8IeRRyyBCk4WZuLa
+	 rJzS3WVTxdOEkTmSr8EBZDce73xD+cS52FmMjYLpCUROW/NCPCnp4Ixv+793ST2viDtgz
+	 faS0cZ5/s3jMStMmRxitljtcESbQaq8gDR7cdl0YUL7lmR88/Wja2uALcVOrQK+OQ6RGf
+	 JoI4fTSGklfDeK0tDNIDwWjh+kD6v8DgklnY3fqxEk4E3eXQoA9tIvL2XLVLQBSN9hev7
+	 jKg2VbggIGNeGWSwgikC2G7IQwzBZYUeaD1CKsOAELxXLLD7rCBF396PrAQS69aRhJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RqtauZuG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQguIky1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C058E6070318;
-	Wed,  4 Nov 2026 21:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520A56070318;
+	Wed,  4 Nov 2026 21:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RqtauZuG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607A21F000C1;
-	Wed,  4 Nov 2026 21:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQguIky1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27BA1F00919;
+	Wed,  4 Nov 2026 21:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826917;
-	bh=7xEIKrHjaZ1Q3diZZ6GS5J5o4qfBxm9fH+vCmnNah4E=;
+	s=korg; t=1793826919;
+	bh=dVtFgunb6R8/DNmYd2c9RcX5/oSG7uxMZaj/z0WzXik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RqtauZuGAly3qO7KiFm7arEGyRhhr5TDX00O+u43xNjCg6ll2HxnffPsP/+8XG6fE
-	 /Plmryxsqn7QTslM+xmvL1vYqJQqiygoY08pbIBDUTSmbsBkbuG/ufqvZOqO03pTvf
-	 h1OFemwdtEcRFeIJoBF6cAMCQ31yENmUdEWT4HX8=
+	b=eQguIky1XAxE7jRjAJ+wzZuITd8veEqtBqNMdlhLol8+jgVutKaF6VDe6sNhapwq/
+	 SsiCzDoCpBj51lFfhhqALg9P0qVe88XYey2Z692N1+8sPQhQZ4oD4xvEPXOsWDGkWg
+	 VknsBGV1boXVoRz/aLd7Jt+gzyVrns9Tm8I08JnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Jie Law <law.wei.jie@gt.tech.gov.sg>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 083/547] net: usb: pegasus: do not advance rx_skb->data on dropped frames
-Date: Wed,  4 Nov 2026 16:04:27 -0500
-Message-ID: <20261104211040.599144558@linuxfoundation.org>
+	Nicholas Wolff <nicholas.wolff@truenas.com>,
+	Ameer Hamza <ameer.hamza@truenas.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.3 084/547] nfsd: fix race between client_info_show() and free_client()
+Date: Wed,  4 Nov 2026 16:04:28 -0500
+Message-ID: <20261104211040.626140958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,86 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
+From: Ameer Hamza <ameer.hamza@truenas.com>
 
-commit bfa09dccf98cf78dd9282259b2140bd1472f5ae9 upstream.
+commit ee62dc03a69ee57855de35da1a8ab53b51d30b32 upstream.
 
-For the 0x8513 chip, read_bulk_callback() skips the 2-byte receive
-header by advancing pegasus->rx_skb->data in place. This is done before
-the pkt_len > PEGASUS_MTU check, and when that check drops the frame
-the good path resubmits the same skb with the advanced rx_skb->data as
-the transfer buffer, still PEGASUS_MTU bytes long.
+client_info_show() renders /proc/fs/nfsd/clients/<id>/info and walks
+clp->cl_sessions under clp->cl_lock to print each session's slot
+counts.  free_client() tears down the same list without taking
+cl_lock, and is the only unlocked mutator of cl_sessions.  A reader
+can observe a client mid-teardown because get_nfsdfs_clp() pins the
+nfs4_client but not its sessions: free_client() frees every session
+before calling nfsd_client_rmdir(), so an in-flight seq_file reader
+can follow a list_del()'d node whose ->next now holds LIST_POISON1
+and take a general protection fault:
 
-Every frame with an oversized length field therefore moves the receive
-buffer two more bytes towards the end of the skb data area. A device
-that keeps sending such frames makes the host controller write received
-data over skb_shared_info and past the end of the allocation, and the
-corrupted skb_shared_info is used when the skb is eventually freed.
-With an emulated device sending frames filled with 0x5a on a KASAN
-kernel:
+  Oops: general protection fault, probably for non-canonical address
+        0xdead00000000014c
+  CPU: 1 UID: 0 PID: 132488 Comm: cat
+  RIP: 0010:client_info_show+0x2bf/0x3d0
+  RAX: dead000000000100
+  Call Trace:
+   seq_read_iter+0x12a/0x4b0
+   seq_read+0xf1/0x130
+   vfs_read+0xbf/0x350
+   ksys_read+0x6f/0xf0
+   do_syscall_64+0x8b/0xcb0
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  Kernel panic - not syncing: Fatal exception
 
-  BUG: KASAN: slab-out-of-bounds in dummy_timer+0xade/0x3f00 [dummy_hcd]
-  Write of size 1536 at addr ffff888105821202 by task swapper/1/0
-  ...
-  Oops: general protection fault, probably for non-canonical address 0xeb4b474b4b4b4b4c: 0000 [#1] PREEMPT SMP KASAN NOPTI
-  KASAN: maybe wild-memory-access in range [0x5a5a5a5a5a5a5a60-0x5a5a5a5a5a5a5a67]
-  RIP: 0010:skb_release_data+0x36f/0x800
+Detach cl_sessions onto a local reaplist under cl_lock, then free the
+sessions after dropping the lock.  Removing entries from cl_sessions
+under cl_lock matches unhash_session(), and the detach-then-reap shape
+matches how __destroy_client() reaps cl_delegations.  The sessions
+cannot be freed while cl_lock is held, since free_session() calls
+nfsd4_del_conns(), which re-acquires it.
 
-Only skip the header with skb_reserve() once the frame is going to be
-passed up, so the receive buffer always starts at the beginning of the
-skb data area. Unlike the old pointer adjustment, skb_reserve() also
-moves skb->tail, so the two header bytes now count against the buffer
-size: lower the length limit for the 0x8513 accordingly, otherwise a
-pkt_len of PEGASUS_MTU - 1 or PEGASUS_MTU would trip skb_over_panic().
-
-Found by code review with LLM assistance and reproduced with an
-emulated USB device (raw-gadget + dummy_hcd).
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Nicholas Wolff <nicholas.wolff@truenas.com>
+Fixes: 601c8cb349c2 ("nfsd: add session slot count to /proc/fs/nfsd/clients/*/info")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261021020310.34045-2-law.wei.jie@gt.tech.gov.sg
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
+Link: https://patch.msgid.link/20260726124658.1715711-1-ameer.hamza@truenas.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/pegasus.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/net/usb/pegasus.c
-+++ b/drivers/net/usb/pegasus.c
-@@ -461,6 +461,7 @@ static void read_bulk_callback(struct ur
- 	u8 *buf = urb->transfer_buffer;
- 	int rx_status, count = urb->actual_length;
- 	int status = urb->status;
-+	int rx_offset = 0;
- 	__u16 pkt_len;
- 
- 	if (!pegasus)
-@@ -510,7 +511,7 @@ static void read_bulk_callback(struct ur
- 	if (pegasus->chip == 0x8513) {
- 		pkt_len = le32_to_cpu(*(__le32 *)urb->transfer_buffer);
- 		pkt_len &= 0x0fff;
--		pegasus->rx_skb->data += 2;
-+		rx_offset = 2;
- 	} else {
- 		pkt_len = buf[count - 3] << 8;
- 		pkt_len += buf[count - 4];
-@@ -522,13 +523,14 @@ static void read_bulk_callback(struct ur
- 	 * If the packet is unreasonably long, quietly drop it rather than
- 	 * kernel panicing by calling skb_put.
- 	 */
--	if (pkt_len > PEGASUS_MTU)
-+	if (pkt_len > PEGASUS_MTU - rx_offset)
- 		goto goon;
- 
- 	/*
- 	 * at this point we are sure pegasus->rx_skb != NULL
- 	 * so we go ahead and pass up the packet.
- 	 */
-+	skb_reserve(pegasus->rx_skb, rx_offset);
- 	skb_put(pegasus->rx_skb, pkt_len);
- 	pegasus->rx_skb->protocol = eth_type_trans(pegasus->rx_skb, net);
- 	netif_rx(pegasus->rx_skb);
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2789,10 +2789,16 @@ void nfsd4_put_client(struct nfs4_client
+ static void
+ free_client(struct nfs4_client *clp)
+ {
+-	while (!list_empty(&clp->cl_sessions)) {
++	LIST_HEAD(reaplist);
++
++	/* client_info_show() walks cl_sessions under cl_lock */
++	spin_lock(&clp->cl_lock);
++	list_splice_init(&clp->cl_sessions, &reaplist);
++	spin_unlock(&clp->cl_lock);
++	while (!list_empty(&reaplist)) {
+ 		struct nfsd4_session *ses;
+-		ses = list_entry(clp->cl_sessions.next, struct nfsd4_session,
+-				se_perclnt);
++		ses = list_entry(reaplist.next, struct nfsd4_session,
++				 se_perclnt);
+ 		list_del(&ses->se_perclnt);
+ 		WARN_ON_ONCE(atomic_read(&ses->se_ref));
+ 		free_session(ses);
 
 
