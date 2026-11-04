@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831556;
-	b=glVqKZXfnrf0b5xNxuuM7Lz/7blx5PWSt+N5UYRKMSJgZYoobd5HEqEqe+mIhojEaatJ
-	 sUqI5HyW28wWkzPoAmasWCFpvvYou5dA0yxjDTQ1flvCTt7l8fpSl+U/QmCxtEAv+SdRh
-	 ErbCBxBtKniEnmMu74eEn1GT5jO/KDC3BATCU4H9Xer7M4UdeIqBFBr5o1BxbqPXS9yuy
-	 4MxazmEm5eIbQpjSrxN9gcFBWsrXkyCkZQCjB9yixdX6f5iPUi2roA0nop5L7OKDfG6qu
-	 NoFu5RHJ5UBGYc1fEBKwqLmtvcoj18643PwvKP5skKJTOEJML7aAXWSCNpWIDj9vkGQ==
+	t=1793831557;
+	b=GZPsnNRST4+YWoXvYFMo5BSj5IxL4rKA/Mb5Kwk/go7pZbCaS1e/fvffZDtCR13vEQbF
+	 Ce1zl9BcY60iO5re2RritGFCufWOeSqTHtC9brCGbH5roFTV9AxLxN2Vg4WCtiH8FJOV5
+	 //1WfTxemLm5Xmd5TYKX1G+DUL5KNlFhsVpduTQDKGwAzDmI+2RbFffiJOxewQUVcDyxY
+	 ds7S6uFPrMgyntmmVYb31jiueDaYn/e1K8Z4EAQDb+94bC4akLkiKiDNMxIDycj0etp9U
+	 WitEIfRLJwNppVqoLk/jR6+YR7a0939vtB/cEN8EX7Qm1IoteiZDCEA9Om4URPnMYTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nHXMNpw5A4I54MIHdJrc31ll7/nfYbD0wrumZhc1M4Q=;
-	b=jyY+CtPEW2BVtYEwQrOFswACMdrsBOoEAA6gdeKo5T3wdIztCSXC/6jOHCytXHLWif2k
-	 JAax7PtxeFuSe/fafw/Hj+Yr/MEmMRaBIeWNdSDSt+2uvSHhJDLvfgkXjC6rmtFOFPWkU
-	 o95TK7VBPo2Bav6HXENTcPetbykYEmKqmNINX0R1sUTZ4Is0NXL9ATcphK3hXPT+LWZjO
-	 QH4M70MnxhLDj3pR43d8M3ZM4AGo22Y//PypV3Hx0K0qmWv0YbRS0FoRBY0e40ojjshwd
-	 Chal2+zYrd815gQME8irIOOLKR4X7EVAhNtZPIeWNasoQci8JvLu8dqUFAzkPmtjjeQ==
+	bh=Kdx8oE38gRHJNJjO6EHpRBZF1kBO9EW5tP3WQrux+bw=;
+	b=PHTIeXwMP5ARNTQTPCCQxm6s2Y5JmKqH3v3q2IINE9dzNKW5GZWailmSl4QiCAA3YU/T
+	 BGTVQtBA87RGdpUPN7Jg02wQgCD5HGc/U/hL8BJcdZ0JpfUxp62ofcpl70NAs/7jypN6H
+	 v4QZFYrnOvJ3Us1WRR2bWTDOup+4ow3pqzcauEamEiqEUF+u6EZ04f1TSsCMpPAiwKPJX
+	 Aj+E7N/fY7z4652qJ0NeZZliCFwR9PA8/8yLjw0HnxocZqNMak7LKf0Go43//9GAlFgb9
+	 dDEXKQNyKRteJPBuuo+tSYq5nWFOPJ4a4Is09tsr7XSfBJfwIQOjYa09mTn007aQKDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z7JXqlM6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3v8mXCG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17D1606A844;
-	Wed,  4 Nov 2026 22:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D5C606A844;
+	Wed,  4 Nov 2026 22:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z7JXqlM6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8E81F00A1C;
-	Wed,  4 Nov 2026 22:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3v8mXCG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF84E1F00A02;
+	Wed,  4 Nov 2026 22:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831555;
-	bh=nHXMNpw5A4I54MIHdJrc31ll7/nfYbD0wrumZhc1M4Q=;
+	s=korg; t=1793831557;
+	bh=Kdx8oE38gRHJNJjO6EHpRBZF1kBO9EW5tP3WQrux+bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z7JXqlM6B/LNKV8s0q3ehrh6ChNHcTcPXcGeQH2+YTO4NNItSte+6Ff6VN6E8N3MO
-	 8aIE5f/wokjoGkauHlEyOv9LVuEXsBuOnY3ceciTHuiodFhu/0nUXigGoBXhKRp4kQ
-	 4AufyqloOgPGmGVCO9XS2VeqwekNBAICvPxjePSk=
+	b=s3v8mXCGfxfOHlIZqI7Oe62LvC9B/Fe8BBkN3kpP1Dgpizhka7qk13Ah5/dZMnffD
+	 hzxRJpccH3K2EtX1oLHA53EAUJyQW88yUhk0dqGVbdFg7vD2gtMy/mTjqxT3Lgqk0B
+	 MI0SpaHAn27Sr0u42N0zUaRJbLVQTqhSHytzf+pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0774/1005] xfs: mark cow extents bad if theres no rmap mapping for them
-Date: Wed,  4 Nov 2026 16:08:27 -0500
-Message-ID: <20261104211105.059633220@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Tao Ma <tao.ma@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 6.18 0757/1005] ocfs2: pin refcount trees before dropping the lookup lock
+Date: Wed,  4 Nov 2026 16:08:10 -0500
+Message-ID: <20261104211104.639672942@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,213 +74,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 2ffc0619c9c2881443c5fffb10db8f2bc0aa2ce8 upstream.
+commit 8c714a074074af7ae59233c1fa6ef9d7aa710462 upstream.
 
-LOLLM noticed that we fail to mark cow staging extents as bad if there's
-a cow staging extent but no rmap record for the cow staging event.
-Close this gap.
+A refcount tree returned to ocfs2_lock_refcount_tree() must stay alive
+until that caller releases its operation reference. However,
+ocfs2_get_refcount_tree() returns the cached pointer after dropping
+osb_lock, and the caller only takes its kref afterwards. The registry
+reference does not protect this gap from concurrent removal.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: dbbdbd0086320a ("xfs: repair problems in CoW forks")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+This can happen when another node frees a refcount root and reuses its
+block with a different generation while this mount retains the old
+cached tree. Two local operations on different inodes sharing the new
+root, such as data CoW and an external xattr update, can then look up
+the same stale tree. Their inode locks are independent, and both the
+REFCOUNT DLM lock and rf_sem are acquired after the first operation
+reference.
+
+The following ordering is possible, with no other operation references:
+
+  Data CoW                         Xattr update
+  --------                         ------------
+  Look up the old tree under
+    osb_lock, then drop osb_lock
+                                   Look up the same tree and take a kref
+                                   Acquire the tree locks and read the
+                                     new on-disk generation
+                                   Erase the old tree under osb_lock
+                                   Unlock and drop the operation kref
+                                   Drop the registry kref, freeing tree
+  Take a kref through the
+    freed tree pointer
+
+The final kref_get() accesses freed rf_getcnt storage, and subsequent
+accesses in ocfs2_lock_refcount_tree() also use the freed allocation.
+
+Take the operation reference in ocfs2_get_refcount_tree() before
+releasing osb_lock, including when an insertion loses to another lookup.
+Removal must acquire the same lock, so it cannot drop the registry
+reference before the lookup has pinned the tree. Keep the existing
+unlock and error path puts. The two callers that already hold the
+refcount tree lock keep their borrowed lookup behavior and do not
+acquire an extra reference.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in ocfs2_lock_refcount_tree+0x94a/0x9b0
+    Read of size 4 at addr ffff888117212820 by task python3/497
+
+[Kernel and hardware identification omitted.]
+
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20e/0x420
+     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
+     kasan_report+0xe0/0x110
+     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
+     ocfs2_lock_refcount_tree+0x94a/0x9b0
+     ? __pfx_ocfs2_lock_refcount_tree+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? ocfs2_refcount_cow+0x3b6/0xd90
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kmalloc_cache_noprof+0x28d/0x610
+     ? ocfs2_refcount_cow+0x3b6/0xd90
+     ocfs2_refcount_cow+0x410/0xd90
+     ? __pfx_ocfs2_refcount_cow+0x10/0x10
+     ? __pfx___might_resched+0x10/0x10
+     ? down_write+0x11a/0x1f0
+     ? __pfx_down_write+0x10/0x10
+     ? ocfs2_inode_unlock+0x1a9/0x260
+     ? __pfx_ocfs2_inode_unlock+0x10/0x10
+     ? ocfs2_file_write_iter+0x1413/0x1d30
+     ocfs2_file_write_iter+0x157b/0x1d30
+     ? __pfx_ocfs2_file_write_iter+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? __x64_sys_pwrite64+0x1b7/0x220
+     ? __pfx___might_resched+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? security_file_permission+0x26/0x80
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_is_held_type+0x8f/0x100
+     vfs_write+0x639/0x1010
+     ? __pfx_ocfs2_file_write_iter+0x10/0x10
+     ? lock_vma_under_rcu+0x154/0x4a0
+     ? __pfx_vfs_write+0x10/0x10
+     ? lock_release+0x121/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     __x64_sys_pwrite64+0x1b7/0x220
+     ? __pfx___x64_sys_pwrite64+0x10/0x10
+     ? irqentry_exit+0xbe/0x820
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on_prepare+0x11d/0x150
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+[Register dump omitted.]
+
+     </TASK>
+
+    Allocated by task 491:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x28d/0x610
+     ocfs2_allocate_refcount_tree+0x49/0x1a0
+     ocfs2_create_refcount_tree+0x5d7/0x1630
+     ocfs2_attach_refcount_tree+0x57d/0x1100
+     __ocfs2_reflink.isra.0+0x1c4/0x1940
+     ocfs2_reflink+0x501/0x9b0
+     ocfs2_reflink_ioctl+0x6b2/0x920
+     ocfs2_ioctl+0x538/0x640
+     __x64_sys_ioctl+0x163/0x1d0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 498:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x308/0x580
+     ocfs2_lock_refcount_tree+0x672/0x9b0
+     ocfs2_xattr_set+0x72c/0x2530
+     ocfs2_xattr_user_set+0xaf/0xf0
+     __vfs_setxattr+0x143/0x1b0
+     __vfs_setxattr_noperm+0x112/0x5b0
+     __vfs_setxattr_locked+0xfe/0x2b0
+     vfs_setxattr+0x13c/0x370
+     do_setxattr+0x128/0x170
+     filename_setxattr+0x147/0x190
+     path_setxattrat+0x1ac/0x260
+     __x64_sys_setxattr+0xcb/0x140
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff888117212800
+     which belongs to the cache kmalloc-1k of size 1024
+    The buggy address is located 32 bytes inside of
+     freed 1024-byte region [ffff888117212800, ffff888117212c00)
+
+[Page and memory dumps omitted.]
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0037-v4-9f1a261dfbc341721689@gmail.com
+Fixes: 374a263e790c ("ocfs2: Add refcount tree lock mechanism.")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Tao Ma <tao.ma@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/cow_repair.c |   84 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 55 insertions(+), 29 deletions(-)
+ fs/ocfs2/refcounttree.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/fs/xfs/scrub/cow_repair.c
-+++ b/fs/xfs/scrub/cow_repair.c
-@@ -199,29 +199,35 @@ xrep_cow_mark_missing_staging_rmap(
- 	void				*priv)
- {
- 	struct xrep_cow			*xc = priv;
--	xfs_agblock_t			rec_bno;
--	xfs_extlen_t			rec_len;
--	unsigned int			adj;
--
--	if (rec->rm_owner == XFS_RMAP_OWN_COW)
--		return 0;
-+	const xfs_agblock_t		rec_end =
-+			rec->rm_startblock + rec->rm_blockcount;
-+	int				error = 0;
- 
--	rec_bno = rec->rm_startblock;
--	rec_len = rec->rm_blockcount;
--	if (rec_bno < xc->irec_startbno) {
--		adj = xc->irec_startbno - rec_bno;
--		rec_len -= adj;
--		rec_bno += adj;
-+	/* Was there a gap since the last rmap? */
-+	if (xc->next_bno < rec->rm_startblock) {
-+		error = xrep_cow_mark_file_range(xc,
-+				xfs_gbno_to_fsb(cur->bc_group, xc->next_bno),
-+				rec->rm_startblock - xc->next_bno);
-+		if (error)
-+			return error;
- 	}
- 
--	if (rec_bno + rec_len > xc->irec_startbno + xc->irec.br_blockcount) {
--		adj = (rec_bno + rec_len) -
--		      (xc->irec_startbno + xc->irec.br_blockcount);
--		rec_len -= adj;
-+	if (rec->rm_owner != XFS_RMAP_OWN_COW) {
-+		const xfs_agblock_t	bad_bno =
-+				max(xc->irec_startbno, rec->rm_startblock);
-+		const xfs_agblock_t	irec_end =
-+				xc->irec_startbno + xc->irec.br_blockcount;
-+		const xfs_extlen_t	bad_end = min(irec_end, rec_end);
-+
-+		error = xrep_cow_mark_file_range(xc,
-+				xfs_gbno_to_fsb(cur->bc_group, bad_bno),
-+				bad_end - bad_bno);
-+		if (error)
-+			return error;
- 	}
- 
--	return xrep_cow_mark_file_range(xc,
--			xfs_gbno_to_fsb(cur->bc_group, rec_bno), rec_len);
-+	xc->next_bno = max(xc->next_bno, rec_end);
-+	return error;
+--- a/fs/ocfs2/refcounttree.c
++++ b/fs/ocfs2/refcounttree.c
+@@ -348,8 +348,10 @@ ocfs2_allocate_refcount_tree(struct ocfs
+ 	return new;
  }
  
- /*
-@@ -239,10 +245,12 @@ xrep_cow_find_bad(
- 	struct xfs_perag		*pag;
- 	struct xfs_scrub		*sc = xc->sc;
- 	xfs_agnumber_t			agno;
-+	xfs_agblock_t			irec_end;
- 	int				error;
++/* Callers without the refcount tree lock must request a reference. */
+ static int ocfs2_get_refcount_tree(struct ocfs2_super *osb, u64 rf_blkno,
+-				   struct ocfs2_refcount_tree **ret_tree)
++				   struct ocfs2_refcount_tree **ret_tree,
++				   bool get_ref)
+ {
+ 	int ret = 0;
+ 	struct ocfs2_refcount_tree *tree, *new = NULL;
+@@ -406,6 +408,8 @@ static int ocfs2_get_refcount_tree(struc
+ 	new = NULL;
  
- 	agno = XFS_FSB_TO_AGNO(sc->mp, xc->irec.br_startblock);
- 	xc->irec_startbno = XFS_FSB_TO_AGBNO(sc->mp, xc->irec.br_startblock);
-+	irec_end = xc->irec_startbno + xc->irec.br_blockcount;
+ out:
++	if (get_ref)
++		ocfs2_refcount_tree_get(tree);
+ 	*ret_tree = tree;
  
- 	pag = xfs_perag_get(sc->mp, agno);
- 	if (!pag)
-@@ -254,7 +262,7 @@ xrep_cow_find_bad(
+ 	osb->osb_ref_tree_lru = tree;
+@@ -479,14 +483,12 @@ int ocfs2_lock_refcount_tree(struct ocfs
+ 	struct ocfs2_refcount_block *rb;
  
- 	/* Mark any CoW fork extents that are shared. */
- 	rc_low.rc_startblock = xc->irec_startbno;
--	rc_high.rc_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
-+	rc_high.rc_startblock = irec_end - 1;
- 	rc_low.rc_domain = rc_high.rc_domain = XFS_REFC_DOMAIN_SHARED;
- 	error = xfs_refcount_query_range(sc->sa.refc_cur, &rc_low, &rc_high,
- 			xrep_cow_mark_shared_staging, xc);
-@@ -263,7 +271,7 @@ xrep_cow_find_bad(
- 
- 	/* Make sure there are CoW staging extents for the whole mapping. */
- 	rc_low.rc_startblock = xc->irec_startbno;
--	rc_high.rc_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
-+	rc_high.rc_startblock = irec_end - 1;
- 	rc_low.rc_domain = rc_high.rc_domain = XFS_REFC_DOMAIN_COW;
- 	xc->next_bno = xc->irec_startbno;
- 	error = xfs_refcount_query_range(sc->sa.refc_cur, &rc_low, &rc_high,
-@@ -271,11 +279,10 @@ xrep_cow_find_bad(
- 	if (error)
- 		goto out_sa;
- 
--	if (xc->next_bno < xc->irec_startbno + xc->irec.br_blockcount) {
-+	if (xc->next_bno < irec_end) {
- 		error = xrep_cow_mark_file_range(xc,
- 				xfs_agbno_to_fsb(pag, xc->next_bno),
--				xc->irec_startbno + xc->irec.br_blockcount -
--				xc->next_bno);
-+				irec_end - xc->next_bno);
- 		if (error)
- 			goto out_sa;
+ again:
+-	ret = ocfs2_get_refcount_tree(osb, ref_blkno, &tree);
++	ret = ocfs2_get_refcount_tree(osb, ref_blkno, &tree, true);
+ 	if (ret) {
+ 		mlog_errno(ret);
+ 		return ret;
  	}
-@@ -284,11 +291,20 @@ xrep_cow_find_bad(
- 	rm_low.rm_startblock = xc->irec_startbno;
- 	memset(&rm_high, 0xFF, sizeof(rm_high));
- 	rm_high.rm_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
-+	xc->next_bno = xc->irec_startbno;
- 	error = xfs_rmap_query_range(sc->sa.rmap_cur, &rm_low, &rm_high,
- 			xrep_cow_mark_missing_staging_rmap, xc);
- 	if (error)
- 		goto out_sa;
  
-+	if (xc->next_bno < irec_end) {
-+		error = xrep_cow_mark_file_range(xc,
-+				xfs_agbno_to_fsb(pag, xc->next_bno),
-+				irec_end - xc->next_bno);
-+		if (error)
-+			goto out_sa;
-+	}
-+
- 	/*
- 	 * If userspace is forcing us to rebuild the CoW fork or someone turned
- 	 * on the debugging knob, replace everything in the CoW fork.
-@@ -319,9 +335,11 @@ xrep_cow_find_bad_rt(
- 	struct xfs_rmap_irec		rm_high = { 0 };
- 	struct xfs_scrub		*sc = xc->sc;
- 	struct xfs_rtgroup		*rtg;
-+	xfs_agblock_t			irec_end;
- 	int				error = 0;
- 
- 	xc->irec_startbno = xfs_rtb_to_rgbno(sc->mp, xc->irec.br_startblock);
-+	irec_end = xc->irec_startbno + xc->irec.br_blockcount;
- 
- 	rtg = xfs_rtgroup_get(sc->mp,
- 			xfs_rtb_to_rgno(sc->mp, xc->irec.br_startblock));
-@@ -335,7 +353,7 @@ xrep_cow_find_bad_rt(
- 
- 	/* Mark any CoW fork extents that are shared. */
- 	rc_low.rc_startblock = xc->irec_startbno;
--	rc_high.rc_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
-+	rc_high.rc_startblock = irec_end - 1;
- 	rc_low.rc_domain = rc_high.rc_domain = XFS_REFC_DOMAIN_SHARED;
- 	error = xfs_refcount_query_range(sc->sr.refc_cur, &rc_low, &rc_high,
- 			xrep_cow_mark_shared_staging, xc);
-@@ -344,7 +362,7 @@ xrep_cow_find_bad_rt(
- 
- 	/* Make sure there are CoW staging extents for the whole mapping. */
- 	rc_low.rc_startblock = xc->irec_startbno;
--	rc_high.rc_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
-+	rc_high.rc_startblock = irec_end - 1;
- 	rc_low.rc_domain = rc_high.rc_domain = XFS_REFC_DOMAIN_COW;
- 	xc->next_bno = xc->irec_startbno;
- 	error = xfs_refcount_query_range(sc->sr.refc_cur, &rc_low, &rc_high,
-@@ -352,11 +370,10 @@ xrep_cow_find_bad_rt(
- 	if (error)
- 		goto out_sr;
- 
--	if (xc->next_bno < xc->irec_startbno + xc->irec.br_blockcount) {
-+	if (xc->next_bno < irec_end) {
- 		error = xrep_cow_mark_file_range(xc,
- 				xfs_rgbno_to_rtb(rtg, xc->next_bno),
--				xc->irec_startbno + xc->irec.br_blockcount -
--				xc->next_bno);
-+				irec_end - xc->next_bno);
- 		if (error)
- 			goto out_sr;
+-	ocfs2_refcount_tree_get(tree);
+-
+ 	ret = __ocfs2_lock_refcount_tree(osb, tree, rw);
+ 	if (ret) {
+ 		mlog_errno(ret);
+@@ -2323,7 +2325,8 @@ int ocfs2_decrease_refcount(struct inode
+ 		goto out;
  	}
-@@ -364,12 +381,21 @@ xrep_cow_find_bad_rt(
- 	/* Mark any area has an rmap that isn't a COW staging extent. */
- 	rm_low.rm_startblock = xc->irec_startbno;
- 	memset(&rm_high, 0xFF, sizeof(rm_high));
--	rm_high.rm_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
-+	rm_high.rm_startblock = irec_end - 1;
-+	xc->next_bno = xc->irec_startbno;
- 	error = xfs_rmap_query_range(sc->sr.rmap_cur, &rm_low, &rm_high,
- 			xrep_cow_mark_missing_staging_rmap, xc);
- 	if (error)
- 		goto out_sr;
  
-+	if (xc->next_bno < irec_end) {
-+		error = xrep_cow_mark_file_range(xc,
-+				xfs_rgbno_to_rtb(rtg, xc->next_bno),
-+				irec_end - xc->next_bno);
-+		if (error)
-+			goto out_sr;
-+	}
-+
- 	/*
- 	 * If userspace is forcing us to rebuild the CoW fork or someone
- 	 * turned on the debugging knob, replace everything in the
+-	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb), ref_blkno, &tree);
++	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb), ref_blkno,
++				      &tree, false);
+ 	if (ret) {
+ 		mlog_errno(ret);
+ 		goto out;
+@@ -2558,7 +2561,7 @@ int ocfs2_prepare_refcount_change_for_de
+ 	BUG_ON(!ocfs2_is_refcount_inode(inode));
+ 
+ 	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb),
+-				      refcount_loc, &tree);
++				      refcount_loc, &tree, false);
+ 	if (ret) {
+ 		mlog_errno(ret);
+ 		goto out;
 
 
