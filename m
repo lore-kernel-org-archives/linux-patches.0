@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829040;
-	b=b9Q1YnIGTdMV/qJe73wwCVME9+GDHo3E7GQ+DsjIzZTlvq5/Xt0R4EypJV+UDCW6KBB5
-	 CWRihx8NWUKKsiepuTIkKa9cgLy1ZdkfQTKCvg/Okrs66PhesKghBHVtFKChDsyTfxB9L
-	 oHZ25yetAFTABJK2Z8k4G5eScWRjSnndw3CnKm6WLUgTyBPxRAt8zFfL0mXt3dA7naLN4
-	 VjUSwL2DKkZLMTDj0oMGQajdb8wCo2+TFpbBqY6sAv5XOPiiRIRORnZKrt/a876LRMxjE
-	 nLBis15U/wRldT6Qo52W9Y3a4CjY22c3l2bqDkE0qHFhh9rWJ6Qo1yxBqhklK1ui09A==
+	t=1793829041;
+	b=HpOTVauCce5ec7+/QofYkMeqX/23nlM+voPbOVYZvzl3AiaF0jFQs/SRl+8uuXrTD1lI
+	 9AF9X2UCARD8KS2jeV+XjRhDwpzG/WbekhfaCH+CIBTY+J8cEUBaqMytJPrGRyR3ig6eE
+	 aeNRklQwVlyB+0RfZvb4JeuajfD+sdDJekgohWKdKDambHDqMUHN4h1l081+5f62hSS9J
+	 x3K/G4oxtfL9jqr5n6NPgDmYWv/1ZCuzNqMzyMkbU2OrgIAYg8OEflb5EvQzMu8EJzEv9
+	 +x1tNHWX+UfCxqll63zco0NiG1yVL9/50mu/cA8+Zh7++2OmJMM7yQigax2iTlAjIDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829040;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RdoxLCMA5BEVmyRqifKkBX3Ec1/bC0RO0V1DKupL1eM=;
-	b=trn5HJxdcNDRzyufNBHHYyJUrk1oeHtNKuol31WxrxT6yJm0gk9VdFZ6hoHNoiyl9elA
-	 c4QIrggbZMITt1Dgeo3Db9jH8yt7HGHJWInho6Evs5h26su5uPqP0N6JT+NVkom5Pnd/A
-	 f/w6q4fSI46qj6HK/vuLEzV8kcX/1Z1V0ssFEPTfrF7IjV5GQOWo+Vgk0+yiJiwpmythV
-	 YmXIDBAa4d3EIEfEbIF6YdmviIlAkPvpQwidyQPG0f/S2rpoWJQttC9odc49IdecMWPnz
-	 fdwld6jqvlH2/DRLOKmshGTKcDnxkbqLK/WPPLWvHh1RxTmELrvkO0+QrAvAS+0977A==
+	bh=t0tveza/UnGHRXKlESNux2j8IrqrEBBEw3P0mIVjk74=;
+	b=A2fwfaw/P62P7929Fcr43PVSaeOncmYjy985y8KO+CzOrh048R23SNTOtVqg/Z8d4MHi
+	 mMxzN/Q/NxnwvjbTCUBghkeHq1RKpl/QyoCOK85Ri2pCAsEsQLmm1Vz7vJWQ4NXlKAUhw
+	 uA3518U6m2RetNQDkbDIIUCCbou5210Rg0L9PHZnXxCiyzrAQE3X3ozU0R2gEUm7HOVq0
+	 4B9ONRN7h0EM/Shmcv1KpsPTmrXxR/MfP7TCUts/X8kz8pnkC3r/VxiHDCeeMmqVS2nWH
+	 sWNFXvidGhFFsadlNQcDxUfaSsj//4sT1DPRrpH3UE6gZ1lbexPr2mhp0QSvl+0YksQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TM7wO1GB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C03OdB8T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024896070764;
-	Wed,  4 Nov 2026 21:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E71F608079C;
+	Wed,  4 Nov 2026 21:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TM7wO1GB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956AF1F00A16;
-	Wed,  4 Nov 2026 21:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C03OdB8T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114B71F00A16;
+	Wed,  4 Nov 2026 21:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829039;
-	bh=RdoxLCMA5BEVmyRqifKkBX3Ec1/bC0RO0V1DKupL1eM=;
+	s=korg; t=1793829041;
+	bh=t0tveza/UnGHRXKlESNux2j8IrqrEBBEw3P0mIVjk74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TM7wO1GBj3ZLv66FU5leLOwr47UqNI3zlu4qz27R0EN9YETgrDfgauwgF2/Uku850
-	 3ivB0gwnTod+MIQojf6AvBIC7RV6M250VWMJTw7JCfQT9FqjLKcDnAzJC/C8/i6IdW
-	 fxetIcc6Xq9vKTGzniF+VTZ7h4Pa1CrqnaLj1jdo=
+	b=C03OdB8TVxsXoapnptvD2ojYnK9qfdB6VLP44EgK57yCBAsxKlv1+G5WBSWitJR0J
+	 jAAoJa67Ppdh+M21yFOdZTijuTCSvP2Np66QPKrgPKI+x7tmKKo5RSmXc+GoDPLFuf
+	 4QIZyRZBHk0zaZYf/lw0kHzf240neJHk2UNt0DlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Zuber <jamz@amazon.com>,
-	NeilBrown <neil@brown.name>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 7.3 406/547] NFS: Fix stale negative cache on failed nfs_mkdir()
-Date: Wed,  4 Nov 2026 16:09:50 -0500
-Message-ID: <20261104211049.850684924@linuxfoundation.org>
+	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 389/547] smb: client: validate NT transaction response layout and offsets
+Date: Wed,  4 Nov 2026 16:09:33 -0500
+Message-ID: <20261104211049.351794534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,42 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Zuber <jamz@amazon.com>
+From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 
-commit 211cda4fdf33011cee39f8970c4625b207142d6b upstream.
+commit 83d0d5e0ca22233c75daf139ec0063b9d2ff1ac7 upstream.
 
-Since commit 8376583b84a1 ("nfs: change mkdir inode_operation to return
-alternate dentry if needed"), nfs_mkdir() no longer drops the dentry on
-RPC failure.  A negative cache value can then result in spurious ENOENT
-results for further operations within that directory, such as open or
-stat.
+validate_ntransact() assumes that the response uses the fixed 18-word NT
+transaction layout. A different WordCount makes get_bcc() locate the byte
+count at a different offset from pSMBr->ByteCount, allowing the subsequent
+bounds checks to use inconsistent response boundaries.
 
-We observed this breaking some applications where an EEXIST on mkdir
-caused the application to assume the directory to exist, only to fail
-operations within that directory due to the retained negative cache
-entry.  The other create paths, nfs_create() and nfs_mknod(), still drop
-the dentry on failure.  This patch restores the previous behavior.
+The function also turns the 32-bit ParameterOffset and DataOffset fields
+into pointers before checking their bounds. On a 32-bit client, a large
+offset can wrap the pointer below end_of_smb and pass the one-sided pointer
+comparison. The caller then dereferences the parameter pointer or copies
+from the data pointer.
 
-Fixes: 8376583b84a1 ("nfs: change mkdir inode_operation to return alternate dentry if needed")
-Cc: stable@vger.kernel.org # v6.15+
-Signed-off-by: Jimmy Zuber <jamz@amazon.com>
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Require the expected WordCount before reading the byte count. Check each
+offset and count against the received SMB length as integers before forming
+either pointer. Use subtraction after validating the offset so that the
+range checks cannot overflow.
+
+Reported-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+Fixes: 0a4b92c05ed0 ("[CIFS] Add worker function for Get ACL cifs style")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/dir.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/cifssmb.c |   32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2490,6 +2490,8 @@ struct dentry *nfs_mkdir(struct mnt_idma
- 	trace_nfs_mkdir_enter(dir, dentry);
- 	ret = NFS_PROTO(dir)->mkdir(dir, dentry, &attr);
- 	trace_nfs_mkdir_exit(dir, dentry, PTR_ERR_OR_ZERO(ret));
-+	if (IS_ERR(ret))
-+		d_drop(dentry);
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(nfs_mkdir);
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -3799,9 +3799,10 @@ static int
+ validate_ntransact(char *buf, char **ppparm, char **ppdata,
+ 		   __u32 *pparmlen, __u32 *pdatalen)
+ {
+-	char *end_of_smb;
+ 	__u32 data_count, data_offset, parm_count, parm_offset;
+ 	struct smb_com_ntransact_rsp *pSMBr;
++	size_t buflen;
++	char *end_buf;
+ 	u16 bcc;
+ 
+ 	*pdatalen = 0;
+@@ -3812,37 +3813,42 @@ validate_ntransact(char *buf, char **ppp
+ 
+ 	pSMBr = (struct smb_com_ntransact_rsp *)buf;
+ 
++	if (pSMBr->hdr.WordCount != 18) {
++		cifs_dbg(FYI, "invalid NT transaction WordCount %u\n",
++			 pSMBr->hdr.WordCount);
++		return -EINVAL;
++	}
++
+ 	bcc = get_bcc(&pSMBr->hdr);
+-	end_of_smb = 2 /* sizeof byte count */ + bcc +
+-			(char *)&pSMBr->ByteCount;
++	end_buf = 2 /* sizeof byte count */ + bcc + (char *)&pSMBr->ByteCount;
++	buflen = end_buf - buf;
+ 
+ 	data_offset = le32_to_cpu(pSMBr->DataOffset);
+ 	data_count = le32_to_cpu(pSMBr->DataCount);
+ 	parm_offset = le32_to_cpu(pSMBr->ParameterOffset);
+ 	parm_count = le32_to_cpu(pSMBr->ParameterCount);
+ 
+-	*ppparm = (char *)&pSMBr->hdr.Protocol + parm_offset;
+-	*ppdata = (char *)&pSMBr->hdr.Protocol + data_offset;
+-
+ 	/* should we also check that parm and data areas do not overlap? */
+-	if (*ppparm > end_of_smb) {
++	if (parm_offset > buflen) {
+ 		cifs_dbg(FYI, "parms start after end of smb\n");
+ 		return -EINVAL;
+-	} else if (parm_count + *ppparm > end_of_smb) {
++	} else if (parm_count > buflen - parm_offset) {
+ 		cifs_dbg(FYI, "parm end after end of smb\n");
+ 		return -EINVAL;
+-	} else if (*ppdata > end_of_smb) {
++	} else if (data_offset > buflen) {
+ 		cifs_dbg(FYI, "data starts after end of smb\n");
+ 		return -EINVAL;
+-	} else if (data_count + *ppdata > end_of_smb) {
+-		cifs_dbg(FYI, "data %p + count %d (%p) past smb end %p start %p\n",
+-			 *ppdata, data_count, (data_count + *ppdata),
+-			 end_of_smb, pSMBr);
++	} else if (data_count > buflen - data_offset) {
++		cifs_dbg(FYI, "data offset %u + count %u past smb length %zu\n",
++			 data_offset, data_count, buflen);
+ 		return -EINVAL;
+ 	} else if (parm_count + data_count > bcc) {
+ 		cifs_dbg(FYI, "parm count and data count larger than SMB\n");
+ 		return -EINVAL;
+ 	}
++
++	*ppparm = buf + parm_offset;
++	*ppdata = buf + data_offset;
+ 	*pdatalen = data_count;
+ 	*pparmlen = parm_count;
+ 	return 0;
 
 
