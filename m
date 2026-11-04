@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826947;
-	b=TrDsnoaC//VLs0zBc3Ef9O8btLBAKMshAWI16dAetN5ma8goGo8li4dD/CNS9QxEwSWT
-	 bA+w7d9azEO8DLe8P7pwyhFoVHVU3vLUK7Jv8JDxMxdTb1d/GKz08uj2iG2g2DT3f1Z95
-	 yRdP6x4GBDbsG+8JjISrZQOM7MAU5fgr/IiHZNaIZiNKk7EWgZMnH5O2k+o5v2yyChHXE
-	 99UpbgYgHWzNeAjS4HxxFVC/JnnDJ5jz6gaqclNVYL9kmJS0OJpABNWQs+SnkZcUqYTVZ
-	 r1O+n0wG1vgluGCg/6odKSqjCQOy4RBxsByfryt5ArmW+SkCGaYg9PgRxHW8TL9vwKA==
+	t=1793826949;
+	b=jV4m5xipKLTHuphQmWSQ4Imc95/gls9G4UpAnUM8UW1aGiBuBTnVqjGCoBlggqsxnTZp
+	 wtGjpzYMbPHpKmFLOAfBbbnp0AoM2rJslxe9WSaGQu/yB/3u1VyfSpObXJ/0iEg0XpgUi
+	 98yujA647q1mlEkjUXd3swCgaO48Iru/zDQPa8LT/JO5jWnpocI0oaqsS5ciDiHT0gxhY
+	 W0ZrYP+3YVI90yDXLETBe39AeRb2JJPWi9us32fYvTtwvaKtyVqCde8cW6XM77oDQhszH
+	 glKM6KE/5MUm/yMyjk5WvH+K8wbK84FDDGLSGYnm4ZzvF7eGgrugwFv4rocriQ0j+IQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/k3ILRHOX+J/9XEYPlJqFr0WiwZrNJ3jM/6WSHBx2mQ=;
-	b=jm7yIv18MVYQ9SyNZ+WSLZine76z0UyRdxQLXp6UDlc4Uq1a1WIlmOycAh5wss1CEWQf
-	 biF0m9Ow6SJuGDnJSEGDZlaH1/Im9MPgAizHDWm52ezBsiNaypXijSCO9o99GywHP07Yd
-	 UIGMRuYdvUCzdFgx66YIy75no7yVIisgZb0LCWtzw29kn4soV1XBSdCXR0H8aRVwi1Bn1
-	 syY+F7C7JBN4l6k9ss4EMfX3QYCZAZUagcfqaHkLh/46t3e1AHpRh+XOBiTjpq1bhXpWB
-	 Z9pwDzx1wQwv4yAfMdwgyG3WXsuK2W5JBgMEZdMB7SKrmIMi7rLyZANX4rawRaFL5BA==
+	bh=p1VrkkwqIWJj3VZgOGOOhWrUdJLr88MZcJB0rUkS0bM=;
+	b=I9j0FWOC6AnyB3B/ntips9w4ogen0Y4hsc1H+rsMi1lqW6FHCDe4iSByfzGmAUn/fmJJ
+	 NdTyWOHe3VOXfNpItkmcUXgWfRhXp9mhSFGE2ItG0Z1W2RbdYQ2GRweagbiWC3pK57Ui+
+	 ry2v0Ue+QBHUSFXoBSjf7RBqdUduwFj7e6rSeR2C8U92IgrZdsjUpGA1YJpUXOJaXiEBX
+	 Tx7X0vNFAas0eGn0pK8PZ3qTVYejY4vyNMRM8M/h/+eTYBE5GycvGKloRd4hPYClMC0As
+	 v5jDZ4ViibfBMgzt6YBQb8S86EADygDuAYtPRpfgGUqffoKNxKECkwS51gYQ0VWlORg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Zrjx7h/J";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rbyQ3EKJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE01607350A;
-	Wed,  4 Nov 2026 21:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123CE60B78E3;
+	Wed,  4 Nov 2026 21:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zrjx7h/J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D001F0093A;
-	Wed,  4 Nov 2026 21:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rbyQ3EKJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FD01F00A16;
+	Wed,  4 Nov 2026 21:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826947;
-	bh=/k3ILRHOX+J/9XEYPlJqFr0WiwZrNJ3jM/6WSHBx2mQ=;
+	s=korg; t=1793826948;
+	bh=p1VrkkwqIWJj3VZgOGOOhWrUdJLr88MZcJB0rUkS0bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zrjx7h/JahQRtHWbYpeZ5Le05+Z+PcX3kVZwej7ChAWvb2wB4WY2EHXqkKC5v8A5/
-	 mCyTj1ZY8EdJ18x32tZj+vppSpCUar3KEjqJD6AnYHBzPq30IY9PWio/L4WHtE67v7
-	 HonHzh/+Srqtm7B/i6FZIUvCvkI0973RroaAZy5o=
+	b=rbyQ3EKJ25T00dsowTP6rYklyZ6XaoR4t0qq5yO9b1gLJaeYuHZhvDhxj1XSgYLEu
+	 NqQeOjVMblVpV5bVQ4t1LjoZhksmFciA/+E4huXd6Vj7NOiiREM1N0ypz8lygL/OAI
+	 SZbCLDXDwglhHiPfMWERDYpQrcFsE0dI2W1ua/m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 103/547] net/sched: act_ife: do not consume the inner header on egress
-Date: Wed,  4 Nov 2026 16:04:47 -0500
-Message-ID: <20261104211041.145186200@linuxfoundation.org>
+	Mario Peter <mario.peter@leica-geosystems.com>,
+	Johan Hovold <johan@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 7.3 104/547] driver core: take parent lock on deferred probe
+Date: Wed,  4 Nov 2026 16:04:48 -0500
+Message-ID: <20261104211041.171167553@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,63 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 498c631f9c6d74aad4bf43039fa3ce70ae9a8bb7 upstream.
+commit 4059f8986c8f50102a04335cc1da4921dfd262d8 upstream.
 
-The issue:
-tcf_ife_decode() unconditionally calls eth_type_trans(), which pulls
-ETH_HLEN.  On egress this consumes the inner Ethernet header, and the
-device receives an skb whose data points to the L3 header:
+USB interfaces should be probed with the parent USB device lock held,
+but this is not honoured when probe is deferred.
 
-- loopback_xmit() parses L3 data as Ethernet: the "ethertype" comes
-  from the inner IPv4 source address, and the decapsulated packet is
-  dropped or misparsed.
-- a real NIC transmits the frame without its Ethernet header.
+Add a new bus_probe_device_deferred() helper to handle deferred probe
+where the parent device lock is not held.
 
-(The __skb_pull() BUG this used to trigger in loopback_xmit() when the
-remaining linear area was short is handled by "loopback: use
-eth_type_trans_careful()".)
-
-The Fix:
-Parse the inner Ethernet header with eth_type_trans() in both directions,
-then restore the egress data position and MAC length.  On ingress the
-existing behavior is unchanged.  On egress, push the inner Ethernet header
-back after parsing so the xmit path sees the original frame and later
-actions see a consistent network header.
-
-Conditions to recreate the bug:
-- egress tc filter on lo: action ife decode pipe;
-- AF_PACKET SOCK_RAW frame: outer Ethernet with ETH_P_IFE, IFE metadata,
-  inner Ethernet + a valid IPv4 ICMP echo request to a local address;
-- before this patch, no echo is received; after it, the echo is
-  delivered and answered.
-
-Fixes: ef6980b6becb ("introduce IFE action")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-[edumazet: reworded changelog, the crash is now handled in loopback]
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261028122703.2093730-6-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d1c3414c2a9d ("drivercore: Add driver probe deferral mechanism")
+Reported-by: Mario Peter <mario.peter@leica-geosystems.com>
+Link: https://lore.kernel.org/20261007131514.1260696-1-mario.peter@leica-geosystems.com
+Cc: stable@vger.kernel.org	# 3.4
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20261014133109.1392265-3-johan@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ife.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/base/base.h |    1 +
+ drivers/base/bus.c  |   28 +++++++++++++++++++++-------
+ drivers/base/dd.c   |    7 ++++---
+ 3 files changed, 26 insertions(+), 10 deletions(-)
 
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -769,6 +769,10 @@ static int tcf_ife_decode(struct sk_buff
+--- a/drivers/base/base.h
++++ b/drivers/base/base.h
+@@ -154,6 +154,7 @@ struct kobject *virtual_device_parent(vo
  
- 	skb->protocol = eth_type_trans(skb, skb->dev);
- 	skb_reset_network_header(skb);
-+	if (!skb_at_tc_ingress(skb)) {
-+		skb_push(skb, ETH_HLEN);
-+		skb_reset_mac_len(skb);
-+	}
- 
- 	return action;
+ int bus_add_device(struct device *dev);
+ void bus_probe_device(struct device *dev);
++void bus_probe_device_deferred(struct device *dev);
+ void bus_remove_device(struct device *dev);
+ void bus_notify(struct device *dev, enum bus_notifier_event value);
+ bool bus_is_registered(const struct bus_type *bus);
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -603,13 +603,7 @@ out_put:
+ 	return error;
  }
+ 
+-/**
+- * bus_probe_device - probe drivers for a new device
+- * @dev: device to probe
+- *
+- * - Automatically probe for a driver if the bus allows it.
+- */
+-void bus_probe_device(struct device *dev)
++static void __bus_probe_device(struct device *dev)
+ {
+ 	struct subsys_private *sp = bus_to_subsys(dev->bus);
+ 	struct subsys_interface *sif;
+@@ -628,6 +622,26 @@ void bus_probe_device(struct device *dev
+ }
+ 
+ /**
++ * bus_probe_device - probe drivers for a new device
++ * @dev: device to probe
++ *
++ * - Automatically probe for a driver if the bus allows it.
++ */
++void bus_probe_device(struct device *dev)
++{
++	__bus_probe_device(dev);
++}
++
++void bus_probe_device_deferred(struct device *dev)
++{
++	if (dev->type && dev->type->need_parent_lock)
++		device_lock(dev->parent);
++	__bus_probe_device(dev);
++	if (dev->type && dev->type->need_parent_lock)
++		device_unlock(dev->parent);
++}
++
++/**
+  * bus_remove_device - remove device from bus
+  * @dev: device to be removed
+  *
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -86,8 +86,9 @@ static void deferred_probe_work_func(str
+ 	/*
+ 	 * This block processes every device in the deferred 'active' list.
+ 	 * Each device is removed from the active list and passed to
+-	 * bus_probe_device() to re-attempt the probe.  The loop continues
+-	 * until every device in the active list is removed and retried.
++	 * bus_probe_device_deferred() to re-attempt the probe.  The loop
++	 * continues until every device in the active list is removed and
++	 * retried.
+ 	 *
+ 	 * Note: Once the device is removed from the list and the mutex is
+ 	 * released, it is possible for the device get freed by another thread
+@@ -121,7 +122,7 @@ static void deferred_probe_work_func(str
+ 		device_pm_move_to_tail(dev);
+ 
+ 		dev_dbg(dev, "Retrying from deferred list\n");
+-		bus_probe_device(dev);
++		bus_probe_device_deferred(dev);
+ 		mutex_lock(&deferred_probe_mutex);
+ 
+ 		put_device(dev);
 
 
