@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829519;
-	b=K40o0s9I4PA22nFKz4n3H/ktNYjohUwPMXOxCdo3vFVaBArTjuQvebTAK9NqVr8+jwkH
-	 kwtipGJdd7GL16XIReyXYnmspQWKGRLTnPoHGcuTkAgBn34lDy9jpMnDEFxsQ3sVIImPg
-	 u7KwYHpJm7Ne7rCMaZK805+wdkxeSmAvajNvE6v9omxidBmx9cuuj35rmlDD12pym1M98
-	 5Izir+TKsOIT78A6QdeKf7ChxQeAbouhlIvJ5an/J3G3BU6ce+Az3e26krj/xWv0v8l+E
-	 h8AEVnXnr71n9Ez2/7UODfux6qqpGKNDVzjIpLCcGiwifF2H8J/nXZ0DaGtxPc2uUtQ==
+	t=1793829520;
+	b=uqVrAkWWy34z5UtkxXpYIvLMScUv3+RrD6iMTZLG5GZan3fPVI5B8rixHcy35ngQ1Ykd
+	 D3Z3DvzIYS5/3h3Yt1s5QaBJICpmes6QzU9s+h7d0kBCzBDD/0ZUpv9PZdqu0TeocB3Pz
+	 28tqxc02YzCTnqLBVEZkjLmeOAFv7yVL2PkreBWBBjs8dR4briBdIrPBiLJbPK7lCmG9S
+	 O9MfslE30qOoIBpDTY6Khejh8uUJk38N0c7TOdf1vqC1mxoa7yeQaQsQvV2oNeJUCwmuP
+	 g/VEk/2vUsdT0hXwesPXCjunkcpqm+f6XMiCqF8cgAOsr4UtgispzHvrGVkbZtkT8kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ftdCYY5maLMXYOX2diBpRJtiVHrvqJteCLjz4q3B7fY=;
-	b=YJPT1tQhJNPRQ1J/Yufvy/Iq6puwfzJ4AgYbrG1rIKnW0+R3owA2PEuVIP5htdAGWUUf
-	 /sbaNc6nlaITBnXIsl/N0NdCgbO127WZkeaJ9fHFKvnvdULOHWOhSKKlVqCopJWtPq9wz
-	 bMfLrO5UFRxeboavqKrJ4qd6WAE58stNYfuWaoyh/V/bbSilg6OztfKmCiInF38Or2XEp
-	 Kdl1WqWicTdSnwPeA2gkbLEEso/RHNXdYBVw5I4BGCwt2qdtITaIaD5DoaiNxOYeEm/CY
-	 qy8jYV6zPToyrH6nk9nfbn730LgLps8bSeXxwfzfmbvXUSKLnpCzL957WrSmSflH1eA==
+	bh=VWjh/8VwumtGyKhLaXbBoL1uZhJYvmqSvCjJtlE63YY=;
+	b=Nw6c5yXlM2D3V2FEyZ6vB2ws+P7WREpFTLPGG5+yQzvPq9rus0tv1Zo9iBw3/UsXdgv2
+	 LvrE3WX0RCcOJrKExMbkCcEbxll0Z8HOoEHsnZkk5xlUw5tewWYUAJy1Q3wR4PvA9jZBX
+	 rm5TlXwq6gr61j2l5i0quV2ZugrSKm0rIkU0Hd2qhbxJpsrjRZQSkXTsnuLPAM7o7TacX
+	 Dy/OetF8g7g28p/GtV6elek8rtgLiN6Xxu9z3fUQRd4vDR0QAkpGGisf0UCR5WsJHHsEr
+	 zVXmTi4XAijbqZcCvyXIeudzlqSI/izQukbQFqkxorZuM1UbKAk7GqOTPmeT4H0l47Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJFNN8Dc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aphv03XI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C54606AB38;
-	Wed,  4 Nov 2026 21:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170A5606AB3D;
+	Wed,  4 Nov 2026 21:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJFNN8Dc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F241F0093A;
-	Wed,  4 Nov 2026 21:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aphv03XI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5021F00A15;
+	Wed,  4 Nov 2026 21:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829518;
-	bh=ftdCYY5maLMXYOX2diBpRJtiVHrvqJteCLjz4q3B7fY=;
+	s=korg; t=1793829519;
+	bh=VWjh/8VwumtGyKhLaXbBoL1uZhJYvmqSvCjJtlE63YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJFNN8DcGOJs4wN/9FvZ/nfsJvXkbj8gsr4jTOsefJRfrZ8m3Mv0MDHy3Rd+3L2FH
-	 43VQutnsIaIBRercZEf7c7ZaZSoBEBr3IDygo7n2iZPKFZ2i3CDO4QEDxAttdi5OBi
-	 spznCwbdOs0R+oCiDPW+JmCnMrpVJRNX/gwzejFk=
+	b=aphv03XIxyarlzdUFscpcu5vBQF9QIgwhOzoqktL7iIrnQwvKrDPD76hWIeTc7osW
+	 7M99aLDUj21l7w4r8bZ8jJpO6H84E+V7GpS+rIXdTThBNwVat8AvaWxyEwawALPsbw
+	 Eb68+0T/EpuKoRqkI94JT/GPkjur197s0lnPZ4mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+56962eb32ba0136cd330@syzkaller.appspotmail.com,
-	Michail Tatas <michail.tatas@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0174/1005] USB: misc: uss720: Fix leak in get_1284_register
-Date: Wed,  4 Nov 2026 15:58:27 -0500
-Message-ID: <20261104211048.649154311@linuxfoundation.org>
+Subject: [PATCH 6.18 0138/1005] media: em28xx: dev_info->pr_info since dev has been freed
+Date: Wed,  4 Nov 2026 15:57:51 -0500
+Message-ID: <20261104211047.564516061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,37 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Tatas <michail.tatas@gmail.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit 15902712b9e2a46649cba2f22002d05faec2a990 ]
+[ Upstream commit c132b07f7e5853c0df35a9b94b8e204cdc6afdef ]
 
-if wait_for_completion_timeout() times out in get_1284_register()
-then we do not destroy the reference acquired via kref_get() in
-submit_async_request. Add the missing kref_put in the timeout path.
+In em28xx_free_device() dev_info passed &dev->intf->dev,
+but that device can be freed already.
 
-link: https://syzkaller.appspot.com/bug?extid=56962eb32ba0136cd330
+Just use pr_info instead.
 
-Reported-by: syzbot+56962eb32ba0136cd330@syzkaller.appspotmail.com
-Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
-Link: https://patch.msgid.link/allaDTUua9n5DQ0a@michalis-linux
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/uss720.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/em28xx/em28xx-cards.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/misc/uss720.c b/drivers/usb/misc/uss720.c
-index 6ebcfaf525989..a405a36d8d42f 100644
---- a/drivers/usb/misc/uss720.c
-+++ b/drivers/usb/misc/uss720.c
-@@ -223,6 +223,7 @@ static int get_1284_register(struct parport *pp, unsigned char reg, unsigned cha
- 	}
- 	printk(KERN_WARNING "get_1284_register timeout\n");
- 	kill_all_async_requests_priv(priv);
-+	kref_put(&rq->ref_count, destroy_async);
- 	return -EIO;
- }
+diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
+index b8e207443770e..af2c06a05084d 100644
+--- a/drivers/media/usb/em28xx/em28xx-cards.c
++++ b/drivers/media/usb/em28xx/em28xx-cards.c
+@@ -3556,7 +3556,7 @@ void em28xx_free_device(struct kref *ref)
+ {
+ 	struct em28xx *dev = kref_to_dev(ref);
  
+-	dev_info(&dev->intf->dev, "Freeing device\n");
++	pr_info("%s: Freeing device\n", dev->name);
+ 
+ 	if (!dev->disconnected)
+ 		em28xx_release_resources(dev);
 -- 
 2.53.0
 
