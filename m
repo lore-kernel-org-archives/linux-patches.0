@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829298;
-	b=pvwiHQiw+oQB3Nj8m6B7zgy2DfGRkpDaPFNgw0CT329TRoUNHePohmusbAt/YV3z4hmL
-	 o7vyVEYxYzPrwgev6XfkqrJWawMU94W0mqedMO1kpihn/iwaD+B4ERYWCxJnDku1FEH/T
-	 63FKS9HFGhRcTtPm31l0WyjtYcU7gSXFHBRu7ctW4qVzgZqlutNdfd5klMBPZQ9BAD7OY
-	 wI6Li28TWbwd5fSwWB5AQ/e1NGugfhunKIADfpcOyj/dF3Sl8hbx8H3wpnclqIg72J6wB
-	 4MliQsocmz9mI593X5TNbo81A0DWkY8LWPkSrhyZBhZl6qw7EL7aehebbaiYewZi2WA==
+	t=1793829300;
+	b=m4w9YslA22SXwuZt5N0ZY+6v6f15orwPmR74Wb4fmLTP6Ath9FKMqlN1n19ca04VPd1a
+	 vwc2vCp93HhGWnNhz/seAg91c2T7Gkhd7Tq6Diu239VHorg0iwut0m+7Uomd5JNVrzWRp
+	 g/kXaDpOuH0F/NJznJ0WUo+uQQz+W/Qh79r1UrUeuj+LTtfiDwRbyvxL+AIK4OwwsvIae
+	 REjwAx1xtbUhE1KvJeJ1cUzUdt0Wr5iNNiaGxr7A3+MRKdbiCwaHWDBEenqV3/EyQRUrJ
+	 XjpZn2dIqrr92efrx5X6XUTKIkuWthpnCXx23gNuWwocG80DmyyiI6xHspY9GzgVeKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=89W3e/SZeCPd+ZPeptsRtHZzSMo6J74E/wncgH5Cek8=;
-	b=XmS5DvnjPM/9pzfMcEEPNTEMeHAKCwK7+hnIKmEctrSckSZnObrBRvT4CyI4d37B1LQx
-	 ib4WqZP/IsdF+qnlZERZJOLO6kpMO3TKPYPe9b7iY1vgtg7eBQPtuNeNG+KGy0LlZCf4y
-	 zji7XBi9e/BOYgud9QfAm5LKJp3xRYEF5c+mjJx1hM+rzXC5/STHhGQljn2CmoR96UzKE
-	 YJ5RSNT+tUw3fEvwwGVvfkArlz7ZR3UrBOddYtTtN0SWQ+Y8lYTEJzKeSltvyw2ernWuL
-	 TNuk25v1NrVDugDskc+OjPZfzsiitql2NNs0j+nSOExKB/ifAjJn0dZeIz1hJ3UsPpg==
+	bh=gtXa5TOGasT3xnX0uy72JYS3oRrbSBo0eee3X6Z6wYM=;
+	b=uoVnA4wr0iiNdGq2OCKPdmnjJ+N4cBtLGrXA8onTkCdnC6hZofhncGODDAJRSQsmWWNq
+	 OajH5KvE72jDHtt3FCylBUp7JS7ZXAAFJ05EfWlgW69H0SLsAMm9tn5UbR4muhWYDkw3V
+	 3LrOR3V3oiY7iqId9ZtfuCK4/mxjc+sgXSu0KEMHhYM32VkJ9DTmVogLtw/iA45etE72k
+	 AymjE1vWe9dZIFFtxxTK2CNlWr+pDHq4ODr0DDyCDdrCgKrCRPiGcSVI+Klm43bJx4yVS
+	 uWg7yk9qorrml9LhNUtnfD2qMh7Caa8thVbRxy5A1FaidIEpg3QdXFNj54D9E6+mIVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ydA540Dt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TAutp3so;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474B66086604;
-	Wed,  4 Nov 2026 21:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36676086604;
+	Wed,  4 Nov 2026 21:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ydA540Dt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4191F000C1;
-	Wed,  4 Nov 2026 21:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TAutp3so
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BD61F000C1;
+	Wed,  4 Nov 2026 21:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829298;
-	bh=89W3e/SZeCPd+ZPeptsRtHZzSMo6J74E/wncgH5Cek8=;
+	s=korg; t=1793829299;
+	bh=gtXa5TOGasT3xnX0uy72JYS3oRrbSBo0eee3X6Z6wYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ydA540DtX6E3zjwtWSG7W5aLmigTeFl8//1yPkGsr7m+cZVzalhSA5ftDf7XQU9lO
-	 OPrHgzYD40qNeG73gMZihiJuEXwP+RW4YOHBdND716x4uEAcP51lfodUDu7z66QJDp
-	 K//+Qm3hCJGncaVPL05D/cKcFqpRgxaw5/5Aat0Q=
+	b=TAutp3so8+Mc6mGtQDyI9I/O4jRIrXaV/aZlubg3EJiV6E5PG0eZuT80hfxUX3Ot7
+	 pFHGiU6gy+t6l84D1Wz/9vPebowHOwU0mBoW/osJGjqhWLoVwXlJv+6w6KQrn7IbDj
+	 C105XkODr4XYgi6faUEfIKvkjodT8shm6eAjwmz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Theesfeld <william@theesfeld.net>,
-	Brian Masney <bmasney@redhat.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0036/1005] clk: zynq: handle kasprintf() failure in periph_clk registration
-Date: Wed,  4 Nov 2026 15:56:09 -0500
-Message-ID: <20261104211044.579822317@linuxfoundation.org>
+Subject: [PATCH 6.18 0037/1005] ASoC: tlv320aic26: remove keyclick sysfs file
+Date: Wed,  4 Nov 2026 15:56:10 -0500
+Message-ID: <20261104211044.609401527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,65 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Theesfeld <william@theesfeld.net>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit d4d0d335e8d37c6c7e1c5664c7664288eca5a09b ]
+[ Upstream commit ae375f8d063d71e598c0d7e14fc056154c84d7a7 ]
 
-zynq_clk_register_periph_clk() ignores the return value of the two
-kasprintf() calls used to build the mux and divider clock names, and
-passes the resulting (possibly NULL) pointers straight into
-clk_register_mux(), clk_register_divider() and clk_register_gate() as
-the clock '"'name'"' argument.  On allocation failure that name later
-gets dereferenced by the clock framework (e.g. in debugfs name
-formatting), causing a NULL-pointer dereference.
+aic26_probe() creates the keyclick sysfs file on the component device.
+The file callback uses the ASoC component pointer stored in the driver
+private data.
 
-Check both kasprintf() returns.  On failure unwind any allocated name
-buffer and the spinlock, then fall through to the existing err label
-which sets clks[] to ERR_PTR(-ENOMEM).  Freeing the spinlock on the
-error path is correct here because no clk_register_*() call has had
-a chance to take ownership of it; the success path intentionally
-hands it off to the registered clocks.
+There is no matching remove callback, so the sysfs file can remain after
+the component is removed while its backing component state is gone.
 
-The neighbouring zynq_clk_register_fclk() in the same file already
-uses this per-allocation goto-label cleanup pattern; this change
-brings periph_clk into line with it.
+Add a component remove callback that removes the keyclick file.
 
-Signed-off-by: William Theesfeld <william@theesfeld.net>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260615064549.34110-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/zynq/clkc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/codecs/tlv320aic26.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/clk/zynq/clkc.c b/drivers/clk/zynq/clkc.c
-index c28d3dacf0fb2..db40a9e7dd3d9 100644
---- a/drivers/clk/zynq/clkc.c
-+++ b/drivers/clk/zynq/clkc.c
-@@ -186,7 +186,11 @@ static void __init zynq_clk_register_periph_clk(enum zynq_clk clk0,
- 	spin_lock_init(lock);
+diff --git a/sound/soc/codecs/tlv320aic26.c b/sound/soc/codecs/tlv320aic26.c
+index e5dfb3d752a3a..84e954311c1b2 100644
+--- a/sound/soc/codecs/tlv320aic26.c
++++ b/sound/soc/codecs/tlv320aic26.c
+@@ -320,8 +320,14 @@ static int aic26_probe(struct snd_soc_component *component)
+ 	return 0;
+ }
  
- 	mux_name = kasprintf(GFP_KERNEL, "%s_mux", clk_name0);
-+	if (!mux_name)
-+		goto err_mux_name;
- 	div_name = kasprintf(GFP_KERNEL, "%s_div", clk_name0);
-+	if (!div_name)
-+		goto err_div_name;
- 
- 	clk_register_mux(NULL, mux_name, parents, 4,
- 			CLK_SET_RATE_NO_REPARENT, clk_ctrl, 4, 2, 0, lock);
-@@ -205,6 +209,10 @@ static void __init zynq_clk_register_periph_clk(enum zynq_clk clk0,
- 
- 	return;
- 
-+err_div_name:
-+	kfree(mux_name);
-+err_mux_name:
-+	kfree(lock);
- err:
- 	clks[clk0] = ERR_PTR(-ENOMEM);
- 	if (two_gates)
++static void aic26_remove(struct snd_soc_component *component)
++{
++	device_remove_file(component->dev, &dev_attr_keyclick);
++}
++
+ static const struct snd_soc_component_driver aic26_soc_component_dev = {
+ 	.probe			= aic26_probe,
++	.remove			= aic26_remove,
+ 	.controls		= aic26_snd_controls,
+ 	.num_controls		= ARRAY_SIZE(aic26_snd_controls),
+ 	.dapm_widgets		= tlv320aic26_dapm_widgets,
 -- 
 2.53.0
 
