@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831698;
-	b=UFTvXMMFvvLSOPzO/1DTjv9jtv07a/aG0wdMYpQDAPlADEh2R0C96oOLlaEQBxKs6y1h
-	 9e/06fPq7MHj2ZrOmoJQjv4kOo29nWMDIXu0f+ilBFTDerStcPT/3+dTzV5Kjdki7wtez
-	 rEieTjAMsquTV8y5ZMbtSAiDa2nOgGc7naNsasSzy6Da0U6HHRDmrYZypXq/ty6Khx8MN
-	 vNfeKGeebXVwVmSieL0aUSCqNK6udeBGFhoMTdthomas8pMkLZQPhbyOYXJvHT02v1rF0
-	 JCiFEHf/ECA4cbZrT3JfFGqqyQh+v9vrhXgfBZ9s1bHB42CIQw9aEjVDEe335p3XmgA==
+	t=1793831700;
+	b=iNeQn7/CrGfR2YFtEbmz1xT6L67VLjVwc63f5UVesY1iMQqFtXzegEmMAxXpgNahORsG
+	 kNkMwdqAiOgDI4QPLazliNF/ulOoNqxxxmtkjAuHSxYxgacHDkOIRe8SnMJVOVxzQfoz4
+	 C1RT6AjFeKGHT/jCfDLFCfyQs+r0OHWR+gKuFSegXENzaBX3DKSM0I3PWwYUJpPUG7v1x
+	 BFCrz3Brz/KMB18ZUcCZdPpQlCcJe4gxbCudxASllFQKUiwRyXzmHiOnQpC2ryON/p5fy
+	 jMHh33NXKTxNscFXsVbrDtc3yJpHIWg0OfuYmvP6Kkb2FwILpouXY5Np/f6A6eRQefQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pu5r5Ds3XYGae9UPegl0hBCGIKI1BZSSo5UEVjZ2AZE=;
-	b=yuTHoGE4Nw6B5fMKnQjlyFdy4PewqeUpAraXcqvEiVmnac9GVKbh/OdEe27DKYCKozKk
-	 X/kFW31dXw0YggA6GJWz/vS8kzdNRTs6ImZYUaDTqCF9ZjXpKUbOQ7s2TI/7i08y/2wAP
-	 Efali1S8Pyr1933FaJHG9pfsiDFgz42BvRTcwkBpklujdCEz0knjrQwUwdealW5A4EHel
-	 fSb0A/u8HItqOTSFgcffQy3rmjc6qf+AVaXQ/pQ/Jwxg4OZdBjm0+LbEEKa55CgDF9W3+
-	 vQH0zo0/134cxMzHM4VtEYyocZNX3eMvAQnHfV8hHMPFdl443K3OVtA2DFWxItshNWw==
+	bh=SJ74aZ4Tloeg3oOPYWmRjX4XXw4EW5XNkambL2MPNNE=;
+	b=ceM1djfXGXAKkWmbM2JZgP0gdOuWkkRjIlfvD4YKEqCYjXz8YTU/+ZwwwX2QbomjE3FX
+	 KCjHNVQPtbzMseVcW1HZDWxShx+CFYBneUkx+Pu+WTJEExJgDE5eLdPzjOpXjdy1p54es
+	 49MOpuV5xr48WpEHi8QW7kuNqo0Oc+bKQLMH+GjubNWgfHm22x30Y4PtK1xqw26hfjAao
+	 7sqK1752e5Q+RDViHTRAuJxihUCa7+LGNwbyMaT8/E0kM+Mil7MewCWdTqiSRCkeiIEfA
+	 UMpBvVaD2gNhFZKBSL4ox9GgphsebpWiep2TFtRG/apcQQp3nP2XRASYm19PfwYdQUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k5S4qU43;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8O2k7nX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A46606AB02;
-	Wed,  4 Nov 2026 22:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DC0606AB02;
+	Wed,  4 Nov 2026 22:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k5S4qU43
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D080A1F000C1;
-	Wed,  4 Nov 2026 22:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8O2k7nX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640901F000C1;
+	Wed,  4 Nov 2026 22:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831698;
-	bh=pu5r5Ds3XYGae9UPegl0hBCGIKI1BZSSo5UEVjZ2AZE=;
+	s=korg; t=1793831699;
+	bh=SJ74aZ4Tloeg3oOPYWmRjX4XXw4EW5XNkambL2MPNNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k5S4qU43wtr1/r5J1QtkUdETci6ULbjcvwvgxJWL/wyHIn/C+LmkPyqF4emcnKheW
-	 gzfI2NhMCBqXzYoMs1RJVnTHPcklfkSnvmMa4ENi8fpaiz4RlsdNvXC1J9Pc5Hjeze
-	 CHXInU2q3P0uh+p41EauhDMg6cQfx9GSkG9EL04M=
+	b=c8O2k7nXhdoLOc4BOIjDx2BwNalixyvS9ocE/cV4v+NbaeTN2k9y5SiF/8uaptL8J
+	 xrJMQ639fslmJCsZgbrEDQrkimMCeKFudwgYVCr80rS0tPof5ENVuqInMMUX0eIV6o
+	 rpj2ff3tt/7AYQTE4goerhnVVLiOdXl7yHKOOEkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0862/1005] xfs: propagate errors while checking null siblings
-Date: Wed,  4 Nov 2026 16:09:55 -0500
-Message-ID: <20261104211107.423459186@linuxfoundation.org>
+Subject: [PATCH 6.18 0863/1005] xfs: range-check bc_levels array access in scrub tracepoints
+Date: Wed,  4 Nov 2026 16:09:56 -0500
+Message-ID: <20261104211107.450504954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,39 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit e5bde75a816b3549942f4b09a8bf09006b7ea9de upstream.
+commit 73b7276b8a4b5eb272f3c3b36ea3042e786f4741 upstream.
 
-LOLLM observes that if xfs_da3_path_shift returns an error here, scrub
-doesn't handle it the way that it handles most runtime errors.  Instead,
-it drops the error and keeps going, even though that's not how that's
-supposed to work.  Fix that by calling xchk_da_process_error to set
-corruption flags and then jump out of the flow of execution.
+LOLLM noticed xchk_btree()'s odd habit of passing cur->bc_nlevels to
+xchk_btree_ptr_ok when we're checking the pointer to the root block at
+the start of the btree scan.  This enables us to skip checking the
+pointer for an inode btree's root (since it doesn't have one) but
+doesn't handle per-AG btrees quite correctly.  There isn't a problem for
+__xfs_btree_check_ptr itself, but the corruption tracepoint naively
+walks off the end of bc_level[].  Fix that by adding a helper to do an
+implicit range check.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: 7c4a07a424c18d ("xfs: scrub directory/attribute btrees")
+Cc: stable@vger.kernel.org # v5.16
+Fixes: 6ca444cfd66354 ("xfs: prepare xfs_btree_cur for dynamic cursor heights")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dabtree.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/trace.c |   13 +++++++++++++
+ fs/xfs/scrub/trace.h |   10 +++++-----
+ 2 files changed, 18 insertions(+), 5 deletions(-)
 
---- a/fs/xfs/scrub/dabtree.c
-+++ b/fs/xfs/scrub/dabtree.c
-@@ -257,9 +257,10 @@ xchk_da_btree_block_check_sibling(
- 	if (sibling == 0) {
- 		error = xfs_da3_path_shift(ds->state, altpath, direction,
- 				false, &retval);
--		if (error == 0 && retval == 0)
-+		if (!xchk_da_process_error(ds, level, &error))
-+			goto out;
-+		if (retval == 0)
- 			xchk_da_set_corrupt(ds, level);
--		error = 0;
- 		goto out;
- 	}
+--- a/fs/xfs/scrub/trace.c
++++ b/fs/xfs/scrub/trace.c
+@@ -42,6 +42,9 @@ xchk_btree_cur_fsbno(
+ 	struct xfs_btree_cur	*cur,
+ 	int			level)
+ {
++	if (level < 0)
++		return NULLFSBLOCK;
++
+ 	if (level < cur->bc_nlevels && cur->bc_levels[level].bp)
+ 		return XFS_DADDR_TO_FSB(cur->bc_mp,
+ 				xfs_buf_daddr(cur->bc_levels[level].bp));
+@@ -53,6 +56,16 @@ xchk_btree_cur_fsbno(
+ 	return NULLFSBLOCK;
+ }
  
++static inline int
++xchk_btree_cur_ptr(
++	const struct xfs_btree_cur	*cur,
++	int				level)
++{
++	if (level >= 0 && level < cur->bc_nlevels)
++		return cur->bc_levels[level].ptr;
++	return -1;
++}
++
+ /*
+  * We include this last to have the helpers above available for the trace
+  * event implementations.
+--- a/fs/xfs/scrub/trace.h
++++ b/fs/xfs/scrub/trace.h
+@@ -577,7 +577,7 @@ TRACE_EVENT(xchk_btree_op_error,
+ 		__entry->level = level;
+ 		__entry->agno = XFS_FSB_TO_AGNO(cur->bc_mp, fsbno);
+ 		__entry->bno = XFS_FSB_TO_AGBNO(cur->bc_mp, fsbno);
+-		__entry->ptr = cur->bc_levels[level].ptr;
++		__entry->ptr = xchk_btree_cur_ptr(cur, level);
+ 		__entry->error = error;
+ 		__entry->ret_ip = ret_ip;
+ 	),
+@@ -618,7 +618,7 @@ TRACE_EVENT(xchk_ifork_btree_op_error,
+ 		__entry->type = sc->sm->sm_type;
+ 		__assign_str(name);
+ 		__entry->level = level;
+-		__entry->ptr = cur->bc_levels[level].ptr;
++		__entry->ptr = xchk_btree_cur_ptr(cur, level);
+ 		__entry->agno = XFS_FSB_TO_AGNO(cur->bc_mp, fsbno);
+ 		__entry->bno = XFS_FSB_TO_AGBNO(cur->bc_mp, fsbno);
+ 		__entry->error = error;
+@@ -660,7 +660,7 @@ TRACE_EVENT(xchk_btree_error,
+ 		__entry->level = level;
+ 		__entry->agno = XFS_FSB_TO_AGNO(cur->bc_mp, fsbno);
+ 		__entry->bno = XFS_FSB_TO_AGBNO(cur->bc_mp, fsbno);
+-		__entry->ptr = cur->bc_levels[level].ptr;
++		__entry->ptr = xchk_btree_cur_ptr(cur, level);
+ 		__entry->ret_ip = ret_ip;
+ 	),
+ 	TP_printk("dev %d:%d type %s %sbt level %d ptr %d agno 0x%x agbno 0x%x ret_ip %pS",
+@@ -700,7 +700,7 @@ TRACE_EVENT(xchk_ifork_btree_error,
+ 		__entry->level = level;
+ 		__entry->agno = XFS_FSB_TO_AGNO(cur->bc_mp, fsbno);
+ 		__entry->bno = XFS_FSB_TO_AGBNO(cur->bc_mp, fsbno);
+-		__entry->ptr = cur->bc_levels[level].ptr;
++		__entry->ptr = xchk_btree_cur_ptr(cur, level);
+ 		__entry->ret_ip = ret_ip;
+ 	),
+ 	TP_printk("dev %d:%d ino 0x%llx fork %s type %s %sbt level %d ptr %d agno 0x%x agbno 0x%x ret_ip %pS",
+@@ -740,7 +740,7 @@ DECLARE_EVENT_CLASS(xchk_sbtree_class,
+ 		__entry->bno = XFS_FSB_TO_AGBNO(cur->bc_mp, fsbno);
+ 		__entry->level = level;
+ 		__entry->nlevels = cur->bc_nlevels;
+-		__entry->ptr = cur->bc_levels[level].ptr;
++		__entry->ptr = xchk_btree_cur_ptr(cur, level);
+ 	),
+ 	TP_printk("dev %d:%d type %s %sbt agno 0x%x agbno 0x%x level %d nlevels %d ptr %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 
 
