@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831790;
-	b=jvD5Qinn0yhfsclVNgnJR9sLHlXMZTUecHR74328mJrkoGxpXe7TvaY9SYwPHMhkFjrp
-	 5pAWLtkz9nX0XVIjgDtywvJxBeYLyBOeHs6cbUJ5W9WeXoyY1iiVzroA1Rzz7yZgNlFzv
-	 lbtjtYWr9wfX6RQwvincHXBC8cm+Jy7C+wHKXgQagDaZqHggwSYFHcZBdFA2yNo53K7I6
-	 9XBi30a/yqtPoQC6zsjDRn/U+sMGAh3PWlHqHS7C1k3IIm1gocLmNWwFMnyu/AWeEdVij
-	 STf9T0q2v4xGhTvrBhJLLxwy0WcIF9o0u79n/x8Jd16WaRek5c8CwryrEU6FiwUBJTw==
+	t=1793831792;
+	b=twnUbFHA09ghXfSOQeiol/qcSuUY+jhtUqJ1XRv5N5x2tD9yHZ3iNvKjXLBOfBZLXrbd
+	 Io7m34FToWMtIa0a67RtGBL9O55AwojTtP39QDN0gNrr0u4BtJJ7TLB/dEAb19AEeNhet
+	 0zQPKw4zG/yo2piJDopA3YRcuo55apE1jltslfOXpnq6WbFMZptjd7vqAY7LOC2P/7esN
+	 smQLQdStmM9gVvVWL+oLWwmKn6Hk7JikKlvHStv+T0P6dWmxfD+dCTR6mkq7v3IZWu6qW
+	 6SuRX0p0NfaxxFdDbdydIL3yxtRwwSCR94TiVV/ZGqtf7aTumuPfIADjZKH51L6JivA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v6b/wJVquBv52E/A9zwezShDbhW4McjU9IdOIoEL8FQ=;
-	b=MZccW0khnOeuaXIcsBLZffquz/664byHAIiocScu70FsO2PyJ9jVRc/lLrlCa3wNGQ/Z
-	 H23dU3chsVlVeD+m1iJuI7NojLb01htKgln6xJiS5xrhZ3wFlbZVGZYq4sd2CAdpjRtHR
-	 7Vl+xgiwilkYK+FmuJXGqLpjuEkN/3CMvhMI0zyIFS4UHBqHEWHp0faTsoYCjC1ETn+aW
-	 dL4B3uICrkS9T5KdH4G5g/GYmYnV4G8KeSXM84er30JkcGdktHU8SZ+XohEozaUzRZbsw
-	 g/2Ec7cr44NyQN3YNypx/kiT/soe+UDCYUyPrLRp4iw3XsHVXEDQ+VpXa28JYZeX9Kg==
+	bh=vuq3JFynaTQqdSzw5MRNWyDCQpJytg8HJebGfHMQLlA=;
+	b=v9wukr0YEsm3M1BGnoWWlziTRJtCcbXezroNUZDup2UahypbRaiORGeKOscMe53Cd9Uy
+	 lG6FnAQ5xhdlcc9Wqh2wwQ3/1b1CJ1C1TCvC4tFdaDZKFR2+agsTwP/MxkngsC/5Tvxpj
+	 KDy5CXXet2CZewbXDYsfH5WeJpvT2D5OT4zo5pFOpInUhICvGnoXIvpGLSjgJJG4QJ9zc
+	 SYXCSCP+rERZKHWQq49SDb+rJTTCPGEYybkGQOlnAfdn97zxZ8NpaK2iumZQO05rbU3Hk
+	 02ZZQdsyGgH+aQhTEtDYJl1im5aZVY6WtSkpvfpys2/akHN9jTEJ+lc2uPyqUmdyIuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vMpn/YEk";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cl8Qe2D2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8474B606AC37;
-	Wed,  4 Nov 2026 22:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0E4606A848;
+	Wed,  4 Nov 2026 22:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMpn/YEk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8221F000C1;
-	Wed,  4 Nov 2026 22:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cl8Qe2D2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02FF1F000C1;
+	Wed,  4 Nov 2026 22:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831790;
-	bh=v6b/wJVquBv52E/A9zwezShDbhW4McjU9IdOIoEL8FQ=;
+	s=korg; t=1793831791;
+	bh=vuq3JFynaTQqdSzw5MRNWyDCQpJytg8HJebGfHMQLlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vMpn/YEkcPbIKG57DZMOOefJYdnegstvWgWJRDOvthR2be7XXXZUot05RMXzB4kDU
-	 OpJkJcl7364Nc47pfOjlSNV/xmkJ1Gt6JZaYZSVw4qXQjuYiYq9VWeil2n8Xrwronx
-	 MZmyMQjo0nYbeSwfAWIX9piFQ641KacLp2f8i9QY=
+	b=Cl8Qe2D2ezYoh2i9eQmj+NIzOzJKU4dCCjBxIl/YtITwHgseHpyLdqmGZJ/SIOOxS
+	 QY8gqIa8vwPPjU4Ea8K3FPbzSKcojB0+NxAtppP7jbuCUDCCUN7xI/22hZJO0Q5reX
+	 eNMlOLFXQMLKXwW601htTveqlRLtbw11+OXaPHIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0887/1005] NFSD: copy SETXATTR data from all XDR buffer segments
-Date: Wed,  4 Nov 2026 16:10:20 -0500
-Message-ID: <20261104211108.073632920@linuxfoundation.org>
+Subject: [PATCH 6.18 0914/1005] SUNRPC: Resume receiving after a TLS control record
+Date: Wed,  4 Nov 2026 16:10:47 -0500
+Message-ID: <20261104211108.762648293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,70 +66,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit b01319947c69b0e3ea0fcd4b675eb892f9cad8a0 upstream.
+commit 8079c660b247f282340fbe7f55cf8a354009db9e upstream.
 
-nfsd4_vbuf_from_vector() manually copies the head followed by whole
-pages starting at offset zero. This assumes that all remaining data
-starts at the beginning of the page array and that no data is stored
-in the tail.
+A TLS control record delivers no payload to the RPC layer.
+svc_tcp_recvfrom() clears XPT_DATA before the receive, and
+svc_tcp_sock_recv_cmsg() returns -EAGAIN for the record it consumed.
+Nothing marks the transport ready again. kTLS raises data_ready for
+arriving TCP segments, not for records it has already decrypted. An
+RPC Call queued behind an alert or a KeyUpdate waits until the client
+sends more. The client blocks until its RPC timeout expires.
 
-However, nfsd4_decode_setxattr() passes an xdr_buf returned by
-xdr_stream_subsegment(). Such a sub-buffer can have a nonzero
-page_base and can span its page and tail segments. Ignoring that
-layout can copy the wrong bytes into the value passed to
-vfs_setxattr().
+The receive takes only the first two octets of the record. kTLS holds
+the remainder on its receive list, where each later receive takes two
+octets more.
 
-Use read_bytes_from_xdr_buf(), which observes the complete xdr_buf
-layout.
+Drain a record that is not an alert, then mark the transport ready
+once a control record has been consumed.
 
-Fixes: c1346a1216ab ("NFSD: Replace the internals of the READ_BUF() macro")
+Fixes: 5e052dda121e ("SUNRPC: Recognize control messages in server-side TCP socket code")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915160022.3105295-1-qwe.aldo@gmail.com
+Link: https://patch.msgid.link/20260808-svcsock-cmsg-fixes-v3-4-62d9a631c880@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |   19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ net/sunrpc/svcsock.c |   55 ++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 52 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -2172,10 +2172,8 @@ static __be32
- nfsd4_vbuf_from_vector(struct nfsd4_compoundargs *argp, struct xdr_buf *xdr,
- 		       char **bufp, size_t buflen)
- {
--	struct page **pages = xdr->pages;
- 	struct kvec *head = xdr->head;
--	char *tmp, *dp;
--	u32 len;
-+	char *tmp;
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -238,6 +238,39 @@ static int svc_one_sock_name(struct svc_
+ 	return len;
+ }
  
- 	if (buflen <= head->iov_len) {
- 		/*
-@@ -2190,19 +2188,8 @@ nfsd4_vbuf_from_vector(struct nfsd4_comp
- 	if (tmp == NULL)
- 		return nfserr_jukebox;
- 
--	dp = tmp;
--	memcpy(dp, head->iov_base, head->iov_len);
--	buflen -= head->iov_len;
--	dp += head->iov_len;
--
--	while (buflen > 0) {
--		len = min_t(u32, buflen, PAGE_SIZE);
--		memcpy(dp, page_address(*pages), len);
--
--		buflen -= len;
--		dp += len;
--		pages++;
--	}
-+	if (read_bytes_from_xdr_buf(xdr, 0, tmp, buflen))
-+		return nfserr_bad_xdr;
- 
- 	*bufp = tmp;
- 	return 0;
++/*
++ * kTLS delivers a record only up to the caller's buffer and keeps
++ * the remainder on its receive list, where no further data_ready
++ * announces it. Consume the whole record.
++ */
++static void
++svc_tcp_sock_drain_record(struct socket *sock)
++{
++	union {
++		struct cmsghdr	cmsg;
++		u8		buf[CMSG_SPACE(sizeof(u8))];
++	} u;
++	u8 discard[64];
++	struct kvec discard_kvec = {
++		.iov_base = discard,
++		.iov_len = sizeof(discard),
++	};
++
++	for (;;) {
++		struct msghdr msg = {
++			.msg_control = &u,
++			.msg_controllen = sizeof(u),
++		};
++
++		iov_iter_kvec(&msg.msg_iter, ITER_DEST, &discard_kvec, 1,
++			      discard_kvec.iov_len);
++		if (sock_recvmsg(sock, &msg, MSG_DONTWAIT) <= 0)
++			break;
++		if (msg.msg_flags & MSG_EOR)
++			break;
++	}
++}
++
+ static int
+ svc_tcp_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
+ 			  struct cmsghdr *cmsg, int ret)
+@@ -293,12 +326,20 @@ svc_tcp_sock_recv_cmsg(struct socket *so
+ 	 * kTLS filled in u.cmsg.
+ 	 */
+ 	if (ret >= 0 && msg.msg_controllen < sizeof(u)) {
++		u8 content_type = tls_get_record_type(sock->sk, &u.cmsg);
++
+ 		/* Returning the count would credit the RPC stream with
+ 		 * octets that never reached the caller's buffer.
+ 		 */
+-		if (tls_get_record_type(sock->sk, &u.cmsg) !=
+-		    TLS_RECORD_TYPE_ALERT)
++		if (content_type != TLS_RECORD_TYPE_ALERT) {
++			/* An application data record carries RPC payload.
++			 * Draining one breaks RPC fragment framing.
++			 */
++			if (content_type != TLS_RECORD_TYPE_DATA &&
++			    !(msg.msg_flags & MSG_EOR))
++				svc_tcp_sock_drain_record(sock);
+ 			return -EAGAIN;
++		}
+ 		/* An Alert record carries exactly one two-octet message
+ 		 * (RFC 8446 Section 5.1). alert_kvec caps the receive at two,
+ 		 * so a longer record produces the same count. MSG_EOR appears
+@@ -321,8 +362,16 @@ svc_tcp_sock_recvmsg(struct svc_sock *sv
+ 	ret = sock_recvmsg(sock, msg, MSG_DONTWAIT);
+ 	if (msg->msg_flags & MSG_CTRUNC) {
+ 		msg->msg_flags &= ~(MSG_CTRUNC | MSG_EOR);
+-		if (ret == 0 || ret == -EIO)
++		if (ret == 0 || ret == -EIO) {
+ 			ret = svc_tcp_sock_recv_cmsg(sock, &msg->msg_flags);
++			/* A control record delivers nothing to the caller,
++			 * and kTLS announces no data_ready for records it
++			 * already holds. Mark the transport ready so that
++			 * the records behind this one can be received.
++			 */
++			if (ret == -EAGAIN)
++				set_bit(XPT_DATA, &svsk->sk_xprt.xpt_flags);
++		}
+ 	}
+ 	return ret;
+ }
 
 
