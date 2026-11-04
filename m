@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830955;
-	b=Kj0PVfK/m7QtmUaNQSNcek+BnxK5FX5UQy1S8n9GIAnioi5KUPupYVXRQdx3QutSCw+J
-	 ow82UCXhGjBwFXZYkqS9Dq0iz63JV5gxnPLM6ouaHAdURU+g/pFfkz+jy4qxIlPD/hpcN
-	 ZTv2riQ8vWRRTlY+Vz8SBUlUgeSbgDYZv7FwWyatCIlKtnDc9KjHqUauujtWK//oeULx3
-	 xdFjx0NEXjsCMSR/XaS5z3HnMGxv6vKDbZtexNgGkKSkoqbblyUkqzOESOP1u0swmWXCM
-	 lrJZqrO4D7UeQS7rvRNUIEVsLMt8ap7jT+zxg117nKDsvCRCOKhGoEmLQKyALREgTYQ==
+	t=1793830957;
+	b=zXPAC0L15xn7hw9viYzzjl1B1eQAFQOvhQrcrmUGCL7MINLmcHhYN1Cv+7Kpq/Bw+DbR
+	 WHEg3j2pd1SipQoAScjbVQB6Ecd3odfWAw9UkhUlN4leXSUtF/74fiyjUgK7lzhAMxLXG
+	 PPLNTnYr1ZTiRspcnJLAFNdHWIhRU6IYftQNO/O59vrgBaEKhWlyKSaO3YDCRNC2UzDo9
+	 eBp7Ur0ELXViwX8urCOzvRtBzD0PO6KoCwxDnHdUFqDUDz3egfJ2cFoMHMFInI58ZLG3B
+	 4uZSNrHiWA9IUioix0Gc9z4mlhgIV+EVf07jDS4BB9OSPEK6H5G4s3ZeFf439FxPkOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830955;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8gJ438F/RxT3XOaVvmRtTkfHgzMmMzX/NshMjniR79Y=;
-	b=Wij4Uuv7nvQs9yQFQVUh8tjdsgXcQ1sTnbvTed/Yok9w5K9HtoAM92ksXsHLzNgGdRsb
-	 vJ8JYc7OGotipXsAIpAm8SLPkYUOzAAi0JO5ox3+wqFjs/ETQh9U/fzScEqtSeIi0plKV
-	 PqeT8/ocE0CBqzhl7KL46Y6/Uiu7FwIBX/+3XQ/DIwHeWw21ZUxTXBQBCDR1MvNR9mFz1
-	 czde9ShWlsM5ALnF8qbgUNlXwBDjQhzdR5hvcB86YE+8Jz+kYJN9zarpAiVg5esEafWRl
-	 GXrYG4n8iUgcpVGkLsR1i9uE8oLp+PjsA6zQRWSBoU2WWA5U5e41c4kVOavkIYPIjbA==
+	bh=hcx40YL0l+MlTE36hLHYgrbybLZpmOM28jXg8k+CAtc=;
+	b=ODfLIAGrDwKHLQ3O9zXTKvTBFPJU0xZQlyW0JuLoe+SFXBIHEvklrWXPW1XfnbcC+fHC
+	 z0ijILxveJZN0DlomOnKj2IPulueJuEZLwtgluPtYPzGWeJLPFYpy9aRBY6LxgS6tH6Uz
+	 4KUKIhpdP3NqWUpDRPqOitLWvbJk6i2JgqIaLHgmoelpJ4Af+mA2n0yvhogP+RTppT9FM
+	 vEwv5uvneCaREKOIrxINWnHXBHJ8KkIAIABXRsX2f9mmkERYxW5UVQfjCPJEjX6fNS5gz
+	 9NdObbUfLnVso1SdV4grgb4xse3C8M3gyOJFM6h5T7nJFGNU0iRJnFGz8++dzQdY/oA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f3zBEL5+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sg968Rxe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5989D606A844;
-	Wed,  4 Nov 2026 22:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66D5606A844;
+	Wed,  4 Nov 2026 22:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f3zBEL5+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F751F000C1;
-	Wed,  4 Nov 2026 22:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sg968Rxe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4123A1F000C1;
+	Wed,  4 Nov 2026 22:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830955;
-	bh=8gJ438F/RxT3XOaVvmRtTkfHgzMmMzX/NshMjniR79Y=;
+	s=korg; t=1793830956;
+	bh=hcx40YL0l+MlTE36hLHYgrbybLZpmOM28jXg8k+CAtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f3zBEL5+ICENalTryIq2YfIcoVBDBDgVe7riySXgShmh9LO2qPxtuUVNRMJkU4Wpy
-	 xBbBpmH7rR1SiuLn6HAMMkXp5XWE8u+t+jGWtLX3CHCEmhU9nDrOE24LbWW36Nuol5
-	 SAu4WFsmT9IOH3Jtyby6kQEhrjT3Qpt/RHo1RAuQ=
+	b=Sg968Rxe+QatzRh84xM4wbmjdYAWzdBk538L+gUKbKtQVwvDZvOdIpdzvM7C4Sx13
+	 eNqQ7dXqt6Cd+q3l+gH3KWxX9ZWiHzrjRUPtty8hI2iLxKODSfXtiLuKSIKyRv8JM1
+	 5tMy+ejrXLUnN9R2/8eEvIq0Wy6ZMbdKSyPwDG+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Chao Shi <coshi036@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0420/1005] ksmbd: honor client signing-required in all modes
-Date: Wed,  4 Nov 2026 16:02:33 -0500
-Message-ID: <20261104211055.862015342@linuxfoundation.org>
+Subject: [PATCH 6.18 0384/1005] nvme: ratelimit the completion-path messages driven by device data
+Date: Wed,  4 Nov 2026 16:01:57 -0500
+Message-ID: <20261104211054.848808555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,42 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Chao Shi <coshi036@gmail.com>
 
-[ Upstream commit bc2f3f3dd69424f76e2ed3dc53d29bfd6c9966d4 ]
+[ Upstream commit c05c86681170e381e24498257db3a879deb1ae89 ]
 
-The SMB2 NEGOTIATE request's SMB2_NEGOTIATE_SIGNING_REQUIRED bit requires
-the server to set Connection.ShouldSign. KSMBD represents that state with
-conn->sign, but previously set it only when its signing configuration was
-auto or disabled.
+nvme_find_rq() and nvme_handle_cqe() print an unratelimited message for
+every completion queue entry whose command id does not resolve to an
+in-flight request.  Both are reached from the completion interrupt path
+(nvme_irq() -> nvme_poll_cq() -> nvme_handle_cqe()) and the decision to
+print is made entirely from device-supplied data, so a controller that
+posts a stream of bogus command ids drives unbounded printk from hard
+interrupt context.
 
-Set conn->sign whenever the client requires signing, independently of the
-server's signing mode. Keep the mandatory server-mode handling unchanged.
+This is not hypothetical.  A single boot under an emulated controller
+that posts invalid completions produced 846 "could not locate request
+for tag 0x0", 846 "invalid id 0 completed on queue 2" and 123 "genctr
+mismatch" lines.  Once the tag set has been torn down every subsequent
+completion resolves to nothing, so the print rate is bounded only by how
+fast the device can post entries.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Ratelimit the three messages.  The information they carry is diagnostic
+and repeats, so the suppression count printed by the ratelimit helpers
+is enough to tell that the condition persists.  This matches how the
+other device-driven error prints in the driver are already handled, for
+example the status messages in nvme_log_error() and
+nvme_log_err_passthru().
+
+nvme_find_rq() lives in nvme.h and is shared by pci, tcp, rdma, apple and
+target-loop, so all transports are covered.
+
+Found by FuzzNvme.
+
+Signed-off-by: Chao Shi <coshi036@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/nvme/host/nvme.h | 6 +++---
+ drivers/nvme/host/pci.c  | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 40d7e3b6ed7e1..61f16f54a810b 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1253,11 +1253,9 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
- 	rsp->SecurityMode = SMB2_NEGOTIATE_SIGNING_ENABLED_LE;
- 	conn->use_spnego = true;
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index ec03a07617af1..b28c1a82f79e6 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -672,12 +672,12 @@ static inline struct request *nvme_find_rq(struct blk_mq_tags *tags,
  
--	if ((server_conf.signing == KSMBD_CONFIG_OPT_AUTO ||
--	     server_conf.signing == KSMBD_CONFIG_OPT_DISABLED) &&
--	    req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED_LE)
-+	if (req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED_LE)
- 		conn->sign = true;
--	else if (server_conf.signing == KSMBD_CONFIG_OPT_MANDATORY) {
-+	if (server_conf.signing == KSMBD_CONFIG_OPT_MANDATORY) {
- 		server_conf.enforced_signing = true;
- 		rsp->SecurityMode |= SMB2_NEGOTIATE_SIGNING_REQUIRED_LE;
- 		conn->sign = true;
+ 	rq = blk_mq_tag_to_rq(tags, tag);
+ 	if (unlikely(!rq)) {
+-		pr_err("could not locate request for tag %#x\n",
+-			tag);
++		pr_err_ratelimited("could not locate request for tag %#x\n",
++				   tag);
+ 		return NULL;
+ 	}
+ 	if (unlikely(nvme_genctr_mask(nvme_req(rq)->genctr) != genctr)) {
+-		dev_err(nvme_req(rq)->ctrl->device,
++		dev_err_ratelimited(nvme_req(rq)->ctrl->device,
+ 			"request %#x genctr mismatch (got %#x expected %#x)\n",
+ 			tag, genctr, nvme_genctr_mask(nvme_req(rq)->genctr));
+ 		return NULL;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 4efb55f1e3833..6e4261b0a0821 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1375,9 +1375,9 @@ static inline void nvme_handle_cqe(struct nvme_queue *nvmeq,
+ 
+ 	req = nvme_find_rq(nvme_queue_tagset(nvmeq), command_id);
+ 	if (unlikely(!req)) {
+-		dev_warn(nvmeq->dev->ctrl.device,
+-			"invalid id %d completed on queue %d\n",
+-			command_id, le16_to_cpu(cqe->sq_id));
++		dev_warn_ratelimited(nvmeq->dev->ctrl.device,
++				     "invalid id %d completed on queue %d\n",
++				     command_id, le16_to_cpu(cqe->sq_id));
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
