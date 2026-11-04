@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831581;
-	b=djo1rowT5Mw2dtM3Im0UacoLja7PtW7zBpxdGTm7++ji00dLY4wkFUaOCv8SwQqx71KW
-	 iynoxA00UAwgMszYSa4Jg9magFPRoGb1Kmh4LwPpVUCGW3+fnyo6xrdaQSbMweqfmPChZ
-	 knwjszCyiTh6fq4ILw71ShR3ISJaEFCBH/PHYCMhXWjXGtySqKAydnPIOpdr8ObSaobOb
-	 9DlyMe9kxDd0hXzElUvM3R62QuU/7Zpe2JjAptyY6KXWFsAGKccTJcTDFn06Ryth9A2UM
-	 OsyxeM6P3Ij7ty9sJKxd1pmhMgtEF4HDbQGjq4Z+xKz4kEwzoENXOO19XrKOLQMjQtg==
+	t=1793831582;
+	b=Zmiy+6BXgCIObTHXAynLi4NeY72LLtGML+l1sZQ4b+UYwBR10rQTV2YGlassYPCcecFo
+	 vT1Sczjtzc9RIQ1JjaG5DImn/Rt79JoznHkv8skK4ABwXEevlayKlPzlXrpM5AJWg+aJi
+	 0KkTxT8Hp7Xrpaqu/Xgxv77rbZv/5ypW3ds5PUPTWI9IjRCaTDTqg70a4xeDaE3mcMD98
+	 EORrPvMS9RCdwEimLV/hA4hD2L9HoJzhSHOeppynOT4ExLfcGyrXv21+JkBeYieK8dusO
+	 RNqF1m40y6lGxFTnKeGPVe+k1IWgibt5qaGVtZ5SUV/2xnSvMBUvOMSFB7Bvciuim3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1XR5e2qlmBukVtiXBwfmN+IKkKW82kfLpSvpnyruwE0=;
-	b=kSFkMvYr6eXOFJ41d2J354pSZwSQlbCNsXxYEk4k+ecXLkHVskjjF81b/bDrQ9Sw1c0w
-	 XgewAwAV/CnxMYJxzKROi1VWu0wQYeVy4WWQSYcR4Xm6b/NcmQ2WBPljG4rOKYXDxaG4J
-	 FTVuzFUN32w0aVAIGaEdIJNlmx6tpLTDvs0ZoJ/X8Wy2rPSKYhlePa7AIb1/o/8Qloy1K
-	 SUu0OKd346xVIrWFlWObKwOO6V7V3eN+5zVtDwB19DeP54MXihqyVoEXOHJ12ohPpBGMb
-	 8KQT0W7uXgpG6RKbrcZOeyewg5550fAkpK2ukXfGtsTlaSMN5+KUvbN0M4wPRRsZ4QA==
+	bh=HAZ/qUb4D89JtZD0b1rLexMPJRXfDtPDiuOjZDMuj2U=;
+	b=sf0UN+EBmN9xCpgml9733AnawUT8SurlmIMrNtXaNZGtWCaPhzAU/8cWVqm0exxF7AVk
+	 d3iHmoY/xjVmr2KXok9PnHzJi1T2r5qQ5eJ9tO+tcASGKt0VwJcXw5HCufbd19+a3IYGg
+	 bubvwfH6Cy9YueLuMOcFFm62IGP1E8F7ajn8DWbTDjE6+oWTEff3W8B7rbZRwphkzM+no
+	 Xp8ELK2NKC16byBzcr0mpx3BWCRyMpMHNKIA0QpPRl3AY677HmOpe1tV2t/G1LEogeR/w
+	 Z13amq+j6PDaTbSnKc+d9kGT/PxVDpAs0i5SVL6rkgX/eoL0bQx5A+SKU/mHqAAE6aA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="na/bYIBv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr2+T74P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1B5606A844;
-	Wed,  4 Nov 2026 22:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544F5606A844;
+	Wed,  4 Nov 2026 22:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=na/bYIBv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727671F000C1;
-	Wed,  4 Nov 2026 22:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr2+T74P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F871F00919;
+	Wed,  4 Nov 2026 22:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831580;
-	bh=1XR5e2qlmBukVtiXBwfmN+IKkKW82kfLpSvpnyruwE0=;
+	s=korg; t=1793831582;
+	bh=HAZ/qUb4D89JtZD0b1rLexMPJRXfDtPDiuOjZDMuj2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=na/bYIBvya0JGWZ5pTxG7iuMflLWJX4J4gLjRPODC0heZcSKhb3teHpFYIuIWMk/F
-	 ilTyNv3rdFoRJINdkT/h/sUKXkcOrlTxgbyyNcaN696DBYcyziwCC7dpULhETF42px
-	 qs1/BDvOvWWR7MHoNQGpY3PaGnrg7stN+5M7cQv4=
+	b=Yr2+T74P1iQESNwo/CelCN11+tl8rLF8eonyG1sAxtXrzrpjIoIUhSNqmhcvxStx6
+	 K1q/ZsVw47V5rk0D8t2Nm5iSeeigNfaN1cWA/UmOwY6jaWe+VlPJdXsQ97ln5kGQ0q
+	 wSsvt3+qR0un/XwAQP1qHNcBA/lCDTbKGnFl4YG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0788/1005] xfs: dont pass iget failures up when marking ondisk inodes
-Date: Wed,  4 Nov 2026 16:08:41 -0500
-Message-ID: <20261104211105.414914105@linuxfoundation.org>
+Subject: [PATCH 6.18 0789/1005] xfs: zero out di_metatype when removing the metadir file iflag
+Date: Wed,  4 Nov 2026 16:08:42 -0500
+Message-ID: <20261104211105.442437506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,41 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 7f5e8bf335e5e257fb82cf5b3521980ded60e863 upstream.
+commit f5b4d8c8ce16675f77c25a4ff06caaa9a2739f31 upstream.
 
-LOLLM observes a couple of problems with this callsite -- an ENOMEM
-return is completely ignored and a subsequent run through the loop body
-obliterates the return value completely.  Also, an error value
-indicating that the list is corrupt can get passed up (thus terminating
-the repair) even though we can handle corrupt lists.  Fix the callsite
-not to have these problems.
+LOLLM pointed out that we should zero di_metatype (fka di_onlink) when
+we're clearing the METADIR inode flag because the file is no longer a
+metadata file.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Cc: stable@vger.kernel.org # v6.13
+Fixes: 7297fd0bebbd70 ("xfs: enforce metadata inode flag")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/agheader_repair.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/inode_repair.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/agheader_repair.c
-+++ b/fs/xfs/scrub/agheader_repair.c
-@@ -1331,8 +1331,12 @@ xrep_iunlink_mark_ondisk_rec(
- 		 */
- 		error = xchk_iget(ragi->sc, xfs_agino_to_ino(sc->sa.pag, agino),
- 				&ip);
--		if (error)
-+		if (error == -ENOMEM)
-+			return error;
-+		if (error) {
-+			error = 0;
- 			continue;
+--- a/fs/xfs/scrub/inode_repair.c
++++ b/fs/xfs/scrub/inode_repair.c
+@@ -579,8 +579,10 @@ xrep_dinode_flags(
+ 
+ 		fa = xfs_dinode_verify_metadir(sc->mp, dip, mode, flags,
+ 				flags2);
+-		if (fa)
++		if (fa) {
+ 			flags2 &= ~XFS_DIFLAG2_METADATA;
++			dip->di_metatype = cpu_to_be16(XFS_METAFILE_UNKNOWN);
 +		}
+ 	}
  
- 		trace_xrep_iunlink_reload_ondisk(ip);
- 
+ 	dip->di_flags = cpu_to_be16(flags);
 
 
