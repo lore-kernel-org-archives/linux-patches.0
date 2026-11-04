@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829164;
-	b=m4WtPoaOCntIn3xPgkvGr16tCuLZ5WrD9i1NyAs8rsc7e9JiLtd2Y2/aNxzGz4riWvy9
-	 dyLbCf7gaYO55YbNT9gKWeS3XKKs7RGBE1bjw5pFqH2JWy8zAcENwYugeSjoBApfSCS0i
-	 UZeNZxrvc6txUFuDr19kuUshZwWHLDO0Y9/YoH39hiQ5oumuT6Gt2zOh2qYcRtKRurtSt
-	 K7B/kmFk0lwrAwKTVmrCmmbSlrBVRTpw3bM8v8pbxL74RWeIgxbEHb+fJ5CIXQCvYhiTh
-	 ww4eAodeuTrKoPxph5Oniv/lKK6b+j7w8JVUIvX+KoxZd+b5lXGy+CUYV1D00346SMw==
+	t=1793829166;
+	b=QbY1Rshp+2u+5qZn3hOTte+/jj918t5my4lIPTeij7NzGG9vtdHVYhQLbUGhf8ffvTYS
+	 hEYe86LDFXR9j7XikCXJWBaGg+xitxpLOV55Ydd2TVmwEtxGfEU16M8NGLX69iEyEvCue
+	 kkeRwWp53FyhS9tIKkZ/E3Ax6zcVA74+DrUgoGPW5ztRntb2Qc7PQbV1q/jjMlg/3lGck
+	 Cl1/qlk4MP4Ya8kfuHnzz4hMpZNuoxaso7/TLL5mrsYwponRm5kMl4fjPPRfY3GYchPuc
+	 PoxyJg8BMUXE8xVveZ8+l2DASSmEJ/YNNx84s0o2R4HwGe9ReEoej+U+eWM+xCFgIcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829164;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829166;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hng6rj5RsHRtt+ax796bUpXGm5+f4PAkfUMdsrfSzr8=;
-	b=0BParW+dRJJZOsEcmWu58P933xUV6wnxv047BOhfimmNstrP167Fub3LhQZxELP9k9SU
-	 AvsXncd2j9Bbw7JxBRaBoO0ImI/Wgj+JdpNkXYhwm8bVgNj1vODX/3BV29AWfOVlIP2xq
-	 TC14toCnBcMCT0oF4bSjmQSwO5zOp3E3DNaOH+3Rv+9dCDBRrQJN4akria/byTDJNUeY5
-	 CMLpkeZ4EWM2nBX2ALhJa4jJMDqO53hcteuwKywEfrQeES0WczXvNDanq21Txz1OmDqPx
-	 l8y+fGz+BjQfQ8mSGa0aszRy7gYdko9VjmEVevu+sfCkd41JbUwJW1leZdROuOT1xag==
+	bh=Ksd/twjITxJ/A7DkGicwjRikXxqC3R2hOxaTXYs7dng=;
+	b=g7uLE6v1WHGmVz/h1fZ5QspuJ4iB34B3ZU+ORjY36Ehe5ljDIZ57+1y7kEy0F5EzhFsw
+	 OaFzNuQgkCEZNme0cOikglljLp8Tn6qJcxEZJaHuaSCGGR8kf58+pChUypNXlbHbBvwGi
+	 tjCnOPr8Bbokl4t1aRH0xLrkCEx3X6CmlfNHEwZP7KpGEKHKLS6EVEG6jqC454wrCoAZk
+	 bZVN2JKFkzok5H4xI5q/dB3J3W7g4Kmd8JbOZTFvljdw5rklzPPOU3ch/2V8tjwS/PmRp
+	 1ZlnkNPbGByOx2qOCa/nFrLoxUEa1tbhLAaoGWvhVTfS6Um/VGtjmxoK5UgYS+fdLmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I539CqF1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NKNDn4yz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC8D607031A;
-	Wed,  4 Nov 2026 21:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AE36070989;
+	Wed,  4 Nov 2026 21:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I539CqF1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F83D1F00919;
-	Wed,  4 Nov 2026 21:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NKNDn4yz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA971F00919;
+	Wed,  4 Nov 2026 21:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829164;
-	bh=Hng6rj5RsHRtt+ax796bUpXGm5+f4PAkfUMdsrfSzr8=;
+	s=korg; t=1793829166;
+	bh=Ksd/twjITxJ/A7DkGicwjRikXxqC3R2hOxaTXYs7dng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I539CqF1TB88dCAbhwhAiLgCE5KANtO9Y6Kp83cXRsLVKfmSnbSYUqOs3kXYWWCJ4
-	 3nLI8qeyw8PG2tpDJccW8sYLIIjz8oCq12GV5+XjtoHeuQm910x8Yc2uIQVDaz9nhF
-	 W3gNeCs98x0VjPocIVeXHJrWQSbxatGG+Mo89G/U=
+	b=NKNDn4yz3OiZfP9cTbfnwsSg6mHqOMl5VhiXRs1cgDW94kHoMrVlwd1h177Eu66Pa
+	 Ge7ldJA79aKxJhe+mZR+QAO9LW92XJafJvm3EmYJWxzDIqoiqPUDixAB+7VtdDZEZp
+	 lGHQXK3ceRGSKHSDwyNUMr2Wa+PGXTkUQ5R9/NGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Panz Dev <panz.development@gmail.com>,
-	Denis Benato <denis.benato@linux.dev>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 487/547] HID: asus: do not send keyboard init reports to touchpads
-Date: Wed,  4 Nov 2026 16:11:11 -0500
-Message-ID: <20261104211052.213460130@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 7.3 488/547] HID: core: Fix out-of-bounds left shift by 32 in s32ton()
+Date: Wed,  4 Nov 2026 16:11:12 -0500
+Message-ID: <20261104211052.241402915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,62 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Panz Dev <panz.development@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 8099f9da59f1c338bf88e25b7aa2a7fdf840879c upstream.
+commit 5fe63b415c636c7f4f6848a8e53bdd4bbf0c300d upstream.
 
-Commit 0919db9f3583 ("HID: asus: always fully initialize devices") added a
-loop during asus_probe() to send keyboard feature report initializations
-(asus_kbd_init) to all ASUS HID devices.
+Syzbot reported an out-of-bounds shift (32-bit integer shifted left by
+32) in the s32ton() routine in the HID core.  This routine converts a
+signed 32-bit integer to a signed n-bit integer, and it caps the value
+of n at 32.  But when n == 32 there's no need to do anything; it can
+simply return the input value.  This will avoid calculating (1 << n)
+when n is 32, which was the cause of the invalid shift.
 
-On ASUS laptops with I2C/HID touchpads (such as the ASUS E200HA), sending
-keyboard feature reports (FEATURE_KBD_REPORT_ID) to touchpad endpoints
-sends invalid feature requests to touchpad hardware, corrupting probe
-state and causing the touchpad to become unresponsive.
-
-Wrap the asus_report_id_init loop in an `if (!drvdata->tp)` check so
-keyboard feature initialization only runs for actual keyboards.
-
-Tested on ASUS E200HA (where touchpad functionality is fully restored)
-and ASUS VivoBook Flip 14 TP401MA (confirming zero regressions).
-
-Fixes: 0919db9f3583 ("HID: asus: always fully initialize devices")
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 69c02ffde6ed ("HID: core: clamp report_size in s32ton() to avoid undefined shift")
+Reported-by: syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/6ac9cbd8.a150a118.27e199.0025.GAE@google.com/
+Tested-by: syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Panz Dev <panz.development@gmail.com>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Link: https://patch.msgid.link/dfa0aa1c-e55e-4316-8307-f72a07383634@rowland.harvard.edu
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-asus.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/hid/hid-core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index ec966fc0a411..bd46aba6622a 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1493,12 +1493,14 @@ static int asus_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		return ret;
- 	}
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -71,8 +71,8 @@ static u32 s32ton(__s32 value, unsigned
+ 	if (!value || !n)
+ 		return 0;
  
--	for (int r = 0; r < ARRAY_SIZE(asus_report_id_init); r++) {
--		if (asus_has_report_id(hdev, asus_report_id_init[r])) {
--			ret = asus_kbd_init(hdev, asus_report_id_init[r]);
--			if (ret < 0)
--				hid_warn(hdev, "Failed to initialize 0x%x: %d.\n",
--					 asus_report_id_init[r], ret);
-+	if (!drvdata->tp) {
-+		for (int r = 0; r < ARRAY_SIZE(asus_report_id_init); r++) {
-+			if (asus_has_report_id(hdev, asus_report_id_init[r])) {
-+				ret = asus_kbd_init(hdev, asus_report_id_init[r]);
-+				if (ret < 0)
-+					hid_warn(hdev, "Failed to initialize 0x%x: %d.\n",
-+						 asus_report_id_init[r], ret);
-+			}
- 		}
- 	}
+-	if (n > 32)
+-		n = 32;
++	if (n >= 32)
++		return (u32) value;
  
--- 
-2.56.0
-
+ 	a = value >> (n - 1);
+ 	if (a && a != -1)
 
 
