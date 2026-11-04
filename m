@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829411;
-	b=PKeu86xKsq5NRMKRIerg1tACIhaaCpOxUpm/TXk4VaQUzN7tDUGGJZTA95xVrXJaE1Ii
-	 ljeEY4DEM4excpX05QMOsKYOSi9Egh/IG6O6OTShslYv92gk0cQ8eT9ydic/ezsUqiYC9
-	 MKftkgDpLxhuoinHyY9Z3w4GF9piJkX0RauohkneDYIeWoyIMw+iThRXJkU0IdEwvx5Qa
-	 f/59NZnf9r9kfm7sisBT6l4y2dFcQLoHnU9KIXT5RbCFEyFW0sTsg5o9BT+UZrdOyIKPX
-	 cDZmj8IhlWsZUK9KZ3HaHspcU6Vml+KrRoT/O6nIRRtg3pyTx+3xuGdhpGB7UKUMKJw==
+	t=1793829412;
+	b=tvRTBDisnec/AAxs5MjyTuAWAa5mdO3WT6dwX3XWEp2iY3S8wy4gAlC9gnyliNB/NSmT
+	 6UU4P9WmtG7FX98J9ukU/W0p7Ib3cf3oUO6tXfTwSPNQSADorSrBck3uZyRyJpJNT8Sej
+	 mjKqk0JBIoFXGoyIfTh0HC3c3dpNmi+KT49NCHhKOaMp/MFSXJMpsQ+mCGGcBJq7JX2BQ
+	 sAN5gcsE/KyEZEW7sNFarMF6FcDYXgC7h61stQBBv/E/AgPMNf8zziGsSGPcfKkEELBne
+	 JWlW2tVC54bUY4idhmVp37lsmzRgLwKpaeXHwJoTAdzjsBXYIWwRDrXIzQpMSvBs7xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tr+ore537cQjZqAV3Bj6sytz30MXKcnhCiq/NAH/8Gs=;
-	b=ahaayuMWLRa65qV7l5BydYSXpeWde67+H4XgTujZVhp6YqGP/dy5ntmEPNOF9c86Wbpt
-	 p9YEsbLQLNsxzqp1p1OA5z/NZEZrL2k0bGN5WbdYndLNHgWo0eTXZA5Papn7q6PR2qWkN
-	 tx7ohAjKFxcRaX6vuf22uvw1NRXJFXxHze9UTPx48XIkGMPOkECV3Qsn63BMEebXcASm4
-	 8f8pRaHzIYBt/+3OhnkW/1BNstAgAUvxOKJKFSf44LApvBltSEWVdo+k13uDqq+oS8kwp
-	 qH3w37gzX/YvZ6ijU2NtFykNFhn3iXUz8XNc4qEy0wGBoc2Hvd3bIvVOQSeytgBTrZw==
+	bh=FavvVyyKzoyiVIyy1j5Nxszu94qhgV+sPUdx+QmXJb8=;
+	b=tB/QO/KuyQR/kLDRih1+Mxkl4wzYLIRDnfTBI4yy6Ii8Jaz26hIMgvUKZNIyZRiSVLPm
+	 MnacagY0MiYPENQfeJH6dS2t1/KNBmmYWfwtqXpCjVdMVIH32OYBTGoLqY4yY2ISrTfW6
+	 HLBGlxgt6qG7Y30QHweX4MDcvtV+N+u+7NhfnomTPhFWqKH63t+kzdGeIV2+24K7BKpVt
+	 1JX/giQMlXNgiKJjG6cYmOTeg9JqJ4FUOe68DRouEgTGg3EFuQxnaULwElufV5r6QIavp
+	 P/4ZTlRzU3EibeW8d1YlVpREtpS2UZCDO+O9DKCp0xmoKKHhUFA5B1IqdEIO7Dzr19g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0hSD+h2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTECREh2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB04D606A865;
-	Wed,  4 Nov 2026 21:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33389606A865;
+	Wed,  4 Nov 2026 21:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0hSD+h2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF1B1F00A17;
-	Wed,  4 Nov 2026 21:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTECREh2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1021F000C1;
+	Wed,  4 Nov 2026 21:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829410;
-	bh=Tr+ore537cQjZqAV3Bj6sytz30MXKcnhCiq/NAH/8Gs=;
+	s=korg; t=1793829412;
+	bh=FavvVyyKzoyiVIyy1j5Nxszu94qhgV+sPUdx+QmXJb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y0hSD+h2tgmYp2sqkmbwIK3ejnep+NrxuadNG1u+peo2zfniL49DeBjJ5+vKuHL/R
-	 VvcrgMdv5X5hAiTxins+QYGK2ZW2ASWSWiDQNQLJDQaYmr0HSxwO3bH/DVncikb0CB
-	 94KConZZunbO9s23h4b4n5lGOlEzuEMabDS7FAoA=
+	b=YTECREh2akMTDPBBshG6GgdxP74STdq1Z+Evv1zEloyWCQ6iTIyz8f+j6K/QwE96E
+	 ab1LIF6GHJM3ESeOD2CEsgWB1N6n+1Kq6CUdJ8VtUgnFfB4kBoKXv/fCnYJ4fEb6p3
+	 eOmnFZUpowsbvNwRu96AocTsMadseURq+D89XeFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Romain Gantois <romain.gantois@bootlin.com>,
+	syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0110/1005] usb: typec: mux: tusb1046: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 15:57:23 -0500
-Message-ID: <20261104211046.732146683@linuxfoundation.org>
+Subject: [PATCH 6.18 0093/1005] block: reject block device inodes with i_rdev == 0 in lookup_bdev()
+Date: Wed,  4 Nov 2026 15:57:06 -0500
+Message-ID: <20261104211046.233789349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,41 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit 5e4eb5c96324b226220d29d025a334df28054ed3 ]
+[ Upstream commit 83887ad02f30c1814bed5da3ca999f7b0f3f337c ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+lookup_bdev() blindly returns inode->i_rdev without validating it.
+When a FUSE filesystem exposes a root inode with S_IFBLK mode but
+i_rdev == 0 (via rootmode=060000), any subsequent mount attempt using
+that path as a block device source propagates dev_t 0 into the
+superblock machinery.  After commit 9ee5f161a4db ("fs: maintain a
+global device-to-superblock table") this triggers a WARNING in
+super_dev_register().
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+Reject i_rdev == 0 early with -ENODEV since no real block device
+driver registers major 0.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Romain Gantois <romain.gantois@bootlin.com>
-Link: https://patch.msgid.link/20260704124714.18404-1-pengpeng@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+72fe3ea5814121fbc76e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=72fe3ea5814121fbc76e
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260703065548.1135125-1-yun.zhou@windriver.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/mux/tusb1046.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/bdev.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/usb/typec/mux/tusb1046.c b/drivers/usb/typec/mux/tusb1046.c
-index 3c1a4551c2fbf..89b47aa56c7a9 100644
---- a/drivers/usb/typec/mux/tusb1046.c
-+++ b/drivers/usb/typec/mux/tusb1046.c
-@@ -179,6 +179,7 @@ static const struct of_device_id tusb1046_match_table[] = {
- 	{.compatible = "ti,tusb1046"},
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, tusb1046_match_table);
+diff --git a/block/bdev.c b/block/bdev.c
+index 02d7503e7c2c4..00345746e34f8 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -1209,6 +1209,18 @@ int lookup_bdev(const char *pathname, dev_t *dev)
+ 	if (!may_open_dev(&path))
+ 		goto out_path_put;
  
- static struct i2c_driver tusb1046_driver = {
- 	.driver = {
++	/*
++	 * Reject a block device inode with i_rdev == 0.  A dev_t of 0 is
++	 * never valid for a block device: no real block device driver
++	 * registers major 0.  Fake block device inodes (e.g. fuse with
++	 * rootmode=S_IFBLK) can expose i_rdev == 0, and letting that
++	 * propagate would confuse superblock lookup and trigger warnings
++	 * in the device-to-superblock table (super_dev_register).
++	 */
++	error = -ENODEV;
++	if (!inode->i_rdev)
++		goto out_path_put;
++
+ 	*dev = inode->i_rdev;
+ 	error = 0;
+ out_path_put:
 -- 
 2.53.0
 
