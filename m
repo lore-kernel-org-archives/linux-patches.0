@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831382;
-	b=BeSQxo37Fkzi+g45q/2RqdpQeiIMOarOIKEua72csUfmOwWtgNrwD9YYqn2nFXcHpL0S
-	 riwsSQHWEy9/JrL6t+4TgfY6gU8N6pQX7bbGMpaaG1O0JPoAkSEeD4wgomg4EMkmRpV1n
-	 HQKbzIZ1OxVWAKSsaBGBCYfSMltGxaItdrRazQpj51L0ovajkRb/Eop2z6W9+/ux+pO0q
-	 FHds5qPYJuDQjEkOFBw7PZSGG+/8hWf+6P1MLvZUpoO/10ncKz/r3Y8OKS1CyJoxNFfrf
-	 ur+La2j08jcrO2yVU/LeN3X5q8o67gURs3X08kv8VE6UICN15svXTkOaSVykgBDXU2g==
+	t=1793831383;
+	b=03CHGo//9CCMXXHS1SBnDawxmd4dhGpplez4UD1so5WETXGdN+1ihM2MaKXKzGqFzXYB
+	 4aFDooIF27s8WVBVuN2UnkTJliOuav68RzI7Wa4KwODHcLRoqmNGwiIFfrPke1+RXUvXG
+	 y9Bd/XVnimbLpMU/HLzzr37/iX98oId7XUCIrSx8L94PeCOiuKMCagXNRKRFYFXbJjoUM
+	 y/9segz7bxV3Zh8sv2n9bPSgWZJQXYxgjObOARHx0qPIFJYHsW6PpaoMu1PzAC9XvHDWr
+	 kXHSyAJXqk8aOzhWbSKjEczrXTCo/8bys/GWgxJwgpxHq1tdPozppXAamDflHAZylgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831382;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ro1IaG2TPzmHXEBU1EtFfWd9LyQ1OQArJ98OADSV6Jk=;
-	b=r9ojcHpfbugGFHI10059Lqea0CbRO3yItOf+4OEW9NdcJgVGHbPp6FWYkkomID56jaKv
-	 SrIG2A8TrJy5sq+Q6JB9Wy8E03IZQds2xoCOXxYmipC5pddWlKVkVvDHSw/XOU9/J6kYp
-	 jKQVg5+QbkQTZe7jDUqDrXgAO6IjDm7khCe7vAvlPyXqHF85DJdrdf91l/mps81tJ6tcp
-	 bH7WDFVzJgiwc/62Ce/H4gLDJ2qmKR4/RAvDt3urrZqDlQij8gS4yDj0Cnu7wifAvKMFp
-	 U7P3gCyuEJDzrvJSK699MZVQXvA9zNbzAI0AesmgkpmkRwwXhPLMsjVpdcSxlCiDaOA==
+	bh=qqXAfbY8aqclJxwCcCkJoCS1JZTNHqz20YB3N63Kb4Y=;
+	b=Iq+OECmAI1u29uoj5FRv9kwN3D++5ag2A8WxJEG2vkMiU/H3P+SvcjDUT9ND1iu94OzL
+	 IWncy0Pgg2po2HkHajZM6zRpjB+iOiG6LaINn+6EY7QtwNnObwFGaTEF0qdYIn/gDTBSU
+	 qNWOfvpyAfZBmqIpCgkvI1W+jMMLSQe6yy73TqrPxZCw7O9TdB/308MRZvZL2jCkjlZgI
+	 x0bUiDNeOS796U+LUilBG1bDbsyINBSA3AzzADYYcA8nH515/TroV2L6YbzI8uiwIdfnV
+	 o9L2DvXBHvv73sDN9CepwPvBY1dhCz7p6QZGDDlYUsiivUlf0Ty03CVjvy4U7H2VZBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCQcxYur;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1gPnT/NE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D176E606A337;
-	Wed,  4 Nov 2026 22:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396F4606A337;
+	Wed,  4 Nov 2026 22:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCQcxYur
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386D61F000C1;
-	Wed,  4 Nov 2026 22:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1gPnT/NE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD0B1F000C1;
+	Wed,  4 Nov 2026 22:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831381;
-	bh=ro1IaG2TPzmHXEBU1EtFfWd9LyQ1OQArJ98OADSV6Jk=;
+	s=korg; t=1793831383;
+	bh=qqXAfbY8aqclJxwCcCkJoCS1JZTNHqz20YB3N63Kb4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OCQcxYurHo59yP5PTeHz3LRhtYamVJXDcrsbr5tWCm1MgbEOMGJD7uJCDRXBLjekv
-	 Qaa9E8wmd/Lw3twiyHtqevZBX6VjKTjDcHG+djQ9Z/mfpkMb4Il4n6NmwzBaFyYld9
-	 WMOlDI8wf6cfFqbeSH6g2UrjIp/w7ihaWoE3LYyQ=
+	b=1gPnT/NEQ1h+2gjxrJyRcsA2d6JD3KhGnvYEr6IizH/QZPelM9TbVlx4ZOU6NMsxx
+	 0zHtTOcIHxkP3oqUDdzuWrXgX2jIgZoAW44o4BiOZlaVxxTH4iMC6raM/z0AGJQ7Z6
+	 dHaCbDS9jLSaaXHxcf0hu9cJ7BlsJjt/5ctfZTJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Johan Hovold <johan@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 0634/1005] driver core: fix parent lock use-after-free on USB disconnect
-Date: Wed,  4 Nov 2026 16:06:07 -0500
-Message-ID: <20261104211101.534731819@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 0670/1005] nvmet-fc: fix use-after-free in nvmet_fc_ls_create_connection()
+Date: Wed,  4 Nov 2026 16:06:43 -0500
+Message-ID: <20261104211102.421161675@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,167 +68,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 0f554506a3fc6a21e714adf38cc3eb0ffe1bb452 upstream.
+commit 2c29f8c9b9e598c09fa50aa02200136a107f6b3f upstream.
 
-USB interfaces should be probed with their parent USB device lock held
-and the USB bus therefore sets the need_parent_lock bus flag so that
-driver core takes the parent lock when needed.
+nvmet_fc_ls_create_connection() looks up the association with
+nvmet_fc_find_target_assoc(), which returns it with a reference held,
+and drops that reference as soon as the target queue has been allocated.
+iod->assoc is then dereferenced again by nvmet_fc_makeconnid() while
+building the connection id.
 
-Driver core is only guaranteed to hold a reference to the parent device
-during initial probe however and nothing prevents the device and its
-parent from being deregistered and the parent potentially freed, for
-example, while iterating over devices in driver_attach() or
-bus_rescan_devices_helper().
+The queue only borrows the pointer and takes no reference of its own.
+Once the lookup reference is dropped the association is kept alive
+solely by the reference taken when it was created, so a disconnect LS or
+a remote port unregister running concurrently can free it before
+nvmet_fc_makeconnid() reads it:
 
-Since commit 524134d42231 ("USB: don't cancel queued resets when
-unbinding drivers") USB interfaces hold a reference to their parent USB
-device, but a parent hub may still go away while probing a USB device
-(e.g. via the drivers_probe sysfs interface). This can lead to a
-use-after-free when taking the parent device lock before checking the
-device->p->dead flag of the device being probed.
+BUG: KASAN: slab-use-after-free in nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
+Read of size 8 at addr ffff888179f1b000 by task kworker/u9:2/1167
 
-As only USB interfaces actually need the parent lock, make the
-need_parent_lock feature even more fine grained by making it a device
-type rather than bus feature. By requiring that any users also make sure
-that their devices hold a reference to their parents (like USB does),
-driver core can lock a device and its parent without first checking if
-the device has been deregistered.
+Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Workqueue: nvmet-wq nvmet_fc_handle_ls_rqst_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+ print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+ kasan_report (mm/kasan/report.c:595)
+ nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
+ process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
+ worker_thread (kernel/workqueue.c:3486)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (archkernel/process.c:158)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+ </TASK>
 
-Note that this will also increase parallelism when using asynchronous
-probe as USB devices connected to the same hub can now be probed in
-parallel.
+Freed by task 1167 on cpu 0 at 405.998150s:
+ kasan_save_track (mm/kasan/common.c:57 mm/kasan/common.c:78)
+ kasan_save_free_info (mm/kasan/generic.c:584)
+ __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+ kfree (include/linux/kasan.h:235 mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
+ nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:1808 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
+ process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
+ worker_thread (kernel/workqueue.c:3486)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (archkernel/process.c:158)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Fixes: bf74ad5bc417 ("[PATCH] Hold the device's parent's lock during probe and remove")
-Cc: stable@vger.kernel.org	# 2.6.16: 524134d42231: USB: don't cancel queued resets when unbinding drivers
-Cc: stable@vger.kernel.org	# 2.6.16
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20261014133109.1392265-2-johan@kernel.org
-[ Fix mention of bus vs. device type in __device_driver_{un}lock().
-  - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+The buggy address belongs to the object at ffff888179f1b000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 0 bytes inside of
+ freed 2048-byte region [ffff888179f1b000, ffff888179f1b800)
+
+Hold the lookup reference until the response has been built, and drop it
+on the error path as well.
+
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-nvme/20260731204504.2396434-1-shuangpeng.kernel@gmail.com
+Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/bus.c         |    4 ++--
- drivers/base/dd.c          |    8 ++++----
- drivers/usb/core/driver.c  |    1 -
- drivers/usb/core/message.c |    1 +
- include/linux/device.h     |    5 +++++
- include/linux/device/bus.h |    3 ---
- 6 files changed, 12 insertions(+), 10 deletions(-)
+ drivers/nvme/target/fc.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -826,10 +826,10 @@ static int __must_check bus_rescan_devic
- 	int ret = 0;
- 
- 	if (!dev->driver) {
--		if (dev->parent && dev->bus->need_parent_lock)
-+		if (dev->type && dev->type->need_parent_lock)
- 			device_lock(dev->parent);
- 		ret = device_attach(dev);
--		if (dev->parent && dev->bus->need_parent_lock)
-+		if (dev->type && dev->type->need_parent_lock)
- 			device_unlock(dev->parent);
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1802,9 +1802,6 @@ nvmet_fc_ls_create_connection(struct nvm
+ 					be16_to_cpu(rqst->connect_cmd.sqsize));
+ 			if (!queue)
+ 				ret = VERR_QUEUE_ALLOC_FAIL;
+-
+-			/* release get taken in nvmet_fc_find_target_assoc */
+-			nvmet_fc_tgt_a_put(iod->assoc);
+ 		}
  	}
- 	return ret < 0 ? ret : 0;
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1163,7 +1163,7 @@ void device_initial_probe(struct device
- /*
-  * __device_driver_lock - acquire locks needed to manipulate dev->drv
-  * @dev: Device we will update driver info for
-- * @parent: Parent device. Needed if the bus requires parent lock
-+ * @parent: Parent device. Needed if the device type requires parent lock
-  *
-  * This function will take the required locks for manipulating dev->drv.
-  * Normally this will just be the @dev lock, but when called for a USB
-@@ -1171,7 +1171,7 @@ void device_initial_probe(struct device
-  */
- static void __device_driver_lock(struct device *dev, struct device *parent)
- {
--	if (parent && dev->bus->need_parent_lock)
-+	if (dev->type && dev->type->need_parent_lock && parent)
- 		device_lock(parent);
- 	device_lock(dev);
- }
-@@ -1179,7 +1179,7 @@ static void __device_driver_lock(struct
- /*
-  * __device_driver_unlock - release locks needed to manipulate dev->drv
-  * @dev: Device we will update driver info for
-- * @parent: Parent device. Needed if the bus requires parent lock
-+ * @parent: Parent device. Needed if the device type requires parent lock
-  *
-  * This function will release the required locks for manipulating dev->drv.
-  * Normally this will just be the @dev lock, but when called for a
-@@ -1188,7 +1188,7 @@ static void __device_driver_lock(struct
- static void __device_driver_unlock(struct device *dev, struct device *parent)
- {
- 	device_unlock(dev);
--	if (parent && dev->bus->need_parent_lock)
-+	if (dev->type && dev->type->need_parent_lock && parent)
- 		device_unlock(parent);
+ 
+@@ -1818,6 +1815,8 @@ nvmet_fc_ls_create_connection(struct nvm
+ 					FCNVME_RJT_RC_INV_ASSOC :
+ 					FCNVME_RJT_RC_LOGIC,
+ 				FCNVME_RJT_EXP_NONE, 0);
++		if (iod->assoc)
++			nvmet_fc_tgt_a_put(iod->assoc);
+ 		return;
+ 	}
+ 
+@@ -1839,6 +1838,9 @@ nvmet_fc_ls_create_connection(struct nvm
+ 	acc->connectid.connection_id =
+ 			cpu_to_be64(nvmet_fc_makeconnid(iod->assoc,
+ 				be16_to_cpu(rqst->connect_cmd.qid)));
++
++	/* release get taken in nvmet_fc_find_target_assoc */
++	nvmet_fc_tgt_a_put(iod->assoc);
  }
  
---- a/drivers/usb/core/driver.c
-+++ b/drivers/usb/core/driver.c
-@@ -2083,5 +2083,4 @@ const struct bus_type usb_bus_type = {
- 	.name =		"usb",
- 	.match =	usb_device_match,
- 	.uevent =	usb_uevent,
--	.need_parent_lock =	true,
- };
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -1920,6 +1920,7 @@ const struct device_type usb_if_device_t
- 	.name =		"usb_interface",
- 	.release =	usb_release_interface,
- 	.uevent =	usb_if_uevent,
-+	.need_parent_lock =	true,
- };
- 
- static struct usb_interface_assoc_descriptor *find_iad(struct usb_device *dev,
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -84,6 +84,10 @@ int subsys_virtual_register(const struct
-  * information, equivalent to the kobj_type of a kobject.
-  * If "name" is specified, the uevent will contain it in
-  * the DEVTYPE variable.
-+ *
-+ * @need_parent_lock:	When probing or removing a device of this type,
-+ *			driver core should lock the device's parent. Note that
-+ *			the device must hold a reference to its parent.
-  */
- struct device_type {
- 	const char *name;
-@@ -94,6 +98,7 @@ struct device_type {
- 	void (*release)(struct device *dev);
- 
- 	const struct dev_pm_ops *pm;
-+	bool need_parent_lock;
- };
- 
- /**
---- a/include/linux/device/bus.h
-+++ b/include/linux/device/bus.h
-@@ -66,8 +66,6 @@ struct fwnode_handle;
-  * @driver_override:	Set to true if this bus supports the driver_override
-  *			mechanism, which allows userspace to force a specific
-  *			driver to bind to a device via a sysfs attribute.
-- * @need_parent_lock:	When probing or removing a device on this bus, the
-- *			device core should lock the device's parent.
-  *
-  * A bus is a channel between the processor and one or more devices. For the
-  * purposes of the device model, all devices are connected via a bus, even if
-@@ -108,7 +106,6 @@ struct bus_type {
- 	const struct dev_pm_ops *pm;
- 
- 	bool driver_override;
--	bool need_parent_lock;
- };
- 
- int __must_check bus_register(const struct bus_type *bus);
+ /*
 
 
