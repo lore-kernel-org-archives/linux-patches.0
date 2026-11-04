@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830887;
-	b=ixdeMc8ZkQUBCerOZmfiLfRJUS65tSIBKM+VpSc/8gt2o6kGz/BR/CKCGZlOXVnWgpA1
-	 Pm3o1Tapf0Bny+7xuU0WFeypTThW2MhDCDTPy/lJCLyFXDpRP8xYPFInoBTJZduD72I5Y
-	 kVSMGY5lw3xc3c5ptoRAKdocZ/3+j5tgrDM4wieIMglIWAwijrugd0ebJYA4K6eDI2h5s
-	 JI/oxlki2Mx12cEVg8GmqJM9KDapvhx9BX6X8I/jDqDZbmxMSeQPW13s6E9h/F63Ocjk0
-	 M5g+TRIVKxnx7/0lMG9mlN4vNGcJH4o/gT8EU6ytGCv2A6ILGeTT0gyWshlLyup56cA==
+	t=1793830889;
+	b=v9uzj6B9pUFx1POHiehkPF8pZctxS0+Ppszg8IzwjFwXjaqTG9sAVUlmH6BpAT5ZNXgW
+	 Tp0cvjJNRn3jpe09kX06CVlm/Xy/VoVc3IUO5Avyx4W9dVrvxdMhIRuKqS390BFI6kbCB
+	 f87VYJ7yCyQZA5SDRM+ESq2mgyXaY7NLSRG1qsTJSWFqR/5z18wR58j8cvkJt5wL8EXsb
+	 MRbXfgoLVd0OXSi5Ab/qEf7r8ENyzTPhokwF8YIPjduzzFOfwmkrP29mBhmlFH3Sr40B8
+	 xizrgNLtP0tDj6eellHFT13iIzEWoE61XBR8JNLlW5J1IBsrUPJ1OGTQTT1Y+TRIhiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830887;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VraUUxnzVE1P0tC5XpBlZ7BymVim1Ib0w1nmOBGrNE4=;
-	b=Vj+IU8U4W5iS/PzRQxpdssUttL9anK9eEtlepY7f4Li6QpanREN1Ek3O8XKQaIEpfb53
-	 5RKYXgvCJ2+6cIu4UxqHyDQtJNWF+Hy75oAnrJ/CgVTEqB28LD+o54mMmuxGL6AXmURCb
-	 dRLUanDIEXE0TQ23CnMib329KMr+8CwXz7T/ID54+UXiJ5K77EZhpqcGnGicO3Wlfb6GL
-	 eQmXwjaiPCik8icHnKpkeAJPXIJynpsNMqy/o0+Xp8O4BWFCfA4QWp9vqev4ctkmO21rQ
-	 oorL767gJKD0z5RfWDAmgOtR1qpU5C38D7JOt3L1T68lf6XHlMUte8gf+Y+ixUM0AyQ==
+	bh=vSwb9PUwk9qnGMKa5uTP+bPmJunDj5n5CyockVUb6MA=;
+	b=orKgOo98N6AMSmO/U3m2ekJfIwO7wYKL7UgazevlZGGC4v4eGIUW8XluW1DddZVJreRL
+	 y8ATlEu6cTwcYEJF4hmYKGCME4TxGOAwk2kiNeyvyZGh9dqnIggk5bvRZAt5nAQ0qTdVy
+	 NocANjGtxxaCxLyytLnprSu8a6LzYT5VTlBcooKx5A4bC8S67qT3QkPegKMLjyjkYiqBT
+	 uS0eUqzrUq3UgaVpirlorgDnfC3dumdY8nj00qaqwM9OE44hBHkyFn3yKiVqUVS/AvbXC
+	 kUeKyEVc+HdhIBh1RojCyYK0uX3/QKS0yzmGB3h1F385RT/hh19aLgNThHIc1ZK3jXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uUdhw8A3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OHfwBY6K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5798B606EE9B;
-	Wed,  4 Nov 2026 22:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13737606A33F;
+	Wed,  4 Nov 2026 22:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uUdhw8A3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15311F00A02;
-	Wed,  4 Nov 2026 22:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OHfwBY6K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758071F000C1;
+	Wed,  4 Nov 2026 22:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830887;
-	bh=VraUUxnzVE1P0tC5XpBlZ7BymVim1Ib0w1nmOBGrNE4=;
+	s=korg; t=1793830888;
+	bh=vSwb9PUwk9qnGMKa5uTP+bPmJunDj5n5CyockVUb6MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uUdhw8A35O5ufWcwmcxTq4iNyG+6PIwuKfM15tCA7iMVALyjOMKUb2ILbvwtPUqVF
-	 bwkkpjbsQ/6f6fiWebxc7ACdWb2KxyQLpLHQxa7ySHE3fPqpKuyZk8XLO3kPBqdCbu
-	 JqVkey9CYO0VM0NcJND2j5XvF8X8ZxuMGu5u7pmc=
+	b=OHfwBY6KoIE9qi2uAPfhUKIX8En6uEIN3ndvcpj738XH1iOnzbrm0E7Ai+4X5ebFH
+	 vGvR7yLIn58vmqGI9vIeqMJVVaEreICitCIV0KjEQrF8KM1rULAH+sGguAcx5jCpD7
+	 LWc1HJe4UePKxpXtoZddQ2vfaiim5xXjedRjzwI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liqiang01@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0349/1005] Bluetooth: bfusb: validate received block boundaries
-Date: Wed,  4 Nov 2026 16:01:22 -0500
-Message-ID: <20261104211053.757567520@linuxfoundation.org>
+Subject: [PATCH 6.18 0350/1005] btrfs: fix memory barrier order in reloc_root_is_dead()
+Date: Wed,  4 Nov 2026 16:01:23 -0500
+Message-ID: <20261104211053.785280232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,103 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 6afadcff79b157a4770c4e987a6005bff40a670b ]
+[ Upstream commit 6f1c97695a6e230ee15c9e052e1933bdccfd5fa3 ]
 
-The USB receive path trusts the block header to contain the required
-number of bytes and passes it to the reassembly routine. The routine
-also trusts a malformed HCI packet type and can append more data than
-the skb allocated from the advertised packet length. A malformed USB
-transfer can therefore cause out-of-bounds reads or an skb tail
-overwrite.
+When we set a root's reloc_root to NULL, we do it like this:
 
-Validate block header availability, declared block size, packet type,
-and reassembly tailroom. Drop the partial frame on an invalid block.
+   static void clear_reloc_root(struct btrfs_root *root)
+   {
+       root->reloc_root = NULL;
+       /*
+        * Need barrier to ensure clear_bit() only happens after
+        * root->reloc_root = NULL. Pairs with have_reloc_root().
+        */
+        smp_wmb();
+        clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
+   }
 
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+So that a NULL reloc_root is always seen before seeing that the bit
+BTRFS_ROOT_DEAD_RELOC_TREE was cleared.
+
+But on the read side we have:
+
+   static bool reloc_root_is_dead(const struct btrfs_root *root)
+   {
+        smp_rmb();
+        if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
+            return true;
+        return false;
+   }
+
+And then callers of reloc_root_is_dead() access root->reloc_root.
+
+Because the read memory barrier is placed before testing the bit, the CPU
+is completely free to speculatively reorder those two loads. It can read
+root->reloc_root before it actually checks the dead tree bit.
+
+Sashiko reported this as an existing problem in another patch review, see
+the link in the Link tag below.
+
+Fix this by moving the read memory barrier to happen after testing the bit
+and update the comment to reflect current reality.
+
+Link: https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd7afd36c9427.1781194426.git.fdmanana%40suse.com
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/bfusb.c | 37 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 34 insertions(+), 3 deletions(-)
+ fs/btrfs/relocation.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bluetooth/bfusb.c b/drivers/bluetooth/bfusb.c
-index 8df310983bf6b..d31d797639b51 100644
---- a/drivers/bluetooth/bfusb.c
-+++ b/drivers/bluetooth/bfusb.c
-@@ -301,6 +301,11 @@ static inline int bfusb_recv_block(struct bfusb_data *data, int hdr, unsigned ch
- 				return -EILSEQ;
- 			}
- 			break;
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index eab9686b1bcdf..fcb0ab937de5c 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -245,14 +245,15 @@ static struct btrfs_backref_node *walk_down_backref(
+ 
+ static bool reloc_root_is_dead(const struct btrfs_root *root)
+ {
++	if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
++		return true;
+ 	/*
+-	 * Pair with set_bit/clear_bit in clean_dirty_subvols and
+-	 * btrfs_update_reloc_root. We need to see the updated bit before
+-	 * trying to access reloc_root
++	 * Pairs with set_bit/clear_bit in clear_reloc_root() and
++	 * btrfs_update_reloc_root(). We need to see the updated bit before
++	 * trying to access root->reloc_root in our callers.
+ 	 */
+ 	smp_rmb();
+-	if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
+-		return true;
 +
-+		default:
-+			bt_dev_err(data->hdev, "unknown packet type 0x%02x",
-+				   pkt_type);
-+			return -EILSEQ;
- 		}
+ 	return false;
+ }
  
- 		skb = bt_skb_alloc(pkt_len, GFP_ATOMIC);
-@@ -319,6 +324,13 @@ static inline int bfusb_recv_block(struct bfusb_data *data, int hdr, unsigned ch
- 		}
- 	}
- 
-+	if (len > skb_tailroom(data->reassembly)) {
-+		bt_dev_err(data->hdev, "block exceeds packet length");
-+		kfree_skb(data->reassembly);
-+		data->reassembly = NULL;
-+		return -EILSEQ;
-+	}
-+
- 	if (len > 0)
- 		skb_put_data(data->reassembly, buf, len);
- 
-@@ -353,6 +365,13 @@ static void bfusb_rx_complete(struct urb *urb)
- 	skb_put(skb, count);
- 
- 	while (count) {
-+		if (count < 2) {
-+			bt_dev_err(data->hdev, "short block header");
-+			kfree_skb(data->reassembly);
-+			data->reassembly = NULL;
-+			break;
-+		}
-+
- 		hdr = buf[0] | (buf[1] << 8);
- 
- 		if (hdr & 0x4000) {
-@@ -360,16 +379,28 @@ static void bfusb_rx_complete(struct urb *urb)
- 			count -= 2;
- 			buf   += 2;
- 		} else {
-+			if (count < 3) {
-+				bt_dev_err(data->hdev, "short block header");
-+				kfree_skb(data->reassembly);
-+				data->reassembly = NULL;
-+				break;
-+			}
-+
- 			len = (buf[2] == 0) ? 256 : buf[2];
- 			count -= 3;
- 			buf   += 3;
- 		}
- 
--		if (count < len)
-+		if (count < len) {
- 			bt_dev_err(data->hdev, "block extends over URB buffer ranges");
-+			kfree_skb(data->reassembly);
-+			data->reassembly = NULL;
-+			break;
-+		}
- 
--		if ((hdr & 0xe1) == 0xc1)
--			bfusb_recv_block(data, hdr, buf, len);
-+		if ((hdr & 0xe1) == 0xc1 &&
-+		    bfusb_recv_block(data, hdr, buf, len) < 0)
-+			data->hdev->stat.err_rx++;
- 
- 		count -= len;
- 		buf   += len;
 -- 
 2.53.0
 
