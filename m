@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829566;
-	b=yr5wsndzXHK9eDppA9lTOxa4310oYDmTroUS+RSVLtP2K3jYcxN+i3SNz6A6URxDAmLO
-	 bHV2BFG2LEtRiGL2pQJXfQFKiAjJtAKEOXcQSUUe9O92FLY4CvywY07AoKt4AZxMIHq9g
-	 xkpnvYZ4rvO9S5s5zy0gUY9zp8RxEJwMwUrzjLB07xK+s1ixuL7cv0v7nkfmIwlvH7bbp
-	 QtlfV4HmPy5x60TROL/3qDGi6twRxfP01RWMrmTWf7qnTeFqidtp/FEDeHWTP87weRYJ+
-	 9ySjGEKP7ypitPFpntuBJ5WQVWABNwvtkQfomul3soi94ajT6ofPBerfHpA+0Y1GUjg==
+	t=1793829568;
+	b=a2Rgg0rlxNS78n5UzkxP+UGgFfTNGtqqkiDbu1fpzACtqArRschd92FC89Flll/oD6sg
+	 flwb5EGb59kKHUDz0t3ktelf34wYPBjiHwAIaeiYNduEByrcNLVLUbD5v4YQ5Rg3JWuTp
+	 Dkm5Y4CcU3IJ8BeD73b2Tt5ITeOt0CGd63U5CsS7SWKy4XH3pIBE2IO05wh+DzgmxdIyM
+	 f7R4oGI2uj36YBGrnoZye4uf6DK+LB/qY4DmpK/V0pauCniHUm6n04aoMi/mIKgOh+sFX
+	 WCHXtQcMcNrF64SjRPPPZN5iiqvgXORJfRJvvKOYSDu9ZTLzAOSTbwsEyjox16iS3VA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9hTudvdPyWYoZ2WPjJXimCOiwpfjTPEgxM1dspyZBlY=;
-	b=W92iPydqQ3p/MC7s/h6w9AlmrlsF+wTdL4Liyh/c7u/Qy8u/KqSuPTSk/Uke2gU2skye
-	 fG/siWROREswbCM1dUYRjAbrnn/W/MUOPr4FH+mJdmJ0KNw9pbk2LrXl/sDX498aBejnv
-	 /r4PcVS+UMfVzhJg+RrOjnUThCpYZPZXA5wFPkrBgwGvcfWJJdenGCz/IfOKlQgjspR/g
-	 m8EgEe/ecjC1SpQYJGvR4hS+uBrf0G/smiFrRzp82BfYbyNoclcRy2ep34hbKEhhtOW7I
-	 rYkf81xUjT3QqspTupWAdNLaJDUGR1AYVYrGW/wTimHKG1LQq5XWGMcTZvcACOCiqAA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=mU/9zlP2rXhcpCFqv/X28dTNF6BtbqNh1SmbWJo96XQ=;
+	b=KKM/DWNtmy4rNGVh/hswKFxXa5sXbFYFRbImRE/owtaaPVDmTKms8Aqzjh1N0YEzrfi8
+	 R1wX8K6xVh0kK5q70FmAIfKbU+lv2JOtwzha3FfgFH8Sx8YumNU0xe69tSnlYhWLu1n+r
+	 CUPMaGN4Cmv14lxcAA3hSY5jhMgCmBHnLo2MHxfaX0SB4+h2FQp8wrvk7gy1C1BJjxWPj
+	 +Jbeu9wPnUDioBs6ghJ0XUjB+GhMQjYzLudR9PQhQ/bznQEfS1i030XvFvpJ3+z0N1mBj
+	 +NXiNHkMeCuwFzcmeXGZwUxxYHlROSHN+YrgcjTVDHV45EnFQIEgxqCNMGQq8LFYDGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDJyaCDM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAxwc5L1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160F9606A33E;
-	Wed,  4 Nov 2026 21:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C635C606A33E;
+	Wed,  4 Nov 2026 21:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDJyaCDM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54AE1F0093A;
-	Wed,  4 Nov 2026 21:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAxwc5L1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2321F00A16;
+	Wed,  4 Nov 2026 21:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829565;
-	bh=9hTudvdPyWYoZ2WPjJXimCOiwpfjTPEgxM1dspyZBlY=;
+	s=korg; t=1793829567;
+	bh=mU/9zlP2rXhcpCFqv/X28dTNF6BtbqNh1SmbWJo96XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TDJyaCDM8dZKbisWI4rVvCmN9h7/XUaq44WmaGRKlG73lqpwV9R3osaj9SNxew/aH
-	 9xEEKLwSz0QstCDxd8HxCYy5PtTMTwYSVSIWTUwonUN6JdnqTTjtkZIAgfxfIAawAR
-	 DE/1mu6WIcnI+Ds41wnC5tPJDc9/mVQlcsGHacMk=
+	b=QAxwc5L1b4UhM8uihekVMuukqgUwMJKQ9B85HPoi/R490X744AuEKLp9BBfpsQPRa
+	 PBCVeEh5r+YNCTYJ7EjaRyUOen8OYCP6447WvRkW+E+Db3k+4l4RjOEFGMEeJnkY7A
+	 WDhjTInaSCQYghz5Hk/wqhZ6DQDt2ouLbs2cpwY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>,
-	Denis Benato <denis.benato@linux.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bob Song <songxiebing@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0205/1005] platform/x86: asus-nb-wmi: map ProArt key (0x8b) to KEY_PROG3
-Date: Wed,  4 Nov 2026 15:58:58 -0500
-Message-ID: <20261104211049.541781918@linuxfoundation.org>
+Subject: [PATCH 6.18 0206/1005] ALSA: hda: Check snd_hda_power_pm construct error before executing verb
+Date: Wed,  4 Nov 2026 15:58:59 -0500
+Message-ID: <20261104211049.571349634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -63,49 +62,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>
+From: Bob Song <songxiebing@kylinos.cn>
 
-[ Upstream commit 6303451189a6d8f304221065c44ccd597e0acbe5 ]
+[ Upstream commit df27e4dc80c4a30ad206432cb848aab00de22ca7 ]
 
-The dedicated "ProArt" key on the ASUS ProArt PX13 (HN7306) emits ASUS
-WMI event code 0x8b. This code is absent from the asus-nb-wmi sparse
-keymap, so pressing the key only produces a "Unknown key code 0x8b"
-message and does nothing in userspace.
+When userspace writes 1 to /sys/bus/pci/devices/XX/remove to remove
+HDA PCI device, the HDA hardware control path is shut down and devres
+unmaps the BAR virtual address bus->remap_addr automatically during
+driver removal.
 
-On this model the key is exposed solely through the WMI interface and has
-no HID scancode, so it can only be handled inside asus-nb-wmi. Map 0x8b
-to KEY_PROG3 so the key emits a bindable event, consistent with the
-existing KEY_PROG3 mapping used for the ASUS programmable/Armoury key.
+If a delayed HDA verb command arrives after the MMIO region is
+unmapped, the driver will access invalid virtual addresses and trigger
+a page fault splat.
 
-Signed-off-by: Nizar Al-Kabbani <nizar.m.kabbani@gmail.com>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Link: https://patch.msgid.link/20260719090843.66777-1-nizar.m.kabbani@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+So add an error check right after constructing snd_hda_power_pm.
+
+Signed-off-by: Bob Song <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260717024948.506335-1-songxiebing@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/common/codec.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index 8dad7bdb8f612..a840d16e063e0 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -622,6 +622,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
- 	{ KE_KEY, 0x86, { KEY_PROG1 } }, /* MyASUS Key */
- 	{ KE_KEY, 0x88, { KEY_RFKILL  } }, /* Radio Toggle Key */
- 	{ KE_KEY, 0x8A, { KEY_PROG1 } }, /* Color enhancement mode */
-+	{ KE_KEY, 0x8B, { KEY_PROG3 } }, /* ProArt key (PX13/HN7306) */
- 	{ KE_KEY, 0x8C, { KEY_SWITCHVIDEOMODE } }, /* SDSP DVI only */
- 	{ KE_KEY, 0x8D, { KEY_SWITCHVIDEOMODE } }, /* SDSP LCD + DVI */
- 	{ KE_KEY, 0x8E, { KEY_SWITCHVIDEOMODE } }, /* SDSP CRT + DVI */
+diff --git a/sound/hda/common/codec.c b/sound/hda/common/codec.c
+index 8cab932177194..7869f673894fe 100644
+--- a/sound/hda/common/codec.c
++++ b/sound/hda/common/codec.c
+@@ -39,6 +39,12 @@ static int call_exec_verb(struct hda_bus *bus, struct hda_codec *codec,
+ 	int err;
+ 
+ 	CLASS(snd_hda_power_pm, pm)(codec);
++	if (pm.err < 0 && !bus->core.chip_init) {
++		codec_warn(codec,
++			   "Failed to send cmd 0x%x ret=[%d], hda control stopped\n",
++			   cmd, pm.err);
++		return pm.err;
++	}
+ 	guard(mutex)(&bus->core.cmd_mutex);
+ 	if (flags & HDA_RW_NO_RESPONSE_FALLBACK)
+ 		bus->no_response_fallback = 1;
 -- 
 2.53.0
 
