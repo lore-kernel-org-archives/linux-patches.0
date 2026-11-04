@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829228;
-	b=CLcoZs8989zkwxx07djXrxO77Bb8y8o2nSCslhFri0Bqzu7OCsGS2+mnkANb/0ZjTl/9
-	 GbE6eN55cNfvIRAc43ZkQZ7Lk919pRMQqR2MIOhnhX8x03ZNjyVg30dxTbAkaG3vwZ+T9
-	 aJSPZ2YUeCVoKVr8V/KYhMzMY3kXeRLtcwQXeLeSUblQkdqewWTt1i/enc2RIL1wffjyy
-	 y4AVt2qwhH27/0awHXZZ6vKIFMXeqw4Q/IPAVjzLVDTW8x/WZqhnyC9OYaCFULrQGkyT1
-	 WR3zreYlf4Guvig4DrQ9rc7aBRPX4biOhK8A3I2Old3vdPRTQfvGy31EVmOyAOsmpuw==
+	t=1793829229;
+	b=k1qV54vsN9nEYyJdFrZXEY9AVpq6UPm+TMpfNjdb64Js8EdDHjFLizEwXunQCUqkpKWt
+	 6UxtvtnuxVJ5B+Pqf1657gTj4mfBT6o0o3bwY3SRWG72EqsiOKaF6yWelv60amuFT3oNN
+	 srJcIYoXzEDMgG9K3elpQBvJVSS0GLSeX6KNLe8KL3cL2hA6G2b2vyee0LdIRcieW1RXW
+	 GoEqH8eZnDZDPYUF6xeH1Ayv4WSE2w9AWNGgHf9JqrBXw+5FjMDuqGvF/FHSsd8BJIumz
+	 IEgSuZZJmuMaCeLGc/qiZcBTEarxi5DQDHy4GW4qPJNGx7nKjljONwc6Kyvt9P5L6Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829229;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+1qE8OOTlTc6bV78Stlv3gAmsFEWM1fjsxOjcYQDw2E=;
-	b=q1nwguJ5fHf5qX56AJlKmJZihBtp5VSm9JjbtXCRQ2xkiooUGVo69F6xIQO/QTiVQTh9
-	 MaVChj5U75Mf7XJJGtHm4X9zFR/OEHPV9+JynnIbrMmwwnk3263EMK7l4Ay5LZDkNBwaU
-	 Xa7sclT4TSyDk8rYHppQLTplN3MWm7EzRtddbs2M7WNGytTZE906XQfOwYiqIbxmSTdiD
-	 f1n0z6XhDyI9hIadjd0Xh2dU8kg8c0etMJndbs764+LlusIKRSRZ7x6t+/HHSuWfmaHKj
-	 74xei4p5G17GPJKZQZxleLIbJv+EfnBi4VoXvz8u7CRgaMH3haamefWRW/c/DLxvxLg==
+	bh=MWUWPsRTRdkN2YpXj5eoGzw03tyFJzFmZ7rUtyrlyDI=;
+	b=dhzmY/93WfN89lDNWiUwLy7EazaSq4Xxwc/iYBAwfNgq59jF5LcLSWanKGf51UVuvJcx
+	 6+BCtr75wzamR0bNuAPpZpEmQEeMth+u+ehvD0rrg3cuDcOOWf9aKpee/AGR3rCb2md5m
+	 xgGMVYra8qmxKoVNdUY87ZCgm79uQsy4g9tTIsrzrBl+pNGGLRSAbG0+r5iGoQawUj3W9
+	 9Tpyukfc2gO9+9DiT7UiHLQWrcDCFlcUM+4XpGWEXN3XOhsR/tksKcFw9K4gAjzMy5KYT
+	 i3dO8kJDSdPqo/frRI4tKMHYTggH5y62SkjlUjB1k/Q9haeUa93s/3S5sl0bIQy423A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W9MQv27+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ff4Z7Zlo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34566070A88;
-	Wed,  4 Nov 2026 21:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7CD6070A88;
+	Wed,  4 Nov 2026 21:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W9MQv27+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D08A1F000C1;
-	Wed,  4 Nov 2026 21:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ff4Z7Zlo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E7C1F000C1;
+	Wed,  4 Nov 2026 21:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829227;
-	bh=+1qE8OOTlTc6bV78Stlv3gAmsFEWM1fjsxOjcYQDw2E=;
+	s=korg; t=1793829229;
+	bh=MWUWPsRTRdkN2YpXj5eoGzw03tyFJzFmZ7rUtyrlyDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W9MQv27+cguqURbRa2t4oPldiTTlucpJk/8l/mOjILWt6xeTcQbu2gpSu3vBDiVZ6
-	 m+wYAbueneShesultSQR+XimOkRTnPku3MuJoTxSlcG8R/NO+qr/TvEyTvNSAExN1U
-	 d95KEASCWxu7ycHPG5O7afTqy9X69CPmlJsEMVFM=
+	b=Ff4Z7Zloz+dPPAG8TZfOP9Hlm4Wuwv7YSCSq48Yf6Uz2Xfr5ByuuanGztgNp9+JNc
+	 YUNVhq/Zc1ZRqwR5U7k9/0QtbuP0eQ6ebObgq2TWeXT6rJxIjrEge2vin+TxbNl+xR
+	 biRlocawxn5IuB8RNoMtGTwzaYTAWywhnyHaLMcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.3 529/547] io_uring: free the task context after a grace period
-Date: Wed,  4 Nov 2026 16:11:53 -0500
-Message-ID: <20261104211053.421385917@linuxfoundation.org>
+Subject: [PATCH 7.3 530/547] io_uring/sqpoll: dont wait for the thread to exit
+Date: Wed,  4 Nov 2026 16:11:54 -0500
+Message-ID: <20261104211053.449255205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,71 +69,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-Commit 9f5315d3f4368590c9fe06d4313b7247470bcf15 upstream.
+Commit 360395e8dbf9d23579f74b84a1af11190813b0f8 upstream.
 
-A task other than the owner can free a request, io_ring_exit_work()
-running the local task_work of a DEFER_TASKRUN ring for example, or
-io_do_iopoll() reaping completions. io_put_task() then takes the else
-branch:
+io_sq_thread_stop() wakes the SQPOLL thread and waits for it to exit.
+The thread belongs to the thread group that created the ring, so a
+SIGSTOP or the cgroup freezer holds it in get_signal(), and the wake up
+doesn't change that. io_ring_exit_work() then sleeps in that wait until
+someone continues or kills the process. iou_exit has 64 slots, so 64
+closed SQPOLL rings of a stopped process keep every other ring from
+being freed, for everyone.
 
-    percpu_counter_sub(&tctx->inflight, 1);
-    if (unlikely(atomic_read(&tctx->in_cancel)))
-            wake_up(&tctx->wait);
-    put_task_struct(tctx->task);
+Don't wait. Set the stop bit, wake the thread, and let it exit when it
+gets to run again. The sqd can now outlive its last ring, so give it a
+second refcount with one reference for the rings and one for the thread,
+and free it with the last one. The thread can't reach a freed ring,
+rings leave ctx_list before dropping their reference, and the io-wq hash
+is refcounted.
 
-The first line is what lets the owner leave io_uring_cancel_generic(),
-and on exec it frees the tctx right after. Nothing holds that off for
-the remaining three lines, the task reference only covers a tctx freed
-along with the task_struct. It used to work out because
-io_uring_del_tctx_node() took the uring_lock that the freeing side holds
-across io_put_task(), until that moved to tctx_lock.
-
-Free the tctx with kfree_rcu(), and enter an RCU read section in
-io_put_task() before the count is dropped.
-
-Fixes: 5623eb1ed035 ("io_uring/tctx: add separate lock for list of tctx's in ctx")
+Fixes: 16efa4fce3b7 ("io_uring: allow IO worker threads to be frozen")
 Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/io_uring_types.h |    3 +++
- io_uring/io_uring.c            |    2 ++
- io_uring/tctx.c                |    2 +-
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ io_uring/sqpoll.c |   28 +++++++++++++++++++++++-----
+ io_uring/sqpoll.h |    3 ++-
+ 2 files changed, 25 insertions(+), 6 deletions(-)
 
---- a/include/linux/io_uring_types.h
-+++ b/include/linux/io_uring_types.h
-@@ -161,6 +161,9 @@ struct io_uring_task {
- 	/* drains ->task_list once the task can no longer run task_work */
- 	struct work_struct		fallback_work;
- 
-+	/* the tctx is freed after a grace period, see io_put_task() */
-+	struct rcu_head			rcu;
-+
- 	struct { /* task_work */
- 		struct mpscq		task_list;
- 		struct callback_head	task_work;
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -634,6 +634,8 @@ static inline void io_put_task(struct io
- 	if (likely(tctx->task == current)) {
- 		tctx->cached_refs++;
- 	} else {
-+		guard(rcu)();
-+
- 		percpu_counter_sub(&tctx->inflight, 1);
- 		if (unlikely(atomic_read(&tctx->in_cancel)))
- 			wake_up(&tctx->wait);
---- a/io_uring/tctx.c
-+++ b/io_uring/tctx.c
-@@ -64,7 +64,7 @@ void io_uring_free_tctx(struct task_stru
- 		WARN_ON_ONCE(tctx->cached_refs);
- 
- 		percpu_counter_destroy(&tctx->inflight);
--		kfree(tctx);
-+		kfree_rcu(tctx, rcu);
- 		tsk->io_uring = NULL;
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -63,6 +63,24 @@ void io_sq_thread_park(struct io_sq_data
  	}
  }
+ 
++/*
++ * The sqd has two holders: its rings, as one, and its thread. Neither waits
++ * for the other to let go. The one that lets go last frees the sqd.
++ */
++static void io_sq_data_release(struct io_sq_data *sqd)
++{
++	if (refcount_dec_and_test(&sqd->free_refs))
++		kfree(sqd);
++}
++
++/*
++ * Ask the thread to exit, and don't wait for it. A thread that is stopped or
++ * frozen exits only when a user lets it run again, and the exit work of the
++ * ring would keep its place in the workqueue until then. All rings have left
++ * ctx_list by now and have no request left, so the thread can reach none of
++ * them. What it still uses is its own or counted: the sqd by free_refs, the
++ * hash of its io-wq by hash->refs.
++ */
+ void io_sq_thread_stop(struct io_sq_data *sqd)
+ {
+ 	struct task_struct *tsk;
+@@ -77,7 +95,6 @@ void io_sq_thread_stop(struct io_sq_data
+ 		wake_up_process(tsk);
+ 	}
+ 	mutex_unlock(&sqd->lock);
+-	wait_for_completion(&sqd->exited);
+ }
+ 
+ void io_put_sq_data(struct io_sq_data *sqd)
+@@ -86,7 +103,7 @@ void io_put_sq_data(struct io_sq_data *s
+ 		WARN_ON_ONCE(atomic_read(&sqd->park_pending));
+ 
+ 		io_sq_thread_stop(sqd);
+-		kfree(sqd);
++		io_sq_data_release(sqd);
+ 	}
+ }
+ 
+@@ -160,10 +177,10 @@ static struct io_sq_data *io_get_sq_data
+ 
+ 	atomic_set(&sqd->park_pending, 0);
+ 	refcount_set(&sqd->refs, 1);
++	refcount_set(&sqd->free_refs, 2);
+ 	INIT_LIST_HEAD(&sqd->ctx_list);
+ 	mutex_init(&sqd->lock);
+ 	init_waitqueue_head(&sqd->wait);
+-	init_completion(&sqd->exited);
+ 	return sqd;
+ }
+ 
+@@ -424,7 +441,7 @@ static int io_sq_thread(void *data)
+ 	io_run_task_work();
+ 	mutex_unlock(&sqd->lock);
+ err_out:
+-	complete(&sqd->exited);
++	io_sq_data_release(sqd);
+ 	do_exit(0);
+ }
+ 
+@@ -544,7 +561,8 @@ __cold int io_sq_offload_create(struct i
+ 	}
+ 	return 0;
+ err_sqpoll:
+-	complete(&ctx->sq_data->exited);
++	/* no thread was made: let go of its share */
++	io_sq_data_release(ctx->sq_data);
+ err:
+ 	io_sq_thread_finish(ctx);
+ 	return ret;
+--- a/io_uring/sqpoll.h
++++ b/io_uring/sqpoll.h
+@@ -2,6 +2,8 @@
+ 
+ struct io_sq_data {
+ 	refcount_t		refs;
++	/* one for all the rings, one for the thread: the last put frees */
++	refcount_t		free_refs;
+ 	atomic_t		park_pending;
+ 	struct mutex		lock;
+ 
+@@ -18,7 +20,6 @@ struct io_sq_data {
+ 
+ 	u64			work_time;
+ 	unsigned long		state;
+-	struct completion	exited;
+ };
+ 
+ int io_sq_offload_create(struct io_ring_ctx *ctx, struct io_uring_params *p);
 
 
