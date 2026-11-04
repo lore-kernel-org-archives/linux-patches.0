@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830918;
-	b=g8fiqWF97LymOo0TFxjZNInMeNEqZLbJey4N23q2F4ditpQasB3WbYrwxMyh+Ln2nr3B
-	 s23yOzqTYPyK/fRKWuL1PK3sIWf1+nJVspzdCaJmFlis0IBOcwTOlF9hxvG3428pgS4DY
-	 m2tx4/s3Uxb/qg3arcH5W307SDOXPou40pFK1+MD4kAK0dCAeRzahDxGzA4kD5pb4hW58
-	 p+E9G4VZV+KWGknZ9ZvgZb1uziXAK0RiXwYuhLSmMZdS1e7/wFjOX/WzcDz60PYS+KQ4n
-	 0+RJ0gWZwgdeDDKaON506i3Qu36yOtvQ7lDawOhrq9gP9EnEsr7TiOyFaKSKbjZy6OQ==
+	t=1793830920;
+	b=wT/L/gcV9bkja5tmgtUFEFWlC1ICsBDeuEkJ2c2Fwx2fmnus7pVa6jpCmbYe3B6jw6lh
+	 0Kazvd9CMCrqS3ztSw7vxpofewfXey5kdAGu7ABVSWuD+B4UrvjS/KhedXLKll/CsBuTB
+	 RexX7b8VjG9rSQVJbQPOY/pwesLJvDl23ouxsRVpOdrgRFqyrwXqIj0KAO7xUM8XXj3bJ
+	 svlQD1LWd5p0gJGX37RNOOEzdFqU+vRqngn2gzEdRw+sOJERGYw9nTpi0Xkv6gNtUd5ee
+	 KZNS8oJ95oa+frtSM9pKvPZwaHQuFL+x6IWlcBrGXdcM6TuqQW2lT4wVoyT8p96Y0xQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=rnGZ4UwO4a//hOrC/TGC0FCDXGuRBNGb0QdhIbPHxRs=;
-	b=BgP35FIfmTcWscHcN843hsQ8qwMyX+Sxwvnik0hGe5JcYmv0OyAWhTsVQx4nZzBOKJkW
-	 CUZiJJ9rrqUD25t6UfIYlQflN8YXt7khitdS1zRkSo7/izdc8czBvciBl8EqAd621GRX6
-	 aq2LtD++mVP2XYebx3G708QF7X5XgpaTrNtyAZyjpjprh2QGRht2pzuKrCi5+59Pjvs/o
-	 D3ZEPCqKT49WN/fep3nLNfjtiankdouMbIN9LdOjgCqRnCl+MBbP9lbfv/Q2AsyxpXLvh
-	 6JV7Zx9XR7DoGUh+HfZthVdBho4o9wPlZgZXoYHtH22G+qkQbr9vviXSe49K/+UMSIQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=gJK7HxWx4eVSkPtnLiUAEmcKb6UztJOC6Loqx4YSh8Q=;
+	b=dOMsIhDhzBcqUqkrWRPe8jWLkV/hcT1Q4d3LXNhrVyXS3FBrP5JHRVxdqQapHrlWZB3k
+	 xZJAcrftDzfS41Oi5my0AmM5kMp7wk/xR87Id2jLGaNJXlNK7NFhvr7slAPQ+HQpw1jIV
+	 9H43W0GUDojzRQggdQfOFLe2HXqZjfuLZlvDarmjjZ+5Pxsa6pwv/lCDq0rUDjpI7QNxi
+	 kavUlOFjVdgCdX0+LqlZqXevS9CZRojwlieqDICj3+J5LsR8VKHE5j+JjualJ5QstRt5c
+	 Rlc/LLtMrjxfb5qvjJS3KSWqbF6t5hJOEXrb4udutGa5d39v5WthN8RqgAOrV+pqGUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1b67Lei1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dUNIFI5+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7AB606EEBC;
-	Wed,  4 Nov 2026 22:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB54C606A841;
+	Wed,  4 Nov 2026 22:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1b67Lei1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8761F00A02;
-	Wed,  4 Nov 2026 22:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dUNIFI5+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632051F00A02;
+	Wed,  4 Nov 2026 22:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830918;
-	bh=rnGZ4UwO4a//hOrC/TGC0FCDXGuRBNGb0QdhIbPHxRs=;
+	s=korg; t=1793830919;
+	bh=gJK7HxWx4eVSkPtnLiUAEmcKb6UztJOC6Loqx4YSh8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1b67Lei1ApPxqGDtxWHHPkg/38i16o+K2tri5bJbfuWnH8aSVnhu6jrIWHNW1eiXm
-	 jQTOobbhmnxJbLXkvVfwtzIkKEs8+o8L9PbQV2cLHcHEBOspXbdZRE+uCPxka3O/1T
-	 p3auQovw5rYHTRdubqxap7YKWRbY8Qi32hyodShc=
+	b=dUNIFI5+TidCs5MVlPudQ5mD0/KgJULiNmeKLTKpHvOdkSHxpjOuyI7hYgbqKWPch
+	 aqG4FOLbBxFCFhLsWj3vSxxFeKKxLF0xP/jcfhbuvBjiaSu4SG4bz/681vIAAizriN
+	 jcJgtNqqEuM0LWm91AIlGdWJwtFvc3esrlA5FWZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	"David C.C.M. Gall" <david.ccm.gall@googlemail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0401/1005] libbpf: Fix ring buffer consumer loop on 32-bit position wrap
-Date: Wed,  4 Nov 2026 16:02:14 -0500
-Message-ID: <20261104211055.307543742@linuxfoundation.org>
+Subject: [PATCH 6.18 0402/1005] crypto: keembay - use crypto_memneq() to compare CCM AEAD tags
+Date: Wed,  4 Nov 2026 16:02:15 -0500
+Message-ID: <20261104211055.334895329@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,61 +62,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: David C.C.M. Gall <david.ccm.gall@googlemail.com>
 
-[ Upstream commit fdd4fad0bbbd08501465c5f9b556963093c5d58a ]
+[ Upstream commit ff2ac77a034e03b64e2ba34f775097427dfa5547 ]
 
-ringbuf_process_ring() walks the records between the consumer and the
-producer with an ordering comparison:
+Use crypto_memneq() for constant-time comparison.
 
-	while (cons_pos < prod_pos) {
+The CCM path in ocs-aes.c verifes the received authentication tag with
+memcmp(), which returns early on the first mismatched byte. This leaks
+valid-prefix length and allows for valid tag forgery which violates the
+INT-CTXT guarantee of AEAD.
 
-cons_pos and prod_pos mirror the kernel's ring positions and are
-unsigned long here too, so on 32-bit they wrap at 2^32 bytes of traffic.
-When producer_pos has wrapped and consumer_pos has not, prod_pos is the
-smaller of the two, the loop body never runs and no record is consumed.
-Since consumer_pos only advances inside that loop, it never wraps either
-and the consumer stops delivering samples for good, with no error
-returned to the caller: ring_buffer__poll() keeps reporting zero
-records while the kernel side fills up and starts dropping.
-
-Compare the distance instead. The consumer never runs ahead of the
-producer, so prod_pos - cons_pos is the amount of unconsumed data and
-stays correct across the wrap.
-
-64-bit hosts are unaffected in practice: the counters would need 16 EiB
-to wrap. This is the userspace counterpart of the kernel-side walk fixed
-in "bpf: Fix pending_pos walk on 32-bit ring position wrap"; a 32-bit
-consumer hits whichever of the two comes first.
-
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-5-i.tellez@btesa.com
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: David C.C.M. Gall <david.ccm.gall@googlemail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/intel/keembay/ocs-aes.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
-index 00ec4837a06de..c8fe57401a8b5 100644
---- a/tools/lib/bpf/ringbuf.c
-+++ b/tools/lib/bpf/ringbuf.c
-@@ -244,7 +244,7 @@ static int64_t ringbuf_process_ring(struct ring *r, size_t n)
- 	do {
- 		got_new_data = false;
- 		prod_pos = smp_load_acquire(r->producer_pos);
--		while (cons_pos < prod_pos) {
-+		while (prod_pos - cons_pos > 0) {
- 			len_ptr = r->data + (cons_pos & r->mask);
- 			len = smp_load_acquire(len_ptr);
+diff --git a/drivers/crypto/intel/keembay/ocs-aes.c b/drivers/crypto/intel/keembay/ocs-aes.c
+index bb6f33f6b4d39..13ba7573617fe 100644
+--- a/drivers/crypto/intel/keembay/ocs-aes.c
++++ b/drivers/crypto/intel/keembay/ocs-aes.c
+@@ -17,6 +17,7 @@
  
+ #include <crypto/aes.h>
+ #include <crypto/gcm.h>
++#include <crypto/utils.h>
+ 
+ #include "ocs-aes.h"
+ 
+@@ -1283,7 +1284,7 @@ static inline int ccm_compare_tag_to_yr(struct ocs_aes_dev *aes_dev,
+ 				 (i * sizeof(u32)));
+ 	}
+ 
+-	return memcmp(tag, yr, tag_size_bytes) ? -EBADMSG : 0;
++	return crypto_memneq(tag, yr, tag_size_bytes) ? -EBADMSG : 0;
+ }
+ 
+ /**
 -- 
 2.53.0
 
