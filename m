@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828991;
-	b=yNAfNObDO4TmJLHPnj5vetHCxA6sjHrA3BnJTHk1W4L/EmchYaQFaCzC271RvfETxyvc
-	 uKP3PoBY4ijkKewuLpCr855x4AWtHHyZomoC7e+AM6yYKgYXxK38w/fi8KHYuJcVSNd6l
-	 BY921+UIaekz98DDR1skFjp3/SnC+YgUsLBrb8+oqzYbi2rCuA1b3p2dwVMPyURDB3gVt
-	 B2YNYcAKF98owGkAs96ecmJ4r0knqKDPT90LAO3PrEQQYJCcAsw0uzn+NpVvAtHXeVY1A
-	 FbgG4uFu+e+M1YEwBCPwsIm/oFUl2+eV8Q78Ff7MVfw/qh0FKr5PTuxHKyZDsCNMYLg==
+	t=1793828992;
+	b=IJpJdZHbcHDGjRAVsM6y7ex2ZsJCq1eWqtQ8vk3MPE1jeoLBg+wZraXp2T32JgiYfwjq
+	 s7wmTQAjmDx3o1cFnGq+/lcYL4N3hA01ErdabyVSjlciVr3GxsbN76rZBZhH9NrhmJRtr
+	 5cCuisjIJtokEl7tD/1nSRCvp9wsxLbb+G2FL1Y0gEWJUYMwZYL5fVAE36cJuPkd1kBD5
+	 ee5IB8EXESN2kOo0afVubwZwE9u3j7uVhUtPXf5WnR8eTvjjDuO59a1FWymEegwOCh+hw
+	 RAtk3KKmKjCzwkL+OdKvszwCtMK35fuoRyP6bS2YJJttQ4cYXKdnCkTwhP6S1HT+FSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I5vycsvoKF51EIN2/pQMO794hy1IbEJT2Oq10WPM2QY=;
-	b=NYSjQQ4g2Y1QPY20eKF5EQfHl70v3cAAU3y/kiAEspooIrgozYgGn0vMsqijkVv5TOCC
-	 KszIuQxUDGqEP7Chkx9e+EA6c2/aRTySTchAWfdJVt5PguklYm1uBCN7akd/BBnI6SjQb
-	 fuA1EKa2U8CxUZsSuDfSmqGZOklGHmHPiRz7Zq93MZQd3ugm8UH60W6KrHwCjx23pLSwo
-	 BZMuR6AMwG2L6t5tvTMIkXjM2fIBfmCX5UAT8Tz896U3KP8nbsQQbUH2JU8jhktK6cdB0
-	 9hq65LzpgeqyvJ3eZ2qWp01+NeeG4SaAgjR3vHKR9e9sRaDpkRABdxYF+v6Zc/+1uag==
+	bh=imStiQVxxfn9wWC4HilPS02IkuKp+prKqZdLvtMhHf0=;
+	b=dwXkf/yYm1fNTzmm5Q2sJSq/TuCfEf2JQdvSZSB5oUhN7ofhGgCOP1hk6cRzvwBHLdOw
+	 r2B781+SP3Z6WEbCMgsGBnqAIPa1HrMSw5m0FNMLbEvZ8KYqjJApFrxzNqtgrkHeu61Aw
+	 KFXWSRvEtB4+Ia6FSj1D3h2i/hZT9dS6Rlp+W499pfdg2SRL2NI244OLmHFAxGcwUVvWa
+	 ObkdRgHMlVchcGJCdK0xz/UavCQkH3DjCdzt6O2Lwqus9VKY+pC3vRAuityYcqx5rWsud
+	 mfDCSzMGcRvQF1gDoaMv7G7T5ekj8rtS13vYo2LKy+9siJE/jVXHfAuRjnLQARS5WEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Chofhu4u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FVA6kebF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D53607F281;
-	Wed,  4 Nov 2026 21:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB4B607F281;
+	Wed,  4 Nov 2026 21:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Chofhu4u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B5A1F000C1;
-	Wed,  4 Nov 2026 21:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FVA6kebF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7831F000C1;
+	Wed,  4 Nov 2026 21:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828991;
-	bh=I5vycsvoKF51EIN2/pQMO794hy1IbEJT2Oq10WPM2QY=;
+	s=korg; t=1793828992;
+	bh=imStiQVxxfn9wWC4HilPS02IkuKp+prKqZdLvtMhHf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Chofhu4u4HfPTY5E9xQMff/IIdTlkXEOIXdhVm84Wvqib9lU7VZh9s+UCvl8DyF65
-	 zrSlGZMNiFikmhzz3PMV1zXtXQzEWt0vmvsYjL5IGreLELhqG155gyWMUrw6CFFjuz
-	 Gh2sNdUSWnMXtr/+B9ObH/C27PM7ms/2Riayx5XA=
+	b=FVA6kebFLqHSpyk9tEhuRwje4j8mQ73372G5K+3EB8OrkzZC1dpTYNOjh5e/If2Sc
+	 YZrcfmwHixMUJx1nByhdUJ7hEy8LtQQ2pDIy3KzQDCUsG6RoOZsQ2zk+wFx2D9LD5Y
+	 U641AuDsQ4XcpXjtiGhsQ+n4wrpxyN2RlCfBC0Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 7.3 374/547] x86/bugs: Adapt SRSO mitigation to Zen6
-Date: Wed,  4 Nov 2026 16:09:18 -0500
-Message-ID: <20261104211048.928197687@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.3 348/547] xfs: bound da-node entry count against the correct geometry
+Date: Wed,  4 Nov 2026 16:08:52 -0500
+Message-ID: <20261104211048.156319949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -66,94 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit ae1d2082d93bc04604dc08e9b7f9cdba5e0c28e6 upstream.
+commit 3df5e5aaa3bc0913236c48ab29b7df3a785aa29f upstream.
 
-Zen6 has BTB protection which isolates the different contexts
-(user/kernel, guest/host) from one another. This makes the SafeRET
-mitigation there unnecessary leaving the user/user and guest/guest
-attack vectors open, whose protection is handled by the Spectre v2
-mitigation setting to do IBPB on a context switch.
+xfs_da3_node_verify() bounds the node entry count against the larger of
+the directory and attribute geometries because, as a buffer verifier, it
+cannot tell whether the block belongs to the directory or the attribute
+tree. When the directory block size exceeds the fs block size (e.g.
+mkfs.xfs -n size=64k -b size=4k), an attribute node buffer is a single fs
+block that holds only m_attr_geo->node_ents entries, yet a crafted attr
+node may claim a count up to m_dir_geo->node_ents and still pass the
+verifier.
 
-Detect that setting and report it with a new mitigation string.
+xfs_da3_node_lookup_int() then indexes btree[] up to that count during
+its binary search -- an out-of-bounds read via getxattr/listxattr on a
+mounted crafted image.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20260822013231.1109255-1-bp@kernel.org
+The buffer verifier is the wrong place to tighten this: it has no fork
+context, and the transaction-less read path used by getxattr does not run
+xfs_da3_node_set_type() either. xfs_da3_node_lookup_int(), on the other
+hand, always runs on that path and holds args->geo, the geometry of the
+fork actually being searched. Bound the entry count against
+args->geo->node_ents there, before walking the entries.
+
+Fixes: 7ab610f9e0f1 ("xfs: move node entry counts to xfs_da_geometry")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    1 +
- arch/x86/kernel/cpu/bugs.c         |   18 ++++++++++++++++--
- arch/x86/kernel/cpu/scattered.c    |    1 +
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ fs/xfs/libxfs/xfs_da_btree.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -430,6 +430,7 @@
- #define X86_FEATURE_SUCCOR		(17*32+ 1) /* "succor" Uncorrectable error containment and recovery */
- #define X86_FEATURE_CPPC_PERF_PRIO	(17*32+ 2) /* CPPC Floor Perf support */
- #define X86_FEATURE_SMCA		(17*32+ 3) /* "smca" Scalable MCA */
-+#define X86_FEATURE_BTB_CTX_ISOLATION	(17*32+ 4) /* AMD: Branch predictions contexts isolated */
+--- a/fs/xfs/libxfs/xfs_da_btree.c
++++ b/fs/xfs/libxfs/xfs_da_btree.c
+@@ -1787,6 +1787,20 @@ xfs_da3_node_lookup_int(
+ 		} else
+ 			expected_level--;
  
- /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX), word 18 */
- #define X86_FEATURE_AVX512_4VNNIW	(18*32+ 2) /* "avx512_4vnniw" AVX-512 Neural Network Instructions */
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1175,6 +1175,7 @@ enum srso_mitigation {
- 	SRSO_MITIGATION_IBPB,
- 	SRSO_MITIGATION_IBPB_ON_VMEXIT,
- 	SRSO_MITIGATION_BP_SPEC_REDUCE,
-+	SRSO_MITIGATION_USER_IBPB,
- };
- 
- static enum srso_mitigation srso_mitigation __ro_after_init = SRSO_MITIGATION_AUTO;
-@@ -2908,7 +2909,8 @@ static const char * const srso_strings[]
- 	[SRSO_MITIGATION_SAFE_RET]		= "Mitigation: Safe RET",
- 	[SRSO_MITIGATION_IBPB]			= "Mitigation: IBPB",
- 	[SRSO_MITIGATION_IBPB_ON_VMEXIT]	= "Mitigation: IBPB on VMEXIT only",
--	[SRSO_MITIGATION_BP_SPEC_REDUCE]	= "Mitigation: Reduced Speculation"
-+	[SRSO_MITIGATION_BP_SPEC_REDUCE]	= "Mitigation: Reduced Speculation",
-+	[SRSO_MITIGATION_USER_IBPB]		= "Mitigation: IBPB on context switch",
- };
- 
- static int __init srso_parse_cmdline(char *str)
-@@ -2948,7 +2950,9 @@ static void __init srso_select_mitigatio
- 		 * required.  Otherwise the 'microcode' mitigation is sufficient
- 		 * to protect the user->user and guest->guest vectors.
- 		 */
--		if (cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST) ||
-+		if ((cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST) &&
-+		    !boot_cpu_has(X86_FEATURE_BTB_CTX_ISOLATION))
-+					||
- 		    (cpu_attack_vector_mitigated(CPU_MITIGATE_USER_KERNEL) &&
- 		     !boot_cpu_has(X86_FEATURE_SRSO_USER_KERNEL_NO))) {
- 			srso_mitigation = SRSO_MITIGATION_SAFE_RET;
-@@ -3024,6 +3028,16 @@ static void __init srso_update_mitigatio
- 	    boot_cpu_has(X86_FEATURE_IBPB_BRTYPE))
- 		srso_mitigation = SRSO_MITIGATION_IBPB;
- 
-+	/*
-+	 * See if IBPB on context switch is the only thing needed to address
-+	 * GUEST/GUEST and USER/USER vectors.
-+	 */
-+	if (srso_mitigation == SRSO_MITIGATION_MICROCODE  &&
-+	    boot_cpu_has(X86_FEATURE_SRSO_USER_KERNEL_NO) &&
-+	    boot_cpu_has(X86_FEATURE_BTB_CTX_ISOLATION) &&
-+	    spectre_v2_user_ibpb != SPECTRE_V2_USER_NONE)
-+		srso_mitigation = SRSO_MITIGATION_USER_IBPB;
++		/*
++		 * The node verifier cannot tell whether this block belongs to
++		 * the directory or the attribute tree, so it only bounds the
++		 * entry count against the larger of the two geometries.  Here
++		 * args->geo is the geometry of the fork we are actually
++		 * searching, so reject a count that would walk btree[] off the
++		 * end of this node buffer.
++		 */
++		if (nodehdr.count > args->geo->node_ents) {
++			xfs_buf_mark_corrupt(blk->bp);
++			xfs_da_mark_sick(args);
++			return -EFSCORRUPTED;
++		}
 +
- 	pr_info("%s\n", srso_strings[srso_mitigation]);
- }
+ 		max = nodehdr.count;
+ 		blk->hashval = be32_to_cpu(btree[max - 1].hashval);
  
---- a/arch/x86/kernel/cpu/scattered.c
-+++ b/arch/x86/kernel/cpu/scattered.c
-@@ -64,6 +64,7 @@ static const struct cpuid_bit cpuid_bits
- 	{ X86_FEATURE_AMD_WORKLOAD_CLASS,	CPUID_EAX, 22, 0x80000021, 0 },
- 	{ X86_FEATURE_TSA_SQ_NO,		CPUID_ECX,  1, 0x80000021, 0 },
- 	{ X86_FEATURE_TSA_L1_NO,		CPUID_ECX,  2, 0x80000021, 0 },
-+	{ X86_FEATURE_BTB_CTX_ISOLATION,	CPUID_ECX,  8, 0x80000021, 0 },
- 	{ X86_FEATURE_PERFMON_V2,		CPUID_EAX,  0, 0x80000022, 0 },
- 	{ X86_FEATURE_AMD_LBR_V2,		CPUID_EAX,  1, 0x80000022, 0 },
- 	{ X86_FEATURE_AMD_LBR_PMC_FREEZE,	CPUID_EAX,  2, 0x80000022, 0 },
 
 
