@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827132;
-	b=bzxGPRP+Dml2ONC+3PxMrItCdb/SstaGrkR9aCGPYUdQGombCL+OFm13BiIIYWtI1pJ3
-	 hz6rLLnG/LfAS7AFNsMTiS8Y0ZLdiJojWUBW99zQId8QXHs/CvFMhwYUE2bJRbWJeDPr1
-	 p+e0F24wbxriVA6pps0sNuC2v0aBPnVcDr/tsKplb0rAH7+903trSprUrbqut3XL9Qlfc
-	 fZCZT4k+LW8l6SScWdfn9oFz6Ki79KpJ0ehg7eWJBz63C580B0SnRwkDaO+2vBWVLgaWg
-	 1yG9mr0GlcxlAy+2o0oCCHrH7Q/cFUs3RKNKbI9Rx1ELWlJ3OgZZsxyVHKm+XbV+RBg==
+	t=1793827134;
+	b=Qg79vwJjyp9+LPRYOezZqDv75T9K432Tr8G+Nb7aehnRpXVUG/A/E0zeE50Qc6SAexbJ
+	 cN+Er9Ky22QS1/Mf+4Vp8cwRXx0U4AP2XrGaueSZBmh4LojQl149FYWxTKfEdEaYmTe4K
+	 zO6ESe5ITWS509XhWOZHmXaJykT99vbtLt7df+s+CKOhad1dRTuDD0BTYYOzocUoIZ/IE
+	 OSCUdGB04olPgCJbruxUrcDp0XSP4x/1XJY7Xdae76spwF2ObH+uWEJW2bXorMMF3Bwvs
+	 XlIOOs2Ym/JxLnh1dcf/vL4NNE5U3BNd9kA8zjzlUbfeoc1Pw3q3Wxf+iMGQn6AMV0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827134;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w+JJEg6cmLoq5hjCGluyFH7GH/qu5G2BspOopTyqJRI=;
-	b=03LemkLWGrvmTNnFft2j8/BbJrGIvPrcBDIkn+QNDQlWxvN/fOstNQ6UE6KdIuxRaDB5
-	 2DH75jOvVO1gTkJCtqMNBfkkanXHLCcplewkDypFyC401LcV9CK79j/JZjT04nVWm+iQ7
-	 eq9NfNcdVo/juf+aBUwoZCqYM5LFUKGaXmAIeRrayh+MrXGG7uGRGBdoX/Xrfi4+iFe10
-	 aDnpEVGcQPXa90g4lX0dMI5QwkUtNquOtjUh/7T6eVAlPeWpV91jdUQGRYMHtcxR63gb3
-	 NojR1cqQNu8I9Z0ZaQVI+HtU2Y2ZAsIPYaLVFJi3jbQw6gbu1X1FPaZdNZ3Bg/rkreA==
+	bh=8Mzj53nENEgVTE/hh5MqW6jTH3kgVlHOHyvZlQHgsGU=;
+	b=MdcZUI3GCNDFUhpGOwmPFMcG+wVZr8Eb6PfARnIWRP42xJTnPL5FVe+hs4bAxvxINtfK
+	 ZMnbTp5ohEi4PDt6vvoUrEpbG//XsNyY2oSqv9QyePZmO6F9TzLVg78XwQWnAEGvlZDHS
+	 ToEnAyhM5jz5x72DA1YzQQZi84qsIwB5BgZyOIbUQGdIiGWbBcqu51GO7NjU4VJjLiVve
+	 GZRuHMAFLJxbkK2CfXeX4Z/iiU1ssEk26wQWnU5u5MawrSRjx38YFqV9/n8H7pmOvunS3
+	 TGMM49gEPGkM0Q0Kg7uEjJyVphtf3nmxKZtLveE/GfejnPc9379hj3MVmvPnAfPHSdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZTkkSrkS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nf8dbItD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8292B606AB0D;
-	Wed,  4 Nov 2026 21:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143DA606A871;
+	Wed,  4 Nov 2026 21:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZTkkSrkS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB331F000C1;
-	Wed,  4 Nov 2026 21:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nf8dbItD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CC51F000C1;
+	Wed,  4 Nov 2026 21:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827132;
-	bh=w+JJEg6cmLoq5hjCGluyFH7GH/qu5G2BspOopTyqJRI=;
+	s=korg; t=1793827133;
+	bh=8Mzj53nENEgVTE/hh5MqW6jTH3kgVlHOHyvZlQHgsGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZTkkSrkSnjdYx1fLRywISUAGEcW2m+p/d3Lm5ODILB3gZ8Ux25CjZpod4bugovy3p
-	 qMG3lVtUdnCppKeus9rFZuWqdNZclueocxn6vWShPJvXSnepqojjEdSEjqFLYQBSzv
-	 c1uBsJ/MJ1KIvFccVkhHTrLnSGuQDwdvPkd81jCo=
+	b=Nf8dbItDYNuV1dpBzcnJ/8PscVlrIl3YbTBplW5UPaTaC9VlcT4j9b3zyXcq9LHXY
+	 vVTRWudfRQiDo5FyXLIyDXvNychBJdwsokY9je9WW/EOAMqErL7xX7PIhPdIfSK0Nt
+	 yXnioGYmhaP5+HZOBkRczL8TT8G0gdDIZU+fViUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.3 206/547] ALSA: emux: Fix UAF of soundfont zones at note-on
-Date: Wed,  4 Nov 2026 16:06:30 -0500
-Message-ID: <20261104211043.997236019@linuxfoundation.org>
+Subject: [PATCH 7.3 207/547] ALSA: pcmtest: handle multiple wraps in random capture fill
+Date: Wed,  4 Nov 2026 16:06:31 -0500
+Message-ID: <20261104211044.026248840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,74 +67,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-commit 34e3e04b8a1731a773797542f0781e99ce7cd755 upstream.
+commit 6541871e8e63e721733cd120af4d9cd22c5ef62f upstream.
 
-snd_emux_note_on() looks up the matching zones via
-snd_soundfont_search_zone(), which takes sflist->lock only during the
-lookup and returns the raw zone pointers after releasing it.  The
-caller then stores them in vp->zone without any protection.
-Meanwhile, a concurrent SNDRV_EMUX_IOCTL_REMOVE_LAST_SAMPLES ioctl may
-unlink and free those zones in snd_soundfont_remove_unlocked(); this
-leads to a use-after-free in snd_emux_note_on(), and later at
-accessing the cached vp->zone, e.g. in snd_emux_send_effect().
+The random capture helpers assume that the data generated for one timer
+tick wraps the DMA ring at most once. However, b_rw describes 200 ms of
+audio because the timer runs at 5 Hz, so it can be several times larger
+than a small ring.
 
-Fix it by holding sflist->lock in snd_emux_note_on() over the whole
-zone lookup and voice setup, and let snd_soundfont_search_zone()
-require the caller to hold the lock, instead.
-snd_soundfont_lock_preset() takes sflist->lock for setting
-presets_locked, so the removal path now syncs with the note-on finish.
+For 48 kHz, S16_LE, four-channel capture with a 512-frame buffer, the DMA
+ring is 4096 bytes while one tick generates 76800 bytes. After filling the
+4096-byte tail, the existing code issues a second 72704-byte write from the
+ring base, writing 68608 bytes beyond the ring. Both interleaved and
+non-interleaved capture are affected.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-697212bb-a434-4ff5-8778-25a84f5dad89
+KASAN reports the first write into the adjacent free page as a
+use-after-free in the random-byte generator. The underlying defect is an
+out-of-bounds write from the live DMA ring, not a stale DMA allocation.
+
+Split each random write repeatedly at the interleaved ring or per-channel
+block boundary. Keep the hardware-pointer update exactly once after the
+complete logical write.
+
+The issue reproduced on three of three clean boots. With this change, the
+same vulnerable geometry completed six times without a sanitizer finding.
+Boundary, pattern-fill, no-timer, open/close, and module-reload controls
+also completed normally.
+
+snd-pcmtest is a test driver, and selecting random fill requires an
+administrator-controlled module parameter. The written values come from the
+kernel random generator; no privilege escalation or attacker-controlled
+write primitive was demonstrated.
+
+Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020101624.205638-1-tiwai@suse.de
+Assisted-by: OpenAI Codex
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
+Link: https://patch.msgid.link/20261003101854.1423146-1-tjdqudcks0424@naver.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/synth/emux/emux_synth.c |    3 +++
- sound/synth/emux/soundfont.c  |    9 ++++++---
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ sound/drivers/pcmtest.c |   42 +++++++++++++++++++-----------------------
+ 1 file changed, 19 insertions(+), 23 deletions(-)
 
---- a/sound/synth/emux/emux_synth.c
-+++ b/sound/synth/emux/emux_synth.c
-@@ -60,6 +60,9 @@ snd_emux_note_on(void *p, int note, int
- 		return;
+--- a/sound/drivers/pcmtest.c
++++ b/sound/drivers/pcmtest.c
+@@ -280,39 +280,35 @@ static void fill_block_pattern(struct pc
+ 		fill_block_pattern_n(v_iter, runtime);
+ }
  
- 	key = note; /* remember the original note */
++static void fill_random_block(char *buf, size_t buf_size, size_t pos,
++			      size_t count)
++{
++	while (count) {
++		size_t chunk = min(count, buf_size - pos);
 +
-+	/* hold sflist->lock for protecting against concurrent free */
-+	guard(spinlock_irqsave)(&emu->sflist->lock);
- 	nvoices = get_zone(emu, port, &note, vel, chan, table);
- 	if (! nvoices)
- 		return;
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -1225,6 +1225,9 @@ delete_preset(struct snd_sf_list *sflist
-  * The found zones are stored on 'table' array.  max_layers defines
-  * the maximum number of elements in this array.
-  * This function returns the number of found zones.  0 if not found.
-+ *
-+ * The caller must hold sflist->lock, and keep holding it as long as
-+ * the returned zones are accessed.
-  */
- int
- snd_soundfont_search_zone(struct snd_sf_list *sflist, int *notep, int vel,
-@@ -1234,11 +1237,11 @@ snd_soundfont_search_zone(struct snd_sf_
++		get_random_bytes(buf + pos, chunk);
++		count -= chunk;
++		pos = 0;
++	}
++}
++
+ static void fill_block_rand_n(struct pcmtst_buf_iter *v_iter, struct snd_pcm_runtime *runtime)
  {
- 	int nvoices;
+ 	unsigned int channels = runtime->channels;
+-	// Remaining space in all channel buffers
+-	size_t bytes_remain = runtime->dma_bytes - v_iter->buf_pos;
++	size_t pos = v_iter->buf_pos / channels;
+ 	unsigned int i;
  
--	/* this function is supposed to be called atomically,
--	 * so we check the lock.  if it's busy, just returns 0 to
-+	lockdep_assert_held(&sflist->lock);
-+
-+	/* if the presets are being modified, just returns 0 to
- 	 * tell the caller the busy state
- 	 */
--	guard(spinlock_irqsave)(&sflist->lock);
- 	if (sflist->presets_locked)
- 		return 0;
- 	nvoices = search_zones(sflist, notep, vel, preset, bank,
+-	for (i = 0; i < channels; i++) {
+-		if (v_iter->b_rw <= bytes_remain) {
+-			//b_rw - count of bytes must be written for all channels at each timer tick
+-			get_random_bytes(runtime->dma_area + buf_pos_n(v_iter, channels, i),
+-					 v_iter->b_rw / channels);
+-		} else {
+-			// Write to the end of buffer and start from the beginning of it
+-			get_random_bytes(runtime->dma_area + buf_pos_n(v_iter, channels, i),
+-					 bytes_remain / channels);
+-			get_random_bytes(runtime->dma_area + v_iter->chan_block * i,
+-					 (v_iter->b_rw - bytes_remain) / channels);
+-		}
+-	}
++	for (i = 0; i < channels; i++)
++		fill_random_block(runtime->dma_area + v_iter->chan_block * i,
++				  v_iter->chan_block, pos,
++				  v_iter->b_rw / channels);
+ 	inc_buf_pos(v_iter, v_iter->b_rw, runtime->dma_bytes);
+ }
+ 
+ static void fill_block_rand_i(struct pcmtst_buf_iter *v_iter, struct snd_pcm_runtime *runtime)
+ {
+-	size_t in_cur_block = runtime->dma_bytes - v_iter->buf_pos;
+-
+-	if (v_iter->b_rw <= in_cur_block) {
+-		get_random_bytes(&runtime->dma_area[v_iter->buf_pos], v_iter->b_rw);
+-	} else {
+-		get_random_bytes(&runtime->dma_area[v_iter->buf_pos], in_cur_block);
+-		get_random_bytes(runtime->dma_area, v_iter->b_rw - in_cur_block);
+-	}
++	fill_random_block(runtime->dma_area, runtime->dma_bytes,
++			  v_iter->buf_pos, v_iter->b_rw);
+ 	inc_buf_pos(v_iter, v_iter->b_rw, runtime->dma_bytes);
+ }
+ 
 
 
