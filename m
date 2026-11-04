@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831626;
-	b=v5Koxg6iOOISeamWBJASHGBVsn9Hv02rtzsCyX69+oqHlF3xoDj+P6GcXEvKt5ENLyhT
-	 7K7i4aqMCf1GZldlZr4cHIQjvEANdXQMwZEZ7jSDoqgT0iH5aaQxi6m9iSsneE2Zrq0k+
-	 bSKXE2Ap6ja7Lr0PjRxVpj8ttvWk/JX70bUz2H3SZ8nzD+Uef3NCVFSyBDXcJitV2oM5m
-	 ItjZGdqSLIjJzMDp9XIuEEZXdDBFuGYT47m+cGhGMLGhMOD1DxJLfvAEu4oMB5/mHDek9
-	 N9bSGRbc5JfIGM8S9MTBFSHIOMR5h3YMCk3s8vv/QqF+ZUpk5DdDaq0SrVYe0/Bf9Kw==
+	t=1793831627;
+	b=b9XMdDsxYJZN34oWIfbVERirT+cBEH0tC4Vd8CCDInvzo+MuRMvQxHMN8UPdDbP0K7PY
+	 PeDzPrU/5odmQ8AmqUDulPHuhIO6Hs9ukg4UBSTrOixUOwAvBBYQcNje9Jj1zKp5Cyq1G
+	 2MwxO2lXmxGDt9i3GNYK794ElZXtspAVCL7VCeAbwl2YdomHc9ZaIraGepuLB8AnZq0Z9
+	 ALIA1EWKsGaQ2MStcu4YdUx2VRqSiBPjlRKiT3YcwSvJ7OyFxvk6zg0inWHL+km3Q5KYh
+	 3mKL6TcAHOmkYXwRz6iaXOLATbD6WzWfv2pZS5nWPQ4A2xj9WEOahAa4bfPsjHkpXfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831627;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EGhaUigjXkw3v3X+VHMYu8/DZQHp7nrIZTw5CDcfp90=;
-	b=0Ry+ZX49Cs0MahE/OtI1Hmah6o5cOKxfdUMpnBJ62vBkQjrS0vOKMgsTd3DHWt/Stz+5
-	 neWZxrgYW2SKyyspXS5JJADUbSobvTnd9bxC+TzyO0LrIkyc44d6yXFkKM6jmEcjCQEUe
-	 y3pgZdM0n80jace1kaG+0fk5dy4b9YwMfDTs6Pt6tptKXVgpoNprsP4O6rL+hpy7Vp8fj
-	 MLW3sarpt8zMwZyKshIZ22ue7ZAU3nOo6Ga+SPkhQtDlOS9mnxIDaw3itcK6RjoimaWFm
-	 J39/tfJ7O2xTOovUTkJc3OWAaTIWvBqZUjReF8ASFKXDaHk35m2aQCrErpbu0VJ7Kag==
+	bh=qCeG+CN6QPGMojwlPnLDpJ1l5BpcZ0nV2nMEqjL2Z1U=;
+	b=oE7Qq3t3AWZCyb10uF2tKSERVpjdrC3kEPKoxNV3iMOz+e/2uz40pe1V9AI1+kyQ8Uws
+	 YZnP3e2/8YGStEkr1e5QKVIpF8JCEq4sAja19QY77i4l/q+DKPw8mmsTvXBnnwlSoEK3+
+	 q8GfMQahKYXkrzXC9Hb0aw6KJ9SzyfPa2XOsWEbvrPE/etJ1N35TWGgaSt8SIGOQ5nhPi
+	 5kIgowphpMIMebro6OdNxCs+tE1K4V9zYvYe8SqWB9dEF4FlBeQZBGDAyeRP1uBEmqSrY
+	 o1w3J+J2oRoUmZAOOPRN0NiMwOqr3FH84H6lSoXEZHypx6yrsZ92SdBCe0/dflk2Weg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n83+RnyE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HtzZQA30;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2636606A326;
-	Wed,  4 Nov 2026 22:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64082606AC25;
+	Wed,  4 Nov 2026 22:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n83+RnyE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709D91F000C1;
-	Wed,  4 Nov 2026 22:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HtzZQA30
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D261F000C1;
+	Wed,  4 Nov 2026 22:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831625;
-	bh=EGhaUigjXkw3v3X+VHMYu8/DZQHp7nrIZTw5CDcfp90=;
+	s=korg; t=1793831627;
+	bh=qCeG+CN6QPGMojwlPnLDpJ1l5BpcZ0nV2nMEqjL2Z1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n83+RnyEMXhfTI/pfK8xqpueSokkO0VN4oEzDX8ILsoev2CoIC5RQyK5kMDqLv0ry
-	 9UnJbPH7Ozb3Zdam4xP3lqvb4dn6CbyYxE1tS00FNwt7lQ9T17/1kv+GMJq4ekTXG4
-	 NI+nBDQLhxkWU129wcFJz4rJZqRbcnYMurZsJ3UU=
+	b=HtzZQA30iKGiFFP4Wk00Sjk3PfiKaj5aZEeBFlmFccYP8ryTY0lDyxjVn+BJMoxYF
+	 p5KTGn0Bt8rOmnM62mO5SOcXNCByKf/6x5viWbPfLy0qdM4OAGRGnyWV/kfbhpn7+e
+	 wPr1LtiIdtk1C+syqLDQbwoYFsmzj+Hynm2uQFoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0818/1005] netfilter: nft_payload: restrict checksum offsets to known values
-Date: Wed,  4 Nov 2026 16:09:11 -0500
-Message-ID: <20261104211106.257241774@linuxfoundation.org>
+Subject: [PATCH 6.18 0819/1005] netfilter: nf_tables: fix netdev hook allocation memleak with dormant tables
+Date: Wed,  4 Nov 2026 16:09:12 -0500
+Message-ID: <20261104211106.285135025@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,101 +70,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit c2226f0c7fe90b67732e5ae36dc5c3cc01ddf888 ]
+[ Upstream commit 63bac027860308d1344f761cb47aabb3b30973fd ]
 
-We need to prevent userspace from corrupting e.g. tcp->doff, because
-many locations in conntrack and conntrack helpers rely on
-nf_conntrack_in() having validated the packet headers.
-nft_payload allows to alter headers later which invalidates this
-assumption.
+sashiko says:
+ could the related code in __nf_tables_abort() leak the struct nft_hook objects when the table is dormant?
 
-The 'Fixes' commit restricts writes to safe fields, but there is
-another side channel: the checksum location.
+ In __nf_tables_abort(), when rolling back a NEWCHAIN transaction that
+ updates hooks, the code conditionally unregisters and frees the hooks only
+ if the table is not dormant [..]
+            if (!(table->flags & NFT_TABLE_F_DORMANT)) {
+                nft_netdev_unregister_hooks(net,
+                                            &nft_trans_chain_hooks(trans),
+                                            true);
+            }
+            ...
+            nft_trans_destroy(trans);
 
-Restrict this too.  Reported via sashiko/gemini.
+Unfortunately netdev family mixes hook registration and allocation.
+Push table struct down and only check for the flag to unregister.
 
-Fixes: 112e447d17f7 ("netfilter: validate L4 headers after userspace packet writes")
-Assisted-by: Claude:claude-opus-4-6
+Fixes: 216e7bf7402c ("netfilter: nf_tables: skip netdev hook unregistration if table is dormant")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_payload.c | 40 ++++++++++++++++++++++++++++++-------
- 1 file changed, 33 insertions(+), 7 deletions(-)
+ net/netfilter/nf_tables_api.c | 34 ++++++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
-index 592fe48a73f84..7f9561111c8db 100644
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -20,6 +20,7 @@
- #include <linux/tcp.h>
- #include <linux/udp.h>
- #include <net/gre.h>
-+#include <linux/icmp.h>
- #include <linux/icmpv6.h>
- #include <linux/ip.h>
- #include <linux/ipv6.h>
-@@ -1008,11 +1009,14 @@ static bool nft_payload_validate_inet_csum_offset(const struct nft_ctx *ctx,
- 		if (priv->csum_flags) /* makes no sense, asks for "re-update" of L4 checksum */
- 			return false;
- 
--		/* no further check here; offset can't be negative so bogus
--		 * offsets can corrupt L4 or payload but not l3 headers.
--		 * We already allow arbitrary l4/inner payload writes.
--		 */
--		return true;
-+		/* Validate csum_offset is one of the supported transport header checksums */
-+		if (priv->csum_offset == offsetof(struct tcphdr, check) ||
-+		    priv->csum_offset == offsetof(struct udphdr, check) ||
-+		    priv->csum_offset == offsetof(struct icmphdr, checksum) ||
-+		    priv->csum_offset == offsetof(struct icmp6hdr, icmp6_cksum))
-+			return true;
-+
-+		return false;
- 	case NFT_PAYLOAD_INNER_HEADER:
- 		return true;
- 	case NFT_PAYLOAD_TUN_HEADER:
-@@ -1046,6 +1050,27 @@ static bool nft_payload_csum_nh_write_ok(const struct nft_payload_set *priv,
- 	return false;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 31c3ff79b2d5c..76876761698eb 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -404,6 +404,7 @@ static void nft_netdev_unregister_trans_hook(struct net *net,
  }
  
-+static bool nft_payload_csum_th_write_ok(const struct nft_payload_set *priv,
-+					 const struct nft_pktinfo *pkt)
-+{
-+	if (!(pkt->flags & NFT_PKTINFO_L4PROTO))
-+		return false;
-+
-+	switch (pkt->tprot) {
-+	case IPPROTO_TCP:
-+		return priv->csum_offset == offsetof(struct tcphdr, check);
-+	case IPPROTO_UDP:
-+	case IPPROTO_UDPLITE:
-+		return priv->csum_offset == offsetof(struct udphdr, check);
-+	case IPPROTO_ICMPV6:
-+		return priv->csum_offset == offsetof(struct icmp6hdr, icmp6_cksum);
-+	case IPPROTO_ICMP:
-+		return priv->csum_offset == offsetof(struct icmphdr, checksum);
+ static void nft_netdev_unregister_hooks(struct net *net,
++					const struct nft_table *table,
+ 					struct list_head *hook_list,
+ 					bool release_netdev)
+ {
+@@ -411,8 +412,10 @@ static void nft_netdev_unregister_hooks(struct net *net,
+ 	struct nf_hook_ops *ops;
+ 
+ 	list_for_each_entry_safe(hook, next, hook_list, list) {
+-		list_for_each_entry(ops, &hook->ops_list, list)
+-			nf_unregister_net_hook(net, ops);
++		if (!(table->flags & NFT_TABLE_F_DORMANT)) {
++			list_for_each_entry(ops, &hook->ops_list, list)
++				nf_unregister_net_hook(net, ops);
++		}
+ 		if (release_netdev)
+ 			nft_netdev_hook_unlink_free_rcu(hook);
+ 	}
+@@ -449,20 +452,25 @@ static void __nf_tables_unregister_hook(struct net *net,
+ 	struct nft_base_chain *basechain;
+ 	const struct nf_hook_ops *ops;
+ 
+-	if (table->flags & NFT_TABLE_F_DORMANT ||
+-	    !nft_is_base_chain(chain))
++	if (!nft_is_base_chain(chain))
+ 		return;
+ 	basechain = nft_base_chain(chain);
+ 	ops = &basechain->ops;
+ 
++	/* must also be called for dormant tables */
++	if (nft_base_chain_netdev(table->family, basechain->ops.hooknum)) {
++		nft_netdev_unregister_hooks(net, table, &basechain->hook_list,
++					    release_netdev);
++		return;
 +	}
 +
-+	return false;
-+}
++	if (table->flags & NFT_TABLE_F_DORMANT)
++		return;
 +
- static bool nft_payload_csum_write_ok(const struct nft_pktinfo *pkt,
- 				      const struct nft_payload_set *priv)
- {
-@@ -1055,9 +1080,10 @@ static bool nft_payload_csum_write_ok(const struct nft_pktinfo *pkt,
- 	case NFT_PAYLOAD_NETWORK_HEADER:
- 		return nft_payload_csum_nh_write_ok(priv, pkt);
- 	case NFT_PAYLOAD_TRANSPORT_HEADER:
-+		return nft_payload_csum_th_write_ok(priv, pkt);
- 	case NFT_PAYLOAD_INNER_HEADER:
--		/* neither offsets are validated, offsets cannot be
--		 * negative so real l3 headers cannot be mangled.
-+		/* offset is not validated, offset cannot be
-+		 * negative so real l3/l4 headers cannot be mangled.
- 		 */
- 		return true;
- 	case NFT_PAYLOAD_TUN_HEADER:
+ 	if (basechain->type->ops_unregister)
+ 		return basechain->type->ops_unregister(net, ops);
+ 
+-	if (nft_base_chain_netdev(table->family, basechain->ops.hooknum))
+-		nft_netdev_unregister_hooks(net, &basechain->hook_list,
+-					    release_netdev);
+-	else
+-		nf_unregister_net_hook(net, &basechain->ops);
++	nf_unregister_net_hook(net, &basechain->ops);
+ }
+ 
+ static void nf_tables_unregister_hook(struct net *net,
+@@ -11296,11 +11304,9 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 			break;
+ 		case NFT_MSG_NEWCHAIN:
+ 			if (nft_trans_chain_update(trans)) {
+-				if (!(table->flags & NFT_TABLE_F_DORMANT)) {
+-					nft_netdev_unregister_hooks(net,
+-								    &nft_trans_chain_hooks(trans),
+-								    true);
+-				}
++				nft_netdev_unregister_hooks(net, table,
++							    &nft_trans_chain_hooks(trans),
++							    true);
+ 				free_percpu(nft_trans_chain_stats(trans));
+ 				kfree(nft_trans_chain_name(trans));
+ 				nft_trans_destroy(trans);
 -- 
 2.53.0
 
