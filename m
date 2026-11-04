@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827211;
-	b=FskPknaV3Td6b/2WtPNoMubYJlq0YCAjFGurNoz/DacoEtkBdg6S1xQhlaCrVCwI07Mc
-	 Usz0krKDmsj3g2ZeX/pzUZCdD0OKzW/SSrvpqGOaWc/tQYqnUBoVDRGnDsm6hmO8T/k/1
-	 0ZgN0xJacDBjoX4FH/zvLU8AwryLnjmQqvvTP8OP5hJc+0aslRcuxJVxx/IXfVJReOUvK
-	 T9U43/GqOV4y6xbT5XMoko3XmDy0MWPCpg/zHeYsgfTDe52xpQS0FSMKkcGrIcBxQoby7
-	 WVgzgPbW6Fu5/fsUX043NYFCHX5ewiMcOqVFfbJhbl3Fbk8HDTRP9WANN+8ebyvE5zA==
+	t=1793827214;
+	b=gAAjbxFfz+F9GOke3zJPmSpw5J2R83B2C91eqBgmyyUMiaBHsDcMQ52aoaOw/enaWXGv
+	 rPr8FbM2R9KcxzZklWP/LkqGH8UlhrJzUlMUVcSZuru4dZRPNqbhPZsnzw8r9QjmD1zK4
+	 qfInqMEcHmijabey8VnAZNy20aFqNqlZUcAFOu6X+xvfLXhYgdE62ATKFp5ZSPgVtpcWG
+	 LyWpCJsIrVNzAS/0oOxNV6dOampng4D8eoG09wSQ/wkIG0aHFOTcVi8KeSr8uyz7LK33B
+	 Y/f0yDQD8yCl1sx8L6wI98TZS0ZmKr+sU9zb9rOyAobsBHG3BR8oD1SYWveEeUUbxow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827211;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827214;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=a7vpgE73VaX27NTeZH0q2vZm5fQioMjA1FYspohCs78=;
-	b=NDVbC/Q4C4i4QSxgoYD59+uDHFdIjnWKKuEhZtifpkOAuqy9bnRhOtsb1F1eGBcvRBSd
-	 yVUPr9/oYifxCtmdvEPtq0ncV216E5bdoo6bER4oawU03n8lFGmDXz0YxaO8dNRMpwx77
-	 NO8on9iF8ccp16vlOTc0FJpceopRj0ZOfBuEddQ20/a1nBQKASDWdNmup5PYv9okUjRI6
-	 +gdAYB2mLl1m30duSeUb41zeAhW/citeiesPloSU24XoqhVdKNwZPFzkTILrlfn7k6Pcl
-	 M2I/OdpNl49VJd4RhDGV1X/289ZXYyRpi1UgF75fu4CqTgcCqfmiamiaryWqv/8JanQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=xX1GIC4ADiihQuO/xEP+PuoyZYz3T50mRAqRI4+VRCk=;
+	b=xhc0lTh+G22A9lrKCtIDtfy4HgrciGBWxVewTnKWmdERikGBsuh6Ad1vREsrBrRYoWEB
+	 49d8LkdEnRN+kT4PtaTotby1EbdbSoIRmefcWTsThvGEhqZBgcPDrFQq63LxFIsszeIOT
+	 EhhHjkqA3kN+VEO10p+SbYecvy6Vnsd5j8tDtOsUCo2/pX9H6byVbnw7vKCgrW2IJOhst
+	 vJXZ6b6yenhBV4HabUm3Ey4KendqOXnK+35Shh3IP+C/E5McZVnE669tQeZLsXz54gG33
+	 HtIAG9FsPRLp8sEZqEhYVqdnaq0eLp6F4a5vfKxQd3QJIIhyJZE+fkSsiSNtUwYWxgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VD/sSf3W";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCx3jDfU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4DE606B39A;
-	Wed,  4 Nov 2026 21:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4768E606B3B1;
+	Wed,  4 Nov 2026 21:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VD/sSf3W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDBA1F00919;
-	Wed,  4 Nov 2026 21:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCx3jDfU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA121F00A02;
+	Wed,  4 Nov 2026 21:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827211;
-	bh=a7vpgE73VaX27NTeZH0q2vZm5fQioMjA1FYspohCs78=;
+	s=korg; t=1793827214;
+	bh=xX1GIC4ADiihQuO/xEP+PuoyZYz3T50mRAqRI4+VRCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VD/sSf3W8efSuiT4qXXDHEBH7UBBkXmd43R++kiEVCn4PtHONv58MuXWu/IHN8PGl
-	 vt+/bd+Gm+UT0ryyu5L3V2iMFikcFyTjdJqX4eb56fDWFseycTAtTRVgjWaooUjWvd
-	 3XqqASjA9xHjbD+cnmFTGm5qYxDtbBEvb9kfydJA=
+	b=FCx3jDfUsBZUB4/oDLH3fnmtq7wJKUnJaugC81K+/cAvJL5GI9pc+bJx05FUHmltI
+	 +/6ypWaoYPcdC+1IcOOOs9YuWMdjHYLGwLs3ZwwCJ1EWApmQDpFJbhsE5BuZtc4kIw
+	 IRvUllXKxRGAa+csL4bPrZJxdYZi6q7prxz7FeEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	Rodolfo Giometti <giometti@enneenne.com>
-Subject: [PATCH 7.3 259/547] pps: generators: dont use the drivers info after unregister
-Date: Wed,  4 Nov 2026 16:07:23 -0500
-Message-ID: <20261104211045.543914359@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 7.3 224/547] KVM: PPC: Book3S HV: Add SRCU protection for virtual-mode HPT hcalls
+Date: Wed,  4 Nov 2026 16:06:48 -0500
+Message-ID: <20261104211044.518629694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -61,148 +62,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit 4e8063cae337cb7328e6856235cf4de5d165516e upstream.
+commit 61a39797bb136243c48b46e2586d8a9e2cea6a89 upstream.
 
-A file that was opened before pps_gen_unregister_source() keeps
-pps_gen, and with it the pointer to the driver's pps_gen_source_info.
-PPS_GEN_SETENABLE and PPS_GEN_USESYSTEMCLOCK keep using that pointer
-after the driver has gone:
+The virtual-mode HPT hcall handlers (H_ENTER, H_REMOVE, H_BULK_REMOVE,
+H_CLEAR_REF, H_CLEAR_MOD) call into book3s_hv_rm_mmu.c, which accesses
+memslots via kvm_memslots_raw().  kvm_memslots_raw() uses
+rcu_dereference_raw_check() to bypass SRCU lockdep annotation checking.
+This is safe in real mode because the entire guest entry/exit is wrapped
+in srcu_read_lock/unlock inside kvmppc_run_core() and
+kvmhv_run_single_vcpu().
 
- - pps_gen_tio allocates its info with devm_kzalloc(), so after an
-   unbind both ioctls read freed memory, and SETENABLE calls the
-   driver's enable() with its freed private data.
+However, since commit 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual
+mode handlers for HPT hcalls and page faults"), these same handlers are
+also executed in virtual mode via kvmppc_pseries_do_hcall(), which runs
+after SRCU has already been released on guest exit.
 
- - pps_gen-dummy does not set info->owner, so it can be unloaded while
-   the file is open, and the ioctls then read the unloaded module's
-   data and call its code.
+A concurrent KVM_SET_USER_MEMORY_REGION deletion or move can therefore
+call synchronize_srcu_expedited() — which does not wait for this thread —
+and then kfree(slot) and vfree(slot->arch.rmap) while the hcall handler
+still holds a raw pointer to the memslot.  lock_rmap() then writes to
+freed vmalloc memory, leading to use-after-free and memory corruption.
+Because kvm_memslots_raw() suppresses lockdep checks, this race is
+entirely silent.
 
-TIO can't probe in a VM, as it needs ART. A test driver that registers
-its info in devm memory like TIO does, unbound while /dev/pps-gen0 is
-open, gives:
+Fix this by factoring out the 7 HPT hcall handlers (H_REMOVE, H_ENTER,
+H_READ, H_CLEAR_MOD, H_CLEAR_REF, H_PROTECT, H_BULK_REMOVE) into a
+helper function, kvmppc_pseries_do_hpt_hcall(), and wrapping its call
+site in srcu_read_lock(&kvm->srcu) / srcu_read_unlock(&kvm->srcu, idx).
+Targeting only the HPT hcalls avoids wrapping non-HPT hcalls that sleep
+(such as H_CONFER, H_REGISTER_VPA, H_PAGE_INIT) or handlers that already
+acquire SRCU internally (such as H_RTAS).
 
-  BUG: KASAN: slab-use-after-free in pps_gen_cdev_ioctl+0x4c1/0x580
-  Read of size 1 at addr ffff88800e647f38 by task ppsgen64/145
-  ...
-  Freed by task 146:
-   kfree+0x25a/0x6d0
-   release_nodes+0xd1/0x140
-   devres_release_all+0x10e/0x1a0
-   device_unbind_cleanup+0x71/0x250
-   device_release_driver_internal+0x41b/0x570
-   unbind_store+0xd9/0x100
-
-and unloading pps_gen-dummy while its file is open oopses:
-
-  BUG: unable to handle page fault for address: ffffffffa0203040
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:pps_gen_cdev_ioctl+0x372/0x580
-
-Protect info in the ioctl handler with a mutex, and clear it under the
-mutex on unregister, so that unregister waits for the ioctls using it
-and later ones fail with -ENODEV. PPS_KC_BIND does the same for a
-removed PPS device since commit 3649f9a6b897 ("pps: don't allow
-PPS_KC_BIND on removed devices"). The sysfs attributes need nothing
-new: they are removed, and their callbacks drained, before info is
-cleared.
-
-Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://patch.msgid.link/20260929124937.51114-3-danishkhateeb03@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual mode handlers for HPT hcalls and page faults")
+Cc: stable@vger.kernel.org # v5.14+
+Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260928122837.8782-2-amachhiw@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pps/generators/pps_gen.c |   31 ++++++++++++++++++++++++++-----
- include/linux/pps_gen_kernel.h   |    2 ++
- 2 files changed, 28 insertions(+), 5 deletions(-)
+ arch/powerpc/kvm/book3s_hv.c |   70 +++++++++++++++++++++----------------------
+ 1 file changed, 35 insertions(+), 35 deletions(-)
 
---- a/drivers/pps/generators/pps_gen.c
-+++ b/drivers/pps/generators/pps_gen.c
-@@ -69,17 +69,28 @@ static long pps_gen_cdev_ioctl(struct fi
- 		if (ret)
- 			return -EFAULT;
- 
--		ret = pps_gen->info->enable(pps_gen, status);
--		if (ret)
--			return ret;
--		pps_gen->enabled = status;
-+		scoped_guard(mutex, &pps_gen->info_lock) {
-+			if (!pps_gen->info)
-+				return -ENODEV;
-+
-+			ret = pps_gen->info->enable(pps_gen, status);
-+			if (ret)
-+				return ret;
-+			pps_gen->enabled = status;
-+		}
- 
- 		break;
- 
- 	case PPS_GEN_USESYSTEMCLOCK:
- 		dev_dbg(&pps_gen->dev, "PPS_GEN_USESYSTEMCLOCK\n");
- 
--		ret = put_user(pps_gen->info->use_system_clock, uiuarg);
-+		scoped_guard(mutex, &pps_gen->info_lock) {
-+			if (!pps_gen->info)
-+				return -ENODEV;
-+			status = pps_gen->info->use_system_clock;
-+		}
-+
-+		ret = put_user(status, uiuarg);
- 		if (ret)
- 			return -EFAULT;
- 
-@@ -212,6 +223,15 @@ static void pps_gen_unregister_cdev(stru
- {
- 	pr_debug("unregistering pps-gen%d\n", pps_gen->id);
- 	cdev_device_del(&pps_gen->cdev, &pps_gen->dev);
-+
-+	/*
-+	 * An open file keeps pps_gen around, but the driver may free info as
-+	 * soon as we return. The sysfs files are gone now, so wait for the
-+	 * ioctls using info and make later ones fail.
-+	 */
-+	scoped_guard(mutex, &pps_gen->info_lock)
-+		pps_gen->info = NULL;
-+
- 	put_device(&pps_gen->dev);
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -1159,6 +1159,38 @@ static long kvmppc_h_rpt_invalidate(stru
+ 	return H_SUCCESS;
  }
  
-@@ -243,6 +263,7 @@ struct pps_gen_device *pps_gen_register_
- 	pps_gen->info = info;
- 	pps_gen->enabled = false;
++static long kvmppc_pseries_do_hpt_hcall(struct kvm_vcpu *vcpu, unsigned long req)
++{
++	switch (req) {
++	case H_REMOVE:
++		return kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
++				       kvmppc_get_gpr(vcpu, 5),
++				       kvmppc_get_gpr(vcpu, 6));
++	case H_ENTER:
++		return kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
++				      kvmppc_get_gpr(vcpu, 5),
++				      kvmppc_get_gpr(vcpu, 6),
++				      kvmppc_get_gpr(vcpu, 7));
++	case H_READ:
++		return kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
++				     kvmppc_get_gpr(vcpu, 5));
++	case H_CLEAR_MOD:
++		return kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
++					  kvmppc_get_gpr(vcpu, 5));
++	case H_CLEAR_REF:
++		return kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
++					  kvmppc_get_gpr(vcpu, 5));
++	case H_PROTECT:
++		return kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
++					kvmppc_get_gpr(vcpu, 5),
++					kvmppc_get_gpr(vcpu, 6));
++	case H_BULK_REMOVE:
++		return kvmppc_h_bulk_remove(vcpu);
++	}
++
++	return H_FUNCTION;
++}
++
+ int kvmppc_pseries_do_hcall(struct kvm_vcpu *vcpu)
+ {
+ 	struct kvm *kvm = vcpu->kvm;
+@@ -1174,47 +1206,15 @@ int kvmppc_pseries_do_hcall(struct kvm_v
  
-+	mutex_init(&pps_gen->info_lock);
- 	init_waitqueue_head(&pps_gen->queue);
- 	spin_lock_init(&pps_gen->lock);
- 
---- a/include/linux/pps_gen_kernel.h
-+++ b/include/linux/pps_gen_kernel.h
-@@ -11,6 +11,7 @@
- #include <linux/pps_gen.h>
- #include <linux/cdev.h>
- #include <linux/device.h>
-+#include <linux/mutex.h>
- 
- /*
-  * Global defines
-@@ -44,6 +45,7 @@ struct pps_gen_source_info {
- /* The main struct */
- struct pps_gen_device {
- 	const struct pps_gen_source_info *info;	/* PSS generator info */
-+	struct mutex info_lock;			/* protects info */
- 	bool enabled;				/* PSS generator status */
- 
- 	unsigned int event;
+ 	switch (req) {
+ 	case H_REMOVE:
+-		ret = kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_ENTER:
+-		ret = kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6),
+-					kvmppc_get_gpr(vcpu, 7));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_READ:
+-		ret = kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_CLEAR_MOD:
+-		ret = kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_CLEAR_REF:
+-		ret = kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_PROTECT:
+-		ret = kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_BULK_REMOVE:
+-		ret = kvmppc_h_bulk_remove(vcpu);
++		idx = srcu_read_lock(&kvm->srcu);
++		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
++		srcu_read_unlock(&kvm->srcu, idx);
+ 		if (ret == H_TOO_HARD)
+ 			return RESUME_HOST;
+ 		break;
 
 
