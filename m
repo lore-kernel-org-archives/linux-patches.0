@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829175;
-	b=17Xz8gyjvM/yb+6UMQcMleJxZqzcgYPlEwi7oEg3C7i3xOQKn4HuLA/Anv7RtFKyn/q2
-	 EDpEGC4Rr8IN5JNIgZBegEhcakXEEn092F3aldO5Gu0bVolnDsFLZiq4/gORXpQcXhtuH
-	 hEjw+bdqw/tJmIzmVG5X+di/DlboR4BBnIUUHaq+whcCF9IwaelxpMm2XOp2caB1RxhtN
-	 ysCdgimNOLdhclNIeHf2vlt4/2OJnqCSHUBePDx4/7BBxherZjbVnZ5XlyOl6roYfcVXv
-	 40gH+VsH1u4NP0oO4RfgDH2MejhUOlkJLWXijWK2AAcUVDYD0k+OlIMjQmtjpfjgYrQ==
+	t=1793829180;
+	b=rXybsNr3YhLIdifZ7iegb+/R1wJyPn680u2tbM5mIKPkJQq0JCb/hODD/wxuPa5Q4SRS
+	 tkhGOPWwxsot4vy/ZJH/GWVeEjqdKCs40h9ZWQuL4eKTsFMEoaYziCF55pDML1mrXSfn3
+	 wn+qc9UnmF2a9II3aYUOoX7R578y9FztHMUUCOydWgzX1b3Ym4tWxiZoI1Bz1lXgD4iky
+	 wCtzoBvN9OfahrUsZisXVmRYL4bhBRsyn7K3GUuGEGR2cTxWWfSU1AU8W2pzJR3SfXV7x
+	 X5CZ2d9cx21CZYMxJNiEulRjKz3Uk2mTW42pCmLSVKzQycHeF9kk7aLDguWKEBT7ECg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829175;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829180;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RTo2t/5Tn2tNK1oNIEzGxfImJhTEjsCpU+Qv30i8MT4=;
-	b=Zc44lLSDslM2MSPAH2AzMtI6uUbaZ5Dud/mrT/v04igxcI6BKhuUtm8QPvNaU9M4ENI6
-	 i/+nSYyQXHNlynW6W+zCmwNF2PlrcuhPfWAMeJ61SZP7aORCIiBOVFpMGP/Jen4TdbxJz
-	 Rx61MdSON77BsExAfprS1aQyeIYYQ1YUWhxlnyqPtgvv+vimcuirw8Rfl1cAPtxgr0ivk
-	 uOSJjtZ7I1CIKJz+2G6P6viHFr80dlqMpk1HAZWa+WUv4tLWYfJB4ScIG7qo/p+w/xvjr
-	 pJkkqlHHJQmaSxz5wd2hXJIg2cYg1Zswk3DywbQ0g108jO7vV+bQ1whEOCOJ+1r81gQ==
+	bh=T4fr9PKoLwCuX6/DLyE+LDj/rq0HwWlnp7/RApqhCus=;
+	b=wZmZMvrI8u3bNeEbz7IXLR2/2fVcmBn+0s4rBJeZPBY5RYCEmLNB91uAn/h6F7XejgKK
+	 xKqpkB9ZhNjrJXyQfH3N82cazwv2QD9tQjbxkn5xoZPZ0JY4GBgC2KFjQxr7gp7WAa1Ky
+	 Lwov6yaz0OXaf2mk+wILhBoodaf90Q3McBS2dP6AdRQ0drgrUI0LZaJxM4NJtu7BUecYj
+	 XjLRRAG4OnYkZwy/BGlrxJ1H3uTabglwin9QSjnVbDrl+nblALKy67iN8v2Ve0uyj2+8J
+	 s90KaCOBhVheGeGI0eI7oh8lJ7qBgAf7jXOGEtoW1bB4QINEUTyjdyZuapMqngLP4yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EBgPdO7T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXrow3m3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6F660709B5;
-	Wed,  4 Nov 2026 21:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B296560709BF;
+	Wed,  4 Nov 2026 21:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EBgPdO7T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3FE1F0093A;
-	Wed,  4 Nov 2026 21:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXrow3m3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB6E1F000C1;
+	Wed,  4 Nov 2026 21:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829175;
-	bh=RTo2t/5Tn2tNK1oNIEzGxfImJhTEjsCpU+Qv30i8MT4=;
+	s=korg; t=1793829179;
+	bh=T4fr9PKoLwCuX6/DLyE+LDj/rq0HwWlnp7/RApqhCus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EBgPdO7Tar42NTDlXUVtTYLh884nZ8o00R7xF/dXbGvUqgkCLi3MtO6mWZVhM/Ljt
-	 muo8VBk0JgmwUwnEsXEV47tFfp52BXbdM1q+kxAmb0qQVEYn/qS1IHttw2H1CJmrNt
-	 UIORAYDJdaMoV9ZkSHy8A9cTlYsJx8QKvcCq2JSc=
+	b=qXrow3m3JLsMUaDpZDsgxOOh+wQ4lOubtIk12vUg5Lfno3CFY98aAipRh9IoJuN1S
+	 n6H0OqRa+VMk/He58U8Vig9giKYpNKYdrh72/2jOBdViWDtJvT3aW7Wm6arPLvK3E4
+	 KFYYuiWz856UwfZFBg+B/Ux+xQaJbV5dIhMHkxy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 493/547] HID: mcp2200: validate READ_ALL response length
-Date: Wed,  4 Nov 2026 16:11:17 -0500
-Message-ID: <20261104211052.381842958@linuxfoundation.org>
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.3 496/547] HID: picoLCD: check for fb_deferred_io_init() error
+Date: Wed,  4 Nov 2026 16:11:20 -0500
+Message-ID: <20261104211052.469117807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,52 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit 26ce0e6bf0b27fc6a2f490f38555dfd0a27c9605 upstream.
+commit feade898fc958ff355101adf12d5632272e64220 upstream.
 
-The HID core invokes raw_event callbacks before validating the report
-length.  mcp2200_raw_event() casts a READ_ALL response to struct
-mcp_read_all_resp and reads fields through offset ten without checking that
-the response contains the structure.
+fb_deferred_io_init() allocates deferred I/O state, populating
+info->fbdefio_state, or leaving it NULL if an error occurs.
 
-A one-byte READ_ALL response reproduced the issue under KASAN:
+Currently picolcd_init_framebuffer() ignores its return value.
 
-  BUG: KASAN: slab-out-of-bounds in mcp2200_raw_event+0x24b/0x3a0
-  Read of size 1 by task hidtrigger/89
-  Call Trace:
-   mcp2200_raw_event+0x24b/0x3a0
-   kasan_report+0x139/0x170
+Therefore if an error arises in fb_deferred_io_init() (for instance, due
+to an allocation failure) info->fbdefio_state is left NULL.
 
-Reject an incomplete READ_ALL response with a protocol error before reading
-its fields.  The common completion path then wakes the command waiter with
-the error instead of leaving it to time out.
+When the file is subsequently opened, fb_open() will dereference a NULL
+pointer (calling fb_deferred_io_open()).
 
-Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
-sequence") added the same kind of raw_event length validation to hid-asus.
+Fix this by checking for the error.
 
-Fixes: 740329d7120f ("HID: mcp2200: added driver for GPIOs of MCP2200")
+Also correct cleanup ordering - defio is initialised after the sysfs file,
+so cleanup defio first.
+
+Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2200.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hid/hid-picolcd_fb.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-mcp2200.c
-+++ b/drivers/hid/hid-mcp2200.c
-@@ -301,6 +301,11 @@ static int mcp2200_raw_event(struct hid_
+--- a/drivers/hid/hid-picolcd_fb.c
++++ b/drivers/hid/hid-picolcd_fb.c
+@@ -531,17 +531,23 @@ int picolcd_init_framebuffer(struct pico
+ 		goto err_cleanup;
+ 	}
  
- 	switch (data[0]) {
- 	case READ_ALL:
-+		if (size < sizeof(*all_resp)) {
-+			mcp->status = -EPROTO;
-+			break;
-+		}
+-	fb_deferred_io_init(info);
++	error = fb_deferred_io_init(info);
++	if (error) {
++		dev_err(dev, "failed to initialize deferred I/O\n");
++		goto err_sysfs;
++	}
 +
- 		all_resp = (struct mcp_read_all_resp *) data;
- 		mcp->status = 0;
- 		mcp->gpio_inval = all_resp->io_port_val_bmap;
+ 	error = register_framebuffer(info);
+ 	if (error) {
+ 		dev_err(dev, "failed to register framebuffer\n");
+-		goto err_sysfs;
++		goto err_defio;
+ 	}
+ 	return 0;
+ 
++err_defio:
++	fb_deferred_io_cleanup(info);
+ err_sysfs:
+ 	device_remove_file(dev, &dev_attr_fb_update_rate);
+-	fb_deferred_io_cleanup(info);
+ err_cleanup:
+ 	data->fb_info    = NULL;
+ 
 
 
