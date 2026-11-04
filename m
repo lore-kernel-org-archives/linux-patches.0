@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827051;
-	b=DR8fNIWGeb6EehkQQgXJur9OABdTGoPhSraiRwlobnT6P46ytGTJP7H0ayRFSLaNpB3e
-	 yQO+reFpaxOahE5ko+o0cfzDIAlpMGZ/QL3h7zT1qjwmEKujeCO6IS7LazILH9VWz4vMI
-	 sYDQNVdXZIjuAe8CmDfDXMbQDnVHkdSQPnsNYWy1xcsU9w6CSpoPUYvJvv3txI7F3VMit
-	 R9SZw0i9I3lcRs2LuWoFg4WAwbPZ1X22rCnSVcYwsAYt4vmOd1g02m3RPtdw7mbgbxO3U
-	 bsEjn/tTZDvmJ4W9j96BHvpfKE/Siya3Hnqz/OTsiI7YrxxnBksaeA3nKsRT95RyJAw==
+	t=1793827053;
+	b=X4rGHZ9Uxzyo8cpQpiUPRisINwZwFJUdV4kCEtKXVRA+8uTVTWtro2wXwzsBsCQR/672
+	 U5deO+YpKjDcaAcGAC/XJydmDosVMLK8BSLIgd/clUW3ODAqyeGDCALhnEyrpoUzP79Vq
+	 c+R4uEHgHpdqriVVx96i8q+H9kr7p/l9j0bC8741j21c0Z4XBRyxxyVgD330mrfpyWUcA
+	 WQq+ewpodUFWAHk+OBUgS11TQr9HZqmmA4ad/IDT26XLEGstamGu+LZzkW0P/TQeZfS7O
+	 mW1zibwqVjUwKOg1Pf2exSkH9OLjtPVqZF+n5B4tSn/okhpFw4t0bObRjE4cLz9SBVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/oy9UYpbke4YJQ/OBu12yZv0+7h7O6A1QZuR3G2rNe8=;
-	b=ZY9esMgLvRFEvuYAho0nl0JMgkYVGcDNegpDbqCeBa/TuzPkvwxB1XpCxprXaH/5QvBP
-	 fLCsma9abC5l6wKTh4Bcd+s3YettH5X/F5iMp1MGFGkuvl4c0CaxuZJvteUfFldhlYdiE
-	 BBo+mbR45ksapNrFArCRv+v6vkkhNnvdjWkDke990Lx4QQceOn69v2tMsoqBI7InyPMJ/
-	 rC9UHMwcbdkTX5KhkOtqFBFwlTJuKRyeIYNfTA+QSEWciG4lvFP3OUsH7zsa+P5fIHMce
-	 098h+cz8Tcbwzr3ve+QRj+T8g8z8X24VSYPYlGkfuCPfiPdDQysmgpt84go9Z0ZCh6g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=J5vcD+f/vpEr4xDlxeuinCecYySjIyDCklFZNNmDzP8=;
+	b=Fvd7m/PQfEWLFJFVy9c9VCQGsA6AgCC7MzAjZyfOWSPOWo8Aq5TkqnVvxq0FN1cmqH5x
+	 iHeunC0swIikZo36MXmyRVMwIWkq/Yi4mvyL2WHlTx1PjhzmEAwz/eGLVqMWjFzACSrDr
+	 i/XrGEUUWL/gh/Yv5OgGQ/0XSqNPXcL15IvbX+iiSizuSIQLK1HXc/2Gkg9qq0wj4GKct
+	 Unl73DwzzMXrcVGWqe0e4ak82CGJsLd00zszpWHRLj9uNZhJDl0t3wFceWeXS4fqbzstY
+	 2TIPD/wqDvif1SYLWd6OzdSIQjXf/loGejLnlSf4ESiHgSgP8LnPQVPZ1zPBU+M4x5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ApEEiG4h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSLF4iUU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAD8606AB18;
-	Wed,  4 Nov 2026 21:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FF2606AB18;
+	Wed,  4 Nov 2026 21:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ApEEiG4h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24BE1F00A16;
-	Wed,  4 Nov 2026 21:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSLF4iUU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7028D1F000C1;
+	Wed,  4 Nov 2026 21:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827051;
-	bh=/oy9UYpbke4YJQ/OBu12yZv0+7h7O6A1QZuR3G2rNe8=;
+	s=korg; t=1793827052;
+	bh=J5vcD+f/vpEr4xDlxeuinCecYySjIyDCklFZNNmDzP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ApEEiG4hj2RFyhUo5dhx8Oi/NkUeNVq5TsKiohkBheE4/HrVC65KmB2GeCSLrhDJB
-	 vZDBpa/pL8DsDgXdEP97D5t10Ou/90x1e5lFMXGYdQZ8/mSDblf/1gVxZDu9ua9gHv
-	 yFECInn+9zRDcq9tX79zwTqYXIbMLuOFTTj0rsGY=
+	b=GSLF4iUUAu4fKVSGurZ0QUNLy4byfuScaIWNqZFksKUXfwa8OrLb6S8p7TvD2NQly
+	 HYTO4EB6QcdBo9T3nLnQOtcxek7elsQhsfr9+H0BjvYVMso2trMdJj4MVz2fT08ml/
+	 POv1vUqAn4URB+8kRvjZX/r9PYUxRw6mcZdhRISY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20=C4=8Cerm=C3=A1k?= <sairon@sairon.cz>,
-	Stefan Agner <stefan@agner.ch>,
-	hitchin999 <hitchin999@users.noreply.github.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 138/547] vlan: restore HW VLAN tag insertion with reorder_hdr off
-Date: Wed,  4 Nov 2026 16:05:22 -0500
-Message-ID: <20261104211042.096205256@linuxfoundation.org>
+	Binbin Deng <18983559317@163.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 7.3 165/547] apparmor: fix a use-after-free in aa_lookupn_ns()
+Date: Wed,  4 Nov 2026 16:05:49 -0500
+Message-ID: <20261104211042.840463627@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -66,151 +61,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit c2124f80be4ceb6ec566ca3b5fc87f84ea9c36e0 ]
+commit f292873ceb4bd3a1a0f75f884361cd556e457692 upstream.
 
-Commit 447cbe95ebb9 ("vlan: fix skb_under_panic and races when toggling
-HW VLAN offload") replaced vlan_passthru_header_ops with vlan_header_ops
-unconditionally to avoid lockless data races when modifying
-hard_header_len dynamically under RTNL.
+aa_lookupn_ns() takes a reference on the namespace it finds with
+aa_get_ns(), which is kref_get() on the reference count that the
+namespace is released through, without checking whether the namespace
+is still in use.  A concurrent removal of a ":"-prefixed namespace
+looks the same namespace up and only then takes the parent lock to
+remove it, so the last reference can be dropped between the lookup and
+the aa_get_ns() call: the reference count then reports the increment on
+a zero count and the kernel classifies the following use of the object
+as a use-after-free.  A user with CAP_MAC_ADMIN can trigger this by
+writing a ":<name>" removal and a ":<name>/<profile>" removal to
+/sys/kernel/security/apparmor/.remove concurrently.
 
-Prior to that commit, vlan devices on top of a real device capable of
-HW VLAN TX offload used vlan_passthru_header_ops, which never inserted
-the 802.1Q header in the frame.
+refcount_t: addition on 0; use-after-free.
+WARNING: lib/refcount.c:25 at refcount_warn_saturate+0xc0/0xe0, CPU#6
+Call Trace:
+ <TASK>
+ aa_lookupn_ns+0xa9/0xc0
+ aa_remove_profiles+0x4fb/0x730
+ ? __kvmalloc_node_noprof+0x219/0x5c0
+ ? __pfx_aa_remove_profiles+0x10/0x10
+ ? aa_loaddata_alloc+0x65/0x1f0
+ ? _copy_from_user+0x2d/0x80
+ ? aa_loaddata_alloc+0x111/0x1f0
+ profile_remove+0x2ee/0x4a0
+ vfs_write+0x21e/0xcf0
+ ? rcu_core+0x29c/0x1740
+ ? timerqueue_linked_add+0x1f4/0x3d0
+ ? __pfx_vfs_write+0x10/0x10
+ ? mutex_lock+0x81/0xe0
+ ? __pfx_mutex_lock+0x10/0x10
+ ? __pfx_rcu_core+0x10/0x10
+ ? __pfx_hrtimer_update_next_event+0x10/0x10
+ ? mutex_unlock+0x7b/0xd0
+ ? fdget_pos+0x24d/0x4b0
+ ksys_write+0xf7/0x1c0
+ ? __pfx_ksys_write+0x10/0x10
+ ? restore_fpregs_from_fpstate+0x37/0xc0
+ do_syscall_64+0xf9/0x540
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-Now, with reorder_hdr=off (as done by Home Assistant OS / NetworkManager
-when flags are omitted over D-Bus), vlan_dev_hard_header() always pushes
-an in-band 802.1Q header, and vlan_dev_hard_start_xmit() hands the frame
-to the real device as is, even if the real device supports HW VLAN TX
-offload.
+Fix by rejecting a namespace whose reference count is zero.
 
-This is a regression for r8169 users (Realtek RTL8168h), who report
-transmit queue timeouts (NETDEV WATCHDOG): this NIC stalls when asked
-to offload checksum and/or TSO for frames carrying an in-band tag.
-Users of r8152 based USB adapters were affected as well.
-
-Reverting the blamed commit, disabling TX checksum offload (which
-also disables TSO), or setting reorder_hdr=on were all reported to
-work around the issue.
-
-Keep vlan_dev_hard_header() as is: the in-band header keeps the frame
-layout seen at the vlan device egress (taps, tc, netfilter) unchanged,
-and is relied upon by stacked vlans (Q-in-Q) and by AF_PACKET SOCK_DGRAM
-users sending ETH_P_8021Q frames.
-
-Instead, when vlan_dev_hard_start_xmit() gets a frame carrying an
-in-band tag with our protocol and the real device can insert tags,
-move that tag to skb->vlan_tci with __skb_vlan_pop(), so that the real
-device inserts it. Frames sent on the wire are unchanged, except that
-frames shorter than 64 bytes with their tag now get up to 4 bytes of
-extra padding, as with reorder_hdr=on and before 447cbe95ebb9.
-
-skb_reset_mac_header() is needed first, because not all ndo_start_xmit()
-callers set the mac header (e.g. AF_XDP copy mode, which uses
-__dev_direct_xmit()).
-
-vlan_set_encap_proto() may read the two bytes after the vlan header,
-so frames whose linear part is shorter than VLAN_ETH_HLEN + 2 are sent
-unchanged, as before. This also makes sure h_vlan_proto, read earlier
-in the function, was in the linear part. Shared skbs (e.g. from
-pktgen) are also sent unchanged, since popping the tag modifies the
-skb, as are skbs already carrying a hwaccel tag (e.g. from generic XDP
-redirect), whose tag must not be overwritten, skbs carrying XDP
-metadata, which the pop would have to move, and CHECKSUM_PARTIAL skbs
-whose csum_start lies within the first VLAN_ETH_HLEN bytes (only
-possible with bogus offsets, e.g. from AF_XDP tx metadata), which the
-pop would leave before skb->data.
-If popping the header fails (memory allocation failure), the frame is
-dropped and counted in tx_dropped, rather than handing the real device
-a frame with an in-band tag.
-
-tx_bytes is now sampled before the pop, so the vlan device statistics
-do not change.
-
-This also applies to frames provided by the sender with our tag
-(AF_PACKET SOCK_RAW, or frames redirected from another reorder_hdr=off
-vlan): the real device now inserts their tag too.
-
-Fixes: 447cbe95ebb9 ("vlan: fix skb_under_panic and races when toggling HW VLAN offload")
-Reported-by: Jan Čermák <sairon@sairon.cz>
-Closes: https://lore.kernel.org/netdev/CAPa5EdCj3v17tB-SF2JNecq5Q8s1Pranr-XzAFWNpNTBPgPG7w@mail.gmail.com/
-Reported-by: Stefan Agner <stefan@agner.ch>
-Reported-by: hitchin999 <hitchin999@users.noreply.github.com>
-Closes: https://github.com/home-assistant/operating-system/issues/5019
-Tested-by: Jan Čermák <sairon@sairon.cz>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/20261013115022.1043024-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3664268f19ea0 ("apparmor: add namespace lookup fns()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/8021q/vlan_dev.c | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ security/apparmor/include/policy_ns.h |   16 ++++++++++++++++
+ security/apparmor/policy_ns.c         |    2 +-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index c949c6a829456..2d775b4c84ce6 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -110,6 +110,8 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
- 	unsigned int len;
- 	int ret;
+--- a/security/apparmor/include/policy_ns.h
++++ b/security/apparmor/include/policy_ns.h
+@@ -118,6 +118,22 @@ static inline struct aa_ns *aa_get_ns(st
+ }
  
-+	len = skb->len;
+ /**
++ * aa_get_ns_not0 - increment references count on @ns found via lookup
++ * @ns: namespace to increment reference count of (MAYBE NULL)
++ *
++ * Returns: pointer to @ns, if @ns is NULL returns NULL,
++ *          NULL if @ns is being freed
++ * Requires: @ns must be held with valid refcount when called
++ */
++static inline struct aa_ns *aa_get_ns_not0(struct aa_ns *ns)
++{
++	if (ns && aa_get_profile_not0(ns->unconfined))
++		return ns;
 +
- 	/* Handle non-VLAN frames if they are sent to us, for example by DHCP.
- 	 *
- 	 * NOTE: THIS ASSUMES DIX ETHERNET, SPECIFICALLY NOT SUPPORTING
-@@ -121,10 +123,39 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
- 		vlan_tci = vlan->vlan_id;
- 		vlan_tci |= vlan_dev_get_egress_qos_mask(dev, skb->priority);
- 		__vlan_hwaccel_put_tag(skb, vlan->vlan_proto, vlan_tci);
-+	} else if (skb_headlen(skb) >= VLAN_ETH_HLEN + sizeof(__be16) &&
-+		   !skb_shared(skb) && !skb_vlan_tag_present(skb) &&
-+		   !skb_metadata_len(skb) &&
-+		   (skb->ip_summed != CHECKSUM_PARTIAL ||
-+		    skb_checksum_start_offset(skb) >= VLAN_ETH_HLEN) &&
-+		   vlan_hw_offload_capable(READ_ONCE(vlan->real_dev->features),
-+					   vlan->vlan_proto)) {
-+		u16 vlan_tci;
++	return NULL;
++}
 +
-+		/* The frame carries its outer tag in-band, either inserted
-+		 * by vlan_dev_hard_header() or provided by the sender.
-+		 * Let the real device insert it: some NICs can not offload
-+		 * checksum or TSO for frames carrying an in-band tag.
-+		 * Not all ndo_start_xmit() callers set the mac header.
-+		 * vlan_set_encap_proto() may read two bytes after the vlan
-+		 * header, so frames with a shorter linear part are sent
-+		 * unchanged, as are shared skbs (e.g. from pktgen), skbs
-+		 * already carrying a hwaccel tag (e.g. from generic XDP
-+		 * redirect), skbs carrying XDP metadata, and CHECKSUM_PARTIAL
-+		 * skbs whose checksum starts within the header to be popped.
-+		 * On allocation failure, drop the frame rather than handing
-+		 * it to the real device with an in-band tag.
-+		 */
-+		skb_reset_mac_header(skb);
-+		if (unlikely(__skb_vlan_pop(skb, &vlan_tci))) {
-+			dev_kfree_skb_any(skb);
-+			this_cpu_inc(vlan->vlan_pcpu_stats->tx_dropped);
-+			return NETDEV_TX_OK;
-+		}
-+		__vlan_hwaccel_put_tag(skb, vlan->vlan_proto, vlan_tci);
- 	}
++/**
+  * aa_put_ns - decrement refcount on @ns
+  * @ns: namespace to put reference of
+  *
+--- a/security/apparmor/policy_ns.c
++++ b/security/apparmor/policy_ns.c
+@@ -207,7 +207,7 @@ struct aa_ns *aa_lookupn_ns(struct aa_ns
+ 	struct aa_ns *ns = NULL;
  
- 	skb->dev = vlan->real_dev;
--	len = skb->len;
- 	if (unlikely(netpoll_tx_running(dev)))
- 		return vlan_netpoll_send_skb(vlan, skb);
+ 	rcu_read_lock();
+-	ns = aa_get_ns(__aa_lookupn_ns(view, name, n));
++	ns = aa_get_ns_not0(__aa_lookupn_ns(view, name, n));
+ 	rcu_read_unlock();
  
--- 
-2.53.0
-
+ 	return ns;
 
 
