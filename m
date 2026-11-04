@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827136;
-	b=nQ/7HF7+qv51PEj6MQuWDs+Bq8dv+SzvKyUZjB+++tKI9oGLtl8qWObQLnm+6qgD3Ag8
-	 2/f0mPOysrCNQoSS4lQLNIAZpacel5HzKfCfSFsUElsG6A/H9e+2H45YkmzAjjWtKPFZf
-	 DBwmQ0N/R2flHv5DRlkTIvbSwuT69rYTOHtKib6wBEu+P3sb+iNfnLZpmTHRKckNsyb/D
-	 Zm6lrYWffkrbVtWLFFG7NEHBFZ089xqcCQkNG9FKo7V4dRdknL4xN4f7Swvxu0HDfk6Ef
-	 qFjvlg7z/aZnjUZx6JvWZHWdD8sBK5Mi4CRyRm2NWoLoZBcvCjZyTa3BqHma9Sw3Vsw==
+	t=1793827137;
+	b=xPRfeMkzOC7FsIV+Dw8LZB2AL5wA8uOIZE5N4HI0UIW6XsjJ4mNhm4CVSzTET8iPI4P+
+	 /FQRPo+eK/xjegacEQMpZ6UITYX1as/xEgnHVANKvppIgTj7CKgR5C6UbC+NtN8vHMamP
+	 xTbvQkoEmsUg0fOoHpHTv1+3aKafv2yCp5C6aAXq7ZqAbKeZpzTEiaeT6DHCc+pHG0j3P
+	 wM+EpZEs/t00FQAIULc8zYmTnkuazoadvu8gvjxdmDou7UaJSrT5QhX8jxaFy8cRy9Udc
+	 7TkLew7b0/Uh4lha5coWuWexJdt0H7Y2bS9vE/gFExiP9+3Ubwv71AcQkl3F2GTWcJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827136;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827137;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GIoNT6mVO+d+pHB2BJpHimM6pAB2MRbnCyFa4ZbE9Y0=;
-	b=szAsTDLKJ9d7XQEV5pbwvq0X51Ppr4aq754NKdoMdvm3YGJfxIwalf03cKGMThQxZJfv
-	 aRw63pLlGdzAfPplGavDyEevpIfLHuz3OrP4IPs42EsbCeV609nzWk3JkrJKd0xX1vhLa
-	 islV6+JvrJBk47GKpefTYigGQTrHlIpkcHyXK0OQM7KUDZ5yQxu2v9zSiToIKrXA12YID
-	 xLjXn/yjSoqLYtM4Lf0BbMueWglEq8/Wik6RQY24E1eIqkFuXozY2bq2gO41QznT0OCqO
-	 NkRnA1SHZPZPKVktAiiIx8m3YH1TSeBSA0fUBF9A+2oUzn2pYQDh6Mu9h0vNbKojk7Q==
+	bh=YAY4a+Fz8GkHTsi8QhMtPerOyOtjYqsU9oz7OOYbo5I=;
+	b=fSCrqXIUXNKSlzBYy+yxUM8wHsH7TaixL9OQ9xl0NcApkDPEjWb1xkNxLC2Kdxl/10h5
+	 Z3joUtCA2p6ZKI8No7SARNfkmhXidqe1WVJCvfkMjeY7+Aa5UEi3C0VHqNFZy8GKgRGhz
+	 w/hpke4599vh7D9anJSqKY2rFay3p/vWzmZH99HoGjNuMAg2BEpVFrO0VeSe/yGaDT3O/
+	 usSkCayBxfc+fLVG+iaCD17EL//l8wVw0OI3o31ZDFt5+FHrDpNiMPjouguF9m/TJwUT9
+	 t/wwywYeyggITbkTRfL5Wthx+0YZfnZiSWINN39SY/2v4l3YFvEdGZm7hIfY1cHQFUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GIvkp5xB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4fWzQuh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BB0606A334;
-	Wed,  4 Nov 2026 21:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D65606A849;
+	Wed,  4 Nov 2026 21:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GIvkp5xB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3F11F000C1;
-	Wed,  4 Nov 2026 21:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4fWzQuh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E1B1F000C1;
+	Wed,  4 Nov 2026 21:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827135;
-	bh=GIoNT6mVO+d+pHB2BJpHimM6pAB2MRbnCyFa4ZbE9Y0=;
+	s=korg; t=1793827137;
+	bh=YAY4a+Fz8GkHTsi8QhMtPerOyOtjYqsU9oz7OOYbo5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GIvkp5xB5BnglbQWgMN06JLvMAxmP6E/WmxR3Bla/T+d/Eo1PgIgc5abQQC82tDYf
-	 BEtxE/h5RZ9wMaipEs2sNrQpocBxcfZy4VHw01Xn0G99ms7qeAc44wH3j4/ORhfhs3
-	 WS1ZqGu1iXFL0ywMdeGOZif/ULL/LNU/vQX63Ne4=
+	b=c4fWzQuhPVUKxuzg7DX5v9Z5KLZYQoWlEPqe6TbAP3ooxRg0sQ10AGOVi6rgYNqe9
+	 EbeJICTfOIwha9N4wYpliWv1dgG2TlFp0rRjRZ7XzHBR56iX06jJo4hvDmnuJ40p4Q
+	 YC7+tn90sdqF8HVyNpuT0Qq7fwe9SYQluRuKi828=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.3 208/547] ASoC: amd: ps: fix snd_acp63_remove() teardown ordering
-Date: Wed,  4 Nov 2026 16:06:32 -0500
-Message-ID: <20261104211044.054612703@linuxfoundation.org>
+	Bui Viet Dung <dungvn2345@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.3 209/547] Bluetooth: hci_vhci: Pin module for debugfs file operations
+Date: Wed,  4 Nov 2026 16:06:33 -0500
+Message-ID: <20261104211044.084391279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,105 +67,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Bui Viet Dung <dungvn2345@gmail.com>
 
-commit c53791d673ed4da6759d276078627ec4d0c6536b upstream.
+commit 645ee6b176c958579cff1c783413d5cff65c8197 upstream.
 
-The ACP IRQ handlers dereference the SoundWire, SoundWire DMA, and PDM
-child platform devices, but snd_acp63_remove() unregisters them while
-the interrupt is still held by devres, which frees it only after remove
-returns. An interrupt in this window is a use-after-free.
+An open debugfs file retains its file_operations pointer in the
+debugfs proxy state. However, force_suspend_fops, force_wakeup_fops,
+aosp_capable_fops, and force_devcoredump_fops have no .owner set to
+THIS_MODULE. As a result, full_proxy_open_regular() calls fops_get()
+which succeeds without taking a reference to the hci_vhci module.
 
-Mask the ACP interrupt sources and call devm_free_irq() before the
-first child device is unregistered. The masking goes through the new
-acp_hw_ops->disable_interrupts callback, keeping the remove path
-platform-agnostic. The interrupt line is shared, and acp_hw_deinit()
-clears the sources only after the children are gone, which would
-leave the line raised with no handler left to ack it. The window
-predates the tagged refactor, which only reshaped the dereferences.
+When userspace opens any of these debugfs files and later closes
+the /dev/vhci file descriptor (triggering vhci_release() and
+debugfs file removal), the open debugfs file descriptor remains valid
+in userspace. Because the module refcount was not incremented,
+the hci_vhci module can be unloaded via delete_module (rmmod hci_vhci).
 
-devm_free_irq() waits for in-flight handlers, but not for work the
-hardirq has already queued: acp63_irq_handler() schedules
-amd_sdw_irq_thread on the SoundWire manager. Draining that work in
-the manager's remove path is a soundwire-side change and follows
-separately.
+When the userspace process subsequently closes the debugfs file
+descriptor, full_proxy_release() accesses the already unmapped
+file_operations structure, resulting in a kernel page fault / oops:
 
-This issue was found by an in-house static analysis tool.
+  BUG: unable to handle page fault for address: fffffbfff846f18b
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:full_proxy_release+0x8e/0x140
+  Call Trace:
+   <TASK>
+   __fput+0x39f/0xa60
+   fput_close_sync+0xff/0x200
+   __x64_sys_close+0x8c/0xf0
+   do_syscall_64+0xc3/0x590
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
+  Modules linked in: ... [last unloaded: hci_vhci(E)]
 
-Fixes: eaf825037d6d ("ASoC: amd: ps: refactor acp child platform device creation code")
+The issue was discovered via manual code audit of
+drivers/bluetooth/hci_vhci.c and verified on a Linux 7.3-rc6 test VM
+with CONFIG_BT_VHCI=m by keeping a debugfs file open across controller
+teardown and module unload.
+
+Set .owner = THIS_MODULE on all four file_operations structures so that
+debugfs pins the module until all file descriptors are closed.
+
+Fixes: 28010791193a ("Bluetooth: vhci: Prevent use-after-free by removing debugfs files early")
 Cc: stable@vger.kernel.org
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20260929061349.3879-1-fanwu01@zju.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/ps/acp63.h     |    8 ++++++++
- sound/soc/amd/ps/pci-ps.c    |    2 ++
- sound/soc/amd/ps/ps-common.c |    2 ++
- 3 files changed, 12 insertions(+)
+ drivers/bluetooth/hci_vhci.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/soc/amd/ps/acp63.h
-+++ b/sound/soc/amd/ps/acp63.h
-@@ -294,6 +294,7 @@ struct acp63_dev_data;
-  * struct acp_hw_ops - ACP PCI driver platform specific ops
-  * @acp_init: ACP initialization
-  * @acp_deinit: ACP de-initialization
-+ * @disable_interrupts: disable ACP interrupt sources
-  * @acp_get_config: function to read the acp pin configuration
-  * @acp_sdw_dma_irq_thread: ACP SoundWire DMA interrupt thread
-  * acp_suspend: ACP system level suspend callback
-@@ -304,6 +305,7 @@ struct acp63_dev_data;
- struct acp_hw_ops {
- 	int (*acp_init)(void __iomem *acp_base, struct device *dev);
- 	int (*acp_deinit)(void __iomem *acp_base, struct device *dev);
-+	void (*disable_interrupts)(void __iomem *acp_base);
- 	void (*acp_get_config)(struct pci_dev *pci, struct acp63_dev_data *acp_data);
- 	void (*acp_sdw_dma_irq_thread)(struct acp63_dev_data *acp_data);
- 	int (*acp_suspend)(struct device *dev);
-@@ -397,6 +399,12 @@ static inline int acp_hw_deinit(struct a
- 	return -EOPNOTSUPP;
+--- a/drivers/bluetooth/hci_vhci.c
++++ b/drivers/bluetooth/hci_vhci.c
+@@ -155,6 +155,7 @@ static ssize_t force_suspend_write(struc
  }
  
-+static inline void acp_hw_disable_interrupts(struct acp63_dev_data *adata)
-+{
-+	if (adata && adata->hw_ops && adata->hw_ops->disable_interrupts)
-+		ACP_HW_OPS(adata, disable_interrupts)(adata->acp63_base);
-+}
-+
- static inline void acp_hw_get_config(struct pci_dev *pci, struct acp63_dev_data *adata)
- {
- 	if (adata && adata->hw_ops && adata->hw_ops->acp_get_config)
---- a/sound/soc/amd/ps/pci-ps.c
-+++ b/sound/soc/amd/ps/pci-ps.c
-@@ -738,6 +738,8 @@ static void snd_acp63_remove(struct pci_
- 	int ret;
+ static const struct file_operations force_suspend_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= force_suspend_read,
+ 	.write		= force_suspend_write,
+@@ -194,6 +195,7 @@ static ssize_t force_wakeup_write(struct
+ }
  
- 	adata = pci_get_drvdata(pci);
-+	acp_hw_disable_interrupts(adata);
-+	devm_free_irq(&pci->dev, pci->irq, adata);
- 	if (adata->sdw) {
- 		amd_sdw_exit(adata);
- 		platform_device_unregister(adata->sdw_dma_dev);
---- a/sound/soc/amd/ps/ps-common.c
-+++ b/sound/soc/amd/ps/ps-common.c
-@@ -248,6 +248,7 @@ void acp63_hw_init_ops(struct acp_hw_ops
- {
- 	hw_ops->acp_init = acp63_init;
- 	hw_ops->acp_deinit = acp63_deinit;
-+	hw_ops->disable_interrupts = acp63_disable_interrupts;
- 	hw_ops->acp_get_config = acp63_get_config;
- 	hw_ops->acp_sdw_dma_irq_thread = acp63_sdw_dma_irq_thread;
- 	hw_ops->acp_suspend = snd_acp63_suspend;
-@@ -484,6 +485,7 @@ void acp70_hw_init_ops(struct acp_hw_ops
- {
- 	hw_ops->acp_init = acp70_init;
- 	hw_ops->acp_deinit = acp70_deinit;
-+	hw_ops->disable_interrupts = acp70_disable_interrupts;
- 	hw_ops->acp_get_config = acp70_get_config;
- 	hw_ops->acp_sdw_dma_irq_thread = acp70_sdw_dma_irq_thread;
- 	hw_ops->acp_suspend = snd_acp70_suspend;
+ static const struct file_operations force_wakeup_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= force_wakeup_read,
+ 	.write		= force_wakeup_write,
+@@ -263,6 +265,7 @@ static ssize_t aosp_capable_write(struct
+ }
+ 
+ static const struct file_operations aosp_capable_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= aosp_capable_read,
+ 	.write		= aosp_capable_write,
+@@ -386,6 +389,7 @@ static ssize_t force_devcd_write(struct
+ }
+ 
+ static const struct file_operations force_devcoredump_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.write		= force_devcd_write,
+ };
 
 
