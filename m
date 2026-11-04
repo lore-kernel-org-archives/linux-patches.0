@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829293;
-	b=4rDTIwfgbyIfcEG/5EIYfet65qkP14hGLnTA6dv8PO4JNRBdQylP38UMv6Lt0gWLcvg5
-	 V+R0b1SD6hfHCgPGLi0hxrgRsI42EtsPSObmRsJVDvtMdk+aMVdaQG+SRGVzpQQ+MsJm9
-	 V8ZmPOUzGEWdTxErbU8imJ49GMxWapR0hDNSRzDHqsJqsVBt/EONUc/bHuECOGf3t6fYN
-	 i1IJl5VoK4DVpHHXv47g0BA8BSTQ2ITootYONnEW2HCQs0ypa4Fxz6L9g6r1SVQifhYYe
-	 PCcRlKR7J8S+MuVUNSJccYr2B+PxqznoajQFmtJGf95T1HVs4ja6X9JgdVcVXUuVFYw==
+	t=1793829295;
+	b=tnduFcc4hPLrGti1b4bEDJCQqtZ0Nmj8qb2s5N7cfhXrweg2as8ydCqW+whAWbaDHwN5
+	 4oWo2d6plgiysDQmXkdi4M1GkqClmJ4d0kxQrdcUEdG4s+twieHAlmYgfn3wFNd6BBMMs
+	 9VzzqcVCKaz0JdXAxpd1jBIvsRQuwjEfjqngXuGxue/OOWsrMTMlGipQzq5mn6G3lBACW
+	 i/4KHwXoCw33+WZLGKeMA4mDGpAlVT7mDeEwwRTzlmGV9v1SWDXUEniK+hEbamU6fZvX4
+	 OehCxVf7+pzjuyxgrJkSC9By/6n3FnC+tShGR7WyDm2sjetzfXYuZEdUUhrA22aNnlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829293;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829295;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pTAqc9u1bgaAcbJLu7qklA5mKNP+Ic0tiMHXb7tgiDU=;
-	b=kHibUYNF6Jkajn03kY08yh2jrzSsBX6hFRIu3uGiPeWRWvKVEfqVv+yavdXNyBG90T0C
-	 8+4MeONGzE0nz/yKoqcAJPoK2409Eb5LSFd60d5XqOgYQSIoSy7i07YD1f50fuuCMSiIM
-	 CzJYzSNvqsFtjOdBLBt/wX9ETTyM97hq2FfjvEL3QZ3ZUqu4jcQKaA4NugHPWWjlVOTZ+
-	 Wo8bNveZgJdGhAxNxjr72pkseXL+Wh3/svs96tbzL7OJHIyngFsywN3elhcBsZsWuud8D
-	 ZSGC24gZwp5+ggY4KOikWVJiI+tVZmay683tE82PyvxOFyNdzYl9fksQ/iR/AgjCztw==
+	bh=AYjRym6Tn0TsGb1qNdVtd+/RCn2jNCGmTjGIDsQDEC4=;
+	b=UujiFwR+DIfD+TKhz2YllUkQ+0TQYMttJwNjR6HO8kaJVyU+3GwBevFuiNHwWPdG9Ehk
+	 c/BQGs9E2ISzyFq46m+NN2obAb7uoB3Jvya3TXEoNxr5iqxl3VlvOfZqQiaiDM3Df8H43
+	 QOUdoMFIyTOazOtOjdLqqDMA4YTe0x2oD/ArL9xWdMwq3RH8mRN4hboJArHCLtzE39lDn
+	 dLWNO2CWAfCVxfI6fJLoP4ngkH/WUY7+YTRC3Ff8UyJm1TdBdKA2eGkZgZhb6vlfiqiph
+	 VMsa50LEJmhrrwwycthaztA5UWBHIveB8x3tEI/U8pN/iFkviIpQHjbUA9ZH2HgQzQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yeDkaTyr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=goe7IBgk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0CB60A3808;
-	Wed,  4 Nov 2026 21:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401886086604;
+	Wed,  4 Nov 2026 21:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yeDkaTyr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345301F00919;
-	Wed,  4 Nov 2026 21:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=goe7IBgk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF271F00919;
+	Wed,  4 Nov 2026 21:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829293;
-	bh=pTAqc9u1bgaAcbJLu7qklA5mKNP+Ic0tiMHXb7tgiDU=;
+	s=korg; t=1793829295;
+	bh=AYjRym6Tn0TsGb1qNdVtd+/RCn2jNCGmTjGIDsQDEC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yeDkaTyr8yY/DxwpZNZKoBSrsG+mp5K33dj2ceentlwdIp9ESDNqQFuo+ATPm6LSN
-	 Iuadi/u3Bw7jwfxXL7Y5FCz7M93C1jrnmuD5KW4Ym5udkYudP5iYi2Sxl/orfP4soE
-	 ryuUXkyQ8ZzBepd5S82U+8amgR39TRyJUuQkts5s=
+	b=goe7IBgkypIY6JKKCf2AAPBaOLh5PL3+rKxiXwYGcalD0LJvVXmGR2WSoe4mMQ72q
+	 K5LgvL0Qd5uNTxo+Db3gVQoKlPUkg9sb7uCMa+C/bIOFbBd1QQT/FFHuQXCAg2M49W
+	 h1zFwcOggWlCGRE/PQkLsyScAkj8pPnxIyG7gRNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0034/1005] ASoC: sma1303: remove fault-check sysfs group on remove
-Date: Wed,  4 Nov 2026 15:56:07 -0500
-Message-ID: <20261104211044.522036222@linuxfoundation.org>
+Subject: [PATCH 6.18 0035/1005] spi: qpic-snand: free OOB buffer with ECC context
+Date: Wed,  4 Nov 2026 15:56:08 -0500
+Message-ID: <20261104211044.552375097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,39 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ce3733792d38ade8df8ce288a96ff0c6ad858bf3 ]
+[ Upstream commit 5504e50ffbcf97b3b6ed3740532497922c96a1f1 ]
 
-sma1303_i2c_probe() creates a sysfs group that exposes the fault-check
-controls. The check_fault_status store callback can queue
-check_fault_work.
+qcom_spi_ecc_init_ctx_pipelined() allocates qspi->oob_buf as part of the
+pipelined ECC context setup. The buffer is then used by the raw and ECC
+page I/O paths through the NAND ECC context.
 
-sma1303_i2c_remove() only cancels the delayed work. It does not remove
-the sysfs group, so the controls can remain published after remove while
-their callbacks still use the driver data and can queue the work again.
-
-Remove the sysfs group before cancelling the delayed work.
+The matching cleanup callback only frees the qpic_ecc structure, and the
+init error path also skips the OOB buffer after it has been allocated.
+Free qspi->oob_buf on both paths and clear the pointer so the ECC context
+teardown owns all resources allocated during init.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260615064456.28615-1-pengpeng@iscas.ac.cn
+Link: https://patch.msgid.link/20260616151129.76060-1-pengpeng@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sma1303.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-qpic-snand.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/sma1303.c b/sound/soc/codecs/sma1303.c
-index 980c48cbc3482..e07ec1bbf2d50 100644
---- a/sound/soc/codecs/sma1303.c
-+++ b/sound/soc/codecs/sma1303.c
-@@ -1787,6 +1787,8 @@ static void sma1303_i2c_remove(struct i2c_client *client)
- 	struct sma1303_priv *sma1303 =
- 		(struct sma1303_priv *) i2c_get_clientdata(client);
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index 222e4aa7ee488..919e847c061db 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -394,14 +394,19 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
+ 	return 0;
  
-+	if (sma1303->attr_grp)
-+		sysfs_remove_group(sma1303->kobj, sma1303->attr_grp);
- 	cancel_delayed_work_sync(&sma1303->check_fault_work);
+ err_free_ecc_cfg:
++	kfree(snandc->qspi->oob_buf);
++	snandc->qspi->oob_buf = NULL;
+ 	kfree(ecc_cfg);
+ 	return ret;
  }
  
+ static void qcom_spi_ecc_cleanup_ctx_pipelined(struct nand_device *nand)
+ {
++	struct qcom_nand_controller *snandc = nand_to_qcom_snand(nand);
+ 	struct qpic_ecc *ecc_cfg = nand_to_ecc_ctx(nand);
+ 
++	kfree(snandc->qspi->oob_buf);
++	snandc->qspi->oob_buf = NULL;
+ 	kfree(ecc_cfg);
+ }
+ 
+@@ -1660,4 +1665,3 @@ module_platform_driver(qcom_spi_driver);
+ MODULE_DESCRIPTION("SPI driver for QPIC QSPI cores");
+ MODULE_AUTHOR("Md Sadre Alam <quic_mdalam@quicinc.com>");
+ MODULE_LICENSE("GPL");
+-
 -- 
 2.53.0
 
