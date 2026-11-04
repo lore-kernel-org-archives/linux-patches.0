@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831249;
-	b=0+FzibvO0uV3ZhfEhRCUN8A7o9wLagg591QVH1c/pVfLNCJDstoAQeyacOzuLunCMcu+
-	 A4HbsrAiRlvVgmaxbOcbwD4qok4rENCvqvLZzd8ECZP4mBoM9I7MM9DAahVgcpI/c97w1
-	 oAiJLQvp/m+qaxmD1+JxGMwwlZ5B29uyD8BsD+yDf6/n1nm3p02vTtFaRYxrE/i/EDhZo
-	 KX1CGBFDB6vuit8WqALyoyAIZWH2Cu30F3aobJm70b5WR9gBGl110roisKpccnGVOtETG
-	 wToTtDtdyGgI1ZQFrd9HwM7uxli3IVpDEcyXNl8aE9wcsq4uSfEMJcA3Ph6yVR6B50g==
+	t=1793831252;
+	b=E4ax7L6rBkpCUcUiHZ6FVCMMHbUIT9JZklSI+T++LaszMmqz1dNxte11a3LxelaDd0cK
+	 jtxGMLrfLXMl5dP5W/6BDWn+N7/bMMyxF6ndw7mfg1k9LuVBGAqXNchc1c4kmsWChBBqB
+	 W8OiRKM6fjQ/biLHdXBw8ja802HIXfL3r1RBKXUXFio77Tw0wUM6HtBgAxVE18BxLS7G2
+	 G3ClG2gSSZ9yvcq6NF+PGJKjPrIfiZY/FfuJYA6+ieEjnDhMQzCUmz1reNHJm4ua/LhNc
+	 5lcFzXZfHqSHyAikRy+ZFS7bpqJeSfIZV7ctaQJq+rOLCzaKLayWRMwA0PHz0CxNZVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UfRY7YsDFKkhnZXiW7hRnenVMJIsQWD2zrLxOfHR5l4=;
-	b=VZQQ7at7K6TxeyzPOH3mZnqrhJO8flNzsUP7xv9mbLUANS5bcXbujz1RjE2GQrLFDNdq
-	 2Y2WJEc5puXyjLNb5I3mVlRpORG4WWIhCsZ/os2btXminvivtfkh+ILwxvc5ugwLftomt
-	 9tfYD0hr9k/pUJXKFZ5mwpCY9dfycSGp4O8aXo8de+auI+3Aw2Y07KzHXDLzwPi/V6HAH
-	 m5iPSyVpAs4T0aVNJ5UGvXTd9LgpnXgo8xgiOhVMPlAgMun4eX2rAGu4eftf5gHkhcGor
-	 Vm6JMdnOBSeiCWltLiJWpD2hqlPLBHvYxP6hKSFRTan0LsgoAnN5TdKUe238zDWW0Wg==
+	bh=0BhOfF86LHzYPi0KWwCv4i5wnnGd0DBLR9fl4Sa6tkM=;
+	b=AcLX6brs1W3+PXd2slSQaKUvfa2rLXMeg+FxW+XwQQ9hrFMUK4j5K0uC2jjlVTL5TydX
+	 qM+n3KkSOBS+ppiGPpGchG7Y+fRcT1KRY/wc1V9+hZYosrPEcNg9HbJzKNH5iuvsGGeGK
+	 xOp1jxZhdwByCkDJp4lVSxExfqeH3xywprpuw2mTDu+Vlz3SLWwa2CiXWQiMkTSDyb0JC
+	 b1r0Hv7k1MtEAvCqG9pXCbAyFQTjMFQBZXpJ3t3b/8WMWhfLR7qbM//Z5PQs3a3G/B/uB
+	 wpESOjX9BWec2ZUTvG3GveZrFoJ3B8VizfhOu11lYHyCa/PQs9wN7mp94rgcJCyw6AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lHx5X0e/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9tRq3AI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7AD606A33E;
-	Wed,  4 Nov 2026 22:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB3C606A33E;
+	Wed,  4 Nov 2026 22:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lHx5X0e/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A261F000C1;
-	Wed,  4 Nov 2026 22:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9tRq3AI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0AC1F000C1;
+	Wed,  4 Nov 2026 22:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831249;
-	bh=UfRY7YsDFKkhnZXiW7hRnenVMJIsQWD2zrLxOfHR5l4=;
+	s=korg; t=1793831250;
+	bh=0BhOfF86LHzYPi0KWwCv4i5wnnGd0DBLR9fl4Sa6tkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lHx5X0e/TOZ3eFBl9LkSGKAwuZNCgIo98vkSmt5qFos04oLDf6KpI95JL+6RCdgRm
-	 dBB3OauHwXykub3rK3dm6om+MI7stlz0vzVyXh8ZKO2NUIu2H6RIsony1RFqNO+iVt
-	 Kp1r+Tjg8TvwlU78dXORB7NZisbdy4/Wd81MTB+s=
+	b=L9tRq3AIcmf9DKNPQUraZsZymG6p8YUVZZDHiNeKgh4Pt0mIbSqliAYHjbvIeihIc
+	 xiBX97gdpytf1o2MOgKimxyID5cqCmsIuoUAt/e2D3fvjtyP8kqKBbliUmgY2zASm8
+	 uJ12cB+NTw4X75Fj8bFcL6JCQO8P8Dr9WIReC/oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0551/1005] LoongArch: KVM: Set vcpu->cpu before IN_GUEST_MODE is set
-Date: Wed,  4 Nov 2026 16:04:44 -0500
-Message-ID: <20261104211059.326589109@linuxfoundation.org>
+Subject: [PATCH 6.18 0552/1005] rust: bug: fix warn_on macro build error on UML
+Date: Wed,  4 Nov 2026 16:04:45 -0500
+Message-ID: <20261104211059.353572803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,40 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-[ Upstream commit 32d05564a6128d59ea876cf9078fe6866a809e14 ]
+[ Upstream commit 30a449e04a32033d8e4844fdb4938a0ebccfa37b ]
 
-In function kvm_make_vcpu_request(), it will send IPI to physical CPU
-when vCPU is in IN_GUEST_MODE mode. And physical CPU is set in function
-kvm_check_vpid(), thus it should be called before IN_GUEST_MODE is set.
-Otherwise IPI will send to wrong old physical CPU where vCPU is running.
+Callers that go through `kernel::prelude` have `CStrExt` in scope, but
+code inside the `kernel` crate imports explicitly and may not. Using
+`warn_on!` from such a module fails to build on UML, which is the only
+configuration where `warn_flags!` needs a C string pointer rather than an
+inline asm bug entry:
+
+error[E0599]: no method named `as_char_ptr` found for reference `&ffi::CStr` in the current scope
+   --> linux/rust/kernel/bug.rs:83:49
+    |
+ 83 |                 $crate::c_str!(::core::file!()).as_char_ptr(),
+    |                                                 ^^^^^^^^^^^
+    |
+   ::: linux/rust/kernel/time.rs:427:9
+    |
+427 |         warn_on!(self.nanos < 0);
+    |         ------------------------ in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is in scope
+    = note: this error originates in the macro `$crate::warn_flags` which comes from the expansion of the macro `warn_on` (in Nightly builds, run with -Z mac)
+help: trait `CStrExt` which provides `as_char_ptr` is implemented but not in scope; perhaps you want to import it
+   --> linux/rust/kernel/time.rs:27:1
+    |
+ 27 + use crate::str::CStrExt;
+
+Call the method through its fully qualified path, which resolves
+without any import at the expansion site.
 
 Cc: stable@vger.kernel.org
-Fixes: 2fc3bd86db4b ("LoongArch: KVM: Implement basic vcpu interfaces")
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: dff64b072708 ("rust: Add warn_on macro")
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Link: https://patch.msgid.link/20260807112427.1039056-1-tomo@flapping.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kvm/vcpu.c | 2 +-
+ rust/kernel/bug.rs | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kvm/vcpu.c b/arch/loongarch/kvm/vcpu.c
-index ee969e3957009..e0bd2ceeada4a 100644
---- a/arch/loongarch/kvm/vcpu.c
-+++ b/arch/loongarch/kvm/vcpu.c
-@@ -282,10 +282,10 @@ static int kvm_pre_enter_guest(struct kvm_vcpu *vcpu)
- 		 */
- 		local_irq_disable();
- 		kvm_deliver_exception(vcpu);
-+		kvm_check_vpid(vcpu);
- 		/* Make sure the vcpu mode has been written */
- 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
- 		kvm_deliver_intr(vcpu);
--		kvm_check_vpid(vcpu);
- 
- 		/*
- 		 * Called after function kvm_check_vpid()
+diff --git a/rust/kernel/bug.rs b/rust/kernel/bug.rs
+index 53dbdaec3560b..15a84e553fd4d 100644
+--- a/rust/kernel/bug.rs
++++ b/rust/kernel/bug.rs
+@@ -83,7 +83,7 @@ macro_rules! warn_flags {
+         // with a valid null-terminated string.
+         unsafe {
+             $crate::bindings::warn_slowpath_fmt(
+-                $crate::c_str!(::core::file!()).as_char_ptr(),
++                $crate::str::CStrExt::as_char_ptr($crate::c_str!(::core::file!())),
+                 line!() as $crate::ffi::c_int,
+                 $flags as $crate::ffi::c_uint,
+                 ::core::ptr::null(),
 -- 
 2.53.0
 
