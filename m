@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827210;
-	b=nyWg7dCajtur4XPirGorS7j6KJegxPQ/qtszZvZFKu/QxD6BNhespAgAMXznDHp/sLOV
-	 euXchQx7BdwWDQAI0j9sHW2d5O+vfLxwO6cDQD/tnccHDrCghLbF148SO5ycOR2iiD3uK
-	 qDWxmltOQHg5aH4LFsUbdadPCpYC5W7x3d74CIsSORoeYksl1fr0YcGE2vci6DXbaALlG
-	 5a6FLxLukGqLJwdbaWhi+zn8wTW3TuBivMMEOXMmgfwH2SiO7qNX+Nd0OuCPt+FlpT17P
-	 odSFXHSTuhqR/rCvPfGG+TFrD5sP2Y4HgUqRP+pWPxNWTKq81qr7Tf0fTfS+lhY/J/Q==
+	t=1793827211;
+	b=FskPknaV3Td6b/2WtPNoMubYJlq0YCAjFGurNoz/DacoEtkBdg6S1xQhlaCrVCwI07Mc
+	 Usz0krKDmsj3g2ZeX/pzUZCdD0OKzW/SSrvpqGOaWc/tQYqnUBoVDRGnDsm6hmO8T/k/1
+	 0ZgN0xJacDBjoX4FH/zvLU8AwryLnjmQqvvTP8OP5hJc+0aslRcuxJVxx/IXfVJReOUvK
+	 T9U43/GqOV4y6xbT5XMoko3XmDy0MWPCpg/zHeYsgfTDe52xpQS0FSMKkcGrIcBxQoby7
+	 WVgzgPbW6Fu5/fsUX043NYFCHX5ewiMcOqVFfbJhbl3Fbk8HDTRP9WANN+8ebyvE5zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827210;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iaANhY+yD4ah89ykbbrEOtG3CXrG11C61CND8OkOv3U=;
-	b=YGSbm7LkUAMBvq2yJ/gTunIZAUsxNNPxUE0FNBPXSc0P1/bfEtwlr1T5iJ1s2PU8nOjV
-	 aKj5WcdQnk69qlSwsRRVC4KUn+cD7A5FSup1vlKYU5c4igsulDED7l74EUHqsMG30DCVd
-	 x2WyO04sxRShm2GJFmcXrnpbfRDZ/RiXYSsLTwf+F7UCzCoifc5izkDbzLmcuNOpkxDw4
-	 epHPszRBX1U9LT3eq3Bh2X6SqxFBXEAEcdVEj1VIANV/KDRd+rhI9vE37XRoB4c+BpXQr
-	 Vow07WvkDAkQTwk4BlpB1PN48w/x9uNT1JDGU2D/b05zdolzUYJXeDVn4E1YTeejOUg==
+	bh=a7vpgE73VaX27NTeZH0q2vZm5fQioMjA1FYspohCs78=;
+	b=NDVbC/Q4C4i4QSxgoYD59+uDHFdIjnWKKuEhZtifpkOAuqy9bnRhOtsb1F1eGBcvRBSd
+	 yVUPr9/oYifxCtmdvEPtq0ncV216E5bdoo6bER4oawU03n8lFGmDXz0YxaO8dNRMpwx77
+	 NO8on9iF8ccp16vlOTc0FJpceopRj0ZOfBuEddQ20/a1nBQKASDWdNmup5PYv9okUjRI6
+	 +gdAYB2mLl1m30duSeUb41zeAhW/citeiesPloSU24XoqhVdKNwZPFzkTILrlfn7k6Pcl
+	 M2I/OdpNl49VJd4RhDGV1X/289ZXYyRpi1UgF75fu4CqTgcCqfmiamiaryWqv/8JanQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAAA9xA3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VD/sSf3W";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90338606B39A;
-	Wed,  4 Nov 2026 21:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4DE606B39A;
+	Wed,  4 Nov 2026 21:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAAA9xA3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392EF1F000C1;
-	Wed,  4 Nov 2026 21:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VD/sSf3W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDBA1F00919;
+	Wed,  4 Nov 2026 21:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827209;
-	bh=iaANhY+yD4ah89ykbbrEOtG3CXrG11C61CND8OkOv3U=;
+	s=korg; t=1793827211;
+	bh=a7vpgE73VaX27NTeZH0q2vZm5fQioMjA1FYspohCs78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAAA9xA3mMGlA2Y5wR6YaFDgSIoYmMEJE05sUHDRaYPiSjsXAauhaa7MR/czbA0iK
-	 svd9WXom/He2FhriSARetufRiIo3mlkuac4hqhGqiZ4U7i8ry1NcXhZxyrCEFZxIwj
-	 Zbmhgz1OxRvYKqXRZtGF2VHS6+sGzGdyNqUWaleg=
+	b=VD/sSf3W8efSuiT4qXXDHEBH7UBBkXmd43R++kiEVCn4PtHONv58MuXWu/IHN8PGl
+	 vt+/bd+Gm+UT0ryyu5L3V2iMFikcFyTjdJqX4eb56fDWFseycTAtTRVgjWaooUjWvd
+	 3XqqASjA9xHjbD+cnmFTGm5qYxDtbBEvb9kfydJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	syzbot+0948c82180d475ad24e2@syzkaller.appspotmail.com,
-	syzbot+fb7c2dd166d3ea63df2a@syzkaller.appspotmail.com,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Paul Durrant <paul@xen.org>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7.3 223/547] KVM: pfncache: use a dedicated invalidation sequence for cache refresh
-Date: Wed,  4 Nov 2026 16:06:47 -0500
-Message-ID: <20261104211044.493660396@linuxfoundation.org>
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Rodolfo Giometti <giometti@enneenne.com>
+Subject: [PATCH 7.3 259/547] pps: generators: dont use the drivers info after unregister
+Date: Wed,  4 Nov 2026 16:07:23 -0500
+Message-ID: <20261104211045.543914359@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -71,169 +67,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-commit da260bcb56feeb6489a83f310308453a0a7de25e upstream.
+commit 4e8063cae337cb7328e6856235cf4de5d165516e upstream.
 
-The gfn_to_pfn_cache refresh path guards against mmu notifier
-invalidations which complete while it has dropped gpc->lock for the
-HVA->PFN lookup: hva_to_pfn_retry() samples kvm->mmu_invalidate_seq
-and retries if it changed, or if mn_active_invalidate_count is still
-elevated.
+A file that was opened before pps_gen_unregister_source() keeps
+pps_gen, and with it the pointer to the driver's pps_gen_source_info.
+PPS_GEN_SETENABLE and PPS_GEN_USESYSTEMCLOCK keep using that pointer
+after the driver has gone:
 
-That is insufficient for HVA-based caches. mmu_invalidate_seq is only
-advanced by kvm_mmu_invalidate_end() when the invalidated range
-overlaps a memslot, and an HVA-based cache (e.g. the Xen shared_info
-page mapped with KVM_XEN_ATTR_TYPE_SHARED_INFO_HVA) need not be backed
-by any memslot at all. An invalidation of the cached HVA which starts
-and ends entirely within the lookup window is thus invisible to the
-retry check: mn_active_invalidate_count is back to zero and the
-sequence never moved. The refresh then publishes a mapping of a page
-which has already been freed, and the next reader dereferences it:
+ - pps_gen_tio allocates its info with devm_kzalloc(), so after an
+   unbind both ioctls read freed memory, and SETENABLE calls the
+   driver's enable() with its freed private data.
 
-  BUG: KASAN: use-after-free in kvm_xen_shared_info_init+0x3c6/0x440
-  Read of size 4 at addr ffff8880599c2900 by task syz.2.383/7257
+ - pps_gen-dummy does not set info->owner, so it can be unloaded while
+   the file is open, and the ioctls then read the unloaded module's
+   data and call its code.
 
-Since gfn_to_pfn_cache_invalidate_start() deliberately skips caches
-which are not currently valid (including one whose refresh is in
-progress, as the refresh clears the valid flag before dropping the
-lock), the retry check is the only line of defence, and it must fire
-for *any* invalidation, not just those hitting a memslot.
+TIO can't probe in a VM, as it needs ART. A test driver that registers
+its info in devm memory like TIO does, unbound while /dev/pps-gen0 is
+open, gives:
 
-Add a dedicated kvm->gpc_invalidate_seq, incremented by every
-kvm_mmu_notifier_invalidate_range_end() under mn_invalidate_lock
-before mn_active_invalidate_count is decremented, and check it in
-hva_to_pfn_retry() instead of mmu_invalidate_seq. Incrementing in
-range_end() in the same critical section as the in-progress count
-also closes the variant where the cache is activated with the
-contested HVA only after invalidate_range_start() has run.
+  BUG: KASAN: slab-use-after-free in pps_gen_cdev_ioctl+0x4c1/0x580
+  Read of size 1 at addr ffff88800e647f38 by task ppsgen64/145
+  ...
+  Freed by task 146:
+   kfree+0x25a/0x6d0
+   release_nodes+0xd1/0x140
+   devres_release_all+0x10e/0x1a0
+   device_unbind_cleanup+0x71/0x250
+   device_release_driver_internal+0x41b/0x570
+   unbind_store+0xd9/0x100
 
-The same bug is also reachable through the per-vCPU vcpu_info cache
-(KVM_XEN_VCPU_ATTR_TYPE_VCPU_INFO_HVA), where the stale mapping is
-then dereferenced by kvm_setup_guest_pvclock() on the next KVM_RUN:
+and unloading pps_gen-dummy while its file is open oopses:
 
-  BUG: KASAN: use-after-free in kvm_setup_guest_pvclock+0x5bf/0x660
+  BUG: unable to handle page fault for address: ffffffffa0203040
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:pps_gen_cdev_ioctl+0x372/0x580
 
-This intentionally makes refresh retry on *unrelated* mmu notifier
-events; restoring precision (and reworking the GPC locking more
-generally) is left for a subsequent series.
+Protect info in the ioctl handler with a mutex, and clear it under the
+mutex on unregister, so that unregister waits for the ioctls using it
+and later ones fail with -ENODEV. PPS_KC_BIND does the same for a
+removed PPS device since commit 3649f9a6b897 ("pps: don't allow
+PPS_KC_BIND on removed devices"). The sysfs attributes need nothing
+new: they are removed, and their callbacks drained, before info is
+cleared.
 
-Reproducers: https://david.woodhou.se/xen_shinfo_race.c
-             https://david.woodhou.se/vcpu_info_race.c
-
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Reported-by: syzbot+0948c82180d475ad24e2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a0c5f2c.a00a0220.2c7954.0000.GAE@google.com/
-Tested-by: syzbot+0948c82180d475ad24e2@syzkaller.appspotmail.com
-Reported-by: syzbot+fb7c2dd166d3ea63df2a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a426dd2.854d4ab9.360e1d.0008.GAE@google.com/
-Fixes: b9220d32799a ("KVM: x86/xen: allow shared_info to be mapped by fixed HVA")
+Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Assisted-by: Claude:claude-mythos-5
-Reviewed-by: Paul Durrant <paul@xen.org>
-Link: https://patch.msgid.link/20260831213632.81023-13-dwmw2@infradead.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://patch.msgid.link/20260929124937.51114-3-danishkhateeb03@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kvm_host.h |    2 ++
- virt/kvm/kvm_main.c      |   10 ++++++++++
- virt/kvm/pfncache.c      |   18 +++++++++---------
- 3 files changed, 21 insertions(+), 9 deletions(-)
+ drivers/pps/generators/pps_gen.c |   31 ++++++++++++++++++++++++++-----
+ include/linux/pps_gen_kernel.h   |    2 ++
+ 2 files changed, 28 insertions(+), 5 deletions(-)
 
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -854,6 +854,8 @@ struct kvm {
- 	gfn_t mmu_invalidate_range_start;
- 	gfn_t mmu_invalidate_range_end;
+--- a/drivers/pps/generators/pps_gen.c
++++ b/drivers/pps/generators/pps_gen.c
+@@ -69,17 +69,28 @@ static long pps_gen_cdev_ioctl(struct fi
+ 		if (ret)
+ 			return -EFAULT;
  
-+	unsigned long gpc_invalidate_seq;
+-		ret = pps_gen->info->enable(pps_gen, status);
+-		if (ret)
+-			return ret;
+-		pps_gen->enabled = status;
++		scoped_guard(mutex, &pps_gen->info_lock) {
++			if (!pps_gen->info)
++				return -ENODEV;
 +
- 	struct list_head devices;
- 	u64 manual_dirty_log_protect;
- 	struct dentry *debugfs_dentry;
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -813,6 +813,16 @@ static void kvm_mmu_notifier_invalidate_
++			ret = pps_gen->info->enable(pps_gen, status);
++			if (ret)
++				return ret;
++			pps_gen->enabled = status;
++		}
  
- 	/* Pairs with the increment in range_start(). */
- 	spin_lock(&kvm->mn_invalidate_lock);
-+	kvm->gpc_invalidate_seq++;
+ 		break;
+ 
+ 	case PPS_GEN_USESYSTEMCLOCK:
+ 		dev_dbg(&pps_gen->dev, "PPS_GEN_USESYSTEMCLOCK\n");
+ 
+-		ret = put_user(pps_gen->info->use_system_clock, uiuarg);
++		scoped_guard(mutex, &pps_gen->info_lock) {
++			if (!pps_gen->info)
++				return -ENODEV;
++			status = pps_gen->info->use_system_clock;
++		}
++
++		ret = put_user(status, uiuarg);
+ 		if (ret)
+ 			return -EFAULT;
+ 
+@@ -212,6 +223,15 @@ static void pps_gen_unregister_cdev(stru
+ {
+ 	pr_debug("unregistering pps-gen%d\n", pps_gen->id);
+ 	cdev_device_del(&pps_gen->cdev, &pps_gen->dev);
 +
 +	/*
-+	 * As with the MMU sequence counter and mmu_invalidate_in_progress, the
-+	 * GPC sequence increase must be visible before the invalidate count
-+	 * goes to zero.  Pairs with the smp_rmb() in
-+	 * mmu_notifier_retry_cache().
++	 * An open file keeps pps_gen around, but the driver may free info as
++	 * soon as we return. The sysfs files are gone now, so wait for the
++	 * ioctls using info and make later ones fail.
 +	 */
-+	smp_wmb();
++	scoped_guard(mutex, &pps_gen->info_lock)
++		pps_gen->info = NULL;
 +
- 	if (!WARN_ON_ONCE(!kvm->mn_active_invalidate_count))
- 		--kvm->mn_active_invalidate_count;
- 	wake = !kvm->mn_active_invalidate_count;
---- a/virt/kvm/pfncache.c
-+++ b/virt/kvm/pfncache.c
-@@ -124,7 +124,7 @@ static void gpc_unmap(kvm_pfn_t pfn, voi
- #endif
+ 	put_device(&pps_gen->dev);
  }
  
--static inline bool mmu_notifier_retry_cache(struct kvm *kvm, unsigned long mmu_seq)
-+static inline bool mmu_notifier_retry_cache(struct kvm *kvm, unsigned long gpc_seq)
- {
- 	/*
- 	 * mn_active_invalidate_count acts for all intents and purposes
-@@ -136,20 +136,20 @@ static inline bool mmu_notifier_retry_ca
- 	 * Note, it does not matter that mn_active_invalidate_count
- 	 * is not protected by gpc->lock.  It is guaranteed to
- 	 * be elevated before the mmu_notifier acquires gpc->lock, and
--	 * isn't dropped until after mmu_invalidate_seq is updated.
-+	 * isn't dropped until after gpc_invalidate_seq is updated.
- 	 */
- 	if (kvm->mn_active_invalidate_count)
- 		return true;
+@@ -243,6 +263,7 @@ struct pps_gen_device *pps_gen_register_
+ 	pps_gen->info = info;
+ 	pps_gen->enabled = false;
  
- 	/*
- 	 * Ensure mn_active_invalidate_count is read before
--	 * mmu_invalidate_seq.  This pairs with the smp_wmb() in
--	 * mmu_notifier_invalidate_range_end() to guarantee either the
-+	 * gpc_invalidate_seq.  This pairs with the smp_wmb() in
-+	 * kvm_mmu_notifier_invalidate_range_end() to guarantee either the
- 	 * old (non-zero) value of mn_active_invalidate_count or the
--	 * new (incremented) value of mmu_invalidate_seq is observed.
-+	 * new (incremented) value of gpc_invalidate_seq is observed.
- 	 */
- 	smp_rmb();
--	return kvm->mmu_invalidate_seq != mmu_seq;
-+	return kvm->gpc_invalidate_seq != gpc_seq;
- }
++	mutex_init(&pps_gen->info_lock);
+ 	init_waitqueue_head(&pps_gen->queue);
+ 	spin_lock_init(&pps_gen->lock);
  
- static kvm_pfn_t hva_to_pfn_retry(struct gfn_to_pfn_cache *gpc)
-@@ -158,7 +158,7 @@ static kvm_pfn_t hva_to_pfn_retry(struct
- 	void *old_khva = (void *)PAGE_ALIGN_DOWN((uintptr_t)gpc->khva);
- 	kvm_pfn_t new_pfn = KVM_PFN_ERR_FAULT;
- 	void *new_khva = NULL;
--	unsigned long mmu_seq;
-+	unsigned long gpc_seq;
- 	struct page *page;
+--- a/include/linux/pps_gen_kernel.h
++++ b/include/linux/pps_gen_kernel.h
+@@ -11,6 +11,7 @@
+ #include <linux/pps_gen.h>
+ #include <linux/cdev.h>
+ #include <linux/device.h>
++#include <linux/mutex.h>
  
- 	struct kvm_follow_pfn kfp = {
-@@ -181,7 +181,7 @@ static kvm_pfn_t hva_to_pfn_retry(struct
- 	gpc->valid = false;
+ /*
+  * Global defines
+@@ -44,6 +45,7 @@ struct pps_gen_source_info {
+ /* The main struct */
+ struct pps_gen_device {
+ 	const struct pps_gen_source_info *info;	/* PSS generator info */
++	struct mutex info_lock;			/* protects info */
+ 	bool enabled;				/* PSS generator status */
  
- 	do {
--		mmu_seq = gpc->kvm->mmu_invalidate_seq;
-+		gpc_seq = gpc->kvm->gpc_invalidate_seq;
- 		smp_rmb();
- 
- 		write_unlock_irq(&gpc->lock);
-@@ -232,7 +232,7 @@ static kvm_pfn_t hva_to_pfn_retry(struct
- 		 * attempting to refresh.
- 		 */
- 		WARN_ON_ONCE(gpc->valid);
--	} while (mmu_notifier_retry_cache(gpc->kvm, mmu_seq));
-+	} while (mmu_notifier_retry_cache(gpc->kvm, gpc_seq));
- 
- 	gpc->valid = true;
- 	gpc->pfn = new_pfn;
+ 	unsigned int event;
 
 
