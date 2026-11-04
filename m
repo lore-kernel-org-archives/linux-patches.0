@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831435;
-	b=WliciYT+3QRU44DxEmvfBF7VwFKFfVuuzF3i5Ys7iKqw7/6i9BJfhha5NfAjKfXad7bC
-	 kMkP/WzAlFiF38UtBlcAv3Bo/QXehejdwERdMeopVebjXBJHmlADijeZuoN1CAYL2VXTP
-	 OaKAUv/XDxVQfP29rgIJFRmO56Qv5qregMYQ0O8HcfC4crY+KYJ4v1SvGXqxbbxNSpL90
-	 lFjKgwI3zUPJ6C1kiOgngou0USkdWsKvWq9AAfYGy/LMLXZ4G1FGMOeQ1pXhVlbDMXaqO
-	 RD7hi/qW+2nlHDz8MYEpk2RvEgUA0qaLFVvLKgpuf4L9Vwyl7ZvG/9DZQKs2pSkLQIg==
+	t=1793831437;
+	b=jmhyBjK/HXp2RiqHT+mNPgSWkAnbrORu0vqs4WASRu0JgnIGz8zS3Qx8UVkMX6ZMN7H4
+	 jcvuvcLqtY7R4dvLOpZWWqubSChWz83bURauMpKFZkgGS5l8IzybCvNRdd85yM45iVpgZ
+	 3vVmoDdZ0/MecJCqT6tJqHi0Y8EzyJeqEICeZR7e1OAM1aSA6t2im0UQPlUVUpay8i5Rs
+	 os0ZefXpKmuA8Jp77l1F5N+e8+LSgSPCJpjaYqydNbNQb6txstLDeBw9UGsUc6+b/Bcun
+	 i0x7Yfe87D78KRl7o/2x1TOkrFxuF8lM5rzI1JFvn3xAxNpGXBcaQKLhyicf9eFkAvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1omiFvsYOpHw2cHtKswdFfXePXcGbzS/A7rqz0WkCm8=;
-	b=hMz6I1JsS/s5rjnLBmVIuhZ8d3h8tsFGZqtOqq+TbbejYgiSB/EFD636Pbk89wQx+Fpk
-	 IAKH5s5KQxIMlkI9py53IHimXcnwrni5YQh9+qwAGtoEDwWaE70DRIT1HPqDKUa3c1qxu
-	 S9eX9+KCXWQoPyN6tTGNU5abGbM8UCqtcwbnLFe6k8QeselyU28zi/wPhkNbFmZKvuI9V
-	 6Uaes0Vqkx/kowsNPN/ptXj0AOaQzpHlXoRMAnek7Vnf7F0xKywk+4JOcwH108lD+2w0r
-	 YJgiivWhoBr4rRBv+55oyoSwSjhtqpGQlEBCRYBukpSYyjXm0wXWbSIfNE+KNFzJYbA==
+	bh=nTypuvJESHejxbxSOTHRvvcsU9H4xbBpQ9jQeDTwAXE=;
+	b=5ULlzHqb+3yWMFNpDiL86QnU/udLC7GxiT3GRf2OhkA8+XHfj+62phFNiJArh6ncO8to
+	 prPtfrhE3rlzy8kVLsZN8hzjDJW1gX+GtfWnV59iOs4i+yLibT6euOfq6KV8ok2TnEj7p
+	 DoJ7+uKqCRn0lfPPIFKNbT9AC/3bHULzz1oRc67zW2GCLXTtdIqqsHwh24dWCVLga0YeJ
+	 kfJY/HBA4j54HOEptRxunJ7dgeCcI/oBnubXkQwyOvShz0vVi7Ol3SIfEpjURE2IgFtHb
+	 t9LfEd+TvxNqnVC+9GIFJPzyvVg0ctEGuQnWwD1nTqcUcKXS+e+xCGZXa2IJ37+T6nA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PfkigjNA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=og5uPJpK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9527A606B39D;
-	Wed,  4 Nov 2026 22:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB154606B385;
+	Wed,  4 Nov 2026 22:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PfkigjNA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59121F000C1;
-	Wed,  4 Nov 2026 22:30:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=og5uPJpK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683B41F000C1;
+	Wed,  4 Nov 2026 22:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831435;
-	bh=1omiFvsYOpHw2cHtKswdFfXePXcGbzS/A7rqz0WkCm8=;
+	s=korg; t=1793831436;
+	bh=nTypuvJESHejxbxSOTHRvvcsU9H4xbBpQ9jQeDTwAXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PfkigjNAtgKRtumdviqYBY1UFAPhHv61wF8XqzHNuQBzHfpXkVdbYHFWY6JTr5Dg9
-	 R4x/6Na+WDPgc3F/L8M+3wB9l0FRzCHZ2cWwvEZ/N8RzHpw+8Yn0rpII2M7WeZCUjy
-	 zbLp1uqJEj6iWMADxTb8Rlmas3EDNGcBMo3+7jFQ=
+	b=og5uPJpK6ohCrYgTNDolXTCqNov8qWbOI604EmjbNs0JAVzwajhxMIIj0NP6/ZmjP
+	 DjERnHAcUp6eYvFdEjOv0GH0cHDxWM3aMYjSy1Q6NANdblKH2dX3ZT9LUqyZhw4zlC
+	 EHqg4kivjXSXYe+LNjwc/yVGdCdSngOR/BFFu1y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <ytan089@ucr.edu>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Priya Bala Govindasamy <pgovind2@uci.edu>
-Subject: [PATCH 6.18 0700/1005] rust: block: fix `Send` bound for `GenDisk`
-Date: Wed,  4 Nov 2026 16:07:13 -0500
-Message-ID: <20261104211103.199659564@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 0674/1005] media: au0828: fix use-after-free in bulk_timeout timer on disconnect
+Date: Wed,  4 Nov 2026 16:06:47 -0500
+Message-ID: <20261104211102.521993943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,55 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Hindborg <a.hindborg@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit e502b667ee70a7fa2a578e7722672ecd4fe0eb81 upstream.
+commit 521030837bee352515d5ea57cc6a29581db3506e upstream.
 
-The `Send` implementation for `GenDisk<T>` was conditioned on `T: Send`.
-This constrains the wrong type. `T` is the `Operations` implementation,
-which is typically a zero-sized marker type that carries no data, so `T:
-Send` says nothing about whether the data a `GenDisk` actually owns can be
-moved to another thread.
+start_urb_transfer() arms dev->bulk_timeout, whose callback
+au0828_bulk_timeout() queues dev->restart_streaming; that work in turn
+calls start_urb_transfer() and re-arms the timer.
 
-A `GenDisk<T>` owns the queue data `T::QueueData` (stored as the
-`gendisk`'s `queuedata` and dropped when the `GenDisk` is dropped) and an
-`Arc<TagSet<T>>`. These are the values transferred when a `GenDisk` is sent
-across a thread boundary, so the `Send` bound must constrain exactly them.
-Bound `T::QueueData: Send` and `Arc<TagSet<T>>: Send` instead.
+au0828_dvb_unregister() cancels restart_streaming on disconnect but does
+not sync bulk_timeout. au0828_usb_release() then frees dev with kfree(),
+so a timer still armed or pending at that point can fire after the free
+and dereference dev through timer_container_of().
 
-Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
+Sync the timer with timer_shutdown_sync() before cancel_work_sync().  The
+timer callback queues the work, so the timer must be stopped first; the
+shutdown variant is needed because the work re-arms the timer through
+start_urb_transfer().  The dvb->frontend == NULL early return guards the
+register-failure path where the timer was never set up.
+
+This bug was found by static analysis.
+
+Fixes: 53460c53b761 ("[media] au0828: Add timer to restart TS stream if no data arrives on bulk endpoint")
 Cc: stable@vger.kernel.org
-Reported-by: Priya Bala Govindasamy <pgovind2@uci.edu>, Dylan Zueck <dzueck@uci.edu>, Yuan Tan <ytan089@ucr.edu>
-Closes: https://lore.kernel.org/all/cover.1780633578.git.ytan089@ucr.edu
-Signed-off-by: Yuan Tan <ytan089@ucr.edu>
-Link: https://msgid.link/20260709100100.604252-1-yuantan098@gmail.com
-[ Andreas: Fix tags to make checkpatch happy. Change summary line. ]
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-4-642a4c1aebd7@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/block/mq/gen_disk.rs |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/usb/au0828/au0828-dvb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/rust/kernel/block/mq/gen_disk.rs
-+++ b/rust/kernel/block/mq/gen_disk.rs
-@@ -215,8 +215,14 @@ pub struct GenDisk<T: Operations> {
- }
+--- a/drivers/media/usb/au0828/au0828-dvb.c
++++ b/drivers/media/usb/au0828/au0828-dvb.c
+@@ -537,6 +537,7 @@ void au0828_dvb_unregister(struct au0828
+ 	if (dvb->frontend == NULL)
+ 		return;
  
- // SAFETY: `GenDisk` is an owned pointer to a `struct gendisk` and an `Arc` to a
--// `TagSet` It is safe to send this to other threads as long as T is Send.
--unsafe impl<T: Operations + Send> Send for GenDisk<T> {}
-+// `TagSet`. It is safe to send this to other threads as long as these two are `Send`.
-+unsafe impl<T> Send for GenDisk<T>
-+where
-+    T: Operations,
-+    T::QueueData: Send,
-+    Arc<TagSet<T>>: Send,
-+{
-+}
++	timer_shutdown_sync(&dev->bulk_timeout);
+ 	cancel_work_sync(&dev->restart_streaming);
  
- impl<T: Operations> Drop for GenDisk<T> {
-     fn drop(&mut self) {
+ 	dvb_net_release(&dvb->net);
 
 
