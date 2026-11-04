@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826838;
-	b=WonU+RJRR/9krKEkGK75//X0VfhAKbuqEPF/C9R8MKXAOFmCoOzBrW5tgBgoAbhry4fq
-	 zZSZynk11rjv+9XYM1mk1+TzgQy4mBO3myEyncDhPfHffbP+bPvrYBwq7CwtSqYV8KYNK
-	 RxZgmjySN2yCMUqUfCfNWFmt8SMFhr9LCVNIGYgElEsP6xLLfC7nIal5DEYbB83j928Xv
-	 /yGofqKJEcjO/j5+e3y6I1psE1/1TuNW46BwRdysCxZwxEKTQM9K/LuJ+yuDb3hxGelHs
-	 czi5f10DAVIv3KCuiRdoGBWUoyHsyftYXvzg5l+EJfrEroXe+dTO53bLBdwVOx+MgQA==
+	t=1793826840;
+	b=VNjUr03Q2XyNXI5G4eJgS6avBMOV3RZ1It5VSrshreU8RXnHbQDPjo2VZ56NONy0SaFw
+	 qsaRS0B2r8VUgibH9OM7eRtSuzu2BblrWXuFpsHqIMacu8Rzk3lhtjepW7kYdIJg0Zcc/
+	 rmLdD42iE3WaGfdiuzuARD7vyNlURnw12/1ZgHkJegWwcv4j2wXfYDSAYgEiTC7FdnJsA
+	 YSwSryrIQW7z1DzSpprCrYVA7upvMDaYCwXT7n02mT/rGTJ/bkHM8ccRGp1H+8zmeG8Qx
+	 ZceoWRyjcpAksmtjb/fttzwRm6OaMN7j4tnMOKsUfK+Anh6t4qAU4VIj6Y1uxHKk/lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826840;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1QniJBNAxeXpKgGG1F/qU350s8TEbj9xp5vmFu18J5w=;
-	b=nkyhNKkXvF9c9u7WEjzitb5vGXWpV+pRFjIs+cdAiIs9wnsxWeOuUVTZRviTB1+UOUHM
-	 3PxoAhsK+bWyUzE05fHIralV77j+ib5BqTvsdV36s0I0AnM08AOmQ2JueCUHT2Y2J1MjM
-	 PudsKrCq6TtYTSOC0hB7G2O3LbkzbuAHdmEzaiAbAnvB1VATPgGpI9APCLU4Gj9C/QzDL
-	 zQl7oqrq1ojhXutgvW3/z3wvJqiKBqrgQ/zLQdf7ZoHS0KFvKilefhHYn0H0UEKwd4vhc
-	 zt+hqo+3uP14JPjV9+0Kq0Ud3CpAnFhgT4uHtbLgQSJi39KOARxrpR5aqG4OY+gt59Q==
+	bh=4ziX3D9RMXFwDf82X5ttC+qUK98IdFScdekInXmZjnE=;
+	b=KJ8YuiYS3CYCEtjwHinRFNH8fv6ip8POBplnZkzJKb2boCvfJmzpubTKRrXJ9hBcEidP
+	 KFC8yzekyDt8lEJgi66i7KH9wj5H29hrXFSW3FElMiEiPxDWR393zKLNHwY5Ml4dsk2d5
+	 TOiN0eMHlwBfIvb+Jun5rRQKGKVa8iRBNlmRiA+vZnU6VrCRoQp1ItWeOpRY6OXOprUeH
+	 nUvfaBC7CeHG0ttLPybzqDmBq1q8ciBdCrRO0uCx0Xforzx8m1MDm2tjwppIHBa0WLSml
+	 jAaC3o+muYDbRjlQR46MPA0TVyYZ7mrntJhGPPlnzVL0VpsNF+RxQsqSp8g3mA+Di7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dAxvWXBq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aRXZR5FA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F46660B140E;
-	Wed,  4 Nov 2026 21:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43A560B1415;
+	Wed,  4 Nov 2026 21:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dAxvWXBq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804AE1F00A15;
-	Wed,  4 Nov 2026 21:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aRXZR5FA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF341F00A1C;
+	Wed,  4 Nov 2026 21:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826837;
-	bh=1QniJBNAxeXpKgGG1F/qU350s8TEbj9xp5vmFu18J5w=;
+	s=korg; t=1793826839;
+	bh=4ziX3D9RMXFwDf82X5ttC+qUK98IdFScdekInXmZjnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dAxvWXBq10AlAkBgGB9VD0WznlUVqimeSSRaV+IVu6rOpN9Dd1s3jckMI0fao8PUy
-	 resHyL02gH71qvO1htVuwv2tRr4J7g8DbYpu+f7nzR3qORnuegnx91czjo4cVkPIsf
-	 xIM+7P3wpDJNL7KZwJ5g+cjlJuGGMqxvWFU4UJsY=
+	b=aRXZR5FA6X8U3ksXBuQ0B64WEQlEH1ErXrPxmtdTlzddM2EQrxuniSHcfCyGcHx8u
+	 IaLqufAxL571ZbGroy08ih4LJOEU1dIa/yvSe1d00FlNQUzJFo0isuW8wGqR4k/DJP
+	 /aiSW35Mv7Ae2yd5/tADWVXgQy8Bnijxt4Wc0zfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 037/547] io_uring/poll: drop stale double poll entry on rearm
-Date: Wed,  4 Nov 2026 16:03:41 -0500
-Message-ID: <20261104211039.390206256@linuxfoundation.org>
+Subject: [PATCH 7.3 038/547] io_uring/futex: allocate private hash before waiting
+Date: Wed,  4 Nov 2026 16:03:42 -0500
+Message-ID: <20261104211039.415484374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,57 +70,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit f2dbe87968a3aef74a11c025776d293b80964d3f ]
+[ Upstream commit 3eff68bce25584cded3fb6ec033ff9a1c9913d04 ]
 
-A file that uses two wait queues for poll, e.g. a tty, gets a second
-io_poll entry, which IORING_OP_POLL_ADD keeps in ->async_data until the
-request is freed. io_poll_add() can run more than once for a request
-though: IORING_OP_POLL_REMOVE with one of the update flags disarms and
-rearms it, and io_poll_task_func() reissues it if a wake up turns out to
-be spurious. The second poll_wait() of the new round then finds
-*poll_ptr set, with ->head cleared by the disarm, and __io_queue_proc()
-fails what it takes for a third wait queue with -EINVAL.
+The futex code relies on there being no private futex waiters by the time
+the first private hash of a mm is installed: __futex_pivot_hash() moves
+the waiters from the previous private hash to the new one, but it does not
+look for them in the global hash which is used as long as there is no
+private hash. That is why every clone(CLONE_VM) allocates it up front: a
+task which is alone in its mm cannot block in futex_wait() and create a
+thread or invoke prctl(PR_FUTEX_HASH) at the same time.
 
-For an update that means that the poll request is completed with
--ECANCELED, while the update itself reports success. For a spurious wake
-up, e.g. tcsetattr() on the polled tty, the poll request fails with
--EINVAL.
+IORING_OP_FUTEX_WAIT and IORING_OP_FUTEX_WAITV do not block the submitter
+though:
 
-Free the old entry and clear the poll flags before arming, which is what
-io_arm_apoll() does for internal polling. All entries have been removed
-from their wait queues at that point.
+  io_uring_enter()
+    io_futex_wait()
+      futex_wait_setup()	// no private hash: queued in the global hash
+  pthread_create()
+    futex_hash_allocate_default()
+      __futex_pivot_hash()	// first private hash, nothing is moved
+				futex(FUTEX_WAKE_PRIVATE)
+				  futex_hash()	// private hash: no waiter
 
-Fixes: b69de288e913 ("io_uring: allow events and user_data update of running poll requests")
-Fixes: 6e5aedb9324a ("io_uring/poll: attempt request issue after racy poll wakeup")
+The wakeup is lost and the request only completes when it is cancelled.
+prctl(PR_FUTEX_HASH, PR_FUTEX_HASH_SET_SLOTS, n) instead of
+pthread_create() has the same effect.
+
+Allocate the default private hash when a wait request on a private futex
+is prepared, which happens in the context of the submitter. This is a RCU
+protected pointer check once the hash exists. A failure to allocate it
+fails the request with -ENOMEM.
+
+Fixes: 80367ad01d93 ("futex: Add basic infrastructure for local task local hash")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-21-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-22-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/poll.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ io_uring/futex.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/io_uring/poll.c b/io_uring/poll.c
-index 3e443b187eae0..4f04bda42f7ff 100644
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -927,6 +927,15 @@ int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
+diff --git a/io_uring/futex.c b/io_uring/futex.c
+index 64909a2a8c886..9203998654ffb 100644
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -152,6 +152,24 @@ int io_futex_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	return 0;
+ }
  
- 	ipt.pt._qproc = io_poll_queue_proc;
- 
-+	/*
-+	 * A poll update or a spurious wake up arms the request again. Forget
-+	 * the entries of the previous round like io_arm_apoll() does, a stale
-+	 * second entry would be taken for a third wait queue.
-+	 */
-+	if (req_has_async_data(req))
-+		io_req_async_data_free(req);
-+	req->flags &= ~(REQ_F_SINGLE_POLL | REQ_F_DOUBLE_POLL);
++/*
++ * A wait on a private futex does not block the submitter. Even a single
++ * threaded task can go on and have the mm private hash installed by clone()
++ * or prctl(), which does not pick up waiters from the global hash. Make
++ * sure the private hash exists before the first waiter is queued.
++ */
++static int io_futex_prep_private(struct io_kiocb *req)
++{
++	int ret = futex_hash_allocate_default();
 +
- 	ret = __io_arm_poll_handler(req, poll, &ipt, poll->events, issue_flags);
- 	if (ret > 0) {
- 		io_req_set_res(req, ipt.result_mask, 0);
++	if (unlikely(ret))
++		return ret;
++
++	/* inflight tracking only needed for mm private hash */
++	io_req_track_inflight(req);
++	return 0;
++}
++
+ int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ {
+ 	struct io_futex *iof = io_kiocb_to_cmd(req, struct io_futex);
+@@ -161,9 +179,8 @@ int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	if (unlikely(ret))
+ 		return ret;
+ 
+-	/* inflight tracking only needed for mm private hash */
+ 	if (!(iof->futex_flags & FLAGS_SHARED))
+-		io_req_track_inflight(req);
++		return io_futex_prep_private(req);
+ 	return 0;
+ }
+ 
+@@ -213,10 +230,13 @@ int io_futexv_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 		return ret;
+ 	}
+ 
+-	/* inflight tracking only needed for mm private hash */
+ 	for (i = 0; i < iof->futex_nr; i++) {
+ 		if (!(ifd->futexv[i].w.flags & FLAGS_SHARED)) {
+-			io_req_track_inflight(req);
++			ret = io_futex_prep_private(req);
++			if (ret) {
++				kfree(ifd);
++				return ret;
++			}
+ 			break;
+ 		}
+ 	}
 -- 
 2.53.0
 
