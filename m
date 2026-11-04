@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830875;
-	b=kueZZHH6il3TupELE/FW6+e268sFjhQ2QBoV9ler4ec3T2aUiSHBnsh8uo3ksPmhsa8x
-	 ArspiEEAzHqh7KWVa/xvhJ5PKkMUG8+JtrME7TLpPJYXKJOnjVSDIgaAYp4fgkt6fq3nW
-	 rYj0cDD1ZEV2Ld2J21JANJg72KWMsIJ0hoToSIgyCZ86lxg2FrfDBrg0032Qc65MjVJJF
-	 J5MwMJ1krhhU3uoG88A2PmqmPbZWL9BahiA/nqMjMvPqgcznf8iaZGlV5T9PA7HaqS1Kw
-	 E0XONLFJyxH/6FxyJzoWSOj+9VQH6XrRsRzWI/U5ixR8THJ0n+L3iBwtUQIyb2Lqw9Q==
+	t=1793830876;
+	b=jiQVHrHfaco0vx123OE/lf7VW0hfo4XEbmSnX3uJQ9UI/Ojf/tIDTx+Z90ZtXv+/Bthu
+	 z/BfFecSl7xXBspM/UP9PC+uNtqzRgmKkDNFjVOuLbtFW7qixOwoGVxhbjuFp/6MIyF17
+	 d+Y0dTEqW7pLI68hw7q1LWCZ5hpAazQZhotIe2QAOnoIUEQ6jKKq9kxAMJxXDzuFI4hEv
+	 l4hS7rqGQ2WXNmy/kiFBceBceqwi7V//5Aaf9/rgyZtBUI4IMN6Cl0d12aa9nRfW9xDB/
+	 DI2JAZzOPcUYLT6gMx5uQz1wJ/Lp2E45TlWlzzSaqrb8TRqnzL0lkvVZmrkL2/6RXuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830875;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830876;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=APAsKoRyO4G5q5Cdd9rZXzsBwj9TrLHg1+uSlg2hzDQ=;
-	b=24ALaxwJhmF9q5BaDBRs8smkjwp/hEmoiLv26bMq56r8K+0SW9emK6oqEcH4KGH/QPNe
-	 JELvf8hPYM61bCWBTmzT5vXrdIppbocmN6b6fbHWWax+QPlmDHlr/C3O85AYCxAKzO60o
-	 WQWregXhE8+7UoSjsDEjYhoJJEwiYWh1OcTw0zkI716S4BOK5SdgiWGxI/rMkosZFWw/p
-	 rHXDe2d8TNJ1x61qZsgMvQT/J0eKpYSyrLipNJUTCAMb4Y07xIWooRHIseMRgzDSvLH+7
-	 anVqBI/xB8tYtc42kcy1T/EiCnUzUXK9LCogrREYS/o//Gpj3ZuRxQ79aVDKm/HbYgw==
+	bh=xTsOAiEiLszpK6uf+Hd4nfCa4kbWfJs/0XYSzW9qDxY=;
+	b=hp/jY9dNvrNqs0ZphKfnyM1a6NzQosXU6qbVK5u/oY9JkBAiaFvHcz1PMPogKQWrNGwJ
+	 /LmW8JM1JNM/JaOPxW4czkK6brpQbKUiSFwE3DtXBYe6Xrghynj7RELuhl938P+c7LFNY
+	 eEEKNX48+LUhVnbSk2kaggbZlkCjm7mLumMt7LZzH6JJQW/2abNhQgnnAMb3fwVblWKBg
+	 xV311E0EsEkRRO56Ezk0lmEwZtIFPiHeaLIVrrFgR1o0i+Aq99zgrnCL83oIb3bE7IXRW
+	 oh1mperR6TQq1H7rJej5Pg3fL1V7F9NaFCN4c3dWmb44pvT9JB4T3o6xPn8tw0Qr5Ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGgaeF1r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AThC6Zm2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1E0606E825;
-	Wed,  4 Nov 2026 22:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993C8606E821;
+	Wed,  4 Nov 2026 22:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGgaeF1r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDC71F000C1;
-	Wed,  4 Nov 2026 22:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AThC6Zm2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F02F1F000C1;
+	Wed,  4 Nov 2026 22:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830874;
-	bh=APAsKoRyO4G5q5Cdd9rZXzsBwj9TrLHg1+uSlg2hzDQ=;
+	s=korg; t=1793830876;
+	bh=xTsOAiEiLszpK6uf+Hd4nfCa4kbWfJs/0XYSzW9qDxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZGgaeF1r/LcTXvAMMGWsZrGTHctelw7tFDzJUJszgculso+aVojgXKZEWkIwvVj9/
-	 d0dy9ib4yl9IKmitJ1P35Vbn3CJHe73G0yctonIPGgP49eS9TBIw3xCkP708xYhNjd
-	 QjRHvIaBFBiFz14k+iquSIDY7G80OzyCaZM2dcvc=
+	b=AThC6Zm2vfjIimWg0xmnpqBEoF/U4B4UQRiiqajFSj61sk43Mz7KC3z0YrpU7qBg6
+	 ZRgoGIJ4Li4ukyhI4R7l0QkDb0GoppfjChpEVnSAfrR+wU5Y4EAujwOyw1DM513Pba
+	 QuBAPd1JbR6pio3Gda4TCv5oH+7goKcoYduO5XdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Thomas Falcon <thomas.falcon@intel.com>,
-	Zide Chen <zide.chen@intel.com>,
+	Hari Mishal <harimishal1@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0373/1005] perf/x86: Free hybrid state on PMU init failure
-Date: Wed,  4 Nov 2026 16:01:46 -0500
-Message-ID: <20261104211054.535257858@linuxfoundation.org>
+Subject: [PATCH 6.18 0374/1005] nvmet: passthru: fix OOB reads when parsing ns id descriptor list
+Date: Wed,  4 Nov 2026 16:01:47 -0500
+Message-ID: <20261104211054.566081303@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,68 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit 96746e731e1626545e343974ca4673739dceb31b ]
+[ Upstream commit bc7f75eba50012ed447654d8ce169ebaba695193 ]
 
-If PMU initialization fails, for example in check_hw_exists(), hybrid
-state can be left partially initialized: x86_pmu.hybrid_pmu is not freed
-and perf_is_hybrid remains set. This can leak memory and leave stale
-hybrid state reachable after a failed init path.
+nvmet_passthru_override_id_descs() walks a namespace identification
+descriptor list populated from the underlying passthru controller's
+Identify response, which is device reported. The loop advanced pos by
+device controlled amounts (sizeof(*cur) + nidl) without checking that
+the next descriptor header actually fits inside the buffer, so a
+malicious device could push pos to within a few bytes of the buffer end
+and cause cur->nidl, cur->nidt or the reserved field to be read past the
+allocation.
 
-Add x86_pmu_free_hybrid() and use it on PMU init failure paths so all
-hybrid-related state is consistently reset.
+Additionally, when a CSI descriptor lands exactly at the last valid
+header offset, cur + 1 points one byte past the end of the buffer.
+The unconditional memcpy(&csi, cur + 1, NVME_NIDT_CSI_LEN) could read
+that out-of-bounds byte and copy it back to the initiator via
+nvmet_copy_to_sgl(), leaking adjacent heap memory.
 
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Thomas Falcon <thomas.falcon@intel.com>
-Reviewed-by: Zide Chen <zide.chen@intel.com>
-Link: https://patch.msgid.link/20260717080342.1879573-3-dapeng1.mi@linux.intel.com
+Bounds check both the descriptor header and the CSI value before
+dereferencing them.
+
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/core.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/nvme/target/passthru.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index 2aa9270446634..7c37c228a88a4 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -2087,6 +2087,17 @@ void x86_pmu_show_pmu_cap(struct pmu *pmu)
- 	pr_info("... global_ctrl mask:          %016llx\n", hybrid(pmu, intel_ctrl));
- }
+diff --git a/drivers/nvme/target/passthru.c b/drivers/nvme/target/passthru.c
+index 0c361b1e35665..6d7469c94610e 100644
+--- a/drivers/nvme/target/passthru.c
++++ b/drivers/nvme/target/passthru.c
+@@ -53,13 +53,22 @@ static u16 nvmet_passthru_override_id_descs(struct nvmet_req *req)
+ 	for (pos = 0; pos < NVME_IDENTIFY_DATA_SIZE; pos += len) {
+ 		struct nvme_ns_id_desc *cur = data + pos;
  
-+static void x86_pmu_free_hybrid(void)
-+{
-+	if (!x86_pmu.hybrid_pmu)
-+		return;
++		if (pos + sizeof(*cur) > NVME_IDENTIFY_DATA_SIZE)
++			break;
 +
-+	static_branch_disable(&perf_is_hybrid);
-+	kfree(x86_pmu.hybrid_pmu);
-+	x86_pmu.hybrid_pmu = NULL;
-+	x86_pmu.num_hybrid_pmus = 0;
-+}
+ 		if (cur->nidl == 0)
+ 			break;
 +
- static int __init init_hw_perf_events(void)
- {
- 	struct x86_pmu_quirk *quirk;
-@@ -2214,9 +2225,6 @@ static int __init init_hw_perf_events(void)
- 			for (j = 0; j < i; j++)
- 				perf_pmu_unregister(&x86_pmu.hybrid_pmu[j].pmu);
- 			pr_warn("Failed to register hybrid PMUs\n");
--			kfree(x86_pmu.hybrid_pmu);
--			x86_pmu.hybrid_pmu = NULL;
--			x86_pmu.num_hybrid_pmus = 0;
- 			goto out2;
+ 		if (cur->nidt == NVME_NIDT_CSI) {
++			if (pos + sizeof(*cur) + NVME_NIDT_CSI_LEN >
++						NVME_IDENTIFY_DATA_SIZE)
++				break;
++
+ 			memcpy(&csi, cur + 1, NVME_NIDT_CSI_LEN);
+ 			csi_seen = true;
+ 			break;
  		}
++
+ 		len = sizeof(struct nvme_ns_id_desc) + cur->nidl;
  	}
-@@ -2232,6 +2240,7 @@ static int __init init_hw_perf_events(void)
- pmi_unregister:
- 	unregister_nmi_handler(NMI_LOCAL, "PMI");
- out_bad_pmu:
-+	x86_pmu_free_hybrid();
- 	memset(&x86_pmu, 0, sizeof(x86_pmu));
- 	return err;
- }
+ 
 -- 
 2.53.0
 
