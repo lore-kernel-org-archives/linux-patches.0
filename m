@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831680;
-	b=tZcnF+pW5L7MDQVUY167xpIGIvkxiawdmXXx8x2mvBmVqMFFxfFZ4J3bUEG2i9+lQt+9
-	 kNwbED+Yv8RXgSx0guu78xmU8wFMDycfrPHLT4eur6pQWbHFccsZrjQuLVLcHzE5awaDT
-	 x0/oYMmnia3HGGALdnfpM3aRE6Oc8OxTFTKwpkSKYL9EU8WKsYv7mniuqhkbNOgI+NazN
-	 oXCAq7fXuzY1O7sv+3pwZyvfhWJKegqU1Ru3kLDJ4JL62laL14h8GqyijwLxLxfLtEnRQ
-	 IgOfW+1aGDfGE2RX1YlqyKAxBYTcPr1wgUan829RelPx8zK/fBPiabRyEcCuU52pbkw==
+	t=1793831681;
+	b=mis6DHC7F1uwJPFquSkP901FPL3XzA6DeL6I5GegxK1M7ZfrAptHUUgD9fbQNhH4eq3u
+	 5dld//8qHn32tzfl4zhzedrxYvn41h1yP+a475MPGLu931w6EVKGmNHmtjIOqoldPr2ee
+	 LOOhfRu026ihFUT1IpvDJv1UAvFERidoFtR9UQVIgCxwd1/ZvAuMi00Kq6zlADdrcn+/J
+	 zJV4zKIQE6uu0p4CMdNm+Q8ftAGaz2c+eXfNJf5AQ834P+b6aZpKmKLtvHOeDfdPFpgfL
+	 VJ3aqejXTayRA4HjxJ8g+D3Yiov+0w/RMA94YDgf8vipvi+3B5SUA8ZiCDs0msvtZDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831681;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E4lgLzB7ZhEL3Nh0Q0uPW4morR786yOZ0JXHJPhgsFA=;
-	b=A4I/8/u9Yk7wLIjbB6se7SuMCLzExj706G3nXa6edSeQ7xUr1YXjfhOq5FAxbuylBFX7
-	 L/rpbU5wgfgSYJZLS9U1gc5CbfzHhw9cUFwz38Kkqe8J2n9pfNJf2snfhVCYaJCw/qZuA
-	 dQ2z2sHKFCRQhYStHvdjJ81Cf8qQmYFF+rU2a386jsZ1nagXV6GRuXHcChZlzvdlIdm33
-	 v0VpcfIV4+V9U/e7ZLARymH1ZC9r53LZIkflUeUGgnZYIH1kXdMjkrObLK1S+6AxCq6d6
-	 oVkx3FU85L9hsnudG1hjRLJ6WvuNlGBxZI6C1I1JAlEJKqEF2ZSIjNMtWpUhsVcRoTg==
+	bh=41JaxFGrr23pChOuynkSZpUomliuyLafn+xFLiDRZHE=;
+	b=pd8nVuqM8YAz/tek18uiT4dUrkV3J+TySSlrjfizx3LohLL20FXDkGUpS6C8n6T3Io22
+	 72EoQxifgitE7GLqlczFX81O46ftaOPa+iW9Uxty5FARg/7OkszWxtoQUnUT9yQG87VgB
+	 i7VdwC1us5gXmI6+Ht3g9Vpt6H7JGtBTbtUSQUoXjKHnL6eoPS5rcVrF1kScc+3JLCDKW
+	 5xIicP0qCbGd0bhnRB6IYsB0KOZZwLK58tN1YZxiEDKKT8wN+XGRMbhVGBhopDUW4W9Lo
+	 k/15hRmwglO9dOy+iAacx4v7i/d+xt4jTVY6M6oC3vgrOS2SkSwi5ugOSEZUpMekezQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYVAiq7I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gto8TeOt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAE2606A860;
-	Wed,  4 Nov 2026 22:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B8A606A33F;
+	Wed,  4 Nov 2026 22:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYVAiq7I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6760A1F0093A;
-	Wed,  4 Nov 2026 22:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gto8TeOt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2721F00A16;
+	Wed,  4 Nov 2026 22:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831679;
-	bh=E4lgLzB7ZhEL3Nh0Q0uPW4morR786yOZ0JXHJPhgsFA=;
+	s=korg; t=1793831681;
+	bh=41JaxFGrr23pChOuynkSZpUomliuyLafn+xFLiDRZHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DYVAiq7IwFBles66cSa1iFDaBSr/NidkVImw0rVFcLfRE5ND/OofuDQdPzzkga0w5
-	 v2Igl+zE3TdIU7eRYiwBpF34QVEnHPuT/bcBw4JK76e+JyJjAV1GDskVCYLupf9GIv
-	 H5iq7AwvtbZNj0xlWQXNEcD1tmkdGg9a0x9LgDsg=
+	b=Gto8TeOtJExbuXJFRd8DepQHzwLmyhEECyx7QjFu/Ej03yOu728PKDo6V8kffG1Zy
+	 8akXt4xLcEMhFnFTVFlCZH8JfXPhrlBZmS/O2kIjruexfSGr5dZTMoTV51d4Q296Xh
+	 4t4+XDkdNmtdt2/xfEUwJN+cIiQeV0FNH2kkR6mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0851/1005] xfs: dont scan across metadata/regular directory trees for dirents
-Date: Wed,  4 Nov 2026 16:09:44 -0500
-Message-ID: <20261104211107.135599939@linuxfoundation.org>
+Subject: [PATCH 6.18 0852/1005] xfs: dont set a metadata directorys parent to sb_rootino
+Date: Wed,  4 Nov 2026 16:09:45 -0500
+Message-ID: <20261104211107.160534530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,11 +70,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 03ce4ca43c00394364493865f417d646e252bac2 upstream.
+commit c9f98b0f4f70c8cfd617dc2886bf2fc0a36ab9da upstream.
 
-LOLLM points out that the directory repair code should never scan files
-in the regular directory tree when fixing a metadata directory and
-vice-versa.  Amend the scan predicate to check this condition.
+LOLLM complains that it's weird to set a metadata directory's parent
+inumber to the regular directory tree root.  Fix this even if nobody's
+ever going to notice this because metadata path lookups don't access
+dotdot.
 
 Cc: stable@vger.kernel.org # v6.13
 Fixes: 4f3d4dd1b04b2b ("xfs: define the on-disk format for the metadir feature")
@@ -84,21 +85,22 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dir_repair.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/dir_repair.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/fs/xfs/scrub/dir_repair.c
 +++ b/fs/xfs/scrub/dir_repair.c
-@@ -1189,7 +1189,9 @@ xrep_dir_want_scan(
- 	struct xrep_dir		*rd,
- 	const struct xfs_inode	*ip)
- {
--	return ip != rd->sc->ip && !xrep_is_tempfile(ip);
-+	return ip != rd->sc->ip &&
-+	       xfs_is_metadir_inode(ip) == xfs_is_metadir_inode(rd->sc->ip) &&
-+	       !xrep_is_tempfile(ip);
- }
+@@ -1674,7 +1674,10 @@ xrep_dir_swap(
+ 	ASSERT(sc->ilock_flags & XFS_ILOCK_EXCL);
+ 	if (rd->pscan.parent_ino == NULLFSINO) {
+ 		rd->needs_adoption = true;
+-		rd->pscan.parent_ino = rd->sc->mp->m_sb.sb_rootino;
++		if (xfs_is_metadir_inode(rd->sc->ip))
++			rd->pscan.parent_ino = rd->sc->mp->m_sb.sb_metadirino;
++		else
++			rd->pscan.parent_ino = rd->sc->mp->m_sb.sb_rootino;
+ 	}
  
- /*
+ 	/*
 
 
