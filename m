@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831038;
-	b=ySE1Cdz5SuWii/72JgYnbfpWhQvOW51xdX31L/CeBOYjBgs9tiWa6OKtn5WTffrzqCg2
-	 UxBD5gQKFDr6blBleBwaYHeCEBmzzVdxJVLStvIX++FySjQ3i0LvLXArh9XEolmThe6MJ
-	 NBWhcb79jenlZHJWIZ4daZ5h3mQgXotwh8r1sE026fcuJOqnCqXNsajgf7yvD2Jpjs6sL
-	 +52hgvHJH+P7V1csu8yMEick/OlyO0NAfxTLBHFbGY8nQCBSqXOXUf2dwlX0TTkwdBgbJ
-	 SE6LwAMLlwR+bLIJd7h7MrPKTVBRosrUvJIond8SdYLH4OC7o1sojSxfMtuby9vZZ3w==
+	t=1793831039;
+	b=Y3+tg4JvsxH2P/i55piKNBkyeLayGapGZLNuCnARC3NlUoE8zJUBYB4o0wC30+wi0Wz9
+	 2Q8dfZva/ZqhebJj0ZCfexv2XShtgQkMcLynN5/fJuBFbqm8MJphkQW4KerGE1LX/uZ26
+	 R/JK6m92lEXR0qLhlgffOkMWrPXOFRe9Z4RnSMXvNDDRlvq4THVRCdJbcGyCeoUqyBK5F
+	 /c+ZXPasWNCBQslstFxmHiPTB6FSVYsLVPQnMHgUY94y2gMvOXq+sw1wmHrcmo9UYXg8r
+	 38qbVmsxjCcV0sV17b6GGsopw8/c+0ERSCMp3u8BiZD5EfZRHtCMHEf3JWP83zpoTwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831038;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xDnyQdeddYEpMpkrhMGQkrjaFcIyflmFaZIRMQ7Q5x0=;
-	b=Urtuudu/9cxSD/RJ2/0AR+0RZcSRSkM3DsVBzygCmfOgY6KeHMW6gnjgE/ALaFrMHSkA
-	 h/N2Tw9U2SIRL1BIzGfCSdpTwXJoofcS1FKa6isEn86WjFVRwHUxxJh3KBEEZ/eFyTYYf
-	 SAphV+QZ+/9k/SWSYfYo3bWgdW8LHaTh10U0US98BgdQoJWGJkUZ2hD0WKHRYQ6fdq6dz
-	 raCt/vOP1CKuJdOfLpRCzqMtL7NqvJTH+l0GRQQ30rK9Dmq5SWe+CFUy3qWvk+XJB7QK+
-	 s19RNZxsndIf60rjg0yLgkeI/OPzLSvu2dxuMsvAcbY8BSo1GpvNExnDyH0yd8OGtAw==
+	bh=PDnUpP4TVUyDxAbilFeUf/wYlhqO8ZFGOLZsgurJ22U=;
+	b=Poz/D22DSQYRLFKk02UZpR1u5vdOsu1qmPU+DYQ+HGLzuu4BSHL9XNPsD6IGx+By0HoF
+	 POO5/I/e9xz1Qck69EmIXTbwLliTYUipNVhk9XQK7RXZT+kKivvBO9hZzpkASEM5I02u/
+	 ZA21/xvVi1J2IOVA/a8/ijgWPO+Arm9DzAxvcwio4rIhupjWw7B63aNGHLMo2eW5bDwAK
+	 H//v3CzUh8L3PPv0ot+aBc8PxHfOW2XCxZvzsrpsjoqy/MaZORy/RD9XWflEVLJdiNtu7
+	 KtZMG7y5S9D0oPPWG3InVxdSgQn7veDhld1OcHajIf4EIOgViGnKX5jGQTJ4EZC8RVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="K8z/OAq5";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uhNZg4mL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA248606B385;
-	Wed,  4 Nov 2026 22:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872D5606B2C2;
+	Wed,  4 Nov 2026 22:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8z/OAq5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420221F000C1;
-	Wed,  4 Nov 2026 22:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uhNZg4mL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26EE1F000C1;
+	Wed,  4 Nov 2026 22:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831037;
-	bh=xDnyQdeddYEpMpkrhMGQkrjaFcIyflmFaZIRMQ7Q5x0=;
+	s=korg; t=1793831039;
+	bh=PDnUpP4TVUyDxAbilFeUf/wYlhqO8ZFGOLZsgurJ22U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8z/OAq5slt32FwjvqvxLCiz1+2UVQJRM0XOWMuKmIY38AKK+g8VyEdBaQyP5NAp2
-	 +p//EjTAaIFb3CJ2wKt5ixPhsC3d9R6K04G/0Wa/QAx8LUrVQMH0enr6CTbhn1arkE
-	 CRGbaj5a3S9EqqwH8MM0t492OR8txguodCppYyxs=
+	b=uhNZg4mLWD0I0LwIWxlQhYQkLLjSgWM1TL8azukdqGwP7GGqkR8awJSiO1BgeXiDd
+	 dtL3Z1T1hOkW0SzWSCVZcb+8FQ+zdaDOVYiTwY9g6xc1cp34ROt228EQuXPAIyYyeD
+	 eANHyEuQdeY84dyn8VHE1fzKavpE5sGn+Q6sHbQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0473/1005] netfilter: tproxy: use DEBUG_NET_WARN_ON_ONCE for protocol fallbacks
-Date: Wed,  4 Nov 2026 16:03:26 -0500
-Message-ID: <20261104211057.255682510@linuxfoundation.org>
+Subject: [PATCH 6.18 0474/1005] ksmbd: handle allocated range queries on dense files
+Date: Wed,  4 Nov 2026 16:03:27 -0500
+Message-ID: <20261104211057.280837299@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,51 +67,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1f0391aea883e99d402d0f77ba3530e4e879350d ]
+[ Upstream commit 350684e0498512d06963858b810101f58563810b ]
 
-Replace WARN_ON calls with DEBUG_NET_WARN_ON_ONCE in the default switch
-blocks of nf_tproxy_get_sock_v4 and v6. Unsupported transport protocols
-are already safely handled by returning a NULL socket pointer. This
-prevents unnecessary system panics when panic_on_warn=1 is enabled in
-production systems.
+FSCTL_QUERY_ALLOCATED_RANGES currently relies on SEEK_DATA and SEEK_HOLE
+for every file. That works for files with holes, but it is not a good
+match for dense files.
 
-Link: https://patch.msgid.link/cover.1786968834.git.zhilinz@nebusec.ai/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+A zeroed range in a dense file may be represented as an unwritten extent
+and skipped by SEEK_DATA. The server can then return no allocated ranges
+even though the file should still be treated as allocated from the
+protocol point of view.
+
+For dense files, report the requested range clipped to EOF as allocated
+instead of probing holes. Keep using SEEK_DATA and SEEK_HOLE for files
+marked with FILE_ATTRIBUTE_SPARSE_FILE, and wait for writeback before
+probing so punch-hole updates are visible to the filesystem seek
+implementation.
+
+This fixes the case where a query after zeroing data could return no
+ranges for a dense file.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 +-
- net/ipv6/netfilter/nf_tproxy_ipv6.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/vfs.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-index 041c3f37f237b..5eab7a2dc8ef2 100644
---- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
-+++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-@@ -137,7 +137,7 @@ nf_tproxy_get_sock_v4(struct net *net, struct sk_buff *skb,
- 		}
- 		break;
- 	default:
--		WARN_ON(1);
-+		DEBUG_NET_WARN_ON_ONCE(1);
- 		sk = NULL;
- 	}
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index f894092901bc5..cd0d3c13da3e7 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1034,7 +1034,8 @@ int ksmbd_vfs_fqar_lseek(struct ksmbd_file *fp, loff_t start, loff_t length,
+ {
+ 	struct file *f = fp->filp;
+ 	struct inode *inode = file_inode(fp->filp);
+-	loff_t maxbytes = (u64)inode->i_sb->s_maxbytes, end;
++	loff_t maxbytes = (u64)inode->i_sb->s_maxbytes, end, query_start;
++	loff_t query_length, size;
+ 	loff_t extent_start, extent_end;
+ 	int ret = 0;
  
-diff --git a/net/ipv6/netfilter/nf_tproxy_ipv6.c b/net/ipv6/netfilter/nf_tproxy_ipv6.c
-index b2f59ed9d7cc0..12ec36a6be2e1 100644
---- a/net/ipv6/netfilter/nf_tproxy_ipv6.c
-+++ b/net/ipv6/netfilter/nf_tproxy_ipv6.c
-@@ -136,7 +136,7 @@ nf_tproxy_get_sock_v6(struct net *net, struct sk_buff *skb, int thoff,
- 		}
- 		break;
- 	default:
--		WARN_ON(1);
-+		DEBUG_NET_WARN_ON_ONCE(1);
- 		sk = NULL;
- 	}
+@@ -1050,11 +1051,33 @@ int ksmbd_vfs_fqar_lseek(struct ksmbd_file *fp, loff_t start, loff_t length,
+ 	if (length > maxbytes || (maxbytes - length) < start)
+ 		length = maxbytes - start;
  
+-	if (start + length > inode->i_size)
+-		length = inode->i_size - start;
++	size = i_size_read(inode);
++	if (start >= size)
++		return 0;
++
++	if (!length)
++		return 0;
++
++	if (start + length > size)
++		length = size - start;
+ 
+ 	*out_count = 0;
++	query_start = start;
++	query_length = length;
+ 	end = start + length;
++	if (!(fp->f_ci->m_fattr & FILE_ATTRIBUTE_SPARSE_FILE_LE)) {
++		ranges[0].file_offset = cpu_to_le64(query_start);
++		ranges[0].length = cpu_to_le64(query_length);
++		*out_count = 1;
++		return 0;
++	}
++
++	if (start < end) {
++		ret = file_write_and_wait_range(f, start, end - 1);
++		if (ret)
++			return ret;
++	}
++
+ 	while (start < end && *out_count < in_count) {
+ 		extent_start = vfs_llseek(f, start, SEEK_DATA);
+ 		if (extent_start < 0) {
 -- 
 2.53.0
 
