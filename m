@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829694;
-	b=1Pym8KwxxZ1wQ8hXI21yCq5d6vY6vuWMm/u4uUvUuPZKkXkI2F/jnKUv+aac16EJkQ2J
-	 zRj0fJ5Fm3kDTV/kKyPu1gA+aZ4cAP1h7aFUpuCaZdW7LRm6zi4tcUBZj4qw4Gtizt8rA
-	 S6wGqkK5f7Ct1NzkSASbDdATKnX6ffvEivyRntlBinllkZ7/6ONezU4fFPWnRrqN9/wNF
-	 9jFPEUKtYxSYf/2CyeLSUWhp1b3i68HOKT9f9on4tnrob72IudKwPH7Lbs+Qk+O7JvJ4n
-	 AJ5AM19knulHrpkUQX5rLqSluknaWmq7x58O6F9K1wAXv5ezBl67NzmSZg1XXK6FeuQ==
+	t=1793829696;
+	b=XEEZPEbWTQl4XO8BLqS5hSmLHMP7dWYRL5h4htdmJx/YQttcXBU12OWZzOVSCFBI0NHU
+	 UQ01Qm2yDRi/HOBX+ltZ745jD2IiznlXeBVhsYoV2VfUt2aNaU+ZAJhVMpaGPBTl9dERW
+	 Tlpqg8I+pMxJ3PPTq38cXXUuoG9Hnb2WZ1OEHI4tqD/+aTMXVr/im1Rmc5r0fEdTaUSAJ
+	 h4icViF/0ZLPkZHzpmLXOznPS0+rq84mWPbOz8L1jZmkDFZHRoO5sqVpZAyANffmiS8Fi
+	 xRcBj41Io94fOPJTQAtEhRwAZZ9CK7FJkdOQfsBAYgX5Ghxo6dZMDW6nfnCTKwNPVvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8ZQMA3jFd3UyLIpOZHRrBOOpbOQNjRe2KMFkshG7rw0=;
-	b=Ej3wVmOSyep1hWLRjn2j4VEXnEiSS/ItfUP/RIfOunGSL37BbxFMPkGi/KXJL+FBQXCY
-	 DGiSrSDbOUxLuS/e9I5zWGPh8AB/lMczwwH1e37uw8Dv215u/fEd/2OFpJQeXhpcOV2So
-	 31LA+u5VNgih9sDhCkUFSU/04+Xm22nk2WRb53gjF4MY9AIiO6Ac+Jm1vejR3gvySKtIM
-	 5prwiz/FaN7dKgSisV1M3NEwJbry+eN6QWA1XZoYB14XfonAH1FtlpiYinq+4vJvU6uO6
-	 9VTf+0djHwZWYh0XBg7vGVp/rEAcEqeVDud3I6OoVuwK5gsexRdkPCvoryT51k9O7lw==
+	bh=czL8Gif9WpYtpV0Tgo6WAomRJfYywQzFPWn0yq8mJjs=;
+	b=E3IzqqmGwwcuPHdq/oIy7BJBpWGT3P31YssoRL5MnjhSdNyp1lYHVhOpIpqt6S1mPyHb
+	 ei6pYqhQPo0GhPm5bTxAY0wpOWJs7mXGwNSn3tm70vfcrYZifd4ww9jtzSz8G+6wrCt92
+	 7tzH/a0G26dglczjoUetrGWt99hzBDwMJBqW445yS2YN+3+Q80qYwx2am4tQL7vvrLBMx
+	 2ZUMaGTfbb2Qw8LNyR9GY/H5lrwqAupJRMfzZzl5qKZQcDC0UBJxgBNdYUxiyrXfTBBnT
+	 uGsuTZSeGFMMiOOrT3sYAwv1pdtEo+g8EfHys58qZbYBMITzT9NbcFLoMFSLdzeF4YQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QADm8bjA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="McjWgC/A";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2019D606BA30;
-	Wed,  4 Nov 2026 22:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7EB6075DE9;
+	Wed,  4 Nov 2026 22:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QADm8bjA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE7F1F00919;
-	Wed,  4 Nov 2026 22:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McjWgC/A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B3F1F000C1;
+	Wed,  4 Nov 2026 22:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829693;
-	bh=8ZQMA3jFd3UyLIpOZHRrBOOpbOQNjRe2KMFkshG7rw0=;
+	s=korg; t=1793829695;
+	bh=czL8Gif9WpYtpV0Tgo6WAomRJfYywQzFPWn0yq8mJjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QADm8bjARdpVFAhhmmTG3XEgwHKTvu0ib+KvXbjcnaFlp9pMUYwp8Oaf2I2GrPM39
-	 e/dSFZKxS0prgmYZkCtgkFgOWbv7qjU8oz+JdP6b9xGjY+07p4q7RvLSjsEK3bvuSk
-	 VqbySqvl1fp4tn+GdNzG8eYNw7FuUNgm74pCQR1Y=
+	b=McjWgC/AKpzf7cN55QKKGh1FiC0g0LfHjCfWiCREjts4gn1GFZJgAadMqnGXzHPuz
+	 HOt9W0eE7RNyBY9bmlcOBDdTI7YASnBIm763YltKNbk7lorSy7wMLXG68FSgUYPEBl
+	 mKQiuU7MHCmkF6Xv22EGIbKz5tY4C80CZx7GDKKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0284/1005] ALSA: hda/realtek: add missing NULL check for codec->bus->pci
-Date: Wed,  4 Nov 2026 16:00:17 -0500
-Message-ID: <20261104211051.853641669@linuxfoundation.org>
+Subject: [PATCH 6.18 0285/1005] fs/ntfs3: Fix memory leak in indx_find_sort()
+Date: Wed,  4 Nov 2026 16:00:18 -0500
+Message-ID: <20261104211051.882270156@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,34 +67,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 3b36ac93739e7b119a30affaee9c2dd41f24efbb ]
+[ Upstream commit 194491be54e1c9e4d29d3ee777b05ff031c4b670 ]
 
-In alc269_probe(), codec->bus->pci is dereferenced without a NULL check
-for the ALC236 vendor ID case. Add the missing check, consistent with
-the existing pattern used elsewhere in the same function.
+When popping a level from the index lookup stack, indx_find_sort() frees
+the struct indx_node but not the index buffer it owns. Every call that
+descends and then pops a level leaks that allocation.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260730015302.253008-2-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Free n->index before freeing the node itself.
+
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
+ fs/ntfs3/index.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 6bf500c0b5f9b..d88627558150f 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -8451,6 +8451,7 @@ static int alc269_probe(struct hda_codec *codec, const struct hda_device_id *id)
- 		spec->init_hook = alc256_init;
- 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
- 		if (codec->core.vendor_id == 0x10ec0236 &&
-+		    codec->bus->pci &&
- 		    codec->bus->pci->vendor != PCI_VENDOR_ID_AMD)
- 			spec->en_3kpull_low = false;
- 		break;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index edfcd28573ef9..03ae5a817c1b4 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1325,6 +1325,7 @@ int indx_find_sort(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 		/* Pop one level. */
+ 		if (n) {
+ 			fnd_pop(fnd);
++			kfree(n->index);
+ 			kfree(n);
+ 		}
+ 
 -- 
 2.53.0
 
