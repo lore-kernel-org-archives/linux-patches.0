@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831706;
-	b=K4nLegZIxyslhLiVRucum6+/wv+mTioLlvDPaDnL2w+wJCsq+wwEUTMsHrs9mVlo+0bz
-	 lIIm/yM1eISymDUf0+99iCC2S4FBgH+1QfUPb3McPKChav+k46zyulmz2fCpxB+Sm6RKU
-	 PcIQOU/QZmQsu8ZVOyxezIEHfLY/U0YeEKZaInDlP0ridXDpGSkNqK71wa/YzEilASmFL
-	 SitSdFoltEm9bCf0W1Ppc7mUtBisjBykzoST6Fuf5m7o15CuL4DkOoZwtn3nMuLYuLCuF
-	 S4bWGabjGrtEAUqcWCk1EzLzBiZ7xJHnzpECHy2YDbZnaYIzDQ3CD81vBTyqNTmcaMA==
+	t=1793831708;
+	b=S5KXO2E7isJLKsD1254ksFR1FT6FM4urzuXuAr1hjtTaD8zY3reE/ZIl7FqwqR/0Ft0f
+	 cvTiXUdDg8vMczb9hHnXUH553dAVabdgM+jIC6b75HRUhQPpQfOGnV313rVLTZEhcUFMC
+	 OH710//cIiDOknVyIWiKMwqjndE1JYVWdJrGmsKTAD9ERmsm4ST9VtjJfkKk2IhnuWShu
+	 vkZ/OMn8jRW2xqZzU2i8+YRNLf9J1PWUnD5AaAIAA5JSiw7bsRKhCN0pHjcXslnsWtp5+
+	 DgftDtrfv6F24CpKBAD+7BHT+GBsL012e8SVx9ezeWuvy/jny2vmOCHNswkS9UOfhyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831706;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831708;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8uCRAk/uX7Rhs5ToHGLQfnc/sOOkukOEJ6ZnlGiwi7s=;
-	b=ipibbbNbIkY/s+bDWdktx5/aXKOnDqjgQQq7HSai1c9FeRZql0QoGOF7pLnbSb8f1ybn
-	 Kcy6uUZJnZ91tZQW42vEQoIXYHYsBtdCk4dQFOAtJKluHXZDuSK8sPZGEGvcyxb74MdhK
-	 UiSe9MDO+hqLPXYLnlEegguzQuL9iSK/avIKc9BeVpwJ5hD0soaEBj0LjDwsaB+bEwhdJ
-	 W88RXzqvdps1iAlMW07L/sr1Id38Xt4B1c1U1sTCTmMytxrcg74nAuMBiuoMWNcRMY20G
-	 mFAfUH68Yu4ab80H4j9/hp+uLLCbsHmBCZPpkMdA5YLNQLyzzA60gsIGDUBK65vd6Bg==
+	bh=EycqpjHVvKIBHEmZH2TWXQ+vYx/UGfaNE2v75f34Me8=;
+	b=j/u15nxj65mTodrPlEniBXlVuw+0Khe+1TNW6HL1xmNMoalolCFfO/+KAGBHAiFheFh2
+	 CqBXptfxsil5IsTl13Q6JmyJnzfutP4sxHfmZ/67OzGHcGlsvbb+mX3yjaEPTsNGrBXVp
+	 5HEFqYJ/mIqFR4s51XQNVucZDsabA6H6v96cttQ3Jx8s6FLJUk39isyJGv5XQpxuyzAyU
+	 gTS9kDqrOXJBMqRJMkIcQvB+CG/RdT61uvrS6ARxImMH3ZECEiJfFA25kxpN0041Na9GS
+	 VtBqVOcWqviEdnK9/K1YwF7h4lDDZKGt3EWvPdSECVyFyrESRCZ9aMkNuGV6me/HGFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfdCB4wO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkIHHCCk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8C2606AB14;
-	Wed,  4 Nov 2026 22:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8286E606A337;
+	Wed,  4 Nov 2026 22:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfdCB4wO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6831F000C1;
-	Wed,  4 Nov 2026 22:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkIHHCCk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE4B1F000C1;
+	Wed,  4 Nov 2026 22:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831705;
-	bh=8uCRAk/uX7Rhs5ToHGLQfnc/sOOkukOEJ6ZnlGiwi7s=;
+	s=korg; t=1793831708;
+	bh=EycqpjHVvKIBHEmZH2TWXQ+vYx/UGfaNE2v75f34Me8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dfdCB4wOmFdbYUf+4O3mDWLLQr63kUqwcfR20YQikxmAMSnSt7N/fKMU1AVSUkPhI
-	 ko80BII4WV0BuEu/N/nNU1iUWo88e/UFISGhKB/xRNyCb7qY+757A46RBN+BlSc6wZ
-	 7JQakgJjxlILhumV/7zkPp3mjYBmi0W/Qwk26UbU=
+	b=SkIHHCCkrM42s+uc4jfmi63QR8UPtG59NGlcQ+G1iVcnjja9KHNSyYe6q0VmZiSJf
+	 ITPf07eIg4UruCKMf3FztuoBssoofZ3SlFmsid6BqDxBfA4B0xfMIU9GYbJ37lgW7j
+	 aSS3bMJnopBeDTxpAAZzxsFTVInu3BKH3SQDm3SA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.18 0865/1005] x86/bugs: Adapt SRSO mitigation to Zen6
-Date: Wed,  4 Nov 2026 16:09:58 -0500
-Message-ID: <20261104211107.505106260@linuxfoundation.org>
+	VeroFess <coderzeng@hotmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.18 0866/1005] smb: server: size directory name conversion buffer correctly
+Date: Wed,  4 Nov 2026 16:09:59 -0500
+Message-ID: <20261104211107.532279157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -66,94 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: VeroFess <coderzeng@hotmail.com>
 
-commit ae1d2082d93bc04604dc08e9b7f9cdba5e0c28e6 upstream.
+commit f1f37834eaba5904103af1f18afe3510c7e9dc71 upstream.
 
-Zen6 has BTB protection which isolates the different contexts
-(user/kernel, guest/host) from one another. This makes the SafeRET
-mitigation there unnecessary leaving the user/user and guest/guest
-attack vectors open, whose protection is handled by the Spectre v2
-mitigation setting to do IBPB on a context switch.
+A 2048-byte ASCII directory name needs 4098 bytes when converted to
+UTF-16, including the terminator. ksmbd_convert_dir_info_name() caps
+its allocation at PATH_MAX and writes past the end of that buffer.
 
-Detect that setting and report it with a new mitigation string.
+Allocate space for one UTF-16 code unit per input byte plus the
+terminator. Use kmalloc_array() to check the size calculation.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20260822013231.1109255-1-bp@kernel.org
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Assisted-by: gpt 6 sol with daybreak blue
+Signed-off-by: VeroFess <coderzeng@hotmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    1 +
- arch/x86/kernel/cpu/bugs.c         |   18 ++++++++++++++++--
- arch/x86/kernel/cpu/scattered.c    |    1 +
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ fs/smb/server/misc.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -411,6 +411,7 @@
- #define X86_FEATURE_OVERFLOW_RECOV	(17*32+ 0) /* "overflow_recov" MCA overflow recovery support */
- #define X86_FEATURE_SUCCOR		(17*32+ 1) /* "succor" Uncorrectable error containment and recovery */
- #define X86_FEATURE_SMCA		(17*32+ 3) /* "smca" Scalable MCA */
-+#define X86_FEATURE_BTB_CTX_ISOLATION	(17*32+ 4) /* AMD: Branch predictions contexts isolated */
+--- a/fs/smb/server/misc.c
++++ b/fs/smb/server/misc.c
+@@ -291,12 +291,13 @@ char *ksmbd_convert_dir_info_name(struct
+ 				  int *conv_len)
+ {
+ 	char *conv;
+-	int  sz = min(4 * d_info->name_len, PATH_MAX);
  
- /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX), word 18 */
- #define X86_FEATURE_AVX512_4VNNIW	(18*32+ 2) /* "avx512_4vnniw" AVX-512 Neural Network Instructions */
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1320,6 +1320,7 @@ enum srso_mitigation {
- 	SRSO_MITIGATION_IBPB,
- 	SRSO_MITIGATION_IBPB_ON_VMEXIT,
- 	SRSO_MITIGATION_BP_SPEC_REDUCE,
-+	SRSO_MITIGATION_USER_IBPB,
- };
+-	if (!sz)
++	if (d_info->name_len <= 0)
+ 		return NULL;
  
- static enum srso_mitigation srso_mitigation __ro_after_init = SRSO_MITIGATION_AUTO;
-@@ -3055,7 +3056,8 @@ static const char * const srso_strings[]
- 	[SRSO_MITIGATION_SAFE_RET]		= "Mitigation: Safe RET",
- 	[SRSO_MITIGATION_IBPB]			= "Mitigation: IBPB",
- 	[SRSO_MITIGATION_IBPB_ON_VMEXIT]	= "Mitigation: IBPB on VMEXIT only",
--	[SRSO_MITIGATION_BP_SPEC_REDUCE]	= "Mitigation: Reduced Speculation"
-+	[SRSO_MITIGATION_BP_SPEC_REDUCE]	= "Mitigation: Reduced Speculation",
-+	[SRSO_MITIGATION_USER_IBPB]		= "Mitigation: IBPB on context switch",
- };
+-	conv = kmalloc(sz, KSMBD_DEFAULT_GFP);
++	/* One UTF-16 code unit per input byte, plus the terminating NUL. */
++	conv = kmalloc_array((size_t)d_info->name_len + 1,
++			     sizeof(__le16), KSMBD_DEFAULT_GFP);
+ 	if (!conv)
+ 		return NULL;
  
- static int __init srso_parse_cmdline(char *str)
-@@ -3095,7 +3097,9 @@ static void __init srso_select_mitigatio
- 		 * required.  Otherwise the 'microcode' mitigation is sufficient
- 		 * to protect the user->user and guest->guest vectors.
- 		 */
--		if (cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST) ||
-+		if ((cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST) &&
-+		    !boot_cpu_has(X86_FEATURE_BTB_CTX_ISOLATION))
-+					||
- 		    (cpu_attack_vector_mitigated(CPU_MITIGATE_USER_KERNEL) &&
- 		     !boot_cpu_has(X86_FEATURE_SRSO_USER_KERNEL_NO))) {
- 			srso_mitigation = SRSO_MITIGATION_SAFE_RET;
-@@ -3171,6 +3175,16 @@ static void __init srso_update_mitigatio
- 	    boot_cpu_has(X86_FEATURE_IBPB_BRTYPE))
- 		srso_mitigation = SRSO_MITIGATION_IBPB;
+@@ -305,7 +306,6 @@ char *ksmbd_convert_dir_info_name(struct
+ 				      d_info->name_len, local_nls, 0);
+ 	*conv_len *= 2;
  
-+	/*
-+	 * See if IBPB on context switch is the only thing needed to address
-+	 * GUEST/GUEST and USER/USER vectors.
-+	 */
-+	if (srso_mitigation == SRSO_MITIGATION_MICROCODE  &&
-+	    boot_cpu_has(X86_FEATURE_SRSO_USER_KERNEL_NO) &&
-+	    boot_cpu_has(X86_FEATURE_BTB_CTX_ISOLATION) &&
-+	    spectre_v2_user_ibpb != SPECTRE_V2_USER_NONE)
-+		srso_mitigation = SRSO_MITIGATION_USER_IBPB;
-+
- 	pr_info("%s\n", srso_strings[srso_mitigation]);
- }
- 
---- a/arch/x86/kernel/cpu/scattered.c
-+++ b/arch/x86/kernel/cpu/scattered.c
-@@ -56,6 +56,7 @@ static const struct cpuid_bit cpuid_bits
- 	{ X86_FEATURE_TSA_SQ_NO,		CPUID_ECX,  1, 0x80000021, 0 },
- 	{ X86_FEATURE_TSA_L1_NO,		CPUID_ECX,  2, 0x80000021, 0 },
- 	{ X86_FEATURE_AMD_WORKLOAD_CLASS,	CPUID_EAX, 22, 0x80000021, 0 },
-+	{ X86_FEATURE_BTB_CTX_ISOLATION,	CPUID_ECX,  8, 0x80000021, 0 },
- 	{ X86_FEATURE_PERFMON_V2,		CPUID_EAX,  0, 0x80000022, 0 },
- 	{ X86_FEATURE_AMD_LBR_V2,		CPUID_EAX,  1, 0x80000022, 0 },
- 	{ X86_FEATURE_AMD_LBR_PMC_FREEZE,	CPUID_EAX,  2, 0x80000022, 0 },
+-	/* We allocate buffer twice bigger than needed. */
+ 	conv[*conv_len] = 0x00;
+ 	conv[*conv_len + 1] = 0x00;
+ 	return conv;
 
 
