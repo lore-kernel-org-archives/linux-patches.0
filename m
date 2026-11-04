@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829181;
-	b=vynsNAGIsiW9rCmDJNFFocjt8kfaNrosUWGv1AT9tnG0mQUQqs1D01v42kEgFDjLK/cV
-	 HD/osUqIHCN0aac9sfwl5lsnCbOJPA5CihxIYIa2rwQMH2AqLm9C5BWz3ySSEriBfwCI5
-	 rYRsTYeupFPLSmrbUPgx901GEF8g3KUVt2mu1HRqTda5yolSigORyUowb4UAr49/D0ToR
-	 pGOk1DFqvIdEkeLx161JVjstqOuYUPml9dcO3KWT+Zt2/4Eqwrvhs97n6AW+x+7ZY+8oS
-	 yyKJ6MUP6Lafv8sO2YoIwAzC8E1VCkwZhbrKr4lAGfsSxhWmz6h/s2T0r4E9OW+FrVw==
+	t=1793829177;
+	b=BnHY7Lo8kWffhrw6R6NflaOEX+B5uoZD3EL+6q2oT9vuif6vY+eR2csjw9KMYqzkBjhk
+	 OznWMOekrNwjxDJ2hZHUsi926Yqdcn2uZy8AIH/plnxHxqmnO2Z47GEJlNXNcUuyhCCC8
+	 xuaeh0YBi2D+ncNbQjVmM0NZ24HbbBXnTUyhaQsnyH9lhzNW7YvDPMU24RlNmhsO+QK4i
+	 3/E8bqi/IbJg7U3X/K4PJz5Idgxi8F5hkqBri6DulcmEHcusYh1CWcqMP0dX4zKPPpKbo
+	 6cgDO9mk3iXa14STaQ/8BRYzpDZ735si8+sr6vhnWhhTOuexeP5pHFu0t4wktfvWw1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829177;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fA1bmigfnPcABMGZEiKAW5Yygjhoe7vJqkmm4d0Z5Vs=;
-	b=EeYx8n8ZUtk79lkU2XNnCpCIEDpR0Dqa8bz1hX9R+ePQtRyOdWqOKSBbdGvUBEcu7jAX
-	 wWWPyBweEel4q1wzrr4M3TtZ8R4KF1twCqJLZK0qY4dDtEpKeK1X/ednqul7Waf6WM5fx
-	 SG664S/1Xa7h/By+mMpDoaNJ4C6emCH49iNdCRkqyNjcAUfh79x+vJ90fNraG6FMC2E1/
-	 HUgLWhElJjmCHW4Fn8OKfPFf+dqsZo6dNfpH2DJxZ7maYNn0eRYFAQk9q3f8O6GTU9pmL
-	 mR1qGfFa2wr30rlEVYjGyDtMmVvvwCnNBfViVehUxPvUKxoUqwTzoAlU7Tgjmq2mBdg==
+	bh=zkTWgouLLPnDh5S8ROkuJUHL/tNkqCBpF/RpN/CqQWg=;
+	b=twd6mxFf+EXGpOH9RGeRFrpsOHTTDjUZltm/r+3GHZEf6iqUQgzV6emXHP1x8+CTrxf7
+	 CShYxROnGEpIXLgfpb8cWyzDFITRWc3WVaSStVa/4ABglBmy/fU8/QYoB1WXfeRcLjEEK
+	 CnfPqnAJA1r4n3FfJ3HTdgnobUWRW3oI2wv+oI3ZdqMX+Gg1xrDRfCgsNyjE3cTcv9RQU
+	 gLyg4DDuK569eLMJGlDOC17Avr2t+ErOtHgCOnH+7eou1dNO6zinvgTTa84DZRxIz62Qc
+	 JQtJ6edApa4kqcs4bmmTMN5aKNzvG7UnTBgihAzGW19u90/hLvkY1UROaVleNqwMUeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dktjczg6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zf6Db2fv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C57260709BF;
-	Wed,  4 Nov 2026 21:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C8C606D806;
+	Wed,  4 Nov 2026 21:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dktjczg6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F171F000C1;
-	Wed,  4 Nov 2026 21:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zf6Db2fv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B12F1F000C1;
+	Wed,  4 Nov 2026 21:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829181;
-	bh=fA1bmigfnPcABMGZEiKAW5Yygjhoe7vJqkmm4d0Z5Vs=;
+	s=korg; t=1793829176;
+	bh=zkTWgouLLPnDh5S8ROkuJUHL/tNkqCBpF/RpN/CqQWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dktjczg6DEiC8YoPjTrFD3znSpY6xpPgaV5IoL7iPVIszGroaEL7vWCvDYuvf9Zmp
-	 vblUVfkfgCyYnuxV1yqlypSRlmWH4ASu98/9aMpvYnnvkGe4SoHaIApG3HgkSShWEX
-	 R68taPmP+7ERwgPp533DZgxu149ngG8/OEqfkaFY=
+	b=Zf6Db2fvWT/2OtB6IckV1uId7HezakSIJpTcOzmFqus4NvnPb+gMU5LcL6iJegW+E
+	 VraLuGm5sC2xSOyww0r+UTg7gcrShvMxRI/e7NLr7Ske4EyCx6Lgmi3rqd6VvoYEhw
+	 9aZC7/6U0r0T3+X5oSV3fke1J1Gzi/IBXgzhsaP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 497/547] HID: prodikeys: validate fixed-format MIDI reports
-Date: Wed,  4 Nov 2026 16:11:21 -0500
-Message-ID: <20261104211052.497532723@linuxfoundation.org>
+Subject: [PATCH 7.3 494/547] HID: mcp2221: always initialize and cancel init_work
+Date: Wed,  4 Nov 2026 16:11:18 -0500
+Message-ID: <20261104211052.408239093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,47 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 0ff37294c41bd925258893310398bc2b45fcd4a7 upstream.
+commit 6a006ff898b459e0bd10375d7fbe0ea7f7a132b9 upstream.
 
-The HID core invokes raw_event callbacks before validating the report
-length.  Prodikeys reports 0x01 and 0x04 are passed to handlers that always
-read bytes one through three, regardless of the supplied size.  A truncated
-report can therefore cause an out-of-bounds read.
+The writable gpio_mode_enforce parameter can change between probe and
+remove.
 
-Require four bytes for the two fixed-format reports.  Keep report 0x03 on
-its existing variable-length path, which derives the number of note pairs
-from size and only accesses complete pairs.
+If it changes from false to true after probe, remove skips cancellation
+of init_work. Pending or running work can then access devm-managed
+driver state after teardown. Changing it from true to false can make
+remove cancel an uninitialized delayed work item.
 
-Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
-sequence") added the same kind of raw_event length validation to hid-asus.
+Initialize init_work whenever IIO is reachable and cancel it
+unconditionally on remove. Keep the parameter check only for scheduling
+the initialization.
 
-Fixes: 3a370ca1dcf8 ("HID: Prodikeys PC-MIDI HID Driver")
+The false-to-true cancellation gap was previously reported by Sashiko.
+We also encountered this issue during our static-analysis research.
+
+Fixes: 200e6c6e94fa ("HID: mcp2221: Add module parameter to enfoce GPIO mode")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-input/20260715143415.916A21F00A3A@smtp.kernel.org/
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-prodikeys.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/hid/hid-mcp2221.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/hid-prodikeys.c
-+++ b/drivers/hid/hid-prodikeys.c
-@@ -772,8 +772,13 @@ static int pk_raw_event(struct hid_devic
- 		if (report->id == data[0])
- 			switch (report->id) {
- 			case 0x01: /* midi keys (qwerty)*/
--			case 0x03: /* midi keyboard (musical)*/
- 			case 0x04: /* extra/midi keys (qwerty)*/
-+				if (size < 4)
-+					break;
-+				ret = pcmidi_handle_report(pm, report->id,
-+							   data, size);
-+				break;
-+			case 0x03: /* midi keyboard (musical)*/
- 				ret = pcmidi_handle_report(pm,
- 						report->id, data, size);
- 				break;
+diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
+index db0b15622c39..053377dbced2 100644
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -1072,8 +1072,7 @@ static void mcp2221_remove(struct hid_device *hdev)
+ #if IS_REACHABLE(CONFIG_IIO)
+ 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
+ 
+-	if (!gpio_mode_enforce)
+-		cancel_delayed_work_sync(&mcp->init_work);
++	cancel_delayed_work_sync(&mcp->init_work);
+ #endif
+ }
+ 
+@@ -1347,10 +1346,9 @@ static int mcp2221_probe(struct hid_device *hdev,
+ #endif
+ 
+ #if IS_REACHABLE(CONFIG_IIO)
+-	if (!gpio_mode_enforce) {
+-		INIT_DELAYED_WORK(&mcp->init_work, mcp_init_work);
++	INIT_DELAYED_WORK(&mcp->init_work, mcp_init_work);
++	if (!gpio_mode_enforce)
+ 		schedule_delayed_work(&mcp->init_work, msecs_to_jiffies(100));
+-	}
+ #endif
+ 
+ 	return 0;
+-- 
+2.56.0
+
 
 
