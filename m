@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830991;
-	b=3BTaXr2T52sVx/S78R7jWkXMRXllIjYDkMSjzx59S+8pagE+8yAfiq8skMJuhzoilRTs
-	 YAvE+prPaMtqWxUcQJ8yCFTYWBBQ7Zl75YRSennPrRexHBI+KE4h3PjZA8HiZ1C/bS1vV
-	 np2bkPNDrBt2VagZ2C6t5RD8tct1gDJgx8fb/DjJrk6GMjq3w7TKmecRAlYOIEy5/rHIq
-	 Umzm5fRo33dWjcHUXEs7okjPZiCKxaAEsq7rDdZy4bhujUkqnEQt8w8+43JuUMUmYVZUw
-	 k8oEjwPm4wuBm8nTy32T988vKngfrIIktBgfAhtxPfgVRtZ8Wu5EmQ9F31ACo+XtTmQ==
+	t=1793830993;
+	b=BO2gu68QrpktH4yAnMao4Fw1xyirHkujB5JOXi9+V+AwJztTM7bN3WaVGCx+sHhzBYEG
+	 gqNxeeO/cX/WAiyMXvb57A7WYJ7vu6v2+m6MBDe6Vte0qUG8oxQq0lQ9TbMTUcfb8wYi5
+	 rL/WygB1Bdj/iqtOq+rjTWZMnrLEm7zVRuX76toNSfYuhFxhmjxOTP+qk5KXhA0YmvjbJ
+	 ysVwAZZONoGLh0CdhloSRSokzJj9ziuKUxCuqhum+cOnnigXnGK4CzL8CStYyQa9t4FD8
+	 q4BKlZoR++ZvEQmVG99vSewJ0BAvCj/KM/F+WEPdZKGQ3DhJeGWCSyJX/r8Gor3DXAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dcxRPNYsQ+s68yqloONTDEJUrXLxQQVHAKONIKVVT+o=;
-	b=hCyoLT8EE4V3NyA+LsRFuEoE3pXBaKJr7Klshpza1jZ0lh9DipQGK0s5pAsoayBw1zLM
-	 BDI/DLe0ovUTCLzAHtAVJbfN15p746CXSFPhUrormQoZis+X6NcjljAZiGKAQvJuB0X33
-	 iJV1pzRLR7I0KrDnuUNZ4gi8ecnM1lSn0uBcxaccBcQg68md6LzjBhYQub887k2QmCEUc
-	 bt/TrxRyTB+2jq8D1N4I/XBIu6tbxlQE1fRM22qZh1sObbbOgUOlZnLsyk0LiaxzRacSa
-	 gN9Gm4fw9hDFPZgBtze9sAu1DxCbajMX7VTpG3vDGR2FPZ5T/H1iC4yKZrUH/jbn6VQ==
+	bh=LuT6d37cY+bm80uQgoy6fYJ1S4REm59llhEGpYZJoTw=;
+	b=2zDSQ1qFf9RPnUu5oOz9fEj1zKos1ktJnUze0RErQ3q6P7M6EffYNBPTehM02Nj9EASt
+	 du6qYGUQQGcnQqeH7Q55PQ/Cf/M7ElzzxN9marZRHX4BflUVb52IlChwe5qb5pBKpZIwl
+	 FIlJ1ftwtdVFVCgSNUI9ZkA6DU+k/oswe4NKcUdzxgxrlTkFfTQihHcHFz4ZqT0EsCt/+
+	 Uf51vTiseCyouUZmGj0OugFYEeIuFJibtuU+cpoYPBkm/MpeEQKIYSO/trjEJMdK4UZSX
+	 LsUoK1Gh20SHrSvP/ESERblm1WEIuN9Y84JHK9MIASRu26m/XBnR3SHBeBxDFvi3zhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a9dLT6OW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZPEVJMj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77951606AB3E;
-	Wed,  4 Nov 2026 22:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1CF606AB32;
+	Wed,  4 Nov 2026 22:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a9dLT6OW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119011F0093A;
-	Wed,  4 Nov 2026 22:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZPEVJMj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974941F00919;
+	Wed,  4 Nov 2026 22:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830991;
-	bh=dcxRPNYsQ+s68yqloONTDEJUrXLxQQVHAKONIKVVT+o=;
+	s=korg; t=1793830992;
+	bh=LuT6d37cY+bm80uQgoy6fYJ1S4REm59llhEGpYZJoTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a9dLT6OWAXtIeLfC94rVYzloDSQF8crqIt18oK3of0u4JEwAjUbhlyUF9uLeHPRwX
-	 Ege5sES1ara7tMrcbAVAmk3OvOgz1EfPq24Vd6501NoV+iODEuhUYjfObhX3Qk19dY
-	 2qvcL3AFm0uopffEnCD4Ae0X034b1pD9okvWBteQ=
+	b=wZPEVJMjVB440Mp0KjfHKS60kRAOSSNIDjCvMYovSKcekpkp3u+ZHTPGXPS770Xf8
+	 oAqXflSXbsNVV5BPKl+YHvBjMTe92SQZKDcuXdl8oB1RE3Z81NbqDcHf3uYW/1zDfa
+	 KtQNSOghxBYOzZVoBAc5MmM8UeWubU+nU2kcfWPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Li Jun <lijun01@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0443/1005] rtc: brcmstb-waketimer: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 16:02:56 -0500
-Message-ID: <20261104211056.478897543@linuxfoundation.org>
+Subject: [PATCH 6.18 0444/1005] spi: loongson: pm: add .freeze .poweroff .thaw .restore
+Date: Wed,  4 Nov 2026 16:02:57 -0500
+Message-ID: <20261104211056.503541304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,40 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Li Jun <lijun01@kylinos.cn>
 
-[ Upstream commit 402c89d28fecd28652a4bfe997f08f6544836381 ]
+[ Upstream commit a9c2f0d401fd1e11ce59e4243946a59bd818e8c5 ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+after execute s4, the spi error,
+[ 1104.754246][ 4] [    T1] tpm_tis_spi spi-SMO0768:00: SPI transfer failed: -110
+[ 1104.761503][ 4] [    T1] spi_master spi1: failed to transfer one message from queue
+[ 1104.769201][ 4] [    T1] spi_master spi1: noqueue transfer failed
+[ 1104.776344][ 4] [    T1] tpm_tis_spi spi-SMO0768:00: SPI transfer failed: -110
+[ 1104.783609][ 4] [    T1] spi_master spi1: failed to transfer one message from queue
+[ 1104.791308][ 4] [    T1] spi_master spi1: noqueue transfer failed
+[ 1104.797446][ 4] [    T1] gttadd tpm_chip_start1 ret = -110
+and in s4 the loongson_spi_resume&suspend are not
+called at all. use DEFINE_SIMPLE_DEV_PM_OPS() add .freeze .poweroff
+.thaw .restore, after s4 the spi communication is normal.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
-
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704121734.54941-1-pengpeng@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Li Jun <lijun01@kylinos.cn>
+Link: https://patch.msgid.link/20260820092351.101605-1-lijun01@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-brcmstb-waketimer.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-loongson-core.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
-index fb47c32ab5ff4..55c15aad42cff 100644
---- a/drivers/rtc/rtc-brcmstb-waketimer.c
-+++ b/drivers/rtc/rtc-brcmstb-waketimer.c
-@@ -413,6 +413,7 @@ static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
- 	{ .compatible = "brcm,brcmstb-waketimer" },
- 	{ /* sentinel */ },
- };
-+MODULE_DEVICE_TABLE(of, brcmstb_waketmr_of_match);
+diff --git a/drivers/spi/spi-loongson-core.c b/drivers/spi/spi-loongson-core.c
+index b46f072a0387b..f07ee432f96b5 100644
+--- a/drivers/spi/spi-loongson-core.c
++++ b/drivers/spi/spi-loongson-core.c
+@@ -270,10 +270,8 @@ static int __maybe_unused loongson_spi_resume(struct device *dev)
+ 	return 0;
+ }
  
- static struct platform_driver brcmstb_waketmr_driver = {
- 	.probe			= brcmstb_waketmr_probe,
+-const struct dev_pm_ops loongson_spi_dev_pm_ops = {
+-	.suspend = loongson_spi_suspend,
+-	.resume = loongson_spi_resume,
+-};
++DEFINE_SIMPLE_DEV_PM_OPS(loongson_spi_dev_pm_ops, loongson_spi_suspend, loongson_spi_resume);
++
+ EXPORT_SYMBOL_NS_GPL(loongson_spi_dev_pm_ops, "SPI_LOONGSON_CORE");
+ 
+ MODULE_DESCRIPTION("Loongson SPI core driver");
 -- 
 2.53.0
 
