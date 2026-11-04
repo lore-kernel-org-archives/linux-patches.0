@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827139;
-	b=vdoFBNROZHT2T7pmopWFCVYLV+0YpVpBK/IJXPjtOKO968dFZb4TiNqUO6YfkWwaJWyQ
-	 b8XRrpJYWczvcsNpB+KlQZchXS/CZG4tvQRz5wdYOTX00hrCHJolbHEjOm/oDVdIjIwW8
-	 Z6qX4EWhDboJPy+/1tvvpYg1WbERzfN7gmQrr11tQFwtPj5lIWUdJg+NuP1KTIVrROIIH
-	 GT5ddIc7alDgsm3R3nVeNddtANpmOncJkJ7U6Hfnq4ite855tb9NZWgR1a8C86/7mJoQi
-	 3m3Q6Gq5QOgMS/MKsy76xdmGytzQOPMGbHgZH7S5ndNdDBf5dBNvs4tcUCMFEzYizwQ==
+	t=1793827141;
+	b=AHWFIM0ud6eT+hUfnB6fsX71otGxCN97f6XSDcAi+KSI6+fZ3FJ5CdRmRWO8OSxIpKms
+	 DF6uc/qb1WMYsG1I6KR/mjFxDnsIy78H/Oj1GO0V0DU3qekc4k2SyJc3NQhuECgA5svWx
+	 QJWvu5DgAM0gvjdB72JRAz/rO4P0tcPm285UP4scBL89h88SeOT/GHBMRWKo/ZkVRVRbv
+	 WinKBgv6GwAvYGfL3KeN9Z6p6PdAOmWVzYcqfBIIF0P/xYAZjEklfrE30S4X2sJZcQv5w
+	 AxzL5Z5SLuzXSTgE4TeWHsJ2wZVYzm6DEaJl0GVJeayKj2gISaT40h5TyHFrvYGKtpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827141;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9fw/U31n6btOD0Y4yLRslCGlklzxbbmvwvZeogP9L64=;
-	b=YnEQnZqZOVY0wCSk/yGEyEkl1Zm4qQh2tzL6NU1MmrgTR4peWCGZhiwa8SeqmZwhPlkF
-	 y1n13swAe8ETQIhqKqKefnLTOOXYs3Z64j3YXzYd1yB2v1f3Sy7AW+8umgA2POkUOxzPA
-	 ci4SE3wTiuHn+/m8d+l7CRK2gnNvxvruOuhms5eUnF4AWjtbiOtLRmbWT1MYMYGC/39Cr
-	 tad7W8TI2n/nHVTKiPLXKN3okswgL9Bl3AlIdssk/rkkndWO3NnfdIYbS2UR7PU++Xg3d
-	 EZ4I5gc5FIkzoFEGB9QErBs6KIf/pN3qf3Ao9rcg413t64KZpd7TRZTXfbcXsGk1hKQ==
+	bh=OfYuHikkpymzQMD893rtxUK1Mb+I0ryC4hxz+YVXPic=;
+	b=I5rVO60iUWCeQlv2KzUesRpfkKwZqhdOtt7a+AIMtEHmxwoGE5cOnC8Ye1JfIYIWhW3o
+	 MRUKPEoVdzcDhBT3JJ8ofM5jUviTUgxJYns7z4S3lf4+ZBmi2oOWopQduKfM/9ccx4wAs
+	 VjSzfizskoASxa/oIvzHHubvESyMA7KcTOvZfVAnJBNmLz1X4lTDSSJJ1WkuC5HtKzHn0
+	 2RE5i8p9crQlpeH1GOTnJyfbPM/CqUbywKHwmdpIJNHJvMkJtQtaFMOfS7/iq0Fl6x2PH
+	 gChF1pJkuL6OuNsTJCMVSpBOoR+AXUIKIhGAt0GPGCAeYJAuSvvsD/hpaqnpVN/yZZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSPhbZfk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iRETG/3T";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17309606A87D;
-	Wed,  4 Nov 2026 21:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFCD606AB0D;
+	Wed,  4 Nov 2026 21:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSPhbZfk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C511F000C1;
-	Wed,  4 Nov 2026 21:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRETG/3T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8261F00A1B;
+	Wed,  4 Nov 2026 21:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827139;
-	bh=9fw/U31n6btOD0Y4yLRslCGlklzxbbmvwvZeogP9L64=;
+	s=korg; t=1793827140;
+	bh=OfYuHikkpymzQMD893rtxUK1Mb+I0ryC4hxz+YVXPic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSPhbZfkIJ2rgYgUH3js+bjlBN3w0/GF3LoVp/IJN1tS62CUP62H61dbQS/DKh6qM
-	 xY/29IUEyir3ClNSOXjcwu9KaOblhNyE7pQDPONgZ4Xefm+tNs/lzBuf5rl7FgNBn1
-	 5Ye1xwJ6QkVqA/3RIM3xduTAPMynw80IIZLcuyGg=
+	b=iRETG/3TIhe73ozyLq0m9Gl8IToViGOgkvvUF/h37nS+3PSenUE5IAyEffv1AqomF
+	 ieSK9aJKDmT64Pb7rjLHPq6PMj80JJMXn3QzcJY2lqM0OhincZvI2QihA0s5OtaOvY
+	 /EooUNsiWCK4U2NfHDZ7Z3pW9JLAZKKiXTp+B6+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Steven Price <steven.price@arm.com>
-Subject: [PATCH 7.3 210/547] drm/panthor: Fix TOCTOU race between GROUP_REGISTERED check and erase
-Date: Wed,  4 Nov 2026 16:06:34 -0500
-Message-ID: <20261104211044.116449022@linuxfoundation.org>
+	Yibo Tan <lhfff@tju.edu.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.3 211/547] fbdev: atmel_lcdfb: Prevent FIFO work after removal
+Date: Wed,  4 Nov 2026 16:06:35 -0500
+Message-ID: <20261104211044.147011921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,57 +67,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Yibo Tan <lhfff@tju.edu.cn>
 
-commit 7764289d76a38c3a2f9b093bf17e193ab54acd70 upstream.
+commit 20b3b97cf89cb381bf07516090d99399cc9b91fd upstream.
 
-panthor_group_destroy() checks the GROUP_REGISTERED mark and then calls
-xa_erase() without holding the xarray lock across both. If the handle is
-destroyed by another thread in between, and a concurrent GROUP_CREATE
-reuses the freed ID, the first destroy erases and releases the new,
-still-initializing group, leading to a use-after-free in
-panthor_group_create().
+The LCD controller IRQ schedules sinfo->task to recover from a FIFO
+underflow.  Probe currently requests the IRQ before initializing the
+work, so an early interrupt can schedule an uninitialized work item.
 
-Do the mark check and erase atomically under xa_lock().
+The probe error path and remove path cancel the work before freeing the
+IRQ.  A FIFO-underflow interrupt can schedule the work again after that
+cancellation.  framebuffer_release() may then free sinfo while the work
+is still pending.
 
-Fixes: eec7e23d848d ("drm/panthor: Prevent potential UAF in group creation")
-Assisted-by: Claude:claude-opus-5.5
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+KASAN reported a use-after-free in atmel_lcdfb_task() when an underflow
+interrupt occurred during removal.  With the IRQ freed before the work
+was cancelled, the same test completed without a kernel diagnostic.
+
+Initialize the work before requesting the IRQ.  In both cleanup paths,
+free the IRQ before cancelling the work so that it cannot be scheduled
+again after cancellation.
+
+Fixes: d22579b83735 ("atmel_lcdfb: FIFO underflow management")
 Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20261008100935.3059587-1-osama.abdelkader@gmail.com
+Assisted-by: Codex:GPT-5
+Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/atmel_lcdfb.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -3794,12 +3794,18 @@ int panthor_group_destroy(struct panthor
- 	struct panthor_group_pool *gpool = pfile->groups;
- 	struct panthor_device *ptdev = pfile->ptdev;
- 	struct panthor_scheduler *sched = ptdev->scheduler;
--	struct panthor_group *group;
-+	struct panthor_group *group = NULL;
+--- a/drivers/video/fbdev/atmel_lcdfb.c
++++ b/drivers/video/fbdev/atmel_lcdfb.c
+@@ -1146,6 +1146,9 @@ static int atmel_lcdfb_probe(struct plat
+ 	/* Initialize PWM for contrast or backlight ("off") */
+ 	init_contrast(sinfo);
  
--	if (!xa_get_mark(&gpool->xa, group_handle, GROUP_REGISTERED))
--		return -EINVAL;
-+	/*
-+	 * Check the mark and erase the entry atomically, so a concurrent
-+	 * destroy + create can't make us erase a group that's still being
-+	 * initialized and happens to reuse the same handle.
-+	 */
-+	xa_lock(&gpool->xa);
-+	if (xa_get_mark(&gpool->xa, group_handle, GROUP_REGISTERED))
-+		group = __xa_erase(&gpool->xa, group_handle);
-+	xa_unlock(&gpool->xa);
++	/* Some LCDC recovery operations require process context. */
++	INIT_WORK(&sinfo->task, atmel_lcdfb_task);
++
+ 	/* interrupt */
+ 	ret = request_irq(sinfo->irq_base, atmel_lcdfb_interrupt, 0, pdev->name, info);
+ 	if (ret) {
+@@ -1153,10 +1156,6 @@ static int atmel_lcdfb_probe(struct plat
+ 		goto unmap_mmio;
+ 	}
  
--	group = xa_erase(&gpool->xa, group_handle);
- 	if (!group)
- 		return -EINVAL;
+-	/* Some operations on the LCDC might sleep and
+-	 * require a preemptible task context */
+-	INIT_WORK(&sinfo->task, atmel_lcdfb_task);
+-
+ 	ret = atmel_lcdfb_init_fbinfo(sinfo);
+ 	if (ret < 0) {
+ 		dev_err(dev, "init fbinfo failed: %d\n", ret);
+@@ -1192,8 +1191,8 @@ reset_drvdata:
+ 	dev_set_drvdata(dev, NULL);
+ 	fb_dealloc_cmap(&info->cmap);
+ unregister_irqs:
+-	cancel_work_sync(&sinfo->task);
+ 	free_irq(sinfo->irq_base, info);
++	cancel_work_sync(&sinfo->task);
+ unmap_mmio:
+ 	exit_backlight(sinfo);
+ 	iounmap(sinfo->mmio);
+@@ -1230,6 +1229,7 @@ static void atmel_lcdfb_remove(struct pl
+ 		return;
+ 	sinfo = info->par;
  
++	free_irq(sinfo->irq_base, info);
+ 	cancel_work_sync(&sinfo->task);
+ 	exit_backlight(sinfo);
+ 	atmel_lcdfb_power_control(sinfo, 0);
+@@ -1238,7 +1238,6 @@ static void atmel_lcdfb_remove(struct pl
+ 	clk_put(sinfo->lcdc_clk);
+ 	clk_put(sinfo->bus_clk);
+ 	fb_dealloc_cmap(&info->cmap);
+-	free_irq(sinfo->irq_base, info);
+ 	iounmap(sinfo->mmio);
+  	release_mem_region(info->fix.mmio_start, info->fix.mmio_len);
+ 	if (platform_get_resource(pdev, IORESOURCE_MEM, 1)) {
 
 
