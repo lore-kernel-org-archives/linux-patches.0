@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829422;
-	b=EAlAZSjEyKgOMFbMsmFnkMxbWFOjjCgwtpm9qcCrwd882U+aNys5FEcV8cvaZIA5rAt6
-	 nDtM3NgxcjaqZQCk/arnGhx/Y+3mjkkn2fSkAAhZQv1JeVqP3U6+C4qyFPyJarWHXfA5p
-	 uRbIjOVy3aLbPfhwfOy/e3yJTO4LCYZKZMUyBFp2Qy0/U2SgVmQqid2dZTM5yVz3gDGZy
-	 PCxGc0FtI7W7oF9bZ2KOIjSlr6+60aPanbJ9tPPMyF1Unv8Tc7rMjb6fvQuTyBVbYW8ie
-	 NfGG8UJHcYX6zvapnHtV/5pnDPg4aajMRkn8baIERcFxABYRbbs8b/cU8pjMMBZ1zug==
+	t=1793829428;
+	b=hvifb04BWUZtyWDjbyMHGGuXqBBm6S33ESjegKDFk/PaTsjvxGlZRtIjjygjhUWUbabN
+	 2cNXi50JSglL3w7PGecSodJ9zSEp2DViwD5LNPq9dnkPc99Ep6aAfcAQtgO5kH8bxgC6R
+	 Ey4KobPw0kqGb05W2L/cekDAirC2ZgYpCys3CQRHLkJgjlTQo3pZEyQ0qxRrZxSUgpzTF
+	 0MP0wqGq3BGA3eqwj7S6K0C4xk+Tl70UX3TEhXUesoPZZ1WJwgEAv+tGOxDGo5VtUbUtJ
+	 O8NOUOJmtSvrYS51dYZWdVcSdJO9IcJKatxhdATxgUTgXgUniyFwNab2DKqBuvyl3iA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829422;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=p4yXFIfuuRoTOe4paTH5moylNGP07WFFrQRHG2crOQQ=;
-	b=ES5YcKIuTneLGlW2cD+LdvfmyojK5zMgiTDNj+lGXJZ5Vy3rT9ZDBlcegLTPh1iB6l+i
-	 fdMtjFySTioD4V+EPwlvl2IQWHgBSS+hxhOenaCCEYLwdFufi8jidFjkVpMdJMqdyYAIG
-	 WUzgtPRXFckIRlemPnT57FhIiJu5TDVnM6mDhwZdU/BwUJycxiyPap/+DYAsjsJ/5deFg
-	 X2GiBEfHYinHb577DTAUKM9xNAmCVKfmdDJVixmhCWzB32yo2b36LSChNrz+201EvR/VH
-	 aNPS323J4KXCU4eA5obG3g650ayQuRxabPjdzpw2qFOqCgttRE9GFiqTShS50R15f2Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=DA0/TPGOvT+FfKC1/jxiYbkGT776i30UbcQU97MHoCA=;
+	b=Jay3FKtrRhAdsu0cbM4zccSumu5/7kUoiHFQ4g/W+hmFE+eYwlAF8ZFX2rYV336kWrud
+	 OtQ+8wVke4lXkF6Yu7KjYcUsbXkNAx2XL2SE5vOnQR2JO18akT+ghZK42v9X0Zvvs+ZrK
+	 usKBhWqh6ZZpHDJQLHZFFSltuoEwjsTxQx9hrx/SO95vsvz6sTOUQYLlpXFOeLFbRXdmc
+	 Um4Jzl8VZ+bl42hQxnNfe17l+zGT4DRA0hApX/ERSTMfTtvri+jnj0x2YWqDCC45b1ePj
+	 ZzxNBZJjDDP1QF9AnBOGJd1Crk63yX+owIzqn7K6ab+mAZL+5s6RFi1b+c48wJyd6WQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PgZ+9JhD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ia7+2ApV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA8A60877C2;
-	Wed,  4 Nov 2026 21:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8880D60877C7;
+	Wed,  4 Nov 2026 21:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PgZ+9JhD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A911F00A1B;
-	Wed,  4 Nov 2026 21:57:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ia7+2ApV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C57D1F00A18;
+	Wed,  4 Nov 2026 21:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829421;
-	bh=p4yXFIfuuRoTOe4paTH5moylNGP07WFFrQRHG2crOQQ=;
+	s=korg; t=1793829428;
+	bh=DA0/TPGOvT+FfKC1/jxiYbkGT776i30UbcQU97MHoCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PgZ+9JhDmjhVKEqmAdpA2KT/vmTlcEC/im1sMJwCnjsI5zxACDlACARNqUI4l81Yc
-	 aMLnNhSCKOiv+XEzkgvvFDSUfz3EsFsSvbMsnN3YDeCz8rvB9vz9qKwG4SRb+4H2F2
-	 0hSAA4keY2IsDMQ4nDuLThX62JWbA29Kz2kNqPP8=
+	b=Ia7+2ApVsBaX6h+/iPheF3i/ku10PN6OKiCyOZdsro6J3lPmRB0NsSel4pFbCMelC
+	 kb4XMiK08XHeTq5Ps06TPWoukc0D9OdFuqFjpk3y61AWaR62sj7U7w6kfqfGCnz1kW
+	 ftOgZgICc7XE2PZgyXG1qK/XYK0s2ow9f0Hg6Tio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Muralidhara M K <muralidhara.mk@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0116/1005] nvme: dont reference NS after unlocking in nvme_ns_head_ctrl_ioctl()
-Date: Wed,  4 Nov 2026 15:57:29 -0500
-Message-ID: <20261104211046.907441008@linuxfoundation.org>
+Subject: [PATCH 6.18 0120/1005] platform/x86/amd/hsmp: Validate _DSD mailbox sub-package element count
+Date: Wed,  4 Nov 2026 15:57:33 -0500
+Message-ID: <20261104211047.028592076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -63,41 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Muralidhara M K <muralidhara.mk@amd.com>
 
-[ Upstream commit 77c57daf98a2ad95ec9ac1371caeff8939cc1f58 ]
+[ Upstream commit 0d7a2664494534d6152be9bd9bf1cb1d089c67d3 ]
 
-In nvme_ns_head_ctrl_ioctl(), once we drop the SRCU read lock we should
-not reference the NS to lookup the controller, so use the available
-controller pointer directly.
+hsmp_read_acpi_dsd() dereferenced elements[0] and elements[1] of each
+mailbox sub-package before confirming the package actually held two
+elements, allowing an out-of-bounds read on a malformed _DSD.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Verify package.count >= 2 first, then fetch the string and integer
+objects.
+
+Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260625123337.886435-3-muralidhara.mk@amd.com
+Link: https://patch.msgid.link/20260629155634.1807598-3-muralidhara.mk@amd.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/amd/hsmp/acpi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
-index fb8533127116a..b3e58de6f5cc5 100644
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -727,7 +727,7 @@ static int nvme_ns_head_ctrl_ioctl(struct nvme_ns *ns, unsigned int cmd,
+diff --git a/drivers/platform/x86/amd/hsmp/acpi.c b/drivers/platform/x86/amd/hsmp/acpi.c
+index 674be31654776..8f297d52ab5e3 100644
+--- a/drivers/platform/x86/amd/hsmp/acpi.c
++++ b/drivers/platform/x86/amd/hsmp/acpi.c
+@@ -152,12 +152,18 @@ static int hsmp_read_acpi_dsd(struct hsmp_socket *sock)
+ 		union acpi_object *msgobj, *msgstr, *msgint;
  
- 	nvme_get_ctrl(ns->ctrl);
- 	srcu_read_unlock(&head->srcu, srcu_idx);
--	ret = nvme_ctrl_ioctl(ns->ctrl, cmd, argp, open_for_write);
-+	ret = nvme_ctrl_ioctl(ctrl, cmd, argp, open_for_write);
+ 		msgobj	= &mailbox_package->package.elements[j];
+-		msgstr	= &msgobj->package.elements[0];
+-		msgint	= &msgobj->package.elements[1];
  
- 	nvme_put_ctrl(ctrl);
- 	return ret;
+ 		/* package should have 1 string and 1 integer object */
+ 		if (msgobj->type != ACPI_TYPE_PACKAGE ||
+-		    msgstr->type != ACPI_TYPE_STRING ||
++		    msgobj->package.count < 2) {
++			ret = -EINVAL;
++			goto free_buf;
++		}
++
++		msgstr	= &msgobj->package.elements[0];
++		msgint	= &msgobj->package.elements[1];
++
++		if (msgstr->type != ACPI_TYPE_STRING ||
+ 		    msgint->type != ACPI_TYPE_INTEGER) {
+ 			ret = -EINVAL;
+ 			goto free_buf;
 -- 
 2.53.0
 
