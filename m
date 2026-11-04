@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830906;
-	b=m5vdjZkXehzZW1gEsDbKwAZpAwpYzCUGc1sTDOVDvw0fsHcXOFYPzyN30ErZiS21w3Cj
-	 Y6S2aU+HdMW1viKIplsX05CRHoPynQDU3ynbEHFQeVapGEu96cZCGuDIpJHIB08QiWe+n
-	 ZcAja+vaT4YvGv4xyQkZsT5ByutwdzyqhuuiQZCoxt9x9mKzwdV0aQ6rBIsrhiMwXdGNR
-	 5bIEY2r3oke4qCrEbawb36mcbhjhx/iJbEYf55LuTsC+L+61RxNONQg/8qEb7MF8XBAu+
-	 13TOlv2sdtuGVNBL2/X9O+v8pAj/358I5IptMQIGmiavDCrziZtxNNnHZAmMNFe/78w==
+	t=1793830907;
+	b=nY2aVb+oPNzhBlH0p1aG6h287vNfQbECX7p49xJfmJQmG2C8fvNJET73Un9XI2uRHGaZ
+	 W+p1Kv3LGvQMTMbVSPs/5aMLMVBLlPrHhzRWnTFD0bh2hhn3GHaJ+TFGWG4BA2+K/Ep1q
+	 yt6m69b9U4/DQPS0tN8NDaXsv6MGYpH+L/hKPXXrcf8f7kG/0tdIooGPjtVGO6yOnJU6l
+	 X+5Isn0rBt4lh6QKL1sZI5kEcoGc7ejs5GNdS0eAjP5cUyC6a1ECGDkvSy1TyerTHRqFQ
+	 kbarUGibCsJMnUkV5kDnuBfAQ0DOMO/FutaAS7TDZSWLNBQd8qLXyw0LINSHEeUmaKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830907;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3iYmyjGVg3x0+YRzcxy41UFoatmju4t1N9umJbkal/s=;
-	b=dJRdy5lBRk6Qmtpe5vMKUSlOTQ4/rP9aSPWmi6I2cmizlI3q6CrbxmeROJhvXAbm6g4d
-	 DHz9rB8H/lyh+Hkl+96Cb/V8cjpmTlTjOFfSnxGe2t7HBCfdODTl0y4GD7r+C1K5hITTX
-	 FJZiwygGuxOuoLMN6SsDUke65Q3jhRMj5x81t2yahrk/XHkd4mOuIz/hDgOYzrS3rHXYZ
-	 ugDgz3kqWlqDaJl5WeXUuebDb5maMunke2sQQ1SuMAWSnEwUQjcI1S4bCAHhHjEKtshX5
-	 PTfiPxVzTFtYTEmxmkwONL0PSUhXag+VA+VbH/XcnO2/D1LoK3aILlkgKVv/5hV7o1Q==
+	bh=e8bmKdZpRIELd31AAoPJgcDATWb4fi4H66zqW1nZjXw=;
+	b=LqOP5/FrNxdEjvuzrPKyuR0FLSi6lAetAlEZMhVsurdTCGGU2i9v3cegYkmYqcoVNKHO
+	 kMpabG1AI7lFLjloob3LKuMd9WIK2I4uvNCMP+5x9XNPgzLZZB+J4MU/VLIlBl0/JBYhk
+	 KdePi0EJYHWP63HI8AZDRsi7/Y1WeloYNyvNYyYpKtH9+1dB5XSlQob5910tr06h9VdGD
+	 omToo25ArQiTmxcHm9jmVOFmpHg6ZbjG/Bube5jw1V67T+xW6PwML13dDW+WEIBYhJbeJ
+	 vQLpTRS+wXu3Q31M99wWHDEAdji0deUPMfqth9T3oRV2WPkJwX4Lftliyl0IwtN0tZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=skhTSXTn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klPWGQjk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F6F606A848;
-	Wed,  4 Nov 2026 22:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390E0606A848;
+	Wed,  4 Nov 2026 22:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=skhTSXTn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426EA1F000C1;
-	Wed,  4 Nov 2026 22:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klPWGQjk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4551F000C1;
+	Wed,  4 Nov 2026 22:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830905;
-	bh=3iYmyjGVg3x0+YRzcxy41UFoatmju4t1N9umJbkal/s=;
+	s=korg; t=1793830907;
+	bh=e8bmKdZpRIELd31AAoPJgcDATWb4fi4H66zqW1nZjXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=skhTSXTnRI57hiiKl7E1D1LtxospFdWyxqaDabZax8LrDOILEBAaeEd3OjSV1iEnx
-	 oCc5d0PovFchc0lBbvrN3Yw0ki7ytgDwqMxHT6il6aYyNQBzhygI9UyvmFU2cL1Elo
-	 fOVYXVvXt4DbZQwdXTlUEOo5b0PMsb+VT2+8Uyzg=
+	b=klPWGQjkO1ZUcVWrkOL2YBbr4P8hOepFWfkAvNV9RGpK/BKHrs9CQrKqChHVV+EQy
+	 RzsSal1XSQaK8R0ZUfNRHMBfLE3EtYDsgq2t+TxmJgjIyEDmwMSFL8rPwXeFx+rSLO
+	 Uraq0NxzsiGOIXayb0H6soDE5lmluCMCxRZy6SBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Andrews <neil@androos.io>,
-	Takashi Iwai <tiwai@suse.de>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0394/1005] ALSA: usb-audio: Rename the Audient iD14 monitor mix volume control
-Date: Wed,  4 Nov 2026 16:02:07 -0500
-Message-ID: <20261104211055.112325727@linuxfoundation.org>
+Subject: [PATCH 6.18 0395/1005] HID: amd_sfh: Serialize access to the shared emp2 pointer
+Date: Wed,  4 Nov 2026 16:02:08 -0500
+Message-ID: <20261104211055.136586973@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,92 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Andrews <neil@androos.io>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 9c0564fcc21aec4f5b7648f61865ce3fc2b84a7f ]
+[ Upstream commit c57016bcf6d0b57cda5579e5d6856bd9bbe52a77 ]
 
-On the Audient iD14 (2708:0008), feature unit 12 is traced through to
-the Speaker output terminal and is therefore exported as "Speaker
-Playback Volume".  The name fits it badly.  It advertises Volume on
-only four of its six logical channels, which the driver records as
-cmask=0xf, channels=4 on a 6-channel playback stream, and it sits on
-the monitor mixer branch rather than in the direct playback path:
+The SFH accessors reach the device through a file-global emp2 pointer
+that is published at probe and cleared on remove. amd_get_sfh_info() is
+exported and called from other modules on unrelated threads, so a reader
+can observe a non-NULL emp2 and then race a concurrent unbind that clears
+it and frees the device.
 
-  INPUT_TERMINAL 2 (USB streaming, 6ch) -> EXTENSION_UNIT 51 ->
-    FEATURE_UNIT 10 (no controls) -> OUTPUT_TERMINAL 20 (Speaker)
+Serialize the emp2 publish/clear and all readers under a mutex, so a
+reader either sees a live device for the whole access or sees NULL.
 
-while FU 12 hangs off MIXER_UNIT 60 and feeds back into
-EXTENSION_UNIT 51.
-
-Userspace adopts the control as the stream's hardware playback volume,
-so any setting below 0 dB attenuates part of the stream and not the
-rest.  Measured over the device's own digital loopback, with one
--12 dBFS tone per channel played straight to hw:, PCM channel 0 is
-unaffected while channel 1 tracks the control: at 107/127 (-20 dB) the
-two read -15.89 and -35.89 dBFS, a 20.00 dB imbalance, and at 127/127
-both read -15.89 dBFS.
-
-Give the unit a non-standard name so that it is no longer taken for
-the stream's master volume.  Dropping the control instead also fixes
-the imbalance, but FU 12 keeps its value across a module reload, so
-dropping it strands a device that is already attenuated with nothing
-able to reset it.  Renaming leaves the monitor gain reachable and that
-recovery path intact.
-
-The mapped name ends in "Playback" because a name from the map
-suppresses the automatic " Playback" but still gets " Volume"
-appended; the control comes out as "Monitor Mix Playback Volume".
-
-Tested on the ACP path with PipeWire, which is where the problem
-reproduces: the control now stays at 127 at every volume setting and
-the imbalance is 0.00 dB, and setting it by hand to 107 and back to
-127 gives 20.00 dB and 0.00 dB as before.
-
-Link: https://lore.kernel.org/linux-sound/0102019fed22f9d3-fa294ec5-02f1-4fd3-b3fa-76efc14331cc-000000@eu-west-1.amazonses.com/T/#u
-Signed-off-by: Neil Andrews <neil@androos.io>
-Link: https://patch.msgid.link/0102019ffcdbb1e6-9b59d3cc-ef05-4df1-8f9f-fb2f425bcda2-000000@eu-west-1.amazonses.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index ce27fc871f513..8046d5987d5b1 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -505,6 +505,19 @@ static const struct usbmix_connector_map gigabyte_b450_connector_map[] = {
- 	{}
- };
- 
-+/* Audient iD14: FU 12 advertises Volume on only 4 of its 6 logical channels
-+ * and sits on the monitor mixer branch, but it is traced through to the
-+ * Speaker output terminal and gets named "Speaker Playback Volume".  Userspace
-+ * then adopts it as the stream's hardware volume, and any setting below 0 dB
-+ * attenuates some channels but not others (20 dB imbalance at 80%).  Give it a
-+ * non-standard name so that it is no longer taken for the stream's master
-+ * volume, while remaining reachable for anyone who wants the monitor gain.
-+ */
-+static const struct usbmix_name_map audient_id14_map[] = {
-+	{ 12, "Monitor Mix Playback" },	/* FU, partial coverage */
-+	{}
-+};
-+
- /*
-  * Control map entries
+diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
+index 837d59e7a6610..dd2720bae65c3 100644
+--- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
++++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
+@@ -8,12 +8,14 @@
+  * Author: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
   */
-@@ -588,6 +601,11 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.id = USB_ID(0x2573, 0x0008),
- 		.map = maya44_map,
- 	},
-+	{
-+		/* Audient iD14 */
-+		.id = USB_ID(0x2708, 0x0008),
-+		.map = audient_id14_map,
-+	},
- 	{
- 		/* KEF X300A */
- 		.id = USB_ID(0x27ac, 0x1000),
+ #include <linux/amd-pmf-io.h>
++#include <linux/cleanup.h>
+ #include <linux/io-64-nonatomic-lo-hi.h>
+ #include <linux/iopoll.h>
+ 
+ #include "amd_sfh_interface.h"
+ 
+ static struct amd_mp2_dev *emp2;
++static DEFINE_MUTEX(emp2_lock);
+ 
+ static int amd_sfh_wait_response(struct amd_mp2_dev *mp2, u8 sid, u32 cmd_id)
+ {
+@@ -78,12 +80,14 @@ static struct amd_mp2_ops amd_sfh_ops = {
+ 
+ void sfh_deinit_emp2(void)
+ {
++	guard(mutex)(&emp2_lock);
+ 	emp2 = NULL;
+ }
+ 
+ void sfh_interface_init(struct amd_mp2_dev *mp2)
+ {
+ 	mp2->mp2_ops = &amd_sfh_ops;
++	guard(mutex)(&emp2_lock);
+ 	emp2 = mp2;
+ }
+ 
+@@ -160,6 +164,8 @@ static int amd_sfh_als_info(u32 *ambient_light)
+ 
+ int amd_get_sfh_info(struct amd_sfh_info *sfh_info, enum sfh_message_type op)
+ {
++	guard(mutex)(&emp2_lock);
++
+ 	if (sfh_info) {
+ 		switch (op) {
+ 		case MT_HPD:
 -- 
 2.53.0
 
