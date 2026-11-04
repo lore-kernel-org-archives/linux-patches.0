@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829702;
-	b=3uCcfouhujhLAOja4EDk4lUtLtIee9Q4/PICB32FyX8C9ReAqJ/npuYPHwWLLQxEjDDo
-	 3O+yUIEYJ1ODflvymdCUcvA/urVO+bruJyIObHjp4slTqwM2DwUnFKZg3BbwQoUnOV1Hz
-	 zi2Ze/5sA23IBvDPC0PCZfO8o3RBkWlg5zHUX9R9JaY1quHtWe2HhETyC+/aFCUb0HO8p
-	 iJtDeYAcqANptZjEpqgloPcNfn/LqKl+9L74Bg31VMtK83Zy2Tc6lDW+iNB92hqZE/Hio
-	 JL494HWD1+dGY4Jc5c4PGk1tmFPzPSejDs8PMDssc2h49gYX7Rv6fnfZI0J5GfTz0Aw==
+	t=1793829703;
+	b=IzlM8vB+P3ZZ+yck9uIFxrJiZsIWUTB058DJ8yNTANHMvY98ahGgtA8MrD1UZcLltVVt
+	 +SyVsp68gOOfJBbP6AhXQ2XonCBm9WAbzBK2jbHPJuQRmC5T6VRQK9HdUeNxwWfuFQgDC
+	 ftTw6ZOEs0T/rmIAayZx+bdMcnEoAxPpXu+btz7raeVbNSigBe63FXJAbdQzEE7caYYOX
+	 LrPaRJUi17jHV055SKdmPR30Jf6fnLVazoCvHVBSSPoS+SpBO14RRFXgnUUAI5nq3LIWv
+	 0kUQ1dHYRIn0n1x4wVFS+rhPc6ddAv/olAQk39svXYuzdlVuf0HGUE/LLVSA3eJMmsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829702;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829703;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sVNfF0Ft3YBYIxa8bTBSlcW7LIDvTt/Yd+mQCHwPTx8=;
-	b=1c8WyukELddTmdngwptCUAb0jFbrScSNRmltIOZdpHUsgjtg5pkE3VWsX9QPuogBYO5F
-	 EDEG4/nxEhZYj1Et4joD+F6XB9nlW/cpktIk3fhT9qBu2+4a1xPOXPvodLfRPb/pRc+7d
-	 DrdAhhuxJQyGv+oBTRDsrYn+NmsK973KVKsPKfFxRtrDfUfDZOKXWqUpl8+UD0BRQEu0q
-	 +DB/uh6didRECaWr3prOpCjRlmLoHl0dnAvTthXxy3s+gkRVS3J4EppsR86THwSXWbiBJ
-	 AjR6av06UmGaCyVY/G+QnKm+cHp23gpi+qjxJh7MzKjEnvTy3RbYPOt2jYvxUTlO9VQ==
+	bh=w1oXIYBotT4utLkXjFpEpPGSWG/msF/777kruCsr42I=;
+	b=Pl4ITICkQ7fGYv1BoBz6lK3dEA8l4LFTetq8+hj0Om2SEwJjXhmhxYfpyyn1RRlUCW0v
+	 1Ky2SVPqQ2Y0VqYxkW9F/48mp3fmmCu5JFE44bMXP9AldJ3ZEv6y6oLCabgHhfys1/wBY
+	 K3Y84eL6MBDb/XRkdCMJttpFX0B1Kwp4Z0zHVvp1NoH5Wdx6BVn6gEbrrQS2bsaTKMtfx
+	 py3ZC/SgXpKG2WOoFnoIzudq9jrZ2UGaNWMrouOs+JPmZerYpemDcQekQ0yNdTyU6FL5L
+	 tHrNuFzAtPwRPzbsMYhw8PAyZqZSe+uqkG/BH1+y1Mc2+cbh2lHkcxxnb1jG+oSOm8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBmG+Da0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLR3Ft8z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21006075DF0;
-	Wed,  4 Nov 2026 22:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DB1606BA3C;
+	Wed,  4 Nov 2026 22:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OBmG+Da0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F751F00919;
-	Wed,  4 Nov 2026 22:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLR3Ft8z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE7C1F00919;
+	Wed,  4 Nov 2026 22:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829701;
-	bh=sVNfF0Ft3YBYIxa8bTBSlcW7LIDvTt/Yd+mQCHwPTx8=;
+	s=korg; t=1793829703;
+	bh=w1oXIYBotT4utLkXjFpEpPGSWG/msF/777kruCsr42I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OBmG+Da0/147fRDSjS/w3UlwMOZ27gPfOxyTTYKvBrGJF+EVHYt03/TOrZ0Fr8psX
-	 s3Pro43ESURLkNFICcpwVw6/hAcmlWqm00XeU/Gp2LmOqJSvWnEzVmu/1s5T5qMKIg
-	 SC/bTwPZVILFOyzZv2R2uXD/ue7TUNzB0AxVySEw=
+	b=DLR3Ft8zoVvISvOqIYGEPt8DiRV8oP2MQPKQiFI9v0qaOigDZBAbqnlud/1rvl1rg
+	 atHY28jr7HYa7lQjTiLv2f9d1aUmThAaYk2HceOkLPSQRhd9dWyTJvwKhGwYjU6c7+
+	 RrYz/jRf1zIcIHFGU3ArjE2uOAUsHHCjwum4TEcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Frank Li <Frank.Li@nxp.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0262/1005] clk: imx: imx8qxp-lpcg: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 15:59:55 -0500
-Message-ID: <20261104211051.207533756@linuxfoundation.org>
+Subject: [PATCH 6.18 0289/1005] regulator: rt6245: Restore state on enable failure
+Date: Wed,  4 Nov 2026 16:00:22 -0500
+Message-ID: <20261104211052.001320627@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,44 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit e89485455ac49925565061733c0d73d568333fc0 ]
+[ Upstream commit e95a0a309ca02bf26dc937cdeb3fe2a235c65f63 ]
 
-The driver has a match table for the of bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+Currently, if regcache_sync() fails after the enable GPIO has been
+asserted, the driver returns with enable_gpio still set high and
+regcache_cache_only() left disabled. This leaves the device state
+inconsistent with the disabled state, where the enable GPIO is low and
+cache_only is enabled.
+On failure, restore the original state by setting cache_only back to
+true and driving the enable GPIO low before returning the error.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
-
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260704150344.59563-1-pengpeng@iscas.ac.cn
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260729100018.66577-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8qxp-lpcg.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/rt6245-regulator.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx8qxp-lpcg.c b/drivers/clk/imx/clk-imx8qxp-lpcg.c
-index 1dae3410ee99a..f0cf6cf918992 100644
---- a/drivers/clk/imx/clk-imx8qxp-lpcg.c
-+++ b/drivers/clk/imx/clk-imx8qxp-lpcg.c
-@@ -354,6 +354,7 @@ static const struct of_device_id imx8qxp_lpcg_match[] = {
- 	{ .compatible = "fsl,imx8qxp-lpcg", NULL },
- 	{ /* sentinel */ }
- };
-+MODULE_DEVICE_TABLE(of, imx8qxp_lpcg_match);
+diff --git a/drivers/regulator/rt6245-regulator.c b/drivers/regulator/rt6245-regulator.c
+index 1843ecec19229..5c0ee04e97ac7 100644
+--- a/drivers/regulator/rt6245-regulator.c
++++ b/drivers/regulator/rt6245-regulator.c
+@@ -49,8 +49,11 @@ static int rt6245_enable(struct regulator_dev *rdev)
  
- static struct platform_driver imx8qxp_lpcg_clk_driver = {
- 	.driver = {
+ 	regcache_cache_only(regmap, false);
+ 	ret = regcache_sync(regmap);
+-	if (ret)
++	if (ret) {
++		regcache_cache_only(regmap, true);
++		gpiod_direction_output(priv->enable_gpio, 0);
+ 		return ret;
++	}
+ 
+ 	priv->enable_state = true;
+ 	return 0;
 -- 
 2.53.0
 
