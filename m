@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831534;
-	b=ilLvKu4ILWVCBzbrTxjGCT50Mv7UxwqoijzqruNwhlLvyKlz5mS+CXEr+6vdSJYqXgvM
-	 kE2mUsd/px9HSjWdyRdyty0b19z7A4W0f8YE/OhTihkmdz3tPUsu+auKgeK1TyPyTNg1f
-	 +li89n4Z8TWZY8inzq/X54o+f6ObpfmKwOxidIE4pF8KpslGUH8NDeMryVN4ZfRDZQB9D
-	 +P1we/S+UHpYuK0PvMiVftpcKdEgDUXfYEmpuYFI7/kvmFa0UQ+xusy3VhiRqv5mmYP71
-	 PP65lOqzthdMIM6PIZKnMDA6JYBxSMt7ls9kjSoSxoCamzbet7uNop7ZgTpYYw+7xMw==
+	t=1793831535;
+	b=yW9tykghbW7JcrVEn/MUuLEbA2WBAtIhTqTfnjlxTFhtQE0vk0Oq0NV3JjXV58+kepAp
+	 Q+sf9cXHQ0MLkLE5qakgS36OnFfWzhOkXpjg7KNPMKj0z+rCSdvEs9IoPYMM/iz/wctfX
+	 EErNZYWamVksjQkXemUMO+3B7CZbwVcyr/CM1neQYLBoGEml1WlBM3zZK2nYbr8eSDZ30
+	 xb+96fRoR0VsJAHSatPIVSb7jklpWrzfE3H9MuhP5nzY+w65y49f7arIucbVWB5HLO3ip
+	 KLJ4ycmLh+VUPO5IkrEuV9fg41CrsSNVseuj1li0QBZQhd58XvqmbbMom6uOjolAlLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EMOs9EAY3mqEhBbphhDrDKMepW+3vak+E79BeZDl5LI=;
-	b=x+QYmmt/MonIcnlEXPTOAgvm5iwpzirKzazoivFRs13NAQgM5hyy1oNzZIvxQck6r4oE
-	 46o5SptXBjRNqf6pnPInybFTJx+xhku/7EsUOLkf5qtNJWz4zCnpAnDl0TcWRu1tNsCl5
-	 h4F10EZy2Xhx3P0WEcvsaLGL6narW+EYLbBHzbVoxlsI5AyRKwZF3cDLOEdAgb4HgpNZQ
-	 HoNyCpK1pJjCye8m6yZGpKYYhJKNMoydij9kafgNaWXZOAfCS8fmJIZBWWae0600UUBEZ
-	 ehRRdxxPmGBlodzsgSb+DJ6m5lZEALe+TF6UFT7PJHT6XdHKI5GO9ZaXMYpD+I4nYGw==
+	bh=WJ5Z6YoAL3up9sqcODqB6GqNgmx8s/pXaL3Yk8THvjo=;
+	b=EHim6v4vNTkgnxgFtEZdgTtvOEh5PCoE55v+miXfoczTeDwn02YeKMg+2z7TnU7N48iP
+	 fJgE5pRQILsLzl/5jhWhu/USB6TQCDz9kVJG982RTk+YT3hAdndEai0zUN+WHk3tsp9Pk
+	 VT0mdT2uDz5E+PO7fnuMIlpBIJEYxnaonfKOl9aRduFcdvvKNxPE3v3QrwS/sGhNT/wkw
+	 9WaZjG49lDj5ocD4fGgYs2kPwOe1az0CdwcwZ0rU6GeCvmaQJYgehHC0NAB8StfLdAOkU
+	 cvlMCqgHvGfjkW7W7kd07QaOFjL7LZJIJzRdMDbjPN2o0N+xrd0gSGpeYaos7WnkqFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQBqubiO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VFuNkhAc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1635D606A334;
-	Wed,  4 Nov 2026 22:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B938606A332;
+	Wed,  4 Nov 2026 22:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQBqubiO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA481F000C1;
-	Wed,  4 Nov 2026 22:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VFuNkhAc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4421F000C1;
+	Wed,  4 Nov 2026 22:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831533;
-	bh=EMOs9EAY3mqEhBbphhDrDKMepW+3vak+E79BeZDl5LI=;
+	s=korg; t=1793831535;
+	bh=WJ5Z6YoAL3up9sqcODqB6GqNgmx8s/pXaL3Yk8THvjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qQBqubiOKYS2OIUlMlvCIxKWMTA2C2phScS0e9mkxM9MeV+zos19lCxlxiA37KfAi
-	 w+zJ8EES++Ty0DEi0Dj3lN/TmB9o8A5mEleVfw1xQ8hz8vCpmWeWEA+r2tWUCy0zUO
-	 GMr15cbFIbdYXhqI3BDksaSLGSTZm2cS0UenRoXE=
+	b=VFuNkhAcoTyXxzJs3NkzhSXBZJKuLDXTSfqsIk78Mbna2KTPvIGd6iJCtFiY6hf5K
+	 K2zPJUhDMRnW/BlABExUjZOulAwWiSfKGr7sH4OTBXMwgo2DEJv/5Rqe8Q/yGLSVID
+	 2dIjGbBsKxJ/8/lSJTDCPp/OXh9+AeI0tAwA7lIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ngoc Quy <ngocquy0700@gmail.com>,
+	Jiaming Zhang <r772577952@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>
-Subject: [PATCH 6.18 0713/1005] fs/proc/task_mmu: pin mm_users in do_pagemap_scan()
-Date: Wed,  4 Nov 2026 16:07:26 -0500
-Message-ID: <20261104211103.523143926@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>
+Subject: [PATCH 6.18 0756/1005] ocfs2: fix chunk number of the first chunk in a local quota file
+Date: Wed,  4 Nov 2026 16:08:09 -0500
+Message-ID: <20261104211104.615845770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -73,85 +74,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ngoc Quy <ngocquy0700@gmail.com>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-commit 4fb975471717c953f912776bb60301add1ffae11 upstream.
+commit 4effccfd50baee4f325694964aeee997dca7bd96 upstream.
 
-The PAGEMAP_SCAN ioctl takes mmap_read_lock() on an mm obtained from
-/proc/<pid>/pagemap without holding a reference to mm_users.
+Mounting a crafted OCFS2 image can corrupt kernel memory.  When the
+local quota file header of such an image claims zero chunks, the first
+quota entry allocated during the mount gets a chunk number taken from a
+kernel pointer, and releasing that entry clears a bit far outside the
+chunk bitmap.
 
-proc_mem_open() deliberately grabs only mm_count, so a consumer that
-touches the address space has to call mmget_not_zero() first.  Every other
-consumer in this file does -- m_start(), do_procmap_query(),
-show_smaps_rollup() and pagemap_read() -- but do_pagemap_scan() does not.
+The write will corrupt the data stored at that address, and the
+corruption may lead to a system crash or damage unrelated data.
+Mounting requires CAP_SYS_ADMIN, so it takes an untrusted image, such
+as removable media or a loop mount of a file from elsewhere.
 
-Without that reference the target can reach exit_mmap() concurrently, and
-exit_mmap() calls unmap_vmas() while holding mmap_lock only for reading,
-which does not exclude the scanner.  For ordinary VMAs this is harmless,
-as free_pgtables() and remove_vma() run afterwards under mmap_write_lock.
-A shared hugetlb VMA is different: __hugetlb_zap_end() frees the VMA's
-hugetlb_vma_lock inside the read-locked phase.
+Since the chunk number comes from a kernel pointer, the address of the
+bit that gets cleared differs from boot to boot, and the issue has been
+reported under several titles:
 
-walk_hugetlb_range() can therefore load vma->vm_private_data, have the
-lock freed underneath it, and then down_read() a freed rw_semaphore.  The
-load happens before the freeing side clears the pointer, so this is a
-use-after-free and not a NULL dereference.  Any unprivileged user can
-reach it with no huge pages configured, as hugetlb_reserve_pages()
-allocates the lock before the VM_NORESERVE early return.
+- BUG: unable to handle kernel paging request in ocfs2_local_release_dquot
+- KASAN: use-after-free Write in ocfs2_local_release_dquot
+- KASAN: slab-out-of-bounds Write in ocfs2_local_release_dquot
+- KASAN: slab-use-after-free Write in ocfs2_local_release_dquot
+- KFENCE: use-after-free write in ocfs2_local_release_dquot
 
-Pin mm_users across the scan, the way the other consumers do.  mmput()
-from the exiting task can then no longer reach exit_mmap() while a walk is
-in progress.
+Note that none of these is a use-after-free in the quota code: the
+chunk and its buffer head are alive.  The bit that gets cleared lies
+far outside the bitmap.  KASAN and KFENCE name each report based on the
+object occupying that address, which explains why the same issue is
+reported under so many different titles.  In the report I sent, the
+address fell in a free page, which KASAN labels use-after-free.
 
-[akpm@linux-foundation.org: remove unneeded & undesirable test for !mm]
-Link: https://lore.kernel.org/20261014095540.3261469-1-ngocquy0700@gmail.com
-Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
-Signed-off-by: Ngoc Quy <ngocquy0700@gmail.com>
+There are known reproducers.  Both a syzkaller and a C reproducer are
+available from the Google Drive link [1] in my report thread.  The
+issue was found by our modified syzkaller, not a theoretical thing
+found by an LLM.  I have not seen it outside fuzzing, so it is not
+affecting me in the real world.
+
+The local quota file in OCFS2 is divided into chunks, and each chunk
+begins with a header block holding a bitmap of the quota entries that
+chunk has handed out.  Chunks are numbered from zero, and that number is
+used to convert the file offset of an entry back into a bit position in
+the bitmap.  ocfs2_local_quota_add_chunk() appends a new chunk to the
+in-memory list and numbers it one past the chunk that was last:
+
+	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
+	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
+				   struct ocfs2_quota_chunk,
+				   qc_chunk)->qc_num + 1;
+
+The predecessor is looked up after the new chunk is added to the list, so
+if the list was empty, the prev pointer is the list head itself.  The head
+is the dqi_chunk member of struct ocfs2_mem_dqinfo and is not a chunk, so
+reading qc_num through it lands 16 bytes past the start of the head, on
+the dqi_gqinode pointer that follows it.  The first chunk of the file is
+then numbered with the lower half of a kernel pointer instead of 0.
+
+The list is empty when the local quota file header claims the file has no
+chunks.  ocfs2_local_read_info() takes dqi_chunks from that header without
+validating it, so an image with dqi_chunks == 0 takes this path when the
+first quota entry is allocated.
+
+ocfs2_create_local_dquot() turns the bad number into a file offset with
+ol_dqblk_off(), which shifts a 32-bit block number left by the block size
+bits, so the top bits of such a large block number are lost.
+ocfs2_local_release_dquot() turns the offset back into a bit index with
+ol_dqblk_chunk_off(), using the full chunk number, so the lost bits push
+that index far outside the bitmap, and clearing it corrupts unrelated
+memory.
+
+Compute the chunk number before putting the chunk on the list, and use 0
+when the list is empty.
+
+Link: https://lore.kernel.org/20260914034940.4070970-1-r772577952@gmail.com
+Link: https://drive.google.com/drive/folders/1-LzPTgOALEc3eOjmgM6oOfRKkYXJ-bnO?usp=drive_link [1]
+Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: Claude:claude-opus-5
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Muhammad Usama Anjum <usama.anjum@arm.com>
+Closes: https://lore.kernel.org/lkml/CANypQFZ05tpth0Xc33gmP6jgPnkY4VuezyHcsajV-SqCsmN_gg@mail.gmail.com/
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: Claude Code:claude-opus-5
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/ocfs2/quota_local.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -3098,15 +3098,18 @@ static long do_pagemap_scan(struct mm_st
- 	size_t n_ranges_out = 0;
- 	int ret;
+--- a/fs/ocfs2/quota_local.c
++++ b/fs/ocfs2/quota_local.c
+@@ -1074,10 +1074,13 @@ static struct ocfs2_quota_chunk *ocfs2_l
+ 		goto out;
+ 	}
  
-+	if (!mmget_not_zero(mm))
-+		return -ESRCH;
-+
- 	ret = pagemap_scan_get_args(&p.arg, uarg);
- 	if (ret)
--		return ret;
-+		goto out_mmput;
- 
- 	p.masks_of_interest = p.arg.category_mask | p.arg.category_anyof_mask |
- 			      p.arg.return_mask;
- 	ret = pagemap_scan_init_bounce_buffer(&p);
- 	if (ret)
--		return ret;
-+		goto out_mmput;
- 
- 	for (walk_start = p.arg.start; walk_start < p.arg.end;
- 			walk_start = p.arg.walk_end) {
-@@ -3161,6 +3164,8 @@ static long do_pagemap_scan(struct mm_st
- 		ret = -EFAULT;
- 
- 	kfree(p.vec_buf);
-+out_mmput:
-+	mmput(mm);
- 	return ret;
- }
- 
++	if (list_empty(&oinfo->dqi_chunk))
++		chunk->qc_num = 0;
++	else
++		chunk->qc_num = list_entry(oinfo->dqi_chunk.prev,
++					   struct ocfs2_quota_chunk,
++					   qc_chunk)->qc_num + 1;
+ 	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
+-	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
+-				   struct ocfs2_quota_chunk,
+-				   qc_chunk)->qc_num + 1;
+ 	chunk->qc_headerbh = bh;
+ 	*offset = 0;
+ 	return chunk;
 
 
