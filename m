@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831824;
-	b=bOzUxtlETUoSlG4RZU1XfooNjbTssTLstbIA3Owgle9UcwlKrKH1baDjNwngXKV2b0y4
-	 zs6/vNdxrUj4/S8vKCWntOnj+cITjzD1qJHWnEVcd4OQJtmcQ+T2KIRxP7A9+2nzAB0KO
-	 9VW89s4erD4tIrL6ykipSzLgDkHO+sz3C7qHjbz6H5LdwTNVgNwHiMbCrMeu+iiA9f0OQ
-	 hF0eUGLHZA0C9G6+FBajvlabaZWqDGZIUjeHgCkAhm10xX3JGWhlpG5/hqJ4F4CMlmWTt
-	 GtlYRBdzjYyXjOMLt0Mj6991nS9UX3bh6TR5zXlYf84niet1su+oChBmOEB2a1jLAIA==
+	t=1793831826;
+	b=FswiKAk7TeMuOynS7jXdYFWK3TRSKFOEmb453jVbfuxystIq0/3rRAP1SGtZFWdU+InN
+	 E717g0oD/peRBWcU7xXV3u6Q2AKfeYYrn6MUmv50jO8mqeOPY77x4W3hjxuYhLDzNJMjJ
+	 zWVDyWOhU+KNdqRvEPMII3abrUq4G9Ytm0WXjJhYUrEAAfEL2R4ZPNR26Mlwq9tb5v2rU
+	 P4GxySGfveIvbh/TD92ZkQsfeMCQPRJj+6p0X6j7RDyUsT29cur4CafrAI8zc9K8ZLsgI
+	 Co+DUrTkr4JjwF2hqoXMJcEerTUbIxcsKoA2gDCw3Mmz1n4yPaIW8VsS7GiDacJiNZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8H0XHm2dd8/7BnzjqxZIFLZbZHbPRsLIhrjEWDDKWyM=;
-	b=0doslRneduf9rW8Y/3AE5HzwtEy7mwXhvEIAdu3ZLVmj3bEVtW9YDH8FrJ1PPLrpAXvW
-	 wk5ypxmQo1IY+0XpNDBR+lJHO6bEWFcRSMaNuFzJyqK8uAGpId348lGdV0FVRYCcJiaui
-	 GGyDd/RyeYsXBelMRWjExTGvOORZQycsbLLigG9gsBFMlDKG/REPlYcqpmX/+wU3po/ai
-	 Zw6D1jC84jVsBfQW7ihlqcENcbALFQrQsdr7CdkhahcTxHqTC5xXTVs1fGJIZCydvWLZq
-	 v4YRFN9U1/KHFHeZQhLADfNCwQXVbkPodPDpgd36/C92hP+decVnDy9b95vIigkErrQ==
+	bh=Zu2WIpoyyA+SHvjDkrbUTT1IV53uwQtKH10uOkOhHoA=;
+	b=Scr7Wzbke93NqsdxIO/NEia4Ae6aZxivRzUcmH7LQq+hH/jfdQImrerCJbYaC9RleQWe
+	 34NHPpyrX17iNEo61gIf7xEUaRxkWPVdVFgT36mFoU1VsrZXbJIi52UZpZc2KoXprSy1u
+	 PLxcvJULQ/28NAbQRQfMrDxXrT8T738owipOqbI3y56jvKg48mLmSsc8myGlGJivfLxTG
+	 Zlfgsi/8qLYVgY+AyOTT/yZsMkgaVcUNr8izO30Sz+a59vx/TWqDQwTo4vE4wrVyEV/K1
+	 f1OxLE4x041Cq0SD1eRTGxv6u/4tO/mMDqt1507B2iIFvmtKIlREcNL72RWQo4Ped+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHS4ih2T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rS3OM9F7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355AA606A873;
-	Wed,  4 Nov 2026 22:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6326606A337;
+	Wed,  4 Nov 2026 22:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHS4ih2T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDB41F000C1;
-	Wed,  4 Nov 2026 22:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rS3OM9F7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C06D1F000C1;
+	Wed,  4 Nov 2026 22:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831824;
-	bh=8H0XHm2dd8/7BnzjqxZIFLZbZHbPRsLIhrjEWDDKWyM=;
+	s=korg; t=1793831825;
+	bh=Zu2WIpoyyA+SHvjDkrbUTT1IV53uwQtKH10uOkOhHoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uHS4ih2TtamOJ4RjHarmfUdf31kAPB+1qx2ZDWagh/mUsQ96obMIIrk7EOmUTEk8W
-	 CH2IyrR8fWK8pIm9gQxk+nkcHNcFpbOnwOPXsTozzpm1zKCA0Dt5GoCvsUpgIZZohk
-	 mAgc+G1/64BhmWoedTaTUWpgpRGP9fCZ1wrIfbjo=
+	b=rS3OM9F7ewrF7fcPtKCE/tyLry0YLNSJWd5b7ek9yFMrgBydlWqw62bnQMlEImY0y
+	 Es418zEltzxM22zl7L1ycncjTL6kUtokWOu4hMBumFNHg+772OUz5gi3wdOgDElDt5
+	 BYMstFzwvP15QQ4QHGYXpkV258mSZMOgr+2Z/NZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0889/1005] NFSD: Dont complete a cld upcall the daemon has not read
-Date: Wed,  4 Nov 2026 16:10:22 -0500
-Message-ID: <20261104211108.124518564@linuxfoundation.org>
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Paul Durrant <paul@xen.org>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 0934/1005] KVM: x86/xen: Take kvm->srcu in __kvm_xen_has_interrupt()
+Date: Wed,  4 Nov 2026 16:11:07 -0500
+Message-ID: <20261104211109.292483680@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,100 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 7f4bf851aca4e18940ebf2bddf4ba6783802ee81 upstream.
+commit aa8ad943f242ef14d136c5440b1178de77466c9e upstream.
 
-cld_pipe_downcall() matches a reply to its upcall on the xid alone.
-A write that arrives before the daemon has read that upcall
-completes __cld_pipe_upcall() while its struct rpc_pipe_msg is still
-queued on the pipe. The waiter returns, its stack frame goes away,
-and the pipe keeps a list_head that points into it. The next
-rpc_queue_upcall() walks that pointer:
+kvm_gpc_check() checks the cached memslot generation against the current
+one, which dereferences kvm->memslots and therefore requires kvm->srcu to
+be held. __kvm_xen_has_interrupt() does not take it.
 
-  BUG: KASAN: vmalloc-out-of-bounds in __list_add_valid_or_report
-  Read of size 8 at addr ffffc90007027950 by task syz.0.96/13066
-   __list_add_valid_or_report+0x6a/0x130
-   rpc_queue_upcall
-   cld_pipe_upcall
-   nfsd4_cld_grace_start
-   nfsd4_cld_tracking_init
+Most callers do happen to hold kvm->srcu, but not all of them:
 
-The pipe is mode 0600 in rpc_pipefs, so the trigger is a broken or
-hostile nfsdcld rather than an unprivileged task.
+ - kvm_emulate_halt() on the VM-Exit path, via kvm_vcpu_has_events() and
+   kvm_cpu_has_extint(). vcpu_enter_guest() drops the vCPU's SRCU lock
+   before entering the guest, so it is not held on the way back out.
 
-Record whether the daemon has consumed the whole message and
-complete only when it has. cld_pipe_destroy_msg() runs on every path
-by which the pipe releases a message, so it can maintain that flag
-under cn_lock. nfsdcld sends its -EINPROGRESS downcalls only after
-reading the upcall, so the new check does not break the GraceStart
-record stream.
+ - kvm_vcpu_block() -> kvm_vcpu_check_block() -> kvm_arch_vcpu_runnable(),
+   which is the case the existing comment in this function describes.
 
-Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
+On a PROVE_RCU kernel the former produces:
+
+  WARNING: suspicious RCU usage
+  include/linux/kvm_host.h:1092 suspicious rcu_dereference_check() usage!
+  ...
+   kvm_gpc_check+0x344/0x3e0 [kvm]
+   __kvm_xen_has_interrupt+0x83/0x310 [kvm]
+   kvm_cpu_has_extint+0x1ff/0x370 [kvm]
+   kvm_cpu_has_interrupt+0x16/0x100 [kvm]
+   kvm_vcpu_has_events+0x4ce/0x690 [kvm]
+   kvm_emulate_halt+0x52/0x1f0 [kvm]
+   vmx_vcpu_run+0x988/0x2630 [kvm_intel]
+
+Use guard(srcu) so that the three existing early returns don't each need
+an explicit unlock. SRCU read sections nest, so this is harmless on the
+paths which already hold it, and srcu_read_lock() does not sleep, so it
+is also safe in the atomic case which this function already handles.
+
+Fixes: 7caf9571563e ("KVM: x86/xen: Use gfn_to_pfn_cache for vcpu_info")
 Cc: stable@vger.kernel.org
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://lore.kernel.org/linux-nfs/CA+0ovCjVF58WLeen2ctdzHyWUASAAW3Y=Yjihyq0pFApYawtDg@mail.gmail.com/
-Link: https://patch.msgid.link/20260901-alemi-v2-1-e163f94a3a6e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Assisted-by: Claude:claude-mythos-5
+Reviewed-by: Paul Durrant <paul@xen.org>
+Link: https://patch.msgid.link/20260831213632.81023-11-dwmw2@infradead.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4recover.c |   23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ arch/x86/kvm/xen.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -709,6 +709,8 @@ struct cld_upcall {
- 	struct list_head	 cu_list;
- 	struct cld_net		*cu_net;
- 	struct completion	 cu_done;
-+	/* daemon has read the whole upcall; protected by cn_lock */
-+	bool			 cu_inflight;
- 	union {
- 		struct cld_msg_hdr	 cu_hdr;
- 		struct cld_msg		 cu_msg;
-@@ -869,6 +871,13 @@ cld_pipe_downcall(struct file *filp, con
- 	spin_lock(&cn->cn_lock);
- 	list_for_each_entry(tmp, &cn->cn_list, cu_list) {
- 		if (get_unaligned(&tmp->cu_u.cu_hdr.cm_xid) == xid) {
-+			/*
-+			 * Completing now would return the waiter
-+			 * while its message is still queued on the
-+			 * pipe.
-+			 */
-+			if (!tmp->cu_inflight)
-+				break;
- 			cup = tmp;
- 			if (status != -EINPROGRESS)
- 				list_del_init(&cup->cu_list);
-@@ -877,9 +886,9 @@ cld_pipe_downcall(struct file *filp, con
- 	}
- 	spin_unlock(&cn->cn_lock);
+--- a/arch/x86/kvm/xen.c
++++ b/arch/x86/kvm/xen.c
+@@ -713,6 +713,16 @@ int __kvm_xen_has_interrupt(struct kvm_v
+ 	BUILD_BUG_ON(sizeof(rc) !=
+ 		     sizeof_field(struct compat_vcpu_info, evtchn_upcall_pending));
  
--	/* couldn't find upcall? */
-+	/* no upcall to complete? */
- 	if (!cup) {
--		dprintk("%s: couldn't find upcall -- xid=%u\n", __func__, xid);
-+		dprintk("%s: no completable upcall -- xid=%u\n", __func__, xid);
- 		return -EINVAL;
- 	}
- 
-@@ -899,8 +908,16 @@ cld_pipe_destroy_msg(struct rpc_pipe_msg
- 	struct cld_msg *cmsg = msg->data;
- 	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall,
- 						 cu_u.cu_msg);
-+	struct cld_net *cn = cup->cu_net;
-+
 +	/*
-+	 * errno >= 0 means the daemon read the whole message and a
-+	 * downcall will complete the upcall.
++	 * kvm_gpc_check() checks the memslot generation, so kvm->srcu must be
++	 * held. Most callers hold it already, but this is also reached from
++	 * kvm_emulate_halt() on the VM-Exit path and from kvm_vcpu_block(),
++	 * where vcpu_enter_guest() has already dropped the vCPU's SRCU lock.
++	 * Taking SRCU does not sleep, so it is safe even in the atomic case
++	 * which is handled below.
 +	 */
-+	spin_lock(&cn->cn_lock);
-+	cup->cu_inflight = msg->errno >= 0;
-+	spin_unlock(&cn->cn_lock);
- 
--	/* errno >= 0 means we got a downcall */
- 	if (msg->errno >= 0)
- 		return;
- 
++	guard(srcu)(&v->kvm->srcu);
++
+ 	read_lock_irqsave(&gpc->lock, flags);
+ 	while (!kvm_gpc_check(gpc, sizeof(struct vcpu_info))) {
+ 		read_unlock_irqrestore(&gpc->lock, flags);
 
 
