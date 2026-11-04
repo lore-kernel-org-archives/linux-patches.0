@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829110;
-	b=GJ1wk5+va+6BqR/G65ofvTA9IgTl8TeXCyXvMWlv5eeYjb5is9KY6K3Y2+y+frULQAgj
-	 U3oAfsW18S87iDf0wKvcR1Qq5BvQG1h1FFyf8WgRS04v/NmwrSUB8Uk0dUwv/aWIncQG2
-	 eAlPlDzjWC7akXCdNzURMK0xO4pinnBbP1nXkM/YAxiPW7AKf9hUM9zihcIgLQWQJVW9i
-	 964IrY9KMxpIuGgOeX412u2z/7pMb95vsfaLwnetbqeQnhbiU1ctCXWCk1jJxSUTd6TrV
-	 XEZl+wAr4rzGE5OfHp//m/A8+EOWIMuU2RxFVyCt3wTUZSjZK1lmbCJuf4/9ipPKKSA==
+	t=1793829112;
+	b=KQBUZgtW4lsenDJeYHcKjjs6byig840Zp39GsnLRk8/dL9AJ+PHbM6z8gjWgqffX+YBF
+	 g6KE7WvWmbTG4Fcam6eT8EVcAQEZOPQzQMuJz5kf3PAyIH55K0fSBToMm2gzoP35I43Ow
+	 UXL7qeDRkw/mZKzmeV2sP6aYiXJ6s7DpSMyzKtAKNkcMJZkhrZAMy0RNqsyD9sQ+NDmCJ
+	 OGV7R6N80SUp4DyqL3a76AsP6IL70Cs9jcakthpyaun/7vLXAs6AyO4yELNn2Ti3U0TA3
+	 JfmO3vDksjOVmuWYegCYBcoBIHLQoiuyE6b4HikJyECBhHXMMUY8hSAvVwFGLlppGCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=19VqxPuxk7aOKyJhn8YT1Ce/Gxd7pdLsaojrsNzEMLM=;
-	b=sTVf75KeBAkR1qMAlt7c+5G2k+yxtbpKx5Tae1AD1j+30OQvmdd99fUrx1KhNxu76rXa
-	 LmPRoojVb6uavA9TgUPKXb/lGzs8wM2VWBH8o6TlHTqitZeAVrGYqaTAv/GKLiI03h1E9
-	 CX2OF8PA/qpyw+9X6GUpuPGEVwgIMogMJ7Her07EtRRPIg5eF3pQrLhSUIpDfWu3fH//v
-	 An1SYH6lxzhuVCJEWYtlBWbKBKYIdsleLXiPkaHKGDcs/krBYI7AFzcmi5Ma/Quzn8XK/
-	 sbgkhyBALjYWJuB3BEfP+Pc61RP+R+o65EG2dwr6InNxWVZpNgIhB5U7O/GT48kpNJg==
+	bh=fifqy3z0XiqUr/aKo7iX/oK68i/yhcrUxEPDURKJZ9k=;
+	b=GWA+B236vQxTEm6iPOpfF4Y6Xc969maSNFRJJR0EE1/k/odc04m3aXFP7BtYy3dMx7Gu
+	 0ToSHbg9uRyRJzuoK8F/ls1Hr+2ABf+Vu5y4vn+8qYGHbp/FtCxjlJk1Uf9QaGmOA+oei
+	 5jK5ZJAxOk3ukrTtGraClc9XOCqjnsDAZFVcHezakJqM5LXQ9P5AwZhsMheez+3G8vbFP
+	 CJ+x0qxcXWiRO9sPTc0GP5Kqd/4I1saRlqbGeaZDy0Pkx7N5sd0NpeS8kbV9F3KG8nLGR
+	 7QWvw2UG/3ocDA6dOksC3o31U5k+o0oC5vFcrFZMkUU2iLf246Umdt+qz+94cqRNQNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0OzynzaI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z9IKZkN7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7031C6070757;
-	Wed,  4 Nov 2026 21:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5626070757;
+	Wed,  4 Nov 2026 21:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0OzynzaI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165681F00919;
-	Wed,  4 Nov 2026 21:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z9IKZkN7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2041F00919;
+	Wed,  4 Nov 2026 21:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829110;
-	bh=19VqxPuxk7aOKyJhn8YT1Ce/Gxd7pdLsaojrsNzEMLM=;
+	s=korg; t=1793829111;
+	bh=fifqy3z0XiqUr/aKo7iX/oK68i/yhcrUxEPDURKJZ9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0OzynzaIUHhtgukllUChLk4EGhFapx4RJp4VMM+PnpgjZJ6sJXFBgSjxdv3/dbqHZ
-	 lqY9OdhyywCuLv94etuSP7cyH0ITyQ1byzCEiOcyyw4JNDTF39CeeY9jUCqP83p6io
-	 VNRza6QV44j0pY7Ynbael1OKTYMjfudDUalz7Tl8=
+	b=Z9IKZkN7c0IZuOir1m4b6ugT5Jun5n6oZigwDqkK1r+JVtp/dM8tCLGSCNuCd6OWR
+	 oyfMhSYbgyer7e37XZKTZxS1MJ554fHYJCVrJf5g6g23xiuMT5JgZwUXdUIVXweLGe
+	 EPw58iJeWqBZLPjGwGfDmNQ4TWxIQ6tGiHigYkcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Juergen Gross <jgross@suse.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	syzbot@syzkaller.appspotmail.com,
-	Atish Patra <atishp@meta.com>,
-	Nikunj A Dadhania <nikunj@amd.com>
-Subject: [PATCH 7.3 452/547] x86/mm/pat: Fix effective RW computation in lookup_address_in_pgd_attr()
-Date: Wed,  4 Nov 2026 16:10:36 -0500
-Message-ID: <20261104211051.197401969@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.3 453/547] ALSA: x86: hdmi: fix chmap array missing terminator entry
+Date: Wed,  4 Nov 2026 16:10:37 -0500
+Message-ID: <20261104211051.225236808@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -72,88 +67,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit ebaf7c9bbb1e16523d7036e7e1225ad2dfcc6482 upstream.
+commit f5e1a9a3fddab8421416b68bb132ae9626d07156 upstream.
 
-lookup_address_in_pgd_attr() accumulates the effective NX and RW bits of
-the walked page table levels so that verify_rwx() can detect mappings that
-are both writable and executable.
+had_build_channel_allocation_map() allocates a single struct
+snd_pcm_chmap_elem via kzalloc() and stores it as
+intelhaddata->chmap->chmap. struct snd_pcm_chmap.chmap is expected to
+be a zero-terminated array (see snd_pcm_std_chmaps[]), but
+had_register_chmap_ctls() never overrides the TLV callback installed
+by snd_pcm_add_chmap_ctls(), so the generic pcm_chmap_ctl_tlv() from
+ALSA core is left in place.
 
-The RW bits are folded into a bool with
+pcm_chmap_ctl_tlv() is reachable by any local user via
+SNDRV_CTL_IOCTL_TLV_READ on the "Playback Channel Map" control and
+walks the array with "for (map = info->chmap; map->channels; map++)".
+Since the driver's single element is never terminated, this walks
+past the allocation. The same pointer is also freed on hot-unplug and
+rebuilt on hot-plug under intelhaddata->mutex, while the TLV callback
+runs under card->controls_rwsem without that mutex, so the walk can
+also race a concurrent free of the array.
 
-	rw &= pXd_flags(*pXd) & _PAGE_RW;
+Fix this by allocating a second, zeroed element so the array is
+properly terminated, and by dropping the inherited TLV callback
+entirely at registration time, since the driver never implements one
+of its own.
 
-but _PAGE_RW is 0x2. So consider the accumulation line:
-
-        rw &= pXd_flags(*pXd) & _PAGE_RW;
-
-where rw=0x1 and the right side evaluates down to 0x2. It'll end up doing:
-
-        rw = 0x1 & 0x2
-
-and rw always ends up 0.
-
-This way rw becomes false at the first level walked, regardless of the
-actual permissions, and verify_rwx() treats every mapping as non-writable
-and never reports a W^X violation.
-
-Add double negation to the right side to normalize the _PAGE_RW flag to
-0 or 1.
-
-Assisted-by: Copilot:claude-opus-4.8
-Fixes: ceb647b4b529 ("x86/pat: Introduce lookup_address_in_pgd_attr()")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Tested-by: Atish Patra <atishp@meta.com>
-Tested-by: Nikunj A Dadhania <nikunj@amd.com>
-Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813-cpa-fixes-v2-5-39b4ff90f91d@kernel.org
+Fixes: 5dab11d89777 ("ALSA: x86: hdmi: Add audio support for BYT and CHT")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261008085411.13742-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat/set_memory.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/x86/intel_hdmi_audio.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -754,7 +754,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
+--- a/sound/x86/intel_hdmi_audio.c
++++ b/sound/x86/intel_hdmi_audio.c
+@@ -475,7 +475,8 @@ static void had_build_channel_allocation
+ 	kfree(intelhaddata->chmap->chmap);
+ 	intelhaddata->chmap->chmap = NULL;
  
- 	*level = PG_LEVEL_512G;
- 	*nx |= pgd_flags(*pgd) & _PAGE_NX;
--	*rw &= pgd_flags(*pgd) & _PAGE_RW;
-+	*rw &= !!(pgd_flags(*pgd) & _PAGE_RW);
+-	chmap = kzalloc_obj(*chmap);
++	/* info->chmap must be zero-terminated; allocate a spare terminator entry */
++	chmap = kzalloc_objs(*chmap, 2);
+ 	if (!chmap)
+ 		return;
  
- 	p4d = p4d_offset(pgd, address);
- 	if (p4d_none(*p4d))
-@@ -765,7 +765,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
- 
- 	*level = PG_LEVEL_1G;
- 	*nx |= p4d_flags(*p4d) & _PAGE_NX;
--	*rw &= p4d_flags(*p4d) & _PAGE_RW;
-+	*rw &= !!(p4d_flags(*p4d) & _PAGE_RW);
- 
- 	pud = pud_offset(p4d, address);
- 	if (pud_none(*pud))
-@@ -776,7 +776,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
- 
- 	*level = PG_LEVEL_2M;
- 	*nx |= pud_flags(*pud) & _PAGE_NX;
--	*rw &= pud_flags(*pud) & _PAGE_RW;
-+	*rw &= !!(pud_flags(*pud) & _PAGE_RW);
- 
- 	pmd = pmd_offset(pud, address);
- 	if (pmd_none(*pmd))
-@@ -787,7 +787,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
- 
- 	*level = PG_LEVEL_4K;
- 	*nx |= pmd_flags(*pmd) & _PAGE_NX;
--	*rw &= pmd_flags(*pmd) & _PAGE_RW;
-+	*rw &= !!(pmd_flags(*pmd) & _PAGE_RW);
- 
- 	return pte_offset_kernel(pmd, address);
+@@ -575,6 +576,12 @@ static int had_register_chmap_ctls(struc
+ 	intelhaddata->chmap->kctl->info = had_chmap_ctl_info;
+ 	intelhaddata->chmap->kctl->get = had_chmap_ctl_get;
+ 	intelhaddata->chmap->chmap = NULL;
++
++	/* drop the inherited TLV read: it walks chmap without our mutex */
++	intelhaddata->chmap->kctl->tlv.c = NULL;
++	intelhaddata->chmap->kctl->vd[0].access &=
++		~(SNDRV_CTL_ELEM_ACCESS_TLV_READ | SNDRV_CTL_ELEM_ACCESS_TLV_CALLBACK);
++
+ 	return 0;
  }
+ 
 
 
