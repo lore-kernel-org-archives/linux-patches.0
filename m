@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831738;
-	b=V0aBSjIyGoxw3h2pHxEUfgcB2i936RvVGhhmO2vjD9/zmoI1s3ckSovxgTadPvoI3Msf
-	 +su2Hm05Xni+8ULfPxqHjO0qh9WEh6zeDBAlzAvvYyteyTaHJm2QTF8TRPTCpxTvFLO45
-	 RGOyE2uE0cBI27emxitqWERyuvEHAgAwV/Kz5DhGCI4QYkzbLZzpEDMm8JwoOOFjuaiKv
-	 bRKrDfhVhNvnaFQRVC+9U30koPQG3nnFioCgbwKyFCeL9OLFEkiJOfRK1K9PRNQkZtxxp
-	 h8MC3cWptTStuClapZ4iwStPex+RvAdEvs0pjO3s2By4/aS+J3ao2hVmAKuL2ul2yoQ==
+	t=1793831739;
+	b=tKoIgmcp34HspCe8diao2kfACjX5jGrAyLhwWfCSGs+hwiH8MCgXDdGg9tQlnop1CM9o
+	 D/Rt1zldqQ9SRqWAA6Ou2QHmUOVoh0bhlZ0Y5mwVIizOVSeUfHzbYJbamoonU3wRnqJD1
+	 vtehML6NvNqGVm3niy701FA7kzEkpSnJQLdwdGNh3P2W+Cs+I4QqIAvrcMPXyzVPOKzaO
+	 8ol4kmNmEOOr/yeXZHYPlUS3rjdVNEjSsuLvo/D3G8+9w4fC8L+sA/ulTFuv/dAlbYwwb
+	 TSBItNdxF2THPKBrzuxhY8f/i59gg8LSVEAIixNjpfZ1535EjPaXy4Ha/HTrwygV5sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831738;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hGpYJNZm1haREsS2n6aSYkoccvODzsqNwvODuLtmbCE=;
-	b=PHZeDft7YDjbytg5ZsALGSwRlcm0wP/tmEzw2tc+/N6lsORHwZ0VEwpHkGXuJ1JjLCJi
-	 rRYw4mAfH5C+zpKc/mmuDZkhtdqQhpmSDgC4rBtMNM5ofEq3dtG1X/Jc4AC9B/UyCyirC
-	 aRIVbXaDZotbqGhhWTaPAvtsIoGHCaG1fi9WaRmDTnDoCj7Kc+OsGkNppHjgyuGHcx100
-	 7UK7KV7ad4ZQWvL0VSbTuLPemxv+6T6936BcnOUVm9BmgGotYu5hu468qhv2//euDnVas
-	 T0Q390lWTfhNqKcsVXL360/PuhzD6sSQ38L2kjwhIc3qqjcbwqEVq6YOO79wb7bd9Ow==
+	bh=zVlWQYbaBpPp5IEWgycOy9OqkaPQNxOn2JVmc/F0KhY=;
+	b=CZSEggnRsKUrCL9ckzoVSTQIBdS1Y2yQSIbaevXV70blUAGnLHPR4/C4KF02USl3lYlZ
+	 zjpmsehU+DnDzmuN/j/lAj5lLb4aMMSSzUDMsd2KSn7eKDviRTRrH7UHNTkGmML4qMdqP
+	 missWbivQGhvjVFE63xdRZu5UTsh6dDq1E9VUSDu3uUV60UXEcO23JD8eNhHCVPk/3PdW
+	 E33xI4tegGmArEwlLTvOE/Okb3aVHRyN5JqP9hdrNGyrSBXMoJDTwHt76mGWbolc2VZBL
+	 wg8N1fhweeZmHPnPSqI6QMJdPKAe3aX3GanvXDZG7IgGTCZfTRkq/QL5gRm46mBQ9AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZus6kyg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2nJxSdn4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEE9606A32F;
-	Wed,  4 Nov 2026 22:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D8B606A32F;
+	Wed,  4 Nov 2026 22:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZus6kyg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2761F000C1;
-	Wed,  4 Nov 2026 22:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2nJxSdn4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52D31F000C1;
+	Wed,  4 Nov 2026 22:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831737;
-	bh=hGpYJNZm1haREsS2n6aSYkoccvODzsqNwvODuLtmbCE=;
+	s=korg; t=1793831739;
+	bh=zVlWQYbaBpPp5IEWgycOy9OqkaPQNxOn2JVmc/F0KhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZus6kygcZ3Qsr10ESfsM0qfqySFkd5k7mN48+Ytagk5Zcy05YqmlzhEIfxAdqJ/P
-	 +7hDoOmrmrQzAAOS5qTSKCurbkTqFpPVIhihMjTaMGaN381BczLWxbvOQ8KQUVAeCN
-	 tcep5ny1qy0pnT7XxX1/B+qTW/sRUYjqt1x+a9W0=
+	b=2nJxSdn42YyrULDtZ6c/EiH7UoKuqJgWm/0RcIwpQJh0iEmEnluF0nXCMdNrfUCEM
+	 uZNqcb3F0wF8ZwptSMLdTS66V73D+KlW0GVX6iQm2ocI63vaYcnWGop71lZwL1gJGo
+	 C4T4m9TBAdircxwcHKa7m4OzglC/EzQovwDifGnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Zuber <jamz@amazon.com>,
-	NeilBrown <neil@brown.name>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.18 0882/1005] NFS: Fix stale negative cache on failed nfs_mkdir()
-Date: Wed,  4 Nov 2026 16:10:15 -0500
-Message-ID: <20261104211107.945341206@linuxfoundation.org>
+	Mike Snitzer <snitzer@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.18 0883/1005] NFS/localio: fix nfs_local_dio_misaligned tracepoint
+Date: Wed,  4 Nov 2026 16:10:16 -0500
+Message-ID: <20261104211107.972099702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,42 +67,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Zuber <jamz@amazon.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit 211cda4fdf33011cee39f8970c4625b207142d6b upstream.
+commit 1ea352a0db8bcb6ff6820e9a8715aac0aa3c761f upstream.
 
-Since commit 8376583b84a1 ("nfs: change mkdir inode_operation to return
-alternate dentry if needed"), nfs_mkdir() no longer drops the dentry on
-RPC failure.  A negative cache value can then result in spurious ENOENT
-results for further operations within that directory, such as open or
-stat.
+The intended focus of nfs_local_iters_setup_dio()'s call to
+trace_nfs_local_dio_misaligned() is on the middle segment being
+misaligned, yet the @offset passed in was local_dio->start_len.
+It would appear this was a cut-n-paste bug from the preceding
+nfs_local_iter_setup() call that passes local_dio->start_len.
 
-We observed this breaking some applications where an EEXIST on mkdir
-caused the application to assume the directory to exist, only to fail
-operations within that directory due to the retained negative cache
-entry.  The other create paths, nfs_create() and nfs_mknod(), still drop
-the dentry on failure.  This patch restores the previous behavior.
+Fix this by passing the @offset as local_dio->middle_offset and
+calculate the start segment's offset rather than assume.
 
-Fixes: 8376583b84a1 ("nfs: change mkdir inode_operation to return alternate dentry if needed")
-Cc: stable@vger.kernel.org # v6.15+
-Signed-off-by: Jimmy Zuber <jamz@amazon.com>
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Example traces, before this fix:
+
+   python3-32744   [006] .l... 132946.352360:
+   nfs_local_dio_write: fileid=00:33:1286 fhandle=0xf1f7c10b
+   offset=1048759 count=1048576 mem_align=4 offset_align=512
+   start=1048759+329 middle=1049088+1048064 end=2097152+183
+
+   python3-32744   [006] .l... 132946.352360:
+   nfs_local_dio_misaligned: fileid=00:33:1286 fhandle=0xf1f7c10b
+   offset=329 count=1048064 mem_align=4 offset_align=512
+   start=329+329 middle=1049088+1048064 end=2097152+183
+
+After this fix:
+
+   python3-32744   [006] .l... 132946.352360:
+   nfs_local_dio_write: fileid=00:33:1286 fhandle=0xf1f7c10b
+   offset=1048759 count=1048576 mem_align=4 offset_align=512
+   start=1048759+329 middle=1049088+1048064 end=2097152+183
+
+   python3-32744   [006] .l... 132946.352360:
+   nfs_local_dio_misaligned: fileid=00:33:1286 fhandle=0xf1f7c10b
+   offset=1049088 count=1048064 mem_align=4 offset_align=512
+   start=1048759+329 middle=1049088+1048064 end=2097152+183
+
+Fixes: 6a218b9c3183e ("nfs/localio: do not issue misaligned DIO out-of-order")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/dir.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfs/localio.c  |    2 +-
+ fs/nfs/nfstrace.h |    5 ++++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2442,6 +2442,8 @@ struct dentry *nfs_mkdir(struct mnt_idma
- 	trace_nfs_mkdir_enter(dir, dentry);
- 	ret = NFS_PROTO(dir)->mkdir(dir, dentry, &attr);
- 	trace_nfs_mkdir_exit(dir, dentry, PTR_ERR_OR_ZERO(ret));
-+	if (IS_ERR(ret))
-+		d_drop(dentry);
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(nfs_mkdir);
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -448,7 +448,7 @@ nfs_local_iters_setup_dio(struct nfs_loc
+ 
+ 	if (unlikely(!iocb->iter_is_dio_aligned[n_iters])) {
+ 		trace_nfs_local_dio_misaligned(iocb->hdr->inode,
+-			local_dio->start_len, local_dio->middle_len, local_dio);
++			local_dio->middle_offset, local_dio->middle_len, local_dio);
+ 		return 0; /* no DIO-aligned IO possible */
+ 	}
+ 	iocb->end_iter_index = n_iters;
+--- a/fs/nfs/nfstrace.h
++++ b/fs/nfs/nfstrace.h
+@@ -1771,7 +1771,10 @@ DECLARE_EVENT_CLASS(nfs_local_dio_class,
+ 		__entry->count = count;
+ 		__entry->mem_align = local_dio->mem_align;
+ 		__entry->offset_align = local_dio->offset_align;
+-		__entry->start = offset;
++		if (local_dio->start_len)
++			__entry->start = local_dio->middle_offset - local_dio->start_len;
++		else
++			__entry->start = 0;
+ 		__entry->start_len = local_dio->start_len;
+ 		__entry->middle = local_dio->middle_offset;
+ 		__entry->middle_len = local_dio->middle_len;
 
 
