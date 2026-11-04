@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829212;
-	b=Zv6AIM7PL1n7z7ISHxM18Mmwor7tEKYIG5Xa83x4yVHhpPd1l2HmPkla1cxI8W32e0mq
-	 XaOvl3LcuWntRMeEets3WOnju5BzbDMAeY6Ovza4Hhzr9ByawMtiQXbDg7DtF5kmOU7WV
-	 2wbOboahH5lfrUBLg+GfMXE9ViXb9Xi2IikRugMWZfG2PDkNiqYcF/or5mq2oBJiiZ5gY
-	 /DIxPkKyQwo97IH70gRTj8nds0ZjDdffPoihbru1Lprla653VLUH6z0SO4Lu9a1SQm/Yb
-	 RjFBAUsprKxlTHpU/5jgE17dFGbt7gY6syKHKqXjLzpN+CiTcHF+hq2K2zpj3F/NUBA==
+	t=1793829214;
+	b=qhDhfTp0z3ouOyHl4igIjgLSl31ZTFzKe+MVUXefCBmpFUCTXPG8i9ULsgw/CTdy9YnI
+	 hklFiX78uI5ZClSQ5qb/uR0/YbmZHGSkKCSK1drOkz1eWTUk7HP9yNFCjdUBmvjzng8tU
+	 avWlKcyD4zlsNElxqrrC2Ted/N0TyHjhOdDn8K20k9tQdUINBKsI5cxE7tCQlQgE3VUgi
+	 FxGNhqqCn9N7j4/6+PgZRNB8v1ijbDrYabNkIIUPh8QmteCxzZpwDAcDgA9HLgP6OUH5N
+	 JhAVS+mIJMD7LBjMh0E4OuEThayZMO5fkvaQlQo15XGYadZkSaj3zrvE80H6gYw7RNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829212;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829214;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IduHgt5wzvGWC1wS1wU4GiW3RCQ+U1eejJR6bVbEi4s=;
-	b=Dbz3XrcsglmXp+UVy9wbl9W3eTrSSveEaftNq6j+EwUjDcWEU2ZD060aPL0Q8rOzCQ97
-	 ZftPy1/y8A7FjuLpmm1fXxe34XHFZMurTlFWMRgFSZEEy7/QoJJYu2njeA727y9d5O8FD
-	 nkmDbqf61Sn3ZbLvUUcpiL9S6hTVrfPOQBDOr+VCMm5Cq2YiLBlWKyf9QAO8uQmTKBg6d
-	 9ZkbI8Lsb+g6rAjKSV8xr9cvUYqzj202rPTxrWAhzordDGbtDUwocu9r0rjAMoZ3E7A9G
-	 DMcW0OVhsvZSuaaUsozXdqdnxQtnZrrFKzSBNvnVlrd2A6LypfGXPUd3OBNPayPv/SA==
+	bh=fMHP57uxtatI1umv13DIkF+Px5SSXYltwk0g4PCKVEc=;
+	b=OhjM8lHdZ/Li3OXijwPWp1NkSQVA4iS+orr3BoLs6q/1OdeyKpCPUbVEX5peCktG28fG
+	 l3ypcwkv5vgCDp21FBEJMOuDSSbWAFyFarGFi+fgi41VWgH3+JbNGBcpEd42VnHyisEYo
+	 3C6oSSs0JztLUPaMq860xyHcI3D+phgohMLEkfZJEeG5q+f979Y0/JesjPF4fJIL/8hih
+	 oEMpC+0TMNSyFOXIEGjjiXYDPPLdKSWcwSnd7ZB65zLjFaVgS4qXUznBgtLNc4/HnEOpo
+	 0FvXYo/Tgyy/uBqMiO83a16PAWs8Ni3CjziE1SqK0XVHeFmNpALKbZllt1hSqklpbKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mUhDjgga;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AuZ4b64k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B0B6070323;
-	Wed,  4 Nov 2026 21:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724E96070323;
+	Wed,  4 Nov 2026 21:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mUhDjgga
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE951F000C1;
-	Wed,  4 Nov 2026 21:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AuZ4b64k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9878A1F000C1;
+	Wed,  4 Nov 2026 21:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829212;
-	bh=IduHgt5wzvGWC1wS1wU4GiW3RCQ+U1eejJR6bVbEi4s=;
+	s=korg; t=1793829213;
+	bh=fMHP57uxtatI1umv13DIkF+Px5SSXYltwk0g4PCKVEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mUhDjgga4s5ZCvQ6nJM65UZiibFBX04LfGUgz2SzxmgAJGWEujidxk69IADZ/EmZU
-	 +Su65mwrkUk1s9vIiIFL0tF1QJQ+9TnaRG0jhhowkcj2vaezpaz6KXeSpHuaZCAbV8
-	 yspr4hEzRt5YU8tYvoxQSFyXeFFDGwDl6zTvGOj0=
+	b=AuZ4b64ky8iMS15mKRiN39iHyd3UXvQectieDFdH9WE7zJ3TRn8FZTwRgr5xQ933j
+	 LcuK3XfdEWtyoVD5Iq0DLni6STOntKS8RykZUbIOpx/Rt9Td2aYvqz6EyJLl/ua2/P
+	 7n9blI1gjJCTPFCXlwm4a0yD2A9ZP9ISku4mhpo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Shivank Garg <shivankg@amd.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>
-Subject: [PATCH 7.3 479/547] KVM: guest_memfd: take the invalidate lock when unbinding a dying file
-Date: Wed,  4 Nov 2026 16:11:03 -0500
-Message-ID: <20261104211051.981381895@linuxfoundation.org>
+	Sashiko Bot <sashiko-bot@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.3 480/547] KVM: guest_memfd: Establish memslot<=>guest_memfd bindings *after* memslot is ready
+Date: Wed,  4 Nov 2026 16:11:04 -0500
+Message-ID: <20261104211052.009940008@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,128 +67,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivank Garg <shivankg@amd.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 0ee2c883b62deb74d8c43007e8049dc006d3a2fb upstream.
+commit 3fe5d2944e5ac3fc5073344b0982c73703332e18 upstream.
 
-kvm_gmem_unbind() takes mapping->invalidate_lock only if the
-get_file_active() succeeds. When the guest_memfd file is dying, its
-reference count is already zero so get_file_active fails and the binding
-is removed without holding the invalidate lock.
+Wait to bind a memslot to a guest_memfd instance until *after* the memslot
+is fully prepared, as creating the binding in guest_memfd will effectively
+expose the memslot to readers.  As pointed out by Sashiko, binding the
+memslot before it's ready to be exposed to the rest of the world can break
+various memslot assumption and rules.  E.g. x86 could observe a NULL rmap
+pointer if a PUNCH_HOLE hit the guest_memfd after the binding was created,
+but before KVM made it through kvm_prepare_memory_region().
 
-kvm_gmem_invalidate_{start,end}() checks f->bindings independently to
-decide whether to begin or end KVM MMU invalidation. So, the bindings
-must therefore remain stable between the two calls. Otherwise, unbind
-can remove a binding after start increments mmu_invalidate_in_progress,
-but before end finds the binding and decrements it.
-Example, unbind race with memory failure:
-
-  CPU 0: memory failure               CPU 1: memslot delete
-  ----------------------------------  ---------------------------
-                                      (guest_memfd file is dying)
-  kvm_gmem_error_folio()
-    kvm_gmem_invalidate_start()
-      finds binding
-      mmu_invalidate_in_progress++
-                                      kvm_gmem_unbind()
-                                        get_file_active() fails
-                                        removes binding
-    kvm_gmem_invalidate_end()
-      no binding found
-      counter stays elevated
-
-mmu_invalidate_retry() then returns 1 forever, so guest page faults
-retry without ever installing a mapping and the guest hangs.
-
-Remove the distinction between live and dying files in the unbind path.
-Always use slot->gmem.file and take the invalidate lock when it's non-NULL.
-Normal unbind callers hold slots_lock, which prevents release from clearing
-the pointer or freeing the file state until unbind completes. Final VM
-teardown can only see a NULL pointer because guest_memfd pins the KVM until
-release has cleared all bindings.
-
-Fixes: ae431059e75d ("KVM: guest_memfd: Remove bindings on memslot deletion when gmem is dying")
+Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260728092027.225CF1F000E9@smtp.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Shivank Garg <shivankg@amd.com>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Link: https://patch.msgid.link/20260901-gmem-unbind-fix-v2-1-12febe1d2216@amd.com
+Reported-by: Sashiko Bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260826170551.BEF801F000E9@smtp.kernel.org
+Link: https://patch.msgid.link/20260922001332.1121266-6-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/guest_memfd.c |   44 ++++++++++++++++++--------------------------
- 1 file changed, 18 insertions(+), 26 deletions(-)
+ virt/kvm/kvm_main.c |   36 +++++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -686,48 +686,40 @@ int kvm_gmem_commit_memory_region(struct
- 	return r;
- }
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -1950,6 +1950,15 @@ static int kvm_set_memslot(struct kvm *k
+ 	if (r)
+ 		goto err;
  
--static void __kvm_gmem_unbind(struct kvm_memory_slot *slot, struct gmem_file *f)
-+void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- {
-+	struct file *file = slot->gmem.file;
- 	unsigned long start = slot->gmem.pgoff;
- 	unsigned long end = start + slot->npages;
--
--	xa_store_range(&f->bindings, start, end - 1, NULL, GFP_KERNEL);
-+	struct gmem_file *f;
- 
- 	/*
--	 * synchronize_srcu(&kvm->srcu) ensured that kvm_gmem_get_pfn()
--	 * cannot see this memslot.
--	 */
--	WRITE_ONCE(slot->gmem.file, NULL);
--}
--
--void kvm_gmem_unbind(struct kvm_memory_slot *slot)
--{
--	/*
- 	 * Nothing to do if the underlying file was _already_ closed, as
- 	 * kvm_gmem_release() invalidates and nullifies all bindings.
- 	 */
--	if (!slot->gmem.file)
-+	if (!file)
- 		return;
- 
--	CLASS(gmem_get_file, file)(slot);
--
- 	/*
- 	 * However, if the file is _being_ closed, then the bindings need to be
- 	 * removed as kvm_gmem_release() might not run until after the memslot
--	 * is freed.  Note, modifying the bindings is safe even though the file
--	 * is dying as kvm_gmem_release() nullifies slot->gmem.file under
--	 * slots_lock, and only puts its reference to KVM after destroying all
--	 * bindings.  I.e. reaching this point means kvm_gmem_release() hasn't
--	 * yet destroyed the bindings or freed the gmem_file, and can't do so
--	 * until the caller drops slots_lock.
-+	 * is freed.  Modifying the bindings is safe even if the file is dying
-+	 * as kvm_gmem_release() nullifies slot->gmem.file under slots_lock,
-+	 * and only puts its reference to KVM after destroying all bindings.
-+	 * I.e. reaching this point means kvm_gmem_release() hasn't destroyed
-+	 * the bindings or freed the gmem_file and can't do so until the caller
-+	 * drops slots_lock, so there's no need to verify the file is live.
- 	 */
--	if (!file) {
--		__kvm_gmem_unbind(slot, slot->gmem.file->private_data);
--		return;
--	}
-+	f = file->private_data;
- 
- 	filemap_invalidate_lock(file->f_mapping);
--	__kvm_gmem_unbind(slot, file->private_data);
-+	xa_store_range(&f->bindings, start, end - 1, NULL, GFP_KERNEL);
++	if (change == KVM_MR_CREATE && (new->flags & KVM_MEM_GUEST_MEMFD)) {
++		r = kvm_gmem_commit_memory_region(kvm, new);
++		if (r) {
++			kvm_arch_free_memslot(kvm, new);
++			kvm_destroy_dirty_bitmap(new);
++			goto err;
++		}
++	}
 +
-+	/*
-+	 * synchronize_srcu(&kvm->srcu) ensured that kvm_gmem_get_pfn()
-+	 * cannot see this memslot.
-+	 */
-+	WRITE_ONCE(slot->gmem.file, NULL);
- 	filemap_invalidate_unlock(file->f_mapping);
- }
+ 	/*
+ 	 * For DELETE and MOVE, the working slot is now active as the INVALID
+ 	 * version of the old slot.  MOVE is particularly special as it reuses
+@@ -2127,32 +2136,25 @@ static int kvm_set_memory_region(struct
+ 						   mem->guest_memfd_offset);
+ 		if (r)
+ 			goto out;
++	}
  
+-		r = kvm_gmem_commit_memory_region(kvm, new);
++	r = kvm_set_memslot(kvm, old, new, change);
+ 
+-		/*
+-		 * Drop the reference to the file, even on success.  The file
+-		 * pins KVM, not the other way 'round.  Active bindings are
+-		 * invalidated if the file is closed before memslots are
+-		 * destroyed.
+-		 */
++	/*
++	 * Drop the reference to the gmem file, even on success.  The file pins
++	 * KVM, not the other way 'round.  Active bindings are invalidated if
++	 * the file is closed before memslots are destroyed.
++	 */
+ #ifdef CONFIG_KVM_GUEST_MEMFD
+-		 fput(new->gmem.file);
++	if (change == KVM_MR_CREATE && (mem->flags & KVM_MEM_GUEST_MEMFD))
++		fput(new->gmem.file);
+ #endif
+ 
+-		if (r)
+-			goto out;
+-	}
+-
+-	r = kvm_set_memslot(kvm, old, new, change);
+ 	if (r)
+-		goto out_unbind;
++		goto out;
+ 
+ 	return 0;
+ 
+-out_unbind:
+-	if (change == KVM_MR_CREATE && (mem->flags & KVM_MEM_GUEST_MEMFD))
+-		kvm_gmem_unbind(new);
+ out:
+ 	kfree(new);
+ 	return r;
 
 
