@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829538;
-	b=iHXeFjZpE5p286GIC/GRieMG/UU/zunVPyjB9O/a4iU/QrwaWkxH9cK5oS7yCyqhm/m5
-	 XRPqsCC6TrTNZ+EOhAkJwyaqhrckKLh8LZzWUHY297LtqSoE+4/2ihAFJexUvsDCxOgTW
-	 N7xV/U5o0ClSbHkZacFF2zA19GfOyyxLmHlYIRJjSXMnBzq/2e22Ja/ibQxdOHed38ZFB
-	 yh95ACQDzX/xbRreLobjVh0agz4X0hQmRs9FjytbeInlm7KqXGaSY38D0ogJcIDVWwWY1
-	 oC1kySYnaHNqzdoj7aZn7V83DlDdjspREqs0M2IXl9EIf9efMNOa6/pao/D0lv3roVQ==
+	t=1793829540;
+	b=B4aGTc7hVIFrnN0E8Sd3ljyN1bNeHsAK14PvV4l8VSbKp93Sv7Ptx1CIN2+qp9Gqu1rD
+	 9hze6Z8xp5gMJb0cKhKoLPIXr4d+gNIrLZgqj63JDjB9CvD16gYNukaOgMqRBde+HWg01
+	 ECbszYh/H8Pi6ozaR7maqr21477OEb8RJ5U8up1KpQABNoxniZav6cqDCBJI9qaOhjjdt
+	 srJlbUdIiw3bSyPxzsNvu36IHci0otDfjv/By6VnB+cDCK/eFADPgMpVpfa+2A7Iry3jV
+	 lmYj7tastRGiMko3pRDpLlKHnOSBpBtVn8r3zmSoFyBuVWrFfA8oLfYizOegTXXe5hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829540;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0j9FoBCdoOO0kOzYmtVRPXi8CAl5knpeAHtogx49A10=;
-	b=dio3D5HwX+8l9mJR4FsPJDaXwu9O/yvRynFnlsVxWGbF0SBcEBAEh3IfBPLy8Iqb1Jyk
-	 vbsAniGfpBdkPlATvGyu6RhQv/hE8kpcK4mb8O+nRSnB46MSNtSJoh1AyNr2FcaQMcD3a
-	 3axj7zTvP67yerDriSgD8ALdzDuEmES0sZmRjYigcA3ZNk1oWbbRo5IGTQ6Gov6sYuWl1
-	 zuOHk7NOK2iMnZ7GAnik2zqRCMOzYB7OAe1oLYKwFOkCUE7SVMEe2fZOYQGLwb4tBa03a
-	 UWHbfDRhAMxoIT5XQ6c98vOI5vNPNEtaFTCyisDK09wnGAB5B1ASEF/ITLA7o3O1YPw==
+	bh=kUCMq/SJPQAkbiBIulU58vSO/EY+qUkQdYv0bHNUeIg=;
+	b=YPCm9/BZei3qRIjBB56azx8VxkScIzvUWcJ9br3BVtVAu5og4y4mO3ywyikKdSbcobWG
+	 T+fcDPx0J9YkAb337p+Ffd/ELoKkple4S4pbinCL5EchzbBPIOxzhhVlasaWSG4wyAAc8
+	 1YBgvk9zsWfP8oiE4p/Un3RU0RhesSgMUm8E+2tjr0AQqoO+d93ur1XbQnC/T5D4XF6QC
+	 PT/GH16+vQ1VNO7G1d4IcN4rjasCwul7sEohrx2Ers2SAggFjGX3BnyHX0x6/Rb0S3Dnp
+	 iBpulJSYj+9NHx79IWFIMPeW0YyQ9THJ4Tnk9pwfl8gwvizkrPpPZ7FpPfROEJtnGog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbgWwJrk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oZJCdOxQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54ED86075254;
-	Wed,  4 Nov 2026 21:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A09060877DC;
+	Wed,  4 Nov 2026 21:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbgWwJrk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA79C1F00A20;
-	Wed,  4 Nov 2026 21:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oZJCdOxQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B871F00A15;
+	Wed,  4 Nov 2026 21:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829538;
-	bh=0j9FoBCdoOO0kOzYmtVRPXi8CAl5knpeAHtogx49A10=;
+	s=korg; t=1793829539;
+	bh=kUCMq/SJPQAkbiBIulU58vSO/EY+qUkQdYv0bHNUeIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vbgWwJrkiSyMhHpeQQAigGOU0EwQvOOBLtcqv3/7RtyBFg4h3E71v5MRnHNJpJoH4
-	 pxI+EHA25oGJeoEqhrJAVwTGH0h+hIxzgyXje7WIJ0WikO700uxFBP0gTz3baTBCOm
-	 FnYoO9NDjVH6+mE/e6wA7Lsgcba0afquQnKhAHoE=
+	b=oZJCdOxQTxLkFc3NLd/HfDglW+L5giT3/xC0W18kMBG/c/e/MqNjWN4TEN43fSzCH
+	 jpgHcgC1ysGMRyvlxv6pA1Z/XJabXAZsvM4PX5YZ/ov90peOgfFAVeL1FqaFlsIFkj
+	 p/6KWh0881TIo+bU83g6OKOf4dXBFEy8XkpNxd1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Andrea della Porta <andrea.porta@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0190/1005] misc: rp1: clear chained IRQ handlers on teardown
-Date: Wed,  4 Nov 2026 15:58:43 -0500
-Message-ID: <20261104211049.116221445@linuxfoundation.org>
+Subject: [PATCH 6.18 0191/1005] greybus: manifest: validate string descriptor header
+Date: Wed,  4 Nov 2026 15:58:44 -0500
+Message-ID: <20261104211049.146117731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,41 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 82aa033fef523ab4f0165afbc1c1fb0dadb89f94 ]
+[ Upstream commit 18b6510f642dbcb856c3af8be974d1600f3ba2d3 ]
 
-rp1_probe() installs a chained handler for each parent MSI-X vector and
-stores the rp1 device pointer as handler data. rp1_unregister_interrupts()
-then disposes the child IRQ mappings, removes the IRQ domain, and frees
-the PCI IRQ vectors without first removing those chained handlers.
+identify_descriptor() computes a string descriptor size from
+desc->string.length.
 
-If a teardown path runs after the handlers have been installed, a later
-parent IRQ can still call rp1_chained_handle_irq() with stale handler
-data and a removed IRQ domain. Clear the chained handlers before
-disposing mappings and freeing the vectors.
+Require the descriptor to contain the fixed string descriptor header
+before reading the variable string length. The existing descriptor-size
+check then reports the short descriptor.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Andrea della Porta <andrea.porta@suse.com>
-Link: https://patch.msgid.link/20260616151028.69890-1-pengpeng@iscas.ac.cn
+Link: https://patch.msgid.link/20260706091935.78020-1-pengpeng@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/rp1/rp1_pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/greybus/manifest.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/misc/rp1/rp1_pci.c b/drivers/misc/rp1/rp1_pci.c
-index 4d00dab48d475..847feb2cbb681 100644
---- a/drivers/misc/rp1/rp1_pci.c
-+++ b/drivers/misc/rp1/rp1_pci.c
-@@ -171,6 +171,9 @@ static void rp1_unregister_interrupts(struct pci_dev *pdev)
- 	struct rp1_dev *rp1 = pci_get_drvdata(pdev);
- 	int irq, i;
+diff --git a/drivers/greybus/manifest.c b/drivers/greybus/manifest.c
+index dd7040697bde9..469da3f39afb4 100644
+--- a/drivers/greybus/manifest.c
++++ b/drivers/greybus/manifest.c
+@@ -122,6 +122,8 @@ static int identify_descriptor(struct gb_interface *intf,
+ 	switch (desc_header->type) {
+ 	case GREYBUS_TYPE_STRING:
+ 		expected_size += sizeof(struct greybus_descriptor_string);
++		if (desc_size < expected_size)
++			break;
+ 		expected_size += desc->string.length;
  
-+	for (i = 0; i < RP1_INT_END; i++)
-+		irq_set_chained_handler_and_data(pci_irq_vector(pdev, i), NULL, NULL);
-+
- 	if (rp1->domain) {
- 		for (i = 0; i < RP1_INT_END; i++) {
- 			irq = irq_find_mapping(rp1->domain, i);
+ 		/* String descriptors are padded to 4 byte boundaries */
 -- 
 2.53.0
 
