@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829160;
-	b=qTZ65eaxxy9JsLMI+fP7e8aEQ2ISkIzxuq65pwrzEflwerILkyqO8A+okhp9wRe9Tdso
-	 WuDBO4gi9EVXGV95okvvZHFBHMtnURBGLwDwdc2mp4ZKxXNlCPX/bpVNIB0dy72ODFzvm
-	 Geh+ES39AbvTltK6MlGxdUi+JbBt9hk5exIPNv9iRD1MGYe6A4FBam76qVd/iuzQOuDrQ
-	 6QBw/6UULbQDObTF2u/gak0VxUZb0juEtp3Bnww7vJmlFCtz5nbO7M5NmH89MOJXYSd4P
-	 7/Ok2yMU15HEPEDsapWMPfJ502g09ssiDgCdU5nyGi0w92CPAbUzFPnIo+yEisUz6JQ==
+	t=1793829162;
+	b=Vcsgk/1u/DxhYahyi04BhkiH9gIG8bqDXndPY5Umc/dSFtLUNpGGMJrxV7aoFFnkUNQb
+	 XwCYOkAiMlP43Ida0PnQsYgA3qX6NoZwiP6OWzng5uT4M/W8ytog4ZrsZsqCCIsZ54vE5
+	 +W1afzOV+jJb5qrwjQv0qY5UyimAx+xw4uZmsI1X6lujhgD7jpsAhlkR+z+E8T6WI2j0V
+	 B2XQh/LWi7/9TebdmeNxmWcsT9eUJvi2kKW2tWxY1Ns1RQsDO0Y3S3BgdiU/Ezq+o8AHY
+	 +7Kk0Xvzi4fR2js3DSX3VDsoOLemR2vzdNiX0zufg2md4fJmXMkUC7VTKMsyIwXwHpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829160;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ulq+jjFLxxBIlPyuVOc0Ql2O+DMssuc0bswrieQorqU=;
-	b=pBtXrZvrQHZcFJxsAHY7H7OGn1zO/Uy0iATs7PrKyPMlsX6crkvgjwxq8gayk0jZ+1M6
-	 oZBiYQfssq96DTXdUYXynlr0BFM2IRXVBuxmPD/hmBxDL7tFyYxuJR2uVFWUTz+MmOI4s
-	 xwHls85j/I4Em6NIXeyro/OiRY1twY8QEUokOZ+8yqmhJsIxGfBhynHwmyO1m2K6XEYgJ
-	 JoYsZ1NYcug1+1d79tNoliLCPX8pazmTaql9PuicFPTSm8kfK7MLnB6kDZRvmuFebkNHO
-	 Re+GkCaF0jhhaBpnqwn7/kswO5sruSzeCieXIs0lE1fzhXIUf0bznqxdYMBLeDqmNLg==
+	bh=rl0YmEVlaSX6HMvuar2htEC3brlsNWlUWNzxCUg42Ro=;
+	b=BBVNEF15n4CnoxJxGpPDtDE6eYABNfIpzwUAGLFPX9yRreD2U1EtzpkU6+ENpsfhlJQB
+	 9n4fZXiTU5HanFM2s39WLTdHU5QgkxGHsUSnRFhPurD2mxX2TA8Iyeiv5wDkWH8H+j7kG
+	 gilyl+RM3d536Ors2rq14m7ngvbfU5E7MBWtxL/TcrRnEXnsOR7LM6m9GvRvv+xMl+45m
+	 hroRhjAsExRwEdL9trX6twkyko5+P1IcufPEZXp2v0jejQqBhC+mgYwOUpqfMS9/6qRqr
+	 lhwp2MULMc2edA0Tn/aACqydFIe9DD1GCUsJ3Dnxds7EbtZmUbuBVM79dabWy+wEvyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vu7ywn7D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EqPzSgPK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8BD607031A;
-	Wed,  4 Nov 2026 21:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C23607031A;
+	Wed,  4 Nov 2026 21:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vu7ywn7D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D143C1F000C1;
-	Wed,  4 Nov 2026 21:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EqPzSgPK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4727A1F00919;
+	Wed,  4 Nov 2026 21:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829160;
-	bh=Ulq+jjFLxxBIlPyuVOc0Ql2O+DMssuc0bswrieQorqU=;
+	s=korg; t=1793829161;
+	bh=rl0YmEVlaSX6HMvuar2htEC3brlsNWlUWNzxCUg42Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vu7ywn7DRZPNJG15V1v5cgqKFy2HyG/Yvix7sala/AI+TKLTMAM2pmVmFG7OAfH6g
-	 NG7wFUbuozeVZlA2+TbKGxVTbiu5r8Ymqa+cmBQiNyE8dOnQ4WuLAZgMQIPRec7XDX
-	 RNbF6/8oOzTN48dP9tjK0FegqwvOMutR1vvoLkRE=
+	b=EqPzSgPK5n+S9trM5NEIb815dpp4kntuZFSbV0YYhjpDR6x5c8OGBuTm6OrOkg2UD
+	 pydFu13pfDd2PSHHpjsSoC979n/9x4nFNuUuF34DcSmyIjI3IkK3gzvHPFdDTGm4yj
+	 fJj+XUhYOvScDCN8N7Zyu1gsp/ockowduaU4OCWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
+	Andrej Scek <scek.andrej@gmail.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 484/547] HID: zydacron: validate key report length
-Date: Wed,  4 Nov 2026 16:11:08 -0500
-Message-ID: <20261104211052.131540099@linuxfoundation.org>
+Subject: [PATCH 7.3 485/547] HID: amd_sfh: Remove unsupported motion-state field from accelerometer report
+Date: Wed,  4 Nov 2026 16:11:09 -0500
+Message-ID: <20261104211052.158837625@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,49 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-commit 9932c9af185f8586e883d44ca562c12f4487c762 upstream.
+commit 6ff86122906357687735dd379c6279e3b2fa26af upstream.
 
-The HID core invokes raw_event callbacks before validating the report
-length.  zc_raw_event() verifies the report ID in byte zero and then reads
-the key code from byte one for report IDs 0x02 and 0x03 without checking
-that the second byte is present.
+The accelerometer HID report descriptor declares a trailing motion-state
+field (usage 0x0451), but the Sensor Fusion Hub never reports this data,
+so each accelerometer input report is one byte shorter than the descriptor
+advertises.
 
-A one-byte report reproduced the issue under KASAN:
+This was previously harmless because hid-core zero-padded short reports.
+Since commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
+bogus memset()") such reports are rejected instead:
 
-  BUG: KASAN: slab-out-of-bounds in zc_raw_event+0x54c/0x580
-  Read of size 1 by task hidtrigger/93
-  Call Trace:
-   zc_raw_event+0x54c/0x580
-   __hid_input_report+0x2ef/0x3a0
-   inject_store+0x479/0x490 [faketrans]
+  hid-sensor-hub 0020:1022:0001.0003: Event data for report 1 was too short (15 vs 14)
 
-Require both the report ID and key code before processing the report.
+As a result the accelerometer input events are dropped and screen
+auto-rotation stops working on AMD SFH systems.
 
-Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
-sequence") added the same kind of raw_event length validation to hid-asus.
+Remove the motion-state field from the accelerometer report descriptor and
+drop the unused in_accel_shake_detection member, so the descriptor matches
+the report actually provided by the hardware.
 
-Fixes: d0742abaa1c3 ("HID: add omitted hid-zydacron.c file")
+Fixes: 1434f9fc0e47 ("SFH: Create HID report to Enable support of AMD sensor fusion Hub (SFH)")
+Reported-by: Andrej Scek <scek.andrej@gmail.com>
+Closes: https://lore.kernel.org/linux-input/CADrS85612m-Hh-G4BJmOhy-y6r3Ni3kD8_GM-2QRBeWWEEZWuA@mail.gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-zydacron.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h        |    2 --
+ drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h |    7 -------
+ 2 files changed, 9 deletions(-)
 
---- a/drivers/hid/hid-zydacron.c
-+++ b/drivers/hid/hid-zydacron.c
-@@ -114,6 +114,9 @@ static int zc_raw_event(struct hid_devic
- 	unsigned key;
- 	unsigned short index;
+--- a/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h
++++ b/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h
+@@ -48,8 +48,6 @@ struct accel3_input_report {
+ 	int in_accel_x_value;
+ 	int in_accel_y_value;
+ 	int in_accel_z_value;
+-	/* include if required to support the "shake" event */
+-	u8 in_accel_shake_detection;
+ } __packed;
  
-+	if (size < 2)
-+		return 0;
-+
- 	if (report->id == data[0] && (hdev->claimed & HID_CLAIMED_INPUT)) {
+ struct gyro_feature_report {
+--- a/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h
++++ b/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h
+@@ -169,13 +169,6 @@ static const u8 accel3_report_descriptor
+ 0x95, 1,		/* HID report count (1) */
+ 0x55, 0x0E,		/* HID unit exponent(0x0E) */
+ 0X81, 0x02,		/* HID Input (Data_Arr_Abs) */
+-
+-0x0A, 0x51, 0x04,	/* HID usage sensor data motion state */
+-0x15, 0,		/* HID logical Min_8(0) False = Still*/
+-0x25, 1,		/* HID logical Min_8(1) True = In motion */
+-0x75, 8,		/* HID report size(8) */
+-0x95, 1,		/* HID report count (1) */
+-0X81, 0x02,		/* HID Input (Data_Arr_Abs) */
+ 0xC0			/* HID end collection */
+ };
  
- 		/* break keys */
 
 
