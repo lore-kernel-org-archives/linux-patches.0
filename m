@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827206;
-	b=YtOajYSilTyAsZv0jfzLfm/lAfkbag10U8EQsSQM5CmYL1Q+4Rw2gQqoaff8xth/pFwn
-	 p5sLo4Hd6T6jAr9MCgBTlbCZT+40SG6lC0ZyiSzxgI4tehvvzPPzIafJE3kBFESZingnq
-	 HHaf05Gbi9axGLmZ1Xl8kEci+Fivx9DENrWJG4lN5Dtn5N5AtZtlCtouXEGopylFLSV/M
-	 pKUMPm21GkUwV6Hp3ZGZtGBYBuvdGcptv/X30JUopw0r26NFW/tNuM9gAf4SGtrIQ3exN
-	 BWrrxZccuMCVIK3j44VwDUWhlnVA4I8uZ4dREqwa7KajM0BosZNGmX+ip5zd8hi/XGg==
+	t=1793827208;
+	b=KyRz3BTS/NyCnWZY20iBUB/2Y/j+veiNMgkz+nPtBI/4jWPhUppfbQs5SGnZNzP5mPMS
+	 qVqtWPhmXsBQPQbr2f8Kgac47omAy4t8WiKUn83nG/bM1pqh7GgRHJ53Pi56EqjrRmPR4
+	 /4ReqDM8I6cCNUVIja44Wr4brY7gmekYOo/hqXnY5JkMh0WIHNazy5QtYacY2KdxbqjSO
+	 g+d7yncOfNvLIlHYHnZvNZK3RvYIsbMnx4U2n7YXA2txSpDOgFr55ci6Jc2ha2DM4VFBS
+	 Sjl0MDxXiWym9L0vCR2LO5uWQO43SrvaiScS/uRjn7Pchh4qMB9JrGsEmnBcRNdFxCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827206;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827208;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uTv9/XB3FTmtWrCFkGH5LTU97kVthR48kXx+Kn+PAfY=;
-	b=LM4v1uovl4ZmNOq8p23J0Dn2/hOudyUr19LGatMUAN7UFwW4Q5DQEyj1+nDD3R9pFClJ
-	 SKvTyBcLB/83141eg6d2tDbjRUI56nd+NScl48oGc2MxL0WswUAvOGG34MgQBV6Qymcg7
-	 Gb4l/3itPAgultxYRzee7udg8yKYOoP7NTTEd8bCg6KL6o7e1i6lOy7LXoBc2qzxQ8Eae
-	 ybsSMtFb+m32R/1Kzpnflb2Y1QXZz4H1BSb23AvHgtblCS9UOU7Wy78x5Q3pzywWL8C1k
-	 +bdsaYAqDT2wnpZuECOZta4oNUF62KmGlUv/5XZHVuJ7KB/g51VfcYIzyGyqckegmJw==
+	bh=Q4eYvozL8ZDt0H/OLJYfrzCIu/PPHp8dC+bWP4IvTeQ=;
+	b=OIfB9DO9ZsdprxahABfRtCxksmWwy4Nx8DEpMlJRiRNUYV4PkRN1bMHYuxTUrpOhxFMe
+	 vYL71qpuWCoZuqqx37n5rMxhYK01l//jiVtaFIENg8K2aX7LazodxlQ1o2rC6FsxqASnQ
+	 duLVl2g6+YG//f2axQod4PvKnpGPymSaFXzYQZBAx8m7lf4i6rqeCkFyQ5t2+fkYuzQ7q
+	 fFDlw3mOXxrbLM9CQjbBF6FBMuYJtEUiwbZvfuRNIQ2/PUF1vCXRDU9Xauu58+c5K8JYP
+	 RnnIQQ3tTsMLCD4Rtfp8csSlEGGEwUol+OMfS5MFFTv7c2L9TM/fuKVXmLdUSJBVBtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XxLGGgCV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ApsJQUXB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48ECB606B2E1;
-	Wed,  4 Nov 2026 21:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026A7606B2F6;
+	Wed,  4 Nov 2026 21:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XxLGGgCV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21A31F00A02;
-	Wed,  4 Nov 2026 21:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ApsJQUXB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917881F0093A;
+	Wed,  4 Nov 2026 21:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827206;
-	bh=uTv9/XB3FTmtWrCFkGH5LTU97kVthR48kXx+Kn+PAfY=;
+	s=korg; t=1793827207;
+	bh=Q4eYvozL8ZDt0H/OLJYfrzCIu/PPHp8dC+bWP4IvTeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XxLGGgCVwKv7il0A8UJQ8WV7NWyJrnP4Z5C7s12j/wJvOSZSWB6VaF/zLfUwhmj8B
-	 JNWsBaHO9a7rhx3eyDhrvR7KW3PTi1gqgMfU+AsXSyQrWzZUlQqy569ZBQuRmEA90T
-	 nS7xwsv7qj0YxbV2jjogZqhiYioYj2r9ubCn1CkM=
+	b=ApsJQUXBGSxu9TvvoA/e321cJ/uUzhR8uXDnkS9jh8mT8N81cCT14RZQemUy8FAfI
+	 9MlzSIEsOEXOpyEEW4dQdn6y/rO5W3OJoMuw6TW9bPasz9FRAZHi1MI+gKfQU8Hw+y
+	 dJkHvW2nVNuL8lLWR4XU4/rLDpXAb7GSZje3Dns0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ijae Kim <ae878000@gmail.com>,
 	Myeonghun Pak <mhun512@gmail.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 7.3 257/547] power: supply: pf1550: drain IRQ work before unregistering supplies
-Date: Wed,  4 Nov 2026 16:07:21 -0500
-Message-ID: <20261104211045.483195148@linuxfoundation.org>
+Subject: [PATCH 7.3 258/547] power: supply: sbs-battery: disable polling before supply teardown
+Date: Wed,  4 Nov 2026 16:07:22 -0500
+Message-ID: <20261104211045.512882042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,83 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 4856b49317ccd4ce96a0e8970df7d13ce8975a02 upstream.
+commit 5c1c602463d597c5189ddc5a73dece588ba2c57a upstream.
 
-The VBUS work calls power_supply_changed(), but its managed
-cancellation is registered before the supplies. Cleanup can therefore
-unregister a supply while IRQ-triggered work is still pending.
+The managed poll-work cancellation is registered before the power
+supply, so cleanup unregisters the supply before draining polling.
+A pending or running poller can then call power_supply_changed() on
+the released supply.
 
-Commit 838767f50747 ("power: supply: pf1550: Fix use-after-free in
-power_supply_changed()") moved IRQ requests after supply registration,
-but left work cancellation before the supplies. That change protects
-the direct IRQ callbacks, while this fix drains the work they queue.
+Commit 8d59cf3887fb ("power: supply: sbs-battery: Fix use-after-free in
+power_supply_changed()") moved the IRQ request after supply registration,
+but did not change the poll-work cancellation order.
 
-Register the three work items after both supplies and before the IRQs.
-Cleanup then frees the IRQ producers, drains the work, and unregisters
-the supplies.
+Add a later managed action that disables and drains polling before
+supply teardown. Its retained disabled state prevents external-power
+callbacks from rearming the poll work after it has been drained.
+Keep the original autocancel to initialize work before supply callbacks
+can run and to cover failed supply registration.
 
 The teardown ordering issue was found by static analysis.
 
-Fixes: 4b6b6433a97d ("power: supply: pf1550: add battery charger support")
-Cc: stable@vger.kernel.org
+Fixes: 6d0c5de2fd84 ("power: supply: Clean-up few drivers by using managed work init")
+Cc: stable@vger.kernel.org # 6.10+
 Assisted-by: LLM
 Co-developed-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20261004043728.1140015-1-mhun512@gmail.com
+Link: https://patch.msgid.link/20261004041019.1123723-1-mhun512@gmail.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/pf1550-charger.c |   32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ drivers/power/supply/sbs-battery.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/power/supply/pf1550-charger.c
-+++ b/drivers/power/supply/pf1550-charger.c
-@@ -566,6 +566,22 @@ static int pf1550_charger_probe(struct p
+--- a/drivers/power/supply/sbs-battery.c
++++ b/drivers/power/supply/sbs-battery.c
+@@ -1068,6 +1068,13 @@ static void sbs_alert(struct i2c_client
+ 	sbs_supply_changed(i2c_get_clientdata(client));
+ }
  
- 	platform_set_drvdata(pdev, chg);
++static void sbs_disable_work(void *data)
++{
++	struct sbs_info *chip = data;
++
++	disable_delayed_work_sync(&chip->work);
++}
++
+ static void sbs_external_power_changed(struct power_supply *psy)
+ {
+ 	struct sbs_info *chip = power_supply_get_drvdata(psy);
+@@ -1208,6 +1215,10 @@ static int sbs_probe(struct i2c_client *
+ 		return dev_err_probe(&client->dev, PTR_ERR(chip->power_supply),
+ 				     "Failed to register power supply\n");
  
-+	psy_cfg.drv_data = chg;
++	rc = devm_add_action_or_reset(&client->dev, sbs_disable_work, chip);
++	if (rc)
++		return rc;
 +
-+	chg->charger = devm_power_supply_register(&pdev->dev,
-+						  &pf1550_charger_desc,
-+						  &psy_cfg);
-+	if (IS_ERR(chg->charger))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(chg->charger),
-+				     "failed: power supply register\n");
-+
-+	chg->battery = devm_power_supply_register(&pdev->dev,
-+						  &pf1550_battery_desc,
-+						  &psy_cfg);
-+	if (IS_ERR(chg->battery))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(chg->battery),
-+				     "failed: power supply register\n");
-+
- 	ret = devm_delayed_work_autocancel(chg->dev, &chg->vbus_sense_work,
- 					   pf1550_chg_vbus_work);
- 	if (ret)
-@@ -584,22 +600,6 @@ static int pf1550_charger_probe(struct p
- 		return dev_err_probe(chg->dev, ret,
- 				     "failed to add battery sense work\n");
+ 	if (!chip->gpio_detect)
+ 		goto out;
  
--	psy_cfg.drv_data = chg;
--
--	chg->charger = devm_power_supply_register(&pdev->dev,
--						  &pf1550_charger_desc,
--						  &psy_cfg);
--	if (IS_ERR(chg->charger))
--		return dev_err_probe(&pdev->dev, PTR_ERR(chg->charger),
--				     "failed: power supply register\n");
--
--	chg->battery = devm_power_supply_register(&pdev->dev,
--						  &pf1550_battery_desc,
--						  &psy_cfg);
--	if (IS_ERR(chg->battery))
--		return dev_err_probe(&pdev->dev, PTR_ERR(chg->battery),
--				     "failed: power supply register\n");
--
- 	for (i = 0; i < PF1550_CHARGER_IRQ_NR; i++) {
- 		irq = platform_get_irq(pdev, i);
- 		if (irq < 0)
 
 
