@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831659;
-	b=TxmxwF8HnpLNIbgTzk8cGu2Zg46nxxilT2PjptosoDTDZ/XbntdtPa8Xu4lFPzuKYTFI
-	 OrviUr9zcFUM7eIx7sDZdtMUlhXv+ggGbjBehZbKVwKAqse/ZRk+C1VOp+MkxACylMMUu
-	 ijpfJEU/4y9D68wFbp/RGYm+RtC2lBBuGMkzvaZWbIZPsEqglQN6z24TMImcnN/o9OgV1
-	 ZSqjz6WkyxZj0iz38Ivg200x+tbFVvGJdVVQyS6NWdMfhjPY3JrSmyNYtWLc3mn678DNi
-	 DLVBpqXUlfgQf0dSS5mZctJAENPeBcPxT06/9b/fnetQ2ECBRK8iME3uk2ss1E/It0g==
+	t=1793831660;
+	b=PpL6osNJ62G61EdSaUQaq2rxPIO+0H5FaxGIehgGZA3iXcmRK0g9jxs3frtk1QHu4rsg
+	 PhsInJHV4yCFxB8ptcL3W6LCD/qu7t8ZuofCXGt3QXrT3jb/HDLtoDiGHNU4AFT0ZnTRu
+	 rIRWK1YRiz2CTPzaAnAWaL1/j0alZRrX89xza8PkAGZ4uw1Ex62PaUXe41kWm+5Nx2lUu
+	 AOSDbV5qm+ialgDRJaK8i/mC+kRM9X9UYNXOjVP+uf8FiZEN+gN99GXDxnHEw7IkOPSL8
+	 yp/ZO8BIa+kp1H0XjkyEMU34Wevtgoz10ccnqlfl6qt1VRNh5f62wwQ8Qz6IAk+bZvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831659;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bb3d+39F93XScKEUBu6rr+fx4AI+G8IG7l8Z5RF3sWo=;
-	b=HZmqg+reVNYtBnWZbVg2zLVe58eCCBWF/M1wMR9KBzb1AIrw0+XHfugCUGzVtXKOpNPk
-	 tJsYqkRdMiegm3Xw1AZHmgn7QGgETapkJTwnvJWEZEk8SSH2QAeylU8gXiHj1Wkgw0aiY
-	 lQCuFvH1Y2sAR66UuLAMZH08Mq2CQ9DoMa/+aA5T9U2ij5etSZy+WEPDEkcbZ2yCQJ8t4
-	 UWoWhVAhtlCfPPZKQlg2QIv8J6AvAXNWsk593A1hfIYDl60JWNbb2IktEoH2sVrOCTrC/
-	 3EbjD7BTvU9Mk3KIgWR/ffEjjIOorRXsL1q/5pfOQFZ8rzNC47NmBZ6WzNM5+AZn0vg==
+	bh=xXAoqiWcYCL3OsYV1psJe++7WKAjMcgtAUf1lwqX5gM=;
+	b=IyG+gYn9LeN6n4IrNs/F3zKO+CMOLSB7WBVPUBr+A1rPyBUamvvgmepZqW2Pxtt/jkoF
+	 OFPDPElvEtsIRwIbWwB7xkQ7P3eNr6xZHe9LwF4AmP+tD0ZFmsEQ9jfsF5v8vXsppRzLH
+	 0KhaTsSCd8q6AetRVxE8qqE56TOgole7Fb7eREw8bDTX8CMULuaHQJrEropBomClpD/Md
+	 tDaeoWecPtlQCTN08pamZTg9T4fjsgUlVO/60Hrt69fH6V0NUpDJzPN34SY6EIOKKG9Wy
+	 eDTY8hNC5ZmCCRU9fUNNfrfppWSclplb9cydAk0ZFmITOHTOK/HsFAClicgexgFB1cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zvf0pWXV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jdQRa8vr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB42D606B2D7;
-	Wed,  4 Nov 2026 22:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3BA606B2D7;
+	Wed,  4 Nov 2026 22:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zvf0pWXV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696991F000C1;
-	Wed,  4 Nov 2026 22:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jdQRa8vr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5811F000C1;
+	Wed,  4 Nov 2026 22:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831658;
-	bh=Bb3d+39F93XScKEUBu6rr+fx4AI+G8IG7l8Z5RF3sWo=;
+	s=korg; t=1793831660;
+	bh=xXAoqiWcYCL3OsYV1psJe++7WKAjMcgtAUf1lwqX5gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zvf0pWXVi1YsiRGL3FyCfRDch1lRfrnKf9+wBsfuEz39l3IDQddst0wD7XK5lBJzo
-	 CJmyAqyBgOheph/T7E8sNO28pPkS1jvrXa7pFVy9agbW9p0JEABU8OXcnqWSHowY3f
-	 Ysaankvw3XpHjVn3jJU/Nu8YQ7bQNN3ebgpRsmy4=
+	b=jdQRa8vr7H9fhyKTMBZ7Kb/ZVP7QPZ3jpM64D1YU4pAxkkJtwBb8ACWncEUJbsnyB
+	 rvm8GheyeZlEMDA4GgsXKXy5zFJURMf5Q9FNsE/rNAa8hOgnEbhRvJk/8NZlcav4IN
+	 3q+1EOGIam0ebCJ4eMQ5ic5GR+BAfZjeFMrJt0mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0837/1005] xfs: always report scrub errors in tracepoints
-Date: Wed,  4 Nov 2026 16:09:30 -0500
-Message-ID: <20261104211106.771799090@linuxfoundation.org>
+Subject: [PATCH 6.18 0801/1005] xfs: abort dirtree repair if the live update hook dies
+Date: Wed,  4 Nov 2026 16:08:54 -0500
+Message-ID: <20261104211105.785475794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,83 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1ccc8f553d885d49c1bfe141ea1f331511940b3a upstream.
+commit 07732dea4f5d0410e1566b81a58a1154bf9dcb29 upstream.
 
-LOLLM complains that the error processing functions in scrub will
-sometimes zero out *error before recording a tracepoint.  This makes
-diagnosing problems harder, so let's fix that.
+LOLLM notices that if the live update hook for the directory tree repair
+code hits an error, it will set dl->aborted and stops working.  If the
+repair code ever sees that condition, it ought to bail out immediately
+instead of continuing with obsolete data.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: 4700d22980d459 ("xfs: create helpers to record and deal with scrub problems")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 3f31406aef493b ("xfs: fix corruptions in the directory tree")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/btree.c   |    8 +++++++-
- fs/xfs/scrub/common.c  |    7 +++++--
- fs/xfs/scrub/dabtree.c |    6 +++++-
- 3 files changed, 17 insertions(+), 4 deletions(-)
+ fs/xfs/scrub/dirtree_repair.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/xfs/scrub/btree.c
-+++ b/fs/xfs/scrub/btree.c
-@@ -46,8 +46,14 @@ __xchk_btree_process_error(
- 	case -ENODATA:
- 		/* Note the badness but don't abort. */
- 		sc->sm->sm_flags |= errflag;
-+		if (cur->bc_ops->type == XFS_BTREE_TYPE_INODE)
-+			trace_xchk_ifork_btree_op_error(sc, cur, level,
-+					*error, ret_ip);
-+		else
-+			trace_xchk_btree_op_error(sc, cur, level,
-+					*error, ret_ip);
- 		*error = 0;
--		fallthrough;
-+		break;
- 	default:
- 		if (cur->bc_ops->type == XFS_BTREE_TYPE_INODE)
- 			trace_xchk_ifork_btree_op_error(sc, cur, level,
---- a/fs/xfs/scrub/common.c
-+++ b/fs/xfs/scrub/common.c
-@@ -107,8 +107,9 @@ __xchk_process_error(
- 	case -ENODATA:
- 		/* Note the badness but don't abort. */
- 		sc->sm->sm_flags |= errflag;
-+		trace_xchk_op_error(sc, agno, bno, *error, ret_ip);
- 		*error = 0;
--		fallthrough;
-+		break;
- 	default:
- 		trace_xchk_op_error(sc, agno, bno, *error, ret_ip);
- 		break;
-@@ -183,8 +184,10 @@ __xchk_fblock_process_error(
- 	case -ENODATA:
- 		/* Note the badness but don't abort. */
- 		sc->sm->sm_flags |= errflag;
-+		trace_xchk_file_op_error(sc, whichfork, offset, *error,
-+				ret_ip);
- 		*error = 0;
--		fallthrough;
-+		break;
- 	default:
- 		trace_xchk_file_op_error(sc, whichfork, offset, *error,
- 				ret_ip);
---- a/fs/xfs/scrub/dabtree.c
-+++ b/fs/xfs/scrub/dabtree.c
-@@ -49,8 +49,12 @@ xchk_da_process_error(
- 	case -ENODATA:
- 		/* Note the badness but don't abort. */
- 		sc->sm->sm_flags |= XFS_SCRUB_OFLAG_CORRUPT;
-+		trace_xchk_file_op_error(sc, ds->dargs.whichfork,
-+				xfs_dir2_da_to_db(ds->dargs.geo,
-+					ds->state->path.blk[level].blkno),
-+				*error, __return_address);
- 		*error = 0;
--		fallthrough;
-+		break;
- 	default:
- 		trace_xchk_file_op_error(sc, ds->dargs.whichfork,
- 				xfs_dir2_da_to_db(ds->dargs.geo,
+--- a/fs/xfs/scrub/dirtree_repair.c
++++ b/fs/xfs/scrub/dirtree_repair.c
+@@ -831,6 +831,11 @@ xrep_dirtree(
+ 	 */
+ 	mutex_lock(&dl->lock);
+ 	do {
++		if (dl->aborted) {
++			error = -EIO;
++			break;
++		}
++
+ 		/*
+ 		 * Decide what we're going to do, then do it.  An -ESTALE
+ 		 * return here means the scan results are invalid and we have
 
 
