@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828994;
-	b=mqEGoyM+mRkcyP2pMMBsCv4t9zqAyh21OMbz3Iplb3ZupdSGiEXxDQUSpURpJIkgQ9ef
-	 RcwpQvsKObZ1EZqnlzfCqMdK0kcz4ZzG1H0nMP+y/eVJnwCJOkdP5lyuRp/z5svSrXOid
-	 5++KoQEtJK7g/F7ISd2eoZAmWDywgQCssqAHVzpd7J5PW9VR8a6Pua8ldKEuVj4EnqjEM
-	 6laAJYefaPD3sdmd0JL1dKNIGEB25nBbCtk7/Fak/0lKIwqFN8jK6mjDvgp0KgNpgkkOx
-	 dWF1d5L5cXvaaK77QZ+NK85E4wvjqx24xKCLkYPDW2cLLNbHW3S5R5DLVjfZx1Kwoew==
+	t=1793828995;
+	b=CbRi3iyjiBOnEsfPdJ0PrH3+4d1ZS/wr1mq/8mIhEnFl9DHVB+UyQQqaOydka4TgcJm9
+	 r+S1MUiGFr7iRAyUx9uomkEQ6km8zy+xPJhHVoe60yObOkhDkjM7MHL8tX7k7Z93mGhEE
+	 FBnm/0mP9RdCgE854Vex/gAd3FrpzTeSRgM4hQ18/yyr4nP+LMxAT1FO4gphoY1ELXpcV
+	 lehDcs1CT5jAVncTmdzNrqRzr+hWLM2MgwifeV9DooWXctCSP95I8iwolVzgMvtGIeYNn
+	 Llja6M1hVY0Qjlq9DSMvrzBWRJhU717p+dvrG3l9Nwh2l1Qwk1jJoa/hv0uzjCDqtgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xN7Ia1jf1gy67j/ce4k1si6XcOE/05u/wJqRF7FfPr0=;
-	b=oy8RhQXsdDsK7O+gV7UNIcDBWIthlkqNU2p/rJBiTiIDUI8C5N9Xw3h1ACvOol88QF9y
-	 l7j0L2TwuyeuqnSPXbUobkW3IHcJtL8QpPCUzbp32c+yUahecyp/rluawIvuPzdFgvCJ6
-	 je4vtgeD1TZdqkPm8LYKPUxkiNppB0wwC7Nnzrs4FkEFuA6tjIeak1OFVhAEKR16FVrKA
-	 LbH6jEY/MF9GPrqp9DXahH+z7r3fI2xRWUIE6X0nJZBRNBYS3FHdMv9Rp2MbYBwgeMNVG
-	 rS5hYO86BwACZNq6QnIoFQlwmU5FLlG8bWmL5J7ReviaVhCy9fbQ2IvZPNFCJrsNREw==
+	bh=PXyd3iv0/MbnscrF1CkL3HGa2ACeb40a/Ox6/SYec/I=;
+	b=oxrCBoVCLkGE/VF5UcI4BnmKdZn+06+Q0Px8PG5G7HjXodtHNYF183ooNGBa+AHZbZp+
+	 16IIodYG9Vy5VzvgiXYMJV1yuoXnoj62F+4eoLVa0BojWrZmtx6NUY3be/mSm1j/89Zkh
+	 AXJQv1uXkBkhZRM5FPq1IExNxlyX6lAlaW6y8mJVz7H8vyKhJWwGw5VaxY0myyN3byX0Q
+	 OcH8607qQWZY8mEk5GK6qooYLRNtsqRYapKBuQiIFzDpw1ZMezw6khBNh7qIGCL5PiQY6
+	 Pi6H0KdBTFlm9r5gpnvN399IpdOTR0qHQkt2veigEbhoBQrooxhXWHXwt+Plo0T0sEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ddTUXTnS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPvD4Quo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215B1607266E;
-	Wed,  4 Nov 2026 21:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B40607F294;
+	Wed,  4 Nov 2026 21:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ddTUXTnS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9491F00919;
-	Wed,  4 Nov 2026 21:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPvD4Quo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E091F00919;
+	Wed,  4 Nov 2026 21:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828994;
-	bh=xN7Ia1jf1gy67j/ce4k1si6XcOE/05u/wJqRF7FfPr0=;
+	s=korg; t=1793828995;
+	bh=PXyd3iv0/MbnscrF1CkL3HGa2ACeb40a/Ox6/SYec/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ddTUXTnSa8aGHnpCmfypH8v+elxbmVd97vCCWAwF+9eyro9gtTA7kBr5dqfbSDVRv
-	 xmZwlqt9tM79gi7S/jkEnCMtJ6tSgyvt74FJijeP8P9oiq6ARRRBlV1iLq0TFALlAO
-	 5Ir1ITXmsJStg6cjfaq8BbCRqzQ2pr7/vfTuoFnE=
+	b=cPvD4QuoeFmlmUBg2CJio97PgLLaBDcUkZ9NS4AKa3aguRg1qUvGAMJhyxsq48tqf
+	 fQYwQC2WFaQQYOTY8HcvNcA7pBEjdqjHT6Rb2hANl4i5e/ee0EkTaKhUREbhs0HVS6
+	 yOHkyVeEAKtzY3wAdNVDQnqB5RMIUiRizfuBwCD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VeroFess <coderzeng@hotmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 375/547] smb: server: size directory name conversion buffer correctly
-Date: Wed,  4 Nov 2026 16:09:19 -0500
-Message-ID: <20261104211048.955405454@linuxfoundation.org>
+	Stefan Metzmacher <metze@samba.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 7.3 376/547] smb: smbdirect: fix buffer length underflow in RDMA transfers
+Date: Wed,  4 Nov 2026 16:09:20 -0500
+Message-ID: <20261104211048.984030288@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,53 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: VeroFess <coderzeng@hotmail.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit f1f37834eaba5904103af1f18afe3510c7e9dc71 upstream.
+commit 7193241a49c958782ba4b8df06da3734d1e317d2 upstream.
 
-A 2048-byte ASCII directory name needs 4098 bytes when converted to
-UTF-16, including the terminator. ksmbd_convert_dir_info_name() caps
-its allocation at PATH_MAX and writes past the end of that buffer.
+When a remote buffer descriptor is larger than the remaining local
+buffer, smbdirect_connection_rdma_xmit() clamps its length and sets
+buf_len to zero. The common accounting code then subtracts the clamped
+length from buf_len, causing it to underflow. If another descriptor
+follows, the loop processes it with a wrapped remaining length and
+includes memory beyond the local buffer in the RDMA transfer.
 
-Allocate space for one UTF-16 code unit per input byte plus the
-terminator. Use kmalloc_array() to check the size calculation.
+A client can trigger an out-of-bounds kernel write with an SMB WRITE
+request, or an out-of-bounds kernel read with an SMB READ request, by
+supplying multiple RDMA buffer descriptors with an oversized descriptor
+before the last one.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Remove the premature assignment to buf_len. Subtracting the clamped length
+already consumes the remaining buffer, so the next iteration stops and
+only descriptors within the local buffer are used to build work requests.
+
+Fixes: e628bf939aaf ("ksmbd: reduce descriptor size if remaining bytes is less than request size")
 Cc: stable@vger.kernel.org
-Assisted-by: gpt 6 sol with daybreak blue
-Signed-off-by: VeroFess <coderzeng@hotmail.com>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-33549
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/misc.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/smb/smbdirect/rw.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/smb/server/misc.c
-+++ b/fs/smb/server/misc.c
-@@ -296,12 +296,13 @@ char *ksmbd_convert_dir_info_name(struct
- 				  int *conv_len)
- {
- 	char *conv;
--	int  sz = min(4 * d_info->name_len, PATH_MAX);
+--- a/fs/smb/smbdirect/rw.c
++++ b/fs/smb/smbdirect/rw.c
+@@ -143,7 +143,6 @@ int smbdirect_connection_rdma_xmit(struc
+ 		if (desc_buf_len > buf_len) {
+ 			desc_buf_len = buf_len;
+ 			desc[i].length = cpu_to_le32(desc_buf_len);
+-			buf_len = 0;
+ 		}
  
--	if (!sz)
-+	if (d_info->name_len <= 0)
- 		return NULL;
- 
--	conv = kmalloc(sz, KSMBD_DEFAULT_GFP);
-+	/* One UTF-16 code unit per input byte, plus the terminating NUL. */
-+	conv = kmalloc_array((size_t)d_info->name_len + 1,
-+			     sizeof(__le16), KSMBD_DEFAULT_GFP);
- 	if (!conv)
- 		return NULL;
- 
-@@ -310,7 +311,6 @@ char *ksmbd_convert_dir_info_name(struct
- 				      d_info->name_len, local_nls, 0);
- 	*conv_len *= 2;
- 
--	/* We allocate buffer twice bigger than needed. */
- 	conv[*conv_len] = 0x00;
- 	conv[*conv_len + 1] = 0x00;
- 	return conv;
+ 		credits_needed += smbdirect_connection_calc_rw_credits(sc,
 
 
