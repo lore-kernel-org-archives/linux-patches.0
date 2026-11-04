@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830869;
-	b=FDqybavwMwp19Sqa3nWjS98faY5zNzorkzmUARJG2GHo/Y+8I7mh4H+/ALpMFI904vla
-	 EYqEEn3FpTmDuBicphka3zAan3bcIrR/Ij7Rj/DoQcNaB2mIfXKBaTymyWOfPkpBskTxQ
-	 wRawxatYLHolVxzYxoG4O0EPEVZZBC3K3jMapbVCg4m4YiyeIr6LUwPOcw4eCAS1LBUCz
-	 DUm+zc+8jOhaQOukqsUFdX4fMQG0C+jPs7cWFjcDSZsKH6lU74tIbc18uf6TfjBW9OGsF
-	 T5M8D4e8rYR3PmphzKrq1P7D3TQ0a0y1g6Cj1nrZGUSxBgGl/eUJmqlqusiW+5YzPDA==
+	t=1793830870;
+	b=nVdhIUUZTYkxnMbAO6go0TAURyZnx9tZVewa3pK/fGkO/aziKBvgd3sq6k4Dnc4Pi41n
+	 X6rh1J0WacsfN8vCQF5c0BcDcTGxE3pklVi+ffOEBg9IGfY34zCsAQXKyG5DRyYNS9/CK
+	 Wa+Y5vai+yAwpQfmkX/sQbm8QY0FpzLCHEg93SafeGZ0tkuirVxPfviz0xE+L/D14YwdD
+	 GQQfFmqXhRePJnR2Jt2peRgZp2PjL9Y19i61Lk5an8YdbnuzuTc5V2+JfvYQF6LbSQ8Zy
+	 RYs/SngJ3bXZ0VGQ18Qb7wxPSc/yjTp5EB3WJfp41nTzaRVZBuZ7pD9iwp7vycSw7Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=22znB58S3Yq9ScNZa5TWOxJLpAz1jhIndb+eyvvYylY=;
-	b=uQSpdxKJ00SYjFzDHtl8bTdYI+nOwnYDKS58q96gIgQql9KNnfcykfCpUccdqN90+Jwn
-	 CgjLytFAavp5us2WH6mrH0ozaBKN2P3ONZ7hwqZvsDCpkfvRGAj2b9X26Uo9zZdDnnJxp
-	 URWObEN95XnmJO+Xyqmqtmlk+H/GppxOW5QV9GeiLFtSO6/4Zk3Jk2N2kWjKLAwF4if9W
-	 SrfMg+QTlEHJOAYHGCKVJnRvuRexUmhqFRBaIjfwCldwUppcN2MfGofWErsKYvk2qxIxh
-	 0y3wAHo4yqCtzgqv3B08P9ZB5hkTUaLX7LJFj9ouIutCuE7oDDviUc+Odb+7LZeIRBA==
+	bh=yFPODIropwp9b92224xR8z+CI1NfowXoDgC38DLplic=;
+	b=OnSjC4kmTB3kNmTkg/dsmdI1XImpw4AQI7/5pL01NKKU9pdxJ85/v13CUhYxoeoXSrWe
+	 aA+qrUaBPHbQLrsualvCkGHrbLkieg0bJCiljdHsjYq56qrMamfIjXIxoII5eZ8mnL7uf
+	 pIZ6w9XcbLpVUsHo4e3XaW0quE+41mnThxlvMpam6o91+3JtFoPbdJbqE+qCMVG2XM0Oi
+	 k/9vECxnmXTAOS3JTBIEChS9zS6dJIB0OsEYYsf9K1Z4J/07oMNEK3HXCN/3NOU13KGnN
+	 Td44d4MYgQ3AcBmPwK6YzVLdAQzykCuL4QnLhY7gQlx61eTQezrp68Btk6v7UuucK8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=asfu347h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vhmK6DyA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64C7606E80E;
-	Wed,  4 Nov 2026 22:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7081F606E819;
+	Wed,  4 Nov 2026 22:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=asfu347h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8338C1F0093A;
-	Wed,  4 Nov 2026 22:21:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vhmK6DyA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0D81F000C1;
+	Wed,  4 Nov 2026 22:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830868;
-	bh=22znB58S3Yq9ScNZa5TWOxJLpAz1jhIndb+eyvvYylY=;
+	s=korg; t=1793830870;
+	bh=yFPODIropwp9b92224xR8z+CI1NfowXoDgC38DLplic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=asfu347hjIZqSixSyXCanNaJa4D+AtRXJeWWv3mBKgCCOnb+EonQEY+tSnmnZprTI
-	 Fyg0NQj0f7+wGeGBrBf+UoUMLQF0TFQBL+y9C8B1QtyxMyADD7vhyaycw7wbSXfISS
-	 S8hxx0MG3osdxm/6hDqgv4ScbiML2j31bJ+NgO8g=
+	b=vhmK6DyA7Ii0EZ40miewowjBDt5wPqdSsJAwEBJ6cBO9U7JqpsOsi2/tM2fIMykw+
+	 E0/IW8bS3w/4QW6zRRMSksR1d27VRcZ1GSVwhHencI4BGhjN+wKOAiivN2/nZ/XTBH
+	 VqXLFJowxniJOivCHxkN7w2twSbs/vvbe6rsG0Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0370/1005] iommu/vt-d: Fix CACHE_TAG_NESTING_DEVTLB polluting shared variables in flush loop
-Date: Wed,  4 Nov 2026 16:01:43 -0500
-Message-ID: <20261104211054.451540599@linuxfoundation.org>
+Subject: [PATCH 6.18 0371/1005] ALSA: usx2y: Stop clearing urb->hcpriv before submission
+Date: Wed,  4 Nov 2026 16:01:44 -0500
+Message-ID: <20261104211054.480419716@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,62 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 3846e469c1ba1407260066070bff5c88ee39a4c7 ]
+[ Upstream commit fabae5548149ef5c8a056875d9ebdc38366db539 ]
 
-In cache_tag_flush_range(), the CACHE_TAG_NESTING_DEVTLB case modifies the
-shared local variables 'addr' and 'mask' before falling through to
-CACHE_TAG_DEVTLB. This causes all subsequent CACHE_TAG_DEVTLB entries in
-the same loop iteration to incorrectly use the full-range flush parameters
-(addr=0, mask=MAX_AGAW_PFN_WIDTH) instead of the precisely calculated PSI
-range. This is not the intended behavior, as regular DEVTLB entries should
-always perform targeted range-based invalidation.
+This is managed by USB core and drivers aren't expected to touch it.
 
-Fix this by having CACHE_TAG_NESTING_DEVTLB directly call
-cache_tag_flush_devtlb_psi() with the full-range constants and break,
-instead of modifying shared variables and falling through. This ensures
-CACHE_TAG_DEVTLB always uses the original calculated addr and mask for
-precise range flush.
+It should only be not NULL on a submitted URB, in which case clearing
+defeats the "submitted while active" sanity check in usb_submit_urb()
+and may crash the HCD handling the URB and panic the kernel.
 
-This change slightly affects trace_cache_tag_flush_range() behavior.
-Previously, after addr/mask were overwritten, the tracepoint could record
-a full-range flush even when the caller requested a narrower range.
-
-The tracepoint should reflect caller intent. Although this helper may
-widen the actual hardware invalidation range for implementation reasons,
-that does not change what the caller requested, so logging the requested
-range is the correct behavior.
-
-If the actual invalidation range sent to hardware is needed, it is already
-visible via the qi_submit trace event, which records the invalidation
-descriptors emitted by the driver.
-
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Link: https://patch.msgid.link/20260810075728.483c827e.michal.pecio@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/cache.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/usb/usx2y/usbusx2yaudio.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
-index 385ae5cfb30d4..e6bc730fac3b0 100644
---- a/drivers/iommu/intel/cache.c
-+++ b/drivers/iommu/intel/cache.c
-@@ -468,9 +468,8 @@ void cache_tag_flush_range(struct dmar_domain *domain, unsigned long start,
- 			 * affected by a change in S2. So just flush the entire
- 			 * device cache.
- 			 */
--			addr = 0;
--			mask = MAX_AGAW_PFN_WIDTH;
--			fallthrough;
-+			cache_tag_flush_devtlb_psi(domain, tag, 0, MAX_AGAW_PFN_WIDTH);
-+			break;
- 		case CACHE_TAG_DEVTLB:
- 			cache_tag_flush_devtlb_psi(domain, tag, addr, mask);
- 			break;
+diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
+index c7c7ec9c228b4..1ea181e9bb283 100644
+--- a/sound/usb/usx2y/usbusx2yaudio.c
++++ b/sound/usb/usx2y/usbusx2yaudio.c
+@@ -167,7 +167,6 @@ static int usx2y_urb_submit(struct snd_usx2y_substream *subs, struct urb *urb, i
+ 	if (!urb)
+ 		return -ENODEV;
+ 	urb->start_frame = frame + NRURBS * nr_of_packs();  // let hcd do rollover sanity checks
+-	urb->hcpriv = NULL;
+ 	urb->dev = subs->usx2y->dev; /* we need to set this at each time */
+ 	err = usb_submit_urb(urb, GFP_ATOMIC);
+ 	if (err < 0) {
 -- 
 2.53.0
 
