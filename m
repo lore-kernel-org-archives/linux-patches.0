@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827096;
-	b=rSNSyXMSevE9bXL2P3rL+GyMUO5caGsRy8JHJJ5RwO/oS/SRWIyjL/Ay3sKA7w1GpcVq
-	 772lDiLalxttHvSrSywTwkNojz9SlBFb8nrCByO8ebhYWg+7Bs1MMwXKUzeT5mx49Yt0h
-	 j46swRKXAu8TXd7f+hCDtNQbUoqv0pbhcKcTJ9nIis0CkrMeVfj/BkU0rtnucnEhLlPYX
-	 uL0Wf114FcpYV/lFKTuGbr8OYJ0ls7q+qcnzN2NrAs6KrQYUIHcAgFKE0ZmSGdWBJkf42
-	 +m86sg2/Ly6/+URV6bTDynpWykAWnABvDiTCLGNtAz3xNdIG4jxw8wrgMLqWAC63WSw==
+	t=1793827097;
+	b=IXOi3dr9kza4WnBGYsC/IeW8fxXfapp3PzqiF+IM+uOsiYXgJQjVRFUh0eXsclUf+toc
+	 ZlgYopIum2J0U5ibaTt9cZ8MyI2MNTRXMAZR6HtPWHdhAYUuhUaeDgOqkE/Z8RgL/4H/l
+	 PyAJ5ZqUdsP5NBo5wkhpU5AAzW0Z9UMQ0IungylDLXeJ0QKyym3q3T6PsLbocFURI7p3O
+	 jmCHYZTB1a/t0V22O32DCoVnS3zkrZx47MRtAKPa1P+cnW7M8KrI/yP0NEqnt70KEc49g
+	 X+0OUtufA25ws2zpnZsbgoCzm47TwnF5OCMaLfrEnJRySDKTohGUh8ZAaGp7m2A7XPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wHkduFuLYq9CtydURqa0KMGs2vX0KpJ/avErLxV2DvI=;
-	b=QDeZ36WiFGpKai0QcyOoftomb76aUeTEnxoyImkD5LUTIp9fyjbJK1DLGqR8wsd8Kj8A
-	 zdEOT8Zcc38O0KCvsCziEsK4JCdC9sDeU2P7q5N+XamjJYGxDvP1jwXPBKmo3jxBe5fSP
-	 YCPck4i50LsCzE/QCfJlAJSfWabyCx1vZxl8DODvYKOiGexEJtwdKtipeIbGkX65IGFnh
-	 uk9ouqEL1hrKmeKAtG91oENAEDJJ684sibeG7WURKEPE9iw1s18TxgK5Z+3xFcoJDp+jL
-	 LN7jB+hfClP4uFWcn8nWcKCTQGseQHrLlnFNm1bj48KR7okdCv6ZExxbXTtwai+eqbg==
+	bh=s6hhS8tmisD+/zoR0GrSwNgbihUD9FQ6fP6WTnVgGOY=;
+	b=2mqLV9qKzKBRio4ObNVjJvlT2M4O9ui4gYn/vu9cI+MfcTqhl8OHytiVBwO3HZOz83TI
+	 rQ3Sc8QD/bLAXCindZKp7ldS93gP6clZgeVO9ouEcmHEz5SGvTxGgreuSOwoH65vccZU4
+	 BcPN6GRbjQ9CDkGA3mFJRqumrqOA7ScIHFxSM2/AmaU80dLaVkqkiRcYxvwRqHzg5PvfA
+	 KkiAxqN59acgD7DAbooUaa4TbBvglKS49WRAePzdqFCl9tUPLbGUjiyG9Do5kPO3M+Moe
+	 pGk5FGUOhAJl0RTsjNd01PjmIWifnqRO80JpSt/w/okucSglQ8HHPrNEVXRD/uO1rMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VTCMDfEl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eU0qzdhF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE7F6084192;
-	Wed,  4 Nov 2026 21:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975E5606A869;
+	Wed,  4 Nov 2026 21:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VTCMDfEl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CFF1F000C1;
-	Wed,  4 Nov 2026 21:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eU0qzdhF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F2D1F000C1;
+	Wed,  4 Nov 2026 21:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827095;
-	bh=wHkduFuLYq9CtydURqa0KMGs2vX0KpJ/avErLxV2DvI=;
+	s=korg; t=1793827097;
+	bh=s6hhS8tmisD+/zoR0GrSwNgbihUD9FQ6fP6WTnVgGOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VTCMDfElEzTwHXWe4W4QzmRbiCdMccwkWaaGZawek2Q0a1REp0+S8VGgVWT2lR9na
-	 TMgwyX3svs+eCTIVy4RoVg/y26b3J05sIO77eW4qwZlY2GhWl9McW/uESfqJRUJtJH
-	 WzHe70Cz8nt6gutG1foT6MbMDb35uOZ2hJrWZpvU=
+	b=eU0qzdhFrgHsUldLJ2nhw7Qryx4eKPmrcGArnHqQqS/iDdRePYMMtWs/u0QL8P80u
+	 hOegFuERNfQvWY65uyPINSrEkyPGkSK0OnVtj2pJTMKUJXGLPiOQeqkjHfbuUZ/5Qv
+	 OgXs7NiKmfj51e8apiPF5YCGvEibOl/Ot5rhiJog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	wang lian <lianux.mm@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
+	Yury Norov <ynorov@nvidia.com>,
+	Burak Emir <burak.emir@gmail.com>,
+	Eliot Courtney <ecourtney@nvidia.com>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.3 193/547] rust: bindings: fix VM_MAYSHARE value
-Date: Wed,  4 Nov 2026 16:06:17 -0500
-Message-ID: <20261104211043.620750217@linuxfoundation.org>
+Subject: [PATCH 7.3 194/547] rust: bitmap: restrict bitmap length to at most i32::MAX
+Date: Wed,  4 Nov 2026 16:06:18 -0500
+Message-ID: <20261104211043.650180544@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -71,44 +69,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Eliot Courtney <ecourtney@nvidia.com>
 
-commit 7b5ba47d845f35b04937748a191a1772ffc1f288 upstream.
+commit 931790a91378f6513ba82730eb5607479c3184a0 upstream.
 
-Commit 2b6a3f061f11 ("mm: declare VMA flags by bit") added a number of
-overrides to the rust bindings helper as the change performed in the commit
-caused rust bindgen to not be able to automatically determine values of
-VMA flags.
+It is currently possible to construct a non-`BitmapVec` backed `Bitmap`
+using `Bitmap::from_raw` that is larger than `i32::MAX`, and it is not
+part of the unsafe requirements. Restricting all bitmaps (even
+non-`BitmapVec` backed ones) to a maximum size of `i32::MAX` simplifies
+a few things and matches `BitmapVec::MAX_LEN`. For example,
+`copy_and_extend` truncates `len` to u32, which is wrong for > u32::MAX
+size. `__bitmap_set` and `__bitmap_clear` need i32 for `size` and u32
+for `start` - so they can't be run on a `Bitmap` with a > i32::MAX size.
+Rather than adding runtime checks to account for the case of a non
+`BitmapVec` backed `Bitmap`, just include that in the requirements for
+`Bitmap`.
 
-However a typo was introduced leaving VM_MAYSHARE to be incorrectly
-interpreted as VM_MAYEXEC in rust code. This patch fixes the typo.
+Add that requirement to the unsafe requirements on `Bitmap::from_raw`
+and `Bitmap::from_raw_mut`, and to the invariants on `Bitmap`.
 
-Fixes: 2b6a3f061f11 ("mm: declare VMA flags by bit")
-Reported-by: Chris Mason <clm@meta.com>
-Closes: https://lore.kernel.org/all/20260113185142.254821-1-clm@meta.com/
+This also fixes u32 casts truncating in `copy_and_extend`, which could
+otherwise lead to OOB writes.
+
+Fixes: 11eca92a2cae ("rust: add bitmap API.")
+Link: https://lore.kernel.org/DKG0U8RLO7LZ.2I1AIH0S38PAP@nvidia.com
+Reviewed-by: Yury Norov <ynorov@nvidia.com>
+Reviewed-by: Burak Emir <burak.emir@gmail.com>
+Signed-off-by: Eliot Courtney <ecourtney@nvidia.com>
+Link: https://patch.msgid.link/20260930-chid-v9-2-0d6cca376cff@nvidia.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: wang lian <lianux.mm@gmail.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260113192949.689834-1-lorenzo.stoakes@oracle.com
-[ Reworded to improve title and to fix typo. - Miguel ]
+[ Added a few intra-doc links. Added backticks to C types. Capitalize
+  tagged comments. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/bindings/bindings_helper.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/bitmap.rs |   70 +++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 49 insertions(+), 21 deletions(-)
 
---- a/rust/bindings/bindings_helper.h
-+++ b/rust/bindings/bindings_helper.h
-@@ -138,7 +138,7 @@ const vm_flags_t RUST_CONST_HELPER_VM_SH
- const vm_flags_t RUST_CONST_HELPER_VM_MAYREAD = VM_MAYREAD;
- const vm_flags_t RUST_CONST_HELPER_VM_MAYWRITE = VM_MAYWRITE;
- const vm_flags_t RUST_CONST_HELPER_VM_MAYEXEC = VM_MAYEXEC;
--const vm_flags_t RUST_CONST_HELPER_VM_MAYSHARE = VM_MAYEXEC;
-+const vm_flags_t RUST_CONST_HELPER_VM_MAYSHARE = VM_MAYSHARE;
- const vm_flags_t RUST_CONST_HELPER_VM_PFNMAP = VM_PFNMAP;
- const vm_flags_t RUST_CONST_HELPER_VM_IO = VM_IO;
- const vm_flags_t RUST_CONST_HELPER_VM_DONTCOPY = VM_DONTCOPY;
+--- a/rust/kernel/bitmap.rs
++++ b/rust/kernel/bitmap.rs
+@@ -17,24 +17,59 @@ use core::ptr::NonNull;
+ /// # Invariants
+ ///
+ /// Must reference a `[c_ulong]` long enough to fit `data.len()` bits.
++/// Must not be longer than [`i32::MAX`] bits, so offsets and lengths used with
++/// [`Bitmap`] functions fit in the `int` and `unsigned int` arguments of the C bitmap API.
++/// This also matches [`BitmapVec::MAX_LEN`].
+ #[cfg_attr(CONFIG_64BIT, repr(align(8)))]
+ #[cfg_attr(not(CONFIG_64BIT), repr(align(4)))]
+ pub struct Bitmap {
+     data: [()],
+ }
+ 
++macro_rules! bitmap_assert {
++    ($cond:expr, $($arg:tt)+) => {
++        #[cfg(CONFIG_RUST_BITMAP_HARDENED)]
++        assert!($cond, $($arg)*);
++    }
++}
++
++macro_rules! bitmap_assert_return {
++    ($cond:expr, $($arg:tt)+) => {
++        #[cfg(CONFIG_RUST_BITMAP_HARDENED)]
++        assert!($cond, $($arg)*);
++
++        #[cfg(not(CONFIG_RUST_BITMAP_HARDENED))]
++        if !($cond) {
++            pr_err!($($arg)*);
++            return
++        }
++    }
++}
++
+ impl Bitmap {
+     /// Borrows a C bitmap.
+     ///
++    /// # Panics
++    ///
++    /// Panics if CONFIG_RUST_BITMAP_HARDENED is enabled and `nbits` exceeds [`i32::MAX`].
++    ///
+     /// # Safety
+     ///
+     /// * `ptr` holds a non-null address of an initialized array of `unsigned long`
+     ///   that is large enough to hold `nbits` bits.
++    /// * `nbits` must not exceed [`i32::MAX`].
+     /// * the array must not be freed for the lifetime of this [`Bitmap`]
+     /// * concurrent access only happens through atomic operations
+     pub unsafe fn from_raw<'a>(ptr: *const usize, nbits: usize) -> &'a Bitmap {
++        bitmap_assert!(
++            nbits <= i32::MAX as usize,
++            "`nbits` must be <= {}, was {}",
++            i32::MAX,
++            nbits
++        );
+         let data: *const [()] = core::ptr::slice_from_raw_parts(ptr.cast(), nbits);
+         // INVARIANT: `data` references an initialized array that can hold `nbits` bits.
++        // INVARIANT: The caller guarantees that `nbits` does not exceed `i32::MAX`.
+         // SAFETY:
+         // The caller guarantees that `data` (derived from `ptr` and `nbits`)
+         // points to a valid, initialized, and appropriately sized memory region
+@@ -51,15 +86,27 @@ impl Bitmap {
+ 
+     /// Borrows a C bitmap exclusively.
+     ///
++    /// # Panics
++    ///
++    /// Panics if CONFIG_RUST_BITMAP_HARDENED is enabled and `nbits` exceeds [`i32::MAX`].
++    ///
+     /// # Safety
+     ///
+     /// * `ptr` holds a non-null address of an initialized array of `unsigned long`
+     ///   that is large enough to hold `nbits` bits.
++    /// * `nbits` must not exceed [`i32::MAX`].
+     /// * the array must not be freed for the lifetime of this [`Bitmap`]
+     /// * no concurrent access may happen.
+     pub unsafe fn from_raw_mut<'a>(ptr: *mut usize, nbits: usize) -> &'a mut Bitmap {
++        bitmap_assert!(
++            nbits <= i32::MAX as usize,
++            "`nbits` must be <= {}, was {}",
++            i32::MAX,
++            nbits
++        );
+         let data: *mut [()] = core::ptr::slice_from_raw_parts_mut(ptr.cast(), nbits);
+         // INVARIANT: `data` references an initialized array that can hold `nbits` bits.
++        // INVARIANT: The caller guarantees that `nbits` does not exceed `i32::MAX`.
+         // SAFETY:
+         // The caller guarantees that `data` (derived from `ptr` and `nbits`)
+         // points to a valid, initialized, and appropriately sized memory region
+@@ -96,26 +143,6 @@ union BitmapRepr {
+     ptr: NonNull<usize>,
+ }
+ 
+-macro_rules! bitmap_assert {
+-    ($cond:expr, $($arg:tt)+) => {
+-        #[cfg(CONFIG_RUST_BITMAP_HARDENED)]
+-        assert!($cond, $($arg)*);
+-    }
+-}
+-
+-macro_rules! bitmap_assert_return {
+-    ($cond:expr, $($arg:tt)+) => {
+-        #[cfg(CONFIG_RUST_BITMAP_HARDENED)]
+-        assert!($cond, $($arg)*);
+-
+-        #[cfg(not(CONFIG_RUST_BITMAP_HARDENED))]
+-        if !($cond) {
+-            pr_err!($($arg)*);
+-            return
+-        }
+-    }
+-}
+-
+ /// Represents an owned bitmap.
+ ///
+ /// Wraps underlying C bitmap API. See [`Bitmap`] for available
+@@ -415,7 +442,8 @@ impl Bitmap {
+     #[inline]
+     pub fn copy_and_extend(&mut self, src: &Bitmap) {
+         let len = core::cmp::min(src.len(), self.len());
+-        // SAFETY: access to `self` and `src` is within bounds.
++        // SAFETY: Access to `self` and `src` is within bounds. Both lengths fit in `u32`
++        // because a `Bitmap` is at most `i32::MAX` bits, so the casts are lossless.
+         unsafe {
+             bindings::bitmap_copy_and_extend(
+                 self.as_mut_ptr(),
 
 
