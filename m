@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829629;
-	b=cRU3FkHi6MRTLOPH9tKEV0TE3KUt8SnrcxKbxocCiZo5YyRd8+FzCsyogws/Cst7dr9N
-	 393RUtM6YaJPt3E9gAZ0UabNLA1p9OejC6M7Pj7fg7S/ODl+ellNY+Z0zz8IbQ9TdFPBq
-	 I2SS7M/RfNM7NU8oL8xJni3TVMUgbVQw1kFtgYF2C/hA3jo71WmZRC0k0LXMl3UvaCpt8
-	 JsT83Q+SYJzZMXd6Wed48qWm7dfgaP6e/QCRwLHHmL4qT9wVJuHTCvIc1+SDFSqKrsIiM
-	 zLlgmTiJ+9xJ2J0MgglAB1iSnxaJbQsdcHqGG393RQ3DlD0N1WNmbJUQgEOiyAlhrOA==
+	t=1793829631;
+	b=As9mGN+d9i1KNKxQdUn4F6n4fSazNC8W17MEBN97tytbM0qS26mc518Z/9QdEJJotr0N
+	 k5Gy6+hviYpl/9NRfplrSTW0E1hF/MmBfUOOaf6TLefyv/MMcYmaGrqSRewolwuMNDd16
+	 NaRn/0YuFevzlAlt+wpIs5sIebAhycGznDUEBb9E5yovepPng5DAaqkIngVdwX7YZBXPL
+	 hvWw3T1GUc3NrXG+CFlr99befd1XATn7Q1zjfzln4jl6c9GvVvWlcTPDdpJpOSGaHhCl1
+	 cfhwVMmAFkMk/Q/SJaqfhk4W4dEL13Xj2LE/0HTUB0sTXN0nOfZX7QeujaHOYkUQNLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rcgqKZorAUW0PIdzCNLrYUYNGXaP9/sv6pvOSj2w06U=;
-	b=CXOrkWLmzASDmflXLRTVC6YPXwDJxHN91/2D2c7xS1BdkdWQU8OaJ6huhNMJLNWcatgk
-	 lLNB4utjFGTPd7ggtED/DarLSfMdGCXQq+HTmGyGAYTf2GLL3JhOSBa3NWvfNZVOS7vmn
-	 PoDoqAw9FQYMmjey/wiGSth9KRLWsHClCYbel9vPqQ4vf8jXBvTbu6zSCdyD5ejqTYqxz
-	 1zEBZhuHYFkTZ0QpISRYnEDj8AGTqOG8baAehWrtbDpKzH2Oso343G+zdWLnnJHzcMK/E
-	 HEQcbAlLExHkMOxFBuSYt+GIIbf09IVZLRcRtfw4B279gVDUlEyBLPKrd/tI3ktkdmA==
+	bh=+jvXRFUtiXyR9YbdQxNAPkSMuEBXfvLBp8RlDLNKoNQ=;
+	b=X1TEsqYftaQGNzyuVWsKrVXLWLEFjvAYb49Pxjtsd1BJZIOOLUZI1dlfhv64G6vPeC5k
+	 cLmUUTiBiVDBgo463I2YIU9xeWw95SuwJGumwRm+JTzls4JXF/jE/v97T6ordr1m7oAPE
+	 wpjvmk0n2YpyeiQxbU54aW/jNgp7L1ymjQou5ypBW1WOe96zy+5LnZmBjQA1++bJYjv1h
+	 qKahGk3O5MVmpuJwX7fYyhzHtMMyKAWxXwiMHH7Q+Z1a175uWAo5HZtuhc+iW16wA1yS1
+	 aEDGr8SDprXHwiBE8rFadKeUW6BvrNX6kbTKoyzMnAzo8osWx4nfninD5ozQCpkItBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hUfD6jnF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ul6cAa/G";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F4B606A84C;
-	Wed,  4 Nov 2026 22:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07033606AC14;
+	Wed,  4 Nov 2026 22:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hUfD6jnF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD18F1F000C1;
-	Wed,  4 Nov 2026 22:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ul6cAa/G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897161F00A16;
+	Wed,  4 Nov 2026 22:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829629;
-	bh=rcgqKZorAUW0PIdzCNLrYUYNGXaP9/sv6pvOSj2w06U=;
+	s=korg; t=1793829630;
+	bh=+jvXRFUtiXyR9YbdQxNAPkSMuEBXfvLBp8RlDLNKoNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hUfD6jnFtyLak1n3qKyw812Jd3/1AizG+MPdxA5JUbzbihLEO8DFfamOrEIwwtFMJ
-	 yCWhp7l2KtixkSvkztFQBb7Dfr6+g85lBmQEsKnskPENFvgxMZrRtVCh5kGuPdQV6m
-	 rr8F/Amr8rZKOeP6hd2NQf5d9nZ9mvIQer5sPIKc=
+	b=ul6cAa/GIAT7DwRIjZcXi6e5FUJqajadv1oqGQpwG4tXhbfHEK62iHDPienn6nXst
+	 t9q+iygclDzo9mJqHHnWWulxR7F+X0AymIjcqye3T1Wqm5MHAhxuKT5zY6Z9+0q0Wd
+	 gLtZbo9YfZkeuo7weUUDi1FA2KTNOXiGlFEzXEKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Senjin <senjin@hatchling.org>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0244/1005] fs/ntfs3: fix lseek EINVAL on sparse/compressed files with 64-bit clusters
-Date: Wed,  4 Nov 2026 15:59:37 -0500
-Message-ID: <20261104211050.693214548@linuxfoundation.org>
+Subject: [PATCH 6.18 0245/1005] fs/ntfs3: load ATTR_BITMAP run extents from $MFT extension records
+Date: Wed,  4 Nov 2026 15:59:38 -0500
+Message-ID: <20261104211050.723406304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,52 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Senjin <senjin@hatchling.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 789af83e41aef54c1ff1cee16adc27822e0a0d71 ]
+[ Upstream commit e31886cb6e0e14cf65e27da0bf1a422ff419d893 ]
 
-When CONFIG_NTFS3_64BIT_CLUSTER is enabled, sbi->maxbytes_sparse is set
-to -1. As a signed loff_t this is -1LL, the most negative value. Any
-lseek on a sparse or compressed file passes this as maxsize to
-vfs_setpos(), which returns -EINVAL whenever offset > maxsize, and
-since -1LL is less than any non-negative offset, every seek fails,
-including lseek(fd, 0, SEEK_SET).
+When $MFT's ATTR_BITMAP attribute is heavily fragmented, its run list
+can span multiple MFT extension records (attribute list entries with
+vcn > 0). The non-primary segment handler in ntfs_read_mft() only
+processed ATTR_DATA extension segments for MFT_REC_MFT, silently
+skipping any ATTR_BITMAP segments. This left sbi->mft.bitmap.run
+incomplete, causing wnd_init() to fail with -ENOENT when wnd_rescan()
+tried to look up a VCN not covered by the truncated run list.
 
-The intent of -1 here appears to be "no limit" (matching the spirit of
-MAX_LFS_FILESIZE assigned to sbi->maxbytes and sb->s_maxbytes in the
-same block), but the signed type makes it the minimum instead of the
-maximum.
+Observed on a 16 TB NTFS volume (0xFFFFFEFF total clusters) whose MFT
+bitmap run list was split across 97 extents in extension records.
+wnd_rescan() successfully looked up VCNs 0-122 from the runs loaded
+from the base record, then failed at VCN 123 (the last cluster of the
+bitmap) whose run was only present in an extension record.
 
-Fix by assigning MAX_LFS_FILESIZE to sbi->maxbytes_sparse in the
-64-bit cluster path, consistent with the other two limits set there.
-
-Observed on a 16 TB NTFS volume with 0xFFFFFEFF total clusters compiled
-with CONFIG_NTFS3_64BIT_CLUSTER=y. Sequential reads via dd/cp worked
-correctly; any lseek call on sparse files returned EINVAL, preventing
-archive managers and other tools from random-accessing files on the
-volume. The non-64-bit-cluster path correctly sets maxbytes_sparse to
-(1ull << (cluster_bits + 32)) - 1, a large positive value.
+Fix by extending the MFT_REC_MFT special case to also handle
+ATTR_BITMAP extension segments, storing their runs into
+sbi->mft.bitmap.run the same way the primary segment does.
 
 Signed-off-by: Senjin <senjin@hatchling.org>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/inode.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index dc799ebc6c883..74f071ace3ad7 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1176,7 +1176,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- #ifdef CONFIG_NTFS3_64BIT_CLUSTER
- 	if (clusters >= (1ull << (64 - cluster_bits)))
- 		sbi->maxbytes = -1;
--	sbi->maxbytes_sparse = -1;
-+	sbi->maxbytes_sparse = MAX_LFS_FILESIZE;
- 	sb->s_maxbytes = MAX_LFS_FILESIZE;
- #else
- 	/* Maximum size for sparse file. */
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 120691bc71ee9..99fdba7b403cb 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -126,10 +126,16 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 
+ 	if (le && le->vcn) {
+ 		/* This is non primary attribute segment. Ignore if not MFT. */
+-		if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)
++		if (ino != MFT_REC_MFT)
++			goto next_attr;
++
++		if (attr->type == ATTR_DATA)
++			run = &ni->file.run;
++		else if (attr->type == ATTR_BITMAP)
++			run = &sbi->mft.bitmap.run;
++		else
+ 			goto next_attr;
+ 
+-		run = &ni->file.run;
+ 		asize = le32_to_cpu(attr->size);
+ 		goto attr_unpack_run;
+ 	}
 -- 
 2.53.0
 
