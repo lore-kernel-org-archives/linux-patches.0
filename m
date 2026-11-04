@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829086;
-	b=EgufSRsI3kQyhIcN4FlU2t4s9vXxjNf8IeAermuZsTwPyNcFshDe48brARy3uo4YWK7t
-	 GsPTuvl8Is8EIwtLcgtD2gZc9EPFLn2z5tDcb8nrgEr8xCSza6pm8yBbIk1unS2tSxSPn
-	 VazVAXwVn8Kc6gjq29qDDindjX15xv5i/CDXEUXplkIQ6rXN4pMrwR2jh7bxobBlXjMiB
-	 pajv00+dlNhgfs7H+Rc1TUYvcOEjnVoi6aOPAzuictiaTcs1urSfVJa2QOvEVMr843jvY
-	 vSzyhNtYtMHI2qLm6HcCw6NbVxvlRvrqH0gNedk5SeMxig4+Par56yTgbRjaDi+1jXw==
+	t=1793829088;
+	b=upuEhOb5Vam/CGKlaz01EshtGlP3Ohd40mWJ3h++1bXHmvqIuRl/BX9JTB2zB8dyJ8lS
+	 fCnU7HC/vMN7iKIPajOBY362nc3Uaj7H3HZJPKXHbOVlfwJii2zZolRDTlYbpy6wzhD+1
+	 qwedTs3nvsP6hQ5Lo6Ybpqz9nWMuQXSzno6372qcbBh6+pahesalVCD/EMkbAx2beMmlD
+	 aZILbjRlbY1u3O3p4kmlOOx7nd3fOPHM30s4k0ohGID2cog0hv2PU4RjntDXE4QUA7qIi
+	 KdgQbUOna9N5UaavcGIV/rRRG7Rml8oDsq8DZQT3Czzk9G7dyF/v3wd19RQ0//ds7mQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KLMTWDBFSEhYtuFoBKjHBFXYi32vHST5xCZz8+VZeY4=;
-	b=qOJiohE7kMuqGFTzIjdl6CLtM+rq8uJvYU4D1rnJrYq9SHJOa8Azmkdy9ASdbGN+gUBn
-	 WGj3kCXgEZYspZqD4zGpltm3XJlwxvjSuRjQZIjoKXnhcwcF2bdP9jk8Fi2LAIlrWinCA
-	 mXwHQl02Q7uWZ8drSyPQgp1gjbfrpA8hA66+pOi3N69gVAgFKWltjzN4YryrFqrT4a1h/
-	 XC50IA3LVtNplTSXBdFskquWy+9FsVVFUC+T1Q5BSFJ6iuR9KMDZ34+Nko6evvJ1t9xf+
-	 OaxShk6+NdxsoeyIyDrCdh9+HKLp7SftymXn0so+mW/kIBk5ZxEeKwhbMgrCsIf74Qg==
+	bh=U7EjvRqKgkMsSmZ1a6VxPc5Ju4qWQhxbKybkfSTgSNQ=;
+	b=VVBioPhRJTZtere/Tf3bZzV6Jv5g9fumnRjZmNBeUv90rVhXsvDk6yW/wka/VL+nS5Lo
+	 fTYwBlNsZtBGLsgLcOW4Zxz9Jr2Dh6XJVqsB4Y5blqijQCbI+tyTGGu42pIu0SN5DlRMF
+	 UUL17KH8k1eB1dd+QMEcm994bYFn7gAKKMWsTuLNVAQ2HmL+VXLKQwewHZYY/Sy4hs208
+	 RtxQLYReCpAaMpCroxtuuT8TS6qQq3WQZcwgmEO5XLsKp+sogO8rpiQqTxL3xPQvny4o6
+	 QAFh2V212LPufHin1Oxtzsn6lF3pMdSZJIFifQs6aZRe9eYMo3e8q0eGAlSSDau3UEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zEO5x8kT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYRUZZ+X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAB06070318;
-	Wed,  4 Nov 2026 21:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80D26072F96;
+	Wed,  4 Nov 2026 21:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zEO5x8kT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3601F000C1;
-	Wed,  4 Nov 2026 21:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYRUZZ+X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569221F000C1;
+	Wed,  4 Nov 2026 21:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829086;
-	bh=KLMTWDBFSEhYtuFoBKjHBFXYi32vHST5xCZz8+VZeY4=;
+	s=korg; t=1793829087;
+	bh=U7EjvRqKgkMsSmZ1a6VxPc5Ju4qWQhxbKybkfSTgSNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zEO5x8kTtyQp9FJOWfx1vOXROoJqvjzU8xRtIOwYlgWfeZa3mZx87ckNSbf43JYv6
-	 wBfwJhpSFZ3giqMHIqwkPYU8MFHeMqBSOiz1THsCl4eKc33RbtPRL2Zce8bk9Wfrcc
-	 onpyPpExFNnPdsKz29V6Xs887Iz4eJQ0MuZ/g5g4=
+	b=pYRUZZ+XOIcNtubTYvJZ/RSmWBZp/Iq2EAjn2zXLf5oBUDsBUBokCOa79W7Yz15ah
+	 IQpqLqzDFl1vuYVy0w5uwbU1nsHVRFtRSBeq05QeRy782O1mrhZcjjnlOEOrqCeEtR
+	 j3IbEPSnQeGHUHa3Ye/ZLx1jaaut8JxFnzof0S7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.3 396/547] pnfs/blocklayout: Complete a device upcall when the pipe is closed
-Date: Wed,  4 Nov 2026 16:09:40 -0500
-Message-ID: <20261104211049.558282017@linuxfoundation.org>
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 387/547] smb: client: reject short SESSION_SETUP responses
+Date: Wed,  4 Nov 2026 16:09:31 -0500
+Message-ID: <20261104211049.294526047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -66,68 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-commit 2a25cc8e984610828a526086313b8a7aeefe507d upstream.
+commit 4d8930afa3446041358a7db33e7b23a0bb9459b5 upstream.
 
-Once blkmapd has read a whole upcall, rpc_pipe_read() unlinks the
-message from every pipe list, so the purges in rpc_pipe_release()
-and rpc_close_pipes() no longer reach it. bl_upcall_ops supplies no
-.release_pipe callback, and bl_pipe_destroy_msg() returns without
-completing the upcall because a downcall is expected to follow. A
-daemon that exits between the read and the write therefore strands
-its waiter: bl_resolve_deviceid() sleeps in wait_for_completion()
-and never returns, and it holds nn->bl_mutex across that wait, so
-every later device resolution in the net namespace blocks behind
-it.
+smb2_check_message() accepts frames shorter than struct smb2_pdu when
+the SMB2 status is non-zero, before the minimum-PDU check added by
+b4694f269e66d. A 64-byte STATUS_MORE_PROCESSING_REQUIRED SESSION_SETUP
+response is therefore accepted even though it cannot contain the
+SecurityBufferOffset and SecurityBufferLength fields.
 
-Add a .release_pipe that completes an upcall blkmapd has consumed
-and left unanswered. Completing an upcall retires it, so a message
-the framework has already purged is no longer in flight and is not
-completed a second time here.
+The parser then reads those fields from stale bytes left in the reused
+receive buffer by an earlier frame. With a long stale
+SecurityBufferLength, decode_ntlmssp_challenge() copies up to about
+64 KB from beyond the receive object and sends the data back to the
+server in the NTLMv2 AUTHENTICATE target info.
 
-Fixes: fe0a9b740881 ("pnfsblock: add device operations")
+Reject short MPR SESSION_SETUP responses before the short-error path,
+and validate SecurityBufferOffset + SecurityBufferLength against the
+received response length before decoding the challenge.
+
+The ordering bypass is not new: the short-error early return predates
+b4694f269e66d, and the unvalidated SecurityBufferLength read predates
+the 2016 raw NTLMSSP split in 166cea4dc3a4, so all supported stable
+trees are affected. Reproduced on 6.6.87.2; the path is unchanged on
+mainline.
+
+Fixes: 5478f9ba9a34 ("CIFS: Add session setup/logoff capability for SMB2")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-8-e163f94a3a6e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/blocklayout/rpc_pipefs.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ fs/smb/client/smb2misc.c |   16 ++++++++++++++++
+ fs/smb/client/smb2pdu.c  |   10 ++++++++--
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
---- a/fs/nfs/blocklayout/rpc_pipefs.c
-+++ b/fs/nfs/blocklayout/rpc_pipefs.c
-@@ -151,10 +151,31 @@ static void bl_pipe_destroy_msg(struct r
- 	complete(&nn->bl_done);
- }
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -225,6 +225,22 @@ smb2_check_message(char *buf, unsigned i
+ 		return 1;
+ 	}
  
-+/*
-+ * An upcall blkmapd has consumed is off every pipe list, so the
-+ * purges in rpc_pipe_release() and rpc_close_pipes() cannot reach it.
-+ * No downcall can arrive once the pipe is closed; release its waiter
-+ * here.
-+ */
-+static void bl_release_pipe(struct inode *inode)
-+{
-+	struct nfs_net *nn = net_generic(inode->i_sb->s_fs_info, nfs_net_id);
-+	struct rpc_pipe *pipe = nn->bl_device_pipe;
-+
-+	spin_lock(&pipe->lock);
-+	if (rpc_msg_is_inflight(&nn->bl_pipe_msg)) {
-+		nn->bl_pipe_msg.copied = 0;
-+		nn->bl_pipe_msg.errno = -EPIPE;
-+		complete(&nn->bl_done);
++	/*
++	 * A SESSION_SETUP response that asks for more processing carries a
++	 * security blob and is parsed as a normal reply. Do not let the
++	 * short-error path below accept a frame that cannot hold the fixed
++	 * response fields; the minimum-PDU check later is unreachable once
++	 * the early return has accepted the frame.
++	 */
++	if (command == SMB2_SESSION_SETUP_HE &&
++	    shdr->Status == STATUS_MORE_PROCESSING_REQUIRED &&
++	    len < smb2_min_pdu_len[command]) {
++		cifs_server_dbg(VFS,
++				"%s: session setup response too short: %u < %zu\n",
++				__func__, len, smb2_min_pdu_len[command]);
++		return 1;
 +	}
-+	spin_unlock(&pipe->lock);
-+}
 +
- static const struct rpc_pipe_ops bl_upcall_ops = {
- 	.upcall		= rpc_pipe_generic_upcall,
- 	.downcall	= bl_pipe_downcall,
- 	.destroy_msg	= bl_pipe_destroy_msg,
-+	.release_pipe	= bl_release_pipe,
- };
+ 	if (len < pdu_size) {
+ 		if ((len >= hdr_size)
+ 		    && (shdr->Status != 0)) {
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -1860,14 +1860,20 @@ SMB2_sess_auth_rawntlmssp_negotiate(stru
+ 		goto out;
  
- static int nfs4blocklayout_register_sb(struct super_block *sb,
+ 	u16 boff = le16_to_cpu(rsp->SecurityBufferOffset);
++	u16 blen = le16_to_cpu(rsp->SecurityBufferLength);
+ 
+ 	if (offsetof(struct smb2_sess_setup_rsp, Buffer) != boff) {
+ 		cifs_dbg(VFS, "Invalid security buffer offset %d\n", boff);
+ 		rc = smb_EIO1(smb_eio_trace_sess_buf_off, boff);
+ 		goto out;
+ 	}
+-	rc = decode_ntlmssp_challenge(rsp->Buffer,
+-			le16_to_cpu(rsp->SecurityBufferLength), ses);
++	if ((u32)boff + blen > sess_data->iov[0].iov_len) {
++		cifs_dbg(VFS, "%s: invalid security buffer length: %u\n",
++			 __func__, blen);
++		rc = -EINVAL;
++		goto out;
++	}
++	rc = decode_ntlmssp_challenge(rsp->Buffer, blen, ses);
+ 	if (rc)
+ 		goto out;
+ 
 
 
