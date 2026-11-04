@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830843;
-	b=lVcqf9nVTnYVy5yl/1nxJJoaXF+tmp5VrnJ+LcatkaZF+6x11RUmKtccLOfk3uAG2tbI
-	 lsSLUkUelx206lOMFseLvINUkSn6isNJD01sa2d8HJW4n5gZGNDT3kv151Pc6/nV2COpF
-	 7k0yNikPAHCvYr4gC+8FtRYt/e+zmI8uzc9z4gzCv2Zx2H941nE55eTYPaMjDT1K+8T61
-	 vc55KOOB3pLJHUfFmyA8od0UfHf6CE6CdxzKkvmex0j+05EDc1Y2KirBGoVhG8grYsalB
-	 J5sK3klspO/qjRiDR3K+2fYsEwGANGFsfOP0RkYOwydERqMd1Mupk8ARX6hf7TfmVAw==
+	t=1793830844;
+	b=zQRdbxpSezP4V4X08ctw0E2ovV2s/DaaaJQrAnslv1fXuKVvdK4+67tzR9rGMjDvSFPZ
+	 MkKZWvYJkfjHekxkRs6XlfaghgCKAJFAxQWcvrWRq2JtX/UKB4+xsM+YfljjBpHFi4YND
+	 rOcBaIo2wUxHymJsJBZSAVbU+FJiAgiRuV+9jaqQOl+9a+biPAQ8YThtpgpnT79KnTBwO
+	 KANFzdBFIa4oxl9KPpjFiq0LWDBYUWLj8ZgUNhl4I4+/jCTrj2wzow295y6DIEUQvGW8h
+	 Z52GLbqKYePUNYXM4huuSBD1umVlPuHTQwpvZe1rRfSeuf3xb7GT7HLXsXOkVi0V7mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830843;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830844;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tU6bAsY2ybQFcKAIY8apwLs99ZW2ZoDNbOrSMWXHKVA=;
-	b=PncpueKzJ4zbYDWzKJXEN0Eqo3j4LBgNdxISrhLE5fRz5ko/GuV8deH+ChE8TXFkMA+o
-	 kFaZjgBmduqHId4sag+0EpXZj5sy8BeXFeuy9XRIuMNQs3yEu834K54D660Kggy/ner5m
-	 5AsOs3jCP09xZOiMjd0AC8q+YfRzzIr0d688+i5mbP9otJOAdOpNOJT0seFBZWruk2Cp9
-	 MAfpEcETRGCZO0/Tt3VWpaUB1hiHyaaWQKqXECzzWPCTBDHqTsJ13enPe388gd0TCfESS
-	 E3PVUnelWsZq11FYK3+appVkISw66biXAUqYVqV8DBWCaWa8MywhKY9cqoAyJG+v/mA==
+	bh=ju7LmGadpFC5EW4Oo2ukpALPMiFpP6ItTK+iJ+BbEUA=;
+	b=KJLmlTecWnwO43Qxv7N+Iuh3z0tAJzW6M7lSUNgC9izfPVcJQA357bpwy69wnqUU9+en
+	 XywqPPMNCr0BhZLdufJ+y7VCQ4SeQ6me1WRs/GSvyrwX26PfXefLmhXE+6SlL9hGhhMQI
+	 LiIGD2XDXB4vidMXXgW+PZzR+eOuKO6w0Mo7zgirNkDtuPzQz3ATFLwmQxBkg4ArqzZmm
+	 zWZYMMDtgEWGQARcHV0CdUDMmT9amVmU/pfbFhpgNZzgkX7i3wdLAE65kY/XKgoxzZYX8
+	 nV1zycPioVFH+CcEGQl32gUBNO9ZCc/RzeGVy2y2U6/89g0EBpGmvuTiV/zO/yQVwFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEulV4Ob;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwWPg6D0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE82C606CA19;
-	Wed,  4 Nov 2026 22:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476D1606B2D8;
+	Wed,  4 Nov 2026 22:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEulV4Ob
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D39E1F0093A;
-	Wed,  4 Nov 2026 22:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwWPg6D0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF961F0093A;
+	Wed,  4 Nov 2026 22:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830842;
-	bh=tU6bAsY2ybQFcKAIY8apwLs99ZW2ZoDNbOrSMWXHKVA=;
+	s=korg; t=1793830844;
+	bh=ju7LmGadpFC5EW4Oo2ukpALPMiFpP6ItTK+iJ+BbEUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fEulV4ObLgIrVrbQvCLC7OI94xK07vlEMa1su7F6t0vPW8Ey9R1cHf2BD4ZOD9rNw
-	 XCrkoelia9ZMNbwKR2kUZPKbFll0rcEkWszc1LCIJa2h9jp0Zk4Mwz92GsxWly5sfR
-	 8H6y5daqeztQjxSDTlaKSz1AclIG4T0j2lIOo59w=
+	b=XwWPg6D0eHd55VS8u/VC53V7kQ0pdApSXCFigjkXMUXcGoW2vlKLRv6B/vcKiZ5sM
+	 Artk0jRozSci/Tsc/3DEIMovP6YDH8Y4Iw2tGi1dq/wsoOxUaSjNDnlHmd3yvehauQ
+	 2Ex5oW1Cu5YzbbwlQ8zdnngSTWNrJpEoq7Whf+2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhang Heng <zhangheng@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0355/1005] ALSA: hda/conexant: Add pin config quirk for Huawei Matebook
-Date: Wed,  4 Nov 2026 16:01:28 -0500
-Message-ID: <20261104211054.018019743@linuxfoundation.org>
+Subject: [PATCH 6.18 0356/1005] ALSA: hda/realtek: Add quirk for Acer Nitro ANV16-42 headset mic
+Date: Wed,  4 Nov 2026 16:01:29 -0500
+Message-ID: <20261104211054.047576116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,58 +70,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit d152afd1cd7a69c752236b6e825c4e62a74788eb ]
+[ Upstream commit e00a6a89900dfa4cda3669558d2f3581cd41a656 ]
 
-The headphone jack is not detected on this Huawei Matebook (Conexant
-SN6140 codec). The BIOS incorrectly marks Pin 0x18 as [N/A], causing
-the driver to report hp_outs=0 and no "Headphones" output appears.
+The Acer Nitro ANV16-42 (subsystem 0x1025:0x1909, Realtek ALC245)
+does not detect the headset microphone jack. Adding the
+ALC2XX_FIXUP_HEADSET_MIC quirk resolves the issue and restores
+proper headset mic functionality.
 
-Override the pin configuration for NID 0x18 to set it as a headphone
-jack, which restores proper detection and audio routing.
-
-Link: https://github.com/thesofproject/sof/issues/10687
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221623
 Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260807125857.678297-4-zhangheng@kylinos.cn
+Link: https://patch.msgid.link/20260807125857.678297-1-zhangheng@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/conexant.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
-index 56d6fbdd9b06d..ef40f1cb1158e 100644
---- a/sound/hda/codecs/conexant.c
-+++ b/sound/hda/codecs/conexant.c
-@@ -298,6 +298,7 @@ enum {
- 	CXT_PINCFG_TOP_SPEAKER,
- 	CXT_FIXUP_HP_A_U,
- 	CXT_FIXUP_ACER_SWIFT_HP,
-+	CXT_FIXUP_HUAWEI_MATEBOOK_HP,
- };
- 
- /* for hda_fixup_thinkpad_acpi() */
-@@ -1043,6 +1044,13 @@ static const struct hda_fixup cxt_fixups[] = {
- 			{ }
- 		},
- 	},
-+	[CXT_FIXUP_HUAWEI_MATEBOOK_HP] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x18, 0x03211020 }, /* Headphone */
-+			{ }
-+		},
-+	},
- };
- 
- static const struct hda_quirk cxt5045_fixups[] = {
-@@ -1143,6 +1151,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo G50-70", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x397b, "Lenovo S205", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad/Ideapad", CXT_FIXUP_LENOVO_XPAD_ACPI),
-+	SND_PCI_QUIRK(0x19e5, 0x3289, "Huawei Matebook", CXT_FIXUP_HUAWEI_MATEBOOK_HP),
- 	SND_PCI_QUIRK(0x1c06, 0x2011, "Lemote A1004", CXT_PINCFG_LEMOTE_A1004),
- 	SND_PCI_QUIRK(0x1c06, 0x2012, "Lemote A1205", CXT_PINCFG_LEMOTE_A1205),
- 	SND_PCI_QUIRK(0x1d05, 0x3012, "MECHREVO Wujie 15X Pro", CXT_FIXUP_HEADSET_MIC),
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 05e7fcc2f67e6..9ec18f779a700 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6595,6 +6595,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1025, 0x182c, "Acer Helios ZPD", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1025, 0x1844, "Acer Helios ZPS", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x1025, 0x1909, "Acer Nitro ANV16-42", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
+ 	SND_PCI_QUIRK(0x1028, 0x053c, "Dell Latitude E5430", ALC292_FIXUP_DELL_E7X),
+ 	SND_PCI_QUIRK(0x1028, 0x054b, "Dell XPS one 2710", ALC275_FIXUP_DELL_XPS),
 -- 
 2.53.0
 
