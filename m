@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829428;
-	b=hvifb04BWUZtyWDjbyMHGGuXqBBm6S33ESjegKDFk/PaTsjvxGlZRtIjjygjhUWUbabN
-	 2cNXi50JSglL3w7PGecSodJ9zSEp2DViwD5LNPq9dnkPc99Ep6aAfcAQtgO5kH8bxgC6R
-	 Ey4KobPw0kqGb05W2L/cekDAirC2ZgYpCys3CQRHLkJgjlTQo3pZEyQ0qxRrZxSUgpzTF
-	 0MP0wqGq3BGA3eqwj7S6K0C4xk+Tl70UX3TEhXUesoPZZ1WJwgEAv+tGOxDGo5VtUbUtJ
-	 O8NOUOJmtSvrYS51dYZWdVcSdJO9IcJKatxhdATxgUTgXgUniyFwNab2DKqBuvyl3iA==
+	t=1793829430;
+	b=EWvHoBLXv00cE0ad45gDV7N28C3uvDi8LWNuVRFufpxS+VQ2eTFhkU5Y4QdlTKP153ON
+	 ZdpgK6ri+i+0dHpzaKqBYE1xAPMuLXqNuhrsWdbINmR200ga2NOf2wz+37y8EnEEIPf/O
+	 z6drM/I0HIDwhRJU3urNhPhEMvb50ZNlZU3XMKU3hBXdk9/nZC3Zty3OOKlY7aFZ5UIIa
+	 yC9XJyKMuZnWqx1OR5NEM/XhaSKb5BW6jfRAjWDeEo8sDsVmJ1dWjOQYy3kOeuoCdZCkA
+	 gHbFpfC7Wm1SiSaOqt+9tCOZ4OUtdcEwlsY+EcsucgoAtX/wstIhhkGmkxHKjyFyf0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829428;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829430;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DA0/TPGOvT+FfKC1/jxiYbkGT776i30UbcQU97MHoCA=;
-	b=Jay3FKtrRhAdsu0cbM4zccSumu5/7kUoiHFQ4g/W+hmFE+eYwlAF8ZFX2rYV336kWrud
-	 OtQ+8wVke4lXkF6Yu7KjYcUsbXkNAx2XL2SE5vOnQR2JO18akT+ghZK42v9X0Zvvs+ZrK
-	 usKBhWqh6ZZpHDJQLHZFFSltuoEwjsTxQx9hrx/SO95vsvz6sTOUQYLlpXFOeLFbRXdmc
-	 Um4Jzl8VZ+bl42hQxnNfe17l+zGT4DRA0hApX/ERSTMfTtvri+jnj0x2YWqDCC45b1ePj
-	 ZzxNBZJjDDP1QF9AnBOGJd1Crk63yX+owIzqn7K6ab+mAZL+5s6RFi1b+c48wJyd6WQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nUMyaCAwkGDOpk5bIiFTTYCMZMK05vErZijbi2QVQxU=;
+	b=2qJdfv+D4qnrd+uJzMXQ43EB4Ne1rmf02dr62hFCM1jmqvI2LR4g4qv0ePtC86Ny+Jfg
+	 UgMCRKGo9wKpZ23Vz6lnlzq7OUeV9m0EbXr6Kx2yzxXlQLL7LbCLUeb/+1aB/svfNIDht
+	 d662XS2FVW5A5KywZt0E/chHfVefW/hALo1fYSHmFpIpzr90o8ZCTyaQgI2o2cWy6QPc8
+	 EMEjfBbH3BPnguyoK5k0SgVI/0zzn8oUsWxk6cW1NydzVWRFGBU7PiIV/ncZ7Y7W6JW6+
+	 Gjy2wccLJ+wwJL/XtcEvAKPZhPWTIY2ao+UhPQNtlswhyBx+WdZgwFxl27M2f7m+1Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ia7+2ApV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRx8epJO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8880D60877C7;
-	Wed,  4 Nov 2026 21:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135C9606AE08;
+	Wed,  4 Nov 2026 21:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ia7+2ApV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C57D1F00A18;
-	Wed,  4 Nov 2026 21:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRx8epJO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B3D1F000C1;
+	Wed,  4 Nov 2026 21:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829428;
-	bh=DA0/TPGOvT+FfKC1/jxiYbkGT776i30UbcQU97MHoCA=;
+	s=korg; t=1793829429;
+	bh=nUMyaCAwkGDOpk5bIiFTTYCMZMK05vErZijbi2QVQxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ia7+2ApVsBaX6h+/iPheF3i/ku10PN6OKiCyOZdsro6J3lPmRB0NsSel4pFbCMelC
-	 kb4XMiK08XHeTq5Ps06TPWoukc0D9OdFuqFjpk3y61AWaR62sj7U7w6kfqfGCnz1kW
-	 ftOgZgICc7XE2PZgyXG1qK/XYK0s2ow9f0Hg6Tio=
+	b=VRx8epJOtPeYU/tNE/AX3FLz5r6Qn8RAUkHw5YjOU5/to21/doi6b71RmWqq82mJ0
+	 YH8ZxmnU7pCbqNmvobPVjWTwPn9dVLRYNTSLVbTMytqTlsCayw+NxdlZo5U7uf9U8h
+	 6sTHjnlbvGpOv4aonY1eh9jgervYwWLzzN8zHdfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muralidhara M K <muralidhara.mk@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0120/1005] platform/x86/amd/hsmp: Validate _DSD mailbox sub-package element count
-Date: Wed,  4 Nov 2026 15:57:33 -0500
-Message-ID: <20261104211047.028592076@linuxfoundation.org>
+Subject: [PATCH 6.18 0094/1005] iio: adc: max1241: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 15:57:07 -0500
+Message-ID: <20261104211046.262992541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,60 +63,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muralidhara M K <muralidhara.mk@amd.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 0d7a2664494534d6152be9bd9bf1cb1d089c67d3 ]
+[ Upstream commit 790a2080e0c9eabefea3561dec301172043de236 ]
 
-hsmp_read_acpi_dsd() dereferenced elements[0] and elements[1] of each
-mailbox sub-package before confirming the package actually held two
-elements, allowing an out-of-bounds read on a malformed _DSD.
+The driver has a match table for the spi bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Verify package.count >= 2 first, then fetch the string and integer
-objects.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260625123337.886435-3-muralidhara.mk@amd.com
-Link: https://patch.msgid.link/20260629155634.1807598-3-muralidhara.mk@amd.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/hsmp/acpi.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/iio/adc/max1241.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/amd/hsmp/acpi.c b/drivers/platform/x86/amd/hsmp/acpi.c
-index 674be31654776..8f297d52ab5e3 100644
---- a/drivers/platform/x86/amd/hsmp/acpi.c
-+++ b/drivers/platform/x86/amd/hsmp/acpi.c
-@@ -152,12 +152,18 @@ static int hsmp_read_acpi_dsd(struct hsmp_socket *sock)
- 		union acpi_object *msgobj, *msgstr, *msgint;
+diff --git a/drivers/iio/adc/max1241.c b/drivers/iio/adc/max1241.c
+index d62c1a0116593..cab04beae7293 100644
+--- a/drivers/iio/adc/max1241.c
++++ b/drivers/iio/adc/max1241.c
+@@ -179,6 +179,7 @@ static const struct spi_device_id max1241_id[] = {
+ 	{ "max1241", max1241 },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(spi, max1241_id);
  
- 		msgobj	= &mailbox_package->package.elements[j];
--		msgstr	= &msgobj->package.elements[0];
--		msgint	= &msgobj->package.elements[1];
- 
- 		/* package should have 1 string and 1 integer object */
- 		if (msgobj->type != ACPI_TYPE_PACKAGE ||
--		    msgstr->type != ACPI_TYPE_STRING ||
-+		    msgobj->package.count < 2) {
-+			ret = -EINVAL;
-+			goto free_buf;
-+		}
-+
-+		msgstr	= &msgobj->package.elements[0];
-+		msgint	= &msgobj->package.elements[1];
-+
-+		if (msgstr->type != ACPI_TYPE_STRING ||
- 		    msgint->type != ACPI_TYPE_INTEGER) {
- 			ret = -EINVAL;
- 			goto free_buf;
+ static const struct of_device_id max1241_dt_ids[] = {
+ 	{ .compatible = "maxim,max1241" },
 -- 
 2.53.0
 
