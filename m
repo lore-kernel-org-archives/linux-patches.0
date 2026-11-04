@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831385;
-	b=yMhy8NRY0GKTsKBufI4zqgHzEtpJ3ef0ScgsKIOmTOQCSnl+AzTQFPp12Zpi2YN8NmDG
-	 WQQia/Chdr1tgFV4TjTq2ybiYspgcpiO1O1yMQvTp0EQqB0A9dcgOeFfWcCuxMhVRw8Di
-	 uPayHT3eVN0w1DnTTC15a7k5PvP2R54MO82sI2wXLuB1lVeXh45Lqp+g3S0IcYQR443B2
-	 CWKtby7ounsQbX1eW8XtJogC1stcuCSHeawC7F0ETSf5LCl9Hm4Jn7jdXICtGgV91zgcB
-	 gCpjTHqDK37dKttANgYUF/yI9NfKh4oiMjVr3cfEzIOge20ckQ2cFgO8KbF84hhhUjg==
+	t=1793831386;
+	b=iCIK6OUiRSg5bkGAlg083W5vwCbLUTvAWuckB9RsNvXs7dj3usEYbGHRmOXEoiuyfqKa
+	 hZedLiDIbXWlsVnKClpyDh1sO+1tG3LejZs9PBEctfQMxgdT8kpa7oKNs0zZpaAJZFJRu
+	 rnTYN3dDuiMmx6HgOyJKwFu8s6swQIpR2FOj6sRs54Bc0h15FqrnMXzemKsD0ncqPSetj
+	 2XNc7FBMgH3Avi4uVH/QHbLGqfIPNY2TUOmxeVoCoiLHkumI+esCFQdyrDbb4647mJRgs
+	 BudK99KBQ1rZurUbLba9U94CkQNj1lg5pFydWOX2xNA8HpP93NU0wlxrFCGajID3Xjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831386;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yVmr5wQURwuahLpBpBQYDhpeP9RwUXE5h6YqFpFJOBU=;
-	b=L9JuKmVx4/GVzfWkiRjjxDfipphoV9JdX/ljxIfs2p6/AfTFs7TGsrOFCaYTwiruhUu7
-	 W9e5SDKLZv0Y4iXl7Dco4CHkFa0xP7MRRRo/S49+hx+qdm2awhe/4Kn8Ja9YdbmqWuwaa
-	 dA/PQSRdO/y3p5zmBzS/qFLibdOhAyl4SqMD8A/0AjPCMPcvoU/dayhMoOZ4arI4rfdED
-	 OMT2erjVd8tEGlYQpjAiQdXzyL0WRVOqQLWcBs7s0c5uoouuB1gcpDSLARay/WHDupAhR
-	 zacwIG/ErfF/U8hBo1vMVGdHAt93ktVnqlHPPM/R/nJbtGuh5ddHKA3BMWre/+An/Ww==
+	bh=3y+p0FiQ3wu0GYW7GBdZmn6jkfyGk+FlIim1hLleuZQ=;
+	b=4qYWtOjbNzqQxszPJ2qnsYTpapca6BFvXLYa3rl3CeFJTj4V07Lbsm9Euo8zluN7H2qa
+	 g+5xx+DjRjzO+zioWEDDn4Okxfh7FqUN5GJrT8T3J66m8ACfWVjxSAG7GfbUaoWLYl+kB
+	 t7w7dWO2S8lF51nFgqb2AK78IVBsAs6P1UTaxk8H+mmjR8GQZP++CfNdmimx5OadqyepQ
+	 z7oBMmnZszZ8J+zlZfrdOm8jT4Xl/TYp5KSGFNVJmX1HersXbcod4BNtkMgpLxAmw0ATu
+	 5i4NbjA2XBZfRLFvNDWoISYdao6q1TyU851JsCSzIhgjuiG7OCO46xQQc1hVTpU3Ffw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cvmrk8vb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vRwOIKPE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56DF606A86F;
-	Wed,  4 Nov 2026 22:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879EF606A337;
+	Wed,  4 Nov 2026 22:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cvmrk8vb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DE71F000C1;
-	Wed,  4 Nov 2026 22:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vRwOIKPE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C851F000C1;
+	Wed,  4 Nov 2026 22:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831384;
-	bh=yVmr5wQURwuahLpBpBQYDhpeP9RwUXE5h6YqFpFJOBU=;
+	s=korg; t=1793831386;
+	bh=3y+p0FiQ3wu0GYW7GBdZmn6jkfyGk+FlIim1hLleuZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cvmrk8vb220bhSlhyd2WvHXeymGM1JN1Tg2pAf28Il6BJyL2VkEqM/SP9Gq/PThLH
-	 TaSGKG3gM3mJVSESkXjamqCc/D4c9ZksfHleoWK2/9KcoThXEwrAUiUE84dT0Mvefe
-	 J5tphGFMcqh/sfC+d7v3YyQHL5UBMnf8S0qtHVPI=
+	b=vRwOIKPEz1ScBelR/5gwBkvfCmaDQwsSBYTddBE667GvlfpdLMUwjJeAO5pgg2RUV
+	 hjky2iPqPE6V5aVKt+X9zAq6s/fxjqB5NlGczXftTkW8xKcd85E1QnE+MunWanMuc2
+	 bHiHrF2cJZ/H8oYPSTLTFYGqCK3KSN87uBlveHxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Kameron Carr <kameroncarr@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.18 0635/1005] Drivers: hv: vmbus: Bounds check the shared ring buffer indices
-Date: Wed,  4 Nov 2026 16:06:08 -0500
-Message-ID: <20261104211101.561363306@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.18 0636/1005] backlight: lm3630a: Cancel delayed work before destroying workqueue
+Date: Wed,  4 Nov 2026 16:06:09 -0500
+Message-ID: <20261104211101.586318603@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,102 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kameron Carr <kameroncarr@linux.microsoft.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 1d287c17cc5bfd6386fe0770999be410b248d021 upstream.
+commit 2cf184caab8b406fdd9db126ee40d62418237456 upstream.
 
-In a CoCo VM the host is untrusted. Since the VMBus ring buffer read and
-write indices live in shared memory, the guest has to treat both as
-potentially malicious.
+The interrupt handler queues delayed work to read the interrupt status.
+After free_irq() stops the producer, this work can still be waiting on its
+timer. destroy_workqueue() cannot drain delayed work that has not yet been
+queued by its timer, so the timer can outlive both the workqueue and the
+devm-allocated chip containing the work.
 
-hv_ringbuffer_write() copies into the ring at write_index with no bounds
-checking, so the host can make the guest write packet data at any offset
-up to 4 GiB past the start of the ring buffer. read_index matters too:
-the available space derived from both indices is the only bound on how
-much is copied, and an out-of-range index can make it far larger than
-the ring.
+Cancel the delayed work synchronously after freeing the IRQ and before
+destroying the workqueue. This also waits for any running status read to
+finish before the chip's resources are released.
 
-The fix is to validate both indices before use and to use the validated
-snapshot instead of re-accessing. For invalid indices,
-hv_ringbuffer_write() logs and returns -EIO.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-One re-read of write_index is left unchecked in this patch:
-hv_get_ring_bufferindices() fetches it again for the prev_indices
-trailer. The value is only returned to the host and is not used as an
-offset or length for indexing. Since this is not a security issue, it is
-addressed later in the series.
-
-Open-coding the bytes available arithmetic keeps the fix free of
-prerequisites; a later patch refactors it into a helper function.
-
-Fixes: 3e7ee4902fe6 ("Staging: hv: add the Hyper-V virtual bus")
-Cc: stable@vger.kernel.org # 5.15.x
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Kameron Carr <kameroncarr@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: 0c2a665a648e ("backlight: add Backlight driver for lm3630 chip")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Link: https://patch.msgid.link/20261003030439.599330-1-mhun512@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/ring_buffer.c |   29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/video/backlight/lm3630a_bl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hv/ring_buffer.c
-+++ b/drivers/hv/ring_buffer.c
-@@ -70,15 +70,6 @@ static void hv_signal_on_write(u32 old_w
+--- a/drivers/video/backlight/lm3630a_bl.c
++++ b/drivers/video/backlight/lm3630a_bl.c
+@@ -591,6 +591,7 @@ static void lm3630a_remove(struct i2c_cl
+ 
+ 	if (pchip->irq) {
+ 		free_irq(pchip->irq, pchip);
++		cancel_delayed_work_sync(&pchip->work);
+ 		destroy_workqueue(pchip->irqthread);
  	}
  }
- 
--/* Get the next write location for the specified ring buffer. */
--static inline u32
--hv_get_next_write_location(struct hv_ring_buffer_info *ring_info)
--{
--	u32 next = ring_info->ring_buffer->write_index;
--
--	return next;
--}
--
- /* Set the next write location for the specified ring buffer. */
- static inline void
- hv_set_next_write_location(struct hv_ring_buffer_info *ring_info,
-@@ -282,6 +273,7 @@ int hv_ringbuffer_write(struct vmbus_cha
- 	u32 totalbytes_towrite = sizeof(u64);
- 	u32 next_write_location;
- 	u32 old_write;
-+	u32 read_index;
- 	u64 prev_indices;
- 	unsigned long flags;
- 	struct hv_ring_buffer_info *outring_info = &channel->outbound;
-@@ -296,7 +288,20 @@ int hv_ringbuffer_write(struct vmbus_cha
- 
- 	spin_lock_irqsave(&outring_info->ring_lock, flags);
- 
--	bytes_avail_towrite = hv_get_bytes_to_write(outring_info);
-+	read_index = READ_ONCE(outring_info->ring_buffer->read_index);
-+	old_write = READ_ONCE(outring_info->ring_buffer->write_index);
-+	if (unlikely(read_index >= outring_info->ring_datasize ||
-+		     old_write >= outring_info->ring_datasize)) {
-+		spin_unlock_irqrestore(&outring_info->ring_lock, flags);
-+		pr_err_ratelimited("outbound ring indices out of range: relid %u read %u write %u size %u\n",
-+				   channel->offermsg.child_relid, read_index,
-+				   old_write, outring_info->ring_datasize);
-+		return -EIO;
-+	}
-+
-+	bytes_avail_towrite = old_write >= read_index ?
-+		outring_info->ring_datasize - (old_write - read_index) :
-+		read_index - old_write;
- 
- 	/*
- 	 * If there is only room for the packet, assume it is full.
-@@ -318,9 +323,7 @@ int hv_ringbuffer_write(struct vmbus_cha
- 	channel->out_full_flag = false;
- 
- 	/* Write to the ring buffer */
--	next_write_location = hv_get_next_write_location(outring_info);
--
--	old_write = next_write_location;
-+	next_write_location = old_write;
- 
- 	for (i = 0; i < kv_count; i++) {
- 		next_write_location = hv_copyto_ringbuffer(outring_info,
 
 
