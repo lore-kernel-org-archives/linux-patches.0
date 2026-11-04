@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831502;
-	b=XA6hHHAFByAtuqd0UfRHvM8CMCIn6j0RNYq42Se1d8TcSP3UmxVe1nynLtYr+y6CFXjz
-	 QdDahv8W2KfFTckT6xUMM+uyuj1c2HoJyuSSoKpaVVlR0YaKcIcA7m5oW01ptFhVuZnwU
-	 /34xWO1/kpIBN8hYp5lFmA3/y1U9B+7h4u+lhXTauc5+KuImCTsXeuK46+fIj2aD/tswa
-	 bz+UWYDp3worY/ixlAN4pO7acWHYGFaeMJC63Dd0lq5dfvtDnp7mCV8f7J0Qwin1JJK0h
-	 gm2IxR04CJ4+9LEUZvf6k5Ecktq5ZxPZQADI2pm1V3Gpf1ciuCFHFtIQahSk86PlZFA==
+	t=1793831504;
+	b=UWqVWgSRwkV7fT3mXwPzcODHnegtcMom4dAfoZ/e54nRIOD4WkDzf8As3WMVya8FyU43
+	 gXuI1kfpdtYREBuVM/iXjtEIsbVr9ICDcmzAwMQZjPBAt2ZfoN4YeWEiBrwIQ+JJKyXiO
+	 1/Gv8zHEpu+EmWOKpvpSNEP3Q/NdT70I/l3xA9LUMMm6KoETzovlc16sm/oZh/SoBmwE6
+	 XyluTWlmRCxAUqojXRszUg0ksKOo3mBs2Mc/2DLgDtb9C71bH/r+7ZfdpWLFK/iHR2k3D
+	 QoMaPAMaV7lzcz4VfO6XS07xr6DIvXD0mXloy/uh8++iDEHbzxGpZ+E285/UhMM9fIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831502;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831504;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rffJZYYLtaekB22ztaROzK6SGWG2H1KbpvfSfuIgQbo=;
-	b=UWYsZOAnblViTiEebZh995Ggws8C9KpvOyVdQlxWIG//IRRAVcE0HXT6W3uMQIAdeSGm
-	 99a2Q7mufzYQq6bp0cwNVNSqwmWGmLXLTyagPYHJCGNvkoibP9MnBUtaTSgoehpk6nR18
-	 7PYR6mma7aWye8W2NTiL2AKC9CsZkFvttj33yyy3FWdyrvNEROfsqkMmgPfB98YH3HCI3
-	 ZNg/7Q0JoM6GdQaeQK5k/ir+ePVx7TylyfdxQPzDMBKYV7NSSJJjGttZf5URaj6o6smLz
-	 Q1TM6yxS81Qr5M8gz0QxN/or3C7oHi3dwGJ95g5GtP1UQIthd3GGk1RvzvFdchTj7XA==
+	bh=SPWEaGgTigCTMMOZ11qJhTwefPJX5Ey28DrIuWPKxC4=;
+	b=nZFlwoL2VmMxYHx6Vp/zXy3QdDCSkY1TiOlAVuDFPPNBKbYGngs1KDaaDon6GZdyu1E3
+	 s14+rgajNkExsC0CTChD6cxJEKQNaGLogQifc7Do81xKK8GljsfR7i0Ylp37mNguMy+y6
+	 aA3NGLSTbt2Fqk4Cr/7KPZ1SogmbutkghaAhZaY/BCclTQmPiE2HEE0rL6kx3sOS7tuPW
+	 PUb7fQxpAhDC5y27ZAdP9Zm+OPVWX7PQnZ4XHbJY1Ya+O+JLr5s8tvnCbGAFejtECyh0G
+	 Exh9u2fmZXSZJwo2pn61UEwuCgwcdskOc9phkNcrjiEbQk7V9/Da2bGsQf5YiAWSbmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oG/Zydn0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1vFBj+u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AE4606B2D7;
-	Wed,  4 Nov 2026 22:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD828606B3B8;
+	Wed,  4 Nov 2026 22:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oG/Zydn0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D121D1F00919;
-	Wed,  4 Nov 2026 22:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1vFBj+u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E111F00A02;
+	Wed,  4 Nov 2026 22:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831502;
-	bh=rffJZYYLtaekB22ztaROzK6SGWG2H1KbpvfSfuIgQbo=;
+	s=korg; t=1793831503;
+	bh=SPWEaGgTigCTMMOZ11qJhTwefPJX5Ey28DrIuWPKxC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oG/Zydn02fJF50gE1RIiPShmkIslvHgFcG0WjF5fI+u56eUwo0HVoLvZ/3Xn13YpK
-	 vw9l1Op/kSTipK8IkLY0J13UjGB6SQOvlwAc2+/NUXb9gCk7zer/1EapL5mS2asjn1
-	 bShHVaVdvFeqeOhWAQ9ngW+9733Go8J0t92KEFAY=
+	b=h1vFBj+uGqXHSEo/Gx65mQ9bt2Ehq3yFp6p6iIYVz9wwq2kb26815vyhWglJZwF3y
+	 eb/K5On1sp5zL+hvRA3uI051zGeSs/D38WB/2k8Ga9XPH6fcOGgJJfRM+/Pjhqe5ys
+	 8P7Gh7VW+IEtxFZ/N3Hkfa4Yp+OPfcq1/kQzxQzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Sinyavin <sinyavin@gmail.com>,
-	Janne Grunau <j@jannau.net>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.18 0742/1005] nvmem: core: Fix OOB read for bit offsets of more than one byte
-Date: Wed,  4 Nov 2026 16:07:55 -0500
-Message-ID: <20261104211104.256355255@linuxfoundation.org>
+	syzbot+563191a4939ddbfe73d4@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 0716/1005] HID: hiddev: keep state alive through disconnect unlock
+Date: Wed,  4 Nov 2026 16:07:29 -0500
+Message-ID: <20261104211103.593984061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,47 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-commit 24530401e8001aaa637dd5007fcdc6fbc00300be upstream.
+commit 03f449b5de36a25fc5eba7dabf2b4494389bdb91 upstream.
 
-When the bit offset is BITS_PER_BYTE or larger the read position is
-advanced by `bytes_offset`. This is not taken into account in the
-per-byte read loop which still reads `cell->bytes` resulting in an out of
-bounds read of `bytes_offset` bytes. The information read OOB does not
-leak directly as the erroneously read bits are cleared.
+mutex_unlock() clears the mutex owner before taking its wait lock. A
+thread spinning in the final hiddev file release can acquire
+existancelock after hiddev_disconnect() clears the owner, then free
+hiddev before the disconnecting thread reaches the mutex wait lock. This
+causes a use-after-free in the mutex slow unlock path.
 
-Detected by KASAN while looking for a use-after-free in simplefb.c.
+Give the connection and each open file an explicit reference. Drop each
+reference only after its existancelock critical section has completed,
+so neither unlock path can free the mutex while the other is still using
+it.
 
+Fixes: 079034073faf ("HID: hiddev cleanup -- handle all error conditions properly")
+Reported-by: syzbot+563191a4939ddbfe73d4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=563191a4939ddbfe73d4
 Cc: stable@vger.kernel.org
-Fixes: 7a06ef751077 ("nvmem: core: fix bit offsets of more than one byte")
-Tested-by: Dmitry Sinyavin <sinyavin@gmail.com>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101329.1084348-5-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=563191a4939ddbfe73d4
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hid/usbhid/hiddev.c |   37 +++++++++++++++++++------------------
+ include/linux/hiddev.h      |    2 ++
+ 2 files changed, 21 insertions(+), 18 deletions(-)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -1597,12 +1597,14 @@ static void nvmem_shift_read_buffer_in_p
- 		*p = *b++ >> bit_offset;
+--- a/drivers/hid/usbhid/hiddev.c
++++ b/drivers/hid/usbhid/hiddev.c
+@@ -46,6 +46,12 @@ struct hiddev_list {
+ 	struct mutex thread_lock;
+ };
  
- 		/* setup rest of the bytes if any */
--		for (i = 1; i < cell->bytes; i++) {
-+		for (i = 1; i < (cell->bytes - bytes_offset); i++) {
- 			/* Get bits from next byte and shift them towards msb */
- 			*p++ |= *b << (BITS_PER_BYTE - bit_offset);
++static void hiddev_put(struct hiddev *hiddev)
++{
++	if (refcount_dec_and_test(&hiddev->refcount))
++		kfree(hiddev);
++}
++
+ /*
+  * Find a report, given the report's type and ID.  The ID can be specified
+  * indirectly by REPORT_ID_FIRST (which returns the first report of the given
+@@ -216,26 +222,21 @@ static int hiddev_fasync(int fd, struct
+ static int hiddev_release(struct inode * inode, struct file * file)
+ {
+ 	struct hiddev_list *list = file->private_data;
++	struct hiddev *hiddev = list->hiddev;
+ 	unsigned long flags;
  
- 			*p = *b++ >> bit_offset;
- 		}
-+		/* point to end of the buffer unused bits will be cleared */
-+		p = buf + cell->bytes - 1;
- 	} else if (p != b) {
- 		memmove(p, b, cell->bytes - bytes_offset);
- 		p += cell->bytes - 1;
+-	spin_lock_irqsave(&list->hiddev->list_lock, flags);
++	spin_lock_irqsave(&hiddev->list_lock, flags);
+ 	list_del(&list->node);
+-	spin_unlock_irqrestore(&list->hiddev->list_lock, flags);
++	spin_unlock_irqrestore(&hiddev->list_lock, flags);
+ 
+-	mutex_lock(&list->hiddev->existancelock);
+-	if (!--list->hiddev->open) {
+-		if (list->hiddev->exist) {
+-			hid_hw_close(list->hiddev->hid);
+-			hid_hw_power(list->hiddev->hid, PM_HINT_NORMAL);
+-		} else {
+-			mutex_unlock(&list->hiddev->existancelock);
+-			kfree(list->hiddev);
+-			vfree(list);
+-			return 0;
+-		}
++	mutex_lock(&hiddev->existancelock);
++	if (!--hiddev->open && hiddev->exist) {
++		hid_hw_close(hiddev->hid);
++		hid_hw_power(hiddev->hid, PM_HINT_NORMAL);
+ 	}
+ 
+-	mutex_unlock(&list->hiddev->existancelock);
++	mutex_unlock(&hiddev->existancelock);
++	hiddev_put(hiddev);
+ 	vfree(list);
+ 
+ 	return 0;
+@@ -270,6 +271,7 @@ static int __hiddev_open(struct hiddev *
+ 	spin_unlock_irq(&hiddev->list_lock);
+ 
+ 	file->private_data = list;
++	refcount_inc(&hiddev->refcount);
+ 
+ 	return 0;
+ 
+@@ -897,6 +899,7 @@ int hiddev_connect(struct hid_device *hi
+ 	INIT_LIST_HEAD(&hiddev->list);
+ 	spin_lock_init(&hiddev->list_lock);
+ 	mutex_init(&hiddev->existancelock);
++	refcount_set(&hiddev->refcount, 1);
+ 	hid->hiddev = hiddev;
+ 	hiddev->hid = hid;
+ 	hiddev->exist = 1;
+@@ -937,9 +940,7 @@ void hiddev_disconnect(struct hid_device
+ 	if (hiddev->open) {
+ 		hid_hw_close(hiddev->hid);
+ 		wake_up_interruptible(&hiddev->wait);
+-		mutex_unlock(&hiddev->existancelock);
+-	} else {
+-		mutex_unlock(&hiddev->existancelock);
+-		kfree(hiddev);
+ 	}
++	mutex_unlock(&hiddev->existancelock);
++	hiddev_put(hiddev);
+ }
+--- a/include/linux/hiddev.h
++++ b/include/linux/hiddev.h
+@@ -13,6 +13,7 @@
+ #ifndef _HIDDEV_H
+ #define _HIDDEV_H
+ 
++#include <linux/refcount.h>
+ #include <uapi/linux/hiddev.h>
+ 
+ 
+@@ -24,6 +25,7 @@ struct hiddev {
+ 	int minor;
+ 	int exist;
+ 	int open;
++	refcount_t refcount;
+ 	struct mutex existancelock;
+ 	wait_queue_head_t wait;
+ 	struct hid_device *hid;
 
 
