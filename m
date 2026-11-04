@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831030;
-	b=W+fRZv8VfO2Y12qr2ZIZjuarUrJ3V2F4oT51hgQs7ye4f79Xc7KzPclHgNAzK6jGhJBa
-	 Xpj3k9wlhggi4ZuzhbssnZdpY6XSyO5/vruzjSR4/JU8fb4P1VBUvtOqkd2bEoNe79cgB
-	 REOcXBT/GQZUvil4bU4TuQJISfdqJn2itG3Z9Qe9+YmwH614bZ4eeODIgmxfcSKizeXBm
-	 kn23DGHGk58OEBjwZV/Nv25fdMFhg0pjVpoeY7vhyEkEpYKQVB6MGjHFMKKazgGUO9y4U
-	 FBU24L9VUznbJCB72w2MyG4hjVM9OPbGvYs1AN8UWLn8fxtOuMzT4nKSs73edmYNfzw==
+	t=1793831031;
+	b=u/qSXeUI/2nQ4TYEFypdA4i4WFVhS1k0uGgR9XusxKhEJxjLZUuhksjgv9TRMC7fXB7P
+	 CVisVjtWKAPfnASPrsQJyhw6sAub4egLCuiNmINegfiyq5tVgTBw0xtdfTtwXa0oHNdhI
+	 nY1olSrQDeFQl04cV7IAYU+avlptB802zjGgNNVbF/+xc3TOtQyURw6TIO0lr6BBbwfJj
+	 uzYXj3bZiXfEtyQf3jfM29AI07hBQC+BjlFiHLac5YMpxvutvSJoycz6rgixembrLBtin
+	 e0M6mJj+emxveJ49A/7aM+n2Ju8zVSlyrIjK7grfw2hQDq4oENG3so4xi1SIW26BtDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831031;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ecBl54rkYjVoZECeIJ0MSxo2CGC2tBOSfavjRHldrwc=;
-	b=p/r3aLANBVb+O/AAIHkvgeeGOyEzOdKjMcHIirE6lsAWv1JZu47Y+IKp6t24sqIyFNcu
-	 Xo6rE2oROBwngpC4xBnTGOV6aGSt68f/mupd41beEo5VQ8KmkWW6y4FKfEpSuIfQpnHtY
-	 R9t5xflu59L8t/N2bG5UyHrQVu/gmsi9nL9ldjTmN3sZEN8d4iwRF1+/uVjDMAgumA6Yw
-	 XnaO6DuMh9qrAjH+lOusPlhwIABAZF1L0kVBmRsXdlL/jC8YxchM9qLeJUgslBgSCQkz8
-	 aakqlKt+vaP1dnfJGPwV5iSM81is1lafehnoUNyE5Qu2XQqkZ9Md6L9XSAVG5G40Wrw==
+	bh=7mJWUDyuXVoSZa+h1TZ88UKvQWi/2NIOe5NR8KUuirg=;
+	b=PDC4qZPQM6el4eFIPdvdWj1cN0TV8DZVQFRjhU0AdhgH36i6QErnrGIwxbwQq2nLwWQC
+	 UZ0v5d3fmlUmiZnBHTkZmPUk7KA3y2vN4ICVQUP+NahKXizUfuAuR0T+9AKUNxxbW/lWu
+	 1zig9xamLDZVpuVmz4ycxgQUYrHxkCRWGUMr3H1AZQS/6cfukCT2/kUjcCuvg1jm/EAbW
+	 p19r/nReIaHr8UmzWpT4ePJf1o2sjA/TzIycTHDbaQXle21gColX3z+DHAnVp6j0qy4pL
+	 oelKXL/tZ8i/4Qpwg74AkZp8RGJKylxiKLbC39WSL29MF7zHqmjkLnFvcUpHo7Vl13Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xB37EeCU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwvxKQEw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E3F606A843;
-	Wed,  4 Nov 2026 22:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8211E606A843;
+	Wed,  4 Nov 2026 22:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xB37EeCU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2741F000C1;
-	Wed,  4 Nov 2026 22:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwvxKQEw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECD51F000C1;
+	Wed,  4 Nov 2026 22:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831029;
-	bh=ecBl54rkYjVoZECeIJ0MSxo2CGC2tBOSfavjRHldrwc=;
+	s=korg; t=1793831031;
+	bh=7mJWUDyuXVoSZa+h1TZ88UKvQWi/2NIOe5NR8KUuirg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xB37EeCUrMAcSpYqqYOYOpjkxbDyc3X0K9jrcvo++eVujfTKFhA2oUUrYz7Soa+Gl
-	 Jz8zquAL6UjieSwYvteApzyz3wRxuL7naRW2YsQD4X/4LOhOEVQERRqdzjc0zoiKBA
-	 jzZ/nbGQyVlZpnS8NwsFwmY6uQVeSizLMKf405cY=
+	b=CwvxKQEwuIC3bjW50/QeSv5nosu5P8INCXnumkLM1BFm6N9jVLzOHZwfwgk2YpPrU
+	 2P77nMKSR/76wrO07rrzEJZ8HNR14L6bkLEbQsi26LrwzcLHvrHPe405sr/fCfEbG2
+	 7eDN7wYQkqHpwqG/J78T4OOrxnuJwgiMfrIn61wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Alex Elder <elder@riscstar.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0428/1005] net: stmmac: use dma_addr_t for DMA addresses
-Date: Wed,  4 Nov 2026 16:02:41 -0500
-Message-ID: <20261104211056.087858248@linuxfoundation.org>
+Subject: [PATCH 6.18 0429/1005] NFSv4/flexfiles: report cancelled I/O as a layout error
+Date: Wed,  4 Nov 2026 16:02:42 -0500
+Message-ID: <20261104211056.114402845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,63 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Elder <elder@riscstar.com>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-[ Upstream commit 0c1f9020d2ada55aed8a2e055903ad9cd5d49dab ]
+[ Upstream commit 4a013b0e881e0466cc2c6a5518d2f6cda3a4f19f ]
 
-In jumbo_frm() (implemented in both "chain_mode.c" and "ring_mode.c"),
-an unsigned integer local variable is used to hold the value returned
-by dma_map_single().  On systems where a dma_addr_t is 64 bits, the
-subsequent dma_mapping_error() check of the returned value operates
-only on the low 32 bits (whose high bit won't be sign-extended).  In
-this case, dma_mapping_error() would return 0 (no error) even if there
-were one.
+When a layout is recalled or revoked the client cancels its in-flight I/O
+so the layout can be returned.  The metadata server needs to learn that
+this I/O to the storage device did not complete, so that it can reconcile
+the affected mirror instance (or, if none remains, take other action).
 
-Fix this in both spots by using a dma_addr_t for the local variable.
+The cancellation completed with -EAGAIN, which ff_layout_io_track_ds_error()
+does not recognise: it fell through the switch and recorded nothing, so no
+error was reported to the server.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/linux-devicetree/20260606010122.21A211F00899@smtp.kernel.org/
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20260812163832.271742-2-elder@riscstar.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+-EAGAIN is overloaded in the RPC layer, so rather than key the reporting on
+it, cancel the I/O with -ECANCELED and map that to NFS4ERR_NXIO in
+ff_layout_io_track_ds_error() -- the status the client already reports for
+the transport errors that leave an in-flight write incomplete.  The
+cancelled I/O is then reported to the server via LAYOUTERROR / LAYOUTRETURN.
+
+Unlike a genuine transport error, though, we aborted the I/O ourselves and
+have no evidence the device is at fault, so once the error is recorded we
+skip marking the device unreachable and forcing a further layout return.
+
+The retry disposition is unchanged from the original -EAGAIN cancellation:
+both NFS4ERR_NXIO and -ECANCELED are no-ops in ff_layout_async_handle_error(),
+which still resets the I/O to pNFS (or the MDS), so it is re-driven as before.
+
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/chain_mode.c | 3 ++-
- drivers/net/ethernet/stmicro/stmmac/ring_mode.c  | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-index 2515608878235..5b0bab33ce4b6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-@@ -20,9 +20,10 @@ static int jumbo_frm(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
- 	unsigned int nopaged_len = skb_headlen(skb);
- 	struct stmmac_priv *priv = tx_q->priv_data;
- 	unsigned int entry = tx_q->cur_tx;
--	unsigned int bmax, buf_len, des2;
-+	unsigned int bmax, buf_len;
- 	unsigned int i = 1, len;
- 	struct dma_desc *desc;
-+	dma_addr_t des2;
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 8099bfc4fe2f8..c708724bb53f2 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1546,6 +1546,17 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 		case -EACCES:
+ 			*op_status = status = NFS4ERR_ACCESS;
+ 			break;
++		case -ECANCELED:
++			/*
++			 * In-flight I/O we cancelled to return a recalled or
++			 * revoked layout.  Report it as a failure to reach the
++			 * device (NFS4ERR_NXIO), like the transport errors
++			 * above, so the server can reconcile the affected mirror
++			 * instance.  We aborted the I/O ourselves rather than
++			 * observe the device fail, so don't condemn it below.
++			 */
++			*op_status = status = NFS4ERR_NXIO;
++			break;
+ 		default:
+ 			return;
+ 		}
+@@ -1556,6 +1567,15 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 				       mirror, dss_id, offset, length, status, opnum,
+ 				       nfs_io_gfp_mask());
  
- 	desc = tx_q->dma_tx + entry;
++	/*
++	 * I/O we cancelled ourselves to return a recalled or revoked layout
++	 * is reported above so the server can reconcile the mirror, but we
++	 * have no evidence the device is at fault: don't mark it unreachable
++	 * or force a return.
++	 */
++	if (error == -ECANCELED)
++		goto out;
++
+ 	switch (status) {
+ 	case NFS4ERR_DELAY:
+ 	case NFS4ERR_GRACE:
+@@ -1575,6 +1595,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 						  lseg);
+ 	}
  
-diff --git a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-index 88a8d22812f5d..1e6541937cb27 100644
---- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-@@ -20,8 +20,9 @@ static int jumbo_frm(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
- 	unsigned int nopaged_len = skb_headlen(skb);
- 	struct stmmac_priv *priv = tx_q->priv_data;
- 	unsigned int entry = tx_q->cur_tx;
--	unsigned int bmax, len, des2;
-+	unsigned int bmax, len;
- 	struct dma_desc *desc;
-+	dma_addr_t des2;
++out:
+ 	dprintk("%s: err %d op %d status %u\n", __func__, err, opnum, status);
+ }
  
- 	if (priv->extend_desc)
- 		desc = (struct dma_desc *)(tx_q->dma_etx + entry);
+@@ -2465,7 +2486,7 @@ static void ff_layout_cancel_io(struct pnfs_layout_segment *lseg)
+ 			clnt = ds_clp->cl_rpcclient;
+ 			if (!clnt)
+ 				continue;
+-			if (!rpc_cancel_tasks(clnt, -EAGAIN,
++			if (!rpc_cancel_tasks(clnt, -ECANCELED,
+ 					      ff_layout_match_io, lseg))
+ 				continue;
+ 			rpc_clnt_disconnect(clnt);
 -- 
 2.53.0
 
