@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829734;
-	b=P8B9YsSDOvw1GQtUltwaIro3plFqEHIiP089vCkT/1U2vrgEUqjPxVO9Oc/ARFpO9VjE
-	 kDGIc4M6pUQ3MCj+Oph953o53M8YZHxnqBMlJvaXsTda0VWXLMkD8gCE+saRv96NuCU+T
-	 bA+c9hcMwjFqRrt3uiBwdkVlW2BWbVyDOCrZ1F7be2u6v2m3kvlPKyXOdj6gow00YIltC
-	 yNczHCglYBNfZBBIuU8o5wTshFqfOXZvgNtVaaNs4lHR4XWCeI3x492FMAjA5fInh569u
-	 tZhBZKb15iphLO4uiT6qiCT+poAi/U5FSzVmePpewfkXg0g69J1/ielKCz0Hpd/YT6Q==
+	t=1793829736;
+	b=CKHQ8dzP1QaaorOT6i7f6MyUqltlrHxSiccXa7Y7kEtg58YcepuAdwyJzzMLuMKvyKP7
+	 072MkJ3/fMAbqdm7xG5DfI8wpalskRVGBoyFB1P+oDOANjPNTE94JRmrmKC0VlU9qgglu
+	 s2iGohp4l5SqXJ9RK4wdZHYYM76p4mDh3vcfFG7oVQShm47P6o2G3eHJBD3zMznFuogYT
+	 4aaIyprLFLfbOdRUuwH0+2Qg6hqCmwHg83x/ZXwfO+raTG9SkD5+5BpO9/tuTTvO8+I+7
+	 /m7wfsPrj/zd7isgQy3sXxP1/XrNgwA/vqaIG2CUyDcfCCxiaeMFQ5bfMzXXyN3ZGlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829736;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WM+uHPCs2I+AW5Iwz0OZEbtoT27X3TQtwD8ygVkwz7U=;
-	b=bvPbSq8Ol7UN+JKqDpXIDCqHqyGWgfEEI2eMm2FtwFfBL3PnTYozbX6h6oOSDm4c3fuN
-	 6UDpl12ehQhBDeO3UL/64UagWv/jB504s6rbNz5DlvB5UskthPj9Qn5qZYk9SpAckj/Tk
-	 t49l4/eXM2LBZ4sls1o3tRp0szxvL7cexXs4XPpu175WmojGvwsIJhJMVWSys7etoiw60
-	 LG/9SlPIopiW1RCO9sG8mLApUmFfosMQOYs4Dku4yfIn90Y7N7pMY2iza2vb/sQWogWNN
-	 rDkA1bbw4B6Zuwk9Hs+MujRxkQL52kTxfyD1a14KWLd1rd/HtuzxlGW/LQT8PyRPX6w==
+	bh=33x9wtwxiBT/PbV7XfcSeCcJUukUGFtu3ij7a0pMM78=;
+	b=QUCbNh7W1uF5sMGNJYb6ja+hObEsSjOOmOK26miv2VvwUdsUl1kqcjHcbKXMxDdAS/rq
+	 gMBRzuO7+ZJhwFiRC2Ju847pIMoGiyPVjWLERRUFv3I2kCL7pP6gWDe6tZF8cK44rggxy
+	 lcQRrtvjlJ6ItTEtckQpyQ5kELxUixEuCnHqOJ4yL/eUb9jNasGx/d48F2HJ1dlZi4GEW
+	 6BA6ioyg6FYnT2w45uDonPd189iI2SqD7Vg3uEofFQO6ele9DVOHxBBJKJTZ1TeqAHUnE
+	 JYrA4yHXpY42FJ8G9dAk5MAo9xeHf7uXMcWYWXfS05XQQ8PL0KiPut7HiJ0Ai/hnacg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEiSg3z4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bH6PR/MS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74832606CA04;
-	Wed,  4 Nov 2026 22:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2210E606CA04;
+	Wed,  4 Nov 2026 22:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEiSg3z4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11961F00919;
-	Wed,  4 Nov 2026 22:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bH6PR/MS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E091F000C1;
+	Wed,  4 Nov 2026 22:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829734;
-	bh=WM+uHPCs2I+AW5Iwz0OZEbtoT27X3TQtwD8ygVkwz7U=;
+	s=korg; t=1793829735;
+	bh=33x9wtwxiBT/PbV7XfcSeCcJUukUGFtu3ij7a0pMM78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YEiSg3z4p1SCAgDy6ZWXazrS7b2Oae/0h9wJnvrRItwMWMtskSwLqGtC1nGUbvgG5
-	 LM3a4r2qVjkDPPLKPXJu751M7lCr3grMOZlDquJITN67hJzE8W/N3DvpTpzaYZzTGK
-	 yrhXEKMQ4vL5tJa2VPyB4Tmd1r3qjQxV9ktkEbLU=
+	b=bH6PR/MSKP3u8oyOZl5OyO2lQfJJsb7b5mpDtp4loF7UUkNRQztVroVDlppqxLBd+
+	 fwsU/ed/KZy/tQ0ZmNBQpFKuqjLsMXWbnLvOkZXYL34AVQOISag6JTjOiLEH6JEYIN
+	 yDXFqyq8tD9+VmVgVd0qeSBkhDO7V7ghZJ9I6T4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Can Peng <pengcan@kylinos.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0302/1005] netfilter: nf_tables: call skb_valid_dst() before skb_dst()
-Date: Wed,  4 Nov 2026 16:00:35 -0500
-Message-ID: <20261104211052.378736444@linuxfoundation.org>
+Subject: [PATCH 6.18 0311/1005] wifi: brcmfmac: validate msgbuf flowring IDs before use
+Date: Wed,  4 Nov 2026 16:00:44 -0500
+Message-ID: <20261104211052.641872227@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,187 +69,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 689db98e535bf8efb5bc9c36f4fd3de3bd715eb6 ]
+[ Upstream commit 32856f39fefdc75bd253cab999f996750628648e ]
 
-When fetching the dst_entry from the skb, check if it valid, ie. this is
-not a template dst, for extensions that can be used from the netdev
-ingress and egress chains.
+Firmware messages carry flow_ring_id values which brcmfmac converts
+to an internal flowid by subtracting
+BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
+a bit index in txstatus_done_map and as an array index into
+msgbuf->flowrings and the flowring state.
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Validate the firmware supplied flow_ring_id before using it. This
+prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
+from underflowing and rejects values outside msgbuf->max_flowrings.
+
+In the tx status path, complete the packet with an error after
+removing a valid packet id so the skb is not leaked when the flow
+ring id is invalid.
+
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260723055618.550834-1-pengcan@kylinos.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 6 ++++--
- net/ipv6/netfilter/nf_reject_ipv6.c | 8 ++++++--
- net/netfilter/nft_meta.c            | 6 ++++--
- net/netfilter/nft_rt.c              | 6 ++++--
- net/netfilter/nft_xfrm.c            | 9 ++++++++-
- 5 files changed, 26 insertions(+), 9 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 46 ++++++++++++++++---
+ 1 file changed, 40 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 4626dc46808f3..59ec465a9df98 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -8,6 +8,7 @@
- #include <net/tcp.h>
- #include <net/route.h>
- #include <net/dst.h>
-+#include <net/dst_metadata.h>
- #include <net/netfilter/ipv4/nf_reject.h>
- #include <linux/netfilter_ipv4.h>
- #include <linux/netfilter_bridge.h>
-@@ -263,6 +264,7 @@ static int nf_reject_fill_skb_dst(struct sk_buff *skb_in)
- 	if (!dst)
- 		return -1;
- 
-+	skb_dst_drop(skb_in);
- 	skb_dst_set(skb_in, dst);
- 	return 0;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index de47d6b7e02b2..f850e64108c41 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -561,6 +561,28 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
+ 	brcmf_flowring_delete(msgbuf->flow, flowid);
  }
-@@ -279,7 +281,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	if (!oth)
- 		return;
  
--	if (!skb_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
-+	if (!skb_valid_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
- 		return;
- 
- 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
-@@ -352,7 +354,7 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (iph->frag_off & htons(IP_OFFSET))
- 		return;
- 
--	if (!skb_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
-+	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
- 
- 	if (skb_csum_unnecessary(skb_in) ||
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index ef5b7e85cffa8..07cdaa10da0d0 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -8,6 +8,7 @@
- #include <net/ip6_route.h>
- #include <net/ip6_fib.h>
- #include <net/ip6_checksum.h>
-+#include <net/dst_metadata.h>
- #include <net/netfilter/ipv6/nf_reject.h>
- #include <linux/netfilter_ipv6.h>
- #include <linux/netfilter_bridge.h>
-@@ -304,6 +305,7 @@ static int nf_reject6_fill_skb_dst(struct sk_buff *skb_in)
- 	if (!dst)
- 		return -1;
- 
-+	skb_dst_drop(skb_in);
- 	skb_dst_set(skb_in, dst);
- 	return 0;
- }
-@@ -336,10 +338,12 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	fl6.fl6_sport = otcph->dest;
- 	fl6.fl6_dport = otcph->source;
- 
--	if (!skb_dst(oldskb)) {
-+	if (!skb_valid_dst(oldskb)) {
- 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
- 		if (!dst)
- 			return;
++static bool brcmf_msgbuf_get_flowid(struct brcmf_msgbuf *msgbuf,
++				    u16 flow_ring_id, u16 *flowid)
++{
++	u32 id = flow_ring_id;
 +
-+		skb_dst_drop(oldskb);
- 		skb_dst_set(oldskb, dst);
- 	}
++	if (id < BRCMF_H2D_MSGRING_FLOWRING_IDSTART) {
++		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
++			 flow_ring_id);
++		return false;
++	}
++
++	id -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	if (id >= msgbuf->max_flowrings) {
++		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
++			 flow_ring_id);
++		return false;
++	}
++
++	*flowid = id;
++	return true;
++}
++
  
-@@ -440,7 +444,7 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
+ static struct brcmf_msgbuf_work_item *
+ brcmf_msgbuf_dequeue_work(struct brcmf_msgbuf *msgbuf)
+@@ -881,17 +903,23 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
+ 	struct msgbuf_tx_status *tx_status;
+ 	u32 idx;
+ 	struct sk_buff *skb;
++	u16 flow_ring_id;
+ 	u16 flowid;
  
--	if (!skb_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
-+	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
+ 	tx_status = (struct msgbuf_tx_status *)buf;
+ 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
+-	flowid = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
+ 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
+ 				     msgbuf->tx_pktids, idx);
+ 	if (!skb)
  		return;
  
- 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
-diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
-index 19e6d1c2436af..f3c7b7edb10c0 100644
---- a/net/netfilter/nft_meta.c
-+++ b/net/netfilter/nft_meta.c
-@@ -20,6 +20,7 @@
- #include <net/dst.h>
- #include <net/ip.h>
- #include <net/sock.h>
-+#include <net/dst_metadata.h>
- #include <net/tcp_states.h> /* for TCP_TIME_WAIT */
- #include <net/netfilter/nf_tables.h>
- #include <net/netfilter/nf_tables_core.h>
-@@ -274,11 +275,12 @@ static bool nft_meta_get_eval_ifname(enum nft_meta_keys key, u32 *dest,
- static noinline bool
- nft_meta_get_eval_rtclassid(const struct sk_buff *skb, u32 *dest)
- {
--	const struct dst_entry *dst = skb_dst(skb);
-+	const struct dst_entry *dst;
- 
--	if (!dst)
-+	if (!skb_valid_dst(skb))
- 		return false;
- 
-+	dst = skb_dst(skb);
- 	*dest = dst->tclassid;
- 	return true;
- }
-diff --git a/net/netfilter/nft_rt.c b/net/netfilter/nft_rt.c
-index ad527f3596c03..cb7dff336bbdc 100644
---- a/net/netfilter/nft_rt.c
-+++ b/net/netfilter/nft_rt.c
-@@ -8,6 +8,7 @@
- #include <linux/netfilter.h>
- #include <linux/netfilter/nf_tables.h>
- #include <net/dst.h>
-+#include <net/dst_metadata.h>
- #include <net/ip6_route.h>
- #include <net/route.h>
- #include <net/netfilter/nf_tables.h>
-@@ -59,10 +60,11 @@ void nft_rt_get_eval(const struct nft_expr *expr,
- 	u32 *dest = &regs->data[priv->dreg];
- 	const struct dst_entry *dst;
- 
--	dst = skb_dst(skb);
--	if (!dst)
-+	if (!skb_valid_dst(skb))
- 		goto err;
- 
-+	dst = skb_dst(skb);
-+
- 	switch (priv->key) {
- #ifdef CONFIG_IP_ROUTE_CLASSID
- 	case NFT_RT_CLASSID:
-diff --git a/net/netfilter/nft_xfrm.c b/net/netfilter/nft_xfrm.c
-index 7ffe6a2690d13..9c9ac27122ad9 100644
---- a/net/netfilter/nft_xfrm.c
-+++ b/net/netfilter/nft_xfrm.c
-@@ -12,6 +12,7 @@
- #include <linux/netfilter/nf_tables.h>
- #include <net/netfilter/nf_tables_core.h>
- #include <net/netfilter/nf_tables.h>
-+#include <net/dst_metadata.h>
- #include <linux/in.h>
- #include <net/xfrm.h>
- 
-@@ -177,9 +178,15 @@ static void nft_xfrm_get_eval_out(const struct nft_xfrm *priv,
- 				  struct nft_regs *regs,
- 				  const struct nft_pktinfo *pkt)
- {
--	const struct dst_entry *dst = skb_dst(pkt->skb);
-+	const struct dst_entry *dst;
- 	int i;
- 
-+	if (!skb_valid_dst(pkt->skb)) {
-+		regs->verdict.code = NFT_BREAK;
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid)) {
++		brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
++				 skb, false);
 +		return;
 +	}
 +
-+	dst = skb_dst(pkt->skb);
- 	for (i = 0; dst && dst->xfrm;
- 	     dst = ((const struct xfrm_dst *)dst)->child, i++) {
- 		if (i < priv->spnum)
+ 	set_bit(flowid, msgbuf->txstatus_done_map);
+ 	commonring = msgbuf->flowrings[flowid];
+ 	atomic_dec(&commonring->outstanding_tx);
+@@ -1238,13 +1266,16 @@ brcmf_msgbuf_process_flow_ring_create_response(struct brcmf_msgbuf *msgbuf,
+ 	struct msgbuf_flowring_create_resp *flowring_create_resp;
+ 	u16 status;
+ 	u16 flowid;
++	u16 flow_ring_id;
+ 
+ 	flowring_create_resp = (struct msgbuf_flowring_create_resp *)buf;
+ 
+-	flowid = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
+ 	status =  le16_to_cpu(flowring_create_resp->compl_hdr.status);
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
++		return;
++
+ 	if (status) {
+ 		bphy_err(drvr, "Flowring creation failed, code %d\n", status);
+ 		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
+@@ -1267,13 +1298,16 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
+ 	struct msgbuf_flowring_delete_resp *flowring_delete_resp;
+ 	u16 status;
+ 	u16 flowid;
++	u16 flow_ring_id;
+ 
+ 	flowring_delete_resp = (struct msgbuf_flowring_delete_resp *)buf;
+ 
+-	flowid = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
+ 	status =  le16_to_cpu(flowring_delete_resp->compl_hdr.status);
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
++		return;
++
+ 	if (status) {
+ 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
+ 		brcmf_flowring_delete(msgbuf->flow, flowid);
 -- 
 2.53.0
 
