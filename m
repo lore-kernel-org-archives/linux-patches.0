@@ -1,53 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831438;
-	b=q8n6vzEGbDLMvDUgtLuuRZr1zTktA65Zp/eTwMB0Q0DSxGCMzgrO4HcQ5lXMJ/u9ZK8W
-	 hHJ7LwLkM8b0NrVY5sFgVFekJGHgJrJTWA7J9QY4OHKZKDVqk5F3g+URa1HtWEDDYAi/f
-	 i9ul6aWnO8Y/p+xCJhFM3w5G9oaX1OOX39+gS6oImDrbCMwynoH1/maH1XAqLrXwBazDp
-	 ptGM2hAJHHw2f74T5B3l4aXun7IPPO2BWS2X/r8On9cqFe38aIENhjQbsRnZZh5c25gWe
-	 VnlkBXMel33ljXnzvmLHj2E+AyC2fRTG84DgEN8EU0tM/lM7X3sDoH+AihFimPGX8BA==
+	t=1793831440;
+	b=QC5un7y4c0cIuM3zNoETVwaUfs/Xwe0n7bPDHGxSR8O05QCQuenxKhRMo29JKFccBVyE
+	 4QAN34s6k12e6wEewipDIn0/whDhdgsJIB6mnr1xSKdhza3Nuf1uhaNqUIJIVrVn4t/dn
+	 34FDJn9JMYjaBgHVUNLeYemGdP8LGZcLPRjRhxT54E736dxr2WqMxmXQD2sivng/GJ2zF
+	 vgZ80BfvB16SFN9xk8PYUE4IpM0+4/OBSB4U03vCM2PUyFSidNiQNABf1Q2XvAo1H9tXM
+	 U2shl+ZefklzfQtizMQP064OC/HYZhhG9H6GIW9/X6bprqQ79bERFfsLEJCx1l+yZYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VLiX+sQyoKBSJV3Gcyf2ZToSFi65RDtHUhhPJ8S/S9U=;
-	b=1P9le8KsbAJYyVeE4JUBImI1ZMi3q5lXG+4nKS0dMP6VAp3xxwWY/pTW70G8K1XOscR9
-	 H2p6PViQNISemIyk72Jlznr/sJQ+P3VZ8oid6wwfTLL72maOOdT36Jc8n57xp+XsgC6vW
-	 AWHibOQwHwq96CGfc+TSwdPAy+xl4TYvnu3d57YpkrlzGH8UxkouyBaqs2gf4V3F0xtb7
-	 1L3xTUah2guUvBIl0MAIQLyQt17MAV3dOWaRgJDvuOtCROgQSym77ieP2r9GChFzjhDT+
-	 BqDyWCoAbc9+W5m/2/+7ZX5mweFdCEQ2utIeH2Ki6oF8Fz2yvGRBarBazKhguLZC60w==
+	bh=WmQzzqAx4vyXdhs1bNkgRj8DAnC360DUwqAdEvGg88s=;
+	b=aYSYaPXK3KzMGRMaco69WE7A8dj1+6zCsMPDk0AeqfTFcIrSVPbLPiURsmK9ma0svB9I
+	 VFaRx0Zi3PD7SAIH1mQieA24B8936I8fzkEZXM3kuKcvNkucVU6qICTOmcbhzhaZg7ccO
+	 DJ7aaTgy1vLGMz7ZffgQuO+sx0Yamu64Pzyr/PtcPrDbuBSoAsQz5iQOZKP4M6Oep3kvz
+	 qG/S29CXFSe7n2itQpFB1cGC0gJSW1StDnLFq8gJIWSi+UKh0WRNlLCeqrRLy65f9mKZ9
+	 SKUVJt1RQeA/g46oXk+HO1Kvv+4n+yuuW8QA9iSaKK7PI/aIyjix7UcP/Cb65Ix9tpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yY6ISSz9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=og3tm4O7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E357606AC00;
-	Wed,  4 Nov 2026 22:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000F3606AC00;
+	Wed,  4 Nov 2026 22:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yY6ISSz9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C351F000C1;
-	Wed,  4 Nov 2026 22:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=og3tm4O7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F50C1F000C1;
+	Wed,  4 Nov 2026 22:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831438;
-	bh=VLiX+sQyoKBSJV3Gcyf2ZToSFi65RDtHUhhPJ8S/S9U=;
+	s=korg; t=1793831439;
+	bh=WmQzzqAx4vyXdhs1bNkgRj8DAnC360DUwqAdEvGg88s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yY6ISSz9c/8ds1XxFZuJCymGAsYIQusg1MRC9xGsBXgYj4pHq63Xzl5QuGgnU0CG3
-	 jxdiY4tBehEpmm0pTBF0cFnkgnP0KwfGCwTFU1r3aZKh22WtUrGpULf0QwqJuHj7vh
-	 nNOsNpt3Yq7hUrSP2Lb4+vF3VNxpxDIWe6sn7FEQ=
+	b=og3tm4O7oYBDp3f0TqS0Y/66g7KzjnWZ4ZZI4T2djx9WmcRDUUgNPjK1cUL9l1ctI
+	 a9rpYBXhQWc+kuLF1Q8cSPxEdIXKDKO+ML06g2AtK7GNfsWTqN+RNYlrPCIloSSh/W
+	 o1YTfwdnO/DbzQimJFcM5rJFjC8unE8TKfYbvEdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 0701/1005] rust: block: require `Sync` for `Operations::QueueData`
-Date: Wed,  4 Nov 2026 16:07:14 -0500
-Message-ID: <20261104211103.225403995@linuxfoundation.org>
+	Andreas Hindborg <a.hindborg@kernel.org>
+Subject: [PATCH 6.18 0702/1005] rust: configfs: fix data offset calculation for subsystem callbacks
+Date: Wed,  4 Nov 2026 16:07:15 -0500
+Message-ID: <20261104211103.250519501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,44 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Hindborg <a.hindborg@kernel.org>
 
-commit 67b7a2728e4873e64405c5564fe50f7123012b71 upstream.
+commit e84c9b64df615e658e47561b835c1364dc48f0c0 upstream.
 
-The queue data installed in a `GenDisk` is stored in the request queue and
-handed back to the driver as a shared borrow through the `queue_rq` and
-`commit_rqs` callbacks. Both callbacks obtain that borrow via
-`ForeignOwnable::borrow` and may execute concurrently on several CPUs,
-since the block layer runs one hardware queue per CPU. That means a shared
-reference to the same queue data can be live on multiple threads at once,
-which is only sound when the referent is `Sync`.
+`get_group_data()` chooses between `Group::<Parent>::container_of()` and
+`Subsystem::<Parent>::container_of()` based on whether `this` represents
+the root group of a configfs subsystem. It detects this by checking
+`(*this).cg_subsys.is_null()`, but `link_group()` in `fs/configfs/dir.c`
+unconditionally sets `cg_subsys` for every `config_group` attached anywhere
+in a registered subsystem, including the subsystem's own `su_group`. The
+only `config_group` with a NULL `cg_subsys` is the configfs root, on which
+userspace cannot trigger callbacks. The check is therefore always false at
+runtime, and the `Subsystem` branch is dead. Subsystem-level callbacks
+reach the `Group` branch and may read `data` at the wrong offset.
 
-The initial `GenDisk` private data support omitted this bound, so a
-driver could install a non-`Sync` type as queue data and then access
-it concurrently from multiple CPUs without synchronization. Add a
-`Sync` bound to the `QueueData` associated type to rule that out.
+Thus change the `is_root` check to correctly identify whether a group is a
+root group by comparing `this` to `subsys.su_group`.
 
-Fixes: 90d952fac8ac ("rust: block: add `GenDisk` private data support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://msgid.link/20260608-queue-data-sync-v1-1-0efff051aaf3@kernel.org
+Fixes: 446cafc295bf ("rust: configfs: introduce rust support for configfs")
+Link: https://msgid.link/20260608-configfs-fix-offset-v1-1-7f01b8fb9e5f@kernel.org
+[ Andreas: Fix clippy warning on 1.85.0 by moving safety comment. ]
 Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-9-642a4c1aebd7@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/block/mq/operations.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/configfs.rs |   43 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 28 insertions(+), 15 deletions(-)
 
---- a/rust/kernel/block/mq/operations.rs
-+++ b/rust/kernel/block/mq/operations.rs
-@@ -30,7 +30,7 @@ type ForeignBorrowed<'a, T> = <T as Fore
- pub trait Operations: Sized {
-     /// Data associated with the `struct request_queue` that is allocated for
-     /// the `GenDisk` associated with this `Operations` implementation.
--    type QueueData: ForeignOwnable;
-+    type QueueData: ForeignOwnable + Sync;
+--- a/rust/kernel/configfs.rs
++++ b/rust/kernel/configfs.rs
+@@ -298,26 +298,39 @@ unsafe impl<Data> HasGroup<Data> for Gro
+ ///
+ /// `this` must be a valid pointer.
+ ///
+-/// If `this` does not represent the root group of a configfs subsystem,
+-/// `this` must be a pointer to a `bindings::config_group` embedded in a
+-/// `Group<Parent>`.
++/// If `this` is the `su_group` field of a `bindings::configfs_subsystem`, that
++/// `configfs_subsystem` must be embedded in a `Subsystem<Parent>`.
+ ///
+-/// Otherwise, `this` must be a pointer to a `bindings::config_group` that
+-/// is embedded in a `bindings::configfs_subsystem` that is embedded in a
+-/// `Subsystem<Parent>`.
++/// Otherwise, `this` must be a pointer to a `bindings::config_group` embedded
++/// in a `Group<Parent>`.
+ unsafe fn get_group_data<'a, Parent>(this: *mut bindings::config_group) -> &'a Parent {
+     // SAFETY: `this` is a valid pointer.
+-    let is_root = unsafe { (*this).cg_subsys.is_null() };
++    let subsys = unsafe { (*this).cg_subsys };
  
-     /// Called by the kernel to queue a request with the driver. If `is_last` is
-     /// `false`, the driver is allowed to defer committing the request.
+-    if !is_root {
+-        // SAFETY: By C API contact,`this` was returned from a call to
+-        // `make_group`. The pointer is known to be embedded within a
+-        // `Group<Parent>`.
+-        unsafe { &(*Group::<Parent>::container_of(this)).data }
+-    } else {
+-        // SAFETY: By C API contract, `this` is a pointer to the
+-        // `bindings::config_group` field within a `Subsystem<Parent>`.
++    // `link_group()` in `fs/configfs/dir.c` assigns `cg_subsys` for every
++    // `config_group` attached anywhere in a registered subsystem, including
++    // the subsystem's own `su_group` (which gets a pointer to itself). The
++    // only `config_group` with a NULL `cg_subsys` is the configfs root, and
++    // userspace cannot trigger callbacks on it. The group is therefore the
++    // subsystem's `su_group` iff it equals `&cg_subsys->su_group`.
++    let is_root = !subsys.is_null()
++        && core::ptr::eq(
++            this.cast_const(),
++            // SAFETY: For every `config_group` the configfs core dispatches a
++            // callback on, `cg_subsys` was set by `link_group()` at registration time
++            // and points to a valid `configfs_subsystem` that outlives the callback.
++            unsafe { &raw const (*subsys).su_group },
++        );
++
++    if is_root {
++        // SAFETY: By the above, `this` is the `su_group` field of a
++        // `configfs_subsystem` that, by function safety requirements, is
++        // embedded in a `Subsystem<Parent>`.
+         unsafe { &(*Subsystem::container_of(this)).data }
++    } else {
++        // SAFETY: By function safety requirements, `this` is a
++        // `config_group` embedded in a `Group<Parent>`.
++        unsafe { &(*Group::<Parent>::container_of(this)).data }
+     }
+ }
+ 
 
 
