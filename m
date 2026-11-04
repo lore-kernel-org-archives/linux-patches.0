@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829280;
-	b=TPpiq5XGaHQw0dNTwet3gpOg/Mb6Rz/DjgSaZgIL/7u4JGYtwzIfr7q82mKvSubv4vcT
-	 TPWGU4Cizb7deaQKYFYjAZFfA/yaswKw/dsbMRbjCTymMOyjVPJSk5nErLLxk0FCYloP5
-	 pfw0T1+YXppR4/APG8XCpdSAYlU7RNfDmQOeDFlm7vvvFmejVy6NkhZOM05X/L2hGH+Vh
-	 CBM84V5eFRFUmQ+CLJm3ZD227vOAI0FpwarzhzCxfFIo7vDS3aveSBmZMv+f+9z6ZBcOf
-	 7Ybr0Nx8t+eizY/XNefExiy5Tc9oNNxFQVVBwYzxUAzPKLPRD5xpfucPqyCrjVslvmg==
+	t=1793829281;
+	b=mTqDGGsyhWzoUiWaLcBwxnlkkGfsbU7stSjO3PVqLzTElY0CDRGh4cvZ0sOsgcQUEr6u
+	 iOufXab5i2FZqwnmihAnMjHbXKNfU88Y1DxzF9m/JbmNjS06MGyd9HXkqpDcscIHbYpTQ
+	 QjT+Zwre3Cjdg/4YM5YGMtc0edLVRYcC0UvMwLEXdcbXjPl6XIAgzhQj1vcEFvoeOHeqh
+	 HWU11kdNHhWohbCUbbpS1Y0gxb8+P3Olnh0I1m+YYhJYM6F5CtMge9WlFGf2zdZHpg9qN
+	 ls4NHJe1ZYK5PIs1r83n7EuRBxi8kKev3PIudOpBFeygv3XtPtONtpfmNm38VEhZdwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n9GE8oTuugPPygWBgDj5V5WWuVJ2f2Pyy0olaE1IcUI=;
-	b=1zdr6OTpJayoLL0HvCNy4PIXAflXA1YFQ3ZXbf9JV8xyDwB9Rxb2GzRS+GkZKZlSG5Fc
-	 hx8ZffzShZ34ALyHd0+Rz8ky2Geqzj5edl2kG86MlmRCmqgr+bcYvZcJb9WiBwg6It2oV
-	 Z5jb8LKzmp7yaJ7qpQSAntC3qT+5rvyrL4Qg7jYhKpZt3WkSV76QgrAY8VYDMRu7o3ARf
-	 o5aRKOF6MOMoJBRXuUEuzErajeoavPjOWFXVbBzUR+0KShH5Bl7w9rG/1BWIp7ic7mzmo
-	 QmrSpny+JfTT1ur7A2T4UX09rdEDppmzdqz+3cjGtAO/vn3yQdezJBF/bLcjUghHcbg==
+	bh=wnhbpgf9pYOWaxEmjLg8XC+2GuWdEZ5DrUmO/3gyEFo=;
+	b=JVJndA67RgbbWGpkEMVhNxswuihGaTmnbVo17z5JeNkJRODK/0nllWHiVKDUFXCOudLS
+	 02I3yjvk09AYtx+lWJGVph09kn5ctJr8sa02nLgemKIiZyojhR8VK/npxeXdIlfDlFEn5
+	 xDLfv3SvrZKOGHr/nflY0/Qjmc2ewvvlVa4/foOl4PbnTJQbVWN7zA+N78i6Iqi8IdVZ1
+	 hFtMuU3aiRNwBDbxvi8akOF1zY3e/fNUQ2TNWqMTY5iELaXC9jdUwzGdZSqKPa+4Ur9EV
+	 Qi1saT9Wm4ncd0PJRzw/MS13Wruwu65u0+LYc0eqDmElx8Jtoa+5gJ1+mXEfbDMSSXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpBncEvx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfPkNN1F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D205360745AE;
-	Wed,  4 Nov 2026 21:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD6460745A8;
+	Wed,  4 Nov 2026 21:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpBncEvx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9DA1F000C1;
-	Wed,  4 Nov 2026 21:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfPkNN1F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA981F000C1;
+	Wed,  4 Nov 2026 21:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829279;
-	bh=n9GE8oTuugPPygWBgDj5V5WWuVJ2f2Pyy0olaE1IcUI=;
+	s=korg; t=1793829281;
+	bh=wnhbpgf9pYOWaxEmjLg8XC+2GuWdEZ5DrUmO/3gyEFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BpBncEvxecnjacCN7W/E10LExMLnTtJfUMu3+0Btc6RjETpG+i0a2Vx9zijNhrnO9
-	 YDQDTBgVVC20n3BRpjZrUy+EBVed5Hk+osRxyVVtN9lqJZ9/Lx8qR8uqsUV7o2EC4v
-	 3R2rG+iuNrWCTBUUjM7IoSCPX+qmx6i/a6KFcr/c=
+	b=HfPkNN1FCw2zZS1T+r6B9Q5dp+n8zTopoS9cGr0LwzlrxSLhuw4/DuZSLwNgGNVvf
+	 Tu4Gdx5++4uOo/mBgeyi0lMk/tW107DLFsnyERmpf7PqZTLdSfrCk8e1MuYKJHfoA6
+	 fDM3s3TcH31hCeserZChYqN3BZE1zzzuBYQYd3Nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0017/1005] drm/panel-edp: Add BOE NV116WH2-M30, BOE NT116WHM-N21, BOE NV116FH1-M31, BOE NV116FH1-M30
-Date: Wed,  4 Nov 2026 15:55:50 -0500
-Message-ID: <20261104211044.027846649@linuxfoundation.org>
+Subject: [PATCH 6.18 0026/1005] selftests/filesystems/overlayfs: fix set_layers_via_fds link error
+Date: Wed,  4 Nov 2026 15:55:59 -0500
+Message-ID: <20261104211044.291601279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,94 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit d4ae726fc08024b359e9cacf2507f1c256b9d71c ]
+[ Upstream commit e5804b1024193c91ff2648403beda882cb4f8b6c ]
 
-The raw EDIDs for each panel:
+set_layers_via_fds.c calls open_tree() directly, but that wrapper is
+not provided by all C libraries, so the test fails to link with
+"undefined reference to open_tree" on toolchains without it.
 
-BOE NV116WH2-M30
-00 ff ff ff ff ff ff 00 09 e5 6e 38 00 00 00 00
-0a 24 01 04 95 1a 0e 78 03 0b 55 9a 5f 58 95 28
-1e 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 96 1d 56 c8 50 00 26 30 30 20
-36 00 00 90 10 00 00 1a b9 13 56 c8 50 00 26 30
-30 20 36 00 00 90 10 00 00 1a 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
-00 0d 40 ff 0a 3c 7d 0f 0c 17 7d 00 00 00 00 80
+Use sys_open_tree() from ../wrappers.h, the syscall wrapper already
+used for move_mount(), fsmount() and friends here.  This is also a
+prerequisite for building the new idmapped_mounts test added to this
+directory.
 
-BOE NT116WHM-N21
-00 ff ff ff ff ff ff 00 09 e5 79 38 00 00 00 00
-08 24 01 04 95 1a 0e 78 03 3a d5 95 5c 58 94 29
-24 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 38 1d 56 c8 50 00 1c 30 30 20
-36 00 00 90 10 00 00 1a 7b 13 56 c8 50 00 1c 30
-30 20 36 00 00 90 10 00 00 1a 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
-00 0d 40 ff 0a 3c 7d 0f 0c 17 7d 00 00 00 00 7a
-
-BOE NV116FH1-M31
-00 ff ff ff ff ff ff 00 09 e5 8b 38 01 ff 00 00
-0c 24 01 04 a5 1a 0e 78 03 50 d5 9c 55 52 8f 27
-15 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 9a 36 80 a0 70 38 28 40 30 20
-35 00 00 90 10 00 00 1a 67 24 80 a0 70 38 28 40
-30 20 35 00 00 90 10 00 00 1a 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
-00 0d 36 ff 0a 3c 96 0f 0b 1a 96 00 00 00 01 cd
-
-70 20 79 02 00 20 00 0c 9a 0e 00 8b 38 00 00 00
-00 0c 1a 00 21 01 1d 03 0a a2 05 80 07 38 04 88
-c2 39 55 1e 15 8f 7a 32 15 02 35 54 b0 5c b0 5c
-00 36 12 78 22 00 14 ff 21 02 85 7f 07 9f 00 2f
-00 1f 00 37 04 27 00 02 00 04 00 81 00 15 74 1a
-00 00 03 00 28 3c 00 00 53 5a 53 5a 3c 00 00 00
-00 00 00 2b 00 06 27 00 28 3b 00 00 2e 00 06 80
-4b b0 5c b0 5c 00 00 00 00 00 00 00 00 00 89 90
-
-BOE NV116FH1-M30
-00 ff ff ff ff ff ff 00 09 e5 8c 38 01 ff 00 00
-0c 24 01 04 a5 1a 0e 78 03 50 d5 9c 55 52 8f 27
-15 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 9a 36 80 a0 70 38 28 40 30 20
-35 00 00 90 10 00 00 1a 67 24 80 a0 70 38 28 40
-30 20 35 00 00 90 10 00 00 1a 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
-00 0d 36 ff 0a 3c 96 0f 0b 1a 96 00 00 00 01 cc
-
-70 20 79 02 00 20 00 0c 9a 0e 00 8c 38 00 00 00
-00 0c 1a 00 21 01 1d 03 0a a2 05 80 07 38 04 88
-c2 39 55 1e 15 8f 7a 32 15 02 35 54 b0 5c b0 5c
-00 36 12 78 22 00 14 ff 21 02 85 7f 07 9f 00 2f
-00 1f 00 37 04 27 00 02 00 04 00 81 00 15 74 1a
-00 00 03 00 28 3c 00 00 53 5a 53 5a 3c 00 00 00
-00 00 00 2b 00 06 27 00 28 3b 00 00 2e 00 06 80
-4b b0 5c b0 5c 00 00 00 00 00 00 00 00 00 88 90
-
-Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260608080310.15126-3-terry_hsiao@compal.corp-partner.google.com
+Link: https://patch.msgid.link/20260615-work-idmapped-overlayfs-v1-8-7381632aa402@kernel.org
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-edp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../filesystems/overlayfs/set_layers_via_fds.c   | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 9ad1769885b3c..792923b1d7878 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -2005,6 +2005,10 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0d45, &delay_200_500_e80, "NV116WHM-N4B"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0d73, &delay_200_500_e80, "NE140WUM-N6S"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0ddf, &delay_200_500_e80, "NV116WHM-T01"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x386e, &delay_200_500_e80, "NV116WH2-M30"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x3879, &delay_200_500_e80, "NT116WHM-N21"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x388b, &delay_200_500_e80, "NV116FH1-M31"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x388c, &delay_200_500_e80, "NV116FH1-M30"),
+diff --git a/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c b/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
+index dc0449fa628f8..d4a645ec88636 100644
+--- a/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
++++ b/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
+@@ -624,7 +624,7 @@ TEST_F(set_layers_via_fds, set_layers_via_detached_mount_fds)
  
- 	EDP_PANEL_ENTRY('C', 'M', 'N', 0x1130, &delay_200_500_e50, "N116BGE-EB2"),
- 	EDP_PANEL_ENTRY('C', 'M', 'N', 0x1132, &delay_200_500_e80_d50, "N116BGE-EA2"),
+ 	ASSERT_EQ(sys_move_mount(fd_tmpfs, "", -EBADF, "/set_layers_via_fds_tmpfs", MOVE_MOUNT_F_EMPTY_PATH), 0);
+ 
+-	fd_tmp = open_tree(fd_tmpfs, "u", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	fd_tmp = sys_open_tree(fd_tmpfs, "u", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+ 	ASSERT_GE(fd_tmp, 0);
+ 
+ 	layer_fds[0] = openat(fd_tmp, "upper", O_CLOEXEC | O_DIRECTORY | O_PATH);
+@@ -633,25 +633,25 @@ TEST_F(set_layers_via_fds, set_layers_via_detached_mount_fds)
+ 	layer_fds[1] = openat(fd_tmp, "work", O_CLOEXEC | O_DIRECTORY | O_PATH);
+ 	ASSERT_GE(layer_fds[1], 0);
+ 
+-	layer_fds[2] = open_tree(fd_tmpfs, "l1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	layer_fds[2] = sys_open_tree(fd_tmpfs, "l1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+ 	ASSERT_GE(layer_fds[2], 0);
+ 
+-	layer_fds[3] = open_tree(fd_tmpfs, "l2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	layer_fds[3] = sys_open_tree(fd_tmpfs, "l2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+ 	ASSERT_GE(layer_fds[3], 0);
+ 
+-	layer_fds[4] = open_tree(fd_tmpfs, "l3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	layer_fds[4] = sys_open_tree(fd_tmpfs, "l3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+ 	ASSERT_GE(layer_fds[4], 0);
+ 
+-	layer_fds[5] = open_tree(fd_tmpfs, "l4", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	layer_fds[5] = sys_open_tree(fd_tmpfs, "l4", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+ 	ASSERT_GE(layer_fds[5], 0);
+ 
+-	layer_fds[6] = open_tree(fd_tmpfs, "d1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	layer_fds[6] = sys_open_tree(fd_tmpfs, "d1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+ 	ASSERT_GE(layer_fds[6], 0);
+ 
+-	layer_fds[7] = open_tree(fd_tmpfs, "d2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	layer_fds[7] = sys_open_tree(fd_tmpfs, "d2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+ 	ASSERT_GE(layer_fds[7], 0);
+ 
+-	layer_fds[8] = open_tree(fd_tmpfs, "d3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
++	layer_fds[8] = sys_open_tree(fd_tmpfs, "d3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
+ 	ASSERT_GE(layer_fds[8], 0);
+ 
+ 	ASSERT_EQ(close(fd_tmpfs), 0);
 -- 
 2.53.0
 
