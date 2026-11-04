@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826782;
-	b=TRg8iaq3JrvkpsFUI5t2iaN1d+clHz8Epp1cJzBgZKx7rf4+zWeyDtIg0KrwNYMtqjHh
-	 S5u8r4K3QzK3lBg79fNn4e9LT+TuaCyax8AEethdDeM5sxmLtaWMcTa3/w4znuuc+hXUK
-	 sbeW/AUkrgdE3U24AuWNkJ1gtKfn/A47FwRxpY2eg27/u6VMdpXZaKSVi5H7w6GBbFjX/
-	 /4YfHjHe82OHHgwdfv3UQXx+XJEPE3OWm3+iFhQtj84BvieRNJm0Twbfbv5Q1qYrO8VGz
-	 OfHiyWGh0dBgDrfr8jrKDKx9Cvuci3KPuW8sMSW8ROmco+zSoNqgDafTEn7jjZLeDGw==
+	t=1793826783;
+	b=o6iKEuMu/m6Mw8wQc9AvxzGfj9ibJqxY2k4W41LIEk7aYm4668R+nw1hCYAon7qgLeny
+	 GPqgH5zy4PiH1vDGV0X6ab1VT0QfSidZy0F3QDKnxkyo0dRYFahQI/THxOgH/TMLwofaB
+	 tTs0qAKFISy/ZMUuSx3BG7tNBSBz+lv+hoVf1dtBnD8aiWt7X3vcOOF2FHOz4xNa5TVND
+	 CXFAvEObrGbGCqi1Nky22hpKFM1bFt4pyDNQ0/RmJ9l8IxiGrKkwM9f7bOY86bbh3Kj9v
+	 UMLZHYUkmt1wpYDE5whQwopvPblWHDzCXAAci8IUQ/yYv/1RI2sgQ3Rls8yEk4Lvr8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826782;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826783;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1818rrR736d5bmU1SmG9J2CXGX8XeoJcaZnQztLvTkI=;
-	b=BsS3BeQtMaBzv7CPP5883qAzk0QOpcdUi10UL/W64MS9ENskkjn+yLxlbhgaPt/0FJpN
-	 hxfwoK8gVDysts84tNJ8S/woo0J605ojo486yTZMv7uvFYZG0ZaQfah3G9QnYPZ9F+6G8
-	 kTyg/8Thnylvvybi3BSKlx9Hs98IOJJL8Heod5yChS+JDme7NUj8nn0eZ1sBrFoZD2u3X
-	 WZOS7aNuD0mrfOkPjClm9n3902vHHN3JLZLkUF1/QB6Zl6dhwnSfJ1gPr9qsP9yY50vNS
-	 4upJmHPjtfncbBhiJ95grysFX1gki8ZIZMe5iD6rseMBcLRhGP5g73WtZVoGNwx6l0Q==
+	bh=HPn6MW2O/9yuqznaM+EZagORgSPJ1JfFLIvuU/c9y2w=;
+	b=Oi2Hw08An6KcRPlcrMlOwO5DJRsFD9hU4F6tMvMfcy+pj7vtDBWZOW4GDkI8zsd2T1Gg
+	 Fo7JNcWkodgI8zKQarMKMR4joOAx5CniXjJo+WCHvWK8/iStF+lUXZNnognylrP4ZVlSh
+	 Mqa+w/xAJvwzUjV35Z/6BZ1EYPF3qgDdeoWDUEAkhNreG6VlG/GeWUgEkUJEF6YCW6NmB
+	 tQN2NcuZ+il9plFrSYnXxwY9c5fd/fquNctQ3qz/UIHJVS3C0/66Oi0btz6Cmcq07fFg3
+	 wBf/3IpurqHB1LRKBJM+GoHRefwTIZbj0S/8QcrZbmLMiA8Ed+OHXK8rfNPAqnG5kAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PoxvCera;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OMq+20O5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C816071A04;
-	Wed,  4 Nov 2026 21:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B3F6071A0B;
+	Wed,  4 Nov 2026 21:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PoxvCera
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313BD1F00A02;
-	Wed,  4 Nov 2026 21:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OMq+20O5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68451F00A16;
+	Wed,  4 Nov 2026 21:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826781;
-	bh=1818rrR736d5bmU1SmG9J2CXGX8XeoJcaZnQztLvTkI=;
+	s=korg; t=1793826783;
+	bh=HPn6MW2O/9yuqznaM+EZagORgSPJ1JfFLIvuU/c9y2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PoxvCeragv0/j8yDi1dp2yiDzLELJPhVpIDh/xv0YqYsTkyYluoM7qN3YViAkQY2n
-	 lxvWEnYR4EVJQg9mxFeRsV8leJ7q3VgeTVm8Kodk3sGfY5CuNBo7InLtE2zUXRSUuI
-	 D6jdIiLfr7uuvLXlK0Edz1Wl64cZJxwUd2kQ7PrA=
+	b=OMq+20O5+aVrbtB+eM0LZp10kfVsJekwbMluPfPWhcpSwZHXCPaEJUX2LkfMlmqPt
+	 mFimxVFmLbxF/XoTEUdqyvQlY/U2QROl4rqDdGaSNGmd+9EmowIhwNyWowiXtdOQYL
+	 vVWf/t2PXXXOkJh8q4MHNy6q/7CJmtADU5C4m9VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 009/547] wifi: ath12k: convert DP_RXDMA_MONITOR_BUF_RING_SIZE to inline helper
-Date: Wed,  4 Nov 2026 16:03:13 -0500
-Message-ID: <20261104211038.651685808@linuxfoundation.org>
+Subject: [PATCH 7.3 010/547] wifi: ath12k: convert DP_RXDMA_MONITOR_DST_RING_SIZE to inline helper
+Date: Wed,  4 Nov 2026 16:03:14 -0500
+Message-ID: <20261104211038.677608694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -72,12 +72,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 
-[ Upstream commit d57f90669269fad2dd9ca98cd32b7412ceccb0b0 ]
+[ Upstream commit 62e2758d17d307753457bd51af074be5f8265c03 ]
 
-Replace DP_RXDMA_MONITOR_BUF_RING_SIZE macro with
-ath12k_dp_rxdma_monitor_buf_ring_size() static inline helper. Pass the DP
-profile parameters explicitly to improve type safety and make the interface
-explicit.
+Replace DP_RXDMA_MONITOR_DST_RING_SIZE macro with
+ath12k_dp_rxdma_monitor_dst_ring_size() static inline helper.
+
+Pass the DP profile parameters explicitly to improve type safety and
+make the interface explicit.
 
 No functional change intended.
 
@@ -86,62 +87,67 @@ Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
 Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260820054804.3222296-4-aaradhana.sahu@oss.qualcomm.com
+Link: https://patch.msgid.link/20260820054804.3222296-5-aaradhana.sahu@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/net/wireless/ath/ath12k/dp.h    | 8 ++++++--
- drivers/net/wireless/ath/ath12k/dp_rx.c | 4 +++-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 8 ++++++--
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index 6540b3453cc69..9081655eae77e 100644
+index 9081655eae77e..a7cd2535866bd 100644
 --- a/drivers/net/wireless/ath/ath12k/dp.h
 +++ b/drivers/net/wireless/ath/ath12k/dp.h
 @@ -216,8 +216,6 @@ struct ath12k_pdev_dp {
  #define DP_RXDMA_REFILL_RING_SIZE	2048
  #define DP_RXDMA_ERR_DST_RING_SIZE	1024
  #define DP_RXDMA_MON_STATUS_RING_SIZE	1024
--#define DP_RXDMA_MONITOR_BUF_RING_SIZE(ab) \
--	((ab)->profile_param->dp_params.rxdma_monitor_buf_ring_size)
- #define DP_RXDMA_MONITOR_DST_RING_SIZE(ab) \
- 	((ab)->profile_param->dp_params.rxdma_monitor_dst_ring_size)
+-#define DP_RXDMA_MONITOR_DST_RING_SIZE(ab) \
+-	((ab)->profile_param->dp_params.rxdma_monitor_dst_ring_size)
  #define DP_RXDMA_MONITOR_DESC_RING_SIZE	4096
-@@ -692,6 +690,12 @@ ath12k_dp_tx_comp_ring_size(const struct ath12k_dp_profile_params *p)
- 	return p->tx_comp_ring_size;
+ #define DP_TX_MONITOR_BUF_RING_SIZE	4096
+ #define DP_TX_MONITOR_DEST_RING_SIZE	2048
+@@ -696,6 +694,12 @@ ath12k_dp_rxdma_monitor_buf_ring_size(const struct ath12k_dp_profile_params *p)
+ 	return p->rxdma_monitor_buf_ring_size;
  }
  
 +static inline u32
-+ath12k_dp_rxdma_monitor_buf_ring_size(const struct ath12k_dp_profile_params *p)
++ath12k_dp_rxdma_monitor_dst_ring_size(const struct ath12k_dp_profile_params *p)
 +{
-+	return p->rxdma_monitor_buf_ring_size;
++	return p->rxdma_monitor_dst_ring_size;
 +}
 +
  void ath12k_dp_vdev_tx_attach(struct ath12k *ar, struct ath12k_link_vif *arvif);
  void ath12k_dp_partner_cc_init(struct ath12k_base *ab);
  int ath12k_dp_pdev_alloc(struct ath12k_base *ab);
 diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 8fa0e90b45316..efc419d41d210 100644
+index efc419d41d210..31e7d47f77341 100644
 --- a/drivers/net/wireless/ath/ath12k/dp_rx.c
 +++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -1692,6 +1692,8 @@ int ath12k_dp_rx_htt_setup(struct ath12k_base *ab)
- 
- int ath12k_dp_rx_alloc(struct ath12k_base *ab)
+@@ -330,16 +330,20 @@ static int ath12k_dp_rx_pdev_srng_alloc(struct ath12k *ar)
  {
-+	const struct ath12k_dp_profile_params *dp_params = &ab->profile_param->dp_params;
-+	u32 monitor_buf_ring_size = ath12k_dp_rxdma_monitor_buf_ring_size(dp_params);
- 	struct ath12k_dp *dp = ath12k_ab_to_dp(ab);
- 	struct dp_srng *srng;
- 	int i, ret;
-@@ -1736,7 +1738,7 @@ int ath12k_dp_rx_alloc(struct ath12k_base *ab)
- 		ret = ath12k_dp_srng_setup(ab,
- 					   &dp->rxdma_mon_buf_ring.refill_buf_ring,
- 					   HAL_RXDMA_MONITOR_BUF, 0, 0,
--					   DP_RXDMA_MONITOR_BUF_RING_SIZE(ab));
-+					   monitor_buf_ring_size);
+ 	struct ath12k_pdev_dp *dp = &ar->dp;
+ 	struct ath12k_base *ab = ar->ab;
++	u32 monitor_dst_ring_size;
++	u32 mac_id = dp->mac_id;
+ 	int i;
+ 	int ret;
+-	u32 mac_id = dp->mac_id;
++
++	monitor_dst_ring_size =
++		ath12k_dp_rxdma_monitor_dst_ring_size(&ab->profile_param->dp_params);
+ 
+ 	for (i = 0; i < ab->hw_params->num_rxdma_per_pdev; i++) {
+ 		ret = ath12k_dp_srng_setup(ar->ab,
+ 					   &dp->rxdma_mon_dst_ring[i],
+ 					   HAL_RXDMA_MONITOR_DST,
+ 					   0, mac_id + i,
+-					   DP_RXDMA_MONITOR_DST_RING_SIZE(ab));
++					   monitor_dst_ring_size);
  		if (ret) {
- 			ath12k_warn(ab, "failed to setup HAL_RXDMA_MONITOR_BUF\n");
- 			return ret;
+ 			ath12k_warn(ar->ab,
+ 				    "failed to setup HAL_RXDMA_MONITOR_DST\n");
 -- 
 2.53.0
 
