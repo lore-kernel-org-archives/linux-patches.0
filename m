@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829167;
-	b=o0KVr9Wc4wIfACFPyW2r77lsLJZNCtu08+xboyXWh4r1aRclLCVHZTHmmsc5eFesTtaj
-	 BfknJbkImDPMeI5PBabLpC8Yf4hCmdcHOXk1lIKpwIG5x60GsgUFo75j93JqmdXVcISNP
-	 ZO3fA0dJjwWWrNb4U4qYNFzu5cSQi/IThBAf/ie7kiFadkMQ/nAlQXgsd0dwE9MO4cvnY
-	 64Rxtz4w8PoC9yMfN4YKcb86ExAa7ZOHoGDZqci00YlUaa2WFlRRgzUso03cpYgh+xZo3
-	 3XdAFBYfwbInytMcYZpzD1MlYH9wuPkVAL6BI454DMP7X1+goZc5nnqqBdfuI4MKR1w==
+	t=1793829169;
+	b=aYkEKOcfj14CGAT2dkbmWJp6rzGO+txQtgR5J0/onlLDM07f6XHwkzRUiAbgam2durSI
+	 QcVWRo7ljW5t+znHT9+ohdAkrt7vM3Cmu6lEyO2pl+c+ZwClvzZS3du0Z2+h8B9vnH7l5
+	 hQxWi15pYtRmj7V83iwscba6TGW6NWSpx5mH3zw1JqlBkRKpY9/OC9fqbUaomPFsJK+J7
+	 0ZnN1Qqx4Pe6FjEdHbyFFbUnFb+HGQqTCAW0YHBRaI42tN6T4pTtKnurMN2+8MtHjSsIc
+	 f6ZLKMXNUqGdJ7wkE6fiG5lsguslj1tF40kt64c/mX7eMANt07no67al9sHEJIo9hcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829167;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xF7oTEDdzHffhPbsRRC56Ab81BU9p5piMi8dJnRJwCU=;
-	b=qxPtEpaWKpYBkKSf8439Q9wCzon89DC1NuYBdl6LFdK+H9Hv5fEmBe3ZUN+bRuVm84PG
-	 cBvGKwFGqsntePjP5sHdspsVJZjkupqlFyZGYFRnDb+KNroB4giFH3v0lXWBkV/H7cyB5
-	 an2Perp3Ze81rqup2tbQR655lUlS5Jrg4G5FsnIqAs/3EZwv3Mr0dVJVkqFUzZsySRbjx
-	 H2uEDZ3061NlAEfiaCWiLMm1ov4Wmt4/9yzEaizZULP5wf2KuPgTSvd5VbAb/5xE0/hfG
-	 1qY6hn9MbgTKyG050e2EgAraNEyOZrOhXsSZjwm+6T4Z39C2ep1Y+3nNccUAIQIIuYQ==
+	bh=/0VmOM6CMAPgNcgx7SwHNI2IvYV+G7+LL9eah+s8Oew=;
+	b=ufVOOLzsqJKbkscpLQIoj3UWyku9FEd2MZ2GiAA+CqSVR11BI6GvgUFT0tPvTYg+lGA7
+	 6M+NQcOrBpoNs7qgQOo1+mmNJs2qbOx82cX7oylZmH72erKDkqvWiAAkdVRp/jZZyTsWH
+	 9v66pQebJB2+sn0QP/YqXNE9WvHs8YnnVll7I0cAMeuc+K+bk9z9BUAze6wZXn0JF8uMw
+	 YA8fYEXlfGg0oNnLgQn+EJX7DHvuQMB6cuuG7bGln6EUH09L3irDHHwwSd9WIWwhT9gMt
+	 I6hvJGHMBBSpdMS1YUvksRX6QaZdmBjNHXRYSiDngMpxbi7vWKOXgewkXE/aQdcy6ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Y/5/ZLfn";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GzZdxMpE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0B16070989;
-	Wed,  4 Nov 2026 21:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6FC60709A4;
+	Wed,  4 Nov 2026 21:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y/5/ZLfn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318841F00A1D;
-	Wed,  4 Nov 2026 21:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GzZdxMpE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62D01F000C1;
+	Wed,  4 Nov 2026 21:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829167;
-	bh=xF7oTEDdzHffhPbsRRC56Ab81BU9p5piMi8dJnRJwCU=;
+	s=korg; t=1793829168;
+	bh=/0VmOM6CMAPgNcgx7SwHNI2IvYV+G7+LL9eah+s8Oew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/5/ZLfnH2wxSqAzimZhkhaXzJa3WqCbNgXAiKyHiFzMQ7zi00Io0WcoOOk5NfMn0
-	 M25GD96LHyJMKIJEbb2COP8jl8rPV7fN+0s9k8t/0833JCmDY0VbHNTGkCxsnKn6vk
-	 Q0dNSvmEaQfWImvs5cBz1VUALc9R53ALwYFwCHe0=
+	b=GzZdxMpEoTHaRMGCf6FHCTpvI0Ww+xh8g0JGXcoxufOdgb9ZD0A1mfYYewRw4u3rL
+	 A8yfL9bHkUbOuTdZn6VjFdl1YtfZppY4T1kJjsjXVNkqavON3gP3Qx6iPKCQXIvMoO
+	 akGnchBsRKCeMR+GZ+fpwYEc58LrmELWuxPfxheo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiale Yao <yaojiale02@163.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 489/547] HID: cougar: reject short special-key reports
-Date: Wed,  4 Nov 2026 16:11:13 -0500
-Message-ID: <20261104211052.268484253@linuxfoundation.org>
+Subject: [PATCH 7.3 490/547] HID: cp2112: validate response report lengths
+Date: Wed,  4 Nov 2026 16:11:14 -0500
+Message-ID: <20261104211052.295399839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,40 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-commit c6c0df8a4b73a0d563c5e64de640ef5ff525fc82 upstream.
+commit fc54e71a063c0dcc4bceba6d0f71805a9b84082d upstream.
 
 The HID core invokes raw_event callbacks before validating the report
-length.  cougar_raw_event() reads the key code and action from offsets one
-and two without checking that those bytes are present.  A short report on
-the special interface can therefore cause an out-of-bounds read.
+length.  cp2112_raw_event() reads every field of a transfer status response
+without checking size.  For a data response, it reads the length at offset
+two and copies that many bytes from offset three, again without ensuring
+that the input report contains them.
 
-Consume reports that do not contain the action field before accessing the
-fixed offsets, consistent with the callback's handling of other reports on
-the special interface.
+Require a complete transfer status structure.  For data responses, first
+require the header and then ensure the clamped payload length fits in the
+received report before copying it.
 
 Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
 sequence") added the same kind of raw_event length validation to hid-asus.
 
-Fixes: b8e759b8f6da ("HID: cougar: Add support for the Cougar 500k Gaming Keyboard")
+Fixes: e932d8178667 ("HID: add hid-cp2112 driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-cougar.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/hid-cp2112.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-cougar.c
-+++ b/drivers/hid/hid-cougar.c
-@@ -270,6 +270,9 @@ static int cougar_raw_event(struct hid_d
- 	if (!shared->enabled || !shared->input)
- 		return -EPERM;
+--- a/drivers/hid/hid-cp2112.c
++++ b/drivers/hid/hid-cp2112.c
+@@ -1430,6 +1430,9 @@ static int cp2112_raw_event(struct hid_d
  
-+	if (size <= COUGAR_FIELD_ACTION)
-+		return -EPERM;
+ 	switch (data[0]) {
+ 	case CP2112_TRANSFER_STATUS_RESPONSE:
++		if (size < sizeof(*xfer))
++			return 0;
 +
- 	code = data[COUGAR_FIELD_CODE];
- 	action = data[COUGAR_FIELD_ACTION];
- 	for (i = 0; cougar_mapping[i][0]; i++) {
+ 		hid_dbg(hdev, "xfer status: %02x %02x %04x %04x\n",
+ 			xfer->status0, xfer->status1,
+ 			be16_to_cpu(xfer->retries), be16_to_cpu(xfer->length));
+@@ -1463,11 +1466,16 @@ static int cp2112_raw_event(struct hid_d
+ 		atomic_set(&dev->xfer_avail, 1);
+ 		break;
+ 	case CP2112_DATA_READ_RESPONSE:
++		if (size < 3)
++			return 0;
++
+ 		hid_dbg(hdev, "read response: %02x %02x\n", data[1], data[2]);
+ 
+ 		dev->read_length = data[2];
+ 		if (dev->read_length > sizeof(dev->read_data))
+ 			dev->read_length = sizeof(dev->read_data);
++		if (dev->read_length > size - 3)
++			return 0;
+ 
+ 		memcpy(dev->read_data, &data[3], dev->read_length);
+ 		atomic_set(&dev->read_avail, 1);
+@@ -1494,4 +1502,3 @@ module_hid_driver(cp2112_driver);
+ MODULE_DESCRIPTION("Silicon Labs HID USB to SMBus master bridge");
+ MODULE_AUTHOR("David Barksdale <dbarksdale@uplogix.com>");
+ MODULE_LICENSE("GPL");
+-
 
 
