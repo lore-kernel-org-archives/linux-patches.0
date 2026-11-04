@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826864;
-	b=2huxHmF5Z5vHfETcdNVG/wH+4BlSJ4WMe2ngzJYsgLqPTR6qAVpU/c7gm+nXJiMNvnhM
-	 c+ltfaD/f1Wkl8CGiCGxgWXEnSsyCWDle6/L3SlUxZ6Jo+wFFOXaI9MMWwgsXljmjKqzz
-	 esQotbid2QsB6aPbGmKuqJlLkruKZSgDjVHDILuRqcLOZcJS2N8ft+nZbsZ7xjhBs2KFi
-	 1pRGtwINTvDf0NiBFf15kAvvBcP2lfvwiDuJfGpBgvZXwAQ2sn7vSGw4wbfRTBB0AI19Q
-	 sDlAC/jngZ57oZO+5Kw69HFcZC0nxkAaRpyRn3BGBjAu0my0trRqbdfQCnW/cJFqYVA==
+	t=1793826865;
+	b=0VUIF8nyaSX/zb0z6Gy+SFxtEHy0A14VD3OqhtHPJ6/n/LZ97dYWdArZrza5Ri/bpH6V
+	 xNIGIBgDZ/1rZ1cUhUMQ73D4YPKgNXIBNRUq8WvKyz6/E1R9HE+NpCaGQp46HvR3GUr6u
+	 yWBxaGBFuTT/294Glo7G+8r3iN/O3vdz1Bm+s4cpQ90+WX+c/Du7JwHuYZUF32foOFrGT
+	 XiSTXwCUmhYqwnkNoP/3EMrDvBo3kiZ15vfsX3z1Y4XDWdzLzlt3KxaKH8fTA/NbO+z5F
+	 6smNSfpbjIjWh3p7/SP7qmJ3/PxLVumuqyukVV+RDbrSfK/ypBn4CT6eZxkwUacep4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s6vHUTz4R4uRKNj/lBYHwUalI2+N7XlxQ78VuWwAMeg=;
-	b=egJ8/dSHlJB53auPaamHXPilCWtCMogWBaSe3LZsRhM4ejIq2VM9Xd7g1b7rHhpbk7+u
-	 r2HwvZLezx8gMamlfTqpn/2F6HKsNMfMk2zrk9DgPckCFPo4e1m2riIhGuyZrF5DTWOrJ
-	 93yAmX92xWQSVoqqB2hYI2aauIOGRhCA+GwIFHYy8br2WJjsfhhe6lIGQs9wI4oM7Zenz
-	 ISE7odq0qHZ+HgYGlBNdsKy/uW7l8LsafGHrAytZFm5WG6XrtabHNfyPslW/Fu0ukgyNI
-	 lYF8Au/Ei3KG6Fu2YXsOgJh1m3nzGcTfNlMYYostQS2uSjCatiIyEGvpvD0YhxbzYtg==
+	bh=u5eg4ezdJHVlmXuIt6uFV2LFfKT6SVQONdRrxoBfAOc=;
+	b=YpMWtvHSmr+OzCFCSOp3HZHREs51acmY8dk/ORmqnP4zLQ+6syr9JpfCe+rdJajjSM1Q
+	 B3I6cBb0Ksw1FAfFEwVPiRxOErwd1Q98+caXGmi9azv0Nt7lNQ7n/fY+2avnF60ZOgH7X
+	 BTk8lRI1ZrCuGCPijjpBwawUfruMHxDlmawuUENxQiESn0fVf8zLaS+lQT2RUuIwBuqng
+	 ns8DDxWM6A47+QnEbFMJcOtp3+OnsADn91gKmIsWVVu8AGOHWFPb+8R/ZMehm6fymJRAC
+	 OkzIzD93QaBXi5S3M0BkQDvWAj+H75g7ayCY9J3Ntibcx8jc9UB+wLjjtPDMJI+QTeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bpwcMnWz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6w25YMk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1461E607043F;
-	Wed,  4 Nov 2026 21:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9112F6070434;
+	Wed,  4 Nov 2026 21:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bpwcMnWz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FCD1F000C1;
-	Wed,  4 Nov 2026 21:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6w25YMk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DBE1F00A15;
+	Wed,  4 Nov 2026 21:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826863;
-	bh=s6vHUTz4R4uRKNj/lBYHwUalI2+N7XlxQ78VuWwAMeg=;
+	s=korg; t=1793826865;
+	bh=u5eg4ezdJHVlmXuIt6uFV2LFfKT6SVQONdRrxoBfAOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bpwcMnWztBMd2I4WYfs/X5oEP1wWBWxXR3xZh5oQMAymf+6xqpt5h0ZPP69uLC7+k
-	 TeCRTYAtXpQ+YA1vznK/QkjuAR8+y6rrHueO+pXqtDkcZUSW+L5BnmUT30NjjHCBVk
-	 dk27HQxXNX7i7UuYv1dcZXcds3fMON7ns8x21MAg=
+	b=y6w25YMkr436sP3494XZTD08K53pYKdl01bVSgrgHNbShuRl41qFs+Y0AmGeX5fMm
+	 J0NIbG3dfBD7rJkRcVcVSjnYJCjjNbw4PZl9BPSr9utqXRRih4GP7uYHNE5kNP41Qg
+	 HHGJUdS28HDnlDW95XLNcnsQnj5tcBUJG62aooKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 050/547] io_uring/napi: dont busy poll past an expired timeout
-Date: Wed,  4 Nov 2026 16:03:54 -0500
-Message-ID: <20261104211039.726742485@linuxfoundation.org>
+Subject: [PATCH 7.3 018/547] io_uring/cmd: dont leave list poison in ->hash_node
+Date: Wed,  4 Nov 2026 16:03:22 -0500
+Message-ID: <20261104211038.890228285@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,38 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 21ed976c12f6b77d7ea028a4fe9a08e69a56179f ]
+[ Upstream commit 4c83e39f4d1944d7146fd06094f2c8053238d55c ]
 
-__io_napi_busy_loop() caps the busy poll time to what is left until the
-timeout of the wait. The difference is negative if the timeout has passed
-already, which is what an application gets if it uses
-IORING_ENTER_ABS_TIMER with a time that isn't in the future any more. The
-min_t(u64, ...) turns that into a huge value, so the cap has no effect
-and the wait, which should return right away, spins for the full busy
-poll time first.
+io_uring_cmd_del_cancelable() uses hlist_del() to take a command off
+->cancelable_uring_cmd, which leaves LIST_POISON1/2 behind in
+->hash_node. Requests are recycled through the request cache without
+being reinitialised, and not every user of ->hash_node sets it up before
+it is used:
 
-Fixes: d5cce407e4f5 ("io_uring/napi: postpone napi timeout adjustment")
+If a vectored futex wait is woken while futex_wait_multiple_setup() is
+still queueing the futexes, io_futexv_wait() doesn't add the request to
+->futex_list, and leaves the completion to the task_work queued by the
+wake up. io_futexv_complete() ends in __io_futex_complete(), whose
+hlist_del_init() is fine for a request that is unhashed, which is how all
+other users of the node leave it. If the request was a cancelable
+uring_cmd in its previous life, e.g. a ublk FETCH_REQ, it writes through
+LIST_POISON2:
+
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: maybe wild-memory-access in range [0xdead000000000120-...]
+  RIP: 0010:io_futexv_complete+0x219/0x420
+  Call Trace:
+   tctx_task_work_run+0x804/0x950
+   tctx_task_work+0x71/0xa0
+   task_work_run+0x118/0x200
+
+Leave the node unhashed.
+
+Fixes: 93b8cc60c37b ("io_uring: cancelable uring_cmd")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-34-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-2-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/napi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/uring_cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/napi.c b/io_uring/napi.c
-index 53d7623e4d237..7e698720cd51a 100644
---- a/io_uring/napi.c
-+++ b/io_uring/napi.c
-@@ -378,6 +378,8 @@ void __io_napi_busy_loop(struct io_ring_ctx *ctx, struct io_wait_queue *iowq)
- 	if (iowq->timeout != KTIME_MAX) {
- 		ktime_t dt = ktime_sub(iowq->timeout, io_get_time(ctx));
+diff --git a/io_uring/uring_cmd.c b/io_uring/uring_cmd.c
+index 726a659f38c38..3baf6459c1c85 100644
+--- a/io_uring/uring_cmd.c
++++ b/io_uring/uring_cmd.c
+@@ -87,7 +87,7 @@ static void io_uring_cmd_del_cancelable(struct io_uring_cmd *cmd,
  
-+		/* an absolute timeout may have passed already */
-+		dt = max_t(ktime_t, dt, 0);
- 		iowq->napi_busy_poll_dt = min_t(u64, iowq->napi_busy_poll_dt, dt);
- 	}
+ 	cmd->flags &= ~IORING_URING_CMD_CANCELABLE;
+ 	io_ring_submit_lock(ctx, issue_flags);
+-	hlist_del(&req->hash_node);
++	hlist_del_init(&req->hash_node);
+ 	io_ring_submit_unlock(ctx, issue_flags);
+ }
  
 -- 
 2.53.0
