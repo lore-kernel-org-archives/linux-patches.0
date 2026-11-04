@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829007;
-	b=izQQ2hgbNgDZXtKLadFWzSCgzrj1P+dJu47MBIsjVd4Hlp+2XR5NK8JyJ4l7BOtAoKMJ
-	 4k1IpRWClsu8H+qzI0sdIvTnXaozmUde2GC3gdnCbMFyrRVqYdSs/8U25ZhRK7ZPXj9kw
-	 hqQMtXKAiToLyRbpqVfrbSQ3jqVK6rx7wGuqbJA1q5nIUAUjZDms1r1NqRd8yE+G8w8dj
-	 CjObqrKhA9eFfcyUiytznWl/LyZkC2iECrcXUYEYBUvjnNxZBRK/DXSJekx3K+GjVUeSE
-	 b7g+he3Ky61tTyJDIcS83SixGaSAUbkA+QgMIJKtW9wKssplmesPJzaQ7BK71/dJHbQ==
+	t=1793829009;
+	b=osCTBEt+XlaBX5/46UjJZ2iCblJXp9S4NZ6nt0z8cTOejXEpy9NxbaE9YYEM1CtJWzXo
+	 wWA6lZ/JnOBvTvIq7HyzgLYNo9AX5BgouxE7DR9ojwFp9g1IX0CdUXV/uTu5IDJBMhu9h
+	 nOu+TfbdqV46u3xARRxW86j1e6acz3dgQGwsXpaum69N6lc2CiwBqOx6E3Cd5Xndfbsm1
+	 JyYZmE6nq7LFQa/2jGnm4osONza7/XjtVRY5SQHdHXaNuRc6lpOcH2LINUjAOe/xg1OiU
+	 yvuzPkMqXEPjsorz1Rhduz6zih28X4dljJ1DMtkfYhXiSSFey2YY5wIGplYXqQ/EhhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tx49FmGV+NvJDKS3otuN6SIzZe9E0EUV9tDUHOd1Nb4=;
-	b=wrUoiQ+PKLwyuyFWQg6we7BdLMG8tDcsLgy9S5pUAfp06YjS8KltqreJoj7D+zIP0cTt
-	 nF3sjlbisemAX7dYDUmcdM9ytpq60LbuFbbJ0A6MUOBXD8Lsh78/GbZX4AYVskI6vp2tl
-	 byg69xX/00AqNBoHTBGT7IS/WVk/RLUTFpINsJZYRtkC6VYY91PXyA3LenPMpGT/UIQPf
-	 jiZwAZxelwdpp2lnCpu4lpqnjY3iGzdnVuMwMUUG6+X1swCNxloprl4Wtr6ORtEIGGm/6
-	 rr0yqo1WR6gwIYihtCAsEhMbnu/nTZ41ocWKSHv6F6wwP58umbOClAHVHV6mDWqbOEw==
+	bh=30sX1KceBTUvqHVXdLEuwWoeUs5RZxjxU1pCa3HO5iw=;
+	b=1L/rSaGTT17rOedoxziBoojQR/AXC+mCWSrqivGJzCgcAVDELI8LrmoqCwYX4myUEKn7
+	 IAAsR0qdlHhnk2DGEEmMXKIHwosbTxRTKAyg/dhBM0YhkA5NiJ/5hWgNNyHjKJrJTshPI
+	 4wO9FidNCOgeNS9hW2BV9niYAzwdT9KXwhsWIRZcFwCWj/4mdV0eh3zxZylMHd/cFhTM0
+	 9AqCChU7e4mZyddyPOehQ2ZPibCQW6iQCoU8yBxYlYJB0z8A3+WDSoTbdPHlbHuSM+xPh
+	 3wyaAp3Z0qSjkpYimbMn3m4esI00Oit7M7bpxOxWFoCb5e1tyK0tWk3NJCAadELT+UA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6tjhV58;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FA6ADMsH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657A36070332;
-	Wed,  4 Nov 2026 21:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6F36070332;
+	Wed,  4 Nov 2026 21:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6tjhV58
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0968D1F000C1;
-	Wed,  4 Nov 2026 21:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FA6ADMsH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF651F000C1;
+	Wed,  4 Nov 2026 21:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829007;
-	bh=Tx49FmGV+NvJDKS3otuN6SIzZe9E0EUV9tDUHOd1Nb4=;
+	s=korg; t=1793829009;
+	bh=30sX1KceBTUvqHVXdLEuwWoeUs5RZxjxU1pCa3HO5iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N6tjhV58vzOpCa/GmoxNDSXHBqCBO2W5O5yucb6JnwmZ4r4MP++k8uGYIgYzVNKIX
-	 YmAuOysTfzIJUwuKeUMJ+g7XiREV9rtdDP+3vyK3dzsPUFo9AhczGQkP7Lu++0Je1u
-	 JtkGVJx57pJWwIGbTuyVHokZUF+oNS+u3kstif8A=
+	b=FA6ADMsH87FFQO/w5hmEKjr2Noy3LenF0t2Hgxh5pblMtxvQdoWHXjQ55R0VyOCeM
+	 Ie4QSxlsCUPvDhkbow4ogpo4kfmtsQ1LY/hZvk5rokXpMfVKNXdCqUjY5bGnSmDvdu
+	 Y7oYvtQ5yDmd5FSiuL36w9svkSRCJenkgnrc4nCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.3 384/547] smb: client: reclaim credits for decrypted reads with no matching mid
-Date: Wed,  4 Nov 2026 16:09:28 -0500
-Message-ID: <20261104211049.206111775@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.3 349/547] xfs: bound inode fork length against the fork size during log recovery
+Date: Wed,  4 Nov 2026 16:08:53 -0500
+Message-ID: <20261104211048.187322423@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -72,89 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 78f73985846465a25a7bd1d89904053661f3ca92 upstream.
+commit 9232301894a06e664d8de2da97175cf98419bd16 upstream.
 
-When a decrypted SMB2 READ response carries a MessageId that matches no
-outstanding request, both the inline receive_encrypted_read() and the
-offloaded smb2_decrypt_offload() paths drop the frame without accounting
-the credits the server granted in it.  The plaintext unknown-frame path in
-cifs_demultiplex_thread() already reclaims them with
-smb2_add_credits_from_hdr(), so encrypted reads leak credits that the
-plaintext path would not.
+xlog_recover_inode_commit_pass2() copies an inode log item's data/attr
+fork region into the inode buffer using the on-log region length without
+bounding it against the fork capacity, e.g.:
 
-This also happens for legitimate frames - e.g. a reply that arrives after
-the client has timed out and dropped the mid - so over a long-lived
-connection the client's credit count drifts down and can eventually starve
-it of the ability to issue requests.  The frame is AEAD-authenticated, so
-the granted credits in the decrypted header come from the real server and
-are safe to apply.
+	len = item->ri_buf[2].iov_len;
+	memcpy(XFS_DFORK_DPTR(dip), src, len);
 
-Reclaim the credits from the decrypted header before dropping the frame,
-and export smb2_add_credits_from_hdr() so the SMB2 receive paths can use it.
+The only guard is an ASSERT, which is a no-op on production kernels
+(CONFIG_XFS_DEBUG off), and xfs_dinode_verify() runs only after the copy.
+A crafted image with a dirty log can therefore drive a heap out-of-bounds
+write at mount time. The XFS_ILOG_DBROOT sibling already passes
+XFS_DFORK_DSIZE as a bound; the DDATA/DEXT and ADATA/AEXT memcpy paths
+did not.
 
-Fixes: c42a6abe3012 ("CIFS: Add capability to decrypt big read responses")
-Fixes: 35cf94a39728 ("smb3: allow parallelizing decryption of reads")
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: stable@vger.kernel.org
+Bound each logged fork region against the destination fork size before
+copying it, and reject the log item with -EFSCORRUPTED when it does not
+fit. Because the recovered inode is only verified after the fork data has
+been copied in, the checks are done up front, before any memcpy into the
+on-disk inode.
+
+Fixes: 658fa68b6f34 ("xfs: refactor log recovery inode item dispatch for pass2 commit functions")
+Cc: stable@vger.kernel.org # v5.8
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsproto.h |    1 +
- fs/smb/client/connect.c   |    3 +--
- fs/smb/client/smb2ops.c   |    6 ++++--
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ fs/xfs/xfs_inode_item_recover.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -131,6 +131,7 @@ void cifs_signal_cifsd_for_reconnect(str
- void cifs_mark_tcp_ses_conns_for_reconnect(struct TCP_Server_Info *server,
- 					   bool mark_smb_session);
- int cifs_reconnect(struct TCP_Server_Info *server, bool mark_smb_session);
-+void smb2_add_credits_from_hdr(char *buffer, struct TCP_Server_Info *server);
- bool backup_cred(struct cifs_sb_info *cifs_sb);
- bool is_size_safe_to_change(struct cifsInodeInfo *cifsInode, __u64 end_of_file,
- 			    bool from_readdir);
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1238,8 +1238,7 @@ cifs_handle_standard(struct TCP_Server_I
- 	return 0;
- }
+--- a/fs/xfs/xfs_inode_item_recover.c
++++ b/fs/xfs/xfs_inode_item_recover.c
+@@ -507,6 +507,25 @@ xlog_recover_inode_commit_pass2(
+ 	ASSERT(!(fields & XFS_ILOG_DFORK) ||
+ 	       (len == xlog_calc_iovec_len(in_f->ilf_dsize)));
  
--static void
--smb2_add_credits_from_hdr(char *buffer, struct TCP_Server_Info *server)
-+void smb2_add_credits_from_hdr(char *buffer, struct TCP_Server_Info *server)
- {
- 	struct smb2_hdr *shdr = (struct smb2_hdr *)buffer;
- 	int scredits, in_flight;
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5288,9 +5288,10 @@ static void smb2_decrypt_offload(struct
++	/*
++	 * The recovered inode is verified only after the fork data has been
++	 * copied into it, so bound each logged fork region against the size of
++	 * its fork now, before the memcpy below can overrun the on-disk inode.
++	 * The DBROOT/ABROOT cases already bound their copies against the fork
++	 * size.
++	 */
++	if ((fields & (XFS_ILOG_DDATA | XFS_ILOG_DEXT)) &&
++	    item->ri_buf[2].iov_len > XFS_DFORK_DSIZE(dip, mp)) {
++		error = -EFSCORRUPTED;
++		goto out_release;
++	}
++	if ((fields & (XFS_ILOG_ADATA | XFS_ILOG_AEXT)) &&
++	    item->ri_buf[(fields & XFS_ILOG_DFORK) ? 3 : 2].iov_len >
++	    XFS_DFORK_ASIZE(dip, mp)) {
++		error = -EFSCORRUPTED;
++		goto out_release;
++	}
++
+ 	switch (fields & XFS_ILOG_DFORK) {
+ 	case XFS_ILOG_DDATA:
+ 	case XFS_ILOG_DEXT:
+@@ -546,7 +565,6 @@ xlog_recover_inode_commit_pass2(
+ 		case XFS_ILOG_ADATA:
+ 		case XFS_ILOG_AEXT:
+ 			dest = XFS_DFORK_APTR(dip);
+-			ASSERT(len <= XFS_DFORK_ASIZE(dip, mp));
+ 			memcpy(dest, src, len);
+ 			break;
  
- 	dw->server->lstrp = jiffies;
- 	mid = smb2_find_dequeue_mid(dw->server, dw->buf);
--	if (mid == NULL)
-+	if (mid == NULL) {
- 		cifs_dbg(FYI, "mid not found\n");
--	else {
-+		smb2_add_credits_from_hdr(dw->buf, dw->server);
-+	} else {
- 		mid->decrypted = true;
- 		rc = handle_read_data(dw->server, mid, dw->buf,
- 				      dw->server->vals->read_rsp_size,
-@@ -5421,6 +5422,7 @@ receive_encrypted_read(struct TCP_Server
- 	*mid = smb2_find_mid(server, buf);
- 	if (*mid == NULL) {
- 		cifs_dbg(FYI, "mid not found\n");
-+		smb2_add_credits_from_hdr(buf, server);
- 		rc = -1;
- 	} else {
- 		cifs_dbg(FYI, "mid found\n");
 
 
