@@ -1,54 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831827;
-	b=haER5jsnARdCDQV1ODv9vBggidBcYDAQ6opwVe8+X0jp/k2fnyoXwapf2m10YYJejzTG
-	 IIdF01l+PQnteCfXUw2PUfI5G3kH6vDu4Sn+Ju/ar9WZwPyqRBrQbh/xiAHXOOnmdqR+r
-	 DuR16TMh2AQ55s+CwaaUcKd+KGEUymvdjJwalJK+Hq+G20CRNKDML2FYckreGynxsGS8R
-	 H/f3c8T8/pItva7HOMSNQXx44072a6ZK2qbJX0+kyFjYrwtvL1gLm78ypYLQQXiEXy836
-	 GqTfntIynwqc7+2m7uMbJJ9iu9n/wehSS3nGKc2yMjEn3T6fcr1c9sbLgiCLkzTsrdQ==
+	t=1793831829;
+	b=Jm/ES4g8i6+T3KLBGV8xdNCVgYXVu5dKA8CexO5Ilpszoy8O/Sr0tU+G1+q9qhn1AsbB
+	 IAJ1r4n5v5MNik+jgRD2BSz9SOLgrGsxrdKdkr+nA7W3Q4ZFTF+Y8XoXJ8Ut7kOE4cn7Z
+	 +S0SIUqf06eAg7a8UYCIHO8MWvmSyxfnv1iTaJH0QYWO+OMWZY/LAP5zI8ubhybpNPx/1
+	 0BCQ38qQgMY11hFZHgi+alj+jVpghrMKVBDkzn1sbFLg1TG9YFhILZ2M1gUHig9GP57VV
+	 BwoGThKTYfLy/Vy55z8q9ZMkROpEuoE/7LXcKX/k3lTk0oBWGccRRnduL9XXmUaQdcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C9orzjhBnJdiCvCBT5WPpCLycXJh84BG5QvuI67+KIQ=;
-	b=mWJloQ8IiBshUHcTQF28i0RRdx4UKaOK/aJdR+AZCarP1IqSyphZE/PQhZKp4yN9ZGVd
-	 Ri33DOVDWQffMOlrdQGfeeLX3TAcAQyl57cIg3U6l1Z+fGCBvH0GZ5PLCLuH742+EJIDg
-	 EA7DBT3WI0sqpoU+SzUGrj2R+1h2rhD/TpoEfgS5FXnjTqTIq/27bqI/Aw6oZ82azjsj9
-	 6xaNNmokp52YSBsz84sU9qgZOwWF69IO30QlH72IMCPxRUXt5etSZNdxg56doNpB8TmaS
-	 eewYixQGq/8mNFuD+tlvNoRBEp/I1Y1ByQLG8pLN6xx7zMaU7fFWGY1MWSkh/20FINQ==
+	bh=K95J88q/3lAL2Sl/1SguCjUF1nR53eY7iD1afPMltMM=;
+	b=2dHb9JmOxdlgd408yFue3BJrmhArSHbJJGvIi1fPMHax6mO52js/qbuP5YCsp40gr2lu
+	 m+mahBVG7vOKW1K3pHo9N/JSD12EMV40MeO7hGw10T3Ge6KZ4xAhJW6qw8wljHTBPN7ak
+	 1c+0sYCKORgEOKoozC5Te2kNjwAIb5ZAi/EGbjJgrNDnLF0z0htKPgLLAwxNdPpqY2boK
+	 kfwvXQnMJjHVSQvLR4rEcu+kI8wdRRuhrJKXDC441t/sZAgp9DDC6Ju2leMc4coM8dATa
+	 okLlL3nQvoTJPimODWhMLmwQfJlticp0EjfSk+SikVhy/KLqxT7Bg3yjnW7/9uqFZkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6uHn8cR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MNgfMsHN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E29D606A337;
-	Wed,  4 Nov 2026 22:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C86F606A878;
+	Wed,  4 Nov 2026 22:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6uHn8cR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8BCF1F000C1;
-	Wed,  4 Nov 2026 22:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MNgfMsHN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2081F000C1;
+	Wed,  4 Nov 2026 22:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831827;
-	bh=C9orzjhBnJdiCvCBT5WPpCLycXJh84BG5QvuI67+KIQ=;
+	s=korg; t=1793831829;
+	bh=K95J88q/3lAL2Sl/1SguCjUF1nR53eY7iD1afPMltMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6uHn8cRLAioQbNRgJUbb5EnM9X8fnRNUlkgnwG36HqkIpatCbZbkZFYClH2NdfVl
-	 bS/ApCMkFHF2/dOF370bhAB0NuDai3qx380ljlHOAJlM9eQKb4J0CHRhOik/VuzXQy
-	 rW7rjWEQ6s1N7C1Ha19KQaf8gjsqcGt6SJByqf10=
+	b=MNgfMsHNu/B6MvqDnBCRGPbNeM9yaMt/STrgxxivtQkDzE0EyJg5ZdmXj05QuVzYD
+	 uXyDPmKEn+RNW5uB44z5ZumI6DW1NRmAKStvfyHayYT1iZA0IxPB15K762jEX/RSrl
+	 vhzsoY542J7lBSqlGGan0r4pWE8CAVe0y0DxaY6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qinguang Chen <chenqinguang@kuaishou.com>,
-	Zhiping Du <duzhiping@kuaishou.com>,
-	Keqiang Duan <duankeqiangcym@gmail.com>,
-	Chao Gao <chao.gao@intel.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 0935/1005] KVM: x86: Clear hardware HLT state when userspace makes a vCPU not-halted
-Date: Wed,  4 Nov 2026 16:11:08 -0500
-Message-ID: <20261104211109.318247810@linuxfoundation.org>
+Subject: [PATCH 6.18 0936/1005] KVM: x86: Preserve DR6.BLD (Bus Lock Detect) when delivering #DB payload
+Date: Wed,  4 Nov 2026 16:11:09 -0500
+Message-ID: <20261104211109.350187693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,170 +66,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keqiang Duan <duankeqiangcym@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 883719f57f5d3898637b130d6db4742471cad618 upstream.
+commit 719a1d58bf43edd03b271df90b67c58c1e9a7da4 upstream.
 
-Force a vCPU out of its hardware-tracked halted state when userspace puts
-the vCPU into any state other than HALTED via KVM_SET_MP_STATE, i.e. clear
-VMCS.GUEST_ACTIVITY_STATE if it says the vCPU is halted.  Add an optional
-kvm_x86_ops hook to do the clearing, as SVM has no equivalent VMCB field.
+Preserve Bus Lock Detect if it isn't present in the payload.  Unlike RTM,
+which is explicitly modified on every #DB,  DR6.BLD is modified if and only
+if the #DB is due to a (coincident) Bus Lock Detect.
 
-When HLT-exiting is disabled for a VM (KVM_CAP_X86_DISABLE_EXITS with
-KVM_X86_DISABLE_EXITS_HLT, e.g. QEMU's "-overcommit cpu-pm=on"), a guest
-HLT halts the physical CPU instead of exiting to KVM, and hardware saves
-GUEST_ACTIVITY_STATE=HLT into the VMCS on the next VM-Exit.  That field is
-sticky: it survives VM-Exit/VM-Enter and is only cleared by vmx_clear_hlt()
-on event injection, or by vmx_vcpu_reset() on INIT / vCPU creation.
+Per Intel's SDM:
 
-Nothing clears it on a userspace-driven state change.  KVM_SET_REGS only
-writes the software register cache and KVM_SET_MP_STATE only writes
-vcpu->arch.mp_state; kvm_vcpu_running() likewise consults software state
-only.  A VMM that emulates a machine reset therefore ends up with a vCPU
-that KVM happily VM-Enters while hardware refuses to fetch instructions.
+  Other debug exceptions do not modify this bit.
 
-Reproduce with a Linux guest by triggering a panic/kdump on a non-boot
-vCPU: nmi_shootdown_cpus() parks the other vCPUs -- including vCPU0 -- in
-crash_nmi_callback(), which does local_irq_disable() followed by a bare
-HLT.  The capture kernel then resets the machine via port 0xCF9.  QEMU
-rewrites RIP to 0xfff0 and sets mp_state to RUNNABLE, but vCPU0's
-GUEST_ACTIVITY_STATE is still HLT, so the BSP never executes the reset
-vector, never sends SIPIs, and the entire VM hangs at "reboot: machine
-restart" forever.  Only destroying and recreating the VM recovers it.
+And AMD's APM
 
-Key off "not HALTED" rather than "is RUNNABLE" as HALTED is the only target
-state for which retaining the hardware halted state is meaningful; every
-other transition either can't be reached on VMX, e.g. AP_RESET_HOLD, or
-goes through vmx_vcpu_reset(), which stuffs GUEST_ACTIVITY_ACTIVE anyways.
-This also captures the intent more directly: KVM only ever drops the
-hardware halted state, it never installs it.
+  All other #DB exceptions leave DR6[BLD] unmodified,
 
-Hook KVM_SET_MP_STATE rather than the VM-Enter path so that the clearing
-is driven by an explicit userspace declaration, and so that no work is
-added to vmx_vcpu_run().  Gate the call on kvm_hlt_in_guest() even though
-vmx_clear_hlt() checks it as well, as the check is cheap and makes it
-obvious in common code when the hardware state can exist at all.
+Restore the explicit RTM handling that was clobbered by commit
+9a3ecd5e2aa1 ("KVM: X86: Rename DR6_INIT to DR6_ACTIVE_LOW"), as the
+semantics of any given bit are feature specific, i.e. are obviously not
+consistent for active-high versus active-low.  In other words, while the
+bug was technically introduced when support for Bus Lock Detect was added,
+it's really that attempt to genericize handling of active-low bits that set
+KVM up to fail.
 
-Do nothing for TDX vCPUs as TDX doesn't support disabling HLT-exiting and
-KVM cannot access a TD's VMCS, i.e. the VMCS used to run the vCPU can't
-in HALTED state, and even if it were, KVM can't change it.
-
-Fixes: caa057a2cad6 ("KVM: X86: Provide a capability to disable HLT intercepts")
+Fixes: e8ea85fb280e ("KVM: X86: Add support for the emulation of DR6_BUS_LOCK bit")
 Cc: stable@vger.kernel.org
-Tested-by: Qinguang Chen <chenqinguang@kuaishou.com>
-Signed-off-by: Zhiping Du <duzhiping@kuaishou.com>
-Signed-off-by: Keqiang Duan <duankeqiangcym@gmail.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Link: https://patch.msgid.link/20260820123512.87236-1-duankeqiangcym@gmail.com
-[sean: drop claim that spurious wakeups are ok, massage changelog]
+Link: https://patch.msgid.link/20260930193634.3415089-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm-x86-ops.h |    1 +
- arch/x86/include/asm/kvm_host.h    |    7 +++++++
- arch/x86/kvm/vmx/main.c            |   13 +++++++++++++
- arch/x86/kvm/vmx/vmx.c             |    2 +-
- arch/x86/kvm/vmx/x86_ops.h         |    1 +
- arch/x86/kvm/x86.c                 |   13 +++++++++++++
- 6 files changed, 36 insertions(+), 1 deletion(-)
+ arch/x86/kvm/x86.c |   52 ++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 30 insertions(+), 22 deletions(-)
 
---- a/arch/x86/include/asm/kvm-x86-ops.h
-+++ b/arch/x86/include/asm/kvm-x86-ops.h
-@@ -80,6 +80,7 @@ KVM_X86_OP(interrupt_allowed)
- KVM_X86_OP(nmi_allowed)
- KVM_X86_OP(get_nmi_mask)
- KVM_X86_OP(set_nmi_mask)
-+KVM_X86_OP_OPTIONAL(clear_hlt)
- KVM_X86_OP(enable_nmi_window)
- KVM_X86_OP(enable_irq_window)
- KVM_X86_OP_OPTIONAL(update_cr8_intercept)
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1824,6 +1824,13 @@ struct kvm_x86_ops {
- 	int (*nmi_allowed)(struct kvm_vcpu *vcpu, bool for_injection);
- 	bool (*get_nmi_mask)(struct kvm_vcpu *vcpu);
- 	void (*set_nmi_mask)(struct kvm_vcpu *vcpu, bool masked);
-+	/*
-+	 * Force the vCPU out of any hardware-tracked halted/inactive state so
-+	 * that it will fetch and execute instructions on the next VM-Enter.
-+	 * Only needed by VMX, where VMCS.GUEST_ACTIVITY_STATE persists across
-+	 * VM-Exit/VM-Enter; SVM has no equivalent VMCB field.
-+	 */
-+	void (*clear_hlt)(struct kvm_vcpu *vcpu);
- 	/* Whether or not a virtual NMI is pending in hardware. */
- 	bool (*is_vnmi_pending)(struct kvm_vcpu *vcpu);
- 	/*
---- a/arch/x86/kvm/vmx/main.c
-+++ b/arch/x86/kvm/vmx/main.c
-@@ -590,6 +590,18 @@ static void vt_set_nmi_mask(struct kvm_v
- 	vmx_set_nmi_mask(vcpu, masked);
- }
- 
-+static void vt_clear_hlt(struct kvm_vcpu *vcpu)
-+{
-+	/*
-+	 * TDX doesn't support disabling HLT-exiting, and KVM can't access a
-+	 * TD's VMCS, so there is never any hardware halted state to clear.
-+	 */
-+	if (is_td_vcpu(vcpu))
-+		return;
-+
-+	vmx_clear_hlt(vcpu);
-+}
-+
- static void vt_enable_nmi_window(struct kvm_vcpu *vcpu)
- {
- 	/* Refer to the comments in tdx_inject_nmi(). */
-@@ -947,6 +959,7 @@ struct kvm_x86_ops vt_x86_ops __initdata
- 	.nmi_allowed = vt_op(nmi_allowed),
- 	.get_nmi_mask = vt_op(get_nmi_mask),
- 	.set_nmi_mask = vt_op(set_nmi_mask),
-+	.clear_hlt = vt_op(clear_hlt),
- 	.enable_nmi_window = vt_op(enable_nmi_window),
- 	.enable_irq_window = vt_op(enable_irq_window),
- 	.update_cr8_intercept = vt_op(update_cr8_intercept),
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -1772,7 +1772,7 @@ int vmx_skip_emulated_instruction(struct
- 	return skip_emulated_instruction(vcpu);
- }
- 
--static void vmx_clear_hlt(struct kvm_vcpu *vcpu)
-+void vmx_clear_hlt(struct kvm_vcpu *vcpu)
- {
- 	/*
- 	 * Ensure that we clear the HLT state in the VMCS.  We don't need to
---- a/arch/x86/kvm/vmx/x86_ops.h
-+++ b/arch/x86/kvm/vmx/x86_ops.h
-@@ -95,6 +95,7 @@ int vmx_interrupt_allowed(struct kvm_vcp
- int vmx_nmi_allowed(struct kvm_vcpu *vcpu, bool for_injection);
- bool vmx_get_nmi_mask(struct kvm_vcpu *vcpu);
- void vmx_set_nmi_mask(struct kvm_vcpu *vcpu, bool masked);
-+void vmx_clear_hlt(struct kvm_vcpu *vcpu);
- void vmx_enable_nmi_window(struct kvm_vcpu *vcpu);
- void vmx_enable_irq_window(struct kvm_vcpu *vcpu);
- void vmx_update_cr8_intercept(struct kvm_vcpu *vcpu, int tpr, int irr);
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -11698,6 +11698,19 @@ int kvm_arch_vcpu_ioctl_set_mpstate(stru
- 	}
+@@ -770,30 +770,37 @@ void kvm_deliver_exception_payload(struc
+ 	switch (ex->vector) {
+ 	case DB_VECTOR:
+ 		/*
+-		 * "Certain debug exceptions may clear bit 0-3.  The
+-		 * remaining contents of the DR6 register are never
+-		 * cleared by the processor".
+-		 */
+-		vcpu->arch.dr6 &= ~DR_TRAP_BITS;
+-		/*
+-		 * In order to reflect the #DB exception payload in guest
+-		 * dr6, three components need to be considered: active low
+-		 * bit, FIXED_1 bits and active high bits (e.g. DR6_BD,
+-		 * DR6_BS and DR6_BT)
+-		 * DR6_ACTIVE_LOW contains the FIXED_1 and active low bits.
+-		 * In the target guest dr6:
+-		 * FIXED_1 bits should always be set.
+-		 * Active low bits should be cleared if 1-setting in payload.
+-		 * Active high bits should be set if 1-setting in payload.
++		 * DR6 is a mess.  Reserved/unused bits are fixed-to-1, and so
++		 * to maintain backwards compatibility with existing software,
++		 * features that use previously-reserved bits have active-low
++		 * semantics, i.e. clear the bit when the feature is present in
++		 * the payload.
++		 *
++		 * Further complicating matters, some DR6 bits are preserved by
++		 * hardware, while others are explicitly modified on every #DB.
++		 * The trap bits are always set based on the payload, as is the
++		 * RTM flag (but it's active low).  All other bits are modified
++		 * if and only if a relevant debug exception occurs, e.g. BD,
++		 * BS, and BT are never cleared by hardware, and BLD is never
++		 * set by hardware (when supported, excepting RESET).
+ 		 *
+-		 * Note, the payload is compatible with the pending debug
+-		 * exceptions/exit qualification under VMX, that active_low bits
+-		 * are active high in payload.
+-		 * So they need to be flipped for DR6.
++		 * Lastly, the payload does NOT have active-low semantics, e.g.
++		 * so that it's compatible VMX's pending debug exceptions and
++		 * qualification fields, and to avoid bleeding the DR6 madness
++		 * into other KVM code.
++		 *
++		 * To compute DR6:
++		 *
++		 *  1. "Reset" the bits that are modified on all #DBs
++		 *  2. Clear active-low bits that are present in the payload.
++		 *  3. Set active-high bits that are present in the payload.
++		 *  4. Clear fixed-0 bits.
++		 *  5. Set fixed-1 bits.
+ 		 */
+-		vcpu->arch.dr6 |= DR6_ACTIVE_LOW;
+-		vcpu->arch.dr6 |= ex->payload;
+-		vcpu->arch.dr6 ^= ex->payload & DR6_ACTIVE_LOW;
++		vcpu->arch.dr6 &= ~DR_TRAP_BITS;
++		vcpu->arch.dr6 |= DR6_RTM;
++		vcpu->arch.dr6 &= ~(ex->payload & DR6_ACTIVE_LOW);
++		vcpu->arch.dr6 |= (ex->payload & ~DR6_ACTIVE_LOW);
  
- 	kvm_set_mp_state(vcpu, mp_state->mp_state);
-+
-+	/*
-+	 * Force the vCPU out of any hardware-tracked halted state, e.g. VMX's
-+	 * GUEST_ACTIVITY_STATE=HLT, when userspace puts the vCPU into a state
-+	 * other than HALTED.  The hardware state is sticky across VM-Exit and
-+	 * VM-Enter and is not touched by any other ioctl, so a vCPU that halted
-+	 * with HLT-exiting disabled stays wedged even after userspace rewrites
-+	 * its registers, e.g. when a VMM emulates a machine reset.
-+	 */
-+	if (kvm_hlt_in_guest(vcpu->kvm) &&
-+	    mp_state->mp_state != KVM_MP_STATE_HALTED)
-+		kvm_x86_call(clear_hlt)(vcpu);
-+
- 	kvm_make_request(KVM_REQ_EVENT, vcpu);
- 
- 	ret = 0;
+ 		/*
+ 		 * The #DB payload is defined as compatible with the 'pending
+@@ -802,6 +809,7 @@ void kvm_deliver_exception_payload(struc
+ 		 * breakpoint), it is reserved and must be zero in DR6.
+ 		 */
+ 		vcpu->arch.dr6 &= ~BIT(12);
++		vcpu->arch.dr6 |= DR6_FIXED_1;
+ 		break;
+ 	case PF_VECTOR:
+ 		vcpu->arch.cr2 = ex->payload;
 
 
