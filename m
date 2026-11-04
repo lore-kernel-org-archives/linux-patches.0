@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829317;
-	b=cb6D+Hsls3A4JNRrCTAHghmt1IfTXypq7s/W2sckSy1Gr0+IA34GncFHR0rsPFJqlOvE
-	 6PNrGPys/s7lg1mMNvj89n9nK2lMdBzJAFyH98l+SUtZ3yg4pvCKX2Vti5seCulSOhKK2
-	 0vmUsg7p3BU9Xhp2GYJbkHb3MvyXyOkqBfnZFKDhoXaQWdAySDjGDArfLu5k9ifr2e8SL
-	 naAiZA1KBgAIsl1sxF3cUlUeQkvVZuFKMNggGmsI0+//24dJMyJ3FTEOUukOLvX/3gQbm
-	 9uUfJek4ld3gAcJxzs0b2PaDI4UTHagRFPlcWL373s8IbuA+SzVe3SR/7PfVs25wPzQ==
+	t=1793829319;
+	b=TykhkNyttmKDwfxNMbYFb6NbzrDlfqs5IXnrUA9ZR7JmIUtgrJj3vWFSEjt8tdcmlQ+Z
+	 qgLrHxvim62RW4i6s3dKtr4Tjyl0JzfI/GtC0aqHY2Z/sb6pG72o7kAdmQA6uGuWcixb+
+	 ZjOou7CdaZX6kB9jMIs2wLwNixd3pdwj/Q/CrQyt7JaUxzq9GAgYEFcrSHd5zsaz3+Gt3
+	 mHZuYiRCvy6IlMUZ9kepfOFjPa7jd4ejslGI2fC/Hl72KLLhE/XqYhE3lb91ZsEiw6kEg
+	 unIWuvBpiUiD+bjGvvY1+YSDz7MN2Rf55qDJQlKTGLFZtowfv8pnbLIvfhkNcWSVsnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YrJFtaxmRupOIdkBqg7gOVvEr+1BOMra2JGx292nUPc=;
-	b=2Qok9uP3ocG63tYyXfyD0kSwpPCwXf7b+lQiDVrp5ww0V5+OaaJ8DP27TI8Sn0ISasEW
-	 4+6bR5VuOuXYPiFHXoaO0FIV9HGeh+VN/Sef/z0DgaoiG8EhckQzFZrvJ1F92yz8vD/dK
-	 dsAABvMsZM4Q+BsfH/OyjnFAJtZoePEDteDkl2Iq0BtK12TQb0rpdFU4xTqjpVkulTC16
-	 NGqubR0MBaxfyyZlYc19aCK40sfsDw4dGWA8P67ZYnX2sRCoBwcOACfrbgTMAvoHMQw8r
-	 CMxMR1+1cciHJ2t+FaeHSu8SletH8BFUNux+wUAplMMKlsoM0tfvtmDTe8lNgrOOe4Q==
+	bh=GZP8/kcsLsUEjTtM4gAYAMvJuvrNKt+3CCqPIlo954w=;
+	b=vzfumrRAt50sVQKg0Wa/wivSvB+bcddnksYy5TE4tJRM2wgaLPAaRSwnpcpHdXnr95L5
+	 aA8Xwuvpdq+zX0VyoHrRZd543r6xpRYs+OH/WP7Prwv8eRI0LlfdAdryHPPc5ada8KZ6n
+	 sTkq5QjgXAdDWy21D0yW47kkkP1Aq/5h1W6T7bNqCIvK+Xr7pe+dO3wmtK4HD/9Pb2dWb
+	 2Euyx/A7qIAgHZkXXwoEJ1B8zmyqxCnZj4lC07T6+wFdS7nXVD8VRfc7NxiCmOLDkJRP4
+	 4EHVHpLbzcE0am43uVRLK2jJQi2gEcz8nuGh5Sk0Nx6YozV3owQiHPKyhyhWzvR+1TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JCdhaMcN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GdJUq7EU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F016074917;
-	Wed,  4 Nov 2026 21:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053B16074917;
+	Wed,  4 Nov 2026 21:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JCdhaMcN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B431F000C1;
-	Wed,  4 Nov 2026 21:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GdJUq7EU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3891F000C1;
+	Wed,  4 Nov 2026 21:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829317;
-	bh=YrJFtaxmRupOIdkBqg7gOVvEr+1BOMra2JGx292nUPc=;
+	s=korg; t=1793829318;
+	bh=GZP8/kcsLsUEjTtM4gAYAMvJuvrNKt+3CCqPIlo954w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JCdhaMcNhK0ffZ2HUiyqyq66bQMGSoGO5kXjq6VdiKNyB5ZINcKTdbcT0GQsfzKwL
-	 5xYDJMbqH1sa+7X7IlWexy6RQ22d4e2tfMz11NFJmTRCrFkpHFEyBAfU5FOyOK73hC
-	 m6oDbruN9fpI62wSpkEnd3FyXmvMvQUZ/2b+xQgA=
+	b=GdJUq7EUmOVtK9s851Q2RviftiXFY6+ES046NGSyrdQKSiw6T+OqFPtOw/z7npMRl
+	 9DVOvMwMJx6IKwvE7jAHH/UZAb1g2M9CWP5neaVvZdhNRK2RHTYICLdz3enuYeJJi0
+	 ArJ6AAnyd5be9Dkr/rpPvqz/X/1uMLTJ4vf5wTWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0048/1005] fs/namespace: notify pollers of legacy propagation changes
-Date: Wed,  4 Nov 2026 15:56:21 -0500
-Message-ID: <20261104211044.933696869@linuxfoundation.org>
+Subject: [PATCH 6.18 0020/1005] drm/amdgpu: Gate debugfs MMIO access on kernel lockdown
+Date: Wed,  4 Nov 2026 15:55:53 -0500
+Message-ID: <20261104211044.117663998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,75 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 0ae44a20835e5cf37d03a83e70c92e92deda3703 ]
+[ Upstream commit 17ac73b24006700f50972d37e297dec1f523c14a ]
 
-Changing mount propagation through the legacy mount API changes
-user-visible mountinfo contents, including the shared: and master:
-optional fields.
+amdgpu_regs, amdgpu_regs2, and related debugfs nodes allow
+arbitrary MMIO read/write via RREG32/WREG32 without checking
+security_locked_down(). On kernel_lockdown=integrity systems
+this bypasses the same restrictions as /dev/mem and PCI config
+space sysfs.
 
-The mount_setattr() path already touches the mount namespace after
-change_mnt_propagation(), so pollers of /proc/<pid>/mountinfo are woken
-when the namespace event changes.
+Check LOCKDOWN_PCI_ACCESS (matching pci-sysfs) at the entry of every
+debugfs handler that performs direct register access.
 
-The legacy mount --make-* path also changes propagation through
-change_mnt_propagation(), and MOVE_MOUNT_SET_GROUP updates the
-propagation relationship of the target mount. Both paths currently
-return without touching the affected mount namespace.
+v2: Use consistent check as per previous check to use
+LOCKDOWN_DEBUGFS(Lijo)
 
-As a result, userspace polling /proc/<pid>/mountinfo can miss these
-propagation-only changes even though mountinfo has changed.
+v3: Do not create any entry from amdgpu_debugfs_regs_init() if
+LOCKDOWN_PCI_ACCESS is active and log once. (Lijo)
 
-A simple reproducer that polls /proc/self/mountinfo while changing
-propagation shows the inconsistency.
-
-Before this change:
-
-  legacy MS_SHARED: poll ret=0 revents=0x0
-  mount_setattr MS_SHARED: poll ret=1 revents=0xa
-
-After this change:
-
-  legacy MS_SHARED: poll ret=1 revents=0xa
-  mount_setattr MS_SHARED: poll ret=1 revents=0xa
-
-Fix this by touching the affected mount namespace after successful
-propagation changes in do_change_type() and do_set_group().
-
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Link: https://patch.msgid.link/20260601032911.940507-1-guopeng.zhang@linux.dev
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 7 +++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 3b6d7271eb3d1..ab050a939cb53 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2932,6 +2932,9 @@ static int do_change_type(const struct path *path, int ms_flags)
- 	for (m = mnt; m; m = (recurse ? next_mnt(m, mnt) : NULL))
- 		change_mnt_propagation(m, type);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index 04939a9711e95..c7535ef0ae401 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -26,6 +26,7 @@
+ #include <linux/kthread.h>
+ #include <linux/pci.h>
+ #include <linux/uaccess.h>
++#include <linux/security.h>
+ #include <linux/pm_runtime.h>
  
-+	guard(mount_locked_reader)();
-+	touch_mnt_namespace(mnt->mnt_ns);
-+
- 	return 0;
- }
+ #include "amdgpu.h"
+@@ -1646,6 +1647,12 @@ int amdgpu_debugfs_regs_init(struct amdgpu_device *adev)
+ 	struct dentry *ent, *root = minor->debugfs_root;
+ 	unsigned int i;
  
-@@ -3414,6 +3417,10 @@ static int do_set_group(const struct path *from_path, const struct path *to_path
- 		list_add(&to->mnt_share, &from->mnt_share);
- 		set_mnt_shared(to);
- 	}
++	if (security_locked_down(LOCKDOWN_PCI_ACCESS)) {
++		drm_info(adev_to_drm(adev),
++			 "amdgpu: HW debugfs nodes disabled (kernel lockdown)\n");
++		return 0;
++	}
 +
-+	guard(mount_locked_reader)();
-+	touch_mnt_namespace(to->mnt_ns);
-+
- 	return 0;
- }
- 
+ 	for (i = 0; i < ARRAY_SIZE(debugfs_regs); i++) {
+ 		ent = debugfs_create_file(debugfs_regs_names[i],
+ 					  S_IFREG | 0400, root,
 -- 
 2.53.0
 
