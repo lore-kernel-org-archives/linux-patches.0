@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831033;
-	b=Y9agbFpAjCWiNbPCkQ0jP6HhUes/XenPiCHlyLe157ak8XlCvElErBjBbFTuPKzcFVNx
-	 iqcTFPyBHFodGIoQtNjtH5tz7Ot3qZZYuFR1kEZjJcyBR1DLlroVAjREsCehBF3//2huL
-	 EYL/o0ZdFB7e4TRFteQ/WuU25k+xKRznGxHm1twgLrLNvwjSukprRjKA8sxwn13LIZxLM
-	 EQ/fRgRaGWmCEXH8nXvdZz39I1hQRx2jnJmTj2zt/Srfp0JNl1IpGR0gqi1101Z0HPhbO
-	 ZM1yXSkZVFTdJFCYWkEXfW8VnOP4gT18+uLDwDp1cr30OSENKU/Dg1/hlVe5DpZvC9Q==
+	t=1793831034;
+	b=ad+jX5xsq1NNzgmT0Yeytxht0U6rIGuh/rdPBJa6JmriIkxqF3Rn5P+y8K7VDC9ZNAUE
+	 SY6FMp2OLi+BaCMhyt3rot7N13Gs+da7fNPuSZESS7YFRD+l6lhjDuCegLIvvDD2tXDMV
+	 Ji2prVFLw9EAbmLaC6On6A7jOrdi4Hr/SJ2syineTBLXeZGKjtChGduEhtEy5zY4+H5y5
+	 wwCVqpMm41+jo7keFGGoJf3SF+RGUqG7An09Cmpq4Zl8xijouxxy/szYqcjbUIfYFgu4z
+	 4mZvEuRAc01XXq3buYg0x9xgKnh6dEOjsPudLaxzpd60ML+UpjmkAgU1QttdJVuIj3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831034;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=lM0swU5y+ZSPNVbri3r7KbjW7jA0WG1QpzG2umL8Tcg=;
-	b=PR85Pc92j323NZ2NR58WZKX+xOjwCYNkoagSZ1knqtKUSjD3vVYsNqtykUrvI0En2ri4
-	 GxjW2dAbI6LvAytZrD0LSavBty1wR1eCc3RAjQVFzLQKwaF3iluVvZEj9c0yIKdNw+5At
-	 ZkwfJ+BRjoLm5EnWyFVqQrIe5BzK6lNeDuxGIaUdZjc9Zlo4Aq0PiL3sMzgfMfKRd7/j0
-	 IuCaW3A/0sTZWiLpoeePQKCQhuDRa/CGsZ0pwGFiD2YV/fehrJPe8QH4ltc+Hc0o+w5Yj
-	 RtLYB4k4LUkCCN6IGafHrPloxfFkYPRJVP8w5WRBh4qnxd4TnLw26iiVOx9Izeeod5A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=R97Gw77jkdSOm/J6zBPRSKnolcn2YJY67lKu08jp5O4=;
+	b=WrE7sE+BSouepkmGNcyEpQTcYzPMpBX1+22dE18g5Gld0y6uKGYUPv7V0+lB8z1FVOFC
+	 DEp/CoP2dm1RpjWqY7xaADAmj34zabT9/3Iz7dFg+w0xMZdP2AqVaMKg3LBU14LeFS2Fm
+	 3FhoXRhEWOsShgl6uhJca+BDBKFydJX1f0VssB7vAW2+4+JpElgd741gP8FjJbcJn0Z1x
+	 i2gsoF0vTCMulzAolG/wHN/l9hgE4OJEIAmUf43Upvgua0Ucxwvl5rPw0UDnAVTv4SPmS
+	 YrkeuytAp+Wtt41VT/0AobzkG+A34T1fiwXnltj7ayiwgXbLGKaTZBcoL7q0FHES7bQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ig06dbOK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ql5CPx5H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D67606A843;
-	Wed,  4 Nov 2026 22:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DC6606B38C;
+	Wed,  4 Nov 2026 22:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ig06dbOK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEEB1F000C1;
-	Wed,  4 Nov 2026 22:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ql5CPx5H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAFF1F00A1A;
+	Wed,  4 Nov 2026 22:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831032;
-	bh=lM0swU5y+ZSPNVbri3r7KbjW7jA0WG1QpzG2umL8Tcg=;
+	s=korg; t=1793831034;
+	bh=R97Gw77jkdSOm/J6zBPRSKnolcn2YJY67lKu08jp5O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ig06dbOKO1G6HTFKh327GFu9oU9W0Gal2hmR9KB+rla532rUP7a8qotHGIjgKXBG7
-	 MnbUs5YrM2U4iyRq5nHaVTxuBgY6I3Rs+VqkNZGKpZ9RSGP+6rQ6pWkY+JY0HLwxUR
-	 7gjMnQQRJV7JmdvJOQmpoAH2AYTzfccZos4YPbVw=
+	b=Ql5CPx5HcaTr3PLd5vaAS0Tio3eQxccdwLekt1yPZvgncS8XUZQFRwBlx111+d+VZ
+	 xnSnPvxgII2pqtZlsHDWZvn6XyZP3UC3wYcV1HNIBaxyx5hlmxAzpoEpmXnpyZ7Gcr
+	 aLWlOL3jlv/Q5U6Pp8ta8Ss49BRvaTI8eHg7lB74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thomas Huth <thuth@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0430/1005] platform/x86: msi-ec: Add MSI Katana GF76 11UEK EC firmware
-Date: Wed,  4 Nov 2026 16:02:43 -0500
-Message-ID: <20261104211056.139632512@linuxfoundation.org>
+Subject: [PATCH 6.18 0421/1005] smb: server: Make sure that passkey is not leaked on the heap in user_config.c
+Date: Wed,  4 Nov 2026 16:02:34 -0500
+Message-ID: <20261104211055.892016127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,44 +62,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
 
-[ Upstream commit 0b30e6e583b2988864ffa7aeb2905bc2d0c7d575 ]
+[ Upstream commit 2c5a176882695f73b52482df03b0017b006ef2d1 ]
 
-Add the firmware string '17L1EMS1.107' to the ALLOWED_FW_13 array.
-This enables Embedded Controller support, including battery charge
-thresholds, for the MSI Katana GF76 11UEK (MS-17L1) laptop.
+Use kfree_sensitive() to free the user->passkey (and the struct
+ksmbd_login_response in ksmbd_login_user() that contains the same
+information) to avoid that this information could leak somewhere
+else via the heap.
 
-Tested on MSI Katana GF76 11UEK with EC firmware 17L1EMS1.107 and
-BIOS E17L1IMS.312.
-
-Signed-off-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
-Link: https://patch.msgid.link/20260807180553.869371-1-aroslavdudkov622@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/msi-ec.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/mgmt/user_config.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/msi-ec.c b/drivers/platform/x86/msi-ec.c
-index 0157e233e4300..0cec54d497d1e 100644
---- a/drivers/platform/x86/msi-ec.c
-+++ b/drivers/platform/x86/msi-ec.c
-@@ -1054,6 +1054,7 @@ static struct msi_ec_conf CONF12 __initdata = {
+diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
+index 0e5fcd6f95c15..909f219c79faa 100644
+--- a/fs/smb/server/mgmt/user_config.c
++++ b/fs/smb/server/mgmt/user_config.c
+@@ -28,7 +28,7 @@ struct ksmbd_user *ksmbd_login_user(const char *account)
+ 	user = ksmbd_alloc_user(resp, resp_ext);
+ 	kvfree(resp_ext);
+ out:
+-	kvfree(resp);
++	kvfree_sensitive(resp, sizeof(*resp));
+ 	return user;
+ }
  
- static const char * const ALLOWED_FW_13[] __initconst = {
- 	"1594EMS1.109", // MSI Prestige 16 Studio A13VE
-+	"17L1EMS1.107", // MSI Katana GF76 11UEK
- 	NULL
- };
+@@ -82,7 +82,7 @@ struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp,
+ 
+ err_free:
+ 	kfree(user->name);
+-	kfree(user->passkey);
++	kfree_sensitive(user->passkey);
+ 	kfree(user);
+ 	return NULL;
+ }
+@@ -92,7 +92,7 @@ void ksmbd_free_user(struct ksmbd_user *user)
+ 	ksmbd_ipc_logout_request(user->name, user->flags);
+ 	kfree(user->sgid);
+ 	kfree(user->name);
+-	kfree(user->passkey);
++	kfree_sensitive(user->passkey);
+ 	kfree(user);
+ }
  
 -- 
 2.53.0
