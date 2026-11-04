@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830913;
-	b=XisyvpXBo/yu9UaxgkveVwbAAZ0EN7RANgeRReDnYaS64F9IK62uhVhuBxCVbrID917x
-	 Y/RGlT4FAfZ928uAe1lopZ8b1irhW6qnk6bqr4MebEBl4aNFo1zWa7RHUOdWaXothWwmF
-	 wMyD6iFmm5iYlRpEnb1Du1SAn1vyhlq7bIJ0ze4sx2LVe7w9henrE4j2K+LaV+PmZK1rU
-	 B3ZsICHi7BdmvI3kUJVgAdHnuSheo5qqI0JEmRLHl2JUmb4OcqpO4peQvLOr3I8LMCQd0
-	 ZXDIsimspzza9vhad4Fro9ChmaSZhh6+Ol82A8AmM95jvqzW9ckkeKKjvhQalgOItFg==
+	t=1793830915;
+	b=aPvtYf6fhotPygMn2XMbF5Z+ShmQ/DcR/oTQ+rRVC9/fPCVLGQwGXsrP4t42bfv9pJ36
+	 wFSwePf1/6FJfPyato01hkSHmvUqaweaPR7fvEvlMQJ12gYuANMwXx9yJkOC4tLtH8j1P
+	 lelr1GA1ynjDYInQ2ruyps1jWW5LCw5Nm8F84vmgZawid+X1xlDcV8mflm0SDO6iEEPTZ
+	 36bYvK93ErzGGP454hvdSh/T7MadDTmCoIhp/bsXsLl/lJRcNyA2jhqNAHnVjbv/WVCSs
+	 IHMdTQlaRZKFOi1JAVpFkMu2BsksLRoEoM49gj793eJ3EAmb0VB7r0S35NDGbyGJ2GA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830913;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YPDgguWo0+KrFhs9r4BTbhTaMGdgTVG2ClIpYDP8dSw=;
-	b=Eo1ZguJ4My05zT5Ql5y3Gz07hSA9hPL5VYqDp1w8MKwlVxxkSG2YuaIHjSBlwAEk0Tej
-	 keXAZDwhzrFxkkYv65CxLuE7GOwcfoNFnR3g2HwNopWG1NlhxIs0kw1d4Ehm3InEzdFIq
-	 mLE66hLl63y676Jqj3hm6JFE+9ZwO9dX+29h8MN1+C/b7raDV+BLMb1n5RlHNzDBJoC3s
-	 ICNBDEtUKl3UVwCLf8wnH8XaJh6HM5eIylahvBBibbwkxzN7al9o3+sbXWot+tceGhP37
-	 ThAt5ze71s8E/WeweFBESMIb0Kk2/XJBFkjJyNfNK3ZAGlZNv9BJ+Qodd/nISOnuKdQ==
+	bh=/MvQzBP9iV764am/wCut6VDGRFv5L1NuZtjOw1MOvms=;
+	b=HT4pvuyIWHrIBldj233oFU76Uh1IZOmVx1tSzspp86dBlDMy00Nh3FIpDWHaL+x1MIPv
+	 EIIT4EWrmOEvsj91YsFfa67dTrdqAeCrNTfRkZhh+OS/XgSnfL/ugMMSaAmFBgN5N0vyM
+	 XKw7dN8v1Qq/fy9jnYlStsH3+qiDOhGvqVJxMiGa5/LHZwnM7QaP//fgDB9iDyQ+JjEFL
+	 rFNR/xHmNVMtNlc2PZJ/fygS8ogTYjq37a+M92ABaeNHSd9MWGZdLcUGDw6E60SZSdYve
+	 tVJQvzJyjv+uqBL5+lDBNo+AbXtSL4KCWRLPfgW+mGnNkp7iWCfOwG1gFgUPBJuvK/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzAQcX1Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uoKufXAC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD41606A841;
-	Wed,  4 Nov 2026 22:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03424606A841;
+	Wed,  4 Nov 2026 22:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzAQcX1Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB611F00A16;
-	Wed,  4 Nov 2026 22:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uoKufXAC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF8A1F000C1;
+	Wed,  4 Nov 2026 22:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830913;
-	bh=YPDgguWo0+KrFhs9r4BTbhTaMGdgTVG2ClIpYDP8dSw=;
+	s=korg; t=1793830914;
+	bh=/MvQzBP9iV764am/wCut6VDGRFv5L1NuZtjOw1MOvms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VzAQcX1YtRdu0X3LJknV9MY/Ph1bs2UZrK1VtabFPZyWiI9dMgV6xp2yAOnNIBs7I
-	 wrmrzQAwpUJs9W/s5Y6dbaHXmlLiY9FFIaZrETUVJt2he+qH8pRjZqf2yxx95WgOcd
-	 maH5PFOkxyhYk7BUmTBTmBUXC6tVNfQLySazDXTs=
+	b=uoKufXACPPkOqNxwftLq/H2MOoM+A84s5YZhBSh8hX7NJ+Lqf/kyeUyojk/ERdaQL
+	 YnxozkYzdlo2zFqDh+2v8KWxEVnhivenoMNqtrj+H1KroT0Mauyl6IiG3HTjl+w+qB
+	 Yv+MBwoQIvKZMV7z7Z+/XBw1R3t8E9RjXIMzR+2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaultier Delbarre <Gaultier.Delbarre@amd.com>,
-	Wei Huang <wei.huang2@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Ankit Soni <Ankit.Soni@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	"David C.C.M. Gall" <david.ccm.gall@googlemail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0381/1005] iommu/amd: Fix missing CMD_COMPLETE_PPR response for invalid PPR requests
-Date: Wed,  4 Nov 2026 16:01:54 -0500
-Message-ID: <20261104211054.770124263@linuxfoundation.org>
+Subject: [PATCH 6.18 0399/1005] crypto: keembay - use crypto_memneq() to compare GCM AEAD tags
+Date: Wed,  4 Nov 2026 16:02:12 -0500
+Message-ID: <20261104211055.245586081@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,102 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: David C.C.M. Gall <david.ccm.gall@googlemail.com>
 
-[ Upstream commit bc1f5ec826bfa510e7138e2be5aad23907850874 ]
+[ Upstream commit 353b3a85136f2a0cf3e872acf8ad6c1dec0b7a8e ]
 
-The AMD IOMMU spec, requires the host to respond with a CMD_COMPLETE_PPR
-command when an EVENT_TYPE_INV_PPR_REQ event is received with the RX bit
-cleared. This response was missing in the current implementation, leaving
-invalid PPR requests unacknowledged.
+Use crypto_memneq() for constant-time comparison.
 
-Introduce amd_iommu_report_ppr_err() to handle EVENT_TYPE_INV_PPR_REQ
-events. The new function logs the invalid PPR request and when the RX
-bit is cleared, sends CMD_COMPLETE_PPR response.
+The GCM path in keembay-ocs-aes-core.c verifes the received
+authentication tag with memcmp(), which returns early on the first
+mismatched byte. This leaks valid-prefix length and allows for valid
+tag forgery which violates the INT-CTXT guarantee of AEAD.
 
-Reported-by: Gaultier Delbarre <Gaultier.Delbarre@amd.com>
-Co-developed-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: David C.C.M. Gall <david.ccm.gall@googlemail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h |  1 +
- drivers/iommu/amd/iommu.c           | 38 ++++++++++++++++++++++++-----
- 2 files changed, 33 insertions(+), 6 deletions(-)
+ drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index dee077bd149b7..5f43a0fcdd1e3 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -158,6 +158,7 @@
- #define EVENT_FLAGS_SHIFT	0x10
- #define EVENT_FLAG_RW		0x020
- #define EVENT_FLAG_I		0x008
-+#define EVENT_FLAG_PPR_RX	0x001
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+index 419f88af1031b..c4fd5e1849cdf 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+@@ -11,6 +11,7 @@
+ #include <crypto/internal/aead.h>
+ #include <crypto/internal/skcipher.h>
+ #include <crypto/scatterwalk.h>
++#include <crypto/utils.h>
+ #include <linux/clk.h>
+ #include <linux/completion.h>
+ #include <linux/dma-mapping.h>
+@@ -919,7 +920,7 @@ static int kmb_ocs_aead_run(struct aead_request *req)
  
- /* feature control bits */
- #define CONTROL_IOMMU_EN	0
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index e64e6da08a5f7..49587eafc0a8f 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -883,10 +883,40 @@ static void amd_iommu_report_page_fault(struct amd_iommu *iommu,
- 		pci_dev_put(pdev);
- }
- 
-+static void amd_iommu_report_ppr_err(struct amd_iommu *iommu, volatile u32 *event,
-+				     u16 devid, u64 address, int flags)
-+{
-+	struct pci_dev *pdev;
-+	struct device *dev = iommu->iommu.dev;
-+	u32 pasid = PPR_PASID(*((u64 *)event));
-+	int tag = event[1] & 0x03FF;
-+
-+	dev_err(dev, "Event logged [INVALID_PPR_REQUEST device=%04x:%02x:%02x.%x pasid=0x%05x address=0x%llx flags=0x%04x tag=0x%03x]\n",
-+		iommu->pci_seg->id, PCI_BUS_NUM(devid), PCI_SLOT(devid), PCI_FUNC(devid),
-+		pasid, address, flags, tag);
-+
-+	/* Skip COMPLETE_PPR_REQUEST response if RX=1 */
-+	if (flags & EVENT_FLAG_PPR_RX)
-+		return;
-+
-+	pdev = pci_get_domain_bus_and_slot(iommu->pci_seg->id, PCI_BUS_NUM(devid),
-+					   devid & 0xff);
-+	if (!pdev)
-+		return;
-+
-+	if (!dev_iommu_priv_get(&pdev->dev)) {
-+		pci_dev_put(pdev);
-+		return;
-+	}
-+
-+	amd_iommu_complete_ppr(&pdev->dev, pasid, IOMMU_PAGE_RESP_FAILURE, tag);
-+	pci_dev_put(pdev);
-+}
-+
- static void iommu_print_event(struct amd_iommu *iommu, void *__evt)
- {
- 	struct device *dev = iommu->iommu.dev;
--	int type, devid, flags, tag;
-+	int type, devid, flags;
- 	volatile u32 *event = __evt;
- 	int count = 0;
- 	u64 address, ctrl;
-@@ -960,11 +990,7 @@ static void iommu_print_event(struct amd_iommu *iommu, void *__evt)
- 		amd_iommu_report_rmp_hw_error(iommu, event);
- 		break;
- 	case EVENT_TYPE_INV_PPR_REQ:
--		pasid = PPR_PASID(*((u64 *)__evt));
--		tag = event[1] & 0x03FF;
--		dev_err(dev, "Event logged [INVALID_PPR_REQUEST device=%04x:%02x:%02x.%x pasid=0x%05x address=0x%llx flags=0x%04x tag=0x%03x]\n",
--			iommu->pci_seg->id, PCI_BUS_NUM(devid), PCI_SLOT(devid), PCI_FUNC(devid),
--			pasid, address, flags, tag);
-+		amd_iommu_report_ppr_err(iommu, event, devid, address, flags);
- 		break;
- 	default:
- 		dev_err(dev, "Event logged [UNKNOWN event[0]=0x%08x event[1]=0x%08x event[2]=0x%08x event[3]=0x%08x\n",
+ 	/* For GCM decrypt, we have to compare in_tag with out_tag. */
+ 	if (rctx->instruction == OCS_DECRYPT) {
+-		rc = memcmp(rctx->in_tag, rctx->out_tag, tag_size) ?
++		rc = crypto_memneq(rctx->in_tag, rctx->out_tag, tag_size) ?
+ 		     -EBADMSG : 0;
+ 		goto exit;
+ 	}
 -- 
 2.53.0
 
