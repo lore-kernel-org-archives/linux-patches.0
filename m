@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793804688;
-	b=oNFGtAqg/52YwugogggWhdlbEDKZ7v5O3Oq5yQaHIBZPPbP5QArkw5aXpsFVlahNR4nu
-	 nnaDPD0EX2/nn3//tU5GAEhck144/fPAAstGTnYlRefnaYUB3g0EqWE51OqOyYRSE/6b9
-	 j6q8pE435oMg1wItrKLunKzdwE+qQFz+zC8alHYdHLCqgZS3JhF7P8kqZvac5Cla7UYxT
-	 9jhme0DaufoenWk4PzmsIQThaOK0GDFjOnGIeIZUtNIBCxbqaxcF2cfeenrqC4e7Gu8BH
-	 7BFbzQQ34/ix2HILFkvyPC4Vte9F/Z1E6ASjlblYIJLcqjFjtqMyOOsetGavekKUONg==
+	t=1793804694;
+	b=eMI3W/8f2HVAEiacPnC6UmP/4qf6+A8XXhg5Wk+f8Yz549zKuGUKlsSXugTZcVfATGzo
+	 xzDrt06mN7EAb5jqR2Hhg8hfGD3XXhfrDZQwULUOdNWt6gALKcwa9uEBf9cyORRgGkDNp
+	 EqtP0UG5X/CYQdWJYiW02QZdvVLedn4aSMBZKK939p4OVTVwLbgFtd5/OcBU0aKuw6joS
+	 c3w+/XMhMGPtJfYioHVWL76qKbWA8enowxFKubWkxuDaeFrfEewPzebGWXUaCYY82Tq17
+	 TPxatQR34QrLgaZSvwOOj2EnQAWBam7SFhoUipY+1vsgMCveAV5leL3l5plLRHR7nOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793804688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793804694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=rS40NRoMRb1Axjjj6DLrLlKdWsMdXuRqZ21vY/yTWC4=;
-	b=CZhR48wDA43P/0qfAVjGw3jkHsin6rsw7UlUhFAPa5SFjsCp2q/3gB2vl9xNP2WgilJq
-	 HBsviBnpvf2mG7RCUspaNYUYYixzgrWi8OEFlVq6sV6GR1d8dOrjSgBJIMkzvzkloAZvr
-	 zMXPplqSzDhliaGc4TEeXIYRMYVm8lzahH9UXWeRUV2o0rr4WnAxwQ8pCBG+T9ves4hmV
-	 EUkgPxhBdqQqfkH+GoHMncbpAPpvEh3tKgqpvbqpjTXjQ156iUJeMvIE42479L7CW18+u
-	 nx+BbZy/LTt5zqQp2cGrG8uVr2rmfuhvP/eOCUFPZ8+wMrRdrnSFKEsX2TUq4rfRQXQ==
+	bh=VIHbFakvtRYmrKmEheBsDAQ67RJgya9s4SAj1gMN2CQ=;
+	b=gf5f9v0+DQRGzzKKvIxm8OInUi25SVNeAW8WxPegNZDSogrtQOYmAx0UC7xQlNnV7GcA
+	 7JkSElNMc8nkgyNELsVnNX7APihjnk9qzUijZTfUGE23qZmWnSdKAG3UdQi0CXiSLqCfr
+	 C9S96VIgedI53tteseoUtl2llaSHLyQgMcf9csM2xPyw/VugrNJsCFpkZd5MO5JmODYzN
+	 8ukPasEzM9B/x+N2uuTbSKTyDWqzmHoegxNXoNj1yY72rJgAvVjevcuh9zPFwbe0/qy8D
+	 CgbBoCzbU7R5qhanl8GD1ANnuBT7qSkNuxC87plqMAeGq523OH1HR6JXGIvb5DkQn2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=krUATiSa;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QY+SIf8F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86482606A33E;
-	Wed,  4 Nov 2026 15:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D90E606A338;
+	Wed,  4 Nov 2026 15:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=krUATiSa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D86B1F000C1;
-	Wed,  4 Nov 2026 15:04:42 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QY+SIf8F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68501F0093A;
+	Wed,  4 Nov 2026 15:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793804688;
-	bh=rS40NRoMRb1Axjjj6DLrLlKdWsMdXuRqZ21vY/yTWC4=;
+	s=k20260515; t=1793804694;
+	bh=VIHbFakvtRYmrKmEheBsDAQ67RJgya9s4SAj1gMN2CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=krUATiSaTdc5CcZdzxygeRGDWGOF+1KIfBcpsteqisvuJzbk/ZRcl8A5IMmjEfKbD
-	 DqBpYtxQNQktX1ttfPg1DcfUGCCpZ3Z8m9XIBmN70PKQ60pI2ZjrKwkvZoru7OfuHF
-	 1qI4JMj07swSks4IW4xh025Xa6upRn4/ht+zwOcGRkU5qlf7k/N2POfepYAE37Z6Bi
-	 pVecfsaLIB/HhJCPlu5ZsPp3sym/iHk5ekIcosNYx1EmSbsUo/9uS5OhQkrPdj/a7S
-	 HQDOiORokzmOAtD2m9H72Ou3aK+mXkCs6uYolzoq0f+9J6bI/uXskIvaWjhXVIP1bh
-	 utXPeW4f8x9jQ==
+	b=QY+SIf8FWvjX5QhUGC7LINeUhwJrVmbPkU0gCVOhMDy9fy7S6ffhBW7GPIIPwxIKb
+	 Zm/nhsWza68aq3T8tn8ysDgd1jo/G1POvKqtvYj4GADAc1LVE5SEDoMgLVRYDCjyUS
+	 DyfsGfW4HQp4SXXCCa8YiP1QMykhRbL6LrWJWz84oaIFJ69Xk+5AnPrIrfMQKPevLt
+	 mMGTm5jPA1V/yVTiUJoo/Eofyq2fB/ZSDZbBWyEyKqODIaGu6bsFysxErv+lbLntyV
+	 36ruBV4U0Y950wikEcNK3PX4H2lYdSxU+Wel8y0X7I4S5BmwrC7BwPFUnBqWaEMHdz
+	 z6BRRVgMtqc5w==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -61,9 +61,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v4 12/25] KVM: guest_memfd: Invalidate mappings before memslot unbind
-Date: Wed,  4 Nov 2026 20:33:09 +0530
-Message-ID: <20261104150322.3516320-13-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v4 13/25] vfio: Track device use by guest_memfd
+Date: Wed,  4 Nov 2026 20:33:10 +0530
+Message-ID: <20261104150322.3516320-14-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
 References: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
@@ -78,63 +78,57 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use the generic invalidate_start/end helpers to remove shared and
-private device mappings before removing the memslot's guest_memfd
-binding.
+Add gmem_attached to record whether a device supplies guest_memfd
+backing, and initialize gmem_lock.
 
-Hold gmem_provider_lock() across invalidation and binding removal to
-prevent device unlock from racing with teardown.
+Changing gmem_attached requires both gmem_lock held for write and
+dev_set->lock held. This lets device file operations check the flag
+under gmem_lock for read, while reset checks use dev_set->lock.
 
-Keep the file attributes and has_private_ranges unchanged. Deleting a
-memslot removes mappings but does not share the backing range. Device
-unlock remains blocked until userspace shares the private ranges or
-closes the last guest_memfd reference.
+This patch adds the flag and initializes the lock. Later patches set
+the flag after successful provider setup and clear it after provider
+cleanup.
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Alex Williamson <alex@shazbot.org>
 Cc: Sean Christopherson <seanjc@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: David Hildenbrand <david@kernel.org>
-Cc: kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- virt/kvm/guest_memfd.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/vfio/vfio_main.c | 1 +
+ include/linux/vfio.h     | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index d3de2e7bb9f5..870fe11c1c5c 100644
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -1873,6 +1873,8 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	unsigned long start = slot->gmem.pgoff;
- 	unsigned long end = start + slot->npages;
- 	struct gmem_file *f;
-+	struct gmem_inode *gi;
-+	enum kvm_gfn_range_filter filter;
+diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
+index 4e5d738ccf4b..ff49f2fdb602 100644
+--- a/drivers/vfio/vfio_main.c
++++ b/drivers/vfio/vfio_main.c
+@@ -290,6 +290,7 @@ static int vfio_init_device(struct vfio_device *device, struct device *dev,
+ 		return ret;
+ 	}
  
++	init_rwsem(&device->gmem_lock);
+ 	device->index = ret;
+ 	init_completion(&device->comp);
+ 	device->dev = dev;
+diff --git a/include/linux/vfio.h b/include/linux/vfio.h
+index 0cc91c6f96d2..2436b8bd600a 100644
+--- a/include/linux/vfio.h
++++ b/include/linux/vfio.h
+@@ -37,6 +37,13 @@ struct vfio_device_set {
+ };
+ 
+ struct vfio_device {
++	/*
++	 * Serializes guest_memfd provider setup and teardown with device file
++	 * operations.
++	 */
++	struct rw_semaphore gmem_lock;
++	/* Updates hold gmem_lock for write and dev_set->lock; either permits reads. */
++	bool gmem_attached;
+ 	struct device *dev;
+ 	const struct vfio_device_ops *ops;
  	/*
- 	 * Nothing to do if the underlying file was _already_ closed, as
-@@ -1892,8 +1894,13 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	 * drops slots_lock, so there's no need to verify the file is live.
- 	 */
- 	f = file->private_data;
-+	gi = GMEM_I(file_inode(file));
-+	filter = kvm_gmem_get_all_gfns_filter(file_inode(file));
- 
- 	filemap_invalidate_lock(file->f_mapping);
-+	gmem_provider_lock(gi);
-+	__kvm_gmem_invalidate_start(f, start, end, filter);
-+	__kvm_gmem_invalidate_end(f, start, end);
- 	xa_store_range(&f->bindings, start, end - 1, NULL, GFP_KERNEL);
- 
- 	/*
-@@ -1902,6 +1909,7 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	 * to guarantee kvm_gmem_get_pfn() can't see the slot+file.
- 	 */
- 	WRITE_ONCE(slot->gmem.file, NULL);
-+	gmem_provider_unlock(gi);
- 	filemap_invalidate_unlock(file->f_mapping);
- }
- 
 -- 
 2.43.0
 
