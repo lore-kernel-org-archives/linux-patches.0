@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831548;
-	b=x3s5Vx5NE7nbupXSKxmUUoz1ZaBYdKVjIynQI5so1+mI1JfrLiQaQLz7QcmSC4WtJsHB
-	 oAZOSw/TwgllbRZGhQsFF1gc4ddhtRPboqrTLds5OVrDLr4JEBTAKydQ3KWFfYG5+HYMe
-	 hGx6a8Vg28lvKEJUqYq+45xzlIlF6Z3zbn2DN94Ku8shsbP0wdkT1Q04yeP73wqPTOfr+
-	 LlCQswlOuz5OFTGp6ReoAAGF0ZGuq8sVJ8o025pj6zKnHW/UWXEBPkF/e/oL0KSzbkO/O
-	 lf2ItUdXMrUQQ65JxCkmL4nILRWkk6cevFCOG5P5alQh1RMA2OkM9hC7lpKF1NNfZkQ==
+	t=1793831554;
+	b=HOMdj04HA7N4cCD7CIDjRzloczep+alGYm1nXqnbSmoE57TOSfLXO8ng9kAq8eZ7+tqk
+	 kEjNWZO8p0d/CGfDR2ay5g1Zke7FGVtB2seFtH9IZkNgLRObrB6HSygyHH5xc4fdc5csd
+	 u4xXFcS+FaEp3j/L8kKWS9wE69IhuHPboMba2TipiOVQrl6G0xf9TFyQFz3+Kn10npj8q
+	 9qqcqEOfXAUzv7TqVHR8MoAgljDOhU3ZeEIcTGxe1hh4WgMLP+u1VHzx8RKy5hdqaIvLO
+	 8fP4ISnbTz+FZmf4j+XV1WbSYaeenVljC5NIF4xTIJzBp0xGl3vl2BjSJFGzUNEYEsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831548;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IkAFR7STfNIJPKjkASftk05R8m8vd1fCi3m83M3HXu0=;
-	b=QBQt7OLRD3wSUqVMnt1Hd45hfa7XXfgtn4gaUP5pUJsGp1Q9MnEI+b/OPEcnNs2ljMOO
-	 fR0LxrW099Ouu/D6TcV8drmSIdlqkutdQ9WUh7UqmMoNRhsDOwq1buetTSZARwA2GBEv+
-	 gNRasW2FrlH5BLSfJ51et96BycuJ9N9tYwUpkrWMNt8ykGtx69f6+gYsGoKDbh3srjf/e
-	 mUz7bv5tzIjvB3ldGDGZMgq3zLZC8TbqzzuV5IVknYx9kONN5swLOgB9EAlBmQCD8cs9X
-	 xBJ6EvTsvClxrq/lwDG9Bf7Op6SrH+lezdG9z+/2L1xQD6Sz+8sJLw3OB7YwZOVGhEg==
+	bh=skAYuL4YVJkdbrBdsqGzD50YJfyjp/3truE9yL6Nfts=;
+	b=u9d8TCacQnhcmWPKqWyNzxwZQGXSmFmuhiVSX/AKnDeorRmRD+nbEICkynPG4m710Ps6
+	 wRZIw+2i2v4pe+dCTfvI0ZmR2qdxJHCmK/MXHMP+mzwQMeDb664wbVla9ueSrqhc0L1R1
+	 mX18ijw4Lc0Yu94mpnYjyPwQZ+5MWZsYN+HXgcCITho5dAWpmWRNWR4XxF2wz3gSw4rCM
+	 6xaq2IZhqPIyvDjPlc3HoLO7RYUpfQsWKtfEzmOpXAjBld0cmb0lTJahrN49A9f8I/L7y
+	 xw5MMvyRroajPcHpA3R8Zl8XMYjVQZGS9s65LXDnurPkYwV3+3SMQh9CWkhXUxFzOvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSoFEZCl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GY83yH8Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F333606A85E;
-	Wed,  4 Nov 2026 22:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE49606A844;
+	Wed,  4 Nov 2026 22:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSoFEZCl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE4C1F00919;
-	Wed,  4 Nov 2026 22:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GY83yH8Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677761F00A02;
+	Wed,  4 Nov 2026 22:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831548;
-	bh=IkAFR7STfNIJPKjkASftk05R8m8vd1fCi3m83M3HXu0=;
+	s=korg; t=1793831554;
+	bh=skAYuL4YVJkdbrBdsqGzD50YJfyjp/3truE9yL6Nfts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSoFEZCly92CttzxcWuddgiK5JPyla4Ob+CS4G+qXeb/LclnX/i99JqaLhnHTrA8r
-	 tcporiANa94B7hgm/q+rYaLpqVzhbsahfHqcUqqJ7Amza/hjxglUSlGUOB3DArTV5b
-	 vuvWPtZlltO6BZhoIztjBvVeG0qXMifZFLWjQXrs=
+	b=GY83yH8QX3V4XK5Bf7H0E5P7c5q0EA94sekxIOQBHTGP6seqUwoLucsTDtrjQ8US+
+	 /SMla5N5aB4zte3VdudHtCxDL/wQROTx8iJHD3f8nUCgVwp58J21jiZeRXyfBlrObp
+	 lG65E9KZT6fbyL2M4SwCuUcBVRDPpH9yDKT3ZX8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.18 0772/1005] ovl: skip copy up of empty security.capability
-Date: Wed,  4 Nov 2026 16:08:25 -0500
-Message-ID: <20261104211105.007764106@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 0773/1005] xfs: clear the symlink zapped flag if inline symlink is ok
+Date: Wed,  4 Nov 2026 16:08:26 -0500
+Message-ID: <20261104211105.032130788@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,71 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 50912a1715b8a7c614b654011a0db750e372b43e upstream.
+commit f8d0d90f2e24b1f4a14796ae63cebfd820cadfcd upstream.
 
-ovl_copy_xattr() gives up if it can't read an attribute that
-listxattr() has named.  An empty security.capability, which anybody has
-been able to store on any file for a long time, is such a case: it is
-listed, and getxattr() has nothing to return for it.  A file in a lower
-layer that carries one can't be copied up: it can't be written to,
-renamed or have its mode changed.
+LOLLM noticed that we fail to clear the SYMLINK_ZAPPED flag if an inline
+symlink checks out ok, even after a repair.  Fix that.
 
-There is nothing to copy if there are no data.  Go on with the next
-one.
-
-Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
-Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: treat -EINVAL as no capability too, and do the same in
- ovl_copy_up_meta_inode_data()]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: d9041681dd2f53 ("xfs: set inode sick state flags when we zap either ondisk fork")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/symlink.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -75,6 +75,15 @@ static int ovl_copy_acl(struct ovl_fs *o
- static ssize_t ovl_getxattr_value(const struct path *path, char *name,
- 				  char **value, ssize_t *value_size);
- 
-+/*
-+ * Any user can store an empty security.capability, which fails to read with
-+ * -EINVAL.  It grants no capability, so treat it as none, like no xattr.
-+ */
-+static bool ovl_no_fscap(ssize_t err)
-+{
-+	return err == -ENODATA || err == -EOPNOTSUPP || err == -EINVAL;
-+}
-+
- int ovl_copy_xattr(struct super_block *sb, const struct path *oldpath, struct dentry *new)
- {
- 	struct dentry *old = oldpath->dentry;
-@@ -134,6 +143,10 @@ int ovl_copy_xattr(struct super_block *s
- 
- 		size = ovl_getxattr_value(oldpath, name, &value, &value_size);
- 		if (size < 0) {
-+			if (!strcmp(name, XATTR_NAME_CAPS) && ovl_no_fscap(size)) {
-+				error = 0;
-+				continue;
-+			}
- 			error = size;
- 			break;
- 		}
-@@ -1115,9 +1128,9 @@ static int ovl_copy_up_meta_inode_data(s
- 	if (c->stat.size) {
- 		err = cap_size = ovl_getxattr_value(&upperpath, XATTR_NAME_CAPS,
- 						    &capability, &cap_size);
--		if (cap_size == -ENODATA || cap_size == -EOPNOTSUPP)
-+		if (ovl_no_fscap(cap_size))
- 			cap_size = 0;
--		if (cap_size < 0)
-+		else if (cap_size < 0)
- 			goto out;
+--- a/fs/xfs/scrub/symlink.c
++++ b/fs/xfs/scrub/symlink.c
+@@ -70,21 +70,20 @@ xchk_symlink(
+ 		return 0;
  	}
  
+-	/* Inline symlink? */
+ 	if (ifp->if_format == XFS_DINODE_FMT_LOCAL) {
++		/* Inline symlink? */
+ 		if (len > xfs_inode_data_fork_size(ip) ||
+ 		    len > strnlen(ifp->if_data, xfs_inode_data_fork_size(ip)))
+ 			xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, 0);
+-		return 0;
++	} else {
++		/* Remote symlink; must read the contents. */
++		error = xfs_symlink_remote_read(sc->ip, sc->buf);
++		if (!xchk_fblock_process_error(sc, XFS_DATA_FORK, 0, &error))
++			return error;
++		if (strnlen(sc->buf, XFS_SYMLINK_MAXLEN) < len)
++			xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, 0);
+ 	}
+ 
+-	/* Remote symlink; must read the contents. */
+-	error = xfs_symlink_remote_read(sc->ip, sc->buf);
+-	if (!xchk_fblock_process_error(sc, XFS_DATA_FORK, 0, &error))
+-		return error;
+-	if (strnlen(sc->buf, XFS_SYMLINK_MAXLEN) < len)
+-		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, 0);
+-
+ 	/* If a remote symlink is clean, it is clearly not zapped. */
+ 	xchk_mark_healthy_if_clean(sc, XFS_SICK_INO_SYMLINK_ZAPPED);
+ 	return 0;
 
 
