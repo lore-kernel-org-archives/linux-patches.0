@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831956;
-	b=tK63E25KkDNPQQKxkjP0xZNbinULynfbHx7E6UCabN/jsB9gBMV0HAma3QFkyIHxmTlX
-	 /rh5qz/shrD2NtXqxWds/usYieIOyjUmSt6nJXUhmXlNYwYmKcuGNE4w5Spawr8wAXPuM
-	 HpaB/mGmHSSqX1ezjZzGcHnPh/oxnGpLo1LQ064dI3BPlnvXQtGxXsPsx3hmnQnCgdEj6
-	 7y4dE5KVm/PyfLD6/QMyH5JzspXFTT/xBXIpIW88Zgga5uRZcqdsbxnA3PWt8sK/YgdDY
-	 1zSK7DowUGuY8MhtkWhoqCnvGACL9OMh83xCY4pKOKC6MPvsfs4gsmQSASL8WQErIDA==
+	t=1793831958;
+	b=u3dQsw1TdCL7eN3M2qZLB0y65nrZfcaNzeESfMAsT4ca3I3+KpDegmhQ7Blq7fCd99cV
+	 hKUz+BRafcqvb2baEDC9/Nj9kYrjGEl8qK5i0uht09bue83LgT1Hn9tdzlTQ8sTK5C/eq
+	 PqS6x7r/QQQboTF+GTKGhzMUaOzipigEGvY76HCa4QjFjdv6yrpafwlEv8K/WlHM8/mdX
+	 9ouCH6ZLo7LdFyqBhPMEAY95fkix1nEhj7hh082thdboTw9L+aydKPdFzDgfLyLsAb280
+	 Hcfjv8IkZBAKO3qAtPKKkLw4ye8CJR9KsRz7sKxQjdBupuMIeMJFz0phYrNVp8YOeRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w75BLrcYq/ahEGFc3yqJS8JFZU85jgJ3DK2SU43lTNE=;
-	b=0ksFE62H9gTafY5La30MYGwsQ8eU4TzGZ6Zq2JjySnTxh35KE3sAV+u8jKLf1qNhyv30
-	 yDeUG7MdjsVswBaI1HTND6sRbqAmKgZ2KxEFgZuuPVQXeqw/85l989ez8+3cFQtN1EYnm
-	 T1ymPK6YTwaisA6UQwAwV9pH4orgrrve1LYCb9OIHl9dcB6x22Xc/Mlf5gBxtunK0DRt5
-	 VwAmhEXL3qpI1Stn6q4HOZeFktNm3ZCckFHYqOBpXZqCA2rzc1Ha9tGw+2muYLiOllFTS
-	 dKlBkA3533fcTksKlX76df6AMuEKIf6+TPvayzmIf3G3oJmnNoJmrjRQMvKLg7W+adQ==
+	bh=aG/5cyztFOcH8kUAr04I+lttdSBH/iBHDUsg2Kddaz0=;
+	b=wxyyVZyz9UZlPlYIypVn8Y2kjSSeVgew405wcwSr4uqS53rmskKcVx/TyiiJnnTXqt6e
+	 Y0kq68XvpgYCNPgumCrfaA2uXPWh0KoN0wSOMEdDWqd1HpsnavGWmAuFwHR2t2jV7VYbU
+	 47A2lpdpA2jI5LpKSOqF0h/rQLXe8PDdvIuvOXxzjLiglDPOS3p1ZZrFCxyF4E0H14ilB
+	 0UC4N7gUTfMrytOpYSBw+UrQMXuXipouFFwQnKxmxtQlO6/mYt8JTnlbMh9ITKqRfIWr/
+	 dY1W9m3YSDqpmlrop9E6izaXuFuiYw2Ijxez9v033jg0RnJPb5yH2QOVKxM0lA24bPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B8GgUa25;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D3ZD+G45;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B3C606A875;
-	Wed,  4 Nov 2026 22:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3A1606A850;
+	Wed,  4 Nov 2026 22:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B8GgUa25
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003AD1F00919;
-	Wed,  4 Nov 2026 22:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D3ZD+G45
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A17A1F000C1;
+	Wed,  4 Nov 2026 22:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831956;
-	bh=w75BLrcYq/ahEGFc3yqJS8JFZU85jgJ3DK2SU43lTNE=;
+	s=korg; t=1793831957;
+	bh=aG/5cyztFOcH8kUAr04I+lttdSBH/iBHDUsg2Kddaz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B8GgUa25IIsrIUMDs0nyuhnBLN59Qy57huef2f2ht0wDNfgKEGqYMLg9FZP5VY7HG
-	 eoxI8CzG0m79qVSUJxOf+SQFreG8BtJx0xTqoXDg12OsgWsi0JbcFJJr+Z34lYjf2B
-	 /3E9vsoOW/UpD6W5pdZSHQ/n1++Ls0B/LbzwY8l4=
+	b=D3ZD+G45kiUKNalNn1rsSp1782EDf8Yl33Te+uPDU1cpF8HA8MBNlLa1KrBUWIQjg
+	 ufSWYSty8KXnaMUJm01qSxPnnFPz7YEABB1sishYsGsAyOdnKYgwntN77/wnNgJaRH
+	 /PoAGZA/uBOCXTBYJ4OO0kOGMUr2nYdQJ2INz5RI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.18 0989/1005] ksmbd: prevent stale data from being written by SMB2 WRITE requests
-Date: Wed,  4 Nov 2026 16:12:02 -0500
-Message-ID: <20261104211110.740515746@linuxfoundation.org>
+	Cheng Yongkang <teel4res@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 0980/1005] io_uring/timeout: count cancelled timeouts in cq_timeouts
+Date: Wed,  4 Nov 2026 16:11:53 -0500
+Message-ID: <20261104211110.494623841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,107 +67,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-[ Upstream commit bc0e0f5ac1d7b044d403f859406b4b66d4b1ce9b ]
+Commit 1c8b49851543f41fc8bb18bcd1f15cc93d14b530 upstream.
 
-Initialize the compatibility byte in request buffers without zeroing
-the entire allocation. Keep the one-byte compatibility exception for
-SMB2 messages so valid zero-length WRITE requests remain compatible,
-and validate the data range in the WRITE handlers against the current
-compound request before accessing it.
+io_timeout_cancel() posts the cancelled timeout's -ECANCELED CQE without
+advancing ctx->cq_timeouts.  io_timeout_fn() and io_kill_timeout()
+advance it for every timeout CQE they post, and io_flush_timeouts()
+computes the number of non-timeout completions as
 
-This prevents stale request-buffer data from being written to files or
-sent to IPC pipes.
+    seq = cached_cq_tail - cq_timeouts
 
-Fixes: 443d61d1fa9f ("ksmbd: allocate one more byte for implied bcc[0]")
+to compare against each off timeout's target_seq.  The cancelled
+timeout's CQE is therefore counted as a regular completion, so every
+cancellation makes an already armed off timeout fire one completion
+early.
+
+A ring with a keep-alive timeout of off=4 completes it after two NOPs
+when one off=100 victim is cancelled through IORING_OP_ASYNC_CANCEL, and
+before any NOP when two victims are cancelled.  The cancel CQE should
+count, but the cancelled timeouts' -ECANCELED CQEs must not: the
+expected counts are three and two NOPs respectively.
+
+Advance cq_timeouts when io_timeout_extract() succeeds, under
+timeout_lock and before the -ECANCELED completion is queued, matching
+io_timeout_fn() and io_kill_timeout().  The -ENOENT and -EALREADY paths
+post no new timeout CQE and keep their accounting.  Both the
+ASYNC_CANCEL and the TIMEOUT_REMOVE path go through io_timeout_cancel().
+
+Fixes: bfe68a221905 ("io_uring: off timeouts based only on completions")
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-32436
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Inlined the unavailable smb2_current_req_len() helper and omitted the decompression change because compression support is absent. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Link: https://patch.msgid.link/179328314078.648427.13761781546953594668@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c |    1 +
- fs/smb/server/smb2pdu.c    |   36 ++++++++++++++++++++++++++----------
- 2 files changed, 27 insertions(+), 10 deletions(-)
+ io_uring/timeout.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -520,6 +520,7 @@ recheck:
- 		if (!conn->request_buf)
- 			break;
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -327,6 +327,9 @@ int io_timeout_cancel(struct io_ring_ctx
  
-+		conn->request_buf[pdu_size + 4] = 0;
- 		memcpy(conn->request_buf, hdr_buf, sizeof(hdr_buf));
+ 	raw_spin_lock_irq(&ctx->timeout_lock);
+ 	req = io_timeout_extract(ctx, cd);
++	if (!IS_ERR(req))
++		atomic_set(&ctx->cq_timeouts,
++			   atomic_read(&ctx->cq_timeouts) + 1);
+ 	raw_spin_unlock_irq(&ctx->timeout_lock);
  
- 		/*
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -7218,23 +7218,28 @@ static noinline int smb2_write_pipe(stru
- 	int err = 0, ret = 0;
- 	char *data_buf;
- 	size_t length;
-+	unsigned int data_offset, req_len;
- 
- 	WORK_BUFFERS(work, req, rsp);
- 
- 	length = le32_to_cpu(req->Length);
- 	id = req->VolatileFileId;
--
--	if ((u64)le16_to_cpu(req->DataOffset) + length >
--	    get_rfc1002_len(work->request_buf)) {
--		pr_err("invalid write data offset %u, smb_len %u\n",
--		       le16_to_cpu(req->DataOffset),
--		       get_rfc1002_len(work->request_buf));
-+	data_offset = le16_to_cpu(req->DataOffset);
-+	req_len = le32_to_cpu(req->hdr.NextCommand);
-+	if (!req_len)
-+		req_len = get_rfc1002_len(work->request_buf) -
-+			work->next_smb2_rcv_hdr_off;
-+
-+	if (data_offset < offsetof(struct smb2_write_req, Buffer) ||
-+	    data_offset > req_len || length > req_len - data_offset) {
-+		pr_err("invalid write data offset %u, length %zu, req_len %u\n",
-+		       data_offset, length, req_len);
- 		err = -EINVAL;
- 		goto out;
- 	}
- 
- 	data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
--			   le16_to_cpu(req->DataOffset));
-+			   data_offset);
- 
- 	rpc_resp = ksmbd_rpc_write(work->sess, id, data_buf, length);
- 	if (rpc_resp) {
-@@ -7391,14 +7396,25 @@ int smb2_write(struct ksmbd_work *work)
- 		writethrough = true;
- 
- 	if (is_rdma_channel == false) {
--		if (le16_to_cpu(req->DataOffset) <
--		    offsetof(struct smb2_write_req, Buffer)) {
-+		unsigned int data_offset = le16_to_cpu(req->DataOffset);
-+		unsigned int req_len = le32_to_cpu(req->hdr.NextCommand);
-+
-+		if (!req_len)
-+			req_len = get_rfc1002_len(work->request_buf) -
-+				work->next_smb2_rcv_hdr_off;
-+
-+		if (data_offset < offsetof(struct smb2_write_req, Buffer) ||
-+		    data_offset > req_len ||
-+		    length > req_len - data_offset) {
-+			ksmbd_debug(SMB,
-+				    "invalid write data offset %u, length %zu, req_len %u\n",
-+				    data_offset, length, req_len);
- 			err = -EINVAL;
- 			goto out;
- 		}
- 
- 		data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
--				    le16_to_cpu(req->DataOffset));
-+				    data_offset);
- 
- 		ksmbd_debug(SMB, "filename %pD, offset %lld, len %zu\n",
- 			    fp->filp, offset, length);
+ 	if (IS_ERR(req))
 
 
