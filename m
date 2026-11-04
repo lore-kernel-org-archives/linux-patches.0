@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826895;
-	b=MdrLgOpsPEZ0Tvo9CYx73/09VYnUvHfJ1BZrEJ3htNa4ZqYVL5Tgggg7OZdHYeQ5kh+x
-	 FfAH8gSJI5K0iBwwohd2Frw/UDW4gTU4MREDiBo8je3Bqm3OdHYlpep5nxoaohWTdhkSS
-	 dygfD5NruUaMcHX/C22EK7EJhVDsUvF9DTquF1/HL0/veuVJsZCbyfhgzcdwXKJxUjdSg
-	 8TvDQ7rSmbUcNk50BoPmvRblcdgPK4M6noLJZ0vud7fZwv4FK3BIkojubRgX8wJAG8ikH
-	 66CkFDgKkrzonxrU2TpGoAf1R898eZ5KSQ5X6+TU+9kW0dWqCmNuYCcAPlA+I7gNInw==
+	t=1793826897;
+	b=znvElajMdAnZn6TrZELZEvi9EFF1sE6b5XrYjus3DH657nIBcbOj4xHu1yVx7VqnB6so
+	 +z3EsGBOi4ntd//O6l8M8wuXSAoQp3ppeCpKgf64bPPYO+TSfuer96UCwosVk5s2Gc0Lp
+	 HZWGBfC1ddiJTEAP1NpnCjWbxYD9cDmhfqBnNYbMYLZVVx9batGGUpKzU98VJ/wQKMzLM
+	 42fnL6O1g/91pWk37cTthx/QTowfwX2FRUgiN4wGdZt/qo3OpAM8duOgHsDyTsdNb5NHy
+	 9LPkTtUk2DXXeOleAqLIln0owkvmUegReyBV1WWMLvB2finxrCIT4ZAZuIWawDifrOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826895;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826897;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=YbGIlWdmYkGEDpfICqQOJW5WMvkgPcJvVhBIt4tn5gQ=;
-	b=A9F88PjQZdn6OpPIg42looXBK04J7KCdOay/Z+VXeTvYStKum4bYKIPinRCtCG9MC4bJ
-	 lat+qKA/UC8xHKfuUFmPetOA/KSk/Pu/2sZNHpGhqVK0WNWPTxsdv1tmKZNIKLQDgM6G7
-	 S5KE03HfYVXxvEIdbRZx+nztAXMYYr69ahVF/yfwVyyjREX8gD1nUD+qay4to22y/oK8p
-	 GeQiOA9SFsDMaWOjnVi2bycVYmGL8Rk/rME1OJrYaxCh3kb9Xv3obiMyaOGtG6GapxrMc
-	 I6hFuh9Ipi5irRbVegBOWf/95hc137aa8j5xpswZKdAB5S3p8aptQZsgCnvIsnanhaA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CjG+oREx2WvP5NWTO0L21NS7l0ODlLJ30zPN15dSUHI=;
+	b=J2eI+JWATsqMe/0UUQFch2avCTNxinuS7kAhKXe1HGa8vBOsAGSOKDDLhRgDCoFRJsN8
+	 IgJjhsQrw/TxcDgV8DxXGMIyOhuNsRI07Xgk1cKDHb3A7qYUk0txij2tkoVhEFQRIAiy0
+	 4SMd9CO5ycR+bt2im1YQGVzgUM66FRgYsmQcxL5EZex83Pl8kvvV+l4SE5LkCSQ6tWm7/
+	 q0QPfgks3n1ceT+VbM00vrPEnrQMhj2UsyQPqdx/hAXNio4SJ+coOyHy1xnJ6hTroVmcN
+	 s34xcZ8lVylKAg1W4qPBW2YYrzPyFtTQPlyxyAaok9ShNt3IJ0VOEuT83c45tn9QMdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCtieBlm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XK7EeZCM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57736070761;
-	Wed,  4 Nov 2026 21:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DD26070762;
+	Wed,  4 Nov 2026 21:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCtieBlm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAF91F000C1;
-	Wed,  4 Nov 2026 21:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XK7EeZCM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C091F00919;
+	Wed,  4 Nov 2026 21:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826894;
-	bh=YbGIlWdmYkGEDpfICqQOJW5WMvkgPcJvVhBIt4tn5gQ=;
+	s=korg; t=1793826896;
+	bh=CjG+oREx2WvP5NWTO0L21NS7l0ODlLJ30zPN15dSUHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dCtieBlmxYCNCF8+nxZd4AxavHihvu08qLbiLsWBo5Nw4cfIFe6ZaiGHatb2jwpPL
-	 UYZLvnn+G3MjO/E9hiumsCTHSv7A1CO5Db5kLtmHq8KrHtjdsEuo/vSwt02d1ZLbr7
-	 3LdSot6dQD9CZ6OvrUJ0TgdhKxlLXupSJmpzrS6M=
+	b=XK7EeZCM6x4dhjrxqV+/6L/G8RY49mH6tDMQJL5I4wV0E0uu/lCmLSb3E5ijs8M3R
+	 4O2k/neh+5bsAhaeEKjesnPibQGHSdW5GU+Pc45Ns2zpdq85Nca5UyTyvPsfGsfux4
+	 NNJOimfpMxLr9x6tCmfFd/t+jrwne9VKXGHclG58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 053/547] io_uring/sqpoll: let the thread sleep on disabled rings
-Date: Wed,  4 Nov 2026 16:03:57 -0500
-Message-ID: <20261104211039.803624522@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.3 071/547] blk-crypto: fix NULL deref and UAF in __blk_crypto_evict_key()
+Date: Wed,  4 Nov 2026 16:04:15 -0500
+Message-ID: <20261104211040.280623826@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -62,59 +63,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit d492dcbb3b81c1c2d0aabef41fa1307093f3a556 ]
+commit c8c53d669d4e45b3a804013251a34387d7e11bfb upstream.
 
-__io_sq_thread() doesn't submit anything as long as the ring has
-IORING_SETUP_R_DISABLED set. The check that keeps the SQPOLL thread from
-going to sleep while the SQ ring holds entries doesn't know about that.
-If an application fills in SQEs first and enables the ring later, the
-thread finds that there is work each time it is about to sleep, goes
-around, doesn't submit it, and so on. It uses up a CPU until the ring
-gets enabled.
+Sashiko reported a possible NULL pointer dereference, triggered by the
+following flow:
 
-Entries in the SQ ring of a disabled ring are no reason to stay awake.
-io_register_enable_rings() clears the flag and then wakes the thread, and
-the flag is looked at after prepare_to_wait(), so the thread can't miss
-that.
+  dm-inlinecrypt ctor            # first use of the fallback
+   ├─ blk_crypto_init_key()      # succeeds, ctx->key.size != 0
+   ├─ blk_crypto_start_using_key()
+   │   ├─ hw-wrapped key: -EOPNOTSUPP
+   │   │    # profile never allocated (NULL)
+   │   └─ raw key: fallback_start_using_mode()
+   │      └─ blk_crypto_fallback_init() fails
+   │         └─ kfree(profile)   # not NULLed
+   ├─ goto bad
+   └─ inlinecrypt_dtr()          # evicts whenever key.size is set
+      └─ blk_crypto_evict_key()
+         └─ blk_crypto_config_supported_natively() = false
+            └─ blk_crypto_fallback_evict_key()
+               └─ __blk_crypto_evict_key(blk_crypto_fallback_profile)
+                  └─ profile->num_slots # BOOM!!!
 
-Fixes: 0298ef969a11 ("io_uring: clean R_DISABLED startup mess")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-37-c1556f5d7bf5@toxicpanda.com
+This issue can be reproduced using the following commands:
+
+  dd if=/dev/zero of=/tmp/backing bs=1M count=64
+  LOOP=$(losetup -f --show /tmp/backing)
+  SZ=$(blockdev --getsz $LOOP)
+  KEY=$(head -c 64 /dev/urandom | od -An -tx1 | tr -d ' \n')
+  dmsetup create ic --table "0 $SZ inlinecrypt aes-xts-plain64 \
+    $KEY 0 $LOOP 0 1 keytype:hw-wrapped"
+
+And the following oops is triggered:
+
+  ==================================================================
+  blk-crypto: loop0: no support for wrapped keys
+  Oops: general protection fault, probably for non-canonical address
+        0xdffffc000000000b: 0000 [#1] SMP KASAN PTI
+  KASAN: null-ptr-deref in range [0x0000000000000058-0x000000000000005f]
+  CPU: 5 UID: 0 PID: 901 Comm: dmsetup 7.3.0-rc3 #1 PREEMPT(lazy)
+  RIP: 0010:__blk_crypto_evict_key+0x2e/0x3b0
+  Call Trace:
+   blk_crypto_evict_key+0x24c/0x320
+   inlinecrypt_dtr+0xf6/0x160
+   inlinecrypt_ctr+0x2d3/0xbd0
+   dm_table_add_target+0x661/0xf40
+   table_load+0x1c4/0x490
+   ctl_ioctl+0x32f/0x5f0
+   dm_ctl_ioctl+0xe/0x20
+  ==================================================================
+
+dm-inlinecrypt is the only caller that can evict a key that was never
+started, as fscrypt frees such a key without evicting it.
+
+Fix this by returning early from blk_crypto_fallback_evict_key() when
+tfms_inited[] is not set for the key's mode.  tfms_inited[] is only set
+after blk_crypto_fallback_init() has successfully initialized the
+profile, so the crash above is no longer reachable.
+
+The bug has been latent since commit c984ff1423ae ("blk-crypto:
+dynamically allocate fallback profile") was merged in v6.5, and only
+became actually triggerable when commit e7f57d2c47e2 ("dm-inlinecrypt:
+add target for inline block device encryption") was merged in v7.2.
+
+Fixes: c984ff1423ae ("blk-crypto: dynamically allocate fallback profile")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://patch.msgid.link/sashiko-outbox-167341@kernel.org
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20261014155131.GB322435@quark
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20261023081908.3505413-1-libaokun@linux.alibaba.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/sqpoll.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ block/blk-crypto-fallback.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
-index ad42e8eb10029..ee97808a065a9 100644
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -385,6 +385,13 @@ static int io_sq_thread(void *data)
- 				 */
- 				smp_mb__after_atomic();
+--- a/block/blk-crypto-fallback.c
++++ b/block/blk-crypto-fallback.c
+@@ -524,6 +524,12 @@ bool blk_crypto_fallback_bio_prep(struct
  
-+				/*
-+				 * Nothing gets submitted before the ring is
-+				 * enabled, which comes with a wake up.
-+				 */
-+				if (READ_ONCE(ctx->flags) & IORING_SETUP_R_DISABLED)
-+					continue;
-+
- 				if (io_sqring_entries(ctx)) {
- 					needs_sched = false;
- 					break;
--- 
-2.53.0
-
+ int blk_crypto_fallback_evict_key(const struct blk_crypto_key *key)
+ {
++	/*
++	 * Pairs with smp_store_release() in
++	 * blk_crypto_fallback_start_using_mode()
++	 */
++	if (!smp_load_acquire(&tfms_inited[key->crypto_cfg.crypto_mode]))
++		return 0;
+ 	return __blk_crypto_evict_key(blk_crypto_fallback_profile, key);
+ }
+ 
 
 
