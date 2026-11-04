@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831259;
-	b=f3mvUQzrsIJXJ0hs/t2Uhx3p+23iHAxR68PWYP1NyC+3hlRL3ADcmaSxbFmQDijXQGk4
-	 41jv4GBeEqGzwoojFuPOA5iBT31igMDogvPXo0AhT08QyQw+1xS95hkaay4/0xhL9wgYd
-	 3PDGUg7Ctk5g2w1fPjYIBDmcWgzH+tEfk+a1IFJ+XEAUTnbt7aIgi+vtymwGmZ/4OJKV4
-	 1EinYeI7CYlyfGy8ARpqf2GjEADjY/mp7eiazuSsdIIgjKMSQKlVzH0b6DgBveB3bkfzJ
-	 mJU67QVIbJLCFYVFdWAeKBFNMlx5HKC8a24KiKKl0+UdseR4TRRAWNMBAbUUHlGkFAw==
+	t=1793831260;
+	b=vslYR1fESNI6CJ/cpiWY6JseporJsyezEMSQ84cNNvK8rgMTV6UVM2IeZrBVtJDJjJQt
+	 yekiALzYy/0dc82d0jBmCPt9Wo0zYWW/ap35F6sMvYQRp/2GKAm+nZgmDPbf33emBxe3R
+	 uJAme1fxwvJ22Uz5NlcNgXtcM807OBzEwwc0IV21w0kFN/mlMIVmE3sqxVV3RZbMOOgwX
+	 0Qy6sII9iyCMy0jdVH3bzkkvubTIw0QLFxn/0yK3uqIgjtaBLPUY0B8geiVT7u8OenJPX
+	 JiIRUtSZ3gN3pQO8wSeJCi5DOJTOnoTD/OtGL2dm8+5pYAzqoDpfed2URqNEMZ96rSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831259;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HnJppgtbZOGa3HVcRG3ydTFrs5q1wf8UqE06Uk6c9iM=;
-	b=sG7hUkol5J/BNpbg3WIuDQFvODZSHdshapkqgBJGEzFJHrT01ocMCKRng7soBQhdeecE
-	 TTsgI6PMA5DMzdtTD+3lXqptz/ueNgzOED2Ah5qPGvSXvksT56HuhqjvZopFrxhe4B4QG
-	 YLFrU7LjtwIDEHJ96ZzLIxsMi0FCXJLOIPcClLHpymtiKd24r1BEMbC3WkdbWn9ehGX5K
-	 lDD0At6eck2TSPpk99v4vh3mgeyq9ngeKRfF5DVAzPrjq02Qlm0I6MTHPOU2x8lTy6B8l
-	 9HTIB03ciI9DVgqLmR+geyXvirdV3NVCSp83aTkvQkK3m1FnMbXuTKy7BKI9DgCESWA==
+	bh=lyAnKR8PDODo0crG5tGUx+iEQBs4Ca7NnrXsM4Km+hk=;
+	b=eGO08AMeu7wetWP7XcYG3q9cFqAnWcZlvbYEkOCMnovWTlZdluDxsi19ZucnzIgUiBIz
+	 nxZIxOtEeJSg6o8ne4A5gKgwkDHYE5AzzLSOg7XThM18rhHQApdl+R0SaosvQNUykADYD
+	 YL/ulkX3zuuTRnVm7LYdvuBNp3wqC3hC4JEbH6i6km/zYQ6Lnzr6C14wjfVS92BOHqfj7
+	 W2GeEsafhF7DsQygXKIaAay9A6vDn/bbZQfLhG4qR/wqNtdresoMRwiOEzMOXorhkvlZ3
+	 rckwTgDkD1T5wS1IjprkDjCbpntpGgc9n3+IufJNxfLpYGVtE1Cvni/P3DNUv//kDEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1yUIaWJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WK8NG0N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FAC606A33E;
-	Wed,  4 Nov 2026 22:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912B4606A33E;
+	Wed,  4 Nov 2026 22:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1yUIaWJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3361F000C1;
-	Wed,  4 Nov 2026 22:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WK8NG0N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8251F000C1;
+	Wed,  4 Nov 2026 22:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831258;
-	bh=HnJppgtbZOGa3HVcRG3ydTFrs5q1wf8UqE06Uk6c9iM=;
+	s=korg; t=1793831260;
+	bh=lyAnKR8PDODo0crG5tGUx+iEQBs4Ca7NnrXsM4Km+hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d1yUIaWJWCchsqeEhy7oFgTI0RwrU1xORBrkACRmXBGJBx4fz9PvkAOdnYBcvdWXj
-	 spgDjgunxetxppyn9P9bQtyJ7Ldm359VJIfcFLR8Eu180LjAllGTAiDLCQMdt8LITI
-	 VDKwraE7lAVnqOGAE+kfxGQ4j5oIRAU5elNw8eXY=
+	b=2WK8NG0NPyBC21tOsiHZRB6NJnytFMnF4+jxsrCGqVaALppqSagrP8KxtnRriHOg7
+	 cHezXMy/XoIIVtBDAtzT3kpkjEsBIPpzHQHfGkR/5XzEeaBwlt/3mWkScpEwwwIrc4
+	 o+zP5suLhCtW4d6S/TegAx8kHzqWcSy7o/+mU1Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongmin Zhou <zhouzongmin@kylinos.cn>,
-	Anup Patel <anup@brainfault.org>,
+	sashiko-bot@kernel.org,
+	stable@kernel.org,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0589/1005] RISC-V: KVM: Fix sdata leak and stale snapshot_addr in snapshot_set_shmem
-Date: Wed,  4 Nov 2026 16:05:22 -0500
-Message-ID: <20261104211100.364639155@linuxfoundation.org>
+Subject: [PATCH 6.18 0598/1005] serial: abort TIOCMIWAIT on hangup
+Date: Wed,  4 Nov 2026 16:05:31 -0500
+Message-ID: <20261104211100.605021073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,53 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit b7749531a9b195f4fd7db92ca3cc49bda1a4dc8d ]
+[ Upstream commit eb35b73e133686e5b999eb7130c4e3d22fe03089 ]
 
-A guest may call SBI_PMU_SNAPSHOT_SET_SHMEM repeatedly. Each call
-overwrites kvpmu->sdata without freeing the old buffer (memory leak),
-and if a later kvm_vcpu_write_guest() fails, the error path frees
-sdata but leaves snapshot_addr stale. A subsequent
-SBI_PMU_COUNTER_START then passes the INVALID_GPA check and crashes
-the host with a NULL buffer in kvm_vcpu_read_guest().
+Add the missing hangup check to the TIOCMIWAIT wait loop to avoid going
+back to sleep (indefinitely) after being woken on hangup.
 
-Fix this by clearing the previously installed snapshot area before
-installing a new one, which keeps sdata and snapshot_addr consistent.
-The SBI spec suggests a single invocation but defines no error code
-for repeated calls, so KVM must tolerate them.
-
-Fixes: c2f41ddbcdd756 ("RISC-V: KVM: Implement SBI PMU Snapshot feature")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260826064117.58029-1-min_halo@163.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-[ sashal: Kept the existing GFP_ATOMIC in the kzalloc context line, since __GFP_ACCOUNT isn't present here, and added the snapshot-area clear block unchanged. ]
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/r/20260904115542.E20D11F00A3D@smtp.kernel.org
+Cc: stable@kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260910130816.642699-5-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_pmu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/tty/serial/serial_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
-index be0c7ecc38e79..d5a0a3a33f6b2 100644
---- a/arch/riscv/kvm/vcpu_pmu.c
-+++ b/arch/riscv/kvm/vcpu_pmu.c
-@@ -437,6 +437,14 @@ int kvm_riscv_vcpu_pmu_snapshot_set_shmem(struct kvm_vcpu *vcpu, unsigned long s
- 		goto out;
- 	}
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index 94da7977f6774..80d1a1b0ba9c1 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -1251,6 +1251,11 @@ static int uart_wait_modem_status(struct tty_struct *tty, struct uart_state *sta
+ 			break;
+ 		}
  
-+	/*
-+	 * Clear any previously installed snapshot area to avoid leaking
-+	 * the old sdata and to keep sdata/snapshot_addr consistent if
-+	 * the re-install fails below.
-+	 */
-+	if (kvpmu->snapshot_addr != INVALID_GPA)
-+		kvm_pmu_clear_snapshot_area(vcpu);
++		if (tty_io_error(tty)) {
++			ret = -EIO;
++			break;
++		}
 +
- 	kvpmu->sdata = kzalloc(snapshot_area_size, GFP_ATOMIC);
- 	if (!kvpmu->sdata) {
- 		sbiret = SBI_ERR_FAILURE;
+ 		schedule();
+ 
+ 		/* see if a signal did it */
 -- 
 2.53.0
 
