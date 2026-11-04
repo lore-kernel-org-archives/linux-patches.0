@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831912;
-	b=Q73UJ1wHu2MvhOv2KRlFtEqvtKT+YMJvLzqBorRrCmQuugtnAdrieHMjk2kd2qfE2EXT
-	 SVC+kjI4823KsBucEPxGqt6T/q+gbr+mhx01t7L37TAX4iGklwd9gbeVgceZEh98VHTmu
-	 7yV/jx0bsCSV2PeXjOP6cmXyJi1mQnz7A1x8+qWjLmxhyBTl1KxeivhtyE2pGSRQ80etE
-	 swx6hXIloZKrEdX3MsMko87ZhYBrDdZTgNJzSTgWBjfi7l4h0TGAWRHa+JzVYivszutUi
-	 q+dQHz/Rvz2zJmtku8fmBe7ILI39MTQRT1Wduja80rHh0rXbTSyMrShch479Z4E5dFA==
+	t=1793831914;
+	b=tsdCJA6GzL7bF9SzTU79lyKAs6jHVH5ltu/jEcGX77WDY+TlKvfmjd2Vu3/VXwSDM9W2
+	 Xq+hfLO634YIlLu+06cusJfYr0g41hqH3Z3rNdj4qU96IvtjnipbJyyB5audY1nwd7oww
+	 17E7XNJhrazUN1bGEuWbMygx6D2Nyz0MYtzah+sT5lejgOIgvoiQIE3QaNvbRECso0kw0
+	 qqnzePszAs5r6v23mf+N0y7EVgEH8s0TMV2gujyy7l6G///RR7CRkB9chE5VwiWE0XeXB
+	 GHHD7z66biWzdlgKhh/IgMcJVJMfOXVHRhNEG78NYVdwry6LKd4n/voKNaf/grT8fRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831914;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KRhXkvBhr5CZH74jC1eas2TmrN+E7zKG3TAtBCFslTU=;
-	b=22HcuZrj54Qz8PzC62mMzIU2o0J+oELlSQ9I7Edru4LqONs0JcPnQDhkX0gxmsbC/p2y
-	 hjwHVB4AHUyPn6W19jjhdDOUpHuGKmXmBxN+yBj+MEroAPMzOW9Hs0AUpbuIVfw1tVaoF
-	 lKLpjt3mHhBTyMPK7qRAb/Nv2T2KGgPlzpNZzfOZ/rlazOOxILDqkJBgSwmWI8KyRfXOv
-	 Z4XSW/PZh/x9RUWQTj9u3b9IifhFcokGSMJOwSDsrr/9ssbAMpZ+aCI9L39oUI23a3rfS
-	 zlMkRfKe20x0nKwBtAii8M2f7UThn63sCFZv3gW1wLuOinLJaEPVtvDkCofb26DdoAA==
+	bh=PDmgC7ECxJxZ0edg+CExE+ahDQSZciNvj0q6MYkqlPQ=;
+	b=iUGxKrCE2P9wRSPYKPCxpdrgArgp6YY5eCj40P+v+d7oVsstL4TSV9RtDSYuq/zFrvn+
+	 gL2l8JFkESeFedKVEoQ4Y6rh75yAJcgsZ5SaqlUeI8PCFPaK0H6aMaviyg+omZpaMd1rM
+	 dp68y7Eft5hg+QZ7CbNU8uEMAxDFNiakDufwPjDrS4AD6dtaFea9a3u4mZIVy6PonvNry
+	 M71Y3yPuikSoMpEr4v2N/vBRQPNqUdcBMSlO7t5PNo15hQSoa164TeTRvV9mYpvWBzAbz
+	 jd1CSLFKoGgrPVcyjjSDrNfXmA8ZGHUCWK9MROOt+FDetuDvSQqIX7mxNZY5zVJhXbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lscKnIvM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fCJNJVV/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2452A606A32D;
-	Wed,  4 Nov 2026 22:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1290F606A844;
+	Wed,  4 Nov 2026 22:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lscKnIvM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69E41F000C1;
-	Wed,  4 Nov 2026 22:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fCJNJVV/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D091F000C1;
+	Wed,  4 Nov 2026 22:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831912;
-	bh=KRhXkvBhr5CZH74jC1eas2TmrN+E7zKG3TAtBCFslTU=;
+	s=korg; t=1793831913;
+	bh=PDmgC7ECxJxZ0edg+CExE+ahDQSZciNvj0q6MYkqlPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lscKnIvM9hfoduqS3G4sTf3dKvmCk1jWRPA52oUtJ3UMO65OaTVHjfHyOzR7vBrgP
-	 WzkvZYqNu9ngUe7IU53wue4RxsgG7C578cKjVkgMadioDjGMVZtwQdlDu6PRXTkoUE
-	 fPJC4gVDIKoqDJokeryAQqLKppgsNUTsL3NOOfQQ=
+	b=fCJNJVV/yfRIauG7D59+yzCfkvDdWowqxXjUToUJvWhP4QLnenK/zC5RWdjNaprU5
+	 ASs2Ktst8aceH9EftWJ06k9ZDz1nmwKQ9ohQCzMfRmTAhjlj3QfZTI0s78R/2Fn160
+	 EQzlYsHeOaZ37FWi6PK0/5v6vlUrHoE17RsSqs2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 0981/1005] io_uring/net: fix multishot recv length limit accounting
-Date: Wed,  4 Nov 2026 16:11:54 -0500
-Message-ID: <20261104211110.520521638@linuxfoundation.org>
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Henry Hu <huhai@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0990/1005] ksmbd: fix invalid pointer dereference when get_inode_acl() fails
+Date: Wed,  4 Nov 2026 16:12:03 -0500
+Message-ID: <20261104211110.767753887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,72 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Henry Hu <huhai@kylinos.cn>
 
-Commit 3e3aebb7570ccdde5cc49c9bfc8fd3a436b71b0c upstream.
+[ Upstream commit 19d180c7baab7126af5848ed87d5f7b5add0cef2 ]
 
-io_recv_finish() debits sr->mshot_total_len with min_t(int, sel->val,
-sr->mshot_total_len).  sel->val is the cumulative byte count of the
-request: on a bundle retry the receive path adds sr->done_io back to the
-return value, and the bundle branch in io_recv_finish() recovers the new
-bytes with this_ret = sel->val - sr->done_io.  The debit therefore uses
-the wrong value after a bundle retry, and the int cast truncates a limit
-above INT_MAX.
+When get_inode_acl() fails, it returns an ERR_PTR(), but
+ksmbd_acls_fattr() stored that pointer in smb_fattr without
+checking for errors. Later callers then passed the error pointer
+to security descriptor helpers or posix_acl_release(), resulting
+in an invalid pointer dereference.
 
-For an IORING_OP_RECV multishot request with optlen above INT_MAX, the
-limit becomes negative when cast to int, so the first completion debits
-the entire limit and ends the multishot with IORING_RECV_MSHOT_DONE
-while the socket still holds data that covers the limit.  With 120 bytes
-queued, a 64-byte buffer and optlen 0x80000000, the first 64-byte CQE
-lacks IORING_CQE_F_MORE and 56 bytes remain unread; the same setup with
-optlen 0x7fffffff posts 64 and 56 bytes with F_MORE.
+This was reproduced on an XFS-backed share when xfs_get_acl()
+returned ERR_PTR(-ENOMEM). Querying the SMB ACL from a CIFS client
+triggered the crash:
 
-After a bundle retry, the bytes already debited for the previous
-attempts are debited again, so the limit is exhausted early.  With 1400
-bytes queued, optlen 1000 and buffers of 600, 100, 100, 50, 50 and 200
-bytes, the first attempt delivers 700 bytes and retries; the second
-delivers 200 more, but the debit accounts for 900 and finishes the
-request with a terminal 900-byte CQE while 500 bytes remain unread.  The
-limit could have been reached.
+  BUG: unable to handle page fault for address: fffffffffffffff8
+  RIP: smb_acl_sec_desc_scratch_len+0x58/0x90 [ksmbd]
+  Call Trace:
+   smb2_query_info+0x40d/0x17c0 [ksmbd]
+   handle_ksmbd_work+0x1ca/0x770 [ksmbd]
 
-Debit only the bytes received by this invocation, sel->val -
-sr->done_io, and compare as unsigned so a limit above INT_MAX is
-accounted correctly. Non-bundle multishot requests keep sr->done_io at
-zero, so their accounting is unchanged.
+Fix this by checking the return values from get_inode_acl() in
+ksmbd_acls_fattr(). Treat -EOPNOTSUPP as indicating that no ACL is
+available, and propagate all other errors to the callers. Update
+smb2_open() and smb2_get_info_sec() to handle these errors.
 
-Fixes: 0ebc9a7ecf6a ("io_uring/net: Support multishot receive len cap")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/179328314078.648427.10086632105828535293@gmail.com
-[axboe: fix-up near-by incorrect comment while in there]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Assisted-by: Codex:gpt-5.6-sol
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Henry Hu <huhai@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: retained the non-const mnt_idmap parameter in ksmbd_acls_fattr() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/smb/server/smb2pdu.c |   42 ++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 34 insertions(+), 8 deletions(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -879,12 +879,15 @@ static inline bool io_recv_finish(struct
- 		cflags |= IORING_CQE_F_SOCK_NONEMPTY;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2730,10 +2730,11 @@ static int smb2_create_sd_buffer(struct
+ 			    le32_to_cpu(sd_buf->ccontext.DataLength), true, false);
+ }
  
- 	if (sel->val > 0 && sr->flags & IORING_RECV_MSHOT_LIM) {
-+		unsigned int this_len = sel->val - sr->done_io;
+-static void ksmbd_acls_fattr(struct smb_fattr *fattr,
+-			     struct mnt_idmap *idmap,
+-			     struct inode *inode)
++static int ksmbd_acls_fattr(struct smb_fattr *fattr,
++			    struct mnt_idmap *idmap,
++			    struct inode *inode)
+ {
++	struct posix_acl *acl;
+ 	vfsuid_t vfsuid = i_uid_into_vfsuid(idmap, inode);
+ 	vfsgid_t vfsgid = i_gid_into_vfsgid(idmap, inode);
+ 
+@@ -2744,10 +2745,28 @@ static void ksmbd_acls_fattr(struct smb_
+ 	fattr->cf_dacls = NULL;
+ 
+ 	if (IS_ENABLED(CONFIG_FS_POSIX_ACL)) {
+-		fattr->cf_acls = get_inode_acl(inode, ACL_TYPE_ACCESS);
+-		if (S_ISDIR(inode->i_mode))
+-			fattr->cf_dacls = get_inode_acl(inode, ACL_TYPE_DEFAULT);
++		acl = get_inode_acl(inode, ACL_TYPE_ACCESS);
++		if (IS_ERR(acl)) {
++			if (acl != ERR_PTR(-EOPNOTSUPP))
++				return PTR_ERR(acl);
++			acl = NULL;
++		}
++		fattr->cf_acls = acl;
 +
- 		/*
--		 * If sr->len hits zero, the limit has been reached. Mark
--		 * mshot as finished, and flag MSHOT_DONE as well to prevent
--		 * a potential bundle from being retried.
-+		 * If sr->mshot_total_len hits zero, the limit has been reached.
-+		 * Mark mshot as finished, and flag MSHOT_DONE as well to
-+		 * prevent a potential bundle from being retried.
- 		 */
--		sr->mshot_total_len -= min_t(int, sel->val, sr->mshot_total_len);
-+		sr->mshot_total_len -= min_t(unsigned int, this_len,
-+					     sr->mshot_total_len);
- 		if (!sr->mshot_total_len) {
- 			sr->flags |= IORING_RECV_MSHOT_DONE;
- 			mshot_finished = true;
++		if (S_ISDIR(inode->i_mode)) {
++			acl = get_inode_acl(inode, ACL_TYPE_DEFAULT);
++			if (IS_ERR(acl)) {
++				if (acl != ERR_PTR(-EOPNOTSUPP)) {
++					posix_acl_release(fattr->cf_acls);
++					return PTR_ERR(acl);
++				}
++				acl = NULL;
++			}
++			fattr->cf_dacls = acl;
++		}
+ 	}
++
++	return 0;
+ }
+ 
+ enum {
+@@ -3482,7 +3501,10 @@ int smb2_open(struct ksmbd_work *work)
+ 					int pntsd_size;
+ 					size_t scratch_len;
+ 
+-					ksmbd_acls_fattr(&fattr, idmap, inode);
++					rc = ksmbd_acls_fattr(&fattr, idmap, inode);
++					if (rc)
++						goto err_out;
++
+ 					scratch_len = smb_acl_sec_desc_scratch_len(&fattr,
+ 							NULL, 0,
+ 							OWNER_SECINFO | GROUP_SECINFO |
+@@ -5953,7 +5975,11 @@ static int smb2_get_info_sec(struct ksmb
+ 
+ 	idmap = file_mnt_idmap(fp->filp);
+ 	inode = file_inode(fp->filp);
+-	ksmbd_acls_fattr(&fattr, idmap, inode);
++	rc = ksmbd_acls_fattr(&fattr, idmap, inode);
++	if (rc) {
++		ksmbd_fd_put(work, fp);
++		return rc;
++	}
+ 
+ 	if (test_share_config_flag(work->tcon->share_conf,
+ 				   KSMBD_SHARE_FLAG_ACL_XATTR))
 
 
