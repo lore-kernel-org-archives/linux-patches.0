@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829121;
-	b=MllzFT8+bAfxasHNWRO+dg0D0i7G658U8JfstaJlHCcwmxZFqkq18lCiPQgD8N2fWBxN
-	 Ym/fJyDa5jOb+Y9Qq8CmVwzJVxVNYXMd/WbFOkS7TaKXZQy1NzBfgXsuewWcRuBOaL4He
-	 vOabea0jJgaVwvjtAKsxgCN9lvk/iW7sasOytDFNkpWHVLGtW2W3aEm/qxgTvsEA1EwUE
-	 AS6b9y7pyt6yUCfVkpriHbbI8rDceOMwXWdLiODNSxcF8O8w2A3j0hWMykttcUvV7qNAR
-	 OfLggUgk9UgLwNzN1pRORQhedKNClAVd0VW7BdcP12KWyDAvk//loP+j57vl4S3d3Og==
+	t=1793829122;
+	b=spe/IG/b81+s+7Cv1+pkE/JA/PxHgwD+yGmETfXG3tTAOQzLk5LFX5zRuFqD8ZMTjKTH
+	 IVBq0bWHuuYWau05FZHFzPpNBbphSuCXNPhr6YCbYkxqp1Ywi0zAQvHtcTkHNLxuIDHsC
+	 k617GuWPY5OH1e9wzgAbS71NdJVTMmKHtTS9c4kGU7gaVfF8s5jxblU0yagYic7GcjLf4
+	 EVMWxHuE42sFvSXgBcEzbVm0skjfugVlOi+LDgFrNUTXdJfYbNWyyt/oRqqOStq65e6PE
+	 pDbcEm72ayCeJNQzGxTTdET+Vwy4ke3bx7cFEiOPLkkky9cLI/ZAX2WNuxY02mP/9cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PZt4YvA37hxo5wSY4BZjxC7mXPKKmZFbx8vyZb0QHDE=;
-	b=VhFUkS9SU9Glg1w0wa/diQNuE5LHXWXp2d4B7h3z3QXJ9LQRyV/57D8AW5XsTljSXqPj
-	 1q59orydGzN2A3FBsfdB6lo9+IZEh3SVPErCf0A1s7udrzqX+79fPIlXXIfxOkdNPGpjm
-	 ZqgqFRvcJ++pKNuehQYTIQM92FjQQdAuEva1J6EETntI1JNb4amsntj47/e4BOZnxzjv9
-	 ZZ9GqOCngvpa/dKHRni7FDLNp954C7fkblyO4qpgszE6wIIatd5I6dc/PdSj07EwxPbkr
-	 ZadV3vTTIYVFjMH4dslcMGXNsjqokpkevFKIP1Y00BJigNq1YLujwO41psX/BoBI7Xw==
+	bh=Hh5vZe2DJRxPLoR5+qV2Gs7197MqgAHbRTGnu36AJps=;
+	b=zzhs6gifg4Hdr5u7Wz2XI9CGwsgSjaw5G8OcwlOv4ClInVuYqgpe8sXOyUOjcXEZ/zLi
+	 7jnjkNLieKgN4jlCdYK2q3BljKQVBTRmENVBq0Raj8n/QWvy4QcEG2Iq81k15zcNxTWCZ
+	 cnYanwZKSALKOB91NGps0SyXslWBrdII89SBici1Zi0gQaMZszSekQWoMfroQ//KowkmY
+	 r0P3Knj57+RGc20dwR6c/xaSj5b2e8z09hUqt9U/E/zrAOtPN4GSEV2YuzDwq4aG9iX2P
+	 Wr4hFwksfHEWvzt77K3KdaY1AZYS8zYJyf9xSKw2El4jLrk+sNwDi/OKXTlCSSPXUlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v2TTaHEQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ys07BjE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CBB6083634;
-	Wed,  4 Nov 2026 21:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9F36083633;
+	Wed,  4 Nov 2026 21:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v2TTaHEQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738031F000C1;
-	Wed,  4 Nov 2026 21:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ys07BjE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF631F000C1;
+	Wed,  4 Nov 2026 21:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829120;
-	bh=PZt4YvA37hxo5wSY4BZjxC7mXPKKmZFbx8vyZb0QHDE=;
+	s=korg; t=1793829122;
+	bh=Hh5vZe2DJRxPLoR5+qV2Gs7197MqgAHbRTGnu36AJps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v2TTaHEQOG65Es+bZDeMDd/1nHHCMjSyaR3NoF6BtdLfzvvQd01TgyP9rcAuYzPXj
-	 lf2sWTg3ansZ7yuD/Vr++V9CE7esDmx4EZ8HETvjRAcKJY1WO6MQR7nYinJaCh7sLB
-	 S06yX4G/74uUCi5Z2jcLBaQoRQqhiRyudt2Kll2w=
+	b=1ys07BjE1dRmSIanpiq+6aom9lF5g3DGf49APfphZyNIgnzOcNbAlT1iEAGb8JyD+
+	 3B9ys80ATo58ucnSHxGMXaQj8zxLkGXZi1odIRJ7Dm6EIaoBWOqvMShr/m/cNMzmKM
+	 QquLwC+8DRNEVAiu/kf+7lQh31oq7qClQiAgl2BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.3 459/547] KVM: VMX: Disallow using to_vmx() in common VT code
-Date: Wed,  4 Nov 2026 16:10:43 -0500
-Message-ID: <20261104211051.390179537@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.3 433/547] nfsd: zero NFSv4 COMPOUND tag padding
+Date: Wed,  4 Nov 2026 16:10:17 -0500
+Message-ID: <20261104211050.650587282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,51 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit f305fd31f52a8d3ce4d2bf0c88c45bb7a373809c upstream.
+commit 3f1181cb09c85499286c7f462d93530b0ebcafcc upstream.
 
-Poison to_vmx() in main.c and posted_intr.c so that attempting to interpret
-the vCPU as a VMX vCPU will fail at compile time, as opposed to failing at
-runtime, or worse corrupting state without outright failing.
+nfs4svc_encode_compoundres() copies the tag bytes into reserved XDR space
+and skips directly to the aligned end of the field. xdr_reserve_space()
+rounds the reservation up but does not initialize the padding bytes.
 
-Note, to_tdx() is buried in tdx.c, i.e. isn't broadly reachable, and so
-doesn't need the same treatment as to_vmx().
+A remote client can choose a tag length that is not a multiple of four,
+causing one to three stale bytes from the response page to be returned in
+the COMPOUND reply.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Tested-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Use xdr_encode_opaque_fixed() to copy the tag and clear its XDR padding.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260904010353.3175819-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260915160049.3105481-1-qwe.aldo@gmail.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/main.c        |    2 ++
- arch/x86/kvm/vmx/posted_intr.c |    2 ++
- 2 files changed, 4 insertions(+)
+ fs/nfsd/nfs4xdr.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/x86/kvm/vmx/main.c
-+++ b/arch/x86/kvm/vmx/main.c
-@@ -10,6 +10,8 @@
- #include "tdx.h"
- #include "tdx_arch.h"
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -6788,8 +6788,7 @@ nfs4svc_encode_compoundres(struct svc_rq
  
-+#pragma GCC poison to_vmx
-+
- #ifdef CONFIG_KVM_INTEL_TDX
- static_assert(offsetof(struct vcpu_vmx, vt) == offsetof(struct vcpu_tdx, vt));
+ 	*p++ = resp->cstate.status;
+ 	*p++ = htonl(resp->taglen);
+-	memcpy(p, resp->tag, resp->taglen);
+-	p += XDR_QUADLEN(resp->taglen);
++	p = xdr_encode_opaque_fixed(p, resp->tag, resp->taglen);
+ 	*p++ = htonl(resp->opcnt);
  
---- a/arch/x86/kvm/vmx/posted_intr.c
-+++ b/arch/x86/kvm/vmx/posted_intr.c
-@@ -14,6 +14,8 @@
- #include "vmx.h"
- #include "tdx.h"
- 
-+#pragma GCC poison to_vmx
-+
- /*
-  * Maintain a per-CPU list of vCPUs that need to be awakened by wakeup_handler()
-  * when a WAKEUP_VECTOR interrupted is posted.  vCPUs are added to the list when
+ 	nfsd4_sequence_done(resp);
 
 
