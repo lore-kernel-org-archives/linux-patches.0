@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831883;
-	b=OWjXcqB0KB9z9iLknZ42LjxXKAZraryahodSFoaZUzXIDO5PS6NoRWnLdbfnzD1sI6gQ
-	 djXxvv9UeSKf/KO4F+v1K1bqR8KPx2JB47U6EX76D78RRuzCsdxSPynX0xbaznJdt5h83
-	 BYMau7eShJH00iXs5Od42zkQXrZlzbD7JIDhjHcBosbMpL4mWhMm259BXNhpCkr9N6yWt
-	 Ps1fh51FyM30Skk5o2iMfcl7UhuxTdVAI73tdaGzj8Bav7hPGLVGSUuvCZeYKX3zD3LVd
-	 vDaG3iT2o5tGVYayThmZi7c1MPLuVSjEtnWzRWw6NvC+6WLXMq3ecHlSLVVUQBvdGCw==
+	t=1793831885;
+	b=BAi4D6bVZlsX5UQW0nl2ZsAFJglFGtiZOfj0G1JeSyXdqZdSxeIRye/6tqSpaDGBWvV2
+	 oE1Er8JIN7tTNUCmQS1rZ3v7RN3gRSlcc3r3nS9ZRaJ1RyLy3CBlBmThi9mjg1dkOSMti
+	 mLouOnf1xM0FEmdhcwVXOO6HH8YbrxmckzlddiF+k76L9pUSGH/sy/bYGpjZg/3Y2cWLY
+	 mW8izSOskeyI0/wkS+9lpBBai1Z4jIrb5hn5+JEpEq912YRfCYcqlvFTT+avKmQwOcq8Q
+	 7Bbr39h+Dq6X2x7sJfAdIUlouEp/3WXfWeS5zjb+Bm3V7D0e+ZU6oAIXNyYkgjHkszw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zFh/SHkFkbMvO2kko7NRied7vDgUNGyp165bjVbTvz0=;
-	b=cm7jAw8X+E6I540SEkepxyjzrnsD7uRgZQfN1DGSQ+E3siw29R58Nh5HEo7s+nCMHbm2
-	 deQBUVUMZ1yZ7BBwHEm7tiI5YxsyNoQZnb5A5ELXQUJjolOWxrjc5j9unSXSfBYy33AZA
-	 5owG/ymuwMVZeTbIXMLaJLqw2UWOdlWopNE+rhMDUb9WM7SRz3kjxwg+j8aVQWwKMQhO9
-	 OqRcMX/zIT1FaAQyAZMgcKDOiufgJXJGpoFF9SgSoIN+bKjMQocKt796xjKgSVteT2Wxi
-	 CJIcOgDCXopT3TV0lDxfncnxnD+4MUqHofMd324iePACa4etQEGbMredy4LMZnBZ/zw==
+	bh=o8YSH8qO52EZ0XHMYhHsc4hHEJ264GiZnwhZE2Za3Gw=;
+	b=Jz2FZoQyLOhz76FePJJY0iyNqO0X99H6Kz62lIfUFjIe3OEaVgAwLDz/DGtLSvCCZcle
+	 V0/5NR3C/kMOg8Wz7yrmxrLQRAN3z/OCmlJPbRaio1YNtG9bbOMqk61oNL88wToDbfnGx
+	 g5MPu/zShjxqgPUBik366Lt/9KB/BBy3M5fPpvnD6WDgzYU2kG+9oIUmoBGry/7uDpN9W
+	 4q/7jAeEW65IQAaxq4/Tp85CT20CzE1BlGTSjzOUdVctnHw5lC5/1jDQpqfcgxFkd4Sou
+	 94gGVq5F5PfBOhT1T65cVU8yiwayMXXJDVn1w2+bJ3I+DxpW91XZzuUX+8KH/AzENNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D9KlTc1y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mjZHy78r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A9A606A334;
-	Wed,  4 Nov 2026 22:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2190A606A333;
+	Wed,  4 Nov 2026 22:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D9KlTc1y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216BB1F000C1;
-	Wed,  4 Nov 2026 22:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mjZHy78r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E061F000C1;
+	Wed,  4 Nov 2026 22:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831883;
-	bh=zFh/SHkFkbMvO2kko7NRied7vDgUNGyp165bjVbTvz0=;
+	s=korg; t=1793831885;
+	bh=o8YSH8qO52EZ0XHMYhHsc4hHEJ264GiZnwhZE2Za3Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D9KlTc1yX/5WBFNarh8XKPz7eCk7/Ikcgb35rZG1nTnE4p5+0sbUVj7h7i8KJEFbG
-	 C9kB+Hv6zV9msxtXPVPef1Jt3mRpyKfVPnEwCsenHSXAjXOsi92V6IeomrrRwY/CBG
-	 t+H2dDar0ScVmULxGbq+v3n+/A1qbyGM0shKVUaU=
+	b=mjZHy78ritO5irMusUyYFbprwlzTIasXwcqrE9j0SmWWA1duYDWA/rW13YlJT4YbA
+	 hgPm21oNdxJjwn/vFTB3QltglueCyeswCNUlD/ejlkcTPiiYF+qyNWlE1X2M+SgRVI
+	 cLQndcabPmAcJu/H3/eq6c9bHKgtBv1FRdBcPDhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daan De Meyer <daan@amutable.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 0973/1005] io_uring/net: dont retry a non-blocking connect() that fails with -EAGAIN
-Date: Wed,  4 Nov 2026 16:11:46 -0500
-Message-ID: <20261104211110.316884330@linuxfoundation.org>
+Subject: [PATCH 6.18 0974/1005] io_uring/io-wq: no new workers once the exit has begun
+Date: Wed,  4 Nov 2026 16:11:47 -0500
+Message-ID: <20261104211110.343012430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,59 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daan De Meyer <daan@amutable.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-Commit 71537ed811107c514c0342e98902d489d6d2b7cd upstream.
+Commit 47c68f925062a6013235d06add85a59f7d91e0fb upstream.
 
-IORING_OP_CONNECT on an O_NONBLOCK AF_UNIX stream socket retries a
-connect that fails with -EAGAIN because the listener's backlog is full.
-Polling the client socket doesn't help: an unconnected stream socket
-reports EPOLLOUT and EPOLLHUP right away, before the backlog drains. So
-io_uring retries the connect until the apoll retry limit is hit, then
-punts the request to io-wq. With a full backlog, io_connect() runs 128
-times in the submitting task and once more in a new io-wq worker. That
-worker stays in the task's thread group, so a later
-unshare(CLONE_NEWUSER) fails with -EINVAL.
+io_wq_exit_start() sets IO_WQ_BIT_EXIT, but worker creation task_work
+queued before that stays queued until io_wq_exit_workers() cancels it.
+In between the task runs its task_work while canceling requests, and a
+worker can still get created.
 
-None of this changes the result. __sys_connect_file() adds the socket's
-own O_NONBLOCK to every attempt, so the attempt from io-wq fails with
--EAGAIN as well. That -EAGAIN becomes the CQE result, and connect(2)
-returns the same -EAGAIN.
+That's a problem for exec. begin_new_exec() calls io_uring_task_cancel()
+after de_thread(), when it's supposedly the only thread left, and
+io_wq_exit_workers() only waits for ->worker_done, which a worker
+completes before do_exit(). So the exiting worker is still in the thread
+group, using the mm, files and sighand, while exec replaces them. Easy
+to hit with a signal pending when create_io_thread() fails and the retry
+gets queued right before execve().
 
-Let's complete the request with -EAGAIN right away when the socket has
-O_NONBLOCK set, like connect(2) does. io_accept() already completes
--EAGAIN this way for IORING_ACCEPT_DONTWAIT. -EINPROGRESS still waits
-for the connection to complete. A blocking socket still ends up in
-io-wq, where the connect sleeps until the listener accepts.
+Cancel the queued creation task_work as soon as the exit bit is set.
+Pending work that isn't otherwise canceled now ends with -ECANCELED when
+the io-wq is destroyed, rather than depending on whether the task
+happened to run its task_work first.
 
-Fixes: f8e85cf255ad ("io_uring: add support for IORING_OP_CONNECT")
-Signed-off-by: Daan De Meyer <daan@amutable.com>
-Link: https://patch.msgid.link/20261027-b4-io-uring-connect-eagain-v1-1-f4e3aaaa49ee@amutable.com
+Fixes: 685fe7feedb9 ("io-wq: eliminate the need for a manager thread")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[axboe: the barrier is already upstream, see 0e5663856b69, only the
+ cancel is new]
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ io_uring/io-wq.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1864,6 +1864,17 @@ int io_connect(struct io_kiocb *req, uns
- 			if (connect->seen_econnaborted)
- 				goto out;
- 			connect->seen_econnaborted = true;
-+		} else if (req->file->f_flags & O_NONBLOCK) {
-+			/*
-+			 * __sys_connect_file() adds O_NONBLOCK from the socket
-+			 * to every attempt, so a retry from io-wq fails with
-+			 * -EAGAIN as well. A poll on the socket doesn't wait
-+			 * until a retry can succeed. For example, an AF_UNIX
-+			 * client reports EPOLLOUT right away while the
-+			 * listener's backlog is full. Complete the request
-+			 * with -EAGAIN, like connect(2) does.
-+			 */
-+			goto out;
- 		}
- 		return -EAGAIN;
- 	}
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -1412,6 +1412,12 @@ void io_wq_exit_start(struct io_wq *wq)
+ 	set_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 	/* Pairs with task_work_add() in io_queue_worker_create(). */
+ 	smp_mb__after_atomic();
++	/*
++	 * No more workers from here on. The caller is going to run its task
++	 * work, and on exec a thread that is created now would still be
++	 * around, exiting, by the time that the caller must be on its own.
++	 */
++	io_wq_cancel_tw_create(wq);
+ }
+ 
+ static void io_wq_cancel_tw_create(struct io_wq *wq)
 
 
