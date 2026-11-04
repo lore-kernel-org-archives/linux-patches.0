@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831193;
-	b=ce1xqlmW+fI3A50k1g8zyJ8gw22oYsrARLxuXPMRyir4GX74lMah+/jnlFVG1qW3DsUv
-	 d2xrDZwAucYa7GvnjENFN8/PpGMQJ5Fnc9dcRVeRmL/Jg6bmodMmTsLRYofNibTBxaTbk
-	 s14i3EB/POTuTYSI41nHZkkQQzt2zelsVJ5JTr92lLoktwYqPI6UA2HZcw2O3k1aaQVif
-	 eJfTGR+7xuUIfu0qy9MBfY53yqguBRANMC2RlnvDa34yL84ishyZPxKuZ5AH4LDNq6ILV
-	 w1MBrGnkL+hXM4wMd1AISqvC3mVRgiXI/4akPxSaZRupqiEHmVTKYOCwv/nqbQRXekA==
+	t=1793831195;
+	b=oaZVPd7cyqiXLm9DYj4vT56WHusZb/rHeXUiSnGZixkkqAy48nX2g2ZlrBYG9ExT6Eyu
+	 Amc/UPLJjF/zYavSBOjMeqUVXhNuMLECH4bF++qXcr5VkFjKhg/ZVMzEI5ytM9e5tk+Vw
+	 iLemybEZo9ATIGwvupLwhL7jbVofOg4pRC+F2Oi9KHMd0V4Oe77A9j3SMDG3fHLuS74K5
+	 7OXtrARYWta6biNhCHv4EsGbx6rsYbOn7Cp5OJOzndyaqjA8Cc1v6LnMA284Vn4JfOMQr
+	 8XIUjI54D35G9c8uMjcTuI7W60VrHB8JxyVhNv4kN1MEA1EbD3GyoR5wniLK9x+eQvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jmaX1XlL9rHzoX/OKUDK3OVAcUOlpTdRzfV/shJCWJE=;
-	b=haS9vdiwflSYd1weTJg6kvjh+G06VcZB4W9R01nVQfupXwgpcH9xqM4yc9juuF00zUI8
-	 oJCL8D8oR1esNUU0ozVCYVkiYGfaxffTEfDClM9oCwDau8xqljmljbs3C29LmUIPeLUy1
-	 abpdqayrW0SLYe6JuHDdieJcp8aNSYTFziUrZjtVbO370DTC1ZxxQmrZFzToREi9u/Grw
-	 640n1GMPENUvFM0uUDMHGA1noqGKM2Ti0E5B5JqgKs1MeJmt4GvRp2DaRPTHIFQbibHPY
-	 NvQxYBVc3fJ7bshZqbxHizYAQvX+/oghUZ+vlPuRHK/UcfsG3Dj+wm4guv5qF6WMfUQ==
+	bh=vh0qKmXVBFsoTL4A0DbsTfTuhX+kJosQKOcCnRNbE/s=;
+	b=WaaXUEb9cTK9S9y9bubUfDcRAA/HGQKNtf4JiCm42M9ENmGEW3+GA8kZSQSfiwua+t6l
+	 xljti565hYiyxOTRYFoG2VjLUeeIHcTlLM1X0fbHZF0mKTWOV5ayAoEosmV7hEB237n1e
+	 APGufpUeL0RSnEybekvjWGzpGOQEx+kG5YU/FiCYLgpny+egluQYrdpi7BWa/cDkvpP0o
+	 7Bu6MIfr8SrcWmQEIhINcQ9cq4xHvrI6MOoAx/CiTh3rpbxehCRFaEEUmKB7KtFRzrXqx
+	 B1Ts1n8Lhejwm851eDdeEhrEAvQDFHmEbC4EmMx5pBNxoLy1hIeqRIxFGPoEtWiNM2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imrerlID;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fiFCusQx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5BF606A85A;
-	Wed,  4 Nov 2026 22:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084DC606E83C;
+	Wed,  4 Nov 2026 22:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imrerlID
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75EE1F0093A;
-	Wed,  4 Nov 2026 22:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fiFCusQx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2F41F000C1;
+	Wed,  4 Nov 2026 22:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831193;
-	bh=jmaX1XlL9rHzoX/OKUDK3OVAcUOlpTdRzfV/shJCWJE=;
+	s=korg; t=1793831194;
+	bh=vh0qKmXVBFsoTL4A0DbsTfTuhX+kJosQKOcCnRNbE/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=imrerlIDbQtXJtXnEhVhKhgksusaLexJS9kLANUmL4czBm0lfurehsppwaKDgrBGx
-	 kszjdUzcY8TDcwh+B786KfARKU5R1HUxsbFdWWHhd19FoPD7oIS5mftUXW+3mgDSKS
-	 ArxtvD7uWrn/j3FlHSjAVZN5pQD2P48k52R7fb9Q=
+	b=fiFCusQxASLIIoFu22Z0XXtKpy1jmrFH2jNxFuhNjQyg4+0psYVsBEzrAdcTF36LW
+	 Go2qrhWYlFoCLOZ6IC/WG6+4W6ZEnN4z7dQZnz8+2hnBVeLPfc/+avbMIZinxGip9P
+	 F3dicdYqX+g/XCuSmNfO2atpMMeI74OQLORZ90g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yi1.lai@intel.com>,
-	Gary Guo <gary@garyguo.net>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Lance Yang <lance.yang@linux.dev>,
+	Qian Cai <cai@lca.pw>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0556/1005] rust: cfi: disable function merging if CFI is enabled
-Date: Wed,  4 Nov 2026 16:04:49 -0500
-Message-ID: <20261104211059.468090514@linuxfoundation.org>
+Subject: [PATCH 6.18 0557/1005] mm/kmemleak: stop the task stack scan early when interrupted
+Date: Wed,  4 Nov 2026 16:04:50 -0500
+Message-ID: <20261104211059.495999083@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,66 +74,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 29b03d1de967a177176d12811d970cac7882afcf ]
+[ Upstream commit eb11f56eeca56069613d00bf623607e305b271d9 ]
 
-In Rust doc tests, there is a dummy `__module_firmware_test_init` function
-generated by the example in `module_firmware!`'s documentation, which
-just returns zero. Many other documentation examples generate functions
-that produce zero. LKP test robot reports [1] a `Flags::zeroed` instance;
-my local reproduction has a `Bounded::new::<0>`.
+scan_block() already checks scan_should_stop() for every pointer and bails
+out of the current block, but the task stack walk cannot tell and keeps
+issuing a separate scan_should_stop() between every task.
 
-LLVM's MergeFunctionsPass incorrectly merges functions with different
-KCFI types, causing `__module_firmware_test_init` to be merged into
-one of the zero-returning functions. As module init is invoked via an
-indirect function call, KCFI is checked and this produces a KCFI failure.
+Return that status from scan_block() and use it as the task stack loop
+condition, so the walk stops as soon as a scan is interrupted.
 
-I've reported this bug to upstream LLVM [2]; in the meantime, disable
-function merging if CFI is enabled. No separate treatment is needed for
-CONFIG_RUST_INLINE_HELPERS, as Clang does not enable function merging
-by default.
-
-[ LLVM already has a pending PR:
-
-    https://github.com/llvm/llvm-project/pull/217665
-
-  which solves the issue. In addition, I asked upstream Rust if the
-  unstable `-Zmerge-functions=disabled` flag will remain around:
-
-    https://rust-lang.zulipchat.com/#narrow/channel/425075-rust-for-linux/topic/.60-Zmerge-functions.3Ddisabled.60/
-
-  and it does indeed look like that will be the case. - Miguel ]
-
-Reported-by: kernel test robot <yi1.lai@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202608201017.100a4511-lkp@intel.com [1]
-Link: https://github.com/llvm/llvm-project/issues/217629 [2]
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Cc: stable@vger.kernel.org
-Fixes: ca627e636551 ("rust: cfi: add support for CFI_CLANG with Rust")
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://patch.msgid.link/20260820135733.37121-1-gary@kernel.org
-[ Fixed typos as discussed. Reworded slightly for other typos. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-2-acecd7d7fd92@debian.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Qian Cai <cai@lca.pw>
+Cc: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 3541a2b06ecd ("mm/kmemleak: report RCU-tasks quiescent states during the scan")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/kmemleak.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 7c698d401dd54..08be8b2cd2447 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1037,7 +1037,8 @@ endif
- ifdef CONFIG_RUST
- 	# Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST selects
- 	# CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
--	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers
-+	# Disable function merging as LLVM incorrectly merges functions with different KCFI types.
-+	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers -Zmerge-functions=disabled
- 	KBUILD_RUSTFLAGS += $(RUSTC_FLAGS_CFI)
- 	export RUSTC_FLAGS_CFI
- endif
+diff --git a/mm/kmemleak.c b/mm/kmemleak.c
+index 452f3714f337b..b5e1a493f1462 100644
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -1518,22 +1518,25 @@ static int scan_should_stop(void)
+ 
+ /*
+  * Scan a memory block (exclusive range) for valid pointers and add those
+- * found to the gray list.
++ * found to the gray list. Return non-zero if the scan was interrupted.
+  */
+-static void scan_block(void *_start, void *_end,
+-		       struct kmemleak_object *scanned)
++static int scan_block(void *_start, void *_end,
++		      struct kmemleak_object *scanned)
+ {
+ 	unsigned long *ptr;
+ 	unsigned long *start = PTR_ALIGN(_start, BYTES_PER_POINTER);
+ 	unsigned long *end = _end - (BYTES_PER_POINTER - 1);
+ 	unsigned long flags;
++	int stop = 0;
+ 
+ 	raw_spin_lock_irqsave(&kmemleak_lock, flags);
+ 	for (ptr = start; ptr < end; ptr++) {
+ 		unsigned long pointer;
+ 
+-		if (scan_should_stop())
++		if (scan_should_stop()) {
++			stop = 1;
+ 			break;
++		}
+ 
+ 		kasan_disable_current();
+ 		pointer = *(unsigned long *)kasan_reset_tag((void *)ptr);
+@@ -1543,6 +1546,8 @@ static void scan_block(void *_start, void *_end,
+ 		pointer_update_refs(scanned, pointer, OBJECT_PERCPU);
+ 	}
+ 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
++
++	return stop;
+ }
+ 
+ /*
+@@ -1698,6 +1703,7 @@ static void kmemleak_scan_task_stacks(void)
+ {
+ 	struct pid *pid;
+ 	int nr = 1;
++	int stop = 0;
+ 
+ 	do {
+ 		struct task_struct *p = NULL;
+@@ -1716,13 +1722,13 @@ static void kmemleak_scan_task_stacks(void)
+ 			void *stack = try_get_task_stack(p);
+ 
+ 			if (stack) {
+-				scan_block(stack, stack + THREAD_SIZE, NULL);
++				stop = scan_block(stack, stack + THREAD_SIZE, NULL);
+ 				put_task_stack(p);
+ 			}
+ 			put_task_struct(p);
+ 		}
+ 		cond_resched();
+-	} while (pid && !scan_should_stop());
++	} while (pid && !stop);
+ }
+ 
+ /*
 -- 
 2.53.0
 
