@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831359;
-	b=JpVRH7hHNUGXFh1+gpTOUAZUBeoVADTztW04q3zVusGXthwPCqtiVUdG5Fnpcijwrr1V
-	 mz9WXF1UzRYAGZv822qLspDRU+5SOMFtMu9m/bjHh6NO4WlNgvPbmxAAPi/zwYfm9xi6x
-	 zdwo/pgfzYl2lJdhHGT24u8hmxSDHYbUdUlLLTl6pKr3zzQDH/60DteTblUTZXVutChQy
-	 fF4Q4NtIr5LqV9mx/1QCbgbDqNv5JmOimDYY1bn3jPyy4YsH7OwpSCf6tzZ61GmPsnGTU
-	 2NMi+qXoRM1DLQjj2YAy9SgeGq9I/QwlbwlhsZe5l0qgTCpbQqUHrtvNAFHmd9vxmSw==
+	t=1793831360;
+	b=UoNUaSEmfdmmaZGexjOnNTWXYXzjHoJsPmKDavPYThCbhV4JLE+OxghWFhhlNxCCelxU
+	 Bomx+Paxz4+EbqVhnQE+i4d2nAWsVxh0l2NIyHjvzVgo3IphlGLeGdB7uu3AbZW0ZiE26
+	 M0MfElg4gActd87uxKUQlZpYdVwdy38tgT3Z7tQbdkUTK5c/6KKAGb3QxpsLAvNMjYRN1
+	 Zf2Y9yxisYQe4DYWTF8VFLEmyJoZCzYf+ppL8B+KyYi4i/kLz5SP6gYdOvQFgd27U6qyE
+	 ng3JJe3MmtuY+IsO0QDfOg6ml5k05Z5+M0a20vMi24/PGSVBgGfeMaMr+mBdT2mMqnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7pVpPiiyLmGI3YhXJqx04csyfjb6bSS2LJSuquNIZGI=;
-	b=MTHBmYVi7ZfBHNza/Ck5b9nypr5pWtK+WvwULSLjK83zDwUhfFNZ/9ca3gc6jlTfBiYY
-	 TW8elJ5ybAIX9gq7ieoOuEFZQfxc/abZC8rx1UP5051sc4smNK6XsFwL+G4WseT+XwnO/
-	 4k69FLL9WBrYfUmHG1Vb+TS26NMPynBMqOWq9N2O2BBky47bwhnAjiHHD6dbuurQiA6M1
-	 obcljOw42r4bBbOZpPTQY6tkqvStlAgNCbuqNJ6ZImaaJDyXVyl+ZH0hsgcYPZXYM+Uat
-	 5cmVzVlOuQNgDXazjUd3vB05s7R5mNt19Ebth+Es2XeyW3ChcYh9tSl8SyoXxdZIj1A==
+	bh=2WzTIXhtKhh97SnTlJSD5xky8G0ne1fQbcn6RUDrZSw=;
+	b=Z8iPVK73S20FwX3Pwx6pbHo6fg3eMyujt+AwCEqGqjbVoe8A/WBX/NjeU5EdlIUfI+a/
+	 WJj7HIXRn1uYPcJkPc7gZtjtJzYKLniuOFKfZWMebaPA7F6tMkF/m/9xoU6jnC/h7qQy8
+	 /Sl/AOhZa2XgQr8Gt/Mxt7/0gGH8AtInqF+MottswWarQVe3X1wiocAIJtv9UpCQ4Devn
+	 qZmv3SBZCBukmzlbZTcsc5QxnKx4LbaZpgc05Vhb0KJJRuQ3blZ2ocXyPu1sOv9ARvTwQ
+	 nRRJnHGDaU+oNn43rMeGRigaWRdPRWUDiTTX2UBQXgZjeab2OVPyQxU93qSYGt+DZpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="M7aRpR6/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpJI0lwF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9855606A336;
-	Wed,  4 Nov 2026 22:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD87606A336;
+	Wed,  4 Nov 2026 22:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7aRpR6/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8E21F000C1;
-	Wed,  4 Nov 2026 22:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpJI0lwF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB82A1F000C1;
+	Wed,  4 Nov 2026 22:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831358;
-	bh=7pVpPiiyLmGI3YhXJqx04csyfjb6bSS2LJSuquNIZGI=;
+	s=korg; t=1793831360;
+	bh=2WzTIXhtKhh97SnTlJSD5xky8G0ne1fQbcn6RUDrZSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7aRpR6/TiDFY1XYvg7WANrKllIXdmK2nS/mOMf76OSVnIkD4ikiCppzuJTi+WWDw
-	 5ANLwYACLrON58TwObppOLz6CMjbfSU8q9Y9kjpJQSWl7LQxQYnmzvxno2DiAboWWG
-	 E0MCQcBmIAFEv9ukaNfQ/143JftfAotcCZNL4Ieo=
+	b=GpJI0lwFsqxJSCRC11rakzN3BPsME/0ATII0S+Uid23ePKE4PjlK5YLQAnt1pwiQm
+	 d9+Yz+ysgRpeeVA0QlQ4zKQ0kl36BJmi6gJSy/t4n1nH/3y081ZBiEIzYX1XwpkcWs
+	 1QWIVXFw9WDL14OwfFKgQzmh9qrUcO7FBgQjgrhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erik Brangs <erik.brangs@gmx.de>,
-	Christoph Zwerschke <cito@online.de>,
+	David Riley <d.riley@proxmox.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Bjoern Doebel <doebel@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0656/1005] Revert "Bluetooth: btusb: Add ASUS USB-BT540 for Realtek 8761CU"
-Date: Wed,  4 Nov 2026 16:06:29 -0500
-Message-ID: <20261104211102.077034711@linuxfoundation.org>
+Subject: [PATCH 6.18 0657/1005] KVM: x86/mmu: pass PFERR_GUEST_PAGE/FINAL_MASK to kvm_translate_gpa
+Date: Wed,  4 Nov 2026 16:06:30 -0500
+Message-ID: <20261104211102.101313215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,47 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Zwerschke <cito@online.de>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-This reverts commit aa7b93fe98ba726971b7d0c68320ce513e68aac2 which is
-commit 980084de4d9b25193398d89a1c0430ba3501b683 upstream.
+[ Upstream commit bd1c40114b02cf63ba33da8e7df71ed0fc2a3019 ]
 
-With the device ID in the table, the adapter is handed over to btrtl,
-which in this tree, together with the backport of commit 4a23ce935f74
-("Bluetooth: btrtl: Add the support for RTL8761CUV"), now requires
-rtl_bt/rtl8761cu_fw.bin. That file is only shipped by linux-firmware
-since 20251111. On systems with older firmware packages, such as
-Debian trixie, the adapter no longer initializes. Without the ID entry
-it binds via the generic Bluetooth class and works on its ROM firmware,
-as it did before the backport.
+The XS/XU bit for EPT are only applied to final accesses, and use the
+U bit from the page walk itself.  While strictly speaking not necessary
+(any value of PFERR_USER_MASK would be the same for page table accesses,
+because they're reads and writes only), it is clearer and less hackish
+to only apply MBEC to PFERR_GUEST_FINAL_MASK.  Allow kvm-intel.ko to
+distinguish the two cases.
 
-Mainline keeps the ID entry, so this revert is for 6.18.y only, as agreed
-in the regression thread.
-
-Reported-by: Erik Brangs <erik.brangs@gmx.de>
-Closes: https://bugs.debian.org/1149377
-Link: https://lore.kernel.org/all/179104011040.2214689.5921682013387867802@eldamar.lan/
-Signed-off-by: Christoph Zwerschke <cito@online.de>
+Tested-by: David Riley <d.riley@proxmox.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[doebel: load_pdptrs() lives in arch/x86/kvm/regs.c in this tree; keep
+this tree's mmu_is_nested() in the Hyper-V hunk]
+Stable-dep-of: 96b067b59ad9 ("KVM: VMX: Synthesize nested EPT violation GVA_IS_VALID/GVA_TRANSLATED bits")
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 4 ----
- 1 file changed, 4 deletions(-)
+ arch/x86/kvm/hyperv.c          | 3 ++-
+ arch/x86/kvm/mmu/mmu.c         | 3 ++-
+ arch/x86/kvm/mmu/paging_tmpl.h | 7 +++++--
+ arch/x86/kvm/regs.c            | 3 ++-
+ 4 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index b571918aac953..0b8c2ecf0a64c 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -844,10 +844,6 @@ static const struct usb_device_id quirks_table[] = {
- 	{ USB_DEVICE(0x37ad, 0x0600), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/arch/x86/kvm/hyperv.c b/arch/x86/kvm/hyperv.c
+index 56325ba9ef367..284adaf508688 100644
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -2056,7 +2056,8 @@ static u64 kvm_hv_flush_tlb(struct kvm_vcpu *vcpu, struct kvm_hv_hcall *hc)
+ 	 * read with kvm_read_guest().
+ 	 */
+ 	if (!hc->fast && mmu_is_nested(vcpu)) {
+-		hc->ingpa = translate_nested_gpa(vcpu, hc->ingpa, 0, NULL);
++		hc->ingpa = translate_nested_gpa(vcpu, hc->ingpa,
++					PFERR_GUEST_FINAL_MASK, NULL);
+ 		if (unlikely(hc->ingpa == INVALID_GPA))
+ 			return HV_STATUS_INVALID_HYPERCALL_INPUT;
+ 	}
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 1fa251ca4dccf..d365bba579d28 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4349,7 +4349,8 @@ static gpa_t nonpaging_gva_to_gpa(struct kvm_vcpu *vcpu, struct kvm_mmu *mmu,
+ {
+ 	if (exception)
+ 		exception->error_code = 0;
+-	return kvm_translate_gpa(vcpu, mmu, vaddr, access, exception);
++	return kvm_translate_gpa(vcpu, mmu, vaddr, access | PFERR_GUEST_FINAL_MASK,
++				 exception);
+ }
  
--	/* Additional Realtek 8761CU Bluetooth devices */
--	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
--						     BTUSB_WIDEBAND_SPEECH },
--
- 	/* Additional Realtek 8821AE Bluetooth devices */
- 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
- 	{ USB_DEVICE(0x13d3, 0x3414), .driver_info = BTUSB_REALTEK },
+ static bool mmio_info_in_cache(struct kvm_vcpu *vcpu, u64 addr, bool direct)
+diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
+index 07b0ddd15b9de..9f8c4293bbe78 100644
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -377,7 +377,8 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
+ 		walker->pte_gpa[walker->level - 1] = pte_gpa;
+ 
+ 		real_gpa = kvm_translate_gpa(vcpu, mmu, gfn_to_gpa(table_gfn),
+-					     nested_access, &walker->fault);
++					     nested_access | PFERR_GUEST_PAGE_MASK,
++					     &walker->fault);
+ 
+ 		/*
+ 		 * FIXME: This can happen if emulation (for of an INS/OUTS
+@@ -445,7 +446,9 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
+ 		gfn += pse36_gfn_delta(pte);
+ #endif
+ 
+-	real_gpa = kvm_translate_gpa(vcpu, mmu, gfn_to_gpa(gfn), access, &walker->fault);
++	real_gpa = kvm_translate_gpa(vcpu, mmu, gfn_to_gpa(gfn),
++				     access | PFERR_GUEST_FINAL_MASK,
++				     &walker->fault);
+ 	if (real_gpa == INVALID_GPA)
+ 		return 0;
+ 
+diff --git a/arch/x86/kvm/regs.c b/arch/x86/kvm/regs.c
+index 7b997c4e6329f..d19a9e7e41f37 100644
+--- a/arch/x86/kvm/regs.c
++++ b/arch/x86/kvm/regs.c
+@@ -122,7 +122,8 @@ int load_pdptrs(struct kvm_vcpu *vcpu, unsigned long cr3)
+ 	 * to an L1 GPA.
+ 	 */
+ 	real_gpa = kvm_translate_gpa(vcpu, mmu, gfn_to_gpa(pdpt_gfn),
+-				     PFERR_USER_MASK | PFERR_WRITE_MASK, NULL);
++				     PFERR_USER_MASK | PFERR_WRITE_MASK |
++				     PFERR_GUEST_PAGE_MASK, NULL);
+ 	if (real_gpa == INVALID_GPA)
+ 		return 0;
+ 
 -- 
 2.53.0
 
