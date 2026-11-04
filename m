@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831773;
-	b=W2hogQgikxSZz4N85e4j8O2j6Zyq2lkphOTjOo1Gtw0BSSrI8pYpdue9HFp50ioLU6v4
-	 wjo9czgEeymqDKCB8IfOnLrNN0m4yLqccmhrK56UojtdQmf7qHmSxlYD3JGYsekTbX2ZH
-	 KV7JAVB3MDEniIiDeNkYeZVxgYdSAsr7r0WV7G7r7MgjU4t6ril3ygipNG31ngeCosBE9
-	 qdpJ2Q7h80hQJ25hpCm2fVT2vTQ+1D19/t90kRycJ2w3ciucS46uuk7sHXKMmg9mQrFOR
-	 jTjm4wVwvtr8NoSOiQp/o5xvGqkIHeFZzZmcz2huv7cM840JeqrcG3bfzd6b9Wwzpzw==
+	t=1793831775;
+	b=oC3km+qUthpZRga54h8W5+5X/pZ3i9PWZr1z1RTHqPnKvThSXk5MqflCm0j+mqrdOJ9A
+	 AtCiTtFECwVELnH6/MdStGs9cSHM1vAkRSL1vaAd/7uQgGOEQi2nn5UupC5Kfar51IVNc
+	 HN7dJXC4iy9zjzLBDMNW0Yeo5P86FvpBDzIPrbpedON95d2oqaGU7KroRe0USLcNAENa5
+	 SzYw7l4R8MBA0+b5offzY+sCrIfLCpVo1pAfb883pUxH0V1SKLO72KblE+catMCWYCX+E
+	 AaNRmNraHzHiNY2wxnW4xc1grO78L72Jn1ZFEuedHT6NnM/RfkIN3YPJy1MB2kkvhAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0uIqIKsHSBo2azX4xWnWzZzrXr+tC06yUgpjzP2n6DA=;
-	b=V448kTMPfBdjajj3R/k7S/oGxodDKz0y/p1Ga4ssu7uAChMV/ukvWfAcHLDQneR+MRsy
-	 fFIdEM0wVIqnT4tbBY4SbQYDuH43BsLu/zGz2TPf+ECuCMaMoZJHML0neZwurpquBb8Fu
-	 1+HTwvG+N5eIT8YsQFEBA2618CqRiAIJPxDG1FmT4bSknVp6aZtp7gV1EXnAvHBH37u7D
-	 E5l7KVeAG1rtlsnbLScMsT2ptyNJWqAY55BDg/Uwh6ooptQXYtBwDpLauocHd45oSJCYQ
-	 TV7miA0IbcNBWmkFXoFpDebbqLXiLEc6UyplN55RrvPQhkpjiiX1KZlZaxG6VAnHj2g==
+	bh=ObCkWw8ZzuZ+KBJmjetzKMgz9TZGWuLliaoOueXYC/E=;
+	b=Iqlg5DFA5opWbi+euImxcqU0VGKqWTHZPBbSbgp56krEbLaTn6mWb1Rdzo8HJsYoclKz
+	 m/d+kwsrtEsjQxE05nIWjBUMwTRXQh3x54I5UE8k3rjp4cODYAlXrZN9Btm9HDMjxuZD2
+	 edlpRvtddekIG0cJ7ETQAGw8rls3YilQGKPo3gT6rMs36moKnCnS/oi1OClLiWz1lymzF
+	 9P9Wcxlji9UfE8WmnbGm+GI4NBpNEtKEd6mY/l+JRQ2EvB/xrjyRLvi5hEiSAod631FCH
+	 0UYgIUIY/9KAAT56F4ndACTJ2o05A0p2rbnnKlQX30dyuM+Rt0nNXBgPXpzPzSPAC2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IUq7Xq5T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KiGBfr/y";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97916606A326;
-	Wed,  4 Nov 2026 22:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6981A606A326;
+	Wed,  4 Nov 2026 22:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IUq7Xq5T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1001F000C1;
-	Wed,  4 Nov 2026 22:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KiGBfr/y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DD11F000C1;
+	Wed,  4 Nov 2026 22:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831773;
-	bh=0uIqIKsHSBo2azX4xWnWzZzrXr+tC06yUgpjzP2n6DA=;
+	s=korg; t=1793831775;
+	bh=ObCkWw8ZzuZ+KBJmjetzKMgz9TZGWuLliaoOueXYC/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUq7Xq5TF0g6K3QG+COCdl60EA8pEDULYFqM6Qyc9tjI0tTR8eSIfkPiOsfZNI7fR
-	 yfnx2COsqQ5BnOoyPEKA6D+LXZo/+v29fQBkAQFF9ht2K2q1Sc+p2v0tMlsyuZ+gPE
-	 B/067+/Grp4KmBY9JFv2LYJ8Vr6SWaalSv7dW2n8=
+	b=KiGBfr/yMoUKzSnmJn6KF58nkhxMqnVZhYd/8aHMIcUZ4eYVCWNv90nNUGNWaA+n5
+	 0yxiJAUxJDw0cRbLGAM5aeW01HzO5C4Sk8w7rSs97eN/1iWCaRFcP2XLdkKNlv9h+h
+	 S0+D8pm+ZZvKTz0MsfWMN78IoPmghEDo3LqZeSu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0886/1005] nfsd: clear XDR padding in GETXATTR replies
-Date: Wed,  4 Nov 2026 16:10:19 -0500
-Message-ID: <20261104211108.046856136@linuxfoundation.org>
+Subject: [PATCH 6.18 0904/1005] NFSD: Set nn->cld_net before registering the cld pipe
+Date: Wed,  4 Nov 2026 16:10:37 -0500
+Message-ID: <20261104211108.508784175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,43 +66,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit daba58690339ae86f1ebeb5197aa1369fae37e57 upstream.
+commit 14996e662f3b734427e2d645cacffc27b779f7d1 upstream.
 
-nfsd4_vbuf_to_stream() uses a raw memcpy() for the first fragment of an
-attribute value. xdr_reserve_space() aligns the reservation but does not
-initialize the extra bytes. If the complete value fits in that fragment,
-the loop that clears padding for the final fragment is never entered.
+rpc_mkpipe_dentry() instantiates the pipe's dentry before it returns,
+so the cld pipe can be opened as soon as nfsd4_cld_register_net() has
+run. __nfsd4_init_cld_pipe() does not store the new cld_net in
+nn->cld_net until after that call. cld_pipe_downcall() reaches the
+cld_net only through that pointer and takes cn_lock without checking
+it, so a write() that lands in the window oopses.
 
-A remote client reading an attribute whose length is not a multiple of
-four can therefore receive one to three stale bytes from the response
-page.
+Store nn->cld_net once @cn is fully initialized and before the pipe is
+registered, and clear it again when registration fails.
 
-Encode the first fragment with xdr_encode_opaque_fixed(), matching the
-final-fragment path and ensuring that any XDR padding is zeroed.
-
-Fixes: 23e50fe3a5e6 ("nfsd: implement the xattr functions and en/decode logic")
+Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915160119.3105745-1-qwe.aldo@gmail.com
+Link: https://patch.msgid.link/20260901-alemi-v2-6-e163f94a3a6e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4recover.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5543,7 +5543,7 @@ nfsd4_vbuf_to_stream(struct xdr_stream *
- 	if (!p)
- 		return nfserr_resource;
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -999,18 +999,24 @@ __nfsd4_init_cld_pipe(struct net *net)
+ 	}
+ 	spin_lock_init(&cn->cn_lock);
+ 	INIT_LIST_HEAD(&cn->cn_list);
++#ifdef CONFIG_NFSD_LEGACY_CLIENT_TRACKING
++	cn->cn_has_legacy = false;
++#endif
++
++	/*
++	 * The pipe's methods reach @cn through nn->cld_net, so set
++	 * it before the pipe can be opened.
++	 */
++	nn->cld_net = cn;
  
--	memcpy(p, buf, cplen);
-+	xdr_encode_opaque_fixed(p, buf, cplen);
- 	buf += cplen;
- 	buflen -= cplen;
+ 	ret = nfsd4_cld_register_net(net, cn->cn_pipe);
+ 	if (unlikely(ret))
+ 		goto err_destroy_data;
  
+-#ifdef CONFIG_NFSD_LEGACY_CLIENT_TRACKING
+-	cn->cn_has_legacy = false;
+-#endif
+-	nn->cld_net = cn;
+ 	return 0;
+ 
+ err_destroy_data:
++	nn->cld_net = NULL;
+ 	rpc_destroy_pipe_data(cn->cn_pipe);
+ err:
+ 	kfree(cn);
 
 
