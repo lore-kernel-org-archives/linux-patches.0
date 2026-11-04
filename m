@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831372;
-	b=5bBM1TDnQ0I33Pus1Q875TNr4/E9aGnvSZld73fidLqpc0+dFo2T8cXlDt5RSzpYkfqB
-	 U6ACMByLnl4Vya3ftJ+Wk3+JuMN+81FhLU4yBKqBslzLw9ziYYKjzzpYbN5d11wcfjfCF
-	 j5VTn15l2Wpb1b4J9lgQLf378dllhX6/veTC/Wv7pg9HuVZ/Jugej4RwBNJZJH7gYbYrd
-	 ZK7oiahuYFjcb8UvW5vhRH4scCsrI+w8/1ZIqOghrkawdZE+bmvrK/USToYcx5pAq1hFb
-	 1XwZbwxNbk8vwT3Q5A2xZPOiPF/9vLFQMw3NJYtkQuuIfH9y/mqi2iZBhAIONLQp2hw==
+	t=1793831373;
+	b=L69TBxMHanjgDuyBTe77t4JUWlBGgK6FCtGXCMtJiXfm5iga6+f0Lk34TQNDb0Xm/Rjg
+	 WCkQpq2z/kSP+FylAFI9VpdSYm5Z9VWo8ZCh75s/ZC/dpharBPmzcKJz7Akn61i5UOhCT
+	 lKZFiBNVh+rUMKVHSRi3Se0k+QRhzI0VahYogh71oL6pTkolnbbd0h/z72JtOMYYvF9/6
+	 Q4W7re3gNHCE7A7W3D7m+HjoUA7uhAmefn0rZlmDH0ElKVSthauIkbOG2jQuyAAz76MtO
+	 cHFVCsX0s7V+x/i/4K5LU7UDq2+lcNxzfNEaqIy1xZwaXpq1lGZp3fTZTdicwIbVeGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U4fTkKPL1r8itt4KPBVFW4aBCqg1azVRA516NDpdREo=;
-	b=NVv82DUdyTP/Og1t6jgZOdrR1xy89voKjUkamyi0cJVQYQoC+h2gRlV3FqCx8JM6ChzE
-	 pAmYfSVttwjcNSVG2XZS3VRQdpBoZ1go6jeqP3F0ax61vpMMQy4Hs2AhxGlI5oNmxB4xh
-	 WMhu2G6SmweeK0Oz3dWykzVnu8ZW5Odn0bDSIc+PylAk2Mg/cdNMBSwaKTZfT2QhtC6Zs
-	 R7R+spwGwyxBJVtnUU7IMEKkr7UaE9h2LwiB8VKq43ISWrk7T3zPspAn7/a2Sv3vOExeQ
-	 c4KoD6uL2W/4SV7nVtWyGA5f1Kqyo28QLx64RqzFZbpnoru/8GKUF4LGhpA/kIGnCrw==
+	bh=yPCBiYUbg7bXLSyCYuf/YKN7+0YPjY0oDV1za9mFOHA=;
+	b=poQk/Uhh1RjGzpZ0U5EnAF00Di8hrPqATF4P71Da9P2gwcxMrf673PaaQhze12V72GxN
+	 pNM7/ZdEXz7CD2zjWXFgLDpW+MeNyvLXt5xW00gWb2UbXz1E2mH6s/AMB1KkUV/6OHQtM
+	 1KbxMVOaVvM3bE+BR//PGTyll0v5Lb8wSqld73Sowr2PhnoeAx6ZBbGJMuaOFXvlospmM
+	 JXkZumB2RCzKfRcQHuF/Yhfv0Uv5yvMkDedO/CNf8CMFoQ0IYgnW7G9uGEL7Y9zx1zUOX
+	 Ecl0FHRnsABQrLmfiEjxKxk6RaJ0oVYy/3eFdb1+IZP3yb1580VIya8fNub0ZCDo/+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6459n5b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc5+Zrzb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63000606A332;
-	Wed,  4 Nov 2026 22:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55475606A33B;
+	Wed,  4 Nov 2026 22:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6459n5b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010DD1F00919;
-	Wed,  4 Nov 2026 22:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc5+Zrzb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34FD1F000C1;
+	Wed,  4 Nov 2026 22:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831372;
-	bh=U4fTkKPL1r8itt4KPBVFW4aBCqg1azVRA516NDpdREo=;
+	s=korg; t=1793831369;
+	bh=yPCBiYUbg7bXLSyCYuf/YKN7+0YPjY0oDV1za9mFOHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e6459n5b/ijGr98kV/ZfCpOKKFHPQMEgx6vwQaJTTTvwEtkzPaVGI7TRoTXebX6oH
-	 obyRPQfmfKRTIiwpaXFm1fJWc/+oIy1+PgWMDqA6ajay1RFpMELI+98huqZtLPibrX
-	 x+bZbDP9BOu8Yc5dohr5oPlqJ7J87uXOIycE2ycs=
+	b=xc5+ZrzbFvTom9KOgCIwnSzX+WuUXoMq29oEKz3fRulmT7xoVQRxGZ+f9pNqgpyne
+	 iPDeviVtuZ+9zauwXcXwmCrEbK2C9Amlf3f3MdHVZaASo5c7MDVpn7nog7iyF9cTPb
+	 cyctnn6bsQPSUM39lgdNIeUJ6eUADqiNLT6dcB8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diego Oliva <diego@bynar.io>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 0664/1005] smb: client: fix use-after-free infoleak via the readdir resume name
-Date: Wed,  4 Nov 2026 16:06:37 -0500
-Message-ID: <20261104211102.269451794@linuxfoundation.org>
+	Zijing Yin <yzjaurora@gmail.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 0662/1005] SUNRPC: fix netns use-after-free in write_gssp()
+Date: Wed,  4 Nov 2026 16:06:35 -0500
+Message-ID: <20261104211102.222206888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,147 +67,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Oliva <diego@bynar.io>
+From: Zijing Yin <yzjaurora@gmail.com>
 
-commit 59131dd72f62b198fc9ea1489ad9d3573154f684 upstream.
+commit e7a8721b7edb54a157623f9e31d71345333b5fb9 upstream.
 
-CIFSFindNext() copies the resume name that cifs_save_resume_key()
-recorded from the last entry of the previous response into its request;
-psrch_inf->presume_name points into the response buffer that entry came
-from, and nothing ever clears it. find_cifs_entry() records a new
-name only from a response with a usable last entry, and cifs_readdir()
-only from an entry it walks to, so a response that carries no entries
-and leaves last_entry NULL, because CIFSFindFirst() or CIFSFindNext()
-rejected LastNameOffset, refreshes neither and presume_name keeps
-pointing into the previous response. That buffer has already been
-released: by CIFSFindNext() before it installs the new response, or by
-find_cifs_entry() when it rewinds the search, which does not drop the
-name either and can then fail in initiate_cifs_search() before a new
-response replaces it. The next CIFSFindNext() then copies up to
-PATH_MAX - 1 bytes of the resume name out of the released buffer into
-its request and sends them to the server: a use-after-free read
-that leaks kernel memory to a malicious or compromised server, which
-can provoke it with a single FindNext response that carries no entries
-and a LastNameOffset above CIFSMaxBufSize, which is all the existing
-check rejects.
+While fuzzing with a customized syzkaller, I hit a refcount warning in
+xprt_alloc(), reached from a write to /proc/net/rpc/use-gss-proxy:
 
-With KASAN enabled, a server that answers a listing that way gives:
+  refcount_t: addition on 0; use-after-free.
+  WARNING: lib/refcount.c:25 at refcount_warn_saturate+0xf8/0x120
+  CPU: 0 PID: 10404 Comm: syz.0.17 Not tainted 7.3.0-rc1-00096-gcfebfd3db73d
+  Call Trace:
+   <TASK>
+   xprt_alloc+0x83f/0x9d0
+   xs_setup_xprt+0xaf/0x3c0
+   xs_setup_local+0x47/0x7f0
+   xprt_create_transport+0x16c/0x730
+   rpc_create+0x38e/0x7f0
+   gssp_rpc_create+0xe2/0x180
+   set_gssp_clnt+0xba/0x1b0
+   write_gssp+0x200/0x310
+   proc_reg_write+0x240/0x330
+   vfs_write+0x2aa/0x1050
+   ksys_write+0x12a/0x250
+   do_syscall_64+0x117/0x750
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
 
- CIFS: VFS: ignoring corrupt resume name
- ==================================================================
- BUG: KASAN: slab-use-after-free in CIFSFindNext+0x8ca/0x14c0
- Read of size 4080 at addr ffff88807c823f98 by task ls/83
+create_use_gss_proxy_proc_entry() stores the struct net pointer as the
+proc entry's private data without taking a reference on it, and an open
+file descriptor does not pin the namespace either, as procfs only pins
+the proc_dir_entry. write_gssp() reads that pointer back with
+pde_data() and hands it to set_gssp_clnt(), which reaches xprt_init():
 
- CPU: 0 UID: 0 PID: 83 Comm: ls Tainted: G    B               7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
- Tainted: [B]=BAD_PAGE
- Call Trace:
-  <TASK>
-  kasan_report+0xdf/0x1a0
-  kasan_check_range+0x10f/0x1e0
-  __asan_memcpy+0x23/0x60
-  CIFSFindNext+0x8ca/0x14c0
-  cifs_readdir+0xf51/0x29c0
-  iterate_dir+0x1c0/0x570
-  __x64_sys_getdents64+0x133/0x270
-  do_syscall_64+0x109/0x5d0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
+	xprt->xprt_net = get_net_track(net, &xprt->ns_tracker, GFP_KERNEL);
 
- Allocated by task 83 on cpu 1 at 13.497119s:
-  cifs_buf_get+0x36/0x90
-  smb_init+0x4f/0x110
-  CIFSFindNext+0xf7/0x14c0
-  cifs_readdir+0xf51/0x29c0
+get_net_track() -> get_net() -> refcount_inc() is unconditional, so
+rpc_create() assumes its caller holds a reference on args.net.
+write_gssp() does not.
 
- Freed by task 83 on cpu 0 at 13.584018s:
-  cifs_buf_release+0x41/0x80
-  CIFSFindNext+0xfce/0x14c0
-  cifs_readdir+0xf51/0x29c0
+Dropping the last ns.count reference does not make the file go away.
+__put_net() only queues cleanup_net() on a workqueue, and the
+remove_proc_entry() that fences off further writes runs from the
+rpcsec_gss pernet .exit method, that is, from inside cleanup_net(). A
+write landing between those two points increments a refcount that is
+already zero. cleanup_net() does not re-read ns.count, so the namespace
+is freed anyway and the rpc_xprt -- along with the AF_LOCAL socket
+opened for it -- is left pointing at freed memory. The resurrected
+count is visible to the rest of that teardown too: with
+CONFIG_IPV6_MROUTE the same cleanup_net() worker then trips
+!mr_can_free_table() in ip6mr_free_table(), which tests check_net() on
+the namespace it is freeing.
 
- The buggy address is located 16280 bytes inside of
-  freed 16588-byte region [ffff88807c820000, ffff88807c8240cc)
- ==================================================================
+It reduces to opening /proc/net/rpc/use-gss-proxy inside a new network
+namespace, calling setns() back to the original one to drop the last
+reference, and then writing "1" to the still-open descriptor.
 
-The same memcpy() first reads past the end of that object while it is
-still live, a slab-out-of-bounds read that the following patches
-bound; that is the taint the report above carries.
+Take the reference in write_gssp() itself and refuse the write when the
+namespace is already gone. This is what procfs does for every other
+/proc/net file: get_proc_net() is maybe_get_net(PDE_NET(PDE(inode)))
+and seq_open_net() returns -ENXIO when it fails. PDE_NET() cannot be
+reused here because the parent directory /proc/net/rpc carries no
+namespace pointer. Adding a .pre_exit to rpcsec_gss_net_ops so the
+entry is removed earlier would only narrow the window, since pre_exit
+also runs from cleanup_net().
 
-SMB1 is not negotiated by default; reaching this code requires an
-explicit vers=1.0 mount.
+Live namespaces are unaffected: a write still returns the error from
+set_gssp_clnt(), a write of "2" still returns -EINVAL, and reads are
+untouched.
 
-Clear presume_name and resume_name_len whenever a new response is
-installed and when the rewind path releases the search buffer, so that
-the name never outlives the buffer it points into, and reset
-resume_key with them, since it was taken from the same entry and would
-otherwise be sent with an empty name. A response without a usable
-last entry then continues the search with an empty resume name rather
-than a stale one; CIFSFindNext() skips the copy of a zero-length name
-so that it never runs on the NULL pointer.
-
-The next patch in the series leaves last_entry NULL for a response
-that carries no entries, and bounds LastNameOffset against the
-received response rather than against CIFSMaxBufSize. Responses that
-are given a last entry today then take the path fixed here, so that
-patch must not be applied without this one.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: b77d753c413e ("[CIFS] Check that last search entry resume key is valid")
+Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Diego Oliva <diego@bynar.io>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
+Link: https://patch.msgid.link/20260907085435.644076-1-yzjaurora@gmail.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifssmb.c |   11 ++++++++++-
- fs/smb/client/readdir.c |    3 +++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -4444,6 +4444,9 @@ findFirstRetry:
- 	psrch_inf->entries_in_buffer = le16_to_cpu(parms->SearchCount);
- 	psrch_inf->index_of_last_entry = 2 /* skip . and .. */ +
- 		psrch_inf->entries_in_buffer;
-+	psrch_inf->presume_name = NULL;
-+	psrch_inf->resume_name_len = 0;
-+	psrch_inf->resume_key = 0;
- 	lnoff = le16_to_cpu(parms->LastNameOffset);
- 	if (CIFSMaxBufSize < lnoff) {
- 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
-@@ -4507,7 +4510,10 @@ int CIFSFindNext(const unsigned int xid,
- 	name_len = psrch_inf->resume_name_len;
- 	params += name_len;
- 	if (name_len < PATH_MAX) {
--		memcpy(pSMB->ResumeFileName, psrch_inf->presume_name, name_len);
-+		if (name_len) {
-+			memcpy(pSMB->ResumeFileName,
-+			       psrch_inf->presume_name, name_len);
-+		}
- 		byte_count += name_len;
- 		/* 14 byte parm len above enough for 2 byte null terminator */
- 		pSMB->ResumeFileName[name_len] = 0;
-@@ -4562,6 +4568,9 @@ int CIFSFindNext(const unsigned int xid,
- 	psrch_inf->endOfSearch = !!parms->EndofSearch;
- 	psrch_inf->entries_in_buffer = le16_to_cpu(parms->SearchCount);
- 	psrch_inf->index_of_last_entry += psrch_inf->entries_in_buffer;
-+	psrch_inf->presume_name = NULL;
-+	psrch_inf->resume_name_len = 0;
-+	psrch_inf->resume_key = 0;
- 	lnoff = le16_to_cpu(parms->LastNameOffset);
- 	if (CIFSMaxBufSize < lnoff) {
- 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -749,6 +749,9 @@ find_cifs_entry(const unsigned int xid,
- 			cfile->srch_inf.ntwrk_buf_start = NULL;
- 			cfile->srch_inf.srch_entries_start = NULL;
- 			cfile->srch_inf.last_entry = NULL;
-+			cfile->srch_inf.presume_name = NULL;
-+			cfile->srch_inf.resume_name_len = 0;
-+			cfile->srch_inf.resume_key = 0;
- 		}
- 		rc = initiate_cifs_search(xid, file, full_path);
- 		if (rc) {
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1420,10 +1420,18 @@ static ssize_t write_gssp(struct file *f
+ 		return res;
+ 	if (i != 1)
+ 		return -EINVAL;
++
++	/*
++	 * Neither the proc entry nor an open descriptor pins @net, so it
++	 * might already be dying when rpc_create() takes its reference.
++	 */
++	if (!maybe_get_net(net))
++		return -ENXIO;
++
+ 	res = set_gssp_clnt(net);
+-	if (res)
+-		return res;
+-	res = set_gss_proxy(net, 1);
++	if (!res)
++		res = set_gss_proxy(net, 1);
++	put_net(net);
+ 	if (res)
+ 		return res;
+ 	return count;
 
 
