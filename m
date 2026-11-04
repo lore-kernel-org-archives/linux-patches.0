@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831793;
-	b=jCikkqr+Duouj7zBeW87n4hwxfC/ZICyI+iyqfVw4cvQ9sMgWKgmFhCaDE0ScRS9E596
-	 Bt8rlZW645VVu467hDMmqw98LL92u6CZK+6pdsbM7x5yUUN07bEBaIvFPhG0LPzBnQ3eM
-	 7vPGkdNXrLuV9J77APsMEgRznCbzq9zj+Gwo8GAwzhtoRdpymrg62OIgLuwHsLDZ9UCsd
-	 5+dMAzvDqhn11Jo5ohJMUoFnRmzWHkPpG22aw1xBqRAMGX6m/IuX66/gGFiB68R2pUzQQ
-	 tXe7jH2dM7Phce5DklvNQDrHGFC/HOwQNZ0wRdXPPc2kT5wwlaQwhUMLWRIIMU0ObNg==
+	t=1793831795;
+	b=dZ6Nyy48clz2EUYuhv7byIPkL3pATSGAa9TFl38wY5WZ6aRwQGitzNQULqjirW7lJb9J
+	 lrEhAqQ2i4xtfnRADg8LS5DDVyFafUpMavhrxrkFUZthNRDR6d/MLqnFn6FYQramm5T2l
+	 XDkSkjQNyhPe+gZcaNJNkOfBQzTOxKUnp6R7dBrY1iUAuVqRefOjz57AARYemQHtFn5gO
+	 eOcNcypDfLK4cujHWouJBsB+RdiyQVQif5xqwQiXIUL/X54WMiUl7vMR7A4/i9JdhiD8f
+	 swrkkQHJamWYgGz2MMllkLUtCtUgEfleT/ZgrHqb2KGtK/qQZ00r8iJuW5VnXLFaLug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831795;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bYWvGW5Mk/iRE5SVQcV7M3zwFwn4T0L1MzV4/z9yggU=;
-	b=T/TdfKIY1TElya2JsDW2YIB5zE7ZgCT1VE6VrGhBIdk+5mblw5lF8B/ju7+ZuEfpVrGY
-	 Gg5/+HE296mEvvNpjwOb4p5GqXNsRLfTDLx3Utqz80mQUzN6G2OfuSQdsQyGib73qNNuc
-	 mBtU8Ts/TYVMzVXQ65abkD7ICKh8b0FWWBCdlzGWiNPIfSgNIKtwpNdkb3sO8SX51xbt3
-	 vyH3NxWhoS9BQDuV/AII5YnUbnhoLuIywkqaSj0QDwlaMl3+ggjI7Vy98MqamVMlhQOw6
-	 oQDj7/wkzWtEXN+evfObUrb50XiRPbxO3ZmG+AevrFvh4MuK3mgPRAPys9NY0MbUDtw==
+	bh=ciJgLqZaNzOG3LRO8J4rl31tP3V0mL9vRoZkfzUP7pg=;
+	b=cEw/i+fZ1WIhL/z9FnhZjYunbgNgyR4OcQvUCBQEeVh+IxpWlsgt556r/v1Pwjy9FrQD
+	 QkjLqoHokltHhT/5YbhOgcuqK4FXVc45ULRal/FyiYC34JiFOOKZ5AV+z4PJd7hznvrSd
+	 2PXBLOIhPnjIdcj844Ae7M+59lU2L1Pq2zMxqkzPsw10nJ+VJ6tc+DmDcfaotZglR5b80
+	 ewA7Kc+CIcKF4wNkz/YbJY0lehX+SNu7c1rv6F7wZmCcL77fbF976Bp97UOyaiTGyPwGM
+	 qH7oZdV4qMZRmmAOQMwehFBPyX+NNoR7JCrddRWCOQhgxxafJuJoTHHG5R5uifTbs3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hiLVzgw7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sOopkRjz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB2F606AC37;
-	Wed,  4 Nov 2026 22:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B10B606AC37;
+	Wed,  4 Nov 2026 22:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hiLVzgw7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BE21F000C1;
-	Wed,  4 Nov 2026 22:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sOopkRjz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCE01F000C1;
+	Wed,  4 Nov 2026 22:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831793;
-	bh=bYWvGW5Mk/iRE5SVQcV7M3zwFwn4T0L1MzV4/z9yggU=;
+	s=korg; t=1793831794;
+	bh=ciJgLqZaNzOG3LRO8J4rl31tP3V0mL9vRoZkfzUP7pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hiLVzgw7E87I3sa8sg01hzFG1YRJXFJysD10zaB23GAvHLV4sovrU3gSWQef0CaB6
-	 Bvv3f/Iu146rVqFrwsrICO/SR/q555VeASAYMCsu0lWfBNP8xnAI+pZohi2pf4D56Y
-	 uD7IKh8saL/XOG2zrZPUVNWS9RMMm6IA3ovzwxCc=
+	b=sOopkRjzfUB4KXcMrQqMsy8PkFy0nSRCC7ngEqcjrSNF4DY/mGAutn2Azowzfa246
+	 dKhjLeWF7J9FrxpnGt5Bio2L3UKOTBEBDa+FVIVAxKtEA0AECMFGdU//Rw1cINzhll
+	 iqCOUrPyskoXJScWU2sRkVGmoIw7+ioJcuGU97eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ameer Hamza <ameer.hamza@truenas.com>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0915/1005] SUNRPC: trace an accepted transport before publishing it
-Date: Wed,  4 Nov 2026 16:10:48 -0500
-Message-ID: <20261104211108.787776723@linuxfoundation.org>
+Subject: [PATCH 6.18 0916/1005] sunrpc: treat empty auth.unix.gid replies as negative entries
+Date: Wed,  4 Nov 2026 16:10:49 -0500
+Message-ID: <20261104211108.815195737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,46 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Ameer Hamza <ameer.hamza@truenas.com>
 
-commit 06f90cf104fc21ee01e7ef1eb80e092173089b9f upstream.
+commit a12cc0930235b86b934ade7c077a1935c2ac333d upstream.
 
-svc_handle_xprt() publishes a newly accepted transport before tracing
-it. svc_add_new_temp_xprt() places the transport on sv_tempsocks and
-clears XPT_BUSY, so another nfsd thread can dequeue it at once. If the
-peer has already closed the connection, that thread runs
-svc_delete_xprt(), which drops the list reference, the only reference
-the new transport holds. trace_svc_xprt_accept() then reads the
-transport's addresses and network namespace from freed memory.
+When rpc.mountd cannot resolve a uid (getpwuid() or getgrouplist()
+failure, e.g. while winbind or sssd is briefly unreachable), it
+answers the auth.unix.gid upcall with zero groups. unix_gid_parse()
+installs that as a valid positive entry, and svcauth_unix_set_client()
+then replaces the credential's group list with the empty one on
+every request, RPCSEC_GSS included via svcauth_gss_set_client().
+One failed lookup strips that uid of all supplementary groups on
+every export for up to mountd's configured TTL (30 minutes by
+default), long after the NSS backend has recovered.
 
-Before publication the accepting thread owns the transport
-exclusively: XPT_BUSY is still set from svc_xprt_init() and the
-transport is on no list. Emit the tracepoint there.
+mountd cannot send an empty list for a successful lookup, since
+getgrouplist(3) always includes at least the user's primary group,
+so a zero-group reply can only mean the lookup failed. Record it as
+a negative entry: unix_gid_find() then returns -ENOENT and
+svcauth_unix_set_client() keeps the groups the RPC credential
+already carries. This is the fallback that
+commit 3fc605a2aa38 ("[PATCH] knfsd: allow the server to provide a
+gid list when using AUTH_UNIX authentication") promised when no
+answer is available, and the same state try_to_negate_entry()
+already creates when no listener holds the channel open.
 
-Fixes: 11bbb0f76e99 ("SUNRPC: Trace a few more generic svc_xprt events")
+Fixes: 3fc605a2aa38 ("[PATCH] knfsd: allow the server to provide a gid list when using AUTH_UNIX authentication")
 Cc: stable@vger.kernel.org
-Reported-by: VEGA <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/d15495bff2247e3f9d4f9ef36df8e246a3898380.1789220778.git.zhilinz@nebusec.ai
-[ cel: trace before publication instead of taking an extra reference ]
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
+Link: https://patch.msgid.link/20260814221953.108837-2-ameer.hamza@truenas.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc_xprt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/svcauth_unix.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -783,8 +783,8 @@ static void svc_handle_xprt(struct svc_r
- 		newxpt = xprt->xpt_ops->xpo_accept(xprt);
- 		if (newxpt) {
- 			newxpt->xpt_cred = get_cred(xprt->xpt_cred);
--			svc_add_new_temp_xprt(serv, newxpt);
- 			trace_svc_xprt_accept(newxpt, serv->sv_name);
-+			svc_add_new_temp_xprt(serv, newxpt);
- 		} else {
- 			module_put(xprt->xpt_class->xcl_owner);
- 		}
+--- a/net/sunrpc/svcauth_unix.c
++++ b/net/sunrpc/svcauth_unix.c
+@@ -537,6 +537,13 @@ static int unix_gid_parse(struct cache_d
+ 	if (ugp) {
+ 		struct cache_head *ch;
+ 		ug.h.flags = 0;
++		/*
++		 * mountd sends at least the user's primary group on
++		 * success, so an empty list can only mean the lookup
++		 * failed. Keep the credential's own groups instead.
++		 */
++		if (gids == 0)
++			set_bit(CACHE_NEGATIVE, &ug.h.flags);
+ 		ug.h.expiry_time = expiry;
+ 		ch = sunrpc_cache_update(cd,
+ 					 &ug.h, &ugp->h,
 
 
