@@ -1,47 +1,46 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831229;
-	b=dIAmobxP9qCsJLQZk5IYoQa8GXWk2x1VvAoSY7uwIzrrKFz14/poHsa4HK6lGHs/OVR1
-	 SGpuDdfFySTIzFJjtspHz3cL/ODakVBh8eAueY0TrsxrQaitBz0HAtyJogWIb5nwBfhGT
-	 /CIre6pFcnWw59PWHycI9f/rcy7MwIweLV6Sp7jQEOstQkWCUhB+mn4PlX/YefI13RAEH
-	 MJdzQYazgJXX4jyf3ajaWBIwC7TegB/Wlae/9IRgGXD9anJRY1PN/hnj6NNM9SlIY8KE5
-	 9AcZ9GH1fp/KKZqCtOTua4dRkvlpbI1WLZJD7gr/WQaCH9aScTcdGQsZphjEzZymJcA==
+	t=1793831231;
+	b=erSHPgCqn03byHUUHXBDpmuUIeqyJWH9fLwPGUAO7FpJDGfxd3UB+AIP1vwwF/BHbqb1
+	 7Z24oxw3J/brpShEOupnxbDaxhGPknatcMoVnmAoaXSrSdyE1eQ3gUlHntVVCXk5OE29o
+	 r06pcgO3FYMpK+1MDx5lMvYqoQTXqAShcgMw+JPZCWt0DxwdKtr/JpThBIumzuy0iPKZ7
+	 99zaIm4LZMLo4i2xBT4zg+7gv7jeCyj80xXl9+l6/JIWKhUz6+a/DTqiSJ35+UzNE/g+a
+	 R+egbw3TujoqJFVMgG7MLp18fjqq+giPoMjHtO880MHbUvKycblkyQpa3E60nS7on/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831229;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831231;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UJdmJqk3fDeEv0bqjjhE4oj8Oy3vUIVag3sdpZcYGhQ=;
-	b=e6QGoNVkBYaU7HyVugRZ0NBdiL+EA1odoMCWwSICIGgmzOHf1qoInVgD9SlWOUwwGQu3
-	 X6A16f7xOrTNc1FedUmSNAdpG9Jy31kG4SHc5dKBp4N0o2PfJ1n75wSWFE772RvCfVG/2
-	 BkfEuIrAwzEQnnm/8wlUj3pZgLY6TffbfJx1v34LN35+PN+FnF2WcDvGKGNHzWWKXaBhs
-	 7keGAyeanExcFSis4kDAfZevj9T7RfU60ubtK33DlW75Neu8e+SD5+VwrTq6SJvxEDJw2
-	 e/PtYq3Hl91XgOw6Id/axT83lq68dixHgF8MqRPwMJM38NfAACdp7G0ttPYxmkllrmQ==
+	bh=/Q8ENYDYhFfbtZIeUdcEhekfwwEfJfrDg1/Ud0DK/8M=;
+	b=B7L7dhOtJaTnx5Ta/gLFOC9XKz0W9vUQLDjgYQsYxU/8O2cfB4yH3mgya2G+D4xL3gHL
+	 edDk8rCkaCwqsg0xPtvOTKySBc7uaqOoTGfh9SB6mozZvWJGXR6QTEftGDVHrTRRzDgaS
+	 1zTnn7wrwXB0/V1lr3sQDhr4zJczy7GPphbPhlMT5dKbBlZqF2KHNJUmWC+OEGh1C3D5o
+	 e5lgNVitIkcN5YqxSWinXB7V0emVLSYaxkClXO4wBwDrNiLK7nHIatEWXRZx+32EVyRTP
+	 fxqJ1fP4L34ewhhYRi5O2SVceEiWUTK8jHUkUKDWWj7dAwGKHCXq9/AO8KMihOol6EA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jF+KQTxB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OZGSTRvt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E81E606AB32;
-	Wed,  4 Nov 2026 22:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC864606AB32;
+	Wed,  4 Nov 2026 22:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jF+KQTxB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7701F000C1;
-	Wed,  4 Nov 2026 22:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OZGSTRvt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1AF1F000C1;
+	Wed,  4 Nov 2026 22:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831229;
-	bh=UJdmJqk3fDeEv0bqjjhE4oj8Oy3vUIVag3sdpZcYGhQ=;
+	s=korg; t=1793831230;
+	bh=/Q8ENYDYhFfbtZIeUdcEhekfwwEfJfrDg1/Ud0DK/8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jF+KQTxBjcoR97mWybJqtxVw4TBPifOJLxCXpwr0Zfqy0c/m92XMa2k1cTvSZX/Xj
-	 S+/h10VJdjYeC7r0+T0EAcdQ2pbDWRQwxvqlXuwmRK0Z9Do2Do3t48jjt4pTxtscJm
-	 tumOPsMrbEe6D4WNT7g2WlGq0RRGvIWl1zhgvPHI=
+	b=OZGSTRvtm8hcqiah1QdGskwNMK+VyNM4vUER8583u+RMg4BIi2yVhO7y0olZSov3J
+	 s9Iag59/s3ahNZAG73FHIdWU9kpIzZ1NzE0nJfLz7tF01fbUQVK6+1Odo2MzWXFjkc
+	 HBGbYSYWvVSOavlFpAnP0RB55pCsqilYVFq4OwJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Lesuisse <arthur.lesuisse@ulb.be>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
@@ -49,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0576/1005] smb: client: fix uid/gid override in getattr with posix extensions
-Date: Wed,  4 Nov 2026 16:05:09 -0500
-Message-ID: <20261104211100.000258027@linuxfoundation.org>
+Subject: [PATCH 6.18 0577/1005] smb: client: fix WSL reparse point uid/gid override
+Date: Wed,  4 Nov 2026 16:05:10 -0500
+Message-ID: <20261104211100.028829428@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -75,23 +74,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit cf4d35896621b7298eef51b7a465e5c0cb22f670 ]
+[ Upstream commit cd2b2b57921d4caa7875e83198bb2aa71254328b ]
 
-When mounting with 'multiuser,posix' options, cifs_getattr() overrides
-the server-provided uid/gid with the current process's fsuid/fsgid.
-This is because the condition only checks for unix extensions
-(tcon->unix_ext) but not posix extensions (tcon->posix_extensions).
+wsl_to_fattr() unconditionally overwrites cf_uid/cf_gid with values
+from WSL extended attributes ($LXUID/$LXGID), ignoring the forceuid
+and forcegid mount options.
 
-With SMB3 POSIX extensions, the server provides real uid/gid values
-just like with unix extensions, so they should be preserved rather
-than replaced with the caller's credentials.
+Fix this by initializing cf_uid/cf_gid to the mount defaults and
+gating the $LXUID/$LXGID EA parsing on forceuid/forcegid.
 
-Add a tcon->posix_extensions check to the condition so that uid/gid
-from the server are properly reported in stat results.
-
-Reported-by: Arthur Lesuisse <arthur.lesuisse@ulb.be>
-Closes: https://lore.kernel.org/r/DB9P190MB2012266F6B8DECBE5D26A1798DB52@DB9P190MB2012.EURP190.PROD.OUTLOOK.COM
-Suggested-by: Arthur Lesuisse <arthur.lesuisse@ulb.be>
+Closes: https://sashiko.dev/#/patchset/20260906190803.667489-1-pc%40manguebit.org
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
@@ -99,34 +91,51 @@ Cc: Shyam Prasad N <sprasad@microsoft.com>
 Cc: Tom Talpey <tom@talpey.com>
 Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-[ sashal: Kept the inline cifs_sb_flags(cifs_sb) calls instead of the upstream cached sbflags local, since that cleanup is missing here, and applied only the posix_extensions condition and comment change. ]
+[ sashal: Kept the existing fattr->cf_mode &= ~S_IFMT; line and added the new uid/gid default initialisation after it, and the S_DT() comparison context uses get_unaligned_le32(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/smb/client/reparse.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 995d6df9304f4..88d2732b73a05 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2978,13 +2978,13 @@ int cifs_getattr(struct mnt_idmap *idmap, const struct path *path,
- 		stat->attributes |= STATX_ATTR_ENCRYPTED;
+diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
+index 2e773a1a67142..124ad21d6dff6 100644
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -1109,11 +1109,15 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
+ 			 struct cifs_sb_info *cifs_sb,
+ 			 u32 tag, struct cifs_fattr *fattr)
+ {
++	unsigned int sbflags = cifs_sb_flags(cifs_sb);
+ 	struct smb2_file_full_ea_info *ea;
+ 	bool have_xattr_dev = false;
+ 	u32 next = 0;
  
- 	/*
--	 * If on a multiuser mount without unix extensions or cifsacl being
--	 * enabled, and the admin hasn't overridden them, set the ownership
--	 * to the fsuid/fsgid of the current process.
-+	 * If on a multiuser mount without unix extensions, posix extensions
-+	 * or cifsacl being enabled, and the admin hasn't overridden them,
-+	 * set the ownership to the fsuid/fsgid of the current process.
- 	 */
- 	if ((cifs_sb_flags(cifs_sb) & CIFS_MOUNT_MULTIUSER) &&
- 	    !(cifs_sb_flags(cifs_sb) & CIFS_MOUNT_CIFS_ACL) &&
--	    !tcon->unix_ext) {
-+	    !tcon->unix_ext && !tcon->posix_extensions) {
- 		if (!(cifs_sb_flags(cifs_sb) & CIFS_MOUNT_OVERR_UID))
- 			stat->uid = current_fsuid();
- 		if (!(cifs_sb_flags(cifs_sb) & CIFS_MOUNT_OVERR_GID))
+ 	fattr->cf_mode &= ~S_IFMT;
++	fattr->cf_uid = cifs_sb->ctx->linux_uid;
++	fattr->cf_gid = cifs_sb->ctx->linux_gid;
++
+ 	switch (tag) {
+ 	case IO_REPARSE_TAG_LX_SYMLINK:
+ 		fattr->cf_mode |= S_IFLNK;
+@@ -1150,11 +1154,13 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
+ 		nlen = ea->ea_name_length;
+ 		v = (void *)((u8 *)ea->ea_data + ea->ea_name_length + 1);
+ 
+-		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen))
+-			fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
+-		else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen))
+-			fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
+-		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
++		if (!strncmp(name, SMB2_WSL_XATTR_UID, nlen)) {
++			if (!(sbflags & CIFS_MOUNT_OVERR_UID))
++				fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
++		} else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen)) {
++			if (!(sbflags & CIFS_MOUNT_OVERR_GID))
++				fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
++		} else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
+ 			/* File type in reparse point tag and in xattr mode must match. */
+ 			if (S_DT(fattr->cf_mode) != S_DT(get_unaligned_le32(v)))
+ 				return false;
 -- 
 2.53.0
 
