@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829047;
-	b=IGyY9lbmw/sbnOh6kTpvfu4o7h1PUBM73KuxDqdsPWEZj9uwAZ305WOgfF1X5tC7d45s
-	 YRrCcAEil6pHekGYTlM5rZ3a/abTnrAVXYFfwUY/PDb2F11SR9vzIuux8jMeN95DlSp4w
-	 iVgm6rHe13u0dIsVG0Yxw3wy4D92vzaiVi3hl+ZCCCJesJ5WoS4HENLycwaud8avaZwWQ
-	 j+rFd3kfQq/N3X+62aXaqrSkaviwcsiVdW/mhmj0uIm3S6f8ZOzbQZhSemLWaULybnVOv
-	 sTVLRYz4VfUtxboVFHzq02DMFT0fA45hoTanEh7NwrNranCdBmeoV4c60KkXAYeR6Kg==
+	t=1793829050;
+	b=RDddLLyuhJTQPYOWcwGZdApyciqekWuulxBrpWXYwwrs+nsePzdVoB3wpWs5sCFy+O6u
+	 G+Zh6e2teSvCK5Z7vWideUJMp0UMZxJ1EdXNrLmMCNXG3McayLZUnQsQpGJEdZx2k5l2v
+	 iSTdXK58BqT+RXO0Tlmd4ujtgXOnLdzbC9O7jmTmEfFIaNxtW9b6cKzekRhBHf07pPBZO
+	 /Gts2v7vcN0V0nIsmYWV5mJyPEyGgUpRyvJJK4WhMrZCcnD+pYcF/02LtcUAqVnWlmBZO
+	 fu/RrJjNo7oITkJ37soa38MFtUL2GN8j1dlBRy9YkX0NBn/pzr9meuW6d5fdDEo4dsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=384s+rSNtMHGR6z3JtzRl907jI1SZVHfXQ2+1mPapNg=;
-	b=KHsaXv7rW/sa28kvfqIm+ZmLQzh6YRvduYrEvrb1UUg7M4KqOhsd/s1l918jLyhMQNmD
-	 4jOqXLAC1JxJLKTrTj47tm76gPCKNVc7RvIEdR5vx/uNZzZGXuYU40j3VBeX8oNDmVdk1
-	 +t2KNTn4OelvpNFYXNxqqKN4vessye474H5tWhscu3DPZmqhNzls+b/arDJSWHfyH0HUR
-	 tdf/GDHznLV2U0pbTwJbZKGEDj770JAHVkKFz0W5d/16ywqIuS2w5t+01yUJ8cbzNAlWb
-	 b3vqhJyVx+nh0ZGts7vGzq154lnly6oqxpSD9ZhAwS4FWSyUBMXpFlqq999IdBX3sMw==
+	bh=5IwVFg7BmKz4WwCDHMYdYkzYIwszuKX532PyZMWjrNE=;
+	b=Y9B2kxp6CmrhgBUaTOKMKFxAdtoCdG7rmp+UB2XyMTc4qNpw1/rRDec0DMnx1S42Bagt
+	 T+zhVyOmwpYOY/LFb7RKOhfzG9HJxVKYO1K8NnO7XsA0i/bEgqIuPErnE6oMEqX08Ozm7
+	 VSGSJk55aw6I7luKEkTY5sAhaXIGOeXhISdKeVHcJ4i5CNPLeKsfufDQvDPX1YqIqmvjQ
+	 v5zbImZmi6XK5M5BJOk1gewbPkN58ZWXZ407zkeg7IGN9m2KhtfsSSeOFl3lyQwkEqGsi
+	 L/CnoTvEwSRzf8jb/AwE6ZcnUhj/iS6o0q5pf6TBhUHkdnoqgo0K+jWtsoLKRxIHxUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uru2qEmT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7TTLvkR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4EF6070772;
-	Wed,  4 Nov 2026 21:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773E660807B1;
+	Wed,  4 Nov 2026 21:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uru2qEmT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC6F1F000C1;
-	Wed,  4 Nov 2026 21:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7TTLvkR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD621F00A1C;
+	Wed,  4 Nov 2026 21:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829047;
-	bh=384s+rSNtMHGR6z3JtzRl907jI1SZVHfXQ2+1mPapNg=;
+	s=korg; t=1793829050;
+	bh=5IwVFg7BmKz4WwCDHMYdYkzYIwszuKX532PyZMWjrNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uru2qEmTJ3ZZWfeSHyGQiQG4Bjmzu7TrJU6FU0URv0KrZj9hkGlnH1WqikBBbCOBN
-	 oI434l/UDSm9/dhDoujRgKc0f4B6XDcDbhZ7n0ki1/ZbwbGp1r6NBM11B4+TVl+Sem
-	 oO7SQl+wcvi+gdgk8BE6GZnRiEvY1JLY+dYmOSjk=
+	b=A7TTLvkRxccLzk3rXNB8wmX//22X3AfjSqlXfpER30k1J7RGfgIt8pw7M0xhFebVC
+	 eVN2kU8CL0AGv04PwA49kOEUWoPOc+oVBZgKJ8CbzSveltxqbyA0imZXl3V+lL5yOm
+	 XqRQkXCQIppQpWbhv5T35o+v6XTIQogdfBtZnDW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.3 410/547] NFSD: cap the number of listeners accepted in listener_set
-Date: Wed,  4 Nov 2026 16:09:54 -0500
-Message-ID: <20261104211049.969019549@linuxfoundation.org>
+Subject: [PATCH 7.3 412/547] NFSD: copy SETXATTR data from all XDR buffer segments
+Date: Wed,  4 Nov 2026 16:09:56 -0500
+Message-ID: <20261104211050.025310624@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,79 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 9a05e5ee0a98b9550521df86936b5f825bc07ec2 upstream.
+commit b01319947c69b0e3ea0fcd4b675eb892f9cad8a0 upstream.
 
-nfsd_nl_listener_set_doit() matches each requested listener against the
-existing set. The nested loop that does this is O(N * M), where N is the
-requested count and M is the existing count. The loop runs under sv_lock
-with bottom halves disabled. A userland request with a very large listener
-list can therefore spin in atomic context for a long time.
+nfsd4_vbuf_from_vector() manually copies the head followed by whole
+pages starting at offset zero. This assumes that all remaining data
+starts at the beginning of the page array and that no data is stored
+in the tail.
 
-Reject a request that carries more than NFSD_NL_LISTENER_MAX (1024)
-entries. The check goes in nfsd_nl_validate_listeners(), before the code
-takes any lock. The limit is far above any realistic configuration.
+However, nfsd4_decode_setxattr() passes an xdr_buf returned by
+xdr_stream_subsegment(). Such a sub-buffer can have a nonzero
+page_base and can span its page and tail segments. Ignoring that
+layout can copy the wrong bytes into the value passed to
+vfs_setxattr().
 
-This patch does not cap M. Only the message size bounded N; real sockets
-bound M. A listener_set result set is the requested set, so that path also
-holds M at the cap, but __write_ports_addxprt() adds two listeners per call
-and removes none, so repeated calls can push M past it. The worst case
-under sv_lock is therefore 1024 * M, plus 1024 nla_parse_nested() calls.
-Both interfaces require CAP_NET_ADMIN.
+Use read_bytes_from_xdr_buf(), which observes the complete xdr_buf
+layout.
 
-Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
+Fixes: c1346a1216ab ("NFSD: Replace the internals of the READ_BUF() macro")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-1-a540d86668b0@kernel.org
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260915160022.3105295-1-qwe.aldo@gmail.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4xdr.c |   19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1973,21 +1973,22 @@ err_free_msg:
- 	return err;
- }
- 
-+/* Upper bound on the number of listeners a single request may carry. */
-+#define NFSD_NL_LISTENER_MAX	1024
-+
- /**
-  * nfsd_nl_validate_listeners - sanity-check the listener list from userland
-  * @info: netlink metadata and command arguments
-  *
-- * Walk every NFSD_A_SERVER_SOCK_ADDR attribute and confirm that each entry
-- * is well-formed: it parses against the policy, carries both an address and
-- * a transport name, and the address is long enough for its family. Doing
-- * this up front lets the callers below assume every entry is valid and
-- * guarantees we make no changes when the request is malformed.
-+ * Walk every NFSD_A_SERVER_SOCK_ADDR attribute and confirm that the list is
-+ * not oversized and that each entry is well-formed.
-  *
-  * Return: 0 if every entry is valid, or a negative errno otherwise.
-  */
- static int nfsd_nl_validate_listeners(struct genl_info *info)
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -2320,10 +2320,8 @@ static __be32
+ nfsd4_vbuf_from_vector(struct nfsd4_compoundargs *argp, struct xdr_buf *xdr,
+ 		       char **bufp, size_t buflen)
  {
- 	const struct nlattr *attr;
-+	unsigned int count = 0;
- 	int rem;
+-	struct page **pages = xdr->pages;
+ 	struct kvec *head = xdr->head;
+-	char *tmp, *dp;
+-	u32 len;
++	char *tmp;
  
- 	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
-@@ -1996,6 +1997,11 @@ static int nfsd_nl_validate_listeners(st
- 		struct sockaddr *sa;
- 		int err;
+ 	if (buflen <= head->iov_len) {
+ 		/*
+@@ -2338,19 +2336,8 @@ nfsd4_vbuf_from_vector(struct nfsd4_comp
+ 	if (tmp == NULL)
+ 		return nfserr_jukebox;
  
-+		if (++count > NFSD_NL_LISTENER_MAX) {
-+			NL_SET_ERR_MSG(info->extack, "too many listeners");
-+			return -E2BIG;
-+		}
-+
- 		err = nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
- 				       nfsd_sock_nl_policy, info->extack);
- 		if (err < 0)
+-	dp = tmp;
+-	memcpy(dp, head->iov_base, head->iov_len);
+-	buflen -= head->iov_len;
+-	dp += head->iov_len;
+-
+-	while (buflen > 0) {
+-		len = min_t(u32, buflen, PAGE_SIZE);
+-		memcpy(dp, page_address(*pages), len);
+-
+-		buflen -= len;
+-		dp += len;
+-		pages++;
+-	}
++	if (read_bytes_from_xdr_buf(xdr, 0, tmp, buflen))
++		return nfserr_bad_xdr;
+ 
+ 	*bufp = tmp;
+ 	return 0;
 
 
