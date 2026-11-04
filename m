@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831289;
-	b=kxjU9+Mf4lHF0gTpIHMpJPaI0rqw3u2Vheqm6AGnuPpUzk2cgMejRJqpmRcYrjLKjHIR
-	 dADOI4Zjxyrkg55vdY7MSsYkmDnynqwa5nI+7VdMKrHV3Cr81V+BAVXwI5jgwpCkBGyRp
-	 ITJpo2UjAbqrp6O6QsvJQlqKH7agPO1gvc+2zwVcXfrvz16I6W38uHNIRisxe7v1zLFDf
-	 xxDmpRvaxp9GEetyC1kQsgKv5Siq47NlCnTSMPXNT5U+/wNKqIAkMPYUdETNGHz07a6kn
-	 RYtblE7CnzTPQ56xmU7QvrIaVyrosP7lT8urxFxeds+Bt81bx6tQjiDX7g8kygZVnBw==
+	t=1793831291;
+	b=EB5YKsBXwz610peuJZa3U5rv27o0+ChFe0HBi2qF0HN+SfP/H4gG7wmYsN5CYply5+j4
+	 rDWGMB1dOL0IPAsEqNMbVFDm4W8W/6AGPC3XoYRsnyeGAh/ra+Zi6lpYQI2kayrkVQLSl
+	 uKk+r1Vh6TzcYnvIwrk5vYpHvIIUFXdpeopFTwzkmtWnwy2bTFZXtB+gamPXPhAGMxuWa
+	 Lw3RYl8pDYqg18YcbC5gGcy1y9OWLvIkwmaHI7Y03sRpIieZqfD2UUIp8NpIrOoSBmH9h
+	 6Lz6ewwjhQT2eyaLeIxZsuID68HT43orgEWNXrjqSdViUrZVhhDX6AH+p925uVuEo3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831291;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5QDwNASLE7l0iT8oUo7RS72LkTC9IqZ8CNBbxeAzadQ=;
-	b=cHa6+q87l+JXXJLlY4ctdnYK2Qx+CS6Gy/u27Vg/Fk+XE2SFnjAf3mCBoXYPRcmvx14a
-	 /BXbYIROT/rM8QOyKeIiYx8fKN7zp/g5i9pfDgnB5CA+yHUDV5VyBZk8oJUmsUINZvl70
-	 PHaoaKcTyCHVSUEHi4kNNS/mBklubDoSj+gLKmN2QwfHzKsquvf4T0FS3hhbP7XmSpW+s
-	 4LBjx1V+nBVxE9l/Iki7eJb2bi0bDkEUYULz3GQ+pHotjYyEJ+80o3XStdR1LW4OaUBKv
-	 8jAplc7MpX9+MnNY4DAUOOAlMqvKupTN31DIJBl4qeElqxoxMmhGD7mKA4ciIFBk/qA==
+	bh=7pSVZ51hw46E+L8ffxT4gHw63q/7AQQxTNV6TzpzUlA=;
+	b=xtZjTIi66OMh3sT3gXIO1i6IeIb8Kfcv5I5agBV6km0gcJNa0X90kXY6xa4CMS60nGiw
+	 4Ck/PI2tj7Pv3UQUogdDK8/Dj734hRwWtDfzO9tJHZzDP7q+yN592+8TMjdtoxPGpGR6w
+	 k7t1XiqwPQS5qEt9/S8/BJDvKBeZ4JXbIrvAQLAo/B4i60BTzeekCi1ulDoh2gytU+/bD
+	 89C0u42QxbSa8omUSFdNL3nG4wlivIsgLnUr7MRwMMdycbKhgdgu3Wm+5ptNUc7aQEfce
+	 5Hk9cxVVGK138Mk8Pb4DS1vzFsTdTjF1xZKdkM6DMlYOFkMfW2BQHTJH+R0MX3qDdEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K4EZ7aSa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hwd8Vhv9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793A9606AC1C;
-	Wed,  4 Nov 2026 22:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5A9606AC1C;
+	Wed,  4 Nov 2026 22:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K4EZ7aSa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66CB1F000C1;
-	Wed,  4 Nov 2026 22:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hwd8Vhv9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4643C1F00919;
+	Wed,  4 Nov 2026 22:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831289;
-	bh=5QDwNASLE7l0iT8oUo7RS72LkTC9IqZ8CNBbxeAzadQ=;
+	s=korg; t=1793831290;
+	bh=7pSVZ51hw46E+L8ffxT4gHw63q/7AQQxTNV6TzpzUlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K4EZ7aSaH8RgUs97gCooEy2KluKOlh5TIHwRK/eXXBd3DjBnJqC9NvA7BIxSSJH+y
-	 kAPD/QEIGOIvf7y6LvDed0ddTC38ipir8RHzlECI+Zh8v89zsZ8FSy4aOZ7T+dTbSa
-	 rd53E7xRaBig78Qmu/oEm6AGmJ+CRiM0/D0qumZw=
+	b=hwd8Vhv9SYMg1inlp8lMb9EN4/Du2lmXhZXLms+Zsq+GSNdTNG39uEOzhbdXUTDd9
+	 TDGuE/kpwcXSG8s8YbAoX3KIWlZrpfI1xXOXw9DwivSQbKu8pwR2eMt/srs8rxf9vv
+	 H087bUQ8tUPOAF8UVzadN9p9zKJl0y2nlwgvVOPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Mishal <harimishal1@gmail.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sidong Yang <sidong.yang@furiosa.ai>,
+	Igor Paunovic <royalnet026@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0613/1005] drm/amd/display: guard dc_sink dereferences in MST mode validation
-Date: Wed,  4 Nov 2026 16:05:46 -0500
-Message-ID: <20261104211101.011671296@linuxfoundation.org>
+Subject: [PATCH 6.18 0614/1005] accel/rocket: search every core slot when looking up a scheduler
+Date: Wed,  4 Nov 2026 16:05:47 -0500
+Message-ID: <20261104211101.036691926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,54 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Igor Paunovic <royalnet026@gmail.com>
 
-[ Upstream commit 217f64f348c90cba62164e7ff38e0ccf78a5ca09 ]
+[ Upstream commit 89c2c777df17eb0201c8e22afabbf3691f2a28fe ]
 
-dm_dp_mst_is_port_support_mode() reads
-aconnector->dc_sink->dsc_caps... for the DSC branch-throughput check,
-and get_conv_frl_bw()'s HDMI-PCON FRL-bandwidth path reads
-aconnector->dc_sink->edid_caps.max_frl_rate, both without a NULL
-check. dc_sink is cleared asynchronously on MST unplug, and both
-functions run from paths that the driver's own comments document as
-racing that teardown: the connector probe worker's ->mode_valid
-callback and a compositor's atomic check, neither of which holds the
-MST manager lock that the teardown path uses. The former does have an
-existing dsc_aux NULL check, but dsc_aux isn't reliably cleared in
-every path that clears dc_sink, so it doesn't cover this.
+sched_to_core() walks rdev->cores[] up to rdev->num_cores, and
+rocket_remove() decrements num_cores for every core it removes. Unbind a
+core that is not the last one and the cores behind it fall outside the
+search, so sched_to_core() returns NULL for a core that is still bound and
+still running jobs. Neither caller checks the result:
 
-Fail the port-support check and skip the FRL conversion path when the
-sink is already gone.
+  rocket_job_run():      rocket_fence_create(core), core->dev
+  rocket_job_timedout(): dev_err(core->dev, "NPU job timed out")
 
-Fixes: f04d275d94e1 ("drm/amd/display: add mst port output bw check")
-Fixes: 5c9b8b27a883 ("drm/amd/display: Tie FRL support into amdgpu_dm")
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Reviewed-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7c3db8da4e039698ae198c870712428644e965c7)
+Unbinding the middle core of the three on an RK3588 while three clients are
+submitting to all of them faults twice, once from the surviving core's
+job queue and once from its reset work:
+
+  KASAN: null-ptr-deref in range [0x0000000000000220-0x0000000000000227]
+  Workqueue: fdad0000.npu drm_sched_run_job_work [gpu_sched]
+  pc : rocket_job_run+0x234/0x838 [rocket]
+  Call trace:
+   rocket_job_run+0x234/0x838 [rocket]
+   drm_sched_run_job_work+0x2cc/0xad8 [gpu_sched]
+   process_one_work+0x640/0x14f0
+
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  Workqueue: rocket-reset-2 drm_sched_job_timedout [gpu_sched]
+  pc : rocket_job_timedout+0xf0/0x1e0 [rocket]
+  Call trace:
+   rocket_job_timedout+0xf0/0x1e0 [rocket]
+   drm_sched_job_timedout+0x188/0x6a0 [gpu_sched]
+
+Both are the third core: the workqueue names are its device and its
+core->index, and it was left at slot 2 while num_cores had dropped to 2.
+
+Search all the slots that were allocated, the way find_core_for_dev() now
+does. A core that is still bound is then found, and the two callers get
+the pointer they already assume they have.
+
+This does not make unbinding one core out of several safe. An open client
+keeps an entity pointing at the scheduler of the core that went away:
+drm_sched reports it as not ready for every job that lands on it, and the
+client waits in dma_fence_default_wait for a fence that will never signal.
+Stopping the NULL dereference is what belongs in a fix; the rest wants
+more thought.
+
+Reported-by: Sidong Yang <sidong.yang@furiosa.ai>
+Closes: https://lore.kernel.org/dri-devel/apwUewaRnoTNXHCt@rock-5b-plus/
+Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
 Cc: stable@vger.kernel.org
-[ sashal: Dropped the FRL hunk because the HDMI 2.1 FRL code isn't present, and applied only the dc_sink NULL check in dm_dp_mst_is_port_support_mode(). ]
+Signed-off-by: Igor Paunovic <royalnet026@gmail.com>
+Assisted-by: LLM sparse checkpatch
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260905150432.7477-1-royalnet026@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/accel/rocket/rocket_job.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 2e0895f4f9b10..642248a251149 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1867,6 +1867,9 @@ enum dc_status dm_dp_mst_is_port_support_mode(
- 	struct dc_dsc_config_options dsc_options = {0};
- 	uint32_t stream_kbps;
+diff --git a/drivers/accel/rocket/rocket_job.c b/drivers/accel/rocket/rocket_job.c
+index b374d7ee54b68..729b7d6d77d46 100644
+--- a/drivers/accel/rocket/rocket_job.c
++++ b/drivers/accel/rocket/rocket_job.c
+@@ -283,7 +283,7 @@ static struct rocket_core *sched_to_core(struct rocket_device *rdev,
+ {
+ 	unsigned int core;
  
-+	if (!aconnector->dc_sink)
-+		return DC_FAIL_BANDWIDTH_VALIDATE;
-+
- 	/* DSC unnecessary case
- 	 * Check if timing could be supported within end-to-end BW
- 	 */
+-	for (core = 0; core < rdev->num_cores; core++) {
++	for (core = 0; core < rdev->max_cores; core++) {
+ 		if (&rdev->cores[core].sched == sched)
+ 			return &rdev->cores[core];
+ 	}
 -- 
 2.53.0
 
