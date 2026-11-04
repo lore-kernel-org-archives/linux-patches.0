@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831171;
-	b=G/n+Abd5vpq7swnmteqwjL8kG9RYWtTo0pJLoM1jjH3DfOvD9cwHEVuSI9HFc/aMOXIj
-	 sS+h/H8Q/DCghobP2ADUCgPtRaHiehpNxrRGouvMmPmjI5D5lCuRcDDFsxMEOckqG4YPE
-	 iwjv4PtTC+yVFjQxB3lELN8MzQD0DNJ/9txR3rgaeaXfze3V+mkApNfu8sy0krXXSKUPR
-	 DtBfXnv6yLKaHbbBQoGFQCa/zMsxiROTLKxbYl/yxxiUJKTSCVm1deoOpZnXEedqDymqg
-	 0HsrkZr8y9g8dWdqDxpThmGA8MughVks5FEQdRbRiKKBw3KIr6Xu5XI6UXntZ1bb2zg==
+	t=1793831173;
+	b=VySmNbrdltbZRB1VCoYicJz7jqn+ugfsIgrJjwnFF2AnUzV6j1VY6KWQi6dQIhqA9eAo
+	 YvYuZgujfMvC/dGI0gxp6kFfQIHTYm1AZmO6O59FltReL9rZ/wy+evEQIJk2fwqsYLy0k
+	 78EvYM0/I7xnT+rb0qgmQPdoW/ZRkhtf9eYcn+uFaudn6qPdEKqVtMLnST8yJucBBGsm8
+	 CESPRdrDzg6Rqsw7WzpRg78hpJsPW17Y/f4Rw/EA0Mp8KApcj9IkZcH2fbzFc9w69ZCWD
+	 QxWCcQUCqkjQqU41/hfpPIM4koPbFs7qCulDcBhHdOMJ3QCJGX+e3RXXt6xbcF+KiMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G/URIuRhAUje1UGwigQkqqpW98WzBGN+hUkpvlLvGOU=;
-	b=w079zU9lIMYbODsB6dpyFcElXddrAGtsmg7+hU8OeQgNUhYKLX6fXI8e+6fU7WLqKt2c
-	 TREF+lgCemNsLjaaHXlu5oG2iaKU9W8OOVwNBNklQbI5DQQ1CidV2U/ZVV6Gf95iBL02E
-	 MsJfE9Dc2wEAatCcoZjs9Zxbz9gPCOpkBMoEYC6zk5dTlAf0BmgyXNzKuvH5omRudkZYF
-	 diVWdD8QG9tgb1UH/8yC81pPXvIcpdF/X9g3sx9jg0ErDIMl8WjRdz1ARrgkW/j/B4Ewo
-	 ySKyLD7V7HTxihWyvEqtXjd+TDx1RYQiL5j/MNioJz3eeDUUqer+akZW2JM/y25uC0g==
+	bh=PYlsUF0lPop6cHdkBrr8x8NT76DrqD0Mq9rNNhd0nxc=;
+	b=tD+SSioiwrpQPuMGoPDARzcyMK/22K4eJ4MlwASKfvpuGl/bMLsh36lyaIZS2r+LjiXB
+	 S5IR7+KCTFB1TGwpANBJhxoNPasooIMF84YrTAOwMygAhEozez5JVvJ9JdubtVUsc3kDr
+	 qoXs+pil5zwiYXlIamjlpmAFu9y04R3uo5hL0Xphz+8fCbphoInl3e0HPjZ41W2/8PUUW
+	 EgkMOXMukb2ZBzv5jJyysYGIL3JLov+mhT43gnoxQdMlua90D2BFeOG/tDZuFTasjH4IA
+	 9vJbqYfwKP4awWrjv6SOCJh3a+/VYG/iRviyj1Kq3OzKBx9EZJ8GAfzxKm/Xm7QftxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z0bbqaEv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbgcYPua;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF5F606A33C;
-	Wed,  4 Nov 2026 22:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110C4606A33C;
+	Wed,  4 Nov 2026 22:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z0bbqaEv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9201F00919;
-	Wed,  4 Nov 2026 22:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbgcYPua
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25AD1F00A02;
+	Wed,  4 Nov 2026 22:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831171;
-	bh=G/URIuRhAUje1UGwigQkqqpW98WzBGN+hUkpvlLvGOU=;
+	s=korg; t=1793831172;
+	bh=PYlsUF0lPop6cHdkBrr8x8NT76DrqD0Mq9rNNhd0nxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z0bbqaEvdkPF96BN1dKihL30/x75hAU6zoGLV/oiJDVlql64zNkGJBTNu5oLDF06y
-	 wGZIHg4vgIxYkmDQV8WhoWI4rDwFP4vlOq3CeAn0FkE7xvaVRrOizhcHFPURWLxVdf
-	 xaGLOPyMhIOrYr8GIro42QG2FPlL2WgAdlGyuWek=
+	b=JbgcYPuahc2SgpGiXThPyg5nGRIPThKlazX8f4WRrB74LNjywmhD+Lq0wsXynuW3e
+	 81+v9Xasvy+B5SEIQv6Di5kTtTkMZ0merc8C5dCgXmOnWmHZcxUKCxmPGyDikmEXel
+	 cNSgnvhQvuuErXSkE0FNI5GmBGiZZz7GGpj83l7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sascha Bischoff <sascha.bischoff@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0540/1005] sctp: auth: discard auth_chunk when skb_clone fails
-Date: Wed,  4 Nov 2026 16:04:33 -0500
-Message-ID: <20261104211059.018327555@linuxfoundation.org>
+Subject: [PATCH 6.18 0541/1005] dt-bindings: interrupt-controller: gicv5: Relax IRS properties constraints
+Date: Wed,  4 Nov 2026 16:04:34 -0500
+Message-ID: <20261104211059.043231508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,62 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
 
-[ Upstream commit 9ae7ed101cf28613071ebfbc42668c8917a670cf ]
+[ Upstream commit 1d77e79d62cfe46ad3619d42ee0d1ebd3f0f79f4 ]
 
-When processing AUTH + COOKIE-ECHO packets, if skb_clone() fails
-due to memory pressure, chunk->auth_chunk is NULL. The original
-code still sets chunk->auth = 1 and continues, leaving the
-COOKIE-ECHO to be processed without a valid auth_chunk for
-deferred verification.
+An IRS is architecturally allowed to be stand-alone (ie with no direct
+CPU connection).
 
-Discard the AUTH chunk early via pdiscard when skb_clone() fails,
-so that the receive loop can continue processing remaining chunks
-in the inqueue instead of stalling the entire packet.
+Relax "cpus" and "arm,iaffids" properties constraints allowing a standalone
+IRS configuration.
 
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260723061107.384106-1-l1138897701@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Fixes: 7d7299bd07c6 ("dt-bindings: interrupt-controller: Add Arm GICv5")
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Sascha Bischoff <sascha.bischoff@arm.com>
+Link: https://patch.msgid.link/20261015-gicv5-irs-no-cpus-v1-1-d4b337b7f000@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/associola.c   | 4 ++++
- net/sctp/endpointola.c | 4 ++++
- 2 files changed, 8 insertions(+)
+ .../bindings/interrupt-controller/arm,gic-v5.yaml        | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index ca55be94e8d4d..db339618ba55f 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -1009,6 +1009,10 @@ static void sctp_assoc_bh_rcv(struct work_struct *work)
- 			if (next_hdr->type == SCTP_CID_COOKIE_ECHO) {
- 				chunk->auth_chunk = skb_clone(chunk->skb,
- 							      GFP_ATOMIC);
-+				if (!chunk->auth_chunk) {
-+					chunk->pdiscard = 1;
-+					continue;
-+				}
- 				chunk->auth = 1;
- 				continue;
- 			}
-diff --git a/net/sctp/endpointola.c b/net/sctp/endpointola.c
-index 31e989dfe8466..be2e2bb2c1173 100644
---- a/net/sctp/endpointola.c
-+++ b/net/sctp/endpointola.c
-@@ -368,6 +368,10 @@ static void sctp_endpoint_bh_rcv(struct work_struct *work)
- 			if (next_hdr->type == SCTP_CID_COOKIE_ECHO) {
- 				chunk->auth_chunk = skb_clone(chunk->skb,
- 								GFP_ATOMIC);
-+				if (!chunk->auth_chunk) {
-+					chunk->pdiscard = 1;
-+					continue;
-+				}
- 				chunk->auth = 1;
- 				continue;
- 			}
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml
+index 86ca7f3ac2810..b901e4288816a 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v5.yaml
+@@ -120,13 +120,14 @@ patternProperties:
+ 
+       cpus:
+         description:
+-          CPUs managed by the IRS.
++          CPUs managed by the IRS. Omit it if the IRS has no associated CPUs.
+ 
+       arm,iaffids:
+         $ref: /schemas/types.yaml#/definitions/uint16-array
+         description:
+           Interrupt AFFinity ID (IAFFID) associated with the CPU whose
+           CPU node phandle is at the same index in the cpus array.
++          Omit it if the IRS has no associated CPUs.
+ 
+     patternProperties:
+       "^its@[0-9a-f]+$":
+@@ -210,12 +211,14 @@ patternProperties:
+           - reg
+           - reg-names
+ 
++    dependencies:
++      cpus: [ "arm,iaffids" ]
++      arm,iaffids: [ cpus ]
++
+     required:
+       - compatible
+       - reg
+       - reg-names
+-      - cpus
+-      - arm,iaffids
+ 
+ additionalProperties: false
+ 
 -- 
 2.53.0
 
