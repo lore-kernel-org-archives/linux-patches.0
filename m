@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793830903;
-	b=PLMFZpyfZ/K+feQ/34GN3btQ6MMSWQrpgzBldpSvMuH758CfW15jfWBdmzYYItqI0ibC
-	 64AUXr5hWHrEASfnPUCz0tf8/AEpPNi7Vt+tzwy9NOU1bzjJlvyYBtrxLsMGW0sEwH/i+
-	 hYW0vMNUrGe3yutJM16PWlQOhVEk9AF2sS/kDZBgjpfEdH2vAlzTuAv4a69dSFYSr0gTn
-	 rp4VAujiCzrlJtkCg4eKIZH39m+eA1vZ/iNhjZghEGctFJodK48r+zNXH17x6ZmWkKoS+
-	 69TXaIr/TFivr0Yqzi/zp/SEBWIXh3bqBPWYpAQ9/EYbitodrtuiwzL5+qd+H1V5s9g==
+	b=Vlf175JfdT3vqgMn11Wu+RFjXD0jF7/pE+s/lpZkSzy2Tfq8J4VGCvvrpx//Je+mG6wH
+	 jEwjZFZk6sv/k7YeVi0MoJrh2KGX+aBbh2FoSlCMrMADGms9NpQe02fWeD9Dkv7o1g5iX
+	 7LiAXnFPd3gDBfgnXfHN2B61bdpdX06HD1wBFSK60WBLWWmLjx8ryC7N/HyZUHvWvuLjL
+	 Y1uCvdXJHA+0i5oqdQ3lCZYeYekDY9uemeNIBoFTYkcdNz26uwwG0rMn4cacn1QpYZmol
+	 8Vk2LoaurNI+gHBxPbBN/4HKzsL9VcE+0BeIvdrYCOuyU3kwbpXGQDG3wKiUEuiQCjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793830903;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HaBigxdhsxC/YsQYSUSSKBjbs/KuiGwhVL8je74i59E=;
-	b=tSbYzg2Yc0XHfBUPgg4VQ/nn1dmniTJ0GstlPvh3SqURFw22ruz4fQbEZUsXLo9mnTif
-	 S7CLN6fUjkS42aspGofvLSBN2q90pq1Wzbv+mO7VRDP6aEEOEg0HyEaBG4PHUX4id6WGz
-	 9SrQ5oEQypO208iiQQxpCVtw1iuMzFX/A/PQPlU/cgLekozf2fNOoLR66LhYj595oGgkB
-	 LmfxT92VjKEulh4lneWWs9XSVck/jCSCOYqXj+dZWh9PsuH0ihz640WMzAx8dHjOH0Dfr
-	 2UHH+6rM2uP3UbzgzNIzm1sNA2PLArreZlQVGUld/xbSfSaHi7R7UQliOkXqvMSfoPA==
+	bh=y0RXNUH9T5V9UX4n72pvnsZZfpm+N0ol4CYu/X+JSWs=;
+	b=AYfj8CbFIovyxAicgbbr6tmhWhE+6ApNEGBq3BFC7/Ns20nSQ1ZiacOxeZa+RnLu+03u
+	 FlPNBUt5SzMbzod3JaBeXpTR1LHonOyokWVam0IVJSz8+L1iH5fhmlUx1FDlEwUWo3+zp
+	 OB76O1+xwtXzuEayziPoVZd6S+E9LikX+0/xKuOLIkvexa+dDe/1GNXcY+wncFqgXRrKr
+	 /MpU6xWVtBLcdcQd7Wt3+92eX9Rm8IXW/Ltm39068u9qvTE39T/2ijqubiReRHXajGQIt
+	 ZlxWxf1dFbm8kJkf7hbRFyVtpz/Q8hmFzUsmYkMhzbYFcsYGzB1qBJ6vYm3WJLLkSlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XP9o7yTt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQvyqyj8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6186A606D817;
-	Wed,  4 Nov 2026 22:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEE4606D806;
+	Wed,  4 Nov 2026 22:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XP9o7yTt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BA51F00A15;
-	Wed,  4 Nov 2026 22:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQvyqyj8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4623F1F00A02;
+	Wed,  4 Nov 2026 22:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830899;
-	bh=HaBigxdhsxC/YsQYSUSSKBjbs/KuiGwhVL8je74i59E=;
+	s=korg; t=1793830897;
+	bh=y0RXNUH9T5V9UX4n72pvnsZZfpm+N0ol4CYu/X+JSWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XP9o7yTtAiF/oRwnT3gLWAqFy2364gLLTDo3xOhVZ4Pc16sst2HKXs5doZhz3/WTs
-	 5tjp2z2rqpjU88e0WXIoet7e5TgukGbd/cJNEXty1QJBM3YDA6MGtPTrmHyDW1XRZo
-	 cH8HUNWoEA3zMPY9s4bUK7kxUJcSCKAFJI0COEFI=
+	b=AQvyqyj8oyoW16LzdiIeT2NDDaTpS/Kzp3etJulPh2XCPw3w4EyKnXKYv2Z8U2zZr
+	 5WUIz4TsgEQOYu8P7L/LktgGf4IiK6Dpbo/QCDCTdPmQj8ZR4FtmvbJ7hBOTQ9B9nY
+	 R+5XW0R8yqXv3U4FKzliW0mn8KkLemTOj1MEhm4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michail Tatas <michail.tatas@gmail.com>,
-	Corey Minyard <corey@minyard.net>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0390/1005] ipmi: Fix leak in __ipmi_bmc_register
-Date: Wed,  4 Nov 2026 16:02:03 -0500
-Message-ID: <20261104211055.003934335@linuxfoundation.org>
+Subject: [PATCH 6.18 0389/1005] soundwire: dmi-quirks: Disable ghost Realtek on Asus ROG Zephyrus Duo
+Date: Wed,  4 Nov 2026 16:02:02 -0500
+Message-ID: <20261104211054.979049747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,34 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Tatas <michail.tatas@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 18e633dd9674c8bf118ea8583bb5a531edc2728a ]
+[ Upstream commit 5b08a3afd2995e5312c4c47ffea9d21b651e8e13 ]
 
-In case that ida_alloc(&ipmi_bmc_ida,...) succeeds and then
-platform_device_register() fails, ipmi_bmc_ida is leaked.
-Fix by freeing the error path
+The Asus ROG Zephyrus Duo also has a Realtek device in the ACPI that
+doesn't exist in the physical hardware. This confuses the machine
+driver into attempting to create DAI links for the device. Add a
+quirk to remove this device.
 
-Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
-Message-ID: <anUK_HOy_pCgvsBm@michalis-linux>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Suggested-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260807121425.1952003-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soundwire/dmi-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 0247079db185e..dc4704b067b94 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3306,6 +3306,7 @@ static int __ipmi_bmc_register(struct ipmi_smi *intf,
- 	list_del(&intf->bmc_link);
- 	mutex_unlock(&bmc->dyn_mutex);
- 	intf->bmc = &intf->tmp_bmc;
-+	ida_free(&ipmi_bmc_ida, bmc->pdev.id);
- 	put_device(&bmc->pdev.dev);
- 	goto out;
- }
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index f738e547a1f30..768255dd12db6 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -193,6 +193,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)ghost_realtek,
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++			DMI_MATCH(DMI_BOARD_NAME, "GX651AR"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
 -- 
 2.53.0
 
