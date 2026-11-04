@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831245;
-	b=Ypj0wvvKmC0hJaRfujertAH4Nh/V9kiYbRiPphI+u3DgooRJHvVNRNHGYUCtQVJZAVHl
-	 BVtUUMnwkqTxmz8p9h/TPLcwRcBOMtgW/9xJiWHX80EeROZcOwevKVu7jhGuRWYakf6p9
-	 dcAHOtyNYcX+kxM0Ptp5QSS4tS5waE1lyGahiG6VW6PQwo6ke+I9CJDDAfZoDQrTZd2R8
-	 VWpMRXjJ6DAESJarDzyle9fTZ4s2/5sMrs8v/VRkO3DgQ9kviXgR214A6e+DFmNO+L7hV
-	 jJdh+8riiltsGOKAx83ctyxGRXr5uSbP0ivZnxU80I3Ofhax3SPFB2xOyvoZfYfHaig==
+	t=1793831246;
+	b=xnvgoo4pba4LssOg7QyJd/uJSJJMu7w9lNhEEQ/7Sq93V9pmeQGKykF8zGk2McCBDlhQ
+	 jPPChn22uy+P8H+5r4TDXl4qnnhO0YCSXyHy5iiZsDfWMbveQXEnmFoWfgvMSVx9ymsJw
+	 ml27a4pukJfojRx2V6f1G8b1Ou1F7CRGrrDkwORq052yHUBt/Lq1+4goaYmcdbjFTTUDK
+	 yqTEYp8J//o9FpIhMWbimcgdsQNT2OucA46QbNaEmvQy7wt9ff9akYAWOTaRsZAYUmW/Z
+	 B9fsBQ7s4BF0ZXOliHF8ZhSq57CYoYlC+PTbBk1SccUDM4PHWhk5wLvVpyMzAogMmyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831246;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l9E4Pyo4x1sHsrm6TiK6AaPq+/aSuTwVqBNF5g4seTw=;
-	b=J0snzZgdPVl7gfOPfXlORBfGhf/kN1J1E+4QSnrt/3ps7E2uHdyoqI0BsM/VzcKvP60i
-	 5YLyxbNFeIToG73gm4nXeLWBUjo1NB12BxPnzaZjxgv95M9+wFWcZIb02G61Fy4Hb3NkM
-	 Qh6Z1ybAB6s7c4k/oLgtuasmNBDrOGMsNEI1KwQklnieIwOEsbDOKmHnWPbNlEFJMYFbb
-	 v3ClQoTZ7sl3kLTwKZlJwg6hqfWP2ptnMRSnNNpbfoHRWD7XK24voUZdXXHg0CcCs8dP0
-	 MV8JSN+YbRENyGw4W9ceJ7LWQZKgUw4pbfAtv6wwip2PDTzqdkSQfdx7MufXN6b/wEA==
+	bh=oI2PoZUNsjbzYmP7Aixw7aVl29D6Z3H6sUH4jmeyQGU=;
+	b=wWNKZmYI6eskpFZvMeHeGBLLs3CMbyUQTtWD0enhKkPi8lU3EaVcr65fECniFcMvxth2
+	 rM0Pw38BQmYeRKjVwNL/2TNhEffcXoquq9v9Pk5VuQcVFYBBf9hYXYV9nK8Vfp2DSXCXT
+	 B0MigjWDJtuP8OzghO5Gw9aCmqQ9KgvGs51iXJ+7bEugG78PRi7333y9GhdCJnJMtf4W7
+	 yAVMrgicC5Pj4ZUPFVLO4DjRSFA1CJfArTWOi4SrRtRnmiB/PeQc7RWSA77h+lNLJ73qo
+	 MagceS3iz73qcTY0cBVnF+Xcfb5jZVURK2x4MvUoAKYETxxQzY1JfI6YL7pri10EZ1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AnJL1YYs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F3FCgjY5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE36B606A33E;
-	Wed,  4 Nov 2026 22:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947ED606A33E;
+	Wed,  4 Nov 2026 22:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AnJL1YYs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659F61F000C1;
-	Wed,  4 Nov 2026 22:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F3FCgjY5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B6B1F000C1;
+	Wed,  4 Nov 2026 22:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831244;
-	bh=l9E4Pyo4x1sHsrm6TiK6AaPq+/aSuTwVqBNF5g4seTw=;
+	s=korg; t=1793831246;
+	bh=oI2PoZUNsjbzYmP7Aixw7aVl29D6Z3H6sUH4jmeyQGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AnJL1YYsfohywI7hS+CGpQOOd6T4yPAxwV6vtKxRhaQQW7Gn7C/aUodSq0hxyHGZ8
-	 dYOTf4VxyfgqsF6N8JXqznEZD1QVcqeJpl7+9vvJs6fCO0936c4Ze1OEEZNJbi3/YB
-	 WJTHPGaPf08eCcpA6pIuKo7UxLOLBQU+o56BRkIc=
+	b=F3FCgjY5vPTOpsooX4yX5wqOf3uRcggEvyh11FlKYHHSv2H7+3LvUQ3Uvwod5e6Ve
+	 glfAP2dutk9zp4Qkajx475RJLTW/9ZCAqEM2YXIkRO6sWPZimtjHc4g5ZR6eVDqdwk
+	 IOsa3JDYQCB1J9/FqjQ9xcVZDZkn8dDkhhczPxhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Mahmoud Nagy Adam <mngyadam@amazon.de>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0550/1005] LoongArch: KVM: Deliver interrupt after IN_GUEST_MODE is set
-Date: Wed,  4 Nov 2026 16:04:43 -0500
-Message-ID: <20261104211059.299531355@linuxfoundation.org>
+Subject: [PATCH 6.18 0586/1005] selftests: ublk: install test_common.sh and trace/ scripts
+Date: Wed,  4 Nov 2026 16:05:19 -0500
+Message-ID: <20261104211100.281832844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,50 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Mahmoud Nagy Adam <mngyadam@amazon.de>
 
-[ Upstream commit 8c5cd2b9d6a724998c1ab9af06ac897b6152d568 ]
+[ Upstream commit c4fa55f85c47cd5d54d717fb8170746edb10292e ]
 
-Interrupt delivery should be called after IN_GUEST_MODE is set. Other
-threads may be posting interrupt however does not send IPI to the vCPU,
-since the vCPU is not in IN_GUEST_MODE yet.
+Every ublk test script sources test_common.sh from its own directory:
 
-Here move function call with kvm_deliver_intr() after IN_GUEST_MODE is
-set, and set mode with OUTSIDE_GUEST_MODE with atomic method.
+    . "$(cd "$(dirname "$0")" && pwd)"/test_common.sh
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Stable-dep-of: 32d05564a612 ("LoongArch: KVM: Set vcpu->cpu before IN_GUEST_MODE is set")
+and test_generic_02/12 additionally run bpftrace against the scripts in
+trace/. Neither test_common.sh nor trace/ is listed in TEST_FILES, so
+"make install" does not copy them into the install directory and every
+ublk test fails when run from there:
+
+  ./test_generic_02.sh: line 4: .../kselftest_install/ublk/test_common.sh: No such file or directory
+  ./test_generic_02.sh: line 8: _have_program: command not found
+
+The bpftrace tests are affected even when bpftrace is installed: the
+missing trace/*.bt makes bpftrace exit immediately, and the tests then
+report a skip rather than a failure, which hides the problem.
+
+Add both to TEST_FILES, matching how other selftests ship their sourced
+helpers (see kexec/kexec_common_lib.sh and zram/zram_lib.sh).
+
+Fixes: 6aecda00b7d1e1 ("selftests: ublk: add kernel selftests for ublk")
+Fixes: 723977cab4c0fd ("selftests: ublk: add generic_01 for verifying sequential IO order")
+Cc: stable@vger.kernel.org # v6.15+
+Assisted-by: Kiro:claude-opus-5
+Signed-off-by: Mahmoud Nagy Adam <mngyadam@amazon.de>
+Reviewed-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20260909132602.68852-2-mngyadam@amazon.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kvm/vcpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/ublk/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/loongarch/kvm/vcpu.c b/arch/loongarch/kvm/vcpu.c
-index 760985b8bd728..ee969e3957009 100644
---- a/arch/loongarch/kvm/vcpu.c
-+++ b/arch/loongarch/kvm/vcpu.c
-@@ -281,10 +281,10 @@ static int kvm_pre_enter_guest(struct kvm_vcpu *vcpu)
- 		 * check vmid before vcpu enter guest
- 		 */
- 		local_irq_disable();
--		kvm_deliver_intr(vcpu);
- 		kvm_deliver_exception(vcpu);
- 		/* Make sure the vcpu mode has been written */
- 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
-+		kvm_deliver_intr(vcpu);
- 		kvm_check_vpid(vcpu);
+diff --git a/tools/testing/selftests/ublk/Makefile b/tools/testing/selftests/ublk/Makefile
+index 0062784b1a308..d441483eb1e78 100644
+--- a/tools/testing/selftests/ublk/Makefile
++++ b/tools/testing/selftests/ublk/Makefile
+@@ -41,6 +41,8 @@ TEST_PROGS += test_stress_04.sh
+ TEST_PROGS += test_stress_05.sh
  
- 		/*
-@@ -322,7 +322,7 @@ static int kvm_handle_exit(struct kvm_run *run, struct kvm_vcpu *vcpu)
- 	u32 intr = estat & CSR_ESTAT_IS;
- 	u32 ecode = (estat & CSR_ESTAT_EXC) >> CSR_ESTAT_EXC_SHIFT;
+ TEST_FILES := settings
++TEST_FILES += test_common.sh
++TEST_FILES += trace
  
--	vcpu->mode = OUTSIDE_GUEST_MODE;
-+	smp_store_mb(vcpu->mode, OUTSIDE_GUEST_MODE);
- 
- 	/* Set a default exit reason */
- 	run->exit_reason = KVM_EXIT_UNKNOWN;
+ TEST_GEN_PROGS_EXTENDED = kublk metadata_size
+ STANDALONE_UTILS := metadata_size.c
 -- 
 2.53.0
 
