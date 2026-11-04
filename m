@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827111;
-	b=Sx0VB38AUYOLen2YGuGZHFE9Ju1Ma04c5jDC47pMtB2DDifXxuSDMwL0W4+zian3N4ra
-	 CWS+8SFPMUzHV/tjuaSGMen4eNCBHLyAbIfmlHJoiNfG/omSngQ5d4M6kwdkmceMgZWt8
-	 G3K35Sxl5cURioPYzpY7rPXA/mU1HNev42ELwTTsaukXvC6hRV6LMsXS2JfFsDXqVwHXU
-	 VtaeGxc5jG3SDrAwIGGQs7WYtGLfUCU+eEF1VAyn7ny/nSUGgp19N2Vemh0G1gfcmeemY
-	 /G56WciBvYWqlCz+cc18Btp54QYOyQagB3naqqIMMt7jwATSYccXg7RjKtVz4MvxtgA==
+	t=1793827112;
+	b=rSov0W9kN8lKAYKEn1naAv/Kra8Dsw2UfiEkdH88rn41BhVpE+AD6grao/oiEAw8lZam
+	 IzHkCpwC6LDqK+A0u5jpfNTyg4Udrqgc/JEpFaFCrK1tfAFfrTfLbPYLbhEP/o3dgIFOv
+	 JJ2uxV5mAmsuvEw/DXhPrUnjVo2uO6XLMmq1hUm+3owwBhLEa8cNO1/TrhafGOnMUrAph
+	 dkEeFqD7CfX7og4W1IQ8p22tHypBsFNkYEnJqDhN2LsRVwknvl00J4ygLPQzqDwEve4Vm
+	 mnrlu2zBe8DU7z7nzzl6GwsMhcsd6oHykESzWO03U5oEzwnuuMuH+ZGMaxmafymzLHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KCdJhuMEVNpLW4GP2aFBlmFT4dXE1KQVuvFVmPDnHl8=;
-	b=YZXSmrHng4Cj7sD7gBROPzkWi+s1CmJIdBdSIdyoEiBe8XsEJwkqM0YqyT706s6r1ZRv
-	 YqFizq/C7Y0RJUuYblCRW7HK2GUwGEx8XyUYKZM39k0wzJuKjPoN7Z7ZK75A9llP5VBCh
-	 FMm9UK04BP5NRDgV0KojhJciqTIKR7Sxm93TfN+j7HNYhovxz0kp+JD9Cnk86Xqh702Xd
-	 umAUjytok2cKLAQKUj3c6ccL48ZQJnYpTNx21y7mwqr+1yRDShh+nzuThMCoEs2Tg7yaO
-	 bxHLv5fDK4ev9hZPAaRGQSkTmll626dkkfhnl0419x/zjTI8qck36pBO9/daIxJwIxA==
+	bh=qSYDKlAZVJOCOMYZW6MiktTALcVLvWoWEyO8DnSGnGI=;
+	b=Ibqp/vr3ulXebJ5XvscX2t6xfRZcaLocfU5oifWFn41XQJ7hasuGu4QbljrO6nPT4hQE
+	 KfLLD/xdMGzhdsPq6zcl//0NVAxwl09Z/+gCnuddDlbmvP06kf/mzd5WzgVslr7TnQW/a
+	 pnLdL8YqKrVKVwptl7UkQfjL1QVZyHpZ4LujZwzwKaVmYwYxqxr149YEYb9HoY6bYCL4b
+	 BhONryrJIb6F6RjompT5Mgy2jFTo1i7VmKjfLk4HY9rLv+C4Lp6lG2tKxGVzTjppDgB5z
+	 nvPjw23mAqA/ObP6Cjlpy/5pkzmc5YYNY+lcrT+bG7z10A7Foc0yHOXuTp+7cO4Cwsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y8BjiSZo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a5ehTH3Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FDA60877F6;
-	Wed,  4 Nov 2026 21:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3EA606A854;
+	Wed,  4 Nov 2026 21:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y8BjiSZo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD381F0093A;
-	Wed,  4 Nov 2026 21:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a5ehTH3Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D031F0093A;
+	Wed,  4 Nov 2026 21:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827110;
-	bh=KCdJhuMEVNpLW4GP2aFBlmFT4dXE1KQVuvFVmPDnHl8=;
+	s=korg; t=1793827112;
+	bh=qSYDKlAZVJOCOMYZW6MiktTALcVLvWoWEyO8DnSGnGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y8BjiSZolT0Cmtbq99yyWrNyo6LB6DgEVp9coPK80CWD6efwXULzPjNlx/wbGCz9b
-	 CZyvmByTovhnhFWg4+0fp8bNnMVz0unhbhwBzZ7HFHClLn68kG/mevhfU4VAiskNcl
-	 xNWGpdqWyfJe8QXW0Sm+6r+H9T+cgCeMICN+x6MI=
+	b=a5ehTH3QIODmdjFPfFM7s11iLJS4+75Jof7jBrdnOxpUl6ZDIkq0mazf9aRI9+LTV
+	 KHaiRhXtusJv/N/xqfxP0jcaYdl/XjI7eEUH7fx9xnrgvSxH3A5oVIfk+KGTAQniUo
+	 TmSrv6Sd+3ObjQl3oe36UXq+jI+eOw3OWToJp1CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Harald Freudenberger <freude@linux.ibm.com>,
 	Holger Dengler <dengler@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 7.3 180/547] s390/zcrypt: Fix and improve zcrypt reply message verification checks
-Date: Wed,  4 Nov 2026 16:06:04 -0500
-Message-ID: <20261104211043.259751107@linuxfoundation.org>
+Subject: [PATCH 7.3 181/547] s390/zcrypt: Fix out-of-bounds ptr advance in cca_query_crypto_facility()
+Date: Wed,  4 Nov 2026 16:06:05 -0500
+Message-ID: <20261104211043.288768423@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,516 +70,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit 5e9b339f323216d71f3ede8a0a427abf7859c486 upstream.
+commit 9fd7fca66735307fd7afa3450882a55ef80f2add upstream.
 
-Add or improve checks related to buffer sizes and reply sizes to the
-handling of replies from the crypto cards for CCA, EP11 (AP message
-type 6) and ICA (AP type 50) messages. The verification code related
-to reply field length was not designed well and thus firmware
-deficiencies could lead to unexpected behavior in the zcrypt device
-driver. Thus improve the code to more closely inspect especially
-length fields at message replies.
+The FQ reply parser code blindly advanced the walk pointer by a length
+value read directly from the hardware reply payload without checking
+that the advance stayed within the allocated reply buffer. A corrupt
+or malicious device response could push ptr beyond the cprbmem region,
+causing an out-of-bounds dereference or kernel memory exposure via the
+subsequent memcpy().
 
-Add length validation before accessing reply message structures in
-zcrypt_msgtype6_receive(), zcrypt_msgtype6_receive_ep11(), and
-zcrypt_msgtype50_receive() to prevent out-of-bounds reads and
-potential kernel memory disclosure.
+Fix this by tracking the remaining reply buffer space in a variable
+and validating each device-supplied length field against it before
+advancing or dereferencing the pointer.
 
-Also rework these three functions to validate reply lengths more
-carefully before copying data back into the request buffer. Use size_t
-for length calculations, reject inconsistent reply sizes, and add
-defensive handling for short invalid replies. For XCRB replies,
-validate both reply segments and derive the effective message length
-from the covered range instead of trusting only the second segment.
-
-Additionally improve some of the later invoked evaluation functions
-which further check the payload. Add comments about length assumptions
-and for the type50 processing rework the payload processing completely
-with removing a misplaced BUG_ON().
-
-Fixes: 5e55a488c87a ("s390/zcrypt: Separate msgtype implementation from card modules.")
+Fixes: 2004b57cde6b ("s390/zcrypt: code cleanup")
 Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 Cc: stable@vger.kernel.org
 Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_msgtype50.c |   95 +++++++++++----
- drivers/s390/crypto/zcrypt_msgtype6.c  |  202 ++++++++++++++++++++++++---------
- 2 files changed, 218 insertions(+), 79 deletions(-)
+ drivers/s390/crypto/zcrypt_ccamisc.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/crypto/zcrypt_msgtype50.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype50.c
-@@ -152,6 +152,11 @@ struct type80_hdr {
- 	unsigned char	reserved3[8];
- } __packed;
+--- a/drivers/s390/crypto/zcrypt_ccamisc.c
++++ b/drivers/s390/crypto/zcrypt_ccamisc.c
+@@ -1627,6 +1627,7 @@ int cca_query_crypto_facility(u16 cardnr
+ 		u8  subfunc_code[2];
+ 		u8  lvdata[];
+ 	} __packed * prepparm;
++	size_t datalen;
  
-+struct type80_reply {
-+	struct type80_hdr hdr;
-+	char data[];
-+} __packed;
-+
- int get_rsa_modex_fc(struct ica_rsa_modexpo *mex, int *fcode)
- {
- 	if (!mex->inputdatalength)
-@@ -340,32 +345,43 @@ static int ICACRT_msg_to_type50CRT_msg(s
-  * @data: pointer to user output data
-  * @length: size of user output data
-  *
-- * Returns 0 on success or -EFAULT.
-+ * Returns 0 on success or neg. errno value on failure.
-  */
- static int convert_type80(struct zcrypt_queue *zq,
- 			  struct ap_message *reply,
- 			  char __user *outputdata,
- 			  unsigned int outputdatalength)
- {
--	struct type80_hdr *t80h = reply->msg;
--	unsigned char *data;
-+	struct type80_reply *msg = reply->msg;
-+	size_t payload_len;
+ 	/* get already prepared memory for 2 cprbs with param block each */
+ 	rc = alloc_and_prep_cprbmem(parmbsize, &mem,
+@@ -1673,27 +1674,44 @@ int cca_query_crypto_facility(u16 cardnr
+ 	prepcblk->rpl_parmb = (u8 __user *)ptr;
+ 	prepparm = (struct fqrepparm *)ptr;
+ 	ptr = prepparm->lvdata;
++	datalen = parmbsize - 2 * sizeof(u8);
  
--	if (t80h->len < sizeof(*t80h) + outputdatalength) {
--		/* The result is too short, the CEXxA card may not do that.. */
-+	/*
-+	 * reply->len is always >= sizeof(struct type80_reply) here and
-+	 * outputdatalength (the modulus size) is guaranteed to be equal to
-+	 * inputdatalength and 0 < outputdatalength <= CEX3A_MAX_MOD_SIZE,
-+	 * also payload size may be >= outputdatalength.
-+	 */
-+
-+	payload_len = reply->len - sizeof(msg->hdr);
-+
-+	if (outputdatalength > payload_len) {
-+		/* We expect at least outputdatalength bytes, broken card ? */
- 		zq->online = 0;
- 		pr_err("Crypto dev=%02x.%04x code=0x%02x => online=0 rc=EAGAIN\n",
- 		       AP_QID_CARD(zq->queue->qid),
--		       AP_QID_QUEUE(zq->queue->qid), t80h->code);
-+		       AP_QID_QUEUE(zq->queue->qid), msg->hdr.code);
- 		ZCRYPT_DBF_ERR("%s dev=%02x.%04x code=0x%02x => online=0 rc=EAGAIN\n",
- 			       __func__, AP_QID_CARD(zq->queue->qid),
--			       AP_QID_QUEUE(zq->queue->qid), t80h->code);
-+			       AP_QID_QUEUE(zq->queue->qid), msg->hdr.code);
- 		ap_send_online_uevent(&zq->queue->ap_dev, zq->online);
- 		return -EAGAIN;
- 	}
--	BUG_ON(t80h->len > CEX3A_MAX_RESPONSE_SIZE);
--	data = reply->msg + t80h->len - outputdatalength;
--	if (copy_to_user(outputdata, data, outputdatalength))
-+
-+	if (copy_to_user(outputdata,
-+			 msg->data + payload_len - outputdatalength,
-+			 outputdatalength))
- 		return -EFAULT;
-+
- 	return 0;
- }
- 
-@@ -374,14 +390,19 @@ static int convert_response(struct zcryp
- 			    char __user *outputdata,
- 			    unsigned int outputdatalength)
- {
--	/* Response type byte is the second byte in the response. */
--	unsigned char rtype = ((unsigned char *)reply->msg)[1];
-+	struct type80_reply *msg = reply->msg;
- 
--	switch (rtype) {
-+	/* reply->len is always >= sizeof(struct error_hdr) here */
-+
-+	switch (msg->hdr.type) {
- 	case TYPE82_RSP_CODE:
- 	case TYPE88_RSP_CODE:
- 		return convert_error(zq, reply);
- 	case TYPE80_RSP_CODE:
-+		if (msg->hdr.code)
-+			return convert_error(zq, reply);
-+		if (reply->len < sizeof(struct type80_reply))
-+			return -EINVAL;
- 		return convert_type80(zq, reply,
- 				      outputdata, outputdatalength);
- 	default: /* Unknown response type, this should NEVER EVER happen */
-@@ -389,11 +410,11 @@ static int convert_response(struct zcryp
- 		pr_err("Crypto dev=%02x.%04x unknown response type 0x%02x => online=0 rc=EAGAIN\n",
- 		       AP_QID_CARD(zq->queue->qid),
- 		       AP_QID_QUEUE(zq->queue->qid),
--		       (int)rtype);
-+		       (int)msg->hdr.type);
- 		ZCRYPT_DBF_ERR(
- 			"%s dev=%02x.%04x unknown response type 0x%02x => online=0 rc=EAGAIN\n",
- 			__func__, AP_QID_CARD(zq->queue->qid),
--			AP_QID_QUEUE(zq->queue->qid), (int)rtype);
-+			AP_QID_QUEUE(zq->queue->qid), (int)msg->hdr.type);
- 		ap_send_online_uevent(&zq->queue->ap_dev, zq->online);
- 		return -EAGAIN;
- 	}
-@@ -416,26 +437,46 @@ static void zcrypt_msgtype50_receive(str
- 		.reply_code = REP82_ERROR_MACHINE_FAILURE,
- 	};
- 	struct type80_hdr *t80h;
--	int len;
-+	size_t len;
- 
- 	/* Copy the reply message to the request message buffer. */
- 	if (!reply)
- 		goto out;	/* ap_msg->rc indicates the error */
-+
- 	t80h = reply->msg;
--	if (t80h->type == TYPE80_RSP_CODE) {
--		len = t80h->len;
--		if (len > reply->bufsize || len > msg->bufsize ||
--		    len != reply->len) {
--			pr_debug("len mismatch => EMSGSIZE\n");
--			msg->rc = -EMSGSIZE;
-+
-+	if (reply->len < sizeof(*t80h) ||
-+	    t80h->type != TYPE80_RSP_CODE) {
-+		if (reply->len < sizeof(error_reply)) {
-+			/* total broken reply, use static error reply instead */
-+			memcpy(msg->msg, &error_reply, sizeof(error_reply));
-+			msg->len = sizeof(error_reply);
- 			goto out;
-+		} else {
-+			/* malformed reply, convert function will handle this */
-+			len = reply->len;
-+			goto copy_len_and_out;
+ 	/* check and possibly copy reply rule array */
+ 	len = *((u16 *)ptr);
++	if (len > datalen) {
++		ZCRYPT_DBF_ERR("%s reply rule array len %u exceeds datalen %zu\n",
++			       __func__, len, datalen);
++		rc = -EIO;
++		goto out;
++	}
++	datalen -= sizeof(u16);
++	ptr += sizeof(u16);
+ 	if (len > sizeof(u16)) {
+-		ptr += sizeof(u16);
+ 		len -= sizeof(u16);
+ 		if (rarray && rarraylen && *rarraylen > 0) {
+ 			*rarraylen = (len > *rarraylen ? *rarraylen : len);
+ 			memcpy(rarray, ptr, *rarraylen);
  		}
--		memcpy(msg->msg, reply->msg, len);
--		msg->len = len;
--	} else {
--		memcpy(msg->msg, reply->msg, sizeof(error_reply));
--		msg->len = sizeof(error_reply);
++		datalen -= len;
+ 		ptr += len;
  	}
-+
-+	len = t80h->len;
-+
-+copy_len_and_out:
-+	if (len != reply->len) {
-+		msg->rc = -EMSGSIZE;
-+		pr_debug("len %zu rpl.len %zu mismatch, msg.rc=%d\n",
-+			 len, reply->len, msg->rc);
+ 	/* check and possible copy reply var array */
+ 	len = *((u16 *)ptr);
++	if (len > datalen) {
++		ZCRYPT_DBF_ERR("%s reply var array len %u exceeds datalen %zu\n",
++			       __func__, len, datalen);
++		rc = -EIO;
 +		goto out;
 +	}
-+	if (len > reply->bufsize || len > msg->bufsize) {
-+		msg->rc = -EMSGSIZE;
-+		pr_debug("len %zu exceeds buf %zu/%zu, msg.rc=%d\n",
-+			 len, reply->bufsize, msg->bufsize, msg->rc);
-+		goto out;
-+	}
-+	memcpy(msg->msg, reply->msg, len);
-+	msg->len = len;
-+
- out:
- 	complete(&msg->response.work);
- }
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -766,6 +766,15 @@ static int convert_type86_rng(struct zcr
- 
- 	if (msg->cprbx.ccp_rtcode != 0 || msg->cprbx.ccp_rscode != 0)
- 		return -EINVAL;
-+	/*
-+	 * Note that offset2 and count2 have already been checked in
-+	 * zcrypt_msgtype6_receive(). So only check for valid count2
-+	 * and for not exceeding the hard coded rng buffer size.
-+	 */
-+	if (!msg->fmt2.count2)
-+		return -EINVAL;
-+	if (msg->fmt2.count2 > ZCRYPT_RNG_BUFFER_SIZE)
-+		return -EMSGSIZE;
- 	memcpy(buffer, data + msg->fmt2.offset2, msg->fmt2.count2);
- 	return msg->fmt2.count2;
- }
-@@ -777,11 +786,17 @@ static int convert_response_ica(struct z
- {
- 	struct type86x_reply *msg = reply->msg;
- 
-+	/* reply->len is always >= sizeof(struct error_hdr) here */
-+
- 	switch (msg->hdr.type) {
- 	case TYPE82_RSP_CODE:
- 	case TYPE88_RSP_CODE:
- 		return convert_error(zq, reply);
- 	case TYPE86_RSP_CODE:
-+		if (msg->hdr.reply_code)
-+			return convert_error(zq, reply);
-+		if (reply->len < sizeof(struct type86x_reply))
-+			return -EINVAL;
- 		if (msg->cprbx.ccp_rtcode &&
- 		    msg->cprbx.ccp_rscode == 0x14f &&
- 		    outputdatalength > 256) {
-@@ -792,8 +807,6 @@ static int convert_response_ica(struct z
- 				return -EINVAL;
- 			}
++	datalen -= sizeof(u16);
++	ptr += sizeof(u16);
+ 	if (len > sizeof(u16)) {
+-		ptr += sizeof(u16);
+ 		len -= sizeof(u16);
+ 		if (varray && varraylen && *varraylen > 0) {
+ 			*varraylen = (len > *varraylen ? *varraylen : len);
+ 			memcpy(varray, ptr, *varraylen);
  		}
--		if (msg->hdr.reply_code)
--			return convert_error(zq, reply);
- 		if (msg->cprbx.cprb_ver_id == 0x02)
- 			return convert_type86_ica(zq, reply,
- 						  outputdata, outputdatalength);
-@@ -820,6 +833,8 @@ static int convert_response_xcrb(bool us
- {
- 	struct type86x_reply *msg = reply->msg;
- 
-+	/* reply->len is always >= sizeof(struct error_hdr) here */
-+
- 	switch (msg->hdr.type) {
- 	case TYPE82_RSP_CODE:
- 	case TYPE88_RSP_CODE:
-@@ -827,9 +842,16 @@ static int convert_response_xcrb(bool us
- 		return convert_error(zq, reply);
- 	case TYPE86_RSP_CODE:
- 		if (msg->hdr.reply_code) {
--			xcrb->status = msg->fmt2.apfs;
-+			if (reply->len < sizeof(struct type86_fmt2_msg))
-+				xcrb->status = 0x0008044DL;
-+			else
-+				xcrb->status = msg->fmt2.apfs;
- 			return convert_error(zq, reply);
- 		}
-+		if (reply->len < sizeof(struct type86_fmt2_msg) +
-+		    offsetof(struct CPRBX, cprb_ver_id) +
-+		    sizeof(msg->cprbx.cprb_ver_id))
-+			return -EINVAL;
- 		if (msg->cprbx.cprb_ver_id == 0x02)
- 			return convert_type86_xcrb(userspace, zq, reply, xcrb);
- 		fallthrough;	/* wrong cprb version is an unknown response */
-@@ -854,6 +876,8 @@ static int convert_response_ep11_xcrb(bo
- {
- 	struct type86_ep11_reply *msg = reply->msg;
- 
-+	/* reply->len is always >= sizeof(struct error_hdr) here */
-+
- 	switch (msg->hdr.type) {
- 	case TYPE82_RSP_CODE:
- 	case TYPE87_RSP_CODE:
-@@ -861,6 +885,8 @@ static int convert_response_ep11_xcrb(bo
- 	case TYPE86_RSP_CODE:
- 		if (msg->hdr.reply_code)
- 			return convert_error(zq, reply);
-+		if (reply->len < sizeof(struct type86_ep11_reply))
-+			return -EINVAL;
- 		if (msg->cprbx.cprb_ver_id == 0x04)
- 			return convert_type86_ep11_xcrb(userspace, zq, reply, xcrb);
- 		fallthrough;	/* wrong cprb version is an unknown resp */
-@@ -885,6 +911,8 @@ static int convert_response_rng(struct z
- {
- 	struct type86x_reply *msg = reply->msg;
- 
-+	/* reply->len is always >= sizeof(struct error_hdr) here */
-+
- 	switch (msg->hdr.type) {
- 	case TYPE82_RSP_CODE:
- 	case TYPE88_RSP_CODE:
-@@ -892,6 +920,8 @@ static int convert_response_rng(struct z
- 	case TYPE86_RSP_CODE:
- 		if (msg->hdr.reply_code)
- 			return -EINVAL;
-+		if (reply->len < sizeof(struct type86x_reply))
-+			return -EINVAL;
- 		if (msg->cprbx.cprb_ver_id == 0x02)
- 			return convert_type86_rng(zq, reply, data);
- 		fallthrough;	/* wrong cprb version is an unknown response */
-@@ -928,48 +958,85 @@ static void zcrypt_msgtype6_receive(stru
- 	};
- 	struct ap_response_type *resp_type = &msg->response;
- 	struct type86x_reply *t86r;
--	int len;
-+	size_t minlen, len;
- 
- 	/* Copy the reply message to the request message buffer. */
- 	if (!reply)
- 		goto out;	/* ap_msg->rc indicates the error */
-+
- 	t86r = reply->msg;
--	if (t86r->hdr.type == TYPE86_RSP_CODE &&
--	    t86r->cprbx.cprb_ver_id == 0x02) {
--		switch (resp_type->type) {
--		case CEXXC_RESPONSE_TYPE_ICA:
--			len = sizeof(struct type86x_reply) + t86r->length;
--			if (len > reply->bufsize || len > msg->bufsize ||
--			    len != reply->len) {
--				pr_debug("len mismatch => EMSGSIZE\n");
--				msg->rc = -EMSGSIZE;
--				goto out;
--			}
--			memcpy(msg->msg, reply->msg, len);
--			msg->len = len;
--			break;
--		case CEXXC_RESPONSE_TYPE_XCRB:
--			if (t86r->fmt2.count2)
--				len = t86r->fmt2.offset2 + t86r->fmt2.count2;
--			else
--				len = t86r->fmt2.offset1 + t86r->fmt2.count1;
--			if (len > reply->bufsize || len > msg->bufsize ||
--			    len != reply->len) {
--				pr_debug("len mismatch => EMSGSIZE\n");
-+	minlen = sizeof(t86r->hdr) + sizeof(t86r->fmt2) +
-+		offsetof(struct CPRBX, cprb_ver_id) +
-+		sizeof(t86r->cprbx.cprb_ver_id);
-+
-+	if (reply->len < minlen ||
-+	    t86r->hdr.type != TYPE86_RSP_CODE ||
-+	    t86r->cprbx.cprb_ver_id != 0x02) {
-+		if (reply->len < sizeof(error_reply)) {
-+			/* total broken reply, use static error reply instead */
-+			memcpy(msg->msg, &error_reply, sizeof(error_reply));
-+			msg->len = sizeof(error_reply);
-+			goto out;
-+		} else {
-+			/* malformed reply, convert function will handle this */
-+			len = reply->len;
-+			goto copy_len_and_out;
-+		}
-+	}
-+
-+	switch (resp_type->type) {
-+	case CEXXC_RESPONSE_TYPE_ICA:
-+		if (reply->len < sizeof(struct type86x_reply)) {
-+			msg->rc = -EMSGSIZE;
-+			pr_debug("rpl.len %zu < struct type86_reply, msg.rc=%d\n",
-+				 reply->len, msg->rc);
-+			goto out;
-+		}
-+		len = sizeof(struct type86x_reply) + (size_t)t86r->length;
-+		break;
-+	case CEXXC_RESPONSE_TYPE_XCRB:
-+		len = (size_t)t86r->fmt2.offset1 + (size_t)t86r->fmt2.count1;
-+		if (len > reply->len) {
-+			msg->rc = -EMSGSIZE;
-+			pr_debug("offset1 %u count1 %u rpl.len %zu mismatch, msg.rc=%d\n",
-+				 t86r->fmt2.offset1, t86r->fmt2.count1,
-+				 reply->len, msg->rc);
-+			goto out;
-+		}
-+		if (t86r->fmt2.count2) {
-+			len = (size_t)t86r->fmt2.offset2 +
-+				(size_t)t86r->fmt2.count2;
-+			if (len > reply->len) {
- 				msg->rc = -EMSGSIZE;
-+				pr_debug("offset2 %u count2 %u rpl.len %zu mismatch, msg.rc=%d\n",
-+					 t86r->fmt2.offset2, t86r->fmt2.count2,
-+					 reply->len, msg->rc);
- 				goto out;
- 			}
--			memcpy(msg->msg, reply->msg, len);
--			msg->len = len;
--			break;
--		default:
--			memcpy(msg->msg, &error_reply, sizeof(error_reply));
--			msg->len = sizeof(error_reply);
- 		}
--	} else {
--		memcpy(msg->msg, reply->msg, sizeof(error_reply));
-+		break;
-+	default:
-+		memcpy(msg->msg, &error_reply, sizeof(error_reply));
- 		msg->len = sizeof(error_reply);
-+		goto out;
++		datalen -= len;
+ 		ptr += len;
  	}
-+
-+copy_len_and_out:
-+	if (len != reply->len) {
-+		msg->rc = -EMSGSIZE;
-+		pr_debug("len %zu rpl.len %zu mismatch, msg.rc=%d\n",
-+			 len, reply->len, msg->rc);
-+		goto out;
-+	}
-+	if (len > reply->bufsize || len > msg->bufsize) {
-+		msg->rc = -EMSGSIZE;
-+		pr_debug("len %zu exceeds buf %zu/%zu, msg.rc=%d\n",
-+			 len, reply->bufsize, msg->bufsize, msg->rc);
-+		goto out;
-+	}
-+	memcpy(msg->msg, reply->msg, len);
-+	msg->len = len;
-+
- out:
- 	complete(&resp_type->work);
- }
-@@ -992,34 +1059,65 @@ static void zcrypt_msgtype6_receive_ep11
- 	};
- 	struct ap_response_type *resp_type = &msg->response;
- 	struct type86_ep11_reply *t86r;
--	int len;
-+	size_t minlen, len;
  
- 	/* Copy the reply message to the request message buffer. */
- 	if (!reply)
- 		goto out;	/* ap_msg->rc indicates the error */
-+
- 	t86r = reply->msg;
--	if (t86r->hdr.type == TYPE86_RSP_CODE &&
--	    t86r->cprbx.cprb_ver_id == 0x04) {
--		switch (resp_type->type) {
--		case CEXXC_RESPONSE_TYPE_EP11:
--			len = t86r->fmt2.offset1 + t86r->fmt2.count1;
--			if (len > reply->bufsize || len > msg->bufsize ||
--			    len != reply->len) {
--				pr_debug("len mismatch => EMSGSIZE\n");
--				msg->rc = -EMSGSIZE;
--				goto out;
--			}
--			memcpy(msg->msg, reply->msg, len);
--			msg->len = len;
--			break;
--		default:
-+	minlen = sizeof(t86r->hdr) + sizeof(t86r->fmt2) +
-+		offsetof(struct ep11_cprb, cprb_ver_id) +
-+		sizeof(t86r->cprbx.cprb_ver_id);
-+
-+	if (reply->len < minlen ||
-+	    t86r->hdr.type != TYPE86_RSP_CODE ||
-+	    t86r->cprbx.cprb_ver_id != 0x04) {
-+		if (reply->len < sizeof(error_reply)) {
-+			/* total broken reply, use static error reply instead */
- 			memcpy(msg->msg, &error_reply, sizeof(error_reply));
- 			msg->len = sizeof(error_reply);
-+			goto out;
-+		} else {
-+			/* malformed reply, convert function will handle this */
-+			len = reply->len;
-+			goto copy_len_and_out;
-+		}
-+	}
-+
-+	switch (resp_type->type) {
-+	case CEXXC_RESPONSE_TYPE_EP11:
-+		len = (size_t)t86r->fmt2.offset1 + (size_t)t86r->fmt2.count1;
-+		if (len > reply->len) {
-+			msg->rc = -EMSGSIZE;
-+			pr_debug("offset1 %u count1 %u rpl.len %zu mismatch, msg.rc=%d\n",
-+				 t86r->fmt2.offset1, t86r->fmt2.count1,
-+				 reply->len, msg->rc);
-+			goto out;
- 		}
--	} else {
--		memcpy(msg->msg, reply->msg, sizeof(error_reply));
-+		break;
-+	default:
-+		memcpy(msg->msg, &error_reply, sizeof(error_reply));
- 		msg->len = sizeof(error_reply);
-+		goto out;
-+	}
-+
-+copy_len_and_out:
-+	if (len != reply->len) {
-+		msg->rc = -EMSGSIZE;
-+		pr_debug("len %zu rpl.len %zu mismatch, msg.rc=%d\n",
-+			 len, reply->len, msg->rc);
-+		goto out;
- 	}
-+	if (len > reply->bufsize || len > msg->bufsize) {
-+		msg->rc = -EMSGSIZE;
-+		pr_debug("len %zu exceeds buf %zu/%zu, msg.rc=%d\n",
-+			 len, reply->bufsize, msg->bufsize, msg->rc);
-+		goto out;
-+	}
-+	memcpy(msg->msg, reply->msg, len);
-+	msg->len = len;
-+
- out:
- 	complete(&resp_type->work);
- }
 
 
