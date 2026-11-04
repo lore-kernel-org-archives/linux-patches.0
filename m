@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831627;
-	b=b9XMdDsxYJZN34oWIfbVERirT+cBEH0tC4Vd8CCDInvzo+MuRMvQxHMN8UPdDbP0K7PY
-	 PeDzPrU/5odmQ8AmqUDulPHuhIO6Hs9ukg4UBSTrOixUOwAvBBYQcNje9Jj1zKp5Cyq1G
-	 2MwxO2lXmxGDt9i3GNYK794ElZXtspAVCL7VCeAbwl2YdomHc9ZaIraGepuLB8AnZq0Z9
-	 ALIA1EWKsGaQ2MStcu4YdUx2VRqSiBPjlRKiT3YcwSvJ7OyFxvk6zg0inWHL+km3Q5KYh
-	 3mKL6TcAHOmkYXwRz6iaXOLATbD6WzWfv2pZS5nWPQ4A2xj9WEOahAa4bfPsjHkpXfg==
+	t=1793831629;
+	b=uys8WHw0CzdfjIFJwKUMZ2ugjWNSnRNFiqMsbMVjNEAoYulPubNwjn7gQw3Sy0jVEleG
+	 tobpVur9YYdb+4RpcTEm0A4eWNVN/o1q5dNK6x3dA4nCtjuTCMSusNW04ch5G9BRi44q3
+	 Fbm3J6E4ueYCnCEx5eXqoorGODsN6ZP9zekKB61fDUDGL4BeL3x3j3K+jwQve4Rt6t468
+	 f2ZdxJcjNKcXOmLLroHGxZUjWDNqnAI48itBIf1mZglO0fOFqzFNdFqfX7iU2uPDoJfZs
+	 WDSYeFYmAX8tQ+6vWxI7Eh77KcYWWahM8jp6ilbLxA6pbUbpk+vYV1a6I6YUvIoZitw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831627;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qCeG+CN6QPGMojwlPnLDpJ1l5BpcZ0nV2nMEqjL2Z1U=;
-	b=oE7Qq3t3AWZCyb10uF2tKSERVpjdrC3kEPKoxNV3iMOz+e/2uz40pe1V9AI1+kyQ8Uws
-	 YZnP3e2/8YGStEkr1e5QKVIpF8JCEq4sAja19QY77i4l/q+DKPw8mmsTvXBnnwlSoEK3+
-	 q8GfMQahKYXkrzXC9Hb0aw6KJ9SzyfPa2XOsWEbvrPE/etJ1N35TWGgaSt8SIGOQ5nhPi
-	 5kIgowphpMIMebro6OdNxCs+tE1K4V9zYvYe8SqWB9dEF4FlBeQZBGDAyeRP1uBEmqSrY
-	 o1w3J+J2oRoUmZAOOPRN0NiMwOqr3FH84H6lSoXEZHypx6yrsZ92SdBCe0/dflk2Weg==
+	bh=iN546HxixpH81VkDyx2ZQqNR8DYH/vdCIi/L9s6HUQA=;
+	b=NXA4Lpu5mH/cgi592pUK3lbOlfkvksw8/ZK21A9vBHb8dK4Lo1S1N35TUvrbTfiWUw8W
+	 vIQgyEVCALFKyCnpGA9VzM6EslWoJkoz1Qvr3SoWpYeyVnVaXAiy96VP6nYEKsDYOaspr
+	 +CzgCTaReEBxm83z8cvJkoNrFDYQTp1gUI7yxohytr97nfnvqo0rmB/iKt1qRC+9A5Ewd
+	 +E43HAp/p4xuclh+55bk0lgK5R7O45gTxgXoi6LAdi0tLWZn0wrEfNB4HIpOKkxMSawoQ
+	 GVJw5yOySxzuDOAp1ZLzEfCSaKZjbQcVzDIaS1QN4VTtrEAKK0MhPM7xmRRkJyxw6zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HtzZQA30;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PMwaFxOt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64082606AC25;
-	Wed,  4 Nov 2026 22:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75F2606AC25;
+	Wed,  4 Nov 2026 22:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HtzZQA30
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D261F000C1;
-	Wed,  4 Nov 2026 22:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PMwaFxOt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820031F000C1;
+	Wed,  4 Nov 2026 22:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831627;
-	bh=qCeG+CN6QPGMojwlPnLDpJ1l5BpcZ0nV2nMEqjL2Z1U=;
+	s=korg; t=1793831628;
+	bh=iN546HxixpH81VkDyx2ZQqNR8DYH/vdCIi/L9s6HUQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HtzZQA30iKGiFFP4Wk00Sjk3PfiKaj5aZEeBFlmFccYP8ryTY0lDyxjVn+BJMoxYF
-	 p5KTGn0Bt8rOmnM62mO5SOcXNCByKf/6x5viWbPfLy0qdM4OAGRGnyWV/kfbhpn7+e
-	 wPr1LtiIdtk1C+syqLDQbwoYFsmzj+Hynm2uQFoY=
+	b=PMwaFxOt7qHp/l5qQXmmxDL8Bho1HZmmZ9aoqV1aowv+LYPXuZoV82FGDBxKs0zpq
+	 e6hUx6jr89hgDPQS0x+zC2gOifj6a3Fpy7OP3B4inul3X4tvzAapkyHQQntCEncpmT
+	 HosWx3uWGqRQUuidAIH0lyYQkD+3nnpk7D5J1qMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yongjun Gwon <d3bugee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0819/1005] netfilter: nf_tables: fix netdev hook allocation memleak with dormant tables
-Date: Wed,  4 Nov 2026 16:09:12 -0500
-Message-ID: <20261104211106.285135025@linuxfoundation.org>
+Subject: [PATCH 6.18 0820/1005] ksmbd: serialize directory emptiness checks with readdir
+Date: Wed,  4 Nov 2026 16:09:13 -0500
+Message-ID: <20261104211106.312419730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,108 +68,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Yongjun Gwon <d3bugee@gmail.com>
 
-[ Upstream commit 63bac027860308d1344f761cb47aabb3b30973fd ]
+[ Upstream commit 7220980b2423d06a0604516129bfa4cec8a697ae ]
 
-sashiko says:
- could the related code in __nf_tables_abort() leak the struct nft_hook objects when the table is dormant?
+SMB2 QUERY_DIRECTORY holds fp->readdir_lock while it calls iterate_dir()
+on fp->filp. An SMB2 SET_INFO request with FILE_DISPOSITION_INFORMATION
+can resolve the same FileId and call ksmbd_vfs_empty_dir() on the same
+filp without that lock.
 
- In __nf_tables_abort(), when rolling back a NEWCHAIN transaction that
- updates hooks, the code conditionally unregisters and frees the hooks only
- if the table is not dormant [..]
-            if (!(table->flags & NFT_TABLE_F_DORMANT)) {
-                nft_netdev_unregister_hooks(net,
-                                            &nft_trans_chain_hooks(trans),
-                                            true);
-            }
-            ...
-            nft_trans_destroy(trans);
+iterate_dir()'s inode read lock permits concurrent readers and does not
+serialize per-file iterator state. ext4 stores its dx readdir cursor and
+fname RB tree in file->private_data. Concurrent reset or refill can
+therefore free a fname node while the other worker still traverses it or
+retains its RB-tree link, resulting in use-after-free accesses.
 
-Unfortunately netdev family mixes hook registration and allocation.
-Push table struct down and only check for the flag to unregister.
+An authenticated SMB client with list and delete rights on a directory in
+a writable KSMBD share backed by ext4 can trigger this when the directory
+takes the dx readdir path. The client overlaps an SMB2 QUERY_DIRECTORY
+request with an SMB2 SET_INFO request carrying FILE_DISPOSITION_INFORMATION
+on one live FileId.
 
-Fixes: 216e7bf7402c ("netfilter: nf_tables: skip netdev hook unregistration if table is dormant")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+In one x86_64 SMP KASAN multi-shot guest using ksmbd-for-next at
+171df27077fb, the unmodified kernel reported a cross-worker use-after-free
+before a panic. The first report's access and free stacks show the two
+request paths directly (trimmed):
+
+  BUG: KASAN: slab-use-after-free in ext4_htree_store_dirent+0x488/0x550
+  Read of size 8 by task kworker/2:0/29
+  Workqueue: ksmbd-io handle_ksmbd_work
+  Call Trace:
+   ext4_htree_store_dirent+0x488/0x550
+   htree_dirblock_to_tree+0x535/0x990
+   ext4_htree_fill_tree+0x319/0xba0
+   ext4_readdir+0x175a/0x2f40
+   iterate_dir+0x1b6/0x630
+   smb2_query_dir+0x1003/0x1cc0
+
+  Freed by task 279:
+   free_rb_tree_fname+0x67/0xc0
+   ext4_readdir+0x13a9/0x2f40
+   iterate_dir+0x1b6/0x630
+   ksmbd_vfs_empty_dir+0xa2/0x100
+   smb2_set_info+0x2ffa/0x45d0
+
+Take fp->readdir_lock across the entire emptiness check. This places both
+iterators over that handle's filp in the same lock domain while
+preserving the disposition status handling. The exact code change
+completed a warning-free x86_64 KASAN bzImage build. Tracing three request
+pairs showed that the two iterate_dir() calls no longer overlapped and the
+expected statuses were preserved. A further 1,600 reproducer iterations
+completed with expected statuses and no KASAN report, Oops, or panic.
+
+The reproducer and complete guest configuration are available privately
+to maintainers on request.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Yongjun Gwon <d3bugee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: adjusted set_file_disposition_info() context for the existing directory condition and older oplock/delete-pending helpers ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ fs/smb/server/smb2pdu.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 31c3ff79b2d5c..76876761698eb 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -404,6 +404,7 @@ static void nft_netdev_unregister_trans_hook(struct net *net,
- }
- 
- static void nft_netdev_unregister_hooks(struct net *net,
-+					const struct nft_table *table,
- 					struct list_head *hook_list,
- 					bool release_netdev)
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 793c219b9a610..5ba6869038f3d 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6592,6 +6592,7 @@ static int set_file_disposition_info(struct ksmbd_work *work,
+ 				     struct smb2_file_disposition_info *file_info)
  {
-@@ -411,8 +412,10 @@ static void nft_netdev_unregister_hooks(struct net *net,
- 	struct nf_hook_ops *ops;
+ 	struct inode *inode;
++	int err;
  
- 	list_for_each_entry_safe(hook, next, hook_list, list) {
--		list_for_each_entry(ops, &hook->ops_list, list)
--			nf_unregister_net_hook(net, ops);
-+		if (!(table->flags & NFT_TABLE_F_DORMANT)) {
-+			list_for_each_entry(ops, &hook->ops_list, list)
-+				nf_unregister_net_hook(net, ops);
+ 	if (!(fp->daccess & FILE_DELETE_LE)) {
+ 		pr_err("no right to delete : 0x%x\n", fp->daccess);
+@@ -6600,9 +6601,13 @@ static int set_file_disposition_info(struct ksmbd_work *work,
+ 
+ 	inode = file_inode(fp->filp);
+ 	if (file_info->DeletePending) {
+-		if (S_ISDIR(inode->i_mode) &&
+-		    ksmbd_vfs_empty_dir(fp) == -ENOTEMPTY)
+-			return -EBUSY;
++		if (S_ISDIR(inode->i_mode)) {
++			mutex_lock(&fp->readdir_lock);
++			err = ksmbd_vfs_empty_dir(fp);
++			mutex_unlock(&fp->readdir_lock);
++			if (err == -ENOTEMPTY)
++				return -EBUSY;
 +		}
- 		if (release_netdev)
- 			nft_netdev_hook_unlink_free_rcu(hook);
- 	}
-@@ -449,20 +452,25 @@ static void __nf_tables_unregister_hook(struct net *net,
- 	struct nft_base_chain *basechain;
- 	const struct nf_hook_ops *ops;
- 
--	if (table->flags & NFT_TABLE_F_DORMANT ||
--	    !nft_is_base_chain(chain))
-+	if (!nft_is_base_chain(chain))
- 		return;
- 	basechain = nft_base_chain(chain);
- 	ops = &basechain->ops;
- 
-+	/* must also be called for dormant tables */
-+	if (nft_base_chain_netdev(table->family, basechain->ops.hooknum)) {
-+		nft_netdev_unregister_hooks(net, table, &basechain->hook_list,
-+					    release_netdev);
-+		return;
-+	}
-+
-+	if (table->flags & NFT_TABLE_F_DORMANT)
-+		return;
-+
- 	if (basechain->type->ops_unregister)
- 		return basechain->type->ops_unregister(net, ops);
- 
--	if (nft_base_chain_netdev(table->family, basechain->ops.hooknum))
--		nft_netdev_unregister_hooks(net, &basechain->hook_list,
--					    release_netdev);
--	else
--		nf_unregister_net_hook(net, &basechain->ops);
-+	nf_unregister_net_hook(net, &basechain->ops);
- }
- 
- static void nf_tables_unregister_hook(struct net *net,
-@@ -11296,11 +11304,9 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 			break;
- 		case NFT_MSG_NEWCHAIN:
- 			if (nft_trans_chain_update(trans)) {
--				if (!(table->flags & NFT_TABLE_F_DORMANT)) {
--					nft_netdev_unregister_hooks(net,
--								    &nft_trans_chain_hooks(trans),
--								    true);
--				}
-+				nft_netdev_unregister_hooks(net, table,
-+							    &nft_trans_chain_hooks(trans),
-+							    true);
- 				free_percpu(nft_trans_chain_stats(trans));
- 				kfree(nft_trans_chain_name(trans));
- 				nft_trans_destroy(trans);
+ 		smb_break_all_levII_oplock(work, fp, 0);
+ 		ksmbd_set_inode_pending_delete(fp);
+ 	} else {
 -- 
 2.53.0
 
