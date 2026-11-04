@@ -1,49 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793805820;
-	b=M/ljg1caCJgOTN+y95Iv+rCVKVDpFNAq35FsXK1KuPTo7+2brJIuXOdniD8JKvlPnCox
-	 lencyBEY6sDXGX2Wq8wg3ObDpPlV88BMWx9QmvWpBvJLVjXxLK5Z0QMSmyyLPGsk0bDFM
-	 dEQPg19rtCfNU+l/XYL2iIX3vDw21CdOW9/6JAcoIabeyKIWtOEuaSjdk3LKr7IUWpZTr
-	 aVRmkYr4XkxeVXXNuEDx3AvPHmdXISQbjpk9BvT3kGhEW9deOtzeHIYlJf8QpVBSHuidq
-	 tPyt+k6WMrrm9lLuIgpm2LyBuF2nwtGzD2twD8ai9Y0GE0GDQv7K+kpP8Ga2OZI7+8w==
+	t=1793810195;
+	b=JyubpJpKq1p7nUqs9MsUfCFR3Ta3pWqMRn6cr0wM7uxO9r6LFNbkgYMplrzMSRn1mSOC
+	 hVMWVytSXqtEfPzDWnqyjwK3hlGDj3Ejs1ZJMMolbKLe2Uu5JYaIe2GUF+jeMC3P/Hdu0
+	 tctcZfYk72Jl5kYlOmtrjzAVTLQz+4KvyVOR9t7smb1lCjm3t3M2HXSRMPjqhaIHOC8Pb
+	 fhzavecGOxud6C98vx24DHl5jIvS8HdGxp4VHMEEJZeBi9Xz/1fCcs5tQzJ4XjlR+Gg0w
+	 vj4CPKALy93eWRbE7ybhjEQI0QayuszTJiewpUTWL2wIbFTAR5Yvg9+HPPntas263rA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793805820;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=iUXqvzkKt0TEjOV9qKAXA2QTquoTPDsStlpxMcQn3lY=;
-	b=aV22e7vQcsUXMjhyZyVWlJCe63gIU2xZPSNQkvhqXifgPgCEWkLSCT0vznvmI/CMSJT6
-	 PPvmTpwDV7/vCzcjEPwREjlh2xnob4kXK5+Ac9gClOiP0son1Dm/Abo9j/jmCYfHsTxN+
-	 upeJDzWogCBhjIgdh5c+jTS+w0XUnRQHcm62042WkzkhsC0FA8UqCN5uyM+K91yjt22es
-	 lRoVcGzdtK5IEudVNYR9FLgbakfCqTywtXhMBeZ6+qE+5q+wDBJK5+2353Bhk0FxaUgDd
-	 QHHvWRBpzBytIpCX3CVYrPLrMJ6F94sbyp6InP4+RZu7jiqITkvZzRYvMriGoRq0rBA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793810195;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=TYgm2qFe044UpfvwwJj7/YqIL4ACLlokwv9PNbM6nXc=;
+	b=rNkA0DtdzLpV4YBxiJ2vN5Xt/3YzfuZqAovWeGnWXqBr82447NOmKWTx9axJZODXfwF+
+	 LT+iH3b2bixODW+MkvSu7pvRiQ2yGutdCSHKT4uiwGhhPqfVV5gYHYBU0nzfWiKzZr2kG
+	 YeoUH632rhLLiiZKM5znjsaZ5g97sMFtafQIvrSUX7SsUHKnxopV9JHLFuUPNykCwDCXP
+	 EOkooMaZnu0E+dxzXPyj5qDBqk5IBx/OcO4hjm7y81ug1C8rcQWCHClRSQUc5wO/Wms/X
+	 gWqBAbVEw8bmXVIzlUPALxZdwUkoDLX8xyfXJPui/YHeBRikyfb4fdfWgLr3Cwn0XPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=OsmJDae5;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F9C3606A326
-	for <patches@lists.linux.dev>; Wed,  4 Nov 2026 15:23:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F9C3606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=W8P6y6Ht;
+	arc=none smtp.remote-ip=74.125.82.177
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F81606D835
+	for <patches@lists.linux.dev>; Wed,  4 Nov 2026 16:36:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 11F81606D835
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=OsmJDae5
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EEA251595;
-	Wed,  4 Nov 2026 07:23:34 -0800 (PST)
-Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A6E923F632;
-	Wed,  4 Nov 2026 07:23:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793805818; bh=hTP7FhBkZEB6EoF3t+8xbFMg1uD94SfziksV1UIfrrI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OsmJDae5CsMe2IuAc64xpm5Dzenn/yZ7TGQJDQIzbpJwB9LL/PBQqXDkWqvIimWfC
-	 5hmz+rBkYLKOFT1EIGoB+nu4rTOw+hvKMTpsCyTakbycyIkocsj1xLpeVPPTJlUd+g
-	 1ZatZUjOwjB5PkX1xwwwGWXT5ADEUsJ7j38/kTV8=
-Message-ID: <293d0352-7a5d-4b8a-b004-277cd8a81902@arm.com>
-Date: Wed, 4 Nov 2026 15:23:34 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=W8P6y6Ht
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-3535a54bed9so1197811eec.1
+        for <patches@lists.linux.dev>; Wed, 04 Nov 2026 08:36:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793810194; x=1794414994; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TYgm2qFe044UpfvwwJj7/YqIL4ACLlokwv9PNbM6nXc=;
+        b=W8P6y6Htn6PGins5/CMdRH7RGaKRju0BtfxxH+Y3sBL588rJcqb3AjeOHmWCJSi+Oe
+         LCfrRsyhvGC5/EvR4MkF+zVwGOQ8UZOM7VpFIm9GfZDIBVM9eAk1bRh6EyyK1jEEyuBw
+         to5MtUpVNKk40zb7EcFLVikyc1fBCPu4uMS+dcn3FG8i0Zvpm0qbgrgBIqc1JNRjyY3r
+         Io5pDAjVpigCbJdjfrVp5qqlPQITZOHIj0ZkwMqlA+OHcH0DawkGzeejEIiVyCueVcuV
+         gavVVgCeTpVYtwdle8L0Rymwzaz0d07r4gx8jWT8XtQr89aNc3rxlwtVSx6M4uOJQCAl
+         2QSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793810194; x=1794414994;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=TYgm2qFe044UpfvwwJj7/YqIL4ACLlokwv9PNbM6nXc=;
+        b=VpHChkzRmlkQoch12HCdiMVTvSeFjrFc+qIlohiq/kX/dG7/fk+gmjOY9tVWhZIPn3
+         amejorQbEHzOAHdV9Y07GuE0WyeCZRpgViKn5KBLoglRsQ+iTsIw/ClBUmz8ICGuFJTK
+         CPTqBvEpdTA68brX9Hy9EMhyP31s+PC/dgXo9IOmsdTeVQA0hI1ivBwM46PADFhGjgTk
+         52iXMTwtpjY8q4GnTKkEdx3pTVBBlU5bwkSG6YH4gzCTCm3B2PcTzH+jBqJlI5Q+0hL8
+         mk9Hav/IzZhjKfV9KJhEI235gfPpH/sieUeJHh+6TYb5a2aNB2W2+hDkI3SZqzm7sdoR
+         c85w==
+X-Forwarded-Encrypted: i=1; AKwUvBxNKT1FA3PvKy3ZmNTC5KCI/5lMfkWnqFPq0PAOZUilpJgJfUmxYtdzbmI86Z4+OnwH05nj1CcN@lists.linux.dev
+X-Gm-Message-State: APuU4Z9+K+gx2WWWjVZlq0bqc7/xk4mSO+guMwDRjAp+BrofXMGmrUHE
+	WqiqngNPndi5LlIHdLyMY8d5yq2ZUbXuX32X4X4vMuDTNTYS6aaYHpDicqRhXw==
+X-Gm-Gg: AYBFou1GdVA8zGqF6lYXlfv8e4xQZFtMbWVnq3JfpJW8pvxDFgMkIzJQj8JzL+rodET
+	d/hx1and6NUssoJq7YsW3slvDaplN60F/cCUNyNwXTvflQACY1WSjMIWgeU0v704pTRe3PELP9G
+	hF2992mPz0Ox7/HQtR2j6ftRkyLvI3aLf03/eyF34hE62VJSey8RMuV/kqb9lN3yLe3CrEsxZtQ
+	qpxV9d8Pe3SaIwFTsoyh/zd6ckjhmkQqUSV0A6sJcsA1p/J4NbiKw9fxs9viw1XFCREM4I/rA+P
+	Y5ne3IX4bNhraYUaRVL3/K9/L/3ySLCt5jWFeLXBOeufma8EWtrZt/V2v2/5RV7f03NNywvHGWR
+	Mu2JccJKh1jK28whCj1CvPYAhcNPWaAIfYBk4mho4OQJgJj1/+HUinwFrP3bdztMdsU1mdQoAqe
+	KXZ+Da/xxFSHYOGdlapbiTA6nghPOxgwe/VNx6xsghmohqXm08ljnPCghY9otKMtFHsyrQNWQec
+	J0ab9SRYVnVNi+VYi79MWChY99sSL5O99+iv0aNfEhqkY7i8COFp6s8xAMU/6ou0mp9w1YkxAnv
+	191AhVexGdfcAcfb4GRLfBflTdv16sSMj7v5h0h+Zxeo2dUajlpfGqaFbDB+54SP4TPAP0Jk+xq
+	F6reCrg==
+X-Received: by 2002:a05:7301:103:b0:36c:9af3:22eb with SMTP id 5a478bee46e88-36c9af32cb0mr6408365eec.34.1793810193837;
+        Wed, 04 Nov 2026 08:36:33 -0800 (PST)
+Received: from localhost ([220.196.228.78])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36ca3958746sm9327852eec.22.2026.11.04.08.36.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2026 08:36:33 -0800 (PST)
+From: Liang Hao <haohlliang@gmail.com>
+To: ralph.siemsen@linaro.org
+Cc: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	bartosz.golaszewski@oss.qualcomm.com,
+	sashal@kernel.org
+Subject: Re: [PATCH 5.10 159/595] gpio: dwapb: Mask interrupts at hardware initialization
+Date: Thu,  5 Nov 2026 00:36:27 +0800
+Message-ID: <20261104163627.92404-1-haohlliang@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <auj7ZUcOlNC-rEnk@maple.netwinder.org>
+References: <auj7ZUcOlNC-rEnk@maple.netwinder.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -53,416 +101,24 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 06/24] arm,x86,fs/resctrl: Replace architecture
- capability helpers with generic versions
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
- Reinette Chatre <reinette.chatre@intel.com>,
- Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
- Peter Newman <peternewman@google.com>, James Morse <james.morse@arm.com>,
- Babu Moger <babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>,
- Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>,
- David E Box <david.e.box@intel.com>, x86@kernel.org
-Cc: Christoph Hellwig <hch@infradead.org>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20261019205031.16977-1-tony.luck@intel.com>
- <20261019205031.16977-7-tony.luck@intel.com>
-Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <20261019205031.16977-7-tony.luck@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Tony,
+On Mon, Nov 2, 2026 at 16:06:45 -0500, Ralph Siemsen wrote:
+> This causes a small regression in 5.10: the gpio-dwapb controller no
+> longer produces interrupts, because nothing undoes the GPIO_INTMASK
+> added in this commit.
+>
+> Only 5.10 is affected, because the following commit was not backported:
+> 1cc3542c76ac ("gpio: dwapb: mask/unmask IRQ when disable/enale it")
+>
+> The earlier commit does not apply cleanly, due to changes in the
+> context, but it is straightforward to apply by hand. For reference I
+> tested with the following and it restored the interrupts.
 
-On 19/10/2026 21:50, Tony Luck wrote:
-> resctrl supports allocation or monitoring if any resource is capable of
-> it. Each architecture answers this via resctrl_arch_alloc_capable() and
-> resctrl_arch_mon_capable(). x86 maintains global flags for this in
-> addition to the per-resource flags and must keep both in sync. MPAM
-> derives the answer from its per-resource flags.
-> 
-> The per-resource flags are part of the resource description that the file
-> system already has, so the architecture helpers duplicate information
-> available to the file system.
-> 
-> Define resctrl_alloc_capable() and resctrl_mon_capable() in the file system
-> based on the per-resource flags and remove the architecture helpers, in
-> preparation for removing the x86 global flags. The result is unchanged for
-> MPAM, which presents all monitors on the L3 resource.
-> 
-> Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
+Thanks for investigating this and providing the fix.
 
-Looks good to me. For the MPAM parts:
-
-Acked-by: Ben Horgan <ben.horgan@arm.com>
+The proposed fix looks reasonable to me.
 
 Thanks,
 
-Ben
-
-> ---
-> v14:
-> 	New Subject: without {alloc,mon}
-> 	New commit message in context, problem, solution format
-> 	Did not apply Reinette RB tag because of commit message rewrite.
-> ---
->  include/linux/arm_mpam.h       |  3 ---
->  include/linux/resctrl.h        | 30 ++++++++++++++++++++++++++++
->  arch/x86/include/asm/resctrl.h | 10 ----------
->  drivers/resctrl/mpam_resctrl.c | 26 ++----------------------
->  fs/resctrl/monitor.c           | 10 +++++-----
->  fs/resctrl/pseudo_lock.c       |  6 +++---
->  fs/resctrl/rdtgroup.c          | 36 +++++++++++++++++-----------------
->  7 files changed, 58 insertions(+), 63 deletions(-)
-> 
-> diff --git a/include/linux/arm_mpam.h b/include/linux/arm_mpam.h
-> index f92a36187a52..ba4131048260 100644
-> --- a/include/linux/arm_mpam.h
-> +++ b/include/linux/arm_mpam.h
-> @@ -50,9 +50,6 @@ static inline int mpam_ris_create(struct mpam_msc *msc, u8 ris_idx,
->  }
->  #endif
->  
-> -bool resctrl_arch_alloc_capable(void);
-> -bool resctrl_arch_mon_capable(void);
-> -
->  void resctrl_arch_set_cpu_default_closid(int cpu, u32 closid);
->  void resctrl_arch_set_closid_rmid(struct task_struct *tsk, u32 closid, u32 rmid);
->  void resctrl_arch_set_cpu_default_closid_rmid(int cpu, u32 closid, u32 rmid);
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index 10dfdca7f4bf..0e7fce070fde 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -346,6 +346,36 @@ struct rdt_resource {
->   */
->  struct rdt_resource *resctrl_arch_get_resource(enum resctrl_res_level l);
->  
-> +/*
-> + * resctrl_alloc_capable - Are any allocation resources enabled?
-> + */
-> +static inline bool resctrl_alloc_capable(void)
-> +{
-> +	struct rdt_resource *r;
-> +
-> +	for_each_rdt_resource(r) {
-> +		if (r->alloc_capable)
-> +			return true;
-> +	}
-> +
-> +	return false;
-> +}
-> +
-> +/*
-> + * resctrl_mon_capable - Are any monitor resources enabled?
-> + */
-> +static inline bool resctrl_mon_capable(void)
-> +{
-> +	struct rdt_resource *r;
-> +
-> +	for_each_rdt_resource(r) {
-> +		if (r->mon_capable)
-> +			return true;
-> +	}
-> +
-> +	return false;
-> +}
-> +
->  /**
->   * struct resctrl_schema - configuration abilities of a resource presented to
->   *			   user-space
-> diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-> index 2031b30ff25b..9c44a7766631 100644
-> --- a/arch/x86/include/asm/resctrl.h
-> +++ b/arch/x86/include/asm/resctrl.h
-> @@ -50,11 +50,6 @@ DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
->  DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
->  DECLARE_STATIC_KEY_FALSE(rdt_mon_enable_key);
->  
-> -static inline bool resctrl_arch_alloc_capable(void)
-> -{
-> -	return rdt_alloc_capable;
-> -}
-> -
->  static inline void resctrl_arch_enable_alloc(void)
->  {
->  	static_branch_enable_cpuslocked(&rdt_alloc_enable_key);
-> @@ -67,11 +62,6 @@ static inline void resctrl_arch_disable_alloc(void)
->  	static_branch_dec_cpuslocked(&rdt_enable_key);
->  }
->  
-> -static inline bool resctrl_arch_mon_capable(void)
-> -{
-> -	return rdt_mon_capable;
-> -}
-> -
->  static inline void resctrl_arch_enable_mon(void)
->  {
->  	static_branch_enable_cpuslocked(&rdt_mon_enable_key);
-> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-> index f2c651e9f6ea..7ddee8f5162f 100644
-> --- a/drivers/resctrl/mpam_resctrl.c
-> +++ b/drivers/resctrl/mpam_resctrl.c
-> @@ -75,28 +75,6 @@ static DECLARE_WAIT_QUEUE_HEAD(wait_cacheinfo_ready);
->   */
->  static bool resctrl_enabled;
->  
-> -bool resctrl_arch_alloc_capable(void)
-> -{
-> -	struct mpam_resctrl_res *res;
-> -	enum resctrl_res_level rid;
-> -
-> -	for_each_mpam_resctrl_control(res, rid) {
-> -		if (res->resctrl_res.alloc_capable)
-> -			return true;
-> -	}
-> -
-> -	return false;
-> -}
-> -
-> -bool resctrl_arch_mon_capable(void)
-> -{
-> -	struct mpam_resctrl_res *res = &mpam_resctrl_controls[RDT_RESOURCE_L3];
-> -	struct rdt_resource *l3 = &res->resctrl_res;
-> -
-> -	/* All monitors are presented as being on the L3 cache */
-> -	return l3->mon_capable;
-> -}
-> -
->  bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt)
->  {
->  	return false;
-> @@ -1902,9 +1880,9 @@ int mpam_resctrl_setup(void)
->  
->  	cpus_read_unlock();
->  
-> -	if (!resctrl_arch_alloc_capable() && !resctrl_arch_mon_capable()) {
-> +	if (!resctrl_alloc_capable() && !resctrl_mon_capable()) {
->  		pr_debug("No alloc(%u) or monitor(%u) found - resctrl not supported\n",
-> -			 resctrl_arch_alloc_capable(), resctrl_arch_mon_capable());
-> +			 resctrl_alloc_capable(), resctrl_mon_capable());
->  		return -EOPNOTSUPP;
->  	}
->  
-> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-> index 04e4ea612b7c..cb34d3637ee5 100644
-> --- a/fs/resctrl/monitor.c
-> +++ b/fs/resctrl/monitor.c
-> @@ -338,7 +338,7 @@ void free_rmid(u32 closid, u32 rmid)
->  	 * allows architectures that ignore the closid parameter to avoid an
->  	 * unnecessary check.
->  	 */
-> -	if (!resctrl_arch_mon_capable() ||
-> +	if (!resctrl_mon_capable() ||
->  	    idx == resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
->  						RESCTRL_RESERVED_RMID))
->  		return;
-> @@ -888,7 +888,7 @@ void mbm_handle_overflow(struct work_struct *work)
->  	 * If the filesystem has been unmounted this work no longer needs to
->  	 * run.
->  	 */
-> -	if (!resctrl_mounted || !resctrl_arch_mon_capable())
-> +	if (!resctrl_mounted || !resctrl_mon_capable())
->  		goto out_unlock;
->  
->  	/*
-> @@ -950,7 +950,7 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
->  	 * When a domain comes online there is no guarantee the filesystem is
->  	 * mounted. If not, there is no need to catch counter overflow.
->  	 */
-> -	if (!resctrl_mounted || !resctrl_arch_mon_capable())
-> +	if (!resctrl_mounted || !resctrl_mon_capable())
->  		return;
->  	cpu = cpumask_any_housekeeping(&dom->hdr.cpu_mask, exclude_cpu);
->  	dom->mbm_work_cpu = cpu;
-> @@ -966,7 +966,7 @@ int setup_rmid_lru_list(void)
->  	u32 idx;
->  	int i;
->  
-> -	if (!resctrl_arch_mon_capable())
-> +	if (!resctrl_mon_capable())
->  		return 0;
->  
->  	/*
-> @@ -1006,7 +1006,7 @@ int setup_rmid_lru_list(void)
->  
->  void free_rmid_lru_list(void)
->  {
-> -	if (!resctrl_arch_mon_capable())
-> +	if (!resctrl_mon_capable())
->  		return;
->  
->  	mutex_lock(&rdtgroup_mutex);
-> diff --git a/fs/resctrl/pseudo_lock.c b/fs/resctrl/pseudo_lock.c
-> index 56ab63f19bad..3d831227a42f 100644
-> --- a/fs/resctrl/pseudo_lock.c
-> +++ b/fs/resctrl/pseudo_lock.c
-> @@ -383,7 +383,7 @@ static int rdtgroup_locksetup_user_restrict(struct rdtgroup *rdtgrp)
->  	if (ret)
->  		goto err_cpus;
->  
-> -	if (resctrl_arch_mon_capable()) {
-> +	if (resctrl_mon_capable()) {
->  		ret = rdtgroup_kn_mode_restrict(rdtgrp, "mon_groups");
->  		if (ret)
->  			goto err_cpus_list;
-> @@ -430,7 +430,7 @@ static int rdtgroup_locksetup_user_restore(struct rdtgroup *rdtgrp)
->  	if (ret)
->  		goto err_cpus;
->  
-> -	if (resctrl_arch_mon_capable()) {
-> +	if (resctrl_mon_capable()) {
->  		ret = rdtgroup_kn_mode_restore(rdtgrp, "mon_groups", 0777);
->  		if (ret)
->  			goto err_cpus_list;
-> @@ -577,7 +577,7 @@ int rdtgroup_locksetup_exit(struct rdtgroup *rdtgrp)
->  {
->  	int ret;
->  
-> -	if (resctrl_arch_mon_capable()) {
-> +	if (resctrl_mon_capable()) {
->  		ret = alloc_rmid(rdtgrp->closid);
->  		if (ret < 0) {
->  			rdt_last_cmd_puts("Out of RMIDs\n");
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 57ab090072c2..96a4978ce6b6 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -691,7 +691,7 @@ static bool is_closid_match(struct task_struct *t, struct rdtgroup *r)
->  
->  static bool is_rmid_match(struct task_struct *t, struct rdtgroup *r)
->  {
-> -	return (resctrl_arch_mon_capable() && (r->type == RDTMON_GROUP) &&
-> +	return (resctrl_mon_capable() && (r->type == RDTMON_GROUP) &&
->  		resctrl_arch_match_rmid(t, r->mon.parent->closid,
->  					r->mon.rmid));
->  }
-> @@ -3157,9 +3157,9 @@ static void resctrl_unmount(void)
->  		resctrl_arch_reset_all_ctrls(r);
->  
->  	resctrl_fs_teardown();
-> -	if (resctrl_arch_alloc_capable())
-> +	if (resctrl_alloc_capable())
->  		resctrl_arch_disable_alloc();
-> -	if (resctrl_arch_mon_capable())
-> +	if (resctrl_mon_capable())
->  		resctrl_arch_disable_mon();
->  	resctrl_mounted = false;
->  	mutex_unlock(&rdtgroup_mutex);
-> @@ -3213,7 +3213,7 @@ static int rdt_get_tree(struct fs_context *fc)
->  	if (ret)
->  		goto out_schemata_free;
->  
-> -	if (resctrl_arch_mon_capable())
-> +	if (resctrl_mon_capable())
->  		flags |= RFTYPE_MON;
->  
->  	ret = rdtgroup_add_files(rdtgroup_default.kn, flags);
-> @@ -3226,7 +3226,7 @@ static int rdt_get_tree(struct fs_context *fc)
->  	if (ret < 0)
->  		goto out_closid_exit;
->  
-> -	if (resctrl_arch_mon_capable()) {
-> +	if (resctrl_mon_capable()) {
->  		ret = mongroup_create_dir(rdtgroup_default.kn,
->  					  &rdtgroup_default, "mon_groups",
->  					  &kn_mongrp);
-> @@ -3246,12 +3246,12 @@ static int rdt_get_tree(struct fs_context *fc)
->  	if (ret)
->  		goto out_mondata;
->  
-> -	if (resctrl_arch_alloc_capable())
-> +	if (resctrl_alloc_capable())
->  		resctrl_arch_enable_alloc();
-> -	if (resctrl_arch_mon_capable())
-> +	if (resctrl_mon_capable())
->  		resctrl_arch_enable_mon();
->  
-> -	if (resctrl_arch_alloc_capable() || resctrl_arch_mon_capable())
-> +	if (resctrl_alloc_capable() || resctrl_mon_capable())
->  		resctrl_mounted = true;
->  
->  	if (resctrl_is_mbm_enabled()) {
-> @@ -3294,10 +3294,10 @@ static int rdt_get_tree(struct fs_context *fc)
->  	return ret;
->  
->  out_mondata:
-> -	if (resctrl_arch_mon_capable())
-> +	if (resctrl_mon_capable())
->  		kernfs_remove(kn_mondata);
->  out_mongrp:
-> -	if (resctrl_arch_mon_capable()) {
-> +	if (resctrl_mon_capable()) {
->  		mon_put_kn_priv();
->  		rdtgroup_unassign_cntrs(&rdtgroup_default);
->  		kernfs_remove(kn_mongrp);
-> @@ -3886,7 +3886,7 @@ static int mkdir_rdt_prepare_rmid_alloc(struct rdtgroup *rdtgrp)
->  {
->  	int ret;
->  
-> -	if (!resctrl_arch_mon_capable())
-> +	if (!resctrl_mon_capable())
->  		return 0;
->  
->  	ret = alloc_rmid(rdtgrp->closid);
-> @@ -3911,7 +3911,7 @@ static int mkdir_rdt_prepare_rmid_alloc(struct rdtgroup *rdtgrp)
->  
->  static void mkdir_rdt_prepare_rmid_free(struct rdtgroup *rgrp)
->  {
-> -	if (resctrl_arch_mon_capable()) {
-> +	if (resctrl_mon_capable()) {
->  		rdtgroup_unassign_cntrs(rgrp);
->  		free_rmid(rgrp->closid, rgrp->mon.rmid);
->  	}
-> @@ -4002,7 +4002,7 @@ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
->  
->  	if (rtype == RDTCTRL_GROUP) {
->  		files = RFTYPE_BASE | RFTYPE_CTRL;
-> -		if (resctrl_arch_mon_capable())
-> +		if (resctrl_mon_capable())
->  			files |= RFTYPE_MON;
->  	} else {
->  		files = RFTYPE_BASE | RFTYPE_MON;
-> @@ -4111,7 +4111,7 @@ static int rdtgroup_mkdir_ctrl_mon(struct kernfs_node *parent_kn,
->  
->  	list_add(&rdtgrp->rdtgroup_list, &rdt_all_groups);
->  
-> -	if (resctrl_arch_mon_capable()) {
-> +	if (resctrl_mon_capable()) {
->  		/*
->  		 * Create an empty mon_groups directory to hold the subset
->  		 * of tasks and cpus to monitor.
-> @@ -4152,11 +4152,11 @@ static int rdtgroup_mkdir(struct kernfs_node *parent_kn, const char *name,
->  	 * allocation is supported, add a control and monitoring
->  	 * subdirectory
->  	 */
-> -	if (resctrl_arch_alloc_capable() && parent_kn == rdtgroup_default.kn)
-> +	if (resctrl_alloc_capable() && parent_kn == rdtgroup_default.kn)
->  		return rdtgroup_mkdir_ctrl_mon(parent_kn, name, mode);
->  
->  	/* Else, attempt to add a monitoring subdirectory. */
-> -	if (resctrl_arch_mon_capable())
-> +	if (resctrl_mon_capable())
->  		return rdtgroup_mkdir_mon(parent_kn, name, mode);
->  
->  	return -EPERM;
-> @@ -4571,7 +4571,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
->  	 * If resctrl is mounted, remove all the
->  	 * per domain monitor data directories.
->  	 */
-> -	if (resctrl_mounted && resctrl_arch_mon_capable())
-> +	if (resctrl_mounted && resctrl_mon_capable())
->  		rmdir_mondata_subdir_allrdtgrp(r, hdr);
->  
->  	if (r->rid != RDT_RESOURCE_L3)
-> @@ -4708,7 +4708,7 @@ int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr
->  	 * by rdt_get_tree() calling mkdir_mondata_all().
->  	 * If resctrl is mounted, add per domain monitor data directories.
->  	 */
-> -	if (resctrl_mounted && resctrl_arch_mon_capable())
-> +	if (resctrl_mounted && resctrl_mon_capable())
->  		mkdir_mondata_subdir_allrdtgrp(r, hdr);
->  
->  out_unlock:
-
+Liang Hao
