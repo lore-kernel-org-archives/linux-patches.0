@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829309;
-	b=FLUAtosesxJ0Z1ZZRvwe/l1qpHhKL86gqAjjemVcrVx22jHZZ0nR+OlMvs4VypXsvlrU
-	 4JXeYbpSyHorZaBXKljjL5pgmhaYGmUtRjRn3ldHY1QgkHrWv7xJI7tKtKlNL1L+g6UL7
-	 KN2Tt3zYJtMvsvlatBZEXyrIY7yx6Zg/iutIIJ7U9Q5d/bDogUcDaTzMpBuOU4tA5utBA
-	 BpaX28QToyJZnKH43YXqR3m9aftbZG0e+2+D3FjWRSc8V5UkQL2flfXi4QYZ1svx2g+PR
-	 X6pSanyyC9gUiz7jkWvwTsTVly4Jc/g5q3PooUFcZteiTbE8ABWqxBiUxDlA7QE0Dbw==
+	t=1793829310;
+	b=ys8KIHwqhPsB2FSLeDSzD4QMijjGDZQvG0Iwd8XEbuctuYkMTdUAY4vUhkhpeXmvpEgV
+	 suOs5Tixxd1DFsWQ3SANPGGMIrlb/78qErxI1HQZrJu71n6lfWo6mOU9OYV4QTknBpUPl
+	 9xAAumsoHlKo84nQKYOpn8sR+cQaWmxaDU1/RfjgRKOtj4j86jKIvoIuux+Loy/7ybGGt
+	 gcJ4BKJT+iYvdo6kroxaXDpeYazy5bolho6M1kVhvv4+SWdMYF2RoGhyOcb/spl7driJ+
+	 1nHVVzUw2GJf0uyCDf9GdOV5dV4u/Xzm5CsCkJtLuJW2/Y0dq5UcitWSEPyoCC/LflQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829309;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829310;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yFddJlitZzCEgR9rd9TIvr0YL24gVu1PgOBkAhyu4bM=;
-	b=KNSUIjuSWSd6mxhOjSUXyTuN5MqGrgzj9WQF/Doe86mZvFIYMrVamVEeALN6XBfDn8rE
-	 ehKkTBJrJeHA0IzSkz1RhhkqopictywkFmoCO8O3FELSWHOCJT8iAWu1Ul0nZ5Jsa5cAt
-	 2LWgjrlO8IDHxthHaUMKCRHwQUQ95qgXO/lEpY1iGMdtXK9+0R6HkTbAwh5r8MJpJDndL
-	 bWfxVFrdkCiZTzzKawSlVz8fN7VtzgbTzCVaMpDMvJNIqw7oBJIAyclwvnuICIVTRJcY2
-	 2Mux6L/LJ0s/aLJPzas1jTlQodrJ8t66Vgsi3k7hTiE9XIYmaG8TmdTbp20vGTJ2v4A==
+	bh=OM8ObayKYOU0YEMSKFgt/1/9E2MJmPeQ9QMBarjmlG8=;
+	b=C2zA8VD3msPVg5kG6SOhi2yzaNQq+L1LthEyQcc0cxh7FL52I34ThUqf3t9w5PvZOGmq
+	 3TTKyrxsuu2UqAbtfLb6jdt8eclPmQX30Ueb4PkZU/wE4d+U2QbWTUaetupvK8z1/XTbV
+	 h6XnPizkjwkSSvUprA4Sdc3Yt3zNXGwoCkFQwN6rvlUn0RKwEkEc+zzE4MlJAXtZZXlB7
+	 Pu9nMpQalG9tVCNl9w6AhCaZxGhCJKcoBCDeRV5HjqXYhHhDBH8//Lmu3IfX2qpAyP78X
+	 s5I/Yb/z2m2V/27Y8jXJHEeFQ4I5ikg8gnb2eQitzJ3bJznbW+86MJA8NxH73oC4X1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mt/P9fJh";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYQMW8Gq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53F0608661B;
-	Wed,  4 Nov 2026 21:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0486074918;
+	Wed,  4 Nov 2026 21:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mt/P9fJh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA411F000C1;
-	Wed,  4 Nov 2026 21:55:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYQMW8Gq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48431F000C1;
+	Wed,  4 Nov 2026 21:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829308;
-	bh=yFddJlitZzCEgR9rd9TIvr0YL24gVu1PgOBkAhyu4bM=;
+	s=korg; t=1793829310;
+	bh=OM8ObayKYOU0YEMSKFgt/1/9E2MJmPeQ9QMBarjmlG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mt/P9fJhplFPNY89nrP4eWq9PoLAd3WsQuWY8ki3AtMrVHHed/1K+eB0zUVAd5iSd
-	 zHprKY+wfIyq9Yc/u+SWV5+tpsNiLFRg+Ey7jqAZOhl0z13nyUwTU5LVY6M2iflzwN
-	 LK4qNwhyjLXgTLG0DVEbIc1rojX8+phpEU/CpEQo=
+	b=TYQMW8GqWCdXFvAtEqvk/SOsg7/Jxuxn622A6HsZxc/ZCW+nduFK4N0xaWPmMOjMR
+	 97pSLVSQ0d9G90eFO149vdNrhBaIB3juYkVo/oRxB47HH0gDTeronM0vx3lLDGQOWE
+	 kr9HIo1r4LJLMQN/YtNm5VC1/ddfXkAxYLOhyut8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0043/1005] perf/x86/intel: Fallback to sw branch type decoding if no hw decoding
-Date: Wed,  4 Nov 2026 15:56:16 -0500
-Message-ID: <20261104211044.787278293@linuxfoundation.org>
+Subject: [PATCH 6.18 0044/1005] drm/sysfb: simpledrm: Validate mmap size against framebuffer size
+Date: Wed,  4 Nov 2026 15:56:17 -0500
+Message-ID: <20261104211044.816186294@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,47 +71,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885 ]
+[ Upstream commit 127d52f9c64b1d9aab6226c4a1f38c37fb7254dc ]
 
-intel_pmu_lbr_filter() currently assumes arch-LBR provides hardware
-branch-type decoding and skips software decoding on that path.
+The size of the mmap'ed framebuffer could be smaller than the minimum
+required framebuffer size. Validate the resource size against the
+framebuffer size.
 
-However, arch-LBR may not always expose branch-type information. In
-that case, treating entries as hardware-decoded can misclassify sampled
-branches (for example, defaulting to JCC), which breaks branch-type
-filtering results.
+Buggy firmware that triggers this check should be fixed up with a quirk
+on a case-by-case base.
 
-Fix this by using software branch-type decoding when hardware
-branch-type decoding is unavailable (that is, when x86_lbr_type is not
-enabled). This keeps branch classification and filtering behavior
-correct across arch-LBR configurations.
+v3:
+- fix size checks (Sashiko)
+- improve error message for alignment check (Thierry)
+- do not store aligned size value
 
-Since x86_lbr_type is only set to true when arch-LBR is supported,
-it's unnecessary to check if the CPU has the arch-LBR feature.
-
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260616044654.3468742-4-dapeng1.mi@linux.intel.com
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Suggested-by: Sashiko <sashiko-bot@kernel.org>
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20260625094509.157581-6-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/lbr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/sysfb/simpledrm.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
-index 44f5556440223..bbfd6ffbdd68a 100644
---- a/arch/x86/events/intel/lbr.c
-+++ b/arch/x86/events/intel/lbr.c
-@@ -1230,7 +1230,7 @@ intel_pmu_lbr_filter(struct cpu_hw_events *cpuc)
- 		 * Doesn't support OTHER_BRANCH decoding for now.
- 		 * OTHER_BRANCH branch type still rely on software decoding.
- 		 */
--		if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&
-+		if (static_branch_likely(&x86_lbr_type) &&
- 		    type <= ARCH_LBR_BR_TYPE_KNOWN_MAX) {
- 			to_plm = kernel_ip(to) ? X86_BR_KERNEL : X86_BR_USER;
- 			type = arch_lbr_br_type_map[type] | to_plm;
+diff --git a/drivers/gpu/drm/sysfb/simpledrm.c b/drivers/gpu/drm/sysfb/simpledrm.c
+index 22f8caab39be0..91f114ab99a3e 100644
+--- a/drivers/gpu/drm/sysfb/simpledrm.c
++++ b/drivers/gpu/drm/sysfb/simpledrm.c
+@@ -5,6 +5,7 @@
+ #include <linux/of_clk.h>
+ #include <linux/minmax.h>
+ #include <linux/of_reserved_mem.h>
++#include <linux/overflow.h>
+ #include <linux/platform_data/simplefb.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+@@ -626,6 +627,7 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 	u16 width_mm = 0, height_mm = 0;
+ 	struct device_node *panel_node;
+ 	const struct drm_format_info *format;
++	u64 size;
+ 	struct resource *res, *mem = NULL;
+ 	struct drm_plane *primary_plane;
+ 	struct drm_crtc *crtc;
+@@ -716,6 +718,14 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 		}
+ 		stride = pitch;
+ 	}
++	if (check_mul_overflow(height, stride, &size)) {
++		drm_err(dev, "framebuffer size exceeds maximum\n");
++		return ERR_PTR(-EINVAL);
++	}
++	if (ALIGN(size, PAGE_SIZE) < PAGE_SIZE) {
++		drm_err(dev, "page-aligned framebuffer exceeds maximum\n");
++		return ERR_PTR(-EINVAL);
++	}
+ 
+ 	sysfb->fb_mode = drm_sysfb_mode(width, height, width_mm, height_mm);
+ 	sysfb->fb_format = format;
+@@ -741,6 +751,13 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 
+ 		drm_dbg(dev, "using system memory framebuffer at %pr\n", mem);
+ 
++		if (size > resource_size(mem)) {
++			drm_err(dev,
++				"framebuffer size of %llu exceeds memory range %pr\n",
++				size, mem);
++			return ERR_PTR(-EINVAL);
++		}
++
+ 		screen_base = devm_memremap(dev->dev, mem->start, resource_size(mem), MEMREMAP_WC);
+ 		if (IS_ERR(screen_base))
+ 			return screen_base;
+@@ -774,6 +791,13 @@ static struct simpledrm_device *simpledrm_device_create(struct drm_driver *drv,
+ 			mem = res;
+ 		}
+ 
++		if (size > resource_size(mem)) {
++			drm_err(dev,
++				"framebuffer size of %llu exceeds memory range %pr\n",
++				size, mem);
++			return ERR_PTR(-EINVAL);
++		}
++
+ 		screen_base = devm_ioremap_wc(&pdev->dev, mem->start, resource_size(mem));
+ 		if (!screen_base)
+ 			return ERR_PTR(-ENOMEM);
 -- 
 2.53.0
 
