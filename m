@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827217;
-	b=OFp3fglFjnmvfJ8xH97sWLx10CVukxSoGsU3D4H6MEO5VbkW3F6zflpiQuYuVYT21SY7
-	 j/GPJCR8AjFJ3ouRDXJK6gy+xrW5uBCb3sPTZBXGKf9oWgYT1oKdCJFw66Oqn9chwmr7F
-	 tCg7Z076MPWYbq9uStQChNK3T+hbV5TwgxAofeolrI4sJ1SYjTX641gF27yqWyWY18IZN
-	 A2Wbq6eQGXMLg94oakFNobrMQ9NuaBHc2fKjVykouw4/nN6RsHLQIhVVpsPqdTPV/xzZ+
-	 /F7cL969YbFbx8eeVzz1NbwzvHKei6f4C4PtyJLO0fn1/5Fn6y6QDrAr217/TRJOjEA==
+	t=1793827213;
+	b=bwqlmdzUECjGkKutaeIwcF7vXi9dInLLYJP71XxfVD42ZyHhfEYq8z2eJKSBr2Hw8Zyw
+	 dCywoekxELiOMd6Jkx2l+kBkL326nmVDtCV1j7Oe8Ys8XA1d630YbiznetZaAPPS+ZzZz
+	 eUb3Lju1bJOXiuSbirTeqdsC/UbJHzu+Z0PipUnMHR9IL1dye4bPph/9VFaAr6m7Anp7Q
+	 ZTn8B4ZlhjvENTCdDVG9TOr7aK2gGRreN8rQNbBic14zAyG5OYRwZbdDq7aV6qc3nUjiw
+	 nk/ye6C82OAZS+lfX0aGiWLVQAEoDhbaUZPNiRV6Fzu5+KwYF63vv6bLB7RjWA892fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827217;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827213;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F9i/rKKX179OYvB7BK8nmuNkY27UEhtKh78DgKnHsws=;
-	b=E+wXgLJSZZeFHTfdYisDXS8T+tGDUSWgonpVlz7vYBhFcVASd1nlmW+m6uXA0wUTQcTI
-	 YbXQVY9YfhwVSA9YLtYd03H4ND/Z05n7XHbV5DnnSodqzJr3zWs0TQiE5kf71ZlQexba7
-	 ictlSg0bjqK7oN2aim71NZ8XkC6Ji8u2xKfEzqdWb78ly8pMetsyHS1yuJI+ImspzRri9
-	 uf+qVYmLILYYXTlxU6bkJR3iEAtqiHBbdOQuFnGr9iyR0hTREK1fN7kayh2b/QFXwwWSo
-	 P9jCkMXzNTeYQ1KAb/TVAXmyogQw0BKidCoqOww7xZ7N5uNQg//KpOnbRM7ghodQQpg==
+	bh=2eqlUlaf1ZvZZnhYb1z9PWaTglAJQzvtRSGVmdkpUGo=;
+	b=3l+Cs6Q0x1XFVyWLwFQdH6b/z1RCK5jQudT67CtN7z/7UHyWQtGZl0QoK9tRnWMKYfRZ
+	 wQ4FcyhFoJjxW8nFclCuPDEAOTDfnogJPWLQjs9X/crC6ndQebPnXymhiRiNhYKztsv1g
+	 nk9FpRJxwvKavdZ9P3q1woQn6khorjbXgBti+RUt/TPOOde5ZHYSExnBmtGT9JdMyNiPM
+	 Jm8oJVIQ1Rw5lcJNBu2DUpIOQrzO1gj+2mEFWDKnWIWJ8rGGQAQpAqFXhy+YDJb1qwG/+
+	 9dtkcZ15pzqXe3OIlSaeQf86OZl5OpXuVCVcoWD7MnBOTakbMrVGahctLVjmp0OVRVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kREk/Ihs";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=142FVKC2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82359606B3AE;
-	Wed,  4 Nov 2026 21:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C284F608C9A1;
+	Wed,  4 Nov 2026 21:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kREk/Ihs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA881F000C1;
-	Wed,  4 Nov 2026 21:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=142FVKC2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF671F000C1;
+	Wed,  4 Nov 2026 21:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827217;
-	bh=F9i/rKKX179OYvB7BK8nmuNkY27UEhtKh78DgKnHsws=;
+	s=korg; t=1793827212;
+	bh=2eqlUlaf1ZvZZnhYb1z9PWaTglAJQzvtRSGVmdkpUGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kREk/Ihsnotn3FU0UsSUnnMLHwATwHop2/RgQtM9aUrfiCkymDJX3kb2szDaTYfB3
-	 e2aIVB8pxv4rkUiZ0QFHB+5E2JJ3X9vaFSqsUBlRWDsABgOnJNbo4npBXd/psw3n7c
-	 1bT4ul2PrMdYPCKq/cVhlYVwnX0sLnh3sg0Yw4yk=
+	b=142FVKC2g6jL1qzyEECjXGJN+MNEhOpII7n9ZD5TjwO7DKedaOWGtrfws0y1wZGjw
+	 5YhO1tM7uQzHmLr5luyEAe5yfD1LBGiZcsZFQFIuCDIlBFCOuBisO83E+1BYhhfLts
+	 ANs5krqQaNsSIxplKune2hVD78xxDjGZXctmxIYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.3 226/547] media: gspca: use vb2_video_unregister_device() on disconnect
-Date: Wed,  4 Nov 2026 16:06:50 -0500
-Message-ID: <20261104211044.576470834@linuxfoundation.org>
+	Dmitry Sinyavin <sinyavin@gmail.com>,
+	Janne Grunau <j@jannau.net>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 7.3 260/547] nvmem: core: Fix OOB read for bit offsets of more than one byte
+Date: Wed,  4 Nov 2026 16:07:24 -0500
+Message-ID: <20261104211045.575636078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,47 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Janne Grunau <j@jannau.net>
 
-commit 3dbbbc3cafa2de377d9b97af4e35b8b6b5282047 upstream.
+commit 24530401e8001aaa637dd5007fcdc6fbc00300be upstream.
 
-gspca uses vb2_fop_release(), but gspca_disconnect() only unregisters
-the video device. If the queue owner closes the device after USB
-disconnect, vb2_fop_release() releases the queue and invokes
-gspca_stop_streaming() at that point.
+When the bit offset is BITS_PER_BYTE or larger the read position is
+advanced by `bytes_offset`. This is not taken into account in the
+per-byte read loop which still reads `cell->bytes` resulting in an out of
+bounds read of `bytes_offset` bytes. The information read OOB does not
+leak directly as the erroneously read bits are cleared.
 
-gspca_stream_off() calls subdriver stop callbacks and
-usb_set_interface() through gspca_dev->dev. By the time the late close
-runs, the USB core can have freed the usb_device, resulting in a
-use-after-free. This was observed as a KASAN use-after-free in sd_stopN().
+Detected by KASAN while looking for a use-after-free in simplefb.c.
 
-Use vb2_video_unregister_device() so the queue is released and streaming
-is stopped synchronously during disconnect, while the usb_device is still
-valid. Since the helper takes the queue lock, which is usb_lock, call it
-after dropping that lock.
-
-Fixes: f729ef5796d8 ("media: videobuf2-v4l2.c: add vb2_video_unregister_device helper function")
-Cc: stable@vger.kernel.org # 5.10.x
-Suggested-by: Hans Verkuil <hverkuil@kernel.org>
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 7a06ef751077 ("nvmem: core: fix bit offsets of more than one byte")
+Tested-by: Dmitry Sinyavin <sinyavin@gmail.com>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20261002101329.1084348-5-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/gspca.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/nvmem/core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/gspca/gspca.c
-+++ b/drivers/media/usb/gspca/gspca.c
-@@ -1636,9 +1636,8 @@ void gspca_disconnect(struct usb_interfa
- #endif
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -1598,12 +1598,14 @@ static void nvmem_shift_read_buffer_in_p
+ 		*p = *b++ >> bit_offset;
  
- 	v4l2_device_disconnect(&gspca_dev->v4l2_dev);
--	video_unregister_device(&gspca_dev->vdev);
--
- 	mutex_unlock(&gspca_dev->usb_lock);
-+	vb2_video_unregister_device(&gspca_dev->vdev);
+ 		/* setup rest of the bytes if any */
+-		for (i = 1; i < cell->bytes; i++) {
++		for (i = 1; i < (cell->bytes - bytes_offset); i++) {
+ 			/* Get bits from next byte and shift them towards msb */
+ 			*p++ |= *b << (BITS_PER_BYTE - bit_offset);
  
- 	/* (this will call gspca_release() immediately or on last close) */
- 	v4l2_device_put(&gspca_dev->v4l2_dev);
+ 			*p = *b++ >> bit_offset;
+ 		}
++		/* point to end of the buffer unused bits will be cleared */
++		p = buf + cell->bytes - 1;
+ 	} else if (p != b) {
+ 		memmove(p, b, cell->bytes - bytes_offset);
+ 		p += cell->bytes - 1;
 
 
