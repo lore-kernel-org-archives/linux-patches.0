@@ -1,51 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827046;
-	b=pgjDzOciZ2NpspBoHWeSIgo/bXDoSsiV2t+B7OQetiipFpKPWVGtECoiRSVrGigNQhsG
-	 J6PhTSeMzIgMwFlc+D6gWoJwEA7hZyXqovoHaQa5s8Q4MqndxWrcfsaJJN41GT+hsQzT5
-	 94ZjlwqLRWNhNp1KWr/9SEwwIRnI6Hc+106r1CrrAmw7SgK+GmZZwtpsmx/t8YphGK5NI
-	 KE5kiPE94+SRfEJ8MhY3jaQdMFuCon+l1FkcN43Z6ZYNFG1bLiVikwFeRoa9G3EotWFIb
-	 h3tW2VRRHdjy27bkM67ylwUZBX8k2REK1UIb0/G8QQb80L22YeqpgPBgu/uQusPO1wg==
+	t=1793827048;
+	b=dlJljxDEeAInB2poK4GP5M1DoH7YZgqhr9T9O0ZMJmsjHx7nRnjVCuvn/hVg3T4Sc0kJ
+	 rTxnKYl2gd9hFERYuwmmsZlFpPimwDWdUAJjYPwzdizaFjSYcafdi5C9uYf6OWDunPshy
+	 oNpceErT8tacnRLFEPljmwe9csEIZ7nkFdYRkG28N0pWq0BQ15OvfN2XJMFDAXQvesTIm
+	 RJFzMkQqloM5Sk5pxVAq44hDwjh4JDcOzgWKzbuekE+SMv3veisPN+foCAyvwnE4vjMN0
+	 QPeOiPxjUL8cw8cCE1EDQGzu2dgqI4I/o3M10MUWEXouemy7nXdNLfC0jT0hsPPfDaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827046;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827048;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vCIkvIsRT+W6/e2hLwoVzEFY+wYwNZ+mMSER1a5eWEw=;
-	b=v6KC0zBAdTkMR0I9BLYMyZLYvjgAiiKvSm2kDQINfuXgh09jmNxlA/hplyl6qR6EZp/q
-	 exVe9qoSiRLj6GokiUSvX3f+3I4P3K1p9usA4OFuDeek5BVfnfweybZQlQNTggFBX3MPe
-	 CpINPPM2ukLLPd+sek+SHeLIaz5G9JeXHDVQrNarLK/H3CgC182P6xHW98NJPr9PUClOU
-	 AXlGLYZBpTHIzvsw/HRknsjZvIUjgXgtIVhTGJ1W7FPpc9wd83mJ+Z5Dtwod68UvPLpZF
-	 rUZjTVIPjdgWC4N530Ayi4ruYKkP4si/QpdAiW4VYibmu3gq//5Ht9p7FTwVAZPzOeg==
+	bh=0M+zF3s5K2k9ZAUnAkn/HIt9MFvu9njUzeqdneQx41Q=;
+	b=LABzqaj5MvACm21sS3cBb4o43tyUQtFaQn9giQy+ydks6T4BipCfyyD/g15aQdg0Jq/y
+	 /ULUZtpGcmMXu2KX36DfuPAhHro93FxD0KWlVwWZNUE4tEkxuqUqH88sUtCrDR4tugEf0
+	 IZp5BdY/0xOF4Pd/RDopSpLe2J1GZIY5drTly0N72gpBLbLwSP73usOI/na6WJQBnsw3f
+	 DYISkiKqjGJ9E6MPxPVhq0+SRk/rj10LqwwSl2Rs4ZX009VwowOogPRop5kMzwx4XyPFp
+	 P17jP308oSNRlmCig6YQhMsdY9gAEwXgPWWzPssuMT25Wfx7tRKDDcNSU/hlzOTLCnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y2j+Cfs9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n/BnisxA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7938F606AE06;
-	Wed,  4 Nov 2026 21:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1D6606A863;
+	Wed,  4 Nov 2026 21:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y2j+Cfs9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D4C1F000C1;
-	Wed,  4 Nov 2026 21:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n/BnisxA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBF31F000C1;
+	Wed,  4 Nov 2026 21:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827046;
-	bh=vCIkvIsRT+W6/e2hLwoVzEFY+wYwNZ+mMSER1a5eWEw=;
+	s=korg; t=1793827048;
+	bh=0M+zF3s5K2k9ZAUnAkn/HIt9MFvu9njUzeqdneQx41Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y2j+Cfs9xm05PXBzqdgY5O/Wpvw0k48mo/y4aF8bb7NpYgA9kXWm2zphkeo9ipv6Y
-	 osux4MJRmwyinp8CGFNqv551mtvQT4tHDjObOG1qwPXRp7R+hqHyDfNLMYFHDGluWt
-	 Q8YA3e1tnWDaZXV1NAbSAzdfduVsb0ExLOFg0zLY=
+	b=n/BnisxAsx/vDV+x7uPPjUI52jYkxKSArJlsyDSwtIq6mHX7sQmNCPEbp4yquKG+y
+	 Mr9MR+2wJwpsb5adEx2RvipKKB10ztyKZ8C+Vgel/xR1JJ2WJ1zjTqa6Lf+fhZtLI/
+	 9+3QfB+0dXJd9e8nnq3UMpr3y4pm0LSfdbxuKwc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 7.3 162/547] media: ipu-bridge: Fix use-after-free in IVSC error path
-Date: Wed,  4 Nov 2026 16:05:46 -0500
-Message-ID: <20261104211042.757421263@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Oscar Salvador <osalvador@suse.de>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Adam Litke <agl@us.ibm.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Rik van Riel <riel@surriel.com>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 7.3 163/547] mm/hugetlb: fix use-after-free in hugetlb_mfill_atomic_pte()
+Date: Wed,  4 Nov 2026 16:05:47 -0500
+Message-ID: <20261104211042.786332437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,55 +84,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-commit 3d42d1c82717f0853379b516a7fab54b636e09cc upstream.
+commit d8a9cd7fd2fb01211430c933932da58839b8ca65 upstream.
 
-ipu_bridge_get_ivsc_acpi_dev() returns an ACPI device with a reference
-held. If no matching CSI device is found, ipu_bridge_check_ivsc_dev()
-drops that reference before passing the device to dev_err(). Concurrent
-CSI device and ACPI namespace removal can drop the other references,
-making this the final put. dev_err() then reads the freed struct
-acpi_device and its kobject name.
+Let's fix another instance where we use a folio after dropping the PTL,
+where someone else could e.g., MADV_DONTNEED it once we drop the PTL,
+making us trigger a use-after-free on the folio.
 
-This was reproduced without kprobes by racing normal CSI platform-device
-unregistration and ACPI configfs table removal against the production
-ipu_bridge_init() entry. KASAN reported the final free through
-device_release(), followed by invalid reads through _dev_err().
-
-Emit the error message while the lookup reference is still held, then
-drop the reference as before.
-
-Source reproducers and vulnerable/fixed serial logs, with only the build
-hostname redacted, are available at:
-https://github.com/kimaiden1984-boop/linux-ipu-bridge-acpi-uaf-reproducer
-
-The fixed target builds with W=1 on x86-64. This was not tested on
-physical IPU hardware. The tests establish runtime reachability but do
-not measure occurrence frequency on shipping systems or establish
-exploitability.
-
-Fixes: c66821f381ae ("media: pci: intel: Add IVSC support for IPU bridge driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/20261015-urgent_fixes-v1-3-42796911043b@kernel.org
+Fixes: cb6acd01e2e4 ("hugetlbfs: fix races and page leaks during migration")
+Fixes: 1c9e8def43a3 ("userfaultfd: hugetlbfs: add UFFDIO_COPY support for shared mappings")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Adam Litke <agl@us.ibm.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/intel/ipu-bridge.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/hugetlb.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/media/pci/intel/ipu-bridge.c
-+++ b/drivers/media/pci/intel/ipu-bridge.c
-@@ -326,8 +326,8 @@ static int ipu_bridge_check_ivsc_dev(str
- 	if (adev) {
- 		csi_dev = ipu_bridge_get_ivsc_csi_dev(adev);
- 		if (!csi_dev) {
--			acpi_dev_put(adev);
- 			dev_err(ADEV_DEV(adev), "Failed to find MEI or CVS CSI dev\n");
-+			acpi_dev_put(adev);
- 			return -ENODEV;
- 		}
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6474,11 +6474,16 @@ int hugetlb_mfill_atomic_pte(pte_t *dst_
+ 	/* No need to invalidate - it was non-present before */
+ 	update_mmu_cache(dst_vma, dst_addr, dst_pte);
  
+-	spin_unlock(ptl);
+ 	if (!is_continue)
+ 		folio_set_hugetlb_migratable(folio);
+ 	if (vm_shared || is_continue)
+ 		folio_unlock(folio);
++
++	/*
++	 * Hold the PTL until we're done with the folio: the page table owns the
++	 * folio reference now.
++	 */
++	spin_unlock(ptl);
+ 	ret = 0;
+ out:
+ 	return ret;
 
 
