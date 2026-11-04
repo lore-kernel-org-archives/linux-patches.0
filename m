@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829024;
-	b=YPv/KXkR+RoaYxhAcRdBfwiB/OMqW4u7MpAbepl3Dp5zajWBr9FVb5s1DEOrsiMTXZrV
-	 GGLQFpSXv7PD9hvfQw+w3q6J+XjXu3hNngqjt/Uqrb+ujhAboebRQ2haY0tero1LNvGFz
-	 hdpo/4BA2ucrDeSng5wZJYkUtq3k2TfIz2zjXr0VrO/4UsQ5ohqti5LNJopBRZYEqKpCz
-	 KyrAJe7PjE+/bZXEAUuRZ2APdaFkVViHTIM8yZaJesfHsDb2TvJLfQUd8DlQiXZMhaz1X
-	 2O2Kwfg6UMnLX8csze+UwJpDXt6uE79/kdh7htWJ4TSTizyvIOsmZtLDae07u5miDSQ==
+	t=1793829025;
+	b=w2eGCjStqTJgDKImJV24XYJuDQLVqjpTjZ4XHR7DQoiNi+B9c5eQcZVX/FWTuP+AioPk
+	 35NvuNgSiaEn11BEWZDjtyzLu4WfPdAQu8hxUFjm6eG4zb1odO5UZDN/tfhwfcO37PEab
+	 FfPU0ZDCRSG+jwJkUVtpMi5EV03048CpWEz+NNbtn5Mec99Jjen3hLIQ6Jp6huWVj7Pbk
+	 Ob1e8saRh21jfC8ar1QmAyIVohVEt/z0rDHiZjINcIc7Kv55wuwx+/KMruvmr6mHMWrTl
+	 hvsKFxmI6ll9DMCar+4bFcbEbuqcD7MnUaVBNx9lq87eOnIPSK0gGge4hkHMbWuFQTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829024;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8vbANA8fjv8NiH9w9A/KBxbr666JMsu8M/I8JA86ucY=;
-	b=ImPgXwd/cKPHrD4A5+luRm4neekdK9fCBWdOICFI68K60GrPq38Q73pGjmOGz4W1ofnd
-	 4+oXTLLyw79hSXN9idYEKAm+eXi8xzF883x5+ddfRDMODIWfnxLKWLZDCOtotfdXLgGnw
-	 0L0HNUXgmMM4sDHijofLZaGwFxbZaRugzZyJLFXyNW2O7VJoKeGEVlM8VyTFJxWvLQOk1
-	 yhUOKfnyjt/I6u/8LPRTOBCHYB9Wh1nnqUw9Xjwb0tQErexuFjbsR4fHI+gd93+WUMoUV
-	 r5NH8ZUTdtqXUXPnJ/R5f55L/pIzr2BNhzXqp5jhcZ9zkd6JcpNlUNLDYck3CXWbPUQ==
+	bh=+2YY19RBQY49RYlOeeEjFBwvm+N33fJ/o+DHqu5XOUU=;
+	b=iA+aAqvDsTpUumJhbgkf3IzEh2eWG6J9kaeDhXwQMkt/uSp8aIq2MHMJNNTLh2DCVh4p
+	 A3vmJm7Dhbs1bZAV2Hg/OqCt539ZYRXYUa6ODjHpwJ/H01jn6GSyHFK08sTe7AgAtELom
+	 7Cjmavy5YnMVQOHoRNbp1xCHbecua3ETmUMgmWIxdf4IOkEpRObfZ/wC3OsxPTGSgR3bq
+	 P3Q+962VIJk+nzNypQ7lOnaRXZKpoFEf+IiFaVZkroLqaArJKM62GUtQVUQ2r+OQIXWSC
+	 6weyEbq1goLQnlRgLKWl5rOCflHtiyHdT9PaqswWWlz6P9KAaqnARcgnxU3NGPlU4xQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QVa4RHgl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SpQla/Kb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FCC607074A;
-	Wed,  4 Nov 2026 21:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925866070745;
+	Wed,  4 Nov 2026 21:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QVa4RHgl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA6B1F000C1;
-	Wed,  4 Nov 2026 21:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpQla/Kb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CBC1F000C1;
+	Wed,  4 Nov 2026 21:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829024;
-	bh=8vbANA8fjv8NiH9w9A/KBxbr666JMsu8M/I8JA86ucY=;
+	s=korg; t=1793829025;
+	bh=+2YY19RBQY49RYlOeeEjFBwvm+N33fJ/o+DHqu5XOUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QVa4RHglo/3ieTOu6OQeb+BwTtHqrrBAPJ3Xm2MJxyPwrV1o6Myt9igxNoUxCWrqz
-	 eup31czkBOz8IvxYoHJ0Yzl+hKtIaamO2fN2h0gxRC+imfmbITQGQsZubnfKJVxAQp
-	 bQEQyTuty71GbvoyywXCIDFnR/KIU3Te3IhPmFBg=
+	b=SpQla/KbhBVfJ5lwKrw7EtN8TYngxQRa/9wlOD0FhuUUM2bFU7gsTlcAxhku8+JWm
+	 0ZnRAh8lHs7NzY0FVQmady8/Aq6Y7sIWsohhyx1Er854N+u2GgERVZDNzX8uEaCw4X
+	 lfkasfKFy1UAcTYqG0EaDRiYQZpUAZqWHR8LFfNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 7.3 388/547] smb: client: require stable pages for SMB compression
-Date: Wed,  4 Nov 2026 16:09:32 -0500
-Message-ID: <20261104211049.322544738@linuxfoundation.org>
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 7.3 397/547] NFSv4/pnfs: bound the CB_NOTIFY_DEVICEID array count before allocating
+Date: Wed,  4 Nov 2026 16:09:41 -0500
+Message-ID: <20261104211049.586999157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -72,50 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-commit 8667061cf99394526dd9c0ea2662e6bbc7ae7848 upstream.
+commit 32f0967ea296d447925465c98e7eec71d4e2f755 upstream.
 
-Like signing, SMB compression builds the write payload from the pagecache
-folios: should_compress() lets a write request through and smb_compress()
-compresses those folios on the way to the socket.  If a buffered write
-mutates a folio while a write subrequest is still in flight, the compressed
-bytes no longer correspond to a consistent view of the data, and the server
-silently stores corrupted contents - worse than the signed case, which at
-least fails loudly with STATUS_ACCESS_DENIED.
+decode_devicenotify_args() hands the server's notification count
+straight to kmalloc_objs() as the array length, without checking it
+against the message that carried it.  Bound it the way nfs4xdr.c bounds
+an attribute length, against xdr_stream_remaining().
 
-Mark the mapping for stable writes when a write may be compressed, i.e. the
-same condition should_compress() tests (compression negotiated and the share
-allows compressed data), so netfs_perform_write() waits for writeback to
-complete before modifying an in-flight folio.
-
-Fixes: f046d71e84e1 ("smb: client: insert compression check/call on write requests")
-Suggested-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+Fixes: 1be5683b03a7 ("pnfs: CB_NOTIFY_DEVICEID")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfs/callback_xdr.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -88,7 +88,9 @@ static void cifs_set_ops(struct inode *i
- 		else
- 			inode->i_data.a_ops = &cifs_addr_ops;
- 		mapping_set_large_folios(inode->i_mapping);
--		if (tcon->ses->server->sign)
-+		if (tcon->ses->server->sign ||
-+		    (tcon->ses->server->compression.enabled &&
-+		     (tcon->share_flags & SMB2_SHAREFLAG_COMPRESS_DATA)))
- 			mapping_set_stable_writes(inode->i_mapping);
- 		break;
- 	case S_IFDIR:
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -271,6 +271,13 @@ __be32 decode_devicenotify_args(struct s
+ 	if (n == 0)
+ 		goto out;
+ 
++	/* sanity check the count against the remaining stream */
++	if (n > xdr_stream_remaining(xdr) /
++		((4 * sizeof(uint32_t)) + NFS4_DEVICEID4_SIZE)) {
++		status = htonl(NFS4ERR_BADXDR);
++		goto out;
++	}
++
+ 	args->devs = kmalloc_objs(*args->devs, n);
+ 	if (!args->devs) {
+ 		status = htonl(NFS4ERR_DELAY);
 
 
