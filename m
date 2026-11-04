@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829342;
-	b=nI+6RcFxMNoBP36x3vaS8rSXkSdcmgEVmPTN+2mRaFYwtkYvsY1gNI9JHRt3iN+uqtdi
-	 5u9HxmSYXxLBMRGJTvisWAurVfPPSUwmy6BCFvHqlFZ2iglT5d15WvVqlL01bYzc1LfcV
-	 loaEWx8kwi3KvWUPC01u4HygwPG6hT+agCozcDEvif8JweqbF/UsjkuA4E4UlMBqo8B3A
-	 +tg4ZiOfKtqCyFRnmCFQnpl4mfiWsRfPDtfGxBlpwXwlQS+FyevP6K0B9Sqv82G6gCpZn
-	 KJtSKF+lPSpWjgIgY083SnYkyRRvxg2CxudO/XtW2ClGC7zOGZ8TWPnhaOxGL116Pcw==
+	t=1793829343;
+	b=AkipHn7STuO8otI2ZN5wE8SEoT6LH6heJuAPfH7dHyekb20pBJx7ic98DQq41VzZ0Clb
+	 YrqFYxxE5Dc2s11BRNNj3BOqaVl9xzcgQ49BHwxZuHaPYEWszrSY2ResvoN3vSJfdkUkR
+	 +30Y5p3qAKs7Vu8gXmLskkPttkulw1FFpDKht7Us6rfOzsUgMJ0f9e/RZBoKU6O3YenMA
+	 IVtkHHtckvYWuVl6xJYpeDO2nghMn63erUWFKbyR9yDTRtUBqGbvpKbhcu/YCGGBLvwqQ
+	 bO2rYMfAlOpIHIgWAVCev1DWB1iYqH2/UNLpGHL4dkH3NQurTr3+jk+AgkdSXMqP1Bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829342;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829343;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Urr/8b9lINrMtgx8uTx4akxHKilD6u6X2Mro45QcKfM=;
-	b=ChntOaHOdK1/7mI/lLDhGIiN0tlqz7q0nTGLPxDaUKMKNCCMotAKuwWrVX7bMY3kAY8F
-	 BonFIMbdJW4KTK1ncrad7Dyey3OPWbryQekdc2Q49epstTdo26SCADQ2jmv3I/twMZX/a
-	 L1GwV1z+X04w/Fy8hHA8mhod+0aTWuIgal4sRgXzJWnyvLWyZMjQuRKKMZ11aQLyAfGkc
-	 FhrGKAeVw79pBade4sn32mXM2Ya53XxsSA30XrRsKVSF4uqNEsgbDvCSpEovVblS4RQgz
-	 DZotTFrrgoxrplppUmPJMK9ZoZsxBy+ONM5rZBIpGz8RyVhiMpjNFXFqToEwX1YlVqA==
+	bh=CMnMO9pIYQuVuE9du7x2t36KRpM85UR6sK/LQts7ZeY=;
+	b=YiJeVXOk74iBSf/fY1ahPL13EGrD45Qeor1cNktqbwxJV1lOkqwZryFuDkF3WhddAGst
+	 paCZuPkrskB/nTbsXzpFqKf3VfE1A0A8c2bvOgulHdIGfbC57a6wAZyQlT9dSDuEg3H0m
+	 cBawwdwaFXKNstBYd+6HBHLALNYpRCFxR6tzEm5St9yqQdX+whcNAORJMrcQcWe4ISgKB
+	 KIhBWL7PAXLF0V8JBxBFDx101lXeejk+whF/hMyKgT6AcUPkvXiACjlyuAr+68RZgQmFD
+	 AkAq9wlLLeFykri92qCFOOoQO/dq3kj7cWwQRfi3Q6C48SBSERaJF6peOeuFTWabxlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YXuOtA6+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NBJUI4UV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B883607491F;
-	Wed,  4 Nov 2026 21:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D02260A5BCE;
+	Wed,  4 Nov 2026 21:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YXuOtA6+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1B31F000C1;
-	Wed,  4 Nov 2026 21:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NBJUI4UV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187331F000C1;
+	Wed,  4 Nov 2026 21:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829341;
-	bh=Urr/8b9lINrMtgx8uTx4akxHKilD6u6X2Mro45QcKfM=;
+	s=korg; t=1793829343;
+	bh=CMnMO9pIYQuVuE9du7x2t36KRpM85UR6sK/LQts7ZeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YXuOtA6+PLQoOsqCwAlPs7NMUAfbMWRVqH0262DE3uJkSIfxo7ZMDkU5sFB8rsnUr
-	 xSDZXrf5c8aFo/bZaV9q5cLrnNDj2M2U8jeGLtaeRxLC26ehV4gHMKzlA5GRfls3r/
-	 Uxgn9rF/W/qi7PgFyfolOd48kkyrRyy6z5mBKIAk=
+	b=NBJUI4UVJqOt0gVHlpFgEU8AHUL5aHEaLavm3JG1cXFd/IjqDgNG52MB1B2CaRXa5
+	 rqYgy3r5xlkPY/dr3nyNeC5BETUr0Uu4WoJiwyeJkANNsKu9QKB7D7MUyXVb21+ZxR
+	 619K7ZC4s3s3YMyrEm9iilY4tgXrrKzYH/AvKLno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
+	Matthew Jacob <mjacob@feralsw.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0066/1005] drm/amd/pm: validate vega10 profile mode inputs
-Date: Wed,  4 Nov 2026 15:56:39 -0500
-Message-ID: <20261104211045.459206550@linuxfoundation.org>
+Subject: [PATCH 6.18 0067/1005] drm/amdgpu: Support some Barco AMD based graphics adapters
+Date: Wed,  4 Nov 2026 15:56:40 -0500
+Message-ID: <20261104211045.489051904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,47 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Matthew Jacob <mjacob@feralsw.com>
 
-[ Upstream commit bf939f2a1687ef4ab815640096357f8ef5bd5fb6 ]
+[ Upstream commit 3dc4d68ee26a7ac12069ff0562ad8935106c79b6 ]
 
-Check for out of range profile modes and custom params that exceed 8 bits.
+These adapters typically are only supported by Barco on the
+Windows platform. However, with these changes in the linux
+driver, multiple monitor support should work correctly.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Matthew Jacob <mjacob@feralsw.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index d6aaba0b3613d..84c777fde62f5 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -5406,6 +5406,11 @@ static int vega10_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
- 	uint8_t min_active_level;
- 	uint32_t power_profile_mode = input[size];
- 
-+	if (power_profile_mode > PP_SMC_POWER_PROFILE_CUSTOM) {
-+		pr_err("Invalid power profile mode %u\n", power_profile_mode);
-+		return -EINVAL;
-+	}
-+
- 	if (power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
- 		if (size != 0 && size != 4)
- 			return -EINVAL;
-@@ -5421,6 +5426,10 @@ static int vega10_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
- 				return -EINVAL;
- 		}
- 
-+		if ((input[0] & ~0xFF) || (input[1] & ~0xFF) ||
-+		    (input[2] & ~0xFF) || (input[3] & ~0xFF))
-+			return -EINVAL;
-+
- 		data->custom_profile_mode[0] = busy_set_point = input[0];
- 		data->custom_profile_mode[1] = FPS = input[1];
- 		data->custom_profile_mode[2] = use_rlc_busy = input[2];
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 376a7cd2667f6..845ebe041563f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -1953,6 +1953,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6646, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
+ 	{0x1002, 0x6647, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
+ 	{0x1002, 0x6649, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
++	{0x1002, 0x664D, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6650, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6651, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6658, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+@@ -2022,6 +2023,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6930, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	{0x1002, 0x6938, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	{0x1002, 0x6939, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
++	{0x1002, 0x693B, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	/* fiji */
+ 	{0x1002, 0x7300, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
+ 	{0x1002, 0x730F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
+@@ -2050,6 +2052,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x67C4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C7, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67D0, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
++	{0x1002, 0x67D4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67DF, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C8, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C9, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+@@ -2063,6 +2066,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6985, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6986, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6987, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
++	{0x1002, 0x698F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6995, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6997, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x699F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
 -- 
 2.53.0
 
