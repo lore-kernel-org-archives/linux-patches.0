@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831007;
-	b=TStBprX4hiO0a/nA8VI3PS4BZWvXavHMMVdpG6aoty3FQOuWoTmmD5TouJkmCovi/RSW
-	 Q6DvDKRqSrncGkwSBgwzeP4Akuj61NY3ya0Wyy1OGWW5V0X3PmFwVsjt01W0atxA0rAXc
-	 8IuOFBqQ1DEopBjY8DlvT5+MDWONAicr3hJGk9SVOzeHCjZADGTMkCcjHixyRBk4j12dU
-	 N8d3ZQYMb94oOo3X5TfKTF4pJ+ur01A8vVAQKYbdewoBWXeHAP058u7ILtmPvYybZY3Ya
-	 IEBQsdGAiRiytzjnB6Bb6zoyg2CzVkbqvv8jp4Q/E0Dh5WTPM/fu5FDgTQXzOsMkdZQ==
+	t=1793831009;
+	b=IglRixxoErbPvsAQp7UqtOCOnrXvMT9tWUG/PGcdHlWiW/jGI0ZmeA+3do6AoGjFxouT
+	 FEh9GmA8Anrwf25y/ZBVclArrfVVK3cTLQjF55Py78K2nxu9b6RDerE77Prj2+3mcSGXa
+	 ROnF8uXADDO7wzXyBj+ir0BZybCufQQrK3q7uE483fkyFlCsTALaNe/gGbwvWLCwavtKW
+	 EONBic71Ijm8vW/ahKFq1qkKUbceTOIyS9bnHnRxhkPEEXEDzBc/hjyfdG/U+ZNrq9ZrN
+	 WwUH71StL73t6yScXc0sXOvD3bg42TV900SSfnW1UTh4FrgD8ZGp2BKXKeqhj0dm7xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4J6Q7cDh7YYODSdKGEvXyitA1Ywj0IjlSN5miJu+fBc=;
-	b=jGm1gELu80mZQ0imyjsUniQvbrw9aEtdaRJqRd6eEUgtIfi+U2GAz6zsFpcNBZNZdodn
-	 1Tboxc37fWKFucQLtH+iFI9whqJ9S0fXDGwMkmxOCApWqJWrVQ7LsB9/AWr+9Fp67dSPY
-	 F62fw7HFZE+bV1XVwnFSQKqKQTpsUQCbDyRfyW3Bva2EUpJxq1rlW5QlpCzKQgdfqLz7E
-	 DpEnxGjMS++JB4uqnlpfAchOJwE9xto/RTDcN7cTkBwP8sllRoft6BlLFS6FROrWn66Zh
-	 lLVWEd6qMEje5lVW7sI9ZdaR+VJrow3FPDPaAM9I2GrfHRHEluUAYLgfGb2W4iBVIRA==
+	bh=tcmd6usAfJcKdUbzOaHfzLlpXBVTueqo1MGQzHDSnaU=;
+	b=yxDeoCB3NxxP8XODS+x4k8pfvQylPYWYq5D1B4CVaJvGH+17I/OTBdj5kxSSoPhOccxw
+	 pp7PyYWAyP4icBAMRg7sbli0FCzgCVg/ZhsScMIdivF/spneRN3FZQGiD40TTd3uNoIyH
+	 /sD/2qq/BBzdDsuAo5ua59PjZTZnRC8qcFUTnP/90YlA2kTtgKNQaVyL/HQZbxYD67vUw
+	 gO8INa9cU9JZmVrKF1f2SASlDBlf1JcssmzblpdLUzzCLprFHAdpGtdMfEuUaCHVCXdw2
+	 Kl7SdiXj4MfpKDfy11ipbtuirtKc7QcV2Q7hfo37QJspr9IKGd87eH6RjCgX9y3zZCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dWqIzm4r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JIFIIKX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B10C606AB22;
-	Wed,  4 Nov 2026 22:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C086070325;
+	Wed,  4 Nov 2026 22:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dWqIzm4r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFB91F000C1;
-	Wed,  4 Nov 2026 22:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JIFIIKX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654AB1F000C1;
+	Wed,  4 Nov 2026 22:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831007;
-	bh=4J6Q7cDh7YYODSdKGEvXyitA1Ywj0IjlSN5miJu+fBc=;
+	s=korg; t=1793831008;
+	bh=tcmd6usAfJcKdUbzOaHfzLlpXBVTueqo1MGQzHDSnaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWqIzm4rXs8y2BRB/NyE0PyVCdrTxtuBKKbFAjsBAhgsXIUajwntaGKNm+CZftlDc
-	 Pqa6crxQsGnHnIGd6vyHXmoePOE9Ot9T+yVbBQTc6qFapSUrIJi6e3WiflHdEK/VGM
-	 qeRWiWgz4FmGN5Po22a34OLFIDIHawCjsHDS2txg=
+	b=1JIFIIKXGvft9ENtffSY8JYDrRnCUtqYIhGSZhlEHTGxDSlHcOQe6+/9ZYGVvXUhu
+	 9a2+LoCXXCgmzB99c3ohySpVaaPkcGqnCxhvzO0CKCozO3nfYtt0mUHJtZVmUMDrk5
+	 nK8205jhqDz5snLb2knyZk1Q31aXqyHSnTuZoH4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Csaba Budai <ilyr73@gmail.com>,
+	Will Porter <mrwillporter@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0452/1005] ALSA: hda/realtek: Fix ALC700 audio on Intel Hades Canyon
-Date: Wed,  4 Nov 2026 16:03:05 -0500
-Message-ID: <20261104211056.705692818@linuxfoundation.org>
+Subject: [PATCH 6.18 0453/1005] ALSA: usb-audio: Add iD14 MkI to monitor-mix volume quirk
+Date: Wed,  4 Nov 2026 16:03:06 -0500
+Message-ID: <20261104211056.733008129@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,87 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Csaba Budai <ilyr73@gmail.com>
+From: Will Porter <mrwillporter@gmail.com>
 
-[ Upstream commit 1fcccdc20a76b4639b00124cf2a379b837bd2bf7 ]
+[ Upstream commit 17056a36d276a740f09dca723de1bc6aa3eb4ef9 ]
 
-On Intel Hades Canyon systems with an ALC700 codec, analog audio can
-become unusable after rebooting from Windows into Linux.
+Add the iD14 MkI USB ID to the existing audient_id14_map. This
+names feature unit 12 Monitor Mix Playback Volume.
 
-The affected system uses codec subsystem ID 8086:2073. In the broken
-state, Realtek coefficient 0x1b has value 0x4a4b. Setting bit 0x0400
-changes it to 0x4e4b and immediately restores normal analog playback.
+Live meter A/B testing on MkI USB ID 2708:0002 reproduced the same
+asymmetric attenuation seen on MkII. At ALSA value 104, the right
+channel was 23.07 dB below the left. At 127, both channels were equal.
 
-The BIOS also sets this bit after disabling and re-enabling onboard
-audio, while Windows may leave it cleared. Linux currently does not
-restore it during codec initialization.
+The misleading Speaker Playback Volume name causes PipeWire to adopt
+FU12 as the stream master. Reuse the existing map to keep the control
+available while preventing that selection.
 
-Add a machine-specific fixup for Intel Hades Canyon which sets only
-bit 0x0400 of coefficient 0x1b during HDA_FIXUP_ACT_INIT.
+Hardware-tested on Bazzite 7.2.0-ogc4.1.fc44.x86_64 with this change
+backported. ALSA exposed Monitor Mix Playback Volume after module load
+and USB reconnect. PipeWire volume changes from 100% to 35% and back
+left all four FU12 values at 127. Channel-isolated left/right playback
+remained balanced after reconnect.
 
-The fix has been verified across Windows -> Linux reboots on an Intel
-NUC8i7HNB with an ALC700 codec.
+Build-tested with CONFIG_SND_USB_AUDIO=m using the focused sound/usb
+target.
 
-Signed-off-by: Csaba Budai <ilyr73@gmail.com>
-Link: https://patch.msgid.link/20260821102514.11194-1-ilyr73@gmail.com
+Assisted-by: Codex:gpt-5
+Signed-off-by: Will Porter <mrwillporter@gmail.com>
+Link: https://patch.msgid.link/20260823015353.686080-1-mrwillporter@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ sound/usb/mixer_maps.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index bc33930e83b9f..8196235c31d2b 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3820,6 +3820,7 @@ enum {
- 	ALC225_FIXUP_DELL_WYSE_MIC_NO_PRESENCE,
- 	ALC225_FIXUP_S3_POP_NOISE,
- 	ALC700_FIXUP_INTEL_REFERENCE,
-+	ALC700_FIXUP_INTEL_HADES_CANYON,
- 	ALC274_FIXUP_DELL_BIND_DACS,
- 	ALC274_FIXUP_DELL_AIO_LINEOUT_VERB,
- 	ALC298_FIXUP_TPT470_DOCK_FIX,
-@@ -4040,6 +4041,19 @@ static void alc287_fixup_lenovo_yoga_book_9i(struct hda_codec *codec,
- 	__snd_hda_apply_fixup(codec, id, action, 0);
- }
+diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
+index 8046d5987d5b1..ace4ccad8f51c 100644
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -505,13 +505,13 @@ static const struct usbmix_connector_map gigabyte_b450_connector_map[] = {
+ 	{}
+ };
  
-+static void alc700_fixup_intel_hades_canyon(struct hda_codec *codec,
-+					    const struct hda_fixup *fix,
-+					    int action)
-+{
-+	/*
-+	 * Windows may leave coef 0x1b bit 0x0400 cleared, causing broken
-+	 * analog playback after rebooting into Linux.  Restore the bit
-+	 * during codec initialization.
-+	 */
-+	if (action == HDA_FIXUP_ACT_INIT)
-+		alc_update_coef_idx(codec, 0x1b, 0x0400, 0x0400);
-+}
-+
- static const struct hda_fixup alc269_fixups[] = {
- 	[ALC233_FIXUP_WUJIE_SPEAKERS] = {
- 		.type = HDA_FIXUP_PINS,
-@@ -5092,6 +5106,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 			{}
- 		}
+-/* Audient iD14: FU 12 advertises Volume on only 4 of its 6 logical channels
+- * and sits on the monitor mixer branch, but it is traced through to the
+- * Speaker output terminal and gets named "Speaker Playback Volume".  Userspace
+- * then adopts it as the stream's hardware volume, and any setting below 0 dB
+- * attenuates some channels but not others (20 dB imbalance at 80%).  Give it a
+- * non-standard name so that it is no longer taken for the stream's master
+- * volume, while remaining reachable for anyone who wants the monitor gain.
++/* Audient iD14 MkI and MkII: FU 12 sits on the monitor mixer branch but is
++ * traced through to the Speaker output terminal, so it is named "Speaker
++ * Playback Volume".  On MkII it controls only 4 of 6 playback channels.  MkI
++ * testing found asymmetric attenuation within the main stereo pair.  Userspace
++ * adopts this control as the stream's hardware volume, causing imbalance below
++ * 0 dB.  Give it a non-standard name so that userspace no longer treats it as
++ * the stream master, while keeping the monitor gain reachable.
+  */
+ static const struct usbmix_name_map audient_id14_map[] = {
+ 	{ 12, "Monitor Mix Playback" },	/* FU, partial coverage */
+@@ -602,7 +602,12 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
+ 		.map = maya44_map,
  	},
-+	[ALC700_FIXUP_INTEL_HADES_CANYON] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc700_fixup_intel_hades_canyon,
+ 	{
+-		/* Audient iD14 */
++		/* Audient iD14 MkI */
++		.id = USB_ID(0x2708, 0x0002),
++		.map = audient_id14_map,
 +	},
- 	[ALC274_FIXUP_DELL_BIND_DACS] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc274_fixup_bind_dacs,
-@@ -7653,6 +7671,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x2782, 0xa128, "Positivo N15RPE-S", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2782, 0xa212, "Lunnen Ground 14", ALC269VC_FIXUP_LUNNEN_GROUND_14),
- 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
-+	SND_PCI_QUIRK(0x8086, 0x2073, "Intel NUC 8 Hades Canyon",
-+		      ALC700_FIXUP_INTEL_HADES_CANYON),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
++	{
++		/* Audient iD14 MkII */
+ 		.id = USB_ID(0x2708, 0x0008),
+ 		.map = audient_id14_map,
+ 	},
 -- 
 2.53.0
 
