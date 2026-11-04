@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829551;
-	b=apVmjrU4vqdp3yWr/jIIUby6FDzkO2xmqDSEFMcvhX/x0BzgxXIFYPBxPdgaRMoRqjFq
-	 5nEoS1gX6bmv7KllpNd/GNA1lm4Lr8YlFnXLQgCMtIxFafkr08fdP6KuPImDdUTrAiM9W
-	 XxyFCs5kcjT62EfuRFZCDAXViBteJqBS9pOC4q3Xc2QgYtkQi7wyWZecRf1/QohLnpKtb
-	 xNF6gJbxRSP7k0J+IM0tdPZ+vTtxDWtcIzvx+f0Qp8+yCuCGefJgqKuL8jJB3NRh9C/JE
-	 eNCIJxw03AQKD0p3WQ2YThIBKuqded/tCm4BZxQMDKtl3+1c2W5my3KBQjpXGgObNJQ==
+	t=1793829552;
+	b=kIUlftNQUy65V7/WMoQA0imQcjXG6B1aaviZ1T3Cbu/uELPeasFZsLm6LHZ5RFIyA8Dt
+	 4JjJbXWimIM0++WW6rdTLL8lvRVmuQ3W+wDIm+eOmHOmaPECrNz/NkTD7refuVkPi75KV
+	 OW6afHczYOwbCd1aQ/wknru8QD6jxco81MSPGHAQrKQiuEbShCoBw2k1l+XWwgEySIcEY
+	 SYSzv9RFaXbFk98LK0SfYz4Ks8mzNknk6tXZFbVAiuTDHjvJA9t8ua11FYj933e66Ll2q
+	 myC49/LssW2uzruvSTzqKrbomcAhs90LCR3YUhoFwe3OrbSjr3u4Km+IZUJOjGSBeIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829552;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FCb/WaSdtpZHz6ocV0ibxepH0XEjdkIKx9KRv0Tpx+Q=;
-	b=Mu550SX9MNKmfqgjBnf9fvQbZRzoeFTm+oWWz700vkjPLYRukCxstpRQZu0SeUdPOJ8q
-	 VVCg7j2dZLbQu3PJOc2UNqwrFF2x8vHmSvr7AmNErFa14C3u/A9Vy+KPq6lyrW0nmjPWB
-	 QY5gI3gavG7ZNWheE/Vh/jaxmtBa60qNUjvQWmHFhcNEStilAK+0kGztLJ56FbneckT4W
-	 /abMo+fYa+XlPk1MFdmmxaeKxbPXcpN2OHYsjgdf5AF+SrdKou8Pl/Dg+pqbV3+T1c7nJ
-	 aG36GvpQBjAlyVlS3ZV3B1CbM3CAO2TgurWbPezRY/l4GDWqZqQRDWhOk/LKJuLj5rQ==
+	bh=Zo0azLKB9JoGBHBVxjJ0V1jI6Gbu5bweXEYnwXbn+HA=;
+	b=DvxZlDSjd5q9vh/fdmEtQUQrRblIJOMZXRieLXJK3f2xdDldreuW/pksg5jcXN6W8rsf
+	 3Bpth98KnJrGWpb2ukOIrD9EBNXEcwK/eagad+TpfygNP54xR5SjLh8+erYACYNQ0wkJz
+	 9GvZfcUlfBibop6IWi9VDby8tL/Kop9MsNHeztSwb1TICeEeQd5KCkH9OSJM3fGcz2q1J
+	 uKADI5hLk7jtmmhl7i4+KqoKSF/5IxcJoh3WCatUAszcH53BcO6VpcGL/P5H8vmNsUABm
+	 NngKb72N7NvPA5LlN46iLhxF3Wd95xPp6n2tRpZA2rqtPjKBo2AcUFjUJvKvk8uRd/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eWJIY0+w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Av2MObTS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C5B606B2C0;
-	Wed,  4 Nov 2026 21:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B88D606A846;
+	Wed,  4 Nov 2026 21:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eWJIY0+w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DD31F00A16;
-	Wed,  4 Nov 2026 21:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Av2MObTS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF39C1F00919;
+	Wed,  4 Nov 2026 21:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829550;
-	bh=FCb/WaSdtpZHz6ocV0ibxepH0XEjdkIKx9KRv0Tpx+Q=;
+	s=korg; t=1793829552;
+	bh=Zo0azLKB9JoGBHBVxjJ0V1jI6Gbu5bweXEYnwXbn+HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eWJIY0+wDD1iQVu746DOJgW+eTMCzfquFc0CbbWSMCZgaGaX+tYV/OXgTNCdK8MWE
-	 PCTqqI+kwbOSHOjQ9Sp1nH05LxODhBgAeqhy9uO16nZbY2bRRJIq50tNtxomiEUxmz
-	 1JRuGgBQnMJqd1PoChMnKd2VR91W4+KfuWh09ADc=
+	b=Av2MObTS3jsBX87oYFI0krWHU75MjNQ2uW5dU84Xn5kFZzKJCoobSP6d4SXecKRKy
+	 trYnMB3o1qEPUSZHJ6mLdS6+T9e3sDfWN9xFkbCTl2xZIQLf/fzblY0cXON4R0okeM
+	 OZgYGsKpzjSf8KiM9bepzXljzS1DwgP6+B4etEV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Aditya Sherawat <asherawa@qti.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0197/1005] driver core: attribute_container: Unwind device_add() on attr failure
-Date: Wed,  4 Nov 2026 15:58:50 -0500
-Message-ID: <20261104211049.314031983@linuxfoundation.org>
+Subject: [PATCH 6.18 0198/1005] drm/msm/adreno: Add support for A704 GPU
+Date: Wed,  4 Nov 2026 15:58:51 -0500
+Message-ID: <20261104211049.340351504@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,44 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Aditya Sherawat <asherawa@qti.qualcomm.com>
 
-[ Upstream commit 8cfe7ad274bb42c4653b645267410d4a3a23db98 ]
+[ Upstream commit 1f69339da06255a7f8560b4768fff83992c03deb ]
 
-attribute_container_add_class_device() first calls device_add() and then
-creates the container attributes. If attribute_container_add_attrs() fails,
-the helper returns the error with the class device still registered.
+Adreno A704 GPU found in Shikra is an IP reuse of A702 GPU with very
+minimal changes. The only KMD facing difference is the chipid and the
+zap firmware which is specified via devicetree.
 
-Callers use an error from this helper as a failed add and do not call
-device_del() on that path. Undo the successful device_add() before
-returning the attribute creation error.
+Just add the new chipid to enable support for A704 GPU in Shikra.
 
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260608172717.88657-1-dbgh9129@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Aditya Sherawat <asherawa@qti.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/738931/
+Message-ID: <20260710-shikra-gpu-v6-1-b388ec5dce77@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/attribute_container.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/attribute_container.c b/drivers/base/attribute_container.c
-index b6f941a6ab693..b1d6eb6ab46b5 100644
---- a/drivers/base/attribute_container.c
-+++ b/drivers/base/attribute_container.c
-@@ -427,7 +427,12 @@ attribute_container_add_class_device(struct device *classdev)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index b43850966a5f6..bbfee7fef6dc0 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1417,7 +1417,7 @@ DECLARE_ADRENO_REGLIST_LIST(a750_ifpc_reglist);
  
- 	if (error)
- 		return error;
--	return attribute_container_add_attrs(classdev);
-+
-+	error = attribute_container_add_attrs(classdev);
-+	if (error)
-+		device_del(classdev);
-+
-+	return error;
- }
- 
- /**
+ static const struct adreno_info a7xx_gpus[] = {
+ 	{
+-		.chip_ids = ADRENO_CHIP_IDS(0x07000200),
++		.chip_ids = ADRENO_CHIP_IDS(0x07000200, 0x07000400),
+ 		.family = ADRENO_6XX_GEN1, /* NOT a mistake! */
+ 		.fw = {
+ 			[ADRENO_FW_SQE] = "a702_sqe.fw",
 -- 
 2.53.0
 
