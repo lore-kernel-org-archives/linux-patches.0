@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831104;
-	b=WKVcRDZaES7iAHGH5FdIG3vJhrWa5lVwhX8+5yZ2wy0p+dqJEH/+huqRSKhlhH1WdQeG
-	 cr2MMIGrfFIHRrNMs3SD2FA+FrsxmZOS1yuyxHjHzrrMlxXicSdefscWaMMNIC+VeDF3M
-	 VktEfD2GXNygqZWj9kM8BsSUCVUnOx8ZXMFBNAmUFD0F2teMuAfCitJxihIUqAS9xH/xN
-	 pmqwfZFhbF0o+lsUqF5hv6ye42qaWg9kcsSSbg4houCzoGA8Ev1+6B7W1TvciU106aUbO
-	 CGmLALKrckVJoPC8anuYPe1DtnGWB5O1IhU9dgF6CazLE2zy+U1KJ3c2/Iw3nUO3+GA==
+	t=1793831106;
+	b=wl1HdPEUtyPAnhRXjZ+Yv84OEz5UP0aUNMPFxTW8348HVbRM8gsrBFMj4VcOYIrDtrTi
+	 Xtbj2VmXosI27RhTTltIPBGKD41PXruXa56JWrJybh0RAOY8j35cA05W8dqs6ANPi3d89
+	 owL8vGG24n/O/24uukwgzFaA73DfEp9Jn28Xv2MTfEk19PmNtD+2umyl8WjD9wAD7hUh2
+	 zWYiqgUD5WuEVDW2oT9ulBll61YAKWFGNm9eOA2ucKl9PJSyShGePha6IBP563smzOAX0
+	 Khqt41C7nTrTb2hS+G8sergKSeI31Sqrn3IPbpjc0ZmC7iB5t+0Duh1QmN8HHU2yEtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bXS6vqrCVExfHshDVxGwzSRWQ3MBMEprJukSY9lDh1I=;
-	b=1D+KSfvrFj57ZV+7zWOQvQNkM0mWEKl9btxp/2Y5upQeuBs5bizUL9D0sny+wmKsBw8/
-	 9D6EIVVoMi/50HuHkR5rvHmRgrsM7fqlZK+ydsot/S3+URL3BA1MRBZ2i4a1FhpIGiN30
-	 Tx7KMmI2CXvZe1MIrdpNz6ZjHFecHwgixf8XxnPtlafMsKd0tGvL5tbCgE1iL6r9TpvlH
-	 WjEn8kdDxsvuQtOo6DTxxhfVKE/mfNynmf0lS9/gr3o21PeMvUk4B4ovTRQrL6QX4mSt/
-	 ImGYuFJF78rycVaNvdOFvmMt9WyqAHgi1aVhEaJ/5zBvJVKUuUiByhQf3vuZ4A/sCRQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=n80S2yiE5VeyhRKYdXztH500aMIEnX9yYmQk6njYxKg=;
+	b=wmGsv/mF4v1N2wgPswmA1Szx2VxR5xYSKAof2MHXfXI5dOqkcql/nF0iJHJigMemPKeD
+	 yTu2fOxP3FfwfM6TQ1cmpP1QqkOiCHxnlIsGdbm0dzcdyXif18lQNA8Z36HI+FwTAbuQf
+	 djgdCHh4ZyWNho+0RcV4Ru0FUQKjet6kWVpiGozlTRlVXxYEP6jM5XC6hFrYYQsDBL8lJ
+	 Ei7XkX2lTVIW/ubDViYRx9XiykGEos5aS7O2Xdjv037J4fQ5VhV/TRPFhnZynFdiUdAMJ
+	 MTabKeDkdkMYqo3R+MmAwpC57l62CnQnl72oN/N4oIaFwhtA/RIRvgAqrIby6xczEqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JySew4S5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWapy7JT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DDA606B2DC;
-	Wed,  4 Nov 2026 22:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128EF606B2D8;
+	Wed,  4 Nov 2026 22:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JySew4S5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92161F000C1;
-	Wed,  4 Nov 2026 22:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWapy7JT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06CE1F000C1;
+	Wed,  4 Nov 2026 22:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831104;
-	bh=bXS6vqrCVExfHshDVxGwzSRWQ3MBMEprJukSY9lDh1I=;
+	s=korg; t=1793831105;
+	bh=n80S2yiE5VeyhRKYdXztH500aMIEnX9yYmQk6njYxKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JySew4S5PXzpvhTKc9DRp/NkWcSoMSVstUWElAIZ9dFwC14yA4W7bQNmJ88P9IGPO
-	 usqXEHwoePiIpmNVeEjhw+IDMaD0oc27sfVpoyKld+X0CgON8DeSbeDnw18SHTti1W
-	 ewnnk9XsSGmHYO7GoQQ/Ik9nPdcH8161ay1zGsps=
+	b=EWapy7JTwfO2IBtkqOnfsDi77n+DyXsNTyuTR6tJRjE8oZeli4kbHluKftKg5uBWL
+	 RvgsI1x8pdlwW0hXDAIHwGuue1mUuKs6utBDZUFz/u/NqIxyDpc1nzDrv9aaRpjwg1
+	 adIHDe6IxoXwGCeP7gU5zCkMoMWoFK6jAj5s1Erg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Federico=20Valent=C3=ADn=20Andrade?= <fandrade@frba.utn.edu.ar>,
-	Takashi Iwai <tiwai@suse.de>,
+	Reinhard Speyerer <rspmn@arcor.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0467/1005] ALSA: usb-audio: Skip mixer creation on M-Audio Venom
-Date: Wed,  4 Nov 2026 16:03:20 -0500
-Message-ID: <20261104211057.096763928@linuxfoundation.org>
+Subject: [PATCH 6.18 0503/1005] net: usb: qmi_wwan: add Rolling Wireless RN947R
+Date: Wed,  4 Nov 2026 16:03:56 -0500
+Message-ID: <20261104211058.030719798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,73 +62,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-[ Upstream commit 4c0ec35e011309bd7091053ad5bbc01420967a66 ]
+[ Upstream commit 7375d38364a9aa66fb31716bcefef38aecad75d8 ]
 
-The M-Audio Venom (0763:2084) does not answer any GET_CUR request
-of its feature units, hanging up the USB microcontroller and
-"responding" with timeouts. So the mixer building lasts around 47
-seconds, and the device does not stream at all.
+Add Rolling Wireless RN947R 0x9300 composition:
 
-The same GET_CUR requests issued through libusb (with no kernel
-driver bound) complete correctly and blazingly fast. So it seems
-to only happen during the initial probe.
+DIAG + ADB + NMEA + MODEM + RMNET + QDSS + ADPL
 
-I defined an explicit composite quirk to bypass the mixer creation,
-as it is not needed (the synth already comes with volume controls).
+T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=02 Dev#=  6 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=33f8 ProdID=9300 Rev= 0.00
+S:  Manufacturer=Rolling Wireless
+S:  Product=RN947R
+S:  SerialNumber=xxxxxxxxxxx
+C:* #Ifs= 7 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 8 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#=21 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#=22 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-With both this and the device flag applied, the synth works
-flawlessly.
-
-Signed-off-by: Federico Valentín Andrade <fandrade@frba.utn.edu.ar>
-Link: https://patch.msgid.link/20260824140211.17003-3-fandrade@frba.utn.edu.ar
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+Link: https://patch.msgid.link/arZzuOOvLUZtdOlv@arcor.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index d783dae1850a0..061d21da91fbe 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -1814,6 +1814,28 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 		}
- 	}
- },
-+{
-+	/*
-+	 * M-Audio Venom
-+	 *
-+	 * The AudioControl interface times out on every GET_CUR request,
-+	 * which adds around 47 seconds to the card registration and
-+	 * freezes the device, blocking streaming.
-+	 * Using an explicit composite quirk to skip the mixer entirely.
-+	 */
-+	USB_DEVICE_VENDOR_SPEC(0x0763, 0x2084),
-+	QUIRK_DRIVER_INFO {
-+		.vendor_name = "M-Audio",
-+		.product_name = "Venom",
-+		QUIRK_DATA_COMPOSITE {
-+			{ QUIRK_DATA_IGNORE(0) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(1) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(2) },
-+			{ QUIRK_DATA_STANDARD_MIDI(3) },
-+			QUIRK_COMPOSITE_END
-+		}
-+	}
-+},
- 
- /* Casio devices */
- {
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index aa66a30e56cdc..85d2daae805fd 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1453,6 +1453,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1312, 4)},	/* u-blox LARA-R6 01B */
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
+ 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
++	{QMI_QUIRK_SET_DTR(0x33f8, 0x9300, 8)}, /* Rolling RN947R RMNET */
+ 	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
+ 	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d63, 0)}, /* MeiG SRM813Q w/ Modem(PPP) */
+ 	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d64, 0)}, /* MeiG SRM813Q w/ NMEA */
 -- 
 2.53.0
 
