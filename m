@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831327;
-	b=1s9nKvoKbCSy2/FQGN+fTqlm75P0siLzXwMZXe8v4HYlojCg66N9IgIq1vfGXwKbHZTv
-	 9LQLjW+m9p3/BjLluLMbGCc4xF/FgjZT91AsV7UIMo+R5IrhcQ6vN2T86VIU8r+/9xTYY
-	 Ipd0CbWmOYIIUOSJoBauYX286m3CefE1lTEJ3YVDfReHfFyzhpQlX6RQnUVsO3W4/vl2I
-	 ic7jkdq0YeteIjMus8wGT1bnHy86jzszgLxgFrzaYIUDHnVgr2JT5BQvuCMpy4R24lq7U
-	 9Kniy4m2HzyIl5u1ZiEzIJTFA0gj+mGnCpvvYaY46Bo/8Ny4QimvublSs7QesADzQ9w==
+	t=1793831329;
+	b=lSx6yOTT5cx8/UNRY/hj1h6uLfLenWoslcDRxl23k2JkBbMqZn9rUyQwBfPQS5WvGMTe
+	 jcNekPcn+rNlnFBvu1tFO6wEKB4rPHJl3WFjX/RI9lYCFNetIDiJiUr6wYHSxZAkiwWmf
+	 rGsaDAw3uoKX98iog5NpRN8sU9PeByD0dtiJjSgo3nSTdinjKPgsdchfQYAJVw6bomTFW
+	 ANmRjPuThbrqoGVWcz2nCAbvXmhlQBL4hDwhx1WxKmuDAckozdC3eqGId8UtOlhTvY8aj
+	 YoU5uqPjfRhy3PJykVydtlgciK6td86HVz7vyEKkk3KqmWDeUjSbykg+qrwD+HIQFhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831327;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rSPUPYoAqcG3vRo0UUlZ4CoLyb9RQMpOywXL8/NSVmk=;
-	b=EDsXwy9DmlhbrXO7ZJMXLa8XNPQgVYndru5aEdcVJiFW1NvbfVOCLPqfpEB4tCtPqSU9
-	 AAcekna0PgoBlaNDxiwCy+AHH7ZZVK3pMSAp5leeB/Apyd+ozPx2RlRhObbgAV1FA9nFh
-	 R9m1IraO74yHfzSLRZKT64yM5bmRRMwTx9aWZq6/iHDLXAOIJrGum6qZUfvRCZd4ljY1p
-	 UL9lhOvZVu+XbTsLJW1dVvfxUxdxpM6wzRnamr7COA4IBdnJzzD7cQGw49SWt/Do/JKTC
-	 4FaWRrVacjNJnbZI4QxdbWf77RUV0cM9RkllR3E0xaNVSvH7ilxsjyoTJeByznbRuRA==
+	bh=AAAve2uVBeeyX41Z/gSLwI/CjPGMAe3zxC+xybCqzcU=;
+	b=1vLB7IrW3sWogyZ7ndMUaviT15mcy/k7255Dycm2Nr0khVwWS9hjKtMVjP32oC+pI+BJ
+	 oiaDZpdr0fxkJJUxff5MXZaK3BH60AaOjVETSdHyfpByAtWhm85y9AwyXS+ZXoZJOQz5I
+	 dlJ0km2D0bQ3HhJEHIFnUc9/kaYjYmcekqRtyQpdgBl+dZmLbVNMLkaE8wDRZDsvoLeH2
+	 VEiK3R/3wRNEZymgTi57QHHoGz3MTYBPpvHKk47ha8dDEajTJjh/xwcenvhFYXjlAJSUe
+	 c/q6xRcDK9y4osCVfoAM0qUY488WibToGGY4LigR/P49vPdzR7ERGmHWjNBFVFuc4dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hc7mVJ31;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JYTVtC02;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77042606A33A;
-	Wed,  4 Nov 2026 22:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18ED1606D821;
+	Wed,  4 Nov 2026 22:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hc7mVJ31
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF081F000C1;
-	Wed,  4 Nov 2026 22:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JYTVtC02
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71AF1F000C1;
+	Wed,  4 Nov 2026 22:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831327;
-	bh=rSPUPYoAqcG3vRo0UUlZ4CoLyb9RQMpOywXL8/NSVmk=;
+	s=korg; t=1793831329;
+	bh=AAAve2uVBeeyX41Z/gSLwI/CjPGMAe3zxC+xybCqzcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hc7mVJ31dURNEFw+AQ4BGjvUzRFrcPcevMJ6OYlEENYUcpEPFSpFNi6CwGrUww4Sa
-	 KCtPP/qie9RFjsCR1sPw49jrFvy2xQoMBh02PXgeVT9kG3roqJMWCH7Peg9S3o6AKi
-	 9oST1iMtCa047CiSWQIifLloZaM4FHxWRBD9RKPQ=
+	b=JYTVtC02ouPuyxrjFfW0a1LlvTqvygjxS+gCogeudeE1lsl9QvcXeNXFDNXmFQAiC
+	 Xv+R9T0XA1rLxffnDUbiBG507m7XpXj4gufXXq26pTZqhH5/T892OE1ToME0VxZWcM
+	 Gc2FneweM8+Jsxwx+b5pLPO/vZbG6ALXZu71QF04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0588/1005] RISC-V: KVM: Release unused page after MMU invalidation
-Date: Wed,  4 Nov 2026 16:05:21 -0500
-Message-ID: <20261104211100.335434089@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 0631/1005] net/sched: act_ife: do not consume the inner header on egress
+Date: Wed,  4 Nov 2026 16:06:04 -0500
+Message-ID: <20261104211101.461439576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,67 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit ed54fdb460a6e81d5f8f38388d1f10b385dd4a58 ]
+commit 498c631f9c6d74aad4bf43039fa3ce70ae9a8bb7 upstream.
 
-If an MMU invalidation races with a G-stage fault, the fault handler skips
-installing the page but leaves ret set to zero. As a result,
-kvm_release_faultin_page() treats the page as used and can unnecessarily
-mark it dirty.
+The issue:
+tcf_ife_decode() unconditionally calls eth_type_trans(), which pulls
+ETH_HLEN.  On egress this consumes the inner Ethernet header, and the
+device receives an skb whose data points to the L3 header:
 
-Track the invalidation retry separately and release the page as unused,
-while preserving the existing return value so that the vCPU retries the
-fault.
+- loopback_xmit() parses L3 data as Ethernet: the "ethertype" comes
+  from the inner IPv4 source address, and the decapsulated packet is
+  dropped or misparsed.
+- a real NIC transmits the frame without its Ethernet header.
 
-Fixes: 2ed90cb0938a ("KVM: RISC-V: Retry fault if vma_lookup() results become invalid")
+(The __skb_pull() BUG this used to trigger in loopback_xmit() when the
+remaining linear area was short is handled by "loopback: use
+eth_type_trans_careful()".)
+
+The Fix:
+Parse the inner Ethernet header with eth_type_trans() in both directions,
+then restore the egress data position and MAC length.  On ingress the
+existing behavior is unchanged.  On egress, push the inner Ethernet header
+back after parsing so the xmit path sees the original frame and later
+actions see a consistent network header.
+
+Conditions to recreate the bug:
+- egress tc filter on lo: action ife decode pipe;
+- AF_PACKET SOCK_RAW frame: outer Ethernet with ETH_P_IFE, IFE metadata,
+  inner Ethernet + a valid IPv4 ICMP echo request to a local address;
+- before this patch, no echo is received; after it, the echo is
+  delivered and answered.
+
+Fixes: ef6980b6becb ("introduce IFE action")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260810051544.3953925-2-xb@ultrarisc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-[ sashal: Dropped the is_hugetlb context line and used spin_lock/spin_unlock on mmu_lock instead of write_lock/write_unlock, so the unused flag hunks apply to this tree's older kvm_riscv_mmu_map(). ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+[edumazet: reworded changelog, the crash is now handled in loopback]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261028122703.2093730-6-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/mmu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sched/act_ife.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/riscv/kvm/mmu.c b/arch/riscv/kvm/mmu.c
-index b5a809a091d60..bdc8243e9c947 100644
---- a/arch/riscv/kvm/mmu.c
-+++ b/arch/riscv/kvm/mmu.c
-@@ -308,6 +308,7 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
- {
- 	int ret;
- 	kvm_pfn_t hfn;
-+	bool unused = false;
- 	bool writable;
- 	short vma_pageshift;
- 	gfn_t gfn = gpa >> PAGE_SHIFT;
-@@ -394,8 +395,10 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -762,6 +762,10 @@ static int tcf_ife_decode(struct sk_buff
  
- 	spin_lock(&kvm->mmu_lock);
- 
--	if (mmu_invalidate_retry(kvm, mmu_seq))
-+	if (mmu_invalidate_retry(kvm, mmu_seq)) {
-+		unused = true;
- 		goto out_unlock;
+ 	skb->protocol = eth_type_trans(skb, skb->dev);
+ 	skb_reset_network_header(skb);
++	if (!skb_at_tc_ingress(skb)) {
++		skb_push(skb, ETH_HLEN);
++		skb_reset_mac_len(skb);
 +	}
  
- 	if (writable) {
- 		mark_page_dirty_in_slot(kvm, memslot, gfn);
-@@ -410,7 +413,8 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
- 		kvm_err("Failed to map in G-stage\n");
- 
- out_unlock:
--	kvm_release_faultin_page(kvm, page, ret && ret != -EEXIST, writable);
-+	kvm_release_faultin_page(kvm, page,
-+				 unused || (ret && ret != -EEXIST), writable);
- 	spin_unlock(&kvm->mmu_lock);
- 	return ret;
+ 	return action;
  }
--- 
-2.53.0
-
 
 
