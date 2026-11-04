@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831728;
-	b=mrQ/axkFScp3zFFeDzp1oFBUAz0h4WO3ZIQJf1oUjBxYboO2x5BLpWXWvKFDHhoRTfxl
-	 hsXhXAjxf2a/2EweshDIWqRhb8ciJO35vWcQSD3XUfhX5XR8X8sOzCekngQKG8gLAb5WC
-	 IgJy4OEuYAHlKtd+zs1vy6rwtFMznW22+IPvWSXhZ795ePd4ZHGkWZTfajydH36OFZbEm
-	 YKLjtuFYXlAMQEjUWKBbkMz+VZxXoOkqCEY3rSAX4Bg2EHIQWIFy0m6bjndxA+F+Dfhfq
-	 a8PFm/n0prW8azoVL4uvm4vJfbARr1Rhn3I3CutDI6/lQYnyPzzlNK3+UQv043JyQ/Q==
+	t=1793831729;
+	b=uxr1uR0Nxq13AlOBlZRMGS3DgvumquxPAe13hGuHAKvLJEp/tIMLKBCp/Rutc/rZj6AA
+	 7NfSIB2TChAE9VrV8o6gmIrXAAiBirXrCl2RirFeg8S0ruLBrjvWCIpIV7wIxstqkJdf3
+	 QMV2pKroRXpMLpQhrGYF98Ft+LArQ2JvuyUTi1syIeIwKVWoPM5ivu9WIl9X5vHBhPNYq
+	 wRRTgS8sF9W20ky4HPteJx5ibvHOSZosAE2AfPYn3+Vq0ko34Dahh3mjj1mMW+t5mUW0k
+	 5cHyMW0/ZRPaCjvbI3PKP++2DLspgPKEmTpopeWTGHC2wo2w0/ZDlcw2luMG6QVAM4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831729;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MXdyztOkoUIF/MY4EG3Ev+5joYjKeRacNX9+s53tt+c=;
-	b=j6sr9APa0WScWJRuruEqkzPRtuuq8zkGwRXuFsuKpS/mSzYmhlqR8+FsfdYJcorYo28Y
-	 5quCZ6D2AVYQV/WDZE+uZOVmgVza8qUVL6Tncckj3EgDNpuFd/hv/LWdchiV4tH9+v/9j
-	 NvwpLLMxpq0Fcv3YlPZpVE0uOUZs6q9ofGgWOY31huFDlYUULGcdiBczz8WDahNa/b4uL
-	 psR4YftjtPJcIKG2tW212yt1ItonFzmgcZgKMJNI9dNqEFOpnfQNNH8rKrB9sAVyDOsRn
-	 3RFASwHLFI9q6A8NH91nxY1novpZFSI4sGmKknFiOiyXX3SjD72oQe2lby6fAe30vsw==
+	bh=RAMHVeuCUUWTZf1Bf1xnU70Ki/zXzzX9Uj6C/aLj5wk=;
+	b=rOjsVdqDx4qC4X/K/7UiKMUFN4Z5yWh8Akc+Sswt3uMMuDomI6wZ1kzBHz1oh8pi6SnZ
+	 s+3dEhmIc960Z36mTwGQ+AohDTMFp5CXJSXVqgRpgJwLvD/C4Ds3j9vzBapzroYMQ0BxM
+	 HRQe9WXIr6CDWUXIheJXJQOmct8kzA5B/BR9Xy89N8LwBoyAQpK2Z4aKl4usom8cQodKB
+	 9+Un38tSzs98RIVOQaubufdjbibexVjHOiT2E9l6lAmI1mp5c/W66tdZiRuXU+2Kx4KsL
+	 SnHP/1CqhPqjeoorir2+ef3PH3QVP8N/hfJrIVMLpLUKliH/iI3bGbRd0YKNu6I7jIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MujFOT4c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jny7C9y+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC73D606AB1A;
-	Wed,  4 Nov 2026 22:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AB2606AB21;
+	Wed,  4 Nov 2026 22:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MujFOT4c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8614F1F0093A;
-	Wed,  4 Nov 2026 22:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jny7C9y+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149231F000C1;
+	Wed,  4 Nov 2026 22:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831727;
-	bh=MXdyztOkoUIF/MY4EG3Ev+5joYjKeRacNX9+s53tt+c=;
+	s=korg; t=1793831729;
+	bh=RAMHVeuCUUWTZf1Bf1xnU70Ki/zXzzX9Uj6C/aLj5wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MujFOT4cZGqSTRcYx1OGyVSAQ6EryjNIPUj/MtzUYr7icd9BTWfhpxjKTZ/VnhQBG
-	 fAPl79rEDX5r2Qb3WPK8jhWPBVlJD3ubxW78fbSVlwMhynApcyOUrxJUCMCbCvc8G3
-	 zOb7al9bmDYX5mVI9yn5OKxPxOjR62xoF2r9QSxQ=
+	b=Jny7C9y+MoTT9wo0ay74cpn66LeHryWLGFu26yWaTfo6V6LKgnrXOrQ8wQtsyELep
+	 ZD7KjB0GzYlKTE4NMm68cfjD4KEBmR+MxsB/Ri5waavIwwY9EqSxWusATYNdPd8ck0
+	 3ZPDQSGLuMfybhiJ7j8TZVP+m0chg73zHdPvVntA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.18 0877/1005] NFSv4/filelayout: Anchor page coalescing on pattern_offset
-Date: Wed,  4 Nov 2026 16:10:10 -0500
-Message-ID: <20261104211107.814902731@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 0842/1005] xfs: check for termination during rmap btree walk
+Date: Wed,  4 Nov 2026 16:09:35 -0500
+Message-ID: <20261104211106.906092579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,62 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 7f2d221b01f356b6bb3bb6efef998f8b28339824 upstream.
+commit 1fc241cdeab276dc6c3ec14840faa706ed7712ff upstream.
 
-filelayout_pg_test() bounds page coalescing to a single stripe unit
-using an offset relative to pls_range.offset, but the data server is
-selected by nfs4_fl_calc_j_index() using an offset relative to
-pattern_offset.  When a segment's pattern_offset and range offset are
-not congruent modulo the stripe unit, the coalescing window is shifted
-off the DS-selection grid, so a coalesced I/O can straddle a stripe
-boundary and send the bytes past it to the wrong data server.
+LOLLM complains that we should check for a fatal signal *every* time we
+walk a record in the rmap btree as part of rebuilding the free space
+btrees.  Fix that, and improve responsiveness to ^C of xfs_scrub.
 
-Anchor coalescing on pattern_offset to match nfs4_fl_calc_j_index().
-Stripe-congruent segments, including the common whole-file pattern_offset
-0 case, are unchanged.
-
-Fixes: c6194271f94b ("pnfs: filelayout: support non page aligned layouts")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 4bdfd7d15747b1 ("xfs: repair free space btrees")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/filelayout/filelayout.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/xfs/scrub/alloc_repair.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/nfs/filelayout/filelayout.c
-+++ b/fs/nfs/filelayout/filelayout.c
-@@ -796,7 +796,7 @@ filelayout_pg_test(struct nfs_pageio_des
- 	unsigned int size;
- 	u64 p_stripe, r_stripe;
- 	u32 stripe_offset;
--	u64 segment_offset = pgio->pg_lseg->pls_range.offset;
-+	u64 pattern_offset = FILELAYOUT_LSEG(pgio->pg_lseg)->pattern_offset;
- 	u32 stripe_unit = FILELAYOUT_LSEG(pgio->pg_lseg)->stripe_unit;
+--- a/fs/xfs/scrub/alloc_repair.c
++++ b/fs/xfs/scrub/alloc_repair.c
+@@ -227,7 +227,10 @@ xrep_abt_walk_rmap(
+ 	void				*priv)
+ {
+ 	struct xrep_abt			*ra = priv;
+-	int				error;
++	int				error = 0;
++
++	if (xchk_should_terminate(ra->sc, &error))
++		return error;
  
- 	/* calls nfs_generic_pg_test */
-@@ -808,8 +808,8 @@ filelayout_pg_test(struct nfs_pageio_des
- 
- 	/* see if req and prev are in the same stripe */
- 	if (prev) {
--		p_stripe = (u64)req_offset(prev) - segment_offset;
--		r_stripe = (u64)req_offset(req) - segment_offset;
-+		p_stripe = (u64)req_offset(prev) - pattern_offset;
-+		r_stripe = (u64)req_offset(req) - pattern_offset;
- 		do_div(p_stripe, stripe_unit);
- 		do_div(r_stripe, stripe_unit);
- 
-@@ -818,7 +818,7 @@ filelayout_pg_test(struct nfs_pageio_des
- 	}
- 
- 	/* calculate remaining bytes in the current stripe */
--	div_u64_rem((u64)req_offset(req) - segment_offset,
-+	div_u64_rem((u64)req_offset(req) - pattern_offset,
- 			stripe_unit,
- 			&stripe_offset);
- 	WARN_ON_ONCE(stripe_offset > stripe_unit);
+ 	/* Record all the OWN_AG blocks... */
+ 	if (rec->rm_owner == XFS_RMAP_OWN_AG) {
 
 
