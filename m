@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831377;
-	b=aom5TA1p/N497cAy1OMtTEikfJ5ptEPtNwM7Da0q1NTJEMf90F8RXzvrzV38+HC8Upuc
-	 wdsNXv3Bbjgq/1DGQPercVi2ceiMjnp4PD2c+j72ony6nsqxuQyovo+qkd6PdGlV756K/
-	 ZvfGdSMGWjsBKn+dTFRojep9QG7oOPsfFXBl7LLpBKcAhLVtwcjTCf+MQ7o1PmptPQ1ip
-	 s66q9uMlzByAV8rWuodbiZk7wPFvNhCmqqqG8L9zZ5oZgFwUIRTLqyUcZNFZQxKYsJdJO
-	 l7LsjqaWyQ/MX7puSUitm9KH+rXmjcdv+P3RoNem9y4fMPxOIrQdv60vwQO23sKsLFg==
+	t=1793831378;
+	b=VkdupR/4cjrLbsgeh4tqZWlQaIFMRV7vOiy9VpGxEcWcUtbO5x0jn6ZypguF5kWloZiJ
+	 +O4EaxCR+1hmXFuHkIue0f2sf3he5d6efIHLYFHd1wh7MtT+noruGGVu87YDjBCvieSfo
+	 t4KZGn/SEXsL6dH+qDZ+y7op8o1fb2ksLlfhpHCkVb04AJqCy7c9r5m76DV+5JWvk6RVP
+	 tgQWV8a44nQ1aygLr6lD21eMrdNAHx6PCEQShfoKBgf6aCuaxuflH2T8H60z8AJW/PMR8
+	 kX+f4J015Q8dVMCIMKy8rA+3Rn63ku9d2/vPMKWM9i1ORgkJgJK1FXpLa7U7iAlAy2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831377;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WHFTiWSNl5Z++0FCI2yrL6mHdw8T9CO8Aq3El7ikJzs=;
-	b=lf0zsOt3AIxKDvLxzDBi6ae5WN9RVc8TsMyY5UH1RhvrxqjTC4Iuy73cHCGfTLSpieIG
-	 Fy/fmfCzajAXKsBHZ3aVk2i3O/Qe59oVBlyfQBA0grQDWbHrmVoeDjdyC9XHCy8v4gxcf
-	 rKRD/1YFZDi8S9jW7zLDLHZSZHsJ2wPK/FKFd6DX1tkBzRuLEX4VjBlAYuUUsgrz7U8TS
-	 2UIrX8J8hRKRlOd4HJBDxVkFtXG4h38HRLZAFRMw7OgAc3i7GfciIfj2lGgME1tlsBNGZ
-	 jP/fYkKcaRIZ65RvGajKx59nB4lgs9PbTayy+qOomNnkFcQ3OrRos5iBw7EPilKTUQg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oqFaObiHM5l3WT3IHgvnPJtXCsKsgRfmKzv9akLPvCM=;
+	b=AqmBqfIb4SkAsqsj8T4Wq/ObBHYqmyOQ20XkKiSRlE87WdUalh1Az965YLJMreAC1A32
+	 JCjC1X2mHMNifkPLmfxbPgMyD0TLSEOlCGg44NWy4AjJbo76/pNkpMH3q7foIBn1yjWis
+	 NvlJkFqMdCniGFMgnPJ6mk8951LWs8Yo1oobpx4K0cQxP3PjQsuFYAawiJZMU2nD5LDP/
+	 DAWTyUtJTLb+YjVjMNwObANHuCFvMh2Z7ceZ2n8g2SHjKgZPML5CNAsqL8XOzJnAwyyTj
+	 iBm9k10IdcGcfzSAEUSxusdBrJHI6YgzyK1pZqNIzji/KyVP930bl9HqX+mI4LIcDvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFR9NaHV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yFzglgQW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1CD606A337;
-	Wed,  4 Nov 2026 22:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92043606A337;
+	Wed,  4 Nov 2026 22:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFR9NaHV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D9F1F000C1;
-	Wed,  4 Nov 2026 22:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yFzglgQW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9851F000C1;
+	Wed,  4 Nov 2026 22:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831376;
-	bh=WHFTiWSNl5Z++0FCI2yrL6mHdw8T9CO8Aq3El7ikJzs=;
+	s=korg; t=1793831378;
+	bh=oqFaObiHM5l3WT3IHgvnPJtXCsKsgRfmKzv9akLPvCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFR9NaHVjFRoEz2CUDOGItQ78ZCgXtBgB9WOnIIDNg1GYO8AFgNCf1ey1d82xEXA6
-	 DCYZ3qbNffJjRf/ZC/LHiWmNtLqP9EhCkv4qDL+COYw/kOV5vMT2b2t90LgiQcenkV
-	 3XfhZ6UUNU/UwFazXvrF1uNCUkoNvJdfvkWbeUKg=
+	b=yFzglgQW4RXGoWUyKL9jslLLJYQbu3s7kNXMI7QMeQUlQrCweKwXghzCWhHD/dzHV
+	 6oXyt7Vt2PzpiXklhNa75ZSVwWUryl/w/hKPi/x7P9CJV1jqUFMoBBp7c2upzRLtK5
+	 t8DvXwPe2yyxk1duy4Wt1vkuqos4uxlhYqeEBgGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Matt Porter <mporter@kernel.crashing.org>
-Subject: [PATCH 6.18 0667/1005] rapidio: mport_cdev: fix use-after-free in mport_mm_close()
-Date: Wed,  4 Nov 2026 16:06:40 -0500
-Message-ID: <20261104211102.343142059@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 0668/1005] platform/x86/amd: hfi: Fix a use-after-free when unloading the driver
+Date: Wed,  4 Nov 2026 16:06:41 -0500
+Message-ID: <20261104211102.367219525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -64,69 +62,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 0f2cd84858e67cf8e02438bf28243bcdc67aa49a upstream.
+commit 55d8406dfa2fa8ad8ac2f053c2a53a97d8b0ce48 upstream.
 
-A use-after-free vulnerability was identified in mport_mm_close() in
-drivers/rapidio/devices/rio_mport_cdev.c, identical to the pattern
-previously addressed in dma_req_free().
+amd_hfi_probe() registers CPU hotplug callbacks with
+cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, ...) and schedules the static
+sched_amd_hfi_itmt_work work item, but amd_hfi_remove() tears down
+neither.  The dynamically assigned hotplug state returned by
+cpuhp_setup_state() is discarded, so cpuhp_remove_state() can never be
+called, and the pending work is never cancelled.
 
-This is observable from userspace when an application creates an mmap
-mapping via the RapidIO character device and subsequently unmaps it (or
-terminates, triggering exit_mmap()).  During munmap, mport_mm_close() is
-invoked and drops the mapping reference via kref_put().
+After the module is unloaded and its memory is freed, any subsequent CPU
+hotplug event or execution of the scheduled work dereferences the stale
+callback and work function pointers, resulting in a use-after-free and
+kernel panic.
 
-If kref_put() drops the last reference, mport_release_mapping() is called,
-which frees the underlying rio_mport_mapping structure.  The subsequent
-mutex_unlock() then dereferences map->md to unlock buf_mutex, leading to a
-use-after-free:
+Store the hotplug state returned by cpuhp_setup_state() and, on removal,
+call cpuhp_remove_state() to unregister the callbacks and
+cancel_work_sync() to flush the scheduled work before the module memory
+goes away.
 
-   mport_mm_close()
-     -> mutex_lock(&map->md->buf_mutex);
-     ...
-     -> kref_put(&map->ref, mport_release_mapping); /* map is freed */
-     -> mutex_unlock(&map->md->buf_mutex);          /* UAF: map used */
-
-Fix this by caching map->md before kref_put() and using the cached pointer
-for mutex unlocking, ensuring that freed memory is not accessed.
-
-Link: https://lore.kernel.org/20260914042327.49798-1-james010kim@gmail.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: bb20421c05fc ("platform/x86: hfi: Add online and offline callback support")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260921170411.1149960-2-mario.limonciello@amd.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/platform/x86/amd/hfi/hfi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -2168,11 +2168,12 @@ static void mport_mm_open(struct vm_area
- static void mport_mm_close(struct vm_area_struct *vma)
- {
- 	struct rio_mport_mapping *map = vma->vm_private_data;
-+	struct mport_dev *md = map->md;
+--- a/drivers/platform/x86/amd/hfi/hfi.c
++++ b/drivers/platform/x86/amd/hfi/hfi.c
+@@ -76,6 +76,8 @@ struct amd_hfi_data {
+ 	struct amd_shmem_info	*shmem;
  
- 	rmcd_debug(MMAP, "%pad", &map->phys_addr);
--	mutex_lock(&map->md->buf_mutex);
-+	mutex_lock(&md->buf_mutex);
- 	kref_put(&map->ref, mport_release_mapping);
--	mutex_unlock(&map->md->buf_mutex);
-+	mutex_unlock(&md->buf_mutex);
+ 	struct dentry *dbgfs_dir;
++
++	int cpuhp_state;
+ };
+ 
+ /**
+@@ -245,6 +247,8 @@ static void amd_hfi_remove(struct platfo
+ {
+ 	struct amd_hfi_data *dev = platform_get_drvdata(pdev);
+ 
++	cpuhp_remove_state(dev->cpuhp_state);
++	cancel_work_sync(&sched_amd_hfi_itmt_work);
+ 	debugfs_remove_recursive(dev->dbgfs_dir);
  }
  
- static const struct vm_operations_struct vm_ops = {
+@@ -502,6 +506,7 @@ static int amd_hfi_probe(struct platform
+ 				amd_hfi_online, amd_hfi_offline);
+ 	if (ret < 0)
+ 		return ret;
++	amd_hfi_data->cpuhp_state = ret;
+ 
+ 	schedule_work(&sched_amd_hfi_itmt_work);
+ 
 
 
