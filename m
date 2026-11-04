@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831871;
-	b=xM9qPzCMCAddqRel+5B5KsLgU/CLFG2kt9LsUd785dFS7klCwaSMfX2xwnGBvoncVMCZ
-	 CFpZgLaCcA2IolnOx4RUsAzwWTKmj4iOdjPQjeEKKERjX14BrGknokH6VwQ7XyrqAcyFv
-	 zIPA9uI2q1HHKXtozmwRfIkHJxvChLQ3DT72O88lkOAF8+eh/5EafhKGLEMHFnNaFSnSc
-	 0UD8H/za1sb215rZyDy3FvGbakCDK/ZH0mKtE/zzyPrIN2X/Dp8xqwfBETiFxGoUWMTuK
-	 b9BXBrzt5F7mL7XW11eSGluqgGumT2jBplh+NSTxta2zGPqWn5OQKn7z6/lUiKHfZBQ==
+	t=1793831872;
+	b=m/uv03ybNJQP1BGsapEHoxoZXCPGSqZRer3RXmNSIuLJCUIyC9E/qK6jtZF9+zame7aZ
+	 iR+ANOsEWWzIOyRt7OvztBMpZID4y45neCZo2rkSIUKnzPRsT0UQZunhPyVacDSU8RznW
+	 82pGUZ1amqNCksFoox10+kis4HYGpFIAVfpouIhZOBNYdeKZBgBG9XFOCa2xTSSeGqcGN
+	 bJcoJiZzdJwzlNVKyr/sm7qNQRF1L7LHQ0Zqp4Egoc+PmMzBarmGplbNlh7jFrYPZSSOv
+	 IV8WFF+pkKzx7meiEQZqSotfCvogkwssWc3rt18rBsWxJi08mfjJdf4sYhKOm3aIw3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EWefh4luHNv4F2M7D+0Dx+rs6ih7yDoQDR0P5LSl2qw=;
-	b=Ob5cjRLHwFmtileaybTgd1D8Q1uIhHKs2XyBBEDq3SNZshhyugRGa5cJLqilwZubNblm
-	 at9fjywrqdIFDINnU0Hb8m91UisEjAb1K6bJ413N/z0yoDanRYiiaB35ZtWq+AMrzpJNQ
-	 KB9hgi3H4/TsQIs6gUM4FUt/28MZLnRSpbd6NhlYjg8g+1ap2xAbYZP3LI4hpd2INTl7y
-	 bshzYvMRzjsUc9fpjrPTx4sxK6x7CXWprxGkOn+FAbR7ifRZBLssk6mPwU6Ax20XdtjOe
-	 BYGCZ7elYj99BOygIoIlLpHaouYSVv/tTo7yGF1ILbWZeqY9B7ANW8kSz8vl3T4Duvw==
+	bh=x8l/tk0AoIcUX0tLXrzoZbnHGkeFvUvqtTrzewZJCqc=;
+	b=4iznqJjbVwtRtX74eWX61qIJkS4/8f39tEDsviwtt0CvcMvCPeWcq9rKoNsuOUea6wnu
+	 2iEglnnRYiIn8QDOnDmaqj0OZxOfNndo8ySXHe3MOxiQPOljsoSYv6Pc4FCs7P/hPrktv
+	 pYLeR6DVp1TBgbytzrD4oxftohgcmt42C1Pm7vR3i6SUlrCzFI40Q5ithoDtQ3iIBf73O
+	 nPkSjJQdZbP+1zabFlxWNsSTx8mBSXSmGPpQWjjBF76EMlM0SlvnRIvbV7W/mIzSEMzIk
+	 VVA+P+98ilMJgsmu37DCbzaBm5IIANb+3AzUPv5aG0dBidqKYqH0oepHWFouWaL1C0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Lb8k/pz5";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=katlSyNX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CF6606A326;
-	Wed,  4 Nov 2026 22:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9809B606A326;
+	Wed,  4 Nov 2026 22:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lb8k/pz5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5941F000C1;
-	Wed,  4 Nov 2026 22:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=katlSyNX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6B41F000C1;
+	Wed,  4 Nov 2026 22:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831870;
-	bh=EWefh4luHNv4F2M7D+0Dx+rs6ih7yDoQDR0P5LSl2qw=;
+	s=korg; t=1793831872;
+	bh=x8l/tk0AoIcUX0tLXrzoZbnHGkeFvUvqtTrzewZJCqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lb8k/pz580dsSvqt5k5aA5KnzLUlYGzt9Ng2Jh7t/Vgdxur0O5gHnqz9OI+e6MChK
-	 QOvcoEqeCaoixxfOubw7XYFdSyQQmUNbBObmOH6D4ADnpn1E+t8+bArTb6bCM3g5bz
-	 2JfRBbus2F1JCYbU8/efPfvE9MC8XcdYpwByTWBY=
+	b=katlSyNXPxzlHGYv3Cm/Sc2Lw8t5fetLltGAw6jzofzoY5Vvz3P8vvg9g1N3yVt6Z
+	 2CUA9HX4YbCeyE7tPQlKpUjg5SuwCoK0QnGJ9SDgkdi5X0luw9rkCUyIpbkk0ni9Vq
+	 KcqZKGkuDIVkRF5m2japMfKoz7uUo4v02Rb8X9I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <mason@kernel.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.18 0966/1005] ovl: check that the parents of volatile/dirty are dirs
-Date: Wed,  4 Nov 2026 16:11:39 -0500
-Message-ID: <20261104211110.130708753@linuxfoundation.org>
+Subject: [PATCH 6.18 0967/1005] ovl: hold a reference on the parent in readdir
+Date: Wed,  4 Nov 2026 16:11:40 -0500
+Message-ID: <20261104211110.156215042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,74 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-commit e34d2ef818e4c7676d8d8e1bf43e6a1ed39efb2a upstream.
+commit 16d319e12328acafeafd3eecdf09c46d7fb43452 upstream.
 
-An unprivileged user crashes the kernel by mounting overlayfs with the
-volatile option.
+Listing a directory on an overlay uses a freed dentry and crashes the
+kernel when a lookup moves the directory at the same time.
 
-A dentry that serves as the parent of a lookup must be a directory.
-ovl_create_volatile_dirty() walks work/incompat/volatile/dirty by name,
-and ovl_lookup_or_create() returns an existing entry whatever its type.
-A file or a symlink that another task creates during the mount becomes
-the parent of the next lookup, which calls a NULL ->lookup.
+Code that can sleep may only use d_parent without a reference while
+something stops a move of the dentry. ovl_iterate_real(),
+ovl_need_adjust_d_ino() and ovl_cache_update() use the d_parent of the
+listed directory and hold only the lock of that directory. When a
+lookup finds the directory under another parent after a change to a
+layer, d_splice_alias() moves it without that lock and drops its
+reference on the old parent.
 
-An unprivileged user mounted overlayfs with "volatile" in a user
-namespace while a second process created a symlink named work/incompat,
-and the mount task oopsed on a NULL ->lookup call.
+With a delay in ovl_iterate_real(), getdents64 on an overlay directory
+raced a rename in the lower layer and a lookup that moved its dentry,
+and after an rmdir of the old parent KASAN reported a use-after-free in
+security_inode_getattr().
 
-Fix this by returning -ENOTDIR from ovl_lookup_or_create() when the
-caller asked for a directory and the existing entry is a non-dir.
+Fix this by using dget_parent() in the three functions.
 
-Fixes: c86243b090bc ("ovl: provide a mount option "volatile"")
+Fixes: b5efccbe0a12 ("ovl: constant d_ino across copy up")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: fix comments in ovl_need_adjust_d_ino()]
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[backport: no ovl_start_creating_upper(), check the child of
- ovl_lookup_upper() in ovl_lookup_or_create() instead]
+[backport: no ovl_need_adjust_d_ino(), take the parent with dget_parent()
+ in ovl_iterate() and test a local flag]
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/super.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/overlayfs/readdir.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -624,15 +624,23 @@ cleanup_temp:
- 
- static struct dentry *ovl_lookup_or_create(struct ovl_fs *ofs,
- 					   struct dentry *parent,
--					   const char *name, umode_t mode)
-+					   const char *name, bool is_dir)
- {
- 	size_t len = strlen(name);
- 	struct dentry *child;
- 
- 	inode_lock_nested(parent->d_inode, I_MUTEX_PARENT);
- 	child = ovl_lookup_upper(ofs, name, parent, len);
--	if (!IS_ERR(child) && !child->d_inode)
--		child = ovl_create_real(ofs, parent, child, OVL_CATTR(mode));
-+	if (!IS_ERR(child)) {
-+		if (!child->d_inode) {
-+			child = ovl_create_real(ofs, parent, child,
-+						OVL_CATTR(is_dir ? S_IFDIR :
-+								   S_IFREG));
-+		} else if (is_dir && !d_can_lookup(child)) {
-+			dput(child);
-+			child = ERR_PTR(-ENOTDIR);
-+		}
-+	}
- 	inode_unlock(parent->d_inode);
- 	dput(parent);
- 
-@@ -653,7 +661,7 @@ static int ovl_create_volatile_dirty(str
- 	const char *const *name = volatile_path;
- 
- 	for (ctr = ARRAY_SIZE(volatile_path); ctr; ctr--, name++) {
--		d = ovl_lookup_or_create(ofs, d, *name, ctr > 1 ? S_IFDIR : S_IFREG);
-+		d = ovl_lookup_or_create(ofs, d, *name, ctr > 1);
- 		if (IS_ERR(d))
- 			return PTR_ERR(d);
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -572,8 +572,8 @@ static int ovl_cache_update(const struct
+ 			goto get;
+ 		}
+ 		if (p->len == 2 && p->name[1] == '.') {
+-			/* we shall not be moved */
+-			this = dget(dir->d_parent);
++			/* d_splice_alias() can move even a locked dir */
++			this = dget_parent(dir);
+ 			goto get;
+ 		}
  	}
+@@ -802,6 +802,7 @@ static int ovl_iterate_real(struct file
+ 	struct dentry *dir = file->f_path.dentry;
+ 	struct ovl_fs *ofs = OVL_FS(dir->d_sb);
+ 	const struct ovl_layer *lower_layer = ovl_layer_lower(dir);
++	struct dentry *parent;
+ 	struct ovl_readdir_translate rdt = {
+ 		.ctx.actor = ovl_fill_real,
+ 		.ctx.count = ctx->count,
+@@ -813,18 +814,26 @@ static int ovl_iterate_real(struct file
+ 	if (rdt.xinobits && lower_layer)
+ 		rdt.fsid = lower_layer->fsid;
+ 
+-	if (OVL_TYPE_MERGE(ovl_path_type(dir->d_parent))) {
++	/*
++	 * The lock on dir does not stop d_splice_alias() from moving it to
++	 * another parent, which drops the reference dir holds on this one.
++	 */
++	parent = dget_parent(dir);
++	if (OVL_TYPE_MERGE(ovl_path_type(parent))) {
+ 		struct kstat stat;
+ 		struct path statpath = file->f_path;
+ 
+-		statpath.dentry = dir->d_parent;
++		statpath.dentry = parent;
+ 		err = vfs_getattr(&statpath, &stat, STATX_INO, 0);
+-		if (err)
++		if (err) {
++			dput(parent);
+ 			return err;
++		}
+ 
+ 		WARN_ON_ONCE(dir->d_sb->s_dev != stat.dev);
+ 		rdt.parent_ino = stat.ino;
+ 	}
++	dput(parent);
+ 
+ 	if (ovl_is_impure_dir(file)) {
+ 		rdt.cache = ovl_cache_get_impure(&file->f_path);
+@@ -853,6 +862,10 @@ static int ovl_iterate(struct file *file
+ 		ovl_dir_reset(file);
+ 
+ 	if (od->is_real) {
++		struct dentry *parent = dget_parent(dentry);
++		bool parent_merge = OVL_TYPE_MERGE(ovl_path_type(parent));
++
++		dput(parent);
+ 		/*
+ 		 * If parent is merge, then need to adjust d_ino for '..', if
+ 		 * dir is impure then need to adjust d_ino for copied up
+@@ -860,8 +873,7 @@ static int ovl_iterate(struct file *file
+ 		 */
+ 		if (ovl_xino_bits(ofs) ||
+ 		    (ovl_same_fs(ofs) &&
+-		     (ovl_is_impure_dir(file) ||
+-		      OVL_TYPE_MERGE(ovl_path_type(dentry->d_parent))))) {
++		     (ovl_is_impure_dir(file) || parent_merge))) {
+ 			err = ovl_iterate_real(file, ctx);
+ 		} else {
+ 			err = iterate_dir(od->realfile, ctx);
 
 
