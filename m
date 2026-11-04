@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831952;
-	b=yHZ9cdg4Ut8GK32H7tmfVmA3Ask8LOtsO6Q4BARrDhF0dbWej+DWpsFa/3SD/irAbKE+
-	 th0P83qtI1Rb+ndYcT+0uboE2T0JuinnpMjdMwLE0uuTySX9MOYsS94oBesoK2+OLuIdZ
-	 2LLleGGrViti6PRN+mXvq162mFr/Y6WfsZjX4pOZUfB3KMOo4U73i2TtOZARPQ7v3a/tn
-	 BPLaSvMBf9XtQvMNxPH+ltXGW5HVPJyF4ODgpgLBrdJrYYQhMuNYTAS29TVvvW8/shlQj
-	 kTb9mLHstv8puTJhYtcEEI2dtyP4iobUkvTmXsI9FNRPknS2pPnPLNpTC5Iad+2SIbw==
+	t=1793831953;
+	b=OO8ulAuu8DJOyUOOx12QtGvPNoD+2kWHhMDw95/rghS5kIio+8t9KT+8hRzvzDqXQpzt
+	 OhUVCoq898pQ2uI2aZNAszVniMhzZZQvjS9I42u3tN+sgG9ZZw1va70ZCaR80/4wYeCZD
+	 7kTVtnuTq/MzoJy8Et/xgedbAY5jbXgvvnN7SU5LPvA5WCA2DYFyV6a1bytCthOD03V2n
+	 pfIvg7VPQH6hv48PfmDtDjkCQGt3PPdkSAaSodPlQJnndiT417GU47lUDsGGUDTcnn8Wl
+	 mY0+w1qmuBR4AYJrdk7J/A2c4kBve1S3WQJmFAC5fJkPhOw0V43RjVKJpXl5MriOx2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831952;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=lyL6ijEsuT3MSS7xFThbk4ABeoeZNdxbbS0oFr56UMQ=;
-	b=GIr/9H6NxD4VwSpRDpTtZoS2KeYcrIVXFgDP3Gel402NcPxHRtZ0KR/LoPxTYqSrL98K
-	 MbbNNyxzGlsr9XeOWl4Lhbdk4RsGI5VkQnyx+BuTtGjdaUxhsWIo5hPV33ImqRVFYs5X3
-	 Q9QdFKTRpenwGEsdm3eUGdXXWbKFg5X0zSaWT4MDTHxmGFx4xm9oN5kGZUp0hlccBfdTs
-	 GYQOJY+2O2RnYDLPobKdoKzGJRSKXVv+3aj+Lkg0B2xbRFQwkLjSjK3gIneucwK67LO+t
-	 2jdN1SPghLl2IKIk0bRfW+Amb5At1LQuLBijNNq0B4DF90Tr+sr+uhaLTbkgvN6YyJA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=26v9iSkZGOfuWbkYVb0zVmZl61VGyt0wd3I9/D9M5zA=;
+	b=TFb06AKMS49r3PPt+WslqEdWrzMbUxZJG1x4q1ywz3Rsa62HP3cXV9nLMIPRRaqGdfJQ
+	 f2bAzjcSF1X8dpogLdYPu7Qy2Q9dQ/8ge1BMWot8TEOGy6yyutIMKrWyAKOih8rChrB0O
+	 YyyDv4m1VmqAnrDpgVwIV1bF/npTcRSkIS25c8qSKc+SsA0vmQAh7re5iMndterpkpPna
+	 IUqPCJ/pcF32Bm19/h85PKjhnELRsvYWnROooezSEz/G1QpWtb3sSOqkVT3K28dolnErr
+	 OHVwYuHAWcCQAlHUOyw4a7IyrfBbi/xdi6J7uZlgzzD1G04AQ1Z4SI0OiVYz0aMgvtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjHVnlwS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXHdh66x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADF3606A33A;
-	Wed,  4 Nov 2026 22:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7053E606A332;
+	Wed,  4 Nov 2026 22:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjHVnlwS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E251F000C1;
-	Wed,  4 Nov 2026 22:39:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXHdh66x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090C41F0093A;
+	Wed,  4 Nov 2026 22:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831951;
-	bh=lyL6ijEsuT3MSS7xFThbk4ABeoeZNdxbbS0oFr56UMQ=;
+	s=korg; t=1793831953;
+	bh=26v9iSkZGOfuWbkYVb0zVmZl61VGyt0wd3I9/D9M5zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OjHVnlwSmDLGP5HPjv9sBYuNSebyqTJROy0aannfqq+flbvmFf+g9wEeJBXPyOZZu
-	 GAH9h87s6uX3PdPDEgilngTRWHB7h3KVWwoU480jbZLxvYrmQlHMjHqHP792AhfydR
-	 FIjuzx6Fw+SHPlECC8UaYbm+4qoP/WUVqE3thGto=
+	b=CXHdh66xbKCam/L3lXDHWKErPEQWrgDaOy1GBrRLOOTjm/AxpxKswUFoy++Np0zrI
+	 1rP11ezpe39ZsRQFXUSyDta8YIVZu67SxLasG/4DRJ91PSEfzx99MryijPI6oVVGzz
+	 Vl3IrkaqhOiP62d4G6OtxXwWOkACu3KjWz+jeua4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Ian Bridges <icb@fastmail.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0986/1005] ksmbd: deny access for an empty DACL instead of granting the request
-Date: Wed,  4 Nov 2026 16:11:59 -0500
-Message-ID: <20261104211110.660797664@linuxfoundation.org>
+Subject: [PATCH 6.18 0987/1005] ksmbd: fix session reference leak on compounded SESSION_SETUP
+Date: Wed,  4 Nov 2026 16:12:00 -0500
+Message-ID: <20261104211110.685582284@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,114 +62,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit de0cffef897c1c232ed973f89928cd6c93d0b1e3 ]
+[ Upstream commit 03bd8f5279e490e15e0c0f0fa388ffbd2fbacd65 ]
 
-smb_check_perm_dacl() returns the access mask it computes to the SMB2
-CREATE handler, which uses it as the granted access for the open. For a
-security descriptor whose DACL is present but contains no ACEs, the
-function is supposed to deny access: an empty (non-NULL) DACL grants no
-access to anyone except the object owner's implicit READ_CONTROL and
-WRITE_DAC (MS-DTYP 2.4.5).
+A compound request can place SESSION_SETUP after another command. That
+earlier command leaves a reference to its session in work->sess.
+smb2_sess_setup() then overwrites work->sess with the session it looks up
+or creates, and the dispatcher later puts work->sess only once. The
+inherited reference is never dropped. That leaks the session, together
+with its setup connection and socket, and every repeat of the compound
+leaks another.
 
-The empty-DACL branch only denies when both
+  unreferenced object (size 512):
+    __kmalloc_cache_noprof+0x32c/0x3a0
+    ksmbd_smb2_session_create+0xf6/0x9c0 [ksmbd]
+    smb2_sess_setup+0xda4/0x6280 [ksmbd]
+    handle_ksmbd_work+0x88c/0x1cb0 [ksmbd]
 
-  - the DACL has no trailing bytes (pdacl_size == sizeof(struct smb_acl)),
-    and
-  - the request contains bits beyond READ_CONTROL / WRITE_DAC.
+Save the inherited session on entry. After the request has been
+processed, release it once, but only when smb2_sess_setup() has replaced
+work->sess with its own session or cleared it. Do this after
+ksmbd_conn_unlock() so the put does not run under srv_mutex. An error path
+may instead leave the inherited session in work->sess. Keep it there, so
+the dispatcher still puts it and the error response is still signed or
+encrypted with it as before.
 
-In every other case it takes the shared "goto err_out" with rc still 0,
-which returns success without modifying *pdaccess, so the caller grants
-the full requested access. Three problems follow:
-
-  - The READ_CONTROL / WRITE_DAC carve-out models the owner's implicit
-    rights, but the check runs before is_owner is computed, so those
-    rights are handed to *every* caller, not just the owner. For
-    READ_CONTROL the SMB2 CREATE path does not fall back to
-    inode_permission(), so any user can read the security descriptor of
-    an object whose empty DACL is meant to deny them.
-
-  - A request of exactly READ_CONTROL and/or WRITE_DAC is granted to any
-    caller. WRITE_DAC lets the handle rewrite the DACL.
-
-  - A DACL that declares zero ACEs but carries trailing bytes
-    (pdacl_size > sizeof(struct smb_acl)) skips the deny entirely and is
-    granted whatever was requested.
-
-On shares where the NT ACL is the authoritative access control -- e.g.
-"force user" shares, where every client maps to one POSIX identity so
-POSIX cannot distinguish users -- this is an access-control bypass.
-
-Compute is_owner before the empty-DACL branch and deny access from an
-empty DACL unless the caller is the owner requesting no more than
-READ_CONTROL / WRITE_DAC.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: 7aa8804c0b67 ("ksmbd: fix user-after-free from session log off")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Signed-off-by: Ian Bridges <icb@fastmail.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: added missing ownership declarations and initialization of is_owner using the mount’s ID mapping ]
+[ sashal: Omitted the installed = true assignment for the absent rejected-binding signature-check block. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |   26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ fs/smb/server/smb2pdu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1469,6 +1469,8 @@ int smb_check_perm_dacl(struct ksmbd_con
- 	struct posix_acl_entry *pa_entry;
- 	unsigned int sid_type = SIDOWNER;
- 	unsigned short ace_size;
-+	bool is_owner;
-+	vfsuid_t vfsuid;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1698,6 +1698,8 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 	struct smb2_sess_setup_req *req;
+ 	struct smb2_sess_setup_rsp *rsp;
+ 	struct ksmbd_session *sess;
++	struct ksmbd_session *prev_sess = work->sess;
++	bool installed = false;
+ 	struct negotiate_message *negblob;
+ 	unsigned int negblob_len, negblob_off;
+ 	int rc = 0;
+@@ -1835,6 +1837,7 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		conn->binding = false;
+ 	}
+ 	work->sess = sess;
++	installed = true;
  
- 	ksmbd_debug(SMB, "check permission using windows acl\n");
- 	pntsd_size = ksmbd_vfs_get_sd_xattr(conn, idmap,
-@@ -1489,19 +1491,27 @@ int smb_check_perm_dacl(struct ksmbd_con
- 	if (pdacl_size > acl_size || pdacl_size < sizeof(struct smb_acl))
- 		goto err_out;
- 
-+	if (!uid)
-+		sid_type = SIDUNIX_USER;
-+	id_to_sid(uid, sid_type, &sid);
-+	vfsuid = i_uid_into_vfsuid(idmap, d_inode(path->dentry));
-+	is_owner = uid == from_kuid(&init_user_ns, vfsuid_into_kuid(vfsuid));
-+
- 	if (!pdacl->num_aces) {
--		if (!(pdacl_size - sizeof(struct smb_acl)) &&
--		    *pdaccess & ~(FILE_READ_CONTROL_LE | FILE_WRITE_DAC_LE)) {
-+		/*
-+		 * An empty (present, zero-ACE) DACL grants no access to
-+		 * anyone except the object owner's implicit READ_CONTROL
-+		 * and WRITE_DAC (MS-DTYP 2.4.5). Deny every other caller,
-+		 * deny the owner any access beyond those two bits, and do
-+		 * not let trailing bytes after a zero-ACE DACL become an
-+		 * implicit grant.
-+		 */
-+		if (!is_owner ||
-+		    (*pdaccess & ~(FILE_READ_CONTROL_LE | FILE_WRITE_DAC_LE)))
- 			rc = -EACCES;
--			goto err_out;
--		}
- 		goto err_out;
+ 	negblob_off = le16_to_cpu(req->SecurityBufferOffset);
+ 	negblob_len = le16_to_cpu(req->SecurityBufferLength);
+@@ -1988,6 +1991,14 @@ out_err:
  	}
  
--	if (!uid)
--		sid_type = SIDUNIX_USER;
--	id_to_sid(uid, sid_type, &sid);
--
- 	if (*pdaccess & FILE_MAXIMAL_ACCESS_LE) {
- 		access_bits = READ_CONTROL | WRITE_DAC | FILE_READ_ATTRIBUTES |
- 			DELETE;
+ 	ksmbd_conn_unlock(conn);
++
++	/*
++	 * Later in a compound, work->sess holds the reference that an
++	 * earlier command took. Drop it once this request has installed
++	 * its own session there or cleared it.
++	 */
++	if (prev_sess && (installed || !work->sess))
++		ksmbd_user_session_put(prev_sess);
+ 	return rc;
+ }
+ 
 
 
