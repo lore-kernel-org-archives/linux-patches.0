@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829764;
-	b=Yxl5YpVlHVYNePt5nwDVTHg5By1hgVrXfrUo9sF4g8Sy9WYoxkU/muvS36LPwPz0IPpW
-	 Ea5cunMB46RX7fg6TwyKhlgDT1GVjYCGs5cYa/OViylATfMwFOCtTgWoYN7vZto+FBcAL
-	 2SwBr7Z/YpqQvLu5t52D4tpYtRaTjsJwZRQvXm/nfpXodV723zhWv9zsFfoYxZ/wF5dAC
-	 7OXVUmKwfPuTbirKvIYbSXBE3iNdsO6neUd1EwGEUTHcGd5yEkOZomqi+QlWmk+BpTunO
-	 4sRhlHCY7UfISnnxBG47j7Zm7IMZ+hBl7mosqs5hE7vE/6eNBSczWvz35QqswbElGaw==
+	t=1793829766;
+	b=pGaLqPhytCnD9YOGnvmFu+Zi8G0nbjmL1DR2ziOPQPT53kMe95bCAoMSKiPX2RjHz8E5
+	 cY9ggho9YCtgOihPY6NDJsN6Bpg2b7lHGd+IfBZvJo/W3Hrc6LneAqfhOqolbDDKIHXSZ
+	 8PdeTKANVgbxzQvKD/zASDzzvrM880WIafmFWhJ0KMaXWFDLHW+qEUvZgGjejKHj4o8PE
+	 vkQbyZn9TA9Vep6EOQCqzBZTRRr9HZnIZnPiOZ3cmylHvk9yp6s3enerEsJM4wG4N1LPN
+	 49Lqb3y8yzgSDckSVTRyt588c48DqXdxxBZSiGMy41K9IupxRi3+mWoRUlVzI17TjkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829764;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=RfGX4O+qRqYQ7k1w2OUfheoXsFeN+TGYK1mAjV4P/a4=;
-	b=urZIAJ9zc6Dqx4oxVmJXKaXgBbVyYL3umyIqimI/x/L3etjXi1X6a7CY1NN+4lQT7sJ9
-	 4/bAwG5ClMHTNlk6LgKy303rFviOjUmFn2yJNLushdj1ShRyJ5KCglHjqlE2o1q5t3uMZ
-	 197psNt2lRYTo4X0GFXk93sJAGaVQTl26//bIbjv2cXt0Owk3QipuRDi3nblQkTqtbTNd
-	 q543gow5TvVVEgjJuvQ4z7Y3mMdLlS21CPzD05t7FpNMCXjKsWSEmk+d5gFkQ0X8CZt3G
-	 XF3SE8GgO07t4msM1IXKQAzsM6DTDysLF786L+5ll7Y26TotDKOLxMHa+RlMs29Sl/g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Vm0L1EgorBfigTqU/MQ2OLOeygldfl156nKCddnbLSY=;
+	b=NXYldndO4PY1LKEiLbcQHCj0v7qmtKEimWnCduugHZuCUtxYUcM4QzyUQ1g2ZKEwQdkA
+	 PCVaOXw8o3YzSSCyBE3I/pw6W7+hd/+mvVVd9fwDU7qqP6X/gdYSEPeAorFQoQpuaanfs
+	 mC4G5hZ6nbijXOkyX9t2KaTvHjEc20nPcFzESo0ARvE+RMZEdRuKyr7FTlgQzzByn3HcY
+	 fvM0I+F3hOCOqDKeiAD55rE0lZDmlKL/yEadI7c+hG8inM0HtAbPcLWcLfufZ9+jqPthG
+	 QxIki540USitzCWlQgm3XW9Ie9qhaqEr5566DAG7RHj8KXJxtPljRCCBu4A8mzXnsnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njAzLuKx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=akqyhVzq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398FA606CA27;
-	Wed,  4 Nov 2026 22:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74127606C927;
+	Wed,  4 Nov 2026 22:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njAzLuKx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A444E1F000C1;
-	Wed,  4 Nov 2026 22:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=akqyhVzq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6C21F000C1;
+	Wed,  4 Nov 2026 22:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829764;
-	bh=RfGX4O+qRqYQ7k1w2OUfheoXsFeN+TGYK1mAjV4P/a4=;
+	s=korg; t=1793829766;
+	bh=Vm0L1EgorBfigTqU/MQ2OLOeygldfl156nKCddnbLSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=njAzLuKxN/rXe5NYhtvDpSfnJ0cA4FV4pjso+QmIVKUcNH7umm7Ny2LDsvJKMILWj
-	 D7AjohJR8bndyjEgH4BUtoW27mOCXpo46cPdwTfsvFBK2oMYzxPRR7y+cdLa2WJRao
-	 xwnq7m9ySy3MVQ0PXzhxzqFvbBZS7WAG05MIYP54=
+	b=akqyhVzq374gHWu6cASV/7Ps/Y+aHJuhfOhzQhtJsAxHFlNCjd5w0F9DwcQOK6Edz
+	 mLJbfRW7Cs4pEZxRR69jiLEGp6J0Zp1Lmpy+UjhN/dLzITJ+OaJZeldNCPFLDG2GVu
+	 fOT8itZw9QRRqF93Jg8r8TnXxLVqqytoQKkvwaeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Alvarado <contact@c127.dev>,
+	Jinhui Guo <guojinhui.liam@bytedance.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0327/1005] net: stmmac: raise TX completion interrupt at the end of an xmit burst
-Date: Wed,  4 Nov 2026 16:01:00 -0500
-Message-ID: <20261104211053.111830136@linuxfoundation.org>
+Subject: [PATCH 6.18 0328/1005] net: usb: cdc_ether: add quirk for AMI BMC stale link events
+Date: Wed,  4 Nov 2026 16:01:01 -0500
+Message-ID: <20261104211053.139974323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,80 +62,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Alvarado <contact@c127.dev>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit d21a374995df9d7cfd193427748a19dcc87956a9 ]
+[ Upstream commit 089ca284afb0f3b2870a5ce41524cbc91ed350d4 ]
 
-The TX mitigation logic only sets the Interrupt on Completion bit once
-every tx_coal_frames descriptors (STMMAC_TX_FRAMES = 25), with the
-tx_coal_timer hrtimer (STMMAC_COAL_TX_TIMER = 5000 us) as the only
-fallback. TX skbs are freed exclusively from the TX completion path,
-so any flow that keeps fewer than 25 frames in flight has all of its
-skbs held for up to 5 ms after transmission.
+On AMD Genoa/Turin platforms the BMC-provided USB-Ethernet gadget
+(American Megatrends, VID 0x046b PID 0xffb0) intermittently fails to
+respond to ARP after AC cold boot.  usbmon captures a stale
+NETWORK_CONNECTION(off) immediately followed by
+NETWORK_CONNECTION(on) on the interrupt endpoint (~130us apart)
+after enumeration.  Because alloc_netdev() leaves
+__LINK_STATE_NOCARRIER cleared, netif_carrier_ok() returns true
+when the spurious OFF arrives, so usbnet_cdc_status() cannot
+recognise it as redundant and schedules EVENT_LINK_CHANGE.
+__handle_link_change() then calls unlink_urbs(), killing ~60 rx
+URBs whose payload has already been DMA'd into memory — xHCI trace
+confirms them completing as -ECONNRESET with non-zero residual
+length.  rx_complete() drops these unconditionally.  The following
+ON restores the carrier and re-submits URBs, but the ARP reply is
+already lost; the interface looks "up but silent" until ifdown/ifup.
 
-Paced flows never queue enough frames to reach the frame threshold:
-TCP Small Queues caps the amount of unfreed data at roughly two pacing
-intervals worth, which at moderate pacing rates is only a couple of
-packets. Every small burst then stalls until the coalesce timer fires,
-and throughput collapses to approximately tsq_limit / tx_coal_timer
-regardless of link capacity.
+Fix this by adding a device-specific quirk with FLAG_LINK_INTR set,
+which makes usbnet_probe() call netif_carrier_off() after bind.
+With initial carrier == OFF, usbnet_cdc_status() recognises the
+spurious OFF as matching the current state and drops it; the
+subsequent ON is the first real event and brings the link up
+cleanly without ever tearing down the rx queue.  The scheduled
+link-change kevent is harmless because EVENT_DEV_OPEN is not yet
+set at probe time.
 
-This is easily reproducible with BBR, which paces its output and thus
-keeps only a few frames in flight at a time. On a YT6801
-(dwmac-motorcomm) equipped Orange Pi 5 Pro, a BBR upload over a ~23 ms
-RTT path is capped at 5.24 Mbit/s, while CUBIC reaches 207 Mbit/s on
-the same path. BBR measures the stalled send rate as the path
-bandwidth and locks its estimate near the floor, so the connection
-never recovers. Lowering the coalesce settings with ethtool -C
-(tx-usecs 100 tx-frames 1) lifts the same transfer to 447 Mbit/s,
-confirming the mechanism.
+This is applied as a device-specific quirk rather than a change to
+the shared cdc_info driver_info because some CDC devices never
+send NETWORK_CONNECTION notifications; forcing carrier off for
+them would leave the link permanently DOWN.  Restricting the change
+to this VID/PID keeps that class of device untouched.
 
-Fix this by setting the IC bit on the last descriptor of every xmit
-burst, i.e. whenever netdev_xmit_more() reports that no further frames
-are pending in the current dequeue batch. Frame-based coalescing still
-applies within a burst, bulk traffic keeps batching through qdisc bulk
-dequeue and NAPI polling, and the coalesce timer becomes a pure
-fallback instead of the primary completion mechanism for lightly
-queued flows.
+Tested on Genoa and Turin across 100+ AC cold boot cycles; ping
+first-packet success rate went from intermittent to 100%.
 
-tx-frames 0 keeps its meaning of timer-based mitigation only.
-
-Signed-off-by: Johan Alvarado <contact@c127.dev>
-Link: https://patch.msgid.link/20260731194522.55069-1-contact@c127.dev
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Link: https://patch.msgid.link/20260730051341.24930-1-guojinhui.liam@bytedance.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/usb/cdc_ether.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 63c045616c9b7..7dbb5e9bcb54b 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4400,6 +4400,8 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 		set_ic = true;
- 	else if (!priv->tx_coal_frames[queue])
- 		set_ic = false;
-+	else if (!netdev_xmit_more())
-+		set_ic = true;
- 	else if (tx_packets > priv->tx_coal_frames[queue])
- 		set_ic = true;
- 	else if ((tx_q->tx_count_frames %
-@@ -4687,6 +4689,8 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 		set_ic = true;
- 	else if (!priv->tx_coal_frames[queue])
- 		set_ic = false;
-+	else if (!netdev_xmit_more())
-+		set_ic = true;
- 	else if (tx_packets > priv->tx_coal_frames[queue])
- 		set_ic = true;
- 	else if ((tx_q->tx_count_frames %
+diff --git a/drivers/net/usb/cdc_ether.c b/drivers/net/usb/cdc_ether.c
+index a032c1ded4063..05e625a461b49 100644
+--- a/drivers/net/usb/cdc_ether.c
++++ b/drivers/net/usb/cdc_ether.c
+@@ -532,6 +532,16 @@ static const struct driver_info	cdc_info = {
+ 	.manage_power =	usbnet_manage_power,
+ };
+ 
++static const struct driver_info ami_bmc_info = {
++	.description =	"AMI BMC USB Ethernet",
++	.flags =	FLAG_ETHER | FLAG_POINTTOPOINT | FLAG_LINK_INTR,
++	.bind =		usbnet_cdc_bind,
++	.unbind =	usbnet_cdc_unbind,
++	.status =	usbnet_cdc_status,
++	.set_rx_mode =	usbnet_cdc_update_filter,
++	.manage_power =	usbnet_manage_power,
++};
++
+ static const struct driver_info	zte_cdc_info = {
+ 	.description =	"ZTE CDC Ethernet Device",
+ 	.flags =	FLAG_ETHER | FLAG_POINTTOPOINT,
+@@ -940,6 +950,12 @@ static const struct usb_device_id	products[] = {
+ 				      USB_CDC_SUBCLASS_ETHERNET,
+ 				      USB_CDC_PROTO_NONE),
+ 	.driver_info = (unsigned long)&wwan_info,
++}, {
++	/* AMI BMC gadget */
++	USB_DEVICE_AND_INTERFACE_INFO(0x046b, 0xffb0, USB_CLASS_COMM,
++				      USB_CDC_SUBCLASS_ETHERNET,
++				      USB_CDC_PROTO_NONE),
++	.driver_info = (unsigned long)&ami_bmc_info,
+ }, {
+ 	USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ETHERNET,
+ 			USB_CDC_PROTO_NONE),
 -- 
 2.53.0
 
