@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826870;
-	b=IgpB3t+NHPNgGOhL7Wu1cPcMk2vfoaNjnTi5nT/lzI/p6bq9D7rWNnJAzYryrrEQWA0a
-	 liUbvGAnFmUASlrexk2t9rugRONatn9H41yRRT99baOmhRow1g8QbE0SxoqiyIPeZJpRf
-	 UAkIwBsRUUi0JDdKXk6qiV6OOmzzmllDjHR5FR3qjX5dnzAWtIJi9+uMsxdCJXx4qa9Jq
-	 HqugUVpFB1XFxEYbfZTpj6C4fBv+jFwJi+NYkyvTDSC8jD8/2n4uPzKA/HHakraTvaKbe
-	 N0Hr1BJcGyoLuwDR9PEdW0HZwABQWMxuBPLF/FoxnASQOfUc7o3XhDHGcCYsa6foADA==
+	t=1793826872;
+	b=l0mPx801Y7MAIX7QStMGudkmppM26o091cv7HkXU+tgARrvtDiABQ5Zf2hKdmsL2fGh3
+	 5KI8PCfyRPXL6LPxbTNf6TpJXNlxCx9BiRoUX+dc/XHQ/ltr/NSRs7cmFahGds1nA5NLR
+	 +b34Q+oy8Rd7aTo9pLKO0459qYMWf4FAnZzwVOor9cVVQO8lZnYcoOrHQOyUArUSuW3iX
+	 WxGZQZWsoXF+E8QuXPD6m6VetaHs0Tg7eLqlWvfBr42odKIS0YAwioMHfAYEvdjUTAo3R
+	 7M6J6PpwOytS31LldLHnAMHCtDupnGoN7L8/Amn1z8BWCHRjsSiHVZcS/HWzU7XPoPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826870;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=veYgSgDSg0cl6Yl6nKzGCLDsgWX1uNBUv+p4uB6Ol0A=;
-	b=pz7MQMS7kzai6xkTFFL+sMvW6g10UNVrYzn+m3Sha4mHTQv4IECQWLwuVjO0xn8sxAO1
-	 QLCdxlsyhJYzc63E9l+IXQCbgqyenMkCcX089A4QVTvMDAvmBVpjo0cVG3RFlmnpiDI/b
-	 q/RMLs46Rg27jcIbBKfjiFmUTVLrbNIU15AmNLlBpfTtla1MesN2p1I3r6EKkiVdP7fdn
-	 Fi9Zrw4u3eWVYE6rrlbE2BPn4GpBrNzBS9FuQy00h5Lmd8/jdvw/WA5Jc6QQZySsbEG3f
-	 GQRjyMcSr7wjRvAIGPc+rwg2BRkRyP89+P4MdBteqfr6NzaSFlsuf5IBVqzt6RguTqA==
+	bh=mFlytu1O0vvGYL3SfCBgYIvRdkVC4L/z7V2YdSJNsgA=;
+	b=ffrwZMT/VYKMfEgOH3K9GWN1cIS9amooBS6k1zKqcsAAdbBSK4yjNMot0ODPGBSFn7ES
+	 QQ8QHgu2HKYQccgCMlW5huOj8Ghgvefs+H1OM5rK24ZUbe+TtBok5wW4Dx5qrCLZpQjum
+	 IT7Kg1SwZpLbi0kFzeJSSKbXqgJkQSnmOiX5LDLsiLHHC/8IP3AX15c6cN6T6TCv0qwJ2
+	 ZDLjec3kWr/wH/sFuNOawYc9Jc5TAnmkQQ3gSnopQNKKOrWy6+StJTykpPrk23m0TgxqP
+	 eHZEqVGvq8mnKrQP5n6f9zX61Pp0XN6JisfyGGfiMvmpELbEb+bw2JTuXhW1M1oMLRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iUXFwCRv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrZKYSSD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5D66070746;
-	Wed,  4 Nov 2026 21:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19AF6070331;
+	Wed,  4 Nov 2026 21:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iUXFwCRv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04491F00919;
-	Wed,  4 Nov 2026 21:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrZKYSSD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0981F00A18;
+	Wed,  4 Nov 2026 21:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826870;
-	bh=veYgSgDSg0cl6Yl6nKzGCLDsgWX1uNBUv+p4uB6Ol0A=;
+	s=korg; t=1793826871;
+	bh=mFlytu1O0vvGYL3SfCBgYIvRdkVC4L/z7V2YdSJNsgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iUXFwCRvep/Mz5Z7XomLCwBtIM/1S5hckGdRu8LrePCdmfD/Q48z+389dGAK5FyKQ
-	 NRGb/Aaq/4HNd/Z8nv1ClxZp5OS9COHr4sYPH8iCd3iZ7pDin8qY2gVHF3EBTwtIU7
-	 7zgNwUcZSzIJTVDzeJgEE2k023cRjHjVxrxWC+ZY=
+	b=GrZKYSSD5GiH/PbMv2X+iuz8ew2XdZwSA1NdXI0NfvLnJRbBagfkdeyKdOWIlJdo4
+	 w7kYYuDxftsLBXEGSO9a5Hr+UBZbJKW8L6v/R7V1gsoIjurgoFYc4xEzHkrCRc0F5M
+	 OV/EffftJ0v+ICtnc2xaEXtHZjPTK/nVUBYhbb+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 021/547] io_uring/io-wq: dont hide a link from cancellations
-Date: Wed,  4 Nov 2026 16:03:25 -0500
-Message-ID: <20261104211038.969128662@linuxfoundation.org>
+Subject: [PATCH 7.3 022/547] io_uring: dont flood a cancelling task with task_work
+Date: Wed,  4 Nov 2026 16:03:26 -0500
+Message-ID: <20261104211038.995799343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,193 +70,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 436d48a2ed13112d2d27085325838e5bce6b4507 ]
+[ Upstream commit 22e643e61b9b6299b42ff7d88bab48bccada8a5d ]
 
-A task that exits cancels its tracked requests and waits until they are
-gone. io_uring_cancel_generic() looks everywhere a request can be, and
-goes to sleep if it found nothing to cancel. It is woken up each time
-one of the requests of the task is completed by task work or freed.
+io_ring_exit_work() asks each task which has used the ring to remove its
+tctx node, by task_work, and repeats that until the list is empty.
+io_tctx_exit_cb() doesn't touch the node while the task is in
+io_uring_cancel_generic(), which removes all the nodes at its end. So the
+work item queues the callback again as soon as it has completed, for
+nothing.
 
-When io-wq is done with a request that has a link, there is a time in which
-the next request of the link can't be found:
+That is more than a waste of time. task_work_run() only returns when it
+finds the list empty. If the rings are released from inside the
+cancellation, because requests of other rings held the last references to
+their files, up to 64 work items keep sending callbacks to the one task
+which is running them. It never finds the list empty, never gets back to
+the cancellation, the nodes stay, and so it goes on: a task with 60 pairs
+of rings which poll each other ran 280000 callbacks in 5 seconds, 20
+seconds after exit_group(). It ends when all the senders happen to be late
+at the same time. Until then the task keeps a CPU and the work items busy.
 
-  io_worker_handle_work()
-    io_assign_current_work(worker, NULL)
-    io_wq_free_work(work)
-      io_req_find_next()           // takes the link off the request
-      io_free_req()                // task work for the task
-    io_assign_current_work(worker, linked)
-      io_run_task_work()
-      cond_resched()
-      worker->cur_work = linked
+An exiting task can't be killed meanwhile. execve() cancels the requests in
+the same way, so a live task can get stuck there as well, for minutes. If
+it takes more than five, the work items run into the
+WARN_ON_ONCE(time_after(jiffies, timeout)) of io_ring_exit_work(). No
+privilege is needed for any of this.
 
-It is not pending, it is not the current work of a worker, and it is not
-yet on the list that it is about to be parked on. If the pass that the
-exiting task makes because of io_free_req() falls into that time, it finds
-nothing and the task goes to sleep. The worker then runs the link, which
-IO_WQ_BIT_EXIT doesn't prevent for bounded work. If that parks the request
-nothing is completed or freed, and nobody wakes up the task. If it is the
-process that exits it can't be killed any more either.
+If the callback has met a task in cancellation, wait a little before it is
+sent again. Nobody has to wake the work item up for that: either the node
+is gone by then, or it is the turn of the next round.
 
-  NOP, IOSQE_ASYNC | IOSQE_IO_LINK
-  FUTEX_WAIT, FUTEX2_PRIVATE
-  exit of the thread, or of the process, up to 63us later
-
-With four of these per round 5 to 8 of 10,000 rounds hang (4 CPUs, KVM):
-
-  io_uring_cancel_generic
-  do_exit
-
-Commit f8b632e89a10 ("io_uring: tighten task exit cancellations") is about
-the same gap, and makes the task look again for whatever happens before
-io_free_req().
-
-Free the request once the link is the current work of the worker, or
-pending. Whoever is woken up by that can find the link, until it is parked
-where cancellations look as well. To do so split io_wq_free_work() in two.
-
-Fixes: 768134d4f481 ("io_uring: don't do flush cancel under inflight_lock")
+Fixes: d56d938b4bef ("io_uring: do ctx initiated file note removal")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-5-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-6-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c    | 18 +++++++++++++++---
- io_uring/io_uring.c | 35 ++++++++++++++++++++++++-----------
- io_uring/io_uring.h |  3 ++-
- 3 files changed, 41 insertions(+), 15 deletions(-)
+ io_uring/io_uring.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 140b7e022fbf2..6a59994d4bd5e 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -642,12 +642,13 @@ static void io_worker_handle_work(struct io_wq_acct *acct,
- 		/* handle a whole dependent link */
- 		do {
- 			bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
--			struct io_wq_work *next_hashed, *linked;
-+			struct io_wq_work *next_hashed, *linked, *done = work;
- 			unsigned int work_flags = atomic_read(&work->flags);
- 			unsigned int hash = __io_wq_is_hashed(work_flags)
- 				? __io_get_work_hash(work_flags)
- 				: -1U;
- 			struct io_kiocb *req;
-+			bool last;
- 
- 			next_hashed = wq_next_work(work);
- 
-@@ -666,7 +667,7 @@ static void io_worker_handle_work(struct io_wq_acct *acct,
- 			kcov_remote_stop();
- 			io_assign_current_work(worker, NULL);
- 
--			linked = io_wq_free_work(work);
-+			last = io_wq_put_work(work, &linked);
- 			work = next_hashed;
- 			if (!work && linked && !io_wq_is_hashed(linked)) {
- 				work = linked;
-@@ -675,6 +676,13 @@ static void io_worker_handle_work(struct io_wq_acct *acct,
- 			io_assign_current_work(worker, work);
- 			if (linked)
- 				io_wq_enqueue(wq, linked);
-+			/*
-+			 * Not before the link is current or pending work again.
-+			 * This may be the last time that a task is woken up
-+			 * which exits and looks for requests to cancel.
-+			 */
-+			if (last)
-+				io_wq_free_work(done);
- 
- 			if (hash != -1U && !next_hashed) {
- 				/* serialize hash clear with wake_up() */
-@@ -1004,9 +1012,13 @@ void io_wq_set_exit_on_idle(struct io_wq *wq, bool enable)
- static void io_run_cancel(struct io_wq_work *work, struct io_wq *wq)
- {
- 	do {
-+		struct io_wq_work *linked;
-+
- 		atomic_or(IO_WQ_WORK_CANCEL, &work->flags);
- 		io_wq_submit_work(work);
--		work = io_wq_free_work(work);
-+		if (io_wq_put_work(work, &linked))
-+			io_wq_free_work(work);
-+		work = linked;
- 	} while (work);
- }
- 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 91178f2fca09a..9db7e68ba9970 100644
+index 9db7e68ba9970..19f79e53c4d37 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -1483,22 +1483,35 @@ int io_poll_issue(struct io_kiocb *req, io_tw_token_t tw)
- 	return ret;
+@@ -2339,6 +2339,7 @@ struct io_tctx_exit {
+ 	struct callback_head		task_work;
+ 	struct completion		completion;
+ 	struct io_ring_ctx		*ctx;
++	bool				in_cancel;
+ };
+ 
+ static __cold void io_tctx_exit_cb(struct callback_head *cb)
+@@ -2353,7 +2354,8 @@ static __cold void io_tctx_exit_cb(struct callback_head *cb)
+ 	 * tctx can be NULL if the queueing of this task_work raced with
+ 	 * work cancelation off the exec path.
+ 	 */
+-	if (tctx && !atomic_read(&tctx->in_cancel))
++	work->in_cancel = tctx && atomic_read(&tctx->in_cancel);
++	if (tctx && !work->in_cancel)
+ 		io_uring_del_tctx_node((unsigned long)work->ctx);
+ 	complete(&work->completion);
  }
- 
--struct io_wq_work *io_wq_free_work(struct io_wq_work *work)
-+/*
-+ * io-wq is done with @work. Returns true if it held the last reference, and
-+ * hands out the next request of the link then. The caller has to make sure
-+ * that cancellations can find the latter before it calls io_wq_free_work().
-+ */
-+bool io_wq_put_work(struct io_wq_work *work, struct io_wq_work **linked)
- {
- 	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
- 	struct io_kiocb *nxt = NULL;
- 
--	if (req_ref_put_and_test_atomic(req)) {
--		if (req->flags & IO_REQ_LINK_FLAGS) {
--			struct io_ring_ctx *ctx = req->ctx;
-+	*linked = NULL;
-+	if (!req_ref_put_and_test_atomic(req))
-+		return false;
- 
--			mutex_lock(&ctx->uring_lock);
--			nxt = io_req_find_next(req);
--			mutex_unlock(&ctx->uring_lock);
--		}
--		io_free_req(req);
-+	if (req->flags & IO_REQ_LINK_FLAGS) {
-+		struct io_ring_ctx *ctx = req->ctx;
-+
-+		mutex_lock(&ctx->uring_lock);
-+		nxt = io_req_find_next(req);
-+		mutex_unlock(&ctx->uring_lock);
+@@ -2447,6 +2449,14 @@ static __cold void io_ring_exit_work(struct work_struct *work)
+ 		 * wait is marked as interruptible.
+ 		 */
+ 		wait_for_completion_interruptible(&exit.completion);
++		/*
++		 * The task removes the node when it is done with its
++		 * cancellation. Give it the time for that: it doesn't get back
++		 * to it as long as it finds new task_work each time it has run
++		 * the old one, and we may be one of many who send it.
++		 */
++		if (exit.in_cancel)
++			schedule_timeout_idle(HZ / 20);
+ 		mutex_lock(&ctx->uring_lock);
+ 		mutex_lock(&ctx->tctx_lock);
  	}
--	return nxt ? &nxt->work : NULL;
-+	if (nxt)
-+		*linked = &nxt->work;
-+	return true;
-+}
-+
-+void io_wq_free_work(struct io_wq_work *work)
-+{
-+	io_free_req(container_of(work, struct io_kiocb, work));
- }
- 
- void io_wq_submit_work(struct io_wq_work *work)
-@@ -1509,7 +1522,7 @@ void io_wq_submit_work(struct io_wq_work *work)
- 	bool needs_poll = false;
- 	int ret = 0, err = -ECANCELED;
- 
--	/* one will be dropped by io_wq_free_work() after returning to io-wq */
-+	/* one will be dropped by io_wq_put_work() after returning to io-wq */
- 	if (!(req->flags & REQ_F_REFCOUNT))
- 		__io_req_set_refcount(req, 2);
- 	else
-diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
-index 896aab1ed026c..71aa30186a667 100644
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -204,7 +204,8 @@ int io_do_iopoll(struct io_ring_ctx *ctx, bool force_nonspin);
- __cold void io_iopoll_try_reap_events(struct io_ring_ctx *ctx);
- void __io_submit_flush_completions(struct io_ring_ctx *ctx);
- 
--struct io_wq_work *io_wq_free_work(struct io_wq_work *work);
-+bool io_wq_put_work(struct io_wq_work *work, struct io_wq_work **linked);
-+void io_wq_free_work(struct io_wq_work *work);
- void io_wq_submit_work(struct io_wq_work *work);
- 
- void io_free_req(struct io_kiocb *req);
 -- 
 2.53.0
 
