@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831006;
-	b=PBVHlR+E4sEYQpKI/tODOofMPsr86FxBImvpYTjDy3DQ8gk7cN7MosmvAjBlDZNtGy+/
-	 zrwZdZNriQ97ZMdr2r2xtDgocCJdHXSj4qJNhD9JQFh5BH2zVSOvDsp5fh3VmAEZcgZ9D
-	 kDMOrG0/jk3Xf/v80OeMK0SsmfXgkc68qivqL8AfY/SKSM0DpMJ5dQiStscq8QsJ2j+pT
-	 lIKx0R2oVhjKjrkMPd249dHBmRzgnmiWuujkTmoOl+sSWhS9n1i911Rdlpagg8UPxKvUN
-	 fKj8HY67ipL2smQrT++l2/kppckLpp7V5Grtqg6oXtoz5EhmKcimVcPB1xtH3xcOCOg==
+	t=1793831007;
+	b=TStBprX4hiO0a/nA8VI3PS4BZWvXavHMMVdpG6aoty3FQOuWoTmmD5TouJkmCovi/RSW
+	 Q6DvDKRqSrncGkwSBgwzeP4Akuj61NY3ya0Wyy1OGWW5V0X3PmFwVsjt01W0atxA0rAXc
+	 8IuOFBqQ1DEopBjY8DlvT5+MDWONAicr3hJGk9SVOzeHCjZADGTMkCcjHixyRBk4j12dU
+	 N8d3ZQYMb94oOo3X5TfKTF4pJ+ur01A8vVAQKYbdewoBWXeHAP058u7ILtmPvYybZY3Ya
+	 IEBQsdGAiRiytzjnB6Bb6zoyg2CzVkbqvv8jp4Q/E0Dh5WTPM/fu5FDgTQXzOsMkdZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yqjp6zPUBBWpOzgJnE7O0pTfVCd4SLf17ggK9MWh8w4=;
-	b=WLY8SVjDxXCbQxRYWhl1kTFrbyAXWPihebRix/7Gd6mvlmamkREmlT1AThM0dc2VxKHz
-	 m3S2fzZXnKGdr7Xqitl72Fpgk9BVlntUvJFVWskVgG4xCQ4hhRyOyxz2Kbp4tPXfeSFmy
-	 tojo6922AmXMJhPFaW9XSS67sH3/tJWSRAFF1P3AsL/n+msysu8f14No7fJZYbgFIp2X/
-	 GeR7imkLEQW7qyNz/oWx5E0SNks3kLzLbWTLn54m4dUicS5eB1W9FR0Jd07FlLiolso5E
-	 HbSAbwJvLqNXWZk5eqxMHELsyQ1cdXIfUIjGQ/iO7w+ABMzpfr5vZ4yQ4zNyxnqDWsA==
+	bh=4J6Q7cDh7YYODSdKGEvXyitA1Ywj0IjlSN5miJu+fBc=;
+	b=jGm1gELu80mZQ0imyjsUniQvbrw9aEtdaRJqRd6eEUgtIfi+U2GAz6zsFpcNBZNZdodn
+	 1Tboxc37fWKFucQLtH+iFI9whqJ9S0fXDGwMkmxOCApWqJWrVQ7LsB9/AWr+9Fp67dSPY
+	 F62fw7HFZE+bV1XVwnFSQKqKQTpsUQCbDyRfyW3Bva2EUpJxq1rlW5QlpCzKQgdfqLz7E
+	 DpEnxGjMS++JB4uqnlpfAchOJwE9xto/RTDcN7cTkBwP8sllRoft6BlLFS6FROrWn66Zh
+	 lLVWEd6qMEje5lVW7sI9ZdaR+VJrow3FPDPaAM9I2GrfHRHEluUAYLgfGb2W4iBVIRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=St7zyENH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dWqIzm4r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0979606AB22;
-	Wed,  4 Nov 2026 22:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B10C606AB22;
+	Wed,  4 Nov 2026 22:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=St7zyENH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492B51F000C1;
-	Wed,  4 Nov 2026 22:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dWqIzm4r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFB91F000C1;
+	Wed,  4 Nov 2026 22:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831005;
-	bh=yqjp6zPUBBWpOzgJnE7O0pTfVCd4SLf17ggK9MWh8w4=;
+	s=korg; t=1793831007;
+	bh=4J6Q7cDh7YYODSdKGEvXyitA1Ywj0IjlSN5miJu+fBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=St7zyENHfWgoS/tIdTWOnagbj1KbgTC1BqnonJK1ku1lKn7faeu6vKkqrVWW+MlY+
-	 pj3aYDcGjcpYlVjTN1dnwLBn7/14p+DX0aiGeWbZ5bMYZFna1O3U2rL5EuEJFGfPyq
-	 CegAjML0D6HN7vG1vPbfxT4I81xSk3BEfzXmIEXo=
+	b=dWqIzm4rXs8y2BRB/NyE0PyVCdrTxtuBKKbFAjsBAhgsXIUajwntaGKNm+CZftlDc
+	 Pqa6crxQsGnHnIGd6vyHXmoePOE9Ot9T+yVbBQTc6qFapSUrIJi6e3WiflHdEK/VGM
+	 qeRWiWgz4FmGN5Po22a34OLFIDIHawCjsHDS2txg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Sunmin Jeong <s_min.jeong@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Csaba Budai <ilyr73@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0451/1005] f2fs: avoid setting SBI_NEED_FSCK on transient resize failure
-Date: Wed,  4 Nov 2026 16:03:04 -0500
-Message-ID: <20261104211056.680317397@linuxfoundation.org>
+Subject: [PATCH 6.18 0452/1005] ALSA: hda/realtek: Fix ALC700 audio on Intel Hades Canyon
+Date: Wed,  4 Nov 2026 16:03:05 -0500
+Message-ID: <20261104211056.705692818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,63 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Csaba Budai <ilyr73@gmail.com>
 
-[ Upstream commit 258c95150c26a30db1896eacd3bdef26314f2ca1 ]
+[ Upstream commit 1fcccdc20a76b4639b00124cf2a379b837bd2bf7 ]
 
-When free_segment_range() fails in f2fs_resize_fs(), no on-disk
-superblock or filesystem metadata has been modified yet, and
-free_segment_range() safely restores all in-memory counters before
-returning.
+On Intel Hades Canyon systems with an ALC700 codec, analog audio can
+become unusable after rebooting from Windows into Linux.
 
-However, the current error recovery path unconditionally sets the
-SBI_NEED_FSCK flag and prints a scary error message on any error,
-forcing an unnecessary and time-consuming fsck.f2fs repair on the
-subsequent mount/reboot.
+The affected system uses codec subsystem ID 8086:2073. In the broken
+state, Realtek coefficient 0x1b has value 0x4a4b. Setting bit 0x0400
+changes it to 0x4e4b and immediately restores normal analog playback.
 
-Fix this by separating the error recovery path with a dedicated
-recover_user_blocks label to bypass setting SBI_NEED_FSCK on
-free_segment_range() failures.
+The BIOS also sets this bit after disabling and re-enabling onboard
+audio, while Windows may leave it cleared. Linux currently does not
+restore it during codec initialization.
 
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Add a machine-specific fixup for Intel Hades Canyon which sets only
+bit 0x0400 of coefficient 0x1b during HDA_FIXUP_ACT_INIT.
+
+The fix has been verified across Windows -> Linux reboots on an Intel
+NUC8i7HNB with an ALC700 codec.
+
+Signed-off-by: Csaba Budai <ilyr73@gmail.com>
+Link: https://patch.msgid.link/20260821102514.11194-1-ilyr73@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 02bd008d79b5c..e85d7f239e7d0 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2415,7 +2415,7 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	err = free_segment_range(sbi, secs, false);
- 	if (err)
--		goto recover_out;
-+		goto recover_user_blocks;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index bc33930e83b9f..8196235c31d2b 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3820,6 +3820,7 @@ enum {
+ 	ALC225_FIXUP_DELL_WYSE_MIC_NO_PRESENCE,
+ 	ALC225_FIXUP_S3_POP_NOISE,
+ 	ALC700_FIXUP_INTEL_REFERENCE,
++	ALC700_FIXUP_INTEL_HADES_CANYON,
+ 	ALC274_FIXUP_DELL_BIND_DACS,
+ 	ALC274_FIXUP_DELL_AIO_LINEOUT_VERB,
+ 	ALC298_FIXUP_TPT470_DOCK_FIX,
+@@ -4040,6 +4041,19 @@ static void alc287_fixup_lenovo_yoga_book_9i(struct hda_codec *codec,
+ 	__snd_hda_apply_fixup(codec, id, action, 0);
+ }
  
- 	update_sb_metadata(sbi, -secs);
- 
-@@ -2437,11 +2437,14 @@ int f2fs_resize_fs(struct file *filp, __u64 block_count)
- 		f2fs_commit_super(sbi, false);
- 	}
- recover_out:
--	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	if (err) {
-+		f2fs_bug_on(sbi, err == -EAGAIN);
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
--
-+	}
-+recover_user_blocks:
-+	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
-+	if (err) {
- 		spin_lock(&sbi->stat_lock);
- 		sbi->user_block_count += shrunk_blocks;
- 		spin_unlock(&sbi->stat_lock);
++static void alc700_fixup_intel_hades_canyon(struct hda_codec *codec,
++					    const struct hda_fixup *fix,
++					    int action)
++{
++	/*
++	 * Windows may leave coef 0x1b bit 0x0400 cleared, causing broken
++	 * analog playback after rebooting into Linux.  Restore the bit
++	 * during codec initialization.
++	 */
++	if (action == HDA_FIXUP_ACT_INIT)
++		alc_update_coef_idx(codec, 0x1b, 0x0400, 0x0400);
++}
++
+ static const struct hda_fixup alc269_fixups[] = {
+ 	[ALC233_FIXUP_WUJIE_SPEAKERS] = {
+ 		.type = HDA_FIXUP_PINS,
+@@ -5092,6 +5106,10 @@ static const struct hda_fixup alc269_fixups[] = {
+ 			{}
+ 		}
+ 	},
++	[ALC700_FIXUP_INTEL_HADES_CANYON] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc700_fixup_intel_hades_canyon,
++	},
+ 	[ALC274_FIXUP_DELL_BIND_DACS] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc274_fixup_bind_dacs,
+@@ -7653,6 +7671,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x2782, 0xa128, "Positivo N15RPE-S", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0xa212, "Lunnen Ground 14", ALC269VC_FIXUP_LUNNEN_GROUND_14),
+ 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
++	SND_PCI_QUIRK(0x8086, 0x2073, "Intel NUC 8 Hades Canyon",
++		      ALC700_FIXUP_INTEL_HADES_CANYON),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
 -- 
 2.53.0
 
