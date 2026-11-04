@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827088;
-	b=uZ3PCWM8bFpVBZd7yhziOWE6tYOQwwkTFa54P8h07bTT9W7RQ++EjL2YGhc0GeDSrCdM
-	 9zWXl5c8Yl2GWjzj5t5ewBSEkRXg2UloDXdbvCTYsa6eg+vridr8EoHa1SLRoxj7cp44h
-	 gz/OVlRv9J99fJ7NTT3ks1ZZ4G0PM3CxWoPNRm03HBvNU6YGJwqifkhguZLAuPq11gcjy
-	 CZ5g9qqTJ5s7hBsvVvEfYDW9HV+VlH3MA0VYZXinjH6+cOhzqTIHLWx1QYGPd7mnPIXt0
-	 fbVkMhWdsm3VCf2YdZo2hJKdGmkdrtSXQRU7j+m+G/mCRj6r9vIhfLtRpqjuDRCH+/Q==
+	t=1793827091;
+	b=H0AHrE4V8cffqAOGbn1f21ycnWkxEQ47gLXCboATH4QKIt7uITOE7/SRpIixEzDSBZmL
+	 5kYZVEF9rURp4Vbt+5U/+YpQwfIWO91KHQK7f4PCIpPub5PKhC5hF7pSDCc0JC3/Kjx9T
+	 lJscxX2cKx0+u4MnThJul7dziEm8it0Ds0nx7boXWh7F4OOYNUYsTKYatJ/XazesjUSuJ
+	 CalkivjywXpC5yI5sz7IIEswtKsof6YAB49q6TYP8SEPY+la+okRLV45UrC6I7fDURT2I
+	 xc+L+NXSOY951rKSXJPUwxOOzmhTKd/nmn8QLvBI9o/RG7+f9YXZPkrBh5EY57S3Kqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827088;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827091;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I/lp7uuxIyCxxzXn80bCP9h6DsVSTL0q7kcm+I0pDzk=;
-	b=UTeTOO5tee9O0k2K3dAs432uFguJXvjiht/6s4Vvv1WszPoNqFghlTkC4ftGm5XZZXdH
-	 b2Ee2PGNp0f1kU7k0vQbTWMEu6nBS4RJfpLFbIEtBTOagml10enh2d0sJDOdQGJdE7tEg
-	 oUVWHIT/xFkGBr33ovnYcQCLHHcLaNSC/rFK10xMqDvXoETp1/E0ZyBwWYgiuUtGfBmT4
-	 YHPQWRBpgdLmOaZK+cXHJ1g6Gjx4/O0JK1dOxEccD/GdqtsYNJzOPfykjcb3UGxuZQlBq
-	 Rxafgsj8iwPCYBe+SmCGYmhno4KadzebW8K6trajwHVRKs8fbw8iNudhiFJiBd3kgSA==
+	bh=d3ksCbw1D/10W/kNEJQLFkxH4W04D5uKnJaGkSwOybI=;
+	b=bU86jAJfrUmKVwzLHeEgkeQl6byGlmpYR34JNU5dq4ir2A71DUEAO27mhKHy4gQIohEh
+	 Qg1r0yTwVpO4rrCm/wgOgVJqwzikQI4rzVqjsBq4N+s5tQDu5dHqsnU5DVR2AHyt6q/QI
+	 sG4aVwNe5HaWXwpk84964rnRO04L+Net4M3i0177FSUdGKPPSWVY9X7xI1zqe/VXsvNUZ
+	 D0Nqi6m/CQS/cAWDvj3JI6wiA+p2opTZSZJ5kUI/4M7Ue8neYTw2ZjK70kN2aUQl7LvtS
+	 OUMvhvnvLcrHYFEKmxqUUyW3OaqV2FkMHqNvUNrrqVf59Ad0IcPNXo//aMOrOhEeZ8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A6NZqKju;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDQhoOqK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9149606A86D;
-	Wed,  4 Nov 2026 21:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105D860841A4;
+	Wed,  4 Nov 2026 21:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A6NZqKju
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4434F1F000C1;
-	Wed,  4 Nov 2026 21:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDQhoOqK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4E31F000C1;
+	Wed,  4 Nov 2026 21:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827087;
-	bh=I/lp7uuxIyCxxzXn80bCP9h6DsVSTL0q7kcm+I0pDzk=;
+	s=korg; t=1793827090;
+	bh=d3ksCbw1D/10W/kNEJQLFkxH4W04D5uKnJaGkSwOybI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6NZqKjuVH/1VAZbHO3rBJJrXNSFF7WB8V7wxgqiK9FOkciNkR+d/cWKMWltXQ7ob
-	 H8bsYm6o0hWcdV6UtprBnpCTtU61YW7LHwASSqlWwbCrAqc0WB2ZFmw5PYJ02iJDdQ
-	 Z7r50Ll3RcSco7uFtO//YZfR+h249BhY/8VZDD7c=
+	b=TDQhoOqKYIJO02VPvvZDhKQsFd47KJcjyabbMuu02JjqUlVzj3W+vYWEskWAQCNU9
+	 tm0Ew/yBEns/xHP0OvFDafHFUVCMmNmgtRrLRRYwVjZ/z3ke8U+XLZdDsQYb6fohit
+	 pXD8PZ0nk72YOKRdFEkeiK3tQXzwH+lx07xmden8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 188/547] HID: wacom: Setup SW_MUTE_DEVICE according to the order of input registration
-Date: Wed,  4 Nov 2026 16:06:12 -0500
-Message-ID: <20261104211043.480268450@linuxfoundation.org>
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>
+Subject: [PATCH 7.3 190/547] klist: avoid accesses after waking klist_remove()
+Date: Wed,  4 Nov 2026 16:06:14 -0500
+Message-ID: <20261104211043.535872548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,76 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping Cheng <ping.cheng@wacom.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 97ce491bcef2d231b8d51cee8e579183319a5ba4 upstream.
+commit 732e3e10234cbe302d0dcbaa98c91c66628209cb upstream.
 
-The refactored SW_MUTE_DEVICE code assumed that stylus will be
-the first regiestered input. In reality, touch can be registered
-before stylus, such as the Wacom Cintiq Pro 13 and 16.
+klist_remove() waits until a node is unreferenced so that its caller can
+free the containing object.  klist_release() currently publishes
+waiter->woken and wakes the waiter before its final accesses to the waiter
+and node.  klist_remove() can then return, allowing its stack waiter and
+the containing object to be freed or reused while klist_release() is still
+running.  In particular, bus_remove_driver() can free drv->p while
+__device_attach() walks the same bus klist with bus_for_each_drv().
 
-This patch covers both touch-first and stylus-first cases.
+On an arm64 Cortex-A72 system, an unpatched 7.2.0-rc3 kernel with
+CONFIG_PREEMPT_RT=y and CONFIG_KASAN=y reproduced the bug through the
+in-tree I2C/at24 path.  KASAN reported a use-after-free in
+klist_dec_and_del() reached from klist_next()/bus_for_each_drv() while
+at24 was being unregistered.
 
-Cc: stable@vger.kernel.org
-Fixes: ba16e5ffbaa1 ("HID: wacom: Advertise SW_MUTE_DEVICE capability prior to registration")
-Reviewed-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Clear n_klist and take a task reference before publishing woken.  Use
+release/acquire accesses for that publication and wake the referenced
+task.  The task reference keeps the waiter task alive if it returns and
+exits before wake_up_process().
+
+Link: https://lore.kernel.org/20260827041708.31682-1-kmehltretter@gmail.com
+Fixes: 8b0c250be489 ("[PATCH] add klist_node_attached() to determine if a node is on a list or not.")
+Fixes: 210272a28465 ("driver core: Remove completion from struct klist_node")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: LLM
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |   33 ++++++++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+ lib/klist.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -3977,10 +3977,18 @@ int wacom_setup_touch_input_capabilities
+--- a/lib/klist.c
++++ b/lib/klist.c
+@@ -36,6 +36,7 @@
+ #include <linux/klist.h>
+ #include <linux/export.h>
+ #include <linux/sched.h>
++#include <linux/sched/task.h>
  
- 	if (features->type == HID_GENERIC) {
- 		hid_dbg(hdev, "generic touch setup\n");
--		if (wacom_wac->has_mute_touch_switch ||
--		    (wacom_wac->shared && READ_ONCE(wacom_wac->shared->has_mute_touch_switch))) {
-+
-+		/*
-+		 * This is to setup the touch switch for those devices that report
-+		 * pen interface first. The setup can only be done here since this
-+		 * routine is only called once. When we are here, the shared
-+		 * has_mute_touch_switch has been set by the pad.
-+
-+		 * There are two ways of reporting inputs from firmware: stylus first
-+		 * or touch first. This path covers the stylus input first case.
-+		 */
-+		if (wacom_wac->shared && READ_ONCE(wacom_wac->shared->has_mute_touch_switch)) {
- 			input_set_capability(input_dev, EV_SW, SW_MUTE_DEVICE);
--			wacom_wac->has_mute_touch_switch = true;
- 		}
- 		/* setup has already been done */
- 		return 0;
-@@ -4403,7 +4411,26 @@ int wacom_setup_pad_input_capabilities(s
- 		break;
+ /*
+  * Use the lowest bit of n_klist to mark deleted nodes and exclude
+@@ -187,18 +188,24 @@ static void klist_release(struct kref *k
  
- 	case INTUOSHT3_BT:
-+		break;
+ 	WARN_ON(!knode_dead(n));
+ 	list_del(&n->n_node);
++	knode_set_klist(n, NULL);
+ 	spin_lock(&klist_remove_lock);
+ 	list_for_each_entry_safe(waiter, tmp, &klist_remove_waiters, list) {
++		struct task_struct *p;
 +
- 	case HID_GENERIC:
-+		if (wacom_wac->shared) {
-+			/*
-+			 * The setup of touch switch capability can only be done
-+			 * here for those devices, such as Cintiq Pro 13 and 16,
-+			 * that have touch input registered before stylus and pad
-+			 * inputs.
-+			 *
-+			 * There are two ways of reporting inputs from firmware:
-+			 * stylus first or touch first. This path covers the touch
-+			 * input first case.
-+			 */
-+			if (wacom_wac->has_mute_touch_switch &&
-+			    wacom_wac->shared->touch_input) {
-+				input_set_capability(wacom_wac->shared->touch_input,
-+				    EV_SW, SW_MUTE_DEVICE);
-+			}
-+		}
- 		break;
+ 		if (waiter->node != n)
+ 			continue;
  
- 	default:
++		p = waiter->process;
++		get_task_struct(p);
+ 		list_del(&waiter->list);
+-		waiter->woken = 1;
++		/* Publish only after the final waiter and n accesses */
++		smp_store_release(&waiter->woken, 1);
+ 		mb();
+-		wake_up_process(waiter->process);
++		wake_up_process(p);
++		put_task_struct(p);
+ 	}
+ 	spin_unlock(&klist_remove_lock);
+-	knode_set_klist(n, NULL);
+ }
+ 
+ static int klist_dec_and_del(struct klist_node *n)
+@@ -250,7 +257,8 @@ void klist_remove(struct klist_node *n)
+ 
+ 	for (;;) {
+ 		set_current_state(TASK_UNINTERRUPTIBLE);
+-		if (waiter.woken)
++		/* Pairs with the release store in klist_release() */
++		if (smp_load_acquire(&waiter.woken))
+ 			break;
+ 		schedule();
+ 	}
 
 
