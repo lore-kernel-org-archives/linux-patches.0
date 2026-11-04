@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793804737;
-	b=xt/csOXW7vVua9IPU8qTUA6V3QhP1vCGp8LvaTaJhJ14ONBIdWC3KKPfH30H3K4cf9KP
-	 lt7KZ+6S+tM1jtTOLlZHMEq1AiZhImIT7rpGfD0s2A/9PbQisUaEs7tcjIQHAWvjUDy+4
-	 kHua7Q0cMdxHRvBUSD9E/7RFez6EdwE9jhpFkhhAj2Z9tgeNmAXuw9DKWviZ6YBI+yOXI
-	 SbTrhRVPuStOh3N5T706uhMXVmZmgdyUU3EgM8CJj/4I/mo7mfHpUY+glCFHWw0VoML60
-	 /syyMJFn09Pwjf9cjT5v/Ri7qMspfSyEIivIAPz02PRyFrDYvhsGPnMwzqjFfHqC3Ag==
+	t=1793804743;
+	b=pxrZBE+7pzjtRq6W7LKfHE++aBN52kseX2jfPHSXtkrHYv+EIo1ZCccCJPyDEFmadfwm
+	 pwdHj9+CfitSy1cBGjz/fY9jul7bG6KfXJvpZpmUBGaHXRpFg+y/3x0jkY2Tkob87VZBG
+	 s/U+cV7OG6ZqICO1hx94VOpbK9erGpE26nfMrulYSFZ7zrSt0GaVXI4wOJ7d0JRfMfOQZ
+	 dWO7e/MgFeeB+v+BEUJlJaZpc0YeybY7KhKv0jGooL6mCeHDxKjvqXAlebAmgZ1PG0vjt
+	 WfeFpbRerjn9PlTwVhaanj7G4ZgB2d/P+QjkVFp6kk1TsLhSIK0klrITkcB4SFjxVUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793804737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793804743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=OfHRgaXZqSxqsm3is7DGxgnfe85zZdPObdvrLpJIvtc=;
-	b=WCqxe3Ymx8w6VQJtQOKHkiL4m0sSmM0xFitFFFbyKQCh9Ax2ojL0ff45wtwBlhqYziu2
-	 YaNVsUOOxMZwnRRbkQqYtiwq/YE7IioQxUa4AbHAWX2Z96jXSeBocNjuAjeGDzp7sEK+g
-	 /yLoFzhVuScJUxZo1SkSUuqrjpR0G2KHFzu4J9T3JJ8pRS2wKOPjXQHSSExFAwLLuzpj2
-	 bKvtRdcAd98K+/kvIjEAsuYAnyEoKlz/9Gv8BAZcMEvNBExnDsGXaDV+mLGBo14mtG5tV
-	 QIlL7GpZ93Up5g37L+jHAp+8YT40lzNB2Y1zjib6k6upDOLbaY+OUc3JcKBxAK+Q0Mw==
+	bh=XtwrP+9WG0tv+esqn1OMvIE4RAJMiQncGuinvZmD9Fk=;
+	b=o0f9mY2Pew0UCwAR4NnUijzhGgPZT473ct0PZH/5pIBiyqEEg3jnLLnZrZW4rVK7BbjU
+	 sUw2/DvKYI4cUgptNrsjO7j93M0Ymymf4RIvD7AeDUEKA5LTG+I+ZjMmAFbj+rI4QHx+K
+	 e/BHHRvL37vj7YmvQ5dWkesLNhrwNMLpIXN/C8S6ke+sPTKH1brZhoiJPUId8um43G4XU
+	 W5Htkt1c0DL1EXc5h94E41cRDdSo2SJ42dO89Bt+YD7d4It0LOPvY5l63NOjmvKSa0aTk
+	 gTgLK2SPRRqZ5fhcuuowV/TyQvLBHqRqk5BZolgcPB/XSWV2+Pd/BG3TKLCSquRSzgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ot1NzJ2Z;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LegUeoE0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE17606A328;
-	Wed,  4 Nov 2026 15:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926C3606A31B;
+	Wed,  4 Nov 2026 15:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ot1NzJ2Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6971F0093A;
-	Wed,  4 Nov 2026 15:05:31 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LegUeoE0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B391F000C1;
+	Wed,  4 Nov 2026 15:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793804737;
-	bh=OfHRgaXZqSxqsm3is7DGxgnfe85zZdPObdvrLpJIvtc=;
+	s=k20260515; t=1793804743;
+	bh=XtwrP+9WG0tv+esqn1OMvIE4RAJMiQncGuinvZmD9Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ot1NzJ2ZVJjEGe6J6bViJ7onW2CjRbtMHoSgEXrfygVXVlIO8iMMhSk5qCn7Sh9Mg
-	 pipqi8oH75w3LrKmpZfa3OCo842e9DVENMffMBBKClnplFb9o85gwfgQGX6dBPuGf0
-	 H2628jvcsNL/FjTxfPHCtnWodIWbPtX2nHXkXtx0qHpJ8UiekMZ3SsQpIB5dt6J60s
-	 17TwfAQWqHeqc39hz4PXy3lVdYFccZDhzyvnGixS5jjzVPlTe8dCg0WgseFD5SDzHG
-	 w6nvcn+XqpG/EFdizMA5621SayKqDO5iTXZYlBouQbGcxW+HlKZA3ZFB9k+XNxbTtC
-	 /aircmc/57ZgA==
+	b=LegUeoE0jvEl5m+YOgT/PD4mjKMmc+PuRDY0NEq11U20TY+iLXIX0GOSRI/aZut/a
+	 msSGHp51+yoexNH+r3bOyAWcWJ4kcb1BQifh/9W8sxMMc2IZoRmdN6EbXhbIk9GfaB
+	 kJJgwh7X5UwxsJk8CT8IUVsEMNlXkhkxu5J1lbXR9GvbX1vqgprFZHONAqpRmAEcjI
+	 z5GwRoWuQiH5agMOc+42RveihP/E8apj+S0HCKrG/x3TKX3YAiSOOh4oOsSRHRnT1u
+	 F4nHIL9aX36+9mSERiMgWjYZHqlZn249h6sbZ+u6KYY9MXZVBe5WvagYuq/GmSrgSW
+	 t+YDkMl0iqvpA==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -61,9 +61,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v4 20/25] vfio: Dispatch guest_memfd provider operations through the device file
-Date: Wed,  4 Nov 2026 20:33:17 +0530
-Message-ID: <20261104150322.3516320-21-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v4 21/25] vfio: Serialize guest_memfd attachment with device file operations
+Date: Wed,  4 Nov 2026 20:33:18 +0530
+Message-ID: <20261104150322.3516320-22-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
 References: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
@@ -78,190 +78,169 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Forward guest_memfd provider operations and the supplied device context
-through the VFIO device file to the device driver. Validate the driver
-callbacks before attachment. Keep a reference to the VFIO device file
-until the driver's provider release callback returns, so the device and
-driver operations remain available throughout cleanup.
+Attaching a VFIO device to guest_memfd must not race with VFIO file
+operations that access its BARs or create mappings. The attachment state
+must apply to every open VFIO file referring to the same device.
 
-Reject non-VFIO resource files and providers without device PFNs, whole-
-range validation, mapping exclusion and release support. BAR
-addresses are device PFNs rather than allocatable RAM folios; accepting
-folio callbacks or incomplete exclusion callbacks would allow a backing
-type that cannot honor device mapping and revocation rules. A driver
-without this contract returns EOPNOTSUPP at attachment rather than
-exposing its regions through a partial provider.
+Hold the device's gmem_lock for reading across read, write, mmap and
+normal ioctl dispatch, and for writing across provider attachment and
+release. File operations already in progress finish before attachment
+proceeds. Later operations observe the updated gmem_attached state while
+holding the same lock, allowing driver checks to reject BAR access.
+
+Hold dev_set->lock across the driver attach/release callbacks and updates
+to gmem_attached as well. This lets hot reset check every affected device
+for an attachment under the device-set lock without racing attachment or
+release. Driver callbacks run with both locks held and must not reacquire
+them.
+
+Return EBUSY for VFIO mmap while guest_memfd is attached, including mmap
+through another open VFIO file. Such a mapping would insert BAR PFNs
+without checking guest_memfd attributes
+
+Keep read, write and ioctl dispatch available to the driver. The PCI
+checks reject operations that access BARs or disrupt their mappings while
+preserving configuration queries, unrelated ioctls, feature probes and
+cleanup.
 
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Sean Christopherson <seanjc@google.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: David Hildenbrand <david@kernel.org>
-Cc: kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- drivers/vfio/vfio_main.c | 108 +++++++++++++++++++++++++++++++++++++++
- include/linux/vfio.h     |   4 ++
- 2 files changed, 112 insertions(+)
+ drivers/vfio/pci/vfio_pci_config.c |  2 ++
+ drivers/vfio/pci/vfio_pci_core.c   |  3 +++
+ drivers/vfio/vfio_main.c           | 28 +++++++++++++++++++++++++++-
+ include/linux/vfio.h               |  4 +++-
+ 4 files changed, 35 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
+index 014f865c1eaf..2cd855cc50bc 100644
+--- a/drivers/vfio/pci/vfio_pci_config.c
++++ b/drivers/vfio/pci/vfio_pci_config.c
+@@ -599,6 +599,8 @@ static int vfio_basic_config_write(struct vfio_pci_core_device *vdev, int pos,
+ 		}
+ 
+ 		/*
++		 * vfio_device_fops_write() holds gmem_lock for read, keeping
++		 * gmem_attached unchanged across this write.
+ 		 * Check BME and Memory Enable changes while holding memory_lock
+ 		 * for write, before updating hardware or vconfig. Return an
+ 		 * error rather than silently masking a rejected write.
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index 2789bfab4415..b8e574194f07 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -378,6 +378,9 @@ static int vfio_pci_runtime_pm_entry(struct vfio_pci_core_device *vdev,
+ 	/*
+ 	 * The vdev power related flags are protected with 'memory_lock'
+ 	 * semaphore.
++	 *
++	 * vfio_device_fops_unl_ioctl() holds gmem_lock for read,
++	 * preventing provider setup during this operation.
+ 	 */
+ 	ret = vfio_pci_begin_bar_state_change(vdev);
+ 	if (ret)
 diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
-index ff49f2fdb602..838242f82fd2 100644
+index 838242f82fd2..787d9a661f75 100644
 --- a/drivers/vfio/vfio_main.c
 +++ b/drivers/vfio/vfio_main.c
-@@ -14,6 +14,7 @@
- #include <linux/compat.h>
- #include <linux/device.h>
- #include <linux/fs.h>
-+#include <linux/guest_memfd.h>
- #include <linux/idr.h>
- #include <linux/iommu.h>
- #if IS_ENABLED(CONFIG_KVM)
-@@ -248,6 +249,110 @@ struct vfio_device *_vfio_alloc_device(size_t size, struct device *dev,
- }
- EXPORT_SYMBOL_GPL(_vfio_alloc_device);
+@@ -289,12 +289,21 @@ static void *vfio_gmem_provider_attach(struct inode *inode, struct file *file,
+ 	if (!provider)
+ 		return ERR_PTR(-ENOMEM);
  
-+#ifdef CONFIG_KVM_GUEST_MEMFD
-+struct vfio_gmem_provider {
-+	const struct guest_memfd_provider_operations *ops;
-+	void *data;
-+	struct file *file;
-+};
-+
-+static void *vfio_gmem_provider_attach(struct inode *inode, struct file *file,
-+				       struct guest_memfd_device *gmem)
-+{
-+	const struct guest_memfd_provider_operations *ops;
-+	struct vfio_gmem_provider *provider;
-+	struct vfio_device_file *df;
-+	void *data;
-+
-+	/* Reject other file types before interpreting their private_data. */
-+	if (file->f_op != &vfio_device_fops || !gmem)
-+		return ERR_PTR(-EOPNOTSUPP);
-+
-+	df = file->private_data;
-+	ops = df->device->ops->gmem_provider_ops;
-+	/* Every provider must support attachment and release. */
-+	if (!ops || !ops->attach || !ops->release)
-+		return ERR_PTR(-EOPNOTSUPP);
-+
-+	/* VFIO requires device PFNs, range validation and mapping exclusion. */
-+	if (!ops->get_pfn || !ops->device_memory ||
-+	    !ops->prepare_memory_region ||
-+	    !ops->lock ||
-+	    !ops->unlock)
-+		return ERR_PTR(-EOPNOTSUPP);
-+
-+	/* VFIO provides PFNs, not folios. */
-+	if (ops->alloc_folio || ops->invalidate_folio)
-+		return ERR_PTR(-EOPNOTSUPP);
-+
-+	provider = kzalloc_obj(*provider);
-+	if (!provider)
-+		return ERR_PTR(-ENOMEM);
-+
-+	data = ops->attach(inode, file, gmem);
-+	if (IS_ERR(data)) {
++	guard(rwsem_write)(&df->device->gmem_lock);
++	if (df->device->gmem_attached) {
 +		kfree(provider);
-+		return data;
++		return ERR_PTR(-EBUSY);
 +	}
 +
-+	provider->ops = ops;
-+	provider->data = data;
-+	/* Pin the driver operations through release(), including its return. */
-+	provider->file = get_file(file);
-+	return provider;
-+}
-+
-+static void vfio_gmem_provider_release(void *data)
-+{
-+	struct vfio_gmem_provider *provider = data;
-+
-+	provider->ops->release(provider->data);
-+	fput(provider->file);
-+	kfree(provider);
-+}
-+
-+static int vfio_gmem_provider_prepare_memory_region(void *data,
-+		u64 offset, u64 size, u32 flags)
-+{
-+	struct vfio_gmem_provider *provider = data;
-+
-+	return provider->ops->prepare_memory_region(provider->data, offset,
-+						    size, flags);
-+}
-+
-+static int vfio_gmem_provider_get_pfn(void *data, pgoff_t index,
-+		unsigned long *pfn, int *max_order)
-+{
-+	struct vfio_gmem_provider *provider = data;
-+
-+	return provider->ops->get_pfn(provider->data, index, pfn, max_order);
-+}
-+
-+static void vfio_gmem_provider_lock(void *context)
-+{
-+	struct vfio_gmem_provider *provider = context;
-+
-+	provider->ops->lock(provider->data);
-+}
-+
-+static void vfio_gmem_provider_unlock(void *context)
-+{
-+	struct vfio_gmem_provider *provider = context;
-+
-+	provider->ops->unlock(provider->data);
-+}
-+
-+static const struct guest_memfd_provider_operations vfio_gmem_provider_ops = {
-+	.attach = vfio_gmem_provider_attach,
-+	.release = vfio_gmem_provider_release,
-+	.prepare_memory_region = vfio_gmem_provider_prepare_memory_region,
-+	.lock = vfio_gmem_provider_lock,
-+	.unlock = vfio_gmem_provider_unlock,
-+	.get_pfn = vfio_gmem_provider_get_pfn,
-+	.device_memory = true,
-+};
-+#endif
-+
- static int vfio_fs_init_fs_context(struct fs_context *fc)
- {
- 	return init_pseudo(fc, VFIO_MAGIC) ? 0 : -ENOMEM;
-@@ -1449,6 +1554,9 @@ static void vfio_device_show_fdinfo(struct seq_file *m, struct file *filep)
- #endif
++	/* Publish attachment under both locks for device-set reset admission. */
++	guard(mutex)(&df->device->dev_set->lock);
+ 	data = ops->attach(inode, file, gmem);
+ 	if (IS_ERR(data)) {
+ 		kfree(provider);
+ 		return data;
+ 	}
  
- const struct file_operations vfio_device_fops = {
-+#ifdef CONFIG_KVM_GUEST_MEMFD
-+	.gmem_provider_ops = &vfio_gmem_provider_ops,
-+#endif
- 	.owner		= THIS_MODULE,
- 	.open		= vfio_device_fops_cdev_open,
- 	.release	= vfio_device_fops_release,
++	df->device->gmem_attached = true;
+ 	provider->ops = ops;
+ 	provider->data = data;
+ 	/* Pin the driver operations through release(), including its return. */
+@@ -306,7 +315,13 @@ static void vfio_gmem_provider_release(void *data)
+ {
+ 	struct vfio_gmem_provider *provider = data;
+ 
+-	provider->ops->release(provider->data);
++	struct vfio_device_file *df = provider->file->private_data;
++
++	scoped_guard(rwsem_write, &df->device->gmem_lock) {
++		guard(mutex)(&df->device->dev_set->lock);
++		provider->ops->release(provider->data);
++		df->device->gmem_attached = false;
++	}
+ 	fput(provider->file);
+ 	kfree(provider);
+ }
+@@ -1447,6 +1462,8 @@ static long vfio_device_fops_unl_ioctl(struct file *filep,
+ 	if (cmd == VFIO_DEVICE_BIND_IOMMUFD)
+ 		return vfio_df_ioctl_bind_iommufd(df, uptr);
+ 
++	guard(rwsem_read)(&device->gmem_lock);
++
+ 	/* Paired with smp_store_release() following vfio_df_open() */
+ 	if (!smp_load_acquire(&df->access_granted))
+ 		return -EINVAL;
+@@ -1495,6 +1512,8 @@ static ssize_t vfio_device_fops_read(struct file *filep, char __user *buf,
+ 	struct vfio_device_file *df = filep->private_data;
+ 	struct vfio_device *device = df->device;
+ 
++	guard(rwsem_read)(&device->gmem_lock);
++
+ 	/* Paired with smp_store_release() following vfio_df_open() */
+ 	if (!smp_load_acquire(&df->access_granted))
+ 		return -EINVAL;
+@@ -1512,6 +1531,8 @@ static ssize_t vfio_device_fops_write(struct file *filep,
+ 	struct vfio_device_file *df = filep->private_data;
+ 	struct vfio_device *device = df->device;
+ 
++	guard(rwsem_read)(&device->gmem_lock);
++
+ 	/* Paired with smp_store_release() following vfio_df_open() */
+ 	if (!smp_load_acquire(&df->access_granted))
+ 		return -EINVAL;
+@@ -1527,10 +1548,15 @@ static int vfio_device_fops_mmap(struct file *filep, struct vm_area_struct *vma)
+ 	struct vfio_device_file *df = filep->private_data;
+ 	struct vfio_device *device = df->device;
+ 
++	guard(rwsem_read)(&device->gmem_lock);
++
+ 	/* Paired with smp_store_release() following vfio_df_open() */
+ 	if (!smp_load_acquire(&df->access_granted))
+ 		return -EINVAL;
+ 
++	if (device->gmem_attached)
++		return -EBUSY;
++
+ 	if (unlikely(!device->ops->mmap))
+ 		return -EINVAL;
+ 
 diff --git a/include/linux/vfio.h b/include/linux/vfio.h
-index 2436b8bd600a..10fd5015ce1d 100644
+index 10fd5015ce1d..ceab68b76300 100644
 --- a/include/linux/vfio.h
 +++ b/include/linux/vfio.h
-@@ -88,6 +88,8 @@ struct vfio_device {
- 	struct dentry *debug_root;
- };
- 
-+struct guest_memfd_provider_operations;
-+
- /**
-  * struct vfio_device_ops - VFIO bus driver device callbacks
-  *
-@@ -118,9 +120,11 @@ struct vfio_device {
+@@ -120,7 +120,9 @@ struct guest_memfd_provider_operations;
   *         if none was provided.
   * @dma_unmap: Called when userspace unmaps IOVA from the container
   *             this device is attached to.
-+ * @gmem_provider_ops: Optional driver guest_memfd resource operations
+- * @gmem_provider_ops: Optional driver guest_memfd resource operations
++ * @gmem_provider_ops: Optional driver guest_memfd resource operations. VFIO
++ *                     calls attach/release with gmem_lock held for write and
++ *                     dev_set->lock held; callbacks must not reacquire them.
   * @device_feature: Optional, fill in the VFIO_DEVICE_FEATURE ioctl
   */
  struct vfio_device_ops {
-+	const struct guest_memfd_provider_operations *gmem_provider_ops;
- 	char	*name;
- 	int	(*init)(struct vfio_device *vdev);
- 	void	(*release)(struct vfio_device *vdev);
 -- 
 2.43.0
 
