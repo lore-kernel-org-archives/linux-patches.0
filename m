@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829673;
-	b=XZtsUZy1bwWnRhxmd7D1AV2qN/cxQlgsIGHEDQj4moDwF9tAXQOFC0eKjircHq6vnkJW
-	 SV6FNGnBmjEJoi/CnpgQC8D8dfV/Pct+5NRaQx67QUVZf42BsXzjHhPiYssQUXb4KcSrs
-	 lfyCSs/ybxfeFWqMH7+q/Bh1RiUdBaBTkqM7LPDQCdim4Id3mTm63oRnzbqjcvaRsHw9H
-	 RyCj1+CQMf7wgyryhdfUIBE6W+Ew31VwotpxvLDE4G887YhdTv2MBmz+c/j2GZULdRYxE
-	 od7ucvoymqCPnhf9fuutkkp4oEU7WQqDKVYHc5PzsOK6GEKn64bLsmt9xg1++ORU2MA==
+	t=1793829675;
+	b=M/VD2J8PhyQ4Ea2XgQlGdty3vVyGmysF+0zCp6XSj3egsoA5juwFkANgOaDcGBEUsJSG
+	 P650P/5ARCt9C9FZTL9sZLaXdYwuJIaWdJfvdTyU1COzSfRdnKs4NtpDwshUGinkct1QT
+	 isVA9pEYgiqjSkmv/yq5hoL6x5chUXC2/Qcef+4LiyBpbkGYV5SPBx27MjFlQxa+KwyQD
+	 I/4D64/3aS5lro8hr8Wg12zW13AnLyoSm3+U/e72XTSDL4aKudL6pxMi4hC5lWscBDuyJ
+	 jXR5iTmqBZpnzcgWBSHPJoO4O8fprbnK2gQCy7Lx5B+plp7xMJi71HJuI10O4U8C1Vg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829673;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yK0iwFQgUz94Dx46t8PQS3Z0AtrLzr4SOD7B2M+Om1I=;
-	b=h9Bv7L5kQo2NUzPFnlTBMfqLzHATNvbh89nNeJSghdcajw+WlHQbE4Bgb5qZykzMsXuM
-	 9bkARYiNdWia9hbLtsizEGlwqJ3fDZlMwgB3aBt+AM/X1BKGKEOMmW+HPFgha7+fE9zPt
-	 Ho4MM8+wJNM9T9Nms/mg8KzrqGOAqNXL8I8NnrY4cp98KoJ+HSssGsGRH5CpC0G21YtnB
-	 80hnvTacJSevjc1cN16UeDxZ0VvMlg+cHAcYTKull9JAdU0+so0t4I1gBaWNWwD+9aN2s
-	 G20uvfiT+7LkMPpM1wgVuYR2DqeTnvTgH+MNzeJv956Lb82mp5tdOx+oUV/XIJL7F0Q==
+	bh=qzDGXWuH3S6f9JmoWVH6wwFuYcfgpaRnKuZVvZ52hiw=;
+	b=T6QvyXAXfhiBoRzuXBmN66I1l81CaMiPFu8s78Tw1XamPQzeVDsE+hkB1N3VFGYS6nWO
+	 5ZWfE1T8XQyWaJLBCn9EnpK6hFitQ3usZjb2ShR7OwtufCDlLfuzVQjMrKCKN+edFytPh
+	 h4TzmvPmicnkVfDdpcl+FFxky22iaOrZD6ut3gHRMUosi/l76viueWn5/Bf37sdPm1g7j
+	 lO0Lf0y4BbYmPxy0hDXNHSJMZBnlgRP87B6EH77Grir4k2YZwtL5BiZqzZCLnoCFIhHw7
+	 +oPeaFfnkQPSe1bu0JhyUOJxv9ugw2HucwfqZ075eXxfMhKSAFQ1ipAuCrjtjB3+paQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+00vA9f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpJACqKP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BFA606BA3F;
-	Wed,  4 Nov 2026 22:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC77C606BA3B;
+	Wed,  4 Nov 2026 22:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+00vA9f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A941F00A02;
-	Wed,  4 Nov 2026 22:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpJACqKP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A3D1F000C1;
+	Wed,  4 Nov 2026 22:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829673;
-	bh=yK0iwFQgUz94Dx46t8PQS3Z0AtrLzr4SOD7B2M+Om1I=;
+	s=korg; t=1793829674;
+	bh=qzDGXWuH3S6f9JmoWVH6wwFuYcfgpaRnKuZVvZ52hiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+00vA9fW4IzZ+uSakbBy2/lsegTjaQP7MeD5R7djWt9alLNq6OMzT9sDYbKZiggv
-	 pUR+0PNpppXfjbynaJiLOZhh/Gsd5BVKm8JT3ZPby+R1UTWMFgJnRxoMPR9KL723Qp
-	 YzvuA/L5doLKBMnfJERnxtg3dNMO32QkMZmPOQik=
+	b=BpJACqKPJpVsI6WH3S5Aq53k6SPHb0oOPgB3rdwnhknQ6D/u3TGJw8F52YszVwcrM
+	 QyVfKH1vCEZB0eqkYNE4r8bqPb8hxuga0PSoBSUXoL5dib6r+9IGff6U52RhkmNJzJ
+	 JW52x1StjE7dQOAYtVMz+bYzOOGrVkxdulS6lTAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
-	Matthew Stewart <Matthew.Stewart2@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Charlie Jenkins <thecharlesjenkins@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0272/1005] drm/amd/display: Fix rounding errors in CalculatePrefetchSchedule
-Date: Wed,  4 Nov 2026 16:00:05 -0500
-Message-ID: <20261104211051.502336213@linuxfoundation.org>
+Subject: [PATCH 6.18 0273/1005] arm64/runtime-const: Use aarch64_insn_patch_text_nosync() for patching
+Date: Wed,  4 Nov 2026 16:00:06 -0500
+Message-ID: <20261104211051.530649324@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,60 +70,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Stewart <Matthew.Stewart2@amd.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-[ Upstream commit fa0300333db07ca4ad56c9879f155faafd3f7079 ]
+[ Upstream commit a6690350a4ae7558b39d15fcc776c4d1ab5bbf39 ]
 
-[why]
+The current scheme to directly patch the kernel text for runtime
+constants runs into the following issue with futex adapted to using
+runtime constants on arm64:
 
-Rounding errors were causing mode validation to fail in some cases when
-it should not. (IE. Increasing fclk from a lower value could lead to
-validation failure, which should not happen.)
+  Unable to handle kernel write to read-only memory at virtual address ...
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Matthew Stewart <Matthew.Stewart2@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The pc points to the *p assignment in the following call chain:
+
+  futex_init()
+    runtime_const_init(shift, __futex_shift)
+      __runtime_fixup_shift()
+        *p = cpu_to_le32(insn);
+
+which suggests that core_initcall() is too late to patch the kernel text
+directly unlike the "d_hash_shift" which is initialized during
+vfs_caches_init_early() before the protections are in place.
+
+Use aarch64_insn_patch_text_nosync() to patch the runtime constants
+instead of doing it directly to allow runtime_const_init() slightly
+later into the boot.
+
+Since aarch64_insn_patch_text_nosync() calls caches_clean_inval_pou()
+internally, __runtime_fixup_caches() ends up being redundant.
+runtime_const_init() are rare and the overheads of multiple calls to
+caches_clean_inval_pou() instead of batching them together should be
+negligible in practice.
+
+The cpu_to_le32() conversion of instruction isn't necessary since it is
+handled later in the aarch64_insn_patch_text_nosync() call-chain:
+
+  aarch64_insn_patch_text_nosync(addr, insn)
+    aarch64_insn_write(addr, insn)
+      __aarch64_insn_write(addr, cpu_to_le32(insn))
+
+Sashiko noted that aarch64_insn_patch_text_nosync() does not expect a
+lm_alias() address and Catalin suggested it is safe to drop the
+lm_alias() for runtime patching since the kernel text is readable. The
+address passed to fixup function is interpreted as a __le32 and
+dereferenced as is to read the opcode at the patch site.
+
+No functional changes are intended.
+
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Charlie Jenkins <thecharlesjenkins@gmail.com>
+Tested-by: Charlie Jenkins <thecharlesjenkins@gmail.com>
+Link: https://patch.msgid.link/20260728052540.4728-3-kprateek.nayak@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c   | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/runtime-const.h | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-index da865bd466c9a..c32b704627085 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-@@ -5554,7 +5554,8 @@ static bool CalculatePrefetchSchedule(struct dml2_core_internal_scratch *scratch
- 				+ 2 * (p->PixelPTEBytesPerRow * p->HostVMInefficiencyFactor + p->meta_row_bytes + tdlut_row_bytes)
- 				+ *p->prefetch_sw_bytes)
- 				/ (*p->Tpre_rounded - *p->Tno_bw);
--			s->Tsw_est1 = *p->prefetch_sw_bytes / s->prefetch_bw1;
-+			/* due to rounding, VM can clamp to +1/4, Row can clamp to +2/4, giving SW less time */
-+			s->Tsw_est1 = *p->prefetch_sw_bytes / s->prefetch_bw1 - 3.0 * s->LineTime / 4.0;
- 		} else
- 			s->prefetch_bw1 = 0;
+diff --git a/arch/arm64/include/asm/runtime-const.h b/arch/arm64/include/asm/runtime-const.h
+index be5915669d239..31a6f94e57955 100644
+--- a/arch/arm64/include/asm/runtime-const.h
++++ b/arch/arm64/include/asm/runtime-const.h
+@@ -3,6 +3,7 @@
+ #define _ASM_RUNTIME_CONST_H
  
-@@ -5578,7 +5579,8 @@ static bool CalculatePrefetchSchedule(struct dml2_core_internal_scratch *scratch
- 		if (*p->Tpre_rounded - *p->Tno_bw - 2.0 * s->Tr0_trips_rounded > 0) {
- 			s->prefetch_bw2 = (vm_bytes * p->HostVMInefficiencyFactor + *p->prefetch_sw_bytes) /
- 			(*p->Tpre_rounded - *p->Tno_bw - 2.0 * s->Tr0_trips_rounded);
--			s->Tsw_est2 = *p->prefetch_sw_bytes / s->prefetch_bw2;
-+			/* due to rounding, VM can clamp to +1/4  */
-+			s->Tsw_est2 = *p->prefetch_sw_bytes / s->prefetch_bw2 - 1.0 * s->LineTime / 4.0;
- 		} else
- 			s->prefetch_bw2 = 0;
+ #include <asm/cacheflush.h>
++#include <asm/text-patching.h>
  
-@@ -5592,7 +5594,8 @@ static bool CalculatePrefetchSchedule(struct dml2_core_internal_scratch *scratch
- 		if (*p->Tpre_rounded - s->Tvm_trips_rounded > 0) {
- 			s->prefetch_bw3 = (2 * (p->PixelPTEBytesPerRow * p->HostVMInefficiencyFactor + p->meta_row_bytes + tdlut_row_bytes) + *p->prefetch_sw_bytes) /
- 				(*p->Tpre_rounded - s->Tvm_trips_rounded);
--			s->Tsw_est3 = *p->prefetch_sw_bytes / s->prefetch_bw3;
-+			/* due to rounding, Row can clamp to +2/4  */
-+			s->Tsw_est3 = *p->prefetch_sw_bytes / s->prefetch_bw3 - 2.0 * s->LineTime / 4.0;
- 		} else
- 			s->prefetch_bw3 = 0;
+ /* Sigh. You can still run arm64 in BE mode */
+ #include <asm/byteorder.h>
+@@ -46,34 +47,26 @@ static inline void __runtime_fixup_16(__le32 *p, unsigned int val)
+ 	u32 insn = le32_to_cpu(*p);
+ 	insn &= 0xffe0001f;
+ 	insn |= (val & 0xffff) << 5;
+-	*p = cpu_to_le32(insn);
+-}
+-
+-static inline void __runtime_fixup_caches(void *where, unsigned int insns)
+-{
+-	unsigned long va = (unsigned long)where;
+-	caches_clean_inval_pou(va, va + 4*insns);
++	aarch64_insn_patch_text_nosync(p, insn);
+ }
  
+ static inline void __runtime_fixup_ptr(void *where, unsigned long val)
+ {
+-	__le32 *p = lm_alias(where);
++	__le32 *p = where;
+ 	__runtime_fixup_16(p, val);
+ 	__runtime_fixup_16(p+1, val >> 16);
+ 	__runtime_fixup_16(p+2, val >> 32);
+ 	__runtime_fixup_16(p+3, val >> 48);
+-	__runtime_fixup_caches(where, 4);
+ }
+ 
+ /* Immediate value is 6 bits starting at bit #16 */
+ static inline void __runtime_fixup_shift(void *where, unsigned long val)
+ {
+-	__le32 *p = lm_alias(where);
++	__le32 *p = where;
+ 	u32 insn = le32_to_cpu(*p);
+ 	insn &= 0xffc0ffff;
+ 	insn |= (val & 63) << 16;
+-	*p = cpu_to_le32(insn);
+-	__runtime_fixup_caches(where, 1);
++	aarch64_insn_patch_text_nosync(p, insn);
+ }
+ 
+ static inline void runtime_const_fixup(void (*fn)(void *, unsigned long),
 -- 
 2.53.0
 
