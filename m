@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829064;
-	b=3H2Ut8uBo7XjkyVTGIBOKAw36EzwAXsy6YI04jSo++0L7sPZi/o9c9rlVWwloYrxiM48
-	 VP9WeIbcR81+vQOpwmcG6sPN06Ceega77dQOZIzTq1Ni0KYFhzHgQ6kcyrP3E/rect1TE
-	 Rw9bYknjJYpAddV98Zvv/Lstrr25l/Fv+C10CR5IzTzfw/136vFLhC0zfTqiGFJycMjJB
-	 zswwOsXW4gPY4sWhwTA1ffbHD8z6sxdUkT5c4vvQCny4bPMwnKeNzvVrjgGm+4+HVPlcl
-	 nsDXnB/KJpttjPSL4kb9G4VPA60bOz7Sh1hVKbw7OxtTGdzG1Q4+x025SkX3iK3QwmQ==
+	t=1793829066;
+	b=cTKMSYQm9okC/f69oYDRoAkddLnR8k2HagMMraMAXVKOBXhrM8hIe/uQlFpYn1i2s8gK
+	 mHwgKvV+lzj1SBGVnhQhQNdkrt4OfHnn6q9Wzl7z9i1H6FDmV5xV5OPmPk99i4FKy3mKb
+	 UV7TWfpJ50onZSLk4lBnvO8eRu4KFOOL7+d7zbPJ9iqT/RppeeToememSp8eLMKDr8sY5
+	 WkC9RSA618b29bsomPpTd5CQAit2CVBphYR15aV4Ds6QmDitC4q7S24gPwH1BnbMdCBox
+	 QS95GiSQ38T5Ur94r+KZic3AkAQlkrQ07fl1pHhiHwHcv4mGya6Ue0cAWgKKQTRyaMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829064;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829066;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7gtKkAe3x+9RbYlmMx+2lv77z3QaGQB7Chh0lVCei5w=;
-	b=jiyuXeEK2YDbunA1X/f2avX7FChAnVHtD0ChcVT+fYTYZpbj2VWMirUlhulfWj5t+lV2
-	 X9hs4iWGGl8+/Pjz+qhfPNI60t9gN+JsVzDUhzxhiOLU6eGFTkZiQUEJ13ru1OQLKjKDe
-	 6NYotNV/EnjLMT8Q/g8Nwdqh5l78Y7vNaLNKT/1RQv8UXj2TaVtfcBgLAk5gbG94LPRqn
-	 SuMs4w+Jp53WjGwgG7Dl+tkH1XfQ0lY9dmukIuUOlEXpQzih1lzlDsK0w08IxQDnSwC7k
-	 yaXdF9VkX+6vGwGDYgV6XxPyH4MrA3sir04OuBS95vrmUVpN4TJifV54d4XUOBROEVw==
+	bh=G0Euo1K6jLT1SQCgT4ccTrRPTq5JkHFYWKypagy7X48=;
+	b=H28AvtDRLd2MJwiXkqaIVOcyV0AXfoWR6VrKATb4Y6pXjJzJb7/nyj3Z0w3KhRkumnsT
+	 53eeqZpC7XRd5OmiIBtSJIV1ci6fULRuX6++sL725GtklvUoFYczBBWDpbHLLT28ZU6ZO
+	 1rMVhbmOdJXxTkaDTELKhVv/2Hg61172PFIylG0jiwx8YxRwPZVWP+G0+yMul+nH3fbj7
+	 6qTNY2pLFn3gFgNtnxU7cL2dzXVJhr6aA8iua1SUxl4wyTV3c1ECZpFLFa4roFINtX1ot
+	 2UCBIPo0PkTHt6GQFs+Mdgv/iOg1Kyn82RpFoWHCFl4wIuEswgtH0bxkgdS+GsQ1ZlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pCuDQB/t";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yIeII3jN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7CE6070775;
-	Wed,  4 Nov 2026 21:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58B3608209F;
+	Wed,  4 Nov 2026 21:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCuDQB/t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2661F000C1;
-	Wed,  4 Nov 2026 21:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yIeII3jN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5400C1F00A02;
+	Wed,  4 Nov 2026 21:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829064;
-	bh=7gtKkAe3x+9RbYlmMx+2lv77z3QaGQB7Chh0lVCei5w=;
+	s=korg; t=1793829065;
+	bh=G0Euo1K6jLT1SQCgT4ccTrRPTq5JkHFYWKypagy7X48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pCuDQB/tJnqQB+133r7lYWCpkrKGK81RNf/CYYP/1hb+2jK521nn/oc8RLpK3pDiK
-	 ljAkXVk71BvDjDE2GnHcT1YZ8pecSqPMKV3x6TR1/t8AG6MF1u1yv0h9kQmRzAb0oP
-	 F/6BMq0a1uqKmlYEKUmjANtqYpfpwoUX8eY3Yiks=
+	b=yIeII3jN9n31007SMyqw7mtxy183McmB9hE3B2mAev+yVGViwMaToLxFk51odAdPq
+	 X/HymBOITf05UPdsBGYfEwsa6K3CLCF8vaRZBtbmUXEA8HKZVVDb+6UItR8BxaFT/e
+	 AEaK4MzjBFmrRbyoou6kcxFLdAgQm7hBg5wLQ+4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.3 420/547] nfsd: Fix id-to-name cache entry leak in idtoname_parse()
-Date: Wed,  4 Nov 2026 16:10:04 -0500
-Message-ID: <20261104211050.265306620@linuxfoundation.org>
+Subject: [PATCH 7.3 421/547] NFSD: Fix out-of-bounds read in the rpc_status dump
+Date: Wed,  4 Nov 2026 16:10:05 -0500
+Message-ID: <20261104211050.296045699@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,43 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Chuck Lever <cel@kernel.org>
 
-commit 8ca3b74c0c447af17d0e27e76658a3d4cae3c5ba upstream.
+commit cbea14890783fead76f878caf0775a62a42049bf upstream.
 
-idtoname_lookup() returns the id-to-name cache entry with a new
-reference. The name is parsed between the lookup and the update call,
-and when the parsed name is malformed (negative length or longer than
-IDMAP_NAMESZ), idtoname_parse() jumps to the error label without
-dropping the reference returned by idtoname_lookup(), leaking the cache
-entry.
+nfsd_nl_rpc_status_get_dumpit() loads args->opcnt and
+args->ops separately, then walks ops[] before rechecking
+rq_status_counter. A COMPOUND that completes between the two loads
+runs nfsd4_release_compoundargs(), which zeroes opcnt and points ops
+back at the eight-entry inline array. A dump that already sampled an
+opcnt of 200 clamps it to the sixteen slots in rq_opnum, then indexes
+iops[0..15]. iops is the last member of struct nfsd4_compoundargs and
+rq_argp is allocated at exactly that size, so the walk runs off the
+end of the allocation. The trailing recheck discards the sampled data,
+but the read has already happened. NFSD_CMD_RPC_STATUS_GET carries
+no GENL_ADMIN_PERM, so an unprivileged local user can repeat the dump
+against a busy server until it lands in the window.
 
-Release the reference with cache_put() before taking the error exit.
+Sample opcnt and ops into locals, then finish the counter recheck
+before dereferencing ops. An unchanged counter means both came from the
+same COMPOUND, where opcnt cannot exceed what ops holds.
 
-Fixes: f9ecc921b5b5 ("[PATCH] knfsd: Use new cache code for name/id lookup caches")
+Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reported-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
+Closes: https://lore.kernel.org/linux-nfs/20260823113255.3417-1-prabhakar.pujeri@dell.com/
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260917163154.2162438-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260824-nfsd-posix-acl-ownership-v1-1-090fffc608ec@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4idmap.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4idmap.c
-+++ b/fs/nfsd/nfs4idmap.c
-@@ -253,8 +253,10 @@ idtoname_parse(struct cache_detail *cd,
- 	/* Name */
- 	error = -EINVAL;
- 	len = qword_get(&buf, buf1, PAGE_SIZE);
--	if (len < 0 || len >= IDMAP_NAMESZ)
-+	if (len < 0 || len >= IDMAP_NAMESZ) {
-+		cache_put(&res->h, cd);
- 		goto out;
-+	}
- 	if (len == 0)
- 		set_bit(CACHE_NEGATIVE, &ent.h.flags);
- 	else
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1585,14 +1585,29 @@ int nfsd_nl_rpc_status_get_dumpit(struct
+ 			    rqstp->rq_proc == NFSPROC4_COMPOUND) {
+ 				/* NFSv4 compound */
+ 				struct nfsd4_compoundargs *args;
++				struct nfsd4_op *ops;
++				u32 opcnt;
+ 				int j;
+ 
+ 				args = rqstp->rq_argp;
+-				genl_rqstp.rq_opcnt = min_t(u32, args->opcnt,
++				opcnt = READ_ONCE(args->opcnt);
++				ops = READ_ONCE(args->ops);
++
++				/*
++				 * Finish the seqcount retry before
++				 * dereferencing ops. An unchanged counter means
++				 * opcnt and ops came from the same COMPOUND,
++				 * where opcnt cannot exceed what ops holds.
++				 */
++				smp_rmb();
++				if (READ_ONCE(rqstp->rq_status_counter) !=
++				    status_counter)
++					continue;
++
++				genl_rqstp.rq_opcnt = min_t(u32, opcnt,
+ 							    ARRAY_SIZE(genl_rqstp.rq_opnum));
+ 				for (j = 0; j < genl_rqstp.rq_opcnt; j++)
+-					genl_rqstp.rq_opnum[j] =
+-						args->ops[j].opnum;
++					genl_rqstp.rq_opnum[j] = ops[j].opnum;
+ 			}
+ #endif /* CONFIG_NFSD_V4 */
+ 
 
 
