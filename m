@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827016;
-	b=tV+37eHk30ZihycIS0cTCM4r/EPl8WR0w8u5w6QPrF/GpGEDe+Hj84YvDTEX6J9A6O/S
-	 ixU22FWMOD4dA4C+yJOKx6z8P7vtmwHZ/5GWWDPXQ0YVl0zfP9/7g1ZssKayNdTVj+SuG
-	 gg0AN94G44eGjyZJou4BSq70wsb5DwwIB0BdjxkGdpuoJbQip78D5mLBM6CyMeGvtuSbh
-	 5blupWI4g8B6cY9N/1OfprkbvTc6ts5iiKAKNwjVrBPw9EpUsot4VPC0PPzOJ3uF5xNgj
-	 z98eUae/0f99vL2pxwKChESNpx6PG4OboUqoHF3HbmW8JgrBc40CXzk8TGKCO/wzoGg==
+	t=1793827018;
+	b=rvPjmdytbhrBNv0Yef3kust9Hoj/BLQGda2hyI9bWAFjGZWBaom1hWNjWSMN7UPfJjV+
+	 GpMEL3pDEOHubvzTS4aDNJvYhq4IU6LlvAfm39aHeZsleQssD9D+zxD0IuyO3ocnAGPzP
+	 MUjYSvvXncBGzYrqEhavMY2fY+plgN6MtJi0u/U5CcIqjmsbnrAx5xvjzb8C465zi2maG
+	 944WjOkil28tnTr/2b9KwYAv9i4u3MJKfwJ0ofgSQ4pvbNBQimJ5MUS7efOfS0mqIwppl
+	 5w0BHoEpXsSGq4FBl7negxkmVk33aRAa7xMuuwR3Dxn/CwAIpjArcX2I3kY6EZXeYJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827016;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827018;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+eWZU0+kc7ZiwXosBEAiwUS1BsuH9bWz9C7dCnZjGGE=;
-	b=0LfxoJeoKtmTettFT7Sx3BfPI9FzdUe4rh+Kfn0M7VoiWbj8RnDATVIBDn1X1TqTqqRq
-	 uryMznh9TO1NxfRwu0NPWPb4lfGayjzm8g9LGUWmFRuZHZZiuce/+dgcCjIs/+/xnVRJi
-	 3blCr/mfUgKkRoQvDgaupeOxzCkIK4rNtCEuu64jqpHIGdpcXZnMghv0U8oXVmhf088C5
-	 sLFqQLYSKpGV5GBfT3kvZrfLP+vPskQ0Ju39ldLlN7p16nL2Q5vvXcF++q1ItsmLIClBY
-	 ntuE/Omjr6xDGg3vw0InZpkj8u/AaLTFIOpSTy3LJxvZDM0DaAHULk9MzhksDF0oFxA==
+	bh=4aCNFDlpVofmP8pwDwgAMKjZ2XMynjjdDtdcGdxVeLk=;
+	b=s7g67W4eOgl5a/D/rq1PlBIIThjgpGLtZU9xdFfQT/M2UKVG643jHhIdneyRyYkCVDKc
+	 bZ4lro7cYlL6eJrZ2859EkdLDRWR84Yj0Jn4SlteLExY/uHSbRTto2aIgI0yrD1NZRIlo
+	 bm7P8xZ1XaA66yDF9T9fxyN0wdigDutDC0ogFBRQCeDd8krJ4HhUJP7ZeNuidg/0CjRNG
+	 GBwABXzrHMnxHk8L9uu0k3EkAXIMpH0EuVSojdRuoEtxADRWMy8p6+2IQI1CVGDsreE0J
+	 iRJo4+YtWVav1De1WxMBnIlSLt1V3SFs4v997N5NDcNkohQ+O1tISGzyYygzeaIi+Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BiXAPsh9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wuki42zF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B956070AA5;
-	Wed,  4 Nov 2026 21:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BA06086E43;
+	Wed,  4 Nov 2026 21:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BiXAPsh9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181701F0093A;
-	Wed,  4 Nov 2026 21:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wuki42zF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8B91F0093A;
+	Wed,  4 Nov 2026 21:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827016;
-	bh=+eWZU0+kc7ZiwXosBEAiwUS1BsuH9bWz9C7dCnZjGGE=;
+	s=korg; t=1793827017;
+	bh=4aCNFDlpVofmP8pwDwgAMKjZ2XMynjjdDtdcGdxVeLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BiXAPsh9KPX7b83c3Yk3gzIEdMtBjCp/WC+lWFZku+SZGx8mfCo4WWVq3snr0Fn2D
-	 aO3e9ikYpb1xxHwXfalyTGQ4R0mGMxLGrpnVuzu6VA5JhnOdGM32rJudGCMCy2Ei9U
-	 lU9IdUl5hNK+DKAKWFjwjGXmndKWxkGrhkZfhMXE=
+	b=Wuki42zF9+dfwQqo7C7VXT0LFtQD/BsL4+X8RLJFj1O5MP4byhFLrDdH9U9CmaUGo
+	 ocGH29fJ89LO/RCmftfn66a1zDyaj1oST0dUzPdYLHskioTBLZC0ZU3v2vpzbIXtRM
+	 JNELURoDJv0dTyH9Wf5s6obSH6ZB3LmKBv80JWrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>
-Subject: [PATCH 7.3 145/547] sched_ext: Fix use-after-free of a local reenq node left on an inactive cpu
-Date: Wed,  4 Nov 2026 16:05:29 -0500
-Message-ID: <20261104211042.287808063@linuxfoundation.org>
+	Deep Shah <deepshah146@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 7.3 146/547] RDMA/uverbs: Fix DMABUF use-after-free during ufile cleanup
+Date: Wed,  4 Nov 2026 16:05:30 -0500
+Message-ID: <20261104211042.315449828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,81 +67,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Deep Shah <deepshah146@gmail.com>
 
-commit 43e1ef14a47257ebf7e3bb3ab9a6df9c6f817c5f upstream.
+commit 2854f9025d4ef6c4566f71e52d7f496d9a0f5737 upstream.
 
-A local DSQ reenq is queued on the rq through a per-sched node and run from
-deferred work. When the reenq is requested from dispatch, the work is a
-balance callback queued once dispatch is done. A cpu going down installs
-balance push early in its teardown, and queue_balance_callback() refuses new
-callbacks from then on. ops.dispatch() keeps running on that cpu until the
-rq goes offline after an RCU grace period, so a reenq it requests in that
-window may never run. The IMMED handling in dispatch_one() requests one the
-same way.
+The DMABUF release can race with ufile cleanup. When the cleanup holds
+hw_destroy_rwsem for write, uverbs_uobject_release() fails its trylock
+and leaves the uobject on the ufile list, but the dma_buf is freed as
+soon as the release returns. The cleanup then destroys the uobject and
+uses the freed dma_buf:
 
-A reenq requested from elsewhere for a cpu that is already offline goes
-through irq_work_queue_on(), which warns, and its work doesn't run until the
-cpu comes back.
+  BUG: KASAN: slab-use-after-free in uverbs_dmabuf_fd_destroy_uobj+0x46/0x200
+  Read of size 8 at addr ff11000109cf14b0 by task repro/435
+  Call Trace:
+   uverbs_dmabuf_fd_destroy_uobj+0x46/0x200
+   destroy_hw_fd_uobject+0x3f/0x50
+   uverbs_destroy_uobject+0xc5/0x380
+   __uverbs_cleanup_ufile+0x1a8/0x260
+   uverbs_destroy_ufile_hw+0x54/0x160
+   ib_uverbs_close+0x34/0x110
+  Allocated by task 435:
+   dma_buf_export+0x1b5/0x530
+   ib_uverbs_handler_UVERBS_METHOD_DMABUF_ALLOC+0x223/0x3f0
+  Freed by task 436:
+   kfree+0x301/0x530
+   dentry_kill+0x14c/0x560
+   __fput+0x23a/0x4a0
 
-Either way the node stays on the rq's list. When the scheduler is freed,
-scx_sched_free_rcu_work() warns and frees the pcpu with the node still
-linked, and the list is walked again once the cpu comes back.
+rdma_user_mmap_entry_remove() dereferences the same pointer.
 
-An inactive cpu's local DSQ holds only tasks that are bound to it or are
-being moved off, so the reenq is pointless. Ignore reenqs of an inactive
-cpu's local DSQ.
+Protect the stored dma_buf pointer with a mutex and clear it before
+release returns. Use a shared revoke helper so uobject destruction and
+mmap entry removal both skip a cleared pointer. Hold a temporary uobject
+reference across uverbs_uobject_release() and the pointer update.
 
-The test is lockless. The hotplug thread of a cpu going down runs on that
-cpu, and it marks the cpu inactive before it installs balance push. A
-dispatch on the cpu runs to completion before that thread can run there, so
-a dispatch that saw the cpu active has queued its callback by then. Requests
-from outside dispatch run from the wakeup path or through irq_work, which
-balance push doesn't affect. The grace period after the cpu goes inactive
-waits for any requester that saw it active, so that irq_work is queued while
-the cpu is online.
+Use a separate mutex because uobject destruction can free the mmap entry
+before release finishes. Map and unmap use attachment->dmabuf directly,
+so they do not need to take the new mutex while holding the reservation
+lock.
 
-Fixes: 238eba8c210d ("sched_ext: Use schedule_deferred_locked() in schedule_dsq_reenq()")
-Fixes: 76edc2761ab8 ("sched_ext: Use irq_work_queue_on() in schedule_deferred()")
-Cc: stable@vger.kernel.org # v7.1+
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Tested-by: Andrea Righi <arighi@nvidia.com>
+Fixes: 0ac6f4056c4a ("RDMA/uverbs: Add DMABUF object type and operations")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Deep Shah <deepshah146@gmail.com>
+Link: https://patch.msgid.link/20261015083637.200958-3-deepshah146@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/ib_core_uverbs.c          |   10 -----
+ drivers/infiniband/core/uverbs.h                  |   37 ++++++++++++++++++++
+ drivers/infiniband/core/uverbs_std_types_dmabuf.c |   39 ++++++++++++----------
+ 3 files changed, 61 insertions(+), 25 deletions(-)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1103,6 +1103,18 @@ void schedule_dsq_reenq(struct scx_sched
- 		rq = container_of(dsq, struct rq, scx.local_dsq);
+--- a/drivers/infiniband/core/ib_core_uverbs.c
++++ b/drivers/infiniband/core/ib_core_uverbs.c
+@@ -244,16 +244,8 @@ void rdma_user_mmap_entry_remove(struct
+ 	entry->driver_removed = true;
+ 	xa_unlock(&entry->ucontext->mmap_xa);
+ 	list_for_each_entry_safe(uverbs_dmabuf, tmp, &entry->dmabufs, dmabufs_elm) {
+-		dma_resv_lock(uverbs_dmabuf->dmabuf->resv, NULL);
+ 		list_del(&uverbs_dmabuf->dmabufs_elm);
+-		uverbs_dmabuf->revoked = true;
+-		dma_buf_invalidate_mappings(uverbs_dmabuf->dmabuf);
+-		dma_resv_wait_timeout(uverbs_dmabuf->dmabuf->resv,
+-				      DMA_RESV_USAGE_BOOKKEEP, false,
+-				      MAX_SCHEDULE_TIMEOUT);
+-		dma_resv_unlock(uverbs_dmabuf->dmabuf->resv);
+-		kref_put(&uverbs_dmabuf->kref, ib_uverbs_dmabuf_done);
+-		wait_for_completion(&uverbs_dmabuf->comp);
++		ib_uverbs_dmabuf_revoke(uverbs_dmabuf);
+ 	}
+ 	mutex_unlock(&entry->dmabufs_lock);
  
- 		/*
-+		 * An inactive cpu's local DSQ holds only tasks that are bound
-+		 * to it or are being moved off, so a reenq of it is pointless.
-+		 * Once balance push is installed, queue_balance_callback() also
-+		 * drops the callback that would run a reenq requested from
-+		 * dispatch, and irq_work_queue_on() can't reach an offline cpu.
-+		 * The reenq's node would then stay on this rq's list after
-+		 * @sch's pcpu is freed.
-+		 */
-+		if (unlikely(!cpu_active(cpu_of(rq))))
-+			return;
+--- a/drivers/infiniband/core/uverbs.h
++++ b/drivers/infiniband/core/uverbs.h
+@@ -42,6 +42,8 @@
+ #include <linux/mutex.h>
+ #include <linux/completion.h>
+ #include <linux/cdev.h>
++#include <linux/dma-buf.h>
++#include <linux/dma-resv.h>
+ 
+ #include <rdma/ib_verbs.h>
+ #include <rdma/ib_umem.h>
+@@ -135,6 +137,13 @@ struct ib_uverbs_completion_event_file {
+ 
+ struct ib_uverbs_dmabuf_file {
+ 	struct ib_uobject uobj;
++	/*
++	 * Serializes users of dmabuf with the dma_buf's release, which sets it
++	 * to NULL. The uobject can outlive the dma_buf while it waits to be
++	 * destroyed. The map and unmap callbacks use attachment->dmabuf
++	 * instead of taking this lock.
++	 */
++	struct mutex dmabuf_release_lock;
+ 	struct dma_buf *dmabuf;
+ 	struct list_head dmabufs_elm;
+ 	struct rdma_user_mmap_entry *mmap_entry;
+@@ -359,6 +368,34 @@ static inline void ib_uverbs_dmabuf_done
+ 	complete(&priv->comp);
+ }
+ 
++/*
++ * Revoke the dmabuf and wait for all of its DMA mappings to be gone. Must be
++ * called with the mmap entry's dmabufs_lock held, after the dmabuf has been
++ * removed from the entry's dmabufs list, so it runs once per dmabuf. Lock
++ * order is dmabufs_lock, dmabuf_release_lock, then the dma_resv lock.
++ */
++static inline void ib_uverbs_dmabuf_revoke(struct ib_uverbs_dmabuf_file *priv)
++{
++	mutex_lock(&priv->dmabuf_release_lock);
++	if (priv->dmabuf) {
++		dma_resv_lock(priv->dmabuf->resv, NULL);
++		priv->revoked = true;
++		dma_buf_invalidate_mappings(priv->dmabuf);
++		dma_resv_wait_timeout(priv->dmabuf->resv,
++				      DMA_RESV_USAGE_BOOKKEEP, false,
++				      MAX_SCHEDULE_TIMEOUT);
++		dma_resv_unlock(priv->dmabuf->resv);
++	} else {
++		/* A released dma_buf has no attachments left to invalidate */
++		priv->revoked = true;
++	}
++	mutex_unlock(&priv->dmabuf_release_lock);
 +
-+		/*
- 		 * A sub-sched lacking baseline access on the target cid has no
- 		 * business triggering IPIs. The lockless test is fine: slipping
- 		 * through right after a revoke is harmless and a wrong denial
-@@ -10020,7 +10032,8 @@ __bpf_kfunc struct task_struct *scx_bpf_
-  * - Local DSQs (%SCX_DSQ_LOCAL or %SCX_DSQ_LOCAL_ON | $cpu)
-  * - User DSQs
-  *
-- * Re-enqueues are performed asynchronously. Can be called from anywhere.
-+ * Re-enqueues are performed asynchronously. Can be called from anywhere. A
-+ * re-enqueue of an inactive cpu's local DSQ is ignored.
-  *
-  * %SCX_DSQ_LOCAL resolves to the local DSQ of the rq the current scheduler
-  * operation is locked to - e.g. the rq being dispatched for in ops.dispatch() -
++	kref_put(&priv->kref, ib_uverbs_dmabuf_done);
++	/* Wait till all DMA unmaps are completed */
++	wait_for_completion(&priv->comp);
++}
++
+ int __uverbs_cleanup_ufile(struct ib_uverbs_file *ufile,
+ 			   enum rdma_remove_reason reason);
+ 
+--- a/drivers/infiniband/core/uverbs_std_types_dmabuf.c
++++ b/drivers/infiniband/core/uverbs_std_types_dmabuf.c
+@@ -28,7 +28,7 @@ uverbs_dmabuf_map(struct dma_buf_attachm
+ 	struct ib_uverbs_dmabuf_file *priv = attachment->dmabuf->priv;
+ 	struct sg_table *ret;
+ 
+-	dma_resv_assert_held(priv->dmabuf->resv);
++	dma_resv_assert_held(attachment->dmabuf->resv);
+ 
+ 	if (priv->revoked)
+ 		return ERR_PTR(-ENODEV);
+@@ -49,7 +49,7 @@ static void uverbs_dmabuf_unmap(struct d
+ {
+ 	struct ib_uverbs_dmabuf_file *priv = attachment->dmabuf->priv;
+ 
+-	dma_resv_assert_held(priv->dmabuf->resv);
++	dma_resv_assert_held(attachment->dmabuf->resv);
+ 	dma_buf_free_sgt(attachment, sgt, dir);
+ 	kref_put(&priv->kref, ib_uverbs_dmabuf_done);
+ }
+@@ -73,7 +73,25 @@ static void uverbs_dmabuf_release(struct
+ 	if (!priv->uobj.context)
+ 		return;
+ 
++	/*
++	 * uverbs_uobject_release() may drop the last reference to the uobject,
++	 * keep it around until the dmabuf pointer below has been cleared.
++	 */
++	uverbs_uobject_get(&priv->uobj);
+ 	uverbs_uobject_release(&priv->uobj);
++
++	/*
++	 * The dma_buf is freed once this function returns. If the uobject was
++	 * not destroyed above, because the ufile is concurrently being cleaned
++	 * up, it is still reachable through the ufile's uobjects list and the
++	 * mmap entry's dmabufs list. Make sure those paths are not in the
++	 * middle of using the dma_buf and cannot use it afterwards.
++	 */
++	mutex_lock(&priv->dmabuf_release_lock);
++	priv->dmabuf = NULL;
++	mutex_unlock(&priv->dmabuf_release_lock);
++
++	uverbs_uobject_put(&priv->uobj);
+ }
+ 
+ static const struct dma_buf_ops uverbs_dmabuf_ops = {
+@@ -99,6 +117,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_
+ 	off_t pg_off;
+ 	int ret;
+ 
++	mutex_init(&uverbs_dmabuf->dmabuf_release_lock);
++
+ 	ret = uverbs_get_const(&pg_off, attrs, UVERBS_ATTR_ALLOC_DMABUF_PGOFF);
+ 	if (ret)
+ 		return ret;
+@@ -162,24 +182,11 @@ static void uverbs_dmabuf_fd_destroy_uob
+ {
+ 	struct ib_uverbs_dmabuf_file *uverbs_dmabuf =
+ 		container_of(uobj, struct ib_uverbs_dmabuf_file, uobj);
+-	bool wait_for_comp = false;
+ 
+ 	mutex_lock(&uverbs_dmabuf->mmap_entry->dmabufs_lock);
+-	dma_resv_lock(uverbs_dmabuf->dmabuf->resv, NULL);
+ 	if (!uverbs_dmabuf->revoked) {
+-		uverbs_dmabuf->revoked = true;
+ 		list_del(&uverbs_dmabuf->dmabufs_elm);
+-		dma_buf_invalidate_mappings(uverbs_dmabuf->dmabuf);
+-		dma_resv_wait_timeout(uverbs_dmabuf->dmabuf->resv,
+-				      DMA_RESV_USAGE_BOOKKEEP, false,
+-				      MAX_SCHEDULE_TIMEOUT);
+-		wait_for_comp = true;
+-	}
+-	dma_resv_unlock(uverbs_dmabuf->dmabuf->resv);
+-	if (wait_for_comp) {
+-		kref_put(&uverbs_dmabuf->kref, ib_uverbs_dmabuf_done);
+-		/* Let's wait till all DMA unmap are completed. */
+-		wait_for_completion(&uverbs_dmabuf->comp);
++		ib_uverbs_dmabuf_revoke(uverbs_dmabuf);
+ 	}
+ 	mutex_unlock(&uverbs_dmabuf->mmap_entry->dmabufs_lock);
+ 
 
 
