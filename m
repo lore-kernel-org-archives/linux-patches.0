@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829061;
-	b=atOGgvOBjC0gSk7JcXHvWQXlMHcI7lbEV5+Nn5QegbB1VITKYIVNhyM50T/ut3vOJ0Wd
-	 Zp78FH7cYwBfGjs/LNwtUBY4DON70bq4vHcCLiWNp6dzWDnuVELHwwvXyffGe2jMz9zZP
-	 5OGXhLIeLu49UkIqhZFpqzeNWrk6v12bjtlztIpX8C3dYGwvCEmmn613AZmNnKEvg6Hhk
-	 kGymkrRQWO324adjcXEyhyRjrTsKSnbARxp0hSrFzrOBQKk5+tlf4Ld07Ng+GKvnV+fvO
-	 J5RzNSOR3bmg3pvf7RpY9T33J14tGnvV21ZSB6dHiRGV21BDRaQKnxxJJe7nOt6fz4Q==
+	t=1793829063;
+	b=Na7qGp62gwiXehoevdrV5iwQ0/CwY/0w38wFnjayBrRNs6+QExlFmtdEsIWZEdTWIEpQ
+	 JN3//Zw6u+HxcstSXzMBnp2QZpryHWB3I0kxFRMt2FSbNajOyOTsVV1a89n9aNmmGUYPe
+	 qWO4yq5mJ6j11YJhrzosHSqF1RfY8UtbWzFoTOyQIm4lYLUFaw0IcsamEkyEj35xrjFuQ
+	 OyG+NTONBE2nNeagdnqAsdOgw+Hi5TaGygJS6IyVQD66H/0xlExT3WmvaF/ckTc3I8BdD
+	 zMpk9RIwCq7J6uQgJycRCbbKEbv0xGR0pT9C9lbImW0hOyUEoS0lBFCbKGMMIfyCN6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mAB2Y3Ly6PLqW5n68GbKKgYI2JfNO5j+jd8N5GA6smY=;
-	b=C3hxunVOE0MleuxG+Pi4zJkDZoZzIeXSXsg9AlYXw+6UA+10d/+xwDPhxqHTDV++y8A1
-	 DPmfPxrZf8yF96dSL71YhLZuLWEThOQpxS67Q920hRvbuqI6qrR3T57RguZUv2vQZXJvd
-	 t/w80VEBuXENYwlIvSyxn3UDPgcgzWJUbGOpPktCblip+ckF9zAnH3NO+eF6NUwLZyTue
-	 Ejz8cgbWcJ6tvVz6/wSlNmk+xV5lhwTjkHproxB2mvdxse46JOZ54f9JTqas8kxwzeFxD
-	 uezcS+5IIoroSuizBtZncdZP/RCXgQ5dXooy0JKMIz479WRa+prTFySWp9VfruJm55Q==
+	bh=PhZz+LbzhndfomHnHMRSGWt43inSfjjlqlSt6DzJtzE=;
+	b=Y8WjgSdzFbrioCNwq/3MlifJ8VpF/BvMcUoLXk51WccC899xKSdmlwNrXMJWuKHF9VDz
+	 fja6kXWUP+O2ag9QhVDVRlU7YgvRXuW53dSqTthIcWoOpNjynZCjEUejARUcoVDHwsfbl
+	 hkAy0RJpqy7hW/g+IfRTD1TuMfAE+1K2HFQlyLfwz8HU6xEfjheL6BcZpWwVXmHBNQVyA
+	 k2zlp6/MQ5+ZfSVYcYXr05NSOeZkeZluhvuUi+VlVH5HyQeuAUL9rw0fIKyA7RHTUptnv
+	 SEmdM3f0NbUH9zXYdHxB9wg+2KUaE6OazITSwFDMyMGIqgSLG9IUD9J/B9QzjirfoAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bworpfpe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSET5yHu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB56607077C;
-	Wed,  4 Nov 2026 21:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08896070775;
+	Wed,  4 Nov 2026 21:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bworpfpe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34591F000C1;
-	Wed,  4 Nov 2026 21:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSET5yHu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531671F000C1;
+	Wed,  4 Nov 2026 21:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829061;
-	bh=mAB2Y3Ly6PLqW5n68GbKKgYI2JfNO5j+jd8N5GA6smY=;
+	s=korg; t=1793829062;
+	bh=PhZz+LbzhndfomHnHMRSGWt43inSfjjlqlSt6DzJtzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bworpfpetKYWwThk4jiHWZqM/v6qBnYlN3y5ZaFSVAHTtZHyvqUheruCwzk5Iq6aR
-	 f/aEAuFAubG3eZW6FudxqX6AD2bGJ03bShkSNg38fGwFe7Wvdg0e+pkbvfz5tlpgjT
-	 oMMBDp0Ce0c0MyOiFHiGNsFg6N8l6y61LIa4FHEI=
+	b=vSET5yHut0aib6SxmobPh4VKHkD669+SgfhePwhblzV0gVfVhULRY4Rkq5T+/5ucZ
+	 3nYWyrAzzfkdfIjci4aXYxYp3up8vMhTXNfTJ+Ntarx9KEGPxBKuTS6iGLR5+OcwgT
+	 DZ854FigD/opnaRudsGI5PpeIaWEkWan6xYrOMbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
+	David Flynn <david.flynn@hammerspace.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.3 418/547] NFSD: Fail a pool_threads read whose reply does not fit
-Date: Wed,  4 Nov 2026 16:10:02 -0500
-Message-ID: <20261104211050.202765684@linuxfoundation.org>
+Subject: [PATCH 7.3 419/547] nfsd: fetch direct I/O alignment for files handed to the filecache
+Date: Wed,  4 Nov 2026 16:10:03 -0500
+Message-ID: <20261104211050.235646287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,59 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: David Flynn <david.flynn@hammerspace.com>
 
-commit e27c63245903402ccfdb46c576462981a7e032e3 upstream.
+commit ace72c3d263294df7111477caaeff37438aa10af upstream.
 
-The reply to a pool_threads read is the list of per-pool thread counts,
-formatted into a buffer of SIMPLE_TRANSACTION_LIMIT bytes. snprintf()
-truncates its last write and strlen() measures only what fit, so a reply
-too long for that buffer ends mid-number with no terminating newline. A
-pool running 4096 threads is reported as 40. Nothing marks the reply as
-incomplete, so an administrator reads a plausible but wrong count.
+nfsd_file_do_acquire() fetches a file's direct I/O alignment
+attributes (nf_dio_mem_align, nf_dio_offset_align and
+nf_dio_read_offset_align) only on the branch where NFSD opens the
+file itself. The other branch, taken when the caller supplies an
+already-open struct file, stores that file in the nfsd_file and
+leaves the three alignment fields zero.
 
-Take snprintf()'s return value, which reports the truncation strlen()
-cannot see, and fail the read with -ENAMETOOLONG when the list does
-not fit. That is the errno svc_one_xprt_name() already returns for the
-same condition.
+NFSv4 OPEN with CREATE takes the supplied-file branch:
+nfsd4_create_file() creates the file with dentry_create() and passes
+the resulting struct file as open->op_filp, which nfs4_get_vfs_file()
+hands to nfsd_file_acquire_opened(). The cached nfsd_file therefore
+keeps zero alignment for its whole life, and
+nfsd_write_dio_iters_init() refuses direct I/O for every WRITE to a
+file the client has just created.
 
-Suggested-by: David Laight <david.laight.linux@gmail.com>
-Fixes: eed2965af1ba ("[PATCH] knfsd: allow admin to set nthreads per node")
+Observed on an export whose backing device reports a dio_mem_align of
+4: all 16 of 16 1 MiB NFSv4.2 writes that followed an OPEN(CREATE)
+took the buffered path, while 16 of 16 writes to the same file
+reopened without CREATE went direct.
+
+Hoist the nfsd_file_get_dio_attrs() call out of the open branch so
+that it runs once, for both branches, whenever the acquire has
+otherwise succeeded. A getattr failure now fails the acquire on the
+supplied-file branch exactly as it already does on the open branch.
+
+Fixes: d11f6cd1bb4a ("NFSD: filecache: add STATX_DIOALIGN and STATX_DIO_READ_ALIGN support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260812193349.13347-1-david.laight.linux@gmail.com
+Assisted-by: Claude:claude-fable-5.1
+Signed-off-by: David Flynn <david.flynn@hammerspace.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://patch.msgid.link/20260908163448.30841-4-snitzer@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/nfsd/filecache.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -477,7 +477,7 @@ static ssize_t write_pool_threads(struct
- 	char *mesg = buf;
- 	int i;
- 	int rv;
--	int len;
-+	size_t len;
- 	int npools;
- 	int *nthreads;
- 	struct net *net = netns(file);
-@@ -531,9 +531,13 @@ static ssize_t write_pool_threads(struct
- 
- 	mesg = buf;
- 	size = SIMPLE_TRANSACTION_LIMIT;
--	for (i = 0; i < npools && size > 0; i++) {
--		snprintf(mesg, size, "%d%c", nthreads[i], (i == npools-1 ? '\n' : ' '));
--		len = strlen(mesg);
-+	for (i = 0; i < npools; i++) {
-+		len = snprintf(mesg, size, "%d%c", nthreads[i],
-+			       (i == npools - 1 ? '\n' : ' '));
-+		if (len >= size) {
-+			rv = -ENAMETOOLONG;
-+			goto out_free;
-+		}
- 		size -= len;
- 		mesg += len;
- 	}
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -1285,9 +1285,9 @@ open_file:
+ 			}
+ 			status = nfserrno(ret);
+ 			trace_nfsd_file_open(nf, status);
+-			if (status == nfs_ok)
+-				status = nfsd_file_get_dio_attrs(fhp, nf);
+ 		}
++		if (status == nfs_ok)
++			status = nfsd_file_get_dio_attrs(fhp, nf);
+ 	} else
+ 		status = nfserr_jukebox;
+ 	/*
 
 
