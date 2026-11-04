@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829203;
-	b=j0+1CntKi4Pqhln2sLVs12NHBOtmW6W81iLydmPrX5/WTRtu+NOR4STCV08wuhrIHRwS
-	 7nP2whTESJwyiyaV7spiYWHh2RXbJ2tB3PQoLnPFy8z60ITJs92QXIsWCUXBYC4QyMMow
-	 qj2W/r5ZSKPdN2urUbfiD7CnANP3SibXuFyh17LCsvpTYrtfhxY3k6X+6mb112WjSHPjI
-	 KOYR6QriMGpeAy0YYr06IiTVGPq0UWNmf9UkO9ZYzbT3fZUzzca7pOSnYLd5k4ySQuDk4
-	 EFg/kgWkady+PtDE2C8FYGn1yRz7eUPr9LYv5FyQq5p3zMbshoKj/6nwPVm98fRioGg==
+	t=1793829205;
+	b=ySnQwtDlKKY+YFTfblMz3KcAe9bG0HCiX/s81YZDsmN1jx6JBJAFTD8S10JrzVU2CGnS
+	 cHHDhUbcE9Qht26bd9xQ4K+KmMgxGTZIi6DRv2PzkGUlK5M3jQbSD8Aca05I7/JBvU8im
+	 Ga5nmu0XVj6JzGoJovq3TZYXIvpTv3C92ENcs4oSNM4v0Fq23zh3HQT1RdpFvifuc3GJE
+	 9KTfYKk/L5UV57fbAA3s1HHZJcWfsDIeio4+8IxTIBoFwB/SIgeBOJKti7HLO/A4deWRL
+	 YYLD7KB3Aq53Fjpq75OyzM2oN6UUINHGZJoaWksDWaieY4SWgnunbVrOma+bE73xagg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a+ZtQAV2tCczniWbf87UpoZ643FKThODf7clQOEkZeo=;
-	b=L/6uowVZBwfyJn/7jsPsz/dZvCoRb00wOevqkOrz/JOwai7x4ACVTGk0KyZNFHiFPFQo
-	 VO12NFLFcTMm5WuJVSmuNf2G0ZtgQgWi94CWeNq2AxGMlO4emJucHId3QhaRCoZLYrAcF
-	 s9Viv8M20Wd30zb9iaQqXQ3A6J2LIhu6GwB9rUDqSfmiKLrt8FUdxbDsDav5ElY+r4ixl
-	 hFOWxA0GOhvRdNMJnJDYUXCKCVY+0Y4KCH1LziEQ0OeTY5pqtkPZZM1PHLMlTNPgM+bpc
-	 z8xYukjpGUiD374dduDgdkgJiBeJNo2BcGS9DtPY2b0pc174B1SV6qvtMNx37GsgSlQ==
+	bh=/mHMdmXwqLdmG1RDxDq2bY4lrhmjvoM2tKKyupLxbwg=;
+	b=CQ9GQzfh6HYYmC/ngrTX46St5lF+J/ikm5zzs2e1IUhE+LoPPQ8UZdjaY2V1kjjZYLm0
+	 oCOXQtU/BngJSpxFx8vsPkhWUzIDxWoyYoNgop+USa8VR1fb/WLFh1vvJ98RJgwes0sbR
+	 YrMWQ25bry2KZkqset+lUy/eJbnbgwdsyg1OTjOQVwFH0hv5+yn6ObvkbhNIWM+yNDPlZ
+	 cXfoWoXpowmqCnRWM/pFbLEOE8pPPcBpcwRmxngVl+hA3HajKttuNbu29ShXiLVdsqGjl
+	 cVozq2gVR1rjMDS7uXXGaDBu/afYb8L4Vvn0/YFb8EU0sinARyNCVnfJjXJBGAGbPTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZ2pv7B9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PbmZ4o0O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F884607030E;
-	Wed,  4 Nov 2026 21:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E880660A2612;
+	Wed,  4 Nov 2026 21:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZ2pv7B9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2D61F000C1;
-	Wed,  4 Nov 2026 21:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PbmZ4o0O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C0B1F0093A;
+	Wed,  4 Nov 2026 21:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829203;
-	bh=a+ZtQAV2tCczniWbf87UpoZ643FKThODf7clQOEkZeo=;
+	s=korg; t=1793829204;
+	bh=/mHMdmXwqLdmG1RDxDq2bY4lrhmjvoM2tKKyupLxbwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZ2pv7B9MNnjFE0kyZpwyrQ6BxhtpZQxbuLbxqTc8knE7zEgaEUPMWhs47o7Px/6P
-	 0vfUpDeCbhbgS5uX67msDFhCVlTLMes8H0XDT8cCF1t1mIQkv5W3u8OuTpRxcjl5Kz
-	 XqX5ov/7dpc2V8tSzLsJXeq8wzlREFg5j1CVGeto=
+	b=PbmZ4o0OD149yGNyeKqJTkGaczB7v0Z3bP4XoH2F87AG1vNLr7cbjKAHbpneEnQEZ
+	 9tsclNQMm/tUXwLDtu6VXp5WxYUfoQverk5BMyEFLIIzChBfZ88tPLbiJq44EVURUo
+	 TsDsxUyOrrUdU7VgU5x+OQAEhj7b0HnvUamDuGy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Derek J. Clark" <derekjohn.clark@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 511/547] HID: hid-lenovo-go-s: Bound stale reply window before reusing send_cmd_complete
-Date: Wed,  4 Nov 2026 16:11:35 -0500
-Message-ID: <20261104211052.908262112@linuxfoundation.org>
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.3 476/547] KVM: TDX: Dont assume exit_reason[31:16] is all-0 in tdx_to_vmx_exit_reason()
+Date: Wed,  4 Nov 2026 16:11:00 -0500
+Message-ID: <20261104211051.885266011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,74 +67,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Derek J. Clark <derekjohn.clark@gmail.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-commit 6224755416e627badf69b330afec9ac6b85e5098 upstream.
+commit bc335ce04408750585b4b32f248c543c9493d545 upstream.
 
-mcu_property_out() reinits send_cmd_complete immediately after a
-timeout is detected, before the next command that reuses it is sent.
-If the MCU's reply to the timed-out command arrives after this reinit
-but before the next command's wait begins, it silently satisfies the
-next, unrelated command's wait instead of the one it actually answers,
-handing that caller stale data with no way to detect the mismatch.
+When handling the real Exit Reason, don't assume the upper 16 bits as
+all-0 in tdx_to_vmx_exit_reason(), in preparation for enabling Bus Lock
+VM exit.
 
-Track when a command has timed out via cmd_orphaned. Before the next
-command reuses the completion, wait a bounded 25ms for a stale reply
-to arrive and be consumed, then unconditionally clear the flag and
-reinit the completion. This does not fully eliminate the window in
-which an unrelated reply could still be received, but bounds it to
-a short interval right before a new command is sent. Behavior matches
-the solution to the same problem in hid-msi.
+When Bus Lock VM exit is enabled, the bit 26 of Exit Reason becomes
+valid and it can be 1 with various exit reasons.  Change the logic in
+tdx_to_vmx_exit_reason() to check the 'basic' Exit Reason for correctness.
+Also preserve bit[31:16] when changing the (basic) Exit Reason, to not
+lose the information in bit[31:16].
 
-Fixes: a23f3497bf208c59ad ("HID: hid-lenovo-go-s: Add Lenovo Legion Go S Series HID Driver")
+Change the return type of tdx_to_vmx_exit_reason() to
+"union vmx_exit_reason" for the convenience of manipulating the basic
+field.
+
+Fixes: c42856af8f70 ("KVM: TDX: Add a place holder for handler of TDX hypercalls (TDG.VP.VMCALL)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Derek J. Clark <derekjohn.clark@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://patch.msgid.link/20260819094903.3060020-5-xiaoyao.li@intel.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-lenovo-go-s.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/tdx.c |   24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
---- a/drivers/hid/hid-lenovo-go-s.c
-+++ b/drivers/hid/hid-lenovo-go-s.c
-@@ -37,6 +37,7 @@ static struct hid_gos_cfg {
- 	struct completion send_cmd_complete;
- 	struct led_classdev *led_cdev;
- 	struct hid_device *hdev;
-+	bool orphan_ack_pending;
- 	struct mutex cfg_mutex; /*ensure single synchronous output report*/
- 	bool gp_registered;
- 	bool rgb_registered;
-@@ -456,6 +457,19 @@ static int mcu_property_out(struct hid_d
- 		return -EINVAL;
- 
- 	guard(mutex)(&drvdata.cfg_mutex);
-+
-+	/*
-+	 * A reply to the previous command may still be in flight. Give it a
-+	 * short window to arrive and be consumed before this call reinits the
-+	 * completion, so a late reply can't be mistaken for this command's.
-+	 */
-+	if (drvdata.orphan_ack_pending) {
-+		wait_for_completion_timeout(&drvdata.send_cmd_complete, msecs_to_jiffies(25));
-+		drvdata.orphan_ack_pending = false;
-+		drvdata.cmd_status = -ETIMEDOUT;
-+	}
-+	reinit_completion(&drvdata.send_cmd_complete);
-+
- 	/* We can't use a devm_alloc reusable buffer without side effects during suspend */
- 	dmabuf = kzalloc(GO_S_PACKET_SIZE, GFP_KERNEL);
- 	if (!dmabuf)
-@@ -481,7 +495,9 @@ static int mcu_property_out(struct hid_d
- 							msecs_to_jiffies(timeout));
- 	ret = ret > 0 ? drvdata.cmd_status : ret ?: -EBUSY;
- 
--	reinit_completion(&drvdata.send_cmd_complete);
-+	if (ret)
-+		drvdata.orphan_ack_pending = true;
-+
- 	return ret;
+--- a/arch/x86/kvm/vmx/tdx.c
++++ b/arch/x86/kvm/vmx/tdx.c
+@@ -935,10 +935,10 @@ static __always_inline bool tdx_is_exit_
+ 	}
  }
  
+-static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
++static __always_inline union vmx_exit_reason tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_tdx *tdx = to_tdx(vcpu);
+-	u32 exit_reason;
++	union vmx_exit_reason exit_reason;
+ 
+ 	/*
+ 	 * Return the synthesized invalid Exit Reason, as the TDX module
+@@ -946,22 +946,26 @@ static __always_inline u32 tdx_to_vmx_ex
+ 	 * but this is NOT a failed VM-Enter.
+ 	 */
+ 	if (!tdx_is_exit_reason_valid(tdx->vp_enter_ret))
+-		return EXIT_REASON_UNDEFINED;
++		return (union vmx_exit_reason) {
++			.basic = EXIT_REASON_UNDEFINED,
++		};
+ 
+-	exit_reason = tdx->vp_enter_ret;
++	exit_reason.full = (u32)tdx->vp_enter_ret;
+ 
+-	switch (exit_reason) {
++	switch (exit_reason.basic) {
+ 	case EXIT_REASON_TDCALL:
+ 		if (tdvmcall_exit_type(vcpu))
+-			return EXIT_REASON_VMCALL;
+-
+-		return tdcall_to_vmx_exit_reason(vcpu);
++			exit_reason.basic = EXIT_REASON_VMCALL;
++		else
++			exit_reason.basic = tdcall_to_vmx_exit_reason(vcpu);
++		break;
+ 	case EXIT_REASON_EPT_MISCONFIG:
+ 		/*
+ 		 * Defer KVM_BUG_ON() until tdx_handle_exit() because this is in
+ 		 * non-instrumentable code with interrupts disabled.
+ 		 */
+-		return EXIT_REASON_UNDEFINED;
++		exit_reason.basic = EXIT_REASON_UNDEFINED;
++		break;
+ 	default:
+ 		break;
+ 	}
+@@ -978,7 +982,7 @@ static noinstr void tdx_vcpu_enter_exit(
+ 
+ 	tdx->vp_enter_ret = tdh_vp_enter(&tdx->vp, &tdx->vp_enter_args);
+ 
+-	vt->exit_reason.full = tdx_to_vmx_exit_reason(vcpu);
++	vt->exit_reason = tdx_to_vmx_exit_reason(vcpu);
+ 
+ 	vt->exit_qualification = tdx->vp_enter_args.rcx;
+ 	tdx->ext_exit_qualification = tdx->vp_enter_args.rdx;
 
 
