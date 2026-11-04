@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827157;
-	b=kWEjbZNyqn++TOX/+NaDov2ZGUORec8IYUR0gH21G3BgdUJ+7KqY8CffOK+51G9tk0Qy
-	 h7O6zefLFzrfBIUhcvdNGNLqlI7LaZ40Tfpuqq/IFwDuGOJo2w38vlayfcdUnlOm7z+pN
-	 Hb4lWsrJ9ACt8w+JIeEN0KDGtXysILt+gjUzi2gu7y6oe8Mg/zz2PQ+uN3VkrY6KhByx4
-	 YlX4GWDMwWEYAXxyVIH6sWVqhveXWd/YknUJqFsGWbsbDXYCVrobrS7b9wIOfrZM+PsPf
-	 WXsVtsgMSzBl0RjxlgvQE2PowrPXnFLioAIcVQUkTyjP5dABaFXMZhSrzFSBNN+K+8A==
+	t=1793827159;
+	b=XH1Ztgtho6KM4idjwPOSrNDtNZOnnO+mf5uJkZNDsTQWsEpifmlWbXkxQINAaPaQs57K
+	 BeXZiC2/xAJXEtLgVPhVz/ZXeFZlH8EbDf+qPCrJtdYsGR57MaWkvkQxhyD2pg00OQMs4
+	 gK9zYivbxTKT9rygYVmcapqJkAje2+5yyy6Qw/xNkTsFA5yKq/OU20tqG5RewiUdaQbQl
+	 niXOcFeLjF+X33Lw7McOH1AilKy0+aib5W8AHSz6CJnPLZSgIPqwwTIMwbbmJ6oI6JVK+
+	 Yg730OQ3r7wgGtNAiR3NnbTKfMwaxaiggzWy+Bcrnqt7MqapUWRANR/w1SCAkM+0tQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827157;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bHJ2KI2d+PALIGVD4ybGZs/OpkaAnpNuWJr68RWqxxA=;
-	b=xJfvrIAIZzvHudsREshTcvOrgbxDU5iC/Muxil68AiIIg/C4viSF24a1KMmpVISl31sJ
-	 8k3uugfnzyyCQy2brIzEPvMN+prs2rF3NbL/MjZFoayvqcqGeh8gEE2wUjwBGn/GxOzM5
-	 H3q0PSLx9TI5GMAAGlRBoWAeACeT84qPAfp4seh7nr8Qxm5kTQV2THRXK7seu/SUsv+hG
-	 VVVwNQ/fDIcK4EJLfJ16OOqaTSL2Z2aYhRRCTUQ2uxR5GrbRF1KalyO8tFOeo44/S39ZU
-	 /fNpoX/LIhdNvtf+2RkDJ0KQsZ2JZJuTjqUfxW+uNSVkTGUMTsEmF/iyE+1Zteazgsg==
+	bh=F0KcLnLTiaqMalS9rnmTVO/J8+XXwNf+MnsZZTxM1hM=;
+	b=s0EGhbnykbattxY2563TiWN8EP13k2sgty44HqxQgre3PYWcxbqJbm38D+jsXpQbfmMQ
+	 R1oNvchCGKSzRXEeUDg7TlXNplDgd8MqFam5FYyJMOwlGs4KVZveT1Al+OkFvqHbm5u4l
+	 LxGUP66Ab1MbIe2kExhxWm3GfVeZ/YgFv9zCrNdn+ma9LK0QGHJezLBkklSqTurGyP30a
+	 Zy5rMZfbUdHOdkGDNL2Lmkh0N73Sk/e+3pw7j0k1EG2Cd2K0MdhxbJWVjYOT9McxgHuSR
+	 tVm00GnTK/+srw1y/hq7obHeUkwkDQsBGh3OSKa9ixsC2uyQFSzDAWzE2R3T+u+Z27A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dzzT//pK";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUPpQ2QW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935A5606A86E;
-	Wed,  4 Nov 2026 21:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32294606A86E;
+	Wed,  4 Nov 2026 21:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzzT//pK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA561F000C1;
-	Wed,  4 Nov 2026 21:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUPpQ2QW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26931F000C1;
+	Wed,  4 Nov 2026 21:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827157;
-	bh=bHJ2KI2d+PALIGVD4ybGZs/OpkaAnpNuWJr68RWqxxA=;
+	s=korg; t=1793827159;
+	bh=F0KcLnLTiaqMalS9rnmTVO/J8+XXwNf+MnsZZTxM1hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dzzT//pKu1xhj5RazZ8vdo7Ukc/UxZh7VpfEbkxt1n2c+ves6VkdtBcxN1tj6CkIi
-	 KDBNIxmfs7rON6vpr3NIXmZh0krXegUD9IWonTyYd0WFBWWNjrOAG5HkAngfoMlXbN
-	 vcTRumR6PWERFOkOLHXnBBOm11T86KFixv3AuadA=
+	b=oUPpQ2QWVXqAURrzazmFsAw8zpvrvbpCJrV6Qz8ti/ohJO1ceF9rmOIO7+qY7A0Hj
+	 3wXC1amgsRYpSzaAcE1M8SlPrrPTnNHmKl9vw3Mdx9ZAjL6PkSlwxuwL8IbfQNO4hi
+	 4u53qt5I2JpafhE5WD8pZMDdc0TFUmPsABJxJzYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Eugen Hristev <ehristev@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.3 230/547] media: microchip-isc: take a reference on the parsed endpoints
-Date: Wed,  4 Nov 2026 16:06:54 -0500
-Message-ID: <20261104211044.693197496@linuxfoundation.org>
+	syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 7.3 231/547] media: redrat3: fix UAF in probe error path leaving rc device registered
+Date: Wed,  4 Nov 2026 16:06:55 -0500
+Message-ID: <20261104211044.719417518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,150 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit f2eb2fd388bf3f1959556a326e797cacca341c86 upstream.
+commit af452b9e01331b5338a1e5141624f17607239207 upstream.
 
-for_each_endpoint_of_node() drops the reference on the current node as
-it advances. xisc_parse_dt() and isc_parse_dt() store the node in
-subdev_entity->epn and release it later with of_node_put(), but never
-took their own reference, so the stored pointer refers to an
-already-released node. This underflows the refcount and can
-use-after-free, reachable through the camera device tree overlay.
+redrat3 stores its device name and phys path inside the main rr3
+structure, and the rc device's device_name and input_phys point into
+rr3. When the RC device is registered, it keeps those pointers.
 
-Take a reference with of_node_get() when storing the node, and drop it
-in microchip_isc_subdev_cleanup() so the entities the bind loop never
-reaches on an early exit do not leak it.
+  KASAN: slab-use-after-free in string_nocheck lib/vsprintf.c:648
+  Read of size 1 at addr ffff888051fda758 by task udevd/7464
+  Call Trace:
+   string_nocheck lib/vsprintf.c:648 [inline]
+   string+0x216/0x2d0 lib/vsprintf.c:730
+   vsnprintf+0x74a/0xef0 lib/vsprintf.c:2945
+   vscnprintf+0x41/0x90 lib/vsprintf.c:3014
+   sysfs_emit+0x10e/0x180 fs/sysfs/file.c:761
+   input_dev_show_name+0x58/0x70 drivers/input/input.c:1282
 
-Fixes: c9aa973884a1 ("media: atmel: atmel-isc: add microchip-xisc driver")
-Fixes: d6701f13bd07 ("media: atmel: Use v4l2_async_notifier_add_fwnode_remote_subdev")
+  Allocated by task 10:
+   redrat3_dev_probe+0x477/0x2570 drivers/media/rc/redrat3.c:1023
+  Freed by task 10:
+   redrat3_delete drivers/media/rc/redrat3.c:466 [inline]
+   redrat3_dev_probe+0x1bf4/0x2570 drivers/media/rc/redrat3.c:1124
+
+Syzkaller triggers this via usb probing. It probes the RedRat3 USB
+interface, which calls redrat3_dev_probe() in redrat3.c. That function
+allocates rr3, then builds an rc device whose name points into rr3 via
+redrat3_init_rc_dev() in redrat3.c, and registers it with
+rc_register_device().
+
+When the detector enable fails after the RC device is registered, the
+probe jumps to the led_free path. That path unregisters the LED but does
+not unregister the RC device before freeing rr3 via redrat3_delete() in
+redrat3.c. The RC device still holds device_name = rr3->name which is now
+freed.
+
+Later udevd reads /sys/.../input device name via sysfs_emit() in file.c,
+which calls input_dev_show_name() in input.c, which emits dev->name which
+is the freed rr3->name.
+
+When the detector enable fails after the RC device is registered, the
+error path must not leave the RC device registered. Make the probe error
+path clean up the same way redrat3_dev_disconnect() does.
+
+This change should be safe because the RC device is fully registered at
+this point and its teardown via rc_unregister_device() is protected by
+the input device mutex, and rr3 is still alive during unregister so
+device_name remains valid until after unregister. The URBs are killed
+before rc_free, so no completion can run after rc is freed. No new lock
+ordering is introduced.
+
+Reported-by: syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=302b9b575a06733ff60c
+Link: https://lore.kernel.org/all/6a74a76d.ec7c9571.3ac9bb.0056.GAE@google.com/
+Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/microchip/microchip-isc-base.c    |    6 +++++
- drivers/media/platform/microchip/microchip-sama5d2-isc.c |   17 ++++++++++-----
- drivers/media/platform/microchip/microchip-sama7g5-isc.c |   17 ++++++++++-----
- 3 files changed, 30 insertions(+), 10 deletions(-)
+ drivers/media/rc/redrat3.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -1860,6 +1860,12 @@ void microchip_isc_subdev_cleanup(struct
- 	list_for_each_entry(subdev_entity, &isc->subdev_entities, list) {
- 		v4l2_async_nf_unregister(&subdev_entity->notifier);
- 		v4l2_async_nf_cleanup(&subdev_entity->notifier);
-+		/*
-+		 * Release the endpoint reference taken while parsing. It is
-+		 * NULL for entities the bind loop already consumed, so this
-+		 * only drops the ones left over on an early exit.
-+		 */
-+		of_node_put(subdev_entity->epn);
- 	}
- 
- 	INIT_LIST_HEAD(&isc->subdev_entities);
---- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-@@ -356,28 +356,30 @@ static int isc_parse_dt(struct device *d
- 	struct device_node *epn;
- 	struct isc_subdev_entity *subdev_entity;
- 	unsigned int flags;
-+	int ret;
- 
- 	INIT_LIST_HEAD(&isc->subdev_entities);
- 
- 	for_each_endpoint_of_node(np, epn) {
- 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
--		int ret;
- 
- 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
- 						 &v4l2_epn);
- 		if (ret) {
--			of_node_put(epn);
- 			dev_err(dev, "Could not parse the endpoint\n");
--			return -EINVAL;
-+			of_node_put(epn);
-+			ret = -EINVAL;
-+			goto err_cleanup;
- 		}
- 
- 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
- 					     GFP_KERNEL);
- 		if (!subdev_entity) {
- 			of_node_put(epn);
--			return -ENOMEM;
-+			ret = -ENOMEM;
-+			goto err_cleanup;
- 		}
--		subdev_entity->epn = epn;
-+		subdev_entity->epn = of_node_get(epn);
- 
- 		flags = v4l2_epn.bus.parallel.flags;
- 
-@@ -398,6 +400,11 @@ static int isc_parse_dt(struct device *d
- 	}
- 
+--- a/drivers/media/rc/redrat3.c
++++ b/drivers/media/rc/redrat3.c
+@@ -975,6 +975,7 @@ static int redrat3_dev_probe(struct usb_
+ 	struct device *dev = &intf->dev;
+ 	struct usb_host_interface *uhi;
+ 	struct redrat3_dev *rr3;
++	struct rc_dev *rc;
+ 	struct usb_endpoint_descriptor *ep;
+ 	struct usb_endpoint_descriptor *ep_narrow = NULL;
+ 	struct usb_endpoint_descriptor *ep_wide = NULL;
+@@ -1119,9 +1120,12 @@ static int redrat3_dev_probe(struct usb_
  	return 0;
-+
-+err_cleanup:
-+	list_for_each_entry(subdev_entity, &isc->subdev_entities, list)
-+		of_node_put(subdev_entity->epn);
-+	return ret;
- }
  
- static int microchip_isc_probe(struct platform_device *pdev)
---- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-@@ -340,6 +340,7 @@ static int xisc_parse_dt(struct device *
- 	struct isc_subdev_entity *subdev_entity;
- 	unsigned int flags;
- 	bool mipi_mode;
-+	int ret;
+ led_free:
++	rc_unregister_device(rr3->rc);
+ 	led_classdev_unregister(&rr3->led);
+ redrat_free:
++	rc = rr3->rc;
+ 	redrat3_delete(rr3, rr3->udev);
++	rc_free_device(rc);
  
- 	INIT_LIST_HEAD(&isc->subdev_entities);
- 
-@@ -347,23 +348,24 @@ static int xisc_parse_dt(struct device *
- 
- 	for_each_endpoint_of_node(np, epn) {
- 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
--		int ret;
- 
- 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
- 						 &v4l2_epn);
- 		if (ret) {
--			of_node_put(epn);
- 			dev_err(dev, "Could not parse the endpoint\n");
--			return -EINVAL;
-+			of_node_put(epn);
-+			ret = -EINVAL;
-+			goto err_cleanup;
- 		}
- 
- 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
- 					     GFP_KERNEL);
- 		if (!subdev_entity) {
- 			of_node_put(epn);
--			return -ENOMEM;
-+			ret = -ENOMEM;
-+			goto err_cleanup;
- 		}
--		subdev_entity->epn = epn;
-+		subdev_entity->epn = of_node_get(epn);
- 
- 		flags = v4l2_epn.bus.parallel.flags;
- 
-@@ -387,6 +389,11 @@ static int xisc_parse_dt(struct device *
- 	}
- 
- 	return 0;
-+
-+err_cleanup:
-+	list_for_each_entry(subdev_entity, &isc->subdev_entities, list)
-+		of_node_put(subdev_entity->epn);
-+	return ret;
- }
- 
- static int microchip_xisc_probe(struct platform_device *pdev)
+ no_endpoints:
+ 	return retval;
 
 
