@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829404;
-	b=UIO9jJ0nBalpZR66QGAUlmNVon5HRpMZwfztwYCz4XMjiv9/9SDX7vZ57xV7a7/GPc2R
-	 jdcWuds7cvkgiYPxB3kkuvy/F0+ev3j10h2TfYnBQNS1RP6bZdOXfro3PG3cs0gbVne0E
-	 ruL80Z8EWJaImZ1YpNFF2p2XoNy7Huo+/E5MeIkOTxyq/PnbYyoADJRs48g78So60W+ND
-	 +l1kW9m4kuCgcKlOJ8k1w+4eS6g7Ss4t+wb33vYkqumB3VdV7lW/vW491+9PJLPMclqOW
-	 41SSlj3IrOEtwzkXQJracByr6OK9vjqzSUYspLAdNIz4PiAGhPWqivQs9utshiTWplw==
+	t=1793829406;
+	b=huTGCAdAUNa/JogngCyfyE3fDlh8xp/D9/pRRPzN09F6VkYmL5PITQqhRZcemCAV94mW
+	 MhadNgOJSf5lj/9knENgwR2PVYqD+wgAPFm0bqkjCDtmkBcmyFkzcbQNasCG5Zd01Yrrn
+	 n7L2ChbUyYg8ZeIYwugBo9k9l06oEt9EDQZjCRXitUFPh8bZ+MTTGFsFJAa/Mt8XmvI8G
+	 Thbm8gBgxTh9++d9TqEBOSoux8+BWYmrp3+5TzzumyPQw0rivxalT/goDy0VTviLbFm//
+	 oJab78Mt30wl0IZGZvYC8nHXXnsbCrqFutxPFbO1dwGtp82/U+6wvyzAhfh95khDN/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829406;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wz6oxcMsI0gz7GeJmn1pu3VgQunqAvybblXvbQuTtko=;
-	b=DbP901D7xuWYmoc0YNgluGfOiHGMADBRa/WZAbhKdwBRBfsp7zdUWXkxrSf9904Vxu25
-	 +aEPBRv5ZaikT61VeL2YcQtg/IeMaHEJ5Frs9ibv63uAsBR4mHMaxl+jJmwhSDMNi9AsX
-	 2chz9hEe2rJdQyV5Jfrvw3LVwnc7Ezwr6r2cFI7RIjZJu+e8jGZL5IDsVQCd1B64T3Cm2
-	 yG3uEfcIAXM3LUrWSirkXS0kdwoXdGO87i9hEeKT4PmOcXuplSzSpIG8dd65/7wxpX+fL
-	 5m4nb7gpe852S/dTrmPfdJ4j1bIK8/31Bk3XpN4ZihTcUyFI63ilUcbUbyP8x+zXvtg==
+	bh=AfPMIVCAykG8c0nJZBUiHFlk9U1SscROT2qVovLV8TQ=;
+	b=VYrqw3psgYwce+26wvOixr1DQnyno1ylF+FGf43vUlWVwCQiwi6YVvNdT/02luk+sHpu
+	 PradoKn0JknoE0M01aKbhuQWuX4aoYJHgPrvzLgV8d+g2d72phzrMCMKIrqH/e+JBAT7v
+	 yrbXwhn/TprYmtPP+6TIOLQjLxKRaHTntsurWYNDq5kS4ip7toWCZicF8I/xyQSDcG+sh
+	 uZGK2QsEwWhBjTOM4JeubOeyU2sdjEBK9IyeXkllhwAEax3AhkoqEYqF69tNKKDQRVdc8
+	 2bC1tgfdZ3/Ce7kmGyeacb9V+ZHnZSTKpVldGF5vfzFKyMkwJFCxTPSQ7BATQRMDSIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NqOVGsFl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D/x2bXA0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DF56086E4A;
-	Wed,  4 Nov 2026 21:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B8660C0169;
+	Wed,  4 Nov 2026 21:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NqOVGsFl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E232D1F000C1;
-	Wed,  4 Nov 2026 21:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D/x2bXA0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7652E1F00919;
+	Wed,  4 Nov 2026 21:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829404;
-	bh=wz6oxcMsI0gz7GeJmn1pu3VgQunqAvybblXvbQuTtko=;
+	s=korg; t=1793829405;
+	bh=AfPMIVCAykG8c0nJZBUiHFlk9U1SscROT2qVovLV8TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NqOVGsFlqMfLUcL+jzy7c/WYMI6wRP53u/vqa8FDba5wrFo+htl2EVUc0VbOMgSDn
-	 1R+o1hv0G34S63LYv0LdzhpKqh+TKAPc7bSG9IoGmSZknAcyv+0kh1Z/7cZSgxC9tr
-	 YjO+0QtvIOf82amESwUeVjuJ5PxxGH86RxHnVJqM=
+	b=D/x2bXA0D6yOHUuSZfPPi4YXBI8qO0YZBWKYToiIghmQ4qklAqnOvkyWThN92XIvZ
+	 ebhAYqtFNrFck7ZxvvDnvfRd6BJexWJApP8L9rwwkuc8ijXfnQ0tSbEPKWTjkJ9rcN
+	 ShQ+XEjOwXZN+IXhWQOA9udyTbDMbW76x53AGxeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0106/1005] nvme: handle positive error codes in nuse_show()
-Date: Wed,  4 Nov 2026 15:57:19 -0500
-Message-ID: <20261104211046.621393352@linuxfoundation.org>
+Subject: [PATCH 6.18 0107/1005] nvme-auth: use crypto_memneq for DH-HMAC-CHAP response comparison
+Date: Wed,  4 Nov 2026 15:57:20 -0500
+Message-ID: <20261104211046.649951525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,47 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit dd516cd7624648c71d338d99368587f10ecc9f0b ]
+[ Upstream commit 3a6d89836ab09d53f4c32c57588689a378ce4363 ]
 
-Function __nvme_submit_sync_cmd() returns a positive error code for NVMe
-errors. Otherwise, we get 0 for success or a negative error code for a
-kernel error.
+DH-HMAC-CHAP authentication compares HMAC response digests with memcmp().
+Standard memcmp() may stop at the first differing byte, which can leak
+timing information to a remote attacker and allow incremental recovery
+of the expected digest.
 
-In nuse_show() -> ns_{head}_update_nuse() -> nvme_identify_ns() ->
-nvme_submit_sync_cmd() -> __nvme_submit_sync_cmd(), we then may get a
-positive error code returned.
+Use crypto_memneq() for constant-time comparison on both the host path
+that validates the controller Success1 response and the target path that
+validates the host Reply digest.  Other memcmp() uses in the NVMe auth
+code (e.g. fixed string prefix checks) are not security-sensitive and
+are left unchanged.
 
-Function nuse_show() - being a device attr handler - should return the
-number of bytes written to the buffer or a negative error code.
-
-Convert any positive NVMe error code to -EIO.
-
-Signed-off-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/sysfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/auth.c               | 3 ++-
+ drivers/nvme/target/fabrics-cmd-auth.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
-index 16c6fea4b2db6..12478e0297356 100644
---- a/drivers/nvme/host/sysfs.c
-+++ b/drivers/nvme/host/sysfs.c
-@@ -239,8 +239,10 @@ static ssize_t nuse_show(struct device *dev, struct device_attribute *attr,
- 		ret = ns_head_update_nuse(head);
- 	else
- 		ret = ns_update_nuse(disk->private_data);
--	if (ret)
-+	if (ret < 0)
- 		return ret;
-+	else if (ret > 0)
-+		return -EIO;
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index 8f3ccb317e4de..9d73713d6f828 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -9,6 +9,7 @@
+ #include <linux/unaligned.h>
+ #include <crypto/hash.h>
+ #include <crypto/dh.h>
++#include <crypto/utils.h>
+ #include "nvme.h"
+ #include "fabrics.h"
+ #include <linux/nvme-auth.h>
+@@ -381,7 +382,7 @@ static int nvme_auth_process_dhchap_success1(struct nvme_ctrl *ctrl,
+ 		return 0;
  
- 	return sysfs_emit(buf, "%llu\n", head->nuse);
- }
+ 	/* Validate controller response */
+-	if (memcmp(chap->response, data->rval, data->hl)) {
++	if (crypto_memneq(chap->response, data->rval, data->hl)) {
+ 		dev_dbg(ctrl->device, "%s: qid %d ctrl response %*ph\n",
+ 			__func__, chap->qid, (int)chap->hash_len, data->rval);
+ 		dev_dbg(ctrl->device, "%s: qid %d host response %*ph\n",
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index 35bf1a2357d49..5b010318286e4 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -10,6 +10,7 @@
+ #include <linux/nvme-auth.h>
+ #include <crypto/hash.h>
+ #include <crypto/kpp.h>
++#include <crypto/utils.h>
+ #include "nvmet.h"
+ 
+ static void nvmet_auth_expired_work(struct work_struct *work)
+@@ -187,7 +188,7 @@ static u8 nvmet_auth_reply(struct nvmet_req *req, void *d, u32 tl)
+ 		return NVME_AUTH_DHCHAP_FAILURE_FAILED;
+ 	}
+ 
+-	if (memcmp(data->rval, response, data->hl)) {
++	if (crypto_memneq(data->rval, response, data->hl)) {
+ 		pr_info("ctrl %d qid %d host response mismatch\n",
+ 			ctrl->cntlid, req->sq->qid);
+ 		pr_debug("ctrl %d qid %d rval %*ph\n",
 -- 
 2.53.0
 
