@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829305;
-	b=27+ZPcY+bclhN2Z9qoTVBN8KxsUkKotix7fN3qp4r4hXmISARB0j4seZgDPdMVi2mzaL
-	 s7CA0COk+8doWqeSe/paCcCthdC9hhQoQQzFMW8bYEfvGWF/iGMlZ8YJEBJU4FVL7uBzU
-	 E6KoZQ0PJRUjD0ibsX0XMGeu5FrSyMwYdSgJVTO0owqcv+3sunyOT6ZZLl7jrHWELgyhU
-	 g0qkhN8dbCcQDMJp5G4xiFaMslLrqEAjusgnMdpBkFydNK9Fev20EmrJst5Ohe4uw22D0
-	 TNUaFBG6VgY1mXWY53yUfzXftyaU6/Qo85Ew6agPIAb8rVW+aOgLh97je1MfZcCt/XA==
+	t=1793829307;
+	b=fvA/w92/EqtQTSl2Y7zo7gm3W2kfdxCF5SoqGUlL4y2c0nLF/ygFjjkIgfUgOqnzsv9/
+	 VfHRWn32QS9eM5AagDp0pvZ0hvr3VYKtpqaasr1kDOrYFRXTBKQWZebFd4rPFhg0R3yP4
+	 xndGm0HoQeZaSZGbVfyF0ejZynjrtHjn9rN878yo/uHjLA1mCtPV6Yz0nIJSmDNY7ASPJ
+	 pDue+WRRyVf3pDyhlkVC6p2frYYHbXncSfrxFJ7O8G16kbWYGdYmOnxgQ0Gvrh1h57Ps7
+	 /Lj6aXVssuBvU962s/zDr/WCInOBE8vdYb31s3rbak9TkJqn3kwRWfjGjS5YrRgdBXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829305;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o6mtLmDhKbUN2QaSpDkE+zdjK60IbaAyp1jdtZRYG9w=;
-	b=3VZRJwNhgaOTUKT3aCcGw0b9rbXIV+2Lxml202FHMVhFj480TkCL3u81dYROP+Bd22gE
-	 L42Kxb452FWiAv8nd2gJeiH6t5JyEOOv32eEAGmbo7lC6QHlh6nfJrZ9MN7eFseK8OPA3
-	 p33vQoOWjEjChZVBmLFhtOp7E1olghHll6pskLODGVFQLI2FDXMYV/MKEgNDGykU+tC+g
-	 7fQrMl1tUkZGSM1VBzPcZ7Ts1w2c2sIVYQgGwifn1UljxqTSZmwW8Tmu657ol6z6MBNRt
-	 LjOzTnfKR3q15SnMDkGZWZG3cZgD16phKvj8Gtkq6OxGTEUiatfR7K0X/xRfXyorb2Q==
+	bh=RE/RKLdcjGV0Usz16J2Gtu/3q/qySomVUVviDsv5Tx0=;
+	b=K7cHAC6Iwm6QmtEcX++TwKQUS/AHGA2zd+2PU3jOGc16ATjkqoxR6Uzyek2ngz7IxnwN
+	 7bNqJPrKVFDullEAkhRVnInVHp6yGhqhAfNbQTh/8tpqjs26ewKaoWeebImS5a6j+XT4T
+	 ZL5HcBS/g3LwcRsCjrnsZxhxWh0fGHp/Zy1SlDQpEGj+n46OO+viGkG9am4lzzkrABAW3
+	 k9jUUnLQzDBOs1OOiJ75Sjh9L62JMEF8KlQrSkuK14urpvz4jqpuKGOOMAj1cnrRiJInB
+	 LP9lUlwPyYgxhRgPF1wUlqRW6PF7KXStxlpKF5smWpIHm/+sCC2fggQ7XNSpHFARkgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+4FHtAj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBQaDFfA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D8560A3824;
-	Wed,  4 Nov 2026 21:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA606074918;
+	Wed,  4 Nov 2026 21:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+4FHtAj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357311F0093A;
-	Wed,  4 Nov 2026 21:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBQaDFfA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE041F00A02;
+	Wed,  4 Nov 2026 21:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829305;
-	bh=o6mtLmDhKbUN2QaSpDkE+zdjK60IbaAyp1jdtZRYG9w=;
+	s=korg; t=1793829307;
+	bh=RE/RKLdcjGV0Usz16J2Gtu/3q/qySomVUVviDsv5Tx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+4FHtAjN+/Pi78XtoxsCL7X+SLn20ywWl7Kjp6g9nDXIz8RTqJS6YP1BzGNEj3LW
-	 z7/HrAymeSr1EvxNuHABwdPgaUHJzysQGpVPU1EVhHtX9TTmYv3yYqgh5pV+QLoU+K
-	 RGtvWB5IQjRH10x9ERYIcdDpINiuYk8vWxCnC4Wk=
+	b=TBQaDFfAxuHG5GBFNgl6R/i352ImUUBO5RSM6OY48m78tvFLr0G5Q1zO1m0qncUe8
+	 zWEJD3FqmsrZP2M3BIm29SJlHnkBxEfMWxIG/2oI5N6xexxoKQ1BeFIpiO+3Uds8z+
+	 exk/GodQcnWDsqOrQSHPkVMoNgiDnNvztztQdO08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mithil Bavishi <bavishimithil@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	"Kevin Hilman (TI)" <khilman@baylibre.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0041/1005] ARM: OMAP2+: Add CFI type for omap4_finish_suspend
-Date: Wed,  4 Nov 2026 15:56:14 -0500
-Message-ID: <20261104211044.727792455@linuxfoundation.org>
+Subject: [PATCH 6.18 0042/1005] iio: accel: fxls8962af: clamp the device-reported FIFO sample count
+Date: Wed,  4 Nov 2026 15:56:15 -0500
+Message-ID: <20261104211044.759471022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,58 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mithil Bavishi <bavishimithil@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 4a7b197ad28d71f9fac873f283b4408df3fdb287 ]
+[ Upstream commit 2f8225b91eb478ca2e9aec8aaef4d229765bcebe ]
 
-With CONFIG_CFI enabled, OMAP4 can trap in omap4_enter_lowpower()
-because omap_pm_ops.finish_suspend points directly to the assembly
-routine omap4_finish_suspend, which lacks the expected KCFI type
-metadata.
+fxls8962af_fifo_flush() transfers the sample count the device reports in
+BUF_STATUS into an on-stack buffer sized for FXLS8962AF_FIFO_LENGTH (32)
+samples, but the count is a 6-bit field (0..63) that is only checked for
+zero. A device, or an attacker on the I2C/SPI bus, reporting 33..63
+overflows the buffer by up to 186 bytes: a stack out-of-bounds write.
 
-Annotate omap4_finish_suspend with SYM_TYPED_FUNC_START so the assembly
-routine carries the KCFI type metadata.
+Clamp the count to FXLS8962AF_FIFO_LENGTH before the transfer, mirroring
+the clamp already applied in fxls8962af_set_watermark(). Conforming
+hardware reports at most that many samples and is unaffected.
 
-Signed-off-by: Mithil Bavishi <bavishimithil@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260604054048.18980-1-bavishimithil@gmail.com
-Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/sleep44xx.S | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iio/accel/fxls8962af-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/mach-omap2/sleep44xx.S b/arch/arm/mach-omap2/sleep44xx.S
-index f09c9197808b1..8b515f30072b0 100644
---- a/arch/arm/mach-omap2/sleep44xx.S
-+++ b/arch/arm/mach-omap2/sleep44xx.S
-@@ -6,6 +6,7 @@
-  * 	Santosh Shilimkar <santosh.shilimkar@ti.com>
-  */
+diff --git a/drivers/iio/accel/fxls8962af-core.c b/drivers/iio/accel/fxls8962af-core.c
+index 8763e91c63d2b..1ecffbf41f64f 100644
+--- a/drivers/iio/accel/fxls8962af-core.c
++++ b/drivers/iio/accel/fxls8962af-core.c
+@@ -970,6 +970,8 @@ static int fxls8962af_fifo_flush(struct iio_dev *indio_dev)
+ 	if (!count)
+ 		return 0;
  
-+#include <linux/cfi_types.h>
- #include <linux/linkage.h>
- #include <asm/assembler.h>
- #include <asm/smp_scu.h>
-@@ -58,7 +59,7 @@
-  * stack frame and it expects the caller to take care of it. Hence the entire
-  * stack frame is saved to avoid possible stack corruption.
-  */
--ENTRY(omap4_finish_suspend)
-+SYM_TYPED_FUNC_START(omap4_finish_suspend)
- 	stmfd	sp!, {r4-r12, lr}
- 	cmp	r0, #0x0
- 	beq	do_WFI				@ No lowpower state, jump to WFI
-@@ -223,7 +224,7 @@ skip_scu_gp_clear:
- 	isb
- 	dsb
- 	ldmfd	sp!, {r4-r12, pc}
--ENDPROC(omap4_finish_suspend)
-+SYM_FUNC_END(omap4_finish_suspend)
++	count = min(count, FXLS8962AF_FIFO_LENGTH);
++
+ 	data->old_timestamp = data->timestamp;
+ 	data->timestamp = iio_get_time_ns(indio_dev);
  
- /*
-  * ============================
 -- 
 2.53.0
 
