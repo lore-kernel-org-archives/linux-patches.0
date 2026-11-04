@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830820;
-	b=kUUwoOjYwu5JFITNd+lw8rjLOC/Eri8VVwOBzH+gGHziwgttE6yVRNwHfhQKD0ltwAri
-	 iGjdAydknkqN4mOx/sFhordclsI/qeaYDXLULGxpbALivPAIAgYbnTlTB8ihDYpN0EQky
-	 jQSbxcUEHZG48SlSaouOthavAbfAnW5OyubxIxCgBpsuj/TcEqAOq9UdEBuaAMF3CT+cb
-	 bX3vPMTAa5xWQkhcxOy3pnE7n1sG8aYgKKZTfNi3ZhckeVjsh4sZ5b9W6U8zEzzGtExzQ
-	 Ksc6W9e95Uwb26MaNMwseFE2XfgkV/D6kOcuc+sUauSZ9/89BR3k/i4J2bcx3dFadbA==
+	t=1793830822;
+	b=SsxCcxn7SQJRcYBWMzNBcRgluFZ9NKl6di2J93zufnX/LWgzUPgy7CUegJibaJZNcKaI
+	 UyrpEO+NVlKsEJNDNBWLHhPj2V29PwGJE55H2eL92HoeCSfS3gCH7fefiR9E5cWvCdirW
+	 ErvWYvSaV2U60so1LZsycZIaWbw2YaFA6uFw5KBaUAypIgnJd2Yz2U7+dFJsHZAIO1D07
+	 GU9BKefIQkykbEPQZTBnItZ3gGbCK+LknMNSJ+yscs7UtWx7gnu1f7jzXoVsGHsH1QJMi
+	 +VXa5QoppaikLrko6468X0FMXA9xU5OOAX2PhKkeAZ5acBGpv4kjqkwN6aWsujUScMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=co2jgbm5xP6iNPFAAR46m84b6A0Q6v34CTKtvuePCtg=;
-	b=eR63DU/mUD5DJdDFjETci321NoOARWvINufOOxYHBZxuFkxjVirlE1pEpLJJ172t3f1Y
-	 yc5+HZyV+2h3NK9hH16i/bxR6l1hbQ86CJySvoS9lQ+iwLX+kRoSoS9pm7CRjPfSJGpKx
-	 KnOHDMsr9PTbaVBiT4BTJAi34joYRlgpYxNIHasL4w0k0PHDHhrQXqAMdayjCbde6xMD1
-	 ic0Ia0oJKA7HeEonjBP318WXCbGp0Sh37viAAgd4xuf+Ww6vSv0psLpahs1Tmh3u1/oEb
-	 SVxkjmLpdTBFEFEHzSAXmk3zccjAttZC2EBpaIc7b5i2UowB1dGs1EdxNzs9G2hwfBg==
+	bh=C8ehrh+z2yM5SGPOo2f08UKTgT6bhaaKIu10qMugurQ=;
+	b=K3iC4mVMmuAvHZmCCYk/Ph7+B2fKAtyiBZY/oeQ7MyORIvkfK3CBDiBhwywYp/R40i2d
+	 ZaQhWtC5l5RmIb7czNq86W9m5/teBtbXG56P0rBvO/w8zDXWZH4eBVV+hI5CqzSG26B4h
+	 TeyAP3BBHl5nYJbY6bPdCoOsP0e8m3i2MMHswHyoNtUiOiEB47xrQpuhV42kvKsCwZXYA
+	 4SKYumlhxsdb2Y//5exCElcUNx7/frE24bFHhlDQeDOyZ7MAACQdQUGCCamtK9ViSl9j/
+	 uFrcvTHflnYsr513HX90l8R7BO7UROtuIAg51mQbYkOZ6wWQguQ4bQkXcZIpSrldtRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nm1JFzUP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukdiL9G3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264D5606AC33;
-	Wed,  4 Nov 2026 22:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6648E606AC39;
+	Wed,  4 Nov 2026 22:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nm1JFzUP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82021F00A18;
-	Wed,  4 Nov 2026 22:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukdiL9G3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBE31F0093A;
+	Wed,  4 Nov 2026 22:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830820;
-	bh=co2jgbm5xP6iNPFAAR46m84b6A0Q6v34CTKtvuePCtg=;
+	s=korg; t=1793830822;
+	bh=C8ehrh+z2yM5SGPOo2f08UKTgT6bhaaKIu10qMugurQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nm1JFzUPAr9IBXKgmtGIjUb5MepQFzATl/Jutb753a0FGXLpaghLBKlMbxefN7MC3
-	 bsXn05WAcBvWWA6XbghypB9KL+0aRBpLoWLIJ8NndNA18lJ5sSGCSMOJQ02fzdHaOW
-	 Or1gxgAK08hjFrsm02jnOJU0CLuC8H7Fgf2KaBv4=
+	b=ukdiL9G3KdBrCQDQSWB3FbbBdKSj2gWzUR+xyuSn6D+56jtln5iff3lspryx4cGBE
+	 rqSsL9d8wm6k6F4N0tTuGuctVcnX+7WAgro8cRCWZdgWq6wGGvfLb2grulVsmyr6Tw
+	 iHWp8hvjECfaomu67cMwu1c0T8DwrMPflzNsdE6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang En Sim <sim@shangen.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mykola Marzhan <mykola@meshstor.io>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0339/1005] ALSA: hda/realtek: Enable mute LEDs on HP Spectre x360 16-aa0xxx
-Date: Wed,  4 Nov 2026 16:01:12 -0500
-Message-ID: <20261104211053.449057612@linuxfoundation.org>
+Subject: [PATCH 6.18 0340/1005] md/raid5: reject zero-sector reshape chunks
+Date: Wed,  4 Nov 2026 16:01:13 -0500
+Message-ID: <20261104211053.482624113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,41 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shang En Sim <sim@shangen.org>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit bfcdc1c0eaeae5525c726193568e8d638b2afdc0 ]
+[ Upstream commit a41bb2ee1aca486853e84920565e50c15f86fa5d ]
 
-The HP Spectre x360 2-in-1 Laptop 16-aa0xxx with PCI subsystem ID
-0x103c:0x8c17 only gets the CS35L41 amplifier setup from
-ALC287_FIXUP_CS35L41_I2C_2, so the speaker-mute and mic-mute keyboard
-LEDs do not work.
+Sashiko reported that RAID5 can accept a reshape chunk size that becomes
+zero sectors. chunk_size_store() stores the sysfs byte value as n >> 9, so
+writing a value below 512 bytes sets mddev->new_chunk_sectors to zero.
+RAID5 then accepted that pending reshape geometry and raid5_start_reshape()
+installed it into conf->chunk_sectors, letting reshape code divide by zero.
 
-Use ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX like subsystem ID 0x8c16 so
-the mute LEDs work.
+Reject zero-sector chunks both in check_reshape(), where normal sysfs
+requests are validated, and in raid5_start_reshape(), so assembly/resume
+paths also cannot install zero chunk geometry.
 
-Tested on HP Spectre x360 2-in-1 Laptop 16-aa0xxx.
+Test script: in QEMU, create a plain three-disk RAID5 array with 64K
+chunks, write/read back a small pattern, write 1 to
+/sys/block/md0/md/chunk_size, add a fourth disk, and run mdadm --grow
+--raid-devices=4 --backup-file=... . The script scans dmesg for divide
+error/Oops/KASAN signatures.
 
-Signed-off-by: Shang En Sim <sim@shangen.org>
-Link: https://patch.msgid.link/20260807055139.58707-1-sim@shangen.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Bad kernel, eb29914412c3:
+
+  echo 1 > /sys/block/md0/md/chunk_size
+  mdadm --grow /dev/md0 --raid-devices=4 --backup-file=/root/md0-grow.bak
+
+  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+  RIP: raid5_get_active_stripe+0x863/0xc10
+  Call Trace:
+   raid5_sync_request
+   md_do_sync
+   md_thread
+  Kernel panic - not syncing: Fatal exception
+
+Fixed kernel: echo 1 > /sys/block/md0/md/chunk_size bash: echo: write
+error: Invalid argument chunk_write_rc=1 grow_rc=skipped RESULT:
+REJECTED_ZERO_CHUNK_NO_OOPS
+
+Tested-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://patch.msgid.link/20260802195038.164272-5-yukuai@kernel.org
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid5.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 5098d3f375316..97ab2269dc472 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6969,7 +6969,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c15, "HP Spectre x360 2-in-1 Laptop 14-eu0xxx", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
--	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre 16", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8c2d, "HP Victus 15-fa1xxx (MB 8C2D)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index b7da2b83e1938..56d7e05e94ce6 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -8437,6 +8437,8 @@ static int check_reshape(struct mddev *mddev)
+ 		return 0; /* nothing to do */
+ 	if (has_failed(conf))
+ 		return -EINVAL;
++	if (!mddev->new_chunk_sectors)
++		return -EINVAL;
+ 	if (mddev->delta_disks < 0 && mddev->reshape_position == MaxSector) {
+ 		/* We might be able to shrink, but the devices must
+ 		 * be made bigger first.
+@@ -8480,6 +8482,9 @@ static int raid5_start_reshape(struct mddev *mddev)
+ 	if (test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
+ 		return -EBUSY;
+ 
++	if (!mddev->new_chunk_sectors)
++		return -EINVAL;
++
+ 	if (!check_stripe_cache(mddev))
+ 		return -ENOSPC;
+ 
 -- 
 2.53.0
 
