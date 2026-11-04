@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826915;
-	b=0auO/5qe3EWcjgNCV/u6ZEgrdqDKRcnu7OYJGuPBMJGB5GC5vJq7YJTAD4+HAc+oY9NH
-	 gLnfgu7Nm6qm8/lXdXk1qsPsuH5wIV8dFVcq1P+EpL8fKWt3vVLU2RZigUg3ZmI+J1NiR
-	 8fCLReBJ3RC7lYu1dp8hiGWD0FL9lUZa3+HYLOZt9cpywwLiMNIKAstakTQrbqsHlOA5L
-	 zDhYccr1x0VjUFoaSAsbQrM8MYL1ebdFp2LOczQH9DRLQcfpoQfFCFFv5tyXyo9ZOCUMy
-	 jitt7Qm80om91L0WI88jQIbJ0KFfCW/t68GGBC1Ed2GObRHPdd8Ajrmg0DGmWsTzzIQ==
+	t=1793826916;
+	b=WZMx95LbK2+MJFSb/QHIkwIHlksBkxwdFiRf6msDUSTqPg0K+CDzsOmpbHaY534Ml71v
+	 rC1QjV2lFdAWfdndVgOQDNG924sPj4DGbEqOULFMrdjSpFn9xSR/idRyyig3nOCDOJDqO
+	 X3VvI9Mr5C/3GFQpsCPABSZXRQ2DgYsogL9dN+fbHI9qTbU0ivQPI8kyLwLudYo6vhpg5
+	 lsWvh3gA7azM1chffAspLbl+3lPhEfJNsaF0US3UW19IDlC7qTPqa3aY7OWyDok+f8ZZ7
+	 1HXgvRWKbCtJlqKSEQTa36nMDt2ERzjblFVee4Bs5ObNBdQ4vd0hWh+/YA3W0rB5C0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826915;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HgpiXS0eC4HUE7F4Xtg2nmexrH/VNkyVwgp9UMPWtnU=;
-	b=raNJKohliIIqHQpdRt44lb+JUKlieN0M288ULR9orRQAqd8kp6po7z6bDuUdpL+SCkBT
-	 qkKDa541UrG8cSaMsyyMxb+raLVpmLVgjOs+nmldOkyf1MZfsq54VzcPUgIKoNVk4QejY
-	 T0u7uYmswhRPG2ogz3meHrtA9e3Qxd0ZuK99+3xGs954P6RjaS2QfC8Jn0+w6838fU4G1
-	 WPcPeGbFCeFHxcvZdd6GZF/Y2z9EPTh75XXuwtY4Z0VE7Q8GBwT4+6MD0NZuPQYRKez7W
-	 pTPIp3uL4QERan9pdg7qWgaw3R+OGvo7FvgknjiAiX3j7xwULpA+87JnPTHj8ujWmvg==
+	bh=hpiRQuYaBFrPnAmHejPTz31fGPZsJeSTWObwmJxP8ho=;
+	b=ZZ63ljE330Z/4tZrw0d/tDY0mHSk8FpmgNKazMWurtxWhbbaIe9A1jzIGPD72tc27inp
+	 a/86eH2bUPph8m7Nfhm5DULfO1xjrm0EAFG7Zw5P8gm2XG+U3IS2sxtDQLHyLZm+pat/H
+	 2fJmOxd8CXp4dPEN5gtJN383VQebyfQ78F3XGid0z/ygYNhU5RhOmnS6MfqKoKNCwvTGh
+	 moZIciYjaL+eQGG11v1zdAJZMamZWTfXedqrk9VlhGHsh5kFdHCuSe51IVV/SqYxpCbys
+	 8jLuujvK3w1s1Im9zv+qYxXKHaGLkzL4ngV3/KGHb/GebsKT2G69YsxJylyo/8vYlZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YBVQsNI+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X04LkBQB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B376070308;
-	Wed,  4 Nov 2026 21:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9656072F85;
+	Wed,  4 Nov 2026 21:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YBVQsNI+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AAE1F000C1;
-	Wed,  4 Nov 2026 21:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X04LkBQB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC0A1F000C1;
+	Wed,  4 Nov 2026 21:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826914;
-	bh=HgpiXS0eC4HUE7F4Xtg2nmexrH/VNkyVwgp9UMPWtnU=;
+	s=korg; t=1793826916;
+	bh=hpiRQuYaBFrPnAmHejPTz31fGPZsJeSTWObwmJxP8ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YBVQsNI+6ePPtbW/yLcMCyC/MVd6YQ9u/Bb0smJjUxqruOqGNFEZUWl6+JqkuUMP9
-	 /fIkuzytAhZpwr+slZvEAQU5bwfs2D9qfm//DheaMgzPIlY6CfpKoEO0LsHz53ir9t
-	 RQx79tSidw9h0spNrcj+z1r7ueW8W1qYNwh4DAdo=
+	b=X04LkBQBH8c3NvtmElMJ7Mdcwz/X8BelDxtSIeiPPyitI+QP69Y3YrmHduq/kXlJa
+	 ebhoqcg+r9B6qDUBQPc3tX2kOJBWa7r/eDl2XVzrw17q3oIvkQyoB0ajgu1hfQNdcc
+	 I2jzXiu8XcKSasgh4fOvXE9hbb1WVNvbBzwOocKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+37a57a84893052ab6071@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.3 081/547] media: usbtv: fix null-pointer dereference on disconnect
-Date: Wed,  4 Nov 2026 16:04:25 -0500
-Message-ID: <20261104211040.546678395@linuxfoundation.org>
+	Eric Dumazet <edumazet@kernel.org>,
+	co+71b6509cb791e531@bugs.sh,
+	Kaho Jiang <kj2864@nyu.edu>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.3 082/547] net: ipv4: add zero check for snd_cwnd_clamp
+Date: Wed,  4 Nov 2026 16:04:26 -0500
+Message-ID: <20261104211040.573226007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,88 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Kaho Jiang <kj2864@nyu.edu>
 
-commit cb705f75d03e946a4514488beb9e3bac9bcdb2e6 upstream.
+commit 363c8c79220d0db4d65dcd570529ddda15067cb5 upstream.
 
-A null-pointer dereference can occur in usb_make_path() when called from
-usbtv_querycap() (and other ioctl handlers) during device disconnection.
+When RTAX_CWND is locked, user is able to pass 0 into it.
+This could lead to writing 0 to tp->snd_cwnd, leading to a
+division by zero error.
 
-Oops: general protection fault, probably for non-canonical address
-0xdffffc000000000a: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000050-0x0000000000000057]
-RIP: 0010:usb_make_path include/linux/usb.h:985 [inline]
-RIP: 0010:usbtv_querycap+0x9c/0x100
-drivers/media/usb/usbtv/usbtv-video.c:612
-...
+Oops: divide error: 0000 [#1] SMP KASAN NOPTI
 Call Trace:
- <TASK>
- v4l_querycap+0x236/0x470 drivers/media/v4l2-core/v4l2-ioctl.c:1106
- __video_do_ioctl+0x8af/0xc70 drivers/media/v4l2-core/v4l2-ioctl.c:3133
- video_usercopy+0x860/0x1430 drivers/media/v4l2-core/v4l2-ioctl.c:3475
- v4l2_ioctl+0x18d/0x1e0 drivers/media/v4l2-core/v4l2-dev.c:366
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
+ <IRQ>
+ tcp_reno_cong_avoid (net/ipv4/tcp_cong.c:510 (discriminator 1))
+ tcp_ack (net/ipv4/tcp_input.c:3517 net/ipv4/tcp_input.c:3873 net/ipv4/tcp_input.c:4440)
+ tcp_rcv_established (net/ipv4/tcp_input.c:6685)
+ tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1854)
+ tcp_v4_rcv (net/ipv4/tcp_ipv4.c:2248)
+ ip_protocol_deliver_rcu (net/ipv4/ip_input.c:207 (discriminator 1))
+ ip_local_deliver_finish (net/ipv4/ip_input.c:241 (discriminator 1))
+ ip_local_deliver (./include/linux/netfilter.h:325 ./include/linux/netfilter.h:319 net/ipv4/ip_input.c:262)
+ ip_rcv (./include/net/dst.h:481 (discriminator 6) net/ipv4/ip_input.c:492 (discriminator 6) ./include/linux/netfilter.h:325 (discriminator 6) ./include/li)
+ __netif_receive_skb_one_core (net/core/dev.c:6297 (discriminator 4))
+ __netif_receive_skb (net/core/dev.c:6410)
+ process_backlog (net/core/dev.c:6761)
+ __napi_poll.constprop.0 (net/core/dev.c:7830)
+ net_rx_action (net/core/dev.c:7893 net/core/dev.c:8050)
+ handle_softirqs (kernel/softirq.c:645)
+ __irq_exit_rcu (kernel/softirq.c:679 kernel/softirq.c:519 kernel/softirq.c:758)
+ irq_exit_rcu (kernel/softirq.c:775)
+ sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1062 (discriminator 35) arch/x86/kernel/apic/apic.c:1062 (discriminator 35))
+RIP: 0010:tcp_cong_avoid_ai (net/ipv4/tcp_cong.c:482)
 
-This happens due to a race condition between the USB device disconnect
-routine (usbtv_disconnect()) and V4L2 ioctls. When the device is
-disconnected, usbtv_disconnect() sets usbtv->udev = NULL without holding
-the usbtv->v4l2_lock mutex. Concurrently, an ioctl handler like
-usbtv_querycap() can be executing under the v4l2_lock and attempt to use
-usbtv->udev, leading to a crash.
+Fix by checking if user pass in zero as parameter and if lock is present.
 
-To fix this, move the usbtv->udev = NULL assignment into usbtv_video_free()
-and protect it with mutex_lock(&usbtv->v4l2_lock). This ensures that no
-non-queue ioctl handler can run concurrently with the pointer being
-nullified. If an ioctl is already running, the mutex will block the
-disconnect path until the ioctl finishes. If an ioctl is blocked waiting
-for the lock, it will acquire it after the disconnect routine releases it,
-but will then check video_is_registered() (which was cleared by
-vb2_video_unregister_device()) and safely return -ENODEV.
-
-Acquiring v4l2_lock after vb2_video_unregister_device() avoids
-reintroducing a historical deadlock issue, and usbtv_audio_free() remains
-safe as it is called before usbtv_video_free().
-
-Fixes: 65e6a2773d65 ("media: usbtv: Remove useless locks in usbtv_video_free()")
+Fixes: 814d488c6126 ("tcp: fix the timid additive increase on stretch ACKs")
 Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+37a57a84893052ab6071@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=37a57a84893052ab6071
-Link: https://syzkaller.appspot.com/ai_job?id=5abbe65a-5853-4bc2-9135-5c75f88d51ed
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Suggested-by: Eric Dumazet <edumazet@kernel.org>
+Reported-by: co+71b6509cb791e531@bugs.sh
+Signed-off-by: Kaho Jiang <kj2864@nyu.edu>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261021235732.1313305-2-kj2864@nyu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/usbtv/usbtv-core.c  |    2 --
- drivers/media/usb/usbtv/usbtv-video.c |    4 ++++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/metrics.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/usb/usbtv/usbtv-core.c
-+++ b/drivers/media/usb/usbtv/usbtv-core.c
-@@ -139,8 +139,6 @@ static void usbtv_disconnect(struct usb_
- 	usbtv_audio_free(usbtv);
- 	usbtv_video_free(usbtv);
+--- a/net/ipv4/metrics.c
++++ b/net/ipv4/metrics.c
+@@ -60,6 +60,11 @@ static int ip_metrics_convert(struct nla
+ 	if (ecn_ca)
+ 		metrics[RTAX_FEATURES - 1] |= DST_FEATURE_ECN_CA;
  
--	usbtv->udev = NULL;
--
- 	/* the usbtv structure will be deallocated when v4l2 will be
- 	   done using it */
- 	v4l2_device_put(&usbtv->v4l2_dev);
---- a/drivers/media/usb/usbtv/usbtv-video.c
-+++ b/drivers/media/usb/usbtv/usbtv-video.c
-@@ -966,5 +966,9 @@ void usbtv_video_free(struct usbtv *usbt
- 	vb2_video_unregister_device(&usbtv->vdev);
- 	v4l2_device_disconnect(&usbtv->v4l2_dev);
- 
-+	mutex_lock(&usbtv->v4l2_lock);
-+	usbtv->udev = NULL;
-+	mutex_unlock(&usbtv->v4l2_lock);
++	if ((metrics[RTAX_LOCK - 1] & (1 << RTAX_CWND)) && !metrics[RTAX_CWND - 1]) {
++		NL_SET_ERR_MSG(extack, "Locked cwnd metric must be non zero");
++		return -EINVAL;
++	}
 +
- 	v4l2_device_put(&usbtv->v4l2_dev);
+ 	return 0;
  }
+ 
 
 
