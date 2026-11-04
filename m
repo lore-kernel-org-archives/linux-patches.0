@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829138;
-	b=4Cr+2Df9+z6sqD1ED+gZXMPnZnzNTpFqx/CG2KIRFayOPva3pccs3FeNuBZV2eBh4oW3
-	 JeIkma+wxLYMIyr8dzuq6CXqzLZk+qGh2p/0CjSARXcLNEUnRkIdnbXUs9UDe82QriKGR
-	 PfdCRmRVzsBeDEP0I4Ed/a8g+DGQU94aHQyvBnhZYDlXT9YFiYWe+UiPJY/5gCHB1IlPc
-	 W0ly1mr57+8TuZ/v0Lah8Sa0mDSVS9chU+6fEQhxIQ8YbuRyQfRD2GzwP88clZwffJqKX
-	 QuFeI69OITI5mFVlNQHMeJrdgPYvML3byjsnyhO4L7JMSwZFtPXvRXrPRGQupWpTrvw==
+	t=1793829140;
+	b=2WxKVnnNLKjBgqVP9mnqy1N0G/690xtD+Gl6Y7zshhNgAOjcSaAaDSUyjUWN9PMvAOWu
+	 2PJFkD+O57hzxaW1J0huQkZ9GK0eu4iNHKXaupmzdpYkUqnyLcgfgw+piSA3oG8Mu9poh
+	 9SVce12yHvd+JiskhWDV1mkGYVp26jv9bu3La8MwWk8INZzw8ZGO8CfkEfC0RkaidM3CL
+	 4KNElf5rO+1A8fKpcJLiyo/BHfvPodwW5VsF8sr4zu5i5d+EojZMblRhuQt1t1vxytTpA
+	 rci0izyz9AX+WY/VdVdLq9aOt4KbmWfJpvrX4jqoaHMJsKgR2N8nyUCSWgd/TAMI/FQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DFF4+i3DNo4vPM3iwdtfsP01oFjIkalZJ56dyZPufpw=;
-	b=Zp1IdpRe+7u6/FqN68VqqAubR8jua+03z8kyVFXSjZoVBKeLWvBhhmbQQTTQ8MkpsshX
-	 QXjRfsGWqRF8b/TPgoHQ4WjDDjoxKU3+YxmtWGId1nZ5iPfRj6fsjTNSCdhM+s/3wJFsJ
-	 fFbMsVIzhIcQVNqFjN5mS8geRo9yFdSJKlHpqnTS8nxuE+0kllhVj/cgrRgNvVqVFUL6v
-	 CWrV8WCdwqnNEv/NjfP6/j+vBUmLdAoYpMW232LOidxBHOB7QuTyQbTUL/xbUS42Mgvre
-	 RnfYJUUwaVUoPFzFWTEzCVG3HlgKP9ihJLixK5eZGdZ/paLY/nxBqieJFZ1oiFPr0Lw==
+	bh=mRa5guKynFPfGUriHLi6gt11vshXhQxyHqn6jxTBTpo=;
+	b=UCht/NJw2iN5XH1SzGQiyMSHa6+mrD13wo2lIiSLwR4WgQSzJRWwfP+GHDbZXo8/iVZG
+	 AfchauA/tLGjvnc8NuBaX54+WnZXeBD31+GAVKvhSQP80cMII810FghZWbG8FFqNXtaMe
+	 qcqx/ziWJVRIPoLNl3h4gyaM/N16TorBcE/LuTYEDw3ntv17L9Sr723hFCJZ9VgIHuHfg
+	 RMSWw1rmbcdm+pEEkrplI6aSL79xeTU51H5eSvWL5X1Yw2WYj6ZKInjd5CCy4nqC8trG5
+	 0ePlosSHLvLZWeozZ+H1c40xPhhJmo7QsEHLvTp/w32psZnumeGkI2Hxl4jemwxrs8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDZtu0Rv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djKDQtQc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CE160841B4;
-	Wed,  4 Nov 2026 21:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FC8608F109;
+	Wed,  4 Nov 2026 21:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDZtu0Rv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3B71F00919;
-	Wed,  4 Nov 2026 21:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djKDQtQc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993CC1F00919;
+	Wed,  4 Nov 2026 21:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829138;
-	bh=DFF4+i3DNo4vPM3iwdtfsP01oFjIkalZJ56dyZPufpw=;
+	s=korg; t=1793829139;
+	bh=mRa5guKynFPfGUriHLi6gt11vshXhQxyHqn6jxTBTpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDZtu0Rv6cJKOeUKMUez69ArA1dyllTpDIoeG4rjy1YCChJJFUiczdxmbW6l+ryh9
-	 vu5N1/CyKYfPlvB5p19iPiLK64PS9tBWaYNVBcz8sNu64JgvkqGpQB4KQsVri3YSvQ
-	 IJSCymsB/KkVBiM6A6oixlbBYzz8IEgrJhYJ9QtE=
+	b=djKDQtQcNznlngNRZQYB5cGUCNBh/xcB2UCIGzIg8Qg3qQbh4nqIvbe2sczfSE+bJ
+	 1gSekt2bhQq0YLNkAkaX5jVcarmqEJFPu5GtoKs/3Vtc1HAYXyWyhh8GdgTHKVOiUl
+	 9bzT3YYhtYpr+HAB+DcTnINoalU1bHN1HWEkxq50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.3 434/547] SUNRPC: Copy the deferred RPC Call from the head buffer
-Date: Wed,  4 Nov 2026 16:10:18 -0500
-Message-ID: <20261104211050.680306746@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.3 470/547] KVM: x86: Take SRCU in kvm_zap_gfn_range()
+Date: Wed,  4 Nov 2026 16:10:54 -0500
+Message-ID: <20261104211051.715444903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,104 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 2192a56b0686599358909c3e12e9a366f5b5d452 upstream.
+commit b59a87c1ba3c347e8aec5f932eb7abf13064fd62 upstream.
 
-svc_defer() snapshots the RPC Call for replay once a pending cache
-upcall resolves. It copies the Call starting (rq_arg.len -
-head[0].iov_len) bytes before head[0].iov_base, a back-up that once
-covered a transport header. No transport has had one since commit
-983084b2672c ("SUNRPC: Remove svc_rqst::rq_xprt_hlen"), so the two
-lengths are meant to be equal.
+kvm_zap_gfn_range() walks memslots and rmaps and may drop mmu_lock to
+reschedule. Callers that do not already hold kvm->srcu (or slots_lock)
+can race with memslot deletion: synchronize_srcu_expedited() does not
+wait, kvm_free_memslot() frees the old slot and its rmap, and the zap
+resumes on freed memory.
 
-An RPCSEC_GSS Call breaks that assumption. Unwrapping the integrity
-service truncates rq_arg.len by the length of the trailing checksum,
-and unwrapping the privacy service leaves rq_arg.len short by an
-amount the client sets with trailing bytes after the wrap token.
-Neither adjusts head[0].iov_len. Both lengths are size_t, so the
-subtraction underflows and the copy starts past head[0].iov_base.
-Every deferred integrity Call replays a shifted snapshot.
+The VFIO noncoherent-DMA path hits this by zapping the entire GPA
+space without SRCU. KASAN reported:
 
-A deferred replay skips GSS verification, so a shifted snapshot runs
-as an authenticated Call. With the privacy service the offset is
-client-chosen. A forged Call placed in that window, naming another
-user's GSS context handle, runs under that identity.
+  BUG: KASAN: vmalloc-out-of-bounds in slot_rmap_walk_next+0x82/0x1c0
+  Read of size 8 at addr ffffc900005c1008
+  Call Trace:
+   slot_rmap_walk_next+0x82/0x1c0
+   __kvm_rmap_zap_gfn_range+0x17a/0x280
+   kvm_zap_gfn_range+0x2a6/0x6a0
+   kvm_vfio_set_attr+0x576/0x770
+   kvm_device_ioctl+0x1ff/0x3b0
 
-Copy the Call from head[0].iov_base. Refuse to defer a Call whose
-length runs past the head buffer, so the copy cannot read out of
-bounds.
+Take SRCU inside kvm_zap_gfn_range() so every caller is covered.
+Nesting with an existing kvm->srcu critical section is fine; the
+helper uses a local index. Drop the now-redundant SRCU pair from
+__kvm_set_or_clear_apicv_inhibit().
 
-Fixes: 260c1d1298f6 ("svc: Add transport hdr size for defer/revisit")
+Fixes: 362ff6dca541 ("KVM: x86/mmu: Zap KVM TDP when noncoherent DMA assignment starts/stops")
 Cc: stable@vger.kernel.org
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Reported-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Link: https://patch.msgid.link/20260902133101.48914-1-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20260825183924.237727-1-nicoyip.dev@gmail.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc_xprt.c |   22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ arch/x86/kvm/mmu/mmu.c |    2 ++
+ arch/x86/kvm/x86.c     |    2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -1268,13 +1268,8 @@ static void svc_revisit(struct cache_def
- }
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -7126,6 +7126,8 @@ void kvm_zap_gfn_range(struct kvm *kvm,
+ 	if (WARN_ON_ONCE(gfn_end <= gfn_start))
+ 		return;
  
- /*
-- * Save the request off for later processing. The request buffer looks
-- * like this:
-- *
-- * <xprt-header><rpc-header><rpc-pagelist><rpc-tail>
-- *
-- * This code can only handle requests that consist of an xprt-header
-- * and rpc-header.
-+ * Save the request off for later processing. Only a Call that fits
-+ * entirely in rq_arg.head[0] can be deferred.
-  */
- static struct cache_deferred_req *svc_defer(struct cache_req *req)
- {
-@@ -1287,8 +1282,11 @@ static struct cache_deferred_req *svc_de
- 		dr = rqstp->rq_deferred;
- 		rqstp->rq_deferred = NULL;
++	guard(srcu)(&kvm->srcu);
++
+ 	write_lock(&kvm->mmu_lock);
+ 
+ 	kvm_mmu_invalidate_start(kvm);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -7935,10 +7935,8 @@ void __kvm_set_or_clear_apicv_inhibit(st
+ 		kvm->arch.apicv_inhibit_reasons = new;
+ 		if (new) {
+ 			unsigned long gfn = gpa_to_gfn(APIC_DEFAULT_PHYS_BASE);
+-			int idx = srcu_read_lock(&kvm->srcu);
+ 
+ 			kvm_zap_gfn_range(kvm, gfn, gfn+1);
+-			srcu_read_unlock(&kvm->srcu, idx);
+ 		}
  	} else {
--		size_t skip;
- 		size_t size;
-+
-+		if (rqstp->rq_arg.len > rqstp->rq_arg.head[0].iov_len)
-+			return NULL;
-+
- 		/* FIXME maybe discard if size too large */
- 		size = sizeof(struct svc_deferred_req) + rqstp->rq_arg.len;
- 		dr = kmalloc(size, GFP_KERNEL);
-@@ -1302,9 +1300,7 @@ static struct cache_deferred_req *svc_de
- 		dr->daddr = rqstp->rq_daddr;
- 		dr->argslen = rqstp->rq_arg.len >> 2;
- 
--		/* back up head to the start of the buffer and copy */
--		skip = rqstp->rq_arg.len - rqstp->rq_arg.head[0].iov_len;
--		memcpy(dr->args, rqstp->rq_arg.head[0].iov_base - skip,
-+		memcpy(dr->args, rqstp->rq_arg.head[0].iov_base,
- 		       dr->argslen << 2);
- 	}
- 	dr->xprt_ctxt = rqstp->rq_xprt_ctxt;
-@@ -1327,17 +1323,13 @@ static noinline int svc_deferred_recv(st
- 
- 	trace_svc_defer_recv(dr);
- 
--	/* setup iov_base past transport header */
- 	rqstp->rq_arg.head[0].iov_base = dr->args;
--	/* The iov_len does not include the transport header bytes */
- 	rqstp->rq_arg.head[0].iov_len = dr->argslen << 2;
- 	rqstp->rq_arg.page_len = 0;
--	/* The rq_arg.len includes the transport header bytes */
- 	rqstp->rq_arg.len     = dr->argslen << 2;
- 	rqstp->rq_prot        = dr->prot;
- 	memcpy(&rqstp->rq_addr, &dr->addr, dr->addrlen);
- 	rqstp->rq_addrlen     = dr->addrlen;
--	/* Save off transport header len in case we get deferred again */
- 	rqstp->rq_daddr       = dr->daddr;
- 	rqstp->rq_xprt_ctxt   = dr->xprt_ctxt;
- 
+ 		kvm->arch.apicv_inhibit_reasons = new;
 
 
