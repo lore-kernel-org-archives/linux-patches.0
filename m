@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831073;
-	b=PFF8pipozlwqzHVr3Qv9lYcTZXXV6bTgFo2xNuX/zWh+USd0obegN9Esjje4Zf77aZq+
-	 rA5/HEsxAtIW338KCCHJva99M3vKm7qHfpD2ot/kIk9rSjPaTa+l2FKwHtey0LiC8o0Gq
-	 zdZPFPjkx2HCqdWG4Gmi370/rh+vARcIV6zdCTdTsmSVQV5KY4nCqBN+IccdyoOX2pUe7
-	 SUEGPv9JmH4PMcq8i9srSyvS1LwR/URrU8w1LBXiiz5hx+YJ0swsYJrgEeEjOajMKYWDr
-	 VnXALQhGvQGAiOLz0FsMa06Wk1E4eD5gnyehs2iuvKJ98NeiBAjd9dIrohfSWnR6BpA==
+	t=1793831075;
+	b=znxEMG7d7/A46RTXyKxlslC22NV9s7jbJs1366PBZ4AhzWA9vaf6hM4xI2gKXTJVpALd
+	 o30Zj7pX+ftx+hqOEKbnMxhcqv6sJUXzKU/4X1jWfoIHpSEr4mvmCBHIvQUXDErySVxyi
+	 f2mB2X7QLJZlryL7H2cZCYZqNLTu3w7d0JT9ggcbD0r2MqoWHfdFsuRQxGbXaWNSHC6SB
+	 WX1qLUBl7C5EmRON5SBKXo9v60ueLm+V8pNEzdQwD0dKt2QOIogHHFBCI38UKaa16VOn9
+	 lmFHHDutZDusmixsRzBL5I/BAGqhBZusvyynITjGmSj0cRV7TVSpNpN5SS+hkihvdxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4CVdkoWLbEm6YL4czRetT1Mwg7MTSfnIIDf4lWNdl5Y=;
-	b=ZPpSuPy1QJ3BWk7PhO4GzODEiC9O9e9I9sYgDe+EMopKKQIxH1cR4mIdRkciQyR4Yx47
-	 r8G4/UeOZySxSzhfXgm9SN9uTa/x6I6n3YqkT4WVECLR+YpCyxOk4eyGsc5sRiJC/JmF9
-	 bMg8wPHIlYofkcEsoSs+/Em4G1RIGvV6UpKwn02oLMkWYTkKNM4z6V9QKD9AMqMfJ+Iu6
-	 dxPqe7ABXlsGcXrhsdWzATyGWKTui00xvhlhUGEProLrP7oLckqqiJTOA/nJjVXaK6WtM
-	 10rx/hVh7oh+2qZnpaOHawIlcPpZJ6mwB0onTihfZryBMEc9eFyeSorOTqaS1e7F9pg==
+	bh=umJpUitjalp8+7PC0vwbMMiFkjoY5UL7fZoLy+8pPyQ=;
+	b=fozcEbXswV4z0UecSbNYbw80n/9iLwg+L/SAhkfxnWPcL12leVFPLJxDlJXyzRclbBDc
+	 8m4W9HeYpKQ5N0/O4hYiOQd2Klz8kQXgK9E6AHhtDfXA1gU7GxttH5FCUc1jlSMrd2GKP
+	 tixFIDwHIKGvMMN3CSK7j8CVpbEVpEoRyctahnF9Q+TfXdC8unkdbYkXqYHIHmp2m7BeE
+	 CKHsmtL6FWppvY5s8tfAB4Z0FrrfLHnxJVLsJB8dP+OhJfbc+efAlgz+lSj0NRHSxgvG6
+	 ok/OJhIHIJQKDJNMmT2WX61+uRHv8stTBVhMo9KcGKNYwzziiD7FHNZl7ogRm1O2PIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y+D6v7as;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VtPxFjGg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5097B606AC19;
-	Wed,  4 Nov 2026 22:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB80606A32C;
+	Wed,  4 Nov 2026 22:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y+D6v7as
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20E91F000C1;
-	Wed,  4 Nov 2026 22:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VtPxFjGg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC121F000C1;
+	Wed,  4 Nov 2026 22:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831073;
-	bh=4CVdkoWLbEm6YL4czRetT1Mwg7MTSfnIIDf4lWNdl5Y=;
+	s=korg; t=1793831074;
+	bh=umJpUitjalp8+7PC0vwbMMiFkjoY5UL7fZoLy+8pPyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y+D6v7asGp7FNeiVKHM4kksBFDhr/dRU9YmUKTS7uGFXq/c9rgL7+yukUFuzmJUvN
-	 dbTehog03yR05AQ2QJe4QaU6cx7UF0jZvatIPho7rP3vYTV4IlIQp0iXmMcNH1tPi8
-	 LqTlH2/5Ke0H+8yPQXV+Dq4s2o5hNpH+pKJUftcw=
+	b=VtPxFjGgGHVx/OnHQbdMpbrJzXM/IcmXLDF1lz4XqUPhj5AUeI0CGDyoJ/ju8CUV0
+	 IMOTtyxORkLv3FtHXs6bTzbLaR4uUYMBnzax4IuxD5SZ9bTqkrps2PQCiUSDblLpb1
+	 0pnmPSv8+tXGv2QoatOCxyw992lHakuSUFlUEwtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jasper Firth <jasper.m.f@hotmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0489/1005] ASoC: Intel: bytcr_rt5651: Add quirk for Chuwi Hi8 with generic DMI strings
-Date: Wed,  4 Nov 2026 16:03:42 -0500
-Message-ID: <20261104211057.670112284@linuxfoundation.org>
+Subject: [PATCH 6.18 0490/1005] nvme-tcp: delay nvme_tcp_reclassify_socket()
+Date: Wed,  4 Nov 2026 16:03:43 -0500
+Message-ID: <20261104211057.694855576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,84 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jasper Firth <jasper.m.f@hotmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c5a8fc2abe05cf6db71f57ff0177fddc59861a1a ]
+[ Upstream commit 447a7a3026eda85ac2738cbe6ee5ab066a39dad0 ]
 
-Some Chuwi Hi8 tablets with model number CWI513 ship with a BIOS
-(American Megatrends 5.11, dated 05/21/2016) whose DMI sys_vendor and
-product_name are both "Default string". The tested unit is labelled
-just "Hi8", but its model number is the same as the existing "Chuwi Hi8
-Pro (CWI513)" entry, and it needs the same quirks. That entry matches on
-sys_vendor "Hampoo" and product_name "X1D3_C806N", so it never applies
-to these units.
+Commit 841aee4d75f1 ("nvme-tcp: lockdep: annotate in-kernel sockets")
+introduced nvme_tcp_reclassify_socket() to resolve a lockdep WARN by
+distinguishing userspace sockets from nvme-tcp sockets. After that, TLS
+encryption support was introduced to nvme-tcp and it added another lock
+dependency on userspace socket handling by tlshd, which resulted in a
+new lockdep WARN. This WARN was hidden by the commit 19bdb70c77d3
+("nvme-tcp: lockdep: use dynamic lockdep keys per socket instance").
+However, it turned out the commit 19bdb70c77d3 has a bug of lockdep key
+lifetime management, and it is to be reverted by another patch in this
+series. After the revert, the WARN was unveiled and observed at the
+blktests test case nvme/062:
 
-Without its quirks the internal speaker, whose amplifier has a
-differential input wired across LOUT left and right, cancels to a faint
-distorted residual for any centred (L == R) content, and the headphone
-channels are swapped.
+  WARNING: possible circular locking dependency detected
+  7.3.0-rc2+ #455 Tainted: G        W
+  ------------------------------------------------------
+  tlshd/75867 is trying to acquire lock:
+  ffffffff91ada5e0 (fs_reclaim){+.+.}-{0:0}, at: __kmalloc_cache_noprof+0x64/0x6d0
 
-Add an entry matching board_vendor "Hampoo" and board_name "Cherry Trail
-CR", plus the BIOS date since those two are too generic on their own.
-drivers/platform/x86/touchscreen_dmi.c already matches the Chuwi HiBook
-the same way.
+  but task is already holding lock:
+  ffff888197808258 (sk_lock-AF_INET-NVME){+.+.}-{0:0}, at: do_tcp_setsockopt+0x499/0x26a0
 
-The quirks are those of the existing Hi8 Pro entry, except for the
-over-current detection scale factor: 1.0 instead of the 0.75 from
-BYT_RT5651_DEFAULT_QUIRKS. With 0.75 and a CTIA headset (inline mic and
-one button), loud speech into the mic, and headphone playback coupling
-onto the mic line, were reported as spurious KEY_PLAYPAUSE presses, one
-of them held for a whole 8 second speech window. With 1.0 the same test
-gave no spurious events, and 3 real button presses were reported as
-exactly 3 press/release pairs.
+  which lock already depends on the new lock.
 
-Tested on a unit with the generic DMI strings, with a module built from
-this patch and no quirk module parameter. The quirks were applied via
-the new entry, the card components read "cfg-spk:1 cfg-mic:in2
-cfg-hp:lrswap", and the following all work: speaker, headphone left/right
-order, jack and headset-mic detection, headset button, and the internal
-and headset mics.
+To fix the lockdep WARN caused by the TLS encryption support, delay the
+reclassification of the nvme-tcp sockets. Currently the reclassification
+happens before the TLS handshake starts, which pulls in the additional
+lock dependencies related to tlshd. Reclassify the sockets after the TLS
+handshake instead, to cut that dependency.
 
-The problem was diagnosed with the help of an AI coding assistant, which
-also drafted this changelog.
-
-Assisted-by: Claude Opus 5.5
-Signed-off-by: Jasper Firth <jasper.m.f@hotmail.com>
-Link: https://patch.msgid.link/20260925-hi8-quirk-v1-1-ffd00b0447f9@hotmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/lkml/CANn89i+wnTLC==UnXCpjsS4YxvEfhe5oK0N7fttbqr1zKyqdug@mail.gmail.com/
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/nvme/host/tcp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index ca540a66f22ce..723acb58e248e 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -409,6 +409,23 @@ static const struct dmi_system_id byt_rt5651_quirk_table[] = {
- 					BYT_RT5651_HP_LR_SWAPPED |
- 					BYT_RT5651_MONO_SPEAKER),
- 	},
-+	{
-+		/* Chuwi Hi8 (CWI513) with a BIOS using generic DMI strings */
-+		.callback = byt_rt5651_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Cherry Trail CR"),
-+			/* Above matches are too generic, add bios-date match */
-+			DMI_MATCH(DMI_BIOS_DATE, "05/21/2016"),
-+		},
-+		.driver_data = (void *)(BYT_RT5651_MCLK_EN |
-+					BYT_RT5651_JD1_1 |
-+					BYT_RT5651_OVCD_TH_2000UA |
-+					BYT_RT5651_OVCD_SF_1P0 |
-+					BYT_RT5651_IN2_MAP |
-+					BYT_RT5651_HP_LR_SWAPPED |
-+					BYT_RT5651_MONO_SPEAKER),
-+	},
- 	{
- 		/* Chuwi Vi8 Plus (CWI519) */
- 		.callback = byt_rt5651_quirk_cb,
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 1f26e35d7a99e..9f15feff66132 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1859,7 +1859,6 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
+ 	}
+ 
+ 	sk_net_refcnt_upgrade(queue->sock->sk);
+-	nvme_tcp_reclassify_socket(queue->sock);
+ 
+ 	/* Single syn retry */
+ 	tcp_sock_set_syncnt(queue->sock->sk, 1);
+@@ -1948,6 +1947,8 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
+ 			goto err_init_connect;
+ 	}
+ 
++	nvme_tcp_reclassify_socket(queue->sock);
++
+ 	ret = nvme_tcp_init_connection(queue);
+ 	if (ret)
+ 		goto err_init_connect;
 -- 
 2.53.0
 
