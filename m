@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829141;
-	b=xsTC4zcpOqdQ9N7ol48+DTjg2sUREZkmscQghXgD7sGrHiDU5P8mG66j4zQuWkF5PD27
-	 AVtd21SWKmVxVWY4sN+ncle0Z9eNp5jmO8vDUFlIlKRJaEcl43Sm0JDhnNSncMqLxvGHp
-	 RFT9R1nVbyAc/xll2ngXQBJEBOHRd3+BzFvYVfIn7giF6GhJo+JqrlIlOF/yIBOUQPHiM
-	 91Ai5lGjRrVslyJI98Pq8TX3ceegq5ae9xU/0KqRyfbHyI7jQY/HQQ4Y/c8CTQ57+KzUv
-	 FMke5EmhGhDUHTmKhu6tIAo9qZWqQLJL8I7R8XrEQTgz01GTjETAsuCo3I8Cn07a3Rg==
+	t=1793829143;
+	b=KKaxruc2E2PJAvS29YVHiAUWRHkfyr0gQcwle5i7i42RQBCUbJ1YBVyDsFo5ItZgHZSt
+	 53dDDKFqLSRYnKZGxcbpfX4Z5OUFP376vTqPfU+qDcaasTbjwp6iy3XiSdLjO0HU9VamN
+	 Jn7pbHo/Y8S1HYZNc58tkHgsY3XyYIdTbRQCcN8c+zQCDU8j2ETsfgsKdzJyXYdoeK7X3
+	 i8PFL6kkUVAHzlnz1DbMZKFxLerKK14RXUCXxojaE7MsJq0whWmKKSFwlDVwbwYYjfOOx
+	 9/YwZbG34FTHgcKj7uY8ycXOb5BxuvehziqnBu6msS+eZxoDhNGN2sWfMNbQt+KmhNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xVZPv0fuIr1Xm5BnitwJ/YYi1yh+np/oefdc8rIM06k=;
-	b=giqB67zWngYqQU+qqnI+TKBF7ckTR6G30uPFApYp+dIfZLcyOWqJpf3lFw0MdFFRgOq7
-	 Y+hwu/HJQmhEfTbUXhGGHeuHcdfbPJ4XmU7KwU19YkUEWD1kMDzEi7Q3iWLmoXAjyEvnp
-	 n09ScsRY0lwplQGgGku/Y9VHEHqLoGyjgCw0/Xse/G5QVJ/ZKczxssMldKyqnN4sFWMQy
-	 xAU6XIHzYxvYoXkzVvsF/glM/jT8yAwUkoRhN/c+GCbAQ5AEDLH78URimEUTJ1ohbVx35
-	 D0p8M/sFDsu/R3yvStELI0aeufX7IrueFXxHgdv5g7KPZr06LnzcbtQP0WNlPI6FFyA==
+	bh=H385g6MjbN3tMZFk+jZ9AwPcHV8J8Vx6HxQ2/H4gfNc=;
+	b=fvJh93V1O42T5Y060Ym8/EwUviBBQdca3eZ9dEbcy94r3ynGFyhY59a8haKikVW1gjVB
+	 v5pT93kNDJtbu9kAJPLc0NsTX7p+9jjlJOyODifvnvEQnwpq5GuFraemGra3JjecKRt6V
+	 k452hzSgdTJLat1EtrNElaGHB2WgsrYCPMhBcYz50SDLJE/xuJrsFCMZGfv3Meo0ZKp52
+	 5VHO0h2PlFJQT98gpE12wT8ASWh7JdV5SXTrLtiEFJe11qeP8FOa3oW51w6YvpVk8oRxq
+	 O9sBNtP861/hYlahrC9eiVYMDvfxvC81RD+tdaP/W/XtlcMFX+C7dQZNW/2tS4YyHMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DaYxH9NS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3Idy0Ge;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72334608F113;
-	Wed,  4 Nov 2026 21:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF354607077E;
+	Wed,  4 Nov 2026 21:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DaYxH9NS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BB41F00919;
-	Wed,  4 Nov 2026 21:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3Idy0Ge
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE3B1F000C1;
+	Wed,  4 Nov 2026 21:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829141;
-	bh=xVZPv0fuIr1Xm5BnitwJ/YYi1yh+np/oefdc8rIM06k=;
+	s=korg; t=1793829142;
+	bh=H385g6MjbN3tMZFk+jZ9AwPcHV8J8Vx6HxQ2/H4gfNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DaYxH9NSxjKd/lW+RC4dvxOzEGc5TTdKAMgy5ApKzE0SWbdEEqMXcyAlz4xLJf6H3
-	 6yLHJLs8aL8RH3FceF4HlC6Hn9F+rbC0gh+wtk5UmdWBZB2YF/nL6ffkHSkP7pzsh5
-	 TW1m7eLbQaeH3Q+e9YTlMn9yn86EhVRx+fAxAJkU=
+	b=g3Idy0Ge8SU09gp1NhzBqkmbTIOyaIHdmIkuaQDq0apRMqr2J4Z26IAGfnkUVlezn
+	 ir/Qylys8yJrVMCQxGHj5H4GhIt5i/A/sa/J9qMI2eC64auSmscNj6wpsuNHhFYPqf
+	 RgHYjQL3LDL3/jriS2VSrJjKrxcScYQhI7VgAq4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.3 471/547] KVM: x86: Zero reserved synic flags when delivering message to avoid stack leak
-Date: Wed,  4 Nov 2026 16:10:55 -0500
-Message-ID: <20261104211051.746908542@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 7.3 435/547] SUNRPC: Do not credit control-record octets to the RPC stream
+Date: Wed,  4 Nov 2026 16:10:19 -0500
+Message-ID: <20261104211050.706189657@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,43 +66,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit 2616f497506a772db53e7bb1024cde50b4c165e0 upstream.
+commit 129e7107b971009bc81643d23f3ab949f540d321 upstream.
 
-Ensure all reserved flags are zeroed when setting the msg_pending flag as
-part of SynIC message delivery, as setting only msg_pending can leak seven
-bits of kernel stack data to the guest.  E.g. gcc typically uses a
-bitwise-OR to set the msg_pending flag, without initializing the on-stack
-variable.
+svc_tcp_sock_recv_cmsg() receives up to two octets into a local
+buffer, and returns that count for any record type other than
+TLS_RECORD_TYPE_ALERT. Nothing reached the caller's buffer, but
+svc_tcp_read_marker() adds the count to sk_tcplen and
+svc_tcp_read_msg()'s caller adds it to sk_datalen. The RPC stream
+advances over octets it never received. The fragment marker is
+assembled from stale sk_marker octets. The message body comes from
+pages nothing wrote.
 
-Precisely zero the flags, e.g. as opposed to zeroing the entire structure,
-to make it somewhat more obvious that the flags *need* to be zeroed.  E.g.
-it would be quite easy to misread the initial read of guest memory and
-think that zeroing the entire structure is completely superfluous.
+A conforming client reaches this. RFC 8446 Section 4.6.3 lets either
+peer send KeyUpdate once it has sent its Finished, and svcsock has no
+rekey path. kTLS leaves the partially consumed record on ctx->rx_list,
+so the body drains two octets per svc_tcp_recvfrom() call. Each pair
+is credited the same way.
 
-Fixes: 3a0e7731724f ("x86: kvm: hyperv: simplify SynIC message delivery")
+Return -EAGAIN for a record that is not an alert. That is what
+svc_tcp_sock_process_cmsg()'s default arm returned before the receive
+moved into a local buffer.
+
+Fixes: bee47cb026e7 ("sunrpc: fix handling of server side tls alerts")
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://patch.msgid.link/20260826184449.814130-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260808-svcsock-cmsg-fixes-v3-1-62d9a631c880@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/hyperv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/svcsock.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -802,7 +802,9 @@ static int synic_deliver_msg(struct kvm_
- 		if (no_retry)
- 			return 0;
- 
-+		hv_hdr.message_flags.asu8 = 0;
- 		hv_hdr.message_flags.msg_pending = 1;
-+
- 		r = kvm_vcpu_write_guest_page(vcpu, msg_page_gfn,
- 					      &hv_hdr.message_flags,
- 					      msg_off +
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -289,8 +289,13 @@ svc_tcp_sock_recv_cmsg(struct socket *so
+ 	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
+ 		      alert_kvec.iov_len);
+ 	ret = sock_recvmsg(sock, &msg, MSG_DONTWAIT);
+-	if (ret > 0 &&
+-	    tls_get_record_type(sock->sk, &u.cmsg) == TLS_RECORD_TYPE_ALERT) {
++	if (ret > 0) {
++		/* Returning the count would credit the RPC stream with
++		 * octets that never reached the caller's buffer.
++		 */
++		if (tls_get_record_type(sock->sk, &u.cmsg) !=
++		    TLS_RECORD_TYPE_ALERT)
++			return -EAGAIN;
+ 		iov_iter_revert(&msg.msg_iter, ret);
+ 		ret = svc_tcp_sock_process_cmsg(sock, &msg, &u.cmsg, -EAGAIN);
+ 	}
 
 
