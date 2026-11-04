@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829639;
-	b=UZcZYMIJw0w6J2K9h4olSPFj3a07dyClZ8tpjM3guAnS/dO4p5Coh7HEyGQLj8q3uU4N
-	 9FvBLdsTEFeqgbvRvPxhuFLpL/9Iue7ebBXGObCrK9DKd5WO6JsVPHifKwWJKYnKlZ+i4
-	 G4yUqrDLFBLyImhtXvShSpJ0oprM8GCK4ZfCZZs1mvJbIAqmJi99scQ4ZDyOeBdP1cd/l
-	 OtwHFGTkxtxCC7PZ9PHsCrM++BxatuKChGncUcQwn8v0YvSGmJwDSK1tR/Ou05+ncDEGM
-	 YqZYvVFsKfh1raC6UV312ANXWggrqs3mZc6tLGrwwv7VRQCIZk5lCv41cAG5P2uahrg==
+	t=1793829641;
+	b=NLzOwtw98ENOeB0Ghg77k6Y+qMjSlAQHckOyAu0fL52qMpKHKJ46hObluTwWnrExjDZF
+	 0CADAwdNU8ZKZPTKW9yQ1oOMu9GjXTk35iddOvImxr9imK6rc8rwkpBnxfMCOQokhCS9/
+	 NIuOeGPkkmM16+hZHyK5ek397v/eJ5Rw+fkVjqOsjWMQ0THFhNwmptTHNGE+vGDQ8QtGG
+	 H0R4kRZ5PpfUGOzmygK+AeYInQUQjLUEYn4p7Z5O9ekQdxO4wesIHLjsmlnl3v8UVs8qk
+	 fapG8cWTE3U3bTfOuCM9XqD3XB8NTsTQHyc0LNBQXlw5ju6Xz5jx6v8sDwUD6na9GAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kxQHsCfkKHFQ32dwPfjVBSE8N8DWPx+bjT07HZYkEuM=;
-	b=y+L/kiIAauIbZ7OceHJMrj02ftLah2q7HZS2ojK+ks8+38LgWDpy0I7ukhsNNi8dEUkB
-	 0zb/ZBozNzZhRvde9jPiylAcYiibytGaMKTEr4JxQUd3mRCjzcmQH8BLZuQjfNR0P3nEI
-	 kIdhDYhq/p+UlrY9fXnmholKWROuQ/U+dR0ZR0vsG+5kSmvttVUBfO3B9UbzAKRCcz60h
-	 EXlT1xllseHeis6j4U9MZou72eNMPR+D8LM7rgrBNDYdFXYMFC80C6mvViY85RAXvQ2kD
-	 nfSet0WUrtW+U/rOmqh5zS1DBnNUx3vnHM7c8393vczulS8iuSXATwo0Rr+APoPP8Cg==
+	bh=OUvQ247wn3aLs8aN0Am95+kTxCBPrgpDz5b7OUuU/5o=;
+	b=0MpUNz7dFPLZekugzX9hIWU989CIlmf0Ob3DjXXhpMKQf/aUk48nqycNS9lR4B/NSLX8
+	 dEPVXE6lbZhe4RoBeN9R5WhO6DhBXAcAOaW9CxtkuiClJI5zBpQ3HY+Lx5c4SQ4qzti8g
+	 +terCgLHBXzD5QeJ6lgnJ8hDhAt067aB9MI+zPM2J3srKOfTsitHljwRULiK8itbXZ7Nd
+	 bqRKBoGWO681VsSesl2/osuXFYewhsyxIsJxAqKeJlBQaJcNQ8Yr+W+EuAIwuVOusI3fY
+	 dc2T2bVeLDk9X/9FnhG+gf+Dr/YX81D0RnAu0PY2gSG6iaxO2QPdMClFKffcJQAg+nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iI90mVZJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4aYudax;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666AD606AC22;
-	Wed,  4 Nov 2026 22:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C217C606AC27;
+	Wed,  4 Nov 2026 22:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iI90mVZJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3691F00A02;
-	Wed,  4 Nov 2026 22:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4aYudax
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2531F00A02;
+	Wed,  4 Nov 2026 22:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829639;
-	bh=kxQHsCfkKHFQ32dwPfjVBSE8N8DWPx+bjT07HZYkEuM=;
+	s=korg; t=1793829640;
+	bh=OUvQ247wn3aLs8aN0Am95+kTxCBPrgpDz5b7OUuU/5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iI90mVZJS0l6hMOafls/PqY9Wv/SiuaP2DqHsbCxkz5rqApSOJ/HEN1Pix/7xFFIh
-	 75MYLHdvIHVGLl8PAnR+14y9yTbTLfyvvI0Tmn5k8U4DOM1omm+FES3vF4kwDWxpgI
-	 I4nc9AqGbmvY3IOkCpnGMtkIaly13VMwtkaL39Rg=
+	b=j4aYudaxY4z9D01qwo6SthUF+w1BjY2oc+zjwqiDk5egdBTEj/eYRqB3zVtBcJ/I/
+	 MLoulUQGM9UwAhDsymA/2BL+VtWM6J7whi+M6RzOUNkR6Y2GSK2J1cPETRE9VAG9z5
+	 qUKPpOkm6qJ862LawwjGmSKXv/akhM42xgVlL1Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tomer Maimon <tmaimon77@gmail.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0249/1005] pinctrl: npcm8xx: clear pending GPIO events during init
-Date: Wed,  4 Nov 2026 15:59:42 -0500
-Message-ID: <20261104211050.834248138@linuxfoundation.org>
+Subject: [PATCH 6.18 0250/1005] pinctrl: npcm8xx: fix debounce register selection
+Date: Wed,  4 Nov 2026 15:59:43 -0500
+Message-ID: <20261104211050.861517086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,36 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomer Maimon <tmaimon77@gmail.com>
 
-[ Upstream commit cd39cce4cfd499f555eb8b8252636609c3468f57 ]
+[ Upstream commit 602ee6c9447e4382c7e145b26a1c940813f2a144 ]
 
-A bank may retain pending event status across resets of the GPIO block.
-If probe leaves the old state in place, the chained IRQ handler can see
-spurious events as soon as the irqchip is registered.
+Each DBNCS register programs debounce source selection for 16 GPIOs.
+The current offset calculation advances the register address every four
+GPIOs, so offsets 4-15 and 20-31 end up touching the wrong selector
+register.
 
-Disable event generation and clear EVST before wiring each GPIO bank
-into gpiolib so the driver starts from a known state.
+Advance the DBNCS offset per 16 GPIOs so each line uses the debounce
+selector bank that matches the hardware layout.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-index c94441b2acdae..22cc87d43ea69 100644
+index 22cc87d43ea69..28464463ff833 100644
 --- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
 +++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-@@ -2412,6 +2412,9 @@ static int npcm8xx_gpio_fw(struct npcm8xx_pinctrl *pctrl)
- 		if (ret < 0)
- 			return dev_err_probe(dev, ret, "Failed to retrieve IRQ for bank %u\n", id);
+@@ -2135,7 +2135,8 @@ static const struct pinmux_ops npcm8xx_pinmux_ops = {
+ static int debounce_timing_setting(struct npcm8xx_gpio *bank, u32 gpio,
+ 				   u32 nanosecs)
+ {
+-	void __iomem *DBNCS_offset = bank->base + NPCM8XX_GP_N_DBNCS0 + (gpio / 4);
++	void __iomem *DBNCS_offset = bank->base + NPCM8XX_GP_N_DBNCS0 +
++				     (gpio / 16) * 4;
+ 	int gpio_debounce = (gpio % 16) * 2, debounce_select, i;
+ 	u32 dbncp_val, dbncp_val_mod;
  
-+		iowrite32(0, pctrl->gpio_bank[id].base + NPCM8XX_GP_N_EVEN);
-+		iowrite32(0xffffffff, pctrl->gpio_bank[id].base + NPCM8XX_GP_N_EVST);
-+
- 		pctrl->gpio_bank[id].irq = ret;
- 		pctrl->gpio_bank[id].irq_chip = npcmgpio_irqchip;
- 		pctrl->gpio_bank[id].irqbase = id * NPCM8XX_GPIO_PER_BANK;
 -- 
 2.53.0
 
