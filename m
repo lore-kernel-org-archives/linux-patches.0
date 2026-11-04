@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827180;
-	b=mkv7KXRHRViyjsMZslRu8ywTaOFNFy4N46nH7zhxGk8wczNTxqd1WVa1ygElfgNH/HW+
-	 lrlc6H1LhuqQNdgQd002y77xQ08LtynjPt0lj3AouocB2vcRG/awrgOnizVU49/9Wakq8
-	 S7a6ol2TE1DbqxU6XVqLw1/uQ9fpQh0mr0lbx8lHZC5lmKN5Sl9yTicMg4qkGuCIE9mSn
-	 BOFus7n/rxv/ovCdtqfwjiqmJ785yaes3QuCPM9SNra5Lb2npffWy/lNgg3/DWnXYDr0z
-	 YgJN732ABFtzXUAR+Y3yXyKyK37L35Bh9+G/zits5uR+ow+HBj65Hj/qg1CKMFUAIpg==
+	t=1793827182;
+	b=k+CzJtUqYl+pIW1KswuboDtlCcWW1pZNulVsk5I4jvLHceKYD5ivmPmbKU4gxWLWApHr
+	 ZtPG68mxThhuQ9nUcY4d9+h8lPOA05mciEALb40IEdU0pjEb7Cy2iPpebDXADBThw3aHY
+	 jV1XhFfjypGDH39eUMWkSwD/WLlDT3scRH5pOc426Q+UHtMQU1SJIlYkxqSlEm+BVHO5v
+	 QnaS4haEBNErNiF7IhhCwqzgaHv6JOcSStgRG4h79C13i7ysJ5acrTCg5PYs3BPGy5koc
+	 Mc+uBtRxdSPaa2IWtn319aaspsEhWydeqgR5uVtIruVbHmCBPeo3tq4gJe1t3xeZUTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G+qFyCrIfMGiWXVVHZ4eMJipSoVBCvaJn1DuK8mj4j4=;
-	b=RB5lFHsIoYhXWoWyr7Q/ft4XbWLCLnsO/N3X6nUF2ltyhTVUfzVxN2TyzYPdjFg17C1c
-	 brfDr8WOix27Y2CCSYrNMOWGrXO+JokD+25Jtd/ZEaAkg1Im2fgg3RWsArJQaD3prkao/
-	 sESHCbKSDwGAdtWINalNrE8STWWQNwyVfFG0Z7InztLvV+Kjw+hQ34/+K1FiWwX1WJhL1
-	 qWNEXxQMl1NNLAtj8crGaRUinoPGH3QEAlt15OCkLrnBn+JbZlnFZX0RP/GFVFVvPJPxo
-	 Tkebs9Y9S1ZGO7oQh810g1e3EoQ5YMxAwHejoTbrsy6MpTkojjqP4WH9XV5osAJ5Fyg==
+	bh=Iy009OI28TStQH+dAvn/7McWuWTh94+ax7gBqacmQNI=;
+	b=nGL4QepN1b+hpPNE2He2Y8xwcfyFHMyXcPDbQTCMk3nfJXYxCu45gmpL6RE7pWn2lV84
+	 A6JwGpY7Wvm1r8Rh2iz/GY0ma3Z/xYjCiuGO5ilYjPlRjcxyEgZ/nkoGdOmcVYhRgviyZ
+	 rGUbnidkGIiAUkBMbVu45PLPbmFrhAQhLV5+k2AelZ57HqT2qJdwhyv3t9WkRhJyl2E5L
+	 +w+33Ll8FyTZecHkbHfqTCA3i3y+HbA3NKUBNo5K5LAkC5lBQvmZkrH4mA+cWI17UoMhr
+	 HSuFx1MA7cYz0VU/BfDSr1BvaD2QY7Wt4O7KU3SdoGGe5VaYFV1hi18Yt4nDtfA93iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7uGHBUi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k3F82tgG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71626606A846;
-	Wed,  4 Nov 2026 21:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49613606A846;
+	Wed,  4 Nov 2026 21:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7uGHBUi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFF31F000C1;
-	Wed,  4 Nov 2026 21:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k3F82tgG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C225E1F00919;
+	Wed,  4 Nov 2026 21:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827180;
-	bh=G+qFyCrIfMGiWXVVHZ4eMJipSoVBCvaJn1DuK8mj4j4=;
+	s=korg; t=1793827182;
+	bh=Iy009OI28TStQH+dAvn/7McWuWTh94+ax7gBqacmQNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7uGHBUi0W6/SZ+bm5CLBa3C4kl7jC6qkvNNVryuDC3zjQVdD9z/+DJQFO31epgm/
-	 lRodje6ytP84Ck1ibBqdFoyvnhKGVg4GJ9oCN6I1h7IMopy5OqPGbgdUhvdq1dNued
-	 yhp3FVBUhD/YCjATDe7mT/GbvMpTl9R5OBLReEcs=
+	b=k3F82tgGAme97dbBzdW4iU8sf3xaj8tkRlZHvmH/RJYZUHzjBxGddkT3BIgP+9Uax
+	 pseiGTWwzmwGlt41QI7HDXDv8pp3RzqY6nqX/awnUKFVgRZJ7G6PytViuAdQ4ak9rz
+	 NIHMhRymkBURQkgY0G9WABTOLeeADw+2bbCqZ6zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 7.3 242/547] mtd: virt-concat: unlink discarded items before freeing
-Date: Wed,  4 Nov 2026 16:07:06 -0500
-Message-ID: <20261104211045.047222070@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Subject: [PATCH 7.3 243/547] net: sched: prevent scheduling deactivated qdiscs
+Date: Wed,  4 Nov 2026 16:07:07 -0500
+Message-ID: <20261104211045.074338978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,46 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 112a666bd82e96e4a01e0cd8a0fb9c88dd0bce38 upstream.
+commit d6f81fd6abe209f9803d8f74ce9ec69b8126bad3 upstream.
 
-mtd_virt_concat_destroy_items() frees each item without removing it
-from concat_node_list. list_for_each_entry_safe() protects the
-current traversal, but concat_node_list still points to the freed
-items afterward.
+TAPRIO can schedule a deactivated qdisc after some_qdisc_is_busy() has
+reported it idle.
 
-The function also unwinds errors from mtd_virt_concat_node_create().
+Commit 47e8dbb6e763 ("net/sched: do not reset queues in graft operations")
+made graft deactivation skip queue reset, leaving TAPRIO's timer armed.
 
-A later initialization can traverse a freed item in
-mtd_is_part_concat(), causing a use-after-free.
+A late callback schedules NET_TX softirq work, whose dequeue path can
+race the unlocked child-queue reset in taprio_reset(). The same skb can
+be queued for deferred freeing by RTNL and dequeued for transmission.
+In the reproducer, the TAP reader frees it before __rtnl_unlock() reads
+its next pointer. KASAN reports a slab-use-after-free in
+__rtnl_unlock+0xa3/0xd0, with a read of size 8 from the freed skb.
 
-Unlink each item before freeing it.
+Reject deactivated qdiscs in __netif_schedule(). Callers' RCU protection
+lets the existing grace period join earlier scheduling calls before the
+busy check. Restart nonempty transmit queues on reactivation so suppressed
+scheduling does not strand packets.
 
-Fixes: 43db6366fc2d ("mtd: Add driver for concatenating devices")
+Fixes: 47e8dbb6e763 ("net/sched: do not reset queues in graft operations")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6, smatch
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/netdev/20260805102514.740834-1-david.lee@trailofbits.com/
+Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtd_virt_concat.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/dev.c          |    3 +++
+ net/sched/sch_generic.c |    4 ++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/mtd/mtd_virt_concat.c b/drivers/mtd/mtd_virt_concat.c
-index 4fad0967a96e..637219e20b80 100644
---- a/drivers/mtd/mtd_virt_concat.c
-+++ b/drivers/mtd/mtd_virt_concat.c
-@@ -202,6 +202,7 @@ void mtd_virt_concat_destroy_items(void)
- 	int i;
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3440,6 +3440,9 @@ static void __netif_reschedule(struct Qd
  
- 	list_for_each_entry_safe(item, temp, &concat_node_list, head) {
-+		list_del(&item->head);
- 		for (i = 0; i < item->count; i++)
- 			of_node_put(item->nodes[i]);
+ void __netif_schedule(struct Qdisc *q)
+ {
++	if (unlikely(test_bit(__QDISC_STATE_DEACTIVATED, &q->state)))
++		return;
++
+ 	/* If q->defer_list is not empty, at least one thread is
+ 	 * in __dev_xmit_skb() before llist_del_all(&q->defer_list).
+ 	 * This thread will attempt to run the queue.
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -1288,6 +1288,10 @@ static void transition_one_qdisc(struct
+ 	if (need_watchdog_p) {
+ 		WRITE_ONCE(dev_queue->trans_start, jiffies);
+ 		*need_watchdog_p = 1;
++
++		/* Resume backlog left by a suppressed schedule while deactivated. */
++		if (!qdisc_is_empty(new_qdisc))
++			netif_schedule_queue(dev_queue);
+ 	}
+ }
  
--- 
-2.56.0
-
 
 
