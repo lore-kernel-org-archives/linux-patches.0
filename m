@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827066;
-	b=WUXFgQuGlFiRxv6hWV+ueV6TatElwT4UcCGjnTbPPasPAIbAqoQoI70YINuxSYfzwVOD
-	 W14SKh5ecPp5wKmDFh9SeDU6RXygrLhSYVhwweXOWbTx+qHBK93DKyLHgFQOWzNF+NcG8
-	 RLPhdUWCkJGKoRYLu/jW80Z8gJLAsDQ6Qgu3zG7iYwFjZl6bVguQaHO1ORlIvAktj+wW3
-	 5R8a/aHTvshPm4RKa1Hty+EBiSy0a+IkHOv3t1RUbX3C2ToEcGNb/2C8cvCpa2EPyDndL
-	 VfQBXLr/5wisIH9DQ1nfOidDRfJWdKtj8OEPWccODFO+8UhvrzHGCRHiFNbfwI9CGog==
+	t=1793827068;
+	b=v5gcwJaHVVx8xPJbHjFDWemrdifnwfPKw7YUXvAM6f7TuXHEjPAXqJC2UhAz+5i02/CN
+	 qO3VE4v5ai2AzwgNRLyGUhKGj+z0Ct59KnTuBwyrb4z+D5I+Kx5h4oVoe5EH7Xh9xWi5v
+	 iq5niTuFvcUJFeiGmxMU1viZv7KABWgBnXeRbrwIXET/XBYMmkMV5V4kjarsC0O284/SH
+	 LpTkE77K+cgipNOXntI9nLiVj2ebtN32EU/svkvOWtz0HZVVDhz06JVQI6Un17V69Or2Z
+	 JDl9EmW0HDEse5wml89SKdsm1K335MuU25Mb+zNbKyR7pxbonloKoAIAlDdoJWdGj4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UZAUxdPi+AKcJ8klcZoPfP3Qk1XZN5ZJkSiTOlwFI0g=;
-	b=ZQ9EnuM7Jeu6dYsqHAR/XyIuSSEi5eQWloi8Nhq+1+y8/TmLsWev0YDVJqftd9Lo96RH
-	 xh7xC0v4YOdfRQADsTfR3qg6Vu/ByMrLVMt46OcP53VZFpflrH8V6FH9hNtHLCv5sOdoY
-	 /qi72Co1Vuj2ubr9AI7gdziPOu97WgybDMCGisjvR2/8L9BZ9r8JmTkCm7z+/8uhzsOLP
-	 9eYvUAGMn+i+0iwT+CDJ3152Pq91jxoy4UuV6McVa0Sdo4ru9WbCR3wc//ucUjFnnn2Z1
-	 rr8SkIH+U3BHWoRE9mAtyXg2v6F/AWX71FhpKMF42R16Xm+ineiG0RhfQ5RqSwUuvNg==
+	bh=gt7UINXYvzYi/AwgglAw5Y6VFopcKtvWhXXhZG8Ln7Q=;
+	b=B66qDEemPxJfFjn+z05MGK4xXwsv9q7qxvQrDxhAHWne/ZhVkFGVSCe89uFHry3PpSqk
+	 H7hkJSNEEWICm1KWK5UpRyUZoi/CPr+dwXcJYpzFR0cTJxhMVsEjoqREAkNTXHSy3R1lJ
+	 bRP9stBciieJIYdZNhIFnnEPrWeeBndU3+Qyalq8GyszALValGnWVRTxYE16d4SSvx0es
+	 O6OLh24R7F0KzTeaw19bdgU1YxpQgI2BP/r+mSv3z30SzPmSS5qlltI9FSUmenKlzSVTg
+	 x3DP0ENwdCzGh/rRTDlBje3FAlgywY2iBc/GpZFwHYTJ3CuYOGhDnavFaO2d02esv5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMpQlobJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TntPMbA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92876606AE3D;
-	Wed,  4 Nov 2026 21:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05236606AE39;
+	Wed,  4 Nov 2026 21:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bMpQlobJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66441F00A17;
-	Wed,  4 Nov 2026 21:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TntPMbA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EDC1F000C1;
+	Wed,  4 Nov 2026 21:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827066;
-	bh=UZAUxdPi+AKcJ8klcZoPfP3Qk1XZN5ZJkSiTOlwFI0g=;
+	s=korg; t=1793827067;
+	bh=gt7UINXYvzYi/AwgglAw5Y6VFopcKtvWhXXhZG8Ln7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMpQlobJE/EFH4S0IQFUVrMBbCmq6/RT6jjv3IKac49Yo3yoKs0HPfRBjawMWK6X8
-	 tnJXHYH7FaKJIElNEWxNIkGiNga2LrAgajXrVodWvVH8giPz9ZQWHz1KEZ8P+S0/WV
-	 oyb22+QSJDOueij3qguAgHpzsd5ppUbJVPh0m3ts=
+	b=0TntPMbAclVsZICXm+AQHxXzaA02pVyfnUM5vLY5LtpIbd7ev0qKlUiA0aOqmiTB8
+	 OrdiA5Yv89XZRKt96jQWH2LBc6pw3435ZDQo6ayjY8YqoMZC4JN5qKfVgKXOD3WZTB
+	 8HTRynwnLAVJtcrpfMVjLw9FMKy3gFRJ9N3W8b28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Schumacher <ts@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 7.3 173/547] s390/pci: Add error cleanup in zpci_directed_irq_init()
-Date: Wed,  4 Nov 2026 16:05:57 -0500
-Message-ID: <20261104211043.063605750@linuxfoundation.org>
+Subject: [PATCH 7.3 174/547] s390/cpum_cf: Check session mask before cpu offline
+Date: Wed,  4 Nov 2026 16:05:58 -0500
+Message-ID: <20261104211043.091341383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,83 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Schumacher <ts@linux.ibm.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 769f66f595c11185c66913ea5d96420504bfebc3 upstream.
+commit 99a95985dfc85eecad97f0991a2401d2fcef294c upstream.
 
-If per-CPU airq_iv allocation fails in the loop, previously allocated
-vectors and arrays leak. Add proper error path to release all resources
-on failure.
+cfset_offline_cpu() stops counter sets for every active session without
+checking whether the outgoing cpu belongs to the session mask.
 
-The error path frees zpci_sbv, but SIC_IRQ_MODE_DIRECT has already
-programmed its address into the hardware. Set the directed interrupt
-mode only after all allocations have succeeded, so a failed init leaves
-no freed memory registered with the hardware.
+For example, run an hwctr session on cpu0 and a cpu bound perf event on
+cpu1:
 
-Fixes: e979ce7bced2 ("s390/pci: provide support for CPU directed interrupts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tobias Schumacher <ts@linux.ibm.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+lshwc -l 9999 -i 5 0:b
+perf stat -C 1 -e cpum_cf/CPU_CYCLES/ sleep 120
+chcpu -d 1
+chcpu -e 1
+
+Although the hwctr session does not include cpu1, cfset_offline_cpu()
+decrements its counter set reference count. The subsequent perf teardown
+decrements it again, causing it to underflow.
+
+The perf event keeps the percpu state alive across hotplug. When cpu1
+comes online, the hwctr session is started there and the reference count
+moves from -1 to 0. Stopping the hwctr session then decrements it to -1
+again, so the zero triggered counter set disable path is skipped.
+
+Check the session mask before stopping counter sets on the outgoing cpu.
+This prevents the unmatched decrement and the resulting reference count
+underflow.
+
+Fixes: a029a4eab39e ("s390/cpumf: Allow concurrent access for CPU Measurement Counter Facility")
+Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: stable@vger.kernel.org # v5.14+
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_irq.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ arch/s390/kernel/perf_cpum_cf.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
-index c5fabad38139..bcf11585df8d 100644
---- a/arch/s390/pci/pci_irq.c
-+++ b/arch/s390/pci/pci_irq.c
-@@ -569,14 +569,9 @@ static int __init zpci_directed_irq_init(void)
- 	if (!zpci_sbv)
- 		return -ENOMEM;
+--- a/arch/s390/kernel/perf_cpum_cf.c
++++ b/arch/s390/kernel/perf_cpum_cf.c
+@@ -1797,6 +1797,9 @@ static int cfset_offline_cpu(unsigned in
  
--	iib.diib.isc = PCI_ISC;
--	iib.diib.nr_cpus = num_possible_cpus();
--	iib.diib.disb_addr = virt_to_phys(zpci_sbv->vector);
--	zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
--
- 	zpci_dibv = kzalloc_objs(*zpci_dibv, num_possible_cpus());
- 	if (!zpci_dibv)
--		return -ENOMEM;
-+		goto out_free_sbv;
- 
- 	for_each_possible_cpu(cpu) {
- 		/*
-@@ -589,13 +584,30 @@ static int __init zpci_directed_irq_init(void)
- 						AIRQ_IV_CACHELINE |
- 						(!cpu ? AIRQ_IV_ALLOC : 0), NULL);
- 		if (!zpci_dibv[cpu])
--			return -ENOMEM;
-+			goto out_free_dibv;
- 	}
+ 	if (!list_empty(&cfset_session.head)) {
+ 		list_for_each_entry(rp, &cfset_session.head, node) {
++			if (!cpumask_test_cpu(cpu, &rp->mask))
++				continue;
 +
-+	iib.diib.isc = PCI_ISC;
-+	iib.diib.nr_cpus = num_possible_cpus();
-+	iib.diib.disb_addr = virt_to_phys(zpci_sbv->vector);
-+	zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
- 	on_each_cpu(cpu_enable_directed_irq, NULL, 1);
- 
- 	zpci_irq_chip.irq_set_affinity = zpci_set_irq_affinity;
- 
- 	return 0;
-+
-+out_free_dibv:
-+	for_each_possible_cpu(cpu) {
-+		if (zpci_dibv[cpu])
-+			airq_iv_release(zpci_dibv[cpu]);
-+	}
-+	kfree(zpci_dibv);
-+	zpci_dibv = NULL;
-+out_free_sbv:
-+	airq_iv_release(zpci_sbv);
-+	zpci_sbv = NULL;
-+	return -ENOMEM;
- }
- 
- static int __init zpci_floating_irq_init(void)
--- 
-2.56.0
-
+ 			p.sets = rp->ctrset;
+ 			cfset_ioctl_off(&p);
+ 			cpumask_clear_cpu(cpu, &rp->mask);
 
 
