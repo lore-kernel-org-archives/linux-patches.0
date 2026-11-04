@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831783;
-	b=NQy5awtQQhkWfyNmWoSiLo4Jbjw/am2n0zfl+QXuKJjRY1nf2BXRLJa1ZPrRz87aJgw/
-	 mq+rLW4E7nPg27RXxY8ozc6X20TV5ue22sdld3H1HsZSR2nG01xZ71BzmlUmOTfw808VB
-	 IP1+OQ/JoegBl02xplMlh1TVQuIF5UWohIEZb6k5+Swi95mOUlKuwbBfMXIk8lP2U+Lpd
-	 /2R0sBdo6A0Z6aQhukE/NyksfUp6m+bYKPAkGirW5bOnPxDIHm+HE61dJsVC7l4GmQu+M
-	 o+djJ+gjv2IkNfyxYn2yewEF1Bg5m2jiK35WXvrMISGe8wj8cux3kqaRIAULzvKp6Wg==
+	t=1793831784;
+	b=K8VeCoJoas80i7dJBlGpiUq3rByVczePNUTUtYSSXNbM4T40GQwJXECQvbiHVAa2v+6K
+	 5CuPCyP/yrybmhkryEBZzYloiBSFD2QOmt5QsEKAcWIDGgkZ5Aq2zIMbhUxNgT0ZGBrAq
+	 LUjAITFbFG2V8wluM0ZM9V+N2828ua5onLrNXwLYxw98udK8+GImelLZDqWNxLePhGTyQ
+	 8g58hzGQHbM+ryI+8om3w41ZyRWNGQcGT/PMl2DIxnndlKStTXcjTvV78fIVsgAzqeT+A
+	 jG5RpM1PdcXLqywa2vUwneDxYkgtSZAKzbnrp7JdAoIOHKKMVHIXTmi07xKCRAVuKYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831784;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3iovlTx8zEJcNK181vswUrd1iRLZULm4+u/ogpWNlI0=;
-	b=zLtC6K/qW1jG66lMQj37/bJnpjmatpzlMN84g22yxqL4tw7h+PQ4/CH4Pl3R7otgTrhj
-	 L06iRCsuFzM+vE0aIwwNE0fcH2lndAPPQ5n9nQneQI8hV2S5OQqdP4HaoMn7K4mznunmL
-	 4dUVnGMNzak7vJ/SxbDq4n0Pp3pMldNCCcQkBwPh8PTEvNTeWXvJjkSgmerFpWiIjFG1C
-	 fetFssT/SQz0PIE3omwkHfXOxRCWvcPoklhTlJ6eZlWxGla6wMMptZI6C5G3tXsEPatPh
-	 7ulvna17Dlatbd+BZPHX93M/ZYz5BVf9Z1IuopuvZ7g2xEBkKDOvM0qv7+977LHlXNA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=xO+twGPLs4s5FfFQ3PrS266ozQRcxyjK3i7f4cH4voE=;
+	b=hxtreM7dhk5jwppb3U/MQZtZ8tm480i5hVwWP6gnriEfR/ZTX5Eu1yYVZNc4d+s/BHzL
+	 but5I173073wel7skauVSi0QKU5xD4INxyrI1dDdNlG4h6pT3eKdVv6ylZ7QxhE5JisSE
+	 I53Sll+tWWlgXD0j6xPEQKtaasYP6jliPkTCmh1pofG6DKyOTCKLYcZQwkiv3tJYUYJoG
+	 d9nbGoI9qY0qnVVEm0N6/gb9z5JvHssmMH+W6Bxx+9yg97UiLthS6ePY3OQqAph8lsRVQ
+	 FelpMvteQA6dYNkeNL9btRVVo+7QKZEKoDYBgaWz776ZqPG6lwcYfAp9hxiQd9V4ftA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7Xv2VtD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JypF36Um;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20EF606AC2A;
-	Wed,  4 Nov 2026 22:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E79D606AC2A;
+	Wed,  4 Nov 2026 22:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7Xv2VtD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC681F000C1;
-	Wed,  4 Nov 2026 22:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JypF36Um
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF69C1F000C1;
+	Wed,  4 Nov 2026 22:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831782;
-	bh=3iovlTx8zEJcNK181vswUrd1iRLZULm4+u/ogpWNlI0=;
+	s=korg; t=1793831784;
+	bh=xO+twGPLs4s5FfFQ3PrS266ozQRcxyjK3i7f4cH4voE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G7Xv2VtDcLcy5EL72r8xUAVNSfVipUZGofJ7WeVPO3wjsEXTvhnD9MO2HCx4rnNPa
-	 vEKl3czPEfWK18Vf7r4Z/nr9t6j4QUzPAW9zetjABt6WwQgO8IKZ2O07LKjA+yIZ5S
-	 fsqvloTa2/jC0XdEUjuydx2E86+NxYKFYAgF1bmM=
+	b=JypF36Umg/lvDaAxrgtXhNSOutwLDZKqUUjhPjNbAv7XhSGDrIn/sguxs6U5/VTdx
+	 TYdpk81lZTeQ6lj5SAwpgvc04Bp0NbY0dCF/OZ7HbpsEGd6BI277yzeYFAtrfOkmxw
+	 XwIUOw5/Gy/UlZ5i8m7Ijt/s8AqaZdmC4HpxR6ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0909/1005] SUNRPC: fix oversized GSS proxy token copy
-Date: Wed,  4 Nov 2026 16:10:42 -0500
-Message-ID: <20261104211108.637799137@linuxfoundation.org>
+Subject: [PATCH 6.18 0910/1005] SUNRPC: keep the first error in svc_register()
+Date: Wed,  4 Nov 2026 16:10:43 -0500
+Message-ID: <20261104211108.661986314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -61,52 +61,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 62319c2534b603b416fa2aa2f3ef18c311f75010 upstream.
+commit 9ed91d7c4698e611ea5bfca45076008def831fb3 upstream.
 
-gss_read_proxy_verf() allocates one page per token chunk, but it copies the
-entire linear head of an RPC request into in_token->pages[0]. A UDP datagram
-can leave more than PAGE_SIZE bytes in the linear head, so a large
-RPCSEC_GSS INIT token overwrites following pages.
+svc_register() assigns every pg_rpcbind_set() result to the same "error"
+variable and returns the last one, so a later result erases an earlier
+failure.
 
-Copy the linear head in page-sized chunks before switching to the request
-page array. The linear head itself can span multiple pages.
+Keep the first error instead of the last.
 
-Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
+Fixes: 642ee6b209c2 ("SUNRPC: Allow further customisation of RPC program registration")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Assisted-by: Codex:gpt-5
-Link: https://patch.msgid.link/20260910125120.3798995-1-Jeremy.Jean@oss.cyber.gouv.fr
+Assisted-by: LLM
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-3-a540d86668b0@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/sunrpc/svc.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1085,10 +1085,11 @@ static int gss_read_proxy_verf(struct sv
- 	}
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -1236,13 +1236,16 @@ int svc_register(const struct svc_serv *
+ 		struct svc_program *progp = &serv->sv_programs[p];
  
- 	length = min_t(unsigned int, inlen, (char *)xdr->end - (char *)xdr->p);
--	if (length)
--		memcpy(page_address(in_token->pages[0]), xdr->p, length);
-+	for (to_offs = 0; to_offs < length; to_offs += PAGE_SIZE)
-+		memcpy(page_address(in_token->pages[to_offs >> PAGE_SHIFT]),
-+		       (char *)xdr->p + to_offs,
-+		       min_t(unsigned int, length - to_offs, PAGE_SIZE));
- 	inlen -= length;
--
- 	to_offs = length;
- 	from_offs = rqstp->rq_arg.page_base;
- 	while (inlen) {
+ 		for (i = 0; i < progp->pg_nvers; i++) {
++			int ret;
+ 
+-			error = progp->pg_rpcbind_set(net, progp, i,
++			ret = progp->pg_rpcbind_set(net, progp, i,
+ 					family, proto, port);
+-			if (error < 0) {
++			if (ret < 0) {
+ 				printk(KERN_WARNING "svc: failed to register "
+ 					"%sv%u RPC service (errno %d).\n",
+-					progp->pg_name, i, -error);
++					progp->pg_name, i, -ret);
++				if (!error)
++					error = ret;
+ 				break;
+ 			}
+ 		}
 
 
