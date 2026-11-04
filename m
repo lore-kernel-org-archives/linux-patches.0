@@ -1,83 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831181;
-	b=PhPzUnFnOw2CEGHCtNCOQYs+bro8732hs4pf0crf+H5s9XZNl4kcmuraeQYSAQkikKvs
-	 Q4Zxrkz5I8SgWFkQZCDpJJyJLKNKz1XbelaltqtKWQpezVaMLgW7J9k8RtXtea6rx/ZtK
-	 8RX67eP2uIHsQZQHnmkoVrAP0sAng182qBSDsTxEnLQyReGATGJ/djIw3GuoMS4eniBu7
-	 19JYHb85mYiKhRixinleDW3u/A+vlVAvU5Ya2+Rpq5irLnvJ/JhdY0LdrE7Ocq4lT1A90
-	 hnvXlrn3ZnbHnd61zD0wknKZwkmeQR2QHBbFrmodd69pTrDxtfVbyjbAYmUA28NsnzA==
+	t=1793831182;
+	b=hyZC7z4UN+iqz8IzoCk4aL68zoqOSUtiWg1U1tcpwq/DWPT/Hf5G+hjN4k3637W2pph3
+	 F32Zqu38mEbnN3Hsprh2MH/xJHdjRBl6m8zSv8M7qtJgLiQsySH0DkeOWpqrINbZL6dgt
+	 272djxgJeHHgkeYjpNt9z/QSPswRCnUygXwyR6JCUB+ItunRFzXZ2GeJF4IMcyRkyrg44
+	 z6BcXFUT4CU8XF6ulVY9oL1vLfrauGAEnGxYfG78jIskCYiDLODfg2PvK3IlEzzEABfsb
+	 ckMlKnarts9Dt+uUYv3Rf87P8eODLqGIo+Mdjn5+Qg7xTjyi/C/eivcV4XBOcaBnH3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aFwu6X/fis7ChBelFltgd54uxjrrr4Z8v/PXJytRGiI=;
-	b=KVlbD19Gqvnv3ZG3ZkG4XqUlVL97DYML2qZTMrHE7L1yY3rMo0Qv0zRRPw7HLfA76R1d
-	 IkkOYCNIWvY6Sp95ADRsZ08tID93ls+pmcMOr39hs+ug9WsbCavaCIagEy5lW4xWRNwj9
-	 3XrsmO4fA4mOY3R02BDchJ908n2It6TPeA0BwFzHOfItWnknHYosCpFZG8X4A62pHOc4I
-	 jNs4madgOq3NC9ptrxvD2DnZUkpfKvtkjyCchgCLrBKwlk9iJJQ3oueC6mATN+ponbCyi
-	 P4vB5g90ClxN6rZbSQ+IbFneZnmM9SiVcmHLESmsxuz/ZHva7fCEKNBs5zmTjGutLVA==
+	bh=uPJcqFpePhY52Gf4/O+G6s1Uz7FP3PWjXmMYg8Y7IFs=;
+	b=V1kjvnLzwWr4sqTWTHWntZNMiIwA1HJIwRQ9td+TPTqOVzV5t3BQU2tvel0u57a/1wLC
+	 Mfn4rLdsZkU/WpOzWWhDaOEm2muaVUYJMhRPZXbr9JfvCYliL29mMZL0lLXiEIOiDdgx9
+	 UBGdNUBUXexJN1U3+VnaJ7F8sZHTdgcCY4hYWgYQ8J8PhBjjwZaR0Ph3w9N00dZW/PlsG
+	 I1nk83ZRb0KWXFChZiAsQUJJZORIbJDnkIyCMLdFDWcfL7Oezi7htUAGSCgS6tx8/SPTA
+	 CnktpCEtHhIujWpKUFkCcnXhxGRjZF3dlusIA3t97YP3d0zAoWQRQ60I2LjgXt1yyoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeoELMdi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fX9ooKDE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A57606A332;
-	Wed,  4 Nov 2026 22:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7809A606A332;
+	Wed,  4 Nov 2026 22:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeoELMdi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652D81F00A15;
-	Wed,  4 Nov 2026 22:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fX9ooKDE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB3E1F000C1;
+	Wed,  4 Nov 2026 22:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831180;
-	bh=aFwu6X/fis7ChBelFltgd54uxjrrr4Z8v/PXJytRGiI=;
+	s=korg; t=1793831182;
+	bh=uPJcqFpePhY52Gf4/O+G6s1Uz7FP3PWjXmMYg8Y7IFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YeoELMdina7EfNitsg6Q7aNOoRITd89hAknvX5DRKcTXCAu/3lHo6vNMj49FB6BY6
-	 /cNPk0Z/ChIMlGXNLBDvUpPfu9/lcAKgANokzpkc9qYRLFu+Hzw2n1/xr50a1+3UpH
-	 Fv9exXomBDqQk5otgnSmP87R88LOuE9n58zntQ0k=
+	b=fX9ooKDEqHXqIvcXyDpxV7q+UOWETXY6G5ru6YkVwqpkATe2JrT34efm9KFKwgcT1
+	 9mpT6A+d3pw0vZdDG7djruxnfbo7DHy+qYTN6sosFAlMPFBMXh0XmWhmeWftb1TYc1
+	 ljIxZzbjKwsU6e+Egqp/D2vmlReG3BkrGE04pcoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0545/1005] mm/migrate: use huge_ptep_get() in remove_migration_pte()
-Date: Wed,  4 Nov 2026 16:04:38 -0500
-Message-ID: <20261104211059.157849669@linuxfoundation.org>
+Subject: [PATCH 6.18 0509/1005] drm/amdgpu/gfx12: set KMD_QUEUE for kernel gfx queues
+Date: Wed,  4 Nov 2026 16:04:02 -0500
+Message-ID: <20261104211058.192799280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -99,81 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit ac1ec50d71b953524100ddc09057ee61a3dfaff3 ]
+[ Upstream commit 9fe5745f9d8eca38d31d9b672a1998edf856f651 ]
 
-remove_migration_pte() converts migration entries back to present PTEs
-after folio migration completes.  For hugetlb folios,
-page_vma_mapped_walk() returns the pte pointer to the hugetlb folio in
-pvmw.pte, but the code reads it with ptep_get().
+Set KMD_QUEUE in the GFX MQD and kernel ring control registers so CP
+preserves kernel IB VMIDs instead of replacing them with the queue VMID.
+Use prop->kernel_queue to distinguish kernel and user MQDs.
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(),
-pte_present() etc to misbehave.
-
-It is not clear whether this has a trivially visible effect to userspace.
-
-Use huge_ptep_get() to dereference a huge pte pointer.
-
-Link: https://lore.kernel.org/20260703114202.365553-5-dev.jain@arm.com
-Fixes: 290408d4a250 ("hugetlb: hugepage migration core")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 14741c01680a803050e949744089b57fa53e02f7)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/migrate.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 3159be53a00d3..08f1382318024 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -370,7 +370,11 @@ static bool remove_migration_pte(struct folio *folio,
- 			continue;
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+index 433381f806b2b..06fde713b9229 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -2733,6 +2733,7 @@ static int gfx_v12_0_cp_gfx_resume(struct amdgpu_device *adev)
+ 	rb_bufsz = order_base_2(ring->ring_size / 8);
+ 	tmp = REG_SET_FIELD(0, CP_RB0_CNTL, RB_BUFSZ, rb_bufsz);
+ 	tmp = REG_SET_FIELD(tmp, CP_RB0_CNTL, RB_BLKSZ, rb_bufsz - 2);
++	tmp = REG_SET_FIELD(tmp, CP_RB0_CNTL, KMD_QUEUE, 1);
+ 	WREG32_SOC15(GC, 0, regCP_RB0_CNTL, tmp);
+ 
+ 	/* Initialize the ring buffer's write pointers */
+@@ -3025,6 +3026,7 @@ static int gfx_v12_0_gfx_mqd_init(struct amdgpu_device *adev, void *m,
+ 	tmp = regCP_GFX_HQD_CNTL_DEFAULT;
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, RB_BUFSZ, rb_bufsz);
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, RB_BLKSZ, rb_bufsz - 2);
++	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, KMD_QUEUE, prop->kernel_queue);
+ #ifdef __BIG_ENDIAN
+ 	tmp = REG_SET_FIELD(tmp, CP_GFX_HQD_CNTL, BUF_SWAP, 1);
  #endif
--		old_pte = ptep_get(pvmw.pte);
-+		if (folio_test_hugetlb(folio))
-+			old_pte = huge_ptep_get(vma->vm_mm, pvmw.address,
-+						pvmw.pte);
-+		else
-+			old_pte = ptep_get(pvmw.pte);
- 		if (rmap_walk_arg->map_unused_to_zeropage &&
- 		    try_to_map_unused_to_zeropage(&pvmw, folio, old_pte, idx))
- 			continue;
 -- 
 2.53.0
 
