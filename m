@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830838;
-	b=xZVN3tkJQf8aCsnU/WzZOxxV2AMxT5Oi8hEIL121j42xJgezruG4S7MfoY+2ClbdRMTp
-	 iU3qsC+eOQEUyJ80B6lUCvrKYXTGxCBbEuW7+Ko36xGD5MxVMTv6p1zhD0f51SSVZjFt2
-	 hBhf/RuHGVccWOaENbpv62WiiZxXfS33C5XvNs1tvhLF/cIG6S1+9DYeItE0NsA5Ij7fF
-	 4gMDXr7u5EMxCRNeZ2R2eN4C4KJge5yQ047sToTL/PCZ5O/QCaPEjpt2DgwfeJ/NNcDYC
-	 140yzl2Iblmmc7Zx/MrdVNI79NKFVBj5UEmig3uZ9JP5cVlAtf2eoVxFnCajP1OEjRA==
+	t=1793830839;
+	b=g9Q0GvNqDADENKMcf0mAzQx9CwKpsIWSx+VHXNOAMnFzJuqHx4hiFy85bTGfy+5cWAdK
+	 25wqQ+6ugYQvLu6yXP5DhLVxnq8qIBtsO630ZhVon6zcpLTn//VFxuDsfGyEX5VDopQz4
+	 vKuuxWib8MZ349swwEg4wV2nnVcglkaJsI8gvuI5LdXXDcEgdglvV0NdGYKHp0mH1x4se
+	 uCQmmYmckTXlmboh4rfemOFSBj1Qw1Nq2O+N+0WpiIrs3umSDGWimXEiU7lBRdZxVngUh
+	 /rBk8MCRir8AJAyct1WQhRvdi1G6RqelF7AfFr8077OZ0azggBREXeRO+5UFfBv6DMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B8K1QRzc18IFd46idDleoGRxlEJecHJgX9Ic0CnrXZ0=;
-	b=ORqSraLOlj1pwsqM9oc7FrYOabT3jcxU8EApgodLj37+C7MJ9trBGlrQX7ncAE1zkw0/
-	 xfTpiK7VGgGVy3TZ4IVtsQCQwHcOR67gxe0qthrW+nLaU5qHFJ2WCm+hQxKhorg0h+FUR
-	 l1QOZXp4rOq7V9HVqe5Q0KXovlAQ9FmVIefphTvDnX1xYI/e6hFyWT1CIGtSIWzInx5up
-	 pIzr2UeMfvEf49LbGOzUWconvQjQhij5jDhszgc/T4BrRWrBdMrMHDwtn0bnUlpoh2daf
-	 r3xLr1F6LI3WMhG6SxkzPL+lrgq68IRZmZ4bzkNu3pwX84ryE5QmOAtMc2CXIW1+SIw==
+	bh=8V5tOTb8Ut/ERlXWHgCAp9NUuUcByZVHPwv8Qe+6Bg0=;
+	b=WlKOidhPeHcKFx2ARlbkvdEA7Tjv1sSjyi8edwlDPzPRs6AK+l2MSqFeKPa18pHZSHSu
+	 WJMCIfvGeYVWozPpQ42WIq5yWy8RxJqH2koCWDpUW1EzYyEvHhxv6Mw6N4qQuuyfh4MV1
+	 UAn/4Unz8hY1fwXuUkyTcK8jqwqybsoP7cVXGRSH111mstrA5Ejg65yYS4P6ifSzziMLD
+	 9SzEANfpFbYrB5yzUdH19ZT3Tn9UBBrbtqOptAoA2Cw8shuH/vStj1hOowNp0gtlMeuUu
+	 1x2j95JQ2C57I1PIa8A9k8kJJY1vEUrnS0SaMz5+9EMY2wU8bYd2czSbRbgxWuUxn+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UoWaSkqH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dmkjG7vq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3798606CA0F;
-	Wed,  4 Nov 2026 22:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34AD606B2D8;
+	Wed,  4 Nov 2026 22:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UoWaSkqH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7551F00919;
-	Wed,  4 Nov 2026 22:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dmkjG7vq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055191F00919;
+	Wed,  4 Nov 2026 22:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830837;
-	bh=B8K1QRzc18IFd46idDleoGRxlEJecHJgX9Ic0CnrXZ0=;
+	s=korg; t=1793830839;
+	bh=8V5tOTb8Ut/ERlXWHgCAp9NUuUcByZVHPwv8Qe+6Bg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UoWaSkqHjnFlotnVFpBqPiOr5m3iA7abUpi5JpynFq7aLYmo1GFgqJIwVB0DcYOB5
-	 E4tqEixX6OmhiV3xY+i52EfnbIWh615vAnrFtZyNS0GZ2IjvE62xWtbMs1HmXGwFTv
-	 JDISRExlbappf3MekcIb0ulawmTrSORjBDPEqyMg=
+	b=dmkjG7vqe4NoP+/r6Pv1GeJk76z3iVtL07p6TVhyPms4l+hjAYFl+RCFEootMrCW1
+	 nEs07VWUwq6YeBN6pvKARLP8lJF41NT8HXg5mL6cZxJeQ1tteab0lGh689hveN5eFV
+	 yafJuidsnZ69icbQNSxog2vWCMzf+xsTIXq9LZKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Qi <qirui.001@bytedance.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0344/1005] selftests/ftrace: Force C locale in ftracetest
-Date: Wed,  4 Nov 2026 16:01:17 -0500
-Message-ID: <20261104211053.602459230@linuxfoundation.org>
+Subject: [PATCH 6.18 0353/1005] ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA
+Date: Wed,  4 Nov 2026 16:01:26 -0500
+Message-ID: <20261104211053.961339613@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,46 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Qi <qirui.001@bytedance.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit c13fcd3951dcc19524ce0b3e852844b16cd32b22 ]
+[ Upstream commit f2d08f3651fb12634347fef2c41687a807a7dcba ]
 
-Some ftracetest test cases parse command output by matching English
-field names. Tools such as readelf may localize their output via
-gettext, while ftracetest currently inherits the user locale from
-the environment.
+On the ASUS Vivobook S14 S5406SA (subsystem 0x104310c4, Lunar Lake
+platform) with an ALC294 codec, the headset microphone (3.5mm jack)
+fails to capture any audio. Adding the ALC2XX_FIXUP_HEADSET_MIC
+quirk resolves the issue and restores proper headset mic recording.
 
-If a translated field name is printed, parsing can fail even though
-the tested kernel behavior is unchanged. For example, add_remove_uprobe
-can fail to find the ELF entry point and then write a uprobe event with
-a missing offset.
-
-Export LC_ALL=C in the top-level ftracetest runner so every test case
-gets stable command output by default.
-
-Link: https://lore.kernel.org/all/20260807081512.2974757-2-qirui.001@bytedance.com/
-
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://github.com/thesofproject/linux/issues/5729
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260807125857.678297-3-zhangheng@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ftrace/ftracetest | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
-index cce72f8b03dce..ee3b950e872f6 100755
---- a/tools/testing/selftests/ftrace/ftracetest
-+++ b/tools/testing/selftests/ftrace/ftracetest
-@@ -7,6 +7,9 @@
- #  Written by Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
- #
- 
-+# Keep command output parsing stable regardless of the user's locale.
-+export LC_ALL=C
-+
- usage() { # errno [message]
- [ ! -z "$2" ] && echo $2
- echo "Usage: ftracetest [options] [testcase(s)] [testcase-directory(s)]"
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 97ab2269dc472..8fdfe1bbe7aff 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7101,6 +7101,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
++	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1154, "ASUS TP3607SH", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.53.0
 
