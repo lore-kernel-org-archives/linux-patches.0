@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830937;
-	b=ymURYZWnNj8lOlXnPBMkG7uh1LOXZbg376hfM5ra4Ugd7HOUMG/+XAP/KDg1n9T4KKTO
-	 ChEojZ7GcPiT4uAgFHFdEGGD8Miqe7tn3CN9eD+Ap+jBkFG5aQKxPiOlKAUi1xeVV+pzT
-	 Y8ljA2fgxsPAq+0qn3GDvTAQAm8MOP0SGBtFeS7JMufFnU+Y2H8r7cV0hPDhTirwdIP0a
-	 YuLi8s5q49p4Y1Pn5KfjvGfSPUnvA3Mxpgehg6QBIGl2oOFTsdb8Dc+A2TsX24RLhpyIK
-	 qwX2WIzXFCIyGHqBaseRmEbgGD5T4Xd7rjCEPe9euz4MZr3osNkQTwWU9G3CZyPXI+w==
+	t=1793830938;
+	b=HsBQBYNgdLcstC5IdsWRAAd9DZqHXjXkI4cdHIBM5kwe2BemRN013pW/zOiIKLwI6Fdt
+	 LkRQxS0ZUf0LPHC6JrUXYMOMRQ52Bm83txYGIshWnamIkKVYXsid7rAwfjNp4af/EAfzU
+	 ADaRVgsBfC++PiwXptHYUzOSA8Gw5MvyyO1QxzE07DWNhSlR7N0yb99oQo3E7g9osXbGm
+	 tGuqGfJQc6heIQiUPJuFiLg6l60qPYhWpgr+PQqRElAWWcNdZNYGqqNEIE7mRVn1rCvxV
+	 sLNXCk6MylJZU5b7CsTWolTEdTrAMfi1PsaFoxI9GZrLYdwJ6s72o7BGJjBhvT5N3tA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830938;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v1bwb9hMOwle2ZY/3iI/iCoZEY0sVN4YPaEHgOPdc0Y=;
-	b=Mc40H8lcve9OsxiU+83VngSNuW70z/8EMdCQPBzdBkrfC3KDg4Q4cL0Zi/LRyDE95fpQ
-	 37Opcsmf4D+zbmfQpjK52YQnQzO6CxU2JWC3rmfNhEGXcrZz7R5rPlPgSQYDd9PphXyij
-	 9CKnDv89O9ZawYGa57yZEfTFBPhDWb6SDrPUlwShzDCifWLHRzO/37j2fhh2IIxF0jAFE
-	 AczYQ25zsnfwoJ4Xsjc60dS7+bY/M3tDbNyZRurkMEbSJ0gF6IrCae3UUI4xcxuPpeAux
-	 rh5sZaad2mUIFJJEfMnVYbgtmlFwgVWYu1eYaKFjuqQT6EulFMA2G9BYOXLGjQXi1Nw==
+	bh=62aMbUc/nlDf/mdevxiLTAEq0DGSvNvt7NE/F496dNk=;
+	b=BhDoH8Boy+WIoP00f1DGBoi4dtqd9k59bpw4z429r1n+E54OGtj8MRfl/NIKz1j5QE5O
+	 6LmycRlIHgfmkHNJd6/+3TQvb8n7kJAU1EmYpQeHf4+fOWY8k59qHQ0MpZc3UTRHqluC8
+	 IYow6AlakVMQvyX3dbLAweRinK5mqqddWFySUDP6szFlc0w3udx37nCyRGGekCOeIC5P+
+	 kgrPKiILh/iIBSm8L3M5yMlkeiQBYIunSaQuYp8kJBKxAp28nrkTMS6BeJ5IQBBKJOx4I
+	 DSrdLQl+DIdn3grdAoTFBPtMrQwNGJ0hwOFPRJqQt9Ppcx0pOnBTuz952/uj9efUFTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbxOrjcb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RR0lxUki;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E6B606A858;
-	Wed,  4 Nov 2026 22:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5925D606A858;
+	Wed,  4 Nov 2026 22:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbxOrjcb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631761F00A02;
-	Wed,  4 Nov 2026 22:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RR0lxUki
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FFC1F00A02;
+	Wed,  4 Nov 2026 22:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830936;
-	bh=v1bwb9hMOwle2ZY/3iI/iCoZEY0sVN4YPaEHgOPdc0Y=;
+	s=korg; t=1793830938;
+	bh=62aMbUc/nlDf/mdevxiLTAEq0DGSvNvt7NE/F496dNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IbxOrjcbsL94Ewxp9uk5w8U0RRc/a3r2YpJf7aEbC2Ym6ULsF36lTvFqOyUuP9P8W
-	 xeIfgbjbz7RNU/+rRRp5vkyeqn3/doG1T9gV+XqjmDzEGZBO+KDGaRGTl+cviiecIX
-	 NCNv5DAKH05VRrW2vOgMwxI/Jwab+PDjM+DYFsvw=
+	b=RR0lxUkiSxIuc13x8ydxFnNOdiRmfeQdDxn3lcfwu75tUR0yvtmlk/a5NfDMiCCHf
+	 SoZ/56s+313zyd5b9w6A3UYDFJW2OjOykwAbukXzs9aOvi8/8h+fhXc+U/yxDqqrfG
+	 p3uCH+qBRgq6ZIZd32yzZRpPH30/Sn9rq7gQI1SA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gael Blivet <gael.blivet@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0412/1005] ksmbd: allow FSCTL_SET_SPARSE without input buffer
-Date: Wed,  4 Nov 2026 16:02:25 -0500
-Message-ID: <20261104211055.623149243@linuxfoundation.org>
+Subject: [PATCH 6.18 0413/1005] ksmbd: skip fallocate for SMB2_CREATE_ALLOCATION_SIZE on a stream handle
+Date: Wed,  4 Nov 2026 16:02:26 -0500
+Message-ID: <20261104211055.653207556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,48 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit 86c84cc760080929b7be44bceebe5854957b99da ]
+[ Upstream commit bfdf81c62f4f52a3626ea62db0744def6778e83f ]
 
-FSCTL_SET_SPARSE without an input buffer sets a file sparse.  Treat a
-zero-length input buffer as SetSparse=true and keep rejecting truncated
-non-empty buffers.
+smb2_open() calls vfs_fallocate(fp->filp, ...) unconditionally when a
+client's CREATE request includes an AllocationSize create context.
+For a stream handle, fp->filp refers to the base file's data fork
+(streams are xattr-backed on the same underlying file, not separate
+files), so this pre-allocates storage on the base file's actual data
+instead of doing anything meaningful for the stream -- fallocate has
+no applicability to an xattr-backed stream at all.
 
+Skip the fallocate call for stream handles.
+
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 86535283b49a6..bfc60fc9fb275 100644
+index bfc60fc9fb275..e473cd3bbee36 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -8617,15 +8617,21 @@ int smb2_ioctl(struct ksmbd_work *work)
- 				rsp);
- 		break;
- 	case FSCTL_SET_SPARSE:
--		if (in_buf_len < sizeof(struct file_sparse)) {
-+	{
-+		struct file_sparse sparse = {0};
-+
-+		if (in_buf_len && in_buf_len < sizeof(struct file_sparse)) {
- 			ret = -EINVAL;
- 			goto out;
+@@ -3633,13 +3633,22 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB,
+ 				    "request smb2 create allocate size : %llu\n",
+ 				    alloc_size);
+-			smb_break_all_levII_oplock(work, fp, 1);
+-			err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
+-					    alloc_size);
+-			if (err < 0)
+-				ksmbd_debug(SMB,
+-					    "vfs_fallocate is failed : %d\n",
+-					    err);
++			/*
++			 * fp->filp is the base file's data fork for a stream
++			 * handle (streams are xattr-backed on the same
++			 * underlying file) -- fallocate has no meaning for a
++			 * stream and would otherwise pre-allocate storage on
++			 * the base file's data instead.
++			 */
++			if (!ksmbd_stream_fd(fp)) {
++				smb_break_all_levII_oplock(work, fp, 1);
++				err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
++						    alloc_size);
++				if (err < 0)
++					ksmbd_debug(SMB,
++						    "vfs_fallocate is failed : %d\n",
++						    err);
++			}
  		}
  
--		ret = fsctl_set_sparse(work, id, (struct file_sparse *)buffer);
-+		*(u8 *)&sparse = 1;
-+		ret = fsctl_set_sparse(work, id, in_buf_len ?
-+				       (struct file_sparse *)buffer : &sparse);
- 		if (ret < 0)
- 			goto out;
- 		break;
-+	}
- 	case FSCTL_SET_ZERO_DATA:
- 	{
- 		struct file_zero_data_information *zero_data;
+ 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
 -- 
 2.53.0
 
