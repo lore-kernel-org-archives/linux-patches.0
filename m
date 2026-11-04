@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826758;
-	b=UHvQ7V6WikGc+qbffzNuj9KGCB/97i9Mo0H/XT3NPFdyH3qMZiIuKJX19K4y6lG5jbQ0
-	 d50z3teT0y0LM0E6PVkig2LvnadhtEl/UYnHRr58Hs2UKDTuxqXkofFvipXRzcPqXlCS2
-	 K3czwXnOzmcg09grM6tsIjggzEIF20bnktiR4lQS/M5rni+BCk+tiEYXLmhkPFLQuCap3
-	 l9g6/Wgtwg7b/5GqUwli+y82ROvDjMM3yx36XAzxXKDvHRcah67G1hXnbAftCTlhKAVMR
-	 yaDjbhVPSRGtyl80BCnsOQk4gzeeIDpER4p954HY/I7uD7U+QlUg70ylbxzrlPN8nBQ==
+	t=1793826760;
+	b=LzhLzhUwLVYRElMND9TyKAlWdefAlPbFdd0IgxUYj5POzDn2w4LsiZ5QIRDYgWZCJzHU
+	 eOcB9H1QbrvVXiI51fs4sZ+K3275o8UpjGOpMEvelVuJSl2k3GG6Fv1Acn/X78xJ0SdRp
+	 14wk0AmY0KtRrfKvgVuxOzwXif2jxXVJXyuradv7HvZOxghjVqcRtOVSZgBeP+CvJugiM
+	 q3KCazR71ykWnJxo3Ektn9+eX2Yw21br9i1295Pdu2yJcsvVNrfY/72S+6iO3ifupJfX7
+	 t+vetTexLlVQIgyfat9U3iXGpWGBusY0047Kh/HonsDrxfa0qLjsON9ZR81HOBxPFSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826760;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AG80wjyOkN6gki8rvbpxJxiiA3qzzQFuVmZcydaz1M4=;
-	b=MeyxvwahokgjQ/72WpJt3lKrQkNhimsFsC2irpaqcL9JxmXjgDroTv0Jb2GfUBVcbuAJ
-	 okoDH7cdlRsiY9CczIo76qxPsYUcToA1T/SoLfetptfcxUn4UD0HnLiyROsQk7cVFKfg4
-	 10RTiwazpEFOIUXgC2j0NzKJHVz3PqUKQHX0LuCrH0IRiymfuJGWJorocc56zwkQzpUBB
-	 0TYNDymtCRqtLlTjk/hnUZerny+jRzSgC1tPLJicbNRd85LFmAXPLH+94dwKPbXJlj74j
-	 QdB3G2xpDDrH3AD4YwqV4zxdUIF/RWf2tvnZB33OYwXZkoZJV4epi/3eSJZOLujafKA==
+	bh=7DKAsH2pI6t6KHr47nJPrN4RKM7uzGIYlgH/kJryk0c=;
+	b=SAgaBNeQ3LodlXtk4NjPMt+qHipmeHjBA6GdjQVvNopxqVxvA4moIY2rx1I4xLiPk+2G
+	 I/+nFXDCc8fHhrF9jZEC5PMSYElb1M37PGutJXuSatpUVozHL2D2oSRWG3DRFrVHOdtxF
+	 kDa2rVyVc+F6ffk3OKfxb84h3zNummQcvAn+T87naSVxgA8ufrPHyq37fXPFxVAs0rJzK
+	 lNpcX+knssXO27iLC0kDnireV7ORotdSQKIy8nknXZdkghIDmJj0wFERnrzBhBsdRUuMg
+	 Kl6b4aqO7fw2jI3ACXHCYpMJevX9Y498cnq4X0CS2ht/20vlMz7d5ShfaaipWAGak+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hkbqx0Lj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P6jj6hd6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AD260ABCD1;
-	Wed,  4 Nov 2026 21:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AC960ABCEC;
+	Wed,  4 Nov 2026 21:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hkbqx0Lj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F39F1F00A1D;
-	Wed,  4 Nov 2026 21:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P6jj6hd6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA3E1F00A16;
+	Wed,  4 Nov 2026 21:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826758;
-	bh=AG80wjyOkN6gki8rvbpxJxiiA3qzzQFuVmZcydaz1M4=;
+	s=korg; t=1793826759;
+	bh=7DKAsH2pI6t6KHr47nJPrN4RKM7uzGIYlgH/kJryk0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hkbqx0Lj5vYpX0/EaaScL42HlHQqksTiPNOAUEi259T2lvXV3c61fjMIGjwQj1wZD
-	 jFOj78iPSnBhOj2BWTjN5wEfg+S9QrEaqcsw8TtMCSreesuiwWNPxzNb16DlXe06nk
-	 t8rgq9vESG+irQKDJq7CXo1WxxgEX+0U2XL7kVCs=
+	b=P6jj6hd6M7Co43JqSu+LTh+orsrB65Rp/1Sqzs0zGYplqj0EKtbRCw+HqDMRJiu8e
+	 cWFl1Ve+RW+6AKcQro+9tKXGYyo9aKAfBlMDuy4wNp3xkIhbkAvNOp6UacD7Kqz3eN
+	 FJe9aQaRmoTCE0E8kIL5c6GWqUGwk2GYM+WgqT5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,13 +44,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Zizhen Liu <pointerliu@126.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 001/547] net: skbuff: propagate shared-frag marker in skb_zerocopy()
-Date: Wed,  4 Nov 2026 16:03:05 -0500
-Message-ID: <20261104211038.447751006@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0001/1005] net: skbuff: propagate shared-frag marker in skb_zerocopy()
+Date: Wed,  4 Nov 2026 15:55:34 -0500
+Message-ID: <20261104211043.566861521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
-References: <20261104211038.406938024@linuxfoundation.org>
+In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
+References: <20261104211043.516122098@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -65,7 +66,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.3-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -96,6 +97,8 @@ Signed-off-by: Zizhen Liu <pointerliu@126.com>
 Reviewed-by: Eric Dumazet <edumazet@kernel.org>
 Link: https://patch.msgid.link/20261022104217.1852191-1-pointerliu@126.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Adjusted context in skb_zerocopy() due to missing from->unreadable propagation. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  net/core/skbuff.c |    2 ++
@@ -103,14 +106,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/core/skbuff.c
 +++ b/net/core/skbuff.c
-@@ -3942,6 +3942,8 @@ skb_zerocopy(struct sk_buff *to, struct
+@@ -3883,6 +3883,8 @@ skb_zerocopy(struct sk_buff *to, struct
  	}
  	skb_shinfo(to)->nr_frags = j;
  
 +	skb_shinfo(to)->flags |= skb_shinfo(from)->flags & SKBFL_SHARED_FRAG;
 +
- 	if (i > 0 && from->unreadable)
- 		to->unreadable = 1;
- 
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(skb_zerocopy);
 
 
