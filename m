@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831879;
-	b=17XfwvVpbPiflP0pZ+371WTFB+pBGpZUnXmzAAcVduU7PgyY5N5Jhcdj62dv61geok/x
-	 mT1duNdr1Ks7D+qa5auBmHthnF38RVbqfc5A4/GCJpo4N51lpKrfC6M8oik/gED9eMxL+
-	 3T7Q2tnpwp9HbeeQRXcRmDYlPPJWCPtP9yW7GGS7oxyPHUNeUUjL3ouL4j91xTuriGchl
-	 sWjtFbkjCm4Pp8N+zQvtMO6sMzCqo53xLKvt7FJocWRe48VKLIqD7IfCPsLJF4Ca4Ss09
-	 tBqAp3EmnwS7QEkFQgQ9c3FnDV+qCGkAGGH5XB/m4wOSp9Yf6v4Ug8b/ssPKqyjKhvQ==
+	t=1793831880;
+	b=N0MhYGj7KtYY+tG9ZYKKB4mIMy8UZYkM8p+UoOZMOobV8E5bH4bsEfAndBS7JlblaQa9
+	 AwqCNYo+Lku/c4bWcGj7/GzeI6PdEbCnRdxJ4PIfEfdhyisJRQvpIe2L1y8hYSRdPemis
+	 bfdDL/3rI9Biy9qTMZQu2qehoNvSJGcaqqsiT/0MS5SqjgcWFMJWbjR+bOac50n4U0elp
+	 OZQA3RBHhM6mNudMXNSG0Lly6w5vDWMdiuKHBThm/KIFG7ggV3t2b7qJqEQhmkFY96LvB
+	 0Xpmy+wTQczPaAVxEAzUjJFkfzoXMf7M5McT22fZmAagdFpFa5gpYnRX7eZcdvDn0tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831879;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831880;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YOFUnD7bz20JH8dlNXesUX8KfGTnkXNB93wKOlfu9/Y=;
-	b=gczYt3Sg8/EDatgt269qQ73isdDlXRnEhP+BuU68Zp9zUXBIdEDB49GDhIP+gYXAU89p
-	 VNPZh+w7juDJu9O2yxAvD+Pi1VZPLsDUBZ9F/SHcB60Zn2EEnY5ZGc+7EOAi+sPvAHCyH
-	 NOXfcnFF1cpFGpe+3NUnx7B8Y0x6r4qj0aqwnPmJDGcUDLD31xv4rDG/jAGGuCDPzBEiq
-	 LfVnHe9D3XUqNAym7FLocgikhhkUV+QeBgunYFzkaxxrCjm/KiCB0deWvdA8uPDKqbFjW
-	 abgU+OhC1W3iAFeat68l0uTg6RDJrAbY8HuoHvZBnXQByUvLIdjRot6buHoS0p6e4KQ==
+	bh=bZY+i01/mE00EYUFAx4x3wQ3Uu8a5ppTT6x1jzB8hM0=;
+	b=xfLCoZdLRnaEhsM5Py3u99ABAHGgV5kFg7tSjstxlVR3E7axKaZOjBlzconx/JhAknGA
+	 CpWIMvIDSYTf1aWekkOHQhksdspiF1q2RL53+vk4PKvm6LocAmw8199MQUuB+QNm5COfv
+	 irt2QwCnNMV0sip/zKboKRPepvqILEDt0cm6sS2mhGZI11yZ5CnWLzWRAB6LzGn7rpD7X
+	 5ZM11RBMtwJbF8nqpC2z3yRjVJeDA6oU20Hcpatz43sp2imTTBMHFAah72dDlflYPOGJa
+	 rPKHzBMmcE45Yzg1bXYkMRh4gUNmNSzGrB+32wau+OvS/n0x4fpCe9T9BZR/pHV6C5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C0xwYwKm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mY+wv9S5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D97606A33F;
-	Wed,  4 Nov 2026 22:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6F6606A841;
+	Wed,  4 Nov 2026 22:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C0xwYwKm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCB71F000C1;
-	Wed,  4 Nov 2026 22:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mY+wv9S5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58CD1F000C1;
+	Wed,  4 Nov 2026 22:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831878;
-	bh=YOFUnD7bz20JH8dlNXesUX8KfGTnkXNB93wKOlfu9/Y=;
+	s=korg; t=1793831880;
+	bh=bZY+i01/mE00EYUFAx4x3wQ3Uu8a5ppTT6x1jzB8hM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C0xwYwKm1dJ9W+IZW1rHl6OyjeRxtcpWYXDfvJkpMbrD76PRhVDReu4wfE1IFAg0M
-	 4xbpl5sNA8HThwv0y5NfSvrA/Io/6m44W7xf1ol3J7TxhPMKtjtlOR1BmkAwXhbHMp
-	 lX9F6eHedWBAvabKwSbhKZVpGGCOiuHvYtV3sXI4=
+	b=mY+wv9S5WjUWHiHZ3iAGTxZZn/YtEPZsgP/4HbxfmCMuz6T/MWkf2nE8/GoYgSnGF
+	 CusbkWNCx/zrhb+ipi+p5o+6A9BJa2sz1InsvImXIYpIE1YKo3DMzIX2fpdklGxj5J
+	 pllq51tHtTND1lgGQLhTRnQeeNo0XnJNxxfisqJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.18 0970/1005] smb: smbdirect: fix buffer length underflow in RDMA transfers
-Date: Wed,  4 Nov 2026 16:11:43 -0500
-Message-ID: <20261104211110.238748056@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 0971/1005] io_uring/kbuf: advance head when a pickup empties the buffer ring
+Date: Wed,  4 Nov 2026 16:11:44 -0500
+Message-ID: <20261104211110.265033132@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,48 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit 7193241a49c958782ba4b8df06da3734d1e317d2 upstream.
+Commit 8742f4b5a472c347fe568a73468a2d9e4d630b33 upstream.
 
-When a remote buffer descriptor is larger than the remaining local
-buffer, smbdirect_connection_rdma_xmit() clamps its length and sets
-buf_len to zero. The common accounting code then subtracts the clamped
-length from buf_len, causing it to underflow. If another descriptor
-follows, the loop processes it with a wrapped remaining length and
-includes memory beyond the local buffer in the RDMA transfer.
+io_ring_buffers_peek() flags the request with REQ_F_BL_EMPTY if the
+buffers it picked were the last ones available, comparing head to tail.
+When the loop breaks because max_len was exhausted the buffer was picked,
+but head is left pointing at it, so the flag isn't set if it was the last
+buffer. A bundle receive then retries, finds no buffer, and the request,
+which has received data, is marked as failed on account of the -ENOBUFS.
+That severs a link, and ends a multishot.
 
-A client can trigger an out-of-bounds kernel write with an SMB WRITE
-request, or an out-of-bounds kernel read with an SMB READ request, by
-supplying multiple RDMA buffer descriptors with an oversized descriptor
-before the last one.
-
-Remove the premature assignment to buf_len. Subtracting the clamped length
-already consumes the remaining buffer, so the next iteration stops and
-only descriptors within the local buffer are used to build work requests.
-
-Fixes: e628bf939aaf ("ksmbd: reduce descriptor size if remaining bytes is less than request size")
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-33549
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ metze: in 6.18 the code is smb_direct_rdma_xmit() in
-  fs/smb/server/transport_rdma.c ]
-Assisted-by: Claude:claude-opus-5-5
+Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20261023091711.83481-1-chenyichong@uniontech.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_rdma.c |    1 -
- 1 file changed, 1 deletion(-)
+ io_uring/kbuf.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -1724,7 +1724,6 @@ static int smb_direct_rdma_xmit(struct s
- 		if (desc_buf_len > buf_len) {
- 			desc_buf_len = buf_len;
- 			desc[i].length = cpu_to_le32(desc_buf_len);
--			buf_len = 0;
- 		}
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -314,8 +314,10 @@ static int io_ring_buffers_peek(struct i
  
- 		credits_needed += calc_rw_credits(sc, desc_buf, desc_buf_len);
+ 		arg->out_len += len;
+ 		arg->max_len -= len;
+-		if (!arg->max_len)
++		if (!arg->max_len) {
++			head++;
+ 			break;
++		}
+ 
+ 		buf = io_ring_head_to_buf(br, ++head, bl->mask);
+ 	} while (--nr_iovs);
 
 
