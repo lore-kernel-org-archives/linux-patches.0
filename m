@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830860;
-	b=APM4pq6YmHSeIeOKBnhebkrBfcPp+SivNBu5BJUk3AaGJSOIiMjFz4/WEtZxp30Picpw
-	 d6uNtpHCpEnQbpcpNOgI8FrrAnYKu+eobDALV6l8lcXNDu3TMX9HhXMfnG0KVtimGeYjD
-	 3pkNmwHZGDx40kAbUrOEqkYfOK8uTCvV1rk1OfK99KzNSzngK++tv0y2ZxqtyEMjhR43u
-	 PsF6Fl67n62XIsDm6WPYD1pKuQ1FpCpATTanMqfSNK9OkehT345gdYrBF4HM9J72ZBTWH
-	 0n4/8rSTC1x60vigGx5VoCtLyNgeUDwNVHi9SDsD7o+P9Asu0cNMx+TuLDbjZMzGFEQ==
+	t=1793830861;
+	b=REFrMcQb7HHjxu/IbeDGxQ80hyPyHKMEGVXrR+DakPERBwvI5YJUZ/qIYU3pNn5o4cRb
+	 by7/eXqocBnqKjVDdoNnw3S31DWaBxixtGU214twZyTXm2BQv89F5Y9lR6gt/BvjSICXI
+	 USr1TwaWfogFzG6YA42dLf1wborhWUxZV6v/5pT7thEq0dU3PIIn/cN1DMZMMs3lnvEtk
+	 VGnLILaD66ocVwrvRAm9KJmtbPWcmtf5lHIV0ZtM2XO6EcqzOqflspu67kZZx9J9T9M5G
+	 65iS1Dqr49iv+C6p4/sZUZgCkw2DHqHhW7tjtPRt8sgph/PWzwNLlVdLSPxKCo4T+NQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830861;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2qOpkr1T+AOkTMzPzF+3PXzVgQUvtkj/5E9yvXkf2Sk=;
-	b=RuWMP1tmbxN8Iibpe/ArvLjOFHOHjwz8hGTDKPoGDd2MlsiOMiaFGEpP6qki28qtqL3F
-	 5HRcvtDE2QZ3g9bLExCVmroAtOKg71qMI+5aLwSNdD63d2ZBInNk8/YjtmO3qKsxqGVe6
-	 +iummfbMx8VuYz4lF5OGkF2wczek/1dRX59hx3jWNor8ucxVZk9HiY+k1mlsj2wuGd1EY
-	 OWdBNh+1WtMPuVEZMucOc75zKWGqMkxSgygQcrSDm4njhJFoqZYFx7MV3GaQIMke1nuHe
-	 UJvLEuG/dh1cGzxUf3VtVk/JRMKp9C1txZsNFMC5fM9WmMDbhUY4pHiuGKBeq4fWXpA==
+	bh=jtoi5gq29+ouITrLOFPUfQqtmrD4Z4fn4pMRdulkjSw=;
+	b=cx/L/ct/X3cbya+UUNOGp8br3uJc9KDxO4BntuZlEiUS5qkt3HscHVY2NZ7FkBghXTxA
+	 udlI5iJ/ZXlfSkl1riITzW1518ydi9LliOgwFxU26PqsCsAQWiq3C6Y9DSl5iKSmqmewO
+	 blP1+ImdInlEruCS72xUGdbg+xGX606YwBGfVs4brJxj1ShTGmYm7dg7ep0p9Wus2IB5i
+	 hb5B1xhNm4atdX2oYN8X6jrSoF2uiCPosVWjCJmhd28PFLg68bCCD+BTWOhXQIkukAZeW
+	 TDkukaespHuJaCDRcmrGRkdFyyQTLSDWMKYNjktJKQP3eJ/BdwwY5vQ503ykAz6cWQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSkrbuvp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TA5Oi7Tx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39EC606D803;
-	Wed,  4 Nov 2026 22:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013FA606D815;
+	Wed,  4 Nov 2026 22:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSkrbuvp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FA81F00919;
-	Wed,  4 Nov 2026 22:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TA5Oi7Tx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9208C1F00A15;
+	Wed,  4 Nov 2026 22:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830859;
-	bh=2qOpkr1T+AOkTMzPzF+3PXzVgQUvtkj/5E9yvXkf2Sk=;
+	s=korg; t=1793830860;
+	bh=jtoi5gq29+ouITrLOFPUfQqtmrD4Z4fn4pMRdulkjSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSkrbuvpK/y4Cwo5etTuLLjLg5eO7qW+7FJx5BVgzIKo0+HpeUp2aLZT4IbChe99o
-	 yrg58x3q0Ea1sBM9xu6TnOsj/LEOv5wHEAnQtrip64Qn9ftJiLY/pagsjruDT4AWHN
-	 giul5AqkQt6al0t8gREL2QPv7SfP1UnqK32B9PF0=
+	b=TA5Oi7TxghIo0JIbwPyLdaO7nSr8uURoOV10muQJ4/PtlZ7lznelez0jXgtOO8ITH
+	 QmCpGSG3ncfV3Z7whPfr130HvCB3mfkQE5e3p1Z3+CpNwtD/krRFuPZ49ggTwYkJKx
+	 TyyxMH4cxS6HzMPdK6kqtZP8xCQ/Ze15nIeKHNd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0364/1005] net: pcs: mtk-lynxi: check regmap reads in mtk_pcs_lynxi_get_state()
-Date: Wed,  4 Nov 2026 16:01:37 -0500
-Message-ID: <20261104211054.282952835@linuxfoundation.org>
+Subject: [PATCH 6.18 0365/1005] net: dsa: mt7530: check CORE_PLL_GROUP4 access in mt7531_setup()
+Date: Wed,  4 Nov 2026 16:01:38 -0500
+Message-ID: <20261104211054.314221410@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,43 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 5cc65c01cdc577621d1320f4aa03a1382c5a4a45 ]
+[ Upstream commit 1ae63b018d3d70e96d420b59a1334860cf232bc6 ]
 
-mtk_pcs_lynxi_get_state() ignores regmap_read()'s return value; a
-failed read leaves bm and adv holding uninitialized stack values
-which are then decoded into the reported link state. The regmaps
-backing the MT7531 SGMII PCS instances sit on an MDIO bus where
-reads can fail. Check both reads and report the link as down on
-error; phylink presets state->link before the callback, so a bare
-return would leave a failed read reported as link-up.
+mt7531_setup() reads CORE_PLL_GROUP4 through the MT7531 indirect c45
+PHY access, modifies it and writes it back to enable the PHY core
+PLL, but checks neither the read nor the write. Now that the indirect
+access functions propagate command-write failures, a failed read
+returns a negative errno that would be bit-modified and written back
+into the PLL register, and a failed write-back would go unnoticed.
+Check both and bail out. The adjacent EEE advertisement writes push a
+constant value and cannot corrupt state, so they are left as is.
 
 Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/fce70657fc03bbaf60a04c0fbf2f418531135c4f.1785811140.git.daniel@makrotopia.org
+Link: https://patch.msgid.link/a7dfe3b66ea6ac1ae7915034de0527060e6ddcd4.1785811140.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pcs/pcs-mtk-lynxi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mt7530.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/pcs/pcs-mtk-lynxi.c b/drivers/net/pcs/pcs-mtk-lynxi.c
-index 87df3a9dfc9bc..64fb17c189afc 100644
---- a/drivers/net/pcs/pcs-mtk-lynxi.c
-+++ b/drivers/net/pcs/pcs-mtk-lynxi.c
-@@ -110,8 +110,11 @@ static void mtk_pcs_lynxi_get_state(struct phylink_pcs *pcs,
- 	unsigned int bm, adv;
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index d2dcc2f1522f4..4f391ef797ea3 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -2758,14 +2758,20 @@ mt7531_setup(struct dsa_switch *ds)
+ 	 * phy_[read,write]_mmd_indirect is called, we provide our own
+ 	 * mt7531_ind_mmd_phy_[read,write] to complete this function.
+ 	 */
+-	val = mt7531_ind_c45_phy_read(priv,
++	ret = mt7531_ind_c45_phy_read(priv,
+ 				      MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
+ 				      MDIO_MMD_VEND2, CORE_PLL_GROUP4);
++	if (ret < 0)
++		return ret;
++
++	val = ret;
+ 	val |= MT7531_RG_SYSPLL_DMY2 | MT7531_PHY_PLL_BYPASS_MODE;
+ 	val &= ~MT7531_PHY_PLL_OFF;
+-	mt7531_ind_c45_phy_write(priv,
+-				 MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
+-				 MDIO_MMD_VEND2, CORE_PLL_GROUP4, val);
++	ret = mt7531_ind_c45_phy_write(priv,
++				       MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
++				       MDIO_MMD_VEND2, CORE_PLL_GROUP4, val);
++	if (ret < 0)
++		return ret;
  
- 	/* Read the BMSR and LPA */
--	regmap_read(mpcs->regmap, SGMSYS_PCS_CONTROL_1, &bm);
--	regmap_read(mpcs->regmap, SGMSYS_PCS_ADVERTISE, &adv);
-+	if (regmap_read(mpcs->regmap, SGMSYS_PCS_CONTROL_1, &bm) ||
-+	    regmap_read(mpcs->regmap, SGMSYS_PCS_ADVERTISE, &adv)) {
-+		state->link = false;
-+		return;
-+	}
- 
- 	phylink_mii_c22_pcs_decode_state(state, neg_mode,
- 					 FIELD_GET(SGMII_BMSR, bm),
+ 	/* Disable EEE advertisement on the switch PHYs. */
+ 	for (i = MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr);
 -- 
 2.53.0
 
