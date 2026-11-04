@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831757;
-	b=xj0togI2F51HGZQ3kYeL3pGfk4QJcS1sAcuK0zGeOpvBkFkAsF4YMsrNWXm1JiViPy0w
-	 5v+Xwnoi28HxWZoE7+TW+1SxN2ACvAfbhR4zBNSwnQxnv4UX9NpdsFKS8zdUuZxTLwBk6
-	 C009INEvpPQ34ZScLIjcZAWxqskv2vcdtEeR636tqL7Uj9LVICCKOZ9hnTXN3vWwrXidB
-	 +DhEZKRUiJgWR8l8jOMc2sP8KADiggXh2oXNX98NoXwabSYVvcykEvtph6NZ1yh6pkXwj
-	 vD4rsfG7fC0SUR850XjFXYSokxjS/zA/sBjr2zjbYdsKAFfnkrzJMGSYGCv1XODZQiw==
+	t=1793831758;
+	b=KwF1eu/JF34J3jI/xGtw8TNiaLNqFJ9nRhRoi2d+U34CqaSPlWkejX5yOkvQKTgJkSQq
+	 KoZklRSt9LgrErYfjlXpfXoeoPHSJUmjw8I8b/9wVCV5y/JLZjo11K5C2UkUnrRLs9HpS
+	 UliXFu3/vLGppTNijO/gBlmARwRp1GsiyqJ30mDRP1C+DTzXRMXTXVZj01dXgY8gaPYt0
+	 Ze2zerrM07VRbwVGuHliwx6pnG4KdMSLAtz0QkbWHasmIZ5tr45XvB9NXpoRwEhZupLr/
+	 5eoUtHmPWQpBSR85VPk0izcG3YD7FO/StZ7pb3eMrPzIsYoprOn53SC4e3lfmMRfzWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AAO0FewQa2jb0WAmiqbij5RbI92XsAyuiJJT7zOVMio=;
-	b=jFFiF1Ag8FCYk2NFGmKmk4tNucy3GWvuAImYEl6O5LQ2/lEmHnLsrSQF3zlGFmuTw4pd
-	 etu6PmYpHB9ZNln6cHS7AfK47gtL0xqf663QyKb48Xq07czXAMbr1SyThOfrX3kzfpaAh
-	 GFhkOebvPxCViQU3Lsw+0+mKWSLx3ejyd6dGejojnzIYzn15Hw04awwKMKdtZhBxqWOzF
-	 ReTYEQUJ6jx3s11yc0G/Vad8NmMfV0IpYSfDWOvZTT2tTFwPwudfHNmqLRVXdEx3Rx944
-	 b22bmPA7oWJ3vZiAR086x4+63iSJpT0/SdHxeHOABfrZxOpvJqmiu4F59YKBRxz3BQw==
+	bh=Kjq0812RXnLyvNPmI+xmztdpbjyULsRoj6QEwiCgDPo=;
+	b=25dkTlKSdZFlhTqh1CUtJRD8DtRXoRDHcgO5II2A12Rirmbjmvpgix8aEouU1q5H33bF
+	 LL4OvXiM2PIg1kn4cgj6xRFJo5PB52YceUKCPIWv3RfGOHU6Dh80fK0DS5cfy1KA5Ip63
+	 K17vQ+ZbilDj+XVRY2p2V8AoHhmJVqZp2KRMsK1zfqyIyJSKEmBdLINTKMyyBDfsMaK6u
+	 gQI2Lfo1IrgDXpwld4piCj3yajlgM9/uwlZAPVo6KJ7/8gBp+s+doaLRRmNVSTkTVXFCG
+	 h5iIm26rj9p/wJ6PSBiTQ6PScGA+o5Cfe0TkUE6m1DaqLxQz0fUj6/FEd1MdDKzHJAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLeUMwyU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cfJGlAad;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FFD606A31B;
-	Wed,  4 Nov 2026 22:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443FF606A31B;
+	Wed,  4 Nov 2026 22:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLeUMwyU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565E31F0093A;
-	Wed,  4 Nov 2026 22:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cfJGlAad
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31ED1F00A02;
+	Wed,  4 Nov 2026 22:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831756;
-	bh=AAO0FewQa2jb0WAmiqbij5RbI92XsAyuiJJT7zOVMio=;
+	s=korg; t=1793831758;
+	bh=Kjq0812RXnLyvNPmI+xmztdpbjyULsRoj6QEwiCgDPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLeUMwyUYQKUeQZMNYLJEV3+SqMMx8jhJw3F0Dx5m01rfLHv2yI0VfTykIiR6GOae
-	 Jrw8ZMW5Hzc8fWK28EMnaZQYU5aF2PQJ80paShqbMF9JC853THWdHaON6VEOfO7huM
-	 BUsHKAZILbwi8Ouhz99KPnvBAKCVX1Y0mxRIWBjA=
+	b=cfJGlAadJLvfRwNdrcIMRbpvyZPMl2VsD56tUCNs0CyZg1Xy7bC7YD/6AV57/o/db
+	 m21TEzv/ds+mhVQNpmCkrsY55Cxjhvp/4FAkIKPdCldjbySZie372gjKjQd3u5n2P/
+	 MQyrFE0ZSyC8CDK9f3rTqYpRi/KfNrWrUXcqK5Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0885/1005] NFSD: cap the number of listeners accepted in listener_set
-Date: Wed,  4 Nov 2026 16:10:18 -0500
-Message-ID: <20261104211108.020988373@linuxfoundation.org>
+Subject: [PATCH 6.18 0894/1005] NFSD: Fix out-of-bounds read in the rpc_status dump
+Date: Wed,  4 Nov 2026 16:10:27 -0500
+Message-ID: <20261104211108.254893137@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,79 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-commit 9a05e5ee0a98b9550521df86936b5f825bc07ec2 upstream.
+commit cbea14890783fead76f878caf0775a62a42049bf upstream.
 
-nfsd_nl_listener_set_doit() matches each requested listener against the
-existing set. The nested loop that does this is O(N * M), where N is the
-requested count and M is the existing count. The loop runs under sv_lock
-with bottom halves disabled. A userland request with a very large listener
-list can therefore spin in atomic context for a long time.
+nfsd_nl_rpc_status_get_dumpit() loads args->opcnt and
+args->ops separately, then walks ops[] before rechecking
+rq_status_counter. A COMPOUND that completes between the two loads
+runs nfsd4_release_compoundargs(), which zeroes opcnt and points ops
+back at the eight-entry inline array. A dump that already sampled an
+opcnt of 200 clamps it to the sixteen slots in rq_opnum, then indexes
+iops[0..15]. iops is the last member of struct nfsd4_compoundargs and
+rq_argp is allocated at exactly that size, so the walk runs off the
+end of the allocation. The trailing recheck discards the sampled data,
+but the read has already happened. NFSD_CMD_RPC_STATUS_GET carries
+no GENL_ADMIN_PERM, so an unprivileged local user can repeat the dump
+against a busy server until it lands in the window.
 
-Reject a request that carries more than NFSD_NL_LISTENER_MAX (1024)
-entries. The check goes in nfsd_nl_validate_listeners(), before the code
-takes any lock. The limit is far above any realistic configuration.
+Sample opcnt and ops into locals, then finish the counter recheck
+before dereferencing ops. An unchanged counter means both came from the
+same COMPOUND, where opcnt cannot exceed what ops holds.
 
-This patch does not cap M. Only the message size bounded N; real sockets
-bound M. A listener_set result set is the requested set, so that path also
-holds M at the cap, but __write_ports_addxprt() adds two listeners per call
-and removes none, so repeated calls can push M past it. The worst case
-under sv_lock is therefore 1024 * M, plus 1024 nla_parse_nested() calls.
-Both interfaces require CAP_NET_ADMIN.
-
-Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
+Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-1-a540d86668b0@kernel.org
+Reported-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
+Closes: https://lore.kernel.org/linux-nfs/20260823113255.3417-1-prabhakar.pujeri@dell.com/
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260824-nfsd-posix-acl-ownership-v1-1-090fffc608ec@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/nfsd/nfsctl.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
 --- a/fs/nfsd/nfsctl.c
 +++ b/fs/nfsd/nfsctl.c
-@@ -1913,21 +1913,22 @@ err_free_msg:
- 	return err;
- }
+@@ -1576,14 +1576,29 @@ int nfsd_nl_rpc_status_get_dumpit(struct
+ 			    rqstp->rq_proc == NFSPROC4_COMPOUND) {
+ 				/* NFSv4 compound */
+ 				struct nfsd4_compoundargs *args;
++				struct nfsd4_op *ops;
++				u32 opcnt;
+ 				int j;
  
-+/* Upper bound on the number of listeners a single request may carry. */
-+#define NFSD_NL_LISTENER_MAX	1024
+ 				args = rqstp->rq_argp;
+-				genl_rqstp.rq_opcnt = min_t(u32, args->opcnt,
++				opcnt = READ_ONCE(args->opcnt);
++				ops = READ_ONCE(args->ops);
 +
- /**
-  * nfsd_nl_validate_listeners - sanity-check the listener list from userland
-  * @info: netlink metadata and command arguments
-  *
-- * Walk every NFSD_A_SERVER_SOCK_ADDR attribute and confirm that each entry
-- * is well-formed: it parses against the policy, carries both an address and
-- * a transport name, and the address is long enough for its family. Doing
-- * this up front lets the callers below assume every entry is valid and
-- * guarantees we make no changes when the request is malformed.
-+ * Walk every NFSD_A_SERVER_SOCK_ADDR attribute and confirm that the list is
-+ * not oversized and that each entry is well-formed.
-  *
-  * Return: 0 if every entry is valid, or a negative errno otherwise.
-  */
- static int nfsd_nl_validate_listeners(struct genl_info *info)
- {
- 	const struct nlattr *attr;
-+	unsigned int count = 0;
- 	int rem;
- 
- 	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
-@@ -1936,6 +1937,11 @@ static int nfsd_nl_validate_listeners(st
- 		struct sockaddr *sa;
- 		int err;
- 
-+		if (++count > NFSD_NL_LISTENER_MAX) {
-+			NL_SET_ERR_MSG(info->extack, "too many listeners");
-+			return -E2BIG;
-+		}
++				/*
++				 * Finish the seqcount retry before
++				 * dereferencing ops. An unchanged counter means
++				 * opcnt and ops came from the same COMPOUND,
++				 * where opcnt cannot exceed what ops holds.
++				 */
++				smp_rmb();
++				if (READ_ONCE(rqstp->rq_status_counter) !=
++				    status_counter)
++					continue;
 +
- 		err = nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
- 				       nfsd_sock_nl_policy, info->extack);
- 		if (err < 0)
++				genl_rqstp.rq_opcnt = min_t(u32, opcnt,
+ 							    ARRAY_SIZE(genl_rqstp.rq_opnum));
+ 				for (j = 0; j < genl_rqstp.rq_opcnt; j++)
+-					genl_rqstp.rq_opnum[j] =
+-						args->ops[j].opnum;
++					genl_rqstp.rq_opnum[j] = ops[j].opnum;
+ 			}
+ #endif /* CONFIG_NFSD_V4 */
+ 
 
 
