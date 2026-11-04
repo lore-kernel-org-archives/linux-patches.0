@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830812;
-	b=MwQWepbR0UTkTq6QzCI2YIYtwiCNqDtbrRaV3RGLPttXOCkyeDDaTF3Xye9/wctchepy
-	 iNzffASoqfmMS+SaKMs5jDJKNxwR0mJ1WzpKh/b4JAQzSRTF8kgacwveZvJuw3Y43amJn
-	 g6lv7sVi3ZLPnV/GJAihKb2te7hZkOh+itVa09O9sVx7LhctTPsYG/YeV8hBxBObBvN/9
-	 LO0zI3oUW9LddfH86wc8WZsl/MTyy0p2vJ48Iueag78uBLdkxRNsgyxl0O3FEKI5GAeoV
-	 xNj2+y5mGowWyD5oBL9c5GatChVoajdmjW6Lak8+pcVJ7qHFvNKScinp90B47qUDRqA==
+	t=1793830814;
+	b=QvhLUI/IsD3esb/27kPYcAAH5Uteq5E9g7JXZ4EphmbuxzUn9Rvx1OoqJ3RYgX2Fqi6R
+	 R4O+7TOGsshn840wFaPggThkCXVoJocdqo2N81/WgsdiUd2L75hqHcGiqci9RN4jgnan8
+	 dKBBiFgI8oOEweoKjkAI0ip0TP7sI81M7enmTEbnshRnALscwi0DeZHUckmswn4eeg1Cn
+	 YkPfzUXhwItidc7Mk4y/XY/d2LGGGAayYVAK8o9JbjBHlE23g62F/ePdd8JTQP4tcWz2v
+	 HE1+YnBt944iBvtbTahIa6A1FAtP+aGxQ8qzaWqhtjFwR4+WsE+p01MNgFXi4EE0+IA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ks0CyD8rtNULitr78oXAuRVHp8JFmfzGUHTk4ONXB/s=;
-	b=AaUKUEC/j+HgR86/buxj0sryx8ldQXvLZTunDx+7buOZnY3w/eYm7TIgDZ21XDPOwxwA
-	 2PyB8rR0WbxmOEylGV6SFEkEDicLfO4+QQyfhdZ5qZ90BLlhBhQbNYS97+QS3kEyjEMmM
-	 wLHWAsMsMJK+Y25EKX0iCQABW/FiO/3npjy32Si2U6M1FvtKQe6VeS/PhaFm71I6IboI8
-	 OqCBuoHuUIhDGN4vw2pD+ywA6SGG+wFWK6vl3MgA6ruY0eQTp9r86k+5yfxZ6Mq4F6Rv5
-	 lKkYky4HyhW2chya7+DG61IrZ8RYF00AZWBmwYdy1GqF7j+UHIounJ+3VGHW0Sc9i6w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=NoN3bXycRLhkZSLrpLe8vYWDl9epBw54oJekyO2sIoY=;
+	b=O23K+o92McT+OFK7cjPjJ/a390tw6CDCbg0sbcJHD8oOir6HpLf0M1j8XwXWMsW7JpnI
+	 xCJK5tB7MR9JQ6j8U3WwXz6QmavCT5pt1t8dvydlbbBeiIhjrLjH/x5KEtHEafRqd8iim
+	 NOM6Fy90Pl5BOjhPZTuR2W8DQtsRwVEAO1Gcf5k9YoVqFic+SSXukFLFN/fgyM4WzA3oR
+	 flEjyZLQbNXjFGl4KtoHjsRBl7olhDY/3dILni9a4kxqib8tiGJMGSWsn/cmGNyRgo7Wg
+	 1/xUHPO9IC+LMnQWYB3T9rE3yX+74NcX5aqiqFBSLT5UVxOpFGJjOPb/kG6guwEkQgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rglce9wa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pyUD9egk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FE5606AC33;
-	Wed,  4 Nov 2026 22:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C9C606AC36;
+	Wed,  4 Nov 2026 22:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rglce9wa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EAE1F00A15;
-	Wed,  4 Nov 2026 22:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pyUD9egk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805FB1F00A16;
+	Wed,  4 Nov 2026 22:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830812;
-	bh=Ks0CyD8rtNULitr78oXAuRVHp8JFmfzGUHTk4ONXB/s=;
+	s=korg; t=1793830813;
+	bh=NoN3bXycRLhkZSLrpLe8vYWDl9epBw54oJekyO2sIoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rglce9waFVmvxYRF/3bIIx7xlOoqBCuXWhR3i9q24lAGFgtft4i3otJ9bM0mtU7IE
-	 uQLNj0KUoAOugcj1C+FqlBAx5XB1LiYzaHuo0zVWHVZT5QXWYDAsi5YrKMx3axFn70
-	 Q7wqvtQFDeoCmsQIdkbPCY89GiC1XWCl1+PcESYY=
+	b=pyUD9egk6FsbL0R2uWU8dh10jTeUZMp1QnzFYwo+wteMhn1dcsBbxDJulYNWgVm7A
+	 WXKkyE+0KL+z/1+/nUBMVzr+wxWR7Mddu1rO1vbACelk4R7aQ67SnXt8qS2JhGGdkI
+	 LBH96q6p6rf8PqQhFoxK+Vh8SH113kyW1XwzNPZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Hansson <newbyte@postmarketos.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	liulhong617 <liulhong617@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0334/1005] wifi: rsi: Fix types to appease CFI
-Date: Wed,  4 Nov 2026 16:01:07 -0500
-Message-ID: <20261104211053.312605894@linuxfoundation.org>
+Subject: [PATCH 6.18 0335/1005] arm64: mm: fix accidental linear mapping of no-map reserved memory
+Date: Wed,  4 Nov 2026 16:01:08 -0500
+Message-ID: <20261104211053.339323298@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,147 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Hansson <newbyte@postmarketos.org>
+From: liulhong617 <liulhong617@gmail.com>
 
-[ Upstream commit da308f6e471252ae5e8009dcea16bc5e9c9dc5dd ]
+[ Upstream commit 7ace06a01efaba1ec585630aa4c98ac39b38452a ]
 
-Avoids errors like:
+When reserved-memory regions with the "no-map" property are not
+page-aligned, the kernel may accidentally map them into the linear
+mapping, contradicting the no-map semantics.
 
-    CFI failure at kthread+0x124/0x1cc (target: rsi_coex_scheduler_thread+0x0/0x1b4 [redpine_91x]; expected type: 0x89fb613d)
+The root cause is a mismatch between /proc/iomem's address boundaries
+and the actual page table mapping boundaries:
 
-As seen in the aforementioned error this was tested using the downstream
-redpine_91x driver found in the Librem 5's downstream source tree.
-However, it appears that this driver is a modified version of the rsi
-driver found in mainline Linux and as such I decided to port the changes
-here too.
+1. /proc/iomem derives its ranges from memblock via
+   memblock_region_reserved_base_pfn/memblock_region_reserved_end_pfn,
+   which perform PFN rounding so the displayed boundaries are
+   page-aligned. This gives the impression that the no-map region
+   occupies whole pages.
 
-Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
-Link: https://patch.msgid.link/20260804-rsi-cfi-fix-v2-1-59679a520240@postmarketos.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+2. However, memblock_mark_nomap() splits memblock.memory regions at
+   exact byte boundaries (memblock_isolate_range preserves raw DT
+   base/size with no alignment). When for_each_mem_range iterates the
+   non-NOMAP regions adjacent to a no-map region, it returns start/end
+   values that are NOT page-aligned — they are the precise byte
+   boundaries from the memblock split.
+
+3. These sub-page-aligned values are passed to
+   __create_pgd_mapping_locked(), which does:
+     phys &= PAGE_MASK;
+     addr = virt & PAGE_MASK;
+     end = PAGE_ALIGN(virt + size);
+   The downward rounding of phys via PAGE_MASK extends the mapped
+   range backward into the adjacent no-map region, effectively
+   including no-map memory in the linear mapping.
+
+For example, with 64K pages, reserved_region@A2000000 (base=0xA2000000,
+size=0x8000, no-map) causes for_each_mem_range to return
+start=0xA2008000 for the next mappable region. After phys &= PAGE_MASK,
+the actual mapping starts at 0xA2000000 — the entire no-map region is
+incorrectly mapped.
+
+Fix this by rounding the mappable range inward to PAGE_SIZE boundaries
+before passing it to __map_memblock: start is rounded UP and end is
+rounded DOWN. This ensures the mapped area never overlaps with adjacent
+no-map regions. The cost is at most one page of unmapped gap at each
+boundary, which is preferable to violating no-map semantics.
+
+Signed-off-by: liulhong617 <liulhong617@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_coex.c     | 3 ++-
- drivers/net/wireless/rsi/rsi_91x_main.c     | 7 ++++---
- drivers/net/wireless/rsi/rsi_91x_sdio_ops.c | 3 ++-
- drivers/net/wireless/rsi/rsi_91x_usb_ops.c  | 7 ++++---
- drivers/net/wireless/rsi/rsi_common.h       | 2 +-
- drivers/net/wireless/rsi/rsi_sdio.h         | 2 +-
- drivers/net/wireless/rsi/rsi_usb.h          | 2 +-
- 7 files changed, 15 insertions(+), 11 deletions(-)
+ arch/arm64/mm/mmu.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_coex.c b/drivers/net/wireless/rsi/rsi_91x_coex.c
-index 372eaaa2b9efc..05525d5e2edb1 100644
---- a/drivers/net/wireless/rsi/rsi_91x_coex.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_coex.c
-@@ -50,8 +50,9 @@ static void rsi_coex_sched_tx_pkts(struct rsi_coex_ctrl_block *coex_cb)
- 	} while (coex_q != RSI_COEX_Q_INVALID);
- }
- 
--static void rsi_coex_scheduler_thread(struct rsi_common *common)
-+static int rsi_coex_scheduler_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_coex_ctrl_block *coex_cb = common->coex_cb;
- 	u32 timeout = EVENT_WAIT_FOREVER;
- 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_main.c b/drivers/net/wireless/rsi/rsi_91x_main.c
-index 2112d8d277a99..0b4d691580054 100644
---- a/drivers/net/wireless/rsi/rsi_91x_main.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_main.c
-@@ -246,12 +246,13 @@ EXPORT_SYMBOL_GPL(rsi_read_pkt);
- /**
-  * rsi_tx_scheduler_thread() - This function is a kernel thread to send the
-  *			       packets to the device.
-- * @common: Pointer to the driver private structure.
-+ * @data: Pointer to the driver private structure.
-  *
-- * Return: None.
-+ * Return: 0.
-  */
--static void rsi_tx_scheduler_thread(struct rsi_common *common)
-+static int rsi_tx_scheduler_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	u32 timeout = EVENT_WAIT_FOREVER;
- 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c b/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-index 597b238e22949..18a28aa974460 100644
---- a/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-@@ -62,8 +62,9 @@ int rsi_sdio_master_access_msword(struct rsi_hw *adapter, u16 ms_word)
- 
- static void rsi_rx_handler(struct rsi_hw *adapter);
- 
--void rsi_sdio_rx_thread(struct rsi_common *common)
-+int rsi_sdio_rx_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	struct rsi_91x_sdiodev *sdev = adapter->rsi_dev;
- 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_usb_ops.c b/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-index 25c2b232394a6..e899631b9aed2 100644
---- a/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-@@ -21,12 +21,13 @@
- /**
-  * rsi_usb_rx_thread() - This is a kernel thread to receive the packets from
-  *			 the USB device.
-- * @common: Pointer to the driver private structure.
-+ * @data: Pointer to the driver private structure.
-  *
-- * Return: None.
-+ * Return: 0.
-  */
--void rsi_usb_rx_thread(struct rsi_common *common)
-+int rsi_usb_rx_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	struct rsi_91x_usbdev *dev = adapter->rsi_dev;
- 	int status;
-diff --git a/drivers/net/wireless/rsi/rsi_common.h b/drivers/net/wireless/rsi/rsi_common.h
-index c40f8101febcb..4f6738ba72be2 100644
---- a/drivers/net/wireless/rsi/rsi_common.h
-+++ b/drivers/net/wireless/rsi/rsi_common.h
-@@ -58,7 +58,7 @@ static inline void rsi_reset_event(struct rsi_event *event)
- 
- static inline int rsi_create_kthread(struct rsi_common *common,
- 				     struct rsi_thread *thread,
--				     void *func_ptr,
-+				     int (*func_ptr)(void *data),
- 				     u8 *name)
- {
- 	init_completion(&thread->completion);
-diff --git a/drivers/net/wireless/rsi/rsi_sdio.h b/drivers/net/wireless/rsi/rsi_sdio.h
-index 7c91b126b350f..eb2b7f36a7e4c 100644
---- a/drivers/net/wireless/rsi/rsi_sdio.h
-+++ b/drivers/net/wireless/rsi/rsi_sdio.h
-@@ -134,5 +134,5 @@ int rsi_sdio_master_access_msword(struct rsi_hw *adapter, u16 ms_word);
- void rsi_sdio_ack_intr(struct rsi_hw *adapter, u8 int_bit);
- int rsi_sdio_determine_event_timeout(struct rsi_hw *adapter);
- int rsi_sdio_check_buffer_status(struct rsi_hw *adapter, u8 q_num);
--void rsi_sdio_rx_thread(struct rsi_common *common);
-+int rsi_sdio_rx_thread(void *data);
- #endif
-diff --git a/drivers/net/wireless/rsi/rsi_usb.h b/drivers/net/wireless/rsi/rsi_usb.h
-index 961851748bc4c..78067eaffe8b1 100644
---- a/drivers/net/wireless/rsi/rsi_usb.h
-+++ b/drivers/net/wireless/rsi/rsi_usb.h
-@@ -81,5 +81,5 @@ static inline int rsi_usb_event_timeout(struct rsi_hw *adapter)
- 	return EVENT_WAIT_FOREVER;
- }
- 
--void rsi_usb_rx_thread(struct rsi_common *common);
-+int rsi_usb_rx_thread(void *data);
- #endif
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index 71841b5c31928..7c3f560df6529 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1179,6 +1179,20 @@ static void __init map_mem(pgd_t *pgdp)
+ 	for_each_mem_range(i, &start, &end) {
+ 		if (start >= end)
+ 			break;
++		/*
++		 * for_each_mem_range may return sub-page-aligned boundaries
++		 * after memblock_mark_nomap() splits regions at byte precision.
++		 * __create_pgd_mapping_locked aligns phys down to PAGE_MASK,
++		 * which could accidentally map no-map memory on the boundary.
++		 * Round the mappable range inward: start UP, end DOWN, so
++		 * that the mapped area never overlaps with adjacent no-map
++		 * regions. The cost is at most one page of unmapped gap at
++		 * each boundary.
++		 */
++		start = PAGE_ALIGN(start);
++		end = end & PAGE_MASK;
++		if (start >= end)
++			continue;
+ 		/*
+ 		 * The linear map must allow allocation tags reading/writing
+ 		 * if MTE is present. Otherwise, it has the same attributes as
 -- 
 2.53.0
 
