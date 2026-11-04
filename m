@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829749;
-	b=hcAs/hsx28VqEqZLe9KJsSdkcEj5Xla6oeSxcZPvGenxmvOGVyS1YcOUooPoImV7QnY8
-	 15pXHQe80e0qL9w5r8RKQI5Z4FRPEFkbOHjA8nfsGA+I7LTJZdBZDjlAi9nONs1Zt4f/j
-	 y1e1mqtij8wncmRT6oe0SHrZ0MK3LeraLhBKLkLTp+qD828qEi/C7fPX6jKHmHEJxRuZD
-	 lt834pIy6ied1TsOSWgJMSymUlQl9ioVS2qA0JhisXuzdD8f2P1hSCBcn+obxixtTtSRr
-	 ClxZ9VPFsxPM6di4yRFfOa+9AEv/8ej0mOWX067eOXoQIoc+Gdk4g+WaQomhQNP8D0g==
+	t=1793829751;
+	b=U9dqoeiCm/Fslf7rWXZBcr/xiEFL22O1gWS4AKTxR4Qhzv3VNFnyQ/zjgU9iK9a+1LSB
+	 EPHlry5/klQ0IOYQDzLk/LoFf7/KbB3Uat+5UzMCs9aUsQtFWCsuNRCifDFJ98mHaFuuB
+	 MQozYX8D/y/dbPKckCPfHccvMg5MNTMYjCDfEBSAd5aSPKIC7USZ868F5LgKEmuHVyZLf
+	 nUdP2aAPZiedkUIbMIEdhFkenRDU7myvkNETpTaBFoCRmW0RN7ESyMPz9sMiz3RkrjOsR
+	 Zxhq3xiZP62ewpW+iC5OS9RY1uBv3rbzNal26/KiRMR9dlJ54gvKWjAbiHUxi+RnTFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829749;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829751;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l+2uC1D7lmIqwOM99TBCm7P1zu8/7UHLzaSxXFP8Y4U=;
-	b=4nmx0gYUPdF4LXA5kixyA/EysKewL+0Y9R8jRPEGXTRlx3YC+TfCH+n7VcMWQFM0u9yw
-	 36yJ2wgTfCbRoUWeUp3UFIJAPCeX5JfDf3kyipx+W6d6oj7o58CU0MXRf+WVXo1ikvjC8
-	 sjVHj3Co3S+084/wwLhmFmjFUsBW37LlXLdVdFgrm/BJeZMHnClkeutxKkC0y+1o7JAMK
-	 1Nl5oRWUnMqQNLM/OdgVmuUY0rsHgac20aQ5CenglXxCvGP9rAGHD/IykcXSw+7AbdeuK
-	 Tck+6KvVkXae3Bi4br+xH/WBLYZageJot/nWcyPVzMRqABmnTcOjPP6RXWduZqYDelg==
+	bh=81+UKNWBJx9ebP+taKXIwtSIBonrE1+fbzchrdkRh6w=;
+	b=bcKaAmujlcZjK9Dg1cVYxuSE2LM3Or5LHOUGvmnmlamLmZ2pwiVTzS3SZH6imoh4mtII
+	 F8AJoi9sG9VPLocoxC8wrSTgvuDRgW4kjTc1zwoZLgRFLrvCxEVXkA2w5Xku+nxM1nwtO
+	 xIzEb3n5C0cwcCJMh03VE/9tbnbvS/nFpLpClcMQLjH5GvI7r4DIht/HmBUcqHFfLIABe
+	 Esr9p4ZdIsD6azN9D4BvM+Dl55E4p3wHt4IDd+LS7+oeVEuQCZfnt+d5Rl60H7FOW7sDD
+	 dXz/TT9rHc5eqxwNMiDz3Qc3rurvhiVp5AP+wDgNniH6B6/wjADj8FafVXYF87BIe4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qc4ye4Ja;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F7RZXo+S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817EC606C5AD;
-	Wed,  4 Nov 2026 22:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A51606C5AD;
+	Wed,  4 Nov 2026 22:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qc4ye4Ja
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C081F00A1A;
-	Wed,  4 Nov 2026 22:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F7RZXo+S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C88B1F0093A;
+	Wed,  4 Nov 2026 22:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829749;
-	bh=l+2uC1D7lmIqwOM99TBCm7P1zu8/7UHLzaSxXFP8Y4U=;
+	s=korg; t=1793829750;
+	bh=81+UKNWBJx9ebP+taKXIwtSIBonrE1+fbzchrdkRh6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qc4ye4JaNO4jHnwAX9DMjfKeiFTj0tFkfsAcKTvTfJVG07d+iH04vsWFZwHYnPfVf
-	 we7voNVbCs09ehJq6ulhJokRwMQlZqg4W2Jo2YSzvdpmyc/AEfHW+Ba2lEsmllVIIw
-	 ZoQUnXeWj5vYMf3Ww1BdRN8Sj8j8BWPlDzbpB7pc=
+	b=F7RZXo+Srh6RI/Tsfj3N1BCrHGz86o6Edc5iUuQJAvYmNcoKcxxhMBzUFWaZ/sCMC
+	 3TGjccI+hyprUEP+uBnBQvWFaf2MSqNrwnLKD2R7AZa/ZgRSD6YLywGz+D6Y29FjQ1
+	 u1jXNSUMAqpHZUKlQzUMfuwhYw4Xno9IhW0D50Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Rausch <gerd.rausch@oracle.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0320/1005] net/rds: fix rds_message leak in the rds_send_xmit() drop path
-Date: Wed,  4 Nov 2026 16:00:53 -0500
-Message-ID: <20261104211052.905700877@linuxfoundation.org>
+Subject: [PATCH 6.18 0303/1005] perf: marvell: Cancel CN10K DDR PMU hrtimer on device remove
+Date: Wed,  4 Nov 2026 16:00:36 -0500
+Message-ID: <20261104211052.408585126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,77 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit eb8a59a17f4a8b6f2afb4a8063e99dd96cc3fab0 ]
+[ Upstream commit 7dbcb0268d1e2a1d3badb0c6e77ee70e550b1787 ]
 
-When rds_send_xmit() picks the next message off cp_send_queue it takes
-its own reference with rds_message_addref().  If the message then hits
-the never-retransmit check (RDS_MSG_FLUSH, or an RDMA op that was
-already retransmitted), it is moved to the local to_be_dropped list and
-that reference is dropped after the batch.
+cn10k_ddr_perf_remove() did not cancel the poll hrtimer before returning.
+If the device was unbound while perf events were still active the timer
+callback could run post-free.
 
-However, if RDS_MSG_ON_CONN has already been cleared, the message is
-not added to to_be_dropped and the reference taken above is never
-dropped: cp_xmit_rm has not been set at this point, so the loop simply
-abandons rm and the rds_message (and everything it pins: pages, MRs,
-notifiers) leaks after an RDMA error.
+To fix the issue by adding hrtimer_cancel() in remove().
 
-The only other places that clear RDS_MSG_ON_CONN are
-rds_send_path_drop_acked() and rds_send_drop_to(), and both can run
-while rds_send_xmit() has dropped cp_lock between moving the message
-to cp_retrans and re-taking the lock in the never-retransmit check:
-rds_send_path_drop_acked() can ack away a message that already sat on
-cp_retrans - the RDS_MSG_RETRANSMITTED case above - and
-rds_send_drop_to() runs on socket close.  Both unlink the message
-under cp_lock and put their own reference, leaving the xmit-path
-reference stranded.
-
-Drop the reference directly in that case.
-
-This mirrors Oracle UEK commit "net/rds: fix rds_message memleak in
-rds_send_xmit".
-
-Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
-Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-[achender: port to net-next; update commit message, checkpatch nits]
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-4-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/send.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/perf/marvell_cn10k_ddr_pmu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/rds/send.c b/net/rds/send.c
-index 5d09c7654f136..0a541cfc90185 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -288,9 +288,21 @@ int rds_send_xmit(struct rds_conn_path *cp)
- 			    (rm->rdma.op_active &&
- 			    test_bit(RDS_MSG_RETRANSMITTED, &rm->m_flags))) {
- 				spin_lock_irqsave(&cp->cp_lock, flags);
--				if (test_and_clear_bit(RDS_MSG_ON_CONN, &rm->m_flags))
--					list_move(&rm->m_conn_item, &to_be_dropped);
--				spin_unlock_irqrestore(&cp->cp_lock, flags);
-+				if (test_and_clear_bit(RDS_MSG_ON_CONN,
-+						       &rm->m_flags)) {
-+					/* our ref is put after the batch */
-+					list_move(&rm->m_conn_item,
-+						  &to_be_dropped);
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+				} else {
-+					/* already off the conn list; drop
-+					 * the ref taken above ourselves
-+					 */
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+					rds_message_put(rm);
-+				}
- 				continue;
- 			}
+diff --git a/drivers/perf/marvell_cn10k_ddr_pmu.c b/drivers/perf/marvell_cn10k_ddr_pmu.c
+index 72ac17efd846a..9974b62541f0d 100644
+--- a/drivers/perf/marvell_cn10k_ddr_pmu.c
++++ b/drivers/perf/marvell_cn10k_ddr_pmu.c
+@@ -1088,6 +1088,12 @@ static void cn10k_ddr_perf_remove(struct platform_device *pdev)
+ {
+ 	struct cn10k_ddr_pmu *ddr_pmu = platform_get_drvdata(pdev);
  
++	/*
++	 * Cancel the poll timer before further teardown so the handler
++	 * cannot run after this function returns.
++	 */
++	hrtimer_cancel(&ddr_pmu->hrtimer);
++
+ 	cpuhp_state_remove_instance_nocalls(
+ 				CPUHP_AP_PERF_ARM_MARVELL_CN10K_DDR_ONLINE,
+ 				&ddr_pmu->node);
 -- 
 2.53.0
 
