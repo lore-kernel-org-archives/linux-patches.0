@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831872;
-	b=m/uv03ybNJQP1BGsapEHoxoZXCPGSqZRer3RXmNSIuLJCUIyC9E/qK6jtZF9+zame7aZ
-	 iR+ANOsEWWzIOyRt7OvztBMpZID4y45neCZo2rkSIUKnzPRsT0UQZunhPyVacDSU8RznW
-	 82pGUZ1amqNCksFoox10+kis4HYGpFIAVfpouIhZOBNYdeKZBgBG9XFOCa2xTSSeGqcGN
-	 bJcoJiZzdJwzlNVKyr/sm7qNQRF1L7LHQ0Zqp4Egoc+PmMzBarmGplbNlh7jFrYPZSSOv
-	 IV8WFF+pkKzx7meiEQZqSotfCvogkwssWc3rt18rBsWxJi08mfjJdf4sYhKOm3aIw3w==
+	t=1793831874;
+	b=np07V0aXzBJI5bypUYdlY/90kscv1DWl5Q95waPvsWZWhzj0oxIqTBd2913Qj0xw1B/E
+	 DQHIWJ+D5pKMuA++oBhw6oDIPpjxT9t+mn2Bvoe1t7pJiLBn0o7jKpcFkZn2BjUFryDgx
+	 HNE35Gwm23GtmCvLSvubL2xOhWPXeelC2GECAkJjwbcP8uvVfS9pPBUy5O76TI/AMs81W
+	 jJNrFCmeOJqdmMs987D5o7nrS67TMClxhDaSVwWEawvgf7di5HqG4BI0WWD+y8pnzZk4b
+	 t0Cx9jpYmiS/gJ8JiN/+Cm7oTwPBAo2ClXDuyHotXG0DY6TXRQrcND+EMM85oYthilQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x8l/tk0AoIcUX0tLXrzoZbnHGkeFvUvqtTrzewZJCqc=;
-	b=4iznqJjbVwtRtX74eWX61qIJkS4/8f39tEDsviwtt0CvcMvCPeWcq9rKoNsuOUea6wnu
-	 2iEglnnRYiIn8QDOnDmaqj0OZxOfNndo8ySXHe3MOxiQPOljsoSYv6Pc4FCs7P/hPrktv
-	 pYLeR6DVp1TBgbytzrD4oxftohgcmt42C1Pm7vR3i6SUlrCzFI40Q5ithoDtQ3iIBf73O
-	 nPkSjJQdZbP+1zabFlxWNsSTx8mBSXSmGPpQWjjBF76EMlM0SlvnRIvbV7W/mIzSEMzIk
-	 VVA+P+98ilMJgsmu37DCbzaBm5IIANb+3AzUPv5aG0dBidqKYqH0oepHWFouWaL1C0Q==
+	bh=/SHXSF3I7fB772VYSWexaKn8jIOkVD3af7gGIeL2bjk=;
+	b=lWOEKB9XBgBrqTr5doUpmLb8EaxSpvB1rS14tuVzRtPEo2DztJsiUdtvpiHfM/uMigI1
+	 InheumUn0f8v5GtmB48VKlIGbSROc1sM2PSBB7L5TYWl3Gf8qdG4kjwf+6YtCST9UoAzL
+	 CivaKs3mbTTD3J24pqfeDspXAEJgCZ23NBTuEw1gcQZyqGm8WMHhBSuW5DsnUKAxmB1ow
+	 EZqzeqFZRZDKDkbppcR25l2FSS8nLk3QyVQnda9O1rgwlSXcfwMY3WWvegRInzf10/jcu
+	 Zdg7E4cGoKW6gi7cL31h95gIRYLWEbTKoQCGeucJG0fmBMOkmKe05R4KB5Az+GiHPWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=katlSyNX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q/xMOh7I";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9809B606A326;
-	Wed,  4 Nov 2026 22:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDEB606A326;
+	Wed,  4 Nov 2026 22:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=katlSyNX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6B41F000C1;
-	Wed,  4 Nov 2026 22:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q/xMOh7I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE531F000C1;
+	Wed,  4 Nov 2026 22:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831872;
-	bh=x8l/tk0AoIcUX0tLXrzoZbnHGkeFvUvqtTrzewZJCqc=;
+	s=korg; t=1793831874;
+	bh=/SHXSF3I7fB772VYSWexaKn8jIOkVD3af7gGIeL2bjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=katlSyNXPxzlHGYv3Cm/Sc2Lw8t5fetLltGAw6jzofzoY5Vvz3P8vvg9g1N3yVt6Z
-	 2CUA9HX4YbCeyE7tPQlKpUjg5SuwCoK0QnGJ9SDgkdi5X0luw9rkCUyIpbkk0ni9Vq
-	 KcqZKGkuDIVkRF5m2japMfKoz7uUo4v02Rb8X9I4=
+	b=q/xMOh7IJYoUmkU5A3fWVqC9L9ScW73ca2FKxLFX9YGl9pmWLEA5dmUPuaEsKDcnz
+	 UhcvvTFGtp08DqdbZw7kOA1Jl6lfF/HxNCXxF0yQK+bScR4s0mzppIBOyVkvo6SiJo
+	 aCD+VoEeSepErCHFTtTVv7dykioJW4UfcBBGcII4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.18 0967/1005] ovl: hold a reference on the parent in readdir
-Date: Wed,  4 Nov 2026 16:11:40 -0500
-Message-ID: <20261104211110.156215042@linuxfoundation.org>
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 0941/1005] KVM: TDX: Enable Notify VM exit
+Date: Wed,  4 Nov 2026 16:11:14 -0500
+Message-ID: <20261104211109.477168242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,113 +69,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-commit 16d319e12328acafeafd3eecdf09c46d7fb43452 upstream.
+commit d93395058c1951bb657c8895dd1fc0f22263f1cc upstream.
 
-Listing a directory on an overlay uses a freed dentry and crashes the
-kernel when a lookup moves the directory at the same time.
+Enable Notify VM exit functionality for TDX guests.
 
-Code that can sleep may only use d_parent without a reference while
-something stops a move of the dentry. ovl_iterate_real(),
-ovl_need_adjust_d_ino() and ovl_cache_update() use the d_parent of the
-listed directory and hold only the lock of that directory. When a
-lookup finds the directory under another parent after a change to a
-layer, d_splice_alias() moves it without that lock and drops its
-reference on the old parent.
+Notify VM exit is an existing feature supported by KVM.  Userspace can
+enable Notify VM exit through KVM_CAP_X86_NOTIFY_VMEXIT when it's
+reported as supported.  However, KVM reports the support of this CAP just
+based on the hardware capability but doesn't differentiate between VMX
+and TDX.  This leads to the issue that userspace can enable this cap for
+TDX guests without getting an error, but the feature is not actually
+enabled because KVM doesn't call the TDX module API to program the
+relevant TD VMCS fields.
 
-With a delay in ovl_iterate_real(), getdents64 on an overlay directory
-raced a rename in the lower layer and a lookup that moved its dentry,
-and after an rmdir of the old parent KASAN reported a use-after-free in
-security_inode_getattr().
+Enable Notify VM exit for TDX guests by:
 
-Fix this by using dget_parent() in the three functions.
+  - Invoking TDX module API calls to set NOTIFY_VM_EXITING and Notify
+    Window in TD VMCS.  It's done in tdx_vcpu_init() where other TD VMCS
+    bits are set.  Since TDX vCPU cannot be reset, it only needs to be
+    configured once when initializing the TDX vCPU.
 
-Fixes: b5efccbe0a12 ("ovl: constant d_ino across copy up")
+  - Adding corresponding exit handler for TDX Notify VM Exit.
+
+Notify VM exit can happen when executing the IRET instruction.  If the
+IRET unblocks the NMI blocking state, bit 12 of the exit qualification
+is set.  In this case, the VMM needs to restore the "blocked by NMI" state
+when it decides to re-enter the guest.  For TDX, KVM cannot manage the
+GUEST_INTERRUPTIBILITY_INFO and it's TDX module's responsibility to
+handle it.  Extract the common part without NMI blocking handling into a
+helper in common.h so that it can be shared between VMX and TDX.
+
+Note, KVM uses "pre-production" terminology for the feature formally called
+Notify VM-Exit.  All public versions of the SDM refer to the feature as
+Instruction Timeout.  This will be remedied in the near future, for now,
+use KVM's terminology for consistency.
+
+Note, #2, there is no enumeration bit for Notify VM exit by TDX module
+because all TDX modules support it, and allow to set the corresponding
+TD VMCS fields as long as the hardware supports the feature.
+
+Fixes: 161d34609f9b ("KVM: TDX: Make TDX VM type supported")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: fix comments in ovl_need_adjust_d_ino()]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[backport: no ovl_need_adjust_d_ino(), take the parent with dget_parent()
- in ovl_iterate() and test a local flag]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Link: https://patch.msgid.link/20260819094903.3060020-2-xiaoyao.li@intel.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/readdir.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ arch/x86/kvm/vmx/common.h |   19 +++++++++++++++++++
+ arch/x86/kvm/vmx/tdx.c    |   10 ++++++++++
+ arch/x86/kvm/vmx/vmx.c    |   13 +------------
+ 3 files changed, 30 insertions(+), 12 deletions(-)
 
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -572,8 +572,8 @@ static int ovl_cache_update(const struct
- 			goto get;
- 		}
- 		if (p->len == 2 && p->name[1] == '.') {
--			/* we shall not be moved */
--			this = dget(dir->d_parent);
-+			/* d_splice_alias() can move even a locked dir */
-+			this = dget_parent(dir);
- 			goto get;
- 		}
- 	}
-@@ -802,6 +802,7 @@ static int ovl_iterate_real(struct file
- 	struct dentry *dir = file->f_path.dentry;
- 	struct ovl_fs *ofs = OVL_FS(dir->d_sb);
- 	const struct ovl_layer *lower_layer = ovl_layer_lower(dir);
-+	struct dentry *parent;
- 	struct ovl_readdir_translate rdt = {
- 		.ctx.actor = ovl_fill_real,
- 		.ctx.count = ctx->count,
-@@ -813,18 +814,26 @@ static int ovl_iterate_real(struct file
- 	if (rdt.xinobits && lower_layer)
- 		rdt.fsid = lower_layer->fsid;
+--- a/arch/x86/kvm/vmx/common.h
++++ b/arch/x86/kvm/vmx/common.h
+@@ -4,6 +4,7 @@
  
--	if (OVL_TYPE_MERGE(ovl_path_type(dir->d_parent))) {
-+	/*
-+	 * The lock on dir does not stop d_splice_alias() from moving it to
-+	 * another parent, which drops the reference dir holds on this one.
-+	 */
-+	parent = dget_parent(dir);
-+	if (OVL_TYPE_MERGE(ovl_path_type(parent))) {
- 		struct kstat stat;
- 		struct path statpath = file->f_path;
+ #include <linux/kvm_host.h>
+ #include <asm/posted_intr.h>
++#include <asm/vmx.h>
  
--		statpath.dentry = dir->d_parent;
-+		statpath.dentry = parent;
- 		err = vfs_getattr(&statpath, &stat, STATX_INO, 0);
--		if (err)
-+		if (err) {
-+			dput(parent);
- 			return err;
-+		}
+ #include "mmu.h"
  
- 		WARN_ON_ONCE(dir->d_sb->s_dev != stat.dev);
- 		rdt.parent_ino = stat.ino;
- 	}
-+	dput(parent);
+@@ -175,6 +176,24 @@ static inline void __vmx_deliver_posted_
+ 	kvm_vcpu_trigger_posted_interrupt(vcpu, POSTED_INTR_VECTOR);
+ }
  
- 	if (ovl_is_impure_dir(file)) {
- 		rdt.cache = ovl_cache_get_impure(&file->f_path);
-@@ -853,6 +862,10 @@ static int ovl_iterate(struct file *file
- 		ovl_dir_reset(file);
- 
- 	if (od->is_real) {
-+		struct dentry *parent = dget_parent(dentry);
-+		bool parent_merge = OVL_TYPE_MERGE(ovl_path_type(parent));
++static inline int __vt_handle_notify(struct kvm_vcpu *vcpu,
++				     unsigned long exit_qual)
++{
++	bool context_invalid = exit_qual & NOTIFY_VM_CONTEXT_INVALID;
 +
-+		dput(parent);
- 		/*
- 		 * If parent is merge, then need to adjust d_ino for '..', if
- 		 * dir is impure then need to adjust d_ino for copied up
-@@ -860,8 +873,7 @@ static int ovl_iterate(struct file *file
++	++vcpu->stat.notify_window_exits;
++
++	if (vcpu->kvm->arch.notify_vmexit_flags & KVM_X86_NOTIFY_VMEXIT_USER ||
++	    context_invalid) {
++		vcpu->run->exit_reason = KVM_EXIT_NOTIFY;
++		vcpu->run->notify.flags = context_invalid ?
++					  KVM_NOTIFY_CONTEXT_INVALID : 0;
++		return 0;
++	}
++
++	return 1;
++}
++
+ noinstr void vmx_handle_nmi(struct kvm_vcpu *vcpu);
+ int vt_handle_bus_lock_vmexit(struct kvm_vcpu *vcpu);
+ 
+--- a/arch/x86/kvm/vmx/tdx.c
++++ b/arch/x86/kvm/vmx/tdx.c
+@@ -2140,6 +2140,9 @@ int tdx_handle_exit(struct kvm_vcpu *vcp
+ 		 * - If it's not an MSMI, no need to do anything here.
  		 */
- 		if (ovl_xino_bits(ofs) ||
- 		    (ovl_same_fs(ofs) &&
--		     (ovl_is_impure_dir(file) ||
--		      OVL_TYPE_MERGE(ovl_path_type(dentry->d_parent))))) {
-+		     (ovl_is_impure_dir(file) || parent_merge))) {
- 			err = ovl_iterate_real(file, ctx);
- 		} else {
- 			err = iterate_dir(od->realfile, ctx);
+ 		return 1;
++	case EXIT_REASON_NOTIFY:
++		/* NMI blocking state is handled by TDX module */
++		return __vt_handle_notify(vcpu, vmx_get_exit_qual(vcpu));
+ 	default:
+ 		break;
+ 	}
+@@ -3141,6 +3144,13 @@ static int tdx_vcpu_init(struct kvm_vcpu
+ 	td_vmcs_write64(tdx, POSTED_INTR_DESC_ADDR, __pa(&tdx->vt.pi_desc));
+ 	td_vmcs_setbit32(tdx, PIN_BASED_VM_EXEC_CONTROL, PIN_BASED_POSTED_INTR);
+ 
++	if (kvm_notify_vmexit_enabled(vcpu->kvm)) {
++		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
++				 SECONDARY_EXEC_NOTIFY_VM_EXITING);
++		td_vmcs_write32(tdx, NOTIFY_WINDOW,
++				vcpu->kvm->arch.notify_window);
++	}
++
+ 	tdx->state = VCPU_TD_STATE_INITIALIZED;
+ 
+ 	return 0;
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6055,9 +6055,6 @@ static int handle_encls(struct kvm_vcpu
+ static int handle_notify(struct kvm_vcpu *vcpu)
+ {
+ 	unsigned long exit_qual = vmx_get_exit_qual(vcpu);
+-	bool context_invalid = exit_qual & NOTIFY_VM_CONTEXT_INVALID;
+-
+-	++vcpu->stat.notify_window_exits;
+ 
+ 	/*
+ 	 * Notify VM exit happened while executing iret from NMI,
+@@ -6067,15 +6064,7 @@ static int handle_notify(struct kvm_vcpu
+ 		vmcs_set_bits(GUEST_INTERRUPTIBILITY_INFO,
+ 			      GUEST_INTR_STATE_NMI);
+ 
+-	if (vcpu->kvm->arch.notify_vmexit_flags & KVM_X86_NOTIFY_VMEXIT_USER ||
+-	    context_invalid) {
+-		vcpu->run->exit_reason = KVM_EXIT_NOTIFY;
+-		vcpu->run->notify.flags = context_invalid ?
+-					  KVM_NOTIFY_CONTEXT_INVALID : 0;
+-		return 0;
+-	}
+-
+-	return 1;
++	return __vt_handle_notify(vcpu, exit_qual);
+ }
+ 
+ static int vmx_get_msr_imm_reg(struct kvm_vcpu *vcpu)
 
 
