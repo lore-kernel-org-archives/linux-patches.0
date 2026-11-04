@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826919;
-	b=UGLsVen9HdZyRjH2hS7/JPXFxKQq0bJHAf4eQRM5pe1+n40J8MOCLWVdLH7PMtFP8qR6
-	 rsS0g6DL3eYhMMpeFp7rSRBIi4EYetXMMS6uQ2qY5nff/2INL+YXZ+bUQ2JUmHdbfSHkb
-	 zWDsWu/Y9Qe51XKBp68xUKQu7mzGIzgjEzIC/5tfNBEltoXbgq4FJM9LdDL/ajkHjjr6B
-	 9cDcz8bn4D+Bl6lzd89MgK6R8eliIO+C24qwk2e582uq5Lo1oMV22LiMK9zRyhTJV7293
-	 T1ADLOuqo/5pLLlXbdzdVhw7gaAPLMpv4ptUgyClNddIA7JYnU5jKBwCozWmcgH1fkg==
+	t=1793826921;
+	b=Q970m3ASy/LfJrTS2UuQ7zk1Xtue3Kczac4NYB/6sT31sXwngJDQSXYckTzqvaEVK7lu
+	 axMPtG04Qnre4BC67L+fbLF/kaQiE7Uf1cF41HhTi5u6dji2xhRAlHY8rx/KJqG6f8KaR
+	 fIodfeFl0t+Ebj0j6gu21Afkk36Ex0uauA4ZOyy6NMYiY8oSzaXnYCyVxx1t5cV4v2DR/
+	 Ga0dDrzMqVxeH9Ak2azZ+/I6R76qsJ2viY4NN5YcbgBxowy+CcvHCaWWpUvO4dPnQe3wR
+	 IAavX8u82K8AaZ4z48APMmSlzoSXxMPIfjtCUCE5UPhzAKePor2x7gdfkfJIADDHd+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dVtFgunb6R8/DNmYd2c9RcX5/oSG7uxMZaj/z0WzXik=;
-	b=FC2FldFlQHpR7yRnkfTa/wMK5cPHGtJvud1KQLyyXneoU5grNm0e8IeRRyyBCk4WZuLa
-	 rJzS3WVTxdOEkTmSr8EBZDce73xD+cS52FmMjYLpCUROW/NCPCnp4Ixv+793ST2viDtgz
-	 faS0cZ5/s3jMStMmRxitljtcESbQaq8gDR7cdl0YUL7lmR88/Wja2uALcVOrQK+OQ6RGf
-	 JoI4fTSGklfDeK0tDNIDwWjh+kD6v8DgklnY3fqxEk4E3eXQoA9tIvL2XLVLQBSN9hev7
-	 jKg2VbggIGNeGWSwgikC2G7IQwzBZYUeaD1CKsOAELxXLLD7rCBF396PrAQS69aRhJw==
+	bh=BPI7PnfBL+GfcnwI3FVOIWePKMYe7mQXHIEh8BRJjTA=;
+	b=P4mOAbFXbQACeaByvwJvRb/zozoyVDgXBwQxdzh1FeAdWAsl2WVzOdE4iZ63H0Q9dgkc
+	 hXfAOE4dioLDmn5pngtzmwF8YIgE+N+zodAUnQ+3vrZqVZE/XmTUJzxED+m+7qmnt6dzS
+	 7b/KX0o32gvLoXRRRuqAmtJqL1dYU5Oo5hfAYbq59gd0ydqsb+4WeGOO7nMRJ2qfdOMIc
+	 b64avhFA7HneVnCKJ9Hixp5AG3v6/H75LNw2N5siDJ4T0xqp0nugiUrgbR+9JHKsn8z/i
+	 d2DSHIjQU5ke13kcTLOmWHGzI4GWM9PMzVvFnguznZo8taZ6DT+wbDSnlwTBwEa5LfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQguIky1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksorMObY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520A56070318;
-	Wed,  4 Nov 2026 21:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE416070318;
+	Wed,  4 Nov 2026 21:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQguIky1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27BA1F00919;
-	Wed,  4 Nov 2026 21:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksorMObY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6958C1F00919;
+	Wed,  4 Nov 2026 21:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826919;
-	bh=dVtFgunb6R8/DNmYd2c9RcX5/oSG7uxMZaj/z0WzXik=;
+	s=korg; t=1793826920;
+	bh=BPI7PnfBL+GfcnwI3FVOIWePKMYe7mQXHIEh8BRJjTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQguIky1XAxE7jRjAJ+wzZuITd8veEqtBqNMdlhLol8+jgVutKaF6VDe6sNhapwq/
-	 SsiCzDoCpBj51lFfhhqALg9P0qVe88XYey2Z692N1+8sPQhQZ4oD4xvEPXOsWDGkWg
-	 VknsBGV1boXVoRz/aLd7Jt+gzyVrns9Tm8I08JnI=
+	b=ksorMObYmLbH994G4p1tpjZbW6jqBBUNB98ZAFeaq3VLM1Eyyg6FbMwqVJG2jgvKQ
+	 xABB1fcZ2moXaTzo6X8mdI/+Zr5p141hR4XcmGG/+BpqT3QVdv7uzqUreuPH6VJE9s
+	 txqca2GbWLCC4iCcv6mIjD8QIN3rVIhs9ykU/hik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Wolff <nicholas.wolff@truenas.com>,
-	Ameer Hamza <ameer.hamza@truenas.com>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.3 084/547] nfsd: fix race between client_info_show() and free_client()
-Date: Wed,  4 Nov 2026 16:04:28 -0500
-Message-ID: <20261104211040.626140958@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 7.3 085/547] ocfs2/dlm: drain join handlers before releasing module text
+Date: Wed,  4 Nov 2026 16:04:29 -0500
+Message-ID: <20261104211040.653119505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,73 +73,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ameer Hamza <ameer.hamza@truenas.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit ee62dc03a69ee57855de35da1a8ab53b51d30b32 upstream.
+commit 28f366d84023651e50e32e29931401ba0df3e679 upstream.
 
-client_info_show() renders /proc/fs/nfsd/clients/<id>/info and walks
-clp->cl_sessions under clp->cl_lock to print each session's slot
-counts.  free_client() tears down the same list without taking
-cl_lock, and is the only unlocked mutator of cl_sessions.  A reader
-can observe a client mid-teardown because get_nfsdfs_clp() pins the
-nfs4_client but not its sessions: free_client() frees every session
-before calling nfsd_client_rmdir(), so an in-flight seq_file reader
-can follow a list_del()'d node whose ->next now holds LIST_POISON1
-and take a general protection fault:
+The code for a registered DLM handler must remain resident until its
+last invocation finishes. dlm_unregister_net_handlers() only removes
+dlm_join_handlers from the o2net registry. o2net_handler_get() takes a
+kref on the wrapper, but that reference does not pin ocfs2_dlm text.
+o2net_process_message() calls nh_func after dropping o2net_handler_lock.
 
-  Oops: general protection fault, probably for non-canonical address
-        0xdead00000000014c
-  CPU: 1 UID: 0 PID: 132488 Comm: cat
-  RIP: 0010:client_info_show+0x2bf/0x3d0
-  RAX: dead000000000100
-  Call Trace:
-   seq_read_iter+0x12a/0x4b0
-   seq_read+0xf1/0x130
-   vfs_read+0xbf/0x350
-   ksys_read+0x6f/0xf0
-   do_syscall_64+0x8b/0xcb0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  Kernel panic - not syncing: Fatal exception
+With CONFIG_OCFS2_FS_O2CB=m, ocfs2_dlm can be loaded independently of
+ocfs2_stack_o2cb while nodemanager continues handling messages from a
+configured, heartbeating peer. If no dependent module or module reference
+prevents normal unload, the following ordering is possible:
 
-Detach cl_sessions onto a local reaplist under cl_lock, then free the
-sessions after dropping the lock.  Removing entries from cl_sessions
-under cl_lock matches unhash_session(), and the detach-then-reap shape
-matches how __destroy_client() reaps cl_delegations.  The sessions
-cannot be freed while cl_lock is held, since free_session() calls
-nfsd4_del_conns(), which re-acquires it.
+  Receive worker                       Module unload
+  --------------                       -------------
+  o2net_handler_get()
+    take wrapper kref
+    drop handler lock
+  <preempted>
+                                       dlm_exit()
+                                         unregister handlers
+                                       release DLM module text
+  call saved nh_func
+    in released module text
 
-Reported-by: Nicholas Wolff <nicholas.wolff@truenas.com>
-Fixes: 601c8cb349c2 ("nfsd: add session slot count to /proc/fs/nfsd/clients/*/info")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
-Link: https://patch.msgid.link/20260726124658.1715711-1-ameer.hamza@truenas.com
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Use o2net_unregister_and_flush_handler_list() in the shared DLM
+unregister helper. It first prevents new lookups, then waits for the
+ordered o2net workqueue to drain, including a concurrent destruction of
+that queue. The acquired invocation therefore finishes before dlm_exit()
+returns and the loader releases the callback code. The same helper
+covers partial registration and dlm_init() error unwind before module
+memory is released.
+
+Skip the drain when the private join-handler list is empty. Early
+dlm_init() failures can reach this helper before any handler has been
+published. Partial-registration failure also reaches it a second time
+after the first call has already unregistered and drained the list.
+Neither case needs to take o2net_wq_mutex or drain unrelated work.
+The list is changed only by serialized module init/exit paths; a
+nonempty list still uses the full unregister-and-flush helper.
+
+Oops report as below:
+
+    Oops: int3: 0000 [#1] SMP KASAN NOPTI
+    CPU: 2 UID: 0 PID: 54 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+
+Hardware identification omitted.
+
+    Workqueue: o2net o2net_rx_until_empty [ocfs2_nodemanager]
+    RIP: 0010:0xffffffffc0423871
+    [Instruction byte dump omitted.]
+
+Register dump omitted.
+
+    Call Trace:
+     <TASK>
+     ? o2net_rx_until_empty+0x19b1/0x3300 [ocfs2_nodemanager]
+     ? __pfx_o2net_rx_until_empty+0x10/0x10 [ocfs2_nodemanager]
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     ? kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ? ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ? ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    Modules linked in: ocfs2_nodemanager [last unloaded: ocfs2_dlm]
+    ---[ end trace 0000000000000000 ]---
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0076-v6-12de5f4628f57fba3be3@gmail.com
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/ocfs2/dlm/dlmdomain.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2789,10 +2789,16 @@ void nfsd4_put_client(struct nfs4_client
- static void
- free_client(struct nfs4_client *clp)
+--- a/fs/ocfs2/dlm/dlmdomain.c
++++ b/fs/ocfs2/dlm/dlmdomain.c
+@@ -2215,7 +2215,8 @@ static LIST_HEAD(dlm_join_handlers);
+ 
+ static void dlm_unregister_net_handlers(void)
  {
--	while (!list_empty(&clp->cl_sessions)) {
-+	LIST_HEAD(reaplist);
-+
-+	/* client_info_show() walks cl_sessions under cl_lock */
-+	spin_lock(&clp->cl_lock);
-+	list_splice_init(&clp->cl_sessions, &reaplist);
-+	spin_unlock(&clp->cl_lock);
-+	while (!list_empty(&reaplist)) {
- 		struct nfsd4_session *ses;
--		ses = list_entry(clp->cl_sessions.next, struct nfsd4_session,
--				se_perclnt);
-+		ses = list_entry(reaplist.next, struct nfsd4_session,
-+				 se_perclnt);
- 		list_del(&ses->se_perclnt);
- 		WARN_ON_ONCE(atomic_read(&ses->se_ref));
- 		free_session(ses);
+-	o2net_unregister_handler_list(&dlm_join_handlers);
++	if (!list_empty(&dlm_join_handlers))
++		o2net_unregister_and_flush_handler_list(&dlm_join_handlers);
+ }
+ 
+ static int dlm_register_net_handlers(void)
 
 
