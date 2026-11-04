@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831874;
-	b=np07V0aXzBJI5bypUYdlY/90kscv1DWl5Q95waPvsWZWhzj0oxIqTBd2913Qj0xw1B/E
-	 DQHIWJ+D5pKMuA++oBhw6oDIPpjxT9t+mn2Bvoe1t7pJiLBn0o7jKpcFkZn2BjUFryDgx
-	 HNE35Gwm23GtmCvLSvubL2xOhWPXeelC2GECAkJjwbcP8uvVfS9pPBUy5O76TI/AMs81W
-	 jJNrFCmeOJqdmMs987D5o7nrS67TMClxhDaSVwWEawvgf7di5HqG4BI0WWD+y8pnzZk4b
-	 t0Cx9jpYmiS/gJ8JiN/+Cm7oTwPBAo2ClXDuyHotXG0DY6TXRQrcND+EMM85oYthilQ==
+	t=1793831876;
+	b=0FHsCYBu/N3uWwBIxX+5JGH87EdXvW/Spi7mj3XkGpylHPWGy4+JfObM67t3QyrE/FdF
+	 Sxef736Nggy4DJV6H/e2Z9068jU16FQEsganH4l/aVUbwaOBewNTbSt/wlrup5+fgP2T3
+	 4ieg1RmOAKKTbDsStq3BAPBlatlYGumQhSI+a1AXsdFkP90fnD2J/etyrWeZM+RL6oIZy
+	 ICmVjwGBBERra4nmnIYxmxxEudQqmT87F2iHvEoEBzxw6Hut2xXHcSRlH+bwPFOibz2CP
+	 4OzYQvd0pIqMO0x6zTPFGyEIL3cgmWoPdf8c/NdZA0DfZgh04ZUptgyKdmffrYuiI7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831876;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/SHXSF3I7fB772VYSWexaKn8jIOkVD3af7gGIeL2bjk=;
-	b=lWOEKB9XBgBrqTr5doUpmLb8EaxSpvB1rS14tuVzRtPEo2DztJsiUdtvpiHfM/uMigI1
-	 InheumUn0f8v5GtmB48VKlIGbSROc1sM2PSBB7L5TYWl3Gf8qdG4kjwf+6YtCST9UoAzL
-	 CivaKs3mbTTD3J24pqfeDspXAEJgCZ23NBTuEw1gcQZyqGm8WMHhBSuW5DsnUKAxmB1ow
-	 EZqzeqFZRZDKDkbppcR25l2FSS8nLk3QyVQnda9O1rgwlSXcfwMY3WWvegRInzf10/jcu
-	 Zdg7E4cGoKW6gi7cL31h95gIRYLWEbTKoQCGeucJG0fmBMOkmKe05R4KB5Az+GiHPWQ==
+	bh=gJMgFE+cdvNQh2bnLBzGsL2YBrSPqFmb/bZZDoVlf8I=;
+	b=5gXN/SM7Zkqsh5QBSwjxQxdrdM4pKZ8KjbU4IbCAF/DNfS0rtkH2kSvimkwt0Bj39c9H
+	 Gp+J5DHHFkCbdx5EZicZGFOLxUFeIWMzmm6EP+av7Wiue21Srj2kdUjkLAgokwWJ6gRlV
+	 6M0J0wAsreMLe22TKGpsGykWxDY6yliNtnqv5BTvEhIwmwEKpX9/IJR2juvM5QB+9aRlR
+	 4pziNoNNnIzsbae4/os207DgGJKW/blOxXKKzPV/xJHqqNXrdK0d+DCxolc3z7hMYbGhU
+	 4bdQfYZ/aYmlmT704sPUNz5uf63Mc7xlXI5lJaIhQhSi8+Q8kynXEscjS6neimXHGfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q/xMOh7I";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLgPIOSc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDEB606A326;
-	Wed,  4 Nov 2026 22:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FD4606A326;
+	Wed,  4 Nov 2026 22:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q/xMOh7I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE531F000C1;
-	Wed,  4 Nov 2026 22:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLgPIOSc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F141F000C1;
+	Wed,  4 Nov 2026 22:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831874;
-	bh=/SHXSF3I7fB772VYSWexaKn8jIOkVD3af7gGIeL2bjk=;
+	s=korg; t=1793831875;
+	bh=gJMgFE+cdvNQh2bnLBzGsL2YBrSPqFmb/bZZDoVlf8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q/xMOh7IJYoUmkU5A3fWVqC9L9ScW73ca2FKxLFX9YGl9pmWLEA5dmUPuaEsKDcnz
-	 UhcvvTFGtp08DqdbZw7kOA1Jl6lfF/HxNCXxF0yQK+bScR4s0mzppIBOyVkvo6SiJo
-	 aCD+VoEeSepErCHFTtTVv7dykioJW4UfcBBGcII4=
+	b=WLgPIOScAhrS5+Ma1mM20p/dpDEkGxHhf6fu8Mr5Pf01FuLc5V5R4eCUpuXY2GHMi
+	 ycembh+mYxvgkpO2GVKPZdWQX9MwUCGDqONslAZBbRaQ395DGtqgJuBi4PVVzPQDp7
+	 WZfrJeIDcHl7J3UeD69YM0dOoN+7Ko2RX1VpouyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 0941/1005] KVM: TDX: Enable Notify VM exit
-Date: Wed,  4 Nov 2026 16:11:14 -0500
-Message-ID: <20261104211109.477168242@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.18 0968/1005] ovl: do not copy up a dentry that was removed
+Date: Wed,  4 Nov 2026 16:11:41 -0500
+Message-ID: <20261104211110.184283767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,150 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Chris Mason <mason@kernel.org>
 
-commit d93395058c1951bb657c8895dd1fc0f22263f1cc upstream.
+commit f635192ad223d2009ee640b63adf5ce3198aa338 upstream.
 
-Enable Notify VM exit functionality for TDX guests.
+A change to a removed file through an open descriptor replaces whatever
+has its old name in the upper layer.
 
-Notify VM exit is an existing feature supported by KVM.  Userspace can
-enable Notify VM exit through KVM_CAP_X86_NOTIFY_VMEXIT when it's
-reported as supported.  However, KVM reports the support of this CAP just
-based on the hardware capability but doesn't differentiate between VMX
-and TDX.  This leads to the issue that userspace can enable this cap for
-TDX guests without getting an error, but the feature is not actually
-enabled because KVM doesn't call the TDX module API to program the
-relevant TD VMCS fields.
+Copy up must only create a name in the upper directory, never replace
+one. After an unlink, an rmdir or a rename over a lower dentry, a
+dentry that an open file keeps alive still has its old parent and name,
+but in the upper directory that name is now a whiteout or a new object.
+ovl_copy_up_workdir() renames the copy over it, which brings back the
+removed object and destroys whatever took its name.
 
-Enable Notify VM exit for TDX guests by:
+An unprivileged user opened a lower FIFO and unlinked it, root created
+a file at that name, and fchmod on the old descriptor replaced the file
+of root with the FIFO.
 
-  - Invoking TDX module API calls to set NOTIFY_VM_EXITING and Notify
-    Window in TD VMCS.  It's done in tdx_vcpu_init() where other TD VMCS
-    bits are set.  Since TDX vCPU cannot be reset, it only needs to be
-    configured once when initializing the TDX vCPU.
+Fix this by looking up the target name of the rename in
+ovl_copy_up_workdir() with LOOKUP_EXCL, so that copy up fails with
+-EEXIST if the name is taken, as copy up with O_TMPFILE already does
+when it links the copy to the name.
 
-  - Adding corresponding exit handler for TDX Notify VM Exit.
-
-Notify VM exit can happen when executing the IRET instruction.  If the
-IRET unblocks the NMI blocking state, bit 12 of the exit qualification
-is set.  In this case, the VMM needs to restore the "blocked by NMI" state
-when it decides to re-enter the guest.  For TDX, KVM cannot manage the
-GUEST_INTERRUPTIBILITY_INFO and it's TDX module's responsibility to
-handle it.  Extract the common part without NMI blocking handling into a
-helper in common.h so that it can be shared between VMX and TDX.
-
-Note, KVM uses "pre-production" terminology for the feature formally called
-Notify VM-Exit.  All public versions of the SDM refer to the feature as
-Instruction Timeout.  This will be remedied in the near future, for now,
-use KVM's terminology for consistency.
-
-Note, #2, there is no enumeration bit for Notify VM exit by TDX module
-because all TDX modules support it, and allow to set the corresponding
-TD VMCS fields as long as the hardware supports the feature.
-
-Fixes: 161d34609f9b ("KVM: TDX: Make TDX VM type supported")
+Fixes: e9be9d5e76e3 ("overlay filesystem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-2-xiaoyao.li@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: use LOOKUP_EXCL instead of relying on d_unhashed()]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[backport: no start_renaming_dentry() and LOOKUP_EXCL, fail with -EEXIST if
+ the target of ovl_lookup_upper() is positive]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/common.h |   19 +++++++++++++++++++
- arch/x86/kvm/vmx/tdx.c    |   10 ++++++++++
- arch/x86/kvm/vmx/vmx.c    |   13 +------------
- 3 files changed, 30 insertions(+), 12 deletions(-)
+ fs/overlayfs/copy_up.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/x86/kvm/vmx/common.h
-+++ b/arch/x86/kvm/vmx/common.h
-@@ -4,6 +4,7 @@
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -830,6 +830,13 @@ static int ovl_copy_up_workdir(struct ov
+ 	if (IS_ERR(upper))
+ 		goto cleanup;
  
- #include <linux/kvm_host.h>
- #include <asm/posted_intr.h>
-+#include <asm/vmx.h>
- 
- #include "mmu.h"
- 
-@@ -175,6 +176,24 @@ static inline void __vmx_deliver_posted_
- 	kvm_vcpu_trigger_posted_interrupt(vcpu, POSTED_INTR_VECTOR);
- }
- 
-+static inline int __vt_handle_notify(struct kvm_vcpu *vcpu,
-+				     unsigned long exit_qual)
-+{
-+	bool context_invalid = exit_qual & NOTIFY_VM_CONTEXT_INVALID;
-+
-+	++vcpu->stat.notify_window_exits;
-+
-+	if (vcpu->kvm->arch.notify_vmexit_flags & KVM_X86_NOTIFY_VMEXIT_USER ||
-+	    context_invalid) {
-+		vcpu->run->exit_reason = KVM_EXIT_NOTIFY;
-+		vcpu->run->notify.flags = context_invalid ?
-+					  KVM_NOTIFY_CONTEXT_INVALID : 0;
-+		return 0;
++	/* The name may have been taken since lookup, never replace it */
++	err = -EEXIST;
++	if (d_is_positive(upper)) {
++		dput(upper);
++		goto cleanup;
 +	}
 +
-+	return 1;
-+}
-+
- noinstr void vmx_handle_nmi(struct kvm_vcpu *vcpu);
- int vt_handle_bus_lock_vmexit(struct kvm_vcpu *vcpu);
- 
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -2140,6 +2140,9 @@ int tdx_handle_exit(struct kvm_vcpu *vcp
- 		 * - If it's not an MSMI, no need to do anything here.
- 		 */
- 		return 1;
-+	case EXIT_REASON_NOTIFY:
-+		/* NMI blocking state is handled by TDX module */
-+		return __vt_handle_notify(vcpu, vmx_get_exit_qual(vcpu));
- 	default:
- 		break;
- 	}
-@@ -3141,6 +3144,13 @@ static int tdx_vcpu_init(struct kvm_vcpu
- 	td_vmcs_write64(tdx, POSTED_INTR_DESC_ADDR, __pa(&tdx->vt.pi_desc));
- 	td_vmcs_setbit32(tdx, PIN_BASED_VM_EXEC_CONTROL, PIN_BASED_POSTED_INTR);
- 
-+	if (kvm_notify_vmexit_enabled(vcpu->kvm)) {
-+		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
-+				 SECONDARY_EXEC_NOTIFY_VM_EXITING);
-+		td_vmcs_write32(tdx, NOTIFY_WINDOW,
-+				vcpu->kvm->arch.notify_window);
-+	}
-+
- 	tdx->state = VCPU_TD_STATE_INITIALIZED;
- 
- 	return 0;
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6055,9 +6055,6 @@ static int handle_encls(struct kvm_vcpu
- static int handle_notify(struct kvm_vcpu *vcpu)
- {
- 	unsigned long exit_qual = vmx_get_exit_qual(vcpu);
--	bool context_invalid = exit_qual & NOTIFY_VM_CONTEXT_INVALID;
--
--	++vcpu->stat.notify_window_exits;
- 
- 	/*
- 	 * Notify VM exit happened while executing iret from NMI,
-@@ -6067,15 +6064,7 @@ static int handle_notify(struct kvm_vcpu
- 		vmcs_set_bits(GUEST_INTERRUPTIBILITY_INFO,
- 			      GUEST_INTR_STATE_NMI);
- 
--	if (vcpu->kvm->arch.notify_vmexit_flags & KVM_X86_NOTIFY_VMEXIT_USER ||
--	    context_invalid) {
--		vcpu->run->exit_reason = KVM_EXIT_NOTIFY;
--		vcpu->run->notify.flags = context_invalid ?
--					  KVM_NOTIFY_CONTEXT_INVALID : 0;
--		return 0;
--	}
--
--	return 1;
-+	return __vt_handle_notify(vcpu, exit_qual);
- }
- 
- static int vmx_get_msr_imm_reg(struct kvm_vcpu *vcpu)
+ 	err = ovl_do_rename(ofs, c->workdir, temp, c->destdir, upper, 0);
+ 	unlock_rename(c->workdir, c->destdir);
+ 	dput(upper);
 
 
