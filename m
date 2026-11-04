@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829689;
-	b=jKFO1ShyZnbshrcf0gDghWXRa8pb3mfYOAUxGsGimJgSJVU4tERn1qmd64m7b+jtWYKW
-	 1078Iyzy/6Tbde1cMWbZz9iWP4WljWSlzP0StCN+FRpuhHZsUsLzWNB59UhdO6tiRLdB2
-	 Ab0X6YITiUBBSdLcATtwYHCnau1GAD3b7d/xNYVAsR2oQ64JaI9QNsdxeAVo8XiNy2RIU
-	 spqFVqV8dz7/xCASgReS8Pci5DhP68i+Y7WukkXx7eKqpBMMh7lHIP1hbWoN3FewH3gw7
-	 G2pEG4YavY2gmyIssapa3uHX0EYHnTmGUxrnW3E3WF3OiBC4rt5e+AjEw5lEWaGIz2g==
+	t=1793829691;
+	b=pnWiAkQscBuVj8voLiN/X2KGKV1SvjQNc0ImLt0XfH1r2EWjU2WkqLXSaXOmxGo9FGdl
+	 IXrjWcbg4H5rVovPCEvJ2t/DZ0JRGatrMskC7KTHzynwqwyMe7DG5C5W8GNsJ1ulTD/Ai
+	 PTpFpSWkQBsidzizCni3DC5lILzhA28XULsL4YavDbkGyNI1VS/1xWI8eygfMAcpruSKd
+	 2KaaA/h/IP5AMnWuRPvtQ8AeymMUOuoZ0KNWhUCrtCpsqlnqa3/oAwPCbl6fP7D7Mwm5O
+	 Hi96vawWzihQirJHfC43IqEmgRQy8Mpxfds6twQgXbXMbv637msNaRBfs6JNVbnD/eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829689;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9jcT9YrZ8f/VIVgrYbbF0Ti4u7hdQn423iEjjyH5r+s=;
-	b=aqu9j8r/ODrYW5XHUFlAbIOeVbWxenS/u0fHOdWVcPB1srLEYw5fkyB50xtkAZWv/Vux
-	 lTEwtkQr7zxBtM433Sp9UOVCeaiKLVtnjf7ata+YJGE3Koi0SP4SibSkeNkeReYQyxCBa
-	 eV9H7ApQeaL5szavNkW6Ye8Hi9/b3pfbCw3jsowEqoYzeKzhziGxvw4oiEVYmiENtyJCl
-	 PRP59grmTxBl5EJpc8rgjlSJnBqjaPjF9rKwH0KJdOu5T2Wqtfc58PwgilMcEDmMHJ9Ki
-	 7SW0Ta7MqYwOjbidGApkroiVvmDLrt4Sa6r6xgg9QceQx9pV79Ii6qzp14jFWr2NFMg==
+	bh=V3MHf11IprB5QkU/GZ7G8ynquAbIemi/2a3wEIbO+zs=;
+	b=ZhnBPD1vbphXQgF0oaGJ2BtUel5ejqQ7++sKjV8t1AcT1EkAEJK0hPSKjjjDUnvqFBKa
+	 4iSzYOvTdP9uFpowRDhwCfVcf2AD4hZk/oODSCsR5kIVrezoQdKX49VlEv2m9SP3fJvOJ
+	 L5jotv7kSWEosV+aD7r/d1jMLhzDcnv6Uk/MsmTFWRNSUnXPPeXCotTtWK1oqUrJpC+fC
+	 /qnRb1wU8cWK1bHO3WuPEs1cUFNYDLP1S7ANBXcZAWm/Os18KGRHff5cj7+pTdUP7KzC0
+	 raZddS7cprpR2O3obHpg1Jprvr+t9IzdwYGBbUx1cb8pPd8EWUGiIm7PrrtovS7ws8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CS/tSx7X";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQbHuXdU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6BC606EE91;
-	Wed,  4 Nov 2026 22:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022E2606BA30;
+	Wed,  4 Nov 2026 22:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CS/tSx7X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F4E1F000C1;
-	Wed,  4 Nov 2026 22:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQbHuXdU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5403F1F00A18;
+	Wed,  4 Nov 2026 22:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829689;
-	bh=9jcT9YrZ8f/VIVgrYbbF0Ti4u7hdQn423iEjjyH5r+s=;
+	s=korg; t=1793829690;
+	bh=V3MHf11IprB5QkU/GZ7G8ynquAbIemi/2a3wEIbO+zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CS/tSx7X3k9q1Krc/wI7niHbFYwKlntZt0WrozwBEdEqxyFz2mj5RL2QC1eL8PHHX
-	 WYlKox6DUv6+31uWZkKZdqh7+EARwIC1AM0BAtviwjitNQAUUlRyySbfBox3IawS55
-	 IbEU8EwGoKbzFVtxkws1X/ySN/8AJYdWIGpsQcso=
+	b=rQbHuXdUsIH0q+B+vlS/Vfq5VPZmlxIzkXVyodKJyv13ivA4wPgn4E1/MJIVvcfEI
+	 trwMFMFQDDYsR2+1j2sSgPZeq/5iSK3cHGVvs/RCnNkl4KzUNBIGCBYEaf/bb/zmqe
+	 uF1o99pTku08N+U4CYa71t9vhD1x9PXe99at+tNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiji Wang <nebclllo0444@gmail.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0281/1005] drm/panel-edp: Add BOE NE140QDM-NX2
-Date: Wed,  4 Nov 2026 16:00:14 -0500
-Message-ID: <20261104211051.765070870@linuxfoundation.org>
+Subject: [PATCH 6.18 0282/1005] soc: mediatek: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 16:00:15 -0500
+Message-ID: <20261104211051.793013612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,53 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiji Wang <nebclllo0444@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 354b9c43d36ce9b41e48b2d67c5d9b953a0e9d64 ]
+[ Upstream commit ec762057868d70d474a9816e9c293c2ef801c3c9 ]
 
-Add timing from datasheet for BOE NE140QDM-NX2.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-edid-decode (hex):
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-00 ff ff ff ff ff ff 00 09 e5 f2 0a 00 00 00 00
-20 1f 01 04 a5 1e 13 78 03 ee 96 a3 54 4c 99 26
-0f 4e 51 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 60 d2 00 a0 a0 40 32 60 30 20
-35 00 2e bd 10 00 00 18 c8 9d 00 a0 a0 40 32 60
-30 20 35 00 2e bd 10 00 00 18 00 00 00 fd 00 30
-78 c6 c6 36 01 0a 20 20 20 20 20 20 00 00 00 fe
-00 4e 45 31 34 30 51 44 4d 2d 4e 58 32 20 01 f8
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
 
-70 13 79 00 00 03 01 14 30 69 00 05 ff 09 9f 00
-2f 00 1f 00 3f 06 31 00 02 00 04 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 4d 90
-
-Signed-off-by: Weiji Wang <nebclllo0444@gmail.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/82fc6395-3425-4f71-ba58-813856cee61d@gmail.com
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-edp.c | 1 +
+ drivers/soc/mediatek/mtk-dvfsrc.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 614c63e95c357..65e2f68b919ef 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1989,6 +1989,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a6a, &delay_200_500_e80, "NV140WUM-N44"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0ac5, &delay_200_500_e50, "NV116WHM-N4C"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0ae8, &delay_200_500_e50_p2e80, "NV140WUM-N41"),
-+	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0af2, &delay_200_500_e50_p2e80, "NE140QDM-NX2"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b09, &delay_200_500_e50_po2e200, "NV140FHM-NZ"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b1e, &delay_200_500_e80, "NE140QDM-N6A"),
- 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0b34, &delay_200_500_e80_d50, "NV122WUM-N41"),
+diff --git a/drivers/soc/mediatek/mtk-dvfsrc.c b/drivers/soc/mediatek/mtk-dvfsrc.c
+index 41add5636b03c..af35d71615baf 100644
+--- a/drivers/soc/mediatek/mtk-dvfsrc.c
++++ b/drivers/soc/mediatek/mtk-dvfsrc.c
+@@ -562,6 +562,7 @@ static const struct of_device_id mtk_dvfsrc_of_match[] = {
+ 	{ .compatible = "mediatek,mt8195-dvfsrc", .data = &mt8195_data },
+ 	{ /* sentinel */ }
+ };
++MODULE_DEVICE_TABLE(of, mtk_dvfsrc_of_match);
+ 
+ static struct platform_driver mtk_dvfsrc_driver = {
+ 	.probe	= mtk_dvfsrc_probe,
 -- 
 2.53.0
 
