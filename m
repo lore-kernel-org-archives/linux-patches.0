@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826893;
-	b=JmgraHQcmvY4JyEYNu11dC3efyxrinpUgVBJ9U+/NMhQwPdd1hRGu0m4oZbpa6nclR0d
-	 NG4W58qzlPbEn+YVPNtxT0Bg2QrmFm81iDS9eHhhY4YriDUGf1kShCrCA4/bareg0z0vW
-	 iBy17ADy772u07k1f8wDQPQeQ1/RHBt5I6C00T1J8t90SKUVH1Fxdi4JiDpKm0tm1P1/n
-	 6DW/UGRHk9WW94jf7KntJjM3N3NQuasvSzC9EYWoouawurR+Nx1d2Pq/fSKpxrzl/s2Sk
-	 gIKP2f/Tv5Ybq1PObBLVEVy6sHXdmmm2L9qsndJ0FpjJ9QV9gwqBPOdC37MBdtugzQg==
+	t=1793826895;
+	b=MdrLgOpsPEZ0Tvo9CYx73/09VYnUvHfJ1BZrEJ3htNa4ZqYVL5Tgggg7OZdHYeQ5kh+x
+	 FfAH8gSJI5K0iBwwohd2Frw/UDW4gTU4MREDiBo8je3Bqm3OdHYlpep5nxoaohWTdhkSS
+	 dygfD5NruUaMcHX/C22EK7EJhVDsUvF9DTquF1/HL0/veuVJsZCbyfhgzcdwXKJxUjdSg
+	 8TvDQ7rSmbUcNk50BoPmvRblcdgPK4M6noLJZ0vud7fZwv4FK3BIkojubRgX8wJAG8ikH
+	 66CkFDgKkrzonxrU2TpGoAf1R898eZ5KSQ5X6+TU+9kW0dWqCmNuYCcAPlA+I7gNInw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826893;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KG6t7i+XBtMsELlwzn00XE39bNVHUODMb5Q05leb3BA=;
-	b=O2XN2ETKxkYG9m4pAZTaCjyF+JAc+y8THUOFudiQvHKssPg0jSj+slqQ2o4L6sow0Cq/
-	 o/uQzNfSRovdyz04G0RIwP3imKhcJiLR2e4L9HNRby8Q9MYjD8btMx48lRjMZFKapMG1p
-	 fcSxN9aXkFXLLeEGCPaGuBAjV8Yi5VL+7N0N21Von7WcRZafkDsnxzl4WGA2FIIYGcnmB
-	 vk+6U2U/utkXQ2LoxlanCN0bFstRvn/zc9tA/D4EC0qlcz5uGgYZLXItD2YEg/SWiw1Li
-	 zqfP/vtTOUgPSc9u/nzOPjgVoe7Z4P9oHqKvKKlNZxLG1vCEUY35bxPOL3eSdaVFvOg==
+	bh=YbGIlWdmYkGEDpfICqQOJW5WMvkgPcJvVhBIt4tn5gQ=;
+	b=A9F88PjQZdn6OpPIg42looXBK04J7KCdOay/Z+VXeTvYStKum4bYKIPinRCtCG9MC4bJ
+	 lat+qKA/UC8xHKfuUFmPetOA/KSk/Pu/2sZNHpGhqVK0WNWPTxsdv1tmKZNIKLQDgM6G7
+	 S5KE03HfYVXxvEIdbRZx+nztAXMYYr69ahVF/yfwVyyjREX8gD1nUD+qay4to22y/oK8p
+	 GeQiOA9SFsDMaWOjnVi2bycVYmGL8Rk/rME1OJrYaxCh3kb9Xv3obiMyaOGtG6GapxrMc
+	 I6hFuh9Ipi5irRbVegBOWf/95hc137aa8j5xpswZKdAB5S3p8aptQZsgCnvIsnanhaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gulcMlWa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCtieBlm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D43F607075C;
-	Wed,  4 Nov 2026 21:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57736070761;
+	Wed,  4 Nov 2026 21:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gulcMlWa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC7E1F00A1F;
-	Wed,  4 Nov 2026 21:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCtieBlm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAF91F000C1;
+	Wed,  4 Nov 2026 21:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826893;
-	bh=KG6t7i+XBtMsELlwzn00XE39bNVHUODMb5Q05leb3BA=;
+	s=korg; t=1793826894;
+	bh=YbGIlWdmYkGEDpfICqQOJW5WMvkgPcJvVhBIt4tn5gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gulcMlWaX5Qwc7z5SJxq4dcyfVdQbT7WbmESlv0O6cclFqb1Weco2ZuLbaNaIsbSm
-	 C+ydTMBol67tOWAsw9KoJCDcGs6oa/AzUf9EVEkU5UuaqVoptDrknegQEZ2UVpcG70
-	 Pcb68HQDOYRtAC57j5WoohHZPcmXR+i+Q24CSYto=
+	b=dCtieBlmxYCNCF8+nxZd4AxavHihvu08qLbiLsWBo5Nw4cfIFe6ZaiGHatb2jwpPL
+	 UYZLvnn+G3MjO/E9hiumsCTHSv7A1CO5Db5kLtmHq8KrHtjdsEuo/vSwt02d1ZLbr7
+	 3LdSot6dQD9CZ6OvrUJ0TgdhKxlLXupSJmpzrS6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <muchun.song@linux.dev>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 7.3 070/547] ARM: 9524/1: mm: align hugetlb mappings to the huge page size
-Date: Wed,  4 Nov 2026 16:04:14 -0500
-Message-ID: <20261104211040.253079079@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 053/547] io_uring/sqpoll: let the thread sleep on disabled rings
+Date: Wed,  4 Nov 2026 16:03:57 -0500
+Message-ID: <20261104211039.803624522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,77 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 1eb87d8f77379d4e4b279487b8c859fb64bd1afb upstream.
+[ Upstream commit d492dcbb3b81c1c2d0aabef41fa1307093f3a556 ]
 
-mmap(MAP_HUGETLB) on 32-bit Arm can return an address which is not
-aligned to the huge page size. In a QEMU virt guest, unmapping the VMA
-then hits the alignment check in __unmap_hugepage_range():
+__io_sq_thread() doesn't submit anything as long as the ring has
+IORING_SETUP_R_DISABLED set. The check that keeps the SQPOLL thread from
+going to sleep while the SQ ring holds entries doesn't know about that.
+If an application fills in SQEs first and enables the ring later, the
+thread finds that there is work each time it is about to sleep, goes
+around, doesn't submit it, and so on. It uses up a CPU until the ring
+gets enabled.
 
-  kernel BUG at mm/hugetlb.c:5213!
-  Internal error: Oops - BUG: 0 [#1] SMP ARM
-  PC is at __unmap_hugepage_range+0x540/0x584
-  LR is at __zap_vma_range+0x13a0/0x1410
+Entries in the SQ ring of a disabled ring are no reason to stay awake.
+io_register_enable_rings() clears the flag and then wakes the thread, and
+the flag is looked at after prepare_to_wait(), so the thread can't miss
+that.
 
-Commit 7bd3f1e1a9ae ("mm: make hugetlb mappings go through
-mm_get_unmapped_area_vmflags") made hugetlb mappings use the
-architecture's arch_get_unmapped_area(). The generic implementations
-handle hugetlb alignment, but the Arm implementations only account for
-the optional SHMLBA cache-colouring constraint. A 4 KiB-page kernel can
-therefore align the mapping to 4 KiB or 16 KiB instead of the required
-2 MiB.
-
-Set the alignment mask from the file's hstate for hugetlb mappings in
-both Arm implementations. Huge-page alignment also satisfies the
-SHMLBA constraint.
-
+Fixes: 0298ef969a11 ("io_uring: clean R_DISABLED startup mess")
 Assisted-by: LLM
-
-Fixes: 7bd3f1e1a9ae ("mm: make hugetlb mappings go through mm_get_unmapped_area_vmflags")
-Cc: stable@vger.kernel.org
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Link: https://lore.kernel.org/r/20260901085740.66283-1-kmehltretter@gmail.com/
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-37-c1556f5d7bf5@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/mmap.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ io_uring/sqpoll.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/arm/mm/mmap.c
-+++ b/arch/arm/mm/mmap.c
-@@ -11,6 +11,7 @@
- #include <linux/io.h>
- #include <linux/personality.h>
- #include <linux/random.h>
-+#include <linux/hugetlb.h>
- #include <asm/cachetype.h>
+diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
+index ad42e8eb10029..ee97808a065a9 100644
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -385,6 +385,13 @@ static int io_sq_thread(void *data)
+ 				 */
+ 				smp_mb__after_atomic();
  
- #define COLOUR_ALIGN(addr,pgoff)		\
-@@ -72,7 +73,10 @@ arch_get_unmapped_area(struct file *filp
- 	info.length = len;
- 	info.low_limit = mm->mmap_base;
- 	info.high_limit = TASK_SIZE;
--	info.align_mask = do_align ? (PAGE_MASK & (SHMLBA - 1)) : 0;
-+	if (filp && is_file_hugepages(filp))
-+		info.align_mask = huge_page_mask_align(filp);
-+	else
-+		info.align_mask = do_align ? (PAGE_MASK & (SHMLBA - 1)) : 0;
- 	info.align_offset = pgoff << PAGE_SHIFT;
- 	return vm_unmapped_area(&info);
- }
-@@ -123,7 +127,10 @@ arch_get_unmapped_area_topdown(struct fi
- 	info.length = len;
- 	info.low_limit = FIRST_USER_ADDRESS;
- 	info.high_limit = mm->mmap_base;
--	info.align_mask = do_align ? (PAGE_MASK & (SHMLBA - 1)) : 0;
-+	if (filp && is_file_hugepages(filp))
-+		info.align_mask = huge_page_mask_align(filp);
-+	else
-+		info.align_mask = do_align ? (PAGE_MASK & (SHMLBA - 1)) : 0;
- 	info.align_offset = pgoff << PAGE_SHIFT;
- 	addr = vm_unmapped_area(&info);
- 
++				/*
++				 * Nothing gets submitted before the ring is
++				 * enabled, which comes with a wake up.
++				 */
++				if (READ_ONCE(ctx->flags) & IORING_SETUP_R_DISABLED)
++					continue;
++
+ 				if (io_sqring_entries(ctx)) {
+ 					needs_sched = false;
+ 					break;
+-- 
+2.53.0
+
 
 
