@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828954;
-	b=kIZlGacYxhlmR34EarIeYSfK9Xxy4ZNHZ/nBGGlilXvz7Xnc6Vu3xIgv0ZbuqSEFt5WS
-	 CGl0WMd2eQMAXfoPFWzvmFQG+ukiDTBbn+Btp+cXZsT3ySnWyM6nWcppLokY6rPl+Iuee
-	 hwJvLlMkwiHgUdxq3cr6gBnk0L8wHosf5x9hu0k/OS+OR/wdHY0MTtqYSWYXsyOxePy6r
-	 DNVQGEGab9M13xEsKLnW49PzI6ykADccxUPAcSnNM70negcjaJBGfw243XPQDx1gO0hmG
-	 zORQTxt2bnjKobkQpyuI/BEo2IRfIAyoe2qpcW7sqWUm10OWLfCjVfBMx0IXxzwQYeQ==
+	t=1793828955;
+	b=hw/L3ILTDc0oqY3OEH/dCXcuoC6oLpb2L5cQhlXfKv/jtPj22mpAXZq5SXsh1SV12kP+
+	 i4453u4pFMgRY5n+GuFJReDancENroQkn1lZI2G3a99q7EUUhty9qUMiOY+0H9nSdoeLf
+	 6Ex46jTCiwAKY72GedxhAkX2DFqraoXjG7CQaaKipuaCAfNLiuu1T4BWZKx/BE3sdPphy
+	 0JTV0jKd0XR7wE+tMqIT2pBsFwgukCXOlb2t8dZlhoLF+nWVY0zcpEQ4N+g+DAD8HsANm
+	 nVolQE9S4hrkJqwgTPsNMJz3D6KQmxdK0LhLttYg8hQjnPx99uJBWrLJH572ETct+mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828955;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z7i/sJDrh47vbOA4yayNuyS6MhkTUREGvIWCVNlZVMs=;
-	b=ournTrH3NuoQtYXdFAvr3cbea4jevQC19OPCU8sVd8i8sW5DP45EMaTmW8HivVJRXXd0
-	 +aYjl0Y7VwN1mcpKeiMR6MWFMqcRCfsYhUvbnpajdaO8QankZ1f0P0U6lAsXfH72o/qEB
-	 gnUDLgWpqP+Eqf7239YruIP2tnWEsrmkzA10WsnHdUAtYSPE+A+C8zaUCNKw6v2TV8z5o
-	 e/sCu1wT0Q1W5KxDllfol6HQfq/5AhTWym4CPYfGZzBunJdmiwRnLFHAhDlO+xXoAM4vF
-	 f9+5xjEV/+lzT+5iY+Oh9A7v/eV5c3EBwHsWlyVZFF43nPQTmYj2UpF6CtYjGzTVvvg==
+	bh=oAnNg+bLflxO9vDC05JbilJVGvf5uUUIjiToOOEYbus=;
+	b=EIFKeLfcdAGre4og83cF+yhWYkDfE3eHCWigc/0qruxSz/rHSOSKYdo696PYnjP0wtGG
+	 Bh5Y8thxp8ShsTGKMpukME5Rf0/86K6pB5J3v60c1ebedIipl2B2LZb0Iw0/iViDjtSv9
+	 TBiEquX/mULYdaCCUTmL7Gq3MwgaBKdXYt8jv16oNcMmKHX7/I1S310fnFqFgYDuE59VI
+	 Q3tTw6NElZ75fNBgikaLNVrCreqblYjXzVdMfmsQ0YNhaCjhxpXKBb06EdSPBSbT+y9hi
+	 L3idGYh387rYQNLCxTSKUdDQLCqnbGUMNyHZrCuZRvRkYguYQTmC47FHCEHcTdcxwEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qZP/3Cgc";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8LhDFfu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1497C607E4AE;
-	Wed,  4 Nov 2026 21:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0A7607043F;
+	Wed,  4 Nov 2026 21:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZP/3Cgc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A94C1F00919;
-	Wed,  4 Nov 2026 21:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8LhDFfu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD00D1F00A15;
+	Wed,  4 Nov 2026 21:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828953;
-	bh=Z7i/sJDrh47vbOA4yayNuyS6MhkTUREGvIWCVNlZVMs=;
+	s=korg; t=1793828955;
+	bh=oAnNg+bLflxO9vDC05JbilJVGvf5uUUIjiToOOEYbus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qZP/3Cgcf9lqamJ60CvY83PYgG5ri5ztl8r3M+/lYpH1jNCDyJ/qUFzYlTkd21WLa
-	 XeAuqkikSicAL3GjrYqw5LamhVsaslkCj6NxibfUbJbwKGz8yrIq8SNwgkTOLxP9Yd
-	 4uf5ijJTunl3fRcWnYR+c2VCR4JF4twrQSrCt7v0=
+	b=P8LhDFfu7Sf0Fig42FrWVPeAHzaIMy7huArDJoxewPznOWbRIuJK8tKCc6RQPDt5d
+	 +VRqOxUOsBdDXEdotQ47r0D+or1LnLaU51r2unvG0dnV/DAkNrmUGuUwEqfkbebqJu
+	 HA2AtOqpuPpx1IpqGHZzi9ThsCUwvP307Q9sfp4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 310/547] xfs: actually report corrupt xattrs as XFAIL during cross-referencing
-Date: Wed,  4 Nov 2026 16:08:14 -0500
-Message-ID: <20261104211047.021426521@linuxfoundation.org>
+Subject: [PATCH 7.3 311/547] xfs: fix inode btree repair when a cluster is larger than a chunk
+Date: Wed,  4 Nov 2026 16:08:15 -0500
+Message-ID: <20261104211047.050183642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,33 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit b339cc253019518c61b8b150fb7ea727fdae59f4 upstream.
+commit 65b89ac3e8c2f041384f715a71b9d113edfa32e5 upstream.
 
-Some LLM reports that xchk_dir_parent_pointer really ought to report
-xattr corruption errors as XFAIL (cross-referencing failed) when a
-directory scrub tries to find the parent pointer for a dirent name.
-Let's do that.
+LOLLM noticed that on filesystems where an inode cluster buffer is
+larger than an inode chunk, we can run through the loop body in
+xrep_ibt_process_cluster more than once, and the number of inodes that
+we pass to xrep_ibt_cluster_record is incorrectly large.  In this case
+we can run right off the end of the buffer.  Fix this by moving the
+nr_inodes computation inside the loop.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 61b3f0df5c2358 ("xfs: check dirents have parent pointers")
+Note that this is only likely to happen on filesystems with (say) 512b
+inodes and 64k fsblocks.
+
+Cc: stable@vger.kernel.org # v6.8
+Fixes: dbfbf3bdf639a2 ("xfs: repair inode btrees")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dir.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/xfs/scrub/ialloc_repair.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/scrub/dir.c
-+++ b/fs/xfs/scrub/dir.c
-@@ -155,6 +155,8 @@ xchk_dir_parent_pointer(
- 			&sd->pptr_args);
- 	if (error == -ENOATTR)
- 		xchk_fblock_xref_set_corrupt(sc, XFS_DATA_FORK, 0);
-+	else
-+		xchk_fblock_xref_process_error(sc, XFS_DATA_FORK, 0, &error);
+--- a/fs/xfs/scrub/ialloc_repair.c
++++ b/fs/xfs/scrub/ialloc_repair.c
+@@ -293,12 +293,8 @@ xrep_ibt_process_cluster(
+ 	struct xfs_ino_geometry	*igeo = M_IGEO(mp);
+ 	xfs_agino_t		cluster_ag_base;
+ 	xfs_agino_t		irec_index;
+-	unsigned int		nr_inodes;
+ 	int			error;
  
- 	return 0;
- }
+-	nr_inodes = min_t(unsigned int, igeo->inodes_per_cluster,
+-			XFS_INODES_PER_CHUNK);
+-
+ 	/*
+ 	 * Grab the inode cluster buffer.  This is safe to do with a broken
+ 	 * inobt because imap_to_bp directly maps the buffer without touching
+@@ -317,6 +313,10 @@ xrep_ibt_process_cluster(
+ 	for (irec_index = 0;
+ 	     irec_index < igeo->inodes_per_cluster;
+ 	     irec_index += XFS_INODES_PER_CHUNK) {
++		unsigned int	nr_inodes =
++			min_t(unsigned int, XFS_INODES_PER_CHUNK,
++					igeo->inodes_per_cluster - irec_index);
++
+ 		error = xrep_ibt_cluster_record(ri,
+ 				cluster_ag_base + irec_index, cluster_bp,
+ 				nr_inodes);
 
 
