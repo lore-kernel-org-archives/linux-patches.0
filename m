@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830850;
-	b=mKnRmmq6mtLTk67vuzGFYGtcvyK00JnjKNPgB6+dSMHwLq7YejvTrYvAkNoRPxkc36G3
-	 VB4QL0RghNQMYK+FgYDunVG9C/YDFj/k8LPmW+j/KTJjIETHz38bDS0mR8BYLJitXWx+I
-	 2flL70mZXlwoTGkE8XgDbfyOd9m6IFCTKmH/fu00g5AsPS0LHMFvt4Ya5ukqEltiiiZyB
-	 N2JWRXdMz2yuInkQ1cOSs0qNiprUBLR9ZUsrXUePlROEmWx3p2iu9xV6nYQnzxXOEeDPt
-	 7PKuJx4p1flS30SGstCmK9qrqo+I/mPrIMWM2d4Ps0DschPUoUs3hSBlVEenfixRFdQ==
+	t=1793830852;
+	b=zOVtCqUQ9ZX12KkWO2i8A/0/QfZrIr/HY9rZxgoMzSkqdVOsEzqUm/poY2PR7ZdKQV0e
+	 dc/bPXOiIIhQvXJZudmUXbbOOL6fYJ6l5vepvgTD6msRKZ/qGD87Z3kdyNL+cp0OCRAXN
+	 BJH+KXyT/jnmlJ3DXAIIjvZHYRABweYYx/pLj0QIXIHC0AavwkinrQ5sEXhkRZAFqSkMZ
+	 NgAKn6uWfpr/6PSZjtmD8+agNJK0Awe5Pa767JrogCTjKHOb/JoMFlojMsouyviB+v5VZ
+	 PAsexWjyxb5PQaXQGOlj9XJjPNu0byCUClfkyxEhCYxzcVZTNKLyNMCkng7OR9StwEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830852;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3iWc5fqWJFHCR68RQMt9B4/q8wiukcjlAvkzZBlZqks=;
-	b=TVUW7Ki9LIktk5c+cdnFKKLhpQJsFGy50LZoV7apgSex+VegHhC+f0KuJE9pKv9cArOk
-	 RIoihFo6NO5Ym4ABSWSvG1umG/G9/fdcPw2xcnXgSbr1G8xI1kOpuorawEfjbuJh6Pb/S
-	 S2qCq+dJ4tDEUy09bkRVxP9eusGYLUZhmdWUeeACgNKAVh4Oue8kOThXXiJzWjDcO4CWy
-	 VFbmw2LIvQGDfOODF7Z/EZOmCCkfhpO3VpKH7r2UFezVSG60LwocJ4SF2g2NN2yD9rkWo
-	 a7hmHPJU9IEw0ahUHQgvw4MABW0RVxcjM68a/4rNwPdAvlL54UFaGLY5wO7KLYVaKGA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=AXDsHH9wFEhEv+k3T4+reRmVKWxeZfGAsgQc2HX5v+A=;
+	b=s7Zrx8Hg9UbalOLhsdU5k4WOEknaPoYVQh6zsWwJxXsjQ0OaQoBC54LpAlcW+nQahKUQ
+	 OWLMPn0iUcrN9s3QMToM8iI05fntGaCCFr/7Zk/Oe3codgEurknQFLcwkha9mBj11QNzj
+	 L6FB8Z4R9tNBcfhM97jW5rg4dY2q3Rad93Zgh9cZ+8+qXwAYiZCg+sSKFFYwEEUQweYir
+	 hTd3TqFOpCi8nGyu0fnr22rzFPeREOpey/4mAVL8P1fA1JL/DCQtvjEMkQeFTIScD2fKL
+	 Py28lp/L8ZYXAQytbXiIbvrOJ6PThspSvxnwh3MzlrxWWjDGfGKZ3XoT9CkxXHaILOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XMs134T9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8Rzpqak;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16389606B2D8;
-	Wed,  4 Nov 2026 22:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4413606CA1F;
+	Wed,  4 Nov 2026 22:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XMs134T9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FE21F00919;
-	Wed,  4 Nov 2026 22:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8Rzpqak
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374401F0093A;
+	Wed,  4 Nov 2026 22:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830849;
-	bh=3iWc5fqWJFHCR68RQMt9B4/q8wiukcjlAvkzZBlZqks=;
+	s=korg; t=1793830851;
+	bh=AXDsHH9wFEhEv+k3T4+reRmVKWxeZfGAsgQc2HX5v+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMs134T98RnZ4R+X/Lnbz9du+yJlUnEe7IVqhq0P0CDGwB6dt1+5vpI+e6VaM5v6R
-	 ZhCnoNO4uldrX3M0A17UG3orLD/WDDWVUbNbmK9nxYXkyZJlxK7Mz64aMuT1JYc7s4
-	 6anRdb8HtJmEQyWrscSjxOA/0MOZ8OJH1dIsHkkA=
+	b=I8Rzpqak45DJ5SgwDoevNoTOzBwNwYOKX0B1bd9RDvPxU4nCVkidrTrsH1LLoLBnc
+	 WgIesJNbXEmtSx7drc4Q353LMi3iH4Iyo8AciWqI3UUNyZ5cr+9qJ+Qii7Qlyu3nPb
+	 9IHCL4PU3YKwRK2fUBSAYCPmpI2PZ6C0evtcI8Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Iva=20Kasprzakov=C3=A1?= <iva@yenya.net>,
+	Muhammad Saheed <muhammad.saheed.iam@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0359/1005] Bluetooth: fix BT dependency for submodules
-Date: Wed,  4 Nov 2026 16:01:32 -0500
-Message-ID: <20261104211054.138118004@linuxfoundation.org>
+Subject: [PATCH 6.18 0360/1005] Bluetooth: hci_sync: Disable legacy instances ext adv before setup snapshot
+Date: Wed,  4 Nov 2026 16:01:33 -0500
+Message-ID: <20261104211054.169240804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,92 +62,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Iva Kasprzaková <iva@yenya.net>
+From: Muhammad Saheed <muhammad.saheed.iam@gmail.com>
 
-[ Upstream commit 6ec1896b5331563fedf3f01014aba9c9e35d7f29 ]
+[ Upstream commit 75722cde87ee24029e93e4e32d85309989f55991 ]
 
-The modules rfcomm (BT_RFCOMM), bnep (BT_BNEP), hidp (BT_HIDP), and
-bluetooth_6lowpan (BT_6LOWPAN) are dependent on the bluetooth module
-(BT, tristate) only transitively through the boolean BT_BREDR for the
-first three and through the boolean BT_LE for the bluetooth_6lowpan.
-Therefore, the modules can be selected as built-in even if the BT=m.
-The combination of BT=m and =y for the said modules leads to the kernel
-build system silently ignoring those modules, without ever compiling
-them as built-in or as loadable modules.
+hci_setup_ext_adv_instance_sync(...) only disabled
+HCI_OP_LE_SET_EXT_ADV_ENABLE before setup snapshot in case of non-legacy
+instances (instance > 0) and never disabled the same for legacy instance
+(instance == 0). This would lead to failure in setting ext adv params
+with HCI_ERROR_COMMAND_DISALLOWED (0x0c) error like below, when toggling
+the discoverable/connectable property of a controller with advertising
+enabled.
+```
+$ btmgmt advertising off
+hci0 Set Advertising complete, settings: powered ssp br/edr le
+  secure-conn wide-band-speech cis-central cis-peripheral
+$ btmgmt connectable on
+hci0 Set Connectable complete, settings: powered connectable ssp br/edr
+  le secure-conn wide-band-speech cis-central cis-peripheral
+$ btmgmt connectable off
+hci0 Set Connectable complete, settings: powered ssp br/edr le
+  secure-conn wide-band-speech cis-central cis-peripheral
 
-Add BT as a direct dependency to the Kconfig of rfcomm, bnep, hidp, and
-bluetooth_6lowpan. The modules set to =y when BT=m will default to =m,
-rather then getting silently ignored by the build system.
+$ btmgmt advertising on
+hci0 Set Advertising complete, settings: powered connectable ssp br/edr
+  le advertising secure-conn wide-band-speech cis-central cis-peripheral
+$ btmgmt connectable on
+Set Connectable for hci0 failed with status 0x0a (Busy)
+$ btmgmt connectable off
+Set Connectable for hci0 failed with status 0x0a (Busy)
 
-Signed-off-by: Iva Kasprzaková <iva@yenya.net>
+$ dmesg
+...
+[   21.970527] hci0: Opcode 0x2036
+[   21.970529] hci0: opcode 0x2036 plen 25
+[   21.970537] hci0: skb len 28
+[   21.970539] hci0: length 1
+[   21.976099] hci0: result 0x0c
+[   21.976105] hci0: end: err -16
+[   21.976114] Bluetooth: hci0: Opcode 0x2036 failed: -16
+```
+
+Signed-off-by: Muhammad Saheed <muhammad.saheed.iam@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/Kconfig        | 2 +-
- net/bluetooth/bnep/Kconfig   | 2 +-
- net/bluetooth/hidp/Kconfig   | 2 +-
- net/bluetooth/rfcomm/Kconfig | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_sync.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/net/bluetooth/Kconfig b/net/bluetooth/Kconfig
-index 6b2b65a667008..86618afb855d3 100644
---- a/net/bluetooth/Kconfig
-+++ b/net/bluetooth/Kconfig
-@@ -83,7 +83,7 @@ config BT_LE_L2CAP_ECRED
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 70fce6811d0a9..8da58c61e9723 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1184,6 +1184,32 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
+ 	return 0;
+ }
  
- config BT_6LOWPAN
- 	tristate "Bluetooth 6LoWPAN support"
--	depends on BT_LE && 6LOWPAN
-+	depends on BT && BT_LE && 6LOWPAN
- 	help
- 	  IPv6 compression over Bluetooth Low Energy.
++static int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
++{
++	struct hci_cp_le_set_ext_adv_enable *cp;
++	struct hci_cp_ext_adv_set *set;
++	u8 data[sizeof(*cp) + sizeof(*set) * 1];
++	u8 size;
++
++	if (!hci_dev_test_flag(hdev, HCI_LE_ADV_0))
++		return 0;
++
++	memset(data, 0, sizeof(data));
++
++	cp = (void *)data;
++	set = (void *)cp->data;
++
++	cp->num_of_sets = 0x01;
++	cp->enable = 0x00;
++
++	set->handle = 0x00;
++
++	size = sizeof(*cp) + sizeof(*set) * cp->num_of_sets;
++
++	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_ENABLE,
++				     size, data, HCI_CMD_TIMEOUT);
++}
++
+ static int hci_disable_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ {
+ 	struct hci_cp_le_set_ext_adv_enable *cp;
+@@ -1409,6 +1435,10 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ 			return -EINVAL;
+ 		}
+ 	} else {
++		err = hci_disable_ext_adv_legacy_instance_sync(hdev);
++		if (err)
++			return err;
++
+ 		adv = NULL;
+ 	}
  
-diff --git a/net/bluetooth/bnep/Kconfig b/net/bluetooth/bnep/Kconfig
-index aac02b5b0d170..f8087e2d2c00e 100644
---- a/net/bluetooth/bnep/Kconfig
-+++ b/net/bluetooth/bnep/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config BT_BNEP
- 	tristate "BNEP protocol support"
--	depends on BT_BREDR
-+	depends on BT && BT_BREDR
- 	select CRC32
- 	help
- 	  BNEP (Bluetooth Network Encapsulation Protocol) is Ethernet
-diff --git a/net/bluetooth/hidp/Kconfig b/net/bluetooth/hidp/Kconfig
-index e08aae35351a7..ba52c7296f18f 100644
---- a/net/bluetooth/hidp/Kconfig
-+++ b/net/bluetooth/hidp/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config BT_HIDP
- 	tristate "HIDP protocol support"
--	depends on BT_BREDR && HID
-+	depends on BT && BT_BREDR && HID
- 	help
- 	  HIDP (Human Interface Device Protocol) is a transport layer
- 	  for HID reports.  HIDP is required for the Bluetooth Human
-diff --git a/net/bluetooth/rfcomm/Kconfig b/net/bluetooth/rfcomm/Kconfig
-index 9b9953ebf4c02..e7af2d565cea8 100644
---- a/net/bluetooth/rfcomm/Kconfig
-+++ b/net/bluetooth/rfcomm/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config BT_RFCOMM
- 	tristate "RFCOMM protocol support"
--	depends on BT_BREDR
-+	depends on BT && BT_BREDR
- 	help
- 	  RFCOMM provides connection oriented stream transport.  RFCOMM
- 	  support is required for Dialup Networking, OBEX and other Bluetooth
 -- 
 2.53.0
 
