@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829500;
-	b=pB9XhUBiSMyXy3vVJTJFWoGWdeUDJg4aMACdk/IesjjWOFEivMPMxyriWrxdblB0fJBu
-	 PZLhrx5jxTUfW36jda1mGf7HsWU1aOauDhGepzl/ZSEn+byoXeOOr1ZwBvHGTQ/SCvGR+
-	 LFI6Nb4UocqazmPjUv0wRCwreUDoAL/lB8/XM2RlylyXDFoTHuELJV9Gi51Af8E8vT6ZJ
-	 4GQFWy1EfUjq5fAHgyJWumq9G6P2x6OSqdrL0BvD3amZ0UdYfF7Azxd0FFJ4uftG8LwuM
-	 Or2UQ5TcjftzuO8wKBJDEPnuGN7Pxyi9nxw0CdSWBX7RcMteV4rofiLbs/UUtjMbNbg==
+	t=1793829502;
+	b=jsgr9fbF/JXCpQWUuBytpMqEmBrxkkPgeZIMEvDOTeiv2jcIMIzOy5jNJKEEwMRlSTxS
+	 a4HSPuYDTPEWK9oKsD81qqe5/mMKmevJ3aLzRSr6wAEQcN6CnNrbl/wDScCJ/Ds0MmsjA
+	 pkrhPuBfBOCX476xVozk/+Hc9PZqYkH+U0+Nejhm9wIRn121LOH6IpOQYmv1hfGvbrtTk
+	 FxUktadd23Dn1vwEmAYjmOQnw4GGNdirA3npktdFUEAy70RrdmIE3ezAcIV8DW6SMo/l3
+	 q5+pGEzC31WnLU/VYH0Gf/XZcpjcwtyRVY12JdiyjDUr+9qPM5wVD68sRV9vSJ67DAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0Ze7Bw79JwnWMZsa4NcPWDY7TG+sc/3bKKNrTmRplm8=;
-	b=rKzapTY1vQw2WhIQWM/I0ZMjQm5Zo15U8COrDZpEO9Ts2+gbshfourl+D9nIvrus8kcm
-	 4kfTZQPS6xNQp6eHut+sFP8AJqELWHuaxQhGmxoySROk2xtGrrp+e+h6AAzTFEkyLkW5P
-	 h7sVaDx5ge5HB1mSBHYSa7GzgIWFk7UsViMSNhitPnMAOCmFlfOVVhKu6pkzLhd9zvUS3
-	 nHKsxQuql/dnKS/BS2gggBzoZ3/mD4TnBa5NfwUu2xNJ1Qfpji7wwsK8lIPiKh4eqJB09
-	 b8af1GfyAqVc6wvDsrkOr/Nm59WCzDAsuyteIBgrb+HpIbi88zFgy+AOFcumbRRNsvQ==
+	bh=B0/x5bAj+DofzRJ8wLIbWiKkDyV/41kpBnSGpbPhZSw=;
+	b=dpfbSSVaOqwaW2VPJgoAu9iqw2LyX902WJAuAK8SnsQdGc97g4kRtJZQmSlU3/FwqKOx
+	 CLW0DG7njsmrfgjfIRhOHXYkC2aleba5u7mbBe4YSWuaCh2d0aSipVlBk/1Tq3V1aAYrw
+	 18mvOPEHpha0p69ZFKcRKC7MeWdtMbxM0V3aYUjnJXzQPjM95oi+dfj6a+J0lHO6djoZg
+	 wmG+QVtYjtBBldsaJJv0Ngq7dopLluIfXEaTgd6k7jOGOExfclJdEwTPaNTcwtLEPP1El
+	 OQlltmM42Jue0TcXsFqzagLCezj/bM/s6ui0mEpUTUcaa88RLxR4ENFeai6eRSoCS2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nrq4pU9e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zFOQjW/1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAB2606A844;
-	Wed,  4 Nov 2026 21:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C196B606A844;
+	Wed,  4 Nov 2026 21:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nrq4pU9e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB72C1F000C1;
-	Wed,  4 Nov 2026 21:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFOQjW/1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626E01F000C1;
+	Wed,  4 Nov 2026 21:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829500;
-	bh=0Ze7Bw79JwnWMZsa4NcPWDY7TG+sc/3bKKNrTmRplm8=;
+	s=korg; t=1793829501;
+	bh=B0/x5bAj+DofzRJ8wLIbWiKkDyV/41kpBnSGpbPhZSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nrq4pU9eV8JOb55oqk8i/pV5Mql327C2XsX0ausUAt17hN7QlMpoEvZiJlpzgeapB
-	 oio5/TCcWJ+QLERXhUIfW4LcxeDJ6s5IMPVaC3TR/3IwDK11tVaDzRiuQbrNEyQFyr
-	 Ls7OchlTmnZ4165/ol1J8M9o91v3yB1meyZO3kOI=
+	b=zFOQjW/1fPlKiN97Zzf1HeXN5C+sdQ2tqEORcsLv/obA+7zAQg4DkRpFbYxgMn9+A
+	 durzvn/l3ZujrOFN6De4juv9sN6J17RKWXUu0k5mCjx+vBHI+WP768Jl40d2fPykA+
+	 zPq8bXEjOzXU+8WJIocpseVxja4MjYNQyufKcATI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0163/1005] wifi: iwlwifi: mvm: reset the smart fifo state upon FW stop
-Date: Wed,  4 Nov 2026 15:58:16 -0500
-Message-ID: <20261104211048.329188294@linuxfoundation.org>
+Subject: [PATCH 6.18 0164/1005] wifi: iwlwifi: mld: cancel wiphy work before freeing wiphy
+Date: Wed,  4 Nov 2026 15:58:17 -0500
+Message-ID: <20261104211048.358377303@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,42 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit a51cc8131214870af92abbceab64877b27e690c2 ]
+[ Upstream commit c99bc4d4e0ba6f4661b2b914c96a597d26e7cc05 ]
 
-The smart fifo is a feature in the firmware configured by the driver.
-The driver keeps a state to remember what was the last configuration
-sent to the firmware. Obviously, if the firmware stops, we need to
-reconfigure the smart fifo. Since we didn't reset that state upon
-firmware stop, we thought the firmware is already properly
-configured and we didn't send the smart fifo configuration command
-as part of the init sequence.
+When we fail to load the fw during op-mode start, we purge the list
+of the async handlers but we don't cancel the work.
+Same when we stop the op-mode.
 
-Reset the smart fifo state in iwl_mvm_stop_device() so that we
-will properly send the command during the init that will come
-later.
+Before freeing wiphy, we need to cancel/flush any pending wiphy work,
+otherwise the work will fire with a freed memory.
+cfg80211 will do it anyway, but it will warn.
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714165826.7d3c5efe2d1a.I16b23c328a677257257f695fa6f439e41fbcd081@changeid
+Cancel the work in those cases.
+
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260714165826.07aa49f755a2.I734a27b1b0eeb5b0e821aee3318fee8dc0a6bc03@changeid
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/mld/mld.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-index d6a13174b5617..3e7c620821069 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -1535,6 +1535,7 @@ void iwl_mvm_stop_device(struct iwl_mvm *mvm)
- 	iwl_fw_cancel_timestamp(&mvm->fwrt);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+index cf003a4a37408..49fcbe6814677 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+@@ -440,6 +440,8 @@ iwl_op_mode_mld_start(struct iwl_trans *trans, const struct iwl_rf_cfg *cfg,
+ 	}
  
- 	clear_bit(IWL_MVM_STATUS_FIRMWARE_RUNNING, &mvm->status);
-+	mvm->sf_state = SF_UNINIT;
+ 	if (ret) {
++		/* wiphy memory is about to be freed, we should cancel any pending work */
++		wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk);
+ 		wiphy_unlock(mld->wiphy);
+ 		rtnl_unlock();
+ 		goto err;
+@@ -505,6 +507,7 @@ iwl_op_mode_mld_stop(struct iwl_op_mode *op_mode)
+ 	iwl_mld_thermal_exit(mld);
  
- 	iwl_mvm_pause_tcm(mvm, false);
- 
+ 	wiphy_lock(mld->wiphy);
++	wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk);
+ 	iwl_mld_low_latency_stop(mld);
+ 	iwl_mld_deinit_time_sync(mld);
+ 	wiphy_unlock(mld->wiphy);
 -- 
 2.53.0
 
