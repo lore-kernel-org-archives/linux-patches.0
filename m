@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829156;
-	b=0vTj4s4XcVzzsnl2kphxN8JFPp15Honjh1Okxpp/b0NtlU1SPjOiX9csyDCvlgXBJfUd
-	 YGbGr/NnN/vBqk01q8zDASEGISiHZneJN5s8jUxJRWvzS78CKNQvIh6XjLVCNaGX4/gpM
-	 2dQYJQzI/zpKbXFaz1F+Qd1kH0kHn/nkboFWaf4SIhNKHt3g2igx4OfGuEUpg0GR0peXn
-	 ncHsK8sfCMzBbm0YNcefJHtfjQlT7lUNVQzdT9O9UiUOpLm/Cagk22tYR+Re31asqhNYI
-	 kqH86sYmzN/y2yvKwr6jmj5M5IHMcH+t34ImYrgfG3LSnL6vexwnEM4GNDaTKSJhLRA==
+	t=1793829157;
+	b=39OlLzfNgGyWLGcZv/53u4iRUla7/7COW7spathjhKmNUTUY/EnxUCHYfNt5fmeHYrdF
+	 ojXtGX/83i6vTSs/BBo/Ont+5Ikcm8q53dxLouA7vhqRD9LfaW+9QDvzMGqYY3B2zJgev
+	 FUw8N+2tz3QUpcvnl5xTrOLsWa6hmao39Evj25KwKeOoyyDAToh8UTXENNcCbah4M480r
+	 I7wJ7qdRGNlrO0f3WZpJ2pPQSB04wqh64q1m6vYpnkZhBr1R9he+231uoXUoQtRsw+3D+
+	 xLq24ZV2mGPJ/aabdUkqHEDdAops2J/Gbz+qMnJUSxSxQk0QMgBEgY8SMsouo87WlPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=eL2xwynpZp3GwuQFadHUshevAHfJkNYXwFZwf/DGuHc=;
-	b=qkEorfCjcqTvta0/uBvHbr3PoXinFh87gMtCiGeMbYbvk3uAkVSrbTWuCFPuFtiB+XJL
-	 kPZcRn7U6BjmO2dkiQGn881Nc0XI3FSVtBJrhk23BDyrpCH4vvTCTY0u/xxOnR94qhzO8
-	 B7PQH3TfnVCqmMS3g7Zr30KoWdCkhYweGwkKKh/uURw/iQuxKCtgLxdV07c2SmrzXj1Zd
-	 RhdkbmrBz9k/F6rXAJdXbIBMor2LiHNlrixCsCWhPjpiUnuekSeLwjPE2XHmW5cHEzW7u
-	 ZFF2JdzkNsfhgtLpUp22j5lhssIaomwEnuE6PRp3bWAJrj0XPpAe3jtt+eB3vCWUSXg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ywVuNhK/giA2zsgttEVVwt31FE1L1UE1K897op5cavk=;
+	b=W/05ZqA8dDO0OPPsMHmG8cLnTWkUKlKup/TxqNmlOMCfjuJ8wNKrA/pG7Uh89U5ZZzS5
+	 2dUW/H3+Y0/xvwtTLBkNd0uD4C7BPK8gx8BqlCwwyEe90jcBGXrnlumhGPZAbld86rewD
+	 PjEwio8l2hZjp3W8npLL9gxaI5OJFPUMCiM0WX3wULl5J65yjhuXhb+CwyPn4O5kgkxR8
+	 4wMlFGE4Y7QTwXrZxAcThbKxypcDwU1IcktTZ/qjOgMI9SHZG0tYNBvnbL+gQjsCZG/JS
+	 rMGIyf+bzlWxFY4fl1TuqSX+MnkJD0yyv1qOkznc2sKr5Cux3gC3VYAQe8rEPmQgGNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V04x6D39;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TJ1TxRRU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2606070984;
-	Wed,  4 Nov 2026 21:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD98607031A;
+	Wed,  4 Nov 2026 21:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V04x6D39
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AF71F000C1;
-	Wed,  4 Nov 2026 21:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TJ1TxRRU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CC61F000C1;
+	Wed,  4 Nov 2026 21:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829155;
-	bh=eL2xwynpZp3GwuQFadHUshevAHfJkNYXwFZwf/DGuHc=;
+	s=korg; t=1793829157;
+	bh=ywVuNhK/giA2zsgttEVVwt31FE1L1UE1K897op5cavk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V04x6D390cB9nbB3XNPZXFuo041QBjZ2h4aTOQ51SvbkAcGPuJAia4yPPwDMoOPCQ
-	 uqlnCMJ2puiEsmultxwPqRMMHa3kJot/0wr5F9ZrR2wPJJdpTX7UTwBJemCtuo2zxz
-	 E2dF1pW/+tCJd6Oq0TX9JN8bych76zLY5BEyP/Kg=
+	b=TJ1TxRRUQuVY/LfKXg3HlEhsVxiiiY+I2SZWwJ5tDt7ey+oQuLJ7q71uKIJRBhJXg
+	 n9XVmCGmmu9WVQEtp2XpRxtVMM0JiaNtr4TwmWiU4i4aseMOYOyqJfVfJu2xfelsLj
+	 6o0PctwumXMWEtN4Apy+GCGvkukaIjg1hRWDjYRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.3 473/547] KVM: TDX: Enable Notify VM exit
-Date: Wed,  4 Nov 2026 16:10:57 -0500
-Message-ID: <20261104211051.801868429@linuxfoundation.org>
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 7.3 482/547] KVM: PPC: Fix get_d_signext() 12-bit displacement for paired-single D-form
+Date: Wed,  4 Nov 2026 16:11:06 -0500
+Message-ID: <20261104211052.070639203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -63,156 +61,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit d93395058c1951bb657c8895dd1fc0f22263f1cc upstream.
+commit 31895b0ff96778b524c74b43a108090581271603 upstream.
 
-Enable Notify VM exit functionality for TDX guests.
+get_d_signext() has two compounding bugs since its introduction in 2010:
 
-Notify VM exit is an existing feature supported by KVM.  Userspace can
-enable Notify VM exit through KVM_CAP_X86_NOTIFY_VMEXIT when it's
-reported as supported.  However, KVM reports the support of this CAP just
-based on the hardware capability but doesn't differentiate between VMX
-and TDX.  This leads to the issue that userspace can enable this cap for
-TDX guests without getting an error, but the feature is not actually
-enabled because KVM doesn't call the TDX module API to program the
-relevant TD VMCS fields.
+1. The extraction mask 0x8FF silently drops bits 8-10 of the 12-bit D
+   field (PPC ISA bits 21-23), corrupting any displacement that has any
+   of those bits set.
 
-Enable Notify VM exit for TDX guests by:
+2. The sign-magnitude idiom "-(d & 0x7ff)" is wrong for two's-complement:
+   for D=0xFFC (encoding of -4) it returns -252 instead of -4.
 
-  - Invoking TDX module API calls to set NOTIFY_VM_EXITING and Notify
-    Window in TD VMCS.  It's done in tdx_vcpu_init() where other TD VMCS
-    bits are set.  Since TDX vCPU cannot be reset, it only needs to be
-    configured once when initializing the TDX vCPU.
+Together these errors produce a wrong effective address for psq_l, psq_lu,
+psq_st, and psq_stu whenever the displacement is negative or is a positive
+value >= 0x100 with bits 8-10 set — essentially any real-world paired-
+single stack-relative access.
 
-  - Adding corresponding exit handler for TDX Notify VM Exit.
+The D field occupies the bottom 12 bits of the instruction word (confirmed
+by the adjacent W and I extractions via inst_get_field(inst,16,16) and
+inst_get_field(inst,17,19)). Replace the open-coded logic with the standard
+sign_extend32(inst & 0xfff, 11), which correctly performs two's-complement
+sign extension from 12 bits to 32 bits.
 
-Notify VM exit can happen when executing the IRET instruction.  If the
-IRET unblocks the NMI blocking state, bit 12 of the exit qualification
-is set.  In this case, the VMM needs to restore the "blocked by NMI" state
-when it decides to re-enter the guest.  For TDX, KVM cannot manage the
-GUEST_INTERRUPTIBILITY_INFO and it's TDX module's responsibility to
-handle it.  Extract the common part without NMI blocking handling into a
-helper in common.h so that it can be shared between VMX and TDX.
-
-Note, KVM uses "pre-production" terminology for the feature formally called
-Notify VM-Exit.  All public versions of the SDM refer to the feature as
-Instruction Timeout.  This will be remedied in the near future, for now,
-use KVM's terminology for consistency.
-
-Note, #2, there is no enumeration bit for Notify VM exit by TDX module
-because all TDX modules support it, and allow to set the corresponding
-TD VMCS fields as long as the hardware supports the feature.
-
-Fixes: 161d34609f9b ("KVM: TDX: Make TDX VM type supported")
+Fixes: 831317b605e7 ("KVM: PPC: Implement Paired Single emulation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-2-xiaoyao.li@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260928122837.8782-4-amachhiw@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/common.h |   19 +++++++++++++++++++
- arch/x86/kvm/vmx/tdx.c    |   10 ++++++++++
- arch/x86/kvm/vmx/vmx.c    |   13 +------------
- 3 files changed, 30 insertions(+), 12 deletions(-)
+ arch/powerpc/kvm/book3s_paired_singles.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/arch/x86/kvm/vmx/common.h
-+++ b/arch/x86/kvm/vmx/common.h
-@@ -4,6 +4,7 @@
+--- a/arch/powerpc/kvm/book3s_paired_singles.c
++++ b/arch/powerpc/kvm/book3s_paired_singles.c
+@@ -479,12 +479,7 @@ static bool kvmppc_inst_is_paired_single
  
- #include <linux/kvm_host.h>
- #include <asm/posted_intr.h>
-+#include <asm/vmx.h>
- 
- #include "mmu.h"
- 
-@@ -183,6 +184,24 @@ static inline void __vmx_deliver_posted_
- 	kvm_vcpu_trigger_posted_interrupt(vcpu, POSTED_INTR_VECTOR);
- }
- 
-+static inline int __vt_handle_notify(struct kvm_vcpu *vcpu,
-+				     unsigned long exit_qual)
-+{
-+	bool context_invalid = exit_qual & NOTIFY_VM_CONTEXT_INVALID;
-+
-+	++vcpu->stat.notify_window_exits;
-+
-+	if (vcpu->kvm->arch.notify_vmexit_flags & KVM_X86_NOTIFY_VMEXIT_USER ||
-+	    context_invalid) {
-+		vcpu->run->exit_reason = KVM_EXIT_NOTIFY;
-+		vcpu->run->notify.flags = context_invalid ?
-+					  KVM_NOTIFY_CONTEXT_INVALID : 0;
-+		return 0;
-+	}
-+
-+	return 1;
-+}
-+
- noinstr void vmx_handle_nmi(struct kvm_vcpu *vcpu);
- int vt_handle_bus_lock_vmexit(struct kvm_vcpu *vcpu);
- 
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -2132,6 +2132,9 @@ int tdx_handle_exit(struct kvm_vcpu *vcp
- 		 * - If it's not an MSMI, no need to do anything here.
- 		 */
- 		return 1;
-+	case EXIT_REASON_NOTIFY:
-+		/* NMI blocking state is handled by TDX module */
-+		return __vt_handle_notify(vcpu, vmx_get_exit_qual(vcpu));
- 	default:
- 		break;
- 	}
-@@ -3155,6 +3158,13 @@ static int tdx_vcpu_init(struct kvm_vcpu
- 	td_vmcs_write64(tdx, POSTED_INTR_DESC_ADDR, __pa(&tdx->vt.pi_desc));
- 	td_vmcs_setbit32(tdx, PIN_BASED_VM_EXEC_CONTROL, PIN_BASED_POSTED_INTR);
- 
-+	if (kvm_notify_vmexit_enabled(vcpu->kvm)) {
-+		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
-+				 SECONDARY_EXEC_NOTIFY_VM_EXITING);
-+		td_vmcs_write32(tdx, NOTIFY_WINDOW,
-+				vcpu->kvm->arch.notify_window);
-+	}
-+
- 	tdx->state = VCPU_TD_STATE_INITIALIZED;
- 
- 	return 0;
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6270,9 +6270,6 @@ static int handle_encls(struct kvm_vcpu
- static int handle_notify(struct kvm_vcpu *vcpu)
+ static int get_d_signext(u32 inst)
  {
- 	unsigned long exit_qual = vmx_get_exit_qual(vcpu);
--	bool context_invalid = exit_qual & NOTIFY_VM_CONTEXT_INVALID;
+-	int d = inst & 0x8ff;
 -
--	++vcpu->stat.notify_window_exits;
- 
- 	/*
- 	 * Notify VM exit happened while executing iret from NMI,
-@@ -6282,15 +6279,7 @@ static int handle_notify(struct kvm_vcpu
- 		vmcs_set_bits(GUEST_INTERRUPTIBILITY_INFO,
- 			      GUEST_INTR_STATE_NMI);
- 
--	if (vcpu->kvm->arch.notify_vmexit_flags & KVM_X86_NOTIFY_VMEXIT_USER ||
--	    context_invalid) {
--		vcpu->run->exit_reason = KVM_EXIT_NOTIFY;
--		vcpu->run->notify.flags = context_invalid ?
--					  KVM_NOTIFY_CONTEXT_INVALID : 0;
--		return 0;
--	}
+-	if (d & 0x800)
+-		return -(d & 0x7ff);
 -
--	return 1;
-+	return __vt_handle_notify(vcpu, exit_qual);
+-	return (d & 0x7ff);
++	return sign_extend32(inst & 0xfff, 11);
  }
  
- static int vmx_get_msr_imm_reg(struct kvm_vcpu *vcpu)
+ static int kvmppc_ps_three_in(struct kvm_vcpu *vcpu, bool rc,
 
 
