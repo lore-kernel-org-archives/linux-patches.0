@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829017;
-	b=V04c45+VcQoxrOaLkbkQn3/VS7NO/BC562OpgcEGlrgJbC2H8AWsir+tt9LSCEPjUo7O
-	 fh+4jaQ53q1v0LrE4zUQKjYmjpTkPUy95xowQj+rfLck3UN8THUb5iQ+r8xSZK+jfrOO2
-	 zaWRoP48uBhM4R1atxa8rYbcyIU49VND39m2GCt3CjCjAV1U4TK+FqGV+dH1oGdXbDJJR
-	 fVGrSN9Vh3BbILDaX+X1vQOgq+7+rITmQYU7UAvH62OPq05IUM6pl1q+SgWpv/ruiveOV
-	 T+2WXnLOhlBzmcl2rrmxrEXn6j/IPxSmc9YGABTnmZAkTyg/vePsPqVhqyljdRF/Jdg==
+	t=1793829018;
+	b=Fa9+OJIH+tj+wyAiOOeelSWwMRFWZ9t3AHMc5EBlznYwkab6d9diZhouxNYkwHISDdr9
+	 JBr0Zf506907ORIaKpHzLop0ustkr1GS5TiWGSsWBX3J0a0howUPHak922qQ1VQ99geso
+	 CYdagREfQn4IRQTIDkmHyI7wulkcRCqRtNfbmV8kdK0D2mHDL4+N3yb0wShRXj7IswoOx
+	 KtfsrrQRpnLzF6DWia0xlNdjpCM6JGyGcrjlF2zZv0BGRYah8og085G1DaeUYonMEvDY7
+	 leshJ5N5senIRxDUxm1NzBe0CVHe0kFEMUaKeuXDVxhNSHWbPSTEgo7mx82JbLfLRhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829018;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u4NFEFHTUENFy5tUjmpOLbJTR/m+eydB7KiJcPOkBHA=;
-	b=0LT2UmM7RThf0GFRhzGfzPfTlSEKzLSn6hF25dOwU77Ig2AKW+l7CRUlf0BAWDnCXRhg
-	 jr/JnwGZqXS90N08uqEgopse4NeqS+xZdW8tNJqfi/p8gmftS7nGhAKIs9FxbvompyukO
-	 ygdQS68DqFQYwoyDvZbIv7/nJHwdwd7tgT5xXKiILMfhvE5LHPW1BmAtkKZ9b26cXOO5S
-	 dFnLGfTQZzzCM43aSvxmM+C2NKU4texH+8if2AZ8YpgA2mv5359+nW/p4nvjyeKMoFGvJ
-	 qKoCDVjSnaaNOr0RgyFFlDmmHNsuomuqHcKUiSxwtrsRbm+AzLN4cpA3BRg7n2KcOXA==
+	bh=UusaPAZdcYc6yB6e9GZyiGpymWT0P2mYHneKosUSAmo=;
+	b=t9mpordrlG0bvWMypKxGXVSH8rsNhnxNf6k5dv3WIl8Vzod7ystiX1VpciZ+2IOQeoti
+	 Qcc/OmECNMD5xu0ie2rLnwHfIJouiYpfleSyhTPuVgx993h+YJ803AdobgDgwWAEFfUpb
+	 qyFjcvk+dpdGY5LFjxSvMH7g66wr6V3mb3sF5BT63hN5n2p+IR0LyjZdiHtI3eOQA5iSn
+	 oIEIIKO1gbfOSsUyUxr9R3966fViUCbahA/lLma4CQNPqLql3cmO9mtZ8atXJ6NzOPiyG
+	 +RWR6b6Eb1YX62VXAs223vyRazShBOFryxsdxdAaIB4nQPuXTZSdWf0LvSLNVFE2Q5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YP2M/riv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uxnZ9tqc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E6F607074C;
-	Wed,  4 Nov 2026 21:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469ED607074A;
+	Wed,  4 Nov 2026 21:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YP2M/riv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAB91F000C1;
-	Wed,  4 Nov 2026 21:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uxnZ9tqc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB31F1F000C1;
+	Wed,  4 Nov 2026 21:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829016;
-	bh=u4NFEFHTUENFy5tUjmpOLbJTR/m+eydB7KiJcPOkBHA=;
+	s=korg; t=1793829018;
+	bh=UusaPAZdcYc6yB6e9GZyiGpymWT0P2mYHneKosUSAmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YP2M/riv+ROuSSHsO0Zwg6MAIyaer7nizNjYPCwjoU8d4xh8YSOZFXFeNIfIX9xQP
-	 rWCDmvdPZvyu1qgH8lxNQwICJ8wWkkrITb0K3AjdPiF/sajf6AthpZSy6+jUDwj7YP
-	 cfwnLhEQe9IgS8AXCnfRnCXwxbKrK7bmUI8cWKNM=
+	b=uxnZ9tqcHxDL3dLomKIlKkZcOo68h+zIc0qB5OHW2gHDBpQqpbAJvNeqZDaL0+8pw
+	 y56DBSn9KriAVNOCPFQlzzoArp+jPtCGluSDfV5nQiSfAWA2F62URmTdiIS3vk4jJD
+	 6b903CDM3ogLcxCY3Og4B5VCO+32lfqFQD+Im/iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 351/547] xfs: check for termination during rmap btree walk
-Date: Wed,  4 Nov 2026 16:08:55 -0500
-Message-ID: <20261104211048.246072704@linuxfoundation.org>
+Subject: [PATCH 7.3 352/547] xfs: clarify various parts of the bitmap API
+Date: Wed,  4 Nov 2026 16:08:56 -0500
+Message-ID: <20261104211048.273368648@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,36 +70,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1fc241cdeab276dc6c3ec14840faa706ed7712ff upstream.
+commit 00f32fdf54983371d39162efef7df693e2842ffb upstream.
 
-LOLLM complains that we should check for a fatal signal *every* time we
-walk a record in the rmap btree as part of rebuilding the free space
-btrees.  Fix that, and improve responsiveness to ^C of xfs_scrub.
+LOLLM pointed out some underspecified parts of the xbitmap{32,64} API.
+Specifically, the behavior of set/clear/test functions when the length
+parameter is zero is not well defined, nor is what happens when someone
+tries to disunion a bitmap with itself.  None of these situations are
+expected, but we'll define zero-length set and clear to be nops, and the
+rest to be checked by assertions.
 
 Cc: stable@vger.kernel.org # v6.8
-Fixes: 4bdfd7d15747b1 ("xfs: repair free space btrees")
+Fixes: 6ece924b952262 ("xfs: create separate structures and code for u32 bitmaps")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/alloc_repair.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/bitmap.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/fs/xfs/scrub/alloc_repair.c
-+++ b/fs/xfs/scrub/alloc_repair.c
-@@ -227,7 +227,10 @@ xrep_abt_walk_rmap(
- 	void				*priv)
- {
- 	struct xrep_abt			*ra = priv;
--	int				error;
-+	int				error = 0;
-+
-+	if (xchk_should_terminate(ra->sc, &error))
-+		return error;
+--- a/fs/xfs/scrub/bitmap.c
++++ b/fs/xfs/scrub/bitmap.c
+@@ -77,6 +77,9 @@ xbitmap64_clear(
+ 	struct xbitmap64_node	*new_bn;
+ 	uint64_t		last = start + len - 1;
  
- 	/* Record all the OWN_AG blocks... */
- 	if (rec->rm_owner == XFS_RMAP_OWN_AG) {
++	if (!len)
++		return 0;
++
+ 	while ((bn = xbitmap64_tree_iter_first(&bitmap->xb_root, start, last))) {
+ 		if (bn->bn_start < start && bn->bn_last > last) {
+ 			uint64_t	old_last = bn->bn_last;
+@@ -127,6 +130,9 @@ xbitmap64_set(
+ 	uint64_t		last = start + len - 1;
+ 	int			error;
+ 
++	if (!len)
++		return 0;
++
+ 	/* Is this whole range already set? */
+ 	left = xbitmap64_tree_iter_first(&bitmap->xb_root, start, last);
+ 	if (left && left->bn_start <= start && left->bn_last >= last)
+@@ -223,6 +229,8 @@ xbitmap64_disunion(
+ 	struct xbitmap64_node	*bn;
+ 	int			error;
+ 
++	ASSERT(bitmap != sub);
++
+ 	if (xbitmap64_empty(bitmap) || xbitmap64_empty(sub))
+ 		return 0;
+ 
+@@ -287,6 +295,8 @@ xbitmap64_test(
+ 	struct xbitmap64_node	*bn;
+ 	uint64_t		last = start + *len - 1;
+ 
++	ASSERT(*len > 0);
++
+ 	bn = xbitmap64_tree_iter_first(&bitmap->xb_root, start, last);
+ 	if (!bn)
+ 		return false;
+@@ -357,6 +367,9 @@ xbitmap32_clear(
+ 	struct xbitmap32_node	*new_bn;
+ 	uint32_t		last = start + len - 1;
+ 
++	if (!len)
++		return 0;
++
+ 	while ((bn = xbitmap32_tree_iter_first(&bitmap->xb_root, start, last))) {
+ 		if (bn->bn_start < start && bn->bn_last > last) {
+ 			uint32_t	old_last = bn->bn_last;
+@@ -407,6 +420,9 @@ xbitmap32_set(
+ 	uint32_t		last = start + len - 1;
+ 	int			error;
+ 
++	if (!len)
++		return 0;
++
+ 	/* Is this whole range already set? */
+ 	left = xbitmap32_tree_iter_first(&bitmap->xb_root, start, last);
+ 	if (left && left->bn_start <= start && left->bn_last >= last)
+@@ -503,6 +519,8 @@ xbitmap32_disunion(
+ 	struct xbitmap32_node	*bn;
+ 	int			error;
+ 
++	ASSERT(bitmap != sub);
++
+ 	if (xbitmap32_empty(bitmap) || xbitmap32_empty(sub))
+ 		return 0;
+ 
+@@ -567,6 +585,8 @@ xbitmap32_test(
+ 	struct xbitmap32_node	*bn;
+ 	uint32_t		last = start + *len - 1;
+ 
++	ASSERT(*len > 0);
++
+ 	bn = xbitmap32_tree_iter_first(&bitmap->xb_root, start, last);
+ 	if (!bn)
+ 		return false;
 
 
