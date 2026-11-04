@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831354;
-	b=obW97pv9aPKgo9Rcuk3Wqebbfu56YO1azaGqrKolIFJUdCrnLaOZiC+f1Qxz42GolX2o
-	 26obJ2ZeVF8tPNnMQylec8pBDXLiuXgWniHvkkJXskrjvKtBcdWgbR3kSEwqt3DFvxi97
-	 UwuEkeOtbkOHLRScvXmLdzsMQ4MrB626eSM9eQqadCG0iZCO709vxVboO7mRcOW70Fm3I
-	 SGyFhFEwZvP8t01I5gpIHIUNph7WxRkEzi8CTULlMx/0aEIO1RluuLnFLgQZ8+Qwps4Qd
-	 Y1aHpNcq3tHz3GJXdddveufAL9LUdF/AxQAE4UdgaFclWSZKd5ETKKTTRInGi2V3QsA==
+	t=1793831355;
+	b=LWWLbX1/qYMQA/PZFvP5N0FYVBCPtS6HJ3h0Ce/apJaGmci+CNZ7A7eFpFF6PQx4QdS7
+	 Afpm78G/+NU75j3LWqQuqQwefQsHPTAbM2pFwacA1iwOR7+jz7p5dnV7gLdIldF02reMu
+	 8EkjBtPRektVEoW3TsdtNnudVMUvCx7v2umRSAVssApXQA0kBSjW6hQ1SPxP3HFyXuCHV
+	 ZDjDS8XozFWPG+QgRHwPu8GelSUr5WObR/IxVoCF2WdlgmTmdLoRrZ0s6c5rXkHvGr2GL
+	 ao2slhaSTJX0MwndBU3qUZqYaZ7iXFjDYwMPd2v2nfFeU1qvi6P62n4vjWlnFcMfE4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831354;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=YZSZdC85XbZzsi7+lYIjhBvS2wq39BNzoGT2X96ECTU=;
-	b=MVQ4WnxnKAIDeRU0/5xAAVkn5Q34GALfW4ipGQBU0fI7Y9ud78GxVfe1viOZuJUG0u+J
-	 oQHjgWzFaNaZaUUmOddNW/ESa2GhMTQXLERqbfqqp8BqQezwFRWEe9m5akIJ86/tKloHq
-	 faiHlgQZtiZJDWgXpvRVhFrT7k2ER11IUaotMITpd+yqQ/lhUKTfzLFEAN/WxZolQw8+Y
-	 PRx4/k/hN+J8o8M5J7xEtuuLdl4EbUNJm4CJIWqpiistK4MbJzNMiSkLBM1tkYh5/5iPE
-	 1sSQYSXgkEIz2ZhwXDOz8XBKgF7WpzKT/3/+IKUT6kJH7z+IgOzYqIP1Zih19x0DovA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3ii5/s0VV54db2BimFgMvmy8QQqoaoedKtShAn2rIRc=;
+	b=e7zdjZ3BNpvopNHzeTOjtx8NgGG9yeW7ei21uzyWTVQ+8nBej32FHV1h88qfduoo7Vnf
+	 AYMWJZl9soRmcDds2j637Ib3M7y7CUlXFNFf4QjaCwUdlobaY1uiTIW1vYPDpkBiXa8ZF
+	 6U2/DaAs1UY404/EQXIdVYL9E0KLarB7ZrSYs8oY8WiZuc6o1iSZ3oFLmnnBA5CtafjYs
+	 E0S9UhG9iGzKGN6wKsy2ysDJN08TfoelDJUDxVnrHh75ImxCxtTB1ALUGRSSwAhQXXoym
+	 7hazW+3FlB2XDhZGwnjwumP5qs8tTLCTWiW7NH1mE6SXeXIAIO0N4sfObnuh2xV9dXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B/bfl2JG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0rvk+oB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6945606A33D;
-	Wed,  4 Nov 2026 22:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774B4606A336;
+	Wed,  4 Nov 2026 22:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B/bfl2JG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6951F00919;
-	Wed,  4 Nov 2026 22:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0rvk+oB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098001F00919;
+	Wed,  4 Nov 2026 22:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831353;
-	bh=YZSZdC85XbZzsi7+lYIjhBvS2wq39BNzoGT2X96ECTU=;
+	s=korg; t=1793831355;
+	bh=3ii5/s0VV54db2BimFgMvmy8QQqoaoedKtShAn2rIRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B/bfl2JGWqD8JSWytrpsZ4C88FvOHZDG3uYSSFq5Uqv22mGNS9Xbk9NqAx//d7YrN
-	 5kNspu97sv3IAV/X9ccACkMKi5qFilajBIJjFG2NnpeQAITwf4Stdx5C6v9aY/Ia71
-	 TTeMsc+dq7tdq4gAgVvHJQsEFfzVIVsuCwd3mmSA=
+	b=l0rvk+oBdgQAuB8977MYq87JGB9OvOhrj/4syIhkB1aEZ9evYWWe7U+bfvfqMSnRZ
+	 KUaJKFILeT9HlrbMwlt49gwObZKPL34KZAnuJznAtfR+G1R2E0GFogdg7h17A1ix8s
+	 xQMnTo4L6rTnUd3kvz0ErkCaq9O2o56lB+UfTo7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20=C4=8Cerm=C3=A1k?= <sairon@sairon.cz>,
-	Stefan Agner <stefan@agner.ch>,
-	hitchin999 <hitchin999@users.noreply.github.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0653/1005] vlan: restore HW VLAN tag insertion with reorder_hdr off
-Date: Wed,  4 Nov 2026 16:06:26 -0500
-Message-ID: <20261104211102.002323530@linuxfoundation.org>
+Subject: [PATCH 6.18 0654/1005] cgroup: serialize migrations of newly forked processes
+Date: Wed,  4 Nov 2026 16:06:27 -0500
+Message-ID: <20261104211102.027798651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -66,148 +62,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit c2124f80be4ceb6ec566ca3b5fc87f84ea9c36e0 ]
+[ Upstream commit bf6fbf46b5ff68c4eebad5aa52309eb124f4509c ]
 
-Commit 447cbe95ebb9 ("vlan: fix skb_under_panic and races when toggling
-HW VLAN offload") replaced vlan_passthru_header_ops with vlan_header_ops
-unconditionally to avoid lockless data races when modifying
-hard_header_len dynamically under RTNL.
+With favordynmods enabled, a cgroup.procs migration takes the target
+threadgroup's cgroup_threadgroup_rwsem for writing. A process fork holds
+the forking threadgroup's semaphore for reading. These are different
+semaphores when fork creates a new process.
 
-Prior to that commit, vlan devices on top of a real device capable of
-HW VLAN TX offload used vlan_passthru_header_ops, which never inserted
-the 802.1Q header in the frame.
+copy_process() publishes the child's PID before cgroup_post_fork() links
+the child to its css_set. A writer can find the child in that interval,
+take its uncontended semaphore, and migrate it while child->cgroups still
+points to init_css_set and child->cg_list is empty. Migration links the
+node into init_css_set.mg_tasks. cgroup_post_fork() then adds the same
+node to the intended css_set as though it were unlinked, corrupting both
+task lists and their css_set ownership.
 
-Now, with reorder_hdr=off (as done by Home Assistant OS / NetworkManager
-when flags are omitted over D-Bus), vlan_dev_hard_header() always pushes
-an in-band 802.1Q header, and vlan_dev_hard_start_xmit() hands the frame
-to the real device as is, even if the real device supports HW VLAN TX
-offload.
+This regresses the fork/migration race fixed by commit b12b533fa523
+("cgroups: add lock for child->cgroups in cgroup_post_fork()") and
+restored again in 2012 after the lock had been removed. The old task_lock
+protection was later superseded by global css_set and cgroup threadgroup
+locking. The change identified by the Fixes tag narrowed only the migration
+side back to a per-threadgroup lock, recreating the different-process
+exclusion failure.
 
-This is a regression for r8169 users (Realtek RTL8168h), who report
-transmit queue timeouts (NETDEV WATCHDOG): this NIC stalls when asked
-to offload checksum and/or TSO for frames carrying an in-band tag.
-Users of r8152 based USB adapters were affected as well.
+Take the new threadgroup's semaphore for reading before the child becomes
+visible and hold it through cgroup_post_fork(). Use a nested lock subclass
+because fork already holds the parent's semaphore. CLONE_THREAD children
+share the parent's signal_struct and remain covered by the existing lock.
+Migrations of unrelated, fully initialized threadgroups remain concurrent.
 
-Reverting the blamed commit, disabling TX checksum offload (which
-also disables TSO), or setting reorder_hdr=on were all reported to
-work around the issue.
+An AI coding assistant was used to identify and reproduce the regression
+and to develop and test this fix.
 
-Keep vlan_dev_hard_header() as is: the in-band header keeps the frame
-layout seen at the vlan device egress (taps, tc, netfilter) unchanged,
-and is relied upon by stacked vlans (Q-in-Q) and by AF_PACKET SOCK_DGRAM
-users sending ETH_P_8021Q frames.
-
-Instead, when vlan_dev_hard_start_xmit() gets a frame carrying an
-in-band tag with our protocol and the real device can insert tags,
-move that tag to skb->vlan_tci with __skb_vlan_pop(), so that the real
-device inserts it. Frames sent on the wire are unchanged, except that
-frames shorter than 64 bytes with their tag now get up to 4 bytes of
-extra padding, as with reorder_hdr=on and before 447cbe95ebb9.
-
-skb_reset_mac_header() is needed first, because not all ndo_start_xmit()
-callers set the mac header (e.g. AF_XDP copy mode, which uses
-__dev_direct_xmit()).
-
-vlan_set_encap_proto() may read the two bytes after the vlan header,
-so frames whose linear part is shorter than VLAN_ETH_HLEN + 2 are sent
-unchanged, as before. This also makes sure h_vlan_proto, read earlier
-in the function, was in the linear part. Shared skbs (e.g. from
-pktgen) are also sent unchanged, since popping the tag modifies the
-skb, as are skbs already carrying a hwaccel tag (e.g. from generic XDP
-redirect), whose tag must not be overwritten, skbs carrying XDP
-metadata, which the pop would have to move, and CHECKSUM_PARTIAL skbs
-whose csum_start lies within the first VLAN_ETH_HLEN bytes (only
-possible with bogus offsets, e.g. from AF_XDP tx metadata), which the
-pop would leave before skb->data.
-If popping the header fails (memory allocation failure), the frame is
-dropped and counted in tx_dropped, rather than handing the real device
-a frame with an in-band tag.
-
-tx_bytes is now sampled before the pop, so the vlan device statistics
-do not change.
-
-This also applies to frames provided by the sender with our tag
-(AF_PACKET SOCK_RAW, or frames redirected from another reorder_hdr=off
-vlan): the real device now inserts their tag too.
-
-Fixes: 447cbe95ebb9 ("vlan: fix skb_under_panic and races when toggling HW VLAN offload")
-Reported-by: Jan Čermák <sairon@sairon.cz>
-Closes: https://lore.kernel.org/netdev/CAPa5EdCj3v17tB-SF2JNecq5Q8s1Pranr-XzAFWNpNTBPgPG7w@mail.gmail.com/
-Reported-by: Stefan Agner <stefan@agner.ch>
-Reported-by: hitchin999 <hitchin999@users.noreply.github.com>
-Closes: https://github.com/home-assistant/operating-system/issues/5019
-Tested-by: Jan Čermák <sairon@sairon.cz>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/20261013115022.1043024-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0568f89d4fb8 ("cgroup: replace global percpu_rwsem with per threadgroup resem when writing to cgroup.procs")
+Cc: stable@vger.kernel.org # 6.18+
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_dev.c | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ kernel/cgroup/cgroup.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index 618c8617c2c43..27b84c4120082 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -110,6 +110,8 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
- 	unsigned int len;
- 	int ret;
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 275c335c02a7f..07e1e29228197 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -6702,6 +6702,31 @@ static struct cgroup *cgroup_get_from_file(struct file *f)
+ 	return cgrp;
+ }
  
-+	len = skb->len;
++/*
++ * A new threadgroup gets its own cgroup_threadgroup_rwsem.  Once its PID is
++ * visible, a cgroup.procs writer can find the child and lock that rwsem even
++ * though cgroup_post_fork() has not linked the child to its css_set yet.
++ *
++ * cgroup_can_fork() already holds the global read lock, which keeps
++ * cgroup_enable_per_threadgroup_rwsem stable.  Lock the child's rwsem as a
++ * nested instance until cgroup_post_fork() finishes.  Threads share their
++ * parent's signal_struct and are covered by the existing read lock.
++ */
++static void cgroup_fork_child_lock(struct task_struct *child)
++{
++	if (cgroup_enable_per_threadgroup_rwsem &&
++	    child->signal != current->signal)
++		down_read_nested(&child->signal->cgroup_threadgroup_rwsem,
++				 SINGLE_DEPTH_NESTING);
++}
 +
- 	/* Handle non-VLAN frames if they are sent to us, for example by DHCP.
- 	 *
- 	 * NOTE: THIS ASSUMES DIX ETHERNET, SPECIFICALLY NOT SUPPORTING
-@@ -121,10 +123,39 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
- 		vlan_tci = vlan->vlan_id;
- 		vlan_tci |= vlan_dev_get_egress_qos_mask(dev, skb->priority);
- 		__vlan_hwaccel_put_tag(skb, vlan->vlan_proto, vlan_tci);
-+	} else if (skb_headlen(skb) >= VLAN_ETH_HLEN + sizeof(__be16) &&
-+		   !skb_shared(skb) && !skb_vlan_tag_present(skb) &&
-+		   !skb_metadata_len(skb) &&
-+		   (skb->ip_summed != CHECKSUM_PARTIAL ||
-+		    skb_checksum_start_offset(skb) >= VLAN_ETH_HLEN) &&
-+		   vlan_hw_offload_capable(READ_ONCE(vlan->real_dev->features),
-+					   vlan->vlan_proto)) {
-+		u16 vlan_tci;
++static void cgroup_fork_child_unlock(struct task_struct *child)
++{
++	if (cgroup_enable_per_threadgroup_rwsem &&
++	    child->signal != current->signal)
++		up_read(&child->signal->cgroup_threadgroup_rwsem);
++}
 +
-+		/* The frame carries its outer tag in-band, either inserted
-+		 * by vlan_dev_hard_header() or provided by the sender.
-+		 * Let the real device insert it: some NICs can not offload
-+		 * checksum or TSO for frames carrying an in-band tag.
-+		 * Not all ndo_start_xmit() callers set the mac header.
-+		 * vlan_set_encap_proto() may read two bytes after the vlan
-+		 * header, so frames with a shorter linear part are sent
-+		 * unchanged, as are shared skbs (e.g. from pktgen), skbs
-+		 * already carrying a hwaccel tag (e.g. from generic XDP
-+		 * redirect), skbs carrying XDP metadata, and CHECKSUM_PARTIAL
-+		 * skbs whose checksum starts within the header to be popped.
-+		 * On allocation failure, drop the frame rather than handing
-+		 * it to the real device with an in-band tag.
-+		 */
-+		skb_reset_mac_header(skb);
-+		if (unlikely(__skb_vlan_pop(skb, &vlan_tci))) {
-+			dev_kfree_skb_any(skb);
-+			this_cpu_inc(vlan->vlan_pcpu_stats->tx_dropped);
-+			return NETDEV_TX_OK;
-+		}
-+		__vlan_hwaccel_put_tag(skb, vlan->vlan_proto, vlan_tci);
- 	}
+ /**
+  * cgroup_css_set_fork - find or create a css_set for a child process
+  * @kargs: the arguments passed to create the child process
+@@ -6867,6 +6892,7 @@ int cgroup_can_fork(struct task_struct *child, struct kernel_clone_args *kargs)
+ 			goto out_revert;
+ 	} while_each_subsys_mask();
  
- 	skb->dev = vlan->real_dev;
--	len = skb->len;
- 	if (unlikely(netpoll_tx_running(dev)))
- 		return vlan_netpoll_send_skb(vlan, skb);
++	cgroup_fork_child_lock(child);
+ 	return 0;
+ 
+ out_revert:
+@@ -6901,6 +6927,7 @@ void cgroup_cancel_fork(struct task_struct *child,
+ 		if (ss->cancel_fork)
+ 			ss->cancel_fork(child, kargs->cset);
+ 
++	cgroup_fork_child_unlock(child);
+ 	cgroup_css_set_put_fork(kargs);
+ }
+ 
+@@ -6998,6 +7025,7 @@ void cgroup_post_fork(struct task_struct *child,
+ 	if (unlikely(kill))
+ 		do_send_sig_info(SIGKILL, SEND_SIG_NOINFO, child, PIDTYPE_TGID);
+ 
++	cgroup_fork_child_unlock(child);
+ 	cgroup_css_set_put_fork(kargs);
+ }
  
 -- 
 2.53.0
