@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827071;
-	b=P23X9c2tl7T60fUPx2hXFmKank2WEt5BG7ZJI/Ztrw9zHbwFdtg2RmYA4oLxjr+3BXlY
-	 19P+YCRS+dP6ssPFy+vXd94mV8fE4Do2o2dcl4n9wKCoLL/faY+VQ2AmviMtaSHQlfb2y
-	 j8lnF1B+BgUU43r7yBZFbxr+bNwQTIsOh+T2BWQBEzlpmH9vqzwlOeMKT1nSqgXTQ0+nK
-	 RvtaFbMdMANx5rI+uanAbUkeAaMXIQeuIpcNkcBdq59uujZmuFYpx04N5l3cbuI1al7YD
-	 EKLY0ISkrDVvdTrk5GLqqEWdTtJdpyHSkHVBWaO08aj9weFuC0HGtmK6dSS8g+zncPg==
+	t=1793827073;
+	b=NQ0TXMbossrO2yHGnkS2S/uEUy4kMVM05+u0p+ORM5k2JvFUXMDtBgGZqWyv8GFJiERW
+	 Y2KZMJXdrbvtkaNKu6B2T1XDedGL5TOxToOAPsgMFsQNtbMACaJX6HWLgxEwI16QrLkut
+	 G+Xon6KCrkbiXO1IEMahbyJKMzGdAdU4qYRjjinKf5Wrs+nna4JwHMxDXnZDDy3q2OgFS
+	 xboXu9eB+udXFy4ADMb9eaUjQvbLyW4BO4Lu2i247SjRtZzTqAGt5ej7P7r81mIhiwiJf
+	 9IuYw5rVBXgXphpv6pzZcnKtqWId/OTh5VPDUKDYbRP3G3CTC3qQi4McfLjSon5lU6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827073;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LoCW4l6ARz+pTpF2HUvIpxC7NVEEJ1z7yiHXf4Kxex4=;
-	b=wYxRAY/XVLVjdorJyQhHtiAC0rdgxIKSRIopD2aUAVRMh2eTxFR4HhH57Q2q1WNeDA36
-	 TdYk+7utsINfh+WZTJXSU8S0O12m85kdTbTEBzebc/HT/nn0RyfcWFtrjUq+gOYazFAFM
-	 oV/b8coNoxH7ImAn1zwWgQkgOBFGsDkQdogmL1CpjFpX1yrSwITMy+eVhQoXX0oVqy0/9
-	 62osIhqZ1CgRHUdEHs5UHEDFUpcQgf3JOHVtjJSVaRWvrqA3KunqZmjhV8imEwmVgvdkx
-	 fCjOBRxlzSxkjdvLWozOGkBqFuhvO90/DyRydhD/4gJPZ46EmTrt5mQMpEG029TUDlA==
+	bh=LF+P32v9rzt2UERuI+ObLeQNYEEyUHQi2uaZGWvHksw=;
+	b=EhtxF/4dlAXc9jGXl9nEfAa7ifdhGZG0SUJOrBf7/6I7N69ES32Kb6b7bhug7/r6QMqO
+	 hv+YR5mRs8NAsTaPx4rhuYdwFr6pNcaD/dmWqveSs6tx/2dWIHmLfOHFPvSHTAs1evoDP
+	 jXwxnZjxDEI3dRUWUXr0jU5sdy+BWqQ7wS+ROvkFG6hbGj7f5Zl8COfG9Y3JkhjP+fCRd
+	 Rgj099rMR+cYdswSLiKAlbjFLJxwOcKswptMiMzOk52TiuJJrnrMxi2rL/NEzlANzuSuT
+	 N31pO67WL6A8+uyxoyfCAIP7OkXowvuSyxTPTa0W7KrJD22z69YI2Ha/P40Rs2RMXXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bYKm/lr7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L8Iy763/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252B2606AE05;
-	Wed,  4 Nov 2026 21:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6A4606AE05;
+	Wed,  4 Nov 2026 21:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYKm/lr7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4D71F00A18;
-	Wed,  4 Nov 2026 21:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L8Iy763/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694771F000C1;
+	Wed,  4 Nov 2026 21:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827071;
-	bh=LoCW4l6ARz+pTpF2HUvIpxC7NVEEJ1z7yiHXf4Kxex4=;
+	s=korg; t=1793827072;
+	bh=LF+P32v9rzt2UERuI+ObLeQNYEEyUHQi2uaZGWvHksw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bYKm/lr7UYCDyczfJA8p0lu1uK3TvlHQ40O41luY7iirZscv31WjoofhAC5Sq2iG5
-	 FVglilsyCc9UrrxKGM5D3a752VDUs+ImFkrWbkni6LgxQ7+KUjl51C1MlyZ4qtPeXJ
-	 uoPQIXVrXiHgvO8QuQeaJ3B+Hq9HJv462wm+l87I=
+	b=L8Iy763/uYd91Sn+6RHGS5+Rd/N+Ix687aobRO0FOVkzVS+Rpl3JK8TaPnNc+TLtc
+	 jFbA3p4zXNWIVKvK2wOKP702dSLrbM7JLjsq1Ux7/O19R53nlLybGNR22A0k3XBsyY
+	 kOTodyiMXvt1hTfKHv1em2X/jIpoZuHYNY0Rnjv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 7.3 175/547] s390/extable: Fix mvcos instruction decoding
-Date: Wed,  4 Nov 2026 16:05:59 -0500
-Message-ID: <20261104211043.118838256@linuxfoundation.org>
+Subject: [PATCH 7.3 176/547] s390/kprobes: Prevent kprobes on instructions with exception table entry
+Date: Wed,  4 Nov 2026 16:06:00 -0500
+Message-ID: <20261104211043.147068374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,41 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 4044466ff004c7ad5fd47be717cd933077e6e874 upstream.
+commit fc9bb0ecd310b53af5116415952a1fb89d4660b9 upstream.
 
-If either the b1 or b2 field of the mvcos instruction is zero, register
-zero is not used for address computation; zero is used instead, according
-to the architecture. ex_handler_ua_mvcos() incorrectly uses the real
-contents of register zero. Fix this.
+The mvcos exception handler ex_handler_ua_mvcos() decodes the faulting
+instruction, assuming it is an mvcos instruction. In case the instruction
+is kprobed the decoded instruction is a breakpoint instruction instead,
+which leads to incorrect instruction decoding and potential register
+corruption.
 
-This shouldn't be a problem for any generated code, since the compiler
-would only generate such code if it is possible to prove at compile time
-that either the source or destination address is within the first 4kb of
-the designated address space. Such code should not exist (also confirmed
-by an allyesconfig build and decoding all ~7000 mvcos instructions).
+Fix this by simply preventing to set a kprobe on such instructions,
+similar like arm64 is doing it.
 
 Fixes: c488f5187a24 ("s390/uaccess: Shorten raw_copy_from_user() / raw_copy_to_user() inline assemblies")
 Cc: stable@vger.kernel.org
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/extable.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/kernel/kprobes.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/s390/mm/extable.c
-+++ b/arch/s390/mm/extable.c
-@@ -106,9 +106,9 @@ static bool ex_handler_ua_mvcos(const st
- 	regs->psw.addr = extable_fixup(ex);
- 	insn = (struct insn_ssf *)regs->psw.addr;
- 	if (from)
--		uaddr = regs->gprs[insn->b2] + insn->d2;
-+		uaddr = (insn->b2 ? regs->gprs[insn->b2] : 0) + insn->d2;
- 	else
--		uaddr = regs->gprs[insn->b1] + insn->d1;
-+		uaddr = (insn->b1 ? regs->gprs[insn->b1] : 0) + insn->d1;
- 	remainder = PAGE_SIZE - (uaddr & (PAGE_SIZE - 1));
- 	if (regs->gprs[insn->r3] <= remainder)
- 		remainder = 0;
+--- a/arch/s390/kernel/kprobes.c
++++ b/arch/s390/kernel/kprobes.c
+@@ -85,6 +85,9 @@ static bool can_probe(unsigned long padd
+ 	if (!kallsyms_lookup_size_offset(paddr, NULL, &offset))
+ 		return false;
+ 
++	if (s390_search_extables(paddr))
++		return false;
++
+ 	/* Decode instructions */
+ 	addr = paddr - offset;
+ 	while (addr < paddr) {
 
 
