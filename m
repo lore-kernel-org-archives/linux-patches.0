@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830841;
-	b=eBpbaRiaNUBQ/sL4+329odGXikEMK1BUGKwtqWhVIX/zK+G6y8K4lR1fqZvBlJQimG0k
-	 oRDRf/OxaDsF+MgkiMa2HSjhtwIU96pV+78jzDgfjvK1V5XWDyF8nPJrtqoaWN9krxltH
-	 9iTyp73Ob0ZxX5/W6vUgwFXJOkv5gRz1Az1WfEzJ3VPSuiexVsUzXDgI2UXKqdRUEZPD3
-	 UBoJ9FMdguWFPLL+7v3T/ZsYyh0WE8oldGx8i60l4Ii0irzBHBXlEcUXod8zXc+x9RQ7V
-	 zqag02G+WowFeYMluEQDPnamn896mzxk9ATiIQPfea9iYBKTf6zVXiUmNctDpazurGg==
+	t=1793830843;
+	b=lVcqf9nVTnYVy5yl/1nxJJoaXF+tmp5VrnJ+LcatkaZF+6x11RUmKtccLOfk3uAG2tbI
+	 lsSLUkUelx206lOMFseLvINUkSn6isNJD01sa2d8HJW4n5gZGNDT3kv151Pc6/nV2COpF
+	 7k0yNikPAHCvYr4gC+8FtRYt/e+zmI8uzc9z4gzCv2Zx2H941nE55eTYPaMjDT1K+8T61
+	 vc55KOOB3pLJHUfFmyA8od0UfHf6CE6CdxzKkvmex0j+05EDc1Y2KirBGoVhG8grYsalB
+	 J5sK3klspO/qjRiDR3K+2fYsEwGANGFsfOP0RkYOwydERqMd1Mupk8ARX6hf7TfmVAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830843;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y9j+lXRpM86pHynfNn79gAbqg1PqQLoQz5f3pjuh4zM=;
-	b=ekiwcPXM5zsJfqiZ+5qaUsswdwxUC82Hkz3Xoznrj3M45+jwJDw2bHzYpulpfZH/cC0Q
-	 +9+gTmiCB/bmKR2X3FBwID4Ma1SjF02lSkw/FwbvM9+lolktoJH6AHBaur/z8Pjx+jcCN
-	 kzsHnS9fLKNxreG7x/23KJK+5+5DSoAY+VRekvgt1PQu53uUpCcMz5QRWcGhoMGqLiwmi
-	 wLm8hF0c47O5SA3FY32WJfrJYyGVe5kkWfjMTIB6C18+j2bBneGieIBzR6HN4nUX8L2Ca
-	 62DME4e6F37vsxfKZ7XUzi6mb2bvIAsKf1j7Xa906OCHgUi6TciaDTW/DIn8gl58dxw==
+	bh=tU6bAsY2ybQFcKAIY8apwLs99ZW2ZoDNbOrSMWXHKVA=;
+	b=PncpueKzJ4zbYDWzKJXEN0Eqo3j4LBgNdxISrhLE5fRz5ko/GuV8deH+ChE8TXFkMA+o
+	 kFaZjgBmduqHId4sag+0EpXZj5sy8BeXFeuy9XRIuMNQs3yEu834K54D660Kggy/ner5m
+	 5AsOs3jCP09xZOiMjd0AC8q+YfRzzIr0d688+i5mbP9otJOAdOpNOJT0seFBZWruk2Cp9
+	 MAfpEcETRGCZO0/Tt3VWpaUB1hiHyaaWQKqXECzzWPCTBDHqTsJ13enPe388gd0TCfESS
+	 E3PVUnelWsZq11FYK3+appVkISw66biXAUqYVqV8DBWCaWa8MywhKY9cqoAyJG+v/mA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpzlVgoC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEulV4Ob;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EC1606B2D8;
-	Wed,  4 Nov 2026 22:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE82C606CA19;
+	Wed,  4 Nov 2026 22:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpzlVgoC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A144B1F000C1;
-	Wed,  4 Nov 2026 22:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEulV4Ob
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D39E1F0093A;
+	Wed,  4 Nov 2026 22:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830840;
-	bh=Y9j+lXRpM86pHynfNn79gAbqg1PqQLoQz5f3pjuh4zM=;
+	s=korg; t=1793830842;
+	bh=tU6bAsY2ybQFcKAIY8apwLs99ZW2ZoDNbOrSMWXHKVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qpzlVgoCUGwf1wIhFzlTfeF7vmICgCv6YqLPEoDePznMLhoMEvFMDSL7yOi5Sqj0C
-	 9Hs6p7gk6ExkIxPT9BksVTnZwhVBoQ8ab+ffuKjSB9sf2SVEs1FrLC+iaIcHRcG/pl
-	 QI2vuR4RFb0ZcHeT0/d3+nXQHCJEcPPSGvc23AXM=
+	b=fEulV4ObLgIrVrbQvCLC7OI94xK07vlEMa1su7F6t0vPW8Ey9R1cHf2BD4ZOD9rNw
+	 XCrkoelia9ZMNbwKR2kUZPKbFll0rcEkWszc1LCIJa2h9jp0Zk4Mwz92GsxWly5sfR
+	 8H6y5daqeztQjxSDTlaKSz1AclIG4T0j2lIOo59w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Garrett Blackmon <garrett@blackmon.dev>,
+	Zhang Heng <zhangheng@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0354/1005] ALSA: hda/realtek: Fix speakers on ASUS ROG Zephyrus G14 GA403UM
-Date: Wed,  4 Nov 2026 16:01:27 -0500
-Message-ID: <20261104211053.987633708@linuxfoundation.org>
+Subject: [PATCH 6.18 0355/1005] ALSA: hda/conexant: Add pin config quirk for Huawei Matebook
+Date: Wed,  4 Nov 2026 16:01:28 -0500
+Message-ID: <20261104211054.018019743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,40 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Garrett Blackmon <garrett@blackmon.dev>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 140fe610af607fd70da95c447943fc2690855519 ]
+[ Upstream commit d152afd1cd7a69c752236b6e825c4e62a74788eb ]
 
-The GA403UM (SSID 1043:1044) uses the same ALC285 codec + dual CS35L56
-I2C amplifier topology as the GA403U and GA403W variants, which already
-have quirk entries (1043:1b13, 1043:1024). Without the quirk, the
-woofers sit on a separate DAC from the tweeters, so the hardware volume
-control only scales part of the speaker system and the headset
-microphone pins are not configured.
+The headphone jack is not detected on this Huawei Matebook (Conexant
+SN6140 codec). The BIOS incorrectly marks Pin 0x18 as [N/A], causing
+the driver to report hp_outs=0 and no "Headphones" output appears.
 
-Apply the existing ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC fixup to the
-GA403UM as well.
+Override the pin configuration for NID 0x18 to set it as a headphone
+jack, which restores proper detection and audio routing.
 
-Signed-off-by: Garrett Blackmon <garrett@blackmon.dev>
-Link: https://patch.msgid.link/20260807150708.33785-1-garrett@blackmon.dev
+Link: https://github.com/thesofproject/sof/issues/10687
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260807125857.678297-4-zhangheng@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/codecs/conexant.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 8fdfe1bbe7aff..05e7fcc2f67e6 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7094,6 +7094,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1034, "ASUS GU605C", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
-+	SND_PCI_QUIRK(0x1043, 0x1044, "ASUS GA403UM", ALC285_FIXUP_ASUS_GA403U_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x1043, 0x106f, "ASUS VivoBook X515UA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
+index 56d6fbdd9b06d..ef40f1cb1158e 100644
+--- a/sound/hda/codecs/conexant.c
++++ b/sound/hda/codecs/conexant.c
+@@ -298,6 +298,7 @@ enum {
+ 	CXT_PINCFG_TOP_SPEAKER,
+ 	CXT_FIXUP_HP_A_U,
+ 	CXT_FIXUP_ACER_SWIFT_HP,
++	CXT_FIXUP_HUAWEI_MATEBOOK_HP,
+ };
+ 
+ /* for hda_fixup_thinkpad_acpi() */
+@@ -1043,6 +1044,13 @@ static const struct hda_fixup cxt_fixups[] = {
+ 			{ }
+ 		},
+ 	},
++	[CXT_FIXUP_HUAWEI_MATEBOOK_HP] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x18, 0x03211020 }, /* Headphone */
++			{ }
++		},
++	},
+ };
+ 
+ static const struct hda_quirk cxt5045_fixups[] = {
+@@ -1143,6 +1151,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo G50-70", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x397b, "Lenovo S205", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad/Ideapad", CXT_FIXUP_LENOVO_XPAD_ACPI),
++	SND_PCI_QUIRK(0x19e5, 0x3289, "Huawei Matebook", CXT_FIXUP_HUAWEI_MATEBOOK_HP),
+ 	SND_PCI_QUIRK(0x1c06, 0x2011, "Lemote A1004", CXT_PINCFG_LEMOTE_A1004),
+ 	SND_PCI_QUIRK(0x1c06, 0x2012, "Lemote A1205", CXT_PINCFG_LEMOTE_A1205),
+ 	SND_PCI_QUIRK(0x1d05, 0x3012, "MECHREVO Wujie 15X Pro", CXT_FIXUP_HEADSET_MIC),
 -- 
 2.53.0
 
