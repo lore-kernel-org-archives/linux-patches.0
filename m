@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826942;
-	b=nOJHaqrG93nQSAWe5afxhCkvG6KaqwpES//XGbR5jlnpy7+DZv/Wu16302rL4cy5QutL
-	 OdNHCfuKutwzJ0GDM7FAZgtYYuYO8kf4m2U9XOXkdLgNX1/Yf/vyac5z0+P/VWgCy9RWr
-	 pl4vPZR18nUTcdJTnlbV8YKUZuuVKzP0uTClQvWgdBgGeauYPRHpjB6QuyJ+zU1vRCWEM
-	 28shGU+FsdOXvyQm9KO4eG5UUh6kpdqBbpi9nr4mqQTvfsUq79PK0rKxlSx+qAnYb2rz4
-	 OeWJhCVOwYk6+MKrD74A+BSYBf+onBwpqvIGkmjZZke2zXMCx2WlO7qjxkbneB5ruZA==
+	t=1793826944;
+	b=0de9KaA1qYT04FDeqSVWwIAsrXQo6kyEVDYbOKroKQcRK4MbQOjTwmEJ9t0SOK5LYyT5
+	 y5PRUsuGfD8wOv2N1bEhDJ00cy0YOfK63bIsWwoVlVDeBvauYrhLOuZTlInv+RV8TfQsA
+	 U3oodiLYBu5KCCE0t7jR+Dc0Kz/qIDPvCM3lYhLoyR+hKm0rWI4gEronGWvt4aiBjDqhz
+	 2JB4E+qCu+SSEFZxYKi+aDwYAiULM39x1ChlxzmvDHUKAkflfTPle4iEbmEjWkBG1eXny
+	 XAYksUuak5KEsD6/qEbQ0zE3aMJ7sQCZNvQCDbxbmujdgwzvmvDx5iNdn1EoieI6JuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826942;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XDric5MQ2y8Zmyi0g7Y9p79Ka3cU0oT9sgrKWaN+/sw=;
-	b=bUpdR8jzn5JMbBAYjJIivJW1VSNoFHRjgcy+iHkjI4Ea5Zs6RANLkIw5AvNgy21ISjhE
-	 j/yio0eGd8b/ST8ao/sbjJGMfOHV6u8v1+IFXgxHEuns8wVbucOZALbKoWm6u8eEU30ZS
-	 6tG1aaClqiXpzxk7RfuXmifobAR5k3jfPepLeR/iDoWmstzrqn7VvRZ5F6Nq/QnwpmxOz
-	 wWjQk2qtlq2tGaFlPVfLrviczr9sGoUv0S3DNnCnYQMvcoZYGvysDttk9xZCv1BbjKviD
-	 lSpVVoTVi8//a/0zkSjpY315dEFECt2r2SUv9tKQGAkBPkecr0EI7Zg9SQqXBBDTLtQ==
+	bh=9YUKl7JT6vKSQIQa3GOqJbCOjm1TMUyedxLsFmObpH4=;
+	b=mdhbMHQrZ5YNBeA0DIX5iRNkLU08MZohaxClLaOb0s+ZIFuUoZ9J0mRkF3GTWRs6KftU
+	 tGQtpoTYMV9qYdGSJy7//EywY0ooR66e7n4eDormkgi+Vko6zqERwlDSKDDEd5QCOmPgE
+	 ssaNF+GP+XOvyAgyKDvklDnwvlNVUP3HC4k4R0bSFpnlRDaD0V5xjdY4ofyGUipUr8j4e
+	 CT9VCIfKm20m73uhAfMVBPpxAOPhXyxZfAAvQHxUJTWt7hVrzAq+keTqjOCpn6L3ClEyr
+	 NBhIbH7DFBNyoeupJK0XNMf85v5j0qdYK85ODIO2KusASHsr3uTOQ23i3h9gAnYPNtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stFIG6pF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PMknbMem;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427676073515;
-	Wed,  4 Nov 2026 21:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F5F60B5A77;
+	Wed,  4 Nov 2026 21:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stFIG6pF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49421F000C1;
-	Wed,  4 Nov 2026 21:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PMknbMem
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7081F000C1;
+	Wed,  4 Nov 2026 21:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826942;
-	bh=XDric5MQ2y8Zmyi0g7Y9p79Ka3cU0oT9sgrKWaN+/sw=;
+	s=korg; t=1793826943;
+	bh=9YUKl7JT6vKSQIQa3GOqJbCOjm1TMUyedxLsFmObpH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=stFIG6pFQ/eT2BEYGc7gBbKMfgQ1Ku9hRnbErEwMjCoI2qYayqs+n9MbpUge3+0/P
-	 EE8Vp23ZbG8PL+s76e0wXRaX5tKSCR3YLqZSwH50tTJjS0G/zaqcfngM/VeiivRQ4t
-	 +ljzPI1ZzsQ62hvG17c5tU8S7jZIMxfYx3fi/5iM=
+	b=PMknbMemXI+W1+SdoZncLa1RpxruVNMSeRtoMmr6ZaD8hSkNmYyzDaq1sD0twyd6y
+	 QhV8sRjZTEa/IeSIBwkBv4x/5yO2ISlYMs0OSU2tmA6Eh0W0GA3mmvE6fixtlBnVs0
+	 NvYsIMJpWpXBW0/qYENir5XLUnD6xEbTTMbOsd3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 060/547] io_uring/timeout: dont put a sequence target behind the last flush
-Date: Wed,  4 Nov 2026 16:04:04 -0500
-Message-ID: <20261104211039.984904376@linuxfoundation.org>
+Subject: [PATCH 7.3 051/547] io_uring/zcrx: fix buffer offsets in areas above 4GB
+Date: Wed,  4 Nov 2026 16:03:55 -0500
+Message-ID: <20261104211039.752679721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,58 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit fdfce905a58edea053ee7b68b5bd4348dd1b36e0 ]
+[ Upstream commit ab4536bf2e5617b04f2d9396f06393c7bbfb071d ]
 
-io_timeout_fn() and io_kill_timeout() bump ->cq_timeouts when a timeout
-fires, but its CQE is only posted later from task_work. Until then the
-sequence io_timeout() computes is one below the last flush per fired
-timeout. Now that ->cq_last_tm_flush is kept while sequence timeouts are
-pending, a timeout armed in that window with a small offset gets a target
-behind the base. Its distance from the base wraps, and it's never
-completed by events, only by its timer. With DEFER_TASKRUN that window
-is as wide as the application makes it, as submission runs before the
-local task_work.
+io_zcrx_queue_cqe() computes the offset of the buffer in its area from
+net_iov_idx(), which is an unsigned int, so the shift is done in 32 bits
+and only the result is widened to the u64 that goes into the CQE. An area
+can be up to 1TB in size. For every niov beyond the first 4GB the CQE
+points the application at a buffer 4GB, or a multiple of that, below the
+one which has the data. It reads the wrong data, and then returns a
+buffer it doesn't own via the refill queue while the real one is never
+given back.
 
-Nothing but those in flight CQEs separates the two, so use the last
-flush as the base for the target when the sequence is behind it.
-
-Fixes: c6c0b3eba88c ("io_uring/timeout: don't skip over reached sequences")
+Fixes: 11ed914bbf94 ("io_uring/zcrx: add io_recvzc request")
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-35-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/timeout.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ io_uring/zcrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/timeout.c b/io_uring/timeout.c
-index 43a40bda7735c..05e6c07c98b53 100644
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -690,7 +690,6 @@ int io_timeout(struct io_kiocb *req, unsigned int issue_flags)
- 	}
+diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
+index cc9df7e64a407..6d7abb1636e7f 100644
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -1645,7 +1645,7 @@ static bool io_zcrx_queue_cqe(struct io_kiocb *req, struct net_iov *niov,
+ 		cqe->flags |= IORING_CQE_F_32;
  
- 	tail = data_race(ctx->cached_cq_tail) - atomic_read(&ctx->cq_timeouts);
--	timeout->target_seq = tail + off;
- 
- 	/*
- 	 * Update the last seq here in case io_flush_timeouts() hasn't, it only
-@@ -704,6 +703,15 @@ int io_timeout(struct io_kiocb *req, unsigned int issue_flags)
- 		ctx->cq_last_tm_flush = tail;
- 	base = ctx->cq_last_tm_flush;
- 
-+	/*
-+	 * A fired timeout bumps ->cq_timeouts before its CQE is posted, which
-+	 * leaves the sequence behind the last flush until it is. Nothing else
-+	 * separates the two then, so count from the flush.
-+	 */
-+	if ((s32)(tail - base) < 0)
-+		tail = base;
-+	timeout->target_seq = tail + off;
-+
- 	/*
- 	 * Insertion sort, ensuring the first entry in the list is always
- 	 * the one we need first.
+ 	area = io_zcrx_iov_to_area(niov);
+-	offset = off + (net_iov_idx(niov) << ifq->niov_shift);
++	offset = off + ((u64)net_iov_idx(niov) << ifq->niov_shift);
+ 	rcqe = (struct io_uring_zcrx_cqe *)(cqe + 1);
+ 	rcqe->off = offset + zcrx_area_id_to_token(area->area_id);
+ 	rcqe->__pad = 0;
 -- 
 2.53.0
 
