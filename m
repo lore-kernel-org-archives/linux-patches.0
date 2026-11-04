@@ -1,72 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793804768;
-	b=yFzMbLji+xWGnIdIwRzbT1725ub8OzwV+/EwFpn27OxPN20DohXQz2zJPGRBCKRdb7Y1
-	 QU4HUqc12t1kTlHva3i5SL+OsLmhNTqlXcWnQTafzi8yOvVN2CIeDljhgBWz48lc/nSBW
-	 xnJDD7NVVVCFxBvOpGYcZ+p9VIZoshIjkL3EHEox8pJ7pk4X2hxfSWIe02dOzaEQnqZvQ
-	 GFcpduCjpHhqgfeb7SuL7/ZttBPVw2ioBCY3ws68pROvlhxi9kGF3AjcJdmF4+p7V83zW
-	 D3ViTcuaKxt8yBsE6bbCRB186U+dUuXqVuqlYDB3lTRpVUuguureC0h9L2n6xhYrN0A==
+	t=1793805820;
+	b=M/ljg1caCJgOTN+y95Iv+rCVKVDpFNAq35FsXK1KuPTo7+2brJIuXOdniD8JKvlPnCox
+	 lencyBEY6sDXGX2Wq8wg3ObDpPlV88BMWx9QmvWpBvJLVjXxLK5Z0QMSmyyLPGsk0bDFM
+	 dEQPg19rtCfNU+l/XYL2iIX3vDw21CdOW9/6JAcoIabeyKIWtOEuaSjdk3LKr7IUWpZTr
+	 aVRmkYr4XkxeVXXNuEDx3AvPHmdXISQbjpk9BvT3kGhEW9deOtzeHIYlJf8QpVBSHuidq
+	 tPyt+k6WMrrm9lLuIgpm2LyBuF2nwtGzD2twD8ai9Y0GE0GDQv7K+kpP8Ga2OZI7+8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793804768;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=9XUu19nr/f7NGXbDq+W5w9qO3ygSqOJpP8i189RQgXI=;
-	b=ABSA3ygFNyKxB3uyDnKgcsKuQpL3gLEdMmWG9n9p/MiVFk05twLbiC5EJyM2oktXiJE+
-	 /d6DuZ/D4+nqbB2Doh+GPOH5yH2Oxm9lScs5/Ca8Igoizis6GaOO5BW8ddxEzdmQMOa13
-	 Ey47kiAK0NjbRV7GSHDMEEmRZktp6VQOlHGsvwB3M7XM7eN+YYA7y88ZdqZnRX640532W
-	 iQdOYphcldQYlRwLEg3FbakRx6Wp53A71d6pW7UcSuq8TxuS8oC8toLf2QBTEerJFviQM
-	 RPOtuCoDUex8Ywq50zpGyvQS/kWmtqVM1D2b4Nh1U0R+8e7khE4HQOtzR7lLL2EbW7Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793805820;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=iUXqvzkKt0TEjOV9qKAXA2QTquoTPDsStlpxMcQn3lY=;
+	b=aV22e7vQcsUXMjhyZyVWlJCe63gIU2xZPSNQkvhqXifgPgCEWkLSCT0vznvmI/CMSJT6
+	 PPvmTpwDV7/vCzcjEPwREjlh2xnob4kXK5+Ac9gClOiP0son1Dm/Abo9j/jmCYfHsTxN+
+	 upeJDzWogCBhjIgdh5c+jTS+w0XUnRQHcm62042WkzkhsC0FA8UqCN5uyM+K91yjt22es
+	 lRoVcGzdtK5IEudVNYR9FLgbakfCqTywtXhMBeZ6+qE+5q+wDBJK5+2353Bhk0FxaUgDd
+	 QHHvWRBpzBytIpCX3CVYrPLrMJ6F94sbyp6InP4+RZu7jiqITkvZzRYvMriGoRq0rBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OQIYThW6;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0063F606A328;
-	Wed,  4 Nov 2026 15:06:07 +0000 (UTC)
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=OsmJDae5;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F9C3606A326
+	for <patches@lists.linux.dev>; Wed,  4 Nov 2026 15:23:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F9C3606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OQIYThW6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C5E1F00A15;
-	Wed,  4 Nov 2026 15:06:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793804767;
-	bh=9XUu19nr/f7NGXbDq+W5w9qO3ygSqOJpP8i189RQgXI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OQIYThW66rDODt+C7H4yN0no9vsvbLmtEEKrtB56e7xJxpgN1y9zekCHkFpY3jL9t
-	 7a0MwO7m1Zsy9YWw/CRb6NiC7EprtPnsRwuWcCz151oTyImEDqKuzkgrR4rBQBb6as
-	 L0KL9VFMblMFQvIV36FTQ2AVAyZNO5r1rF7QWWA1ujc1xL6zVocbc8Vc1lQOaQtYa7
-	 /GBPO1jTz9DppgDA4juqTOe5LoX7Pqp65USZprlW0qqKvqxABAOHXzPcZWk1avQMXT
-	 e0tp6lGhhmqYiFUUiTW1eS0dPZsyS020Ng3uZ+hgkDgIefi1BBY9hKVN6Vc0n0qPFI
-	 bZBp7029JUJYA==
-From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
-To: linux-coco@lists.linux.dev
-Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Alex Williamson <alex@shazbot.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	"Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Fred Griffoul <griffoul@gmail.com>,
-	iommu@lists.linux.dev,
-	kvm@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [RFC PATCH v4 25/25] KVM: Document device-backed guest_memfd and VFIO usage
-Date: Wed,  4 Nov 2026 20:33:22 +0530
-Message-ID: <20261104150322.3516320-26-aneesh.kumar@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
-References: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=OsmJDae5
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EEA251595;
+	Wed,  4 Nov 2026 07:23:34 -0800 (PST)
+Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A6E923F632;
+	Wed,  4 Nov 2026 07:23:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793805818; bh=hTP7FhBkZEB6EoF3t+8xbFMg1uD94SfziksV1UIfrrI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OsmJDae5CsMe2IuAc64xpm5Dzenn/yZ7TGQJDQIzbpJwB9LL/PBQqXDkWqvIimWfC
+	 5hmz+rBkYLKOFT1EIGoB+nu4rTOw+hvKMTpsCyTakbycyIkocsj1xLpeVPPTJlUd+g
+	 1ZatZUjOwjB5PkX1xwwwGWXT5ADEUsJ7j38/kTV8=
+Message-ID: <293d0352-7a5d-4b8a-b004-277cd8a81902@arm.com>
+Date: Wed, 4 Nov 2026 15:23:34 +0000
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -76,130 +53,416 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 06/24] arm,x86,fs/resctrl: Replace architecture
+ capability helpers with generic versions
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
+ Reinette Chatre <reinette.chatre@intel.com>,
+ Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+ Peter Newman <peternewman@google.com>, James Morse <james.morse@arm.com>,
+ Babu Moger <babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>,
+ Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>,
+ David E Box <david.e.box@intel.com>, x86@kernel.org
+Cc: Christoph Hellwig <hch@infradead.org>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20261019205031.16977-1-tony.luck@intel.com>
+ <20261019205031.16977-7-tony.luck@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <20261019205031.16977-7-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Describe device setup, VFIO access restrictions, mappings and lock ordering.
+Hi Tony,
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Alex Williamson <alex@shazbot.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Kevin Tian <kevin.tian@intel.com>
-Cc: "Joerg Roedel (AMD)" <joro@8bytes.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
----
- Documentation/virt/kvm/api.rst     | 50 ++++++++++++++++++++++++++----
- Documentation/virt/kvm/locking.rst | 27 ++++++++++++++++
- 2 files changed, 71 insertions(+), 6 deletions(-)
+On 19/10/2026 21:50, Tony Luck wrote:
+> resctrl supports allocation or monitoring if any resource is capable of
+> it. Each architecture answers this via resctrl_arch_alloc_capable() and
+> resctrl_arch_mon_capable(). x86 maintains global flags for this in
+> addition to the per-resource flags and must keep both in sync. MPAM
+> derives the answer from its per-resource flags.
+> 
+> The per-resource flags are part of the resource description that the file
+> system already has, so the architecture helpers duplicate information
+> available to the file system.
+> 
+> Define resctrl_alloc_capable() and resctrl_mon_capable() in the file system
+> based on the per-resource flags and remove the architecture helpers, in
+> preparation for removing the x86 global flags. The result is unchanged for
+> MPAM, which presents all monitors on the L3 resource.
+> 
+> Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index 4482d34ec281..289b42224258 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -6513,8 +6513,8 @@ The capability KVM_CAP_GUEST_MEMFD_FLAGS enumerates the `flags` that can be
- specified via KVM_CREATE_GUEST_MEMFD.  Currently defined flags:
- 
-   ============================= ================================================
--  GUEST_MEMFD_FLAG_MMAP         Enable using mmap() on the guest_memfd file
--                                descriptor.
-+  GUEST_MEMFD_FLAG_MMAP         Enable userspace mappings through guest_memfd,
-+                                including shared VFIO PCI BAR resources.
-   GUEST_MEMFD_FLAG_INIT_SHARED  Make all memory in the file shared during
-                                 KVM_CREATE_GUEST_MEMFD (memory files created
-                                 without INIT_SHARED will be marked private).
-@@ -6540,10 +6540,48 @@ provider. PFN_MODE selects the PFN callbacks; providers that supply device
- operations additionally require INIT_SHARED and a VM supporting protected
- device mappings.
- 
--KVM_SET_MEMORY_ATTRIBUTES2 converts device memory using guest_memfd offsets.
--For private conversion, KVM resolves the guest address through the memslot
--binding and obtains the physical address from the provider. Shared conversion
--removes the protected device mappings before publishing shared attributes.
-+For VFIO PCI device resources, resource_fd must refer to a VFIO device fd
-+bound to IOMMUFD, with a vDEVICE belonging to the same VM. Set USE_RESOURCE,
-+PFN_MODE and INIT_SHARED. File offsets use the VFIO region-offset namespace.
-+Memslots must cover page-aligned ranges within a single memory-mapped I/O
-+BAR that supports mmap. Dirty logging and read-only memslots are rejected
-+with EINVAL.
-+
-+Creation fails with EBUSY if the device already supplies another guest_memfd,
-+has VFIO BAR mappings, dma-buf exports or ioeventfd handlers, or userspace has
-+enabled VFIO runtime suspend. The device is resumed and must be in D0; it is
-+kept active until guest_memfd releases it.
-+
-+While guest_memfd uses the device, the following operations fail with EBUSY
-+through any VFIO fd referring to it, even if all ranges are shared:
-+
-+- BAR read/write, mmap, new ioeventfd registration and dma-buf export.
-+- VFIO_DEVICE_RESET, PCIe/AF function-level reset and hot reset affecting
-+  the device.
-+- Requests for D1, D2 or D3, enabling VFIO runtime suspend, and configuration
-+  writes that change Memory Enable or Bus Master Enable.
-+
-+Rejected configuration writes leave the hardware and virtual registers
-+unchanged. Unrelated configuration writes, queries and IRQ configuration
-+remain available.
-+
-+GUEST_MEMFD_FLAG_MMAP permits MAP_SHARED mappings through guest_memfd.
-+Without this flag, mmap fails with ENODEV.
-+
-+MSI-X SET_IRQS remains available. Userspace must keep the MSI-X table and
-+PBA pages shared while host-managed MSI-X is in use and reject guest private
-+mapping requests for those pages. The kernel does not enforce this policy.
-+
-+Use :ref:`KVM_SET_MEMORY_ATTRIBUTES2` to convert device memory by guest_memfd
-+offset. Private conversion uses the memslot binding and provider PFNs to
-+install protected device mappings before publishing private attributes.
-+Shared conversion removes those mappings before publishing shared attributes.
-+
-+Revocation and memslot deletion remove shared and private mappings without
-+changing file attributes. Private ranges still prevent device unlock after
-+these operations; userspace must share them or release the last guest_memfd
-+reference. Final release removes mappings and clears the private-range
-+summary before releasing the device resources.
- 
- When the KVM MMU performs a PFN lookup to service a guest fault, the fault will
- always be consumed from guest_memfd, regardless of whether it is a shared or a
-diff --git a/Documentation/virt/kvm/locking.rst b/Documentation/virt/kvm/locking.rst
-index 662231e958a0..a2a6b4dd9a1f 100644
---- a/Documentation/virt/kvm/locking.rst
-+++ b/Documentation/virt/kvm/locking.rst
-@@ -58,6 +58,33 @@ On x86:
-   kvm->arch.tdp_mmu_pages_lock and kvm->arch.mmu_unsync_pages_lock must
-   also take kvm->arch.mmu_lock
- 
-+For device-backed guest_memfd, conversion takes locks in this order:
-+
-+- inode->i_mapping->invalidate_lock for write
-+- IOMMUFD vDEVICE mmio_lock
-+- VFIO vdev->memory_lock for read, during PFN lookup
-+
-+The inode invalidate lock protects attributes and offset-to-GPA bindings.
-+The provider's lock()/unlock() callbacks hold mmio_lock across
-+invalidation, conversion and publication of attributes. Device unlock takes
-+the same mutex when checking for private ranges. Range revocation, memslot
-+unbind and final file cleanup use the same order.
-+
-+PFN lookup during faults takes the inode invalidate lock for read, then
-+memory_lock for read, without taking mmio_lock. memory_lock protects the
-+power and Memory Enable checks and BAR PFN lookup against PCI state
-+restore. Host faults retain the inode invalidate lock through PTE insertion.
-+
-+VFIO provider setup and release take gmem_lock for write, then
-+dev_set->lock, before taking mmio_lock. Both outer locks protect updates to
-+gmem_attached. VFIO file operations read this state under gmem_lock for
-+read; reset checks can instead use dev_set->lock.
-+
-+VFIO resumes the device and takes a runtime-PM reference before acquiring
-+mmio_lock during provider setup. It drops that reference after removing
-+the provider from the vDEVICE during release. Runtime PM callbacks do not
-+take the guest_memfd inode invalidate lock.
-+
- Everything else is a leaf: no other lock is taken inside the critical
- sections.
- 
--- 
-2.43.0
+Looks good to me. For the MPAM parts:
+
+Acked-by: Ben Horgan <ben.horgan@arm.com>
+
+Thanks,
+
+Ben
+
+> ---
+> v14:
+> 	New Subject: without {alloc,mon}
+> 	New commit message in context, problem, solution format
+> 	Did not apply Reinette RB tag because of commit message rewrite.
+> ---
+>  include/linux/arm_mpam.h       |  3 ---
+>  include/linux/resctrl.h        | 30 ++++++++++++++++++++++++++++
+>  arch/x86/include/asm/resctrl.h | 10 ----------
+>  drivers/resctrl/mpam_resctrl.c | 26 ++----------------------
+>  fs/resctrl/monitor.c           | 10 +++++-----
+>  fs/resctrl/pseudo_lock.c       |  6 +++---
+>  fs/resctrl/rdtgroup.c          | 36 +++++++++++++++++-----------------
+>  7 files changed, 58 insertions(+), 63 deletions(-)
+> 
+> diff --git a/include/linux/arm_mpam.h b/include/linux/arm_mpam.h
+> index f92a36187a52..ba4131048260 100644
+> --- a/include/linux/arm_mpam.h
+> +++ b/include/linux/arm_mpam.h
+> @@ -50,9 +50,6 @@ static inline int mpam_ris_create(struct mpam_msc *msc, u8 ris_idx,
+>  }
+>  #endif
+>  
+> -bool resctrl_arch_alloc_capable(void);
+> -bool resctrl_arch_mon_capable(void);
+> -
+>  void resctrl_arch_set_cpu_default_closid(int cpu, u32 closid);
+>  void resctrl_arch_set_closid_rmid(struct task_struct *tsk, u32 closid, u32 rmid);
+>  void resctrl_arch_set_cpu_default_closid_rmid(int cpu, u32 closid, u32 rmid);
+> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> index 10dfdca7f4bf..0e7fce070fde 100644
+> --- a/include/linux/resctrl.h
+> +++ b/include/linux/resctrl.h
+> @@ -346,6 +346,36 @@ struct rdt_resource {
+>   */
+>  struct rdt_resource *resctrl_arch_get_resource(enum resctrl_res_level l);
+>  
+> +/*
+> + * resctrl_alloc_capable - Are any allocation resources enabled?
+> + */
+> +static inline bool resctrl_alloc_capable(void)
+> +{
+> +	struct rdt_resource *r;
+> +
+> +	for_each_rdt_resource(r) {
+> +		if (r->alloc_capable)
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+> +/*
+> + * resctrl_mon_capable - Are any monitor resources enabled?
+> + */
+> +static inline bool resctrl_mon_capable(void)
+> +{
+> +	struct rdt_resource *r;
+> +
+> +	for_each_rdt_resource(r) {
+> +		if (r->mon_capable)
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>  /**
+>   * struct resctrl_schema - configuration abilities of a resource presented to
+>   *			   user-space
+> diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
+> index 2031b30ff25b..9c44a7766631 100644
+> --- a/arch/x86/include/asm/resctrl.h
+> +++ b/arch/x86/include/asm/resctrl.h
+> @@ -50,11 +50,6 @@ DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
+>  DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
+>  DECLARE_STATIC_KEY_FALSE(rdt_mon_enable_key);
+>  
+> -static inline bool resctrl_arch_alloc_capable(void)
+> -{
+> -	return rdt_alloc_capable;
+> -}
+> -
+>  static inline void resctrl_arch_enable_alloc(void)
+>  {
+>  	static_branch_enable_cpuslocked(&rdt_alloc_enable_key);
+> @@ -67,11 +62,6 @@ static inline void resctrl_arch_disable_alloc(void)
+>  	static_branch_dec_cpuslocked(&rdt_enable_key);
+>  }
+>  
+> -static inline bool resctrl_arch_mon_capable(void)
+> -{
+> -	return rdt_mon_capable;
+> -}
+> -
+>  static inline void resctrl_arch_enable_mon(void)
+>  {
+>  	static_branch_enable_cpuslocked(&rdt_mon_enable_key);
+> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
+> index f2c651e9f6ea..7ddee8f5162f 100644
+> --- a/drivers/resctrl/mpam_resctrl.c
+> +++ b/drivers/resctrl/mpam_resctrl.c
+> @@ -75,28 +75,6 @@ static DECLARE_WAIT_QUEUE_HEAD(wait_cacheinfo_ready);
+>   */
+>  static bool resctrl_enabled;
+>  
+> -bool resctrl_arch_alloc_capable(void)
+> -{
+> -	struct mpam_resctrl_res *res;
+> -	enum resctrl_res_level rid;
+> -
+> -	for_each_mpam_resctrl_control(res, rid) {
+> -		if (res->resctrl_res.alloc_capable)
+> -			return true;
+> -	}
+> -
+> -	return false;
+> -}
+> -
+> -bool resctrl_arch_mon_capable(void)
+> -{
+> -	struct mpam_resctrl_res *res = &mpam_resctrl_controls[RDT_RESOURCE_L3];
+> -	struct rdt_resource *l3 = &res->resctrl_res;
+> -
+> -	/* All monitors are presented as being on the L3 cache */
+> -	return l3->mon_capable;
+> -}
+> -
+>  bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt)
+>  {
+>  	return false;
+> @@ -1902,9 +1880,9 @@ int mpam_resctrl_setup(void)
+>  
+>  	cpus_read_unlock();
+>  
+> -	if (!resctrl_arch_alloc_capable() && !resctrl_arch_mon_capable()) {
+> +	if (!resctrl_alloc_capable() && !resctrl_mon_capable()) {
+>  		pr_debug("No alloc(%u) or monitor(%u) found - resctrl not supported\n",
+> -			 resctrl_arch_alloc_capable(), resctrl_arch_mon_capable());
+> +			 resctrl_alloc_capable(), resctrl_mon_capable());
+>  		return -EOPNOTSUPP;
+>  	}
+>  
+> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+> index 04e4ea612b7c..cb34d3637ee5 100644
+> --- a/fs/resctrl/monitor.c
+> +++ b/fs/resctrl/monitor.c
+> @@ -338,7 +338,7 @@ void free_rmid(u32 closid, u32 rmid)
+>  	 * allows architectures that ignore the closid parameter to avoid an
+>  	 * unnecessary check.
+>  	 */
+> -	if (!resctrl_arch_mon_capable() ||
+> +	if (!resctrl_mon_capable() ||
+>  	    idx == resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
+>  						RESCTRL_RESERVED_RMID))
+>  		return;
+> @@ -888,7 +888,7 @@ void mbm_handle_overflow(struct work_struct *work)
+>  	 * If the filesystem has been unmounted this work no longer needs to
+>  	 * run.
+>  	 */
+> -	if (!resctrl_mounted || !resctrl_arch_mon_capable())
+> +	if (!resctrl_mounted || !resctrl_mon_capable())
+>  		goto out_unlock;
+>  
+>  	/*
+> @@ -950,7 +950,7 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
+>  	 * When a domain comes online there is no guarantee the filesystem is
+>  	 * mounted. If not, there is no need to catch counter overflow.
+>  	 */
+> -	if (!resctrl_mounted || !resctrl_arch_mon_capable())
+> +	if (!resctrl_mounted || !resctrl_mon_capable())
+>  		return;
+>  	cpu = cpumask_any_housekeeping(&dom->hdr.cpu_mask, exclude_cpu);
+>  	dom->mbm_work_cpu = cpu;
+> @@ -966,7 +966,7 @@ int setup_rmid_lru_list(void)
+>  	u32 idx;
+>  	int i;
+>  
+> -	if (!resctrl_arch_mon_capable())
+> +	if (!resctrl_mon_capable())
+>  		return 0;
+>  
+>  	/*
+> @@ -1006,7 +1006,7 @@ int setup_rmid_lru_list(void)
+>  
+>  void free_rmid_lru_list(void)
+>  {
+> -	if (!resctrl_arch_mon_capable())
+> +	if (!resctrl_mon_capable())
+>  		return;
+>  
+>  	mutex_lock(&rdtgroup_mutex);
+> diff --git a/fs/resctrl/pseudo_lock.c b/fs/resctrl/pseudo_lock.c
+> index 56ab63f19bad..3d831227a42f 100644
+> --- a/fs/resctrl/pseudo_lock.c
+> +++ b/fs/resctrl/pseudo_lock.c
+> @@ -383,7 +383,7 @@ static int rdtgroup_locksetup_user_restrict(struct rdtgroup *rdtgrp)
+>  	if (ret)
+>  		goto err_cpus;
+>  
+> -	if (resctrl_arch_mon_capable()) {
+> +	if (resctrl_mon_capable()) {
+>  		ret = rdtgroup_kn_mode_restrict(rdtgrp, "mon_groups");
+>  		if (ret)
+>  			goto err_cpus_list;
+> @@ -430,7 +430,7 @@ static int rdtgroup_locksetup_user_restore(struct rdtgroup *rdtgrp)
+>  	if (ret)
+>  		goto err_cpus;
+>  
+> -	if (resctrl_arch_mon_capable()) {
+> +	if (resctrl_mon_capable()) {
+>  		ret = rdtgroup_kn_mode_restore(rdtgrp, "mon_groups", 0777);
+>  		if (ret)
+>  			goto err_cpus_list;
+> @@ -577,7 +577,7 @@ int rdtgroup_locksetup_exit(struct rdtgroup *rdtgrp)
+>  {
+>  	int ret;
+>  
+> -	if (resctrl_arch_mon_capable()) {
+> +	if (resctrl_mon_capable()) {
+>  		ret = alloc_rmid(rdtgrp->closid);
+>  		if (ret < 0) {
+>  			rdt_last_cmd_puts("Out of RMIDs\n");
+> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+> index 57ab090072c2..96a4978ce6b6 100644
+> --- a/fs/resctrl/rdtgroup.c
+> +++ b/fs/resctrl/rdtgroup.c
+> @@ -691,7 +691,7 @@ static bool is_closid_match(struct task_struct *t, struct rdtgroup *r)
+>  
+>  static bool is_rmid_match(struct task_struct *t, struct rdtgroup *r)
+>  {
+> -	return (resctrl_arch_mon_capable() && (r->type == RDTMON_GROUP) &&
+> +	return (resctrl_mon_capable() && (r->type == RDTMON_GROUP) &&
+>  		resctrl_arch_match_rmid(t, r->mon.parent->closid,
+>  					r->mon.rmid));
+>  }
+> @@ -3157,9 +3157,9 @@ static void resctrl_unmount(void)
+>  		resctrl_arch_reset_all_ctrls(r);
+>  
+>  	resctrl_fs_teardown();
+> -	if (resctrl_arch_alloc_capable())
+> +	if (resctrl_alloc_capable())
+>  		resctrl_arch_disable_alloc();
+> -	if (resctrl_arch_mon_capable())
+> +	if (resctrl_mon_capable())
+>  		resctrl_arch_disable_mon();
+>  	resctrl_mounted = false;
+>  	mutex_unlock(&rdtgroup_mutex);
+> @@ -3213,7 +3213,7 @@ static int rdt_get_tree(struct fs_context *fc)
+>  	if (ret)
+>  		goto out_schemata_free;
+>  
+> -	if (resctrl_arch_mon_capable())
+> +	if (resctrl_mon_capable())
+>  		flags |= RFTYPE_MON;
+>  
+>  	ret = rdtgroup_add_files(rdtgroup_default.kn, flags);
+> @@ -3226,7 +3226,7 @@ static int rdt_get_tree(struct fs_context *fc)
+>  	if (ret < 0)
+>  		goto out_closid_exit;
+>  
+> -	if (resctrl_arch_mon_capable()) {
+> +	if (resctrl_mon_capable()) {
+>  		ret = mongroup_create_dir(rdtgroup_default.kn,
+>  					  &rdtgroup_default, "mon_groups",
+>  					  &kn_mongrp);
+> @@ -3246,12 +3246,12 @@ static int rdt_get_tree(struct fs_context *fc)
+>  	if (ret)
+>  		goto out_mondata;
+>  
+> -	if (resctrl_arch_alloc_capable())
+> +	if (resctrl_alloc_capable())
+>  		resctrl_arch_enable_alloc();
+> -	if (resctrl_arch_mon_capable())
+> +	if (resctrl_mon_capable())
+>  		resctrl_arch_enable_mon();
+>  
+> -	if (resctrl_arch_alloc_capable() || resctrl_arch_mon_capable())
+> +	if (resctrl_alloc_capable() || resctrl_mon_capable())
+>  		resctrl_mounted = true;
+>  
+>  	if (resctrl_is_mbm_enabled()) {
+> @@ -3294,10 +3294,10 @@ static int rdt_get_tree(struct fs_context *fc)
+>  	return ret;
+>  
+>  out_mondata:
+> -	if (resctrl_arch_mon_capable())
+> +	if (resctrl_mon_capable())
+>  		kernfs_remove(kn_mondata);
+>  out_mongrp:
+> -	if (resctrl_arch_mon_capable()) {
+> +	if (resctrl_mon_capable()) {
+>  		mon_put_kn_priv();
+>  		rdtgroup_unassign_cntrs(&rdtgroup_default);
+>  		kernfs_remove(kn_mongrp);
+> @@ -3886,7 +3886,7 @@ static int mkdir_rdt_prepare_rmid_alloc(struct rdtgroup *rdtgrp)
+>  {
+>  	int ret;
+>  
+> -	if (!resctrl_arch_mon_capable())
+> +	if (!resctrl_mon_capable())
+>  		return 0;
+>  
+>  	ret = alloc_rmid(rdtgrp->closid);
+> @@ -3911,7 +3911,7 @@ static int mkdir_rdt_prepare_rmid_alloc(struct rdtgroup *rdtgrp)
+>  
+>  static void mkdir_rdt_prepare_rmid_free(struct rdtgroup *rgrp)
+>  {
+> -	if (resctrl_arch_mon_capable()) {
+> +	if (resctrl_mon_capable()) {
+>  		rdtgroup_unassign_cntrs(rgrp);
+>  		free_rmid(rgrp->closid, rgrp->mon.rmid);
+>  	}
+> @@ -4002,7 +4002,7 @@ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
+>  
+>  	if (rtype == RDTCTRL_GROUP) {
+>  		files = RFTYPE_BASE | RFTYPE_CTRL;
+> -		if (resctrl_arch_mon_capable())
+> +		if (resctrl_mon_capable())
+>  			files |= RFTYPE_MON;
+>  	} else {
+>  		files = RFTYPE_BASE | RFTYPE_MON;
+> @@ -4111,7 +4111,7 @@ static int rdtgroup_mkdir_ctrl_mon(struct kernfs_node *parent_kn,
+>  
+>  	list_add(&rdtgrp->rdtgroup_list, &rdt_all_groups);
+>  
+> -	if (resctrl_arch_mon_capable()) {
+> +	if (resctrl_mon_capable()) {
+>  		/*
+>  		 * Create an empty mon_groups directory to hold the subset
+>  		 * of tasks and cpus to monitor.
+> @@ -4152,11 +4152,11 @@ static int rdtgroup_mkdir(struct kernfs_node *parent_kn, const char *name,
+>  	 * allocation is supported, add a control and monitoring
+>  	 * subdirectory
+>  	 */
+> -	if (resctrl_arch_alloc_capable() && parent_kn == rdtgroup_default.kn)
+> +	if (resctrl_alloc_capable() && parent_kn == rdtgroup_default.kn)
+>  		return rdtgroup_mkdir_ctrl_mon(parent_kn, name, mode);
+>  
+>  	/* Else, attempt to add a monitoring subdirectory. */
+> -	if (resctrl_arch_mon_capable())
+> +	if (resctrl_mon_capable())
+>  		return rdtgroup_mkdir_mon(parent_kn, name, mode);
+>  
+>  	return -EPERM;
+> @@ -4571,7 +4571,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+>  	 * If resctrl is mounted, remove all the
+>  	 * per domain monitor data directories.
+>  	 */
+> -	if (resctrl_mounted && resctrl_arch_mon_capable())
+> +	if (resctrl_mounted && resctrl_mon_capable())
+>  		rmdir_mondata_subdir_allrdtgrp(r, hdr);
+>  
+>  	if (r->rid != RDT_RESOURCE_L3)
+> @@ -4708,7 +4708,7 @@ int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr
+>  	 * by rdt_get_tree() calling mkdir_mondata_all().
+>  	 * If resctrl is mounted, add per domain monitor data directories.
+>  	 */
+> -	if (resctrl_mounted && resctrl_arch_mon_capable())
+> +	if (resctrl_mounted && resctrl_mon_capable())
+>  		mkdir_mondata_subdir_allrdtgrp(r, hdr);
+>  
+>  out_unlock:
 
