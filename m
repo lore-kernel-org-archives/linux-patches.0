@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831703;
-	b=GtW6lZ+qQN6uCgI742LflY601wL4KEwiGPHXmIBZKwC5jalbGDBiCT96UnTha/57l1Cs
-	 bMofk+Qf/BgPAKqBfpjZ55GzrMpd8qUXclbvmj7nN+TCIVEcHdBXjScfWuizduNhT5DSo
-	 WtFDk3QL3ivQ/Op/A0HfUTNRpQJ6FxEQQVxfR/oab5JBXJ5H252Zga2McxvlLcZ6J3tuj
-	 p4VrqbBdb7Vq3ftF1/pMRO2nbFErWPA42V3/hHSlx0OLHlaG6BmtME0JGueqyMNkCfL7T
-	 BSrbvdE1Nm2p6A3VhflGcQlH1/BK+wyQjYDQGE0E1XO3hu/wnPJ5ONiyo1DJRYyMTLw==
+	t=1793831706;
+	b=K4nLegZIxyslhLiVRucum6+/wv+mTioLlvDPaDnL2w+wJCsq+wwEUTMsHrs9mVlo+0bz
+	 lIIm/yM1eISymDUf0+99iCC2S4FBgH+1QfUPb3McPKChav+k46zyulmz2fCpxB+Sm6RKU
+	 PcIQOU/QZmQsu8ZVOyxezIEHfLY/U0YeEKZaInDlP0ridXDpGSkNqK71wa/YzEilASmFL
+	 SitSdFoltEm9bCf0W1Ppc7mUtBisjBykzoST6Fuf5m7o15CuL4DkOoZwtn3nMuLYuLCuF
+	 S4bWGabjGrtEAUqcWCk1EzLzBiZ7xJHnzpECHy2YDbZnaYIzDQ3CD81vBTyqNTmcaMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DAwYQNbUrMn1HzTYPQvJPGxwewLz6I23cz52KWZJJ+0=;
-	b=bZYdm/WPrWK7FfD2te660JTKe1mYmEFgrMpo6H5ZyLWsf0JntuBF6JhtpkRXrXLBaRi9
-	 Hepcu2fEqrzywGRj3X7cnqornfPi4ZKyRrxjleEkrdiTm5xWXraL1Y89ErBGcrShL738G
-	 WfnYSenIBKRw/LG2BBP4iYPSxJyigdsq8w5NBF87MolmX9YQiDeuLjvR5CzAT2vEWxSMv
-	 DDXp5DbANxhxIn7Xf1GqnGRSLL2UETmiq4E5otgoPomufMgdaEmHOF7MOQ0f0IvLZdUQ1
-	 hq4MgJyO96WYhetx+SrkM9E+yB6erkzAMrIGp8Ke81wnOPKOa7A+eMkjhw1CT+AIWAg==
+	bh=8uCRAk/uX7Rhs5ToHGLQfnc/sOOkukOEJ6ZnlGiwi7s=;
+	b=ipibbbNbIkY/s+bDWdktx5/aXKOnDqjgQQq7HSai1c9FeRZql0QoGOF7pLnbSb8f1ybn
+	 Kcy6uUZJnZ91tZQW42vEQoIXYHYsBtdCk4dQFOAtJKluHXZDuSK8sPZGEGvcyxb74MdhK
+	 UiSe9MDO+hqLPXYLnlEegguzQuL9iSK/avIKc9BeVpwJ5hD0soaEBj0LjDwsaB+bEwhdJ
+	 W88RXzqvdps1iAlMW07L/sr1Id38Xt4B1c1U1sTCTmMytxrcg74nAuMBiuoMWNcRMY20G
+	 mFAfUH68Yu4ab80H4j9/hp+uLLCbsHmBCZPpkMdA5YLNQLyzzA60gsIGDUBK65vd6Bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RXwPIsd/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfdCB4wO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DB1606D826;
-	Wed,  4 Nov 2026 22:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8C2606AB14;
+	Wed,  4 Nov 2026 22:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RXwPIsd/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF041F000C1;
-	Wed,  4 Nov 2026 22:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dfdCB4wO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6831F000C1;
+	Wed,  4 Nov 2026 22:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831702;
-	bh=DAwYQNbUrMn1HzTYPQvJPGxwewLz6I23cz52KWZJJ+0=;
+	s=korg; t=1793831705;
+	bh=8uCRAk/uX7Rhs5ToHGLQfnc/sOOkukOEJ6ZnlGiwi7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXwPIsd/BMRR26u8ADtYvV1pMusX6hxoDbugMxbSsUOnljxmmcqSDqWnVdY3CCarg
-	 jgL2GUSNOUDwrCZi/7/2IQPM74J3E9D+CE1wh/AYxINJPuspAstX1bpivD+c5xqBPx
-	 Ak0EZVRzIX7FN27McsU4vs1YOeuZKWp4NxGLD+bU=
+	b=dfdCB4wOmFdbYUf+4O3mDWLLQr63kUqwcfR20YQikxmAMSnSt7N/fKMU1AVSUkPhI
+	 ko80BII4WV0BuEu/N/nNU1iUWo88e/UFISGhKB/xRNyCb7qY+757A46RBN+BlSc6wZ
+	 7JQakgJjxlILhumV/7zkPp3mjYBmi0W/Qwk26UbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0864/1005] xfs: reattach dquots after changing inode ids
-Date: Wed,  4 Nov 2026 16:09:57 -0500
-Message-ID: <20261104211107.476959728@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.18 0865/1005] x86/bugs: Adapt SRSO mitigation to Zen6
+Date: Wed,  4 Nov 2026 16:09:58 -0500
+Message-ID: <20261104211107.505106260@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,185 +66,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 2f528e4a8f89daa6d0cc64b044f6f94c018fe9ae upstream.
+commit ae1d2082d93bc04604dc08e9b7f9cdba5e0c28e6 upstream.
 
-LOLLM noticed that xrep_inode_ids can change the user, group, or project
-id of any given file.  When this happens, we need to detach any existing
-incore dquot and attach the correct ones.
+Zen6 has BTB protection which isolates the different contexts
+(user/kernel, guest/host) from one another. This makes the SafeRET
+mitigation there unnecessary leaving the user/user and guest/guest
+attack vectors open, whose protection is handled by the Spectre v2
+mitigation setting to do IBPB on a context switch.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: 2d295fe65776d1 ("xfs: repair inode records")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Detect that setting and report it with a new mitigation string.
+
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260822013231.1109255-1-bp@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/inode_repair.c |  133 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 132 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/cpufeatures.h |    1 +
+ arch/x86/kernel/cpu/bugs.c         |   18 ++++++++++++++++--
+ arch/x86/kernel/cpu/scattered.c    |    1 +
+ 3 files changed, 18 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/inode_repair.c
-+++ b/fs/xfs/scrub/inode_repair.c
-@@ -41,6 +41,8 @@
- #include "xfs_rtgroup.h"
- #include "xfs_rtrmap_btree.h"
- #include "xfs_rtrefcount_btree.h"
-+#include "xfs_dquot_item.h"
-+#include "xfs_dquot.h"
- #include "scrub/xfs_scrub.h"
- #include "scrub/scrub.h"
- #include "scrub/common.h"
-@@ -1762,6 +1764,20 @@ xrep_inode_ids(
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -411,6 +411,7 @@
+ #define X86_FEATURE_OVERFLOW_RECOV	(17*32+ 0) /* "overflow_recov" MCA overflow recovery support */
+ #define X86_FEATURE_SUCCOR		(17*32+ 1) /* "succor" Uncorrectable error containment and recovery */
+ #define X86_FEATURE_SMCA		(17*32+ 3) /* "smca" Scalable MCA */
++#define X86_FEATURE_BTB_CTX_ISOLATION	(17*32+ 4) /* AMD: Branch predictions contexts isolated */
  
- 	trace_xrep_inode_ids(sc);
+ /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX), word 18 */
+ #define X86_FEATURE_AVX512_4VNNIW	(18*32+ 2) /* "avx512_4vnniw" AVX-512 Neural Network Instructions */
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1320,6 +1320,7 @@ enum srso_mitigation {
+ 	SRSO_MITIGATION_IBPB,
+ 	SRSO_MITIGATION_IBPB_ON_VMEXIT,
+ 	SRSO_MITIGATION_BP_SPEC_REDUCE,
++	SRSO_MITIGATION_USER_IBPB,
+ };
+ 
+ static enum srso_mitigation srso_mitigation __ro_after_init = SRSO_MITIGATION_AUTO;
+@@ -3055,7 +3056,8 @@ static const char * const srso_strings[]
+ 	[SRSO_MITIGATION_SAFE_RET]		= "Mitigation: Safe RET",
+ 	[SRSO_MITIGATION_IBPB]			= "Mitigation: IBPB",
+ 	[SRSO_MITIGATION_IBPB_ON_VMEXIT]	= "Mitigation: IBPB on VMEXIT only",
+-	[SRSO_MITIGATION_BP_SPEC_REDUCE]	= "Mitigation: Reduced Speculation"
++	[SRSO_MITIGATION_BP_SPEC_REDUCE]	= "Mitigation: Reduced Speculation",
++	[SRSO_MITIGATION_USER_IBPB]		= "Mitigation: IBPB on context switch",
+ };
+ 
+ static int __init srso_parse_cmdline(char *str)
+@@ -3095,7 +3097,9 @@ static void __init srso_select_mitigatio
+ 		 * required.  Otherwise the 'microcode' mitigation is sufficient
+ 		 * to protect the user->user and guest->guest vectors.
+ 		 */
+-		if (cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST) ||
++		if ((cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST) &&
++		    !boot_cpu_has(X86_FEATURE_BTB_CTX_ISOLATION))
++					||
+ 		    (cpu_attack_vector_mitigated(CPU_MITIGATE_USER_KERNEL) &&
+ 		     !boot_cpu_has(X86_FEATURE_SRSO_USER_KERNEL_NO))) {
+ 			srso_mitigation = SRSO_MITIGATION_SAFE_RET;
+@@ -3171,6 +3175,16 @@ static void __init srso_update_mitigatio
+ 	    boot_cpu_has(X86_FEATURE_IBPB_BRTYPE))
+ 		srso_mitigation = SRSO_MITIGATION_IBPB;
  
 +	/*
-+	 * We changed one of the file IDs, so we must detach the dquots to
-+	 * prevent further changes from being accounted to them, and try to
-+	 * attach the dquot for the new id to absorb any other block usage
-+	 * changes.  We can't do that right now because the existing dquots
-+	 * might be attached to the scrub transaction and we're in the middle
-+	 * of fixing the inode, so we'll switch the incore dquot pointers
-+	 * later.
-+	 *
-+	 * Schedule a quotacheck so the accounting discrepancies will get fixed
-+	 * eventually.  We'll have to repeat this later when we do the actual
-+	 * switch.
++	 * See if IBPB on context switch is the only thing needed to address
++	 * GUEST/GUEST and USER/USER vectors.
 +	 */
++	if (srso_mitigation == SRSO_MITIGATION_MICROCODE  &&
++	    boot_cpu_has(X86_FEATURE_SRSO_USER_KERNEL_NO) &&
++	    boot_cpu_has(X86_FEATURE_BTB_CTX_ISOLATION) &&
++	    spectre_v2_user_ibpb != SPECTRE_V2_USER_NONE)
++		srso_mitigation = SRSO_MITIGATION_USER_IBPB;
 +
- 	if (!uid_valid(VFS_I(sc->ip)->i_uid)) {
- 		i_uid_write(VFS_I(sc->ip), 0);
- 		dirty = true;
-@@ -2072,6 +2088,113 @@ xrep_inode_unlinked(
- 	return 0;
+ 	pr_info("%s\n", srso_strings[srso_mitigation]);
  }
  
-+#ifdef CONFIG_XFS_QUOTA
-+static inline bool
-+xrep_inode_need_reset_dquots(
-+	struct xfs_scrub	*sc)
-+{
-+	struct xfs_mount	*mp = sc->mp;
-+	struct xfs_inode	*ip = sc->ip;
-+
-+	if (!XFS_IS_QUOTA_ON(mp))
-+		return false;
-+	if (xfs_is_quota_inode(&mp->m_sb, I_INO(ip)))
-+		return false;
-+	if (xfs_is_metadir_inode(ip))
-+		return false;
-+
-+	if (XFS_IS_UQUOTA_ON(sc->mp) &&
-+	    (!ip->i_udquot || ip->i_udquot->q_id != i_uid_read(VFS_I(ip))))
-+		return true;
-+	if (XFS_IS_GQUOTA_ON(sc->mp) &&
-+	    (!ip->i_gdquot || ip->i_gdquot->q_id != i_gid_read(VFS_I(ip))))
-+		return true;
-+	if (XFS_IS_PQUOTA_ON(sc->mp) &&
-+	    (!ip->i_pdquot || ip->i_pdquot->q_id != ip->i_projid))
-+		return true;
-+
-+	return false;
-+}
-+
-+/* Switch dquot, return dqtype if we need quotacheck */
-+static xfs_dqtype_t
-+xrep_inode_switch_dquot(
-+	struct xfs_scrub	*sc,
-+	xfs_dqtype_t		type,
-+	struct xfs_dquot	**dqp)
-+{
-+	xfs_dqtype_t		ret = 0;
-+	xfs_dqid_t		id = xfs_qm_id_for_quotatype(sc->ip, type);
-+
-+	if (*dqp != NULL && (*dqp)->q_id != id) {
-+		xfs_qm_dqrele(*dqp);
-+		*dqp = NULL;
-+	}
-+
-+	if (!*dqp) {
-+		xfs_qm_dqget_inode(sc->ip, type, true, dqp);
-+		ret = type;
-+	}
-+	return ret;
-+}
-+
-+static int
-+xrep_inode_reset_dquots(
-+	struct xfs_scrub	*sc)
-+{
-+	xfs_dqtype_t		need = 0;
-+	int			error;
-+
-+	/*
-+	 * If we changed the file IDs, then we need to drop the transaction so
-+	 * that we can detach the dquots and attach new ones.
-+	 *
-+	 * Commit the scrub transaction so that there are no dangling
-+	 * references to any dquots that might get detached, and retain the
-+	 * ILOCK, as required by the dqattach code.
-+	 *
-+	 * Note that dqattach can cycle the ILOCK when creating a new dquot, so
-+	 * this must be the very last thing that the repair function does.
-+	 */
-+	error = xrep_trans_commit(sc);
-+	if (error)
-+		return error;
-+
-+	if (XFS_IS_UQUOTA_ON(sc->mp))
-+		need |= xrep_inode_switch_dquot(sc, XFS_DQTYPE_USER,
-+				&sc->ip->i_udquot);
-+	if (XFS_IS_GQUOTA_ON(sc->mp))
-+		need |= xrep_inode_switch_dquot(sc, XFS_DQTYPE_GROUP,
-+				&sc->ip->i_gdquot);
-+	if (XFS_IS_PQUOTA_ON(sc->mp))
-+		need |= xrep_inode_switch_dquot(sc, XFS_DQTYPE_PROJ,
-+				&sc->ip->i_pdquot);
-+
-+	xchk_iunlock(sc, XFS_ILOCK_EXCL);
-+
-+	/*
-+	 * Now that we've updated the dquots, force quotacheck once again.
-+	 * In theory we could be racing against a concurrent quotacheck.
-+	 * Note that we can't hold the ILOCK when allocating a transaction.
-+	 */
-+	error = xchk_trans_alloc(sc, 0);
-+	if (error)
-+		return error;
-+
-+	if (need & XFS_DQTYPE_USER)
-+		xrep_force_quotacheck(sc, XFS_DQTYPE_USER);
-+	if (need & XFS_DQTYPE_GROUP)
-+		xrep_force_quotacheck(sc, XFS_DQTYPE_GROUP);
-+	if (need & XFS_DQTYPE_PROJ)
-+		xrep_force_quotacheck(sc, XFS_DQTYPE_PROJ);
-+
-+	return 0;
-+}
-+#else
-+# define xrep_inode_need_reset_dquots(sc)	(false)
-+# define xrep_inode_reset_dquots(sc)		(0)
-+#endif
-+
- /* Repair an inode's fields. */
- int
- xrep_inode(
-@@ -2126,5 +2249,13 @@ xrep_inode(
- 	if (error)
- 		return error;
- 
--	return xrep_defer_finish(sc);
-+	error = xrep_defer_finish(sc);
-+	if (error)
-+		return error;
-+
-+	/* Must come last */
-+	if (xrep_inode_need_reset_dquots(sc))
-+		return xrep_inode_reset_dquots(sc);
-+
-+	return 0;
- }
+--- a/arch/x86/kernel/cpu/scattered.c
++++ b/arch/x86/kernel/cpu/scattered.c
+@@ -56,6 +56,7 @@ static const struct cpuid_bit cpuid_bits
+ 	{ X86_FEATURE_TSA_SQ_NO,		CPUID_ECX,  1, 0x80000021, 0 },
+ 	{ X86_FEATURE_TSA_L1_NO,		CPUID_ECX,  2, 0x80000021, 0 },
+ 	{ X86_FEATURE_AMD_WORKLOAD_CLASS,	CPUID_EAX, 22, 0x80000021, 0 },
++	{ X86_FEATURE_BTB_CTX_ISOLATION,	CPUID_ECX,  8, 0x80000021, 0 },
+ 	{ X86_FEATURE_PERFMON_V2,		CPUID_EAX,  0, 0x80000022, 0 },
+ 	{ X86_FEATURE_AMD_LBR_V2,		CPUID_EAX,  1, 0x80000022, 0 },
+ 	{ X86_FEATURE_AMD_LBR_PMC_FREEZE,	CPUID_EAX,  2, 0x80000022, 0 },
 
 
