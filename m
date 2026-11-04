@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829595;
-	b=ipeBZ34v1eNpqfqBvohZIw3B+JwjQta4rmCUBYCrj0jcistNj5W5fUN0uive67BSK7w1
-	 5MFgu8OxwwPQEe91W4AqL8weEntS0l3p5yTFc/EGty+1Nsy5eRi/uP5Sh8Hb+g4TdSo+Q
-	 uLf5VbhJT1x6dnq3njJmN8KV2FEFPt6cp9lny78M557u8DghtXTSkozFAVfs9Xj882zC7
-	 2Isq6IBQX5XVrGe3ZS0tzoOJp2I+Bh7WRb2C7qC3srBH/SGRy7yjd76Y21gO72u5VDxYy
-	 OXZuWpG5SaxhZ/dgqnLv4zJ7EN7s7UGwpb4UXtm7D73spXjcrOoPuUF8KwJmMFUKvog==
+	t=1793829596;
+	b=O1TTYixC9IIfY9VtxGzfYkbWYL2xn4uti62Kr9dLu7PLswcDmPdFzPcWUNzXKAzmX+h/
+	 ZF8CkVi2gzxICDb0UAKYfkkGrEFAZBj5q8CKgNFl50dHJV8iQgrCUtl+qMvCNm9Fjz9nt
+	 0K/6Rg8ExCCmCn1oOMwPuZD09rPeKjpLE3G/ZrEUswMtRiDfB0KCvLExpS6pUNZmHenjt
+	 HSYSYVlqYjFiqDucSERCBhI1SWRzXfuCNZKiKDqR2EJ79ah+T+yWTRTOSXkj05DJgxjUz
+	 qlIFgLg+m7Ikoe+SVUUbaeA6Dzm4BZkBhkEdczwypN+honNPR7uzERgszDC9G0qtHrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qEzi563bCPQ8ndRWlhrYL+hMeDMPS3Gp6OO0AyW550k=;
-	b=4wjQowXmS/exsVJwve0a/L2IZSf7eymsuQOezecskzZDxAzyu6p7zVYX5W7ERtdr5HdA
-	 ZSF0VLtAxBkzlqy2TFLoJWhwsqyGCtwDCySxiZ9f2Sc5kGtOFof5kXqVvtn7d2iFczlhz
-	 jC+NsARGIKdqqrLF7/0iIxymyM2lJTF3uo59J3MpMjGJ1SkO84GsbqwwNyF5k5bBJGeaR
-	 nb4hvOaxQLaOOpOAc42xqe50qz4hBwcRwt4zLum5Xn6XrT+zIoQ+dV8OhwC40LMikL7Xk
-	 EQXocyHVv0KsoeGUQpJEvDGVxfi2G0E9rYvdUjUpbUZDuLuZ3QGPDOEZjlnt+/ZkSIA==
+	bh=rvfNQ5FTDVkjwgoQok7EkLoscfbfeF82B21ENE/pyB0=;
+	b=CDku9/lonxFs1erCAcd7YqOJetylB9kYJbzLBNV7Pf+HmsOPHcciUObBCEa9nBPoM4h4
+	 OFSGFY18vBPQJ4zKbUAGqgVeI8OXcAEWfWnPPWid0bgTZvcYT1PQljLvsnu6jRNCTc9eg
+	 WHohC93A/SdKEvidZw+xoK+fDS0HdmhmkQV6pk9PKW7h28Oi/zOz7GA3QFPEfBCQdpMY7
+	 6L0Uxdru/CS/PgPoJ+0+vQnQm7vvAxvE40FbZkouaotU+gFE2U5KWOpReF+x6QGgPdMSp
+	 /tT+7reClIijPCBsGg3BVGzNiP2FQGAOr7yUnV4WVPvDKF7Jgy+v+J989NBrSsHCypQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WniIk3XT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MNJfWET8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AFF607525D;
-	Wed,  4 Nov 2026 21:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D99606B2D2;
+	Wed,  4 Nov 2026 21:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WniIk3XT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5A31F00A15;
-	Wed,  4 Nov 2026 21:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MNJfWET8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E0A1F0093A;
+	Wed,  4 Nov 2026 21:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829594;
-	bh=qEzi563bCPQ8ndRWlhrYL+hMeDMPS3Gp6OO0AyW550k=;
+	s=korg; t=1793829596;
+	bh=rvfNQ5FTDVkjwgoQok7EkLoscfbfeF82B21ENE/pyB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WniIk3XT32lpHOUC9GM8mqeLAdNMmH0+VgAmFZaibNaalXwvVY0Rfel/F3Hrkt3pp
-	 637ZRa7Qoz3PHyqOpx7vj9QK4fX2i9fOeot7Pp74h5Fwhthz1j6fE6HlaLovWHDsUi
-	 2txbk9ejT5BmKKAhmx8L7elNYySf3dcUocvxTDME=
+	b=MNJfWET8/ZdC7TGurfnQhf1RzZq3xlV3LVVHgPexKka5A44y6rrpRGvB2LkzsvzkU
+	 rMojU/V7omSdb9yqYxaqe5YSUN4NtAv77OEUsLa6BsFZJ+danJkEeNAGIAW7ibh0WP
+	 qpd5tkkqeDMIMWo1M9gqUays6cl4fNpQeZIYjxLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0175/1005] uio: sercos3: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 15:58:28 -0500
-Message-ID: <20261104211048.677435495@linuxfoundation.org>
+Subject: [PATCH 6.18 0218/1005] net: sfp: add quirk for HORACO copper SFP+ module
+Date: Wed,  4 Nov 2026 15:59:11 -0500
+Message-ID: <20261104211049.923766082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,41 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit a432f68c51fc6761658445e80a798b8425fdb3dc ]
+[ Upstream commit 1bb028baab541900d3603d4f93c1c0fb5aba5401 ]
 
-The driver has a match table for the pci bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+Add quirk for a copper SFP+ module that identifies itself as "OEM"
+"HC-10GE-113C". It uses RollBall protocol to talk to the PHY.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
-
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704152642.54769-1-pengpeng@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260719100158.874882-1-olek2@wp.pl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio_sercos3.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/phy/sfp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/uio/uio_sercos3.c b/drivers/uio/uio_sercos3.c
-index 12afc2fa1a0bb..80087897f9b86 100644
---- a/drivers/uio/uio_sercos3.c
-+++ b/drivers/uio/uio_sercos3.c
-@@ -212,6 +212,7 @@ static const struct pci_device_id sercos3_pci_ids[] = {
- 	},
- 	{ 0, }
- };
-+MODULE_DEVICE_TABLE(pci, sercos3_pci_ids);
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index af43530ffb2c3..195468bde2f29 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -576,6 +576,9 @@ static const struct sfp_quirk sfp_quirks[] = {
  
- static struct pci_driver sercos3_pci_driver = {
- 	.name = "sercos3",
+ 	SFP_QUIRK_F("YV", "SFP+ONU-XGSPON", sfp_fixup_potron),
+ 
++	// HORACO HC-10GE-113C uses Rollball protocol to talk to the PHY.
++	SFP_QUIRK_F("OEM", "HC-10GE-113C", sfp_fixup_rollball),
++
+ 	// OEM SFP-GE-T is a 1000Base-T module with broken TX_FAULT indicator
+ 	SFP_QUIRK_F("OEM", "SFP-GE-T", sfp_fixup_ignore_tx_fault),
+ 
 -- 
 2.53.0
 
