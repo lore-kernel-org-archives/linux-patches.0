@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829683;
-	b=i4IQKy4kimvDbKzqh3lHN3uUCjmGAg9TAOv1iix1gGSlRrinzkeCuNOM+ANuAxiLChvM
-	 wcmFMVduHxAxtGsgIbbaqVKG2SA4dzHKNPnGhDpBDDNU6zVxXBDSki/oztsAnmafS6TBb
-	 2lviF83jkZe/WHtXEMs6V0kdCT5pl/ugVkQqf7Ex9oYzFiqGgAN7kbLPSRLyPEeEZxhAK
-	 hKatkXfUT1fNjfrV+D2XBzPFvbl5jZohWY7VXdAlqSJs7jmMN4TP+upfDr8BVAmTA3v3F
-	 wP2bEomb76rKT6yhecCt2mo5YxsypaeCItj78VQEGa1Cmd4kQJ8B2vG/jhyxopFTgpw==
+	t=1793829684;
+	b=pwANXIdac3wq7a6kbwJ/RqSYgV1765wiKgkS3VHLq9/cWqH2ScApZ+yJ3EcYoWxn0HYA
+	 961lqm3kpk2i+zN1ldklNllt/u0cs966E4tm8PyW2FaRu9zkbufpRXTjhT3+AbCmHRwTo
+	 S6+dstUNIisuYozQ7FX3AQjuHdQ/vDCElvltZcDw0+t0XBGo/s6dO30s6OgirfEKaO5UQ
+	 5JCiZ36YalAgfjXB5PpwyGcqMre5VTPwpBoi4xcmBlLkdjEs1aB1UxxAK4Y1QmAVwXyru
+	 nPWZz3k0GUKWX8r+MsRx4bxMO1dYDQXmocB6daVqPHabXKZPCdUKb3gjNsYRXBdTSLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829684;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+hGkb598rogNG1289OXy6UACol8IF7fyoX+icDPOuvo=;
-	b=l6SCgQNgiSos2/TdUiOemzCYDB0zq+SlouycfibVdFYdvGn7w0zJTGY0H1PVRzzXMWq3
-	 H0oxwjy7irt2U654d8obKotR1MV2APHyAY+W7W/FWwVfHtcz7B/Dhd1AJyAlB11MaeJfP
-	 qX2Y4UHgr+kLyJxbHI7ghkB7sIv4w+dkwodig5w3Wwbichok7IORJPFwrIwhGNmtcFPqc
-	 f391tFU05QxIffWT0Y7byKq5G+LlavmufA0yOf3n7NmZ8PCabg9mFzZPt/zEZI9UloxQH
-	 +s9EyRQasy8Ke26Sl36qLb/O6JfkuWP24A2KoIYZzydHgfWPZktzcd/pwf9UPTO4DMQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=uGnq5ZjKhLLO18ST69KcJHPCVszO4DLAdJMXiTGwIoA=;
+	b=FGuWd+Ymkf4MvhJ9Aw7umuUpAzmeMcQL5qpyiqVu1nBm3RmxFuJYUPo1Fm3G9hO7TLG5
+	 8UBD8EXGSQvgz514LEutNowdo3Bdjcpb+wWL0cSGzb7mmiUEup/2/jK1Vr06yVnl4HJGu
+	 bbY9BhOxISL8i8YODs/tMi9on6/mXU4RHaVAdTJreQ+qPiVpkc0WMSjGC7PCQwnLpFtBa
+	 PAsWdSSF3y9JOtxD8NgvJU1+XFGksFlMWYcCrYnEF1MpkGLtV58tvMHHCBDoyPUcRAW/7
+	 z6yh2c85RMw4KX3QVhKh7YUlqyoB38aNGQ49rlirdmoSLhzsbdIb1lrW49w0mnF+8yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CjIHnRLC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SsqC13T0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB38B606EE91;
-	Wed,  4 Nov 2026 22:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5485B606EE91;
+	Wed,  4 Nov 2026 22:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CjIHnRLC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E051F000C1;
-	Wed,  4 Nov 2026 22:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SsqC13T0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3711F00919;
+	Wed,  4 Nov 2026 22:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829682;
-	bh=+hGkb598rogNG1289OXy6UACol8IF7fyoX+icDPOuvo=;
+	s=korg; t=1793829684;
+	bh=uGnq5ZjKhLLO18ST69KcJHPCVszO4DLAdJMXiTGwIoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CjIHnRLCI5SLnyxUp71MLqibw23M190Zm9Krgw7XQ1JoQtPhJCbzQt7z5p47rdz1U
-	 wPKR7mm20knk+kneaWU8PIvTFjPXCMnp02N6W47PP1xP0GzFlkbFIyDQpYeN2E5wJp
-	 upfdSS0LJznMi7xi6BOFLDuHzKTD9bhrAEm6Jm6M=
+	b=SsqC13T0GZ4SOam238/L0asvdkqQQff6Ca8WCPLCnQ9P/bXtTOoBaWVvm3okt7AXh
+	 23O2C44eeD0G7OmKTyieDHm4vKMLYtzMOfl2zwTTtuNItavkQiJWc9l377VOiz3Swd
+	 9VKQqhdaePvS36vz+6UEmUrqldUn990DoQy7QdDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Brian Masney <bmasney@redhat.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0278/1005] platform/x86: dell-smbios-wmi: Fix chardev resource management
-Date: Wed,  4 Nov 2026 16:00:11 -0500
-Message-ID: <20261104211051.679284046@linuxfoundation.org>
+Subject: [PATCH 6.18 0261/1005] clk: imx: imx8qxp: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 15:59:54 -0500
+Message-ID: <20261104211051.178777158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -63,212 +63,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 41427211f663c6eb36986ca2ea68d7e87aac52e9 ]
+[ Upstream commit cd21fdcbef3fb32136f72075ab668b075423b3f6 ]
 
-When unbinding the WMI driver while a userspace application has
-an open file descriptor for the character device, a UAF occurs:
+The driver has a match table for the of bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-KASAN: slab-use-after-free in _copy_to_user from platform/x86/dell-smbios-wmi
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-The reason for this is that even after calling misc_deregister(),
-userspace appications can still call read() and/or ioctl() on open
-file descriptors associated with the already unregistered character
-device. This causes a UAF by attempting to access the already freed
-state container of the WMI driver.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-Fix this by no longer storing the state container inside
-filp->private_data. Instead retrieve the state container using
-get_first_smbios_priv() and return -ENODEV if the state container
-does not exist anymore.
-
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/platform-driver-x86/178144969601.60470.13396800403157907003@gmail.com/
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20260720131921.368000-2-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Link: https://patch.msgid.link/20260705001705.70400-1-pengpeng@iscas.ac.cn
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-smbios-wmi.c | 67 +++++++++++----------
- 1 file changed, 34 insertions(+), 33 deletions(-)
+ drivers/clk/imx/clk-imx8qxp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/dell/dell-smbios-wmi.c b/drivers/platform/x86/dell/dell-smbios-wmi.c
-index a7dca8c59d602..0729c5a1945c7 100644
---- a/drivers/platform/x86/dell/dell-smbios-wmi.c
-+++ b/drivers/platform/x86/dell/dell-smbios-wmi.c
-@@ -6,6 +6,7 @@
-  */
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/dmi.h>
- #include <linux/fs.h>
-@@ -13,14 +14,13 @@
- #include <linux/miscdevice.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
-+#include <linux/rwsem.h>
- #include <linux/uaccess.h>
- #include <linux/wmi.h>
- #include <uapi/linux/wmi.h>
- #include "dell-smbios.h"
- #include "dell-wmi-descriptor.h"
- 
--static DEFINE_MUTEX(call_mutex);
--static DEFINE_MUTEX(list_mutex);
- static int wmi_supported;
- 
- struct misc_bios_flags_structure {
-@@ -32,6 +32,7 @@ struct misc_bios_flags_structure {
- #define DELL_WMI_SMBIOS_GUID "A80593CE-A997-11DA-B012-B622A1EF5492"
- 
- struct wmi_smbios_priv {
-+	struct mutex call_lock; /* Protects the content of the SMBIOS buffer */
- 	struct dell_wmi_smbios_buffer *buf;
- 	struct list_head list;
- 	struct wmi_device *wdev;
-@@ -39,6 +40,8 @@ struct wmi_smbios_priv {
- 	u64 req_buf_size;
- 	struct miscdevice char_dev;
+diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
+index 3ae162625bb1a..15b08fc02f920 100644
+--- a/drivers/clk/imx/clk-imx8qxp.c
++++ b/drivers/clk/imx/clk-imx8qxp.c
+@@ -337,6 +337,7 @@ static const struct of_device_id imx8qxp_match[] = {
+ 	{ .compatible = "fsl,imx8qm-clk", &imx_clk_scu_rsrc_imx8qm, },
+ 	{ /* sentinel */ }
  };
-+
-+static DECLARE_RWSEM(list_lock);	/* Protects access to wmi_list */
- static LIST_HEAD(wmi_list);
++MODULE_DEVICE_TABLE(of, imx8qxp_match);
  
- static inline struct wmi_smbios_priv *get_first_smbios_priv(void)
-@@ -93,40 +96,35 @@ static int dell_smbios_wmi_call(struct calling_interface_buffer *buffer)
- 	size_t size;
- 	int ret;
- 
--	mutex_lock(&call_mutex);
-+	guard(rwsem_read)(&list_lock);
-+
- 	priv = get_first_smbios_priv();
--	if (!priv) {
--		ret = -ENODEV;
--		goto out_wmi_call;
--	}
-+	if (!priv)
-+		return -ENODEV;
- 
- 	size = sizeof(struct calling_interface_buffer);
- 	difference = priv->req_buf_size - sizeof(u64) - size;
- 
-+	guard(mutex)(&priv->call_lock);
-+
- 	memset(&priv->buf->ext, 0, difference);
- 	memcpy(&priv->buf->std, buffer, size);
- 	ret = run_smbios_call(priv->wdev);
- 	memcpy(buffer, &priv->buf->std, size);
--out_wmi_call:
--	mutex_unlock(&call_mutex);
- 
- 	return ret;
- }
- 
--static int dell_smbios_wmi_open(struct inode *inode, struct file *filp)
-+static ssize_t dell_smbios_wmi_read(struct file *filp, char __user *buffer, size_t length,
-+				    loff_t *offset)
- {
- 	struct wmi_smbios_priv *priv;
- 
--	priv = container_of(filp->private_data, struct wmi_smbios_priv, char_dev);
--	filp->private_data = priv;
-+	guard(rwsem_read)(&list_lock);
- 
--	return nonseekable_open(inode, filp);
--}
--
--static ssize_t dell_smbios_wmi_read(struct file *filp, char __user *buffer, size_t length,
--				    loff_t *offset)
--{
--	struct wmi_smbios_priv *priv = filp->private_data;
-+	priv = get_first_smbios_priv();
-+	if (!priv)
-+		return -ENODEV;
- 
- 	return simple_read_from_buffer(buffer, length, offset, &priv->req_buf_size,
- 				       sizeof(priv->req_buf_size));
-@@ -173,22 +171,24 @@ static long dell_smbios_wmi_do_ioctl(struct wmi_smbios_priv *priv,
- static long dell_smbios_wmi_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- {
- 	struct dell_wmi_smbios_buffer __user *input = (struct dell_wmi_smbios_buffer __user *)arg;
--	struct wmi_smbios_priv *priv = filp->private_data;
--	long ret;
-+	struct wmi_smbios_priv *priv;
- 
- 	if (cmd != DELL_WMI_SMBIOS_CMD)
- 		return -ENOIOCTLCMD;
- 
--	mutex_lock(&call_mutex);
--	ret = dell_smbios_wmi_do_ioctl(priv, input);
--	mutex_unlock(&call_mutex);
-+	guard(rwsem_read)(&list_lock);
- 
--	return ret;
-+	priv = get_first_smbios_priv();
-+	if (!priv)
-+		return -ENODEV;
-+
-+	guard(mutex)(&priv->call_lock);
-+
-+	return dell_smbios_wmi_do_ioctl(priv, input);
- }
- 
- static const struct file_operations dell_smbios_wmi_fops = {
- 	.owner		= THIS_MODULE,
--	.open		= dell_smbios_wmi_open,
- 	.read		= dell_smbios_wmi_read,
- 	.unlocked_ioctl	= dell_smbios_wmi_ioctl,
- 	.compat_ioctl	= compat_ptr_ioctl,
-@@ -260,6 +260,10 @@ static int dell_smbios_wmi_probe(struct wmi_device *wdev, const void *context)
- 	if (!priv->buf)
- 		return -ENOMEM;
- 
-+	ret = devm_mutex_init(&wdev->dev, &priv->call_lock);
-+	if (ret)
-+		return ret;
-+
- 	ret = dell_smbios_wmi_register_chardev(priv);
- 	if (ret)
- 		return ret;
-@@ -268,9 +272,8 @@ static int dell_smbios_wmi_probe(struct wmi_device *wdev, const void *context)
- 	if (ret)
- 		return ret;
- 
--	mutex_lock(&list_mutex);
-+	guard(rwsem_write)(&list_lock);
- 	list_add_tail(&priv->list, &wmi_list);
--	mutex_unlock(&list_mutex);
- 
- 	return 0;
- }
-@@ -279,12 +282,10 @@ static void dell_smbios_wmi_remove(struct wmi_device *wdev)
- {
- 	struct wmi_smbios_priv *priv = dev_get_drvdata(&wdev->dev);
- 
--	mutex_lock(&call_mutex);
--	mutex_lock(&list_mutex);
--	list_del(&priv->list);
--	mutex_unlock(&list_mutex);
- 	dell_smbios_unregister_device(&wdev->dev);
--	mutex_unlock(&call_mutex);
-+
-+	guard(rwsem_write)(&list_lock);
-+	list_del(&priv->list);
- }
- 
- static const struct wmi_device_id dell_smbios_wmi_id_table[] = {
+ static struct platform_driver imx8qxp_clk_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
