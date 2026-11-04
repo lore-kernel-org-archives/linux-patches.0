@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831842;
-	b=zUgxvAak5a5Atfu/dV9OVdepPlj+SSr8LY70v/VIlewC8oNPz+KB/q0nL90u0FfHRSLx
-	 Wq1CUMYENIz3gBS7DbwH9ZhF2kbuGAa2mPyV7gSQvpax7SbzilCfmrnm0n5SBP4ywxutZ
-	 0EYyqEzxnDxRw/CMjdBYRhOwW6SpBrq8Wm+WU4c+bJqRKNe5izlqxwHortsiCYptW7fns
-	 QRi8k6K55U8lRTxR8pau0FpVxe1LLMFigOKUsYC8vA/7NJCaCY2XCoBibGT/iEIQkAz/3
-	 m2ryjH6hVsfcSPpqDpUxnJQGZ7QadYME27qF3lhSw4Yj/X9OeiFQ9ZQw0pzA9Q1x9Kg==
+	t=1793831843;
+	b=X5EtgkiJu7UFG6tUEo7AQxpIeKl/vegh6hRjwT1A/nQS3xJNH9vglIIyEF6qF8ALle/1
+	 rXejyNUFZKZiJo75Gzs9AXAsEPnGnCazjMWo2KTSpgEhKoyn3QBlt9ytfeMGu+RzpQBou
+	 Tb/t50cDNYthvlEielXg+d1RYGRJSikSjhVzOM3u3NmMRTZbzpp6md7DHjDCMgcPk/HZ7
+	 /6fmZ8ArotNFQIVqd/tPpefITR92u3we0iLfH/8keMon31JfK8qjjvXFMMtGhl+/RCsuL
+	 r6XgSfR8eUXTU6cyvFexgnt8QS9wQAv2cLNR0hDRDV8sQlPZPOj7iO8gXy+j8+jnz4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831843;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kEvxlMu6IzgejWQPet3UbVnjxpwm/xjynPbmvDCfogk=;
-	b=D1Q2r5BHFqcWOW9ZEkT3FrltFudxSPxcI3jUx+OYUHbck5ZtEXh+f1ESyCGEBiE8pqwa
-	 VoUsafT93MWD8ZWPzwBlqH/b4koxgWZ/jvZjUtvrwXhizkvRwXWKUSqoDvDlZ7SsGKtPk
-	 8SeEI0zcEXK9ACH7MPk2gmtLMxN9UrNsP/9rsQ7ssvf0iLSTlcqr/lu8gNq7c4NV8trs3
-	 zSvFJ+tQzx5meyNHYOJ9qa8YY8uiVWiaQEUz6vzyN9cIbPxI+lS+rjhIaXdTxpWnO8MQC
-	 m+8DL+2fvTliIn9g4VnDjyHCKnUMKAIC7YDb8eo2msJgZ/0cyaz9DAxBOflvVzDnmag==
+	bh=pt6PcVRkrkGOP+oJij400MQ+q2Xk5y4Bmio+LmLgV/A=;
+	b=osSkWjzVNV43Pd5VknBOciySrZUCGMn7MyZOTUgYaqDQZQC2HegDbDzV7lZFrDZzVcwS
+	 2Z7toGuLfMYIYaTYFGdoZYNXENPCw8HX8tfmK8ztDt/eFAbFRrtak9u/ex8X5MgTaJ2xf
+	 khJhpZ0MaV0RuiMeEOZMla8iG5w5/DqN64hVf+Vx7aMJ6NfC/CEEF2SYj8waQMkY17Myp
+	 qHNgNmwSc0h33trEZH154yZAKc9Wos5DSTxlwzTWP+OaqaVS6qDYaGiiHA4i49FM1dKG0
+	 b5ErNIQqX4vh3QJNX5hU58nEOkZCxVFbyYsYaJcg5nKqkJtusUdsy6DNjQ7XMQgP+5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gFMoPFTw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gh+RJYoW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F49606A842;
-	Wed,  4 Nov 2026 22:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A82606AB17;
+	Wed,  4 Nov 2026 22:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gFMoPFTw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46BD51F000C1;
-	Wed,  4 Nov 2026 22:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gh+RJYoW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73881F000C1;
+	Wed,  4 Nov 2026 22:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831841;
-	bh=kEvxlMu6IzgejWQPet3UbVnjxpwm/xjynPbmvDCfogk=;
+	s=korg; t=1793831843;
+	bh=pt6PcVRkrkGOP+oJij400MQ+q2Xk5y4Bmio+LmLgV/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gFMoPFTwfB2OG/keqBTKDCk8/GIsZtg2VfN5GIhfldRUiL8Zpa5nupE6HdK4z59N1
-	 pdxz5+64zooiS3vEUM6GOOht5snl/iwq85WICL6tdH/NZpNzEHoCjquT7We6+tPxhs
-	 c2ES+7qlHB//Nf8TYRCTvz+r5EGQRyX5VrlQZoCo=
+	b=Gh+RJYoWrMXBU4IDrUQy/4uImpUu/7uRbphOl5do0SRtZLiCAexfZeTISez+vVZcW
+	 C2AZ25jjS35arwlAkyh1cNHD/i6ZuOMfncE4jWKH3CL8wLXPjnImWjfMDfcJD1+9hb
+	 90eAoiz2MOv9X6rQdrVy2VU4WlfvGje0nXCDg6L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.18 0948/1005] HID: core: Fix out-of-bounds left shift by 32 in s32ton()
-Date: Wed,  4 Nov 2026 16:11:21 -0500
-Message-ID: <20261104211109.664724975@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 0949/1005] HID: cougar: reject short special-key reports
+Date: Wed,  4 Nov 2026 16:11:22 -0500
+Message-ID: <20261104211109.690405789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,42 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit 5fe63b415c636c7f4f6848a8e53bdd4bbf0c300d upstream.
+commit c6c0df8a4b73a0d563c5e64de640ef5ff525fc82 upstream.
 
-Syzbot reported an out-of-bounds shift (32-bit integer shifted left by
-32) in the s32ton() routine in the HID core.  This routine converts a
-signed 32-bit integer to a signed n-bit integer, and it caps the value
-of n at 32.  But when n == 32 there's no need to do anything; it can
-simply return the input value.  This will avoid calculating (1 << n)
-when n is 32, which was the cause of the invalid shift.
+The HID core invokes raw_event callbacks before validating the report
+length.  cougar_raw_event() reads the key code and action from offsets one
+and two without checking that those bytes are present.  A short report on
+the special interface can therefore cause an out-of-bounds read.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 69c02ffde6ed ("HID: core: clamp report_size in s32ton() to avoid undefined shift")
-Reported-by: syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/6ac9cbd8.a150a118.27e199.0025.GAE@google.com/
-Tested-by: syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com
+Consume reports that do not contain the action field before accessing the
+fixed offsets, consistent with the callback's handling of other reports on
+the special interface.
+
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw_event length validation to hid-asus.
+
+Fixes: b8e759b8f6da ("HID: cougar: Add support for the Cougar 500k Gaming Keyboard")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/dfa0aa1c-e55e-4316-8307-f72a07383634@rowland.harvard.edu
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-cougar.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -71,8 +71,8 @@ static u32 s32ton(__s32 value, unsigned
- 	if (!value || !n)
- 		return 0;
+--- a/drivers/hid/hid-cougar.c
++++ b/drivers/hid/hid-cougar.c
+@@ -270,6 +270,9 @@ static int cougar_raw_event(struct hid_d
+ 	if (!shared->enabled || !shared->input)
+ 		return -EPERM;
  
--	if (n > 32)
--		n = 32;
-+	if (n >= 32)
-+		return (u32) value;
- 
- 	a = value >> (n - 1);
- 	if (a && a != -1)
++	if (size <= COUGAR_FIELD_ACTION)
++		return -EPERM;
++
+ 	code = data[COUGAR_FIELD_CODE];
+ 	action = data[COUGAR_FIELD_ACTION];
+ 	for (i = 0; cougar_mapping[i][0]; i++) {
 
 
