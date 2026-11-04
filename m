@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827058;
-	b=GNszS4BDIkoYYgJpEOZfUWXbgFzgh9SX74q0n+cqxwn0DMLZX1rgXSKnJXHsjMo5gAt2
-	 YNuTYw6LzMJtqRi28+9zSF1pzfydGCroQtOOMHPcY3rUXCTIV6SWKHb58RnFWoUHH3QRp
-	 DcrZCSLDIyhUh5lIvp16mJHpvK76CXWN9mDsZALAA2oIVSdS1RmylgVoKq+Vo8NkfFgk6
-	 JXJGz/c4cTwnfBieyzGPPRHiOYRribLBk9X0qguYRQ8xjkfrdpR9T+pcqCQ6H4xg4hSC5
-	 HNYTnxGNypxewo/wTnhPFniAJNqwMRALfQue/Dt4/lx2KGCSlJ3v25fr/PFHiDeYmeQ==
+	t=1793827060;
+	b=40BaQgIdVSUFtKoXPRBW/xSRCNGHrYg7rzywLQm0+AZfRgf9FpvLiU2qmZmU5LAjF9F4
+	 ORwcRhc/5bFsIqQTG4jNm1FVdTTKkgFmY9VbjQD77ta2HC6uP3dWe368OiE/t4XbIWrPV
+	 t84/9T7pG6UqVY4n9WUOJohauCAcmiupj0jMhSSaz/359wJNT2xACqP8gLYtPOvOGyqbu
+	 z65SWrQ2QBWr2iacOCo1UCBgQWaID7TFyrRK9ONXTPlQzhO0NUy5Jl7wYp8tKEfzvq+1z
+	 inY+TPvA8NrpnT2v3O42ioUXiJZao13+2ZeS4RsCBocYuK3g+rQhGckckFlH1yB9iXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827058;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XZubt2ihF1O1F9uFnnYD1u0uBbhXxyOHNthWk8P+cPg=;
-	b=J7s6lP1HEva8R3Y5qszGzYGuKeq6lUbN8/042v4wVREoZf6HcjfCRxuLWgmXRg4P+niy
-	 UTB1k4QmycsNON7IAuqc06m3guhXMPQ90hysTc/x9f3rvx95FlBYY153s3PBA22X6h5EM
-	 wprqM02uqa8f00K6xiRMihRfVZODH/+w+ThnQFFAFjdmp5eK6j89kKZ2S2BV+orVgkbPp
-	 kqzUpSNFSoB+W3c+h9Vj7+k3jKKyzdxDM+kQO4M2EnP8w6WAFuJJsH34eFCY8pHrO21gx
-	 a1GU/Zr8MRD4J5GiJqv8E/bKWhLg8aplq0N2qEuz07z+X+8/xKq8f1LSKfV9kMNSZDw==
+	bh=mUtkhUKXQv0fn8wVFxFcECUmtQBSRg1AwFTPq0UR794=;
+	b=Jczz48TfBA3YHiPOS/084/1USjsyFX/RBIFvEgpkV98rGW7JqYyC9gJ6eUOp8OxlMpEE
+	 QmBXH87ti6AVvkOjDCr/pze43OxE1NaCUuyylwxR/O+1gDRrn8ETTbQUgxbm22qd/g+3Z
+	 zK/3Lg9ea5KuR813GLPl9bk2upSas65hNLamXU7GY8PU/JRUB15TtXPhw+e7/7ibwe0xD
+	 tPOWdamp6g+chJ//R2MhXE0ay1VYdBPkNldOI01Vc1TUgxw4l7SWmrJrp8fJgUbmH09I1
+	 59IzOqog7POfRKB89jd6Gvrsbf3H52EgcS8FVY9hHSVOzwHI3rcC4Ko680ONNT8drtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHw5wEJ8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6afW5ze;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C64606A840;
-	Wed,  4 Nov 2026 21:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D754D606A840;
+	Wed,  4 Nov 2026 21:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHw5wEJ8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8FF1F000C1;
-	Wed,  4 Nov 2026 21:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6afW5ze
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC7B1F000C1;
+	Wed,  4 Nov 2026 21:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827057;
-	bh=XZubt2ihF1O1F9uFnnYD1u0uBbhXxyOHNthWk8P+cPg=;
+	s=korg; t=1793827059;
+	bh=mUtkhUKXQv0fn8wVFxFcECUmtQBSRg1AwFTPq0UR794=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZHw5wEJ8qO1f9Rc89IjBXVnfHRhgC644FPVf4DHSz/OuaaWNEt7VjjoHcFGqhT5RT
-	 vwMTXDqtoSehUcJIzSz8s+9laV0JaDnsjBeH5eJC4GlbDkah/4wzcwMjlDq/PD6pFZ
-	 v4U1m79HqgJXTUEJJcH3G1mMARb2nYW826qQZc8Q=
+	b=N6afW5zeDHF5pmFotnedZn2kOf/DfxR+TIxxP0VqER7ryFVMSdMPGHQgXzC9Np6xx
+	 z16iS3fxTDfNqWqEHJL5sMUy9c3Q8CRZK1LzsB+L4itLaP9juDHJbqGufNvoXqprCA
+	 ex4LM7aBVPLdrUtbL2/0HUSx/VEQ2Cb26kefwIuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Rob Clark <robin.clark@oss.qualcomm.com>
-Subject: [PATCH 7.3 168/547] drm/msm: Fix vm_bo use-after-free in with_vm_locks()
-Date: Wed,  4 Nov 2026 16:05:52 -0500
-Message-ID: <20261104211042.924969718@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Tobias Schumacher <ts@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 7.3 169/547] s390/pci: Fix double-free and NULL deref in zpci MSI domain cleanup
+Date: Wed,  4 Nov 2026 16:05:53 -0500
+Message-ID: <20261104211042.951032718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,46 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Tobias Schumacher <ts@linux.ibm.com>
 
-commit 81878aa1a2f551f51a3d3aef2a9509503ec34d8b upstream.
+commit 31c66bd273303590fe69fad370e72a12faa0bf76 upstream.
 
-The unwind loop drops the vm_bo reference taken while locking before
-advancing to the next entry.  drm_gpuvm_bo_put() may drop the last
-reference, removing and freeing the vm_bo, after which the plain list
-iterator dereferences freed memory to advance.
+zpci_remove_parent_msi_domain() dereferences zbus->msi_parent_domain
+unconditionally and does not clear it afterwards.
 
-Use the safe iterator, which saves the next entry before the body runs.
+zpci_bus_create_pci_bus() removes the domain when pci_create_root_bus()
+fails, then zpci_bus_release() removes it again on the last kref_put(),
+reading ->fwnode from the freed irq_domain and freeing it twice.
 
-Fixes: fe4952b5f27cca5d ("drm/msm: Convert vm locking")
+If zpci_alloc_domain() or zpci_create_parent_msi_domain() fails, no domain
+is created at all; zbus is kzalloc'd, so the same release path dereferences
+NULL.
+
+Return early when there is no domain, and clear the pointer after removing
+one.
+
+Fixes: f770950a4709 ("s390/pci: Migrate s390 IRQ logic to IRQ domain API")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Patchwork: https://patchwork.freedesktop.org/patch/754331/
-Message-ID: <20260916175548.2089821-1-vulab@iscas.ac.cn>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Tobias Schumacher <ts@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_gem_shrinker.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/pci/pci_irq.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -51,6 +51,7 @@ with_vm_locks(void (*fn)(struct drm_gem_
- 	 * success paths
- 	 */
- 	struct drm_gpuvm_bo *vm_bo, *last_locked = NULL;
-+	struct drm_gpuvm_bo *next;
- 	bool locked = true;
+--- a/arch/s390/pci/pci_irq.c
++++ b/arch/s390/pci/pci_irq.c
+@@ -533,9 +533,13 @@ void zpci_remove_parent_msi_domain(struc
+ {
+ 	struct fwnode_handle *fn;
  
- 	drm_gem_for_each_gpuvm_bo (vm_bo, obj) {
-@@ -82,7 +83,7 @@ with_vm_locks(void (*fn)(struct drm_gem_
++	if (!zbus->msi_parent_domain)
++		return;
++
+ 	fn = zbus->msi_parent_domain->fwnode;
+ 	irq_domain_remove(zbus->msi_parent_domain);
+ 	irq_domain_free_fwnode(fn);
++	zbus->msi_parent_domain = NULL;
+ }
  
- out_unlock:
- 	if (last_locked) {
--		drm_gem_for_each_gpuvm_bo (vm_bo, obj) {
-+		drm_gem_for_each_gpuvm_bo_safe(vm_bo, next, obj) {
- 			struct dma_resv *resv = drm_gpuvm_resv(vm_bo->vm);
- 
- 			if (resv == obj->resv)
+ static void __init cpu_enable_directed_irq(void *unused)
 
 
