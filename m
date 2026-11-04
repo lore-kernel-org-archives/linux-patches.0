@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826840;
-	b=VNjUr03Q2XyNXI5G4eJgS6avBMOV3RZ1It5VSrshreU8RXnHbQDPjo2VZ56NONy0SaFw
-	 qsaRS0B2r8VUgibH9OM7eRtSuzu2BblrWXuFpsHqIMacu8Rzk3lhtjepW7kYdIJg0Zcc/
-	 rmLdD42iE3WaGfdiuzuARD7vyNlURnw12/1ZgHkJegWwcv4j2wXfYDSAYgEiTC7FdnJsA
-	 YSwSryrIQW7z1DzSpprCrYVA7upvMDaYCwXT7n02mT/rGTJ/bkHM8ccRGp1H+8zmeG8Qx
-	 ZceoWRyjcpAksmtjb/fttzwRm6OaMN7j4tnMOKsUfK+Anh6t4qAU4VIj6Y1uxHKk/lw==
+	t=1793826841;
+	b=x4mcFZpXBapktjvvLOmAnhWHxGX2hqz2DhL/8EC1fthinktAa9b5+5M0N7xq9tZ7g1ck
+	 uIrWAR/NrIJbmjTl9HF871CSQn2Bf7ttXzPNkk10wdjo50Z+pDw8SzNIG8AzSqUP6iHVF
+	 ocxJPDHM4bJcl5GjnfJ9UKQFEV9nQMYXsH9HFbFawY7KMG2GSanRB4eAjimskz0LDzqwU
+	 efN/iGK+i2dTlrn1Tf1tZYu3huloTA+aCFm/9IG2+S5aOU8ffUWrbQqX9lAIr0Ro5Bte8
+	 JPggGCyXLprFyCLNG6vS+zgBSLQDyk9t+/V5TUzPJlX1K0qt/aVUi/4dg2snUWnwRmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4ziX3D9RMXFwDf82X5ttC+qUK98IdFScdekInXmZjnE=;
-	b=KJ8YuiYS3CYCEtjwHinRFNH8fv6ip8POBplnZkzJKb2boCvfJmzpubTKRrXJ9hBcEidP
-	 KFC8yzekyDt8lEJgi66i7KH9wj5H29hrXFSW3FElMiEiPxDWR393zKLNHwY5Ml4dsk2d5
-	 TOiN0eMHlwBfIvb+Jun5rRQKGKVa8iRBNlmRiA+vZnU6VrCRoQp1ItWeOpRY6OXOprUeH
-	 nUvfaBC7CeHG0ttLPybzqDmBq1q8ciBdCrRO0uCx0Xforzx8m1MDm2tjwppIHBa0WLSml
-	 jAaC3o+muYDbRjlQR46MPA0TVyYZ7mrntJhGPPlnzVL0VpsNF+RxQsqSp8g3mA+Di7w==
+	bh=9EaNo/GKA5J5rgjx36DcGi7oKTNOTxrJ8o15oGd0HYU=;
+	b=bu3XCsqa/uTMyeBfFR0fPhXjtpc1lYNY5N9L5io6Wv2yqn+KiOwj1dbtIgbbWAIUaLp0
+	 aV4qOBsESYSP5HJXbM3Mk5+QuRShlOF1ZogGIrzY1bkquG7zxJxypVNuFh7gyMd0ECPvi
+	 ap/ibYM4ByakxSo/dPT9bw+/psxVE2MarSW7uG1gtOl5HffHsmyyKK1efmP0yWaNb9pwI
+	 uaxk6vXD98iZMIJyN8nzjfBhARMMbi5DCCH5vn46lHtXUtSHcEFKVkwu76rWLzVvnsINx
+	 ZQmW5Jr4xNDymYy5pE9Ue6GVrG894CA0doEaK/2vG1oYEafFwouUI2HXWRGcjcbxYzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aRXZR5FA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJHaq2Op;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43A560B1415;
-	Wed,  4 Nov 2026 21:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649706070407;
+	Wed,  4 Nov 2026 21:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aRXZR5FA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF341F00A1C;
-	Wed,  4 Nov 2026 21:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJHaq2Op
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D675B1F00919;
+	Wed,  4 Nov 2026 21:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826839;
-	bh=4ziX3D9RMXFwDf82X5ttC+qUK98IdFScdekInXmZjnE=;
+	s=korg; t=1793826841;
+	bh=9EaNo/GKA5J5rgjx36DcGi7oKTNOTxrJ8o15oGd0HYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aRXZR5FA6X8U3ksXBuQ0B64WEQlEH1ErXrPxmtdTlzddM2EQrxuniSHcfCyGcHx8u
-	 IaLqufAxL571ZbGroy08ih4LJOEU1dIa/yvSe1d00FlNQUzJFo0isuW8wGqR4k/DJP
-	 /aiSW35Mv7Ae2yd5/tADWVXgQy8Bnijxt4Wc0zfY=
+	b=qJHaq2OpKdnEBEwxaEiUKAC27MafJl+x9iA3sSIlARDYoxtVML3gRr4aFlnLZN6Kz
+	 j5+Dxzvg/pgRNv+Cc4TGQbFW3ekdk3RlFQKHX3cb04gtjJaA4vV7hy6WCIg4ry4jGn
+	 4ZzP7GoRiBBUwlW/0CRIbqYEaftsChXuVUQOv7sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Leonid Ovchinnikov <teiny.work@gmail.com>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 038/547] io_uring/futex: allocate private hash before waiting
-Date: Wed,  4 Nov 2026 16:03:42 -0500
-Message-ID: <20261104211039.415484374@linuxfoundation.org>
+Subject: [PATCH 7.3 039/547] io_uring: drop the CQE cache if a refill fails
+Date: Wed,  4 Nov 2026 16:03:43 -0500
+Message-ID: <20261104211039.440435835@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,103 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3eff68bce25584cded3fb6ec033ff9a1c9913d04 ]
+[ Upstream commit 78f9c9cffef02a290b6e97672aaa9c75df0d21da ]
 
-The futex code relies on there being no private futex waiters by the time
-the first private hash of a mm is installed: __futex_pivot_hash() moves
-the waiters from the previous private hash to the new one, but it does not
-look for them in the global hash which is used as long as there is no
-private hash. That is why every clone(CLONE_VM) allocates it up front: a
-task which is alone in its mm cannot block in futex_wait() and create a
-thread or invoke prctl(PR_FUTEX_HASH) at the same time.
+->cqe_cached and ->cqe_sentinel delimit the CQ entries which can be
+handed out without looking at the ring. io_get_cqe_overflow() only calls
+io_cqe_cache_refill() if that range is too small. Without
+IORING_SETUP_CQE_MIXED too small means empty. With it, a 32b CQE needs
+two entries, and one may be left. If the refill then fails, the entry
+stays in the cache, and the next 16b CQE gets it without any checks.
 
-IORING_OP_FUTEX_WAIT and IORING_OP_FUTEX_WAITV do not block the submitter
-though:
+That CQE overtakes the 32b one, which went to the overflow list. The test
+for IO_CHECK_CQ_OVERFLOW_BIT, which is there to prevent that, is part of
+the refill:
 
-  io_uring_enter()
-    io_futex_wait()
-      futex_wait_setup()	// no private hash: queued in the global hash
-  pthread_create()
-    futex_hash_allocate_default()
-      __futex_pivot_hash()	// first private hash, nothing is moved
-				futex(FUTEX_WAKE_PRIVATE)
-				  futex_hash()	// private hash: no waiter
+  CQ ring with 4 entries, head == 0
+  16b CQE, 32b CQE       tail == 3, one entry cached
+  32b CQE                no room, the CQE overflows
+  16b CQE                written to entry 3, ahead of the 32b CQE
 
-The wakeup is lost and the request only completes when it is cancelled.
-prctl(PR_FUTEX_HASH, PR_FUTEX_HASH_SET_SLOTS, n) instead of
-pthread_create() has the same effect.
+Forget about the rest of the cache when it is refilled.
 
-Allocate the default private hash when a wait request on a private futex
-is prepared, which happens in the context of the submitter. This is a RCU
-protected pointer check once the hash exists. A failure to allocate it
-fails the request with -ENOMEM.
-
-Fixes: 80367ad01d93 ("futex: Add basic infrastructure for local task local hash")
+Fixes: e26dca67fde1 ("io_uring: add support for IORING_SETUP_CQE_MIXED")
+Reported-by: Leonid Ovchinnikov <teiny.work@gmail.com>
+Closes: https://lore.kernel.org/io-uring/CAECZYD5OMD9vMTzjteFMMP40Dn+SWKj9SFj=43U6uO3XMnxJbw@mail.gmail.com/
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-22-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-23-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/futex.c | 28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ io_uring/io_uring.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/io_uring/futex.c b/io_uring/futex.c
-index 64909a2a8c886..9203998654ffb 100644
---- a/io_uring/futex.c
-+++ b/io_uring/futex.c
-@@ -152,6 +152,24 @@ int io_futex_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 	return 0;
- }
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 19f79e53c4d37..020ea9b01f986 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -735,6 +735,13 @@ bool io_cqe_cache_refill(struct io_ring_ctx *ctx, bool overflow, bool cqe32)
+ 	if (!overflow && (ctx->check_cq & BIT(IO_CHECK_CQ_OVERFLOW_BIT)))
+ 		return false;
  
-+/*
-+ * A wait on a private futex does not block the submitter. Even a single
-+ * threaded task can go on and have the mm private hash installed by clone()
-+ * or prctl(), which does not pick up waiters from the global hash. Make
-+ * sure the private hash exists before the first waiter is queued.
-+ */
-+static int io_futex_prep_private(struct io_kiocb *req)
-+{
-+	int ret = futex_hash_allocate_default();
++	/*
++	 * A single entry may be left if a 32b CQE is asked for. It must not be
++	 * handed out later on if this fails, as the CQE is going to overflow.
++	 */
++	ctx->cqe_cached = NULL;
++	ctx->cqe_sentinel = NULL;
 +
-+	if (unlikely(ret))
-+		return ret;
-+
-+	/* inflight tracking only needed for mm private hash */
-+	io_req_track_inflight(req);
-+	return 0;
-+}
-+
- int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- {
- 	struct io_futex *iof = io_kiocb_to_cmd(req, struct io_futex);
-@@ -161,9 +179,8 @@ int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 	if (unlikely(ret))
- 		return ret;
- 
--	/* inflight tracking only needed for mm private hash */
- 	if (!(iof->futex_flags & FLAGS_SHARED))
--		io_req_track_inflight(req);
-+		return io_futex_prep_private(req);
- 	return 0;
- }
- 
-@@ -213,10 +230,13 @@ int io_futexv_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 		return ret;
- 	}
- 
--	/* inflight tracking only needed for mm private hash */
- 	for (i = 0; i < iof->futex_nr; i++) {
- 		if (!(ifd->futexv[i].w.flags & FLAGS_SHARED)) {
--			io_req_track_inflight(req);
-+			ret = io_futex_prep_private(req);
-+			if (ret) {
-+				kfree(ifd);
-+				return ret;
-+			}
- 			break;
- 		}
- 	}
+ 	/*
+ 	 * Post dummy CQE if a 32b CQE is needed and there's only room for a
+ 	 * 16b CQE before the ring wraps.
 -- 
 2.53.0
 
