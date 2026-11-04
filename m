@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829355;
-	b=iF76FtvDRjZCg8FjXrr3BnflZTsWnkXi23R+aDUN9ck88VI7WWlYLEGXpIAlXeMn7gL6
-	 iUp1NsoTybEl4jlmwSbz4g/N8PKBCPuLezEJOrMhTZE70L21Wq2X8v4Ic7SXrcCVfV8gC
-	 y93RduAjrToQLMwJB2iQu4q0vEbWsE1hZo1H8gPPd28JxOC7wk3kuFB7WwDJo/gb74v1i
-	 iyrMuUFF1DcPWwPH7exGv5eT42wQzpwU1T0lLdBJjhblO4Ff9Ysf9uDUXMKGiGDXzvajq
-	 jt4A2Y8TdxGYRTh6Q949oOjT4iVAh4gHthx3IuEwIi2jzpNbVkeo66f7jnuPxiPDPsQ==
+	t=1793829357;
+	b=YfU+/x5fE+t+jugaWal6FhPPkt67QJVuMXS4beYFQm98mW5FnzkpRsFKJwo96CVDak0D
+	 CLgB0RdWJvzKKgO7dajBxlYSiy1ZKeJxxHGWxuqFgsY7IQInTCFRSgOsQGtc9foj2qCeu
+	 r/MUsiV1I7iCSH/gWQmebZU8ffELI023ER5vqWsGSudJj9VRApicd5g+NnPNfNgMw2sDh
+	 3DTPjd8ij+9ks1Xw7UVrK3bROTwajIexcDfZKTRVkhNB6QLo267QShQ4UnsZxg+6iLi7Q
+	 6ILRHe9y0Q80QJv4S/vb2/Vm2w+JmmDe9ueaCIfXfO8MPvKQbDRl2Xs2SAqYdbe1adw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829357;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=znQjV0yBP8xvH7sLjS2KT3w+RTjxLOy95908JTF1lMs=;
-	b=rsAtdc2hbVaoUUX0NH4ebioctX16Z9Oxo2itEoqFWTp/Lq0Vc0dlvUBWPpirSZFclSFk
-	 cUkqLjR7fEnyALr5CikmlP5ML5sBdyopZRxb13pum7T9Ump6QRYfxc8sJxLVrX9q7FPGB
-	 vKTO584LxP1+yYcG6/lr2W4/TwH5foPZMeWBOCbI2CeK/giuNhtvlgALDOTq4LPOxW2ec
-	 2t+kWEm4njZCxEgYyXvEK02/N3lYBpEAJrFXjif0lARt+z0Cd6Mz1gIWdZM7gKVPufmYb
-	 +FUIQBxyfGe20gBz1vzqxdfG0FEzHXnQN8jkvxMnMdspAIwHmMpfgzNkClgXWIY+s4Q==
+	bh=wiJ7TAV6+6DMin7BeNzVECOhkqFEsEIPIXAIhycS9K4=;
+	b=ebtxsEGHHeWwgCcPG36nZtc/4O+F4ZDGK8OfQZJ32177pcpoOOOjHR2S8Uc5F/nVRsYo
+	 9BLOdFDqum39lLMQ40HkshryBpsmpqkKRAp0Bd7DF8zcSq/ZndfHMK9sQ42NANSpS2r7M
+	 qJjWpi0ceIBpOu6HKY2uqHlZdsiyGoYOX5IFl/tLx1JT2udDtgWUE7m+kzfdI47iniJVh
+	 JGyDnUwzg+I9YGOlfRgDH5PaWiRJ54NBd1KHsTAuyFsT9S1FzKHfynHHEXDz15XqJgZJo
+	 xq1KSckXcbj/E2F5yVgL+bDLrdhOls3/D7NpATTi5aj9CP8k1loSkG2jRpNS75gQ1/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bVQrvEM+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LWal6KQw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DB160A5BD2;
-	Wed,  4 Nov 2026 21:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0178E607493E;
+	Wed,  4 Nov 2026 21:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bVQrvEM+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321D91F00919;
-	Wed,  4 Nov 2026 21:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LWal6KQw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AAB1F00919;
+	Wed,  4 Nov 2026 21:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829355;
-	bh=znQjV0yBP8xvH7sLjS2KT3w+RTjxLOy95908JTF1lMs=;
+	s=korg; t=1793829356;
+	bh=wiJ7TAV6+6DMin7BeNzVECOhkqFEsEIPIXAIhycS9K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bVQrvEM+/B420+S8bnTK8aWnVKWPIg2VLO549g116Fo6OuhAAb5LcKxFEe4ExEez0
-	 ZfkLgDEGBMWfyvjMwVtqqH0JtxO3+oMxj5HVHU+rHxtNA70ZInDJ4dDMBzdOi6HuGq
-	 GC99QM4QjpJCCqiXo5cX5IWur+WSYCSLUnyu0kio=
+	b=LWal6KQwBodnM76A5xWi5guKXfv1Ne3jV68TOgzCuKpsxSISOihj/8Sy7py4xtCL9
+	 q5e37rfmijKeVVHXV8WEcpkacMjdj8hWhvNapvxBusIO5lhAt1unFnjAtYqkSeSehT
+	 j072VaNJDMQhpNhHgQ2QOutOnVzrE0pLTJ5INe44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Xiang Liu <xiang.liu@amd.com>,
 	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0074/1005] drm/amd/pm: Validate Tonga PowerPlay state array bounds
-Date: Wed,  4 Nov 2026 15:56:47 -0500
-Message-ID: <20261104211045.687064156@linuxfoundation.org>
+Subject: [PATCH 6.18 0075/1005] drm/amd/pm: Guard VBIOS AC timing table walk
+Date: Wed,  4 Nov 2026 15:56:48 -0500
+Message-ID: <20261104211045.715198116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,138 +69,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Xiang Liu <xiang.liu@amd.com>
 
-[ Upstream commit 1ac24df78c566d767a5ef05a1fe0ecc55bac248d ]
+[ Upstream commit 2bf6867e5953a140fc91c3159987656e44ed29fb ]
 
-process_pptables_v1_0.c builds the Tonga state array pointer
-from usStateArrayOffset before checking that the table buffer covers
-the referenced data. A truncated PowerPlay table can therefore lead to
-out-of-bounds reads while validating the state array.
+Reject AC timing blocks with a stride smaller than a dword before walking
+VBIOS data. A zero stride can otherwise keep reg_data pinned on a
+nonmatching MEM_ID forever.
 
-Validate the fixed table size first, then check the state array offset
-and entry range before dereferencing the state array.
+Also bound the data-block and END marker reads by the returned VRAM_Info
+table size so malformed index/data sizes do not push the timing walk past
+the table.
 
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Xiang Liu <xiang.liu@amd.com>
 Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../powerplay/hwmgr/process_pptables_v1_0.c   | 62 ++++++++++++-------
- 1 file changed, 40 insertions(+), 22 deletions(-)
+ .../drm/amd/pm/powerplay/hwmgr/ppatomctrl.c   | 28 +++++++++++++++----
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
-index 6cfef1b295abb..94c1e2c103703 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
-@@ -1113,15 +1113,17 @@ static int init_thermal_controller(
-  * @powerplay_table: Pointer to the PowerPlay Table.
-  * Exception:  2 if the powerplay table is incorrect.
-  */
--static int check_powerplay_tables(
--		struct pp_hwmgr *hwmgr,
--		const ATOM_Tonga_POWERPLAYTABLE *powerplay_table
--		)
-+static int get_tonga_state_array(struct pp_hwmgr *hwmgr,
-+	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table,
-+	const ATOM_Tonga_State_Array **state_array)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index 1fff7567bca27..4b796d60b03d4 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -46,16 +46,22 @@ union voltage_object_info {
+ static int atomctrl_retrieve_ac_timing(
+ 		uint8_t index,
+ 		ATOM_INIT_REG_BLOCK *reg_block,
++		u8 *table_end,
+ 		pp_atomctrl_mc_reg_table *table)
  {
- 	const ATOM_Tonga_State_Array *state_arrays;
-+	u16 state_array_offset;
-+	size_t state_array_size;
-+	size_t table_size = hwmgr->soft_pp_table_size;
+ 	uint32_t i, j;
++	u16 stride = le16_to_cpu(reg_block->usRegDataBlkSize);
+ 	uint8_t tmem_id;
+ 	ATOM_MEMORY_SETTING_DATA_BLOCK *reg_data = (ATOM_MEMORY_SETTING_DATA_BLOCK *)
+ 		((uint8_t *)reg_block + (2 * sizeof(uint16_t)) + le16_to_cpu(reg_block->usRegIndexTblSize));
  
--	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)powerplay_table) +
--		le16_to_cpu(powerplay_table->usStateArrayOffset));
-+	PP_ASSERT_WITH_CODE((table_size >= sizeof(*powerplay_table)),
-+			    "Invalid PowerPlay Table!", return -1);
+ 	uint8_t num_ranges = 0;
  
- 	PP_ASSERT_WITH_CODE((ATOM_Tonga_TABLE_REVISION_TONGA <=
- 		powerplay_table->sHeader.ucTableFormatRevision),
-@@ -1130,12 +1132,34 @@ static int check_powerplay_tables(
- 		"State table is not set!", return -1);
- 	PP_ASSERT_WITH_CODE((0 < powerplay_table->sHeader.usStructureSize),
- 		"Invalid PowerPlay Table!", return -1);
+-	while (*(uint32_t *)reg_data != END_OF_REG_DATA_BLOCK &&
++	if (stride < sizeof(uint32_t))
++		return -EINVAL;
 +
-+	state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
-+	PP_ASSERT_WITH_CODE((state_array_offset <=
-+			     table_size - sizeof(*state_arrays)),
-+			    "Invalid PowerPlay Table!", return -1);
-+
-+	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)powerplay_table) +
-+		state_array_offset);
- 	PP_ASSERT_WITH_CODE((0 < state_arrays->ucNumEntries),
- 		"Invalid PowerPlay Table!", return -1);
++	while ((uint8_t *)reg_data + sizeof(uint32_t) <= table_end &&
++	       *(uint32_t *)reg_data != END_OF_REG_DATA_BLOCK &&
+ 			num_ranges < VBIOS_MAX_AC_TIMING_ENTRIES) {
+ 		tmem_id = (uint8_t)((*(uint32_t *)reg_data & MEM_ID_MASK) >> MEM_ID_SHIFT);
  
-+	state_array_size = struct_size(state_arrays, entries, state_arrays->ucNumEntries);
-+	PP_ASSERT_WITH_CODE((state_array_size <= table_size - state_array_offset),
-+			    "Invalid PowerPlay Table!", return -1);
+@@ -67,6 +73,10 @@ static int atomctrl_retrieve_ac_timing(
+ 			for (i = 0, j = 1; i < table->last; i++) {
+ 				if ((table->mc_reg_address[i].uc_pre_reg_data &
+ 							LOW_NIBBLE_MASK) == DATA_FROM_TABLE) {
++					if ((uint8_t *)reg_data +
++					    (j + 1) * sizeof(uint32_t) > table_end)
++						return -EINVAL;
 +
-+	*state_array = state_arrays;
+ 					table->mc_reg_table_entry[num_ranges].mc_data[i] =
+ 						(uint32_t)*((uint32_t *)reg_data + j);
+ 					j++;
+@@ -81,11 +91,13 @@ static int atomctrl_retrieve_ac_timing(
+ 		}
+ 
+ 		reg_data = (ATOM_MEMORY_SETTING_DATA_BLOCK *)
+-			((uint8_t *)reg_data + le16_to_cpu(reg_block->usRegDataBlkSize)) ;
++			((uint8_t *)reg_data + stride);
+ 	}
+ 
+-	PP_ASSERT_WITH_CODE((*(uint32_t *)reg_data == END_OF_REG_DATA_BLOCK),
+-			"Invalid VramInfo table.", return -1);
++	if ((uint8_t *)reg_data + sizeof(uint32_t) > table_end ||
++	    *(uint32_t *)reg_data != END_OF_REG_DATA_BLOCK)
++		return -EINVAL;
 +
+ 	table->num_entries = num_ranges;
+ 
  	return 0;
- }
- 
-+static int check_powerplay_tables(struct pp_hwmgr *hwmgr,
-+	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table)
-+{
-+	const ATOM_Tonga_State_Array *state_arrays;
-+
-+	return get_tonga_state_array(hwmgr, powerplay_table, &state_arrays);
-+}
-+
- static int pp_tables_v1_0_initialize(struct pp_hwmgr *hwmgr)
+@@ -136,6 +148,7 @@ int atomctrl_initialize_mc_reg_table(
  {
+ 	ATOM_VRAM_INFO_HEADER_V2_1 *vram_info;
+ 	ATOM_INIT_REG_BLOCK *reg_block;
++	u8 *table_end;
  	int result = 0;
-@@ -1239,17 +1263,16 @@ const struct pp_table_func pptable_v1_0_funcs = {
+ 	u8 frev, crev;
+ 	u16 size;
+@@ -157,6 +170,7 @@ int atomctrl_initialize_mc_reg_table(
+ 	}
  
- int get_number_of_powerplay_table_entries_v1_0(struct pp_hwmgr *hwmgr)
- {
--	ATOM_Tonga_State_Array const *state_arrays;
-+	const ATOM_Tonga_State_Array *state_arrays;
- 	const ATOM_Tonga_POWERPLAYTABLE *pp_table = get_powerplay_table(hwmgr);
-+	int result;
+ 	if (0 == result) {
++		table_end = (uint8_t *)vram_info + size;
+ 		reg_block = (ATOM_INIT_REG_BLOCK *)
+ 			((uint8_t *)vram_info + le16_to_cpu(vram_info->usMemClkPatchTblOffset));
+ 		result = atomctrl_set_mc_reg_address_table(reg_block, table);
+@@ -164,7 +178,7 @@ int atomctrl_initialize_mc_reg_table(
  
- 	PP_ASSERT_WITH_CODE((NULL != pp_table),
- 			"Missing PowerPlay Table!", return -1);
--	PP_ASSERT_WITH_CODE((pp_table->sHeader.ucTableFormatRevision >=
--			ATOM_Tonga_TABLE_REVISION_TONGA),
--			"Incorrect PowerPlay table revision!", return -1);
- 
--	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)pp_table) +
--			le16_to_cpu(pp_table->usStateArrayOffset));
-+	result = get_tonga_state_array(hwmgr, pp_table, &state_arrays);
-+	PP_ASSERT_WITH_CODE((result == 0),
-+			    "Invalid PowerPlay Table State Array.", return result);
- 
- 	return (uint32_t)(state_arrays->ucNumEntries);
- }
-@@ -1380,15 +1403,11 @@ int get_powerplay_table_entry_v1_0(struct pp_hwmgr *hwmgr,
- 
- 	if (pp_table->sHeader.ucTableFormatRevision >=
- 			ATOM_Tonga_TABLE_REVISION_TONGA) {
--		state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)pp_table) +
--				le16_to_cpu(pp_table->usStateArrayOffset));
--
--		PP_ASSERT_WITH_CODE((0 < pp_table->usStateArrayOffset),
--				"Invalid PowerPlay Table State Array Offset.", return -1);
--		PP_ASSERT_WITH_CODE((0 < state_arrays->ucNumEntries),
--				"Invalid PowerPlay Table State Array.", return -1);
--		PP_ASSERT_WITH_CODE((entry_index <= state_arrays->ucNumEntries),
--				"Invalid PowerPlay Table State Array Entry.", return -1);
-+		result = get_tonga_state_array(hwmgr, pp_table, &state_arrays);
-+		PP_ASSERT_WITH_CODE((result == 0),
-+				    "Invalid PowerPlay Table State Array.", return result);
-+		PP_ASSERT_WITH_CODE((entry_index < state_arrays->ucNumEntries),
-+				    "Invalid PowerPlay Table State Array Entry.", return -1);
- 
- 		state_entry = GET_FLEXIBLE_ARRAY_MEMBER_ADDR(
- 						ATOM_Tonga_State, entries,
-@@ -1414,4 +1433,3 @@ int get_powerplay_table_entry_v1_0(struct pp_hwmgr *hwmgr,
+ 	if (0 == result) {
+ 		result = atomctrl_retrieve_ac_timing(module_index,
+-					reg_block, table);
++					reg_block, table_end, table);
+ 	}
  
  	return result;
- }
--
+@@ -177,6 +191,7 @@ int atomctrl_initialize_mc_reg_table_v2_2(
+ {
+ 	ATOM_VRAM_INFO_HEADER_V2_2 *vram_info;
+ 	ATOM_INIT_REG_BLOCK *reg_block;
++	u8 *table_end;
+ 	int result = 0;
+ 	u8 frev, crev;
+ 	u16 size;
+@@ -198,6 +213,7 @@ int atomctrl_initialize_mc_reg_table_v2_2(
+ 	}
+ 
+ 	if (0 == result) {
++		table_end = (uint8_t *)vram_info + size;
+ 		reg_block = (ATOM_INIT_REG_BLOCK *)
+ 			((uint8_t *)vram_info + le16_to_cpu(vram_info->usMemClkPatchTblOffset));
+ 		result = atomctrl_set_mc_reg_address_table(reg_block, table);
+@@ -205,7 +221,7 @@ int atomctrl_initialize_mc_reg_table_v2_2(
+ 
+ 	if (0 == result) {
+ 		result = atomctrl_retrieve_ac_timing(module_index,
+-					reg_block, table);
++					reg_block, table_end, table);
+ 	}
+ 
+ 	return result;
 -- 
 2.53.0
 
