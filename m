@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829050;
-	b=RDddLLyuhJTQPYOWcwGZdApyciqekWuulxBrpWXYwwrs+nsePzdVoB3wpWs5sCFy+O6u
-	 G+Zh6e2teSvCK5Z7vWideUJMp0UMZxJ1EdXNrLmMCNXG3McayLZUnQsQpGJEdZx2k5l2v
-	 iSTdXK58BqT+RXO0Tlmd4ujtgXOnLdzbC9O7jmTmEfFIaNxtW9b6cKzekRhBHf07pPBZO
-	 /Gts2v7vcN0V0nIsmYWV5mJyPEyGgUpRyvJJK4WhMrZCcnD+pYcF/02LtcUAqVnWlmBZO
-	 fu/RrJjNo7oITkJ37soa38MFtUL2GN8j1dlBRy9YkX0NBn/pzr9meuW6d5fdDEo4dsg==
+	t=1793829052;
+	b=RMGGUytukf9ZM8wgUSkdwnwvju/m7h/mYosr23snVC37Uh7ONJVY6Nq0XBCVgtZa+0Nm
+	 OiqbnD2oy5aqaQ6n/FYiFgq2F4WtCLXO5SVlb/YnO4YRNmstev7Ows9AjhOHEuyBRcBMS
+	 trYkDC9L92fwMEwnxl2Fxgleou+PR3t6V4Fso2Ji0LGTnqZwOVjEdkZCTSgHgPPKqu9T3
+	 S+mZ2Y6g1vHge64FDut9nF+q5NtDxbMuKB/kZQY31G+3Wv6p3q6mHu0QSMj22m4Aaeygo
+	 peZ9NmM/po2HfnaxitfbAh9CYGmu2H1B1amJVMM+AZ4lproCX7exX4zZcxnRpmcwUYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829050;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5IwVFg7BmKz4WwCDHMYdYkzYIwszuKX532PyZMWjrNE=;
-	b=Y9B2kxp6CmrhgBUaTOKMKFxAdtoCdG7rmp+UB2XyMTc4qNpw1/rRDec0DMnx1S42Bagt
-	 T+zhVyOmwpYOY/LFb7RKOhfzG9HJxVKYO1K8NnO7XsA0i/bEgqIuPErnE6oMEqX08Ozm7
-	 VSGSJk55aw6I7luKEkTY5sAhaXIGOeXhISdKeVHcJ4i5CNPLeKsfufDQvDPX1YqIqmvjQ
-	 v5zbImZmi6XK5M5BJOk1gewbPkN58ZWXZ407zkeg7IGN9m2KhtfsSSeOFl3lyQwkEqGsi
-	 L/CnoTvEwSRzf8jb/AwE6ZcnUhj/iS6o0q5pf6TBhUHkdnoqgo0K+jWtsoLKRxIHxUA==
+	bh=iYs7uUEC91T93uoaHeBqf6Euwv2rKg0bzCR7t5NA7SE=;
+	b=SRR9NIpz7Ste4z25YY4hzXcd3N21HOtvGtNrvofEIom3c09Yg/BONwFY02kueDkDToMZ
+	 3wlI19lOagTtxJx+jR+OGwp0k56OKE9kws5qN+xhEeMzrXBi51zttsr3cZIYpN438neNe
+	 zlaGyobGlZ6qgK1a58ebQTOiegIFRFYGRZ22hYqMVx3oFQdYMnv/Vq1CtrN4KOZlHIy3s
+	 6rL1qaML8KPFqCJUefYwc9FhOg/fKO2MVhb3mUvcjMFpe/vi9vSXUH5nJG/y/SW6jhJyd
+	 3rMyzNz4UiWViEpumPyyiz+ODGsPGjrV3ddYXu761M1ZynLeiuG4Nb3p6DiYRy23f6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7TTLvkR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGGUkYui;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773E660807B1;
-	Wed,  4 Nov 2026 21:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F2860807B1;
+	Wed,  4 Nov 2026 21:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7TTLvkR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD621F00A1C;
-	Wed,  4 Nov 2026 21:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGGUkYui
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A6C1F00919;
+	Wed,  4 Nov 2026 21:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829050;
-	bh=5IwVFg7BmKz4WwCDHMYdYkzYIwszuKX532PyZMWjrNE=;
+	s=korg; t=1793829051;
+	bh=iYs7uUEC91T93uoaHeBqf6Euwv2rKg0bzCR7t5NA7SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A7TTLvkRxccLzk3rXNB8wmX//22X3AfjSqlXfpER30k1J7RGfgIt8pw7M0xhFebVC
-	 eVN2kU8CL0AGv04PwA49kOEUWoPOc+oVBZgKJ8CbzSveltxqbyA0imZXl3V+lL5yOm
-	 XqRQkXCQIppQpWbhv5T35o+v6XTIQogdfBtZnDW0=
+	b=MGGUkYui37dvpAb9t7Kc+0IfG2SBmdPF608jYx3Y6rSefhNb4aWvMfOJZhgkasPtM
+	 um/T1vG6eJOokCSXWf3wg/eKupuojjMmHRwZL/9YjywV2oFxLhY0tULS2ZVegMTTXP
+	 AaN7qQUV4SVmAG11b3c4f/LxOehVI6t7h+B6l25s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 7.3 412/547] NFSD: copy SETXATTR data from all XDR buffer segments
-Date: Wed,  4 Nov 2026 16:09:56 -0500
-Message-ID: <20261104211050.025310624@linuxfoundation.org>
+Subject: [PATCH 7.3 413/547] NFSD: Destroy a recalled delegation the client does not hold
+Date: Wed,  4 Nov 2026 16:09:57 -0500
+Message-ID: <20261104211050.051761116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,70 +66,385 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit b01319947c69b0e3ea0fcd4b675eb892f9cad8a0 upstream.
+commit bbfa823f624d41e85ebca929ac77dc2182cadfed upstream.
 
-nfsd4_vbuf_from_vector() manually copies the head followed by whole
-pages starting at offset zero. This assumes that all remaining data
-starts at the beginning of the page array and that no data is stored
-in the tail.
+A client that answers CB_RECALL with NFS4ERR_BADHANDLE or
+NFS4ERR_BAD_STATEID has no record of the delegation, so the
+FREE_STATEID that clears it from cl_revoked never arrives. Every later
+SEQUENCE reply carries SEQ4_STATUS_RECALLABLE_STATE_REVOKED, and the
+client loops issuing TEST_STATEID.
 
-However, nfsd4_decode_setxattr() passes an xdr_buf returned by
-xdr_stream_subsegment(). Such a sub-buffer can have a nonzero
-page_base and can span its page and tail segments. Ignoring that
-layout can copy the wrong bytes into the value passed to
-vfs_setxattr().
+Destroy such a delegation when it is reaped rather than revoking it
+onto cl_revoked. RFC 8881 Section 20.2.4 completes the recall at the
+reply when its status is neither NFS4_OK nor NFS4ERR_DELAY, so a
+rejected recall leaves nothing to revoke. An administrative revoke
+keeps that path, since NFS4ERR_ADMIN_REVOKED reports it. A destroyed
+stateid returns NFS4ERR_BAD_STATEID instead of NFS4ERR_DELEG_REVOKED. A
+client that rejects the recall but still holds the delegation gets no
+notice that its state was revoked.
 
-Use read_bytes_from_xdr_buf(), which observes the complete xdr_buf
-layout.
+CB_RECALL can outrun the reply that granted the delegation, so honor
+a rejection only once the client has seen that grant. Per RFC 8881
+Section 2.10.6.3, retirement of the slot that carried the grant is that
+proof; retry until then, and revoke when the retries lapse.
 
-Fixes: c1346a1216ab ("NFSD: Replace the internals of the READ_BUF() macro")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915160022.3105295-1-qwe.aldo@gmail.com
+Fixes: 3bd64a5ba171 ("nfsd4: implement SEQ4_STATUS_RECALLABLE_STATE_REVOKED")
+Cc: stable@vger.kernel.org # 6.14.x
+Link: https://patch.msgid.link/20260802-nfsd-deleg-destroy-badhandle-v1-8-323aa7196055@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |   19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ fs/nfsd/nfs4state.c |  200 +++++++++++++++++++++++++++++++++++++++++++---------
+ fs/nfsd/state.h     |   13 +++
+ 2 files changed, 179 insertions(+), 34 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -2320,10 +2320,8 @@ static __be32
- nfsd4_vbuf_from_vector(struct nfsd4_compoundargs *argp, struct xdr_buf *xdr,
- 		       char **bufp, size_t buflen)
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -92,6 +92,8 @@ static void nfsd4_end_grace(struct nfsd_
+ static void _free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps);
+ static void nfsd4_file_hash_remove(struct nfs4_file *fi);
+ static void deleg_reaper(struct nfsd_net *nn);
++static void nfsd4_drop_revoked_stid(struct nfs4_stid *s)
++	__releases(&s->sc_client->cl_lock);
+ 
+ static const struct lease_manager_operations nfsd_lease_mng_ops;
+ 
+@@ -1279,6 +1281,9 @@ __alloc_init_deleg(struct nfs4_client *c
+ 	dp->dl_type = dl_type;
+ 	dp->dl_retries = 1;
+ 	dp->dl_recalled = false;
++	dp->dl_recall_rejected = false;
++	dp->dl_recall_grant.valid = false;
++	dp->dl_recall_grant.retired_at_send = false;
+ 	get_nfs4_file(fp);
+ 	dp->dl_stid.sc_file = fp;
+ 	nfsd4_init_cb(&dp->dl_recall, dp->dl_stid.sc_client,
+@@ -1563,27 +1568,22 @@ static void destroy_delegation(struct nf
+ }
+ 
+ /**
+- * revoke_delegation - perform nfs4 delegation structure cleanup
+- * @dp: pointer to the delegation
++ * revoke_delegation - dispose of a delegation the server has revoked
++ * @dp: delegation to dispose of
++ *
++ * The caller holds a reference on @dp, which this function consumes.
++ * On NFSv4.1 and newer, @dp's sc_status must already carry
++ * SC_STATUS_REVOKED or SC_STATUS_ADMIN_REVOKED.
++ *
++ * @dp is parked on the client's cl_revoked list to await a FREE_STATEID.
++ * Where none can arrive, @dp is destroyed here instead: FREE_STATEID has
++ * already freed it, or the client rejected the recall with
++ * NFS4ERR_BADHANDLE or NFS4ERR_BAD_STATEID and holds no record of the
++ * delegation. NFS4ERR_ADMIN_REVOKED still prompts one, so an
++ * administrative revoke waits on cl_revoked.
+  *
+- * This function assumes that it's called either from the administrative
+- * interface (nfsd4_revoke_states()) that's revoking a specific delegation
+- * stateid or it's called from a laundromat thread (nfsd4_landromat()) that
+- * determined that this specific state has expired and needs to be revoked
+- * (both mark state with the appropriate stid sc_status mode). It is also
+- * assumed that a reference was taken on the @dp state. This function
+- * consumes that reference.
+- *
+- * If this function finds that the @dp state is SC_STATUS_FREED it means
+- * that a FREE_STATEID operation for this stateid has been processed and
+- * we can proceed to removing it from recalled list. However, if @dp state
+- * isn't marked SC_STATUS_FREED, it means we need place it on the cl_revoked
+- * list and wait for the FREE_STATEID to arrive from the client. At the same
+- * time, we need to mark it as SC_STATUS_FREEABLE to indicate to the
+- * nfsd4_free_stateid() function that this stateid has already been added
+- * to the cl_revoked list and that nfsd4_free_stateid() is now responsible
+- * for removing it from the list. Inspection of where the delegation state
+- * in the revocation process is protected by the clp->cl_lock.
++ * Context: Takes and releases the client's cl_lock; may sleep after
++ *          dropping it.
+  */
+ static void revoke_delegation(struct nfs4_delegation *dp)
  {
--	struct page **pages = xdr->pages;
- 	struct kvec *head = xdr->head;
--	char *tmp, *dp;
--	u32 len;
-+	char *tmp;
+@@ -1601,6 +1601,19 @@ static void revoke_delegation(struct nfs
+ 		list_del_init(&dp->dl_recall_lru);
+ 		goto out;
+ 	}
++	if (dp->dl_recall_rejected &&
++	    !(dp->dl_stid.sc_status & SC_STATUS_ADMIN_REVOKED)) {
++		/*
++		 * SC_STATUS_CLOSED, set under cl_lock, makes a racing
++		 * FREE_STATEID bail out rather than drop this reference
++		 * too. The put releases what cl_revoked would have held.
++		 */
++		dp->dl_stid.sc_status |= SC_STATUS_CLOSED;
++		spin_unlock(&clp->cl_lock);
++		nfs4_put_stid(&dp->dl_stid);
++		destroy_unhashed_deleg(dp);
++		return;
++	}
+ 	list_add(&dp->dl_recall_lru, &clp->cl_revoked);
+ 	dp->dl_stid.sc_status |= SC_STATUS_FREEABLE;
+ out:
+@@ -2895,11 +2908,18 @@ __destroy_client(struct nfs4_client *clp
+ 		list_del_init(&dp->dl_recall_lru);
+ 		destroy_unhashed_deleg(dp);
+ 	}
++	/*
++	 * A CB_RECALL reply can release revoked delegations concurrently:
++	 * nfsd4_shutdown_callback() has not run yet.
++	 */
++	spin_lock(&clp->cl_lock);
+ 	while (!list_empty(&clp->cl_revoked)) {
+ 		dp = list_entry(clp->cl_revoked.next, struct nfs4_delegation, dl_recall_lru);
+-		list_del_init(&dp->dl_recall_lru);
+-		nfs4_put_stid(&dp->dl_stid);
++		/* this function drops ->cl_lock */
++		nfsd4_drop_revoked_stid(&dp->dl_stid);
++		spin_lock(&clp->cl_lock);
+ 	}
++	spin_unlock(&clp->cl_lock);
+ 	while (!list_empty(&clp->cl_openowners)) {
+ 		oo = list_entry(clp->cl_openowners.next, struct nfs4_openowner, oo_perclient);
+ 		nfs4_get_stateowner(&oo->oo_owner);
+@@ -6069,6 +6089,60 @@ bool nfsd_wait_for_delegreturn(struct sv
+ 	return timeo > 0;
+ }
  
- 	if (buflen <= head->iov_len) {
++static bool nfsd4_recall_grant_slot_retired(struct nfs4_delegation *dp)
++{
++	struct nfs4_client *clp = dp->dl_stid.sc_client;
++	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
++	struct nfsd4_session *ses;
++	struct nfsd4_sessionid sid;
++	bool retired = false;
++	void *entry;
++
++	if (!dp->dl_recall_grant.valid)
++		return false;
++
++	/*
++	 * gen_sessionid() composes a sessionid from the client's clientid
++	 * and a sequence counter, so the sequence alone identifies the
++	 * granting session.
++	 */
++	sid.clientid = clp->cl_clientid;
++	sid.sequence = dp->dl_recall_grant.sessionid_seq;
++	sid.reserved = 0;
++
++	/*
++	 * A missing session does not prove the client saw the grant: a
++	 * DESTROY_SESSION unhashes its own session before the reply to
++	 * that compound is encoded.
++	 */
++	spin_lock(&nn->client_lock);
++	ses = __find_in_sessionid_hashtbl((struct nfs4_sessionid *)&sid,
++					  clp->net);
++	entry = ses ? xa_load(&ses->se_slots, dp->dl_recall_grant.slotid) : NULL;
++	if (xa_is_value(entry)) {
++		/*
++		 * A slot is freed only once the client has acknowledged
++		 * the smaller slot table, which it cannot do while a
++		 * request on that slot is outstanding.
++		 */
++		retired = true;
++	} else if (entry) {
++		struct nfsd4_slot *slot = entry;
++
++		/*
++		 * A reactivated slot was freed and rebuilt, so the same
++		 * acknowledgment applies. The seqid test errs toward
++		 * revoking: a rebuilt slot restarting at seqid 1 matches
++		 * an old grant.
++		 */
++		retired = (slot->sl_flags & NFSD4_SLOT_REUSED) ||
++			  ((slot->sl_flags & NFSD4_SLOT_INITIALIZED) &&
++			   slot->sl_seqid != dp->dl_recall_grant.seqid);
++	}
++	spin_unlock(&nn->client_lock);
++	return retired;
++}
++
+ static bool nfsd4_cb_recall_prepare(struct nfsd4_callback *cb)
+ {
+ 	struct nfs4_delegation *dp = cb_to_delegation(cb);
+@@ -6090,9 +6164,37 @@ static bool nfsd4_cb_recall_prepare(stru
+ 		list_add_tail(&dp->dl_recall_lru, &nn->del_recall_lru);
+ 	}
+ 	spin_unlock(&nn->deleg_lock);
++
++	dp->dl_recall_grant.retired_at_send =
++			nfsd4_recall_grant_slot_retired(dp);
+ 	return true;
+ }
+ 
++/*
++ * cl_lock orders this against a laundromat reaping @dp: either
++ * revoke_delegation() observes dl_recall_rejected and destroys @dp, or
++ * it reached cl_revoked first and @dp is released here instead.
++ */
++static void nfsd4_deleg_recall_rejected(struct nfs4_delegation *dp)
++{
++	struct nfs4_client *clp = dp->dl_stid.sc_client;
++
++	spin_lock(&clp->cl_lock);
++	if (dp->dl_stid.sc_status & (SC_STATUS_CLOSED | SC_STATUS_FREED |
++				     SC_STATUS_ADMIN_REVOKED)) {
++		spin_unlock(&clp->cl_lock);
++		return;
++	}
++	if (dp->dl_stid.sc_status & SC_STATUS_FREEABLE) {
++		dp->dl_stid.sc_status |= SC_STATUS_CLOSED;
++		/* this function drops ->cl_lock */
++		nfsd4_drop_revoked_stid(&dp->dl_stid);
++		return;
++	}
++	dp->dl_recall_rejected = true;
++	spin_unlock(&clp->cl_lock);
++}
++
+ static int nfsd4_cb_recall_done(struct nfsd4_callback *cb,
+ 		struct rpc_task *task)
+ {
+@@ -6100,27 +6202,33 @@ static int nfsd4_cb_recall_done(struct n
+ 
+ 	trace_nfsd_cb_recall_done(&dp->dl_stid.sc_stateid, task);
+ 
+-	if (dp->dl_stid.sc_status)
+-		/* CLOSED or REVOKED */
+-		return 1;
+-
+ 	switch (task->tk_status) {
+ 	case 0:
+ 		return 1;
+ 	case -NFS4ERR_DELAY:
++		if (dp->dl_stid.sc_status)
++			/* CLOSED or REVOKED */
++			return 1;
+ 		rpc_delay(task, 2 * HZ);
+ 		return 0;
+ 	case -EBADHANDLE:
+ 	case -NFS4ERR_BAD_STATEID:
  		/*
-@@ -2338,19 +2336,8 @@ nfsd4_vbuf_from_vector(struct nfsd4_comp
- 	if (tmp == NULL)
- 		return nfserr_jukebox;
+-		 * Race: client probably got cb_recall before open reply
+-		 * granting delegation.
++		 * Retirement of the granting slot proves the client saw
++		 * the grant. Trust the rejection only if the slot had
++		 * retired when this recall was sent.
+ 		 */
+-		if (dp->dl_retries--) {
++		if (dp->dl_recall_grant.retired_at_send) {
++			nfsd4_deleg_recall_rejected(dp);
++			return 1;
++		}
++		if (!dp->dl_stid.sc_status && dp->dl_retries--) {
++			dp->dl_recall_grant.retired_at_send =
++					nfsd4_recall_grant_slot_retired(dp);
+ 			rpc_delay(task, 2 * HZ);
+ 			return 0;
+ 		}
+-		fallthrough;
++		return 1;
+ 	default:
+ 		return 1;
+ 	}
+@@ -6714,9 +6822,25 @@ static bool nfsd4_want_deleg_timestamps(
+ 	return open->op_deleg_want & OPEN4_SHARE_ACCESS_WANT_DELEG_TIMESTAMPS;
+ }
  
--	dp = tmp;
--	memcpy(dp, head->iov_base, head->iov_len);
--	buflen -= head->iov_len;
--	dp += head->iov_len;
--
--	while (buflen > 0) {
--		len = min_t(u32, buflen, PAGE_SIZE);
--		memcpy(dp, page_address(*pages), len);
--
--		buflen -= len;
--		dp += len;
--		pages++;
--	}
-+	if (read_bytes_from_xdr_buf(xdr, 0, tmp, buflen))
-+		return nfserr_bad_xdr;
++static void
++nfs4_delegation_record_grant_slot(struct nfs4_delegation *dp,
++				 const struct nfsd4_compound_state *cstate)
++{
++	const struct nfsd4_sessionid *sid;
++
++	if (!cstate->session)
++		return;
++	sid = (struct nfsd4_sessionid *)cstate->session->se_sessionid.data;
++	dp->dl_recall_grant.sessionid_seq = sid->sequence;
++	dp->dl_recall_grant.slotid = cstate->slot->sl_index;
++	dp->dl_recall_grant.seqid = cstate->slot->sl_seqid;
++	dp->dl_recall_grant.valid = true;
++}
++
+ static struct nfs4_delegation *
+-nfs4_set_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
+-		    struct svc_fh *parent)
++nfs4_set_delegation(struct nfsd4_open *open,
++		    const struct nfsd4_compound_state *cstate,
++		    struct nfs4_ol_stateid *stp, struct svc_fh *parent)
+ {
+ 	bool deleg_ts = nfsd4_want_deleg_timestamps(open);
+ 	struct nfs4_client *clp = stp->st_stid.sc_client;
+@@ -6806,6 +6930,14 @@ nfs4_set_delegation(struct nfsd4_open *o
+ 	dp = alloc_init_deleg(clp, fp, odstate, dl_type);
+ 	if (!dp)
+ 		goto out_delegees;
++
++	/*
++	 * Record the granting slot before kernel_setlease() makes @dp
++	 * visible to lease breakers. A conflicting open can drive
++	 * CB_RECALL to completion from that point on.
++	 */
++	nfs4_delegation_record_grant_slot(dp, cstate);
++
+ 	if (stp->st_stid.sc_export)
+ 		dp->dl_stid.sc_export = exp_get(stp->st_stid.sc_export);
  
- 	*bufp = tmp;
- 	return 0;
+@@ -6970,6 +7102,7 @@ nfs4_open_delegation(struct svc_rqst *rq
+ 		     struct nfs4_ol_stateid *stp, struct svc_fh *currentfh,
+ 		     struct svc_fh *fh)
+ {
++	struct nfsd4_compoundres *resp = rqstp->rq_resp;
+ 	struct nfs4_openowner *oo = openowner(stp->st_stateowner);
+ 	bool deleg_ts = nfsd4_want_deleg_timestamps(open);
+ 	struct nfs4_client *clp = stp->st_stid.sc_client;
+@@ -7006,7 +7139,7 @@ nfs4_open_delegation(struct svc_rqst *rq
+ 		default:
+ 			goto out_no_deleg;
+ 	}
+-	dp = nfs4_set_delegation(open, stp, parent);
++	dp = nfs4_set_delegation(open, &resp->cstate, stp, parent);
+ 	if (IS_ERR(dp))
+ 		goto out_no_deleg;
+ 
+@@ -10300,6 +10433,7 @@ nfsd_get_dir_deleg(struct nfsd4_compound
+ 	dp = alloc_init_dir_deleg(clp, fp);
+ 	if (!dp)
+ 		goto out_delegees;
++	nfs4_delegation_record_grant_slot(dp, cstate);
+ 	if (cstate->current_fh.fh_export)
+ 		dp->dl_stid.sc_export =
+ 			exp_get(cstate->current_fh.fh_export);
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -270,7 +270,8 @@ struct nfsd4_cb_notify {
+  * If the server attempts to recall a delegation and the client doesn't do so
+  * before a timeout, the server may also revoke the delegation. In that case,
+  * the object will either be destroyed (v4.0) or moved to a per-client list of
+- * revoked delegations (v4.1+).
++ * revoked delegations (v4.1+). A v4.1+ client that rejects the recall holds
++ * no record of the delegation, so the object is destroyed rather than listed.
+  *
+  * This object is a superset of the nfs4_stid.
+  */
+@@ -286,9 +287,19 @@ struct nfs4_delegation {
+ 	int			dl_retries;
+ 	struct nfsd4_callback	dl_recall;
+ 	bool			dl_recalled;
++	bool			dl_recall_rejected;
+ 	bool			dl_written;
+ 	bool			dl_setattr;
+ 
++	/* Forward-channel slot that carried the granting request */
++	struct {
++		u32			sessionid_seq;
++		u32			slotid;
++		u32			seqid;
++		bool			valid;
++		bool			retired_at_send;
++	} dl_recall_grant;
++
+ 	union {
+ 		/* for CB_GETATTR */
+ 		struct nfs4_cb_fattr    dl_cb_fattr;
 
 
