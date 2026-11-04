@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830930;
-	b=ikcWKADR+GnjEz7prqph+tHA4kkhosVPs5QFu+MMQCtim9j1N4S7x5ljPysZatk0dbaj
-	 7E0gRNTpFXnb/zmrkXwTKRNUnXHph8xbWVeY3RFsOb+jChxDRVNQH6Zu1xrv3ca/jURU3
-	 jNYnOTixhcAMEU88aFqGI3sUo5UcwwHeA+4qaJCNgJwroI3ZdW8K1B3xXCZ8Hb06JkH//
-	 YJCUxskWKu1WhPUDYPE3bdGLNFCrUozcsr2d1ZLEjrXFsl7x5tSRZ6MXAXofKKedttsRw
-	 Zec3oiyLSGpyOMAPSP10lVK4VgH1ZmhwKA0NN503esQnckWqAjCoZo4tt5l3twHWk2Q==
+	t=1793830932;
+	b=k2rO4pgclCjnVhzBbpv9taSobX2iYtrACD88cAKjK4JVXkPZ3jH6J0cFaJe/yVqtISFa
+	 gZd9RcKywgzKxjVTQmKJNaKQ0kQvfAkdiX5tffAe0KiU6syvRytNBfv/yK9a93O1+o0gm
+	 ZZPYlsBWUC9Eu0F5MQv5A7p+DNSAzSe0K1JFbBNScci0ZLTSOhqsfGioUU5S+bUSPwU8e
+	 eIOeK4DPCgCXAJ00Uw6XDD4hU/hGYi6HX2ku9SJ2uxB/XashGI3TSiG/gi6B/V3lGWhB6
+	 QJDJ4xDwzX8abHEKPCDUI87GjKQbwU0HOcs32RuFDB3NvSSvFaliPJjUQNlYvPA/8PQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3h+TTkb90aYrwuam5cb5i8c36Qqe4L/OOfcUy8ORiVE=;
-	b=YQFBGQ+sonlXsbVlGGTOmz8VpT7GZ6xStLObA6ugheP3+YlGLPDVdRS74AmaU0Hk0mGJ
-	 3X89LycOASxMs1B0QR6Y7TdIWd/SkqwBYYCkt2csQB5NQR//hegSi43uG5q986G8qqNMW
-	 fIl4RGb6pHeVhnlz77BQ7yB4iWeEb7DKuGG9LdZwxB6X6EwJYnJKDTUWZZx9J5RHdojHB
-	 fXj0yUNgFmQh5uOpf1Vt1t44+64Q0kNkQQJxhSRelbmEdf6/9z8gQrpt3XmG+O7R5YUsL
-	 SL1RlpQvMNiMlcUhgD75eCwf27fiUQtkf6J+4XhiGN5GtMSigdyu7Z15M0Acsvy6hVw==
+	bh=qLSkPsag8TRQuC0d93gdf2P12j6NNldC9Qsqvq46X80=;
+	b=hcb/hCMI+yvz8qPpdo3YRqilI9R+tg/t0wHJkfj7rmhnWu6n5Z3oQtB2MRYlvfcNPPbn
+	 qRWgf7Sxj9Cu85khFQoBseTNJSNDzpDated3mTGY6sC3puPV8pNnGD6V/cw63Vnl2VBdb
+	 iaes/WNflI3x/JrBAA5eb+ItL3U6BocQD7Fu12g4aXe34iDxV8OOYRamotCcZFtdxqwvW
+	 4xQv5tboK7ZdgrWv9HpObnugmJ6kXSopyyUEi32OkpNa+XN+1eUNmgt4yxsIdjv9aR9fJ
+	 zAmm2UYNokcI5zffhx7fW45uEoX75XmrjaXVTd0jwqZDv2OfQcemELT1yDgHSZ4K6lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhYHsFuv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sl5KqRwQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891DA606A33B;
-	Wed,  4 Nov 2026 22:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A785606A850;
+	Wed,  4 Nov 2026 22:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhYHsFuv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220691F000C1;
-	Wed,  4 Nov 2026 22:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sl5KqRwQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1E61F000C1;
+	Wed,  4 Nov 2026 22:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830930;
-	bh=3h+TTkb90aYrwuam5cb5i8c36Qqe4L/OOfcUy8ORiVE=;
+	s=korg; t=1793830932;
+	bh=qLSkPsag8TRQuC0d93gdf2P12j6NNldC9Qsqvq46X80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UhYHsFuvCiE/tMb//Yx6fBFW2PCvVSZLdceR5x2jnNIv5TnATFNJnRHh1Thuh2Caq
-	 fi0bfTWZ3X5F+kJxioviJzt3xdppi8NLDUX61MDU5jJUM28LG3PJ0DWskvgMR9+CUq
-	 Rbj560dIFZF416jPiT8lzVMo+ktQ2MrNGqDe1NhQ=
+	b=sl5KqRwQDQJukfvTS5mz8kwi517DYtENp/RtGkc56HUTSc/mCpNNLe/1RuH+JqVV7
+	 tI7pTgk5LjsGWuIHK5owmZ1elv9vxH2O5mHlC7UJ9CLFpb6s2bEDBW1+w3Qxbr7Lrb
+	 9szrkHb8iC1JKWh4AkQN/FJXGft2ErQWcmFCtDmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0382/1005] nfc: mrvl: spi: Unregister dev on allocation fail
-Date: Wed,  4 Nov 2026 16:01:55 -0500
-Message-ID: <20261104211054.796891043@linuxfoundation.org>
+Subject: [PATCH 6.18 0409/1005] ksmbd: return buffer too small for short security queries
+Date: Wed,  4 Nov 2026 16:02:22 -0500
+Message-ID: <20261104211055.534047366@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,40 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d832b95697384a2b67f20b35106bbf925358cde9 ]
+[ Upstream commit 2103add92a02505bdd536ba6fce7f64a427222a2 ]
 
-Call nfcmrvl_nci_unregister_dev() if nci_spi_allocate_spi() fails,
-unwrapping the previous call to nfcmrvl_nci_register_dev() during the
-nfcmrvl_spi_probe() function.
+SMB2 QUERY_INFO security requests with an output buffer too small for
+the self-relative security descriptor header can fall through descriptor
+construction and be reported as STATUS_INVALID_INFO_CLASS.
 
-Assisted-by: gkh-clanker-2000
-Cc: David Heidelberg <david@ixit.cz>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
-Signed-off-by: David Heidelberg <david@ixit.cz>
+After validating the file handle, reject buffers shorter than struct
+smb_ntsd with STATUS_BUFFER_TOO_SMALL before building the descriptor.
+
+This fixes smb2.getinfo.qsec_buffercheck.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nfcmrvl/spi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/server/smb2pdu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/nfc/nfcmrvl/spi.c b/drivers/nfc/nfcmrvl/spi.c
-index 9c8cde1250fb5..dad07c8e13b84 100644
---- a/drivers/nfc/nfcmrvl/spi.c
-+++ b/drivers/nfc/nfcmrvl/spi.c
-@@ -168,6 +168,10 @@ static int nfcmrvl_spi_probe(struct spi_device *spi)
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index b17296c7b64ee..0de707a77faa0 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5907,6 +5907,12 @@ static int smb2_get_info_sec(struct ksmbd_work *work,
+ 	if (!fp)
+ 		return -ENOENT;
  
- 	drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
- 						 drv_data->priv->ndev);
-+	if (!drv_data->nci_spi) {
-+		nfcmrvl_nci_unregister_dev(drv_data->priv);
-+		return -ENOMEM;
++	if (le32_to_cpu(req->OutputBufferLength) < sizeof(struct smb_ntsd)) {
++		rsp->hdr.Status = STATUS_BUFFER_TOO_SMALL;
++		ksmbd_fd_put(work, fp);
++		return -ENOSPC;
 +	}
- 
- 	/* Init completion for slave handshake */
- 	init_completion(&drv_data->handshake_completion);
++
+ 	idmap = file_mnt_idmap(fp->filp);
+ 	inode = file_inode(fp->filp);
+ 	ksmbd_acls_fattr(&fattr, idmap, inode);
 -- 
 2.53.0
 
