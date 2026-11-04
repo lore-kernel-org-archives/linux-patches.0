@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830929;
-	b=iMQ99JM4ZcDxFNpz0ljeiUKySCeeB+mcXmDTUeh3OFeVOdJb09g9IYLXXZ/szEK/n2Sf
-	 LvycFCiQQwwChGOZNynLSHXl6KckK1n/J98wdaShyTDHiMBk+kknZ+DbIPpMB5d1s8DbG
-	 tIrIN09at3KaK/Oe++1UC95TfJtv4/gm6H2yd/INTKgcIvn25qPlqPeWa8aqaP1e1O+eA
-	 ACkfvXHkL55XnwhoXV5BQE2vh26bvyvQ537uxShJGfnfLb8ruNVCqA4x3tYqaZwV7m/iX
-	 c5g4KnkroMxIrtCFZx9pGm9WA3WPbpLzE4qGw+V6NT0P3RT1KjJu1dKbCCr3gDcqNjQ==
+	t=1793830930;
+	b=ikcWKADR+GnjEz7prqph+tHA4kkhosVPs5QFu+MMQCtim9j1N4S7x5ljPysZatk0dbaj
+	 7E0gRNTpFXnb/zmrkXwTKRNUnXHph8xbWVeY3RFsOb+jChxDRVNQH6Zu1xrv3ca/jURU3
+	 jNYnOTixhcAMEU88aFqGI3sUo5UcwwHeA+4qaJCNgJwroI3ZdW8K1B3xXCZ8Hb06JkH//
+	 YJCUxskWKu1WhPUDYPE3bdGLNFCrUozcsr2d1ZLEjrXFsl7x5tSRZ6MXAXofKKedttsRw
+	 Zec3oiyLSGpyOMAPSP10lVK4VgH1ZmhwKA0NN503esQnckWqAjCoZo4tt5l3twHWk2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZEorYstGDMvtQuBBWATXuxwnVinsWILAMDUTuPQb2ag=;
-	b=INZfAJ8aQS13t1P4rm0SRqmuRU3Y+9bJ5NAzRQehLCJPdl3dKp277/bMo/CSG64kjXdD
-	 kWWE5CevS90j1WnpPbWut+wuq7OWurUb7Vh4NQQjDHugZcs2a7y1tMX/wpPo9UUtJvtFG
-	 3IoImOw2r2GV1gXbl4woVDevdbYqR8M20ogPAfZICOn4Cg1+aUuQh64fgK+GVpsZkKI6Q
-	 TqedwSpceM19WB+LVH6sYeqiXeaGhb0UMwqTxbehCWUCfa57h1Npt5UpV38KSzzVbNDdr
-	 tg8Uv0uNcsJ+ViSqEI6qFSHWNqvxCwet1DAmlpfxHZnhvM5fJe1eMNC/WwfOPmgWkHQ==
+	bh=3h+TTkb90aYrwuam5cb5i8c36Qqe4L/OOfcUy8ORiVE=;
+	b=YQFBGQ+sonlXsbVlGGTOmz8VpT7GZ6xStLObA6ugheP3+YlGLPDVdRS74AmaU0Hk0mGJ
+	 3X89LycOASxMs1B0QR6Y7TdIWd/SkqwBYYCkt2csQB5NQR//hegSi43uG5q986G8qqNMW
+	 fIl4RGb6pHeVhnlz77BQ7yB4iWeEb7DKuGG9LdZwxB6X6EwJYnJKDTUWZZx9J5RHdojHB
+	 fXj0yUNgFmQh5uOpf1Vt1t44+64Q0kNkQQJxhSRelbmEdf6/9z8gQrpt3XmG+O7R5YUsL
+	 SL1RlpQvMNiMlcUhgD75eCwf27fiUQtkf6J+4XhiGN5GtMSigdyu7Z15M0Acsvy6hVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZNhEi6j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhYHsFuv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08310606AB08;
-	Wed,  4 Nov 2026 22:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891DA606A33B;
+	Wed,  4 Nov 2026 22:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZNhEi6j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E8D1F0093A;
-	Wed,  4 Nov 2026 22:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhYHsFuv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220691F000C1;
+	Wed,  4 Nov 2026 22:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830928;
-	bh=ZEorYstGDMvtQuBBWATXuxwnVinsWILAMDUTuPQb2ag=;
+	s=korg; t=1793830930;
+	bh=3h+TTkb90aYrwuam5cb5i8c36Qqe4L/OOfcUy8ORiVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZNhEi6jAnYMlbYhbvXurovq4Ebx00K9ivxRhNBiXHEIFUQzr248dwKY/u+LSLf/9
-	 n8xWohFznQcCA3alp8RcyOTSEwfqEKh0foBadaQvaFpPjIol3UIftk4L+gUlgLJ9dj
-	 C+FWr4+Lw9JfnHtRhN8UFalXt8s3qZV/pLQMf6D8=
+	b=UhYHsFuvCiE/tMb//Yx6fBFW2PCvVSZLdceR5x2jnNIv5TnATFNJnRHh1Thuh2Caq
+	 fi0bfTWZ3X5F+kJxioviJzt3xdppi8NLDUX61MDU5jJUM28LG3PJ0DWskvgMR9+CUq
+	 Rbj560dIFZF416jPiT8lzVMo+ktQ2MrNGqDe1NhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gael Blivet <gael.blivet@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0408/1005] ksmbd: fix off-by-one rejecting minimal COPYCHUNK query-limits request
-Date: Wed,  4 Nov 2026 16:02:21 -0500
-Message-ID: <20261104211055.504761581@linuxfoundation.org>
+Subject: [PATCH 6.18 0382/1005] nfc: mrvl: spi: Unregister dev on allocation fail
+Date: Wed,  4 Nov 2026 16:01:55 -0500
+Message-ID: <20261104211054.796891043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,43 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gael Blivet <gael.blivet@gmail.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit d68d4b3293034f549d55f407a23b4c0a6c90e50a ]
+[ Upstream commit d832b95697384a2b67f20b35106bbf925358cde9 ]
 
-The FSCTL_COPYCHUNK/FSCTL_COPYCHUNK_WRITE input length check uses
-in_buf_len <= sizeof(struct copychunk_ioctl_req), which rejects a
-buffer that is exactly sizeof(struct copychunk_ioctl_req) bytes -- the
-minimal, valid request containing only the fixed header with
-ChunkCount=0 and no chunk entries, used by clients to query the
-server's copy limits before issuing a real copychunk.
+Call nfcmrvl_nci_unregister_dev() if nci_spi_allocate_spi() fails,
+unwrapping the previous call to nfcmrvl_nci_register_dev() during the
+nfcmrvl_spi_probe() function.
 
-Since copychunk_ioctl_req ends in a flexible array member, the correct
-minimum is that the buffer covers the fixed header, so use
-offsetof(..., Chunks) with '<' instead of '<=' against sizeof(): same
-value, but the boundary case is now correctly accepted.
-
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Assisted-by: gkh-clanker-2000
+Cc: David Heidelberg <david@ixit.cz>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nfc/nfcmrvl/spi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index eec5cb16bfe53..b17296c7b64ee 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8581,7 +8581,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 			goto out;
- 		}
+diff --git a/drivers/nfc/nfcmrvl/spi.c b/drivers/nfc/nfcmrvl/spi.c
+index 9c8cde1250fb5..dad07c8e13b84 100644
+--- a/drivers/nfc/nfcmrvl/spi.c
++++ b/drivers/nfc/nfcmrvl/spi.c
+@@ -168,6 +168,10 @@ static int nfcmrvl_spi_probe(struct spi_device *spi)
  
--		if (in_buf_len <= sizeof(struct copychunk_ioctl_req)) {
-+		if (in_buf_len < offsetof(struct copychunk_ioctl_req, Chunks)) {
- 			ret = -EINVAL;
- 			goto out;
- 		}
+ 	drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
+ 						 drv_data->priv->ndev);
++	if (!drv_data->nci_spi) {
++		nfcmrvl_nci_unregister_dev(drv_data->priv);
++		return -ENOMEM;
++	}
+ 
+ 	/* Init completion for slave handshake */
+ 	init_completion(&drv_data->handshake_completion);
 -- 
 2.53.0
 
