@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826929;
-	b=b7aWJezRwUiWDj3ClN5+KiqnOORVCwbZ8FhO7JikPP7oXALZ4dP7U4izuWP/wUe4VJxG
-	 oyfm+1PudBO3KeGQZSGVotEDCweiZm0jbbnVJmJx8JifonQ1QS7jLwNaH+UNVufuRt7Qs
-	 /+/XKSsy5E1B/yOhv+9Tt/wYsJoXD2rVQjoYtLkOt5QkRXu8IZQNMHRjSDvSg8nlBC3CN
-	 SoVxZZe1rTr17XYUj73w0/z79u3DDcZO07Gcm456Q1JTzfpfIMRApxlgehuDKJwS+ef3u
-	 RHYD8LnTnfpuqga1nlD9vNGUBZCITHBe/Huww4TYgNRZ5Ig8Nm8XKJJAJI5S7qSrOyw==
+	t=1793826931;
+	b=OAWLYB/R0XhQZcipIvGtTSjeoEDPvh/3rj7PbJX/ze9y0NPYjWzRTBiUTrPn3P5wkCg3
+	 5gBLJGYE75+rwCxlfA1OPdVypGisqU9WUf28er+KxukrYGNDuz/uoy0YdyWR+WUo2xqh+
+	 az08OmSCVNg/4yUhnMCnqHWjMfJtprsX48Rzj8MfgM1SaN8qWXujE/MGPi74svj/gMy5o
+	 woUShguvBc+zOmIC6ka2zMtFcEXVn6/ao7PD4OSexzKSvREmSCDksGVac9ObWrad/aT5v
+	 Qa4m8o+1Ps0R28/zwX6UWtvRTZ9+VRYqCpqi7kcEFZ4l1h4hBytNdvO3cmZ6zibwHng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826931;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZteNeQvOOP7aTgWn38NYMp6bHNYAJL6TgX+o6+BEYp4=;
-	b=CCPwuRMPB8m5E2plN4mNLtkxRN3wNKCJCg4zM5DWKs9tx5mEACcDBtMSNh4IQNH3aglP
-	 l9AjnUTZrvwDJ8TCJ1+PuyYqasPR5Hx0HZ4Nppr+lSYxQarWKhaxLhzXdhUx+LmCvLMhB
-	 doJFg/F5hIDpeuFYc2cbxM8ipu/OMGjM8K3brC+Dy1w5y3CJ4XMnN1DE/M62c+/opO+J9
-	 KeqRBR8GbuL8NMYIgoynZGuiSA3GXQRhAtdL0TlROPdVVZKlAeCSQ1z8VJN8eQSgewuKX
-	 YTONwP8SAk2DoiCznYanY1RQtdWzD0cHYc04prFInRoHyUyZDKABSdGSaKcoIt/6W+g==
+	bh=W52rDQsQRBgbGmyYOm0GBN/qmeSAtna8ZJbCvsvIgWY=;
+	b=RcWW8XrtIDabfaF1Xh17Ip24bzVEDntR4OUGZVFW1ZxPWeuK/6cuZks+8YsR8okTeaai
+	 kfnJuo2dj+6JaA91I603nyj332DuxKuVw+fQv0aTMSrX7GXhDb6ik83QWcSA/gvrW1nyk
+	 QmR95q5JZTElDKQ5UZH0aPpjlbt+XX5QUvRaPS+2huKtvfDFb0r4hhKveSM3v3g2nL7Hx
+	 FIaws8sbDD+Dy/KArQlBCRt7WHov6/6yp0UMSbD9d25rqNLklR7DLn8oAqXJPlQdfKWmw
+	 txLbMFsuUkgzeD+46tOC32o9Uu5Z2f+59dPsak4TOK9TcdiRB4RmKv+8X8DR6xrvkgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWFVfwSm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bl3CSJ0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098E46072FA3;
-	Wed,  4 Nov 2026 21:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE0C6072FA3;
+	Wed,  4 Nov 2026 21:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWFVfwSm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861431F00A02;
-	Wed,  4 Nov 2026 21:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bl3CSJ0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492481F00919;
+	Wed,  4 Nov 2026 21:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826928;
-	bh=ZteNeQvOOP7aTgWn38NYMp6bHNYAJL6TgX+o6+BEYp4=;
+	s=korg; t=1793826930;
+	bh=W52rDQsQRBgbGmyYOm0GBN/qmeSAtna8ZJbCvsvIgWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VWFVfwSmuAuufhMD4jw+ebwUG3YuizhSYsLiRPq6iolLU0E7k5uBXs8mySm6LcMW3
-	 5ungo/Eg+FdaLaubPN8A2po9Vbk/wctyrKZPK55x4nCP6OrQKett+frgZ2ibTYdw07
-	 U0XQRLWj3loyyFFccbdQhxpYeyqt5jY38SfaZEZg=
+	b=0bl3CSJ0jBg0Nwu2iVcCANLYhwpXrvVB6oy9db1ZWqNFPNiYD68nTY14dZLcsCSJn
+	 ijn/ZF+MVMuh1HTTAG9lTNQuY1yl3d4anHMSuAzo8wck5TBkTO5fpdaeuZlMoQ+6ol
+	 9H5kbvzq3IexBDQVINFBZRtirw6Qghh9jiBwS3p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.3 090/547] smb: client: fix early procfs exposure race
-Date: Wed,  4 Nov 2026 16:04:34 -0500
-Message-ID: <20261104211040.785045537@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 055/547] io_uring: dont pass restart error codes to userspace
+Date: Wed,  4 Nov 2026 16:03:59 -0500
+Message-ID: <20261104211039.855724338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,126 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 7b1afb631395c958993cda4631002258ef4151ea upstream.
+[ Upstream commit e1a64bc64897f4c2fe460922c345f2ed8f889b5f ]
 
-Currently, init_cifs() calls cifs_proc_init() near the beginning of
-the function, before INIT_LIST_HEAD, leading to a momentarily
-uninitialized, but exposed, procfs. If a userspace process reads this
-empty procfs, iterating over a zeroed list_head leads to a NULL
-pointer dereference and a kernel oops/panic.
+-ERESTARTSYS and friends are instructions for the system call exit code,
+which either restarts the call or turns them into -EINTR. They are not
+supposed to be seen by applications. A request isn't a system call,
+nobody looks at what it returns before that is put into a CQE.
 
-For example, if a delay is added between cifs_proc_init() and
-INIT_LIST_HEAD, and a userspace process is polling
-/proc/fs/cifs/DebugData, the following oops occurs:
+The read/write and the networking opcodes convert these codes to -EINTR
+by hand. The others don't. An io-wq worker that is blocked in the open of
+a FIFO, a tty or some other device, or in a splice from an empty pipe,
+and that gets interrupted because the request is cancelled, completes it
+with -512:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000608
-Oops: Oops: 0000 [#1] SMP PTI
-CPU: 0 UID: 0 PID: 3477 Comm: cat Not tainted
-7.3.0-02212-g4df4d2a577db-dirty #6 PREEMPT(lazy)
-RIP: 0010:cifs_debug_data_proc_show+0x103/0xd80 [cifs]
-Call Trace:
-<TASK>
- ? seq_read_iter+0x86/0x400
- ? seq_read_iter+0x86/0x400
- seq_read_iter+0x183/0x400
- proc_reg_read_iter+0x62/0x90
- copy_splice_read+0x215/0x310
- splice_file_to_pipe+0xec/0x1c0
- do_splice+0x4b8/0x780
- __se_sys_splice+0x18f/0x250
- do_syscall_64+0x109/0x330
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-</TASK>
+  IORING_OP_OPENAT, IOSQE_ASYNC       // FIFO without a writer
+  IORING_OP_ASYNC_CANCEL              // -EALREADY, worker is signalled
+  CQE of the open: res == -512
 
-Fix this by moving cifs_proc_init() down in init_cifs(), ensuring it runs
-only after all internal lists, locks, counters, and workqueues are fully
-ready, but before registering the filesystem. Update the error cleanup
-ladder and exit_cifs() to maintain proper LIFO order.
+There are more candidates, like whatever a file system or driver returns
+from ->flush(), ->fsync(), ->fallocate() or ->uring_cmd(), or breaking a
+lease or delegation.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Take care of it in io_issue_sqe(), which all of them go through. The
+helper is moved from rw.c as is. The cost is a compare and a branch that
+is not taken per request.
+
+Fixes: 15b71abe7b52 ("io_uring: add support for IORING_OP_OPENAT")
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-39-c1556f5d7bf5@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ io_uring/io_uring.c |  5 +++++
+ io_uring/io_uring.h | 18 ++++++++++++++++++
+ io_uring/rw.c       | 18 ------------------
+ 3 files changed, 23 insertions(+), 18 deletions(-)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -2021,7 +2021,6 @@ init_cifs(void)
- 	if (rc)
- 		return rc;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 9796283508b83..7cade81d332a8 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1454,6 +1454,9 @@ static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
+ 	ret = __io_issue_sqe(req, issue_flags, def);
  
--	cifs_proc_init();
- 	INIT_LIST_HEAD(&cifs_tcp_ses_list);
- /*
-  *  Initialize Global counters
-@@ -2070,10 +2069,8 @@ init_cifs(void)
- 	cifsiod_wq = alloc_workqueue("cifsiod",
- 				     WQ_FREEZABLE | WQ_MEM_RECLAIM | WQ_PERCPU,
- 				     0);
--	if (!cifsiod_wq) {
--		rc = -ENOMEM;
--		goto out_clean_proc;
--	}
-+	if (!cifsiod_wq)
-+		return -ENOMEM;
- 
- 	/*
- 	 * Consider in future setting limit!=0 maybe to min(num_of_cores - 1, 3)
-@@ -2164,19 +2161,22 @@ init_cifs(void)
- 	if (rc)
- 		goto out_cifs_swn_init;
- 
-+	cifs_proc_init();
-+
- 	rc = register_filesystem(&cifs_fs_type);
- 	if (rc)
--		goto out_init_cifs_idmap;
-+		goto out_clean_proc;
- 
- 	rc = register_filesystem(&smb3_fs_type);
- 	if (rc) {
- 		unregister_filesystem(&cifs_fs_type);
--		goto out_init_cifs_idmap;
-+		goto out_clean_proc;
+ 	if (ret == IOU_COMPLETE) {
++		/* not all handlers take care of the internal restart codes */
++		if (unlikely(req->cqe.res <= -ERESTARTSYS))
++			req->cqe.res = io_fixup_restart_res(req->cqe.res);
+ 		if (issue_flags & IO_URING_F_COMPLETE_DEFER)
+ 			io_req_complete_defer(req);
+ 		else
+@@ -1468,6 +1471,8 @@ static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
+ 		if (req->flags & REQ_F_IOPOLL)
+ 			io_iopoll_req_issued(req, issue_flags);
  	}
- 
- 	return 0;
- 
--out_init_cifs_idmap:
-+out_clean_proc:
-+	cifs_proc_clean();
- 	exit_cifs_idmap();
- out_cifs_swn_init:
- #ifdef CONFIG_CIFS_SWN_UPCALL
-@@ -2212,8 +2212,6 @@ out_destroy_decrypt_wq:
- 	destroy_workqueue(decrypt_wq);
- out_destroy_cifsiod_wq:
- 	destroy_workqueue(cifsiod_wq);
--out_clean_proc:
--	cifs_proc_clean();
- 	return rc;
++	if (unlikely(ret <= -ERESTARTSYS))
++		ret = io_fixup_restart_res(ret);
+ 	return ret;
  }
  
-@@ -2223,6 +2221,7 @@ exit_cifs(void)
- 	cifs_dbg(NOISY, "exit_smb3\n");
- 	unregister_filesystem(&cifs_fs_type);
- 	unregister_filesystem(&smb3_fs_type);
-+	cifs_proc_clean();
- 	cifs_release_automount_timer();
- 	exit_cifs_idmap();
- #ifdef CONFIG_CIFS_SWN_UPCALL
-@@ -2245,7 +2244,6 @@ exit_cifs(void)
- 	destroy_workqueue(serverclose_wq);
- 	destroy_workqueue(cfid_put_wq);
- 	destroy_workqueue(cifsiod_wq);
--	cifs_proc_clean();
+diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
+index 659deb13c6680..22374bf536a04 100644
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -350,6 +350,24 @@ static inline void io_req_set_res32(struct io_kiocb *req, s32 res, u32 cflags,
+ 	req->big_cqe.extra2 = extra2;
  }
  
- MODULE_AUTHOR("Steve French");
++static inline ssize_t io_fixup_restart_res(ssize_t ret)
++{
++	switch (ret) {
++	case -ERESTARTSYS:
++	case -ERESTARTNOINTR:
++	case -ERESTARTNOHAND:
++	case -ERESTART_RESTARTBLOCK:
++		/*
++		 * We can't just restart the syscall, since previously
++		 * submitted sqes may already be in progress. Just fail
++		 * this IO with EINTR.
++		 */
++		return -EINTR;
++	default:
++		return ret;
++	}
++}
++
+ static inline void *io_uring_alloc_async_data(struct io_alloc_cache *cache,
+ 					      struct io_kiocb *req)
+ {
+diff --git a/io_uring/rw.c b/io_uring/rw.c
+index 432820f862514..b21daa3cfa5c2 100644
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -610,24 +610,6 @@ static void io_complete_rw_iopoll(struct kiocb *kiocb, long res)
+ 	smp_store_release(&req->iopoll_completed, 1);
+ }
+ 
+-static inline ssize_t io_fixup_restart_res(ssize_t ret)
+-{
+-	switch (ret) {
+-	case -ERESTARTSYS:
+-	case -ERESTARTNOINTR:
+-	case -ERESTARTNOHAND:
+-	case -ERESTART_RESTARTBLOCK:
+-		/*
+-		 * We can't just restart the syscall, since previously
+-		 * submitted sqes may already be in progress. Just fail
+-		 * this IO with EINTR.
+-		 */
+-		return -EINTR;
+-	default:
+-		return ret;
+-	}
+-}
+-
+ static inline void io_rw_done(struct io_kiocb *req, ssize_t ret)
+ {
+ 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
+-- 
+2.53.0
+
 
 
