@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830907;
-	b=nY2aVb+oPNzhBlH0p1aG6h287vNfQbECX7p49xJfmJQmG2C8fvNJET73Un9XI2uRHGaZ
-	 W+p1Kv3LGvQMTMbVSPs/5aMLMVBLlPrHhzRWnTFD0bh2hhn3GHaJ+TFGWG4BA2+K/Ep1q
-	 yt6m69b9U4/DQPS0tN8NDaXsv6MGYpH+L/hKPXXrcf8f7kG/0tdIooGPjtVGO6yOnJU6l
-	 X+5Isn0rBt4lh6QKL1sZI5kEcoGc7ejs5GNdS0eAjP5cUyC6a1ECGDkvSy1TyerTHRqFQ
-	 kbarUGibCsJMnUkV5kDnuBfAQ0DOMO/FutaAS7TDZSWLNBQd8qLXyw0LINSHEeUmaKg==
+	t=1793830909;
+	b=ecN4BB9DzWxBITovne/uJ6WQefS95Lh/Kvl+D25i/OPW09esLbCHloamxXRaSx4EcJur
+	 VFJuLZ9uoJCQ/4QzMjSLfITH8jgDdP1gbUoR7NfO5r/GYPuNDLVUwLgCaH7WUNW470Tfs
+	 vmhWyuCdrlf2ZL0oY6n38dEXdOAS2TS9TjhKprdoVwVt6tigUa13Q4+N1XPw9PNSKzjZM
+	 3STCvZ2FSjJlzCN4afwjy/yYUF8FYm2UtwhEyWu3M9KniTzmp2PsbsNOglSuqekQP5msg
+	 u3OcUDZnBkc01TLYqY6Tk9DhH4Kqwj3GwxVOSj/zyGfPVieaC3R12X46xTqqkYuxF8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830907;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e8bmKdZpRIELd31AAoPJgcDATWb4fi4H66zqW1nZjXw=;
-	b=LqOP5/FrNxdEjvuzrPKyuR0FLSi6lAetAlEZMhVsurdTCGGU2i9v3cegYkmYqcoVNKHO
-	 kMpabG1AI7lFLjloob3LKuMd9WIK2I4uvNCMP+5x9XNPgzLZZB+J4MU/VLIlBl0/JBYhk
-	 KdePi0EJYHWP63HI8AZDRsi7/Y1WeloYNyvNYyYpKtH9+1dB5XSlQob5910tr06h9VdGD
-	 omToo25ArQiTmxcHm9jmVOFmpHg6ZbjG/Bube5jw1V67T+xW6PwML13dDW+WEIBYhJbeJ
-	 vQLpTRS+wXu3Q31M99wWHDEAdji0deUPMfqth9T3oRV2WPkJwX4Lftliyl0IwtN0tZA==
+	bh=rWmjd4/8b4kVe5iuGVScRstFjXhCXCSLjbc3X+EEjAw=;
+	b=EBuCs7kNMBoIKAjohYCYaIBpXA59E6xxqkIKJEStre6SESNsyvXvUHE5Eq7xHUEYEWP3
+	 blUc0C/PraJ2llgj5oxl8USB1qzm519k2U0Csk79ngiKURKJ+lgqsD0d4Kz0Qjfnthiiu
+	 pZK+bSjcCojxf/hyZxuGpxjBPYO5B/59qvrLOvXLQJG0TjPy+IQAjTL+Jw0w/3CaMtYi2
+	 FHhcdKkHk5UzdmebR+Q7WP5db4FeQsiV5vCabc2hs4wpBk8dh5ujbNPGgnjTzrsGNRYWk
+	 ZR69QBPjMSi013THBCg/mc/uzF7bJOqxk4dD2sinEN7oCmprhfjx4RJlipH8+3cPKmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klPWGQjk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f8uPo6Gk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390E0606A848;
-	Wed,  4 Nov 2026 22:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6889606A336;
+	Wed,  4 Nov 2026 22:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=klPWGQjk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4551F000C1;
-	Wed,  4 Nov 2026 22:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f8uPo6Gk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D211F00919;
+	Wed,  4 Nov 2026 22:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830907;
-	bh=e8bmKdZpRIELd31AAoPJgcDATWb4fi4H66zqW1nZjXw=;
+	s=korg; t=1793830908;
+	bh=rWmjd4/8b4kVe5iuGVScRstFjXhCXCSLjbc3X+EEjAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klPWGQjkO1ZUcVWrkOL2YBbr4P8hOepFWfkAvNV9RGpK/BKHrs9CQrKqChHVV+EQy
-	 RzsSal1XSQaK8R0ZUfNRHMBfLE3EtYDsgq2t+TxmJgjIyEDmwMSFL8rPwXeFx+rSLO
-	 Uraq0NxzsiGOIXayb0H6soDE5lmluCMCxRZy6SBM=
+	b=f8uPo6Gkeewq62m8S3me1uLbVHhUvqKxw5xTCzJyMusP7WE6EnajP9gGkAtQ5TflT
+	 QNCGchaPZkahBnpg9C3YNLTW8nxmnwVxJ/H1M4n8XDs1/Xf2C/G9H9DGpWnvjvFITf
+	 vv6rr8AFLhMMVXheeX+KEA5fDX63GbezsWtIMtYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com,
+	Anuj Bolewar <bolewara@gmail.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0395/1005] HID: amd_sfh: Serialize access to the shared emp2 pointer
-Date: Wed,  4 Nov 2026 16:02:08 -0500
-Message-ID: <20261104211055.136586973@linuxfoundation.org>
+Subject: [PATCH 6.18 0396/1005] drm/virtio: reclaim pending vbufs before tearing down vqs
+Date: Wed,  4 Nov 2026 16:02:09 -0500
+Message-ID: <20261104211055.163153498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,69 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Anuj Bolewar <bolewara@gmail.com>
 
-[ Upstream commit c57016bcf6d0b57cda5579e5d6856bd9bbe52a77 ]
+[ Upstream commit 61d85f99b5a55d4f717c4bb2f4c4acabf22ee3fc ]
 
-The SFH accessors reach the device through a file-global emp2 pointer
-that is published at probe and cleared on remove. amd_get_sfh_info() is
-exported and called from other modules on unrelated threads, so a reader
-can observe a non-NULL emp2 and then race a concurrent unbind that clears
-it and frees the device.
+virtio_gpu_free_vbufs() destroys the vbufs kmem_cache after the virtqueues
+have already been released. Commands that were queued but never completed
+by the device leave their vbuffers stranded in the virtqueue, so the cache
+still holds live objects when virtio_gpu_deinit() tears everything down.
+This triggers a WARNING in virtio_gpu_free_vbufs:
 
-Serialize the emp2 publish/clear and all readers under a mutex, so a
-reader either sees a live device for the whole access or sees NULL.
+    BUG virtio-gpu-vbufs (Not tainted): Objects remaining in cache
+    on __kmem_cache_shutdown()
 
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Drain any buffers still sitting in the control and cursor virtqueues in
+virtio_gpu_deinit() after the device has been reset and before the
+virtqueues are deleted, following the same pattern used by virtio_console's
+remove_vqs(). Each reclaimed buffer is released with free_vbuf(), dropping
+the reference on any GEM objects it holds. Pending RESOURCE_UNREF
+commands are handled as well: their resp_cb_data still references a GEM
+object, so it is cleaned up with virtio_gpu_cleanup_object() to avoid
+leaking it on teardown.
+
+Reported-by: syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=06f9b2a53ba4a5a47644
+Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260802-virtio-gpu-reclaim-vbufs-v2-1-5767fb860691@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/virtio/virtgpu_drv.h |  1 +
+ drivers/gpu/drm/virtio/virtgpu_kms.c |  1 +
+ drivers/gpu/drm/virtio/virtgpu_vq.c  | 15 +++++++++++++++
+ 3 files changed, 17 insertions(+)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-index 837d59e7a6610..dd2720bae65c3 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-@@ -8,12 +8,14 @@
-  * Author: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-  */
- #include <linux/amd-pmf-io.h>
-+#include <linux/cleanup.h>
- #include <linux/io-64-nonatomic-lo-hi.h>
- #include <linux/iopoll.h>
- 
- #include "amd_sfh_interface.h"
- 
- static struct amd_mp2_dev *emp2;
-+static DEFINE_MUTEX(emp2_lock);
- 
- static int amd_sfh_wait_response(struct amd_mp2_dev *mp2, u8 sid, u32 cmd_id)
- {
-@@ -78,12 +80,14 @@ static struct amd_mp2_ops amd_sfh_ops = {
- 
- void sfh_deinit_emp2(void)
- {
-+	guard(mutex)(&emp2_lock);
- 	emp2 = NULL;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
+index 51b78f8a8aa2e..d52f35a09a1b0 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.h
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
+@@ -355,6 +355,7 @@ void virtio_gpu_array_put_free_work(struct work_struct *work);
+ /* virtgpu_vq.c */
+ int virtio_gpu_alloc_vbufs(struct virtio_gpu_device *vgdev);
+ void virtio_gpu_free_vbufs(struct virtio_gpu_device *vgdev);
++void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev);
+ void virtio_gpu_cmd_create_resource(struct virtio_gpu_device *vgdev,
+ 				    struct virtio_gpu_object *bo,
+ 				    struct virtio_gpu_object_params *params,
+diff --git a/drivers/gpu/drm/virtio/virtgpu_kms.c b/drivers/gpu/drm/virtio/virtgpu_kms.c
+index 4a25347734fda..01ea5cd5ea7f1 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_kms.c
++++ b/drivers/gpu/drm/virtio/virtgpu_kms.c
+@@ -289,6 +289,7 @@ void virtio_gpu_deinit(struct drm_device *dev)
+ 	flush_work(&vgdev->cursorq.dequeue_work);
+ 	flush_work(&vgdev->config_changed_work);
+ 	virtio_reset_device(vgdev->vdev);
++	virtio_gpu_reclaim_vbufs(vgdev);
+ 	vgdev->vdev->config->del_vqs(vgdev->vdev);
  }
  
- void sfh_interface_init(struct amd_mp2_dev *mp2)
- {
- 	mp2->mp2_ops = &amd_sfh_ops;
-+	guard(mutex)(&emp2_lock);
- 	emp2 = mp2;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
+index 244a791ab915e..f7e7d212fc67c 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_vq.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
+@@ -207,6 +207,21 @@ static void free_vbuf(struct virtio_gpu_device *vgdev,
+ 	kmem_cache_free(vgdev->vbufs, vbuf);
  }
  
-@@ -160,6 +164,8 @@ static int amd_sfh_als_info(u32 *ambient_light)
- 
- int amd_get_sfh_info(struct amd_sfh_info *sfh_info, enum sfh_message_type op)
- {
-+	guard(mutex)(&emp2_lock);
++void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev)
++{
++	struct virtio_gpu_vbuffer *vbuf;
 +
- 	if (sfh_info) {
- 		switch (op) {
- 		case MT_HPD:
++	while ((vbuf = virtqueue_detach_unused_buf(vgdev->ctrlq.vq))) {
++		if (vbuf->objs)
++			virtio_gpu_array_put_free(vbuf->objs);
++		if (vbuf->resp_cb_data)
++			virtio_gpu_cleanup_object(vbuf->resp_cb_data);
++		free_vbuf(vgdev, vbuf);
++	}
++	while ((vbuf = virtqueue_detach_unused_buf(vgdev->cursorq.vq)))
++		free_vbuf(vgdev, vbuf);
++}
++
+ static void reclaim_vbufs(struct virtqueue *vq, struct list_head *reclaim_list)
+ {
+ 	struct virtio_gpu_vbuffer *vbuf;
 -- 
 2.53.0
 
