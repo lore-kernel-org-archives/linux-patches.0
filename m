@@ -1,111 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793817477;
-	b=WCwQmK82uL9gWgnQutPgHCj7+3RbY4oWa2znP4JtTj67SO5/XJTXylmZqy3A+9PhZqXu
-	 UZ5CNv3gwpl+onlhI12uYORfGOEB9VBxEdvzrKsHPIQnxhdWSEw/pO3sT4tcmTPQMYlDr
-	 Z67dpDNWc5MG1RHlayAGoPgHw62/vMmWlmSdHs9cdJnWCNn2q4O+v+jC6np2x/u1i7/5K
-	 vjviPnYF/1xwMx4Z8U1wEz1tPIHUWACDy4Mqjmsv3ar4UkYEb9p9Z74y4sJ9vtDsznG4M
-	 gbKFR+HJSwE0D0yFJA2ld/ROR4265EK7HtuEKhkWIE2egBEYDlpULgvq+uKZ0EOMlLQ==
+	t=1793825543;
+	b=GtBM4/E4k88dpMlVEt41s0m2is6vYXhmYh8ABBvtOjAztqxcSuvHdDQkZ3wY3IYR6q7G
+	 5ZWP51L4pRgyMXtNQFJUkxMNynyeGB2/wZUVD/vpdTIRwTVzE83nOTHJFn1PzxAbL/40C
+	 zaX5l955DQOwkkG7lBfKL1+4Ul7OHE+tx8lYZH8q+Y+gLQrORZEVjfiS3LVTU87zd0xDL
+	 FvrBRl/D+R1j3VppwJSOpvxkGSdRI8BFz2ISMrdU/m5S/BB9nKN5KTqVvZd1sT4iFXpIV
+	 P7R9f7B0zJZBm7N2J4825bl2jWydrm8Vz7AzcvUOD6PeTVJrzykEWunDJmpqUpqW+Ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793817477;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=zP0FWmOJm/guqpM9jttc05RQpe78thW+WHjsEUvp+/0=;
-	b=rwWBLsIG0H5EhSuf5TzieDEXV3hatijnd/O7QYvEqJxjHW6oYw3YmgAOaUBdCqfy3Gpx
-	 0AxkQuozYNaONH9QtR+MM0FdwOXLHzoox7hDOW/ejqQb7IgOh60l16qu3XVNLnaOualvc
-	 qVasT1IasHdrilufzw93q5cQ5D8tjLre2qubSMk6pDSK5V/gxxTVhXESoQdL2pBM0gUor
-	 +83REJ9C5sK49ZyGbKXZwoBB+BmyYfP4nMrrAdKNULTVVIh1i3vkDTFHn95IddglGOZQb
-	 +xQ94hlO5xF7Tp+EfOUYbieHnUjN+Mm0wg+HSibP5iApOkJ+ZVmQwccBTeQ7StaO7aw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793825543;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=6xD81lAG6UeXkEreuShp+JJaj+9y4oCBxhpOeIMXWAs=;
+	b=0IklUqUp9uJrNJ7GOjtz6+CpuW77Cx2ciIauzF7zTT6QAtTGO9IKVGH+4gD8M2tgWt45
+	 8R98BHnP4mnMv5Tg9GsqQ269ilgxhEFTg2+zsrroGvlsd8pnv2NvHX+vg6ruFE5nn0Y7H
+	 ywO1oRxWqqsF2UKcP6QF4/mDju4ql1IHC+BeQaVtfL0eKsw/g7HZCdaWW8vMPlFMp46Gp
+	 z/tUlsPwGMJkg0Eclj3LHmH2QjXQeXgRIzUeIyWvH9I7iZ386UHoZtXDIfXW4+hlBI9c0
+	 lK58XRE7lfN59MV5b4n9p8hIO9Zh0cMoDlCgv/IVrQOk/4ka8aSQcc1YqE/8xxxG1SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=id58xR3y;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKn0+6ig;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E644606A32F
-	for <patches@lists.linux.dev>; Wed,  4 Nov 2026 18:37:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3E644606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68FF6078147;
+	Wed,  4 Nov 2026 20:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=id58xR3y
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4b467581b98so7647385e9.0
-        for <patches@lists.linux.dev>; Wed, 04 Nov 2026 10:37:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793817476; x=1794422276; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zP0FWmOJm/guqpM9jttc05RQpe78thW+WHjsEUvp+/0=;
-        b=id58xR3yXof1mgYZ/P5jHRLMSpf9YnAWZ5l0v6P0qr032vgjfhX0MCmf9beKiq8SnG
-         Fs/36SndlYpSdjfcQj90HTont983Bn33aZ9gBsgKQ5juK3a1aoZ7dVEZtmpHczoygnuF
-         aGPjvAog3VDTA4DBZG7CIaH5vDMUAO3TeBFe/BuxgsIuSQ588lbzeWGRXubKKQ1DUDK0
-         P2fkSmzV1MBa2wsQSisua0yV+9hozRsTtv69yGmpCFHtWDAkwIx3jlpeJ7uBtTzZUoh6
-         z6bdAA4YVN0BjWSvAQPuVjO3xQd0QF8NQsQfZphGg3C0946jWq7/f030ZPcimSa2QNJM
-         dpFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793817476; x=1794422276;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zP0FWmOJm/guqpM9jttc05RQpe78thW+WHjsEUvp+/0=;
-        b=O2oTbllLhMTnwRkTagC/J6iUI5oeJ9Vinr9TqH1LkFqudfl9AZUWP3bGGsN6cC+1lx
-         hMCpaVwdIR44iTnQqb9OSfvEDHQVWZIbdRtK655weAt/KTyVztqiFcm6OxzjQd9qrUAI
-         0MweXkHRJLJ7R648ri8opmiZPepbvQ0KMqTaDbAYEdtejZ44W4nF6yP/UfR5yELEsvK9
-         pXW9U8/aFrXtKIoU+gaRzgsh0+IEWqRyowE2OUSnBWndg8DTGijbebswZEaISlj9OhbN
-         bm6JS/sY5uderEYguN09VFHKrbCXHVPaCva6Si7Btv4oBOsXlOwrqGpP6lED0+3O11yc
-         0xeA==
-X-Forwarded-Encrypted: i=1; AKwUvBw6s6a1e3rBMj5oX51pWpMYaukBTQJhEowErID20Uezx2pqmgRbFGQni6ICp3TNg/uiDI967N1S@lists.linux.dev
-X-Gm-Message-State: APuU4Z8OmvKrUBwyTrZ+gBh7dgUfyY0G9KYWZxIMIzQ/DHw8Lg76G51H
-	OsqebGTKMrZ+M5puwCPa6VKCZojb6lSKOXq8Q5PCZFQgV6fl6amD6keD
-X-Gm-Gg: AYBFou37dpgu8+INCuTn/Mz693HlZ3VsDVYE5v7i4szXXh2jPckeWFmwPdBBwd+CRCy
-	Wd7eQ4xYipqksW2T0igehDBjerlBzbmHDrcmsk3qfipVT2fgP746faJBaicgpMAPlOjAkeGtnFy
-	2i+UcibLt8S42USxFWaMeeXOGsoHLsfwgj52G3GXMhUHW6tV6i8w/LLNX94uftHzvI4q0v6eUUn
-	GieN/LbMuAlsTd65h+51NQbpCvkqICsPD4qGTACgFPY8Anf506vPL5hJIKB9HdUftGjiX2cygKn
-	XTjKp1Dw3bqRx6902/cZ3hMv4sm3XKd7nV5/WJ9bZ3TGtXXYaJdpmr6NXSR0CRwx3mKuCxjMMG2
-	z4vULOgsifr/0VJqxHX6kBsmglijBn5/KGPv+P0TBmIenIm+tPU7Q0brFLjQLiy+zCTB05BGXk8
-	POVn664yeEPe6KeIdw4/h8lOzDQm5/KK0b07AktKBcYo01f3wSsl/sCXm1EVHbdHTqDmFpsmwNv
-	c+3/o3XYWgtShoh3XRalp5TO9LvpPz9yXuuCcRaZ5Ydqz8O2gx5Gbi++fG/NW7eGe1OJQ5BkpWX
-	ISaegWQKDRZKQ1EDuhanLLVaDkIKFG3Ymo9DHa49mqd8ZejdOKDR8UcB+k6PaVl9qtmoJG3Fnt3
-	IVAHYewLBBtPFa2YoprhxMcB6g3WwD0f0ImAewLgbbmiiIPn5CNSC20//wUhPDD5ryQ==
-X-Received: by 2002:a05:600c:8b85:b0:4a1:cd83:b23e with SMTP id 5b1f17b1804b1-4ac122897a8mr438143715e9.0.1793817475572;
-        Wed, 04 Nov 2026 10:37:55 -0800 (PST)
-Received: from dev-dsk-fgriffo-1c-93421965.eu-west-1.amazon.com (54-240-197-234.amazon.com. [54.240.197.234])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b56fca22e1sm4198665e9.14.2026.11.04.10.37.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Nov 2026 10:37:54 -0800 (PST)
-From: Fred Griffoul <griffoul@gmail.com>
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	linux-coco@lists.linux.dev
-Cc: Ackerley Tng <ackerleytng@google.com>,
-	Alex Williamson <alex@shazbot.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	"Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	iommu@lists.linux.dev,
-	kvm@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [RFC PATCH v4 06/25] KVM: guest_memfd: Support device-backed PFN providers
-Date: Wed,  4 Nov 2026 18:37:54 +0000
-Message-ID: <20261104183754.10457-1-griffoul@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261104150322.3516320-7-aneesh.kumar@kernel.org>
-References: <20261104150322.3516320-1-aneesh.kumar@kernel.org> <20261104150322.3516320-7-aneesh.kumar@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKn0+6ig
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8291F000C1;
+	Wed,  4 Nov 2026 20:52:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1793825542;
+	bh=6xD81lAG6UeXkEreuShp+JJaj+9y4oCBxhpOeIMXWAs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=RKn0+6igfgmEszjRwFLPQY0bX4nEyQ4tGkDZ4qrsOyUNlp3WX6J8Sc8wUJV4mrjog
+	 A+W1GCWBa0iMzwAEhX6sG1Oy73Jyu1jY2+YO1Pc3iPpvyoRc2BOSaLHs+muQAlRUOm
+	 s2tVwKvMAHhCvPeJdeHbeBmfFgvkCcZJ9zfEb9kM=
+Date: Wed, 4 Nov 2026 15:52:03 -0500
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ralph Siemsen <ralph.siemsen@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Liang Hao <haohlliang@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 159/595] gpio: dwapb: Mask interrupts at hardware
+ initialization
+Message-ID: <2026110444-preshow-shelter-42d2@gregkh>
+References: <20260930152347.700140858@linuxfoundation.org>
+ <20260930152351.156698628@linuxfoundation.org>
+ <auj7ZUcOlNC-rEnk@maple.netwinder.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -115,56 +58,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <auj7ZUcOlNC-rEnk@maple.netwinder.org>
 
-"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> writes:
+On Mon, Nov 02, 2026 at 04:06:45PM -0500, Ralph Siemsen wrote:
+> Hello Greg,
+> 
+> This caused a small regression on 5.10, details below.
+> 
+> On Wed, Sep 30, 2026 at 05:20:52PM +0200, Greg Kroah-Hartman wrote:
+> > 5.10-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Liang Hao <haohlliang@gmail.com>
+> > 
+> > [ Upstream commit aaf7766ba3b99a3834319e7cf939838afc705574 ]
+> > 
+> > GPIO interrupts may retain stale state across warm reboots when
+> > peripherals remain powered. If a GPIO line is not explicitly
+> > configured for interrupts, this can result in interrupt storms
+> > due to missing handlers.
+> > 
+> > Fix this by ensuring all interrupts are masked and disabled at
+> > hardware initialization time via the init_hw() callback. Pending
+> > interrupts are also cleared to start from a known-safe state.
+> > 
+> > Interrupts will be unmasked only when explicitly configured by
+> > userspace or kernel drivers.
+> > 
+> > Signed-off-by: Liang Hao <haohlliang@gmail.com>
+> > Link: https://patch.msgid.link/20260705074759.47863-1-haohlliang@gmail.com
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> > drivers/gpio/gpio-dwapb.c | 17 +++++++++++++++++
+> > 1 file changed, 17 insertions(+)
+> > 
+> > diff --git a/drivers/gpio/gpio-dwapb.c b/drivers/gpio/gpio-dwapb.c
+> > index ea2e2618b7945..d6240ae0f87ca 100644
+> > --- a/drivers/gpio/gpio-dwapb.c
+> > +++ b/drivers/gpio/gpio-dwapb.c
+> > @@ -189,6 +189,22 @@ static void dwapb_toggle_trigger(struct dwapb_gpio *gpio, unsigned int offs)
+> > 	dwapb_write(gpio, GPIO_INT_POLARITY, pol);
+> > }
+> > 
+> > +static int dwapb_irq_init_hw(struct gpio_chip *gc)
+> > +{
+> > +	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
+> > +
+> > +	/*
+> > +	 * GPIO interrupts may retain stale state across warm reboots when
+> > +	 * peripherals stay powered. Force a known-safe state before the GPIO
+> > +	 * irqchip and irq domain are set up.
+> > +	 */
+> > +	dwapb_write(gpio, GPIO_INTEN, 0);
+> > +	dwapb_write(gpio, GPIO_INTMASK, 0xffffffff);
+> > +	dwapb_write(gpio, GPIO_PORTA_EOI, 0xffffffff);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > static u32 dwapb_do_irq(struct dwapb_gpio *gpio)
+> > {
+> > 	struct gpio_chip *gc = &gpio->ports[0].gc;
+> > @@ -428,6 +444,7 @@ static void dwapb_configure_irqs(struct dwapb_gpio *gpio,
+> > 	girq = &gc->irq;
+> > 	girq->handler = handle_bad_irq;
+> > 	girq->default_type = IRQ_TYPE_NONE;
+> > +	girq->init_hw = dwapb_irq_init_hw;
+> > 
+> > 	port->pirq = pirq;
+> > 	pirq->irqchip.name = DWAPB_DRIVER_NAME;
+> > -- 
+> 
+> This causes a small regression in 5.10: the gpio-dwapb controller no longer
+> produces interrupts, because nothing undoes the GPIO_INTMASK added in this
+> commit.
+> 
+> Only 5.10 is affected, because the following commit was not backported:
+> 1cc3542c76ac ("gpio: dwapb: mask/unmask IRQ when disable/enale it")
+> 
+> The earlier commit does not apply cleanly, due to changes in the context,
+> but it is straightforward to apply by hand. For reference I tested with the
+> following and it restored the interrupts.
 
-> Device resources such as PCI BARs supply PFNs directly and cannot use
-> the folio allocation path. Store the mapping owner and device ID in the
-> core context during attach(), and use them when preparing device
-> memslots. Keep device memory separate from ordinary PFN-backed RAM.
+Can you provide this in a format which we can apply it in?
 
-The device rules you wrote down in api.rst and locking.rst helped a
-lot. If I read v4 right, the device backing differs from the RAM PFN
-backing in these places:
+thanks,
 
-  1. PFN mode calls RAM arch hooks: kvm_arch_gmem_make_shared() at
-     conversion, kvm_arch_gmem_make_private() at fault, and
-     kvm_arch_gmem_reclaim() on revoke and release. The device path
-     has to skip them.
-  2. lookup_pfn_range() only feeds those hooks, so the device path
-     does not need it.
-  3. The host mmap and stage-2 need a device memory type.
-  4. In PFN mode, a conversion to private only updates the attributes,
-     and the guest fault maps the page later. CCA has to map device
-     memory at conversion, because the guest validates the mapping
-     before it touches it.
-  5. The device provider needs lock()/unlock(), the private range
-     summary and prepare_memory_region().
-  6. The provider gets the VM and the vDEVICE binding at attach.
-
-Would these changes to PFN mode be enough to drop the device table?
-
-  1. The arch hooks take the frame attributes. For RAM the arch does
-     the RMP work. For MMIO it skips it, or does the RMM work instead.
-  2. lookup_pfn_range() stays required. For vfio-pci it is the BAR
-     start plus the offset.
-  3. get_pfn() and lookup_pfn_range() report a memory type (MMIO) in
-     their attributes, next to read only. The core mmap and the KVM
-     fault path use it.
-  4. A conversion calls an arch hook in both directions, and the hook
-     can fail. CCA maps the private device range there.
-  5. lock()/unlock(), the private range summary and
-     prepare_memory_region() become optional ops for any PFN provider.
-     A provider that moves RAM between guests needs them too: it has
-     to order its moves with conversions and leave private pages
-     alone.
-
-I'm less sure about 6. Could KVM ask the provider for the vDEVICE when
-the memslot is created, passing the VM? The provider would then not
-need to keep a VM pointer.
-
-Is there something in the device path that this would not cover?
-
-Thanks,
-Fred
+greg k-h
