@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828860;
-	b=Z+Wt1jsqrvJdY0FClDGs12iRzzW8ogHzLZZHiW7PSzYaVh8dP2OurYEI4RpMYeh21haz
-	 ARGo8RgaNgezJtO9wov27hMALcE2xtT3tvWXcWcyNX+IKXqymwIfsDcZXxdi5wNpXUQSs
-	 i0BVstWicfLr5sD0A0UD4uRFFy8e7LTATr5sh5uKf7q3DZP9/z49yUDuIiiypzfs4JgeE
-	 8A0zB3rIuwJQ9afFOfb525hKVbHf7NUTkuH5/lQ3I3xOKGIRt2/N1wcct9UYxGFPRFC7h
-	 nGARcH84Qh3r7igSUfqXH/IQYOFKR0wenNN5hCA8iXkY8Ei/gfPjnjzQb/Y3k+L0FfQ==
+	t=1793828862;
+	b=gpjiw1jRbSLjY6wFy7iCjN92vBM9+3WF8Na5QHgrWBc+OAnaGqobHuLhX5s3DVQSAdr3
+	 5nNIWhsLOLnNo9MUr9BlmNRsvbukYrEk5PwLptFYUBB134sWsJJR+FydbQcpuGMTfiyOB
+	 sB4fbp2mDyzk1rEN98SQxIgg7SgiaA6ouQly4M1wxf3SV/h8it4l+LAbEBSp9lpO2+H+C
+	 IiviBe+02qPnQsYeWjGQK6uoAE7/Az2NNjVU2373+6IdElCHxhmHdQo1zn4Yrm0GBaQBc
+	 ZvZyOGtjB4f15zLz7jLa9OQWuvQm/itYmXN2ABf1zgsW4XyNrQbYQ3o7iVTl1G820TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828862;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q1wKGDY5NlUIbaI4S9DGXUEf50U4dH4TEjRmHq9sX/U=;
-	b=ZcrXXmsQTJtHpVmV6w32WTkwMJ6D8Sa/6HEwjlnZJ7QonuyqoQm5wfRl5+rvyNuHJP4W
-	 zC/qY6BoL+2KwzhCGDpQvWigvTLiuZonPrAGbw7k8sQPn4yvOAObr0QmRCVSnRDCwKhEH
-	 em4maAdKyjbuh5tsuqUKLDen1khJnG5/Q9JmGVX7YCiKt2hpuHr8LYwyYfplRMfSGLRvG
-	 6mr2RUTVDytltKYI7/MO2D3rPG24hp81Dqhv4wPDpWBEMx+O5WBCsaPIJcDFEh1T06iqh
-	 m4XsVEvlmlLQWRlNWKnZmJc4RXydWKI0cljiZt2fDx2MOpdu4pyNaUK0IrEXFNzo9pQ==
+	bh=MNG0RRN51pxFErQaNq/ySeMp4Ldx8YaHIeCwiV7ofcQ=;
+	b=2NGUGvnGId6D2zLnNUeIicim3EVf90iEpmyTMweWCbgx3q9atAiWqBC20D+LGwBXAjHP
+	 n7e395fZgggMl+M+eNScoLI80KRmPduwyEIlPuOw3ClU73Ru2YuJ4KBS4eszmkwteTEN6
+	 9B4y8zIw3LM3dqrvn4VPdG6ovbwQVsAyi7jVWc+9PAQuNiyZl3kn1pgANcakGfykpd5yG
+	 Nnto7/CAhaP7M4cejUsByeyyXNFbZysZAvZ6Tf+axEZXPz/9tEIkulDgWwnpt9tpC+Fo0
+	 aQLgDP4osZwHDPTCgLBLbXLlC/ONbfzHXSK2BLwUrdhv8yTD9As9i8C7O+VHTmwy2QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=leCheBjQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AH8Z8Y1l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F326070F18;
-	Wed,  4 Nov 2026 21:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA846070F23;
+	Wed,  4 Nov 2026 21:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=leCheBjQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193721F000C1;
-	Wed,  4 Nov 2026 21:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AH8Z8Y1l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862891F00A15;
+	Wed,  4 Nov 2026 21:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828860;
-	bh=Q1wKGDY5NlUIbaI4S9DGXUEf50U4dH4TEjRmHq9sX/U=;
+	s=korg; t=1793828861;
+	bh=MNG0RRN51pxFErQaNq/ySeMp4Ldx8YaHIeCwiV7ofcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=leCheBjQBXzyyHgLS5149SoTrOH77CN+GrS6G8hNLYGq7gJ2ymRJYWnw2Kl4gGRLK
-	 lwT7nYOdJPtgkx8U0hRA3z2ctR+yqGBkmnF+nHUGbGjWDN9aNuyKYAVQcud0ZtjzG2
-	 +PUyw8sFeF7MKxdGmryRKDL7thpyHAc9455Hzi9A=
+	b=AH8Z8Y1l9G9HMzjnK7mYjA2PMKm6rUicSovN9KEX6ToazzmIq/zhnFkRvugiof9gt
+	 bp0GCv7aInVh2KtGaVRLIlg8w6opAqx9ac01EX0E21AAj+V4s9DWXGdCAyfOgjOLS/
+	 DlH5d4FUsXwO4ky4/375ub0dCinWWIsEda+wtKnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 7.3 286/547] ovl: always encode the origin fh when index is enabled
-Date: Wed,  4 Nov 2026 16:07:50 -0500
-Message-ID: <20261104211046.327284425@linuxfoundation.org>
+Subject: [PATCH 7.3 287/547] ovl: check that the parents of volatile/dirty are dirs
+Date: Wed,  4 Nov 2026 16:07:51 -0500
+Message-ID: <20261104211046.356207137@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,81 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-commit 949f9d8a5580c77a45fa759123367682aba4d173 upstream.
+commit e34d2ef818e4c7676d8d8e1bf43e6a1ed39efb2a upstream.
 
-On an overlay with index=on,nfs_export=on, copy up of a directory
-crashes the kernel once an LSM has started to deny CAP_DAC_READ_SEARCH
-to the mounter, the task that mounted the overlay. The mount and the LSM
-policy change require root. After that, any user who can write to a
-directory that exists only in a lower layer triggers the oops by doing
-so.
+An unprivileged user crashes the kernel by mounting overlayfs with the
+volatile option.
 
-Before a file or directory that exists only in a lower layer is changed
-for the first time, overlayfs copies it to the writable upper layer.
-This is called copy up.
+A dentry that serves as the parent of a lookup must be a directory.
+ovl_create_volatile_dirty() walks work/incompat/volatile/dirty by name,
+and ovl_lookup_or_create() returns an existing entry whatever its type.
+A file or a symlink that another task creates during the mount becomes
+the parent of the next lookup, which calls a NULL ->lookup.
 
-On copy up, ovl_get_origin_fh() encodes the file handle of the lower
-inode, called the origin. It returns NULL if ovl_can_decode_fh() says
-that the lower filesystem cannot decode handles. Whether the callers can
-handle NULL depends on the index option:
+An unprivileged user mounted overlayfs with "volatile" in a user
+namespace while a second process created a symlink named work/incompat,
+and the mount task oopsed on a NULL ->lookup call.
 
-- Without an index, NULL is fine: the callers store an empty origin
-  xattr.
-- With index enabled, overlayfs keeps entries for copied up inodes in an
-  internal index directory. The name of an index entry is derived from
-  the handle, so ovl_get_origin_fh() must return a handle or an error.
+Fix this by returning -ENOTDIR from ovl_lookup_or_create() when the
+caller asked for a directory and the existing entry is a non-dir.
 
-The mount only enables the index if ovl_can_decode_fh() succeeds for all
-layers, but the result can change later. The function checks the export
-operations of the filesystem and capable(CAP_DAC_READ_SEARCH). Copy up
-runs with the mounter's credentials, and an LSM can start to deny the
-capability to those credentials after the mount. ovl_get_origin_fh()
-then returns NULL with index enabled.
-
-This goes wrong in two callers:
-
-- With nfs_export=on, copy up of a directory creates an index entry for
-  the directory. ovl_create_index() passes the NULL handle to
-  ovl_get_index_name_fh(), which dereferences it.
-- If the result changes while mount(2) is still running,
-  ovl_get_indexdir() passes a NULL from ovl_get_origin_fh() to
-  ovl_verify_set_fh() in the same way.
-
-Before the commit in the Fixes tag, these two callers encoded the handle
-themselves, without consulting ovl_can_decode_fh().
-
-Reproduced with a BPF LSM program that started to deny the capability
-after the mount. An unprivileged touch in a directory that had not been
-copied up yet oopsed in ovl_get_index_name_fh(). With this patch the
-touch succeeds and the directory gets its index entry.
-
-Fix this by calling ovl_can_decode_fh() in ovl_get_origin_fh() only when
-index is disabled.
-
-Fixes: 5b02bfc1e7e3 ("ovl: do not encode lower fh with upper sb_writers held")
+Fixes: c86243b090bc ("ovl: provide a mount option "volatile"")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/overlayfs/super.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -476,8 +476,12 @@ struct ovl_fh *ovl_get_origin_fh(struct
- 	 * When lower layer doesn't support export operations store a 'null' fh,
- 	 * so we can use the overlay.origin xattr to distignuish between a copy
- 	 * up and a pure upper inode.
-+	 *
-+	 * With index enabled, mount already found that all layers can decode
-+	 * file handles.  Do not ask again, because an LSM may change its answer
-+	 * about CAP_DAC_READ_SEARCH and index users cannot cope with a 'null' fh.
- 	 */
--	if (!ovl_can_decode_fh(origin->d_sb))
-+	if (!ofs->config.index && !ovl_can_decode_fh(origin->d_sb))
- 		return NULL;
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -621,16 +621,21 @@ cleanup_temp:
  
- 	return ovl_encode_real_fh(ofs, d_inode(origin), false);
+ static struct dentry *ovl_lookup_or_create(struct ovl_fs *ofs,
+ 					   struct dentry *parent,
+-					   const char *name, umode_t mode)
++					   const char *name, bool is_dir)
+ {
+ 	struct dentry *child;
+ 
+ 	child = ovl_start_creating_upper(ofs, parent, &QSTR(name));
+ 	if (!IS_ERR(child)) {
+-		if (!child->d_inode)
++		if (!child->d_inode) {
+ 			child = ovl_create_real(ofs, parent, child,
+ 						&QSTR(name),
+-						OVL_CATTR(mode));
++						OVL_CATTR(is_dir ? S_IFDIR :
++								   S_IFREG));
++		} else if (is_dir && !d_can_lookup(child)) {
++			end_creating(child);
++			child = ERR_PTR(-ENOTDIR);
++		}
+ 		end_creating_keep(child);
+ 	}
+ 	dput(parent);
+@@ -652,7 +657,7 @@ static int ovl_create_volatile_dirty(str
+ 	const char *const *name = volatile_path;
+ 
+ 	for (ctr = ARRAY_SIZE(volatile_path); ctr; ctr--, name++) {
+-		d = ovl_lookup_or_create(ofs, d, *name, ctr > 1 ? S_IFDIR : S_IFREG);
++		d = ovl_lookup_or_create(ofs, d, *name, ctr > 1);
+ 		if (IS_ERR(d))
+ 			return PTR_ERR(d);
+ 	}
 
 
