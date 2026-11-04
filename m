@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827144;
-	b=GwotE3l4WJoyud/TGFTyV8w8t3Wpub5WUU1MILHFjVVnwtloCBK0YnXbpI6nXtBuHIVD
-	 f6labbYb9MOfak0B6H9BioecTaWiEEag6GxyykEiiLwriG3m/aqIGJZFVNyHOoNAoIwHC
-	 yd6+DLMY+zW/9iSW0uXXBija+Sf67g+WeSAEmswPS7wbyFIubOmfGTVSoENeK29Dj0IQS
-	 kLDF2AbtQF1V8mpFWZkdmnrLqdZJkYv2nqMXEFoFAIe5l31MjhzyBUJ4jub06tuJhAEjF
-	 ual8G8nUM2uqWq2SMZ5Y8BxKNEHV+dDaVkEwkgccPvORoK+ZMyLUhmZZO0dvY8S6G0Q==
+	t=1793827146;
+	b=TpKtRbLB9rFF1AxhV98nSak8e3TEUxLt21ddQY9qCFD7QeV4PgS8mHBSz42ezNB/MxZo
+	 GO2vHrUXY99Jb6M4XHwAzwNlh3An4MnDO7m7IOcnWV4rQdjIsUraeccnOBr/kuvmT/Xv8
+	 nshIqPzTx4wiTlO6PG1jGWB2cheblViQ+9ZzHqxJczwkAGk/ofw4M7AiGLpfuhjyDXxoG
+	 7QHLwm5KSpvS846k2FkH+9nPui2XgURSYpY9E9Fpt30sv+AWuOyGtzePWr3dyBu9O1eqW
+	 Yo26xgfpQoofP/p1iU8GlYq7qay4y9JVfIiRDhCQwCtWPaPm3+Oe5dY/YN4Qlvmkx2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s4Tx5rvt7McMmBCZaZk6940HKAZNPoufC/ud0z+vmI0=;
-	b=DYjKKPq+TGlKHOsPdP8ZhGM5fTvfdNM90RqTq39wnqs7I+gu3hnG+rtKtY9GHa7czFiQ
-	 Vbf/X4vszy0Og6UJ3uSDJ3FJ8EhukY9TZQZrEk3PP70xGWkRhc8XChUi8PRSlBOF/Zgwa
-	 7eMmmsOPOwC4k2frSAcTqvbzg5Z1kVdeNbtS/omDG6UmyEFhieUTCm0PcOEe4R6Vajq8U
-	 oPNm6KVfzAJ74N84wmOpsH7lx84M7ArMwSqp8KedMAbDRwixuExPcNsKBFLuh1o11zwG4
-	 YoQ+/oOIWYH1/H/MCn5P28dUmzpsY12pMjwikPK6xvWcnJ70gz8CDCyPbQA2NATknKg==
+	bh=UA9Ds4+o5uO7b5T5anLH4F1ETjhj3LNyvks+g9sUa3Y=;
+	b=2kpG/Cs48IrWRkFaWyvaadULd54eYXKM19Tr8/VjmU0WAGuT3k5Xnui/CnaPrCRN2Pf/
+	 MKdTjS1sO1OLIreAWxFem0Rse0A6J4nI6qCBWlv+w3G56Q2uN3MgBCtODGetheQBP/yAu
+	 0Ny67XOhV9gCmaTOlQIkiHwb5FDGx5BNXN+xfAUwffwmObXRtSKCITFZp/DRfM5CpI7YG
+	 G49ApT8ado92AhfQStLW3E0q8+P5wGk7yKIOMIOBucN1QFL5pZMbERxjS4m4EHYmAmIBQ
+	 SURz2sAC+/VDz4iFNxHRsHjhxKzJvCqpqmBkVkPAAwrqKKe7keugM5QegPhVphP8Hqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7TWUB+8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBaaF8ZR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3476E606AB0D;
-	Wed,  4 Nov 2026 21:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D83606AB34;
+	Wed,  4 Nov 2026 21:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7TWUB+8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0D01F00A17;
-	Wed,  4 Nov 2026 21:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBaaF8ZR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BB91F00919;
+	Wed,  4 Nov 2026 21:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827144;
-	bh=s4Tx5rvt7McMmBCZaZk6940HKAZNPoufC/ud0z+vmI0=;
+	s=korg; t=1793827145;
+	bh=UA9Ds4+o5uO7b5T5anLH4F1ETjhj3LNyvks+g9sUa3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7TWUB+8GR9AlNuq5qHEXGt36FNgphtnXW5RuPFAaqlOiVSxkusgN6bIHUnfhtTcM
-	 /ewYPVBy8ybYu1VFLCWtx2fCwSGn/cdmyNKLR0TVTnxUVl5V7peVzZq5W6wWW6jGsW
-	 /e5Ot5rx6zoq0ymA4nUx8z4FystbYEOUnFYhV2BM=
+	b=rBaaF8ZRD8BE8oMBlESL5GocA0mfsmy54wNnKaU9NiKJ31PueptdKHKVGgj/2eTlD
+	 HsU7Z1xtW2rucX4ESL23Gzfy23bkLioERb8hDRkcJonZEmjGJPmG4OBUnv6OKrL2eq
+	 Uc2DFttZJasbvk/UutyccDNxJaLDtcStaaJusGhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 213/547] filelock: keep superblock active through delegation wait
-Date: Wed,  4 Nov 2026 16:06:37 -0500
-Message-ID: <20261104211044.205128591@linuxfoundation.org>
+	Ngoc Quy <ngocquy0700@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>
+Subject: [PATCH 7.3 214/547] fs/proc/task_mmu: pin mm_users in do_pagemap_scan()
+Date: Wed,  4 Nov 2026 16:06:38 -0500
+Message-ID: <20261104211044.232431339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,80 +73,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: Ngoc Quy <ngocquy0700@gmail.com>
 
-commit c206cdfee6c037b829178bb7e17e6e37ddc9aa35 upstream.
+commit 4fb975471717c953f912776bb60301add1ffae11 upstream.
 
-A caller may drop its path after try_break_deleg() returns a delegated
-inode but before break_deleg_wait() finishes. The extra inode reference
-held in struct delegated_inode does not keep the superblock active.
+The PAGEMAP_SCAN ioctl takes mmap_read_lock() on an mm obtained from
+/proc/<pid>/pagemap without holding a reference to mm_users.
 
-After a lazy unmount, closing the delegation holder can release the last
-mount reference and shut down the superblock while another task waits for
-the delegation break. The waiter's final iput() can then enter the
-filesystem's eviction code after its superblock-private state was freed.
-This has been observed as a KASAN use-after-free in shmem_evict_inode().
+proc_mem_open() deliberately grabs only mm_count, so a consumer that
+touches the address space has to call mmget_not_zero() first.  Every other
+consumer in this file does -- m_start(), do_procmap_query(),
+show_smaps_rollup() and pagemap_read() -- but do_pagemap_scan() does not.
 
-When try_break_deleg() saves a delegated inode, take an active reference
-to its superblock while the caller still pins the mount. Keep that
-reference through break_deleg_wait() and the final iput(), then release
-it with deactivate_super(). This protects every caller of the helpers,
-including the mknod, mkdir, symlink and rmdir paths that drop their path
-before waiting.
+Without that reference the target can reach exit_mmap() concurrently, and
+exit_mmap() calls unmap_vmas() while holding mmap_lock only for reading,
+which does not exclude the scanner.  For ordinary VMAs this is harmless,
+as free_pgtables() and remove_vma() run afterwards under mmap_write_lock.
+A shared hugetlb VMA is different: __hugetlb_zap_end() frees the VMA's
+hugetlb_vma_lock inside the read-locked phase.
 
-Fixes: e12d203b8c88 ("vfs: allow mkdir to wait for delegation break on parent")
-Fixes: 4fa76319cd0c ("vfs: allow rmdir to wait for delegation break on parent")
-Fixes: c826229c6a82 ("vfs: make vfs_create break delegations on parent directory")
-Fixes: e8960c1b2ee9 ("vfs: make vfs_mknod break delegations on parent directory")
-Fixes: 92bf53577f01 ("vfs: make vfs_symlink break delegations on parent dir")
-Link: https://lore.kernel.org/r/20261016093421.90725-1-zhaogongyi@bytedance.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-Link: https://patch.msgid.link/20261023111250.17696-1-zhaogongyi@bytedance.com
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+walk_hugetlb_range() can therefore load vma->vm_private_data, have the
+lock freed underneath it, and then down_read() a freed rw_semaphore.  The
+load happens before the freeing side clears the pointer, so this is a
+use-after-free and not a NULL dereference.  Any unprivileged user can
+reach it with no huge pages configured, as hugetlb_reserve_pages()
+allocates the lock before the VM_NORESERVE early return.
+
+Pin mm_users across the scan, the way the other consumers do.  mmput()
+from the exiting task can then no longer reach exit_mmap() while a walk is
+in progress.
+
+[akpm@linux-foundation.org: remove unneeded & undesirable test for !mm]
+Link: https://lore.kernel.org/20261014095540.3261469-1-ngocquy0700@gmail.com
+Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
+Signed-off-by: Ngoc Quy <ngocquy0700@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: Claude:claude-opus-5
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Muhammad Usama Anjum <usama.anjum@arm.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/filelock.h |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/proc/task_mmu.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/include/linux/filelock.h
-+++ b/include/linux/filelock.h
-@@ -530,8 +530,8 @@ static inline bool is_delegated(struct d
-  *
-  * Break delegations in a non-blocking fashion. If there are
-  * outstanding delegations and @di is set, then an extra reference
-- * will be taken on @inode and @di->di_inode will be populated so
-- * that it may be waited upon.
-+ * will be taken on @inode and its superblock, and @di->di_inode will
-+ * be populated so that it may be waited upon.
-  *
-  * Returns 0 if there is no need to wait or an error. If -EWOULDBLOCK
-  * is returned, then @di will be populated (if non-NULL).
-@@ -545,16 +545,21 @@ static inline int try_break_deleg(struct
- 	if (ret == -EWOULDBLOCK && di) {
- 		di->di_inode = inode;
- 		ihold(inode);
-+		/* The caller may drop its mount before break_deleg_wait(). */
-+		atomic_inc(&inode->i_sb->s_active);
- 	}
- 	return ret;
- }
- 
- static inline int break_deleg_wait(struct delegated_inode *di)
- {
-+	struct inode *inode = di->di_inode;
-+	struct super_block *sb = inode->i_sb;
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -3231,15 +3231,18 @@ static long do_pagemap_scan(struct mm_st
+ 	size_t n_ranges_out = 0;
  	int ret;
  
--	ret = break_deleg(di->di_inode, 0);
--	iput(di->di_inode);
-+	ret = break_deleg(inode, 0);
-+	iput(inode);
-+	deactivate_super(sb);
- 	di->di_inode = NULL;
++	if (!mmget_not_zero(mm))
++		return -ESRCH;
++
+ 	ret = pagemap_scan_get_args(&p.arg, uarg);
+ 	if (ret)
+-		return ret;
++		goto out_mmput;
+ 
+ 	p.masks_of_interest = p.arg.category_mask | p.arg.category_anyof_mask |
+ 			      p.arg.return_mask;
+ 	ret = pagemap_scan_init_bounce_buffer(&p);
+ 	if (ret)
+-		return ret;
++		goto out_mmput;
+ 
+ 	for (walk_start = p.arg.start; walk_start < p.arg.end;
+ 			walk_start = p.arg.walk_end) {
+@@ -3294,6 +3297,8 @@ static long do_pagemap_scan(struct mm_st
+ 		ret = -EFAULT;
+ 
+ 	kfree(p.vec_buf);
++out_mmput:
++	mmput(mm);
  	return ret;
  }
+ 
 
 
