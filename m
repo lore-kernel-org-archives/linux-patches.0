@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831401;
-	b=gEUXYJnEImCIlL3EHIKZs/qbREfBsStb0S1gGVnxl/3gOrMX9y2f54o69n0tBOgWXuqc
-	 +tHWO7mm9MH5irEvAXbfOWspdSMU9Rki2gVqzAzH/k+oafU3znEypn9IR+mKPE2Gcs0DH
-	 amedxZg0MsDO4V9ngAQEuw4/GjAGSv2TFirMS32FVmoDcVChFbKV84mKBdrCoj999j8IK
-	 G5VizEPMSzeoILSCRXqgC67LuXXbTgOtXRlrGa7C5qNfKGd8IEY6NvUVxTWe0/s5oAw4R
-	 Gye2yGBaVFReYO1A3rfDcmEfa5leOYK7M6kfARk6WiNb3tpB4AtRJoQed3INNgm+zQQ==
+	t=1793831403;
+	b=BRva+XulfGiufB7KxOdv5+6JPRevLYnCmqawIRZdOZRIvmtgQG6DAvLs2kJq6ghzwVaC
+	 w9qw7HIOFT3oRxDePQRkLNle7DRkPBkH42yMzYnbUl7/SkdQUlFs0BZJrqOMOp6LQwPqS
+	 +t9ONwIGPOvqqmmH+TS6ukckAJOcJ+8WVJ1vvDoYjIX/zDruxB6f3og4BMnOsdMYcXzJ3
+	 1HV4PVIRBvbkc8219YE3baHHHD1lEVHr9LXUb17S0tY7cNDtSk+Y9+9wNXYlPv4BqUMMN
+	 5AZdJkV9IOND+o5cSZfnGGRKC1scD32AW3tD3Q7xDYpc4XDSmQiNRNbHVz12jpwRiGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831401;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zgeiTgHDw8J3WA7t7ps184zXeY5AboWkGO16ZYTzeuA=;
-	b=YSKS/O+GnN3OkiH/FGoitODc6vJNo01FUqa/T41q70ZSc7M/q04mcOTPVFjHMVlHyywp
-	 ronO4w+btSM7GanNhIS+vZyPVkx9IP4Hc4dX2yLa5+tephOnxtoqOBGbhPSvLQIU8v67N
-	 nTVYz4wtsZyUsx0pcRMWJeU5b8XjNelsJtJ2Ggvav08r2v20PylE3aKLb9+qDdLDUpXV/
-	 joKEOFPLrlz2VBimz5AAbSvxEmiGAGdoiNbp6dljg86uKarE9WWCF0ATZzw9XX9UzW6nt
-	 wL6DhUSClZ8+5LSdnc3wffL0mxNKcPzfnZMCiK8dcRk9C8jmijJkfuYY0VGrgwxmfsw==
+	bh=xx2UpNkngObTyM/BHCLQhkCO/3b3QiSaeqP01kslcts=;
+	b=CzaP5YNkVuxGfdMsR++H2oV+wIFV1eKKfMF+xsynDXt5zUGFwNqr1ii679nrGAYtYHqg
+	 IXNXbo2RaLNtFS/aCeCD3J79xWugAkwyeD4sZsvHmRCsK52SJyMBMQRg0CaOc9l+2DFwr
+	 JMwVFBVxvZV33tSkMB/L/jly9KWPVR5LVIeS4059kr+gyf1FWwjXvN7lbEv+dcdyWTCPR
+	 kzXWoQSR8o+3BSFA0MfFlEhznZhFOgtNg6Xjz5wu15roZKvzwvwmVfMY8n1E5au5F4RgD
+	 AEt4ng/GIPfW2S1slpsrFHMPXwlvFmUAPD6Vivjb4U1IKQ8lbayoolIFVqGsth9j3GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmzBHq+t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CsD646rU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E81606AB19;
-	Wed,  4 Nov 2026 22:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B37606AB10;
+	Wed,  4 Nov 2026 22:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmzBHq+t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEA51F00A02;
-	Wed,  4 Nov 2026 22:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CsD646rU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADD61F00919;
+	Wed,  4 Nov 2026 22:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831401;
-	bh=zgeiTgHDw8J3WA7t7ps184zXeY5AboWkGO16ZYTzeuA=;
+	s=korg; t=1793831402;
+	bh=xx2UpNkngObTyM/BHCLQhkCO/3b3QiSaeqP01kslcts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmzBHq+t6C5mMYP+JTXam5Azg8wHD5Y+tvaJPTq4bwkRj8GxBtK7gCLZ0JWNMiJ9S
-	 cx2CbH59Pyqr3z4+DDv2g0kz1C2UCpEzqmQ6nF2qx2w3Y7RbH15Oxn/lLpuTbCWsSE
-	 EkHHw2HhU6/GfQq76JepRP+WcDl1v7LCxjXr7UMY=
+	b=CsD646rUmIyvW8L84hSzufTek9pmMTNscykmNQxxbh8svYmhihJolOmzritZy44zL
+	 7SP5jEs49WT23G65i/n86hZFwgXsclTmcxS6RkCbRXpM5svXQxsnouvSTVP1z4vwo0
+	 00jM/7d7QRr/6hk3CFhdz6N+Pmj2H3+I46mplG4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Rob Clark <robin.clark@oss.qualcomm.com>
-Subject: [PATCH 6.18 0683/1005] drm/msm: Fix vm_bo use-after-free in with_vm_locks()
-Date: Wed,  4 Nov 2026 16:06:56 -0500
-Message-ID: <20261104211102.760291060@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.18 0684/1005] s390/cpum_cf: Check session mask before cpu offline
+Date: Wed,  4 Nov 2026 16:06:57 -0500
+Message-ID: <20261104211102.784444488@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,51 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 81878aa1a2f551f51a3d3aef2a9509503ec34d8b upstream.
+commit 99a95985dfc85eecad97f0991a2401d2fcef294c upstream.
 
-The unwind loop drops the vm_bo reference taken while locking before
-advancing to the next entry.  drm_gpuvm_bo_put() may drop the last
-reference, removing and freeing the vm_bo, after which the plain list
-iterator dereferences freed memory to advance.
+cfset_offline_cpu() stops counter sets for every active session without
+checking whether the outgoing cpu belongs to the session mask.
 
-Use the safe iterator, which saves the next entry before the body runs.
+For example, run an hwctr session on cpu0 and a cpu bound perf event on
+cpu1:
 
-Fixes: fe4952b5f27cca5d ("drm/msm: Convert vm locking")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Patchwork: https://patchwork.freedesktop.org/patch/754331/
-Message-ID: <20260916175548.2089821-1-vulab@iscas.ac.cn>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+lshwc -l 9999 -i 5 0:b
+perf stat -C 1 -e cpum_cf/CPU_CYCLES/ sleep 120
+chcpu -d 1
+chcpu -e 1
+
+Although the hwctr session does not include cpu1, cfset_offline_cpu()
+decrements its counter set reference count. The subsequent perf teardown
+decrements it again, causing it to underflow.
+
+The perf event keeps the percpu state alive across hotplug. When cpu1
+comes online, the hwctr session is started there and the reference count
+moves from -1 to 0. Stopping the hwctr session then decrements it to -1
+again, so the zero triggered counter set disable path is skipped.
+
+Check the session mask before stopping counter sets on the outgoing cpu.
+This prevents the unmatched decrement and the resulting reference count
+underflow.
+
+Fixes: a029a4eab39e ("s390/cpumf: Allow concurrent access for CPU Measurement Counter Facility")
+Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: stable@vger.kernel.org # v5.14+
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/kernel/perf_cpum_cf.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 9d2788f79ace..a626fbb869db 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -51,6 +51,7 @@ with_vm_locks(void (*fn)(struct drm_gem_object *obj),
- 	 * success paths
- 	 */
- 	struct drm_gpuvm_bo *vm_bo, *last_locked = NULL;
-+	struct drm_gpuvm_bo *next;
- 	bool locked = true;
+--- a/arch/s390/kernel/perf_cpum_cf.c
++++ b/arch/s390/kernel/perf_cpum_cf.c
+@@ -1800,6 +1800,9 @@ static int cfset_offline_cpu(unsigned in
  
- 	drm_gem_for_each_gpuvm_bo (vm_bo, obj) {
-@@ -82,7 +83,7 @@ with_vm_locks(void (*fn)(struct drm_gem_object *obj),
- 
- out_unlock:
- 	if (last_locked) {
--		drm_gem_for_each_gpuvm_bo (vm_bo, obj) {
-+		drm_gem_for_each_gpuvm_bo_safe(vm_bo, next, obj) {
- 			struct dma_resv *resv = drm_gpuvm_resv(vm_bo->vm);
- 
- 			if (resv == obj->resv)
--- 
-2.56.0
-
+ 	if (!list_empty(&cfset_session.head)) {
+ 		list_for_each_entry(rp, &cfset_session.head, node) {
++			if (!cpumask_test_cpu(cpu, &rp->mask))
++				continue;
++
+ 			p.sets = rp->ctrset;
+ 			cfset_ioctl_off(&p);
+ 			cpumask_clear_cpu(cpu, &rp->mask);
 
 
