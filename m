@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829671;
-	b=ahfaTmGCKS86cpQnP3G3paKfxN28ivNes3hNuOhL0yzIO99YgoMwbvrlplFpK13rqDYq
-	 asEbLbpAW87L85xemJZcb+Cdz6CEmrVR9ARrk8RrJvSV1EVHVQnzo3DcninPslGS4FhgI
-	 DOk+oG9l6SL8KRp/Y2Ub0+/2hs1CBZ0VOHocyYGXp8HqNPppGZehW9ir1eqI3jZOBpAsY
-	 l+fq56H7NNyIN7+gDYN15lgbusrNgMGmJXamZoYpDH+U9Y0wZowtz4upMcPmD/Hby8VjS
-	 ZsM5g622WGBOV455CAyO2Dzqrs5mdv6xeMPjZXqFeHn+LWpO4S7itF151XDL3VyMCIQ==
+	t=1793829673;
+	b=XZtsUZy1bwWnRhxmd7D1AV2qN/cxQlgsIGHEDQj4moDwF9tAXQOFC0eKjircHq6vnkJW
+	 SV6FNGnBmjEJoi/CnpgQC8D8dfV/Pct+5NRaQx67QUVZf42BsXzjHhPiYssQUXb4KcSrs
+	 lfyCSs/ybxfeFWqMH7+q/Bh1RiUdBaBTkqM7LPDQCdim4Id3mTm63oRnzbqjcvaRsHw9H
+	 RyCj1+CQMf7wgyryhdfUIBE6W+Ew31VwotpxvLDE4G887YhdTv2MBmz+c/j2GZULdRYxE
+	 od7ucvoymqCPnhf9fuutkkp4oEU7WQqDKVYHc5PzsOK6GEKn64bLsmt9xg1++ORU2MA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829673;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9z5ymhvh+Hm7ff64vdie+YY/XMrNeqr9uc6ECTIKVI8=;
-	b=2OCC78//z5uPPZ2Q+ItkKJy/ecy0rDWquwzKFVEJxvYa27yENv4Y5ea4RArp8K61QRMQ
-	 IOq6gkn04s7YDOijflXNuIpP5ZvcLCBd5TRPHTmHcmmn6npeV0S5qKTvTVeN9DmGSv0IQ
-	 a298bmvnr3qmyJRFzhgX8Do2td69K+1DBIbeMK80mabWRcFP9rxN57hPuODOksGBNN1xq
-	 KHk2N9s5POMcbQzXWpCKhC7xpAPmzLW6Epk828l7/f8mpuhj9aa6kxmS4jg1kF8rvYd4g
-	 6qK0bnOhZXIQA4kLlAYFPOQOQAwC3W0bdKoiZmH+QOMIPkABVBSEwlkcSlBRVrUau/w==
+	bh=yK0iwFQgUz94Dx46t8PQS3Z0AtrLzr4SOD7B2M+Om1I=;
+	b=h9Bv7L5kQo2NUzPFnlTBMfqLzHATNvbh89nNeJSghdcajw+WlHQbE4Bgb5qZykzMsXuM
+	 9bkARYiNdWia9hbLtsizEGlwqJ3fDZlMwgB3aBt+AM/X1BKGKEOMmW+HPFgha7+fE9zPt
+	 Ho4MM8+wJNM9T9Nms/mg8KzrqGOAqNXL8I8NnrY4cp98KoJ+HSssGsGRH5CpC0G21YtnB
+	 80hnvTacJSevjc1cN16UeDxZ0VvMlg+cHAcYTKull9JAdU0+so0t4I1gBaWNWwD+9aN2s
+	 G20uvfiT+7LkMPpM1wgVuYR2DqeTnvTgH+MNzeJv956Lb82mp5tdOx+oUV/XIJL7F0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1nPecOLV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+00vA9f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923D5606C587;
-	Wed,  4 Nov 2026 22:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BFA606BA3F;
+	Wed,  4 Nov 2026 22:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1nPecOLV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282B21F000C1;
-	Wed,  4 Nov 2026 22:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+00vA9f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A941F00A02;
+	Wed,  4 Nov 2026 22:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829671;
-	bh=9z5ymhvh+Hm7ff64vdie+YY/XMrNeqr9uc6ECTIKVI8=;
+	s=korg; t=1793829673;
+	bh=yK0iwFQgUz94Dx46t8PQS3Z0AtrLzr4SOD7B2M+Om1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1nPecOLVOA8o/thDfOuV77JHC31C+CU1aLsh3kirffvu2AaVNZV0mFnD82+Fq6ame
-	 3LthzwYhBtZVQFDlaC0D87qKtO77raMPjopTGR335Ypic7YUDDu1rRxW1nDRQu1c9d
-	 jxPSxxEzLavSFNqC8ahsPfl94LGZmS+gmYgKbpf4=
+	b=z+00vA9fW4IzZ+uSakbBy2/lsegTjaQP7MeD5R7djWt9alLNq6OMzT9sDYbKZiggv
+	 pUR+0PNpppXfjbynaJiLOZhh/Gsd5BVKm8JT3ZPby+R1UTWMFgJnRxoMPR9KL723Qp
+	 YzvuA/L5doLKBMnfJERnxtg3dNMO32QkMZmPOQik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <amber.lin@amd.com>,
-	David Yat Sin <david.yatsin@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Matthew Stewart <Matthew.Stewart2@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0271/1005] drm/amdkfd: Fix signal reset event
-Date: Wed,  4 Nov 2026 16:00:04 -0500
-Message-ID: <20261104211051.470441410@linuxfoundation.org>
+Subject: [PATCH 6.18 0272/1005] drm/amd/display: Fix rounding errors in CalculatePrefetchSchedule
+Date: Wed,  4 Nov 2026 16:00:05 -0500
+Message-ID: <20261104211051.502336213@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,62 +71,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amber Lin <amber.lin@amd.com>
+From: Matthew Stewart <Matthew.Stewart2@amd.com>
 
-[ Upstream commit b38f9b6ffdfc86d5aff36881d9e8028c79bc98c9 ]
+[ Upstream commit fa0300333db07ca4ad56c9879f155faafd3f7079 ]
 
-When a mode reset happens, driver needs to notify the process on that
-GPU a reset event is happening. The existing code assumes the process is
-using the GPU that is getting mode reset, which is not always true. For
-example, on a 8G system, the process may be only using GPU 0~4 but a
-mode 2 reset is resetting the all 8 GPUs connected by XGMI. Trying to
-find a process on GPU 5~7 will fail, which is fine and should skip the
-event signal.
+[why]
 
-Signed-off-by: Amber Lin <amber.lin@amd.com>
-Reviewed-by: David Yat Sin <david.yatsin@amd.com>
+Rounding errors were causing mode validation to fail in some cases when
+it should not. (IE. Increasing fclk from a lower value could lead to
+validation failure, which should not happen.)
+
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Matthew Stewart <Matthew.Stewart2@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_events.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ .../dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c   | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-index b033c3a9ce545..aac5bc4d13fdb 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-@@ -1287,6 +1287,8 @@ void kfd_signal_reset_event(struct kfd_node *dev)
- 	struct kfd_event *ev;
- 	unsigned int temp;
- 	uint32_t id, idx;
-+	int user_gpu_id;
-+	struct kfd_process_device *pdd;
- 	int reset_cause = atomic_read(&dev->sram_ecc_flag) ?
- 			KFD_HW_EXCEPTION_ECC :
- 			KFD_HW_EXCEPTION_GPU_HANG;
-@@ -1302,17 +1304,14 @@ void kfd_signal_reset_event(struct kfd_node *dev)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+index da865bd466c9a..c32b704627085 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+@@ -5554,7 +5554,8 @@ static bool CalculatePrefetchSchedule(struct dml2_core_internal_scratch *scratch
+ 				+ 2 * (p->PixelPTEBytesPerRow * p->HostVMInefficiencyFactor + p->meta_row_bytes + tdlut_row_bytes)
+ 				+ *p->prefetch_sw_bytes)
+ 				/ (*p->Tpre_rounded - *p->Tno_bw);
+-			s->Tsw_est1 = *p->prefetch_sw_bytes / s->prefetch_bw1;
++			/* due to rounding, VM can clamp to +1/4, Row can clamp to +2/4, giving SW less time */
++			s->Tsw_est1 = *p->prefetch_sw_bytes / s->prefetch_bw1 - 3.0 * s->LineTime / 4.0;
+ 		} else
+ 			s->prefetch_bw1 = 0;
  
- 	idx = srcu_read_lock(&kfd_processes_srcu);
- 	hash_for_each_rcu(kfd_processes_table, temp, p, kfd_processes) {
--		int user_gpu_id = kfd_process_get_user_gpu_id(p, dev->id);
--		struct kfd_process_device *pdd = kfd_get_process_device_data(dev, p);
--
--		if (unlikely(user_gpu_id == -EINVAL)) {
--			WARN_ONCE(1, "Could not get user_gpu_id from dev->id:%x\n", dev->id);
-+		pdd = kfd_get_process_device_data(dev, p);
-+		if (!pdd)
-+			/* no process is using this device */
- 			continue;
--		}
-+		user_gpu_id = kfd_process_get_user_gpu_id(p, dev->id);
+@@ -5578,7 +5579,8 @@ static bool CalculatePrefetchSchedule(struct dml2_core_internal_scratch *scratch
+ 		if (*p->Tpre_rounded - *p->Tno_bw - 2.0 * s->Tr0_trips_rounded > 0) {
+ 			s->prefetch_bw2 = (vm_bytes * p->HostVMInefficiencyFactor + *p->prefetch_sw_bytes) /
+ 			(*p->Tpre_rounded - *p->Tno_bw - 2.0 * s->Tr0_trips_rounded);
+-			s->Tsw_est2 = *p->prefetch_sw_bytes / s->prefetch_bw2;
++			/* due to rounding, VM can clamp to +1/4  */
++			s->Tsw_est2 = *p->prefetch_sw_bytes / s->prefetch_bw2 - 1.0 * s->LineTime / 4.0;
+ 		} else
+ 			s->prefetch_bw2 = 0;
  
--		if (unlikely(!pdd)) {
--			WARN_ONCE(1, "Could not get device data from process pid:%d\n",
--				  p->lead_thread->pid);
-+		if (unlikely(user_gpu_id == -EINVAL)) {
-+			WARN_ONCE(1, "Could not get user_gpu_id from dev->id:%d\n", dev->id);
- 			continue;
- 		}
+@@ -5592,7 +5594,8 @@ static bool CalculatePrefetchSchedule(struct dml2_core_internal_scratch *scratch
+ 		if (*p->Tpre_rounded - s->Tvm_trips_rounded > 0) {
+ 			s->prefetch_bw3 = (2 * (p->PixelPTEBytesPerRow * p->HostVMInefficiencyFactor + p->meta_row_bytes + tdlut_row_bytes) + *p->prefetch_sw_bytes) /
+ 				(*p->Tpre_rounded - s->Tvm_trips_rounded);
+-			s->Tsw_est3 = *p->prefetch_sw_bytes / s->prefetch_bw3;
++			/* due to rounding, Row can clamp to +2/4  */
++			s->Tsw_est3 = *p->prefetch_sw_bytes / s->prefetch_bw3 - 2.0 * s->LineTime / 4.0;
+ 		} else
+ 			s->prefetch_bw3 = 0;
  
 -- 
 2.53.0
