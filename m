@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829032;
-	b=wVhZe1BpOq4vXwp2tqC+U9SntwkJCVbAwOaBzwfMS00pHewiJ/BWsM5s+uzmyUlOSxv0
-	 lCGHPZ2Mgwg1fr/uj/YYf0vbh98p9nZPkW+C++ptcU9zToE5F2dbMBGFgUCAiGDQKsieI
-	 gkVrL2lqMc6nlbeCsUJSv1/QbKYfJFYi18r+wr5Mzl6m4bldfQjA/u+ZKOgJWuZ/Iid2x
-	 +WXXus01gf89jApEf9dNfwzg1VCPuT/PClih1KyzzwotL8oa8I03iy8Pgm0kRnl0zKwku
-	 qMsU5RDWMFJXVkdCnWdQiv4+AJualGd+JNk0AsPJ+r4YYzglZmFtUVNaXQC54AFQMJg==
+	t=1793829034;
+	b=l9Ye+Bd/mZLCdqQ4rqDMLSK/CEz3FQ+1DZj2Qnswl83JkL2E1EvV4/Fo+2ekyVoD0eHB
+	 0yz/+kZXJs5s7qkeCPlVnCQ0uDU4G4eb26PeBos2guTn/ABjgns81hNZ+p2qFgceoYhxU
+	 vKbwJSeCf934RVZ12OIA6IShHBpWKDQkiTIqlhSl6I9yNP9EVPX9+nHbSmLED5Qq0wSgy
+	 qorVCE5iuCVwozzY0ZuNSmvH/Ef7mvvxd9Zw0aLe8Oo0Ii6i8CCv6ZzNutHIMYvoacsxs
+	 NaSkXBHNIrRXSL2rbeG2cDS785AFh0PTzV2uPmfy0jzBY+DKrUjVw+YwHasGDeGSX0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829034;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q8k2lMyRPYq+NRA8L3NUrD2G24GPi7YUsAj8VzODsAo=;
-	b=D3ySw+c+96N8v0oZhQfI+gXR2qKGZ4KtE5Z9fqAb/Pk4T8Grac+PJCxJjOMfXWabyY4I
-	 GR4kR/Fz1YJquXHrAhIgRxTS1cCrQO7rYkIre5ORmtNH0GCySOjcZZ3dik3X2LhcKERnq
-	 7FAVExZudX80sk8Dt6h11XKp+CQZvNjuFdPD8aJvWn7ix1aGgiXlpx078ivtU7QAjYH7i
-	 tKc38SEfY4zHGNhQSxJpvQ1nY/SAO9bW3gOQ+JqUL5doLEFAQv0aX6jiu/d3n0RNagR8J
-	 rSXaRhOXIO0c/mHzAxYH+edA9AbyRwe420eU0fKHcTd5uXZWCTJuzDnaQ4f4BuHGRMQ==
+	bh=4JscoBUL6ZSxLr6cAs2P6BdlZ5eRuQ+n+s5udEUV09s=;
+	b=anBl5ibLT1kQbvdqlNly/MYsGPLa7Pn4z7s9uGZyhGY1p7vamMM5sb3Nuj2GEBkBOEGm
+	 k1VUlDj8C7bT7S4vE7IF2gKS+Vp2xcUXBT6RW46R/Cj02cTxYAEjW+2cknZLAFP6lI3Bm
+	 lrtAOFgtO/g60XJp+pz+POsnrvOnur/VMZSTHzU1tBirHPGpIksk+qaVyMOKxPBuqeh5W
+	 mbGRsVFpL/0bBBLELmVX/BEO4NxzxkD0Hm+cVgdYM2eT30Pch9Med/WHpqr2zuJOlNTe6
+	 oKh+Yj34GKtCGlXHK6z8iYJUi5Z301ewp8gfuXJfonNI4FPRct0wn+YOxW1CROK+XvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xdSOyt52;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfFuoNv1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9908D6070764;
-	Wed,  4 Nov 2026 21:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17ECE6070764;
+	Wed,  4 Nov 2026 21:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xdSOyt52
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A1E1F000C1;
-	Wed,  4 Nov 2026 21:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfFuoNv1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2CA1F000C1;
+	Wed,  4 Nov 2026 21:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829032;
-	bh=Q8k2lMyRPYq+NRA8L3NUrD2G24GPi7YUsAj8VzODsAo=;
+	s=korg; t=1793829033;
+	bh=4JscoBUL6ZSxLr6cAs2P6BdlZ5eRuQ+n+s5udEUV09s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xdSOyt52oZcV/TZJyQJ5xdse5hn9mycZ/znh3nByyS9rx6X1MK2b40nt5pafXXs7T
-	 JzZ63//coVRC/7I7duqIXqMh2Dhw6CoH4kV1a6jG6Dqb9H1liNssg/BfYEiXAVtWtV
-	 lVxTB3XAvhln13Mz23D5NPTnYWwMkNiOxD75Wabk=
+	b=jfFuoNv1diupJpSRBi651JvseSimSrUDPx187j25NQE7qbHku9avV27FASVZtSOsf
+	 xOEYymL5N6PR7R+8UNZ/Pbs12Jl/dzoaEEjj3vrh/vgLSPC6XTI1BZbDhQE5mFv4rY
+	 f9Izx5ZiILh60dVyyY23PxqZEsI6SEEkSgdBcM4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Arun Potharaju <arun.potharaju@hammerspace.com>,
 	Benjamin Coddington <bcodding@hammerspace.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 7.3 401/547] NFSv4/filelayout: Anchor page coalescing on pattern_offset
-Date: Wed,  4 Nov 2026 16:09:45 -0500
-Message-ID: <20261104211049.707067195@linuxfoundation.org>
+Subject: [PATCH 7.3 402/547] NFSv4/flexfiles: fail I/O to the data server once a lock is lost
+Date: Wed,  4 Nov 2026 16:09:46 -0500
+Message-ID: <20261104211049.736273158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,62 +68,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Benjamin Coddington <bcodding@hammerspace.com>
 
-commit 7f2d221b01f356b6bb3bb6efef998f8b28339824 upstream.
+commit 7fa2ad367abe6d3155daefb57331e7fce1a17afd upstream.
 
-filelayout_pg_test() bounds page coalescing to a single stripe unit
-using an offset relative to pls_range.offset, but the data server is
-selected by nfs4_fl_calc_j_index() using an offset relative to
-pattern_offset.  When a segment's pattern_offset and range offset are
-not congruent modulo the stripe unit, the coalescing window is shifted
-off the DS-selection grid, so a coalesced I/O can straddle a stripe
-boundary and send the bytes past it to the wrong data server.
+When a client loses a byte-range lock, because its lease expired and it
+may not recover the lock (nfs.recover_lost_locks=0) or because reclaim
+failed, it marks the lock state NFS_LOCK_LOST and fails further I/O by
+that lock owner.  Otherwise an application that believes it holds a
+lock over a range is never told that the lock is gone, and can
+overwrite data that another client has since written under its own
+lock on that range.
 
-Anchor coalescing on pattern_offset to match nfs4_fl_calc_j_index().
-Stripe-congruent segments, including the common whole-file pattern_offset
-0 case, are unchanged.
+The NFSv4 READ/WRITE and file layout I/O paths apply this in
+rpc_call_prepare, where nfs4_set_rw_stateid() returns -EIO for a lost
+lock.  The flexfiles data server I/O path does not: the NFSv3 data
+server path never checked, and the check on the NFSv4 path was removed
+when the data server stateid began to be taken from the layout.
 
-Fixes: c6194271f94b ("pnfs: filelayout: support non page aligned layouts")
+Fail read and write RPCs to the data server in rpc_call_prepare when the
+lock is lost.  The data server path has no use for the stateid that
+nfs4_set_rw_stateid() selects, and selecting it looks up a delegation
+or open stateid on every I/O.
+Instead add nfs4_lock_context_lost(), which only tests NFS_LOCK_LOST,
+and check it alongside the open state.  Its lookup,
+__nfs4_lookup_lock_state(), is split out of __nfs4_find_lock_state()
+and takes no reference: a lock state is only unlinked from
+state->lock_states under state->state_lock, so one found while holding
+that lock cannot be freed before it is released.  Use it in
+nfs4_copy_lock_stateid() as well, which only reads the lock state under
+that lock.  That drops a reference get and put from stateid selection
+for all NFSv4 I/O without changing the stateid selected.
+
+Terminating the RPC in rpc_call_prepare is not enough on its own.  The
+done callback reads the -EIO as a data server connection error, forgets
+the device ID, and resets the I/O to pNFS (or, for an NFSv4 data
+server, possibly to the MDS).  After a reset to pNFS a new LAYOUTGET is
+granted and rpc_call_prepare fails the I/O again, without end.  The
+existing NFS_CONTEXT_BAD check does not loop, since the open state is
+then invalid and pnfs_update_layout() fails the reset I/O, but it still
+forgets the device ID.
+
+So when an RPC that was never sent fails and the open context is bad,
+the open state is invalid, or the lock is lost, complete it with -EIO
+without error handling.  An RPC that was sent and failed is handled as
+before, so a real data server error is still reported to the MDS.
+
+Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Fixes: bb21ce0ad227 ("flexfiles: use per-mirror specified stateid for IO")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
+Tested-by: Arun Potharaju <arun.potharaju@hammerspace.com>
+Assisted-by: LLM
 Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/filelayout/filelayout.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c |   25 +++++++++++++++++++--
+ fs/nfs/nfs4_fs.h                       |    2 +
+ fs/nfs/nfs4state.c                     |   38 +++++++++++++++++++++++++++++----
+ 3 files changed, 59 insertions(+), 6 deletions(-)
 
---- a/fs/nfs/filelayout/filelayout.c
-+++ b/fs/nfs/filelayout/filelayout.c
-@@ -796,7 +796,7 @@ filelayout_pg_test(struct nfs_pageio_des
- 	unsigned int size;
- 	u64 p_stripe, r_stripe;
- 	u32 stripe_offset;
--	u64 segment_offset = pgio->pg_lseg->pls_range.offset;
-+	u64 pattern_offset = FILELAYOUT_LSEG(pgio->pg_lseg)->pattern_offset;
- 	u32 stripe_unit = FILELAYOUT_LSEG(pgio->pg_lseg)->stripe_unit;
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1597,6 +1597,15 @@ out:
+ 	dprintk("%s: err %d op %d status %u\n", __func__, err, opnum, status);
+ }
  
- 	/* calls nfs_generic_pg_test */
-@@ -808,8 +808,8 @@ filelayout_pg_test(struct nfs_pageio_des
++static bool ff_layout_io_state_lost(const struct nfs_pgio_header *hdr)
++{
++	struct nfs_open_context *ctx = hdr->args.context;
++
++	return test_bit(NFS_CONTEXT_BAD, &ctx->flags) ||
++	       !nfs4_valid_open_stateid(ctx->state) ||
++	       nfs4_lock_context_lost(ctx->state, hdr->args.lock_context);
++}
++
+ /* NFS_PROTO call done callback routines */
+ static int ff_layout_read_done_cb(struct rpc_task *task,
+ 				struct nfs_pgio_header *hdr)
+@@ -1608,6 +1617,12 @@ static int ff_layout_read_done_cb(struct
+ 		hdr->args.offset);
+ 	int err;
  
- 	/* see if req and prev are in the same stripe */
- 	if (prev) {
--		p_stripe = (u64)req_offset(prev) - segment_offset;
--		r_stripe = (u64)req_offset(req) - segment_offset;
-+		p_stripe = (u64)req_offset(prev) - pattern_offset;
-+		r_stripe = (u64)req_offset(req) - pattern_offset;
- 		do_div(p_stripe, stripe_unit);
- 		do_div(r_stripe, stripe_unit);
- 
-@@ -818,7 +818,7 @@ filelayout_pg_test(struct nfs_pageio_des
++	if (task->tk_status < 0 && !RPC_WAS_SENT(task) &&
++	    ff_layout_io_state_lost(hdr)) {
++		task->tk_status = -EIO;
++		return 0;
++	}
++
+ 	if (task->tk_status < 0) {
+ 		ff_layout_io_track_ds_error(hdr->lseg,
+ 					    hdr->pgio_mirror_idx, dss_id,
+@@ -1724,7 +1739,7 @@ static void ff_layout_read_record_layout
+ static int ff_layout_read_prepare_common(struct rpc_task *task,
+ 					 struct nfs_pgio_header *hdr)
+ {
+-	if (unlikely(test_bit(NFS_CONTEXT_BAD, &hdr->args.context->flags))) {
++	if (unlikely(ff_layout_io_state_lost(hdr))) {
+ 		rpc_exit(task, -EIO);
+ 		return -EIO;
  	}
+@@ -1813,6 +1828,12 @@ static int ff_layout_write_done_cb(struc
+ 	loff_t end_offs = 0;
+ 	int err;
  
- 	/* calculate remaining bytes in the current stripe */
--	div_u64_rem((u64)req_offset(req) - segment_offset,
-+	div_u64_rem((u64)req_offset(req) - pattern_offset,
- 			stripe_unit,
- 			&stripe_offset);
- 	WARN_ON_ONCE(stripe_offset > stripe_unit);
++	if (task->tk_status < 0 && !RPC_WAS_SENT(task) &&
++	    ff_layout_io_state_lost(hdr)) {
++		task->tk_status = -EIO;
++		return 0;
++	}
++
+ 	if (task->tk_status < 0) {
+ 		ff_layout_io_track_ds_error(hdr->lseg,
+ 					    hdr->pgio_mirror_idx, dss_id,
+@@ -1950,7 +1971,7 @@ static void ff_layout_write_record_layou
+ static int ff_layout_write_prepare_common(struct rpc_task *task,
+ 					  struct nfs_pgio_header *hdr)
+ {
+-	if (unlikely(test_bit(NFS_CONTEXT_BAD, &hdr->args.context->flags))) {
++	if (unlikely(ff_layout_io_state_lost(hdr))) {
+ 		rpc_exit(task, -EIO);
+ 		return -EIO;
+ 	}
+--- a/fs/nfs/nfs4_fs.h
++++ b/fs/nfs/nfs4_fs.h
+@@ -526,6 +526,8 @@ extern int nfs4_select_rw_stateid(struct
+ 		const struct cred **);
+ extern bool nfs4_copy_open_stateid(nfs4_stateid *dst,
+ 		struct nfs4_state *state);
++extern bool nfs4_lock_context_lost(struct nfs4_state *state,
++		const struct nfs_lock_context *l_ctx);
+ 
+ extern struct nfs_seqid *nfs_alloc_seqid(struct nfs_seqid_counter *counter, gfp_t gfp_mask);
+ extern int nfs_wait_on_sequence(struct nfs_seqid *seqid, struct rpc_task *task);
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -812,10 +812,13 @@ void nfs4_close_sync(struct nfs4_state *
+  * be made.  Failing that, a "consistent" choice is preferable.  The
+  * consistent choice we make is to prefer the first owner, that of a
+  * Posix lock.
++ *
++ * Called with state->state_lock held.  No reference is taken: a lock
++ * state is freed only after it is unlinked under state->state_lock.
+  */
+ static struct nfs4_lock_state *
+-__nfs4_find_lock_state(struct nfs4_state *state,
+-		       fl_owner_t owner, fl_owner_t owner2)
++__nfs4_lookup_lock_state(struct nfs4_state *state,
++			 fl_owner_t owner, fl_owner_t owner2)
+ {
+ 	struct nfs4_lock_state *pos, *ret = NULL;
+ 	list_for_each_entry(pos, &state->lock_states, ls_locks) {
+@@ -826,6 +829,16 @@ __nfs4_find_lock_state(struct nfs4_state
+ 		if (pos->ls_owner == owner2)
+ 			ret = pos;
+ 	}
++	return ret;
++}
++
++static struct nfs4_lock_state *
++__nfs4_find_lock_state(struct nfs4_state *state,
++		       fl_owner_t owner, fl_owner_t owner2)
++{
++	struct nfs4_lock_state *ret;
++
++	ret = __nfs4_lookup_lock_state(state, owner, owner2);
+ 	if (ret)
+ 		refcount_inc(&ret->ls_count);
+ 	return ret;
+@@ -968,7 +981,7 @@ static int nfs4_copy_lock_stateid(nfs4_s
+ 	fl_flock_owner = l_ctx->open_context->flock_owner;
+ 
+ 	spin_lock(&state->state_lock);
+-	lsp = __nfs4_find_lock_state(state, owner, fl_flock_owner);
++	lsp = __nfs4_lookup_lock_state(state, owner, fl_flock_owner);
+ 	if (lsp && test_bit(NFS_LOCK_LOST, &lsp->ls_flags))
+ 		ret = -EIO;
+ 	else if (lsp != NULL && test_bit(NFS_LOCK_INITIALIZED, &lsp->ls_flags) != 0) {
+@@ -976,11 +989,28 @@ static int nfs4_copy_lock_stateid(nfs4_s
+ 		ret = 0;
+ 	}
+ 	spin_unlock(&state->state_lock);
+-	nfs4_put_lock_state(lsp);
+ out:
+ 	return ret;
+ }
+ 
++bool nfs4_lock_context_lost(struct nfs4_state *state,
++			    const struct nfs_lock_context *l_ctx)
++{
++	struct nfs4_lock_state *lsp;
++	bool ret;
++
++	if (!test_bit(LK_STATE_IN_USE, &state->flags))
++		return false;
++
++	spin_lock(&state->state_lock);
++	lsp = __nfs4_lookup_lock_state(state, l_ctx->lockowner,
++				       l_ctx->open_context->flock_owner);
++	ret = lsp && test_bit(NFS_LOCK_LOST, &lsp->ls_flags);
++	spin_unlock(&state->state_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(nfs4_lock_context_lost);
++
+ bool nfs4_copy_open_stateid(nfs4_stateid *dst, struct nfs4_state *state)
+ {
+ 	bool ret;
 
 
