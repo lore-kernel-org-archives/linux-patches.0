@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831795;
-	b=dZ6Nyy48clz2EUYuhv7byIPkL3pATSGAa9TFl38wY5WZ6aRwQGitzNQULqjirW7lJb9J
-	 lrEhAqQ2i4xtfnRADg8LS5DDVyFafUpMavhrxrkFUZthNRDR6d/MLqnFn6FYQramm5T2l
-	 XDkSkjQNyhPe+gZcaNJNkOfBQzTOxKUnp6R7dBrY1iUAuVqRefOjz57AARYemQHtFn5gO
-	 eOcNcypDfLK4cujHWouJBsB+RdiyQVQif5xqwQiXIUL/X54WMiUl7vMR7A4/i9JdhiD8f
-	 swrkkQHJamWYgGz2MMllkLUtCtUgEfleT/ZgrHqb2KGtK/qQZ00r8iJuW5VnXLFaLug==
+	t=1793831797;
+	b=qfDWgYkTFVlvR/WkpC/Z9I69O27NJJrMOiyudnSaskyIPVnbQ5mY/wsXbgxrqF+cSNtl
+	 E01++E+aelYAxg2A58BGlxouGWyBILF1IwGKDQS+SWRsePaQZ7hUYiS4HJ8iuikoKOQ+V
+	 V0gLveEx28loC/VZ7qzxYn5s09rwwDetmNJ0bRQlQNeIAmllr53X86PCvSij02/LLItCf
+	 tWMYUNZU8OjKpDGu1PBV059O080iPx8FS75EoCEDswwCgxhu2L1DGbc03MIC+ugcVmQ5b
+	 lXMlnHkALjLxXs2wD7Kc883onC54se25y6lB7XCcgD8B0MVqmYG2CjYWFURlCQiJXhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831795;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ciJgLqZaNzOG3LRO8J4rl31tP3V0mL9vRoZkfzUP7pg=;
-	b=cEw/i+fZ1WIhL/z9FnhZjYunbgNgyR4OcQvUCBQEeVh+IxpWlsgt556r/v1Pwjy9FrQD
-	 QkjLqoHokltHhT/5YbhOgcuqK4FXVc45ULRal/FyiYC34JiFOOKZ5AV+z4PJd7hznvrSd
-	 2PXBLOIhPnjIdcj844Ae7M+59lU2L1Pq2zMxqkzPsw10nJ+VJ6tc+DmDcfaotZglR5b80
-	 ewA7Kc+CIcKF4wNkz/YbJY0lehX+SNu7c1rv6F7wZmCcL77fbF976Bp97UOyaiTGyPwGM
-	 qH7oZdV4qMZRmmAOQMwehFBPyX+NNoR7JCrddRWCOQhgxxafJuJoTHHG5R5uifTbs3Q==
+	bh=KvEpP2g7jLtKxNRa1q/paY7beSrtBifvUYlL/J95oek=;
+	b=PJnUQ0Z4beYdJ+TzD8X24+Y15JzaAqw1lgZUUK0t2tgOTsC7na/DA4pD/RjApk8EFMkQ
+	 jeaZnubakYEOk4yozrz7q9DWpVv90TOxQebk9+HVwAJmzGclcJeB7qndfiQXF2BqrG1o1
+	 5o3XNB2FUH7af+Iuh8tnSmnHNOiXoHJS9SHBfpsN/M8XmcyU/HHathXdw+nw8Dm5DAGZP
+	 kd27iMrrhSiq22MffPGf4O+UoYnZb+odBj8PA47LxY9D0N57Ow7oKqZX8o+cWrhUz1ZZs
+	 wnMwH6G1h4c8ICxuKqSQr94ukSYd3FIA1zFj2ISu7JrRTR3CgT+TdXV7J3erozVXHog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sOopkRjz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nj8YDChb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B10B606AC37;
-	Wed,  4 Nov 2026 22:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EEA606A33A;
+	Wed,  4 Nov 2026 22:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sOopkRjz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCE01F000C1;
-	Wed,  4 Nov 2026 22:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nj8YDChb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52FF71F000C1;
+	Wed,  4 Nov 2026 22:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831794;
-	bh=ciJgLqZaNzOG3LRO8J4rl31tP3V0mL9vRoZkfzUP7pg=;
+	s=korg; t=1793831796;
+	bh=KvEpP2g7jLtKxNRa1q/paY7beSrtBifvUYlL/J95oek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sOopkRjzfUB4KXcMrQqMsy8PkFy0nSRCC7ngEqcjrSNF4DY/mGAutn2Azowzfa246
-	 dKhjLeWF7J9FrxpnGt5Bio2L3UKOTBEBDa+FVIVAxKtEA0AECMFGdU//Rw1cINzhll
-	 iqCOUrPyskoXJScWU2sRkVGmoIw7+ioJcuGU97eo=
+	b=nj8YDChbLgXL4WSwuoUEbuE7BKaZb0gdvpEAfce/8fEklJ+iYV048RyCNwHIEfRgx
+	 mYLVHmnFYkV/gZyvZG6B+wQj+UZZ0frxp4Bme56B4yuqB346k6+uWgEMPHZWafBme5
+	 u0AGdWjlZb+k7+nt7Z3qWtFgfmaxblavBH4Gs3uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ameer Hamza <ameer.hamza@truenas.com>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0916/1005] sunrpc: treat empty auth.unix.gid replies as negative entries
-Date: Wed,  4 Nov 2026 16:10:49 -0500
-Message-ID: <20261104211108.815195737@linuxfoundation.org>
+Subject: [PATCH 6.18 0917/1005] SUNRPC: Treat every TLS error alert as fatal
+Date: Wed,  4 Nov 2026 16:10:50 -0500
+Message-ID: <20261104211108.841229853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,57 +66,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ameer Hamza <ameer.hamza@truenas.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit a12cc0930235b86b934ade7c077a1935c2ac333d upstream.
+commit 2c0dfe9d6d81e4bc9201b11dab3876cbfd01884e upstream.
 
-When rpc.mountd cannot resolve a uid (getpwuid() or getgrouplist()
-failure, e.g. while winbind or sssd is briefly unreachable), it
-answers the auth.unix.gid upcall with zero groups. unix_gid_parse()
-installs that as a valid positive entry, and svcauth_unix_set_client()
-then replaces the credential's group list with the empty one on
-every request, RPCSEC_GSS included via svcauth_gss_set_client().
-One failed lookup strips that uid of all supplementary groups on
-every export for up to mountd's configured TTL (30 minutes by
-default), long after the NSS backend has recovered.
+svc_tcp_sock_process_cmsg() decides whether an alert ends the session
+by reading the alert's level octet. RFC 8446 Section 6 retired that
+field. The severity is implicit in the description, and a receiver
+treats every alert listed in Section 6.2 as an error alert
+"regardless of the AlertLevel in the message". A peer that aborts
+with unexpected_message but leaves the legacy octet set to warning
+makes the server return -EAGAIN. svc_tcp_recvfrom() then leaves a
+dead TLS session attached to an open transport. NFSD keeps polling
+it.
 
-mountd cannot send an empty list for a successful lookup, since
-getgrouplist(3) always includes at least the user's primary group,
-so a zero-group reply can only mean the lookup failed. Record it as
-a negative entry: unix_gid_find() then returns -ENOENT and
-svcauth_unix_set_client() keeps the groups the RPC credential
-already carries. This is the fallback that
-commit 3fc605a2aa38 ("[PATCH] knfsd: allow the server to provide a
-gid list when using AUTH_UNIX authentication") promised when no
-answer is available, and the same state try_to_negate_entry()
-already creates when no listener holds the channel open.
+Decide from the alert description instead. close_notify and
+user_canceled are the closure alerts (RFC 8446 Section 6.1). Every
+other description ends the session, including one this kernel does
+not recognize.
 
-Fixes: 3fc605a2aa38 ("[PATCH] knfsd: allow the server to provide a gid list when using AUTH_UNIX authentication")
+Fixes: 39067dda1d86 ("SUNRPC: Use new helpers to handle TLS Alerts")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
-Link: https://patch.msgid.link/20260814221953.108837-2-ameer.hamza@truenas.com
+Link: https://patch.msgid.link/20260808-svcsock-cmsg-fixes-v3-3-62d9a631c880@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcauth_unix.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/sunrpc/svcsock.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/svcauth_unix.c
-+++ b/net/sunrpc/svcauth_unix.c
-@@ -537,6 +537,13 @@ static int unix_gid_parse(struct cache_d
- 	if (ugp) {
- 		struct cache_head *ch;
- 		ug.h.flags = 0;
-+		/*
-+		 * mountd sends at least the user's primary group on
-+		 * success, so an empty list can only mean the lookup
-+		 * failed. Keep the credential's own groups instead.
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -290,8 +290,17 @@ svc_tcp_sock_process_cmsg(struct socket
+ 		break;
+ 	case TLS_RECORD_TYPE_ALERT:
+ 		tls_alert_recv(sock->sk, msg, &level, &description);
+-		ret = (level == TLS_ALERT_LEVEL_FATAL) ?
+-			-ENOTCONN : -EAGAIN;
++		/* RFC 8446 Section 6: every alert but a closure alert is
++		 * an error alert.
 +		 */
-+		if (gids == 0)
-+			set_bit(CACHE_NEGATIVE, &ug.h.flags);
- 		ug.h.expiry_time = expiry;
- 		ch = sunrpc_cache_update(cd,
- 					 &ug.h, &ugp->h,
++		switch (description) {
++		case TLS_ALERT_DESC_CLOSE_NOTIFY:
++		case TLS_ALERT_DESC_USER_CANCELED:
++			ret = -EAGAIN;
++			break;
++		default:
++			ret = -ENOTCONN;
++		}
+ 		break;
+ 	default:
+ 		/* discard this record type */
 
 
