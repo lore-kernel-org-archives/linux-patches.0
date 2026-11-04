@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831280;
-	b=AEhMWl7lSgHJKESGv7UJBn3467lrHe9wMN+s6NhIUMhqQg/1kdMXtZ2K33mLb5cvlxVh
-	 CpllOxZs7mIMkc5sCkpCBMqlQOw2bOHWMTRltr7xIhep0YkQRBuhcUPhnt1zzkttoj4D8
-	 D/3pgiOpSuQU2VN/AybG8HmP2PpwlJOl42ALHrF0c01hMNQjzWIUgpVT/1oyyYT9L9Slw
-	 2I6h0du8U5Zx0b+/F3hYh1RoXKkO8drotm6Z+QCnZQxmEFtWVyVNlE+DtS4QoSv9TE0Ig
-	 jk0Uv+43lQKonAfNOtt40nrwVqfPUvr9uPw/LG/Rap9lsZ5Gx2dO/FmAgcHqZdud0UQ==
+	t=1793831282;
+	b=0hya0UpWDjbVkSdFrF1lg2JHRxeZMF8hnoP2Zg7fEx/9qJI7qaoZetJ+hOtDrEng9Igg
+	 HyU009ZdO4b0QZSlFQw3CUZBXwa88T5PHhMaLZcaIk1AWay77N5YRiFigrjENoRzczgJx
+	 WE+K/ZIfhM0QNy1yU1roUcFwKR1s0nLzWr8bJrrWJJ/9FQ5s1QKWIdiz/EzBkOHwX6c59
+	 dU7RT60/2bYTUt/qMUHVWAcS1rXrXWSmWr7L9amgDo5Zjp+KgeMJLm9POQGbJFT8Ks74G
+	 A0tPnqxxsuPObQdjNfuU3JEyohBXoIVzofqVaOvCfwHWeaeXo2sqis1CwrgSkk8msYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831282;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=bFITSyvYw8ObphXZoU5GCIRgaM5jOoYi+m8g0Lyb1Rk=;
-	b=V8gUTCLSI3kZZOcvxRhBUyZMhxJC9IdOQxMIJf8uUNacOtHUMS5NAYVWsn039aFR1XbE
-	 wHhshLcmFULk+qe4q6VrnxBIq7sZVLZjbk3hPi7OmQHVKjq6Ol5pdxrC5TLD99cf0EMRe
-	 1l27XJzCf6mZOko7a6uEoJHtH+MmnWRH8fbty71etzyDv4Ab+UB4NB2kJVAJSPETxG9lb
-	 iTCSThCE7f0tfuajtihXDy53wuJaW4NhF04MqLk4OF8sE/KUYTm+UZTRHjmHeDCH0hX+o
-	 Nh4/46BdSJ6DbCt6bzG//2ZxtbS8+hgzIh8pV4tbfFA5JVIIyMsFLcgiitdaDN4r5Hg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oJfmzu7FaUcxpkOXZcnjunS+4QZCz91JuuQDSDQKeFA=;
+	b=P0Ul101MgRf20yTf2WiBwzHoqs2nR3H1rLEfiKANcY8NPoTwUPVo86iogY/pPBrcx5Rf
+	 VmP5FykihtdMa03nymRmooxArrjq8UeFTFWiZaocGfC90AqwhCAAEq2xOhfQ2f8YpFV+u
+	 wDEm8hi96gSaKMPh1ak28XQqKb/GdvHu1oKxPUlUUaDzriFFLmApfHbsJnF/S54x4dIcw
+	 sRErb7fphuvO34aRv803E/+L6rkR1r510h71EPOrhAHO3ncEcps+f6yK/cE+oy/3dp+VC
+	 n2WrgZxAPtUoF16jCw1gaeRRJf6a/FCUb2Nwz7ixoNla7F2zLjY5YQIwOIO1qgVxMNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NCJvmK2A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H76f/Svl";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408CA606A335;
-	Wed,  4 Nov 2026 22:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0CB606A335;
+	Wed,  4 Nov 2026 22:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NCJvmK2A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F771F000C1;
-	Wed,  4 Nov 2026 22:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H76f/Svl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6476F1F00919;
+	Wed,  4 Nov 2026 22:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831280;
-	bh=bFITSyvYw8ObphXZoU5GCIRgaM5jOoYi+m8g0Lyb1Rk=;
+	s=korg; t=1793831281;
+	bh=oJfmzu7FaUcxpkOXZcnjunS+4QZCz91JuuQDSDQKeFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NCJvmK2A2dcbt45GOgIxIMHF2J9AQT/mjZTeE6issrAuG7Zc09hPUv/MNmq66zXSY
-	 vp0Jy2Pt5BX5HSa0tRI+zSawz7zeNai6j7W+4oelI3pn3RAEjPUp6xlL9ZtFIb3MDU
-	 oQWtkv9tVOTozq7eiTrj9ghxsiNptvfyEWBtmzkg=
+	b=H76f/SvllCanZhJRFzelrmE05ggD3Go50dDBujokKjFN/1LhZ3ACYQh8BAzISm+dr
+	 wqwc1ws7sGrz9virrtSg+LL25lr7UWLb9DP3HLcuujILw8O9McW/XTOV5TE8bMNQk0
+	 X2uiEHBUTwCqsX9UhQMYI6Tl0AH3ulRpTOzX7v9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Len Brown <len.brown@intel.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0609/1005] tools/power turbostat: Read complete CPU lists
-Date: Wed,  4 Nov 2026 16:05:42 -0500
-Message-ID: <20261104211100.905867185@linuxfoundation.org>
+Subject: [PATCH 6.18 0610/1005] drm/amd/display: Fix fast updates on DCE 6.x
+Date: Wed,  4 Nov 2026 16:05:43 -0500
+Message-ID: <20261104211100.934747068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,92 +63,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit c24362650f7a8573dc9a9991a034b8500af8eb19 ]
+[ Upstream commit 88427119e1f039c8cdffd63726c136a986ef519f ]
 
-CPU_SUBSET_MAXCPUS accepts CPU IDs through 8191, but the sysfs and
-cgroup CPU-list readers stop at 1024 bytes. A fragmented cpuset or
-hybrid PMU CPU list can exceed that size and be truncated.
-initialize_cpu_set_from_sysfs() can also pass a full, non-NUL-terminated
-buffer to parse_cpu_str(), causing an out-of-bounds read.
+DCE6 should use legacy fast updates, just like all DCE8 - DCN2.
+Set that flag for DCE 6.0, 6.1 and 6.4 (all DCE6 versions).
 
-Additionally, initialize_cpu_set_from_sysfs() returns with the file
-still open on success. It is now called once per CPU for
-thread_siblings_list, so large systems can leak thousands of descriptors
-during topology discovery.
+Technically DCE6 should have been included when the fast update
+code was refactored, but it just happened to work until now.
 
-Use getline() so both readers receive a complete, NUL-terminated line.
-Close and free the sysfs CPU-list resources on every path, and report
-malformed input from the correct buffer.
+A recent commit "Attach only plane updates that actually changed"
+has exposed this issue because with that commit, DC accidentally
+took the new fast update code path for DCE6 as well, which caused
+it to boot into a black screen with a flip done timeout.
 
-Fixes: eb187540d13a ("tools/power turbostat: Increase CPU_SUBSET_MAXCPUS to 8192")
-Fixes: 58839fdbd441 ("tools/power turbostat: Process HT siblings in CPU order")
+This fix should be backported to all kernel versions that
+have "Refactor fast update to use new HWSS build sequence",
+but this patch won't apply cleanly to older kernels due to
+another refactor in "Remove dc param from check_update".
+
+Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
+Fixes: 9ec11bb842b6 ("drm/amd/display: Remove dc param from check_update")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260923122033.1046651-1-timur.kristof@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 698fda6e360625850413a2d1a90b72ae5f03073d)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
-[ sashal: Dropped the initialize_cpu_set_from_sysfs() hunk because that function doesn't exist here, and adapted the update_effective_str() context, where the err() message still had a trailing \n. ]
+[ sashal: Replaced the missing dc_check_config flag with dc->debug = debug_defaults, setting enable_legacy_fast_update = true in the DCE6 constructors, and adjusted the dce64_construct context because is_apu was already removed. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ .../gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 3bab2677b0670..fb8f679549279 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -6176,33 +6176,35 @@ int for_all_proc_cpus(int (func) (int))
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
+index e67c73807f371..9fa6c01f32c84 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dce60/dce60_resource.c
+@@ -439,6 +439,10 @@ static const struct dce_abm_mask abm_mask = {
+ 		ABM_MASK_SH_LIST_DCE110(_MASK)
+ };
  
- #define PATH_EFFECTIVE_CPUS	"/sys/fs/cgroup/cpuset.cpus.effective"
++static const struct dc_debug_options debug_defaults = {
++	.enable_legacy_fast_update = true,
++};
++
+ #define CTX  ctx
+ #define REG(reg) mm ## reg
  
--static char cpu_effective_str[1024];
-+static char *cpu_effective_str;
+@@ -912,6 +916,7 @@ static bool dce60_construct(
+ 	dc->caps.max_cursor_size = 64;
+ 	dc->caps.dual_link_dvi = true;
+ 	dc->caps.extended_aux_timeout_support = false;
++	dc->debug = debug_defaults;
  
- static int update_effective_str(bool startup)
- {
- 	FILE *fp;
--	char *pos;
--	char buf[1024];
-+	char *buf = NULL;
-+	size_t size = 0;
- 	int ret;
+ 	/*************************************************
+ 	 *  Create resources                             *
+@@ -1109,6 +1114,7 @@ static bool dce61_construct(
+ 	dc->caps.i2c_speed_in_khz = 40;
+ 	dc->caps.max_cursor_size = 64;
+ 	dc->caps.is_apu = true;
++	dc->debug = debug_defaults;
  
--	if (cpu_effective_str[0] == '\0' && !startup)
-+	if (!cpu_effective_str && !startup)
- 		return 0;
+ 	/*************************************************
+ 	 *  Create resources                             *
+@@ -1306,6 +1312,7 @@ static bool dce64_construct(
+ 	dc->caps.max_downscale_ratio = 200;
+ 	dc->caps.i2c_speed_in_khz = 40;
+ 	dc->caps.max_cursor_size = 64;
++	dc->debug = debug_defaults;
  
- 	fp = fopen(PATH_EFFECTIVE_CPUS, "r");
- 	if (!fp)
- 		return 0;
- 
--	pos = fgets(buf, 1024, fp);
--	if (!pos)
--		err(1, "%s: file read failed\n", PATH_EFFECTIVE_CPUS);
-+	if (getline(&buf, &size, fp) < 0)
-+		err(1, "%s: file read failed", PATH_EFFECTIVE_CPUS);
- 
- 	fclose(fp);
- 
--	ret = strncmp(cpu_effective_str, buf, 1024);
--	if (!ret)
-+	ret = cpu_effective_str ? strcmp(cpu_effective_str, buf) : 1;
-+	if (!ret) {
-+		free(buf);
- 		return 0;
-+	}
- 
--	strncpy(cpu_effective_str, buf, 1024);
-+	free(cpu_effective_str);
-+	cpu_effective_str = buf;
- 	return 1;
- }
- 
+ 	/*************************************************
+ 	 *  Create resources                             *
 -- 
 2.53.0
 
