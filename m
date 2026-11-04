@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827192;
-	b=Aj5/xv+G7ka/LnBaq4xZK3ii8RjAvPGbahRDD9GjcT/7FV8Mal1yi6Cv5w3xsqcVABet
-	 rpOsUSLbDzdmfZDMzoRNMTN9UaqM6iMwpLsq0JrcD6wcrAAfmJ3aYlIE8Hn3TQrcuhu6e
-	 1z9GK+6Qdw6m+lLsmtcjwzhJut3kpCPihB+ZTsFyf2f2hdO8wskanVOrSSyFswogfYEVv
-	 HjfCnEBgdlO4b4Wze+Z4TRN01Km7b5xSAefjiXtnvVq7r9cnvmGYLHcdQHloFnnEWaPNL
-	 09PdWgiyjApD9Xfl4k+yxqGw8OKHjxnV+pWzuS2moIPm+NwFzBhnZSRcmDH71arR7fw==
+	t=1793827193;
+	b=euHsuHvmdGjlEDLLaNVhEQzzkZ2b0GigU+fFMRzU87Cw8PV02GpkgQzItIeDlu6WQCfz
+	 9MT8R+O5ZdxE5e9tFz+/G7K/yvJ0HemdzNP/W/uG/bkBljmj35Y0g9Sd26CTWht2uQAi8
+	 /FPoalwlHokmp+S2gJcjOtG3D2GICH3C+GJWGS707njvq4t6hso9OxJjwjvnmXOkOn2xt
+	 CVjH3lbHgdk69nouxrN9wS/7oLvLyiRKOTRoGiBNmyTUtVEfmwEW6WEE5T/9ERc+JVFHL
+	 P/6IxQVPa74kWalfebRUu/jSvxoSV5nlt8ERTTL8XEYRVfgbY7v/XrdCfcX8eB8b/bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=awrsWNnIJLsCQXRYeBOGDKUpNJFGJ20efuZD/JrCSws=;
-	b=K/b/ddey1ldRXf9oSlFkAWsxAPbrvxa0XjI88zy2Cj2FnSt8ShB1hdp1FqiWIzI4sGq+
-	 3X0747G4f7qg5lp+5sDck7NuGQWCE/Dzo70/FsZNrp8diBr8cRiiQsnqF1HVzK6dAHmp/
-	 Rwb7z39KEwMn++nIF3UyjeTaXtkOLey2n7KS1H340fTT8fmmfm7Kbo/ZqdiT6O3QDGL8Q
-	 7kNnzwcUitKJtt1iCmWVGma/yhrOlDZZGONKwBQdNzbgXN/HLabcVVXC3drXdKhRUOeOj
-	 gnTGBZv1QzLEmwO0mhwGcUrvVX8dGwUzKq/l7GihgehabS1miy4Y/PJCu+RbF7YJ2Ug==
+	bh=E1xYwfT2C/hy/dOozl66oe7H+IEPI8rnoetCkErapEk=;
+	b=MI5jNl3XJL4/sE52Mfv9LagzRyq7ch1GEFXG6TMbPEFNSjJ+iR82651bLlPYFw/EOJp8
+	 WRYwme74wz0sPo7GJtjsDCSyoMwRb/6Pg7uwEOFRVGdMH2WEsl5mFbbDbUqJs4PJ2gkbO
+	 R2hqAF4PzvDTaEpvksUgax4nXJFiZyavP2HrNq0nMA55KHndpDa/AkRHf6x5kRWKyrgbi
+	 zjDwdC3Ifpng9B9U5FLs6phY6G4s6aTEE4VYVHT6EFsO2vtPX+5zfBDNIWZphCS31xThI
+	 VFf6f+L4OlSFE/jj6zf1xT8PWP+GEmex/KemtysvcRvjeIk7bhlJgTKvMfSk1Vqhu9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIWnB7fR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TpYuqzLv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD40B6075DD9;
-	Wed,  4 Nov 2026 21:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C02606B2C1;
+	Wed,  4 Nov 2026 21:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIWnB7fR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2D41F000C1;
-	Wed,  4 Nov 2026 21:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TpYuqzLv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D63B1F00919;
+	Wed,  4 Nov 2026 21:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827191;
-	bh=awrsWNnIJLsCQXRYeBOGDKUpNJFGJ20efuZD/JrCSws=;
+	s=korg; t=1793827193;
+	bh=E1xYwfT2C/hy/dOozl66oe7H+IEPI8rnoetCkErapEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIWnB7fR8rvm/viamgY2m7tsjzPTU1zx8n7XTc7zG1tCSxRavWYAATkIdtV02nvxh
-	 kNiAN2Bm0HHt/0+V83JZj3ePZKrNyHpDUD4PaeH8v+wkCobcW4+R5dcii8Fv+cfrEU
-	 D3/6YslKEYnouIifaeN8RAOBr9kMazVnQuihCmQU=
+	b=TpYuqzLvWsxARJgZq94Qkcs4iaaE7w9C5bMcokqbrhFIFMLxVzIpjY4035uNRS3Vw
+	 Odw7cvNutwnd9Ox1iUJljEx/RVZ5R9CW+Wkf/zNONotNfdpxRnNOnMmwAicOUF32dG
+	 jyaewDuqRydLzh9A7V6qSMpD9DCBypgdAKEx00+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Dennis Tighe <dtighe@google.com>,
-	Sashiko Bot <sashiko-bot@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.3 222/547] KVM: guest_memfd: Gracefully handle xarray errors when binding a memslot
-Date: Wed,  4 Nov 2026 16:06:46 -0500
-Message-ID: <20261104211044.463084202@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 7.3 249/547] wifi: mt76: mt7996: unlink TWT flow if the MCU rejects the agreement
+Date: Wed,  4 Nov 2026 16:07:13 -0500
+Message-ID: <20261104211045.248095698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -71,76 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit e6ecb88711d93b9e014532f17d3d29b57e80932c upstream.
+commit 022f5f8b7a0580da50fcbc34da853d03d4321fe2 upstream.
 
-If inserting a memslot into a guest_memfd's bindings xarray fails,
-propagate the error back to the caller, i.e. fail memslot creation as well.
-Signalling success and continuing on with memslot creation results in
-use-after-free, as the guest_memfd instance will remain reachable via the
-memslot after the file is freed (kvm_gmem_release() won't nullify the file
-pointer due to lack of a valid binding).
+mt7996_mac_add_twt_setup() links a new flow into dev->twt_list before
+asking the MCU to add the agreement, but exits without unlinking the flow
+if the request fails. The flow-ID and table masks are only committed
+after MCU success, so the still-linked flow is invisible to the
+mask-gated teardown paths.
 
-Opportunistically WARN and reject binding if KVM_MEMSLOT_GMEM_ONLY is
-already set, partly to guard against goofs elsewhere, but mostly so that
-KVM doesn't need to worry about clobbering flags when unwinding on failure.
+If the station retries the setup, the same slot is cleared and its
+embedded list node reinitialized while it is still linked, corrupting
+dev->twt_list. If the station disassociates instead, teardown skips the
+flow and station storage can be freed while the node remains linked. A
+later scheduling or debugfs twt_stats walk can then dereference the
+freed flow, resulting in a use-after-free.
 
-Regarding the unwind, the slot must be fully prepared before inserting it
-into the bindings, at which point the slot becomes reachable.  I.e. waiting
-to update the slot in order to avoid the ugly unwind isn't an option.  And
-as part of the unwind, explicitly nullify the relevant bindings, as xarray
-can store a subset of entries when populating a range.
+Unlink the flow when the MCU rejects the agreement. This restores the
+list to its pre-request state while leaving the unchanged mask and
+agreement accounting untouched.
 
-Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Reported-by: Dennis Tighe <dtighe@google.com>
-Reported-by: Sashiko Bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260823135031.4F6DC1F000E9%40smtp.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Ackerley Tng <ackerleytng@google.com>
-Link: https://patch.msgid.link/20260922001332.1121266-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/all/20260729173632.14387-3-enderaoelyther@gmail.com/
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260825112620.97568-1-enderaoelyther@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/guest_memfd.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -616,6 +616,9 @@ int kvm_gmem_bind(struct kvm *kvm, struc
- 	BUILD_BUG_ON(sizeof(gpa_t) != sizeof(offset));
- 	BUILD_BUG_ON(sizeof(gfn_t) != sizeof(slot->gmem.pgoff));
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -3285,8 +3285,10 @@ void mt7996_mac_add_twt_setup(struct iee
+ 	flow->tsf = le64_to_cpu(twt_agrt->twt);
  
-+	if (WARN_ON_ONCE(slot->flags & KVM_MEMSLOT_GMEM_ONLY))
-+		return -EINVAL;
-+
- 	file = fget(fd);
- 	if (!file)
- 		return -EBADF;
-@@ -654,7 +657,13 @@ int kvm_gmem_bind(struct kvm *kvm, struc
- 	if (kvm_gmem_supports_mmap(inode))
- 		slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
- 
--	xa_store_range(&f->bindings, start, end - 1, slot, GFP_KERNEL);
-+	r = xa_err(xa_store_range(&f->bindings, start, end - 1, slot, GFP_KERNEL));
-+	if (r) {
-+		xa_store_range(&f->bindings, start, end - 1, NULL, GFP_KERNEL);
-+		slot->gmem.file = NULL;
-+		slot->gmem.pgoff = 0;
-+		slot->flags &= ~KVM_MEMSLOT_GMEM_ONLY;
+ 	if (mt7996_mcu_twt_agrt_update(dev, &msta->vif->deflink, flow,
+-				       MCU_TWT_AGRT_ADD))
++				       MCU_TWT_AGRT_ADD)) {
++		list_del(&flow->list);
+ 		goto unlock;
 +	}
- 	filemap_invalidate_unlock(inode->i_mapping);
  
- 	/*
-@@ -662,7 +671,6 @@ int kvm_gmem_bind(struct kvm *kvm, struc
- 	 * not the other way 'round.  Active bindings are invalidated if the
- 	 * file is closed before memslots are destroyed.
- 	 */
--	r = 0;
- err:
- 	fput(file);
- 	return r;
+ 	setup_cmd = TWT_SETUP_CMD_ACCEPT;
+ 	dev->twt.table_mask |= BIT(table_id);
 
 
