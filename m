@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827031;
-	b=IdcrZpzYbngHdluTe3zSgrfIaXGjUTCJs84pUmQC72U/UnX5/8DG3G5CTpXhhmc1g/9S
-	 DvGdgGRDK9BFilFVQcjbCJU0fR3BDB118EoY2hlI3xM95UeNn8EB6cB+GFZWO9uG9bKob
-	 om8gWNdSF4p/BRekNkOb9F+ce597YPJlRXi8Iv8PsRm0SDu4kEVnGbkou8DCnbNQ8FCgF
-	 7zpgRFdgXnV7bb7hodGwsiiC6cxZCKu1p9qVDJJNNZY6rc3VdgdAbSFFzOiDzvT0eiojp
-	 IHzyMbJMvxURdlhZ8p+bOlKMcwaWMQJ9syDYZQ8sO4zYUD1g02wBPkG3/+lwYdq05jw==
+	t=1793827033;
+	b=tI7g5655Limd75yIIcHMF4orFcp42lM6OT/sXjs+xj6KpyDkDgcb8jwy59KEoRIeFMhN
+	 W4MFX6BdE5DcOBrzWJYQvIrI4eGl8Db+x63R+tOei9h5WZXJXJ9NUlYemUsugZhotb2py
+	 Oi89SJz8I6Jj3v0tkZ2cDyZtKhHgTQ9yr61AFDYZt8ryxfyW7CFk4CK39WKRWxdEeopo6
+	 0HUqLGEWWXqrP+sAWeuD9hocZJLlF0XfX/Jj6mmu348lx8J22DZVsW5Uv2wCxSrKfpj2E
+	 nErE1O3rjZQNzxzkBspPd/eajAVWqpYOZAluo/Fp77XeMpCK7plCe9lL/RdQKEmvMlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ahQuT7PAu9i1rKKBpgYXfxeBtAYD7/YuGtO5w/Qd230=;
-	b=es0B71vO6HujUoua7b/MBVhXsqu4ztQfdj4Z4JelOGMHpNYb4rrJhhyBhR2y8XaEkl6u
-	 5ntte8JyBGSVWQzMr+Tge/MCNFoDS2utOV14oSKnEuNIHfIfn0uVEk3REU9aIfoFyz+b1
-	 sYwJSOI1QpDP/NfbgukmWVv68Ifnt0YhH9vtQdknrZ9PT7/awvH/iUQDYxeDtR2N8caXK
-	 +RQpdMl9RzuujpeS1KW+HhRdpcaC80HytzlwQ9pzbptvGq/cczbrNZcZuoAGXkT2MQTMU
-	 Yhsd385qchbnt3BTYLHdHDJjhUV3R9/QN+PVJrzqzm6VGlmjPnKI/PcxPXoQeH2jJzg==
+	bh=tcV0ajnol1GuX4HBGguuFlpB32F7zpYqf85sNQCqIow=;
+	b=1rDcZPGPTfV80KRaTO5HxlFehWNNPOapaZ4jQ3FjAdEGpSebJulxSYVOWlj9GHklVvFh
+	 2wdwguIEu/xAUGp8cG0RmqeGJEI3QBQTL4ChB5iw5g4bZ1F3X/swpB+Qleqj+uHrDQQkz
+	 CW7oBHIk7+eJ6FskSSVDZ7r3A0poS3Psq3tzkaIebkriCUP/OcFo40KoGh6GqpjENhxU1
+	 DpTBnLazXdLhZ/VYd3Mm0YwPfG5ZAnvWMjRWL2ZuDD7tMr8OqSJ2wTzyVhL8KLEzDxh0e
+	 Rl/Ju53J4LeWhb23lr/j3gbNm+527yJkR3I8Im46AI5l4AQpyJuZiVy9H8wmQ7TZx8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sSZCAp4X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l3Dr2JhX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4B36070A97;
-	Wed,  4 Nov 2026 21:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAF66070313;
+	Wed,  4 Nov 2026 21:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sSZCAp4X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87D31F000C1;
-	Wed,  4 Nov 2026 21:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l3Dr2JhX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD6F1F000C1;
+	Wed,  4 Nov 2026 21:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827031;
-	bh=ahQuT7PAu9i1rKKBpgYXfxeBtAYD7/YuGtO5w/Qd230=;
+	s=korg; t=1793827032;
+	bh=tcV0ajnol1GuX4HBGguuFlpB32F7zpYqf85sNQCqIow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sSZCAp4XXVHP2pP308GxVQxaFyPvTDIKWzjF20bAXTNB855a1BJmZATM+BsfFHKv0
-	 WfnmuFBoyhbadEqDTirf5Lh6CtrVk7Q//S5LcrkXh4+RyJZOSjP6wX6+sEebdVZ3bb
-	 zxcrY/1JG0J2EsU19ojdkfAvFo8VaunxjfKS2k3c=
+	b=l3Dr2JhX+3i/V8pyoMoJ1V6q50/tLW8CLoX3jZbtSiLTNYAeySd9q7SjPsSkIDLH1
+	 BojRmQSxPaKMnbhYWSPyhdkW6Ni+DZau5hZcytipc2pciaPzpazWntr0U4/3cx0e7r
+	 u83iGdSJxtJVQsGpCLQEDW8lhL5VItCQHdSTK9fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.3 154/547] nvmet-fc: fix use-after-free in nvmet_fc_ls_create_connection()
-Date: Wed,  4 Nov 2026 16:05:38 -0500
-Message-ID: <20261104211042.534306445@linuxfoundation.org>
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.3 137/547] ksmbd: verify transform SessionId matches the decrypted header
+Date: Wed,  4 Nov 2026 16:05:21 -0500
+Message-ID: <20261104211042.068358514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,101 +67,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-commit 2c29f8c9b9e598c09fa50aa02200136a107f6b3f upstream.
+commit 798214e6fafcdcc29f5ba2661a473232b5e70cfb upstream.
 
-nvmet_fc_ls_create_connection() looks up the association with
-nvmet_fc_find_target_assoc(), which returns it with a reference held,
-and drops that reference as soon as the target queue has been allocated.
-iod->assoc is then dereferenced again by nvmet_fc_makeconnid() while
-building the connection id.
+When an encrypted request comes in, the decryption key is picked by
+the SessionId in the transform header, but the request is then
+authorized under whatever session the decrypted inner header names.
+Nothing ever compares the two, so on a connection with more than
+one session a client can get a request decrypted with one session's
+key and run it as another session. Encrypted requests are exempt
+from signing too, so a valid AEAD tag is the only proof of session
+identity, and it is checked against the wrong session.
 
-The queue only borrows the pointer and takes no reference of its own.
-Once the lookup reference is dropped the association is kept alive
-solely by the reference taken when it was created, so a disconnect LS or
-a remote port unregister running concurrently can free it before
-nvmet_fc_makeconnid() reads it:
+MS-SMB2 says the server must check that the transform SessionId
+matches the one in the decrypted SMB2 header and treat a mismatch
+as a protocol error. Add that check in __handle_ksmbd_work() after
+decryption, before dispatching: the message has to be at least one
+fixed SMB2 header, the first operation must not set
+SMB2_FLAGS_RELATED_OPERATIONS and its SessionId must match the
+transform SessionId, and every following non-related operation in
+a compound chain must carry the same SessionId. NextCommand
+offsets must be 8-byte aligned and stay inside the message; the
+bounds check is done by subtraction so it cannot wrap.
 
-BUG: KASAN: slab-use-after-free in nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
-Read of size 8 at addr ffff888179f1b000 by task kworker/u9:2/1167
+When the decrypted payload is a compression transform, the
+existing decompression step runs first and the decompressed SMB2
+message is checked instead, since a compression transform header
+carries no SessionId.
 
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: nvmet-wq nvmet_fc_handle_ls_rqst_work
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
- print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
- kasan_report (mm/kasan/report.c:595)
- nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
- process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
- worker_thread (kernel/workqueue.c:3486)
- kthread (kernel/kthread.c:436)
- ret_from_fork (archkernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
- </TASK>
-
-Freed by task 1167 on cpu 0 at 405.998150s:
- kasan_save_track (mm/kasan/common.c:57 mm/kasan/common.c:78)
- kasan_save_free_info (mm/kasan/generic.c:584)
- __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
- kfree (include/linux/kasan.h:235 mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
- nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:1808 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
- process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
- worker_thread (kernel/workqueue.c:3486)
- kthread (kernel/kthread.c:436)
- ret_from_fork (archkernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-The buggy address belongs to the object at ffff888179f1b000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 0 bytes inside of
- freed 2048-byte region [ffff888179f1b000, ffff888179f1b800)
-
-Hold the lookup reference until the response has been built, and drop it
-on the error path as well.
-
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-nvme/20260731204504.2396434-1-shuangpeng.kernel@gmail.com
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Dairui Zhang <zhangdairui@gmail.com>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/smb/server/server.c  |   16 ++++++++++++++
+ fs/smb/server/smb2pdu.c |   54 ++++++++++++++++++++++++++++++++++++++++++++++++
+ fs/smb/server/smb2pdu.h |    1 
+ 3 files changed, 71 insertions(+)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1796,9 +1796,6 @@ nvmet_fc_ls_create_connection(struct nvm
- 					be16_to_cpu(rqst->connect_cmd.sqsize));
- 			if (!queue)
- 				ret = VERR_QUEUE_ALLOC_FAIL;
--
--			/* release get taken in nvmet_fc_find_target_assoc */
--			nvmet_fc_tgt_a_put(iod->assoc);
- 		}
- 	}
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -187,6 +187,16 @@ static void __handle_ksmbd_work(struct k
  
-@@ -1812,6 +1809,8 @@ nvmet_fc_ls_create_connection(struct nvm
- 					FCNVME_RJT_RC_INV_ASSOC :
- 					FCNVME_RJT_RC_LOGIC,
- 				FCNVME_RJT_EXP_NONE, 0);
-+		if (iod->assoc)
-+			nvmet_fc_tgt_a_put(iod->assoc);
- 		return;
- 	}
- 
-@@ -1833,6 +1832,9 @@ nvmet_fc_ls_create_connection(struct nvm
- 	acc->connectid.connection_id =
- 			cpu_to_be64(nvmet_fc_makeconnid(iod->assoc,
- 				be16_to_cpu(rqst->connect_cmd.qid)));
+ 	if (conn->ops->is_transform_hdr &&
+ 	    conn->ops->is_transform_hdr(work->request_buf)) {
++		u64 tr_sess_id;
 +
-+	/* release get taken in nvmet_fc_find_target_assoc */
-+	nvmet_fc_tgt_a_put(iod->assoc);
++		if (get_rfc1002_len(work->request_buf) <
++		    sizeof(struct smb2_transform_hdr)) {
++			ksmbd_conn_abort(conn);
++			return;
++		}
++		tr_sess_id = le64_to_cpu(((struct smb2_transform_hdr *)
++				smb_get_msg(work->request_buf))->SessionId);
++
+ 		rc = conn->ops->decrypt_req(work);
+ 		if (rc < 0) {
+ 			ksmbd_conn_abort(conn);
+@@ -215,6 +225,12 @@ static void __handle_ksmbd_work(struct k
+ 			ksmbd_conn_abort(conn);
+ 			return;
+ 		}
++
++		rc = ksmbd_check_transform_session(work, tr_sess_id);
++		if (rc < 0) {
++			ksmbd_conn_abort(conn);
++			return;
++		}
+ 	}
+ 
+ 	if (conn->ops->allocate_rsp_buf(work))
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -12483,6 +12483,60 @@ bool smb3_is_transform_hdr(void *buf)
+ 	return trhdr->ProtocolId == SMB2_TRANSFORM_PROTO_NUM;
  }
  
- /*
++/*
++ * The decryption key is selected by the transform SessionId, but
++ * the request is authorized under the session named in the
++ * decrypted SMB2 header. Per MS-SMB2 the two must match, so check
++ * the decrypted message and its compound chain before dispatch.
++ */
++int ksmbd_check_transform_session(struct ksmbd_work *work, u64 tr_sess_id)
++{
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
++	size_t msg_len = get_rfc1002_len(work->request_buf);
++	size_t off = 0;
++	bool first = true;
++
++	if (msg_len < sizeof(*hdr)) {
++		pr_err_ratelimited("Decrypted message is smaller than SMB2 header\n");
++		return -ECONNABORTED;
++	}
++
++	for (;;) {
++		u64 sid = le64_to_cpu(hdr->SessionId);
++		u32 next;
++
++		if (first) {
++			if (hdr->Flags & SMB2_FLAGS_RELATED_OPERATIONS) {
++				pr_err_ratelimited("RELATED_OPERATIONS set on first operation\n");
++				return -ECONNABORTED;
++			}
++			if (sid != tr_sess_id) {
++				pr_err_ratelimited("SessionId mismatch between transform and inner header\n");
++				return -ECONNABORTED;
++			}
++			first = false;
++		} else if (!(hdr->Flags & SMB2_FLAGS_RELATED_OPERATIONS) &&
++			   sid != tr_sess_id) {
++			pr_err_ratelimited("SessionId mismatch in compound chain\n");
++			return -ECONNABORTED;
++		}
++
++		next = le32_to_cpu(hdr->NextCommand);
++		if (!next)
++			return 0;
++		if (next % 8) {
++			pr_err_ratelimited("NextCommand %u is not 8-byte aligned\n", next);
++			return -ECONNABORTED;
++		}
++		if (next > msg_len - off - sizeof(*hdr)) {
++			pr_err_ratelimited("NextCommand %u is out of the message\n", next);
++			return -ECONNABORTED;
++		}
++		off += next;
++		hdr = (struct smb2_hdr *)((u8 *)smb_get_msg(work->request_buf) + off);
++	}
++}
++
+ int smb3_decrypt_req(struct ksmbd_work *work)
+ {
+ 	char *buf = work->request_buf;
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -420,6 +420,7 @@ struct channel *lookup_chann_list(struct
+ void smb3_preauth_hash_rsp(struct ksmbd_work *work);
+ bool smb3_is_transform_hdr(void *buf);
+ int smb3_decrypt_req(struct ksmbd_work *work);
++int ksmbd_check_transform_session(struct ksmbd_work *work, u64 tr_sess_id);
+ int smb3_encrypt_resp(struct ksmbd_work *work);
+ bool smb3_11_final_sess_setup_resp(struct ksmbd_work *work);
+ int smb2_set_rsp_credits(struct ksmbd_work *work);
 
 
