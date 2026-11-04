@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793830902;
-	b=jteGbaV08pk3GKiuc3YwfGaVSBt6smDf4b4YmLD/s0ougKEhMhbC/vtpU6XeAGzGI47j
-	 FBBCfCjS3/IO/zuC2Og/auq9/9/AxAz3fPljReVxQTDz7Nf972jQXx8LmXPvwA+U30HWB
-	 Kx/I4cZcFliIlo9Nuffx41v2Bd1kO8sIpamwi78u++HN1kgCEUmPG/7/FtVH+1r8fti1X
-	 0R882lZjiWFiTXiHf4gYCT5vGGGMxRE5qp26nTbHhYnBwRIDtOw8b7tZGeY1uqzTH6W2D
-	 D4LhrNu1HSMnn8B4h1QFjTNf+aDPol2YrxaJ5ar9T3LY8qDggQTnHmBzAlY3jCC7FIQ==
+	b=uT9fnaPnBf2PNQvEi2pABuvIpGr02X5CzrTet8FutLpkONH9TwGzjExU5Zo0REOTfhQr
+	 FIc6RxItmFFgS3v2sfd0RxSWzXJ+sjblHIedPCAsR0GwZfnr+zapqg8OlDfFi85GAwM4H
+	 ifIl70zmRLlQp6mx8/JQ2jsgQQyt80wl0WoyiDRJWzzPMXBPCscx+FsINMULabCKw1X3I
+	 XJoT3gt6/t1jACS+udmYx5NnKYlC3UvFoHB3O1QzCOmBYffmjQ7P8U6mMuQQT+TSYW8aa
+	 FGnHO2/aSQQPPj8pQ4EoM9RQqTbCnTxBDOnIQn/GvP4oAmyeYONK0bnpH9y4HcMo2UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793830902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=350+S1fnDJetBn1sPDFyDdacBwqmK7KHFtAnxyLnG68=;
-	b=H9fAkn0wvieUcoQr4CyGXRrGj/xCG+Vi0RnfRhuDNp+t8V8yFVc0pknB1L5OeWjtlA/Y
-	 2HQqkHXQs5/oy8Q+MgZZ0YobUSZBevmohJzD89PLuk3WGahezCbYN5eGBPZ8iG8Ponidf
-	 7agQvD/GnoacW8kRKAtzPLU+P5ni9iYA5ahhJQT7vGZRfxhVIKzKv6dngL6+7UPWcvOpG
-	 hTUIpBdl9a9zNfOhUNE7/oP6DcH2Ej12ml4K1akQFcJjxG9BwzvH0EHFDQlyraVu0DSIC
-	 C2gV5/fp8lUB7P07LwYINHy1yvwJcHJw2dWVdBrR/Atvlm5iz5C3qEs79rvhr3Ow1dA==
+	bh=RJDNton1RWYQNO3tnBsWNFqndf6rIIRlpoL5BpqXAxo=;
+	b=zuLvbHJnnWlQKxczRGJDBNOEypJTSUK4EGSi/64L4tUlZWXpYmcuFvXNa/ZkeBNOL5BR
+	 IeUPy70u9xGBZO7u5eibqDAVqD5T+ATXVdtmUpb7bp9tSWnWHMh9+iF7CkSY1eA8UkApb
+	 sVD0G/36jpsKtUZ9HcDA/cA/33/FueQigQ88yl/jJFyBaF2tmq01CcP3/NAEta2wJGIGY
+	 8vEiAbs9nwg9kcA5md14rbuEcd9Dmtitf9Uoosau2ugJuGLfq58uvO9exPHeVXGixUqh8
+	 o+AmDftbREUOWOkFqflTjtWmktiHiuZqi+rwRSKLRzyWEvImlqwh2Jj51EQxCH9R2AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mGl/F8oY";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wVt/sfV+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62596606D81B;
-	Wed,  4 Nov 2026 22:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29672606A848;
+	Wed,  4 Nov 2026 22:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGl/F8oY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702AA1F00A16;
-	Wed,  4 Nov 2026 22:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVt/sfV+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C4E1F00919;
+	Wed,  4 Nov 2026 22:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830900;
-	bh=350+S1fnDJetBn1sPDFyDdacBwqmK7KHFtAnxyLnG68=;
+	s=korg; t=1793830896;
+	bh=RJDNton1RWYQNO3tnBsWNFqndf6rIIRlpoL5BpqXAxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mGl/F8oY0I3Y0zsREsq3sYYaiOO6LNu9x44nGqAgkFsKqdiDA/5HN8NjXJZpx5mY+
-	 lzinFtkIlP0shnNNeVUJWGNilem32nWKLPiA/nHST68v9+I1e3HvxBw+ckFFRsC2Fa
-	 uq0uFr5ZnRE0z4JFssuuoF2NcG+W9yCr3+8007Ng=
+	b=wVt/sfV+xqJohH5dDO1egB68foP1rrzEdDZb/04+m5bB5Z+JXjuvgeBN4WtK8w3Vu
+	 QUuevWARA/IG0FS4ICVQkaz346n1F0Iy2QU+eP0jkj0H5YKF2rOIKs7so46xPSp584
+	 e4SDfn4BAv+iMET+NUrx49OGO02/MC8zSd59DeRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0391/1005] PCI: Avoid saving config space state if inaccessible
-Date: Wed,  4 Nov 2026 16:02:04 -0500
-Message-ID: <20261104211055.032763039@linuxfoundation.org>
+Subject: [PATCH 6.18 0380/1005] selftests: net: reuseport_bpf_numa: consider cpuless numa node
+Date: Wed,  4 Nov 2026 16:01:53 -0500
+Message-ID: <20261104211054.741892208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,74 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Feng Tang <feng.tang@linux.alibaba.com>
 
-[ Upstream commit e18d1abc3bff0a24a5299f3c150ab9546e9439aa ]
+[ Upstream commit 88b8d85e889e2fe1cce3e66e50c3029dda94842a ]
 
-The current reset process saves the device's config space state before
-reset and restores it afterward. However errors may occur unexpectedly and
-it may then be impossible to save config space because the device may be
-inaccessible (e.g. DPC). This results in saving invalid values that get
-written back to the device during state restoration.
+reuseport_bpf_numa case failed when testing on a platform with CXL
+memory:
 
-With a reset we want to recover/restore the device into a functional state.
-So avoid saving the state of the config space when the device config space
-is inaccessible.
+    #./reuseport_bpf_numa
+    ---- IPv4 UDP ----
+    send node 0, receive socket 0
+    ./reuseport_bpf_numa: failed to pin to node: Invalid argument
 
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-[bhelgaas: comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260805165518.794-4-alifm@linux.ibm.com
+The root cause is that the platform has 2 numa nodes: node 0 has
+both cpu and memory, while node 1 is a CXL node which only has
+memory, and caused numa_run_on_node() to fail.
+
+Add sanity check to skip cpuless numa node for the numa binding test.
+
+Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260807002436.43991-1-feng.tang@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ .../selftests/net/reuseport_bpf_numa.c        | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 78d4411e3255b..bab3213bafbda 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -725,6 +725,28 @@ u16 pci_find_dvsec_capability(struct pci_dev *dev, u16 vendor, u16 dvsec)
+diff --git a/tools/testing/selftests/net/reuseport_bpf_numa.c b/tools/testing/selftests/net/reuseport_bpf_numa.c
+index c9ba36aa688e2..b04b511809ad2 100644
+--- a/tools/testing/selftests/net/reuseport_bpf_numa.c
++++ b/tools/testing/selftests/net/reuseport_bpf_numa.c
+@@ -104,6 +104,26 @@ static void attach_bpf(int fd)
+ 	close(bpf_fd);
  }
- EXPORT_SYMBOL_GPL(pci_find_dvsec_capability);
  
-+static bool pci_dev_config_accessible(struct pci_dev *dev, char *msg)
++/*
++ * Return true if it is a cpuless node. Return false if it isn't or any
++ * error (very unlikely) happens during the libnuma calls.
++ */
++static bool is_cpuless_node(int node_id)
 +{
-+	u32 val;
++	struct bitmask *cpumask;
++	bool ret = false;
 +
-+	/*
-+	 * If a device's config space is inaccessible, reads typically
-+	 * return ~0.  Since Device and Vendor ID are always ~0 for VFs,
-+	 * check the Command and Status registers instead.
-+	 *
-+	 * N.B. This is racy because the device may become inaccessible
-+	 * before the next access.
-+	 */
-+	pci_read_config_dword(dev, PCI_COMMAND, &val);
-+	if (PCI_POSSIBLE_ERROR(val)) {
-+		pci_warn(dev, "Device config space inaccessible; unable to %s\n",
-+				msg);
-+		return false;
-+	}
++	cpumask = numa_allocate_cpumask();
++	if (!cpumask)
++		return ret;
 +
-+	return true;
++	if (!numa_node_to_cpus(node_id, cpumask) && !numa_bitmask_weight(cpumask))
++		ret = true;
++
++	numa_bitmask_free(cpumask);
++	return ret;
 +}
 +
- /**
-  * pci_find_parent_resource - return resource region of parent bus of given
-  *			      region
-@@ -5016,6 +5038,9 @@ static void pci_dev_save_and_disable(struct pci_dev *dev)
- 	 */
- 	pci_set_power_state(dev, PCI_D0);
- 
-+	if (!pci_dev_config_accessible(dev, "save state"))
-+		return;
-+
- 	pci_save_state(dev);
- 	/*
- 	 * Disable the device by clearing the Command register, except for
+ static void send_from_node(int node_id, int family, int proto)
+ {
+ 	struct sockaddr_storage saddr, daddr;
+@@ -213,6 +233,8 @@ static void test(int *rcv_fd, int len, int family, int proto)
+ 	for (node = 0; node < len; ++node) {
+ 		if (!numa_bitmask_isbitset(numa_nodes_ptr, node))
+ 			continue;
++		if (is_cpuless_node(node))
++			continue;
+ 		send_from_node(node, family, proto);
+ 		receive_on_node(rcv_fd, len, epfd, node, proto);
+ 	}
+@@ -221,6 +243,8 @@ static void test(int *rcv_fd, int len, int family, int proto)
+ 	for (node = len - 1; node >= 0; --node) {
+ 		if (!numa_bitmask_isbitset(numa_nodes_ptr, node))
+ 			continue;
++		if (is_cpuless_node(node))
++			continue;
+ 		send_from_node(node, family, proto);
+ 		receive_on_node(rcv_fd, len, epfd, node, proto);
+ 	}
 -- 
 2.53.0
 
