@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829668;
-	b=dkLBAMCZIQQ14HmlSUKdoDsAh/K0zzFYR0uhgYykIcctgdAw+HEtEw5SE7MobbL62eTh
-	 z6uCxVKckoJXbz2Na1UexovzViMIp+zkEH33Dsmra3zdL8T1NZOYUviN09qDVZEf2V6w/
-	 OiaHgi4LcDp2YJELIVwwpdM765qvkKjXovyFG4nVu+3ApwWZ1cJKpzrM0VgmurkUr55R/
-	 T5xaXPtJE/cl2f2z2pe22K0PVillrxxXfobEDXGFOhFsuRVoUwyKuDz+G+XPJpmFKgDQ/
-	 bPZb4mBykAnv5JOs3BoOt8KZNlL0Uef4CpqVk9OC9c4dlbfTrhKccdsfm+wWYvQJbEg==
+	t=1793829670;
+	b=qLzHijjUSRT3J24Jcn6dlGraxxYazeeselcHdxdG3jKwsDgyLE50j+995gcDiKMkD/c/
+	 /fg4X4xkEQUYVvOQmpFcSzT/FkWD0yVD/5J06smUBvm8ZuoDNuYx9SAiyXHT/HMM9ztVv
+	 ZDTr9for9HmEV1HyjEDjt6mDcS0XAz3r5rz8Zh4esxogkOXqI3pHwmyI1Hr4LjB4BaMON
+	 RKkrxCwgTh334supZtUZsKcAmNQ1vlsbUrgpxlNFJyBsWvBIyoVGEfpZuf+XHWfBvTgA0
+	 hUpeKXVgF/3tO6YcOKm81E4HHIibI/xymhs+Qlgpr7qMZ0CebSBLDVhCWIdnLsokY4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=udGTOhhkqG7HscxyiXq9qpBJLUsRQFSPccfrZOcm7kg=;
-	b=qvBxK+lsWJgc404rnm+fofEPWXpfyNuZDcczAV2aBmYJZjgA2MPzpQYF4hx/hO65wHz/
-	 zgGXYP1fMWcYe7joBA2cu+NT109nFXSDkaRkKnmsJxvhlyk8ju8iFM6BGaXsn5J+4+9zp
-	 AJgJQU7A8+QSPfbOSU2CyxfUkFe6YJYo8vRzws/XG34bCEw6ErNzgslDUhCgixJr+4id6
-	 Evkrw9kaJ1rWJloew9GM3XBPZUST2JIbZly3vtIYX5TysEmOcNGRD4a0uoRV4oo3jjGwg
-	 4RbGH30YlJwMhwh5z8uGPW8Cx4gALoBnSJ3QWK9hEoirgOnxbxAJXRMVrhnwNlyEqeQ==
+	bh=p/Alny20gNEUQPSR9DPRYIbo0bDlR/8LdNYDWub1Wto=;
+	b=bxBLKGo8gdDqXgLetWVfmDMG3DrdyGOXoAUrnp/5VXBbZziAdCn2vAEefa5qxthki+It
+	 FvT5ZnTDfTJ0asdtvk+udiASe0j5qAcXhkg90g2M0sEWAbR4yjkUN5JuCzmsxaW/rObeW
+	 iJkzEEZ32wcm8QrpE1mv4OpTPITAI4g0xGTzrbpjS70JYQiQgZYjm9jBDs45rzq7kkZDB
+	 GZvVx4zafjg2pDxgg4IGvgAKQKO9RBR9MQIp3VR3JnZLPTIW2/p2gV259B7h6FSk8521J
+	 tbKFF49BGU0oqm7KrzWJlCh/S+LAjJXiC7C63qOTuVBpz4tPq8o2TMnoeZDkQZR/FIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2gMW8e7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGxefkja;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55349606BA3F;
-	Wed,  4 Nov 2026 22:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF56A606C583;
+	Wed,  4 Nov 2026 22:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2gMW8e7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D201F000C1;
-	Wed,  4 Nov 2026 22:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZGxefkja
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAB31F000C1;
+	Wed,  4 Nov 2026 22:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829668;
-	bh=udGTOhhkqG7HscxyiXq9qpBJLUsRQFSPccfrZOcm7kg=;
+	s=korg; t=1793829669;
+	bh=p/Alny20gNEUQPSR9DPRYIbo0bDlR/8LdNYDWub1Wto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X2gMW8e767BL/gBUwAiQJV/3PLfAl3t8rmZD2XJTKn5miRMUNsZtpr46a/+eOHs/8
-	 ddZdT99qtOl+q1eMeMqK0gCgw/AnjE/pqNHZTCK0D03Q0xWfoaHf2IBtLC8oSfiGPh
-	 Be3kadKpm/AJWqJSpOIhnTEgfF5ZCudGyDhqgd5o=
+	b=ZGxefkja58VazhxpRKwILBZP4BDu8IBE/dNFOirVWK/GoNuUpP0fQLtnFixDJREjK
+	 D3F9LP/SZdjmLHbK69978HvoWMqtWYn3uImQkZk7iBioRThUYi4shWSl04z93jh2HT
+	 xWcSy/w+smTdEkQpdafALIQNUv/wJvZEWKBpjm1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	David Strahan <david.strahan@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0269/1005] i2c: qup: Propagate clock enable failures
-Date: Wed,  4 Nov 2026 16:00:02 -0500
-Message-ID: <20261104211051.411097006@linuxfoundation.org>
+Subject: [PATCH 6.18 0270/1005] scsi: smartpqi: Add new PCI device-ids
+Date: Wed,  4 Nov 2026 16:00:03 -0500
+Message-ID: <20261104211051.440853071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,92 +69,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: David Strahan <David.Strahan@microchip.com>
 
-[ Upstream commit a477626332800942f463d76aa48db0c47f1dfd18 ]
+[ Upstream commit 1a220e6e87a31c2572cd07ff47023e5cd92ac80f ]
 
-The QUP I2C driver treats the core and iface clocks as required
-resources, but qup_i2c_enable_clocks() ignores clk_prepare_enable()
-failures.  Probe can then continue to register the I2C adapter, and
-runtime/system resume can return success, even when a required clock
-transition failed.
+All PCI ID entries in Hex.
 
-Make the helper return an error, unwind a partially enabled clock, and
-propagate failures from probe and resume paths.
+Add PCI IDs for Hurray Data controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 207d / 4246
+                                            9005 / 028f / 207d / 4256
+                                            9005 / 028f / 207d / 4356
+                                            9005 / 028f / 207d / 4940
+                                            9005 / 028f / 207d / 4a46
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260624055237.29977-1-pengpeng@iscas.ac.cn
+Add PCI IDs for ZTE controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 1cf2 / 5451
+                                            9005 / 028f / 1cf2 / 5452
+                                            9005 / 028f / 1cf2 / 5453
+
+Add PCI ID for Ramaxel controller:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 1f3f / 0670
+
+Signed-off-by: David Strahan <david.strahan@microchip.com>
+Reviewed-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/linux-scsi/20260722220401.6357-1-david.strahan@microchip.com/
+Link: https://patch.msgid.link/20260722220401.6357-4-david.strahan@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qup.c | 31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 36 +++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index a0e076fc5f363..ee7915ee2ba2f 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -1657,10 +1657,21 @@ static const struct i2c_adapter_quirks qup_i2c_quirks_v2 = {
- 	.flags = I2C_AQ_NO_ZERO_LEN,
- };
- 
--static void qup_i2c_enable_clocks(struct qup_i2c_dev *qup)
-+static int qup_i2c_enable_clocks(struct qup_i2c_dev *qup)
- {
--	clk_prepare_enable(qup->clk);
--	clk_prepare_enable(qup->pclk);
-+	int ret;
-+
-+	ret = clk_prepare_enable(qup->clk);
-+	if (ret)
-+		return ret;
-+
-+	ret = clk_prepare_enable(qup->pclk);
-+	if (ret) {
-+		clk_disable_unprepare(qup->clk);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static void qup_i2c_disable_clocks(struct qup_i2c_dev *qup)
-@@ -1823,7 +1834,9 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 			ret = PTR_ERR(qup->pclk);
- 			goto fail_dma;
- 		}
--		qup_i2c_enable_clocks(qup);
-+		ret = qup_i2c_enable_clocks(qup);
-+		if (ret)
-+			goto fail_dma;
- 		src_clk_freq = clk_get_rate(qup->clk);
- 	}
- 	qup->src_clk_freq = src_clk_freq;
-@@ -1975,8 +1988,7 @@ static int qup_i2c_pm_resume_runtime(struct device *device)
- 	struct qup_i2c_dev *qup = dev_get_drvdata(device);
- 
- 	dev_dbg(device, "pm_runtime: resuming...\n");
--	qup_i2c_enable_clocks(qup);
--	return 0;
-+	return qup_i2c_enable_clocks(qup);
- }
- 
- static int qup_i2c_suspend(struct device *device)
-@@ -1988,7 +2000,12 @@ static int qup_i2c_suspend(struct device *device)
- 
- static int qup_i2c_resume(struct device *device)
- {
--	qup_i2c_pm_resume_runtime(device);
-+	int ret;
-+
-+	ret = qup_i2c_pm_resume_runtime(device);
-+	if (ret)
-+		return ret;
-+
- 	pm_request_autosuspend(device);
- 	return 0;
- }
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 88cffb1fb59ce..3f5fabf723c3e 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -10152,10 +10152,30 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x207d, 0x4240)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4246)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4256)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4356)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x207d, 0x4840)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4940)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4a46)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_ADVANTECH, 0x8312)
+@@ -10340,6 +10360,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1cf2, 0x544f)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5451)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5452)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5453)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1cf2, 0x54da)
+@@ -10380,6 +10412,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1f3f, 0x0610)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1f3f, 0x0670)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_LENOVO, 0x0220)
 -- 
 2.53.0
 
