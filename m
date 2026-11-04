@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829575;
-	b=q5dmGpQ89cKpF5qZcOfq/nF0XTGgE+zkg80yep8fK/id5A38L8QTXWr8EgAh3yg5r1uW
-	 stTFBJmN3firDBj2fPPzgqbg+lGjhFKPoL54LZyueeV9hdceb0Pwrleo2onrnICSR97Mx
-	 c65vTTYCUeigKkpD+UVEClfr0JLHQGXsdNlk3h1loWSMjo2cqikJ6ju/KeupnnXvwI0or
-	 SE+eK49LFzr8SBBL9hL8ViuDsMqfOCxszpmKakypAqQXXxealFIcGT9FzfpNkxZcOZwCF
-	 Erppb1ga+j+W9X71Nl6V51oPiYfAwei9dScSkiO13fKx5AWG2frdhIAknGPjzX2XsyQ==
+	t=1793829577;
+	b=q1gfS3c4eTHncpRGy5eASnhQ61DvfkmV4MAxcTuHcK99F0JdJ8245ZtTXZeQwkABBhjm
+	 pc7XYpcyMPft+CG8e5+RJIlzgkic/Pg+J4vPmlPVCPynaFZrLXnaJpoQ7cALuPFsUGVMy
+	 7EN8vdRrZsBpdl/uZazDZEf02Wxlket3b3MJxOOyDxWdEAv9f/pARWQujTQgymuGxvgEq
+	 v9WDszUWyMX9TicGRMloxpmlrWGyJAJU91dyKnKvqqsATxL3g8N0ogEJ6ekNKBzBFqFJX
+	 UbtYZmLqjwbNfzNYkS7xcAL6iRfJcwPjpieXsaTxAGBp1BN4Xwo2n7Z5tUt68FtAKXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wETTdhaRc2JqyP2ItumGgjIb+1SPUW27QuzLleA7XTo=;
-	b=nFPQpORk5EtbrMO6ytzspgmluhbiLEUQWhR0vo++vcUleLe15pO1XeiaOdAbkHNufXrR
-	 OFdQ1hJ75IUmX00t5A0RYBmU8y/gYSrqlqSeAOqxY3J1pie+r1wNwrFr7PbdrWq3d3EeS
-	 XGgMq5DbVY7zUtksoH3cQSXlk3t18elCd1RRS11FKdOoJme6iFqGaCFqUW8qasEny/XqL
-	 wQ41Zdq4ttBMgjtwhNgXq4on1rxEiq6xMrNMizsqDrhCVA1frX89XtdDdlXve1k1B2l57
-	 sYi7B2vsu21u7vWZHTpiUWZAaqtvcRfxxFAX+3LE8R4a2hi0danfstVmC2zkZKPqHig==
+	bh=E9g5Zznw6O4zic5OUOl2MjpRLZsKARvVqtDDPhsOqNk=;
+	b=p+VCVEWZ2jIUuB5tmPe6uGV7woD1Z+H+hu/twNJqxdLIn+iLK7Fbay8wVfmdonqT4yoL
+	 0EVxrrKjjgDBHkGEu5/JIYKFIG7wMhhbnvCGXx6TtfNnsqYEQNqEleultLRv/yvx6U1BA
+	 smRVZT371M3vo1nrT6GoRnS498b62oWwuMVuY1Wmwucb81ahs0HIiEhCYx61kMcqgjXBB
+	 jlQwXLXoc5/uVFuNF5RqW/CYtkhWfotmV739KLxjhDlhJx81ETpwlhCebSkmHh/7gqMKV
+	 2LEUYoicMzz1zqmynwrgdXDxYi0iuS+pvfv3/igaQQ2C23JRqTDKCDC50FvZq7mAwBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aEfCT/U+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dcNAXhBt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB9D606A33E;
-	Wed,  4 Nov 2026 21:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110BC606B396;
+	Wed,  4 Nov 2026 21:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aEfCT/U+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D261F00A02;
-	Wed,  4 Nov 2026 21:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dcNAXhBt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60B21F000C1;
+	Wed,  4 Nov 2026 21:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829575;
-	bh=wETTdhaRc2JqyP2ItumGgjIb+1SPUW27QuzLleA7XTo=;
+	s=korg; t=1793829576;
+	bh=E9g5Zznw6O4zic5OUOl2MjpRLZsKARvVqtDDPhsOqNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEfCT/U+MZxpXYTdH7dxa3qpqdgckSFUllK1rGgAPgbWoOszhQGHShaUYFBjDYi/L
-	 /lh2BuuYqId/HRcIkIK8QaOVEV5yRwmFZyHxGag1/CPhdz9Ari6bv3VpyaoRzH4VXw
-	 VXl6NsbOrp4i+FC1I+nHJP8KFoct0gmcjflLUnSo=
+	b=dcNAXhBtEmsQmcP8VjBvLbkqk+R+7gf/DElCmeOzlyudY7Tmd6oGbnlt/9wMIZqFH
+	 g6FhMX1dG1ociOBvPlNPSa/KU/cm4z7IR7vgDzsNdA634C8eDxtfajgOJ0BR6IQCeU
+	 OBJE9KilH/PZfLHPtO1j3dDFu/W253aAT0pgms4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Mohan <linmhwork@outlook.com>,
-	Ali Alaei <ali.alaei.tabatabaei@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0211/1005] PCI: vmd: Handle BUS_RESTRICT_CFG value 3 for Arrow Lake-HX
-Date: Wed,  4 Nov 2026 15:59:04 -0500
-Message-ID: <20261104211049.722266497@linuxfoundation.org>
+Subject: [PATCH 6.18 0212/1005] ext4: set EXT4_STATE_NO_EXPAND in ext4_evict_inode
+Date: Wed,  4 Nov 2026 15:59:05 -0500
+Message-ID: <20261104211049.750897084@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,63 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Alaei <ali.alaei.tabatabaei@gmail.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit 72b32eccbcd591b9606edacf3bd7c455176d7660 ]
+[ Upstream commit 2c0e4fb511f97467dafc91b6afb3414100289081 ]
 
-On Intel Arrow Lake-HX systems (e.g. Core Ultra 9 275HX on Acer Predator
-PH16-73), the VMD controller reports BUS_RESTRICT_CFG = 3 in the VMCONFIG
-register. The existing switch statement only handled values 0, 1, and 2,
-causing vmd_get_bus_number_start() to return -ENODEV and aborting the
-entire VMD probe. This leaves NVMe drives behind the VMD controller
-invisible to the kernel.
+An inode being evicted will never need its extra isize expanded.  Set
+EXT4_STATE_NO_EXPAND before ext4_mark_inode_dirty() in ext4_evict_inode()
+to make this explicit and prevent any unnecessary work in
+ext4_try_to_expand_extra_isize().
 
-Hardware registers (VMCAP/VMCONFIG at offsets 0x40/0x44):
+This also provides defense-in-depth for the s_writepages_rwsem deadlock
+during mount-time orphan cleanup, ensuring the expand path is blocked
+for inodes under eviction regardless of how they are reached.
 
-  VMD 0000:00:0e.0 (8086:ad0b): VMCAP=0x000f, VMCONFIG=0x03b8
-  BUS_RESTRICT_CFG(0x03b8) = (0x03b8 >> 8) & 0x3 = 3
-
-Add cfg=3 as a fallthrough to cfg=2, setting busn_start=224, which is
-the correct bus number base for this hardware.
-
-Also add a PCI_POSSIBLE_ERROR() guard after reading VMCONFIG: a failed
-config space read returns 0xFFFF, and BUS_RESTRICT_CFG(0xFFFF) = 3,
-so without this guard a removed or errored device would falsely match
-the new case 3 instead of being caught as an error.
-
-Reported-by: Lin Mohan <linmhwork@outlook.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221137 # Arrow-Lake-S
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221136 # Arrow-Lake-S
-Signed-off-by: Ali Alaei <ali.alaei.tabatabaei@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260628143450.92492-1-ali.alaei.tabatabaei@gmail.com
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260623061903.2148767-2-yun.zhou@windriver.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index b4b62b9ccc45a..5d3e6cc7e4feb 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -656,6 +656,8 @@ static int vmd_get_bus_number_start(struct vmd_dev *vmd)
- 	pci_read_config_word(dev, PCI_REG_VMCAP, &reg);
- 	if (BUS_RESTRICT_CAP(reg)) {
- 		pci_read_config_word(dev, PCI_REG_VMCONFIG, &reg);
-+		if (PCI_POSSIBLE_ERROR(reg))
-+			return -ENODEV;
- 
- 		switch (BUS_RESTRICT_CFG(reg)) {
- 		case 0:
-@@ -664,6 +666,7 @@ static int vmd_get_bus_number_start(struct vmd_dev *vmd)
- 		case 1:
- 			vmd->busn_start = 128;
- 			break;
-+		case 3:
- 		case 2:
- 			vmd->busn_start = 224;
- 			break;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index bbc437be5e63b..9a5c08650bd1e 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -261,6 +261,7 @@ void ext4_evict_inode(struct inode *inode)
+ 	if (ext4_inode_is_fast_symlink(inode))
+ 		memset(EXT4_I(inode)->i_data, 0, sizeof(EXT4_I(inode)->i_data));
+ 	inode->i_size = 0;
++	ext4_set_inode_state(inode, EXT4_STATE_NO_EXPAND);
+ 	err = ext4_mark_inode_dirty(handle, inode);
+ 	if (err) {
+ 		ext4_warning(inode->i_sb,
 -- 
 2.53.0
 
