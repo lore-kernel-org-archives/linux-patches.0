@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826967;
-	b=o8kfI0dMhcYmp0UYWwNB8QajOq2SXriP0gWX2WOPDd8nX94FE3CFqQoB+Jz2nHFX7g/T
-	 3ngytuxZUh1xfA3bxlFnPXPIDMv06iEf8ZvDZOTMQsrzraIMiEFjIbKlWDvPK6eMovNwN
-	 P7ZGA8GeTyIQMN5NLQfHHFWTgxjp5TuEnxcn4wf1oWGXE5QUzeYZSKmJK9UJNnvs4P99R
-	 Kz2fC6Fijg7f2KFKY0GDdcb6LKfiCUqm4q7JSMxnhjx9pVlrznStqBI6c4asnJQRws3OV
-	 VeuLGsUu4Qwrp+mUAs6jATXM+5kutgwOJPFKbxlXmAUKGX2+jEOBHOqx5HToIVX+8jA==
+	t=1793826969;
+	b=vQeAqvHv7WcAlaGZJRN4xplot3EQ+mP/+q4SW/QOsuGVZF/KiZA3Gh2yNwxY9a6qLKkx
+	 igOrPzzKwNfAOMsAgRH6gsrKWBbGd7AfHDHicxucw16roFn7oBwFiLdjErmddIdk7dXPo
+	 fy/LCht3M2FYkRXlhtD9CZQ3h/Xm8QZAAKoGsA5kXSjCWus0qNPq0P/yHNkWcDqtW7x2K
+	 om3qsvn+9TBCo5Aw1NXNV2S9rYLl0/r3WxK++FQnNY3oiNU5xLM7NzGODYcPbBLfBDI3V
+	 AAgM6faWh1eSdSDo78FMEDEL8E42m4qtuONIqfO3t6TNtG0zBnae6SWD8eECEQuxvPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826969;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RkaUJLucWOQzYxNEUwFeMsDORIegiA+pYfmE9t/ec50=;
-	b=UaTKD+D9AW+R9iWnylQWUDpE/jhZaYE84fJGs8xER36RYJScIvTsMdNF+sxMKkOUCjv7
-	 7NV0NTzSu/Wg/KD0ZeqAhR0D+bt+JyWCAlIOLpRkecHkca6c07QWVlwUIZoyt0jeoqedI
-	 6SKhFNxv5PHGEoa7Z/+raQ7m5P/6iwVA/WOmNzRlTCMntXzc8bXHcZ1XuNH57UarKEDHy
-	 X7+2xgNWEJ/l5GECdxiJ8QiLTgVCFNNVpnQ7DVCNlw2k0WRzbBtIwTpM1lQd4OXfAJ0t4
-	 mu8XFtad2T1QalnAia/iGHGHr522l6KRFpgAYjNwCi89XC8byA26tiovh3xhbOc7yew==
+	bh=AnjKc+4Sd5Fshucc4w3vmX1yHDrLUtbg4Yl6qAjT6bo=;
+	b=MwL3W6eyBSHcC8L7t0/TXFaQiR6/xhqSqYdYsMDC+41IDvI+yX+/P7uIyonNdRxMa1be
+	 6X7+cH6PyoJo/zoIDSFPWKXh3lxIwDnSt8yntDS0g5TxMM9MEXPc/3VLRTLCyNFY56Hsa
+	 XLbajK5A4b+BItxzlcO5DDQb+4tNCiXHSm0m2wcCgmxcRW4jNVgz2DNFsEe7CXUD3I02h
+	 DjbFqX+LDG1TNYr5IuhIHKZv6l7wT2QdYlF/xIdNQfpf8+JRcmx5GNiJdJvZUKOBLyytz
+	 2DayzK9Z6WD2NCY++BFLH/7WoYYxIyAucqevIJNmv8DhVk/D+5JK9v+N+7nVfHcvFhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPkUlzWE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R1h2dF/q";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C73C60BB5B8;
-	Wed,  4 Nov 2026 21:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEE360BC541;
+	Wed,  4 Nov 2026 21:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPkUlzWE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AB51F00A21;
-	Wed,  4 Nov 2026 21:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1h2dF/q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786E11F00A18;
+	Wed,  4 Nov 2026 21:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826967;
-	bh=RkaUJLucWOQzYxNEUwFeMsDORIegiA+pYfmE9t/ec50=;
+	s=korg; t=1793826968;
+	bh=AnjKc+4Sd5Fshucc4w3vmX1yHDrLUtbg4Yl6qAjT6bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mPkUlzWEyqGr6cQTsRohfH667HcQmwKTkilQMBOIpl/Dbet3BIxOkc7S8FvTi0pZ0
-	 tXN2Yq2U1xPry3NN4p20TG8/5gELL/NFj6glio+RXxEpGR64OJiBuX/mtfIRtv+ZWc
-	 jY2HaRwoPynlNG7uQa5OY/sImJhIk3XoqtygC9/c=
+	b=R1h2dF/q2T8NAWKlcCi/mh7nPG77lNqT+Jqqdkbnaiqlh8jekFmCFaFu9q4KZonu0
+	 Vv6il9mmMdP3r193QoVkgL6SCmwJewtpRNPCOM+GVYV5+EWXq4Wnr2QslcLdhjfgAg
+	 r/3LTvRKo/QrBEs7xz23aC4eP6ivZUkqlDER4XtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Abdifatah Suruur <suruurism@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 114/547] ksmbd: avoid restoring only in-memory EOF after allocation change
-Date: Wed,  4 Nov 2026 16:04:58 -0500
-Message-ID: <20261104211041.443070481@linuxfoundation.org>
+Subject: [PATCH 7.3 115/547] ksmbd: defer connection scavenging while session locks are busy
+Date: Wed,  4 Nov 2026 16:04:59 -0500
+Message-ID: <20261104211041.472215936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,63 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 9455e920aebe41217cabff3f81e90da4c407fdb6 upstream.
+commit b4bae7af1154089be87c7475218264fcbfd16d10 upstream.
 
-When SetAllocation requests a size below the allocated block count but
-above EOF, ksmbd truncates the file to that size and restores only the
-in-memory i_size. The larger EOF remains on disk and reappears after a
-reboot. A 3-byte file preallocated to 64 KiB can acquire a 4 KiB EOF
-after reducing its allocation to 4 KiB. Extending EOF this way is not
-a reliable way to reclaim the preallocation beyond the old EOF either.
+The expiration worker holds conn_list_lock for reading while checking
+for authenticated sessions. Without this change, the check can wait for
+conn->session_lock or sessions_table_lock.
 
-Only use this truncate path when the requested allocation is at or below
-the observed EOF. A truncate to the existing EOF still lets filesystems
-release preallocated blocks beyond EOF. Remove the in-memory-only i_size
-restoration. The size check still precedes vfs_truncate() taking the
-inode lock, so a concurrent shrink can make the truncate extend EOF;
-that race also existed in the original path.
+In destroy_previous_session(), the status updates after
+ksmbd_conn_wait_idle_sess() run with both session locks held for
+writing. Both the KSMBD_SESS_GOOD error path and the
+KSMBD_SESS_NEED_SETUP success path call ksmbd_all_conn_set_status(),
+which takes conn_list_lock for reading.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+A writer queued on conn_list_lock can block these new read acquisitions.
+The worker then waits for a session lock held by
+destroy_previous_session(), which waits behind the writer. The writer
+cannot proceed until the worker releases conn_list_lock.
+
+Try both session locks instead of waiting in the scavenging check. Keep
+the connection when either lock is busy and let the periodic worker
+retry later.
+
+Fixes: d7fd1f98607f ("ksmbd: follow SMB2 session expiration semantics")
 Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Reported-by: Abdifatah Suruur <suruurism@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ fs/smb/server/mgmt/user_session.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8241,24 +8241,17 @@ static int set_file_allocation_info(stru
- 			pr_err("vfs_fallocate is failed : %d\n", rc);
- 			return rc;
- 		}
--	} else if (alloc_blks < stat.blocks) {
--		loff_t size;
--
-+	} else if (alloc_blks < stat.blocks &&
-+		   alloc_blks * 512 <= i_size_read(inode)) {
- 		/*
--		 * Allocation size could be smaller than original one
--		 * which means allocated blocks in file should be
--		 * deallocated. use truncate to cut out it, but inode
--		 * size is also updated with truncate offset.
--		 * inode size is retained by backup inode size.
-+		 * Truncate at or below EOF to discard excess allocation.
-+		 * Truncating above EOF would extend the file on disk.
- 		 */
--		size = i_size_read(inode);
- 		rc = ksmbd_vfs_truncate(work, fp, alloc_blks * 512);
- 		if (rc) {
- 			pr_err("truncate failed!, err %d\n", rc);
- 			return rc;
- 		}
--		if (size < alloc_blks * 512)
--			i_size_write(inode, size);
- 	}
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -532,7 +532,12 @@ bool ksmbd_conn_has_valid_or_expired_ses
+ 	int state, bkt;
+ 	bool found = false;
  
- 	fp->allocation_size = le64_to_cpu(file_alloc_info->AllocationSize);
+-	down_read(&conn->session_lock);
++	/*
++	 * The expiration worker holds conn_list_lock, which session teardown
++	 * takes after the session locks. Defer scavenging if either is busy.
++	 */
++	if (!down_read_trylock(&conn->session_lock))
++		return true;
+ 	xa_for_each(&conn->sessions, id, sess) {
+ 		state = READ_ONCE(sess->state);
+ 		if (state == SMB2_SESSION_VALID ||
+@@ -546,7 +551,8 @@ bool ksmbd_conn_has_valid_or_expired_ses
+ 		return true;
+ 
+ 	/* A session bound through SMB3 multichannel is not in conn->sessions. */
+-	down_read(&sessions_table_lock);
++	if (!down_read_trylock(&sessions_table_lock))
++		return true;
+ 	hash_for_each(sessions_table, bkt, sess, hlist) {
+ 		state = READ_ONCE(sess->state);
+ 		if (state != SMB2_SESSION_VALID &&
 
 
