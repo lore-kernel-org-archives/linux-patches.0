@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831947;
-	b=YhCs0Z/ZWD6P2u8SPnc/3NdMwdEgm3v38zR0Sl0mIe9692plBJeekkjkvcJH0qlIR+fH
-	 zo74sJEhURUVaUH4OHSAOVQJvl0exvXPDGA3yJAyG53jc0cz6yxhhzdOi5A+NFTIUwvD+
-	 bCrJvhSz/j0bVxb1GMGFd/a8Zx2m6pKmnxFP66QUcDbKH/rnuoMl0XdMUlgjrP58+6RdR
-	 3MweL3TMw45tvqAOfcB2Cvh2r9s1Qkw/eM13kLaJF9bPqTsMNyYIaDlpiBZH6DxexMIRW
-	 jgiRdzjTDIMf/g8YNNNQJjmxgxaevfl+eesvxpIfYoeRSaxDLPupBNgGuGIFh+yV2+g==
+	t=1793831949;
+	b=Tpc4+ftp9/scBlmYyhl2gWuaWraSm5aCZtHSeuUMAcTheLF7dj1Kj6dwF6K4131OMSU4
+	 IctUiGRhp+SyI1+7VtyMwVDtXTll3OwLmVFBDCRyHjgIGo//q1jSiAz+SlTZOAzdQ1qwk
+	 QS4po0mnwHz9vvcspAZrjc0mfCk5ma57+0nujR9dP3dnMHZmIwL7oXx2F2otnlo/vuyl9
+	 R4H0kUGG49pYkYvOKIArj5RorbIy+iGK1Xd/Bs50Erz0ElCIv72X8Enfa9aBGFXrGoz6K
+	 4n2ChrCih6gPXMY2MTEL9sjq3GIyYXIQiVDtcKt5f/Ow/A1ALGpFuX9rSONx6OkvGEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KfNKa79znQ4PymwOhmCfa4nIs0CYHTlrFcc/UixLxrY=;
-	b=ktPwBnsa2m83tL7UYPKtZHWkaQEm8jSn5yUseL5gQGDIDHxjN9QZRwHp9GT1m1i46aDj
-	 Rub9oxn/iaT68v88CvWFH84h4dlhf/0bjYWGr+aHfaNVOVNzTCOyCqGcHuFwJi11YmXi0
-	 DGS652RPWel6MRpFZ1lI/PUGaKPM0niI0ts2tiNEE1mcXforpkdUBOTo+ERotjvp7Vgfr
-	 caLB1XD+LqMPfk0835hAGWUM/uabfGT/6geldkHDQcg9VLibcvZreFVyMZGdC/VR/f4sL
-	 UTgC42NWQFxKItbtFStrHyUmS35DtX9Fzz51ytC0qrUTZhm6DBMDwY12W6FmEJCG5mw==
+	bh=MPRqr61wwNGLDRLfaxYp54Mhy+7GYD99ygKmoP5PFY4=;
+	b=3ttkCrX0buyVGDhlwaAugSaO7di/jQXdalUi1VzqpNIfQo2HULSQVxLSDmgiIcaDde8K
+	 EvLdMvcRGgWO/anrfP5/98zrTJoBJG6SDJ3yOf17na/NpGB6U38u+PeH6+/W6Sax9xdzo
+	 c+H6MNX9l67CmbrBrhOMNw5DoYsMIE90NUOLMH2m5VyJsBDiM3fQzFCzeheipgxOcXytS
+	 BwfukajQZWwMgxVRm2vmqAM7zD75YbW8VZTt7JZmE5j4Dkb6xaZRhj00KlNd/xxvK1jvv
+	 BxcfgeolnnECYnPBt2iBNKHb8HrWr+HohcBjtOjiSIBNSI9MPvldSPjBKTTTrOrpzAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2jeYu9Qa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k81aUZ2p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2B1606A85B;
-	Wed,  4 Nov 2026 22:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A536D606A870;
+	Wed,  4 Nov 2026 22:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2jeYu9Qa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FF31F00919;
-	Wed,  4 Nov 2026 22:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k81aUZ2p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA021F00A18;
+	Wed,  4 Nov 2026 22:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831946;
-	bh=KfNKa79znQ4PymwOhmCfa4nIs0CYHTlrFcc/UixLxrY=;
+	s=korg; t=1793831948;
+	bh=MPRqr61wwNGLDRLfaxYp54Mhy+7GYD99ygKmoP5PFY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2jeYu9QalZrQG/UXZA85F/WfQhZ7+FBoKI6fOzAsdh3s9XfpFQmpXXX+CWf9/y2bM
-	 13mWvEDnfJPPJTrCPizY6K4BNWacFBhC4Y6O+cDU/EH8wYDOPVd7NT/Kylsiq1YSV2
-	 Ap0Hn8Du6Iu1ZiWV2hSk2kU12dJmPuSstB/ZDrMc=
+	b=k81aUZ2peJr9c/0g+E3LfvbOxYM/LDST8liNxIXPe3IFJ3crkG7A+mTuGn0fuWJPy
+	 DFQst5PoWab3Ex2HRvME7XhC4nxXCD7ZFMtZAIsiJindDQPL5LmKBDejQXUyACBRlf
+	 uW0neNkjwcBVIMbgSVENcP2SS0xhLNk21Qxs8894=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Vincent Liu <vincent.liu@nutanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0983/1005] smb: client: fix early procfs exposure race
-Date: Wed,  4 Nov 2026 16:11:56 -0500
-Message-ID: <20261104211110.580124112@linuxfoundation.org>
+Subject: [PATCH 6.18 0984/1005] driver core: Check drivers_autoprobe for all added devices
+Date: Wed,  4 Nov 2026 16:11:57 -0500
+Message-ID: <20261104211110.606382408@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,128 +67,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Vincent Liu <vincent.liu@nutanix.com>
 
-[ Upstream commit 7b1afb631395c958993cda4631002258ef4151ea ]
+[ Upstream commit ea34511aaf755349999a1067b2984a541bee1492 ]
 
-Currently, init_cifs() calls cifs_proc_init() near the beginning of
-the function, before INIT_LIST_HEAD, leading to a momentarily
-uninitialized, but exposed, procfs. If a userspace process reads this
-empty procfs, iterating over a zeroed list_head leads to a NULL
-pointer dereference and a kernel oops/panic.
+When a device is hot-plugged, the drivers_autoprobe sysfs attribute is
+not checked (at least for PCI devices). This means that
+drivers_autoprobe is not working as intended, e.g. hot-plugged PCI
+devices will still be autoprobed and bound to drivers even with
+drivers_autoprobe disabled.
 
-For example, if a delay is added between cifs_proc_init() and
-INIT_LIST_HEAD, and a userspace process is polling
-/proc/fs/cifs/DebugData, the following oops occurs:
+The problem likely started when device_add() was removed from
+pci_bus_add_device() in commit 4f535093cf8f ("PCI: Put pci_dev in device
+tree as early as possible") which means that the check for
+drivers_autoprobe which used to happen in bus_probe_device() is no
+longer present (previously bus_add_device() calls bus_probe_device()).
+Conveniently, in commit 91703041697c ("PCI: Allow built-in drivers to
+use async initial probing") device_attach() was replaced with
+device_initial_probe() which faciliates this change to push the check
+for drivers_autoprobe into device_initial_probe().
 
-BUG: kernel NULL pointer dereference, address: 0000000000000608
-Oops: Oops: 0000 [#1] SMP PTI
-CPU: 0 UID: 0 PID: 3477 Comm: cat Not tainted
-7.3.0-02212-g4df4d2a577db-dirty #6 PREEMPT(lazy)
-RIP: 0010:cifs_debug_data_proc_show+0x103/0xd80 [cifs]
-Call Trace:
-<TASK>
- ? seq_read_iter+0x86/0x400
- ? seq_read_iter+0x86/0x400
- seq_read_iter+0x183/0x400
- proc_reg_read_iter+0x62/0x90
- copy_splice_read+0x215/0x310
- splice_file_to_pipe+0xec/0x1c0
- do_splice+0x4b8/0x780
- __se_sys_splice+0x18f/0x250
- do_syscall_64+0x109/0x330
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-</TASK>
+Make sure all devices check drivers_autoprobe by pushing the
+drivers_autoprobe check into device_initial_probe(). This will only
+affect devices on the PCI bus for now as device_initial_probe() is only
+called by pci_bus_add_device() and bus_probe_device(), but
+bus_probe_device() already checks for autoprobe, so callers of
+bus_probe_device() should not observe changes on autoprobing.
+Note also that pushing this check into device_initial_probe() rather
+than device_attach() makes it only affect automatic probing of
+drivers (e.g. when a device is hot-plugged), userspace can still choose
+to manually bind a driver by writing to drivers_probe sysfs attribute,
+even with autoprobe disabled.
 
-Fix this by moving cifs_proc_init() down in init_cifs(), ensuring it runs
-only after all internal lists, locks, counters, and workqueues are fully
-ready, but before registering the filesystem. Update the error cleanup
-ladder and exit_cifs() to maintain proper LIFO order.
+Any future callers of device_initial_probe() will respect the
+drivers_autoprobe sysfs attribute, which is the intended purpose of
+drivers_autoprobe.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Adjusted init_cifs() context because smb1_init_maperror() and smb2_init_maperror() are absent. ]
+Signed-off-by: Vincent Liu <vincent.liu@nutanix.com>
+Link: https://patch.msgid.link/20251022120740.2476482-1-vincent.liu@nutanix.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 187a62f99da2 ("driver core: take parent lock in async device attach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/base/bus.c |    3 +--
+ drivers/base/dd.c  |   10 +++++++++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -1972,7 +1972,6 @@ static int __init
- init_cifs(void)
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -573,8 +573,7 @@ static void __bus_probe_device(struct de
+ 	if (!sp)
+ 		return;
+ 
+-	if (sp->drivers_autoprobe)
+-		device_initial_probe(dev);
++	device_initial_probe(dev);
+ 
+ 	mutex_lock(&sp->mutex);
+ 	list_for_each_entry(sif, &sp->interfaces, node)
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1157,7 +1157,15 @@ EXPORT_SYMBOL_GPL(device_attach);
+ 
+ void device_initial_probe(struct device *dev)
  {
- 	int rc = 0;
--	cifs_proc_init();
- 	INIT_LIST_HEAD(&cifs_tcp_ses_list);
- /*
-  *  Initialize Global counters
-@@ -2021,10 +2020,8 @@ init_cifs(void)
- 	cifsiod_wq = alloc_workqueue("cifsiod",
- 				     WQ_FREEZABLE | WQ_MEM_RECLAIM | WQ_PERCPU,
- 				     0);
--	if (!cifsiod_wq) {
--		rc = -ENOMEM;
--		goto out_clean_proc;
--	}
-+	if (!cifsiod_wq)
-+		return -ENOMEM;
- 
- 	/*
- 	 * Consider in future setting limit!=0 maybe to min(num_of_cores - 1, 3)
-@@ -2115,19 +2112,22 @@ init_cifs(void)
- 	if (rc)
- 		goto out_cifs_swn_init;
- 
-+	cifs_proc_init();
+-	__device_attach(dev, true);
++	struct subsys_private *sp = bus_to_subsys(dev->bus);
 +
- 	rc = register_filesystem(&cifs_fs_type);
- 	if (rc)
--		goto out_init_cifs_idmap;
-+		goto out_clean_proc;
- 
- 	rc = register_filesystem(&smb3_fs_type);
- 	if (rc) {
- 		unregister_filesystem(&cifs_fs_type);
--		goto out_init_cifs_idmap;
-+		goto out_clean_proc;
- 	}
- 
- 	return 0;
- 
--out_init_cifs_idmap:
-+out_clean_proc:
-+	cifs_proc_clean();
- 	exit_cifs_idmap();
- out_cifs_swn_init:
- #ifdef CONFIG_CIFS_SWN_UPCALL
-@@ -2163,8 +2163,6 @@ out_destroy_decrypt_wq:
- 	destroy_workqueue(decrypt_wq);
- out_destroy_cifsiod_wq:
- 	destroy_workqueue(cifsiod_wq);
--out_clean_proc:
--	cifs_proc_clean();
- 	return rc;
++	if (!sp)
++		return;
++
++	if (sp->drivers_autoprobe)
++		__device_attach(dev, true);
++
++	subsys_put(sp);
  }
  
-@@ -2174,6 +2172,7 @@ exit_cifs(void)
- 	cifs_dbg(NOISY, "exit_smb3\n");
- 	unregister_filesystem(&cifs_fs_type);
- 	unregister_filesystem(&smb3_fs_type);
-+	cifs_proc_clean();
- 	cifs_release_automount_timer();
- 	exit_cifs_idmap();
- #ifdef CONFIG_CIFS_SWN_UPCALL
-@@ -2196,7 +2195,6 @@ exit_cifs(void)
- 	destroy_workqueue(serverclose_wq);
- 	destroy_workqueue(cfid_put_wq);
- 	destroy_workqueue(cifsiod_wq);
--	cifs_proc_clean();
- }
- 
- MODULE_AUTHOR("Steve French");
+ /*
 
 
