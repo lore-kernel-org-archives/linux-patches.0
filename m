@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829319;
-	b=TykhkNyttmKDwfxNMbYFb6NbzrDlfqs5IXnrUA9ZR7JmIUtgrJj3vWFSEjt8tdcmlQ+Z
-	 qgLrHxvim62RW4i6s3dKtr4Tjyl0JzfI/GtC0aqHY2Z/sb6pG72o7kAdmQA6uGuWcixb+
-	 ZjOou7CdaZX6kB9jMIs2wLwNixd3pdwj/Q/CrQyt7JaUxzq9GAgYEFcrSHd5zsaz3+Gt3
-	 mHZuYiRCvy6IlMUZ9kepfOFjPa7jd4ejslGI2fC/Hl72KLLhE/XqYhE3lb91ZsEiw6kEg
-	 unIWuvBpiUiD+bjGvvY1+YSDz7MN2Rf55qDJQlKTGLFZtowfv8pnbLIvfhkNcWSVsnA==
+	t=1793829320;
+	b=ItPyRpI8vq2hVR3p9rt8jqdLnS8dVy2+OG5OREp/aPJToI70IvYZkCz9qrNoZFoVDBgX
+	 gE3tw85C45ndA5ZC+n7qlYFS8oMBwK9TLfJBYdV9dWDWySr/JfvuFS2COZDkW16OgG2Wc
+	 qzeCZK019Uu0Hc1Z/uFr6xxhpWh7Cv+ZyuCJzNTXXpA8SFEReozWmPesHku/k19wL9fOs
+	 k/vyidTAgq3xIts6KpPNePhqMT847eczdSNpFZI+gx7Z3Z0UPqCO9YhTyPSN5kHbC+OJX
+	 9QWeJmo5vXw0evb/5PZPrKVumc8XprmP4cCuXcq5WDSM7ri3ReIUj1iqKKI8a8Fq26A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GZP8/kcsLsUEjTtM4gAYAMvJuvrNKt+3CCqPIlo954w=;
-	b=vzfumrRAt50sVQKg0Wa/wivSvB+bcddnksYy5TE4tJRM2wgaLPAaRSwnpcpHdXnr95L5
-	 aA8Xwuvpdq+zX0VyoHrRZd543r6xpRYs+OH/WP7Prwv8eRI0LlfdAdryHPPc5ada8KZ6n
-	 sTkq5QjgXAdDWy21D0yW47kkkP1Aq/5h1W6T7bNqCIvK+Xr7pe+dO3wmtK4HD/9Pb2dWb
-	 2Euyx/A7qIAgHZkXXwoEJ1B8zmyqxCnZj4lC07T6+wFdS7nXVD8VRfc7NxiCmOLDkJRP4
-	 4EHVHpLbzcE0am43uVRLK2jJQi2gEcz8nuGh5Sk0Nx6YozV3owQiHPKyhyhWzvR+1TA==
+	bh=R65u5i0A4vIOP2Z98REIkflVuVdYQHYXQt86seFBhLU=;
+	b=L8qjsA8q+xXHaGrgwasphywtb+Qhiab0fHJc1R104IrBgrwN8WeIJ+UIdVhhZ+ZO0aTL
+	 tqaNuy4A1V4RwfvBMywY9MKrbikBEAYx3mGNg1/rFf2Zsd+zak2qBfw5qZiDeZWiUNldX
+	 rGO4gu9EpCoBM/Z/ufQFWqMnplB7oHdfyoj5Y37SNXv0qfLAKnwxEzbhKrFp7Psz7dY+f
+	 HcJNeM77yPGzBzBAhBbxmlIoD6/pMymjdnmgp2uZ0UuB64WWsl5wxQmPM0/dBhDTiqmR+
+	 fWT059AFCTB79rf9ADoz6lilKbvOCWOkgTmyGjTflcFQxWCTMW56DWVnS6X45N/Lhdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GdJUq7EU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h/rp4jpI";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053B16074917;
-	Wed,  4 Nov 2026 21:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711FA6074917;
+	Wed,  4 Nov 2026 21:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GdJUq7EU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3891F000C1;
-	Wed,  4 Nov 2026 21:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h/rp4jpI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CCD1F000C1;
+	Wed,  4 Nov 2026 21:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829318;
-	bh=GZP8/kcsLsUEjTtM4gAYAMvJuvrNKt+3CCqPIlo954w=;
+	s=korg; t=1793829320;
+	bh=R65u5i0A4vIOP2Z98REIkflVuVdYQHYXQt86seFBhLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GdJUq7EUmOVtK9s851Q2RviftiXFY6+ES046NGSyrdQKSiw6T+OqFPtOw/z7npMRl
-	 9DVOvMwMJx6IKwvE7jAHH/UZAb1g2M9CWP5neaVvZdhNRK2RHTYICLdz3enuYeJJi0
-	 ArJ6AAnyd5be9Dkr/rpPvqz/X/1uMLTJ4vf5wTWQ=
+	b=h/rp4jpIoIqf1rFF/g/KYR063wHnTPqgkmoGbtht8EMKf4vCxMptcBrNNEAH4TxYR
+	 eOadLbj0oaRcplmH5PpBuYU8XDRMUsoS6pspWvY41T158fyVYiD4EPCWam9qGyuOLE
+	 wk4hd23+6Yxzr8+aYrmBM1YCFmYDc4lCh3KZHdNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0020/1005] drm/amdgpu: Gate debugfs MMIO access on kernel lockdown
-Date: Wed,  4 Nov 2026 15:55:53 -0500
-Message-ID: <20261104211044.117663998@linuxfoundation.org>
+Subject: [PATCH 6.18 0021/1005] drm/amd/display: fix max dispclk_khz/dppclk_khz double 1000
+Date: Wed,  4 Nov 2026 15:55:54 -0500
+Message-ID: <20261104211044.147057918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,58 +72,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Charlene Liu <Charlene.Liu@amd.com>
 
-[ Upstream commit 17ac73b24006700f50972d37e297dec1f523c14a ]
+[ Upstream commit f48124ff35357d05a98d9cd5cb7982e7e5509003 ]
 
-amdgpu_regs, amdgpu_regs2, and related debugfs nodes allow
-arbitrary MMIO read/write via RREG32/WREG32 without checking
-security_locked_down(). On kernel_lockdown=integrity systems
-this bypasses the same restrictions as /dev/mem and PCI config
-space sysfs.
+[why]
+Fix regresson caused by double roundup and index out of range
 
-Check LOCKDOWN_PCI_ACCESS (matching pci-sysfs) at the entry of every
-debugfs handler that performs direct register access.
-
-v2: Use consistent check as per previous check to use
-LOCKDOWN_DEBUGFS(Lijo)
-
-v3: Do not create any entry from amdgpu_debugfs_regs_init() if
-LOCKDOWN_PCI_ACCESS is active and log once. (Lijo)
-
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Reviewed-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
+Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-index 04939a9711e95..c7535ef0ae401 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -26,6 +26,7 @@
- #include <linux/kthread.h>
- #include <linux/pci.h>
- #include <linux/uaccess.h>
-+#include <linux/security.h>
- #include <linux/pm_runtime.h>
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
+index 08f7f03b10231..0167d936feaf5 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
+@@ -152,16 +152,16 @@ static void dml21_calculate_rq_and_dlg_params(const struct dc *dc, struct dc_sta
+ 	context->bw_ctx.bw.dcn.clk.bw_dispclk_khz = context->bw_ctx.bw.dcn.clk.dispclk_khz;
+ 	if (in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values > 1) {
+ 		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz =
+-			in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values] * 1000;
++			in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values - 1];
+ 	} else {
+-		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[0] * 1000;
++		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[0];
+ 	}
  
- #include "amdgpu.h"
-@@ -1646,6 +1647,12 @@ int amdgpu_debugfs_regs_init(struct amdgpu_device *adev)
- 	struct dentry *ent, *root = minor->debugfs_root;
- 	unsigned int i;
+ 	if (in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values > 1) {
+ 		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz =
+-			in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values] * 1000;
++			in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values - 1];
+ 	} else {
+-		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[0] * 1000;
++		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[0];
+ 	}
  
-+	if (security_locked_down(LOCKDOWN_PCI_ACCESS)) {
-+		drm_info(adev_to_drm(adev),
-+			 "amdgpu: HW debugfs nodes disabled (kernel lockdown)\n");
-+		return 0;
-+	}
-+
- 	for (i = 0; i < ARRAY_SIZE(debugfs_regs); i++) {
- 		ent = debugfs_create_file(debugfs_regs_names[i],
- 					  S_IFREG | 0400, root,
+ 	/* get global mall allocation */
 -- 
 2.53.0
 
