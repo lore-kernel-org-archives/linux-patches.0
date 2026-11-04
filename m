@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827068;
-	b=v5gcwJaHVVx8xPJbHjFDWemrdifnwfPKw7YUXvAM6f7TuXHEjPAXqJC2UhAz+5i02/CN
-	 qO3VE4v5ai2AzwgNRLyGUhKGj+z0Ct59KnTuBwyrb4z+D5I+Kx5h4oVoe5EH7Xh9xWi5v
-	 iq5niTuFvcUJFeiGmxMU1viZv7KABWgBnXeRbrwIXET/XBYMmkMV5V4kjarsC0O284/SH
-	 LpTkE77K+cgipNOXntI9nLiVj2ebtN32EU/svkvOWtz0HZVVDhz06JVQI6Un17V69Or2Z
-	 JDl9EmW0HDEse5wml89SKdsm1K335MuU25Mb+zNbKyR7pxbonloKoAIAlDdoJWdGj4g==
+	t=1793827070;
+	b=yeq0RniYIYtz63eQbBCdIDwMbHG4TTEcnGzZQ/TOB0A5xb5VrNmR6IedIhYPd7XNoX4q
+	 PBYh/q602D/+gyYrNy34qV0S9CIgHYAR5ahhaDhWoM0168UtRXPhfmWeMYHERPRaVwcXb
+	 rswrnd+UR83kUjDUWaw5H8igqz6ww1nb/LqW2cDaKy4PCjPyilwGccfUOGrmaeTp0u/So
+	 B2jMGH3Rcwfmw/UwLuHCOvPwQTtMfPz8tJlW5EvM2Fa7crWkwDilpIl5gFLCc1t9WyQU/
+	 36Pe0bkIxoVx/DPSUbf8if3y1QfRcMCp3VS24M4w1UOOxW08DmGCQovk6mdcJeXBhUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gt7UINXYvzYi/AwgglAw5Y6VFopcKtvWhXXhZG8Ln7Q=;
-	b=B66qDEemPxJfFjn+z05MGK4xXwsv9q7qxvQrDxhAHWne/ZhVkFGVSCe89uFHry3PpSqk
-	 H7hkJSNEEWICm1KWK5UpRyUZoi/CPr+dwXcJYpzFR0cTJxhMVsEjoqREAkNTXHSy3R1lJ
-	 bRP9stBciieJIYdZNhIFnnEPrWeeBndU3+Qyalq8GyszALValGnWVRTxYE16d4SSvx0es
-	 O6OLh24R7F0KzTeaw19bdgU1YxpQgI2BP/r+mSv3z30SzPmSS5qlltI9FSUmenKlzSVTg
-	 x3DP0ENwdCzGh/rRTDlBje3FAlgywY2iBc/GpZFwHYTJ3CuYOGhDnavFaO2d02esv5Q==
+	bh=KC6FrlnIenHFRNv81VOrF+DK3DbOSgIeNDpm7wSDUNM=;
+	b=dKCjk+WgMV2i2nDeOdksQa6B9Dbz4Z7sYvNcSW2CNlzlFJr+XDLx/xHQqvyfctrO6RZK
+	 BOxo+TUEdZXJAZ1QUETTIuEVzSoZxIXF4IqfbT87C9otEiu2Xa9uFJrYWGFhxNaatbIrH
+	 2U0wJjdQWC6MZqVuEa+DoneF1vNe8DAhtLmlw5QkKf72jLMrf2DTsWIiPNkDUp/mZ5TWG
+	 z5LszsbKXa8faT8geXPBqR9rqxMQPE//usvBqKw2wDnl2i5ESkJTdQYLSrOnt/t+6Eo6M
+	 8wDdXRWRMxTvyR++AiT/M1oooDe+nJXl0Ka1aIpm3mtc1LQGSRnA8B+FZCypzslFZKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TntPMbA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xNlp2NmM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05236606AE39;
-	Wed,  4 Nov 2026 21:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2626606A862;
+	Wed,  4 Nov 2026 21:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TntPMbA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EDC1F000C1;
-	Wed,  4 Nov 2026 21:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xNlp2NmM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2004C1F000C1;
+	Wed,  4 Nov 2026 21:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827067;
-	bh=gt7UINXYvzYi/AwgglAw5Y6VFopcKtvWhXXhZG8Ln7Q=;
+	s=korg; t=1793827069;
+	bh=KC6FrlnIenHFRNv81VOrF+DK3DbOSgIeNDpm7wSDUNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0TntPMbAclVsZICXm+AQHxXzaA02pVyfnUM5vLY5LtpIbd7ev0qKlUiA0aOqmiTB8
-	 OrdiA5Yv89XZRKt96jQWH2LBc6pw3435ZDQo6ayjY8YqoMZC4JN5qKfVgKXOD3WZTB
-	 8HTRynwnLAVJtcrpfMVjLw9FMKy3gFRJ9N3W8b28=
+	b=xNlp2NmMhLcV98I+saCS+2kCfdBYjv555rssZUJ/co4Dn4bbBDW/te3B/ZetMJdwy
+	 jLvcLODwbVHBDdsVhg91B13ZCZIF/ZNbLSnftiscsnBFIPwIxQRFFHvhTQsfbYMiFL
+	 te9N8APov4AEwbZmHk9CLTBsCfPZiZomo7TeFkFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 7.3 174/547] s390/cpum_cf: Check session mask before cpu offline
-Date: Wed,  4 Nov 2026 16:05:58 -0500
-Message-ID: <20261104211043.091341383@linuxfoundation.org>
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 139/547] cgroup: serialize migrations of newly forked processes
+Date: Wed,  4 Nov 2026 16:05:23 -0500
+Message-ID: <20261104211042.124993317@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,56 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 99a95985dfc85eecad97f0991a2401d2fcef294c upstream.
+[ Upstream commit bf6fbf46b5ff68c4eebad5aa52309eb124f4509c ]
 
-cfset_offline_cpu() stops counter sets for every active session without
-checking whether the outgoing cpu belongs to the session mask.
+With favordynmods enabled, a cgroup.procs migration takes the target
+threadgroup's cgroup_threadgroup_rwsem for writing. A process fork holds
+the forking threadgroup's semaphore for reading. These are different
+semaphores when fork creates a new process.
 
-For example, run an hwctr session on cpu0 and a cpu bound perf event on
-cpu1:
+copy_process() publishes the child's PID before cgroup_post_fork() links
+the child to its css_set. A writer can find the child in that interval,
+take its uncontended semaphore, and migrate it while child->cgroups still
+points to init_css_set and child->cg_list is empty. Migration links the
+node into init_css_set.mg_tasks. cgroup_post_fork() then adds the same
+node to the intended css_set as though it were unlinked, corrupting both
+task lists and their css_set ownership.
 
-lshwc -l 9999 -i 5 0:b
-perf stat -C 1 -e cpum_cf/CPU_CYCLES/ sleep 120
-chcpu -d 1
-chcpu -e 1
+This regresses the fork/migration race fixed by commit b12b533fa523
+("cgroups: add lock for child->cgroups in cgroup_post_fork()") and
+restored again in 2012 after the lock had been removed. The old task_lock
+protection was later superseded by global css_set and cgroup threadgroup
+locking. The change identified by the Fixes tag narrowed only the migration
+side back to a per-threadgroup lock, recreating the different-process
+exclusion failure.
 
-Although the hwctr session does not include cpu1, cfset_offline_cpu()
-decrements its counter set reference count. The subsequent perf teardown
-decrements it again, causing it to underflow.
+Take the new threadgroup's semaphore for reading before the child becomes
+visible and hold it through cgroup_post_fork(). Use a nested lock subclass
+because fork already holds the parent's semaphore. CLONE_THREAD children
+share the parent's signal_struct and remain covered by the existing lock.
+Migrations of unrelated, fully initialized threadgroups remain concurrent.
 
-The perf event keeps the percpu state alive across hotplug. When cpu1
-comes online, the hwctr session is started there and the reference count
-moves from -1 to 0. Stopping the hwctr session then decrements it to -1
-again, so the zero triggered counter set disable path is skipped.
+An AI coding assistant was used to identify and reproduce the regression
+and to develop and test this fix.
 
-Check the session mask before stopping counter sets on the outgoing cpu.
-This prevents the unmatched decrement and the resulting reference count
-underflow.
-
-Fixes: a029a4eab39e ("s390/cpumf: Allow concurrent access for CPU Measurement Counter Facility")
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: stable@vger.kernel.org # v5.14+
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0568f89d4fb8 ("cgroup: replace global percpu_rwsem with per threadgroup resem when writing to cgroup.procs")
+Cc: stable@vger.kernel.org # 6.18+
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/perf_cpum_cf.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/cgroup/cgroup.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/arch/s390/kernel/perf_cpum_cf.c
-+++ b/arch/s390/kernel/perf_cpum_cf.c
-@@ -1797,6 +1797,9 @@ static int cfset_offline_cpu(unsigned in
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 227d09704ca59..42cc77dfa1c8a 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -6844,6 +6844,31 @@ static struct cgroup *cgroup_get_from_file(struct file *f)
+ 	return cgrp;
+ }
  
- 	if (!list_empty(&cfset_session.head)) {
- 		list_for_each_entry(rp, &cfset_session.head, node) {
-+			if (!cpumask_test_cpu(cpu, &rp->mask))
-+				continue;
++/*
++ * A new threadgroup gets its own cgroup_threadgroup_rwsem.  Once its PID is
++ * visible, a cgroup.procs writer can find the child and lock that rwsem even
++ * though cgroup_post_fork() has not linked the child to its css_set yet.
++ *
++ * cgroup_can_fork() already holds the global read lock, which keeps
++ * cgroup_enable_per_threadgroup_rwsem stable.  Lock the child's rwsem as a
++ * nested instance until cgroup_post_fork() finishes.  Threads share their
++ * parent's signal_struct and are covered by the existing read lock.
++ */
++static void cgroup_fork_child_lock(struct task_struct *child)
++{
++	if (cgroup_enable_per_threadgroup_rwsem &&
++	    child->signal != current->signal)
++		down_read_nested(&child->signal->cgroup_threadgroup_rwsem,
++				 SINGLE_DEPTH_NESTING);
++}
 +
- 			p.sets = rp->ctrset;
- 			cfset_ioctl_off(&p);
- 			cpumask_clear_cpu(cpu, &rp->mask);
++static void cgroup_fork_child_unlock(struct task_struct *child)
++{
++	if (cgroup_enable_per_threadgroup_rwsem &&
++	    child->signal != current->signal)
++		up_read(&child->signal->cgroup_threadgroup_rwsem);
++}
++
+ /**
+  * cgroup_css_set_fork - find or create a css_set for a child process
+  * @kargs: the arguments passed to create the child process
+@@ -7009,6 +7034,7 @@ int cgroup_can_fork(struct task_struct *child, struct kernel_clone_args *kargs)
+ 			goto out_revert;
+ 	} while_each_subsys_mask();
+ 
++	cgroup_fork_child_lock(child);
+ 	return 0;
+ 
+ out_revert:
+@@ -7043,6 +7069,7 @@ void cgroup_cancel_fork(struct task_struct *child,
+ 		if (ss->cancel_fork)
+ 			ss->cancel_fork(child, kargs->cset);
+ 
++	cgroup_fork_child_unlock(child);
+ 	cgroup_css_set_put_fork(kargs);
+ }
+ 
+@@ -7140,6 +7167,7 @@ void cgroup_post_fork(struct task_struct *child,
+ 	if (unlikely(kill))
+ 		do_send_sig_info(SIGKILL, SEND_SIG_NOINFO, child, PIDTYPE_TGID);
+ 
++	cgroup_fork_child_unlock(child);
+ 	cgroup_css_set_put_fork(kargs);
+ }
+ 
+-- 
+2.53.0
+
 
 
