@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831016;
-	b=y3n1Ot0EoEDhQDDFLw+WhFelfV0kQOtZmvhskLnWTbbzUZEI/o3eRMaIM7PtZUOOy9o/
-	 toonwLitYpeidxBkcG4L7PwFASzeyEq7nZFWfjzIXKKI0TXdfD4dGIFlociROkKbuC8RH
-	 A/M/7KRb8IEnA5BZp5TPdvyliUqm+5yFQwLpox4PnCYoS7sYU4+p6kLRwzGVgUu6D8AwQ
-	 dxdOGufKwgHEngj0DBg/GhRALNkS3j5yyz7OygftdLrOusNg2ZHNJ5HibbYNtI4mpgS1g
-	 ea1nrVu3VZMqUgoOBQ495In6hcB6oz7W5bILxAW8jxtciWivMHwJ+6MXNyRLbD5rI9g==
+	t=1793831019;
+	b=0L92EAcHc+VCJNbBPz2l8hpV7qyuIJ5ADVtEpl39/P38de3xpJ9BFjOUNEcfSLaPITUH
+	 wxhNApOvt7L1hkvRQBuda+gsfoLmiE8e2gZtVyOpSZkACRWfiNmR0D+PYJnsPBGFjaxyh
+	 +/zk6H6iF2pAPdlFOGdTu+yrri9jLd6pYz46ezdgI+I81sbHdEFdJ+wtkxuStX7jzjaH1
+	 LrxtuRYCVSqaKv79QyfTOJKnszajsDFSSImKdRB7NfTiw56mn7MKg9FTkoPXWuoTQUJYo
+	 jVHZc5syVx56NbU14Mg/W9XgCa3oCbW35HtBDM7LoSvoZOZiokIu+QbvxasvlrAy3uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831016;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831019;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4Ok6k40uvK4L4eSz9CaRadnqhnYyC3ESPwG8OShOS/Y=;
-	b=s0Kc9n0/Fv+/Yd+dTCrczme+r4yGZKInnM31LkeQvU1W8DcFXSC202S5h6fHve08XBgl
-	 OTZAC5lsoRYZ43UQcv8CoqKlIDe4aVWI+/ZcWXFagNCgS7jmUrsOOSnQWrkgLAb8Tsoyk
-	 UG2mnRJxQL/QqR6ol+GYkvDIXEPmjT+/xyf4IVMAsoa8RV6kkhIDsbbyG7f8cqVLVzpe4
-	 evoBKI7TthZpH/rPDvJsE7LMgVynmCwSoYlLPViTaauAKyUToe1SjThxuhh+nZ6kdLr75
-	 DlL9WdyCOuXsXrPwAQ5rq7EL741J7CLwW8AWRCJ+d0ScKowEduWny+lKkzjEbkmkEfA==
+	bh=+7YSLdJRubglEtZGDIKmcuYHSXt80hj75s170Tc0wJA=;
+	b=l8lpxCWMxEauE6L+b/k7hDN2s/wTF8gSlN0MNtCZqSbQ8X9ePJlSA93vs++df/SjDIi/
+	 EOrPZygZXgraqKSSzs0faVzWjOe3ux4axHGFNOYaIF7ktcyUgy2iYN/lgfhhDjxgtEb4w
+	 NtbXey6wZwbss5Y62siiDt36MouAz4ViXrpaTZxD3KK46boH/Aw9G2H+JzjOctiy6KR69
+	 a8AwmQjn7klR9FxTy6l+HnGv/vevdWqxdz955CFi0xJoWRPgLIgn5Wd960Lt8yzIHn4FI
+	 /IGbYQZ3gjNXDtTyDnET9n/9h8cuiJxkxLpfpSW6GODJUYmbJt9aWd7G/FDnBcpEfVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HrAvjgQB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjGWZz+G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E865606A843;
-	Wed,  4 Nov 2026 22:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F65606A843;
+	Wed,  4 Nov 2026 22:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HrAvjgQB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114441F000C1;
-	Wed,  4 Nov 2026 22:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjGWZz+G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2241F000C1;
+	Wed,  4 Nov 2026 22:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831016;
-	bh=4Ok6k40uvK4L4eSz9CaRadnqhnYyC3ESPwG8OShOS/Y=;
+	s=korg; t=1793831019;
+	bh=+7YSLdJRubglEtZGDIKmcuYHSXt80hj75s170Tc0wJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HrAvjgQBmKjOIfTCA29hP38GkLz/+1s1Z89CkWsRdrQhMhZ96tZgwopp5lWmn8tQW
-	 x09KskR6Of5CEwEZ6QoeUQm2cZ71TVNMgHizGyqvSP0Dqn2pdKNYZg74aQLEKqvwKH
-	 l/DP2+Aqa5B/eFG1BesqrxzNIYDI/+Sz4++mQ1js=
+	b=JjGWZz+GpP+dRnwkod5Dx5H5zVsT7gLOrjxvz7PqQQ4P4rWaPFRVx/t/r/kKvCH2L
+	 NSbulJwJH/EQhdxdfrf8MJSy+A8yv0P7PVM7VRTCr9C+cGVTXoKIPpupVF6vzpRN/K
+	 kO8Hs4okG/EbSjE0R0yy3LBS7DQ5no+ssQZDmyqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumeet Pawnikar <sumeet4linux@gmail.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Md Rabbani <rabbanyhmm@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0458/1005] powercap: intel_rapl: Fix kernel panic during PMU unbind
-Date: Wed,  4 Nov 2026 16:03:11 -0500
-Message-ID: <20261104211056.864891159@linuxfoundation.org>
+Subject: [PATCH 6.18 0459/1005] net: stmmac: fix device node reference leaks in stmmac_mtl_setup()
+Date: Wed,  4 Nov 2026 16:03:12 -0500
+Message-ID: <20261104211056.889487290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,49 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumeet Pawnikar <sumeet4linux@gmail.com>
+From: Md Rabbani <rabbanyhmm@gmail.com>
 
-[ Upstream commit 916b61abba586d950a4d8264e2841cc5ccfa4df1 ]
+[ Upstream commit 317fe168f4c0fc30e5c375c22d9c8911940aea9b ]
 
-rapl_package_add_pmu() fails internally at perf_pmu_register(),
-and rapl_pmu_update() leaves the global rapl_pmu.pmu structure
-zero-initialized via memset and returns an error. But any
-previously probed packages retain has_pmu = true.
+In stmmac_mtl_setup(), q_node is shared across the RX and TX queue
+parsing loops. When the RX queue loop breaks early because the number
+of parsed queues reaches plat->rx_queues_to_use, q_node retains an
+acquired reference count. If the error check passes
+(queue == plat->rx_queues_to_use), execution proceeds directly to the
+TX queue loop, where of_get_next_child() immediately overwrites q_node
+with the first TX child, permanently leaking the retained RX child
+device node reference.
 
-When the driver is subsequently unbound or removed,
-rapl_package_remove_pmu_locked() sees has_pmu == true and
-unconditionally calls perf_pmu_unregister(&rapl_pmu.pmu) on the
-zeroed-out structure. This attempts a list_del_rcu() on a NULL
-list head, immediately causing a kernel panic.
+Switch both loops to for_each_child_of_node_scoped() so child node
+references are automatically dropped upon loop exit or early break,
+and remove the now-unnecessary function-scoped q_node variable and
+its manual of_node_put() at the exit label.
 
-Fix this by checking if the PMU is actually registered before
-attempting to unregister it.
-
-Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-[ rjw: Added empty line after the new conditional ]
-Link: https://patch.msgid.link/20260822094657.12489-1-sumeet4linux@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Md Rabbani <rabbanyhmm@gmail.com>
+Link: https://patch.msgid.link/20260821055718.57-1-rabbanyhmm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index f08ac99f5e55e..977c4c90923d5 100644
---- a/drivers/powercap/intel_rapl_common.c
-+++ b/drivers/powercap/intel_rapl_common.c
-@@ -2106,7 +2106,9 @@ void rapl_package_remove_pmu(struct rapl_package *rp)
- 			return;
- 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+index 0cb51935c4056..ceb913a3a6c69 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -131,7 +131,6 @@ static struct stmmac_axi *stmmac_axi_setup(struct platform_device *pdev)
+ static int stmmac_mtl_setup(struct platform_device *pdev,
+ 			    struct plat_stmmacenet_data *plat)
+ {
+-	struct device_node *q_node;
+ 	struct device_node *rx_node;
+ 	struct device_node *tx_node;
+ 	u8 queue = 0;
+@@ -174,7 +173,7 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
+ 		plat->rx_sched_algorithm = MTL_RX_ALGORITHM_SP;
  
--	perf_pmu_unregister(&rapl_pmu.pmu);
-+	if (rapl_pmu.registered)
-+		perf_pmu_unregister(&rapl_pmu.pmu);
-+
- 	memset(&rapl_pmu, 0, sizeof(struct rapl_pmu));
+ 	/* Processing individual RX queue config */
+-	for_each_child_of_node(rx_node, q_node) {
++	for_each_child_of_node_scoped(rx_node, q_node) {
+ 		if (queue >= plat->rx_queues_to_use)
+ 			break;
+ 
+@@ -237,7 +236,7 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
+ 	queue = 0;
+ 
+ 	/* Processing individual TX queue config */
+-	for_each_child_of_node(tx_node, q_node) {
++	for_each_child_of_node_scoped(tx_node, q_node) {
+ 		if (queue >= plat->tx_queues_to_use)
+ 			break;
+ 
+@@ -290,7 +289,6 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
+ out:
+ 	of_node_put(rx_node);
+ 	of_node_put(tx_node);
+-	of_node_put(q_node);
+ 
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(rapl_package_remove_pmu);
 -- 
 2.53.0
 
