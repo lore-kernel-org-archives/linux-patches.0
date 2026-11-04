@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829316;
-	b=5kT/b5fkQE0upuiKrlzEhtvnDTkZ0NJm8lJ0sfKQeDCgcTf6ZJTGK9Pnes17GvJqzakv
-	 o4tAJ6EaKbgr0ec/JYge7pzqdl7jt4Y+fs2HMVqHzobRp6Wq/tuwXFrrKlQqh32YtDQN3
-	 jYanAXKEgt89laELTjyvsWX84wHsmSBvqNvDODALQbQIYSwI36eAjCE8wbBCbhScdS8ii
-	 /DYnayT4x4xIPIsTByrFSk2SIgqsbgucOr6Gf7APHRYrNbYDmHTEGRaEH0sEZaOhS1QLh
-	 kbvtKfoE+JGCwGuF6omMlRrwyRco7AK/2dCeEnw/KF7A3P39twBLwqOVBfTvINRVcwg==
+	t=1793829317;
+	b=cb6D+Hsls3A4JNRrCTAHghmt1IfTXypq7s/W2sckSy1Gr0+IA34GncFHR0rsPFJqlOvE
+	 6PNrGPys/s7lg1mMNvj89n9nK2lMdBzJAFyH98l+SUtZ3yg4pvCKX2Vti5seCulSOhKK2
+	 0vmUsg7p3BU9Xhp2GYJbkHb3MvyXyOkqBfnZFKDhoXaQWdAySDjGDArfLu5k9ifr2e8SL
+	 naAiZA1KBgAIsl1sxF3cUlUeQkvVZuFKMNggGmsI0+//24dJMyJ3FTEOUukOLvX/3gQbm
+	 9uUfJek4ld3gAcJxzs0b2PaDI4UTHagRFPlcWL373s8IbuA+SzVe3SR/7PfVs25wPzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829316;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e6/cZgK1/qd/ZcJ551DcnlFqNmke/MvIffv0wXHoZiw=;
-	b=0iUb10FeFRTw87KjqWlZ2F77mBof/tZNzQf/fb/sLSiXIT+levyIIvlDL/UNOMZRNVmn
-	 qKNwhS4BaIKrTcMONS98b25JLcmev0sCYDerxoGJ3JF60gFYRnNwcQAavDldOYuWHZ8rx
-	 f6chJbbONXI/+1hbzIoQFz3ZSwRYXwLIO10aRHllDisR1hTfJmm7/ASJtWXIkd3pXVXal
-	 Nm7qmg3EtBoV+T7E73hTruU0OTmpkUFh4ZQAEh9xgimCTFsZKwoozbJHQhRUUnn3CGZYD
-	 9BVa/gEgbgQiV/gU4cLD/AAsEdDhcIUYkEih86uk7/ZqhgPgvgIzqOTyqB3/kSij/fw==
+	bh=YrJFtaxmRupOIdkBqg7gOVvEr+1BOMra2JGx292nUPc=;
+	b=2Qok9uP3ocG63tYyXfyD0kSwpPCwXf7b+lQiDVrp5ww0V5+OaaJ8DP27TI8Sn0ISasEW
+	 4+6bR5VuOuXYPiFHXoaO0FIV9HGeh+VN/Sef/z0DgaoiG8EhckQzFZrvJ1F92yz8vD/dK
+	 dsAABvMsZM4Q+BsfH/OyjnFAJtZoePEDteDkl2Iq0BtK12TQb0rpdFU4xTqjpVkulTC16
+	 NGqubR0MBaxfyyZlYc19aCK40sfsDw4dGWA8P67ZYnX2sRCoBwcOACfrbgTMAvoHMQw8r
+	 CMxMR1+1cciHJ2t+FaeHSu8SletH8BFUNux+wUAplMMKlsoM0tfvtmDTe8lNgrOOe4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2tU3H49;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JCdhaMcN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DF16074917;
-	Wed,  4 Nov 2026 21:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F016074917;
+	Wed,  4 Nov 2026 21:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2tU3H49
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C031F000C1;
-	Wed,  4 Nov 2026 21:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JCdhaMcN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B431F000C1;
+	Wed,  4 Nov 2026 21:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829315;
-	bh=e6/cZgK1/qd/ZcJ551DcnlFqNmke/MvIffv0wXHoZiw=;
+	s=korg; t=1793829317;
+	bh=YrJFtaxmRupOIdkBqg7gOVvEr+1BOMra2JGx292nUPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z2tU3H49cW/xPQppJ4rKjDSUTwqmX90Z03NdjS9zFF5HeUeIIA8SmWMBMbRNCBff2
-	 aNtBSOjlsJO1TT8DLH0PcmgXX4tHnOEgrlLa4lvcMOMtzxvUdHIiyNRdNedKT/po3o
-	 oDDYC4t1eQbbhs9j0bCSg8VltYCxgz2DrMNyODmY=
+	b=JCdhaMcNhK0ffZ2HUiyqyq66bQMGSoGO5kXjq6VdiKNyB5ZINcKTdbcT0GQsfzKwL
+	 5xYDJMbqH1sa+7X7IlWexy6RQ22d4e2tfMz11NFJmTRCrFkpHFEyBAfU5FOyOK73hC
+	 m6oDbruN9fpI62wSpkEnd3FyXmvMvQUZ/2b+xQgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0047/1005] perf/x86/intel/uncore: Fix PCI PMU cleanup on setup failure
-Date: Wed,  4 Nov 2026 15:56:20 -0500
-Message-ID: <20261104211044.906069838@linuxfoundation.org>
+Subject: [PATCH 6.18 0048/1005] fs/namespace: notify pollers of legacy propagation changes
+Date: Wed,  4 Nov 2026 15:56:21 -0500
+Message-ID: <20261104211044.933696869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,62 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-[ Upstream commit 003267cb94e21d762eb72d6977d84f44f1705bb7 ]
+[ Upstream commit 0ae44a20835e5cf37d03a83e70c92e92deda3703 ]
 
-When uncore_pci_pmu_register() fails, pmu->boxes[die] is set to NULL
-before returning.  In the uncore_pci_remove() path, this causes
-uncore_pci_pmu_unregister() to be skipped entirely, leaking
-pmu->activeboxes.  In the uncore_bus_notify() path,
-uncore_pci_pmu_unregister() may still be called and must exit early
-when pmu->boxes[die] is NULL to avoid a NULL pointer dereference, and
-to ensure activeboxes is only decremented for a previously active box.
+Changing mount propagation through the legacy mount API changes
+user-visible mountinfo contents, including the shared: and master:
+optional fields.
 
-Additionally, since pci_get_drvdata() returns NULL on registration
-failure, uncore_pci_remove() can no longer treat NULL drvdata as an
-indicator of an auxiliary PCI device.  Remove the associated
-WARN_ON_ONCE().
+The mount_setattr() path already touches the mount namespace after
+change_mnt_propagation(), so pollers of /proc/<pid>/mountinfo are woken
+when the namespace event changes.
 
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://sashiko.dev/#/patchset/20260512233048.9577-1-zide.chen@intel.com?part=1
-Link: https://patch.msgid.link/20260611160033.66760-2-zide.chen@intel.com
+The legacy mount --make-* path also changes propagation through
+change_mnt_propagation(), and MOVE_MOUNT_SET_GROUP updates the
+propagation relationship of the target mount. Both paths currently
+return without touching the affected mount namespace.
+
+As a result, userspace polling /proc/<pid>/mountinfo can miss these
+propagation-only changes even though mountinfo has changed.
+
+A simple reproducer that polls /proc/self/mountinfo while changing
+propagation shows the inconsistency.
+
+Before this change:
+
+  legacy MS_SHARED: poll ret=0 revents=0x0
+  mount_setattr MS_SHARED: poll ret=1 revents=0xa
+
+After this change:
+
+  legacy MS_SHARED: poll ret=1 revents=0xa
+  mount_setattr MS_SHARED: poll ret=1 revents=0xa
+
+Fix this by touching the affected mount namespace after successful
+propagation changes in do_change_type() and do_set_group().
+
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Link: https://patch.msgid.link/20260601032911.940507-1-guopeng.zhang@linux.dev
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/namespace.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
-index a5793847ed5a9..3d9973c416ecf 100644
---- a/arch/x86/events/intel/uncore.c
-+++ b/arch/x86/events/intel/uncore.c
-@@ -1165,6 +1165,7 @@ static int uncore_pci_pmu_register(struct pci_dev *pdev,
- 	/* First active box registers the pmu */
- 	ret = uncore_pmu_register(pmu);
- 	if (ret) {
-+		atomic_dec(&pmu->activeboxes);
- 		pmu->boxes[die] = NULL;
- 		uncore_box_exit(box);
- 		kfree(box);
-@@ -1230,6 +1231,9 @@ static void uncore_pci_pmu_unregister(struct intel_uncore_pmu *pmu, int die)
- {
- 	struct intel_uncore_box *box = pmu->boxes[die];
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 3b6d7271eb3d1..ab050a939cb53 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2932,6 +2932,9 @@ static int do_change_type(const struct path *path, int ms_flags)
+ 	for (m = mnt; m; m = (recurse ? next_mnt(m, mnt) : NULL))
+ 		change_mnt_propagation(m, type);
  
-+	if (!box)
-+		return;
++	guard(mount_locked_reader)();
++	touch_mnt_namespace(mnt->mnt_ns);
 +
- 	pmu->boxes[die] = NULL;
- 	if (atomic_dec_return(&pmu->activeboxes) == 0)
- 		uncore_pmu_unregister(pmu);
-@@ -1254,7 +1258,6 @@ static void uncore_pci_remove(struct pci_dev *pdev)
- 				break;
- 			}
- 		}
--		WARN_ON_ONCE(i >= UNCORE_EXTRA_PCI_DEV_MAX);
- 		return;
+ 	return 0;
+ }
+ 
+@@ -3414,6 +3417,10 @@ static int do_set_group(const struct path *from_path, const struct path *to_path
+ 		list_add(&to->mnt_share, &from->mnt_share);
+ 		set_mnt_shared(to);
  	}
++
++	guard(mount_locked_reader)();
++	touch_mnt_namespace(to->mnt_ns);
++
+ 	return 0;
+ }
  
 -- 
 2.53.0
