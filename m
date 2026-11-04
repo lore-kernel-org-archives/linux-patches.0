@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829205;
-	b=ySnQwtDlKKY+YFTfblMz3KcAe9bG0HCiX/s81YZDsmN1jx6JBJAFTD8S10JrzVU2CGnS
-	 cHHDhUbcE9Qht26bd9xQ4K+KmMgxGTZIi6DRv2PzkGUlK5M3jQbSD8Aca05I7/JBvU8im
-	 Ga5nmu0XVj6JzGoJovq3TZYXIvpTv3C92ENcs4oSNM4v0Fq23zh3HQT1RdpFvifuc3GJE
-	 9KTfYKk/L5UV57fbAA3s1HHZJcWfsDIeio4+8IxTIBoFwB/SIgeBOJKti7HLO/A4deWRL
-	 YYLD7KB3Aq53Fjpq75OyzM2oN6UUINHGZJoaWksDWaieY4SWgnunbVrOma+bE73xagg==
+	t=1793829206;
+	b=16BEW5IEGvbJ4nswgkFEtbDMi55rkZVsXQgzVP0GD5dsP63nek8WpTe4+tzW5e3i9Wkb
+	 0b3DfjfexyhEOnjDBP3FBWTDc8xawBReHMo+zDU/l1u8gDtPGsN1M2mtR3TX8CITHmrT3
+	 2awLs5zbHbpeDkAxXaL5K4jrsgKRuCpy8sUcN5TcLBgRIBXo7L8vy/CFHYt3TW0GPm6+p
+	 +dRpweXsILnu7LOiDGcU6PgePseJURLHNcFKs7Eck6YfB/v55BcCZ0Ce2uk9VZ0JiAC08
+	 sZEJ/N/A4J0bRWtjrg4D+owm9FdCzESr2Na/6NTnAjlivKqOmthrqK+tsIlzzxEX6Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/mHMdmXwqLdmG1RDxDq2bY4lrhmjvoM2tKKyupLxbwg=;
-	b=CQ9GQzfh6HYYmC/ngrTX46St5lF+J/ikm5zzs2e1IUhE+LoPPQ8UZdjaY2V1kjjZYLm0
-	 oCOXQtU/BngJSpxFx8vsPkhWUzIDxWoyYoNgop+USa8VR1fb/WLFh1vvJ98RJgwes0sbR
-	 YrMWQ25bry2KZkqset+lUy/eJbnbgwdsyg1OTjOQVwFH0hv5+yn6ObvkbhNIWM+yNDPlZ
-	 cXfoWoXpowmqCnRWM/pFbLEOE8pPPcBpcwRmxngVl+hA3HajKttuNbu29ShXiLVdsqGjl
-	 cVozq2gVR1rjMDS7uXXGaDBu/afYb8L4Vvn0/YFb8EU0sinARyNCVnfJjXJBGAGbPTw==
+	bh=4PiDUfVyuFVuFSON2/m5DovdXYZkxlUqqQRoyJXq3EI=;
+	b=wr+nd5qwn6o08faTOzh7LaqnNIhKtDRj7xQ3PVZGA7oe46otBkrGBIlPZ7JGcR1HDoBT
+	 VANhz/UGDbo1snM+B9bMVUOEtD9jHOZg+N7d5sIDhnQKJdpCXUD22wjj3lBO8fuSxlXn1
+	 wUGLFmtqqsfK8j5F/sDLCTNCdx+cUzMC7/eK88JwmwS+ZvI5O2HyifOK5qEDprCkQrmoF
+	 fAoY1YzDDNuntiJa/CPUIRXqCy/SPwIXf5vPlQm5TBjT898filo/Dn2Hq3zY4JV4aogdo
+	 I+nWwVorSvL2dsWxc2yUHXVRM+MK0MfDOeyzNbvnTkT7WepKRDm4Or7lyO6EijI60dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PbmZ4o0O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKs7yff1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E880660A2612;
-	Wed,  4 Nov 2026 21:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DABF60A261E;
+	Wed,  4 Nov 2026 21:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PbmZ4o0O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C0B1F0093A;
-	Wed,  4 Nov 2026 21:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKs7yff1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE271F000C1;
+	Wed,  4 Nov 2026 21:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829204;
-	bh=/mHMdmXwqLdmG1RDxDq2bY4lrhmjvoM2tKKyupLxbwg=;
+	s=korg; t=1793829206;
+	bh=4PiDUfVyuFVuFSON2/m5DovdXYZkxlUqqQRoyJXq3EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PbmZ4o0OD149yGNyeKqJTkGaczB7v0Z3bP4XoH2F87AG1vNLr7cbjKAHbpneEnQEZ
-	 9tsclNQMm/tUXwLDtu6VXp5WxYUfoQverk5BMyEFLIIzChBfZ88tPLbiJq44EVURUo
-	 TsDsxUyOrrUdU7VgU5x+OQAEhj7b0HnvUamDuGy0=
+	b=lKs7yff1A2WjrAq2avSICm6VbCRGSIFFKqPv0u1BCKdFbNIjoaWnlc5gCyw2FuY7I
+	 nK5At2yqYXEkMiZzs7JlUSGeOTw+ZNNPx2VI4CF9OR2aZqOZvRrXJSy3DzC28vvCMl
+	 qpJYY3m7OyZQpzOG3qLYJx3KuNh3UHdFVXSMkt8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.3 476/547] KVM: TDX: Dont assume exit_reason[31:16] is all-0 in tdx_to_vmx_exit_reason()
-Date: Wed,  4 Nov 2026 16:11:00 -0500
-Message-ID: <20261104211051.885266011@linuxfoundation.org>
+	"Derek J. Clark" <derekjohn.clark@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.3 512/547] HID: hid-lenovo-go-s: Move attribute init to after device query
+Date: Wed,  4 Nov 2026 16:11:36 -0500
+Message-ID: <20261104211052.937077223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,91 +67,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Derek J. Clark <derekjohn.clark@gmail.com>
 
-commit bc335ce04408750585b4b32f248c543c9493d545 upstream.
+commit 8f456881ba40a04494440663231ba773a06588f3 upstream.
 
-When handling the real Exit Reason, don't assume the upper 16 bits as
-all-0 in tdx_to_vmx_exit_reason(), in preparation for enabling Bus Lock
-VM exit.
+Currently this driver registers attributes before the MCU is ready to
+accept commands. This can lead to attribute access that blocks the MCU
+in some rare cases.
 
-When Bus Lock VM exit is enabled, the bit 26 of Exit Reason becomes
-valid and it can be 1 with various exit reasons.  Change the logic in
-tdx_to_vmx_exit_reason() to check the 'basic' Exit Reason for correctness.
-Also preserve bit[31:16] when changing the (basic) Exit Reason, to not
-lose the information in bit[31:16].
+Move attribute construction to gos_cfg_setup, after the device has been
+queried. Gate creation to drvdata.gp_registered and
+drvdata.rgb_registered so a resume before setup has run doesn't prevent
+attribute creation or attempt to re-register the same attributes.
 
-Change the return type of tdx_to_vmx_exit_reason() to
-"union vmx_exit_reason" for the convenience of manipulating the basic
-field.
-
-Fixes: c42856af8f70 ("KVM: TDX: Add a place holder for handler of TDX hypercalls (TDG.VP.VMCALL)")
+Fixes: a23f3497bf208c59ad ("HID: hid-lenovo-go-s: Add Lenovo Legion Go S Series HID Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-5-xiaoyao.li@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Derek J. Clark <derekjohn.clark@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/tdx.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/hid/hid-lenovo-go-s.c | 68 +++++++++++++++++++++++------------
+ 1 file changed, 45 insertions(+), 23 deletions(-)
 
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -935,10 +935,10 @@ static __always_inline bool tdx_is_exit_
+diff --git a/drivers/hid/hid-lenovo-go-s.c b/drivers/hid/hid-lenovo-go-s.c
+index 6d98fff6d987..f1a0bcfcdb71 100644
+--- a/drivers/hid/hid-lenovo-go-s.c
++++ b/drivers/hid/hid-lenovo-go-s.c
+@@ -1452,6 +1452,7 @@ static struct led_classdev_mc gos_cdev_rgb = {
+ 
+ static void cfg_setup(struct work_struct *work)
+ {
++	bool gp_registered, rgb_registered;
+ 	int ret;
+ 
+ 	/* MCU */
+@@ -1497,10 +1498,53 @@ static void cfg_setup(struct work_struct *work)
+ 		return;
  	}
+ 
++	/* Pairs with smp_store_release from below */
++	gp_registered = smp_load_acquire(&drvdata.gp_registered);
++	if (gp_registered)
++		goto try_rgb;
++
++	ret = sysfs_create_groups(&drvdata.hdev->dev.kobj, top_level_attr_groups);
++	if (ret) {
++		dev_err(&drvdata.hdev->dev,
++			"Failed to create gamepad configuration attributes: %i\n", ret);
++		goto try_rgb;
++	}
++
+ 	/* Pairs with smp_load_acquire in attribute show/store functions */
+ 	smp_store_release(&drvdata.gp_registered, true);
++	gp_registered = true;
++
++try_rgb:
++	/* Pairs with smp_store_release from below */
++	rgb_registered = smp_load_acquire(&drvdata.rgb_registered);
++	if (rgb_registered)
++		goto update_kobjects;
++
++	ret = devm_led_classdev_multicolor_register(&drvdata.hdev->dev, &gos_cdev_rgb);
++	if (ret) {
++		dev_err(&drvdata.hdev->dev,
++			"Failed to create RGB device: %i\n", ret);
++		goto update_kobjects;
++	}
++
++	ret = devm_device_add_group(gos_cdev_rgb.led_cdev.dev, &rgb_attr_group);
++	if (ret) {
++		dev_err(&drvdata.hdev->dev,
++			"Failed to create RGB configuration attributes: %i\n", ret);
++		goto update_kobjects;
++	}
++
++	drvdata.led_cdev = &gos_cdev_rgb.led_cdev;
++
+ 	/* Pairs with smp_load_acquire in attribute show/store functions */
+ 	smp_store_release(&drvdata.rgb_registered, true);
++	rgb_registered = true;
++
++update_kobjects:
++	if (gp_registered)
++		kobject_uevent(&drvdata.hdev->dev.kobj, KOBJ_CHANGE);
++	if (rgb_registered)
++		kobject_uevent(&drvdata.led_cdev->dev->kobj, KOBJ_CHANGE);
  }
  
--static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-+static __always_inline union vmx_exit_reason tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
- {
- 	struct vcpu_tdx *tdx = to_tdx(vcpu);
--	u32 exit_reason;
-+	union vmx_exit_reason exit_reason;
+ static int hid_gos_cfg_probe(struct hid_device *hdev,
+@@ -1510,30 +1554,8 @@ static int hid_gos_cfg_probe(struct hid_device *hdev,
  
- 	/*
- 	 * Return the synthesized invalid Exit Reason, as the TDX module
-@@ -946,22 +946,26 @@ static __always_inline u32 tdx_to_vmx_ex
- 	 * but this is NOT a failed VM-Enter.
- 	 */
- 	if (!tdx_is_exit_reason_valid(tdx->vp_enter_ret))
--		return EXIT_REASON_UNDEFINED;
-+		return (union vmx_exit_reason) {
-+			.basic = EXIT_REASON_UNDEFINED,
-+		};
- 
--	exit_reason = tdx->vp_enter_ret;
-+	exit_reason.full = (u32)tdx->vp_enter_ret;
- 
--	switch (exit_reason) {
-+	switch (exit_reason.basic) {
- 	case EXIT_REASON_TDCALL:
- 		if (tdvmcall_exit_type(vcpu))
--			return EXIT_REASON_VMCALL;
+ 	hid_set_drvdata(hdev, &drvdata);
+ 	drvdata.hdev = hdev;
++
+ 	mutex_init(&drvdata.cfg_mutex);
 -
--		return tdcall_to_vmx_exit_reason(vcpu);
-+			exit_reason.basic = EXIT_REASON_VMCALL;
-+		else
-+			exit_reason.basic = tdcall_to_vmx_exit_reason(vcpu);
-+		break;
- 	case EXIT_REASON_EPT_MISCONFIG:
- 		/*
- 		 * Defer KVM_BUG_ON() until tdx_handle_exit() because this is in
- 		 * non-instrumentable code with interrupts disabled.
- 		 */
--		return EXIT_REASON_UNDEFINED;
-+		exit_reason.basic = EXIT_REASON_UNDEFINED;
-+		break;
- 	default:
- 		break;
- 	}
-@@ -978,7 +982,7 @@ static noinstr void tdx_vcpu_enter_exit(
+-	ret = sysfs_create_groups(&hdev->dev.kobj, top_level_attr_groups);
+-	if (ret) {
+-		dev_err_probe(&hdev->dev, ret,
+-			      "Failed to create gamepad configuration attributes\n");
+-		return ret;
+-	}
+-
+-	ret = devm_led_classdev_multicolor_register(&hdev->dev, &gos_cdev_rgb);
+-	if (ret) {
+-		dev_err_probe(&hdev->dev, ret, "Failed to create RGB device\n");
+-		return ret;
+-	}
+-
+-	ret = devm_device_add_group(gos_cdev_rgb.led_cdev.dev, &rgb_attr_group);
+-	if (ret) {
+-		dev_err_probe(&hdev->dev, ret,
+-			      "Failed to create RGB configuration attributes\n");
+-		return ret;
+-	}
+-
+-	drvdata.led_cdev = &gos_cdev_rgb.led_cdev;
+-
+ 	init_completion(&drvdata.send_cmd_complete);
  
- 	tdx->vp_enter_ret = tdh_vp_enter(&tdx->vp, &tdx->vp_enter_args);
- 
--	vt->exit_reason.full = tdx_to_vmx_exit_reason(vcpu);
-+	vt->exit_reason = tdx_to_vmx_exit_reason(vcpu);
- 
- 	vt->exit_qualification = tdx->vp_enter_args.rcx;
- 	tdx->ext_exit_qualification = tdx->vp_enter_args.rdx;
+ 	/* Executing calls prior to returning from probe will lock the MCU. Schedule
+-- 
+2.56.0
+
 
 
