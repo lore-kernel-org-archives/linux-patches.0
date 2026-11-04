@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826974;
-	b=dn+hiU4gwrxZZI/Umay/IW8pqdOpAa7STmZIkxCF6cMhdsDgQyZk+7y70zdPkJu9W0Bb
-	 x5wt/xzJ3lsvBwYPRhJQ18GEXMeyouYi2Yd6lC7lPyHeKZbmvpmA5bLKJ9TMHG+5CbiZH
-	 DHs3Tp0Pg9rJ7APi66nfCEjo9yVmiXQM6zEGsCDoiWSmH3AtGDuQW9SSTTTWibqy99q/P
-	 ZAhSWxlNWynwBxOXXHpqvfrTo/NjIyv4plP1J5Q3XsuwRvgqvL2ty/qC6tlgGsBU0cTHl
-	 HuOzV+RMRZjfB1WQqp90eiFdGMJd3U1JN6QBjPzeXqYubzWAUgDpjY6tbmLgqajsacQ==
+	t=1793826975;
+	b=Ff+Rnomh4fPju7J6AAWWLDVtNDUM+Ez2hfb44N13uwieIbksRjSuLzStdUPW0zLRtOjX
+	 T/darKCUTsnB8r427MmrZxNE9ImfTkKdgr3ezMIQrCh7wb8KJAh1jkwoNoRnD5fZxexu6
+	 z9ikK6zdId6QDrhqnsqKEZDkNBgm6dbuYcJP+BuYQR7huWqyJutEJFdwFlCaEV4oVGKmv
+	 IXy06FVEATMAIBV4KT00cux37kxgVmbkFlh4rdyJxdeR9UpR92Al5zMdrfeSM8Z7HAS+D
+	 SJhApS/Z7ekQWhw7rARypWUtVHVGXzbWHsGXBmLt2S2vuHgL5A2p7KK97ETK4Td+BRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jOORKYyTRJ69x0DsKmtN8GksqPGeGNmAh2sA/2UeKoc=;
-	b=g4o3xkktHvKxucrdJEDc6Ej/8JAyRdUbj9k9kv/jJ6r+/jEwoCOZHfg0xxrKyTFLgy7z
-	 7QaGR9YFpVCT/d4khaOwhPsgNL1wVoWt4dStN2HnNATLYIg7u3Eo5FtqDWo43Fqug3Gnl
-	 3HpdBiWRUB3Jho61fZ6BEFDmJTGauRgrXtfxzSjPOkDCvXtLntNtbh0qqGLrBprncP9nN
-	 pRlbQQF3q/Fx8k7ZRd4q2es2967W4zG2J1gYZbRlGBuCC1TNGYDhy+rlnGlMP5ypp97K+
-	 wT+Yv5NQ1wWwGpnMVQFf4+4v7wDPeRmj3YgiUZrzPTzZDVEuDch2fPxCGU3MchsWF7Q==
+	bh=ZtB9Gl1/2QqhS40vdSRBMmazDXPZ2opYSHc1oPCsLtQ=;
+	b=E43PI0luO6OUctg+zWHpM56EjhG7VYGVOxY+5TeHPbY8uKILJOoSi3Pe7yHu/XzlVMsd
+	 ssHIjHeFNGjoAO29xjXUr2NOw1c3jdaZwklPFKC10N6J5PG5Z+FnqwlU19Jepc8JBInix
+	 YZytUWCt/VB0NeFBdDldcn9SEBjGMn/NRofIflFP+z2GkFaxnRgnR8GnLZHOPrq3UeaWx
+	 OfcOdkbNgAoedjkXFk8oc6YeEkRhxAaV3Y0pRFYhHdg1bAd8jO73NTVlYSrZVJeQuZc0p
+	 ZDAdQ7kTcZsbaN2YksnB4iotXq2SwLGL/qBf5aws9mMw8GsP4KA++dIQRw1kc3smmhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNwEgEZT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJFklqLU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E76D60BC560;
-	Wed,  4 Nov 2026 21:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864486070AAB;
+	Wed,  4 Nov 2026 21:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNwEgEZT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6315C1F00A18;
-	Wed,  4 Nov 2026 21:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJFklqLU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21ED21F000C1;
+	Wed,  4 Nov 2026 21:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826973;
-	bh=jOORKYyTRJ69x0DsKmtN8GksqPGeGNmAh2sA/2UeKoc=;
+	s=korg; t=1793826975;
+	bh=ZtB9Gl1/2QqhS40vdSRBMmazDXPZ2opYSHc1oPCsLtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNwEgEZT3Fssrr7pIjPHKsRxEa51Kkou4oSXogfkqCyCju2C9FHN9xLs8X0PpJF8C
-	 w/9q0XBBedAmBcw2jH192vvltzMpabYRZ2SpXjT0GWYviydX3rF7cFpvnpOcg4KHk6
-	 /5+goRnpIhwHBB4uKN7UDrJLPNX0NlHMR5eOKtMY=
+	b=OJFklqLUaCWkF/XWNlR7UtxhgVIVnG2ZX0v/C6GWB1bFDs5uy8MuG5zXc4dRWVsy/
+	 bJEVCQqHXMF1LgGB/5RYRv5d6+kpd1dbMKr5utAIWDGcW9pd0CajNSw14hO4Tlxjbf
+	 VL44OxUDNlrx92E0KZCHyOhIOeGyToYosMz+9Qhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tea La Forgia <tealaforgia+alias@gmail.com>,
+	Dairui Zhang <zhangdairui@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 118/547] ksmbd: fix extended session security negotiation for raw NTLMSSP
-Date: Wed,  4 Nov 2026 16:05:02 -0500
-Message-ID: <20261104211041.551194130@linuxfoundation.org>
+Subject: [PATCH 7.3 119/547] ksmbd: fix OOB read and cross-share confusion in ksmbd_validate_name_reconnect()
+Date: Wed,  4 Nov 2026 16:05:03 -0500
+Message-ID: <20261104211041.577122683@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,45 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-commit 6868f857514bbfd2ed10b9b566664dc4a8ca039d upstream.
+commit 783a7fc454991544bf92268d8f2413af1a7c7eb8 upstream.
 
-ksmbd_build_ntlmssp_challenge_blob() only advertises extended session
-security when conn->use_spnego is true. As a result, raw NTLMSSP
-negotiation drops NTLMSSP_NEGOTIATE_EXTENDED_SEC from the challenge even
-when the client requested it.
+ksmbd_validate_name_reconnect() indexes
+ab_pathname[share->path_sz + 1] without checking that the path is
+longer than share->path_sz + 1 (d_path() fills the buffer from the
+end). A durable fp is not bound to its original share, so a client
+can preserve a file from a short-path share and reconnect it on a
+long-path share, making strcmp() read past the PATH_MAX buffer -
+with a long enough share path this oopses the kernel, and on a
+mapped page it also gives a byte-equality oracle on adjacent heap
+(the reconnect succeeds exactly when the out-of-bounds string
+equals the requested name). A same-share variant with the durable
+fp at the share root reads 1 byte past the buffer
+(strlen(ab_pathname) == share->path_sz).
 
-A Windows capture shows an initial SPNEGO authentication succeeding,
-followed by a raw NTLMSSP negotiation on the same TCP connection. The raw
-challenge omits extended session security, and the client does not send
-an AUTHENTICATE message. The unfinished session then occupies the pending
-session slot, causing subsequent SESSION_SETUP requests to fail with
-STATUS_INSUFFICIENT_RESOURCES.
+Check before comparing: the path must be longer than share->path_sz,
+it must start with share->path, and the next character must be '/'.
+The share root itself is accepted only for an empty name.
 
-Set NTLMSSP_NEGOTIATE_EXTENDED_SEC whenever the client requests it,
-independently of the SPNEGO wrapper, as required by [MS-NLMP].
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Reported-by: Dairui Zhang <zhangdairui@gmail.com>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Reported-by: Tea La Forgia <tealaforgia+alias@gmail.com>
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/auth.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/smb/server/vfs_cache.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -336,8 +336,7 @@ ksmbd_build_ntlmssp_challenge_blob(struc
- 	if (cflags & NTLMSSP_REQUEST_TARGET)
- 		flags |= NTLMSSP_REQUEST_TARGET;
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -1877,9 +1877,21 @@ int ksmbd_validate_name_reconnect(struct
+ 		return -EACCES;
+ 	}
  
--	if (conn->use_spnego &&
--	    (cflags & NTLMSSP_NEGOTIATE_EXTENDED_SEC))
-+	if (cflags & NTLMSSP_NEGOTIATE_EXTENDED_SEC)
- 		flags |= NTLMSSP_NEGOTIATE_EXTENDED_SEC;
+-	if (name && strcmp(&ab_pathname[share->path_sz + 1], name)) {
+-		ksmbd_debug(SMB, "invalid name reconnect %s\n", name);
+-		ret = -EINVAL;
++	if (name) {
++		size_t len = strlen(ab_pathname);
++
++		if (len == share->path_sz && !strncmp(ab_pathname, share->path, len)) {
++			/* the durable fp is the share root itself */
++			if (name[0])
++				ret = -EINVAL;
++		} else if (len <= share->path_sz ||
++			   strncmp(ab_pathname, share->path, share->path_sz) ||
++			   ab_pathname[share->path_sz] != '/' ||
++			   strcmp(&ab_pathname[share->path_sz + 1], name)) {
++			ret = -EINVAL;
++		}
++		if (ret)
++			ksmbd_debug(SMB, "invalid name reconnect %s\n", name);
+ 	}
  
- 	if (cflags & NTLMSSP_NEGOTIATE_KEY_XCH)
+ 	kfree(pathname);
 
 
