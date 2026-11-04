@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831480;
-	b=j6Zr30hwRV1p7PkYenszI8P8OHZedq9JaqB1VGleOfqaUmftxrCsr5rk3OrpVlqxZHc2
-	 KjUgpoXHUEgppBoDkM4d9ocgrd9CYnjjsHH77Sprbv7Sl9fgXXLZU53N8O2jy0abcTQ3g
-	 r6YqUp9zZskSKxL1RscU596cqrGx3d9EoVeW1iQN33VXIssC0gYipR4ps4sJw/spT/mOr
-	 iVcMaTi8JvuV+3xoTxdON+GRffxw7bVphulNfzlSLWMEbHak8YQV0AJVFb/SYW7DROVSx
-	 OrvZsV12RdzC4wwECttfyKzqbTnaC5VKAeQdla7inSvOYtKkhV2Kkbtqnb3ERNB9AVg==
+	t=1793831482;
+	b=KRUfPaBpHG7ioZ7Hw1oFxjPY/KDt0+oFWChyOa/Yj0J1IgGmqI287MAqLx4VwDiNiAfe
+	 KW8SVb9pwKkANINvImwtD4Oj/UwVa3Cwgw6hJEXT2nszlKnNakRixNiKbZb8JdCgWcs/C
+	 1xHovJZPjwmRvfcOLnj0QsdJp+T2lDLlL9CnvOUJM2CY+nnEWdgZ7ebfSM862Hpg5qq4h
+	 7bWLSTW2FXjn9/0rshN5/clvXB6cRzjgOSdQQn6Qg4C5rRJib/4Y85d+dq76/kto1MuFX
+	 fhh3+LibeiOO/HTIDVYy8uberGe6KeTitOY4o+3As5lc/JXWbHQpMSrv7ZIk9IO1FdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831482;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/zU9WXM02FD0rFQ0g4buGmzoeZg+rnW3Op4tbb8NXrA=;
-	b=2S5e9XQFiR+3M/0andv07/kt1cEETNCIJ13NhzduSdh6LdBluTsUJd+ll8GRIt3oHt3B
-	 mjOzefqeFSrnwkGFRGJxVjs0mTP37bOd9p/nwOIeSVK3a+GFwXdgcmhGD/m1ilrHHvcAZ
-	 XSDu0KQZLTydZuRaIs6pou7HgOsUZDNzlq3zrKyGLb0+GmmBw4oByTPEoCVwMlIf/yoN/
-	 qfUYwOjW7ghbI3/tQkH4t/imJMhsor+R2BwtEbgDuWlbq0tZZ3k0XkVzAAObZQ2SZtrNs
-	 6S4sA6SV8pZghbBk7Ta7SyfCxHNH0a2cTzUntE0Ifj7SdhMG37lYB2XM6vJGPWrgq1Q==
+	bh=HjKVAo4ibu1snwGfvLsLHJOKVeP4qV5E8yIT1+1WV98=;
+	b=IjGKjsbxY7QX6P6HDP80zj4fzas9EBHHKh917XPUJFA8CP03w2S2gckE15TVRHWILYwf
+	 TaiY50fRS3Vezx2NuusB1lWFE1JKQ4eaUBFnwUDZfexGT5vyGXScal1/DHommIW6Cbpq3
+	 PF9fW09upDGcLs/pFthBIPf7VJ7Lwl3gTiEYqU+oZRm7uzFU4hltYjx37fQx/YnsWBv3p
+	 gzqvBfhZXuBsSQio9tSCekyaPUNaAvlBDPFvFhWJbkpxzPhWlCZff7eyc8F8b8ZaYzLLf
+	 VSstw65rL/DC7/WPaSfVBEPYwMhwTYi32isrtfzbP7hLClqU+lMsurotyLVlX0++0XA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gpQJOItY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HR8hWCxs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB96606AC2A;
-	Wed,  4 Nov 2026 22:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DC1606AC2A;
+	Wed,  4 Nov 2026 22:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gpQJOItY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB4B1F000C1;
-	Wed,  4 Nov 2026 22:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HR8hWCxs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1BA1F00919;
+	Wed,  4 Nov 2026 22:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831480;
-	bh=/zU9WXM02FD0rFQ0g4buGmzoeZg+rnW3Op4tbb8NXrA=;
+	s=korg; t=1793831481;
+	bh=HjKVAo4ibu1snwGfvLsLHJOKVeP4qV5E8yIT1+1WV98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gpQJOItYM5rYdpa+wlF3tjU/xKFp3OUB0VqHbveTfwAmU1Xs4pollSBFmJFOiGX2B
-	 nvdwSWI1s4YpPcl7DlbcDky+gDysnTMymqPXN8gQvNy78fVQTfgJvBXPSoG2mkmTG9
-	 tm2IsTe08pODwuhDrsdGMPBSYs8b29jl56mN1PxI=
+	b=HR8hWCxsp6CDI7MBlxSBPUfB6VF2JxSRhiYaJjypHTb/jI2qjA+/firdt1sVvPLxA
+	 xxog4wXGwL1HOXawPV4p5STrsjpZKcz5Gw2WBxWOmiGXEwHLw1L6vqRU4Xwl83g+lf
+	 QdF1NeeVjz7LoTce9KHpaktpnWl1tUXAFL8K6AWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Yang <yanglincheng@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Zach OKeefe <zokeefe@google.com>
-Subject: [PATCH 6.18 0730/1005] mm: khugepaged: fix folio is used after folio_put/unlock()
-Date: Wed,  4 Nov 2026 16:07:43 -0500
-Message-ID: <20261104211103.945832493@linuxfoundation.org>
+	Jamie Lenehan <lenehan@twibble.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 6.18 0731/1005] scsi: dc395x: sync the waiting_timer before freeing the host
+Date: Wed,  4 Nov 2026 16:07:44 -0500
+Message-ID: <20261104211103.970264992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -74,86 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vernon Yang <yanglincheng@kylinos.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 9010383e71e6ce75fcd3c8f87133c8ce6c0e6ab4 upstream.
+commit 0b1a79f2791a06f139dce5450e487307cf0e241f upstream.
 
-On the rollback path, folio_put() has already dropped the last reference
-of new_folio.  On the success path, new_folio is already unlocked and can
-be freed concurrently.  The trace_mm_khugepaged_collapse_file() is left
-with a dangling folio pointer.
-
-So using the folio_pfn() before dropping the reference, closing
+The waiting_timer callback re-arms itself and takes the host lock.
+adapter_uninit() currently stops it with timer_delete(), which does not
+wait for a callback already running on another CPU. The final
+scsi_host_put() that frees the host (and the host lock the callback
+dereferences) runs right after adapter_uninit(), so a concurrent or just
+re-armed callback can fire after the free, leaving a potential
 use-after-free window.
 
-Link: https://lore.kernel.org/20260909025804.3233645-4-vernon2gm@gmail.com
-Fixes: 4c9473e87e75 ("mm/khugepaged: add tracepoint to collapse_file()")
-Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Zach O'Keefe <zokeefe@google.com>
-Cc: <stable@vger.kernel.org>
+Replace timer_delete() with timer_shutdown_sync() at the top of
+adapter_uninit(), before the host-lock section: the timer is dequeued,
+a running callback is waited for and rearming is blocked before the chip
+is halted, so it cannot fire at all once the adapter has ceased to
+function. Waiting outside the lock avoids the self-deadlock that would
+result from syncing a callback blocked on the lock we still hold.
+
+No shutdown is needed for selto_timer because it has no reachable armer
+or callback.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Cc: Jamie Lenehan <lenehan@twibble.org>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260911020544.42966-1-fanwu01@zju.edu.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/huge_memory.h |    6 +++---
- mm/khugepaged.c                    |    4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/scsi/dc395x.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/include/trace/events/huge_memory.h
-+++ b/include/trace/events/huge_memory.h
-@@ -200,10 +200,10 @@ TRACE_EVENT(mm_khugepaged_scan_file,
- );
+--- a/drivers/scsi/dc395x.c
++++ b/drivers/scsi/dc395x.c
+@@ -3814,13 +3814,11 @@ static void adapter_uninit_chip(struct A
+ static void adapter_uninit(struct AdapterCtlBlk *acb)
+ {
+ 	unsigned long flags;
+-	DC395x_LOCK_IO(acb->scsi_host, flags);
  
- TRACE_EVENT(mm_khugepaged_collapse_file,
--	TP_PROTO(struct mm_struct *mm, struct folio *new_folio, pgoff_t index,
-+	TP_PROTO(struct mm_struct *mm, unsigned long new_pfn, pgoff_t index,
- 			unsigned long addr, bool is_shmem, struct file *file,
- 			int nr, int result),
--	TP_ARGS(mm, new_folio, index, addr, is_shmem, file, nr, result),
-+	TP_ARGS(mm, new_pfn, index, addr, is_shmem, file, nr, result),
- 	TP_STRUCT__entry(
- 		__field(struct mm_struct *, mm)
- 		__field(unsigned long, hpfn)
-@@ -217,7 +217,7 @@ TRACE_EVENT(mm_khugepaged_collapse_file,
+-	/* remove timers */
+-	if (timer_pending(&acb->waiting_timer))
+-		timer_delete(&acb->waiting_timer);
+-	if (timer_pending(&acb->selto_timer))
+-		timer_delete(&acb->selto_timer);
++	/* Drain the self-rearming timer; must not run under host_lock. */
++	timer_shutdown_sync(&acb->waiting_timer);
++
++	DC395x_LOCK_IO(acb->scsi_host, flags);
  
- 	TP_fast_assign(
- 		__entry->mm = mm;
--		__entry->hpfn = new_folio ? folio_pfn(new_folio) : -1;
-+		__entry->hpfn = new_pfn;
- 		__entry->index = index;
- 		__entry->addr = addr;
- 		__entry->is_shmem = is_shmem;
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1861,6 +1861,7 @@ static int collapse_file(struct mm_struc
- 	struct address_space *mapping = file->f_mapping;
- 	struct page *dst;
- 	struct folio *folio, *tmp, *new_folio;
-+	unsigned long new_pfn = -1;
- 	pgoff_t index = 0, end = start + HPAGE_PMD_NR;
- 	LIST_HEAD(pagelist);
- 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
-@@ -1873,6 +1874,7 @@ static int collapse_file(struct mm_struc
- 	result = alloc_charge_folio(&new_folio, mm, cc);
- 	if (result != SCAN_SUCCEED)
- 		goto out;
-+	new_pfn = folio_pfn(new_folio);
- 
- 	mapping_set_update(&xas, mapping);
- 
-@@ -2292,7 +2294,7 @@ rollback:
- 	folio_put(new_folio);
- out:
- 	VM_BUG_ON(!list_empty(&pagelist));
--	trace_mm_khugepaged_collapse_file(mm, new_folio, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
-+	trace_mm_khugepaged_collapse_file(mm, new_pfn, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
- 	return result;
- }
- 
+ 	adapter_uninit_chip(acb);
+ 	adapter_remove_and_free_all_devices(acb);
 
 
