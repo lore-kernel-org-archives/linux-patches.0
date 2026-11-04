@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831911;
-	b=C56Cp/Y337znsuDIzZUEa1QihJOGJ+h7rZBEpjnzgUSy3xO2uRR/0+I1EHNgFepJCp3a
-	 ck3EqFMitgx7BMiZ4TkOUdifYXIvrFBSi5FSo4c9Ffm3C27nM0sw2faLnfFwpj4IjoTGa
-	 D44FKgDwtFA3btqDRVVBcwRaYuXKUFFzbdQdPI7TCjae3BDWFaHCgDjwf7U99PyUQs9qE
-	 FZ2/vYxvFHqy+qxLx0Z0jHLv2nytZQbaNswCqylRX77wCGai/MqqhRL+Op2qEzFsNZl07
-	 4aalGC1vMjtc0WhGKAZJxzpD6FLd62ITCCujL3RZM0k5/3vvwFSJpCnuXpJTth6bceQ==
+	t=1793831912;
+	b=Q73UJ1wHu2MvhOv2KRlFtEqvtKT+YMJvLzqBorRrCmQuugtnAdrieHMjk2kd2qfE2EXT
+	 SVC+kjI4823KsBucEPxGqt6T/q+gbr+mhx01t7L37TAX4iGklwd9gbeVgceZEh98VHTmu
+	 7yV/jx0bsCSV2PeXjOP6cmXyJi1mQnz7A1x8+qWjLmxhyBTl1KxeivhtyE2pGSRQ80etE
+	 swx6hXIloZKrEdX3MsMko87ZhYBrDdZTgNJzSTgWBjfi7l4h0TGAWRHa+JzVYivszutUi
+	 q+dQHz/Rvz2zJmtku8fmBe7ILI39MTQRT1Wduja80rHh0rXbTSyMrShch479Z4E5dFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831911;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+YM0S781jI2+ydPj8Iz7uG2eSjMaEo3byu2ElUHOTdc=;
-	b=BSZ1/LmDlcvTXI3CsGcOj6LEtSUiCIho+I9rL2hEak8EsWbRQiYPnMJuwftb96GR79ld
-	 meh7yfZE84SQef4OtcCQivv1nL3XAuSh5eNGUCdxPy1WLq0GemED40lOTDLfggn8EpItt
-	 Evabm2JMhF/mUpIoOir0tf0aogf027No2s7TNKSgzFtnYmXLu32HU76DSKPJX3c4Sk5pH
-	 uci/BWQrl8OTXyE/d9X69Y27CTZFCO1od2KdYbAggHIgbKQJ4eo2jrdt6wDH/zdhmz7RP
-	 7UOK3d8rLSq9kYXMXfmIWOkdmWh6lrzSNoJT9m6bLN3cRhB5N8ZaPqyaO8vRsl63ZlA==
+	bh=KRhXkvBhr5CZH74jC1eas2TmrN+E7zKG3TAtBCFslTU=;
+	b=22HcuZrj54Qz8PzC62mMzIU2o0J+oELlSQ9I7Edru4LqONs0JcPnQDhkX0gxmsbC/p2y
+	 hjwHVB4AHUyPn6W19jjhdDOUpHuGKmXmBxN+yBj+MEroAPMzOW9Hs0AUpbuIVfw1tVaoF
+	 lKLpjt3mHhBTyMPK7qRAb/Nv2T2KGgPlzpNZzfOZ/rlazOOxILDqkJBgSwmWI8KyRfXOv
+	 Z4XSW/PZh/x9RUWQTj9u3b9IifhFcokGSMJOwSDsrr/9ssbAMpZ+aCI9L39oUI23a3rfS
+	 zlMkRfKe20x0nKwBtAii8M2f7UThn63sCFZv3gW1wLuOinLJaEPVtvDkCofb26DdoAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMQRTXJo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lscKnIvM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0574606A32D;
-	Wed,  4 Nov 2026 22:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2452A606A32D;
+	Wed,  4 Nov 2026 22:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMQRTXJo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CB91F000C1;
-	Wed,  4 Nov 2026 22:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lscKnIvM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69E41F000C1;
+	Wed,  4 Nov 2026 22:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831910;
-	bh=+YM0S781jI2+ydPj8Iz7uG2eSjMaEo3byu2ElUHOTdc=;
+	s=korg; t=1793831912;
+	bh=KRhXkvBhr5CZH74jC1eas2TmrN+E7zKG3TAtBCFslTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KMQRTXJomPYl8qSTbfl6sFs2HuY5EBVA59GXjfm+aXm+8RLMOFPHeISfT9z+5nM1D
-	 hBSJRpOW3sj6/n4cJblhLhsl7Pw9JvwikD25aES74YXZSGMB30D7UuBNQyulBH4TY2
-	 SWFRTFALSwceMcSEPml9pCZQRjV8qqyLCe6MwMew=
+	b=lscKnIvM9hfoduqS3G4sTf3dKvmCk1jWRPA52oUtJ3UMO65OaTVHjfHyOzR7vBrgP
+	 WzkvZYqNu9ngUe7IU53wue4RxsgG7C578cKjVkgMadioDjGMVZtwQdlDu6PRXTkoUE
+	 fPJC4gVDIKoqDJokeryAQqLKppgsNUTsL3NOOfQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 0938/1005] KVM: x86: Take SRCU in kvm_zap_gfn_range()
-Date: Wed,  4 Nov 2026 16:11:11 -0500
-Message-ID: <20261104211109.402543072@linuxfoundation.org>
+	Cheng Yongkang <teel4res@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 0981/1005] io_uring/net: fix multishot recv length limit accounting
+Date: Wed,  4 Nov 2026 16:11:54 -0500
+Message-ID: <20261104211110.520521638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,68 +67,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-commit b59a87c1ba3c347e8aec5f932eb7abf13064fd62 upstream.
+Commit 3e3aebb7570ccdde5cc49c9bfc8fd3a436b71b0c upstream.
 
-kvm_zap_gfn_range() walks memslots and rmaps and may drop mmu_lock to
-reschedule. Callers that do not already hold kvm->srcu (or slots_lock)
-can race with memslot deletion: synchronize_srcu_expedited() does not
-wait, kvm_free_memslot() frees the old slot and its rmap, and the zap
-resumes on freed memory.
+io_recv_finish() debits sr->mshot_total_len with min_t(int, sel->val,
+sr->mshot_total_len).  sel->val is the cumulative byte count of the
+request: on a bundle retry the receive path adds sr->done_io back to the
+return value, and the bundle branch in io_recv_finish() recovers the new
+bytes with this_ret = sel->val - sr->done_io.  The debit therefore uses
+the wrong value after a bundle retry, and the int cast truncates a limit
+above INT_MAX.
 
-The VFIO noncoherent-DMA path hits this by zapping the entire GPA
-space without SRCU. KASAN reported:
+For an IORING_OP_RECV multishot request with optlen above INT_MAX, the
+limit becomes negative when cast to int, so the first completion debits
+the entire limit and ends the multishot with IORING_RECV_MSHOT_DONE
+while the socket still holds data that covers the limit.  With 120 bytes
+queued, a 64-byte buffer and optlen 0x80000000, the first 64-byte CQE
+lacks IORING_CQE_F_MORE and 56 bytes remain unread; the same setup with
+optlen 0x7fffffff posts 64 and 56 bytes with F_MORE.
 
-  BUG: KASAN: vmalloc-out-of-bounds in slot_rmap_walk_next+0x82/0x1c0
-  Read of size 8 at addr ffffc900005c1008
-  Call Trace:
-   slot_rmap_walk_next+0x82/0x1c0
-   __kvm_rmap_zap_gfn_range+0x17a/0x280
-   kvm_zap_gfn_range+0x2a6/0x6a0
-   kvm_vfio_set_attr+0x576/0x770
-   kvm_device_ioctl+0x1ff/0x3b0
+After a bundle retry, the bytes already debited for the previous
+attempts are debited again, so the limit is exhausted early.  With 1400
+bytes queued, optlen 1000 and buffers of 600, 100, 100, 50, 50 and 200
+bytes, the first attempt delivers 700 bytes and retries; the second
+delivers 200 more, but the debit accounts for 900 and finishes the
+request with a terminal 900-byte CQE while 500 bytes remain unread.  The
+limit could have been reached.
 
-Take SRCU inside kvm_zap_gfn_range() so every caller is covered.
-Nesting with an existing kvm->srcu critical section is fine; the
-helper uses a local index. Drop the now-redundant SRCU pair from
-__kvm_set_or_clear_apicv_inhibit().
+Debit only the bytes received by this invocation, sel->val -
+sr->done_io, and compare as unsigned so a limit above INT_MAX is
+accounted correctly. Non-bundle multishot requests keep sr->done_io at
+zero, so their accounting is unchanged.
 
-Fixes: 362ff6dca541 ("KVM: x86/mmu: Zap KVM TDP when noncoherent DMA assignment starts/stops")
+Fixes: 0ebc9a7ecf6a ("io_uring/net: Support multishot receive len cap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20260825183924.237727-1-nicoyip.dev@gmail.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Assisted-by: LLM
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Link: https://patch.msgid.link/179328314078.648427.10086632105828535293@gmail.com
+[axboe: fix-up near-by incorrect comment while in there]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |    2 ++
- arch/x86/kvm/x86.c     |    2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ io_uring/net.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -6876,6 +6876,8 @@ void kvm_zap_gfn_range(struct kvm *kvm,
- 	if (WARN_ON_ONCE(gfn_end <= gfn_start))
- 		return;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -879,12 +879,15 @@ static inline bool io_recv_finish(struct
+ 		cflags |= IORING_CQE_F_SOCK_NONEMPTY;
  
-+	guard(srcu)(&kvm->srcu);
+ 	if (sel->val > 0 && sr->flags & IORING_RECV_MSHOT_LIM) {
++		unsigned int this_len = sel->val - sr->done_io;
 +
- 	write_lock(&kvm->mmu_lock);
- 
- 	kvm_mmu_invalidate_begin(kvm);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10619,10 +10619,8 @@ void __kvm_set_or_clear_apicv_inhibit(st
- 		kvm->arch.apicv_inhibit_reasons = new;
- 		if (new) {
- 			unsigned long gfn = gpa_to_gfn(APIC_DEFAULT_PHYS_BASE);
--			int idx = srcu_read_lock(&kvm->srcu);
- 
- 			kvm_zap_gfn_range(kvm, gfn, gfn+1);
--			srcu_read_unlock(&kvm->srcu, idx);
- 		}
- 	} else {
- 		kvm->arch.apicv_inhibit_reasons = new;
+ 		/*
+-		 * If sr->len hits zero, the limit has been reached. Mark
+-		 * mshot as finished, and flag MSHOT_DONE as well to prevent
+-		 * a potential bundle from being retried.
++		 * If sr->mshot_total_len hits zero, the limit has been reached.
++		 * Mark mshot as finished, and flag MSHOT_DONE as well to
++		 * prevent a potential bundle from being retried.
+ 		 */
+-		sr->mshot_total_len -= min_t(int, sel->val, sr->mshot_total_len);
++		sr->mshot_total_len -= min_t(unsigned int, this_len,
++					     sr->mshot_total_len);
+ 		if (!sr->mshot_total_len) {
+ 			sr->flags |= IORING_RECV_MSHOT_DONE;
+ 			mshot_finished = true;
 
 
