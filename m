@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829403;
-	b=mw1iycLBmk379IYrkTNBz/MXnLH8+HVKVKV0RLNMqBCtUkFNoevf0GzqR8ldMMuGJNjc
-	 /V1ycOjLbQxSUbOFcRjNzRpPvWFoVMOugiLofi01TJljKwfnoUR5OsZBxj9QB1F283tIw
-	 l5NtRjTOgMo4+7O9544qffPZkU+HbEucOkXHR9bfdF+eHycO64NurW/lOxw2tg8OVT0V6
-	 61EO9BfHaSRUUXV/L6BnMoFwJuykbSmm6SpZbJkR6dOWXVQ/CqEGzMmlAGlERoQd2bKOW
-	 jleUC/p4VKyKsmU+42okhn+O+MJe0oUX+6fKKSLmje+lE9bwdZceD8VHH+mPEB/Ey8g==
+	t=1793829404;
+	b=UIO9jJ0nBalpZR66QGAUlmNVon5HRpMZwfztwYCz4XMjiv9/9SDX7vZ57xV7a7/GPc2R
+	 jdcWuds7cvkgiYPxB3kkuvy/F0+ev3j10h2TfYnBQNS1RP6bZdOXfro3PG3cs0gbVne0E
+	 ruL80Z8EWJaImZ1YpNFF2p2XoNy7Huo+/E5MeIkOTxyq/PnbYyoADJRs48g78So60W+ND
+	 +l1kW9m4kuCgcKlOJ8k1w+4eS6g7Ss4t+wb33vYkqumB3VdV7lW/vW491+9PJLPMclqOW
+	 41SSlj3IrOEtwzkXQJracByr6OK9vjqzSUYspLAdNIz4PiAGhPWqivQs9utshiTWplw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829403;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829404;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jrhdYsPNJy1RAr5bAz8ZiOz6rL6wnWMeUUl4mjzvOGI=;
-	b=HyK7vvxULCjHbGsxTLSxuge2webB7XkhWB51lZDyUWazszPDjMerKzKi/keJNgpupw48
-	 G/GuX//2QFrKT16VOWVxUZDxd5saE67MVy8hhYuIL8DSlcRhEddPl8/OmGDoKW4WHCWbP
-	 eloagC3+vvzmSFA/y2WI2Vaa7ki2nojOtstydBm4rHDgt3O7x2IrfMetNpqCK6jOSquKB
-	 +eLJBTkYCWd9ibGPiNVAHtRy1Uln405LL/yR1fGJugUFuRYuQHKUqg3nNLhhuk5ibGoNe
-	 WSzjozX+Ilt0adguw5tsrTSzZXYbNpawaoJB1IKjztVmOBsKgiscBH7dyZkgtXNlRpA==
+	bh=wz6oxcMsI0gz7GeJmn1pu3VgQunqAvybblXvbQuTtko=;
+	b=DbP901D7xuWYmoc0YNgluGfOiHGMADBRa/WZAbhKdwBRBfsp7zdUWXkxrSf9904Vxu25
+	 +aEPBRv5ZaikT61VeL2YcQtg/IeMaHEJ5Frs9ibv63uAsBR4mHMaxl+jJmwhSDMNi9AsX
+	 2chz9hEe2rJdQyV5Jfrvw3LVwnc7Ezwr6r2cFI7RIjZJu+e8jGZL5IDsVQCd1B64T3Cm2
+	 yG3uEfcIAXM3LUrWSirkXS0kdwoXdGO87i9hEeKT4PmOcXuplSzSpIG8dd65/7wxpX+fL
+	 5m4nb7gpe852S/dTrmPfdJ4j1bIK8/31Bk3XpN4ZihTcUyFI63ilUcbUbyP8x+zXvtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p3FEdyZf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NqOVGsFl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4496086E79;
-	Wed,  4 Nov 2026 21:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DF56086E4A;
+	Wed,  4 Nov 2026 21:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p3FEdyZf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608631F000C1;
-	Wed,  4 Nov 2026 21:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NqOVGsFl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E232D1F000C1;
+	Wed,  4 Nov 2026 21:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829402;
-	bh=jrhdYsPNJy1RAr5bAz8ZiOz6rL6wnWMeUUl4mjzvOGI=;
+	s=korg; t=1793829404;
+	bh=wz6oxcMsI0gz7GeJmn1pu3VgQunqAvybblXvbQuTtko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p3FEdyZfvoFd9b8xVDcqbfniuhBfq1Q08OASObzjrZpmkpHQK6dUloOVhTGW1bvWv
-	 5AtL4QwPZoA3Yx6mbyNWwpl/fe5ZvKuiPrBndpymgiHF4FcQJsITJk4Z4CLekXBld3
-	 E9/4uXaRuaMCCseY/49SpGcyMnOBIRADt6l3iOFM=
+	b=NqOVGsFlqMfLUcL+jzy7c/WYMI6wRP53u/vqa8FDba5wrFo+htl2EVUc0VbOMgSDn
+	 1R+o1hv0G34S63LYv0LdzhpKqh+TKAPc7bSG9IoGmSZknAcyv+0kh1Z/7cZSgxC9tr
+	 YjO+0QtvIOf82amESwUeVjuJ5PxxGH86RxHnVJqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanmay Shah <tanmay.shah@amd.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0105/1005] remoteproc: core: Full attach detach during recovery
-Date: Wed,  4 Nov 2026 15:57:18 -0500
-Message-ID: <20261104211046.593114726@linuxfoundation.org>
+Subject: [PATCH 6.18 0106/1005] nvme: handle positive error codes in nuse_show()
+Date: Wed,  4 Nov 2026 15:57:19 -0500
+Message-ID: <20261104211046.621393352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,52 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tanmay Shah <tanmay.shah@amd.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit d93ffd549fb4df18c934ca7a47d4128a18c718cb ]
+[ Upstream commit dd516cd7624648c71d338d99368587f10ecc9f0b ]
 
-Current attach on recovery mechanism loads the clean resource table
-during recovery, but doesn't re-allocate the resources. RPMsg
-communication will fail after recovery due to this. Fix this
-incorrect behavior by doing the full detach and attach of remote
-processor during the recovery. This will load the clean resource table
-and re-allocate all the resources, which will set up correct vring
-information in the resource table.
+Function __nvme_submit_sync_cmd() returns a positive error code for NVMe
+errors. Otherwise, we get 0 for success or a negative error code for a
+kernel error.
 
-Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
-Link: https://lore.kernel.org/r/20260630004806.3835488-2-tanmay.shah@amd.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+In nuse_show() -> ns_{head}_update_nuse() -> nvme_identify_ns() ->
+nvme_submit_sync_cmd() -> __nvme_submit_sync_cmd(), we then may get a
+positive error code returned.
+
+Function nuse_show() - being a device attr handler - should return the
+number of bytes written to the buffer or a negative error code.
+
+Convert any positive NVMe error code to -EIO.
+
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/nvme/host/sysfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index bbc781e41a1b8..2336c55eb021d 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1784,7 +1784,20 @@ static int rproc_attach_recovery(struct rproc *rproc)
- 	if (ret)
+diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
+index 16c6fea4b2db6..12478e0297356 100644
+--- a/drivers/nvme/host/sysfs.c
++++ b/drivers/nvme/host/sysfs.c
+@@ -239,8 +239,10 @@ static ssize_t nuse_show(struct device *dev, struct device_attribute *attr,
+ 		ret = ns_head_update_nuse(head);
+ 	else
+ 		ret = ns_update_nuse(disk->private_data);
+-	if (ret)
++	if (ret < 0)
  		return ret;
++	else if (ret > 0)
++		return -EIO;
  
--	return __rproc_attach(rproc);
-+	/* clean up all acquired resources */
-+	rproc_resource_cleanup(rproc);
-+
-+	/* release HW resources if needed */
-+	rproc_unprepare_device(rproc);
-+
-+	rproc_disable_iommu(rproc);
-+
-+	/* Free the copy of the resource table */
-+	kfree(rproc->cached_table);
-+	rproc->cached_table = NULL;
-+	rproc->table_ptr = NULL;
-+
-+	return rproc_attach(rproc);
+ 	return sysfs_emit(buf, "%llu\n", head->nuse);
  }
- 
- static int rproc_boot_recovery(struct rproc *rproc)
 -- 
 2.53.0
 
