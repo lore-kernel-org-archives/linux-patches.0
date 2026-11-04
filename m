@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827221;
-	b=JnJlHCEz6E6TlDeWuzZ95+B/tJbaX3bLdrcdcub3I8tUqpV8+xlzQ5IqyEevPQa9EbzK
-	 8SNTvXRQc9jp8pFskFm5qFdRfsfN0+i2CDIt1JCDwnwW7YhmWXGw58rFQtfQzlELXKZwY
-	 thXUalKXgmiTB9kXHrYrNpQDYgp8Yc3HlVS0xJq0ovs2IxgDirpwX5i67vpU/TeaD/RYy
-	 zUH8q2F9q0XoQSAvVI5zvYwdOF88t039O3t9ITPMtxVHaHEoByW0vj88pqCCnM2zNjizT
-	 zvdH71BCYvOrUqMG+FlorinSI/o89I+91MgRMMgANRokI2+eRrf4qDHIMsKF/UDJ4Ag==
+	t=1793827222;
+	b=trGraF3wCsYcgPuQ64hFPEK4+6BEO2/2xYP06LnLgRgjV5fPbYSR+3OOgTFJSJiF0WGF
+	 GNteSNNaQB6S965QRLNQqpcV0CaDxMJd0isstUOY2vAjHN8c5y6AR5QGWcuED6IV01C3E
+	 PN9W8DZTrA/c8flpM9grVaZwbhbujqYUviiegcbcV7WsMOqNfE1voxz6u39OTW4kwfh7Z
+	 +b57xXXl8IbYLRRR54VjG4LntkSM5cvzqmhnNCtZKWs0F/dZEYfS+O9V3QG5Ejh0lFIrW
+	 v12ps3kftBt3P8YJRPdgiUu43++dSWn2+EHjbbvPcw7z9P6thsJMMRS8v1gNuaX78/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827222;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fOBngUzjIuefeyMVqZi0gsxED2LLyqcJVE0avmZAKMw=;
-	b=2D72Olsp33mTLv6N9X6iah2Q7IW5aJu/R1mHMyAptRgXsgPm/9aKgj1QA3bb2viq4EOJ
-	 JRg9844FgzXhwv+hVqRVrjxXBb7uFSv7gPKphYngOlfZJR6Sgn9cVCjkNw2wfjghMhy5q
-	 dj7AykgnLdGt1Ufz83NMg1jrsR5AnQY4IzlaRttD9Q2iZRxmoYgCzVZ3yANC9oz49aZH4
-	 f3+TsgrzlHHKebqH9DYXfQQVYSNl934NN4Su1E65eKgNj169kFzGEmtxiyNWyy2vOY0KD
-	 oC96K2o6j7aRnT+0RA+nYHaNVMA0VJKWN9L9qRA4r+8i28efrLBFfRSaqHsMnCFPR8Q==
+	bh=bQukiRTDsvDkvelNuLG2+9zTJs4obElNpR/TzfoDgZA=;
+	b=UZBo1r5Q2N8a4/pt59WrEhQCfh/Iv8IAqk8wxGfEGgIayyBL3b27oAtllt0G/tTuzPvn
+	 iWqhvyitI/oFNOKaZEWo3jxzbu/D70MphaeA1zhSjoDNZII+P0XDk+dT3A381jjPPgS2J
+	 QGFICuWFvCH/FBavGnXoj10EqBGBrn2r4xcBoermaSE0K1Apaneb3bggCUWZCk1icXzFj
+	 CHHEyTatxvTvcy87dFz42NuH+0QCfXYaEAmpxS/5gTkat4p5zdRAkZnPwBp/jRsz4S0MJ
+	 1welRfRRT6Ms62bTK0OuYiWR6qiLx0lA+YUUyQ/86YlWrX4+u5kHQy03rk372bWS30g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qi5KyPqR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ns4qgefA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE39C606B3AF;
-	Wed,  4 Nov 2026 21:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865A1606B3B1;
+	Wed,  4 Nov 2026 21:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qi5KyPqR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADF91F00A17;
-	Wed,  4 Nov 2026 21:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ns4qgefA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ED51F00A17;
+	Wed,  4 Nov 2026 21:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827220;
-	bh=fOBngUzjIuefeyMVqZi0gsxED2LLyqcJVE0avmZAKMw=;
+	s=korg; t=1793827222;
+	bh=bQukiRTDsvDkvelNuLG2+9zTJs4obElNpR/TzfoDgZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qi5KyPqREpw29hQk8R89sJ4uXZOb2LryikHsDFME+ZgxkcArlvGTUW4n+wVdd6l2I
-	 UsRYGNBsmtvfhrzNi0tA3ahCIjILMRSr6nSm1CqPWvsYlPDDJExDy4H0ei6YcsRCrW
-	 yPyTXiMxrhTjrEmuizurSBnvH+GBmHVtdLYgQ2K0=
+	b=Ns4qgefAw8l72Vk5DLeUvmsspCNt9DeR1YFaCbbhGeGAcjBw9ZXYIOS03On9yRmMG
+	 /Ohz2N1sLgfycerzrsXdkYa3jbyBwuyqlT09v/EIr+vUXdFJP/Ha6ArSOdy6PrLQDJ
+	 e9Qb+4sjOnz1oFe0Z/9K0TO5w7cB+TNtw378CC78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.3 228/547] media: marvell: mcam: stop DMA and cancel s_bh_work before freeing DMA buffers
-Date: Wed,  4 Nov 2026 16:06:52 -0500
-Message-ID: <20261104211044.633874626@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.3 219/547] io_uring/io-wq: save worker type before dropping its reference
+Date: Wed,  4 Nov 2026 16:06:43 -0500
+Message-ID: <20261104211044.375247236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,78 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 0f29f84317c1e35f6a9265277be33e60d3fc8c1c upstream.
+commit 37e425460b7c41687e51e3254b1eb1d799da9614 upstream.
 
-In vmalloc mode the frame-completion IRQ queues mcam_frame_work() on
-cam->s_bh_work, which memcpy()s from the dma_bufs[] that
-mcam_free_dma_bufs() frees with dma_free_coherent().  mccic_shutdown()
-frees those buffers without stopping the controller, so while streaming
-a late frame IRQ can re-arm the work after the buffers are gone, causing a
-use-after-free.
+io_wq_cancel_tw_create() inspects cb->func after calling
+io_worker_cancel_cb(). For an existing worker, that call can drop the
+last worker reference and wake io_worker_exit(). If the canceling task
+is preempted, the worker can be unlinked and freed by kfree_rcu() before
+the callback function is inspected. KASAN reports a slab-use-after-free
+read in this path.
 
-Stop the controller in mccic_shutdown() when streaming is still active
-(gated on an open fd, which holds a runtime-PM reference, so the device
-is powered), cancel s_bh_work in mcam_free_dma_bufs(), and move
-INIT_WORK() into mccic_register() before the device can be published.
+Save whether the callback belongs to an unpublished continuation worker
+while its reference is still held, then use the saved result for the
+conditional free. This preserves the existing accounting and frees only
+the worker allocated for the canceled continuation.
 
-Fixes: 67a8dbbc4e04 ("[media] marvell-cam: Basic working MMP camera driver")
+Fixes: e6db6f9398da ("io_uring/io-wq: only free worker if it was allocated for creation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/marvell/mcam-core.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ io_uring/io-wq.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/media/platform/marvell/mcam-core.c
-+++ b/drivers/media/platform/marvell/mcam-core.c
-@@ -406,6 +406,8 @@ static void mcam_free_dma_bufs(struct mc
- {
- 	int i;
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -1424,14 +1424,16 @@ static void io_wq_cancel_tw_create(struc
  
-+	cancel_work_sync(&cam->s_bh_work);
-+
- 	for (i = 0; i < cam->nbufs; i++) {
- 		dma_free_coherent(cam->dev, cam->dma_buf_size,
- 				cam->dma_bufs[i], cam->dma_handles[i]);
-@@ -1306,7 +1308,6 @@ static int mcam_setup_vb2(struct mcam_ca
- 		break;
- 	case B_vmalloc:
- #ifdef MCAM_MODE_VMALLOC
--		INIT_WORK(&cam->s_bh_work, mcam_frame_work);
- 		vq->ops = &mcam_vb2_ops;
- 		vq->mem_ops = &vb2_vmalloc_memops;
- 		cam->dma_setup = mcam_ctlr_dma_vmalloc;
-@@ -1864,6 +1865,12 @@ int mccic_register(struct mcam_camera *c
- 		goto out;
- 	}
+ 	while ((cb = task_work_cancel_match(wq->task, io_task_work_match, wq)) != NULL) {
+ 		struct io_worker *worker;
++		bool free_worker;
  
-+#ifdef MCAM_MODE_VMALLOC
-+	/* Init before sensor bind: armed by IRQ, cancelled on probe-error paths. */
-+	if (cam->buffer_mode == B_vmalloc)
-+		INIT_WORK(&cam->s_bh_work, mcam_frame_work);
-+#endif
-+
- 	mutex_init(&cam->s_mutex);
- 	cam->state = S_NOTREADY;
- 	mcam_set_config_needed(cam, 1);
-@@ -1922,10 +1929,15 @@ void mccic_shutdown(struct mcam_camera *
- 	 * take it down again will wedge the machine, which is frowned
- 	 * upon.
- 	 */
-+	mutex_lock(&cam->s_mutex);
- 	if (!list_empty(&cam->vdev.fh_list)) {
- 		cam_warn(cam, "Removing a device with users!\n");
-+		/* Stop so the IRQ can't re-arm s_bh_work after the buffers are freed. */
-+		if (cam->state == S_STREAMING)
-+			mcam_ctlr_stop_dma(cam);
- 		sensor_call(cam, core, s_power, 0);
+ 		worker = container_of(cb, struct io_worker, create_work);
+-		io_worker_cancel_cb(worker);
+ 		/*
+ 		 * Only the worker continuation helper has worker allocated and
+-		 * hence needs freeing.
++		 * hence needs freeing. Save this before dropping its reference.
+ 		 */
+-		if (cb->func == create_worker_cont)
++		free_worker = cb->func == create_worker_cont;
++		io_worker_cancel_cb(worker);
++		if (free_worker)
+ 			kfree(worker);
  	}
-+	mutex_unlock(&cam->s_mutex);
- 	if (cam->buffer_mode == B_vmalloc)
- 		mcam_free_dma_bufs(cam);
- 	v4l2_ctrl_handler_free(&cam->ctrl_handler);
+ }
 
 
