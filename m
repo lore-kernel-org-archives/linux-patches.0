@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830949;
-	b=I/hmoUQz1OQUvTOs8CjN6sfDKq7iISM0Pe/cAEGmNc5MKsujLbkPR+8z3K0Z3Gg0q8l2
-	 3gVxcuMftGLDOUBrlJZFQDjLPYKL3wsX/RB6Q2vyB8Dq8iCeRVRO01btgauah+l0dlOpU
-	 0TElUwuEL1momhImi/9zfVDS7cF8iK39zpWaQrYvFPRIGkeB1jwzv8BcaPJkBMKJydu2N
-	 8z8+sprytonBYdGsYGhH0NgB2LqMFXz4HAlvGAwd2MS94/PTtuoNsgdY0iurBR3jmoitE
-	 KA8ZvWUXf2XrDOi5H/gtWzgfY9OSJow7HuzhRbabsWarurtiF3Euu5uKLSv1uaBDhTw==
+	t=1793830950;
+	b=ZGL37he7JjBctDFVfInKtrZkCIgYHCC9XZvBlXNAVXiheCMjmp78iIi8FXAt9KPUMz4k
+	 FZdAxjZvurpnIc5QVZV0zi3yTPnurJcycxtEfPY+qt1Klad3VRBIgFNTzPMkt/JiEv4wW
+	 Ndp8yrz+uZsRzadeHfrjGZPnYaznck5bmVs2H1bsR/jSYM0X5xvJ2oDGpeZyl9eLv8O0b
+	 /0EQISkgCWaD04hhoElWXL9kSul9qMTOg+3tJwCtjpfDMEAnNlFcJ0ZgEnGj0HGNr9NwZ
+	 CzOJEsp+0mbk00yV6Y7uc8Vy2imXp0Aer0BVhEDXhew7lkiqf4ClALdlSdhsCZUIwSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7DpTd6eC5N5hl22DUOzPNYYIGND9aZXj5cWTgi20JbQ=;
-	b=gonOIJoAR6h1izmqnPWzm2zm42lsF//UHbSj1ikSkh6jFAHh1lSZZHq9qM+2kK9tojM4
-	 /rNDvHpoaTyMcHHMynlOfTji5/FzBogi+xW8uFGlFatmAS5ec/+G+SeT67dPJ57EvvQ0x
-	 GH+s5Gt/8j+mTxmYI/q7nlz8EZHlSG1UC0y8bg904lnWcYPwQmQXBHJFNCOrJZWNlnCkj
-	 wNXwJ713tOv9FTZi45crVKxmkh/G2L7o9pu+HH5VYh4Eeft2a4ExGarUQak1qcCClikwb
-	 n1CmpCK5vRWVOwNlhVxqJQTjXc46iHU5m0OTjdLIbyhA/tinJmtrxKpPcJKe6Rxr5QQ==
+	bh=TEZgOW6TzYUH+1IvgWbwl2Ez/VZSttR9Pnia4Af9YPs=;
+	b=coRVs7ANVmMTlpajx8KUM1VQdXIcdJJKa+jlQVCgvtHAhnAsEYa8hqwZ3CnTd8EHAnPu
+	 jbzv6O7CtnX31DGYIjmMThA2mMWxl4W3EcDQlPPBzZboBZHI8AJlXYCOujnjUa9B2N8ed
+	 aE0wCeqn8838wq3DimUhkXE7luCn3zMcsaVDZLScFewdt5kGhF+NEyWNgKoBrtvKaCR3M
+	 56Wf5k7KaIneIN3W9cMoMRKdAUVuyUp53F5YiPUfPoHoFFv2m4p+ZYy/RHoQVKvrBNbqf
+	 MtcuP6iyZ23lT5q1lz9Qw2VqeuqwrApHHkFqqXoZSUCACoFQhc4/nUE7YwKCQv/xzAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Si6Dd+MZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uZaV6vGO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B60606A844;
-	Wed,  4 Nov 2026 22:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A752606A844;
+	Wed,  4 Nov 2026 22:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Si6Dd+MZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C171F000C1;
-	Wed,  4 Nov 2026 22:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uZaV6vGO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060C91F000C1;
+	Wed,  4 Nov 2026 22:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830948;
-	bh=7DpTd6eC5N5hl22DUOzPNYYIGND9aZXj5cWTgi20JbQ=;
+	s=korg; t=1793830950;
+	bh=TEZgOW6TzYUH+1IvgWbwl2Ez/VZSttR9Pnia4Af9YPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Si6Dd+MZkE8+db2b7UpcMz4w0IyKWHwVfJDLAhIKVx9tg4X3jipsNGYHmBuY/JVVd
-	 3g6DwmLcMqvpGFQvuF6Log4b6W7fZu4fjLGmVdBSwzgB9SGf6mLMQ9YUMd1kL1WDUG
-	 Blyhd2QpvKPUxMLbt3jRwy88R84GAlHftAoZYoUY=
+	b=uZaV6vGOlvZodRyg80lDt7WqqOjnN7Nvbvazk9restNBrm0tSy85SQtF0CM6DZZUn
+	 gPIjMHS1eCdfOH80rhlRt4hbHBAhGT09c9EkxjcBjAecD4RgnrGAmQTRPkufFEAcUX
+	 ozbjVvL3e5JjTHeQMEo88NmZhJdYs1Yg0728j2BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gael Blivet <gael.blivet@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0417/1005] ksmbd: fix SMB2 byte-range lock end offset
-Date: Wed,  4 Nov 2026 16:02:30 -0500
-Message-ID: <20261104211055.774253694@linuxfoundation.org>
+Subject: [PATCH 6.18 0418/1005] ksmbd: fix AsyncId zeroed before use in smb2_lock() cancel response
+Date: Wed,  4 Nov 2026 16:02:31 -0500
+Message-ID: <20261104211055.802572045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,128 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit 54d90311f9b4eb23f3b0b62650b0cfddb11a12ef ]
+[ Upstream commit 7b461610882c8baa64d56dade57cdbfb686739fa ]
 
-SMB2 describes a byte-range lock using an offset and a length, while
-Linux file_lock uses an inclusive end offset. smb2_lock() currently sets
-fl_end to start + length and consequently locks one extra byte for every
-nonzero-length request.
+release_async_work() zeroes work->async_id before the CANCELLED path
+calls smb2_send_interim_resp(work, STATUS_CANCELLED), which reads
+work->async_id to build the response's AsyncId field. The cancellation
+response for a cancelled blocked-lock request is sent with AsyncId=0
+instead of the id the client received in the original STATUS_PENDING
+response for this request.
 
-Translate nonzero lengths to start + length - 1 and reject ranges that
-cannot be represented by loff_t instead of silently truncating them at
-OFFSET_MAX. Track zero-length locks from the request length so one-byte
-ranges are not mistaken for zero-length locks after endpoint conversion.
+Checked against every other release_async_work() call site in this
+file: smb2_read()/smb2_write() don't send a further async response
+afterward (their status goes out on the synchronous path instead), and
+smb2_notify()'s two async paths already transfer the id to a separate
+struct before releasing, so this reordering is scoped to smb2_lock()
+only.
 
+Send the STATUS_CANCELLED response while work->async_id is still valid,
+then release the async work afterward.
+
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Assisted-by: Claude:claude-sonnet-5
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 44 +++++++++++++----------------------------
- 1 file changed, 14 insertions(+), 30 deletions(-)
+ fs/smb/server/smb2pdu.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 16dea2c8b9267..fba9c75b9f878 100644
+index fba9c75b9f878..edbac6c9b577c 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -7609,7 +7609,7 @@ static int smb2_set_flock_flags(struct file_lock *flock, int flags)
- }
+@@ -7914,22 +7914,25 @@ int smb2_lock(struct ksmbd_work *work)
+ 				spin_unlock(&fp->f_lock);
  
- static struct ksmbd_lock *smb2_lock_init(struct file_lock *flock,
--					 unsigned int cmd, int flags,
-+					 unsigned int cmd, int flags, bool zero_len,
- 					 struct list_head *lock_list)
- {
- 	struct ksmbd_lock *lock;
-@@ -7623,8 +7623,7 @@ static struct ksmbd_lock *smb2_lock_init(struct file_lock *flock,
- 	lock->start = flock->fl_start;
- 	lock->end = flock->fl_end;
- 	lock->flags = flags;
--	if (lock->start == lock->end)
--		lock->zero_len = 1;
-+	lock->zero_len = zero_len;
- 	INIT_LIST_HEAD(&lock->clist);
- 	INIT_LIST_HEAD(&lock->flist);
- 	INIT_LIST_HEAD(&lock->llist);
-@@ -7717,32 +7716,18 @@ int smb2_lock(struct ksmbd_work *work)
- 
- 		lock_start = le64_to_cpu(lock_ele[i].Offset);
- 		lock_length = le64_to_cpu(lock_ele[i].Length);
--		if (lock_start > U64_MAX - lock_length) {
-+		if (lock_start > OFFSET_MAX ||
-+		    (lock_length &&
-+		     lock_length - 1 > OFFSET_MAX - lock_start)) {
- 			pr_err("Invalid lock range requested\n");
- 			rsp->hdr.Status = STATUS_INVALID_LOCK_RANGE;
- 			locks_free_lock(flock);
- 			goto out;
- 		}
- 
--		if (lock_start > OFFSET_MAX)
--			flock->fl_start = OFFSET_MAX;
--		else
--			flock->fl_start = lock_start;
+ 				list_del(&smb_lock->llist);
+-				release_async_work(work);
 -
--		lock_length = le64_to_cpu(lock_ele[i].Length);
--		if (lock_length > OFFSET_MAX - flock->fl_start)
--			lock_length = OFFSET_MAX - flock->fl_start;
+-				if (work->state == KSMBD_WORK_ACTIVE)
+-					goto retry;
 -
--		flock->fl_end = flock->fl_start + lock_length;
--
--		if (flock->fl_end < flock->fl_start) {
--			ksmbd_debug(SMB,
--				    "the end offset(%llx) is smaller than the start offset(%llx)\n",
--				    flock->fl_end, flock->fl_start);
--			rsp->hdr.Status = STATUS_INVALID_LOCK_RANGE;
--			locks_free_lock(flock);
--			goto out;
--		}
-+		flock->fl_start = lock_start;
-+		flock->fl_end = lock_length ?
-+			flock->fl_start + lock_length - 1 : flock->fl_start;
+-				locks_free_lock(flock);
  
- 		/* Check conflict locks in one request */
- 		list_for_each_entry(cmp_lock, &lock_list, llist) {
-@@ -7758,7 +7743,8 @@ int smb2_lock(struct ksmbd_work *work)
- 			}
- 		}
- 
--		smb_lock = smb2_lock_init(flock, cmd, flags, &lock_list);
-+		smb_lock = smb2_lock_init(flock, cmd, flags, !lock_length,
-+					   &lock_list);
- 		if (!smb_lock) {
- 			err = -EINVAL;
- 			locks_free_lock(flock);
-@@ -7832,7 +7818,7 @@ int smb2_lock(struct ksmbd_work *work)
- 				/* check zero byte lock range */
- 				if (cmp_lock->zero_len && !smb_lock->zero_len &&
- 				    cmp_lock->start > smb_lock->start &&
--				    cmp_lock->start < smb_lock->end) {
-+				    cmp_lock->start <= smb_lock->end) {
- 					spin_unlock(&conn->llist_lock);
- 					up_read(&conn_list_lock);
- 					pr_err("previous lock conflict with zero byte lock range\n");
-@@ -7841,17 +7827,15 @@ int smb2_lock(struct ksmbd_work *work)
- 
- 				if (smb_lock->zero_len && !cmp_lock->zero_len &&
- 				    smb_lock->start > cmp_lock->start &&
--				    smb_lock->start < cmp_lock->end) {
-+				    smb_lock->start <= cmp_lock->end) {
- 					spin_unlock(&conn->llist_lock);
- 					up_read(&conn_list_lock);
- 					pr_err("current lock conflict with zero byte lock range\n");
+ 				if (work->state == KSMBD_WORK_CANCELLED) {
+ 					rsp->hdr.Status = STATUS_CANCELLED;
+ 					kfree(smb_lock);
+ 					smb2_send_interim_resp(work,
+ 							STATUS_CANCELLED);
++					release_async_work(work);
++					locks_free_lock(flock);
+ 					work->send_no_response = 1;
  					goto out;
  				}
  
--				if (((cmp_lock->start <= smb_lock->start &&
--				      cmp_lock->end > smb_lock->start) ||
--				     (cmp_lock->start < smb_lock->end &&
--				      cmp_lock->end >= smb_lock->end)) &&
-+				if (cmp_lock->start <= smb_lock->end &&
-+				    smb_lock->start <= cmp_lock->end &&
- 				    !cmp_lock->zero_len && !smb_lock->zero_len) {
- 					spin_unlock(&conn->llist_lock);
- 					up_read(&conn_list_lock);
++				release_async_work(work);
++
++				if (work->state == KSMBD_WORK_ACTIVE)
++					goto retry;
++
++				locks_free_lock(flock);
++
+ 				rsp->hdr.Status =
+ 					STATUS_RANGE_NOT_LOCKED;
+ 				kfree(smb_lock);
 -- 
 2.53.0
 
