@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829409;
-	b=y7GcCEOdXZElJU8vcZkDUb++DTlRQuChxzcL1X9EIaZNLkiSo+nuTQvZiWRpkKSRMWC8
-	 RR5JOnACUMYmpw3CtEo4gPCbTfpyqPXttfY2K9cCKjsi4dLKysEQkHMEBdU+cB3nDpIQ+
-	 pC0tysPTJjRPS3F3fR5teaiDhM4qMa59GVMDCzWxPStfUG2BFvpBSj+Idz/f7NzHfYKQH
-	 LJEtwNCnn9Qn/gVd5esaIf0dOD5NupljJlYngyKrFOTGooDHr/YWQ4eC6fQejqNUdKOfZ
-	 D7N8BGx3ioEoVwI+Q+WdSkbDa4p+WxuRhWgphgpc/V1c4fYrUOchmg7KSp25uaG1EQA==
+	t=1793829411;
+	b=PKeu86xKsq5NRMKRIerg1tACIhaaCpOxUpm/TXk4VaQUzN7tDUGGJZTA95xVrXJaE1Ii
+	 ljeEY4DEM4excpX05QMOsKYOSi9Egh/IG6O6OTShslYv92gk0cQ8eT9ydic/ezsUqiYC9
+	 MKftkgDpLxhuoinHyY9Z3w4GF9piJkX0RauohkneDYIeWoyIMw+iThRXJkU0IdEwvx5Qa
+	 f/59NZnf9r9kfm7sisBT6l4y2dFcQLoHnU9KIXT5RbCFEyFW0sTsg5o9BT+UZrdOyIKPX
+	 cDZmj8IhlWsZUK9KZ3HaHspcU6Vml+KrRoT/O6nIRRtg3pyTx+3xuGdhpGB7UKUMKJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ets7bNxwBH3mLoU2HCjojr3F2kwFKfJn+hNW4XIdthw=;
-	b=v9G0nT2Jm/6NaP/+3/po8UY3NTWyE7Yowcgc/lDeNwIEzGW7u40BVFZANylj25i8DmEu
-	 KBEWft8J464A+UB26GQhwujFNKQ5Yssz0xxuzOv8x/aSEfOjw23IKC/xjebsVCSx20yd8
-	 vAyFVAwS6dA3pBOGsQ9gAwbA1v9IwoKAqM8wWs0D13hQpeiG2JMHWbycdw5clOrJNuwmS
-	 /mIBCWn9R1QRyGxqlZlCctyxb+X4VasrgGNlHiMTNSWA9AiTZXQtXtrR/vyGEFZv5K1fS
-	 5fIlRv1LBFGpmQXFu8F5deMDX+fytRak8fmSueNLfAaPpY5mhP05TIF239W3v2aw5tA==
+	bh=Tr+ore537cQjZqAV3Bj6sytz30MXKcnhCiq/NAH/8Gs=;
+	b=ahaayuMWLRa65qV7l5BydYSXpeWde67+H4XgTujZVhp6YqGP/dy5ntmEPNOF9c86Wbpt
+	 p9YEsbLQLNsxzqp1p1OA5z/NZEZrL2k0bGN5WbdYndLNHgWo0eTXZA5Papn7q6PR2qWkN
+	 tx7ohAjKFxcRaX6vuf22uvw1NRXJFXxHze9UTPx48XIkGMPOkECV3Qsn63BMEebXcASm4
+	 8f8pRaHzIYBt/+3OhnkW/1BNstAgAUvxOKJKFSf44LApvBltSEWVdo+k13uDqq+oS8kwp
+	 qH3w37gzX/YvZ6ijU2NtFykNFhn3iXUz8XNc4qEy0wGBoc2Hvd3bIvVOQSeytgBTrZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ypl/Wq2U";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0hSD+h2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669AA606A865;
-	Wed,  4 Nov 2026 21:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB04D606A865;
+	Wed,  4 Nov 2026 21:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypl/Wq2U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59441F00A15;
-	Wed,  4 Nov 2026 21:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0hSD+h2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF1B1F00A17;
+	Wed,  4 Nov 2026 21:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829409;
-	bh=Ets7bNxwBH3mLoU2HCjojr3F2kwFKfJn+hNW4XIdthw=;
+	s=korg; t=1793829410;
+	bh=Tr+ore537cQjZqAV3Bj6sytz30MXKcnhCiq/NAH/8Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ypl/Wq2UuPkWLcphUNOjsxLVToCIFWi0Mm+2917iPpoKvxOXVRnRKhW2uFyUkb6bd
-	 sonOS1Y0GRpNxLKIsQCPU5Sd8XIRbrOJazJv44n2M68vvf1FGn5WkcTZ6DEJdoZHVU
-	 l1I+vV69Nt2HclR44ojZeteFiwBR/znxrndWXNAY=
+	b=Y0hSD+h2tgmYp2sqkmbwIK3ejnep+NrxuadNG1u+peo2zfniL49DeBjJ5+vKuHL/R
+	 VvcrgMdv5X5hAiTxins+QYGK2ZW2ASWSWiDQNQLJDQaYmr0HSxwO3bH/DVncikb0CB
+	 94KConZZunbO9s23h4b4n5lGOlEzuEMabDS7FAoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devansh Soni <devanshsoni874@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Romain Gantois <romain.gantois@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0109/1005] staging: rtl8723bs: fix missing unregister_netdev on sdio_alloc_irq failure
-Date: Wed,  4 Nov 2026 15:57:22 -0500
-Message-ID: <20261104211046.703770643@linuxfoundation.org>
+Subject: [PATCH 6.18 0110/1005] usb: typec: mux: tusb1046: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 15:57:23 -0500
+Message-ID: <20261104211046.732146683@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,43 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devansh Soni <devanshsoni874@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 51b554f1a758570159a770983c7a0ccd7c761491 ]
+[ Upstream commit 5e4eb5c96324b226220d29d025a334df28054ed3 ]
 
-In rtw_drv_init(), if rtw_drv_register_netdev() succeeds but
-sdio_alloc_irq() fails, the error path jumps to free_if1 and calls
-rtw_sdio_if1_deinit(). However, rtw_sdio_if1_deinit() calls
-rtw_free_netdev() without a preceding unregister_netdev(), freeing a
-still-registered netdev but leaving stale sysfs entries behind.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Signed-off-by: Devansh Soni <devanshsoni874@gmail.com>
-Link: https://patch.msgid.link/20260619125724.12458-1-devanshsoni874@gmail.com
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
+
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Romain Gantois <romain.gantois@bootlin.com>
+Link: https://patch.msgid.link/20260704124714.18404-1-pengpeng@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/typec/mux/tusb1046.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-index ae379e99736ad..e9bf6c3b18af0 100644
---- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-+++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-@@ -379,10 +379,13 @@ static int rtw_drv_init(
+diff --git a/drivers/usb/typec/mux/tusb1046.c b/drivers/usb/typec/mux/tusb1046.c
+index 3c1a4551c2fbf..89b47aa56c7a9 100644
+--- a/drivers/usb/typec/mux/tusb1046.c
++++ b/drivers/usb/typec/mux/tusb1046.c
+@@ -179,6 +179,7 @@ static const struct of_device_id tusb1046_match_table[] = {
+ 	{.compatible = "ti,tusb1046"},
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, tusb1046_match_table);
  
- 	status = sdio_alloc_irq(dvobj);
- 	if (status != _SUCCESS)
--		goto free_if1;
-+		goto free_netdev;
- 
- 	status = _SUCCESS;
- 
-+free_netdev:
-+	if (status != _SUCCESS)
-+		rtw_unregister_netdevs(dvobj);
- free_if1:
- 	if (status != _SUCCESS && if1)
- 		rtw_sdio_if1_deinit(if1);
+ static struct i2c_driver tusb1046_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
