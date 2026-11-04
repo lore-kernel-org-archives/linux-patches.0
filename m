@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829254;
-	b=RMHwUdbReWp5tnP5qNosW9aGy6go2bWWuN2aj75QeGvWM1p46GI0KXst7UTPw6t6i2Dc
-	 PLmIRrf6b8pA13rfCriN/MzO9mJBm0JPXzbwq7XIglxDUo+PG43yFx60OoKK/lwSRDmTi
-	 TPhXxzixiiWwI0j4WGUZpXRKZ/7ZX6oNsLQ260xMMmky3Cs6gqdZAaiLyGq10+lmphRmJ
-	 BXOYKvpGhMrOArTVPZme1/XtRk7MRbY2dK2kb/2H6/N50TMWik3xVz2NuuJBTpPI2+eGX
-	 U9KUraJ0AWDswoUELVTKXo403wJ2p7vcHG7XzHfCttcVsp1To2kP4Rgq2QmhQOrX8NA==
+	t=1793829255;
+	b=j2WLNpniaS5OUz8WtZKEVP2K9OIz8Sq/ggflCRRcYxx4nCrhW1SDzGUlytLyE3C/dhuC
+	 7Y2UYcasKSy8e4eTHmFV82pyNTtnVAax+Rw8tHqDHcIsh251sKTD06E/qaoKU5rQKzwHO
+	 m3X/2MZThav5dJqWrvEcCzTC/oF2JBlef/vlmx9Lo9h5CP0K8+QYIT6hr7HUVtdntuZAY
+	 rUFaErxOWMGxXn3cclUw88qul4At7rbVmMTgWjvJe5fMBSsSmfoOY+09R/TNJvgmH0qoo
+	 xZDEP4BEjeIHCsmqCDC/hlBCZS0ABjenXc9fw2/gITLq3iHGK+NY+xS7Hfsy1uzJhAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MXmoXw1RHEptIGFQtV0oijVOUYr4ihwiPWt0Uh0roAM=;
-	b=jFvc7gCmNsTL9LKMTQJLhJ7c0bqWE644RfwDV/aUAEd7gi6ZrfXCOZLVmyP+3P5e67V0
-	 hTg6Lfi5JanAyPO1WD7Zw2mwVkO/ME4VCsjVjK+52kWhc35sIHLRy8CrjkEO5lvhaie52
-	 uEORbwAWERbfXyT290DoSv6628zGMtXkQgCP98pEk7+oJlIBgjDmhE9o+j/XAVA87qJhZ
-	 LL2KbjoVSPZPeO7wp4IKqT4uClb2uxuMnYTZzXezfd653n+UYmCdVTHDW+0q9vhsyhZRr
-	 e7TM0iUwlKQe3NSyJR4lps+Pe5zJnZn35fZ/kST2fbn6D2XueCFDGuGVhcge9WKyEiA==
+	bh=a2vR7iTrenYGvJV6yNbn0WVMu8pJ3+/YekoEV15Xei0=;
+	b=ixE+LUm0ZdugQK2X23ZjTEoJCxs3i8WsmCSCOgdGBrZOYQUiuUv3Vu/TPZkc6hfE/0i1
+	 yFWuG2pWO1I6hl5IKjFDMQ5RHCZWeDC7tjJ4u/YeS8IzfxnUCYAal+J4NfuG7/6ZYUsyi
+	 egFfr8NzfrSa+qS+Iso4FA3eY6C0wYGNt3p8VCC/lgvYE7NAg0m6Kw03gUp6GwLxUTKuj
+	 HcHrVC7urQ7t3+3avgbPhbkTMB1jNJmlpCiKGtH9qXp4SV9+XpNHrtX/ZedlltcD3pI17
+	 8jCZY64vOfEt57uMXU8m9ZKwd1Xoj9GsxjusC+SHyLAVTHlO3ZJLHMimIsJPwZHJyZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aD+y5G5D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zS0g3Vc8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38B2606A845;
-	Wed,  4 Nov 2026 21:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6108F606EE81;
+	Wed,  4 Nov 2026 21:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aD+y5G5D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A96A1F000C1;
-	Wed,  4 Nov 2026 21:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zS0g3Vc8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030D31F000C1;
+	Wed,  4 Nov 2026 21:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829253;
-	bh=MXmoXw1RHEptIGFQtV0oijVOUYr4ihwiPWt0Uh0roAM=;
+	s=korg; t=1793829255;
+	bh=a2vR7iTrenYGvJV6yNbn0WVMu8pJ3+/YekoEV15Xei0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aD+y5G5DuzJ3mEEjWxtKj7BENcbI4i/8m6wEQzUZKi7hgxT774NWnOOJm2mYZsIeu
-	 pxElHiYCSbJZqPD0DEy1mEM1tdBioSz5CXuu93ruPRlBUi2SgsJvu4nAMvTU57/573
-	 OBxIldtwLD0eWX05eRUayW1zfqLMJ1NfrA9mxxTo=
+	b=zS0g3Vc8ixQLgXV+VYTtfZRWG7I0Ig/56t8ydmX4lIVKktpkuIeL2OhGiV4XNsWh1
+	 ziugmnzJRh4W2IE4jAKMSe/JDAn746b+bgjUucYCA8B/ixuCm+6ywpPqMQyWKblw8f
+	 VAmjJ0h1NLCV2dXC6jy5dKr1iZ+6GfUYU1m5kke8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	stable@kernel.org,
+	Poil Zero <poilandgginchi@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 544/547] ksmbd: fix use-after-free after a failed durable reconnect
-Date: Wed,  4 Nov 2026 16:12:08 -0500
-Message-ID: <20261104211053.862781392@linuxfoundation.org>
+Subject: [PATCH 7.3 545/547] rust_binder: wake epoll on self-work queued to poll thread
+Date: Wed,  4 Nov 2026 16:12:09 -0500
+Message-ID: <20261104211053.889978551@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,127 +69,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Alice Ryhl <aliceryhl@google.com>
 
-[ Upstream commit 248b5819591c577727930e4e255a455235fab50a ]
+[ Upstream commit 985955d8e6b2b15cfd65b7ac6893e3a5a90c5870 ]
 
-ksmbd_reopen_durable_fd() republishes a detached durable handle in the
-reconnecting session's file table and takes no reference for that entry.
-If smb2_open() then fails, cleanup relies on the final ksmbd_fd_put() to
-remove the volatile id.
+When a thread pushes work to its own todo list, InnerThread::push_work()
+returns PushWorkRes::OkNotifyPoll if the thread uses epoll, but four
+call sites in thread.rs discard this return value. As a result, a
+non-blocking BC_* write that enqueues work onto the calling thread's
+todo list without also reading will not wake epoll. Check the return
+value and call self.process.notify_poll(false) when
+PushWorkRes::OkNotifyPoll is returned.
 
-Two reconnects of the same handle can both take a lookup reference before
-either attaches it. If the one that reopens first then fails and drops
-its references first, the other request makes the final put through
-ksmbd_put_durable_fd(). That frees the handle without removing the first
-session's table entry, so tearing that session down writes to freed
-memory.
+This is similar to commit 97830f3c3088 ("binder: signal epoll threads of
+self-work"), but in C Binder pending thread work also prevented
+subsequent process work from waking epoll, causing a permanent hang,
+which is not the case in Rust Binder. This means that in practice, it
+merely delays notifications rather than completely failing to send them.
 
-  BUG: KASAN: slab-use-after-free in __close_file_table_ids+0x14d/0x740 [ksmbd]
-  Call Trace:
-   __close_file_table_ids+0x14d/0x740 [ksmbd]
-   ksmbd_destroy_file_table+0x76/0x100 [ksmbd]
-   ksmbd_session_destroy+0xf8/0x480 [ksmbd]
-   ksmbd_dispose_sessions+0x13e/0x200 [ksmbd]
-   ksmbd_conn_sessions_cleanup+0x4c3/0x6d0 [ksmbd]
-  Freed by task 1030:
-   __ksmbd_close_fd+0x97d/0x1000 [ksmbd]
-   smb2_open+0x14eb/0xd9f0 [ksmbd]
-
-Commit 3515503322f4 ("ksmbd: fix durable reconnect error path file
-lifetime") handles a final put made by the reconnecting request, but not
-one made by another holder.
-
-Remove the volatile id under the file-table lock on this error path,
-before the references are dropped, as ksmbd_close_fd() does on the
-request_open path just above. Removal then no longer depends on which
-holder makes the final put. The stale comment in the reconnect cleanup
-is updated to match. A successful reconnect is unchanged.
-
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: stable@kernel.org
+Fixes: dbb17c9ea756 ("rust_binder: move (e)poll wait queue to Process")
+Reported-by: Poil Zero <poilandgginchi@gmail.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20261016-binder-poll-self-work-v1-1-c29c87d99abb@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: adapted reply_inner() to unconditional immediate completion because TransactionFlag::DeferComplete is absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c   |    9 +++++----
- fs/smb/server/vfs_cache.c |   28 ++++++++++++++++++++++++++++
- fs/smb/server/vfs_cache.h |    2 ++
- 3 files changed, 35 insertions(+), 4 deletions(-)
+ drivers/android/binder/thread.rs |   38 +++++++++++++++++++++++++++-----------
+ 1 file changed, 27 insertions(+), 11 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5525,6 +5525,8 @@ err_out2:
- 				ksmbd_close_fd(work, fp->volatile_id);
- 				smb2_complete_request_open(work);
- 			} else {
-+				if (dh_info.reconnected && fp == dh_info.fp)
-+					ksmbd_unpublish_reopened_fd(work, fp);
- 				ksmbd_fd_put(work, fp);
- 			}
- 		}
-@@ -5538,10 +5540,9 @@ err_out2:
- 	if (dh_info.reconnected) {
- 		/*
- 		 * If reconnect succeeded, fp was republished in the
--		 * session file table.  On a later error, ksmbd_fd_put()
--		 * above drops the session reference; drop the durable
--		 * lookup reference through the same session-aware path so
--		 * final close removes the volatile id before freeing fp.
-+		 * session file table, and the error path above has
-+		 * already removed its volatile id.  Drop the durable
-+		 * lookup reference through the same session-aware path.
- 		 */
- 		if (rc && fp == dh_info.fp)
- 			ksmbd_fd_put(work, dh_info.fp);
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -851,6 +851,34 @@ void ksmbd_wake_session_blocked_works(st
- 	read_unlock(&ft->lock);
- }
+--- a/drivers/android/binder/thread.rs
++++ b/drivers/android/binder/thread.rs
+@@ -344,13 +344,13 @@ impl InnerThread {
+         }
+     }
  
-+/**
-+ * ksmbd_unpublish_reopened_fd() - remove a reopened durable handle from the
-+ *	session file table after its CREATE failed
-+ * @work:	smb work of the failed CREATE
-+ * @fp:		durable handle republished by ksmbd_reopen_durable_fd()
-+ *
-+ * The reopen publishes @fp in this session's table without taking a reference
-+ * for the entry, so the CREATE error path's puts need not be the last ones.
-+ * Another holder of a global-table reference, such as a concurrent reconnect
-+ * of the same handle, can drop the last one through ksmbd_put_durable_fd(),
-+ * which frees @fp without touching this table.  Remove the id here, while
-+ * the caller still holds its references.
-+ *
-+ * Every path that removes the id before the final put also clears
-+ * @fp->volatile_id under ft->lock, so a valid id is still @fp's entry.
-+ */
-+void ksmbd_unpublish_reopened_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
-+{
-+	struct ksmbd_file_table *ft = &work->sess->file_table;
-+
-+	write_lock(&ft->lock);
-+	if (has_file_id(fp->volatile_id)) {
-+		idr_remove(ft->idr, fp->volatile_id);
-+		fp->volatile_id = KSMBD_NO_FID;
-+	}
-+	write_unlock(&ft->lock);
-+}
-+
- int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- {
- 	struct ksmbd_file	*fp;
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -198,6 +198,8 @@ static inline bool ksmbd_stream_fd(struc
- int ksmbd_init_file_table(struct ksmbd_file_table *ft);
- void ksmbd_destroy_file_table(struct ksmbd_session *sess);
- int ksmbd_close_fd(struct ksmbd_work *work, u64 id);
-+void ksmbd_unpublish_reopened_fd(struct ksmbd_work *work,
-+				 struct ksmbd_file *fp);
- struct ksmbd_file *ksmbd_lookup_fd_fast(struct ksmbd_work *work, u64 id);
- struct ksmbd_file *ksmbd_lookup_foreign_fd(struct ksmbd_work *work, u64 id);
- struct ksmbd_file *ksmbd_lookup_fd_slow(struct ksmbd_work *work, u64 id,
+-    fn push_return_work(&mut self, reply: u32) {
++    fn push_return_work(&mut self, reply: u32) -> PushWorkRes {
+         if let Ok(work) = ListArc::try_from_arc(self.return_work.clone()) {
+             work.set_error_code(reply);
+-            // Not notifying: Reply to current thread.
+-            let _ = self.push_work(work);
++            self.push_work(work)
+         } else {
+             pr_warn!("Thread return work is already in use.");
++            PushWorkRes::Ok
+         }
+     }
+ 
+@@ -669,8 +669,12 @@ impl Thread {
+     pub(crate) fn push_work_if_looper(&self, work: DLArc<dyn DeliverToRead>) -> BinderResult {
+         let mut inner = self.inner.lock();
+         if inner.is_looper() && !inner.is_dead {
+-            // Not notifying: Reply to current thread.
+-            let _ = inner.push_work(work);
++            // Not notifying work_condvar: Reply to current thread.
++            let res = inner.push_work(work);
++            drop(inner);
++            if matches!(res, PushWorkRes::OkNotifyPoll) {
++                self.process.notify_poll(false);
++            }
+             Ok(())
+         } else {
+             drop(inner);
+@@ -683,7 +687,11 @@ impl Thread {
+     }
+ 
+     pub(crate) fn push_return_work(&self, reply: u32) {
+-        self.inner.lock().push_return_work(reply);
++        // Not notifying work_condvar: Reply to current thread.
++        let res = self.inner.lock().push_return_work(reply);
++        if matches!(res, PushWorkRes::OkNotifyPoll) {
++            self.process.notify_poll(false);
++        }
+     }
+ 
+     pub(crate) fn pop_work_even_if_deferred(&self) -> Option<DLArc<dyn DeliverToRead>> {
+@@ -1416,8 +1424,11 @@ impl Thread {
+             let process = orig.from.process.clone();
+             let allow_fds = orig.flags.contains(TransactionFlag::AcceptFds);
+             let reply = Transaction::new_reply(self, process, info, allow_fds)?;
+-            // Not notifying: Reply to current thread.
+-            let _ = self.inner.lock().push_work(completion);
++            // Not notifying work_condvar: Reply to current thread.
++            let res = self.inner.lock().push_work(completion);
++            if matches!(res, PushWorkRes::OkNotifyPoll) {
++                self.process.notify_poll(false);
++            }
+             orig.from.deliver_reply(Ok(reply), &orig, None);
+             Ok(())
+         })()
+@@ -1456,10 +1467,15 @@ impl Thread {
+         let list_completion =
+             DTRWrap::arc_try_new(DeliverCode::new(code, self.process.task.pid()))?;
+         let completion = list_completion.clone_arc();
+-        // Not notifying: Reply to current thread.
+-        let _ = self.inner.lock().push_work(list_completion);
++        // Not notifying work_condvar: Reply to current thread.
++        let res = self.inner.lock().push_work(list_completion);
+         match transaction.submit(info) {
+-            Ok(()) => Ok(()),
++            Ok(()) => {
++                if matches!(res, PushWorkRes::OkNotifyPoll) {
++                    self.process.notify_poll(false);
++                }
++                Ok(())
++            }
+             Err(err) => {
+                 completion.skip();
+                 Err(err)
 
 
