@@ -1,57 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826785;
-	b=tOYQbX3xVpH7EmrhVCobl3+WCwg7KpQxt7QRxm1fXSUo6qkLtC/Pec411zquOwYcTokw
-	 /PLrqnot2EXvCD/e66GoyDIVt9ac0sqESya2xIdLtiALb3vog46z+TGwo8fJ10T1bW01S
-	 qHYtFT2AzOHRwTHct3FRgRdiU7d3dMXuBDlhlUiLaBX8w7nZu/hj5/CnSJS4ypJZv4NBd
-	 UdkZmRAYmMI2uU11uHOXtRa1qQijEwoaObegz5X/ymdoAlG4+z2l/sCsrMFukcuOlKDA5
-	 FrNKZDzk/5Q26gxva86OU3SWQSk+2upsj7h7coOP9efVP2yG8/s568M2qBf1FIrURWA==
+	t=1793826786;
+	b=o+2byh1ak0C91WX6v0udjgdAegF5M5qsQRh/yvLkLPv2OZeDpQd6kg4y/PncFLRgOyN9
+	 3wFeua+lQkx/XRVJ798lKLWb7WO6z5UwCq7gP+5AXNkwH02xWaGk7g6JnUGPG4ChNgGx/
+	 ZSWuBFxoAdNYBrslOf9ptD+i4wgNJA7xfnGOFm9+8j5zkgWMyc9kk3GQH1rM0DSi6hMxL
+	 uqOS8mkiHas7vNsRWYq3b7ryuH+AM6tc823cGkwlPVxFSrHxC//5ehnztwgTcVk0Cozgd
+	 f8jIscEoPSZdJ4m6tSkoYVhmTU8xNwRO1xC/CDxt3ZrbydksnHRFIgC4C0Oc4uhQE6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3G0i3HttT7GIGvSXDzvEWbdQoidQDV0qzb18AHasU90=;
-	b=mYJQoaYMaGAochYpbctZxY8tOT+I/B2UkScGNtQdu3qjFIcaliR0TxwhXjPXCi82YGLv
-	 c4KCZp/jvwLpOZj8PNjyi4yYY+93khlAGY2IVd+pwJF65mW/VWzWaHW4A0RHvsByUV53g
-	 AwrvwOBx2e4yChFc3ls6ChZ/vb9tJAjfqbU9QSvSSpHOwbmn5tnVTxzmzoSIx1/7SjE4m
-	 GJjAlYkvcf8yBljRZ3LfQ3eNhSIzS5o+YLJO3qL3tYIFCCvrTL1M65HVMhWq2z3TdXL2i
-	 TtgG/SvxNkHdkBIb/o/iQg5JW6WcClYtuCOeK+5RcaYPi5yxj9BLUfOU6Oc57YD2TmQ==
+	bh=houNDDaEzwObt2uld173tIJh3mVgvI58c5fj7YT0vdA=;
+	b=1kAmh6S4CkiMI3graMIo1+tzrg42NwT9DhSxm6jG1eQTHUbSoL8oXLcgNIbPlUd5UtEV
+	 x8NwiXrSAolOE1BQqJ6S0S70zIQYM9nvKP15LCg2ML+I+hcJmU8BBtTplZR6C4sON8O71
+	 bLTLa/jQWNPVaBHToTJtvG4XsM6SqLAF/sA1sEm+TOaktn1Cy4SyC4qKHkWAtS6DpOUnr
+	 SLeBNImPCxaYmZVTC47l/lvIccqUYDRSu4t48kvle7KuLQrtldFiF+73hxM1HhbAy77bX
+	 3ypoazzXCell72Gird5Jz6LhbPjRDTIRnxIMrL/De61WPf3b4V1ygyWmNhsaQoJmsVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ioy7Hp+A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yARJAaTL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE1C6071A07;
-	Wed,  4 Nov 2026 21:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27906071A07;
+	Wed,  4 Nov 2026 21:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ioy7Hp+A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5361F00A02;
-	Wed,  4 Nov 2026 21:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yARJAaTL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030C71F000C1;
+	Wed,  4 Nov 2026 21:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826784;
-	bh=3G0i3HttT7GIGvSXDzvEWbdQoidQDV0qzb18AHasU90=;
+	s=korg; t=1793826786;
+	bh=houNDDaEzwObt2uld173tIJh3mVgvI58c5fj7YT0vdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ioy7Hp+AB4Gl929Bzu2HyIL1iM9Ec+apNLXBLb+V7mGVD3agPoiieYo3HM3D2x2Kg
-	 BlXPBSB+NYOg6n0ky5iCBrX0g8iVdfj6x3SBjgq4Zbd3N37FGLGChmdLmO773aJTZV
-	 p6xSFWsrEFJWYX3SI19LTNsF9O2t8XULgrs3uH40=
+	b=yARJAaTLk8x3NKBqtKJl05alW8azvBGt2zhdmYuE/ZjzNLKwjuSKAlRntAH4qP5jS
+	 PzRo/pP42y1nf4SVWKgaQMG759T/6CkByMuMN81HxBWc1DlD1AmVO4aUNaAR+Cla7H
+	 BpWOJQEecUKs7X+AdeLiECbJYEyICTIvOl1SBsf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 007/547] wifi: ath12k: move dp_profile_params to dp.h
-Date: Wed,  4 Nov 2026 16:03:11 -0500
-Message-ID: <20261104211038.600583974@linuxfoundation.org>
+Subject: [PATCH 6.18 0009/1005] fork: move the coredump and exec checks into create_io_thread()
+Date: Wed,  4 Nov 2026 15:55:42 -0500
+Message-ID: <20261104211043.796385107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
-References: <20261104211038.406938024@linuxfoundation.org>
+In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
+References: <20261104211043.516122098@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -66,72 +64,52 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.3-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit bf7c19e231e2f48cafddbe3f4c2a2f5b6184b55f ]
+[ Upstream commit e760200370e4de054b6b5f568a7faa911e2956bb ]
 
-Move struct ath12k_dp_profile_params from core.h to dp.h as it is
-specifically used for Data Path operations. This improves code
-organization by keeping DP-related structures in the DP header.
+Only a PF_USER_WORKER thread returns from get_signal() after a fatal
+signal and can go on to create a thread. get_signal() sets PF_SIGNALED
+before it dumps core and before it lets a PF_USER_WORKER thread return.
+That flags sticks.
 
-No functional change intended.
+The exec'ing thread itself is never signaled. But it doesn't need the check
+anyway as we moved cancellation of io_uring requests before de_thread().
+create_io_thread() is the only way a signaled thread creates another
+one. vhost_task_create() is reached from ioctls alone.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
+io_should_retry_thread() doesn't retry -EINTR, so io-wq callers give up
+the same way they did when copy_process() refused.
 
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260820054804.3222296-2-aaradhana.sahu@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/aq0VLTyxNatFmLOK@redhat.com
+Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-13-8e4adb1619e6@kernel.org
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: 1f978881ce6c ("fork: don't create io threads once PF_POSTCOREDUMP is set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.h | 9 ---------
- drivers/net/wireless/ath/ath12k/dp.h   | 9 +++++++++
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ kernel/fork.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
-index 93fd227b4d198..99d71dab7c04c 100644
---- a/drivers/net/wireless/ath/ath12k/core.h
-+++ b/drivers/net/wireless/ath/ath12k/core.h
-@@ -927,15 +927,6 @@ struct ath12k_wsi_info {
- 	u32 hw_link_id_base;
- };
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 6734b94600333..bf0bbd8a569e5 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -2559,6 +2559,10 @@ struct task_struct *create_io_thread(int (*fn)(void *), void *arg, int node)
+ 		.user_worker	= 1,
+ 	};
  
--struct ath12k_dp_profile_params {
--	u32 tx_comp_ring_size;
--	u32 rxdma_monitor_buf_ring_size;
--	u32 rxdma_monitor_dst_ring_size;
--	u32 num_pool_tx_desc;
--	u32 rx_desc_count;
--	u32 rx_release_ring_size;
--};
--
- struct ath12k_mem_profile_based_param {
- 	u32 num_vdevs;
- 	u32 max_client_single;
-diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index bef0f2ba0560f..72d3de2db5d8e 100644
---- a/drivers/net/wireless/ath/ath12k/dp.h
-+++ b/drivers/net/wireless/ath/ath12k/dp.h
-@@ -23,6 +23,15 @@ struct ath12k_ext_irq_grp;
- struct ath12k_dp_rx_tid;
- struct ath12k_dp_rx_tid_rxq;
- 
-+struct ath12k_dp_profile_params {
-+	u32 tx_comp_ring_size;
-+	u32 rxdma_monitor_buf_ring_size;
-+	u32 rxdma_monitor_dst_ring_size;
-+	u32 num_pool_tx_desc;
-+	u32 rx_desc_count;
-+	u32 rx_release_ring_size;
-+};
++	/* A creator past its fatal signal gets no thread. */
++	if (current->flags & PF_SIGNALED)
++		return ERR_PTR(-EINTR);
 +
- #define DP_MON_PURGE_TIMEOUT_MS     100
- #define DP_MON_SERVICE_BUDGET       128
+ 	return copy_process(NULL, 0, node, &args);
+ }
  
 -- 
 2.53.0
