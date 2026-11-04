@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829752;
-	b=cyIEewi7gqAyWNYLb9unOeJ4zLGLl5sjbYShj/kDUtd8UH8ypytZQFW1A5zxSn90sIut
-	 jzbgZqa0LeTWuCvzCX6wUNl83sZ5WJI2B21ZdTMXhYRch9qETqngoazA7Q3w4ure3rLBX
-	 8gwV37NaNifadwDPieuL29AHDvtsrPyyXUyeC/uSzx2/m2wB1CLc13qZ5wnVfaXxQa272
-	 Fb9JtI4cF1qLPYkXaXE3Nut7lkxhLuNuJMMsuncgpIOX20xUtH9XpH5xKkT463NijkP5g
-	 B2KEGvsd7OxWibw5gVmiGvsOP90BLWjRpGQiZnF2wxtLXeerMRsyoo7lqJ+B0zLmnkg==
+	t=1793829754;
+	b=J2wYiAO1VJVAltzV1P5jRWtwZKTDmapXebhah7mUb4f2we6ZpLd8Ry7lspe4jV0/c5H9
+	 TKoau0ww9EQmKSl+s3nFBUP/UwFbEjbZKeUl0AWBMB6IdSmrPZ4oKDjI57NpkzIdlFTma
+	 KsmRxg1/bntuYFTceBp2270jyv5UrrJEnGXKe5lcMh3mh3UqfHwpLsrWE/IN2ywo8XA3r
+	 z27C9pQ1ZeOHiEcgICeQtHLwYbaMHQgCjN5zbyDGExdg1aHEMBSS4qGs4actw14BCDaKl
+	 4NACV8SidLZNd96W4scLGgvOWUvFHwGRuR5xmzyYn8x2F99vavHk5gcsHgwbSSEWTVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829752;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829754;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SgUTcBh1rplxe11xj9x+fBpEUugKkajGmCYPAe3y15A=;
-	b=T/2fhmjweRwpMwyJYrwtG6XmV+xhFUBS/cbsxjnMSRaPLYLDe71B06taXvEKvkaIBSyE
-	 aTLgY93zuNaashGMMVeQ46A7pjbLhqpOG1L0rkZAY+G0d+8pFDIJPb500pwbL4a6Ja50j
-	 jRq9It3uGYgkiTcAOKO+ab7KnSoaikpMun4Me7SCdOQ8ABwxVTRteS5c8O8gGoqw8v1Ce
-	 +ts0FrUe7NFlKVQMccL2g6mMKPnjuh+hgMtC3dEEeRrLnxhPbL68pgRoRNiuFe6S6gRby
-	 SqmWaS2BOtxjD4iIMW91pXIvbG1nVvDfD90GzXMl1zuJMQOJCt2gOqQB1WhNi0JXmyg==
+	bh=ayG6Vup8M5EifTjchPlxzlcTwJAik5sP8kwxJRR0Vzo=;
+	b=tRBNUXfJ5Jxtza9G+/inXq2pLa1BLmvYxS7emaf5NfPLMLAM0NkYf8XaqdpkqEqRcdxa
+	 uEr2Z5xiZ/AxTVRAnGSPHzuuyD/Ej92NcP0HFnqPt6NJjm68Y2r+gHmspBiKhry8IIXPJ
+	 6G8iDXL3yWtRBUAnMsCBF3amTmBnOn2s+rdzagLSFdSHvCGFWLV0dzPl17dJ2VPLRM1B8
+	 itC22XwqpIktGxxVt+XNpHY7zRXimmAKjDJ5kDTn5VdgIc5FlBk5N7iOF+MupdDQovnrR
+	 hqduIwK7JAZzIjmuUNFhOYdKGrLVxvml4FRgEN7VMdhmc8ZVEGzUXoTfRKbrHrFc1Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRczBNEF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AkqL/9GQ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCF9606C922;
-	Wed,  4 Nov 2026 22:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8165E606C922;
+	Wed,  4 Nov 2026 22:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRczBNEF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2878F1F0093A;
-	Wed,  4 Nov 2026 22:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkqL/9GQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B691A1F0093A;
+	Wed,  4 Nov 2026 22:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829752;
-	bh=SgUTcBh1rplxe11xj9x+fBpEUugKkajGmCYPAe3y15A=;
+	s=korg; t=1793829754;
+	bh=ayG6Vup8M5EifTjchPlxzlcTwJAik5sP8kwxJRR0Vzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oRczBNEFxZwE3KiUARH6lx/a0FFAZm3jOIGGaFVNKqxUXHnPTz2dD/ghmyErNAqTv
-	 DpNOBiFon/3bDGcFR0eHCjiPzMPxkjlSFJGGlKeNdHDFqRYPZOznSeoZNM7wvWQNUl
-	 OtxMRV0jGN4VtcLES5EgkUvu/BvLukvvDQyWprLc=
+	b=AkqL/9GQ3Lc9NgzA8vplXYWk7hVPtBA6DpmieTi3ofy02/9QIFx6qrwAupUrfYoyY
+	 KFRjJ4lsbYC1NRiqIs3w8NPAd3h2Wi10XsaLSBQ4zx4Px/BZGlqfmreKaNZjiAGvzw
+	 JXaBJkGZ9yeO3wQvde+4Lo3nTWIb8aVeCmCy1uf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Glass <sjg@chromium.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0321/1005] net/rds: unpin MR pages with unpin_user_pages_dirty_lock()
-Date: Wed,  4 Nov 2026 16:00:54 -0500
-Message-ID: <20261104211052.934003421@linuxfoundation.org>
+Subject: [PATCH 6.18 0322/1005] kconfig: abort rather than loop for ever on EOF
+Date: Wed,  4 Nov 2026 16:00:55 -0500
+Message-ID: <20261104211052.964284299@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,59 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Simon Glass <sjg@chromium.org>
 
-[ Upstream commit a507023e6ff1d0b4e7aac49b2f547fed0c21ea4e ]
+[ Upstream commit f915149f5cfbd0d4406ec0b0f57b1d2c8685ae55 ]
 
-The pages backing an RDS memory region are pinned in __rds_rdma_map()
-with rds_pin_pages(), which uses pin_user_pages_fast(): each page's
-refcount is biased by GUP_PIN_COUNTING_BIAS to account the pin.  The
-scatterlist is then handed to the IB transport, and the transport
-releases the pages in __rds_ib_teardown_mr() with
+When a non-interactive 'make oldconfig' or 'syncconfig' meets a new int
+or hex symbol whose default cannot be applied, conf_string() reads a
+value from stdin. At end of file fgets() returns NULL, no value is set
+and the loop asks again. The result is an endless loop which fills the
+output until it exhausts memory, rather than a clean failure.
 
-	set_page_dirty(page);
-	put_page(page);
+Detect this in conf_string(): if the value cannot be set and stdin is at
+end of file, stop with an error that names the symbol.
 
-put_page() drops a single reference instead of removing the pin bias,
-so every MR teardown permanently strands the remaining references and
-the pages are never freed - a userspace-triggerable memory leak of up
-to RDS_MAX_MSG_SIZE per RDS_GET_MR/RDS_GET_MR_FOR_DEST call.
+Note that a symbol with no default doesn't trigger this, since
+sym_calc_value() falls back to 0, which is accepted at end of file. The
+loop is triggered by a broken Kconfig file, with a default whose text
+fails sym_string_valid().
 
-The conversion to the pin API updated the unpin sites in rdma.c but
-missed this one on the transport side.  Release the pages with
-unpin_user_pages_dirty_lock(), which removes the pin bias and also
-dirties the page under the folio lock, closing the truncation race
-that a bare set_page_dirty() leaves open.
+Such mistakes do creep in from time to time and are hard to debug, since
+the build fills the log with repeated prompts instead of pointing at the
+offending symbol. Some bad defaults draw a parse-time warning, but
+menu_validate_number() accepts a reference to any int or hex symbol, so
+a cross-type reference loops with no warning at all. For example, "0xff"
+is not a valid int value:
 
-Dirtying under the folio lock can sleep, which is safe in every path
-that reaches __rds_ib_teardown_mr(): the registration-reuse path
-(rds_ib_map_frmr()) runs in syscall context, and the pool flush
-(rds_ib_unreg_frmr()) runs under pool->flush_lock, a mutex, and
-already sleeps in rds_ib_post_inv().  The WARN_ON that guarded the
-old irq-context set_page_dirty() case is dropped along with it.
+  config HEXSYM
+          hex
+          default 0xff
 
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-5-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  config VAL
+          int "Value"
+          default HEXSYM
+
+Interactive use is unaffected, since feof() only becomes true once a
+read actually hits end of file: an invalid answer at a terminal still
+re-prompts, while Ctrl-D at such a prompt exits with the error instead
+of looping. bool and tristate symbols and choices already accept the
+default on an empty line, so they still take their defaults in a
+non-interactive build.
+
+Tested with int and hex symbols carrying such defaults: with empty
+stdin, the code without this change produces around 190MB of repeated
+prompts within two seconds, while with the change it exits 1 naming the
+symbol. Piped and interactive (pty) sessions still re-prompt on an
+invalid answer and then accept a valid one. A new string symbol with no
+default still takes the empty string at end of file, since any text is
+valid for a string.
+
+Signed-off-by: Simon Glass <sjg@chromium.org>
+Link: https://patch.msgid.link/20260714133545.3294648-1-sjg@chromium.org
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_rdma.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ scripts/kconfig/conf.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
-index 751755cd069e0..36fd8dedbce56 100644
---- a/net/rds/ib_rdma.c
-+++ b/net/rds/ib_rdma.c
-@@ -251,9 +251,7 @@ void __rds_ib_teardown_mr(struct rds_ib_mr *ibmr)
- 
- 			/* FIXME we need a way to tell a r/w MR
- 			 * from a r/o MR */
--			WARN_ON(!page->mapping && irqs_disabled());
--			set_page_dirty(page);
--			put_page(page);
-+			unpin_user_pages_dirty_lock(&page, 1, true);
+diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
+index c368bec5ab601..fe8ba09b00391 100644
+--- a/scripts/kconfig/conf.c
++++ b/scripts/kconfig/conf.c
+@@ -348,6 +348,23 @@ static int conf_string(struct menu *menu)
  		}
- 		kfree(ibmr->sg);
+ 		if (def && sym_set_string_value(sym, def))
+ 			return 0;
++
++		/*
++		 * A new int or hex symbol whose default fails validation
++		 * cannot be set from an empty answer. When standard input is
++		 * exhausted, as it is for a non-interactive oldconfig or
++		 * syncconfig, re-asking would loop forever and grow the output
++		 * until it exhausts memory. Stop with an error that names the
++		 * symbol instead. String symbols accept any text, and bool and
++		 * tristate symbols (conf_sym()) and choices (conf_choice())
++		 * accept the default on an empty line, so they are unaffected.
++		 */
++		if (feof(stdin)) {
++			fprintf(stderr,
++				"\nerror: no value for new symbol '%s' at end of input\n",
++				sym->name);
++			exit(1);
++		}
+ 	}
+ }
  
 -- 
 2.53.0
