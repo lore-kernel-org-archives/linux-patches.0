@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829245;
-	b=NokjciLBvHGNX70Psx6TOhvg1m+30CPE4XH/pW7Wd+7jlh3qqVTHm/CBbbpX7zsbY/yZ
-	 UwWiGeMPREUpOPlZcoEu3UU9jJy9/E0te2Bwxe8D8F6AD8kRMRA6XpNVhGwq3yOwG90Nk
-	 AS1Zd+3JTgGbp+kBSJ/RaMnq/vN+Ub6vNMIvxOIYOp44ZuGSXYyOXroGRz93CrNYIH+Sk
-	 EdsjcePP+vUw11q47H3ax61JHjPUi6FHnQ/pihi8/quZr6QtseuydqV6Mq0xs5GI6m/b+
-	 CMIDa2R5axD2JeRWR7LLTiUC5NZMDzsTonTGgl2Apc/pcxglt34sIsegvb3I9kCM8Yw==
+	t=1793829246;
+	b=OTEADAIceNNeTGcVgbYPg7PDkQnYZ5CZwA+VpGftkDu8Si6cbzrIXFg1ULWO9NdojqqP
+	 aMcdqkjNC8fvQlJIZLYHhYiaGQyO6DaBsEy/QYM3CPG8HdzrRZ07hgyUFFO4HZW4yseX/
+	 CYFj4gv0SxH5sfrKmRkeSBWG8O/v73++vQd3P0GtvZPYitLhl667KdoZ6gpgrZnqFSULL
+	 rkDKftQlYmR9OmzMGdDebpBBOAq3aRohG+/VBwnKUAELePlmmSzpypjHiCKjhCaeW10/e
+	 fCRLUyaJmdXW8T8YfS/9asyfBS0UTASpmxory+1Q7VJ+gOQ5zxd7cxH3g50UtnGBOJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829246;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i0LogzbTvkcOZJcR0Zram0G8xZgBm2rrZrLiPGhVgBQ=;
-	b=adOBlOzaYRdas09lBapQog9Eu4nR6qy1ba3t+Hy3K2PioTXRAETHVKLQWQ6EF49UZ1MN
-	 k8HiDm3tqdFTJ+RQ6lrNYSdAF69Xp2r4t4mB0u+UK6zpp4Ekt7xehKVdYVfs1w/FXX2L+
-	 uM/a5mcjdMxnd+jY93WLCdsOj9IVC9FY/FiKd7Sh70+t8PqQjEg6VpPnS1Z7wnHutSAXW
-	 5aynM98+jE/pJkgdLKtRMfCUzG4V1D5j13l2m6N05g1JQ4iXXtWqwaAgNg2CUOH1+6/y9
-	 bD9wtuGK12VEnhErcR3xbnVHpzoPFUty0+ysDO5kXVYlVG+TRv6IbyjRzYWlsUgmPKg==
+	bh=SNCV45zhGEICJbIDxyk+HgRE6ndD60cIu5EaNalasjc=;
+	b=I/gQKa3LEvuznsbl+JEwEBPHagbDRbQC7OJcLz5AKdL9vEL8rBhPtHAXHw4WcRPyrBZC
+	 nqhdLR57X/0mzSszbRlcB3xcn+UnBtovazdxaHBOzMiA2idybeDKNRqg/x2DaUzTkMkXL
+	 KbXgdCX1tsEzMrjfJDKeFyXfBufAMWfLZP9uJf4CZ3ePEf9BI2rN+ETZ7H/9TtSjbuG4O
+	 0Wjudp1GJRrYyl9UPowqpenI8I981SaDyJrk5zg/5UWwoHl3ZW1LE1zuidhHvvMAK8DrC
+	 8dTssCzm36/4Rw+MPtdIdhyK+sK23ctQFPN8fOvLBJEn443bOD9BhJq0VRdhTrXF1mA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wpGQChcG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DJwlQFtc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12D36072F83;
-	Wed,  4 Nov 2026 21:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF46607031F;
+	Wed,  4 Nov 2026 21:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wpGQChcG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5851F0093A;
-	Wed,  4 Nov 2026 21:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DJwlQFtc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32721F000C1;
+	Wed,  4 Nov 2026 21:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829244;
-	bh=i0LogzbTvkcOZJcR0Zram0G8xZgBm2rrZrLiPGhVgBQ=;
+	s=korg; t=1793829246;
+	bh=SNCV45zhGEICJbIDxyk+HgRE6ndD60cIu5EaNalasjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wpGQChcGqsXJh1H8NZhsngWxuZlIY+vEmUfO8yyWdj11YlA/5Kn9Qkn3hvapwQ6rw
-	 I+vM8cJSPoSbea1MTOlZ56YaFuAZ6nnMYRRghqFztLWveo5Hc4gkfxC5/9GXlkx0F5
-	 Dow22AKDnQlCX1xtZj80rdxrVOdRtm67NgYE9zFU=
+	b=DJwlQFtc/CGc/EP+mgysaucCo3RyAQNS1376A97aS/6Qa+kx1brd634R4WUUcN7mL
+	 3EJPkSuJJ/bGAw68UH1EjSO+W4wehgCSJ0mvpGmvESrGZS3L8bp0v4YVbPxMEw0Sg6
+	 NHv3BqsdOAFCHlrIpQqcNAi6dvWQ448OA5Ojv3qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Henry Hu <huhai@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 539/547] ksmbd: fix app-instance non-durable supersede session UAF
-Date: Wed,  4 Nov 2026 16:12:03 -0500
-Message-ID: <20261104211053.719906681@linuxfoundation.org>
+Subject: [PATCH 7.3 540/547] ksmbd: fix invalid pointer dereference when get_inode_acl() fails
+Date: Wed,  4 Nov 2026 16:12:04 -0500
+Message-ID: <20261104211053.749464877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,103 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Henry Hu <huhai@kylinos.cn>
 
-[ Upstream commit f728cfee6929057087c303d07d7a6a7c61196b48 ]
+[ Upstream commit 19d180c7baab7126af5848ed87d5f7b5add0cef2 ]
 
-ksmbd_close_fd_app_instance_id() supersedes a prior open that has the
-same AppInstanceId. It reaches that open's session through opinfo->sess.
-This pointer is not refcounted.
+When get_inode_acl() fails, it returns an ERR_PTR(), but
+ksmbd_acls_fattr() stored that pointer in smb_fattr without
+checking for errors. Later callers then passed the error pointer
+to security descriptor helpers or posix_acl_release(), resulting
+in an invalid pointer dereference.
 
-Session teardown detaches durable handles before it frees the session.
-It does not detach a non-durable open. That open still points at the
-session through opinfo->sess after the session is freed. Another session
-can supersede the open at the same time. The supersede then takes a
-write lock through the stale pointer, in the freed session's file table.
+This was reproduced on an XFS-backed share when xfs_get_acl()
+returned ERR_PTR(-ENOMEM). Querying the SMB ACL from a CIFS client
+triggered the crash:
 
-  BUG: KASAN: slab-use-after-free in _raw_write_lock+0x71/0xd0
+  BUG: unable to handle page fault for address: fffffffffffffff8
+  RIP: smb_acl_sec_desc_scratch_len+0x58/0x90 [ksmbd]
   Call Trace:
-   _raw_write_lock+0x71/0xd0
-   ksmbd_close_fd_app_instance_id+0xd9/0x670 [ksmbd]
-   smb2_open+0x3e10/0xd910 [ksmbd]
-  Freed by task 212:
-   ksmbd_session_destroy+0x38d/0x480 [ksmbd]
+   smb2_query_info+0x40d/0x17c0 [ksmbd]
+   handle_ksmbd_work+0x1ca/0x770 [ksmbd]
 
-Fix this by looking the session up by opinfo->session_id. The lookup
-returns a reference, as smb2_break_collect_channels() does. Recheck that
-opinfo->sess still points at it before using it.
+Fix this by checking the return values from get_inode_acl() in
+ksmbd_acls_fattr(). Treat -EOPNOTSUPP as indicating that no ACL is
+available, and propagate all other errors to the callers. Update
+smb2_open() and smb2_get_info_sec() to handle these errors.
 
-Do the lookup without m_lock held. destroy_previous_session() takes
-m_lock under the session table lock, and taking them in the other order
-here would deadlock.
-
-Fixes: 16c30649709d ("ksmbd: handle durable v2 app instance id")
-Cc: stable@vger.kernel.org # e0386cd6498b: ksmbd: validate AppInstanceId takeover target
-Signed-off-by: Ian Bridges <icb@fastmail.org>
+Cc: stable@vger.kernel.org
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Assisted-by: Codex:gpt-5.6-sol
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Henry Hu <huhai@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: Retained the non-const struct mnt_idmap * parameter in ksmbd_acls_fattr() to match the existing UID/GID mapping helpers. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs_cache.c |   32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c |   42 ++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 34 insertions(+), 8 deletions(-)
 
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -1054,7 +1054,9 @@ int ksmbd_close_fd_app_instance_id(struc
- 				 struct ksmbd_file *fp, bool *closed)
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3694,10 +3694,11 @@ static int smb2_create_sd_buffer(struct
+ 			    le32_to_cpu(sd_buf->ccontext.DataLength), true, false);
+ }
+ 
+-static void ksmbd_acls_fattr(struct smb_fattr *fattr,
+-			     struct mnt_idmap *idmap,
+-			     struct inode *inode)
++static int ksmbd_acls_fattr(struct smb_fattr *fattr,
++			    struct mnt_idmap *idmap,
++			    struct inode *inode)
  {
- 	struct ksmbd_file_table *ft;
-+	struct ksmbd_session *sess;
- 	struct oplock_info *opinfo;
-+	u64 session_id;
- 	int n_to_drop = 0;
++	struct posix_acl *acl;
+ 	vfsuid_t vfsuid = i_uid_into_vfsuid(idmap, inode);
+ 	vfsgid_t vfsgid = i_gid_into_vfsgid(idmap, inode);
  
- 	*closed = false;
-@@ -1067,10 +1069,35 @@ int ksmbd_close_fd_app_instance_id(struc
- 		up_read(&fp->f_ci->m_lock);
- 		goto out;
- 	}
-+	/*
-+	 * opinfo->sess is not refcounted, and m_lock does not keep it alive.
-+	 * The owner can be torn down while we hold only a reference to fp.
-+	 * Look the owner up by id to take a real reference instead.
-+	 */
-+	session_id = opinfo->session_id;
-+	up_read(&fp->f_ci->m_lock);
+@@ -3708,10 +3709,28 @@ static void ksmbd_acls_fattr(struct smb_
+ 	fattr->cf_dacls = NULL;
+ 
+ 	if (IS_ENABLED(CONFIG_FS_POSIX_ACL)) {
+-		fattr->cf_acls = get_inode_acl(inode, ACL_TYPE_ACCESS);
+-		if (S_ISDIR(inode->i_mode))
+-			fattr->cf_dacls = get_inode_acl(inode, ACL_TYPE_DEFAULT);
++		acl = get_inode_acl(inode, ACL_TYPE_ACCESS);
++		if (IS_ERR(acl)) {
++			if (acl != ERR_PTR(-EOPNOTSUPP))
++				return PTR_ERR(acl);
++			acl = NULL;
++		}
++		fattr->cf_acls = acl;
 +
-+	/* destroy_previous_session() takes m_lock under sessions_table_lock. */
-+	sess = ksmbd_session_lookup_slowpath(session_id);
-+	if (!sess)
-+		goto out;
- 
--	ft = &opinfo->sess->file_table;
-+	down_read(&fp->f_ci->m_lock);
-+	if (opinfo->sess != sess) {
-+		up_read(&fp->f_ci->m_lock);
-+		ksmbd_user_session_put(sess);
-+		goto out;
-+	}
-+	ft = &sess->file_table;
- 	write_lock(&ft->lock);
--	if (fp->f_state == FP_INITED && has_file_id(fp->volatile_id) &&
-+	/*
-+	 * The table may already be detached by destroy_previous_session().
-+	 * A new session could also reuse the old id and address and pass the
-+	 * check above. Only remove fp if this table still publishes it.
-+	 */
-+	if (ft->idr && fp->f_state == FP_INITED &&
-+	    has_file_id(fp->volatile_id) &&
-+	    idr_find(ft->idr, fp->volatile_id) == fp &&
- 	    ksmbd_app_instance_id_matches(work, fp)) {
- 		idr_remove(ft->idr, fp->volatile_id);
- 		fp->volatile_id = KSMBD_NO_FID;
-@@ -1078,6 +1105,7 @@ int ksmbd_close_fd_app_instance_id(struc
++		if (S_ISDIR(inode->i_mode)) {
++			acl = get_inode_acl(inode, ACL_TYPE_DEFAULT);
++			if (IS_ERR(acl)) {
++				if (acl != ERR_PTR(-EOPNOTSUPP)) {
++					posix_acl_release(fattr->cf_acls);
++					return PTR_ERR(acl);
++				}
++				acl = NULL;
++			}
++			fattr->cf_dacls = acl;
++		}
  	}
- 	write_unlock(&ft->lock);
- 	up_read(&fp->f_ci->m_lock);
-+	ksmbd_user_session_put(sess);
- 	opinfo_put(opinfo);
- 	opinfo = NULL;
++
++	return 0;
+ }
  
+ enum {
+@@ -4931,7 +4950,10 @@ resolve_path:
+ 					int pntsd_size;
+ 					size_t scratch_len;
+ 
+-					ksmbd_acls_fattr(&fattr, idmap, inode);
++					rc = ksmbd_acls_fattr(&fattr, idmap, inode);
++					if (rc)
++						goto err_out;
++
+ 					scratch_len = smb_acl_sec_desc_scratch_len(&fattr,
+ 							NULL, 0,
+ 							OWNER_SECINFO | GROUP_SECINFO |
+@@ -7793,7 +7815,11 @@ static int smb2_get_info_sec(struct ksmb
+ 
+ 	idmap = file_mnt_idmap(fp->filp);
+ 	inode = file_inode(fp->filp);
+-	ksmbd_acls_fattr(&fattr, idmap, inode);
++	rc = ksmbd_acls_fattr(&fattr, idmap, inode);
++	if (rc) {
++		ksmbd_fd_put(work, fp);
++		return rc;
++	}
+ 
+ 	if (test_share_config_flag(work->tcon->share_conf,
+ 				   KSMBD_SHARE_FLAG_ACL_XATTR))
 
 
