@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826987;
-	b=ZLCwHXz0LZTs1ZQqHcHoRzbxnnBr6XGO6ZJX9QPWLs/+HZ567E+pfjzOgeHC5Cap9q4S
-	 mkoSQHX5JUbpC1jw6bzKUBSmqEhnim7VoKVxkpthbHrUo9RnOFZkYnJ3opzvIe1M/fwFa
-	 8yTKgwEENCypxA2zTPXxEYNffvAeu6ZL5dUPDaRzclFgi54sFJtTgKqDITdytxj8/0a6G
-	 jTwgaaL89B0lkcpMK4ea+0dwnbNPRZe9lD1jX1WfRQK1eqBmpVnBEalKLSa6gXtbtnjxe
-	 X7CUDzTCVaPi9cWMhfvpujmJ3jZXGwBsGUZr4e6jowsS13tqyXxLZY6GE/HeoH0uEcA==
+	t=1793826989;
+	b=07WAVxEWaB1IK0RuQjgKwXa5xt1CPkgtnIVQhQ4rIonQIaqAoFA/6o6EjtVw52YrToiH
+	 J/5nnyH1Hla0nbF/WNKLzZf0UwQJXZVp3OMpVyWm9NbxgM1bKokMZ0fUDYNjb5j4outuj
+	 nbFKkRKLb6ChCCKGuIr/ufTtwGhU3nyywoUFk1j7kPbFPVqxVsGhqEelmv25T7+gD5muY
+	 ptPHFdikvRhOvfaxGwDWUtM2TUYMxLgO5l6/OX8VX2MvD9rPWaLvw55kbr3vs5/cF3Df7
+	 0cr1P7avcBG3ePIMHr2gZ/fxQjoBGDQSgqysdljqUSMaHsLgROBCOclB9Tww0q768Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826987;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U/zfvCQ5AhxrHh7LDT5x/I46WFFzu01Pbk1jSCUri+w=;
-	b=XOvoTYV04k0/Ru2SFwBT8gTgffCoA/wyJr42a0BMcDkgtg3FYbbuDRKw0BW/B9pVPoaA
-	 K7e1cVVnUIw0ypduicepn/oJ45ApOXKf9wSMdBkU8DwFeAlbgf3Di8w5fReK2KcpNq4x+
-	 FhQQKKgnA2yWtnYZpsG/pzKrw390WPW3skEVGlNSNxtXbrleA67M0oXgN5t7jUkuAzaeG
-	 Rrpng1qAoU+JuerafmUdKXJq9anBgWix6xWAAiw7tX+zf0zkbqvn9RyXAgAB5Odhv+Pg3
-	 hDaCsBUxvYaxrhCzodcekUODSns97SG4xaeIkobVxJVDw9sykJnHK9pNzbsifAkQKSQ==
+	bh=+VmnO6X2RK97Xa3zjb0i12pVSXXY6a/wqH4nx3EEtp8=;
+	b=c5gZMX+oWrkqSIWcffFJ6OTbmgTtXm4i1jB2cxPKNz6cIx026ywjctzilvm7yjAXWKHV
+	 crzqdy8fg05Wegl1Dr3nRtcYA4P+gysR0QWvM4eib4itKkezU2kbKWdru0VH0Nx2raaTV
+	 INSxe/o4JWkcGALSFwCF03D9Na0AQz7Cge49DUK/P8MPtEVhQGdvMvZHGpRlIWfLH0Vcc
+	 hy8Hm5kZ2sH8mA/0HKOVm9/fyUAKAuyVT8EEUXzbBSXcF9DSjqMnbTL3VhTOaVIjwjI6P
+	 aPffWcFpxNPfQnaWemfC0nS33kgFVKRRkc2D3QfH7Xfo2olBly8QhH/BPY/PWuMh2zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AmKWKBDY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tw6LF9t5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CF46070AAC;
-	Wed,  4 Nov 2026 21:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C8F6070AA2;
+	Wed,  4 Nov 2026 21:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AmKWKBDY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DF51F00A16;
-	Wed,  4 Nov 2026 21:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tw6LF9t5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710211F00919;
+	Wed,  4 Nov 2026 21:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826987;
-	bh=U/zfvCQ5AhxrHh7LDT5x/I46WFFzu01Pbk1jSCUri+w=;
+	s=korg; t=1793826988;
+	bh=+VmnO6X2RK97Xa3zjb0i12pVSXXY6a/wqH4nx3EEtp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AmKWKBDY/O+ggtoUVoXvlhNYdxXr1aYtYPqmccOXBKOhfcl3CUKzi5EeYBEPx3bsX
-	 nLAMZw6S/DQmfaJUaLmAuScJ/LycDvmPgdsz38QMN6qeaiBS/xwxZOefti/UmzT6pg
-	 M9e3/4dVMBuEFFDP3ZqjrucBICBWi1CItV5fyQgg=
+	b=tw6LF9t5/KyhljtFdN4leJKVeVkpTbn4jsnvdqvpnDXupBWQEGiPrr4T61exAtwHb
+	 qzLzlCRysglWtBjDJ5O8+SD96ZNzA0G3SeONU7vgi1s86Pp7OnS5ZneBpKK8o0FBeG
+	 NqDXrOcZHQ6kbynW+Td1JdChcGGUfr/tsvrDajvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
+	DaeMyung Kang <charsyam@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 125/547] ksmbd: limit sessions on each connection
-Date: Wed,  4 Nov 2026 16:05:09 -0500
-Message-ID: <20261104211041.739065148@linuxfoundation.org>
+Subject: [PATCH 7.3 126/547] ksmbd: preserve unreadable named streams on open
+Date: Wed,  4 Nov 2026 16:05:10 -0500
+Message-ID: <20261104211041.765318776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,335 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-commit dc6aa1ba8b7fff8800ad9bf143f17d308e02ec68 upstream.
+commit 80c816c047f7cae3c99cc75740c1f5d2c4d97b45 upstream.
 
-The pending setup limit only counts InProgress sessions. A client can
-complete authentication repeatedly and retain an unbounded number of Valid
-sessions on one connection.
+A write-only client can open an existing named stream with FILE_OPEN_IF
+without permission to read the underlying file. The case-insensitive
+lookup finds the xattr name, but querying its value length then fails
+with -EACCES. smb2_set_stream_name_xattr() treats every negative result
+as a missing stream and replaces the existing xattr with an empty value.
 
-Reserve a connection slot before allocating a session and retain a
-connection reference while authentication is in progress. The first SMB3
-channel takes over that reservation; binding to another connection reserves
-one slot there. Reauthentication and authentication continuation reuse the
-existing reservation. Return slots on allocation or insertion failure,
-channel removal, and final session destruction.
+A failed xattr list is not proof that the stream is absent either:
+for example, -ENOMEM can lead to the same empty replacement. Preserve
+listing errors and create a stream only for -ENOENT or -ENODATA. The
+latter can occur if the xattr is removed between listing its name and
+querying its value. Return other lookup errors without changing the
+stream.
 
-Accept max_sessions_per_connection in reserved startup-request space and
-default to 64 when older tools leave it zero. Keep the request size and
-existing field offsets unchanged. Expose the configured limit in procfs.
-The existing connection limits bound the aggregate number of sessions
-without a separate global session allocation limit.
+A write-only FILE_OPEN now reports access denied instead of name not
+found. FILE_OVERWRITE_IF and FILE_SUPERSEDE on an unreadable stream
+also fail instead of appearing to replace it. Stream writes and EOF
+changes already need to read the old value, so such handles cannot
+update the stream after opening either.
 
-Fixes: d7fd1f98607f ("ksmbd: follow SMB2 session expiration semantics")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Reported-by: Abdifatah Suruur <suruurism@gmail.com>
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c        |    1 
- fs/smb/server/connection.h        |    2 +
- fs/smb/server/ksmbd_netlink.h     |    3 +-
- fs/smb/server/mgmt/user_session.c |   50 +++++++++++++++++++++++++++++++-------
- fs/smb/server/mgmt/user_session.h |    6 +++-
- fs/smb/server/proc.c              |    2 +
- fs/smb/server/server.c            |    2 +
- fs/smb/server/server.h            |    3 ++
- fs/smb/server/smb2pdu.c           |   16 +++++++++++-
- fs/smb/server/transport_ipc.c     |    7 +++++
- 10 files changed, 80 insertions(+), 12 deletions(-)
+ fs/smb/server/smb2pdu.c |    2 ++
+ fs/smb/server/vfs.c     |    6 +++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -306,6 +306,7 @@ struct ksmbd_conn *ksmbd_conn_alloc(void
- 	atomic_set(&conn->req_running, 0);
- 	atomic_set(&conn->r_count, 0);
- 	atomic_set(&conn->refcnt, 1);
-+	atomic64_set(&conn->session_count, 0);
- 	conn->total_credits = 1;
- 	conn->outstanding_credits = 0;
- 
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -77,6 +77,8 @@ struct ksmbd_conn {
- 	struct rw_semaphore		session_lock;
- 	/* smb session 1 per user */
- 	struct xarray			sessions;
-+	/* New sessions and SMB3 channels each reserve one connection slot. */
-+	atomic64_t			session_count;
- 	unsigned long			creation_time;
- 	unsigned long			last_active;
- 	/* How many request are running currently */
---- a/fs/smb/server/ksmbd_netlink.h
-+++ b/fs/smb/server/ksmbd_netlink.h
-@@ -114,7 +114,8 @@ struct ksmbd_startup_request {
- 	__s8	bind_interfaces_only;
- 	__u32	max_ip_connections;	/* Number of maximum connection per ip address */
- 	__s8	aapl_model[32];		/* AAPL model string for Finder icon, e.g. "Xserve" */
--	__s8	reserved[467];		/* Reserved room */
-+	__u32	max_sessions_per_connection; /* Maximum sessions per connection */
-+	__s8	reserved[463];		/* Reserved room */
- 	__u32	ifc_list_sz;		/* interfaces list size */
- 	__s8	____payload[];
- } __packed;
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -3,6 +3,7 @@
-  *   Copyright (C) 2018 Samsung Electronics Co., Ltd.
-  */
- 
-+#include <linux/atomic.h>
- #include <linux/list.h>
- #include <linux/slab.h>
- #include <linux/rwsem.h>
-@@ -18,6 +19,7 @@
- #include "../vfs_cache.h"
- #include "../misc.h"
- #include "../stats.h"
-+#include "../server.h"
- 
- static DEFINE_IDA(session_ida);
- 
-@@ -26,6 +28,21 @@ static DEFINE_IDA(session_ida);
- static DEFINE_HASHTABLE(sessions_table, SESSION_HASH_BITS);
- static DECLARE_RWSEM(sessions_table_lock);
- 
-+int ksmbd_session_reserve_slot(struct ksmbd_conn *conn)
-+{
-+	if (atomic64_inc_return(&conn->session_count) >
-+	    READ_ONCE(server_conf.max_sessions_per_connection)) {
-+		atomic64_dec(&conn->session_count);
-+		return -ENOSPC;
-+	}
-+	return 0;
-+}
-+
-+void ksmbd_session_release_slot(struct ksmbd_conn *conn)
-+{
-+	atomic64_dec(&conn->session_count);
-+}
-+
- struct ksmbd_session_rpc {
- 	int			id;
- 	unsigned int		method;
-@@ -273,6 +290,7 @@ static void free_channel_list(struct ksm
- 	down_write(&sess->chann_lock);
- 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
- 		xa_erase(&sess->ksmbd_chann_list, index);
-+		ksmbd_session_release_slot(chann->conn);
- 		ksmbd_conn_put(chann->conn);
- 		kfree_sensitive(chann);
- 	}
-@@ -400,9 +418,12 @@ int ksmbd_session_rpc_method(struct ksmb
- 
- void ksmbd_session_destroy(struct ksmbd_session *sess)
- {
-+	struct ksmbd_conn *setup_conn;
-+
- 	if (!sess)
- 		return;
- 
-+	setup_conn = sess->setup_conn;
- 	delete_proc_session(sess);
- 	ksmbd_tree_conn_session_logoff(sess);
- 	ksmbd_destroy_file_table(sess);
-@@ -412,9 +433,14 @@ void ksmbd_session_destroy(struct ksmbd_
- 	ksmbd_session_rpc_clear_list(sess);
- 	free_channel_list(sess);
- 	kfree_sensitive(sess->Preauth_HashValue);
--	ksmbd_release_id(&session_ida, sess->id);
-+	if (sess->id)
-+		ksmbd_release_id(&session_ida, sess->id);
- 	ida_destroy(&sess->tree_conn_ida);
- 	kfree_sensitive(sess);
-+	if (setup_conn) {
-+		ksmbd_session_release_slot(setup_conn);
-+		ksmbd_conn_put(setup_conn);
-+	}
- }
- 
- static void ksmbd_session_remove_from_table(struct ksmbd_session *sess)
-@@ -602,6 +628,7 @@ static int ksmbd_chann_del(struct ksmbd_
- 	if (!chann)
- 		return -ENOENT;
- 
-+	ksmbd_session_release_slot(chann->conn);
- 	ksmbd_conn_put(chann->conn);
- 	kfree_sensitive(chann);
- 	return 0;
-@@ -841,7 +868,7 @@ static int __init_smb2_session(struct ks
- 	return 0;
- }
- 
--static struct ksmbd_session *__session_create(int protocol)
-+static struct ksmbd_session *__session_create(struct ksmbd_conn *conn, int protocol)
- {
- 	struct ksmbd_session *sess;
- 	int ret;
-@@ -849,15 +876,17 @@ static struct ksmbd_session *__session_c
- 	if (protocol != CIFDS_SESSION_FLAG_SMB2)
- 		return NULL;
- 
-+	if (ksmbd_session_reserve_slot(conn))
-+		return NULL;
-+
- 	sess = kzalloc_obj(struct ksmbd_session, KSMBD_DEFAULT_GFP);
--	if (!sess)
-+	if (!sess) {
-+		ksmbd_session_release_slot(conn);
- 		return NULL;
-+	}
- 
-+	sess->setup_conn = ksmbd_conn_get(conn);
- 	ida_init(&sess->tree_conn_ida);
--
--	if (ksmbd_init_file_table(&sess->file_table))
--		goto error;
--
- 	sess->last_active = jiffies;
- 	sess->state = SMB2_SESSION_IN_PROGRESS;
- 	set_session_flag(sess, protocol);
-@@ -870,6 +899,9 @@ static struct ksmbd_session *__session_c
- 	init_rwsem(&sess->rpc_lock);
- 	init_rwsem(&sess->chann_lock);
- 
-+	if (ksmbd_init_file_table(&sess->file_table))
-+		goto error;
-+
- 	ret = __init_smb2_session(sess);
- 	if (ret)
- 		goto error;
-@@ -888,9 +920,9 @@ error:
- 	return NULL;
- }
- 
--struct ksmbd_session *ksmbd_smb2_session_create(void)
-+struct ksmbd_session *ksmbd_smb2_session_create(struct ksmbd_conn *conn)
- {
--	return __session_create(CIFDS_SESSION_FLAG_SMB2);
-+	return __session_create(conn, CIFDS_SESSION_FLAG_SMB2);
- }
- 
- int ksmbd_acquire_tree_conn_id(struct ksmbd_session *sess)
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -37,6 +37,8 @@ struct ksmbd_session {
- 	char				ClientGUID[SMB2_CLIENT_GUID_SIZE];
- 
- 	struct ksmbd_user		*user;
-+	/* Holds the connection slot until an SMB3 channel takes it over. */
-+	struct ksmbd_conn		*setup_conn;
- 	unsigned int			sequence_number;
- 	unsigned int			flags;
- 
-@@ -89,7 +91,9 @@ static inline void clear_session_flag(st
- 	sess->flags &= ~bit;
- }
- 
--struct ksmbd_session *ksmbd_smb2_session_create(void);
-+struct ksmbd_session *ksmbd_smb2_session_create(struct ksmbd_conn *conn);
-+int ksmbd_session_reserve_slot(struct ksmbd_conn *conn);
-+void ksmbd_session_release_slot(struct ksmbd_conn *conn);
- 
- void ksmbd_session_destroy(struct ksmbd_session *sess);
- 
---- a/fs/smb/server/proc.c
-+++ b/fs/smb/server/proc.c
-@@ -161,6 +161,8 @@ static int proc_show_ksmbd_stats(struct
- 	seq_printf(m, "max_connections:\t%u\n", server_conf.max_connections);
- 	seq_printf(m, "max_connections_per_ip:\t%u\n",
- 		   server_conf.max_ip_connections);
-+	seq_printf(m, "max_sessions_per_connection:\t%u\n",
-+		   server_conf.max_sessions_per_connection);
- 	seq_printf(m, "max_inflight_requests:\t%u\n",
- 		   server_conf.max_inflight_req);
- 	seq_printf(m, "deadtime_seconds:\t%lu\n", server_conf.deadtime / HZ);
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -456,6 +456,8 @@ static int server_conf_init(void)
- 				KSMBD_AUTH_MSKRB5;
- #endif
- 	server_conf.max_inflight_req = SMB2_MAX_CREDITS;
-+	server_conf.max_sessions_per_connection =
-+		KSMBD_DEFAULT_MAX_SESSIONS_PER_CONNECTION;
- 	return 0;
- }
- 
---- a/fs/smb/server/server.h
-+++ b/fs/smb/server/server.h
-@@ -8,6 +8,8 @@
- 
- #include "smbacl.h"
- 
-+#define KSMBD_DEFAULT_MAX_SESSIONS_PER_CONNECTION	64
-+
- /*
-  * Server state type
-  */
-@@ -44,6 +46,7 @@ struct ksmbd_server_config {
- 	unsigned int		max_connections;
- 	unsigned int		max_inflight_req;
- 	unsigned int		max_ip_connections;
-+	unsigned int		max_sessions_per_connection;
- 
- 	char			*conf[SERVER_CONF_WORK_GROUP + 1];
- 	struct task_struct	*dh_task;
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -116,14 +116,28 @@ static int register_session_channel(stru
- 		goto out;
- 	}
+@@ -3428,6 +3428,8 @@ static noinline int smb2_set_stream_name
+ 				     xattr_stream_size);
+ 	if (rc >= 0)
+ 		return 0;
++	if (rc != -ENOENT && rc != -ENODATA)
++		return rc;
  
-+	if (sess->setup_conn != conn) {
-+		rc = ksmbd_session_reserve_slot(conn);
-+		if (rc) {
-+			kfree_sensitive(chann);
-+			goto out;
-+		}
+ 	if (fp->cdoption == FILE_OPEN_LE) {
+ 		if (!strcmp(stream_name, "AFP_AfpInfo") &&
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1912,7 +1912,11 @@ ssize_t ksmbd_vfs_casexattr_len(struct m
+ 	ssize_t value_len = -ENOENT, xattr_list_len;
+ 
+ 	xattr_list_len = ksmbd_vfs_listxattr(dentry, &xattr_list);
+-	if (xattr_list_len <= 0)
++	if (xattr_list_len < 0) {
++		value_len = xattr_list_len;
++		goto out;
 +	}
-+
- 	chann->conn = ksmbd_conn_get(conn);
- 	memcpy(chann->sess_key, sess_key, sizeof(chann->sess_key));
- 	old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
- 		       KSMBD_DEFAULT_GFP);
- 	if (xa_is_err(old)) {
-+		if (sess->setup_conn != conn)
-+			ksmbd_session_release_slot(conn);
- 		ksmbd_conn_put(chann->conn);
- 		kfree_sensitive(chann);
- 		rc = xa_err(old);
-+	} else if (sess->setup_conn == conn) {
-+		/* Transfer the initial reservation and reference to this channel. */
-+		sess->setup_conn = NULL;
-+		ksmbd_conn_put(conn);
- 	}
- out:
- 	up_write(&sess->chann_lock);
-@@ -2461,7 +2475,7 @@ int smb2_sess_setup(struct ksmbd_work *w
++	if (!xattr_list_len)
+ 		goto out;
  
- 	ksmbd_conn_lock(conn);
- 	if (!req->hdr.SessionId) {
--		sess = ksmbd_smb2_session_create();
-+		sess = ksmbd_smb2_session_create(conn);
- 		if (!sess) {
- 			rc = -ENOMEM;
- 			goto out_err;
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -353,6 +353,13 @@ static int ipc_server_config_on_startup(
- 	if (req->max_ip_connections)
- 		server_conf.max_ip_connections = req->max_ip_connections;
- 
-+	if (req->max_sessions_per_connection)
-+		server_conf.max_sessions_per_connection =
-+			req->max_sessions_per_connection;
-+	else
-+		server_conf.max_sessions_per_connection =
-+			KSMBD_DEFAULT_MAX_SESSIONS_PER_CONNECTION;
-+
- 	ret = ksmbd_set_netbios_name(req->netbios_name);
- 	ret |= ksmbd_set_server_string(req->server_string);
- 	ret |= ksmbd_set_work_group(req->work_group);
+ 	for (name = xattr_list; name - xattr_list < xattr_list_len;
 
 
