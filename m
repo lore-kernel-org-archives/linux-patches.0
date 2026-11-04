@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826887;
-	b=HNbB+jKKVnnvytjygnicxHl0ZQRrd1aUd2Y81hs+HmkjbroEMRvUz8J7zUTKKIgYRLNk
-	 iKhENBepKcXfZc6yR2sN/rw3UEQxFBoX0tNXefMITBnQu21c2KVbelz3aw2TDVZ8tWzDj
-	 Gm9tIeLXmi6oedCkg/g8KWRS6Wy+FYmBGp2GevlrCODhKrNaIpv7jaHc5XxN0r4i6l6zZ
-	 HfTVYgVCF6g5dHG8+pBl2bC3sUR5Nd9SbpSVUdTqd2xEes0mKycoY/Twa2PJ1ZK3g07KE
-	 EQNsFdO0ben8zL3CXQ1xydugc6h8TMZXzH9iMp1yKOR5VN1RmlKXQvR6AxpadV0CdWg==
+	t=1793826888;
+	b=jXpSVr7BibKVLzn+OnDl2XpOb688yMhtnVHg/3jkJoOVR1o7d0e7/QKBHT0QdV6whxj2
+	 Nfl7CwKyXlNsSiX8i3bBYmLa1TGIScBJOlU/jViPxfEzOkFEnphcsD25lvgCJ856fU9c5
+	 1Q1rRP9bApxSx89keK/UlLhRxMBCRpQ6hVLGQPzvZzRJ1bPn0EBarXdUADCcKZn5AIdeW
+	 3ZXKDOyAvHnbioYj7nRIn37l4oIPguZN/0hG1jvne7hFlx0201U1QQdovZXRT+tdEVu4c
+	 iniO1qaRh7ltWHAu749qvTE4HueSDIWrvSDsXtNTprfNZlqYw76bfy3e1aU+lvYfljA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826887;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826888;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LXOWoFeUQlZzVUZ3GtJ2V5p8Zxxwe6uttlmx+d15jTA=;
-	b=XyxAnxP5LQINW42MZvlm7foYra6HV7eFrnhymv3xKPPRWNJz2RGdZz7Beb+Q7dQNkKXW
-	 tFkZdig/IKoq33Y47k6ongOIQjjKgDQlp0lXAYikkvh/WMUYIvfClxDkoJVOPZpp+PHxm
-	 Qz1FCn2SxnHZFR2taV+dX3RCiXKUhSLbrNj8lexMqZWdPDLOpjRZyZmmzgAjx9bph/k4e
-	 IIqQWbZQNxe5OTJ5Zf7BQJSQJpd2umP7zG3CLNPqAo7brfGCrygiHGp+owFgH2L/cVdRI
-	 pVIxLl2t2E01T5Iwk+Nb/8WqnnodXjGUO/5o5yJ3nB8xEb+REG74a9UEUAimTpHUhpg==
+	bh=DjWiQoIz3qDeBmS+rH/fg8mnE2gELOFWS+DORs3t4GE=;
+	b=n1naWiOXm5M1WsZTUQydG8na7K89t4CPOwP0ke3GFSW5NryYdcbtIlHpxfoh0EyouWKN
+	 jrg1DS7N/T7Jj6DKQ5pKmKWpmgTdgzneDyUnRkZKYxzGsbzEAMD7wxl5l/2Kn87JcvVkE
+	 CrjwoBYn9Bk73KMtXLxhm2/JnJabJTb0Xe/UZuUNDLzVONuGp1+7kFTgwx3wZfRsMrb0Q
+	 ZDwbDg0/wLdE55qh6U7ATXPDpuTLP6/YqKC9628xQj8nr+e68+h/hIH3EXg2gTPVg56Bb
+	 vfcZ7GMNAPns5iDZWb9v+iDlLLvUzI2eqOpyC/T9vLDUUQsPQZiN6uqvimeMptwqprA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jYmnfpI4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+0uzY5A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB99607267B;
-	Wed,  4 Nov 2026 21:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2086082FDF;
+	Wed,  4 Nov 2026 21:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jYmnfpI4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8491F00919;
-	Wed,  4 Nov 2026 21:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+0uzY5A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76C41F00919;
+	Wed,  4 Nov 2026 21:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826886;
-	bh=LXOWoFeUQlZzVUZ3GtJ2V5p8Zxxwe6uttlmx+d15jTA=;
+	s=korg; t=1793826888;
+	bh=DjWiQoIz3qDeBmS+rH/fg8mnE2gELOFWS+DORs3t4GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jYmnfpI4cvWmeiom3Ugl/xE6wEPk44nqOiTAs5EbVazn/aVZzbdesy53l0cfbF376
-	 tH4D7HJMGNs2JoaDKMuDh67avIuhN4m4sXDGSOtO6sOMtUdR6CaMQT2MyyHq5PW5Pp
-	 J2mT1zhJj+SFoWs3wiS16t3SDREs7f3Yv6gMt//s=
+	b=s+0uzY5AKcKJidWW6JwFBAS3Ii54uLevvXbjQ9mFvHOPtORk8Wzum1kieOhDVVJQN
+	 SqG17aPUC/LzDKdnEp1PMiTofu+imIeYA9JRP0p39RlHDJunprr8hBqXXxq6eFsYV+
+	 6fld/N0prNKi8oBa0H2Gr/u33oAYtoDVEBGX9ZQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 7.3 066/547] clk: renesas: r9a08g046: Propagate clk rate for ETH TX mux clocks
-Date: Wed,  4 Nov 2026 16:04:10 -0500
-Message-ID: <20261104211040.145897890@linuxfoundation.org>
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.3 067/547] ALSA: line6: Clear prev_fbuf on capture buffer release
+Date: Wed,  4 Nov 2026 16:04:11 -0500
+Message-ID: <20261104211040.172322839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,42 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit e018c27e6052ec58de3c1e7b340521ef162a8b81 upstream.
+commit aa118c8f61d59387961d58ffae831c5259a9f222 upstream.
 
-Add CLK_SET_RATE_PARENT flag to the sel_eth0_tx and sel_eth1_tx mux
-clocks so that rate-setting requests on these clocks propagate up to
-their parent clocks.  Without this flag, a clk_set_rate() call on the
-downstream GBETH clocks has no effect on the actual PLL/divider chain
-feeding the TX clock, leaving the requested rate unapplied.
+A KASAN slab-use-after-free read was reported in submit_audio_out_urb()
+when generating an impulse test signal:
 
-Fixes: d55a0dfec40b ("clk: renesas: r9a08g046: Add GBETH clocks and resets")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260914165026.184612-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+  BUG: KASAN: slab-use-after-free in create_impulse_test_signal sound/usb/line6/playback.c:76 [inline]
+  BUG: KASAN: slab-use-after-free in submit_audio_out_urb+0x1848/0x1b20 sound/usb/line6/playback.c:249
+  Read of size 2 at addr ffff888008d74870 by task syz.2.3214/7785
+
+  Allocated by task 11:
+   kmem_cache_alloc_noprof+0x2f0/0x390 mm/slub.c:4144
+   line6_buffer_acquire+0x1a1/0x220 sound/usb/line6/pcm.c:158
+   line6_pcm_acquire+0xb6/0x230 sound/usb/line6/pcm.c:329
+   line6_startup_work+0x3c/0x50 sound/usb/line6/driver.c:728
+
+  Freed by task 7785:
+   kfree+0xf8/0x390 mm/slub.c:6566
+   line6_buffer_release sound/usb/line6/pcm.c:176 [inline]
+   line6_buffer_release+0xa5/0xf0 sound/usb/line6/pcm.c:170
+   __line6_pcm_release sound/usb/line6/pcm.c:305 [inline]
+   line6_pcm_release+0x5a/0x80 sound/usb/line6/pcm.c:313
+   snd_toneport_monitor_put+0x11b/0x190 sound/usb/line6/toneport.c:183
+
+line6pcm->prev_fbuf points into the capture PCM stream buffer
+(line6pcm->in.buffer), which is updated during audio_in_callback() to
+feed rate synchronization, software monitoring, and impulse test signal
+generation on playback side.
+
+When all capture streams are closed, line6_buffer_release() frees
+pstr->buffer with kfree().  However, it does not clear line6pcm->prev_fbuf.
+If playback is subsequently started (e.g. via impulse test signal
+volume control snd_line6_impulse_volume_put()), submit_audio_out_urb()
+dereferences the stale pointer line6pcm->prev_fbuf under in.lock,
+resulting in a slab-use-after-free read.
+
+Clear prev_fbuf and prev_fsize in line6_buffer_release() when releasing
+the capture stream buffer under in.lock, ensuring that no stale buffer
+pointer can be accessed by submit_audio_out_urb().
+
+Fixes: 63e20df1e5b2 ("ALSA: line6: Reorganize PCM stream handling")
+Cc: stable@vger.kernel.org
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261013063554.571-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/renesas/r9a08g046-cpg.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/usb/line6/pcm.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/clk/renesas/r9a08g046-cpg.c
-+++ b/drivers/clk/renesas/r9a08g046-cpg.c
-@@ -277,10 +277,12 @@ static const struct cpg_core_clk r9a08g0
- 	DEF_MUX(".sel_rspi0", CLK_SEL_RSPI0, G3L_SEL_RSPI0, sel_rsci_rspi),
- 	DEF_MUX(".sel_rspi1", CLK_SEL_RSPI1, G3L_SEL_RSPI1, sel_rsci_rspi),
- 	DEF_MUX(".sel_rspi2", CLK_SEL_RSPI2, G3L_SEL_RSPI2, sel_rsci_rspi),
--	DEF_MUX(".sel_eth0_tx", CLK_SEL_ETH0_TX, G3L_SEL_ETH0_TX, sel_eth0_tx),
-+	DEF_MUX_FLAGS(".sel_eth0_tx", CLK_SEL_ETH0_TX, G3L_SEL_ETH0_TX, sel_eth0_tx,
-+		      CLK_SET_RATE_PARENT),
- 	DEF_MUX(".sel_eth0_rx", CLK_SEL_ETH0_RX, G3L_SEL_ETH0_RX, sel_eth0_rx),
- 	DEF_MUX(".sel_eth0_rm", CLK_SEL_ETH0_RM, G3L_SEL_ETH0_RM, sel_eth0_rm),
--	DEF_MUX(".sel_eth1_tx", CLK_SEL_ETH1_TX, G3L_SEL_ETH1_TX, sel_eth1_tx),
-+	DEF_MUX_FLAGS(".sel_eth1_tx", CLK_SEL_ETH1_TX, G3L_SEL_ETH1_TX, sel_eth1_tx,
-+		      CLK_SET_RATE_PARENT),
- 	DEF_MUX(".sel_eth1_rx", CLK_SEL_ETH1_RX, G3L_SEL_ETH1_RX, sel_eth1_rx),
- 	DEF_MUX(".sel_eth1_rm", CLK_SEL_ETH1_RM, G3L_SEL_ETH1_RM, sel_eth1_rm),
- 	DEF_DIV(".div_eth0_tr", CLK_ETH0_TR, CLK_PLL6, G3L_SDIV_ETH_A, dtable_4_200),
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -173,6 +173,14 @@ static void line6_buffer_release(struct
+ 	clear_bit(type, &pstr->opened);
+ 	if (!pstr->opened) {
+ 		line6_wait_clear_audio_urbs(line6pcm, pstr);
++		if (pstr == &line6pcm->in) {
++			/* prev_fbuf points into the capture buffer we are about
++			 * to free; drop it while no capture URB is in flight.
++			 */
++			guard(spinlock_irqsave)(&line6pcm->in.lock);
++			line6pcm->prev_fbuf = NULL;
++			line6pcm->prev_fsize = 0;
++		}
+ 		kfree(pstr->buffer);
+ 		pstr->buffer = NULL;
+ 	}
 
 
