@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826931;
-	b=OAWLYB/R0XhQZcipIvGtTSjeoEDPvh/3rj7PbJX/ze9y0NPYjWzRTBiUTrPn3P5wkCg3
-	 5gBLJGYE75+rwCxlfA1OPdVypGisqU9WUf28er+KxukrYGNDuz/uoy0YdyWR+WUo2xqh+
-	 az08OmSCVNg/4yUhnMCnqHWjMfJtprsX48Rzj8MfgM1SaN8qWXujE/MGPi74svj/gMy5o
-	 woUShguvBc+zOmIC6ka2zMtFcEXVn6/ao7PD4OSexzKSvREmSCDksGVac9ObWrad/aT5v
-	 Qa4m8o+1Ps0R28/zwX6UWtvRTZ9+VRYqCpqi7kcEFZ4l1h4hBytNdvO3cmZ6zibwHng==
+	t=1793826932;
+	b=Fr9C8MWFZ7yq2E7f0UO5K4/GRqK9asjXMT7tXkZn9T2GSntSbcnhRNLzIxdW3MgyOeRA
+	 xSN6rd9WIkvbTgQM3yMYlpUB0s2dfiVofYXzqlYlO9IG5qM4GGARkGpReiIafJkyte/gv
+	 pNQFjeFLC6rPexh+rM6fHQjGlT5eqeVgGnyamEeoDVVguYtw4i4d2Rpgvm0nAAJRyAYyi
+	 QXFHnijYm4nctKUSSa7s4lLSNB3kk0HkYFWHTeYs73TPQMt2wOzMipx6uj5FEn/t1/o97
+	 4kgSkgawYHP2gu9zJPmCI2tMBPB0UMNMjQMejGJcx/g6Qdr9JU7pzW1Ma6wqxJ6J4mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826931;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W52rDQsQRBgbGmyYOm0GBN/qmeSAtna8ZJbCvsvIgWY=;
-	b=RcWW8XrtIDabfaF1Xh17Ip24bzVEDntR4OUGZVFW1ZxPWeuK/6cuZks+8YsR8okTeaai
-	 kfnJuo2dj+6JaA91I603nyj332DuxKuVw+fQv0aTMSrX7GXhDb6ik83QWcSA/gvrW1nyk
-	 QmR95q5JZTElDKQ5UZH0aPpjlbt+XX5QUvRaPS+2huKtvfDFb0r4hhKveSM3v3g2nL7Hx
-	 FIaws8sbDD+Dy/KArQlBCRt7WHov6/6yp0UMSbD9d25rqNLklR7DLn8oAqXJPlQdfKWmw
-	 txLbMFsuUkgzeD+46tOC32o9Uu5Z2f+59dPsak4TOK9TcdiRB4RmKv+8X8DR6xrvkgg==
+	bh=/Ui0jvI69bT1k9GtOyAGpfA6K8IcN5i3/KBOAnr1hY0=;
+	b=wxRgtHghWxQFZF8JVGP8n0DZbXXQy0FRAKCwt90wUXNpEhSsB8V881aMIdLyCpui2qa7
+	 aKkA1vuqxYbBejmBsEPvfpswTuYAnUysy+O3iydhpoPZnkON5m5dTxECD5KinTdol8o0Q
+	 350g+IJCwr5McvjXG6LAmn+E04oJodh2gcu+QsmHrQtw/6DLm1HG1DHEz3CuLGJfyVgrB
+	 0B4uYDWx+XShbk9XsFzYriLo+qxJSy6EtE0JWL2y35BnA5N4kIBI/kJPntOxoVm7yk9FW
+	 Fmy2BqNEoHZ0c1YrH2u6/mOy8Z3eHTZzTyUyR7HAkTY+aE6ZYonnVHyLJ3SauCSyzdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bl3CSJ0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okOUTYSt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE0C6072FA3;
-	Wed,  4 Nov 2026 21:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531E96072FA3;
+	Wed,  4 Nov 2026 21:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bl3CSJ0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492481F00919;
-	Wed,  4 Nov 2026 21:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okOUTYSt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D8F1F00919;
+	Wed,  4 Nov 2026 21:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826930;
-	bh=W52rDQsQRBgbGmyYOm0GBN/qmeSAtna8ZJbCvsvIgWY=;
+	s=korg; t=1793826932;
+	bh=/Ui0jvI69bT1k9GtOyAGpfA6K8IcN5i3/KBOAnr1hY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bl3CSJ0jBg0Nwu2iVcCANLYhwpXrvVB6oy9db1ZWqNFPNiYD68nTY14dZLcsCSJn
-	 ijn/ZF+MVMuh1HTTAG9lTNQuY1yl3d4anHMSuAzo8wck5TBkTO5fpdaeuZlMoQ+6ol
-	 9H5kbvzq3IexBDQVINFBZRtirw6Qghh9jiBwS3p0=
+	b=okOUTYStCXG9ekIE1uAGSrA8qt/h7YO2dzrxjBO+jcx8me1g2+VPJ59BH8Yiz4GdP
+	 WKHN0GFFQeOkBpM3rAbg1p/xVrl5Wov5vHKB1U8m+KSoVZ7YpY1vL47COls/QpOhE5
+	 iNLA66D417a0hcdy7wGDuWv8U5RKOV6OODKqAjZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 055/547] io_uring: dont pass restart error codes to userspace
-Date: Wed,  4 Nov 2026 16:03:59 -0500
-Message-ID: <20261104211039.855724338@linuxfoundation.org>
+	Jonathan Gopel <jgopel@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 7.3 091/547] thunderbolt: Do not RPM complete unrelated subtrees on unplug
+Date: Wed,  4 Nov 2026 16:04:35 -0500
+Message-ID: <20261104211040.811352734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,128 +67,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jonathan Gopel <jgopel@gmail.com>
 
-[ Upstream commit e1a64bc64897f4c2fe460922c345f2ed8f889b5f ]
+commit 96a8479804e3f7af43e639e9df39f562f1a75fd5 upstream.
 
--ERESTARTSYS and friends are instructions for the system call exit code,
-which either restarts the call or turns them into -EINTR. They are not
-supposed to be seen by applications. A request isn't a system call,
-nobody looks at what it returns before that is put into a CQE.
+When a Thunderbolt device is unplugged, that switch and every switch
+subsequent to it on the bus device list is `complete()`d, not just its
+child devices. In the case of multiple domains, it may cause, eg, an
+attempt to `complete()` the uninitialized domain 1 root switch RPM
+completion on unplug of a switch from domain 0 (though ordering is not
+guaranteed numerically sorted).
 
-The read/write and the networking opcodes convert these codes to -EINTR
-by hand. The others don't. An io-wq worker that is blocked in the open of
-a FIFO, a tty or some other device, or in a splice from an empty pipe,
-and that gets interrupted because the request is cancelled, completes it
-with -512:
+I initially noticed this issue on a Dell XPS9720 when the system would
+seem to sporadically not wake after unplugging a Thunderbolt dock. I
+tried multiple kernel versions including v7.2.7 and v7.3-rc4 to see if
+that resolved the issue, but the issue persisted. Eventually I found
+that I could consistently generate a kernel Oops reporting a page fault
+at 0xffff_ffff_ffff_fff8 on unplug from one side of the laptop and went
+bug hunting. I became suspicious of the `bus_for_each_dev()` walk that I
+ultimately ended up changing. To confirm this issue, I did an eBPF trace
+of `bus_for_each_dev()`, `complete_rpm()`, and `complete()` while
+unplugging in a variety of situations and found that an unplug from
+domain 0 tries to `complete_rpm()` domain 1's switch, whose RPM
+completion is not initialized and thus is holding a null wait-list
+pointer, triggering the page fault.
 
-  IORING_OP_OPENAT, IOSQE_ASYNC       // FIFO without a writer
-  IORING_OP_ASYNC_CANCEL              // -EALREADY, worker is signalled
-  CQE of the open: res == -512
+Here are the key sections of that eBPF trace. Note that HEAD denotes the
+completion's own wait-list HEAD:
 
-There are more candidates, like whatever a file system or driver returns
-from ->flush(), ->fsync(), ->fallocate() or ->uring_cmd(), or breaking a
-lease or delegation.
+```
+RESCAN_ENTER domain=0
 
-Take care of it in io_issue_sqe(), which all of them go through. The
-helper is moved from rw.c as is. The cost is a compare and a branch that
-is not taken per request.
+COMPLETE rescan_domain=0 target=0-1 target_domain=0
+         route=0x1 parent=0-0 unplugged=1
+COMPLETION done=0 head=HEAD next=HEAD prev=HEAD
 
-Fixes: 15b71abe7b52 ("io_uring: add support for IORING_OP_OPENAT")
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-39-c1556f5d7bf5@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+BUS_WALK domain=0 start=0-1 callback=complete_rpm
+CALLBACK_ENTER rescan_domain=0 dev=1-0 parent=domain1 is_switch=1
+
+COMPLETE rescan_domain=0 target=1-0 target_domain=1
+         route=0x0 parent=domain1 unplugged=0
+COMPLETION done=0 head=HEAD next=0 prev=0
+
+        complete+5
+        complete_rpm+43
+        bus_for_each_dev+133
+        icm_free_unplugged_children+250
+        icm_rescan_work+42
+```
+
+This patch gates the `complete()` on an additional condition - that the
+Thunderbolt domain matches the domain of the device that was unplugged.
+
+I only have a single system with multiple Thunderbolt domains - the Dell
+XPS9720. I am consistently able to reproduce the Oops on that system.
+Since running with this patch, I have not seen the Oops reoccur. I have
+also tested it on a Thinkpad X1-Gen12, and that system boots and runs
+well with it, but it only has a single Thunderbolt domain, so it does
+not exercise the multi-domain failure case.
+
+Fixes: 4f7c2e0d8765 ("thunderbolt: Make sure device runtime resume completes before taking domain lock")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Gopel <jgopel@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |  5 +++++
- io_uring/io_uring.h | 18 ++++++++++++++++++
- io_uring/rw.c       | 18 ------------------
- 3 files changed, 23 insertions(+), 18 deletions(-)
+ drivers/thunderbolt/icm.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 9796283508b83..7cade81d332a8 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1454,6 +1454,9 @@ static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
- 	ret = __io_issue_sqe(req, issue_flags, def);
- 
- 	if (ret == IOU_COMPLETE) {
-+		/* not all handlers take care of the internal restart codes */
-+		if (unlikely(req->cqe.res <= -ERESTARTSYS))
-+			req->cqe.res = io_fixup_restart_res(req->cqe.res);
- 		if (issue_flags & IO_URING_F_COMPLETE_DEFER)
- 			io_req_complete_defer(req);
- 		else
-@@ -1468,6 +1471,8 @@ static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
- 		if (req->flags & REQ_F_IOPOLL)
- 			io_iopoll_req_issued(req, issue_flags);
- 	}
-+	if (unlikely(ret <= -ERESTARTSYS))
-+		ret = io_fixup_restart_res(ret);
- 	return ret;
- }
- 
-diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
-index 659deb13c6680..22374bf536a04 100644
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -350,6 +350,24 @@ static inline void io_req_set_res32(struct io_kiocb *req, s32 res, u32 cflags,
- 	req->big_cqe.extra2 = extra2;
- }
- 
-+static inline ssize_t io_fixup_restart_res(ssize_t ret)
-+{
-+	switch (ret) {
-+	case -ERESTARTSYS:
-+	case -ERESTARTNOINTR:
-+	case -ERESTARTNOHAND:
-+	case -ERESTART_RESTARTBLOCK:
-+		/*
-+		 * We can't just restart the syscall, since previously
-+		 * submitted sqes may already be in progress. Just fail
-+		 * this IO with EINTR.
-+		 */
-+		return -EINTR;
-+	default:
-+		return ret;
-+	}
-+}
-+
- static inline void *io_uring_alloc_async_data(struct io_alloc_cache *cache,
- 					      struct io_kiocb *req)
+--- a/drivers/thunderbolt/icm.c
++++ b/drivers/thunderbolt/icm.c
+@@ -2072,7 +2072,7 @@ static int complete_rpm(struct device *d
  {
-diff --git a/io_uring/rw.c b/io_uring/rw.c
-index 432820f862514..b21daa3cfa5c2 100644
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -610,24 +610,6 @@ static void io_complete_rw_iopoll(struct kiocb *kiocb, long res)
- 	smp_store_release(&req->iopoll_completed, 1);
- }
+ 	struct tb_switch *sw = tb_to_switch(dev);
  
--static inline ssize_t io_fixup_restart_res(ssize_t ret)
--{
--	switch (ret) {
--	case -ERESTARTSYS:
--	case -ERESTARTNOINTR:
--	case -ERESTARTNOHAND:
--	case -ERESTART_RESTARTBLOCK:
--		/*
--		 * We can't just restart the syscall, since previously
--		 * submitted sqes may already be in progress. Just fail
--		 * this IO with EINTR.
--		 */
--		return -EINTR;
--	default:
--		return ret;
--	}
--}
--
- static inline void io_rw_done(struct io_kiocb *req, ssize_t ret)
- {
- 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
--- 
-2.53.0
-
+-	if (sw)
++	if (sw && sw->tb == data)
+ 		complete(&sw->rpm_complete);
+ 	return 0;
+ }
+@@ -2088,8 +2088,8 @@ static void remove_unplugged_switch(stru
+ 	 * tb_switch_remove() calls pm_runtime_get_sync() that then waits
+ 	 * for it.
+ 	 */
+-	complete_rpm(&sw->dev, NULL);
+-	bus_for_each_dev(&tb_bus_type, &sw->dev, NULL, complete_rpm);
++	complete_rpm(&sw->dev, sw->tb);
++	bus_for_each_dev(&tb_bus_type, &sw->dev, sw->tb, complete_rpm);
+ 	tb_switch_remove(sw);
+ 
+ 	pm_runtime_mark_last_busy(parent);
 
 
