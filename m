@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831093;
-	b=yeOqqRPrlsZaB7NM+vXk9eZBeggKbAV9KVsfL1JWjLwzjF3lPQFpW+6ADXyfXP0GajvD
-	 yd8PC5Hm+KtLhntd6YlzpoyIZ9oAYrMvF7FJ8lxuAZu6dVedAmMMur7TL9uVv+sHbFvfM
-	 16f+Z8nM5J5VY7sbpNZUjiiCY7Ek/JtRNZYBZeu+IXb7TdxMTk8T1r0gFj7fezTDW69zj
-	 nzPSuKeIz4iUKfCsz4hzkmY/FCVAhLrUmO+wkimncEVedT9ntiv2VkIKRYG3QHqe58tzY
-	 paz0km0ft77fn2PzhSRhBU49HFILo6JLfG/TCQNYYJs8YwP1a5cd/YQrJd2mv4c1oQA==
+	t=1793831094;
+	b=LOq+tZ+T+ghNmUqApLVW4Y7BvrPM4iZL1Auv/kW6/MijNpx381HzJlC6DWzrRHTxS+bs
+	 x54usWXTIv9zbpRdcEty+218EHO3baTraEAGYvV2fja7GSw2KWvcEnPmoOsbrCVYg4gG4
+	 Q8jI9CyUvgblVogmh19fXXkYEbLH5LcJt2+ZeuyZsEP3zMcz0GhOpKG7n8O+FLNSspYoL
+	 l+kkbL3SyEyDOQYjtJ98uNKvFxBK+G374cJ1AYNhi7+TZWaq4ZS5jwABIAju5hY+/B666
+	 Dti6P6jGH6Ev889fMGm1wvxDEUv7Yd1W4ouG9pjtBpiVezXTz/4T4VHXJDNTeP1+NfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831093;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831094;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DejV7SHRdkGkWRKNZSaw0SmWVxdTgg4pRRHBPsrPB9o=;
-	b=c+LHtA+K9LvPe8JR62HGewruaOGX4d2vVaus4O4l8feRvFiQn18ao3W9DYtyXGwjdEfG
-	 Qgf16FrGOEYQBn4bhRIwwfwEAicQKsVHDHEX/C84GIUjos/aMVRYhCJJIZdyo+7JjCu1s
-	 BMMuSEdzNG5XnVra7e+c5D7tNAf+0drWCqLm1uQKEoDXqzCdvQwTs5R19EENGdqS7ytoK
-	 4oDam5qAO0pfHpzLUYheXabFceWUWihZSjak/AKWo0dcr8gdR5KVpfR63Yjh/ET2c8d8t
-	 +zicASJSFDnFDqgBMwsHmR5SX2Uy1O3oCj+8D+/Py9BNUBvI77HTBO5vc/TPoJ6vcQw==
+	bh=oSMhyXnF0hHe4HAQzx1Rv2gdVZt07ML///pX8D4gTIE=;
+	b=CQxjmI7NSHVMpVbKQWaeCh/KykI+xIFy4l7yriCazTDE9mZe/DntgsVYwHu9JdeMuxmr
+	 E6fSHdaXI4FBYQ88J1zBPSEObMfAUy2FTrFP/gYrr44wQXeaePlgkjSKFdQFTK4vgnO5C
+	 NFscUokq+YXKNK1GvI5hXKduILfbGItfh2neTYttp3/LSygiwe3aKkg6h8AGTnnjZyINn
+	 k20iqt4tR/kQl43pB4068m/TkP1RhQM9GbNd9Az9q2MAMsTbunfYbOD4Ku63DuHjAgUAv
+	 K2xuvl8K61g8Kd5TCQlu+ej4dLyOqT1Yxptj1nWhCCOgPgNoGgNuyZ7Qh2/BQRRaG5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KuC86d3N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHFrFG5t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66A1606AC39;
-	Wed,  4 Nov 2026 22:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CEC606AC36;
+	Wed,  4 Nov 2026 22:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KuC86d3N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4288C1F00919;
-	Wed,  4 Nov 2026 22:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHFrFG5t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B171F000C1;
+	Wed,  4 Nov 2026 22:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831092;
-	bh=DejV7SHRdkGkWRKNZSaw0SmWVxdTgg4pRRHBPsrPB9o=;
+	s=korg; t=1793831094;
+	bh=oSMhyXnF0hHe4HAQzx1Rv2gdVZt07ML///pX8D4gTIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KuC86d3N1DzZ69xs4DYHg5UZG4BxNZnBlgeyL0yVedthGP96HyYZchtTRr9akekzd
-	 42YoB86rIW1gjiNP3tlsvrHJHoyGtYJkJPywQI1WpbL8ov6AScFkT7O1zJUI58Ptv8
-	 2m9XCAKD84pKFRWU7bG9Sd8i1dzHfO9IXv6iIQdU=
+	b=ZHFrFG5tw5Nua2LIssWtJF4QoPRLynB/xzTaR0GIPuq7rowdOfkbg+FwrUdVoT+eL
+	 QQ3DvQIjqE+DNLyT7tRRr9HR32fgVFpYStCA4UDo3uTl9aAh/qBrK422KH5pTDU/cL
+	 YGz0Zj6UPCJzkKExa1PuJn/UqCnd9Ncx1S3iSLkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
+	Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0499/1005] ALSA: hda/realtek: Add quirk for Acer Nitro AN515-45
-Date: Wed,  4 Nov 2026 16:03:52 -0500
-Message-ID: <20261104211057.927882085@linuxfoundation.org>
+Subject: [PATCH 6.18 0500/1005] ALSA: hda/realtek: Fix speakers on ASUS PM3406CHA
+Date: Wed,  4 Nov 2026 16:03:53 -0500
+Message-ID: <20261104211057.952652328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,34 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>
 
-[ Upstream commit 0d90a929836344f1d3b39f22f08ccecc62378a59 ]
+[ Upstream commit 0eee030c2c09c7a44be778de5f451d9e7a2f09c1 ]
 
-The Acer Nitro AN515-45 requires ALC2XX_FIXUP_HEADSET_MIC to make the
-headset microphone work properly.
+The ASUS ExpertBook PM3406CHA uses an ALC256 codec with subsystem
+ID 1043:1664. On Linux boot, the internal speakers are silent even
+though playback is routed to the codec and the speaker pin is
+configured for output.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221925
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260921124450.639601-2-zhangheng@kylinos.cn
+The codec starts with coefficient 0x10 set to 0x1d20. Writing 0x7f20
+to coefficient 0x10 immediately restores internal speaker output.
+
+This was reproduced on the affected hardware from a fresh boot using
+hda-verb. Reducing a larger initialization sequence showed that this
+coefficient write alone is sufficient; no GPIO, EAPD, pin-control, or
+other coefficient changes are required. After applying the coefficient
+in userspace, speaker output also remains functional across suspend
+and resume.
+
+Add a machine-specific HDA fixup that writes the required coefficient.
+
+The fixup has been compile-tested, but could not be boot-tested because
+the affected hardware is no longer available.
+
+Closes: https://bugs.launchpad.net/ubuntu/+source/alsa-driver/+bug/2162718
+Signed-off-by: Muhtasham Nawr al-Mahmud <muhtaseem2005@gmail.com>
+Link: https://patch.msgid.link/20260924144512.3989-1-muhtaseem2005@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/codecs/realtek/alc269.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 4eefd5d87f04b..fa5bc54ff083d 100644
+index fa5bc54ff083d..a40b85fbaf393 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6615,6 +6615,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1025, 0x142b, "Acer Swift SF314-42", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1466, "Acer Aspire A515-56", ALC255_FIXUP_ACER_HEADPHONE_AND_MIC),
-+	SND_PCI_QUIRK(0x1025, 0x151e, "Acer Nitro AN515-45", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1539, "Acer Nitro 5 AN515-57", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58", ALC2XX_FIXUP_HEADSET_MIC),
+@@ -3678,6 +3678,7 @@ enum {
+ 	ALC269_FIXUP_SONY_VAIO,
+ 	ALC275_FIXUP_SONY_VAIO_GPIO2,
+ 	ALC269_FIXUP_DELL_M101Z,
++	ALC256_FIXUP_ASUS_PM3406CHA,
+ 	ALC269_FIXUP_SKU_IGNORE,
+ 	ALC269_FIXUP_ASUS_G73JW,
+ 	ALC269_FIXUP_ASUS_N7601ZM_PINS,
+@@ -4089,6 +4090,14 @@ static const struct hda_fixup alc269_fixups[] = {
+ 			{}
+ 		}
+ 	},
++	[ALC256_FIXUP_ASUS_PM3406CHA] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x10 },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x7f20 },
++			{}
++		}
++	},
+ 	[ALC269_FIXUP_SKU_IGNORE] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc_fixup_sku_ignore,
+@@ -7184,6 +7193,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1652, "ASUS ROG Zephyrus Do 15 SE", ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1043, 0x1664, "ASUS ExpertBook PM3406CHA", ALC256_FIXUP_ASUS_PM3406CHA),
+ 	SND_PCI_QUIRK(0x1043, 0x1683, "ASUS UM3402YAR", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x16a3, "ASUS UX3402VA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x16b2, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
 -- 
 2.53.0
 
