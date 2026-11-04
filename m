@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830844;
-	b=zQRdbxpSezP4V4X08ctw0E2ovV2s/DaaaJQrAnslv1fXuKVvdK4+67tzR9rGMjDvSFPZ
-	 MkKZWvYJkfjHekxkRs6XlfaghgCKAJFAxQWcvrWRq2JtX/UKB4+xsM+YfljjBpHFi4YND
-	 rOcBaIo2wUxHymJsJBZSAVbU+FJiAgiRuV+9jaqQOl+9a+biPAQ8YThtpgpnT79KnTBwO
-	 KANFzdBFIa4oxl9KPpjFiq0LWDBYUWLj8ZgUNhl4I4+/jCTrj2wzow295y6DIEUQvGW8h
-	 Z52GLbqKYePUNYXM4huuSBD1umVlPuHTQwpvZe1rRfSeuf3xb7GT7HLXsXOkVi0V7mw==
+	t=1793830846;
+	b=ZNCEoFImfGD1UbvtwxKfsn64e/zabf3Godhxx6PvlyGjHjIxyse8qOcCLd4MAa09jda4
+	 47u2AfpuZRIm2HWIqqBhZCCpCaWyMEn7MgTxTqaKpHNw7s/IaUCqJrMrVjMQyf+ZVMjBr
+	 GBuLRNmdxFgjnEJjxOFtMGfy/w4PfQmhP1Ak0pDq21kqxe7NcbZuY5BqoKIZ2PMN7kYcM
+	 Ddro+9D1o0iRupvBw0IUg+DYwxhObkU8cGGq5SLMV7dphXUDvTsqF1B5QeTFYDEIFTq99
+	 JXPy1EoPKCHoY6OQCkmp+RMOyr7kBI1TmTH8jaDLffeS4GAGueivHMu16DUdBUys8EA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830846;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ju7LmGadpFC5EW4Oo2ukpALPMiFpP6ItTK+iJ+BbEUA=;
-	b=KJLmlTecWnwO43Qxv7N+Iuh3z0tAJzW6M7lSUNgC9izfPVcJQA357bpwy69wnqUU9+en
-	 XywqPPMNCr0BhZLdufJ+y7VCQ4SeQ6me1WRs/GSvyrwX26PfXefLmhXE+6SlL9hGhhMQI
-	 LiIGD2XDXB4vidMXXgW+PZzR+eOuKO6w0Mo7zgirNkDtuPzQz3ATFLwmQxBkg4ArqzZmm
-	 zWZYMMDtgEWGQARcHV0CdUDMmT9amVmU/pfbFhpgNZzgkX7i3wdLAE65kY/XKgoxzZYX8
-	 nV1zycPioVFH+CcEGQl32gUBNO9ZCc/RzeGVy2y2U6/89g0EBpGmvuTiV/zO/yQVwFw==
+	bh=k+1dx9NERD9mNbUN3G+8RSc+7NZRkNNFDzLWp0QyIjA=;
+	b=DG6OX3bpxdfon/6xzM8vZujR6uL24pPWzcqB0Sagi4qTHud3w6pRLxE7noNBL8eq2vfK
+	 GvxP9tkzl+B6HbZrFpAaBcDvrnyv03oIYyemMDcf8AvHN6UL6fPZDfmOn81XAYbmHuh6/
+	 KhcJE5xxrJ1UaCW8mdNCg0fQMDfd2urqglg/WxDGP3Tjry7gDgqdphqSQ0fA0ArSOqVZh
+	 IzH5sC7NcQk5B3VU1mELHhmofjYNWuxXUXJiXUGO/5cJlV0PPS5zYnr1JSXoGCK6kzC/j
+	 yn+ThWfc4WM9lL6hdUr2efD4gpaSMyMSzIe4qzE9i3tjpq8//S8daAyszfVEaYZANvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwWPg6D0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJd+zxzg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476D1606B2D8;
-	Wed,  4 Nov 2026 22:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB751606B2D8;
+	Wed,  4 Nov 2026 22:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwWPg6D0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF961F0093A;
-	Wed,  4 Nov 2026 22:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJd+zxzg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733431F00919;
+	Wed,  4 Nov 2026 22:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830844;
-	bh=ju7LmGadpFC5EW4Oo2ukpALPMiFpP6ItTK+iJ+BbEUA=;
+	s=korg; t=1793830845;
+	bh=k+1dx9NERD9mNbUN3G+8RSc+7NZRkNNFDzLWp0QyIjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XwWPg6D0eHd55VS8u/VC53V7kQ0pdApSXCFigjkXMUXcGoW2vlKLRv6B/vcKiZ5sM
-	 Artk0jRozSci/Tsc/3DEIMovP6YDH8Y4Iw2tGi1dq/wsoOxUaSjNDnlHmd3yvehauQ
-	 2Ex5oW1Cu5YzbbwlQ8zdnngSTWNrJpEoq7Whf+2k=
+	b=nJd+zxzgoIRlgm22ViUvsnemCPFaAjoQ22fIxZPNObQ4+LpXCL/6jFbWhS2gZa/+1
+	 trQ7stA44vkKEkh8F5IunShaaVdsolowmahGJ3a7ct1WdK0Z7rEZjdTkoUMlh9zgcr
+	 xryasbgUpsHBl58r6IwHH4Rvwgs5XaDBzE6QfZhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0356/1005] ALSA: hda/realtek: Add quirk for Acer Nitro ANV16-42 headset mic
-Date: Wed,  4 Nov 2026 16:01:29 -0500
-Message-ID: <20261104211054.047576116@linuxfoundation.org>
+Subject: [PATCH 6.18 0357/1005] Bluetooth: btrsi: Move set_bt_context after successful HCI registration
+Date: Wed,  4 Nov 2026 16:01:30 -0500
+Message-ID: <20261104211054.084800150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,36 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit e00a6a89900dfa4cda3669558d2f3581cd41a656 ]
+[ Upstream commit 290a3644609526f7ac12529cd1618042fa5a32db ]
 
-The Acer Nitro ANV16-42 (subsystem 0x1025:0x1909, Realtek ALC245)
-does not detect the headset microphone jack. Adding the
-ALC2XX_FIXUP_HEADSET_MIC quirk resolves the issue and restores
-proper headset mic functionality.
+In rsi_hci_attach(), ops->set_bt_context() stores the newly allocated
+h_adapter into common->bt_adapter before hci_alloc_dev() and
+hci_register_dev() are called. If either of these fails, h_adapter
+is freed but common->bt_adapter remains a non-NULL dangling pointer.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221623
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260807125857.678297-1-zhangheng@kylinos.cn
+This causes a deterministically reachable use-after-free when the
+device operates in a BT+WiFi coexistence mode and CONFIG_RSI_COEX
+is enabled. The following software-only trigger paths exist:
+
+  1. SDIO driver .remove  (rsi_disconnect)
+  2. USB  driver .disconnect (rsi_disconnect)
+  3. SDIO driver .shutdown (rsi_shutdown)
+  4. Hibernation .freeze  (rsi_freeze)
+
+All four paths check:
+    if (IS_ENABLED(CONFIG_RSI_COEX) && coex_mode > 1 && bt_adapter)
+        rsi_bt_ops.detach(bt_adapter);  // use-after-free
+
+coex_mode is set during rsi_91x_init(), before rsi_hci_attach() is
+called, and is not cleared on attach failure. Since set_bt_context()
+already wrote bt_adapter before the failure, the deinit paths see a
+non-NULL dangling pointer and proceed to detach it.
+
+Fix this by moving set_bt_context() after hci_register_dev() succeeds.
+On failure paths bt_adapter stays NULL, and the deinit callers correctly
+skip the detach call.
+
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btrsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 05e7fcc2f67e6..9ec18f779a700 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6595,6 +6595,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1025, 0x182c, "Acer Helios ZPD", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1025, 0x1844, "Acer Helios ZPS", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1025, 0x1909, "Acer Nitro ANV16-42", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
- 	SND_PCI_QUIRK(0x1028, 0x053c, "Dell Latitude E5430", ALC292_FIXUP_DELL_E7X),
- 	SND_PCI_QUIRK(0x1028, 0x054b, "Dell XPS one 2710", ALC275_FIXUP_DELL_XPS),
+diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
+index 6c1f584c8a337..0e2894e93e82e 100644
+--- a/drivers/bluetooth/btrsi.c
++++ b/drivers/bluetooth/btrsi.c
+@@ -117,7 +117,6 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		return -ENOMEM;
+ 
+ 	h_adapter->priv = priv;
+-	ops->set_bt_context(priv, h_adapter);
+ 	h_adapter->proto_ops = ops;
+ 
+ 	hdev = hci_alloc_dev();
+@@ -146,6 +145,8 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		goto err;
+ 	}
+ 
++	ops->set_bt_context(priv, h_adapter);
++
+ 	return 0;
+ err:
+ 	h_adapter->hdev = NULL;
 -- 
 2.53.0
 
