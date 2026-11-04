@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830957;
-	b=zXPAC0L15xn7hw9viYzzjl1B1eQAFQOvhQrcrmUGCL7MINLmcHhYN1Cv+7Kpq/Bw+DbR
-	 WHEg3j2pd1SipQoAScjbVQB6Ecd3odfWAw9UkhUlN4leXSUtF/74fiyjUgK7lzhAMxLXG
-	 PPLNTnYr1ZTiRspcnJLAFNdHWIhRU6IYftQNO/O59vrgBaEKhWlyKSaO3YDCRNC2UzDo9
-	 eBp7Ur0ELXViwX8urCOzvRtBzD0PO6KoCwxDnHdUFqDUDz3egfJ2cFoMHMFInI58ZLG3B
-	 4uZSNrHiWA9IUioix0Gc9z4mlhgIV+EVf07jDS4BB9OSPEK6H5G4s3ZeFf439FxPkOg==
+	t=1793830958;
+	b=IZ27x5kLGnFpzL2GYCkmD9q+wVTxg4uo44Ei6oI/CI5bApuA0G6bfowSqal4+FNMaGXR
+	 7sL2C4ajahgbTQxEB2bRGuBqLMtMmSWgJEXioM6K6DBp4jSDuzSy8TOydeI/2jCc7vwec
+	 iOndypZBGIQx8+SZ2pfRRpY610cjr1tDQdSIx1QNlhgD3K+opvwX8X7iOrdNL8hn/FNB6
+	 ycFk/rVHTq4hvTzZprIu46+P6NE1ugRC5Obaoj+pU807bWbkoUI0GXppbfz1ggF2BGsQX
+	 ufdo7sfzL1RyLtF5AuPiseWzuvndHQ6Jzg/rT1Voji5XYaw0vb/62Uyr6b4rgPUP4Uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830957;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hcx40YL0l+MlTE36hLHYgrbybLZpmOM28jXg8k+CAtc=;
-	b=ODfLIAGrDwKHLQ3O9zXTKvTBFPJU0xZQlyW0JuLoe+SFXBIHEvklrWXPW1XfnbcC+fHC
-	 z0ijILxveJZN0DlomOnKj2IPulueJuEZLwtgluPtYPzGWeJLPFYpy9aRBY6LxgS6tH6Uz
-	 4KUKIhpdP3NqWUpDRPqOitLWvbJk6i2JgqIaLHgmoelpJ4Af+mA2n0yvhogP+RTppT9FM
-	 vEwv5uvneCaREKOIrxINWnHXBHJ8KkIAIABXRsX2f9mmkERYxW5UVQfjCPJEjX6fNS5gz
-	 9NdObbUfLnVso1SdV4grgb4xse3C8M3gyOJFM6h5T7nJFGNU0iRJnFGz8++dzQdY/oA==
+	bh=yAxeC510uZb/jh1X5Cv3p0bTk4m+dfZCl5ns7/m7rEI=;
+	b=dWabrjEDoh3/hPXLFI2xNGiZJwdexpJRu2FxyOJR4PH/HYb8Y60Lam19ah0anwTCZZbl
+	 mWWfHlT9p1On2g9Dp9fkmW0STdMYrGfDJqoO56TX6GSXyWNY15QkcNAn7rHUjbaOVwyo9
+	 vzvIvpBzJNWq71hRIw6+/nz2tc4wd7+hq/WfzZ5Ze4IujSfkA951s/Xqpj/94R/ot8sSb
+	 46Jnc6GlccDfOTZHYokbolYPAourX6ouKjVL4Zb3X+ulpu5tGq0dAt2u1Y+lJtv5R7AF/
+	 DR++MuuEfkVoOAg6kvWLLlZaJt17vFV18fphzSfZsblr1xC6aaLe2CHJXI6f/aAbOEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sg968Rxe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUwl1yde;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66D5606A844;
-	Wed,  4 Nov 2026 22:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3732B606A87A;
+	Wed,  4 Nov 2026 22:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sg968Rxe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4123A1F000C1;
-	Wed,  4 Nov 2026 22:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUwl1yde
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37951F0093A;
+	Wed,  4 Nov 2026 22:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830956;
-	bh=hcx40YL0l+MlTE36hLHYgrbybLZpmOM28jXg8k+CAtc=;
+	s=korg; t=1793830958;
+	bh=yAxeC510uZb/jh1X5Cv3p0bTk4m+dfZCl5ns7/m7rEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sg968Rxe+QatzRh84xM4wbmjdYAWzdBk538L+gUKbKtQVwvDZvOdIpdzvM7C4Sx13
-	 eNqQ7dXqt6Cd+q3l+gH3KWxX9ZWiHzrjRUPtty8hI2iLxKODSfXtiLuKSIKyRv8JM1
-	 5tMy+ejrXLUnN9R2/8eEvIq0Wy6ZMbdKSyPwDG+o=
+	b=AUwl1ydeFC59XyFpGoyZsy2biV7ugbZ0pBw8HUwVLrIyVAE+pkWXbPosWqOoTa9y3
+	 gCgJvPzZ/7EdYoyXkwIWi9N6H2mo94epJrChq/9ah8Ky/5MCdLhKrnuO7YgwPcy9gw
+	 bZ9+W5yT+WMMTD+BZjHJhDcoKfhmU9/i7yndOHLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Shi <coshi036@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0384/1005] nvme: ratelimit the completion-path messages driven by device data
-Date: Wed,  4 Nov 2026 16:01:57 -0500
-Message-ID: <20261104211054.848808555@linuxfoundation.org>
+Subject: [PATCH 6.18 0385/1005] alpha: run the remote RTC access in a worker, not an IPI callback
+Date: Wed,  4 Nov 2026 16:01:58 -0500
+Message-ID: <20261104211054.875532043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,81 +68,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit c05c86681170e381e24498257db3a879deb1ae89 ]
+[ Upstream commit 6f45effbd74012f1715584ba51abaa3196a47c08 ]
 
-nvme_find_rq() and nvme_handle_cqe() print an unratelimited message for
-every completion queue entry whose command id does not resolve to an
-in-flight request.  Both are reached from the completion interrupt path
-(nvme_irq() -> nvme_poll_cq() -> nvme_handle_cqe()) and the decision to
-print is made entirely from device-supplied data, so a controller that
-posts a stream of bogus command ids drives unbounded printk from hard
-interrupt context.
+On Marvel the CMOS clock is only reachable from the boot cpu, so
+remote_read_time() and remote_set_time() bounce the access there with
+smp_call_function_single(), whose callback runs in hard interrupt
+context.
 
-This is not hypothetical.  A single boot under an emulated controller
-that posts invalid completions produced 846 "could not locate request
-for tag 0x0", 846 "invalid id 0 completed on queue 2" and 123 "genctr
-mismatch" lines.  Once the tag set has been torn down every subsequent
-completion resolves to nothing, so the print rate is bounded only by how
-fast the device can post entries.
+alpha_rtc_read_time() calls mc146818_get_time() with a 10 ms timeout.
+That waits out the RTC update cycle in mc146818_avoid_UIP(), which drops
+rtc_lock and udelay()s 100 us at a time until the update completes or
+the timeout expires:
 
-Ratelimit the three messages.  The information they carry is diagnostic
-and repeats, so the suppression count printed by the ratelimit helpers
-is enough to tell that the condition persists.  This matches how the
-other device-driven error prints in the driver are already handled, for
-example the status messages in nvme_log_error() and
-nvme_log_err_passthru().
+	for (i = 0; UIP_RECHECK_LOOPS_MS(i) < timeout; i++) {
+		spin_lock_irqsave(&rtc_lock, flags);
+		...
+		if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
+			spin_unlock_irqrestore(&rtc_lock, flags);
+			udelay(UIP_RECHECK_DELAY);
+			continue;
+		}
 
-nvme_find_rq() lives in nvme.h and is shared by pci, tcp, rdma, apple and
-target-loop, so all transports are covered.
+So a clock read from a non-boot cpu can spin for up to 10 ms in hard
+interrupt context on the boot cpu, while the cpu that sent the request
+spins in smp_call_function_single() waiting for it to finish.
 
-Found by FuzzNvme.
+mc146818_set_time() does not poll, but it takes rtc_lock too, and
+rtc_lock is a spinlock_t.  Only raw spinlocks may be taken in hard
+interrupt context, so lockdep reports the write path as soon as a
+non-boot cpu sets the clock:
 
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+  [ BUG: Invalid wait context ]
+  -----------------------------
+  swapper/0/0 is trying to lock:
+  fffffc0003690470 (rtc_lock){....}-{3:3}, at: mc146818_set_time+0x74/0x450
+  other info that might help us debug this:
+  context-{2:2}
+  no locks held by swapper/0/0.
+  stack backtrace:
+  CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc1 #1 NONE
+  Trace:
+  [<fffffc000102ebb0>] dump_stack+0x28/0x44
+  [<fffffc000110efcc>] __lock_acquire+0xb0c/0x1060
+  [<fffffc000110f5f0>] lock_acquire.part.0+0xd0/0x300
+  [...]
+  [<fffffc0001b0d834>] mc146818_set_time+0x74/0x450
+  [<fffffc0001f090cc>] _raw_spin_lock_irqsave+0x7c/0xc0
+  [<fffffc0001042f90>] do_remote_set+0x90/0xc0
+  [<fffffc000119c1a4>] __flush_smp_call_function_queue+0x314/0x5c0
+  [<fffffc000119c474>] generic_smp_call_function_single_interrupt+0x24/0x40
+  [<fffffc000103d984>] handle_ipi+0xa4/0x230
+  [<fffffc0001037044>] do_entInt+0x1a4/0x2e0
+
+The rtc class ops are always called from process context, so there is no
+reason to run the access from an interrupt at all.  Use work_on_cpu() to
+run it in a worker on the boot cpu.  Alpha does not support cpu hotplug,
+so the boot cpu cannot go offline while the work is pending.
+
+Tested on an AlphaServer ES47 (Marvel/EV7): hwclock read and write
+pinned to a non-boot cpu, twenty times, with no splat.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260810202835.3592833-1-mattst88@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/nvme.h | 6 +++---
- drivers/nvme/host/pci.c  | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/alpha/kernel/rtc.c | 37 ++++++++++++-------------------------
+ 1 file changed, 12 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index ec03a07617af1..b28c1a82f79e6 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -672,12 +672,12 @@ static inline struct request *nvme_find_rq(struct blk_mq_tags *tags,
+diff --git a/arch/alpha/kernel/rtc.c b/arch/alpha/kernel/rtc.c
+index cfdf90bc8b3f8..9e7d714ef6f85 100644
+--- a/arch/alpha/kernel/rtc.c
++++ b/arch/alpha/kernel/rtc.c
+@@ -15,6 +15,7 @@
+ #include <linux/bcd.h>
+ #include <linux/rtc.h>
+ #include <linux/platform_device.h>
++#include <linux/workqueue.h>
  
- 	rq = blk_mq_tag_to_rq(tags, tag);
- 	if (unlikely(!rq)) {
--		pr_err("could not locate request for tag %#x\n",
--			tag);
-+		pr_err_ratelimited("could not locate request for tag %#x\n",
-+				   tag);
- 		return NULL;
- 	}
- 	if (unlikely(nvme_genctr_mask(nvme_req(rq)->genctr) != genctr)) {
--		dev_err(nvme_req(rq)->ctrl->device,
-+		dev_err_ratelimited(nvme_req(rq)->ctrl->device,
- 			"request %#x genctr mismatch (got %#x expected %#x)\n",
- 			tag, genctr, nvme_genctr_mask(nvme_req(rq)->genctr));
- 		return NULL;
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 4efb55f1e3833..6e4261b0a0821 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1375,9 +1375,9 @@ static inline void nvme_handle_cqe(struct nvme_queue *nvmeq,
+ #include "proto.h"
  
- 	req = nvme_find_rq(nvme_queue_tagset(nvmeq), command_id);
- 	if (unlikely(!req)) {
--		dev_warn(nvmeq->dev->ctrl.device,
--			"invalid id %d completed on queue %d\n",
--			command_id, le16_to_cpu(cqe->sq_id));
-+		dev_warn_ratelimited(nvmeq->dev->ctrl.device,
-+				     "invalid id %d completed on queue %d\n",
-+				     command_id, le16_to_cpu(cqe->sq_id));
- 		return;
- 	}
+@@ -142,54 +143,40 @@ static const struct rtc_class_ops alpha_rtc_ops = {
+ };
+ 
+ /*
+- * Similarly, except do the actual CMOS access on the boot cpu only.
+- * This requires marshalling the data across an interprocessor call.
++ * Similarly, except do the actual CMOS access on the boot cpu only.  The
++ * access polls for the RTC update cycle and takes rtc_lock, so run it in a
++ * worker on that cpu rather than from an interprocessor interrupt.
+  */
+ 
+ #if defined(CONFIG_SMP) && \
+     (defined(CONFIG_ALPHA_GENERIC) || defined(CONFIG_ALPHA_MARVEL))
+ # define HAVE_REMOTE_RTC 1
+ 
+-union remote_data {
+-	struct rtc_time *tm;
+-	long retval;
+-};
+-
+-static void
++static long
+ do_remote_read(void *data)
+ {
+-	union remote_data *x = data;
+-	x->retval = alpha_rtc_read_time(NULL, x->tm);
++	return alpha_rtc_read_time(NULL, data);
+ }
+ 
+ static int
+ remote_read_time(struct device *dev, struct rtc_time *tm)
+ {
+-	union remote_data x;
+-	if (smp_processor_id() != boot_cpuid) {
+-		x.tm = tm;
+-		smp_call_function_single(boot_cpuid, do_remote_read, &x, 1);
+-		return x.retval;
+-	}
++	if (smp_processor_id() != boot_cpuid)
++		return work_on_cpu(boot_cpuid, do_remote_read, tm);
+ 	return alpha_rtc_read_time(NULL, tm);
+ }
+ 
+-static void
++static long
+ do_remote_set(void *data)
+ {
+-	union remote_data *x = data;
+-	x->retval = alpha_rtc_set_time(NULL, x->tm);
++	return alpha_rtc_set_time(NULL, data);
+ }
+ 
+ static int
+ remote_set_time(struct device *dev, struct rtc_time *tm)
+ {
+-	union remote_data x;
+-	if (smp_processor_id() != boot_cpuid) {
+-		x.tm = tm;
+-		smp_call_function_single(boot_cpuid, do_remote_set, &x, 1);
+-		return x.retval;
+-	}
++	if (smp_processor_id() != boot_cpuid)
++		return work_on_cpu(boot_cpuid, do_remote_set, tm);
+ 	return alpha_rtc_set_time(NULL, tm);
+ }
  
 -- 
 2.53.0
