@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831473;
-	b=OC4i2/0q0OwnqPiJ+JWdPWh7mrC3Uy+X0PLrJfwcSUpJIPTCgwqwSSMF9VobFew1ODb5
-	 rg5FxuU68LanzmR0l4WKZc1wsi3NT8vRn+BlhncttBhAYkwOLFuWD7R8Ji+WPDhXJ2/dW
-	 SgQMAuSY0cVZ+MGUqQ4r7eLNIfb6WKFkVH0qJnKc26TEBSZXZcLGWf7McF2p5QCZ6ZfDP
-	 dXtVTg9xS3xdG2HA2fqGLR4xDwosIVMfrs4l9GpLgwomiMDP1chQe0WoDGq1GBcyHSVWa
-	 hvt165Z8o4jRY1jCA9tf2vBe776MAiS7pU3fqkT6gMPIWJ12EvVgtw/FhIMsqb9U9jA==
+	t=1793831474;
+	b=QB/+RGZgpYPtJl/L0qD85XAcNaBfSTMC/J+jiBKekuFnlOeHuRd8PBPnQePPrNKvS+AU
+	 pF9hYV4sjwKlVhXcT8geUBw9jpY/5MY4Rl/rVQ2UL3HTzVy6/eU/qKVY5mmjW3BZd1Vwq
+	 GJ0jOQTeliJ+li29MQMYq9m+d2Qd3TRiIySiHY+xfvfXfEvzs50Fmnsiuqb1ITSMkaC/+
+	 zGEXCKRWzoQOp0xaZCgv+7d1hfQjQDMKxq65HbIxFDsLk+PxLNfjOB/bf0dqv6UNmpm/Y
+	 0tlyQvricQGY9+CfcERTmORd9TGZ4ph/wDu57TqzgAJia/69Jk3kuHFy3z95cDrdl4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831473;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831474;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RFqpSsxNZx3ARjIhBVshtO8ukGiqj9zbDf/2/e3kk8E=;
-	b=buU3cFr8C1ODLIO3zN+yZywkLpETfmnjQ5fNLN6v0DBUZZpDZi/blHR9z/iOjcsPMe2m
-	 rRq//etI41q7EPQoPuXd3XUW6Z479nuxgcj/uoOXBTTbtLQD7+x358v9ZRM+qGa1cFIA4
-	 hcK98Ck+w+bow69GKc31Yzg+QPuAp12y4QCFl0MMA5l3wBaHZoOYCvbVAcTqWnVcLYeht
-	 UbouedksYCDODO3gQahnAW7w9exDmkNoAAy6NB+V9+l4q+oGNplBHFpUG8ocyuI2n3ga2
-	 AiWqNP4XeaRCrIEe+tCqN/X8pWHLS23xAo34IqRa2eqz8hv/JCpOKMZL9ohrDpvhXfQ==
+	bh=ZtIExRDApcJwNV2228+mOeE+p4BdVFrYRWdeW52dK34=;
+	b=IQFjy0D5D6L8ej2o5MCi0ZM2z2bUoLuGKSKd3egeT6JNrIlVOhOBvhbWCKVa0PlX4cde
+	 TY4Wo5BNGPeAaUrzebpYkfhqs8BHki5pbRV3Ccpbra7sjQlU/XEt07WAltxdaJdEFLAti
+	 0gUYZEQmU/EHP7rw4daEwC31r8PUz4SgdZp7jYVNoWl8OynZxzwmJySvkcSoN6anUohS5
+	 WDf5v71TlV5a9rbefLAVKVysUrkgrt1NYIM4QbarmXFTstmIR6jGlKAfkjUbt3WIm46S0
+	 sneA1YGuvR6Pyaui2FrvWULC53RkMyGb54bk5lnI7RKM0bg3A8t/Op3fFTEGe5LweOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iASvbRHk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nDGhNlTK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EF2606AC2A;
-	Wed,  4 Nov 2026 22:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95168606AC2A;
+	Wed,  4 Nov 2026 22:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iASvbRHk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3B81F00919;
-	Wed,  4 Nov 2026 22:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nDGhNlTK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E153F1F000C1;
+	Wed,  4 Nov 2026 22:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831468;
-	bh=RFqpSsxNZx3ARjIhBVshtO8ukGiqj9zbDf/2/e3kk8E=;
+	s=korg; t=1793831474;
+	bh=ZtIExRDApcJwNV2228+mOeE+p4BdVFrYRWdeW52dK34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iASvbRHkqYEWgdOZ4t1fVGJRWk2shUm9v201rV5GAR1lmiWnq5w6ZN0JShnzwkAp2
-	 ebMglZZrsVEBuUeZmhxDS2pdGonqudfpq7ORBTFzRksmohc8bmS6EteaedPDkWZtxZ
-	 Cbp2haarpzbVYHwxZCtr2xaeD2Lpl8G3bQVqwy9Y=
+	b=nDGhNlTKIlM/yyUN3h0FFN4JgxfkDJQw69MlKADcaRJq0CieZJ10NcpyWy+uaD1ju
+	 uFVZsnKy+5HY9uRggfTgU4v3JyIPpaMTPRszamIexSeI7wowrGE4h5egS4XwcRG+QE
+	 EnsJKD/0NWbXeRNI7dzYTUZqXY41SrgKXi9cpNTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Patel <ripatel@wii.dev>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.18 0714/1005] genirq: Defer kfree(irqaction) until irq_thread_dtor() finishes
-Date: Wed,  4 Nov 2026 16:07:27 -0500
-Message-ID: <20261104211103.546434022@linuxfoundation.org>
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 0726/1005] media: microchip-isc: take a reference on the parsed endpoints
+Date: Wed,  4 Nov 2026 16:07:39 -0500
+Message-ID: <20261104211103.838192690@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,147 +68,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Patel <ripatel@wii.dev>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-commit d04adff6860587e843948b0c31174f8ae11b8dfe upstream.
+commit f2eb2fd388bf3f1959556a326e797cacca341c86 upstream.
 
-When an interrupt thread exits abnormally via do_exit() (e.g. the interrupt
-handler oopses) without returning from irq_thread(), a concurrent call to
-free_irq() could free the irqaction before the irq_thread_dtor() exit task
-work runs.
+for_each_endpoint_of_node() drops the reference on the current node as
+it advances. xisc_parse_dt() and isc_parse_dt() store the node in
+subdev_entity->epn and release it later with of_node_put(), but never
+took their own reference, so the stored pointer refers to an
+already-released node. This underflows the refcount and can
+use-after-free, reachable through the camera device tree overlay.
 
-  irq thread (oopsed)                 free_irq()
-  -------------------                 ----------
-  do_exit()
-    exit_mm()
-      complete_vfork_done()  -------> kthread_stop() returns
-    exit_files() ...                  kfree(action)
-    exit_task_work()
-      irq_thread_dtor()
-        action->...                   <- use-after-free
+Take a reference with of_node_get() when storing the node, and drop it
+in microchip_isc_subdev_cleanup() so the entities the bind loop never
+reaches on an early exit do not leak it.
 
-Track the pending exit work with the IRQTF_EXIT_WORK thread flag, and have
-__free_irq() wait for the bit to clear before kfree().
-
-irq_thread_dtor() only runs on irq_thread abnormal exit. If that dtor also
-faults, free_irq() will hang indefinitely, but double IRQ thread faults
-require a reboot anyways.
-
-[ tglx: Add missing include ]
-
-Fixes: ed3e694d78cc ("move exit_task_work() past exit_files() et.al.")
-Signed-off-by: Richard Patel <ripatel@wii.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: c9aa973884a1 ("media: atmel: atmel-isc: add microchip-xisc driver")
+Fixes: d6701f13bd07 ("media: atmel: Use v4l2_async_notifier_add_fwnode_remote_subdev")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009145842.1616117-2-ripatel@wii.dev
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/internals.h |    2 ++
- kernel/irq/manage.c    |   26 ++++++++++++++++++++------
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ drivers/media/platform/microchip/microchip-isc-base.c    |    6 +++++
+ drivers/media/platform/microchip/microchip-sama5d2-isc.c |   17 ++++++++++-----
+ drivers/media/platform/microchip/microchip-sama7g5-isc.c |   17 ++++++++++-----
+ 3 files changed, 30 insertions(+), 10 deletions(-)
 
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -31,6 +31,7 @@ extern struct irqaction chained_action;
-  * IRQTF_AFFINITY  - irq thread is requested to adjust affinity
-  * IRQTF_FORCED_THREAD  - irq action is force threaded
-  * IRQTF_READY     - signals that irq thread is ready
-+ * IRQTF_EXIT_WORK - irq thread exit task_work is pending
-  */
- enum {
- 	IRQTF_RUNTHREAD,
-@@ -38,6 +39,7 @@ enum {
- 	IRQTF_AFFINITY,
- 	IRQTF_FORCED_THREAD,
- 	IRQTF_READY,
-+	IRQTF_EXIT_WORK,
- };
- 
- /*
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -21,6 +21,7 @@
- #include <linux/sched/isolation.h>
- #include <uapi/linux/sched/types.h>
- #include <linux/task_work.h>
-+#include <linux/wait_bit.h>
- 
- #include "internals.h"
- 
-@@ -1173,17 +1174,14 @@ void wake_threads_waitq(struct irq_desc
- 		wake_up(&desc->wait_for_threads);
- }
- 
--static void irq_thread_dtor(struct callback_head *unused)
-+static void __irq_thread_dtor(struct irqaction *action)
- {
- 	struct task_struct *tsk = current;
- 	struct irq_desc *desc;
--	struct irqaction *action;
- 
- 	if (WARN_ON_ONCE(!(current->flags & PF_EXITING)))
- 		return;
- 
--	action = kthread_data(tsk);
--
- 	pr_err("exiting task \"%s\" (%d) is an active IRQ thread (irq %d)\n",
- 	       tsk->comm, tsk->pid, action->irq);
- 
-@@ -1200,6 +1198,14 @@ static void irq_thread_dtor(struct callb
- 	irq_finalize_oneshot(desc, action);
- }
- 
-+static void irq_thread_dtor(struct callback_head *unused)
-+{
-+	struct irqaction *action = kthread_data(current);
-+
-+	__irq_thread_dtor(action);
-+	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
-+}
-+
- static void irq_wake_secondary(struct irq_desc *desc, struct irqaction *action)
- {
- 	struct irqaction *secondary = action->secondary;
-@@ -1257,6 +1263,7 @@ static int irq_thread(void *data)
- 	else
- 		handler_fn = irq_thread_fn;
- 
-+	set_bit(IRQTF_EXIT_WORK, &action->thread_flags);
- 	init_task_work(&on_exit_work, irq_thread_dtor);
- 	task_work_add(current, &on_exit_work, TWA_NONE);
- 
-@@ -1277,6 +1284,7 @@ static int irq_thread(void *data)
- 	 * oneshot mask bit can be set.
- 	 */
- 	task_work_cancel_func(current, irq_thread_dtor);
-+	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
- 	return 0;
- }
- 
-@@ -1811,6 +1819,12 @@ out_mput:
- 	return ret;
- }
- 
-+static void irq_stop_thread(struct irqaction *action)
-+{
-+	kthread_stop_put(action->thread);
-+	wait_on_bit(&action->thread_flags, IRQTF_EXIT_WORK, TASK_UNINTERRUPTIBLE);
-+}
-+
- /*
-  * Internal function to unregister an irqaction - used to free
-  * regular and special interrupts that are part of the architecture.
-@@ -1915,9 +1929,9 @@ static struct irqaction *__free_irq(stru
- 	 * the same bit to a newly requested action.
- 	 */
- 	if (action->thread) {
--		kthread_stop_put(action->thread);
-+		irq_stop_thread(action);
- 		if (action->secondary && action->secondary->thread)
--			kthread_stop_put(action->secondary->thread);
-+			irq_stop_thread(action->secondary);
+--- a/drivers/media/platform/microchip/microchip-isc-base.c
++++ b/drivers/media/platform/microchip/microchip-isc-base.c
+@@ -1860,6 +1860,12 @@ void microchip_isc_subdev_cleanup(struct
+ 	list_for_each_entry(subdev_entity, &isc->subdev_entities, list) {
+ 		v4l2_async_nf_unregister(&subdev_entity->notifier);
+ 		v4l2_async_nf_cleanup(&subdev_entity->notifier);
++		/*
++		 * Release the endpoint reference taken while parsing. It is
++		 * NULL for entities the bind loop already consumed, so this
++		 * only drops the ones left over on an early exit.
++		 */
++		of_node_put(subdev_entity->epn);
  	}
  
- 	/* Last action releases resources */
+ 	INIT_LIST_HEAD(&isc->subdev_entities);
+--- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
++++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
+@@ -356,28 +356,30 @@ static int isc_parse_dt(struct device *d
+ 	struct device_node *epn;
+ 	struct isc_subdev_entity *subdev_entity;
+ 	unsigned int flags;
++	int ret;
+ 
+ 	INIT_LIST_HEAD(&isc->subdev_entities);
+ 
+ 	for_each_endpoint_of_node(np, epn) {
+ 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
+-		int ret;
+ 
+ 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
+ 						 &v4l2_epn);
+ 		if (ret) {
+-			of_node_put(epn);
+ 			dev_err(dev, "Could not parse the endpoint\n");
+-			return -EINVAL;
++			of_node_put(epn);
++			ret = -EINVAL;
++			goto err_cleanup;
+ 		}
+ 
+ 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
+ 					     GFP_KERNEL);
+ 		if (!subdev_entity) {
+ 			of_node_put(epn);
+-			return -ENOMEM;
++			ret = -ENOMEM;
++			goto err_cleanup;
+ 		}
+-		subdev_entity->epn = epn;
++		subdev_entity->epn = of_node_get(epn);
+ 
+ 		flags = v4l2_epn.bus.parallel.flags;
+ 
+@@ -398,6 +400,11 @@ static int isc_parse_dt(struct device *d
+ 	}
+ 
+ 	return 0;
++
++err_cleanup:
++	list_for_each_entry(subdev_entity, &isc->subdev_entities, list)
++		of_node_put(subdev_entity->epn);
++	return ret;
+ }
+ 
+ static int microchip_isc_probe(struct platform_device *pdev)
+--- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
++++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
+@@ -340,6 +340,7 @@ static int xisc_parse_dt(struct device *
+ 	struct isc_subdev_entity *subdev_entity;
+ 	unsigned int flags;
+ 	bool mipi_mode;
++	int ret;
+ 
+ 	INIT_LIST_HEAD(&isc->subdev_entities);
+ 
+@@ -347,23 +348,24 @@ static int xisc_parse_dt(struct device *
+ 
+ 	for_each_endpoint_of_node(np, epn) {
+ 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
+-		int ret;
+ 
+ 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
+ 						 &v4l2_epn);
+ 		if (ret) {
+-			of_node_put(epn);
+ 			dev_err(dev, "Could not parse the endpoint\n");
+-			return -EINVAL;
++			of_node_put(epn);
++			ret = -EINVAL;
++			goto err_cleanup;
+ 		}
+ 
+ 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
+ 					     GFP_KERNEL);
+ 		if (!subdev_entity) {
+ 			of_node_put(epn);
+-			return -ENOMEM;
++			ret = -ENOMEM;
++			goto err_cleanup;
+ 		}
+-		subdev_entity->epn = epn;
++		subdev_entity->epn = of_node_get(epn);
+ 
+ 		flags = v4l2_epn.bus.parallel.flags;
+ 
+@@ -387,6 +389,11 @@ static int xisc_parse_dt(struct device *
+ 	}
+ 
+ 	return 0;
++
++err_cleanup:
++	list_for_each_entry(subdev_entity, &isc->subdev_entities, list)
++		of_node_put(subdev_entity->epn);
++	return ret;
+ }
+ 
+ static int microchip_xisc_probe(struct platform_device *pdev)
 
 
