@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829252;
-	b=TnbvC/S0B8UyLHOR+3JnXJdiOXNSVD5Mlah5Pc8RJPD47yV8P+x7CH3gNqWRh0SFzPBb
-	 TusicWe5GNk+ZtSBlDwp4iYL74JCLV0MENp6k532F7qSADeMwinAIEtDl5R7hI25xGh+p
-	 dryABX0nk3Ne2GQ3Ydayh6tUXYJnXQZrioPPLEIARMfeKg76QzwWTNoc0Qy4piKACp/vI
-	 VGBNJmhWjm7UuR7bytqzV8mi3W20ueGmMnejBMGeh9++JOokPANMsHW3Qn3kqun+z7gll
-	 HgAduXN5jqRawOF1gu7PP3v2a9BDXQp1dMDGEbhhuW1l4Ku86+zUNnqJxycNPy7qZLg==
+	t=1793829254;
+	b=RMHwUdbReWp5tnP5qNosW9aGy6go2bWWuN2aj75QeGvWM1p46GI0KXst7UTPw6t6i2Dc
+	 PLmIRrf6b8pA13rfCriN/MzO9mJBm0JPXzbwq7XIglxDUo+PG43yFx60OoKK/lwSRDmTi
+	 TPhXxzixiiWwI0j4WGUZpXRKZ/7ZX6oNsLQ260xMMmky3Cs6gqdZAaiLyGq10+lmphRmJ
+	 BXOYKvpGhMrOArTVPZme1/XtRk7MRbY2dK2kb/2H6/N50TMWik3xVz2NuuJBTpPI2+eGX
+	 U9KUraJ0AWDswoUELVTKXo403wJ2p7vcHG7XzHfCttcVsp1To2kP4Rgq2QmhQOrX8NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=URqJg1PvblskWlJ0QNer6lk0/xYvXQMJZEbPxyrdLOc=;
-	b=d4xKOTHjfYwec9KK5xZiQD/4uSfNcLmgjG8rSBzjWnkvu5Tuwhy42cZCyrt3TmOYMWr5
-	 XlGvhKlWBjXjX0jhkILKKvD+c/lOUX1oHHrD/f2vCIvi+z2qJ5KXdGgWN5e5NkMsn9/Rn
-	 IyBqx6Mc3rwyPvhWNd/vLYNRUbrdtiHUD503BQcvtLdthl3xASOCbgcWzJBwL3Rcm1Hp6
-	 T20dwb/8hlYrC8gEHhRtKdRU34lCrHFGoj4WG+71HjUU0Q2+wYcxpECYDGGq51mHAynNg
-	 dnSXM+AC3WtTNAryjS5uKSDoEEFaZBeRI1II1r2GihDhY8ytlVyl2lhVjwBx1sTgzJQ==
+	bh=MXmoXw1RHEptIGFQtV0oijVOUYr4ihwiPWt0Uh0roAM=;
+	b=jFvc7gCmNsTL9LKMTQJLhJ7c0bqWE644RfwDV/aUAEd7gi6ZrfXCOZLVmyP+3P5e67V0
+	 hTg6Lfi5JanAyPO1WD7Zw2mwVkO/ME4VCsjVjK+52kWhc35sIHLRy8CrjkEO5lvhaie52
+	 uEORbwAWERbfXyT290DoSv6628zGMtXkQgCP98pEk7+oJlIBgjDmhE9o+j/XAVA87qJhZ
+	 LL2KbjoVSPZPeO7wp4IKqT4uClb2uxuMnYTZzXezfd653n+UYmCdVTHDW+0q9vhsyhZRr
+	 e7TM0iUwlKQe3NSyJR4lps+Pe5zJnZn35fZ/kST2fbn6D2XueCFDGuGVhcge9WKyEiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnnIjkbl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aD+y5G5D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462CF6070A83;
-	Wed,  4 Nov 2026 21:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38B2606A845;
+	Wed,  4 Nov 2026 21:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnnIjkbl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8C61F00919;
-	Wed,  4 Nov 2026 21:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aD+y5G5D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A96A1F000C1;
+	Wed,  4 Nov 2026 21:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829252;
-	bh=URqJg1PvblskWlJ0QNer6lk0/xYvXQMJZEbPxyrdLOc=;
+	s=korg; t=1793829253;
+	bh=MXmoXw1RHEptIGFQtV0oijVOUYr4ihwiPWt0Uh0roAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LnnIjkblGWoCqFz+rk+gUPR8dhPfG4NQhLfETS/adHT73a8PetqbPBORYrYmsKLUe
-	 Jfki0v0p0Sxcy8wvwCPUQJC+89gZUO2tSp5BFGea2XPUfs6XyB02ZmTuoIQosDAv6m
-	 I0IKGc2V9hJ8Jwh0MJgs/NhQR2EWTD+NAzU7i6nk=
+	b=aD+y5G5DuzJ3mEEjWxtKj7BENcbI4i/8m6wEQzUZKi7hgxT774NWnOOJm2mYZsIeu
+	 pxElHiYCSbJZqPD0DEy1mEM1tdBioSz5CXuu93ruPRlBUi2SgsJvu4nAMvTU57/573
+	 OBxIldtwLD0eWX05eRUayW1zfqLMJ1NfrA9mxxTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>
-Subject: [PATCH 7.3 517/547] accel/amdxdna: Add support for AIE2 revision 9
-Date: Wed,  4 Nov 2026 16:11:41 -0500
-Message-ID: <20261104211053.084011293@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 544/547] ksmbd: fix use-after-free after a failed durable reconnect
+Date: Wed,  4 Nov 2026 16:12:08 -0500
+Message-ID: <20261104211053.862781392@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,41 +68,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Ian Bridges <icb@fastmail.org>
 
-commit 63e91c1997898f32f68a5dbf68195d68b8e58443 upstream.
+[ Upstream commit 248b5819591c577727930e4e255a455235fab50a ]
 
-aie2_get_dev_revision() fails to recognize AIE2 revision 9 hardware.
-Add AIE2_DEV_REVISION_GRGH to the list of supported AIE2 revisions.
+ksmbd_reopen_durable_fd() republishes a detached durable handle in the
+reconnecting session's file table and takes no reference for that entry.
+If smb2_open() then fails, cleanup relies on the final ksmbd_fd_put() to
+remove the volatile id.
 
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260929181459.928468-1-lizhi.hou@amd.com
+Two reconnects of the same handle can both take a lookup reference before
+either attaches it. If the one that reopens first then fails and drops
+its references first, the other request makes the final put through
+ksmbd_put_durable_fd(). That frees the handle without removing the first
+session's table entry, so tearing that session down writes to freed
+memory.
+
+  BUG: KASAN: slab-use-after-free in __close_file_table_ids+0x14d/0x740 [ksmbd]
+  Call Trace:
+   __close_file_table_ids+0x14d/0x740 [ksmbd]
+   ksmbd_destroy_file_table+0x76/0x100 [ksmbd]
+   ksmbd_session_destroy+0xf8/0x480 [ksmbd]
+   ksmbd_dispose_sessions+0x13e/0x200 [ksmbd]
+   ksmbd_conn_sessions_cleanup+0x4c3/0x6d0 [ksmbd]
+  Freed by task 1030:
+   __ksmbd_close_fd+0x97d/0x1000 [ksmbd]
+   smb2_open+0x14eb/0xd9f0 [ksmbd]
+
+Commit 3515503322f4 ("ksmbd: fix durable reconnect error path file
+lifetime") handles a final put made by the reconnecting request, but not
+one made by another holder.
+
+Remove the volatile id under the file-table lock on this error path,
+before the references are dropped, as ksmbd_close_fd() does on the
+request_open path just above. Removal then no longer depends on which
+holder makes the final put. The stale comment in the reconnect cleanup
+is updated to match. A successful reconnect is unchanged.
+
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/amdxdna/aie2_msg_priv.h |    1 +
- drivers/accel/amdxdna/npu4_regs.c     |    1 +
- 2 files changed, 2 insertions(+)
+ fs/smb/server/smb2pdu.c   |    9 +++++----
+ fs/smb/server/vfs_cache.c |   28 ++++++++++++++++++++++++++++
+ fs/smb/server/vfs_cache.h |    2 ++
+ 3 files changed, 35 insertions(+), 4 deletions(-)
 
---- a/drivers/accel/amdxdna/aie2_msg_priv.h
-+++ b/drivers/accel/amdxdna/aie2_msg_priv.h
-@@ -530,6 +530,7 @@ enum aie2_dev_revision {
- 	AIE2_DEV_REVISION_GPT1,
- 	AIE2_DEV_REVISION_GPT2,
- 	AIE2_DEV_REVISION_GPT3,
-+	AIE2_DEV_REVISION_GRGH,
- 	AIE2_DEV_REVISION_UNKN,
- };
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5525,6 +5525,8 @@ err_out2:
+ 				ksmbd_close_fd(work, fp->volatile_id);
+ 				smb2_complete_request_open(work);
+ 			} else {
++				if (dh_info.reconnected && fp == dh_info.fp)
++					ksmbd_unpublish_reopened_fd(work, fp);
+ 				ksmbd_fd_put(work, fp);
+ 			}
+ 		}
+@@ -5538,10 +5540,9 @@ err_out2:
+ 	if (dh_info.reconnected) {
+ 		/*
+ 		 * If reconnect succeeded, fp was republished in the
+-		 * session file table.  On a later error, ksmbd_fd_put()
+-		 * above drops the session reference; drop the durable
+-		 * lookup reference through the same session-aware path so
+-		 * final close removes the volatile id before freeing fp.
++		 * session file table, and the error path above has
++		 * already removed its volatile id.  Drop the durable
++		 * lookup reference through the same session-aware path.
+ 		 */
+ 		if (rc && fp == dh_info.fp)
+ 			ksmbd_fd_put(work, dh_info.fp);
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -851,6 +851,34 @@ void ksmbd_wake_session_blocked_works(st
+ 	read_unlock(&ft->lock);
+ }
  
---- a/drivers/accel/amdxdna/npu4_regs.c
-+++ b/drivers/accel/amdxdna/npu4_regs.c
-@@ -153,6 +153,7 @@ const struct amdxdna_rev_vbnv npu4_rev_v
- 	{ AIE2_DEV_REVISION_GPT1, "NPU Gorgon Point 1" },
- 	{ AIE2_DEV_REVISION_GPT2, "NPU Gorgon Point 2" },
- 	{ AIE2_DEV_REVISION_GPT3, "NPU Gorgon Point 3" },
-+	{ AIE2_DEV_REVISION_GRGH, "NPU Gorgon Halo" },
- 	{ 0 }
- };
- 
++/**
++ * ksmbd_unpublish_reopened_fd() - remove a reopened durable handle from the
++ *	session file table after its CREATE failed
++ * @work:	smb work of the failed CREATE
++ * @fp:		durable handle republished by ksmbd_reopen_durable_fd()
++ *
++ * The reopen publishes @fp in this session's table without taking a reference
++ * for the entry, so the CREATE error path's puts need not be the last ones.
++ * Another holder of a global-table reference, such as a concurrent reconnect
++ * of the same handle, can drop the last one through ksmbd_put_durable_fd(),
++ * which frees @fp without touching this table.  Remove the id here, while
++ * the caller still holds its references.
++ *
++ * Every path that removes the id before the final put also clears
++ * @fp->volatile_id under ft->lock, so a valid id is still @fp's entry.
++ */
++void ksmbd_unpublish_reopened_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
++{
++	struct ksmbd_file_table *ft = &work->sess->file_table;
++
++	write_lock(&ft->lock);
++	if (has_file_id(fp->volatile_id)) {
++		idr_remove(ft->idr, fp->volatile_id);
++		fp->volatile_id = KSMBD_NO_FID;
++	}
++	write_unlock(&ft->lock);
++}
++
+ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
+ {
+ 	struct ksmbd_file	*fp;
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -198,6 +198,8 @@ static inline bool ksmbd_stream_fd(struc
+ int ksmbd_init_file_table(struct ksmbd_file_table *ft);
+ void ksmbd_destroy_file_table(struct ksmbd_session *sess);
+ int ksmbd_close_fd(struct ksmbd_work *work, u64 id);
++void ksmbd_unpublish_reopened_fd(struct ksmbd_work *work,
++				 struct ksmbd_file *fp);
+ struct ksmbd_file *ksmbd_lookup_fd_fast(struct ksmbd_work *work, u64 id);
+ struct ksmbd_file *ksmbd_lookup_foreign_fd(struct ksmbd_work *work, u64 id);
+ struct ksmbd_file *ksmbd_lookup_fd_slow(struct ksmbd_work *work, u64 id,
 
 
