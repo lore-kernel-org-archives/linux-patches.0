@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831321;
-	b=usYyY7lkVPjoFr7DiVB1OaR5WukfYjT04GWtLKuuQuifPXyNPPBVBjhpN0O3vJeEc7bw
-	 a3voHJ0+xAIrluobnBcIFOH7TLsTcvL/gU8gxiRbIbELPlFnF+3aT8aOIgtlTUHg8Bvf1
-	 wxWsf0Ix5MYInCxitE/XH6xjStEYzOo/S16TFWttapMJ9GVzU0oq+NqO6U42G5A1dNVM4
-	 8LyK2qa81GLEpYWM1j6aJoNFqmrM2IZ1I367jsM/dOVMPoxZAx5B0J/zVR66Ard6siusH
-	 T4QdVr+IZ8ZkIkL0VGyY+apxEM+54sBj6VBpitIT2rygqGx5x0ynJZuexPTOPz6ekPg==
+	t=1793831323;
+	b=pjSoufc7p5191C7MYxZ6BTxi7Li9khvFzrKQzdoIpLhYTzxLD/V1+r05WQc9dmIwmN7c
+	 l0lpWjTRhfbbQPIGfo0nl+GGGtPl+4wWLobPiSZ7vQ/X8s09z4/Wke56UIeRby+28uUaR
+	 eAjN72eJviqYmqR/9H7YExeAcD+T6LyGUyfs0vlAIvi/NCO15841N/IXQiCIgW/J/PX6h
+	 GwCuTyYBx52HkudL4ICHDNOCA+sMEFa3ICULZ/KuMZ28xqEbEtHk+mJ21LEcxqtA0evV6
+	 KifzZ+tb0R0txRxNvTwVT6TsfYL7kseYPtrANOQ8zVlIci9aP4nw+go3ecV7dzSuW7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831321;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831323;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qVGoVnVVycOnVTSTWlK0Z85j6t1POayQPPKg0vk5FKo=;
-	b=rM85iINLltm61z+kG4sWjUu4ho9jUbXOw05Nq6uwCOHJyGolFfVP6tnZ5gKVIC5LFtwU
-	 4SHUogG7rtH/ZdBOCE48RqAk5V/FqG1v5j3Jer9kGRIMzMrLqKts+ypjv39iUc56AX0kW
-	 s8hTgFAFFvPaj6ql11+yEh68zbyBZ3dC8RSCz6YG1LhXlF6mBxDJf2KD2ALrgZo5Xh/uf
-	 Jx8Jyd7iD0u2f9PNOXzIzClGnz9LVzaupn+tfY+ChGR5DzcI1NL1XWoyGBh0fUggD1EDJ
-	 Q0RG2SVoupFRdjSI12LwtyLKOXgBb7pUaYHAiQaYyB5MgpXpCAJ0ntrfWbheVQWDKtA==
+	bh=KmImZm8QkcfAeOSmdJG2oh8gr/A6In/nKEMNjV0R4PM=;
+	b=qQtUZQhSfiaUQcPfMgVnl+mjH9F9ysDAlJylCfk9r85tPL4wNrmNgUXVvNQLVzklybdn
+	 6v00ug8t8dqwW2Fq71H+LTFJG48GYtdrAXmf11CKfYcIgAm1XFFz00dMDaNzcmc7n6YBA
+	 3wPZ75+5gbfnEuJ+cdfo61PRHdx4ZfftDORwOdH9Y5oKQHcmpYLNr0bgV3rX/7GY8HwMk
+	 tO11HSRuIzdMPJy2Dfb6gy/rL/UmIjgprMYCpn7NYwLwjHuf0RN4Z3TSsQD/dqfNu/CQ0
+	 fV7Kp0XxfJtzLvda126wCpzV5AhVp0d0gp8vHgzZ4DOh9nXJRYO/hzFXPtXZtsMtmcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EYHsRur0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uhpaovAe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D420606D80A;
-	Wed,  4 Nov 2026 22:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB107606A33A;
+	Wed,  4 Nov 2026 22:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EYHsRur0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5B71F00919;
-	Wed,  4 Nov 2026 22:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uhpaovAe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C06F1F00919;
+	Wed,  4 Nov 2026 22:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831321;
-	bh=qVGoVnVVycOnVTSTWlK0Z85j6t1POayQPPKg0vk5FKo=;
+	s=korg; t=1793831322;
+	bh=KmImZm8QkcfAeOSmdJG2oh8gr/A6In/nKEMNjV0R4PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EYHsRur03Ha6SYoyZP9GAT5d1xe0RSdX3hsCqijmuHlx9ZazLXnHz2qr2BSblJiFE
-	 WV8FUcqpKxE+ftAGE+JDzWuzFUuN7kfeesdX90lK01GBEX6OD/fJVuElik6I2tGcAx
-	 j0ZtiT3WRDxN/fnn69lKlgAAC/2pKQBCFUyEyQRk=
+	b=uhpaovAeJqRPGSwdG8XMcW0RfqHIzUBx5brr/vETBZE00qgJcvg1AIe0xXx11Bij6
+	 TH3dvh46fOb/BQ/mRQSSBUWaBD0Yj0fferBsPkmcc3NZffLNFXCHALLQvGj/uLRUif
+	 4wuNxQq/tFM1teK4LABmqgIdosP0V+kM+neIkQFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com,
-	Adarsh Das <adarshdas950@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Jinwoo Lee <rkskek9254@gmail.com>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0594/1005] smb: client: delete compound mids on send failure before unlock
-Date: Wed,  4 Nov 2026 16:05:27 -0500
-Message-ID: <20261104211100.500806547@linuxfoundation.org>
+Subject: [PATCH 6.18 0595/1005] KVM: x86: Fill kvm_run exit fields in common get_nested_state_pages() error paths
+Date: Wed,  4 Nov 2026 16:05:28 -0500
+Message-ID: <20261104211100.527687952@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,54 +69,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adarsh Das <adarshdas950@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 8f6f8a48399f82f4a83f7b9f25b9707e0062a4f9 ]
+[ Upstream commit c1214f293d77c6e425a379f90d09bdb4815993a8 ]
 
-When sending a compound request fails, smb_send_rqst() kicks off a
-reconnect. compound_send_recv() still has those mids on pending_mid_q,
-but it unlocks the server without removing them first.
+Fill kvm_run with "internal error, emulation" in the common error handling
+paths for getting nested state pages, as requiring each check to manually
+fill kvm_run is error prone and requires a non-trivial amount of copy+paste.
 
-During reconnect, cifs_abort_connection() walks pending_mid_q and runs
-each mid callback. With no response yet, those callbacks return credits
-and drop in_flight. Then compound_send_recv()'s send-error path returns
-the same credits again. in_flight ends up decremented twice and
-smb2_add_credits() WARNs.
+Specifically, both SVM and VMX fail to fill kvm_run if load_pdptrs() fails,
+and SVM fails to fill kvm_run if kvm_hv_verify_vp_assist() fails.  If those
+flows fail, the *best* case scenario is that KVM will exit to userspace
+with KVM_EXIT_UNKNOWN.  The worst case scenario is that KVM exits with a
+stale exit_reason and confuses userspace.
 
-syzbot hits this during SMB2_negotiate when the socket send fails.
+Note, SVM never exits to userspace if something goes sideways when dealing
+with vmcb12 assets while emulating VMRUN, i.e. lack of SVM-specific code is
+not a bug.
 
-cifs_call_async() already calls delete_mid() before unlock on send
-failure. Do the same for compound chains and set cancelled_mid[] so the
-out: path does not delete them again.
-
-Fixes: ee258d79159a ("CIFS: Move credit processing to mid callbacks for SMB3")
-Reported-by: syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/6a727d22.40259c87.584f4.04ce.GAE@google.com
-Tested-by: syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com
-Assisted-by: LLM
+Fixes: 0f85722341b0 ("KVM: nVMX: delay loading of PDPTRs to KVM_REQ_GET_NESTED_STATE_PAGES")
+Fixes: 232f75d3b4b5 ("KVM: nSVM: call nested_svm_load_cr3 on nested state load")
+Fixes: 3f4a812edf5c ("KVM: nSVM: hyper-v: Enable L2 TLB flush")
 Cc: stable@vger.kernel.org
-Signed-off-by: Adarsh Das <adarshdas950@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reported-by: Jinwoo Lee <rkskek9254@gmail.com>
+Closes: https://lore.kernel.org/all/20260813043932.3214460-1-rkskek9254@gmail.com
+Reported-by: Stefan Teodorescu <fane@google.com>
+Link: https://patch.msgid.link/20260921211608.1030158-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ sashal: Kept this tree's vmx->nested.nested_run_pending in the vmentry_failed: context line, since the field has not yet moved to vcpu->arch. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kvm/svm/nested.c |  7 +------
+ arch/x86/kvm/vmx/nested.c | 15 +++++----------
+ arch/x86/kvm/x86.c        |  3 +++
+ 3 files changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index 342664eae295a..446edaf94cf4f 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -976,6 +976,10 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 	if (rc < 0) {
- 		revert_current_mid(server, num_rqst);
- 		server->sequence_number -= 2;
-+		for (i = 0; i < num_rqst; i++) {
-+			delete_mid(mid[i]);
-+			cancelled_mid[i] = true;
-+		}
- 	}
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index 892b6fd48a0d7..ec984fa88dbce 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1949,13 +1949,8 @@ static bool svm_get_nested_state_pages(struct kvm_vcpu *vcpu)
+ 		if (CC(!load_pdptrs(vcpu, vcpu->arch.cr3)))
+ 			return false;
  
- 	cifs_server_unlock(server);
+-	if (!nested_svm_merge_msrpm(vcpu)) {
+-		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
+-		vcpu->run->internal.suberror =
+-			KVM_INTERNAL_ERROR_EMULATION;
+-		vcpu->run->internal.ndata = 0;
++	if (!nested_svm_merge_msrpm(vcpu))
+ 		return false;
+-	}
+ 
+ 	if (kvm_hv_verify_vp_assist(vcpu))
+ 		return false;
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index be2ab71cd9eab..6dd21c2938d99 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3499,10 +3499,6 @@ static bool nested_get_vmcs12_pages(struct kvm_vcpu *vcpu)
+ 		} else {
+ 			pr_debug_ratelimited("%s: no backing for APIC-access address in vmcs12\n",
+ 					     __func__);
+-			vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
+-			vcpu->run->internal.suberror =
+-				KVM_INTERNAL_ERROR_EMULATION;
+-			vcpu->run->internal.ndata = 0;
+ 			return false;
+ 		}
+ 	}
+@@ -3573,11 +3569,6 @@ static bool vmx_get_nested_state_pages(struct kvm_vcpu *vcpu)
+ 	if (!nested_get_evmcs_page(vcpu)) {
+ 		pr_debug_ratelimited("%s: enlightened vmptrld failed\n",
+ 				     __func__);
+-		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
+-		vcpu->run->internal.suberror =
+-			KVM_INTERNAL_ERROR_EMULATION;
+-		vcpu->run->internal.ndata = 0;
+-
+ 		return false;
+ 	}
+ #endif
+@@ -3965,8 +3956,12 @@ static int nested_vmx_run(struct kvm_vcpu *vcpu, bool launch)
+ 
+ vmentry_failed:
+ 	vmx->nested.nested_run_pending = 0;
+-	if (status == NVMX_VMENTRY_KVM_INTERNAL_ERROR)
++	if (status == NVMX_VMENTRY_KVM_INTERNAL_ERROR) {
++		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
++		vcpu->run->internal.suberror = KVM_INTERNAL_ERROR_EMULATION;
++		vcpu->run->internal.ndata = 0;
+ 		return 0;
++	}
+ 	if (status == NVMX_VMENTRY_VMEXIT)
+ 		return 1;
+ 	WARN_ON_ONCE(status != NVMX_VMENTRY_VMFAIL);
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 9493af5fa8275..64e24e75a17c5 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10715,6 +10715,9 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 
+ 		if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
+ 			if (unlikely(!kvm_nested_call(get_nested_state_pages)(vcpu))) {
++				vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
++				vcpu->run->internal.suberror = KVM_INTERNAL_ERROR_EMULATION;
++				vcpu->run->internal.ndata = 0;
+ 				kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
+ 				r = 0;
+ 				goto out;
 -- 
 2.53.0
 
