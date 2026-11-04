@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831109;
-	b=JuxaoZl4MxkWnqhub16sJ/L/jFMO7/tGHTMMlqCqKYWWIB5iXk2IhOonDpaixUtQmHd9
-	 3l8B8z/TXuY5DT7m4MD5p87QqwDLjbOWw2w5C0of1DmtRXFKm8sAR57PwJp6tYVaoZ6nl
-	 xe2AR7Q0jvzoOHV5ec3VydqWcWSzDz4Fjhm0wA5alOBAA4FtcolZjWxpXAVX0aXrw13Fs
-	 5fF1ft+mkKts/ObG4SpqOexo13TJrKGoiegO9E7K/p3WL72/gSHkVEoyl2uP+SdeFtfMB
-	 /6lSRFYutGF+WwkpDFxg+/k1JTcjIU2pWIkHdTFtqSIsXJnalEPXqxsAPPlJIn6IFsw==
+	t=1793831111;
+	b=VOMh8oXZJ703l3buTTdceDS+s4lP28IcvKIT980/7CJo/geEudhFe4yxQXLbysGPKQoG
+	 VsdIgjpieFoos7tSt+1gL7OgTkFJw9/0PnOZ8JZxNKEjOkOyDnHJgpJJqEdQlzkxXeVBz
+	 9EmQ9haEAGphIsPD8XRZ+fBYBxNf2z5LCXS1IeXZl6fl0Ecb1uzpLdpcwIBaBdcdlBl/J
+	 OIx41v+4nbu2nVyuFMyjcltezY11d4MjZkNWhwRgStZyu1s1QeNDNV6HyHq58y+yfIgoo
+	 HcZw/Kvio9SZrCJmXbrc64pOhsc++DZXesdf8o/R9XQgbEEvfoTldyEWz6NciATwIfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831109;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831111;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=qKsVITMKAmIjPk1rdn/XvZZWDKj8qfVTKT90XPn2u1o=;
-	b=hWKd9qxbrYo2u/cQMCHr3WuGj0OSfWss+T70vv3/rO9TnCLucih2f75YSFd0feMmWyT2
-	 sLSSjDmeaxZRMHo6/XU+kJCOS3+0bX6oL3C/dW/kBzZ89/LrbSrol7hAYmZbQyUDqbAdJ
-	 3F6kfGwdRoYIYF2xqW2zBvdXq8Wi9oWa4cxMi723Dflom7T34kZDL07oXECfA5iYaD/Gx
-	 ehhy7jvjGPy1DS6HOvtv6jX5Yo5F1vCiT7Pklu0GQc8aVVdFJb8OdDKWlwoHMupGRuo+v
-	 Siwpc7HgaTotpe1YM8PDv/knpYigtVYwm0alsHdIoecfU8mAiv9nV106sA+jnCJ89KA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=U6l/282c11Rgn8nBg50GF4HyRXkd6vY2+LwIR91LyEg=;
+	b=RxTAGvnWpd9U+iNh83fl0B/x/bTd3puGddkG8kMhvogco7InNp+WGx+zOuAFGLvkLPRd
+	 8xocVkHsaYrkXC4xqX0U5aUxN3pGx7dYwBd0a9r/TP7+f8NUANhoqMtTFTA8sV22VYwtk
+	 lPsDjV6qmagNMhf0pu8JrGO9+0VrBQ44drNqtPHVLHXtfbXdfOv91yfKmad5uFIo3PrO6
+	 EhOTFjj1L48M5x8oyRtaBkMWa+A4C167N9VtOdXo/v/zqdTSFfpyJqKLvuclS0DjZEu89
+	 5OYH4x671o5lo/c6viRhgmnsA/1pSXpnVliqBOgqe71LROS7sIDe2TP+S74PTSwEwIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJF8ZxhL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qtsoCzx+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A1D606B2D8;
-	Wed,  4 Nov 2026 22:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFCD606B2D8;
+	Wed,  4 Nov 2026 22:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJF8ZxhL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F591F000C1;
-	Wed,  4 Nov 2026 22:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qtsoCzx+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448521F000C1;
+	Wed,  4 Nov 2026 22:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831109;
-	bh=qKsVITMKAmIjPk1rdn/XvZZWDKj8qfVTKT90XPn2u1o=;
+	s=korg; t=1793831110;
+	bh=U6l/282c11Rgn8nBg50GF4HyRXkd6vY2+LwIR91LyEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uJF8ZxhLhnxBHRg6KpQdTy9ZjvF3pVICBsL0+A0NbHLYxaIlOC7me9k4i60GDp1wG
-	 gGcBkUHbqbXSXgV46pLFpsQJNXVJ8ON8YFkPy9fqMPU2Ru4ZSdGvGmFgriNHvd6eq/
-	 e4+kXcwzsoiY8dZq3WsU3PM6dp/ebK1KJ10nLHoc=
+	b=qtsoCzx+7g4zbs3sqfDE0cSBt+UrfdnYkOugYLv9jr33ZupOGHqru9TOXb1HkQwbO
+	 7D1wUdoyYhGv8gIJ5xcNfo29SX+9WXbxLR8jlKmDY9uMS73eCTHhdg2UtOQ2Y0SrEi
+	 x8bMLWRo8B+wSnTZ3Q4MSMkrhKotzQm0fea86VQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andras Pataki <apataki@flatironinstitute.org>,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Bob Song <songxiebing@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0469/1005] ceph: do not cache negative dentries for snapped directories
-Date: Wed,  4 Nov 2026 16:03:22 -0500
-Message-ID: <20261104211057.150470092@linuxfoundation.org>
+Subject: [PATCH 6.18 0470/1005] ALSA: hda/conexant: Always enable the headset-mic pin on plugin
+Date: Wed,  4 Nov 2026 16:03:23 -0500
+Message-ID: <20261104211057.180161668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -64,87 +62,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Bob Song <songxiebing@kylinos.cn>
 
-[ Upstream commit af59562a5b3d34fb3aa7753f2543393578d06dbf ]
+[ Upstream commit 9642a5e843758686e02a7f0d1df9eb0f7f96603c ]
 
-When a LOOKUP/LOOKUPSNAP in a snapped directory returns ENOENT
-without a trace, ceph_finish_lookup() creates a negative dentry
-via d_add(dentry, NULL).  For live directories this is fine — the
-dentry naturally expires.  But for snapped directories,
-ceph_d_revalidate() unconditionally trusts all cached dentries
-(valid = 1), so a negative dentry created by a transient error
-persists forever, hiding entries that genuinely exist in the
-snapshot.
+Rename the function to cx_process_headset_detect_plug_type() to reflect
+that it only reports the detected plug type, and move the pin control
+write into cx_update_headset_mic_vref() so that node 0x19 is always set
+to enable the headset mic with the 80% VREF whenever the mic is
+present, regardless of the type detection result.
 
-Only cache negative dentries for live (non-snapshotted) parent
-directories.  For snapped parents, skip the negative dentry so
-that VFS retries the lookup on the next access.  Since the
-conditions that trigger a negative dentry (MDS transient error,
-local ENOENT shortcut, or MDS null dentry lease) are all rare in
-snapped directories, the performance impact of this change is
-negligible.
-
-Link: https://tracker.ceph.com/issues/78529
-Reported-by: Andras Pataki <apataki@flatironinstitute.org>
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Bob Song <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260826115344.2128835-1-songxiebing@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/dir.c   | 10 ++++++++--
- fs/ceph/inode.c |  3 ++-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ sound/hda/codecs/conexant.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
-index 24abe4dbf774d..a253286214fee 100644
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -774,8 +774,13 @@ struct dentry *ceph_finish_lookup(struct ceph_mds_request *req,
- 				d_drop(dentry);
- 				err = -ENOENT;
- 			} else {
--				if (d_unhashed(dentry))
--					d_add(dentry, NULL);
-+				if (d_unhashed(dentry)) {
-+					struct inode *parent =
-+						d_inode(dentry->d_parent);
-+					if (!parent ||
-+					    ceph_snap(parent) == CEPH_NOSNAP)
-+						d_add(dentry, NULL);
-+				}
- 			}
- 		}
- 	}
-@@ -840,6 +845,7 @@ static struct dentry *ceph_lookup(struct inode *dir, struct dentry *dentry,
- 			    dentry->d_name.len) &&
- 		    !is_root_ceph_dentry(dir, dentry) &&
- 		    ceph_test_mount_opt(fsc, DCACHE) &&
-+		    ceph_snap(dir) == CEPH_NOSNAP &&
- 		    __ceph_dir_is_complete(ci) &&
- 		    __ceph_caps_issued_mask_metric(ci, CEPH_CAP_FILE_SHARED, 1)) {
- 			__ceph_touch_fmode(ci, mdsc, CEPH_FILE_MODE_RD);
-diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
-index b6c60d787692e..fddeeb9527fb3 100644
---- a/fs/ceph/inode.c
-+++ b/fs/ceph/inode.c
-@@ -1783,7 +1783,8 @@ int ceph_fill_trace(struct super_block *sb, struct ceph_mds_request *req)
- 				ceph_dir_clear_ordered(dir);
- 				d_delete(dn);
- 			} else if (have_lease) {
--				if (d_unhashed(dn))
-+				if (d_unhashed(dn) &&
-+				    ceph_snap(dir) == CEPH_NOSNAP)
- 					d_add(dn, NULL);
- 			}
+diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
+index 862fcbe74e4f0..faaabc326f560 100644
+--- a/sound/hda/codecs/conexant.c
++++ b/sound/hda/codecs/conexant.c
+@@ -213,7 +213,7 @@ static void cx_remove(struct hda_codec *codec)
+ 	snd_hda_gen_remove(codec);
+ }
  
+-static void cx_process_headset_plugin(struct hda_codec *codec)
++static void cx_process_headset_detect_plug_type(struct hda_codec *codec)
+ {
+ 	unsigned int val;
+ 	unsigned int count = 0;
+@@ -249,10 +249,12 @@ static void cx_update_headset_mic_vref(struct hda_codec *codec, struct hda_jack_
+ 	 * Check hp&mic tag to process headset plugin & plugout.
+ 	 */
+ 	mic_present = snd_hda_codec_read(codec, 0x19, 0, AC_VERB_GET_PIN_SENSE, 0x0);
+-	if (!(mic_present & AC_PINSENSE_PRESENCE)) /* mic plugout */
++	if (!(mic_present & AC_PINSENSE_PRESENCE)) { /* mic plugout */
+ 		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x20);
+-	else
+-		cx_process_headset_plugin(codec);
++	} else {
++		cx_process_headset_detect_plug_type(codec);
++		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x24);
++	}
+ }
+ 
+ static int cx_suspend(struct hda_codec *codec)
 -- 
 2.53.0
 
