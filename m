@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831894;
-	b=UjxOKc8xzfuNx393D1VnMprbsTguNRItjP1cFg+lGcE5JP72PzsiKk1YP4RYefzvdPLA
-	 F6sSlJM71tKq4DS4b6CLgGuW9AJqaYTIE7n8LCcuSrezRlqIgSp+vBnM6F3QyinkgfcLQ
-	 yBzQvs3AUI4lMY9efMum4Kf5Kn2vqRTmKRE0U3j1sRlG4T/JvNlsHjz012O6SnTv+4Bxb
-	 0ID6Xrq7juOQjt/LPxSlWqDqQwJ7GOWPU33pUAEYIXVOJ4l6+M50ePjrHWu8QyOngKSf+
-	 8rdPUdl6RHbbVP/pMLZszsnT2eAE0Z3DZ7qD/PD5Qfahy2UH1+/F9qycwECdR3J3APw==
+	t=1793831895;
+	b=Jog4Reu+DM0ZUrfSifgopNsNv4HkSBTvE+jYChGmjYUk3Z2sycJLlzMyoZbrSaO7x+S0
+	 qhIWAJ6wKza7aua7VyKLPRU51TCsWDfx07y5AWupE9mTpLHBhcSWoGRgfSTqBE0Rc319y
+	 GGVtVI9rmTTCERC1iHMhgeroVKdAlDrlRHWjeYuQRT5HwZvtaEaN2LESv7JHW8iyZ7WCs
+	 u1xs+MwQnO/20wvDnuIUFUDyc1qB3twTmGGX1lksDjBjRbAtZpl2nnBNQpbfHga54uP5y
+	 aDWZ6LCZuD1u6pYoBiOaz29R7k+bCKVJJN049cEEQc0tuSwOixqX47Xg5hsJjGClfFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nF6F+CLAYXepSes8nOzv08Mugfvicsxe5fjbGeIVMzo=;
-	b=x/S0VORtEzcBaLDyl1CcXD042XBJbFpQ6IpPUCYDLeiBMdnC3gc9ECeX1T0fUARu9Qgc
-	 NllXEA2wL5lslP4zXXrOlcUPfaUjzvsnIt4yppDZT8sSC6QoNJF6vWvGLic8xeFtYuOSO
-	 /RVwuurDbIAfWGHvliT2t4AofEnoZy9LGSHJC+BO0VHnfdGkLWZv80wAnvrNH0vj3xi8T
-	 bQcx9aSy0gaDaAwf63agNZaowCC1k+2ZfIYZjFTMNKoXgjsP36n+pVsXHfl53OjrUERtV
-	 wdCAlGoje/YF2uCydDYL50KHYu/wvJ+AAHGyUP8u9UgEIiPEwF3kAMTXZ126XvpVa8A==
+	bh=oCRnaHW/Qy99TgiOVxd0jdyhkTXDQVezOBt7bEUI2NY=;
+	b=C5stkD0AvOyK+IzsBBcSIXT2c5lHJvWtK4xgrLPe8HhSmv+Ffi1R88y2bvJvaQojejFS
+	 N8eoXdUDhoyyQdxhyn2qHReV7oD0jLqwNFF0+Obf2ulcndHo44eBs/VbTdkpyey9cvnrE
+	 0QUBgjQOp6BG4wGtPY7cMjoVn/o++AEHi/amoA+k5v63wws12ewknVJqF90wx3/Nffv2l
+	 4io/flQrfg7NZ4f/nIBq22qejC71NQHr60k1jLe1M+ywzJjP1sA5t6U7v8BzPhDFkM4zT
+	 KAJkk7kmCNw716AuXH5HlNgjNlKODtUMaxMjOubwYmGdgn+2jcX1sg8XNrZK+BABBwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EF4cAw78;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PdwweKWA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DF3606A858;
-	Wed,  4 Nov 2026 22:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D74606A33D;
+	Wed,  4 Nov 2026 22:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EF4cAw78
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C2F1F000C1;
-	Wed,  4 Nov 2026 22:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PdwweKWA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134281F000C1;
+	Wed,  4 Nov 2026 22:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831893;
-	bh=nF6F+CLAYXepSes8nOzv08Mugfvicsxe5fjbGeIVMzo=;
+	s=korg; t=1793831895;
+	bh=oCRnaHW/Qy99TgiOVxd0jdyhkTXDQVezOBt7bEUI2NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EF4cAw78BFnMP0tGadTdwaOUgKWeZpWLSYmtuVuEPGXAW6DcQ8puwN9xX1cJL53Ll
-	 vKFlzSZ9jMVem0yXZ44baVQYrPOmhr+ObP6+VyVTYnTUJvp80bwN7TvgslhcXP7eps
-	 azueXcQ6/trkYOjRrAinh7LDZ302CqGotah+yP2U=
+	b=PdwweKWAhv8toJzc9z/A1dNElAgtlYlD1ORY0fQnzMG3FtFpbxHzbEIho21Pn9YUp
+	 ZAmEDKiV7tUXYukQy9AlsVB3zFlKe0ar9frfMknzPCv9zQqKvF8uUyAyMBGxo+q9qL
+	 K/3VZjaDIIYQ26deanxmpaXyAqGzgNmLPVEGX4Rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 0977/1005] io_uring: free XArray nodes left by a failed store
-Date: Wed,  4 Nov 2026 16:11:50 -0500
-Message-ID: <20261104211110.420677798@linuxfoundation.org>
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Chenyi Qiang <chenyi.qiang@intel.com>
+Subject: [PATCH 6.18 0942/1005] KVM: TDX: Enable Bus Lock VM exit
+Date: Wed,  4 Nov 2026 16:11:15 -0500
+Message-ID: <20261104211109.504581890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,54 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Commit 51bab09b7ca1a9a6dd9303a3b7ee346f8128c963 upstream.
+commit 63d196e2e20429de5ba501f1b6059d9b93140007 upstream.
 
-A failed xa_store() can leave nodes without entries in the tree, and
-erasing every entry doesn't free those. An XArray needs xa_destroy()
-before it goes away, even an empty one. That was dropped for tctx->xa in
-commit ca6484cd308a ("io_uring: no need to call xa_destroy() on empty
-xarray") over a lockdep report from freeing the tctx in softirq context,
-and ctx->personalities never had it.
+Enable Bus Lock VM exit functionality for TDX guests.
 
-Now that the nodes are charged, a store can fail at memory.max and the
-leaked nodes stay charged. Call xa_destroy() in io_uring_clean_tctx(),
-which the task runs itself in process context before the tctx is freed,
-in the error path of __io_uring_add_tctx_node(), and for
-ctx->personalities in io_ring_ctx_free().
+Bus Lock VM exit is an existing feature supported by KVM.  Userspace can
+enable Bus Lock VM exit through KVM_BUS_LOCK_DETECTION_EXIT when it's
+reported as supported.  However, KVM reports the support of this CAP
+just based on the hardware capability but doesn't differentiate between
+VMX and TDX.  This leads to the issue that userspace can enable this cap
+for TDX guests without getting an error, but the feature is not actually
+enabled because KVM doesn't call the TDX module API to program the
+relevant TD VMCS fields.
 
-Fixes: ca6484cd308a ("io_uring: no need to call xa_destroy() on empty xarray")
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: 6.18 installs the tctx before adding the node and has no error
-path that frees it, drop that hunk. There's no ctx->hpage_acct either]
+Enable Bus Lock VM exit for TDX guests by programming the
+BUS_LOCK_DETECTION control in the TD VMCS and by adding the exit handler.
+
+Note, there is no enumeration bit for this feature by TDX module because
+all TDX modules support it and allow to set the TD VMCS as long as the
+hardware supports the feature.
+
+Fixes: 161d34609f9b ("KVM: TDX: Make TDX VM type supported")
+Cc: stable@vger.kernel.org
+Originally-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: https://patch.msgid.link/20260819094903.3060020-9-xiaoyao.li@intel.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    1 +
- io_uring/tctx.c     |    2 ++
- 2 files changed, 3 insertions(+)
+ arch/x86/kvm/vmx/tdx.c |   24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3039,6 +3039,7 @@ static __cold void io_ring_ctx_free(stru
- 	io_napi_free(ctx);
- 	kvfree(ctx->cancel_table.hbs);
- 	xa_destroy(&ctx->io_bl_xa);
-+	xa_destroy(&ctx->personalities);
- 	kfree(ctx);
+--- a/arch/x86/kvm/vmx/tdx.c
++++ b/arch/x86/kvm/vmx/tdx.c
+@@ -2042,7 +2042,7 @@ int tdx_complete_emulated_msr(struct kvm
  }
  
---- a/io_uring/tctx.c
-+++ b/io_uring/tctx.c
-@@ -206,6 +206,8 @@ __cold void io_uring_clean_tctx(struct i
- 		io_uring_del_tctx_node(index);
- 		cond_resched();
+ 
+-int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
++static int __tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+ {
+ 	struct vcpu_tdx *tdx = to_tdx(vcpu);
+ 	u64 vp_enter_ret = tdx->vp_enter_ret;
+@@ -2143,6 +2143,8 @@ int tdx_handle_exit(struct kvm_vcpu *vcp
+ 	case EXIT_REASON_NOTIFY:
+ 		/* NMI blocking state is handled by TDX module */
+ 		return __vt_handle_notify(vcpu, vmx_get_exit_qual(vcpu));
++	case EXIT_REASON_BUS_LOCK:
++		return vt_handle_bus_lock_vmexit(vcpu);
+ 	default:
+ 		break;
  	}
-+	/* A failed xa_store() leaves nodes with no entry behind. */
-+	xa_destroy(&tctx->xa);
- 	if (wq) {
- 		/*
- 		 * Must be after io_uring_del_tctx_node() (removes nodes under
+@@ -2156,6 +2158,22 @@ unhandled_exit:
+ 	return 0;
+ }
+ 
++int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
++{
++	int ret = __tdx_handle_exit(vcpu, fastpath);
++
++	/* Exit to user space when bus lock was detected */
++	if (vmx_get_exit_reason(vcpu).bus_lock_detected) {
++		if (ret > 0) {
++			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
++			ret = 0;
++		}
++
++		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
++	}
++	return ret;
++}
++
+ void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
+ 		u64 *info1, u64 *info2, u32 *intr_info, u32 *error_code)
+ {
+@@ -3151,6 +3169,10 @@ static int tdx_vcpu_init(struct kvm_vcpu
+ 				vcpu->kvm->arch.notify_window);
+ 	}
+ 
++	if (vcpu->kvm->arch.bus_lock_detection_enabled)
++		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
++				 SECONDARY_EXEC_BUS_LOCK_DETECTION);
++
+ 	tdx->state = VCPU_TD_STATE_INITIALIZED;
+ 
+ 	return 0;
 
 
