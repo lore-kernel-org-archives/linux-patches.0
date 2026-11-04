@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831901;
-	b=hEcYj9n0AOlSOj0pPllP7K0vJl1J51oALcbhrwshJNndhpBUzLDp07LKuOaej0BPd7Re
-	 /C2QWZewVPsUlDQJf7veI+vBj7F+oLhNK1R6LB2XHx7951dcTRYnfWv1tf0uqkKFzY+g0
-	 vhPA6tZ1Kgd93ts1ko7qtgzzsUikN+x112VOtnsS7+xqoS/Qu8rEoIPsjPT4CGdYBsoIc
-	 tNgAjrnoMgqAClToIxdjWEqLpvlfBWr+qtsvVZPFocr4lDJUyI7ePFscsUIbJQq1JHrUz
-	 7ecxixET8J1VIsJNzd2HdfkH63/BbYeu1MrjmDa+mUOImtxRv37PMMn5nqBXMTtAJaQ==
+	t=1793831903;
+	b=WXo24aduSr0VBdTJdOycR2EGryhpvN9JLtcilAIZNrZRC05ZGoF3LZ5qZxrJkFA5RZZa
+	 XlDZxT05/tjEScbWXTD/hatxrkmWg126mii6CNJ8hJb7xM1hs8AoKYRwYFOKYC+AJ6myX
+	 4/z0wkpQEiln2mYhDD59H3/GtsWi0qdNFphQP55XSMHEK60Pmo/c/dN8z1nEY8iVPlHPl
+	 t9qHcaU1JyHpJTKn6PMhcK0rRsycVgkuIqUo9LxA3WasswcYWz9YA4bjzTVfimcCMlph5
+	 n/O1laGGLu8cdyWqtgkwfZdFwBULwJE8c/hmprC68QB5Op4KatO/fUefxWoD5BpjFwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831901;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831903;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=m2VjytFovJAMumwqSLWOABSUcHrxQmCbOlO0wgpVscs=;
-	b=aSLobN4cZw2gPBzUCw6azrG6Rgg5wh7HmXWouA6RCMDtIhiY7rNDTqEIf5Hc5YiVTpJ8
-	 uVxudo8Vy2dRhBZD5FheVmk9yxY5j4PBbDfxna2Z4gm7yXyw35pcVYQLKFWto9RFZaV0S
-	 5hC+jm5EcRpJrsN1XWhlw+Yq3vpgfG67ZMGlIg65mHuK+P1gg1DkmartRMeI8F75GWLnZ
-	 vlnObTOOAVFGxH0t8wCOl6X5OVQkUdjZB/Fmd8X9JUVt/PyYPR0OReKEjoKtYCflcACy9
-	 9VIVYjEdmx6QZgDisniDu3wb6lG/tMh09mNAG8ulLzBtyUnZQruVVDAGo93O1r3c4rw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=mgCDQpC6BqLCIX7bCd0t1kUCrbfpEEKubfCbNX+sUvk=;
+	b=znOavEqzz9FAWx7Dp81xfAQfcDdnUfyYSbtiYFtOHbhTw8O9SUNa6Yj1bGLkzrL5PmP0
+	 ug1Ixr2okXZo7jAKfJYxgaAHkEaQjbsqtPr1jM5jD49OmO1eq3tdOUA10Lp6PX9kxwhqa
+	 sRHWnHc+Am/5brKJ2aHzROSJDNvLikuDS1SWu8++szNlgnyrkkMpWP2c29InG1RBjMCaR
+	 yis1psX2gNLu5SrnW13DnjMRk/DsNCxuMDuECPN3wc+f0s5ZtLNzU/KWavC/GLUINDeA3
+	 TfthRl6RhVj4dGNRTFiWC37ptcM5r+G/Vhjh4IJUoQKYmQwDU+KOrR7zUqoMZwU0y6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2UobyHAe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="epVN/LHp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985F5606A33D;
-	Wed,  4 Nov 2026 22:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C06606A33D;
+	Wed,  4 Nov 2026 22:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2UobyHAe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303E61F000C1;
-	Wed,  4 Nov 2026 22:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=epVN/LHp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FF91F000C1;
+	Wed,  4 Nov 2026 22:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831901;
-	bh=m2VjytFovJAMumwqSLWOABSUcHrxQmCbOlO0wgpVscs=;
+	s=korg; t=1793831903;
+	bh=mgCDQpC6BqLCIX7bCd0t1kUCrbfpEEKubfCbNX+sUvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2UobyHAeYJ9PchmEjFhAofocUP7JrY4M7PoI/bQw2U2a8M42nHJ2h2wgcTtt9mEip
-	 BlseGobmFc3NYeaEp3HeNepaS535NJmYsW5apqy29yar+ak7rt4wRKy/VFNhXHFV/D
-	 3p1foLQwxswop1fNdGk6L/rNHdSFCb2UFyqRiIZM=
+	b=epVN/LHpL3/IgGuGqYfkxRdBna8yykeYioxPDCzc/WaCvyyLKTRtqxwVkR0eGWARO
+	 YHB6WHtInGYBRlFncUMi4K6rJmrXqLCML+Ldtqse/PrlQE0armDJ5YD31k2UraVGdl
+	 jS9biglLF1mpf+NJ0cmDIlWKUJ85bIS4ukMXITDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 0944/1005] KVM: PPC: Fix get_d_signext() 12-bit displacement for paired-single D-form
-Date: Wed,  4 Nov 2026 16:11:17 -0500
-Message-ID: <20261104211109.556618920@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 0945/1005] HID: zydacron: validate key report length
+Date: Wed,  4 Nov 2026 16:11:18 -0500
+Message-ID: <20261104211109.586764052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -61,62 +61,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit 31895b0ff96778b524c74b43a108090581271603 upstream.
+commit 9932c9af185f8586e883d44ca562c12f4487c762 upstream.
 
-get_d_signext() has two compounding bugs since its introduction in 2010:
+The HID core invokes raw_event callbacks before validating the report
+length.  zc_raw_event() verifies the report ID in byte zero and then reads
+the key code from byte one for report IDs 0x02 and 0x03 without checking
+that the second byte is present.
 
-1. The extraction mask 0x8FF silently drops bits 8-10 of the 12-bit D
-   field (PPC ISA bits 21-23), corrupting any displacement that has any
-   of those bits set.
+A one-byte report reproduced the issue under KASAN:
 
-2. The sign-magnitude idiom "-(d & 0x7ff)" is wrong for two's-complement:
-   for D=0xFFC (encoding of -4) it returns -252 instead of -4.
+  BUG: KASAN: slab-out-of-bounds in zc_raw_event+0x54c/0x580
+  Read of size 1 by task hidtrigger/93
+  Call Trace:
+   zc_raw_event+0x54c/0x580
+   __hid_input_report+0x2ef/0x3a0
+   inject_store+0x479/0x490 [faketrans]
 
-Together these errors produce a wrong effective address for psq_l, psq_lu,
-psq_st, and psq_stu whenever the displacement is negative or is a positive
-value >= 0x100 with bits 8-10 set — essentially any real-world paired-
-single stack-relative access.
+Require both the report ID and key code before processing the report.
 
-The D field occupies the bottom 12 bits of the instruction word (confirmed
-by the adjacent W and I extractions via inst_get_field(inst,16,16) and
-inst_get_field(inst,17,19)). Replace the open-coded logic with the standard
-sign_extend32(inst & 0xfff, 11), which correctly performs two's-complement
-sign extension from 12 bits to 32 bits.
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw_event length validation to hid-asus.
 
-Fixes: 831317b605e7 ("KVM: PPC: Implement Paired Single emulation")
+Fixes: d0742abaa1c3 ("HID: add omitted hid-zydacron.c file")
 Cc: stable@vger.kernel.org
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260928122837.8782-4-amachhiw@linux.ibm.com
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kvm/book3s_paired_singles.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/hid/hid-zydacron.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/powerpc/kvm/book3s_paired_singles.c
-+++ b/arch/powerpc/kvm/book3s_paired_singles.c
-@@ -479,12 +479,7 @@ static bool kvmppc_inst_is_paired_single
+--- a/drivers/hid/hid-zydacron.c
++++ b/drivers/hid/hid-zydacron.c
+@@ -114,6 +114,9 @@ static int zc_raw_event(struct hid_devic
+ 	unsigned key;
+ 	unsigned short index;
  
- static int get_d_signext(u32 inst)
- {
--	int d = inst & 0x8ff;
--
--	if (d & 0x800)
--		return -(d & 0x7ff);
--
--	return (d & 0x7ff);
-+	return sign_extend32(inst & 0xfff, 11);
- }
++	if (size < 2)
++		return 0;
++
+ 	if (report->id == data[0] && (hdev->claimed & HID_CLAIMED_INPUT)) {
  
- static int kvmppc_ps_three_in(struct kvm_vcpu *vcpu, bool rc,
+ 		/* break keys */
 
 
