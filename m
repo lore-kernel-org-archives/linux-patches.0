@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793830902;
-	b=p2C1VD9s94FINqyuLy8F9iFBQ132PpD1hq3PodWLKB2SSO2JGirqGQF4X3WflkMdXXNH
-	 GYHxs/ucnrT7UlXWd+m2cjqDZPTimuOQxU7F33FZfN4jdP6pZJ+upKG2ubJUH+zdrkglU
-	 vzBcHSqoMWSJJ2e0i0C7bX2ZI1RWiu15Lqf6K5j44rikcJp9/KFnaeDr76ZYwCR9/ct4J
-	 1mK6M25+xYVWi26LvvxY4VddXdCzR/zaGGuItjyAjEVPXPoOz+0cmKF+UYFio/Ve74h/b
-	 cCn8b/ysynY15Dk4l8DGPQ/Ryszu1ahMLaBL4zExlZ8zuNX96XXFPPXruGUed9LJQHA==
+	b=jteGbaV08pk3GKiuc3YwfGaVSBt6smDf4b4YmLD/s0ougKEhMhbC/vtpU6XeAGzGI47j
+	 FBBCfCjS3/IO/zuC2Og/auq9/9/AxAz3fPljReVxQTDz7Nf972jQXx8LmXPvwA+U30HWB
+	 Kx/I4cZcFliIlo9Nuffx41v2Bd1kO8sIpamwi78u++HN1kgCEUmPG/7/FtVH+1r8fti1X
+	 0R882lZjiWFiTXiHf4gYCT5vGGGMxRE5qp26nTbHhYnBwRIDtOw8b7tZGeY1uqzTH6W2D
+	 D4LhrNu1HSMnn8B4h1QFjTNf+aDPol2YrxaJ5ar9T3LY8qDggQTnHmBzAlY3jCC7FIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793830902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x+EohQvh4/tkPsktRJoUzR8rXx5JRomOHgWQH9/7dc4=;
-	b=m0U86himUwGZude+B2FTWwheC0xzAbhE7Xpj9a5++K9qb+5TIOfMcmPhn8TRx170xc53
-	 4n4zUX5wJGYflXreQvRg2zWvph4GWKqK+FLz/Pv9rJvscZl4jUceYL6haRN6vqBU8dBUA
-	 xLeQpW+hxqnH764G1U84O7dDF7t8luJTFQCwH6OpH/6Tt67fUxFhAlPvpwVsE3pofupSa
-	 GloK1ASIfWciY24u/J2WYq2k9z5BPqyoPZjANKDcY6AHoF4L/28xdAO7fVsiKKzEYKFaN
-	 oxYmccwTxNVOzudOe1dPsqvkvDOXCGM/nRssVlGtijNIlv5F8k0s7+3GDveC2XfXe0A==
+	bh=350+S1fnDJetBn1sPDFyDdacBwqmK7KHFtAnxyLnG68=;
+	b=H9fAkn0wvieUcoQr4CyGXRrGj/xCG+Vi0RnfRhuDNp+t8V8yFVc0pknB1L5OeWjtlA/Y
+	 2HQqkHXQs5/oy8Q+MgZZ0YobUSZBevmohJzD89PLuk3WGahezCbYN5eGBPZ8iG8Ponidf
+	 7agQvD/GnoacW8kRKAtzPLU+P5ni9iYA5ahhJQT7vGZRfxhVIKzKv6dngL6+7UPWcvOpG
+	 hTUIpBdl9a9zNfOhUNE7/oP6DcH2Ej12ml4K1akQFcJjxG9BwzvH0EHFDQlyraVu0DSIC
+	 C2gV5/fp8lUB7P07LwYINHy1yvwJcHJw2dWVdBrR/Atvlm5iz5C3qEs79rvhr3Ow1dA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0nZklNi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mGl/F8oY";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94026606D804;
-	Wed,  4 Nov 2026 22:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62596606D81B;
+	Wed,  4 Nov 2026 22:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0nZklNi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAB61F0093A;
-	Wed,  4 Nov 2026 22:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mGl/F8oY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702AA1F00A16;
+	Wed,  4 Nov 2026 22:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830894;
-	bh=x+EohQvh4/tkPsktRJoUzR8rXx5JRomOHgWQH9/7dc4=;
+	s=korg; t=1793830900;
+	bh=350+S1fnDJetBn1sPDFyDdacBwqmK7KHFtAnxyLnG68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0nZklNi9yJBQmRgOODrTkF1aTsDwrQy+6Kuvsm7TrNxT9RrASaxr1qfDUvTsBU01
-	 LGS11JTfPOLGPbjQMzV683S+n1QEeqK6OGRJz9mdohITZ17ekL8vd5ca6DjM13EmKq
-	 MezgXNJr8jsZXy8PemBOtzx/aY+mQ0OwIajHSbjY=
+	b=mGl/F8oY0I3Y0zsREsq3sYYaiOO6LNu9x44nGqAgkFsKqdiDA/5HN8NjXJZpx5mY+
+	 lzinFtkIlP0shnNNeVUJWGNilem32nWKLPiA/nHST68v9+I1e3HvxBw+ckFFRsC2Fa
+	 uq0uFr5ZnRE0z4JFssuuoF2NcG+W9yCr3+8007Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Haufler <andreas@haufler.info>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0343/1005] tools/lib/thermal: Fix misplaced extern "C" closing brace
-Date: Wed,  4 Nov 2026 16:01:16 -0500
-Message-ID: <20261104211053.572487364@linuxfoundation.org>
+Subject: [PATCH 6.18 0391/1005] PCI: Avoid saving config space state if inaccessible
+Date: Wed,  4 Nov 2026 16:02:04 -0500
+Message-ID: <20261104211055.032763039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,53 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Haufler <andreas@haufler.info>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-[ Upstream commit cb0ec27efac2aaf92393ad563a35fb6f00d0a6cd ]
+[ Upstream commit e18d1abc3bff0a24a5299f3c150ab9546e9439aa ]
 
-The public libthermal header opens the C++ 'extern "C" {' block inside
-the __LIBTHERMAL_H include guard, but places the closing brace after
-the guard has already ended:
+The current reset process saves the device's config space state before
+reset and restores it afterward. However errors may occur unexpectedly and
+it may then be impossible to save config space because the device may be
+inaccessible (e.g. DPC). This results in saving invalid values that get
+written back to the device during state restoration.
 
-	#endif /* __LIBTHERMAL_H */
+With a reset we want to recover/restore the device into a functional state.
+So avoid saving the state of the config space when the device config space
+is inaccessible.
 
-	#ifdef __cplusplus
-	}
-	#endif
-
-On a single inclusion the braces still balance, so the problem is
-invisible. On the second inclusion of the header in the same C++
-translation unit the include guard skips the opening 'extern "C" {',
-while the closing '}' lives outside the guard and is emitted anyway.
-This leaves a stray '}' and breaks compilation for any C++ consumer
-that includes the header more than once.
-
-Move the closing block inside the include guard so both halves of the
-'extern "C"' declaration are guarded consistently.
-
-Signed-off-by: Andreas Haufler <andreas@haufler.info>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+[bhelgaas: comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260805165518.794-4-alifm@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/thermal/include/thermal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/pci.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/tools/lib/thermal/include/thermal.h b/tools/lib/thermal/include/thermal.h
-index 818ecdfb46e50..d9097271d9fad 100644
---- a/tools/lib/thermal/include/thermal.h
-+++ b/tools/lib/thermal/include/thermal.h
-@@ -175,8 +175,8 @@ LIBTHERMAL_API thermal_error_t thermal_sampling_handle(struct thermal_handler *t
- 
- LIBTHERMAL_API int thermal_sampling_fd(struct thermal_handler *th);
- 
--#endif /* __LIBTHERMAL_H */
--
- #ifdef __cplusplus
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 78d4411e3255b..bab3213bafbda 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -725,6 +725,28 @@ u16 pci_find_dvsec_capability(struct pci_dev *dev, u16 vendor, u16 dvsec)
  }
- #endif
+ EXPORT_SYMBOL_GPL(pci_find_dvsec_capability);
+ 
++static bool pci_dev_config_accessible(struct pci_dev *dev, char *msg)
++{
++	u32 val;
 +
-+#endif /* __LIBTHERMAL_H */
++	/*
++	 * If a device's config space is inaccessible, reads typically
++	 * return ~0.  Since Device and Vendor ID are always ~0 for VFs,
++	 * check the Command and Status registers instead.
++	 *
++	 * N.B. This is racy because the device may become inaccessible
++	 * before the next access.
++	 */
++	pci_read_config_dword(dev, PCI_COMMAND, &val);
++	if (PCI_POSSIBLE_ERROR(val)) {
++		pci_warn(dev, "Device config space inaccessible; unable to %s\n",
++				msg);
++		return false;
++	}
++
++	return true;
++}
++
+ /**
+  * pci_find_parent_resource - return resource region of parent bus of given
+  *			      region
+@@ -5016,6 +5038,9 @@ static void pci_dev_save_and_disable(struct pci_dev *dev)
+ 	 */
+ 	pci_set_power_state(dev, PCI_D0);
+ 
++	if (!pci_dev_config_accessible(dev, "save state"))
++		return;
++
+ 	pci_save_state(dev);
+ 	/*
+ 	 * Disable the device by clearing the Command register, except for
 -- 
 2.53.0
 
