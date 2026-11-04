@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831604;
-	b=kx41syTu21R9YM2a5XDo6/3o/aKNPsKNLpzxtQZwvHXv4r+GQqI7UiL5rSA+x681PxGn
-	 K+lPvqtg6V18qnJhbmZSjSA7xydQGk1Jtz+N3ejHIOFpTS+04EQ28xYMfAeGDA64MrOtl
-	 z4JCfr9uZYgbzlJXc+oAQaKXcJF+2rGrsDqIl+sZcyXa2SmdxuY4e1p7BDM2nYcfArkG3
-	 GWihnSJ9cP22a6UcF1TbcslUw0M1Ek+beJzIxrABFyXwOId9a2zNTKKD+w+9lP7lTzhlW
-	 uGXNRTcYcJWra2mS9iY3YuQGjZSnB9q8zwJEny7r6ZfuK/Vdrzn2dzkKEM9B98ZAPLw==
+	t=1793831605;
+	b=Ia9nrxaTXd6CHEJ5Z/DPAw3Uj5JdFHAFuKwGq3ovfYkoORpIN9scbdRb1u0QjV0q+fC/
+	 TB7jaaWSDsJBw3YnKEVLyX3WMhaIO+reW2qzsLO150ZOmIb2Omrvv6QH1w/N8CvebH86h
+	 YoZsWCw/2IZxYuX9i/Yt9nk4cOHxd0Kfpu/6Ny3N0vGFGGWAYvppa+IRBBe+1sKSxp0o1
+	 TXc+bZUwDfdUazR6cqjy1+nZ9b923b+N4xY2Cg+1+AuJE6UMMbzu/7r4BueXNMoC/fF+j
+	 yavnWkORW6ZUrVzTyL2QjD+hgHGrW0tQZKi/9zO1X9dw6vcXT/jjIBPVRLde5uVnfdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CjbCMvZLS+MgRNJaIDrSFniHaee0QPA/Ts1uYaQLuC4=;
-	b=xACcw9Pxkmh2EuONTzMWEx+yE3Dx47KnbRzA4azqr9zbv3cwwn17+7j8QHhbMLAWcECX
-	 qaFKKoga+vg7S7BmyOD2EtqNS0dhbdnrFIYg4vaa5a0IHjTokNqx/Xap0vNqOWPT7ul/z
-	 baxVqjTysk4O1UHuqUhhZoq509PedVv6M9Wg8Rpr51ULzBgSvCawbdNJkm+LH6ctVJukp
-	 mZhCqmArDhzdo06p0eEBKxBRBfJIkSfVb5sjGd4i/s53b5sJpmWdrY4kUpPW2X4CqLii1
-	 ugN2ppNF5vvguyCvu5EqgQDiIk94RG7QjvTO8ylhR7K94Y+z5iGYV4RLpw7jS3OnQEw==
+	bh=fHTG7Din9fwdyf8ALQrk8CnWnTtbUb7PI598J7VvUEA=;
+	b=kYWV2i9fDRNyljDC7tU8mYI6MkJt36KRnq47kMES2GCe9m+Lx7NJl4f3xya2gJHrh788
+	 GgLS7mpcC107u1mbU4LB1c1qU4Ry+7CG5lmjdYOpZ7UzEUcM7Vbefvth5yfe7YK/RTL4T
+	 ub/YN0Vh7nJ9MrDAsMNfO63th31CwOOSUJFmihjHuG+hSouzzXsK60iuqv4fEUWacfd99
+	 nuD1XC2WVH48zlPziQTbLPR9TOMHs9DJ7wdtOmgf8NKHTKVYH9ABgIp3OEno/Wj2UcBou
+	 OtcCuyg2+XK3VgZBC2+hkJYBkddDbFXAqzcOHi9FbcXZE57OLVNciL8ZMTs6zSVwHEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r2RdaTBv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdjimljH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12484606A31B;
-	Wed,  4 Nov 2026 22:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923B2606A31B;
+	Wed,  4 Nov 2026 22:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r2RdaTBv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58141F00919;
-	Wed,  4 Nov 2026 22:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdjimljH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA9E1F000C1;
+	Wed,  4 Nov 2026 22:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831603;
-	bh=CjbCMvZLS+MgRNJaIDrSFniHaee0QPA/Ts1uYaQLuC4=;
+	s=korg; t=1793831605;
+	bh=fHTG7Din9fwdyf8ALQrk8CnWnTtbUb7PI598J7VvUEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r2RdaTBvNz1QJTbcODfDRVyUvmmIcBfmY6ILjkd1YJsyibH5Ok4l0qooH86QHpMjO
-	 1X3JzyU89V4bMWw0fzT7rJ4YEAInGNi7lBOcm0nzb+CnGyHTmJIYGLLVawfDeyJTdc
-	 vzpEJAhgo63qM3/MePZUYewwUcT0iWtGdHZsy2xc=
+	b=TdjimljH1D46qS6D9wutgVQJ0Vk3Gfoj47ddKAMwbrUQH6woMzk9WbHOLsO1C/A61
+	 bITGsswg5iroZ9ySwUcmTbKiXZusAjjUNQisfE2rM2lTAfr+l/nSq1MNjX7UGJKKdK
+	 6qhaKd06ZPbcBrTV+OAhQpl2G9Zo//lkAaWS34Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0797/1005] xfs: allow softlimit with no hardlimit in quota scrub
-Date: Wed,  4 Nov 2026 16:08:50 -0500
-Message-ID: <20261104211105.670015689@linuxfoundation.org>
+Subject: [PATCH 6.18 0806/1005] xfs: adjust checks for cross-AG reaping issues
+Date: Wed,  4 Nov 2026 16:08:59 -0500
+Message-ID: <20261104211105.931470814@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,73 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 342c2e00b3a99099a7088f7b8c8f075670c603a9 upstream.
+commit 4c6668ecebc61bb0a53d4c6e95509bc960cf6bbc upstream.
 
-LOLLM observes that the sysadmin can set a user's soft limit to a
-nonzero value and the hard limit to zero, so those aren't corruptions.
+While analyzing the reaping code for the previous patch, I studied the
+xfs_fsblock_t code to reconstruct how this code works.  AGs have a
+superblock at the start of each AG which means that regions in the
+xfsb_bitmap (aka xfs_fsblock_t bitmap) cannot cross an AG boundary, so
+we don't need a loop here like we do for xfs_rtblock_t bitmaps.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: c2fc338c87a31f ("xfs: scrub quota information")
+However, the checks here are not quite right -- there can be quite a lot
+of reserved space in COW forks, which means that the bitmap extent
+actually can exceed XFS_MAX_BMBT_EXTLEN.  We also don't have an explicit
+debugging check that we never cross AGs, so add that here.
+
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 66da11280f7ecd ("xfs: reintroduce reaping of file metadata blocks to xrep_reap_extents")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/quota.c        |    8 ++++----
- fs/xfs/scrub/quota_repair.c |    6 +++---
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ fs/xfs/scrub/reap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/quota.c
-+++ b/fs/xfs/scrub/quota.c
-@@ -185,21 +185,21 @@ xchk_quota_item(
- 	 * suspect, which is why we flag it for review.
- 	 *
- 	 * Complain about corruption if the soft limit is greater than
--	 * the hard limit.
-+	 * the hard limit and there's a hard limit set.
- 	 */
- 	if (dq->q_blk.hardlimit > mp->m_sb.sb_dblocks)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_blk.softlimit > dq->q_blk.hardlimit)
-+	if (dq->q_blk.hardlimit && dq->q_blk.softlimit > dq->q_blk.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
+--- a/fs/xfs/scrub/reap.c
++++ b/fs/xfs/scrub/reap.c
+@@ -796,9 +796,9 @@ xreap_fsmeta_extent(
+ 	xfs_agblock_t		agbno_next = agbno + len;
+ 	int			error = 0;
  
- 	if (dq->q_ino.hardlimit > M_IGEO(mp)->maxicount)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_ino.softlimit > dq->q_ino.hardlimit)
-+	if (dq->q_ino.hardlimit && dq->q_ino.softlimit > dq->q_ino.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
+-	ASSERT(len <= XFS_MAX_BMBT_EXTLEN);
+ 	ASSERT(sc->ip != NULL);
+ 	ASSERT(!sc->sa.pag);
++	ASSERT(agno == XFS_FSB_TO_AGNO(sc->mp, fsbno + len - 1));
  
- 	if (dq->q_rtb.hardlimit > mp->m_sb.sb_rblocks)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_rtb.softlimit > dq->q_rtb.hardlimit)
-+	if (dq->q_rtb.hardlimit && dq->q_rtb.softlimit > dq->q_rtb.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
- 
- 	/* Check the resource counts. */
---- a/fs/xfs/scrub/quota_repair.c
-+++ b/fs/xfs/scrub/quota_repair.c
-@@ -197,17 +197,17 @@ xrep_quota_item(
- 		return error;
- 
- 	/* Check the limits. */
--	if (dq->q_blk.softlimit > dq->q_blk.hardlimit) {
-+	if (dq->q_blk.hardlimit && dq->q_blk.softlimit > dq->q_blk.hardlimit) {
- 		dq->q_blk.softlimit = dq->q_blk.hardlimit;
- 		dirty = true;
- 	}
- 
--	if (dq->q_ino.softlimit > dq->q_ino.hardlimit) {
-+	if (dq->q_ino.hardlimit && dq->q_ino.softlimit > dq->q_ino.hardlimit) {
- 		dq->q_ino.softlimit = dq->q_ino.hardlimit;
- 		dirty = true;
- 	}
- 
--	if (dq->q_rtb.softlimit > dq->q_rtb.hardlimit) {
-+	if (dq->q_rtb.hardlimit && dq->q_rtb.softlimit > dq->q_rtb.hardlimit) {
- 		dq->q_rtb.softlimit = dq->q_rtb.hardlimit;
- 		dirty = true;
- 	}
+ 	/*
+ 	 * We're reaping blocks after repairing file metadata, which means that
 
 
