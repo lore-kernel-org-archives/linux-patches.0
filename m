@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793804762;
-	b=RUhz2uRK4XCBXvg9seUsKOPEELei2yD5gZM6Wpo6TO/zd0d01b9ipIkpS6JrIGLNhz1g
-	 X2XFBP2sleleTZd6Vk526OGtb8xIX4NIJ+jP+WCOdKHEG2V4lGI+Uw1XAZs7REQwZ16ot
-	 Z7ux9LliKPzYRSMLagqQgyAuiHcCK1xMRi72hKITGKFlaRV3Gjrb/axtrB8CcrRO36SqR
-	 mKmlj41IIO2Xhe7QIVc96G/Boko1QNviqykzbz1jpP2WquXBftLtEwEXwTbpSnML2aOYa
-	 xQXaf7GzFVLBFR5PBYYG3r5nP12Rq5+Tz6KXkb0hznJFXtkXdllWfWq+YHcaIFMu1rw==
+	t=1793804768;
+	b=yFzMbLji+xWGnIdIwRzbT1725ub8OzwV+/EwFpn27OxPN20DohXQz2zJPGRBCKRdb7Y1
+	 QU4HUqc12t1kTlHva3i5SL+OsLmhNTqlXcWnQTafzi8yOvVN2CIeDljhgBWz48lc/nSBW
+	 xnJDD7NVVVCFxBvOpGYcZ+p9VIZoshIjkL3EHEox8pJ7pk4X2hxfSWIe02dOzaEQnqZvQ
+	 GFcpduCjpHhqgfeb7SuL7/ZttBPVw2ioBCY3ws68pROvlhxi9kGF3AjcJdmF4+p7V83zW
+	 D3ViTcuaKxt8yBsE6bbCRB186U+dUuXqVuqlYDB3lTRpVUuguureC0h9L2n6xhYrN0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793804762;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793804768;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=bQScCPsstcI1x3czxLA/N1iLoPpFtUtJIthleDIaRyI=;
-	b=HoHcOmaqLutL360ne4RujtKTKzrNcuZrCxNv/6lYOvIiJ+TGiA75VhxKSs65FEVqeuf7
-	 Tb10pQh3XrQN7tAplX71QvoQRQhG/ksXJlxYa2DfJYEG6WNiuPIWy6Wh5OyStlPNynMX0
-	 OrK1rk7Yqp+zkz1JwfSZMUcijqWeKaFaExcqyV6m/fQZuTsmgvkYUcmAHpA4IZBZhXl3I
-	 Q2RjBj1pEayjtL4+/USpzFrpT9mTnQq5OOLz/CMXQrvKdlzvMi4GSwYejjrDpVqoqtvEG
-	 /zF0leylJkjEXH/nZefvYjOHOm3OagkZJfbgINyX0IYQDnWfvwAmrcqqZw5YmsUEXNw==
+	bh=9XUu19nr/f7NGXbDq+W5w9qO3ygSqOJpP8i189RQgXI=;
+	b=ABSA3ygFNyKxB3uyDnKgcsKuQpL3gLEdMmWG9n9p/MiVFk05twLbiC5EJyM2oktXiJE+
+	 /d6DuZ/D4+nqbB2Doh+GPOH5yH2Oxm9lScs5/Ca8Igoizis6GaOO5BW8ddxEzdmQMOa13
+	 Ey47kiAK0NjbRV7GSHDMEEmRZktp6VQOlHGsvwB3M7XM7eN+YYA7y88ZdqZnRX640532W
+	 iQdOYphcldQYlRwLEg3FbakRx6Wp53A71d6pW7UcSuq8TxuS8oC8toLf2QBTEerJFviQM
+	 RPOtuCoDUex8Ywq50zpGyvQS/kWmtqVM1D2b4Nh1U0R+8e7khE4HQOtzR7lLL2EbW7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="HFwC/v98";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OQIYThW6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1707606D81A;
-	Wed,  4 Nov 2026 15:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0063F606A328;
+	Wed,  4 Nov 2026 15:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HFwC/v98
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86991F000C1;
-	Wed,  4 Nov 2026 15:05:55 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OQIYThW6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C5E1F00A15;
+	Wed,  4 Nov 2026 15:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793804761;
-	bh=bQScCPsstcI1x3czxLA/N1iLoPpFtUtJIthleDIaRyI=;
+	s=k20260515; t=1793804767;
+	bh=9XUu19nr/f7NGXbDq+W5w9qO3ygSqOJpP8i189RQgXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HFwC/v98QdrDlJOoHSVKLX7jEAKVrqwEIwJCx5SFmnEwZykVGjghi4QI1sNio1y+7
-	 qXFpInb7wQA0VmcIiFFGPqOVpXO+gL32ahD61xWUyAddsK4FuAoyb/Y5H3x++CULM0
-	 RBv170vRcSCaYmDg2/qsmwg5IBdZ0KTWtcsAILdPheHpBgO59MD64VKK8DiS9CRY7D
-	 iqJQuZGmjI8bSn6IrqquR542KODWceH4z9lx0K8Fdbr5pa2tItsc+TPoueiLzVUo80
-	 Tmojl3Y6kiNenm8EbOEXU67q21ocqapPpCQ9k3ZPkA7bQixDcroUoA9nNdI5zLlBiM
-	 cptuRPoAaVO4w==
+	b=OQIYThW66rDODt+C7H4yN0no9vsvbLmtEEKrtB56e7xJxpgN1y9zekCHkFpY3jL9t
+	 7a0MwO7m1Zsy9YWw/CRb6NiC7EprtPnsRwuWcCz151oTyImEDqKuzkgrR4rBQBb6as
+	 L0KL9VFMblMFQvIV36FTQ2AVAyZNO5r1rF7QWWA1ujc1xL6zVocbc8Vc1lQOaQtYa7
+	 /GBPO1jTz9DppgDA4juqTOe5LoX7Pqp65USZprlW0qqKvqxABAOHXzPcZWk1avQMXT
+	 e0tp6lGhhmqYiFUUiTW1eS0dPZsyS020Ng3uZ+hgkDgIefi1BBY9hKVN6Vc0n0qPFI
+	 bZBp7029JUJYA==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -61,9 +61,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v4 24/25] vfio/pci: Add a guest_memfd resource provider for MMIO BARs
-Date: Wed,  4 Nov 2026 20:33:21 +0530
-Message-ID: <20261104150322.3516320-25-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v4 25/25] KVM: Document device-backed guest_memfd and VFIO usage
+Date: Wed,  4 Nov 2026 20:33:22 +0530
+Message-ID: <20261104150322.3516320-26-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
 References: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
@@ -78,508 +78,128 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Allow a VFIO PCI device file to supply MMIO BAR PFNs to guest_memfd.
-Validate BAR ranges before memslot setup and provide PFNs for shared
-faults and private conversion.
+Describe device setup, VFIO access restrictions, mappings and lock ordering.
 
-Require page-aligned, nonempty ranges within the BAR and guest_memfd
-file. Reject memslots requesting dirty logging or read-only access,
-which this provider does not implement.
-
-Existing VFIO mappings, dma-buf exports and ioeventfd handlers can
-access BARs without guest_memfd attribute checks. Private conversion
-cannot revoke those accesses, so reject setup with EBUSY while any
-exist.
-
-Require an IOMMUFD vDEVICE associated with the same VM as guest_memfd.
-Keep that vDEVICE referenced until release and pass its device ID and
-mapping-owner handle to guest_memfd for KVM device mappings.
-
-Require D0 and hold a runtime-PM reference until release to keep BARs
-accessible. Reject setup while userspace allows runtime suspend.
-Block direct VFIO BAR access, reset, low-power entry and userspace
-changes to Memory Enable or Bus Master Enable while the device
-supplies BAR PFNs to guest_memfd.
-
-Use the vDEVICE mmio_lock to prevent device unlock from racing with
-conversion, invalidation and attribute updates. PFN lookup holds
-memory_lock for read while checking BAR access.
-
-MSI-X configuration remains allowed. Userspace must keep the table/PBA
-pages shared while host MSI-X is active.
-
-Cc: Alex Williamson <alex@shazbot.org>
-Cc: Sean Christopherson <seanjc@google.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Alex Williamson <alex@shazbot.org>
 Cc: David Hildenbrand <david@kernel.org>
-Cc: kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Kevin Tian <kevin.tian@intel.com>
+Cc: "Joerg Roedel (AMD)" <joro@8bytes.org>
+Cc: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- drivers/vfio/pci/Kconfig         |  11 ++
- drivers/vfio/pci/Makefile        |   1 +
- drivers/vfio/pci/vfio_pci.c      |   3 +
- drivers/vfio/pci/vfio_pci_gmem.c | 327 +++++++++++++++++++++++++++++++
- drivers/vfio/pci/vfio_pci_gmem.h |  17 ++
- drivers/vfio/pci/vfio_pci_priv.h |  15 +-
- include/linux/vfio_pci_core.h    |   4 +
- 7 files changed, 375 insertions(+), 3 deletions(-)
- create mode 100644 drivers/vfio/pci/vfio_pci_gmem.c
- create mode 100644 drivers/vfio/pci/vfio_pci_gmem.h
+ Documentation/virt/kvm/api.rst     | 50 ++++++++++++++++++++++++++----
+ Documentation/virt/kvm/locking.rst | 27 ++++++++++++++++
+ 2 files changed, 71 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vfio/pci/Kconfig b/drivers/vfio/pci/Kconfig
-index 296bf01e185e..e5dedf3e4a65 100644
---- a/drivers/vfio/pci/Kconfig
-+++ b/drivers/vfio/pci/Kconfig
-@@ -55,6 +55,17 @@ config VFIO_PCI_ZDEV_KVM
+diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+index 4482d34ec281..289b42224258 100644
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -6513,8 +6513,8 @@ The capability KVM_CAP_GUEST_MEMFD_FLAGS enumerates the `flags` that can be
+ specified via KVM_CREATE_GUEST_MEMFD.  Currently defined flags:
  
- 	  To enable s390x KVM vfio-pci extensions, say Y.
+   ============================= ================================================
+-  GUEST_MEMFD_FLAG_MMAP         Enable using mmap() on the guest_memfd file
+-                                descriptor.
++  GUEST_MEMFD_FLAG_MMAP         Enable userspace mappings through guest_memfd,
++                                including shared VFIO PCI BAR resources.
+   GUEST_MEMFD_FLAG_INIT_SHARED  Make all memory in the file shared during
+                                 KVM_CREATE_GUEST_MEMFD (memory files created
+                                 without INIT_SHARED will be marked private).
+@@ -6540,10 +6540,48 @@ provider. PFN_MODE selects the PFN callbacks; providers that supply device
+ operations additionally require INIT_SHARED and a VM supporting protected
+ device mappings.
  
-+config VFIO_PCI_GMEM
-+	bool "VFIO PCI device guest_memfd resource provider"
-+	depends on VFIO_PCI && IOMMUFD && KVM
-+	depends on KVM_GUEST_MEMFD
-+	help
-+	  Allow the VFIO PCI device fd to provide BAR PFNs to guest_memfd,
-+	  including confidential-device range conversion through its
-+	  existing IOMMUFD vDEVICE. This requires a capable TSM backend.
-+	  Shared access is revoked before private range mapping and is
-+	  restored only after private mappings and device state permit it.
+-KVM_SET_MEMORY_ATTRIBUTES2 converts device memory using guest_memfd offsets.
+-For private conversion, KVM resolves the guest address through the memslot
+-binding and obtains the physical address from the provider. Shared conversion
+-removes the protected device mappings before publishing shared attributes.
++For VFIO PCI device resources, resource_fd must refer to a VFIO device fd
++bound to IOMMUFD, with a vDEVICE belonging to the same VM. Set USE_RESOURCE,
++PFN_MODE and INIT_SHARED. File offsets use the VFIO region-offset namespace.
++Memslots must cover page-aligned ranges within a single memory-mapped I/O
++BAR that supports mmap. Dirty logging and read-only memslots are rejected
++with EINVAL.
 +
- config VFIO_PCI_DMABUF
- 	def_bool y if VFIO_PCI_CORE && PCI_P2PDMA && DMA_SHARED_BUFFER
++Creation fails with EBUSY if the device already supplies another guest_memfd,
++has VFIO BAR mappings, dma-buf exports or ioeventfd handlers, or userspace has
++enabled VFIO runtime suspend. The device is resumed and must be in D0; it is
++kept active until guest_memfd releases it.
++
++While guest_memfd uses the device, the following operations fail with EBUSY
++through any VFIO fd referring to it, even if all ranges are shared:
++
++- BAR read/write, mmap, new ioeventfd registration and dma-buf export.
++- VFIO_DEVICE_RESET, PCIe/AF function-level reset and hot reset affecting
++  the device.
++- Requests for D1, D2 or D3, enabling VFIO runtime suspend, and configuration
++  writes that change Memory Enable or Bus Master Enable.
++
++Rejected configuration writes leave the hardware and virtual registers
++unchanged. Unrelated configuration writes, queries and IRQ configuration
++remain available.
++
++GUEST_MEMFD_FLAG_MMAP permits MAP_SHARED mappings through guest_memfd.
++Without this flag, mmap fails with ENODEV.
++
++MSI-X SET_IRQS remains available. Userspace must keep the MSI-X table and
++PBA pages shared while host-managed MSI-X is in use and reject guest private
++mapping requests for those pages. The kernel does not enforce this policy.
++
++Use :ref:`KVM_SET_MEMORY_ATTRIBUTES2` to convert device memory by guest_memfd
++offset. Private conversion uses the memslot binding and provider PFNs to
++install protected device mappings before publishing private attributes.
++Shared conversion removes those mappings before publishing shared attributes.
++
++Revocation and memslot deletion remove shared and private mappings without
++changing file attributes. Private ranges still prevent device unlock after
++these operations; userspace must share them or release the last guest_memfd
++reference. Final release removes mappings and clears the private-range
++summary before releasing the device resources.
  
-diff --git a/drivers/vfio/pci/Makefile b/drivers/vfio/pci/Makefile
-index 6138f1bf241d..351af00acb3f 100644
---- a/drivers/vfio/pci/Makefile
-+++ b/drivers/vfio/pci/Makefile
-@@ -3,6 +3,7 @@
- vfio-pci-core-y := vfio_pci_core.o vfio_pci_intrs.o vfio_pci_rdwr.o vfio_pci_config.o
- vfio-pci-core-$(CONFIG_VFIO_PCI_ZDEV_KVM) += vfio_pci_zdev.o
- vfio-pci-core-$(CONFIG_VFIO_PCI_DMABUF) += vfio_pci_dmabuf.o
-+vfio-pci-core-$(CONFIG_VFIO_PCI_GMEM) += vfio_pci_gmem.o
- obj-$(CONFIG_VFIO_PCI_CORE) += vfio-pci-core.o
+ When the KVM MMU performs a PFN lookup to service a guest fault, the fault will
+ always be consumed from guest_memfd, regardless of whether it is a shared or a
+diff --git a/Documentation/virt/kvm/locking.rst b/Documentation/virt/kvm/locking.rst
+index 662231e958a0..a2a6b4dd9a1f 100644
+--- a/Documentation/virt/kvm/locking.rst
++++ b/Documentation/virt/kvm/locking.rst
+@@ -58,6 +58,33 @@ On x86:
+   kvm->arch.tdp_mmu_pages_lock and kvm->arch.mmu_unsync_pages_lock must
+   also take kvm->arch.mmu_lock
  
- vfio-pci-y := vfio_pci.o
-diff --git a/drivers/vfio/pci/vfio_pci.c b/drivers/vfio/pci/vfio_pci.c
-index e7c012febe91..64068e7aa61e 100644
---- a/drivers/vfio/pci/vfio_pci.c
-+++ b/drivers/vfio/pci/vfio_pci.c
-@@ -147,6 +147,9 @@ static int vfio_pci_init_dev(struct vfio_device *core_vdev)
- }
++For device-backed guest_memfd, conversion takes locks in this order:
++
++- inode->i_mapping->invalidate_lock for write
++- IOMMUFD vDEVICE mmio_lock
++- VFIO vdev->memory_lock for read, during PFN lookup
++
++The inode invalidate lock protects attributes and offset-to-GPA bindings.
++The provider's lock()/unlock() callbacks hold mmio_lock across
++invalidation, conversion and publication of attributes. Device unlock takes
++the same mutex when checking for private ranges. Range revocation, memslot
++unbind and final file cleanup use the same order.
++
++PFN lookup during faults takes the inode invalidate lock for read, then
++memory_lock for read, without taking mmio_lock. memory_lock protects the
++power and Memory Enable checks and BAR PFN lookup against PCI state
++restore. Host faults retain the inode invalidate lock through PTE insertion.
++
++VFIO provider setup and release take gmem_lock for write, then
++dev_set->lock, before taking mmio_lock. Both outer locks protect updates to
++gmem_attached. VFIO file operations read this state under gmem_lock for
++read; reset checks can instead use dev_set->lock.
++
++VFIO resumes the device and takes a runtime-PM reference before acquiring
++mmio_lock during provider setup. It drops that reference after removing
++the provider from the vDEVICE during release. Runtime PM callbacks do not
++take the guest_memfd inode invalidate lock.
++
+ Everything else is a leaf: no other lock is taken inside the critical
+ sections.
  
- static const struct vfio_device_ops vfio_pci_ops = {
-+#if IS_ENABLED(CONFIG_VFIO_PCI_GMEM)
-+	.gmem_provider_ops = &vfio_pci_gmem_provider_ops,
-+#endif
- 	.name		= "vfio-pci",
- 	.init		= vfio_pci_init_dev,
- 	.release	= vfio_pci_core_release_dev,
-diff --git a/drivers/vfio/pci/vfio_pci_gmem.c b/drivers/vfio/pci/vfio_pci_gmem.c
-new file mode 100644
-index 000000000000..11f6ae44cd49
---- /dev/null
-+++ b/drivers/vfio/pci/vfio_pci_gmem.c
-@@ -0,0 +1,327 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2026 ARM Ltd.
-+ */
-+#include <linux/guest_memfd.h>
-+#include <linux/iommufd.h>
-+#include <linux/kvm.h>
-+#include <linux/mm.h>
-+#include <linux/overflow.h>
-+#include <linux/pci.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/slab.h>
-+#include <linux/vfio_pci_core.h>
-+
-+#include "../vfio.h"
-+#include "vfio_pci_priv.h"
-+#include "vfio_pci_gmem.h"
-+
-+/**
-+ * vfio_gmem_resolve_bar_range() - validate and resolve a VFIO BAR interval
-+ * @ctx: attached VFIO provider
-+ * @offset: byte offset in the VFIO region namespace
-+ * @size: interval length in bytes
-+ * @bar: output BAR index
-+ * @bar_offset: output byte offset within that BAR
-+ * @pa: output starting physical address
-+ *
-+ * Return: 0 on success or -EINVAL for an ineligible interval.
-+ */
-+static int vfio_gmem_resolve_bar_range(struct vfio_pci_gmem *ctx, u64 offset,
-+		u64 size, u32 *bar, u64 *bar_offset, phys_addr_t *pa)
-+{
-+	struct pci_dev *pdev = ctx->vdev->pdev;
-+	resource_size_t start, len;
-+	u32 index = offset >> VFIO_PCI_OFFSET_SHIFT;
-+	u64 off = offset & ((1ULL << VFIO_PCI_OFFSET_SHIFT) - 1);
-+
-+	if (!size || !PAGE_ALIGNED(offset | size))
-+		return -EINVAL;
-+
-+	if (offset >= ctx->gmem->size ||
-+	    size > ctx->gmem->size - offset)
-+		return -EINVAL;
-+
-+	if (index >= PCI_STD_NUM_BARS)
-+		return -EINVAL;
-+
-+	start = pci_resource_start(pdev, index);
-+	len = pci_resource_len(pdev, index);
-+
-+	if (!ctx->vdev->bar_mmap_supported[index] ||
-+	    !(pci_resource_flags(pdev, index) & IORESOURCE_MEM) ||
-+	    !PAGE_ALIGNED(start))
-+		return -EINVAL;
-+
-+	if (off >= len || size > len - off)
-+		return -EINVAL;
-+
-+	/* The interval must not cross into the next VFIO region. */
-+	if (size > (1ULL << VFIO_PCI_OFFSET_SHIFT) - off)
-+		return -EINVAL;
-+
-+	if (check_add_overflow(start, off, pa))
-+		return -EINVAL;
-+
-+	*bar = index;
-+	*bar_offset = off;
-+	return 0;
-+}
-+
-+/**
-+ * vfio_gmem_has_private_mmio() - check for private BAR ranges
-+ * @data: attached VFIO provider context
-+ *
-+ * Return: true if the core has committed private BAR ranges.
-+ */
-+static bool vfio_gmem_has_private_mmio(void *data)
-+{
-+	struct vfio_pci_gmem *ctx = data;
-+
-+	/* The caller holds mmio_lock, including before attach() returns. */
-+	return READ_ONCE(ctx->gmem->has_private_ranges);
-+}
-+
-+/**
-+ * vfio_gmem_attach() - prepare a VFIO PCI device to supply guest_memfd backing
-+ * @inode: guest_memfd inode supplied by the core
-+ * @file: open VFIO device file supplying the BAR namespace
-+ * @gdev: device memory context supplied by guest_memfd
-+ *
-+ * Require @file to be bound to IOMMUFD. Reject the request if VFIO BAR
-+ * mappings, dma-buf exports or ioeventfd handlers already exist.
-+ *
-+ * Require the device to be in D0 and retain a runtime-PM reference to
-+ * prevent runtime suspend. Obtain the existing IOMMUFD vDEVICE after
-+ * checking that it belongs to the same VM as @gdev. Keep both references
-+ * until vfio_gmem_release().
-+ *
-+ * Generic VFIO keeps @file referenced until vfio_gmem_release() returns.
-+ *
-+ * Return: Provider context on success, or an ERR_PTR() on failure.
-+ */
-+static void *vfio_gmem_attach(struct inode *inode, struct file *file,
-+		struct guest_memfd_device *gdev)
-+{
-+	struct vfio_device_file *df = file->private_data;
-+	struct vfio_pci_core_device *vdev =
-+		container_of(df->device, struct vfio_pci_core_device, vdev);
-+	struct vfio_pci_gmem *ctx;
-+	struct iommufd_vdevice *ivdev;
-+	int ret;
-+
-+	if (!gdev)
-+		return ERR_PTR(-EOPNOTSUPP);
-+
-+	ctx = kzalloc_obj(*ctx);
-+	if (!ctx)
-+		return ERR_PTR(-ENOMEM);
-+
-+	ctx->vdev = vdev;
-+	ctx->gmem = gdev;
-+	ctx->mapping = inode->i_mapping;
-+
-+	lockdep_assert_held_write(&vdev->vdev.gmem_lock);
-+	lockdep_assert_held(&vdev->vdev.dev_set->lock);
-+	/*
-+	 * Require access to be granted and the file to be bound to IOMMUFD.
-+	 * The acquire pairs with smp_store_release() after vfio_df_open()
-+	 * so the device setup is visible before proceeding.
-+	 */
-+	if (!smp_load_acquire(&df->access_granted) || !df->iommufd) {
-+		ret = -EINVAL;
-+		goto fail;
-+	}
-+
-+	/*
-+	 * Reject setup if dma-buf exports or ioeventfd handlers can access
-+	 * BARs outside guest_memfd.
-+	 */
-+	if (!list_empty_careful(&vdev->dmabufs) || vdev->ioeventfds_nr) {
-+		ret = -EBUSY;
-+		goto fail;
-+	}
-+
-+	/*
-+	 * Reject setup while userspace allows the device to runtime suspend.
-+	 */
-+	if (READ_ONCE(vdev->pm_runtime_engaged)) {
-+		ret = -EBUSY;
-+		goto fail;
-+	}
-+
-+	/*
-+	 * Reject the request if any VFIO BAR mapping exists
-+	 */
-+	if (atomic_read(&vdev->mmap_count)) {
-+		ret = -EBUSY;
-+		goto fail;
-+	}
-+
-+	/* Runtime suspend must stay excluded until provider release. */
-+	ret = vfio_pci_core_pm_pin_d0(vdev);
-+	if (ret)
-+		goto fail;
-+
-+	ivdev = iommufd_device_attach_mmio_provider(vdev->vdev.iommufd_device,
-+						    gdev->kvm, ctx,
-+						    vfio_gmem_has_private_mmio,
-+						    &gdev->binding.owner);
-+	if (IS_ERR(ivdev)) {
-+		ret = PTR_ERR(ivdev);
-+		goto fail_pm;
-+	}
-+	gdev->binding.vdev_id = ivdev->virt_id;
-+	ctx->ivdev = ivdev;
-+	return ctx;
-+fail_pm:
-+	pm_runtime_put(&vdev->pdev->dev);
-+fail:
-+	kfree(ctx);
-+	return ERR_PTR(ret);
-+}
-+
-+/**
-+ * vfio_gmem_prepare_memory_region() - validate a memslot BAR interval
-+ * @data: attached provider context
-+ * @offset: byte offset in the VFIO region namespace
-+ * @size: range length in bytes
-+ * @flags: requested KVM_MEM_LOG_DIRTY_PAGES and KVM_MEM_READONLY flags
-+ *
-+ * Check the entire interval and the BAR's existing iomap. BAR reservations
-+ * are released by VFIO teardown.
-+ *
-+ * Return: 0 on success or a negative error code.
-+ */
-+static int vfio_gmem_prepare_memory_region(void *data,
-+		u64 offset, u64 size, u32 flags)
-+{
-+	struct vfio_pci_gmem *ctx = data;
-+	phys_addr_t pa;
-+	u64 off;
-+	u32 bar;
-+	int ret;
-+
-+	if (flags & (KVM_MEM_LOG_DIRTY_PAGES | KVM_MEM_READONLY))
-+		return -EINVAL;
-+
-+	ret = vfio_gmem_resolve_bar_range(ctx, offset, size, &bar, &off, &pa);
-+	if (ret)
-+		return ret;
-+
-+	return PTR_ERR_OR_ZERO(vfio_pci_core_get_iomap(ctx->vdev, bar));
-+}
-+
-+/**
-+ * vfio_gmem_get_pfn() - obtain a BAR PFN for guest_memfd
-+ * @data: provider context returned by vfio_gmem_attach()
-+ * @index: page index in the VFIO region namespace
-+ * @pfn: receives the BAR PFN
-+ * @max_order: receives zero for base-page mappings
-+ *
-+ * Called with the guest_memfd inode's invalidate_lock held. Take memory_lock
-+ * for read while checking BAR access and resolving the PFN.
-+ *
-+ * Return: 0 on success, -ENXIO if BAR access is disabled, or a range or BAR
-+ * mapping error.
-+ */
-+static int vfio_gmem_get_pfn(void *data, pgoff_t index,
-+		unsigned long *pfn, int *max_order)
-+{
-+	struct vfio_pci_gmem *ctx = data;
-+	struct vfio_pci_core_device *vdev = ctx->vdev;
-+	phys_addr_t pa;
-+	u64 off;
-+	u32 bar;
-+	int ret;
-+
-+	if ((u64)index >= (ctx->gmem->size >> PAGE_SHIFT))
-+		return -EINVAL;
-+
-+	lockdep_assert_held(&ctx->mapping->invalidate_lock);
-+	guard(rwsem_read)(&vdev->memory_lock);
-+	if (!__vfio_pci_memory_enabled(vdev))
-+		/* Retrying cannot change the decode state frozen at attachment. */
-+		return -ENXIO;
-+
-+	ret = vfio_gmem_resolve_bar_range(ctx, (u64)index << PAGE_SHIFT, PAGE_SIZE,
-+					  &bar, &off, &pa);
-+	if (ret)
-+		return ret;
-+
-+	/* Userspace can fault the BAR before a memslot has been installed. */
-+	ret = PTR_ERR_OR_ZERO(vfio_pci_core_get_iomap(vdev, bar));
-+	if (ret)
-+		return ret;
-+
-+	*pfn = PHYS_PFN(pa);
-+	if (max_order)
-+		*max_order = 0;
-+	return 0;
-+}
-+
-+/**
-+ * vfio_gmem_lock() - exclude TDI transitions during mapping changes
-+ * @context: attached provider context
-+ *
-+ * Called with the inode invalidate lock held for write. Hold the vDEVICE
-+ * MMIO mutex through guest invalidation, architecture conversion and
-+ * publication of the private-range summary. Revocation, memslot unbind and
-+ * final file cleanup use the same exclusion without changing attributes.
-+ */
-+static void vfio_gmem_lock(void *context)
-+{
-+	struct vfio_pci_gmem *ctx = context;
-+
-+	lockdep_assert_held_write(&ctx->mapping->invalidate_lock);
-+	iommufd_vdevice_mmio_lock(ctx->ivdev);
-+}
-+
-+/**
-+ * vfio_gmem_unlock() - release provider exclusion after mapping changes
-+ * @context: attached provider context
-+ */
-+static void vfio_gmem_unlock(void *context)
-+{
-+	struct vfio_pci_gmem *ctx = context;
-+
-+	lockdep_assert_held_write(&ctx->mapping->invalidate_lock);
-+	lockdep_assert_held(&ctx->ivdev->mmio_lock);
-+	iommufd_vdevice_mmio_unlock(ctx->ivdev);
-+}
-+
-+/**
-+ * vfio_gmem_release() - release a provider after successful core cleanup
-+ * @data: provider context to release
-+ *
-+ * Detach from the pinned vDEVICE, drop runtime PM and free the context.
-+ * Generic VFIO pins the source file through this call and clears attachment
-+ * state after release returns.
-+ *
-+ * The caller holds gmem_lock for write and dev_set->lock. Detachment takes
-+ * the vDEVICE MMIO lock.
-+ */
-+static void vfio_gmem_release(void *data)
-+{
-+	struct vfio_pci_gmem *ctx = data;
-+	struct vfio_pci_core_device *vdev = ctx->vdev;
-+
-+	lockdep_assert_held_write(&vdev->vdev.gmem_lock);
-+	lockdep_assert_held(&vdev->vdev.dev_set->lock);
-+	iommufd_vdevice_detach_mmio_provider(ctx->ivdev);
-+	pm_runtime_put(&vdev->pdev->dev);
-+	kfree(ctx);
-+}
-+
-+const struct guest_memfd_provider_operations vfio_pci_gmem_provider_ops = {
-+	.attach = vfio_gmem_attach,
-+	.prepare_memory_region = vfio_gmem_prepare_memory_region,
-+	.device_memory = true,
-+	.lock = vfio_gmem_lock,
-+	.unlock = vfio_gmem_unlock,
-+	.get_pfn = vfio_gmem_get_pfn,
-+	.release = vfio_gmem_release,
-+};
-+EXPORT_SYMBOL_GPL(vfio_pci_gmem_provider_ops);
-+
-+MODULE_IMPORT_NS("IOMMUFD");
-diff --git a/drivers/vfio/pci/vfio_pci_gmem.h b/drivers/vfio/pci/vfio_pci_gmem.h
-new file mode 100644
-index 000000000000..3ed53ae0c18a
---- /dev/null
-+++ b/drivers/vfio/pci/vfio_pci_gmem.h
-@@ -0,0 +1,17 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+#ifndef VFIO_PCI_GMEM_H
-+#define VFIO_PCI_GMEM_H
-+
-+#include <linux/guest_memfd.h>
-+
-+struct iommufd_vdevice;
-+struct vfio_pci_core_device;
-+
-+struct vfio_pci_gmem {
-+	struct guest_memfd_device *gmem;
-+	struct vfio_pci_core_device *vdev;
-+	struct iommufd_vdevice *ivdev;
-+	struct address_space *mapping;
-+};
-+
-+#endif /* VFIO_PCI_GMEM_H */
-diff --git a/drivers/vfio/pci/vfio_pci_priv.h b/drivers/vfio/pci/vfio_pci_priv.h
-index 43d74c46e841..54e7c0fe0b0e 100644
---- a/drivers/vfio/pci/vfio_pci_priv.h
-+++ b/drivers/vfio/pci/vfio_pci_priv.h
-@@ -11,17 +11,26 @@
- /* Cap maximum number of ioeventfds per device (arbitrary) */
- #define VFIO_PCI_IOEVENTFD_MAX		1000
- 
--/* Later patches reject BAR state changes while guest_memfd uses the device. */
-+/*
-+ * Exclusive BAR ownership excludes destructive state changes. File
-+ * operations hold gmem_lock; reset of a device instead holds
-+ * dev_set->lock. Either stabilizes gmem_attached, whose publication and
-+ * removal hold both locks.
-+ */
- static inline bool
- vfio_pci_bar_state_change_allowed(struct vfio_pci_core_device *vdev)
- {
--	return true;
-+	lockdep_assert(lockdep_is_held(&vdev->vdev.gmem_lock) ||
-+		       lockdep_is_held(&vdev->vdev.dev_set->lock));
-+	return !vdev->vdev.gmem_attached;
- }
- 
- static inline bool
- vfio_pci_bar_access_allowed(struct vfio_pci_core_device *vdev)
- {
--	return true;
-+	lockdep_assert_held(&vdev->vdev.gmem_lock);
-+
-+	return !vdev->vdev.gmem_attached;
- }
- 
- struct vfio_pci_ioeventfd {
-diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
-index 4ebd29069034..485f953345bd 100644
---- a/include/linux/vfio_pci_core.h
-+++ b/include/linux/vfio_pci_core.h
-@@ -156,6 +156,10 @@ struct vfio_pci_core_device {
- 	struct list_head	dmabufs;
- };
- 
-+#if IS_ENABLED(CONFIG_VFIO_PCI_GMEM)
-+extern const struct guest_memfd_provider_operations vfio_pci_gmem_provider_ops;
-+#endif
-+
- enum vfio_pci_io_width {
- 	VFIO_PCI_IO_WIDTH_1 = 1,
- 	VFIO_PCI_IO_WIDTH_2 = 2,
 -- 
 2.43.0
 
