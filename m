@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831049;
-	b=I8vnu9XdWKXKDiAtetv+OlBQ0et8a0b8/n2HD4czN7olGBgL0hohPOdTpKORsJNhHx//
-	 bhM7+rSozCjLm3NM0zErrROfa8zWvipTKNXsN6P798ZEqlHuR9s4mKITNcs4Le9cNCMr6
-	 Pga7FHKsUMs8+8/e+rfVtkzWulnEvsCimHfkNUaL68qgCKK4ZfiswTUXB3KE+az2rhjsV
-	 8MFSZ5F6zxDTVhEQf4l64pbZ9UN6eED1j0eRqMAK9PLQiGNX2j1Rfnd3t0Mf2IgDcQ1oo
-	 kcZUIh19wL1WkdqbeprGWjX492NSMu9eq+XsJfUk3wRKFZGTp3P+Y2BYBvLjjkqtuwQ==
+	t=1793831059;
+	b=E+7wDbFx/QAWsg7gOaHWLc3aT01+Wb8YJhuhNqRx5BPVV5nGB/Ta98+T6nJ1HhSaatG4
+	 rSq+vWwvvFvY19YtRtwD5WaXFUZsGwtwj/uzHlmAaURkyxpoM/IOYKYuVT5KUJQOtEKbD
+	 4JnioLP3GcHxZrYlXG2pRvDqlLSxpUH32ccx00RLFkRJgv3ZCHVmxGmpJe6FwUwOLDYYV
+	 BNieq1VHtVoat5Hog7OUAjcWtse59huNryZHC4LpVsnN8SvNzebQ/lcwb33xEftpMcj6d
+	 PMn9RTZLz8KTLwsHja/AfZlgqmwismRtjKb7o2UJ3Ftpg97TVWKWdNJe2HFSA3hVTXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A4HThpdcyhTpQ5CyXyD9tgx9dAWqS1c3ogyoa2ZP2tU=;
-	b=F1a/8E6WmKjuIc69pvHj8CzsXpNGl7w2zAoz7KcvwJ19JJoEAkkfQ/DS7iTldBARJp/Y
-	 FRXCrbeoERiDvJnaFIUtcPvERX3VK7MRQ/WvzZUuQl3vcso65eJNK14AJx7IvN5SjLZBf
-	 qoPnimzQ5xzPprBSL4YCj/REnOCFvaiKCfbR/lgN2sG0ys8o/qYPOgl6JogGUrQsxFQb3
-	 1rui3yDlFpO+igURxTxxggcd89jg+Koh4JtGtK5HwCh/sZH0T4gyLV8WjFPUNK/HI6reT
-	 VfWRzJs/GVg/I7KthwqTJ9gNyUglUlabFHWKuCoxFVzAEYF21+d/Cf5Mp60TtZiyy0w==
+	bh=QXbVUA3x8HcPACnqfeeCQNs/DUbD0IupZ0X7cQKgFWs=;
+	b=TqeyDbPBk6ottVe2rXyl/cxuuEboqosYDJPIisqxkOjEcrXEtI6mR00rUqquNknpt9R1
+	 9OmW6tWy6pX6XT+6iZjW53gC+Sut7U2OEoZxu36Y6BVbSqzGwEptQTuQr0SUyFgsJENkx
+	 8YRaAnAWxUzQWasaXW1+aaAyJ4hMPmfr/G8Koqy8t7xH2J+X92lqdJdbH2GPsnMerHEt6
+	 LCbBUIegEaZdcOYMlhayBsF1ebZgjqZt9VyVrMoCMgqqshpVEpwYUA6qy+/ri6L9jetPo
+	 eorAQC+bfSPqZUso3ocONYmMW7HC83ulA269ufLECPC2BsPSE2aZvNXPKqHUc73xlAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ddyX+1PJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SjypbBni;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0675606A843;
-	Wed,  4 Nov 2026 22:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396D1606A843;
+	Wed,  4 Nov 2026 22:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ddyX+1PJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5741F0093A;
-	Wed,  4 Nov 2026 22:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SjypbBni
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A581F0093A;
+	Wed,  4 Nov 2026 22:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831048;
-	bh=A4HThpdcyhTpQ5CyXyD9tgx9dAWqS1c3ogyoa2ZP2tU=;
+	s=korg; t=1793831059;
+	bh=QXbVUA3x8HcPACnqfeeCQNs/DUbD0IupZ0X7cQKgFWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ddyX+1PJ9DpJDGLlOdXJbN0r/R/GuNOjM67WlhQ+LWfIN5Nv/zsveSRIZ1SbUSZFa
-	 /r91526ooAkn4xhv7VS7YkZ2NreOTESwFfUihmxQWxxzF8cvGiXkNIWXaC6BiMZEfn
-	 X61zILVlmYty0CtDnZl/Kbsfiwx5k33f21ZRcrME=
+	b=SjypbBnivV1pQWav9kdT3zAyS0RScQgyGVPYfCGe/QN/LsLyjVAbTVvib1OiRoUj9
+	 0zHPrTORlLgdzWAxQTN2Lz0h97/AAByx7iJ5jJ9acRbMlN0BvWf5BJRLotHQ+4eGWV
+	 vUI6tTMeeZCAIiu1vnPZwXiTXmpBQxGo/saWLbj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jiri Kosina <jkosina@suse.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0480/1005] HID: roccat: fix locking in roccat_connect() and roccat_disconnect()
-Date: Wed,  4 Nov 2026 16:03:33 -0500
-Message-ID: <20261104211057.436984674@linuxfoundation.org>
+Subject: [PATCH 6.18 0481/1005] scsi: devinfo: Add BLIST_SKIP_IO_HINTS for EMC Symmetrix
+Date: Wed,  4 Nov 2026 16:03:34 -0500
+Message-ID: <20261104211057.464096945@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,68 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Ewan D. Milne <emilne@redhat.com>
 
-[ Upstream commit d76994443eed0af297cb82bd038ae9d76327ef90 ]
+[ Upstream commit f06a44e235ef188689ba23ffc72e9e89b10951a9 ]
 
-Extend critical section in roccat_connect() to ensure that partially
-initialized 'struct roccat_device' is never exposed in 'devices' list,
-and do the same in roccat_disconnect() to avoid racy 'devices' access
-against roccat_release().
+EMC Symmetrix returns an error on MODE SENSE for page 0Ah subpage 05h
+because it does not implement the SBC-5 I/O hints.  These commands began to
+be sent as a result of commit 4f53138fffc2 ("scsi: sd: Translate data
+lifetime information").  Add BLIST_SKIP_IO_HINTS to avoid sending these
+commands because in large configurations the failed commands are displacing
+other useful information in internal error logs.
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Link: https://patch.msgid.link/20260915173800.39117-1-emilne@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-roccat.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/scsi/scsi_devinfo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-roccat.c b/drivers/hid/hid-roccat.c
-index e54b6a8a92ef7..77042c7edf765 100644
---- a/drivers/hid/hid-roccat.c
-+++ b/drivers/hid/hid-roccat.c
-@@ -344,8 +344,6 @@ int roccat_connect(const struct class *klass, struct hid_device *hid, int report
- 		return temp;
- 	}
- 
--	mutex_unlock(&devices_lock);
--
- 	init_waitqueue_head(&device->wait);
- 	INIT_LIST_HEAD(&device->readers);
- 	mutex_init(&device->readers_lock);
-@@ -356,6 +354,7 @@ int roccat_connect(const struct class *klass, struct hid_device *hid, int report
- 	device->cbuf_end = 0;
- 	device->report_size = report_size;
- 
-+	mutex_unlock(&devices_lock);
- 	return minor;
- }
- EXPORT_SYMBOL_GPL(roccat_connect);
-@@ -369,15 +368,12 @@ void roccat_disconnect(int minor)
- 
- 	mutex_lock(&devices_lock);
- 	device = devices[minor];
--	mutex_unlock(&devices_lock);
- 
- 	device->exist = 0; /* TODO exist maybe not needed */
- 
- 	device_destroy(device->dev->class, MKDEV(roccat_major, minor));
- 
--	mutex_lock(&devices_lock);
- 	devices[minor] = NULL;
--	mutex_unlock(&devices_lock);
- 
- 	if (device->open) {
- 		hid_hw_close(device->hid);
-@@ -385,6 +381,8 @@ void roccat_disconnect(int minor)
- 	} else {
- 		roccat_free_device(device);
- 	}
-+
-+	mutex_unlock(&devices_lock);
- }
- EXPORT_SYMBOL_GPL(roccat_disconnect);
- 
+diff --git a/drivers/scsi/scsi_devinfo.c b/drivers/scsi/scsi_devinfo.c
+index c51146882a1fa..a438e510f2cae 100644
+--- a/drivers/scsi/scsi_devinfo.c
++++ b/drivers/scsi/scsi_devinfo.c
+@@ -161,7 +161,7 @@ static struct {
+ 	{"DGC", "DISK", NULL, BLIST_SPARSELUN},	/* EMC CLARiiON, no storage on LUN 0 */
+ 	{"EMC",  "Invista", "*", BLIST_SPARSELUN | BLIST_LARGELUN},
+ 	{"EMC", "SYMMETRIX", NULL, BLIST_SPARSELUN | BLIST_LARGELUN |
+-	 BLIST_REPORTLUN2 | BLIST_RETRY_ITF},
++	 BLIST_REPORTLUN2 | BLIST_RETRY_ITF | BLIST_SKIP_IO_HINTS},
+ 	{"EMULEX", "MD21/S2     ESDI", NULL, BLIST_SINGLELUN},
+ 	{"easyRAID", "16P", NULL, BLIST_NOREPORTLUN},
+ 	{"easyRAID", "X6P", NULL, BLIST_NOREPORTLUN},
 -- 
 2.53.0
 
