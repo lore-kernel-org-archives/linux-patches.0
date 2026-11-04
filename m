@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829159;
-	b=L+AEnfsIbLfIjxyc7IQOCmtoIVjPIay+Ru3qz4u+GrvOzxWRoMIR5Y5prpAJkFsC7aW5
-	 u0Yr4GttSkGkit/I7fEjRSD+EkNq7bp8CgsgodQ45GdcYqMeEtLbCE8hll3h+HXV/CLXI
-	 X7AWZzmRh9I/KkQXTpE4zwDxLqOpqU11P9fyj9MRq4XehyJrHxsJZXqAiFROS2IcvsU/D
-	 BgLlNcgf/DO6ejab+I46LLahskWTHVBH5nUk6bmchS96UrrC/rShUYtJCW1ph4Z7f3tHC
-	 TlkZEo/fikoHaSgXKSmXdcxELZzbVp/11Zj5m3mSA1/Djs1EXpBQP1n7Q8Xi1SJZJ+A==
+	t=1793829160;
+	b=qTZ65eaxxy9JsLMI+fP7e8aEQ2ISkIzxuq65pwrzEflwerILkyqO8A+okhp9wRe9Tdso
+	 WuDBO4gi9EVXGV95okvvZHFBHMtnURBGLwDwdc2mp4ZKxXNlCPX/bpVNIB0dy72ODFzvm
+	 Geh+ES39AbvTltK6MlGxdUi+JbBt9hk5exIPNv9iRD1MGYe6A4FBam76qVd/iuzQOuDrQ
+	 6QBw/6UULbQDObTF2u/gak0VxUZb0juEtp3Bnww7vJmlFCtz5nbO7M5NmH89MOJXYSd4P
+	 7/Ok2yMU15HEPEDsapWMPfJ502g09ssiDgCdU5nyGi0w92CPAbUzFPnIo+yEisUz6JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lS64HSa1R1o7hZGs+sp1ii4YOLZioOreSXqxmz7DdDA=;
-	b=WrC5zupYuM6Mhsn2r03Wae1Io+Dz9eMbNsVvQPaSu95xx+A/jSndy4valu1TODNXvlAO
-	 mL5waabAV5A+20GJmtYwAEU98yXCqLwpmT6IvMr+CckwyE6x70Ztz91ZiigAIRaozSigE
-	 sKBX8ldactvea+yI+hCUa5Jmsv4pEaqatpNZcde5gK5OpWPWmoML5bUGMsgxvNOkrpR+h
-	 YOWv9VfIl0Qp83yI2lccuepbKIWsRNpQp9qR0Ex+8tcU3Lh0HmZcYSvf+PXN9nvjtXDg1
-	 MchuyY64uBVOfhwOpTvSx2fDxxu0CgN0SgCAKYBWDRHZxg3UgDwmLEdKTX16L6Ad/NA==
+	bh=Ulq+jjFLxxBIlPyuVOc0Ql2O+DMssuc0bswrieQorqU=;
+	b=pBtXrZvrQHZcFJxsAHY7H7OGn1zO/Uy0iATs7PrKyPMlsX6crkvgjwxq8gayk0jZ+1M6
+	 oZBiYQfssq96DTXdUYXynlr0BFM2IRXVBuxmPD/hmBxDL7tFyYxuJR2uVFWUTz+MmOI4s
+	 xwHls85j/I4Em6NIXeyro/OiRY1twY8QEUokOZ+8yqmhJsIxGfBhynHwmyO1m2K6XEYgJ
+	 JoYsZ1NYcug1+1d79tNoliLCPX8pazmTaql9PuicFPTSm8kfK7MLnB6kDZRvmuFebkNHO
+	 Re+GkCaF0jhhaBpnqwn7/kswO5sruSzeCieXIs0lE1fzhXIUf0bznqxdYMBLeDqmNLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VEm4k1uP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vu7ywn7D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2996607031A;
-	Wed,  4 Nov 2026 21:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8BD607031A;
+	Wed,  4 Nov 2026 21:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VEm4k1uP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F7C1F000C1;
-	Wed,  4 Nov 2026 21:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vu7ywn7D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D143C1F000C1;
+	Wed,  4 Nov 2026 21:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829158;
-	bh=lS64HSa1R1o7hZGs+sp1ii4YOLZioOreSXqxmz7DdDA=;
+	s=korg; t=1793829160;
+	bh=Ulq+jjFLxxBIlPyuVOc0Ql2O+DMssuc0bswrieQorqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VEm4k1uPultmfflIG3She2gXhjFqyuXu1k6X2+YSzORxFUpjtU4JBt0nJqIbivqHh
-	 8oBJ8BR/OnGc4SeviwahMaPsNl1v8OGiCqwLJcNW5hRDGJ57tcIcNBAJdNEJdUPibx
-	 Y82RfvzFQNvLZXzVtIJi2MyWZdrgSuN1nZf1c9kg=
+	b=vu7ywn7DRZPNJG15V1v5cgqKFy2HyG/Yvix7sala/AI+TKLTMAM2pmVmFG7OAfH6g
+	 NG7wFUbuozeVZlA2+TbKGxVTbiu5r8Ymqa+cmBQiNyE8dOnQ4WuLAZgMQIPRec7XDX
+	 RNbF6/8oOzTN48dP9tjK0FegqwvOMutR1vvoLkRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kerim Kabirov <the.privat33r+linux@pm.me>,
-	GameBurrow <gameburrow@pm.me>,
-	Ahmed Yaseen <yaseen@ghoul.dev>,
-	Denis Benato <denis.benato@linux.dev>,
+	Jiale Yao <yaojiale02@163.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 483/547] HID: usbhid: skip interrupt IN polling for devices with no input reports
-Date: Wed,  4 Nov 2026 16:11:07 -0500
-Message-ID: <20261104211052.101535673@linuxfoundation.org>
+Subject: [PATCH 7.3 484/547] HID: zydacron: validate key report length
+Date: Wed,  4 Nov 2026 16:11:08 -0500
+Message-ID: <20261104211052.131540099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,68 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Yaseen <yaseen@ghoul.dev>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit 4563e596bd913fb2d5b10b2ef306c754cf97ced2 upstream.
+commit 9932c9af185f8586e883d44ca562c12f4487c762 upstream.
 
-usbhid starts polling a device's interrupt IN endpoint on open
-(usbhid_open() -> hid_start_in()). If the report descriptor declares no
-input reports there is nothing to read there, so the poll is useless,
-and on some composite devices it is also harmful.
+The HID core invokes raw_event callbacks before validating the report
+length.  zc_raw_event() verifies the report ID in byte zero and then reads
+the key code from byte one for report IDs 0x02 and 0x03 without checking
+that the second byte is present.
 
-The ASUS ROG N-Key keyboards expose a second, input-less interface used
-only for RGB control via feature reports. Opening its hidraw node (any
-hidraw reader does, including SDL/Steam Input or a plain cat) starts the
-pointless IN poll and keypress reports on the keyboard interface get
-dropped for as long as the node stays open: a lost key-down drops a
-letter, a lost key-up leaves the key stuck. usbmon shows the dropped
-reports never reach the URB layer.
+A one-byte report reproduced the issue under KASAN:
 
-The useless poll itself is long-standing; commit 4ac74ea68f64 ("HID:
-asus: early return for ROG devices") is what exposes it on these
-devices by keeping the input-less interface alive instead of ejecting
-it, so its hidraw node can be opened and the poll started.
+  BUG: KASAN: slab-out-of-bounds in zc_raw_event+0x54c/0x580
+  Read of size 1 by task hidtrigger/93
+  Call Trace:
+   zc_raw_event+0x54c/0x580
+   __hid_input_report+0x2ef/0x3a0
+   inject_store+0x479/0x490 [faketrans]
 
-Skip the poll in usbhid_open() when the device has no input reports.
-Feature reports and hidraw output keep working over the control and OUT
-endpoints, so the interface is otherwise unaffected.
+Require both the report ID and key code before processing the report.
 
-Fixes: 4ac74ea68f64 ("HID: asus: early return for ROG devices")
-Link: https://discuss.cachyos.org/t/keyboard-input-issues-on-asus-rog-strix-16-2025-with-cachyos-during-gaming/30823
-Link: https://github.com/ublue-os/bazzite/issues/4590
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw_event length validation to hid-asus.
+
+Fixes: d0742abaa1c3 ("HID: add omitted hid-zydacron.c file")
 Cc: stable@vger.kernel.org
-Tested-by: Kerim Kabirov <the.privat33r+linux@pm.me>
-Tested-by: GameBurrow <gameburrow@pm.me>
-Signed-off-by: Ahmed Yaseen <yaseen@ghoul.dev>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/hid/hid-zydacron.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
-index 96b0181cf819..d7cf2b56e117 100644
---- a/drivers/hid/usbhid/hid-core.c
-+++ b/drivers/hid/usbhid/hid-core.c
-@@ -688,7 +688,14 @@ static int usbhid_open(struct hid_device *hid)
+--- a/drivers/hid/hid-zydacron.c
++++ b/drivers/hid/hid-zydacron.c
+@@ -114,6 +114,9 @@ static int zc_raw_event(struct hid_devic
+ 	unsigned key;
+ 	unsigned short index;
  
- 	set_bit(HID_OPENED, &usbhid->iofl);
++	if (size < 2)
++		return 0;
++
+ 	if (report->id == data[0] && (hdev->claimed & HID_CLAIMED_INPUT)) {
  
--	if (hid->quirks & HID_QUIRK_ALWAYS_POLL) {
-+	/*
-+	 * ALWAYS_POLL devices are already polled from usbhid_start(), and a
-+	 * device with no input reports has nothing to send on the interrupt
-+	 * IN endpoint. In some cases polling is harmful: on the ASUS ROG
-+	 * N-Key keyboards it makes the sibling interface drop keypresses.
-+	 */
-+	if ((hid->quirks & HID_QUIRK_ALWAYS_POLL) ||
-+	    list_empty(&hid->report_enum[HID_INPUT_REPORT].report_list)) {
- 		res = 0;
- 		goto Done;
- 	}
--- 
-2.56.0
-
+ 		/* break keys */
 
 
