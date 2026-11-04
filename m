@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829425;
-	b=QTzOj5Yp7BELW0oL9zapqFiGT2F4WfpfAG12EVeRExultLx9KCToDEJsTtP8fIfLrpfB
-	 kNcOQzug+TO+xMTGw35upCg9IJZc30r8fSrqDl1NKnKMOLbCrSonH/P3/UPoOY/dOSceY
-	 b2C1yPb7XCvJJYjnHNZHv/Tb0rJ0i+uLLz47Q3LYTqJw9uj1Np4sMQUdtkPExvR9gBH7I
-	 HK9KWaBvq2fufDSy3pcFISvvo6nDgikIqopbtvlOkJ1T81k24OY1dhLuTXPd1tUP8KHG7
-	 0faJquY66O09/t0g4Tq9oDHGSyyYdX/1itOIt0Ll0JqZTEUTz6yEOBIF6DoFcMdk0Rw==
+	t=1793829426;
+	b=eY+h46Rwm9LRi4xqWqW0oCVlOeB7nBYaxvRDFj0EW1Xu2JR66Qg6ZQ3lKx487FOGhjds
+	 UXwfkaAkRTL0kwDlkMTl9UzOqtRxeAEAdEG3g1uMBOJDuda6epO7MZoZruypxrJ+IVFos
+	 Gsmc2XtjDLUuD6NlJJxVo0YSG3bTIh8uoSUg8bgMKlsgRJvH5fWyIImwK7yyVsKU1rMyd
+	 a/E+LfzzViaGtE3F2JpWjD199rF7TA2xwoIuFk/CFdNexXeYJ2gF+kxPdADCRy2YLsdc2
+	 iachXpgCNoXlfAQ5bdGyd2ooI9w+DCXuXwhTTgoAA+qMHAt7/CTHzkkKZFh1tprdLMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829426;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0ZvbkBdHT4UCaVm64ZqoKfdXz+m+GtK7SmQ7Jw0ixxk=;
-	b=f/YuH/4kfHtn8s5QfAdyJ8+XBnEE7l3xLDraMi0IjNnmPxtzoJFv0WEwYR26OU3p04Wq
-	 hjRsvzEfvqnItYA/BmFvbx1sA415Xv6wyL42FJ+8Da6YtPnuOj1qY4ZOSlmLwu6Wl7g4a
-	 8K7AjC8VzQkuz5jJ/GNNwHB2mCm5urH73A1DjbbIE5Y4u7AvGkH9ifcg8RKlOpaVvbC/D
-	 7qFMi/QgNFlhe6x8iCfuu0fN33+LYuHUuyGhsVjB4U58wEiOmxEH6gICucuyrCXqahTrs
-	 uYOZVdlgejzHfhbpfbh+JULa7Dce7PLQ+EdFkjdAy3CTgRpQw2jANMhfYpAKtHSZVkg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=23bbIPNZ0+3EkZdGaYof2r2hDj8MlYJoU/jKr6EMZpE=;
+	b=YFEuPfzmKlAFO8K9v1SrzTLT7MDO/JIhMZewy7TaGWYOd4qOEMDvNhPOn0C6XosI6IYd
+	 ZbZhJmfA3MMTsSnrS9lTnuczjzllUot+3waNfXEw5aCJMbDCM5Pe/GZ15Mnl3IfEZPo/S
+	 zNKKmfgE4bqrZHJ3ZMfU1oRRp7bwQaNVTg/YN39jragR5ESL79Crb17/Zjc+ayw8zVxts
+	 IdZ3uSPeucwrNjMMB+DZPpDSvhnUeh/PiSsX49Vza1MjSMYN/hQCUvgH04VP1nwm/M1TP
+	 XRPTp28PUyaPM03dzpqBOncsTEaNyoiPBn69PjbqfDj5yoos6EC6wr05eqT8sCYsbzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oITMkcci;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmBXWDYt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF75F606A85D;
-	Wed,  4 Nov 2026 21:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B61606A84F;
+	Wed,  4 Nov 2026 21:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oITMkcci
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C49B1F00A15;
-	Wed,  4 Nov 2026 21:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BmBXWDYt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4511F000C1;
+	Wed,  4 Nov 2026 21:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829424;
-	bh=0ZvbkBdHT4UCaVm64ZqoKfdXz+m+GtK7SmQ7Jw0ixxk=;
+	s=korg; t=1793829426;
+	bh=23bbIPNZ0+3EkZdGaYof2r2hDj8MlYJoU/jKr6EMZpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oITMkcci9CBpnAgDAYN3MKBO+F/+CWysB20VfvxaHvIbHTfSO2Qog6YyjURwAnGuU
-	 BOb5gNP9XuC7kDF7N3xMqO1XESqErCOSe/eXURxH62GpbR4vQ4kDu0X1BGlWPycu6x
-	 QD1cOqL7gAnGsagaSsVgSx1dl4FTMGoC6xs555xs=
+	b=BmBXWDYth0scesW5ow9YrG2akY2fE9lZ9keWf9XQZqn/6Ncd3cHaqFylAZVpWsMNY
+	 dAYwi4QChpFiEbcXWUhx3We33Q1uQKBlIOd0umXDwmoRq0VSG2bw8HonSOUdPGW1Ip
+	 qPvAoFtvTH05Bdl9auBmBy9ioBpHnt+stGPEMSlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muralidhara M K <muralidhara.mk@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0118/1005] platform/x86/amd/hsmp: Validate ACPI UID before parsing socket index
-Date: Wed,  4 Nov 2026 15:57:31 -0500
-Message-ID: <20261104211046.970228409@linuxfoundation.org>
+Subject: [PATCH 6.18 0119/1005] ASoC: codecs: max98396: Unwind supplies on resume failure
+Date: Wed,  4 Nov 2026 15:57:32 -0500
+Message-ID: <20261104211046.999308379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,54 +62,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muralidhara M K <muralidhara.mk@amd.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 4c7d1b4cd75a775326e6802608440f7642284ea6 ]
+[ Upstream commit d20de7409dfa8e3341af7f157cd42130bd4ba3a7 ]
 
-hsmp_get_uid() passed the device UID directly to kstrtou16(uid + 2)
-without checking it.  A NULL UID or one shorter than three characters
-would dereference a NULL pointer or read past the end of the string.
+max98396_resume() enables the core, pvdd, and vbat supplies before
+leaving cache-only mode, resetting the device, and replaying cached
+register state. The function currently ignores regcache_sync() failures,
+and the optional pvdd/vbat enable failures return without unwinding
+supplies that were already enabled in this resume attempt.
 
-Reject such UIDs with -EINVAL before stripping the "ID" prefix.
+Rework the function to use common error labels. This propagates sync
+failures, restores cache-only/dirty state on failed cache replay, and
+disables each supply acquired by this resume path before returning the
+error.
 
-Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260625123337.886435-3-muralidhara.mk@amd.com
-Link: https://patch.msgid.link/20260629155634.1807598-2-muralidhara.mk@amd.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704040651.47558-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/hsmp/acpi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/codecs/max98396.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/hsmp/acpi.c b/drivers/platform/x86/amd/hsmp/acpi.c
-index d0b74d243ce4c..674be31654776 100644
---- a/drivers/platform/x86/amd/hsmp/acpi.c
-+++ b/drivers/platform/x86/amd/hsmp/acpi.c
-@@ -21,6 +21,7 @@
- #include <linux/kstrtox.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/string.h>
- #include <linux/sysfs.h>
- #include <linux/uuid.h>
+diff --git a/sound/soc/codecs/max98396.c b/sound/soc/codecs/max98396.c
+index 4b4e1fc98a6da..0255399c405df 100644
+--- a/sound/soc/codecs/max98396.c
++++ b/sound/soc/codecs/max98396.c
+@@ -1601,19 +1601,37 @@ static int max98396_resume(struct device *dev)
+ 	if (max98396->pvdd) {
+ 		ret = regulator_enable(max98396->pvdd);
+ 		if (ret < 0)
+-			return ret;
++			goto err_core_supplies;
+ 	}
  
-@@ -78,6 +79,8 @@ static inline int hsmp_get_uid(struct device *dev, u16 *sock_ind)
- 	 * bytes to integer.
- 	 */
- 	uid = acpi_device_uid(ACPI_COMPANION(dev));
-+	if (!uid || strlen(uid) < 3)
-+		return -EINVAL;
+ 	if (max98396->vbat) {
+ 		ret = regulator_enable(max98396->vbat);
+ 		if (ret < 0)
+-			return ret;
++			goto err_pvdd;
+ 	}
  
- 	return kstrtou16(uid + 2, 10, sock_ind);
+ 	regcache_cache_only(max98396->regmap, false);
+ 	max98396_reset(max98396, dev);
+-	regcache_sync(max98396->regmap);
++	ret = regcache_sync(max98396->regmap);
++	if (ret < 0) {
++		regcache_cache_only(max98396->regmap, true);
++		regcache_mark_dirty(max98396->regmap);
++		goto err_vbat;
++	}
++
+ 	return 0;
++
++err_vbat:
++	if (max98396->vbat)
++		regulator_disable(max98396->vbat);
++err_pvdd:
++	if (max98396->pvdd)
++		regulator_disable(max98396->pvdd);
++err_core_supplies:
++	regulator_bulk_disable(MAX98396_NUM_CORE_SUPPLIES,
++			       max98396->core_supplies);
++
++	return ret;
  }
+ 
+ static const struct dev_pm_ops max98396_pm = {
 -- 
 2.53.0
 
