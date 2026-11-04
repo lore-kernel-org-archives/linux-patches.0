@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831459;
-	b=QhNHiewgBThEFj11QOc1p7sN/SLi3bsPU22yLL2DzNPOtlNrDrDzwMma2zmOfCg3mFTM
-	 GHFg/UviV6dfN6ffYau0xjdSHVINZ6s2kqvuhsJ/MuxWudExpUk4adRqoMxsOTM7yUlSy
-	 qMmU1aCVCZaiUv5x/i5vTgwUmKLrbeF+762yTma0x4i3wWwpLz9vwzzkaHUZEY2AwX5aW
-	 vODNkwAXVdESMzxZKvaTrh6l/198SZsDVCyuSB4SOtwxe80vr9UCYpxIa0Uf6KgyNDEYy
-	 k0KCcWwXAfkh+58VmjyCDIXgDxUdQ9my/28I5SAH2Lw7sfnLKSiw8GwPEGys1KOl2aA==
+	t=1793831460;
+	b=pGD9O+2mqtBFzilXUYTDSsynWP7HO8rp0Zc0zMTvZbiv8cUoj1ZCNQXX4f61aQFcXQMO
+	 OsTGBQadv+sfY6Bo7/+3AtCeO2dai7RwjJ2FinHoUxv/+sqB4nsPH3d85bJNI1tWKkl9D
+	 zMAeLKuljtbgxFGt+nXwPPtSMV9uI8/Xk4LueSSAy41eGUi2JyH07wG2wPjioNZw6Ut7T
+	 JREX/RclkKQnoW80oubSzfopwPDm97wmogH7hmMaXOQbKUvpTvVruPRj7LYwLWp6YUy5z
+	 As5WlF8r5//I5N70jT/dHLatUActWQyVYHB3+CkZrpgZzZlJGVPFw0rpA0crqICxhxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/2Xed6la4IYulS9UlvR9FNs6LMr24pLkQTX4fQcKK4U=;
-	b=3yDjayvjILjDsVIuiK4Kh+BHisYudCVoaJKKt3Mhxujv+kTYV58UppFrE9Ln6/IMVdt/
-	 HKyiGRxvDweKUWOMhb9hUsFWCYOToyvhx+Ql8lqM2PbDcoEwsi/wDHKYgzm8okdB/rL/5
-	 W3IpEa5TOkheZh6qxoE5SkoLbkE4f3/ooHQkQJUSAX28mZfotu0CcBWQRXgDmfUqqg+ZY
-	 HXN2CmEds1Ifi/fBV5E3Gbntw8SSe963YiZfzZZ1RRMxriNSp0/JntltdUfkYVL0Iu+RF
-	 GuN9By0YSfSbTIAWssmMtZOvwVR3d9qBRxpgFLeU8jXuoffjH/oertUr3znvfXpC0ug==
+	bh=upbZCLkejFXdIrvPpwnMigf1fKYC0sCPk0EwGAkxX+U=;
+	b=SL7yQYOdff25tvKT+Woa6WruEdEAyE0CBpQDJbaKNGcIu/KI+QwOg2myvekK3qwPieXS
+	 XhGbK5DdzonL7+vrIaeNE2oh7S/rCJuJCpOW1sQyKDJqrqXIRuM27c2/bMEP+nq0vC8Nf
+	 Kwhup/nD+r+fAenygeVbPYJ8knm7CJtpxMn+s4lY5ELjsDipTsV2QldezWLig+zwJ1tRl
+	 AhRxKq6DsZ6uRvVDKyPX17BIXE4RyayzVFKug9EeBCIGI+eYLHWeoUzUCGoKN5+mxaklp
+	 kdAAvWXG2/Uez8nA0bfx2a2nCYBY0OrB9zkvgcnLG3NsKSrXgDo4PAC76qQW97HC1mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PUZgx5FF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01sjJk+G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5B7606A335;
-	Wed,  4 Nov 2026 22:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF26606AC17;
+	Wed,  4 Nov 2026 22:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PUZgx5FF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589421F000C1;
-	Wed,  4 Nov 2026 22:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01sjJk+G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6881F000C1;
+	Wed,  4 Nov 2026 22:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831458;
-	bh=/2Xed6la4IYulS9UlvR9FNs6LMr24pLkQTX4fQcKK4U=;
+	s=korg; t=1793831460;
+	bh=upbZCLkejFXdIrvPpwnMigf1fKYC0sCPk0EwGAkxX+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PUZgx5FFKt0wE4NmGGhUG3iMrcvjeyfkoFuojSCZGPON/36PIPRvql+mocrBhaxft
-	 dQmE+RdwjE4NAfHrZej6Lhu+gAR2ZF9f5GXQyV9Ic2ytct75uMpZPhwK3v0WBeRO2O
-	 HsOA+0S8lPBYZi269d/G1pO1JnyWKcCybrREqLGk=
+	b=01sjJk+GEbZoahVWApSXNnh+VV4bfbTFqEk7zGhT55v3JNgqsskxlqBVWcxOdtFeV
+	 sqC9GRbf32aNk3InG7Nq+TRKnO73w6hzxnLjJuf0/SEPbV1ERhNcayv0ercEXTyTmf
+	 Ad7rLk1THVdKQgqP8Xse4Pe3/4W7jqyX5dXOk9tE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com,
-	Anuj Bolewar <bolewara@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 0676/1005] media: hackrf: fix use-after-free in hackrf_alloc_urbs() error path
-Date: Wed,  4 Nov 2026 16:06:49 -0500
-Message-ID: <20261104211102.574570328@linuxfoundation.org>
+	syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 6.18 0677/1005] media: imon: fix use-after-free in display_close via dev_dbg
+Date: Wed,  4 Nov 2026 16:06:50 -0500
+Message-ID: <20261104211102.600370191@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,56 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anuj Bolewar <bolewara@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 6802ad4b6b267dda02209b5811edac7825c8a5f6 upstream.
+commit 118a3590a4080c71c565265b05b3f92e814d7647 upstream.
 
-hackrf_alloc_urbs() frees the URBs it allocated so far when one
-allocation fails, but leaves the entries in dev->urb_list[] and
-dev->urbs_initialized untouched. The caller, hackrf_start_streaming(),
-then calls hackrf_free_urbs() on the error path, which walks
-dev->urbs_initialized entries and calls usb_free_urb() a second time on
-the already-freed URBs, causing a use-after-free (slab-use-after-free
-Write in usb_free_urb()).
+ictx->dev is a raw pointer to the usb_interface's embedded device.
+On disconnect, usb_disconnect() can drop the last reference on the
+interface and free it while a userspace fd for /dev/lcd0 is still
+open. When that fd is later closed, display_close() dereferences
+the now-freed ictx->dev via dev_dbg(), causing a use-after-free.
 
-Drop the redundant cleanup loop inside hackrf_alloc_urbs() and let
-hackrf_free_urbs(), which the caller already invokes on error, own the
-cleanup of the successfully allocated URBs.
+Remove the dev_dbg() calls that dereference ictx->dev in
+display_close() and free_imon_context(), rather than taking a
+reference on the device.
 
-Reported-by: syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=832ce9fa3face1b7d44d
-Fixes: 969ec1f6bd92 ("[media] hackrf: HackRF SDR driver")
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9bfac891bdd42eb708fc
+Link: https://lore.kernel.org/all/20260918054851.26083-1-kartikey406@gmail.com/T/ [v1]
+Link: https://lore.kernel.org/all/20260928121230.35359-1-kartikey406@gmail.com/T/ [v2]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/hackrf/hackrf.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/media/rc/imon.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/media/usb/hackrf/hackrf.c
-+++ b/drivers/media/usb/hackrf/hackrf.c
-@@ -665,7 +665,7 @@ static int hackrf_free_urbs(struct hackr
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -492,16 +492,12 @@ MODULE_PARM_DESC(pad_thresh, "Threshold
  
- static int hackrf_alloc_urbs(struct hackrf_dev *dev, bool rcv)
+ static void free_imon_context(struct imon_context *ictx)
  {
--	int i, j;
-+	int i;
- 	unsigned int pipe;
- 	usb_complete_t complete;
+-	struct device *dev = ictx->dev;
+-
+ 	usb_free_urb(ictx->tx_urb);
+ 	WARN_ON(ictx->dev_present_intf0);
+ 	usb_free_urb(ictx->rx_urb_intf0);
+ 	WARN_ON(ictx->dev_present_intf1);
+ 	usb_free_urb(ictx->rx_urb_intf1);
+ 	kfree_rcu(ictx, rcu);
+-
+-	dev_dbg(dev, "%s: iMON context freed\n", __func__);
+ }
  
-@@ -681,11 +681,8 @@ static int hackrf_alloc_urbs(struct hack
- 	for (i = 0; i < MAX_BULK_BUFS; i++) {
- 		dev_dbg(dev->dev, "alloc urb=%d\n", i);
- 		dev->urb_list[i] = usb_alloc_urb(0, GFP_KERNEL);
--		if (!dev->urb_list[i]) {
--			for (j = 0; j < i; j++)
--				usb_free_urb(dev->urb_list[j]);
-+		if (!dev->urb_list[i])
- 			return -ENOMEM;
--		}
- 		usb_fill_bulk_urb(dev->urb_list[i],
- 				dev->udev,
- 				pipe,
+ /*
+@@ -577,7 +573,6 @@ static int display_close(struct inode *i
+ 		retval = -EIO;
+ 	} else {
+ 		ictx->display_isopen = false;
+-		dev_dbg(ictx->dev, "display port closed\n");
+ 	}
+ 
+ 	mutex_unlock(&ictx->lock);
 
 
