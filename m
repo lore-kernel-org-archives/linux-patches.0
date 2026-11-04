@@ -1,54 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827161;
-	b=DnTK/AJS+5qa9qnU1mI/+mg78eOX1ZHaP+r6AKKYUxEFUiyb8SMTSgHQTMf8BNyqdO2d
-	 rlFygOQt03nqZEB6VO3ZkL2JSop1AAU7wyNLq0zubSfIUAh1fPowZrzUC14+rB8EQTzmI
-	 OCHuw3Hx98NVH2CYB98RB0LvwXBE0DMSCt+hdx9s8yIlMf1rS3sWguuZmn3oxVW50wcoq
-	 2ATyjrh+qdUGhXCPlbZot6kJiMm+RHsKVVrZ2vO8TN+pzmRNzyf9s31Zsg3Zi/4dpjci9
-	 Okdia5TKOh/hvCghOzWW+MPV+ol6NJ/DOTdSugcR5Y+sZQSBrpk/6FGCOSEWbhV7p2g==
+	t=1793827162;
+	b=WLHPskU4hph5cZOXR4RjAeRg5FJgFNvsTzcYZ3vUdi+TaScLEJoVZESucWBrDMaDmLWf
+	 tef4Cc4ET4L9p5efIo6X7cQE1eZbRXCCa59YB0lvggjGMXDzkKTVawskaUyfPBg0i+Zau
+	 YJX/BOQD5FANZQvSn7H0rbsSfKNEQVUQVNTaLXbm6h3uiaTDmyxfqwgcnkijefPLKFp+L
+	 eKxT0zEKz7eKnrq4lia8opoQdVjHlKyaeEVkcLIF82riG/hu38n+RuJxgC2Tthy7JsquX
+	 mxYmJLIMqPvFia+ySumQH0DH4NlW5dKbXukYEYk4GJGjFEsWStNzjnQERfCe7ROlWtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827161;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cIukMbgNpLK3zrgZZ/wZyGVPBkNOGzkg71M09qlpcYE=;
-	b=thEJKrobFzLJprKcHatWX6UUBcuCjPNlLAqv18T3ZuMVZGdTQ6+ilt/oSFtcrfc/gjyC
-	 9aLTtvfnGrQIK5EZS1PWTJbhWa1HvldnoQDRrAsw8tAy0vvmSBvLPkkzjXLneS839KeJJ
-	 f+DsNLuhjgwq48CE2lMbw64DbMgqid8TY8czNobM1aMp39T8jUe4/xlJfPUwRj1jKR9na
-	 0nmTJVzq9HNJxh4yLT/HSwk+7YNNYCQL4mx2lE1T7pCWSB7PygZs7bkXJw1hJqO9YgQzg
-	 1zeFrHIuGOW6xvFbB4Rw8Md1YV7049IWxBp+hehKxAmKpKfWH9BKpVvp4b/xHUgXd5g==
+	bh=F8vOEDDvorPKfkwaNi3fXFN6U64ch1htT8mMDCjK5rU=;
+	b=Azezl7YvQOgg46nNuDGOPzdjTNVmkg/T9S57o6iEhJymYukoIMqdoevE+3hGcqVTgc3j
+	 1wmwarf3QjZzaix2uFlO2LrTWIgSA4OmnNIWIdXHXPloc5GGdqZ38Xv/huvegwadqksM/
+	 /EC8QzNpQMpa8SHt8sw49UOgmsa6XV+FV+JN1lCpIYV6LeXtbb5C/sRB2Ia0zskq1uskH
+	 GqfRdzpcSkgRIsxzhm6bwPLfif7R6FnKg6ibzuiIRuEHYpCMEs22O+lLftYjsycK+k8Gu
+	 V1CPoVvj3zwb8eunvlhEYjOrNvGRjFdkGm+xWSF7NnITshKjtli07Zl5I7S8ZhQqMXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4y4nwKe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLlHVmWX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3386606A86E;
-	Wed,  4 Nov 2026 21:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681AE606AB17;
+	Wed,  4 Nov 2026 21:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4y4nwKe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF061F0093A;
-	Wed,  4 Nov 2026 21:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLlHVmWX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C691F0093A;
+	Wed,  4 Nov 2026 21:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827160;
-	bh=cIukMbgNpLK3zrgZZ/wZyGVPBkNOGzkg71M09qlpcYE=;
+	s=korg; t=1793827162;
+	bh=F8vOEDDvorPKfkwaNi3fXFN6U64ch1htT8mMDCjK5rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G4y4nwKe+YY6SJbO6FBWQABdsGeUISeHK4BKnijYoyz29ixEuvWsevlJdEDLz3nvh
-	 usGi7l3rTUn2xSZMv72ksl6YKjmDNZaksxYxQ6fXUCUW2nNnsP3zvGNYnudUwEsoAg
-	 ODbr94Vin44oSHeLYZsYIxoZyZChb+8YGleEB1CY=
+	b=DLlHVmWXZkL01PbAqP06RcnJ/LnIOZ7m2SPCebPKK2UGOd/CXfusgNWQMdFKIdRab
+	 FBodqInQdoFDmObQjAQwt5MY1aP+X3utURFJKyoXT+54Rh1ZaSrOzUPru8aodoKkye
+	 hHZ047oLDIFvFrCt6nJKD26RtNeYttG7sx0/SxWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.3 232/547] media: s5p-mfc: use timer_shutdown_sync() for the self-rearming watchdog
-Date: Wed,  4 Nov 2026 16:06:56 -0500
-Message-ID: <20261104211044.749889244@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"JongHyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
+	Rik van Riel <riel@surriel.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 7.3 233/547] mm/rmap: dont discard lazyfree THPs at PMD level
+Date: Wed,  4 Nov 2026 16:06:57 -0500
+Message-ID: <20261104211044.780126217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,58 +77,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 63069b5917cba2e15b1a78b3f4ff99e45102c56f upstream.
+commit 984c0700854e35779a2bcce6b02783e709b6efa2 upstream.
 
-The MFC watchdog timer (s5p_mfc_watchdog) is self-rearming: every
-callback re-arms itself with add_timer() and, on a timeout, schedules
-watchdog_work. s5p_mfc_remove() tears this down with timer_delete_sync()
-followed by flush_work().
+__discard_anon_folio_pmd_locked() clears a lazyfree THP's PMD before it
+determines whether the folio can be discarded, and restores it if the
+folio is dirty or has extra references.  It is done under only the PMD
+lock and the anon_vma read lock inside try_to_unmap_one() and no mmap lock
+is held.  The temporarily none PMD causes UAF.
 
-timer_delete_sync() dequeues the timer and waits for a callback that is
-already running, but it does not prevent a subsequent re-arm. Because the
-watchdog callback re-arms via add_timer(), this is the wrong shutdown
-primitive: once the wait returns nothing guarantees a just-queued re-arm
-will not fire later, dereferencing dev (clock on/off, deinit_hw,
-load_firmware, init_hw) after video_unregister_device(), DMA teardown and
-s5p_mfc_final_pm() have run, a potential use-after-free.
+A parallel munmap() or mremap() is supposed to serialize with it on the
+PMD lock, but zap_pmd_range() (called by munmap()) and move_page_tables()
+(called by mremap()) do not take the lock when they see the temporarily
+none PMD and skip the PMD.  There is no more page table walk after the
+none PMD is restored:
 
-Use timer_shutdown_sync(), which puts the timer into a shutdown state so
-that any add_timer()/mod_timer() from the callback becomes a no-op and no
-later firing is possible. Switch flush_work() to cancel_work_sync() so any
-watchdog_work that was already queued before the timer was stopped is
-cancelled rather than allowed to run to completion against the torn-down
-device.
+- munmap(): free_pgtables() waits in unlink_anon_vmas() for the anon_vma
+  lock, then free_pmd_range() drops the restored PMD as bad without
+  removing the rmap, so the folio keeps a stale mapcount.
 
-This issue was found by an in-house static analysis tool. No runtime
-reproducer is available.
+- whole-VMA MREMAP_DONTUNMAP: dontunmap_complete() unlinks the source VMA
+  from its anon_vma while the restored PMD still maps the folio.
 
-Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
-Cc: stable@vger.kernel.org
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+- plain mremap(): the THP is not moved but unmapped, so the THP's data is
+  lost.
+
+In the first two cases, the folio stays mapped, but no VMA that maps it is
+linked to its anon_vma.  When the anon_vma is freed, it is still reachable
+when one rmap walks the folio.  Racing lazyfree reclaim against
+MREMAP_DONTUNMAP as an unprivileged user reproduces a KASAN use-after-free
+in folio_lock_anon_vma_read() as reported in the Closes link.
+
+One solution is to use an invalidated PMD instead of a cleared one until
+the discard is committed, but it needs arch fixes first.
+1. GUP-fast still follows an invalidated PMD on riscv, LoongArch and s390.
+2. sparc64 miscounts thp_pte_count when an invalidated PMD is set again or
+   cleared.
+
+To keep the fix simple for backport, stop discarding lazyfree THPs at PMD
+level instead. try_to_unmap_one() splits the PMD and discards the folio at
+PTE level.
+
+unmap_huge_pmd_locked() and __discard_anon_folio_pmd_locked() are left in
+place, unused, to minimize this fix for backport and the invalidated PMD
+approach is planned as a follow-up series to use them again.
+
+Link: https://lore.kernel.org/20261012-lazyfree-stable-fix-v2-1-6387d6e30063@nvidia.com
+Fixes: 735ecdfaf4e8 ("mm/vmscan: avoid split lazyfree THP during shrink_folio_list()")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Closes: https://lore.kernel.org/r/20261009165214.40212-2-kylebot@openai.com
+Reviewed-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: JongHyuk Kim(MalHyuk) <malhyuk97@gmail.com>
+  Link: https://lore.kernel.org/CADQRuqvXQ=YE=7T3oR66vTxE33pi=ygEeZKPTOU=cALZL0Figw@mail.gmail.com
+Assisted-by: LLM
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/rmap.c |   11 -----------
+ 1 file changed, 11 deletions(-)
 
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-@@ -1474,8 +1474,8 @@ static void s5p_mfc_remove(struct platfo
- 	}
- 	mutex_unlock(&dev->mfc_mutex);
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -2275,17 +2275,6 @@ static bool try_to_unmap_one(struct foli
+ 		}
  
--	timer_delete_sync(&dev->watchdog_timer);
--	flush_work(&dev->watchdog_work);
-+	timer_shutdown_sync(&dev->watchdog_timer);
-+	cancel_work_sync(&dev->watchdog_work);
- 
- 	video_unregister_device(dev->vfd_enc);
- 	video_unregister_device(dev->vfd_dec);
+ 		if (!pvmw.pte) {
+-			if (folio_test_lazyfree(folio)) {
+-				if (unmap_huge_pmd_locked(vma, pvmw.address, pvmw.pmd, folio))
+-					goto walk_done;
+-				/*
+-				 * unmap_huge_pmd_locked has either already marked
+-				 * the folio as swap-backed or decided to retain it
+-				 * due to GUP or speculative references.
+-				 */
+-				goto walk_abort;
+-			}
+-
+ 			if (flags & TTU_SPLIT_HUGE_PMD) {
+ 				/*
+ 				 * We temporarily have to drop the PTL and
 
 
