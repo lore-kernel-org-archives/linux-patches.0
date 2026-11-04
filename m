@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829380;
-	b=QKsP/ooJcBLZGtuUPoXiRljW0mnOXwRvZ2+SWZ4IZae6AC0c4m2nddpNm0k7N7lQMKWC
-	 J8pKNflxuoSqbG8FquNvOaEHP/tXyxwcqq6f7pajeYugygEE0V5DTjeR3LyQEva30aFfW
-	 i0j9S9SWGRoB+f5SOQjgr7tuaiSYiZbiMn8K6QI7FYm6+o26IIbUn15R6WhA9ZSghhp7G
-	 qWxWPzWig8jJ2yqgPYoC0aIHsadyISSY+zJx0FEg8454Yq716nihNAQ7b+saLbPyrO0pl
-	 yq/xZG2U5J8zLhSXW3G8nDuwWG2k5c5l+bzfnIzNxDJN5abavkiqXU0hEcVM4yf4UGA==
+	t=1793829382;
+	b=T/c1WcFv/qRGqvBFontEmASB1naDHWpLpLtl4tJ2TQUc19pLKumTtv5vQ/9PldpmoF23
+	 Gs2rxhAHvS+Z3XMZOkLC+DX5QwrMb2E1xF2A5s0MW/7CRK589sCDLvV15CM3ismDwQsfg
+	 T6ZX2iN9CfyDYDJlqFxjn5kvm30jcRaz9X3510CI/dOjiT2S6gZdEPeQF7ACSpVP1gaOt
+	 S0TMJJlQ3yJfYejk63VzkJfLLJyu1Oc9ONnrSWAJpG8j72CWNrlDu6BlGVlOr+CDRcRID
+	 YmYUncfG/qWjioDkxClcNSUgbzEmowCrNMcxuGwsB0OlJvnAPLVerh9lnujNHwrmKMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iiODLTbdIuPHkDTxrXht7tsi5I+/Yo0ionq0dtQk1kA=;
-	b=tMDPXaNgi+3Emm3qXt8SzlNYMHg3aq3h9JSPxXyV6cZWsLlf43C1eM4GEg/fB4BQGURu
-	 PsIVaCZ18+RCHPev8ZUql7DP5/GiDhb528KZG43DL2VFhekhtLaWF0qx8eUlc4H/wB7s6
-	 DnCS/Kr5Ff0evCWg0eosn5OQkO+n6WUfLtFZL6+lTUcR087NG5Bk94EPfu/Pl08Iga59v
-	 +6OYtJEh/4/kckCodbrk7x+yNEMK6cA9FIrzfHpm84ggiLT78yj7uxFc8oj+ZQ5kPBsay
-	 feJ8ZnmiCKbFQE+nRGoAw4rmNqqOhWGPq2Aygr6fs33NFhapoxmni7jE8KuTV16nhPg==
+	bh=SGxcFQ5r4FjraY8EDdJnSw/qRkShd+MDvYmpBGcuhcM=;
+	b=x9PH9mVKtHkjLE1GfY4QzkfY0lvDmpnK17uaAdtcGLws9A1vVAGItF36Wjnc42UxxMPG
+	 fVHelgvfrkHyMAKbnQ1I36VALYoFEp076gelXQa8XHyXgYKjy4slku5ZaVS8cl8dY8th9
+	 NU2Jxe11IUe/oVGr2nlLSwjf3QeER49yOzbK+jXyuPb0LZyK0s3E2tR2u/6Eh//MowiBs
+	 jXU+dejM40wtl0TogW5KUqG+D5FSTy/CKIPA9/3egbKoYBRoY9SY4FjHKfDvRWmv9rQRF
+	 rVeYQHqM6ihkdC4c0MUXkp6Tftpn+MFNrTVyLzGHac8aXY7B0Bhsbs4EtOQYP5/rdiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WMgeQSLS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QdXmmw2C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7804B607490E;
-	Wed,  4 Nov 2026 21:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BEE606A865;
+	Wed,  4 Nov 2026 21:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WMgeQSLS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121BF1F00A17;
-	Wed,  4 Nov 2026 21:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QdXmmw2C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FF21F00A18;
+	Wed,  4 Nov 2026 21:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829380;
-	bh=iiODLTbdIuPHkDTxrXht7tsi5I+/Yo0ionq0dtQk1kA=;
+	s=korg; t=1793829381;
+	bh=SGxcFQ5r4FjraY8EDdJnSw/qRkShd+MDvYmpBGcuhcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WMgeQSLSTn8R6SDt7LUZ8hAVo8QdbsQhXacTaI2+zGiApxsmrK+A5qsuDs5tCbC/d
-	 BFdn8BatD/n4vHUBXM/Bos/HbGfW2GvS3R8mD6LSPWPFG6mqP/DB3Zq0mGYvYoI8qJ
-	 JiH5+k2PS33Kilw7ngA8bdlL2+VsZ7JIS0HZo2kY=
+	b=QdXmmw2CBb37IX7I6y9jGvT1g0okyZXgkzs7pr6vlxtCg8fm1KwX4MxePDnWN/XyC
+	 XOG8md1zPCwbsDaxmdCx9eYBTAq6oy4nRx3eaz+otIpNxrJPdnq4v27XPJo4mIRtHn
+	 VsHwTp6XfoR8JeahPG2zoYs/ROuUFajn26lp+eQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0053/1005] spi: fsl-dspi: clean up after failed suspend and resume
-Date: Wed,  4 Nov 2026 15:56:26 -0500
-Message-ID: <20261104211045.077964839@linuxfoundation.org>
+Subject: [PATCH 6.18 0089/1005] wifi: rtw89: wow: only WiFi 6 chips initialize RF registers in WoWLAN mode
+Date: Wed,  4 Nov 2026 15:57:02 -0500
+Message-ID: <20261104211046.120424234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,78 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit 2543355f3da56a297e3803ccb5d29f4dce5f18f1 ]
+[ Upstream commit dbff9040587e9bd6d3ee337315971957f9f76612 ]
 
-dspi_suspend() disabled the IRQ before spi_controller_suspend(),
-but ignored a suspend failure and kept tearing the device down.
-Restore the IRQ and return the error if suspend fails.
+Only the WiFi 6 chips need to initialize RF register when WoWLAN download
+FW for some power save issue. Applying the same initialization flow to
+WiFi 7 chips might trigger the error
+'RF parameters exceed size. path=1, idx=1500.'.
 
-dspi_resume() also left the clock prepared if controller resume or
-hardware init failed. Route those failures through clock cleanup.
+This happens because normal mode uses rtw89_phy_config_rf_reg_v1(), which
+skips registers with addresses below 0x100. However, WoWLAN mode uses
+rtw89_phy_config_rf_reg_noio(), and WiFi 7 chips do not satisfy the
+rtw89_chip_rf_v1() condition. As a result, more RF registers are
+configured, causing the size overflow error.
 
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Link: https://patch.msgid.link/tencent_427FA55E3D59112524886E9C931CA0F92F06@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260625061545.44808-11-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/wow.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index 83ea296597e94..1283a193b6fcc 100644
---- a/drivers/spi/spi-fsl-dspi.c
-+++ b/drivers/spi/spi-fsl-dspi.c
-@@ -1464,10 +1464,18 @@ static int dspi_init(struct fsl_dspi *dspi)
- static int dspi_suspend(struct device *dev)
- {
- 	struct fsl_dspi *dspi = dev_get_drvdata(dev);
-+	int ret;
+diff --git a/drivers/net/wireless/realtek/rtw89/wow.c b/drivers/net/wireless/realtek/rtw89/wow.c
+index f6cdbc15dcc4a..90046d6f620ef 100644
+--- a/drivers/net/wireless/realtek/rtw89/wow.c
++++ b/drivers/net/wireless/realtek/rtw89/wow.c
+@@ -1299,7 +1299,8 @@ static int rtw89_wow_swap_fw(struct rtw89_dev *rtwdev, bool wow)
+ 	if (disable_intr_for_dlfw)
+ 		rtw89_hci_enable_intr(rtwdev);
  
- 	if (dspi->irq)
- 		disable_irq(dspi->irq);
--	spi_controller_suspend(dspi->ctlr);
-+
-+	ret = spi_controller_suspend(dspi->ctlr);
-+	if (ret) {
-+		if (dspi->irq)
-+			enable_irq(dspi->irq);
-+		return ret;
-+	}
-+
- 	clk_disable_unprepare(dspi->clk);
+-	rtw89_phy_init_rf_reg(rtwdev, true);
++	if (chip->chip_gen == RTW89_CHIP_AX)
++		rtw89_phy_init_rf_reg(rtwdev, true);
  
- 	pinctrl_pm_select_sleep_state(dev);
-@@ -1485,12 +1493,15 @@ static int dspi_resume(struct device *dev)
- 	ret = clk_prepare_enable(dspi->clk);
- 	if (ret)
- 		return ret;
--	spi_controller_resume(dspi->ctlr);
-+
-+	ret = spi_controller_resume(dspi->ctlr);
-+	if (ret)
-+		goto disable_clk;
- 
- 	ret = dspi_init(dspi);
- 	if (ret) {
- 		dev_err(dev, "failed to initialize dspi during resume\n");
--		return ret;
-+		goto disable_clk;
- 	}
- 
- 	dspi_set_mtf(dspi);
-@@ -1499,6 +1510,10 @@ static int dspi_resume(struct device *dev)
- 		enable_irq(dspi->irq);
- 
- 	return 0;
-+
-+disable_clk:
-+	clk_disable_unprepare(dspi->clk);
-+	return ret;
- }
- #endif /* CONFIG_PM_SLEEP */
- 
+ 	ret = rtw89_fw_h2c_role_maintain(rtwdev, rtwvif_link, rtwsta_link,
+ 					 RTW89_ROLE_FW_RESTORE);
 -- 
 2.53.0
 
