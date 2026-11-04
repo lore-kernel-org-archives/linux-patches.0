@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829021;
-	b=HOOLJeopxlFN/IelkJ7EBtGlkqKnqDQC/ROAvvJBXDuLFr6+ReRP50Ow78V7za5OdMEM
-	 XAG7gGG3Vfr7uGCkY/GSOvVciVEhOp1HpFApvjlJ17LrMOSuVbbvS2nrkeBfX2kNDGLMh
-	 BADgClicOSi3vbWra0Dv4T9dXG0Q1wkz7P5wnKOlnM9o11loawBC7WP3WEdsMvufJrZgq
-	 P7zzNjVV9Pc0MzjsfiBXEROKlphF5v8QmSejTebKCSgsIdo23yi5p9WCwz3n9vGIp1sKU
-	 +q91b+Ca1CER1r2y6ulSUNz2LSjszErCaOXJEKBuDmdbSAI5GE3DcHuOLbsuKuQLDjQ==
+	t=1793829023;
+	b=wzhFtGQ39Pd5EWzUppT8bDaR6khEHKPbygZ88/bt1s5nWnxSIomjCGMqDnbgx/VYf+8r
+	 cGO3534ld3UeeW7aVrVtKrTCiNYFGhA8I/WgNr8ZXcgS1wJ8KLQQzKM+XbC4rdm37ELEc
+	 YpXe0mYO3ZQBOesWU3oiH2OzjYOqXbnpxVTVUu0vw3h0bdpEx5VCr+mc3rsvxejDyMkBA
+	 8N9rQ+7Cj9ReCA92UrhX++lfUaS3t2maq/xUedsg5cXgszY47qSmNOoKuo4qq0edNT/T9
+	 gVWXrxZlbpDQ2aHw2C+evg/y3lD63O5DfgkJhu9SLhX6Y7ekfuzQO9WFidIHLZEkVog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829023;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w7jeVVkSmMHLew86Tkd+sYI69/+qvRYUeLDEDmCKk7Q=;
-	b=Cq62gmVVg4bAl/YXloBlj38BFK1PjKc8Z5SseKVTs8J/kfuHUekYUvMH33owRsMBW+tP
-	 OGz83Egej4RgPEfvE3o8eOmAvGihnV8pnXld09wEj5zZrgHAduFlGpNQ3H2ai/8Heajxf
-	 reBcPness1+9moa2+RWvcQ+8NW7KK+DdIkbjgdcQZ4aiOj2MHozzAmv9NsJcmkPoW0Eo+
-	 eemd08k0wUECRSxjSWjKf4wgSbcB/eLTdPfKUksIfjeDPHphjSKyrQCmSsaVmTy/t+/yY
-	 xSGZZc7q4MoLr0tQ1fHX6GffOZOUImSOG6t2xdSLRb6FeZMUAZWK8Hpavht02r4ptUg==
+	bh=e1BmCmbjH6bOBypfw3dnkv0O1fMhjhZnMZVV0YCdCcQ=;
+	b=WkjYHNnpyKWWHwYS5Pl5pUavCpbONFyeAyPkjXEx0XDvKpT7trrnJUfFLhaKRLw/aEMm
+	 X5RWZtp0qnUrryjSwXJl7uqCUOfq7/1OMQomFVS9+mRV8rSdR6uWL8LKQfIhnzg3AKe0T
+	 VcmSZiNGopsyOc1uEDaOwO2IcPTFolAwBw5eAu6GulPf/ygCaCO6zsWexgzZLI6oLP30e
+	 1seoVkCJG4+4cPWLtqzG7QsYWf9WR5wIIQs/2w/1bkEAIcfmiC38e53O0G4vyfgSPebCn
+	 /cT+2ObqjHYtw5sLSGzzL/gr+uTneCIdX1KclbgrcAH1B5p7ROtjlVXKNcqAbL9SojQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x8aeTgIp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsbbeaCh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E52A6070759;
-	Wed,  4 Nov 2026 21:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF900607074A;
+	Wed,  4 Nov 2026 21:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x8aeTgIp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E151F000C1;
-	Wed,  4 Nov 2026 21:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsbbeaCh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0871F000C1;
+	Wed,  4 Nov 2026 21:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829021;
-	bh=w7jeVVkSmMHLew86Tkd+sYI69/+qvRYUeLDEDmCKk7Q=;
+	s=korg; t=1793829022;
+	bh=e1BmCmbjH6bOBypfw3dnkv0O1fMhjhZnMZVV0YCdCcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x8aeTgIpMEhvw3CZz6XPClZnRR9tM2Gh4XPV7lHQE2u2ziZlp5/Jb8Unu/T9YELm6
-	 zHaMRxtFg06sJd4jcOgeItuArR6HIS+TrEjGOVXe5bI9snlHQghdabm2eDL4QfKhZZ
-	 pyq8sV1hI/J+7AcNGdVIHQlrnZ1a+UsMBt0J2Fa0=
+	b=JsbbeaChPD28EJeIpVndb4YWU8YgKch5akDrKhOfCGsfucd29V6Yu/P0nSFxmSH9j
+	 KjRxMGgpfIG5uydGzesmtSSaC6JszCWtYCb+45dh3S5ca9SpHZcxQh78+/nXXVOdhC
+	 dPxIiDQvDSPvwJFv7HlBss0EEBEN5reD90JPZydA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 354/547] xfs: complain loudly when dirtree checker finds broken links
-Date: Wed,  4 Nov 2026 16:08:58 -0500
-Message-ID: <20261104211048.333678114@linuxfoundation.org>
+Subject: [PATCH 7.3 345/547] xfs: always report inode repair setup failures
+Date: Wed,  4 Nov 2026 16:08:49 -0500
+Message-ID: <20261104211048.069281741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,44 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit e09438cab72c2c6a32665829d4186155346bfee8 upstream.
+commit ce9098338a7e1a77246684242d10779fc4d4a539 upstream.
 
-LOLLM observed that the directory tree walk code bails out if it finds
-broken parent pointers along the way.  However, it flattens the return
-code to zero, which means that we can end up in the repair code having
-not completed the scan.  We should never proceed with a repair in this
-state, so let's mark the scrub incomplete and exit.
+LOLLM noticed that xchk_setup_inode silently discards errors being
+returned by xrep_setup_inode.  Fix that, and fix the stub macro so that
+it actually "returns" a value.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 928b721a11789a ("xfs: teach online scrub to find directory tree structure problems")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 2d295fe65776d1 ("xfs: repair inode records")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dirtree.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/inode.c  |    2 +-
+ fs/xfs/scrub/repair.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/dirtree.c
-+++ b/fs/xfs/scrub/dirtree.c
-@@ -860,7 +860,8 @@ xchk_dirtree_find_paths_to_root(
- 				 * A parent pointer of @sc->ip is bad, don't
- 				 * bother continuing.
- 				 */
--				break;
-+				xchk_set_incomplete(sc);
-+				return error;
- 			}
- 			if (error == -ESTALE) {
- 				/* This had better be an invalidation. */
-@@ -981,6 +982,7 @@ xchk_dirtree(
- 		 * parent pointers are corrupt; this scan cannot be completed
- 		 * without full information.
- 		 */
-+		xchk_set_incomplete(sc);
- 		xchk_ip_xref_set_corrupt(sc, sc->ip);
- 		error = 0;
- 		goto out_scanlock;
+--- a/fs/xfs/scrub/inode.c
++++ b/fs/xfs/scrub/inode.c
+@@ -212,7 +212,7 @@ xchk_setup_inode(
+ 	 * make repairs to the ondisk inode buffer.
+ 	 */
+ 	if (xchk_could_repair(sc))
+-		xrep_setup_inode(sc, &imap);
++		return xrep_setup_inode(sc, &imap);
+ 	return 0;
+ 
+ out_cancel:
+--- a/fs/xfs/scrub/repair.h
++++ b/fs/xfs/scrub/repair.h
+@@ -239,7 +239,7 @@ xrep_setup_nothing(
+ #define xrep_setup_rtrmapbt		xrep_setup_nothing
+ #define xrep_setup_rtrefcountbt		xrep_setup_nothing
+ 
+-#define xrep_setup_inode(sc, imap)	((void)0)
++#define xrep_setup_inode(sc, imap)	(0)
+ 
+ static inline int xrep_setup_symlink(struct xfs_scrub *sc, unsigned int *x)
+ {
 
 
