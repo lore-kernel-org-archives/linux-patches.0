@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831545;
-	b=PjSnSeAiu/IhA9V3DIJFxhN2AztmIaMg9StzdkcyI3e6XvG3jJ9y0jXYunQISNIyn/9i
-	 s0qQWuGuMXH4IdGBidZVIh1XAHs/PU9+BEEHFx5SfgSZaV7IivOA91DKL4q4Rb62ixEsu
-	 grQ98DKofbbUyqk8VX8tbNYjV16fTXAabrxhTXUCxpsfruAtGjwk08KQPys6chmMHh2/z
-	 F7kG+s02QRNfU2BUjXaZxFpFxciKOOohu7j3AfG7F8ZNZXflbkLqen5wp6w/keq6zH+1a
-	 UBRoZXtCOraCq1zdfjchgKZE2gMG2b5/JcVw7zu9Gu19TQZfKBE0IlG9o8erwCDZAvQ==
+	t=1793831547;
+	b=XAQEMfglW3Ml2SEK1te6PMAKnHKZNI2e9GIcU4rd32fOcwHxNMhr31LMKdOvmnd8Wv1A
+	 o9Igl3dd7Mp1hS2+XJvhlUKI1DBI6I/ZyxNV2aOnJScu2WqhM20440ekQB10M/konU3dA
+	 kGEhKCRWPraBkZBfnPA6MXnEUzYN4D6+Gj2apz9CKi6djYePcm8n4hZ1+iH+FzVp+fY9s
+	 wiiDZQmH7mwW4PnBs+bM8cMZnSZR20WUI0bPR5uvke+nWclwWiDUi1C3ZWXv6FXUdNffb
+	 1hZoUlO/hKf81Wx3vG6zGXPHGCAplp4ITnx7f1BV5FkCHToprrT9DBn6HKZcH1tsyUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831545;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831547;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1e/8JQ5jOxYCNdG7n8EqlZjU1yIjgAFtT9HDlZYCjkA=;
-	b=PBn7AuajejuZ/Tl5+t4jf+YkO8h1v9DK1tiGJjwmvQMSBkNA/jH2Qw4Iei6sse3sotqe
-	 E4kUsAWr4sEZvxLRWUctLlvUpv9FN4jGzNXryNTsJMgnEo3uU+9JCLR+x5cfoCoAe2qCn
-	 ARdxgqObMtlOtlGC+8soxz/SfCU11n9fgA8pdmnWh0IF/t+VBNODoJ8ll9ZYyKEwOcR2z
-	 yXxWnXF46tH/v0VkGPJUcdCoa3MTSCkLb+KHsQ8mxbIpQ7bYNW9op2QM42XQoOKw8gsHM
-	 yY3/3NgWvrq9Gsg/0dd5QGfUQgfDk5UO0uplFOmQ29e0eT/4XdOP/xs1kbtM2S9xnMQ==
+	bh=JjuCLjFa3d6izL8up4x9s7PkGmgfxAjL0UukNfNgyNo=;
+	b=Qblu93cW7jvmf2B8YAZj2uYD8QxWBhBSBZSF4w6GrZ30tDGGulAKoA1YCH8JIUotjtfW
+	 pB/MyRxfLRtvnhpEK4vHP8hLlbqoZIRDKLYzJHidt+U8BPeXwalnyEjRiQGPi3G3jVccx
+	 qsQH676u9md+k3fafb2iI2eXgcIaVVnZmo2600EMMMLjNu2u7/6ZTMI1oXtbGS5ZKCUUc
+	 rkcnoTnPtMgHuCjFlJRv+39c57W5iPRsVU42RnxPssnVNxCVnnV2aIFTPWtj6KZBufssm
+	 azaPj6sWbdLbJzyL3CDZHG3dJs70IqEOt2GVciVbi40PWzw96IgmGCYSYrdqbI3ATyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yazZ4Tkg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F4MP1kvH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FDE606E821;
-	Wed,  4 Nov 2026 22:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AA7606D820;
+	Wed,  4 Nov 2026 22:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yazZ4Tkg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CD01F000C1;
-	Wed,  4 Nov 2026 22:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F4MP1kvH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB561F000C1;
+	Wed,  4 Nov 2026 22:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831544;
-	bh=1e/8JQ5jOxYCNdG7n8EqlZjU1yIjgAFtT9HDlZYCjkA=;
+	s=korg; t=1793831546;
+	bh=JjuCLjFa3d6izL8up4x9s7PkGmgfxAjL0UukNfNgyNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yazZ4TkgBVsuesy9JSRH0OrlHgkJ2mZUx0Kct0dnGSiTGQyQ3/nAe68KswRcp9S63
-	 IpsslARaByXVSrXwoPrhYFS3C0aJy+zy6lUyBF9JJBk3TEITAI+HLz9r2glGocnE12
-	 qYRdX8HUbGCYiAPyHK2H9hb1O8IVrWCoBMvrIYxc=
+	b=F4MP1kvHBcjfr5G8RezJqZpIDYltJTSwNV9ZvAzgGNTLV9vi/3c2zmWPIgugFzQEz
+	 Kqw78BnqYgy+AZXBx0ByeaQK7Hm1nKADpQoyM/35KzBEl0hZmY/pDE/Aiym8Sp44zj
+	 IjgQbbkZQYYALeNp3TnzSHssp1qQAxky7STkqDpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
+	Chris Mason <mason@kernel.org>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.18 0770/1005] ovl: reserve space for the casefolded name terminator
-Date: Wed,  4 Nov 2026 16:08:23 -0500
-Message-ID: <20261104211104.959317819@linuxfoundation.org>
+Subject: [PATCH 6.18 0771/1005] ovl: set the revalidate flags after d_instantiate()
+Date: Wed,  4 Nov 2026 16:08:24 -0500
+Message-ID: <20261104211104.984259532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,49 +67,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-commit a65eb1808177a4381718abe563dddebf840598f9 upstream.
+commit 75e89c0055c1d7f7eeb462995f11253ca5864f79 upstream.
 
-ovl_casefold() allocates NAME_MAX bytes and passes that capacity to
-utf8_casefold(), which also needs room for a terminating NUL. A valid
-name whose folded form is exactly NAME_MAX bytes therefore fails to
-fold, and ovl_fill_merge() falls back to comparing the original bytes.
+stat() of a file on an overlayfs mount triggers a kernel warning and
+fails with ECHILD if another task is creating that file at the same
+time. This happens on an overlay with a FUSE upper layer, which is the
+layer where overlayfs creates new files. Write access to a directory on
+such an overlay is all a user needs to run the two tasks.
 
-For example, when two casefolded layers contain directories named with
-255 uppercase and lowercase ASCII letters respectively, readdir lists
-both names even though lookup treats them as the same directory. The
-same names merge correctly at 254 bytes.
+The revalidate flags are DCACHE_OP_REVALIDATE and
+DCACHE_OP_WEAK_REVALIDATE. They tell path walk to call ->d_revalidate()
+or ->d_weak_revalidate() on a dentry, so that the filesystem can check
+that the cached dentry is still valid. An overlay dentry only has one of
+these flags if a dentry in one of its layers has it. FUSE dentries have
+the first one.
 
-Reserve one additional byte in both the allocation and the folding
-capacity so that NAME_MAX-byte folded names use the canonical merge key.
+When a flag is set on an overlay dentry, path walk calls
+ovl_dentry_revalidate_common(). That function only expects a dentry
+without an inode in RCU walk, while the dentry is being destroyed. For
+such a dentry outside of RCU walk, it hits a WARN_ON() and
+returns -ECHILD. So a negative overlay dentry must never have the flags
+set.
 
-Fixes: ee95c5fc86dd ("ovl: Create ovl_casefold() to support casefolded strncmp()")
+ovl_instantiate() breaks this rule. When a task creates a file, the
+overlay dentry for the new name is hashed but still negative.
+ovl_instantiate() then works in this order:
+
+- It copies the flags from the new upper dentry to the overlay dentry.
+- It calls ovl_get_inode(), which can sleep in a getxattr request to the
+  FUSE server.
+- Only then does it call d_instantiate().
+
+A second task that looks up the name between the first step and the last
+finds a negative dentry with the flags set and revalidates it.
+
+Reproduced with a FUSE server that delays its getxattr reply: stat() of
+a name that was being created hit the WARN_ON() and failed with ECHILD.
+
+Fix this by setting the flags after d_instantiate().
+
+Fixes: bccece1ead36 ("ovl: allow remote upper")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/readdir.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/overlayfs/dir.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -79,13 +79,13 @@ static int ovl_casefold(struct ovl_readd
- 	if (!IS_ENABLED(CONFIG_UNICODE) || !rdd->map || is_dot_dotdot(str, len))
- 		return 0;
+--- a/fs/overlayfs/dir.c
++++ b/fs/overlayfs/dir.c
+@@ -295,7 +295,6 @@ static int ovl_instantiate(struct dentry
+ 	};
  
--	cf_name = kmalloc(NAME_MAX, GFP_KERNEL);
-+	cf_name = kmalloc(NAME_MAX + 1, GFP_KERNEL);
- 	if (!cf_name) {
- 		rdd->err = -ENOMEM;
- 		return -ENOMEM;
- 	}
+ 	ovl_dentry_set_upper_alias(dentry);
+-	ovl_dentry_init_reval(dentry, newdentry, NULL);
  
--	cf_len = utf8_casefold(rdd->map, &qstr, cf_name, NAME_MAX);
-+	cf_len = utf8_casefold(rdd->map, &qstr, cf_name, NAME_MAX + 1);
- 	if (cf_len > 0)
- 		*dst = cf_name;
- 	else
+ 	if (!hardlink) {
+ 		/*
+@@ -326,6 +325,13 @@ static int ovl_instantiate(struct dentry
+ 		d_mark_tmpfile(tmpfile, inode);
+ 
+ 	d_instantiate(dentry, inode);
++	/*
++	 * Unless it is a tmpfile, the dentry is hashed and a path walk can find
++	 * it at any time.  Set the revalidate flags only now, because
++	 * ovl_dentry_revalidate_common() does not expect them on a negative
++	 * dentry.
++	 */
++	ovl_dentry_init_reval(dentry, ovl_dentry_upper(dentry), NULL);
+ 	if (inode != oip.newinode) {
+ 		pr_warn_ratelimited("newly created inode found in cache (%pd2)\n",
+ 				    dentry);
 
 
