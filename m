@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826984;
-	b=CT5VjNQd03f+KuRZJcpl6e+huYURyW3veQodT4nQg8e3OBwLmr2IG3jtxEt1zWxVZLhA
-	 2346TRV97uU/qRk10exbXMYJgra7HQyXS9lp4PpFDurviZyB+2HpFG/D86H77bP7DUE4K
-	 uTfirbpH9r/KADfrWUQFZB/W6uFHxHaWQix/1NPy+zGFKpbyY6kdf5uGssSTrJxYRCUiL
-	 z/NUD/w3n/CRDpXbX86LVK5eX08RrkcVnGnTDZnlS9jnZg8BzK5cnfnb2z8lazysWrWoT
-	 T/lP/Hfun6nhsV7W+XHbAzSVbdhJJZyPH/L8BCctaHiLLyIrNUEPyUnvF5U89g9vHMQ==
+	t=1793826985;
+	b=gLJhCLL++ACLO80eJ6sl5Ojl8Wh/9teabccIMf6Bz7lC3nQc+lsIP/ysMqLhPOgv7FOC
+	 Jmsybz45XqatK1ci4B5/oIhGrfqMXbBecCOSxSTdVJ3vpH0kPhHsq7YKlj+yxnpGoCj8O
+	 6vP0AMlMFKqWSsi5RBRtok1dsFK/Kn7mLJZiT0n4KevtQ6ED+mBnJbO5uXDBP7NsW50np
+	 Ucb9BRwNonQtrz7Xubopto3Hr5IuZgq0u8OFVC06ZkW+33o6P1G/hPwiOyKlYWv1fJmfw
+	 Za06LemIsHUSNgWgMhlia6pDe33wr+1aHehrAbjAkHZZesiTMZsPb0BJrcqu1lqP2aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4OTb0FV553+gfRS47gi1NH0x0rQJsBDduIlEahIhwEA=;
-	b=1KIiL5FuGzHSukhc27LADa21scsb1P+D81FEHmufXQfmIbOSonFtzUqMYAOP1kZBF2Z/
-	 NW0HfuTzT8HQ991gywCs2k558STMGMNq5tgWuPWSvLl4qOYJz7pnmSgLE1BwjGCqhRubc
-	 QFhdkuCYRlpMvjwaKOescl660k8kTXXFByQOMAnjOBTBD0CmSouAMRTgb/Goz4olYZwkS
-	 JeZ3wZygtcMvbEQJeT9HKDk7TN9lKjfjGowUaYCjzcIdM5kH6ln6Ed91cA6QV4cLMkh1R
-	 BbEi1fEVJlc/AGrQG4qOCI8CqvuWkgWwiQJlhYShRBfRXvpOMBHkbI8LHaw2bv0dG/Q==
+	bh=usZlT6BiVU7o7vAgy6lzZG9f3nmSSWo1LAx0J3knv/g=;
+	b=BKPOjUWrcAC/oK5jEY1E8ACzSex/pfZ3ZcAZiaNwOHwYOq7PLTpILwvriSc73S5xITic
+	 /lG9K9yZfqcEh8kGR/yazHaxmXwBu3Qw8M0lkcHwFHMtHGAKTLheKOac926Sp5wJlBwu7
+	 nHZhwpzq2+gc6diCOr5w/8AGp1rQlj7R2iX5EjrAwknxzUWTQ9WDmOh9yslcFKvo/ivYS
+	 ZjCtXK+J3kFdW+gcVa8UcKOQABhLsn3iGhmfBMuYFOlS1qEGd8Ju3PgyGYnCafivM+mqf
+	 IFaDQr0USO9D7wuYIDUYUbfLl3Op9KNTH1RG1K+e8mo7UZFB7ua/bFM0cL3yLHLX6CA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZUYtDK9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqCCJlXW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4253D606A33B;
-	Wed,  4 Nov 2026 21:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D506070A8D;
+	Wed,  4 Nov 2026 21:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZUYtDK9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BAE1F00A1C;
-	Wed,  4 Nov 2026 21:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqCCJlXW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2899A1F00A16;
+	Wed,  4 Nov 2026 21:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826983;
-	bh=4OTb0FV553+gfRS47gi1NH0x0rQJsBDduIlEahIhwEA=;
+	s=korg; t=1793826985;
+	bh=usZlT6BiVU7o7vAgy6lzZG9f3nmSSWo1LAx0J3knv/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZUYtDK9qXU09awip2P2crntq8lpLwF5eTS3XGPUMBz3WPQsYb7ZufTVSUtoe+iIf
-	 lqJNCwcpzMMQkvyjwC1c2AcWm9AzHbMTJ5uGt+Mv90GKF8jDRVPlJEoB2p7MLwzC5G
-	 LwTB2IxY9HdhxXfImcn+4OGP8043tfd32WP/3TtQ=
+	b=dqCCJlXWnXt93HN3qfG+/huncfS+FYhSTSMWbQtQiWgRAJFBE3wMRShPTlwL1yteQ
+	 ijwFumAdEvWN5ZYr0oeRrYBxdmHFqg6h4gZANdDxTotcslm+AFkfHfX597YzQwGRnv
+	 pHhSuTosrsE5i0Nrjzbj8sizuuX0o3Fof63gBQMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
+	Jan Koester <j.koester@act-marketing.de>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 123/547] ksmbd: hold a connection reference for each session channel
-Date: Wed,  4 Nov 2026 16:05:07 -0500
-Message-ID: <20261104211041.684934002@linuxfoundation.org>
+Subject: [PATCH 7.3 124/547] ksmbd: ignore network devices of other namespaces
+Date: Wed,  4 Nov 2026 16:05:08 -0500
+Message-ID: <20261104211041.712192460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,68 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Jan Koester <j.koester@act-marketing.de>
 
-commit add8d7fb04efe564193df73581889c62fc0016f1 upstream.
+commit 1f5ce2b8b9164b3fcb93a18fe1e7b451c2fc6eea upstream.
 
-ksmbd_session_unregister() removes a session from the global and per-
-connection tables before dropping the table reference. A concurrent
-reference holder can keep the session and its channel list alive after
-those removals.
+With no interface list configured, ksmbd binds every interface that
+comes up. ksmbd_netdev_event() does not look at the device's namespace,
+and create_socket() opens the listener in the namespace of the task
+raising NETDEV_UP. A container with its own address on a bridge brings
+up its interface and finds port 445 in its namespace already taken by
+ksmbd, so an SMB server running inside the container fails with
+"Address already in use".
 
-Connection cleanup can no longer find the unpublished session to remove its
-channels. Since a channel only stores a raw conn pointer, the connection
-can be freed while another session reference holder is still accessing it,
-for example during SMB3.1.1 binding or a procfs read.
+Interfaces are also matched by name only, so a container's eth0 going
+down would stop the listener on the host's eth0.
 
-Take a connection reference when registering a channel and release it on
-insertion failure, channel removal, or final session destruction. Keep the
-channels and signing keys until the session is destroyed so a response can
-still be signed after the session has been unregistered.
+Only handle netdev events for devices in init_net.
 
-Fixes: d7fd1f98607f ("ksmbd: follow SMB2 session expiration semantics")
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: stable@vger.kernel.org
-Reported-by: Abdifatah Suruur <suruurism@gmail.com>
+Signed-off-by: Jan Koester <j.koester@act-marketing.de>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |    2 ++
- fs/smb/server/smb2pdu.c           |    3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/transport_tcp.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -273,6 +273,7 @@ static void free_channel_list(struct ksm
- 	down_write(&sess->chann_lock);
- 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
- 		xa_erase(&sess->ksmbd_chann_list, index);
-+		ksmbd_conn_put(chann->conn);
- 		kfree_sensitive(chann);
- 	}
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -577,6 +577,15 @@ static int ksmbd_netdev_event(struct not
+ 	struct interface *iface;
+ 	int ret;
  
-@@ -601,6 +602,7 @@ static int ksmbd_chann_del(struct ksmbd_
- 	if (!chann)
- 		return -ENOENT;
- 
-+	ksmbd_conn_put(chann->conn);
- 	kfree_sensitive(chann);
- 	return 0;
- }
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -116,11 +116,12 @@ static int register_session_channel(stru
- 		goto out;
- 	}
- 
--	chann->conn = conn;
-+	chann->conn = ksmbd_conn_get(conn);
- 	memcpy(chann->sess_key, sess_key, sizeof(chann->sess_key));
- 	old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
- 		       KSMBD_DEFAULT_GFP);
- 	if (xa_is_err(old)) {
-+		ksmbd_conn_put(chann->conn);
- 		kfree_sensitive(chann);
- 		rc = xa_err(old);
- 	}
++	/*
++	 * ksmbd serves the initial namespace only. create_socket() listens in
++	 * the namespace of the task raising the event, so a container bringing
++	 * up its own interface would get a listener on its port 445, and the
++	 * name-only interface lookup would let its interfaces stop ours.
++	 */
++	if (!net_eq(dev_net(netdev), &init_net))
++		return NOTIFY_DONE;
++
+ 	switch (event) {
+ 	case NETDEV_UP:
+ 		if (netif_is_bridge_port(netdev))
 
 
