@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830861;
-	b=REFrMcQb7HHjxu/IbeDGxQ80hyPyHKMEGVXrR+DakPERBwvI5YJUZ/qIYU3pNn5o4cRb
-	 by7/eXqocBnqKjVDdoNnw3S31DWaBxixtGU214twZyTXm2BQv89F5Y9lR6gt/BvjSICXI
-	 USr1TwaWfogFzG6YA42dLf1wborhWUxZV6v/5pT7thEq0dU3PIIn/cN1DMZMMs3lnvEtk
-	 VGnLILaD66ocVwrvRAm9KJmtbPWcmtf5lHIV0ZtM2XO6EcqzOqflspu67kZZx9J9T9M5G
-	 65iS1Dqr49iv+C6p4/sZUZgCkw2DHqHhW7tjtPRt8sgph/PWzwNLlVdLSPxKCo4T+NQ==
+	t=1793830862;
+	b=3g9PD9yMrPMWgVAUBn0iMVdxLnpWCiLkV2XuO+zdBmEbUO3uDsLvPC2nptSgG1rj63O3
+	 F1YqidT/TuW6FNCuNmdeg+Vi3w46X2odrgKgE+J72CkL3D2vIzotp848+XMYr6sdVsslL
+	 Qe7dBP4Wdq26KhVRM3V/fiplI33sXOUa7Onm9SZrkhdOpS9KIOCVPL20wC/EdGNNC79Nq
+	 t3LUBgx6PIpwrNFMx+XizDVX+xeW8vv5z1RYvWsVVUIDe54bNspQHoXOWzIEejeQUtwch
+	 7flksB47FYAVOmc6aKfXMGf9L2S6VC0rgLv7qBfPljNO92TBVP1INehv6vzdc/F6RuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830862;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jtoi5gq29+ouITrLOFPUfQqtmrD4Z4fn4pMRdulkjSw=;
-	b=cx/L/ct/X3cbya+UUNOGp8br3uJc9KDxO4BntuZlEiUS5qkt3HscHVY2NZ7FkBghXTxA
-	 udlI5iJ/ZXlfSkl1riITzW1518ydi9LliOgwFxU26PqsCsAQWiq3C6Y9DSl5iKSmqmewO
-	 blP1+ImdInlEruCS72xUGdbg+xGX606YwBGfVs4brJxj1ShTGmYm7dg7ep0p9Wus2IB5i
-	 hb5B1xhNm4atdX2oYN8X6jrSoF2uiCPosVWjCJmhd28PFLg68bCCD+BTWOhXQIkukAZeW
-	 TDkukaespHuJaCDRcmrGRkdFyyQTLSDWMKYNjktJKQP3eJ/BdwwY5vQ503ykAz6cWQQ==
+	bh=slQTGDTP6a9JQp/c7CxqCuFX7Z+F7e3G78QygI+9xCQ=;
+	b=Glpsr+Z/mLLDWV+cqOJIXMeWdCMlSgJkWrSH/obnEGFJRYjRyVn1soB5pk+F7+F68Emv
+	 6d8pUtN9K6klzC+ZVaoUB9k6MPnDqvgfrzh/dsj+qHxYHCrnI5rpzkMpL8zta5AFx6Fzg
+	 I9Te7MAbcbt1mFNz8A9hun4ohkVjn8XWrCRyL7Q9lQVcjEr/NZcQHAacmMDepXqb/wErv
+	 7cn2/ghvr/5HS/CpVVbUW9ZFHZ45g/MHT4UL04rtpveKQu1V8EweSN1ijw/qj62uliDf6
+	 U78Iv1zkRWyZI4ZT1/fz8EbqOIDOP0kpott5JvN8ZVnh/dVYAAXVym4P86W8eBZDV0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TA5Oi7Tx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLTwRs8p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013FA606D815;
-	Wed,  4 Nov 2026 22:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D230606D80A;
+	Wed,  4 Nov 2026 22:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TA5Oi7Tx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9208C1F00A15;
-	Wed,  4 Nov 2026 22:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLTwRs8p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD551F000C1;
+	Wed,  4 Nov 2026 22:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830860;
-	bh=jtoi5gq29+ouITrLOFPUfQqtmrD4Z4fn4pMRdulkjSw=;
+	s=korg; t=1793830862;
+	bh=slQTGDTP6a9JQp/c7CxqCuFX7Z+F7e3G78QygI+9xCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TA5Oi7TxghIo0JIbwPyLdaO7nSr8uURoOV10muQJ4/PtlZ7lznelez0jXgtOO8ITH
-	 QmCpGSG3ncfV3Z7whPfr130HvCB3mfkQE5e3p1Z3+CpNwtD/krRFuPZ49ggTwYkJKx
-	 TyyxMH4cxS6HzMPdK6kqtZP8xCQ/Ze15nIeKHNd0=
+	b=eLTwRs8pRstnPHu1AAsfH8iEuRxXkfpN4PF0EVZaLaYZahu3WwQ54XQlFi7zXufHB
+	 9Kvvwpsv88caENL0+Yq2DgishpWp5sQgZyrYPGOxrUkcY4bDED5Dheyktqsq0xGhPW
+	 +yoCyCR5caGh6xdUP1oUlGUBnzgMVLHkPNuGz+uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rui Qi <qirui.001@bytedance.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0365/1005] net: dsa: mt7530: check CORE_PLL_GROUP4 access in mt7531_setup()
-Date: Wed,  4 Nov 2026 16:01:38 -0500
-Message-ID: <20261104211054.314221410@linuxfoundation.org>
+Subject: [PATCH 6.18 0366/1005] riscv: kprobes: Prevent probes in breakpoint handlers
+Date: Wed,  4 Nov 2026 16:01:39 -0500
+Message-ID: <20261104211054.339756717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,56 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit 1ae63b018d3d70e96d420b59a1334860cf232bc6 ]
+[ Upstream commit e7d8ea6c6d1bc685a8943ffad2d3679be92d164f ]
 
-mt7531_setup() reads CORE_PLL_GROUP4 through the MT7531 indirect c45
-PHY access, modifies it and writes it back to enable the PHY core
-PLL, but checks neither the read nor the write. Now that the indirect
-access functions propagate command-write failures, a failed read
-returns a negative errno that would be bit-modified and written back
-into the PLL register, and a failed write-back would go unnoticed.
-Check both and bail out. The adjacent EEE advertisement writes push a
-constant value and cannot corrupt state, so they are left as is.
+The ftrace selftest multiple_kprobes.tc registers kprobe events on
+the first 256 text symbols from /proc/kallsyms. If handle_break() is
+selected as a probe target on RISC-V, the breakpoint exception path
+can trap again before it reaches the kprobe breakpoint handler. That
+recursively enters do_trap_break() and can make the system
+unresponsive.
 
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://patch.msgid.link/a7dfe3b66ea6ac1ae7915034de0527060e6ddcd4.1785811140.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Mark handle_break() and its local probe dispatch helpers as nokprobe
+symbols so they are added to the kprobe blacklist, matching other
+low-level breakpoint exception paths.
+
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Link: https://patch.msgid.link/20260806043807.2583001-1-qirui.001@bytedance.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ arch/riscv/kernel/traps.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index d2dcc2f1522f4..4f391ef797ea3 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -2758,14 +2758,20 @@ mt7531_setup(struct dsa_switch *ds)
- 	 * phy_[read,write]_mmd_indirect is called, we provide our own
- 	 * mt7531_ind_mmd_phy_[read,write] to complete this function.
- 	 */
--	val = mt7531_ind_c45_phy_read(priv,
-+	ret = mt7531_ind_c45_phy_read(priv,
- 				      MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
- 				      MDIO_MMD_VEND2, CORE_PLL_GROUP4);
-+	if (ret < 0)
-+		return ret;
-+
-+	val = ret;
- 	val |= MT7531_RG_SYSPLL_DMY2 | MT7531_PHY_PLL_BYPASS_MODE;
- 	val &= ~MT7531_PHY_PLL_OFF;
--	mt7531_ind_c45_phy_write(priv,
--				 MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
--				 MDIO_MMD_VEND2, CORE_PLL_GROUP4, val);
-+	ret = mt7531_ind_c45_phy_write(priv,
-+				       MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
-+				       MDIO_MMD_VEND2, CORE_PLL_GROUP4, val);
-+	if (ret < 0)
-+		return ret;
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index 47afea4ff1a8d..e7e45cbb08999 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -272,6 +272,7 @@ static bool probe_single_step_handler(struct pt_regs *regs)
  
- 	/* Disable EEE advertisement on the switch PHYs. */
- 	for (i = MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr);
+ 	return user ? uprobe_single_step_handler(regs) : kprobe_single_step_handler(regs);
+ }
++NOKPROBE_SYMBOL(probe_single_step_handler);
+ 
+ static bool probe_breakpoint_handler(struct pt_regs *regs)
+ {
+@@ -279,6 +280,7 @@ static bool probe_breakpoint_handler(struct pt_regs *regs)
+ 
+ 	return user ? uprobe_breakpoint_handler(regs) : kprobe_breakpoint_handler(regs);
+ }
++NOKPROBE_SYMBOL(probe_breakpoint_handler);
+ 
+ void handle_break(struct pt_regs *regs)
+ {
+@@ -303,6 +305,7 @@ void handle_break(struct pt_regs *regs)
+ 	else
+ 		die(regs, "Kernel BUG");
+ }
++NOKPROBE_SYMBOL(handle_break);
+ 
+ asmlinkage __visible __trap_section void do_trap_break(struct pt_regs *regs)
+ {
 -- 
 2.53.0
 
