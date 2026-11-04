@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831490;
-	b=ucDZhBQ8MmQK9SKIcrlI0it2HoGnMYbRYuO9xRNT7ps3TvedCVMcbiRRXk7AS9FVEo4c
-	 v6MxaNl/ocCZkK8xO/CZbkLf1FqpjY6dJa5tJRewDqBo9LAZDKPDPEQvjFe3mcCav1Uxo
-	 F0n17lLC032jiCML8wWSH6Wq2Tia9kzkO/R/qUbXDQeQsqRzbzqxTI4oAAKJlIODtYmqi
-	 jwIsBTmDxeWSkdje7BQ+Y3uW9asQsQ78F43Ti879eOvKYJ6S1MZqRC3GOcmbky62/HoYs
-	 byRqF09p4qAsXMKxKcPXABxZkysmG23F5OBnVdwA1PIb4wlGgggyIbQoVJ2fUWgdUoA==
+	t=1793831491;
+	b=w9T4R6U0G1QXN0hHRSsVxrRWYydqhwCeSrrfbRqdkqE1RgRP54Y20oqH1oq7uo2By81P
+	 qNXk2nXSn8biWeA5lRmtGvSDWKmwbJ/g3/4VYKR0ipGvUokjjYcVeuayQjnkHbxyKdxGr
+	 Wi3PdM6tFLfVD8AfOE77ErZ5O5pMLXyce5ZG4Ucw/ZmBkjlDD+CYsPOR1o/XCn146iCPO
+	 lMKHG9egYTmLqVYA43se2I/dX6J/8dRdGqBiHKIkbMxy8OIuN8h6ySoDnhnlZMMuZoWNT
+	 WynBgmlvkx29Za9HSINWGq30+pq+vW8kS0vW/jx4sBso1Ml7TqBl8FOMj1pj1lehpiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rqSrum3OjI3JFHuJ5SgNjd50FNslsEi/RhCCrORqnp0=;
-	b=Sui6EWtVQ5ZYXM3cv7s7TKBkFP5zFxdNABDBozFCPeTaMzHfYMxgV/whUHMZ8hjQ5//D
-	 wHhXIKbDbCqwEuSJ086P01O6V/FXqSbHLg5UKkb823llBC/2QwAK6JF/tSGD3SUYw7iWR
-	 dK6Oatro5mZJyBYhPH/E0zvJnHR+mSDPvILuseshMd56ib3Me9HNEJexqVGyXFSuoVEGx
-	 pqcTuT2WKLwe9mGXlLQE+mDiyCfNP4TRYLpxSb30jGiWNctnZDSQfc+RbcPHY4CrySMrx
-	 WmsId6TitEoakNLIm+H525q/VE45KDqjzaNomyhANExFwk5npMsUgILR/KfYFAk37og==
+	bh=C49kosnddwzAZFB9FQE0WEamEw+ryuPSud4hw3Jpgs0=;
+	b=vWH+Zl1z6PENJmSqngSQwuNex6rWSUC6974qLmuEV8oME3mE2ns5kLHpzS2IBh1UrZlY
+	 Ll19/jc/IMncs11Rwy0Jp5t5ONmJfC3euR680npCsVpKhDtDJ2nAaWTod2mMS4yEjrZrC
+	 W6u57L+3jHIGC26RihbpD1Vi1xrJY8DHARC4drFYSeWgZUGnE+eCHQ5wwrwlSyCd14VtL
+	 4LjnZ/e3SC0FE9SwpilEii2RZrFh5jjKhXVXEnL7RoAHKAL+o4ypN3W4y1MAq0xK2NzYN
+	 vT/3/pqxuyLEAQ9CFCYqzttaUCBlvcvhzfMT5K6Jwdysbbu4e1LHaAhCodZwUp7mGMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+oAgxNi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrO1f2Jt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CF6606B3A5;
-	Wed,  4 Nov 2026 22:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695AA606B2D7;
+	Wed,  4 Nov 2026 22:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+oAgxNi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D4A1F000C1;
-	Wed,  4 Nov 2026 22:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrO1f2Jt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24E11F00919;
+	Wed,  4 Nov 2026 22:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831489;
-	bh=rqSrum3OjI3JFHuJ5SgNjd50FNslsEi/RhCCrORqnp0=;
+	s=korg; t=1793831491;
+	bh=C49kosnddwzAZFB9FQE0WEamEw+ryuPSud4hw3Jpgs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r+oAgxNiiMfN8P/oGRAIbiR8wSvI/OrLVgECnNqb6Q1/T/IdrmQO/mfhHIugRFTOY
-	 V8mbUuSsnQ8+R5qRr2VHUjipmstjkOcjoQt3CbshENvjQEDPVmLxul9a+TJNw9YjZ9
-	 LOzJkAKFh/IuHjZGE2cWsq/TlqYOStp+m+MpXGJM=
+	b=wrO1f2JtNCN9yyxRiPCB5NgVBUKtdaFAwGnEOtNgQJZjkBsfm/1DO9xABp+40E2KI
+	 excus9iPDnHxZAEqOT3U70R1CPKGp2XRWitCmwrX/WlMPs4p6o4CvsZp1zJ7KtvUB5
+	 2T7NI3EXjv92+92Rctu+YELkVEvmcaYdue9TKiO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.18 0735/1005] wifi: mt76: mt7996: unlink TWT flow if the MCU rejects the agreement
-Date: Wed,  4 Nov 2026 16:07:48 -0500
-Message-ID: <20261104211104.079217410@linuxfoundation.org>
+	syzbot+8496ab5e117502750445@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.18 0736/1005] usb: gadget: fix refcount underflow in gadgetfs_bind() error path
+Date: Wed,  4 Nov 2026 16:07:49 -0500
+Message-ID: <20261104211104.103367330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,53 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>
 
-commit 022f5f8b7a0580da50fcbc34da853d03d4321fe2 upstream.
+commit cb3b441f2698455a48e9a023d5f7f4e3fcb94c73 upstream.
 
-mt7996_mac_add_twt_setup() links a new flow into dev->twt_list before
-asking the MCU to add the agreement, but exits without unlinking the flow
-if the request fails. The flow-ID and table masks are only committed
-after MCU success, so the still-linked flow is invisible to the
-mask-gated teardown paths.
+gadgetfs_bind() calls get_dev() only on the success path, but
+gadgetfs_unbind() called from the enomem error label unconditionally
+calls put_dev().  When bind fails (e.g. ENOMEM), put_dev() fires
+without a matching get_dev(), leaving the refcount unbalanced.
 
-If the station retries the setup, the same slot is cleared and its
-embedded list node reinitialized while it is still linked, corrupting
-dev->twt_list. If the station disassociates instead, teardown skips the
-flow and station storage can be freed while the node remains linked. A
-later scheduling or debugfs twt_stats walk can then dereference the
-freed flow, resulting in a use-after-free.
+A subsequent close of the ep0 file descriptor calls dev_release() ->
+put_dev() which hits zero and frees the object; then gadgetfs_kill_sb()
+calls put_dev(the_device) again on the already-freed pointer, triggering
+a refcount underflow and use-after-free.
 
-Unlink the flow when the MCU rejects the agreement. This restores the
-list to its pre-request state while leaving the unchanged mask and
-agreement accounting untouched.
+Fix by calling get_dev() at the start of gadgetfs_bind(), before any
+error path that invokes gadgetfs_unbind(), so the reference is always
+balanced regardless of whether bind succeeds or fails.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260729173632.14387-3-enderaoelyther@gmail.com/
-Assisted-by: Codex:gpt-5.6-sol
-Assisted-by: Kimi:K3
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260825112620.97568-1-enderaoelyther@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reported-by: syzbot+8496ab5e117502750445@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://syzkaller.appspot.com/bug?extid=8496ab5e117502750445
+Signed-off-by: Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260811060810.295666-1-khiemtranzo532001@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/legacy/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -3347,8 +3347,10 @@ void mt7996_mac_add_twt_setup(struct iee
- 	flow->tsf = le64_to_cpu(twt_agrt->twt);
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -1697,6 +1697,8 @@ static int gadgetfs_bind(struct usb_gadg
+ 	dev->gadget = gadget;
+ 	gadget->ep0->driver_data = dev;
  
- 	if (mt7996_mcu_twt_agrt_update(dev, &msta->vif->deflink, flow,
--				       MCU_TWT_AGRT_ADD))
-+				       MCU_TWT_AGRT_ADD)) {
-+		list_del(&flow->list);
- 		goto unlock;
-+	}
++	get_dev (dev);
++
+ 	/* preallocate control response and buffer */
+ 	dev->req = usb_ep_alloc_request (gadget->ep0, GFP_KERNEL);
+ 	if (!dev->req)
+@@ -1711,7 +1713,6 @@ static int gadgetfs_bind(struct usb_gadg
+ 	spin_lock_irq(&dev->lock);
+ 	dev->state = STATE_DEV_UNCONNECTED;
+ 	spin_unlock_irq(&dev->lock);
+-	get_dev (dev);
+ 	return 0;
  
- 	setup_cmd = TWT_SETUP_CMD_ACCEPT;
- 	dev->twt.table_mask |= BIT(table_id);
+ enomem:
 
 
