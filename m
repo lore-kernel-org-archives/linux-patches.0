@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831914;
-	b=tsdCJA6GzL7bF9SzTU79lyKAs6jHVH5ltu/jEcGX77WDY+TlKvfmjd2Vu3/VXwSDM9W2
-	 Xq+hfLO634YIlLu+06cusJfYr0g41hqH3Z3rNdj4qU96IvtjnipbJyyB5audY1nwd7oww
-	 17E7XNJhrazUN1bGEuWbMygx6D2Nyz0MYtzah+sT5lejgOIgvoiQIE3QaNvbRECso0kw0
-	 qqnzePszAs5r6v23mf+N0y7EVgEH8s0TMV2gujyy7l6G///RR7CRkB9chE5VwiWE0XeXB
-	 GHHD7z66biWzdlgKhh/IgMcJVJMfOXVHRhNEG78NYVdwry6LKd4n/voKNaf/grT8fRQ==
+	t=1793831916;
+	b=pie/hRIMt6eOmx8jg+9PVlkmx6I8t9f0OKY5qrRGemwOhPMGIw5QJmgO/DZ5Fm5w08io
+	 craaSELi8RE3GgN5vg5mmES+M7mUeMkt9HoZe1ycwzt7B7gNFBolIBPKynXL0bWppOsgQ
+	 HkI6EA8ZmlJVTUvPM6wPevqjRMjXXIOVOufTogLZxfIHZim8irBV0lgYOVXmRBJzLIoYg
+	 sjucBxTvx+YXRO3DH7aXqkRmebJyj7hrU/UrECUcq2ZdasYklCicc7CMxmBtoUykGoPdL
+	 VgjhN0AQ7T96tuYpzub/rfmUWZCStYHW3gqjSjutZN8LbSX2GV2ocbsaTW4f7/2WLIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831914;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PDmgC7ECxJxZ0edg+CExE+ahDQSZciNvj0q6MYkqlPQ=;
-	b=iUGxKrCE2P9wRSPYKPCxpdrgArgp6YY5eCj40P+v+d7oVsstL4TSV9RtDSYuq/zFrvn+
-	 gL2l8JFkESeFedKVEoQ4Y6rh75yAJcgsZ5SaqlUeI8PCFPaK0H6aMaviyg+omZpaMd1rM
-	 dp68y7Eft5hg+QZ7CbNU8uEMAxDFNiakDufwPjDrS4AD6dtaFea9a3u4mZIVy6PonvNry
-	 M71Y3yPuikSoMpEr4v2N/vBRQPNqUdcBMSlO7t5PNo15hQSoa164TeTRvV9mYpvWBzAbz
-	 jd1CSLFKoGgrPVcyjjSDrNfXmA8ZGHUCWK9MROOt+FDetuDvSQqIX7mxNZY5zVJhXbg==
+	bh=zEZSh8nkh5QGwblc7+FGxUK6kR4Xeyz70Pb1lb9B4so=;
+	b=ejOAlS8IWhqBxbspmQJ2gaK0JISwDLiY2aJD0wvsvxYluspvEq+fbLO9blqTXXcBmdzP
+	 D6osOOQGGVBYK9au58j1IPvWBE/ti/4kv2aLYU3NuliI5AsS0gNzv5ckbjC40jL+3s1h8
+	 3PGE2YtmvTMtYmKBHKB28+uJm42G4akE7Wxlil9LDmHfcoqQbEFPIhwmvHul8MQp88xHL
+	 IVvPMN7ZNDdnEyS0Ozfj6vFtF6WLquIJNR5LCq33SeYQXQ8awTlH1E1igYBVx+J+Ntc2s
+	 4aVBSvaXUtXI9snhgAUu57NWtfGPL4c9qBU6GLN10zzrBKjUDRa1T1VXUYDMJ3ovlww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fCJNJVV/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODQQDVgg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1290F606A844;
-	Wed,  4 Nov 2026 22:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E8B606A32E;
+	Wed,  4 Nov 2026 22:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fCJNJVV/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D091F000C1;
-	Wed,  4 Nov 2026 22:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ODQQDVgg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A8A1F000C1;
+	Wed,  4 Nov 2026 22:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831913;
-	bh=PDmgC7ECxJxZ0edg+CExE+ahDQSZciNvj0q6MYkqlPQ=;
+	s=korg; t=1793831915;
+	bh=zEZSh8nkh5QGwblc7+FGxUK6kR4Xeyz70Pb1lb9B4so=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fCJNJVV/yfRIauG7D59+yzCfkvDdWowqxXjUToUJvWhP4QLnenK/zC5RWdjNaprU5
-	 ASs2Ktst8aceH9EftWJ06k9ZDz1nmwKQ9ohQCzMfRmTAhjlj3QfZTI0s78R/2Fn160
-	 EQzlYsHeOaZ37FWi6PK0/5v6vlUrHoE17RsSqs2k=
+	b=ODQQDVggM4IjRE8JjIRlJJABVOjcvf7tAbiPjSzImyIqoLFZxVL9DHJgESysD3DDf
+	 SZ3BWkjmnsxC5FTF76SQ9qo6H9ukgJWS48JP/cI+3JZwmqTkwlf0YkkdZssXpr51tB
+	 IGOrWY67Fs/qs+PrLthAZLalGNxpLncpbDJyZ8Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Henry Hu <huhai@kylinos.cn>,
+	DaeMyung Kang <charsyam@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0990/1005] ksmbd: fix invalid pointer dereference when get_inode_acl() fails
-Date: Wed,  4 Nov 2026 16:12:03 -0500
-Message-ID: <20261104211110.767753887@linuxfoundation.org>
+Subject: [PATCH 6.18 0991/1005] ksmbd: use the existing xattr name for a named stream
+Date: Wed,  4 Nov 2026 16:12:04 -0500
+Message-ID: <20261104211110.795422759@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,117 +68,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Hu <huhai@kylinos.cn>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit 19d180c7baab7126af5848ed87d5f7b5add0cef2 ]
+[ Upstream commit a7d1d52748e0fe4d06fdb871fc9899904fbba93f ]
 
-When get_inode_acl() fails, it returns an ERR_PTR(), but
-ksmbd_acls_fattr() stored that pointer in smb_fattr without
-checking for errors. Later callers then passed the error pointer
-to security descriptor helpers or posix_acl_release(), resulting
-in an invalid pointer dereference.
+SMB stream names are case-insensitive, but ksmbd stores each named
+stream in an xattr whose name is case-sensitive. Opening an existing
+stream finds its xattr with a case-insensitive match, yet the handle
+keeps the name as the client spelled it, and every later operation that
+needs an exact name uses that spelling:
 
-This was reproduced on an XFS-backed share when xfs_get_acl()
-returned ERR_PTR(-ENOMEM). Querying the SMB ACL from a CIFS client
-triggered the crash:
+ - a WRITE or an end-of-file change creates a second xattr, so a stream
+   created as "Foo" and written through "foo" ends up stored twice, and
+   which value a later lookup returns depends on xattr list order;
+ - delete-on-close and delete-pending removal can fail with -ENODATA,
+   or remove only a case-variant copy and leave the original;
+ - the share mode check compares stream names with strcmp(), so two
+   opens of the same stream that differ only in case do not conflict.
 
-  BUG: unable to handle page fault for address: fffffffffffffff8
-  RIP: smb_acl_sec_desc_scratch_len+0x58/0x90 [ksmbd]
-  Call Trace:
-   smb2_query_info+0x40d/0x17c0 [ksmbd]
-   handle_ksmbd_work+0x1ca/0x770 [ksmbd]
+Have ksmbd_vfs_casexattr_len() copy the matching xattr's name into the
+handle when the stream is opened, so later operations use the name
+already on disk. The match must have the same length as the name it
+replaces; the stream lookup passes a length that includes the
+terminating NUL, which already guarantees that, and the check makes the
+copy safe for any caller. A stream that does not exist yet keeps the
+client's spelling, as before.
 
-Fix this by checking the return values from get_inode_acl() in
-ksmbd_acls_fattr(). Treat -EOPNOTSUPP as indicating that no ACL is
-available, and propagate all other errors to the callers. Update
-smb2_open() and smb2_get_info_sec() to handle these errors.
+smb2_rename() compares and looks up fp->stream.name case-insensitively,
+so it behaves the same with either spelling.
 
-Cc: stable@vger.kernel.org
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Assisted-by: Codex:gpt-5.6-sol
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Henry Hu <huhai@kylinos.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: retained the non-const mnt_idmap parameter in ksmbd_acls_fattr() ]
+[ sashal: adapted stream lookup signature changes to the existing callers and non-const mnt_idmap interface ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   42 ++++++++++++++++++++++++++++++++++--------
- 1 file changed, 34 insertions(+), 8 deletions(-)
+ fs/smb/server/smb2pdu.c |    8 ++++----
+ fs/smb/server/vfs.c     |    7 ++++++-
+ fs/smb/server/vfs.h     |    2 +-
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -2730,10 +2730,11 @@ static int smb2_create_sd_buffer(struct
- 			    le32_to_cpu(sd_buf->ccontext.DataLength), true, false);
- }
+@@ -2475,7 +2475,7 @@ static int smb2_set_ea(struct smb2_ea_in
+ 						     path->dentry,
+ 						     attr_name,
+ 						     XATTR_USER_PREFIX_LEN +
+-						     eabuf->EaNameLength);
++						     eabuf->EaNameLength, NULL);
  
--static void ksmbd_acls_fattr(struct smb_fattr *fattr,
--			     struct mnt_idmap *idmap,
--			     struct inode *inode)
-+static int ksmbd_acls_fattr(struct smb_fattr *fattr,
-+			    struct mnt_idmap *idmap,
-+			    struct inode *inode)
+ 			/* delete the EA only when it exits */
+ 			if (rc > 0) {
+@@ -2547,11 +2547,11 @@ static noinline int smb2_set_stream_name
+ 	fp->stream.name = xattr_stream_name;
+ 	fp->stream.size = xattr_stream_size;
+ 
+-	/* Check if there is stream prefix in xattr space */
++	/* Keep the existing xattr's case for subsequent writes and removal. */
+ 	rc = ksmbd_vfs_casexattr_len(idmap,
+ 				     path->dentry,
+ 				     xattr_stream_name,
+-				     xattr_stream_size);
++				     xattr_stream_size, xattr_stream_name);
+ 	if (rc >= 0)
+ 		return 0;
+ 	if (rc != -ENOENT && rc != -ENODATA)
+@@ -5276,7 +5276,7 @@ static int get_file_stream_info(struct k
+ 		 */
+ 		slen = ksmbd_vfs_casexattr_len(file_mnt_idmap(fp->filp),
+ 						path->dentry, stream_name,
+-						strlen(stream_name) + 1);
++						strlen(stream_name) + 1, NULL);
+ 		ssize = slen < 0 ? 0 : (loff_t)slen;
+ 		file_info->StreamSize = cpu_to_le64(ssize);
+ 		file_info->StreamAllocationSize = cpu_to_le64(ssize);
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1816,7 +1816,7 @@ int ksmbd_vfs_fill_dentry_attrs(struct k
+ 
+ ssize_t ksmbd_vfs_casexattr_len(struct mnt_idmap *idmap,
+ 				struct dentry *dentry, char *attr_name,
+-				int attr_name_len)
++				int attr_name_len, char *actual_name)
  {
-+	struct posix_acl *acl;
- 	vfsuid_t vfsuid = i_uid_into_vfsuid(idmap, inode);
- 	vfsgid_t vfsgid = i_gid_into_vfsgid(idmap, inode);
+ 	char *name, *xattr_list = NULL;
+ 	ssize_t value_len = -ENOENT, xattr_list_len;
+@@ -1834,8 +1834,13 @@ ssize_t ksmbd_vfs_casexattr_len(struct m
+ 		ksmbd_debug(VFS, "%s, len %zd\n", name, strlen(name));
+ 		if (strncasecmp(attr_name, name, attr_name_len))
+ 			continue;
++		if (actual_name && strlen(name) + 1 != attr_name_len)
++			continue;
  
-@@ -2744,10 +2745,28 @@ static void ksmbd_acls_fattr(struct smb_
- 	fattr->cf_dacls = NULL;
- 
- 	if (IS_ENABLED(CONFIG_FS_POSIX_ACL)) {
--		fattr->cf_acls = get_inode_acl(inode, ACL_TYPE_ACCESS);
--		if (S_ISDIR(inode->i_mode))
--			fattr->cf_dacls = get_inode_acl(inode, ACL_TYPE_DEFAULT);
-+		acl = get_inode_acl(inode, ACL_TYPE_ACCESS);
-+		if (IS_ERR(acl)) {
-+			if (acl != ERR_PTR(-EOPNOTSUPP))
-+				return PTR_ERR(acl);
-+			acl = NULL;
-+		}
-+		fattr->cf_acls = acl;
-+
-+		if (S_ISDIR(inode->i_mode)) {
-+			acl = get_inode_acl(inode, ACL_TYPE_DEFAULT);
-+			if (IS_ERR(acl)) {
-+				if (acl != ERR_PTR(-EOPNOTSUPP)) {
-+					posix_acl_release(fattr->cf_acls);
-+					return PTR_ERR(acl);
-+				}
-+				acl = NULL;
-+			}
-+			fattr->cf_dacls = acl;
-+		}
+ 		value_len = ksmbd_vfs_xattr_len(idmap, dentry, name);
++		/* The caller provides attr_name_len bytes for the actual name. */
++		if (value_len >= 0 && actual_name)
++			memcpy(actual_name, name, attr_name_len);
+ 		break;
  	}
-+
-+	return 0;
- }
  
- enum {
-@@ -3482,7 +3501,10 @@ int smb2_open(struct ksmbd_work *work)
- 					int pntsd_size;
- 					size_t scratch_len;
- 
--					ksmbd_acls_fattr(&fattr, idmap, inode);
-+					rc = ksmbd_acls_fattr(&fattr, idmap, inode);
-+					if (rc)
-+						goto err_out;
-+
- 					scratch_len = smb_acl_sec_desc_scratch_len(&fattr,
- 							NULL, 0,
- 							OWNER_SECINFO | GROUP_SECINFO |
-@@ -5953,7 +5975,11 @@ static int smb2_get_info_sec(struct ksmb
- 
- 	idmap = file_mnt_idmap(fp->filp);
- 	inode = file_inode(fp->filp);
--	ksmbd_acls_fattr(&fattr, idmap, inode);
-+	rc = ksmbd_acls_fattr(&fattr, idmap, inode);
-+	if (rc) {
-+		ksmbd_fd_put(work, fp);
-+		return rc;
-+	}
- 
- 	if (test_share_config_flag(work->tcon->share_conf,
- 				   KSMBD_SHARE_FLAG_ACL_XATTR))
+--- a/fs/smb/server/vfs.h
++++ b/fs/smb/server/vfs.h
+@@ -107,7 +107,7 @@ ssize_t ksmbd_vfs_getxattr(struct mnt_id
+ 			   char **xattr_buf);
+ ssize_t ksmbd_vfs_casexattr_len(struct mnt_idmap *idmap,
+ 				struct dentry *dentry, char *attr_name,
+-				int attr_name_len);
++				int attr_name_len, char *actual_name);
+ int ksmbd_vfs_setxattr(struct mnt_idmap *idmap,
+ 		       const struct path *path, const char *attr_name,
+ 		       void *attr_value, size_t attr_size, int flags,
 
 
