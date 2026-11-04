@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827104;
-	b=tgVjIovbWdirnN0X5UPWPVm0P6I6o0GOAlmrYlJaZrxdT/dbZtZMYEOrbFbatQpUpmL0
-	 TASa+N/FEl205cqq3O2C1xB5QnqTf5gQKaMQUHEJ+cGPmoWPpHa/JYy/xR6WbTwlBVPHo
-	 Fjk4qh4bI32hd+dAhkMciMzopu42Seuo5K65P98cWhQG6ok/JxNMFp+Bjf2pjyb4MRpVE
-	 ZdKA7Tu1lDys/eNe9+Opd0I/7f3/8pGnCK6jYHXhVz5AzSLrHbP84/KFhCk3a/8bsF6Oq
-	 pkMbQFOFgogFi+99eZomvrJgcJBGJhS8h5qF+jSRshmpbDmm5ssGmpx8iDXKYSiLFQw==
+	t=1793827106;
+	b=wpqphW18h3USNmq3uk2Brm7yZyH/DeWqOKSCvZTwju2quEYVeHaQUG8DD7CBFYCDIhAn
+	 iXxoigvLnz66KjRY5x/HS2aLz3ny1I+17c/KoAXUk5dAiPKSMkIbKXSEJS4E6g32BUqdo
+	 MC54Gbo2BBFiaHHsnEpGokG5v1Xlcb6xXKi3PI1YAu3dlp0+qiCY6ToB3sFyDc4IlxqfP
+	 GBouw0BZiaShe7ZBWsJ88rXO1b0mdtFLDZq7nt1sTXVBG04BFf/69+Q4t7EWMTSFVjabJ
+	 WmPUjsk4g4r+E1UN7Q92Rjjm/FInkQdCoRtinGRLA19lXS1+HK+FWi0AD7xaNbcpJfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JGr1RvGkoNorSnPNcTPwiHCnpRyyyvrTbpm1NoeiZjE=;
-	b=1yMT2CVIrnFLXsYoZjycb8cWfP/v2AJJqN+TEzR8g4sFZihIIJVFcPzb32eKaHUxLVpj
-	 r1/Sf3u0uw3PIJhLqHgJwLGvIZTpu57JfGkSFy4vfbZHnabvJMxUywy4IhRM+xHJm4+H8
-	 6O2M1aGJIdEvT/lY4wAepyodzHS1jp8323CSkP5TXHhHgjVjA7owIVQnpYbeOeKSRDVMP
-	 RwAP4UgH9Q1vIf1SNDMXdCsH6PfYclpOUTJpNbSFztSdhytkW2EnAojDRWuvaMIA3G0ai
-	 AvPYih5acSXY7EAKrJsdo+wyE77tkEXySjH6/yy/UN7iab9f3t5SIQ5U41yUj4OLEMA==
+	bh=KnIJj4SOmj2iGjCCYza+dO9sWW+L0MHG/GAN8tWNqJ4=;
+	b=1r5dO4ugMbW7+NnM000Z3vviqg//Kn17vEnKm62C2ApKDFlzAa4y91S0bIaQM4vufG+j
+	 TPBMFC0+VcltINDcr8krzpNwm07+tvHR9PoqhX528F7K2gGltjfla2iN0+c6PiKXGP6GF
+	 FHskADh4e1aAPygQg+Y5tpGk9dvcBnS6cKEArBeY5sR6CkWXYa5XaxZUzFDGCzLEP1sKS
+	 TuPF0hYSvHZ6tvLL9sgkDk8RQZw0Apkxu0TYsBaR4lIEYH7CV8Saz437a7GQtBIy2MWdZ
+	 4xqL5LftHKtw8+P2Fi1PeUo7vKNp3YdA7XACJKfgHInc11ZuhMMinj7WUYwC+r0gkEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dng7HwK4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jlr8OW5z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435A4606AE00;
-	Wed,  4 Nov 2026 21:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CE3606A869;
+	Wed,  4 Nov 2026 21:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dng7HwK4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E321F000C1;
-	Wed,  4 Nov 2026 21:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jlr8OW5z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629031F00A18;
+	Wed,  4 Nov 2026 21:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827104;
-	bh=JGr1RvGkoNorSnPNcTPwiHCnpRyyyvrTbpm1NoeiZjE=;
+	s=korg; t=1793827105;
+	bh=KnIJj4SOmj2iGjCCYza+dO9sWW+L0MHG/GAN8tWNqJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dng7HwK46lkdl+qtx8OeokwXDPt73JV8CHICRonNC7Ut2YGPVaKVUcWMS7clcyppc
-	 K5kFNyHZsLIQXz6LsQ8oASKID1RS45EsPZ+Shcz8HHEYhf6piTxZXBvfP9zu4V8sma
-	 nCXtzGkVBG7eO6ZOnWb/h3wWq2xATzFq+6cu23m0=
+	b=Jlr8OW5z3MfT9AA93TPJ9+BdtXw/XrvLrwpn/lsNhnKVHSfzYx7fuRxZJPf1bHDhH
+	 pteAYcKhquPWAlnnAALvX4hZIQM4lhHSLyYb2VX0wTAVExkx8I2S7nh9DRqGj5LURS
+	 yT+ILqT6EvhYod43fJV9fHWykrIcOBCJnphkOplI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.3 197/547] rust: bug: pass TAINT_WARN to warn_slowpath_fmt() on UML
-Date: Wed,  4 Nov 2026 16:06:21 -0500
-Message-ID: <20261104211043.737749499@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>
+Subject: [PATCH 7.3 198/547] rust: bug: update the SAFETY comment for warn_slowpath_fmt() on UML
+Date: Wed,  4 Nov 2026 16:06:22 -0500
+Message-ID: <20261104211043.768074397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,46 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-commit 951d09ca450ca76a695016ea76c3fa653bd20439 upstream.
+commit 5c94956f2bfb87025c1eaded6c51d5841d38d333 upstream.
 
-On UML, `warn_flags!` calls `warn_slowpath_fmt()` directly. Its third
-argument is a taint number, but `warn_on!` passes its bug flags there.
+The SAFETY comment says that it is always safe to call
+`warn_slowpath_fmt()` with a valid null-terminated string. This is not
+true. The taint argument must also be a valid taint number.
+Commit 951d09ca450c ("rust: bug: pass TAINT_WARN to warn_slowpath_fmt()
+on UML") fixed a bug where it was not.
 
-As a result, `add_taint()` gets 2304 instead of 9 (`TAINT_WARN`). The
-warning is not recorded: `/proc/sys/kernel/tainted` stays 0 after
-`warn_on!` fires, where it should be 512. It also causes an
-out-of-bounds write in `add_taint()`.
+List each condition that the call meets: the file name, the taint
+number, and the null `fmt`.
 
-Pass `TAINT_WARN` directly, as C does on UML.
-
+Suggested-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Link: https://patch.msgid.link/20261002104550.2877930-1-tomo@flapping.org
 Cc: stable@vger.kernel.org
 Fixes: dff64b072708 ("rust: Add warn_on macro")
-Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Link: https://patch.msgid.link/20261001123103.2198104-1-tomo@flapping.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/bug.rs |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ rust/kernel/bug.rs |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/rust/kernel/bug.rs
 +++ b/rust/kernel/bug.rs
-@@ -85,6 +85,7 @@ macro_rules! warn_flags {
-     ($file:expr, $flags:expr) => {
-         if false {
-             _ = $file;
-+            _ = $flags;
+@@ -88,8 +88,10 @@ macro_rules! warn_flags {
+             _ = $flags;
          }
  
-         // SAFETY: It is always safe to call `warn_slowpath_fmt()`
-@@ -93,7 +94,7 @@ macro_rules! warn_flags {
+-        // SAFETY: It is always safe to call `warn_slowpath_fmt()`
+-        // with a valid null-terminated string.
++        // SAFETY:
++        // - The file name is a null-terminated string with `'static` lifetime.
++        // - `TAINT_WARN` is a valid taint number.
++        // - `fmt` can be NULL, and NULL is passed.
+         unsafe {
              $crate::bindings::warn_slowpath_fmt(
                  $crate::str::CStrExt::as_char_ptr($crate::c_str!(::core::file!())),
-                 line!() as $crate::ffi::c_int,
--                $flags as $crate::ffi::c_uint,
-+                $crate::bindings::TAINT_WARN,
-                 ::core::ptr::null(),
-             );
-         }
 
 
