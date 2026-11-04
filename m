@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829596;
-	b=O1TTYixC9IIfY9VtxGzfYkbWYL2xn4uti62Kr9dLu7PLswcDmPdFzPcWUNzXKAzmX+h/
-	 ZF8CkVi2gzxICDb0UAKYfkkGrEFAZBj5q8CKgNFl50dHJV8iQgrCUtl+qMvCNm9Fjz9nt
-	 0K/6Rg8ExCCmCn1oOMwPuZD09rPeKjpLE3G/ZrEUswMtRiDfB0KCvLExpS6pUNZmHenjt
-	 HSYSYVlqYjFiqDucSERCBhI1SWRzXfuCNZKiKDqR2EJ79ah+T+yWTRTOSXkj05DJgxjUz
-	 qlIFgLg+m7Ikoe+SVUUbaeA6Dzm4BZkBhkEdczwypN+honNPR7uzERgszDC9G0qtHrw==
+	t=1793829598;
+	b=Hku0As/7tXdvDWIL7tUJfuK75KLXDi1xSaPu0kw14THOFdGC0Zvo3Bk45mqUJQg2ohSk
+	 7B0Durvzl2VN/QVa5UuMDrtryi3ASqPpm2iDQylIrTSbeB4BKzmnE0S8XQ8zn2y9MLFTc
+	 o5vsfmc++CZfHJHTQqAhTlIJ/rJGftH+787fKIjm0LJ4Lm/zPWs8GT8Opb3l6LRk6Mpub
+	 rQL42KNoTi1H+pDUk/qjMFHkmr7lJbDPCg7m732+vozDLWdk5kgGAnQb1EV3hHuYhkD2b
+	 aUp86++O/Qoj41Sk/ofMsQ1JHVZkK6sqcObCEdRXxI6M7N7waoUUoJW6UPJ9o5jZ1xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829596;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rvfNQ5FTDVkjwgoQok7EkLoscfbfeF82B21ENE/pyB0=;
-	b=CDku9/lonxFs1erCAcd7YqOJetylB9kYJbzLBNV7Pf+HmsOPHcciUObBCEa9nBPoM4h4
-	 OFSGFY18vBPQJ4zKbUAGqgVeI8OXcAEWfWnPPWid0bgTZvcYT1PQljLvsnu6jRNCTc9eg
-	 WHohC93A/SdKEvidZw+xoK+fDS0HdmhmkQV6pk9PKW7h28Oi/zOz7GA3QFPEfBCQdpMY7
-	 6L0Uxdru/CS/PgPoJ+0+vQnQm7vvAxvE40FbZkouaotU+gFE2U5KWOpReF+x6QGgPdMSp
-	 /tT+7reClIijPCBsGg3BVGzNiP2FQGAOr7yUnV4WVPvDKF7Jgy+v+J989NBrSsHCypQ==
+	bh=bschZ0puM7J7741sGXGlWSI/28seGSW9I3l970RuAtw=;
+	b=rJlOAUX0C7aotFDlIdjvQ3lql/oc/2Lb3bQeG8YvzF/RmTG6wExQvxSMj3teT6zPPKu0
+	 bb96PmWBwDn+KMSgBdavdGoppL1Qufob5Pf6+qqDg2k/5MohzI40uYHXmg20CVnkRxTOF
+	 1Nfo5Fr91oFgxzgSVR2uansUU+8YVsD8vGwzG7p1zFZP9ARmS8lqsrdlkOVrUxVLkXL4M
+	 jsnN5xjJRpNUB3UIER5YxEi836KjApBHqDJgh2iEE/lquB1/8mv2O3uWC008FxUCO8iow
+	 IJ6HC6b/PoUSwsRV35BST3urbtoX3cu1CA8Oq6nLaD9Chzh5GITtY3mw5qiv4QKCsrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MNJfWET8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pogr+b2k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D99606B2D2;
-	Wed,  4 Nov 2026 21:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021E9606B2D2;
+	Wed,  4 Nov 2026 21:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MNJfWET8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E0A1F0093A;
-	Wed,  4 Nov 2026 21:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pogr+b2k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904951F00A02;
+	Wed,  4 Nov 2026 21:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829596;
-	bh=rvfNQ5FTDVkjwgoQok7EkLoscfbfeF82B21ENE/pyB0=;
+	s=korg; t=1793829597;
+	bh=bschZ0puM7J7741sGXGlWSI/28seGSW9I3l970RuAtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MNJfWET8/ZdC7TGurfnQhf1RzZq3xlV3LVVHgPexKka5A44y6rrpRGvB2LkzsvzkU
-	 rMojU/V7omSdb9yqYxaqe5YSUN4NtAv77OEUsLa6BsFZJ+danJkEeNAGIAW7ibh0WP
-	 qpd5tkkqeDMIMWo1M9gqUays6cl4fNpQeZIYjxLk=
+	b=Pogr+b2kMd9pXPhtxRrB0/chx4oZT/Egw3sPWozLIVzqVqIP2KOU84a0ifOb/9m8t
+	 7KKXJIj4B1OGHN+DQPTMU83nZdRVCGSrqm7/8rn6txfP1EB89nn+frjmUjmqaBImB4
+	 zlueTLw8hPs10VjiWW2sXiknzXap4eHTZ89oEQgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0218/1005] net: sfp: add quirk for HORACO copper SFP+ module
-Date: Wed,  4 Nov 2026 15:59:11 -0500
-Message-ID: <20261104211049.923766082@linuxfoundation.org>
+Subject: [PATCH 6.18 0227/1005] iommu/qcom: Enable clocks before hardware access in qcom_iommu_ctx_probe()
+Date: Wed,  4 Nov 2026 15:59:20 -0500
+Message-ID: <20261104211050.191797494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,36 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 1bb028baab541900d3603d4f93c1c0fb5aba5401 ]
+[ Upstream commit cb776a03a53429aa59e25a8cbc3d1a48bd11afdb ]
 
-Add quirk for a copper SFP+ module that identifies itself as "OEM"
-"HC-10GE-113C". It uses RollBall protocol to talk to the PHY.
+qcom_iommu_ctx_probe() reads and writes the CB_FSR register to clear any
+stale IRQ left by the bootloader. This happens during
+devm_of_platform_populate() which is called from the parent device's
+probe before any pm_runtime_get(). The parent's clocks (iface, bus, tbu)
+are therefore not guaranteed to be on, making the register access
+unreliable on rebind or after a suspend cycle.
 
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260719100158.874882-1-olek2@wp.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Use pm_runtime_resume_and_get() on the parent device to ensure clocks
+are enabled before the register access, and release the reference
+immediately after.
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index af43530ffb2c3..195468bde2f29 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -576,6 +576,9 @@ static const struct sfp_quirk sfp_quirks[] = {
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index fbe4bd3ec0c42..792585321bd11 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -704,8 +704,13 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+ 	/* clear IRQs before registering fault handler, just in case the
+ 	 * boot-loader left us a surprise:
+ 	 */
+-	if (!ctx->secured_ctx)
++	if (!ctx->secured_ctx) {
++		ret = pm_runtime_resume_and_get(dev->parent);
++		if (ret)
++			return ret;
+ 		iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
++		pm_runtime_put_sync(dev->parent);
++	}
  
- 	SFP_QUIRK_F("YV", "SFP+ONU-XGSPON", sfp_fixup_potron),
- 
-+	// HORACO HC-10GE-113C uses Rollball protocol to talk to the PHY.
-+	SFP_QUIRK_F("OEM", "HC-10GE-113C", sfp_fixup_rollball),
-+
- 	// OEM SFP-GE-T is a 1000Base-T module with broken TX_FAULT indicator
- 	SFP_QUIRK_F("OEM", "SFP-GE-T", sfp_fixup_ignore_tx_fault),
- 
+ 	ret = devm_request_irq(dev, irq,
+ 			       qcom_iommu_fault,
 -- 
 2.53.0
 
