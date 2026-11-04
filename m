@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829368;
-	b=EWgmDdcCq5A+SIv4NDkPVlLEf1BeTdnbfUuU9lfeIQFybxA/t6kuUvPBLD4MZMGLleVw
-	 IHRxwWDAeo4NUhTeSCo2JAZ4TXWAP52uyzFNCpfcE/mpYSnBSc4us7MXgnn9g3SWmKuvk
-	 KdkYnXXAUtZxpJ9KZpZ7XL1hSdjV/VN0vupmFp1gvAWDj0JjqHbBZHEWMUeBUt4Ingy5H
-	 6xS7mqrXymYc1rk6C1VcOarG7qCHECuLw30Q0dCCVtzh4RNPHuFCIHtbC8wlCVxdYDqbm
-	 FU3KsZtXFmST2f853hxzidhqSKDZc1j9cN4i4MLRrIec/n3oBqVt1c4RfMFdSplmtkg==
+	t=1793829370;
+	b=waWYWWMLEVwl9vTWLxMro0x5ifyP+JboHzV2wCIGF7k6uf8yr+xrDpU+0+bhSjDtOeOY
+	 2mcL8tOjBEjwHJ+yPodXessUOg5i8dW8RtW2AlwQ7YxgrZmfchoUSW5sUhX61aMe03/ju
+	 udSfONwODdQoIw8wWE3zAtA9jhbvNwQ9t4DuiNg/iuX21vGN/KX3rn4BwvRqA7wVGv6DK
+	 xgrwIwhHro6dY/xc28BMRclUp/urrm4sELr4tCO6l3IEyq6T7aS6V2n7pxa+akeyh6QvT
+	 1K0SRp3tHzUk0e7Rtx23bE1zG8Bab6nrurax5vwF5Aqp07eAliT50hqgmzPvuRRl26Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829370;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JbC7mfLI7DIxeZvidgRxTZJ5NJtAuL6v+jacBBLXruQ=;
-	b=aING4Pbx+4Y2lLU8ze8OLtYEgG+oX28JOEQfLPjMHpEapctmh3mQcL2NrL1eA6zuZ6NN
-	 t8ALXcWP8dFAtWUmwIdg6CYaUUOSj5f4k92Ba89RYRRSDppxjR62/wQhLAs+zIycz1X9v
-	 xRP40rBOJSc13NB/bNDets9dF/geodLORN+M0mZCkQnNwAYhzj0lDMdCCuR+xBd49EU2/
-	 oR0qZnexjULIa1MKqCZJSr38kj8xifERlCVpDWVNh3NK+RrxgQioe3/U02XY1vaXdHS1N
-	 B7Ra3dgtaNFRRsSL244bSZSr0SG/rva+i2QCHyvP7o5XUJtAlSb2PE2tlqN8dxnYDNg==
+	bh=0c2AgIOV7OVi2bUj2M4DHxG6RbWKGX3WqfDsBgC5wv4=;
+	b=f6fPPC8YW+46cvLnUcCdRZrx3mY+fIVPpBrONhm5fQgct+lahBuvZrudfPSfN+C3sOlr
+	 LXo4GT7CPh7hIB2V2wGn0/FUHHsUH+UMLGhodL/LzCdZkGv7zqOp+gaKoi79jhvJXQZl4
+	 01fb6IciLnK1AY7V9NjKW4JEHfVGuLNKYcHQeTtp465H+HfrqdYuTiA+hYyuGUL+z7WbW
+	 XilO8huH58mBrd7NKJX7pMPsS8hBnS7EVOU3od1ltTufTHMFKcwZ2qw5r4Q++9unpUkKS
+	 6tYQ7rSIXgzOxkNjEV+75R75J1Xg9dnv7eHOk8vxq1ztq2oWD4Z72SKmmLBaHKJNtmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gpj4nM2J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/vhXhgH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B0160BF2FD;
-	Wed,  4 Nov 2026 21:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E270260C2990;
+	Wed,  4 Nov 2026 21:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gpj4nM2J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97ED1F000C1;
-	Wed,  4 Nov 2026 21:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/vhXhgH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775A61F000C1;
+	Wed,  4 Nov 2026 21:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829368;
-	bh=JbC7mfLI7DIxeZvidgRxTZJ5NJtAuL6v+jacBBLXruQ=;
+	s=korg; t=1793829369;
+	bh=0c2AgIOV7OVi2bUj2M4DHxG6RbWKGX3WqfDsBgC5wv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gpj4nM2JU2dKHIrKL0ryeMGJZg+8khm84lCmeYM/XBUOmJjfX+N0Vq+rS2tKlSKkl
-	 Di0zwxNHuNqnf+q1puNppI6tVxwlvJoCUv5bjzNYWeia2UPdxs2bIviR+u91H/TW78
-	 Tv0h35YsnC0A58VGxC9PS9kJktPn8dJywT4+k1Es=
+	b=a/vhXhgH7pi4atnTIH6iW4k9vMzufvjewtGQ0MiniTQPZqm3mLlHVpaDAQTkM4JU3
+	 Lowi8Df6z9rkfDwLm04+HqZwvPr39p7plHupMr55y2A9uPCK+hBC718MVFqTUEXSMp
+	 WuNW7V9BA9AsGphX4f0eCtdWWmsgM2mEkTi7Fg0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com,
+	Petko Manolov <petkan@nucleusys.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0081/1005] libbpf: Skip bpf_object__probe_loading() when BPF token is in use
-Date: Wed,  4 Nov 2026 15:56:54 -0500
-Message-ID: <20261104211045.891240215@linuxfoundation.org>
+Subject: [PATCH 6.18 0082/1005] net: usb: rtl8150: handle link status read failures
+Date: Wed,  4 Nov 2026 15:56:55 -0500
+Message-ID: <20261104211045.922301506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,58 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit d262a25d8b58b697b2a1a2fe4b0078446cc00e11 ]
+[ Upstream commit 8c9c5b9a689612dcb92a04a4218c975cd19f19d8 ]
 
-bpf_object__probe_loading() tries to load trivial SOCKET_FILTER and
-TRACEPOINT programs to verify the BPF environment works.  When a
-BPF token is in use with restricted program type permissions, these
-probe loads may fail because the token does not allow the specific
-program types, even though BPF loading is perfectly functional.
+set_carrier() ignores the result of the USB control transfer and tests
+the stack variable supplied as its receive buffer. If the device rejects
+or aborts the request, that variable remains uninitialized and the driver
+chooses an arbitrary carrier state.
 
-Fix by skipping the probe when a token FD is present: BPF token
-creation itself proves the kernel has a working BPF subsystem.
-Real BPF issues will be caught during actual program and map loading.
+Leave the existing carrier state unchanged when the link status cannot be
+read. A transient USB error should not be treated as link loss.
 
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260610145059.113412-2-chenyuan_fl@163.com
+Reported-by: syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9db6c624635564ad813c
+Suggested-by: Petko Manolov <petkan@nucleusys.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260630101216.10365-1-alhouseenyousef@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/net/usb/rtl8150.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index b21d2f842579f..1aaf2bdf26857 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -5070,12 +5070,8 @@ bpf_object__probe_loading(struct bpf_object *obj)
- 		BPF_EXIT_INSN(),
- 	};
- 	int ret, insn_cnt = ARRAY_SIZE(insns);
--	LIBBPF_OPTS(bpf_prog_load_opts, opts,
--		.token_fd = obj->token_fd,
--		.prog_flags = obj->token_fd ? BPF_F_TOKEN_FD : 0,
--	);
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index 647f28b367b99..8c739d898e57d 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -734,7 +734,9 @@ static void set_carrier(struct net_device *netdev)
+ 	rtl8150_t *dev = netdev_priv(netdev);
+ 	short tmp;
  
--	if (obj->gen_loader)
-+	if (obj->gen_loader || obj->token_fd)
- 		return 0;
- 
- 	ret = bump_rlimit_memlock();
-@@ -5084,9 +5080,9 @@ bpf_object__probe_loading(struct bpf_object *obj)
- 			errstr(ret));
- 
- 	/* make sure basic loading works */
--	ret = bpf_prog_load(BPF_PROG_TYPE_SOCKET_FILTER, NULL, "GPL", insns, insn_cnt, &opts);
-+	ret = bpf_prog_load(BPF_PROG_TYPE_SOCKET_FILTER, NULL, "GPL", insns, insn_cnt, NULL);
- 	if (ret < 0)
--		ret = bpf_prog_load(BPF_PROG_TYPE_TRACEPOINT, NULL, "GPL", insns, insn_cnt, &opts);
-+		ret = bpf_prog_load(BPF_PROG_TYPE_TRACEPOINT, NULL, "GPL", insns, insn_cnt, NULL);
- 	if (ret < 0) {
- 		ret = errno;
- 		pr_warn("Error in %s(): %s. Couldn't load trivial BPF program. Make sure your kernel supports BPF (CONFIG_BPF_SYSCALL=y) and/or that RLIMIT_MEMLOCK is set to big enough value.\n",
+-	get_registers(dev, CSCR, 2, &tmp);
++	if (get_registers(dev, CSCR, 2, &tmp))
++		return;
++
+ 	if (tmp & CSCR_LINK_STATUS)
+ 		netif_carrier_on(netdev);
+ 	else
 -- 
 2.53.0
 
