@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829125;
-	b=4MEvknHWxnw04vpIl0ywxR7Guy9g/zrO6ZwhDzGvd89XjK9FmrKK+NRsiR7JZesTwYkO
-	 kDKvXi0VGMgBvCvoFRony8hMcq0cu4UthgdvYOFbdO4oAOnCf0jGW88gAILPlL9QenziB
-	 2sN9FYhjXrf43NXCy2seS1XJd1xguS0aXwIqjlCKVD6GIv6KTeblu0gJjj0V0TU6qlxuA
-	 4+oQbRyuZumyKkCa3S8EZLiVMZI7+xAcrKjEsYC70RKxz2T+2TC8OS1JuiF+ELQuzjSHN
-	 hyBXI5uS2a8wkO4dBID0AJBuKKBCPkIpv07kePD90ANRaMZISrMVbdpwcjkm+LJW74A==
+	t=1793829127;
+	b=AuTmU2wboMfS3V43SA+TQLjkXztzOxzF9qNE43e6uXxFVWd4LCB/dAC4vdgCuGKSjAM1
+	 MG8/m1rZ6SZgDYOr/Z7uG9n3o7/5wI14D3CBXxyyaLGU4VL91TOAGJbbBQUB8JkrSS23U
+	 OjuNN/6K9bEV/RwA84j1Bt3cqky8bAyfxiWUvoCpY/835VwGMsph0K3MjiOsi1TI5YSy6
+	 J0mZe71pJPaGjOgvaJxUiBwkmBG9OAap3bEuYu8dzSZA2OrVG51ozJVNuDTqlR96o7xwG
+	 AJwGtlg/mCTJmrRLAEYGmYUu0sEJ85uzbX4OsJVUgcpz3iKeK3vh9Q1EC/d6x8scHxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cq7CgbycuwzDmMKk/cu3oV+O2Y0skE7L558NVwZY3Uo=;
-	b=UhxNEavMnysWe8FsinrZy/D6T8RPtPHHA8unFcbHR9ZbnUMb06RyfVW9VbfevIwu1wow
-	 INR3JtLg196Hv/rFWCzW6a9Hm6Hs8UFwbYiZbiL8rt5Wm3jMp0fV4ru0Ay6llrsEFXYEc
-	 OLMCZQEj31+POyTkk3w8lzlx/KblpR7q0YewIliBZjVYnZy/SHCJIeOMKr6gcMl33TKGV
-	 GhDsHWDit3I9CTqxP8T+uNROuLG9azC+UDzO0PyK9dw4284f2BUaQGJKbweZzD7IXEJVo
-	 daEiJSsOWVVACWgPumgrHsRb+DPTmxr6Wz1y5SCbMsKMsURrPnJvhb/TcBXPZIFAxQA==
+	bh=mKnFrbcFmMnhHa8ypbg9E7Rp/A7oeZsYUGH8ppdb8CA=;
+	b=A4fjPR4m7YZlyFXYiq5CFHjo6BvR32LrA+NxRScmOJohcu5kWmIxZU+LnmTIKF3VFEsx
+	 WKTBE5Ds/3NRZH/BM3xc3bfhA69AK7Lh2+Blo3JNGyDgAUFA1sB54lBkrMM5IjQq6dxa7
+	 a5Dv8UCrJ8+RsXkJmw4mfHWZIPe7jrkL7xXTidOHXcy/mMpUZYn7xSdsXQnceZDoUcB/i
+	 CMJ2xGfckhfHVL8R8Cfjqz0tj48kOtdpb5b1ZqzHBWiMdI9gIkGUtxdECrBKvoWtFd2nT
+	 JSXrVpURszfm+wHRLKcB+FYIAgSUDtdqAtrwx1ZZIA/P7gG/iOyfiuPz6O+vhGzlChw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J/rFb7c0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXYAYXsW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A261607350D;
-	Wed,  4 Nov 2026 21:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55B1607350D;
+	Wed,  4 Nov 2026 21:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J/rFb7c0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED941F000C1;
-	Wed,  4 Nov 2026 21:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CXYAYXsW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6771F000C1;
+	Wed,  4 Nov 2026 21:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829125;
-	bh=cq7CgbycuwzDmMKk/cu3oV+O2Y0skE7L558NVwZY3Uo=;
+	s=korg; t=1793829126;
+	bh=mKnFrbcFmMnhHa8ypbg9E7Rp/A7oeZsYUGH8ppdb8CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/rFb7c0Bq6f/8zkZhDMA2935Alr2/ZoOVcrCn1AwiFeM/XCDt7y6G02dooH1YNTy
-	 X3FOy7t2yGgU44FJv7293oi9fmlmQbJr+YegUG3ITVoAtK6WWFRKSXVk35bg5dou4X
-	 Lg3yEIr4Jf6G5VTldIoCi5zLXpHZgdp55IP6vwd4=
+	b=CXYAYXsWJvu35su76PA4MPVhlZqORnQ1JI0nUQI3a4Ae9nPzDue6AiKdBXDNu4tBQ
+	 QO/3efQeilz0l/+d03NSJ+q4nJhWaNPof6/mQYTcJnEx5awJvaldXjsdZOSI7eaZYJ
+	 x8ExT8Jen6K8A1O2Z29qKhWkh4Jg0e2PVYQPIRCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
 	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.3 461/547] KVM: VMX: Make handle_bus_lock_vmexit() a shared helper
-Date: Wed,  4 Nov 2026 16:10:45 -0500
-Message-ID: <20261104211051.449782960@linuxfoundation.org>
+Subject: [PATCH 7.3 462/547] KVM: VMX: Preserve negative return value in vmx_handle_exit() with bus lock detected
+Date: Wed,  4 Nov 2026 16:10:46 -0500
+Message-ID: <20261104211051.477523309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,82 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-commit 326fa2c9b4d3e6cab58c139eb55aaabd7179192e upstream.
+commit cef48693da1e964e9f192bfc16cd0ed287c48337 upstream.
 
-Move handle_bus_lock_vmexit() from vmx.c to main.c to make it a shared
-helper so that TDX can use it for Bus Lock VM exit handling as well.
-Rename it to add vt_ prefix to reflect that it is a helper for both VMX
-and TDX.
+Preserve the negative return value from __vmx_handle_exit() when a bus
+lock is detected, instead of always overwriting it with 0.
 
+The purpose of bus_lock_detected handling is to force a userspace exit to
+inform userspace that a bus lock happened. The negative return value can
+achieve this purpose, and changing the negative value to 0 fails to return
+an error to userspace. So, preserve the negative return value.
+
+Fixes: fe6b6bc802b4 ("KVM: VMX: Enable bus lock VM exit")
 Cc: stable@vger.kernel.org
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260805034602.5B2BB1F000E9@smtp.kernel.org/
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://patch.msgid.link/20260819094903.3060020-8-xiaoyao.li@intel.com
+Link: https://patch.msgid.link/20260819094903.3060020-7-xiaoyao.li@intel.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/common.h |    1 +
- arch/x86/kvm/vmx/main.c   |   11 +++++++++++
- arch/x86/kvm/vmx/vmx.c    |   13 +------------
- 3 files changed, 13 insertions(+), 12 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/vmx/common.h
-+++ b/arch/x86/kvm/vmx/common.h
-@@ -184,5 +184,6 @@ static inline void __vmx_deliver_posted_
- }
- 
- noinstr void vmx_handle_nmi(struct kvm_vcpu *vcpu);
-+int vt_handle_bus_lock_vmexit(struct kvm_vcpu *vcpu);
- 
- #endif /* __KVM_X86_VMX_COMMON_H */
---- a/arch/x86/kvm/vmx/main.c
-+++ b/arch/x86/kvm/vmx/main.c
-@@ -878,6 +878,17 @@ static int vt_gmem_max_mapping_level(str
- #define vt_op_tdx_only(name) NULL
- #endif /* CONFIG_KVM_INTEL_TDX */
- 
-+int vt_handle_bus_lock_vmexit(struct kvm_vcpu *vcpu)
-+{
-+	/*
-+	 * Hardware may or may not set the BUS_LOCK_DETECTED flag on BUS_LOCK
-+	 * VM-Exits. Unconditionally set the flag here and leave the handling
-+	 * to .handle_exit() callback.
-+	 */
-+	to_vt(vcpu)->exit_reason.bus_lock_detected = true;
-+	return 1;
-+}
-+
- #define VMX_REQUIRED_APICV_INHIBITS				\
- 	(BIT(APICV_INHIBIT_REASON_DISABLED) |			\
- 	 BIT(APICV_INHIBIT_REASON_ABSENT) |			\
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6267,17 +6267,6 @@ static int handle_encls(struct kvm_vcpu
- }
- #endif /* CONFIG_X86_SGX_KVM */
+@@ -6864,11 +6864,12 @@ int vmx_handle_exit(struct kvm_vcpu *vcp
+ 	 * a bus lock in guest.
+ 	 */
+ 	if (vmx_get_exit_reason(vcpu).bus_lock_detected) {
+-		if (ret > 0)
++		if (ret > 0) {
+ 			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
++			ret = 0;
++		}
  
--static int handle_bus_lock_vmexit(struct kvm_vcpu *vcpu)
--{
--	/*
--	 * Hardware may or may not set the BUS_LOCK_DETECTED flag on BUS_LOCK
--	 * VM-Exits. Unconditionally set the flag here and leave the handling to
--	 * vmx_handle_exit().
--	 */
--	to_vt(vcpu)->exit_reason.bus_lock_detected = true;
--	return 1;
--}
--
- static int handle_notify(struct kvm_vcpu *vcpu)
- {
- 	unsigned long exit_qual = vmx_get_exit_qual(vcpu);
-@@ -6377,7 +6366,7 @@ static int (*kvm_vmx_exit_handlers[])(st
- 	[EXIT_REASON_VMFUNC]		      = handle_vmx_instruction,
- 	[EXIT_REASON_PREEMPTION_TIMER]	      = handle_preemption_timer,
- 	[EXIT_REASON_ENCLS]		      = handle_encls,
--	[EXIT_REASON_BUS_LOCK]                = handle_bus_lock_vmexit,
-+	[EXIT_REASON_BUS_LOCK]                = vt_handle_bus_lock_vmexit,
- 	[EXIT_REASON_NOTIFY]		      = handle_notify,
- 	[EXIT_REASON_SEAMCALL]		      = handle_tdx_instruction,
- 	[EXIT_REASON_TDCALL]		      = handle_tdx_instruction,
+ 		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
+-		return 0;
+ 	}
+ 	return ret;
+ }
 
 
