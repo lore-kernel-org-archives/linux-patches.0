@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831723;
-	b=2zZ94dRzSJD0z2OB4UX2IvqGToitoVlAWp2SosNFjHMimW/rfEdGBK+c1drvLWb4u2qb
-	 9tnZVAVWu3coZyL+HboBDFqt/9d6DD87AMAh0aJ70ZkHSn2qEJK5vB3d+6EWEIS3vzKMY
-	 iKcUi0cAVJFWxwrT80lJI+uQ9s4exOAbQlaEuqX74iCWE14tZQcZTsfliiK2cnXGsxtQ6
-	 gLbJFmBCcbjkkyHVqxr5PHRD1tBa7nOYvKGbFkVY5g7mGOakBInCMF7HKYEImC/E8VjUE
-	 eYxg8Wy0nthC6FTAEbcv2/5Mpe9AtOPy4iZR2qN2Wgrm6JdczW6HqQUl2ROL0Y84Aog==
+	t=1793831725;
+	b=OVYNHd7oJyN7g9EHBb1eZ63Z3PplsrpZDaSsJmn1lNfn/0M+xb19sS/X/rwvtMpBFTho
+	 1vUW3SEGjTJaJH/Lyw5iLXG7lOsCT0H3ZcqgvTdu6bdNvgvik8XC36JEIbJSsdiSlIM7C
+	 TCxfnA/sTUofOJm7brL8rtO9IjiXqlMHsqFI9X54h6WIBis9kzZrEUw/SxG5hbxG/1D7n
+	 3cNGTOYRJP8OhCUs3EJOWctPDGFigPAvbl40XE6t53SWUk+PNBifRNmZthpGmbeS6wG75
+	 dnW94JQaslfQphFtawngVb7YR+v+yp85rhd/ca2qhrPgYPrcIPYW8MjMAuvIzHOS8jA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831723;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C0cuTy+MPCZJxZtCDso22n9fMDi+l699Q84Ttvv3hkM=;
-	b=ntP8bmMT6UpOdbN4qHz72DpVP5QEIXR1uC4chaJNCqJYWZNmMLLW1YWex3p4FYIfNtZy
-	 6ituiX3y1439z7ld9TQl+h5Oofx1p1scONdb/2DbrMa9V/6nVZrItV4QMYHzKeTO8QIPJ
-	 ZVNeOFKv+jv2Z03yczK0JYpbHVSuuGZuxbO26yR837Jk9yoiglCeTapuBm7gFaPtt7em2
-	 voIpuu8XMupLUc9j0JuvTJeeuGrVppt7yct7Eou2fIlEzPR//3FOaGqdpBrYOOgdqDZTK
-	 vucz49iayZjL0zzkK1p9skTt7tEnjTlF16EcRVbj5fOlTmjt8mq/b8goNk0KY/imb7Q==
+	bh=iaWOuU8NK+2UAhrTS2KOq5G9wL349hzrWzTJ+epcexQ=;
+	b=pDwQuZ16Cn6+A+qjRbmHqAqUDoB8zykv2d3PFrP/Kipir/LPznBNAoL+lskTR8HcCdL0
+	 NmJQf9yUGKddlXGCiIL/lSQxOaztmKcmnoTwrJFj1foFsTSlfmuF6TduC+aqAhu1g2j+U
+	 tdtkaO1gJTXCfb3NnCodmYwyWC172QDSnKvMGtzDbCKlJJvNWGfuXJLlFoJ2zcsmPE7vW
+	 ceQD2pmjmOlIYLh3oIGpfi+teSoCjgaQqIozTXoI0yi0KBDvZXroPhuw6BpXUliK2fF6w
+	 JyRRrKDDHwczwfTzkOwPL1o6/e95Sgy04TBiWE1y5g4u1oNwlgZjuzEVC3dRFoHHw+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nh2Kzd1F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XopRXYQt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588AB606A846;
-	Wed,  4 Nov 2026 22:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8956606A842;
+	Wed,  4 Nov 2026 22:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nh2Kzd1F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C6C1F000C1;
-	Wed,  4 Nov 2026 22:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XopRXYQt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B721F000C1;
+	Wed,  4 Nov 2026 22:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831723;
-	bh=C0cuTy+MPCZJxZtCDso22n9fMDi+l699Q84Ttvv3hkM=;
+	s=korg; t=1793831724;
+	bh=iaWOuU8NK+2UAhrTS2KOq5G9wL349hzrWzTJ+epcexQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nh2Kzd1FhwzxxI0I5U4EphaXpU4u3BIkami4ILXfEvw/CkBPrcCxFzW4VUIQ8vosw
-	 g5xYQea3dqLLdcOPVMYCXtnBkeGbt5sk5elx82Kw5iv+gtpi8MOXUTOTZR8rI0tfcR
-	 5OGJ8vPbfBSmmXQe06jkEfQEKeTd+DT3DzwJtZFs=
+	b=XopRXYQtJBpMVzeyv+/M9p+YfwUjF/qmjVk+uW2vhsK6c92V2bQA3wTsw9iIikBIE
+	 4QfT8QEe7E+0PpZyCLMyxylIpsQQ/skx9Kcaz4E8nDAEO/l7QL14PDUMAFoQb4A8Ee
+	 wPev563CFIBULrCkERgKgagHt4i4XYfIRyWghP9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0874/1005] pnfs/blocklayout: Complete a device upcall when the pipe is closed
-Date: Wed,  4 Nov 2026 16:10:07 -0500
-Message-ID: <20261104211107.738828907@linuxfoundation.org>
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.18 0875/1005] NFSv4/pnfs: Free the netid when draining a data-server address list
+Date: Wed,  4 Nov 2026 16:10:08 -0500
+Message-ID: <20261104211107.764149445@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -66,68 +67,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-commit 2a25cc8e984610828a526086313b8a7aeefe507d upstream.
+commit a7c8e96d1b9fa327cbdea514d047c8295b28d49a upstream.
 
-Once blkmapd has read a whole upcall, rpc_pipe_read() unlinks the
-message from every pipe list, so the purges in rpc_pipe_release()
-and rpc_close_pipes() no longer reach it. bl_upcall_ops supplies no
-.release_pipe callback, and bl_pipe_destroy_msg() returns without
-completing the upcall because a downcall is expected to follow. A
-daemon that exits between the read and the write therefore strands
-its waiter: bl_resolve_deviceid() sleeps in wait_for_completion()
-and never returns, and it holds nn->bl_mutex across that wait, so
-every later device resolution in the net namespace blocks behind
-it.
+nfs4_pnfs_ds_addr_free() releases all three of an address entry's
+allocations, but the four sites that drain a decoded list before it
+reaches a data server open-code the loop and free only da_remotestr and
+the entry, leaking da_netid.  Both layout drivers drain that list when
+nfs4_pnfs_ds_add() returned a data server already in the cache, and
+again on their error exits.
 
-Add a .release_pipe that completes an upcall blkmapd has consumed
-and left unanswered. Completing an upcall retires it, so a message
-the framework has already purged is no longer in flight and is not
-completed a second time here.
+Lift the drain into nfs4_pnfs_ds_addr_list_free() so an address list has
+one owner.  A striping mount reaches the cached case on nearly every
+GETDEVICEINFO, since many deviceIDs name the same data servers.
 
-Fixes: fe0a9b740881 ("pnfsblock: add device operations")
+Fixes: 4be78d26810b ("NFSv4/pNFS: Store the transport type in struct nfs4_pnfs_ds_addr")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-8-e163f94a3a6e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/blocklayout/rpc_pipefs.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ fs/nfs/filelayout/filelayoutdev.c         |   17 ++---------------
+ fs/nfs/flexfilelayout/flexfilelayoutdev.c |   17 ++---------------
+ fs/nfs/pnfs.h                             |    1 +
+ fs/nfs/pnfs_nfs.c                         |   21 +++++++++++++--------
+ 4 files changed, 18 insertions(+), 38 deletions(-)
 
---- a/fs/nfs/blocklayout/rpc_pipefs.c
-+++ b/fs/nfs/blocklayout/rpc_pipefs.c
-@@ -151,10 +151,31 @@ static void bl_pipe_destroy_msg(struct r
- 	complete(&nn->bl_done);
+--- a/fs/nfs/filelayout/filelayoutdev.c
++++ b/fs/nfs/filelayout/filelayoutdev.c
+@@ -177,27 +177,14 @@ nfs4_fl_alloc_deviceid_node(struct nfs_s
+ 		trace_fl_getdevinfo(server, &pdev->dev_id, dsaddr->ds_list[i]->ds_remotestr);
+ 
+ 		/* If DS was already in cache, free ds addrs */
+-		while (!list_empty(&dsaddrs)) {
+-			da = list_first_entry(&dsaddrs,
+-					      struct nfs4_pnfs_ds_addr,
+-					      da_node);
+-			list_del_init(&da->da_node);
+-			kfree(da->da_remotestr);
+-			kfree(da);
+-		}
++		nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ 	}
+ 
+ 	folio_put(scratch);
+ 	return dsaddr;
+ 
+ out_err_drain_dsaddrs:
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ out_err_free_deviceid:
+ 	nfs4_fl_free_deviceid(dsaddr);
+ 	/* stripe_indicies was part of dsaddr */
+--- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
++++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+@@ -155,26 +155,13 @@ nfs4_ff_alloc_deviceid_node(struct nfs_s
+ 		goto out_err_drain_dsaddrs;
+ 
+ 	/* If DS was already in cache, free ds addrs */
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs,
+-				      struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ 
+ 	folio_put(scratch);
+ 	return new_ds;
+ 
+ out_err_drain_dsaddrs:
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ 
+ 	kfree(ds_versions);
+ out_scratch:
+--- a/fs/nfs/pnfs.h
++++ b/fs/nfs/pnfs.h
+@@ -426,6 +426,7 @@ int nfs4_pnfs_ds_connect(struct nfs_serv
+ struct nfs4_pnfs_ds_addr *nfs4_decode_mp_ds_addr(struct net *net,
+ 						 struct xdr_stream *xdr,
+ 						 gfp_t gfp_flags);
++void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs);
+ void pnfs_layout_mark_request_commit(struct nfs_page *req,
+ 				     struct pnfs_layout_segment *lseg,
+ 				     struct nfs_commit_info *cinfo,
+--- a/fs/nfs/pnfs_nfs.c
++++ b/fs/nfs/pnfs_nfs.c
+@@ -633,23 +633,28 @@ static void nfs4_pnfs_ds_addr_free(struc
+ 	kfree(da);
  }
  
-+/*
-+ * An upcall blkmapd has consumed is off every pipe list, so the
-+ * purges in rpc_pipe_release() and rpc_close_pipes() cannot reach it.
-+ * No downcall can arrive once the pipe is closed; release its waiter
-+ * here.
-+ */
-+static void bl_release_pipe(struct inode *inode)
-+{
-+	struct nfs_net *nn = net_generic(inode->i_sb->s_fs_info, nfs_net_id);
-+	struct rpc_pipe *pipe = nn->bl_device_pipe;
-+
-+	spin_lock(&pipe->lock);
-+	if (rpc_msg_is_inflight(&nn->bl_pipe_msg)) {
-+		nn->bl_pipe_msg.copied = 0;
-+		nn->bl_pipe_msg.errno = -EPIPE;
-+		complete(&nn->bl_done);
-+	}
-+	spin_unlock(&pipe->lock);
-+}
-+
- static const struct rpc_pipe_ops bl_upcall_ops = {
- 	.upcall		= rpc_pipe_generic_upcall,
- 	.downcall	= bl_pipe_downcall,
- 	.destroy_msg	= bl_pipe_destroy_msg,
-+	.release_pipe	= bl_release_pipe,
- };
+-static void destroy_ds(struct nfs4_pnfs_ds *ds)
++void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs)
+ {
+ 	struct nfs4_pnfs_ds_addr *da;
  
- static int nfs4blocklayout_register_sb(struct super_block *sb,
++	while (!list_empty(dsaddrs)) {
++		da = list_first_entry(dsaddrs, struct nfs4_pnfs_ds_addr,
++				      da_node);
++		list_del_init(&da->da_node);
++		nfs4_pnfs_ds_addr_free(da);
++	}
++}
++EXPORT_SYMBOL_GPL(nfs4_pnfs_ds_addr_list_free);
++
++static void destroy_ds(struct nfs4_pnfs_ds *ds)
++{
+ 	dprintk("--> %s\n", __func__);
+ 	ifdebug(FACILITY)
+ 		print_ds(ds);
+ 
+ 	nfs_put_client(ds->ds_clp);
+ 
+-	while (!list_empty(&ds->ds_addrs)) {
+-		da = list_first_entry(&ds->ds_addrs,
+-				      struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		nfs4_pnfs_ds_addr_free(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&ds->ds_addrs);
+ 
+ 	kfree(ds->ds_remotestr);
+ 	kfree(ds);
 
 
