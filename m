@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828978;
-	b=S14TFjDruUhQaEEZVyN+PwJGNsmD/nA20xzcq8HkX3WzJJrjZ2GuPb0sRUH1Y2bGxtag
-	 eioAziMd0Wj9zrRvsxP1C8g0y8bmmv3lt/R3dZlzPJBzUOWybxBMjVi1yldwy4hIdFLQX
-	 Uf/xLjyF8yQNHc4IgfS4CmSCF9nHrmChU6zA2dQ2rhKHoQuWcjdydb+fHKQK0x0tVl4Ht
-	 f5U4zYtkEiDQHqedunOFqiqj7C247YW+MEyYD63eCl4wF3MXwLM2i10BAyMcVvrMqAU1U
-	 8ulNzAbYRl1XL7d43wcJqWw5p4h7YmOm7nloeDCjDqCZEdS/YkWTyqFV3EE4id6azCg==
+	t=1793828979;
+	b=dJKXhnHSzt695uX7zEvK7fGPyrXRcxsA7Gsgkj4+3JnljOTbHCgghSTzvKyDa0AUebcV
+	 6h7EMEfZq6bY/z40MCjBw41+4hklnLkBlk5070OGLESO/fU1vuCWA2yJFuEorktpGMesj
+	 Pqiz7lmeIZAETOka7gXqLiDV0BnSUlBZ9AbNdp0VjXjrH3DZ9MjBgNSsQCZ7/5K3dCS0/
+	 RQJ7JNSrGmYzvT1rBMM0yh9/2Qd6wKXmvhm/mwp4vFknxfBEzmHruq9OomRUG5hAwGFbI
+	 1pWdFTOKDHploFtNkEwG6SQgpsORAa8OvGZ5nLEcEtx3y78uG2d2H1Bn+wRQ27HcDlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828978;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MTxEskI2a59RqGp4CubFIbMdemA3py2ZzXetd7QnY3U=;
-	b=EqjMtHceF4oxjv/npTzkDMhjxaaI4QJRaHK3T8hF3k028NcZqrXXMzLqkoW4Chs7+DGU
-	 uM+QdDIE+HoXCDLi/+xYdm0B2dOhvo5gWHZIJYSCzXULRAsCpskk/90jyGx9pz4eMgAiB
-	 jvYVJyzZ7G+zBOVRnv1/WOUbQpW/219ms3Xdt7Vk2mszY7t6OrrsWyUY7UUYGqclviOQD
-	 LYmIUOIiTxnwF9ql3A7RxNJxpd1wrR7ouqRIcPxLdbCc/ofST7bu2XbNe43I18UAx2T2N
-	 GUIWOY/AX/WgNzCj8ouLqPZhahSqBrv43kH+Hnh5/b8ohfVOd/KvjnssYAb6f6jqYUQ==
+	bh=FtMcnAlaPau8Uicxzr5f18n56uj9anL9DFD7X6rlkFM=;
+	b=4Gf9vnQkwPLn3cnhV7dwiQoN7eXwPLn3YmL1ty49C11j2E/uYhW6qo5yEwhgtn1n6M1c
+	 nZlcVYSgyIdU6pG6rAKZIdazn/ReCki8z/bXHVXfK6Ax2FX3K+oDape5wkfmy+PWw7ivG
+	 pSbxQClorm5pIHbRsZ7iLDiKilHCuF4OHRSsLP1FGN1GdwO19WsPEdWolUFIj1eGF8MN6
+	 2BVEfNvHE3fiQSvdgebLUG5WDbE3VTyQdBIc8QUda/Qx17kpuQn/1MnugxsffcIUkN7zS
+	 QVDZuxr4vPTnKyf0VFXevNx06HdskblLIk7aVpr6HB+IXHy7Xg0QCmnwIlZXYdmP5sQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWzzhfhO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QcTrTTuI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E946070754;
-	Wed,  4 Nov 2026 21:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C03D6070754;
+	Wed,  4 Nov 2026 21:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWzzhfhO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651561F00919;
-	Wed,  4 Nov 2026 21:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QcTrTTuI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D171C1F00919;
+	Wed,  4 Nov 2026 21:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828977;
-	bh=MTxEskI2a59RqGp4CubFIbMdemA3py2ZzXetd7QnY3U=;
+	s=korg; t=1793828979;
+	bh=FtMcnAlaPau8Uicxzr5f18n56uj9anL9DFD7X6rlkFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EWzzhfhOylxwOVhUvlkujBqXXHU9MdfAQ6wxm4K5PRXKnSC4+2Fc32pA77QW3Z7cq
-	 a4zvJcKM05eDEUEDU6faXgw46mysaCvLC/VSPqlAXsEh2zLFiOvBpPjB7tdgujy9UK
-	 NYHsOJxQr4avLbZ2KK6H9u6G+KOQ139U9QMyv4Bc=
+	b=QcTrTTuIuV4mjx9qHC8PcGFJy1uR0heBwOmdzZkKsKu1/WrYBPDX7A3OOSeFEoHnP
+	 akvkrFXXk3sL2DHL1kjeNezflKxCD30jH4udnEobrLWeiRadC23/9nsqO4Jk/Rai/w
+	 dIKssidklIqtfMzGqPY+T9xY5124xkgDcza6Zqxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 365/547] xfs: fix correction of unwritten extents in quota file data fork
-Date: Wed,  4 Nov 2026 16:09:09 -0500
-Message-ID: <20261104211048.664510043@linuxfoundation.org>
+Subject: [PATCH 7.3 366/547] xfs: fix data fork block count check in xrep_inode_blockcounts
+Date: Wed,  4 Nov 2026 16:09:10 -0500
+Message-ID: <20261104211048.692264443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,77 +70,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 6f2792720673f569fa3e1f68181b9d6fd26802b5 upstream.
+commit 147f9f8300cb284923e08bb8a7b32ba9681c45ed upstream.
 
-LOLLM noticed a couple of problems with the code that fixes unwritten
-mappings in the quota file's data fork: first, we should zero the ondisk
-contents as part of converting them to "unwritten" just in case we crash
-shortly after the conversion.  Second, and more importantly, it noticed
-that we fail to resynchronize the iext tree cursor after modifying the
-iext tree.  If the tree shape changes, we could be in a world of hurt.
-Third, we should force a quotacheck if we reset an ondisk dquot.  Fix
-all issues.
+LOLLM notices that for non-reflink realtime files, the @count output of
+xchk_inode_count_blocks includes both the file blocks on the realtime
+volume and the bmap btree blocks on the data volume.  Therefore, we must
+compare this value to rblocks + dblocks to avoid unnecessary failure.
 
 Cc: stable@vger.kernel.org # v6.8
-Fixes: a5b91555403e3a ("xfs: repair quotas")
+Fixes: 2d295fe65776d1 ("xfs: repair inode records")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/quota_repair.c |   25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/inode_repair.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/quota_repair.c
-+++ b/fs/xfs/scrub/quota_repair.c
-@@ -416,7 +416,9 @@ xrep_quota_data_fork(
- 	/* Check for data fork problems that apply only to quota files. */
- 	max_dqid_off = XFS_DQ_ID_MAX / qi->qi_dqperchunk;
- 	ifp = xfs_ifork_ptr(sc->ip, XFS_DATA_FORK);
--	for_each_xfs_iext(ifp, &icur, &irec) {
-+	xfs_iext_first(ifp, &icur);
-+
-+	while (xfs_iext_get_extent(ifp, &icur, &irec)) {
- 		if (isnullstartblock(irec.br_startblock)) {
- 			error = -EFSCORRUPTED;
- 			goto out;
-@@ -440,16 +442,35 @@ xrep_quota_data_fork(
- 
- 			error = xfs_bmapi_write(sc->tp, sc->ip,
- 					irec.br_startoff, irec.br_blockcount,
--					XFS_BMAPI_CONVERT, 0, &nrec, &nmap);
-+					XFS_BMAPI_CONVERT | XFS_BMAPI_ZERO, 0,
-+					&nrec, &nmap);
- 			if (error)
- 				goto out;
- 			ASSERT(nrec.br_startoff == irec.br_startoff);
- 			ASSERT(nrec.br_blockcount == irec.br_blockcount);
- 
-+			/*
-+			 * We just zeroed the ondisk dquot, so counts could be
-+			 * wrong.  Schedule a quotacheck to fix that.
-+			 */
-+			xrep_force_quotacheck(sc, dqtype);
- 			error = xfs_defer_finish(&sc->tp);
- 			if (error)
- 				goto out;
-+
-+			/*
-+			 * Set cursor to the next block past the extent we just
-+			 * converted because bmapi write could have merged
-+			 * records.
-+			 */
-+			if (!xfs_iext_lookup_extent(sc->ip, ifp,
-+					irec.br_startoff + irec.br_blockcount,
-+					&icur, &irec))
-+				break;
-+			continue;
- 		}
-+
-+		xfs_iext_next(ifp, &icur);
- 	}
- 
- 	if (!joined) {
+--- a/fs/xfs/scrub/inode_repair.c
++++ b/fs/xfs/scrub/inode_repair.c
+@@ -1724,7 +1724,7 @@ xrep_inode_blockcounts(
+ 		 */
+ 		;
+ 	} else if (XFS_IS_REALTIME_INODE(sc->ip)) {
+-		if (count >= sc->mp->m_sb.sb_rblocks)
++		if (count >= sc->mp->m_sb.sb_rblocks + sc->mp->m_sb.sb_dblocks)
+ 			return -EFSCORRUPTED;
+ 	} else {
+ 		if (count >= sc->mp->m_sb.sb_dblocks)
 
 
