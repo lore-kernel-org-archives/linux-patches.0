@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828853;
-	b=NrwMG5oMMWi6FSVPXkuGG/bsUN7k2pcoVa78jYnC6bfJpNebzjWVMy65z0gOrFL1+Fnr
-	 iXDSXljtwwkDPUr9VRLyyFhxcnqF/9PFiN54AUBIs014Yb/U8tP8R7OwcFs+YW2FBGr23
-	 G17C1PcUsl6gtHEOu+T8FBHg5ILNaYqCnVoLSSkTeLvGgI2iu7KYZqoCrY5RAq2gB99aV
-	 b5PgmhBj1MxDI/SJlDCQpZQxGhotMrEmUoEIjU8oCOdmfYPZVhUkiBMtyntCWlJT4gtk7
-	 fms94LI4tv9RsdWj5GlJO+fIloG6giLY6hUtcW3gZfdWaa+VVJcN3+yDnWIkCVFlxTQ==
+	t=1793828854;
+	b=KS5zJaP0824f0MumlHmoqREghSgiR5FwribID02zCZL+PEN/r2dAqdgC8uAXH2WuOiVj
+	 8XoYhRa3TvIVpd7PcLjOOVZj+xYn6qdoGDlLxjkzY8cSRsL3FbqcfWNG23nYX0qtheFQX
+	 eJ2ARkm9OarZr6WbefS5vH3qAdrDTMIrtZkE1MIIzJtc5IqJ84yULv8tB7GvGV+BmyTjp
+	 3qgSZeFFWdrSCG8H23g/2vRWP2faFpZ3aqqWyjZGoo3v+xy90tvtfTZIjQkDmZ5biXVn6
+	 zroUe0yEKFfrLLPYaoWk0oS6OiT58YbI9wmwITFz+mKG2RqQSI3e6CDqbOgtQlm5yMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828854;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GqS4XGd7VMFWYaLZEmAQLhaP1o5s9DM6n13ME+ehbJU=;
-	b=WqN5KP6/5aHXJbTU1y4UC94Nbe9mliXAC2US1ez534M8dM1S/Cuktriei31Q69pXYNCm
-	 1aRvM1Yssbh5CxiDYZ8Ae+ti7QjLTgDHN6BvUGUeevgks6QTKpzmCmtf3b9cBoCqkiIfZ
-	 ujK7jQUk4GNXtOyeEhE8nFDLhT/JcIgMSsPN+dHu+e4jYweyRu4ztFVenTHmUsUzE0qCh
-	 sJzcJwj9silb9Y11xBs2WJ5Ca+BHzm9YogYZY7sBWAj4RCcXsbV4y613eao12tSI+N3Et
-	 Yp1B4dtEDRSNH6q0nOAqgWnn/dOzcubJMAWWsC2uJ0ewYxEPOLRZyF51++JmQLln0WA==
+	bh=/5qEwRkaLIolO+UUoVcUt6hpvnsABYBvULgBbuqDLK0=;
+	b=N9QcGuNyj5g4SnFxhg1bZ9XVaDRs/uVccrPkjEWrwgrFR9QIKAh35pfQMVJ/l/9j1WkY
+	 M6zcNnRCgfbv+1x01L23LXXSNGsbDuKNlLt9ZCKstYl0vTh9x9U2CXsQXAiC1o0eAmDT4
+	 5eA5JfD65+cUxnKoyFfGvtKOQbIvO2NPaJqIpMiaJnM+24hQllgtnue9snAVxE1ImaDNC
+	 uF0t9HS7ptLLvDHRow+8I7iA8DxonJReFI1oNSzvL97xUSnHuoqzSgUz8OwI/qEg16Oli
+	 aV4DgKQldUDQwurTC8FZDh8aegnyEaTJNv6hNV+LFP+JSqM6XTtPcxyJcvZybCYg7WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fysa5NqA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Spo+s+O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729A7606A32D;
-	Wed,  4 Nov 2026 21:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1B0606A32D;
+	Wed,  4 Nov 2026 21:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fysa5NqA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84D71F000C1;
-	Wed,  4 Nov 2026 21:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Spo+s+O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDE51F000C1;
+	Wed,  4 Nov 2026 21:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828853;
-	bh=GqS4XGd7VMFWYaLZEmAQLhaP1o5s9DM6n13ME+ehbJU=;
+	s=korg; t=1793828854;
+	bh=/5qEwRkaLIolO+UUoVcUt6hpvnsABYBvULgBbuqDLK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fysa5NqArZuL+FGvrZCUzDp6S5WCI3XUPml9jWnDSoJvvVLX7Dt0PWW9/v36TNxwZ
-	 H+P6QrlL/zVIHL5KrkLzKE0mwglz6sS/KVBenmCGesiXtGg+0hoTaPIUUrVdG3Dikp
-	 ubViEylDfrstFfD6o3ucPT0UzcFE3ZwdpVhFtzXg=
+	b=0Spo+s+OJJQTIQJsMuGkx+RhVw8uLaUjPZio18lqcLyQHtNUP4fTqarhOXvXE4IvS
+	 MPg9FQ6NJgdFKFMunAHEOcTrTHne4z6TGmtxBHin4VNtxFjLrxVmGVao387Sv7kHo9
+	 12UgPEV+7+aJXSLFInpuIg93wBelHQj9MF74yV/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+24c7c12d69e63c6d@bugs.sh,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.3 281/547] smb: client: stop processing a read response after a receive error
-Date: Wed,  4 Nov 2026 16:07:45 -0500
-Message-ID: <20261104211046.184124800@linuxfoundation.org>
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 7.3 282/547] ovl: hold a reference on the parent in readdir
+Date: Wed,  4 Nov 2026 16:07:46 -0500
+Message-ID: <20261104211046.210808182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,54 +68,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-commit 51efca72345acdbedc4af76782d464bd15ba50ff upstream.
+commit 16d319e12328acafeafd3eecdf09c46d7fb43452 upstream.
 
-cifs_read_iter_from_socket() may call cifs_reconnect() before returning an
-error.  The reconnect path aborts pending mids and invokes their callbacks.
-The callback can then release the cifs_io_subrequest containing rdata.
+Listing a directory on an overlay uses a freed dentry and crashes the
+kernel when a lookup moves the directory at the same time.
 
-cifs_readv_receive() nevertheless continues after a negative return and may
-dereference rdata in cifs_readv_discard().  KASAN reports the resulting
-UAF:
+Code that can sleep may only use d_parent without a reference while
+something stops a move of the dentry. ovl_iterate_real(),
+ovl_need_adjust_d_ino() and ovl_cache_update() use the d_parent of the
+listed directory and hold only the lock of that directory. When a
+lookup finds the directory under another parent after a change to a
+layer, d_splice_alias() moves it without that lock and drops its
+reference on the old parent.
 
-  BUG: KASAN: slab-use-after-free in cifs_readv_receive
-  Read of size 4 by task cifsd
-  cifs_readv_receive (fs/smb/client/transport.c:1284)
-  cifs_demultiplex_thread (fs/smb/client/connect.c:1355)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
+With a delay in ovl_iterate_real(), getdents64 on an overlay directory
+raced a rename in the lower layer and a lookup that moved its dentry,
+and after an rmdir of the old parent KASAN reported a use-after-free in
+security_inode_getattr().
 
-  Freed by task 148:
-  netfs_put_subrequest (fs/netfs/objects.c:267)
-  netfs_read_collection (fs/netfs/read_collect.c:460)
-  netfs_wait_for_in_progress (fs/netfs/misc.c:462)
+Fix this by using dget_parent() in the three functions.
 
-Return the socket error immediately, as this path did before the iterator
-conversion.  This also avoids adding a negative length to total_read.
-
+Fixes: b5efccbe0a12 ("ovl: constant d_ino across copy up")
 Cc: stable@vger.kernel.org
-Fixes: d08089f649a0 ("cifs: Change the I/O paths to use an iterator rather than a page list")
-Reported-by: co+24c7c12d69e63c6d@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[amir: fix comments in ovl_need_adjust_d_ino()]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/transport.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/overlayfs/readdir.c |   33 +++++++++++++++++++++++++--------
+ 1 file changed, 25 insertions(+), 8 deletions(-)
 
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -1317,6 +1317,8 @@ cifs_readv_receive(struct TCP_Server_Inf
- #endif
- 		length = cifs_read_iter_from_socket(server, &rdata->subreq.io_iter,
- 						    data_len);
-+	if (length < 0)
-+		return length;
- 	if (length > 0)
- 		rdata->got_bytes += length;
- 	server->total_read += length;
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -568,8 +568,8 @@ static int ovl_cache_update(const struct
+ 			goto get;
+ 		}
+ 		if (p->len == 2) {
+-			/* we shall not be moved */
+-			this = dget(dir->d_parent);
++			/* d_splice_alias() can move even a locked dir */
++			this = dget_parent(dir);
+ 			goto get;
+ 		}
+ 	}
+@@ -797,6 +797,7 @@ static int ovl_iterate_real(struct file
+ 	struct dentry *dir = file->f_path.dentry;
+ 	struct ovl_fs *ofs = OVL_FS(dir->d_sb);
+ 	const struct ovl_layer *lower_layer = ovl_layer_lower(dir);
++	struct dentry *parent;
+ 	struct ovl_readdir_translate rdt = {
+ 		.ctx.actor = ovl_fill_real,
+ 		.ctx.count = ctx->count,
+@@ -808,18 +809,26 @@ static int ovl_iterate_real(struct file
+ 	if (rdt.xinobits && lower_layer)
+ 		rdt.fsid = lower_layer->fsid;
+ 
+-	if (OVL_TYPE_MERGE(ovl_path_type(dir->d_parent))) {
++	/*
++	 * The lock on dir does not stop d_splice_alias() from moving it to
++	 * another parent, which drops the reference dir holds on this one.
++	 */
++	parent = dget_parent(dir);
++	if (OVL_TYPE_MERGE(ovl_path_type(parent))) {
+ 		struct kstat stat;
+ 		struct path statpath = file->f_path;
+ 
+-		statpath.dentry = dir->d_parent;
++		statpath.dentry = parent;
+ 		err = vfs_getattr(&statpath, &stat, STATX_INO, 0);
+-		if (err)
++		if (err) {
++			dput(parent);
+ 			return err;
++		}
+ 
+ 		WARN_ON_ONCE(dir->d_sb->s_dev != stat.dev);
+ 		rdt.parent_ino = stat.ino;
+ 	}
++	dput(parent);
+ 
+ 	if (ovl_is_impure_dir(file)) {
+ 		rdt.cache = ovl_cache_get_impure(&file->f_path);
+@@ -875,8 +884,10 @@ static bool ovl_need_adjust_d_ino(struct
+ {
+ 	struct dentry *dentry = file->f_path.dentry;
+ 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
++	struct dentry *parent;
++	enum ovl_path_type type;
+ 
+-	/* If parent is merge, then need to adjust d_ino for '..' */
++	/* With xino, need to map real d_ino to the unified overlay ino space */
+ 	if (ovl_xino_bits(ofs))
+ 		return true;
+ 
+@@ -885,8 +896,14 @@ static bool ovl_need_adjust_d_ino(struct
+ 		return false;
+ 
+ 	/* If dir is impure then need to adjust d_ino for copied up entries */
+-	if (ovl_is_impure_dir(file) ||
+-	    OVL_TYPE_MERGE(ovl_path_type(dentry->d_parent)))
++	if (ovl_is_impure_dir(file))
++		return true;
++
++	/* If parent is merge, then need to adjust d_ino for '..' */
++	parent = dget_parent(dentry);
++	type = ovl_path_type(parent);
++	dput(parent);
++	if (OVL_TYPE_MERGE(type))
+ 		return true;
+ 
+ 	/* Pure: no need to adjust d_ino */
 
 
