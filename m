@@ -1,61 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827162;
-	b=WLHPskU4hph5cZOXR4RjAeRg5FJgFNvsTzcYZ3vUdi+TaScLEJoVZESucWBrDMaDmLWf
-	 tef4Cc4ET4L9p5efIo6X7cQE1eZbRXCCa59YB0lvggjGMXDzkKTVawskaUyfPBg0i+Zau
-	 YJX/BOQD5FANZQvSn7H0rbsSfKNEQVUQVNTaLXbm6h3uiaTDmyxfqwgcnkijefPLKFp+L
-	 eKxT0zEKz7eKnrq4lia8opoQdVjHlKyaeEVkcLIF82riG/hu38n+RuJxgC2Tthy7JsquX
-	 mxYmJLIMqPvFia+ySumQH0DH4NlW5dKbXukYEYk4GJGjFEsWStNzjnQERfCe7ROlWtg==
+	t=1793827164;
+	b=SdtotWhvsZZ6pSB0JzYAKD0BuZxbsXB+0nmPh/CuKGUrgi0IaqB/f+B+wrmTtldtDPxD
+	 spe+kLwaH+q8b0FXNUIYEb5C9nBGaYScuSfeikkTAj4Q+10QPE7pQyCmmQxtdQ0EytkZs
+	 IrOzG60RsgbxRMUplO2qw5cYpA7fUzi8Qy6+K4pQKLegjwloa3GWTWEkQSrPU7ukZcGn7
+	 8J+mbVxWgrIkRwT63r3+ESbnsFp5iOnBszh8lcp8qbfcxJ0LJULta7U49Rdplp7sikjRz
+	 6ZNIpSJKMkaGAaTkPw5oG7jVVSeSv84BYHs1niBgx5Chd6Mx6u2E5MHyxWigk490Tjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827164;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F8vOEDDvorPKfkwaNi3fXFN6U64ch1htT8mMDCjK5rU=;
-	b=Azezl7YvQOgg46nNuDGOPzdjTNVmkg/T9S57o6iEhJymYukoIMqdoevE+3hGcqVTgc3j
-	 1wmwarf3QjZzaix2uFlO2LrTWIgSA4OmnNIWIdXHXPloc5GGdqZ38Xv/huvegwadqksM/
-	 /EC8QzNpQMpa8SHt8sw49UOgmsa6XV+FV+JN1lCpIYV6LeXtbb5C/sRB2Ia0zskq1uskH
-	 GqfRdzpcSkgRIsxzhm6bwPLfif7R6FnKg6ibzuiIRuEHYpCMEs22O+lLftYjsycK+k8Gu
-	 V1CPoVvj3zwb8eunvlhEYjOrNvGRjFdkGm+xWSF7NnITshKjtli07Zl5I7S8ZhQqMXw==
+	bh=NsMo2N0zw8lwNflgfAJNcHY8WPwA0LxA8fh+v1MD+EI=;
+	b=4XtQrMfSxiNmYPmtx2Mgmdeox8fEi+tUT3B7QSOnWuoSf/WVzghCrW7GpjNAbsb0N0hz
+	 Th49fVlTY2QyAeqTLAKEDUpGY6m7dKizy5MNG0B3goaYbjo+oocVausSt7f9jdrncuufn
+	 nUMCrSp7vkh0SKN5518utnRXV1m4vjCGew9JkHToynbi9d5gQz0wKcZRx422YRQDWUqqN
+	 46kdAzx05agUIi9fg6Wqv46mOTUaQhpl8MfcETW3VdekG4Z+sRZoPFByVwzOP58lXGPC4
+	 4YcNMHYouKZw6WiXBCiDYbcFori1VfdlrQWH1NKiaUXfalRsAKD0EH2e/GUtQnfK9Jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLlHVmWX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VgACP9OI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681AE606AB17;
-	Wed,  4 Nov 2026 21:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7E2606AB17;
+	Wed,  4 Nov 2026 21:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLlHVmWX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C691F0093A;
-	Wed,  4 Nov 2026 21:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VgACP9OI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89F51F0093A;
+	Wed,  4 Nov 2026 21:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827162;
-	bh=F8vOEDDvorPKfkwaNi3fXFN6U64ch1htT8mMDCjK5rU=;
+	s=korg; t=1793827164;
+	bh=NsMo2N0zw8lwNflgfAJNcHY8WPwA0LxA8fh+v1MD+EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DLlHVmWXZkL01PbAqP06RcnJ/LnIOZ7m2SPCebPKK2UGOd/CXfusgNWQMdFKIdRab
-	 FBodqInQdoFDmObQjAQwt5MY1aP+X3utURFJKyoXT+54Rh1ZaSrOzUPru8aodoKkye
-	 hHZ047oLDIFvFrCt6nJKD26RtNeYttG7sx0/SxWg=
+	b=VgACP9OIsDwmkuRve7z34CUrCxuxoSIh63nZhGWQJWmfp4zyWZyO7QsQvvyEMYJSD
+	 rIJ6sk14k7aHSp6RHX3x2m6QXPQlKVbg3I3a4sZiboxCbXrr37u0KQqyiQ6l/TKdMc
+	 0c3H1Sy7jkJDgXV5L8jSj+/zYAn7RQeNdtXsiYPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kyle Zeng <kylebot@openai.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"JongHyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Harry Yoo <harry@kernel.org>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 7.3 233/547] mm/rmap: dont discard lazyfree THPs at PMD level
-Date: Wed,  4 Nov 2026 16:06:57 -0500
-Message-ID: <20261104211044.780126217@linuxfoundation.org>
+	Imre Kaloz <kaloz@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 7.3 234/547] mm/slab: sample slab_state once in kmem_cache_destroy()
+Date: Wed,  4 Nov 2026 16:06:58 -0500
+Message-ID: <20261104211044.810573887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -77,95 +69,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-commit 984c0700854e35779a2bcce6b02783e709b6efa2 upstream.
+commit 088bfdc0d7947d623f4899b9011c866e4445074d upstream.
 
-__discard_anon_folio_pmd_locked() clears a lazyfree THP's PMD before it
-determines whether the folio can be discarded, and restores it if the
-folio is dirty or has extra references.  It is done under only the PMD
-lock and the anon_vma read lock inside try_to_unmap_one() and no mmap lock
-is held.  The temporarily none PMD causes UAF.
+kmem_cache_release() tests slab_state >= FULL after kmem_cache_destroy()
+has dropped slab_mutex and unlinked the cache, and for a
+SLAB_TYPESAFE_BY_RCU cache after rcu_barrier(). If slab_late_init() runs
+before that test it sets slab_state to FULL but skips the unlinked cache,
+which never got a sysfs entry, so sysfs_slab_release() calls kobject_put()
+on a kobject that was never initialized:
 
-A parallel munmap() or mremap() is supposed to serialize with it on the
-PMD lock, but zap_pmd_range() (called by munmap()) and move_page_tables()
-(called by mremap()) do not take the lock when they see the temporarily
-none PMD and skip the PMD.  There is no more page table walk after the
-none PMD is restored:
+  WARNING: lib/kobject.c:734 at kobject_put+0x64/0x2c0, CPU#1: kworker/u8:3/55
+  kobject: '(null)' ((____ptrval____)): is not initialized, yet kobject_put() is being called.
+  refcount_t: underflow; use-after-free.
+  kobject_put+0x64/0x2c0
+  sysfs_slab_release+0xc/0x20
+  kmem_cache_destroy+0x104/0x1e0
+  bioset_exit+0x13c/0x1e0
+  disk_release+0x54/0x140
+  put_disk+0x18/0x40
+  floppy_async_init+0xbec/0xd10
 
-- munmap(): free_pgtables() waits in unlink_anon_vmas() for the anon_vma
-  lock, then free_pmd_range() drops the restored PMD as bad without
-  removing the rmap, so the folio keeps a stale mapcount.
+slab_state >= FULL asks whether the cache has a kobject, which cache
+creation skips while slab_state <= UP. UP is the state just below FULL,
+so a false sample cannot skip a kobject_put() that was owed.
 
-- whole-VMA MREMAP_DONTUNMAP: dontunmap_complete() unlinks the source VMA
-  from its anon_vma while the restored PMD still maps the folio.
+Seen on sparc64 at boot, where the asynchronous floppy init tears down
+its bio slab while the late initcalls are running.
 
-- plain mremap(): the THP is not moved but unmapped, so the THP's data is
-  lost.
+Sample slab_state once, under slab_mutex which slab_late_init() holds
+when it sets FULL, and use the result for both the unlink and the
+release.
 
-In the first two cases, the folio stays mapped, but no VMA that maps it is
-linked to its anon_vma.  When the anon_vma is freed, it is still reachable
-when one rmap walks the folio.  Racing lazyfree reclaim against
-MREMAP_DONTUNMAP as an unprivileged user reproduces a KASAN use-after-free
-in folio_lock_anon_vma_read() as reported in the Closes link.
+The history of this problem dates back to v3.2:
 
-One solution is to use an invalidated PMD instead of a cleared one until
-the discard is committed, but it needs arch fixes first.
-1. GUP-fast still follows an invalidated PMD on riscv, LoongArch and s390.
-2. sparc64 miscounts thp_pte_count when an invalidated PMD is set again or
-   cleared.
+  Commit 69cb8e6b7c29 ("slub: free slabs without holding locks") in
+  v3.2 moved sysfs_slab_remove() outside slub_lock and introduced
+  a race condition between kmem_cache_destroy() and slab_sysfs_init().
 
-To keep the fix simple for backport, stop discarding lazyfree THPs at PMD
-level instead. try_to_unmap_one() splits the PMD and discards the folio at
-PTE level.
+  Commit 945cf2b6199be ("mm/sl[aou]b: Extract a common function for
+  kmem_cache_destroy") in v3.7 accidentally closed the race while
+  extracting a common implementation for kmem_cache_destroy().
 
-unmap_huge_pmd_locked() and __discard_anon_folio_pmd_locked() are left in
-place, unused, to minimize this fix for backport and the invalidated PMD
-approach is planned as a follow-up series to use them again.
+  Commit 5413dfba88d6 ("slub: drop mutex before deleting sysfs entry")
+  in v3.8 re-opened the race by dropping slab_mutex around
+  sysfs_slab_remove() in __kmem_cache_shutdown(), to avoid a lockdep
+  splat between slab_mutex and the sysfs lock.
 
-Link: https://lore.kernel.org/20261012-lazyfree-stable-fix-v2-1-6387d6e30063@nvidia.com
-Fixes: 735ecdfaf4e8 ("mm/vmscan: avoid split lazyfree THP during shrink_folio_list()")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Closes: https://lore.kernel.org/r/20261009165214.40212-2-kylebot@openai.com
-Reviewed-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: JongHyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-  Link: https://lore.kernel.org/CADQRuqvXQ=YE=7T3oR66vTxE33pi=ygEeZKPTOU=cALZL0Figw@mail.gmail.com
-Assisted-by: LLM
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
+  Commit 657dc2f97220 ("slab: remove synchronous rcu_barrier() call in
+  memcg cache release path") in v4.11 shifted from synchronous
+  rcu_barrier() to asynchronous RCU work for SLAB_TYPESAFE_BY_RCU caches.
+  That commit, again, accidentally closed the race by moving
+  sysfs_slab_release() to shutdown_cache(), but only for
+  !SLAB_TYPESAFE_BY_RCU caches because destruction of
+  SLAB_TYPESAFE_BY_RCU caches is done in an RCU work.
+
+  Commit 0495e337b703 ("mm/slab_common: Deleting kobject in
+  kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock") in
+  v6.0 re-introduced the race for !SLAB_TYPESAFE_BY_RCU caches.
+
+Fixes: 69cb8e6b7c29 ("slub: free slabs without holding locks")
+Fixes: 5413dfba88d6 ("slub: drop mutex before deleting sysfs entry")
+Fixes: 0495e337b703 ("mm/slab_common: Deleting kobject in kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock")
+Cc: stable@vger.kernel.org
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://patch.msgid.link/20261014150844.8536-1-kaloz@kernel.org
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/rmap.c |   11 -----------
- 1 file changed, 11 deletions(-)
+ mm/slab_common.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -2275,17 +2275,6 @@ static bool try_to_unmap_one(struct foli
- 		}
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -515,10 +515,10 @@ EXPORT_SYMBOL(kmem_buckets_create);
+  * and release of the kobject does not need slab_mutex or cpu_hotplug_lock
+  * protection. So they are now done without holding those locks.
+  */
+-static void kmem_cache_release(struct kmem_cache *s)
++static void kmem_cache_release(struct kmem_cache *s, bool sysfs_ready)
+ {
+ 	kfence_shutdown_cache(s);
+-	if (__is_defined(SLAB_SUPPORTS_SYSFS) && slab_state >= FULL)
++	if (__is_defined(SLAB_SUPPORTS_SYSFS) && sysfs_ready)
+ 		sysfs_slab_release(s);
+ 	else
+ 		slab_kmem_cache_release(s);
+@@ -533,6 +533,7 @@ void slab_kmem_cache_release(struct kmem
  
- 		if (!pvmw.pte) {
--			if (folio_test_lazyfree(folio)) {
--				if (unmap_huge_pmd_locked(vma, pvmw.address, pvmw.pmd, folio))
--					goto walk_done;
--				/*
--				 * unmap_huge_pmd_locked has either already marked
--				 * the folio as swap-backed or decided to retain it
--				 * due to GUP or speculative references.
--				 */
--				goto walk_abort;
--			}
--
- 			if (flags & TTU_SPLIT_HUGE_PMD) {
- 				/*
- 				 * We temporarily have to drop the PTL and
+ void kmem_cache_destroy(struct kmem_cache *s)
+ {
++	bool sysfs_ready;
+ 	int err;
+ 
+ 	if (unlikely(!s) || !kasan_check_byte(s))
+@@ -580,10 +581,18 @@ void kmem_cache_destroy(struct kmem_cach
+ 
+ 	list_del(&s->list);
+ 
++	/*
++	 * slab_late_init() sets slab_state to FULL under slab_mutex and adds
++	 * sysfs entries only for caches still on the list. Sample the state
++	 * here, so that a cache unlinked before that point is not handed to
++	 * sysfs_slab_release() with an uninitialized kobject.
++	 */
++	sysfs_ready = slab_state >= FULL;
++
+ 	mutex_unlock(&slab_mutex);
+ 	cpus_read_unlock();
+ 
+-	if (slab_state >= FULL)
++	if (sysfs_ready)
+ 		sysfs_slab_unlink(s);
+ 	debugfs_slab_release(s);
+ 
+@@ -593,7 +602,7 @@ void kmem_cache_destroy(struct kmem_cach
+ 	if (s->flags & SLAB_TYPESAFE_BY_RCU)
+ 		rcu_barrier();
+ 
+-	kmem_cache_release(s);
++	kmem_cache_release(s, sysfs_ready);
+ }
+ EXPORT_SYMBOL(kmem_cache_destroy);
+ 
 
 
