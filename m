@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829302;
-	b=t5Zy4Gk+A5sCf9O2iwUFz1F/5UDziMgQ04u6A6sTyHNsruG9vB7UdLFO3nPHqeeg+1t8
-	 XAUH5s5SfuGroRdVtuzz+GPRC/tzhw2IcS9FHd0KnMzxKsp/IFMLCaXeVKdm8nYkunVUZ
-	 nNls9njsRPRoocfZnbbYRqmoiFygZZA1d+D8FuTLCJRYeo1kvRSf3s7uP70D9JZZ/MlTv
-	 3n/S9catp6nX4Wveebbx5x4YVgjfjF/OIxHW0A/6kF4BuzLZE2N6je5NbJMJXHwEzsiVY
-	 2F8JnSGXsOfDejEhrMYWj7AhrRe9nZchblOVyz8Ljb/bSrIcJXBWP72dtqQtai8YHfA==
+	t=1793829304;
+	b=3Zm4sSp1zrXcm4XmLLG89ZIHXuukMCmxIGaQZh1xCj3RpFN6kmqcGdYCmaL8HCK2PCcT
+	 kbD3c2ZzvFI287nTt/TleP+flf0LBwnBORXrIROK0g670FQXijN6UCbDUKHPlc1G1ikTx
+	 B0eSCa4PrUHHTPViRZoy8AIEYENsF3ZeL3Lr6JUGIEGaeIWLZLbHWqT9m/8pxpoT1H5yh
+	 0+WUq4vjjN3pzULYvpIaFKs9pIo7RWRmseMybxvFm4DcvfTKkeCzLm4PmzhJrvqT3IRq9
+	 yUNSdeaKdh8qN2vq0B+i6nNaH9MXthPgiW6B9UNStO8tTWXgpNJN5v73dXrbtWfSCDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829302;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=vI2av7/GmDzqR/DF/KwlBljWN818p/BbasvHVTqU2iM=;
-	b=CEiuevLE9VHwZk51Jexz3l6Fm6blSa1/HOfDmRxun2C4Wi3K/6XF9zvV0a8BWTKVAUue
-	 qJgNy7nNcLbyENvQddjSn3rZPlrPVulqbBo1ksRc+mo30d5C/AnJqtHYplYGIZrVJWdNP
-	 aBrOtlUjxX1CA1GYkUwhPAqnxNpJ+k/0PeQUU2Wvo2lAE4+/nxlTYK0xlaBQ7PYS7fBVh
-	 FuUh0uc33ChW5udbBBkWGeL4b8bsPOUwAS/RGHRQs1n7Scsb80EfV1x72326U/SNX9TXH
-	 z9ThTYuuFcYaYLhhoER9JRwu1kKCaedEz3NtWRmt1Alm1YQDSa1FxwMDmCSVwXwuZYg==
+	bh=F8pBa5XnzFYUc2phPP8VjBPE5SB5fsbCxXRG+1A5HXQ=;
+	b=VL+gqkylbkAccjYcVUrMvahfRSBES0+9OIpkimIQCwFCHV6TQFG9H3R+hFe8mZOKWyjh
+	 2GFbpk1WwOSLvewWtoESUqo8wS0kEPkmPyp9vbrsARbZPhtbu6GzrnkLoAzcpkR8c9Vgh
+	 xzzsPKtTmfOJzXOLLHZ4ITv4VfNe9rMWHz7yKx1y9jSyApspC1+QHo9+WFGfHcNV7l1/M
+	 VOG7f0amLIyVVwr5smeL/4vNTa8j99yC0bayR7GcitHBlnxwKcSGzOgRxyTimkCfxdYIf
+	 1762BJux6jgHdgkHvSeAUg9tRHakfbty/Xw7GXzqVbU+qJtFzfBvgdtQdnGDHicjyyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6ctmB61;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AmNz5YcN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9758A6086615;
-	Wed,  4 Nov 2026 21:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207A16074911;
+	Wed,  4 Nov 2026 21:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6ctmB61
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473BE1F00A16;
-	Wed,  4 Nov 2026 21:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AmNz5YcN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B851F00919;
+	Wed,  4 Nov 2026 21:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829302;
-	bh=vI2av7/GmDzqR/DF/KwlBljWN818p/BbasvHVTqU2iM=;
+	s=korg; t=1793829304;
+	bh=F8pBa5XnzFYUc2phPP8VjBPE5SB5fsbCxXRG+1A5HXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6ctmB61kPQAAFS4rXWnzoobM8x/j2AAJuSfj5sxjvyotWFK0NVBqGRu9s8JL2511
-	 o49ckTWmVVCswSLjcF37eHypQK/xSaFwOlxP2wM4QuxgKo7vXHCBAd81EZ9/6PpyXY
-	 bMBFNSrjOOIabHKTV2WWEgRbF1Z16CsprXtKupGw=
+	b=AmNz5YcN4kpkVexy/95R8j4nnGb5x4sv22lDKlQLT+jtrwr160FYdkbzJqmQACpkZ
+	 mnc0VwcAeNh1OsyjyZUCzcIRj0xgyhUiQCJzMjdwmpYe/Kq3madygT4dOTVU/CPQUk
+	 CkP2b5RsYmGp7LOgD5cFgI6B8a2s4yiMuzFJ9tZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Joe Simmons-Talbott <joest@redhat.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0039/1005] regmap: maple: Workaround for another false-positive compiler warning
-Date: Wed,  4 Nov 2026 15:56:12 -0500
-Message-ID: <20261104211044.668318069@linuxfoundation.org>
+Subject: [PATCH 6.18 0040/1005] selftests/cgroup: Adjust cpu test duration based on HZ
+Date: Wed,  4 Nov 2026 15:56:13 -0500
+Message-ID: <20261104211044.696180484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,38 +70,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+From: Joe Simmons-Talbott <joest@redhat.com>
 
-[ Upstream commit dffd32eb2b0e714a8ae23f98518ad7152cb06369 ]
+[ Upstream commit a2703c2980c0776e9be7d8f9e144afd054dddb12 ]
 
-Similar to the issue fixed in commit 542440fd7b30 ("regmap: maple: work
-around gcc-14.1 false-positive warning"), I see an uninitialized warning
-for upper_index and upper_last.
+For lower HZ values a quota of 1000us is much lower than the amount
+of microseconds per tick which makes the tests test_cpucg_max and
+test_cpugc_max_nested fail. Increase the test duration to accommodate
+for lower HZ values.
 
-Happens with arc-linux-gnu-gcc (Debian 15.3.0-1) 15.3.0 on an
-allmodconfig for ARCH=arc.
-
-Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20260626060427.2548578-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/lkml/20260625203307.1114538-1-joest@redhat.com/
+Signed-off-by: Joe Simmons-Talbott <joest@redhat.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../cgroup/lib/include/cgroup_util.h          |  1 +
+ tools/testing/selftests/cgroup/test_cpu.c     | 43 ++++++++++++++++---
+ 2 files changed, 38 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 38a648efa6069..040fe03f66143 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -112,7 +112,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 	unsigned long *entry, *lower, *upper;
- 	/* initialized to work around false-positive -Wuninitialized warning */
- 	unsigned long lower_index = 0, lower_last = 0;
--	unsigned long upper_index, upper_last;
-+	unsigned long upper_index = 0, upper_last = 0;
- 	int ret = 0;
+diff --git a/tools/testing/selftests/cgroup/lib/include/cgroup_util.h b/tools/testing/selftests/cgroup/lib/include/cgroup_util.h
+index 7ab2824ed7b54..b9cd00e0e8349 100644
+--- a/tools/testing/selftests/cgroup/lib/include/cgroup_util.h
++++ b/tools/testing/selftests/cgroup/lib/include/cgroup_util.h
+@@ -8,6 +8,7 @@
  
- 	lower = NULL;
+ #define MB(x) (x << 20)
+ 
++#define NSEC_PER_USEC	1000L
+ #define USEC_PER_SEC	1000000L
+ #define NSEC_PER_SEC	1000000000L
+ 
+diff --git a/tools/testing/selftests/cgroup/test_cpu.c b/tools/testing/selftests/cgroup/test_cpu.c
+index d54e2317efff2..de60967279668 100644
+--- a/tools/testing/selftests/cgroup/test_cpu.c
++++ b/tools/testing/selftests/cgroup/test_cpu.c
+@@ -639,6 +639,31 @@ test_cpucg_nested_weight_underprovisioned(const char *root)
+ 	return run_cpucg_nested_weight_test(root, false);
+ }
+ 
++/*
++ * Best effort attempt to get the kernel's HZ value from the config.
++ * Return the HZ value if found otherwise return 1000 (the default) to
++ * indicate failure.
++ */
++static long
++get_config_hz(void)
++{
++	long hz = 1000;
++	FILE *f;
++	char cmd[256] = "zcat /proc/config.gz 2>/dev/null | grep '^CONFIG_HZ='";
++
++	f = popen(cmd, "r");
++
++	if (!f)
++		return hz;
++
++	if (fscanf(f, "CONFIG_HZ=%ld", &hz) == EOF)
++		goto out;
++
++out:
++	pclose(f);
++	return hz;
++}
++
+ /*
+  * This test creates a cgroup with some maximum value within a period, and
+  * verifies that a process in the cgroup is not overscheduled.
+@@ -646,15 +671,18 @@ test_cpucg_nested_weight_underprovisioned(const char *root)
+ static int test_cpucg_max(const char *root)
+ {
+ 	int ret = KSFT_FAIL;
++	long hz = get_config_hz();
+ 	long quota_usec = 1000;
+ 	long default_period_usec = 100000; /* cpu.max's default period */
+ 	long duration_seconds = 1;
+ 
+-	long duration_usec = duration_seconds * USEC_PER_SEC;
++	long duration_usec;
+ 	long usage_usec, n_periods, remainder_usec, expected_usage_usec;
+ 	char *cpucg;
+ 	char quota_buf[32];
+ 
++	duration_usec = duration_seconds * USEC_PER_SEC * 1000 / hz;
++
+ 	snprintf(quota_buf, sizeof(quota_buf), "%ld", quota_usec);
+ 
+ 	cpucg = cg_name(root, "cpucg_test");
+@@ -670,8 +698,8 @@ static int test_cpucg_max(const char *root)
+ 	struct cpu_hog_func_param param = {
+ 		.nprocs = 1,
+ 		.ts = {
+-			.tv_sec = duration_seconds,
+-			.tv_nsec = 0,
++			.tv_sec = duration_usec / USEC_PER_SEC,
++			.tv_nsec = duration_usec % USEC_PER_SEC * NSEC_PER_USEC,
+ 		},
+ 		.clock_type = CPU_HOG_CLOCK_WALL,
+ 	};
+@@ -710,15 +738,18 @@ static int test_cpucg_max(const char *root)
+ static int test_cpucg_max_nested(const char *root)
+ {
+ 	int ret = KSFT_FAIL;
++	long hz = get_config_hz();
+ 	long quota_usec = 1000;
+ 	long default_period_usec = 100000; /* cpu.max's default period */
+ 	long duration_seconds = 1;
+ 
+-	long duration_usec = duration_seconds * USEC_PER_SEC;
++	long duration_usec;
+ 	long usage_usec, n_periods, remainder_usec, expected_usage_usec;
+ 	char *parent, *child;
+ 	char quota_buf[32];
+ 
++	duration_usec = duration_seconds * USEC_PER_SEC * 1000 / hz;
++
+ 	snprintf(quota_buf, sizeof(quota_buf), "%ld", quota_usec);
+ 
+ 	parent = cg_name(root, "cpucg_parent");
+@@ -741,8 +772,8 @@ static int test_cpucg_max_nested(const char *root)
+ 	struct cpu_hog_func_param param = {
+ 		.nprocs = 1,
+ 		.ts = {
+-			.tv_sec = duration_seconds,
+-			.tv_nsec = 0,
++			.tv_sec = duration_usec / USEC_PER_SEC,
++			.tv_nsec = duration_usec % USEC_PER_SEC * NSEC_PER_USEC,
+ 		},
+ 		.clock_type = CPU_HOG_CLOCK_WALL,
+ 	};
 -- 
 2.53.0
 
