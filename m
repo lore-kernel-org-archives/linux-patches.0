@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831857;
-	b=y/YE5BZW8i1vLRl8ShmsXXyDw1VO4/Zn06sQbqtfOPkiv3UdxfuHS9RM4kC7ey4b3b6g
-	 YA5uosNW1UajhMGJYnc+pHo354yfFSSIZv1dHfArRqs6If2hxtUQ8jdwkvs/nQ0dFh93X
-	 uIpX2Hqcuib/+EQrqtsnjA6LMdDzpY/3qDWMVkQNW6rExz5P2zLu47MPLngwse/OrhoQl
-	 H8WioqAXz8+EnqcDJQR3lBhIALFVRDFYTbBH9pCfeMxFMF82MT9d297bZ3OWBvmKGeFwc
-	 FGUgFvuGPcwkx3R7vvpn+tWMAHpCO5CF7J4JPe1Nm//9cAkfMHLtAFO1uZkneOc5PWQ==
+	t=1793831858;
+	b=fW+nwYsFJRH+xNuCarNjG8dtlY2+VI7RgCre3KgOVdYfb0xQytXmYtP38jOzI2Rth6yB
+	 w8pTt/b8ckm7x080KHBbN1AWXkzZeKCw9gCxoF0EITHoeroMsJFlqojo4EKvySgGcH2p4
+	 lkTtbP7siICg0+BCmuBD1HvX1LPBF4talXWPjLsrQvktMjO0R4LsSO/pR7SlKKdTjx4Pk
+	 yJ+YCrd7G+pkRHZiD1usLAvjyGr1dmnHgG5L/XpTcWRK+nEKT6vYnZ1bxoqZcLRh61UI+
+	 9NbeDbKIrjA+UV2xPPoakfAAw498UxL4TRFhpFBD7q/aIQ59aFEKMZfEytlifK6s3Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831857;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oDaShTwZP3Wf2FtO1+MiWuowyOVXZmzWIpBNDus5T4Y=;
-	b=wZKqilr1yP64RbanV0gZ+mYwYIlGcqS72rsm7W0dfzYAveCkHytAYUt5bMg0lDwu5f3e
-	 uFt6i6OpE9hmbc6e4SED9Wi2cKEcbhhqLJvDVNU5g/0i6KysEvnVwEhsJ3Dz/CIxI+8rO
-	 LFCIP7iWixuIZBKxVnTd6DATyFrTFYxjY0NM0PNT42hC6MzHh0VkfV9iVIQgu0UcGe2i1
-	 F9RDs1rqN6j/GEpDoumPPdMaRtUtA2YP+F+irsPRQ8bhGioA+VU2tnSzQ4aypP6m9xvyf
-	 g5zacjO5DA7ywSmNKu0Y9lmRwu5GK+znP54ccj+an45CyJxqag4oEkwM+4M6dPWve3g==
+	bh=RrXpXGjiItVPmp3gku5s12yBocuRHd9Bu+HthuGvQrs=;
+	b=vmQ2QdrXf2eYf68Wy3lAb0JUouGHiRQ5gqphrqwcpaT604mVPfJZFYRL+dPY0KwJgcyK
+	 2o0MJEQ6y78DdoS8J6dcybeh2esM5SpcY3gz4zFWCXS+7FaeyWMe+GnLtzD1h+r4O7d/3
+	 shi+1o6yN15jB7LRrQcHwZg8Ags0HCsfq5u465mucWC1O4t808k70ZzwE0lJShvmobfBB
+	 DM01umm5AQDKpIXJ2VjHjj0WD6mUFIdrZ5TXZU6rBLNaim4c0mN9Mfmg4w8neM+mj08vN
+	 wnl2c3APHwGx3dwHWAUvbaN6CAZ/WJYd825smIns246Bv+VsG6nkoHQVh7R9dsDzz1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svE0gnhS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r4rgZCUp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143A0606A328;
-	Wed,  4 Nov 2026 22:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C4B606AB27;
+	Wed,  4 Nov 2026 22:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svE0gnhS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C1D1F000C1;
-	Wed,  4 Nov 2026 22:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r4rgZCUp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5481F00919;
+	Wed,  4 Nov 2026 22:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831856;
-	bh=oDaShTwZP3Wf2FtO1+MiWuowyOVXZmzWIpBNDus5T4Y=;
+	s=korg; t=1793831858;
+	bh=RrXpXGjiItVPmp3gku5s12yBocuRHd9Bu+HthuGvQrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=svE0gnhS0B3/O3ZSDNKhRLCIBhUmNgTk2t/tXB1q/BB+153wILnTdP1Rj27NdMwgx
-	 hnD66tL5Jcw+WmyT32vijO5eHwojibke2qnmO9IQvnLL9udoOvotY1eDXDvMmoJV/j
-	 vlTL5Z2dv0Lnj195XYw5g6Jo5cbjidlJzgf3IT1U=
+	b=r4rgZCUpzSXoCFSloBmoLOAbAEt2Nz7Twa69opKDbmqbbN4z7aQvUwbAjwxK1IrF4
+	 Z4XOPv/XtTnISiQ0IkcoNANbfnPHOBWlKW6PNXHQpP/o06ozB8ZmyQzVszD9i/3dgf
+	 kNqB0F+FfvhNlBkkPm9MTUQqCQpJtKz26TaHNvIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>
-Subject: [PATCH 6.18 0940/1005] KVM: TDX: Check if there is valid exit infos based on vp_enter_ret
-Date: Wed,  4 Nov 2026 16:11:13 -0500
-Message-ID: <20261104211109.452458036@linuxfoundation.org>
+	Gabor Tanz <gabor.tanz@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 0958/1005] HID: quirks: Always poll the Anne Pro 2 with product ID a292
+Date: Wed,  4 Nov 2026 16:11:31 -0500
+Message-ID: <20261104211109.921316208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,82 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Gabor Tanz <gabor.tanz@gmail.com>
 
-commit 0966c881ea13be5ec89820c185de4d55568e80ed upstream.
+commit cbc13a78a89d087252947d0a51048e576cfcb3ef upstream.
 
-Check if there is valid exit info based on vp_enter_ret instead of relying
-on the clobbered Exit Reason, in tdx_get_exit_info().
+The wired Anne Pro 2 identifying as 04d9:a292 stops delivering keyboard
+input after a period of inactivity. Unplugging and reconnecting the
+keyboard restores input.
 
-Current KVM uses "Exit Reason is not equal to the synthesized invalid
-Exit Reason, -1u," as the condition to identify there is a real TD Exit
-and valid exit infos.  However, there is one issue with this approach:
-KVM updates the Exit Reason to the synthesized invalid Exit Reason for
-real EPT MISCONFIG as well.  This is a false positive for real EPT
-MISCONFIG, which has valid exit infos.
+Keeping ObinsKit running prevents the problem. A read-only userspace
+reader that keeps USB HID interface 1 open also prevents it, as does
+usbhid.quirks=0x04d9:0xa292:0x00000400 without either application running.
 
-Though the issue can be addressed by changing the handling for real EPT
-MISCONFIG to not update the Exit Reason to the synthesized one, relying
-on the clobbered Exit Reason itself is brittle.  Instead, check
-vp_enter_ret directly to identify if it is a valid Exit Reason.
+Commit ca28aff0e1dc ("HID: quirks: Always poll Obins Anne Pro 2
+keyboard") added HID_QUIRK_ALWAYS_POLL for product ID a293.
+The variant identifying as 04d9:a292 exhibits the same symptom.
+Apply the quirk to this product ID as well.
 
-Fixes: da407fe45908 ("KVM: TDX: Handle EPT violation/misconfig exit")
 Cc: stable@vger.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-3-xiaoyao.li@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Assisted-by: LLM
+Signed-off-by: Gabor Tanz <gabor.tanz@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/tdx.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/hid/hid-ids.h    |    1 +
+ drivers/hid/hid-quirks.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -885,21 +885,27 @@ static __always_inline u32 tdcall_to_vmx
- 	return EXIT_REASON_TDCALL;
- }
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -719,6 +719,7 @@
+ #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A081	0xa081
+ #define USB_DEVICE_ID_HOLTEK_ALT_MOUSE_A0C2	0xa0c2
+ #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096	0xa096
++#define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292	0xa292
+ #define USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293	0xa293
  
--static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-+static __always_inline bool tdx_is_exit_reason_valid(u64 vp_enter_ret)
- {
--	struct vcpu_tdx *tdx = to_tdx(vcpu);
--	u32 exit_reason;
--
--	switch (tdx->vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
-+	switch (vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
- 	case TDX_SUCCESS:
- 	case TDX_NON_RECOVERABLE_VCPU:
- 	case TDX_NON_RECOVERABLE_TD:
- 	case TDX_NON_RECOVERABLE_TD_NON_ACCESSIBLE:
- 	case TDX_NON_RECOVERABLE_TD_WRONG_APIC_MODE:
--		break;
-+		return true;
- 	default:
--		return -1u;
-+		return false;
- 	}
-+}
-+
-+static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-+{
-+	struct vcpu_tdx *tdx = to_tdx(vcpu);
-+	u32 exit_reason;
-+
-+	if (!tdx_is_exit_reason_valid(tdx->vp_enter_ret))
-+		return -1u;
- 
- 	exit_reason = tdx->vp_enter_ret;
- 
-@@ -2153,7 +2159,7 @@ void tdx_get_exit_info(struct kvm_vcpu *
- 	struct vcpu_tdx *tdx = to_tdx(vcpu);
- 
- 	*reason = tdx->vt.exit_reason.full;
--	if (*reason != -1u) {
-+	if (tdx_is_exit_reason_valid(tdx->vp_enter_ret)) {
- 		*info1 = vmx_get_exit_qual(vcpu);
- 		*info2 = tdx->ext_exit_qualification;
- 		*intr_info = vmx_get_intr_info(vcpu);
+ #define USB_VENDOR_ID_IMATION		0x0718
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -102,6 +102,7 @@ static const struct hid_device_id hid_qu
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FIGHTING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HAPP, USB_DEVICE_ID_UGCI_FLYING), HID_QUIRK_BADPAD | HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A096), HID_QUIRK_NO_INIT_REPORTS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A292), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HOLTEK_ALT, USB_DEVICE_ID_HOLTEK_ALT_KEYBOARD_A293), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_LOGITECH_OEM_USB_OPTICAL_MOUSE_0A4A), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_HP, USB_PRODUCT_ID_HP_ELITE_PRESENTER_MOUSE_464A), HID_QUIRK_MULTI_INPUT },
 
 
