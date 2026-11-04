@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831067;
-	b=aq4T/u0sOt56fYVPra3uQf3natWHiolthqInVqA6qwhxzcwleCpWu0plM01i4KIKd2IR
-	 CgII0Ojng7D1LWJK57cmTS1kywaIbVnHa1F9lgcigW2AZ91sOmc9yK7niq38cwuEquq/h
-	 W2yLxSm30gAiBQp3RINU3LkWZ3c/XxXX0NqKmQug/2258bM0twQAVkvdl4ztWgt+DiML1
-	 B3kCxQfj/DuqvSUKjhsMNga5JwqtS8o1Ol51URLw4ZjDkjLH3qsRk7SemBFheiTmiXP0T
-	 cMUzKFmyjJ81j5svZrBwJ1AM3jyXhKmMXWUg5hQjzngepTH9RN0BKUH6Knj1XNRPotQ==
+	t=1793831069;
+	b=ocoKM8J5dmbJd0Flxim9RX+OJ6yVFvpTGUn5PWd+03NqWr8XFJHJXLGBEv2uVIiBL5rI
+	 IhRlq7gQg8VUnlYLMOgoWyG7GZai7jCYGTez858iBBgXPVK7jJG7/ZxJLJjhicJzOYVfr
+	 qCiZYX3/dVddrSW+5XGyLgFhMGwC3+sRrwz5vYZnN9zI9Tt+FpGEFKog/KghKe31FtyJC
+	 PxfidsGvzp7iYyE64GfidQtRFgFccFWRZ4mJQQ5i2fzJ5c6TrMDU5KxBxZKWRdFLPi6Kj
+	 yxb4Ye2FJtuI2xw15NUZ0ZyIJZAZmhc8xBBGrMKwi0TgJzrmobhaZJoP/w59Ji5njXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=rWc5HqNFz9UPIXWk0vwEPwcKkWAhEgINcqIU/FuNCyo=;
-	b=cMnu2hYUGRZ3egy4sb0UUot5sbSgXkghkU47QTCqRoLi3a7wbKen3QW9ZtZwF6FdlSAD
-	 x1hNpuoRE8gLlWTKjfQrg3U+r8bKRYk5iSzXEBTYXksCFETHLg5RYFFz3sMjkzPn2Gm9b
-	 wjoqTFPtDRUCpAcQmkVskHEVRn3stegg/KC4DhS5kfcYHYBDQ+rQboNFA11b5g7Sz53UX
-	 zHC9Fn45ihLbqC9SwyAvB1/Ir+8tx7PDlh+OxPlQ3x8HE/YWIj0/CEAETgFl5BqRi71zI
-	 M2pz0UC9hK3yzMrgNxOVZVz1PIDwhLt2sFu378Kw1LdcZtQ548YfBdCdFxaOELGTRXA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=2WBJmRhQtFLFeDBdbE2pbI/AYIGVTugIWQJRB4Uzg7k=;
+	b=VlmgNinL1ucyCF5hdtVV+8tD+Qc7QCK38l25ORXXQmljQ0s/vwG45UXpncZwjQuIzf6E
+	 Gy7L6ppOj9XfQpicif29buJA7qtryEiWM5giAWduOcbmxT2x8vH52sNZtIumrk5Cq0mvv
+	 JmYKqbiyOkDegGoAEx0dAbyq+G8km4kfWKEMmAVb8i8ORXvT3u1MXEN/sN1GQlTM5yGLD
+	 Lhyp3mG8hfqOiIvboopdAxuVm00LVSnV33TswgAZZRT57vjPA4b5VZss3IjEI0J8c3YOY
+	 b4m7b0w4/z7lA9zX1lfzhoeqJ+925zM2VkXrL3kxShHjFCn0dZKQDXEoz2sdagluF8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gxjpeWpF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUhZirMH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F991606A32C;
-	Wed,  4 Nov 2026 22:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99E3606A32C;
+	Wed,  4 Nov 2026 22:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gxjpeWpF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4331F000C1;
-	Wed,  4 Nov 2026 22:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUhZirMH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300B61F00919;
+	Wed,  4 Nov 2026 22:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831066;
-	bh=rWc5HqNFz9UPIXWk0vwEPwcKkWAhEgINcqIU/FuNCyo=;
+	s=korg; t=1793831068;
+	bh=2WBJmRhQtFLFeDBdbE2pbI/AYIGVTugIWQJRB4Uzg7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gxjpeWpFfcdsp+QcaHt3NQOMsq99ovGlQUSohUdIQTAQH8qSZnqbcVbcDDlurLSPB
-	 +Xov3l2lr+VpQhcrDOSYm7rsdcccPKIO+FylC26viEDYhDJjyfdEszMhrkgbbdjtsP
-	 cW0IieYeEOcpYXxkYQQwx/VgdPsb/mfXyjCX2haU=
+	b=YUhZirMHOMQW8frT+w4wWFOniBrzqknJILKAP2yfRRBwvkthnF7XUzUIIlsmtdk8n
+	 zJ4ADmM/nZPZFH3xY/PV3EnMv+11fT4UoI6o/vVdaXyw+FItIYdDUvi2t9opX+yBPp
+	 y5GMMXyAHk8kI37gzc2lQgwexOLcioQv6qCzbewc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Ortiz <letargopausado@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0485/1005] ASoC: amd: yc: Add DMI quirk for Lenovo V15 G6 ARP
-Date: Wed,  4 Nov 2026 16:03:38 -0500
-Message-ID: <20261104211057.567633241@linuxfoundation.org>
+Subject: [PATCH 6.18 0486/1005] HID: universal-pidff: Add support for Turtle Beach VelocityOne Race
+Date: Wed,  4 Nov 2026 16:03:39 -0500
+Message-ID: <20261104211057.593508088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,56 +62,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Ortiz <letargopausado@gmail.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit d395e1b62d9694f2e4add9122f8d473eacd374aa ]
+[ Upstream commit 53f7f7955a684e820bdd6bd6792c45c4b434f637 ]
 
-The Lenovo V15 G6 ARP (product name 83UU) uses the ACP6x PDM interface
-for its internal digital microphone array. Its firmware exposes neither
-the AcpDmicConnected _DSD property nor the _WOV method, so acp6x_probe()
-falls through to the DMI check and returns -ENODEV, leaving
-acp_yc_mach.0 unbound and no capture device registered.
+Add usb VID and device PID to hid-ids.h
 
-Add a DMI quirk entry for this model. With it, the machine driver binds
-and the DMIC capture device is created:
-
-  acp_yc_mach acp_yc_mach.0: Enabling ACP DMIC support via DMI
-  card 2: acp6x [acp6x], device 0: DMIC capture dmic-hifi-0
-
-Capture was verified working with arecord and PipeWire.
-
-Signed-off-by: Daniel Ortiz <letargopausado@gmail.com>
-Link: https://patch.msgid.link/20260920011920.2482786-1-letargopausado@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/hid-ids.h             | 3 +++
+ drivers/hid/hid-universal-pidff.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 507c07efc069b..209ac43f9e31e 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -374,6 +374,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83UU"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index ca5c62f29aebe..69b1b0f98c99d 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1415,6 +1415,9 @@
+ #define USB_DEVICE_ID_ASUS_MD_5110	0x5110
+ #define USB_DEVICE_ID_TURBOX_TOUCHSCREEN_MOSART	0x7100
+ 
++#define USB_VENDOR_ID_TURTLE_BEACH	0x10f5
++#define USB_DEVICE_ID_TB_VELOCITYONE_RACE	0x7077
++
+ #define USB_VENDOR_ID_TWINHAN		0x6253
+ #define USB_DEVICE_ID_TWINHAN_IR_REMOTE	0x0100
+ 
+diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
+index 60180467a0bfd..f1854cfe42d0d 100644
+--- a/drivers/hid/hid-universal-pidff.c
++++ b/drivers/hid/hid-universal-pidff.c
+@@ -187,6 +187,7 @@ static const struct hid_device_id universal_pidff_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_FORTE) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_LA_PRIMA) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASETEK, USB_DEVICE_ID_ASETEK_TONY_KANAAN) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_TURTLE_BEACH, USB_DEVICE_ID_TB_VELOCITYONE_RACE)},
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(hid, universal_pidff_devices);
 -- 
 2.53.0
 
