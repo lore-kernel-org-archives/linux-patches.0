@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829582;
-	b=C7PfgJIjAnlWwef185M9xom1ZxZdykaU2ueBl+Q+R5+f2NUBOdf/hzSQ7qAn7IwqJt0P
-	 su95QuG5pE9jnOYN3P2osiIrS8pHM0aQCevd/jO5GEBBJ5876SF+grO4bbS8uIB0RekVs
-	 bneTkTgN1E4S1WrZFPnGKmL9tqMaRl6LBEQxkOxgOpJybEJLwgz89xWN593t79THRCZv+
-	 Hpwiq0weje7/NZGr2rOSwsSDOZ1bJR73UzTdI3L8vdtAIQ4auhb+vWf4wrkAIp65BstWI
-	 kIdPNUInIjrmb9LlDvoNOF7JmFQFrXfp3vQ7+6tWIkX2u84KXkuh4a/ilHYq6p65oDA==
+	t=1793829584;
+	b=0uGDMF4INnb2mOC4RKoxPtW3mRgbKDjSiQwm4a3sZ2XzYUvdk+3HRWJOciqdGmFvLnwg
+	 2Bobn5qQgIvvRVkVS8UWYcdwxioG5Rxeb1qxehL/jH1MVS7ONHSJ/euRZZrASdMhll3BB
+	 zgNFE41qsyYQR8s5bQx1YtWAP1DyNW9t9/NBAEepJNqvwTW2+rfy7kBMzs6eIdf+izHUR
+	 p5FHS1VeDbbkfFLFE3eNnu5Kf9786z1+JxqZo23IrQFqemP6AzPmd9LX8XCoBwL/2GuMG
+	 +IC8CpUbvBlisyD2PSznOA8lm0mBAklsGHl9m7z5XXyNakjMJKygxG1fNeH0fuBbtoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829582;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s56BQbdHrHdyJ8hqPRbn4/69fy5UAuUcDsV+VPq2izs=;
-	b=SepZ8SX+JZ4ko4ZQ7A8lPAJV+qNJF9BBjD9021d2vNGb7ON1LsVLUVF2yT841Q12xWBp
-	 9b873dP2ilNYT23ggKC0OMuD7uc0bOkw1LwrMXmTD0PIwI/VyIY5+1RAAZQAQzp8w1dMn
-	 7Y1G22iJ/gBOxGhZpCA18FJMoLeQBU3qfgj8iNfaZqyzCwEZnw9S5dFRS6wfXf7gWZDaN
-	 IXCVgt5CCKtbSq8FehkW/jcN7Va/ja3KHK4mp2qmkg67v3WfFmGJpLroYno1FQXnA30G7
-	 COGEAamwgc4hE0qditA5qdUbmGyIovh8kmgQqtqiRNG0M/tLMGzTyYumS2gNO11/xBQ==
+	bh=BrR0C8SzOEu4i1Me5gvHSCxyltDwTQ37DK7okYHxaDc=;
+	b=vp1i5ywE4f7IrhRWi3rZTlSNKdo+GoWfrv2dd3Ry/58gYMKy05KqNOFmJuHpgoEn1RqM
+	 I67/UHKVQmSS5ki02+NGtkFUrA31rdRgzYPqIuENAKqnPGgGumg4OMGi7uWbQ8bBSr5ja
+	 huvcPDNsxZj1Z2/Ui7UO6PHeQPYiNAEWtBFWQj/Q/+ueeuQDMbH9vQFZ1DtB3uOSP4EQL
+	 WfuSFTXasukb0h9jyceA9q43B+j14r3Kz7a4jGmaztxsrEmXWuKLwq0R7Qeg7pQdPr01E
+	 XnCrq/bTWPKWQA5eq1j0pPQvx8DUS87KNY2nqu58UzV+tmKo+2y/bR48pZCpho0WEiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NBv9wN3+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QWo/CJMg";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0339B606A33E;
-	Wed,  4 Nov 2026 21:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A930D606B399;
+	Wed,  4 Nov 2026 21:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NBv9wN3+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEC11F00A16;
-	Wed,  4 Nov 2026 21:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QWo/CJMg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391611F000C1;
+	Wed,  4 Nov 2026 21:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829581;
-	bh=s56BQbdHrHdyJ8hqPRbn4/69fy5UAuUcDsV+VPq2izs=;
+	s=korg; t=1793829583;
+	bh=BrR0C8SzOEu4i1Me5gvHSCxyltDwTQ37DK7okYHxaDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBv9wN3+3my8vr17AVXlZcv6gnONTZnW93hS1foFiKw9MO0Hi6Q+73HOtjfWk+Ozo
-	 1oEIF5mpMHOblDiSxx2S/+JWRNgrxCDeWGI17UOfEpVv+HdfB+k99WMabTfWsuds7M
-	 glg+8UjtnfmFEaCRRUxLBBnGoznA5lokaLRhyb3c=
+	b=QWo/CJMgp3SkVozHJNX6unfEkUUx+orNYAXMREuC8J3mnJHJH9Q6NrkaDRvNep0+a
+	 EBRUWeYf+DWWm/C+G5503JRy3th/MVtrXZijy4ZnWX7lhurriFfIwFa2+WzCAVdI/Q
+	 CoU/8EkQvofWDlQZnVJTEt0E4Fx9GYgJsZoIAyaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>,
+	Thomas Renninger <trenn@suse.de>,
+	Michal Suchanek <msuchanek@suse.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0179/1005] comedi: quatech_daqp_cs: Fix sanity check in interrupt handler
-Date: Wed,  4 Nov 2026 15:58:32 -0500
-Message-ID: <20261104211048.796518015@linuxfoundation.org>
+Subject: [PATCH 6.18 0215/1005] ACPI: sysfs: Properly map BERT and CCEL data to their ACPI tables
+Date: Wed,  4 Nov 2026 15:59:08 -0500
+Message-ID: <20261104211049.836750661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,48 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Thomas Renninger <trenn@suse.de>
 
-[ Upstream commit 1bc9538df6be8dac8727179d8bcc0d880648361b ]
+[ Upstream commit e45ee607ca6f9f97a2f97be356d844a912971a16 ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+In the case of multiple BERT ACPI tables, one gets:
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing the dev->read_dev pointer which may be NULL if
-dev->attached is false.  Move the check to avoid the possible null
-pointer dereference.
+sysfs: cannot create duplicate filename '/firmware/acpi/tables/data/BERT'
 
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-12-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is because both:
+
+/firmware/acpi/tables/BERT1
+/firmware/acpi/tables/BERT2
+
+are attempted to be mapped to the same data table:
+
+/firmware/acpi/tables/data/BERT
+
+Address this problem by passing and using the same filename for data
+tables.
+
+Signed-off-by: Thomas Renninger <trenn@suse.de>
+Reported-by: Michal Suchanek <msuchanek@suse.com>
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1270211
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20260717065129.72924-3-trenn@suse.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/quatech_daqp_cs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/acpi/sysfs.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/comedi/drivers/quatech_daqp_cs.c b/drivers/comedi/drivers/quatech_daqp_cs.c
-index 2a76c75c513b8..d5e3e213e233b 100644
---- a/drivers/comedi/drivers/quatech_daqp_cs.c
-+++ b/drivers/comedi/drivers/quatech_daqp_cs.c
-@@ -211,13 +211,15 @@ static irqreturn_t daqp_interrupt(int irq, void *dev_id)
+diff --git a/drivers/acpi/sysfs.c b/drivers/acpi/sysfs.c
+index e596224302f4c..d8d04437f63d6 100644
+--- a/drivers/acpi/sysfs.c
++++ b/drivers/acpi/sysfs.c
+@@ -316,6 +316,7 @@ struct acpi_table_attr {
+ struct acpi_data_attr {
+ 	struct bin_attribute attr;
+ 	u64	addr;
++	char filename[ACPI_NAMESEG_SIZE+ACPI_INST_SIZE];
+ };
+ 
+ static ssize_t acpi_table_show(struct file *filp, struct kobject *kobj,
+@@ -453,7 +454,6 @@ static int acpi_bert_data_init(void *th, struct acpi_data_attr *data_attr)
+ 	}
+ 	data_attr->addr = bert->address;
+ 	data_attr->attr.size = bert->region_length;
+-	data_attr->attr.attr.name = "BERT";
+ 
+ 	return sysfs_create_bin_file(tables_data_kobj, &data_attr->attr);
+ }
+@@ -469,7 +469,6 @@ static int acpi_ccel_data_init(void *th, struct acpi_data_attr *data_attr)
+ 	}
+ 	data_attr->addr = ccel->log_area_start_address;
+ 	data_attr->attr.size = ccel->log_area_minimum_length;
+-	data_attr->attr.attr.name = "CCEL";
+ 
+ 	return sysfs_create_bin_file(tables_data_kobj, &data_attr->attr);
+ }
+@@ -484,7 +483,7 @@ static struct acpi_data_obj {
+ 
+ #define NUM_ACPI_DATA_OBJS ARRAY_SIZE(acpi_data_objs)
+ 
+-static int acpi_table_data_init(struct acpi_table_header *th)
++static int acpi_table_data_init(struct acpi_table_header *th, struct acpi_table_attr *table_attr)
  {
- 	struct comedi_device *dev = dev_id;
- 	struct comedi_subdevice *s = dev->read_subdev;
--	struct comedi_cmd *cmd = &s->async->cmd;
-+	struct comedi_cmd *cmd;
- 	int loop_limit = 10000;
- 	int status;
+ 	struct acpi_data_attr *data_attr;
+ 	int i;
+@@ -497,6 +496,8 @@ static int acpi_table_data_init(struct acpi_table_header *th)
+ 			sysfs_attr_init(&data_attr->attr.attr);
+ 			data_attr->attr.read = acpi_data_show;
+ 			data_attr->attr.attr.mode = 0400;
++			strscpy(data_attr->filename, table_attr->filename);
++			data_attr->attr.attr.name = data_attr->filename;
+ 			return acpi_data_objs[i].fn(th, data_attr);
+ 		}
+ 	}
+@@ -543,7 +544,7 @@ static int acpi_tables_sysfs_init(void)
+ 			return ret;
+ 		}
+ 		list_add_tail(&table_attr->node, &acpi_table_attr_list);
+-		acpi_table_data_init(table_header);
++		acpi_table_data_init(table_header, table_attr);
+ 	}
  
- 	if (!dev->attached)
- 		return IRQ_NONE;
- 
-+	cmd = &s->async->cmd;
-+
- 	status = inb(dev->iobase + DAQP_STATUS_REG);
- 	if (!(status & DAQP_STATUS_EVENTS))
- 		return IRQ_NONE;
+ 	kobject_uevent(tables_kobj, KOBJ_ADD);
 -- 
 2.53.0
 
