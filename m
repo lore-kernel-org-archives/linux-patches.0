@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830883;
-	b=1HuSUHl8YfBNwaJH5oUdRvb3aCC/qoB0n5kzTIeRpS19vjR72oZtM+/RVbtybDX+NwIw
-	 iWFfqI/I+0SYiNLZwKpf7HPBpLZm8phtadtfqn0cUlWWOVy+xiCK32KyahBwsfBRU+lQ6
-	 RlC+9mNvQikxBz3S35/8uw/y0tRk68l3oYuwkNW2Ag8Q6CUbwnW8rhvt8+YM1RVAyaj2y
-	 S5JOim9P03SUF3Qvx63AqibGr5uxQ42pm+J2tT3dP/94R4bNWddrv/XN/EtKwqEhCNJ3e
-	 3uzcqlPNX+i1hyAxfmHOdNSrxK/tUbPqJHgCKxhJZ6J1MeArR+cu/TqTfJ9pjI+LEQw==
+	t=1793830884;
+	b=Xyg1BfdLmYT5pxmIhscXzrzKUtV3fFInO/PEAnHcV7ce/scS5x3kNUtNmiyLtUGyjNF7
+	 G/wB577ZgOt7TMfLs9s5M5m3uuBosNq6OsXZEgVlJdR0GyIRdU7Evu7n9yezUP+0Kthch
+	 Lvfu+AytPRfC0lUx3sJz2IUeCWypvQ/c4LnuBV9vkly7Son9qCo/0EYvo3hYlivP9FsS8
+	 sXDYw8ROIbPF9ekCV/i2t7wGirzBiebVo0Z5I9Mus/wucw+1VCDXR4ev5vIcpVLDJv2/+
+	 mHyY+/A0y69yVSRmf7eKltv/kCFDRm46xMujVL/AnGxb3QklX5Bz5y7sj6VpyNUGddA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rcC4g2ndXRkAdydo/8L4XSbVpSFvYkZAUaDLSW54lZw=;
-	b=cyyE1/LA2iQkDwdsg0hnKJpyWXTXlQZ9FHhi+N/d6FFs2Xh46b5h54ipQXhU2KkCZCk4
-	 4/sCCy5kAuUf+nX/2i95IAGnhLEZpfUr7cnQlNswa9ezxr64VzUHqMpuoXk1QhZYMNRZA
-	 bMUazq3dNUxI7Lk1myLSWuLFdtNiFv9rYmOpMRZeAjGllBakMcLFgLJv3Uhl463GaCE/L
-	 1wJChhWL7v4kySNSMNEZYxcyFZUKt/mQ94CHHBZp2Ob7uOw60ptZfx3lv+cKvds2jXXmR
-	 XGLoMvtPBPV73dwQl8ZQaVttPrVrzIrpv0ntp2qms6C4/gs8AUzUu/S+nyCmxBmtIOA==
+	bh=sm5CL/KDGGQtkIRq3jiso/SQm/vE0C8uB5LmbrSkB0U=;
+	b=VlQcfwaCRdspIxKlYKcUZ3OtxWwiTuWR0c3CVJsPITO//xF0Zd2Bna+vZPlOD6ShUCoX
+	 ZAdqJRi8HDKKHhLIN1/gMCFWlotgd8otKOkD4vO2wd9xlOGBdRaU1F80Z7X9iTCXul2/J
+	 EzhleJfW6F1/Rx/FSj4m3CyyI5PrTPBHZtTb1WEYZXS6mrSfNdZvdS93c7pqrdVUpP0DM
+	 /ja7ojxVKOxQ+Agy5cOmf8KyhLlnU50UlESe2hIO6U/SlKLPi7pQ6hA5jzss4k4myuJby
+	 hhk4X6aBUDxzJppxGLgAlIX/SfJjSydMR72x78PTzNHfo2U0tfHP8DKshEwC7LkM8lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SsVlugAh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDmZwZDY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7A9606E831;
-	Wed,  4 Nov 2026 22:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE36606E837;
+	Wed,  4 Nov 2026 22:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SsVlugAh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469CD1F0093A;
-	Wed,  4 Nov 2026 22:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDmZwZDY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C531F00A15;
+	Wed,  4 Nov 2026 22:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830882;
-	bh=rcC4g2ndXRkAdydo/8L4XSbVpSFvYkZAUaDLSW54lZw=;
+	s=korg; t=1793830884;
+	bh=sm5CL/KDGGQtkIRq3jiso/SQm/vE0C8uB5LmbrSkB0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SsVlugAhKz38V90MnhhDljjo0E/JMoc9ScA/sVvCiDp8NpqoED1H2H9Z9tKhV30NI
-	 YOLXxQtQYZdydo38+S7S+9gvB6pXFi9cKRW9+VF4uz7fKB95dO1WmNVGbsSXKty1Sr
-	 nysJnFrnWqBwbG0a7L5+YfJuNqZNz1APcoZALTdU=
+	b=oDmZwZDYglnw9jCJDIMDHhduRcx8jDz/VyOSURuab5zQ5uuTD7hxp+hXW/MllhEbd
+	 rsP6yIwWWvYIwJf7mLjI5t41GZA7cXfX1eND8VjDR0uh7UvMqfjkPxFFCFnHqE5oLU
+	 ovBRDz92yg8WwNdpEEpcnX9EiBPFoPyi++rX9bx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rongguang Wei <weirongguang@kylinos.cn>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0378/1005] tap: fix incorrect variable used for USO check in set_offload()
-Date: Wed,  4 Nov 2026 16:01:51 -0500
-Message-ID: <20261104211054.682833922@linuxfoundation.org>
+Subject: [PATCH 6.18 0347/1005] Bluetooth: hci_nokia: validate firmware packet bounds
+Date: Wed,  4 Nov 2026 16:01:20 -0500
+Message-ID: <20261104211053.695560522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,57 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rongguang Wei <weirongguang@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit fac7973f004de6dd51fb15a33e33ed37718e58bb ]
+[ Upstream commit 45640627e3ddc5f4d3a0d08618a596a8c65d48a5 ]
 
-The USO features in set_offload() incorrectly uses feature_mask and
-features argument.
+nokia_setup_fw() walks a length-prefixed firmware stream and
+decodes HCI command packets from each record.
 
-The USO feature was written to the local features variable instead of
-feature_mask. All other offload bits (TSO, TSO_ECN) are stored in
-feature_mask which becomes tap->tap_features and is used by
-tap_handle_frame() for GSO segmentation. Without NETIF_F_GSO_UDP_L4
-in tap->tap_features, making USO on tap effectively non-functional.
+Check that each record fits in the remaining firmware image, that command
+records contain the HCI command header, and that the payload length is
+covered before submitting the command.
 
-Keeping the USO handling inside the TUN_F_CSUM block avoids enabling
-GRO/LRO when userspace requests USO without CSUM.
-
-This has not worked since the beginning, so
-commit 399e0827642f ("driver/net/tun: Added features for USO.")
-
-Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260807070914.112698-1-clementwei90@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_nokia.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index 1aeaecd4030fa..9eea418afe2fc 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -883,7 +883,7 @@ static int set_offload(struct tap_queue *q, unsigned long arg)
+diff --git a/drivers/bluetooth/hci_nokia.c b/drivers/bluetooth/hci_nokia.c
+index 1e65b541f8ade..be2923231e712 100644
+--- a/drivers/bluetooth/hci_nokia.c
++++ b/drivers/bluetooth/hci_nokia.c
+@@ -354,9 +354,29 @@ static int nokia_setup_fw(struct hci_uart *hu)
+ 		u16 opcode;
+ 		struct sk_buff *skb;
  
- 		/* TODO: for now USO4 and USO6 should work simultaneously */
- 		if ((arg & (TUN_F_USO4 | TUN_F_USO6)) == (TUN_F_USO4 | TUN_F_USO6))
--			features |= NETIF_F_GSO_UDP_L4;
-+			feature_mask |= NETIF_F_GSO_UDP_L4;
- 	}
++		if (pkt_size > fw_size - 2) {
++			err = -EINVAL;
++			dev_err(dev, "%s: Malformed firmware packet\n",
++				hu->hdev->name);
++			goto done;
++		}
++
+ 		switch (pkt_type) {
+ 		case HCI_COMMAND_PKT:
++			if (pkt_size < 1 + HCI_COMMAND_HDR_SIZE) {
++				err = -EINVAL;
++				dev_err(dev, "%s: Malformed firmware command\n",
++					hu->hdev->name);
++				goto done;
++			}
++
+ 			cmd = (struct hci_command_hdr *)(fw_ptr + 3);
++			if (cmd->plen > pkt_size - 1 - HCI_COMMAND_HDR_SIZE) {
++				err = -EINVAL;
++				dev_err(dev, "%s: Truncated firmware command\n",
++					hu->hdev->name);
++				goto done;
++			}
+ 			opcode = le16_to_cpu(cmd->opcode);
  
- 	/* tun/tap driver inverts the usage for TSO offloads, where
-@@ -894,8 +894,7 @@ static int set_offload(struct tap_queue *q, unsigned long arg)
- 	 * When user space turns off TSO, we turn off GSO/LRO so that
- 	 * user-space will not receive TSO frames.
- 	 */
--	if (feature_mask & (NETIF_F_TSO | NETIF_F_TSO6) ||
--	    (feature_mask & (TUN_F_USO4 | TUN_F_USO6)) == (TUN_F_USO4 | TUN_F_USO6))
-+	if (feature_mask & (NETIF_F_TSO | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4))
- 		features |= RX_OFFLOADS;
- 	else
- 		features &= ~RX_OFFLOADS;
+ 			skb = __hci_cmd_sync(hu->hdev, opcode, cmd->plen,
 -- 
 2.53.0
 
