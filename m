@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826790;
-	b=fL6YH9NlYmnXkNLdhYFUFCrxbwt2xb708SwvYuEiUvhhtgBvKURspgvyGfNIaAA14jYi
-	 1fZKDwf65uEQzX470FbKBrXBTJJnWalt8Mammovty82N1PAEE5Ku3QVLypm3JN99VHKJz
-	 TlonU8CAEtLvppzCpJyc2LB7AKmP62gN4Y0MX38CYjjvT38sZHY8ZeelFoCFgmLog2lVk
-	 jtt6NpFID3LwCSzJeoKpwDnPN8NQQe1LKaryeYXBVPdNNd+RXDYLOJb3pSoAtFNl4GQYB
-	 0W0JDoP60wrmYiocM4np4npHF8gUVkBJuVSQXXmYwAtEHWxRaxEeB0wPgmOKXXNivdA==
+	t=1793826791;
+	b=YBzsz1RNKre5OIlnEW04HHTU8CvbXvnRAlJYqeecwf218PeckHDNdGPSfS9eM166MY7B
+	 vpm+sewfr0UANh4+d5ouewF5ru+oEpnsCEJkofU1NvFNMlWOahlB0eCjBrLy2IkJld6wL
+	 y57zFZqKFQTgMAhRSfj0nqdYDzZ9NciVs76VrKkJwIXEU6Vya/KkcyY+OgSYu4KkHyGLF
+	 0w2yUUAdoR5GaVHOp3cEDagXZHCvCysPyE3skptb3k8HbP+BhnXAoeOrRctxnfgUVSE7R
+	 Oq6yz1sx6c2bpKc0UwxC0zIGF7+Btu9gWWeGwnh3lrJIEPLTy/d5E52QecwQtIitjUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9DqIlOilLLn/bPvIcMs5OBYd5js16QyERUEORWcRFA0=;
-	b=rQ60YkIemg8V6KQNVGsb87vT8E2S+oc8XmICZnPIxWN7kPSs+3ZN8Ga4CrMZXbTAmkyq
-	 wXmKo0EENo7A27AYzpXodHTylcHtlc3o9vfhStAIgiepE2kmCZCqskq8eiEmMgauu10eW
-	 IVdAAzWdVYenpTeJVQ68r+DltUjLID92Im91H8wVM78+iOquyhYB8nxkLKYaZqXYVwvQB
-	 +aQPLUhC7OKX2f1Hed3W/Sa5VgcmHGDuCoctegvq0spZ4lCk5vLdrCy0/vNlJhl9hOfrW
-	 +lGasGerbA/Dzz5eLuv83FZztFn6lu25om743tLjkSvSo83WpN206MzePMPDh6+Sbpw==
+	bh=uTw2DiBW9l42YAemMchIWlcGftJB2+wgbO/sXMEeHIk=;
+	b=UqWobq4SgrSZC9UKIXVX/giMNGQSUNrrZR+L1EkeLTHc9aBnhVyyWSVF7zxqe1WKhQS2
+	 3It/8OlKNPOgqN1reQyyvk0x2E//v3KacCgXMr84j76SrfZEX2FXVhQY4iwInTyRt96av
+	 2knrNB0Tgc1hzwEua4f9BgdRBBqEl9mm1fMHg2FrBh5LqFnpvuTZeer4sJaEyF/zVFtWc
+	 58a64cAQdqb0lQdrvSkZfHILl61lVJwjHWs2vFX/bfvxIFetrKY0uuED7Py9IT4uJzqYw
+	 dUh3VCW+x8OxgrwR1bvBnn5KC8K7ziMwva74IBOb4NqMPoSzZy2cW2yqIrlq/lRHdKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=If1s1fBa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BP1ahgna;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37506071A07;
-	Wed,  4 Nov 2026 21:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4DF6071A00;
+	Wed,  4 Nov 2026 21:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=If1s1fBa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60AE01F000C1;
-	Wed,  4 Nov 2026 21:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BP1ahgna
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34EF1F00A15;
+	Wed,  4 Nov 2026 21:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826789;
-	bh=9DqIlOilLLn/bPvIcMs5OBYd5js16QyERUEORWcRFA0=;
+	s=korg; t=1793826791;
+	bh=uTw2DiBW9l42YAemMchIWlcGftJB2+wgbO/sXMEeHIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=If1s1fBa7Yu8B1CH7Ukiy2ikt7/EWzKg7VRwtFw6q5ICIu4+LM16wBa7Tl8ViLHHH
-	 4mAzwwD0mmR0BLJlgJuPetPk3MRTIDgaFmsHclhIXQDDZhr3ndSe1Ay5seVjyEdZQk
-	 b2e6mjl/PeBWWp5fyDXUgbnrZVD5qvezo/Osd/LY=
+	b=BP1ahgnamgSGWGHby9f4xLBllKSUu/FArT/4ddfKK66VcKTBsnVmqgvfTDNTBztuz
+	 tPsRARkIwpfvjLH97txmCXRbyx/9z/YZLTExuSKiuEYoMsStZY/Hqt07wp+se4+AY/
+	 HALHSkj38bmUXoY6tr48JGM3XlFfU26RMZmc84xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleg Nesterov <oleg@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0008/1005] exec: cancel io_uring requests before de_thread()
-Date: Wed,  4 Nov 2026 15:55:41 -0500
-Message-ID: <20261104211043.766954811@linuxfoundation.org>
+Subject: [PATCH 6.18 0011/1005] coredump: prevent TIF_NOTIFY_SIGNAL from interrupting coredumps
+Date: Wed,  4 Nov 2026 15:55:44 -0500
+Message-ID: <20261104211043.854490153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -71,69 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit b42c85c20d84ff3e4f0f027d6596c3b3b4a20657 ]
+[ Upstream commit a58d647acfdc62561f3570d114025b3bf38ae41b ]
 
-begin_new_exec() cancels the exec'ing thread's io_uring requests after
-de_thread() made it the only thread in the thread-group. Now
-io_uring_task_cancel() runs task work after. If it runs a
-create_worker_cb() item then a io-wq queued on the thread before the
-exec creates a new io-wq worker thread.
+TIF_NOTIFY_SIGNAL is used to kick a task in uninterruptible sleep to
+return to userspace and run task work and then go back to sleep. This
+mechanism works well but breaks coredumps. dump_interrupted() only
+allows fatal signals to interrupt a coredump and the whole regular write
+path going to actual filesystems is impervious to TIF_NOTIFY_SIGNAL as
+well.
 
-Said thread joins the thread-group which de_thread() just took down. The
-io-iwq sticks around until it notices that its workqueue is dying. But
-code after de_thread() relies on being single-threaded.
+However, both the usermodehelper pipe and the coredump socket will bail
+early on TIF_NOTIFY_SIGNAL. This affects the following codepaths:
 
-Move io_uring_task_cancel() before de_thread() but behind the point of
-no return. Any worker created during task work run from
-io_uring_task_cancel() is just a sibling thread that de_thread() will
-take down and reap.
+- coredump_sock_recv() -> unix_stream_read_generic()
+  The request/ack handshake is abandoned before any coredump data is
+  sent.
 
-Once io_uring_task_cancel() returned the thread has neither a task
-context nor a workqueue left so nothing can add a thread behind
-de_thread()'s back anymore.
+- anon_pipe_write() returning -ERESTARTSYS
+  Once the pipe is full this truncates the coredump.
 
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/aq0_lvHDViIpX_Mu@redhat.com
-Fixes: 3bfe6106693b ("io-wq: fork worker threads from original task")
+- unix_stream_sendmsg() returning -ERESTARTSYS
+  Once the send buffer is full this truncates the coredump.
+
+- coredump_sock_wait() -> __kernel_read()
+  This reports a failure that didn't happen.
+
+- wait_for_dump_helpers() -> wait_event_interruptible()
+  This stops waiting for the coredump helpers.
+
+Such truncation is entirely invisible to userspace and all uapi bits
+still indicate that a successful coredump happened. A crashing process
+with a bunch of file backed mappings and io_uring thrown in loses most
+of the coredump data. If the NT_FILE note goes past PAGE_SIZE mappings
+it's gonzo.
+
+TIF_NOTIFY_SIGNAL is sent by io_uring for the common case. And it uses
+poll without sleeping so a completion callback runs task_work_add() from
+interrupt context against the task that submitted the request. This is
+the task that is running the coredump. Since that task hasn't set
+work_exited (it hasn't exited yet after all) TIF_NOTIFY_SIGNAL keeps
+reappearing.
+
+A coredumping task doesn't return to userspace. The task work is run at
+exit. So interrupting it doesn't buy anything and just loses the
+coredump which is quite valuable.
+
+Note that this isn't specific to io_uring. There's also
+klp_send_signals(), bpf_task_work_schedule_signal(), landlock's tsync
+and then  technically, kthread_stop() and the printk kunit test set the
+bit raw.
+
+Link: https://patch.msgid.link/20260824-work-tif_notify_signal-v2-2-6609e42b3157@kernel.org
+Fixes: 12db8b690010 ("entry: Add support for TIF_NOTIFY_SIGNAL")
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260921-work-coredump-fixes-v3-12-8e4adb1619e6@kernel.org
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: adjusted context for inline coredump handling with override_creds() instead of scoped_with_creds(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/coredump.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 4aa6905259591..3f301138e65a0 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1134,6 +1134,13 @@ int begin_new_exec(struct linux_binprm * bprm)
- 	 */
- 	bprm->point_of_no_return = true;
+diff --git a/fs/coredump.c b/fs/coredump.c
+index 3e927378bf5bf..b3cc7c0531ee1 100644
+--- a/fs/coredump.c
++++ b/fs/coredump.c
+@@ -1131,6 +1131,8 @@ void vfs_coredump(const kernel_siginfo_t *siginfo)
+ 	if (coredump_wait(siginfo->si_signo, &core_state) < 0)
+ 		return;
  
-+	/*
-+	 * Cancel any io_uring activity across execve. This runs task work
-+	 * that may still create an io-wq worker, so do it while de_thread()
-+	 * can still zap it.
-+	 */
-+	io_uring_task_cancel();
-+
- 	/* Make this the only thread in the thread group */
- 	retval = de_thread(me);
- 	if (retval)
-@@ -1150,10 +1157,6 @@ int begin_new_exec(struct linux_binprm * bprm)
++	/* Task work must not cut the dump short, see signal_pending(). */
++	guard(no_notify_signal)();
+ 	old_cred = override_creds(cred);
  
- 	/* see the comment in check_unsafe_exec() */
- 	current->fs->in_exec = 0;
--	/*
--	 * Cancel any io_uring activity across execve
--	 */
--	io_uring_task_cancel();
- 
- 	/* Ensure the files table is not shared. */
- 	retval = unshare_files();
+ 	if (!coredump_parse(&cn, &cprm, &argv, &argc)) {
 -- 
 2.53.0
 
