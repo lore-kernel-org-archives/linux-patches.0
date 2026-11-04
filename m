@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829633;
-	b=a/SUFt9CJgkWiDEBZsJGYfyX4cPn6kcaSaVOv6meihA+EzY8UfvXOIfmpLQpg7Kezwa9
-	 V9XIf0zWKsoWHhE9lCgU55w/4OgLYZRWbhhV++WB48qpPrrMJQbvEj+DTybjvLS8lFE8e
-	 nnsQORoski38XBCMYw/p1OxV6Sv+7Y9oOoVoml8d7mq0H0khBDQsPR30bSxMK6BZM3Ijw
-	 874JrWGXjRhOVd0UoX8ac+X+PRH8wTyr7sn3Du5ripeFwD3a/kt3ePACc7pSYoNRu1rmS
-	 0P/A4fu9xSMriVK09B0XQaPPqGGttkd9pvnhYsNAiKPFz6fTWPRHl/oTCEhzfN2X98g==
+	t=1793829634;
+	b=AtZeD0HeGrFY4s3kS5NhtUqAK4TjWetVu5Ox/nlVfbsgpZxR0bX2Gxu1Qx+Ukh/Ibxt4
+	 SBFaI48uM1RO6tov+ba2f6+kZye7N2rWN2j6m3gL0Bz3zNbFbvksCrF3ccRNQdfH6Zjno
+	 qP4Hd08q3aK4kqnl6oasT5Xa3DTcuQv695osLjvAGeUYYCjXf42y7NcfwLCkAGk/0Fbtl
+	 zz+UwgV5VMGiAPPqBkRThtDK25Bh1y2b5EILLMyvLhp4oohOrYi2u5PgTqmm9tuwr8AJv
+	 yCdaIIfstic5p5Jt8HOgX16LPCicqLNo8zW0u+m3fswacHuWYaJxgBt15Ahmfovh/ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829633;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ocgR+qRL2c3Py3k7950u3McbBFfp0NE3WKwMAYdkQu8=;
-	b=Ht3JPxHNTGxBsQllE3uRZwhWO9jEUQtpDXfI7D7JbCxskeyW2VfslMv+hfuJVxVx3iBO
-	 QzKQndk/FuHVtepBwn1w2UL7bfp0vLL/gfjrIU5CTW6WT64IBsG0pMccaAtgPTkjdpXea
-	 SbH8gOX5OImvlzzcYQWrtP+sbinpQGXcTejN/sv55mwjErYfEI0cWV5gLfxg7kcwar5Ov
-	 Ud5SBuO28R7DvFm+ruhBThm0OgqAMNFSgToBcP6rkdynn0iVrk1nqvgdXJ5aG0wt1Fq/c
-	 SYwDaAkaaZLaF4HFIE335vMPHL8PQRcByBysPyFEmoUhTjrBjdr9ba5zc2IOs3j/dDw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=sRNhiJunSaTKYtMmOauBDQkjNIacoHtWUVu8oeVihfQ=;
+	b=Jp8b4pgiwwZW2MV2jW5K0XjWzZv02Y6r+btXn5xkztTrKL1VQDEyH0N6kmPApSEpZG7M
+	 SECy0nZpvW9YK0lK5x//UGlyXlSy7E96UMQ9EpWbsnZnmprZMaBKyMUYHX4GAQgT7xCZd
+	 WwRpF8VkleZtNsPJFP2p1ZsXWsWtf3czaqUZfplvMTCz887UuaxvcndeRJIm6fcY31Xs7
+	 PO9BmUftWo9bUHJVHgN26Tqjow45f7hi28iIXe75nxU1uLoHS8WLbhzpzK9q+740F66g/
+	 Tt1kpvd/UU906tI467iwfIZaiW5v3XIw6LkTh+h84kROsXT4U0C4CBehTSjmkEjIpVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ux2ZXfXJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L1v6UkZS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD5D606AC14;
-	Wed,  4 Nov 2026 22:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A85606AC18;
+	Wed,  4 Nov 2026 22:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ux2ZXfXJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429E21F0093A;
-	Wed,  4 Nov 2026 22:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L1v6UkZS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E748A1F0093A;
+	Wed,  4 Nov 2026 22:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829632;
-	bh=ocgR+qRL2c3Py3k7950u3McbBFfp0NE3WKwMAYdkQu8=;
+	s=korg; t=1793829634;
+	bh=sRNhiJunSaTKYtMmOauBDQkjNIacoHtWUVu8oeVihfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ux2ZXfXJYWk4vA+kvg9pdKHGFF3XMRJ2DUEilUeWFTJfrUxZce9F5fZymEAaazvjX
-	 OL2ZigC5JOmFsCYBKI6akECjExfiyG6rNh/zB5pKuAR0YhxLTMv7aRJB5m8TyHoKjK
-	 o9h6ZEFMGsOHU5c5HuE970Ip3+eJ+wTA9pkFyK6Q=
+	b=L1v6UkZSABb1mlyq/8btBzOjN0S3ZaYB8s0e0Fq/ul59Biublbu6ozWiAocOoSqjR
+	 iuQUq+WGPEKD0pAPRYcX7KArNTlr0sHujZUBgIiYuRxJ6P8DC7NhFRC4H4t5t4RWeO
+	 C3SXcw0Nq4GKqY6iwRJr6fELGyR+yUoG6YY6Hkck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0246/1005] platform/x86: int1092: Fix info leak in parse_package()
-Date: Wed,  4 Nov 2026 15:59:39 -0500
-Message-ID: <20261104211050.752373789@linuxfoundation.org>
+Subject: [PATCH 6.18 0220/1005] power: reset: piix4-poweroff: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 15:59:13 -0500
+Message-ID: <20261104211049.979139550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -63,62 +62,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f5eb833730c071b68a68de5d1df442aae4ae7e6e ]
+[ Upstream commit ffefc5d9a052f67bc87b57d1107fd7cc1fa1a3d4 ]
 
-Sashiko reports a possible information leak that can occur as follows:
+The driver has a match table for the pci bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-1. In parse_package(), memory allocated for data->device_mode_info is not
-   zerozed initially as it is allocated with devm_kmalloc_array().
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-2. In the for loop after the allocation, a malformed ACPI package
-   provided by firmware can cause some fields in data->device_mode_info
-   to remain uninitialized.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-3. Later in update_sar_data(), the uninitialized fields gets copied to
-   the fields of context->sar_data, which can be exposed to userspace
-   through sysfs attribute read (intc_data_show()).
-
-Fix the leak by switching to use devm_kcalloc() for allocation.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260710052806.100107-1-nihaal%40cse.iitm.ac.in
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260723-platx86-v4-2-93b4a178b595@cse.iitm.ac.in
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704152336.51384-1-pengpeng@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/int1092/intel_sar.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/power/reset/piix4-poweroff.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/intel/int1092/intel_sar.c b/drivers/platform/x86/intel/int1092/intel_sar.c
-index 7263114f0b3d0..f506155f35d4d 100644
---- a/drivers/platform/x86/intel/int1092/intel_sar.c
-+++ b/drivers/platform/x86/intel/int1092/intel_sar.c
-@@ -91,10 +91,10 @@ static acpi_status parse_package(struct wwan_sar_context *context, union acpi_ob
- 	    item->package.count <= data->total_dev_mode)
- 		return AE_ERROR;
+diff --git a/drivers/power/reset/piix4-poweroff.c b/drivers/power/reset/piix4-poweroff.c
+index e6822c0210000..1a6f3d22d2974 100644
+--- a/drivers/power/reset/piix4-poweroff.c
++++ b/drivers/power/reset/piix4-poweroff.c
+@@ -96,6 +96,7 @@ static const struct pci_device_id piix4_poweroff_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82371AB_3) },
+ 	{ 0 },
+ };
++MODULE_DEVICE_TABLE(pci, piix4_poweroff_ids);
  
--	data->device_mode_info = devm_kmalloc_array(&context->sar_device->dev,
--						    data->total_dev_mode,
--						    sizeof(*data->device_mode_info),
--						    GFP_KERNEL);
-+	data->device_mode_info = devm_kcalloc(&context->sar_device->dev,
-+					      data->total_dev_mode,
-+					      sizeof(*data->device_mode_info),
-+					      GFP_KERNEL);
- 	if (!data->device_mode_info)
- 		return AE_ERROR;
- 
+ static struct pci_driver piix4_poweroff_driver = {
+ 	.name		= "piix4-poweroff",
 -- 
 2.53.0
 
