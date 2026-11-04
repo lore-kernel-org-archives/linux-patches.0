@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829686;
-	b=qtoaUnAMKzYDn84J5a9+NAg1aPUSI2x/oEiNXAlzyuiwuxpnkVJ7ED+gzNHNj8dzIpG6
-	 /ijYPGLCdOW83qLkV1/gHiXAXz5mKpXtTT+eGxJ3F2Sw4rDncK5y+zk+b//USr/Wl2aFX
-	 zQPW4rKwjPdJ8DZO5YRl+5L3haaf2HR4ZoEHR2v4/iNZWGhnKMitHnL2wcmBuhNm1H5pL
-	 FyOfcUlqU7Ud81c9nykjq3mENbRBmKLTfWiR9bZDKZdUjb4/R5urbr3rFfoAv4N6aUSt5
-	 sc7YL3aUu2IaL4VdwTvhxtCmy07+CmWFEnWLYIEChIQDlqFSRVXuyrzmpeSfiyXcFgA==
+	t=1793829687;
+	b=kWHBJosUK+obLD/GejFVzrud97mkG9Z2mYtHJkMaSxXiLGr2a/3CvJkN1CZJJj0Yk1oO
+	 DxBBDYO1kWddeMDWA4BEeNeLI/gNM1oanktHl3SuEmNHEe3LtoSyob/OxtRohlhWZ0jN4
+	 1P/tOmSW3ldPXv2OBMGnJMtdPTUBdFtxmJGDpN6vsXloMv0QQQPGWSDTEXzZeO+XUhzdT
+	 /F72/TXqmXyZRmLXRgzgkKcAspQC1Hr+aXTv5RNAtDexVHc6BI3hmu78NwY9FOSeQ7R3I
+	 n86CmTcL60B0+e3z8YIRL9uls+S8NRzyfx6Rm4cESCdRwIDZWYR73TOpBE5jzRrTSvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829687;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sLv2CAdnS1qpO7k7ww6QXAfxiwOkbub3lPDIx3foRSo=;
-	b=gFAJRpGg2UgG67KD02GtbjusseigAXjcRTwuDuvNtvhvxEPxAsrR7fRuQS3IELEjIztL
-	 th3WUEYpNKEaWa+p8s0bUSPB32qFL1xJ9FJ2M+FGW7drSHxq+90cXrxm3ejbFEIVWgbyz
-	 rnzBPsB0B7jEGvQUVviIK7OqEeenDbWZu0O+TDJZQ+go7Y8PI1m1Lwz8Ycvo8CkfcFZFa
-	 GM1S5aFsmTaNZ4P2J8Cw4c+qMmkOh0+E1TfspJc0N+tci3/qEh0WSeqa/kJqojI3BJYSw
-	 7eEaLDoLb96cfMJHKlBhk8lHb+ux8Rk0bIlC91PTi/Lx46Jv2BJFcjy2p/KiVWuyoXQ==
+	bh=JYjqoXGiD3WqpmiifQv7K0IoVt0hL9t7amdJ7GShYOE=;
+	b=fzS7qVdXeZzwk4NHCgX0p6IDiMwXXakxsCxsC6b/h6Uyv6u51tT0+2BHFUauxQSoqQr0
+	 gU9TrFzieVXiGTYJJWm68j/VZ2LrkMhtTjJrD02CKGzw4pIR/cXQ8Klr+0Oez4Qw+sauD
+	 y1bXoE61ORY+/ecLXAw39y9s5aWycm2RZsMcON6rOxDfaBDzdX79yO0s+nGlZnvYbdJnS
+	 YegbZv3mdtVLsUEnc41Ww0Zlz7P8Eo3gMKSjjCnChgnHGwBJmnTysLx84jzrSK03NZIVE
+	 UCKjwWFq0smNsYAflOrOI2ZjrYxPCnGDJ1MWyZ8oJTSmVbRffsCV19lyA/fsi1EsfWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIzVM4Pl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p3OZpVaa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0170E606EE91;
-	Wed,  4 Nov 2026 22:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEE2606EE91;
+	Wed,  4 Nov 2026 22:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIzVM4Pl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8380B1F00919;
-	Wed,  4 Nov 2026 22:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p3OZpVaa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF951F0093A;
+	Wed,  4 Nov 2026 22:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829685;
-	bh=sLv2CAdnS1qpO7k7ww6QXAfxiwOkbub3lPDIx3foRSo=;
+	s=korg; t=1793829687;
+	bh=JYjqoXGiD3WqpmiifQv7K0IoVt0hL9t7amdJ7GShYOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sIzVM4PlFcQpxmuy7637QY31dw8sX7ThbfSqZ5ONFBCV3B26EXJTNW+nHC3FvJaEx
-	 Z0BP/eD/4YyskdMoX4MAjblF4/hNoppac3QpsoPrDREwB00VBTKFLWsawsEWZspdEk
-	 0HcgDU3T4qS1octa6lHI+neaPZk9AcJylIvZwNqE=
+	b=p3OZpVaamh8C7dtcQ4e+8F3efZYASSilBwup6LO3UtebonOwSHGCFw4AaS/eMOl7m
+	 Zo3oGtNzjBj+AvkPpieW7FBOzcGWBCwCJ7mjfgyUkZa8r3Ved1dNJP5ZEQyODu6CNk
+	 bWiT5z+fbGAVK2iGlkjS7UiZZBj7jEKxrAGz/mvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.18 0279/1005] s390/mm: Add missing mm check to do_secure_storage_access()
-Date: Wed,  4 Nov 2026 16:00:12 -0500
-Message-ID: <20261104211051.707486930@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0280/1005] s390/mm: Fix handling of vmalloc area in do_secure_storage_access()
+Date: Wed,  4 Nov 2026 16:00:13 -0500
+Message-ID: <20261104211051.734619161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -72,48 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 7cf227b2707ed0129018c283ffc8f893945586db ]
+[ Upstream commit a2e5a9d853e015bc876399eb18435aa88101c60a ]
 
-Similar like the normal exception handler the secure storage access
-exception handler needs to verify if mm is not NULL, which may happen
-with kernel threads.
+Secure storage access exceptions in vmalloc area need to be handled
+separately since virt_to_phys() does not work on such addresses. Given
+that there cannot be a valid access let such exceptions fail
+immediately. The kernel will either fixup or crash.
 
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260717132345.539A11F00A3A@smtp.kernel.org/
+Tested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>> ---
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/fault.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/s390/mm/fault.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
-index 069f72703a915..46e5748b5b1b3 100644
+index 46e5748b5b1b3..9d7d3ef99fc16 100644
 --- a/arch/s390/mm/fault.c
 +++ b/arch/s390/mm/fault.c
-@@ -404,9 +404,9 @@ void do_secure_storage_access(struct pt_regs *regs)
- {
- 	union teid teid = { .val = regs->int_parm_long };
- 	unsigned long addr = get_fault_address(regs);
-+	struct mm_struct *mm = current->mm;
- 	struct vm_area_struct *vma;
- 	struct folio_walk fw;
--	struct mm_struct *mm;
- 	struct folio *folio;
- 	int rc;
- 
-@@ -448,9 +448,8 @@ void do_secure_storage_access(struct pt_regs *regs)
- 		if (rc)
- 			return handle_fault_error_nolock(regs, 0);
- 	} else {
--		if (faulthandler_disabled())
-+		if (faulthandler_disabled() || !mm)
- 			return handle_fault_error_nolock(regs, 0);
--		mm = current->mm;
- 		mmap_read_lock(mm);
- 		vma = find_vma(mm, addr);
- 		if (!vma)
+@@ -433,6 +433,8 @@ void do_secure_storage_access(struct pt_regs *regs)
+ 		panic("Unexpected PGM 0x3d with TEID bit 61=0");
+ 	}
+ 	if (is_kernel_fault(regs)) {
++		if (is_vmalloc_addr((void *)addr))
++			return handle_fault_error_nolock(regs, 0);
+ 		folio = virt_to_folio((void *)addr);
+ 		if (unlikely(!folio_try_get(folio)))
+ 			return;
 -- 
 2.53.0
 
