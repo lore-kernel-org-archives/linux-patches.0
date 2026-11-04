@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829571;
-	b=RMiDKob4At5xweWRajJvMxoHw7MdUvqLwsl0Ivxl2Q+SkDe5Mzxk9IoFo8g6HFDFxuMq
-	 0H6LupL3DB5EJ6DfQiiD4z4Zw7GPnyFrRMV3j1t2LbfGWGAFI49HKOblWu8NPGM1wR0CD
-	 MlII5+SaMY4rC4anXRz2TMSM7CQXpvS0+pcR4J2Z2PBtBfyWsF+A38LpewiWoedq/0OBa
-	 6LER2lUXGudN3AA90myN9PIeOaxxwRYS1AbTt21RRgFmN5C8tZr82+fouMDjYFYmk93mX
-	 CCFw2UBO75+sHWyF8dz/VXcnOoTOyfL7+AmdSd4STFkH1wvZPcKFbsqI+hR7oFxZOuw==
+	t=1793829572;
+	b=ysH0tirqLO0nGsP9Ue8HXZpr8xJ7UldGOdy1s8IRgQLJ15PR0Q3uoqN5LoW0+62pNfWc
+	 pwqs5iYG3nDh+VYrP7lgEcg/Xpkuph+N7+uZakleB5RwNW2g9Az/Ws9Woe0gmfuxbyyIa
+	 DzRelsaB8GI99Stdyd2x35sY3TI92emGZwfjW54sK/EetZTybpYm0/XEAwyK/+aSBBu7/
+	 tz2ZFERedkMmDxVrBZRtApS5W/OrdSRV/GoQqGdvb6ArPwUuLy7qPssD9PAjDCL0g/vsS
+	 8MXtSe0SUY+fZDw982qy+cK5XOrYMfSlFqHuVs3ziMMKRFlO+azxp/HIOcMAfloeXaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=KgDhlAvhMXZkVYdt75gZ2sPCRfGSAnm4Hf9/oB53Jr0=;
-	b=WM8/J1dq0irr70wMJ69XsOMsSzZkO3ZnDPdsC8bSherTJvkIY9TTsttGtQiK0Ri+vI7F
-	 odf2ceDZ5shhD6NrbGDAg03akoCeDZ3xu71DmoN7LoZ53Qd7I3/v1QAWcSKbtsNepb+0R
-	 H7jDS62p7CQCgDHZoj8GG9Qa/L9oXX5Jfo4h/wUJJVD4mXT/IXCvVy9mNNm8GZwjxArma
-	 jcDlg/IiscDIoQGMfYtoMMf7GSAy5q6j+PtdfXWRMhi2kVKkXJy3yjZqtLKBg/IHbjqEP
-	 kTWuNqDbNOMEnTgqFfiL3XIWg/mojARe4QhR9zotboHsfSHOS+JfSFYSa+KJDa0N9pA==
+	bh=334Ndnd0IvbcOlgCJE9DbKFac7shZ8q+ShjS3zKUrdw=;
+	b=lWHCdK4IV/b6/Ol+9zry23zewrMEImKiC3ve/kFl4U6/GRa0u005UgnuxVmDwBjGae3p
+	 rq2sFAA9ujp8lD5MfC8kG3fdQhF3IPQ82SWe3FgNik/A+h0VJSfyyM+UBlYuoikCpFRzr
+	 TNGf1yRp36d+SIKNTtO3Uiou4VIGeP0dFM2C5CU56iOy2KfA9Hkd3vtn0GatTY30VBdFt
+	 CWNwSRHxFf9dGxUHxtS+DSIuAgzfstzqgwGG7yLdYwGsJKvIneDkNui8ObnKytuPIUkgf
+	 A7FKHnK/59aLSgwMcijwjmQjz6B+GH4Vc5lq4HdiDdZAodjuoWAdhf8DkAebW5eNgMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsJAXoO0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qE6iCV5V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE5F606A33E;
-	Wed,  4 Nov 2026 21:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A69606A33E;
+	Wed,  4 Nov 2026 21:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsJAXoO0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A42D1F00A18;
-	Wed,  4 Nov 2026 21:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qE6iCV5V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E401F00A18;
+	Wed,  4 Nov 2026 21:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829570;
-	bh=KgDhlAvhMXZkVYdt75gZ2sPCRfGSAnm4Hf9/oB53Jr0=;
+	s=korg; t=1793829572;
+	bh=334Ndnd0IvbcOlgCJE9DbKFac7shZ8q+ShjS3zKUrdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zsJAXoO08f9FfL05UKIFJdgu+hvXNscCHhPC8kl5Od0woyTfpYL1l9baZR+w3sDf4
-	 9W8nJnGstxasdAU4c+epEFrvsIrfer3ag+XYDgJbCk0EM5HHnXYOcewJBMVeW1q+Nd
-	 SmsQkRpwaC7xLBJi8oE9imVi5GJA8w6Tc8TJGT/4=
+	b=qE6iCV5VNxqhrO6Jt7NZtk77fcwqhG62bJzXlXtn1EZeSrFhNdv1UcS+g9ghOizqc
+	 J5YBCz2ZdhlO3eYIpru8sb83sGGWcfsTGjs6egtszhzakA2yi0TOMv5s0t1U/sbCKI
+	 QH19xBNnqSM9jahNjLiydI4PsYq107mTAk41ZGUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kate Hsuan <hpa@redhat.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yap Weei Choong <ywc8891@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0208/1005] ACPI: battery: Sanitise model_number by dropping unprintable characters
-Date: Wed,  4 Nov 2026 15:59:01 -0500
-Message-ID: <20261104211049.630881355@linuxfoundation.org>
+Subject: [PATCH 6.18 0209/1005] platform/x86/amd/pmc: Add T14 Gen2 AMD (20XL) to s2idle quirk list
+Date: Wed,  4 Nov 2026 15:59:02 -0500
+Message-ID: <20261104211049.660760780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,73 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kate Hsuan <hpa@redhat.com>
+From: Yap Weei Choong <ywc8891@gmail.com>
 
-[ Upstream commit 6587dd87595cfae6bf1304cd0cd1df2274424e42 ]
+[ Upstream commit e25fb2258bddbcf70df69d1358be3e1274bdc5f2 ]
 
-The battery Embedded Controller (EC) may return the model name with
-trailing unprintable or non-ASCII characters. For example, on some
-systems:
+The ThinkPad T14 Gen 2 AMD was sold under two machine types, 20XK and
+20XL, but only 20XK has been in the s2idle quirk list since the quirk
+was introduced in commit 455cd867b85b ("platform/x86: thinkpad_acpi:
+Add a s2idle resume quirk for a number of laptops").
 
-$ cat /sys/class/power_supply/BAT0/model_name
-LNV-5B10W51864��
+On 20XL machines the firmware SMI handler therefore still runs on the
+NVMe D3->D0 transition when exiting suspend-to-idle. With IOMMU
+translation enabled (the default), this intermittently stalls resume
+for ~10.25 seconds: seven devices across three root ports (nvme, both
+xhci_hcd functions, xhci-pci-renesas, snd_hda_intel x2, snd_rn_pci_acp3x)
+block in pci_pm_resume_noirq and are released simultaneously, consistent
+with all cores being held in SMM.
 
-If a non-ASCII or an unprintable character is found, it will be
-replaced with '\0' to ensure the model_number is a valid string.
+Add the missing 20XL machine type, mirroring the existing 20XK entry.
+This is the same class of omission fixed by commit 9a469c6dfab3
+("platform/x86: thinkpad_acpi: Add missing T14s Gen1 type to s2idle
+quirk list").
 
-If left intact, the malformed string prevents udev rules and hwdb
-working correctly.
+Verified on a ThinkPad T14 Gen 2a (type 20XLS41C00, BIOS R1MET62W 1.32,
+kernel 6.12.95): with this entry the quirk message appears at probe and
+a 14-hour suspend resumes in ~1s with no noirq stalls, where previously
+even short suspends could hit the ~10s delay. A further two-day soak
+(short naps and two ~14-hour suspends) showed every resume clean.
 
-Link: https://gitlab.freedesktop.org/upower/upower/-/work_items/345
-Signed-off-by: Kate Hsuan <hpa@redhat.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-[ rjw: Subject tweak ]
-Link: https://patch.msgid.link/20260710125122.1621877-1-hpa@redhat.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221755
+Signed-off-by: Yap Weei Choong <ywc8891@gmail.com>
+Tested-by: Yap Weei Choong <ywc8891@gmail.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260717060744.1252065-2-ywc8891@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 296c2981b1a73..0b922aceb28d1 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -10,6 +10,7 @@
- 
- #define pr_fmt(fmt) "ACPI: battery: " fmt
- 
-+#include <linux/ctype.h>
- #include <linux/delay.h>
- #include <linux/dmi.h>
- #include <linux/jiffies.h>
-@@ -486,6 +487,15 @@ static int acpi_battery_get_status(struct acpi_battery *battery)
- 	return 0;
- }
- 
-+static void acpi_battery_clean_unprintable_chars(char *str, size_t length)
-+{
-+	for (unsigned int i = 0; i < length; i++) {
-+		if (!isascii(str[i]) || !isprint(str[i])) {
-+			str[i] = '\0';
-+			break;
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index 74ddf1d8289a9..09a30f3337596 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -71,6 +71,14 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "20XK"),
+ 		}
+ 	},
++	{
++		.ident = "T14 Gen2 AMD",
++		.driver_data = &quirk_s2idle_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "20XL"),
 +		}
-+	}
-+}
- 
- static int extract_battery_info(const int use_bix,
- 			 struct acpi_battery *battery,
-@@ -527,6 +537,10 @@ static int extract_battery_info(const int use_bix,
- 	    battery->capacity_now > battery->full_charge_capacity)
- 		battery->capacity_now = battery->full_charge_capacity;
- 
-+	if (!result)
-+		acpi_battery_clean_unprintable_chars(battery->model_number,
-+					ARRAY_SIZE(battery->model_number));
-+
- 	return result;
- }
- 
++	},
+ 	{
+ 		.ident = "T14 Gen1 AMD",
+ 		.driver_data = &quirk_s2idle_spurious_8042,
 -- 
 2.53.0
 
