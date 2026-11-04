@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831070;
-	b=0VL+J1MUn8I3ojocyThH1IDrEL7km6ZYvXbHUB5K+NjM0qJ6or0FgpGLwgboHd0BGbfz
-	 GtGCJ2Ct4g8x3O3J7K3J62BwaV7BWlGCv7rQMvAwox1t82Z4A8zEFGEtUKQQy4IY8nNo/
-	 8jv3F6QKbf6Jps6cjsnSxVZZAYSrThvfMc338H+JF2vCpzu3qmhcvxWeolL+Bh1sbaTZo
-	 vl3akrFgz81eJrESrPkVwNSCuAJ5PuaFCsXIQRxagS4Qe3CzA5gOJpOCUheO4/tZvehDt
-	 t082RetwLA+mNlfWlkx7qEV4GtfX986UPQCJc7CXEqn2cBtYwMf7PEXO3o5yH9FrmwQ==
+	t=1793831072;
+	b=FERS+ANLJlxA0/GJ2aWvdMeP6iBIQ83oOVHYPh09+RD0TgYxmdNhdN3/rb5/W1NUDqIK
+	 Hm871H38xypXz5WEdDlHN6bzaaMydvDXH38mhd+KgpOUidAyfp22bHCEzgjkF3/a7JjPZ
+	 2cHN2IJrfHiAdQQpCJuaSLT8lBflp4Qpt9WBjJhhoV1YpjgL5RdjL8VvjvpWwkp63ExsK
+	 Gl/P8cSTSCFdk0zw9xk6iys7Se6cJOCPisV0wg7g8YglfJkbEJIAKXLl7EbnlwRFtnRJj
+	 F/ejXJLbSMMkp2eGkkUTKQgkJXsTPpGss7PTxjy4fNWEKJmXQxWRRdLFA22M5b9y0CA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831070;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831072;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HRTQ6jnZVOTgzpJ4wriMe8BKz0RfvzKCJ/KORkWaTEM=;
-	b=RKYnL7OusUauemMim2ksgM1WDtIb2/VLm/fdIOEYWoKqHhqfXICnmqxMKYwYvwZEpJns
-	 7YmYojmhZIjClWV2drklKj3aIWE2wKzR4yVOrJKkesprqUWXoFoBtZoja/d5g0VVMcJTM
-	 J7vuwp0tphNeVaUyjQnV8QKvNQ5kRqqoMEQ3E7y/FHUk+gUlfMW7eqMIbJJV21ugOSPOj
-	 9mosBj1nRVMNRl3K/1QETIWJFBlLLVRm7UbOBk/TIMP8KB2VGQbt3xyklhrOHeoJM1pEB
-	 4W6b/ejfA8dc4XC/nVoYwrfgn4VClB3eFsiYk3D1fNPTgzr+SEgE7VTRZpsO5zYS3HQ==
+	bh=GSyju8KggLplN6wcpU3PhLiXnIijKBeapLl3hYvHArg=;
+	b=kIo7dZydeeXDMh+Vwk5kXXyfawzTKTmfo/848wfEo6k9GalytE5uatoyUWrYvGc1Qtfj
+	 +XxYp8pq69ITNquTM7tQMOS+EebZ45P13PIzb5yEYWaN0iZz4+dWT+Rcs0l15hkPNic+2
+	 NtsrbgNCLKYh5n/WKtcGbY/jgpCfrlFXRwWApP5oFZGVTzy4jXsPNuU9qxlibgcVOdpeh
+	 i9A21iVRKLwiOyUZWbnKkdwVVFCix4z0G3V9zb0gjS31CFVrrVGhKK00pEJQSlUxAK/aZ
+	 Kir8zP/XGKRQXdEuGuFLytMIW3HEJNLrsNnKq/3+8Zb6CGGovoADOq1NYW2I4CAz0ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JckwQ0v7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aPuVuIrC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F2E606A32C;
-	Wed,  4 Nov 2026 22:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA05606A32C;
+	Wed,  4 Nov 2026 22:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JckwQ0v7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF61B1F000C1;
-	Wed,  4 Nov 2026 22:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aPuVuIrC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4745E1F000C1;
+	Wed,  4 Nov 2026 22:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831070;
-	bh=HRTQ6jnZVOTgzpJ4wriMe8BKz0RfvzKCJ/KORkWaTEM=;
+	s=korg; t=1793831071;
+	bh=GSyju8KggLplN6wcpU3PhLiXnIijKBeapLl3hYvHArg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JckwQ0v72lSgv/Baox526uyPI7jJBa0KxfLVTOOwZ5pYczsd4/yQnWIzlVBycPfqp
-	 SMAxagxRLhXiNO4aMolKN/O7II4+S5hRbXoYBBWhFsClZcwXvM81teeERi6z0WeAn4
-	 8JMYM80smcqgq1sN8MrVJ0m9Dv+1IzweY2BbRKn4=
+	b=aPuVuIrCT1KtTKxWJKrXL78oLj3HiqiMIHQW8HbwH54pyeDW5Q1DXsmPJdTScLBqi
+	 WWroGOv/pOFPo/YgolCKzhpBKPtP6U3mygj+weBV8EOluqW64c8QWS1bFJ9kgFLA/L
+	 sbjYFj6cgHpUsRmOpqY/SMb63odNVGbqc9aZyklY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Even Xu <even.xu@intel.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0487/1005] HID: Intel-thc-hid: Intel-quickspi: Fix buffer overflow
-Date: Wed,  4 Nov 2026 16:03:40 -0500
-Message-ID: <20261104211057.618832416@linuxfoundation.org>
+Subject: [PATCH 6.18 0488/1005] HID: Intel-thc-hid: Intel-quicki2c: Fix buffer overflow
+Date: Wed,  4 Nov 2026 16:03:41 -0500
+Message-ID: <20261104211057.643313855@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,10 +70,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Even Xu <even.xu@intel.com>
 
-[ Upstream commit a1cdd72371270640bd357bd3e3b2ec0be17c9536 ]
+[ Upstream commit 5e5c3b9db1c5910d6a9175c97b76a95566e4dc32 ]
 
-The input buffers are used to store complete HID-over-SPI packets,
-including their protocol headers. However, their sizes are
+The input and output buffers are used to store complete HID-over-I2C
+packets, including their protocol headers. However, their sizes are
 currently calculated from the payload length only.
 
 Allocate enough space for both the payload and the packet header to
@@ -83,21 +83,31 @@ Signed-off-by: Even Xu <even.xu@intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-index 1c96d1d85845c..48387a7341604 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-@@ -549,7 +549,8 @@ static int quickspi_alloc_report_buf(struct quickspi_device *qsdev)
- 	max_input_len = max(le16_to_cpu(qsdev->dev_desc.rep_desc_len),
- 			    le16_to_cpu(qsdev->dev_desc.max_input_len));
+diff --git a/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c b/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
+index c6ba6886072ad..4588c55cf255d 100644
+--- a/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
++++ b/drivers/hid/intel-thc-hid/intel-quicki2c/pci-quicki2c.c
+@@ -586,7 +586,8 @@ static int quicki2c_alloc_report_buf(struct quicki2c_device *qcdev)
+ 	 */
+ 	max_report_len = max(le16_to_cpu(qcdev->dev_desc.max_input_len), SZ_4K);
  
--	qsdev->input_buf = devm_kzalloc(qsdev->dev, max_input_len, GFP_KERNEL);
-+	qsdev->input_buf = devm_kzalloc(qsdev->dev,
-+					HIDSPI_INPUT_BODY_SIZE(max_input_len), GFP_KERNEL);
- 	if (!qsdev->input_buf)
+-	qcdev->input_buf = devm_kzalloc(qcdev->dev, max_report_len, GFP_KERNEL);
++	qcdev->input_buf = devm_kzalloc(qcdev->dev,
++					HIDI2C_PACKET_LEN(max_report_len), GFP_KERNEL);
+ 	if (!qcdev->input_buf)
+ 		return -ENOMEM;
+ 
+@@ -596,7 +597,8 @@ static int quicki2c_alloc_report_buf(struct quicki2c_device *qcdev)
+ 	max_report_len = max(le16_to_cpu(qcdev->dev_desc.max_output_len),
+ 			     max_report_len);
+ 
+-	qcdev->report_buf = devm_kzalloc(qcdev->dev, max_report_len, GFP_KERNEL);
++	qcdev->report_buf = devm_kzalloc(qcdev->dev,
++					 HIDI2C_PACKET_LEN(max_report_len), GFP_KERNEL);
+ 	if (!qcdev->report_buf)
  		return -ENOMEM;
  
 -- 
