@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831726;
-	b=HSKfKJcaJuU/+BLvyk04NAGcpcAAEiSH8EFcrM4y8Q/+hWqhZuUTS6FYQEMMQCtD/yYp
-	 pkC2FCwekEg2mo7ob2HSlaB5tRtkbQlRKggblazFW7ZhRnv4cPVXO17yZzIwvtVHB3Bnw
-	 GUKzJLYA19/CLY/m+U5Uuw+5MT97ipSZ6365UiEwE35w9b3b3cR2lRoZXZeArs8Di3wxx
-	 GEUERol1sRBQ9Hm+Cq0gH3EXH2kMJ316BKGN+f3q8cq9mvHaoeo+KctzvImOHYeM+WJR7
-	 oJs67YhJQrtUuJx9eqIqNpDKyB/jt405WFosl5hIarb8F2RP099NSEJz99ayLja0waA==
+	t=1793831728;
+	b=mrQ/axkFScp3zFFeDzp1oFBUAz0h4WO3ZIQJf1oUjBxYboO2x5BLpWXWvKFDHhoRTfxl
+	 hsXhXAjxf2a/2EweshDIWqRhb8ciJO35vWcQSD3XUfhX5XR8X8sOzCekngQKG8gLAb5WC
+	 IgJy4OEuYAHlKtd+zs1vy6rwtFMznW22+IPvWSXhZ795ePd4ZHGkWZTfajydH36OFZbEm
+	 YKLjtuFYXlAMQEjUWKBbkMz+VZxXoOkqCEY3rSAX4Bg2EHIQWIFy0m6bjndxA+F+Dfhfq
+	 a8PFm/n0prW8azoVL4uvm4vJfbARr1Rhn3I3CutDI6/lQYnyPzzlNK3+UQv043JyQ/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3fojTfqAgojNcMHdFyHVxjGoM8XE0fBJ8d3y7aYrZVM=;
-	b=mJRNZvyHCd7xZ4/OdNw6LsSK76JxlmveBon6pnN5oX7NiewRCu6wdNOQ39JNj+j1GBKQ
-	 P7svMDSIau01nPTyP6858JcXLVEKIbVh2yzNGjCh4DV4M6mpUvukftvjYrC8p4fkRlujj
-	 akogw2Twz6HPtjOXJ/ClHhOUavTbY5gkPbakTomj9/4/vNTeouFR/Kr1WjjjBth1WtwWj
-	 jCzQqrx7CacExrMvbdoAe4evBQVwgfxYw3JP0t7dGhh0z4Wf/oXu/EVHbsOhgeL/7wgrc
-	 jwzN3Bmm0cp4xEOjqaS8MiWi1dDV7dNwXvDnsGHdsS729qOgIAsSfVAEOZYabIxqA/w==
+	bh=MXdyztOkoUIF/MY4EG3Ev+5joYjKeRacNX9+s53tt+c=;
+	b=j6sr9APa0WScWJRuruEqkzPRtuuq8zkGwRXuFsuKpS/mSzYmhlqR8+FsfdYJcorYo28Y
+	 5quCZ6D2AVYQV/WDZE+uZOVmgVza8qUVL6Tncckj3EgDNpuFd/hv/LWdchiV4tH9+v/9j
+	 NvwpLLMxpq0Fcv3YlPZpVE0uOUZs6q9ofGgWOY31huFDlYUULGcdiBczz8WDahNa/b4uL
+	 psR4YftjtPJcIKG2tW212yt1ItonFzmgcZgKMJNI9dNqEFOpnfQNNH8rKrB9sAVyDOsRn
+	 3RFASwHLFI9q6A8NH91nxY1novpZFSI4sGmKknFiOiyXX3SjD72oQe2lby6fAe30vsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uz6TgPOR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MujFOT4c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F27D606A842;
-	Wed,  4 Nov 2026 22:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC73D606AB1A;
+	Wed,  4 Nov 2026 22:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uz6TgPOR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BBC1F000C1;
-	Wed,  4 Nov 2026 22:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MujFOT4c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8614F1F0093A;
+	Wed,  4 Nov 2026 22:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831726;
-	bh=3fojTfqAgojNcMHdFyHVxjGoM8XE0fBJ8d3y7aYrZVM=;
+	s=korg; t=1793831727;
+	bh=MXdyztOkoUIF/MY4EG3Ev+5joYjKeRacNX9+s53tt+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uz6TgPORl5Bo44U+/+eQWoQU6hhr3shoOJ043uhDdQYjAZ0wLpJSCwTvG43WuxSwQ
-	 KKb+MbG6ThX4gV1psSRkTV67BXGcoZ0XUwr9UdpcofmgigzeFwIPB9NDu4wawuc2n0
-	 gMZ2pXsYichFWmg7DEy4JClT1Qis+9zu67JwhS/0=
+	b=MujFOT4cZGqSTRcYx1OGyVSAQ6EryjNIPUj/MtzUYr7icd9BTWfhpxjKTZ/VnhQBG
+	 fAPl79rEDX5r2Qb3WPK8jhWPBVlJD3ubxW78fbSVlwMhynApcyOUrxJUCMCbCvc8G3
+	 zOb7al9bmDYX5mVI9yn5OKxPxOjR62xoF2r9QSxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Benjamin Coddington <bcodding@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.18 0876/1005] NFSv4.1/pnfs: suspend pNFS on NFS4ERR_TOOSMALL from LAYOUTGET
-Date: Wed,  4 Nov 2026 16:10:09 -0500
-Message-ID: <20261104211107.790389664@linuxfoundation.org>
+Subject: [PATCH 6.18 0877/1005] NFSv4/filelayout: Anchor page coalescing on pattern_offset
+Date: Wed,  4 Nov 2026 16:10:10 -0500
+Message-ID: <20261104211107.814902731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,68 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-commit 28c950413605fb5b6cb3863c5e3274ea69701097 upstream.
+commit 7f2d221b01f356b6bb3bb6efef998f8b28339824 upstream.
 
-If the layout for the requested range is larger than the size the
-client advertised in loga_maxcount, RFC 8881 Section 18.43.3 has the
-metadata server return NFS4ERR_TOOSMALL.  The client caps
-loga_maxcount at a single page, so a flexfiles server that stripes a
-layout segment across several dozen data servers produces this error
-today.
+filelayout_pg_test() bounds page coalescing to a single stripe unit
+using an offset relative to pls_range.offset, but the data server is
+selected by nfs4_fl_calc_j_index() using an offset relative to
+pattern_offset.  When a segment's pattern_offset and range offset are
+not congruent modulo the stripe unit, the coalescing window is shifted
+off the DS-selection grid, so a coalesced I/O can straddle a stripe
+boundary and send the bytes past it to the wrong data server.
 
-The client has no handling for it: nfs4_stat_to_errno() maps the
-error to -ETOOSMALL during decode, which nothing in the layoutget
-path recognizes and nfs_error_is_fatal() does not consider fatal, so
-pnfs_update_layout() clears the layout fail bit and returns no
-segment.  The I/O falls back to the MDS, but because no fail bit was
-set, every subsequent pageio attempt sends another LAYOUTGET that is
-doomed to the same NFS4ERR_TOOSMALL.  Files whose layouts do not fit
-the reply buffer never use pNFS and pay an extra round trip on every
-pageio.
+Anchor coalescing on pattern_offset to match nfs4_fl_calc_j_index().
+Stripe-congruent segments, including the common whole-file pattern_offset
+0 case, are unchanged.
 
-Map -ETOOSMALL to -EMSGSIZE in the layoutget exception handler and
-have pnfs_update_layout() treat it like NFS4ERR_LAYOUTUNAVAILABLE:
-mark the layout mode as failed and fall back to I/O through the MDS.
-
-Fixes: d600ad1f2bdb ("NFS41: pop some layoutget errors to application")
+Fixes: c6194271f94b ("pnfs: filelayout: support non page aligned layouts")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c |    8 ++++++++
- fs/nfs/pnfs.c     |    2 ++
- 2 files changed, 10 insertions(+)
+ fs/nfs/filelayout/filelayout.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -9938,6 +9938,14 @@ nfs4_layoutget_handle_exception(struct r
- 		status = -EOVERFLOW;
- 		goto out;
- 	/*
-+	 * NFS4ERR_TOOSMALL means the layout for the requested range
-+	 * exceeds what the client advertised in loga_maxcount (see
-+	 * RFC8881 section 18.43.3).
-+	 */
-+	case -ETOOSMALL:
-+		status = -EMSGSIZE;
-+		goto out;
-+	/*
- 	 * NFS4ERR_LAYOUTTRYLATER is a conflict with another client
- 	 * (or clients) writing to the same RAID stripe except when
- 	 * the minlength argument is 0 (see RFC5661 section 18.43.3).
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -2319,6 +2319,8 @@ lookup_again:
- 			break;
- 		case -ENODATA:
- 			/* The server returned NFS4ERR_LAYOUTUNAVAILABLE */
-+		case -EMSGSIZE:
-+			/* The layout exceeded loga_maxcount (NFS4ERR_TOOSMALL) */
- 			pnfs_layout_set_fail_bit(
- 				lo, pnfs_iomode_to_fail_bit(iomode));
- 			lseg = NULL;
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -796,7 +796,7 @@ filelayout_pg_test(struct nfs_pageio_des
+ 	unsigned int size;
+ 	u64 p_stripe, r_stripe;
+ 	u32 stripe_offset;
+-	u64 segment_offset = pgio->pg_lseg->pls_range.offset;
++	u64 pattern_offset = FILELAYOUT_LSEG(pgio->pg_lseg)->pattern_offset;
+ 	u32 stripe_unit = FILELAYOUT_LSEG(pgio->pg_lseg)->stripe_unit;
+ 
+ 	/* calls nfs_generic_pg_test */
+@@ -808,8 +808,8 @@ filelayout_pg_test(struct nfs_pageio_des
+ 
+ 	/* see if req and prev are in the same stripe */
+ 	if (prev) {
+-		p_stripe = (u64)req_offset(prev) - segment_offset;
+-		r_stripe = (u64)req_offset(req) - segment_offset;
++		p_stripe = (u64)req_offset(prev) - pattern_offset;
++		r_stripe = (u64)req_offset(req) - pattern_offset;
+ 		do_div(p_stripe, stripe_unit);
+ 		do_div(r_stripe, stripe_unit);
+ 
+@@ -818,7 +818,7 @@ filelayout_pg_test(struct nfs_pageio_des
+ 	}
+ 
+ 	/* calculate remaining bytes in the current stripe */
+-	div_u64_rem((u64)req_offset(req) - segment_offset,
++	div_u64_rem((u64)req_offset(req) - pattern_offset,
+ 			stripe_unit,
+ 			&stripe_offset);
+ 	WARN_ON_ONCE(stripe_offset > stripe_unit);
 
 
