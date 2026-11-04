@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831076;
-	b=aU4vftymscy9nF2WtVAqBi4Rrb2ZODSYwpLh01ormfz7HpSxddp9XoF+uWs32EMsWRyI
-	 yg0UPse/igHKK5DwRl4fe10BjiCwdYx3Lyx7+x8TZtrU+BkoSWUYzDOsxeEb559pYmlBb
-	 KBcEE3eJsJl7D+Zg8sFKwwMJ/W7YcGwnRo4WA5zpBtlvuA3+YWS+5cpxE6u53OMrzCF0n
-	 rS7RjmeVCJghQnIgGA2bTF8IDnJeiOwweOO4b2AJvEhcRXhl1Pjq/jmeOLSZO3bY4RKv7
-	 ILqVS4wXTcCbn9QmG83amtPCRVFPzwJxQpEQOphvyBD+PdZQuXUSzhFpKhE9FxEW38w==
+	t=1793831078;
+	b=Fg19+UfiqkJTAMLT31RXyAyiGboFXEnCn07AXI+8HRt8YQ5X0T/kAk+8/cyBwXGZdM47
+	 3X/ZSpi4Eyp0lwLaxO/KOX+bk2PB+pec6skp/KcQacEwZ+XdLYlz0hrYaHf9pHvNzUuRP
+	 6LWg4dbRDx53+YclJF7CWWv5UvuopiHXJ7j/IBaY1UKMT76qXOup6gLtAWRV88YeqHgCG
+	 S3lBAEGC10HsqxfO9fQO8urz4dv0tG/mAsN4NuW/SbY+M2zgRBoiyrSbatqmz3GOhEU2T
+	 3FzRtG5Ue7izUwFUElumpQrr0AWdbzLQYOzi6N5HLl0RFCEpJbp/WoN+CRWJg/wC+6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831076;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831078;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f8rdjvKdvslN61XtqCB/xEXwqIbZXyS7i2Q2O3JWLio=;
-	b=jia7txYWkbf7gSOkdpJ+ldNhzx4upDLS/HghnxBgOIn3vSl6MVv5UGGp6VD5r9IoIpP3
-	 XnVX3cSYwvFaNrU3pmwa9Xc7L/bFLI2uOqQ4olJsYsI8KozbZcpZQDuo+KJ9McYT8bQmE
-	 5SqC6f0oS8CpnaV6ni9S5uRfnGxbRnz8MTJWpMHHtdCB3IVFH5xQ26pLBirAlX+b+EbHC
-	 OuY7ICBhdKG42qJZI/EWGW5qYGdDv/hJLvVB+19Kvev8BHgq8e3NuKwsShifLRVZ7LfMW
-	 APFOkW/5ngnh0BbVjdLV5XOt6oDweGx6Gctx1PSNH/gy2j66TGMKVr0aGBaFtNmDfgA==
+	bh=gxMEAdy+sfih7piuSqYFZ2hzpkWksCRpRqk2lGPvc4A=;
+	b=hYBv9npMFgIClZCbeuPqGMMFyt9cWFSID+B6D8FinnQ9HaDhxfBxaGCOgphsbJiZFcoI
+	 docazh9KmwjYOd4NfegKko+eYLxJrsMliwoNlMxRb20UW11InhJUoi6K263qxLwz6+o2q
+	 GU0eqSqYAkjdMUnAicRUIl3gEU7qOajBm49WkPZbspySiqXszC2gX8wZ+XXLkWZOOmsz0
+	 ZXTNzXkystw8ycAm/Wt18mNCM0uqwB9Bdhts5KIMWBHOZsD0EokJ+TyiFOVbdct8kn6sH
+	 6js5VJAhK++FdtOz3s9GoxC1V1Bo0kpwRKde7bNTXXs5lvwvaPUisjljAVy8zWn/Syw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sxckl51r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BprxQ2nx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFCC606A32C;
-	Wed,  4 Nov 2026 22:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379B0606AC25;
+	Wed,  4 Nov 2026 22:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sxckl51r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAD51F00919;
-	Wed,  4 Nov 2026 22:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BprxQ2nx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD8D1F00919;
+	Wed,  4 Nov 2026 22:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831076;
-	bh=f8rdjvKdvslN61XtqCB/xEXwqIbZXyS7i2Q2O3JWLio=;
+	s=korg; t=1793831077;
+	bh=gxMEAdy+sfih7piuSqYFZ2hzpkWksCRpRqk2lGPvc4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sxckl51rWwR9039zvmEEcZAYfYr+QAhvKKyTMTJLvzrzv56Jw671Eg3Wds0mDLWu5
-	 j7Zgj19I3PRUhl/LdjxRVoZTPQBHr3CKGYy+cwFIazi+f+7dskKH4c6XWnm9Dgwf+j
-	 +qdyQ/MQDLfP5MZtgaWH8VrL3KdqBKP2iY42Z6+w=
+	b=BprxQ2nxFdsHGGlbrDtJdtuJva9lG3QXv/x5DJ4i3MxI8POHFZ0sg7hYeyZFVded1
+	 P6Uvvl4be/xtFmOm1lsDIBWUGDCbM3Y34HNEn9Su24AkjxAsSgI3YLxmRpIwJJhNA6
+	 msLL1kuf0eZYeEj+aCtdd5YD7aXH1zA+oi32mTUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Hernan Ganzo <gp@sneemgp.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0491/1005] docs: update the unmount propagation rule
-Date: Wed,  4 Nov 2026 16:03:44 -0500
-Message-ID: <20261104211057.721344050@linuxfoundation.org>
+Subject: [PATCH 6.18 0492/1005] ALSA: hda/realtek: Limit internal mic boost on HP Pavilion 15 (103c:2164)
+Date: Wed,  4 Nov 2026 16:03:45 -0500
+Message-ID: <20261104211057.747340937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,69 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Hernan Ganzo <gp@sneemgp.com>
 
-[ Upstream commit 3f5dc09141a7bfe286620a6869d1d70ffe32d6b8 ]
+[ Upstream commit 786fb6b3f513937f712db5a9ba6a12cbc6982ba9 ]
 
-Section 5f still describes the rule propagate_umount() used before
-commit f0d0ba19985d ("Rewrite of propagate_umount()"). It states that a
-mount that receives the unmount by propagation is left alone as soon as
-it has any submount. That's not true anymore.
+The HP Pavilion 15 with the ALC3227 codec (SSID 103c:2164) exposes the full
+four-step internal mic boost on pin 0x12: nsteps=3 with stepsize=0x2f, that is
+0, 12, 24 and 36 dB. Combined with the ADC capture gain of +30 dB the analogue
+cascade reaches 66 dB, and the internal microphone clips on the ambient noise of
+a quiet room; the upper two steps are unusable at any useful input level. This
+is the defect class ALC269_FIXUP_LIMIT_INT_MIC_BOOST exists for.
 
-A propagated unmount unmounts a mount with sub-mounts as long as every
-sub-mount gets unmounted together with it. This is the case when the
-sub-mounts are unmounted by the same propagation. Only a sub-mount that
-cannot be unmounted keeps its parent mounted.
+The machine matches no SSID quirk and falls through to the pin table, which
+selects ALC269_FIXUP_HP_MUTE_LED_MIC1 through a pin signature shared with
+several other HP models. Add an SSID entry instead, using
+ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED: the existing fixup that applies
+alc269_fixup_limit_int_mic_boost() and chains to the same mute LED fixup, as
+already done for 103c:218b. The boost becomes 0 or 12 dB and the LED handling is
+unchanged.
 
-The section also only describes a single mount without sub-mounts. But
-lazy unmounts take a tree and every mount of the tree propagates its
-unmount from its parent mount.
+Tested on the affected machine by selecting the same fixup through the model
+string (snd-hda-intel.model), which bypasses the SSID and pin tables, with the
+driver confirming the selection:
 
-Link: https://patch.msgid.link/20260923-work-mount-fixes-v1-8-f424cf8d3242@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+  snd_hda_codec_alc269 hdaudioC1D0: ALC3227: picked fixup limit-mic-boost (model specified)
+
+With that, Internal Mic Boost reports Limits 0 - 1 (0 or 12 dB) instead of 0 - 3
+(0 to 36 dB), so alc269_fixup_limit_int_mic_boost() clamps this codec's internal
+mic pin as intended. Note that /proc/asound/card1/codec#0 keeps printing the
+unclamped hardware caps (nsteps=0x03): that file reads codec parameters uncached
+by design, while the fixup overrides the driver's cached parameter that the
+control is built from.
+
+This does not by itself make the default capture volume sane -- the remaining
+12 dB on top of the +30 dB ADC gain is still hotter than this machine's usable
+operating point. It removes the two unusable steps from the hardware range, which
+is what a quirk of this class can do.
+
+Signed-off-by: Hernan Ganzo <gp@sneemgp.com>
+Link: https://patch.msgid.link/20260921205538.41192-1-gp@sneemgp.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/sharedsubtree.rst | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/filesystems/sharedsubtree.rst b/Documentation/filesystems/sharedsubtree.rst
-index 8b7dc91590837..8bae6d9a7e047 100644
---- a/Documentation/filesystems/sharedsubtree.rst
-+++ b/Documentation/filesystems/sharedsubtree.rst
-@@ -564,8 +564,8 @@ f) Unmount semantics
-    where 'A' is a mount mounted on mount 'B' at dentry 'b'.
- 
-    If mount 'B' is shared, then all most-recently-mounted mounts at dentry
--   'b' on mounts that receive propagation from mount 'B' and does not have
--   sub-mounts within them are unmounted.
-+   'b' on mounts that receive propagation from mount 'B' are unmounted as
-+   well, if every mount below them is also unmounted.
- 
-    Example: Let's say 'B1', 'B2', 'B3' are shared mounts that propagate to
-    each other.
-@@ -584,10 +584,18 @@ f) Unmount semantics
- 
-    So all 'C1', 'C2' and 'C3' should be unmounted.
- 
--   If any of 'C2' or 'C3' has some child mounts, then that mount is not
--   unmounted, but all other mounts are unmounted. However if 'C1' is told
--   to be unmounted and 'C1' has some sub-mounts, the umount operation is
--   failed entirely.
-+   If any of 'C2' or 'C3' has a child mount that cannot be unmounted
-+   then that mount is not unmounted. But all other mounts are unmounted.
-+   A child mount that is itself unmounted by the same unmount
-+   propagation does not keep its parent mounted. However if 'C1' is
-+   supposed to be unmounted and 'C1' has some sub-mounts, the unmount
-+   fails.
-+
-+   A lazy umount (MNT_DETACH) takes a whole tree. Every mount of the
-+   tree then propagates its unmount from its own parent as described
-+   above, so the mounts that receive propagation lose the corresponding
-+   trees as well. Documentation/filesystems/propagate_umount.txt has the
-+   precise rules, including the ones for locked mounts.
- 
- g) Clone Namespace
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index bc87062f86da7..10d930d8fed72 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6707,6 +6707,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1028, 0x164b, "Dell", ALC293_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x1586, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC2),
+ 	SND_PCI_QUIRK(0x103c, 0x18e6, "HP", ALC269_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x2164, "HP Pavilion 15 Notebook PC", ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x218b, "HP", ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x21f9, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC1),
+ 	SND_PCI_QUIRK(0x103c, 0x2210, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC1),
 -- 
 2.53.0
 
