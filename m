@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828909;
-	b=mDmmTz1avFyqk6eGja8H2gd6ZIeuyp9ZWbLsgjtGP/3YimhbJMsZ6ojc6/uukoclSbJL
-	 cCnkkY2GJi8g6XrDW0qNWOkvMMwX5vm2ugyCMBB4c+5nfeVW90rCtALE5tzq4sHbiM13j
-	 YM6Mtrwho+AJ3cKKDyjHdxNqQVk9qJE3/95TcH8tMOzd2iYH8+opXuO2OBWoeqRN9xOCP
-	 BDghTQdEdyETRwtHJi4GyzM4q5M4fDl9qnxKdVHoh9Dk2cHmubVFnNcamlxOperWsbFwW
-	 FVmbKex7og9wwKqit6axvcW96tnGa7UKfycs7Joxe/oCWkLeCzW7nEIP8wA58vY09yQ==
+	t=1793828911;
+	b=Ip8Yo2dMWnTd3LHtZbNynj1i/wiqzCnBuNzFqjQpsTWIZfi8zC8zK27T7hpd1YnVyhBN
+	 eLqg1y/CGz6GMY6OAy6ir1m4yO7sKlj3YvEtTeTiDZZe3rzszE1nEK7btVK68AmLYcs4R
+	 hL9WLzHoH8cnKthMF1T2CFgG+21dhrCSx7+S07F3eQVPjA8ROtniOIeJCIQURYbsL46gM
+	 vMzBSZbea2iWvYEu75h63VT/Wxr/bgM4kPAbI6rOgYsmTm7nIMT/z8iqlwTzKGHhBI4wL
+	 UirZI51wYIm+LRKFi79UpXLeRDXIlrD9NtdBoLVLucJLWc7Bucz7fZAYMxIm9oHySlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828909;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828911;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SYbg6+mgdu6eu2kQlTJiVrfh051mtbCPaP/A1GzojJg=;
-	b=l4BRCa4TgCTRrWNwebCvUeLWEHDBxNC5uIu4MU4YZQ3LAm7GYeZBkYAQXqATrIrKkXbJ
-	 T+aGniWf+gwOyihFiVbLqssaTbLMX6nWCclNS7MvsH3IleActme2VuTd7b5lv3ApO5dDX
-	 o5WO7xxXiLOWqAlcCsLX1TRBe69qAprwYGwa3pya2CAdeP0UmDjpuZXgDNEjf+TJ0y9gj
-	 yP0lc0PZU5YKEkC5k/bnivMVrS9DqgT+Une4pXRL7ih85uTT+b8/wiN2TIaoSyJXXuaxK
-	 0KZ+2XHw7e1+1IyCB7qljXjXDz6gbquu5IPllm4XUSq8LfGB3Lcpp0UX6IO9E/ULb5A==
+	bh=9vEjueqxjv+HST0lBYwmBRYkeXwIXjb3y6abEw6t41c=;
+	b=1ZISkWWg4t8wyKFVpVmZQZm7g3Pu+ImEe7mjz+SmNan1lmeE6wnLFzr7FMnTEr7YW8nv
+	 Tii3M5Ir+1gldva5YSNxqa5F7gutZiVjklw1UV2yB3XF8UK6XUOdgqkaFTigq8OZhEdFp
+	 0KMEhooDUXi465xrGJVxGq80/LdN7ivIXLleMocE8nCHwwa4tOFN/MhTaXW73imOoZYAp
+	 5R/cV/agSpEbJ80PTzwC0ZAzybAyP5ZkzI5w7AckeAJ926yIpdH0teqA0KMKtlV4LiEIZ
+	 XPRMIzkazxRlAWZg8X0lEGmWPAhWk/iE8kP27evASLnBeywnIDx4y4cNadLd0FvPCkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3WK4d1F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O354Ku19;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5D26070303;
-	Wed,  4 Nov 2026 21:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58696072648;
+	Wed,  4 Nov 2026 21:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3WK4d1F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06DC1F0093A;
-	Wed,  4 Nov 2026 21:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O354Ku19
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5611E1F00A17;
+	Wed,  4 Nov 2026 21:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828909;
-	bh=SYbg6+mgdu6eu2kQlTJiVrfh051mtbCPaP/A1GzojJg=;
+	s=korg; t=1793828910;
+	bh=9vEjueqxjv+HST0lBYwmBRYkeXwIXjb3y6abEw6t41c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3WK4d1FYqVAzJVLgGu28bV9qnrQs37bUqxhfI/1wOICvtzOwdOLJgIIfuyylub7S
-	 E4zWcHqCXYiHb4jIDF1CiHf4VYSKvzZa+Pij6uYpQlb9fpMB49Kvu2afRGQUdKbf5J
-	 LtTIuwZvG6oS3/TuMvEkzJRHS0JCTPHNRtjllovM=
+	b=O354Ku19WiyteNeAOJ3hoGnOOpZvoeMvw/sjDRGwhK5ENlulcwduuNI6dpYCNLrRy
+	 hS5eOHqW/Qq4ue8kCwllfugnjYLpItxsmp8gcto+62bbx7hOxF+VJSKg8Xl9PHILMD
+	 2iTBip5Kv+UT5WyKP92JukpKq3mXsOPDpvAbyabM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 320/547] xfs: dont repair fs summary counters with garbage
-Date: Wed,  4 Nov 2026 16:08:24 -0500
-Message-ID: <20261104211047.312460496@linuxfoundation.org>
+Subject: [PATCH 7.3 321/547] xfs: fix lost errno returned from xfarray_foliosort
+Date: Wed,  4 Nov 2026 16:08:25 -0500
+Message-ID: <20261104211047.341180106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,37 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 22a8a7501c0146dba4ce99b8256975ffe945125d upstream.
+commit 8c4f172c246717b1420f138a159ed15c315a58bd upstream.
 
-LOLLM noticed that if we scan the filesystem and come up with totally
-garbage numbers for the summary counters, we don't actually mark the
-scan incomplete.  Because we don't do this, repair can install the
-garbage values into the filesystem, making things worse.  Don't do that.
+LOLLM noticed that we stop the sort early but don't actually pass along
+the error code, which could enable repair code to continue running with
+an unsorted array.  Fix that.
 
 Cc: stable@vger.kernel.org # v6.9
-Fixes: 4ed080cd7cb077 ("xfs: repair summary counters")
+Fixes: ee13fc67205b98 ("xfs: convert xfarray_pagesort to deal with large folios")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/fscounters.c |    4 +++-
+ fs/xfs/scrub/xfarray.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/fscounters.c
-+++ b/fs/xfs/scrub/fscounters.c
-@@ -368,8 +368,10 @@ retry:
- 	/* Bail out if the values we compute are totally nonsense. */
- 	if (fsc->icount < fsc->icount_min || fsc->icount > fsc->icount_max ||
- 	    fsc->fdblocks > mp->m_sb.sb_dblocks ||
--	    fsc->ifree > fsc->icount_max)
-+	    fsc->ifree > fsc->icount_max) {
-+		xchk_set_incomplete(sc);
- 		return -EFSCORRUPTED;
-+	}
- 
- 	/*
- 	 * If ifree > icount then we probably had some perturbation in the
+--- a/fs/xfs/scrub/xfarray.c
++++ b/fs/xfs/scrub/xfarray.c
+@@ -943,8 +943,10 @@ xfarray_sort(
+ 		 * problems, we're done.
+ 		 */
+ 		ret = xfarray_foliosort(si, lo, hi);
+-		if (ret < 0)
++		if (ret < 0) {
++			error = ret;
+ 			goto out_free;
++		}
+ 		if (ret == 1) {
+ 			si->stack_depth--;
+ 			continue;
 
 
