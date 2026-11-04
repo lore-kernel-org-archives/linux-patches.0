@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829009;
-	b=osCTBEt+XlaBX5/46UjJZ2iCblJXp9S4NZ6nt0z8cTOejXEpy9NxbaE9YYEM1CtJWzXo
-	 wWA6lZ/JnOBvTvIq7HyzgLYNo9AX5BgouxE7DR9ojwFp9g1IX0CdUXV/uTu5IDJBMhu9h
-	 nOu+TfbdqV46u3xARRxW86j1e6acz3dgQGwsXpaum69N6lc2CiwBqOx6E3Cd5Xndfbsm1
-	 JyYZmE6nq7LFQa/2jGnm4osONza7/XjtVRY5SQHdHXaNuRc6lpOcH2LINUjAOe/xg1OiU
-	 yvuzPkMqXEPjsorz1Rhduz6zih28X4dljJ1DMtkfYhXiSSFey2YY5wIGplYXqQ/EhhA==
+	t=1793829010;
+	b=ltsSzT8qlKTSflngH8W7WzxuRaxOBBWWm49cbXczgK6A0bAdgpUKanVAeF6ZAQsqiSBx
+	 ak/EeJ8MtTcVaDstkjQ87BH8oj+6wJsZ/3lxHdHtHV3iFzqY3DJMvFtXjrQR+nF5KPW5L
+	 K7UJUAwnD7zsFiLqPCWMqIgfz7YQScPGReQVmAovu02/rc2gRxiZT+fsZ4IRfAA6kmqN1
+	 C9Txwl0bP+AGIOpsvktcAXqVFgtnoZa+M0yygmP9bvQU9Mb0IEW8hfgDl6IkMx9euLsTR
+	 SqUfF6gL/Tyzn9RuuQuFQ/+pV4gjV9qhD6/blMK4dUzUXoc7sb+KMGgy5LWNoGkl9Bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=30sX1KceBTUvqHVXdLEuwWoeUs5RZxjxU1pCa3HO5iw=;
-	b=1L/rSaGTT17rOedoxziBoojQR/AXC+mCWSrqivGJzCgcAVDELI8LrmoqCwYX4myUEKn7
-	 IAAsR0qdlHhnk2DGEEmMXKIHwosbTxRTKAyg/dhBM0YhkA5NiJ/5hWgNNyHjKJrJTshPI
-	 4wO9FidNCOgeNS9hW2BV9niYAzwdT9KXwhsWIRZcFwCWj/4mdV0eh3zxZylMHd/cFhTM0
-	 9AqCChU7e4mZyddyPOehQ2ZPibCQW6iQCoU8yBxYlYJB0z8A3+WDSoTbdPHlbHuSM+xPh
-	 3wyaAp3Z0qSjkpYimbMn3m4esI00Oit7M7bpxOxWFoCb5e1tyK0tWk3NJCAadELT+UA==
+	bh=cX14CIww+a5jymhaGwEHBLJYZOKC6tXHUhn2OPVcEek=;
+	b=4aThOqfnr8Q0LjUJCisygQT59LNamLNB2uDqf99o9H5PiMZvCgZ9GtHI9GIq8Ni8NbKJ
+	 iGdOweOFgh2ij4n1nmFQLMFMtuwbVYqylVs+EqmzNiwEBpWYm9RFXKn3/B4HUdaLCjqiw
+	 DwJxZkSRaD9o6qDId+vReWyt7Xfp2f1vuTKtXZ0tW8j1XyP4tYcREoXsOcqIYqL4vqANj
+	 +n+PJx1hfKE3QGkmjKeu+hcPxBMyf1xZc9tXgDoxDq0+GIWcbLongqw0USM+bashDZ0Oh
+	 E+JO8h5Qc4nCkIwVuA8sD3Giu+6XlJl+jjUVtQJeDuN3N1/SfNwiRCIJHDCtb38agaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FA6ADMsH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vKbjaQuv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6F36070332;
-	Wed,  4 Nov 2026 21:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E27F607F2BA;
+	Wed,  4 Nov 2026 21:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FA6ADMsH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF651F000C1;
-	Wed,  4 Nov 2026 21:50:08 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vKbjaQuv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC8A1F000C1;
+	Wed,  4 Nov 2026 21:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829009;
-	bh=30sX1KceBTUvqHVXdLEuwWoeUs5RZxjxU1pCa3HO5iw=;
+	s=korg; t=1793829010;
+	bh=cX14CIww+a5jymhaGwEHBLJYZOKC6tXHUhn2OPVcEek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FA6ADMsH87FFQO/w5hmEKjr2Noy3LenF0t2Hgxh5pblMtxvQdoWHXjQ55R0VyOCeM
-	 Ie4QSxlsCUPvDhkbow4ogpo4kfmtsQ1LY/hZvk5rokXpMfVKNXdCqUjY5bGnSmDvdu
-	 Y7oYvtQ5yDmd5FSiuL36w9svkSRCJenkgnrc4nCg=
+	b=vKbjaQuvkgbmM9ACwioBLaSZwoVTO6rhnkqM8b+qecNPtcTs5teNpL2sqTsLrQElD
+	 9P6rFjq9ivVLAJERvJVh3qeOI05yTfP5il9Oqhv71eKy7OAtLFJYiTAbkz/Fv0QTMv
+	 QhoKAV9+2CUwcuqHvjbzNDJrXU7ctMsGMfEAxsyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 349/547] xfs: bound inode fork length against the fork size during log recovery
-Date: Wed,  4 Nov 2026 16:08:53 -0500
-Message-ID: <20261104211048.187322423@linuxfoundation.org>
+	Diego Oliva <diego@bynar.io>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 385/547] smb: client: reject FIND data areas that run past the received response
+Date: Wed,  4 Nov 2026 16:09:29 -0500
+Message-ID: <20261104211049.234800822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,75 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Diego Oliva <diego@bynar.io>
 
-commit 9232301894a06e664d8de2da97175cf98419bd16 upstream.
+commit 29bd6773187cb5c1bbbdf90d677c6add7d58af26 upstream.
 
-xlog_recover_inode_commit_pass2() copies an inode log item's data/attr
-fork region into the inode buffer using the on-log region length without
-bounding it against the fork capacity, e.g.:
+CIFSFindFirst() and CIFSFindNext() take the directory entries of a
+TRANS2_FIND_FIRST2 or TRANS2_FIND_NEXT2 response from DataOffset for
+DataCount bytes. validate_t2() bounds DataOffset at 1024 and
+ParameterCount + DataCount by the byte count, and nothing compares
+DataOffset + DataCount with the number of bytes SendReceive() copied
+into the buffer.
 
-	len = item->ri_buf[2].iov_len;
-	memcpy(XFS_DFORK_DPTR(dip), src, len);
+smb_init() places the request and the response in the same
+cifs_request allocation and cifs_buf_get() clears only the start of
+it, so a short response whose data area extends past its end has
+srch_entries_start point at bytes of the request that was just sent,
+or at whatever the allocation held before, and those bytes are parsed
+as directory entries. cifs_readdir() and find_cifs_entry() walk the
+entries with nxt_dir_entry(), which checks every entry but the first
+of a response against the end of the SMB; cifs_query_path_info() and
+cifs_backup_query_path_info() read the first entry with no check at
+all. Those reads stay inside the allocation, but what they return is
+not part of the response. The last entry, which LastNameOffset locates
+relative to the data area, is bounded against the received response
+by an earlier patch of this series, as is every entry that
+cifs_fill_dirent() parses; the walk itself and the two query functions
+are not.
 
-The only guard is an ASSERT, which is a no-op on production kernels
-(CONFIG_XFS_DEBUG off), and xfs_dinode_verify() runs only after the copy.
-A crafted image with a dirty log can therefore drive a heap out-of-bounds
-write at mount time. The XFS_ILOG_DBROOT sibling already passes
-XFS_DFORK_DSIZE as a bound; the DDATA/DEXT and ADATA/AEXT memcpy paths
-did not.
+SMB1 is not negotiated by default; reaching this code requires an
+explicit vers=1.0 mount.
 
-Bound each logged fork region against the destination fork size before
-copying it, and reject the log item with -EFSCORRUPTED when it does not
-fit. Because the recovered inode is only verified after the fork data has
-been copied in, the checks are done up front, before any memcpy into the
-on-disk inode.
+Reject a response whose data area extends past the received length,
+with the -EINVAL that validate_t2() returns for the other malformed
+transaction responses. cifs_query_path_info() and
+cifs_backup_query_path_info() still read a whole entry from a data
+area that may be smaller than one; that is not changed here.
 
-Fixes: 658fa68b6f34 ("xfs: refactor log recovery inode item dispatch for pass2 commit functions")
-Cc: stable@vger.kernel.org # v5.8
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+A conforming server is not affected. The data block of a transaction
+response is part of the SMB, so DataOffset + DataCount cannot exceed
+the smbCalcSize() bytes that SendReceive() copies; coalesce_t2()
+appends each secondary response to the data area and adds its length
+to both DataCount and the byte count, which keeps that relation.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode_item_recover.c |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ fs/smb/client/cifssmb.c |   31 +++++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
---- a/fs/xfs/xfs_inode_item_recover.c
-+++ b/fs/xfs/xfs_inode_item_recover.c
-@@ -507,6 +507,25 @@ xlog_recover_inode_commit_pass2(
- 	ASSERT(!(fields & XFS_ILOG_DFORK) ||
- 	       (len == xlog_calc_iovec_len(in_f->ilf_dsize)));
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -4418,8 +4418,9 @@ CIFSFindFirst(const unsigned int xid, st
+ /* level 257 SMB_ */
+ 	TRANSACTION2_FFIRST_REQ *pSMB = NULL;
+ 	TRANSACTION2_FFIRST_RSP *pSMBr = NULL;
+-	T2_FFIRST_RSP_PARMS *parms;
++	unsigned int data_off, data_count;
+ 	struct nls_table *nls_codepage;
++	T2_FFIRST_RSP_PARMS *parms;
+ 	unsigned int in_len, lnoff;
+ 	__u16 params, byte_count;
+ 	int bytes_returned = 0;
+@@ -4538,11 +4539,19 @@ findFirstRetry:
+ 		return rc;
+ 	}
  
-+	/*
-+	 * The recovered inode is verified only after the fork data has been
-+	 * copied into it, so bound each logged fork region against the size of
-+	 * its fork now, before the memcpy below can overrun the on-disk inode.
-+	 * The DBROOT/ABROOT cases already bound their copies against the fork
-+	 * size.
-+	 */
-+	if ((fields & (XFS_ILOG_DDATA | XFS_ILOG_DEXT)) &&
-+	    item->ri_buf[2].iov_len > XFS_DFORK_DSIZE(dip, mp)) {
-+		error = -EFSCORRUPTED;
-+		goto out_release;
-+	}
-+	if ((fields & (XFS_ILOG_ADATA | XFS_ILOG_AEXT)) &&
-+	    item->ri_buf[(fields & XFS_ILOG_DFORK) ? 3 : 2].iov_len >
-+	    XFS_DFORK_ASIZE(dip, mp)) {
-+		error = -EFSCORRUPTED;
-+		goto out_release;
++	data_off = le16_to_cpu(pSMBr->t2.DataOffset);
++	data_count = le16_to_cpu(pSMBr->t2.DataCount);
++	if (data_off + data_count > (unsigned int)bytes_returned) {
++		cifs_dbg(VFS, "%s: data area offset %u count %u past response length %d\n",
++			 __func__, data_off, data_count, bytes_returned);
++		cifs_buf_release(pSMB);
++		return -EINVAL;
 +	}
 +
- 	switch (fields & XFS_ILOG_DFORK) {
- 	case XFS_ILOG_DDATA:
- 	case XFS_ILOG_DEXT:
-@@ -546,7 +565,6 @@ xlog_recover_inode_commit_pass2(
- 		case XFS_ILOG_ADATA:
- 		case XFS_ILOG_AEXT:
- 			dest = XFS_DFORK_APTR(dip);
--			ASSERT(len <= XFS_DFORK_ASIZE(dip, mp));
- 			memcpy(dest, src, len);
- 			break;
+ 	psrch_inf->unicode = !!(pSMBr->hdr.Flags2 & SMBFLG2_UNICODE);
+ 	psrch_inf->ntwrk_buf_start = (char *)pSMBr;
+ 	psrch_inf->smallBuf = false;
+-	psrch_inf->srch_entries_start = (char *)&pSMBr->hdr.Protocol +
+-		le16_to_cpu(pSMBr->t2.DataOffset);
++	psrch_inf->srch_entries_start = (char *)&pSMBr->hdr.Protocol + data_off;
  
+ 	parms = (T2_FFIRST_RSP_PARMS *)((char *)&pSMBr->hdr.Protocol +
+ 					le16_to_cpu(pSMBr->t2.ParameterOffset));
+@@ -4575,8 +4584,9 @@ int CIFSFindNext(const unsigned int xid,
+ {
+ 	TRANSACTION2_FNEXT_REQ *pSMB = NULL;
+ 	TRANSACTION2_FNEXT_RSP *pSMBr = NULL;
+-	T2_FNEXT_RSP_PARMS *parms;
++	unsigned int data_off, data_count;
+ 	unsigned int name_len, in_len;
++	T2_FNEXT_RSP_PARMS *parms;
+ 	unsigned int lnoff;
+ 	__u16 params, byte_count;
+ 	char *response_data;
+@@ -4660,13 +4670,22 @@ int CIFSFindNext(const unsigned int xid,
+ 		cifs_buf_release(pSMB);
+ 		return rc;
+ 	}
++
++	data_off = le16_to_cpu(pSMBr->t2.DataOffset);
++	data_count = le16_to_cpu(pSMBr->t2.DataCount);
++	if (data_off + data_count > (unsigned int)bytes_returned) {
++		cifs_dbg(VFS, "%s: data area offset %u count %u past response length %d\n",
++			 __func__, data_off, data_count, bytes_returned);
++		cifs_buf_release(pSMB);
++		return -EINVAL;
++	}
++
+ 	/* BB fixme add lock for file (srch_info) struct here */
+ 	psrch_inf->unicode = !!(pSMBr->hdr.Flags2 & SMBFLG2_UNICODE);
+ 	response_data = (char *)&pSMBr->hdr.Protocol +
+ 		le16_to_cpu(pSMBr->t2.ParameterOffset);
+ 	parms = (T2_FNEXT_RSP_PARMS *)response_data;
+-	response_data = (char *)&pSMBr->hdr.Protocol +
+-		le16_to_cpu(pSMBr->t2.DataOffset);
++	response_data = (char *)&pSMBr->hdr.Protocol + data_off;
+ 
+ 	if (psrch_inf->smallBuf)
+ 		cifs_small_buf_release(psrch_inf->ntwrk_buf_start);
 
 
