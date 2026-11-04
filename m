@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827244;
-	b=ABM0k+mfb4QGndUh5/UKkso4cP56ggG+K2ZsV+cibAYLDR9QbJjUcRqsQoA2vG8IcLNX
-	 13Gzssb5HUkcGZnfF1AUcTA8pTXdCshb4VIFr+jq16AjFbGraFbgUncO11p5paQswHWl9
-	 GDGsgZ93b+5//YVXGWMXOMdHJ00QF2nTNULadE63QVzmOMSY3DWAEMu0XnnbNS/SARa9l
-	 UnLWcr+b2JoBlKS09rHL1U4qUo3YU8SY9QXbCCTImNtfF+KAOr3I9mTtufnygjFgNEsoE
-	 sUyxFdIj0isaUpa4ipsewp1YfNVJYb48slDP/QoVNtyTvd/KeJ649+uRMW0rXVFH0GA==
+	t=1793827245;
+	b=s0Lpx4O8LbLvbjMsjVNsSs/2aBDpKYMDEIy26WkW8tJNv3migLxvuOCqful69IiJk29m
+	 EC5yo7ONvr8eM7ebPJXV4XP4+9uXb9c+GSihoXk5uQJldf9JtmfSO1lwYpYgJGBT3iYqq
+	 TbP3Vkhjb0CWsTJC4AZNM1dInoA1mDKIqWvkwnVSrn2RGHaV4GbF9OpJkxY6Pjy/di/+C
+	 AuKDz5hg0k8h9hJx0rqdw4FgTe3ssM7FYLl+8YOKSQq2Z2cp5KLpISfevtIMpS9k9oz8s
+	 4/B66etuQ0V0NvGvqKTH6OQXUvhCIbxpEqhbm0XrDmqJAokEqgeTAU2Uy6/JW7CR2Sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZDtPFrBRiUGeyvzl6WOXxfr1ZCcid3Tlu1BVm8MTHus=;
-	b=c7/V+sVSi3pPFV9hqWp6OPNelFac/E+h8PMMDM1WzT3UwEuZSMG/3/oUudk3BJ6PTsRB
-	 68g11KLkFgZRw1AZm9+hLtZsXdy/BfX/H+SnbAweAoWUEqIuvcMYrcIpRCKuszoPcB/de
-	 seTbQHWH2r7mD0nNjIsxBmC/Il9fxnqAS4x/XdhS6rP6+8npyhDmNvj/Nmbn9JK0RAdMy
-	 xY4rRb4oUU5ibDgFtn1N02MFuQRTPTJaO2zlMQVI7xVT65kO7/ihY+vho9e6uOLGmkWif
-	 gBA7oRgDqI97DaxXw9pGq/zrmsSpjHm0rOJVJ+vC7wMCZhDZ9aa82544xTU0/MaPyVA==
+	bh=8YMpBBFnC75fQxbW1bR4ozxfud1UODyYYWcu9Xi5/Mc=;
+	b=kFFFrtzIbjQL5ucPYc/WYf6iw/dwRLpxJoUv1RsvLN0vaqkSVgN2TabyVr7PCqeObcay
+	 KW08Ye6gpHZsw54rCGx+WsAW/Oq1hePxmXT5GD8/iapm6A6YuC2i1Qpj8/AeifApuohts
+	 8uW1UeBYKTHznj89NjE+oApogdoT0QPlfe5R6fXuSnq3qmCwgB/FIaSlpfjjCoZRueG03
+	 Auk2ZclscghVd/IAWLxtYwvdOl+NQciRqmfNSdrznwiWCpXFeDfGSxdyXLJ9A3D9ks1vB
+	 D2ITadjx/gxr3L4o+SEeVuDLsL+k986IEXzSjCd0DDby3o03Y4iUytsuMVZCTiHigAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNV9JOmQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfTJ5vC7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B8E606AC00;
-	Wed,  4 Nov 2026 21:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459C9606AC00;
+	Wed,  4 Nov 2026 21:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNV9JOmQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527041F00A17;
-	Wed,  4 Nov 2026 21:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfTJ5vC7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F691F00919;
+	Wed,  4 Nov 2026 21:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827243;
-	bh=ZDtPFrBRiUGeyvzl6WOXxfr1ZCcid3Tlu1BVm8MTHus=;
+	s=korg; t=1793827245;
+	bh=8YMpBBFnC75fQxbW1bR4ozxfud1UODyYYWcu9Xi5/Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tNV9JOmQWt/Y6EIxGFLQLiSwW8qZQzXjAQk1nnfUb401+FhmJpR/Bwraq8tiW/U+L
-	 M6zNY78ZybxP1AOsWDtyiGd+NXXTZkJFhR33gQDyEM+RLKyVsFfKJmoAIuTs/I3jIj
-	 KKo64RRCz0z2K1E11r/xhU76sQBLQjjqiE6qyo54=
+	b=TfTJ5vC7tkJjTk8hmH6BW7thcCqNK7BQbyw0RV1HjIjRA6rC9+dvreBU98gQoowGZ
+	 teiBKcKm0nLXL8AFIgWUyv17n/TYXRG/FLbCw6u4KLxC39tvhPbxgfXena22jvVZYh
+	 27Pj1rjYHaCFs0Ng4crBc5g8Jxk+G9f14D3I/R04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com
-Subject: [PATCH 7.3 278/547] ocfs2: snapshot dentry names in file and setattr traces
-Date: Wed,  4 Nov 2026 16:07:42 -0500
-Message-ID: <20261104211046.097500445@linuxfoundation.org>
+	Diego Oliva <diego@bynar.io>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 279/547] smb: client: fix OOB last_entry pointer from unbounded LastNameOffset
+Date: Wed,  4 Nov 2026 16:07:43 -0500
+Message-ID: <20261104211046.128329579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -73,300 +68,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Diego Oliva <diego@bynar.io>
 
-commit 8cd3ff30659775a6831c66687a69d2b83d163591 upstream.
+commit 570c783a96f054dd3ac409a92772e9afb705d21c upstream.
 
-Patch series "ocfs2: stabilize dentry names in file and setattr traces",
-v4.
+CIFSFindFirst() and CIFSFindNext() locate the last entry of a
+TRANS2_FIND_FIRST2 or TRANS2_FIND_NEXT2 response by adding the
+LastNameOffset of the response parameters to the start of the data
+area, and store the result in psrch_inf->last_entry. MS-CIFS 2.2.6.2.2
+defines that offset as the offset of the entry's file name; the client
+follows the reading of NT and Samba servers, which point it at the
+entry. LastNameOffset is only checked against CIFSMaxBufSize, which
+says nothing about the response actually received: validate_t2() lets
+the data area start up to 1024 bytes into the buffer, and SendReceive()
+copies at most CIFSMaxBufSize + MAX_CIFS_HDR_SIZE bytes of a response,
+16468 by default, into a cifs_request allocation of CIFSMaxBufSize +
+MAX_SMB2_HDR_SIZE bytes, 16588 by default. The pointer itself can
+therefore be placed anywhere from the end of the received data to 820
+bytes past the end of the allocation.
 
-Snapshot names at all six users of ocfs2__file_ops and at the separate
-setattr event. Patch 1 handles the five ordinary file-operation callers
-and setattr. Patch 2 handles release separately to preserve its locked
-open-count sample and take the snapshot outside that critical section.
+The read through that pointer is far larger than its displacement.
+find_cifs_entry() hands last_entry to cifs_save_resume_key() after every
+FindNext and after the FindFirst of a search rewind, and
+cifs_fill_dirent() takes the length of the name from the entry itself: a
+__le32 FileNameLength for most levels, a __u8 for
+SMB_FIND_FILE_INFO_STANDARD, and for SMB_FIND_FILE_UNIX the result of a
+scan for the terminating NUL over up to PATH_MAX + 1 UTF-16 units. The
+name is recorded as the resume name of the search, and the next
+CIFSFindNext() rejects only a recorded length of PATH_MAX or more before
+copying the name into the ResumeFileName of its request and sending it
+with the resume key taken from the same entry: up to 4 KiB of memory
+from past the end of the allocation leaks to the server, and for
+SMB_FIND_FILE_UNIX the NUL scan runs about twice as far before the
+length is even known. The entry does not have to lie outside the
+response for that either: a maximal response ends about 120 bytes before
+the end of the allocation, so an entry in its last bytes with a name
+just under PATH_MAX has nearly all of that name copied from past the
+allocation.
 
-The release explanation distinguishes its existing RCU lifetime coverage
-from name/length consistency. It does not claim that the ordinary
-callers' external-name UAF interleaving crosses the held inode spinlock.
-The release source change is unchanged from v3.
+It needs nothing unusual from the client: a FindNext response that
+reports no entries and does not end the search makes find_cifs_entry()
+send the next FindNext at once, carrying whatever was parsed at
+LastNameOffset, and a search rewind can do the same after its
+FindFirst. SMB1 is not negotiated by default: this takes a malicious
+or compromised server, a mount of it with an explicit vers=1.0, which
+CONFIG_CIFS_ALLOW_INSECURE_LEGACY (default y) permits, and a directory
+listing on that mount.
 
-Patch 1 also removes the read callback's redundant NULL-inode check.
-The two patches apply independently and leave trace formats unchanged.
+With KASAN enabled, a response that places the last entry past the
+buffer, with a large DataOffset and a LastNameOffset near the end of
+its range, gives:
 
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in cifs_save_resume_key.isra.0+0x7aa/0x7f0
+ Read of size 4 at addr ffff88807b55c33b by task ls/83
 
-This patch (of 2):
+ CPU: 1 UID: 0 PID: 83 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
+ Call Trace:
+  <TASK>
+  kasan_report+0xdf/0x1a0
+  cifs_save_resume_key.isra.0+0x7aa/0x7f0
+  cifs_readdir+0x1ed6/0x29c0
+  iterate_dir+0x1c0/0x570
+  __x64_sys_getdents64+0x133/0x270
+  do_syscall_64+0x109/0x5d0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
 
-The open, fsync, read, write and splice-read trace calls pass the live
-dentry name and length to the shared ocfs2__file_ops event class.
-ocfs2_setattr() passes the same unprotected arguments to its own event.
-Both events size and copy a __string field separately. A reference to
-the dentry does not pin the external storage backing an individual name.
+ Allocated by task 83 on cpu 0 at 19.317556s:
+  cifs_buf_get+0x36/0x90
+  smb_init+0x4f/0x110
+  CIFSFindNext+0xf7/0x14c0
+  cifs_readdir+0xf51/0x29c0
 
-With an event enabled, a caller can be preempted after loading the name
-pointer. A long-to-short rename can then replace the name and reclaim its
-old external allocation before the trace callback sizes or copies it,
-provided no other snapshot retains that allocation.
+ The buggy address belongs to the object at ffff88807b558000
+  which belongs to the cache cifs_request of size 16588
+ The buggy address is located 623 bytes to the right of
+  allocated 16588-byte region [ffff88807b558000, ffff88807b55c0cc)
+ ==================================================================
 
-The setattr inode lock does not exclude every rename: a same-directory
-rename of a source directory need not take that directory's inode lock.
-It can therefore change the dentry name while setattr records its event.
-Inline names and separately loaded lengths can also change during trace
-record sizing and copying.
+The four bytes read there are the FileNameLength of the entry, which
+cifs_fill_dirent() takes before anything checks where the entry lies.
 
-Take a dentry name snapshot around each of these six trace calls and
-pass both the string and length from the snapshot. Check event enablement
-before taking a snapshot. Keep the event classes and formats unchanged.
+Ignore the last entry when it does not start inside the received
+response or the response holds no entries; for a response without
+entries, last_entry pointed into or past its empty data area and
+cifs_save_resume_key() parsed whatever the buffer held there. The
+entry is bounded by the response that was received, which is what the
+buffer holds, rather than by the data area the response declares,
+which a later patch checks against the received length. Record the
+search handle before the last entry is examined, since a response
+without a usable last entry still carries the handle that the search
+is continued and closed with; leaving the assignment in the else
+branch would drop the handle of every response without entries.
 
-Also remove the redundant NULL-inode check in the read callback.
-file_inode() returns the open file's inode, which is already used by the
-trace call above the check.
+This bounds where the last entry starts, not how far it is parsed: an
+entry that starts within the final bytes of the response still has
+its fixed part read past the end of the received data and its name,
+up to 4095 bytes, copied from past the end of the allocation, until
+the following patch bounds the parse itself. A response without a
+usable last entry continues the search with an empty resume name,
+since the preceding patch, "smb: client: fix use-after-free infoleak
+via the readdir resume name", drops the recorded name whenever a new
+response is installed. This patch applies on top of that one and
+relies on it: without it, every response rejected here would leave
+the previous name in place, pointing into a buffer that has been
+released.
 
-The historical report below is from the read path.
+A conforming server is not affected: the last entry lies inside the
+data area of the response.
 
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in strlen+0x85/0xa0
-    Read of size 1 at addr ffff88810a5b2b18 by task python3/496
-
-    [CPU and host details omitted.]
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? strlen+0x85/0xa0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20e/0x420
-     ? strlen+0x85/0xa0
-     kasan_report+0xe0/0x110
-     ? strlen+0x85/0xa0
-     strlen+0x85/0xa0
-     trace_event_raw_event_ocfs2__file_ops+0xf0/0x480
-     ? __pfx_trace_event_raw_event_ocfs2__file_ops+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? pmbd_probe_hit_cookie+0xe7/0x1c0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_pmbd_probe_hit_cookie+0x10/0x10
-     ocfs2_file_read_iter+0x6cd/0xb30
-     ? __pfx_ocfs2_file_read_iter+0x10/0x10
-     ? selinux_file_permission+0x11d/0x540
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? security_file_permission+0x26/0x80
-     vfs_read+0x7d2/0xc20
-     ? __pfx_vfs_read+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_do_sys_openat2+0x10/0x10
-     ksys_read+0x111/0x200
-     ? __pfx_ksys_read+0x10/0x10
-     ? irqentry_exit+0xbe/0x820
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on_prepare+0x11d/0x150
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    [User register dump omitted.]
-     </TASK>
-
-    Allocated by task 489:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_noprof+0x2de/0x780
-     __d_alloc+0x5fc/0x8c0
-     d_alloc_parallel+0x106/0x11d0
-     lookup_open+0x3ff/0x13e0
-     path_openat+0x95e/0x2020
-     do_file_open+0x21e/0x470
-     do_sys_openat2+0xf4/0x1b0
-     __x64_sys_openat+0x136/0x1e0
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 0:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     __rcu_free_sheaf_prepare+0x65/0x2a0
-     rcu_free_sheaf_nobarn+0x1d/0x50
-     rcu_core+0x6be/0x1ed0
-     handle_softirqs+0x1fa/0x8d0
-     __irq_exit_rcu+0x113/0x1e0
-     irq_exit_rcu+0xe/0x20
-     sysvec_apic_timer_interrupt+0x6c/0x80
-     asm_sysvec_apic_timer_interrupt+0x1a/0x20
-
-    The buggy address belongs to the object at ffff88810a5b2b00
-     which belongs to the cache kmalloc-rcl-192 of size 192
-    The buggy address is located 24 bytes inside of
-     freed 192-byte region [ffff88810a5b2b00, ffff88810a5b2bc0)
-
-    [Page and shadow-memory dumps omitted.]
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-0@gmail.com
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-1@gmail.com
-Fixes: 468eedde23d6 ("ocfs2: Remove mlog(0) from fs/ocfs2/file.c")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 0752f1522a91 ("[CIFS] make sure we have the right resume info before calling CIFSFindNext")
+Fixes: b77d753c413e ("[CIFS] Check that last search entry resume key is valid")
+Cc: stable@vger.kernel.org
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/file.c |  102 +++++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 65 insertions(+), 37 deletions(-)
+ fs/smb/client/cifssmb.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -85,10 +85,17 @@ static int ocfs2_file_open(struct inode
- 	int mode = file->f_flags;
- 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
- 
--	trace_ocfs2_file_open(inode, file, file->f_path.dentry,
--			      (unsigned long long)oi->ip_blkno,
--			      file->f_path.dentry->d_name.len,
--			      file->f_path.dentry->d_name.name, mode);
-+	if (trace_ocfs2_file_open_enabled()) {
-+		struct dentry *dentry = file->f_path.dentry;
-+		struct name_snapshot name;
-+
-+		take_dentry_name_snapshot(&name, dentry);
-+		trace_ocfs2_file_open(inode, file, dentry,
-+				      oi->ip_blkno,
-+				      name.name.len, name.name.name,
-+				      mode);
-+		release_dentry_name_snapshot(&name);
-+	}
- 
- 	if (file->f_mode & FMODE_WRITE) {
- 		status = dquot_initialize(inode);
-@@ -174,11 +181,17 @@ static int ocfs2_sync_file(struct file *
- 	tid_t commit_tid;
- 	bool needs_barrier = false;
- 
--	trace_ocfs2_sync_file(inode, file, file->f_path.dentry,
--			      oi->ip_blkno,
--			      file->f_path.dentry->d_name.len,
--			      file->f_path.dentry->d_name.name,
--			      (unsigned long long)datasync);
-+	if (trace_ocfs2_sync_file_enabled()) {
-+		struct dentry *dentry = file->f_path.dentry;
-+		struct name_snapshot name;
-+
-+		take_dentry_name_snapshot(&name, dentry);
-+		trace_ocfs2_sync_file(inode, file, dentry,
-+				      oi->ip_blkno,
-+				      name.name.len, name.name.name,
-+				      (unsigned long long)datasync);
-+		release_dentry_name_snapshot(&name);
-+	}
- 
- 	if (unlikely(ocfs2_emergency_state(osb)))
- 		return -EROFS;
-@@ -1132,15 +1145,19 @@ int ocfs2_setattr(struct mnt_idmap *idma
- 	int had_lock;
- 	struct ocfs2_lock_holder oh;
- 
--	trace_ocfs2_setattr(inode, dentry,
--			    (unsigned long long)OCFS2_I(inode)->ip_blkno,
--			    dentry->d_name.len, dentry->d_name.name,
--			    attr->ia_valid,
--				attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
--				attr->ia_valid & ATTR_UID ?
-+	if (trace_ocfs2_setattr_enabled()) {
-+		struct name_snapshot name;
-+
-+		take_dentry_name_snapshot(&name, dentry);
-+		trace_ocfs2_setattr(inode, dentry, OCFS2_I(inode)->ip_blkno,
-+				    name.name.len, name.name.name, attr->ia_valid,
-+				    attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
-+				    attr->ia_valid & ATTR_UID ?
- 					from_kuid(&init_user_ns, attr->ia_uid) : 0,
--				attr->ia_valid & ATTR_GID ?
-+				    attr->ia_valid & ATTR_GID ?
- 					from_kgid(&init_user_ns, attr->ia_gid) : 0);
-+		release_dentry_name_snapshot(&name);
-+	}
- 
- 	status = ocfs2_emergency_state(osb);
- 	if (unlikely(status)) {
-@@ -2392,11 +2409,17 @@ static ssize_t ocfs2_file_write_iter(str
- 	int direct_io = iocb->ki_flags & IOCB_DIRECT ? 1 : 0;
- 	int nowait = iocb->ki_flags & IOCB_NOWAIT ? 1 : 0;
- 
--	trace_ocfs2_file_write_iter(inode, file, file->f_path.dentry,
--		(unsigned long long)OCFS2_I(inode)->ip_blkno,
--		file->f_path.dentry->d_name.len,
--		file->f_path.dentry->d_name.name,
--		(unsigned int)from->nr_segs);	/* GRRRRR */
-+	if (trace_ocfs2_file_write_iter_enabled()) {
-+		struct dentry *dentry = file->f_path.dentry;
-+		struct name_snapshot name;
-+
-+		take_dentry_name_snapshot(&name, dentry);
-+		trace_ocfs2_file_write_iter(inode, file, dentry,
-+					    OCFS2_I(inode)->ip_blkno,
-+					    name.name.len, name.name.name,
-+					    (unsigned int)from->nr_segs);
-+		release_dentry_name_snapshot(&name);
-+	}
- 
- 	if (!direct_io && nowait)
- 		return -EOPNOTSUPP;
-@@ -2542,17 +2565,16 @@ static ssize_t ocfs2_file_read_iter(stru
- 	int direct_io = iocb->ki_flags & IOCB_DIRECT ? 1 : 0;
- 	int nowait = iocb->ki_flags & IOCB_NOWAIT ? 1 : 0;
- 
--	trace_ocfs2_file_read_iter(inode, filp, filp->f_path.dentry,
--			(unsigned long long)OCFS2_I(inode)->ip_blkno,
--			filp->f_path.dentry->d_name.len,
--			filp->f_path.dentry->d_name.name,
--			to->nr_segs);	/* GRRRRR */
--
--
--	if (!inode) {
--		ret = -EINVAL;
--		mlog_errno(ret);
--		goto bail;
-+	if (trace_ocfs2_file_read_iter_enabled()) {
-+		struct dentry *dentry = filp->f_path.dentry;
-+		struct name_snapshot name;
-+
-+		take_dentry_name_snapshot(&name, dentry);
-+		trace_ocfs2_file_read_iter(inode, filp, dentry,
-+					   OCFS2_I(inode)->ip_blkno,
-+					   name.name.len, name.name.name,
-+					   to->nr_segs);
-+		release_dentry_name_snapshot(&name);
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -4546,14 +4546,17 @@ findFirstRetry:
+ 	psrch_inf->presume_name = NULL;
+ 	psrch_inf->resume_name_len = 0;
+ 	psrch_inf->resume_key = 0;
++	if (pnetfid)
++		*pnetfid = parms->SearchHandle;
+ 	lnoff = le16_to_cpu(parms->LastNameOffset);
+-	if (CIFSMaxBufSize < lnoff) {
++	if (!psrch_inf->entries_in_buffer) {
++		psrch_inf->last_entry = NULL;
++	} else if (psrch_inf->srch_entries_start + lnoff >=
++		   psrch_inf->ntwrk_buf_start + bytes_returned) {
+ 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
+ 		psrch_inf->last_entry = NULL;
+ 	} else {
+ 		psrch_inf->last_entry = psrch_inf->srch_entries_start + lnoff;
+-		if (pnetfid)
+-			*pnetfid = parms->SearchHandle;
  	}
- 
- 	if (!direct_io && nowait)
-@@ -2624,11 +2646,17 @@ static ssize_t ocfs2_file_splice_read(st
- 	ssize_t ret = 0;
- 	int lock_level = 0;
- 
--	trace_ocfs2_file_splice_read(inode, in, in->f_path.dentry,
--				     (unsigned long long)OCFS2_I(inode)->ip_blkno,
--				     in->f_path.dentry->d_name.len,
--				     in->f_path.dentry->d_name.name,
--				     flags);
-+	if (trace_ocfs2_file_splice_read_enabled()) {
-+		struct dentry *dentry = in->f_path.dentry;
-+		struct name_snapshot name;
-+
-+		take_dentry_name_snapshot(&name, dentry);
-+		trace_ocfs2_file_splice_read(inode, in, dentry,
-+					     OCFS2_I(inode)->ip_blkno,
-+					     name.name.len, name.name.name,
-+					     flags);
-+		release_dentry_name_snapshot(&name);
-+	}
- 
- 	/*
- 	 * We're fine letting folks race truncates and extending writes with
+ 	return 0;
+ }
+@@ -4672,7 +4675,10 @@ int CIFSFindNext(const unsigned int xid,
+ 	psrch_inf->resume_name_len = 0;
+ 	psrch_inf->resume_key = 0;
+ 	lnoff = le16_to_cpu(parms->LastNameOffset);
+-	if (CIFSMaxBufSize < lnoff) {
++	if (!psrch_inf->entries_in_buffer) {
++		psrch_inf->last_entry = NULL;
++	} else if (psrch_inf->srch_entries_start + lnoff >=
++		   psrch_inf->ntwrk_buf_start + bytes_returned) {
+ 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
+ 		psrch_inf->last_entry = NULL;
+ 	} else {
 
 
