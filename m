@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831111;
-	b=VOMh8oXZJ703l3buTTdceDS+s4lP28IcvKIT980/7CJo/geEudhFe4yxQXLbysGPKQoG
-	 VsdIgjpieFoos7tSt+1gL7OgTkFJw9/0PnOZ8JZxNKEjOkOyDnHJgpJJqEdQlzkxXeVBz
-	 9EmQ9haEAGphIsPD8XRZ+fBYBxNf2z5LCXS1IeXZl6fl0Ecb1uzpLdpcwIBaBdcdlBl/J
-	 OIx41v+4nbu2nVyuFMyjcltezY11d4MjZkNWhwRgStZyu1s1QeNDNV6HyHq58y+yfIgoo
-	 HcZw/Kvio9SZrCJmXbrc64pOhsc++DZXesdf8o/R9XQgbEEvfoTldyEWz6NciATwIfg==
+	t=1793831112;
+	b=QWSYVJGJQReU3VQ/DpS8E8YXdn3O97ffVfCaQMRNt0oYGGBmPfobWJkxnPR2nFKJ0+6t
+	 POs98O4hBc5ByLLqPHKPJ5TeRuxqzVanmXKRomXxwVewsRLKzqIDKDIDLv5hrCdbeX3yG
+	 KYFWFgSmx9iH1XZ6nWNfYZvcNQZqntq9bnt4xFki58PCedcrz22RSmKQJBIwgTgkKI3V1
+	 zlb2UeuuXWA/m7s9ZcdbF9AyglKgH8f3gVrSA441E9tmRbowFtmvMAemfkd8GrRdWjxxi
+	 s2/pFexqr0q7d3Q84pbTBnnRmgadBi2Htb1PGJSlJZ+Yo0kN8SGt+yAZZXAWKTyUHlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U6l/282c11Rgn8nBg50GF4HyRXkd6vY2+LwIR91LyEg=;
-	b=RxTAGvnWpd9U+iNh83fl0B/x/bTd3puGddkG8kMhvogco7InNp+WGx+zOuAFGLvkLPRd
-	 8xocVkHsaYrkXC4xqX0U5aUxN3pGx7dYwBd0a9r/TP7+f8NUANhoqMtTFTA8sV22VYwtk
-	 lPsDjV6qmagNMhf0pu8JrGO9+0VrBQ44drNqtPHVLHXtfbXdfOv91yfKmad5uFIo3PrO6
-	 EhOTFjj1L48M5x8oyRtaBkMWa+A4C167N9VtOdXo/v/zqdTSFfpyJqKLvuclS0DjZEu89
-	 5OYH4x671o5lo/c6viRhgmnsA/1pSXpnVliqBOgqe71LROS7sIDe2TP+S74PTSwEwIw==
+	bh=q8eB8AEqYpdyE6xqHgQno1+IwUgGmNKS7cASiWAg6rU=;
+	b=5sduMOPB0BPb+qSe+2SSzk2z40+9WRRsEegkwXP2CV8tKqLDvG/LsaCyWbG7iXn/6bqp
+	 znNm37L8k3/fjVKFLKsXT0uQz3uQexBZ2ta69kkblJtZNeM2MCIWOZH6IWLWORqOWNTkw
+	 NrcTVpSWNVKTTC1ANV1FbG+paUi39QUlldALpAtYgZelATXmSC/+yQUBuFBRmSf2VGbkC
+	 A+YnQs+KiCawBIDHE+5eUiE/cRs57NSdgGzLSe0GbxXL9zMAQ7i8055UWz9Hf19r/baGs
+	 Ead97g0jqGRhInF5cNKP2hKUZD9Z+dcKvZ16hRr33t0jQzwSV5b+zfc3YrPHeoo5dOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qtsoCzx+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o3VGx/Lg";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFCD606B2D8;
-	Wed,  4 Nov 2026 22:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE24606B2D8;
+	Wed,  4 Nov 2026 22:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qtsoCzx+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448521F000C1;
-	Wed,  4 Nov 2026 22:25:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3VGx/Lg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75DD1F000C1;
+	Wed,  4 Nov 2026 22:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831110;
-	bh=U6l/282c11Rgn8nBg50GF4HyRXkd6vY2+LwIR91LyEg=;
+	s=korg; t=1793831112;
+	bh=q8eB8AEqYpdyE6xqHgQno1+IwUgGmNKS7cASiWAg6rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qtsoCzx+7g4zbs3sqfDE0cSBt+UrfdnYkOugYLv9jr33ZupOGHqru9TOXb1HkQwbO
-	 7D1wUdoyYhGv8gIJ5xcNfo29SX+9WXbxLR8jlKmDY9uMS73eCTHhdg2UtOQ2Y0SrEi
-	 x8bMLWRo8B+wSnTZ3Q4MSMkrhKotzQm0fea86VQY=
+	b=o3VGx/Lg9raS5UPGaXsDGzkueRMLfyKwAv9ozMoerCv40AOZFip//R4k1tcPUIJBo
+	 y4aXEcvGz41D2jOzlWJC3oPCJiFrY/TQdJcPtBwM3CHRHCS2xKGMoE+nHcqLaeGCcM
+	 txtxSXBWGUvlkYR1HLa73yfvVWsIfFZezFPgM18c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mehmet Aysel <mehmet4ysel@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0470/1005] ALSA: hda/conexant: Always enable the headset-mic pin on plugin
-Date: Wed,  4 Nov 2026 16:03:23 -0500
-Message-ID: <20261104211057.180161668@linuxfoundation.org>
+Subject: [PATCH 6.18 0471/1005] ASoC: amd: acp-config: Add HVY-WXX9/M1060 DMI quirk
+Date: Wed,  4 Nov 2026 16:03:24 -0500
+Message-ID: <20261104211057.205152468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,53 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Mehmet Aysel <mehmet4ysel@gmail.com>
 
-[ Upstream commit 9642a5e843758686e02a7f0d1df9eb0f7f96603c ]
+[ Upstream commit 032bb633e0c34a88b70a4bfc65ebd4e2b510f706 ]
 
-Rename the function to cx_process_headset_detect_plug_type() to reflect
-that it only reports the detected plug type, and move the pin control
-write into cx_update_headset_mic_vref() so that node 0x19 is always set
-to enable the headset mic with the 80% VREF whenever the mic is
-present, regardless of the type detection result.
+Add DMI match table entry for HUAWEI HVY-WXX9 board, product version
+M1060, a MateBook D16 2021 (Ryzen 5 4600H) revision not covered by the
+existing M1010/M1020/M1040 entries. This board uses the same
+FLAG_AMD_LEGACY / ACP_PCI_DEV_ID configuration as the other HVY-WXX9
+variants.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260826115344.2128835-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Mehmet Aysel <mehmet4ysel@gmail.com>
+Link: https://patch.msgid.link/20260825092432.56292-1-mehmet4ysel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/conexant.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/soc/amd/acp-config.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
-index 862fcbe74e4f0..faaabc326f560 100644
---- a/sound/hda/codecs/conexant.c
-+++ b/sound/hda/codecs/conexant.c
-@@ -213,7 +213,7 @@ static void cx_remove(struct hda_codec *codec)
- 	snd_hda_gen_remove(codec);
- }
+diff --git a/sound/soc/amd/acp-config.c b/sound/soc/amd/acp-config.c
+index 365209ea53f36..653e8ce946082 100644
+--- a/sound/soc/amd/acp-config.c
++++ b/sound/soc/amd/acp-config.c
+@@ -159,6 +159,20 @@ static const struct config_entry config_table[] = {
+ 			{}
+ 		},
+ 	},
++	{
++		.flags = FLAG_AMD_LEGACY,
++		.device = ACP_PCI_DEV_ID,
++		.dmi_table = (const struct dmi_system_id []) {
++			{
++				.matches = {
++					DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "HUAWEI"),
++					DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "HVY-WXX9"),
++					DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "M1060"),
++				},
++			},
++			{}
++		},
++	},
+ };
  
--static void cx_process_headset_plugin(struct hda_codec *codec)
-+static void cx_process_headset_detect_plug_type(struct hda_codec *codec)
- {
- 	unsigned int val;
- 	unsigned int count = 0;
-@@ -249,10 +249,12 @@ static void cx_update_headset_mic_vref(struct hda_codec *codec, struct hda_jack_
- 	 * Check hp&mic tag to process headset plugin & plugout.
- 	 */
- 	mic_present = snd_hda_codec_read(codec, 0x19, 0, AC_VERB_GET_PIN_SENSE, 0x0);
--	if (!(mic_present & AC_PINSENSE_PRESENCE)) /* mic plugout */
-+	if (!(mic_present & AC_PINSENSE_PRESENCE)) { /* mic plugout */
- 		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x20);
--	else
--		cx_process_headset_plugin(codec);
-+	} else {
-+		cx_process_headset_detect_plug_type(codec);
-+		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x24);
-+	}
- }
- 
- static int cx_suspend(struct hda_codec *codec)
+ static int snd_amd_acp_acpi_find_config(struct pci_dev *pci)
 -- 
 2.53.0
 
