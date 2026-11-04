@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826818;
-	b=4VD8tMvFC/SAfsSTkaaSdDSWk9a/bKzisx4cVniOXcyJJbIyz31ZBJAcrO9h7YjpZwmo
-	 on3sau2AF6p+z0PTFTOSWYypQWUoBoQfWSl3VWp+plfvnhQ5zuCB0zKw3lFvnz/LMw3kq
-	 jQJt4cicCmVMu/NvnG3PROXFWb5wH+Hl/OHT8bdxIE6NHcoTyAqRM6TaoNOJ7t/o0/qm/
-	 oUj36ShLmTt9f4sS7scF9BljrJaUtyzCxV39JUVoSBZB+04OAoQNVxg1mXhRUDcYrkAAd
-	 rtdfBbceiI9oeeVfqK8vY77utQvmuYTsTg3VYPe70mzzTePaOuzKmiLdsMn9VdRLDjg==
+	t=1793826828;
+	b=AB8vbGIdiVeXtbARWppPzXr8WF8O56iLj/H+Pc0/XTTWZCT72FKW4LpiEZGGZp81Dl0x
+	 ZyZ15lUUr56IYDgbB6ekSicRjZaAX7UFfkTN4yQInJjZUcJ00WYKdVgyiZfMxAxbEbXGC
+	 v9TrGRbibmPe9Y1jCg2UF6OfJxAttJMmj/2r4SPcbSuDKLaKsxNwT8HPig3eRoYCVF+vE
+	 9XNx/W98bsduVLUB7F/VaNK2Gz2ltYmt/zASjY6XFdzM88CPokVG7LIMAxk1srh7hp0jn
+	 GWKCSLqyZmq3F1iO+4bDZZTv7lJwsVrZLpLKT5xfMJWC8yJqnklZuW72eOoOctcZr8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826828;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mb4AywhwZQs519UHUO/fYW+nIA7/6Uek0Y5c2JZ4TUA=;
-	b=TBGG7trgjZAN1d+aUoY6jI+REif+vNJb70u1fkj1HmBh4dbAlIfStaxNPPVcE3kyVgrK
-	 SClvkSWPlQNJea5i+UA5xu4fC2SvHY2FISzJtjz6tvvKpnEfBYxLDT5W0yBoNMnrNAduI
-	 Z55CmmHmllivcieTL8RAJtPxmq7a2Bx+mg1tt9oO+ZwWO6s5g29uC9bBuNYiGGvPpMopO
-	 T3xtCc1jTZHHyEhkoNymC9cgURLTMu4cpycfxiIpIcRfcw8FOTG4ZfJ3HuMdJ0EV1IaS6
-	 JEpYH9bL6eC1+NYTfa7F2yf+HHIsQPRkEt5e7smVbCpYFI2iXgejajJzQhf7j7tZMvA==
+	bh=OymlbgGlp3CMCSls5u6tNj5eeq42dArBD8LpFi0mNlg=;
+	b=HDB69J50pN3WLRmF00rNJMK539hCEsY0apgXuv4doeUT0igTzmtvNNZZ0M4OvxbAfBn2
+	 u4wyxAlFtTUOCtzG5ftp0yuIzACKX1+AI1CSmKvTO1JXmpgo2cZX19pK9NHrIL0uflNn0
+	 wWa1hcHoLsO1oTjdok6B3Nddz0/U6VmItjtIKR7ol7V0+7Q8AdVhaDAGIN4NLt7l+nsch
+	 R8k90dXwOcUVO1lPP4qRvZwyXUZoOAHs0+d/5eygxVVZX2K6v2xaxGm87x1tjTMhAqF63
+	 KwNoMPDXk24VtbGrvPA1WX8K9ShhKfypV5yq+6rk6YP/51Y0Lk2dRWb7dZvvTPdqVgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O6Tjn7LA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w/nxYgwn";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39C0606A32D;
-	Wed,  4 Nov 2026 21:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2263F6071ADF;
+	Wed,  4 Nov 2026 21:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O6Tjn7LA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C051F00A2B;
-	Wed,  4 Nov 2026 21:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w/nxYgwn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5BE1F00919;
+	Wed,  4 Nov 2026 21:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826817;
-	bh=mb4AywhwZQs519UHUO/fYW+nIA7/6Uek0Y5c2JZ4TUA=;
+	s=korg; t=1793826827;
+	bh=OymlbgGlp3CMCSls5u6tNj5eeq42dArBD8LpFi0mNlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6Tjn7LAPyeleO216Jsh/k1moPBkXAaeDmDUAbTIBjV7J81VjgAQq0n0WegvLzMn6
-	 rN9ofYXo9J/UueQdXALDuKHCGkHYgTOrnbo3QDCVAgaylO1JvdS9wo0DhA16U65dJ2
-	 KZS8A9LgTxyFsjFIAxbW6BZveYlYnGCs8vBwA5P4=
+	b=w/nxYgwnUC9FIfyzG0kfed1KqwupFQEgZSB0WkTL685p0KJ0Dw8E1d3mYkIkaNywG
+	 qNWL6GuhCSaIRxl6tHlWpqPz89qLq+e2v7kPEvUiCW8muF2ELsHwtw8Jp83Rhvg7t7
+	 EJ8Dc1fAZadxtbDUp1GDTigPW+gAEMBi/4Npvtog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 026/547] io_uring/io-wq: dont go to sleep on pending work
-Date: Wed,  4 Nov 2026 16:03:30 -0500
-Message-ID: <20261104211039.099830389@linuxfoundation.org>
+Subject: [PATCH 7.3 032/547] io_uring/cancel: dont forget that the work was running
+Date: Wed,  4 Nov 2026 16:03:36 -0500
+Message-ID: <20261104211039.258109321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,88 +70,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit f19c38feb96802ee53a99649d740d2bf630bcce7 ]
+[ Upstream commit 8aa0e5db4845fb5ac11abe40d7b1cac0656c3ee3 ]
 
-io_wq_enqueue() wakes a worker off the free list. If there is none it
-creates one, unless ->nr_running says that a worker is running. That
-relies on whoever takes ->nr_running to zero to check for pending work,
-which io_wq_dec_running() no longer does for a worker without
-->cur_work, on the grounds that an idle worker is either woken right
-away or someone else has created a worker. Neither has to be the case:
+If the request to be cancelled is being run by io-wq,
+io_async_cancel_one() flags the work, signals the worker and returns
+-EALREADY. Since commit ccbf726171b7 ("io_uring: perform poll removal even
+if async work removal is successful") io_try_cancel() goes on regardless,
+as poll may be armed for the request. If it isn't, and nothing else turns
+up, the result is the -ENOENT of the last search.
 
-worker A (idle)          worker B (idle)          io_wq_enqueue()
-                         woken for work 1
-woken (e.g. timeout)     takes work 1
-work list is empty
-                                                  queues work 2
-                                                  B is first on the free
-                                                  list: wake_up_process(B)
-                         leaves the free list
-                         work 1 blocks
-                           nr_running 2 -> 1
-schedule_timeout()
-  nr_running 1 -> 0
-  ->cur_work == NULL
+__io_async_cancel() makes up for that. On -ENOENT it tries the io-wq of
+every task that uses the ring, and that of the caller is one of them. So
+the work is found a second time, and the result is -EALREADY after all.
 
-Work 2 isn't looked at until work 1 is done or A's idle timeout fires,
-five seconds later. ->cur_work is also NULL while a worker blocks on
-->uring_lock in io_wq_put_work(), with the same result if it was the
-only one running.
+Unless the worker is done with it by then. If the work is flagged before
+io_wq_submit_work() looks at IO_WQ_WORK_CANCEL, all the worker does is to
+queue the request to be failed by task work. Then it isn't anywhere to be
+found until the task work has run, and
 
-Let the idle worker leave ->nr_running by itself before it takes its last
-look at the work list. Both that and queueing work are done under
-acct->lock, so either the worker sees the work, or the enqueue side sees
-that it can't count on this worker. This doesn't bring back the request
-for a new worker which the check was meant to avoid, and as idle workers
-don't get to io_wq_dec_running() any more, the check can go.
+ - IORING_REGISTER_SYNC_CANCEL returns -ENOENT,
+ - IORING_OP_ASYNC_CANCEL completes with -ENOENT,
 
-Fixes: 8343cae362e1 ("io_uring/io-wq: ignore non-busy worker going to sleep")
+for a request that they have just cancelled, and that completes with
+-ECANCELED.
+
+With a read of an empty pipe, IOSQE_ASYNC, and a sync cancel right behind
+it, 1 to 3 of 1,000,000 calls return -ENOENT, and 50 to 110 with
+IORING_SETUP_DEFER_TASKRUN (4 CPUs, KVM). Nothing is written to the pipe,
+and all of these reads end with -ECANCELED.
+
+Remember that the work was found. IORING_OP_ASYNC_CANCEL completes with
+-EALREADY, as it does if the worker is a bit slower. For
+IORING_REGISTER_SYNC_CANCEL it means to try again, which ends with 0.
+
+The result of a linked timeout, which calls io_try_cancel() by itself,
+and the number that is returned for IORING_ASYNC_CANCEL_ALL and _ANY don't
+change.
+
+Fixes: ccbf726171b7 ("io_uring: perform poll removal even if async work removal is successful")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-10-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-16-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ io_uring/cancel.c | 13 ++++++++++++-
+ io_uring/cancel.h |  2 ++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 6a59994d4bd5e..38fcccf389936 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -467,11 +467,9 @@ static void io_wq_dec_running(struct io_worker *worker)
+diff --git a/io_uring/cancel.c b/io_uring/cancel.c
+index 03b1f1f3fad16..e9988a9dbb144 100644
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -117,6 +117,8 @@ int io_try_cancel(struct io_uring_task *tctx, struct io_cancel_data *cd,
+ 	 */
+ 	if (!ret)
+ 		return 0;
++	if (ret == -EALREADY)
++		cd->running = true;
  
- 	if (!atomic_dec_and_test(&acct->nr_running))
- 		return;
--	if (!worker->cur_work)
--		return;
- 	if (!io_acct_run_queue(acct))
- 		return;
--	if (io_wq_hash_defer(worker->cur_work, acct)) {
-+	if (worker->cur_work && io_wq_hash_defer(worker->cur_work, acct)) {
- 		raw_spin_unlock(&acct->lock);
- 		return;
+ 	ret = io_poll_cancel(ctx, cd, issue_flags);
+ 	if (ret != -ENOENT)
+@@ -180,6 +182,7 @@ static int __io_async_cancel(struct io_cancel_data *cd,
+ 	struct io_tctx_node *node;
+ 	int ret, nr = 0;
+ 
++	cd->running = false;
+ 	do {
+ 		ret = io_try_cancel(tctx, cd, issue_flags);
+ 		if (ret == -ENOENT)
+@@ -204,7 +207,15 @@ static int __io_async_cancel(struct io_cancel_data *cd,
  	}
-@@ -747,6 +745,19 @@ static int io_wq_worker(void *data)
- 		raw_spin_unlock(&acct->workers_lock);
- 		if (io_run_task_work())
- 			continue;
-+		/*
-+		 * io_wq_enqueue() leaves new work to us for as long as we are
-+		 * accounted as running. Get out of ->nr_running before taking
-+		 * the last look at the work list, rather than when scheduling
-+		 * out. No need to ask for another worker then, we can do it.
-+		 */
-+		clear_bit(IO_WORKER_F_RUNNING, &worker->flags);
-+		atomic_dec(&acct->nr_running);
-+		if (io_acct_run_queue(acct)) {
-+			io_wq_worker_running(current);
-+			io_worker_handle_work(acct, worker);
-+			continue;
-+		}
- 		ret = schedule_timeout(WORKER_IDLE_TIMEOUT);
- 		if (signal_pending(current)) {
- 			struct ksignal ksig;
+ 	mutex_unlock(&ctx->tctx_lock);
+ 	io_ring_submit_unlock(ctx, issue_flags);
+-	return all ? nr : ret;
++	if (all)
++		return nr;
++	/*
++	 * The worker may be done with the work that was found running, and
++	 * flagged, above. That isn't the same as not having found it.
++	 */
++	if (ret == -ENOENT && cd->running)
++		ret = -EALREADY;
++	return ret;
+ }
+ 
+ int io_async_cancel(struct io_kiocb *req, unsigned int issue_flags)
+diff --git a/io_uring/cancel.h b/io_uring/cancel.h
+index 1b201a0943030..e03a6fb0b7f95 100644
+--- a/io_uring/cancel.h
++++ b/io_uring/cancel.h
+@@ -11,6 +11,8 @@ struct io_cancel_data {
+ 	u8 opcode;
+ 	u32 flags;
+ 	int seq;
++	/* io_try_cancel() has found it being run by io-wq, and flagged it */
++	bool running;
+ };
+ 
+ int io_async_cancel_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
 -- 
 2.53.0
 
