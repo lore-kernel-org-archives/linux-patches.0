@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827045;
-	b=bPv1nSXBG5fsvT5sfPD7gj6H0/ms2ZTCMqEnfU5MGXv6vYqM15NaL5iPhIO2GQ6YiUiZ
-	 84HJuhD/v1X0c3/lG6Xkxs3FmDUWL0uC48LkoAq8lsA2JtqhVdF3c87wDsawiH53w0FNl
-	 oD2YLoDya6e/0N0OI7byJmLETbMPVWtxYXGV2kBxmqsGm6QinhEMZcC7T+WiI2aOkEBMh
-	 +G57sa6XFUhyRnXzFpyW7hQlzj6W6ZeDJ7kpDg5DHLsXqfdjGwRjPYVl/7H1Ga2ftAj7X
-	 5arTMu1dK9BllD5Tk3pkO0k/+oRTvVMJIvytLr7EwGNCKU0tNAED5ctYGmK0ov9uacA==
+	t=1793827046;
+	b=pgjDzOciZ2NpspBoHWeSIgo/bXDoSsiV2t+B7OQetiipFpKPWVGtECoiRSVrGigNQhsG
+	 J6PhTSeMzIgMwFlc+D6gWoJwEA7hZyXqovoHaQa5s8Q4MqndxWrcfsaJJN41GT+hsQzT5
+	 94ZjlwqLRWNhNp1KWr/9SEwwIRnI6Hc+106r1CrrAmw7SgK+GmZZwtpsmx/t8YphGK5NI
+	 KE5kiPE94+SRfEJ8MhY3jaQdMFuCon+l1FkcN43Z6ZYNFG1bLiVikwFeRoa9G3EotWFIb
+	 h3tW2VRRHdjy27bkM67ylwUZBX8k2REK1UIb0/G8QQb80L22YeqpgPBgu/uQusPO1wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827045;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827046;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uqyz/5+mH/hAjJfQucpMliSLwjHuFviTx4DAIT66ckY=;
-	b=BeiIB0gZlOwuipAELAT0GBMm25CpYjMAKOK6o+pK74yNUcHswe1tO9UYpBiyaWhIjHyz
-	 FTYgcuBiyrx0B6eOn9ACrWg3KNC8UbElMjzwcUYK/yQDrjYtEN8fMfLsJ89a513NqaclI
-	 p4bBQh3wdra8nH36rtXwS2fG0bs1XzUpEM2V5zgjaocEHiNQMnNiN0Pe7AMuA4yBXqyRX
-	 hBzkES1MLUHQ7BmG9YEj3ggKlPtWvm6e4EW1bVRlbrzIIet6DhIe6qNSuwtfyRMxO9ZPA
-	 /76Sju95R0oBofgL9ywtZLkXdSFgaEOG8EkBGPQdicEJ+9K2cabMn6zNQ846UbkYfrw==
+	bh=vCIkvIsRT+W6/e2hLwoVzEFY+wYwNZ+mMSER1a5eWEw=;
+	b=v6KC0zBAdTkMR0I9BLYMyZLYvjgAiiKvSm2kDQINfuXgh09jmNxlA/hplyl6qR6EZp/q
+	 exVe9qoSiRLj6GokiUSvX3f+3I4P3K1p9usA4OFuDeek5BVfnfweybZQlQNTggFBX3MPe
+	 CpINPPM2ukLLPd+sek+SHeLIaz5G9JeXHDVQrNarLK/H3CgC182P6xHW98NJPr9PUClOU
+	 AXlGLYZBpTHIzvsw/HRknsjZvIUjgXgtIVhTGJ1W7FPpc9wd83mJ+Z5Dtwod68UvPLpZF
+	 rUZjTVIPjdgWC4N530Ayi4ruYKkP4si/QpdAiW4VYibmu3gq//5Ht9p7FTwVAZPzOeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b6rahIu/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y2j+Cfs9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D13606AE08;
-	Wed,  4 Nov 2026 21:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7938F606AE06;
+	Wed,  4 Nov 2026 21:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b6rahIu/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EBD1F00919;
-	Wed,  4 Nov 2026 21:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y2j+Cfs9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D4C1F000C1;
+	Wed,  4 Nov 2026 21:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827044;
-	bh=Uqyz/5+mH/hAjJfQucpMliSLwjHuFviTx4DAIT66ckY=;
+	s=korg; t=1793827046;
+	bh=vCIkvIsRT+W6/e2hLwoVzEFY+wYwNZ+mMSER1a5eWEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b6rahIu/IRoZjL1AOc4YScvNEBYa6v+tCnlOfXFawlAkiaA2BGKh6gS9iKUNf6pP8
-	 AsxF0fJXodFuOp5CUKnvTlZ66De0rjEB6ivieNO8zRqiy2TwoMfJxAfbQr15dsm7T6
-	 HJfBjdVY7HfzLBSftAY55dp6EhfFPQ2WUtQ9Idc0=
+	b=Y2j+Cfs9xm05PXBzqdgY5O/Wpvw0k48mo/y4aF8bb7NpYgA9kXWm2zphkeo9ipv6Y
+	 osux4MJRmwyinp8CGFNqv551mtvQT4tHDjObOG1qwPXRp7R+hqHyDfNLMYFHDGluWt
+	 Q8YA3e1tnWDaZXV1NAbSAzdfduVsb0ExLOFg0zLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 7.3 161/547] media: imon: fix use-after-free in display_close via dev_dbg
-Date: Wed,  4 Nov 2026 16:05:45 -0500
-Message-ID: <20261104211042.730631790@linuxfoundation.org>
+	Yibo Tan <lhfff@tju.edu.cn>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 7.3 162/547] media: ipu-bridge: Fix use-after-free in IVSC error path
+Date: Wed,  4 Nov 2026 16:05:46 -0500
+Message-ID: <20261104211042.757421263@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,59 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Yibo Tan <lhfff@tju.edu.cn>
 
-commit 118a3590a4080c71c565265b05b3f92e814d7647 upstream.
+commit 3d42d1c82717f0853379b516a7fab54b636e09cc upstream.
 
-ictx->dev is a raw pointer to the usb_interface's embedded device.
-On disconnect, usb_disconnect() can drop the last reference on the
-interface and free it while a userspace fd for /dev/lcd0 is still
-open. When that fd is later closed, display_close() dereferences
-the now-freed ictx->dev via dev_dbg(), causing a use-after-free.
+ipu_bridge_get_ivsc_acpi_dev() returns an ACPI device with a reference
+held. If no matching CSI device is found, ipu_bridge_check_ivsc_dev()
+drops that reference before passing the device to dev_err(). Concurrent
+CSI device and ACPI namespace removal can drop the other references,
+making this the final put. dev_err() then reads the freed struct
+acpi_device and its kobject name.
 
-Remove the dev_dbg() calls that dereference ictx->dev in
-display_close() and free_imon_context(), rather than taking a
-reference on the device.
+This was reproduced without kprobes by racing normal CSI platform-device
+unregistration and ACPI configfs table removal against the production
+ipu_bridge_init() entry. KASAN reported the final free through
+device_release(), followed by invalid reads through _dev_err().
 
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Emit the error message while the lookup reference is still held, then
+drop the reference as before.
+
+Source reproducers and vulnerable/fixed serial logs, with only the build
+hostname redacted, are available at:
+https://github.com/kimaiden1984-boop/linux-ipu-bridge-acpi-uaf-reproducer
+
+The fixed target builds with W=1 on x86-64. This was not tested on
+physical IPU hardware. The tests establish runtime reachability but do
+not measure occurrence frequency on shipping systems or establish
+exploitability.
+
+Fixes: c66821f381ae ("media: pci: intel: Add IVSC support for IPU bridge driver")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bfac891bdd42eb708fc
-Link: https://lore.kernel.org/all/20260918054851.26083-1-kartikey406@gmail.com/T/ [v1]
-Link: https://lore.kernel.org/all/20260928121230.35359-1-kartikey406@gmail.com/T/ [v2]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/media/pci/intel/ipu-bridge.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -492,16 +492,12 @@ MODULE_PARM_DESC(pad_thresh, "Threshold
+--- a/drivers/media/pci/intel/ipu-bridge.c
++++ b/drivers/media/pci/intel/ipu-bridge.c
+@@ -326,8 +326,8 @@ static int ipu_bridge_check_ivsc_dev(str
+ 	if (adev) {
+ 		csi_dev = ipu_bridge_get_ivsc_csi_dev(adev);
+ 		if (!csi_dev) {
+-			acpi_dev_put(adev);
+ 			dev_err(ADEV_DEV(adev), "Failed to find MEI or CVS CSI dev\n");
++			acpi_dev_put(adev);
+ 			return -ENODEV;
+ 		}
  
- static void free_imon_context(struct imon_context *ictx)
- {
--	struct device *dev = ictx->dev;
--
- 	usb_free_urb(ictx->tx_urb);
- 	WARN_ON(ictx->dev_present_intf0);
- 	usb_free_urb(ictx->rx_urb_intf0);
- 	WARN_ON(ictx->dev_present_intf1);
- 	usb_free_urb(ictx->rx_urb_intf1);
- 	kfree_rcu(ictx, rcu);
--
--	dev_dbg(dev, "%s: iMON context freed\n", __func__);
- }
- 
- /*
-@@ -577,7 +573,6 @@ static int display_close(struct inode *i
- 		retval = -EIO;
- 	} else {
- 		ictx->display_isopen = false;
--		dev_dbg(ictx->dev, "display port closed\n");
- 	}
- 
- 	mutex_unlock(&ictx->lock);
 
 
