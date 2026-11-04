@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831532;
-	b=o6w2vly3NKQ0AoAlzsYtELEpsTrKNbUfaeYXBZf1JZ0ELarKzJJJ77Di40XZlgYn5YHD
-	 +phgBXJGILyDXd3tIWq8OKmCBi2mLaVLSB7skMYcBm5amdxSaZJ0hMKmi+qdUz2xgBxIQ
-	 zq6tsJHwb3ivTWn2AicE+EzlK7xUqUOsG37wM3z0wmqn6ZddM8Qp5Jbkk0eqvxM4Bg92G
-	 o51mUr2lhKuG/xNewp6ss9ZyG/nMr0qDZUuCORo5kdDzxsG1pXSEIIxtBVk1eCd6NAnsO
-	 gp73EeKWO1HlWfL3fq+AbdaMI7m+xipwlVGRiZQMoZaeM/bd2mUDmHPeborCVsohjGA==
+	t=1793831534;
+	b=ilLvKu4ILWVCBzbrTxjGCT50Mv7UxwqoijzqruNwhlLvyKlz5mS+CXEr+6vdSJYqXgvM
+	 kE2mUsd/px9HSjWdyRdyty0b19z7A4W0f8YE/OhTihkmdz3tPUsu+auKgeK1TyPyTNg1f
+	 +li89n4Z8TWZY8inzq/X54o+f6ObpfmKwOxidIE4pF8KpslGUH8NDeMryVN4ZfRDZQB9D
+	 +P1we/S+UHpYuK0PvMiVftpcKdEgDUXfYEmpuYFI7/kvmFa0UQ+xusy3VhiRqv5mmYP71
+	 PP65lOqzthdMIM6PIZKnMDA6JYBxSMt7ls9kjSoSxoCamzbet7uNop7ZgTpYYw+7xMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831534;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ciO/wiJ0UwxYod6kL217YeKN7HAJUS/DmzOB6GANYME=;
-	b=QvCwudO/UfRyi2TMmFKfJCG2HG4WGlbP/56qe0yEpGHGRMbohQMsEIvme7kwa8tluzcp
-	 VmIWTc299etIF4JwEwlzjketVP9aP1qkaOIVsOnJEh6SpSZpIAlO2Gi+VbiH6iRLA2xlm
-	 zuwX5SVBfNDt9t1DHO8RUgiO5XzTk6+C8epmN4Pkwqk3hqskvcfDq1V3JiJStCaM8XUYM
-	 1RTCAVykE+PuV90d4XrcxEt/cUaORLNOn4/lzrHhgtK44sotFzQvjAkdU0qVORbTrHT+J
-	 okigHqrh4qZMIUe+s9hpx3Ho1c+64uD6X+g4ooGM1gyFDnNiE6OmBBXZYRPGnb4Gm7g==
+	bh=EMOs9EAY3mqEhBbphhDrDKMepW+3vak+E79BeZDl5LI=;
+	b=x+QYmmt/MonIcnlEXPTOAgvm5iwpzirKzazoivFRs13NAQgM5hyy1oNzZIvxQck6r4oE
+	 46o5SptXBjRNqf6pnPInybFTJx+xhku/7EsUOLkf5qtNJWz4zCnpAnDl0TcWRu1tNsCl5
+	 h4F10EZy2Xhx3P0WEcvsaLGL6narW+EYLbBHzbVoxlsI5AyRKwZF3cDLOEdAgb4HgpNZQ
+	 HoNyCpK1pJjCye8m6yZGpKYYhJKNMoydij9kafgNaWXZOAfCS8fmJIZBWWae0600UUBEZ
+	 ehRRdxxPmGBlodzsgSb+DJ6m5lZEALe+TF6UFT7PJHT6XdHKI5GO9ZaXMYpD+I4nYGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TZAHJ57Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQBqubiO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902B5606A859;
-	Wed,  4 Nov 2026 22:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1635D606A334;
+	Wed,  4 Nov 2026 22:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TZAHJ57Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBC41F000C1;
-	Wed,  4 Nov 2026 22:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQBqubiO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA481F000C1;
+	Wed,  4 Nov 2026 22:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831532;
-	bh=ciO/wiJ0UwxYod6kL217YeKN7HAJUS/DmzOB6GANYME=;
+	s=korg; t=1793831533;
+	bh=EMOs9EAY3mqEhBbphhDrDKMepW+3vak+E79BeZDl5LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZAHJ57YPb+WWHCF9Vr+iChwJjnZKoFc7t/kH3ApkPjHpha9prTEkP7sCP/Eq2Y07
-	 MfU5wnLkB/swHTHfR1J0tCMIY0ZSbx3eh6LuSBHTiCwwV1JAY/JcotBb8nX7M+9EXe
-	 wacb4alG5UHPE36aSnOPqnJVALviJAbVAQlZ0M18=
+	b=qQBqubiOKYS2OIUlMlvCIxKWMTA2C2phScS0e9mkxM9MeV+zos19lCxlxiA37KfAi
+	 w+zJ8EES++Ty0DEi0Dj3lN/TmB9o8A5mEleVfw1xQ8hz8vCpmWeWEA+r2tWUCy0zUO
+	 GMr15cbFIbdYXhqI3BDksaSLGSTZm2cS0UenRoXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 0722/1005] media: gspca: use vb2_video_unregister_device() on disconnect
-Date: Wed,  4 Nov 2026 16:07:35 -0500
-Message-ID: <20261104211103.739494861@linuxfoundation.org>
+	Ngoc Quy <ngocquy0700@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>
+Subject: [PATCH 6.18 0713/1005] fs/proc/task_mmu: pin mm_users in do_pagemap_scan()
+Date: Wed,  4 Nov 2026 16:07:26 -0500
+Message-ID: <20261104211103.523143926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,47 +73,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Ngoc Quy <ngocquy0700@gmail.com>
 
-commit 3dbbbc3cafa2de377d9b97af4e35b8b6b5282047 upstream.
+commit 4fb975471717c953f912776bb60301add1ffae11 upstream.
 
-gspca uses vb2_fop_release(), but gspca_disconnect() only unregisters
-the video device. If the queue owner closes the device after USB
-disconnect, vb2_fop_release() releases the queue and invokes
-gspca_stop_streaming() at that point.
+The PAGEMAP_SCAN ioctl takes mmap_read_lock() on an mm obtained from
+/proc/<pid>/pagemap without holding a reference to mm_users.
 
-gspca_stream_off() calls subdriver stop callbacks and
-usb_set_interface() through gspca_dev->dev. By the time the late close
-runs, the USB core can have freed the usb_device, resulting in a
-use-after-free. This was observed as a KASAN use-after-free in sd_stopN().
+proc_mem_open() deliberately grabs only mm_count, so a consumer that
+touches the address space has to call mmget_not_zero() first.  Every other
+consumer in this file does -- m_start(), do_procmap_query(),
+show_smaps_rollup() and pagemap_read() -- but do_pagemap_scan() does not.
 
-Use vb2_video_unregister_device() so the queue is released and streaming
-is stopped synchronously during disconnect, while the usb_device is still
-valid. Since the helper takes the queue lock, which is usb_lock, call it
-after dropping that lock.
+Without that reference the target can reach exit_mmap() concurrently, and
+exit_mmap() calls unmap_vmas() while holding mmap_lock only for reading,
+which does not exclude the scanner.  For ordinary VMAs this is harmless,
+as free_pgtables() and remove_vma() run afterwards under mmap_write_lock.
+A shared hugetlb VMA is different: __hugetlb_zap_end() frees the VMA's
+hugetlb_vma_lock inside the read-locked phase.
 
-Fixes: f729ef5796d8 ("media: videobuf2-v4l2.c: add vb2_video_unregister_device helper function")
-Cc: stable@vger.kernel.org # 5.10.x
-Suggested-by: Hans Verkuil <hverkuil@kernel.org>
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+walk_hugetlb_range() can therefore load vma->vm_private_data, have the
+lock freed underneath it, and then down_read() a freed rw_semaphore.  The
+load happens before the freeing side clears the pointer, so this is a
+use-after-free and not a NULL dereference.  Any unprivileged user can
+reach it with no huge pages configured, as hugetlb_reserve_pages()
+allocates the lock before the VM_NORESERVE early return.
+
+Pin mm_users across the scan, the way the other consumers do.  mmput()
+from the exiting task can then no longer reach exit_mmap() while a walk is
+in progress.
+
+[akpm@linux-foundation.org: remove unneeded & undesirable test for !mm]
+Link: https://lore.kernel.org/20261014095540.3261469-1-ngocquy0700@gmail.com
+Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
+Signed-off-by: Ngoc Quy <ngocquy0700@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: Claude:claude-opus-5
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Muhammad Usama Anjum <usama.anjum@arm.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/gspca.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/proc/task_mmu.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/gspca/gspca.c
-+++ b/drivers/media/usb/gspca/gspca.c
-@@ -1641,9 +1641,8 @@ void gspca_disconnect(struct usb_interfa
- #endif
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -3098,15 +3098,18 @@ static long do_pagemap_scan(struct mm_st
+ 	size_t n_ranges_out = 0;
+ 	int ret;
  
- 	v4l2_device_disconnect(&gspca_dev->v4l2_dev);
--	video_unregister_device(&gspca_dev->vdev);
--
- 	mutex_unlock(&gspca_dev->usb_lock);
-+	vb2_video_unregister_device(&gspca_dev->vdev);
++	if (!mmget_not_zero(mm))
++		return -ESRCH;
++
+ 	ret = pagemap_scan_get_args(&p.arg, uarg);
+ 	if (ret)
+-		return ret;
++		goto out_mmput;
  
- 	/* (this will call gspca_release() immediately or on last close) */
- 	v4l2_device_put(&gspca_dev->v4l2_dev);
+ 	p.masks_of_interest = p.arg.category_mask | p.arg.category_anyof_mask |
+ 			      p.arg.return_mask;
+ 	ret = pagemap_scan_init_bounce_buffer(&p);
+ 	if (ret)
+-		return ret;
++		goto out_mmput;
+ 
+ 	for (walk_start = p.arg.start; walk_start < p.arg.end;
+ 			walk_start = p.arg.walk_end) {
+@@ -3161,6 +3164,8 @@ static long do_pagemap_scan(struct mm_st
+ 		ret = -EFAULT;
+ 
+ 	kfree(p.vec_buf);
++out_mmput:
++	mmput(mm);
+ 	return ret;
+ }
+ 
 
 
