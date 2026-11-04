@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828896;
-	b=y8Bq3ytJhmMOuzqTNQOUYb/QNL/doD2bhT75qySVlrkRwpW0KQIYyXkq0pqsS8iXg0tC
-	 sGZ/GHKVqXuLh0gVNmMbaJeTPbRpFxoigL0eoCa3I8+lzANlQ4XzUlTJ/5BT9UYxotNCt
-	 tQ/FLzkEuN8GdHb4v2YdAi39UfVWJ+LRVgVECaPgsvwNzJv681SFI/EjtGqPSNQw8ovlu
-	 y2t4ZWkGSm9rOW6qsG3+Da52tRMxkc5l9x08QaThUc3hpo+G/TCOrm2JGc7eAqpzi74sS
-	 HRwtUOtRT/tImThk2UNuM7Qv0B5WD388Ey2QGUZOBFLqu1hTrMna6iMh62BLGtn3Rzw==
+	t=1793828897;
+	b=Bd1FmMIc6C+6a+7mLxFxn2c5DzErl92tjFNeZq/GMlaYXj3LfYv9F7p46fT1xYYXX/OR
+	 u4geBOXivRPvpAlv+Yut4d4/GX3xn+3YdH2glmMovWma8fO8lSCEvgXYcRfRl03told6X
+	 4kY5ofTX44s37d7Or39p0EtMMYkiG9+gVLU8VAu2njXGQtbUO4gGFr2ih5ODYzPvXzUSN
+	 XCENKiQqZlU/QfbIBLe8cDM/IIkVM7I75tKZOA1nW+xRuq9q+d5zKvLzj2X4O+OC2JubC
+	 Od0m+BwL4swt89FGHuCkZBGYRVU4cArWKhq2NfAXz23loh1PTKqnNh3ukJ96yj2yQMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828896;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828897;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bSDtTSbit39dk9Tw4Q3rAjOBPVB/6KXwComGaNi0wiI=;
-	b=qn8hN5GT4Bi72Udh+8maKcbfpA+cXJUbcodBOmVvChUN+mJbwf5o2cAOmuA8GWdKQ6sh
-	 76CMvrIGj1h7sKc9c6xHKQz7RIThBwSVqlw2uKfCMtJrOJ6XBIaVawe9owXlC09jJX6Ve
-	 wx+h0GN415eXEl+MmyjjfbZUA7s81e6hJFYZd5gy28zv9MR6ihWCoqFlXfP6MN50UvOvy
-	 yRpEx6v0N7kucR0w+wkT2yoAUJWj/x9vlPl6Wo49Iwf5CDNbB3yZMtJ9+AcOev11C3TgL
-	 P6DcnBKmkR3zMJ3GWE1Mvoh2e0o76Nj48VUmJtO8JfWuZWC1DV1nQAsPAxT2ig3vAnQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=zILiSdDdvmOKPHZyVmO1OSYBffzkdKuHg7MVH9mTiR4=;
+	b=0lHtWpq7B70XwdhtWfDyfmUF81foWqINzYhLR6nU9OkMQsLjRXbu99Y2U+tZRyvo7Ei0
+	 Msv9FmmX/jyy6N0GTpWODLrtMjgvgEegrVL1U4X0QkIQveZ7rKUtgmex5S5p+v7bXrBVz
+	 pHhBw6M03bl8QaBktejnTQ8/pzH5w3FrzYeSZmzTEZo5sThORBOpGtiqZ6z6AsfV9tj5g
+	 ndanmQsAS3zcxg2FmHGDEpvKLg3feK3Ec8hlmVMZlN2SjpbbvdM7Ld4tZ3FWjGXbhae9U
+	 eU5FEsko25aDZAmweXx9Oit8CGVwUHjydeEUnB9pBJHBFsQSRJChSZdlTSsmhUx97ZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YElv/Fjx";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jAoqY2cd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E396071AE2;
-	Wed,  4 Nov 2026 21:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BE9606A33A;
+	Wed,  4 Nov 2026 21:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YElv/Fjx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67BC1F000C1;
-	Wed,  4 Nov 2026 21:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jAoqY2cd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EF31F0093A;
+	Wed,  4 Nov 2026 21:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828896;
-	bh=bSDtTSbit39dk9Tw4Q3rAjOBPVB/6KXwComGaNi0wiI=;
+	s=korg; t=1793828897;
+	bh=zILiSdDdvmOKPHZyVmO1OSYBffzkdKuHg7MVH9mTiR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YElv/FjxxiifAh+62Zlpj/ksDokans7BCCZVQ5tGNRx3j6XUFCDPoAv6lxrp22HMI
-	 4SOJCaRp2hS1EaW1oTcH1C0YhMWXsYjZAVPjHImJXYVGRci6JDe0CdY7ZqvtF5aNoV
-	 T1YOb7dr8Q8BvsCz9zswAmVRg8Pi0DyGiV2C845I=
+	b=jAoqY2cdAPSJeeIEYftGBOfYkhQhW1XNNBI+A1JeI209otwq4uI+gTjDrxJlIOyrT
+	 qZbp8CPsNQeQskzR+h6Rrp+A4GT+/fzsIwmTuwwArsd9dGAW1rLHf05sTAG9izzw22
+	 NAaxk7iiXbWbjq6vdbTKEMpqewAPa10vUcVKVrWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.3 261/547] nvmet-auth: serialize access to DH-HMAC-CHAP state to fix UAF
-Date: Wed,  4 Nov 2026 16:07:25 -0500
-Message-ID: <20261104211045.603693153@linuxfoundation.org>
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.3 304/547] xfs: fix buffer overruns in xfs_ioc_attr_list
+Date: Wed,  4 Nov 2026 16:08:08 -0500
+Message-ID: <20261104211046.844921914@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -62,179 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 53f6efe00cea0c0cf7bd99debe3cdac8567170b5 upstream.
+commit 0b9081a774ee7b9dff1e9ac3765b73c1d6bba5b2 upstream.
 
-A REPLY AUTH_SEND command can derive a dhchap_skey key while a
-concurrent AUTH_RECEIVE command observing this REPLY state executes
-the failure path and frees that key. The REPLY command then continues
-and writes into freed memory, causing a use-after-free. KASAN reports
-it as:
+When we converted the al_offset array in struct xfs_attrlist into a VLA,
+the size of the object shrank by 4 bytes.  Unfortunately, the buffer
+size validation in the attrlist ioctl wasn't updated to notice this, so
+the al_offset[0] assignment blindly writes off the end of the buffer.
+LOLLM noticed the omitted check and complained.
 
-  BUG: KASAN: slab-use-after-free in __sha256_final
-  Write of size 4 at addr ffff88800359c540
-  ...
-  nvmet_auth_sq_free (drivers/nvme/target/auth.c:237)
-  nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:621)
-
-Add a mutex to each submission queue to serialize authentication
-commands and timeout handling. Unlock the mutex before completing
-requests and ignore outdated timeout callbacks. Limit timeout delays
-to prevent immediate expiry on 32-bit kernels.
-
-Fixes: 7a277c37d352 ("nvmet-auth: Diffie-Hellman key exchange support")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
+Cc: stable@vger.kernel.org # v6.5
+Fixes: 371baf5c9750a2 ("xfs: convert flex-array declarations in struct xfs_attrlist*")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/auth.c             |    1 +
- drivers/nvme/target/fabrics-cmd-auth.c |   32 ++++++++++++++++++++++++++++----
- drivers/nvme/target/nvmet.h            |    2 ++
- 3 files changed, 31 insertions(+), 4 deletions(-)
+ fs/xfs/xfs_handle.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/target/auth.c
-+++ b/drivers/nvme/target/auth.c
-@@ -229,6 +229,7 @@ out_unlock:
+--- a/fs/xfs/xfs_handle.c
++++ b/fs/xfs/xfs_handle.c
+@@ -409,7 +409,7 @@ xfs_ioc_attr_list(
+ 	void				*buffer;
+ 	int				error;
  
- void nvmet_auth_sq_free(struct nvmet_sq *sq)
- {
-+	sq->auth_expiry_active = false;
- 	cancel_delayed_work(&sq->auth_expired_work);
- 	kfree(sq->dhchap_c1);
- 	sq->dhchap_c1 = NULL;
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -6,6 +6,7 @@
-  */
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- #include <linux/blkdev.h>
-+#include <linux/jiffies.h>
- #include <linux/random.h>
- #include <linux/nvme-auth.h>
- #include <crypto/kpp.h>
-@@ -17,16 +18,27 @@ static void nvmet_auth_expired_work(stru
- 	struct nvmet_sq *sq = container_of(to_delayed_work(work),
- 			struct nvmet_sq, auth_expired_work);
+-	if (bufsize < sizeof(struct xfs_attrlist) ||
++	if (bufsize < struct_size(alist, al_offset, 1) ||
+ 	    bufsize > XFS_XATTR_LIST_MAX)
+ 		return -EINVAL;
  
-+	mutex_lock(&sq->auth_lock);
-+	/* A command may have cancelled or rearmed this timeout. */
-+	if (!sq->auth_expiry_active ||
-+	    delayed_work_pending(&sq->auth_expired_work))
-+		goto out_unlock;
-+	sq->auth_expiry_active = false;
-+
- 	pr_debug("%s: ctrl %d qid %d transaction %u expired, resetting\n",
- 		 __func__, sq->ctrl->cntlid, sq->qid, sq->dhchap_tid);
- 	sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
- 	sq->dhchap_tid = -1;
-+out_unlock:
-+	mutex_unlock(&sq->auth_lock);
- }
- 
- void nvmet_auth_sq_init(struct nvmet_sq *sq)
- {
- 	/* Initialize in-band authentication */
-+	mutex_init(&sq->auth_lock);
- 	INIT_DELAYED_WORK(&sq->auth_expired_work, nvmet_auth_expired_work);
-+	sq->auth_expiry_active = false;
- 	sq->authenticated = false;
- 	sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
- }
-@@ -256,6 +268,8 @@ void nvmet_execute_auth_send(struct nvme
- 	u16 status = 0;
- 	u8 dhchap_status;
- 
-+	mutex_lock(&req->sq->auth_lock);
-+
- 	if (req->cmd->auth_send.secp != NVME_AUTH_DHCHAP_PROTOCOL_IDENTIFIER) {
- 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 		req->error_loc =
-@@ -281,8 +295,10 @@ void nvmet_execute_auth_send(struct nvme
- 			offsetof(struct nvmf_auth_send_command, tl);
- 		goto done;
- 	}
--	if (!nvmet_check_transfer_len(req, tl)) {
-+	if (unlikely(tl != req->transfer_len)) {
- 		pr_debug("%s: transfer length mismatch (%u)\n", __func__, tl);
-+		mutex_unlock(&req->sq->auth_lock);
-+		nvmet_check_transfer_len(req, tl);
- 		return;
- 	}
- 
-@@ -406,10 +422,12 @@ done:
- 			 status, req->error_loc);
- 	if (req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2 &&
- 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
--		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
-+		unsigned long auth_expire = min_t(u64, MAX_JIFFY_OFFSET,
-+			(u64)(ctrl->kato ? ctrl->kato : 120) * HZ);
- 
-+		req->sq->auth_expiry_active = true;
- 		mod_delayed_work(system_percpu_wq, &req->sq->auth_expired_work,
--				 auth_expire_secs * HZ);
-+				 auth_expire);
- 		goto complete;
- 	}
- 	/* Final states, clear up variables */
-@@ -418,6 +436,7 @@ done:
- 		nvmet_ctrl_fatal_error(ctrl);
- 
- complete:
-+	mutex_unlock(&req->sq->auth_lock);
- 	nvmet_req_complete(req, status);
- }
- 
-@@ -536,6 +555,8 @@ void nvmet_execute_auth_receive(struct n
- 	u32 al;
- 	u16 status = 0;
- 
-+	mutex_lock(&req->sq->auth_lock);
-+
- 	if (req->cmd->auth_receive.secp != NVME_AUTH_DHCHAP_PROTOCOL_IDENTIFIER) {
- 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 		req->error_loc =
-@@ -561,8 +582,10 @@ void nvmet_execute_auth_receive(struct n
- 			offsetof(struct nvmf_auth_receive_command, al);
- 		goto done;
- 	}
--	if (!nvmet_check_transfer_len(req, al)) {
-+	if (unlikely(al != req->transfer_len)) {
- 		pr_debug("%s: transfer length mismatch (%u)\n", __func__, al);
-+		mutex_unlock(&req->sq->auth_lock);
-+		nvmet_check_transfer_len(req, al);
- 		return;
- 	}
- 
-@@ -621,5 +644,6 @@ done:
- 		nvmet_auth_sq_free(req->sq);
- 		nvmet_ctrl_fatal_error(ctrl);
- 	}
-+	mutex_unlock(&req->sq->auth_lock);
- 	nvmet_req_complete(req, status);
- }
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -161,8 +161,10 @@ struct nvmet_sq {
- 	u32			sqhd;
- 	bool			sqhd_disabled;
- #ifdef CONFIG_NVME_TARGET_AUTH
-+	struct mutex		auth_lock;
- 	bool			authenticated;
- 	struct delayed_work	auth_expired_work;
-+	bool			auth_expiry_active;
- 	u16			dhchap_tid;
- 	u8			sc_c;
- 	u8			dhchap_status;
 
 
