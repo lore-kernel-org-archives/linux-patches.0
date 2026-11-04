@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829023;
-	b=wzhFtGQ39Pd5EWzUppT8bDaR6khEHKPbygZ88/bt1s5nWnxSIomjCGMqDnbgx/VYf+8r
-	 cGO3534ld3UeeW7aVrVtKrTCiNYFGhA8I/WgNr8ZXcgS1wJ8KLQQzKM+XbC4rdm37ELEc
-	 YpXe0mYO3ZQBOesWU3oiH2OzjYOqXbnpxVTVUu0vw3h0bdpEx5VCr+mc3rsvxejDyMkBA
-	 8N9rQ+7Cj9ReCA92UrhX++lfUaS3t2maq/xUedsg5cXgszY47qSmNOoKuo4qq0edNT/T9
-	 gVWXrxZlbpDQ2aHw2C+evg/y3lD63O5DfgkJhu9SLhX6Y7ekfuzQO9WFidIHLZEkVog==
+	t=1793829024;
+	b=YPv/KXkR+RoaYxhAcRdBfwiB/OMqW4u7MpAbepl3Dp5zajWBr9FVb5s1DEOrsiMTXZrV
+	 GGLQFpSXv7PD9hvfQw+w3q6J+XjXu3hNngqjt/Uqrb+ujhAboebRQ2haY0tero1LNvGFz
+	 hdpo/4BA2ucrDeSng5wZJYkUtq3k2TfIz2zjXr0VrO/4UsQ5ohqti5LNJopBRZYEqKpCz
+	 KyrAJe7PjE+/bZXEAUuRZ2APdaFkVViHTIM8yZaJesfHsDb2TvJLfQUd8DlQiXZMhaz1X
+	 2O2Kwfg6UMnLX8csze+UwJpDXt6uE79/kdh7htWJ4TSTizyvIOsmZtLDae07u5miDSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829023;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e1BmCmbjH6bOBypfw3dnkv0O1fMhjhZnMZVV0YCdCcQ=;
-	b=WkjYHNnpyKWWHwYS5Pl5pUavCpbONFyeAyPkjXEx0XDvKpT7trrnJUfFLhaKRLw/aEMm
-	 X5RWZtp0qnUrryjSwXJl7uqCUOfq7/1OMQomFVS9+mRV8rSdR6uWL8LKQfIhnzg3AKe0T
-	 VcmSZiNGopsyOc1uEDaOwO2IcPTFolAwBw5eAu6GulPf/ygCaCO6zsWexgzZLI6oLP30e
-	 1seoVkCJG4+4cPWLtqzG7QsYWf9WR5wIIQs/2w/1bkEAIcfmiC38e53O0G4vyfgSPebCn
-	 /cT+2ObqjHYtw5sLSGzzL/gr+uTneCIdX1KclbgrcAH1B5p7ROtjlVXKNcqAbL9SojQ==
+	bh=8vbANA8fjv8NiH9w9A/KBxbr666JMsu8M/I8JA86ucY=;
+	b=ImPgXwd/cKPHrD4A5+luRm4neekdK9fCBWdOICFI68K60GrPq38Q73pGjmOGz4W1ofnd
+	 4+oXTLLyw79hSXN9idYEKAm+eXi8xzF883x5+ddfRDMODIWfnxLKWLZDCOtotfdXLgGnw
+	 0L0HNUXgmMM4sDHijofLZaGwFxbZaRugzZyJLFXyNW2O7VJoKeGEVlM8VyTFJxWvLQOk1
+	 yhUOKfnyjt/I6u/8LPRTOBCHYB9Wh1nnqUw9Xjwb0tQErexuFjbsR4fHI+gd93+WUMoUV
+	 r5NH8ZUTdtqXUXPnJ/R5f55L/pIzr2BNhzXqp5jhcZ9zkd6JcpNlUNLDYck3CXWbPUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsbbeaCh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QVa4RHgl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF900607074A;
-	Wed,  4 Nov 2026 21:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FCC607074A;
+	Wed,  4 Nov 2026 21:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsbbeaCh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0871F000C1;
-	Wed,  4 Nov 2026 21:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QVa4RHgl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA6B1F000C1;
+	Wed,  4 Nov 2026 21:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829022;
-	bh=e1BmCmbjH6bOBypfw3dnkv0O1fMhjhZnMZVV0YCdCcQ=;
+	s=korg; t=1793829024;
+	bh=8vbANA8fjv8NiH9w9A/KBxbr666JMsu8M/I8JA86ucY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JsbbeaChPD28EJeIpVndb4YWU8YgKch5akDrKhOfCGsfucd29V6Yu/P0nSFxmSH9j
-	 KjRxMGgpfIG5uydGzesmtSSaC6JszCWtYCb+45dh3S5ca9SpHZcxQh78+/nXXVOdhC
-	 dPxIiDQvDSPvwJFv7HlBss0EEBEN5reD90JPZydA=
+	b=QVa4RHglo/3ieTOu6OQeb+BwTtHqrrBAPJ3Xm2MJxyPwrV1o6Myt9igxNoUxCWrqz
+	 eup31czkBOz8IvxYoHJ0Yzl+hKtIaamO2fN2h0gxRC+imfmbITQGQsZubnfKJVxAQp
+	 bQEQyTuty71GbvoyywXCIDFnR/KIU3Te3IhPmFBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 345/547] xfs: always report inode repair setup failures
-Date: Wed,  4 Nov 2026 16:08:49 -0500
-Message-ID: <20261104211048.069281741@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 7.3 388/547] smb: client: require stable pages for SMB compression
+Date: Wed,  4 Nov 2026 16:09:32 -0500
+Message-ID: <20261104211049.322544738@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,47 +72,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit ce9098338a7e1a77246684242d10779fc4d4a539 upstream.
+commit 8667061cf99394526dd9c0ea2662e6bbc7ae7848 upstream.
 
-LOLLM noticed that xchk_setup_inode silently discards errors being
-returned by xrep_setup_inode.  Fix that, and fix the stub macro so that
-it actually "returns" a value.
+Like signing, SMB compression builds the write payload from the pagecache
+folios: should_compress() lets a write request through and smb_compress()
+compresses those folios on the way to the socket.  If a buffered write
+mutates a folio while a write subrequest is still in flight, the compressed
+bytes no longer correspond to a consistent view of the data, and the server
+silently stores corrupted contents - worse than the signed case, which at
+least fails loudly with STATUS_ACCESS_DENIED.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: 2d295fe65776d1 ("xfs: repair inode records")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Mark the mapping for stable writes when a write may be compressed, i.e. the
+same condition should_compress() tests (compression negotiated and the share
+allows compressed data), so netfs_perform_write() waits for writeback to
+complete before modifying an in-flight folio.
+
+Fixes: f046d71e84e1 ("smb: client: insert compression check/call on write requests")
+Suggested-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/inode.c  |    2 +-
- fs/xfs/scrub/repair.h |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/inode.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/inode.c
-+++ b/fs/xfs/scrub/inode.c
-@@ -212,7 +212,7 @@ xchk_setup_inode(
- 	 * make repairs to the ondisk inode buffer.
- 	 */
- 	if (xchk_could_repair(sc))
--		xrep_setup_inode(sc, &imap);
-+		return xrep_setup_inode(sc, &imap);
- 	return 0;
- 
- out_cancel:
---- a/fs/xfs/scrub/repair.h
-+++ b/fs/xfs/scrub/repair.h
-@@ -239,7 +239,7 @@ xrep_setup_nothing(
- #define xrep_setup_rtrmapbt		xrep_setup_nothing
- #define xrep_setup_rtrefcountbt		xrep_setup_nothing
- 
--#define xrep_setup_inode(sc, imap)	((void)0)
-+#define xrep_setup_inode(sc, imap)	(0)
- 
- static inline int xrep_setup_symlink(struct xfs_scrub *sc, unsigned int *x)
- {
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -88,7 +88,9 @@ static void cifs_set_ops(struct inode *i
+ 		else
+ 			inode->i_data.a_ops = &cifs_addr_ops;
+ 		mapping_set_large_folios(inode->i_mapping);
+-		if (tcon->ses->server->sign)
++		if (tcon->ses->server->sign ||
++		    (tcon->ses->server->compression.enabled &&
++		     (tcon->share_flags & SMB2_SHAREFLAG_COMPRESS_DATA)))
+ 			mapping_set_stable_writes(inode->i_mapping);
+ 		break;
+ 	case S_IFDIR:
 
 
