@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829240;
-	b=MVDGHWPEawx50wQ7u0hG4HBivs79ezzu4wjuyoCNJX6MUnDcHqqi/ur5yV0AmeTVBlcw
-	 i5FD/YMAmY5WWBdbhGnl6uvFMEwYc4fNLhBURPHacCHCFn9FbBOM2P5CNAdxCfT4oExV9
-	 D6azmzxYzk9HdPcyXDrqSi7s4KDIgH++GqG0fWBB9ZNiGbV7Erby9QPyZTSSNleKkBzJg
-	 iyZW0S2a5mftwpUivKZvj7utMuPOapwAoVlM85Tb93MAOjMfIeP9p4JFzdo5YQrkHosTS
-	 UvKeGIipwLADC+njLHg34UwzrRQLf/cK9XMDem28eNm0dlGY1RmctMyOvMwU/7vk/wA==
+	t=1793829242;
+	b=tNAfIeenRGxQaLXQjbPCsqVacU/9wBiHujWfbztZe6lhDBm3+JOLO2zqpRVc/JkB+7V3
+	 6FLk7QYj6yDvwm8lDCvKVY51C1zVkIz+hKQrjFT2v8thn1Bguv/J+yNNOybu80BBX5QrT
+	 0kurdCQyOcZlfOVDeeBIbHeX+3iNEA1+kczIh0jvCuL5dJ3TxCVr3sTSoeXx/18QZ+ufM
+	 23YX25V/dKkhYGviERUv2yTMxMxSRErIiZnjoIPNAGLPbreTh75QKlk+q3iZ4AlEU9MYP
+	 TS/f1GUg7BhjvSvgbo2/iTtfQR01acBboCDtNcithZT3C9SxVHJUmFSp2x46cNY3aVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829240;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829242;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b1zqBpIsPj11qbbJWiePyt6BnNF60z65jIZ2U59C5ug=;
-	b=5UZluiVDQJkjdXXNw2x3Abd2Asr9qy3g3v+q9t7CoyvHkWEhKDYEat7YVr/qwSfF0hDD
-	 QW4dNnpgPdckD/Tkf1YUJpCB/8P0AgUoIOEEWZftgYr5N1g9N5Vy6iwQ+yhRmslieZ5k9
-	 r/smrt86X8VmpyXurwlo/DmjYcZ7K6S/jgaUWZmdZgIe7oLbVCb6YbeOZvClDnmrCgLt8
-	 BdFUT4E2AVRbeXgWiq/9K6aA83YHJTGk0xaRV/Mvq/L8XuEHTC05PN69q8kxeUWBAGJky
-	 L90bUg67yzJJySzwrKZytw6Tts1iL/mHkcdhBXF1Hf7ygRoGUiG0r/DxBsTgeuqWPOQ==
+	bh=+GMIR5oBQVpzEjIDrciLuSR48FvLBTyXa0Z0OOCj72E=;
+	b=wXnGgYkophn8fV8KjEFXczfnsXfgqOvMq1k1yama4jo4PM8Lv/iB3qjCfWBJxk7n+su8
+	 fm3bc60eAu5BbhhcPockUFFmxaF/h3Fw2cS4u6AyJLyg7HceEqO2kt2ggmhigYS2/fkOL
+	 LtGVEWnU7UgkvcAnB9IiaxLkh/e1pXs5namCdg2qjXDR5oabKC82LbGynWnAFRIen0SxM
+	 aTwWOcUurpl32GRHGd7HidsVJ9DPGOVqWEcyvU4gLeJ2DyrS5yLheU0sqFwolzlWBN/Vz
+	 1jfWndyQpIPwbyWIFu0z7qJKxV2EG/7vr8MmtAKuVGCkF9FkHjQDVk6YxOehQR6pmhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NGDpx15E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e29UtkTU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CB66074588;
-	Wed,  4 Nov 2026 21:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6D7607352E;
+	Wed,  4 Nov 2026 21:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NGDpx15E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9403B1F00A02;
-	Wed,  4 Nov 2026 21:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e29UtkTU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E011F0093A;
+	Wed,  4 Nov 2026 21:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829239;
-	bh=b1zqBpIsPj11qbbJWiePyt6BnNF60z65jIZ2U59C5ug=;
+	s=korg; t=1793829241;
+	bh=+GMIR5oBQVpzEjIDrciLuSR48FvLBTyXa0Z0OOCj72E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NGDpx15ETDSy5boxSXxse5YGhG0P4fn/E+wZwA5AJKDNH3bpm9o1mgszCGvYlDOPN
-	 eNOK6uWX5zpfgsHpz6OrAYtyEKm4nwXWrrkrsr7EuPQXVrfAfuemybVjEd9OKSDYSF
-	 bEm5QsjA3B2VgEmJyYA+I7OqJ7DcoXRqJB5JKPtU=
+	b=e29UtkTU5RxM0srDnyQ5ZlQn4jbmnAZJDM4Xez4aqtG8cMiLNPGfjCYcG2KP26w2I
+	 84cxeBYkVFIfAul4tyW/ohr4rq3hnPgpzgEvkZMAbCFArvexkRO2/u9CGgnIDVtXeI
+	 RytTWzzguoYrT5Skqxf4O4uNNf5hZnN4gRlS4cyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@chenxiaosong.com>,
-	Daijiamu <3058704216@qq.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Pan Guihua <pan.guihua@datatom.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 536/547] ksmbd: use clear_and_wake_up_bit() directly
-Date: Wed,  4 Nov 2026 16:12:00 -0500
-Message-ID: <20261104211053.626188856@linuxfoundation.org>
+Subject: [PATCH 7.3 537/547] ksmbd: track delivery of queued TCP writes
+Date: Wed,  4 Nov 2026 16:12:01 -0500
+Message-ID: <20261104211053.657761394@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,96 +68,603 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daijiamu <3058704216@qq.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 8852052e32df965a76daecbd8cda0ecf950b54df ]
+[ Upstream commit c0632d2010ffc006eed9becc8d0d10d54f294bbd ]
 
-clear_and_wake_up_bit() was introduced by commit 8236b0ae31c8 ("bdi:
-wake up concurrent wb_shutdown() callers.") to replace the open-coded
-clear_bit_unlock() + smp_mb__after_atomic() + wake_up_bit() sequence.
+A nonblocking break send must distinguish a PDU accepted by TCP from one
+still queued in ksmbd. Retrying an accepted PDU can send duplicates, while
+abandoning a partial send can corrupt the stream.
 
-Replace the sequence and drop the now-trivial wake_up_oplock_break()
-wrapper, calling the helper directly at each call site.
+Queue owned PDU bytes when TCP cannot accept the full message. Track the
+stream position through socket delivery and TCP ACK, and expose it to break
+retries. Bound retained data and stop queued writes during teardown.
 
-Suggested-by: ChenXiaoSong <chenxiaosong@chenxiaosong.com>
-Signed-off-by: Daijiamu <3058704216@qq.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Reported-by: Pan Guihua <pan.guihua@datatom.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Stable-dep-of: f728cfee6929 ("ksmbd: fix app-instance non-durable supersede session UAF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |   20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ fs/smb/server/connection.c    |   52 ++++++-
+ fs/smb/server/connection.h    |   24 +++
+ fs/smb/server/transport_tcp.c |  299 ++++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 356 insertions(+), 19 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -763,14 +763,6 @@ static bool wait_for_break_ack(struct op
- 	return false;
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -458,17 +458,13 @@ void ksmbd_all_conn_set_status(struct ks
+ 
+ void ksmbd_conn_abort(struct ksmbd_conn *conn)
+ {
+-	bool shutdown = false;
+-
+ 	spin_lock(&conn->request_lock);
+-	if (!ksmbd_conn_exiting(conn) && !ksmbd_conn_releasing(conn)) {
++	if (!ksmbd_conn_exiting(conn) && !ksmbd_conn_releasing(conn))
+ 		ksmbd_conn_set_exiting(conn);
+-		shutdown = true;
+-	}
+ 	spin_unlock(&conn->request_lock);
+ 	wake_up_all(&conn->req_running_q);
+ 
+-	if (shutdown && conn->transport->ops->shutdown)
++	if (conn->transport->ops->shutdown)
+ 		conn->transport->ops->shutdown(conn->transport);
  }
  
--static void wake_up_oplock_break(struct oplock_info *opinfo)
--{
--	clear_bit_unlock(0, &opinfo->pending_break);
--	/* memory barrier is needed for wake_up_bit() */
--	smp_mb__after_atomic();
--	wake_up_bit(&opinfo->pending_break, 0);
--}
--
- static bool oplock_break_set_ack_wait(struct oplock_info *opinfo)
- {
- 	bool ret = false;
-@@ -826,13 +818,13 @@ static int oplock_break_pending(struct o
+@@ -535,12 +531,19 @@ static int __ksmbd_conn_write(struct ksm
+ 	tx->need_invalidate_rkey = work->need_invalidate_rkey;
+ 	tx->remote_key = work->remote_key;
  
- 	if (opinfo->level <= req_op_level) {
- 		if (opinfo->is_lease == false) {
--			wake_up_oplock_break(opinfo);
-+			clear_and_wake_up_bit(0, &opinfo->pending_break);
- 			return 1;
- 		}
- 		if (opinfo->o_lease->state !=
- 		    (SMB2_LEASE_HANDLE_CACHING_LE |
- 		     SMB2_LEASE_READ_CACHING_LE)) {
--			wake_up_oplock_break(opinfo);
-+			clear_and_wake_up_bit(0, &opinfo->pending_break);
- 			return 1;
+-	ksmbd_conn_lock(conn);
++	if (tx->tracking) {
++		/* A busy writer must not consume the break's retry budget. */
++		if (!mutex_trylock(&conn->srv_mutex))
++			return -EAGAIN;
++	} else {
++		ksmbd_conn_lock(conn);
++	}
+ 	sent = conn->transport->ops->writev(conn->transport, tx);
+ 	ksmbd_conn_unlock(conn);
+ 
+ 	if (sent < 0) {
+-		pr_err("Failed to send message: %d\n", sent);
++		if (!tx->tracking || sent != -EAGAIN)
++			pr_err("Failed to send message: %d\n", sent);
+ 		return sent;
+ 	}
+ 
+@@ -554,6 +557,20 @@ int ksmbd_conn_write(struct ksmbd_work *
+ 	return __ksmbd_conn_write(work, &tx);
+ }
+ 
++int ksmbd_conn_write_tracked(struct ksmbd_work *work,
++			     struct ksmbd_tx_tracking *tracking)
++{
++	struct ksmbd_transport_write tx = {};
++
++	tracking->valid = false;
++	/* Transports without delivery tracking keep their synchronous send path. */
++	if (work->conn->transport->ops->is_acked) {
++		tx.msg_flags = MSG_DONTWAIT;
++		tx.tracking = tracking;
++	}
++	return __ksmbd_conn_write(work, &tx);
++}
++
+ int ksmbd_conn_write_eor(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_transport_write tx = {
+@@ -807,7 +824,12 @@ recheck:
  		}
  	}
-@@ -1260,7 +1252,7 @@ again:
- 				SMB2_LEASE_HANDLE_CACHING_LE)) {
- 			if (!oplock_break_set_ack_wait(brk_opinfo)) {
- 				atomic_dec_if_positive(&brk_opinfo->breaking_cnt);
--				wake_up_oplock_break(brk_opinfo);
-+				clear_and_wake_up_bit(0, &brk_opinfo->pending_break);
- 				return -ENOENT;
- 			}
- 		} else
-@@ -1309,7 +1301,7 @@ again:
- 		      lease->state != SMB2_LEASE_NONE_LE)))
- 			goto again;
  
--		wake_up_oplock_break(brk_opinfo);
-+		clear_and_wake_up_bit(0, &brk_opinfo->pending_break);
- 		return err;
- 	} else {
- 		err = oplock_break_pending(brk_opinfo, req_op_level);
-@@ -1319,7 +1311,7 @@ again:
- 		if (brk_opinfo->level == SMB2_OPLOCK_LEVEL_BATCH ||
- 		    brk_opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE) {
- 			if (!oplock_break_set_ack_wait(brk_opinfo)) {
--				wake_up_oplock_break(brk_opinfo);
-+				clear_and_wake_up_bit(0, &brk_opinfo->pending_break);
- 				return -ENOENT;
- 			}
- 		}
-@@ -1342,7 +1334,7 @@ again:
- 	ksmbd_debug(OPLOCK, "oplock granted = %d\n", brk_opinfo->level);
- 	if (brk_opinfo->op_state == OPLOCK_CLOSING)
- 		err = -EAGAIN;
--	wake_up_oplock_break(brk_opinfo);
-+	clear_and_wake_up_bit(0, &brk_opinfo->pending_break);
- 
- 	return err;
++	/* Exclude new break senders before draining their work references. */
++	spin_lock(&conn->request_lock);
+ 	ksmbd_conn_set_releasing(conn);
++	spin_unlock(&conn->request_lock);
++	/* TCP writers waiting for queue space must release their work references. */
++	wake_up_all(&conn->req_running_q);
+ 	ksmbd_conn_cancel_async_requests(conn);
+ 	/* Wait till all reference dropped to the Server object*/
+ 	ksmbd_debug(CONN, "Wait for all pending requests(%d)\n", atomic_read(&conn->r_count));
+@@ -834,6 +856,20 @@ void ksmbd_conn_r_count_inc(struct ksmbd
+ 	atomic_inc(&conn->r_count);
  }
+ 
++/* The caller already owns a connection reference. */
++bool ksmbd_conn_r_count_inc_if_good(struct ksmbd_conn *conn)
++{
++	bool ret = false;
++
++	spin_lock(&conn->request_lock);
++	if (ksmbd_conn_good(conn)) {
++		atomic_inc(&conn->r_count);
++		ret = true;
++	}
++	spin_unlock(&conn->request_lock);
++	return ret;
++}
++
+ void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn)
+ {
+ 	/*
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -102,6 +102,8 @@ struct ksmbd_conn {
+ 	wait_queue_head_t		r_count_q;
+ 	/* Lock to protect requests list*/
+ 	spinlock_t			request_lock;
++	/* Set under request_lock at teardown start and kept set thereafter. */
++	bool				releasing;
+ 	struct list_head		requests;
+ 	struct list_head		async_requests;
+ 	int				connection_type;
+@@ -161,6 +163,13 @@ struct ksmbd_conn_ops {
+ 	int	(*terminate_fn)(struct ksmbd_conn *conn);
+ };
+ 
++struct ksmbd_tx_tracking {
++	/* Required TCP byte count, including transport and socket queues. */
++	u64		end;
++	unsigned long	retry_after;
++	bool		valid;
++};
++
+ struct ksmbd_transport_write {
+ 	struct kvec	*iov;
+ 	int		iov_cnt;
+@@ -168,6 +177,7 @@ struct ksmbd_transport_write {
+ 	bool		need_invalidate_rkey;
+ 	unsigned int	remote_key;
+ 	int		msg_flags;
++	struct ksmbd_tx_tracking *tracking;
+ };
+ 
+ struct ksmbd_transport_ops {
+@@ -175,8 +185,12 @@ struct ksmbd_transport_ops {
+ 	void (*shutdown)(struct ksmbd_transport *t);
+ 	int (*read)(struct ksmbd_transport *t, char *buf,
+ 		    unsigned int size, int max_retries);
++	/* Retained bytes must be privately owned before a full result is returned. */
+ 	int (*writev)(struct ksmbd_transport *t,
+ 		      const struct ksmbd_transport_write *tx);
++	/* Optional delivery tracking for nonblocking break sends. */
++	bool (*is_acked)(struct ksmbd_transport *t,
++			 const struct ksmbd_tx_tracking *tracking);
+ 	int (*rdma_read)(struct ksmbd_transport *t,
+ 			 void *buf, unsigned int len,
+ 			 struct smbdirect_buffer_descriptor_v1 *desc,
+@@ -216,6 +230,8 @@ int ksmbd_conn_wq_init(void);
+ void ksmbd_conn_wq_destroy(void);
+ bool ksmbd_conn_lookup_dialect(struct ksmbd_conn *c);
+ int ksmbd_conn_write(struct ksmbd_work *work);
++int ksmbd_conn_write_tracked(struct ksmbd_work *work,
++			     struct ksmbd_tx_tracking *tracking);
+ int ksmbd_conn_write_eor(struct ksmbd_work *work);
+ int ksmbd_conn_rdma_read(struct ksmbd_conn *conn,
+ 			 void *buf, unsigned int buflen,
+@@ -234,6 +250,7 @@ void ksmbd_conn_transport_destroy(void);
+ void ksmbd_conn_lock(struct ksmbd_conn *conn);
+ void ksmbd_conn_unlock(struct ksmbd_conn *conn);
+ void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn);
++bool ksmbd_conn_r_count_inc_if_good(struct ksmbd_conn *conn);
+ void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn);
+ 
+ /*
+@@ -249,7 +266,8 @@ static inline bool ksmbd_conn_new(struct
+ 
+ static inline bool ksmbd_conn_good(struct ksmbd_conn *conn)
+ {
+-	return READ_ONCE(conn->status) == KSMBD_SESS_GOOD;
++	return !READ_ONCE(conn->releasing) &&
++		READ_ONCE(conn->status) == KSMBD_SESS_GOOD;
+ }
+ 
+ static inline unsigned int
+@@ -283,7 +301,8 @@ static inline bool ksmbd_conn_exiting(st
+ 
+ static inline bool ksmbd_conn_releasing(struct ksmbd_conn *conn)
+ {
+-	return READ_ONCE(conn->status) == KSMBD_SESS_RELEASING;
++	return READ_ONCE(conn->releasing) ||
++		READ_ONCE(conn->status) == KSMBD_SESS_RELEASING;
+ }
+ 
+ static inline void ksmbd_conn_set_new(struct ksmbd_conn *conn)
+@@ -318,6 +337,7 @@ static inline void ksmbd_conn_set_exitin
+ 
+ static inline void ksmbd_conn_set_releasing(struct ksmbd_conn *conn)
+ {
++	WRITE_ONCE(conn->releasing, true);
+ 	WRITE_ONCE(conn->status, KSMBD_SESS_RELEASING);
+ }
+ 
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include <linux/freezer.h>
++#include <linux/uio.h>
+ 
+ #include "smb_common.h"
+ #include "server.h"
+@@ -29,11 +30,30 @@ static LIST_HEAD(iface_list);
+ 
+ static int bind_additional_ifaces;
+ 
++struct tcp_tx {
++	struct list_head		list;
++	size_t			len;
++	size_t			offset;
++	unsigned long		deadline;
++	int			msg_flags;
++	u8			data[];
++};
++
+ struct tcp_transport {
+ 	struct ksmbd_transport		transport;
+ 	struct socket			*sock;
+ 	struct kvec			*iov;
+ 	unsigned int			nr_iov;
++	/* Serializes queue access and socket writes. Never taken by callbacks. */
++	struct mutex			tx_lock;
++	struct list_head		tx_queue;
++	struct delayed_work		tx_work;
++	size_t				tx_queued;
++	/* TCP byte positions for accepted PDUs and bytes passed to the socket. */
++	u64				tx_end;
++	u64				tx_sent;
++	bool				tx_stopped;
++	void				(*write_space)(struct sock *sk);
+ };
+ 
+ static const struct ksmbd_transport_ops ksmbd_tcp_transport_ops;
+@@ -42,6 +62,10 @@ static void tcp_stop_kthread(struct task
+ static void ksmbd_tcp_stop_listener(struct interface *iface);
+ static struct interface *alloc_iface(char *ifname);
+ static void ksmbd_tcp_disconnect(struct ksmbd_transport *t);
++static void ksmbd_tcp_shutdown(struct ksmbd_transport *t);
++static void ksmbd_tcp_tx_work(struct work_struct *work);
++static void ksmbd_tcp_write_space(struct sock *sk);
++static void ksmbd_tcp_stop_tx(struct tcp_transport *t);
+ 
+ #define KSMBD_TRANS(t)	(&(t)->transport)
+ #define TCP_TRANS(t)	((struct tcp_transport *)container_of(t, \
+@@ -66,6 +90,9 @@ static struct tcp_transport *alloc_trans
+ 	if (!t)
+ 		return NULL;
+ 	t->sock = client_sk;
++	mutex_init(&t->tx_lock);
++	INIT_LIST_HEAD(&t->tx_queue);
++	INIT_DELAYED_WORK(&t->tx_work, ksmbd_tcp_tx_work);
+ 
+ 	conn = ksmbd_conn_alloc();
+ 	if (!conn) {
+@@ -85,13 +112,26 @@ static struct tcp_transport *alloc_trans
+ 	conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
+ 	conn->inet_hash = ipv4_addr_hash(inet_sk(client_sk->sk)->inet_daddr);
+ #endif
+-	down_write(&conn_list_lock);
+-	hash_add(conn_list, &conn->hlist, conn->inet_hash);
+-	up_write(&conn_list_lock);
+-
+ 	conn->transport = KSMBD_TRANS(t);
+ 	KSMBD_TRANS(t)->conn = conn;
+ 	KSMBD_TRANS(t)->ops = &ksmbd_tcp_transport_ops;
++
++	lock_sock(client_sk->sk);
++	t->tx_end = tcp_sk(client_sk->sk)->bytes_acked +
++		(u32)(tcp_sk(client_sk->sk)->write_seq -
++		      tcp_sk(client_sk->sk)->snd_una);
++	t->tx_sent = t->tx_end;
++	release_sock(client_sk->sk);
++
++	write_lock_bh(&client_sk->sk->sk_callback_lock);
++	t->write_space = client_sk->sk->sk_write_space;
++	client_sk->sk->sk_user_data = t;
++	client_sk->sk->sk_write_space = ksmbd_tcp_write_space;
++	write_unlock_bh(&client_sk->sk->sk_callback_lock);
++
++	down_write(&conn_list_lock);
++	hash_add(conn_list, &conn->hlist, conn->inet_hash);
++	up_write(&conn_list_lock);
+ 	return t;
+ }
+ 
+@@ -99,6 +139,7 @@ static void ksmbd_tcp_free_transport(str
+ {
+ 	struct tcp_transport *t = TCP_TRANS(kt);
+ 
++	ksmbd_tcp_stop_tx(t);
+ 	sock_release(t->sock);
+ 	kfree(t->iov);
+ 	kfree(t);
+@@ -106,7 +147,8 @@ static void ksmbd_tcp_free_transport(str
+ 
+ static void free_transport(struct tcp_transport *t)
+ {
+-	kernel_sock_shutdown(t->sock, SHUT_RDWR);
++	ksmbd_tcp_shutdown(KSMBD_TRANS(t));
++	ksmbd_tcp_stop_tx(t);
+ 	ksmbd_conn_free(KSMBD_TRANS(t)->conn);
+ }
+ 
+@@ -431,15 +473,251 @@ static int ksmbd_tcp_read(struct ksmbd_t
+ 	return ksmbd_tcp_readv(TCP_TRANS(t), &iov, 1, to_read, max_retries);
+ }
+ 
++static bool ksmbd_tcp_tx_has_space(struct tcp_transport *t, size_t size)
++{
++	size_t limit = max_t(size_t, READ_ONCE(t->sock->sk->sk_sndbuf), size);
++
++	/* Allow one large response, but bound the retained response buffers. */
++	return READ_ONCE(t->tx_queued) <= limit - size;
++}
++
++static struct tcp_tx *ksmbd_tcp_alloc_tx(const struct ksmbd_transport_write *tx,
++					 size_t offset)
++{
++	struct tcp_tx *msg;
++	struct iov_iter iter;
++	size_t remaining = tx->size - offset;
++
++	msg = kvmalloc(struct_size(msg, data, remaining), KSMBD_DEFAULT_GFP);
++	if (!msg)
++		return NULL;
++
++	iov_iter_kvec(&iter, ITER_SOURCE, tx->iov, tx->iov_cnt, tx->size);
++	iov_iter_advance(&iter, offset);
++	if (!copy_from_iter_full(msg->data, remaining, &iter)) {
++		kvfree(msg);
++		return NULL;
++	}
++	msg->len = remaining;
++	msg->offset = 0;
++	msg->msg_flags = tx->msg_flags;
++	return msg;
++}
++
++static void ksmbd_tcp_purge_tx(struct tcp_transport *t)
++{
++	struct tcp_tx *msg, *next;
++
++	list_for_each_entry_safe(msg, next, &t->tx_queue, list) {
++		list_del(&msg->list);
++		kvfree(msg);
++	}
++	WRITE_ONCE(t->tx_queued, 0);
++}
++
++static bool ksmbd_tcp_send_retry(int ret)
++{
++	return ret == -EAGAIN || ret == -EINTR || ret == -ERESTARTSYS ||
++		ret == -ENOMEM;
++}
++
++static void ksmbd_tcp_tx_work(struct work_struct *work)
++{
++	struct tcp_transport *t = container_of(to_delayed_work(work),
++					     struct tcp_transport, tx_work);
++	unsigned long delay = 0;
++	unsigned int budget = 16;
++	bool failed = false;
++	int ret;
++
++	mutex_lock(&t->tx_lock);
++	while (!READ_ONCE(t->tx_stopped) && !list_empty(&t->tx_queue) && budget--) {
++		struct tcp_tx *msg = list_first_entry(&t->tx_queue, struct tcp_tx, list);
++		struct msghdr hdr = {
++			.msg_flags = MSG_NOSIGNAL | MSG_DONTWAIT | msg->msg_flags,
++		};
++		struct kvec iov = {
++			.iov_base = msg->data + msg->offset,
++			.iov_len = msg->len - msg->offset,
++		};
++
++		/* MSG_DONTWAIT bypasses sk_sndtimeo, including for retained PDUs. */
++		if (time_after_eq(jiffies, msg->deadline)) {
++			WRITE_ONCE(t->tx_stopped, true);
++			failed = true;
++			break;
++		}
++		ret = kernel_sendmsg(t->sock, &hdr, &iov, 1, iov.iov_len);
++		if (ret > 0) {
++			msg->offset += ret;
++			t->tx_sent += ret;
++			if (msg->offset == msg->len) {
++				WRITE_ONCE(t->tx_queued, t->tx_queued - msg->len);
++				list_del(&msg->list);
++				kvfree(msg);
++				continue;
++			}
++		} else if (!ksmbd_tcp_send_retry(ret)) {
++			WRITE_ONCE(t->tx_stopped, true);
++			failed = true;
++			break;
++		}
++		/*
++		 * Write-space notifications normally resume the head of the queue.
++		 * Also retry after memory pressure, which may produce no notification.
++		 */
++		delay = max_t(unsigned long, 1, HZ / 10);
++		break;
++	}
++	if (READ_ONCE(t->tx_stopped))
++		ksmbd_tcp_purge_tx(t);
++	else if (!list_empty(&t->tx_queue))
++		queue_delayed_work(system_unbound_wq, &t->tx_work, delay);
++	mutex_unlock(&t->tx_lock);
++	wake_up_all(&t->transport.conn->req_running_q);
++
++	if (failed)
++		ksmbd_conn_abort(t->transport.conn);
++}
++
++static void ksmbd_tcp_write_space(struct sock *sk)
++{
++	struct tcp_transport *t;
++
++	read_lock_bh(&sk->sk_callback_lock);
++	t = sk->sk_user_data;
++	if (t) {
++		t->write_space(sk);
++		if (!READ_ONCE(t->tx_stopped) && sk_stream_is_writeable(sk))
++			mod_delayed_work(system_unbound_wq, &t->tx_work, 0);
++	}
++	read_unlock_bh(&sk->sk_callback_lock);
++}
++
++static void ksmbd_tcp_stop_tx(struct tcp_transport *t)
++{
++	struct sock *sk = t->sock->sk;
++
++	WRITE_ONCE(t->tx_stopped, true);
++	write_lock_bh(&sk->sk_callback_lock);
++	if (sk->sk_user_data == t) {
++		sk->sk_write_space = t->write_space;
++		sk->sk_user_data = NULL;
++	}
++	write_unlock_bh(&sk->sk_callback_lock);
++	cancel_delayed_work_sync(&t->tx_work);
++	mutex_lock(&t->tx_lock);
++	ksmbd_tcp_purge_tx(t);
++	mutex_unlock(&t->tx_lock);
++	wake_up_all(&t->transport.conn->req_running_q);
++}
++
+ static int ksmbd_tcp_writev(struct ksmbd_transport *t,
+ 			    const struct ksmbd_transport_write *tx)
+ {
+-	struct msghdr smb_msg = {
+-		.msg_flags = MSG_NOSIGNAL | tx->msg_flags,
++	struct tcp_transport *tt = TCP_TRANS(t);
++	struct sock *sk = tt->sock->sk;
++	struct msghdr hdr = {
++		.msg_flags = MSG_NOSIGNAL | MSG_DONTWAIT | tx->msg_flags,
+ 	};
++	struct tcp_tx *msg;
++	unsigned long deadline = jiffies + KSMBD_TCP_SEND_TIMEOUT;
++	long timeout;
++	int sent = 0;
++
++	for (;;) {
++		if (tx->msg_flags & MSG_DONTWAIT) {
++			if (!mutex_trylock(&tt->tx_lock))
++				return -EAGAIN;
++		} else {
++			mutex_lock(&tt->tx_lock);
++		}
++		if (READ_ONCE(tt->tx_stopped) || ksmbd_conn_exiting(t->conn) ||
++		    ksmbd_conn_releasing(t->conn)) {
++			mutex_unlock(&tt->tx_lock);
++			return -EPIPE;
++		}
++		if (ksmbd_tcp_tx_has_space(tt, tx->size))
++			break;
++		mutex_unlock(&tt->tx_lock);
++		if (tx->msg_flags & MSG_DONTWAIT)
++			return -EAGAIN;
++		timeout = deadline - jiffies;
++		if (time_after_eq(jiffies, deadline) ||
++		    !wait_event_timeout(t->conn->req_running_q,
++					READ_ONCE(tt->tx_stopped) ||
++					ksmbd_conn_exiting(t->conn) ||
++					ksmbd_conn_releasing(t->conn) ||
++					ksmbd_tcp_tx_has_space(tt, tx->size),
++					timeout)) {
++			/* A queued PDU may already have a prefix in the socket. */
++			ksmbd_conn_abort(t->conn);
++			return -EAGAIN;
++		}
++	}
+ 
+-	return kernel_sendmsg(TCP_TRANS(t)->sock, &smb_msg, tx->iov,
+-			      tx->iov_cnt, tx->size);
++	/* Avoid an extra copy when the socket accepts the whole PDU at once. */
++	if (list_empty(&tt->tx_queue)) {
++		sent = kernel_sendmsg(tt->sock, &hdr, tx->iov, tx->iov_cnt, tx->size);
++		if (sent > 0) {
++			tt->tx_sent += sent;
++			if (sent == tx->size)
++				goto accepted;
++		} else if (ksmbd_tcp_send_retry(sent)) {
++			sent = 0;
++		} else {
++			WRITE_ONCE(tt->tx_stopped, true);
++			mutex_unlock(&tt->tx_lock);
++			ksmbd_conn_abort(t->conn);
++			return sent ?: -EPIPE;
++		}
++	}
++
++	/* The request buffers can be freed as soon as writev returns. */
++	msg = ksmbd_tcp_alloc_tx(tx, sent);
++	if (!msg) {
++		if (sent)
++			WRITE_ONCE(tt->tx_stopped, true);
++		mutex_unlock(&tt->tx_lock);
++		if (sent)
++			ksmbd_conn_abort(t->conn);
++		return -ENOMEM;
++	}
++	msg->deadline = deadline;
++	list_add_tail(&msg->list, &tt->tx_queue);
++	WRITE_ONCE(tt->tx_queued, tt->tx_queued + msg->len);
++	queue_delayed_work(system_unbound_wq, &tt->tx_work, 0);
++
++accepted:
++	tt->tx_end += tx->size;
++	if (tx->tracking) {
++		/* Include retained data, without retaining the caller's tracking object. */
++		tx->tracking->end = tt->tx_end;
++		lock_sock(sk);
++		tx->tracking->retry_after =
++			clamp_t(unsigned long, 6UL * inet_csk(sk)->icsk_rto,
++				msecs_to_jiffies(1200), 6 * HZ);
++		release_sock(sk);
++		tx->tracking->valid = true;
++	}
++	mutex_unlock(&tt->tx_lock);
++	return tx->size;
++}
++
++static bool ksmbd_tcp_is_acked(struct ksmbd_transport *t,
++			     const struct ksmbd_tx_tracking *tracking)
++{
++	struct tcp_transport *tt = TCP_TRANS(t);
++	struct sock *sk = tt->sock->sk;
++	bool acked;
++
++	mutex_lock(&tt->tx_lock);
++	lock_sock(sk);
++	acked = tt->tx_sent >= tracking->end &&
++		tcp_sk(sk)->bytes_acked >= tracking->end;
++	release_sock(sk);
++	mutex_unlock(&tt->tx_lock);
++	return acked;
+ }
+ 
+ static void ksmbd_tcp_disconnect(struct ksmbd_transport *t)
+@@ -451,7 +729,9 @@ static void ksmbd_tcp_disconnect(struct
+ 
+ static void ksmbd_tcp_shutdown(struct ksmbd_transport *t)
+ {
++	WRITE_ONCE(TCP_TRANS(t)->tx_stopped, true);
+ 	kernel_sock_shutdown(TCP_TRANS(t)->sock, SHUT_RDWR);
++	wake_up_all(&t->conn->req_running_q);
+ }
+ 
+ static void tcp_destroy_socket(struct socket *ksmbd_socket)
+@@ -724,6 +1004,7 @@ int ksmbd_tcp_set_interfaces(char *ifc_l
+ static const struct ksmbd_transport_ops ksmbd_tcp_transport_ops = {
+ 	.read		= ksmbd_tcp_read,
+ 	.writev		= ksmbd_tcp_writev,
++	.is_acked	= ksmbd_tcp_is_acked,
+ 	.disconnect	= ksmbd_tcp_disconnect,
+ 	.shutdown	= ksmbd_tcp_shutdown,
+ 	.free_transport = ksmbd_tcp_free_transport,
 
 
