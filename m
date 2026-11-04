@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829311;
-	b=noCVgS0uJTPO1SLmK287O7GzKxLKP2CZDGrtW/nB1kWKJYO8gchfAHeoyvCAZQsQWGNu
-	 urIcmEYmR29ccgKNgrvbwWt24ODU/W0bjIqzfFdTNWurBEet5BtYDwxojDdT3/7YlHRe4
-	 7MxlQHBqut/x3OQk5ZFf8Zcb3IY4VlY95YwWQuW2l/Vs8DtcN/RCJxKkmFCNDAvVhEqHx
-	 Ly77DgvlOSjgAMBAg4TCx/2wkgu1Q5F5ahuoHgcJLrX6z5iFEt1ooflTunAK+kALx/TX3
-	 jdaJIELEvuEle1kpYgP2oBjGCiBNF2gSW27AbYkX38WE36JTqpZT83lHi+3iBdYxJew==
+	t=1793829313;
+	b=Oa9a1ReNgJOTJPh34x4pM1ysnkWmFHswvKS7JhUb7LHhxOe8A+z5KDeTNSJ2e1xcuuDz
+	 RjUsHWhWji3MZgILXKIZ3zdkSeNRjSjBCgr/dQ9djepiGy2rsqNu/048pNDUha11/jb26
+	 gIk7zLkJ1jIHiSSRmD4e0WqyFQXkFgBWgTKtxWf1ptAhRq9Ej78m/rGX5jvCypFuFc6D2
+	 PBS4LCu/BUdiOj0Hsw1aKe8LIPyk8rIAk7JsXfzo1Yri7byUsz1nk7LRUb2uvY3Cu7QrB
+	 3cJPxqYELIKb7cgCfN5AKNXhRrcdelR0KRWgKZmwwaxUSiacFEnY9sewX8dk5VB9RLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iVBYFbHQzqSZ4Gh9Zws8VXko+LgwYSDMd5Iyew8hJR8=;
-	b=I/8b3jxE3jPzSmYX7gpr5nWap+jumPHPFmVv5b3Oc0oEWnIJLIw0xd1BRL/48UclKnme
-	 bDie/INARRTAUGqKJeT5+4fRY9OM5HEEIYOGDRSJnxOwjivelEofIBDqdHyfZOU6nyYqu
-	 fj8cJR43ktrfbt8RBDYtpfxxFO6OxHPhJYcL8uc6TY7czdSvUH6KzN5OBllRbwMVOmcKX
-	 +F2tAMBqRXYwFZ2A7+a10EC8MQwj2LmQg5ZnkSz94j22AuOzKLG20iEClpNjrWH3b+/UA
-	 RrSxKj61k4judjTxjtjlBrL6gbmVN5wekLctdtRtbJz9+pRAUsgCsHNML9dAycfujRQ==
+	bh=PSc51Uoq6urmmIJVuot7GqD9HncHNObDlSs6T9oGok0=;
+	b=vb5NHfKj/x7vM0O9+uZnsJqL7RioBWYP4mCcGIfVt/ww4/uhipKGDGFaUV4WXwSqMSyv
+	 vU6ClkP93Fm3wIW4F+Kt3ACRSj9YvJwtQd0DQ96+RvNjnDLq1GRR98lZKPWtsDSol+Zhl
+	 HYw5ytLC4yLE4lE8vqxXnqQVQkSrA6HHZT556AdAzXditvAkz9VLUAj5fiyjcDJG61bxH
+	 +1PPTmBSJsbBLzgD1J8jKufu685huXt+uavpeueamiqG7mVnsQCNz1jJBZUZTObrMxxag
+	 ny4Qw3OG/ieTLhCrpBID8eUcOiWJYPEXQq4DJA0MreXBjXVuqMvMhRHTVAR4TMSp2lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TjSP69QA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z/1Wzd1d";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8766B6074918;
-	Wed,  4 Nov 2026 21:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E606074918;
+	Wed,  4 Nov 2026 21:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TjSP69QA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DA61F000C1;
-	Wed,  4 Nov 2026 21:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z/1Wzd1d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A933B1F000C1;
+	Wed,  4 Nov 2026 21:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829311;
-	bh=iVBYFbHQzqSZ4Gh9Zws8VXko+LgwYSDMd5Iyew8hJR8=;
+	s=korg; t=1793829312;
+	bh=PSc51Uoq6urmmIJVuot7GqD9HncHNObDlSs6T9oGok0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TjSP69QAT7gBU7aUGcq2DifJJfLn/9mR7AqZlSErp5fLVRsZen2LD4PGyo/NjY/Fs
-	 M7wWOWETiuhUpjfcpxK+u11qLyVVcZTgMRAGe1VbXcpIg9oV50tS1Phttn1rJUp/+b
-	 Y3AAoRVWNk2qup6gXPUI3MeN0gYG8I9GBhBUN8ys=
+	b=z/1Wzd1dqBp0N1VB7lBlZo4FuuKkGRpKGdl6bBbNT3n5PqYIqrneomT8+v9CPGCwX
+	 9drPMxr4kiXkEx6sAuwjg/5At1/XwCKXG+3WS7clN/+JoM5bT5w9gaVqnxvBhEZjHU
+	 HJ9/SLvX6goC5wSUubqFiQ3JERVZjc2aPruYBKc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0045/1005] perf/core: Fix kernel register info leak via hardware skid
-Date: Wed,  4 Nov 2026 15:56:18 -0500
-Message-ID: <20261104211044.846806371@linuxfoundation.org>
+Subject: [PATCH 6.18 0019/1005] drm/amd/pm: Validate OD DPM triples before mutating tables
+Date: Wed,  4 Nov 2026 15:55:52 -0500
+Message-ID: <20261104211044.086876676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,96 +70,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 166f10836a653dfa280d4335603b52f685b8b1ef ]
+[ Upstream commit b390cb9d776039fc4f0be13b2649299079227d12 ]
 
-An unprivileged hardware perf event using exclude_kernel=1 can leak kernel
-register data to user space via PERF_SAMPLE_REGS_INTR or PERF_SAMPLE_IP.
-Due to hardware skid, a PMI may trigger after the CPU has already entered
-kernel space (Ring 0), bypassing the perf_allow_kernel() privilege
-barrier.
+vega10_odn_edit_dpm_table() and smu7_odn_edit_dpm_table() could mutate
+the live ODN table for valid triples, then return 0 after detecting a
+truncated buffer or out-of-range index. Validate all (index, clock,
+voltage) triples first and return -EINVAL on any failure; only then
+apply updates.
 
-This security vulnerability is severely exacerbated by upcoming support
-for SIMD register sampling via XSAVES, which could expose sensitive kernel
-FPU states (such as active cryptographic keys).
+v2: Use distinct message for different error case, removed unused
+input_level from validation loop (Lijo)
 
-Fix this by ensuring that sampled register data is dropped if the event's
-exclude_kernel attribute is set but the PMI catches the CPU in kernel mode.
+v3: Reject negative level indices, input[] is long but was compared only
+against unsigned table bounds, so negative values could pass and truncate
+when assigned to uint32_t input_level.
 
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/all/20260529085613.CCAFB1F00893@smtp.kernel.org/
-Link: https://patch.msgid.link/20260616044654.3468742-8-dapeng1.mi@linux.intel.com
+Set DPMTABLE_OD_UPDATE_SCLK/MCLK only after validation passes,
+so a failed sysfs write does not leave need_update_dpm_table set for a
+later commit.
+
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 37 ++++++++++++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 7 deletions(-)
+ .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 34 ++++++++++-------
+ .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 37 ++++++++++++-------
+ 2 files changed, 43 insertions(+), 28 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 9007f2b36c447..469f89cb92f11 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -7500,10 +7500,20 @@ unsigned long perf_misc_flags(struct perf_event *event,
- unsigned long perf_instruction_pointer(struct perf_event *event,
- 				       struct pt_regs *regs)
- {
--	if (should_sample_guest(event))
--		return perf_guest_get_ip();
-+	/*
-+	 * Hardware skid can lead to a scenario where a PMI is
-+	 * delivered after the CPU has already entered kernel mode.
-+	 * In that case, user-space sampling must not expose kernel
-+	 * register state.
-+	 */
-+	if (should_sample_guest(event)) {
-+		return event->attr.exclude_kernel &&
-+		       !(perf_guest_state() & PERF_GUEST_USER) ?
-+			0 : perf_guest_get_ip();
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+index ba953654a0206..cf008ed409552 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -5661,23 +5661,29 @@ static int smu7_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
+ 	}
+ 
+ 	for (i = 0; i < size; i += 3) {
+-		if (i + 3 > size || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
+-			pr_info("invalid clock voltage input \n");
+-			return 0;
++		if (i + 3 > size) {
++			pr_info("truncated clock/voltage input\n");
++			return -EINVAL;
+ 		}
+-		input_level = input[i];
+-		input_clk = input[i+1] * 100;
+-		input_vol = input[i+2];
+-
+-		if (smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
+-			podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
+-			podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
+-			podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
+-			podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
+-			podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
+-		} else {
++		if (input[i] < 0 || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
++			pr_info("invalid clock/voltage level\n");
+ 			return -EINVAL;
+ 		}
++		input_clk = input[i + 1] * 100;
++		input_vol = input[i + 2];
++		if (!smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
++			return -EINVAL;
 +	}
++
++	for (i = 0; i < size; i += 3) {
++		input_level = input[i];
++		input_clk = input[i + 1] * 100;
++		input_vol = input[i + 2];
++		podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
++		podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
++		podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
++		podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
++		podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
+ 	}
  
--	return perf_arch_instruction_pointer(regs);
-+	return event->attr.exclude_kernel && !user_mode(regs) ?
-+		0 : perf_arch_instruction_pointer(regs);
- }
+ 	return 0;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+index b3fed2a478aab..d6aaba0b3613d 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+@@ -5645,11 +5645,9 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
+ 	if (PP_OD_EDIT_SCLK_VDDC_TABLE == type) {
+ 		dpm_table = &data->dpm_table.gfx_table;
+ 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_sclk;
+-		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
+ 	} else if (PP_OD_EDIT_MCLK_VDDC_TABLE == type) {
+ 		dpm_table = &data->dpm_table.mem_table;
+ 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_mclk;
+-		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
+ 	} else if (PP_OD_RESTORE_DEFAULT_TABLE == type) {
+ 		memcpy(&(data->dpm_table), &(data->golden_dpm_table), sizeof(struct vega10_dpm_table));
+ 		vega10_odn_initial_default_setting(hwmgr);
+@@ -5667,21 +5665,32 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
+ 	}
  
- static void
-@@ -7537,10 +7547,22 @@ static void perf_sample_regs_user(struct perf_regs *regs_user,
- }
- 
- static void perf_sample_regs_intr(struct perf_regs *regs_intr,
--				  struct pt_regs *regs)
-+				  struct pt_regs *regs,
-+				  bool exclude_kernel)
- {
--	regs_intr->regs = regs;
--	regs_intr->abi  = perf_reg_abi(current);
-+	/*
-+	 * Hardware skid can lead to a scenario where a PMI is
-+	 * delivered after the CPU has already entered kernel mode.
-+	 * In that case, user-space sampling must not expose kernel
-+	 * register state.
-+	 */
-+	if (exclude_kernel && !user_mode(regs)) {
-+		regs_intr->abi = PERF_SAMPLE_REGS_ABI_NONE;
-+		regs_intr->regs = NULL;
-+	} else {
-+		regs_intr->regs = regs;
-+		regs_intr->abi = perf_reg_abi(current);
+ 	for (i = 0; i < size; i += 3) {
+-		if (i + 3 > size || input[i] >= podn_vdd_dep_table->count) {
+-			pr_info("invalid clock voltage input\n");
+-			return 0;
++		if (i + 3 > size) {
++			pr_info("truncated clock/voltage input\n");
++			return -EINVAL;
+ 		}
+-		input_level = input[i];
+-		input_clk = input[i+1] * 100;
+-		input_vol = input[i+2];
+-
+-		if (vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
+-			dpm_table->dpm_levels[input_level].value = input_clk;
+-			podn_vdd_dep_table->entries[input_level].clk = input_clk;
+-			podn_vdd_dep_table->entries[input_level].vddc = input_vol;
+-		} else {
++		if (input[i] < 0 || input[i] >= podn_vdd_dep_table->count) {
++			pr_info("invalid clock/voltage level\n");
+ 			return -EINVAL;
+ 		}
++		input_clk = input[i + 1] * 100;
++		input_vol = input[i + 2];
++		if (!vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
++			return -EINVAL;
 +	}
- }
- 
- 
-@@ -8428,7 +8450,8 @@ void perf_prepare_sample(struct perf_sample_data *data,
- 		/* regs dump ABI info */
- 		int size = sizeof(u64);
- 
--		perf_sample_regs_intr(&data->regs_intr, regs);
-+		perf_sample_regs_intr(&data->regs_intr, regs,
-+				      event->attr.exclude_kernel);
- 
- 		if (data->regs_intr.regs) {
- 			u64 mask = event->attr.sample_regs_intr;
++
++	if (type == PP_OD_EDIT_SCLK_VDDC_TABLE)
++		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
++	else
++		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
++
++	for (i = 0; i < size; i += 3) {
++		input_level = input[i];
++		input_clk = input[i + 1] * 100;
++		input_vol = input[i + 2];
++		dpm_table->dpm_levels[input_level].value = input_clk;
++		podn_vdd_dep_table->entries[input_level].clk = input_clk;
++		podn_vdd_dep_table->entries[input_level].vddc = input_vol;
+ 	}
+ 	vega10_odn_update_soc_table(hwmgr, type);
+ 	return 0;
 -- 
 2.53.0
 
