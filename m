@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829015;
-	b=U1XkKu3iH+teABjyPtFsncxbqabxGScnD6elJZ6zWMhmyTK/ASxuAV3rLZ/UzLxWpldQ
-	 jDZzkfsq93ljV7pP9Y9kQgYwRg12qbGFPsff+TM+oPpDBsojGfBzXcMsOlXx5riQht3Ff
-	 nhZBHX7f37MnyYzvBQot/P30mi877aVYqpv0WiogHvvYzcrgeUzL1ScrMYTcC6L+vY5pz
-	 fHGSs7chQGl4BTGgET4CuMg8wdrYctWZHR0KCeotHskmsyeSmCV+bGiZzx2xYOU3+k5Dn
-	 s9NQkc+CRr8j3brCtJgqHUT64+Julpo2AQfZs4PgDS+OTJD1ChJAD2mk6n1dPnXlPEA==
+	t=1793829017;
+	b=V04c45+VcQoxrOaLkbkQn3/VS7NO/BC562OpgcEGlrgJbC2H8AWsir+tt9LSCEPjUo7O
+	 fh+4jaQ53q1v0LrE4zUQKjYmjpTkPUy95xowQj+rfLck3UN8THUb5iQ+r8xSZK+jfrOO2
+	 zaWRoP48uBhM4R1atxa8rYbcyIU49VND39m2GCt3CjCjAV1U4TK+FqGV+dH1oGdXbDJJR
+	 fVGrSN9Vh3BbILDaX+X1vQOgq+7+rITmQYU7UAvH62OPq05IUM6pl1q+SgWpv/ruiveOV
+	 T+2WXnLOhlBzmcl2rrmxrEXn6j/IPxSmc9YGABTnmZAkTyg/vePsPqVhqyljdRF/Jdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829017;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TffNSX9jXcnhHzpNz5xvoRb1jpCqAkqXp0tHg2prKXc=;
-	b=yP5TQ6aGSZ6keToGq265i8yjt5qWULO3m+9xANDeY93F8P89ldj1VNxKhAiCWUE6L0bw
-	 tswSA5uaXL/W3ROKZeeudxNYYExK9zft5AdbZneTh0u4fUL51kkodvdiqV8BZzKjAY69B
-	 oHbNtfGTqq5XJJ6aOkJV8GDjRMpWZUxKZ4TOhaVxACOotLz0etRPGkuz+3yPUM4BrSQEI
-	 D6eCCRAJx7tm+Jnw2T8ABntwQD7l3/hA3h5LZ0KRAjmmvRp693hxSMoEMk49fs6RGncJK
-	 rOHr6Bx93u2plkuzf0sTtC3+OEm5MAbeb80fa81Gsov/8ky76zw4LHrjGeKJbHoz8vQ==
+	bh=u4NFEFHTUENFy5tUjmpOLbJTR/m+eydB7KiJcPOkBHA=;
+	b=0LT2UmM7RThf0GFRhzGfzPfTlSEKzLSn6hF25dOwU77Ig2AKW+l7CRUlf0BAWDnCXRhg
+	 jr/JnwGZqXS90N08uqEgopse4NeqS+xZdW8tNJqfi/p8gmftS7nGhAKIs9FxbvompyukO
+	 ygdQS68DqFQYwoyDvZbIv7/nJHwdwd7tgT5xXKiILMfhvE5LHPW1BmAtkKZ9b26cXOO5S
+	 dFnLGfTQZzzCM43aSvxmM+C2NKU4texH+8if2AZ8YpgA2mv5359+nW/p4nvjyeKMoFGvJ
+	 qKoCDVjSnaaNOr0RgyFFlDmmHNsuomuqHcKUiSxwtrsRbm+AzLN4cpA3BRg7n2KcOXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwUk4UoS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YP2M/riv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEF3607074C;
-	Wed,  4 Nov 2026 21:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E6F607074C;
+	Wed,  4 Nov 2026 21:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwUk4UoS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AAB1F000C1;
-	Wed,  4 Nov 2026 21:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YP2M/riv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAB91F000C1;
+	Wed,  4 Nov 2026 21:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829015;
-	bh=TffNSX9jXcnhHzpNz5xvoRb1jpCqAkqXp0tHg2prKXc=;
+	s=korg; t=1793829016;
+	bh=u4NFEFHTUENFy5tUjmpOLbJTR/m+eydB7KiJcPOkBHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OwUk4UoSqgrRt/0o5d+7CBurOFk9z8xrUr6lDGKsTgVg1kedUcEA7uNXnwG8JmIKB
-	 jvggIZrHWixA83QT0jeEW1a29eMRcIxomfdkMTvooLb9u8PO39bSeKhipClrj2s+Cf
-	 ITMkGbsVIzZ4AIF2gHEJQRnOypjEP1jYc8AfLOT8=
+	b=YP2M/riv+ROuSSHsO0Zwg6MAIyaer7nizNjYPCwjoU8d4xh8YSOZFXFeNIfIX9xQP
+	 rWCDmvdPZvyu1qgH8lxNQwICJ8wWkkrITb0K3AjdPiF/sajf6AthpZSy6+jUDwj7YP
+	 cfwnLhEQe9IgS8AXCnfRnCXwxbKrK7bmUI8cWKNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 350/547] xfs: check for fragments when full-extent sharing matches
-Date: Wed,  4 Nov 2026 16:08:54 -0500
-Message-ID: <20261104211048.216240651@linuxfoundation.org>
+Subject: [PATCH 7.3 351/547] xfs: check for termination during rmap btree walk
+Date: Wed,  4 Nov 2026 16:08:55 -0500
+Message-ID: <20261104211048.246072704@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,39 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 95e213c1ddb40dfb0a8178ed35c9f29992a320e1 upstream.
+commit 1fc241cdeab276dc6c3ec14840faa706ed7712ff upstream.
 
-LOLLM noticed that xchk_refcountbt_process_rmap_fragments returns early
-if there are enough rmap records that overlap the space referenced by a
-refcountbt record to match the refcount in that refcountbt record.
-Unfortunately, it never checks the fragment list in this case, so it
-won't find the discrepancy between the rmap and refcount btrees.
+LOLLM complains that we should check for a fatal signal *every* time we
+walk a record in the rmap btree as part of rebuilding the free space
+btrees.  Fix that, and improve responsiveness to ^C of xfs_scrub.
 
-Cc: stable@vger.kernel.org # v4.16
-Fixes: dbde19da963706 ("xfs: cross-reference the rmapbt data with the refcountbt")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 4bdfd7d15747b1 ("xfs: repair free space btrees")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/refcount.c |    5 ++++-
+ fs/xfs/scrub/alloc_repair.c |    5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/refcount.c
-+++ b/fs/xfs/scrub/refcount.c
-@@ -173,8 +173,11 @@ xchk_refcountbt_process_rmap_fragments(
- 	xfs_nlink_t			target_nr;
+--- a/fs/xfs/scrub/alloc_repair.c
++++ b/fs/xfs/scrub/alloc_repair.c
+@@ -227,7 +227,10 @@ xrep_abt_walk_rmap(
+ 	void				*priv)
+ {
+ 	struct xrep_abt			*ra = priv;
+-	int				error;
++	int				error = 0;
++
++	if (xchk_should_terminate(ra->sc, &error))
++		return error;
  
- 	target_nr = refchk->refcount - refchk->seen;
--	if (target_nr == 0)
-+	if (target_nr == 0) {
-+		if (!list_empty(&refchk->fragments))
-+			refchk->seen = 0;
- 		return;
-+	}
- 
- 	/*
- 	 * There are (refchk->rc.rc_refcount - refchk->nr refcount)
+ 	/* Record all the OWN_AG blocks... */
+ 	if (rec->rm_owner == XFS_RMAP_OWN_AG) {
 
 
