@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828878;
-	b=nqrQqXoK9EOD1TfZvnunv4kqGfHkZmKZaR7bcovy43uBg/yl75hENa4qWIJ7Q5Vqc4/k
-	 5asMfHseS8nYd2FpBO4Hvxht+aursZOnNxCXHVbD4469c29PVs98bP9WvOjaN0qCLIfZF
-	 E3lYYkLXwqRDR2m/jD4khUAU5gDDY2qBxQB+0wOMelLvGz6Oz+N54om/G6Fu25Ss16rFV
-	 N7YxMQBprMjXA5/QKA2f6Kzlos/qqGteHJfiDiziSxPTZSuCZRQ5/yjjXuUyAuUdalWQ3
-	 uv0+ftjtcDjnd6m3f4bSFXxKhIcnfWvAB4D0wCxcWlneFttMhC6ZFeoSLAwg2+6mjNg==
+	t=1793828884;
+	b=2WCW70k9SCrrOqyBLNp/J1K10kDaKulstlNNIr4gk/YAwqhqBSREcfOJUckm00cuz/oU
+	 kcwRxgWCW17Ik/IW1ByT//mIb8HQ/J6zCGJCOJTjwkvNrLr0Jo24W3Wx+lFZHTk4OMOfw
+	 yBSxpZ3th93VfKBJlH6ZHlegbav4/5pp5KOK6WstQKdHGRxOhiQD6siY0PLX4qc0d6NbB
+	 S0wU1r+XHYc+3DV7Ywg7vyu92zF6xzoHKbr/e1AbBVKLPFQMICrcfqoVRWD5cU7T/x0ZG
+	 q6eHpezsZzNK//+pOj0u/tmYxzbFC374QmKNDugoTGdUE7CJsyVlQJt393wXRjTsbHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ihLAY5BA7s55rKete/TFzPtxh8eucCl4f0tSRoZIYCo=;
-	b=ad6KoNKZctBGQXd70FDocxHugxWRcwPzeUvX7YWC2EQ9+2z7zEHcCuBFJFq8c25lbymO
-	 a7MvWo9tc4laYmbebDHnsPozfUFMEYl5iChhx00AwnjXY3AgyVejiQmXRUCkyK5CKlZjX
-	 o79JzxKOdm/Ba7o3UAPu3Ny3aGLld687YenflG3N2D4YXkxKZADOTR5Ctkeie2Oys2rKX
-	 vA0c3blHm0wgSJtMMv1nkoyaf8fAyhmpAZe+GbHE8ooGBJm8XTCZPv18b9aA0l0nDtWzD
-	 fsFmu9kV6u0YMXSWY8sYFyqnJsrnJXP8VKxiXfGA3e26ZgOcmohssqepnl2F687BqiQ==
+	bh=wz2rA6Mb9t7Z3Bfmg9PBc2KasB39JfiOed+/Ys9cxPc=;
+	b=pEQU7UYax+V0OekIV2O5leaQnfjpg3Fi14lUQQXa8bqnjvgyA+KzswpEm8P6Ew+eG/D+
+	 P8mjaJKY48DLahZjtHwPTSxuXz8SbOp4tFknn00FAGYcHHvTThhZUBJi+vzQ7Sdk5Tdpn
+	 CLT8V6dlH8D6DqVVF8rlftuV0zSKGiF9u2hLl4N95WS7wdu74LSwNzIah4JsWgq5a4LLW
+	 OuUHkCd4E/gCJlKEO6PNuI0+8KP3dzh8RAc6tC8ZgHeXGVcgPFcAzw6cFfC8opilhVnSv
+	 aWzL+5XKmcGlCuOSjwK73rX13xdMlByETaE/BSmpoFb2ksTBmIfFtclu96/hYdvlX+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYkaMVMe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3DDITzv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFF16071AC3;
-	Wed,  4 Nov 2026 21:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500C4607030F;
+	Wed,  4 Nov 2026 21:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYkaMVMe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D25D1F000C1;
-	Wed,  4 Nov 2026 21:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3DDITzv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE441F0093A;
+	Wed,  4 Nov 2026 21:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828878;
-	bh=ihLAY5BA7s55rKete/TFzPtxh8eucCl4f0tSRoZIYCo=;
+	s=korg; t=1793828884;
+	bh=wz2rA6Mb9t7Z3Bfmg9PBc2KasB39JfiOed+/Ys9cxPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LYkaMVMefJrUbu1YD4QOs4C6MLg2dDa4A3DaW4t0PJ1tMPxeb4KuO+1LwlDHlk5K5
-	 6Q6aBscXFWzh3CM2HGXXBw2FODYdItYH2ptTvaYLqlyETensqN6xo3PbVMwjMFHmPX
-	 zhIEO9sML5ZtOPPsg/9rskNli/MfDtof85SEvvAc=
+	b=x3DDITzvBbbP4Xxk4p0jBuhQz+3k8Z7KHc9UYns87m8gwc6t22eJn+ZwQWPR77kKG
+	 qU1B7EGG8rfBLrRIfJC0K/Q5dR2X4foO9BNE9lgR+YjVDWQSj/jsntSYtGb0D/JWiF
+	 Ohsmv+fkBwbNZEsUsh0h3pJcUTh3S0qCDNV/wrbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 7.3 297/547] ovl: skip copy up of empty security.capability
-Date: Wed,  4 Nov 2026 16:08:01 -0500
-Message-ID: <20261104211046.636587968@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.3 265/547] media: rc: Fix race between bpf(BPG_PROG_ATTACH) and device unregister
+Date: Wed,  4 Nov 2026 16:07:29 -0500
+Message-ID: <20261104211045.718582882@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,71 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Sean Young <sean@mess.org>
 
-commit 50912a1715b8a7c614b654011a0db750e372b43e upstream.
+commit b3f5daf3222999d3f92f606a4eb5e35ab90fd0e4 upstream.
 
-ovl_copy_xattr() gives up if it can't read an attribute that
-listxattr() has named.  An empty security.capability, which anybody has
-been able to store on any file for a long time, is such a case: it is
-listed, and getxattr() has nothing to return for it.  A file in a lower
-layer that carries one can't be copied up: it can't be written to,
-renamed or have its mode changed.
+Mark the device as unregistered before tearing down raw IR/bpf
+state, so that racing bpf(BPF_PROG_{ATTACH,DETACH,QUERY}) calls
+cannot slip in between ir_raw_event_unregister() completing and
+dev->registered being cleared.
 
-There is nothing to copy if there are no data.  Go on with the next
-one.
-
-Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: treat -EINVAL as no capability too, and do the same in
- ovl_copy_up_meta_inode_data()]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/media/rc/rc-main.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -75,6 +75,15 @@ static int ovl_copy_acl(struct ovl_fs *o
- static ssize_t ovl_getxattr_value(const struct path *path, char *name,
- 				  char **value, ssize_t *value_size);
+--- a/drivers/media/rc/rc-main.c
++++ b/drivers/media/rc/rc-main.c
+@@ -2026,18 +2026,18 @@ void rc_unregister_device(struct rc_dev
+ 	if (!dev)
+ 		return;
  
-+/*
-+ * Any user can store an empty security.capability, which fails to read with
-+ * -EINVAL.  It grants no capability, so treat it as none, like no xattr.
-+ */
-+static bool ovl_no_fscap(ssize_t err)
-+{
-+	return err == -ENODATA || err == -EOPNOTSUPP || err == -EINVAL;
-+}
++	mutex_lock(&dev->lock);
++	dev->registered = false;
++	if (dev->users && dev->close)
++		dev->close(dev);
++	mutex_unlock(&dev->lock);
 +
- int ovl_copy_xattr(struct super_block *sb, const struct path *oldpath, struct dentry *new)
- {
- 	struct dentry *old = oldpath->dentry;
-@@ -134,6 +143,10 @@ int ovl_copy_xattr(struct super_block *s
+ 	if (dev->driver_type == RC_DRIVER_IR_RAW)
+ 		ir_raw_event_unregister(dev);
  
- 		size = ovl_getxattr_value(oldpath, name, &value, &value_size);
- 		if (size < 0) {
-+			if (!strcmp(name, XATTR_NAME_CAPS) && ovl_no_fscap(size)) {
-+				error = 0;
-+				continue;
-+			}
- 			error = size;
- 			break;
- 		}
-@@ -1103,9 +1116,9 @@ static int ovl_copy_up_meta_inode_data(s
- 	if (c->stat.size) {
- 		err = cap_size = ovl_getxattr_value(&upperpath, XATTR_NAME_CAPS,
- 						    &capability, &cap_size);
--		if (cap_size == -ENODATA || cap_size == -EOPNOTSUPP)
-+		if (ovl_no_fscap(cap_size))
- 			cap_size = 0;
--		if (cap_size < 0)
-+		else if (cap_size < 0)
- 			goto out;
- 	}
+ 	timer_delete_sync(&dev->timer_keyup);
+ 	timer_delete_sync(&dev->timer_repeat);
  
+-	mutex_lock(&dev->lock);
+-	if (dev->users && dev->close)
+-		dev->close(dev);
+-	dev->registered = false;
+-	mutex_unlock(&dev->lock);
+-
+ 	rc_free_rx_device(dev);
+ 
+ 	/*
 
 
