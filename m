@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829699;
-	b=cnH3Z6QJ7A+1Re60jYnnyxWPEibH7cFbMjGLT4f2OIMm4qd+G8TeQsQQ+4UUBu+kuMNT
-	 y6Bbg9Al7zJNVMyTfRqv++qPCxm7y8ZXGesbhID5wB9wNZKuRYILaEbf66/eAjrvajyrY
-	 2Hv+PRAkjfonZSZo4brTU/loq+D08tzCtWXXg0eCihVWeTLIkh0WRIO/Pmt+Qf6SgI8rF
-	 hTRgvTccOjEGiKMuwgynznHYk0VGbZbX+gclRYafkfpCnVKS4Yz+atE/y9WW3OCwsjJnc
-	 OXy+QkCuy9r5piTOEwolsX66ELpaz/vyAjmVInD1Di7dIAvIkTbU21OOHzIfxEc9i+w==
+	t=1793829700;
+	b=ojDmEeLXwHtgSN1J1/phkWwMJD71D8xoeKUeAiHda//dCSz10/88EAlNTyu7JmkVkx9b
+	 B+m9uVL7OzPby+FhslTjGrCXnFMb4CLbB7pPOWG32UjvDECrK3njfO5qPZA+SqO7Upd3/
+	 B7Meu1L3YK/ycm6R0EQ2SIDBa7E0t5Ij1vISQFyfOWlCOHhUio0Mn43msCDt3YilIQzgr
+	 IRWqeyCVe/l31GkGJPH4r54eoRvJsFt1NfPw9nWOjn4uxB2FfrTLQGpM82IA8Ag/4blI2
+	 IJmLRoa1ZrEiAJhwnq6qcMI/bP7PeyuWRkgM2y+GOV7fEq4blQOQaNfZAiOQpXhvlxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7VySvBCPPdYtMKFHBKJcey+IJl+rILCqNV4Scv8FXJQ=;
-	b=nZEqBzeRCsyDuYT67VFvsgOx9edNT1fjbNacfdzSna3Go8UYRifroHLJBfP36lrQpd8v
-	 hYDG6uC/tjcYtKsGsy/nMnEIb6QGVGiJ23PjGCfG1F5Gg7cGASRX+2O3RVilq6J+V0Rf8
-	 Y8fz59SrRLMvsQeBYVQYAcA6PYZEv1NHV31TJ8/diXp4woRJr+6Z9l3rekAG2C49HXAMC
-	 N/TPJKYGwRvksnMcIwtbKqUqmA9/J7fHwbQ7gSNH3O5TAPUODSeLhOA58WA7gUmGpmr9Z
-	 aa9N1LlEvhylMcNyjPI6aX6EMsGljPqCwqtVSEyZtg8KTM4TU3fMXRrAWmJeoWsEXcw==
+	bh=AbLOijNRYxXsV4UFTs0HhI+Qwd+RO5KBy2iFyafAGzg=;
+	b=WEPif8yh0inKBTIn/YSmcEkBLhSVOiBYnoDLlttJoPEBCs1KwlzsvxUk1jfEte6msGN6
+	 4eBHMVOk2L4P1zWpyE2bytOnSY+EBSifrPLVwrAT5jDrM/MATzMmg50ucyP1o0neFUUgy
+	 6JkSGVLl4jICQGv5pep21L3h4ImbNAnRtnHpUFSu0HbrWIIaqbTjDLFK+jtEMs83BVvRG
+	 dbXC98sCQBj9wYxMimYj+OBPI4xodJOlgW6rJBTDTFl+uJAAiiogp584bgv82+PclZYKw
+	 DMANWq5rTM+n0S8cZddVsNW5TJOV5HNLO84zxySmDcJXKWMMdAaeP1L0g9bkmWsyqOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XnuT91T4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RyhpS93z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2749606BA30;
-	Wed,  4 Nov 2026 22:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB32606BA30;
+	Wed,  4 Nov 2026 22:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XnuT91T4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237681F00A18;
-	Wed,  4 Nov 2026 22:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RyhpS93z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94991F00A1B;
+	Wed,  4 Nov 2026 22:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829698;
-	bh=7VySvBCPPdYtMKFHBKJcey+IJl+rILCqNV4Scv8FXJQ=;
+	s=korg; t=1793829700;
+	bh=AbLOijNRYxXsV4UFTs0HhI+Qwd+RO5KBy2iFyafAGzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XnuT91T4nsSbTr71+gYpjWPGH5MgDqUQStCF7OdexzoAr/JhXo8iLbsLMiPkuhHdv
-	 dPmGttF+eRzmR2+V1weR+tkN/EUnF+dTNxF4mP8QonwYjHrsHyBnnLYLM1WYCze31R
-	 uR/6qw70UsjwHZFwc9p5eRqX/I5lXRc2O7Lo78hA=
+	b=RyhpS93z7Adbgjg0Ps7KHDvSrDgjUF+TtOval5mJZpriUe78rYQMWF9/k5f3hshRF
+	 K2P+kj13fFhjpCebyhKSjX71MlE5CBveW+vTX27RBkW/BQqC3qC5CujPuse3W9gGWo
+	 oARZ98cqifMbdoREtPIAMVt3SHw3QSRumTxjxY3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Oleg Proshkin <oleg.pro171@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0287/1005] ALSA: hda/realtek: add missing error checks for COEF index reads in alc269
-Date: Wed,  4 Nov 2026 16:00:20 -0500
-Message-ID: <20261104211051.939358411@linuxfoundation.org>
+Subject: [PATCH 6.18 0288/1005] mfd: axp20x: Preserve other control bits when powering off
+Date: Wed,  4 Nov 2026 16:00:21 -0500
+Message-ID: <20261104211051.970332225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,88 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Oleg Proshkin <oleg.pro171@gmail.com>
 
-[ Upstream commit 5b106b40ed22098f2bc049efb645148d038444bd ]
+[ Upstream commit 3756bf05c963563f1325af105356541882dd5899 ]
 
-alc_read_coef_idx() and alc_read_coefex_idx() can return -1 on error
-via snd_hda_codec_read(). Several codec initialization and shutdown
-functions save these return values and later write them back to
-hardware registers without checking for errors, potentially corrupting
-COEF register state on a read failure.
+axp20x_power_off() triggers shutdown by writing AXP20X_OFF (BIT(7)) to
+the power-off control register with regmap_write(), which rewrites the
+whole register and clears other control bits in it.
 
-Add error checks in:
-- alc282_init() and alc282_shutup(): check coef78 before write-back
-- alc285_hp_init(): check coef38/coef0d/coef36 before update, check
-  val before write-back, and break polling loop on error
-- alc294_hp_init(): break polling loop on read error
+On the AXP221/AXP223 (and the register-compatible AXP228) - that
+register also holds the CHGLED auto-control bit.
+Clearing it during an orderly shutdown disables the hardware charge
+indicator, so the charge LED stays dark while the board is powered off
+and charging. Other variants keep unrelated configuration in the same
+register too.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260730015302.253008-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Set only the power-off bit with regmap_set_bits() and leave the rest of
+the register untouched. The shutdown register is readable on every
+variant, so the read-modify-write should be safe.
+
+Tested on a ClockworkPi uConsole (Raspberry Pi Compute Module 4, AXP228,
+which enumerates as AXP221): register AXP20X_OFF_CTRL reads 0x08 at
+runtime, so the old code left it 0x80 whereas setting only BIT(7)
+leaves 0x88. Writing 0x88 at power-off enables the charge LED
+while still powering off the PMIC.
+
+Signed-off-by: Oleg Proshkin <oleg.pro171@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/20260611154629.76607-1-oleg.pro171@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/mfd/axp20x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index d88627558150f..3364f6ad91fcb 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -296,7 +296,8 @@ static void alc282_init(struct hda_codec *codec)
- 		msleep(100);
- 
- 	/* Headphone capless set to normal mode */
--	alc_write_coef_idx(codec, 0x78, coef78);
-+	if (coef78 != -1)
-+		alc_write_coef_idx(codec, 0x78, coef78);
- }
- 
- static void alc282_shutup(struct hda_codec *codec)
-@@ -333,7 +334,8 @@ static void alc282_shutup(struct hda_codec *codec)
- 
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
--	alc_write_coef_idx(codec, 0x78, coef78);
-+	if (coef78 != -1)
-+		alc_write_coef_idx(codec, 0x78, coef78);
- }
- 
- static const struct coef_fw alc283_coefs[] = {
-@@ -585,15 +587,19 @@ static void alc285_hp_init(struct hda_codec *codec)
- 
- 	alc_write_coefex_idx(codec, 0x58, 0x00, 0xf888); /* HP depop procedure start */
- 	val = alc_read_coefex_idx(codec, 0x58, 0x00);
--	for (i = 0; i < 20 && val & 0x8000; i++) {
-+	for (i = 0; i < 20 && val != -1 && val & 0x8000; i++) {
- 		msleep(50);
- 		val = alc_read_coefex_idx(codec, 0x58, 0x00);
- 	} /* Wait for depop procedure finish  */
- 
--	alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the result */
--	alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
--	alc_update_coef_idx(codec, 0x0d, 0x110, coef0d);
--	alc_update_coef_idx(codec, 0x36, 3<<13, coef36);
-+	if (val != -1)
-+		alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the result */
-+	if (coef38 != -1)
-+		alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
-+	if (coef0d != -1)
-+		alc_update_coef_idx(codec, 0x0d, 0x110, coef0d);
-+	if (coef36 != -1)
-+		alc_update_coef_idx(codec, 0x36, 3<<13, coef36);
- 
- 	msleep(50);
- 	alc_update_coef_idx(codec, 0x4a, 1<<15, 0);
-@@ -858,7 +864,7 @@ static void alc294_hp_init(struct hda_codec *codec)
- 
- 	/* Wait for depop procedure finish  */
- 	val = alc_read_coefex_idx(codec, 0x58, 0x01);
--	for (i = 0; i < 20 && val & 0x0080; i++) {
-+	for (i = 0; i < 20 && val != -1 && val & 0x0080; i++) {
- 		msleep(50);
- 		val = alc_read_coefex_idx(codec, 0x58, 0x01);
+diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
+index c5f0ebae327f5..85506813f089c 100644
+--- a/drivers/mfd/axp20x.c
++++ b/drivers/mfd/axp20x.c
+@@ -1250,7 +1250,7 @@ static int axp20x_power_off(struct sys_off_data *data)
+ 		break;
  	}
+ 
+-	regmap_write(axp20x->regmap, shutdown_reg, AXP20X_OFF);
++	regmap_set_bits(axp20x->regmap, shutdown_reg, AXP20X_OFF);
+ 
+ 	/* Give capacitors etc. time to drain to avoid kernel panic msg. */
+ 	mdelay(500);
 -- 
 2.53.0
 
