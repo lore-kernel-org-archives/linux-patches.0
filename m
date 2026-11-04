@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831714;
-	b=4LFA/qAA2+e6hgxL6UNTAAZ4kC1mBJBUm3htivdaovQ+Kbx1BhG4a6TokkIIpEsbF8qA
-	 erfN3pMQs30B6i9O4vl4Pm8rbDIbkdKouAI+XfynYJSB90vrq31jZAzy6BSemU0j0vB3m
-	 05TjjpI9kCfVnJ2/Cg1iHHi+6zMYBN/vwhgNLFnmS5eF+vQznUowXp6ckvczbrEbNWUW3
-	 7upLbD5pJdAJVJ86dmDkI7sfL+MocGzPWTdux0u5MJkJUHjHGAasr7eHPJDrRu+t0kXvb
-	 0/78hgE4CPfU0NT67mVLF0z4Do4vj6p2wKw1cPEnVsUhPoQL9DYtlasPjNBYAY2BV7A==
+	t=1793831715;
+	b=l4MOEnN6VIhCAScxaNilIKx1Si0ewd98I0k64R3YNYhyVXb0EUdvODyedW/FSGFjqF9b
+	 DtwkHEB9G2p8AEdJLES/+m7XSnCy9p7xPL+f9o4tFSpiastT5ctRTiVoo7ICRBX6y57nK
+	 BDHpS7ugI6c8Fit6XO0gxbzRKyzOW9340EXwg4uFBSh5VhTgm+q+gVOjOt1PggOMZw8WY
+	 OINecmoO4PuToyQiv6jJ0oL6GvZcZY+6QSIJsGutfEbg4+ATjqk2d5YKUHjwr50UvrERt
+	 K911k0ZJ3rEv7UT/0958PbEEMa97xT2wcOy0xdQFXxdDFuonhcfk4skqi4ArsPHsg1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831715;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9E8D/i0q9l8Nz93MJrbv/L8iF8UTYPCv5J1zLF0zpnc=;
-	b=R3M97RGZhQV0zL6UEz2ZnWVPF2hR8dWoEgfp3aS93r1P7ZX0vEX+nhK1WX0Jelag8Ov5
-	 QNsuDP1U+uFa7us1VRC3itIbOCBe0oo8Yh/Qv8zXLJ80JcCf/a8PuZzaLzUbzJwuWasO3
-	 Elb3UC4og2gyLGLuas/JgSLPgddjD4ucHB+tJ1wHQkU5QlP2oRogAT/qEZGspcGJfFvDG
-	 WCXwC3BbC0mHHBHxjMgmAzy1d+99khLMhI99Gd4s3OA2QbrzPXXFSkHZ7aWrlrWt5wkNU
-	 UOVXkS6jF6mZiE7nbhdorWDDyp0U6nUaK3xWVlmccI9rynO3YV45NrrYv++oCX9kpCQ==
+	bh=lXSyBZsj1MDRKSDQMfbJ43AE2n9iZxBsLKq9yNvmeIw=;
+	b=uqW8YIXbqC9HZq1mOYyGZo8yHIvguwhr48Tqe6uqmRIYZIRJWiyaMhJWb4g8Rl2x2OH3
+	 /SBgXkAtXFCPD7M+Qpd6W8urJpwSIDjhfkf9XHOQVCL9e7GIMURSw46P0nnvb42ahcPMw
+	 EnYc3L0OQP6fVh6QhF4f02kJ4a7hlJoPRppi+rlFo0j3AUosdbJiI57qvLXFmUdKs2U3l
+	 VhC1QvCCCDjPh60zXYhkqtrGnhPUt0lYJKZ6Ft86TR2jiM0C539q7ZtPYuHCUJZYZ73xu
+	 50afnhTI9r0ZwgIm5Qhk8CoP0eCw5fm8iGPnUsRB8i+OgY6P7oQ7nFHuLtuLbRXYnDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzFKnhr+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qb/5taGU";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B75B606A337;
-	Wed,  4 Nov 2026 22:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA16606A846;
+	Wed,  4 Nov 2026 22:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzFKnhr+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C411F000C1;
-	Wed,  4 Nov 2026 22:35:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qb/5taGU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD881F000C1;
+	Wed,  4 Nov 2026 22:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831713;
-	bh=9E8D/i0q9l8Nz93MJrbv/L8iF8UTYPCv5J1zLF0zpnc=;
+	s=korg; t=1793831715;
+	bh=lXSyBZsj1MDRKSDQMfbJ43AE2n9iZxBsLKq9yNvmeIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lzFKnhr+wzMfdQF1V+rfFB/fzktoN+YU91dLcg/SLBXkHlIpUc/osXG8eIEFwnC7Y
-	 oitc3/aGd8SsSU5fiX30xsNX/cSgq5YDAttIWXPfbBQ7/DMt8KxGSVGg3ybT8Bl4+9
-	 kazM83+Qz0UPFtcdIK+SR1Rw04tGfgXcaQQQHTwQ=
+	b=qb/5taGUJ5TJW6iPVWPrOS8HrIC5+WhggjnsdPH++b+rjuIkD2/2PdW36hqtacUf3
+	 XkvCfn78fZmjeCLhhmQj0Kp3pQJdJhm5CWZUtwOUv/igMwnu3YwOTAhoCtabTx9G6i
+	 EX3JA4igtUchAXMO5DOHamxUYK5bCkpwxu3dBwzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Liu <bird@lzu.edu.cn>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>
-Subject: [PATCH 6.18 0868/1005] smb: client: fix buffer overflow in SMB2_tcon()
-Date: Wed,  4 Nov 2026 16:10:01 -0500
-Message-ID: <20261104211107.582637249@linuxfoundation.org>
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 0869/1005] smb: client: fix fiemap wild read on empty truncated response
+Date: Wed,  4 Nov 2026 16:10:02 -0500
+Message-ID: <20261104211107.608614554@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,72 +67,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-commit 73cc469b0ff7551f8537ea919709973e6dc4f514 upstream.
+commit f5baa17a0f316c235d61623ac8e8fb32c2b3c0cc upstream.
 
-In SMB2_tcon(), unc_path is allocated with a fixed buffer size of
-MAX_SHARENAME_LENGTH * 2 bytes (672 bytes). However, the user-controlled
-UNC path (tree) length is passed to cifs_strtoUTF16(), which assumes the
-destination buffer is large enough and writes strlen(tree) + 1 UTF-16 code
-units.
+smb3_fiemap() treats -E2BIG from SMB2_ioctl() as a truncated range blob
+and loops for the next chunk. If the server reports
+STATUS_BUFFER_OVERFLOW with OutputCount == 0, SMB2_ioctl() returns
+-E2BIG with out_data == NULL and out_data_len == 0, and the existing
+length checks accept the empty result. The loop then evaluates
 
-Commit 62a1a439e0fd ("cifs: clean up handling of unc= option") removed the
-length check on UNC mount options, allowing mount paths to exceed
-MAX_SHARENAME_LENGTH while retaining the fixed-size buffer allocation in
-SMB2_tcon(). Consequently, an oversized UNC string causes cifs_strtoUTF16()
-to write past the end of the heap object, resulting in a slab-out-of-bounds
-write. Furthermore, if a tree exceeds MAX_TREE_SIZE characters, strscpy()
-truncates it in cifs_tcon::tree_name, causing subsequent reconnects or
-failovers to fail.
+	next = out_data[num - 1].file_offset + ...
 
-Fix this by first verifying that the length of tree does not exceed
-MAX_TREE_SIZE, returning -EINVAL if it does. Then, dynamically allocate
-unc_path based on the length of tree so that it safely accommodates all
-UTF-16 code units for paths within MAX_TREE_SIZE.
+with num == 0, reading 16 bytes before NULL.
 
-Fixes: 62a1a439e0fd ("cifs: clean up handling of unc= option")
+Reject a truncated range blob that contains no range, so the resume
+offset is never computed from an empty response. Also require the last
+range in a truncated blob to advance the resume offset without
+overflowing, and to stay within the requested range; a malicious or
+broken server could otherwise make no progress or underflow len and loop
+forever. Free the previous response buffer before retrying.
+
+Reproduced on 6.6.87.2 with a malicious SMB2 server that answers
+FSCTL_QUERY_ALLOCATED_RANGES with STATUS_BUFFER_OVERFLOW and
+OutputCount == 0; an FS_IOC_FIEMAP ioctl on the mount oopses in
+cifs_fiemap() with CR2 = fffffffffffffff8. The code path is unchanged
+on mainline.
+
+Fixes: 2f3ebaba13ce ("cifs: add fiemap support")
 Cc: stable@vger.kernel.org
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Closes: https://bugtracker.nebusec.ai/f/3292
-Assisted-by: LLM
-Suggested-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-[pc: remove unused MAX_SHARENAME_LENGTH]
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/smb/client/smb2ops.c |   30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2017,8 +2017,6 @@ static inline void cifs_stats_fail_inc(s
- 	cifs_stats_inc(&tcon->stats.smb2_stats.smb2_com_failed[code]);
- }
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4293,6 +4293,15 @@ static int smb3_fiemap(struct cifs_tcon
+ 		goto out;
+ 	}
  
--#define MAX_SHARENAME_LENGTH (255 /* server */ + 80 /* share */ + 1 /* NULL */)
--
- /* These are similar values to what Windows uses */
- static inline void init_copy_chunk_defaults(struct cifs_tcon *tcon)
- {
-@@ -2049,7 +2047,15 @@ SMB2_tcon(const unsigned int xid, struct
- 	if (!server || !tree)
- 		return -EIO;
- 
--	unc_path = kmalloc(MAX_SHARENAME_LENGTH * 2, GFP_KERNEL);
-+	total_len = strlen(tree);
-+	if (total_len > MAX_TREE_SIZE) {
-+		cifs_server_dbg(VFS | ONCE,
-+				"%s: tree name exceeded %u characters\n",
-+				__func__, MAX_TREE_SIZE);
-+		return -EINVAL;
++	/*
++	 * A truncated range blob must contain at least one range, otherwise
++	 * there is no offset to resume from and out_data is NULL.
++	 */
++	if (!last_blob && out_data_len == 0) {
++		rc = -EINVAL;
++		goto out;
 +	}
 +
-+	unc_path = kmalloc((total_len + 1) * sizeof(*unc_path), GFP_KERNEL);
- 	if (unc_path == NULL)
- 		return -ENOMEM;
+ 	num = out_data_len / sizeof(struct file_allocated_range_buffer);
+ 	for (i = 0; i < num; i++) {
+ 		flags = 0;
+@@ -4313,10 +4322,25 @@ static int smb3_fiemap(struct cifs_tcon
+ 	}
+ 
+ 	if (!last_blob) {
+-		next = le64_to_cpu(out_data[num - 1].file_offset) +
+-		  le64_to_cpu(out_data[num - 1].length);
+-		len = len - (next - start);
++		u64 last_start, last_len;
++
++		last_start = le64_to_cpu(out_data[num - 1].file_offset);
++		last_len = le64_to_cpu(out_data[num - 1].length);
++
++		if (check_add_overflow(last_start, last_len, &next) ||
++		    next <= start) {
++			rc = -EINVAL;
++			goto out;
++		}
++		if (next - start >= len) {
++			rc = 0;
++			goto out;
++		}
++
++		len -= next - start;
+ 		start = next;
++		kfree(out_data);
++		out_data = NULL;
+ 		goto again;
+ 	}
  
 
 
