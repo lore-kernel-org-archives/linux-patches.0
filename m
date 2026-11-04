@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830855;
-	b=BjGX1s09Tr7wvdRRi5NZvKK7KqvoYodAMqLrmBfSrJwTa4lVjl6ok9nYEYtRygwH3W4t
-	 jElxufycUFSrjpNZYHCXxs8bb7NY8sN5pmpJTula42quGrw0CmOfwjnZSR3FQD2RtrvIr
-	 GXz6IR1diLW+iBeD0ge1dZ8Mf9XmmCakUgMddDhI4x/3XGAnRSwAd57CNLslheD86f6dW
-	 zhIDijczqa9TCW8jHueiGUZc9Q4KN+OJU63LlIluKjp7XAY7S27ohAfyvD+z2bM1bwh/b
-	 00RmfZeZ0hdfc17l0YVAxUArdxE3DLtX+HUZjKv5JbuR92R3kpaxz83hjieksmN5xKg==
+	t=1793830856;
+	b=RTi1HxYteOsk1RbKnMgIS4DmuqTwVw1XCcA4grGLMX3g0AbxXlKXeWI25Q8yZ0x93xm1
+	 mvAQAC8uEWxE1ngNCCBVaEs/7QjBOSvn2gU62wmLl2aXLF9lffL0FwLC597O6u61ySJHF
+	 zzA7mJOKupbE9pUrDnHkY5aBxBtDVr0nWtTWpqvwAEE8uVdyEwezAuIcd7CzgLvhqnb1l
+	 KKxmVOX0SNxzo8Ay10EAETeI5CcNRA2Adl10pNhDn16Ax8FUDayrgt3XtGzZG2G4YbS/Y
+	 H01ZkoW5c8i0hU26sjznCNCd1mrYivsEdTcIZVcS+VlLog8L2iRqyhd+g+6THE+ZfYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MDwQrvd8Y6bVuSFCK0MHeeBfy+Vq17DNukEhe2YYZPg=;
-	b=P+7y+MZfsVz1VOK04UzDxOBmKzHlo7A00dHctPc8DNtdK9dNavG64q16ECGo84U0K0UM
-	 170Zu5PE7tOWOc3Fxl+Z9E0nEMnSVjrz49j+K1zGJh5/gC94xciZRJzAGa7GKI2fYBWuc
-	 FV6DKZcLoM7la74GLsM6NBs6ME4kKV9Q/fUqS1KhDQ6/wfc5sEw2eQidvqxhHfgiw1jzK
-	 wZwTmAwtqNHMwKmXRaoBwPoliTi8dsMzLJodtvYcau+XghaSfOLVlSXjlehVL/rMz/8+g
-	 6uruguHio+Nw0SM7FKIXzlaAT07XAVqjgy2e/1YNyAw3Z3zh81K+pm+NzzJF81pRYhw==
+	bh=JPXCvUojbTBhuVwK8h3gH9UAs0bu6/1y6nPqfwMidwA=;
+	b=j2pWPGzh00dBbYvpbq9AoDYFVjttCNBJqf6iUnMEOwwZRiKR1aGrs0wcEzEx2zDZ1iH7
+	 t1xosmhm1BnJLmPyZVeGiC36BGTX1TI1yj/bOiaoY8cPLkFKuqN/IMrsaNhRBFRBRISAx
+	 X8YqKPCzz5qd0bMTL36RRC+s4Hq2fRA9DFGB8WsA7aEFwNHWcxP4w3R0fZXdhoJmTudFG
+	 OPa4uHKZetc43STeFkLTq126/mqMSl7t/91chswNVHxzhiGuAT/D5lIT+FFYKB25LsYyj
+	 iNWFYY2haPrbJETLOfghmkxBDq5b64ioYI7FpCBBAXM65O2uhF3j1rKqAIwJUvtlheg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mhZ8Jjn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lQTX+zw+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2491606CA2D;
-	Wed,  4 Nov 2026 22:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC87606CA39;
+	Wed,  4 Nov 2026 22:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mhZ8Jjn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559741F00A15;
-	Wed,  4 Nov 2026 22:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lQTX+zw+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB8A1F00919;
+	Wed,  4 Nov 2026 22:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830854;
-	bh=MDwQrvd8Y6bVuSFCK0MHeeBfy+Vq17DNukEhe2YYZPg=;
+	s=korg; t=1793830856;
+	bh=JPXCvUojbTBhuVwK8h3gH9UAs0bu6/1y6nPqfwMidwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2mhZ8JjnOqP2NyVXQNMSHlI5NykxOtBu39BYhfdspgijzpjhrMS53tMXQGTNRlBTH
-	 YkF5ZGXH2cjC71iQNGJjgmGOIiRtjskxlLFYThQM1J47L/1C04tb8Q4i87h7JWQ/Or
-	 PfmWx9eUJK0PQ5vAO1BB2wYWInPNTi4VD3z88Y2s=
+	b=lQTX+zw+lXfsYqA14QmyZdAILv1SZPLt2ctLGB3mi4swBrLbC/td82c+vc2oCojC7
+	 1WStcdBzPHNSLaD129RZIQ9rVQQAJLFhkHx55BN1CoXbU6rOgYbFAhyTTxW8juEmHg
+	 KPJb7snN8d9WQ6n1j8ZmoPzTcuNCKfSiB0wZdQZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya <acharyalaxman8848@gmail.com>,
+	Gustavo Evgucci <monesss315@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0362/1005] Bluetooth: hci_event: fix out-of-bounds read in LE PA report reassembly
-Date: Wed,  4 Nov 2026 16:01:35 -0500
-Message-ID: <20261104211054.224925765@linuxfoundation.org>
+Subject: [PATCH 6.18 0345/1005] Bluetooth: btusb: Add USB ID 13d3:3625 for MediaTek MT7922
+Date: Wed,  4 Nov 2026 16:01:18 -0500
+Message-ID: <20261104211053.632270794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,68 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya <acharyalaxman8848@gmail.com>
+From: Gustavo Evgucci <monesss315@gmail.com>
 
-[ Upstream commit e3643fbddb257c928c075cab05bbd929106b56ee ]
+[ Upstream commit 849a3bf1489093996859ba0c3c1c0cd314d6ff96 ]
 
-hci_le_per_adv_report_evt() is dispatched with a minimum length of
-sizeof(struct hci_ev_le_per_adv_report), which only covers the fixed
-part of the event and not the trailing data[] array:
+The IMC Networks MT7922 Bluetooth adapter with USB ID 13d3:3625 is not
+recognized as a MediaTek device because it is missing from the btusb
+device ID table. As a result, btmtk firmware loading is never triggered
+and the HCI reset command times out with -ETIMEDOUT.
 
-	struct hci_ev_le_per_adv_report {
-		__le16   sync_handle;
-		__u8     tx_power;
-		__u8     rssi;
-		__u8     cte_type;
-		__u8     data_status;
-		__u8     length;
-		__u8     data[];
-	} __packed;
+Add the device with BTUSB_MEDIATEK | BTUSB_WIDEBAND_SPEECH flags,
+consistent with the neighboring 13d3:3627, 13d3:3628 and 13d3:3630
+entries which use the same chip.
 
-The handler notifies the ISO layer via hci_proto_connect_ind(), which
-reaches iso_connect_ind(). That function retrieves the stored event with
-hci_recv_event_data() and, while reassembling the periodic advertising
-data, does:
+Tested on: MediaTek MT7922 (Wi-Fi 6E combo card, IMC Networks BT USB
+interface), kernel 7.0.11-arch1-1.
 
-	memcpy(hcon->le_per_adv_data + hcon->le_per_adv_data_offset,
-	       ev->data, ev->length);
+/sys/kernel/debug/usb/devices:
 
-ev->length is taken directly from the event and is never validated
-against the amount of data the event actually carries.  A controller
-that reports a length larger than the received event therefore causes
-the memcpy() to read past the end of the event buffer.  The leaked bytes
-are stored in hcon->le_per_adv_data and can subsequently be read back
-from user space via getsockopt(BT_ISO_BASE).
+T:  Bus=01 Lev=01 Prnt=01 Port=12 Cnt=03 Dev#=  4 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3625 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-Validate that the event contains ev->length data bytes before it is
-consumed, mirroring the check already performed by
-hci_le_ext_adv_report_evt() and hci_le_adv_report_evt().
-
-Signed-off-by: Laxman Acharya <acharyalaxman8848@gmail.com>
+Signed-off-by: Gustavo Evgucci <monesss315@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 23fe327a0fcd6..fd823baf64415 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6580,6 +6580,13 @@ static void hci_le_per_adv_report_evt(struct hci_dev *hdev, void *data,
- 
- 	bt_dev_dbg(hdev, "sync_handle 0x%4.4x", le16_to_cpu(ev->sync_handle));
- 
-+	/* The reassembly in iso_connect_ind() copies ev->length bytes from the
-+	 * stored event, so make sure the event actually carries that many data
-+	 * bytes before it is consumed.
-+	 */
-+	if (!hci_le_ev_skb_pull(hdev, skb, HCI_EV_LE_PER_ADV_REPORT, ev->length))
-+		return;
-+
- 	hci_dev_lock(hdev);
- 
- 	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, PA_LINK, &flags);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 59fff918fd2de..9257341b01399 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -788,6 +788,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3613), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3625), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3627), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3628), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.53.0
 
