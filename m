@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827039;
-	b=p5yfAkaP4nksBtUcDXqYzHNOBOZiMiLIrGc4yjDM1PK1zZTNEEzPC0N7oSgcUTFfUBmP
-	 uaPxi/vYt4QODTQR/TA9Pv2+Q66KidD5yGVCgI3xO1Ucz5vrpGy/+RcPsTSFIBqH4gXFn
-	 5j9IY9W3goL/dU5+R5kve1ZdtTEHf8msvy77VNa18aY9cqAROs3dSS+C7JPu/O+H6NmoB
-	 HL0spUzmwiKEwAN25UtDwl42HfpdD5Bsz28KZfxnjrWrU4vN+eKOXjzFlIqt5tuqpyiMR
-	 laNZLNklE1d3q53TzKgs94+wL8/aA6TCXimmuRIgIc+AjYt3pgFByBFgOiBwOl4cftg==
+	t=1793827041;
+	b=Hiclo0t90uytfkot0Jf7NUEBBlnMq79MZcdMS58IntFBZab61gmtNRiuxKMU/xrBJLA3
+	 I7fcwxILLyXZqf5VEmQkE5mLQrLFmDav052BQAORXRE+hXOAOpdpFXHJqmOGeqexT62bw
+	 WL967xRGtSw04nIShPk3jdtpPDdQlDKdZ2FbMfNgWS39Q/yIUKnoxVkCYq0mJid/boZX3
+	 L82gw9A7n9Q/h9fwYSRLDODMnBspr+HSaZJ0rkc/5QCg1Eo8wuj4nqRgj0ktxxXcw7SNS
+	 zm+UnZhjOpZG3ZaoO3oD0+IvlSJBFwpzLqs4E7NXjLWCxv3Mj9tRLaqF9IuUnNz6t7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xyzz/88GpUqTT/nwP7162/KtMTbP2zx5JVkbweiTaS4=;
-	b=sWqsYxh5O4M6e8/1lMzdxFv4wgOPBEpCIk1t/aUJmEhKT7ZYKT2p43eYldtoVfIapXLY
-	 Zcy8Tt6hFhrcVc1jFO+6ux6b2bOOzy01RVObmd89PcPf9ZfN9sTuBaFfLdf5S/XNRc3Y2
-	 d0lmUzL6dugeqNatwl9MxvSFJ8VBWArHMT/COkSgo6JkaPlfcrCvVnv7jAlvL9Ny+bz4H
-	 WAoB10fy+KJKtBqyRRFuxQxyDWl2gnpi7PNeZcFIWKMuleeIj0HtfpdF0IpZglF1PLG1Q
-	 TXJYbrwh2LmSHO8znuPU48JAwouQQB00Q7IPX7lR8GMjiGCngBaKnfdEGyD4pXLcRiA==
+	bh=Eps6kcps0HjeQV7UDQ+r4kAxHHr7eURorDprz1sp7O4=;
+	b=NcQ9bXZ7mC3S7EN1rU76cjqAVgLTSigB9t5wZjDFxAkTPc62s3hHm4HA35kYxpKZx9F3
+	 zZo3qso/ZJt1llMJIx56I/3LbBi+7SW2Y6vq8HWg23ky+M6VSeUSXovdaBBCOdN0uXcYu
+	 n70sCAgY6oY6rV+ZdsCyBmLlEcJiaVSuPoghJ90Q+FIBSRKgzjkSQnfgv6JtZYYXSq7L9
+	 HRr1sVNZ9nq6FWzWNuGEvju3gKQ4XVKi6MrFi3VMo1H1EPOHpnH78etUnsIkVyOGZIB4M
+	 ItBhcuFpd/WY9oXZ59Na5S67g7zIE5IektKMfqQqQrAEU7O+S7N+dkaTYmymhouvmPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFpCQy0d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhizBa8E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAA660877C4;
-	Wed,  4 Nov 2026 21:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5707D606A84F;
+	Wed,  4 Nov 2026 21:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qFpCQy0d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249CD1F000C1;
-	Wed,  4 Nov 2026 21:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhizBa8E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BFC1F000C1;
+	Wed,  4 Nov 2026 21:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827039;
-	bh=Xyzz/88GpUqTT/nwP7162/KtMTbP2zx5JVkbweiTaS4=;
+	s=korg; t=1793827041;
+	bh=Eps6kcps0HjeQV7UDQ+r4kAxHHr7eURorDprz1sp7O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qFpCQy0dB4LbqsbywJfNpWca+b8wpnJar79EMRMCTkq5X5MWQNd84FThEtZi3eu9n
-	 IyLCzKsJTEij307/Un8jA1/16XuyxSPRnYpEcPBzWhKI2IwABr41h/r71QxbxuYKr8
-	 KpfAxRmvwQjbgo4Oa8V25BOpKr+ow67nh7vTqY50=
+	b=xhizBa8ErJlWfGLV+4IAlzYflAnniiWlqZJizJSn9RWR2dzg5CiC/BNCNNNKxkGNX
+	 gytaU/A6yST8XUlxPowrmcq6JCKPY33pJR6EfUGXA0WRTEMLbvICYccw9m8MNANCLd
+	 PHKJ1RxHGS8nobalOX26NUvcm/QXQdP7neKzbwzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.3 158/547] media: au0828: fix use-after-free in bulk_timeout timer on disconnect
-Date: Wed,  4 Nov 2026 16:05:42 -0500
-Message-ID: <20261104211042.647052622@linuxfoundation.org>
+Subject: [PATCH 7.3 159/547] media: cx23885: Fix use-after-free in cx23885_finidev due to race condition
+Date: Wed,  4 Nov 2026 16:05:43 -0500
+Message-ID: <20261104211042.673882481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,46 +67,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 521030837bee352515d5ea57cc6a29581db3506e upstream.
+commit 75016a992d9b03f5cc6df1414d1da35840d4feeb upstream.
 
-start_urb_transfer() arms dev->bulk_timeout, whose callback
-au0828_bulk_timeout() queues dev->restart_streaming; that work in turn
-calls start_urb_transfer() and re-arms the timer.
+In cx23885_v4l2_dev_notify_init, &dev->cx25840_work is bound with
+cx23885_av_work_handler, and &dev->ir_rx_work and &dev->ir_tx_work
+are bound with cx23885_ir_rx_work_handler and
+cx23885_ir_tx_work_handler. cx23885_irq can schedule these works on
+system_wq when an AV_CORE interrupt is received, and the IR subdevice
+can also schedule the IR works from its interrupt service routine via
+the v4l2_device notify callback.
 
-au0828_dvb_unregister() cancels restart_streaming on disconnect but does
-not sync bulk_timeout. au0828_usb_release() then frees dev with kfree(),
-so a timer still armed or pending at that point can fire after the free
-and dereference dev through timer_container_of().
+If we remove the device, cx23885_finidev makes cleanup and the memory
+allocated for dev is released by kfree(dev), while the works mentioned
+above may still be pending or running. The sequence of operations that
+may lead to a UAF bug is as follows:
 
-Sync the timer with timer_shutdown_sync() before cancel_work_sync().  The
-timer callback queues the work, so the timer must be stopped first; the
-shutdown variant is needed because the work re-arms the timer through
-start_urb_transfer().  The dvb->frontend == NULL early return guards the
-register-failure path where the timer was never set up.
+CPU0                                      CPU1
 
-This bug was found by static analysis.
+                                          | cx23885_irq
+                                          | schedule_work(&dev->cx25840_work)
+cx23885_finidev                           |
+cx23885_input_fini(dev)                   |
+cx23885_ir_fini(dev)                      |
+cx23885_shutdown(dev)                     |
+free_irq(pci_dev->irq, dev)               |
+pci_disable_device(pci_dev)               |
+cx23885_dev_unregister(dev)               |
+v4l2_device_unregister(v4l2_dev)          |
+kfree(dev)                                |
+// dev is freed                           |
+                                          | cx23885_av_work_handler
+                                          | // use dev (use-after-free)
 
-Fixes: 53460c53b761 ("[media] au0828: Add timer to restart TS stream if no data arrives on bulk endpoint")
+Fix it by canceling the works after the IRQ handler that can schedule
+them has been stopped, and before proceeding with the remaining
+cleanup in cx23885_finidev.
+
+Note that the flush_work() calls in cx23885_input_ir_stop() do not
+close this race: they only wait for works that are already queued or
+running at that moment, they do not prevent the IRQ handler, which is
+still registered at that point, from scheduling the works again
+afterwards, and they are skipped entirely when dev->sd_ir is NULL.
+The cancel_work_sync() calls are therefore placed after free_irq(),
+the only point at which no new work can be scheduled.
+
+Fixes: e5514f104d87 ("V4L/DVB: cx23885: Move AV Core irq handling to a work handler")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Assisted-by: Codex:deepseek-v4-flash
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/au0828/au0828-dvb.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/pci/cx23885/cx23885-core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/usb/au0828/au0828-dvb.c
-+++ b/drivers/media/usb/au0828/au0828-dvb.c
-@@ -537,6 +537,7 @@ void au0828_dvb_unregister(struct au0828
- 	if (dvb->frontend == NULL)
- 		return;
+--- a/drivers/media/pci/cx23885/cx23885-core.c
++++ b/drivers/media/pci/cx23885/cx23885-core.c
+@@ -2246,6 +2246,10 @@ static void cx23885_finidev(struct pci_d
+ 	/* unregister stuff */
+ 	free_irq(pci_dev->irq, dev);
  
-+	timer_shutdown_sync(&dev->bulk_timeout);
- 	cancel_work_sync(&dev->restart_streaming);
++	cancel_work_sync(&dev->cx25840_work);
++	cancel_work_sync(&dev->ir_rx_work);
++	cancel_work_sync(&dev->ir_tx_work);
++
+ 	pci_disable_device(pci_dev);
  
- 	dvb_net_release(&dvb->net);
+ 	cx23885_dev_unregister(dev);
 
 
