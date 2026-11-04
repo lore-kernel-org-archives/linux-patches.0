@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831818;
-	b=vd/5zL3C2FuxIkHxhghoFbwzSYOMzknYZKWI0ZrR4JzbH4jyQvmkmdSmTUN9AjgRp3td
-	 kcycKzGz/CIfrQ1DW8nZ+Nl2RokgSDHheqoudL+LDURMtHHoCvxS4Gr6i4MbZmD6vCAFt
-	 d/P84CZ7ND/ujwo9YkwCU4YOJUvC7kDel0eDY5CoCRaCoZQTSBBovRuEY1FxQb3Fq3MxW
-	 umnqNqOuWcJn+eK4HidAn+Cu82f7kOrEq0/97SqNGeXLN39Mh3mSr/BkGN3jnVyooW4Kq
-	 tuonPlPVBE/NdFGQIphZ0yXX3jDYRIbDpmoE8CWg0rFWMFm6iMd3SZJKuzWBs73b2Jg==
+	t=1793831819;
+	b=EwoDYIrPVWDGTlu4uZ3I3ZpDctNsY8VTKzaAuZH3JChQYGeZpL94pDYI2jmJBZ6mupzk
+	 CgBpv2gtHfcwuTg750ruw3HVYGJlnPheKh+TKdVSh3oh2BXRLlmNFzjH5tjbfxxuMO6uo
+	 dwM7Dcgl2W5M6AxRLnYUG1HA7pvPjxjF2XT04YubaETcWsyY308E736tF4UUsQP8HPZVw
+	 76C/4F200+a2y8Vs3HZ6riyJ+2py3l/hPa/4+1tMc+KBs6kPY2IVd0gtFFX5ghRFY6D3j
+	 xanoiuKMOZOm+UWHg6ph1sCKU7mqrPij+xQpO8UwlANtaKbNFohWaM5GQZJavo74AVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gQ+7PTFtlwuyeD2IeiHcqSrUS4IPm42Z+kWdCoG+HaI=;
-	b=Mf+hXu+VbtgVUXvmsmVFtbc4TnMgf6bJeNUS6tx/+IuJE4vgxfPPdF2OHGsDPINNaBPX
-	 321aPgGDBZ8V0FMiqj/M7szQKKfiWbnt6GRoyKmwQ2St5ucYcGV9erTyB+LiiWYC/H+gI
-	 C0ZMS2k86xpJe5+HspEQ6TioPKjMTI9lyyt6pfBKLfDGBmCoC7DsHVVMy7XnnJJ+qz2wT
-	 PIcZgr5PnIx8LSBf9oFpRTv4QL61pHSDlcJ15EUzzbYZxSCC+3Tb7kSynsxnY16UG4NSr
-	 LqOdNHiIy1LUzpsLtcgOAFwDqjLYzOQW4elFWPaug4CL1mHFkOw4TUbhS0BixWRfX0w==
+	bh=647kDBaZEnDL8PtZo2JffOwWfUjjoW4Xmc+IhFCfX4Y=;
+	b=GKa+WYzIf7Tfc5ZTpJDYZaR9lTx7mAamVnhBN8AfqX2jGtL4ihoid0TUsdhFNsSDA6pI
+	 zC4LWgknW3CxmZr19uLrTH/qzBvmOeoA0FFA8kgnSXzsRYO6noqrQhXBdb0ViRbImDmr/
+	 7Q6aaTrv+Tsxh3LS7cXmErNCu18sX7Z8xy0B1avYxOHm/yylQn99hQfco3k9alGaGAHli
+	 +D4LDhUpO97ynkkfFHftk5uptx5/EUTLo107mqnLwbGnL4uw/H8Wr9eioD5idV4TJScKs
+	 wlPHv9kBoWNA6vhcmX7Z249xPjlz/oSCnlH7Z3/vklvM6Yy8ZRb8doVKM/Ezos02Ysg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcQEiqe1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xF2riPOm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F326E606A847;
-	Wed,  4 Nov 2026 22:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CD5606A847;
+	Wed,  4 Nov 2026 22:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcQEiqe1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A621F000C1;
-	Wed,  4 Nov 2026 22:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xF2riPOm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEF41F000C1;
+	Wed,  4 Nov 2026 22:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831817;
-	bh=gQ+7PTFtlwuyeD2IeiHcqSrUS4IPm42Z+kWdCoG+HaI=;
+	s=korg; t=1793831819;
+	bh=647kDBaZEnDL8PtZo2JffOwWfUjjoW4Xmc+IhFCfX4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XcQEiqe1mBELFgJnkNx+SK2QhFmO5daJvVEB/3a7t/4QhY1wRasiZPPdIyNOJzDN6
-	 TQGVlT70TqB0sg1E7JiUc+6XM6elsnxmbgzU9JXj8dUSx51+IstsGjx7iPq3/nIFeU
-	 SAZ04aPYqDWMqOs/pBgBHMu/8NMZeRIMmNwAoRdI=
+	b=xF2riPOmJ7stxgJjA+vVVX+iS4I4bnCsIRHqsKsp/rzIoSxZCep8kL3mW6Feklqob
+	 YI+WcTreyvNy4MbMyc0DFQFkYQEXKVNEOD27AbPf7amamS6gtJMVasLNZKyUORSbGV
+	 jiJaKuAzNIioVdDRaOrmdT4g8eceVoybtuloxYjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 0930/1005] KVM: VMX: Preserve negative return value in vmx_handle_exit() with bus lock detected
-Date: Wed,  4 Nov 2026 16:11:03 -0500
-Message-ID: <20261104211109.187691607@linuxfoundation.org>
+Subject: [PATCH 6.18 0931/1005] KVM: x86/mmu: Bug the VM if KVM attempts to walk more levels than the MMU has
+Date: Wed,  4 Nov 2026 16:11:04 -0500
+Message-ID: <20261104211109.212622348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,46 +66,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit cef48693da1e964e9f192bfc16cd0ed287c48337 upstream.
+commit 115f9405a2ed6d78ee7ad8436bdd638743f6d1d4 upstream.
 
-Preserve the negative return value from __vmx_handle_exit() when a bus
-lock is detected, instead of always overwriting it with 0.
+Extend the "EFER.LMA && !CR4.PAE" check, which exists largely to guard
+against KVM configuring a paging32 MMU with more than 2 levels of paging,
+with a very explicit check for exactly that: that KVM isn't trying to walk
+more levels of paging than the MMU template provides.  I.e. harden KVM
+against all bugs that would cause KVM to generates accesses beyond the
+bounds of guest_walker's arrays, regardless of how KVM ended up with the
+misconfigured MMU.
 
-The purpose of bus_lock_detected handling is to force a userspace exit to
-inform userspace that a bus lock happened. The negative return value can
-achieve this purpose, and changing the negative value to 0 fails to return
-an error to userspace. So, preserve the negative return value.
+Note, don't use w->cpu_role.base.level directly as the paging64 template
+only provides two levels of page tables for PAE paging on 32-bit hosts, and
+handles the third level by manually emulating the PDPTR access.
 
-Fixes: fe6b6bc802b4 ("KVM: VMX: Enable bus lock VM exit")
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260805034602.5B2BB1F000E9@smtp.kernel.org/
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-7-xiaoyao.li@intel.com
+Link: https://patch.msgid.link/20260902232028.2767071-4-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/kvm/mmu/paging_tmpl.h |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6645,11 +6645,12 @@ int vmx_handle_exit(struct kvm_vcpu *vcp
- 	 * a bus lock in guest.
- 	 */
- 	if (vmx_get_exit_reason(vcpu).bus_lock_detected) {
--		if (ret > 0)
-+		if (ret > 0) {
- 			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
-+			ret = 0;
-+		}
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -349,13 +349,14 @@ retry_walk:
+ 	pte_access = ~0;
  
- 		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
--		return 0;
- 	}
- 	return ret;
- }
+ 	/*
+-	 * Queue a page fault for injection if this assertion fails, as callers
+-	 * assume that walker.fault contains sane info on a walk failure.  I.e.
+-	 * avoid making the situation worse by inducing even worse badness
+-	 * between when the assertion fails and when KVM kicks the vCPU out to
+-	 * userspace (because the VM is bugged).
++	 * Queue a page fault for injection if any of the below assertions fail,
++	 * as callers assume that walker.fault contains sane info on a walk
++	 * failure.  I.e. avoid making the situation worse by inducing even
++	 * worse badness between when the assertion fails and when KVM kicks
++	 * the vCPU out to userspace (because the VM is bugged).
+ 	 */
+-	if (KVM_BUG_ON(is_long_mode(vcpu) && !is_pae(vcpu), vcpu->kvm))
++	if (KVM_BUG_ON(is_long_mode(vcpu) && !is_pae(vcpu), vcpu->kvm) ||
++	    KVM_BUG_ON(walker->max_level > PT_MAX_FULL_LEVELS, vcpu->kvm))
+ 		goto error;
+ 
+ 	++walker->level;
 
 
