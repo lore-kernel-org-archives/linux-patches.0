@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829216;
-	b=yHFQv7z69CJuo92jJeWw8Y/9rUMk0crA7+a6EkbRx6ibmUCejrD2WoS/NFgWiL1dDGxi
-	 y/aUKEJ+xvjAI3yEG9RxnjIHTu6NpvZ+Vsktc2nQKziuroxB14WKtvLgevJtXiJlCc1TS
-	 a6zk8JKx73I70kgypMRo4ZnzwI1atKgO0OlbOxYJjvfRnBm/doUHNeMrfPJuu9cvhhwb5
-	 Ch7GgVmckV/mVJb7skBjzz9URkDMpd37WMFRr0ibM/7E2/sas4z4Y9VjlzU91MyGAPVWG
-	 vjOydU+/zjl/XtMN0GpajF28jRxVw+od6kGdJf1IU4pd59uYOLYf08XvwHgV3Hq0Qbw==
+	t=1793829217;
+	b=5eNqJ4XLz7RbRdMrLh8C4ishutFmx9JZGquv/EQbHOdsnuEbuh/nGftqA1/Wpbbfj1/a
+	 GuGWo1FtnYr0AIjyj6XtUWAxBHzy6ObIfl3KP898+IE+1fpemvFgLIMPyjntTLNk2vDW1
+	 trGg2NGiaCU+29FTY2oqoNfqoH+naohnL3xa2jXLwkPcTvp81F7PJhCEvSk3/DARJ9kAQ
+	 7hxkDu2P3P62qfZIdIUOAiwlN+qIsgh8YvddLJtd8I1UQN0PZLoz9Y41ZlpE8tUZ9atGo
+	 3TNvoPJJn7cy6YDIcsMHhEssacNdpLApAqqwlJ2NmHPdZUcamMD6EoDa7GoH+W3IvmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829216;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829217;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dlFgcRgRBqBeHByj51RbtdySKPUtNoJ40vu3mosPVy8=;
-	b=0OMVTfjYAN4mY1SMTqSYMs57Y3ho8X7FTBwhh5WaQVTvKy5GI7Lv/xrQHpTiBQIPG+81
-	 J7TQZXUK4e5QK7SBimeKA14I3d8XltolipaG8PmXZppyWZESvmD+jpK4REsQTvLbba106
-	 0S7gDaG2PoLvG842Nwf8MIAHMeMQTTLH4fLZ08viqJ2VkLa5pGfcKYjg6MfnlA6ZKNTm2
-	 kDn0ne4n26Ii/PB1HWF5kbv8bl72IsvpCdjsb/0Lc8rdBM8iT14WnW/x5jv+0kq1R/QJ+
-	 fuTujvtwmtxhuFldvZjfAEuBLJK8ToI/VXpnLn7DlRvrg6gnzaQaxe/U2oB1g2V9yHw==
+	bh=3SjW8i7DbpuKjwBT3AAm+F6S0Q5Cbol3X/Cy6s4EgwY=;
+	b=NdpDiN88nqlOv7ONIZNdKg/j2IlDLKlIcakBBoW06NuoNGfYHrm6112G1uF5MCW3BfX9
+	 oHcRVA5vAMixiliuIXNgZ37NVQegsvv2bq13PYvo/Ca35lymSZz1pm+4LRYwK2C9oYdbE
+	 xH2Uh1zW8FyfYYQUF+rV0pN5VzdxhvoQRrVPPv2u8sqmnUCP+84ZzLuOhZabFJ6unFeyb
+	 2o2WW6IW6E0Y+IjcOKdQ1o2dlm20VtbaDZn5PUuiTAuTwLEWXFajZuVgh4YFaGoSTr3qT
+	 FJ7PaLC+ymCypTMNVr4Y+ssy/BfQq68PMKnSPrtmxCJaDBZuSw1xekWbiqUvEg66nJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFr64U8N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rrZyZhox;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40736070A88;
-	Wed,  4 Nov 2026 21:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2326C6070323;
+	Wed,  4 Nov 2026 21:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFr64U8N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AE11F00A18;
-	Wed,  4 Nov 2026 21:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rrZyZhox
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89521F000C1;
+	Wed,  4 Nov 2026 21:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829215;
-	bh=dlFgcRgRBqBeHByj51RbtdySKPUtNoJ40vu3mosPVy8=;
+	s=korg; t=1793829217;
+	bh=3SjW8i7DbpuKjwBT3AAm+F6S0Q5Cbol3X/Cy6s4EgwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IFr64U8NASNmNEvky62mfwiERLXVcQ10D5dIbxp4fMEbIzk/o+Vz/n3oODM+/61xr
-	 Knu7yOlNVXqNLB4zbhVfSdp8ceKmpEcTNtc9c7CQ3nulUAs2x++3CVco1OCbx42YfG
-	 bDMA4RmwAeXAx+lp8va0uzmHa/KZvVAvfJPxlfs4=
+	b=rrZyZhoxDz2J4O44eO5QR8lhU1qi+kVgcbEN/6WIJG1vcnW20A1jkJIGWZSGYjpkm
+	 GMrp6cBJ31m4K+HSZA0oi4XyIjcjZEGzaxQa7ZXkVXN6pAV5W6L7CFxCcS+xY3sqNa
+	 OxgwX8IppH2MVLDxll3HVa2492tbnCD8IzKN9wb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.3 481/547] KVM: PPC: Book3S HV: Add preempt_disable() around virtual-mode HPTE bit-lock users
-Date: Wed,  4 Nov 2026 16:11:05 -0500
-Message-ID: <20261104211052.041001178@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>
+Subject: [PATCH 7.3 472/547] KVM: TDX: Check if there is valid exit infos based on vp_enter_ret
+Date: Wed,  4 Nov 2026 16:10:56 -0500
+Message-ID: <20261104211051.776126872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,90 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-commit abbbe5ff83e7c9ed3a4d61b73011f1df7bf87907 upstream.
+commit 0966c881ea13be5ec89820c185de4d55568e80ed upstream.
 
-kvmppc_hv_find_lock_hpte() requires virtual-mode callers to run with
-preemption disabled, because it can return with HPTE_V_HVLOCK still held
-until the caller later unlocks the HPTE.  Existing virtual-mode callers
-in book3s_64_mmu_hv.c already follow that rule.
+Check if there is valid exit info based on vp_enter_ret instead of relying
+on the clobbered Exit Reason, in tdx_get_exit_info().
 
-Two virtual-mode call paths do not:
+Current KVM uses "Exit Reason is not equal to the synthesized invalid
+Exit Reason, -1u," as the condition to identify there is a real TD Exit
+and valid exit infos.  However, there is one issue with this approach:
+KVM updates the Exit Reason to the synthesized invalid Exit Reason for
+real EPT MISCONFIG as well.  This is a false positive for real EPT
+MISCONFIG, which has valid exit infos.
 
-1. kvmppc_handle_exit_hv() calls kvmppc_hpte_hv_fault() for hash-mode
-   data-side and instruction-side faults after guest exit, with
-   preemption already enabled.  kvmppc_hpte_hv_fault() calls
-   kvmppc_hv_find_lock_hpte() directly.
+Though the issue can be addressed by changing the handling for real EPT
+MISCONFIG to not update the Exit Reason to the synthesized one, relying
+on the clobbered Exit Reason itself is brittle.  Instead, check
+vp_enter_ret directly to identify if it is a valid Exit Reason.
 
-2. kvmppc_pseries_do_hcall() executes virtual-mode handlers for HPT
-   hcalls via kvmppc_pseries_do_hpt_hcall() with preemption enabled.
-   The handlers for H_ENTER, H_REMOVE, H_READ, H_CLEAR_MOD, H_CLEAR_REF,
-   H_PROTECT, and H_BULK_REMOVE spin on try_lock_hpte() or lock_rmap(),
-   and H_ENTER also reaches kvmppc_do_h_enter(), which uses
-   arch_spin_lock() on kvm->mmu_lock.  That raw lock choice is
-   intentional because kvmppc_do_h_enter() is also used by real-mode
-   callers, so the correct fix is to establish the proper preemption
-   context at the virtual-mode caller boundary.
-
-If a vCPU thread is preempted while holding HPTE_V_HVLOCK, any other
-thread on the same CPU trying to acquire the same bit-lock can spin
-indefinitely.  The same applies to lock_rmap() users and to the H_ENTER
-path while holding the raw mmu_lock.
-
-Fix this by adding preempt_disable()/preempt_enable() pairs around the
-two kvmppc_hpte_hv_fault() call sites in kvmppc_handle_exit_hv(), and
-around the kvmppc_pseries_do_hpt_hcall() invocation in
-kvmppc_pseries_do_hcall().  Targeting only the HPT hcall helper avoids
-wrapping non-HPT hcalls (such as H_RTAS, H_CONFER, H_REGISTER_VPA) that
-perform page faults, blocking memory allocations, or context switches.
-
-Fixes: 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual mode handlers for HPT hcalls and page faults")
-Cc: stable@vger.kernel.org # v5.14+
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260928122837.8782-3-amachhiw@linux.ibm.com
+Fixes: da407fe45908 ("KVM: TDX: Handle EPT violation/misconfig exit")
+Cc: stable@vger.kernel.org
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Link: https://patch.msgid.link/20260819094903.3060020-3-xiaoyao.li@intel.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kvm/book3s_hv.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kvm/vmx/tdx.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -1212,9 +1212,11 @@ int kvmppc_pseries_do_hcall(struct kvm_v
- 	case H_CLEAR_REF:
- 	case H_PROTECT:
- 	case H_BULK_REMOVE:
-+		preempt_disable();
- 		idx = srcu_read_lock(&kvm->srcu);
- 		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
- 		srcu_read_unlock(&kvm->srcu, idx);
-+		preempt_enable();
- 		if (ret == H_TOO_HARD)
- 			return RESUME_HOST;
- 		break;
-@@ -1834,8 +1836,10 @@ static int kvmppc_handle_exit_hv(struct
- 		else
- 			vsid = vcpu->arch.fault_gpa;
+--- a/arch/x86/kvm/vmx/tdx.c
++++ b/arch/x86/kvm/vmx/tdx.c
+@@ -921,21 +921,27 @@ static __always_inline u32 tdcall_to_vmx
+ 	return EXIT_REASON_TDCALL;
+ }
  
-+		preempt_disable();
- 		err = kvmppc_hpte_hv_fault(vcpu, vcpu->arch.fault_dar,
- 				vsid, vcpu->arch.fault_dsisr, true);
-+		preempt_enable();
- 		if (err == 0) {
- 			r = RESUME_GUEST;
- 		} else if (err == -1 || err == -2) {
-@@ -1881,8 +1885,10 @@ static int kvmppc_handle_exit_hv(struct
- 		else
- 			vsid = vcpu->arch.fault_gpa;
+-static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
++static __always_inline bool tdx_is_exit_reason_valid(u64 vp_enter_ret)
+ {
+-	struct vcpu_tdx *tdx = to_tdx(vcpu);
+-	u32 exit_reason;
+-
+-	switch (tdx->vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
++	switch (vp_enter_ret & TDX_SEAMCALL_STATUS_MASK) {
+ 	case TDX_SUCCESS:
+ 	case TDX_NON_RECOVERABLE_VCPU:
+ 	case TDX_NON_RECOVERABLE_TD:
+ 	case TDX_NON_RECOVERABLE_TD_NON_ACCESSIBLE:
+ 	case TDX_NON_RECOVERABLE_TD_WRONG_APIC_MODE:
+-		break;
++		return true;
+ 	default:
+-		return -1u;
++		return false;
+ 	}
++}
++
++static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
++{
++	struct vcpu_tdx *tdx = to_tdx(vcpu);
++	u32 exit_reason;
++
++	if (!tdx_is_exit_reason_valid(tdx->vp_enter_ret))
++		return -1u;
  
-+		preempt_disable();
- 		err = kvmppc_hpte_hv_fault(vcpu, vcpu->arch.fault_dar,
- 				vsid, vcpu->arch.fault_dsisr, false);
-+		preempt_enable();
- 		if (err == 0) {
- 			r = RESUME_GUEST;
- 		} else if (err == -1) {
+ 	exit_reason = tdx->vp_enter_ret;
+ 
+@@ -2141,7 +2147,7 @@ void tdx_get_exit_info(struct kvm_vcpu *
+ 	struct vcpu_tdx *tdx = to_tdx(vcpu);
+ 
+ 	*reason = tdx->vt.exit_reason.full;
+-	if (*reason != -1u) {
++	if (tdx_is_exit_reason_valid(tdx->vp_enter_ret)) {
+ 		*info1 = vmx_get_exit_qual(vcpu);
+ 		*info2 = tdx->ext_exit_qualification;
+ 		*intr_info = vmx_get_intr_info(vcpu);
 
 
