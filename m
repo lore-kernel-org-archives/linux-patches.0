@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828850;
-	b=mnZM7q/FBNAaKQRsVTnOLQHHQq21keEDn82hq6HRUbkgC8ltPFJKaw9y3d3FAz2cSGbh
-	 p3jTptwG53cFSTxOspZNzZ5otC90C7EPIldV87E2Lmhz1K0MBb5QnJ7jWso221ClVKzfG
-	 RgAMg6F8BKQe+2kgLqpxfVLnp5abJJWaFZwTT+NUmG9PcvVjqfqDuoISygsr+ybv4ShGD
-	 Y+8ciSmMpdXV3xRNqBTDsP4ODvXRvbS+por2fXSNzU/RGHCiYyI1ZAfO/TYnLRPfAJnXu
-	 lgtWnC7MWmXPlyRbMIePII3GksT2nn33rQfQjDd4eUgZuWaMfHMbtzzZS/CrXDZWkAQ==
+	t=1793828852;
+	b=HtmANxW0LlMmFUzIBfPviY20HJfdbhNHpShfRlMjhm7jfFEn/ntrSFazfny6ZSK6WO0Q
+	 faysoX6sMeFOJBOxLpLxvziffJIgNX+wDMGQqHSiJObBne3N9Rap0cgl1ixRZ7JkZIRcV
+	 Df0te8OkdTPBenKM3wwcuo20LE8ZC0kv2cGtqJakn3Jsi9qw7WUIE/22sDvxVSLStrqYv
+	 QLwokUQOdPyLQzEa0jXuxO56WkNWuu6lWydG3ETa2jtXJAhRJR5p6dT5pTMiF/alB0VcD
+	 xQTcZDRsCuRf98KdXtunUVOTkVxfGCxI9FmNIgNCGArg/29JdMNl3qVqsvwOn1pqHBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828852;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tJDCEn1i23eN2lLMkC6QsqASGv6nPjaKV0TVsf8smxc=;
-	b=uVqf33odIAm4bztIEadtRlL9m5lRIK+hj9uS6zg5gTbxEJ8OsSmyYYbRCh6VWggxbTt1
-	 OCizwY9zf4AQmtoCBEWOpyZGvHFLS6TJn1wc6zcEhQ7rQdiLMHJZXvFxVw8VL3u5kgWbp
-	 Q1pw4MsSGgvxiDMOa9WjeX5uUN+J8HVaAVfe2AhXfHJh1Dk5csmM8YwuytNXatqFDkku6
-	 KYqVerm/fPljumHxylHVnN8L/t/TYdXSIfH2TZjfgxgXMUVcqFZvpz5ef7AOV0+NWBIBZ
-	 DBAGI7Tf3jrNARcC/0VWvAj0QZAstoW+GkQQdU5bi5fp0/EBXzDLCXqSi64BjNYYpsA==
+	bh=K6rl0+8Tx5GcaqoEuxXMAcaZLgp5RkgENrHn4pIUXag=;
+	b=bAsVD5zTbRG2xlVjmZP4TBvwEJmn+WdKuOxHqyREheN7ttGKl5R9z2K37+VCGixcWskE
+	 5Jg7dJP8SsIvniez6M30Xc4H+37Bc99gQ1z6SobYvWs97rKarlNyLmxyNcmnxsxfaqdbt
+	 yme1VjsUnFddDmXhWJXmvc35CjAMSuJDsr5seVG2BBOtbTN6E8m24eJM4wacKZpmq+puv
+	 8AIw9U1+DcH2reeG016MgpUBXOSfe6ZVxvNIcHHiock4TJLgeanFoCwjt2ZGN19+OvnrN
+	 lJIiyL2sWGlAKA1zBAR/6eNQYIuZvR3Z4nRtOg3SeoPMAyQK1OIXoFQ0wjq0D4qHVRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XPBq4/CX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPLNqvcy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AA5606A32D;
-	Wed,  4 Nov 2026 21:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD879606A32D;
+	Wed,  4 Nov 2026 21:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XPBq4/CX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47191F000C1;
-	Wed,  4 Nov 2026 21:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPLNqvcy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DAC1F000C1;
+	Wed,  4 Nov 2026 21:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828850;
-	bh=tJDCEn1i23eN2lLMkC6QsqASGv6nPjaKV0TVsf8smxc=;
+	s=korg; t=1793828851;
+	bh=K6rl0+8Tx5GcaqoEuxXMAcaZLgp5RkgENrHn4pIUXag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XPBq4/CX7graWI8/umZsoldcneff7U8mH2whcdCXcz9o9RJ6ul9JMucSMcxHED85v
-	 KdkvVOyjpiRmtIwx3h/0Jx+y7CB0I53sLLnkXm5Ve8RU6uEWNJSPhBMP6pu3dHD/fM
-	 HaMMSFPHpiBU2LeRlSFY1uw8wl0LKBFMxwjGw/Vk=
+	b=uPLNqvcyBxSTLgelsB7DpgFNyl7VSXS+KRWJwG+lQ+IS071xzWWO2RwrYdQo0DZ0e
+	 c1yEUh/I1k5ljMrH4NAKuuKf/GQVKwq7M1j1F2+dJGVphr3FSEZdRde0Ite9yRfjDd
+	 qYJnpUZMqj6ysFhYoRDB1gI/e6KjKiX22rHReaCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com,
-	syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com,
-	Eduard Zateev <hackerowskiy@gmail.com>,
-	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.3 280/547] smb: client: hold server info until cifsd exits
-Date: Wed,  4 Nov 2026 16:07:44 -0500
-Message-ID: <20261104211046.156838099@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.3 263/547] media: rc: Ensure registered is cleared in error path
+Date: Wed,  4 Nov 2026 16:07:27 -0500
+Message-ID: <20261104211045.664031124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,142 +67,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zateev <hackerowskiy@gmail.com>
+From: Sean Young <sean@mess.org>
 
-commit 482c117c6dbeee382790168af10959810450ab09 upstream.
+commit 37efd09ba2c62e46e3a3a793025c186f8cd1a417 upstream.
 
-The last session reference can be dropped while the cifsd demultiplex
-thread is still running clean_demultiplex_info(). That thread frees
-TCP_Server_Info there, racing with cifs_put_tcp_session() as it releases
-the server crypto state. syzbot reported a KASAN use-after-free in
-cifs_crypto_secmech_release().
+If rc_register_device() fails, ensure that registered is not set to true.
+If lirc_register() succeeded, then userspace could have an open file
+descriptor open. This leads to a use-after-free.
 
-Keep an object reference for the cifsd thread. Defer final crypto,
-session-key, network namespace, string, and structure cleanup until both
-the last session reference and the thread reference are dropped. Drop the
-thread reference after clean_demultiplex_info() has finished using the
-server.
+lirc_unregister() must be called with registered = false, else there is a
+possibility that an fd is open and polling, which would never return
+POLLERR unless registered is false.
 
-Build-tested with ARCH=arm64 and W=1 for
-fs/smb/client/connect.o. The KASAN reproducer was not run on the patched
-kernel.
+Note that registered must be changed under dev->lock, many functions
+read registered under lock (e.g. lirc_ioctl).
 
-Fixes: a5c3e1c725af ("Revert "cifs: No need to send SIGKILL to demux_thread during umount"")
-Reported-by: syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5c3ed2a0de3270efc921
-Reported-by: syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=c2ec61adfbcb24e5ec20
-Assisted-by: LLM OpenAI Codex
-Signed-off-by: Eduard Zateev <hackerowskiy@gmail.com>
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Tested-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h |    2 ++
- fs/smb/client/connect.c  |   33 +++++++++++++++++++++------------
- 2 files changed, 23 insertions(+), 12 deletions(-)
+ drivers/media/rc/rc-main.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -16,6 +16,7 @@
- #include <linux/scatterlist.h>
- #include <linux/mm.h>
- #include <linux/mempool.h>
-+#include <linux/refcount.h>
- #include <linux/workqueue.h>
- #include <linux/utsname.h>
- #include <linux/sched/mm.h>
-@@ -679,6 +680,7 @@ struct TCP_Server_Info {
- 	spinlock_t srv_lock;  /* protect anything here that is not protected */
- 	__u64 conn_id; /* connection identifier (useful for debugging) */
- 	int srv_count; /* reference counter */
-+	refcount_t obj_refs; /* struct lifetime: srv_count users + cifsd */
- 	int rfc1001_sessinit; /* whether to estasblish netbios session */
- 	bool with_rfc1001; /* if netbios session is used */
- 	/* 15 character server name + 0x20 16th byte indicating type = srv */
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1062,6 +1062,19 @@ cifs_enable_signing(struct TCP_Server_In
- 	return 0;
- }
- 
-+static void cifs_tcp_server_put(struct TCP_Server_Info *server)
-+{
-+	if (!refcount_dec_and_test(&server->obj_refs))
-+		return;
-+
-+	cifs_crypto_secmech_release(server);
-+	kfree_sensitive(server->session_key.response);
-+	put_net(cifs_net_ns(server));
-+	kfree(server->leaf_fullpath);
-+	kfree(server->hostname);
-+	kfree_sensitive(server);
-+}
-+
- static noinline_for_stack void
- clean_demultiplex_info(struct TCP_Server_Info *server)
- {
-@@ -1147,14 +1160,11 @@ clean_demultiplex_info(struct TCP_Server
- 		 */
+--- a/drivers/media/rc/rc-main.c
++++ b/drivers/media/rc/rc-main.c
+@@ -1929,7 +1929,8 @@ int rc_register_device(struct rc_dev *de
+ 			goto out_raw;
  	}
  
--	put_net(cifs_net_ns(server));
--	kfree(server->leaf_fullpath);
--	kfree(server->hostname);
--	kfree_sensitive(server);
--
- 	length = atomic_dec_return(&tcpSesAllocCount);
- 	if (length > 0)
- 		mempool_resize(cifs_req_poolp, length + cifs_min_rcv);
-+
-+	cifs_tcp_server_put(server);
- }
+-	dev->registered = true;
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = true;
  
- static int
-@@ -1731,7 +1741,7 @@ cifs_put_tcp_session(struct TCP_Server_I
- 	else
- 		cancel_delayed_work_sync(&server->reconnect);
- 
--	/* For secondary channels, we pick up ref-count on the primary server */
-+	/* For secondary channels, drop the reference on the primary server */
- 	if (SERVER_IS_CHAN(server))
- 		cifs_put_tcp_session(server->primary_server, from_reconnect);
- 
-@@ -1739,15 +1749,11 @@ cifs_put_tcp_session(struct TCP_Server_I
- 	server->tcpStatus = CifsExiting;
- 	spin_unlock(&server->srv_lock);
- 
--	cifs_crypto_secmech_release(server);
--
--	kfree_sensitive(server->session_key.response);
--	server->session_key.response = NULL;
--	server->session_key.len = 0;
--
- 	task = xchg(&server->tsk, NULL);
- 	if (task)
- 		send_sig(SIGKILL, task, 1);
-+
-+	cifs_tcp_server_put(server);
- }
- 
- struct TCP_Server_Info *
-@@ -1769,6 +1775,7 @@ cifs_get_tcp_session(struct smb3_fs_cont
- 		rc = -ENOMEM;
- 		goto out_err;
+ 	rc = device_add(&dev->dev);
+ 	if (rc)
+@@ -1949,7 +1950,7 @@ int rc_register_device(struct rc_dev *de
+ 	if (dev->allowed_protocols != RC_PROTO_BIT_CEC) {
+ 		rc = lirc_register(dev);
+ 		if (rc < 0)
+-			goto out_dev;
++			goto out_lirc;
  	}
-+	refcount_set(&tcp_ses->obj_refs, 1);
  
- 	tcp_ses->hostname = kstrdup(ctx->server_hostname, GFP_KERNEL);
- 	if (!tcp_ses->hostname) {
-@@ -1907,6 +1914,8 @@ smbd_connected:
- 		module_put(THIS_MODULE);
- 		goto out_err_crypto_release;
- 	}
-+	/* Keep the server alive until the demultiplex thread has exited */
-+	refcount_inc(&tcp_ses->obj_refs);
- 	/* thread created, put it on the list */
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_add(&tcp_ses->tcp_ses_list, &cifs_tcp_ses_list);
+ 	if (dev->driver_type != RC_DRIVER_IR_RAW_TX) {
+@@ -1972,11 +1973,18 @@ int rc_register_device(struct rc_dev *de
+ out_rx:
+ 	rc_free_rx_device(dev);
+ out_lirc:
+-	if (dev->allowed_protocols != RC_PROTO_BIT_CEC)
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = false;
++
++	if (device_is_registered(&dev->lirc_dev))
+ 		lirc_unregister(dev);
+-out_dev:
+ 	device_del(&dev->dev);
++	/* registered already cleared above */
++	goto out_free_table;
+ out_rx_free:
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = false;
++out_free_table:
+ 	ir_free_table(&dev->rc_map);
+ out_raw:
+ 	ir_raw_event_free(dev);
 
 
