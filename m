@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831412;
-	b=UDcGlXumH6EXpN108fih99atMoHs1Wd2vClQXPM4OsDjPHGefI+bThQXHqJy4/UIRiqO
-	 1emReEgifjCZIc9ApL8LlhE7qL5hHygdscfbFOhfvo7W3GhQ6dbYyLb/2QZGlVT13Nu2g
-	 HXSNmR75PCyCZYNAh+NrckO/xr3fGi/t3yWchzsIJ9l8DmRISsPpL4u2assYfTFuuThDD
-	 Mzm+Io1hRBrlEI0Xy+L50aG2fs24c5KAJrvDLJ8r7hHJGN/3wv60aOj1BWfLuOKE3T1Vr
-	 wG2l7ZbXCOheiest3N2nFBXOQojeyRWmavFcaEa+CGUJsVSuLo+Yp8dhUbP9TQjP2CA==
+	t=1793831414;
+	b=iY3Tud8rX+zxagJ8b2TdVADf7iAnb+Rwt5mwM9QjI/C3YwY/dYX9ttDokWSrbcTCmjfb
+	 42D/e0wc/222rMZxQzaYq1nrrKiZACmTSB9SqZ1tgvAk4Phjiy4bH6MgCDtGWYHCzHUgS
+	 pykVcNlaLTpljCYQqq7zOYpyeXKvNcZG6IEgvJM4e8KB9X+pKaQMjyCFdDLNvo6jqWpNS
+	 yc5nLpsiWSAyXHYtCFUctk/jU+GHv/64A1OxUVMIKY0qXumamftjCoEM5raWjoaBX6/AN
+	 5le8BS/cO5yjvBEaRDE755woJi1w0cSLL3zoZqEdcNFY2ZejWTvqPfJJDU0rGbDiRpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831414;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mfufBmCGbIQF6+1aZvpN1m+7bpj24utAR45fK92Y/lY=;
-	b=RCcY1vuW0InNGvF0EYFpLLkcsy2UUBmxgvKE/KDz0U1RRaXzGUAa2dihAHSv5kPR7F6f
-	 G0u1m4kAJrSLGk/juOMCZsgdIifSP11J+DoQ4iRyIj0LclBg7US4up4F/FJS61cwTsa+g
-	 334iwbzOU7vl6f3dxz8JjZ4tpbIORetFKot7BsTRjP+Tjpv/7PrNOb22P5nU7J3Oo+YTA
-	 Dgpfstp8ibpJORjXgMeqejJ6Bkuol4XYTHeEcXctFA02j682GP2fN6t5Oo43CmirKiMrv
-	 6mku1+maRwQcqYahyzFLGPFlG4rpPdBzMp7DOs1peddC4bjPJ6CLDJ0iDtnpQ8EbJmg==
+	bh=mm3MHz+aDp2PjkRKNN5XnE6IaijVZTqtB37uzSZIVVw=;
+	b=ZRYczTJk+vSR4A027BcDxYU5zyUkwGvpfwpisD1C25bo1KVQH7mFabmHgQKDB92Dplns
+	 e9UUD02ajVZuTZ60fxSNtE31h90BE9Wow6r0cz5tbLJyNZNPYtucHVULAsnD9hzKkU/k1
+	 2f3v8CEsOwhRnBiDn0VSEGJajTn05Ll5VB36keKy8/PTb5Dh0CSuMsIpwK+8IJSx75FOh
+	 h+RnOw0WVTRABK1rTqSmwxT0W3IThTK5/KAn+c7ob++7RR10mC+XFwcMeBa92yop3Wq/w
+	 T541kBUOBIQJ7s5iYSQfqp29CEJ+6cDETWDRvx48Q8rRwthWwhyl8ACeIZUBS//fG2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgSmYAJx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIMoq9Iq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714D1606AB04;
-	Wed,  4 Nov 2026 22:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04802606AB0A;
+	Wed,  4 Nov 2026 22:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgSmYAJx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A59A1F00A16;
-	Wed,  4 Nov 2026 22:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIMoq9Iq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6731F00A02;
+	Wed,  4 Nov 2026 22:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831412;
-	bh=mfufBmCGbIQF6+1aZvpN1m+7bpj24utAR45fK92Y/lY=;
+	s=korg; t=1793831413;
+	bh=mm3MHz+aDp2PjkRKNN5XnE6IaijVZTqtB37uzSZIVVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IgSmYAJxPLHgAvOtJPv4LZm+Ipy0KCIi6JCouFZGoB8sa6Fyw19xoEyt9nPfaNeb4
-	 ZHR69DTYwXfAu1PGp8ZAfNVqyXaZLYgCNGORTP7buz6OdAEBtQtNBWGMoSP937v1uH
-	 TVKI569wDr810hxaVTOyQzgqSQ9Bunzq6/fh+tDc=
+	b=nIMoq9Iq8uXBVy2QauUWUCy4VZuazbKi+oaVkOb6/Dk21DZRZKgjiUFVTGi8EcWE2
+	 wCgmm5FwUC+u2wMkliiGn27LWREW2D5tgGpY0KWV9r1cIEYfKWEptiskZ70eVBLQ2z
+	 FWunr/H4aCqCOL2s1AidgHtHKLgKxQotNZLeEOTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 0690/1005] HID: wacom: Use hdev->product in wacom_setup_touch_input_capabilities
-Date: Wed,  4 Nov 2026 16:07:03 -0500
-Message-ID: <20261104211102.942054711@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.18 0673/1005] lockd: Fix use-after-free in nlmsvc_retry_blocked
+Date: Wed,  4 Nov 2026 16:06:46 -0500
+Message-ID: <20261104211102.497159911@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,83 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-commit 86472508a7ef74b525e79a79d2d02d911a641d6b upstream.
+commit f5b7634f0f213299a07b461fb10385c8639a4ab8 upstream.
 
-Replace the lookup-dependent 'wacom_wac->shared->touch->product' references
-with 'hdev->product' inside wacom_setup_touch_input_capabilities() since
-'hdev' is already available (via container_of) and represents the touch
-device itself.
+nlmsvc_retry_blocked() examines the block at the head of nlm_blocked
+under nlm_blocked_lock, then releases the lock before calling
+nlmsvc_grant_blocked() or retry_deferred_block(). The nlm_blocked list
+reference is all that keeps the block alive across that window.
+nlmsvc_grant_blocked() does take one of its own, but not until after
+the lock has been dropped. Unmounting the nfsd filesystem while a lock
+request is still blocked reaches nlmsvc_traverse_blocks(), which drops
+the list reference and frees the block along with the nlm_rqst hanging
+off it.
 
+  BUG: KASAN: slab-use-after-free in nlm_async_call+0xd6/0x230
+  Read of size 8 at addr ffff88811b04c808 by task lockd/8377
+    nlm_async_call+0xd6/0x230
+    nlmsvc_retry_blocked+0x61c/0x800
+    lockd+0x144/0x1c0
+  Freed by task 8392:
+    nlmsvc_release_block+0x231/0x290
+    nlmsvc_traverse_blocks+0x139/0x1b0
+    nlm_traverse_files+0x1aa/0xa00
+    nlmsvc_free_host_resources+0x12/0x60
+    nlm_shutdown_hosts_net+0x127/0x280
+    lockd_down+0xd5/0x1c0
+
+Take a reference before releasing nlm_blocked_lock and drop it once
+the retry has run.
+
+Fixes: 0e4ac9d93515 ("lockd: handle fl_grant callbacks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Acked-by: Ping Cheng <ping.cheng@wacom.com>
-Tested-by: Ping Cheng <ping.cheng@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-nfs/20260818235808.3458075-1-shuangpeng.kernel@gmail.com/
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260822-lockd-retry-blocked-uaf-v3-1-761661eae60c@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/lockd/svclock.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -3966,8 +3966,8 @@ int wacom_setup_pen_input_capabilities(s
- int wacom_setup_touch_input_capabilities(struct input_dev *input_dev,
- 					 struct wacom_wac *wacom_wac)
- {
-+	struct hid_device *hdev = container_of(wacom_wac, struct wacom, wacom_wac)->hdev;
- 	struct wacom_features *features = &wacom_wac->features;
--
- 	if (!(features->device_type & WACOM_DEVICETYPE_TOUCH))
- 		return -ENODEV;
+--- a/fs/lockd/svclock.c
++++ b/fs/lockd/svclock.c
+@@ -1048,6 +1048,7 @@ nlmsvc_retry_blocked(struct svc_rqst *rq
+ 			timeout = block->b_when - jiffies;
+ 			break;
+ 		}
++		kref_get(&block->b_count);
+ 		spin_unlock(&nlm_blocked_lock);
  
-@@ -3976,9 +3976,11 @@ int wacom_setup_touch_input_capabilities
- 	else
- 		__set_bit(INPUT_PROP_POINTER, input_dev->propbit);
- 
--	if (features->type == HID_GENERIC)
-+	if (features->type == HID_GENERIC) {
-+		hid_dbg(hdev, "generic touch setup\n");
- 		/* setup has already been done */
- 		return 0;
-+	}
- 
- 	input_dev->evbit[0] |= BIT_MASK(EV_KEY) | BIT_MASK(EV_ABS);
- 	__set_bit(BTN_TOUCH, input_dev->keybit);
-@@ -4010,19 +4012,17 @@ int wacom_setup_touch_input_capabilities
- 		input_dev->evbit[0] |= BIT_MASK(EV_SW);
- 		__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
- 
--		if (wacom_wac->shared->touch->product == 0x361) {
-+		if (hdev->product == 0x361) {
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
- 					     0, 12440, 4, 0);
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
- 					     0, 8640, 4, 0);
--		}
--		else if (wacom_wac->shared->touch->product == 0x360) {
-+		} else if (hdev->product == 0x360) {
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
- 					     0, 8960, 4, 0);
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
- 					     0, 5920, 4, 0);
--		}
--		else if (wacom_wac->shared->touch->product == 0x393) {
-+		} else if (hdev->product == 0x393) {
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
- 					     0, 6400, 4, 0);
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
-@@ -4052,8 +4052,8 @@ int wacom_setup_touch_input_capabilities
- 		fallthrough;
- 
- 	case WACOM_27QHDT:
--		if (wacom_wac->shared->touch->product == 0x32C ||
--		    wacom_wac->shared->touch->product == 0xF6) {
-+		if (hdev->product == 0x32C ||
-+		    hdev->product == 0xF6) {
- 			input_dev->evbit[0] |= BIT_MASK(EV_SW);
- 			__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
- 			wacom_wac->has_mute_touch_switch = true;
+ 		dprintk("nlmsvc_retry_blocked(%p, when=%ld)\n",
+@@ -1058,6 +1059,7 @@ nlmsvc_retry_blocked(struct svc_rqst *rq
+ 			retry_deferred_block(block);
+ 		} else
+ 			nlmsvc_grant_blocked(block);
++		nlmsvc_release_block(block);
+ 		spin_lock(&nlm_blocked_lock);
+ 	}
+ 	spin_unlock(&nlm_blocked_lock);
 
 
