@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831739;
-	b=tKoIgmcp34HspCe8diao2kfACjX5jGrAyLhwWfCSGs+hwiH8MCgXDdGg9tQlnop1CM9o
-	 D/Rt1zldqQ9SRqWAA6Ou2QHmUOVoh0bhlZ0Y5mwVIizOVSeUfHzbYJbamoonU3wRnqJD1
-	 vtehML6NvNqGVm3niy701FA7kzEkpSnJQLdwdGNh3P2W+Cs+I4QqIAvrcMPXyzVPOKzaO
-	 8ol4kmNmEOOr/yeXZHYPlUS3rjdVNEjSsuLvo/D3G8+9w4fC8L+sA/ulTFuv/dAlbYwwb
-	 TSBItNdxF2THPKBrzuxhY8f/i59gg8LSVEAIixNjpfZ1535EjPaXy4Ha/HTrwygV5sg==
+	t=1793831741;
+	b=zZDmH8MtX341L1zDxfiNG26S7ySMfjDJNeAUW3YTwrseI6JLbD3l8sRFnjN2avkMfMJz
+	 5EpfxIDAYASqnwzpodKTXnW3spJG6YH2njqTgY4xwzlanJvkyyQ9yo68tK8kpmWlfHupE
+	 4wSgITy1g65g3niczLC2Cbj7zSOHe5r0Wmp/gxeVlZ2dCF4FXaqYNk+shBekKh25IUWHl
+	 aV3A/xkJD+MVfgvP7SfzkdcR+cSqHLD7rknzXtjPs87WAWxxLMN68FgF7/umQRHxUoYd/
+	 PK9Iouh9cKF6GxTr42uUOTdkEUegvCoAvafYDNpDue2OKBwBsujrE0cF8nyrDrVzECA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831741;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zVlWQYbaBpPp5IEWgycOy9OqkaPQNxOn2JVmc/F0KhY=;
-	b=CZSEggnRsKUrCL9ckzoVSTQIBdS1Y2yQSIbaevXV70blUAGnLHPR4/C4KF02USl3lYlZ
-	 zjpmsehU+DnDzmuN/j/lAj5lLb4aMMSSzUDMsd2KSn7eKDviRTRrH7UHNTkGmML4qMdqP
-	 missWbivQGhvjVFE63xdRZu5UTsh6dDq1E9VUSDu3uUV60UXEcO23JD8eNhHCVPk/3PdW
-	 E33xI4tegGmArEwlLTvOE/Okb3aVHRyN5JqP9hdrNGyrSBXMoJDTwHt76mGWbolc2VZBL
-	 wg8N1fhweeZmHPnPSqI6QMJdPKAe3aX3GanvXDZG7IgGTCZfTRkq/QL5gRm46mBQ9AQ==
+	bh=SSpoYGeoo76TmYN0e1Qwhnq6xSpwD1rkIctp0Jr4FaQ=;
+	b=oX++mQNHV7k2yd+0BmgWRSeczY/D4hTxfkr0wt3Y8R81ogQ335Wvs2SPigUmJN3M5ANb
+	 M25Pb3hsCdpzyq+8ZmKuQnEbRCAM3RBAY1WIlOjCk5YHEbkf4tzGduJ+eyTTdBlxktPPj
+	 TaCOPY4/TYWW27RsIdKhfCOi3BjAd3spWvX05xi1wYsr5ZnaLHkSYQiUXyiPqMo7u1GOW
+	 LZpbvjfYLckzMgKVahaKzGjUY9Sn0b3gJYymev5wd6hHQp186fTqX8D/klHgizmumIZBE
+	 2hkUpc1MffX493ZxNlE/SC+HJwJM30AOoZzeau/dp/wj0YZjYtfvH2JJIcsEZpJ2+Ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2nJxSdn4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=caIZhfOu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D8B606A32F;
-	Wed,  4 Nov 2026 22:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B3C606A329;
+	Wed,  4 Nov 2026 22:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2nJxSdn4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52D31F000C1;
-	Wed,  4 Nov 2026 22:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=caIZhfOu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEB21F000C1;
+	Wed,  4 Nov 2026 22:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831739;
-	bh=zVlWQYbaBpPp5IEWgycOy9OqkaPQNxOn2JVmc/F0KhY=;
+	s=korg; t=1793831740;
+	bh=SSpoYGeoo76TmYN0e1Qwhnq6xSpwD1rkIctp0Jr4FaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2nJxSdn42YyrULDtZ6c/EiH7UoKuqJgWm/0RcIwpQJh0iEmEnluF0nXCMdNrfUCEM
-	 uZNqcb3F0wF8ZwptSMLdTS66V73D+KlW0GVX6iQm2ocI63vaYcnWGop71lZwL1gJGo
-	 C4T4m9TBAdircxwcHKa7m4OzglC/EzQovwDifGnM=
+	b=caIZhfOuYE140QkqAvq/Vr+F8RtQF6K6fEEOfgRBQ+bn5fzgMMunwUO1uWT41xnh/
+	 MmxSLUQFm8rbFAUzQx+udlQwXXXPi2d6wyf0kLVsCQPd/sxyKfIV7tPotxGTujrmuF
+	 nNX6MVYP/2OrVZ90Kb9wC4l7K4XKIgauecPmDe/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.18 0883/1005] NFS/localio: fix nfs_local_dio_misaligned tracepoint
-Date: Wed,  4 Nov 2026 16:10:16 -0500
-Message-ID: <20261104211107.972099702@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 0843/1005] xfs: clarify various parts of the bitmap API
+Date: Wed,  4 Nov 2026 16:09:36 -0500
+Message-ID: <20261104211106.935304104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,77 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1ea352a0db8bcb6ff6820e9a8715aac0aa3c761f upstream.
+commit 00f32fdf54983371d39162efef7df693e2842ffb upstream.
 
-The intended focus of nfs_local_iters_setup_dio()'s call to
-trace_nfs_local_dio_misaligned() is on the middle segment being
-misaligned, yet the @offset passed in was local_dio->start_len.
-It would appear this was a cut-n-paste bug from the preceding
-nfs_local_iter_setup() call that passes local_dio->start_len.
+LOLLM pointed out some underspecified parts of the xbitmap{32,64} API.
+Specifically, the behavior of set/clear/test functions when the length
+parameter is zero is not well defined, nor is what happens when someone
+tries to disunion a bitmap with itself.  None of these situations are
+expected, but we'll define zero-length set and clear to be nops, and the
+rest to be checked by assertions.
 
-Fix this by passing the @offset as local_dio->middle_offset and
-calculate the start segment's offset rather than assume.
-
-Example traces, before this fix:
-
-   python3-32744   [006] .l... 132946.352360:
-   nfs_local_dio_write: fileid=00:33:1286 fhandle=0xf1f7c10b
-   offset=1048759 count=1048576 mem_align=4 offset_align=512
-   start=1048759+329 middle=1049088+1048064 end=2097152+183
-
-   python3-32744   [006] .l... 132946.352360:
-   nfs_local_dio_misaligned: fileid=00:33:1286 fhandle=0xf1f7c10b
-   offset=329 count=1048064 mem_align=4 offset_align=512
-   start=329+329 middle=1049088+1048064 end=2097152+183
-
-After this fix:
-
-   python3-32744   [006] .l... 132946.352360:
-   nfs_local_dio_write: fileid=00:33:1286 fhandle=0xf1f7c10b
-   offset=1048759 count=1048576 mem_align=4 offset_align=512
-   start=1048759+329 middle=1049088+1048064 end=2097152+183
-
-   python3-32744   [006] .l... 132946.352360:
-   nfs_local_dio_misaligned: fileid=00:33:1286 fhandle=0xf1f7c10b
-   offset=1049088 count=1048064 mem_align=4 offset_align=512
-   start=1048759+329 middle=1049088+1048064 end=2097152+183
-
-Fixes: 6a218b9c3183e ("nfs/localio: do not issue misaligned DIO out-of-order")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 6ece924b952262 ("xfs: create separate structures and code for u32 bitmaps")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/localio.c  |    2 +-
- fs/nfs/nfstrace.h |    5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/bitmap.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -448,7 +448,7 @@ nfs_local_iters_setup_dio(struct nfs_loc
+--- a/fs/xfs/scrub/bitmap.c
++++ b/fs/xfs/scrub/bitmap.c
+@@ -77,6 +77,9 @@ xbitmap64_clear(
+ 	struct xbitmap64_node	*new_bn;
+ 	uint64_t		last = start + len - 1;
  
- 	if (unlikely(!iocb->iter_is_dio_aligned[n_iters])) {
- 		trace_nfs_local_dio_misaligned(iocb->hdr->inode,
--			local_dio->start_len, local_dio->middle_len, local_dio);
-+			local_dio->middle_offset, local_dio->middle_len, local_dio);
- 		return 0; /* no DIO-aligned IO possible */
- 	}
- 	iocb->end_iter_index = n_iters;
---- a/fs/nfs/nfstrace.h
-+++ b/fs/nfs/nfstrace.h
-@@ -1771,7 +1771,10 @@ DECLARE_EVENT_CLASS(nfs_local_dio_class,
- 		__entry->count = count;
- 		__entry->mem_align = local_dio->mem_align;
- 		__entry->offset_align = local_dio->offset_align;
--		__entry->start = offset;
-+		if (local_dio->start_len)
-+			__entry->start = local_dio->middle_offset - local_dio->start_len;
-+		else
-+			__entry->start = 0;
- 		__entry->start_len = local_dio->start_len;
- 		__entry->middle = local_dio->middle_offset;
- 		__entry->middle_len = local_dio->middle_len;
++	if (!len)
++		return 0;
++
+ 	while ((bn = xbitmap64_tree_iter_first(&bitmap->xb_root, start, last))) {
+ 		if (bn->bn_start < start && bn->bn_last > last) {
+ 			uint64_t	old_last = bn->bn_last;
+@@ -127,6 +130,9 @@ xbitmap64_set(
+ 	uint64_t		last = start + len - 1;
+ 	int			error;
+ 
++	if (!len)
++		return 0;
++
+ 	/* Is this whole range already set? */
+ 	left = xbitmap64_tree_iter_first(&bitmap->xb_root, start, last);
+ 	if (left && left->bn_start <= start && left->bn_last >= last)
+@@ -218,6 +224,8 @@ xbitmap64_disunion(
+ 	struct xbitmap64_node	*bn;
+ 	int			error;
+ 
++	ASSERT(bitmap != sub);
++
+ 	if (xbitmap64_empty(bitmap) || xbitmap64_empty(sub))
+ 		return 0;
+ 
+@@ -282,6 +290,8 @@ xbitmap64_test(
+ 	struct xbitmap64_node	*bn;
+ 	uint64_t		last = start + *len - 1;
+ 
++	ASSERT(*len > 0);
++
+ 	bn = xbitmap64_tree_iter_first(&bitmap->xb_root, start, last);
+ 	if (!bn)
+ 		return false;
+@@ -352,6 +362,9 @@ xbitmap32_clear(
+ 	struct xbitmap32_node	*new_bn;
+ 	uint32_t		last = start + len - 1;
+ 
++	if (!len)
++		return 0;
++
+ 	while ((bn = xbitmap32_tree_iter_first(&bitmap->xb_root, start, last))) {
+ 		if (bn->bn_start < start && bn->bn_last > last) {
+ 			uint32_t	old_last = bn->bn_last;
+@@ -402,6 +415,9 @@ xbitmap32_set(
+ 	uint32_t		last = start + len - 1;
+ 	int			error;
+ 
++	if (!len)
++		return 0;
++
+ 	/* Is this whole range already set? */
+ 	left = xbitmap32_tree_iter_first(&bitmap->xb_root, start, last);
+ 	if (left && left->bn_start <= start && left->bn_last >= last)
+@@ -493,6 +509,8 @@ xbitmap32_disunion(
+ 	struct xbitmap32_node	*bn;
+ 	int			error;
+ 
++	ASSERT(bitmap != sub);
++
+ 	if (xbitmap32_empty(bitmap) || xbitmap32_empty(sub))
+ 		return 0;
+ 
+@@ -557,6 +575,8 @@ xbitmap32_test(
+ 	struct xbitmap32_node	*bn;
+ 	uint32_t		last = start + *len - 1;
+ 
++	ASSERT(*len > 0);
++
+ 	bn = xbitmap32_tree_iter_first(&bitmap->xb_root, start, last);
+ 	if (!bn)
+ 		return false;
 
 
