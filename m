@@ -1,59 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827239;
-	b=PcZ56fNySCWjnYfET0YpXN7zg++dhygfI5ajMiuSsoRQTzR4WIaCyMP68WH66Ibo8Cm0
-	 eQmSGeATszIDkS99JZw5PpkpbqmWMFg9dLeMTtjcUrVJGZsMA9dh6KllbHgtI53gm8/JP
-	 e4HOHm7ZeOpWPmO05LieYLJInENhBROounMRu9NM23LRB9PeLFCAa9n4UTfGJcfEvM6HV
-	 peHxeGqAbgfMddHZvEXX/QT9X6mWyjVi9JB2vgU1F5z3sGJvWxbvva4HF3vWjHExxpO0S
-	 K0wCGvnpyJWxHYc2wRgUWA4Wd6KlKXSMgqYLVN/zJ0uhCqDgDTInjvA3MLIaMpLwkVg==
+	t=1793827240;
+	b=2ACxo7YFUADaJ0rrvrc0PgMmxbocTQt5FWnr7Y9TaniLvzbDUUNBT4+TBgCi4dcdotgK
+	 Jm/t4Af4haYnoY7BBeMVx+QZR+4qel0lQH1Ovp1Ixm3Hf7MgBnmWzx2C/Qpmx0aOx+/Xj
+	 HcCeM36t2XURaLyk4t/HNijDLD/L2sX7NuLvBF9367ORXYuDbwP1wrJ07nUY1BO1w1vtC
+	 ixMQ54YlqJheO18XADJUkL6G5S7zkYOZe2NI1Jrpz9LMiuPyLFWxqLXxk5xJVnlwZlDBh
+	 q5/pg+FR05V7X6LvTj8duzzxGasBlYvtnmffrQ3XkqfsiqaJpdJNP3eCg8QaxAtQ1VA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827239;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827240;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ah+6Xx2pnWwznVW8M9R+a1hI3ONeVj0Ilm4BzHgrth4=;
-	b=YnIrRCpRJ4z0uBbtT1aUC1Jyr/BtlhqnQ2MboShvUYtSGIE2kxXsYHc9tf8eVAbOGqGJ
-	 tUQ/XUwT1nrh+2qkBDB0xS2iweSKeEolo3arkGIYppp25wdrKEEaKA5KwL9jbUKQMbgNG
-	 C6MB04EwePHM61/EZgcDQinELJGLOYSKuG9UUzx3dcUsw7osEcHiRxZUOG1ZU0AOOlBeu
-	 u2ABlX2tJdjH4glbpkTAMSAUH6IDd6uE/1C837n7BwtPGG0XtFiML2L2RpWXJdG+lS9Fb
-	 /ztO2bQvZAILjIESZU7HWXN6xlcXY86dseea/odJ2nyOP4/QqdDt6/6teblCIC+kQUg==
+	bh=33zFL9jrqaEchT4HXqCpkeUKt+uo9I+cvk632EWuRkQ=;
+	b=A462rNsSVsgMw8mr0yn4lrylcMdgVjUhRbMQ1c1MWo1lOJKNZikt/fq3vAqkuxQBF5l+
+	 z/o1I00kL/2MAuC7KIC2sbCSY7biCaTm/Yg8hSRk3U1QUJE9+Fi5SJu7UT6GXsoRfej3x
+	 X1TqJeq26fCyCfv8ICLA5xnK+zjQq+4q/qrsAZJnAegOtwWS3UmO9cLesQXshHauZYb0T
+	 se4UXlJqV1/hm9DNp686l3vJ1ky2Lmzq1diZMnsaSpadOaTlqyqsZGLgAVSiXOcb+HRC+
+	 JyvmvYD6ltfzSt3aKmN/1RrJK4UjrHqj7/+9t9FMYFfNF8UmcYZgnidOBHDgxI+uAzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vyntq5KV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ksp/g+cX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03445606AC01;
-	Wed,  4 Nov 2026 21:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D32606AC0A;
+	Wed,  4 Nov 2026 21:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vyntq5KV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983BE1F000C1;
-	Wed,  4 Nov 2026 21:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ksp/g+cX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D381F000C1;
+	Wed,  4 Nov 2026 21:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827238;
-	bh=Ah+6Xx2pnWwznVW8M9R+a1hI3ONeVj0Ilm4BzHgrth4=;
+	s=korg; t=1793827240;
+	bh=33zFL9jrqaEchT4HXqCpkeUKt+uo9I+cvk632EWuRkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vyntq5KVEUMo17A+IWA5b8dgkk4XGO4l8HZzcjecQ4zpzyO10obM+tbU3+o8YrWGz
-	 HFpSw3Zf7HkE6yRxqNEdUGEWs4o4RgLvGwHGhuyChca6B0FquJvSEbnGSxOw9FPXe2
-	 rkWYbUmUPyVrZl1zGkdBwqaLcFz7HKp6a3ZY7n1k=
+	b=Ksp/g+cXwHD+ZRqmdTdKEKSygCBRyvISZ8FA2c4VlT6FFIblaYfk/rAhb8NHGLK0F
+	 CI5cIkCz50A4Ws1SWbEX4kQzlAVTp0LnKXrbPvGodrrhP2a2bv7qri3r97t8Fa2654
+	 jVlU69BnAsehIzLwJqGtlcZdkoyvE35nMEGFAtgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Jiaming Zhang <r772577952@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Chao Yu <chao@kernel.org>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com
-Subject: [PATCH 7.3 275/547] ocfs2: cancel quota sync work before freeing quota info
-Date: Wed,  4 Nov 2026 16:07:39 -0500
-Message-ID: <20261104211046.012311612@linuxfoundation.org>
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>
+Subject: [PATCH 7.3 276/547] ocfs2: fix chunk number of the first chunk in a local quota file
+Date: Wed,  4 Nov 2026 16:07:40 -0500
+Message-ID: <20261104211046.042605815@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -75,185 +74,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-commit 1dd1f005026d52642b994d63baa16b0b31f3b14f upstream.
+commit 4effccfd50baee4f325694964aeee997dca7bd96 upstream.
 
-OCFS2 quota info owns dqi_sync_work and must outlive both its timer and
-qsync_work_fn().  ocfs2_local_free_info() frees that owner without
-cancelling the work, relying on the quota suspend/disable wrappers.
+Mounting a crafted OCFS2 image can corrupt kernel memory.  When the
+local quota file header of such an image claims zero chunks, the first
+quota entry allocated during the mount gets a chunk number taken from a
+kernel pointer, and releasing that entry clears a bit far outside the
+chunk bitmap.
 
-Loading quotas on a read-only to read-write remount can successfully queue
-the work in ocfs2_global_read_info() and then fail while attaching a dquot
-to an existing inode in add_dquot_ref().  The quota core unwinds that
-failure directly through dquot_disable(), bypassing the OCFS2 wrapper:
+The write will corrupt the data stored at that address, and the
+corruption may lead to a system crash or damage unrelated data.
+Mounting requires CAP_SYS_ADMIN, so it takes an untrusted image, such
+as removable media or a loop mount of a file from elsewhere.
 
-  Remount task (s_umount write)        Timer/workqueue
-  ocfs2_global_read_info()
-    schedules dqi_sync_work
-  add_dquot_ref() returns an error
-  dquot_disable()
-    ocfs2_local_free_info()
-      frees oinfo
-                                     delayed-work timer expires
-                                     qsync_work_fn() reads oinfo
+Since the chunk number comes from a kernel pointer, the address of the
+bit that gets cleared differs from boot to boot, and the issue has been
+reported under several titles:
 
-The timer core can then write to the freed embedded timer, or
-qsync_work_fn() can read oinfo->dqi_gqinode before its s_umount trylock.
-The outer ocfs2_disable_quotas() cleanup skips the failed type because
-dquot_disable() has already cleared its loaded state.
+- BUG: unable to handle kernel paging request in ocfs2_local_release_dquot
+- KASAN: use-after-free Write in ocfs2_local_release_dquot
+- KASAN: slab-out-of-bounds Write in ocfs2_local_release_dquot
+- KASAN: slab-use-after-free Write in ocfs2_local_release_dquot
+- KFENCE: use-after-free write in ocfs2_local_release_dquot
 
-Cancel dqi_sync_work synchronously at the start of
-ocfs2_local_free_info(), before dropping the global inode or freeing any
-owner state. The work is initialized whenever read_file_info() succeeds.
-dquot_disable() holds s_umount for write, so the callback skips its quota
-scan via down_read_trylock() and can finish without waiting for teardown.
-The synchronous cancel also handles its self-rearm.
+Note that none of these is a use-after-free in the quota code: the
+chunk and its buffer head are alive.  The bit that gets cleared lies
+far outside the bitmap.  KASAN and KFENCE name each report based on the
+object occupying that address, which explains why the same issue is
+reported under so many different titles.  In the report I sent, the
+address fell in a free page, which KASAN labels use-after-free.
 
-KASAN report as below:
+There are known reproducers.  Both a syzkaller and a C reproducer are
+available from the Google Drive link [1] in my report thread.  The
+issue was found by our modified syzkaller, not a theoretical thing
+found by an LLM.  I have not seen it outside fuzzing, so it is not
+affecting me in the real world.
 
-    BUG: KASAN: slab-use-after-free in __run_timers+0x9e9/0xa10
-    Write of size 8 at addr ffff888111b0aad0 by task swapper/3/0
+The local quota file in OCFS2 is divided into chunks, and each chunk
+begins with a header block holding a bitmap of the quota entries that
+chunk has handed out.  Chunks are numbered from zero, and that number is
+used to convert the file offset of an entry back into a bit position in
+the bitmap.  ocfs2_local_quota_add_chunk() appends a new chunk to the
+in-memory list and numbers it one past the chunk that was last:
 
-    Call Trace:
-     <IRQ>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? __run_timers+0x9e9/0xa10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20e/0x420
-     ? __run_timers+0x9e9/0xa10
-     kasan_report+0xe0/0x110
-     ? __run_timers+0x9e9/0xa10
-     __run_timers+0x9e9/0xa10
-     ? __pfx___run_timers+0x10/0x10
-     ? __lock_acquire+0x5a3/0x2140
-     ? __pfx_do_raw_spin_lock+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     timer_expire_remote+0xfa/0x160
-     ? __pfx_timer_expire_remote+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     tmigr_handle_remote_up+0x4ba/0x9d0
-     ? __pfx_tmigr_handle_remote_up+0x10/0x10
-     ? tmigr_handle_remote+0x21a/0x340
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? __pfx_tmigr_handle_remote_up+0x10/0x10
-     __walk_groups_from+0x5a/0x160
-     tmigr_handle_remote+0x24f/0x340
-     ? __pfx_tmigr_handle_remote+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     run_timer_softirq+0x222/0x270
-     ? __pfx_run_timer_softirq+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lockdep_hardirqs_on_prepare+0xb8/0x1a0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     handle_softirqs+0x1fa/0x8d0
-     ? __pfx_handle_softirqs+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? _raw_spin_unlock+0x23/0x40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __hrtimer_rearm_deferred+0x1fb/0x5d0
-     __irq_exit_rcu+0x113/0x1e0
-     irq_exit_rcu+0xe/0x20
-     sysvec_apic_timer_interrupt+0x6c/0x80
-     </IRQ>
-     <TASK>
-     asm_sysvec_apic_timer_interrupt+0x1a/0x20
-     ? ct_kernel_exit.constprop.0+0xc5/0xf0
-     ? do_idle+0x3ae/0x650
-     default_idle+0x9/0x10
-     default_idle_call+0x6c/0xb0
-     do_idle+0x3ae/0x650
-     ? cpuhp_online_idle+0x9c/0xb0
-     ? __pfx_do_idle+0x10/0x10
-     ? __entry_text_end+0x1020f6/0x1020f9
-     ? lockdep_hardirqs_on_prepare+0xeb/0x1a0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     cpu_startup_entry+0x54/0x60
-     start_secondary+0x223/0x2d0
-     ? __pfx_start_secondary+0x10/0x10
-     common_startup_64+0x13e/0x158
-     </TASK>
+	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
+	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
+				   struct ocfs2_quota_chunk,
+				   qc_chunk)->qc_num + 1;
 
-    Allocated by task 523:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x28d/0x610
-     ocfs2_local_read_info+0x181/0x1580
-     dquot_load_quota_sb+0x69e/0x11c0
-     dquot_load_quota_inode+0x227/0x3e0
-     ocfs2_enable_quotas+0x27c/0x520
-     ocfs2_reconfigure+0x964/0xd00
-     reconfigure_super+0x3ca/0xa70
-     path_mount+0x141e/0x1e80
-     __x64_sys_mount+0x24b/0x2d0
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The predecessor is looked up after the new chunk is added to the list, so
+if the list was empty, the prev pointer is the list head itself.  The head
+is the dqi_chunk member of struct ocfs2_mem_dqinfo and is not a chunk, so
+reading qc_num through it lands 16 bytes past the start of the head, on
+the dqi_gqinode pointer that follows it.  The first chunk of the file is
+then numbered with the lower half of a kernel pointer instead of 0.
 
-    Freed by task 523:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x308/0x580
-     ocfs2_local_free_info+0x47b/0x800
-     dquot_disable+0x5d9/0x17a0
-     dquot_load_quota_sb+0xd3c/0x11c0
-     dquot_load_quota_inode+0x227/0x3e0
-     ocfs2_enable_quotas+0x27c/0x520
-     ocfs2_reconfigure+0x964/0xd00
-     reconfigure_super+0x3ca/0xa70
-     path_mount+0x141e/0x1e80
-     __x64_sys_mount+0x24b/0x2d0
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The list is empty when the local quota file header claims the file has no
+chunks.  ocfs2_local_read_info() takes dqi_chunks from that header without
+validating it, so an image with dqi_chunks == 0 takes this path when the
+first quota entry is allocated.
 
-    The buggy address belongs to the object at ffff888111b0a800
-     which belongs to the cache kmalloc-1k of size 1024
-    The buggy address is located 720 bytes inside of
-     freed 1024-byte region [ffff888111b0a800, ffff888111b0ac00)
+ocfs2_create_local_dquot() turns the bad number into a file offset with
+ol_dqblk_off(), which shifts a 32-bit block number left by the block size
+bits, so the top bits of such a large block number are lost.
+ocfs2_local_release_dquot() turns the offset back into a bit index with
+ol_dqblk_chunk_off(), using the full chunk number, so the lost bits push
+that index far outside the bitmap, and clearing it corrupts unrelated
+memory.
 
-Host details, register and page dumps omitted.
+Compute the chunk number before putting the chunk on the list, and use 0
+when the list is empty.
 
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0052-v3-b4904bd6c85daf033adf@gmail.com
-Fixes: 1a6152d36dee ("quota: propagate error from __dquot_initialize")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://lore.kernel.org/20260914034940.4070970-1-r772577952@gmail.com
+Link: https://drive.google.com/drive/folders/1-LzPTgOALEc3eOjmgM6oOfRKkYXJ-bnO?usp=drive_link [1]
+Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://lore.kernel.org/lkml/CANypQFZ05tpth0Xc33gmP6jgPnkY4VuezyHcsajV-SqCsmN_gg@mail.gmail.com/
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Assisted-by: LLM
+Assisted-by: Claude Code:claude-opus-5
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
 Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Chao Yu <chao@kernel.org>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/quota_local.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ocfs2/quota_local.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 --- a/fs/ocfs2/quota_local.c
 +++ b/fs/ocfs2/quota_local.c
-@@ -816,6 +816,9 @@ static int ocfs2_local_free_info(struct
- 	int mark_clean = 1, len;
- 	int status = 0;
+@@ -1074,10 +1074,13 @@ static struct ocfs2_quota_chunk *ocfs2_l
+ 		goto out;
+ 	}
  
-+	/* Quota-core error paths can bypass ocfs2_disable_quotas(). */
-+	cancel_delayed_work_sync(&oinfo->dqi_sync_work);
-+
- 	iput(oinfo->dqi_gqinode);
- 	ocfs2_simple_drop_lockres(OCFS2_SB(sb), &oinfo->dqi_gqlock);
- 	ocfs2_lock_res_free(&oinfo->dqi_gqlock);
++	if (list_empty(&oinfo->dqi_chunk))
++		chunk->qc_num = 0;
++	else
++		chunk->qc_num = list_entry(oinfo->dqi_chunk.prev,
++					   struct ocfs2_quota_chunk,
++					   qc_chunk)->qc_num + 1;
+ 	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
+-	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
+-				   struct ocfs2_quota_chunk,
+-				   qc_chunk)->qc_num + 1;
+ 	chunk->qc_headerbh = bh;
+ 	*offset = 0;
+ 	return chunk;
 
 
