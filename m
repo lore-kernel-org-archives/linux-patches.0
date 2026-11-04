@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831263;
-	b=1ueAloboYGd8+vwnH5GA6G634UzyC7+KAd+elZq9vQDwL/MoRiSphDuKIG1dNK/ZNuRR
-	 XlhZVVP4wspBo9nQHt8ejy29EcrthLFYlf9voFpWLE/tSwCyLaYN/YxYhJ2hWrpEyaOnI
-	 Ja9Aff4rhd0s+3fZhBCwNHfAIPOzbEI3pWi+kpHdbU5bwGFyxllPFY3hViWedaTy63o9R
-	 P1jK1cjMs+QNOjtPMV32ibokDXbcnM6gFPAjKrRFxYJBqZboKRXyKXHqlmFXfRCoN689A
-	 8mtD+KZawm5YnD4DIXh1T5lx18SN3W6iIzZmlOnUuD9xQqOfwn7s4HGbpWyJ7f8RwDA==
+	t=1793831265;
+	b=GuZGU3NxRyKlpxcH3r8FYJO37swqzWh9c9HVjss7P/mXuqBAPJFUZORlOlE1Y5WJIB41
+	 WY1nd9ZwLJlSHZvExasq5JV2ER/Zs/U7NYdy1YdrOo7TBpdlLpEcHhFSISU2RMIlJV/Jr
+	 HyKmQ85WUsRQ1sszrUcUKpqQlC2zcVjMwfY+Bvnju3Q6/tiylcu8jyp362IKUF2cMZcxz
+	 /LaX0ofXabLowe8m8hTPBhGDMJOAPYv7R2kYgxyKXU4zlq6xiTATcgNkajeatadUUghJy
+	 U0c6vd9PjRqgImltAx2i2XRp9hmP1Bd647jhTPmYrE0KmIEeH0/TDbzbJDFkPSIcDuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B13mQ3ePzlo18ZNt+K65KD+uLyzre57rGfyD70x/T74=;
-	b=mY0MZgv5Pdw24g0bspTN72KuSkvvU9ODTAsVlfJlSJY5pxBLKT4P/2w6TjxLsKrC70jp
-	 acT39Nphbty8dd1pRMraCYWbLwZrth3YS22VYGxkCZM3RXlcVqmCgyXcFLtGOmsGVsbi8
-	 qpxRhD2tLvBKRYLmW0+2Gs9hQN4T+jjIXTNiSALM+BM8F6jVVxGXuFIHXhwDml9rzHM60
-	 yqDovTUDbfYrtOXWx8U0dGrBfaL1YFT0+e4bNFRRtPHU5O60hQ2Dos6wo8gk7iyymCZKn
-	 tZ5VngSg0RwCmzX7Zjemy90DJoUDqfWqQs8HUctnhQm5DEb3KKcVEEEseE8Z7yP+4dQ==
+	bh=tzLuzSOuyosln+ZOeTGDRqZt6lgkEwZS9H7WEFI3XIE=;
+	b=a1b5jrve8YPnx888UlitMBRjM6XQzruR7iEnsabfOdSxA+ZteDnflJ4WaGFAZQHka25T
+	 VKkMkM3y3wY9RG/gsGIJlG31hmceHBXdTlz3nO1PZbt0MR7Bde4pN2g2BHoI8+quPMZNJ
+	 fn2j2P4Opuv1wHuM6yEXJqruBGRpsGLKkMb9NZbAXnwOBrE+Vph2xxZnw5H7FzOvsBQ2p
+	 tUHc8i17Gl97HRHEL5GRPYYHKng23Lj/piT1jyPs6pDW5EfCtttU8B9NHmj52mdvKki2l
+	 d/iCj8qnlGCoiqoRUNFgqACfnXLcwA6iegeMYdK/SWxsOW0GlsPZl1vxUtbfP7nTH3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xgdWrGa/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPbyOoTH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F86606B2C2;
-	Wed,  4 Nov 2026 22:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695DE606B399;
+	Wed,  4 Nov 2026 22:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgdWrGa/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413DA1F000C1;
-	Wed,  4 Nov 2026 22:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPbyOoTH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13291F0093A;
+	Wed,  4 Nov 2026 22:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831263;
-	bh=B13mQ3ePzlo18ZNt+K65KD+uLyzre57rGfyD70x/T74=;
+	s=korg; t=1793831265;
+	bh=tzLuzSOuyosln+ZOeTGDRqZt6lgkEwZS9H7WEFI3XIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xgdWrGa/z9J+htiFa9C5YtHyXu3213LRcPveo5FJ+wpY/IQLOnlBK31XNL4DtwZ9Z
-	 LbpCIEaVNYBIitzIRftvsSbBgl35mqCu+vKDUYr/85JHsVG9oWKYPwaiGN5qMtt0BW
-	 zoS2a6zbVBkdC7VtuVYB8qsDIEvhYflc1Hlg3YJU=
+	b=gPbyOoTH0E4oCQQF7YBSu4NEU1TsgFJIGh+0IevzM7G1Fwt8cI9wDQOPiIyqJoAWy
+	 XxMucCKADPlLoe4A5dlxnWcPaR8b2X69dyJwdxdUfYxScPHDSoNUtfYcBHhY3Z83D+
+	 VT4JTRLrnmy9PWM+enBaCiw65YJh7FbIN8h9asSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Jim Mattson <jmattson@google.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0600/1005] KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN
-Date: Wed,  4 Nov 2026 16:05:33 -0500
-Message-ID: <20261104211100.659411866@linuxfoundation.org>
+Subject: [PATCH 6.18 0601/1005] KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded
+Date: Wed,  4 Nov 2026 16:05:34 -0500
+Message-ID: <20261104211100.687112555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -74,97 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 60d93c27859fb3ec5b5a689e24de303f166477d0 ]
+[ Upstream commit e27fc915c8f575ab5630e27d97465c2077d4b9d1 ]
 
-Don't reset the VMCB's TLB control back to "do nothing" on a failed VMRUN,
-as empirical testing shows that the CPU performs the requested TLB flush if
-and only if VMRUN is successful, i.e. clearing TLB control on a failed
-VMRUN effectively drops a TLB flush.
+Leave control.erap_ctl and control.clean as-is in the VMCS if VMRUN fails,
+because as per AMD:
 
-Explicitly track the need to flush all ASIDs on a per-CPU basis, as the
-ASID reuse condition is tied to the pCPU, not to the vCPU.  As a bonus,
-this also obviates the need to avoid clobbering FLUSH_ALL_ASID with
-TLB_CONTROL_FLUSH_ASID, e.g. in svm_flush_tlb_asid().
+  there's no explicit architectural guarantee about the behavior in the
+  presence of VMRUN failures. So the best thing to do would be to assume
+  that if VMRUN fails, the actions requested in the control fields may not
+  have been performed.
 
-Deliberately don't bother saving/restoring the "old" tlb_ctl on failure,
-in quotes because it's not exactly the old tlb_ctl, it's the tlb_ctl from
-after pre_svm_run(), but before updating tlb_ctl for flush_all_asids.  If
-VMRUN fails and TLB_CONTROL_FLUSH_ALL_ASID is forced, then the next
-successful run of the VMCB *may* unnecessarily flush all ASIDs, which
-strictly speaking could result in noisy neighbor issues.  However, the
-fact that new_asid() is already guest-triggerable, because of KVM's flawed
-behavior of clearing the ASID on emulated INIT, means that a guest can
-already trigger a flush of all ASIDs at roughly the same rate.  And once
-KVM stops clobbering the ASID on emulated INIT, *or* assigns a static ASID
-to each vCPU, this flaw goes away.
-
-Fixes: 38e5e92fe8c0 ("KVM: SVM: Implement Flush-By-Asid feature")
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Suggested-by: Yosry Ahmed <yosry@kernel.org>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: Jim Mattson <jmattson@google.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260904170642.3291466-2-seanjc@google.com>
+Message-ID: <20260904170642.3291466-3-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ sashal: Replaced the svm_is_vmrun_failure() helper with an exit_code != SVM_EXIT_ERR check and dropped the ERAPS CLEAR_RAP context block, since neither exists in this tree. ]
+[ sashal: Dropped the ERAPS hunk because the tree lacks ERAPS support, so only the vmcb_mark_all_clean() move into the VMRUN-succeeded block is applied. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/svm.c | 14 +++++++++++---
- arch/x86/kvm/svm/svm.h |  1 +
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/svm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 5f3c6d7974fb9..3de16ee6698a6 100644
+index 3de16ee6698a6..e31f807f65aa3 100644
 --- a/arch/x86/kvm/svm/svm.c
 +++ b/arch/x86/kvm/svm/svm.c
-@@ -1781,8 +1781,7 @@ static void new_asid(struct vcpu_svm *svm, struct svm_cpu_data *sd)
- 	if (sd->next_asid > sd->max_asid) {
- 		++sd->asid_generation;
- 		sd->next_asid = sd->min_asid;
--		svm->vmcb->control.tlb_ctl = TLB_CONTROL_FLUSH_ALL_ASID;
--		vmcb_mark_dirty(svm->vmcb, VMCB_ASID);
-+		sd->flush_all_asids = true;
- 	}
+@@ -4423,9 +4423,9 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
+ 	if (svm->vmcb->control.exit_code != SVM_EXIT_ERR) {
+ 		this_cpu_ptr(&svm_data)->flush_all_asids = false;
+ 		svm->vmcb->control.tlb_ctl = TLB_CONTROL_DO_NOTHING;
+-	}
  
- 	svm->current_vmcb->asid_generation = sd->asid_generation;
-@@ -4334,6 +4333,11 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
- 		svm->vmcb->control.asid = svm->asid;
- 		vmcb_mark_dirty(svm->vmcb, VMCB_ASID);
- 	}
-+	if (this_cpu_ptr(&svm_data)->flush_all_asids) {
-+		svm->vmcb->control.tlb_ctl = TLB_CONTROL_FLUSH_ALL_ASID;
-+		vmcb_mark_dirty(svm->vmcb, VMCB_ASID);
+-	vmcb_mark_all_clean(svm->vmcb);
++		vmcb_mark_all_clean(svm->vmcb);
 +	}
-+
- 	svm->vmcb->save.cr2 = vcpu->arch.cr2;
- 
- 	svm_fixup_nested_rips(vcpu);
-@@ -4416,7 +4420,11 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
- 		svm->nested.nested_run_pending = 0;
- 	}
- 
--	svm->vmcb->control.tlb_ctl = TLB_CONTROL_DO_NOTHING;
-+	if (svm->vmcb->control.exit_code != SVM_EXIT_ERR) {
-+		this_cpu_ptr(&svm_data)->flush_all_asids = false;
-+		svm->vmcb->control.tlb_ctl = TLB_CONTROL_DO_NOTHING;
-+	}
-+
- 	vmcb_mark_all_clean(svm->vmcb);
  
  	/* if exit due to PF check for async PF */
-diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
-index df081ae666f0d..f8ea26ba71423 100644
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -351,6 +351,7 @@ struct svm_cpu_data {
- 	u32 next_asid;
- 	u32 min_asid;
- 
-+	bool flush_all_asids;
- 	bool bp_spec_reduce_set;
- 
- 	struct vmcb *save_area;
+ 	if (svm->vmcb->control.exit_code == SVM_EXIT_EXCP_BASE + PF_VECTOR)
 -- 
 2.53.0
 
