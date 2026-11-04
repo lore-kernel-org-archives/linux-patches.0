@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827147;
-	b=Uz03GD9GJSywn8Is3TTo6YneziDxjlKKOPIR+oMEX2vjLRLkrq+PbiCPBpbOM1LIb0/u
-	 JXMu+zNWpW0vflqvkTFryZxNLMIWna9dqThN492cMOlux+tDEHhr1SbewZ7cPl0PDBsKS
-	 LaJVhej6uKwTsJZBdUB4A5jSwzCdDcy/TQcbJ3rB3mD5xsXXUgQeZ7Rtf5yh+N/lCKopd
-	 dkg+hG/8kR08wn0W6kOsXfzKv7xb1e650wuTztOKk+hmBGhxUV0Zpu3BkhU4GLXCU7NZ9
-	 cyBpPmMWMyWaAesnkbAdkc9AO1B9nAPTVtrbWV/yZ5RYIno/PiupQ2eZnD4iRtQYYSg==
+	t=1793827151;
+	b=YjuJeIb0uHjcf7xmb0xYc28effkNyxswnkGsYb7+7u1QO8LtwIxumPlTqytYbjTe4S8u
+	 l69FJssgpz/SnUFoqGTrxvH6RVQLtPK1Eq2UYo8kPMyOf51Dq+KdLP2yv22kZDM3M7eT4
+	 grwzPZTG/eWSay1EthM1S6T3+rLR2EWDCQLBBRTpKDm4bEFBfg/m9gLJTc+N6CsA8a0SD
+	 CRycWDCNjCWyS2TumMVLr3kxlx0W6y4Ksz0r6wL11Y53Wp5VJTKZ704ELWPaC9q83dD/M
+	 IlwthLXOva4hNa+6pFWr+RZHhbayyqmpv10zG+VDoAM8ucQyZrS9RYpCPvn0SaWwrNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827147;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OW/7EbxzIoJ5EEbKnwc+dgO8/AinioI1xaR5L47qe8E=;
-	b=mAVNLEctBsBX2dPTCgaIV+WUiEr72jOw8vXblPazpDzUve+1xwLcAQtAgJGlc55hguwZ
-	 GsNQYbTnf5eBaLgTSAO1pzcMOyIZ4DEzJGTBtfHeiV6ih7keb55A9TihuzafJeOfgA35y
-	 +UoG4K/KwCKnXJ18O72NJ0CDtfNuom1hBl4eL8U4taMNxGue+kHmJPXNUZS5I5NuQ0POt
-	 j08fjJJKrQ8L38VP+AQfcj+sszgSNEkEcFEwVb5pBSeaZGl/P2Jd+xILVv7+MnQ5uUB82
-	 VRaFXlJd+92Pd3WPYNorHvhb647S36+fg8EXc85jhgD+9rl6hoS8ky+zFXpqsSQQ59w==
+	bh=DvPKCi85HkUA8OQ52PFu8Sz3VH7rjHVDudjSKz5Yg94=;
+	b=giBKUPDCZAEXnD2WvxxJ8gifaCaffB3A5XHmUmTJbmRfBjpa9nlxBLOw+ccDLGX7hMV/
+	 zok6z8L++oHSbhJTwWztOt8tFHXWIX57P/S07QmlZ1N9oYRfYapVzPqLXNgH4YJe6UQUF
+	 GH7T/WyQTsbUOD637pRUZA4G2JBzjp6Uaju9vlp1NzjI8kS+4ll8OIVTavSOQ0j3nzWr1
+	 codRJ+Bw9fxNDhcySuzpCff/pXI53WjMH29zbd3UHtAeTtqU6CEPngT+F8H4qwGCCTm6R
+	 xgBw+t0RxEapXJ5DOasa0ieiWUDFkQL0Fa/2GmDz6tSL/sfcEJnvL7KjElelsF6hjzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LG4oVLso;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZHLf9M+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90408606AB39;
-	Wed,  4 Nov 2026 21:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82E1606AB35;
+	Wed,  4 Nov 2026 21:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LG4oVLso
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC2B1F00919;
-	Wed,  4 Nov 2026 21:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZHLf9M+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB561F0093A;
+	Wed,  4 Nov 2026 21:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827147;
-	bh=OW/7EbxzIoJ5EEbKnwc+dgO8/AinioI1xaR5L47qe8E=;
+	s=korg; t=1793827150;
+	bh=DvPKCi85HkUA8OQ52PFu8Sz3VH7rjHVDudjSKz5Yg94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LG4oVLsocftT1c/kx3C9GqVsDagn+aLOPgiFf83TC+LberWlf7SCT8BEFGAMMC0wD
-	 MqA5xADVBFXOTUwFpoXY7QAK9VGG+KyyRkg3jjwSPLZLasHi4muBgMSOCXzNwQK6Z8
-	 CNjbAXm62hdxtC/xz/2/DlPlnupC8TGFHqEyGgtw=
+	b=kZHLf9M+NM39fBbVoMJb2ncSU6rWcvBEsDSYyrm+5wO7/RkV8/SY0JCqXKGm+TVYq
+	 j3N1Q2Yi/zzehBp9W3Tz51pLkCns40cj+XRCPE4qTvbJ/p0O0KCNfh9knbk2o5Wiu2
+	 +vUIVfBY/OJTEXN2VBIYR/ZdT+B+YBns6UKBUMHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.3 215/547] fsverity: Set S_VERITY only after rollback is no longer possible
-Date: Wed,  4 Nov 2026 16:06:39 -0500
-Message-ID: <20261104211044.261570026@linuxfoundation.org>
+	Richard Patel <ripatel@wii.dev>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.3 217/547] genirq: Move interrupt thread exit_work object to irqaction
+Date: Wed,  4 Nov 2026 16:06:41 -0500
+Message-ID: <20261104211044.317803347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,154 +67,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Richard Patel <ripatel@wii.dev>
 
-commit c349b233d6ab0fc3517401a1e2d36f5f90eb8c9b upstream.
+commit 89a9e003a2ef73f67dff03dfd59e0a5474b56b0b upstream.
 
-Commit f77f281b6118 ("fsverity: use a hashtable to find the
-fsverity_info") changed the implementation of FS_IOC_ENABLE_VERITY to
-make concurrent reads start going through fsverity verification slightly
-earlier than they did before.
+irq_thread() registers irq_thread_dtor() as exit task_work using a
+stack-allocated callback_head.  On normal interrupt thread exit, this work
+gets cancelled and never runs.
 
-Instead of it happening when enable_verity() calls fsverity_set_info(),
-it now happens when ->end_enable_verity() sets S_VERITY.
+On x86, an abnormal interrupt thread exit (e.g. handler oops) discards the
+stack, including the callback_head, while that callback_head is still
+pending. By the time exit_task_work() runs, the stack memory formerly
+backing callback_head is already clobbered.
 
-However, ext4 and btrfs can roll back verity after they set S_VERITY,
-causing a use-after-free.
+  irq_thread()                      <-- on_exit_work allocated
+    ** IRQ handler faults **
+    oops_end()
+      rewind_stack_and_make_dead()  <-- on_exit_work freed
+  make_task_dead()
+    do_exit(SIGSEGV)
+      ...
+      exit_shm()                    <-- on_exit_work clobbered
+      ...
+      exit_task_work()              <-- stack use-after-free
+        exit_shm()+0x30             <-- wild jump to return addr
 
-Fix that by making ext4 and btrfs set S_VERITY only after rollback is no
-longer possible.  On failure, don't roll back S_VERITY, but do roll back
-the filesystem-specific verity flag.
+Thus, a benign threaded IRQ oops (e.g. a NULL pointer deref) is
+turned into a wild jump. This is caught by kernel IBT:
 
-Also update enable_verity() to handle any future instances of this bug
-more safely by warning and *not* freeing the fsverity_info.
+  ** first fault **
+  Oops: general protection fault, kernel NULL pointer dereference 0x3c0: 0000 [#1] SMP NOPTI
+  ...
+  ** second fault **
+  Missing ENDBR: exit_shm+0x30/0x1c0
+  kernel BUG at arch/x86/kernel/cet.c:133!
+  ...
+   ? task_work_run+0x5c/0x90
+   ? do_exit+0x209/0x460
+   ? rewind_stack_and_make_dead+0x16/0x20
+  ...
+  note: irq/165-AudioDS[1427] exited with irqs disabled
+  Fixing recursive fault but reboot is needed!
 
-Finally, tweak some comments.  Clarify one, and move information from
-another to its proper place in the comment for ->end_enable_verity().
+Fix this by storing the callback_head in struct irqaction.  The irqaction
+is only freed once irq_thread_dtor() finishes.
 
-Fixes: f77f281b6118 ("fsverity: use a hashtable to find the fsverity_info")
+Fixes: 2deb4be28077 ("x86/dumpstack: When OOPSing, rewind the stack before do_exit()")
+Signed-off-by: Richard Patel <ripatel@wii.dev>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261025204807.122875-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20261009145842.1616117-3-ripatel@wii.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/verity.c        |    7 ++++---
- fs/ext4/verity.c         |    4 +++-
- fs/verity/enable.c       |   12 +++++-------
- include/linux/fsverity.h |   12 +++++++-----
- 4 files changed, 19 insertions(+), 16 deletions(-)
+ include/linux/interrupt.h |    2 ++
+ kernel/irq/manage.c       |    9 ++++-----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/verity.c
-+++ b/fs/btrfs/verity.c
-@@ -489,8 +489,6 @@ static int rollback_verity(struct btrfs_
- 			inode->vfs_inode.i_ino);
- 		goto out;
- 	}
--	inode->ro_flags &= ~BTRFS_INODE_RO_VERITY;
--	btrfs_sync_inode_flags_to_i_flags(inode);
- 	ret = btrfs_update_inode(trans, inode);
- 	if (unlikely(ret)) {
- 		btrfs_abort_transaction(trans, ret);
-@@ -555,16 +553,19 @@ static int finish_verity(struct btrfs_in
- 	if (IS_ERR(trans))
- 		return PTR_ERR(trans);
- 	inode->ro_flags |= BTRFS_INODE_RO_VERITY;
--	btrfs_sync_inode_flags_to_i_flags(inode);
- 	ret = btrfs_update_inode(trans, inode);
- 	if (ret)
- 		goto end_trans;
- 	ret = del_orphan(trans, inode);
- 	if (ret)
- 		goto end_trans;
-+	/* Now that rollback is no longer possible, set S_VERITY. */
-+	btrfs_sync_inode_flags_to_i_flags(inode);
- 	clear_bit(BTRFS_INODE_VERITY_IN_PROGRESS, &inode->runtime_flags);
- 	btrfs_set_fs_compat_ro(root->fs_info, VERITY);
- end_trans:
-+	if (ret)
-+		inode->ro_flags &= ~BTRFS_INODE_RO_VERITY;
- 	btrfs_end_transaction(trans);
- 	return ret;
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -119,6 +119,7 @@ typedef irqreturn_t (*irq_handler_t)(int
+  * @thread_flags:	flags related to @thread
+  * @thread_mask:	bitmask for keeping track of @thread activity
+  * @dir:	pointer to the proc/irq/NN/name entry
++ * @thread_dtor:	task_work for @thread irregular exit cleanup
+  */
+ struct irqaction {
+ 	irq_handler_t		handler;
+@@ -137,6 +138,7 @@ struct irqaction {
+ 	unsigned long		thread_mask;
+ 	const char		*name;
+ 	struct proc_dir_entry	*dir;
++	struct callback_head	thread_dtor;
+ } ____cacheline_internodealigned_in_smp;
  
---- a/fs/ext4/verity.c
-+++ b/fs/ext4/verity.c
-@@ -242,17 +242,19 @@ static int ext4_end_enable_verity(struct
- 		goto stop_and_cleanup;
+ extern irqreturn_t no_action(int cpl, void *dev_id);
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -1201,9 +1201,9 @@ static void __irq_thread_dtor(struct irq
+ 	irq_finalize_oneshot(desc, action);
+ }
  
- 	ext4_set_inode_flag(inode, EXT4_INODE_VERITY);
--	ext4_set_inode_flags(inode, false);
- 	err = ext4_mark_iloc_dirty(handle, inode, &iloc);
- 	if (err)
- 		goto stop_and_cleanup;
+-static void irq_thread_dtor(struct callback_head *unused)
++static void irq_thread_dtor(struct callback_head *work)
+ {
+-	struct irqaction *action = kthread_data(current);
++	struct irqaction *action = container_of(work, struct irqaction, thread_dtor);
  
- 	ext4_journal_stop(handle);
+ 	__irq_thread_dtor(action);
+ 	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+@@ -1250,7 +1250,6 @@ static void wake_up_and_wait_for_irq_thr
+  */
+ static int irq_thread(void *data)
+ {
+-	struct callback_head on_exit_work;
+ 	struct irqaction *action = data;
+ 	struct irq_desc *desc = irq_to_desc(action->irq);
+ 	irqreturn_t (*handler_fn)(struct irq_desc *desc,
+@@ -1270,8 +1269,8 @@ static int irq_thread(void *data)
+ 		handler_fn = irq_thread_fn;
  
-+	/* Now that rollback is no longer possible, set S_VERITY. */
-+	ext4_set_inode_flags(inode, false);
- 	ext4_clear_inode_state(inode, EXT4_STATE_VERITY_IN_PROGRESS);
- 	return 0;
+ 	set_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+-	init_task_work(&on_exit_work, irq_thread_dtor);
+-	task_work_add(current, &on_exit_work, TWA_NONE);
++	init_task_work(&action->thread_dtor, irq_thread_dtor);
++	task_work_add(current, &action->thread_dtor, TWA_NONE);
  
- stop_and_cleanup:
-+	ext4_clear_inode_flag(inode, EXT4_INODE_VERITY);
- 	ext4_journal_stop(handle);
- cleanup:
- 	/*
---- a/fs/verity/enable.c
-+++ b/fs/verity/enable.c
-@@ -274,8 +274,8 @@ static int enable_verity(struct file *fi
- 	 * initialization so that we don't have to undo the enabling when memory
- 	 * allocation for the hash table fails.  This is safe because looking up
- 	 * the fsverity_info always first checks the S_VERITY flag on the inode,
--	 * which will only be set at the very end of the ->end_enable_verity
--	 * method.
-+	 * which will only be set at the very end of a successful call to
-+	 * ->end_enable_verity().
- 	 */
- 	err = fsverity_set_info(vi);
- 	if (err) {
-@@ -285,10 +285,7 @@ static int enable_verity(struct file *fi
- 
- 	/*
- 	 * Tell the filesystem to finish enabling verity on the file.
--	 * Serialized with ->begin_enable_verity() by the inode lock.  The file
--	 * system needs to set the S_VERITY flag on the inode at the very end of
--	 * the method, at which point the fsverity information can be accessed
--	 * by other threads.
-+	 * Serialized with ->begin_enable_verity() by the inode lock.
- 	 */
- 	inode_lock(inode);
- 	err = vops->end_enable_verity(filp, desc, desc_size, params.tree_size);
-@@ -296,7 +293,8 @@ static int enable_verity(struct file *fi
- 	if (err) {
- 		fsverity_err(inode, "%ps() failed with err %d",
- 			     vops->end_enable_verity, err);
--		fsverity_remove_info(vi);
-+		if (!WARN_ON_ONCE(IS_VERITY(inode)))
-+			fsverity_remove_info(vi);
- 	} else if (WARN_ON_ONCE(!IS_VERITY(inode))) {
- 		fsverity_remove_info(vi);
- 		err = -EINVAL;
---- a/include/linux/fsverity.h
-+++ b/include/linux/fsverity.h
-@@ -54,11 +54,13 @@ struct fsverity_operations {
- 	 * @merkle_tree_size: total bytes the Merkle tree took up
- 	 *
- 	 * If desc == NULL, then enabling verity failed and the filesystem only
--	 * must do any necessary cleanups.  Else, it must also store the given
--	 * verity descriptor to a fs-specific location associated with the inode
--	 * and do any fs-specific actions needed to mark the inode as a verity
--	 * inode, e.g. setting a bit in the on-disk inode.  The filesystem is
--	 * also responsible for setting the S_VERITY flag in the VFS inode.
-+	 * must do any necessary cleanups.
-+	 *
-+	 * Else, the filesystem must store the given verity descriptor to a
-+	 * fs-specific location associated with the inode and do any fs-specific
-+	 * actions needed to mark the inode as a verity inode, e.g. set a bit in
-+	 * the on-disk inode.  Finally, on success (only when rollback is no
-+	 * longer possible!) it must set S_VERITY in the VFS inode.
- 	 *
- 	 * i_rwsem is held for write, but it may have been dropped between
- 	 * ->begin_enable_verity() and ->end_enable_verity().
+ 	while (!irq_wait_for_interrupt(desc, action)) {
+ 		irqreturn_t action_ret;
 
 
