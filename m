@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826856;
-	b=Zx4+CD0LCF5rmZqhVtcN0y064AKBdfiqIwcSmMc+xrQpRjkWH3NexvBiIzz41F+bW9OO
-	 uuceoN+A6vWsoiaJWzOxCvGHCYMwjRYehRlXhy96vdThHoOBmeodHoz0b2+B63ZGJeYxq
-	 NoBMDw5wLrUxBMqYdbqera5jt7CbkedIHP9P3whBCpWNw4r7vNFnGj6CoVnTqfwDUW/Pb
-	 tgZzTE0r2oMO+CtCKXlaJ9XZ3dXK53xCOnf4rnir1S/dfiYmGMWQtlmtwuOJtDO+OLFCq
-	 MTWpLvnFU5fbb4ILk7CeOwcfu7zvLJdvOaHes47G6YFHUhPhBDvmk1XteM4hFA0jr7A==
+	t=1793826859;
+	b=ZDO6/vqLTSJRfdtJ5WDH8wOI/aaONd9/kzh0svwIgg4owBlGBwleVc7yNJi32JzJAZ7t
+	 Pa1upKU2a7PHj8hxWk9CZ7RZmQINtY+bAaUGbE4wdwbF+XC16EVGyXgBPsKP0/aNByvAg
+	 x2OPPJgyB2jW+VxWgEo+NcuR8H+NqLZVa0D52Mn++fbzxKHVcO0qUbeGgBatw5MwnhXEu
+	 oLr0IrzW4xgzGuOrjnLqev166re2cNoraWVn4nHoyD/m+cdXVB0mgKmUUYGn9sQTFBx3X
+	 jae3pjshmqI+0EL59QmygfDX3/XjOfQvLL3CeBwzAOuNI8LYZB8GiFu9lYzE1VKWt2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wA7cquLtU6fjVjO6uN5wBdgpuqCjv21rKx2ZSb4PKIU=;
-	b=cj1XpQ0/2jSsv4ExhZZwzmj2eLU1t3nuxMQ4M5SebYFhV3ozvhkqt6zfPHHwFzsphkZ0
-	 LekcKGZeK4ZD5wizo6t7gBmjYMbxvorPqpGyvOXQ612f3Mz79qlntBfyxoxLUFTYCIPd+
-	 j5wJPEnNESVsQvwMjYeYwU4vTbzKEfd62+EBvMxGGQ2ZmWvSOES0P4dIkAsj42gnftbnd
-	 oMtEPSJOBOI4yJkQldjfUWwtPl2dKUuuHopZnk8fDoyZEL1jWR+2l1177YhpFSVusY/u0
-	 YGEA/FRXG25ElN25YtFnDaFCmc9ccXz+oy9XWUcc29LL67DDlBBGmA4GvZzpQ0lCpow==
+	bh=Nm7nB6TGIfMPCXQMyiEej9CKa40X4XX/tNs5A1GrocQ=;
+	b=vXAhpXKLOcMEojRlVy7zwqckyFwQlmfBeCOjDSx5PVxoEYtnmVGwrAp1ey5bMC/I6D+Z
+	 f7KwaVB+EKEYEkLa4GpxdmE8xf+05T58Dy6jHrACQcs36hUmYlyTBQQ40Q/GJ1/fbxUTi
+	 6NuoKPhsEiNDARK6e8Xnx1dPUUA5LytNpCh6IUqtwp4PgOWLV13xMEmFNz5DGdIoc00Xq
+	 eCQY6hQfm7JUsXMKx/S+x5F9zgpTaduzXcBtSeoFrO1kr/4ZZorFqV4l5cD1MRUNFgGnT
+	 ImoNDZOY4eFmdQh9li7CMmUTiAYoiHomdBAGKlCROlEtFIqku6o0scuVSTRQWq2B0hQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TA13qP+E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GsTsPa/l";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6889C607030A;
-	Wed,  4 Nov 2026 21:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EBCF606EEB7;
+	Wed,  4 Nov 2026 21:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TA13qP+E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C401F00A02;
-	Wed,  4 Nov 2026 21:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GsTsPa/l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3C21F0093A;
+	Wed,  4 Nov 2026 21:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826856;
-	bh=wA7cquLtU6fjVjO6uN5wBdgpuqCjv21rKx2ZSb4PKIU=;
+	s=korg; t=1793826859;
+	bh=Nm7nB6TGIfMPCXQMyiEej9CKa40X4XX/tNs5A1GrocQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TA13qP+EmuTKzn+glC2qgVITtOLOzyBNsunGDfTklt2Wj4R7p/OacTmSf/5ZNEPOZ
-	 jsqI2C+xCgtlEjig9FSYbgUWwe8NiLK141NRd0adXG/UpHDeN+VdqebuyuhnsZ61l1
-	 6fU0haR0uasPLf9n3/r3lrm1Xv0WXQRQYCVXkNg0=
+	b=GsTsPa/l/Ip2/fug1dxfDDiImFAqxi0eppiBlSG8dE63TYnLpXv9sHmf4tS77GMQe
+	 5NkUjd6vSLFrtTShbBI/eFnSOQY3YUcdl4zzvaYDLMGxz5b+t5O2DxDMCxS1qtBMly
+	 M5laF2jCw2Vc9BbyoWjB+9Pz0S0nlWsXbdz6UcWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 047/547] io_uring/timeout: use the right clock for ABS updates
-Date: Wed,  4 Nov 2026 16:03:51 -0500
-Message-ID: <20261104211039.649388386@linuxfoundation.org>
+Subject: [PATCH 7.3 048/547] io_uring/wait: no early -ETIME if min_wait finds work
+Date: Wed,  4 Nov 2026 16:03:52 -0500
+Message-ID: <20261104211039.674593206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,70 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit dad82eb1805d76c555224e4030319e3844642b64 ]
+[ Upstream commit 83cce67298ab1f4d2e9205a49f56975475cdb154 ]
 
-io_parse_user_time() converts an absolute time from the time namespace of
-the caller to the host's view, for the clock given by the flags. The
-flags of IORING_TIMEOUT_UPDATE and IORING_LINK_TIMEOUT_UPDATE can't name
-a clock, the updated timer keeps running on the clock the timeout was
-set up with. So the time is always converted as if it was
-CLOCK_MONOTONIC.
+When the min wait time is over and there is work to run, which for
+DEFER_TASKRUN includes task_work that was queued lazily and didn't wake
+the waiter, io_cqring_min_timer_wakeup() ends the wait via
+io_cqring_timer_wakeup(). That flags it as timed out. io_cqring_wait()
+runs the work, leaves the loop, and returns 0 if the CQ ring holds
+something.
 
-In a time namespace with a monotonic offset, that moves the new expiry of
-a CLOCK_REALTIME timeout by that offset, although the clock isn't
-affected by time namespaces at all, and the one of a CLOCK_BOOTTIME
-timeout by the difference between the two offsets.
+Running task_work doesn't have to result in a CQE, though. A poll wake up
+can turn out to be spurious, for instance if somebody else has read the
+data by the time the request is retried. The application then gets -ETIME
+once the min wait time has passed, no matter how far away the timeout it
+asked for is.
 
-Do the conversion when the timeout has been looked up and its clock is
-known. The update is run by the submitter, its SQPOLL thread or one of
-its io-wq workers, all of which share the time namespace.
+Wake the task without declaring a timeout. From now on a single CQE
+satisfies the wait, like in the case where the timer is switched over to
+the normal timeout. If running the work doesn't post one, the loop in
+io_cqring_wait() goes back to sleep with the normal timeout.
 
-Fixes: 9cc6bac1bebf ("io_uring/timeout: honour caller's time namespace for IORING_TIMEOUT_ABS")
+Fixes: 1100c4a2656d ("io_uring: add support for batch wait timeout")
 Assisted-by: LLM
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-31-c1556f5d7bf5@toxicpanda.com
+Link: https://patch.msgid.link/20261015-b4-io-uring-fixes-v1-32-c1556f5d7bf5@toxicpanda.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/timeout.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ io_uring/wait.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/timeout.c b/io_uring/timeout.c
-index 38ee4e966e8e7..2385adae72e01 100644
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -458,6 +458,8 @@ static int io_linked_timeout_update(struct io_ring_ctx *ctx, __u64 user_data,
- 	io = req->async_data;
- 	if (hrtimer_try_to_cancel(&io->timer) == -1)
- 		return -EALREADY;
-+	if (mode == HRTIMER_MODE_ABS)
-+		ts = timens_ktime_to_host(io_timeout_get_clock(io), ts);
- 	hrtimer_setup(&io->timer, io_link_timeout_fn, io_timeout_get_clock(io), mode);
- 	hrtimer_start(&io->timer, ts, mode);
- 	return 0;
-@@ -479,6 +481,8 @@ static int io_timeout_update(struct io_ring_ctx *ctx, __u64 user_data,
- 	/* for a multishot request this isn't a sequence, keep the repeats */
- 	if (!(data->flags & IORING_TIMEOUT_MULTISHOT))
- 		timeout->off = 0; /* noseq */
-+	if (mode == HRTIMER_MODE_ABS)
-+		time = timens_ktime_to_host(io_timeout_get_clock(data), time);
- 	data->time = time;
- 
- 	list_add_tail(&timeout->list, &ctx->timeout_list);
-@@ -511,7 +515,12 @@ int io_timeout_remove_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 				  IORING_TIMEOUT_ABS |
- 				  IORING_TIMEOUT_IMMEDIATE_ARG))
- 			return -EINVAL;
--		ret = io_parse_user_time(&tr->time, READ_ONCE(sqe->addr2), tr->flags);
-+		/*
-+		 * The clock is that of the timeout to update, an absolute time
-+		 * is converted to the host's view once that has been found.
-+		 */
-+		ret = io_parse_user_time(&tr->time, READ_ONCE(sqe->addr2),
-+					 tr->flags & ~IORING_TIMEOUT_ABS);
- 		if (ret)
- 			return ret;
- 	} else if (tr->flags) {
+diff --git a/io_uring/wait.c b/io_uring/wait.c
+index 078fa8b076a99..fb1c082993a7e 100644
+--- a/io_uring/wait.c
++++ b/io_uring/wait.c
+@@ -78,9 +78,16 @@ static enum hrtimer_restart io_cqring_min_timer_wakeup(struct hrtimer *timer)
+ 	if (iowq->timeout == KTIME_MAX ||
+ 	    ktime_compare(iowq->min_timeout, iowq->timeout) >= 0)
+ 		goto out_wake;
+-	/* work we may need to run, wake function will see if we need to wake */
+-	if (io_has_work(ctx))
+-		goto out_wake;
++	/*
++	 * Work we need to run. It isn't known if that is going to post a CQE,
++	 * so this isn't a timeout. Carry on with the normal one if it doesn't.
++	 */
++	if (io_has_work(ctx)) {
++		iowq->min_timeout = 0;
++		iowq->cq_tail = iowq->cq_min_tail + 1;
++		wake_up_process(iowq->wq.private);
++		return HRTIMER_NORESTART;
++	}
+ 	/* got events since we started waiting, min timeout is done */
+ 	scoped_guard(rcu) {
+ 		struct io_rings *rings = io_get_rings(ctx);
 -- 
 2.53.0
 
