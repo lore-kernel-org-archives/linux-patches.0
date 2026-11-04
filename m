@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829281;
-	b=mTqDGGsyhWzoUiWaLcBwxnlkkGfsbU7stSjO3PVqLzTElY0CDRGh4cvZ0sOsgcQUEr6u
-	 iOufXab5i2FZqwnmihAnMjHbXKNfU88Y1DxzF9m/JbmNjS06MGyd9HXkqpDcscIHbYpTQ
-	 QjT+Zwre3Cjdg/4YM5YGMtc0edLVRYcC0UvMwLEXdcbXjPl6XIAgzhQj1vcEFvoeOHeqh
-	 HWU11kdNHhWohbCUbbpS1Y0gxb8+P3Olnh0I1m+YYhJYM6F5CtMge9WlFGf2zdZHpg9qN
-	 ls4NHJe1ZYK5PIs1r83n7EuRBxi8kKev3PIudOpBFeygv3XtPtONtpfmNm38VEhZdwQ==
+	t=1793829283;
+	b=TuA256IuasibSYMMdvwwKKMN9m3Gd3OJI3mUB4bpuCvck0kTgOY0akxr/MQoHd32JyyX
+	 lesWawrdWZilot+P9FQX0ADxA/InjzEYcVFS5o5WU+H7LWr72dKQVvI51zZtBPurooGBg
+	 gE8sO4OE4d20I4xGeLMY7hBMX469dwX0N4E204lPp1iT/wRG3n3j1y+g5mFyyjNOT5QbX
+	 73P4HLPrQdr9Xw/pX5b7F6MFMd/Wb5ef4drTkc0m/AzxXmgS7d0Q9joM1mChCoBnlgoT6
+	 5t37VxdYcppAfZXhzi6EXgNt7LlMuWNbYJ925ahXOSjMlnQ7uHg9UqReFOV0f02VtzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wnhbpgf9pYOWaxEmjLg8XC+2GuWdEZ5DrUmO/3gyEFo=;
-	b=JVJndA67RgbbWGpkEMVhNxswuihGaTmnbVo17z5JeNkJRODK/0nllWHiVKDUFXCOudLS
-	 02I3yjvk09AYtx+lWJGVph09kn5ctJr8sa02nLgemKIiZyojhR8VK/npxeXdIlfDlFEn5
-	 xDLfv3SvrZKOGHr/nflY0/Qjmc2ewvvlVa4/foOl4PbnTJQbVWN7zA+N78i6Iqi8IdVZ1
-	 hFtMuU3aiRNwBDbxvi8akOF1zY3e/fNUQ2TNWqMTY5iELaXC9jdUwzGdZSqKPa+4Ur9EV
-	 Qi1saT9Wm4ncd0PJRzw/MS13Wruwu65u0+LYc0eqDmElx8Jtoa+5gJ1+mXEfbDMSSXQ==
+	bh=4p6L31TN8lrrldsNMV/TKmCaQn+U5uM0T25wAvd5KcQ=;
+	b=Nqn9M2trLZC5bpgPdRgGLXBgW85NGdi9E5W4HFixQw1hZ51XL/gET64A7CNCJ54TD8jw
+	 RI/dPfuWwSvYQ2RJ/Q//qFEXRHLntwG9ghaCsl+FyNTxi9K9rH4N4JSHXgMEM1UwVVC8y
+	 qOC18Yd01YOw9V5yedIneWERY2X/JgZJV3SO0yZ8qgeuB8UfOw4sPizCj0cyS0YeO9Txk
+	 0hq9pR8yfc65h7rMTNsNAVL0u17JZ4Ekz7ner8/NrnrjKO4N7AylbA+hAAMpmHooYXaIm
+	 b8BajKuRAumlFF+KN0kvq7t/A/k1vsCYVfdqCPQ+nmVfw68th0yI84IcU0EB4gXYKgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfPkNN1F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOGQBtSu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD6460745A8;
-	Wed,  4 Nov 2026 21:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA88260745A8;
+	Wed,  4 Nov 2026 21:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfPkNN1F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA981F000C1;
-	Wed,  4 Nov 2026 21:54:40 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOGQBtSu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA491F000C1;
+	Wed,  4 Nov 2026 21:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829281;
-	bh=wnhbpgf9pYOWaxEmjLg8XC+2GuWdEZ5DrUmO/3gyEFo=;
+	s=korg; t=1793829282;
+	bh=4p6L31TN8lrrldsNMV/TKmCaQn+U5uM0T25wAvd5KcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HfPkNN1FCw2zZS1T+r6B9Q5dp+n8zTopoS9cGr0LwzlrxSLhuw4/DuZSLwNgGNVvf
-	 Tu4Gdx5++4uOo/mBgeyi0lMk/tW107DLFsnyERmpf7PqZTLdSfrCk8e1MuYKJHfoA6
-	 fDM3s3TcH31hCeserZChYqN3BZE1zzzuBYQYd3Nk=
+	b=EOGQBtSuKGUVsMtaMqXg+NFPdv62SfYQXaZH5P1xbeR/m+t+0TMAGD41SnpT0Adn5
+	 G6hlWDFDaLU6ugfiXdtGMC6i00W4vqlMgeULzicwxSYPePuhnavJdHcYfMXj1Q3b0Y
+	 q6PgfxIUtsPKuHH+TUdt+DlW/M4/201H6P9RSa4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0026/1005] selftests/filesystems/overlayfs: fix set_layers_via_fds link error
-Date: Wed,  4 Nov 2026 15:55:59 -0500
-Message-ID: <20261104211044.291601279@linuxfoundation.org>
+Subject: [PATCH 6.18 0027/1005] HID: wacom: avoid copying Bluetooth input reports
+Date: Wed,  4 Nov 2026 15:56:00 -0500
+Message-ID: <20261104211044.320310024@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,73 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit e5804b1024193c91ff2648403beda882cb4f8b6c ]
+[ Upstream commit 8310cdeefc8a14d2093c3234b570c7805c20bcbf ]
 
-set_layers_via_fds.c calls open_tree() directly, but that wrapper is
-not provided by all C libraries, so the test fails to link with
-"undefined reference to open_tree" on toolchains without it.
+wacom_intuos_bt_irq() duplicates the received Bluetooth report with
+kmemdup() so that it can pass 10-byte input report payloads to the
+common Intuos parser. The helper then copies each payload back into
+wacom->data before calling wacom_intuos_irq().
 
-Use sys_open_tree() from ../wrappers.h, the syscall wrapper already
-used for move_mount(), fsmount() and friends here.  This is also a
-prerequisite for building the new idmapped_mounts test added to this
-directory.
+Avoid the allocation and copy by temporarily pointing wacom->data at the
+current 10-byte payload while the common parser runs, then restoring the
+original report pointer. The Bluetooth report parser keeps using the
+original report buffer for dispatch and battery parsing, while the common
+parser sees the same payload bytes as before.
 
-Link: https://patch.msgid.link/20260615-work-idmapped-overlayfs-v1-8-7381632aa402@kernel.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+This also removes the unchecked kmemdup() result from the Bluetooth IRQ
+path.
+
+Suggested-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../filesystems/overlayfs/set_layers_via_fds.c   | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/hid/wacom_wac.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c b/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
-index dc0449fa628f8..d4a645ec88636 100644
---- a/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
-+++ b/tools/testing/selftests/filesystems/overlayfs/set_layers_via_fds.c
-@@ -624,7 +624,7 @@ TEST_F(set_layers_via_fds, set_layers_via_detached_mount_fds)
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index af76e49fd0f25..8feb8027be95e 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1192,8 +1192,11 @@ static int int_dist(int x1, int y1, int x2, int y2)
+ static void wacom_intuos_bt_process_data(struct wacom_wac *wacom,
+ 		unsigned char *data)
+ {
+-	memcpy(wacom->data, data, 10);
++	u8 *saved_data = wacom->data;
++
++	wacom->data = data;
+ 	wacom_intuos_irq(wacom);
++	wacom->data = saved_data;
  
- 	ASSERT_EQ(sys_move_mount(fd_tmpfs, "", -EBADF, "/set_layers_via_fds_tmpfs", MOVE_MOUNT_F_EMPTY_PATH), 0);
+ 	input_sync(wacom->pen_input);
+ 	if (wacom->pad_input)
+@@ -1202,7 +1205,7 @@ static void wacom_intuos_bt_process_data(struct wacom_wac *wacom,
  
--	fd_tmp = open_tree(fd_tmpfs, "u", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	fd_tmp = sys_open_tree(fd_tmpfs, "u", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(fd_tmp, 0);
+ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
+ {
+-	u8 *data = kmemdup(wacom->data, len, GFP_KERNEL);
++	u8 *data = wacom->data;
+ 	int i = 1;
+ 	unsigned power_raw, battery_capacity, bat_charging, ps_connected;
  
- 	layer_fds[0] = openat(fd_tmp, "upper", O_CLOEXEC | O_DIRECTORY | O_PATH);
-@@ -633,25 +633,25 @@ TEST_F(set_layers_via_fds, set_layers_via_detached_mount_fds)
- 	layer_fds[1] = openat(fd_tmp, "work", O_CLOEXEC | O_DIRECTORY | O_PATH);
- 	ASSERT_GE(layer_fds[1], 0);
+@@ -1242,7 +1245,6 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
+ 		break;
+ 	}
  
--	layer_fds[2] = open_tree(fd_tmpfs, "l1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[2] = sys_open_tree(fd_tmpfs, "l1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[2], 0);
+-	kfree(data);
+ 	return 0;
+ }
  
--	layer_fds[3] = open_tree(fd_tmpfs, "l2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[3] = sys_open_tree(fd_tmpfs, "l2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[3], 0);
- 
--	layer_fds[4] = open_tree(fd_tmpfs, "l3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[4] = sys_open_tree(fd_tmpfs, "l3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[4], 0);
- 
--	layer_fds[5] = open_tree(fd_tmpfs, "l4", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[5] = sys_open_tree(fd_tmpfs, "l4", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[5], 0);
- 
--	layer_fds[6] = open_tree(fd_tmpfs, "d1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[6] = sys_open_tree(fd_tmpfs, "d1", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[6], 0);
- 
--	layer_fds[7] = open_tree(fd_tmpfs, "d2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[7] = sys_open_tree(fd_tmpfs, "d2", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[7], 0);
- 
--	layer_fds[8] = open_tree(fd_tmpfs, "d3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	layer_fds[8] = sys_open_tree(fd_tmpfs, "d3", OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
- 	ASSERT_GE(layer_fds[8], 0);
- 
- 	ASSERT_EQ(close(fd_tmpfs), 0);
 -- 
 2.53.0
 
