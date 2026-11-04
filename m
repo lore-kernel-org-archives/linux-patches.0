@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831719;
-	b=jnehqrolFyTbNMJb29b2a3hSqzNQZlaeLVDhBUpsnvW/UqsZNDUsIJqWdKifAcHjGYzH
-	 VrenXzn2/vbkdCfpu5rfD2bXW9bmESPQ58ulxBsZi07/IUoPU+eRxzovZBfZOxHOrud+v
-	 dTrjRxoKiGIvr8xv1nxcsj1cSmyxBPHCU5e1/05I6h0h5uKzA7CIlDOL7yQN6yGTGuneZ
-	 rwQQqAidRzjUexAJ2m4239z9tBnvuHkCgR9m2rDHyiAp6qw+Xgqs78I/YpAYVueRmoeDY
-	 i6DjVl56qXcBNTOms3O1rTtsffwNsnpEwT+n9RrKnynkGRdM6kQs3sbrqZGM1hYpl1A==
+	t=1793831720;
+	b=1+uSnFiQcYEPavGo+oSucL//kBKQFasPJPNbEiUvh9/sb6xfxXZAuqSOqBysl9J4PB89
+	 Dk/KbPYY3fTFhZoTFF/4VgTmMy7U3Ta5vHmKqhuPk9HU+uzQT4oXkjptoqALXdltR6+np
+	 Syz6q35dqBjayRYycLT2k5Oaao1Po15iiQ2LL9vY1qbiI+fFTKoBWNhJVy4nF0pnIdwo6
+	 Sc1Ti867mhPxz7kGp5vOroQVOD97WzRI/9pTCl0PTZ9hMjG4S9fxES+XOzZpy1Hf0++s0
+	 hIT0zWi3DiwOqOP4HRJuE1FgcEvzoB3ax9eo1I2lwNU62iIiUAjIP5Dn0RUF8CyFuNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jfI+itqO6+gpiYeuyxEjgWf8f0j+EpZodoEzSnueeNI=;
-	b=1Fn9MdOm615mAcypGQ5Wyo2aUJp3ZkMADa4/FEH1iqhr/uHKZodENjK+d92qPbvUDfi/
-	 MQ2aaM1wJtFGH4/26l03DFKHSDYns3x3+RNnKHG9V5GBeCP1XkdwPWawagZ9IlZ7w+ph/
-	 v+KPXdiMTYHoyd178Bo63ZQbvwhB3aMX096juFUwPWfE1cxoS/SulsYyR+1Y54N+5dsu9
-	 wfV9x0L4d5M/r6Y3y+Fyp2ylimhoV+VzIwXImI3Nn2m7MxWb9OMRoJh4jLkRYaRgdqTza
-	 DLAfONBpV7WNdRhNrp8S4N9n/UhA8ckwzExs8TDbGqSY0coU81V4vpePlg9pxyeVkSg==
+	bh=/WYQXUusDEJy9DVm5jnCHrUtEW2Fa/TpOLZRKmqyPJc=;
+	b=eo+r04nt3g4FlTQmP5dhRjz6QJ0SrJlFlf/PU2vWl8dWcTlik8KMLStTIkxcYBKWycby
+	 TKedyHDEl7II/UT768L8pk1iDVctQe1QbmIaC/MdZlE9KNOxMAvcn/MXrxO5RZloVZ7kD
+	 Yl1ZAXE79MtBl3LoqmgLk6galDmcjeP6g1aZFqQlSaZMGO7C1pfIEHgB7LBWXhfjlxdNa
+	 puNbC0PZFDMQwcODgHIhYodtv8u7pSWPiup+d7D/Y+7VL21Sxh+ymxxyUH02bC0Ncblk2
+	 3emGdLpmM2bCxuZ+MgnvTCP9iFtbDMkeDmRkqyPXvLCjoDIshJsh/Dvt6c4ztCC4c/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ERIysrDM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kcLTH6Z5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75F1606A846;
-	Wed,  4 Nov 2026 22:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EEC606A846;
+	Wed,  4 Nov 2026 22:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ERIysrDM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A131F000C1;
-	Wed,  4 Nov 2026 22:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kcLTH6Z5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CA11F000C1;
+	Wed,  4 Nov 2026 22:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831718;
-	bh=jfI+itqO6+gpiYeuyxEjgWf8f0j+EpZodoEzSnueeNI=;
+	s=korg; t=1793831720;
+	bh=/WYQXUusDEJy9DVm5jnCHrUtEW2Fa/TpOLZRKmqyPJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ERIysrDMA9EiqqVjh7rgWV+6icsIsSKY6471YNGYT8u11DWMhgCe/7WwQysvK2ZJq
-	 qKixxfCFM7ICrDjx3ShhqH/edeismUc2mr2Af/eZXipYSLOkj53YRBtxrJwHatw5nC
-	 eb6a0wLiie9y9ifImQllypKZaTizYNzb2a1IF/H8=
+	b=kcLTH6Z5NSQkTxz1JunMkckhXQA0GlS2S/zlL1LYZHfHqUOmtYJm4q+CAvKUAfh49
+	 pulbmgjVe+oGFCY3+rVmhJ5pclSh9PFkPSZMxJJwY9HbGSGIEt7EYIDECLLm+Kahc7
+	 utCbVgtE+DO82xTE8iwU0FOActRhmYGz63/ECZGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 0871/1005] smb: client: validate NT transaction response layout and offsets
-Date: Wed,  4 Nov 2026 16:10:04 -0500
-Message-ID: <20261104211107.662118793@linuxfoundation.org>
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.18 0872/1005] pNFS: Fix CB_NOTIFY_DEVICEID CHANGE to consume ndc_immediate
+Date: Wed,  4 Nov 2026 16:10:05 -0500
+Message-ID: <20261104211107.687507259@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,105 +67,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-commit 83d0d5e0ca22233c75daf139ec0063b9d2ff1ac7 upstream.
+commit a0cb76dc3b2919af8257fc08b4f9a79a35442483 upstream.
 
-validate_ntransact() assumes that the response uses the fixed 18-word NT
-transaction layout. A different WordCount makes get_bcc() locate the byte
-count at a different offset from pSMBr->ByteCount, allowing the subsequent
-bounds checks to use inconsistent response boundaries.
+decode_devicenotify_args() gated the trailing ndc_immediate on
+cbd_layout_type rather than cbd_notify_type, so the flag was never
+consumed and a multi-item cnda_changes<> misaligned after the first
+entry.
 
-The function also turns the 32-bit ParameterOffset and DataOffset fields
-into pointers before checking their bounds. On a 32-bit client, a large
-offset can wrap the pointer below end_of_smb and pass the one-sided pointer
-comparison. The caller then dereferences the parameter pointer or copies
-from the data pointer.
-
-Require the expected WordCount before reading the byte count. Check each
-offset and count against the received SMB length as integers before forming
-either pointer. Use subtraction after validating the offset so that the
-range checks cannot overflow.
-
-Reported-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Fixes: 0a4b92c05ed0 ("[CIFS] Add worker function for Get ACL cifs style")
+Fixes: 1be5683b03a7 ("pnfs: CB_NOTIFY_DEVICEID")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifssmb.c |   32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ fs/nfs/callback_xdr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -3715,9 +3715,10 @@ static int
- validate_ntransact(char *buf, char **ppparm, char **ppdata,
- 		   __u32 *pparmlen, __u32 *pdatalen)
- {
--	char *end_of_smb;
- 	__u32 data_count, data_offset, parm_count, parm_offset;
- 	struct smb_com_ntransact_rsp *pSMBr;
-+	size_t buflen;
-+	char *end_buf;
- 	u16 bcc;
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -316,7 +316,7 @@ __be32 decode_devicenotify_args(struct s
+ 		memcpy(dev->cbd_dev_id.data, p, NFS4_DEVICEID4_SIZE);
+ 		p += XDR_QUADLEN(NFS4_DEVICEID4_SIZE);
  
- 	*pdatalen = 0;
-@@ -3728,37 +3729,42 @@ validate_ntransact(char *buf, char **ppp
- 
- 	pSMBr = (struct smb_com_ntransact_rsp *)buf;
- 
-+	if (pSMBr->hdr.WordCount != 18) {
-+		cifs_dbg(FYI, "invalid NT transaction WordCount %u\n",
-+			 pSMBr->hdr.WordCount);
-+		return -EINVAL;
-+	}
-+
- 	bcc = get_bcc(&pSMBr->hdr);
--	end_of_smb = 2 /* sizeof byte count */ + bcc +
--			(char *)&pSMBr->ByteCount;
-+	end_buf = 2 /* sizeof byte count */ + bcc + (char *)&pSMBr->ByteCount;
-+	buflen = end_buf - buf;
- 
- 	data_offset = le32_to_cpu(pSMBr->DataOffset);
- 	data_count = le32_to_cpu(pSMBr->DataCount);
- 	parm_offset = le32_to_cpu(pSMBr->ParameterOffset);
- 	parm_count = le32_to_cpu(pSMBr->ParameterCount);
- 
--	*ppparm = (char *)&pSMBr->hdr.Protocol + parm_offset;
--	*ppdata = (char *)&pSMBr->hdr.Protocol + data_offset;
--
- 	/* should we also check that parm and data areas do not overlap? */
--	if (*ppparm > end_of_smb) {
-+	if (parm_offset > buflen) {
- 		cifs_dbg(FYI, "parms start after end of smb\n");
- 		return -EINVAL;
--	} else if (parm_count + *ppparm > end_of_smb) {
-+	} else if (parm_count > buflen - parm_offset) {
- 		cifs_dbg(FYI, "parm end after end of smb\n");
- 		return -EINVAL;
--	} else if (*ppdata > end_of_smb) {
-+	} else if (data_offset > buflen) {
- 		cifs_dbg(FYI, "data starts after end of smb\n");
- 		return -EINVAL;
--	} else if (data_count + *ppdata > end_of_smb) {
--		cifs_dbg(FYI, "data %p + count %d (%p) past smb end %p start %p\n",
--			 *ppdata, data_count, (data_count + *ppdata),
--			 end_of_smb, pSMBr);
-+	} else if (data_count > buflen - data_offset) {
-+		cifs_dbg(FYI, "data offset %u + count %u past smb length %zu\n",
-+			 data_offset, data_count, buflen);
- 		return -EINVAL;
- 	} else if (parm_count + data_count > bcc) {
- 		cifs_dbg(FYI, "parm count and data count larger than SMB\n");
- 		return -EINVAL;
- 	}
-+
-+	*ppparm = buf + parm_offset;
-+	*ppdata = buf + data_offset;
- 	*pdatalen = data_count;
- 	*pparmlen = parm_count;
- 	return 0;
+-		if (dev->cbd_layout_type == NOTIFY_DEVICEID4_CHANGE) {
++		if (dev->cbd_notify_type == NOTIFY_DEVICEID4_CHANGE) {
+ 			p = xdr_inline_decode(xdr, sizeof(uint32_t));
+ 			if (unlikely(p == NULL)) {
+ 				status = htonl(NFS4ERR_BADXDR);
 
 
