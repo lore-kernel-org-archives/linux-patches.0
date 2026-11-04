@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829502;
-	b=jsgr9fbF/JXCpQWUuBytpMqEmBrxkkPgeZIMEvDOTeiv2jcIMIzOy5jNJKEEwMRlSTxS
-	 a4HSPuYDTPEWK9oKsD81qqe5/mMKmevJ3aLzRSr6wAEQcN6CnNrbl/wDScCJ/Ds0MmsjA
-	 pkrhPuBfBOCX476xVozk/+Hc9PZqYkH+U0+Nejhm9wIRn121LOH6IpOQYmv1hfGvbrtTk
-	 FxUktadd23Dn1vwEmAYjmOQnw4GGNdirA3npktdFUEAy70RrdmIE3ezAcIV8DW6SMo/l3
-	 q5+pGEzC31WnLU/VYH0Gf/XZcpjcwtyRVY12JdiyjDUr+9qPM5wVD68sRV9vSJ67DAA==
+	t=1793829503;
+	b=ut1X11vMPE59A48zGirg5Jt8UPaRwZ/x1JiXDbDyuTA0Lp8nc+1mTOZf1yel+Kef2IIb
+	 q9EQzVxMjAuB5r9zhpgPkIbQwwlxKeSd4scoxH6iMxni1H8yYyjshz3U++SX56uuOd0i8
+	 UUmfdHsjvOSc/TmusGX45elqlMZIn1OFqRTpm3V4jKv/g89W9XUK0S45Re5poy5mJfujr
+	 f7jO+kqyLUuH4dHhkpkMFkVwhbNkBOMxusSBSYtHceBGGDmT4dWOjmw0g4uD09WMtjPg6
+	 m506/GwXfqZo0sobQw2Zdgmh3jKJWskQbfnJA1hmtu82ub/UzneRpqLJnG3cQGteqgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829502;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829503;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B0/x5bAj+DofzRJ8wLIbWiKkDyV/41kpBnSGpbPhZSw=;
-	b=dpfbSSVaOqwaW2VPJgoAu9iqw2LyX902WJAuAK8SnsQdGc97g4kRtJZQmSlU3/FwqKOx
-	 CLW0DG7njsmrfgjfIRhOHXYkC2aleba5u7mbBe4YSWuaCh2d0aSipVlBk/1Tq3V1aAYrw
-	 18mvOPEHpha0p69ZFKcRKC7MeWdtMbxM0V3aYUjnJXzQPjM95oi+dfj6a+J0lHO6djoZg
-	 wmG+QVtYjtBBldsaJJv0Ngq7dopLluIfXEaTgd6k7jOGOExfclJdEwTPaNTcwtLEPP1El
-	 OQlltmM42Jue0TcXsFqzagLCezj/bM/s6ui0mEpUTUcaa88RLxR4ENFeai6eRSoCS2Q==
+	bh=B4iOC6zPIY0V6OfUe1SQBE44qXIjtBa/luGKoSx7cWw=;
+	b=SWGfD2iem/21x2Jxhs1sR6SaqFgdLdSmdf3E9dInsLY0Si3ryM+gMSDzUKW2fpPxUefe
+	 XR3t1DfXCNkvzWZBPxx0PNtFFYXjoBzSBaebpeBOuRJNwRKwyA7AoaWnHe9ozAQ4GrETm
+	 /jTIKajkHjYofD5KivC0t/jfFkVQOa+4Hz1KcPd5ph5FW8ofiLf0wptOs2EsR67lO3t5r
+	 igGdey8J9YiEcz/hN79CLzsAhZRNJQoO5KwYwUvoTeNR6+0RlszSiBKyTyZqVR434iQQE
+	 C+3lFGOgjNmwUR08yQAl0iRzYUdHQwITHCqtuQz9/pEc+IVM2DYs42rDdY9QL034VIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zFOQjW/1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dojSIA8x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C196B606A844;
-	Wed,  4 Nov 2026 21:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406BC606A844;
+	Wed,  4 Nov 2026 21:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFOQjW/1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626E01F000C1;
-	Wed,  4 Nov 2026 21:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dojSIA8x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53FB1F000C1;
+	Wed,  4 Nov 2026 21:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829501;
-	bh=B0/x5bAj+DofzRJ8wLIbWiKkDyV/41kpBnSGpbPhZSw=;
+	s=korg; t=1793829503;
+	bh=B4iOC6zPIY0V6OfUe1SQBE44qXIjtBa/luGKoSx7cWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zFOQjW/1fPlKiN97Zzf1HeXN5C+sdQ2tqEORcsLv/obA+7zAQg4DkRpFbYxgMn9+A
-	 durzvn/l3ZujrOFN6De4juv9sN6J17RKWXUu0k5mCjx+vBHI+WP768Jl40d2fPykA+
-	 zPq8bXEjOzXU+8WJIocpseVxja4MjYNQyufKcATI=
+	b=dojSIA8xvTfckIwYij0pNg3P9SH5JsyQKNwSRxenyhGUMxKvImEeOpKTOFaRt8OGU
+	 wNWkHuZYurQaVrl6Zt3sX+vQioGZdoxtYX5M/NENQ8RdApIOeaHU9eDW5Wzpf/bkK6
+	 wwJkvt7x9DTeaJw/EM0gtAm4wlhUZnDIdd1CDLTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sashiko Review <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0164/1005] wifi: iwlwifi: mld: cancel wiphy work before freeing wiphy
-Date: Wed,  4 Nov 2026 15:58:17 -0500
-Message-ID: <20261104211048.358377303@linuxfoundation.org>
+Subject: [PATCH 6.18 0165/1005] tools/lib/api: Fix potential double-free from fdarray__grow()
+Date: Wed,  4 Nov 2026 15:58:18 -0500
+Message-ID: <20261104211048.385177430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,49 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit c99bc4d4e0ba6f4661b2b914c96a597d26e7cc05 ]
+[ Upstream commit eadce0f46a1d066b812c7e5aa46a33711c78a755 ]
 
-When we fail to load the fw during op-mode start, we purge the list
-of the async handlers but we don't cancel the work.
-Same when we stop the op-mode.
+If the realloc for fda->entries succeeds but the realloc for fda->priv
+fails, the error path frees the newly allocated entries.
 
-Before freeing wiphy, we need to cancel/flush any pending wiphy work,
-otherwise the work will fire with a freed memory.
-cfg80211 will do it anyway, but it will warn.
+However, fda->entries is neither updated to point to the new entries block
+nor cleared to NULL. If realloc moved the allocation to a new block, the
+old fda->entries pointer is now freed memory.
 
-Cancel the work in those cases.
+When fdarray__exit() is later called to clean up, it executes
+free(fda->entries), which would trigger a double-free on that old pointer.
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20260714165826.07aa49f755a2.I734a27b1b0eeb5b0e821aee3318fee8dc0a6bc03@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reported-by: Sashiko Review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-perf-users/20260710200150.11FE71F00A3A@smtp.kernel.org
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/mld.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/lib/api/fd/array.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-index cf003a4a37408..49fcbe6814677 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
-@@ -440,6 +440,8 @@ iwl_op_mode_mld_start(struct iwl_trans *trans, const struct iwl_rf_cfg *cfg,
+diff --git a/tools/lib/api/fd/array.c b/tools/lib/api/fd/array.c
+index f0f195207fca9..dcb396ab51eb1 100644
+--- a/tools/lib/api/fd/array.c
++++ b/tools/lib/api/fd/array.c
+@@ -31,7 +31,8 @@ int fdarray__grow(struct fdarray *fda, int nr)
+ 
+ 	priv = realloc(fda->priv, psize);
+ 	if (priv == NULL) {
+-		free(entries);
++		/* this will be freed by fdarray__exit() */
++		fda->entries = entries;
+ 		return -ENOMEM;
  	}
  
- 	if (ret) {
-+		/* wiphy memory is about to be freed, we should cancel any pending work */
-+		wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk);
- 		wiphy_unlock(mld->wiphy);
- 		rtnl_unlock();
- 		goto err;
-@@ -505,6 +507,7 @@ iwl_op_mode_mld_stop(struct iwl_op_mode *op_mode)
- 	iwl_mld_thermal_exit(mld);
+@@ -50,7 +51,7 @@ struct fdarray *fdarray__new(int nr_alloc, int nr_autogrow)
  
- 	wiphy_lock(mld->wiphy);
-+	wiphy_work_cancel(mld->wiphy, &mld->async_handlers_wk);
- 	iwl_mld_low_latency_stop(mld);
- 	iwl_mld_deinit_time_sync(mld);
- 	wiphy_unlock(mld->wiphy);
+ 	if (fda != NULL) {
+ 		if (fdarray__grow(fda, nr_alloc)) {
+-			free(fda);
++			fdarray__delete(fda);
+ 			fda = NULL;
+ 		} else {
+ 			fda->nr_autogrow = nr_autogrow;
 -- 
 2.53.0
 
