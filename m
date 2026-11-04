@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829430;
-	b=EWvHoBLXv00cE0ad45gDV7N28C3uvDi8LWNuVRFufpxS+VQ2eTFhkU5Y4QdlTKP153ON
-	 ZdpgK6ri+i+0dHpzaKqBYE1xAPMuLXqNuhrsWdbINmR200ga2NOf2wz+37y8EnEEIPf/O
-	 z6drM/I0HIDwhRJU3urNhPhEMvb50ZNlZU3XMKU3hBXdk9/nZC3Zty3OOKlY7aFZ5UIIa
-	 yC9XJyKMuZnWqx1OR5NEM/XhaSKb5BW6jfRAjWDeEo8sDsVmJ1dWjOQYy3kOeuoCdZCkA
-	 gHbFpfC7Wm1SiSaOqt+9tCOZ4OUtdcEwlsY+EcsucgoAtX/wstIhhkGmkxHKjyFyf0w==
+	t=1793829431;
+	b=2L32++TpBdFzJKJ0N7KPa9p4MbG0W9RNclxN7g3rkQaQFOlYpuyUmYbdWPHj3DwZLqJv
+	 CId+OwsL49FD2h9wCnTmAxk8dlFqqeKBLHdDhClwYN1CEB15zoJ6BEpA49Njjs3dPgfNt
+	 J/azCwqfTyN4OUzbz/DiP1OzToS2uhzVmVMHXdoxsgG1nWEGoa0RAA/imaIFdpxcQLDQO
+	 6T9VCVav+0ihbmDy7dZSEVzB3rZi3CecIF4YHyQfjcVMuoAyPkt6wGDAjvECoWRNY8yFW
+	 6GgAFuazH/CPSlGqEtQPNWzbER9xq9I8/5zERYcMubnmTK7oXbi5+niUfd6fYx9sipg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829431;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nUMyaCAwkGDOpk5bIiFTTYCMZMK05vErZijbi2QVQxU=;
-	b=2qJdfv+D4qnrd+uJzMXQ43EB4Ne1rmf02dr62hFCM1jmqvI2LR4g4qv0ePtC86Ny+Jfg
-	 UgMCRKGo9wKpZ23Vz6lnlzq7OUeV9m0EbXr6Kx2yzxXlQLL7LbCLUeb/+1aB/svfNIDht
-	 d662XS2FVW5A5KywZt0E/chHfVefW/hALo1fYSHmFpIpzr90o8ZCTyaQgI2o2cWy6QPc8
-	 EMEjfBbH3BPnguyoK5k0SgVI/0zzn8oUsWxk6cW1NydzVWRFGBU7PiIV/ncZ7Y7W6JW6+
-	 Gjy2wccLJ+wwJL/XtcEvAKPZhPWTIY2ao+UhPQNtlswhyBx+WdZgwFxl27M2f7m+1Gg==
+	bh=eCFc1w2DAfw46qclkgq2/hhyx6n5ojtBFoGDwU08zYU=;
+	b=MuOs0e+t0+d3FpAOxsgsfMK7Gb3NlwBDvWdXJeplPCyLmCGsRa20Z0sVjtJURsbPmmLE
+	 tL47lSpzZkbof5OpcMWB94xcVwadVT3onGXpmU+NloqS6/Wu+rM3pstxP+hHJskQr28fP
+	 b32zB68tutjpI53xOS803Rx5dHNGmOJ7kTcyAE/5KBvZEsdrWNqPmqABTbUV+eAsLwVKw
+	 aO2RU7PZXxqygk0GBYxFdBfLzcz0/1a/l/BlmsexfLDBlYfwnjpd9C4w67vS57bMDEaAX
+	 f19FLd4ZB8xOgwDGJ8U/K1uMEQAQ7Y4mKsLkGqk1MDKKde9HjoYCTJent2GEpHMKd6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRx8epJO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/kpcDuJ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135C9606AE08;
-	Wed,  4 Nov 2026 21:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E0F606AE06;
+	Wed,  4 Nov 2026 21:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRx8epJO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B3D1F000C1;
-	Wed,  4 Nov 2026 21:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/kpcDuJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475C21F000C1;
+	Wed,  4 Nov 2026 21:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829429;
-	bh=nUMyaCAwkGDOpk5bIiFTTYCMZMK05vErZijbi2QVQxU=;
+	s=korg; t=1793829431;
+	bh=eCFc1w2DAfw46qclkgq2/hhyx6n5ojtBFoGDwU08zYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VRx8epJOtPeYU/tNE/AX3FLz5r6Qn8RAUkHw5YjOU5/to21/doi6b71RmWqq82mJ0
-	 YH8ZxmnU7pCbqNmvobPVjWTwPn9dVLRYNTSLVbTMytqTlsCayw+NxdlZo5U7uf9U8h
-	 6sTHjnlbvGpOv4aonY1eh9jgervYwWLzzN8zHdfs=
+	b=k/kpcDuJx//OBaGCwEDK8eY/hsZu0VdakzH6Fb6hRhubyPHo8gA0ymHA2GYCUpq0n
+	 5jUag/gq+jQ0PqoiwzdOj3QyK3YXVk3NNpi4iyK58bI4ShHuWirRkFRNl7BPTNCIUD
+	 nuRKJFVJAdL+NZRiBPIoZzIR/Bm7Z0yOOW8HHVgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0094/1005] iio: adc: max1241: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 15:57:07 -0500
-Message-ID: <20261104211046.262992541@linuxfoundation.org>
+Subject: [PATCH 6.18 0121/1005] PCI/ATS: Ensure pci_ats_supported() is PF-aware for VFs
+Date: Wed,  4 Nov 2026 15:57:34 -0500
+Message-ID: <20261104211047.057389584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,41 +74,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit 790a2080e0c9eabefea3561dec301172043de236 ]
+[ Upstream commit 4f2cd6091ac41566a7300f5a4590d20a99aaa8bc ]
 
-The driver has a match table for the spi bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+Update pci_ats_supported() to additionally check the associated PF's
+status when called on a VF. This ensures that PF-level quirks and
+untrusted status are correctly propagated to VFs, providing a robust
+support check that aligns with the kernel's PF-centric ATS configuration
+model and is immune to the timing of VF-specific fixups.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
-
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/max1241.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/ats.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/adc/max1241.c b/drivers/iio/adc/max1241.c
-index d62c1a0116593..cab04beae7293 100644
---- a/drivers/iio/adc/max1241.c
-+++ b/drivers/iio/adc/max1241.c
-@@ -179,6 +179,7 @@ static const struct spi_device_id max1241_id[] = {
- 	{ "max1241", max1241 },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(spi, max1241_id);
+diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
+index ec6c8dbdc5e9c..a5fa7745bce8e 100644
+--- a/drivers/pci/ats.c
++++ b/drivers/pci/ats.c
+@@ -40,10 +40,13 @@ void pci_ats_init(struct pci_dev *dev)
+  */
+ bool pci_ats_supported(struct pci_dev *dev)
+ {
+-	if (!dev->ats_cap)
++	if (!dev->ats_cap || dev->untrusted)
+ 		return false;
  
- static const struct of_device_id max1241_dt_ids[] = {
- 	{ .compatible = "maxim,max1241" },
+-	return (dev->untrusted == 0);
++	if (dev->is_virtfn)
++		return pci_ats_supported(pci_physfn(dev));
++
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(pci_ats_supported);
+ 
 -- 
 2.53.0
 
