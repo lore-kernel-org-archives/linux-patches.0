@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831505;
-	b=hc5ltQ8vb9b6iLz7Dn6YpEBH32y5VmLxLoHlm7ogpS0L/MUnd5cz8IW1U/OWGg+n+30j
-	 2m2j/wNE5L/xGH4dzE6GvZW+hJEfrElfF/X7laiJ47SWyL5KdO19YURvUskvj/ruo3Uqc
-	 EO0O2HUpCQVjfNajLT0R3v1oBxR63QrtOpf/6mgTL1/IkzXa/AdkD06QMC2vE81t53pRL
-	 e3nPCCHFANY8nu14av+JljitIoNQ4OlgS6a8XbkbZtmlk+BRHK/mbphGsJ0gBFg/V1kKa
-	 ctzVDsg6og1Ms4I8K8Fr7235XX72ybonlD+cj2Rwees8Ik63galrdXgyeJY2B5u5TSA==
+	t=1793831507;
+	b=JiO21wmBtv3Ox6ShJozzqBLjZwrOAtWGQtB1czwaqRO820ueXTrbmbxzOj2WepQgxPaX
+	 mIW9eKFrjGbCGJ/M0H9utQM1ZIDHYD0QJxdoyhsBFo+BGz5/Yt/FPpEUROko1XRvoZTCQ
+	 rARW2ztzX8uiyLjW2ySP2CA3VKtRLLh46WQ61Hzhk0F4BHE8mq33wdc6f4XCDBbUr628Y
+	 glh4c+bXVqu5j3P/o+xPB8I3a64D4Av975QPTGBYY7FEbQt7KbLMzBP2laRIC3ZEstuAj
+	 g1c+dmPhyFxxd0pgjZiqgCTJilHvw91Td3RFQOBofJo/gYIOZVo68zft0ZtxMOiDrWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c0atzLCf2tL8+JeHkLpq+eTKz0KVEsRURpK9hOhLODM=;
-	b=xRUe5MP4LMe2yWvdJFqqmYL0KYp5UHPun5BMnNZHc90ke2NvLuSSskohLWwFOeC5Vd4p
-	 ZheKT/UZZ+jMlvT8QDsER1wzWTjRmjDJ/SvDZLQX84K+2YknzgCagPf6Sfajuqw94/HU1
-	 wl0YE8ECumB/vcoZP+f9z2H9Y8qSwnkUODZzCo4kB4xwXt4EvPsndlNKcFcG6IZ3l7IX6
-	 8INT3XbK15kS0NCnkOcAWI4cW+oBQB0XDqDTLaZBXySeiHrkkoz6AAsg+92woZkPA/ux5
-	 Bcz+dVHJooHY2v2cQSNl3kimCurYpmerBtf8iewQNKd5DOVUsDsE8dI3UszG7Y6JLyw==
+	bh=vTNTABf/MgwPfSGxY+Qzklm4eg+YiD8Rk5hJJ74DiRk=;
+	b=bh0gBYBnLeemEpiUceeakgk5hHhkjujVDhDB0qNrGUWjarR40qhVFDG7AXEr73eKijUE
+	 XwpfRHZk8op3TGO3/xE92Ggcqn3LPiDUptbp55SIdoR6FmVldMjQ+Xlldasy8HbEwP1I1
+	 q11jQGghsUi/7CVO/ZKwW/iE8bSR0HnPrg609Z3IP1/pC8C9Lv9tg6DH7wfS9GY9llUsT
+	 +005EHl08ddeVW4kOyQvKRJaiIiwfuHwn4GTsNiHcPeiXuMAvbP4ZSibbJnoa8dhHEPKq
+	 dr6aXt+zvdSqHHhJcpfXkzcDxk3sB1gtGL6AAV5e+27UeQq8rfQqgd1Y3kJk43AFv8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iuxS5w/u";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eIBl3d4j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7042A606D80A;
-	Wed,  4 Nov 2026 22:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C25606D80A;
+	Wed,  4 Nov 2026 22:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iuxS5w/u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083841F0093A;
-	Wed,  4 Nov 2026 22:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eIBl3d4j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A91D1F00A02;
+	Wed,  4 Nov 2026 22:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831505;
-	bh=c0atzLCf2tL8+JeHkLpq+eTKz0KVEsRURpK9hOhLODM=;
+	s=korg; t=1793831506;
+	bh=vTNTABf/MgwPfSGxY+Qzklm4eg+YiD8Rk5hJJ74DiRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iuxS5w/uezcAty/qJQ92cdImjahslyo+HqbD+ShLNqYblwFT4QZlV0KkBgVdxMUBW
-	 UUY/tImywM/StwkdDJkh3CviWhRH+OvKQwiqivmpnVS+x57DAMHycKuQmMsqKH9xCz
-	 I2jRgXjs1YsE4Mk9eQkWR2Uu2I7c7yNIkbcwm8G8=
+	b=eIBl3d4j8ENVFidH4KL0T4OQ437/VCqN7hJyCtRPcwvnYOiisvMWzlU+zSnBKkj/x
+	 FyXaqrfKZWLrV70qj1T7MSIhji1BQKVpDNuuyLAy21FH9M/UjlYfLtc6yRu53pGURX
+	 HmehKiC1i5KV8YKr5Plvgm0rPGNhgiqTcM5bOVL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 0743/1005] media: rc: Ensure that rc_unregister_device() does not free input device
-Date: Wed,  4 Nov 2026 16:07:56 -0500
-Message-ID: <20261104211104.281453742@linuxfoundation.org>
+Subject: [PATCH 6.18 0744/1005] media: rc: Ensure registered is cleared in error path
+Date: Wed,  4 Nov 2026 16:07:57 -0500
+Message-ID: <20261104211104.307610334@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,12 +69,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-commit 61c7ca95d2483c77dfdde1b007cbe846f145dec4 upstream.
+commit 37efd09ba2c62e46e3a3a793025c186f8cd1a417 upstream.
 
-During or after rc_unregister_device(), IR may still be reported which
-results in a input event being reported. This could result in a null
-pointer deref in rc_keydown() or a use-after-free of the input device if
-the pointer was read before it is set to NULL.
+If rc_register_device() fails, ensure that registered is not set to true.
+If lirc_register() succeeded, then userspace could have an open file
+descriptor open. This leads to a use-after-free.
+
+lirc_unregister() must be called with registered = false, else there is a
+possibility that an fd is open and polling, which would never return
+POLLERR unless registered is false.
+
+Note that registered must be changed under dev->lock, many functions
+read registered under lock (e.g. lirc_ioctl).
 
 Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
 Signed-off-by: Sean Young <sean@mess.org>
@@ -82,40 +88,50 @@ Cc: stable@vger.kernel.org
 Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/rc-main.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/rc/rc-main.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 --- a/drivers/media/rc/rc-main.c
 +++ b/drivers/media/rc/rc-main.c
-@@ -1742,7 +1742,7 @@ void rc_free_device(struct rc_dev *dev)
- 	if (!dev)
- 		return;
+@@ -1929,7 +1929,8 @@ int rc_register_device(struct rc_dev *de
+ 			goto out_raw;
+ 	}
  
--	input_free_device(dev->input_dev);
-+	input_put_device(dev->input_dev);
+-	dev->registered = true;
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = true;
  
- 	put_device(&dev->dev);
- 
-@@ -1854,6 +1854,8 @@ static int rc_setup_rx_device(struct rc_
+ 	rc = device_add(&dev->dev);
  	if (rc)
- 		return rc;
+@@ -1949,7 +1950,7 @@ int rc_register_device(struct rc_dev *de
+ 	if (dev->allowed_protocols != RC_PROTO_BIT_CEC) {
+ 		rc = lirc_register(dev);
+ 		if (rc < 0)
+-			goto out_dev;
++			goto out_lirc;
+ 	}
  
-+	input_get_device(dev->input_dev);
+ 	if (dev->driver_type != RC_DRIVER_IR_RAW_TX) {
+@@ -1972,11 +1973,18 @@ int rc_register_device(struct rc_dev *de
+ out_rx:
+ 	rc_free_rx_device(dev);
+ out_lirc:
+-	if (dev->allowed_protocols != RC_PROTO_BIT_CEC)
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = false;
 +
- 	/*
- 	 * Default delay of 250ms is too short for some protocols, especially
- 	 * since the timeout is currently set to 250ms. Increase it to 500ms,
-@@ -1880,10 +1882,8 @@ static void rc_free_rx_device(struct rc_
- 	if (!dev)
- 		return;
- 
--	if (dev->input_dev) {
-+	if (dev->input_dev)
- 		input_unregister_device(dev->input_dev);
--		dev->input_dev = NULL;
--	}
- 
++	if (device_is_registered(&dev->lirc_dev))
+ 		lirc_unregister(dev);
+-out_dev:
+ 	device_del(&dev->dev);
++	/* registered already cleared above */
++	goto out_free_table;
+ out_rx_free:
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = false;
++out_free_table:
  	ir_free_table(&dev->rc_map);
- }
+ out_raw:
+ 	ir_raw_event_free(dev);
 
 
