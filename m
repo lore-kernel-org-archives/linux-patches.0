@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831812;
-	b=2YLcHX3tDU8LEblcG86hEMov1Ye1yOS/rEs6DaFeRcWMHjET9uJCBxHMHI5wN/NQWCVn
-	 0quIBAfSyIDZC+A9HLUFLNQgnwM3OcSYVPWSByq0hYjq7sHMJiNN99/JWy5CIG0juuUOp
-	 J+c599jAWBAJ1ykjZBJW77xaHjgAo2Bg73wj45rFofE3tgoeHCnikEeE0gzm9hbG6wcV8
-	 t3nBHi2INR4+tNGjrrQ+j2tCr2b0vMRg7UxCraKM3hppchpvSy0kq72fvpa08TMVlAYiU
-	 FzJx22Y1WJ1Lj/8xia0sIh4p5EdcVkNUUoRqh3VKyuOyB0pW+lnOJzl1FKvO7JlXibw==
+	t=1793831813;
+	b=3C/oEkNEfg8Sr1stvLgrbbcy2f7G31UsfFDYnEA2vFRdMDM87HJaTeTBddfeApHQZv8k
+	 D4ipfsQhXSaxtx0P0RfGArdiCJ9DeU974cBBpoSvJMHZXmCr5O9xQryrFSCDGG2uAbaF6
+	 fJ6cflBKDrLcoWYx16f2WHrMHXcTQwm2SUEcyOOxiWYLh8WCy3uZEcdKSkbzTVo6sXp7l
+	 FJCL+wwpaLc2mTTOSFuTJGEGxLBsCaahj9H/UioomAWqQgLUv+dVay8n5+WkrwYofGMEq
+	 ydJ3+5Lk96HoBAM5SB4DeJm0PG991xaYsUJDQ6aXPUV+A412KgF+g2IV5Qbce19cFZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831813;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0857d9FV4bbO3/WUXOKbdq/qWvU4Znl+l8g4zrm8yPM=;
-	b=ogmuEbWIQXcdXwYtiD9HETpGxHlrBBYPYF0ZRIa8cJHD74hIWOWPBhDD/Xb2iGwB2SdY
-	 Bhf3AbP/VTfPgFXQg6a2v4UtlVu6WxID+4+Qjz50uMh+HrU/AlzQ2vK01WUIaManZHWMK
-	 Gx7DRZudW2GC78BE174ATbe7qsDPTMZOa4sB/8DORP8mqz/1Ff51J980WgzemRw17xlDl
-	 abrcMlha0LNiIZuVLhr5sMy/KSukn1rlO/w/SpZiKekNiq45kp+8HyfCnVrE//gIO5yT2
-	 ByGQbQj7uaddx00q1XCkWEuz/+k0YioA3tguDivoFSmna1dtNh9DOyJO0HxgJQXQRxA==
+	bh=dCdrziLKap1h4t7ITgkIZuxWDubJ7l18dGM+slDpggM=;
+	b=K7fAlRATAS5FFZ7tRv+OIkSmU0sEsIG+K1ucS6oi2b0ACUxD8pmDpGHxhi/E+cK6nWIe
+	 az4N7Juo1x2ru+LfwtYptitop6umxYxa/yVT5vU9wZ2//X2tOXzSpOGguS9zvG4pEkPiD
+	 wGPJDM+u8GJlC/Rx91WgWqy5QSkFjljbi7lIO2ny1vDEIXM8b9FYClw3xaPNJTsRHLv05
+	 5OPNQbEJp1VDh9lZL/DvUfaQ1hMJlcUpUnkup5K9SXF0DePfY23wXuv/Du/RkMwU5pCei
+	 Qatz/i1w9+zlCXKWWPPWjGIlYvdmKxRxDOrKY9ONXQF7/PZItd/kHjNx7gjJGTMHkdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TaYc6vhq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MmDbyuml;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F15606A86B;
-	Wed,  4 Nov 2026 22:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9501A606A86B;
+	Wed,  4 Nov 2026 22:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TaYc6vhq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E171F0093A;
-	Wed,  4 Nov 2026 22:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MmDbyuml
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59C91F000C1;
+	Wed,  4 Nov 2026 22:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831811;
-	bh=0857d9FV4bbO3/WUXOKbdq/qWvU4Znl+l8g4zrm8yPM=;
+	s=korg; t=1793831813;
+	bh=dCdrziLKap1h4t7ITgkIZuxWDubJ7l18dGM+slDpggM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TaYc6vhqmv1RC/iyzr1URrMK6qWqtRRa8vs4qCJjU+OBf8rtSSAEUd1tf6pvLxfT/
-	 hB4frnH+mD8sQd7GGh45ALTjQACdvdCGXRQNPkerjuOkWTMIuHXngq7PufyQUnYdlO
-	 lkujMqnXG8P1RdR1RX4NJ8kxUcY5qxItxyBAVMvQ=
+	b=MmDbyumlhQicCyjFgvYU24++LeBJ6OqrRB5hP4FVd3YIHo0exlNzW+FhtjmZxJ1pR
+	 BfNZkbUv7uN0n/hla09SS3qLOxeoYUERvc35E9lBC+xhi02qHGF8eoKNeLXpLalw7w
+	 dPuCZkvCUFP5uDzvyKwu85zJwdyxC6K4v3JXaW1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Ackerley Tng <ackerleytng@google.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 0926/1005] KVM: nSVM: Ignore EFER.LMA if EFER.LME=0 when preparing L2 state
-Date: Wed,  4 Nov 2026 16:10:59 -0500
-Message-ID: <20261104211109.077476331@linuxfoundation.org>
+Subject: [PATCH 6.18 0927/1005] KVM: Use goto to handle errors during memslot preparation
+Date: Wed,  4 Nov 2026 16:11:00 -0500
+Message-ID: <20261104211109.103861261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,37 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 1c4c84a643b704e473cb171f7b61359ff29b12a4 upstream.
+commit 23a205797cec86f391d0be886b9bc741e1262063 upstream.
 
-Force EFER.LMA=0 if EFER.LME=0 when preparing L2 state for VMRUN, i.e.
-mimic real hardware's behavior of ignoring EFER.LMA if EFER.LME=0.  VMRUN
-unfortunately allows the nonsensical combination, i.e. doesn't fail, but
-KVM itself has an invariant EFER.LMA can be set et if and only if EFER.LME
-is set.   Breaking that invariant can lead to a variety of issue,
-particularly in MMU code that keys off EFER.LMA when determining whether to
-emulate/virtualization 4/5-level paging versus PAE paging.
+Use a goto to unwind early memslot changes if preparing for a memslot
+operation fails.  This will allow moving the creation of guest_memfd
+bindings into kvm_set_memslot() without needing to copy+paste the unwind
+logic.
+
+No functional change intended.
 
 Cc: stable@vger.kernel.org
-Cc: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260902232028.2767071-3-seanjc@google.com
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Ackerley Tng <ackerleytng@google.com>
+Link: https://patch.msgid.link/20260922001332.1121266-3-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ virt/kvm/kvm_main.c |   31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -671,6 +671,10 @@ static void nested_vmcb02_prepare_save(s
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -1937,21 +1937,8 @@ static int kvm_set_memslot(struct kvm *k
+ 	}
  
- 	kvm_set_rflags(vcpu, vmcb12->save.rflags | X86_EFLAGS_FIXED);
+ 	r = kvm_prepare_memory_region(kvm, old, new, change);
+-	if (r) {
+-		/*
+-		 * For DELETE/MOVE, revert the above INVALID change.  No
+-		 * modifications required since the original slot was preserved
+-		 * in the inactive slots.  Changing the active memslots also
+-		 * release slots_arch_lock.
+-		 */
+-		if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
+-			kvm_activate_memslot(kvm, invalid_slot, old);
+-			kfree(invalid_slot);
+-		} else {
+-			mutex_unlock(&kvm->slots_arch_lock);
+-		}
+-		return r;
+-	}
++	if (r)
++		goto err;
  
-+	/* SVM ignores EFER.LMA if EFER.LME=0 (instead of failing VMRUN). */
-+	if (!(svm->nested.save.efer & EFER_LME))
-+		svm->nested.save.efer &= ~EFER_LMA;
+ 	/*
+ 	 * For DELETE and MOVE, the working slot is now active as the INVALID
+@@ -1983,6 +1970,20 @@ static int kvm_set_memslot(struct kvm *k
+ 	kvm_commit_memory_region(kvm, old, new, change);
+ 
+ 	return 0;
 +
- 	svm_set_efer(vcpu, svm->nested.save.efer);
++err:
++	/*
++	 * For DELETE/MOVE, revert the above INVALID change.  No modifications
++	 * required since the original slot was preserved in the inactive slots.
++	 * Changing the active memslots also release slots_arch_lock.
++	 */
++	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
++		kvm_activate_memslot(kvm, invalid_slot, old);
++		kfree(invalid_slot);
++	} else {
++		mutex_unlock(&kvm->slots_arch_lock);
++	}
++	return r;
+ }
  
- 	svm_set_cr0(vcpu, svm->nested.save.cr0);
+ static bool kvm_check_memslot_overlap(struct kvm_memslots *slots, int id,
 
 
