@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829667;
-	b=QT7t+gfCn9VFJnENEhIueiHtNOkv4uQsApuc2PFE3Z/C6kq2j3nUG7gnz0aMZ860pSfh
-	 4/yIAZ0JCM9UU2k7c+V0EZst6N1u5JbwzQjr/GsrxhMhdwVM1FNc6CDV/FikjSjB+vilw
-	 D/nuIZNA1kO1SNZrDs1K4BQ8HaiRS5z0cOANz3v5rGwX+dYyqO46G0APGNNmsCTArbKgc
-	 /b41YGYpKW9YTrv7OxXdIXwFn7NPQjM3PEQM6O3+99S1Zc/EVnILbmE3gg6zwpbuj8Lsr
-	 pkmMZl0SqMWO2SV7o6J+rWVrfs25Z65gzOKdAGZvXn2kHqIV4QI2P5RRCsMMCwLFWiA==
+	t=1793829668;
+	b=dkLBAMCZIQQ14HmlSUKdoDsAh/K0zzFYR0uhgYykIcctgdAw+HEtEw5SE7MobbL62eTh
+	 z6uCxVKckoJXbz2Na1UexovzViMIp+zkEH33Dsmra3zdL8T1NZOYUviN09qDVZEf2V6w/
+	 OiaHgi4LcDp2YJELIVwwpdM765qvkKjXovyFG4nVu+3ApwWZ1cJKpzrM0VgmurkUr55R/
+	 T5xaXPtJE/cl2f2z2pe22K0PVillrxxXfobEDXGFOhFsuRVoUwyKuDz+G+XPJpmFKgDQ/
+	 bPZb4mBykAnv5JOs3BoOt8KZNlL0Uef4CpqVk9OC9c4dlbfTrhKccdsfm+wWYvQJbEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829667;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FNfiL4Yv/bvYZ2YoY13vbeBotNlOhcqoBxU1/XmiykM=;
-	b=mBgRZ6hfvEYdR6cF80tyvkvIvBFH4fGkAWXM7WXbNtcgHm74Af7276htQKS5S0MIh38g
-	 9FLQ/+TmXoWcI1pVZqkYYmWGKlZz7KuZn10GhtDFB+Fb0R/dcji+LjfDxi/BhCpW+kHLF
-	 u655iI/+BmcXHnjUfW2EjE1TM1jdps+/VNjAResbD3MzVIWyJI98j7aqmSeqasETfdldC
-	 28A7HbqkKo9RBd8kmhdlrEoFb881CeeBgeGCoWBkW603UJso4EO+U37Qo/jcHbVvqZndh
-	 VQlf8JTfZmtHkMvfWxYK+8W6qBm4i4GnY3L2ZOJfKHcB1wvLCl4pkkLkc3tEB95VmRQ==
+	bh=udGTOhhkqG7HscxyiXq9qpBJLUsRQFSPccfrZOcm7kg=;
+	b=qvBxK+lsWJgc404rnm+fofEPWXpfyNuZDcczAV2aBmYJZjgA2MPzpQYF4hx/hO65wHz/
+	 zgGXYP1fMWcYe7joBA2cu+NT109nFXSDkaRkKnmsJxvhlyk8ju8iFM6BGaXsn5J+4+9zp
+	 AJgJQU7A8+QSPfbOSU2CyxfUkFe6YJYo8vRzws/XG34bCEw6ErNzgslDUhCgixJr+4id6
+	 Evkrw9kaJ1rWJloew9GM3XBPZUST2JIbZly3vtIYX5TysEmOcNGRD4a0uoRV4oo3jjGwg
+	 4RbGH30YlJwMhwh5z8uGPW8Cx4gALoBnSJ3QWK9hEoirgOnxbxAJXRMVrhnwNlyEqeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+muJL8P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2gMW8e7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57DF60C2980;
-	Wed,  4 Nov 2026 22:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55349606BA3F;
+	Wed,  4 Nov 2026 22:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+muJL8P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459171F000C1;
-	Wed,  4 Nov 2026 22:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2gMW8e7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D201F000C1;
+	Wed,  4 Nov 2026 22:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829666;
-	bh=FNfiL4Yv/bvYZ2YoY13vbeBotNlOhcqoBxU1/XmiykM=;
+	s=korg; t=1793829668;
+	bh=udGTOhhkqG7HscxyiXq9qpBJLUsRQFSPccfrZOcm7kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+muJL8PGJIE+g5XCzbWT7s3Jf1i8cnjwg9acBdGCBKIfgejb6Wunpnv8RSFDWqTP
-	 6zr0/I4fCJfzGynKK7ZpViGdXJRJKh9epo7Dm7uKsiiCygoRgFzOQYHpILirtYCJPV
-	 HanMyP74tDdCY2FLDaSPOa7gaQ84c3ia5qjPcfaY=
+	b=X2gMW8e767BL/gBUwAiQJV/3PLfAl3t8rmZD2XJTKn5miRMUNsZtpr46a/+eOHs/8
+	 ddZdT99qtOl+q1eMeMqK0gCgw/AnjE/pqNHZTCK0D03Q0xWfoaHf2IBtLC8oSfiGPh
+	 Be3kadKpm/AJWqJSpOIhnTEgfF5ZCudGyDhqgd5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0260/1005] iommu/tegra241-cmdqv: Rate-limit the error ISRs log message
-Date: Wed,  4 Nov 2026 15:59:53 -0500
-Message-ID: <20261104211051.149912937@linuxfoundation.org>
+Subject: [PATCH 6.18 0269/1005] i2c: qup: Propagate clock enable failures
+Date: Wed,  4 Nov 2026 16:00:02 -0500
+Message-ID: <20261104211051.411097006@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,60 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a86c36163c9722545d27e92bdad8418fdcaa8b1d ]
+[ Upstream commit a477626332800942f463d76aa48db0c47f1dfd18 ]
 
-tegra241_cmdqv_isr() logs the error-map registers on every error interrupt.
-A malfunctioning device, or a guest deliberately faulting its own VCMDQs,
-can raise these interrupts rapidly, and the unconditional dev_warn() then
-floods the kernel log.
+The QUP I2C driver treats the core and iface clocks as required
+resources, but qup_i2c_enable_clocks() ignores clk_prepare_enable()
+failures.  Probe can then continue to register the I2C adapter, and
+runtime/system resume can return success, even when a required clock
+transition failed.
 
-Rate-limit the message with dev_warn_ratelimited(), and pass the error-map
-registers straight to it so their four MMIO reads run only when the limiter
-prints, instead of building the string on every interrupt.
+Make the helper return an error, unwind a partially enabled clock, and
+propagate failures from probe and resume paths.
 
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260624055237.29977-1-pengpeng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/i2c/busses/i2c-qup.c | 31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index fdbd487848e64..8c9530873ed98 100644
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -350,21 +350,19 @@ static irqreturn_t tegra241_cmdqv_isr(int irq, void *devid)
+diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+index a0e076fc5f363..ee7915ee2ba2f 100644
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -1657,10 +1657,21 @@ static const struct i2c_adapter_quirks qup_i2c_quirks_v2 = {
+ 	.flags = I2C_AQ_NO_ZERO_LEN,
+ };
+ 
+-static void qup_i2c_enable_clocks(struct qup_i2c_dev *qup)
++static int qup_i2c_enable_clocks(struct qup_i2c_dev *qup)
  {
- 	struct tegra241_cmdqv *cmdqv = (struct tegra241_cmdqv *)devid;
- 	void __iomem *reg_vintf_map = REG_CMDQV(cmdqv, VINTF_ERR_MAP);
--	char err_str[256];
- 	u64 vintf_map;
+-	clk_prepare_enable(qup->clk);
+-	clk_prepare_enable(qup->pclk);
++	int ret;
++
++	ret = clk_prepare_enable(qup->clk);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(qup->pclk);
++	if (ret) {
++		clk_disable_unprepare(qup->clk);
++		return ret;
++	}
++
++	return 0;
+ }
  
- 	/* Use readl_relaxed() as register addresses are not 64-bit aligned */
- 	vintf_map = (u64)readl_relaxed(reg_vintf_map + 0x4) << 32 |
- 		    (u64)readl_relaxed(reg_vintf_map);
+ static void qup_i2c_disable_clocks(struct qup_i2c_dev *qup)
+@@ -1823,7 +1834,9 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 			ret = PTR_ERR(qup->pclk);
+ 			goto fail_dma;
+ 		}
+-		qup_i2c_enable_clocks(qup);
++		ret = qup_i2c_enable_clocks(qup);
++		if (ret)
++			goto fail_dma;
+ 		src_clk_freq = clk_get_rate(qup->clk);
+ 	}
+ 	qup->src_clk_freq = src_clk_freq;
+@@ -1975,8 +1988,7 @@ static int qup_i2c_pm_resume_runtime(struct device *device)
+ 	struct qup_i2c_dev *qup = dev_get_drvdata(device);
  
--	snprintf(err_str, sizeof(err_str),
--		 "vintf_map: %016llx, vcmdq_map %08x:%08x:%08x:%08x", vintf_map,
--		 readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(3))),
--		 readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(2))),
--		 readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(1))),
--		 readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(0))));
--
--	dev_warn(cmdqv->dev, "unexpected error reported. %s\n", err_str);
-+	dev_warn_ratelimited(
-+		cmdqv->dev,
-+		"unexpected error reported. vintf_map: %016llx, vcmdq_map %08x:%08x:%08x:%08x\n",
-+		vintf_map, readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(3))),
-+		readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(2))),
-+		readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(1))),
-+		readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(0))));
+ 	dev_dbg(device, "pm_runtime: resuming...\n");
+-	qup_i2c_enable_clocks(qup);
+-	return 0;
++	return qup_i2c_enable_clocks(qup);
+ }
  
- 	/* Handle VINTF0 and its LVCMDQs */
- 	if (vintf_map & BIT_ULL(0)) {
+ static int qup_i2c_suspend(struct device *device)
+@@ -1988,7 +2000,12 @@ static int qup_i2c_suspend(struct device *device)
+ 
+ static int qup_i2c_resume(struct device *device)
+ {
+-	qup_i2c_pm_resume_runtime(device);
++	int ret;
++
++	ret = qup_i2c_pm_resume_runtime(device);
++	if (ret)
++		return ret;
++
+ 	pm_request_autosuspend(device);
+ 	return 0;
+ }
 -- 
 2.53.0
 
