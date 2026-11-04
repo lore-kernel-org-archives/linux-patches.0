@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831570;
-	b=xlq1x8hgy22X1Wq1TBGZ47/R51tcWKuBEywVmKUHIOMEEmvDW+0nuC/LWyw+Hkjh2cmO
-	 m2vXUw7poW7yK1ypqV6LHEhx83xu9pEDLocKVwe0gJj5IiFjkApgIge0Ygvzz9Q1Z9JT2
-	 pdQK7pyAtsstTmreoZNXCdHEfm3AGFBxFM0KZ36j54z0/YajawUlJm9gG+h7nTGYYjibK
-	 iY1b5M4Wln88L8lsc3Bvn0BRQmZZTV6b6B5i3+MnyHiO5dONxuS1FFbQIvyB1u8iGPL7F
-	 XZuqANla01xlIp83/2nldL6w4s/+9BnKpjgxaTSvUedM0QCT5KBnZu1I++nBfpaEXSw==
+	t=1793831572;
+	b=cgAbOG/pABCYgk/zBUIN+wN1LEEWPc/Yi03UhSX1W7fdVSqBmCF1P5G9AtbJIDW2myI5
+	 +AV7lpM4HpskJyPcCAOW/W7OXA3cma3BS912y+221v9c0BkiBSpTo6mI4Luw/Evsw1mDR
+	 7I2kgv7g10NtQWVo7FTPa+EZT6Ivo/NJdtVmS/bSJwVwkFU7wYitIFDYTw6/+RJl1xftA
+	 fslqs3XwNrAfeg1j44Zg/tM4r+uSr/4Rwj5afH7BhLBrVBE3+SqntfxvynvCdtmcpPSwX
+	 lBbQmIApyaFPIM/+/AkvZj/6YE2n9MMdc8XHgSQ7yfO1nP0DJNQbMUH4fJvpC7hnfpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831570;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j7G4imNLJ3dE9Ot3swOkrzpddwcKXM4eaQJE3PMhHkU=;
-	b=RQwQsVjHPBVu5XgN/L+adSQbZpMpQaQYVacxebJ/YaYE0Ro/UdWRsekw1i7zZBpQlsaY
-	 5s/7OceTZA6Nnpmw4OVpW/w1KGBNyw5o5OEx54iBSNbQ+xorD5kGMcEHzqtLAzQ4kkqVX
-	 l8FVFjiVCx1FDx4xjgl1Vhac3u8k/TJdmSClAqEdTrzRe2RtPX5YEiBGWy8MLCm/RBA2Q
-	 aZI1JtxOk9g6vN2Y/dxKGrbSXkII1j5plGxevlibmbGGTnZt+33433R5p0IrzirbIXae6
-	 veF9XEOOPKZiWoxXcxKdB8gWpB3m7JLCn3J3AQ11cT5DARcgnzM/f86QTMN37bn1EDw==
+	bh=gZo7m0cA5ndQNqGEloKfhBGbo4xZo4mw9z16qS2RrPo=;
+	b=SVLQnJRTrGflmszl8rtQCq+yLESHunNokLkSm4vj68Lb/6Ko+260hvvymfg8By3mte41
+	 OLgRdgcFYfVoZ+mSdAyMsyL/9TVEKE0mqmqwTOhtbAoxcIW6pS/mk9SPHbWPmXuSytxcD
+	 X/Lb6qsFmSDRRTtW20DkaBsNyow49nJgsKQ03fak7ykxU6999e43StqRIm2GkLqH3ijoQ
+	 AwjBFjduhmre4aHBNmugLtTDbqDHoQ7enLhA1lzuttfldTXW7FwiYF+WLNVijfwkasA/z
+	 pbXQqcbAJbY6NGRPDAuPtcUQeUeeaaonIFLPSn3onBuaHpk0AmE/SyqS+n0BYzswwlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvTQLLH7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xqB+trWt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9009606A844;
-	Wed,  4 Nov 2026 22:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A0B606AB0A;
+	Wed,  4 Nov 2026 22:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvTQLLH7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D211F00A16;
-	Wed,  4 Nov 2026 22:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xqB+trWt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A151F0093A;
+	Wed,  4 Nov 2026 22:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831569;
-	bh=j7G4imNLJ3dE9Ot3swOkrzpddwcKXM4eaQJE3PMhHkU=;
+	s=korg; t=1793831571;
+	bh=gZo7m0cA5ndQNqGEloKfhBGbo4xZo4mw9z16qS2RrPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SvTQLLH7Hw51QP5aIrqgswREWEpUqC/Y7CuGQmOmf63hPswSLwHa4noXpgVXL1a0l
-	 hXdkWGoFE46jtfUT+ZHKZYjysLkpEyrwD0Qat1qhMB28Tg8jfXVeV80La60JK7Dp49
-	 v7TTyAaQwi+jXhAyYujyEdbAT9mw9cdZMvI1roUk=
+	b=xqB+trWt9iVbDRLdUl114K9PNvftjQ5V14n+dLJW0l19KjCe+S7YafdZ1x98BxqcE
+	 7Bb47haaMxHJIO03/aKN6ZjVDaakg2eDm7e3ZX7OZlcihphhAeRLNxj/T20k0wo8ei
+	 h1mfq0CzEU1/4DfPYMjuupOoWPgAMEpWxXfs49d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hch@lst.de,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0782/1005] xfs: actually lock the metafile reservation when adjusting after repair
-Date: Wed,  4 Nov 2026 16:08:35 -0500
-Message-ID: <20261104211105.263349130@linuxfoundation.org>
+Subject: [PATCH 6.18 0783/1005] xfs: fix unnecessary dapos truncation in xchk_dir_walk
+Date: Wed,  4 Nov 2026 16:08:36 -0500
+Message-ID: <20261104211105.289155555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,73 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit e53c620b3670fc0c162b5f768a10a3a17d0c04f6 upstream.
+commit f60a2ef8d8a7ac6dedf4d0c3325cc3fc2fe0d948 upstream.
 
-LOLLM reported that xrep_reset_metafile_resv performs unlocked loads
-and stores to the metadata file space reservation counters and thus can
-race with other threads.  Fix this by taking the lock.
+LOLLM points out that the all the implementations of xchk_dirent_fn can
+handle a signed @dapos parameter, so the truncation here breaks the
+information captured in scrub tracepoints if the directory is very
+large.  I don't think it ever made sense to do the truncation for the
+VFS readdir code for programs that can handle 64-bit offsets, but commit
+15440319767942 has been around for 17 years without complaints so I'll
+leave that alone.
 
-Cc: hch@lst.de
-Cc: stable@vger.kernel.org # v6.15
-Fixes: 1df8d75030b787 ("xfs: make metabtree reservations global")
+Stumbled-over: 15440319767942 ("[XFS] truncate readdir offsets to signed 32 bit values")
+Cc: stable@vger.kernel.org # v6.4
+Fixes: 4c233b5c4f29df ("xfs: streamline the directory iteration code for scrub")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/repair.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ fs/xfs/scrub/readdir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/repair.c
-+++ b/fs/xfs/scrub/repair.c
-@@ -1377,12 +1377,14 @@ xrep_reset_metafile_resv(
- {
- 	struct xfs_mount	*mp = sc->mp;
- 	int64_t			delta;
--	int			error;
-+	int			error = 0;
-+
-+	mutex_lock(&mp->m_metafile_resv_lock);
+--- a/fs/xfs/scrub/readdir.c
++++ b/fs/xfs/scrub/readdir.c
+@@ -238,7 +238,7 @@ xchk_dir_walk_leaf(
+ 		dep = bp->b_addr + offset;
+ 		length = xfs_dir2_data_entsize(mp, dep->namelen);
  
- 	delta = mp->m_metafile_resv_used + mp->m_metafile_resv_avail -
- 		mp->m_metafile_resv_target;
- 	if (delta == 0)
--		return 0;
-+		goto out_resv_lock;
- 
- 	/*
- 	 * Too many blocks have been reserved, transfer some from the incore
-@@ -1398,7 +1400,7 @@ xrep_reset_metafile_resv(
- 			mp->m_metafile_resv_avail -= give_back;
- 		}
- 
--		return 0;
-+		goto out_resv_lock;
- 	}
- 
- 	/*
-@@ -1412,14 +1414,18 @@ xrep_reset_metafile_resv(
- 		if (delta == 0) {
- 			xfs_warn(sc->mp,
- "Insufficient free space to reset metabtree reservation after repair.");
--			return 0;
-+			error = 0;
-+			goto out_resv_lock;
- 		}
- 		error = xfs_dec_fdblocks(mp, delta, true);
- 	}
- 	if (error)
--		return error;
-+		goto out_resv_lock;
- 
- 	xfs_mod_sb_delalloc(mp, delta);
- 	mp->m_metafile_resv_avail += delta;
--	return 0;
-+
-+out_resv_lock:
-+	mutex_unlock(&mp->m_metafile_resv_lock);
-+	return error;
- }
+-		dapos = xfs_dir2_byte_to_dataptr(curoff) & 0x7fffffff;
++		dapos = xfs_dir2_byte_to_dataptr(curoff);
+ 		ino = be64_to_cpu(dep->inumber);
+ 		name.name = dep->name;
+ 		name.len = dep->namelen;
 
 
