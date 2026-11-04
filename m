@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831106;
-	b=wl1HdPEUtyPAnhRXjZ+Yv84OEz5UP0aUNMPFxTW8348HVbRM8gsrBFMj4VcOYIrDtrTi
-	 Xtbj2VmXosI27RhTTltIPBGKD41PXruXa56JWrJybh0RAOY8j35cA05W8dqs6ANPi3d89
-	 owL8vGG24n/O/24uukwgzFaA73DfEp9Jn28Xv2MTfEk19PmNtD+2umyl8WjD9wAD7hUh2
-	 zWYiqgUD5WuEVDW2oT9ulBll61YAKWFGNm9eOA2ucKl9PJSyShGePha6IBP563smzOAX0
-	 Khqt41C7nTrTb2hS+G8sergKSeI31Sqrn3IPbpjc0ZmC7iB5t+0Duh1QmN8HHU2yEtA==
+	t=1793831107;
+	b=JDDqJK5oAAyHFqked+uEUrJfgycRwc2+xZncSMQBX2dfiylySPAOnPUo5CUJ8bpAIHMm
+	 Arfl6Orb/RhoAqylPPrhAGjr0pgFBIQNsQmsD1oBR6UL2EEHFi51CzdOTDglrSO4/63c8
+	 Vs5NOQwczHjKmd4PFNq4d8XP7diJiyz4mgoEuv7xvpCI0rzeFoJwKhBXdC0SlsYFbSJIQ
+	 C0f7hQ+epx/CiCRBGhx/TwHM8RW50ReGIkjyWc4h1kVUK1WbitmLs6f4Vgx/NK05PYC0q
+	 YXyREKtSjJmZg3fZXZqgEmGUVc+/Gr/TkLFF3Oc3ZNeVThMETdVBPwYHJyuNM9Rvu3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831106;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n80S2yiE5VeyhRKYdXztH500aMIEnX9yYmQk6njYxKg=;
-	b=wmGsv/mF4v1N2wgPswmA1Szx2VxR5xYSKAof2MHXfXI5dOqkcql/nF0iJHJigMemPKeD
-	 yTu2fOxP3FfwfM6TQ1cmpP1QqkOiCHxnlIsGdbm0dzcdyXif18lQNA8Z36HI+FwTAbuQf
-	 djgdCHh4ZyWNho+0RcV4Ru0FUQKjet6kWVpiGozlTRlVXxYEP6jM5XC6hFrYYQsDBL8lJ
-	 Ei7XkX2lTVIW/ubDViYRx9XiykGEos5aS7O2Xdjv037J4fQ5VhV/TRPFhnZynFdiUdAMJ
-	 MTabKeDkdkMYqo3R+MmAwpC57l62CnQnl72oN/N4oIaFwhtA/RIRvgAqrIby6xczEqQ==
+	bh=HilU6WH2TxuLd8Oh/9ViRgdvZWC+SaoBjNjXMFZxedA=;
+	b=vIbUD0hI1vy3WZTkohGOYJkPOi65UeCc6gnlEJvqzamQbWy0bjFbkzfc3BK0fMfyT0Jt
+	 q15mO4hQ7IDqKy41tlePlEcvSgyj9iAZRNpkByAWVWleRZo/IqJ7PL4ntxq3DZ5ycCsXG
+	 1/PqVtyuTCLY4hZNTB8VXCwyLNV1nOpzP2zKo7AS1oRCpG3PZPdbF4wsCE9JPhylh9MwE
+	 BtLLAksC7uiKZCUwVCeX1fQ9gr7/kN1zYdv6dH5FWJvKcgBIkMGcojM3jM67Te8pHAL/f
+	 591WUzDk0PeHCuzanXTYdFYu5UTrKbIlWEPuKNDSGwV1WKgG8TCGRTuEIZJz/Pb1Dtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWapy7JT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U6juKPtT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128EF606B2D8;
-	Wed,  4 Nov 2026 22:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C30606B2D8;
+	Wed,  4 Nov 2026 22:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWapy7JT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06CE1F000C1;
-	Wed,  4 Nov 2026 22:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U6juKPtT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333201F000C1;
+	Wed,  4 Nov 2026 22:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831105;
-	bh=n80S2yiE5VeyhRKYdXztH500aMIEnX9yYmQk6njYxKg=;
+	s=korg; t=1793831107;
+	bh=HilU6WH2TxuLd8Oh/9ViRgdvZWC+SaoBjNjXMFZxedA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EWapy7JTwfO2IBtkqOnfsDi77n+DyXsNTyuTR6tJRjE8oZeli4kbHluKftKg5uBWL
-	 RvgsI1x8pdlwW0hXDAIHwGuue1mUuKs6utBDZUFz/u/NqIxyDpc1nzDrv9aaRpjwg1
-	 adIHDe6IxoXwGCeP7gU5zCkMoMWoFK6jAj5s1Erg=
+	b=U6juKPtTXb9bwEnIBQdYy8w1FkmJLZGSOfqJb1Hh5fXN7W4b3X0hj4nexDkNm6BpU
+	 SoDJnV+b3NjZLecxnXfJuN+Bxt8u6Jn71pLh3FG4SFv8W2WaZJQwrozvRhT524VGex
+	 bJkLMyiyhM4mYn3d21aRxF+NJzd1CGUkKY52vdjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mehmet Aysel <mehmet4ysel@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0503/1005] net: usb: qmi_wwan: add Rolling Wireless RN947R
-Date: Wed,  4 Nov 2026 16:03:56 -0500
-Message-ID: <20261104211058.030719798@linuxfoundation.org>
+Subject: [PATCH 6.18 0468/1005] ASoC: amd: acp3x-es83xx: Add HVY-WXX9/M1060 DMI quirk
+Date: Wed,  4 Nov 2026 16:03:21 -0500
+Message-ID: <20261104211057.122546641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,64 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: Mehmet Aysel <mehmet4ysel@gmail.com>
 
-[ Upstream commit 7375d38364a9aa66fb31716bcefef38aecad75d8 ]
+[ Upstream commit c1a39c228aceebc0ede83781ea906d257e324009 ]
 
-Add Rolling Wireless RN947R 0x9300 composition:
+Add matching DMI table entry for the ES83xx machine driver, so the
+HUAWEI HVY-WXX9 / M1060 board (MateBook D16 2021, Ryzen 5 4600H) can
+successfully probe its ES8316 codec via the acp3x-es83xx machine
+driver, consistent with the existing M1010/M1020/M1040 entries for
+the same board name.
 
-DIAG + ADB + NMEA + MODEM + RMNET + QDSS + ADPL
-
-T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=02 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=9300 Rev= 0.00
-S:  Manufacturer=Rolling Wireless
-S:  Product=RN947R
-S:  SerialNumber=xxxxxxxxxxx
-C:* #Ifs= 7 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 8 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#=21 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#=22 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
-Link: https://patch.msgid.link/arZzuOOvLUZtdOlv@arcor.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mehmet Aysel <mehmet4ysel@gmail.com>
+Link: https://patch.msgid.link/20260825092432.56292-2-mehmet4ysel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index aa66a30e56cdc..85d2daae805fd 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1453,6 +1453,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1312, 4)},	/* u-blox LARA-R6 01B */
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
- 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
-+	{QMI_QUIRK_SET_DTR(0x33f8, 0x9300, 8)}, /* Rolling RN947R RMNET */
- 	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
- 	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d63, 0)}, /* MeiG SRM813Q w/ Modem(PPP) */
- 	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d64, 0)}, /* MeiG SRM813Q w/ NMEA */
+diff --git a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
+index eb5d4a5baef24..b18a8971aec94 100644
+--- a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
++++ b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
+@@ -379,6 +379,14 @@ static const struct dmi_system_id acp3x_es83xx_dmi_table[] = {
+ 		},
+ 		.driver_data = (void *)(ES83XX_ENABLE_DMIC),
+ 	},
++	{
++		.matches = {
++			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "HUAWEI"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "HVY-WXX9"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "M1060"),
++		},
++		.driver_data = (void *)(ES83XX_ENABLE_DMIC),
++	},
+ 	{}
+ };
+ 
 -- 
 2.53.0
 
