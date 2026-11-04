@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827134;
-	b=Qg79vwJjyp9+LPRYOezZqDv75T9K432Tr8G+Nb7aehnRpXVUG/A/E0zeE50Qc6SAexbJ
-	 cN+Er9Ky22QS1/Mf+4Vp8cwRXx0U4AP2XrGaueSZBmh4LojQl149FYWxTKfEdEaYmTe4K
-	 zO6ESe5ITWS509XhWOZHmXaJykT99vbtLt7df+s+CKOhad1dRTuDD0BTYYOzocUoIZ/IE
-	 OSCUdGB04olPgCJbruxUrcDp0XSP4x/1XJY7Xdae76spwF2ObH+uWEJW2bXorMMF3Bwvs
-	 XlIOOs2Ym/JxLnh1dcf/vL4NNE5U3BNd9kA8zjzlUbfeoc1Pw3q3Wxf+iMGQn6AMV0w==
+	t=1793827136;
+	b=nQ/7HF7+qv51PEj6MQuWDs+Bq8dv+SzvKyUZjB+++tKI9oGLtl8qWObQLnm+6qgD3Ag8
+	 2/f0mPOysrCNQoSS4lQLNIAZpacel5HzKfCfSFsUElsG6A/H9e+2H45YkmzAjjWtKPFZf
+	 DBwmQ0N/R2flHv5DRlkTIvbSwuT69rYTOHtKib6wBEu+P3sb+iNfnLZpmTHRKckNsyb/D
+	 Zm6lrYWffkrbVtWLFFG7NEHBFZ089xqcCQkNG9FKo7V4dRdknL4xN4f7Swvxu0HDfk6Ef
+	 qFjvlg7z/aZnjUZx6JvWZHWdD8sBK5Mi4CRyRm2NWoLoZBcvCjZyTa3BqHma9Sw3Vsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827134;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827136;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8Mzj53nENEgVTE/hh5MqW6jTH3kgVlHOHyvZlQHgsGU=;
-	b=MdcZUI3GCNDFUhpGOwmPFMcG+wVZr8Eb6PfARnIWRP42xJTnPL5FVe+hs4bAxvxINtfK
-	 ZMnbTp5ohEi4PDt6vvoUrEpbG//XsNyY2oSqv9QyePZmO6F9TzLVg78XwQWnAEGvlZDHS
-	 ToEnAyhM5jz5x72DA1YzQQZi84qsIwB5BgZyOIbUQGdIiGWbBcqu51GO7NjU4VJjLiVve
-	 GZRuHMAFLJxbkK2CfXeX4Z/iiU1ssEk26wQWnU5u5MawrSRjx38YFqV9/n8H7pmOvunS3
-	 TGMM49gEPGkM0Q0Kg7uEjJyVphtf3nmxKZtLveE/GfejnPc9379hj3MVmvPnAfPHSdA==
+	bh=GIoNT6mVO+d+pHB2BJpHimM6pAB2MRbnCyFa4ZbE9Y0=;
+	b=szAsTDLKJ9d7XQEV5pbwvq0X51Ppr4aq754NKdoMdvm3YGJfxIwalf03cKGMThQxZJfv
+	 aRw63pLlGdzAfPplGavDyEevpIfLHuz3OrP4IPs42EsbCeV609nzWk3JkrJKd0xX1vhLa
+	 islV6+JvrJBk47GKpefTYigGQTrHlIpkcHyXK0OQM7KUDZ5yQxu2v9zSiToIKrXA12YID
+	 xLjXn/yjSoqLYtM4Lf0BbMueWglEq8/Wik6RQY24E1eIqkFuXozY2bq2gO41QznT0OCqO
+	 NkRnA1SHZPZPKVktAiiIx8m3YH1TSeBSA0fUBF9A+2oUzn2pYQDh6Mu9h0vNbKojk7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nf8dbItD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GIvkp5xB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143DA606A871;
-	Wed,  4 Nov 2026 21:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BB0606A334;
+	Wed,  4 Nov 2026 21:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nf8dbItD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CC51F000C1;
-	Wed,  4 Nov 2026 21:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GIvkp5xB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3F11F000C1;
+	Wed,  4 Nov 2026 21:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827133;
-	bh=8Mzj53nENEgVTE/hh5MqW6jTH3kgVlHOHyvZlQHgsGU=;
+	s=korg; t=1793827135;
+	bh=GIoNT6mVO+d+pHB2BJpHimM6pAB2MRbnCyFa4ZbE9Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nf8dbItDYNuV1dpBzcnJ/8PscVlrIl3YbTBplW5UPaTaC9VlcT4j9b3zyXcq9LHXY
-	 vVTRWudfRQiDo5FyXLIyDXvNychBJdwsokY9je9WW/EOAMqErL7xX7PIhPdIfSK0Nt
-	 yXnioGYmhaP5+HZOBkRczL8TT8G0gdDIZU+fViUE=
+	b=GIvkp5xB5BnglbQWgMN06JLvMAxmP6E/WmxR3Bla/T+d/Eo1PgIgc5abQQC82tDYf
+	 BEtxE/h5RZ9wMaipEs2sNrQpocBxcfZy4VHw01Xn0G99ms7qeAc44wH3j4/ORhfhs3
+	 WS1ZqGu1iXFL0ywMdeGOZif/ULL/LNU/vQX63Ne4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.3 207/547] ALSA: pcmtest: handle multiple wraps in random capture fill
-Date: Wed,  4 Nov 2026 16:06:31 -0500
-Message-ID: <20261104211044.026248840@linuxfoundation.org>
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.3 208/547] ASoC: amd: ps: fix snd_acp63_remove() teardown ordering
+Date: Wed,  4 Nov 2026 16:06:32 -0500
+Message-ID: <20261104211044.054612703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,110 +69,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 6541871e8e63e721733cd120af4d9cd22c5ef62f upstream.
+commit c53791d673ed4da6759d276078627ec4d0c6536b upstream.
 
-The random capture helpers assume that the data generated for one timer
-tick wraps the DMA ring at most once. However, b_rw describes 200 ms of
-audio because the timer runs at 5 Hz, so it can be several times larger
-than a small ring.
+The ACP IRQ handlers dereference the SoundWire, SoundWire DMA, and PDM
+child platform devices, but snd_acp63_remove() unregisters them while
+the interrupt is still held by devres, which frees it only after remove
+returns. An interrupt in this window is a use-after-free.
 
-For 48 kHz, S16_LE, four-channel capture with a 512-frame buffer, the DMA
-ring is 4096 bytes while one tick generates 76800 bytes. After filling the
-4096-byte tail, the existing code issues a second 72704-byte write from the
-ring base, writing 68608 bytes beyond the ring. Both interleaved and
-non-interleaved capture are affected.
+Mask the ACP interrupt sources and call devm_free_irq() before the
+first child device is unregistered. The masking goes through the new
+acp_hw_ops->disable_interrupts callback, keeping the remove path
+platform-agnostic. The interrupt line is shared, and acp_hw_deinit()
+clears the sources only after the children are gone, which would
+leave the line raised with no handler left to ack it. The window
+predates the tagged refactor, which only reshaped the dereferences.
 
-KASAN reports the first write into the adjacent free page as a
-use-after-free in the random-byte generator. The underlying defect is an
-out-of-bounds write from the live DMA ring, not a stale DMA allocation.
+devm_free_irq() waits for in-flight handlers, but not for work the
+hardirq has already queued: acp63_irq_handler() schedules
+amd_sdw_irq_thread on the SoundWire manager. Draining that work in
+the manager's remove path is a soundwire-side change and follows
+separately.
 
-Split each random write repeatedly at the interleaved ring or per-channel
-block boundary. Keep the hardware-pointer update exactly once after the
-complete logical write.
+This issue was found by an in-house static analysis tool.
 
-The issue reproduced on three of three clean boots. With this change, the
-same vulnerable geometry completed six times without a sanitizer finding.
-Boundary, pattern-fill, no-timer, open/close, and module-reload controls
-also completed normally.
-
-snd-pcmtest is a test driver, and selecting random fill requires an
-administrator-controlled module parameter. The written values come from the
-kernel random generator; no privilege escalation or attacker-controlled
-write primitive was demonstrated.
-
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
+Fixes: eaf825037d6d ("ASoC: amd: ps: refactor acp child platform device creation code")
 Cc: stable@vger.kernel.org
-Assisted-by: OpenAI Codex
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Link: https://patch.msgid.link/20261003101854.1423146-1-tjdqudcks0424@naver.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20260929061349.3879-1-fanwu01@zju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/pcmtest.c |   42 +++++++++++++++++++-----------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ sound/soc/amd/ps/acp63.h     |    8 ++++++++
+ sound/soc/amd/ps/pci-ps.c    |    2 ++
+ sound/soc/amd/ps/ps-common.c |    2 ++
+ 3 files changed, 12 insertions(+)
 
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -280,39 +280,35 @@ static void fill_block_pattern(struct pc
- 		fill_block_pattern_n(v_iter, runtime);
+--- a/sound/soc/amd/ps/acp63.h
++++ b/sound/soc/amd/ps/acp63.h
+@@ -294,6 +294,7 @@ struct acp63_dev_data;
+  * struct acp_hw_ops - ACP PCI driver platform specific ops
+  * @acp_init: ACP initialization
+  * @acp_deinit: ACP de-initialization
++ * @disable_interrupts: disable ACP interrupt sources
+  * @acp_get_config: function to read the acp pin configuration
+  * @acp_sdw_dma_irq_thread: ACP SoundWire DMA interrupt thread
+  * acp_suspend: ACP system level suspend callback
+@@ -304,6 +305,7 @@ struct acp63_dev_data;
+ struct acp_hw_ops {
+ 	int (*acp_init)(void __iomem *acp_base, struct device *dev);
+ 	int (*acp_deinit)(void __iomem *acp_base, struct device *dev);
++	void (*disable_interrupts)(void __iomem *acp_base);
+ 	void (*acp_get_config)(struct pci_dev *pci, struct acp63_dev_data *acp_data);
+ 	void (*acp_sdw_dma_irq_thread)(struct acp63_dev_data *acp_data);
+ 	int (*acp_suspend)(struct device *dev);
+@@ -397,6 +399,12 @@ static inline int acp_hw_deinit(struct a
+ 	return -EOPNOTSUPP;
  }
  
-+static void fill_random_block(char *buf, size_t buf_size, size_t pos,
-+			      size_t count)
++static inline void acp_hw_disable_interrupts(struct acp63_dev_data *adata)
 +{
-+	while (count) {
-+		size_t chunk = min(count, buf_size - pos);
-+
-+		get_random_bytes(buf + pos, chunk);
-+		count -= chunk;
-+		pos = 0;
-+	}
++	if (adata && adata->hw_ops && adata->hw_ops->disable_interrupts)
++		ACP_HW_OPS(adata, disable_interrupts)(adata->acp63_base);
 +}
 +
- static void fill_block_rand_n(struct pcmtst_buf_iter *v_iter, struct snd_pcm_runtime *runtime)
+ static inline void acp_hw_get_config(struct pci_dev *pci, struct acp63_dev_data *adata)
  {
- 	unsigned int channels = runtime->channels;
--	// Remaining space in all channel buffers
--	size_t bytes_remain = runtime->dma_bytes - v_iter->buf_pos;
-+	size_t pos = v_iter->buf_pos / channels;
- 	unsigned int i;
+ 	if (adata && adata->hw_ops && adata->hw_ops->acp_get_config)
+--- a/sound/soc/amd/ps/pci-ps.c
++++ b/sound/soc/amd/ps/pci-ps.c
+@@ -738,6 +738,8 @@ static void snd_acp63_remove(struct pci_
+ 	int ret;
  
--	for (i = 0; i < channels; i++) {
--		if (v_iter->b_rw <= bytes_remain) {
--			//b_rw - count of bytes must be written for all channels at each timer tick
--			get_random_bytes(runtime->dma_area + buf_pos_n(v_iter, channels, i),
--					 v_iter->b_rw / channels);
--		} else {
--			// Write to the end of buffer and start from the beginning of it
--			get_random_bytes(runtime->dma_area + buf_pos_n(v_iter, channels, i),
--					 bytes_remain / channels);
--			get_random_bytes(runtime->dma_area + v_iter->chan_block * i,
--					 (v_iter->b_rw - bytes_remain) / channels);
--		}
--	}
-+	for (i = 0; i < channels; i++)
-+		fill_random_block(runtime->dma_area + v_iter->chan_block * i,
-+				  v_iter->chan_block, pos,
-+				  v_iter->b_rw / channels);
- 	inc_buf_pos(v_iter, v_iter->b_rw, runtime->dma_bytes);
- }
- 
- static void fill_block_rand_i(struct pcmtst_buf_iter *v_iter, struct snd_pcm_runtime *runtime)
+ 	adata = pci_get_drvdata(pci);
++	acp_hw_disable_interrupts(adata);
++	devm_free_irq(&pci->dev, pci->irq, adata);
+ 	if (adata->sdw) {
+ 		amd_sdw_exit(adata);
+ 		platform_device_unregister(adata->sdw_dma_dev);
+--- a/sound/soc/amd/ps/ps-common.c
++++ b/sound/soc/amd/ps/ps-common.c
+@@ -248,6 +248,7 @@ void acp63_hw_init_ops(struct acp_hw_ops
  {
--	size_t in_cur_block = runtime->dma_bytes - v_iter->buf_pos;
--
--	if (v_iter->b_rw <= in_cur_block) {
--		get_random_bytes(&runtime->dma_area[v_iter->buf_pos], v_iter->b_rw);
--	} else {
--		get_random_bytes(&runtime->dma_area[v_iter->buf_pos], in_cur_block);
--		get_random_bytes(runtime->dma_area, v_iter->b_rw - in_cur_block);
--	}
-+	fill_random_block(runtime->dma_area, runtime->dma_bytes,
-+			  v_iter->buf_pos, v_iter->b_rw);
- 	inc_buf_pos(v_iter, v_iter->b_rw, runtime->dma_bytes);
- }
- 
+ 	hw_ops->acp_init = acp63_init;
+ 	hw_ops->acp_deinit = acp63_deinit;
++	hw_ops->disable_interrupts = acp63_disable_interrupts;
+ 	hw_ops->acp_get_config = acp63_get_config;
+ 	hw_ops->acp_sdw_dma_irq_thread = acp63_sdw_dma_irq_thread;
+ 	hw_ops->acp_suspend = snd_acp63_suspend;
+@@ -484,6 +485,7 @@ void acp70_hw_init_ops(struct acp_hw_ops
+ {
+ 	hw_ops->acp_init = acp70_init;
+ 	hw_ops->acp_deinit = acp70_deinit;
++	hw_ops->disable_interrupts = acp70_disable_interrupts;
+ 	hw_ops->acp_get_config = acp70_get_config;
+ 	hw_ops->acp_sdw_dma_irq_thread = acp70_sdw_dma_irq_thread;
+ 	hw_ops->acp_suspend = snd_acp70_suspend;
 
 
