@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829272;
-	b=IcZEtQ4lFK4mxwl9xMmw4LHe/kWuIuSHZpNIZpgJ/RplTyLmiPAuEaepFpFC4CS+psC5
-	 CPxpp8wb9Y4fC9ADc6KH7YQo+B68ufjYfUCq9arwTo3kGgULB0GTsgEtWONNDEOaWKTrB
-	 9Q2Chb8wFeiVjG1Mogi/MMoSWOA0FQ0JpGmMNaR+KYbm5YPUXgyRAIBLEo4v8O5X29LJZ
-	 sj+CrzeUEVErGSIq2ImSohyltlv+RYuyZrpY2fQRd9jaSIhgsquAtRZBOO/gR7HY3blx/
-	 9BUVFJt1e+ETb0RSCxQ3DvBikKZMoztnaHO7XIpBlcSv2IcOpWQXpkuJV4MTgGX1WOA==
+	t=1793829274;
+	b=A5SzxqAxQogV8u7tWD/xnhhDpvnZMBVqc/PcAWxJFFDYL5BtlSJGorrzYjYPB3l5hkYE
+	 bqyxMYnpEYfZAOkMdwbTT7k1Oq8QQfwd5RTuq/+q7Y5OfDIAGP1UcV9gaIe0RSx7aU2/q
+	 62MWWZU1bqmgDr8JDKorh4SnrtUr7utaKYEXTokmZari6qe1b90RPjlA70U6MSEwu3wYa
+	 DQEzTQnfsHbOQ/CtSJmKUtMlvRATkpCE92YSXJdowF0+izkEAN2TTORnru9BsmETA3Leu
+	 8eXCZR1W7YEDNMvUWsa9EHXt1hFezG6xe6utTyC/sRTtkZ9WEfAUarsKHeBOylsTDfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829274;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mg+JwnS90CMwvIEalIgqq2mxaTVLRKxuYwc36C/hHLY=;
-	b=JkDPaHYjh0DygXih54Cokd0kLhvzKdMl+03scI+TjJZmaOspPJnGmXTnpSthy/MzsJzS
-	 Gl/IlrOW0BoWBxlVLxPw47vrlEKVdw7n01ioKA86Gr49ser/dQRTdEmhKfljQLX3YhLco
-	 o4UGCSvA2vC98H1d/VLGojiRWRuDtKKzpduJPU6OOMR5t5F8G8oia5tfXFpRt1+fMNKg5
-	 3f/thpPQuOINLsEz107QCW40+gxB30+ZVyqum6WI1KLsKq3upQNEZwyG/vKrY71EznsYF
-	 wKXzCOc3/QjKgvYrLgdj6XcR7Urk7ehpF/JCmMwQqpEd6gy7RXD+7rbgKG1lrDiXsaw==
+	bh=Y1JvTjge3O5wb3G7jScc8T3WYG76X3S7KWQztkUYbck=;
+	b=GTLmJ2ejRqvPBGPF/K/M1s2efRPpHScwG9hw+YVGaSCBoBel2kP4Uj7HeIn0AplMQRhC
+	 PuOv8FIt98qEvtlUCp91iECsnk1ExHPbm5ALHkjF9PsmcgJGouQ2XJuwLCHxnaBBEcb1h
+	 XILuuKrvv9Ymn0SB5U4XxgnBRIkloybg0VKUQUEr+qJASJP5O82uhr3FPTPRXJCkWfi9I
+	 SKyMEqzFC3vd83Nfaip+229waSYNflEBVtS2FCTGhjmYDW1wRtmRBTLL6yaWMdb4ekC2V
+	 ZOEpAfvP6n16N9tA37Bpx+lCMqzpqKb7k5wxdoVa5WVQkIuRr1ejMKwS9f481ASxb+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cgYkwkHg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="S5iw/yUB";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B16D6070AA2;
-	Wed,  4 Nov 2026 21:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79BD6070AA2;
+	Wed,  4 Nov 2026 21:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cgYkwkHg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0D91F000C1;
-	Wed,  4 Nov 2026 21:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5iw/yUB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2A31F000C1;
+	Wed,  4 Nov 2026 21:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829272;
-	bh=Mg+JwnS90CMwvIEalIgqq2mxaTVLRKxuYwc36C/hHLY=;
+	s=korg; t=1793829273;
+	bh=Y1JvTjge3O5wb3G7jScc8T3WYG76X3S7KWQztkUYbck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cgYkwkHg7BeaNJ/T+P7cPwvD7sbfnwNlHrdFpaoYz4Uj9wTU37ERruTQluTXGdZQr
-	 5tqSeZDO4W3Y60rNoDFixuIBjOl4UBRLkejc2uh5uggcHlFBZ9xpJDcY7JIZ6v2tl8
-	 K3Hymk7SiIYr9IJLfJ0NZXXQgrrcT5klyy5PRAjo=
+	b=S5iw/yUBg7/Rbd0wpd86VXzddABQMaQxIEH0ukdD2YTcFnJRZ4yVkPIYBnBp98zSZ
+	 HjxDiPUaK+D5HRYquX6X7+Jh8rJwGZhgwiixwp5IielKT2UincQcOasAtgk//phAyD
+	 n9u0UGm5tdnacZMFcVdoivga0luejkBiSQIFyXfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dominik Maier <dmnk@google.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.3 520/547] io_uring/net: mask socket type with SOCK_TYPE_MASK in io_socket_bpf_populate()
-Date: Wed,  4 Nov 2026 16:11:44 -0500
-Message-ID: <20261104211053.166817435@linuxfoundation.org>
+Subject: [PATCH 7.3 521/547] io_uring/register: enforce per-task restrictions in io_uring_register_blind()
+Date: Wed,  4 Nov 2026 16:11:45 -0500
+Message-ID: <20261104211053.199356987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,41 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Dominik Maier <dmnk@google.com>
 
-Commit e66907c3ba229399ecfb4ef032b95a4a071c894e upstream.
+Commit 4a93427e99a8524f3612f29ec8bc0da5f8435a51 upstream.
 
-When an IORING_OP_SOCKET request is prepared in io_socket_prep(),
-sock->type retains creation flags such as SOCK_CLOEXEC and SOCK_NONBLOCK
-until __sys_socket_file() masks them off with SOCK_TYPE_MASK during
-execution.
+When io_uring_register(2) is invoked with fd == -1, it dispatches
+directly to io_uring_register_blind() without checking
+current->io_uring_restrict.
 
-However, io_socket_bpf_populate() copies sock->type into
-bctx->socket.type without masking off ~SOCK_TYPE_MASK. As a result, a
-cBPF filter inspecting bctx->socket.type against socket types such as
-SOCK_DGRAM or SOCK_STREAM can be bypassed by ORing SOCK_CLOEXEC or
-SOCK_NONBLOCK into the socket type.
+As a result, a task with per-task register restrictions installed via
+IORING_REGISTER_RESTRICTIONS can still invoke blind registration opcodes
+such as IORING_REGISTER_SEND_MSG_RING even when those opcodes are not in
+the task's allowed register_op bitmap.
 
-Mask sock->type with SOCK_TYPE_MASK when populating bctx->socket.type.
+Check current->io_uring_restrict->register_op in
+io_uring_register_blind() before dispatching blind registration opcodes.
 
-Fixes: cff1c26b4223 ("io_uring/net: allow filtering on IORING_OP_SOCKET data")
+Fixes: ed82f35b926b ("io_uring: allow registration of per-task restrictions")
 Assisted-by: ARTIST LLM
 Signed-off-by: Dominik Maier <dmnk@google.com>
-Link: https://patch.msgid.link/20261022232120.2537530-1-dmnk@google.com
+Link: https://patch.msgid.link/20261022232121.2538616-1-dmnk@google.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/register.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1734,7 +1734,7 @@ void io_socket_bpf_populate(struct io_ur
- 	struct io_socket *sock = io_kiocb_to_cmd(req, struct io_socket);
- 
- 	bctx->socket.family = sock->domain;
--	bctx->socket.type = sock->type;
-+	bctx->socket.type = sock->type & SOCK_TYPE_MASK;
- 	bctx->socket.protocol = sock->protocol;
- }
- 
+--- a/io_uring/register.c
++++ b/io_uring/register.c
+@@ -1058,6 +1058,13 @@ static int io_uring_register_send_msg_ri
+ static int io_uring_register_blind(unsigned int opcode, void __user *arg,
+ 				   unsigned int nr_args)
+ {
++	if (current->io_uring_restrict &&
++	    current->io_uring_restrict->reg_registered) {
++		opcode = array_index_nospec(opcode, IORING_REGISTER_LAST);
++		if (!test_bit(opcode, current->io_uring_restrict->register_op))
++			return -EACCES;
++	}
++
+ 	switch (opcode) {
+ 	case IORING_REGISTER_SEND_MSG_RING:
+ 		return io_uring_register_send_msg_ring(arg, nr_args);
 
 
