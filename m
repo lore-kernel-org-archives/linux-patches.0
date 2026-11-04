@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829438;
-	b=zvgnSdVq799MepT08GoTTum+fu/OD3uJDgwajyspdJrYBMnNCEKqD1xmRalAqyAMUXzb
-	 HSZOGE0RFopdFR5SzReF+a04Lg6rC8RJLsS925vyXf0v0EYo3IHFwTKUZs1QtDDC4/TAJ
-	 wpiOI0nlkoNpsae/DdSwc6VBjNdIPiZXi0auiaeRUq4Jv4UvCIb6htOg8elr8I89Yq74U
-	 14JPKBb64C8H/sHHzQGxbJJPO3QGgaQs6/aDFFasygXqayQGVxdbWiwPuQaLS3PW2NdPy
-	 K7pOkW5tY3VnFPGlXVbJ20GCuBvLFtLX5MBGglgpyysd5IhdHJ3Ko3BJOIolYerMG2A==
+	t=1793829439;
+	b=zJxm0ENj9dKEyY4jIq3nrODxoXgjW3pbbD/cUJHZZO8Ib8H4DuLthjT8R2nTbTyN5V7D
+	 IyMbZD9cZXvSs2MMAsdkQ5naVqq66R6CCaOnD5rbdQKz9xD9aw42KMo/s93c0wYr0FwPa
+	 JfYauv0/PeF27rrK1qtmy2B8XNvW4RochDkgjwdIgQ4k5S4hCGdMeeL5qWR4hui+hKZ2c
+	 c8JwHS4HltyEJz+y5eOfB7PQrAfVvxo5MggDxQ8rUint2hCyLggDO/igDT9eE6kCnXAdH
+	 ICBR64wWXXHx368S6fhq8NoTJ3rIf/o4JLn0pZDW83HGLEysVx7qHRABg629iVF7Bxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AUlaGiXmcRBDmEmcIQBz9BZGyhVFV+B9QBTfleul9iI=;
-	b=itFj03A58u9yzCPn6kcjjrEGMD3hriTu480OwJUH8BilGxBmtKOPqpHpFXcuLHdBtW0V
-	 OLvVlbwLeOFEaR2xWLad+avYQvRpvKcZUitQAybX72FD7KzQ8bXO+V7aLOBaxHmCY1DXK
-	 srWzzgUkpZIdzIy0zmHSasHBiBEmVX1WIAT+A3gwsd4yeyD1b3nYKLWksR1/rpGnDL+yB
-	 +2u9LgeqtykKr0Jdq4SjKJjVja8dnazloQNmQl0BxZ16z4qe7QbpvZVqE9tsF+9V7UwZr
-	 CQ3bxLLwrbizotdmqhctMxh8GbYDGKk3M2GueBXZSYroKlidAfMBoaCuo/AftffbS5g==
+	bh=jGbn6JM8Qhc5ydMgCki/Xz0bgNQH+Mt8goxLxRjLIvw=;
+	b=pNlNm0nv1hArlAnI14DTzN5SZrcS9RSdKktNSzwxupAoZ9ETlah4+y54h+sjC3DscXLE
+	 uYDpeowCxue+8D1JXajRsM3xnJMnUmVxv34xLItssj+NV/zz7qBnutMTBjjvV/wQsEz6r
+	 WjEg5ya/cvcaMbGkaSTM7GZGxCvnVYNTpFaTiR+qB3BHq+9iN5Vd0jIqRoDfNWipd8qgk
+	 oYQ70GYiyU3D3blO+dBl0qYCamhkhN6MJdoE6KSMmT7aYMxrVQYgZFw17fP+ZvSGNBb70
+	 oVHO8sDv5IVuYKrAoAjG0zVNGMN+uPe1GREEk2fn8Xc4zMb+IeZzl776siSuShHNutQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yQ3VBtnf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tcT4JXIa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2003606A863;
-	Wed,  4 Nov 2026 21:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F423606A840;
+	Wed,  4 Nov 2026 21:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yQ3VBtnf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7B91F00A1A;
-	Wed,  4 Nov 2026 21:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tcT4JXIa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE831F0093A;
+	Wed,  4 Nov 2026 21:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829437;
-	bh=AUlaGiXmcRBDmEmcIQBz9BZGyhVFV+B9QBTfleul9iI=;
+	s=korg; t=1793829439;
+	bh=jGbn6JM8Qhc5ydMgCki/Xz0bgNQH+Mt8goxLxRjLIvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yQ3VBtnfk82fkrDA1VlQM0zV0GR+mb+r0E8NZzCC1WGioAeX4yE/+A5bN+AZ1wOp3
-	 3f0DCf4wfj4xJcQgj92A3Qx3XYtEin1TgK8Ge5VjLUAk8kaRhKnlmjItXEPi10+zEN
-	 ISmwHubhS/SEb9NU1lbjDYnLw0Ytj5IQILz1lZys=
+	b=tcT4JXIaGTjqxupDAkk02OezwIr1/UI4vrpsCRK5VhMq4hQvUy2DztVnCubJhsq/b
+	 YTTlNxPbg7JQDZwl1anek9jeGD6qEi9SuT7lVUKm5wVlBn15HlR+vB2LVLpXh6zrau
+	 hkJ1RZn5lsJ1OtZ9/P/rtvt+IlzBxFjadHdTFyqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Rahul Bukte <rahul.bukte@sony.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0125/1005] mmc: block: reject invalid perdev_minors before division
-Date: Wed,  4 Nov 2026 15:57:38 -0500
-Message-ID: <20261104211047.180426587@linuxfoundation.org>
+Subject: [PATCH 6.18 0126/1005] serial: 8250: force synchronous probe for the ISA and PNP drivers
+Date: Wed,  4 Nov 2026 15:57:39 -0500
+Message-ID: <20261104211047.209057711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,44 +67,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Rahul Bukte <rahul.bukte@sony.com>
 
-[ Upstream commit 5253aee00a4383cb0482d5e99bde48b8054ae2c0 ]
+[ Upstream commit 31e11af34e2c7cc61e25533ab877b1f9cc3eb528 ]
 
-The mmcblk.perdev_minors module parameter is parsed as a signed int and
-is used during mmc_blk_init() to compute the number of supported block
-devices.
+On x86_64 defconfig, booting with driver_async_probe=serial hangs in early
+init. The 8250 PNP driver is put onto the async probe pool.
+serial8250_register_8250_port() runs in a kworker concurrently with the
+ISA registration done from the serial8250_init() initcall resulting in a
+deadlock or NULL dereference.
 
-Passing perdev_minors=0 makes the init path divide by zero when it
-computes max_devices. Negative values are invalid as well and would make
-max_devices negative before it is later used as an IDA limit.
+  - Deadlock: serial_core_register_port() holds port_mutex across
+    serial_core_add_one_port()
+        uart_configure_port()
+            autoconfig_irq()
+                probe_irq_on()
+                    async_synchronize_full(),
+    which waits for the async probe pool to drain.
 
-Reject non-positive perdev_minors values before registering any mmcblk
-resources.
+    The async PNP worker reaches the "port already in use" check and
+    tries to unregister it.
+    serial8250_register_8250_port()
+        uart_remove_one_port()
+            serial_core_unregister_port()
+    This blocks on port_mutex.
+    The init thread waits for the worker and the worker waits for the
+    init thread.
 
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+  - NULL deref: when the worker instead observes a slot whose port.dev
+    is set but whose port_dev has not yet been populated, it hits the
+    null pointer on the call to serial_core_get_ctrl_dev() in
+    serial_core_unregister_port().
+
+Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
+Link: https://patch.msgid.link/20260610054130.2825182-1-rahul.bukte@sony.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/block.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/serial/8250/8250_platform.c | 1 +
+ drivers/tty/serial/8250/8250_pnp.c      | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
-index e8e45b161a398..5077842b286fe 100644
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -3407,6 +3407,11 @@ static int __init mmc_blk_init(void)
- {
- 	int res;
+diff --git a/drivers/tty/serial/8250/8250_platform.c b/drivers/tty/serial/8250/8250_platform.c
+index fe7ec440ffa58..69d8720fb65bf 100644
+--- a/drivers/tty/serial/8250/8250_platform.c
++++ b/drivers/tty/serial/8250/8250_platform.c
+@@ -287,6 +287,7 @@ static struct platform_driver serial8250_isa_driver = {
+ 	.driver		= {
+ 		.name	= "serial8250",
+ 		.acpi_match_table = acpi_platform_serial_table,
++		.probe_type = PROBE_FORCE_SYNCHRONOUS,
+ 	},
+ };
  
-+	if (perdev_minors <= 0) {
-+		pr_err("mmcblk: invalid minors per device: %d\n", perdev_minors);
-+		return -EINVAL;
-+	}
-+
- 	res  = bus_register(&mmc_rpmb_bus_type);
- 	if (res < 0) {
- 		pr_err("mmcblk: could not register RPMB bus type\n");
+diff --git a/drivers/tty/serial/8250/8250_pnp.c b/drivers/tty/serial/8250/8250_pnp.c
+index 7a837fdf9df13..3f41a9d6cb273 100644
+--- a/drivers/tty/serial/8250/8250_pnp.c
++++ b/drivers/tty/serial/8250/8250_pnp.c
+@@ -521,6 +521,7 @@ static struct pnp_driver serial_pnp_driver = {
+ 	.remove		= serial_pnp_remove,
+ 	.driver         = {
+ 		.pm     = pm_sleep_ptr(&serial_pnp_pm_ops),
++		.probe_type = PROBE_FORCE_SYNCHRONOUS,
+ 	},
+ 	.id_table	= pnp_dev_table,
+ };
 -- 
 2.53.0
 
