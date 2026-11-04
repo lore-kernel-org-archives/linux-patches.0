@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831605;
-	b=Ia9nrxaTXd6CHEJ5Z/DPAw3Uj5JdFHAFuKwGq3ovfYkoORpIN9scbdRb1u0QjV0q+fC/
-	 TB7jaaWSDsJBw3YnKEVLyX3WMhaIO+reW2qzsLO150ZOmIb2Omrvv6QH1w/N8CvebH86h
-	 YoZsWCw/2IZxYuX9i/Yt9nk4cOHxd0Kfpu/6Ny3N0vGFGGWAYvppa+IRBBe+1sKSxp0o1
-	 TXc+bZUwDfdUazR6cqjy1+nZ9b923b+N4xY2Cg+1+AuJE6UMMbzu/7r4BueXNMoC/fF+j
-	 yavnWkORW6ZUrVzTyL2QjD+hgHGrW0tQZKi/9zO1X9dw6vcXT/jjIBPVRLde5uVnfdg==
+	t=1793831607;
+	b=aM23mxlbXad+0H1M/q7ss+eA18P/rHeHJBYKYZZXyceKaChlSrF6Axd8i6BRMB9bOl01
+	 q7BJZaFB8y2KrFIC3qTRqX0vbC8x3ngnFpVySVNIX2cO/vneLzFKlQ2RYsKq+TszmS21y
+	 /sfvZJRo52CqXivMKSesdij5aLNWMBARQMpPPZum7nL5JYXk/V0stt4SREw/vBQ3vItT4
+	 DVmyyNQajX6FW991/7QfQR5Z/qRpDHYD6YaNK4bENjxw+1pIzhqfTlrRvJVqAOGitSAsQ
+	 2VmvdhCGbYBVUwzCEeILtTq2uJygcXBn3Cz0VFWNzcnyC/wLJq3ANG75kcd0rV1nKmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fHTG7Din9fwdyf8ALQrk8CnWnTtbUb7PI598J7VvUEA=;
-	b=kYWV2i9fDRNyljDC7tU8mYI6MkJt36KRnq47kMES2GCe9m+Lx7NJl4f3xya2gJHrh788
-	 GgLS7mpcC107u1mbU4LB1c1qU4Ry+7CG5lmjdYOpZ7UzEUcM7Vbefvth5yfe7YK/RTL4T
-	 ub/YN0Vh7nJ9MrDAsMNfO63th31CwOOSUJFmihjHuG+hSouzzXsK60iuqv4fEUWacfd99
-	 nuD1XC2WVH48zlPziQTbLPR9TOMHs9DJ7wdtOmgf8NKHTKVYH9ABgIp3OEno/Wj2UcBou
-	 OtcCuyg2+XK3VgZBC2+hkJYBkddDbFXAqzcOHi9FbcXZE57OLVNciL8ZMTs6zSVwHEQ==
+	bh=pWWufKAt0ALubScIViFzeO2CkSZuykpdgY8vIPET5PU=;
+	b=egFFnZryYM4swGyh172RqDECVkzwEaLvhE/xI5TQCms2MFFYnv7/LOT06RCEEnPAa9zn
+	 aadFcdmhzCTs8nC09inbV0DKNXOwc+gGkgdipTZ1admVxYyH74vqseroJ12J/NSaQ4gc+
+	 Vt/v4A32R6irpewQxmJFI8Rzj/gdonM3kIqD8mgS4EvO2rVSOgVX51fqBY3kNSdyp7Kno
+	 yXi3RFSrs943ZClJk4BSUBnhDfOTadNq1coLrqM4bZ54JPgix3knfN8Na5ty7y7W0Wpmv
+	 2tB9cGWI5ouVxkTyVP4vKGHfRnkt5r/Lro7WVM3z4lFMVSQUszmfTj5TT/PpPH8T3qA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdjimljH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wR+jRyMU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923B2606A31B;
-	Wed,  4 Nov 2026 22:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D81606A843;
+	Wed,  4 Nov 2026 22:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdjimljH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA9E1F000C1;
-	Wed,  4 Nov 2026 22:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wR+jRyMU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6CD1F000C1;
+	Wed,  4 Nov 2026 22:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831605;
-	bh=fHTG7Din9fwdyf8ALQrk8CnWnTtbUb7PI598J7VvUEA=;
+	s=korg; t=1793831607;
+	bh=pWWufKAt0ALubScIViFzeO2CkSZuykpdgY8vIPET5PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TdjimljH1D46qS6D9wutgVQJ0Vk3Gfoj47ddKAMwbrUQH6woMzk9WbHOLsO1C/A61
-	 bITGsswg5iroZ9ySwUcmTbKiXZusAjjUNQisfE2rM2lTAfr+l/nSq1MNjX7UGJKKdK
-	 6qhaKd06ZPbcBrTV+OAhQpl2G9Zo//lkAaWS34Ig=
+	b=wR+jRyMUAY80q3mjDXQ8GI8zpw+vab9Ue3i5MohvT59qXBS0pAeqcdyPHoa/da3LF
+	 NPu9eLiRG3gJnbD5FmAgtY5ZUUhHMIgxeDvVAymKrY7mjmE3fsd3lb0v+gy7WyTlsX
+	 QspolC/9DlfFdUwsWQyWUHQ4fdlI0H2LsqwmIbNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0806/1005] xfs: adjust checks for cross-AG reaping issues
-Date: Wed,  4 Nov 2026 16:08:59 -0500
-Message-ID: <20261104211105.931470814@linuxfoundation.org>
+Subject: [PATCH 6.18 0807/1005] xfs: actually check XFS_DIFLAG2_METADATA for metadata btree data forks
+Date: Wed,  4 Nov 2026 16:09:00 -0500
+Message-ID: <20261104211105.959412473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,41 +70,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 4c6668ecebc61bb0a53d4c6e95509bc960cf6bbc upstream.
+commit 436ae68743a6974021fefa21fd3093d9bf8e66e4 upstream.
 
-While analyzing the reaping code for the previous patch, I studied the
-xfs_fsblock_t code to reconstruct how this code works.  AGs have a
-superblock at the start of each AG which means that regions in the
-xfsb_bitmap (aka xfs_fsblock_t bitmap) cannot cross an AG boundary, so
-we don't need a loop here like we do for xfs_rtblock_t bitmaps.
+LOLLM noticed that xrep_dinode_check_dfork doesn't require that the
+inode has the METADATA flag set in flags2.  Add that check.
 
-However, the checks here are not quite right -- there can be quite a lot
-of reserved space in COW forks, which means that the bitmap extent
-actually can exceed XFS_MAX_BMBT_EXTLEN.  We also don't have an explicit
-debugging check that we never cross AGs, so add that here.
-
-Cc: stable@vger.kernel.org # v6.8
-Fixes: 66da11280f7ecd ("xfs: reintroduce reaping of file metadata blocks to xrep_reap_extents")
+Cc: stable@vger.kernel.org # v6.14
+Fixes: 702c90f4516223 ("xfs: support file data forks containing metadata btrees")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/reap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/inode_repair.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/xfs/scrub/reap.c
-+++ b/fs/xfs/scrub/reap.c
-@@ -796,9 +796,9 @@ xreap_fsmeta_extent(
- 	xfs_agblock_t		agbno_next = agbno + len;
- 	int			error = 0;
+--- a/fs/xfs/scrub/inode_repair.c
++++ b/fs/xfs/scrub/inode_repair.c
+@@ -1014,6 +1014,11 @@ xrep_dinode_bad_metabt_fork(
+ 	if (whichfork != XFS_DATA_FORK)
+ 		return true;
  
--	ASSERT(len <= XFS_MAX_BMBT_EXTLEN);
- 	ASSERT(sc->ip != NULL);
- 	ASSERT(!sc->sa.pag);
-+	ASSERT(agno == XFS_FSB_TO_AGNO(sc->mp, fsbno + len - 1));
- 
- 	/*
- 	 * We're reaping blocks after repairing file metadata, which means that
++	if (!xfs_has_metadir(sc->mp))
++		return true;
++	if (!(dip->di_flags2 & cpu_to_be64(XFS_DIFLAG2_METADATA)))
++		return true;
++
+ 	switch (be16_to_cpu(dip->di_metatype)) {
+ 	case XFS_METAFILE_RTRMAP:
+ 		return xrep_dinode_bad_rtrmapbt_fork(sc, dip, dfork_size);
 
 
