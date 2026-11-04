@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829470;
-	b=pA5kO84icNDsgxuHQAoolssysxsZ/U3avpotms2foVGLgq7WN9S/TouFKemOi5xMLgaU
-	 RZGkjSqsmEnJt+wjv/Y8Fzh7OxOQ6GZdRdY1V96mfGDRaYEHJ9YYUZ0od3l7qT7tMdWmo
-	 Z8cLWbXd7yIy+S0qawl2WSw1XZ2/HDJPrdzBrNbM0MRuUZKxGtd9zoHZYe7C0bGPVsjKw
-	 4SmYPqxRQS8EK/jOLsNORYT/g0gZkSMcFwKcuXAXyIzpp1O4VbgnEAvLsKRWU3n/CqP3V
-	 3+6ovj6uVRwEWJfVd0FVn0NkCncxLbd1xTQrLnBD5olvi/k0QZU0rQn+PaojpevDPxw==
+	t=1793829472;
+	b=0hIR7ugVke4hLAZBB1WN+oyrZsAdyc+NiP/iMJo5dAhs9CjxFnUPpwdy43agK5a3nl49
+	 pPYSkrtzvyOfT8OzAMpdeXBcE/64lsRE+GJzoeYh++xCthEZbs3ulUhUKdSsFI2SqjqL+
+	 GnILOWTXyPK5PEu5KqXJ1v3hPmEt0lfDuJhIMcW6zrPtcLb83OXq2cjX9wKU2E+dvyf1G
+	 6oRiEh+XSjyCOoSLKzi6F8yz5+neWscpiH9OeTHJiVvJ0hN0N+nZBOXdS+jxB78fNuuSs
+	 roW4f88xMA8PVoB5XaX7mBu3Hb2YDpEUJNCwwwhgYspUvXmQLsr0W7inKNKM+71weKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S/YwBV2YdKgv7s7xuHExuGGH6xAXf0IwCdW5wheZM3g=;
-	b=pvCsi4Rf2vND4Vqixn4f4AnRp74VymvgRjoy3IWltlNdnzondSiY9pOHjpKytYgh14sb
-	 BP4o8VaRCXgoEJTguh39SYGbrorbA+xcnWSaI4u4andNv08MgZsyXBv1IwUE4pWfzWpXd
-	 S7a420NXi6xDdYzWRPEJlvdqm6knhhuMc7FUJYvm238drIUcMEMgJtPClNHsygV1EIxI6
-	 qlUbgpmkkSmkdHX1oK4m8mbM4tdHs2rxmCp0fjH042bCfd3BBsmRqSVm263zHh+IEqdQP
-	 8Rj23YeesKrb+El7KtuuUozNmLibI6PugLWZU6fXAtoOFPZ+0Q8Q5e8Zf0ZghdIiS/w==
+	bh=x5eRHDNhrYOF/67GU1JkkiAJVZU1d2rxAQ6F9QOewGc=;
+	b=aKGvxQwK5VH5orCgIT35mAkdtNuzcsdk1wy5bHhwMzawbOsHFJqh/f1duatC9ncePQjL
+	 IBx6Um06qr2XbmAagH1OwfhlQ9XG3r6MfDXTZGJmTRFsC6vcvzmiG5vXaCtatfIcTw7ia
+	 rYSrO+zQnAKDFicRnS+Z6/NU9okCj4TweDEOvS/HMwEy0J6oja6e/JAj3n/1rPDuo9g0D
+	 JKIAriMtdCp5kKhZ/XdvNd2cEzvaTiybvcrsB8Kd2UcOwVvDr737BLXLm84c5tll9eycF
+	 m5m0va6/E4hST9ZGHDS0lbFu1Uey5FvdVjWZLsq65szMHJQoGWrNVHKksHGbLI+X2/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dLiDpRUC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RhXPWLib;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE6E606AB0B;
-	Wed,  4 Nov 2026 21:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE298606AB20;
+	Wed,  4 Nov 2026 21:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dLiDpRUC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15841F00A16;
-	Wed,  4 Nov 2026 21:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RhXPWLib
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694901F000C1;
+	Wed,  4 Nov 2026 21:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829470;
-	bh=S/YwBV2YdKgv7s7xuHExuGGH6xAXf0IwCdW5wheZM3g=;
+	s=korg; t=1793829471;
+	bh=x5eRHDNhrYOF/67GU1JkkiAJVZU1d2rxAQ6F9QOewGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dLiDpRUCyts+1gBMmMf3UJJ5QqAhXR+LMqDlP80ob0ZoGC0a93amihs63IaS40ywd
-	 a/khSosu69nN90WJ/UVPBJMyBuBRT/JF9rGT50o1QSuPW1ZxAkz0Ll71YF3ZoTTcQe
-	 6PePFS3Cr5bfwexL8AZZrEKUNJeKSAVQEbH8QbvY=
+	b=RhXPWLibcsZLOA0PQXFoidSSwBIu/W09mX03eMkZC9OUhn3I6RqHckZCeXMDiqlBw
+	 OmOEfk8QDd13YWrjEhqDRzzha8U8rHP6i8ucB5Iw509nNBw8KrXVQCWeYY9FnVl8Fh
+	 F++nD6QuySWt/QKE9UEuiVQVOLrfxmPJ+4yTiiDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hari Mishal <harimishal1@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0146/1005] iwlwifi: dvm: add missing cleaup for on error path
-Date: Wed,  4 Nov 2026 15:57:59 -0500
-Message-ID: <20261104211047.797572829@linuxfoundation.org>
+Subject: [PATCH 6.18 0147/1005] nvme: clamp FDP nruhsd to allocated RUH status descriptor count
+Date: Wed,  4 Nov 2026 15:58:00 -0500
+Message-ID: <20261104211047.827689859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,37 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit 94280e6e0c69a5327e377803732f494d8b5a74cd ]
+[ Upstream commit 29261f8bb41662f2a660c479e5cf592942b53f78 ]
 
-In iwlagn_tx_agg_start(), call iwlagn_dealloc_agg_txq()
-to clear bit on error path.
+nvme_query_fdp_info() allocates the RUH status buffer for at most S8_MAX
+- 1 descriptors, and then copies ruhs->ruhsd[] into head->plids[] using
+the controller reported ruhs->nruhsd directly as the loop bound.
+However, that count wasn't taken into account for the actual buffer's
+size, so there was a chance for a controller reporting a larger nruhsd
+to cause the copy to overflow the buffer.  Clamp nr_plids to the same
+bound used for the allocation.
 
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20260401030555.541685-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Assisted-by: gkh_clanker_t1000
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/tx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-index a7806776a51eb..1a0167f67c7bd 100644
---- a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-@@ -604,8 +604,10 @@ int iwlagn_tx_agg_start(struct iwl_priv *priv, struct ieee80211_vif *vif,
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 5ed62e070f715..ad725e346c94e 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2313,7 +2313,7 @@ static int nvme_query_fdp_info(struct nvme_ns *ns, struct nvme_ns_info *info)
+ 		goto free;
  	}
  
- 	ret = iwl_sta_tx_modify_enable_tid(priv, sta_id, tid);
--	if (ret)
-+	if (ret) {
-+		iwlagn_dealloc_agg_txq(priv, txq_id);
- 		return ret;
-+	}
+-	head->nr_plids = le16_to_cpu(ruhs->nruhsd);
++	head->nr_plids = min(le16_to_cpu(ruhs->nruhsd), S8_MAX - 1);
+ 	if (!head->nr_plids)
+ 		goto free;
  
- 	spin_lock_bh(&priv->sta_lock);
- 	tid_data = &priv->tid_data[sta_id][tid];
 -- 
 2.53.0
 
