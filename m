@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831031;
-	b=u/qSXeUI/2nQ4TYEFypdA4i4WFVhS1k0uGgR9XusxKhEJxjLZUuhksjgv9TRMC7fXB7P
-	 CVisVjtWKAPfnASPrsQJyhw6sAub4egLCuiNmINegfiyq5tVgTBw0xtdfTtwXa0oHNdhI
-	 nY1olSrQDeFQl04cV7IAYU+avlptB802zjGgNNVbF/+xc3TOtQyURw6TIO0lr6BBbwfJj
-	 uzYXj3bZiXfEtyQf3jfM29AI07hBQC+BjlFiHLac5YMpxvutvSJoycz6rgixembrLBtin
-	 e0M6mJj+emxveJ49A/7aM+n2Ju8zVSlyrIjK7grfw2hQDq4oENG3so4xi1SIW26BtDA==
+	t=1793831033;
+	b=Y9agbFpAjCWiNbPCkQ0jP6HhUes/XenPiCHlyLe157ak8XlCvElErBjBbFTuPKzcFVNx
+	 iqcTFPyBHFodGIoQtNjtH5tz7Ot3qZZYuFR1kEZjJcyBR1DLlroVAjREsCehBF3//2huL
+	 EYL/o0ZdFB7e4TRFteQ/WuU25k+xKRznGxHm1twgLrLNvwjSukprRjKA8sxwn13LIZxLM
+	 EQ/fRgRaGWmCEXH8nXvdZz39I1hQRx2jnJmTj2zt/Srfp0JNl1IpGR0gqi1101Z0HPhbO
+	 ZM1yXSkZVFTdJFCYWkEXfW8VnOP4gT18+uLDwDp1cr30OSENKU/Dg1/hlVe5DpZvC9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=7mJWUDyuXVoSZa+h1TZ88UKvQWi/2NIOe5NR8KUuirg=;
-	b=PDC4qZPQM6el4eFIPdvdWj1cN0TV8DZVQFRjhU0AdhgH36i6QErnrGIwxbwQq2nLwWQC
-	 UZ0v5d3fmlUmiZnBHTkZmPUk7KA3y2vN4ICVQUP+NahKXizUfuAuR0T+9AKUNxxbW/lWu
-	 1zig9xamLDZVpuVmz4ycxgQUYrHxkCRWGUMr3H1AZQS/6cfukCT2/kUjcCuvg1jm/EAbW
-	 p19r/nReIaHr8UmzWpT4ePJf1o2sjA/TzIycTHDbaQXle21gColX3z+DHAnVp6j0qy4pL
-	 oelKXL/tZ8i/4Qpwg74AkZp8RGJKylxiKLbC39WSL29MF7zHqmjkLnFvcUpHo7Vl13Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=lM0swU5y+ZSPNVbri3r7KbjW7jA0WG1QpzG2umL8Tcg=;
+	b=PR85Pc92j323NZ2NR58WZKX+xOjwCYNkoagSZ1knqtKUSjD3vVYsNqtykUrvI0En2ri4
+	 GxjW2dAbI6LvAytZrD0LSavBty1wR1eCc3RAjQVFzLQKwaF3iluVvZEj9c0yIKdNw+5At
+	 ZkwfJ+BRjoLm5EnWyFVqQrIe5BzK6lNeDuxGIaUdZjc9Zlo4Aq0PiL3sMzgfMfKRd7/j0
+	 IuCaW3A/0sTZWiLpoeePQKCQhuDRa/CGsZ0pwGFiD2YV/fehrJPe8QH4ltc+Hc0o+w5Yj
+	 RtLYB4k4LUkCCN6IGafHrPloxfFkYPRJVP8w5WRBh4qnxd4TnLw26iiVOx9Izeeod5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwvxKQEw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ig06dbOK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8211E606A843;
-	Wed,  4 Nov 2026 22:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D67606A843;
+	Wed,  4 Nov 2026 22:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwvxKQEw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECD51F000C1;
-	Wed,  4 Nov 2026 22:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ig06dbOK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEEB1F000C1;
+	Wed,  4 Nov 2026 22:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831031;
-	bh=7mJWUDyuXVoSZa+h1TZ88UKvQWi/2NIOe5NR8KUuirg=;
+	s=korg; t=1793831032;
+	bh=lM0swU5y+ZSPNVbri3r7KbjW7jA0WG1QpzG2umL8Tcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CwvxKQEwuIC3bjW50/QeSv5nosu5P8INCXnumkLM1BFm6N9jVLzOHZwfwgk2YpPrU
-	 2P77nMKSR/76wrO07rrzEJZ8HNR14L6bkLEbQsi26LrwzcLHvrHPe405sr/fCfEbG2
-	 7eDN7wYQkqHpwqG/J78T4OOrxnuJwgiMfrIn61wg=
+	b=ig06dbOKO1G6HTFKh327GFu9oU9W0Gal2hmR9KB+rla532rUP7a8qotHGIjgKXBG7
+	 MnbUs5YrM2U4iyRq5nHaVTxuBgY6I3Rs+VqkNZGKpZ9RSGP+6rQ6pWkY+JY0HLwxUR
+	 7gjMnQQRJV7JmdvJOQmpoAH2AYTzfccZos4YPbVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0429/1005] NFSv4/flexfiles: report cancelled I/O as a layout error
-Date: Wed,  4 Nov 2026 16:02:42 -0500
-Message-ID: <20261104211056.114402845@linuxfoundation.org>
+Subject: [PATCH 6.18 0430/1005] platform/x86: msi-ec: Add MSI Katana GF76 11UEK EC firmware
+Date: Wed,  4 Nov 2026 16:02:43 -0500
+Message-ID: <20261104211056.139632512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,101 +62,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
 
-[ Upstream commit 4a013b0e881e0466cc2c6a5518d2f6cda3a4f19f ]
+[ Upstream commit 0b30e6e583b2988864ffa7aeb2905bc2d0c7d575 ]
 
-When a layout is recalled or revoked the client cancels its in-flight I/O
-so the layout can be returned.  The metadata server needs to learn that
-this I/O to the storage device did not complete, so that it can reconcile
-the affected mirror instance (or, if none remains, take other action).
+Add the firmware string '17L1EMS1.107' to the ALLOWED_FW_13 array.
+This enables Embedded Controller support, including battery charge
+thresholds, for the MSI Katana GF76 11UEK (MS-17L1) laptop.
 
-The cancellation completed with -EAGAIN, which ff_layout_io_track_ds_error()
-does not recognise: it fell through the switch and recorded nothing, so no
-error was reported to the server.
+Tested on MSI Katana GF76 11UEK with EC firmware 17L1EMS1.107 and
+BIOS E17L1IMS.312.
 
--EAGAIN is overloaded in the RPC layer, so rather than key the reporting on
-it, cancel the I/O with -ECANCELED and map that to NFS4ERR_NXIO in
-ff_layout_io_track_ds_error() -- the status the client already reports for
-the transport errors that leave an in-flight write incomplete.  The
-cancelled I/O is then reported to the server via LAYOUTERROR / LAYOUTRETURN.
-
-Unlike a genuine transport error, though, we aborted the I/O ourselves and
-have no evidence the device is at fault, so once the error is recorded we
-skip marking the device unreachable and forcing a further layout return.
-
-The retry disposition is unchanged from the original -EAGAIN cancellation:
-both NFS4ERR_NXIO and -ECANCELED are no-ops in ff_layout_async_handle_error(),
-which still resets the I/O to pNFS (or the MDS), so it is re-driven as before.
-
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Link: https://patch.msgid.link/20260807180553.869371-1-aroslavdudkov622@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ drivers/platform/x86/msi-ec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 8099bfc4fe2f8..c708724bb53f2 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1546,6 +1546,17 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
- 		case -EACCES:
- 			*op_status = status = NFS4ERR_ACCESS;
- 			break;
-+		case -ECANCELED:
-+			/*
-+			 * In-flight I/O we cancelled to return a recalled or
-+			 * revoked layout.  Report it as a failure to reach the
-+			 * device (NFS4ERR_NXIO), like the transport errors
-+			 * above, so the server can reconcile the affected mirror
-+			 * instance.  We aborted the I/O ourselves rather than
-+			 * observe the device fail, so don't condemn it below.
-+			 */
-+			*op_status = status = NFS4ERR_NXIO;
-+			break;
- 		default:
- 			return;
- 		}
-@@ -1556,6 +1567,15 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
- 				       mirror, dss_id, offset, length, status, opnum,
- 				       nfs_io_gfp_mask());
+diff --git a/drivers/platform/x86/msi-ec.c b/drivers/platform/x86/msi-ec.c
+index 0157e233e4300..0cec54d497d1e 100644
+--- a/drivers/platform/x86/msi-ec.c
++++ b/drivers/platform/x86/msi-ec.c
+@@ -1054,6 +1054,7 @@ static struct msi_ec_conf CONF12 __initdata = {
  
-+	/*
-+	 * I/O we cancelled ourselves to return a recalled or revoked layout
-+	 * is reported above so the server can reconcile the mirror, but we
-+	 * have no evidence the device is at fault: don't mark it unreachable
-+	 * or force a return.
-+	 */
-+	if (error == -ECANCELED)
-+		goto out;
-+
- 	switch (status) {
- 	case NFS4ERR_DELAY:
- 	case NFS4ERR_GRACE:
-@@ -1575,6 +1595,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
- 						  lseg);
- 	}
+ static const char * const ALLOWED_FW_13[] __initconst = {
+ 	"1594EMS1.109", // MSI Prestige 16 Studio A13VE
++	"17L1EMS1.107", // MSI Katana GF76 11UEK
+ 	NULL
+ };
  
-+out:
- 	dprintk("%s: err %d op %d status %u\n", __func__, err, opnum, status);
- }
- 
-@@ -2465,7 +2486,7 @@ static void ff_layout_cancel_io(struct pnfs_layout_segment *lseg)
- 			clnt = ds_clp->cl_rpcclient;
- 			if (!clnt)
- 				continue;
--			if (!rpc_cancel_tasks(clnt, -EAGAIN,
-+			if (!rpc_cancel_tasks(clnt, -ECANCELED,
- 					      ff_layout_match_io, lseg))
- 				continue;
- 			rpc_clnt_disconnect(clnt);
 -- 
 2.53.0
 
