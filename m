@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831059;
-	b=E+7wDbFx/QAWsg7gOaHWLc3aT01+Wb8YJhuhNqRx5BPVV5nGB/Ta98+T6nJ1HhSaatG4
-	 rSq+vWwvvFvY19YtRtwD5WaXFUZsGwtwj/uzHlmAaURkyxpoM/IOYKYuVT5KUJQOtEKbD
-	 4JnioLP3GcHxZrYlXG2pRvDqlLSxpUH32ccx00RLFkRJgv3ZCHVmxGmpJe6FwUwOLDYYV
-	 BNieq1VHtVoat5Hog7OUAjcWtse59huNryZHC4LpVsnN8SvNzebQ/lcwb33xEftpMcj6d
-	 PMn9RTZLz8KTLwsHja/AfZlgqmwismRtjKb7o2UJ3Ftpg97TVWKWdNJe2HFSA3hVTXA==
+	t=1793831061;
+	b=1F5TVcQc95D32rbuU/435dbUS5Ehp8nQVQKMErwWJzxhDGoT7INnjBP2T0DSUbYXlFdL
+	 shvvZP0vQ2yHoItdKf7s1XKgfBmIebVXWPlvBT0O6CpUP6KmBaQvcNqOsJuJP6uqpee+T
+	 T/ZN0YbXSgHc4cuIO3ULAKW4VpPgD7n27zKwd5r3UHvVTjBjPONvGcc14TdeWVXOIEq1r
+	 ongRVG4w7kiAf6se/cYcbG4m7NiERCaiDiaqrV4j3xP3+wlIcVJQKUcNJdyqulVqcVieb
+	 A3DEAXfrLh2Sb1PLTF1YfdFmiS84HZNksvk/9Xdjb6aJUTykL+79Gc5feahuauAn24A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QXbVUA3x8HcPACnqfeeCQNs/DUbD0IupZ0X7cQKgFWs=;
-	b=TqeyDbPBk6ottVe2rXyl/cxuuEboqosYDJPIisqxkOjEcrXEtI6mR00rUqquNknpt9R1
-	 9OmW6tWy6pX6XT+6iZjW53gC+Sut7U2OEoZxu36Y6BVbSqzGwEptQTuQr0SUyFgsJENkx
-	 8YRaAnAWxUzQWasaXW1+aaAyJ4hMPmfr/G8Koqy8t7xH2J+X92lqdJdbH2GPsnMerHEt6
-	 LCbBUIegEaZdcOYMlhayBsF1ebZgjqZt9VyVrMoCMgqqshpVEpwYUA6qy+/ri6L9jetPo
-	 eorAQC+bfSPqZUso3ocONYmMW7HC83ulA269ufLECPC2BsPSE2aZvNXPKqHUc73xlAQ==
+	bh=ZP7wQTag072pTMB4PE+JHnuQyLXWBzUgjMa4057cav4=;
+	b=ujmj0jil1YDeIEUmBu1WcIDQyEnf/RdFAHVDJNThIKgFRV+4VRD0rBbYulvo0Bmdzekr
+	 sFzgg77oxbIhD+1m/wmyl0Nn1rPVY1w2Wmk/+sa2oHb6KO8NWuNk8IghAw96KtEhkzGJP
+	 WF4IU+VUWI+vZYDqEUY94pTFeARyXNd7i5bDvJ1a7YINvqtmSLYNn3bO7GZCqXp65XYlH
+	 9oxHJx0H/lPZPSKNQwQXp7nYLkVwibl08b30+L2v5dOS2mqasEeLBeO4GoNzDCNF8u6Te
+	 GLnURSLZNNH7dGWz4mQs01c7iptPLLSsbwj1JUTr8idvo5ESQ41xvRLFswrJFtDkUnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SjypbBni;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dub06Mo3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396D1606A843;
-	Wed,  4 Nov 2026 22:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6500606A32C;
+	Wed,  4 Nov 2026 22:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SjypbBni
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A581F0093A;
-	Wed,  4 Nov 2026 22:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dub06Mo3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649941F000C1;
+	Wed,  4 Nov 2026 22:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831059;
-	bh=QXbVUA3x8HcPACnqfeeCQNs/DUbD0IupZ0X7cQKgFWs=;
+	s=korg; t=1793831060;
+	bh=ZP7wQTag072pTMB4PE+JHnuQyLXWBzUgjMa4057cav4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SjypbBnivV1pQWav9kdT3zAyS0RScQgyGVPYfCGe/QN/LsLyjVAbTVvib1OiRoUj9
-	 0zHPrTORlLgdzWAxQTN2Lz0h97/AAByx7iJ5jJ9acRbMlN0BvWf5BJRLotHQ+4eGWV
-	 vUI6tTMeeZCAIiu1vnPZwXiTXmpBQxGo/saWLbj0=
+	b=dub06Mo3nOxpNymWGzxmqlzrw5uvJq/PlA4B9GPZT33mYH6GoNkyzDsN75Wv/b1fO
+	 TTkQ/PlWFm4Cr12tzrWMShiXsl5uPcJYvnJSVtCecIJGyd3W933MVcOvL/MjOYFe1S
+	 1PqTWECF8Z5mGmkObNsm+DSDcs8NoskUThH6Az0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Seiji Adachi <seiji_adachi@yahoo.co.jp>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0481/1005] scsi: devinfo: Add BLIST_SKIP_IO_HINTS for EMC Symmetrix
-Date: Wed,  4 Nov 2026 16:03:34 -0500
-Message-ID: <20261104211057.464096945@linuxfoundation.org>
+Subject: [PATCH 6.18 0482/1005] ASoC: amd: yc: Add Lenovo ThinkPad E16 Gen 2 (21JN) to quirks
+Date: Wed,  4 Nov 2026 16:03:35 -0500
+Message-ID: <20261104211057.489038621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,38 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ewan D. Milne <emilne@redhat.com>
+From: Seiji Adachi <seiji_adachi@yahoo.co.jp>
 
-[ Upstream commit f06a44e235ef188689ba23ffc72e9e89b10951a9 ]
+[ Upstream commit 4cae4ca34992d210d115e8e891f1e88c9df5f24c ]
 
-EMC Symmetrix returns an error on MODE SENSE for page 0Ah subpage 05h
-because it does not implement the SBC-5 I/O hints.  These commands began to
-be sent as a result of commit 4f53138fffc2 ("scsi: sd: Translate data
-lifetime information").  Add BLIST_SKIP_IO_HINTS to avoid sending these
-commands because in large configurations the failed commands are displacing
-other useful information in internal error logs.
-
-Signed-off-by: Ewan D. Milne <emilne@redhat.com>
-Link: https://patch.msgid.link/20260915173800.39117-1-emilne@redhat.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Seiji Adachi <seiji_adachi@yahoo.co.jp>
+Link: https://patch.msgid.link/20260917131851.2122144-1-seiji_adachi@yahoo.co.jp
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_devinfo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/scsi/scsi_devinfo.c b/drivers/scsi/scsi_devinfo.c
-index c51146882a1fa..a438e510f2cae 100644
---- a/drivers/scsi/scsi_devinfo.c
-+++ b/drivers/scsi/scsi_devinfo.c
-@@ -161,7 +161,7 @@ static struct {
- 	{"DGC", "DISK", NULL, BLIST_SPARSELUN},	/* EMC CLARiiON, no storage on LUN 0 */
- 	{"EMC",  "Invista", "*", BLIST_SPARSELUN | BLIST_LARGELUN},
- 	{"EMC", "SYMMETRIX", NULL, BLIST_SPARSELUN | BLIST_LARGELUN |
--	 BLIST_REPORTLUN2 | BLIST_RETRY_ITF},
-+	 BLIST_REPORTLUN2 | BLIST_RETRY_ITF | BLIST_SKIP_IO_HINTS},
- 	{"EMULEX", "MD21/S2     ESDI", NULL, BLIST_SINGLELUN},
- 	{"easyRAID", "16P", NULL, BLIST_NOREPORTLUN},
- 	{"easyRAID", "X6P", NULL, BLIST_NOREPORTLUN},
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 8e203c034851f..507c07efc069b 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -234,6 +234,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21J6"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21JN"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.53.0
 
