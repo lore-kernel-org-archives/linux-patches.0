@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829398;
-	b=Y4wd9JDIT+2OJxGD6TUKzZ/4XoW3jPC32IjTvzhuVck+nUyRM2xpN32u5Fya6jzmC8jY
-	 ECcm9PGHHcxidC0jVuFOnwJAMUAEhuAFzuregsAwTrtQmQJuLNIRPLwZaf1z+yyOyypJ+
-	 iH5HFSyQE5ED65I55CAqma3RJAc/0Wi7NPXBYtM4TeAl+m+O+2u4RNeZMS2CQh/ARYERS
-	 W/1DP2J0KmX6wA7UslvJRuYZ9ZA8VwdPydHSK7s9ul71U5m+SuEnR/7fKEd3MHSfycQpG
-	 lMDoWfDujo5g8ITtab2mvxZaR5AbHBIE4m9IUUCK9DRDlX577T4Y+omGWxIiilkNauw==
+	t=1793829400;
+	b=zCwqBdeL5WLMORqGPkxpn2sVvRoGLiE3LCyiBJxjdiqTdTqfDmMTsfMGex48x7+vezHa
+	 OmPH5JguGUXpRrsevTGywU2X3yLc1ZyuL6rzop9lBY6iQuS4pBqM2FZC6Cr3cIKkXv7rA
+	 qBq+CAFSCEn6sd40dZ1uDluLY5z03pFi+HF+2bSByu+UoasXmbZwfkyGX4hxt7fiOrVZv
+	 QL6+vKzOaR97n0R1hQ0WldHSkqLHWWbMpMAu/+95WR/EA8NXKHY8Zq1SC0chG1NPLFLn+
+	 kt634xxw4SQbK0l/ZpKDJQ+OFHuTJtHPeErlfrEmPzxerKklVAcp4MVIE4tR0ZjXxUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829400;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FzGpZiN4Pkvza+R0qTGgjMgEe6ceN3IPbOKpqz3YT5U=;
-	b=deocd3EdAUz4tgonQHhrOhqWJRVDDxd+HhJjQV6cY2/JoOsFBzEGsjRMd0+xC0sbH7GH
-	 o8yB/YSnjydZ7h8fT0J3+ADW4qW5t/b6Etymsr89vxT9WjHx+1AMpDxgrRT6rSyUFfn+1
-	 gyGWkn4z9lphVy3hUP+rUpTlb/ZG3mNKSB/lJxteQn3mUCNxS57wCuq2rL83XqRnWkqTn
-	 eXMJw3svdPNkMWKXNh+xXD1dJE6Qolab9/4bvtLkIkSndLQXvySax0l2z6rhTju7rv7uq
-	 5L9u5Q3gsyrNKTYSH2eZJkJRhPqLLUWpe/TV2ozCOihicgbYsqKhngkNUYWPIjiVOBA==
+	bh=w4nlZ+HC7FTenhWRwDne09jSQnF5FqrmpEskBaJiK90=;
+	b=G5qtHNjNC0PmkRjygn0YEVDUj8zqRL03pkyl5iONQ7soCUhS1UgEISHSu6eFNaYWBRqD
+	 6MHbUr7K5vYeM37FUoZIt6KICPZJUz0rHMA/qMU1VqQT/2Mhw4j/UR8WVVdeRlKzYyEpV
+	 0EjtBqOZI+J2+SwmI0Zr4QKo2nO/LUk7C0QlZIvHrTr3+9cnuhL2prp3RgP6kLoYJwAJ4
+	 eP62FkwNCp3Wpj5ZntfPPrCHtmNzfHg7t5c1JeZyeGrONR+vFPJ/Wiq2NEZ7ceQUd/P4C
+	 61wvgYrPbz8wmO8i7ieLAZAjOZbBdavv0I8nGKhj7goMMjbswjLO2IAbtSqfXb8NmSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C/QI9rVu";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F95Uq4Zg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E2160C014D;
-	Wed,  4 Nov 2026 21:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0341960C299A;
+	Wed,  4 Nov 2026 21:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C/QI9rVu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FC01F00919;
-	Wed,  4 Nov 2026 21:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F95Uq4Zg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAEF1F00919;
+	Wed,  4 Nov 2026 21:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829398;
-	bh=FzGpZiN4Pkvza+R0qTGgjMgEe6ceN3IPbOKpqz3YT5U=;
+	s=korg; t=1793829399;
+	bh=w4nlZ+HC7FTenhWRwDne09jSQnF5FqrmpEskBaJiK90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C/QI9rVumtH8vPtxPBTNZSHAz97Nf+eV1K2Hjt9hYgLNUNGsCC6n4egTVFF8lxQPW
-	 VcS59B1DEVW4YcQDeXIzJLjox0MZbPoBTfqGhKjnRlPwomxiCW9q8Yw1bfdJrfBiHT
-	 +7WSz1Z3rl4EImiXD963a379Ce2JZdLWYaQlMxtk=
+	b=F95Uq4ZgIHA76XEwzfPdA8+ATpwIDUdTdArz9TAtAInqA3XNHYyOYqf930FrAe7tP
+	 SsvKvPkwTb5yCVPHn/1GkJIMwdMT8kop9jexNX012wIKy2kfYGzHjynTBfjlqtAEbU
+	 nXY2h5CHoDhyLr5kaVMvskrCsMWtORW+92AzLStc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0102/1005] mmc: sdhci-of-ma35d1: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 15:57:15 -0500
-Message-ID: <20261104211046.500127670@linuxfoundation.org>
+Subject: [PATCH 6.18 0103/1005] mmc: dw_mmc: stop and complete DMA also in STATE_DATA_BUSY state
+Date: Wed,  4 Nov 2026 15:57:16 -0500
+Message-ID: <20261104211046.531495231@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,35 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 9b3732cce41d177acac731e0b8024d72f0dfde38 ]
+[ Upstream commit cb3fcb8d118b874178251d1f02613f60d25e4ddc ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+When transfer was stopped in STATE_DATA_BUSY state, there was no call to
+dma_ops->cleanup function, so the DMA mapped buffer was never properly
+unmapped. Fix this by calling dw_mci_stop_dma() function also in that
+state to ensure proper cleanup call when DMA transfer was used.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-of-ma35d1.c | 1 +
+ drivers/mmc/host/dw_mmc.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mmc/host/sdhci-of-ma35d1.c b/drivers/mmc/host/sdhci-of-ma35d1.c
-index 287026422616c..73f772db04148 100644
---- a/drivers/mmc/host/sdhci-of-ma35d1.c
-+++ b/drivers/mmc/host/sdhci-of-ma35d1.c
-@@ -291,6 +291,7 @@ static const struct of_device_id sdhci_ma35_dt_ids[] = {
- 	{ .compatible = "nuvoton,ma35d1-sdhci" },
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, sdhci_ma35_dt_ids);
+diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
+index c5db92bbb0946..90cc41901edaa 100644
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -2213,6 +2213,7 @@ static void dw_mci_work_func(struct work_struct *t)
+ 			}
  
- static struct platform_driver sdhci_ma35_driver = {
- 	.driver	= {
+ 			dw_mci_stop_fault_timer(host);
++			dw_mci_stop_dma(host);
+ 			host->data = NULL;
+ 			set_bit(EVENT_DATA_COMPLETE, &host->completed_events);
+ 			err = dw_mci_data_complete(host, data);
 -- 
 2.53.0
 
