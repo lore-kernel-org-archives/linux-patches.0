@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831937;
-	b=bKDJVJPrCBUXDFCoAMo3TGaOLNv4mk9YHQeDCbJeoej544fF26hoNDGhQeSAPbELv9/O
-	 9oM9b1fvHu1Yg4KRCxjW+NHMfBM3l9mYg35dkGtVhZ5uzttVKXMl8eF3WLlkq3LjM1gda
-	 TI1ZXK29a5o5HsW+FScC191bBECHajgBhFt7d8e5g3zxAsXLi+t55mEKuQ9sS/6erOZAP
-	 QZiwjTshmBNzaTbRjoS/jQTSSSyzmbiyDB6lg91yVwDEgDQYyCgmfOBDmy5zB3Ck4Lkfh
-	 DGiibVbKGC6qmNrHYyTDlSBdVOTDCR+YwZm0eIdivYQcgsc/RKU1eAFtMdY1Q1j7mOA==
+	t=1793831939;
+	b=OHPyYfAslLRR0XTNPlTTXL6V5n5G9um6hoHsMXTy3q/nKF/dVSZ7CSqYb1tigVigVq1q
+	 d+rBhSigf+/XaAEMhu58w37Xuo72DHXzxtol/drPBVTC1q+9SxDvwROBUqEFaSSQkLaYT
+	 PVSLUtsibXwbUmHy9JGR3L+4cimWNC/Ll8Hkek6k2SSaWPA4/sKB5IpkkdpU95y/atT7a
+	 YFf6N+5fCsAPh+Fr3U/PH6qdQUh+TzZah6gMQHd7sB32702m9bkWFz3W/7zc1SUB6yNY8
+	 UcmsO0cT06bvhjfMkuYHK40nmN176kmCu41G8XhbwoVu7dPLVaCwgC8/y+Z3TauL7kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831939;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3L49HTQ3eZ68PNgqLiJRe5Tb07E9sCgIXJCkIl9x1DU=;
-	b=LGkDHxL81A2a3YUigkAuAFpvz5uJdiGeKMct3ljuzE6f4WL3nFQ3WUrqRXJwvdHu4bn5
-	 x/wx0rmcVu/eJwmJVGmn0NBSWGb9sY2TpHvU5/1yaFY3J4MbvsbEg11B6vSJtOAOxLQ4y
-	 wb0FgHmBE5C4BMV0n0QsrbxxY4G7RFKhZ7Y1rmUrgMU4lwcaB9tvh0HyFzk7K7/iJUU7f
-	 X3VCM7mP7jCjEuDRvAUJtpty5Pc63cMfQyc+GvwDSXjrmIvmEDQpSj1OuV8naZ27mFnrd
-	 IRfBpMMNBRvBeaLr0XDwR3WucSbdkA7g+oVl2kO5Ag75WXnj09PIamh+pk8TVqlas8Q==
+	bh=HXpEtDJ7GV7lMMw+mQeO9xNclryHvzph7VupFl4sQH8=;
+	b=2Bf1Wy0jQb2oe8JWy86fMVNLJTNmHOmjC85XpzgXNulwRz46YB9OewLPYWUuVUtIXfAh
+	 UqMMTUtfMPALqrRDEx/+V5VvI7HnnCUHJHW0qNgPAaAb3S0JdPHTQCCsCgOgPOA/bBDx+
+	 K5njHWKYZfgrYYPhNInB4qUiJy/bt16xKhY+kg1rPNbv7jzSFyw9qbPHnlb5P+jZoxTVR
+	 MkmHd9IFDnRaMoQFM5haX80uKqFqyupcuCUTkZ/egsDgKNZdBoQVCxC/TecS0SGm9SmD6
+	 GfjaCdcg5vWJn22qcwvGmgisTvP7E2D3vk0/H7qVF435DvWMa8EFgS5B5lNx9m7L73A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wzh088CD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mjs47o7K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F35E606A328;
-	Wed,  4 Nov 2026 22:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33E3606A328;
+	Wed,  4 Nov 2026 22:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wzh088CD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA861F000C1;
-	Wed,  4 Nov 2026 22:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mjs47o7K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0C41F000C1;
+	Wed,  4 Nov 2026 22:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831937;
-	bh=3L49HTQ3eZ68PNgqLiJRe5Tb07E9sCgIXJCkIl9x1DU=;
+	s=korg; t=1793831938;
+	bh=HXpEtDJ7GV7lMMw+mQeO9xNclryHvzph7VupFl4sQH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wzh088CDu3TCpJv6izw+wVh7CbJ2hq6FqhJxYoAyLiSwGQFkzjN6obcMzoU2rCSDp
-	 J4f/tHVaP7NtkhcjW0xNvRdkN5rt0K2CQjoiZD/wf2tDmL35o6T7e/0qnG8YFjfOQj
-	 NuL+0fVjWcWnDPJLN2U7HV3td01+t1i/0R0JxTdg=
+	b=mjs47o7Kzh1JthwSiMtN/cr6+/DjedutN44fxmH9X5TasZHaFHCscfet/jURFUpw8
+	 GPySWFRRtatLX8Nk1doN0EEwlsRrnF0seT0Klw6GrB4fNTcJJJakQdi58C4E6yXXKt
+	 OGxvQ87Ropg8eJh/+xRJi6yVchE8oirsUt2P/ihY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 6.18 1000/1005] media: rc: Fix build failure with CONFIG_LIRC disabled
-Date: Wed,  4 Nov 2026 16:12:13 -0500
-Message-ID: <20261104211111.033619858@linuxfoundation.org>
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Alexander Atanasov <alex@zazolabs.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 1001/1005] selftests: ublk: add missing gitignore for metadata_size binary
+Date: Wed,  4 Nov 2026 16:12:14 -0500
+Message-ID: <20261104211111.061341022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,46 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Alexander Atanasov <alex@zazolabs.com>
 
-commit 0c795849fd70d6bdb99aea5dd08d9b43128612f6 upstream.
+commit 8e5bcc3a955a2cc4460b391f55d3b49905eb248e upstream.
 
-commit 37efd09ba2c6 ("media: rc: Ensure registered is cleared in error
-path") broke the build if CONFIG_LIRC was not enabled.
+A new utility metadata_size was added in
+commit 261b67f4e347 ("selftests: ublk: add utility to get block device metadata size")
+but it was not added to .gitignore. Fix that by adding it there.
 
-Fixes: 37efd09ba2c6 ("media: rc: Ensure registered is cleared in error path")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202609230511.Em5Osw74-lkp@intel.com
-Signed-off-by: Sean Young <sean@mess.org>
+While at it sort all entries alphabetically and add a SPDX license header.
+
+Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
+Fixes: 261b67f4e347 ("selftests: ublk: add utility to get block device metadata size")
+Signed-off-by: Alexander Atanasov <alex@zazolabs.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/lirc_dev.c |    3 +++
- drivers/media/rc/rc-main.c  |    3 +--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ tools/testing/selftests/ublk/.gitignore |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/media/rc/lirc_dev.c
-+++ b/drivers/media/rc/lirc_dev.c
-@@ -775,6 +775,9 @@ void lirc_unregister(struct rc_dev *dev)
- 	unsigned long flags;
- 	struct lirc_fh *fh;
- 
-+	if (!device_is_registered(&dev->lirc_dev))
-+		return;
-+
- 	dev_dbg(&dev->dev, "lirc_dev: driver %s unregistered from minor = %d\n",
- 		dev->driver_name, MINOR(dev->lirc_dev.devt));
- 
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -1981,8 +1981,7 @@ out_lirc:
- 	scoped_guard(mutex, &dev->lock)
- 		dev->registered = false;
- 
--	if (device_is_registered(&dev->lirc_dev))
--		lirc_unregister(dev);
-+	lirc_unregister(dev);
- 	device_del(&dev->dev);
- 	/* registered already cleared above */
- 	goto out_free_table;
+--- a/tools/testing/selftests/ublk/.gitignore
++++ b/tools/testing/selftests/ublk/.gitignore
+@@ -1,3 +1,5 @@
+-kublk
+-/tools
++# SPDX-License-Identifier: GPL-2.0
+ *-verify.state
++/tools
++kublk
++metadata_size
 
 
