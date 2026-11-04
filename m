@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829353;
-	b=eBHVy//dlrgHX6ulBUCbvpyFveUsgS9M32S7YJS21NJ7Z0BGFcD7rwSFEfsdQaO8PNrs
-	 xmzI1FocqrLARjei3sZV1AjXbz8M2rst0W23nGI7NWedA9gWjGwvKQlhCsnl4fn56V69r
-	 plTvNqlepoK+TKSzj8AQKrSDihYl7p7z+lh3jD0voxt6v5CkzUtau1csQRUF7wfcYRZD9
-	 NG6z5x8HTKFf8JUJMTzHoPNq8UBm73/to7NfWkIhde1yUTipKXFTabvpXM962DABW/fbb
-	 03LbfDJZ4vFxYyCHO99LnSiuehMww8PnpvLev/ZC9SJll5QKQUSyeE92GsGQJHqLnqw==
+	t=1793829354;
+	b=EM67JsXaL8aqS3b1uegsruswTPfDjHbJw9FZ7AsHQyhCHYtPRD07U3NyR/HVPelKoSn5
+	 thyaX4faOiy1BFZ8RwG69bBThHoiEq1JUR4CW9CP1LqPxAA7fr5jpGjOLR8aFe+TQ/tRf
+	 eXba+MYxoh73o8mjxpYWhxbxl9WGk8/ZVppZxfTBYwX1PVETPARBOJ/vU74i6Iawaxd/m
+	 iUYLRnyTHkT83Z7xdmpDAMGvyap2eifnlXHQ7jRarOg/fYZYnL3qF1hseJHGZdDfUiQqR
+	 VlwazOnE+CuntDTpNEsoxBhR57oKmtsO6/UTZjmAdHg+MJ315V7MDfCfh2SnWIWAsiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829354;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+fj8IyQMjNzWewlU9GL52psEm4QwrADRcpVi8c0W9ZU=;
-	b=NJrsL3z960maant0UceJ0zJjeA0rthuTI8y8d63/wAgc/NubXmHqmlZOrJnF0QiY3Gaa
-	 Nk+HamFUs0yZ0LUti1wyuRlAKp8LdDmhc3wOqRWSz115T0TC+h7zFo5nPU90gaX6VJ/dB
-	 ImuB/EcpzFWOuCu2obe11O99MiCMQDVCg1l0gEIocRQNkvj2AN9A7AbppdzCpS3x+fIpA
-	 KLVUnwWZ4pWK3KIJzQZwBxJVnX1R/qRjwURpVe6KTV28zFgdfgn+rEMe9y3OidIEQTKUW
-	 eVKv8ibzLoarKR+hhTKD/BZwrb++lYg48YXuKypsLuR/GCHI4c/FZaK+3RvhVpKV1ew==
+	bh=IoxJdNRK0ypjM3x5Ktuju9dGMbp85sTbYQSeeY2Th/g=;
+	b=Q3jgAkS1NPgcwes6/rWlkKfFVuO5fuEZmLXB60tabc49QRcovOmlXZFxEtw4+CBvsZqn
+	 IvuSVagl3kxi08FUD8nt/7z7OClCamygqFYhxG44YjOfnZDbZmsx8Ug5/KDk6eYbOuHiB
+	 1KJfLH6yo8YX24R6t9YNUA7l7p+TPi75E275dBrJETtbx+vSPAoSqe3YeXJcwKLOEIxsQ
+	 hk+B+1LW+K1i4FbG5qXrBjZa16jwqiWs8f4OjswDPbEj27r17Fxxx/8R8w23qxp53jJz0
+	 O9Y66xV7k8JKVzemS5uZxzn0txox8rIzFbYO2cHKI/Ny+92g5I7jlQj6BK+ojWbMTzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKRxB68U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cClPR79d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA98C60A6F63;
-	Wed,  4 Nov 2026 21:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230AC6074908;
+	Wed,  4 Nov 2026 21:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKRxB68U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2AE1F00919;
-	Wed,  4 Nov 2026 21:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cClPR79d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B899F1F00A15;
+	Wed,  4 Nov 2026 21:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829352;
-	bh=+fj8IyQMjNzWewlU9GL52psEm4QwrADRcpVi8c0W9ZU=;
+	s=korg; t=1793829354;
+	bh=IoxJdNRK0ypjM3x5Ktuju9dGMbp85sTbYQSeeY2Th/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKRxB68UTTDdKutz7GJ8pgU0ZwO61p06px2GUJV1QTS68Q/xPTjVXntr8Cg0vVTR+
-	 XUM9P0Cj4AUs5L1xRnmy8TRE7YHj2w8fYId7aMg6/qqLCiLfUWFLYQ7l9R1lGpbhAo
-	 x6RlbRCVP/KYB7daU4uH+cQ/Krm05GqrWscSnE9Q=
+	b=cClPR79dcXIlE6ko0e5XzqhdOSMcWTd472MMtroKhthh79fI+RUbV1HoJQqwCJALW
+	 luVweH1V7Sy7R/dtRTs/1xe12DqZZHuTOBVimhtCd8yCbEAGfG8i4J5NKioxt19dml
+	 ulsqbOLBRwME1hZ9/r4WwN77XoIasqV0jDi0L63k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Yongqiang Sun <Yongqiang.Sun@amd.com>,
+	David Francis <David.Francis@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0072/1005] drm/amd/pm: Use uploaded size for legacy custom PPTable
-Date: Wed,  4 Nov 2026 15:56:45 -0500
-Message-ID: <20261104211045.632146467@linuxfoundation.org>
+Subject: [PATCH 6.18 0073/1005] drm/amdkfd: use node XCC count for v9 CRIU control stack restore
+Date: Wed,  4 Nov 2026 15:56:46 -0500
+Message-ID: <20261104211045.660741308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,66 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Yongqiang Sun <Yongqiang.Sun@amd.com>
 
-[ Upstream commit 055a40c32f3a2dcd4d1a6f85ff4c231cf35f1b53 ]
+[ Upstream commit 1a0aa3c4cb207fcbf7ebd2d9ed9f1cfb4560bd2c ]
 
-The legacy powerplay path used to allocate hardcode_pp_table from
-the original VBIOS PPTable size, copy only the uploaded bytes into it,
-and keep soft_pp_table_size unchanged. If a custom PPTable is shorter
-than the original table, later code can still treat the stale tail as
-valid table data.
+set_queue_properties_from_criu() divided the checkpointed control stack
+size by NUM_XCC(adev->gfx.xcc_mask) (whole GPU), while the checkpoint
+size was recorded, the MQD buffer allocated, and the control stack
+restored using the per-node mask NUM_XCC(mm->dev->xcc_mask). On spatially
+partitioned GFX9.4.3 (CPX/QPX) these differ, so the per-XCC control stack
+size used for the restore memcpy could exceed the region sized for the
+MQD allocation, writing past the BO into adjacent kernel memory; it also
+broke legitimate restore on partitioned parts.
 
-Treat the uploaded buffer as the complete custom PPTable: duplicate the
-uploaded buffer directly, replace hardcode_pp_table atomically, and set
-soft_pp_table_size to the uploaded size.
+Divide by the per-node XCC count so allocation and copy agree,
+leaving kfd_queue_acquire_buffers() to bound the size against
+the node's advertised control stack size.
 
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
+Reviewed-by: David Francis <David.Francis@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/powerplay/amd_powerplay.c  | 21 +++++++------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index 5e197c463ed96..05c5e7d19ca1c 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -663,25 +663,20 @@ static int amd_powerplay_reset(void *handle)
- static int pp_dpm_set_pp_table(void *handle, const char *buf, size_t size)
- {
- 	struct pp_hwmgr *hwmgr = handle;
-+	void *hardcode_pp_table;
- 	int ret = -ENOMEM;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 912c4ebd30405..99a47f2a45e7a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -1062,7 +1062,7 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ 	ctl_stack = mqd + q_data->mqd_size;
  
--	if (!hwmgr || !hwmgr->pm_en)
--		return -EINVAL;
--
--	if (size > hwmgr->soft_pp_table_size)
-+	if (!hwmgr || !hwmgr->pm_en || !buf || !size || size > U32_MAX)
- 		return -EINVAL;
+ 	memset(&qp, 0, sizeof(qp));
+-	set_queue_properties_from_criu(&qp, q_data, NUM_XCC(pdd->dev->adev->gfx.xcc_mask));
++	set_queue_properties_from_criu(&qp, q_data, NUM_XCC(pdd->dev->xcc_mask));
  
--	if (!hwmgr->hardcode_pp_table) {
--		hwmgr->hardcode_pp_table = kmemdup(hwmgr->soft_pp_table,
--						   hwmgr->soft_pp_table_size,
--						   GFP_KERNEL);
--		if (!hwmgr->hardcode_pp_table)
--			return ret;
--	}
--
--	memcpy(hwmgr->hardcode_pp_table, buf, size);
-+	hardcode_pp_table = kmemdup(buf, size, GFP_KERNEL);
-+	if (!hardcode_pp_table)
-+		return ret;
- 
-+	kfree(hwmgr->hardcode_pp_table);
-+	hwmgr->hardcode_pp_table = hardcode_pp_table;
- 	hwmgr->soft_pp_table = hwmgr->hardcode_pp_table;
-+	hwmgr->soft_pp_table_size = size;
- 
- 	ret = amd_powerplay_reset(handle);
- 	if (ret)
+ 	ret = kfd_queue_acquire_buffers(pdd, &qp);
+ 	if (ret) {
 -- 
 2.53.0
 
