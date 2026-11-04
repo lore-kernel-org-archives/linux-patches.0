@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829313;
-	b=Oa9a1ReNgJOTJPh34x4pM1ysnkWmFHswvKS7JhUb7LHhxOe8A+z5KDeTNSJ2e1xcuuDz
-	 RjUsHWhWji3MZgILXKIZ3zdkSeNRjSjBCgr/dQ9djepiGy2rsqNu/048pNDUha11/jb26
-	 gIk7zLkJ1jIHiSSRmD4e0WqyFQXkFgBWgTKtxWf1ptAhRq9Ej78m/rGX5jvCypFuFc6D2
-	 PBS4LCu/BUdiOj0Hsw1aKe8LIPyk8rIAk7JsXfzo1Yri7byUsz1nk7LRUb2uvY3Cu7QrB
-	 3cJPxqYELIKb7cgCfN5AKNXhRrcdelR0KRWgKZmwwaxUSiacFEnY9sewX8dk5VB9RLw==
+	t=1793829314;
+	b=wI057M44c7qyVlv90qfjy+hicW2ZCtZlh1lf5//yewfaZKvRs3YFOs2Apj1c+vwKEX0u
+	 +WzTTlTw8BBWWxECylt43OwDo3cYId4fziX63l3GoxrxzBzo4NUMqfQYfqptQc8nIASAw
+	 D0CUu9E8EmBoEZjlsXXP5QH8qlCFpbqCS18vu01+doftypC9W/Mie6lnzzFa0fHUwVASi
+	 EoJhsmKS0u5x/ItMWN0QW1ZvIG//dd5aZ9rv0zPNb1fqgv5OABdsaRJI/qss3A5WZk7cr
+	 PQDEn8YmLABUcskKzh7JK0Lq0qOKgl9yp3jX0geWtlHMiQwUpQuACcRWMaO/VPQ8Gdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829314;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PSc51Uoq6urmmIJVuot7GqD9HncHNObDlSs6T9oGok0=;
-	b=vb5NHfKj/x7vM0O9+uZnsJqL7RioBWYP4mCcGIfVt/ww4/uhipKGDGFaUV4WXwSqMSyv
-	 vU6ClkP93Fm3wIW4F+Kt3ACRSj9YvJwtQd0DQ96+RvNjnDLq1GRR98lZKPWtsDSol+Zhl
-	 HYw5ytLC4yLE4lE8vqxXnqQVQkSrA6HHZT556AdAzXditvAkz9VLUAj5fiyjcDJG61bxH
-	 +1PPTmBSJsbBLzgD1J8jKufu685huXt+uavpeueamiqG7mVnsQCNz1jJBZUZTObrMxxag
-	 ny4Qw3OG/ieTLhCrpBID8eUcOiWJYPEXQq4DJA0MreXBjXVuqMvMhRHTVAR4TMSp2lA==
+	bh=sqjlldPIFFM2wtnRmJK6Jtk4XGiPewwyEOoZirlNcwY=;
+	b=sL7bmwqp6ZriR1HqY1yaNkfOdvVspJ12lc8H570IE2paCzt3JptJT0CrS9TVdl7qaa7h
+	 XiyWMwBCMuTiCv6vweC4+V/0vfyQgdOkK1n0kjfv8QGpJRZKwCvtRbpjMRDvv3rEoZ+ub
+	 LCmzedCBZc/a0yXPEQsP9Pb+WpTqKdpzUiw/NH4/7ezx6RUyDFYyR6pME56JqFFUTz+Jv
+	 Gx/1SlB43lIAe3ptBfXnSQB9sRmPSaQE3U+CDs/A5J4LE2Hjv4xYdCM/KM2PG8hZYcx9u
+	 hpLOU+QeRmL1+MFlIvpNsRx9RGX/y6a/3e0bSOewQ7hcOdaC/Ks+g3VqL8F4lcIBMAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z/1Wzd1d";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FsJu7rH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E606074918;
-	Wed,  4 Nov 2026 21:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850596074918;
+	Wed,  4 Nov 2026 21:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z/1Wzd1d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A933B1F000C1;
-	Wed,  4 Nov 2026 21:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FsJu7rH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2615C1F000C1;
+	Wed,  4 Nov 2026 21:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829312;
-	bh=PSc51Uoq6urmmIJVuot7GqD9HncHNObDlSs6T9oGok0=;
+	s=korg; t=1793829314;
+	bh=sqjlldPIFFM2wtnRmJK6Jtk4XGiPewwyEOoZirlNcwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z/1Wzd1dqBp0N1VB7lBlZo4FuuKkGRpKGdl6bBbNT3n5PqYIqrneomT8+v9CPGCwX
-	 9drPMxr4kiXkEx6sAuwjg/5At1/XwCKXG+3WS7clN/+JoM5bT5w9gaVqnxvBhEZjHU
-	 HJ9/SLvX6goC5wSUubqFiQ3JERVZjc2aPruYBKc4=
+	b=0FsJu7rHlyTr/11BAV2wkN715AZPxjY2Z+mO19jCKyTNbEi5xajruzzSO9uc+ajqs
+	 YtbNFkw2XYugw9859xBc+OF2YjybY6pfodIWu7Pzt/gfPsTpEO6yFN96QVx1rk2g9W
+	 8wQtTWFFpWl1arzDSnaZm163u08YX6RIo9d+w9dU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0019/1005] drm/amd/pm: Validate OD DPM triples before mutating tables
-Date: Wed,  4 Nov 2026 15:55:52 -0500
-Message-ID: <20261104211044.086876676@linuxfoundation.org>
+Subject: [PATCH 6.18 0046/1005] fat: reject name longer than NAME_MAX in msdos_format_name()
+Date: Wed,  4 Nov 2026 15:56:19 -0500
+Message-ID: <20261104211044.874496360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,146 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit b390cb9d776039fc4f0be13b2649299079227d12 ]
+[ Upstream commit 9d7ed813ee5ff0d469bd99630828ed6fdef4e8da ]
 
-vega10_odn_edit_dpm_table() and smu7_odn_edit_dpm_table() could mutate
-the live ODN table for valid triples, then return 0 after detecting a
-truncated buffer or out-of-range index. Validate all (index, clock,
-voltage) triples first and return -EINVAL on any failure; only then
-apply updates.
+msdos_format_name() performs no upper-bound check on the input name length.
+It silently truncates an arbitrarily long name into the 8.3 form (11 bytes)
+and returns success. The subsequent fat_scan() then matches only against
+these 11 truncated bytes, so it returns an inode as long as any entry with
+the same 8.3 name exists on disk.
 
-v2: Use distinct message for different error case, removed unused
-input_level from validation loop (Lijo)
+For example, passing a 300-byte name of all 'A's returns 0 with res set to
+"AAAAAAAA" (8 'A's + 3 padding spaces), reporting success for a name far
+longer than NAME_MAX.
 
-v3: Reject negative level indices, input[] is long but was compared only
-against unsigned table bounds, so negative values could pass and truncate
-when assigned to uint32_t input_level.
+As a result, when a user calls open() on a path component longer than
+NAME_MAX (255) bytes, the VFS only enforces PATH_MAX, not the length of an
+individual component. The dentry keeps the original long name but gets an
+inode attached and becomes positive. Later in vfs_open() -> fsnotify_open()
+-> fanotify_info_copy_name() triggers WARN_ON_ONCE(), and the event is
+reported to userspace with an empty name.
 
-Set DPMTABLE_OD_UPDATE_SCLK/MCLK only after validation passes,
-so a failed sysfs write does not leave need_update_dpm_table set for a
-later commit.
+vfat is not affected, as create goes through xlate_to_uni() which refuses
+names longer than FAT_LFN_LEN.
 
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix this by checking 'len > NAME_MAX' at the entry of msdos_format_name(),
+the single entry point for all msdos name handling, aligning with the
+NAME_MAX check that xfs/9p/ceph/simple_lookup() perform at lookup.
+
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260629130943.3671939-1-wozizhi@huaweicloud.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 34 ++++++++++-------
- .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 37 ++++++++++++-------
- 2 files changed, 43 insertions(+), 28 deletions(-)
+ fs/fat/namei_msdos.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index ba953654a0206..cf008ed409552 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -5661,23 +5661,29 @@ static int smu7_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	}
+diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
+index 262ec1b790b56..c03610d0e7247 100644
+--- a/fs/fat/namei_msdos.c
++++ b/fs/fat/namei_msdos.c
+@@ -29,6 +29,9 @@ static int msdos_format_name(const unsigned char *name, int len,
+ 	unsigned char c;
+ 	int space;
  
- 	for (i = 0; i < size; i += 3) {
--		if (i + 3 > size || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
--			pr_info("invalid clock voltage input \n");
--			return 0;
-+		if (i + 3 > size) {
-+			pr_info("truncated clock/voltage input\n");
-+			return -EINVAL;
- 		}
--		input_level = input[i];
--		input_clk = input[i+1] * 100;
--		input_vol = input[i+2];
--
--		if (smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
--			podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
--			podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
--			podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
--			podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
--			podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
--		} else {
-+		if (input[i] < 0 || input[i] >= podn_dpm_table_in_backend->num_of_pl) {
-+			pr_info("invalid clock/voltage level\n");
- 			return -EINVAL;
- 		}
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		if (!smu7_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
-+			return -EINVAL;
-+	}
++	if (len > NAME_MAX)
++		return -ENAMETOOLONG;
 +
-+	for (i = 0; i < size; i += 3) {
-+		input_level = input[i];
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		podn_dpm_table_in_backend->entries[input_level].clock = input_clk;
-+		podn_vdd_dep_in_backend->entries[input_level].clk = input_clk;
-+		podn_dpm_table_in_backend->entries[input_level].vddc = input_vol;
-+		podn_vdd_dep_in_backend->entries[input_level].vddc = input_vol;
-+		podn_vdd_dep_in_backend->entries[input_level].vddgfx = input_vol;
- 	}
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index b3fed2a478aab..d6aaba0b3613d 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -5645,11 +5645,9 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	if (PP_OD_EDIT_SCLK_VDDC_TABLE == type) {
- 		dpm_table = &data->dpm_table.gfx_table;
- 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_sclk;
--		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
- 	} else if (PP_OD_EDIT_MCLK_VDDC_TABLE == type) {
- 		dpm_table = &data->dpm_table.mem_table;
- 		podn_vdd_dep_table = &data->odn_dpm_table.vdd_dep_on_mclk;
--		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
- 	} else if (PP_OD_RESTORE_DEFAULT_TABLE == type) {
- 		memcpy(&(data->dpm_table), &(data->golden_dpm_table), sizeof(struct vega10_dpm_table));
- 		vega10_odn_initial_default_setting(hwmgr);
-@@ -5667,21 +5665,32 @@ static int vega10_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 	}
- 
- 	for (i = 0; i < size; i += 3) {
--		if (i + 3 > size || input[i] >= podn_vdd_dep_table->count) {
--			pr_info("invalid clock voltage input\n");
--			return 0;
-+		if (i + 3 > size) {
-+			pr_info("truncated clock/voltage input\n");
-+			return -EINVAL;
- 		}
--		input_level = input[i];
--		input_clk = input[i+1] * 100;
--		input_vol = input[i+2];
--
--		if (vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol)) {
--			dpm_table->dpm_levels[input_level].value = input_clk;
--			podn_vdd_dep_table->entries[input_level].clk = input_clk;
--			podn_vdd_dep_table->entries[input_level].vddc = input_vol;
--		} else {
-+		if (input[i] < 0 || input[i] >= podn_vdd_dep_table->count) {
-+			pr_info("invalid clock/voltage level\n");
- 			return -EINVAL;
- 		}
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		if (!vega10_check_clk_voltage_valid(hwmgr, type, input_clk, input_vol))
-+			return -EINVAL;
-+	}
-+
-+	if (type == PP_OD_EDIT_SCLK_VDDC_TABLE)
-+		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_SCLK;
-+	else
-+		data->need_update_dpm_table |= DPMTABLE_OD_UPDATE_MCLK;
-+
-+	for (i = 0; i < size; i += 3) {
-+		input_level = input[i];
-+		input_clk = input[i + 1] * 100;
-+		input_vol = input[i + 2];
-+		dpm_table->dpm_levels[input_level].value = input_clk;
-+		podn_vdd_dep_table->entries[input_level].clk = input_clk;
-+		podn_vdd_dep_table->entries[input_level].vddc = input_vol;
- 	}
- 	vega10_odn_update_soc_table(hwmgr, type);
- 	return 0;
+ 	if (name[0] == '.') {	/* dotfile because . and .. already done */
+ 		if (opts->dotsOK) {
+ 			/* Get rid of dot - test for it elsewhere */
 -- 
 2.53.0
 
