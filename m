@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829644;
-	b=sx84xlAY+snVb3dJi65GNX8BvhYS4R/xwszyt9GKuSTR4tPoCzYI0YYkMGe4Ixtf0wC8
-	 6DKCYDYqCplnRFe3nSt7InvJ1ZlmLiRYJ7nqAUO/Hsj49T8M78b3r9l4WJj/jarB4OzWN
-	 f8XLpT7fw4Un+oiqeV+sLiQ9Ur/ZWLlu/3h9qNbBo5ciRjBMQTwnkDSKNKLaRIbEt+IpM
-	 5dlgiWJinS3+eaTfsnCnMFLGXUxReIc7jNb0hv3n2qe+fHodCDaKjrEk4jZfTWo5y15qV
-	 HcKa5QMyb/J+xcRlUffwuZ85P/9iz2OAYiguYRlE9buRGwGNlbDbHZjXYF2LR4nxxqw==
+	t=1793829646;
+	b=CmJw9CuuhrZ4wHuBw0knn8lHsgXvOJLX93HE6uyggfDkmtbNmVAyBsuWETFvflyfY/A2
+	 jBHPlP+EuoFHg8feO1Ym3RThQKAQM82h7/ynqbAq184oFG4VvUNPix8NfQMGnK7/nfeMt
+	 aYaLiiX3Dzm8faPHN+8YDxTAnG/DKt01duxYyQPurMvyqy56QjBe4OMQnOO2ZBrxRYit+
+	 xDS50cOfZaGX7OJWproi2DVRFXAcY8334NfBN4DlOE93tqjeMFvUdTE6yizwIdpuGjks8
+	 VzAdxUloHI+vJDhxqyw4LgVaTM9CRCdIyeGcavq5oSEf+6TS5Kei7SWajDWXNVYjoKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829644;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829646;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D1oBDAP19hYHtfBmn47m/yrrXHWnhUjmY10v5uZnHsw=;
-	b=uAfkHcRDMfoWttFa+F6JFvEQJQWCrkDCv31SQrvUV/UUdzu1ID94NCcu+37hI2yFdR17
-	 BCf+oXQ2UDLoyJVP2261y9VjutQ8j4uhuMs95XYtd4rXTceJs1uQlBLO2C+zBYUujvnWC
-	 npWnRNmHeIR1C7oxKHMFcoSv3zHPI07pjD/X6gRYi3p8L64anNFecsRJunvJL/4oCoY9Y
-	 t7ZwM74UzWKdpUzXnxdIA1dUamHAzrawab9etf17uRmOxOpc0HiV5ZBeUvIznFLZKAQNt
-	 9ozh7gWEWbQNC9rH8PNaMNmBrmt5ABuEcorKqkW2ZhjF3rsSLXfXfVahBvBuo+wBckQ==
+	bh=uuYoAEbvL1aZ7vAbf4CRhKxNlvkNIDJjkzLmT/03w1A=;
+	b=d+Eihvn/Tqbl4U4LJWwVra6rbyr8OEeX1lY0muQDwyLgghfH+BAVoIOzEWLaQAEFQpl4
+	 D8aGhfOy1SokEFJkC13Uhy/YcnvSo4veTa52Rg5LzMHTfjFLN2LGfqZByXBwrY34Z/C0u
+	 hgULE0Jgybh4tEGH1nu7h6Hs5eOhtDXbz6QNaZbyAwuNQo0Az4gHqkKY1404A6ct+ayDN
+	 J16WJoGT8SItatID2MRCrYqgGRybYMPf1ucRKntid8m++9cwyK1xELkq8njt3YU5HJfJ7
+	 YMVpcahdTTor/0JbzfYJWHxsSGe2vPkn17nFmU/xfgYQGb1BayLxRR0wPxCN6MOibow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTXvHc6C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BFS8Id5b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46125606AC27;
-	Wed,  4 Nov 2026 22:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C097A606AC2E;
+	Wed,  4 Nov 2026 22:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTXvHc6C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50E31F000C1;
-	Wed,  4 Nov 2026 22:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BFS8Id5b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9811F000C1;
+	Wed,  4 Nov 2026 22:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829644;
-	bh=D1oBDAP19hYHtfBmn47m/yrrXHWnhUjmY10v5uZnHsw=;
+	s=korg; t=1793829645;
+	bh=uuYoAEbvL1aZ7vAbf4CRhKxNlvkNIDJjkzLmT/03w1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yTXvHc6CnBrFm0q4RSmfYRsgaQRDTWCtQjjpx1/rrfUrumnWNtAfRZEmxyYMoElot
-	 jq06/1f5zxBIiy76E+ybiS5DU8BnpqNlGG99JHHBu1ACe2gXdI3nfe4YQvVnYn7kpt
-	 ofiGJb+tZVTPoVY6K9TRhaP1MdbuMBdoKVWp1ZBg=
+	b=BFS8Id5bXWXvQrLNUBNjknJpaUhAO+MvnNIOUrH4RaNjntkHecBlZIpfiPfS3iYY2
+	 aFnrXh/DGCikxofsUQc9SItFoJ6wfQ645ECP6u8xxgCTKNCjJGnRGE+wlBCy0sbT9a
+	 cZcjCY2cVoEzWNCJLuQn9oVfihXiBrvEo82hwlSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Jiaxing Hu <gahing@gahingwoo.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0252/1005] hsi: omap_ssi: remove debugfs on port creation failure
-Date: Wed,  4 Nov 2026 15:59:45 -0500
-Message-ID: <20261104211050.920923183@linuxfoundation.org>
+Subject: [PATCH 6.18 0253/1005] iommu/rockchip: Clear stale page faults before enabling stall
+Date: Wed,  4 Nov 2026 15:59:46 -0500
+Message-ID: <20261104211050.950586682@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,40 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jiaxing Hu <gahing@gahingwoo.com>
 
-[ Upstream commit 760318e2e69857214314e94ac477219f0c89106b ]
+[ Upstream commit b10d5920cafa292ee3cab9c20f813da4fe4f00b8 ]
 
-ssi_probe() creates the controller debugfs tree before creating the SSI
-port child devices. If a port device cannot be created, the error path
-removes any children and tears down the controller, but leaves the
-debugfs tree behind.
+Boot firmware can leave an IOMMU bank in PAGE_FAULT_ACTIVE before the
+driver has configured paging:
 
-Remove the controller debugfs tree on the port creation failure path,
-matching the normal remove path.
+  PAGE_FAULT_ACTIVE=1  STALL_ACTIVE=0  IDLE=1
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260616004348.97684-1-pengpeng@iscas.ac.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Such a bank ignores CMD_ENABLE_STALL and never reaches STALL_ACTIVE, so
+rk_iommu_enable_stall()'s readx_poll_timeout() spins until it times out
+(seen on the RK3576 NPU, whose MMUs share this poll across banks).
+
+Rather than special-casing these banks in the stall path, acknowledge the
+stale fault with CMD_PAGE_FAULT_DONE before enabling stall, so every bank
+starts from a clean state and the normal stall sequence applies to all of
+them.  Banks without a pending fault are untouched.
+
+Signed-off-by: Jiaxing Hu <gahing@gahingwoo.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hsi/controllers/omap_ssi_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iommu/rockchip-iommu.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
-index 47826315d7d62..3163a063aaa23 100644
---- a/drivers/hsi/controllers/omap_ssi_core.c
-+++ b/drivers/hsi/controllers/omap_ssi_core.c
-@@ -535,6 +535,9 @@ static int ssi_probe(struct platform_device *pd)
- 	return err;
- out3:
- 	device_for_each_child(&pd->dev, NULL, ssi_remove_ports);
-+#ifdef CONFIG_DEBUG_FS
-+	ssi_debug_remove_ctrl(ssi);
-+#endif
- out2:
- 	ssi_remove_controller(ssi);
- 	pm_runtime_disable(&pd->dev);
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index 309ba78e27d4f..982ea9cafee1b 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -422,6 +422,19 @@ static int rk_iommu_enable_stall(struct rk_iommu *iommu)
+ 	if (!rk_iommu_is_paging_enabled(iommu))
+ 		return 0;
+ 
++	/*
++	 * Boot firmware can leave a bank in PAGE_FAULT_ACTIVE with no handler
++	 * (PAGE_FAULT_ACTIVE & !STALL_ACTIVE & IDLE).  Such a bank ignores
++	 * CMD_ENABLE_STALL and never reaches STALL_ACTIVE, timing out the poll
++	 * below.  Acknowledge any stale fault first so every bank starts clean.
++	 */
++	for (i = 0; i < iommu->num_mmu; i++) {
++		if (rk_iommu_read(iommu->bases[i], RK_MMU_STATUS) &
++		    RK_MMU_STATUS_PAGE_FAULT_ACTIVE)
++			writel(RK_MMU_CMD_PAGE_FAULT_DONE,
++			       iommu->bases[i] + RK_MMU_COMMAND);
++	}
++
+ 	rk_iommu_command(iommu, RK_MMU_CMD_ENABLE_STALL);
+ 
+ 	ret = readx_poll_timeout(rk_iommu_is_stall_active, iommu, val,
 -- 
 2.53.0
 
