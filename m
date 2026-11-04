@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831307;
-	b=4bFwaxqc7iGsJGZqbUmSfaGjqU2t/Qs2NHQ5F5JwLvCz5/zxawq94DkC+6mWqranBm8/
-	 PMru57f5KQn4xuwNMAXmtLFuDamQd1oSIg6r9Wao9ahR5ddD/bpMjBIRpgZktlVHC3x5D
-	 hhDx95NceOqwYXmG+ZvrFS/MmhRYHNO0fVOJY4MLsTzY9o5QEPg/myEa3J/D2qPcVbu4y
-	 YHxWJkxQ3BPweMlyLivXax9sGGvzxugsdm2i6HREOyG6Pj2HKUX68LvRvlDN0TMZoDCBb
-	 /bdcrXayVZGR3E1NRWyzFwYaDErv0BDunoGL9Lo+INChoUBXMHG7it9QHkwhB015mrQ==
+	t=1793831309;
+	b=y8cH+nmJcXhMBI9uHrXNjfHIESh3kKswFs/AciSW2L8scKK/Z1JNgJAEwulkf6XUwqXj
+	 4tOs+aK46jTB/MXF6vhrengYi414aE5trGTU/wHfN6il5Yqi+yZ5Z6iTqOmTIp1ZsvHMS
+	 7xS+8eIeRYoopH/u2KfK562VHZpXSxA5gKmI8DOmTVQGazKueowZrBVETFK5j+WSDYCht
+	 7JikF4vZ3Ohi4AZcGu51W9PyoirpImo+OjhYedYC7vp5QqZcQQB65oTK3TpYeVVeDPEkd
+	 RuD1rXgADFmI5O4Gd1r1Jsclk+uuGSYWaZLvrTY4FwFXgQPm5p2zIPFwCLSBcDABTEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831307;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831309;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+AbAKZfsTvilYszSqXO9h2oIu2DZn9QWn1YEVOCL+Ps=;
-	b=RfUnTzCFmwXDqUmyN8GlpPRNnUp/mCKf6pmMsGuUoYHGVw1UPhGi7Gei24M4A2YZ44hu
-	 aHPrSxDLiDH17VpjLfpxUx/k6KcjD/Mw6IrMTFxeTLX8V8ehDSMzLuPskCtav5pNpRS6z
-	 xvEkdFG6gTafRuIsDJQxRAJpP+wqWlffTO1DacRPDnaJdLmJi0cLZjPZY6JFfV134hHNP
-	 I+GozgPkbKnbZ7Vng+A4MMr/6kEv7fGpdd+XamYXSoRbUf4Cgm21Uk15nxpI0ubBm2oYR
-	 1vh7zO5W8sMmTi+tf6znF70HxQp3/UKsIgH+QYEzRgCNMGOwpcq+Oi1//iawL3j1MUQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pAW/eo/h+kW6AOeEAEqNajoXODwnd6U5Db2bpDwBW3E=;
+	b=sNAk4gL3CYUTT4enOCpuSnn4nlQ04FiWKD0jvE1rWgKMoHWwBKPKxF5lL1LXDFpJUjzM
+	 9nrtev0hOt20lkbs9E5bBgF+QUFQIQTim7IipF0APrkMfHFSuGySilGwv1vO1tYqSMwR7
+	 Wy+hQxrjde7mlq07vg5eO7OFjPQiBXqk9zjriQ8/RMXG5/HulcqaM+pgohQe23GMicCqU
+	 BB+MoHmB4lBREQjsgwo0AoqAJGKBNLUQeFi36qWr68iEhRxxD8/1+yD1L/2wqv1pDgaI5
+	 pM9bZxmHchuq+cIRQo7u480b/8KywmecsJpb69AsmcKSJhnIEaWRiHeB1EN9cOcjuFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mupQCm2A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gBub2xbG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61150606B2F8;
-	Wed,  4 Nov 2026 22:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5429606B2F8;
+	Wed,  4 Nov 2026 22:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mupQCm2A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDD31F0093A;
-	Wed,  4 Nov 2026 22:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gBub2xbG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF8B1F00919;
+	Wed,  4 Nov 2026 22:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831307;
-	bh=+AbAKZfsTvilYszSqXO9h2oIu2DZn9QWn1YEVOCL+Ps=;
+	s=korg; t=1793831308;
+	bh=pAW/eo/h+kW6AOeEAEqNajoXODwnd6U5Db2bpDwBW3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mupQCm2AzrRLiezgBgf6JWt8SkbAADpMydDtN20MoQ64pLEy4+mQfAydJK4iKBw37
-	 BU7sJOdlw9PtzWYuCgvAtJ8DsHWIg8bNfG8Ieewwo2q+bNmRL6OrcXP7xtZfGmPUov
-	 +kgHC0r7Ku3Cq7sBqMpEFlAGuQ/zFTQb9mzrqIEk=
+	b=gBub2xbGAPHyByRs86r0+ywQPNiEKZHkNy5pgoUimDg3IfVhwU/VD4EQ8HvNp061F
+	 dlmi99oyozCDAzCJt7k4ISXl+lEd5tIA6I0YPkKLxCh9QNn1cmVYk/fvcnoo+WINi/
+	 Z7+PVgh1RWLMRDRY72LS4Pt5HPWG1h/hFLdeCsJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiakai Xu <jiakaiPeanut@gmail.com>,
+	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
+	Nutty Liu <nutty.liu@hotmail.com>,
+	Andrew Jones <andrew.jones@oss.qualcomm.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0623/1005] drm/amdgpu/uvd3.1: Fix checking whether UVD firmware keyselect was already set
-Date: Wed,  4 Nov 2026 16:05:56 -0500
-Message-ID: <20261104211101.263418599@linuxfoundation.org>
+Subject: [PATCH 6.18 0624/1005] RISC-V: KVM: Fix double-free of sdata in kvm_pmu_clear_snapshot_area()
+Date: Wed,  4 Nov 2026 16:05:57 -0500
+Message-ID: <20261104211101.288487360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -63,47 +65,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Jiakai Xu <xujiakai2025@iscas.ac.cn>
 
-[ Upstream commit 800ea86e83e137395eba54103e5c459c2bc9965f ]
+[ Upstream commit 310e2096b082ae0010e7afef666073b966ac2fa7 ]
 
-The PASS_MASK is for a different register not for UVD_FW_START.
-It was a mistake to check this flag. It should be enough to check
-that the register is non-zero.
+In kvm_riscv_vcpu_pmu_snapshot_set_shmem(), when kvm_vcpu_write_guest()
+fails, kvpmu->sdata is freed but not set to NULL. This leaves a dangling
+pointer that will be freed again when kvm_pmu_clear_snapshot_area() is
+called during vcpu teardown, triggering a KASAN double-free report.
 
-Fixes: 889a2cfd889c ("drm/amdgpu/uvd3.1: Don't validate the firmware when already validated")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20261006211607.75407-1-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9dee462c83259ca769aa1bf82228adee9831685c)
-Cc: stable@vger.kernel.org
+First free occurs in kvm_riscv_vcpu_pmu_snapshot_set_shmem():
+ kvm_riscv_vcpu_pmu_snapshot_set_shmem arch/riscv/kvm/vcpu_pmu.c:443
+ kvm_sbi_ext_pmu_handler arch/riscv/kvm/vcpu_sbi_pmu.c:74
+ kvm_riscv_vcpu_sbi_ecall arch/riscv/kvm/vcpu_sbi.c:608
+ kvm_riscv_vcpu_exit arch/riscv/kvm/vcpu_exit.c:240
+ kvm_arch_vcpu_ioctl_run arch/riscv/kvm/vcpu.c:1008
+ kvm_vcpu_ioctl virt/kvm/kvm_main.c:4476
+
+Second free (double-free) occurs in kvm_pmu_clear_snapshot_area():
+ kvm_pmu_clear_snapshot_area arch/riscv/kvm/vcpu_pmu.c:403 [inline]
+ kvm_riscv_vcpu_pmu_deinit.part arch/riscv/kvm/vcpu_pmu.c:905
+ kvm_riscv_vcpu_pmu_deinit arch/riscv/kvm/vcpu_pmu.c:893
+ kvm_arch_vcpu_destroy arch/riscv/kvm/vcpu.c:199
+ kvm_vcpu_destroy virt/kvm/kvm_main.c:469 [inline]
+ kvm_destroy_vcpus virt/kvm/kvm_main.c:489
+ kvm_arch_destroy_vm arch/riscv/kvm/vm.c:54
+ kvm_destroy_vm virt/kvm/kvm_main.c:1301 [inline]
+ kvm_put_kvm virt/kvm/kvm_main.c:1338
+ kvm_vm_release virt/kvm/kvm_main.c:1361
+
+Fix it by setting kvpmu->sdata to NULL after kfree() in
+kvm_riscv_vcpu_pmu_snapshot_set_shmem(), so that the subsequent
+kfree(NULL) in kvm_pmu_clear_snapshot_area() becomes a safe no-op.
+
+This bug was found by fuzzing the KVM RISC-V PMU interface.
+
+Fixes: c2f41ddbcdd756 ("RISC-V: KVM: Implement SBI PMU Snapshot feature")
+Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>
+Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260318092956.708246-1-xujiakai2025@iscas.ac.cn
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kvm/vcpu_pmu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index 1df45633e8120..ccb6572891136 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -288,7 +288,7 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
- 	int i;
- 	uint32_t keysel = adev->uvd.keyselect;
- 
--	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
-+	if (RREG32(mmUVD_FW_START)) {
- 		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
- 			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
- 		return 0;
+diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
+index d5a0a3a33f6b2..b3ce82cfd78f3 100644
+--- a/arch/riscv/kvm/vcpu_pmu.c
++++ b/arch/riscv/kvm/vcpu_pmu.c
+@@ -454,6 +454,7 @@ int kvm_riscv_vcpu_pmu_snapshot_set_shmem(struct kvm_vcpu *vcpu, unsigned long s
+ 	/* No need to check writable slot explicitly as kvm_vcpu_write_guest does it internally */
+ 	if (kvm_vcpu_write_guest(vcpu, saddr, kvpmu->sdata, snapshot_area_size)) {
+ 		kfree(kvpmu->sdata);
++		kvpmu->sdata = NULL;
+ 		sbiret = SBI_ERR_INVALID_ADDRESS;
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
