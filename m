@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830927;
-	b=eLR8ZFnpty5Jfy6xiV2sSNh6vKj18KVOsbXd47S0strz1YAtm81nelHMM+ZJOSa3So95
-	 xJ6p4iSxayQMXTdVseQ7EODxOf6NpF2iN7BzdwC/5kHyXPQV0ZxfjvVRQsEEkljI+XgRU
-	 Gw4BQzKTcWYJYu4mXrjafa9yWbuBAUheJmA/Me0/yvPYq4VDbjt6vJH/7GYp8H/G085yQ
-	 342OId7XcEeSXhnJHOo5NBjgflQtgD3SXRsjVBR4L/IQ+7Q3cqLDL7aFESxXBJPDsW8Ll
-	 qX8LvKp1liysZZgkzqL1XBtBSCnsYLrETz+QvApn2gFbQ0mOLafiIgvJw9lRKkMz+/Q==
+	t=1793830929;
+	b=iMQ99JM4ZcDxFNpz0ljeiUKySCeeB+mcXmDTUeh3OFeVOdJb09g9IYLXXZ/szEK/n2Sf
+	 LvycFCiQQwwChGOZNynLSHXl6KckK1n/J98wdaShyTDHiMBk+kknZ+DbIPpMB5d1s8DbG
+	 tIrIN09at3KaK/Oe++1UC95TfJtv4/gm6H2yd/INTKgcIvn25qPlqPeWa8aqaP1e1O+eA
+	 ACkfvXHkL55XnwhoXV5BQE2vh26bvyvQ537uxShJGfnfLb8ruNVCqA4x3tYqaZwV7m/iX
+	 c5g4KnkroMxIrtCFZx9pGm9WA3WPbpLzE4qGw+V6NT0P3RT1KjJu1dKbCCr3gDcqNjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830927;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830929;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nx8zxQigrCsKZsqVJB8tqbe7aV2YW9Gsj/g47LTue5E=;
-	b=2ELGHDSjM4wYXEKTtvTyErcEzBbQJcWhhwRNkLnSW1gtzZTmTof2YHr1IvEcS+3aEZ9F
-	 MsorEIq0dZioLeMJu1yHeWXbUycGRQmKr147Q9FWYUfDopQSs5T0hoKQX1JKG1PM2DxuI
-	 OJCDd+Q1NzjYs8+W82QpdQSre71+sxcneD6JQ1BtcFiyJFzreokavem47zjn9vlN+JnhZ
-	 3f5pSJpZ/zImQ9JFkgGHphT9UFlV1FjxApbEV1T3pBhAcN7hiIem9swRue18Gi9vg8rD8
-	 ulb4+6yVOqEQAGE4GSw/kETyHzNh4TqdfJZ/2n0WAQrsuevB8nIyHJCRXDVcvQOHOjg==
+	bh=ZEorYstGDMvtQuBBWATXuxwnVinsWILAMDUTuPQb2ag=;
+	b=INZfAJ8aQS13t1P4rm0SRqmuRU3Y+9bJ5NAzRQehLCJPdl3dKp277/bMo/CSG64kjXdD
+	 kWWE5CevS90j1WnpPbWut+wuq7OWurUb7Vh4NQQjDHugZcs2a7y1tMX/wpPo9UUtJvtFG
+	 3IoImOw2r2GV1gXbl4woVDevdbYqR8M20ogPAfZICOn4Cg1+aUuQh64fgK+GVpsZkKI6Q
+	 TqedwSpceM19WB+LVH6sYeqiXeaGhb0UMwqTxbehCWUCfa57h1Npt5UpV38KSzzVbNDdr
+	 tg8Uv0uNcsJ+ViSqEI6qFSHWNqvxCwet1DAmlpfxHZnhvM5fJe1eMNC/WwfOPmgWkHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RyZWjvsq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZNhEi6j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C257606A33B;
-	Wed,  4 Nov 2026 22:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08310606AB08;
+	Wed,  4 Nov 2026 22:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RyZWjvsq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119221F00A02;
-	Wed,  4 Nov 2026 22:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZNhEi6j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E8D1F0093A;
+	Wed,  4 Nov 2026 22:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830927;
-	bh=nx8zxQigrCsKZsqVJB8tqbe7aV2YW9Gsj/g47LTue5E=;
+	s=korg; t=1793830928;
+	bh=ZEorYstGDMvtQuBBWATXuxwnVinsWILAMDUTuPQb2ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RyZWjvsqKxP/wqBjqoapji9nIcJdI6zXe6AEGarPWjEvvrygqOhLymoFifA00nAxa
-	 xVO5pMGVEvpJADMi0yavN/BC0IpiH4R3uFhQpoO5vudHfHOsuuEEpb+xDsw8UCjHq8
-	 5o1+unmSHuMLXHH46f5X/9MrVXOcqV0O/KbhO9Rc=
+	b=AZNhEi6jAnYMlbYhbvXurovq4Ebx00K9ivxRhNBiXHEIFUQzr248dwKY/u+LSLf/9
+	 n8xWohFznQcCA3alp8RcyOTSEwfqEKh0foBadaQvaFpPjIol3UIftk4L+gUlgLJ9dj
+	 C+FWr4+Lw9JfnHtRhN8UFalXt8s3qZV/pLQMf6D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gael Blivet <gael.blivet@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0407/1005] ksmbd: reject SMB3.1.1 binding with mismatched cipher
-Date: Wed,  4 Nov 2026 16:02:20 -0500
-Message-ID: <20261104211055.477906721@linuxfoundation.org>
+Subject: [PATCH 6.18 0408/1005] ksmbd: fix off-by-one rejecting minimal COPYCHUNK query-limits request
+Date: Wed,  4 Nov 2026 16:02:21 -0500
+Message-ID: <20261104211055.504761581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,55 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit 7019a11f79dc408f2b47b1027240e7f198784c9a ]
+[ Upstream commit d68d4b3293034f549d55f407a23b4c0a6c90e50a ]
 
-SMB3.1.1 multichannel connections belonging to the same session must use
-the same negotiated encryption cipher.
+The FSCTL_COPYCHUNK/FSCTL_COPYCHUNK_WRITE input length check uses
+in_buf_len <= sizeof(struct copychunk_ioctl_req), which rejects a
+buffer that is exactly sizeof(struct copychunk_ioctl_req) bytes -- the
+minimal, valid request containing only the fixed header with
+ChunkCount=0 and no chunk entries, used by clients to query the
+server's copy limits before issuing a real copychunk.
 
-ksmbd validates the dialect and client GUID during session binding, but
-does not compare the cipher negotiated by the new connection with the
-cipher used by the existing session channels. This allows a channel
-negotiated with AES-128-CCM to bind to a session using AES-128-GCM.
+Since copychunk_ioctl_req ends in a flexible array member, the correct
+minimum is that the buffer covers the fixed header, so use
+offsetof(..., Chunks) with '<' instead of '<=' against sizeof(): same
+value, but the boundary case is now correctly accepted.
 
-Compare the new connection's cipher with an existing session channel and
-return STATUS_INVALID_PARAMETER when they differ.
-
-This fixes smb2.session.bind_negative_smb3encGtoCs.
-
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/smb/server/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index a5f9876182313..eec5cb16bfe53 100644
+index eec5cb16bfe53..b17296c7b64ee 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -1747,6 +1747,21 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 			goto out_err;
+@@ -8581,7 +8581,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			goto out;
  		}
  
-+		if (conn->dialect == SMB311_PROT_ID) {
-+			struct channel *chann;
-+			unsigned long index;
-+
-+			down_read(&sess->chann_lock);
-+			xa_for_each(&sess->ksmbd_chann_list, index, chann) {
-+				if (conn->cipher_type != chann->conn->cipher_type)
-+					rc = -EINVAL;
-+				break;
-+			}
-+			up_read(&sess->chann_lock);
-+			if (rc)
-+				goto out_err;
-+		}
-+
- 		if (!(req->hdr.Flags & SMB2_FLAGS_SIGNED)) {
- 			rc = -EINVAL;
- 			goto out_err;
+-		if (in_buf_len <= sizeof(struct copychunk_ioctl_req)) {
++		if (in_buf_len < offsetof(struct copychunk_ioctl_req, Chunks)) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
 -- 
 2.53.0
 
