@@ -1,64 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831192;
-	b=PN79hazpA+rh6fSPWV6q+gsbz72qIdEiisLoUAlwslSsyqex+Bx3PABD/9n4LeRmPE/3
-	 RIiNWRhqYq+Fj57uQ1bQ/wI4j4GaeBdAjfJCpQo23VFWC0MQUveHw4uQeQg8vEz06BYy7
-	 l8XTkLv3Nou/Hv/VAxU32PUc+zU9DZisz2D2FUTA3W7bOgmi0oranuPpHwssSxp3VkgkF
-	 yFSRqOaO9aE55fnuXrDF1F0X6GV8Cv6N37N8siJtPxSt7nlWzcnchUTUpvHajjjjkIqlX
-	 kNsOs7ODFSg6N1+je5n8s5knkU3rtWa6wm/0bpDcNeWHMbsWvtiWTl2LP2N+Xsewqgg==
+	t=1793831193;
+	b=ce1xqlmW+fI3A50k1g8zyJ8gw22oYsrARLxuXPMRyir4GX74lMah+/jnlFVG1qW3DsUv
+	 d2xrDZwAucYa7GvnjENFN8/PpGMQJ5Fnc9dcRVeRmL/Jg6bmodMmTsLRYofNibTBxaTbk
+	 s14i3EB/POTuTYSI41nHZkkQQzt2zelsVJ5JTr92lLoktwYqPI6UA2HZcw2O3k1aaQVif
+	 eJfTGR+7xuUIfu0qy9MBfY53yqguBRANMC2RlnvDa34yL84ishyZPxKuZ5AH4LDNq6ILV
+	 w1MBrGnkL+hXM4wMd1AISqvC3mVRgiXI/4akPxSaZRupqiEHmVTKYOCwv/nqbQRXekA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jeqOZi5jxT5e+IY0ajYeOA7eYIbLQuP8mLnDPsC0bmw=;
-	b=Bx0V6T2QvhsbczlvV7WvME5mmvXDMlr0TUPe/MPWG6rV/0bOdMnKZqejKT5CholnUF/I
-	 Z0czki/6L1yQG80lnoBezOptfEuK7gNEOsLqmNjq9HCZDp2DqQPiDHl6CEwwgbMyKbul3
-	 8pHW6df0Ad53oswlUWz5iWh7yxYioOZdifSU3erdagB9MgDij/+sbCiBVnTFDviCm9LLo
-	 up2kgIJZrGuLmr+r9AynIHGF5uRgO53XvJmcjP8usTGrj48czEhtTl7IhDx+rNp3ST6+N
-	 Wyt8N3eXNJkrmaeHutMhD4jnEZpXuIN0egfqxq3EFlQtJU4NCH9FDGjKO5fdhBnmb4Q==
+	bh=jmaX1XlL9rHzoX/OKUDK3OVAcUOlpTdRzfV/shJCWJE=;
+	b=haS9vdiwflSYd1weTJg6kvjh+G06VcZB4W9R01nVQfupXwgpcH9xqM4yc9juuF00zUI8
+	 oJCL8D8oR1esNUU0ozVCYVkiYGfaxffTEfDClM9oCwDau8xqljmljbs3C29LmUIPeLUy1
+	 abpdqayrW0SLYe6JuHDdieJcp8aNSYTFziUrZjtVbO370DTC1ZxxQmrZFzToREi9u/Grw
+	 640n1GMPENUvFM0uUDMHGA1noqGKM2Ti0E5B5JqgKs1MeJmt4GvRp2DaRPTHIFQbibHPY
+	 NvQxYBVc3fJ7bshZqbxHizYAQvX+/oghUZ+vlPuRHK/UcfsG3Dj+wm4guv5qF6WMfUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LCAf6bt/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imrerlID;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2997606A84F;
-	Wed,  4 Nov 2026 22:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5BF606A85A;
+	Wed,  4 Nov 2026 22:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCAf6bt/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A73E1F000C1;
-	Wed,  4 Nov 2026 22:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imrerlID
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75EE1F0093A;
+	Wed,  4 Nov 2026 22:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831191;
-	bh=jeqOZi5jxT5e+IY0ajYeOA7eYIbLQuP8mLnDPsC0bmw=;
+	s=korg; t=1793831193;
+	bh=jmaX1XlL9rHzoX/OKUDK3OVAcUOlpTdRzfV/shJCWJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LCAf6bt/lD2pPN3KBhQ5ofw7q55olWVkN2kt6IQ+8bRJvHkGhQ0q8tdPCgk91HSsJ
-	 MkVSs+jjz90HcZbKO94W55meACnL/xEQPIyO7w5PIkirEeemevnIlpGczaDjRN35hV
-	 JGxFi7n3S2zW2tO+nCyVGjC5HvDiAkaG6tFMP0S0=
+	b=imrerlIDbQtXJtXnEhVhKhgksusaLexJS9kLANUmL4czBm0lfurehsppwaKDgrBGx
+	 kszjdUzcY8TDcwh+B786KfARKU5R1HUxsbFdWWHhd19FoPD7oIS5mftUXW+3mgDSKS
+	 ArxtvD7uWrn/j3FlHSjAVZN5pQD2P48k52R7fb9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan Jackman <jackmanb@google.com>,
-	sashiko-bot@kernel.org,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <yi1.lai@intel.com>,
+	Gary Guo <gary@garyguo.net>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0547/1005] mm/page_alloc: dont spin_trylock() when disallowed in free_one_page()
-Date: Wed,  4 Nov 2026 16:04:40 -0500
-Message-ID: <20261104211059.217913905@linuxfoundation.org>
+Subject: [PATCH 6.18 0556/1005] rust: cfi: disable function merging if CFI is enabled
+Date: Wed,  4 Nov 2026 16:04:49 -0500
+Message-ID: <20261104211059.468090514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -80,59 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brendan Jackman <jackmanb@google.com>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit 52dcc33881e55189650404f833c0e6b7913d6c16 ]
+[ Upstream commit 29b03d1de967a177176d12811d970cac7882afcf ]
 
-__free_frozen_pages() checks can_spin_trylock() before entering into the
-main free_frozen_page_commit()/free_one_page() path, but before this it
-can get to free_one_page() via the !pcp_allowed_order() and
-MIGRATE_ISOLATE paths.
+In Rust doc tests, there is a dummy `__module_firmware_test_init` function
+generated by the example in `module_firmware!`'s documentation, which
+just returns zero. Many other documentation examples generate functions
+that produce zero. LKP test robot reports [1] a `Flags::zeroed` instance;
+my local reproduction has a `Bounded::new::<0>`.
 
-The !pcp_allowed_order() path depends on usage by callers so might not be
-possible in practice.  The MIGRATE_ISOLATE path probably means kernel
-crashes and privilege escalation if anyone ever did memory hotplug and BPF
-tracing on a PREEMPT_RT or !SMP build.
+LLVM's MergeFunctionsPass incorrectly merges functions with different
+KCFI types, causing `__module_firmware_test_init` to be merged into
+one of the zero-returning functions. As module init is invoked via an
+indirect function call, KCFI is checked and this produces a KCFI failure.
 
-Link: https://lore.kernel.org/20260715-alloc-nolock-fixes-v1-2-fadc49952dda@google.com
-Signed-off-by: Brendan Jackman <jackmanb@google.com>
-Fixes: 8c57b687e833 ("mm, bpf: Introduce free_pages_nolock()")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260710-spin-trylock-followup-v1-0-affb5fe5ed00%40google.com?part=2
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ sashal: Replaced the missing can_spin_trylock() helper call in free_one_page() with its equivalent inline condition, matching the existing open-coded checks in this tree. ]
+I've reported this bug to upstream LLVM [2]; in the meantime, disable
+function merging if CFI is enabled. No separate treatment is needed for
+CONFIG_RUST_INLINE_HELPERS, as Clang does not enable function merging
+by default.
+
+[ LLVM already has a pending PR:
+
+    https://github.com/llvm/llvm-project/pull/217665
+
+  which solves the issue. In addition, I asked upstream Rust if the
+  unstable `-Zmerge-functions=disabled` flag will remain around:
+
+    https://rust-lang.zulipchat.com/#narrow/channel/425075-rust-for-linux/topic/.60-Zmerge-functions.3Ddisabled.60/
+
+  and it does indeed look like that will be the case. - Miguel ]
+
+Reported-by: kernel test robot <yi1.lai@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202608201017.100a4511-lkp@intel.com [1]
+Link: https://github.com/llvm/llvm-project/issues/217629 [2]
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Cc: stable@vger.kernel.org
+Fixes: ca627e636551 ("rust: cfi: add support for CFI_CLANG with Rust")
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://patch.msgid.link/20260820135733.37121-1-gary@kernel.org
+[ Fixed typos as discussed. Reworded slightly for other typos. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index ec5ca89cbc000..ff863a87f2b85 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1585,7 +1585,9 @@ static void free_one_page(struct zone *zone, struct page *page,
- 	unsigned long flags;
- 
- 	if (unlikely(fpi_flags & FPI_TRYLOCK)) {
--		if (!spin_trylock_irqsave(&zone->lock, flags)) {
-+		if ((IS_ENABLED(CONFIG_PREEMPT_RT) && (in_nmi() || in_hardirq())) ||
-+		    (!IS_ENABLED(CONFIG_SMP) && in_nmi()) ||
-+		    !spin_trylock_irqsave(&zone->lock, flags)) {
- 			add_page_to_zone_llist(zone, page, order);
- 			return;
- 		}
+diff --git a/Makefile b/Makefile
+index 7c698d401dd54..08be8b2cd2447 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1037,7 +1037,8 @@ endif
+ ifdef CONFIG_RUST
+ 	# Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST selects
+ 	# CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
+-	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers
++	# Disable function merging as LLVM incorrectly merges functions with different KCFI types.
++	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers -Zmerge-functions=disabled
+ 	KBUILD_RUSTFLAGS += $(RUSTC_FLAGS_CFI)
+ 	export RUSTC_FLAGS_CFI
+ endif
 -- 
 2.53.0
 
