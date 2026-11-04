@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829605;
-	b=xuh+j88Cp9h7E2E2MwXUR/IzitSbbIF14vBzBOwOduNQSikqqff246qYp3EJ5f9uJSKY
-	 uubB8aOCjThHzM5QKmbiWGhH90UsZPaBcdJ3RSIrPVqTR0ddesR7NnmjFqH452PVF1cD2
-	 ln8ECZKCVP3vg8pBEDUiYMSX4YSjHJfqt1jDfJoDdj9GNuCDQFWyY5S76gVfWYvYz7AEC
-	 ZToK6ykXKkjRXdMRBY01pUoxEUIyqqEuM1OwmHE5MPZf3kSW9h6kdFM/d4sajApY+pI/z
-	 QWkWQAiEPB/fSCvbRzSPrOULISjha4hv7PmfkrjnoYKLiiCXHyapCrJzhRpBMOQ6M0w==
+	t=1793829606;
+	b=TxD0o1EhYBvil+0zVJVarhSpTAzmXuuzwBCl0anPZuQg8oRiQwouYruFLpObCsA1uMGv
+	 RdiFJfxc9eyoE+HqEU49YRF2Kare9eVcZzr+pfZIGTwqWpR1Ajy/TBBww3hnQruB++J+F
+	 6V4hJ8zCy9BJ6GD0ONmSBiYFCWm6NcK/NuW15rWYmd9w+N63oA3jOznxtnJUo7XMDT5nr
+	 TvYPE0Zppj5jIwYqqld2GBz73esPO37lkqoQnABjImGSzWKH9nGDXYSgtuBWTbucua5PF
+	 oOj29Xs8AMdPdS8kTB7nEoCrSixBRCn57Z4WlTjj5e4RVzPkV5+ilRMJMrCmSk2a/2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XRM3xSj9ga7iU7RgFv/KJlpwLDJL9+NluNPnOoZXx8s=;
-	b=f8Cn469tPkEo27lLPeJgHkKEwzyXy5ztlQZT+OF4SxCpB4kixhIovDIlWtIloskSxQQr
-	 5gcYgQVdgZFDnVQ4v0ZtNczmik8OuVyCU6HADnBRsPqo7fOUeqxB4ERIeMoDzWUVpKiqM
-	 6X+MGGdQIPxG9idKU6kYOJ8OKU+E6bYCLCkrpvCVq5b5HpmqTcectkS3l9O1BZRyyuhHx
-	 lWqKPULlgTFk8a5m3QsYLvNkoBcKjMTsbN5bctGIzVYf+/tNVkcOdKuodYCU1ausbgTNf
-	 B8q607GBxq7gAFVNi4aorOBJsc/wyNE5wuGI79hNz1mS/d6zMhCR66P1D6AfRAhvBmg==
+	bh=98LzNV5fhHHaY7JM8J6Ad2kTAM+ck/CN5+PkC3IHaoQ=;
+	b=Dj9g63z8Y4uvD6Zjw0ecP3EEtHT3Wq8ocFIjAOHs6kLatqcieDQEmtqJoQfk8JeWRFJw
+	 nYkPtGKe4Og4K19c1c6Bg4R7XAFkUfi68FEZAUX3zemvmUI2Ebwcuddh7Hf6NN6kWBcAd
+	 +CmqTv1G+pE8Uehy7YQlpkuCLzD6wJ+JbwYelgvR0NDzf2GdJ9Fu7tovqdzOiBSzgOyEM
+	 suSHK+syBsrkLWuUCjT1f4WtzULdU4QWR3XyBRIr5mzUsF8bn9MyFooC/VEZLkOrV/Xai
+	 TIBoAFLeiKtCHLQkaL66Qa6K+4OGa4wsW0hppppvBSeCq7MIZXDVdbmPnmnk1v3WiWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+mdRP9Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO2nv2BU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7446075DD2;
-	Wed,  4 Nov 2026 22:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D7F6075DD3;
+	Wed,  4 Nov 2026 22:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+mdRP9Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF041F00919;
-	Wed,  4 Nov 2026 22:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO2nv2BU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CAF1F00A02;
+	Wed,  4 Nov 2026 22:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829604;
-	bh=XRM3xSj9ga7iU7RgFv/KJlpwLDJL9+NluNPnOoZXx8s=;
+	s=korg; t=1793829605;
+	bh=98LzNV5fhHHaY7JM8J6Ad2kTAM+ck/CN5+PkC3IHaoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+mdRP9YOQk7GlHyZg+B8H2KTEygsW7cdr4bYcv0/FZkSrD0z8v5do6KmiijD9KgH
-	 nS0Fvu3klPoznImlMK51WlUd1nQodwWlcw8pL1usxeACsA4od2PbDpwqX9FV+BTYrE
-	 9Z523NJHP9NhAITO8Mo34Za8tp2/85/wSShkrHCQ=
+	b=bO2nv2BU+muewMzMgxZ9hU3ZbP6omVPqNjul+GMxtzdm+RcPw7LTcLS0JOVGHs5F8
+	 GZ2XnKiO6VNYkQvmAcWifKK8Am/UZC/oU6aVr39ErlulAbOb28Kh33u4KRtjal60vN
+	 xKzB32hi1ZA4xwbfhLoJBiuo6JrWSnRKBpVV6IiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0230/1005] net: libwx: disable TX VLAN offload for packets with >2 VLAN tags
-Date: Wed,  4 Nov 2026 15:59:23 -0500
-Message-ID: <20261104211050.284051873@linuxfoundation.org>
+Subject: [PATCH 6.18 0231/1005] wifi: ath11k: validate regulatory capability phy_id
+Date: Wed,  4 Nov 2026 15:59:24 -0500
+Message-ID: <20261104211050.315430681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,65 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f5cfb576ce39ba5647024c6d6eeb5b7a822fab6e ]
+[ Upstream commit f8729a40ebcc94d164be8f154483a21669f3ab52 ]
 
-The current hardware does not support TX VLAN offload for packets with
-three or more VLAN tags. When such packets are transmitted with hardware
-VLAN offload enabled, the hardware may malfunction or produce corrupted
-frames.
+ath11k_wmi_tlv_ext_hal_reg_caps() copies firmware regulatory
+capability records into soc->hal_reg_cap[] using reg_cap.phy_id as
+the destination index.  The loop count is bounded by num_phy, but the
+phy_id embedded in each record is not checked against the fixed
+MAX_RADIOS-sized destination array.
 
-Add a check in wx_features_check() to parse the VLAN depth of the
-skb. If more than two VLAN tags are detected (including both the
-hardware tag and in-band tags), strip NETIF_F_HW_VLAN_CTAG_TX and
-NETIF_F_HW_VLAN_STAG_TX from the feature set. This forces the
-kernel networking stack to handle VLAN insertion in software for
-these specific packets, ensuring correct transmission.
+Reject firmware records whose phy_id does not fit soc->hal_reg_cap[]
+before copying the parsed capability.
 
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/069DF89AA8029189+20260713060441.276612-1-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260704011040.26233-1-pengpeng@iscas.ac.cn
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c | 24 +++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/net/wireless/ath/ath11k/wmi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index 4a6851612368d..9be339965a683 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -3193,6 +3193,30 @@ netdev_features_t wx_features_check(struct sk_buff *skb,
- 				    netdev_features_t features)
- {
- 	struct wx *wx = netdev_priv(netdev);
-+	__be16 type = skb->protocol;
-+	u16 vlan_depth = ETH_HLEN;
-+	u32 vlan_num = 0;
-+
-+	if (skb_vlan_tag_present(skb))
-+		vlan_num++;
-+
-+	while (eth_type_vlan(type)) {
-+		struct vlan_hdr vhdr, *vh;
-+
-+		vh = skb_header_pointer(skb, vlan_depth, sizeof(vhdr), &vhdr);
-+		if (unlikely(!vh))
-+			break;
-+
-+		type = vh->h_vlan_encapsulated_proto;
-+		vlan_depth += VLAN_HLEN;
-+		vlan_num++;
-+
-+		if (vlan_num > 2) {
-+			features &= ~(NETIF_F_HW_VLAN_CTAG_TX |
-+				      NETIF_F_HW_VLAN_STAG_TX);
-+			break;
-+		}
-+	}
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 3305ec66ddbf2..c6b9e84b169c9 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -4816,6 +4816,12 @@ static int ath11k_wmi_tlv_ext_hal_reg_caps(struct ath11k_base *soc,
+ 			return ret;
+ 		}
  
- 	if (!skb->encapsulation)
- 		return features;
++		if (reg_cap.phy_id >= ARRAY_SIZE(soc->hal_reg_cap)) {
++			ath11k_warn(soc, "invalid reg cap phy_id %u\n",
++				    reg_cap.phy_id);
++			return -EINVAL;
++		}
++
+ 		memcpy(&soc->hal_reg_cap[reg_cap.phy_id],
+ 		       &reg_cap, sizeof(reg_cap));
+ 	}
 -- 
 2.53.0
 
