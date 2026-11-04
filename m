@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831765;
-	b=MqpGXSFc4DwrkhcSAT3O3VI71fGQND9+hgs2eOz6OCXSXQh1pN73IVtNwt32hlKvrV5w
-	 hNRR+Hfx/BjVmQy9Azxn9PMSt3loFOOLk5bmltNRrs8kSLqKUwo6/woHHgxIko4sjRjb5
-	 uOJcGtbmB291xJjUu6gNXbVetEmswYIhgMyB1mN1P8C5+asx5DPsJvgehsmXTbswLtKR4
-	 je7PAG7eGlHL7YQrq/MvWM1WsBqyGoc24w6usdjuht441QGp+RrVm8RPtakC6sW/a2nHw
-	 YrHJ8fy6wa1rcFg/V+r9h5IHoyf7WZ/2BwLGsDK97nW7CwNcR2csHdQnXHJoVNxersg==
+	t=1793831766;
+	b=hwMfguj6eGONc3OpGqylZovHqSBY1CDSbbTC2X3+Z5EVt0UphaxiU/pOTX+f+a92ZTnN
+	 xBLiRjOruGX5Bb098KJ7D/pruL+hTzy3pC78YLXTf4KhSswUcicSTNLqGKN6ndPbrN/nV
+	 jVa+kgtzNsbYrLodLUSBq2lAzoKyd/CidXtTf7J5FWR7rwDgXZv0QYVkCnDh/V5JGPrI3
+	 kh6L3248IVefSY6IJTbHySVNDhWTvYQ/LKNpochPg1OlPduM8jutE+uOuPI9GOpIfKst3
+	 VFCSITY+Va6Ph2AcoI7sKbkCHo0m3er2hScfSBSr+eXzaK22Rs5aUTttisJAZor9SJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831765;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=wPtpCL2Xh/QU9ZXU1whlgE4BdSvspCibiEvyhZalo+M=;
-	b=Mw1MxxBj/MH6d49d5HGQBY1Bq/1iN7MTNfbHZL6OMtu6cAfBWV+HE7mTRqBv7UMcTmfC
-	 wderEF/cTUYcKJQxPvYfIdORNieC2988lOE8BVTYzueIw6u6bINcijUOySDmyP0xp9iQm
-	 Y3HKBO79LalBpkK811Hzx9gElBULNivfUiyb/xpJHlTxIiBaV5Mri7KfIoMlHziea1lJt
-	 DKdv0WDC/hzOaEUEFf+blZwSJHtgyZfq4n9T3brec43/gHfR04HhPHeL6ayYGy/2ZSjlR
-	 ZbXlRCuTrLJbUID2Ob1JmwShtI9qy8MM+68NYjorPNpgpxpOPgf7HZrrf03TQusqDwA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Y8c95Sl3d3yvS/R1a4NnowkzbaLt0jbfZT6lHkPqmv4=;
+	b=FiFhND481/GipTVmnki4wx19SBApGyE8z0OJIVs4/UEvtG6wJLxkSD1NEIewyaMLI0ck
+	 npJDIpj4J3kYtx+cjuQcd/1EPwk7I7nVkla9t4SaXka8156dv66m8YMdOsNUYlq1lq2ow
+	 WASfqXKOXqn3B+/uLqfAePNW9882gRMavo+MuoVwILE2Mas4eqXW2FJH4b7ORPlRMFeUS
+	 4h0O0HQd7HedUmVuXK29v7NshHW2JAoBqzc7lblTqH367nUbiBM7RdfdlZ78jMpck6/LW
+	 jfv+Qgn/ZQ8KdG7Tj3rb8DtUFmGMqzMpzSbMHsxwDnEMSVuJqk7NEMh4u++h+PIKunw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dUmjrTWX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnVk2vHK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA758606A31B;
-	Wed,  4 Nov 2026 22:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03717606A31B;
+	Wed,  4 Nov 2026 22:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dUmjrTWX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062B41F0093A;
-	Wed,  4 Nov 2026 22:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnVk2vHK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A191F000C1;
+	Wed,  4 Nov 2026 22:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831764;
-	bh=wPtpCL2Xh/QU9ZXU1whlgE4BdSvspCibiEvyhZalo+M=;
+	s=korg; t=1793831765;
+	bh=Y8c95Sl3d3yvS/R1a4NnowkzbaLt0jbfZT6lHkPqmv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dUmjrTWXbDLckTicgR8T4xx4V3OWCo2fr4xmg/npapfYPnpycfnnQ6uEVcUwWFYy8
-	 7RjgUQn6cbcyFJqy9Bk+djRL7c/0Xwl+RP/LM5Ycj7ADC1JpNEAW/klOOudxZ6rr10
-	 m6wAENbjbLDdDf9tmJeav/wX9wRsFUl9gKem/v/k=
+	b=hnVk2vHK2IhAd28/ycWc7G8QrmB2n9WVeoQvP3IV19JMSJ8fgKMUZ+VxzF11mZlAa
+	 UFfIC/qt8iS9gZLtvkwuZlHOqBg1Ag6OyUCd6Kt9J7VIJ377iliGdt5d3IVn2ba+N4
+	 h2bK0lrRfvlGHYYg2mi8rsdBtx4EjYeO6MxDUwWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	"Mayank Jangid (OpenSec Intelligence)" <mayank.jangid.moon@gmail.com>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0898/1005] NFSD: Map flex file layout IDs through the requests user namespace
-Date: Wed,  4 Nov 2026 16:10:31 -0500
-Message-ID: <20261104211108.358022333@linuxfoundation.org>
+Subject: [PATCH 6.18 0899/1005] nfsd: preflight SEQUENCE replies before accepting a slot
+Date: Wed,  4 Nov 2026 16:10:32 -0500
+Message-ID: <20261104211108.382642355@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,124 +62,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit f913d5d2130a584d1a027ffe3dfd88b6be2e0540 upstream.
+commit 35ff1a7a7e3835c3e974bc5c45d335897564ceae upstream.
 
-nfsd4_ff_proc_layoutget() and nfsd4_ff_encode_layoutget() translate
-the file's owner and group with init_user_ns, but every other identity
-nfsd places on the wire goes through nfsd_user_namespace(). When the
-transport carries a credential from a non-initial user namespace, the
-flex file layout reports host-global IDs. The client copies those IDs
-into the AUTH_SYS credential it presents to the data server, and
-svcauth_unix_accept() resolves that credential in the transport's
-namespace, so data server I/O runs under an identity unrelated to the
-file's owner.
+nfsd4_sequence() narrows the reply buffer to the session's cached
+reply limit before it accepts the slot seqid. A client may negotiate
+ca_maxresponsesize_cached down to NFSD_MIN_HDR_SEQ_SZ, and
+nfsd4_alloc_slot() then gives every slot a zero-length sl_data[]. A
+COMPOUND tag can fill that narrowed buffer until it holds the
+SEQUENCE opcode but not the status word that follows.
+nfsd4_encode_operation() returns without running
+nfsd4_encode_sequence(), so cstate.data_offset stays zero. It leaves
+op->status at nfs_ok as well, so the COMPOUND is treated as having
+succeeded.
 
-Switching to the request's namespace introduces a second hazard.
-from_kuid() returns (uid_t)-1 when the target namespace has no
-mapping for the owner, and the IOMODE_READ arm adds one to that
-result to derive an identity for which the data server denies
-writes. The addition would wrap to zero, handing the client uid 0
-instead of an identity distinct from the owner.
+nfsd4_store_cache_entry() declines to cache a lone SEQUENCE that
+returned an error. That test reads the status the operation
+reported, so it passes here. The copy starts at offset zero and
+takes the whole reply, RPC and COMPOUND headers included, into the
+zero-length sl_data[]. The COMPOUND tag is copied along with it, so
+the client picks most of the bytes written past the end of the slot:
 
-Translate both IDs in nfsd4_ff_proc_layoutget(), which has the
-svc_rqst, and carry the wire values in struct pnfs_ff_layout.
-from_kuid_munged() substitutes overflowuid for an unmapped owner and
-thus never returns (uid_t)-1, so the increment cannot wrap to zero.
+  BUG: KASAN: slab-out-of-bounds in read_bytes_from_xdr_buf+0x1bc/0x390
+  Write of size 80 at addr ffff888003a549cd by task kunit_try_catch/24
+   __asan_memcpy+0x38/0x60
+   read_bytes_from_xdr_buf+0x1bc/0x390
+   nfsd4_sequence_done+0x5b0/0x810
+   nfs4svc_encode_compoundres+0x1bf/0x240
 
-Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
+Check that the fixed-size SEQUENCE result, plus room for a following
+operation's error status, fits the negotiated limit before narrowing
+the buffer and consuming the slot seqid. The slot and its reply
+cache are left unchanged, as RFC 8881 Section 2.10.6.1.2 requires of
+an error returned from SEQUENCE.
+
+Fixes: 47ee52986472 ("nfsd4: adjust buflen to session channel limit")
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260720141442.783935-1-cel@kernel.org?part=3
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260720163724.810227-1-cel@kernel.org
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Tested-by: Mayank Jangid (OpenSec Intelligence) <mayank.jangid.moon@gmail.com>
+Link: https://patch.msgid.link/20260817-jean-v1-1-9e356596ab85@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/flexfilelayout.c    |   20 ++++++++++++--------
- fs/nfsd/flexfilelayoutxdr.c |    4 ++--
- fs/nfsd/flexfilelayoutxdr.h |    5 +++--
- 3 files changed, 17 insertions(+), 12 deletions(-)
+ fs/nfsd/nfs4state.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/flexfilelayout.c
-+++ b/fs/nfsd/flexfilelayout.c
-@@ -14,6 +14,7 @@
- #include <linux/sunrpc/addr.h>
- 
- #include "flexfilelayoutxdr.h"
-+#include "auth.h"
- #include "pnfs.h"
- #include "vfs.h"
- 
-@@ -23,10 +24,10 @@ static __be32
- nfsd4_ff_proc_layoutget(struct svc_rqst *rqstp, struct inode *inode,
- 		const struct svc_fh *fhp, struct nfsd4_layoutget *args)
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4565,6 +4565,7 @@ __be32
+ nfsd4_sequence(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		union nfsd4_op_u *u)
  {
-+	struct user_namespace *userns = nfsd_user_namespace(rqstp);
- 	struct nfsd4_layout_seg *seg = &args->lg_seg;
- 	u32 device_generation = 0;
- 	int error;
--	uid_t u;
++	struct nfsd4_compoundargs *args = rqstp->rq_argp;
+ 	struct nfsd4_sequence *seq = &u->sequence;
+ 	struct nfsd4_compoundres *resp = rqstp->rq_resp;
+ 	struct xdr_stream *xdr = resp->xdr;
+@@ -4574,6 +4575,7 @@ nfsd4_sequence(struct svc_rqst *rqstp, s
+ 	struct nfsd4_conn *conn;
+ 	__be32 status;
+ 	int buflen;
++	u32 maxlen, respsize;
+ 	struct net *net = SVC_NET(rqstp);
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
- 	struct pnfs_ff_layout *fl;
- 
-@@ -49,13 +50,16 @@ nfsd4_ff_proc_layoutget(struct svc_rqst
- 	fl->flags = FF_FLAGS_NO_LAYOUTCOMMIT | FF_FLAGS_NO_IO_THRU_MDS |
- 		    FF_FLAGS_NO_READ_IO;
- 
--	/* Do not allow a IOMODE_READ segment to have write pemissions */
--	if (seg->iomode == IOMODE_READ) {
--		u = from_kuid(&init_user_ns, inode->i_uid) + 1;
--		fl->uid = make_kuid(&init_user_ns, u);
--	} else
--		fl->uid = inode->i_uid;
--	fl->gid = inode->i_gid;
-+	fl->uid = from_kuid_munged(userns, inode->i_uid);
-+	fl->gid = from_kgid_munged(userns, inode->i_gid);
+@@ -4651,7 +4653,22 @@ nfsd4_sequence(struct svc_rqst *rqstp, s
+ 			session->se_fchannel.maxresp_sz;
+ 	status = (seq->cachethis) ? nfserr_rep_too_big_to_cache :
+ 				    nfserr_rep_too_big;
+-	if (xdr_restrict_buflen(xdr, buflen - rqstp->rq_auth_slack))
++	if (buflen < rqstp->rq_auth_slack)
++		goto out_put_session;
++	maxlen = buflen - rqstp->rq_auth_slack;
 +
 +	/*
-+	 * Do not allow an IOMODE_READ segment to have write permissions.
-+	 * The group is left intact so group-readable files stay readable;
-+	 * nfsd_setuser() squashes an unmapped uid to the export's anon ID.
++	 * A SEQUENCE result too large for maxlen never reaches
++	 * nfsd4_encode_sequence(), so cstate.data_offset stays zero and
++	 * the reply cache overruns the slot.
 +	 */
-+	if (seg->iomode == IOMODE_READ)
-+		fl->uid++;
++	respsize = nfsd4_max_reply(rqstp, &args->ops[0]);
++	if (!nfsd4_last_compound_op(rqstp))
++		respsize += COMPOUND_ERR_SLACK_SPACE;
++	if (xdr->buf->len + respsize > maxlen)
++		goto out_put_session;
++
++	if (xdr_restrict_buflen(xdr, maxlen))
+ 		goto out_put_session;
+ 	svc_reserve_auth(rqstp, buflen);
  
- 	error = nfsd4_set_deviceid(&fl->deviceid, fhp, device_generation);
- 	if (error)
---- a/fs/nfsd/flexfilelayoutxdr.c
-+++ b/fs/nfsd/flexfilelayoutxdr.c
-@@ -32,8 +32,8 @@ nfsd4_ff_encode_layoutget(struct xdr_str
- 
- 	fh_len = 4 + xdr_align_size(fl->fh.size);
- 
--	uid.len = sprintf(uid.buf, "%u", from_kuid(&init_user_ns, fl->uid));
--	gid.len = sprintf(gid.buf, "%u", from_kgid(&init_user_ns, fl->gid));
-+	uid.len = sprintf(uid.buf, "%u", fl->uid);
-+	gid.len = sprintf(gid.buf, "%u", fl->gid);
- 
- 	/* data server entry: deviceid + efficiency + stateid + fh list +
- 	 * user + group + flags + stats_collect_hint
---- a/fs/nfsd/flexfilelayoutxdr.h
-+++ b/fs/nfsd/flexfilelayoutxdr.h
-@@ -35,8 +35,9 @@ struct pnfs_ff_device_addr {
- struct pnfs_ff_layout {
- 	u32				flags;
- 	u32				stats_collect_hint;
--	kuid_t				uid;
--	kgid_t				gid;
-+	/* Values to encode; nfsd4_ff_proc_layoutget() has mapped these */
-+	u32				uid;
-+	u32				gid;
- 	struct nfsd4_deviceid		deviceid;
- 	stateid_t			stateid;
- 	struct nfs_fh			fh;
 
 
