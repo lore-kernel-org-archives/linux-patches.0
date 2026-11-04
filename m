@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826770;
-	b=EnWdf60mKbqnyOJ8zgfORY24i6rREdrC8RNzY3NzSsiye3csPapRNlcNznrYtKRKBjaY
-	 sZJ8pe8RMphlbVjhNkLnekqNHhmg0vbT9DoVz8/2SIRlIZbrq0U36DaMM/q8fkLBpfS9T
-	 RAKpBL2DT8a+0kSUYgnoFYHE6dSLiKqDZcRLCm5p1JoiwcXNw1HYEbRIv4wOYcGnIEjcZ
-	 cA7vpMBUkhFVdN41LIO0sx/RuDCdPA7afPTHsSds1pb9Sj/Dd08Oik1hhPpfr0zjLW0kl
-	 p4HrmcSlJe6D7XKmmKKTS0YpGL49zksxOqNXZMlVsjBSQ5PbUBuMBtEbO+2IEXHu26w==
+	t=1793826772;
+	b=moUutNx9rK4F2EM38skk567RF5zMLqTc4QxgNJa3bZ10piAafixY/jec6NWjzNS34Oou
+	 Rk/bgxF0KxvfIC/DckcZ681eLaNF/xyrgKEIb/ZlRp7df82+WHsZ2+Mnvn/DwEoF9cPDE
+	 S7VQN/tx/1MnPMh7uyqwVnHWCAbdaot1v3k6XxcD6JVIyyWiFIeUOZaJiwNhA/0Xk3WnA
+	 kUHbNSphxhTvdD+zqF5BAWuubzrroJ+IqcyY7YxKH8ssjxI6ArSCCamtDWmuRy3eFJfvh
+	 bc4ib1yoticeSGA9tbPdAOMWIT5KEgzYN531iNAowaAl6iYF4uIQDLT4ebjQBDn34kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7Jsgov8faG3YwSLxiHg4DXyg9LDtPy8S8vfu/xWne4I=;
-	b=IkMlKiEzDRYw6W82r0+yWni0X0smRNInwyNHm4eELmDfYLIrhJbob2rFfD/WMB3zJ7rH
-	 a7WQa/f2rBQm/iFHY9Ike5l0ghJ4Fvyg6dztoWBakpabYOF6E95ieDgC8PABaM13iKHq4
-	 7YRxpUQceaCFq3p6NDzK7IfLgqtrEAkmNcE4aADoSR20evb0BQ7Zw7Z4m9J2ozGxuWyxM
-	 TX6NakL7ixGq4eLojjUFniguDTYa1BLwld0V93XYrRqHjmFFr90JuB9BOtGQHEjXIJ3xA
-	 ivQRql1+6isuE5yD621iZKBZUSRJUMagOBy6+rkOysu5UNo4fv8tjw04rAXrmtLylzw==
+	bh=hpGAMfOtdNKc2f/na8gs+SMnYlHKpbFdMnv0ooOg5qU=;
+	b=ml38Tk+kmsQm94jyCKb7tbC7szprqKHB/lPzgHBRENDjBkXwdIcEyD71X6vOYpEkShCy
+	 2k8Or9FGoCGg+L6GAnujZQ/PeNveLlbVAf1UzOYwz2ZkFZq8ql1stUDXzYfBvi6lpUNB2
+	 PZQz5SI/3Ly4ygUMX45VD/lpGfSVFEpgvMI/Uw/JYatJ3eOWztumRFrZlYE7f+iwiC2Pf
+	 /x1IKp4cDOR4evNNoiasPYEGgRGw9qMGR3qHoa7EZg+xmWzZtCA65FLJ9oY772o8S87fH
+	 krDdsCiI/IKQrOll0zoRTdi+6wLfcKf8ckA+t58XPe/jUiQ5i7eD0dXWOKWt+bnSt9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O4n/9DGp";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gCDfRvhC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442F260A5BD7;
-	Wed,  4 Nov 2026 21:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96346082097;
+	Wed,  4 Nov 2026 21:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O4n/9DGp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955781F00919;
-	Wed,  4 Nov 2026 21:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gCDfRvhC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420791F00A02;
+	Wed,  4 Nov 2026 21:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826769;
-	bh=7Jsgov8faG3YwSLxiHg4DXyg9LDtPy8S8vfu/xWne4I=;
+	s=korg; t=1793826771;
+	bh=hpGAMfOtdNKc2f/na8gs+SMnYlHKpbFdMnv0ooOg5qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O4n/9DGpvShEP/y1AQm5J9tcLkwqw1qgC0umDT/d3dcTQ3J7A1wt1nKzYUxPOVEl3
-	 zxj/vOtSlCDhi+zOS00nHJRHpJKGlIHfQRL1yecKm86QlmtbDvQ4i8R+zxF10Q25UO
-	 XXFcjlJWRjpsO+4AopS7N2PjL8GKez/PsFHgUkN8=
+	b=gCDfRvhCxP323WzQS9hiw36i9p0CCy3YHlRr7E5gQE++kU9jTUZjjMajisXBg6ZGd
+	 mz3H1gPgb9KHBGUFK5s+7pOTt54eKneTEWwDM6ubV7Xs4vAmibDCwvab29o4I1GHzf
+	 E/2k5VevflRSeQJhfo7E/nOXd6xAMFpwLRaHFY0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Ridham Khurana <khurana.ridham222@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0007/1005] hwmon: (lm90) Rely on subsystem locking
-Date: Wed,  4 Nov 2026 15:55:40 -0500
-Message-ID: <20261104211043.738227112@linuxfoundation.org>
+Subject: [PATCH 6.18 0005/1005] platform: cznic: turris-omnia-mcu: Add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 15:55:38 -0500
+Message-ID: <20261104211043.678838791@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,125 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 
-[ Upstream commit e9b64fae44be190ea21c1092e96f316f90deb663 ]
+[ Upstream commit 59797443846bc2451c35816026bbb79d281c9f23 ]
 
-Attribute access is now serialized in the hardware monitoring core,
-so locking n the driver code is no longer necessary. Drop it.
+The driver wires of_omnia_mcu_match into the i2c_driver's
+.of_match_table but never exports it with MODULE_DEVICE_TABLE(), so no
+module alias is generated and the module is not autoloaded when the MCU
+is probed from the device tree.
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Found by code inspection. Not tested on the hardware itself; with the
+module built, the alias lookup
+
+  $ modprobe -R 'of:Nsystem-controllerT(null)Ccznic,turris-omnia-mcu'
+
+reports no match before this change and resolves to turris_omnia_mcu
+after it.
+
+Fixes: 992f1a3d4e88 ("platform: cznic: Add preliminary support for Turris Omnia MCU")
+Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
+Link: https://patch.msgid.link/20260921204204.797294-1-khurana.ridham222@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm90.c | 25 ++++---------------------
- 1 file changed, 4 insertions(+), 21 deletions(-)
+ drivers/platform/cznic/turris-omnia-mcu-base.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
-index e1795ccde876c..0153160552e02 100644
---- a/drivers/hwmon/lm90.c
-+++ b/drivers/hwmon/lm90.c
-@@ -108,7 +108,6 @@
- #include <linux/hwmon.h>
- #include <linux/kstrtox.h>
- #include <linux/module.h>
--#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/regulator/consumer.h>
- #include <linux/slab.h>
-@@ -735,7 +734,6 @@ struct lm90_data {
- 	struct hwmon_channel_info temp_info;
- 	const struct hwmon_channel_info *info[3];
- 	struct hwmon_chip_info chip;
--	struct mutex update_lock;
- 	struct delayed_work alert_work;
- 	struct work_struct report_work;
- 	bool shutdown;		/* true if shutting down */
-@@ -1230,9 +1228,9 @@ static int lm90_update_alarms(struct lm90_data *data, bool force)
- {
- 	int err;
+diff --git a/drivers/platform/cznic/turris-omnia-mcu-base.c b/drivers/platform/cznic/turris-omnia-mcu-base.c
+index e8fc0d7b33434..f0416302a1f3c 100644
+--- a/drivers/platform/cznic/turris-omnia-mcu-base.c
++++ b/drivers/platform/cznic/turris-omnia-mcu-base.c
+@@ -403,6 +403,7 @@ static const struct of_device_id of_omnia_mcu_match[] = {
+ 	{ .compatible = "cznic,turris-omnia-mcu" },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, of_omnia_mcu_match);
  
--	mutex_lock(&data->update_lock);
-+	hwmon_lock(data->hwmon_dev);
- 	err = lm90_update_alarms_locked(data, force);
--	mutex_unlock(&data->update_lock);
-+	hwmon_unlock(data->hwmon_dev);
- 
- 	return err;
- }
-@@ -1523,9 +1521,7 @@ static int lm90_temp_read(struct device *dev, u32 attr, int channel, long *val)
- 	int err;
- 	u16 bit;
- 
--	mutex_lock(&data->update_lock);
- 	err = lm90_update_device(dev);
--	mutex_unlock(&data->update_lock);
- 	if (err)
- 		return err;
- 
-@@ -1594,11 +1590,9 @@ static int lm90_temp_write(struct device *dev, u32 attr, int channel, long val)
- 	struct lm90_data *data = dev_get_drvdata(dev);
- 	int err;
- 
--	mutex_lock(&data->update_lock);
--
- 	err = lm90_update_device(dev);
- 	if (err)
--		goto error;
-+		return err;
- 
- 	switch (attr) {
- 	case hwmon_temp_min:
-@@ -1628,9 +1622,6 @@ static int lm90_temp_write(struct device *dev, u32 attr, int channel, long val)
- 		err = -EOPNOTSUPP;
- 		break;
- 	}
--error:
--	mutex_unlock(&data->update_lock);
--
- 	return err;
- }
- 
-@@ -1666,9 +1657,7 @@ static int lm90_chip_read(struct device *dev, u32 attr, int channel, long *val)
- 	struct lm90_data *data = dev_get_drvdata(dev);
- 	int err;
- 
--	mutex_lock(&data->update_lock);
- 	err = lm90_update_device(dev);
--	mutex_unlock(&data->update_lock);
- 	if (err)
- 		return err;
- 
-@@ -1714,11 +1703,9 @@ static int lm90_chip_write(struct device *dev, u32 attr, int channel, long val)
- 	struct i2c_client *client = data->client;
- 	int err;
- 
--	mutex_lock(&data->update_lock);
--
- 	err = lm90_update_device(dev);
- 	if (err)
--		goto error;
-+		return err;
- 
- 	switch (attr) {
- 	case hwmon_chip_update_interval:
-@@ -1732,9 +1719,6 @@ static int lm90_chip_write(struct device *dev, u32 attr, int channel, long val)
- 		err = -EOPNOTSUPP;
- 		break;
- 	}
--error:
--	mutex_unlock(&data->update_lock);
--
- 	return err;
- }
- 
-@@ -2805,7 +2789,6 @@ static int lm90_probe(struct i2c_client *client)
- 
- 	data->client = client;
- 	i2c_set_clientdata(client, data);
--	mutex_init(&data->update_lock);
- 	INIT_DELAYED_WORK(&data->alert_work, lm90_alert_work);
- 	INIT_WORK(&data->report_work, lm90_report_alarms);
- 
+ static struct i2c_driver omnia_mcu_driver = {
+ 	.probe		= omnia_mcu_probe,
 -- 
 2.53.0
 
