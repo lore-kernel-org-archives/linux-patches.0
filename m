@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829545;
-	b=xxpLgVHoMKhZ03XkrhzFJ6/0sBAGUR1FrJy1rxtow9V5W7SZKCRD/n+TGNPx7+JxSIyo
-	 YYHAsW0JGnioJ76SNZ2t4/8q+MgRhIQLSK7QzDn0cpi4GXj/YcvtAJtUrRZI+XoXYox72
-	 hiKJaS3TU89AWcr1/ypI+NrlFQGtZITzyZFSpxcm8HyC4kijjUhxznhYiGTeWOQN2jBbX
-	 5yja3ZlEpXBv/Ubfs1A1bEoHLXgk0RpSI119zpoPFS5FCVabHUC2XZJ/SfVI2TFcrwnD5
-	 B81nJ8MMl+3uZPRul2GJ1+JtaVMlSXHkCZusG/JTvrfm/8F+Hney28xdkzWmHcGEZ0w==
+	t=1793829546;
+	b=Bn1EiIfY3y5/71COpeXTjz74hQ6V80Tr6IfFlj2G3Laz8xjdXw2L597eJ9pv0xFGldw5
+	 n6iQ40HMT1hA1L0tZIx9C3ADEyGLkbXbFolhch1omdeDVjAr8BElmegpeZ2bb+objvUsD
+	 xX3yOixB3PlqdDSahUpAjjYnEjGKqWaThqF30Tm07heNlq40vA54Y0bNoXdODxPitPMmG
+	 L2C5gCQx+/di1yOmFShzeWLUPDvO2WvMMMZKtmIKTYaOE8+WHP5efG61Xlz3t4D8pnGM8
+	 bDOcsNZ097eFqxt5tQh8wrbeveBZvekkTonn90GNRjVIPVpcw7izFryLs1O6AMZyKxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829545;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bwpUOoTmnA19RFKToeBByoSSzWx5f2eXghingd+JmOQ=;
-	b=i2BDhKbN+Q+D6kHEFPGMUavK8QrKUZrbJCIUPPcfc2af/8Njnaq1RinLbSX/sEQ0UFHu
-	 l2C4+rTuIYfjXHmKPSmd9UyZT1PL4Lfjt+mzmTI9FeYcEpMNplhJQW40FiWiMZhARy+xq
-	 k4Xzy0/1TDUyg9R6cz/b/VoCSKkU2xH1JGGAvEoqWJlUNs4IMW0Z91L9z+sM/6Vyn1+jU
-	 mLm09N7El6HiCdfwpk6XFMLI/d/hjUy6+RjidtloFOtRSczpKk5KdN4WRf09OFimHj37J
-	 3C4CsA4QsUP8pM2m+Y+zozN3lMPDuSCBU5ptgAOnOAEMWa1V9hOLjoSORfx3eyA8ROA==
+	bh=xenYbiw7kG0O/I1G9XkLd69Lkz4Tyxipu08ZyBNXCik=;
+	b=AonMlxzefvyIs15NLuijE2LbEj8cqOBywSrwOQVXC2EmhGPIgjY15ePN15Z/famrgUG0
+	 6WSVc57p4EAic8+7RWQE/dlY+BDu4lTGi2SYo3yd78WPw2XlkOVB+xvb+/EwLfcg08Jqs
+	 9Ef8pMofmyA3gjU66A8V5uvy2yrjifvxV5scADuzLADVVTMSkLLdJr4Dx+p3ucxtCyXbW
+	 TQYcNVEH/DGPJmngytQ/+Y3BmyNfeol/F8b6oZwBglKgR6U1p/tkST7Ni7I7TJqeroKU6
+	 xFs85vqpk7EVVCGNZpF8jd8oAkrrR9ao3W5bkvh/lVkuUACToHq4mzRx7XfZSrXaOXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2aV0a7k8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLljPZup;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02826074FBD;
-	Wed,  4 Nov 2026 21:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A889607526B;
+	Wed,  4 Nov 2026 21:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2aV0a7k8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFFB1F00A16;
-	Wed,  4 Nov 2026 21:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLljPZup
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA87A1F000C1;
+	Wed,  4 Nov 2026 21:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829544;
-	bh=bwpUOoTmnA19RFKToeBByoSSzWx5f2eXghingd+JmOQ=;
+	s=korg; t=1793829546;
+	bh=xenYbiw7kG0O/I1G9XkLd69Lkz4Tyxipu08ZyBNXCik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2aV0a7k8f4IlIalKY77UeEtnDMRQAYXu/zy94PAaGD2d1mCPmOFeARsU+oNyX3kEU
-	 JTxZfJBvlHclX8a4G7+OQ4XjfYXVGpNAzzzv2VlYrZYn7j/n7t2Q3B3ukz3kXU4lO7
-	 vwdIycPvx0fZa10Ks045+yR7kMr2lbq+BauJ7Sis=
+	b=pLljPZup/HI2nWCVpZiqI8F2fXDuY+qv7WOJWpXkvrzEpw10KM6aWNB9wf4VC0xi+
+	 L3XHMjzWgyhVZU9Kd4nNN7xAKvRu9Oj1VNiDntL6RzguhSPItssXhJQZN3I/swQrPb
+	 oYHKfW3VYem5/wyqxYuiO3qUEe5SsL20kpD0Umco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0194/1005] misc: ibmvmc: reject oversized inbound messages
-Date: Wed,  4 Nov 2026 15:58:47 -0500
-Message-ID: <20261104211049.231229988@linuxfoundation.org>
+Subject: [PATCH 6.18 0177/1005] comedi: ni_at_a2150: Fix sanity check in interrupt handler
+Date: Wed,  4 Nov 2026 15:58:30 -0500
+Message-ID: <20261104211048.737185825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,46 +67,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 18189e5d84aa0b3bc89189cba13b9105634cb6fb ]
+[ Upstream commit e7356cdc7077a4f30fc5232a18e9fc6a4d404581 ]
 
-ibmvmc_recv_msg() trusts the message length from the CRQ.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-It passes that length directly to h_copy_rdma().
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing various pointers which may be NULL if dev->attached is
+false.  Move the check to avoid the possible null pointer dereferences.
 
-The destination buffer is only max_mtu bytes.
-
-A larger length can overrun it before userspace reads the message.
-
-Validate the CRQ length before issuing the RDMA copy.
-
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260624175139.7981-1-alhouseenyousef@gmail.com
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ibmvmc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/comedi/drivers/ni_at_a2150.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/misc/ibmvmc.c b/drivers/misc/ibmvmc.c
-index af84e94ec5f0e..b26ee0d3626f5 100644
---- a/drivers/misc/ibmvmc.c
-+++ b/drivers/misc/ibmvmc.c
-@@ -1659,6 +1659,13 @@ static int ibmvmc_recv_msg(struct crq_server_adapter *adapter,
- 		return -1;
- 	}
+diff --git a/drivers/comedi/drivers/ni_at_a2150.c b/drivers/comedi/drivers/ni_at_a2150.c
+index e4e5a0ebd195a..93e9591f5dd4c 100644
+--- a/drivers/comedi/drivers/ni_at_a2150.c
++++ b/drivers/comedi/drivers/ni_at_a2150.c
+@@ -132,11 +132,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
+ 	struct comedi_device *dev = d;
+ 	struct a2150_private *devpriv = dev->private;
+ 	struct comedi_isadma *dma = devpriv->dma;
+-	struct comedi_isadma_desc *desc = &dma->desc[0];
++	struct comedi_isadma_desc *desc;
+ 	struct comedi_subdevice *s = dev->read_subdev;
+-	struct comedi_async *async = s->async;
+-	struct comedi_cmd *cmd = &async->cmd;
+-	unsigned short *buf = desc->virt_addr;
++	struct comedi_async *async;
++	struct comedi_cmd *cmd;
++	unsigned short *buf;
+ 	unsigned int max_points, num_points, residue, leftover;
+ 	unsigned short dpnt;
+ 	int status;
+@@ -145,6 +145,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
+ 	if (!dev->attached)
+ 		return IRQ_HANDLED;
  
-+	if (msg_len > buffer->size) {
-+		dev_err(adapter->dev, "Recv_msg: msg_len 0x%lx exceeds buffer size 0x%x\n",
-+			msg_len, buffer->size);
-+		spin_unlock_irqrestore(&hmc->lock, flags);
-+		return -1;
-+	}
++	desc = &dma->desc[0];
++	async = s->async;
++	cmd = &async->cmd;
++	buf = desc->virt_addr;
 +
- 	/* RDMA the data into the partition. */
- 	rc = h_copy_rdma(msg_len,
- 			 adapter->riobn,
+ 	status = inw(dev->iobase + STATUS_REG);
+ 	if ((status & INTR_BIT) == 0)
+ 		return IRQ_NONE;
 -- 
 2.53.0
 
