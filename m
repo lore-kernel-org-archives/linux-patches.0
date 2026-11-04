@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831019;
-	b=0L92EAcHc+VCJNbBPz2l8hpV7qyuIJ5ADVtEpl39/P38de3xpJ9BFjOUNEcfSLaPITUH
-	 wxhNApOvt7L1hkvRQBuda+gsfoLmiE8e2gZtVyOpSZkACRWfiNmR0D+PYJnsPBGFjaxyh
-	 +/zk6H6iF2pAPdlFOGdTu+yrri9jLd6pYz46ezdgI+I81sbHdEFdJ+wtkxuStX7jzjaH1
-	 LrxtuRYCVSqaKv79QyfTOJKnszajsDFSSImKdRB7NfTiw56mn7MKg9FTkoPXWuoTQUJYo
-	 jVHZc5syVx56NbU14Mg/W9XgCa3oCbW35HtBDM7LoSvoZOZiokIu+QbvxasvlrAy3uA==
+	t=1793831021;
+	b=eyCLmmPUm2Y0BEmW1bu2dNRDIChr8vEV7wLwqofQO02GEnHCPOsVEjw3fjuC+DnK/4R4
+	 sJEc2G0rpP2LqO3qFihUeb+akOygmjpNw1PPcSQE3wQcrJNlPpcCiM1ZOvyq+d9NEUXJ8
+	 Af+2VCMyh8a/yhKjixat4qcXgNzyFXUqL26XytjLeXVZez8BH2HTNZarBaJREup4REOE0
+	 7mtlce8GPwZT2s2pGYrbGQ6oRGLoVNuv5TmWPNYaYDSHZkZU8KMTSs2VeOxPddHPHP/F4
+	 6KtNE24cpGfCK3+O9Y6HBLdAMAnnud8L+bEhYC74ESa+I9xcKpLRsUIf2/hyHc56Urw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831021;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+7YSLdJRubglEtZGDIKmcuYHSXt80hj75s170Tc0wJA=;
-	b=l8lpxCWMxEauE6L+b/k7hDN2s/wTF8gSlN0MNtCZqSbQ8X9ePJlSA93vs++df/SjDIi/
-	 EOrPZygZXgraqKSSzs0faVzWjOe3ux4axHGFNOYaIF7ktcyUgy2iYN/lgfhhDjxgtEb4w
-	 NtbXey6wZwbss5Y62siiDt36MouAz4ViXrpaTZxD3KK46boH/Aw9G2H+JzjOctiy6KR69
-	 a8AwmQjn7klR9FxTy6l+HnGv/vevdWqxdz955CFi0xJoWRPgLIgn5Wd960Lt8yzIHn4FI
-	 /IGbYQZ3gjNXDtTyDnET9n/9h8cuiJxkxLpfpSW6GODJUYmbJt9aWd7G/FDnBcpEfVA==
+	bh=dIGUQW5YEE2C1XhmyDZZGNPWgcrfhJK1nSfwiqEBU2Y=;
+	b=1OoD284nFvYPEtDqOM+6dZj6bnL/jB3PYIT82hoUQob7vssoZlHFl2uCi/NFGfIll2V2
+	 GQ6cb1ZsZOI25kX7SsdWT2zBiLP0J9Yk/ag9N+/HBfhlJ5aoSdrq7h1kKOmzUNLRsdXuJ
+	 qeBEUavW/hoQ/bbSwIjP5kGq1OctfSFzuSJVGwmXip7KxDBaNAqs8iKis0q92sEjeFwAP
+	 16cDK29TOAARbgkImoOTR9V5VnRTDrM4mkM+GtRQq6XAjTVv0FAe5ntUMVI7cpIHQpMGJ
+	 gG0GrCuvXBcEa8vLusUHUEDRGZo8CRbKM0vAwzcfDCy1H/sSEMUzO3vi0yHTaMoGQrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjGWZz+G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QsH3LbfV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F65606A843;
-	Wed,  4 Nov 2026 22:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D9C606A843;
+	Wed,  4 Nov 2026 22:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjGWZz+G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2241F000C1;
-	Wed,  4 Nov 2026 22:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QsH3LbfV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EBD1F000C1;
+	Wed,  4 Nov 2026 22:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831019;
-	bh=+7YSLdJRubglEtZGDIKmcuYHSXt80hj75s170Tc0wJA=;
+	s=korg; t=1793831020;
+	bh=dIGUQW5YEE2C1XhmyDZZGNPWgcrfhJK1nSfwiqEBU2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JjGWZz+GpP+dRnwkod5Dx5H5zVsT7gLOrjxvz7PqQQ4P4rWaPFRVx/t/r/kKvCH2L
-	 NSbulJwJH/EQhdxdfrf8MJSy+A8yv0P7PVM7VRTCr9C+cGVTXoKIPpupVF6vzpRN/K
-	 kO8Hs4okG/EbSjE0R0yy3LBS7DQ5no+ssQZDmyqE=
+	b=QsH3LbfVIWoz34h66ZZ+OKmdXApAArGKtAOiiFXrKDd2NR4H81Pd3vcMd36TcrP7r
+	 fbdsR/PcHbYAegaJNRISvYQMFRJ6gd/ThXIVm7NkVsc431nVCSFDlagoPPatA6nIJb
+	 3CsUWinZs5NTOPC/YvXkVjd9APZyVlmGntYJ01j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Md Rabbani <rabbanyhmm@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0459/1005] net: stmmac: fix device node reference leaks in stmmac_mtl_setup()
-Date: Wed,  4 Nov 2026 16:03:12 -0500
-Message-ID: <20261104211056.889487290@linuxfoundation.org>
+Subject: [PATCH 6.18 0460/1005] ALSA: hda/realtek: Add quirk for Lenovo IdeaPad Slim 3 15ABR8
+Date: Wed,  4 Nov 2026 16:03:13 -0500
+Message-ID: <20261104211056.918082125@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,70 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Md Rabbani <rabbanyhmm@gmail.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 317fe168f4c0fc30e5c375c22d9c8911940aea9b ]
+[ Upstream commit be79a45e2ec289eb9fad519e8f5a3d4fc3789dd0 ]
 
-In stmmac_mtl_setup(), q_node is shared across the RX and TX queue
-parsing loops. When the RX queue loop breaks early because the number
-of parsed queues reaches plat->rx_queues_to_use, q_node retains an
-acquired reference count. If the error check passes
-(queue == plat->rx_queues_to_use), execution proceeds directly to the
-TX queue loop, where of_get_next_child() immediately overwrites q_node
-with the first TX child, permanently leaking the retained RX child
-device node reference.
+The internal microphone on Lenovo IdeaPad Slim 3 15ABR8 (subsystem
+17aa:3862) exhibits severe distortion at default gain levels. The
+Capture Volume is fixed at 63 (max) and cannot be lowered without
+explicit userspace intervention. The existing fixup
+ALC269_FIXUP_LIMIT_INT_MIC_BOOST limits the gain range and resolves
+the issue.
 
-Switch both loops to for_each_child_of_node_scoped() so child node
-references are automatically dropped upon loop exit or early break,
-and remove the now-unnecessary function-scoped q_node variable and
-its manual of_node_put() at the exit label.
-
-Signed-off-by: Md Rabbani <rabbanyhmm@gmail.com>
-Link: https://patch.msgid.link/20260821055718.57-1-rabbanyhmm@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221891
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260824123752.525173-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index 0cb51935c4056..ceb913a3a6c69 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -131,7 +131,6 @@ static struct stmmac_axi *stmmac_axi_setup(struct platform_device *pdev)
- static int stmmac_mtl_setup(struct platform_device *pdev,
- 			    struct plat_stmmacenet_data *plat)
- {
--	struct device_node *q_node;
- 	struct device_node *rx_node;
- 	struct device_node *tx_node;
- 	u8 queue = 0;
-@@ -174,7 +173,7 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
- 		plat->rx_sched_algorithm = MTL_RX_ALGORITHM_SP;
- 
- 	/* Processing individual RX queue config */
--	for_each_child_of_node(rx_node, q_node) {
-+	for_each_child_of_node_scoped(rx_node, q_node) {
- 		if (queue >= plat->rx_queues_to_use)
- 			break;
- 
-@@ -237,7 +236,7 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
- 	queue = 0;
- 
- 	/* Processing individual TX queue config */
--	for_each_child_of_node(tx_node, q_node) {
-+	for_each_child_of_node_scoped(tx_node, q_node) {
- 		if (queue >= plat->tx_queues_to_use)
- 			break;
- 
-@@ -290,7 +289,6 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
- out:
- 	of_node_put(rx_node);
- 	of_node_put(tx_node);
--	of_node_put(q_node);
- 
- 	return ret;
- }
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 8196235c31d2b..bc87062f86da7 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7515,6 +7515,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
++	SND_PCI_QUIRK(0x17aa, 0x3862, "Lenovo IdeaPad Slim 3 15ABR8", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x17aa, 0x3865, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3866, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
 -- 
 2.53.0
 
