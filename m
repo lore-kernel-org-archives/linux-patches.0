@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827015;
-	b=vxyVfgTG529x+EgA3nk/QHJkNR5okfvkBYRrJhusQMFIIxGO4GUaqHyDkYSwlfZY+9bQ
-	 XyHODZxw1qKfxnz3ba9mYCgxWYbXfNhzj8JmN+jDXlfm6e4WXxIYzHNaxImqPf8NblZPG
-	 bHxxWjjxhGUvTDkkEYKjORiqh3mIDoLITCvcEOzhpwSOwjmdJVyo7NCccx6IJxnoPSILo
-	 xmt5/oGI7sbPVz6Q2IdX+1v+k/2fslqOvhgchh0npj70VeY59169jHJoSr59MvKI5JC4D
-	 SGPdDu/S710iu4AsjQbu5MIJ2AbJZ5D2x1fhVvJRGd8sMX/we80dwfgvoboFUNk009A==
+	t=1793827016;
+	b=tV+37eHk30ZihycIS0cTCM4r/EPl8WR0w8u5w6QPrF/GpGEDe+Hj84YvDTEX6J9A6O/S
+	 ixU22FWMOD4dA4C+yJOKx6z8P7vtmwHZ/5GWWDPXQ0YVl0zfP9/7g1ZssKayNdTVj+SuG
+	 gg0AN94G44eGjyZJou4BSq70wsb5DwwIB0BdjxkGdpuoJbQip78D5mLBM6CyMeGvtuSbh
+	 5blupWI4g8B6cY9N/1OfprkbvTc6ts5iiKAKNwjVrBPw9EpUsot4VPC0PPzOJ3uF5xNgj
+	 z98eUae/0f99vL2pxwKChESNpx6PG4OboUqoHF3HbmW8JgrBc40CXzk8TGKCO/wzoGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827016;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EfGHCoIzxwg8MT7kW8mRT6JXxQsRcL2/MhU8X9P+Kd8=;
-	b=izL3Klj+P7dW5SA1Xm+P7wJI4ZIMm5v2FL+55cAEQzpl+QEE2OWUdsFsRz3PaWrJQ/SB
-	 WtAf8xulgm9A0NJ8+1R16A3aXnJXyKl5d6p3siEncEqb7m7ydLkWWfR+f3gAPzcmLWoOx
-	 3L1dnK7C1IPS+V+FPT2yUSY0HUI3S0Dfb9XqQRbEO+6l8IN7IilbzRuNH/2jQVLy2jdrN
-	 ypVzRl5OOg+L7ztAeYWCNKPzZwDLkt3hmRkcZUO1hYnvlLGjmmMRu3tOSyNLEfJPs4GJ3
-	 BNiDGcnSJA8/pSyTgUlz8K2vJSgmvQE0A68vACjHbUdfLdgsjD6WwmyReb6RI4HLCIA==
+	bh=+eWZU0+kc7ZiwXosBEAiwUS1BsuH9bWz9C7dCnZjGGE=;
+	b=0LfxoJeoKtmTettFT7Sx3BfPI9FzdUe4rh+Kfn0M7VoiWbj8RnDATVIBDn1X1TqTqqRq
+	 uryMznh9TO1NxfRwu0NPWPb4lfGayjzm8g9LGUWmFRuZHZZiuce/+dgcCjIs/+/xnVRJi
+	 3blCr/mfUgKkRoQvDgaupeOxzCkIK4rNtCEuu64jqpHIGdpcXZnMghv0U8oXVmhf088C5
+	 sLFqQLYSKpGV5GBfT3kvZrfLP+vPskQ0Ju39ldLlN7p16nL2Q5vvXcF++q1ItsmLIClBY
+	 ntuE/Omjr6xDGg3vw0InZpkj8u/AaLTFIOpSTy3LJxvZDM0DaAHULk9MzhksDF0oFxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btohrkoM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BiXAPsh9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9222607493C;
-	Wed,  4 Nov 2026 21:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B956070AA5;
+	Wed,  4 Nov 2026 21:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btohrkoM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723B01F0093A;
-	Wed,  4 Nov 2026 21:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BiXAPsh9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181701F0093A;
+	Wed,  4 Nov 2026 21:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827014;
-	bh=EfGHCoIzxwg8MT7kW8mRT6JXxQsRcL2/MhU8X9P+Kd8=;
+	s=korg; t=1793827016;
+	bh=+eWZU0+kc7ZiwXosBEAiwUS1BsuH9bWz9C7dCnZjGGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=btohrkoMpKCsSSNFneJajQEzXGbgcoWCNVlBbtpRJu2iqlqUMun1KY+CDvf5yDFxQ
-	 6SMRIK+i7zJeRCeEopKx9NwOknYNG4zXnEU07akQDQwv7oGHOwLQpDAU9B1p0J4v6D
-	 wQJ96RSgjW80abbQ5KrSibCj1wftYdZA0urFe/og=
+	b=BiXAPsh9KPX7b83c3Yk3gzIEdMtBjCp/WC+lWFZku+SZGx8mfCo4WWVq3snr0Fn2D
+	 aO3e9ikYpb1xxHwXfalyTGQ4R0mGMxLGrpnVuzu6VA5JhnOdGM32rJudGCMCy2Ei9U
+	 lU9IdUl5hNK+DKAKWFjwjGXmndKWxkGrhkZfhMXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 136/547] ksmbd: validate security descriptor offsets before pointer arithmetic
-Date: Wed,  4 Nov 2026 16:05:20 -0500
-Message-ID: <20261104211042.039039900@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>
+Subject: [PATCH 7.3 145/547] sched_ext: Fix use-after-free of a local reenq node left on an inactive cpu
+Date: Wed,  4 Nov 2026 16:05:29 -0500
+Message-ID: <20261104211042.287808063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,96 +67,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tejun Heo <tj@kernel.org>
 
-commit 3474e1a304fbf9f7c996b24adcd519e031227a90 upstream.
+commit 43e1ef14a47257ebf7e3bb3ab9a6df9c6f817c5f upstream.
 
-parse_sec_desc() constructs SID and DACL pointers by adding untrusted
-32-bit offsets to the security descriptor before checking their bounds.
-The existing checks reject offsets into the descriptor header, but do
-not reject offsets beyond the descriptor's length.
+A local DSQ reenq is queued on the rq through a per-sched node and run from
+deferred work. When the reenq is requested from dispatch, the work is a
+balance callback queued once dispatch is done. A cpu going down installs
+balance push early in its teardown, and queue_balance_callback() refuses new
+callbacks from then on. ops.dispatch() keeps running on that cpu until the
+rq goes offline after an RCU grace period, so a reenq it requests in that
+window may never run. The IMMED handling in dispatch_one() requests one the
+same way.
 
-On a 32-bit kernel, a large offset can wrap the pointer before the
-descriptor. The end-only checks in parse_sid() and parse_dacl() can then
-accept it, allowing an authenticated SMB2 SET_INFO request to access
-memory outside the security descriptor and fault the kernel.
+A reenq requested from elsewhere for a cpu that is already offline goes
+through irq_work_queue_on(), which warns, and its work doesn't run until the
+cpu comes back.
 
-Check each nonzero offset against acl_len before constructing its
-pointer. Initialize the optional owner and group SID pointers to NULL
-so an omitted SID remains absent when parsing the DACL.
+Either way the node stays on the rq's list. When the scheduler is freed,
+scx_sched_free_rcu_work() warns and frees the pcpu with the node still
+linked, and the list is walked again once the cpu comes back.
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Cc: stable@vger.kernel.org
-Reported-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+An inactive cpu's local DSQ holds only tasks that are bound to it or are
+being moved off, so the reenq is pointless. Ignore reenqs of an inactive
+cpu's local DSQ.
+
+The test is lockless. The hotplug thread of a cpu going down runs on that
+cpu, and it marks the cpu inactive before it installs balance push. A
+dispatch on the cpu runs to completion before that thread can run there, so
+a dispatch that saw the cpu active has queued its callback by then. Requests
+from outside dispatch run from the wakeup path or through irq_work, which
+balance push doesn't affect. The grace period after the cpu goes inactive
+waits for any requester that saw it active, so that irq_work is queued while
+the cpu is online.
+
+Fixes: 238eba8c210d ("sched_ext: Use schedule_deferred_locked() in schedule_dsq_reenq()")
+Fixes: 76edc2761ab8 ("sched_ext: Use irq_work_queue_on() in schedule_deferred()")
+Cc: stable@vger.kernel.org # v7.1+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Tested-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ kernel/sched/ext/ext.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -899,7 +899,7 @@ int parse_sec_desc(struct mnt_idmap *idm
- 		   int acl_len, struct smb_fattr *fattr)
- {
- 	int rc = 0;
--	struct smb_sid *owner_sid_ptr, *group_sid_ptr;
-+	struct smb_sid *owner_sid_ptr = NULL, *group_sid_ptr = NULL;
- 	struct smb_acl *dacl_ptr; /* no need for SACL ptr */
- 	char *end_of_acl = ((char *)pntsd) + acl_len;
- 	__u32 dacloffset;
-@@ -911,12 +911,7 @@ int parse_sec_desc(struct mnt_idmap *idm
- 	if (acl_len < sizeof(struct smb_ntsd))
- 		return -EINVAL;
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1103,6 +1103,18 @@ void schedule_dsq_reenq(struct scx_sched
+ 		rq = container_of(dsq, struct rq, scx.local_dsq);
  
--	owner_sid_ptr = (struct smb_sid *)((char *)pntsd +
--			le32_to_cpu(pntsd->osidoffset));
--	group_sid_ptr = (struct smb_sid *)((char *)pntsd +
--			le32_to_cpu(pntsd->gsidoffset));
- 	dacloffset = le32_to_cpu(pntsd->dacloffset);
--	dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
- 	ksmbd_debug(SMB,
- 		    "revision %d type 0x%x ooffset 0x%x goffset 0x%x sacloffset 0x%x dacloffset 0x%x\n",
- 		    pntsd->revision, pntsd->type, le32_to_cpu(pntsd->osidoffset),
-@@ -932,9 +927,12 @@ int parse_sec_desc(struct mnt_idmap *idm
- 	pntsd->type = cpu_to_le16(DACL_PRESENT);
- 
- 	if (pntsd->osidoffset) {
--		if (le32_to_cpu(pntsd->osidoffset) < sizeof(struct smb_ntsd))
-+		if (le32_to_cpu(pntsd->osidoffset) < sizeof(struct smb_ntsd) ||
-+		    le32_to_cpu(pntsd->osidoffset) >= acl_len)
- 			return -EINVAL;
- 
-+		owner_sid_ptr = (struct smb_sid *)((char *)pntsd +
-+				le32_to_cpu(pntsd->osidoffset));
- 		rc = parse_sid(owner_sid_ptr, end_of_acl);
- 		if (rc) {
- 			pr_err("%s: Error %d parsing Owner SID\n", __func__, rc);
-@@ -950,9 +948,12 @@ int parse_sec_desc(struct mnt_idmap *idm
- 	}
- 
- 	if (pntsd->gsidoffset) {
--		if (le32_to_cpu(pntsd->gsidoffset) < sizeof(struct smb_ntsd))
-+		if (le32_to_cpu(pntsd->gsidoffset) < sizeof(struct smb_ntsd) ||
-+		    le32_to_cpu(pntsd->gsidoffset) >= acl_len)
- 			return -EINVAL;
- 
-+		group_sid_ptr = (struct smb_sid *)((char *)pntsd +
-+				le32_to_cpu(pntsd->gsidoffset));
- 		rc = parse_sid(group_sid_ptr, end_of_acl);
- 		if (rc) {
- 			pr_err("%s: Error %d mapping Owner SID to gid\n",
-@@ -974,9 +975,10 @@ int parse_sec_desc(struct mnt_idmap *idm
- 		pntsd->type |= cpu_to_le16(DACL_PROTECTED);
- 
- 	if (dacloffset) {
--		if (dacloffset < sizeof(struct smb_ntsd))
-+		if (dacloffset < sizeof(struct smb_ntsd) || dacloffset >= acl_len)
- 			return -EINVAL;
- 
-+		dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
- 		rc = parse_dacl(idmap, dacl_ptr, end_of_acl,
- 				owner_sid_ptr, group_sid_ptr, fattr);
- 		if (rc)
+ 		/*
++		 * An inactive cpu's local DSQ holds only tasks that are bound
++		 * to it or are being moved off, so a reenq of it is pointless.
++		 * Once balance push is installed, queue_balance_callback() also
++		 * drops the callback that would run a reenq requested from
++		 * dispatch, and irq_work_queue_on() can't reach an offline cpu.
++		 * The reenq's node would then stay on this rq's list after
++		 * @sch's pcpu is freed.
++		 */
++		if (unlikely(!cpu_active(cpu_of(rq))))
++			return;
++
++		/*
+ 		 * A sub-sched lacking baseline access on the target cid has no
+ 		 * business triggering IPIs. The lockless test is fine: slipping
+ 		 * through right after a revoke is harmless and a wrong denial
+@@ -10020,7 +10032,8 @@ __bpf_kfunc struct task_struct *scx_bpf_
+  * - Local DSQs (%SCX_DSQ_LOCAL or %SCX_DSQ_LOCAL_ON | $cpu)
+  * - User DSQs
+  *
+- * Re-enqueues are performed asynchronously. Can be called from anywhere.
++ * Re-enqueues are performed asynchronously. Can be called from anywhere. A
++ * re-enqueue of an inactive cpu's local DSQ is ignored.
+  *
+  * %SCX_DSQ_LOCAL resolves to the local DSQ of the rq the current scheduler
+  * operation is locked to - e.g. the rq being dispatched for in ops.dispatch() -
 
 
