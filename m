@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829307;
-	b=fvA/w92/EqtQTSl2Y7zo7gm3W2kfdxCF5SoqGUlL4y2c0nLF/ygFjjkIgfUgOqnzsv9/
-	 VfHRWn32QS9eM5AagDp0pvZ0hvr3VYKtpqaasr1kDOrYFRXTBKQWZebFd4rPFhg0R3yP4
-	 xndGm0HoQeZaSZGbVfyF0ejZynjrtHjn9rN878yo/uHjLA1mCtPV6Yz0nIJSmDNY7ASPJ
-	 pDue+WRRyVf3pDyhlkVC6p2frYYHbXncSfrxFJ7O8G16kbWYGdYmOnxgQ0Gvrh1h57Ps7
-	 /Lj6aXVssuBvU962s/zDr/WCInOBE8vdYb31s3rbak9TkJqn3kwRWfjGjS5YrRgdBXQ==
+	t=1793829309;
+	b=FLUAtosesxJ0Z1ZZRvwe/l1qpHhKL86gqAjjemVcrVx22jHZZ0nR+OlMvs4VypXsvlrU
+	 4JXeYbpSyHorZaBXKljjL5pgmhaYGmUtRjRn3ldHY1QgkHrWv7xJI7tKtKlNL1L+g6UL7
+	 KN2Tt3zYJtMvsvlatBZEXyrIY7yx6Zg/iutIIJ7U9Q5d/bDogUcDaTzMpBuOU4tA5utBA
+	 BpaX28QToyJZnKH43YXqR3m9aftbZG0e+2+D3FjWRSc8V5UkQL2flfXi4QYZ1svx2g+PR
+	 X6pSanyyC9gUiz7jkWvwTsTVly4Jc/g5q3PooUFcZteiTbE8ABWqxBiUxDlA7QE0Dbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829307;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829309;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RE/RKLdcjGV0Usz16J2Gtu/3q/qySomVUVviDsv5Tx0=;
-	b=K7cHAC6Iwm6QmtEcX++TwKQUS/AHGA2zd+2PU3jOGc16ATjkqoxR6Uzyek2ngz7IxnwN
-	 7bNqJPrKVFDullEAkhRVnInVHp6yGhqhAfNbQTh/8tpqjs26ewKaoWeebImS5a6j+XT4T
-	 ZL5HcBS/g3LwcRsCjrnsZxhxWh0fGHp/Zy1SlDQpEGj+n46OO+viGkG9am4lzzkrABAW3
-	 k9jUUnLQzDBOs1OOiJ75Sjh9L62JMEF8KlQrSkuK14urpvz4jqpuKGOOMAj1cnrRiJInB
-	 LP9lUlwPyYgxhRgPF1wUlqRW6PF7KXStxlpKF5smWpIHm/+sCC2fggQ7XNSpHFARkgw==
+	bh=yFddJlitZzCEgR9rd9TIvr0YL24gVu1PgOBkAhyu4bM=;
+	b=KNSUIjuSWSd6mxhOjSUXyTuN5MqGrgzj9WQF/Doe86mZvFIYMrVamVEeALN6XBfDn8rE
+	 ehKkTBJrJeHA0IzSkz1RhhkqopictywkFmoCO8O3FELSWHOCJT8iAWu1Ul0nZ5Jsa5cAt
+	 2LWgjrlO8IDHxthHaUMKCRHwQUQ95qgXO/lEpY1iGMdtXK9+0R6HkTbAwh5r8MJpJDndL
+	 bWfxVFrdkCiZTzzKawSlVz8fN7VtzgbTzCVaMpDMvJNIqw7oBJIAyclwvnuICIVTRJcY2
+	 2Mux6L/LJ0s/aLJPzas1jTlQodrJ8t66Vgsi3k7hTiE9XIYmaG8TmdTbp20vGTJ2v4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBQaDFfA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mt/P9fJh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA606074918;
-	Wed,  4 Nov 2026 21:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53F0608661B;
+	Wed,  4 Nov 2026 21:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBQaDFfA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE041F00A02;
-	Wed,  4 Nov 2026 21:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mt/P9fJh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA411F000C1;
+	Wed,  4 Nov 2026 21:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829307;
-	bh=RE/RKLdcjGV0Usz16J2Gtu/3q/qySomVUVviDsv5Tx0=;
+	s=korg; t=1793829308;
+	bh=yFddJlitZzCEgR9rd9TIvr0YL24gVu1PgOBkAhyu4bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TBQaDFfAxuHG5GBFNgl6R/i352ImUUBO5RSM6OY48m78tvFLr0G5Q1zO1m0qncUe8
-	 zWEJD3FqmsrZP2M3BIm29SJlHnkBxEfMWxIG/2oI5N6xexxoKQ1BeFIpiO+3Uds8z+
-	 exk/GodQcnWDsqOrQSHPkVMoNgiDnNvztztQdO08=
+	b=mt/P9fJhplFPNY89nrP4eWq9PoLAd3WsQuWY8ki3AtMrVHHed/1K+eB0zUVAd5iSd
+	 zHprKY+wfIyq9Yc/u+SWV5+tpsNiLFRg+Ey7jqAZOhl0z13nyUwTU5LVY6M2iflzwN
+	 LK4qNwhyjLXgTLG0DVEbIc1rojX8+phpEU/CpEQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0042/1005] iio: accel: fxls8962af: clamp the device-reported FIFO sample count
-Date: Wed,  4 Nov 2026 15:56:15 -0500
-Message-ID: <20261104211044.759471022@linuxfoundation.org>
+Subject: [PATCH 6.18 0043/1005] perf/x86/intel: Fallback to sw branch type decoding if no hw decoding
+Date: Wed,  4 Nov 2026 15:56:16 -0500
+Message-ID: <20261104211044.787278293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,41 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit 2f8225b91eb478ca2e9aec8aaef4d229765bcebe ]
+[ Upstream commit 170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885 ]
 
-fxls8962af_fifo_flush() transfers the sample count the device reports in
-BUF_STATUS into an on-stack buffer sized for FXLS8962AF_FIFO_LENGTH (32)
-samples, but the count is a 6-bit field (0..63) that is only checked for
-zero. A device, or an attacker on the I2C/SPI bus, reporting 33..63
-overflows the buffer by up to 186 bytes: a stack out-of-bounds write.
+intel_pmu_lbr_filter() currently assumes arch-LBR provides hardware
+branch-type decoding and skips software decoding on that path.
 
-Clamp the count to FXLS8962AF_FIFO_LENGTH before the transfer, mirroring
-the clamp already applied in fxls8962af_set_watermark(). Conforming
-hardware reports at most that many samples and is unaffected.
+However, arch-LBR may not always expose branch-type information. In
+that case, treating entries as hardware-decoded can misclassify sampled
+branches (for example, defaulting to JCC), which breaks branch-type
+filtering results.
 
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fix this by using software branch-type decoding when hardware
+branch-type decoding is unavailable (that is, when x86_lbr_type is not
+enabled). This keeps branch classification and filtering behavior
+correct across arch-LBR configurations.
+
+Since x86_lbr_type is only set to true when arch-LBR is supported,
+it's unnecessary to check if the CPU has the arch-LBR feature.
+
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260616044654.3468742-4-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/fxls8962af-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/events/intel/lbr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/fxls8962af-core.c b/drivers/iio/accel/fxls8962af-core.c
-index 8763e91c63d2b..1ecffbf41f64f 100644
---- a/drivers/iio/accel/fxls8962af-core.c
-+++ b/drivers/iio/accel/fxls8962af-core.c
-@@ -970,6 +970,8 @@ static int fxls8962af_fifo_flush(struct iio_dev *indio_dev)
- 	if (!count)
- 		return 0;
- 
-+	count = min(count, FXLS8962AF_FIFO_LENGTH);
-+
- 	data->old_timestamp = data->timestamp;
- 	data->timestamp = iio_get_time_ns(indio_dev);
- 
+diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
+index 44f5556440223..bbfd6ffbdd68a 100644
+--- a/arch/x86/events/intel/lbr.c
++++ b/arch/x86/events/intel/lbr.c
+@@ -1230,7 +1230,7 @@ intel_pmu_lbr_filter(struct cpu_hw_events *cpuc)
+ 		 * Doesn't support OTHER_BRANCH decoding for now.
+ 		 * OTHER_BRANCH branch type still rely on software decoding.
+ 		 */
+-		if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&
++		if (static_branch_likely(&x86_lbr_type) &&
+ 		    type <= ARCH_LBR_BR_TYPE_KNOWN_MAX) {
+ 			to_plm = kernel_ip(to) ? X86_BR_KERNEL : X86_BR_USER;
+ 			type = arch_lbr_br_type_map[type] | to_plm;
 -- 
 2.53.0
 
