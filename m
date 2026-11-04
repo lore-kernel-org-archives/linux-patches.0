@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827200;
-	b=yh0saQjasi2qi+SiK/z7QYqa511ucOULyGBtYUMXIim9uGb2ZP9bzTXKAxtPTl+SYR5Q
-	 AZKswIpWOY3cbDqOQvJugEx8aN3PYDhjHMMItJCQKDNrr0V7aXHMxgoqGysv35/kQ9zmG
-	 at/KhYnagqN00ZFUbcLqkp868tv7BZaAL+9yxkFHqQk9GYzdbNJrm56pVPIlHhGoZ7J/7
-	 +48WM0bm/yb9YDydNWPgPjQWU4Ad3v0s9xgjzP93BV4TmYS+bK9t0edwaoGeUT7uWjGN7
-	 jqOzYLihsW5yzaxagxUEa52WVwbUfChqECehTny31D6/IAdiX33sSpkYUPn82RNWuTQ==
+	t=1793827201;
+	b=rCv7+ataJaq9xDti4qVJA76OAH+Kbx2Yn3/YZj/Esxz9rZ6g6L/YjvNNlLs7b2o0u1mJ
+	 8717gFW+JARN/KJoSG0vlFnLxjrvp4hkVvjWlYJxLAnkFSAlxtkFHyNKFsflMw+EOltet
+	 5924aJqdG+pFhUxrun2OJT7fVM+qg10aZWsjvEcT54m/YcuaYD50QuZbrXq6qcDFqwB+4
+	 GM+7NyFe+X2noVSHANgO+xHpT9hW8Ulrgb+fjPV4D94vHZ2sVBlWmtL2GJSnRwoFMaSik
+	 lpM8iWxA6qHSDQtRXWg4KxIahvXED0q71KOv5FmsAOwdYhhCui3K0T/ERZZ9qUfMuRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827200;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827201;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5l8183xYRnQab2E4QFshCWCQJV9ypQVs1flh3Cz29xY=;
-	b=1KpyKVWrmLNaKGFnj4pwqUPAP+1HgcX7MK2L976PaK13A9/4O58lsH14u/qykqzFL+ZG
-	 aMCr2kqQKTnB+bfY5/vLcamp6nylZzF6V+zVlbRYdGuYnqhSGA71s7bEzh+3KOzmhMtnD
-	 rTBY9BHf177k1wCmjfU8o5NApVO3TsHVartD+/990f5zOqbSFUT6rf1JMHAKswZsO4Z02
-	 EYV2l4F2JRNXBuS42cC40v++660XkCNq9fHmO4kh8uVx/56k48llbwYy2Av1WSKG9dWpx
-	 KkGsHxs3EdAWe28/WrR8/EwOIptGi+/rxotIqivTWJPGn0wzrKeu3CJQ3E3Ub9jqyEw==
+	bh=IroGTun+mc0K7vzq7B5C4EZPRT4iKUU8fBAyoa648ho=;
+	b=ndspy94Y01FR6eQKW9XG//MR+4vqFfzwZtrl7StAcEgIN4rR/KJ4XPazWdHzR7VouMUO
+	 D3TmGb3uj7FLUcB6YQ57uKSuVDjhnKmHfTfH4zEqnogqNdhiXJ6VxUoc7VwU1ivqZ+YCX
+	 wNKCNVd11/f9t40PviJeyZXNd2ay3ZzGPmN93NZHCbiLSltlGvp+CP9dw1V27HNm1cVcp
+	 Eg7q97v4E80pgorrbRgmjwuzjelLovamlW9M7FoZC1XIgkQ+2HkoQkynZD0wat5tync2t
+	 Zqgwv+bDsbyswmeIZwomR1Cb3e0gO8cyQ8mBe0Z6IA/B+6tkpRdnoPjovIgzVpyzDIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFL6P3+m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EywIIGbZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E466D606B387;
-	Wed,  4 Nov 2026 21:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5BF606A843;
+	Wed,  4 Nov 2026 21:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFL6P3+m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46AEB1F00919;
-	Wed,  4 Nov 2026 21:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EywIIGbZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5C41F00A16;
+	Wed,  4 Nov 2026 21:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827199;
-	bh=5l8183xYRnQab2E4QFshCWCQJV9ypQVs1flh3Cz29xY=;
+	s=korg; t=1793827201;
+	bh=IroGTun+mc0K7vzq7B5C4EZPRT4iKUU8fBAyoa648ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFL6P3+mxoHXKheEEcMjUZ1CuslyHx1fwHXtb07XfT/6QzkD1roLpnVaERguXsM/g
-	 Ja6UJSSNHxG/MEaeowBrylDlI5HNYqoLU4wY2ol6+cN8HeEcb4CYeMTpzyoEK4C8+I
-	 GO69p+Ic4RUktLIXVOhJ9cscYKB/mPqNJT5Wdro0=
+	b=EywIIGbZFt+GKGJLo+rwvyvhqy0SszD57u+VuDANooGWirH8fzBL18L4qRrXDPgI/
+	 whtJ6jpifIuk7+jb9BQT9mXRimA0AJKKRg5CORV778AE9VGHwtzxx9lZoZ8vX28Bik
+	 4xCiERwj1UZk17DDqR/4QSFixinLqCyp6P7VWB6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YANXIN LI <fadouse@pm.me>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 253/547] ufs: use u64 for directory size in ufs_last_byte
-Date: Wed,  4 Nov 2026 16:07:17 -0500
-Message-ID: <20261104211045.364871851@linuxfoundation.org>
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.3 254/547] spi: spi-pci1xxxx: quiesce DMA engines on transfer timeout
+Date: Wed,  4 Nov 2026 16:07:18 -0500
+Message-ID: <20261104211045.395102292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,76 +67,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YANXIN LI <fadouse@pm.me>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-commit 1eff23433e73d7da4f9e3529d2701e34962b161f upstream.
+commit 0b591332a2bdc13d3f9163793131fe3651d1556a upstream.
 
-ufs1_read_inode() and ufs2_read_inode() copy the untrusted 64-bit
-on-disk size into inode->i_size.  ufs_last_byte() then truncates that
-value to an unsigned int before calculating the valid extent of a
-directory folio.
+If a DMA-mapped transfer times out waiting for DMA_TERM and neither DMA
+abort interrupt arrived, pci1xxxx_spi_transfer_with_dma() returns
+through the error label while both DMA engines are still enabled, the
+done/abort interrupt status is still armed and the transfer state
+(p->xfer, p->tx_sgl, p->rx_sgl) is still registered.
 
-A directory size of exactly 4 GiB is truncated to zero.  In
-ufs_find_entry(), subtracting the requested record length from that zero
-forms an endpoint almost 4 GiB beyond the mapped folio.  A crafted UFS2
-image produces:
+The ISRs keep firing afterwards: they reprogram the DMA engines from
+p->tx_sgl / p->rx_sgl and signal completion through p->xfer and
+p->spi_xfer_done, all of which the SPI core is free to unmap or reuse
+once transfer_one() has returned, which is a use-after-free. A late
+done interrupt can also start the next transfer queued behind the
+failed one.
 
-  BUG: KASAN: use-after-free in ufs_find_entry+0x583/0x6e0 [ufs]
-  Read of size 1
-  ...
-  ufs_find_entry
-  ufs_inode_by_name
-  ufs_lookup
-  __lookup_slow
-  path_lookupat
+Stop both DMA engines, drain the pending done/abort interrupt status
+and synchronize the DMA IRQs before dropping the in-progress state and
+the transfer pointers, and re-enable the engines afterwards so that
+subsequent transfers keep working. The engines are only turned back on
+once both were confirmed to have stopped: re-enabling an engine that
+failed to stop would cancel the pending stop request and let it keep
+running into buffers the SPI core is about to unmap or free, which is
+exactly the window this patch closes. An engine that failed to stop is
+left disabled, as the abort paths already do.
 
-The KASAN classification reflects that the adjacent physical page was
-free; the source-level operation is an out-of-folio read.  A controlled
-UFS1 test with CONFIG_UFS_FS_WRITE enabled also made ufs_find_entry()
-return a directory entry from an adjacent anonymous page.  unlink() then
-passed that pointer to ufs_delete_entry(), which cleared the adjacent
-page's 3
-2-bit d_ino.  This write result reproduced three out of three
-times.
+The DMA interrupt status and mask registers are shared between the two
+SPI instances, so the cleanup drains only this instance's done/abort
+status bits instead of masking the interrupt lines, which would also
+suppress the peer instance's completion interrupts.
 
-UFS normally requires a privileged mount path.  A relevant boundary is
-a privileged automounter or image-processing service handling an
-attacker-supplied filesystem.  The write primitive additionally requires
-UFS1 to be mounted read-write with CONFIG_UFS_FS_WRITE enabled; the read
-is reachable with read-only UFS2.
+Also make the DMA ISRs ignore interrupts while no transfer is in
+progress so that a stray MSI after the cleanup can no longer act on
+the cleared state.
 
-Keep the intermediate size arithmetic at 64 bits so non-final pages are
-bounded at PAGE_SIZE.  With this change, the same controlled tests reach
-the real on-disk directory entry and produce no adjacent-page write or
-KASAN report.  A reproducer and full validation logs are available on
-request.
+No PCI1XXXX hardware was available for testing and QEMU has no model
+of this PCIe part, so the timeout path was exercised with a userspace
+replica of the timeout branch and the DMA ISRs, with the register and
+interrupt accesses mocked: on the unfixed code both a wedged engine
+that clears after the timeout and a late done interrupt touch the
+freed transfer state, while with this fix applied neither does and an
+engine that failed to stop is left disabled.  The module was also
+loaded and unloaded in a QEMU x86_64 guest running a kernel with this
+fix applied.
 
-The vulnerable helper is present in v7.2-rc3, v7.1, v6.18.38, v6.12.95,
-v6.6.111, and upstream master at 1229e2e57a5c.  Runtime reproduction and
-fix validation were performed in an x86-64 QEMU guest running v7.2-rc3
-with generic KASAN.
-
-Fixes: b71034e5e67d ("[PATCH] ufs: directory and page cache:  from blocks to pages")
-Cc: stable@vger.kernel.org
-Signed-off-by: YANXIN LI <fadouse@pm.me>
-Link: https://patch.msgid.link/20260718190300.867109-1-fadouse@pm.me
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 9538edeb72c9 ("spi: mchp-pci1xxxx: DMA support for copying data to and from SPI Buf")
+Cc: stable@vger.kernel.org # 6.8+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261016020036.1333548-1-liuwb@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ufs/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-pci1xxxx.c |   71 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
 
---- a/fs/ufs/dir.c
-+++ b/fs/ufs/dir.c
-@@ -213,7 +213,7 @@ fail:
- static unsigned
- ufs_last_byte(struct inode *inode, unsigned long page_nr)
- {
--	unsigned last_byte = inode->i_size;
-+	u64 last_byte = inode->i_size;
+--- a/drivers/spi/spi-pci1xxxx.c
++++ b/drivers/spi/spi-pci1xxxx.c
+@@ -542,6 +542,8 @@ static int pci1xxxx_spi_transfer_with_dm
+ 	struct pci1xxxx_spi_internal *p = spi_controller_get_devdata(spi_ctlr);
+ 	struct pci1xxxx_spi *par = p->parent;
+ 	dma_addr_t tx_dma_addr = 0;
++	unsigned long flags;
++	bool engines_stopped;
+ 	int ret = 0;
+ 	u32 regval;
  
- 	last_byte -= page_nr << PAGE_SHIFT;
- 	if (last_byte > PAGE_SIZE)
+@@ -618,12 +620,72 @@ static int pci1xxxx_spi_transfer_with_dm
+ 			p->dma_aborted_wr = false;
+ 			ret = -ECANCELED;
+ 		}
++
++		/*
++		 * A timed out transfer leaves the DMA engines running and
++		 * the done/abort interrupt status armed with p->xfer,
++		 * p->tx_sgl and p->rx_sgl still registered.  Stop the
++		 * engines, drain the pending status and synchronize the
++		 * IRQs before dropping the transfer state, otherwise a
++		 * late interrupt makes the ISRs reprogram the engines
++		 * from or signal completion through memory which the SPI
++		 * core is about to unmap or free.
++		 */
++		writel(SPI_DMA_ENGINE_DIS,
++		       par->dma_offset_bar + SPI_DMA_GLOBAL_WR_ENGINE_EN);
++		writel(SPI_DMA_ENGINE_DIS,
++		       par->dma_offset_bar + SPI_DMA_GLOBAL_RD_ENGINE_EN);
++		engines_stopped =
++			!(readl_poll_timeout(par->dma_offset_bar +
++					     SPI_DMA_GLOBAL_WR_ENGINE_EN,
++					     regval, regval == 0x0, 0,
++					     USEC_PER_MSEC) ||
++			  readl_poll_timeout(par->dma_offset_bar +
++					     SPI_DMA_GLOBAL_RD_ENGINE_EN,
++					     regval, regval == 0x0, 0,
++					     USEC_PER_MSEC));
++		if (!engines_stopped)
++			dev_warn(&par->dev->dev,
++				 "SPI DMA engines failed to stop\n");
++
++		spin_lock_irqsave(&par->dma_wr_reg_lock, flags);
++		writel((SPI_DMA_DONE_INT_MASK(p->hw_inst) |
++			SPI_DMA_ABORT_INT_MASK(p->hw_inst)),
++		       par->dma_offset_bar + SPI_DMA_INTR_WR_CLR);
++		spin_unlock_irqrestore(&par->dma_wr_reg_lock, flags);
++		spin_lock_irqsave(&par->dma_rd_reg_lock, flags);
++		writel((SPI_DMA_DONE_INT_MASK(p->hw_inst) |
++			SPI_DMA_ABORT_INT_MASK(p->hw_inst)),
++		       par->dma_offset_bar + SPI_DMA_INTR_RD_CLR);
++		spin_unlock_irqrestore(&par->dma_rd_reg_lock, flags);
++
++		p->spi_xfer_in_progress = false;
++		synchronize_irq(p->irq[1]);
++		synchronize_irq(p->irq[2]);
++
++		/*
++		 * Turn the engines back on only once both are confirmed
++		 * to have stopped: re-enabling an engine that failed to
++		 * stop would cancel the pending stop request and let it
++		 * run into buffers the SPI core is about to unmap or
++		 * free.  An engine that failed to stop is left disabled,
++		 * as the abort paths already do.
++		 */
++		if (engines_stopped) {
++			writel(SPI_DMA_ENGINE_EN,
++			       par->dma_offset_bar + SPI_DMA_GLOBAL_WR_ENGINE_EN);
++			writel(SPI_DMA_ENGINE_EN,
++			       par->dma_offset_bar + SPI_DMA_GLOBAL_RD_ENGINE_EN);
++		}
+ 		goto error;
+ 	}
+ 	ret = 0;
+ 
+ error:
+ 	p->spi_xfer_in_progress = false;
++	p->xfer = NULL;
++	p->tx_sgl = NULL;
++	p->rx_sgl = NULL;
+ 
+ 	return ret;
+ }
+@@ -695,6 +757,9 @@ static irqreturn_t pci1xxxx_spi_isr_dma_
+ 	unsigned long flags;
+ 	u32 regval;
+ 
++	if (!p->spi_xfer_in_progress)
++		return IRQ_NONE;
++
+ 	/* Clear the DMA RD INT and start spi xfer*/
+ 	regval = readl(p->parent->dma_offset_bar + SPI_DMA_INTR_RD_STS);
+ 	if (regval) {
+@@ -723,6 +788,9 @@ static irqreturn_t pci1xxxx_spi_isr_dma_
+ 	unsigned long flags;
+ 	u32 regval;
+ 
++	if (!p->spi_xfer_in_progress)
++		return IRQ_NONE;
++
+ 	/* Clear the DMA WR INT */
+ 	regval = readl(p->parent->dma_offset_bar + SPI_DMA_INTR_WR_STS);
+ 	if (regval) {
+@@ -755,6 +823,9 @@ static irqreturn_t pci1xxxx_spi_isr_dma(
+ 	irqreturn_t spi_int_fired = IRQ_NONE;
+ 	u32 regval;
+ 
++	if (!p->spi_xfer_in_progress)
++		return IRQ_NONE;
++
+ 	/* Clear the SPI GO_BIT Interrupt */
+ 	regval = readl(p->parent->reg_base + SPI_MST_EVENT_REG_OFFSET(p->hw_inst));
+ 	if (regval & SPI_INTR) {
 
 
