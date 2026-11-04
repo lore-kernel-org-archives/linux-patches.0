@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828897;
-	b=Bd1FmMIc6C+6a+7mLxFxn2c5DzErl92tjFNeZq/GMlaYXj3LfYv9F7p46fT1xYYXX/OR
-	 u4geBOXivRPvpAlv+Yut4d4/GX3xn+3YdH2glmMovWma8fO8lSCEvgXYcRfRl03told6X
-	 4kY5ofTX44s37d7Or39p0EtMMYkiG9+gVLU8VAu2njXGQtbUO4gGFr2ih5ODYzPvXzUSN
-	 XCENKiQqZlU/QfbIBLe8cDM/IIkVM7I75tKZOA1nW+xRuq9q+d5zKvLzj2X4O+OC2JubC
-	 Od0m+BwL4swt89FGHuCkZBGYRVU4cArWKhq2NfAXz23loh1PTKqnNh3ukJ96yj2yQMw==
+	t=1793828899;
+	b=fmQV5Vl7fpEHLrUyrdVd0Xi6ZKU9zFk/GyUXAcdVgbMVAcjSjjEcSZCLrCrLUV+yW45X
+	 KYJYut2HwNxU02Wsni2yslafHtS1yAWtdub6ZEdDa3vOJlfIRKyJxyC25T2Cx9ykkxSii
+	 lWL1830BRDVl/WUjap9IYvh30zZXsw+/N0jXYXG8qKu/oWFbpoyEsPT/u1qyVTpK30oAP
+	 c/iEy0UPiC8KR4LWSrnhI7K6t3swaN2hxueTRVxEjggrHpZzPkZck2xwZmP6vWZdg5nIv
+	 I6xZUN+dvFRhoB70dGBY/XhPb44UlgmzMxl8cvzmwCjrE3AstfxLTILeMuAcj+PDzgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828897;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zILiSdDdvmOKPHZyVmO1OSYBffzkdKuHg7MVH9mTiR4=;
-	b=0lHtWpq7B70XwdhtWfDyfmUF81foWqINzYhLR6nU9OkMQsLjRXbu99Y2U+tZRyvo7Ei0
-	 Msv9FmmX/jyy6N0GTpWODLrtMjgvgEegrVL1U4X0QkIQveZ7rKUtgmex5S5p+v7bXrBVz
-	 pHhBw6M03bl8QaBktejnTQ8/pzH5w3FrzYeSZmzTEZo5sThORBOpGtiqZ6z6AsfV9tj5g
-	 ndanmQsAS3zcxg2FmHGDEpvKLg3feK3Ec8hlmVMZlN2SjpbbvdM7Ld4tZ3FWjGXbhae9U
-	 eU5FEsko25aDZAmweXx9Oit8CGVwUHjydeEUnB9pBJHBFsQSRJChSZdlTSsmhUx97ZA==
+	bh=GP6O6Ep7CYi0YtKjmKx4n8ZgpZHpPNxLVcc3X5eWLzA=;
+	b=L82N6QJvCdawUfh/jp2ciU5S39+Qllh4as+8sc//3tkow1O/ZWLWj5eM5DACXNd/wySw
+	 PDDl6FP8MgiYEnQk0AHT0DowZjnQ25M6kuafY3ueiOkcbXGeWN+/CE/STOKRPjy39ZYwi
+	 apwonuMIUSqt9MCDDU5I4hONpaSi6bxluILP8RUHjAwJxzbizqT/Oa/5WwTnQgH5arYvM
+	 u4QQTezllF7KxrlM5ZHMU8Avutno4nrn8n4yHIKpKreuZHIDM0NF8NowmaPXyJN5vFuuA
+	 r2YZdHGMaUs4+kc2fAbD4vTm7jvln3AfBBbwX6q9E1U6J/TzScUmd2FrZ0ua2Ekr8Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jAoqY2cd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UTI6VX2+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BE9606A33A;
-	Wed,  4 Nov 2026 21:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313D6606A33A;
+	Wed,  4 Nov 2026 21:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jAoqY2cd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EF31F0093A;
-	Wed,  4 Nov 2026 21:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UTI6VX2+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA7C1F000C1;
+	Wed,  4 Nov 2026 21:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828897;
-	bh=zILiSdDdvmOKPHZyVmO1OSYBffzkdKuHg7MVH9mTiR4=;
+	s=korg; t=1793828898;
+	bh=GP6O6Ep7CYi0YtKjmKx4n8ZgpZHpPNxLVcc3X5eWLzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jAoqY2cdAPSJeeIEYftGBOfYkhQhW1XNNBI+A1JeI209otwq4uI+gTjDrxJlIOyrT
-	 qZbp8CPsNQeQskzR+h6Rrp+A4GT+/fzsIwmTuwwArsd9dGAW1rLHf05sTAG9izzw22
-	 NAaxk7iiXbWbjq6vdbTKEMpqewAPa10vUcVKVrWE=
+	b=UTI6VX2+MkthGUtGNJzupovwh4bTi1ST3smAk40lZVHmGNrj/jOr4NOlIdlHjLZS5
+	 WQIV47IlrdLp6KVIr94t7TH9HZ52w8isn9fS1O9oAsffV15B+M5p8w/R4aYbS6OvjQ
+	 hXRGpHsqlbq8FvHWqd4kAw8FA7wvg9MiAiPvZbwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 304/547] xfs: fix buffer overruns in xfs_ioc_attr_list
-Date: Wed,  4 Nov 2026 16:08:08 -0500
-Message-ID: <20261104211046.844921914@linuxfoundation.org>
+Subject: [PATCH 7.3 313/547] xfs: dont pass iget failures up when marking ondisk inodes
+Date: Wed,  4 Nov 2026 16:08:17 -0500
+Message-ID: <20261104211047.105292922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,35 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 0b9081a774ee7b9dff1e9ac3765b73c1d6bba5b2 upstream.
+commit 7f5e8bf335e5e257fb82cf5b3521980ded60e863 upstream.
 
-When we converted the al_offset array in struct xfs_attrlist into a VLA,
-the size of the object shrank by 4 bytes.  Unfortunately, the buffer
-size validation in the attrlist ioctl wasn't updated to notice this, so
-the al_offset[0] assignment blindly writes off the end of the buffer.
-LOLLM noticed the omitted check and complained.
+LOLLM observes a couple of problems with this callsite -- an ENOMEM
+return is completely ignored and a subsequent run through the loop body
+obliterates the return value completely.  Also, an error value
+indicating that the list is corrupt can get passed up (thus terminating
+the repair) even though we can handle corrupt lists.  Fix the callsite
+not to have these problems.
 
-Cc: stable@vger.kernel.org # v6.5
-Fixes: 371baf5c9750a2 ("xfs: convert flex-array declarations in struct xfs_attrlist*")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_handle.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/agheader_repair.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_handle.c
-+++ b/fs/xfs/xfs_handle.c
-@@ -409,7 +409,7 @@ xfs_ioc_attr_list(
- 	void				*buffer;
- 	int				error;
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -1325,8 +1325,12 @@ xrep_iunlink_mark_ondisk_rec(
+ 		 */
+ 		error = xchk_iget(ragi->sc, xfs_agino_to_ino(sc->sa.pag, agino),
+ 				&ip);
+-		if (error)
++		if (error == -ENOMEM)
++			return error;
++		if (error) {
++			error = 0;
+ 			continue;
++		}
  
--	if (bufsize < sizeof(struct xfs_attrlist) ||
-+	if (bufsize < struct_size(alist, al_offset, 1) ||
- 	    bufsize > XFS_XATTR_LIST_MAX)
- 		return -EINVAL;
+ 		trace_xrep_iunlink_reload_ondisk(ip);
  
 
 
