@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829406;
-	b=huTGCAdAUNa/JogngCyfyE3fDlh8xp/D9/pRRPzN09F6VkYmL5PITQqhRZcemCAV94mW
-	 MhadNgOJSf5lj/9knENgwR2PVYqD+wgAPFm0bqkjCDtmkBcmyFkzcbQNasCG5Zd01Yrrn
-	 n7L2ChbUyYg8ZeIYwugBo9k9l06oEt9EDQZjCRXitUFPh8bZ+MTTGFsFJAa/Mt8XmvI8G
-	 Thbm8gBgxTh9++d9TqEBOSoux8+BWYmrp3+5TzzumyPQw0rivxalT/goDy0VTviLbFm//
-	 oJab78Mt30wl0IZGZvYC8nHXXnsbCrqFutxPFbO1dwGtp82/U+6wvyzAhfh95khDN/A==
+	t=1793829408;
+	b=R3HA6sJf8kdoAncqGVu+CuVebIde8BssdXsYJawUI4pLboHIPjp37M4BIR14R+sUS9FB
+	 2JdsJm5vFq5QO35Elp3/8PSmPK3bPxgjI1OA3MwvBK61pym0HEkiX2vRDF8xf8HakJWHg
+	 8WH3pi60LU+vV/1cvG0KHs0simztRZsC+CpOwPrnAqMqo879yU+qrF+/7xpoOCzOr7iEq
+	 eD3QrYavBSMCxwhcFY+8PTZgyR22GRJZssXOMYtfHEfsvlvGITRJHBzqSIjcz4RxYHwNm
+	 +g5WkcGRDycKTFd+LAExqEKzGvGS2chI+a27LbvirGhzl/p2ZyfjxHfzdF7rweoKq5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829408;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AfPMIVCAykG8c0nJZBUiHFlk9U1SscROT2qVovLV8TQ=;
-	b=VYrqw3psgYwce+26wvOixr1DQnyno1ylF+FGf43vUlWVwCQiwi6YVvNdT/02luk+sHpu
-	 PradoKn0JknoE0M01aKbhuQWuX4aoYJHgPrvzLgV8d+g2d72phzrMCMKIrqH/e+JBAT7v
-	 yrbXwhn/TprYmtPP+6TIOLQjLxKRaHTntsurWYNDq5kS4ip7toWCZicF8I/xyQSDcG+sh
-	 uZGK2QsEwWhBjTOM4JeubOeyU2sdjEBK9IyeXkllhwAEax3AhkoqEYqF69tNKKDQRVdc8
-	 2bC1tgfdZ3/Ce7kmGyeacb9V+ZHnZSTKpVldGF5vfzFKyMkwJFCxTPSQ7BATQRMDSIA==
+	bh=2xzXWmxgXEAZjng7f4WVTFpxe+yq+8ib3al177K93a0=;
+	b=sbfs+ajbdZfAarn46cF2ZfxDd+jXZRT/t+w4AjK76JEIPMMqnvwcZrI62SyKcjl2bnpR
+	 rT7RibeEJAev3zKuTOw6Ub9fw6sWKAE6/PBy0fAY6hBGOVnEmDc6mMJyw4ZIydBDX9nez
+	 RNY9t4XKARpu1aTSrFpEvaTLyMp4peZNekqkxRN9d8ghsUYmIf++f6kStr8DtDfzZ08GH
+	 aD2/UpK8ZthemfPNcanrJUSexXvF1lh01guKM2M03QXEGt7/t++qaOf7osS7eF4eLysmm
+	 a5yfDuoOLNneGe2TZdJ6iLSuyy0FSKv5eSNEXiHIYlEAFnHl3e20rvy77P+U/UlN5ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D/x2bXA0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PlJiz7Da;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B8660C0169;
-	Wed,  4 Nov 2026 21:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD210606A865;
+	Wed,  4 Nov 2026 21:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D/x2bXA0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7652E1F00919;
-	Wed,  4 Nov 2026 21:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PlJiz7Da
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A2B1F00919;
+	Wed,  4 Nov 2026 21:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829405;
-	bh=AfPMIVCAykG8c0nJZBUiHFlk9U1SscROT2qVovLV8TQ=;
+	s=korg; t=1793829407;
+	bh=2xzXWmxgXEAZjng7f4WVTFpxe+yq+8ib3al177K93a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D/x2bXA0D6yOHUuSZfPPi4YXBI8qO0YZBWKYToiIghmQ4qklAqnOvkyWThN92XIvZ
-	 ebhAYqtFNrFck7ZxvvDnvfRd6BJexWJApP8L9rwwkuc8ijXfnQ0tSbEPKWTjkJ9rcN
-	 ShQ+XEjOwXZN+IXhWQOA9udyTbDMbW76x53AGxeg=
+	b=PlJiz7DajeENwlCFmYPsYq6rAFbt26J3XPfi2GV4+beg7Ab20II3yx7Ri87akLUOK
+	 8nzTDDHNqvT7hHgsLG8jjnp6EAiL33rS9Of3qFYePgSyBXfFPON+XUHFY4R7iY3Si5
+	 C6UODLxovaXOrQM2kqdw4c9KCawkRpszlVYUKmG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xixin Liu <liuxixin@kylinos.cn>,
-	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0107/1005] nvme-auth: use crypto_memneq for DH-HMAC-CHAP response comparison
-Date: Wed,  4 Nov 2026 15:57:20 -0500
-Message-ID: <20261104211046.649951525@linuxfoundation.org>
+Subject: [PATCH 6.18 0108/1005] nvme: zns: cap zone report nr_zones by DMA buffer size
+Date: Wed,  4 Nov 2026 15:57:21 -0500
+Message-ID: <20261104211046.677228639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -72,71 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit 3a6d89836ab09d53f4c32c57588689a378ce4363 ]
+[ Upstream commit 09c9062d4f62199a634a45e2bb9e6e8e572cc78c ]
 
-DH-HMAC-CHAP authentication compares HMAC response digests with memcmp().
-Standard memcmp() may stop at the first differing byte, which can leak
-timing information to a remote attacker and allow incremental recovery
-of the expected digest.
+With Partial Report (PR=1), the Number of Zones (NZ) field in the report
+header must equal the number of zone descriptors fully transferred in the
+DMA buffer (ZNS Command Set Specification Rev 1.2, section 3.4.2).
 
-Use crypto_memneq() for constant-time comparison on both the host path
-that validates the controller Success1 response and the target path that
-validates the host Reply digest.  Other memcmp() uses in the NVMe auth
-code (e.g. fixed string prefix checks) are not security-sensitive and
-are left unchanged.
+nvme_ns_report_zones() does not cap the parse loop by max_in_buf derived
+from buflen.  Cap nz with min3() over the device-reported count, nr_zones -
+zone_idx, and max_in_buf.
 
 Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/auth.c               | 3 ++-
- drivers/nvme/target/fabrics-cmd-auth.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/nvme/host/zns.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
-index 8f3ccb317e4de..9d73713d6f828 100644
---- a/drivers/nvme/host/auth.c
-+++ b/drivers/nvme/host/auth.c
-@@ -9,6 +9,7 @@
- #include <linux/unaligned.h>
- #include <crypto/hash.h>
- #include <crypto/dh.h>
-+#include <crypto/utils.h>
- #include "nvme.h"
- #include "fabrics.h"
- #include <linux/nvme-auth.h>
-@@ -381,7 +382,7 @@ static int nvme_auth_process_dhchap_success1(struct nvme_ctrl *ctrl,
- 		return 0;
+diff --git a/drivers/nvme/host/zns.c b/drivers/nvme/host/zns.c
+index cce4c5b55aa9c..f067185920451 100644
+--- a/drivers/nvme/host/zns.c
++++ b/drivers/nvme/host/zns.c
+@@ -178,7 +178,7 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 	struct nvme_zone_report *report;
+ 	struct nvme_command c = { };
+ 	int ret, zone_idx = 0;
+-	unsigned int nz, i;
++	unsigned int max_in_buf, nz, i;
+ 	size_t buflen;
  
- 	/* Validate controller response */
--	if (memcmp(chap->response, data->rval, data->hl)) {
-+	if (crypto_memneq(chap->response, data->rval, data->hl)) {
- 		dev_dbg(ctrl->device, "%s: qid %d ctrl response %*ph\n",
- 			__func__, chap->qid, (int)chap->hash_len, data->rval);
- 		dev_dbg(ctrl->device, "%s: qid %d host response %*ph\n",
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 35bf1a2357d49..5b010318286e4 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -10,6 +10,7 @@
- #include <linux/nvme-auth.h>
- #include <crypto/hash.h>
- #include <crypto/kpp.h>
-+#include <crypto/utils.h>
- #include "nvmet.h"
+ 	if (ns->head->ids.csi != NVME_CSI_ZNS)
+@@ -188,6 +188,9 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 	if (!report)
+ 		return -ENOMEM;
  
- static void nvmet_auth_expired_work(struct work_struct *work)
-@@ -187,7 +188,7 @@ static u8 nvmet_auth_reply(struct nvmet_req *req, void *d, u32 tl)
- 		return NVME_AUTH_DHCHAP_FAILURE_FAILED;
- 	}
++	max_in_buf = (buflen - sizeof(struct nvme_zone_report)) /
++		sizeof(struct nvme_zone_descriptor);
++
+ 	c.zmr.opcode = nvme_cmd_zone_mgmt_recv;
+ 	c.zmr.nsid = cpu_to_le32(ns->head->ns_id);
+ 	c.zmr.numd = cpu_to_le32(nvme_bytes_to_numd(buflen));
+@@ -207,7 +210,8 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
+ 			goto out_free;
+ 		}
  
--	if (memcmp(data->rval, response, data->hl)) {
-+	if (crypto_memneq(data->rval, response, data->hl)) {
- 		pr_info("ctrl %d qid %d host response mismatch\n",
- 			ctrl->cntlid, req->sq->qid);
- 		pr_debug("ctrl %d qid %d rval %*ph\n",
+-		nz = min((unsigned int)le64_to_cpu(report->nr_zones), nr_zones);
++		nz = min3((unsigned int)le64_to_cpu(report->nr_zones),
++			  nr_zones - zone_idx, max_in_buf);
+ 		if (!nz)
+ 			break;
+ 
 -- 
 2.53.0
 
