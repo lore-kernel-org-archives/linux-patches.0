@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829542;
-	b=F3GVXQvtuGx2fv4t/aEUWATuRadH3tg9AzO6ENu2e89qH0Mf+02XyqFBofYdsHuo3krD
-	 9IeZShcnJyz0VAlOjSXsON5pQXbHhipnchHbEl+eriUKABtd5iSUNb+sqmazMfql2C58I
-	 27swmMqMl4wXh3OGYERC2mBAusdnLw87qA3mBiw6MzawQTPRs932R60nLLW6dpdWH4A5w
-	 OwJA9ME4RLvn0MCPHzkNpURJsDM8uao9fUIVTG8pbbeoPh8JgmGOemYTgIFEOZx4KV97Y
-	 D4EvB+wyrRPY/3f/y3uD5o9M+gEmMOkoKtFFiFkIbg6RKu2+4dJhquPS894YlfxQkpw==
+	t=1793829543;
+	b=c2lxKFzbOz/nNDI1ObHoEUffccfK7ny6RYD+HmcMK3OUnIY+NufhQ7hXd83In2T9cYBJ
+	 Q4CjmgWl29XuvREaUwngJ2Ad33ULPY6Tu5Mes/ZOZ4lU3DEN68yW2aa+bhSL4khCc830G
+	 8Zwaso+T+EQwGxGW50nLI0roJoZJnZky0wn39CKH9JMePPutg1PX7FHJQf3JCCJZq5C8h
+	 YyussobD3PFBCXv0sYVBmbsglqcSbyP3L+p90Dpg2oVWpDDt6s72uZEZcH31pFPSawHW0
+	 +eU9c1rbswEqBq6IDmLwl/qf7zJId2lRD5hA4JSbndQGRAw5L0UJBC/7uIb9i5Do/rA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829542;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829543;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7bsHF5IPdnpLhLx8xSRyrRJ8h4gpm4YufZBHo9+s6ls=;
-	b=MiD0E/W21XNWKo/W/c6FN2oJDMpy9KQGTbdlSmyKiKyiADSEbh63ogR0vTLhOS3Qj7hP
-	 oa7Ds9/QhpcEJQjU6rqf47NxieVygAJ9jyygeoBLQvS5tpP37M2hvLSAX0MVtlat1zV2w
-	 miG6HqorWiOH4dDqpRGOI9tRNMUW9AgUGJGVBCTYOvGOBCkKQrDuPR58BqZAMc/aDb6+3
-	 3shaco0DHRIvN+eQSHFhby//3GBC2xkLWseczE7wk/IqwSoMyRNLHchfcummt9WEUeoCl
-	 wLmuTKVD3ZXZzNaYvOD+1yy6ukpI8w6QwlGfM42kJexBj3N0tLOjgnSi/wBIaqG0FxA==
+	bh=lhlOlHEK28LwQ7m91NdWCWuxJSoe1ZTM424POaKDywE=;
+	b=bdh40goET95LVcnxqbAvi3EDZ4Amf0g475vh2VPqZZq0XoS8fpy+KjcfHHV2zoxGIbdG
+	 p6/R4v+DBUiNqjx8qJ32c0C8hwVRhTCZk4eNMK2osqE/G+9Y/pAL87h7REl9lPAUJXkmv
+	 SeOQkO3glhg21ngFvt20pPVaonxUeufLvv1o9dXKL+y8XZ2jNlz039uIAVPF9zpF8hXOH
+	 rR+HVPeYBp3VCaHCJENanxPb6IVc/WulRomJ4t2LZ5x2p9iUIatk8IjjBFUmPNxbsq5SV
+	 jP6SLDdd52F5Zd/Gnu5ic/YlavP3L9l7dnk8NMwlEn038tMIlXaPygc5+lvAnEBKDVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTcWASiW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JSUcnkh3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64076075267;
-	Wed,  4 Nov 2026 21:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE286074FBD;
+	Wed,  4 Nov 2026 21:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTcWASiW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415D61F00A16;
-	Wed,  4 Nov 2026 21:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JSUcnkh3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4EF1F00A1A;
+	Wed,  4 Nov 2026 21:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829541;
-	bh=7bsHF5IPdnpLhLx8xSRyrRJ8h4gpm4YufZBHo9+s6ls=;
+	s=korg; t=1793829543;
+	bh=lhlOlHEK28LwQ7m91NdWCWuxJSoe1ZTM424POaKDywE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yTcWASiWj+7yw+2i67OQbFgY+8vPN1l3eKo95gpHNMwlgj1r7+ucd1DBY8+un95XF
-	 PBAq68F0canyMcYqH2qs5qIQf1jSaHAEd6gAuN8LJC++R+py/oKjmqGCcvbueLxBtg
-	 aPXfE04qCRoTHMInbeNBx5/Ky3LYr9We04G8lJFE=
+	b=JSUcnkh3mGzWynCmdJ4lTuBq+e5ebOzB5yOi5DSksPkJWAhF+3R00TzyKOXi0sPJO
+	 wdzHVti+JrpzDVUcSMO41yMhnQ0yLd0AqlAX65FDKN8+rs891bVkW/jzP5yC2DipI6
+	 jZLTY6JCUVA2YG7IiO0eQZmTfOSbrVDTsOLlBDWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0192/1005] misc: ibmvmc: release send buffer on write errors
-Date: Wed,  4 Nov 2026 15:58:45 -0500
-Message-ID: <20261104211049.172902732@linuxfoundation.org>
+Subject: [PATCH 6.18 0193/1005] ipack: ipoctal: add rwsem to guard against TOCTOU in remove path
+Date: Wed,  4 Nov 2026 15:58:46 -0500
+Message-ID: <20261104211049.201357667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,56 +67,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit fd62c1f591372f7dc4c5bc041569c2f0a4a86be1 ]
+[ Upstream commit 7d3a708af7f4e2af9e114d731bd60d30c1ec884e ]
 
-ibmvmc_get_valid_hmc_buffer() marks the selected send buffer busy before
-ibmvmc_write() validates the backing storage or copies data from user
-space. Error exits after that point leave the buffer permanently busy.
+The "removed" flag check in each tty op has a TOCTOU race with
+__ipoctal_remove(): the device could be removed between the flag
+check and the subsequent access to hardware resources (channel
+registers via iowrite8, or xmit_buf in write_tty).
 
-Keep the buffer pointer until ownership is handed to the hypervisor, and
-mark it free again on local write failures. Also report an RDMA send
-failure instead of returning a successful byte count.
+Close this race by introducing a read-write semaphore (remove_sem).
+The tty ops acquire the read lock via guard(rwsem_read) for the
+full duration of the operation, while __ipoctal_remove() acquires
+the write lock via scoped_guard(rwsem_write) when setting the
+removed flag.  This ensures that once removed is true, no in-flight
+tty op can still be accessing resources that are about to be freed
+by the remove path.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260624185925.2133-1-alhouseenyousef@gmail.com
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/fbce75010a0f0a3a3709a5e06fd0ffd19ca0a0ed.1782870760.git.xiaopei01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ibmvmc.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/ipack/devices/ipoctal.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/misc/ibmvmc.c b/drivers/misc/ibmvmc.c
-index e5f935b5249d5..af84e94ec5f0e 100644
---- a/drivers/misc/ibmvmc.c
-+++ b/drivers/misc/ibmvmc.c
-@@ -1040,7 +1040,7 @@ static ssize_t ibmvmc_write(struct file *file, const char *buffer,
- 			    size_t count, loff_t *ppos)
- {
- 	struct inode *inode;
--	struct ibmvmc_buffer *vmc_buffer;
-+	struct ibmvmc_buffer *vmc_buffer = NULL;
- 	struct ibmvmc_file_session *session;
- 	struct crq_server_adapter *adapter;
- 	struct ibmvmc_hmc *hmc;
-@@ -1130,9 +1130,15 @@ static ssize_t ibmvmc_write(struct file *file, const char *buffer,
- 	dev_dbg(adapter->dev, "write: file = 0x%lx, count = 0x%lx\n",
- 		(unsigned long)file, (unsigned long)count);
+diff --git a/drivers/ipack/devices/ipoctal.c b/drivers/ipack/devices/ipoctal.c
+index 474b58858dca6..aab303c4a9837 100644
+--- a/drivers/ipack/devices/ipoctal.c
++++ b/drivers/ipack/devices/ipoctal.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/interrupt.h>
+ #include <linux/kref.h>
++#include <linux/rwsem.h>
+ #include <linux/sched.h>
+ #include <linux/tty.h>
+ #include <linux/serial.h>
+@@ -54,6 +55,7 @@ struct ipoctal {
+ 	u8 __iomem			*int_space;
+ 	struct kref			kref;
+ 	struct module			*carrier_owner;
++	struct rw_semaphore		remove_sem;
+ 	bool				removed;
+ };
  
--	ibmvmc_send_msg(adapter, vmc_buffer, hmc, count);
-+	if (ibmvmc_send_msg(adapter, vmc_buffer, hmc, count)) {
-+		ret = -EIO;
-+		goto out;
-+	}
-+	vmc_buffer = NULL;
- 	ret = p - buffer;
-  out:
-+	if (vmc_buffer)
-+		vmc_buffer->free = 1;
- 	spin_unlock_irqrestore(&hmc->lock, flags);
- 	return (ssize_t)(ret);
- }
+@@ -81,7 +83,7 @@ static int ipoctal_port_activate(struct tty_port *port, struct tty_struct *tty)
+ 	channel = dev_get_drvdata(tty->dev);
+ 	ipoctal = chan_to_ipoctal(channel, tty->index);
+ 
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed)
+ 		return -ENODEV;
+ 
+@@ -476,7 +478,7 @@ static ssize_t ipoctal_write_tty(struct tty_struct *tty, const u8 *buf,
+ 	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
+ 	size_t char_copied;
+ 
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed || !channel->tty_port.xmit_buf)
+ 		return 0;
+ 
+@@ -522,7 +524,7 @@ static void ipoctal_set_termios(struct tty_struct *tty,
+ 	struct ipoctal *ipoctal = chan_to_ipoctal(channel, tty->index);
+ 	speed_t baud;
+ 
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed)
+ 		return;
+ 
+@@ -660,7 +662,7 @@ static void ipoctal_hangup(struct tty_struct *tty)
+ 		return;
+ 
+ 	ipoctal = chan_to_ipoctal(channel, tty->index);
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed)
+ 		return;
+ 
+@@ -686,7 +688,7 @@ static void ipoctal_shutdown(struct tty_struct *tty)
+ 		return;
+ 
+ 	ipoctal = chan_to_ipoctal(channel, tty->index);
+-
++	guard(rwsem_read)(&ipoctal->remove_sem);
+ 	if (ipoctal->removed)
+ 		return;
+ 
+@@ -736,6 +738,7 @@ static int ipoctal_probe(struct ipack_device *dev)
+ 		return -ENOMEM;
+ 
+ 	kref_init(&ipoctal->kref);
++	init_rwsem(&ipoctal->remove_sem);
+ 
+ 	ipoctal->dev = dev;
+ 	ipoctal->carrier_owner = dev->bus->owner;
+@@ -755,7 +758,8 @@ static void __ipoctal_remove(struct ipoctal *ipoctal)
+ {
+ 	int i;
+ 
+-	ipoctal->removed = true;
++	scoped_guard(rwsem_write, &ipoctal->remove_sem)
++		ipoctal->removed = true;
+ 
+ 	ipoctal->dev->bus->ops->free_irq(ipoctal->dev);
+ 
 -- 
 2.53.0
 
