@@ -1,52 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831933;
-	b=VSF/89Arf5RK48Bh2WF1pJJI2+s4tD5sFDWxMh2qCKAYiVGF9SJN157X23ogpJYQ6FPO
-	 GhqaosjxeWUgneSB7A/CdYiEgEtLmVIUUWzcTX5kUpKekR3D4oqFm7+QXykk+47WuL3Nx
-	 MFH5/NgrzcNQ/K4vYodlcbEYPPfNgsHXAI7Ja0T97XoVooRXYqfDtr6tKCfaaohltlAWo
-	 JnOTrH9Krqm5XePzyMi5BcbExMJRViry17fgZw1UpqjBl6yLirsDDndkkJFll2JN7okHY
-	 cfRVVoEWu1bBkhOY0YI71w9EeRmqsnvV/b05bb/Mi+S5WBJ7pzlr4yl8G5cDk0NZo3Q==
+	t=1793831934;
+	b=w6ki83a0jLaY1uGn/IcsADO48r0Dd6o7lMrWc0Q4aPycXzUt7wUXe+Bvgf5oBl8mdq7o
+	 /p1eIj3zDjhhkaeCB7UfNxqLAdxW0pLqpraQms4l7rM3pFSkE/U40WeX4F18GYOThSbwz
+	 rfkdqlrS3fjhC2P9v9kItoAEnyjxX1qjyLURM1BmM1ziq0XqI+n8LlSJlM4UoANQ6UAiD
+	 jb2lsGBoDiqIwYytWX8Jm+rkKth/qr72jgcWK01UxnrkDGgBPe8s5kWwLAs2fvDfB9Cfo
+	 etzZTtS7v4SF07SskQL+uMHPRJwPeozB6VGwQ3b1P5BaxS2Qm3atIq4YEDhEb8bRy1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831933;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=07LxaJa/ZdRkLV/KePMkh6ZQynybvJbSdtTjWxN49OQ=;
-	b=SxIHkVIbk8T059JCJua3MoP+f5Y9aWUkV4to/4fOXqxKnXu9WQjJ4fNF0iNWRXVSq2n0
-	 rNm1B5KtsM7z1X3x9wF2Q4rbt3f51LQpMHVpUNK6QxRz9OyNrHRbkMWdne8Z+5rU/JgQ4
-	 By6LO01s6HihaalFEqyUphHwq4xBmn+Re0sIFB3JoIc6dq5pLGs7XcnzWkYsefZGnMz92
-	 vGzcfCfwyzyrxDA/qTCoNOIcV1ClSIfTsxcXenNWokKJx7B6FcfV1lLAlzCNKroqk16Ca
-	 VDmbhoKDNTbS2TPQ6yr+GZGZDFm6NjCU5BuGtPp5x1eACwC6wLEjkbt0/dDmaO3Xmvg==
+	bh=ApiBoMDjgoM0044zdx0o75V6cgGUOm7zmWa5ZtHYJJ4=;
+	b=v5P7e3MVGklyIDFHn/xHeSAR8pr2H6uYMpcFTNArbyASRroN7jOo4hd82y2iCJvPat+L
+	 d6B53AeCgGd3aI85ykX80w8odWnNAc3ZTTcdkImFGynockt1FbKukkvT9cOyqyiQut/02
+	 suKEa/ZmiqtR+fxnoKc1OKx5Iaf8fHLCleMoSpSWlWryUCMPc3ui8t5pzm48jaklhYBUB
+	 LECPostHODjUMYtpsYzfMVaQbr21A4jd+tS0I5otyYNkDNbPIqpyddyr31JF0BKSR432T
+	 dFT10Vsjy/7Hoi3omvpQrhxn8lZTNZFKtgnWPUeSgVFi+ZD+ONgLXn/MyML1toP0IsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc22Xqjt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jhBu68yn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F94606A326;
-	Wed,  4 Nov 2026 22:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B2B606A328;
+	Wed,  4 Nov 2026 22:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc22Xqjt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1641F000C1;
-	Wed,  4 Nov 2026 22:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jhBu68yn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA781F000C1;
+	Wed,  4 Nov 2026 22:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831932;
-	bh=07LxaJa/ZdRkLV/KePMkh6ZQynybvJbSdtTjWxN49OQ=;
+	s=korg; t=1793831934;
+	bh=ApiBoMDjgoM0044zdx0o75V6cgGUOm7zmWa5ZtHYJJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wc22XqjtZQlb9uSqsbqpKKqQWDtnXQgqLN1LiYxtf2wxkvQx5d2hXq8i7/w+uv+ET
-	 +sVCWP13VG/4WLI32FH8i6dUy3uTKcNwQEZ2e8DycvME4MRO4jnlQ3A13ytEsdGD4p
-	 oNF3zIC59mEnjkNlLd0eI1ZE7YxG/PqVCfPwgVMY=
+	b=jhBu68ynSwm7JMsx5UxorQeXwkh+7dpeqJgETITuqUi8P8p4BZ4ZKz+3PhCjnQ+3A
+	 zZ1RZB+wvqB5NdyvjNivii+SLUFZZDTvwIZZaB+jH8mpnxbB1wJ/mpKj6E9wYve0C8
+	 FGtXllvdzdUstsr4ViZ2VV9dMVTn13CrXqYSNRH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0998/1005] pps: generators: fix use-after-free when closing a removed device
-Date: Wed,  4 Nov 2026 16:12:11 -0500
-Message-ID: <20261104211110.983686708@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"JongHyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
+	Rik van Riel <riel@surriel.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.18 0999/1005] mm/rmap: dont discard lazyfree THPs at PMD level
+Date: Wed,  4 Nov 2026 16:12:12 -0500
+Message-ID: <20261104211111.008011492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,238 +77,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Zi Yan <ziy@nvidia.com>
 
-[ Upstream commit d19552611cb2eb6329826871565e5309bec2f288 ]
+commit 984c0700854e35779a2bcce6b02783e709b6efa2 upstream.
 
-The cdev of a PPS generator is embedded in struct pps_gen_device, but
-nothing ties the lifetime of that structure to the cdev: pps_gen is
-freed by the release function of its device, and an open file holds a
-device reference only until pps_gen_cdev_release() drops it.
+__discard_anon_folio_pmd_locked() clears a lazyfree THP's PMD before it
+determines whether the folio can be discarded, and restores it if the
+folio is dirty or has extra references.  It is done under only the PMD
+lock and the anon_vma read lock inside try_to_unmap_one() and no mmap lock
+is held.  The temporarily none PMD causes UAF.
 
-When the generator is unregistered while /dev/pps-genN is open, that
-put_device() drops the last reference and frees pps_gen, and __fput()
-then calls cdev_put() on the freed cdev:
+A parallel munmap() or mremap() is supposed to serialize with it on the
+PMD lock, but zap_pmd_range() (called by munmap()) and move_page_tables()
+(called by mremap()) do not take the lock when they see the temporarily
+none PMD and skip the PMD.  There is no more page table walk after the
+none PMD is restored:
 
-  BUG: KASAN: slab-use-after-free in cdev_put+0x53/0x60
-  Read of size 8 at addr ffff88801383e138 by task ppsgen64/149
-  Call Trace:
-   cdev_put+0x53/0x60
-   __fput+0x745/0xad0
-   fput_close_sync+0xd9/0x1b0
-   __x64_sys_close+0x86/0xf0
-  ...
-  Freed by task 149:
-   kfree+0x25a/0x6d0
-   device_release+0xca/0x3c0
-   kobject_put+0x169/0x320
-   pps_gen_cdev_release+0x51/0x80
-   __fput+0x36a/0xad0
+- munmap(): free_pgtables() waits in unlink_anon_vmas() for the anon_vma
+  lock, then free_pmd_range() drops the restored PMD as bad without
+  removing the rmap, so the folio keeps a stale mapcount.
 
-pps.c had the same bug, fixed in commit c79a39dc8d06 ("pps: Fix a
-use-after-free").
+- whole-VMA MREMAP_DONTUNMAP: dontunmap_complete() unlinks the source VMA
+  from its anon_vma while the restored PMD still maps the folio.
 
-Fix it the usual way: embed the struct device in pps_gen_device and
-register both with cdev_device_add(). This makes the device the parent
-of the cdev, so the cdev holds a device reference until the last file
-is closed.
+- plain mremap(): the THP is not moved but unmapped, so the THP's data is
+  lost.
 
-Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
-Cc: stable@vger.kernel.org
+In the first two cases, the folio stays mapped, but no VMA that maps it is
+linked to its anon_vma.  When the anon_vma is freed, it is still reachable
+when one rmap walks the folio.  Racing lazyfree reclaim against
+MREMAP_DONTUNMAP as an unprivileged user reproduces a KASAN use-after-free
+in folio_lock_anon_vma_read() as reported in the Closes link.
+
+One solution is to use an invalidated PMD instead of a cleared one until
+the discard is committed, but it needs arch fixes first.
+1. GUP-fast still follows an invalidated PMD on riscv, LoongArch and s390.
+2. sparc64 miscounts thp_pte_count when an invalidated PMD is set again or
+   cleared.
+
+To keep the fix simple for backport, stop discarding lazyfree THPs at PMD
+level instead. try_to_unmap_one() splits the PMD and discards the folio at
+PTE level.
+
+unmap_huge_pmd_locked() and __discard_anon_folio_pmd_locked() are left in
+place, unused, to minimize this fix for backport and the invalidated PMD
+approach is planned as a follow-up series to use them again.
+
+Link: https://lore.kernel.org/20261012-lazyfree-stable-fix-v2-1-6387d6e30063@nvidia.com
+Fixes: 735ecdfaf4e8 ("mm/vmscan: avoid split lazyfree THP during shrink_folio_list()")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Closes: https://lore.kernel.org/r/20261009165214.40212-2-kylebot@openai.com
+Reviewed-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: JongHyuk Kim(MalHyuk) <malhyuk97@gmail.com>
+  Link: https://lore.kernel.org/CADQRuqvXQ=YE=7T3oR66vTxE33pi=ygEeZKPTOU=cALZL0Figw@mail.gmail.com
 Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://patch.msgid.link/20260929124937.51114-2-danishkhateeb03@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pps/generators/pps_gen.c |   63 +++++++++++++++++++--------------------
- include/linux/pps_gen_kernel.h   |    2 -
- 2 files changed, 32 insertions(+), 33 deletions(-)
+ mm/rmap.c |   11 -----------
+ 1 file changed, 11 deletions(-)
 
---- a/drivers/pps/generators/pps_gen.c
-+++ b/drivers/pps/generators/pps_gen.c
-@@ -63,7 +63,7 @@ static long pps_gen_cdev_ioctl(struct fi
- 
- 	switch (cmd) {
- 	case PPS_GEN_SETENABLE:
--		dev_dbg(pps_gen->dev, "PPS_GEN_SETENABLE\n");
-+		dev_dbg(&pps_gen->dev, "PPS_GEN_SETENABLE\n");
- 
- 		ret = get_user(status, uiuarg);
- 		if (ret)
-@@ -77,7 +77,7 @@ static long pps_gen_cdev_ioctl(struct fi
- 		break;
- 
- 	case PPS_GEN_USESYSTEMCLOCK:
--		dev_dbg(pps_gen->dev, "PPS_GEN_USESYSTEMCLOCK\n");
-+		dev_dbg(&pps_gen->dev, "PPS_GEN_USESYSTEMCLOCK\n");
- 
- 		ret = put_user(pps_gen->info->use_system_clock, uiuarg);
- 		if (ret)
-@@ -89,12 +89,12 @@ static long pps_gen_cdev_ioctl(struct fi
- 		struct pps_gen_event info;
- 		unsigned int ev = pps_gen->last_ev;
- 
--		dev_dbg(pps_gen->dev, "PPS_GEN_FETCHEVENT\n");
-+		dev_dbg(&pps_gen->dev, "PPS_GEN_FETCHEVENT\n");
- 
- 		ret = wait_event_interruptible(pps_gen->queue,
- 				ev != pps_gen->last_ev);
- 		if (ret == -ERESTARTSYS) {
--			dev_dbg(pps_gen->dev, "pending signal caught\n");
-+			dev_dbg(&pps_gen->dev, "pending signal caught\n");
- 			return -EINTR;
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -1963,17 +1963,6 @@ static bool try_to_unmap_one(struct foli
  		}
  
-@@ -121,7 +121,7 @@ static int pps_gen_cdev_open(struct inod
- 	struct pps_gen_device *pps_gen = container_of(inode->i_cdev,
- 				struct pps_gen_device, cdev);
- 
--	get_device(pps_gen->dev);
-+	get_device(&pps_gen->dev);
- 	file->private_data = pps_gen;
- 	return 0;
- }
-@@ -130,7 +130,7 @@ static int pps_gen_cdev_release(struct i
- {
- 	struct pps_gen_device *pps_gen = file->private_data;
- 
--	put_device(pps_gen->dev);
-+	put_device(&pps_gen->dev);
- 	return 0;
- }
- 
-@@ -151,19 +151,15 @@ static void pps_gen_device_destruct(stru
- {
- 	struct pps_gen_device *pps_gen = dev_get_drvdata(dev);
- 
--	cdev_del(&pps_gen->cdev);
+ 		if (!pvmw.pte) {
+-			if (folio_test_anon(folio) && !folio_test_swapbacked(folio)) {
+-				if (unmap_huge_pmd_locked(vma, pvmw.address, pvmw.pmd, folio))
+-					goto walk_done;
+-				/*
+-				 * unmap_huge_pmd_locked has either already marked
+-				 * the folio as swap-backed or decided to retain it
+-				 * due to GUP or speculative references.
+-				 */
+-				goto walk_abort;
+-			}
 -
- 	pr_debug("deallocating pps-gen%d\n", pps_gen->id);
- 	ida_free(&pps_gen_ida, pps_gen->id);
- 
--	kfree(dev);
- 	kfree(pps_gen);
- }
- 
- static int pps_gen_register_cdev(struct pps_gen_device *pps_gen)
- {
- 	int err;
--	dev_t devt;
- 
- 	err = ida_alloc_max(&pps_gen_ida, PPS_GEN_MAX_SOURCES - 1, GFP_KERNEL);
- 	if (err < 0) {
-@@ -171,46 +167,52 @@ static int pps_gen_register_cdev(struct
- 			pr_err("too many PPS sources in the system\n");
- 			err = -EBUSY;
- 		}
-+		kfree(pps_gen);
- 		return err;
- 	}
- 	pps_gen->id = err;
- 
--	devt = MKDEV(MAJOR(pps_gen_devt), pps_gen->id);
-+	/*
-+	 * From here on pps_gen belongs to its device and is freed by
-+	 * pps_gen_device_destruct(). The cdev holds a reference to the
-+	 * device, so pps_gen stays around until the last file is closed.
-+	 */
-+	device_initialize(&pps_gen->dev);
-+	pps_gen->dev.class = &pps_gen_class;
-+	pps_gen->dev.parent = pps_gen->info->parent;
-+	pps_gen->dev.devt = MKDEV(MAJOR(pps_gen_devt), pps_gen->id);
-+	pps_gen->dev.release = pps_gen_device_destruct;
-+	dev_set_drvdata(&pps_gen->dev, pps_gen);
- 
- 	cdev_init(&pps_gen->cdev, &pps_gen_cdev_fops);
- 	pps_gen->cdev.owner = pps_gen->info->owner;
- 
--	err = cdev_add(&pps_gen->cdev, devt, 1);
-+	err = dev_set_name(&pps_gen->dev, "pps-gen%d", pps_gen->id);
-+	if (err)
-+		goto put_dev;
-+
-+	err = cdev_device_add(&pps_gen->cdev, &pps_gen->dev);
- 	if (err) {
- 		pr_err("failed to add char device %d:%d\n",
- 				MAJOR(pps_gen_devt), pps_gen->id);
--		goto free_ida;
-+		goto put_dev;
- 	}
--	pps_gen->dev = device_create(&pps_gen_class, pps_gen->info->parent, devt,
--				     pps_gen, "pps-gen%d", pps_gen->id);
--	if (IS_ERR(pps_gen->dev)) {
--		err = PTR_ERR(pps_gen->dev);
--		goto del_cdev;
--	}
--	pps_gen->dev->release = pps_gen_device_destruct;
--	dev_set_drvdata(pps_gen->dev, pps_gen);
- 
- 	pr_debug("generator got cdev (%d:%d)\n",
- 			MAJOR(pps_gen_devt), pps_gen->id);
- 
- 	return 0;
- 
--del_cdev:
--	cdev_del(&pps_gen->cdev);
--free_ida:
--	ida_free(&pps_gen_ida, pps_gen->id);
-+put_dev:
-+	put_device(&pps_gen->dev);
- 	return err;
- }
- 
- static void pps_gen_unregister_cdev(struct pps_gen_device *pps_gen)
- {
- 	pr_debug("unregistering pps-gen%d\n", pps_gen->id);
--	device_destroy(&pps_gen_class, pps_gen->dev->devt);
-+	cdev_device_del(&pps_gen->cdev, &pps_gen->dev);
-+	put_device(&pps_gen->dev);
- }
- 
- /*
-@@ -244,18 +246,15 @@ struct pps_gen_device *pps_gen_register_
- 	init_waitqueue_head(&pps_gen->queue);
- 	spin_lock_init(&pps_gen->lock);
- 
--	/* Create the char device */
-+	/* Create the char device, this frees pps_gen on failure */
- 	err = pps_gen_register_cdev(pps_gen);
- 	if (err < 0) {
- 		pr_err(" unable to create char device\n");
--		goto kfree_pps_gen;
-+		goto pps_gen_register_source_exit;
- 	}
- 
- 	return pps_gen;
- 
--kfree_pps_gen:
--	kfree(pps_gen);
--
- pps_gen_register_source_exit:
- 	pr_err("unable to register generator\n");
- 
-@@ -289,7 +288,7 @@ void pps_gen_event(struct pps_gen_device
- {
- 	unsigned long flags;
- 
--	dev_dbg(pps_gen->dev, "PPS generator event %u\n", event);
-+	dev_dbg(&pps_gen->dev, "PPS generator event %u\n", event);
- 
- 	spin_lock_irqsave(&pps_gen->lock, flags);
- 
---- a/include/linux/pps_gen_kernel.h
-+++ b/include/linux/pps_gen_kernel.h
-@@ -54,7 +54,7 @@ struct pps_gen_device {
- 
- 	unsigned int id;			/* PPS generator unique ID */
- 	struct cdev cdev;
--	struct device *dev;
-+	struct device dev;
- 	struct fasync_struct *async_queue;	/* fasync method */
- 	spinlock_t lock;
- };
+ 			if (flags & TTU_SPLIT_HUGE_PMD) {
+ 				/*
+ 				 * We temporarily have to drop the PTL and
 
 
