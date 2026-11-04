@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829417;
-	b=TvsID+L83bYPN/y4xz3cE1+qs9N4QN8mGraypcFlVjqF6MmUDLK+lR1BLubCsJGcfX9z
-	 J6xGjeaEDllMWfk0uO8dm9Sv1VFNqXim7SCibaI7kLRqk1+oyFNrQPa4UkWlg5suJk3qG
-	 /BQvxNePx6J+43x0MCvko4GVK8FWnSNVeVxwJ1/Vo1ZyZJG633OKQxB4EcqxYmCFFBVaS
-	 BNDfZWjwlRTuN/NF8ufMArxK3VO3XbIF+k+9dmoyxwB6wc+PI9pMAMMJtKbqrIJOaOHCP
-	 Uy0JNS5td1M9FmaZJmz2fFe161H5IuAVUuXKaAWV7fYzgYOy++0kqf1w8PBsgR6EWGw==
+	t=1793829418;
+	b=BPFk78CcuT74jYO48eprzsgarnqsBO2szILvc0OsX9dhypViCyc69Jw9Mv0fxMbyDYp8
+	 vHEgaDXnfa+t2py1lBvZ4aPcVbihMpuuKsMsX/9fKeA3PnYvZHSsGk/S9BHxebBYqOf/X
+	 n1wfmuA8l0VZt0ZhFFyOOAwzDWCA+T7C8YdgqM19EkxnPQ1GJSOnfRrDwZ9gqDpsQ1V0a
+	 Uy0b6v8v0wNSUHp2QubJGxcldx8eVQxEk+7UXItbNhQHR5VqEKnc38dFj7eyu/YJmR2/e
+	 KO5x9dhy+92VY9nRUi3qICAiDv35IdmyL0vbOU2QUtCxuqdl3HRXj4+qlYpHpTmetrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B/gdxULOVgXWPni79GvYrS+LjBFjEwHWRzerM6nSdjA=;
-	b=FBOTcWf7KmkrKPbC48vUFn/tsvdhlB+P7FGffx6uddO3wbRaY/OzN8zQrmUzEybTq4xK
-	 q9CZ6kxLdvTPRCtncEQCaTbofeymkryKtxdkXFXyA6Bj3yZyoCTl2F/gYqNwxiqE8CocR
-	 52j2u6P5F3CEtJzejJndtX7CrfH+MKkOMnGxiKCYzd7zzjGZ7wT0ADPbWtkcPzGvv7wQk
-	 q+Tk/s+IkRxJdOysuoTuMR8ybFiTblnY7VW1FyA4uK8Yys8OlPYsF2kHE9Zg4598mY1Tf
-	 YHZHBKH2MBPEZdZ7TXEmo+ye6Ezf7R7MThzfoEsh1E52bZk3SmM0iKM9C+9XfGaC6CQ==
+	bh=2RAHpEgUj2su69iAuj+Au46CBcCjTqNh0hL51WoMUNQ=;
+	b=WqTtUz03KA+0MuIuJ+ziQ/+Y9xaJ/GsTIG51xS4Cdju/quYRK350MNfl2IP5GdHiYnov
+	 1JracMD0Qu4LS3fygNWn3SbRUxZAbwT90xJGUPtJtVkT1Vf34WLAV5CcRob6SIphD6tSe
+	 j+yjgn3slv9RiYQ5rX1Fc4r8BXFlrGZ7TQWy/p2u6uZY+D9EzLagk4cP6sJXXwhP9Bjkp
+	 MRkaQmqtrUKoqTIpEQk9jHSVaEp5Ztz+oyxAOEVNb8+4TgND0NrZ2hsM7fKbM9FE/X9l5
+	 oy/DL4CbDnBhIw7QraT1WTr/FUs/WDCz7vih0I5A6bDbK3yFm5v3jdAdu7/10wlLiZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KYrLkYc/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X44ZgW75;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A90606A85A;
-	Wed,  4 Nov 2026 21:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB32606A85A;
+	Wed,  4 Nov 2026 21:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KYrLkYc/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5F31F000C1;
-	Wed,  4 Nov 2026 21:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X44ZgW75
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144451F000C1;
+	Wed,  4 Nov 2026 21:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829416;
-	bh=B/gdxULOVgXWPni79GvYrS+LjBFjEwHWRzerM6nSdjA=;
+	s=korg; t=1793829418;
+	bh=2RAHpEgUj2su69iAuj+Au46CBcCjTqNh0hL51WoMUNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KYrLkYc/Kj6eVgC/L7fE1s/4Ht8yvgd5hilRnFPPSc0mrVUxJilJ184SByjWT4TGH
-	 sUA66xI6tz0ek0hAYfV3s5r0VTAVzXjsvbGbkI9M/qlL/ZTGTyn9+8cOrgu2aq/73h
-	 XnPz8l7jS3AtHnnF5wyJjoVrd+gOq6cKzZQCGkEA=
+	b=X44ZgW753UF7eXgxK86eIcyFI0518RkQmiYB3FjpfkSiVZeY1Gvn0aPJopoMjN/PU
+	 wi7XlFzitI+15DoLWQjSa7KhScEf2H25eBo69Hqw4yhuULn7NJJ6j8LbN50qMTPGJM
+	 hw8Nbj3p0NiDV4aJ5uc0s/TKLWFlq6pauU+3YiUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Kent Russell <kent.russell@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0113/1005] ASoC: codecs: uda1342: Leave cache-only mode before syncing
-Date: Wed,  4 Nov 2026 15:57:26 -0500
-Message-ID: <20261104211046.818404536@linuxfoundation.org>
+Subject: [PATCH 6.18 0114/1005] drm/amdgpu/atomfirmware: WARN() rather than BUG()
+Date: Wed,  4 Nov 2026 15:57:27 -0500
+Message-ID: <20261104211046.847805251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,47 +68,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 29da72e58fde87e632f2fa43e448fcd1e3ab31b0 ]
+[ Upstream commit d7c595044965c826e6f3ce30590d3ec4399cd633 ]
 
-uda1342_suspend() puts the regmap into cache-only mode. uda1342_resume()
-marks the cache dirty and syncs it, but does not first leave cache-only
-mode and ignores sync failures.
+There's no need to crash the kernel for this case.  Just
+return an error.
 
-Leave cache-only mode before syncing the dirty cache, propagate sync
-failures, and restore cache-only/dirty state on failure.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704072140.67222-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/uda1342.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/codecs/uda1342.c b/sound/soc/codecs/uda1342.c
-index b0b29012842da..c21919bef4d72 100644
---- a/sound/soc/codecs/uda1342.c
-+++ b/sound/soc/codecs/uda1342.c
-@@ -308,9 +308,16 @@ static int uda1342_suspend(struct device *dev)
- static int uda1342_resume(struct device *dev)
- {
- 	struct uda1342_priv *uda1342 = dev_get_drvdata(dev);
-+	int ret;
- 
-+	regcache_cache_only(uda1342->regmap, false);
- 	regcache_mark_dirty(uda1342->regmap);
--	regcache_sync(uda1342->regmap);
-+	ret = regcache_sync(uda1342->regmap);
-+	if (ret) {
-+		regcache_cache_only(uda1342->regmap, true);
-+		regcache_mark_dirty(uda1342->regmap);
-+		return ret;
-+	}
- 
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
+index c7d32fb216e4e..ce2a4a15d5ecb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
+@@ -806,8 +806,6 @@ int amdgpu_atomfirmware_get_clock_info(struct amdgpu_device *adev)
+ 				   (crev != 6)) {
+ 				spll->reference_freq = le32_to_cpu(gfx_info->v22.rlc_gpu_timer_refclk);
+ 				ret = 0;
+-			} else {
+-				BUG();
+ 			}
+ 		}
+ 	}
 -- 
 2.53.0
 
