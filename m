@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831291;
-	b=EB5YKsBXwz610peuJZa3U5rv27o0+ChFe0HBi2qF0HN+SfP/H4gG7wmYsN5CYply5+j4
-	 rDWGMB1dOL0IPAsEqNMbVFDm4W8W/6AGPC3XoYRsnyeGAh/ra+Zi6lpYQI2kayrkVQLSl
-	 uKk+r1Vh6TzcYnvIwrk5vYpHvIIUFXdpeopFTwzkmtWnwy2bTFZXtB+gamPXPhAGMxuWa
-	 Lw3RYl8pDYqg18YcbC5gGcy1y9OWLvIkwmaHI7Y03sRpIieZqfD2UUIp8NpIrOoSBmH9h
-	 6Lz6ewwjhQT2eyaLeIxZsuID68HT43orgEWNXrjqSdViUrZVhhDX6AH+p925uVuEo3Q==
+	t=1793831292;
+	b=cF5rHzg3hARdGrDLwdOubP70bVHLvyw0nUoWYnZPSRWD94gdX0706nD7fOBMmrjYerAJ
+	 QlI2UMVNGR5bg3cnAHQ4DbqjtreQiDEExLPN1+l8hNh3ijVJyTR2KesCH750JssLATSKP
+	 I7KsV48RML6vHq16bCKAZDU7jJRmk7mzj9ZYKI+84PrmxcyKAsDejvSesWgP8QVztl+En
+	 m5U83aynnC+knsbOIrr9JJJNn/1Lby0AueGaUzPjAL6FoctiaCh7DgeZ8/YpbGyIdHeA5
+	 vP5y6TNqDvD+aCLBbKNo3BFUBLbM4xkJcgC7N+aJAt108Svzvg5Qae9eJS06nKRx+Sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7pSVZ51hw46E+L8ffxT4gHw63q/7AQQxTNV6TzpzUlA=;
-	b=xtZjTIi66OMh3sT3gXIO1i6IeIb8Kfcv5I5agBV6km0gcJNa0X90kXY6xa4CMS60nGiw
-	 4Ck/PI2tj7Pv3UQUogdDK8/Dj734hRwWtDfzO9tJHZzDP7q+yN592+8TMjdtoxPGpGR6w
-	 k7t1XiqwPQS5qEt9/S8/BJDvKBeZ4JXbIrvAQLAo/B4i60BTzeekCi1ulDoh2gytU+/bD
-	 89C0u42QxbSa8omUSFdNL3nG4wlivIsgLnUr7MRwMMdycbKhgdgu3Wm+5ptNUc7aQEfce
-	 5Hk9cxVVGK138Mk8Pb4DS1vzFsTdTjF1xZKdkM6DMlYOFkMfW2BQHTJH+R0MX3qDdEw==
+	bh=gl+LV55i23UwCzLTL+gWyXGUmjYLcwqiM/CbUZwSgMM=;
+	b=nkgHwYYLgQ6DZsI7LJjb45S4QLXM/cJXsok8GMSX74AKxnOBFE+U/Vbup3kE8wcBdCAx
+	 QvFJ1++sdqSo8gJvF6zLaBAyZOyKgx/8ZK6iXUJIVXusRlRayWtTz29iLuDJjg2cIVs2F
+	 18CCLQNahdkT1u2TQsSiCeBi7tAdAI0AuNP3oOqEjl7XmmLHW1OZ/ei5Jk56EJ66kbYNy
+	 +egp54wnlhyK/kWcSq5LSL1GnoI65i4NQzvq6uJDvk3OFTeKqOjfB+qrxFEdIj6esPs7N
+	 YqfM/HXPdS8GswMOi94cZ3i+JEPR3Csy19vwYbEEyfn2Zfpqh4jer3kjipUqVF/o8Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hwd8Vhv9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0lHl1XU5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5A9606AC1C;
-	Wed,  4 Nov 2026 22:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707FD606AC20;
+	Wed,  4 Nov 2026 22:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hwd8Vhv9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4643C1F00919;
-	Wed,  4 Nov 2026 22:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0lHl1XU5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85A51F000C1;
+	Wed,  4 Nov 2026 22:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831290;
-	bh=7pSVZ51hw46E+L8ffxT4gHw63q/7AQQxTNV6TzpzUlA=;
+	s=korg; t=1793831292;
+	bh=gl+LV55i23UwCzLTL+gWyXGUmjYLcwqiM/CbUZwSgMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hwd8Vhv9SYMg1inlp8lMb9EN4/Du2lmXhZXLms+Zsq+GSNdTNG39uEOzhbdXUTDd9
-	 TDGuE/kpwcXSG8s8YbAoX3KIWlZrpfI1xXOXw9DwivSQbKu8pwR2eMt/srs8rxf9vv
-	 H087bUQ8tUPOAF8UVzadN9p9zKJl0y2nlwgvVOPY=
+	b=0lHl1XU5Kh2GbVVgZVfimCH/Ugbmw+uqaQFgvEqVojYqr6lB9dpqFMB0d5nXKZym+
+	 hgx80ZMg/C3sChSEW3EzWWGh0XXT/6aW7ba+h3szUSniWUJM8IX5IrFm6oUYbdf9Iy
+	 7E8AX5FsIjlLd2OV+g1bH5Ivz4ml2m9qpG3QE81s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sidong Yang <sidong.yang@furiosa.ai>,
-	Igor Paunovic <royalnet026@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Vlad Kulikov <vlad_kulikov_c@pm.me>,
+	Jan Kara <jack@suse.cz>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Ma Wupeng <mawupeng1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0614/1005] accel/rocket: search every core slot when looking up a scheduler
-Date: Wed,  4 Nov 2026 16:05:47 -0500
-Message-ID: <20261104211101.036691926@linuxfoundation.org>
+Subject: [PATCH 6.18 0615/1005] ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure
+Date: Wed,  4 Nov 2026 16:05:48 -0500
+Message-ID: <20261104211101.061579375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,78 +73,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Paunovic <royalnet026@gmail.com>
+From: Vlad Kulikov <vlad.kulikov.c@gmail.com>
 
-[ Upstream commit 89c2c777df17eb0201c8e22afabbf3691f2a28fe ]
+[ Upstream commit 7229d74e5e8c1f140529d405c88d4493e37ce4e3 ]
 
-sched_to_core() walks rdev->cores[] up to rdev->num_cores, and
-rocket_remove() decrements num_cores for every core it removes. Unbind a
-core that is not the last one and the cores behind it fall outside the
-search, so sched_to_core() returns NULL for a core that is still bound and
-still running jobs. Neither caller checks the result:
+If setup_mq_sysctls(ns) fails after mq_init_ns(ns) succeeds, the error
+path skipped releasing the internal kernel mqueue mount kept in
+ns->mq_mnt. That leaves the vfsmount/superblock referenced until final
+namespace teardown, i.e. a resource leak on this rare failure edge.
 
-  rocket_job_run():      rocket_fence_create(core), core->dev
-  rocket_job_timedout(): dev_err(core->dev, "NPU job timed out")
+Unwind it by calling mntput(ns->mq_mnt) before dropping user_ns and
+freeing the IPC namespace. This mirrors the normal ordering used in
+free_ipc_ns().
 
-Unbinding the middle core of the three on an RK3588 while three clients are
-submitting to all of them faults twice, once from the surviving core's
-job queue and once from its reset work:
-
-  KASAN: null-ptr-deref in range [0x0000000000000220-0x0000000000000227]
-  Workqueue: fdad0000.npu drm_sched_run_job_work [gpu_sched]
-  pc : rocket_job_run+0x234/0x838 [rocket]
-  Call trace:
-   rocket_job_run+0x234/0x838 [rocket]
-   drm_sched_run_job_work+0x2cc/0xad8 [gpu_sched]
-   process_one_work+0x640/0x14f0
-
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  Workqueue: rocket-reset-2 drm_sched_job_timedout [gpu_sched]
-  pc : rocket_job_timedout+0xf0/0x1e0 [rocket]
-  Call trace:
-   rocket_job_timedout+0xf0/0x1e0 [rocket]
-   drm_sched_job_timedout+0x188/0x6a0 [gpu_sched]
-
-Both are the third core: the workqueue names are its device and its
-core->index, and it was left at slot 2 while num_cores had dropped to 2.
-
-Search all the slots that were allocated, the way find_core_for_dev() now
-does. A core that is still bound is then found, and the two callers get
-the pointer they already assume they have.
-
-This does not make unbinding one core out of several safe. An open client
-keeps an entity pointing at the scheduler of the core that went away:
-drm_sched reports it as not ready for every job that lands on it, and the
-client waits in dma_fence_default_wait for a fence that will never signal.
-Stopping the NULL dereference is what belongs in a fix; the rest wants
-more thought.
-
-Reported-by: Sidong Yang <sidong.yang@furiosa.ai>
-Closes: https://lore.kernel.org/dri-devel/apwUewaRnoTNXHCt@rock-5b-plus/
-Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
-Cc: stable@vger.kernel.org
-Signed-off-by: Igor Paunovic <royalnet026@gmail.com>
-Assisted-by: LLM sparse checkpatch
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260905150432.7477-1-royalnet026@gmail.com
+Link: https://lkml.kernel.org/r/20251021181341.670297-1-vlad_kulikov_c@pm.me
+Signed-off-by: Vlad Kulikov <vlad_kulikov_c@pm.me>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: Aleksa Sarai <cyphar@cyphar.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Ma Wupeng <mawupeng1@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: f0e48172a59e ("ipc: drop the mqueue mount with kern_unmount() on setup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/rocket/rocket_job.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ipc/namespace.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/rocket/rocket_job.c b/drivers/accel/rocket/rocket_job.c
-index b374d7ee54b68..729b7d6d77d46 100644
---- a/drivers/accel/rocket/rocket_job.c
-+++ b/drivers/accel/rocket/rocket_job.c
-@@ -283,7 +283,7 @@ static struct rocket_core *sched_to_core(struct rocket_device *rdev,
- {
- 	unsigned int core;
+diff --git a/ipc/namespace.c b/ipc/namespace.c
+index 59b12fcb40bdf..cf62d11a09b90 100644
+--- a/ipc/namespace.c
++++ b/ipc/namespace.c
+@@ -75,10 +75,10 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
  
--	for (core = 0; core < rdev->num_cores; core++) {
-+	for (core = 0; core < rdev->max_cores; core++) {
- 		if (&rdev->cores[core].sched == sched)
- 			return &rdev->cores[core];
- 	}
+ 	err = -ENOMEM;
+ 	if (!setup_mq_sysctls(ns))
+-		goto fail_put;
++		goto fail_mq_mount;
+ 
+ 	if (!setup_ipc_sysctls(ns))
+-		goto fail_mq;
++		goto fail_mq_sysctls;
+ 
+ 	err = msg_init_ns(ns);
+ 	if (err)
+@@ -92,9 +92,10 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
+ 
+ fail_ipc:
+ 	retire_ipc_sysctls(ns);
+-fail_mq:
++fail_mq_sysctls:
+ 	retire_mq_sysctls(ns);
+-
++fail_mq_mount:
++	mntput(ns->mq_mnt);
+ fail_put:
+ 	put_user_ns(ns->user_ns);
+ 	ns_common_free(ns);
 -- 
 2.53.0
 
