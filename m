@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831616;
-	b=aSnYMxE49+bFjnRkKjPfTjJMROb7v/oxMbqkMBwJSiChgd/FBRJ1eg0MdvzNepJwQlF8
-	 Mk/sHWOHr5p2IG2PhPt/2rfhsHkQOjDC8YNZHyar9Slboen1Y+umElJi52kmCvrIU5pwa
-	 x9Zbqt/JSh1N3AZ5PtEQQOoJzam8v2qqMZCnBLao+jOECVxz9WYcKIL+xP04KZjXLUDNc
-	 FyyizCFtAfye2VOnmtAI3VsaywB0gVAAtw44piC/hMmZlJFEcE/d7i9qTw2OpyKhlBk6v
-	 jF5Sbh6BG4F6THggssenR1YxRrrWwV9yq7apnsuI750BAHs/BYQrGM4bRxT7scJmscQ==
+	t=1793831618;
+	b=FGm2kYtu4aXPYEZLPSSKWgWPUVejl9jBGvInQ7qLMooMi6y3l57tNAA5EitsBXtkuvxe
+	 cTYESwJe3fF4wFSD4NsJ4PCslS+xr80keYN3M4n70TZ40xVC+bqAC8KsDfiCNg5QjNCNB
+	 VXAuJikHM017ZSR1OCyr4Tso3tNL766/RZp6xAgCmT2bDmnWopIC2NpKX0f3F1XHrkpfd
+	 s1XqAevWcbJb09TnMm7v+sqEmb8QMkwgh/zt6EaQi+r+uWDtAD7dGrbWc8l+Y1gtPsOtp
+	 +gSmRVUUgvi2f5tH7U++bVygtUYnsPKjoKocFZRxS71ST7oPyOOuglmAuXn9wOfgaQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831616;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831618;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SEv+IuUxipHnrsoMZc0urgcIe5TgXZl1BxjmzcyLh30=;
-	b=EBHLdKvtwp0disSiVwDAoq1A1/KQ+bVoowyhRdwZSdQs/eboZAofRg8rx/XUKYTrx8fe
-	 kiD8TYb4SERPo0cGi/6BkVgEzwSh+XR3skap42PixbXQl6G0yqDV+06IYWoblUVMuLbXx
-	 7j3WGceemEqcGJdaSPq93PNcDPkbNHitbOJXdLL8klX6UjvUL1EAK+pkwFfLBjgFzyzkK
-	 1gauXiYd4/1RJVCEAtiN+oEChatIeYEubDAhV5+WJTxLcNA3s9jXYdti5ULkiC9nkuwp/
-	 J3Juiy6yurZTSuhfxvUqDxkFY7Q86tbrgm8Xpgre6mcpDUWOyvXQ9sHp15Jy7hUn9Cw==
+	bh=z3LdxjZhmkNsrSRy0AJ3mG+88RR95BvAhy1XkvwNywQ=;
+	b=gJo7dlz8dqDNOM3Bq+n60LI3+yHe7vV/j5iQamius8Q310v9yePiiQzQP4AZ0UGjtnOr
+	 AOyvL7h3Q7EaYWnc5sdw2avPVBx4QkaUElB50iwXcu++PCSp5wjUcSb2vvp/UIE1PfzZN
+	 kEk8RTpDKpLmI9z1nm+oW6DJHKC27VVRN52S/9mp6jumPuDJ/CFvHcpy0Fmal91zwUkl2
+	 /Ii/JDjMgRRNwTZohCUJyVIQTo8nGmFEY6xDSBtqid1bpZ0QcK/29t+96wuuB0SWuzGLy
+	 JN45PL+ppXl6mEXbUQ9Ye37cjKnLUV1/dazH4X9ARv2rRhHj1d8BoE+Vsh//oUFAWcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MnSVS6f+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=afY0UMnn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7C6606A326;
-	Wed,  4 Nov 2026 22:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603DF606A326;
+	Wed,  4 Nov 2026 22:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MnSVS6f+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FF31F000C1;
-	Wed,  4 Nov 2026 22:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=afY0UMnn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50D91F0093A;
+	Wed,  4 Nov 2026 22:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831616;
-	bh=SEv+IuUxipHnrsoMZc0urgcIe5TgXZl1BxjmzcyLh30=;
+	s=korg; t=1793831617;
+	bh=z3LdxjZhmkNsrSRy0AJ3mG+88RR95BvAhy1XkvwNywQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MnSVS6f+8ZehQJ2WGUHL5Jszd3Cct1/SIirWXKob13k0LiZO9bk/PpEOZdongDKs9
-	 V9i/jeBPFRxduNkGFSuGXwfhbbAqRroXgVw4qLJFRdKjRRhOLvcZDzJRBqzO+SeF8V
-	 vky2NJ04xAhu54dL3+Va6YASEN1ixqJMUi71u2CM=
+	b=afY0UMnnp780UC3+vehZoc2U7G/Z2zvKoEQK7nlSPmK8MUFCwBUJ9/DZZpxPGlw1C
+	 A+XUrZX4TMNgcJgUgEvkjS7SN/m5GF70DOAXpWQPALxyww0m5uwL90uaM64mLmPiSN
+	 7UUj5BBb6bwjs0IW7fGyh+mENYMAM2ZF6G/r9XR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0813/1005] netfilter: nfnetlink_queue: restrict writes to network header
-Date: Wed,  4 Nov 2026 16:09:06 -0500
-Message-ID: <20261104211106.120815687@linuxfoundation.org>
+Subject: [PATCH 6.18 0814/1005] netfilter: nft_meta: add double-tagged vlan and pppoe support
+Date: Wed,  4 Nov 2026 16:09:07 -0500
+Message-ID: <20261104211106.148895059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,223 +68,307 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 54f34607d184c1cc056c59a5b3d86d96dd6a515c ]
+[ Upstream commit 3785091c6c16a1ce4a5e0460881fc81ed8d2c8a1 ]
 
-nfnetlink_queue doesn't allow selective replacements of some part of the
-payload, only complete replacement.
-If the new data is shorter, skb is trimmed, otherwise expanded.
+Currently:
 
-Add minimal validation of the new ip/ipv6 header.  Check total len
-matches skb length.  Disallow ip option modifications.
+  add rule netdev x y ip saddr 1.1.1.1
 
-IPv6 extension headers are also disabled.
-IP options and exthdrs could be allowed later after validation pass or
-ip option recompile.
+does not work with neither double-tagged vlan nor pppoe packets. This is
+because the network and transport header offset are not pointing to the
+IP and transport protocol headers in the stack.
 
-Transport header is not checked.
+This patch expands NFT_META_PROTOCOL and NFT_META_L4PROTO to parse
+double-tagged vlan and pppoe packets so matching network and transport
+header fields becomes possible with the existing userspace generated
+bytecode. Note that this parser only supports double-tagged vlan which
+is composed of vlan offload + vlan header in the skb payload area for
+simplicity.
 
-Bridge modifications are rejected.  Given userspace doesn't even receive
-L2 headers, use is limited and I don't think there are any users of
-bridge nfnetlink_queue, let alone users that modifiy payload.
+NFT_META_PROTOCOL is used by bridge and netdev family as an implicit
+dependency in the bytecode to match on network header fields.
+Similarly, there is also NFT_META_L4PROTO, which is also used as an
+implicit dependency when matching on the transport protocol header
+fields.
 
-Arp isn't supported at all.
-
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_queue.c | 170 ++++++++++++++++++++++++++++++++
- 1 file changed, 170 insertions(+)
+ include/net/netfilter/nf_tables.h      |  4 ++
+ include/net/netfilter/nf_tables_ipv4.h | 17 +++++---
+ include/net/netfilter/nf_tables_ipv6.h | 16 +++++---
+ net/netfilter/nf_tables_core.c         |  2 +-
+ net/netfilter/nft_meta.c               | 54 +++++++++++++++++++++++++-
+ net/netfilter/nft_payload.c            |  2 +-
+ 6 files changed, 82 insertions(+), 13 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 463abfb3fb54e..7cfb1bdf0e88f 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -1185,6 +1185,173 @@ nfqnl_enqueue_packet(struct nf_queue_entry *entry, unsigned int queuenum)
- 	return err;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 4c691d5e4ae9b..ac04b4eb17d78 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -32,7 +32,9 @@ struct nft_pktinfo {
+ 	const struct nf_hook_state	*state;
+ 	u8				flags;
+ 	u8				tprot;
++	__be16				ethertype;
+ 	u16				fragoff;
++	u16				nhoff;
+ 	u16				thoff;
+ 	u16				inneroff;
+ };
+@@ -84,6 +86,8 @@ static inline void nft_set_pktinfo_unspec(struct nft_pktinfo *pkt)
+ {
+ 	pkt->flags = 0;
+ 	pkt->tprot = 0;
++	pkt->ethertype = pkt->skb->protocol;
++	pkt->nhoff = 0;
+ 	pkt->thoff = 0;
+ 	pkt->fragoff = 0;
+ }
+diff --git a/include/net/netfilter/nf_tables_ipv4.h b/include/net/netfilter/nf_tables_ipv4.h
+index fcf967286e37c..e715405a73cb9 100644
+--- a/include/net/netfilter/nf_tables_ipv4.h
++++ b/include/net/netfilter/nf_tables_ipv4.h
+@@ -12,16 +12,19 @@ static inline void nft_set_pktinfo_ipv4(struct nft_pktinfo *pkt)
+ 	ip = ip_hdr(pkt->skb);
+ 	pkt->flags = NFT_PKTINFO_L4PROTO;
+ 	pkt->tprot = ip->protocol;
++	pkt->ethertype = pkt->skb->protocol;
++	pkt->nhoff = 0;
+ 	pkt->thoff = ip_hdrlen(pkt->skb);
+ 	pkt->fragoff = ntohs(ip->frag_off) & IP_OFFSET;
  }
  
-+static bool nfqnl_validate_ipopts(const struct iphdr *iph_new,
-+				  const struct nf_queue_entry *e)
-+{
-+	const struct iphdr *iph_orig = ip_hdr(e->skb);
-+	unsigned int ihl = iph_new->ihl * 4;
-+
-+	if (iph_new->ihl != iph_orig->ihl)
-+		return false;
-+	if (ihl == sizeof(*iph_orig))
-+		return true;
-+
-+	return memcmp(iph_new + 1, ip_hdr(e->skb) + 1, ihl - sizeof(*iph_orig)) == 0;
-+}
-+
-+static bool nfqnl_validate_ip4(const struct iphdr *iph, unsigned int data_len,
-+			       const struct nf_queue_entry *e)
-+{
-+	unsigned int ihl;
-+
-+	if (data_len < sizeof(*iph))
-+		return false;
-+
-+	ihl = iph->ihl * 4u;
-+	if (ihl < sizeof(*iph) || data_len < ihl)
-+		return false;
-+
-+	if (iph->version != 4 ||
-+	    ((iph->frag_off ^ ip_hdr(e->skb)->frag_off) & ~htons(IP_DF)) != 0)
-+		return false;
-+
-+	/* BIG TCP won't work; netlink attr len is u16 */
-+	if (ntohs(iph->tot_len) != data_len)
-+		return false;
-+
-+	/* support for ipopts mangling would require
-+	 * recompile + skb transport header update.
-+	 */
-+	return nfqnl_validate_ipopts(iph, e);
-+}
-+
-+static bool nfqnl_validate_one_exthdr(const u8 *data,
-+				      unsigned int data_len,
-+				      const struct nf_queue_entry *e,
-+				      int start, int hdrlen)
-+{
-+	u16 octets;
-+
-+	if (data_len < hdrlen || hdrlen < 2)
-+		return false;
-+
-+	while (hdrlen > 0) {
-+		if (data_len < sizeof(octets))
-+			return false;
-+		data_len -= sizeof(octets);
-+
-+		if (skb_copy_bits(e->skb, start, &octets, sizeof(octets)))
-+			return false;
-+
-+		if (hdrlen < sizeof(octets))
-+			return false;
-+
-+		hdrlen -= sizeof(octets);
-+		if (memcmp(data, &octets, sizeof(octets)))
-+			return false;
-+
-+		start += sizeof(octets);
-+		data += sizeof(octets);
-+	}
-+
-+	return true;
-+}
-+
-+static bool nfqnl_validate_exthdr(const struct ipv6hdr *ip6_new,
-+				  unsigned int data_len,
-+				  const struct nf_queue_entry *e)
-+{
-+	const struct ipv6hdr *ip6_orig = ipv6_hdr(e->skb);
-+	int exthdr_cnt = 0, start = sizeof(*ip6_orig);
-+	const u8 *data = (const u8 *)ip6_new;
-+	u8 orig_nexthdr = ip6_orig->nexthdr;
-+	u8 new_nexthdr = ip6_new->nexthdr;
-+
-+	if (new_nexthdr != orig_nexthdr)
-+		return false;
-+
-+	data += sizeof(*ip6_new);
-+	data_len -= sizeof(*ip6_new);
-+
-+	while (ipv6_ext_hdr(orig_nexthdr)) {
-+		const struct ipv6_opt_hdr *hp;
-+		struct ipv6_opt_hdr _hdr;
-+		int hdrlen;
-+
-+		if (orig_nexthdr == NEXTHDR_NONE)
-+			return true;
-+
-+		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
-+			return false;
-+
-+		hp = skb_header_pointer(e->skb, start, sizeof(_hdr), &_hdr);
-+		if (!hp)
-+			return false;
-+
-+		switch (orig_nexthdr) {
-+		case NEXTHDR_FRAGMENT:
-+			hdrlen = sizeof(struct frag_hdr);
-+			break;
-+		case NEXTHDR_AUTH:
-+			hdrlen = ipv6_authlen(hp);
-+			break;
-+		default:
-+			hdrlen = ipv6_optlen(hp);
-+			break;
-+		}
-+
-+		if (!nfqnl_validate_one_exthdr(data, data_len, e,
-+					       start, hdrlen))
-+			return false;
-+
-+		orig_nexthdr = hp->nexthdr;
-+		hp = (const void *)data;
-+		new_nexthdr = hp->nexthdr;
-+
-+		if (new_nexthdr != orig_nexthdr)
-+			return false;
-+
-+		data_len -= hdrlen;
-+		start += hdrlen;
-+		data += hdrlen;
-+	}
-+
-+	return true;
-+}
-+
-+static bool nfqnl_validate_ip6(const struct ipv6hdr *ip6, unsigned int data_len,
-+			       const struct nf_queue_entry *e)
-+{
-+	if (data_len < sizeof(*ip6))
-+		return false;
-+
-+	/* BIG TCP/jumbograms won't work; netlink attr len is u16 */
-+	if (ntohs(ip6->payload_len) != data_len - sizeof(*ip6))
-+		return false;
-+
-+	if (ip6->version != 6)
-+		return false;
-+
-+	return nfqnl_validate_exthdr(ip6, data_len, e);
-+}
-+
-+static bool nfqnl_validate_write(const void *data, unsigned int data_len,
-+				 const struct nf_queue_entry *e)
-+{
-+	switch (e->state.pf) {
-+	case NFPROTO_IPV4:
-+		return nfqnl_validate_ip4(data, data_len, e);
-+	case NFPROTO_IPV6:
-+		return nfqnl_validate_ip6(data, data_len, e) &&
-+		       !(IP6CB(e->skb)->flags & IP6SKB_JUMBOGRAM);
-+	case NFPROTO_BRIDGE:
-+		/* No write support. Bridge is dubious: userspace doesn't even see L2 header */
-+		return false;
-+	}
-+
-+	return false;
-+}
-+
- static int
- nfqnl_mangle(void *data, unsigned int data_len, struct nf_queue_entry *e, int diff)
+-static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
++static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt,
++						  int nhoff)
  {
-@@ -1193,6 +1360,9 @@ nfqnl_mangle(void *data, unsigned int data_len, struct nf_queue_entry *e, int di
- 	if (e->state.net->user_ns != &init_user_ns)
- 		return -EPERM;
+ 	struct iphdr *iph, _iph;
+ 	u32 len, thoff, skb_len;
  
-+	if (!nfqnl_validate_write(data, data_len, e))
-+		return -EINVAL;
+-	iph = skb_header_pointer(pkt->skb, skb_network_offset(pkt->skb),
++	iph = skb_header_pointer(pkt->skb, skb_network_offset(pkt->skb) + nhoff,
+ 				 sizeof(*iph), &_iph);
+ 	if (!iph)
+ 		return -1;
+@@ -31,7 +34,7 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
+ 
+ 	len = iph_totlen(pkt->skb, iph);
+ 	thoff = iph->ihl * 4;
+-	skb_len = pkt->skb->len - skb_network_offset(pkt->skb);
++	skb_len = pkt->skb->len - skb_network_offset(pkt->skb) - nhoff;
+ 
+ 	if (skb_len < len)
+ 		return -1;
+@@ -42,7 +45,9 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
+ 
+ 	pkt->flags = NFT_PKTINFO_L4PROTO;
+ 	pkt->tprot = iph->protocol;
+-	pkt->thoff = skb_network_offset(pkt->skb) + thoff;
++	pkt->ethertype = pkt->skb->protocol;
++	pkt->nhoff = nhoff;
++	pkt->thoff = skb_network_offset(pkt->skb) + nhoff + thoff;
+ 	pkt->fragoff = ntohs(iph->frag_off) & IP_OFFSET;
+ 
+ 	return 0;
+@@ -50,7 +55,7 @@ static inline int __nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
+ 
+ static inline void nft_set_pktinfo_ipv4_validate(struct nft_pktinfo *pkt)
+ {
+-	if (__nft_set_pktinfo_ipv4_validate(pkt) < 0)
++	if (__nft_set_pktinfo_ipv4_validate(pkt, 0) < 0)
+ 		nft_set_pktinfo_unspec(pkt);
+ }
+ 
+@@ -78,6 +83,8 @@ static inline int nft_set_pktinfo_ipv4_ingress(struct nft_pktinfo *pkt)
+ 	}
+ 
+ 	pkt->flags = NFT_PKTINFO_L4PROTO;
++	pkt->ethertype = pkt->skb->protocol;
++	pkt->nhoff = 0;
+ 	pkt->tprot = iph->protocol;
+ 	pkt->thoff = thoff;
+ 	pkt->fragoff = ntohs(iph->frag_off) & IP_OFFSET;
+diff --git a/include/net/netfilter/nf_tables_ipv6.h b/include/net/netfilter/nf_tables_ipv6.h
+index c53ac00bb974d..d7b8c559b795b 100644
+--- a/include/net/netfilter/nf_tables_ipv6.h
++++ b/include/net/netfilter/nf_tables_ipv6.h
+@@ -20,21 +20,23 @@ static inline void nft_set_pktinfo_ipv6(struct nft_pktinfo *pkt)
+ 
+ 	pkt->flags = NFT_PKTINFO_L4PROTO;
+ 	pkt->tprot = protohdr;
++	pkt->ethertype = pkt->skb->protocol;
++	pkt->nhoff = 0;
+ 	pkt->thoff = thoff;
+ 	pkt->fragoff = frag_off;
+ }
+ 
+-static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
++static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt, int nhoff)
+ {
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	unsigned int flags = IP6_FH_F_AUTH;
+ 	struct ipv6hdr *ip6h, _ip6h;
+-	unsigned int thoff = 0;
++	unsigned int thoff = nhoff;
+ 	unsigned short frag_off;
+ 	u32 pkt_len, skb_len;
+ 	int protohdr;
+ 
+-	ip6h = skb_header_pointer(pkt->skb, skb_network_offset(pkt->skb),
++	ip6h = skb_header_pointer(pkt->skb, skb_network_offset(pkt->skb) + nhoff,
+ 				  sizeof(*ip6h), &_ip6h);
+ 	if (!ip6h)
+ 		return -1;
+@@ -43,7 +45,7 @@ static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
+ 		return -1;
+ 
+ 	pkt_len = ipv6_payload_len(pkt->skb, ip6h);
+-	skb_len = pkt->skb->len - skb_network_offset(pkt->skb);
++	skb_len = pkt->skb->len - skb_network_offset(pkt->skb) - nhoff;
+ 	if (pkt_len + sizeof(*ip6h) > skb_len)
+ 		return -1;
+ 
+@@ -53,6 +55,8 @@ static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
+ 
+ 	pkt->flags = NFT_PKTINFO_L4PROTO;
+ 	pkt->tprot = protohdr;
++	pkt->ethertype = pkt->skb->protocol;
++	pkt->nhoff = nhoff;
+ 	pkt->thoff = thoff;
+ 	pkt->fragoff = frag_off;
+ 
+@@ -64,7 +68,7 @@ static inline int __nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
+ 
+ static inline void nft_set_pktinfo_ipv6_validate(struct nft_pktinfo *pkt)
+ {
+-	if (__nft_set_pktinfo_ipv6_validate(pkt) < 0)
++	if (__nft_set_pktinfo_ipv6_validate(pkt, 0) < 0)
+ 		nft_set_pktinfo_unspec(pkt);
+ }
+ 
+@@ -99,6 +103,8 @@ static inline int nft_set_pktinfo_ipv6_ingress(struct nft_pktinfo *pkt)
+ 
+ 	pkt->flags = NFT_PKTINFO_L4PROTO;
+ 	pkt->tprot = protohdr;
++	pkt->ethertype = pkt->skb->protocol;
++	pkt->nhoff = 0;
+ 	pkt->thoff = thoff;
+ 	pkt->fragoff = frag_off;
+ 
+diff --git a/net/netfilter/nf_tables_core.c b/net/netfilter/nf_tables_core.c
+index 6557a4018c099..5ddd5b6e135f1 100644
+--- a/net/netfilter/nf_tables_core.c
++++ b/net/netfilter/nf_tables_core.c
+@@ -151,7 +151,7 @@ static bool nft_payload_fast_eval(const struct nft_expr *expr,
+ 	unsigned char *ptr;
+ 
+ 	if (priv->base == NFT_PAYLOAD_NETWORK_HEADER)
+-		ptr = skb_network_header(skb);
++		ptr = skb_network_header(skb) + pkt->nhoff;
+ 	else {
+ 		if (!(pkt->flags & NFT_PKTINFO_L4PROTO))
+ 			return false;
+diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
+index f3c7b7edb10c0..a6e83279d0b6b 100644
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -24,6 +24,8 @@
+ #include <net/tcp_states.h> /* for TCP_TIME_WAIT */
+ #include <net/netfilter/nf_tables.h>
+ #include <net/netfilter/nf_tables_core.h>
++#include <net/netfilter/nf_tables_ipv4.h>
++#include <net/netfilter/nf_tables_ipv6.h>
+ #include <net/netfilter/nft_meta.h>
+ #include <net/netfilter/nf_tables_offload.h>
+ 
+@@ -308,6 +310,54 @@ nft_meta_get_eval_sdifname(u32 *dest, const struct nft_pktinfo *pkt)
+ 	nft_meta_store_ifname(dest, dev);
+ }
+ 
++static void nft_meta_pktinfo_may_update(struct nft_pktinfo *pkt)
++{
++	struct sk_buff *skb = pkt->skb;
++	struct vlan_ethhdr *veth;
++	__be16 ethertype;
++	int nhoff;
 +
- 	if (diff < 0) {
- 		unsigned int min_len = skb_transport_offset(e->skb);
- 
++	/* Is this an IP packet? Then, skip. */
++	if (pkt->flags)
++		return;
++
++	/* ... else maybe an IP packet over PPPoE or Q-in-Q? */
++	switch (skb->protocol) {
++	case htons(ETH_P_8021Q):
++		if (!pskb_may_pull(skb, skb_mac_offset(skb) + sizeof(*veth)))
++			return;
++
++		veth = (struct vlan_ethhdr *)skb_mac_header(skb);
++		nhoff = VLAN_HLEN;
++		ethertype = veth->h_vlan_encapsulated_proto;
++		break;
++	case htons(ETH_P_PPP_SES):
++		if (!nf_flow_pppoe_proto(skb, &ethertype))
++			return;
++
++		nhoff = PPPOE_SES_HLEN;
++		break;
++	default:
++		return;
++	}
++
++	nhoff += skb_network_offset(skb);
++	switch (ethertype) {
++	case htons(ETH_P_IP):
++		if (__nft_set_pktinfo_ipv4_validate(pkt, nhoff))
++			nft_set_pktinfo_unspec(pkt);
++		break;
++	case htons(ETH_P_IPV6):
++		if (__nft_set_pktinfo_ipv6_validate(pkt, nhoff))
++			nft_set_pktinfo_unspec(pkt);
++		break;
++	default:
++		break;
++	}
++
++	pkt->ethertype = ethertype;
++}
++
+ void nft_meta_get_eval(const struct nft_expr *expr,
+ 		       struct nft_regs *regs,
+ 		       const struct nft_pktinfo *pkt)
+@@ -321,12 +371,14 @@ void nft_meta_get_eval(const struct nft_expr *expr,
+ 		*dest = skb->len;
+ 		break;
+ 	case NFT_META_PROTOCOL:
+-		nft_reg_store16(dest, (__force u16)skb->protocol);
++		nft_meta_pktinfo_may_update((struct nft_pktinfo *)pkt);
++		nft_reg_store16(dest, (__force u16)pkt->ethertype);
+ 		break;
+ 	case NFT_META_NFPROTO:
+ 		nft_reg_store8(dest, nft_pf(pkt));
+ 		break;
+ 	case NFT_META_L4PROTO:
++		nft_meta_pktinfo_may_update((struct nft_pktinfo *)pkt);
+ 		if (!(pkt->flags & NFT_PKTINFO_L4PROTO))
+ 			goto err;
+ 		nft_reg_store8(dest, pkt->tprot);
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index 4034d61e2a135..125650be78436 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -183,7 +183,7 @@ void nft_payload_eval(const struct nft_expr *expr,
+ 		offset = skb_mac_header(skb) - skb->data;
+ 		break;
+ 	case NFT_PAYLOAD_NETWORK_HEADER:
+-		offset = skb_network_offset(skb);
++		offset = skb_network_offset(skb) + pkt->nhoff;
+ 		break;
+ 	case NFT_PAYLOAD_TRANSPORT_HEADER:
+ 		if (!(pkt->flags & NFT_PKTINFO_L4PROTO) || pkt->fragoff)
 -- 
 2.53.0
 
