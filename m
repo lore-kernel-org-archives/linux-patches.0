@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826794;
-	b=zE62Bj3aNliydvTaKMZ+I7dQvF0jCofPCyRWs3nT36mO54n0NUhfAIUjpkdZ8g0MAzVg
-	 sfOp9EdOthAZbOPzO1c5SttSlNRIkCTFUzYp+qfwFgdcvo87z3gSX7ecPyc4mwkMqZU3M
-	 KIzBDbBt5Ynd70sS5Kc91W/cpk8qDO3WS8nVNlzy9TY4fQzJzi5j3hBu1MAd6tCmJAwQt
-	 PGm25QVb7uTHnFHbu+uqzm2/jTzQQfWoY70sDdFUp7w4rNHhgbmdcsi2qmhIK63JmgcC2
-	 zUb4N7CPPw5vv9gOWXzJeUDRq5Jri3Lp7/tXtTjkeCIXl2FkP4yNqqKSJSR95GzbvDQ==
+	t=1793826796;
+	b=vMk2BeP4BewYlsCo58YaI/Cc7cqGKknUl/k1QZQIqpos08EzYKXB9LmzrhVm6dTg1tGo
+	 d9as6Di1KZuMfy+24qB7p768Z6+qmw72C3D6QM/UIHTn3M/sWkdntCMv0Dr0qZ5keCMk8
+	 TCmL1KwARENasosUEeqzDV5DfYxOExnpwlHRiKwxVigOXKwLJFjxj0QRFDIuIF9tvzw4k
+	 bKOxG1rQooxvxCC3dpaH5dc1/9m1J7VCRds4wmJswMyv3f1iFWgFoU3YvL6NRY5GtgpqQ
+	 lfIOEBdRQNqnlq37aB0JGpTXOGxLOVmGhcHFW/xS0Rn2HAHcnJnGspENqE1fVlUw0sA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826796;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lO0hBKd2MOEAikY5wOkkiaGdriEKotm4r/r3DaDJo0o=;
-	b=aMIrPmq/kbvIHi2RqnNGj15DSu2F30R5gj/HNjhVJ7Zz4XB7+iaJZtxOx9x68cK5qvmD
-	 z3XA0SWBpTjGbQAPh76IdTxBPgy1w9JKcgHDqtR/7k5e9rSRRu7n4pmcOoGf4Upmt/bdo
-	 eN0bB4sTZCs8TT9EhLwygPGrArzMVYwEdhttD8Ui1lvnNKZqZk8NIWn27aI6681xaSv9R
-	 oCHtDkCpWAoYwwSIU6SOjL0tqehTDINNU6cPGRdHOA8crNf7LcXZhoQssJXj4IgewoG/5
-	 XwpYLcJ84MeihdaB/Si7l5gnMiP2saXRhch5ksXHae/NSUGeb8LYT9QEvs5FnwOUbwQ==
+	bh=htHNrrwC9UidU5IrS2/x+6IDwC52zh+HzcpeYuhTb9k=;
+	b=4dYO2Y679q/OgC6bd0OhBjm3Kn3/CJXaToD2DqMzUhAeoi/JWFoliK4DUrbtI7ZqDmjq
+	 wVvFIwKfDtVSyOJZuI1ezfSufT1xnrT0Cg/KXq61kXXvNQhwj8gk/kJy1M2qqoga+Khbi
+	 U1ae4p6IpLYKmthP1nVgVudjeNq17AQrvMFIxYg7NLETFgGzHVLWOJhKaDXPeyYX4Yz38
+	 3ydmyhm6EoolLviHmqzFnZ0ivsnX/W0upyCBL7nVVok44RIrAPcgMTmVfVb1ujUPGwfCr
+	 Y8fXDS2NAYWlAXf7GmqNYu3j7IiPFz/Gt4LmfU0mZkea0kCynvxQ+6LpM8Ziy3dPBeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueBAQ79N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9XuxRnl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF666071A00;
-	Wed,  4 Nov 2026 21:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F10606D822;
+	Wed,  4 Nov 2026 21:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueBAQ79N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D921F00919;
-	Wed,  4 Nov 2026 21:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9XuxRnl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AF61F00919;
+	Wed,  4 Nov 2026 21:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826793;
-	bh=lO0hBKd2MOEAikY5wOkkiaGdriEKotm4r/r3DaDJo0o=;
+	s=korg; t=1793826795;
+	bh=htHNrrwC9UidU5IrS2/x+6IDwC52zh+HzcpeYuhTb9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ueBAQ79NKCI1XrjNw0BlOb9C8P3i1GPl1k1lmOuK2GlSISlhk5gC0L7T4JXE0RQTo
-	 +9Wz2FJp2WIfjh3D9iGQeF4EfSzj+nCyxwDFYONPlu54sdbpjKpNZA+jlTXxRLuFL/
-	 iAmGtlpWUQ5VrPocPs0WXT11/AVGfHI8NJVaCYo4=
+	b=C9XuxRnlMLst0iuOuEEXUtqPsf9QP5eKliVAKpcfo8EMcq3WKTHaTXOX3kx0jyrjz
+	 zERoAYOhD+IlXl+Te1JpRIf+HC3lN0kwxAHt3L8TW0XMxUgzQZcuaxh446DPg9TXtO
+	 s03kRPguo0tpIFHMWVeIGqlni0+wR6906r7THmd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 012/547] wifi: ath12k: convert ATH12K_RX_DESC_COUNT to inline helper
-Date: Wed,  4 Nov 2026 16:03:16 -0500
-Message-ID: <20261104211038.731242047@linuxfoundation.org>
+Subject: [PATCH 7.3 013/547] wifi: ath12k: convert DP_RX_RELEASE_RING_SIZE to inline helper
+Date: Wed,  4 Nov 2026 16:03:17 -0500
+Message-ID: <20261104211038.758230448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -72,15 +72,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 
-[ Upstream commit fafb9b0450fd6fd3618daf347717a6d6320bea38 ]
+[ Upstream commit 897d2e0046f941d8956f655f5ffc5d75c788558d ]
 
-Replace ATH12K_RX_DESC_COUNT with ath12k_dp_rx_desc_count() static inline
-helper, also replace ATH12K_NUM_RX_SPT_PAGES which is calculated from
-ATH12K_RX_DESC_COUNT into static inline helper functions and pass the DP
-profile parameters explicitly to improve type safety and make the interface
-explicit.
-
-Also remove the unused ATH12K_NUM_TX_SPT_PAGE_START macro.
+Replace DP_RX_RELEASE_RING_SIZE macro with ath12k_dp_rx_release_ring_size()
+static inline helper. Pass the DP profile parameters explicitly to
+improve type safety and make the interface explicit.
 
 No functional change intended.
 
@@ -89,135 +85,48 @@ Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
 Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260820054804.3222296-7-aaradhana.sahu@oss.qualcomm.com
+Link: https://patch.msgid.link/20260820054804.3222296-8-aaradhana.sahu@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.c | 18 +++++++++++-------
- drivers/net/wireless/ath/ath12k/dp.h | 24 ++++++++++++------------
- 2 files changed, 23 insertions(+), 19 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp.c | 2 +-
+ drivers/net/wireless/ath/ath12k/dp.h | 8 ++++++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/dp.c b/drivers/net/wireless/ath/ath12k/dp.c
-index 93a41b2440daa..417d960bbd07d 100644
+index 417d960bbd07d..779529d189f8a 100644
 --- a/drivers/net/wireless/ath/ath12k/dp.c
 +++ b/drivers/net/wireless/ath/ath12k/dp.c
-@@ -968,7 +968,7 @@ void ath12k_dp_vdev_tx_attach(struct ath12k *ar, struct ath12k_link_vif *arvif)
- static void ath12k_dp_cc_cleanup(struct ath12k_base *ab)
- {
- 	const struct ath12k_dp_profile_params *dp_params = &ab->profile_param->dp_params;
--	u32 pool_id, tx_spt_page, tx_spt_pages_per_pool;
-+	u32 pool_id, tx_spt_page, tx_spt_pages_per_pool, num_rx_spt_pages;
- 	struct ath12k_tx_desc_info *tx_desc_info, *tmp1;
- 	struct ath12k_dp *dp = ath12k_ab_to_dp(ab);
- 	struct ath12k_rx_desc_info *desc_info;
-@@ -983,8 +983,10 @@ static void ath12k_dp_cc_cleanup(struct ath12k_base *ab)
- 	/* RX Descriptor cleanup */
- 	spin_lock_bh(&dp->rx_desc_lock);
+@@ -488,7 +488,7 @@ static int ath12k_dp_srng_common_setup(struct ath12k_base *ab)
  
-+	num_rx_spt_pages = ath12k_dp_num_rx_spt_pages(dp_params);
-+
- 	if (dp->rxbaddr) {
--		for (i = 0; i < ATH12K_NUM_RX_SPT_PAGES(ab); i++) {
-+		for (i = 0; i < num_rx_spt_pages; i++) {
- 			if (!dp->rxbaddr[i])
- 				continue;
- 
-@@ -1166,7 +1168,7 @@ struct ath12k_rx_desc_info *ath12k_dp_get_rx_desc(struct ath12k_dp *dp,
- 	dp_params = &dp->ab->profile_param->dp_params;
- 
- 	start_ppt_idx = dp->rx_ppt_base + ath12k_dp_rx_spt_page_offset(dp_params);
--	end_ppt_idx = start_ppt_idx + ATH12K_NUM_RX_SPT_PAGES(dp->ab);
-+	end_ppt_idx = start_ppt_idx + ath12k_dp_num_rx_spt_pages(dp_params);
- 
- 	if (ppt_idx < start_ppt_idx ||
- 	    ppt_idx >= end_ppt_idx ||
-@@ -1208,10 +1210,10 @@ EXPORT_SYMBOL(ath12k_dp_get_tx_desc);
- static int ath12k_dp_cc_desc_init(struct ath12k_base *ab)
- {
- 	const struct ath12k_dp_profile_params *dp_params = &ab->profile_param->dp_params;
-+	u32 num_rx_spt_pages = ath12k_dp_num_rx_spt_pages(dp_params);
- 	struct ath12k_rx_desc_info *rx_descs, **rx_desc_addr;
- 	struct ath12k_tx_desc_info *tx_descs, **tx_desc_addr;
- 	u32 i, j, pool_id, tx_spt_page, tx_spt_pages_per_pool;
--	u32 num_rx_spt_pages = ATH12K_NUM_RX_SPT_PAGES(ab);
- 	u32 ppt_idx, cookie_ppt_idx, rx_spt_page_offset;
- 	struct ath12k_dp *dp = ath12k_ab_to_dp(ab);
- 
-@@ -1317,7 +1319,7 @@ static int ath12k_dp_cmem_init(struct ath12k_base *ab,
- 	case ATH12K_DP_RX_DESC:
- 		cmem_base += ATH12K_PPT_ADDR_OFFSET(dp->rx_ppt_base);
- 		start = ath12k_dp_rx_spt_page_offset(dp_params);
--		end = start + ATH12K_NUM_RX_SPT_PAGES(ab);
-+		end = start + ath12k_dp_num_rx_spt_pages(dp_params);
- 		break;
- 	default:
- 		ath12k_err(ab, "invalid descriptor type %d in cmem init\n", type);
-@@ -1349,7 +1351,8 @@ static u32 ath12k_dp_get_num_spt_pages(struct ath12k_base *ab)
- {
- 	const struct ath12k_dp_profile_params *dp_params = &ab->profile_param->dp_params;
- 
--	return ATH12K_NUM_RX_SPT_PAGES(ab) + ath12k_dp_num_tx_spt_pages(dp_params);
-+	return ath12k_dp_num_rx_spt_pages(dp_params) +
-+	       ath12k_dp_num_tx_spt_pages(dp_params);
- }
- 
- static int ath12k_dp_cc_init(struct ath12k_base *ab)
-@@ -1377,7 +1380,8 @@ static int ath12k_dp_cc_init(struct ath12k_base *ab)
- 		return -ENOMEM;
- 	}
- 
--	dp->rx_ppt_base = ab->device_id * ATH12K_NUM_RX_SPT_PAGES(ab);
-+	dp->rx_ppt_base = ab->device_id *
-+			  ath12k_dp_num_rx_spt_pages(&ab->profile_param->dp_params);
- 
- 	for (i = 0; i < dp->num_spt_pages; i++) {
- 		dp->spt_info[i].vaddr = dma_alloc_coherent(ab->dev,
+ 	ret = ath12k_dp_srng_setup(ab, &dp->rx_rel_ring, HAL_WBM2SW_RELEASE,
+ 				   HAL_WBM2SW_REL_ERR_RING_NUM, 0,
+-				   DP_RX_RELEASE_RING_SIZE(ab));
++				   ath12k_dp_rx_release_ring_size(dp_params));
+ 	if (ret) {
+ 		ath12k_warn(ab, "failed to set up rx_rel ring :%d\n", ret);
+ 		goto err;
 diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index 7e48379d18a0f..c8ca3ab4d5e1a 100644
+index c8ca3ab4d5e1a..ff62773cfa9ab 100644
 --- a/drivers/net/wireless/ath/ath12k/dp.h
 +++ b/drivers/net/wireless/ath/ath12k/dp.h
-@@ -249,10 +249,6 @@ struct ath12k_pdev_dp {
- #define ATH12K_SHADOW_DP_TIMER_INTERVAL 20
- #define ATH12K_SHADOW_CTRL_TIMER_INTERVAL 10
- 
--/* TODO: revisit this count during testing */
--#define ATH12K_RX_DESC_COUNT(ab) \
--	((ab)->profile_param->dp_params.rx_desc_count)
--
- #define ATH12K_PAGE_SIZE	PAGE_SIZE
- 
- /* Total 1024 entries in PPT, i.e 4K/4 considering 4K aligned
-@@ -263,16 +259,8 @@ struct ath12k_pdev_dp {
- /* Total 512 entries in a SPT, i.e 4K Page/8 */
- #define ATH12K_MAX_SPT_ENTRIES	512
- 
--#define ATH12K_NUM_RX_SPT_PAGES(ab)	((ATH12K_RX_DESC_COUNT(ab)) / \
--					  ATH12K_MAX_SPT_ENTRIES)
--
- #define ATH12K_TX_SPT_PAGE_OFFSET 0
- 
--/* The SPT pages are divided for RX and TX, first block for RX
-- * and remaining for TX
-- */
--#define ATH12K_NUM_TX_SPT_PAGE_START(ab) ATH12K_NUM_RX_SPT_PAGES(ab)
--
- #define ATH12K_DP_RX_DESC_MAGIC	0xBABABABA
- 
- /* 4K aligned address have last 12 bits set to 0, this check is done
-@@ -716,6 +704,18 @@ ath12k_dp_rx_spt_page_offset(const struct ath12k_dp_profile_params *p)
- 	return ath12k_dp_num_tx_spt_pages(p);
+@@ -206,8 +206,6 @@ struct ath12k_pdev_dp {
+ #define DP_REO_DST_RING_MAX		8
+ #define DP_REO_DST_RING_SIZE		2048
+ #define DP_REO_REINJECT_RING_SIZE	32
+-#define DP_RX_RELEASE_RING_SIZE(ab) \
+-	((ab)->profile_param->dp_params.rx_release_ring_size)
+ #define DP_REO_EXCEPTION_RING_SIZE	128
+ #define DP_REO_CMD_RING_SIZE		256
+ #define DP_REO_STATUS_RING_SIZE		2048
+@@ -716,6 +714,12 @@ ath12k_dp_num_rx_spt_pages(const struct ath12k_dp_profile_params *p)
+ 	return ath12k_dp_rx_desc_count(p) / ATH12K_MAX_SPT_ENTRIES;
  }
  
 +static inline u32
-+ath12k_dp_rx_desc_count(const struct ath12k_dp_profile_params *p)
++ath12k_dp_rx_release_ring_size(const struct ath12k_dp_profile_params *p)
 +{
-+	return p->rx_desc_count;
-+}
-+
-+static inline u32
-+ath12k_dp_num_rx_spt_pages(const struct ath12k_dp_profile_params *p)
-+{
-+	return ath12k_dp_rx_desc_count(p) / ATH12K_MAX_SPT_ENTRIES;
++	return p->rx_release_ring_size;
 +}
 +
  void ath12k_dp_vdev_tx_attach(struct ath12k *ar, struct ath12k_link_vif *arvif);
