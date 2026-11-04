@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829531;
-	b=dKQ2m0VUNI2sWrC7iRAL+ro1gQTrRIn8yEUnGtQS4jMf8AwS8yBHhBJji57UVHy0Rc69
-	 cn5CtUxbYak6In+O2vRxnzhKKxjPECK0RgaLNbo+A292ZJ36ZfZA4cI59zPNz156JhJ0r
-	 +LT3TXyH5qJxyN8JnXrI4CRJUcdl8qAfFfyFZ0DmJcP+BfoNr7nborP1ue012Fyi/tHT1
-	 zTlhtVAtKwAMb6XGYByWm7TUhlcRvblBRx82H26ZwTlVa7LzftE11Y6OoGMY0co7ylzan
-	 IXICINnNbU7LuK1Kqm6jbGb9pJ9pyQGLaowpxYAwCWtUA+QH3GyFptK1NBK0cH0uUqQ==
+	t=1793829532;
+	b=1tPBSV0FzExK8UtusvGAa2W2rFpu2RRXv7FgxEY4BJK9qsoY+l8C49I4QFvzWKYzR9Wl
+	 Elh+FI1NanbioMeMAb6XkrtneawXcC5ExOCYrBgwtYggAEnzFBA87S+iW570Iac5fgEV9
+	 BnSjg8/kRjTDAOhCGP6Tr5CZe34SqELjr6xlSwgjPgIOYkBrylcBfBob0D6Fu8SsqpQjM
+	 TKAfKKOrlqNlJv5TVifyxD0Q6B3TJ9rmatu79cMvn/vonLCvx/ThHd9dk9L/L0FLaMkrj
+	 +SPfuFhyvXTHA0yM0xsbbEsMAP1IpL18VDFgl/zKZJEBC7D54eddutn07J1x80iRqyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GXvHj5yNJvbNCV/MLN+1pczmnNb3PTT+R9aRCcM8xJI=;
-	b=ANxHjmEj+iXGRJyXxfc6TYadus2t987lRNMMj8gVpWzOF3OJtfwyRmatZBdk7xT7QF9A
-	 rzqGnX9KwgLnwUaLYAL2J3SEnunBR2WAdcovEvg6uQd8Er1O4I7+t6NeIB2kLugMLzuap
-	 XaydkHCnrE8O7cqqdyoi1KKYVbG3RqpERN3jQq0ujY1a/rLk061ce8Ssny9vyBnwc0rzd
-	 MnUlQM7fMLkLnoGA+otoEScWNX2mqERJFh4+DTmWBbTEynZyqSO094gMaloAHEK/6EQpg
-	 Ar02lGmo1F364OnT+ATyNBMSeXwfKIpSsEndBLc6gCHr0hdoKP+P/qVd5T/7lN8u+PQ==
+	bh=9CPLFq14QLgTvfeIrY2TV/gfA3NnUGjgALo79yyh1PU=;
+	b=mmK9n/t+XohQO1I+3kErn8TDw5ldOmsuMmtnkAAATjz5f/1LlCYUyB/jejKY8N5bQix0
+	 1MzbJijH3afqMUmpDe6cfbqPYYdlKdDAgWT4UMv+KjbPWl9bEhlp8SUgXWnpj9IA7Ap1a
+	 4bL4MiCYr3460FIiHNZH5/DV85Dmnur791fI/m3wHjVjhWRm6TSrFH+n5hae/i8Kf+0h9
+	 PkG2LLA9HUPXSMsHYDVmd6n1k1cyUFGImH4aefBYLP7rdjfIJ5Oi9x5rwL2WvTZQhE04a
+	 G0ndY+AZGxsPAfkC8nwVKCuHD+kyP/3doJZwf435eHALMeeaa1HJabdQT/F031Df5KA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rywRZ6uy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NaUwyR3n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D72606AB38;
-	Wed,  4 Nov 2026 21:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C61E606AB38;
+	Wed,  4 Nov 2026 21:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rywRZ6uy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674DE1F000C1;
-	Wed,  4 Nov 2026 21:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NaUwyR3n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15871F000C1;
+	Wed,  4 Nov 2026 21:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829530;
-	bh=GXvHj5yNJvbNCV/MLN+1pczmnNb3PTT+R9aRCcM8xJI=;
+	s=korg; t=1793829532;
+	bh=9CPLFq14QLgTvfeIrY2TV/gfA3NnUGjgALo79yyh1PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rywRZ6uyk7c7U43n4nPKs791W6XkV6FPZlTm3o6M3+kuXyFbwHoo/sgnUE32H0tEy
-	 YgOYl5mmPYS6ohqJvaYZ0nrcdCayp7TdScPigCsnfWibE3S4BhIRg0HpUIogjqvsUM
-	 fJ0rLy1FitASCzuYSf0h8ImdfjLFjHHIa1syNScI=
+	b=NaUwyR3nJRrksqlrmbuMNrMmPqxwSodHDBWYqYsND+1k61nJqLM7uXai1ZBjxpptD
+	 7Qzzccoun0YNUKaK+BZuOuc9BsLcbkEbzzn8I15RTT/ephKSmlFfmqdnPSUwnG9xRG
+	 JXXl9X3G5oacTgTIPbXEdJoPCGTjx2H88MxBzEDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0185/1005] comedi: pcm816: Fix sanity check in interrupt handler
-Date: Wed,  4 Nov 2026 15:58:38 -0500
-Message-ID: <20261104211048.963973126@linuxfoundation.org>
+Subject: [PATCH 6.18 0186/1005] comedi: pcmuio: Add sanity check to interrupt handler
+Date: Wed,  4 Nov 2026 15:58:39 -0500
+Message-ID: <20261104211048.993986072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,47 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 4fdac5090ce3616283216d9a1d2b9664e8e20747 ]
+[ Upstream commit 6f6f6644e011fa910db744e9978127a443b94001 ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+The driver requests an interrupt handler for the device, after setting
+device registers to disable interrupt generation.  The interrupt handler
+should not be called prematurely unless the user-configured I/O port
+base address and/or IRQ number are incorrect or the hardware is bad.
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing the devpriv->dma pointer which may be NULL if
-dev->attached is false.  Move the dereference of the devpriv->dma
-pointer after dev->attached has been checked to avoid the possible null
-pointer dereference.
+For safety, check the dev->attached flag in the interrupt handler
+pcmuio_interrupt() to ensure the device has been fully set up, avoiding
+a possible null pointer dereference of dev->subdevices by
+pcmuio_handle_asic_interrupt().
+
+Also make use of the IRQ_HANDLED(x) macro for the normal return path of
+the interrupt handler.
 
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-8-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260618102949.26607-11-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcl816.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/comedi/drivers/pcmuio.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/comedi/drivers/pcl816.c b/drivers/comedi/drivers/pcl816.c
-index 28d1a88c50f65..3c295647e2ed5 100644
---- a/drivers/comedi/drivers/pcl816.c
-+++ b/drivers/comedi/drivers/pcl816.c
-@@ -242,7 +242,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
- 	struct comedi_subdevice *s = dev->read_subdev;
- 	struct pcl816_private *devpriv = dev->private;
- 	struct comedi_isadma *dma = devpriv->dma;
--	struct comedi_isadma_desc *desc = &dma->desc[dma->cur_dma];
-+	struct comedi_isadma_desc *desc;
- 	unsigned int nsamples;
- 	unsigned int bufptr;
+diff --git a/drivers/comedi/drivers/pcmuio.c b/drivers/comedi/drivers/pcmuio.c
+index 33b24dbbb9199..1c5fe065a91f5 100644
+--- a/drivers/comedi/drivers/pcmuio.c
++++ b/drivers/comedi/drivers/pcmuio.c
+@@ -362,12 +362,15 @@ static irqreturn_t pcmuio_interrupt(int irq, void *d)
+ 	struct pcmuio_private *devpriv = dev->private;
+ 	int handled = 0;
  
-@@ -257,6 +257,7 @@ static irqreturn_t pcl816_interrupt(int irq, void *d)
- 		return IRQ_HANDLED;
- 	}
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	if (irq == dev->irq)
+ 		handled += pcmuio_handle_asic_interrupt(dev, 0);
+ 	if (irq == devpriv->irq2)
+ 		handled += pcmuio_handle_asic_interrupt(dev, 1);
  
-+	desc = &dma->desc[dma->cur_dma];
- 	nsamples = comedi_bytes_to_samples(s, desc->size) -
- 		   devpriv->ai_poll_ptr;
- 	bufptr = devpriv->ai_poll_ptr;
+-	return handled ? IRQ_HANDLED : IRQ_NONE;
++	return IRQ_RETVAL(handled);
+ }
+ 
+ /* chip->spinlock is already locked */
 -- 
 2.53.0
 
