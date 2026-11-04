@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793804639;
-	b=f/84yAnaGKq6cYFYRFxjDu8HSPsNAvMFZKRV1II9QaXJr09LqKqyBAcdX7CqB0rY/uYi
-	 C65zQrbaB7bJzO0fv1YiV/XxsDh8L29E02mOWfpt4xInIjFDvJq1Nbisy3qnQ/TuBegnE
-	 0i243wlX1RE3xfwPtUWlzEJflOWVIgHlue/cSAwGHZv1i5odtMJfpDV0eZPNQLxIj5/QI
-	 FzdhyD6KOYbWlv5ReOi1ew06ORCulSoobaOFSqj6N0YUQeDSw6xiTAnveUgwI4Hx+47Hu
-	 FKHYb0N0SZcKvkevcuZKl+AE3gBWNRvFyvW3iRMP8pmRK8cytCiewZEZ1KuIB7gX7qw==
+	t=1793804645;
+	b=tnnGpIA0/rjqUwjHe79Cq3m4NOAz+vDSvXyUs77Xh7LFedA/c5CuoXWIUREfzPWCnXmg
+	 WNznqsQMzqNxFDrBFp66/j+OhxG+AKinQWx+QV0YC4vB8wBQpI2h78Y2he5m5+mMVuYDY
+	 8TaID7G/j2Qqo82Rvmn0NmEarMG86gHNsmgftbrcY1NcMBd1YxBjoOEaz30OeUIS8VL2I
+	 e8blJjboHGXtLjs5UHP4L17EWlLxMMxu6dAEgIdTBdQUuvXuNO+BJvmU2dXsjw+cFUDXG
+	 EXTRxYJKdjrAGAPb2SfLozbkaO8eOTeRpAoVdhDTxto27Ku6PTRY+i5iThIALKbDPLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793804639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793804645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=22FBzhEimgUJAz+7WuE5Wz0zgC4u7PHGyV0ZGAglNwQ=;
-	b=0rFtfK/TDiVa8l4d7pDv9fT/LRk7ShlEf5MHDHxp2T+TS3A1by2JB9VxT1Vfg2LOMwJr
-	 jP/6BQdLsHdOJ7f+EG9KWcXOFEpNUxZmGjM/LY26ioSY5nqaGqVG5W1ufb251xdhkGqHR
-	 QsoNxSd+R3jN1bJggMnXe0szGYPYNbSJjX0xYR8l9HxEMm5x6Ql8Na4co9SlXfEil3b8P
-	 wZSIXRTONLP8NV77XngCfFss9hnbZIiPEnAYQNu1QDzXzDzQP/loiD12z1Ybfq4OpuLQh
-	 vxulPZsljwvAbyNpulmHaT8g3tr1oIIUtudAAS1IL07CNbOV0lWFIz/IFmga2rUpsrQ==
+	bh=37YpjaOgNccrGcYsvQbgZqV6HiURURtIIQXB5fcYtQQ=;
+	b=l5ayChtgPWIZNY1mOZDVnAnzLo+iMnad3A9sJoaN1BvInrF/UjIRZGTDH0pNR/oTM8nn
+	 zULGQWb/uNLjzXlMT3guf4EHf6tZf8jJfncp/38EkzJCiKHCROFrggVFP5NYvlsBlg1Ss
+	 XkVKf5P1B2t0ythYzj1iGBdF9F3jKrJh1PQCjZ8UX52uUc3EJK9E8+RnFPAufszKR5CJc
+	 dNRxZPg9u7maB4ffIg5KAkBVPI70kMZPXbIDY1k3Zb06yrJVoeV3l0kmZQLs7VQxr5X66
+	 o3i6GAZxHugmryhfZxD79Hln3AmSlLXxbzGpGPMLOAzVBpJGPTla9avLPQD9yMGQ6Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bKlhmCTz;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oVHSuLsZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B87606D835;
-	Wed,  4 Nov 2026 15:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA86606A32D;
+	Wed,  4 Nov 2026 15:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bKlhmCTz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B321F000C1;
-	Wed,  4 Nov 2026 15:03:52 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oVHSuLsZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492131F00919;
+	Wed,  4 Nov 2026 15:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793804638;
-	bh=22FBzhEimgUJAz+7WuE5Wz0zgC4u7PHGyV0ZGAglNwQ=;
+	s=k20260515; t=1793804644;
+	bh=37YpjaOgNccrGcYsvQbgZqV6HiURURtIIQXB5fcYtQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bKlhmCTzHWtx1T6JKsEsHCkUruKkAtHE2YobbqZy4kxzIq4UY/pUtJ4/h0QAmA1rQ
-	 hWZQCp6UzNPWGkaIaw6grooR9laiD/S2caNZfmdow/Va+SvO6mPSf6KpPTFTixTb4T
-	 UHftqLPRZqewcV3EJ5fo3Gam2XxrqFP5b/ATrN9wbahrEs98JQfD/tfGLwBUh7njdj
-	 nkTqUjkgrMhwE8SvsgfLSxtucl064jdFWQ+uksf97kjTulpxpE/O0VD1cEN6+qnicn
-	 AED4ph1AQ+6PcV5s3np6WPAi9UurFY/isz3TjHXsXgyEAhiK6GrKo7qSBkrwKgK1jn
-	 5OJGXh/cgCNvg==
+	b=oVHSuLsZL6mz71XqI0NoifxWphWSKFWfitBn84QOxNc8Z0e+QG5j0gebPyOSDom0I
+	 7BK97oLwjXGS4ynLyXW08w4/GTz6+XCv+//Y29VGlpQ4VEcro3MvSE57Pq3sMiTvOR
+	 oe1d91OWfW2YYlNomdAJJgYAyfY42AE8/FO89mtZtEJdMdPuxsRsbuiInatwZTt2mR
+	 ZuROz84xJLCuXL6aghR/2i8huRlIOn3Z+4MHhIGN/IM0LTTFnf4oy7iFSwWCJSV4Vn
+	 dNXJnTS0KFdRBLOsLnSuJBkDsBraOdqLv7vKPfTuPooiGW+9QaKFlI30pELwIiVLhK
+	 5QGQusNEBq0Uw==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -61,9 +61,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v4 04/25] KVM: guest_memfd: Dispatch revocation through backing operations
-Date: Wed,  4 Nov 2026 20:33:01 +0530
-Message-ID: <20261104150322.3516320-5-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v4 05/25] KVM: guest_memfd: Split population by backing type
+Date: Wed,  4 Nov 2026 20:33:02 +0530
+Message-ID: <20261104150322.3516320-6-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
 References: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
@@ -78,14 +78,13 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Revocation truncates cached folios for folio backing, while RAM PFN
-backing unmaps host mappings, reclaims architecture state and optionally
-releases provider PFNs. Move that into backing-specific revoke()
-operations.
+Preallocation obtains cached folios for folio backing and walks provider
+PFN ranges for RAM PFN backing. Both use the same range validation and
+shared inode invalidate lock.
 
-Hold optional provider exclusion across invalidation and revocation,
-inside the inode invalidate lock. Keep reclamation and provider PFN
-release in the backing operation rather than the common sequence.
+Move the two walks into backing-specific populate() operations. Keep
+size checks and locking in kvm_gmem_allocate(), preserving signal
+handling, folio references and PFN range stepping.
 
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Sean Christopherson <seanjc@google.com>
@@ -94,129 +93,150 @@ Cc: kvm@vger.kernel.org
 Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- virt/kvm/guest_memfd.c | 62 ++++++++++++++++++++++++++++++------------
- 1 file changed, 44 insertions(+), 18 deletions(-)
+ virt/kvm/guest_memfd.c | 101 +++++++++++++++++++++++++----------------
+ 1 file changed, 61 insertions(+), 40 deletions(-)
 
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 20c72693c210..4280c3b740ef 100644
+index 4280c3b740ef..5a4da27f0434 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -32,6 +32,8 @@ struct gmem_file {
+@@ -32,6 +32,7 @@ struct gmem_file {
  };
  
  struct kvm_gmem_backing_ops {
-+	int (*revoke)(struct inode *inode, pgoff_t start, pgoff_t end,
-+		const unsigned long *pfn, bool put_pfn_range);
++	int (*populate)(struct inode *inode, pgoff_t start, pgoff_t end);
+ 	int (*revoke)(struct inode *inode, pgoff_t start, pgoff_t end,
+ 		const unsigned long *pfn, bool put_pfn_range);
  	/*
- 	 * Validate the transition before gmem_provider_lock(), guest invalidation
- 	 * and conversion. Caller holds inode->i_mapping->invalidate_lock for write.
-@@ -473,14 +475,48 @@ static void kvm_gmem_pfn_reclaim(struct gmem_inode *gi, pgoff_t start, pgoff_t e
- static void kvm_gmem_pfn_reclaim(struct gmem_inode *gi, pgoff_t start, pgoff_t end) {}
- #endif
+@@ -578,46 +579,11 @@ int kvm_gmem_revoke(struct inode *inode, pgoff_t start, size_t nr_pages,
+ }
+ EXPORT_SYMBOL_GPL(kvm_gmem_revoke);
  
-+static int kvm_gmem_folio_revoke(struct inode *inode, pgoff_t start, pgoff_t end,
-+		const unsigned long *pfn, bool put_pfn_range)
-+{
-+	loff_t offset = (loff_t)start << PAGE_SHIFT;
-+	loff_t len = (loff_t)(end - start) << PAGE_SHIFT;
-+
-+	truncate_inode_pages_range(inode->i_mapping, offset, offset + len - 1);
-+	return 0;
-+}
-+
-+static int kvm_gmem_ram_pfn_revoke(struct inode *inode, pgoff_t start, pgoff_t end,
-+		const unsigned long *pfn, bool put_pfn_range)
-+{
-+	loff_t offset = (loff_t)start << PAGE_SHIFT;
-+	loff_t len = (loff_t)(end - start) << PAGE_SHIFT;
-+	size_t nr_pages = end - start;
-+
-+	unmap_mapping_range(inode->i_mapping, offset, len, 0);
-+#ifdef CONFIG_HAVE_KVM_ARCH_GMEM_RECLAIM
-+	if (pfn)
-+		kvm_arch_gmem_reclaim(*pfn, nr_pages);
-+	else
-+		kvm_gmem_pfn_reclaim(GMEM_I(inode), start, end);
-+#endif
-+	if (put_pfn_range)
-+		gmem_provider_put_pfn_range(GMEM_I(inode), start, nr_pages);
-+	return 0;
-+}
-+
- static int __kvm_gmem_revoke(struct inode *inode, pgoff_t start,
- 			      size_t nr_pages, const unsigned long *pfn,
- 			      bool put_pfn_range)
+-static long kvm_gmem_allocate(struct inode *inode, loff_t offset, loff_t len)
++static int kvm_gmem_folio_populate(struct inode *inode,
++		pgoff_t start, pgoff_t end)
  {
- 	enum kvm_gfn_range_filter filter = kvm_gmem_get_all_gfns_filter(inode);
- 	pgoff_t max_pages = i_size_read(inode) >> PAGE_SHIFT;
--	loff_t offset, len;
+-	struct address_space *mapping = inode->i_mapping;
+-	struct gmem_inode *gi = GMEM_I(inode);
+-	pgoff_t start, index, end;
+-	int r;
+-
+-	/* Dedicated guest is immutable by default. */
+-	if (offset + len > i_size_read(inode))
+-		return -EINVAL;
+-
+-	filemap_invalidate_lock_shared(mapping);
+-
+-	start = offset >> PAGE_SHIFT;
+-	end = (offset + len) >> PAGE_SHIFT;
+-
+-	r = 0;
+-	if (kvm_gmem_is_pfn_mode(gi)) {
+-		for (index = start; index < end; ) {
+-			pgoff_t next_boundary;
+-			pgoff_t max_nr_pages;
+-			int max_order = 0;
+-			kvm_pfn_t pfn;
+-
+-			if (signal_pending(current)) {
+-				r = -EINTR;
+-				break;
+-			}
+-
+-			r = gmem_provider_get_pfn(gi, index, &pfn, &max_order);
+-			if (r)
+-				break;
+-
+-			max_nr_pages = 1UL << max_order;
+-			next_boundary = ALIGN_DOWN(index + max_nr_pages, max_nr_pages);
+-			index += min_t(size_t, next_boundary - index, end - index);
+-			cond_resched();
+-		}
+-		goto out_unlock;
+-	}
++	pgoff_t index;
++	int r = 0;
+ 
+ 	for (index = start; index < end; ) {
+ 		struct folio *folio;
+@@ -645,7 +611,60 @@ static long kvm_gmem_allocate(struct inode *inode, loff_t offset, loff_t len)
+ 		cond_resched();
+ 	}
+ 
+-out_unlock:
++	return r;
++}
++
++static int kvm_gmem_ram_pfn_populate(struct inode *inode,
++		pgoff_t start, pgoff_t end)
++{
 +	struct gmem_inode *gi = GMEM_I(inode);
-+	const struct kvm_gmem_backing_ops *ops = gi->backing_ops;
- 	pgoff_t end;
++	pgoff_t index;
++	int r = 0;
++
++	for (index = start; index < end; ) {
++		pgoff_t next_boundary;
++		pgoff_t max_nr_pages;
++		int max_order = 0;
++		kvm_pfn_t pfn;
++
++		if (signal_pending(current)) {
++			r = -EINTR;
++			break;
++		}
++
++		r = gmem_provider_get_pfn(gi, index, &pfn, &max_order);
++		if (r)
++			break;
++
++		max_nr_pages = 1UL << max_order;
++		next_boundary = ALIGN_DOWN(index + max_nr_pages, max_nr_pages);
++		index += min_t(size_t, next_boundary - index, end - index);
++		cond_resched();
++	}
++
++	return r;
++}
++
++static long kvm_gmem_allocate(struct inode *inode, loff_t offset, loff_t len)
++{
++	struct address_space *mapping = inode->i_mapping;
++	const struct kvm_gmem_backing_ops *ops = GMEM_I(inode)->backing_ops;
++	pgoff_t start, end;
 +	int r;
 +
-+	if (!ops->revoke)
++	if (!ops->populate)
 +		return -EOPNOTSUPP;
- 
- 	if (start >= max_pages)
- 		return 0;
-@@ -489,8 +525,6 @@ static int __kvm_gmem_revoke(struct inode *inode, pgoff_t start,
- 	if (!nr_pages)
- 		return 0;
- 
--	offset = (loff_t)start << PAGE_SHIFT;
--	len = (loff_t)nr_pages << PAGE_SHIFT;
- 	end = start + nr_pages;
- 
- 	/*
-@@ -499,27 +533,17 @@ static int __kvm_gmem_revoke(struct inode *inode, pgoff_t start,
- 	 */
- 	filemap_invalidate_lock(inode->i_mapping);
- 
-+	gmem_provider_lock(gi);
 +
- 	kvm_gmem_invalidate_start(inode, start, end, filter);
++	/* Dedicated guest is immutable by default. */
++	if (offset + len > i_size_read(inode))
++		return -EINVAL;
++
++	filemap_invalidate_lock_shared(mapping);
++
++	start = offset >> PAGE_SHIFT;
++	end = (offset + len) >> PAGE_SHIFT;
++	r = ops->populate(inode, start, end);
++
+ 	filemap_invalidate_unlock_shared(mapping);
  
--	if (kvm_gmem_is_pfn_mode(GMEM_I(inode))) {
--		unmap_mapping_range(inode->i_mapping, offset, len, 0);
--#ifdef CONFIG_HAVE_KVM_ARCH_GMEM_RECLAIM
--		if (pfn)
--			kvm_arch_gmem_reclaim(*pfn, nr_pages);
--		else
--			kvm_gmem_pfn_reclaim(GMEM_I(inode), start, end);
--#endif
--		if (put_pfn_range)
--			gmem_provider_put_pfn_range(GMEM_I(inode), start, nr_pages);
--	} else {
--		truncate_inode_pages_range(inode->i_mapping, offset, offset + len - 1);
--	}
-+	r = ops->revoke(inode, start, end, pfn, put_pfn_range);
- 
- 	kvm_gmem_invalidate_end(inode, start, end);
--
-+	gmem_provider_unlock(gi);
- 	filemap_invalidate_unlock(inode->i_mapping);
- 
--	return 0;
-+	return r;
- }
- 
- static long kvm_gmem_punch_hole(struct inode *inode, loff_t offset, loff_t len)
-@@ -1098,12 +1122,14 @@ static int kvm_gmem_ram_prepare_pfn(struct kvm *kvm, gfn_t gfn,
+ 	return r;
+@@ -1122,6 +1141,7 @@ static int kvm_gmem_ram_prepare_pfn(struct kvm *kvm, gfn_t gfn,
  }
  
  static const struct kvm_gmem_backing_ops kvm_gmem_folio_backing_ops = {
-+	.revoke = kvm_gmem_folio_revoke,
++	.populate = kvm_gmem_folio_populate,
+ 	.revoke = kvm_gmem_folio_revoke,
  	.prepare_attributes = kvm_gmem_folio_prepare_attributes,
  	.convert_attributes = kvm_gmem_folio_convert_attributes,
- 	.prepare_pfn = kvm_gmem_ram_prepare_pfn,
+@@ -1129,6 +1149,7 @@ static const struct kvm_gmem_backing_ops kvm_gmem_folio_backing_ops = {
  };
  
  static const struct kvm_gmem_backing_ops kvm_gmem_ram_pfn_backing_ops = {
-+	.revoke = kvm_gmem_ram_pfn_revoke,
++	.populate = kvm_gmem_ram_pfn_populate,
+ 	.revoke = kvm_gmem_ram_pfn_revoke,
  	.prepare_attributes = kvm_gmem_ram_pfn_prepare_attributes,
  	.convert_attributes = kvm_gmem_ram_pfn_convert_attributes,
- 	.prepare_pfn = kvm_gmem_ram_prepare_pfn,
 -- 
 2.43.0
 
