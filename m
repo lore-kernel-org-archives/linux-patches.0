@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831483;
-	b=MkLFx/6M0vC7TU33TcLHwp5GCmOpY3Qy+WDFkziY8PPL4RC5TLt+dJue5GQT8/dCeOLg
-	 bY7oF7KmwuvRqX59QXDto+ELDGyC8IZK74kpYiiCGh+bZRK2Ri5B26UuCozTRLscBw5jj
-	 hloHLEBFYrpnjPWIhPRDysbtBocZcbRiWlNXOdKQBl/g3licuJiyKshmCOW5WFR+Kms63
-	 RiOmg4tCCzoW9sm6AvRYdeLNTFVPcPBGqHobADs6dhSB/S6EgWUDeEwVprOyyhpuaojVM
-	 7vg3Baq0uCxPbj2PS7W7AVO/mUObntKtF7w0TpWfXjsUHy53KJ/dnxyHD19Awa3y+OA==
+	t=1793831485;
+	b=hAKYUkDdU5WUl1jujZqNm39g8eoR+SCknhBEIaRZ+hoL9Z3FwXA5ZEM7k/+/9n4EikgG
+	 pUqrE4ndkuX2Fa16SSnIYl/TyZbUYhFlq0A+ckh4JHuNiW93EDCV+cwg1VJcxNmncXUpo
+	 fL2Klh1uaW4+Y+INfDb2WuL23X75pyaXAk7yDbJVFAB3/lMovx2BciEZ3+Z2rZ8gW1UKa
+	 54t6qaWkKzo1X+g1w6o2uygIsQFK5NHS3cJvmqIUccYeV0xrQHAq7qwpF6WJdRmY7Lp6d
+	 0vt7M45lGIGuPqnjuSKqIHwDX3JFCWvbbTm8hM/dErMjgaMN+jvF1daxwsr5bxaO/3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831485;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n8iVgZAevvweEdO5BourY0rdlk1njVixN6iwp2X7H4o=;
-	b=CgwVspjPYEv/Ob52ho/sgJxtK0H/0LvzhFy4Ij4LKHRBVgejIs2MB9+m43aaFO7WFDfK
-	 Mk7PUj/1hP3ryp8/mcshb8I8hLkzNpPJjruzM78ixHvDu1CJE5cc34SbNaNl93lEinT3d
-	 b6e8Th1i0hIqM6Q7HB93mOP9g/XCL105Y07Lqrh1euUKPz/3PWcF6mWJh09GGCl2zz2iG
-	 M+mbMiXCAPF1mN9WbRlfXHxnLa2xk7aFuuBXGbzm4K04Hyy61BI17VIEty44/B4Vl476b
-	 +6Z/HH/jwUUrIAVKMhHNvy1ET0jJ5D4dlEEQogdDKrLwpDud/Q0QndUJy55ibOK4qkA==
+	bh=r/Fzi+K1DHOPipX7vhZDahErcgwWjefDVrmzcH4xmXs=;
+	b=332kl2VdAdpI2eMdQVETYzKSs6EyV1FdkVe3gA5MhQFa28Y6LSD9/6Hb94KZv3oYMprU
+	 Pf8/0RP2+1ndD6/xANdFq2Ov0V6+sU25jSfdkAH5QWTDXATUQvFYYDLHq7DzjW6J4kuCK
+	 8pI3Slu/Fmer3991odqTp2+2/YyZje+vBi3M2LrSAzT0GUM18lZNFtZH9jMa5LgmNNrDF
+	 0oPWO7q1jt6Try8nTLX+dX72be7sSW7q4fO6WLoBMTtfO4n+NZ1eFSzqv/ggfGn+r5nB6
+	 ZYD7x+fjZytZAB4hDSYf7JsEjk1igfJw2B4smCrpmcjxuiCVLSP5fgGi4dAw6uK/ubg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhXtNWxM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4j8wgqz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE56606AC2A;
-	Wed,  4 Nov 2026 22:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F763606B2DC;
+	Wed,  4 Nov 2026 22:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhXtNWxM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E581F000C1;
-	Wed,  4 Nov 2026 22:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4j8wgqz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1031F000C1;
+	Wed,  4 Nov 2026 22:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831483;
-	bh=n8iVgZAevvweEdO5BourY0rdlk1njVixN6iwp2X7H4o=;
+	s=korg; t=1793831484;
+	bh=r/Fzi+K1DHOPipX7vhZDahErcgwWjefDVrmzcH4xmXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EhXtNWxM2JoPm18xwJ9eSbJ9BHti38jst03fXSItUmH7WZcRa3esK8iP6QgKv/0y8
-	 uWAm6MD2v0dYvEiNRekN0Ud0PJmorkKSkuPUGzjmm1ven5ae+IXPoc2XpgU6vcjrEh
-	 m+wLAsCjoCRXCmb3iNVbOCCNSGMnug+E1Jkm15Gk=
+	b=p4j8wgqzHRS9f3Ww3LDqjtPA0ylUZPKhV/w/KpIdfeLuzOTWmXwYKuXvUuKWdFy7w
+	 1Nt29KkEfTysUnvRRyx9s60/iHyScY14FVDxN998ldlQ80TnF25dejqjQ3CrUyk90W
+	 FIXlwy7m/ykTcwwPey4OKrlhevYi9YUbtwtPI6Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+843bf2f48f4d12e6682e@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Igor Putko <igorpetindev@gmail.com>
-Subject: [PATCH 6.18 0732/1005] serial: core: shut down initialized port on removal
-Date: Wed,  4 Nov 2026 16:07:45 -0500
-Message-ID: <20261104211103.999798555@linuxfoundation.org>
+	Richard Patel <ripatel@wii.dev>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.18 0715/1005] genirq: Move interrupt thread exit_work object to irqaction
+Date: Wed,  4 Nov 2026 16:07:28 -0500
+Message-ID: <20261104211103.571491519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,67 +67,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Putko <igorpetindev@gmail.com>
+From: Richard Patel <ripatel@wii.dev>
 
-commit 810d467c11f0c85107874d08dfdd11acba6aa0c0 upstream.
+commit 89a9e003a2ef73f67dff03dfd59e0a5474b56b0b upstream.
 
-When a serial port configured as a console is opened and subsequently
-closed, tty_port_shutdown() skips invoking port->ops->shutdown() because
-port->console is true. As a result, tty_port_initialized() remains true
-and the port's interrupt handler stays registered in the irq subsystem.
+irq_thread() registers irq_thread_dtor() as exit task_work using a
+stack-allocated callback_head.  On normal interrupt thread exit, this work
+gets cancelled and never runs.
 
-If the underlying device is later unbound or removed (e.g. via sysfs
-driver unbind or device hot-unplug), serial_core_remove_one_port()
-unregisters the console, frees uport->name via kfree(), and tears down
-the port without shutting it down or freeing its IRQ. Consequently, the
-irqaction descriptor remains registered in genirq with action->name
-pointing to freed memory.
+On x86, an abnormal interrupt thread exit (e.g. handler oops) discards the
+stack, including the callback_head, while that callback_head is still
+pending. By the time exit_task_work() runs, the stack memory formerly
+backing callback_head is already clobbered.
 
-This triggers a use-after-free read whenever genirq accesses action->name,
-such as when reading /proc/interrupts:
+  irq_thread()                      <-- on_exit_work allocated
+    ** IRQ handler faults **
+    oops_end()
+      rewind_stack_and_make_dead()  <-- on_exit_work freed
+  make_task_dead()
+    do_exit(SIGSEGV)
+      ...
+      exit_shm()                    <-- on_exit_work clobbered
+      ...
+      exit_task_work()              <-- stack use-after-free
+        exit_shm()+0x30             <-- wild jump to return addr
 
-  BUG: KASAN: slab-use-after-free in string+0x476/0x570
-  Call Trace:
-   string+0x476/0x570
-   vsnprintf+0x422/0x1300
-   seq_printf+0x...
-   show_interrupts+...
+Thus, a benign threaded IRQ oops (e.g. a NULL pointer deref) is
+turned into a wild jump. This is caught by kernel IBT:
 
-Fix this by acquiring port->mutex in serial_core_remove_one_port() after
-console unregistration, clearing port->console under the mutex to prevent
-data races with concurrent tty_port_shutdown(), and invoking
-uart_shutdown(NULL, state) if the port remains initialized. This ensures
-that port->ops->shutdown() is called and the IRQ is freed before
-kfree(uport->name).
+  ** first fault **
+  Oops: general protection fault, kernel NULL pointer dereference 0x3c0: 0000 [#1] SMP NOPTI
+  ...
+  ** second fault **
+  Missing ENDBR: exit_shm+0x30/0x1c0
+  kernel BUG at arch/x86/kernel/cet.c:133!
+  ...
+   ? task_work_run+0x5c/0x90
+   ? do_exit+0x209/0x460
+   ? rewind_stack_and_make_dead+0x16/0x20
+  ...
+  note: irq/165-AudioDS[1427] exited with irqs disabled
+  Fixing recursive fault but reboot is needed!
 
-Reported-by: syzbot+843bf2f48f4d12e6682e@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Closes: https://syzkaller.appspot.com/bug?extid=843bf2f48f4d12e6682e
-Fixes: 761ed4a94582 ("tty: serial_core: convert uart_close to use tty_port_close")
-Fixes: f7048b15900f ("tty: serial_core: Add name field to uart_port struct")
-Signed-off-by: Igor Putko <igorpetindev@gmail.com>
-Link: https://patch.msgid.link/20261003163337.45577-1-igorpetindev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by storing the callback_head in struct irqaction.  The irqaction
+is only freed once irq_thread_dtor() finishes.
+
+Fixes: 2deb4be28077 ("x86/dumpstack: When OOPSing, rewind the stack before do_exit()")
+Signed-off-by: Richard Patel <ripatel@wii.dev>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261009145842.1616117-3-ripatel@wii.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ include/linux/interrupt.h |    2 ++
+ kernel/irq/manage.c       |    9 ++++-----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -3225,6 +3225,13 @@ static void serial_core_remove_one_port(
- 	if (uart_console(uport))
- 		unregister_console(uport->cons);
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -118,6 +118,7 @@ typedef irqreturn_t (*irq_handler_t)(int
+  * @thread_flags:	flags related to @thread
+  * @thread_mask:	bitmask for keeping track of @thread activity
+  * @dir:	pointer to the proc/irq/NN/name entry
++ * @thread_dtor:	task_work for @thread irregular exit cleanup
+  */
+ struct irqaction {
+ 	irq_handler_t		handler;
+@@ -133,6 +134,7 @@ struct irqaction {
+ 	unsigned long		thread_mask;
+ 	const char		*name;
+ 	struct proc_dir_entry	*dir;
++	struct callback_head	thread_dtor;
+ } ____cacheline_internodealigned_in_smp;
  
-+	scoped_guard(mutex, &port->mutex) {
-+		port->console = false;
-+
-+		if (tty_port_initialized(port))
-+			uart_shutdown(NULL, state);
-+	}
-+
- 	/*
- 	 * Free the port IO and memory resources, if any.
- 	 */
+ extern irqreturn_t no_action(int cpl, void *dev_id);
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -1198,9 +1198,9 @@ static void __irq_thread_dtor(struct irq
+ 	irq_finalize_oneshot(desc, action);
+ }
+ 
+-static void irq_thread_dtor(struct callback_head *unused)
++static void irq_thread_dtor(struct callback_head *work)
+ {
+-	struct irqaction *action = kthread_data(current);
++	struct irqaction *action = container_of(work, struct irqaction, thread_dtor);
+ 
+ 	__irq_thread_dtor(action);
+ 	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+@@ -1247,7 +1247,6 @@ static void wake_up_and_wait_for_irq_thr
+  */
+ static int irq_thread(void *data)
+ {
+-	struct callback_head on_exit_work;
+ 	struct irqaction *action = data;
+ 	struct irq_desc *desc = irq_to_desc(action->irq);
+ 	irqreturn_t (*handler_fn)(struct irq_desc *desc,
+@@ -1264,8 +1263,8 @@ static int irq_thread(void *data)
+ 		handler_fn = irq_thread_fn;
+ 
+ 	set_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+-	init_task_work(&on_exit_work, irq_thread_dtor);
+-	task_work_add(current, &on_exit_work, TWA_NONE);
++	init_task_work(&action->thread_dtor, irq_thread_dtor);
++	task_work_add(current, &action->thread_dtor, TWA_NONE);
+ 
+ 	while (!irq_wait_for_interrupt(desc, action)) {
+ 		irqreturn_t action_ret;
 
 
