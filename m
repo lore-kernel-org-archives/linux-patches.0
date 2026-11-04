@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831770;
-	b=IQ3/t7IY38EqhoRx/++IQoJFAV5zgXapnDNS+lZnZmPuNNSIk00hr69V6TEK5CH3DYZL
-	 1do00bhWZTqRcYf/3Zf7x02MynnzeXpw1S+LMSYndw7TX+RU0+tfV92qwuSWfsey4+Ses
-	 DqffSTiTJps9p44f34TWj9Q3h+pZt9jFpdSWWata86vj8ILCsp7pSpeJCN1IhqRed6uZv
-	 VDfMQwM7fx8jJAm300bVCzQ7nnV9bwGn3CainyiPdbl2poL94+tqibY0iPR/UnVxiBY/w
-	 fu3iR9xEp2RzioTmEn26CnBbMZN4aHpmYbg2Ujn75rfMEGCo1Gvgsdx4hcp7QNibWTQ==
+	t=1793831772;
+	b=PCCYiq4I/+B1pj7gJS5faERnVgPRH4HN30fYm6v1YqcPjssKMkFPsooH7VDnJ3BIFVpq
+	 JguXnPcUVwijDf7ZvcbZOlaz7FF1BIjtxO031/sf+9TitpbKyFf7FNsb9u7AY3027d3Fa
+	 wg+p9NxQLZhbcRiiVG7PWfARWfg2NqnH0KwjjK4dkZiYhKM4gs5O+BfdeJJcQ8j7HzG9K
+	 PM2paujzS4YO84dDDjjFoJ6xiNs4gRG1oqBzZ/Cf6F6PeSe38TNw0kKYrXuxbNLBFuK78
+	 BAslDvSsnuM4MrtgMUQ7jagGyOEdP/Dv4N7THTuYGV7aQTMlAx7Qs3n+/K3Hju1bbEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=sw14OA6HNyon2a7VTZDnPB7S5N1UHAye9ff4C/FybSI=;
-	b=Bj8bHVyjNyovSJzSS3ipQu6pMWZLzurUF3674czYPxkKsVWfbvTMkMotAHK4jIIvgbu9
-	 DZq5SRnnmNLtQLJ/uh7hJNs3Fla/2bmJnNVTsbwo0J2qUidaa3ABgy8VpzvO2EOjmu0Os
-	 jdmf0uzK9oQ2MCmJ5PzmI0vvr5CRm0wjv+HLu84f42hR0GhTXzrXUFuDyFwXQn4OLsKQC
-	 H0P9cL3AOucEOwyPBzsg1HXKoL/mQIXqOmO0AZG5USdxkrXEUZTBeUhyFGkMzUaRIQT9e
-	 ih0O9woHrmTVtbopd82I0gUteB3hzld/LaUiPAmhc7+P6AZpXLZiy8Cug2vFtsEdvvA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=B0zXC7CklPEgfiwZJr3oLkIqKD7P33H4qk5UklmY43c=;
+	b=mdZgcULnVgpEzzh+nS1BjuAC3n9NfEEBErFYfuiBzn1cx9yhyWSQ8jCHE8KM6hW7D6KI
+	 r4F25Y9V95RKA4AiexUxmdInpcHGvQQDPZGPLkSApfTZqD0deTW8im/FjL66AQaUN+Cf2
+	 F4Llin9JG37r3e1pTDX4dcawNMnHc63zOkwJ7eDRr+dDfgWl4nOmEmgShFvsMpRgJTjmu
+	 cxX+NZIHYUvkEIPAGo9F3JogUU9i0LQZGzCGaO1QDEFf39vbnfhdhFHDqRak6MM8bqu4g
+	 BI/KOewfClNPKQTZiRP7edt4ofLbpGFqZI53op/5CPr+5bnn8ZoKdDSnyfxRR1sMWsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GbjOpBs9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KhRPLXHk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDDA606A31B;
-	Wed,  4 Nov 2026 22:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A1A606A31B;
+	Wed,  4 Nov 2026 22:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GbjOpBs9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C53A1F000C1;
-	Wed,  4 Nov 2026 22:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KhRPLXHk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA11E1F000C1;
+	Wed,  4 Nov 2026 22:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831770;
-	bh=sw14OA6HNyon2a7VTZDnPB7S5N1UHAye9ff4C/FybSI=;
+	s=korg; t=1793831772;
+	bh=B0zXC7CklPEgfiwZJr3oLkIqKD7P33H4qk5UklmY43c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GbjOpBs9jUOignz5Q2Yps78upGpXJtYNaxLmEcdxI/mLqjwAzATZddePep8eeWR7Q
-	 TPWW8CD7SaJydqe4EeSaXebivrHOxuGb17bKp+GurIhyC7d2+5MFaOscNkjDjnfLez
-	 1bYy7CNv2hNa/svpF22OYD9TK+Zuj/egIiEVLgtU=
+	b=KhRPLXHkfpwdLSM4VA+Z2cGZsXnSW74QH6MdsymntI/yjopupCBNNyP7sNyf5ta6w
+	 WZ/tAe8cwq7ld/Ic8noDHEvzYw8BBLnMCeLSgZerDGKnIEeVzpASVG9OKl2yNVwKMr
+	 h5ZUGp2IwN6uNUtqjLh/winlgtJjj3WOylasCLJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?J=C3=B6rg=20Sommer?= <joerg@jo-so.de>,
+	NeilBrown <neil@brown.name>,
 	Jeff Layton <jlayton@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.18 0902/1005] NFSD: Resolve the recall-any mask names in the trace format
-Date: Wed,  4 Nov 2026 16:10:35 -0500
-Message-ID: <20261104211108.458144635@linuxfoundation.org>
+Subject: [PATCH 6.18 0903/1005] NFSD: Return NFSERR_ISDIR for NFSv2 READ and WRITE on a non-regular file
+Date: Wed,  4 Nov 2026 16:10:36 -0500
+Message-ID: <20261104211108.483432996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -70,48 +72,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit c563a1f0679566d7d586802e5346591d0af8da78 upstream.
+commit 07649099cc8c449ea8d37d0e8d6b532fecb24bf8 upstream.
 
-RCA4_TYPE_MASK_* are enum constants, so the preprocessor cannot fold
-them into the print format that show_rca_mask() builds for the
-nfsd_cb_recall_any event. Nothing declares an eval map for them
-either, so trace_event_eval_update() has no substitution to apply at
-module load, and the event's format file ships the enumerator names
-verbatim. trace-cmd and perf cannot decode the bmval0 field.
+Commit 0ac903d1bfdc ("NFS: NFSERR_INVAL is not defined by NFSv2")
+changed the status NFSD returns for an NFSv2 READ or WRITE of a
+symlink or other non-regular file from NFSERR_INVAL to NFSERR_IO.
+RFC 1094 defines neither an INVAL nor a SYMLINK status.
 
-Declare the eval maps for the nine mask bits show_rca_mask() decodes.
-The format then carries the shift counts as integers, the same shape
-the SUNRPC trace points already emit from their BIT() flag decoders.
+U-Boot's NFS client follows a symlink only when READ fails with
+NFSERR_ISDIR or NFSERR_INVAL. Since that commit it cannot load a
+boot image through a symlink exported by a Linux NFS server: the
+load completes with zero bytes transferred.
 
-Fixes: 638593be55c0 ("NFSD: add CB_RECALL_ANY tracepoints")
+Solaris returns NFSERR_ISDIR when the target of an NFSv2 READ or
+WRITE is not a regular file. Return the same status from NFSD.
+Other NFSv2 procedures continue to return NFSERR_IO.
+
+Fixes: 0ac903d1bfdc ("NFS: NFSERR_INVAL is not defined by NFSv2")
 Cc: stable@vger.kernel.org
+Reported-by: Jörg Sommer <joerg@jo-so.de>
+Closes: https://lore.kernel.org/linux-nfs/apE90ZRZB8IW_AiS@jo-so.de/
+Reviewed-by: NeilBrown <neil@brown.name>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260818184151.31180-1-cel@kernel.org
+Link: https://patch.msgid.link/20260828231841.282003-1-cel@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/misc/nfs.h |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/nfsd/nfsproc.c |   19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/include/trace/misc/nfs.h
-+++ b/include/trace/misc/nfs.h
-@@ -358,6 +358,16 @@ TRACE_DEFINE_ENUM(IOMODE_ANY);
- 		{ IOMODE_RW,			"RW" }, \
- 		{ IOMODE_ANY,			"ANY" })
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -39,6 +39,21 @@ static __be32 nfsd_map_status(__be32 sta
+ 	return status;
+ }
  
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_RDATA_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_WDATA_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_DIR_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_FILE_LAYOUT);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_BLK_LAYOUT);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MIN);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MAX);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MIN);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MAX);
++/*
++ * Because NFSv2 does not have an NFSERR_SYMLINK, Solaris returns
++ * NFSERR_ISDIR when the target of a READ or WRITE is any object
++ * that is not a regular file.
++ */
++static __be32 nfsd_map_io_status(__be32 status)
++{
++	switch (status) {
++	case nfserr_symlink:
++	case nfserr_wrong_type:
++		return nfserr_isdir;
++	}
++	return nfsd_map_status(status);
++}
 +
- #define show_rca_mask(x) \
- 	__print_flags(x, "|", \
- 		{ BIT(RCA4_TYPE_MASK_RDATA_DLG),	"RDATA_DLG" }, \
+ static __be32
+ nfsd_proc_null(struct svc_rqst *rqstp)
+ {
+@@ -237,7 +252,7 @@ nfsd_proc_read(struct svc_rqst *rqstp)
+ 		resp->status = fh_getattr(&resp->fh, &resp->stat);
+ 	else if (resp->status == nfserr_jukebox)
+ 		set_bit(RQ_DROPME, &rqstp->rq_flags);
+-	resp->status = nfsd_map_status(resp->status);
++	resp->status = nfsd_map_io_status(resp->status);
+ 	return rpc_success;
+ }
+ 
+@@ -270,7 +285,7 @@ nfsd_proc_write(struct svc_rqst *rqstp)
+ 		resp->status = fh_getattr(&resp->fh, &resp->stat);
+ 	else if (resp->status == nfserr_jukebox)
+ 		set_bit(RQ_DROPME, &rqstp->rq_flags);
+-	resp->status = nfsd_map_status(resp->status);
++	resp->status = nfsd_map_io_status(resp->status);
+ 	return rpc_success;
+ }
+ 
 
 
