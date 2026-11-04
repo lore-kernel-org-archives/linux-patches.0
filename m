@@ -1,46 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831798;
-	b=tN9zryi8enah3GeXqJPSaFxD5R2d1ZeL/cPEWf0EHsmixgsDg5l2V3D3f4+WSgnMuBJr
-	 Jimk6tigWss7077fHk7QW+aP33BFrnUPLQfW22yv8y8yRl6tKorkZQ4wq1G3xSNb883bI
-	 +RixAcLobF5lYwCkd6l5oyk7wWVYmE3Sw77nvo2p/f9LTF3MvzjHDI1xjxDCTqVQRs1B7
-	 AveUc6C1osujnLZvPZFSk0LiYI9R0IAk2cFxXiJbZMGnhtZLerFZE3wMPYUtmSEhRqhlG
-	 TjBtyt1LiBk2RMFnE3FIhxwmyiIiRD9eUhqu8SKfBhyjanlfA86oaAIGtom9z06k5Gw==
+	t=1793831800;
+	b=F2N9gB8H6btsRayNts+JgbiV8vZzxep7LJ1cm70dMdI0b2dfDti7jh0FhXwtdT73GVwU
+	 4ZDT9Yvc9yjQQqk0GH+e9TMwzpajij9rNlNHLq921BzZZPvlGnBE+OFifITrWrhaK5ipY
+	 wCy2yns3tKZJvsuxc253mmrzLInXFrDDgMF4eXX9pwK4YmdsYAILUTtZH7NLojpQafKHE
+	 KWwWhQksDUgFEy7i5dSwYnbo1xf4BOMiScCmFDaBDWlZnCnWhDdMmr8nRmhDab+oDc+y5
+	 p/uXdFp59sJ75FFWpvE+k80sI558+ZShyxCgTiOtoqVyKmRNkX0n/YeyzTvDnU8QL9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831798;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831800;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zIzJsHholdqyHde0ZBmCMUU12P4oCtxx1aPnp0DUlbk=;
-	b=scqK195l6/TgGheddG+rSgRp/0IRACrBCKtZqwaB3qwOf0sVWA1YR5uoOAEjxqfa4REg
-	 t1D+0ftBb/PXGgWZC1HX/jGuqdZjlNIfM0DxoVMzzG+MKyO6N6PO1VojnzIjtHtt+k9og
-	 5dzk4gLVEltMdQoh0rCOTX5oU8Q7TCeFaa5+NoPkVqUuhk1dnkrwlQ+ZLt0m+yKxm3ik5
-	 2KvGEroUkuALBrh0l26xlxvrdsbBWUfnEfZDOWE5sTbCm1QFHe5vSjJgcEKjnc2fOn7/m
-	 Qv0oGlZo9uIyo9tED4TtMsQaCAC2Pj+rR9XSd+6Z9J8lZTbzhGJskXEOjVBR8TJuoRw==
+	bh=Kdb8eYw9DEpXWmzZm54P0rZWIlst6n2sHCVp8HnMJ/I=;
+	b=NZFuuaqV9XogPiZ8tYw3cJBu16hf79P51gKH3Y5dzugAskBI+kwOlSpiRB5sMwUdh1tF
+	 EUOrUp4hxu20XObK0eKl0+Y4cK8t98QJ2jfdf13hXL6EuN3FWxiBumvSUAhQ/JkZKaWaf
+	 gLO1Kl8OyleZ+4O/Z0wfF2WfW/VQSWr5pYeAvSI/ub6zTA4IVrOK0YAoVRgieQ4TQcZAl
+	 jtSv5pocd2vr2NDF/cNpBboNTs3CT9UqRmVoopXXMPrwyDJjdj0Xvyj1bVcqS47a6nRmd
+	 ZT+2JRkQzOsKSwmTaOWOnmmCR82Yy4KubtWGkyvntP/ExAU1V8NCFfognfKCQvVPsFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iIKR4Hib;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMaOo4x8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2F7606A33A;
-	Wed,  4 Nov 2026 22:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE61D606A841;
+	Wed,  4 Nov 2026 22:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iIKR4Hib
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79AC1F00919;
-	Wed,  4 Nov 2026 22:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMaOo4x8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DDB1F000C1;
+	Wed,  4 Nov 2026 22:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831798;
-	bh=zIzJsHholdqyHde0ZBmCMUU12P4oCtxx1aPnp0DUlbk=;
+	s=korg; t=1793831799;
+	bh=Kdb8eYw9DEpXWmzZm54P0rZWIlst6n2sHCVp8HnMJ/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iIKR4HibAUbdaFgjplGW76Vjx0h49kaFHyekT39QT4JBHZYqJIZDdQtiG0zHrGbL6
-	 Wsaa9cD3igrUI7G5STfMPK6QIDY4gduKQ9R8Gp5tq/xijAMpZ8NOCjJzvVJWYJjTIf
-	 UdEgSTdq9cT3NG1GbU39P089q6dmH2ODPSSRFmH8=
+	b=jMaOo4x8NESXaVG8hWRUZSGDynk+pGCqAENhdKX+jSzVWT1uv6/R6/WrxxPJXJAhC
+	 E1H25Ncb+BdH/XWNyU1SYCCFT12siYra06n2ylDoKhATM8pH+KwMKj5QAa1d0kmmtf
+	 8X6jM+gUbhshsu+4TGjZ+7elgUkTtYgQJl6WLW6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Laight <david.laight.linux@gmail.com>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	Eric Dumazet <edumazet@google.com>,
@@ -49,9 +50,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org
-Subject: [PATCH 6.18 0918/1005] rxrpc: Fix update of call->tx_pending without holding lock
-Date: Wed,  4 Nov 2026 16:10:51 -0500
-Message-ID: <20261104211108.867760214@linuxfoundation.org>
+Subject: [PATCH 6.18 0919/1005] rxrpc: Fix lack of short-send handling in rxrpc_kernel_send_data()
+Date: Wed,  4 Nov 2026 16:10:52 -0500
+Message-ID: <20261104211108.894444023@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -75,37 +76,20 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-commit 7801c42c3bb737cfb06194a383873fcad8daacf5 upstream.
+commit af208f36ae22440cf6011a43cb3064fd525d85b4 upstream.
 
-Currently, rxrpc_send_data() updates call->tx_pending just before it
-returns - but it won't be holding the call->user_mutex when it does this if
-a wait was interrupted by a signal.  This would allow a parallel sendmsg()
-to race.
+Fix rxrpc_kernel_send_data() to loop around if it detects a short send.
+David Laight suggested doing it here rather than wrapping all the calls in
+loops.  Further, remove the len argument and use the iterator count instead
+and return 0 on success, not the amount copied.
 
-Further, both the callers of rxrpc_send_data() call it with the lock held,
-and then it returns an indication through the parameter list to say whether
-it has dropped the lock or not - after which the callers both just drop the
-lock if it's still held.
+Note this is also a prerequisite for changing the way rxrpc_send_data()
+works to return a short send rather than an error if some data was
+buffered.
 
-Fix this by:
-
- (1) Moving the release of call->user_mutex down into rxrpc_send_data() and
-     get rid of the indicator parameter.  This makes it easier to see where
-     the lock is held.
-
- (2) After waiting, if the attempt to reacquire the mutex is interrupted,
-     just return directly there rather than going to out_unlock
-
- (3) Restricting the txb variable to inside the buffering loop and leaving
-     ->tx_pending set until we've queued the buffer.
-
-Note that there's a slight change in behaviour in that wait_for_space
-failure now doesn't check for completion because it doesn't hold the call
-user_mutex.  The caller, however, should re-issue the send and pick up any
-error at a second attempt.
-
-Fixes: b0f571ecd794 ("rxrpc: Fix locking in rxrpc's sendmsg")
-Closes: https://sashiko.dev/#/patchset/20260702144919.172295-1-dhowells%40redhat.com
+Fixes: 651350d10f93 ("[AF_RXRPC]: Add an interface to the AF_RXRPC module for the AFS filesystem to use")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824091645.415423-1-dhowells%40redhat.com
+Suggested-by: David Laight <david.laight.linux@gmail.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Eric Dumazet <edumazet@google.com>
@@ -115,199 +99,231 @@ cc: Paolo Abeni <pabeni@redhat.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-4-dhowells@redhat.com
+Link: https://patch.msgid.link/20261006133011.531806-5-dhowells@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/sendmsg.c |   63 +++++++++++++++++++++++-----------------------------
- 1 file changed, 29 insertions(+), 34 deletions(-)
+ Documentation/networking/rxrpc.rst |    8 +++++---
+ fs/afs/rxrpc.c                     |   32 +++++++++++++-------------------
+ include/net/af_rxrpc.h             |    5 ++---
+ net/rxrpc/rxperf.c                 |   25 ++++++++++---------------
+ net/rxrpc/sendmsg.c                |   27 +++++++++++++++++++--------
+ 5 files changed, 49 insertions(+), 48 deletions(-)
 
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -320,10 +320,9 @@ static int rxrpc_alloc_txqueue(struct so
- static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			   struct rxrpc_call *call,
- 			   struct msghdr *msg, size_t len,
--			   rxrpc_notify_end_tx_t notify_end_tx,
--			   bool *_dropped_lock)
-+			   rxrpc_notify_end_tx_t notify_end_tx)
-+	__releases(&call->user_mutex)
- {
--	struct rxrpc_txbuf *txb;
- 	struct sock *sk = &rx->sk;
- 	enum rxrpc_call_state state;
- 	long timeo;
-@@ -334,30 +333,26 @@ static int rxrpc_send_data(struct rxrpc_
- 		trace_rxrpc_abort(call->debug_id, rxrpc_sendmsg_late_send,
- 				  call->cid, call->call_id, call->rx_consumed,
- 				  0, -EPROTO);
--		return -EPROTO;
-+		ret = -EPROTO;
-+		goto out_unlock;
- 	}
+--- a/Documentation/networking/rxrpc.rst
++++ b/Documentation/networking/rxrpc.rst
+@@ -870,7 +870,6 @@ The kernel interface functions are as fo
+ 	int rxrpc_kernel_send_data(struct socket *sock,
+ 				   struct rxrpc_call *call,
+ 				   struct msghdr *msg,
+-				   size_t len,
+ 				   rxrpc_notify_end_tx_t notify_end_rx);
  
- 	timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
+      This is used to supply either the request part of a client call or the
+@@ -879,14 +878,17 @@ The kernel interface functions are as fo
+      exclusively to in-kernel virtual addresses.  msg.msg_flags may be given
+      MSG_MORE if there will be subsequent data sends for this call.
  
- 	ret = rxrpc_wait_to_be_connected(call, &timeo);
+-     The msg must not specify a destination address, control data or any flags
+-     other than MSG_MORE.  len is the total amount of data to transmit.
++     msg must not specify a destination address, control data or any flags
++     other than MSG_MORE or MSG_WAITALL.
+ 
+      notify_end_rx can be NULL or it can be used to specify a function to be
+      called when the call changes state to end the Tx phase.  This function is
+      called with a spinlock held to prevent the last DATA packet from being
+      transmitted until the function returns.
+ 
++     It returns 0 if all the provided data has been buffered and a negative
++     error code on failure.
++
+  (#) Receive data from a call::
+ 
+ 	int rxrpc_kernel_recv_data(struct socket *sock,
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -412,8 +412,7 @@ void afs_make_call(struct afs_call *call
+ 	msg.msg_controllen	= 0;
+ 	msg.msg_flags		= MSG_WAITALL | (call->write_iter ? MSG_MORE : 0);
+ 
+-	ret = rxrpc_kernel_send_data(call->net->socket, rxcall,
+-				     &msg, call->request_size,
++	ret = rxrpc_kernel_send_data(call->net->socket, rxcall, &msg,
+ 				     afs_notify_end_request_tx);
  	if (ret < 0)
--		return ret;
-+		goto out_unlock;
+ 		goto error_do_abort;
+@@ -425,7 +424,6 @@ void afs_make_call(struct afs_call *call
  
- 	if (call->conn->state == RXRPC_CONN_CLIENT_UNSECURED) {
- 		ret = rxrpc_init_client_conn_security(call->conn);
- 		if (ret < 0)
--			return ret;
-+			goto out_unlock;
- 	}
+ 		ret = rxrpc_kernel_send_data(call->net->socket,
+ 					     call->rxcall, &msg,
+-					     iov_iter_count(&msg.msg_iter),
+ 					     afs_notify_end_request_tx);
+ 		*call->write_iter = msg.msg_iter;
  
- 	/* this should be in poll */
- 	sk_clear_bit(SOCKWQ_ASYNC_NOSPACE, sk);
+@@ -871,7 +869,7 @@ void afs_send_empty_reply(struct afs_cal
+ 	msg.msg_controllen	= 0;
+ 	msg.msg_flags		= 0;
  
- reload:
--	txb = call->tx_pending;
--	call->tx_pending = NULL;
--	if (txb)
--		rxrpc_see_txbuf(txb, rxrpc_txbuf_see_send_more);
+-	switch (rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
++	switch (rxrpc_kernel_send_data(net->socket, call->rxcall, &msg,
+ 				       afs_notify_end_reply_tx)) {
+ 	case 0:
+ 		_leave(" [replied]");
+@@ -897,7 +895,7 @@ void afs_send_simple_reply(struct afs_ca
+ 	struct afs_net *net = call->net;
+ 	struct msghdr msg;
+ 	struct kvec iov[1];
+-	int n;
++	int ret;
+ 
+ 	_enter("");
+ 
+@@ -912,21 +910,17 @@ void afs_send_simple_reply(struct afs_ca
+ 	msg.msg_controllen	= 0;
+ 	msg.msg_flags		= 0;
+ 
+-	n = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, len,
+-				   afs_notify_end_reply_tx);
+-	if (n >= 0) {
+-		/* Success */
+-		_leave(" [replied]");
+-		return;
+-	}
 -
- 	ret = -EPIPE;
- 	if (sk->sk_shutdown & SEND_SHUTDOWN)
- 		goto maybe_error;
-@@ -386,6 +381,8 @@ reload:
+-	if (n == -ENOMEM) {
+-		_debug("oom");
+-		rxrpc_kernel_abort_call(net->socket, call->rxcall,
+-					RXGEN_SS_MARSHAL, -ENOMEM,
+-					afs_abort_oom);
++	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg,
++				     afs_notify_end_reply_tx);
++	if (ret < 0) {
++		if (ret == -ENOMEM) {
++			_debug("oom");
++			rxrpc_kernel_abort_call(net->socket, call->rxcall,
++						RXGEN_SS_MARSHAL, -ENOMEM,
++						afs_abort_oom);
++		}
++		_leave(" [error]");
  	}
- 
- 	do {
-+		struct rxrpc_txbuf *txb = call->tx_pending;
-+
- 		if (!txb) {
- 			size_t remain;
- 
-@@ -411,6 +408,9 @@ reload:
- 				ret = -ENOMEM;
- 				goto maybe_error;
- 			}
-+			call->tx_pending = txb;
-+		} else {
-+			rxrpc_see_txbuf(txb, rxrpc_txbuf_see_send_more);
- 		}
- 
- 		_debug("append");
-@@ -445,9 +445,9 @@ reload:
- 
- 			ret = call->security->secure_packet(call, txb);
- 			if (ret < 0)
--				goto out;
-+				goto out_unlock;
- 			rxrpc_queue_packet(rx, call, txb, notify_end_tx);
--			txb = NULL;
-+			call->tx_pending = NULL;
- 		}
- 	} while (msg_data_left(msg) > 0);
- 
-@@ -456,45 +456,46 @@ success:
- 	if (rxrpc_call_is_complete(call) &&
- 	    call->error < 0)
- 		ret = call->error;
--out:
--	call->tx_pending = txb;
-+out_unlock:
-+	mutex_unlock(&call->user_mutex);
- 	_leave(" = %d", ret);
- 	return ret;
- 
- call_terminated:
--	rxrpc_put_txbuf(txb, rxrpc_txbuf_put_send_aborted);
--	_leave(" = %d", call->error);
--	return call->error;
-+	ret = call->error;
-+	goto out_unlock;
- 
- maybe_error:
- 	if (copied)
- 		goto success;
--	goto out;
-+	goto out_unlock;
- 
- efault:
- 	ret = -EFAULT;
--	goto out;
-+	goto out_unlock;
- 
- wait_for_space:
- 	ret = -EAGAIN;
- 	if (msg->msg_flags & MSG_DONTWAIT)
- 		goto maybe_error;
- 	mutex_unlock(&call->user_mutex);
--	*_dropped_lock = true;
-+
- 	ret = rxrpc_wait_for_tx_window(rx, call, &timeo,
- 				       msg->msg_flags & MSG_WAITALL);
- 	if (ret < 0)
--		goto maybe_error;
-+		goto out_nolock;
- 	if (call->interruptibility == RXRPC_INTERRUPTIBLE) {
- 		if (mutex_lock_interruptible(&call->user_mutex) < 0) {
- 			ret = sock_intr_errno(timeo);
--			goto maybe_error;
-+			goto out_nolock;
- 		}
- 	} else {
- 		mutex_lock(&call->user_mutex);
- 	}
--	*_dropped_lock = false;
- 	goto reload;
-+out_nolock:
-+	_leave(" = %d [intr]", ret);
-+	return copied ?: ret;
+-	_leave(" [error]");
  }
  
  /*
-@@ -660,7 +661,6 @@ rxrpc_new_client_call_for_sendmsg(struct
- int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- {
- 	struct rxrpc_call *call;
--	bool dropped_lock = false;
- 	int ret;
+--- a/include/net/af_rxrpc.h
++++ b/include/net/af_rxrpc.h
+@@ -64,9 +64,8 @@ struct rxrpc_call *rxrpc_kernel_begin_ca
+ 					   bool upgrade,
+ 					   enum rxrpc_interruptibility interruptibility,
+ 					   unsigned int debug_id);
+-int rxrpc_kernel_send_data(struct socket *, struct rxrpc_call *,
+-			   struct msghdr *, size_t,
+-			   rxrpc_notify_end_tx_t);
++int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
++			   struct msghdr *msg, rxrpc_notify_end_tx_t notify_end_tx);
+ int rxrpc_kernel_recv_data(struct socket *, struct rxrpc_call *,
+ 			   struct iov_iter *, size_t *, bool, u32 *, u16 *);
+ bool rxrpc_kernel_abort_call(struct socket *, struct rxrpc_call *,
+--- a/net/rxrpc/rxperf.c
++++ b/net/rxrpc/rxperf.c
+@@ -513,8 +513,8 @@ static int rxperf_process_call(struct rx
+ 	struct msghdr msg = {};
+ 	struct bio_vec bv;
+ 	struct kvec iov[1];
+-	ssize_t n;
+ 	size_t reply_len = call->reply_len, len;
++	int ret;
  
- 	struct rxrpc_send_params p = {
-@@ -769,16 +769,15 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *
- 		ret = 0;
- 		break;
- 	case RXRPC_CMD_SEND_DATA:
--		ret = rxrpc_send_data(rx, call, msg, len, NULL, &dropped_lock);
--		break;
-+		ret = rxrpc_send_data(rx, call, msg, len, NULL);
-+		goto error_put;
- 	default:
- 		ret = -EINVAL;
- 		break;
+ 	rxrpc_kernel_set_tx_length(rxperf_socket, call->rxcall,
+ 				   reply_len + sizeof(rxperf_magic_cookie));
+@@ -524,13 +524,11 @@ static int rxperf_process_call(struct rx
+ 		bvec_set_page(&bv, ZERO_PAGE(0), len, 0);
+ 		iov_iter_bvec(&msg.msg_iter, WRITE, &bv, 1, len);
+ 		msg.msg_flags = MSG_MORE;
+-		n = rxrpc_kernel_send_data(rxperf_socket, call->rxcall, &msg,
+-					   len, rxperf_notify_end_reply_tx);
+-		if (n < 0)
+-			return n;
+-		if (n == 0)
+-			return -EIO;
+-		reply_len -= n;
++		ret = rxrpc_kernel_send_data(rxperf_socket, call->rxcall, &msg,
++					     rxperf_notify_end_reply_tx);
++		if (ret < 0)
++			return ret;
++		reply_len -= len;
  	}
  
- out_put_unlock:
--	if (!dropped_lock)
--		mutex_unlock(&call->user_mutex);
-+	mutex_unlock(&call->user_mutex);
- error_put:
- 	rxrpc_put_call(call, rxrpc_call_put_sendmsg);
- 	_leave(" = %d", ret);
-@@ -808,7 +807,6 @@ int rxrpc_kernel_send_data(struct socket
- 			   struct msghdr *msg, size_t len,
- 			   rxrpc_notify_end_tx_t notify_end_tx)
+ 	len = sizeof(rxperf_magic_cookie);
+@@ -538,16 +536,13 @@ static int rxperf_process_call(struct rx
+ 	iov[0].iov_len	= len;
+ 	iov_iter_kvec(&msg.msg_iter, WRITE, iov, 1, len);
+ 	msg.msg_flags = 0;
+-	n = rxrpc_kernel_send_data(rxperf_socket, call->rxcall, &msg, len,
+-				   rxperf_notify_end_reply_tx);
+-	if (n >= 0)
+-		return 0; /* Success */
+-
+-	if (n == -ENOMEM)
++	ret = rxrpc_kernel_send_data(rxperf_socket, call->rxcall, &msg,
++				     rxperf_notify_end_reply_tx);
++	if (ret == -ENOMEM)
+ 		rxrpc_kernel_abort_call(rxperf_socket, call->rxcall,
+ 					RXGEN_SS_MARSHAL, -ENOMEM,
+ 					rxperf_abort_oom);
+-	return n;
++	return ret;
+ }
+ 
+ /*
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -793,7 +793,6 @@ error_release_sock:
+  * @sock: The socket the call is on
+  * @call: The call to send data through
+  * @msg: The data to send
+- * @len: The amount of data to send
+  * @notify_end_tx: Notification that the last packet is queued.
+  *
+  * Allow a kernel service to send data on a call.  The call must be in an state
+@@ -804,8 +803,7 @@ error_release_sock:
+  * Return: %0 if successful and a negative error code otherwise.
+  */
+ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
+-			   struct msghdr *msg, size_t len,
+-			   rxrpc_notify_end_tx_t notify_end_tx)
++			   struct msghdr *msg, rxrpc_notify_end_tx_t notify_end_tx)
  {
--	bool dropped_lock = false;
  	int ret;
  
- 	_enter("{%d},", call->debug_id);
-@@ -819,12 +817,9 @@ int rxrpc_kernel_send_data(struct socket
- 	mutex_lock(&call->user_mutex);
+@@ -814,12 +812,25 @@ int rxrpc_kernel_send_data(struct socket
+ 	ASSERTCMP(msg->msg_name, ==, NULL);
+ 	ASSERTCMP(msg->msg_control, ==, NULL);
  
- 	ret = rxrpc_send_data(rxrpc_sk(sock->sk), call, msg, len,
--			      notify_end_tx, &dropped_lock);
-+			      notify_end_tx);
- 	if (ret == -ESHUTDOWN)
- 		ret = call->error;
--
--	if (!dropped_lock)
--		mutex_unlock(&call->user_mutex);
+-	mutex_lock(&call->user_mutex);
++	for (;;) {
++		mutex_lock(&call->user_mutex);
++
++		ret = rxrpc_send_data(rxrpc_sk(sock->sk), call, msg,
++				      msg_data_left(msg), notify_end_tx);
++		if (ret == -ESHUTDOWN)
++			ret = call->error;
++		if (ret < 0)
++			break;
++		if (msg_data_left(msg) == 0) {
++			ret = 0;
++			break;
++		}
++		if (ret == 0) {
++			ret = -EIO;
++			break;
++		}
++	}
+ 
+-	ret = rxrpc_send_data(rxrpc_sk(sock->sk), call, msg, len,
+-			      notify_end_tx);
+-	if (ret == -ESHUTDOWN)
+-		ret = call->error;
  	_leave(" = %d", ret);
  	return ret;
  }
