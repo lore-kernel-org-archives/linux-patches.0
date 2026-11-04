@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830881;
-	b=4jeyVj5qyG7DqRtPGc8Qe3fxLiKOlPkjrqntgR+dEvtPCJmi3QqkhZ7G6knMGkOZo3zV
-	 Us4UJ4n5SjpXIBr89ZAyGyocJQFdYp+65EY4TH15pOeCgIBTRcmmiucNS/dvEmqx6I8Ph
-	 HT0MRQNTH6d8XH6tigw4bN+WXjs3dsI0VqJCQQsMmfDTPov0I6v9aKuebQjbHX0sVYnGy
-	 QIP8UdeE0ImuwSXK4ZtcCHDzkD+zkeOmHh2Ivep1Ff7RnpADjE+ZVPfuFRXxuK0IB7DTz
-	 DuBQMJC2QD3Si5upc4MWTcElLBUjoX1lNHR1w06+d/bWrTKBXE+jn3DmuOe9ePgVn4Q==
+	t=1793830883;
+	b=1HuSUHl8YfBNwaJH5oUdRvb3aCC/qoB0n5kzTIeRpS19vjR72oZtM+/RVbtybDX+NwIw
+	 iWFfqI/I+0SYiNLZwKpf7HPBpLZm8phtadtfqn0cUlWWOVy+xiCK32KyahBwsfBRU+lQ6
+	 RlC+9mNvQikxBz3S35/8uw/y0tRk68l3oYuwkNW2Ag8Q6CUbwnW8rhvt8+YM1RVAyaj2y
+	 S5JOim9P03SUF3Qvx63AqibGr5uxQ42pm+J2tT3dP/94R4bNWddrv/XN/EtKwqEhCNJ3e
+	 3uzcqlPNX+i1hyAxfmHOdNSrxK/tUbPqJHgCKxhJZ6J1MeArR+cu/TqTfJ9pjI+LEQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DnyLQYgY+RSliOtRHzD8/ZD3dM9Pbc4pFxHYyG4OO9M=;
-	b=t+jvN8r9k5uAJ+IP6sWoaBIjZFPzlKUBKh3gO+TAh5ixrcWUFlisL+VheR6sLlIZt8Jj
-	 /xpgnI3JrWd2FHdf41BZf93l0eIpl/Zlrk7LpsR6BS9Q95LhfbV7i/kKTaDldsuJKWLhV
-	 ip2/Mxfs+yzQUS8ApOYzcxKZCurYU77zw0ECUcp3JeP+jSsEGOKDf4JRZQH46a+wqPAVa
-	 4rrkvFa+iGNkYcVI/qCfeTrGhZg9Yk7fOlNDv0K6L3hqgXBxnNlCvmy1RU08GQTllBO18
-	 hxtAqtQ7wwynTgTCAGVYhOh7P15xk+SfbFuPOLSz+ZGWs0C70nRGnjvh5e5nNPBzWUg==
+	bh=rcC4g2ndXRkAdydo/8L4XSbVpSFvYkZAUaDLSW54lZw=;
+	b=cyyE1/LA2iQkDwdsg0hnKJpyWXTXlQZ9FHhi+N/d6FFs2Xh46b5h54ipQXhU2KkCZCk4
+	 4/sCCy5kAuUf+nX/2i95IAGnhLEZpfUr7cnQlNswa9ezxr64VzUHqMpuoXk1QhZYMNRZA
+	 bMUazq3dNUxI7Lk1myLSWuLFdtNiFv9rYmOpMRZeAjGllBakMcLFgLJv3Uhl463GaCE/L
+	 1wJChhWL7v4kySNSMNEZYxcyFZUKt/mQ94CHHBZp2Ob7uOw60ptZfx3lv+cKvds2jXXmR
+	 XGLoMvtPBPV73dwQl8ZQaVttPrVrzIrpv0ntp2qms6C4/gs8AUzUu/S+nyCmxBmtIOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XN2Nkkfr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SsVlugAh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D219606E831;
-	Wed,  4 Nov 2026 22:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7A9606E831;
+	Wed,  4 Nov 2026 22:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XN2Nkkfr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7691F0093A;
-	Wed,  4 Nov 2026 22:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SsVlugAh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469CD1F0093A;
+	Wed,  4 Nov 2026 22:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830881;
-	bh=DnyLQYgY+RSliOtRHzD8/ZD3dM9Pbc4pFxHYyG4OO9M=;
+	s=korg; t=1793830882;
+	bh=rcC4g2ndXRkAdydo/8L4XSbVpSFvYkZAUaDLSW54lZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XN2NkkfrJ/nVY1X2ksUWLAEgAHsqqYRX1xhYFhnw65yICXvZ7K9p9HragNvzHTuqs
-	 zx+b2yuKrd+N79ap4bTyzYlZe9kDEEg1juqITFUmUOBr83MvmzWxkaTakXhb3rQYjp
-	 nLNvFTN4DU9pBjbru1dsFJBgqNod0fPAr8Ep+5cY=
+	b=SsVlugAhKz38V90MnhhDljjo0E/JMoc9ScA/sVvCiDp8NpqoED1H2H9Z9tKhV30NI
+	 YOLXxQtQYZdydo38+S7S+9gvB6pXFi9cKRW9+VF4uz7fKB95dO1WmNVGbsSXKty1Sr
+	 nysJnFrnWqBwbG0a7L5+YfJuNqZNz1APcoZALTdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	Rongguang Wei <weirongguang@kylinos.cn>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0377/1005] nvme-tcp: look up host_iface in the current netns
-Date: Wed,  4 Nov 2026 16:01:50 -0500
-Message-ID: <20261104211054.654024296@linuxfoundation.org>
+Subject: [PATCH 6.18 0378/1005] tap: fix incorrect variable used for USO check in set_offload()
+Date: Wed,  4 Nov 2026 16:01:51 -0500
+Message-ID: <20261104211054.682833922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,46 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Rongguang Wei <weirongguang@kylinos.cn>
 
-[ Upstream commit 58202950e39c127d593ec4f0624d8b8985a285b1 ]
+[ Upstream commit fac7973f004de6dd51fb15a33e33ed37718e58bb ]
 
-nvme_tcp_alloc_ctrl() looks opts->host_iface up in &init_net, the boot-time
-netns. When called from any other netns - e.g. the selftest's ns2, where
-ns2eth1 actually lives - the lookup misses and the controller setup fails
-with "invalid interface passed":
+The USO features in set_offload() incorrectly uses feature_mask and
+features argument.
 
- nvmet: adding nsid 1 to subsystem nqn.2014-08.org.nvmexpress.mptcpdev
- nvmet_tcp: enabling port 24660 (0.0.0.0:24099)
- # nvme discover -a 10.1.1.1 --tos=0x10 --host-iface=ns2eth1
- nvme_tcp: invalid interface passed: ns2eth1
- # failed to add controller, error invalid interface
+The USO feature was written to the local features variable instead of
+feature_mask. All other offload bits (TSO, TSO_ECN) are stored in
+feature_mask which becomes tap->tap_features and is used by
+tap_handle_frame() for GSO segmentation. Without NETIF_F_GSO_UDP_L4
+in tap->tap_features, making USO on tap effectively non-functional.
 
-Look the device up in current->nsproxy->net_ns instead so the check sees
-the calling task's netns.
+Keeping the USO handling inside the TUN_F_CSUM block avoids enabling
+GRO/LRO when userspace requests USO without CSUM.
 
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+This has not worked since the beginning, so
+commit 399e0827642f ("driver/net/tun: Added features for USO.")
+
+Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260807070914.112698-1-clementwei90@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/tap.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index beef2b576102a..1f26e35d7a99e 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2999,7 +2999,8 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index 1aeaecd4030fa..9eea418afe2fc 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -883,7 +883,7 @@ static int set_offload(struct tap_queue *q, unsigned long arg)
+ 
+ 		/* TODO: for now USO4 and USO6 should work simultaneously */
+ 		if ((arg & (TUN_F_USO4 | TUN_F_USO6)) == (TUN_F_USO4 | TUN_F_USO6))
+-			features |= NETIF_F_GSO_UDP_L4;
++			feature_mask |= NETIF_F_GSO_UDP_L4;
  	}
  
- 	if (opts->mask & NVMF_OPT_HOST_IFACE) {
--		if (!__dev_get_by_name(&init_net, opts->host_iface)) {
-+		if (!__dev_get_by_name(current->nsproxy->net_ns,
-+				       opts->host_iface)) {
- 			pr_err("invalid interface passed: %s\n",
- 			       opts->host_iface);
- 			ret = -ENODEV;
+ 	/* tun/tap driver inverts the usage for TSO offloads, where
+@@ -894,8 +894,7 @@ static int set_offload(struct tap_queue *q, unsigned long arg)
+ 	 * When user space turns off TSO, we turn off GSO/LRO so that
+ 	 * user-space will not receive TSO frames.
+ 	 */
+-	if (feature_mask & (NETIF_F_TSO | NETIF_F_TSO6) ||
+-	    (feature_mask & (TUN_F_USO4 | TUN_F_USO6)) == (TUN_F_USO4 | TUN_F_USO6))
++	if (feature_mask & (NETIF_F_TSO | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4))
+ 		features |= RX_OFFLOADS;
+ 	else
+ 		features &= ~RX_OFFLOADS;
 -- 
 2.53.0
 
