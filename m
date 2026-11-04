@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827100;
-	b=QeRFUdGcheeR/1JzkoRWhBpmxaCN4Ni1ui2kdY0yA2VUZsMJ9R7UP3q0sFgHmyvg0ffL
-	 bnzJGrErydZ3Nts3EQbhPI+s9lNMtzDiy+kStFTcGOkCFwCFTGJe9hUJZWUnxQyz3DCcS
-	 EagyB507isORYwpWnyz2KWGgcCuh8rXzniEkWLgA/WC+1PXUb7VcMxPPl+FP0UKbVO2ya
-	 2NZlS14MBjw3o0BvoCIjtP7OOeUOfa/r1nHVAqFOrKeOa4GFu9yLQd6VKQrnzv3KCTQ0J
-	 KgGqh5ipmicp8sD9xQ+93xAo2RXp4YKmnHccS5qqBFBrNf2KLO6Hz7AySOXb+enpyNw==
+	t=1793827101;
+	b=CbEsScbwQWQ/SeflgDCdmJV1J2tjO8qEUjatdfVF+ryq3k0IYdKumtMnIsKk+sAXMW+B
+	 CPXeJrgzZUH7+aCeqn5ijxF2nJ61XfkInvK7CpyO6oWRLL16UB46QJi5n9BUpzTd0eOHc
+	 QeuYsTqZXaHA2ygVpFPIKEcp14iSfCBk3YuJlr1kcC/a00rJFrEJTaGxYLdGA2AyfBdLG
+	 apz8Ui8ZWF/8ePtNHtpDDxSJBo7ReeCO9bhPG1DGWEPAcCmKiiZx9tACcYEGZITlZt7Js
+	 bINsk+emyWJ7/wrdgih/PR6Z4aRCzp2Zjn2JWy1rMU6veBkmTXYaZ4E82bPszb4w4mQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827100;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7feyUgohLOadHxSdgqt/oohNCkugSj+vVGOE+04jxE4=;
-	b=wkTd4qyCZrHEk8BBrRi3CDFtKK4P0SLkdgCA696kYsMG6GXvuATlwsl9ReUFs4/2c3uQ
-	 egrojkd8ibWRiJkkaHJA8jlB2iE8zZaJDrZcgX5F4dw4hy4fOojVcJlXuj8KAz0aMtGh0
-	 Pxbu7JmIRlp24El27lBnrRUP9e+YEATHfySFXdmGioAt5XB0VbfQir5n3DgJqYU5ChwxQ
-	 OzUkgN3cjfJI3JktzluFF+mFHf3BajVbrJOVxuV4XPbiQonsuXEY2nlO1xq+bKX3FFWtI
-	 wQtyLSBjXbOqKUfvPTbXrGpQgpL6n1PN2ZzLttrymE/a++jbCkmw6ui6Pi+/oRYuoKg==
+	bh=M7CkxZVoF2Qvf4ZYWJz7hp3jKKZRU71kRmC2OrhM6iQ=;
+	b=adKjFM3dOZDXQBlE8Tk+5V/MEP/L5Wm0Fvc7YrIixZ45bSPspyHBPAHu3sA0w/bPTZ5L
+	 aBeSFvE5j5vk+cEcdwLsMB96LFpFKLAmRdlF8IGoN9U76gBuRi1BffVNjjxfyowyGHw8w
+	 ZluNbV9OO/f9kRWmCofPHaerjxfZTsh2ze7YNpoiZ9WrierApbLLd8vlcdUlnkRbFclxf
+	 2VTl4ccNYMbo3WyqZeyJbOW1qrxdPcJLfdmt+OagIT88HBMPQjDwMJiKzCqQC33VsWgS3
+	 OlC9gJhmRPD/Gd6ZZzs+u3WTnVQYGA6vXsDrrFDkTczBaHhwS1ut+oEyPDsfdj6E2ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pPNNPUsi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vjjWZy57;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A7E606A86C;
-	Wed,  4 Nov 2026 21:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C24606A86C;
+	Wed,  4 Nov 2026 21:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pPNNPUsi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B3F1F0093A;
-	Wed,  4 Nov 2026 21:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vjjWZy57
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB651F00A18;
+	Wed,  4 Nov 2026 21:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827099;
-	bh=7feyUgohLOadHxSdgqt/oohNCkugSj+vVGOE+04jxE4=;
+	s=korg; t=1793827100;
+	bh=M7CkxZVoF2Qvf4ZYWJz7hp3jKKZRU71kRmC2OrhM6iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pPNNPUsiTs77zpp2uUFs5f/oL3nbrE+PK5YXN8m/FBUWAHPCicFbI7Jt0RGqyRwtC
-	 IPHaYuzUFv/6/CYO2bHPxKYQiux1ngxKMh5bGphPh3Js8ON6+rezsXZ2FdxcIEnEmM
-	 exQloSFi4F6umIi4oDRN4LQFTEfCg/+y16XhdM8I=
+	b=vjjWZy574O/x3grxcLHSGLHPkxp+HZJLS6g4K/Bi+fUbGBxRkHvAzvZpmUR6Zr0zR
+	 lshPEw8ylIag0XWe307Uh/OfhlujjdWKIWOkGUUoYxCiCImI5rnGb2XAqNEMstNOLK
+	 bFRfvWDBZWMRTQuW8W4j2KgEkIfqTR8dJlLAW1KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <ytan089@ucr.edu>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Gary Guo <gary@garyguo.net>,
 	Andreas Hindborg <a.hindborg@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Priya Bala Govindasamy <pgovind2@uci.edu>
-Subject: [PATCH 7.3 195/547] rust: block: fix `Send` bound for `GenDisk`
-Date: Wed,  4 Nov 2026 16:06:19 -0500
-Message-ID: <20261104211043.678008722@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.3 196/547] rust: block: require `Sync` for `Operations::QueueData`
+Date: Wed,  4 Nov 2026 16:06:20 -0500
+Message-ID: <20261104211043.708458546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -71,53 +71,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Hindborg <a.hindborg@kernel.org>
 
-commit e502b667ee70a7fa2a578e7722672ecd4fe0eb81 upstream.
+commit 67b7a2728e4873e64405c5564fe50f7123012b71 upstream.
 
-The `Send` implementation for `GenDisk<T>` was conditioned on `T: Send`.
-This constrains the wrong type. `T` is the `Operations` implementation,
-which is typically a zero-sized marker type that carries no data, so `T:
-Send` says nothing about whether the data a `GenDisk` actually owns can be
-moved to another thread.
+The queue data installed in a `GenDisk` is stored in the request queue and
+handed back to the driver as a shared borrow through the `queue_rq` and
+`commit_rqs` callbacks. Both callbacks obtain that borrow via
+`ForeignOwnable::borrow` and may execute concurrently on several CPUs,
+since the block layer runs one hardware queue per CPU. That means a shared
+reference to the same queue data can be live on multiple threads at once,
+which is only sound when the referent is `Sync`.
 
-A `GenDisk<T>` owns the queue data `T::QueueData` (stored as the
-`gendisk`'s `queuedata` and dropped when the `GenDisk` is dropped) and an
-`Arc<TagSet<T>>`. These are the values transferred when a `GenDisk` is sent
-across a thread boundary, so the `Send` bound must constrain exactly them.
-Bound `T::QueueData: Send` and `Arc<TagSet<T>>: Send` instead.
+The initial `GenDisk` private data support omitted this bound, so a
+driver could install a non-`Sync` type as queue data and then access
+it concurrently from multiple CPUs without synchronization. Add a
+`Sync` bound to the `QueueData` associated type to rule that out.
 
-Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
+Fixes: 90d952fac8ac ("rust: block: add `GenDisk` private data support")
 Cc: stable@vger.kernel.org
-Reported-by: Priya Bala Govindasamy <pgovind2@uci.edu>, Dylan Zueck <dzueck@uci.edu>, Yuan Tan <ytan089@ucr.edu>
-Closes: https://lore.kernel.org/all/cover.1780633578.git.ytan089@ucr.edu
-Signed-off-by: Yuan Tan <ytan089@ucr.edu>
-Link: https://msgid.link/20260709100100.604252-1-yuantan098@gmail.com
-[ Andreas: Fix tags to make checkpatch happy. Change summary line. ]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://msgid.link/20260608-queue-data-sync-v1-1-0efff051aaf3@kernel.org
 Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-4-642a4c1aebd7@kernel.org
+Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-9-642a4c1aebd7@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/block/mq/gen_disk.rs |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ rust/kernel/block/mq/operations.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/block/mq/gen_disk.rs
-+++ b/rust/kernel/block/mq/gen_disk.rs
-@@ -212,8 +212,14 @@ pub struct GenDisk<T: Operations> {
- }
+--- a/rust/kernel/block/mq/operations.rs
++++ b/rust/kernel/block/mq/operations.rs
+@@ -30,7 +30,7 @@ type ForeignBorrowed<'a, T> = <T as Fore
+ pub trait Operations: Sized {
+     /// Data associated with the `struct request_queue` that is allocated for
+     /// the `GenDisk` associated with this `Operations` implementation.
+-    type QueueData: ForeignOwnable;
++    type QueueData: ForeignOwnable + Sync;
  
- // SAFETY: `GenDisk` is an owned pointer to a `struct gendisk` and an `Arc` to a
--// `TagSet` It is safe to send this to other threads as long as T is Send.
--unsafe impl<T: Operations + Send> Send for GenDisk<T> {}
-+// `TagSet`. It is safe to send this to other threads as long as these two are `Send`.
-+unsafe impl<T> Send for GenDisk<T>
-+where
-+    T: Operations,
-+    T::QueueData: Send,
-+    Arc<TagSet<T>>: Send,
-+{
-+}
- 
- impl<T: Operations> Drop for GenDisk<T> {
-     fn drop(&mut self) {
+     /// Called by the kernel to queue a request with the driver. If `is_last` is
+     /// `false`, the driver is allowed to defer committing the request.
 
 
