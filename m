@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829389;
-	b=d1TS1JcHwjKfeFgmIV5pbaNU2mHgWNu/28KhsrNY3BXnnPXPQwFr7oCm1dmA1dfbsSJl
-	 nEFysivvSLFF04ptn4+tk0QBII/VhOo537IEmAPO1Pbk+B5agnxh8oJ2qPrC1IuUM/s9I
-	 IR0RRh5B82TaTvxqbRWR8mu2IBtsJQr4wClle04niww9y2Cx6XgdQDvAiuvF/tM+MOvGM
-	 nWlhkbKQkqpkxwCMhY4q27e1PKjouZlbj2Cx/pQDCHbWmOwUBGqzElmhiJuS0BG9b7HcB
-	 caZX9nmnuRaeyJdXjsO1W/0UVTKcf8bGMgjoVti8Vr49Wj+M4hwHi65hMMFbVswMmKw==
+	t=1793829391;
+	b=GGiNQhmLm6lEWTd664phL3yXG/jp953GyWYMBpLraNRTTKBfhoP8kKDjWCnDHl0MyM3H
+	 Gj1A4Q0J9NgYB3+hpiSXFo9xtcT8EL5J+2Dod05BsXnD/odNs3bHlANDwme6dRxICmWrL
+	 VtH6UA3buQ5B7aAmLYN4XEbQOPO+1Cxwxs3Cec5Dps2YuKc5XmriNHoUURkOh+EL2wUMP
+	 XZAOS5kh1oLQbirnkQOtB+NMXehQ+tmtCQGXoX9/By3rPudMdk82zjSaBI5ccidujiRNC
+	 xPxyN+tMA6bx6CPPUmHZDgiPK0z4runsHXRCDtzBc+yD2IKK+pdny1YAZ9D970T16Gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829391;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ULD2xrTHuPin6OKwXqLLOdnjIyeWJcMPxShpM1zzUVI=;
-	b=JGHlhPeXEqgBtb9IGEjxuQy3Oy18QrdodMuWP/re5n/2i3HSQOLnX1Y7l/aL5vlZ3vV8
-	 5BhAZ2gJkr6SEINhQVUTYIMVIekLc+j7yNbVZu+C5z/sCE1NIZw5Ri+5pYJ3gXAkJxyZC
-	 XObTxkXkCGAFT465qfUHXgghJVjAnqlalSN2WWbqJLPnJbmt4ZUGmc8oweWNMS6dsmfbf
-	 AuEK8QjW3LRb/4gLCXU8r54OcEhso0RgMD6jpRtMOvzSTK57ICOFeMr7TmhDEo+ijWcbo
-	 je+nnMEhNjVwOh9JloBwXaRi/4kQHyUs9hGz8xln+12QBSRWZF50EXOyr3WphVIAhpQ==
+	bh=J3qTgnAwImS6IzWITarqpXzP5C+DyYxERKw7ncTbZJA=;
+	b=oX13NcNWoLIC/0miJhH9h3E5SH7CuZ0EJfNyoY71qFW7UE4dc+l3BRWaUbDAACVySwVK
+	 s7xFw2ENQ/x8bcwuNGgWb0ITy+wMJGXG6GuUb+LcxfD/0nio97X4Vwqiso5y+xUFeAgw3
+	 YUWyWUnATwD3HApOPeBgYjrBEakfqLQhvcsbAVoI6C6AFGsjnIII6AcUrGUKsR+Qoc6Nc
+	 46R2+sHxzRCm/Lb3ERQtiFH7o7gvzyUsaDKulrTXE9rXrv+DSlvXgNXVYFxEiemWsd+pJ
+	 vCwY3tycn+TXkYveyxgbSbHPpEAhCX8eJFq6FUOxlXrAvu8X07mnCL7oZzdiHo3z6vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruhuvKEx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aejbIkW/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2B9606A865;
-	Wed,  4 Nov 2026 21:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6197606A865;
+	Wed,  4 Nov 2026 21:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruhuvKEx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D731F000C1;
-	Wed,  4 Nov 2026 21:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aejbIkW/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E0E1F000C1;
+	Wed,  4 Nov 2026 21:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829389;
-	bh=ULD2xrTHuPin6OKwXqLLOdnjIyeWJcMPxShpM1zzUVI=;
+	s=korg; t=1793829390;
+	bh=J3qTgnAwImS6IzWITarqpXzP5C+DyYxERKw7ncTbZJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ruhuvKExEtG5cn6k9MA+O9ISY/PPO4daDmFujttUuD416PzHmrlg5mp6ej96Vuzrl
-	 BvaxKlu6mAaxIW1f6q+P8ZdAb4rFkAXLRdr6Sq1Y1HhjkLQumAaNphIh5Qb3c6ZW9k
-	 x/XiUajxsplqrP1c2PF0KHr8Y5cdKzczthEpUwLA=
+	b=aejbIkW/AnaG9CZY3BoVBl0oA3eEkT72j+gEy3DdMf1im657a5gwp/KiFjW6veqR7
+	 iiySRChtzEBHrgO0+k1i6gdKrk4kchjeMoCQGxYTmmWp0K+QZl1FUAmv0k3uunuZF4
+	 eJAGK49JyJ/U7M3yN4yOwUWmSb+2L8AGetFhZSpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0056/1005] memory: stm32_omm: initialize ret in stm32_omm_set_amcr
-Date: Wed,  4 Nov 2026 15:56:29 -0500
-Message-ID: <20261104211045.161841387@linuxfoundation.org>
+Subject: [PATCH 6.18 0057/1005] wifi: ath12k: avoid setting 320MHz support on non 6GHz band
+Date: Wed,  4 Nov 2026 15:56:30 -0500
+Message-ID: <20261104211045.192312073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,36 +70,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 1527acf2295cf2d6e11e3e9b121d63709667e6e7 ]
+[ Upstream commit eaf478b3ea68e1b5df659acd24c4df5850e12325 ]
 
-stm32_omm_set_amcr() returns ret after checking whether the AMCR value
-matches the device tree description. On the normal matching path ret is
-not otherwise assigned, so initialize it to 0 before the checks.
+On a split phy qcn9274 (2.4GHz + 5GHz low), "iw phy" reports 320MHz
+related features on the 5GHz band while it should not:
 
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Link: https://patch.msgid.link/20260617182202.961843-1-ruoyuw560@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+    Wiphy phy1
+    [...]
+        Band 2:
+    [...]
+            EHT Iftypes: managed
+    [...]
+                EHT PHY Capabilities: (0xe2ffdbe018778000):
+                    320MHz in 6GHz Supported
+    [...]
+                    Beamformee SS (320MHz): 7
+    [...]
+                    Number Of Sounding Dimensions (320MHz): 3
+    [...]
+                EHT MCS/NSS: (0x22222222222222222200000000):
+
+This is also reflected in the beacons sent by a mesh interface started on
+that band. They erroneously advertise 320MHz support too.
+
+This should not happen as IEEE Std 802.11-2024, subclause 9.4.2.323.3 says
+we should not set the 320MHz related fields when not operating on a 6GHz
+band. For example it says about Bit 0 "Support For 320 MHz In 6 GHz"
+
+  "Reserved if the EHT Capabilities element is indicating capabilities for
+   the 2.4 GHz or 5 GHz bands."
+
+Fix this by clearing the related bits when converting from WMI eht phy
+capabilities to mac80211 phy capabilities, for bands other than 6GHz.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00218-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260623151613.72113-1-nico.escande@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/stm32_omm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/memory/stm32_omm.c b/drivers/memory/stm32_omm.c
-index 5d06623f3f689..2a1af229d2444 100644
---- a/drivers/memory/stm32_omm.c
-+++ b/drivers/memory/stm32_omm.c
-@@ -47,7 +47,7 @@ static int stm32_omm_set_amcr(struct device *dev, bool set)
- 	struct device_node *node;
- 	struct resource res, res1;
- 	unsigned int syscon_args[2];
--	int ret, idx;
-+	int ret = 0, idx;
- 	unsigned int i, amcr, read_amcr;
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index ade14ba6703f3..39d5110eca901 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -4939,6 +4939,7 @@ static void ath12k_wmi_eht_caps_parse(struct ath12k_pdev *pdev, u32 band,
+ 				       __le32 cap_info_internal)
+ {
+ 	struct ath12k_band_cap *cap_band = &pdev->cap.band[band];
++	u8 *phy_cap = (u8 *)&cap_band->eht_cap_phy_info[0];
+ 	u32 support_320mhz;
+ 	u8 i;
  
- 	for (i = 0; i < omm->nb_child; i++) {
+@@ -4952,8 +4953,22 @@ static void ath12k_wmi_eht_caps_parse(struct ath12k_pdev *pdev, u32 band,
+ 	for (i = 0; i < WMI_MAX_EHTCAP_PHY_SIZE; i++)
+ 		cap_band->eht_cap_phy_info[i] = le32_to_cpu(cap_phy_info[i]);
+ 
+-	if (band == NL80211_BAND_6GHZ)
++	if (band == NL80211_BAND_6GHZ) {
+ 		cap_band->eht_cap_phy_info[0] |= support_320mhz;
++	} else {
++		/*
++		 * Firmware may report 6 GHz/320 MHz specific capabilities for
++		 * non-6 GHz bands, so explicitly clear them.
++		 */
++		phy_cap[0] &= ~IEEE80211_EHT_PHY_CAP0_320MHZ_IN_6GHZ;
++		phy_cap[1] &= ~IEEE80211_EHT_PHY_CAP1_BEAMFORMEE_SS_320MHZ_MASK;
++		phy_cap[2] &= ~IEEE80211_EHT_PHY_CAP2_SOUNDING_DIM_320MHZ_MASK;
++		phy_cap[3] &= ~IEEE80211_EHT_PHY_CAP3_SOUNDING_DIM_320MHZ_MASK;
++		phy_cap[6] &= ~IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_320MHZ;
++		phy_cap[6] &= ~IEEE80211_EHT_PHY_CAP6_EHT_DUP_6GHZ_SUPP;
++		phy_cap[7] &= ~IEEE80211_EHT_PHY_CAP7_NON_OFDMA_UL_MU_MIMO_320MHZ;
++		phy_cap[7] &= ~IEEE80211_EHT_PHY_CAP7_MU_BEAMFORMER_320MHZ;
++	}
+ 
+ 	cap_band->eht_mcs_20_only = le32_to_cpu(supp_mcs[0]);
+ 	cap_band->eht_mcs_80 = le32_to_cpu(supp_mcs[1]);
 -- 
 2.53.0
 
