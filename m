@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793830978;
-	b=BZJm5hzdgLFW7IgTskuNNBM58qulp1lAn1qpQ3/d1XaSwBd42a7PWaDYoqFpkFpFD4yB
-	 lt5U0Rg3g7hYRRJnLrwjHbuZqVr66bwox2OZxQcn+zmHz5XFw/FWWSRdwDG8sMqWC1Z9U
-	 /gFp2ag2hf00f4xl8BllJJtBg3XsLcl7NOpPKTpo7ef0OxuSaZwKwg5nKId9wJ6tMugpB
-	 JUG1UWTOj0PF1PaS6w1FLjE0avfqY0oHrFUiMydrWl2JMx9SSPqObMJUcyL0Ofp4uvXcC
-	 lEx+SYLt3bnahvGpeCEBWLix3VYGOiyK2TN4LHtdxQ4mLwrCtcb3/TBfb9MeghWK9ag==
+	t=1793830980;
+	b=lEf6RdDYkcIwLoUc0IhEeUj6IhoiX1HTsiudCKTM3e+9bT5HcrMBMJdKlrYp+n9hVLVR
+	 unzlTrTwo5F8MIn57HzgFEUiWjC9jU0Qkwbln+59+EF8B/bP3ReuNQjEmpBwsdkauZtsG
+	 yz2jtzBiodtzDxhjA945+xqFsIU5z4cg8BFCeuJTO9ncbUSwKDirBlNuIkCDfs/6TNA7E
+	 +ANBU6haT5CFDnnuni1fOLV1BB6pHrISeS3n1DpPkULlm0t2WIWyE+k4fmwDT2uCOK6hO
+	 BEjZRY4mcUyr2PclMi8G2GVy+dDKNyZySd8XPqqb/jVDgBc76XFsE7K8ct+2UWb8Hgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793830978;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793830980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aiYJ6A2IkPYrIeI9lW6woLRxoay2TsOc30lmKhBmCgE=;
-	b=f9EMo64XDWFDJjnbY3xmpHB+BNXEyyLF24bSsNDJURAq35HoMgPCQA+eMPmEtErVrCyW
-	 URZMvX3V+UW0AEgm2HqkZGX4eDyrxEQFSeapQJjs/i+JbIhvpQ22PhmycJFlx4BFUSHdl
-	 9w2NXWv5dvKfVXawsOKQicc6qqjXedIaVVMJzNXxXWSz9uyTFAZUyNRp7MiCsye41hzFO
-	 ShpG84wIcC0Qh2RGqsr8wDO8cxmHzZm3PMEU+HwSFp+soFenqb21EYS86sMvaZP2jm+0j
-	 yWuR46LK1Ul1CQhgv7ydqECZkIGhzYT5dpNYKo5Hv/KtIWINqG5pD5OXCcZVCCcOiTQ==
+	bh=UoxaLFlUs0DGfkQ+q0EpQehBOw+eGBX9iDTqLGYFlwo=;
+	b=19Q+JjVFWsGV3MD8csTcEc473qm1rxw4Y5l+fx0EWuMbJ2l9kqBHOVf+C0kKk6KTJS8+
+	 2B8p3VdNB4DkizCQHBp3oM+048WoZdwMbyt0La/7cgTcqDF0LerK7pRFiFGa9u0CSsI6v
+	 U+huhFeaZT0lH2jLHBf8r+EK6vu7t7AQdMGwydUgM8uixu3Oox2kQmVsT5QT1fuDIPtpZ
+	 wdsa0Wm+4BY3tvUWOjqQ4PDuWtpAhDRCJgEW2yqX/2UcScJevU2YtlTkhUBoeO8vwbslm
+	 9APw+wz7llXHkQkur5IXJZo5HQtmWqN3z4QFFGAjjW7WZ/Xs9yNZDEvFBfu9ztGpx6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dtt8azA5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bldJjTog;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDE8606AB19;
-	Wed,  4 Nov 2026 22:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B1F606AB19;
+	Wed,  4 Nov 2026 22:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dtt8azA5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA1F1F00919;
-	Wed,  4 Nov 2026 22:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bldJjTog
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5110F1F000C1;
+	Wed,  4 Nov 2026 22:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793830978;
-	bh=aiYJ6A2IkPYrIeI9lW6woLRxoay2TsOc30lmKhBmCgE=;
+	s=korg; t=1793830979;
+	bh=UoxaLFlUs0DGfkQ+q0EpQehBOw+eGBX9iDTqLGYFlwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dtt8azA5rjwHt0EIANWIc3llHGONwgAS62GkrTjMqtimvImJ7zLVWfQzboGN2DSei
-	 m1mSDzEPU/w0C9gXyKb+efwm54x4IfS3vUN1wI8wmGDiJIhUE8ZL/DFqrNLhdZXJkW
-	 R6/NJKRRm/QZ2XApjazb/gtAcxQ6X3PTu8yNqPDc=
+	b=bldJjTog9DLfcLgnxasGFkbWITJAMuxeh/Elp+2WtpdNxwh/RRcg2zzeHEcwsGI4M
+	 ToKP7sKHnamwas2IZsQzqujeRwJ1s6L1fTpij+wZwwzLwrrgayUbu0yDpChn/xIB41
+	 pTZrmkLsgi+ZIcuWvk9PAGocRF289d4L3WDjHv5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Szymon Durawa <szymon.durawa@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0438/1005] rtc: ab-eoz9: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 16:02:51 -0500
-Message-ID: <20261104211056.349782855@linuxfoundation.org>
+Subject: [PATCH 6.18 0439/1005] PCI: vmd: Add Nova Lake (NVL) and Dunlow (DNL) Device IDs
+Date: Wed,  4 Nov 2026 16:02:52 -0500
+Message-ID: <20261104211056.374569055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,41 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Szymon Durawa <szymon.durawa@linux.intel.com>
 
-[ Upstream commit 7490b8356e52e09c196645912f2c054f79aa5f3a ]
+[ Upstream commit 55aa45154fe48b7d8e96bc031ad27d5b0edfcdb8 ]
 
-The driver has a match table for the i2c bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+Add VMD Device ID Support for Intel NVL/DNL processors.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
-
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704152528.53258-1-pengpeng@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Suggested-by: Nirmal Patel <nirmal.patel@linux.intel.com>
+Signed-off-by: Szymon Durawa <szymon.durawa@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Nirmal Patel <nirmal.patel@linux.intel.com>
+Cc: Jonathan Derrick <jonathan.derrick@linux.dev>
+Link: https://patch.msgid.link/20260819130523.398493-1-szymon.durawa@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ab-eoz9.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/controller/vmd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
-index de002f7a39bf4..8dc656bb78bfb 100644
---- a/drivers/rtc/rtc-ab-eoz9.c
-+++ b/drivers/rtc/rtc-ab-eoz9.c
-@@ -549,6 +549,7 @@ static const struct i2c_device_id abeoz9_id[] = {
- 	{ "abeoz9" },
- 	{ }
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index 5d3e6cc7e4feb..aa6d4f56f612a 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -1141,6 +1141,10 @@ static const struct pci_device_id vmd_ids[] = {
+                 .driver_data = VMD_FEATS_CLIENT,},
+ 	{PCI_VDEVICE(INTEL, 0xb07f),
+                 .driver_data = VMD_FEATS_CLIENT,},
++	{PCI_VDEVICE(INTEL, 0xd70b),
++		.driver_data = VMD_FEATS_CLIENT,},
++	{PCI_VDEVICE(INTEL, 0xd73b),
++		.driver_data = VMD_FEATS_CLIENT,},
+ 	{0,}
  };
-+MODULE_DEVICE_TABLE(i2c, abeoz9_id);
- 
- static struct i2c_driver abeoz9_driver = {
- 	.driver = {
+ MODULE_DEVICE_TABLE(pci, vmd_ids);
 -- 
 2.53.0
 
