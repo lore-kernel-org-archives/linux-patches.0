@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831686;
-	b=utpUXyuxlneeZhubznCOy0GdPHKp2Zxg8YvtEbBxGszmPnaEuRibY+fYux+51Q/sH6ys
-	 0b/oeNbEeOmHjqJVmagpJXFGZEkszAum/OpY1NzHdHzMS4cxYnPYvJc5BuYy5S+nDHZfS
-	 7S9IMhhFc1UOzP4Qy6DdQOnyyLjRolbThATRzW+zFgGbwaiIzs+/kKoSd778ngZLBSdxy
-	 YgqSX5kgFNzWvgyF1KObXTsJKNcIUVNaORGgY6adaV+zOKJfxDsvgEUam4EbN8H8cYvZn
-	 qOgo6EoT7bSCaziePbGsxzIwmQUp/oF1KI1SUGRhDvslRqXGu7WGzrkzNJxo+8voPEg==
+	t=1793831687;
+	b=JRZ+zuwaXQlF3zjnwnLs1wKW6vnIPhx4u208cb22S1Ksd6aTzfnT9P+WCAwupFTGz8cD
+	 zY/87IKBIQz9OJjPRc6LjHoVEb/wRhKRTvTu5cskACmb1fCUvcsabOAo/fCq1XRd1W7xq
+	 gtIDLEazQ9+IKhPIZoE7N51S2sctlj+cpoUbEUd/LsmlDuHqZO067HZfsrxtNsKJeVq8Z
+	 xGQhpzge7FuJodCHetS/0z/96S1jDC4wW4ei87yYJ5/YMWNKbh2wLN/WGKsE1le8YAq6V
+	 l8gNiEK+jyMt0AnEbaPEUjQisTFXcFh7t1o7aR7/tToL+bh7EqZx3OHd5+0jdW4i6Pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831687;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U8Z/0O12iA39FzglBPcEhb3/sd0zNGloRw11YiQwshE=;
-	b=bX/itrp6X5pzwzmImvhgn67APyV1+qe82MRdvmBjCMoYcj+/IstCT3Yx6a9dNbw3P0Q+
-	 ZzQPAzsqCQGMFeYRft6+Yy5aHc7eIOC1xxJjpA/BGjV3y7t87oeVv2uY74SAUhbbirxkR
-	 /B2tAZfUErMvseKqC/AYl82AjGpzH2IAeYRHLGNWE44NiBBJWXQflnvKwStgOi1yAo0wt
-	 YwupOcaUoYTOZfMYw75U6zWu4PpTpju1ZrbuzlsxNXUw+sc46RDasJNI3bL7XRlJTg7rv
-	 TPtMM+zjuz/IHzUBQ0wn6wjsLBn481Yb9QM2BIBjNWxcrfAkoMXT5XwFJmkQFvVFnOw==
+	bh=4/rr5DV/OLuJiYuY8dS7epfIxFCqPmICBzkyf0lBeDg=;
+	b=HHFg0q+kw9P3oMv0f4MSgkJfCfNLiN0aXRMsyre7XZxsvOE+I8TwUOuYjVdehL7/sF8N
+	 USxsLOGOcGQ95lMU/Cb4QTWY9CVUhJjvYZSTF94BwmafUmPze9j3cmzyHjli0lnRdTSOc
+	 BoOwg14cwmt5AAdRxGliVMseUv6TNNCeVrcnj2Kt96a3Vs9G+aCYGPPgEYZQe0/KQZo7a
+	 fVvqFh0MVeEuhoHB/cnhwAJuwLWkl4ai+twbiiPzBPLJk6z7M6err7U+wRUWEt6yTgjT4
+	 OQbZOMhTCaAJ7scMehBUgUUy+7skO5EiZa4xAs2mgfToRVXRPlEWd8aqTTDAauw4GPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jOgPhECv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V41BAqjT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A50606A33D;
-	Wed,  4 Nov 2026 22:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809FE606A33D;
+	Wed,  4 Nov 2026 22:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jOgPhECv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0E61F00A1C;
-	Wed,  4 Nov 2026 22:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V41BAqjT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209531F00919;
+	Wed,  4 Nov 2026 22:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831685;
-	bh=U8Z/0O12iA39FzglBPcEhb3/sd0zNGloRw11YiQwshE=;
+	s=korg; t=1793831687;
+	bh=4/rr5DV/OLuJiYuY8dS7epfIxFCqPmICBzkyf0lBeDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jOgPhECvObggk5GJ8nO95lBFEljUo4dNLpQvZEPPUJjd7Sz86J/0Y7Ii3nSFIu9YC
-	 ZcsoRy2wxiBS+FWoeH5GKZuUEjWVsdwa4WFcrTSlxLMNefxw2RVtVCNtd12/w73QEa
-	 far+lwE2Q5GTzxmtQwlAIbNQKt7sl3TxK5VBuHKc=
+	b=V41BAqjTVT37TxS+F4UZMaR/Rp3mhD4K7lohGw4XmfGy/gX4ndFCm4x5st6Li6CRT
+	 QH6ALGpQW5MLrYNVu/h8fiqMKq3H/VsY3LaYUPPfzPmbQ2W1QLq1OT88dRQXimSVlP
+	 y50K8+txDapkUMYRiCp46LlPqbfpxrbrGBjwX9Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0855/1005] xfs: dont try to scrub self-referential dirent in metapath checker
-Date: Wed,  4 Nov 2026 16:09:48 -0500
-Message-ID: <20261104211107.236510600@linuxfoundation.org>
+Subject: [PATCH 6.18 0856/1005] xfs: fix correction of unwritten extents in quota file data fork
+Date: Wed,  4 Nov 2026 16:09:49 -0500
+Message-ID: <20261104211107.265635845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,40 +70,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1e7337a3ecebab1bb2ba02187d88b94e5146e4f0 upstream.
+commit 6f2792720673f569fa3e1f68181b9d6fd26802b5 upstream.
 
-LOLLM observes that the _ilock_both helper will loop forever trying to
-double-lock the same inode if mpath->dp == sc->ip.  Callers are not
-supposed to call us with parent == child because that makes no sense.
-Trigger an assertion, mark the scan incomplete, and return IO error
-so that this fails noisily.
+LOLLM noticed a couple of problems with the code that fixes unwritten
+mappings in the quota file's data fork: first, we should zero the ondisk
+contents as part of converting them to "unwritten" just in case we crash
+shortly after the conversion.  Second, and more importantly, it noticed
+that we fail to resynchronize the iext tree cursor after modifying the
+iext tree.  If the tree shape changes, we could be in a world of hurt.
+Third, we should force a quotacheck if we reset an ondisk dquot.  Fix
+all issues.
 
-Cc: stable@vger.kernel.org # v6.13
-Fixes: b3c03efa5972f0 ("xfs: check metadata directory file path connectivity")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: a5b91555403e3a ("xfs: repair quotas")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/metapath.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/xfs/scrub/quota_repair.c |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/metapath.c
-+++ b/fs/xfs/scrub/metapath.c
-@@ -324,6 +324,13 @@ xchk_metapath(
- 		return 0;
+--- a/fs/xfs/scrub/quota_repair.c
++++ b/fs/xfs/scrub/quota_repair.c
+@@ -418,7 +418,9 @@ xrep_quota_data_fork(
+ 	/* Check for data fork problems that apply only to quota files. */
+ 	max_dqid_off = XFS_DQ_ID_MAX / qi->qi_dqperchunk;
+ 	ifp = xfs_ifork_ptr(sc->ip, XFS_DATA_FORK);
+-	for_each_xfs_iext(ifp, &icur, &irec) {
++	xfs_iext_first(ifp, &icur);
++
++	while (xfs_iext_get_extent(ifp, &icur, &irec)) {
+ 		if (isnullstartblock(irec.br_startblock)) {
+ 			error = -EFSCORRUPTED;
+ 			goto out;
+@@ -442,16 +444,35 @@ xrep_quota_data_fork(
+ 
+ 			error = xfs_bmapi_write(sc->tp, sc->ip,
+ 					irec.br_startoff, irec.br_blockcount,
+-					XFS_BMAPI_CONVERT, 0, &nrec, &nmap);
++					XFS_BMAPI_CONVERT | XFS_BMAPI_ZERO, 0,
++					&nrec, &nmap);
+ 			if (error)
+ 				goto out;
+ 			ASSERT(nrec.br_startoff == irec.br_startoff);
+ 			ASSERT(nrec.br_blockcount == irec.br_blockcount);
+ 
++			/*
++			 * We just zeroed the ondisk dquot, so counts could be
++			 * wrong.  Schedule a quotacheck to fix that.
++			 */
++			xrep_force_quotacheck(sc, dqtype);
+ 			error = xfs_defer_finish(&sc->tp);
+ 			if (error)
+ 				goto out;
++
++			/*
++			 * Set cursor to the next block past the extent we just
++			 * converted because bmapi write could have merged
++			 * records.
++			 */
++			if (!xfs_iext_lookup_extent(sc->ip, ifp,
++					irec.br_startoff + irec.br_blockcount,
++					&icur, &irec))
++				break;
++			continue;
+ 		}
++
++		xfs_iext_next(ifp, &icur);
  	}
  
-+	/* Callers should not set the parent to the child. */
-+	if (mpath->dp == sc->ip) {
-+		ASSERT(mpath->dp != sc->ip);
-+		xchk_set_incomplete(sc);
-+		return -EIO;
-+	}
-+
- 	xchk_trans_alloc_empty(sc);
- 
- 	error = xchk_metapath_ilock_both(mpath);
+ 	if (!joined) {
 
 
