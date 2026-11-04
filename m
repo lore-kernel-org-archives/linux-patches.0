@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829479;
-	b=ufUJraG5MD8a/freQlRfshBfIZlpoItZxOq5NnKuEts04nDtOqvF7U4K4MZfzdeI52bq
-	 4gbmQYGxgjLW3hqwYhYg8xVMErIplh8u8c7pKiNaRLtGHPlWjzMrsp4cx604TCEkQrd1Q
-	 pUNUxGEJXGkGGLSHR4G/IIwY/GN2mIY+1Z3E/khXgW2/rMEDF7RD9H/1lQdw/qxK+RmLH
-	 F3jTQV8FebKu92eDAhi2EcGBu3K6zbgVHXuiRH5CQqNITphIefpObYX4m5OUdPxNfjMVl
-	 JlFKyhUodyT8GsYZNqwKlJBH/TaOR7/PEnK0jee/u+M6NTB/EPKJAr908nBfiCBV/ww==
+	t=1793829481;
+	b=lpARWt4FIBg0DudtolNA76HMDKSreXOp9g19cLTsIPGe3rUBG0zZNMo9q1AvQ94EVBNv
+	 EZqXaHmzSaX88wnnPeS93XumjD1vxrZfjOaE5CcC1gVGZhKeK8VhypumsDz9j4fmFz/L8
+	 ZpF/PAt3voFehm/OnVoYd23DpIkqJoCWSELW4QgBnaxm6QwNhljcD3sbtw+PF+5T0Ex0q
+	 izymPPm4QdHKFI3q5za7Bw3a6ZtPKy/DppoKu9224yZbxbNEy3JeofC3Kw7vWGdMIzakQ
+	 QLQc3gijLQ3rdzHuOb2Aa3L9HUv8CAo8YgL6yLi7Itq5rcYqSP1qkRebikzoVun26fQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829479;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ccx8zE1ruMdw0B6DGYxl1DT3HxsOIL6K22niL6Cdwz8=;
-	b=a84Y1OBLaqlqFbtpDhGlg+zzGtUkFgFw5/CwnB6l/703CRmKAs/LH/YhGRFtOGThqNaY
-	 z/d5iZSyldmDm2XELPF3iaqjaipS25kAGoMqlOvYBYm3U/+8tKQYTsRduhyB4ymphZ6Ss
-	 gTAd0tmHjz4oF2t+19mXMR7ApqGfZMddbBE/aqxzL7EhFD/pP6/ZSELHaep7Xr501Zn26
-	 7iCDtjTj17l5tSI5czx01aMLXnY3nLw4yxDxQKB5TA9u7l3pf6KH8/1+I5U9UtH3tlb9t
-	 ieR4J2Y+GwgmgsDrx9EzKqpWbcdou9ufIoYyWg/PHE2mHZ0zUgYh7dVnsJ5cxGV2NVg==
+	bh=CH7Abe1upqGphxtSP7O/4UlY7Pd3krMVDD3eQ4oqYNw=;
+	b=Wl/3WuneCnoYDPU5lBVEKtKCBgms8CSNcjQ+L39ujWnw7jyiErcMJwMrQutwMjfOhFt6
+	 7QX9s/XToHigc9Emilf0UF38QeuAq0z7mYg8XvurjGdIek6VEeSlH+U7BpVk8rY4em/G9
+	 DZBZUatNP/Z23fHmMxw3XMG9Qv89RpC7Qv+24pMv2VM/RF9jfFtY/iMt9Ub/q+V6hBez5
+	 8YhT3AqF2xKyiucXHLlpRnWeLzdGBhiSaIcjSMmJmju0AIKeKRrZwdqL+OXX8koyra+AI
+	 KREYwoB0+FxZJSaikhEgvTeeMFDclRm3957EMVCSnNRKbTCUxfZSY5Ig+PdpLeOZnhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aBDLrtnX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RO6EOkpD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915206082BF4;
-	Wed,  4 Nov 2026 21:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114F86082BFF;
+	Wed,  4 Nov 2026 21:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aBDLrtnX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313FC1F000C1;
-	Wed,  4 Nov 2026 21:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RO6EOkpD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AB71F000C1;
+	Wed,  4 Nov 2026 21:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829479;
-	bh=Ccx8zE1ruMdw0B6DGYxl1DT3HxsOIL6K22niL6Cdwz8=;
+	s=korg; t=1793829480;
+	bh=CH7Abe1upqGphxtSP7O/4UlY7Pd3krMVDD3eQ4oqYNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aBDLrtnXVzf0VlTMaLSXhcuqEwJI9oPfEsEHIuSTYOi0J7iGNDnO6h0IqLb/e1tyX
-	 QCtc8BISd1fH08gkOUzmiY1tP1I/yTFyhTUJiNFOB75/tcvTyJdXD0zPGKmhrd7nDj
-	 /E9IfTanP/HYbLyivSvwDIlwosHIudeg8qLvABXk=
+	b=RO6EOkpDRuGG1emIeHoNXelaDzfllLQQEW9N5oHk+SplLSoN1Lzj3c0WhhrXL63So
+	 623a3InSlLJFu8SvbIR240X02T9SEvgiD4XoHsebkR+GL6pa74gHuVAxbXt8HLKj6M
+	 Hl1J4BDJrYfezV/5/bpUQ9ly30jqJELkxEZatbiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0152/1005] media: ivtv: stop VBI start-code scan before short tail
-Date: Wed,  4 Nov 2026 15:58:05 -0500
-Message-ID: <20261104211047.989727213@linuxfoundation.org>
+Subject: [PATCH 6.18 0135/1005] gpio: vf610: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 15:57:48 -0500
+Message-ID: <20261104211047.480416149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,34 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f373cf17fb8e7a530bc6e1e36fc41cb5dab2cdaa ]
+[ Upstream commit 975a1d61260cf74d467f34898fade63165c80735 ]
 
-compress_sliced_buf() scans one byte at a time while testing a four-byte
-VBI start code.  The final iterations can read beyond the remaining
-buffer tail.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Stop the scan once fewer than four bytes remain.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
+
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260704122123.73004-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/ivtv/ivtv-vbi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-vf610.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/pci/ivtv/ivtv-vbi.c b/drivers/media/pci/ivtv/ivtv-vbi.c
-index ae7a00f462574..af086c4cbe1a7 100644
---- a/drivers/media/pci/ivtv/ivtv-vbi.c
-+++ b/drivers/media/pci/ivtv/ivtv-vbi.c
-@@ -330,7 +330,7 @@ static u32 compress_sliced_buf(struct ivtv *itv, u32 line, u8 *buf, u32 size, u8
- 	unsigned lines = 0;
+diff --git a/drivers/gpio/gpio-vf610.c b/drivers/gpio/gpio-vf610.c
+index aa8586d8a787f..adfa2c2d5873d 100644
+--- a/drivers/gpio/gpio-vf610.c
++++ b/drivers/gpio/gpio-vf610.c
+@@ -83,6 +83,7 @@ static const struct of_device_id vf610_gpio_dt_ids[] = {
+ 	{ .compatible = "fsl,imx8ulp-gpio",	.data = &imx8ulp_data, },
+ 	{ /* sentinel */ }
+ };
++MODULE_DEVICE_TABLE(of, vf610_gpio_dt_ids);
  
- 	/* find the first valid line */
--	for (i = 0; i < size; i++, buf++) {
-+	for (i = 0; i + 3 < size; i++, buf++) {
- 		if (buf[0] == 0xff && !buf[1] && !buf[2] && buf[3] == sav)
- 			break;
- 	}
+ static inline void vf610_gpio_writel(u32 val, void __iomem *reg)
+ {
 -- 
 2.53.0
 
