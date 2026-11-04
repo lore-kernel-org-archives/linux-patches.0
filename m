@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829394;
-	b=tXbNS/0wBrJe1r3tw1bfdRaTSfehpZ/JO9kchJRUIwMZrp0++CeJ5LICZ0B2pM5VeoK6
-	 27fJTaHHjZnkdJMaMyxKMYSoK3DgVBoS2YObLsd7IfSRej2c1du91Fdy3kX+95MwEBOLW
-	 +GRj0V+1kbNOTCQoUj7nGujmKqG6rY3gy6P7ulOXbu4Oy94WvGlzcdHNxNJSmSd86cqIL
-	 M+cbUkFWhgNeZs69dpy7BhML8XmSZN2NwhWII7sOl/mhPu8XbZIpe3PHlG//jhazL7S5i
-	 saiBPK5oIg2LA0Z0FbzJ5FboOghrIta07aDttWa/joSwVZ9TEml+fdv7rVg1Otr/7Fg==
+	t=1793829395;
+	b=JV69vb1dxznEo9i2GwmwiI3IiufvZbfB9fqFgixCyRi/xZezafBN6toXjv6F6pXq26EP
+	 oVjoAyvMmpKeElOE1IjYBmwVEFic5SlyQZD2vyhHriDp2RPbbvaCFrrK8RjsDJUBWHBDW
+	 IZCKJ+6IrGhy66Bj+ddNzaVwgYOEtjH5IJR4+LBan9KAoAQFMoWg414TE/tKQPBiyuDwU
+	 Q01DMYNp8D3Ns+7azOLGowJAIKSRXqsnBVzEKFBMwY0hrX0eJlvGgpbZd5PlFaBc6OvmD
+	 O5m4IAmPfv69hXHcazlrx0QHk4Um6deR3IH+UU8hhTNcr5EVkuFaVGJtyCrnBpkkHJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lOE3ftrFtL7OxQtM0iyv0u7Ji4p4ohQQ6YtVOq0Aub0=;
-	b=1Rqll/mSbSaYqYHO86/1t9Z76wMw7QlWgJT3WywM4x+pEm444LqmdzjekY/U4/uvyyga
-	 WeF2gM1XgERm1gxYmCC5+ScAnG8QzYxtAKkX72S6f35jyFwTRCGdqpSUzRgrDqZ9V+M7D
-	 1dAKIPi6Zes2CQMAakrgj8sVHjUhte2XIABo8lRY3jSwEDljum0zlCcHOvdvEHFB/Mir6
-	 um1esoidpI/M5hjQybXe45+v4A0O3n0Tt26W3NJf0+2NmWgF63uJhpu96cJB0ycltYdlr
-	 1ae8or8sChGRMxfcAQXM6ROsW1lqEQ6UfHXGE1gSZcHAmmDQHrNlmcO6AY/wz9rcOcg==
+	bh=/RrKLN+YNEQtPdmHQjpCVM/saD2ddUS3ZfOpDVAdT/E=;
+	b=ysiv7EJZlCzIWOTDd7HkH9tM0jk4JXHD3MTxi/WHMEOJue0FEgBJMzVE8ouTKsqXOTGm
+	 pW55uBoELsLh99YkRUb5O7/aSLHL68W4TY2IecO4FF225mBHJjMOicEBDCAz4+1b9loHY
+	 MLWjGw9q/PKNAcHt9KVf6C0tWvudjE/NY22rT8riuWJEt005NkcJE5CXHP+9JGwq6DGPU
+	 mq+2vMRzZGi8Klds1B4GqdLFOuniKltpIKT7q6Vfqz9GM9vK2fToE0vth7XeQsD8yviv6
+	 KvAeU2LB1rCm3HhPLPAwkIN5EYcwfc81apEotGGqQzsW0RRu0h/vy0hHCB4lqmE0Ogg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kAcTbNw/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qSuHngzW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8933606A865;
-	Wed,  4 Nov 2026 21:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E52A606A865;
+	Wed,  4 Nov 2026 21:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kAcTbNw/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589791F000C1;
-	Wed,  4 Nov 2026 21:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qSuHngzW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52FC1F000C1;
+	Wed,  4 Nov 2026 21:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829393;
-	bh=lOE3ftrFtL7OxQtM0iyv0u7Ji4p4ohQQ6YtVOq0Aub0=;
+	s=korg; t=1793829395;
+	bh=/RrKLN+YNEQtPdmHQjpCVM/saD2ddUS3ZfOpDVAdT/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kAcTbNw/98r8XXX5DhVRcCVHoGPhFdBF787kRG9fgWtOK6K6OKczQ6mOPqM/l+JHC
-	 uTPpNTOMnV9LgqGXPqaJAa9CD8RmHnyfvr0frEdOLjV3F5KVqQmiXXx1vTxR1LWNTK
-	 ql2EuGdTTejP6fUX2/qNGmoy2OdVnwBMtwU9u4Dc=
+	b=qSuHngzWWYTsPRTaiKbT3nSUhDAKNyyjQpvTzKvyw2y8Ic4nqtgf8s/F0x3vfFHHj
+	 h+e5p2rBjTblvhj/0D6VhUBrjE39sSLoqsC/IxeSaY94bxsGYNG0o7nBrFRRp/oR/m
+	 +6X0SOs8NoLlg56kpklXjKtLpUJFmm6ihCQcbPtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0049/1005] spi: bcm-qspi: return error from failed controller suspend
-Date: Wed,  4 Nov 2026 15:56:22 -0500
-Message-ID: <20261104211044.965895138@linuxfoundation.org>
+Subject: [PATCH 6.18 0092/1005] soc: amlogic: meson-clk-measure: remove debugfs tree
+Date: Wed,  4 Nov 2026 15:57:05 -0500
+Message-ID: <20261104211046.204952208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,49 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 44d09ef0ba690ac46d17eb05c12a47a5dd75e231 ]
+[ Upstream commit 67481152be2ec5de3529664c82054b43d6d4b9f5 ]
 
-spi_controller_suspend() can fail if the SPI core cannot stop the
-controller. bcm_qspi_suspend() ignored that error, disabled the
-controller clock, uninitialized the hardware, and returned success.
+meson_msr_probe() creates a debugfs tree with entries that reference
+devm-managed measurement table entries and the driver's private regmap
+state. The driver has no remove callback, so unbinding the device can
+leave those debugfs entries behind after the private data is released.
 
-Return the suspend error before tearing down the clock and hardware
-state.
+Store the debugfs root and remove the subtree from a new remove callback.
 
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Link: https://patch.msgid.link/tencent_21BF5F9512F56D45FD9018BAF14ED2805808@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260615091531.21964-1-pengpeng@iscas.ac.cn
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/soc/amlogic/meson-clk-measure.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index cfdaa5eaec76d..ae5545be0a45c 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -1694,13 +1694,17 @@ EXPORT_SYMBOL_GPL(bcm_qspi_remove);
- static int __maybe_unused bcm_qspi_suspend(struct device *dev)
- {
- 	struct bcm_qspi *qspi = dev_get_drvdata(dev);
-+	int ret;
+diff --git a/drivers/soc/amlogic/meson-clk-measure.c b/drivers/soc/amlogic/meson-clk-measure.c
+index d862e30a244ed..7ca43bcb622a2 100644
+--- a/drivers/soc/amlogic/meson-clk-measure.c
++++ b/drivers/soc/amlogic/meson-clk-measure.c
+@@ -7,6 +7,7 @@
+ #include <linux/of_address.h>
+ #include <linux/platform_device.h>
+ #include <linux/bitfield.h>
++#include <linux/err.h>
+ #include <linux/seq_file.h>
+ #include <linux/debugfs.h>
+ #include <linux/regmap.h>
+@@ -50,6 +51,7 @@ struct meson_msr_data {
+ struct meson_msr {
+ 	struct regmap *regmap;
+ 	struct meson_msr_data data;
++	struct dentry *debugfs_root;
+ };
  
- 	/* store the override strap value */
- 	if (!bcm_qspi_bspi_ver_three(qspi))
- 		qspi->s3_strap_override_ctrl =
- 			bcm_qspi_read(qspi, BSPI, BSPI_STRAP_OVERRIDE_CTRL);
+ #define CLK_MSR_ID(__id, __name) \
+@@ -952,6 +954,7 @@ static int meson_msr_probe(struct platform_device *pdev)
+ 	       sizeof(struct msr_reg_offset));
  
--	spi_controller_suspend(qspi->host);
-+	ret = spi_controller_suspend(qspi->host);
-+	if (ret)
-+		return ret;
+ 	root = debugfs_create_dir("meson-clk-msr", NULL);
++	priv->debugfs_root = root;
+ 	clks = debugfs_create_dir("clks", root);
+ 
+ 	debugfs_create_file("measure_summary", 0444, root,
+@@ -967,9 +970,19 @@ static int meson_msr_probe(struct platform_device *pdev)
+ 				    &priv->data.msr_table[i], &clk_msr_fops);
+ 	}
+ 
++	platform_set_drvdata(pdev, priv);
 +
- 	clk_disable_unprepare(qspi->clk);
- 	bcm_qspi_hw_uninit(qspi);
+ 	return 0;
+ }
  
++static void meson_msr_remove(struct platform_device *pdev)
++{
++	struct meson_msr *priv = platform_get_drvdata(pdev);
++
++	if (!IS_ERR_OR_NULL(priv->debugfs_root))
++		debugfs_remove_recursive(priv->debugfs_root);
++}
++
+ static const struct msr_reg_offset msr_reg_offset = {
+ 	.duty_val = 0x0,
+ 	.freq_ctrl = 0x4,
+@@ -1065,6 +1078,7 @@ MODULE_DEVICE_TABLE(of, meson_msr_match_table);
+ 
+ static struct platform_driver meson_msr_driver = {
+ 	.probe	= meson_msr_probe,
++	.remove = meson_msr_remove,
+ 	.driver = {
+ 		.name		= "meson_msr",
+ 		.of_match_table	= meson_msr_match_table,
 -- 
 2.53.0
 
