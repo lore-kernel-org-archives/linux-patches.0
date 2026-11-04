@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826925;
-	b=am1xFPIGEYOP54j1kmQFgUvbJQucB3J3B9NEWZ83W9m+vPJ9vFanXu5ZBBfUqXKNpieH
-	 y23RABxfKYNY2ZN4MvXKwD+E733K+xEvxU7bIknx5cy9mKgWVjkFIu3R2biKeRwkkuROF
-	 AmkeYrsD5YSRtiCgJB4g1W+yE6bpjikKePpd4bHrgPjljtSrJrredpjh+KVob2Ecyjrlm
-	 XWfOZqi+vUYe4/WOIsQzC3W7H09G+tLih3qhuIk5hLWElU3jrNxfgbgDVIB6/vza8HCVm
-	 OqnsxBseeTwcWxA4mcDGmbSimvduj4jYJ9K2ThB8Rg+ogKx43GDms708uZDtGamkbgQ==
+	t=1793826927;
+	b=5YcoJ9/ToBMjv6Z/NS13QetyeNv0dNY0AiuTYEEB3/qY1AzSAwjbgvfLjY2GRRVtb7MV
+	 nxi3w1XYac1JcnyzSXeiZI/rCt4C0kscDesJ3PN6NRxR0f2tGsgznGlpBrhWRtNxe+Bg6
+	 9c3+gAuwfNgGR1pHpS7K1FEyfoeOChus6AgTd/9jmpT917AjtWhiTG4uX+LFFwVkyAqzY
+	 VUmc6FmIi2b330Vfl+jIhRtQs0xOx1Fx4s+2IbMM9sf+ffnEM1NH4i3Avz75Pj5UvtwcR
+	 sAsxVSevzUIDSJTuTIZw9Z79+oRWPFUP2ZuvMAt7HijnBttwM/NfjXpO1vQhXO/oRpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PlV5qY475LibNtar2BXBknqYiJwpHM8ZymGubFCs3lE=;
-	b=cEX8z1rvl+QttFlW10NDpdbv+UA6MEgbnBSmCLbmjchxRSljITim3FYzOWIk0tmHtF9V
-	 YSZNf5zic40bwUA1JZOWwkhX5qH76goT1cEZCEKNDyNdCejG8r/rTDCT9GOnug5XXURwC
-	 DAIravlWQgj43PkzjilJJijwhvAH2c8c3dMOPte2pgJAqj/wyfhddqJH21U/JZMd0uQpN
-	 LOI+XygCK4x3ym3lPKXB5CoICuQyuNc5T7ws/jQlwI9XNPweUL3FKy0Vhr81mEGJ5XyFV
-	 fd8uYnMPfyZw7Oz5B7Vcste5MRHbL4sg3ZD/59NcMv9i5qWn8P3V8qAyQvBTzQuAJNQ==
+	bh=oNXEP/NNuXzMrNZAUqy0PEyOBuHduxOr08e63yzLBAg=;
+	b=QOrdKdzgm1izWl2mtVXnuqNauEGS1IcPzywmdWTJ+W3ZWaAKAvOUvY96ZdrqYdbM4xN4
+	 frfr2hmxVFamgqh2NABrrs/SuDoAQtVWqbUb7osnc/WX6WgZ8iGtO84oMRhXUXRgEkAk7
+	 VmwQvnfdsqk/LpsaFMDiXxutr7xZ27AkdnfYc5MYiss5nPckMH5+QjnxERzT91f/Jxaqo
+	 1yKAbtpdqgoy+haZKbksm3lr8ZQ19dmr7GDpHHursf2Wpoq24V0D3pvUwuAbBVQOnnrrA
+	 vXWJzjEU5mMg8KFfOluyBpdZNyMeB8+BJooy0Xcg5CaOznf6BrP6RITkjaAI/uK44mA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZgMDcTZ2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n8md6R0I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC316072FA3;
-	Wed,  4 Nov 2026 21:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551686072FA1;
+	Wed,  4 Nov 2026 21:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZgMDcTZ2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB801F0093A;
-	Wed,  4 Nov 2026 21:15:25 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n8md6R0I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BE11F0093A;
+	Wed,  4 Nov 2026 21:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826925;
-	bh=PlV5qY475LibNtar2BXBknqYiJwpHM8ZymGubFCs3lE=;
+	s=korg; t=1793826927;
+	bh=oNXEP/NNuXzMrNZAUqy0PEyOBuHduxOr08e63yzLBAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZgMDcTZ2euD1zi3Pp0OHLCg8jZwSuzEo5efIKynL5oBqe1l8088F8a+bdG5mBPhOg
-	 /GmeABD8NftmbTgdlAMVoBFHPNUUx7JtHEaxlun3O38vM4RM73Bbfz3+AKkms/8SXk
-	 OpkdckAgc0ni/OCT2SPdi0iZJ8wD9X2DJ7yb/Jpo=
+	b=n8md6R0IkE2u4m+wl9eFfj6TKakUQEaAIzOG1xwansNqUUNgLYDzgQXVNJkkHkPxw
+	 8gvSXwjsOgQgQDpNVX84o1bUSjBKhhHHtRKrIq5YsLkrM7RyvnW9sX+v0+j+vWL7yn
+	 WN4v4ck/3WXbghUUvnlFUaXBBhAyD4y54KVK9Icg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Gang He <ghe@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com
-Subject: [PATCH 7.3 088/547] ocfs2: publish the filecheck owner before adding sysfs attributes
-Date: Wed,  4 Nov 2026 16:04:32 -0500
-Message-ID: <20261104211040.730820026@linuxfoundation.org>
+	Zikang Gao <2715417602@qq.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 089/547] smb: client: do not pass a NULL buf to is_oplock_break()
+Date: Wed,  4 Nov 2026 16:04:33 -0500
+Message-ID: <20261104211040.757235438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -74,84 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Zikang Gao <2715417602@qq.com>
 
-commit e062baf5680845705d21df415c8f0751c96b0792 upstream.
+commit 2225ab306575e424b3dad2ee1be2521c89249d15 upstream.
 
-ocfs2_filecheck_create_sysfs() initializes the filecheck allocation before
-calling kobject_init_and_add(), but assigns entry->fs_fcheck only after
-that call returns.  The default attribute group can already be visible
-while registration is in progress.  A concurrent read can therefore enter
-ocfs2_filecheck_attr_show() with a NULL fs_fcheck and try to lock its
-fc_lock.
+receive_encrypted_read() sets *num_mids = 1 and never writes the
+caller's bufs[]. Offload returns -1 with *num_mids = 0, so the
+demultiplex thread skips the frame. The inline decrypt path
+returns 0 even when smb2_find_mid() fails.
 
-Assign the initialized owner before adding the kobject, so every activated
-attribute has valid state.  Clear the pointer when addition fails,
-preserving the existing teardown guard and error cleanup.
+cifs_demultiplex_thread() then treats mids[i] == NULL as an
+oplock break and calls is_oplock_break(bufs[i], server) with
+bufs[i] still NULL. smb2_is_valid_oplock_break() reads
+hdr.Command at offset 12 and oopses.
 
-A controlled probe-instrumented test kernel with the original OCFS2
-registration ordering produced this Oops during a concurrent sysfs read:
+A large encrypted READ whose MessageId does not match is enough
+to panic cifsd.
 
-  KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
-  RIP: 0010:kasan_byte_accessible+0x15/0x30
-  Call Trace:
-   <TASK>
-   __kasan_check_byte+0x13/0x50
-   lock_acquire+0x113/0x300
-   _raw_spin_lock+0x31/0x40
-   ocfs2_filecheck_attr_show+0x138/0x5f0
-   ocfs2_filecheck_show+0x5d/0x90
-   sysfs_kf_seq_show+0x1d3/0x360
-   seq_read_iter+0x480/0x1110
-   kernfs_fop_read_iter+0x419/0x5a0
-   vfs_read+0x7d2/0xc20
-   ksys_read+0x111/0x200
-   do_syscall_64+0x114/0x620
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Modules linked in:
+    Oops: general protection fault, probably for non-canonical address
+    0xdffffc0000000001: 0000 [#1] SMP KASAN PTI
+    KASAN: null-ptr-deref in range
+    [0x0000000000000008-0x000000000000000f]
+    CPU: 0 PID: 100 Comm: cifsd
+    RIP: smb2_is_valid_oplock_break+0xc8/0x2270 [cifs]
+    cifs_demultiplex_thread
+    Kernel panic - not syncing: Fatal exception
 
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0086-v4-1b3a3c5fd05c1fb41df9@gmail.com
-Fixes: 5f483c4abb50 ("ocfs2: add kobject for online file check")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Return -1 when inline decrypt finds no mid, and skip
+is_oplock_break() plus the unknown-frame dump when bufs[i]
+is NULL. receive_encrypted_standard() already assigns
+bufs[*num_mids].
+
+Fixes: c42a6abe3012 ("CIFS: Add capability to decrypt big read responses")
 Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Gang He <ghe@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Signed-off-by: Zikang Gao <2715417602@qq.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/filecheck.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/client/connect.c |    4 +++-
+ fs/smb/client/smb2ops.c |    1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/filecheck.c
-+++ b/fs/ocfs2/filecheck.c
-@@ -179,17 +179,20 @@ int ocfs2_filecheck_create_sysfs(struct
- 	fcheck->fc_size = 0;
- 	fcheck->fc_done = 0;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1401,12 +1401,14 @@ next_pdu:
+ 					mid_execute_callback(server, mids[i]);
  
-+	/* Publish the initialized owner before activating its sysfs callbacks. */
-+	entry->fs_fcheck = fcheck;
- 	entry->fs_kobj.kset = osb->osb_dev_kset;
- 	init_completion(&entry->fs_kobj_unregister);
- 	ret = kobject_init_and_add(&entry->fs_kobj, &ocfs2_ktype_filecheck,
- 					NULL, "filecheck");
- 	if (ret) {
-+		/* Mount failure still calls ocfs2_filecheck_remove_sysfs(). */
-+		entry->fs_fcheck = NULL;
- 		kobject_put(&entry->fs_kobj);
- 		kfree(fcheck);
- 		return ret;
- 	}
- 
--	entry->fs_fcheck = fcheck;
- 	return 0;
- }
- 
+ 				release_mid(server, mids[i]);
+-			} else if (server->ops->is_oplock_break &&
++			} else if (bufs[i] && server->ops->is_oplock_break &&
+ 				   server->ops->is_oplock_break(bufs[i],
+ 								server)) {
+ 				smb2_add_credits_from_hdr(bufs[i], server);
+ 				cifs_dbg(FYI, "Received oplock break\n");
+ 			} else {
++				if (!bufs[i])
++					continue;
+ 				cifs_server_dbg(VFS, "No task to wake, unknown frame received! NumMids %d\n",
+ 						atomic_read(&mid_count));
+ 				cifs_dump_mem("Received Data is: ", bufs[i],
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -5397,6 +5397,7 @@ receive_encrypted_read(struct TCP_Server
+ 	*mid = smb2_find_mid(server, buf);
+ 	if (*mid == NULL) {
+ 		cifs_dbg(FYI, "mid not found\n");
++		rc = -1;
+ 	} else {
+ 		cifs_dbg(FYI, "mid found\n");
+ 		(*mid)->decrypted = true;
 
 
