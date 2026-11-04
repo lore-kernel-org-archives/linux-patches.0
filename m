@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831256;
-	b=hQX8zeHFnz19SKLgkmkvWJATJAx8CxcIhyni2IKA6DgHHsV76ibMeUORr7thIvr8lW78
-	 aMc5yoUJotlsVsen/v8V5ugQEzhhmwoMp7nR8zDSJJDWW4oQETeaD/Mz/IGiJ7pjC/svE
-	 zUPd3PAMYHe5FQXAIE8pNuBGSs5mCmJYSQ10Eoi27Wn3tQVJ8ZETQMw1YkkiG10i0qO4C
-	 UnqyFA2AWwcA03ek9hBdJp4Gh4xAD0mb39GHVqAYjyNoCCVvIEX4tLP6JCyx9VmqcDm4I
-	 uQEzslGQU6GmZIoKou59/fnuMX/ai8QVJuxXBUVA3HqQEVx83oyf3vm9OP5JJkM5vdQ==
+	t=1793831257;
+	b=uFUBM541hLLTBOIaa0iLHsTO9v9b2gCFVMx1aBj0r4xV9161GFKDuB9pocCw9tccI8lt
+	 +GWWxdEG8ZkmdUnOmDwjDpSTEv/2NZjPDftFkZ9dzQEhr9u/Xo/VeFqLMl8sr3fal7zv7
+	 OCBiawieSz9hYY+M/Q2LA8kczZLiQErtubCSiyt59LxkLtOSkDX8+syi3foTz4KU7B9Q9
+	 mKfh2SPgwi45apAr7Bj9PRChvOLc4zRg2yLCvMCpJnMW+FuaXYvl2HDEdCELaaq/1iPEi
+	 VM0Cv3YCgpbpAD+Xj5pgSQLJr+soiQ9b2DKcmPjWf3PdCWlAjZRbY6OoVYNmmHxI4PA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831257;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WOSi0b4aCNVu2sYpVWTBOgFIwSk3+gnNLp6dyuhaGTM=;
-	b=ti+7iPFT1ik/0MtDpxBV87y4hCXLXGblJwmLlj78PCZqJbDaLaG2k7a0NMqDCRI28Os4
-	 CoQiRhG8cmx8++fMlGvfc2AItUaJOIu+bakc+zj+ZfZKB0xrCND+AZDpsp9bmZc1VYp+L
-	 RpzbQP6olALMvumSkteVy79Zgw/ZGfwo2Kf3idQu3it1BHlJMLrvRztQ+IqN99gKlMUin
-	 V9rMfqjzXTJNfxNOB5dKKRy8A1MaBVjOdQR7+vcxjjxBZ9yIAWTlvY2X2/660Suxwh4AX
-	 qTeY2AAxke5OKjMzzHyHj0liIfO3pUtSua8JIhhjFVIu9Yhh+mkNWKs2c9agjgOxNhQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=3XiIodtTMr2UOrXmRVNulVddcHifct0FDMekCH0Y6aM=;
+	b=bZmYSDdjUMfuYsNca59Tojuu2240WQ5zTjXje0+EBVmVOMU24CITYYSgpA5RbTquAGy7
+	 ofcrh4pk/h1OlLrle6fUslRrDpMVzU/3Urm6gWiO7s+HvFgBxHMDffCQNTMyz9KrmG5JT
+	 HM7SwJa8v23Lq+unO644mQeHyZuFWBzXXc1k/WTpJB4clH5s/qKyBCpHzsokSeBxIeCYT
+	 b7TolWkqO6wt15yzsnZihldg3/WuNkqpzsKBO8Gn1+d7dcn85w70LR0OATL9T457cpdcR
+	 X0EnmX0wcrNa+/NQIUXW7zwdAv1xxWdtst5TNhKJnTe3qrLWyQf9HjncHPtsm0bs+zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAnnlNcr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+jsMkx4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF713606A33E;
-	Wed,  4 Nov 2026 22:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECA0606A33E;
+	Wed,  4 Nov 2026 22:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAnnlNcr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2591F0093A;
-	Wed,  4 Nov 2026 22:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+jsMkx4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03521F0093A;
+	Wed,  4 Nov 2026 22:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831255;
-	bh=WOSi0b4aCNVu2sYpVWTBOgFIwSk3+gnNLp6dyuhaGTM=;
+	s=korg; t=1793831257;
+	bh=3XiIodtTMr2UOrXmRVNulVddcHifct0FDMekCH0Y6aM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BAnnlNcr2HJFRn24VU93v5Qu8sHqbSeIufUNoEZRcNNBuZTy+p5dSjMcbCtNFUeN2
-	 tdgj4CtzMmvF9V++B6HvH6l6nuRzpqJTcdnv+ZdVVrRhtYoE6t1aqD+dI6ojEW9D1E
-	 uQ+hfb+as/FkpWguhj+jli7hjMpT7xioOdJPRo1g=
+	b=k+jsMkx4vxA+cIZmdT97knlFc/5vT838Kg3ImFYoD2m4Xc7DUTo4ZxrHDT4R87FjL
+	 MW3mO3qJgH2MlTgfRFXva+3oPgsBVC8org5C65xo2R/dbeNN2mRSxlPcaUQNoyBlKU
+	 XwpVeMJohFYLrEzTokEJ5llotMo416Cytkv+GoGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
+	Alec Hall <signshop.alec@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0555/1005] LoongArch: Expand module virtual address space to 2GB
-Date: Wed,  4 Nov 2026 16:04:48 -0500
-Message-ID: <20261104211059.439051404@linuxfoundation.org>
+Subject: [PATCH 6.18 0546/1005] HID: input: read battery capacity from its actual report offset
+Date: Wed,  4 Nov 2026 16:04:39 -0500
+Message-ID: <20261104211059.187260921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -62,95 +63,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
 
-[ Upstream commit 18210a104bb97e28c26dc31fd9fc7b5c381fec62 ]
+[ Upstream commit d07644524b6511b622ee7b0e2e68c9ee43d522a4 ]
 
-The current 256MB module virtual address space is easily exhausted when
-loading massive graphics drivers such as amdgpu along with the large
-unstripped symbol tables, resulting in allocation failures of "execmem:
-unable to allocate memory".
+hidinput_query_battery_capacity() assumes the state-of-charge value is
+the first byte following the report ID (buf[1]) and ignores where the
+battery field actually sits within the report.
 
-Thus, expand the module virtual address space to 2GB while keeping
-the current normal code model '-mcmodel=normal', rather than using the
-medium code model '-mcmodel=medium'. This approach avoids the extra
-performance overhead and larger binary size of forcing every function
-call into a 2-instruction sequence of 'pcaddu18i + jirl'.
+An Apple Magic Trackpad 2 precedes the AbsoluteStateOfCharge byte with a
+byte of status flags in its battery reports, so this query returns the
+flags byte instead of the charge level.
 
-Given that individual module code segments rarely exceed 128MB, most
-jumps remain fast direct calls by using the bl instruction. For the
-long-distance jumps exceeding the +/-128MB limit, apply_r_larch_b26()
-emits PLT entries, while signed_imm_check() guarantees the run-time
-safety by rejecting any out-of-bound instruction offsets.
+The device happens to make that easy to observe, because it exposes the
+same cell twice: its report descriptor declares AbsoluteStateOfCharge in
+two reports (0x90 and 0x9b), so hidinput_setup_battery() registers two
+power supplies. Only the first one is refreshed by hid-magicmouse -- it
+uses hid_get_battery(), which returns the first battery of the list --
+and that refresh goes through the report event path, which parses the
+field correctly. Nothing ever reports the second one, so every read of
+its capacity takes the query path above. On a USB-C Magic Trackpad over
+USB, on an unpatched 7.1.5:
 
-There is still a risk that the distance between .init.text and .text of
-the same module exceeds 128MB. So we divide the 2GB virtual space to be
-two sub-regions: the first 256MB is for module text, and the rest is for
-module data.
+  hid-<serial>-battery-144 = 100%  (Charging)      <- report event path
+  hid-<serial>-battery-155 =   3%  (Discharging)   <- query path
 
+Both are the same physical battery. A raw HIDIOCGINPUT of the two
+reports at that same moment:
+
+  report 0x90 -> [90 03 64]
+  report 0x9b -> [9b 03 64 64 00 00 10 00 00 00 00 00 00 00]
+                     ^flags ^SoC = 0x64 = 100%
+
+The device answers correctly in both cases; only the offset the kernel
+reads the capacity from is wrong. 0x03 is the flags byte (present,
+charging), reported as "3%".
+
+Bluetooth takes the same query path for its capacity, where the trackpad
+reported a bogus near-constant ~4% -- 0b100, the FullyCharged flag --
+regardless of the real charge.
+
+Store the battery field's offset within the report at setup time and use
+it when querying, so the capacity is read from its real position. The
+report event path already parses the field correctly through the HID
+core; only the explicit GET_REPORT query was wrong.
+
+Devices whose capacity field is the first field in the report have a
+report_offset of 0 and are unaffected (buf[1 + 0] == buf[1]).
+
+Fixes: 581c4484769e ("HID: input: map digitizer battery usage")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-[ sashal: Kept the existing #ifdef CONFIG_EXECMEM guard in init.c instead of upstream's #if defined(CONFIG_EXECMEM) && defined(MODULES_VADDR), and added the new module text/data region defines after it. ]
+Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+Reviewed-by: Alec Hall <signshop.alec@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[ sashal: Adapted to the single-battery layout by using dev->battery_report_offset in struct hid_device instead of bat->report_offset in struct hid_battery, and kept the explicit kfree(buf) handling. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/pgtable.h |  2 +-
- arch/loongarch/mm/init.c             | 17 ++++++++++++++---
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/hid/hid-input.c | 17 +++++++++++++----
+ include/linux/hid.h     |  1 +
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/pgtable.h b/arch/loongarch/include/asm/pgtable.h
-index e3563a52e5b5b..e3ba4759b4d00 100644
---- a/arch/loongarch/include/asm/pgtable.h
-+++ b/arch/loongarch/include/asm/pgtable.h
-@@ -80,7 +80,7 @@ extern unsigned long empty_zero_page[PAGE_SIZE / sizeof(unsigned long)];
-  * still reliably trap.
-  */
- #define MODULES_VADDR	(vm_map_base + PCI_IOSIZE + (2 * PAGE_SIZE))
--#define MODULES_END	(MODULES_VADDR + SZ_256M)
-+#define MODULES_END	(MODULES_VADDR + SZ_2G) /* 256MB for text, rest for data */
- 
- #ifdef CONFIG_KFENCE
- #define KFENCE_AREA_SIZE	(((CONFIG_KFENCE_NUM_OBJECTS + 1) * 2 + 2) * PAGE_SIZE)
-diff --git a/arch/loongarch/mm/init.c b/arch/loongarch/mm/init.c
-index 900ce1da75a43..aaf66c0a096c1 100644
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -221,15 +221,26 @@ pte_t invalid_pte_table[PTRS_PER_PTE] __page_aligned_bss;
- EXPORT_SYMBOL(invalid_pte_table);
- 
- #ifdef CONFIG_EXECMEM
-+#define MODULES_TEXT_START (MODULES_VADDR)
-+#define MODULES_TEXT_END   (MODULES_VADDR + SZ_256M)
-+#define MODULES_DATA_START (MODULES_VADDR + SZ_256M)
-+#define MODULES_DATA_END   (MODULES_END)
-+
- static struct execmem_info execmem_info __ro_after_init;
- 
- struct execmem_info __init *execmem_arch_setup(void)
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index b2fa8c42f09b3..6e1f2bd440eba 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -437,19 +437,27 @@ static int hidinput_query_battery_capacity(struct hid_device *dev)
  {
- 	execmem_info = (struct execmem_info){
- 		.ranges = {
--			[EXECMEM_DEFAULT] = {
--				.start	= MODULES_VADDR,
--				.end	= MODULES_END,
-+			[EXECMEM_MODULE_TEXT] = {
-+				.start	= MODULES_TEXT_START,
-+				.end	= MODULES_TEXT_END,
-+				.pgprot	= PAGE_KERNEL,
-+				.alignment = 1,
-+			},
-+			[EXECMEM_MODULE_DATA] = {
-+				.start	= MODULES_DATA_START,
-+				.end	= MODULES_DATA_END,
- 				.pgprot	= PAGE_KERNEL,
- 				.alignment = 1,
- 			},
+ 	u8 *buf;
+ 	int ret;
++	/*
++	 * The capacity field may not be the first field in the report: some
++	 * devices (e.g. the Apple Magic Trackpad 2 over Bluetooth) precede it
++	 * with status flags. Read it from its actual byte offset in the report
++	 * (report_offset is in bits; the leading byte is the report id).
++	 */
++	int offset = 1 + dev->battery_report_offset / 8;
++	int len = offset + 1;
+ 
+-	buf = kmalloc(4, GFP_KERNEL);
++	buf = kmalloc(max(len, 4), GFP_KERNEL);
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, 4,
++	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, max(len, 4),
+ 				 dev->battery_report_type, HID_REQ_GET_REPORT);
+-	if (ret < 2) {
++	if (ret < len) {
+ 		kfree(buf);
+ 		return -ENODATA;
+ 	}
+ 
+-	ret = hidinput_scale_battery_capacity(dev, buf[1]);
++	ret = hidinput_scale_battery_capacity(dev, buf[offset]);
+ 	kfree(buf);
+ 	return ret;
+ }
+@@ -567,6 +575,7 @@ static int hidinput_setup_battery(struct hid_device *dev, unsigned report_type,
+ 	dev->battery_max = max;
+ 	dev->battery_report_type = report_type;
+ 	dev->battery_report_id = field->report->id;
++	dev->battery_report_offset = field->report_offset;
+ 	dev->battery_charge_status = POWER_SUPPLY_STATUS_DISCHARGING;
+ 
+ 	/*
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 29561887bea8c..5c49f29912978 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -679,6 +679,7 @@ struct hid_device {
+ 	__s32 battery_max;
+ 	__s32 battery_report_type;
+ 	__s32 battery_report_id;
++	__s32 battery_report_offset;
+ 	__s32 battery_charge_status;
+ 	enum hid_battery_status battery_status;
+ 	bool battery_avoid_query;
 -- 
 2.53.0
 
