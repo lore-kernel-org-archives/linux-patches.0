@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828992;
-	b=IJpJdZHbcHDGjRAVsM6y7ex2ZsJCq1eWqtQ8vk3MPE1jeoLBg+wZraXp2T32JgiYfwjq
-	 s7wmTQAjmDx3o1cFnGq+/lcYL4N3hA01ErdabyVSjlciVr3GxsbN76rZBZhH9NrhmJRtr
-	 5cCuisjIJtokEl7tD/1nSRCvp9wsxLbb+G2FL1Y0gEWJUYMwZYL5fVAE36cJuPkd1kBD5
-	 ee5IB8EXESN2kOo0afVubwZwE9u3j7uVhUtPXf5WnR8eTvjjDuO59a1FWymEegwOCh+hw
-	 RAtk3KKmKjCzwkL+OdKvszwCtMK35fuoRyP6bS2YJJttQ4cYXKdnCkTwhP6S1HT+FSw==
+	t=1793828994;
+	b=mqEGoyM+mRkcyP2pMMBsCv4t9zqAyh21OMbz3Iplb3ZupdSGiEXxDQUSpURpJIkgQ9ef
+	 RcwpQvsKObZ1EZqnlzfCqMdK0kcz4ZzG1H0nMP+y/eVJnwCJOkdP5lyuRp/z5svSrXOid
+	 5++KoQEtJK7g/F7ISd2eoZAmWDywgQCssqAHVzpd7J5PW9VR8a6Pua8ldKEuVj4EnqjEM
+	 6laAJYefaPD3sdmd0JL1dKNIGEB25nBbCtk7/Fak/0lKIwqFN8jK6mjDvgp0KgNpgkkOx
+	 dWF1d5L5cXvaaK77QZ+NK85E4wvjqx24xKCLkYPDW2cLLNbHW3S5R5DLVjfZx1Kwoew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=imStiQVxxfn9wWC4HilPS02IkuKp+prKqZdLvtMhHf0=;
-	b=dwXkf/yYm1fNTzmm5Q2sJSq/TuCfEf2JQdvSZSB5oUhN7ofhGgCOP1hk6cRzvwBHLdOw
-	 r2B781+SP3Z6WEbCMgsGBnqAIPa1HrMSw5m0FNMLbEvZ8KYqjJApFrxzNqtgrkHeu61Aw
-	 KFXWSRvEtB4+Ia6FSj1D3h2i/hZT9dS6Rlp+W499pfdg2SRL2NI244OLmHFAxGcwUVvWa
-	 ObkdRgHMlVchcGJCdK0xz/UavCQkH3DjCdzt6O2Lwqus9VKY+pC3vRAuityYcqx5rWsud
-	 mfDCSzMGcRvQF1gDoaMv7G7T5ekj8rtS13vYo2LKy+9siJE/jVXHfAuRjnLQARS5WEg==
+	bh=xN7Ia1jf1gy67j/ce4k1si6XcOE/05u/wJqRF7FfPr0=;
+	b=oy8RhQXsdDsK7O+gV7UNIcDBWIthlkqNU2p/rJBiTiIDUI8C5N9Xw3h1ACvOol88QF9y
+	 l7j0L2TwuyeuqnSPXbUobkW3IHcJtL8QpPCUzbp32c+yUahecyp/rluawIvuPzdFgvCJ6
+	 je4vtgeD1TZdqkPm8LYKPUxkiNppB0wwC7Nnzrs4FkEFuA6tjIeak1OFVhAEKR16FVrKA
+	 LbH6jEY/MF9GPrqp9DXahH+z7r3fI2xRWUIE6X0nJZBRNBYS3FHdMv9Rp2MbYBwgeMNVG
+	 rS5hYO86BwACZNq6QnIoFQlwmU5FLlG8bWmL5J7ReviaVhCy9fbQ2IvZPNFCJrsNREw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FVA6kebF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ddTUXTnS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB4B607F281;
-	Wed,  4 Nov 2026 21:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215B1607266E;
+	Wed,  4 Nov 2026 21:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FVA6kebF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7831F000C1;
-	Wed,  4 Nov 2026 21:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ddTUXTnS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9491F00919;
+	Wed,  4 Nov 2026 21:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828992;
-	bh=imStiQVxxfn9wWC4HilPS02IkuKp+prKqZdLvtMhHf0=;
+	s=korg; t=1793828994;
+	bh=xN7Ia1jf1gy67j/ce4k1si6XcOE/05u/wJqRF7FfPr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVA6kebFLqHSpyk9tEhuRwje4j8mQ73372G5K+3EB8OrkzZC1dpTYNOjh5e/If2Sc
-	 YZrcfmwHixMUJx1nByhdUJ7hEy8LtQQ2pDIy3KzQDCUsG6RoOZsQ2zk+wFx2D9LD5Y
-	 U641AuDsQ4XcpXjtiGhsQ+n4wrpxyN2RlCfBC0Mg=
+	b=ddTUXTnSa8aGHnpCmfypH8v+elxbmVd97vCCWAwF+9eyro9gtTA7kBr5dqfbSDVRv
+	 xmZwlqt9tM79gi7S/jkEnCMtJ6tSgyvt74FJijeP8P9oiq6ARRRBlV1iLq0TFALlAO
+	 5Ir1ITXmsJStg6cjfaq8BbCRqzQ2pr7/vfTuoFnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 348/547] xfs: bound da-node entry count against the correct geometry
-Date: Wed,  4 Nov 2026 16:08:52 -0500
-Message-ID: <20261104211048.156319949@linuxfoundation.org>
+	VeroFess <coderzeng@hotmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.3 375/547] smb: server: size directory name conversion buffer correctly
+Date: Wed,  4 Nov 2026 16:09:19 -0500
+Message-ID: <20261104211048.955405454@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,62 +67,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: VeroFess <coderzeng@hotmail.com>
 
-commit 3df5e5aaa3bc0913236c48ab29b7df3a785aa29f upstream.
+commit f1f37834eaba5904103af1f18afe3510c7e9dc71 upstream.
 
-xfs_da3_node_verify() bounds the node entry count against the larger of
-the directory and attribute geometries because, as a buffer verifier, it
-cannot tell whether the block belongs to the directory or the attribute
-tree. When the directory block size exceeds the fs block size (e.g.
-mkfs.xfs -n size=64k -b size=4k), an attribute node buffer is a single fs
-block that holds only m_attr_geo->node_ents entries, yet a crafted attr
-node may claim a count up to m_dir_geo->node_ents and still pass the
-verifier.
+A 2048-byte ASCII directory name needs 4098 bytes when converted to
+UTF-16, including the terminator. ksmbd_convert_dir_info_name() caps
+its allocation at PATH_MAX and writes past the end of that buffer.
 
-xfs_da3_node_lookup_int() then indexes btree[] up to that count during
-its binary search -- an out-of-bounds read via getxattr/listxattr on a
-mounted crafted image.
+Allocate space for one UTF-16 code unit per input byte plus the
+terminator. Use kmalloc_array() to check the size calculation.
 
-The buffer verifier is the wrong place to tighten this: it has no fork
-context, and the transaction-less read path used by getxattr does not run
-xfs_da3_node_set_type() either. xfs_da3_node_lookup_int(), on the other
-hand, always runs on that path and holds args->geo, the geometry of the
-fork actually being searched. Bound the entry count against
-args->geo->node_ents there, before walking the entries.
-
-Fixes: 7ab610f9e0f1 ("xfs: move node entry counts to xfs_da_geometry")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Assisted-by: gpt 6 sol with daybreak blue
+Signed-off-by: VeroFess <coderzeng@hotmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_da_btree.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/smb/server/misc.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_da_btree.c
-+++ b/fs/xfs/libxfs/xfs_da_btree.c
-@@ -1787,6 +1787,20 @@ xfs_da3_node_lookup_int(
- 		} else
- 			expected_level--;
+--- a/fs/smb/server/misc.c
++++ b/fs/smb/server/misc.c
+@@ -296,12 +296,13 @@ char *ksmbd_convert_dir_info_name(struct
+ 				  int *conv_len)
+ {
+ 	char *conv;
+-	int  sz = min(4 * d_info->name_len, PATH_MAX);
  
-+		/*
-+		 * The node verifier cannot tell whether this block belongs to
-+		 * the directory or the attribute tree, so it only bounds the
-+		 * entry count against the larger of the two geometries.  Here
-+		 * args->geo is the geometry of the fork we are actually
-+		 * searching, so reject a count that would walk btree[] off the
-+		 * end of this node buffer.
-+		 */
-+		if (nodehdr.count > args->geo->node_ents) {
-+			xfs_buf_mark_corrupt(blk->bp);
-+			xfs_da_mark_sick(args);
-+			return -EFSCORRUPTED;
-+		}
-+
- 		max = nodehdr.count;
- 		blk->hashval = be32_to_cpu(btree[max - 1].hashval);
+-	if (!sz)
++	if (d_info->name_len <= 0)
+ 		return NULL;
  
+-	conv = kmalloc(sz, KSMBD_DEFAULT_GFP);
++	/* One UTF-16 code unit per input byte, plus the terminating NUL. */
++	conv = kmalloc_array((size_t)d_info->name_len + 1,
++			     sizeof(__le16), KSMBD_DEFAULT_GFP);
+ 	if (!conv)
+ 		return NULL;
+ 
+@@ -310,7 +311,6 @@ char *ksmbd_convert_dir_info_name(struct
+ 				      d_info->name_len, local_nls, 0);
+ 	*conv_len *= 2;
+ 
+-	/* We allocate buffer twice bigger than needed. */
+ 	conv[*conv_len] = 0x00;
+ 	conv[*conv_len + 1] = 0x00;
+ 	return conv;
 
 
