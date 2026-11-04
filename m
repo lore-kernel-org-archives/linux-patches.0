@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829004;
-	b=NoLs51lNrpIp2foEtJFOvkVSj14mMCdBxIjaMRmHeVI0Y/bG7oZtpw1B8gm3EEccyzjL
-	 Y1C5sG+xhLli5Ce5+dH7zpNtowzQQV+4LbXu0KUzgaeVQaKaMJfKniiQIYrSRRxP/lYdv
-	 BPQlcbXy3r010Cwcn/MiSqDk8Id6IlWR1u7nQMfxvnrEv4G80X3WOQAn6/c8f+ndKcp5q
-	 YCEsi/U/scLCBEsRgEhVImO+CPB48ABisAAa/aMp1ZbRzNSKY6XA2BwY0GV6XBeMMRN71
-	 Yd49is5cQzH+8d4v5llppAed7EnQTmKukCC5GJq19B92xrq9wM4ZwV8FDQoTtYtsLUQ==
+	t=1793829006;
+	b=1h0Heswss6JAtB6qfBM604VOBdSxqPbJb7IpEKgxZ8m93HgoB6QwiQPs6TrDSjR0/fKu
+	 2JrxlgDi0z8Ykea8xdVWSCVQkDk1toOslcS3WvafoDZBK+MoEXsjV483e3bMRibfsBOES
+	 OxQaS+NinDBBxT04XakwI40Wo+/ujhglpF2wjsOCigM/ICt7Tvok1i5wiVX1UIWUOz79a
+	 VrhREvAV7km7WM7/OxSDiX7NnNgXjkrsgRuUDFfyJ2vmfYFSgMM+oM7NAvGKjC2wTiE7z
+	 8ywbrRrCXeW50d4CF6QUFZARinLxNbBVl/1aabE3cCZ7Oj4Kan1xdXFeV0B22LuLBAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FGfg3jh2Rbw/xgg8upm54t7ZEI/9u9gppXb21ll31ns=;
-	b=wGNAreXVbXjJz3UBQiQI22dNRUM0aJ0KLej2LOtFpCq30FpmcUTsh1qNeomID/ARSkmJ
-	 UBMJ3/Sak6EYxwTnJVn6M/w4YifiNrCYuGIrMWJhXZfclFB9bXFAsgHSeKh2FP1HGdYKz
-	 IPto/6gcuJ5/+dgTBhN19K8gf6A50xI6A8+4P1g/0YzDxRbSajLXDxrb2iVD5r3MwhDsR
-	 qDmQJ0whPrC0Q+AvcnB/NmO07HgU304io1j2sJxI0hmsNjJPfqEBEa1iHVDoNbag+paQo
-	 A0njsmgHvY03VJsfE6FpGcB22+TCbbrGwMJAXs0IhMJIQY7LSHSGwRXcx9KRnKhIzSA==
+	bh=ygZVR9lE789/skBl1Yso6avLYGY8ewKmdOBt43ZZZrI=;
+	b=KYt34VHKHrrfaHjPXL8hv6aG8MTRZCXALfGGiom+hUpAB839bodCOHcHRQwSM2sLGpv2
+	 S4DWnzaoZhbEGO1NpZDbT/7F9aU0WA/6MtEDGQE3oJW8Nfd56JLedCk+MKLQRzXmO+jpe
+	 Xw6feON6cuXIt6Vtnqyf1BNN9VzPP14JjeTHVBRYgcYj8gqUqfcohw930PU1ksimiYh/u
+	 buBB7s+58R1TZBYhnN2/iG84/vM0ExR+jgWFQCVNgmpo11Ishy5EOcko0okPryfR7ThJO
+	 6nZjujjFAWEIUWF1QIyHXhpuncEcSJyifRR/5l6DoPJAoUPCYv7sUhF1jRkUrVf6vNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMmCC87H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gU4kVQeo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7885A607F2AB;
-	Wed,  4 Nov 2026 21:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B306070747;
+	Wed,  4 Nov 2026 21:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMmCC87H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131A51F000C1;
-	Wed,  4 Nov 2026 21:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gU4kVQeo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842051F000C1;
+	Wed,  4 Nov 2026 21:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829004;
-	bh=FGfg3jh2Rbw/xgg8upm54t7ZEI/9u9gppXb21ll31ns=;
+	s=korg; t=1793829005;
+	bh=ygZVR9lE789/skBl1Yso6avLYGY8ewKmdOBt43ZZZrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMmCC87HAcNlWKvctBIHDuibfZfjH2DgtRLCwmpQiSqi76zG3AZHhYX5HLWdP0pIt
-	 JCvPjWwFqbeVCxnt0B2sDC4s9LrK+GWpUBkJ/s9jztwzADv++hDnZbVBMMyaaJYV3Y
-	 MMycWbAOt+vSf7fok8L9ag9nAy7vyN0f5WoL+djw=
+	b=gU4kVQeok+zSWcwxEur8esGIQIRBlyi3ibQwq59t/O8I/U+Oanah+gxtvMG27wmmB
+	 X9Ow5pvPvl4NLTu8/ggWRMQv1nbTu7t/MJNKdruU5LqhXVxoOi6R2weULGvsNwxEX4
+	 dR3iIxqY8fm6d2pPVKz8CNFFnqWU31u7j3Aopkdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diego Oliva <diego@bynar.io>,
-	David Howells <dhowells@redhat.com>,
+	Dominik Maier <dmnk@google.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.3 382/547] smb: client: fix OOB read in the SMB_FIND_FILE_UNIX name scan
-Date: Wed,  4 Nov 2026 16:09:26 -0500
-Message-ID: <20261104211049.150029959@linuxfoundation.org>
+Subject: [PATCH 7.3 383/547] smb: client: fix slab-out-of-bounds write in id_mode_to_cifs_acl()
+Date: Wed,  4 Nov 2026 16:09:27 -0500
+Message-ID: <20261104211049.179281969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,175 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Oliva <diego@bynar.io>
+From: Dominik Maier <dmnk@google.com>
 
-commit fa0c2f082946917c3f07d2475c8ce73a8c96d0e2 upstream.
+commit a377a3645c7d0246af0bc4ef24db94bb2670bdde upstream.
 
-cifs_fill_dirent_unix() finds the length of an SMB_FIND_FILE_UNIX
-entry name by scanning for its terminating NUL, over up to PATH_MAX + 1
-UTF-16 units in cifs_unicode_bytelen() or PATH_MAX bytes in strnlen().
-Neither scan knows where the response ends. cifs_fill_dirent() only
-requires the fixed part of the entry to fit, so the name can start
-exactly at the end of the received data, and a name that holds no
-terminator is then scanned for 8194 bytes, or 4096 bytes without
-unicode, past the end of the received data. SendReceive() copies at
-most 16468 bytes into the 16588-byte cifs_request allocation, so for a
-response of that length up to 8074 of the bytes scanned lie past the
-end of the allocation. Before the preceding patches bounded where the
-entry starts, the entry itself could start up to 820 bytes past the
-end of the allocation at the default CIFSMaxBufSize, and its name 928
-bytes past it, so all 8194 scanned bytes would lie outside.
-cifs_fill_dirent() rejects the name afterwards because it extends past
-the end of the response, so nothing of what was read is used, but the
-out-of-bounds read itself remains.
+In id_mode_to_cifs_acl(), while the chown branch reserves
+sizeof(struct smb_ntsd) + 2 * sizeof(struct smb_sid) (plus
+sizeof(struct smb_acl) and the worst-case ACE space after
+commit 0ee150794c75 ("smb: client: fix heap overflow in DACL owner/group
+rewrite")), the chmod branch only adds 2 * sizeof(struct smb_ace) or
+5 * sizeof(struct smb_ace) to secdesclen (or 1 * sizeof(struct smb_ace)
+on posix).
 
-SMB_FIND_FILE_UNIX is only used with SMB1 servers that offer the Unix
-extensions; SMB1 is not negotiated by default and requires an explicit
-vers=1.0 mount.
+However, the chmod branch also invokes build_sec_desc() ->
+copy_sec_desc(), which unconditionally writes the Owner SID at
+pnntsd + sidsoffset and the Group SID at
+pnntsd + sidsoffset + sizeof(struct smb_sid) (2 * 68 = 136 bytes total),
+and set_chmod_dacl() always writes a struct smb_acl header (8 bytes)
+even when the source descriptor has dacloffset == 0. When a security
+descriptor has compact or overlapping Owner/Group SIDs (or
+dacloffset == 0), calling chmod() under-allocates pnntsd and writes past
+the end of the slab buffer.
 
-Before the preceding patches, an entry placed past the buffer left the
-scan out of bounds from its first read. They bound where the entry
-starts, but nothing bounds the scan, so a name that holds no
-terminator still runs off the end of the allocation. Reproduced on
-the unpatched tree with KASAN enabled, for an entry that starts
-inside the response, which is the case the preceding patches leave
-open:
+Reserve sizeof(struct smb_acl) + 2 * sizeof(struct smb_sid) (plus
+sizeof(struct smb_ntsd) on the posix path) in the chmod branch of
+id_mode_to_cifs_acl().
 
- ==================================================================
- BUG: KASAN: slab-out-of-bounds in cifs_save_resume_key.isra.0+0x75c/0x7f0
- Read of size 2 at addr ffff88807ee640cc by task ls/84
-
- CPU: 0 UID: 0 PID: 84 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
- Call Trace:
-  <TASK>
-  kasan_report+0xdf/0x1a0
-  cifs_save_resume_key.isra.0+0x75c/0x7f0
-  cifs_readdir+0x1ed6/0x29c0
-  iterate_dir+0x1c0/0x570
-  __x64_sys_getdents64+0x133/0x270
-  do_syscall_64+0x109/0x5d0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
-
- Allocated by task 84 on cpu 1 at 15.751078s:
-  cifs_buf_get+0x36/0x90
-  smb_init+0x4f/0x110
-  CIFSFindNext+0xf7/0x14c0
-  cifs_readdir+0xf51/0x29c0
-
- The buggy address belongs to the object at ffff88807ee60000
-  which belongs to the cache cifs_request of size 16588
- The buggy address is located 0 bytes to the right of
-  allocated 16588-byte region [ffff88807ee60000, ffff88807ee640cc)
- ==================================================================
-
-The two bytes read there are one UTF-16 unit of the scan, at the first
-byte past the end of the object. The scan carries on from there,
-reported again 2, 4 and 6 bytes to the right.
-
-Pass the number of bytes that follow the fixed part of the entry to
-cifs_fill_dirent_unix() and stop both scans there. A scan that reaches
-the end of the response without finding a terminator now fails: it
-returns a name that ends exactly at the end of the response and would
-otherwise pass the bound, so cifs_fill_dirent() requires the position
-of the terminator of an SMB_FIND_FILE_UNIX name to lie inside the
-response as well. Accepting such a name truncated at the end of the
-response would turn a malformed entry into a directory entry, or a
-resume name, that no server sent. A name longer than the PATH_MAX cap
-of the scans is still truncated there, as before, when the response
-extends past the cap. The message cifs_unicode_bytelen() logs when it
-finds no terminator now covers both limits.
-
-This patch depends on "smb: client: fix OOB read of the resume name
-sent in TRANS2_FIND_NEXT2", which adds the end argument of
-cifs_fill_dirent() and the length it derives from it; the backport
-note in that patch applies to this one as well.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 7ee0b4c635c0 ("cifs: fix hardcoded default security descriptor length")
+Fixes: f5065508897a ("cifs: Retain old ACEs when converting between mode bits and ACL.")
+Assisted-by: ARTIST LLM
+Signed-off-by: Dominik Maier <dmnk@google.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Diego Oliva <diego@bynar.io>
-Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/readdir.c |   29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ fs/smb/client/cifsacl.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -456,17 +456,20 @@ initiate_cifs_search(const unsigned int
- }
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -1826,12 +1826,15 @@ id_mode_to_cifs_acl(struct inode *inode,
  
- /* return length of unicode string in bytes */
--static int cifs_unicode_bytelen(const char *str)
-+static size_t cifs_unicode_bytelen(const char *str, size_t maxlen)
- {
--	int len;
- 	const __le16 *ustr = (const __le16 *)str;
-+	size_t len;
- 
--	for (len = 0; len <= PATH_MAX; len++) {
-+	maxlen = umin(PATH_MAX + 1, maxlen / sizeof(__le16));
-+	for (len = 0; len < maxlen; len++) {
- 		if (ustr[len] == 0)
--			return len << 1;
-+			return len * sizeof(__le16);
- 	}
--	cifs_dbg(FYI, "Unicode string longer than PATH_MAX found\n");
--	return len << 1;
-+	len *= sizeof(__le16);
-+	cifs_dbg(FYI, "%s: Unicode string not terminated within %zu bytes\n",
-+		 __func__, len);
-+	return len;
- }
- 
- static char *nxt_dir_entry(char *old_entry, char *end_of_smb, int level)
-@@ -532,13 +535,13 @@ static void cifs_fill_dirent_posix(struc
- }
- 
- static void cifs_fill_dirent_unix(struct cifs_dirent *de,
--		const FILE_UNIX_INFO *info, bool is_unicode)
-+		const FILE_UNIX_INFO *info, bool is_unicode, size_t maxlen)
- {
- 	de->name = &info->FileName[0];
- 	if (is_unicode)
--		de->namelen = cifs_unicode_bytelen(de->name);
-+		de->namelen = cifs_unicode_bytelen(de->name, maxlen);
- 	else
--		de->namelen = strnlen(de->name, PATH_MAX);
-+		de->namelen = strnlen(de->name, min_t(size_t, maxlen, PATH_MAX));
- 	de->resume_key = info->ResumeKey;
- 	de->ino = le64_to_cpu(info->basic.UniqueId);
- }
-@@ -589,6 +592,7 @@ static int cifs_fill_dirent(struct cifs_
- 			    const char *end, u16 level, bool is_unicode)
- {
- 	size_t len = end > (const char *)info ? end - (const char *)info : 0;
-+	size_t nul_len = 0;
- 
- 	memset(de, 0, sizeof(*de));
- 
-@@ -601,7 +605,9 @@ static int cifs_fill_dirent(struct cifs_
- 	case SMB_FIND_FILE_UNIX:
- 		if (len < offsetof(FILE_UNIX_INFO, FileName))
- 			goto too_short;
--		cifs_fill_dirent_unix(de, info, is_unicode);
-+		cifs_fill_dirent_unix(de, info, is_unicode,
-+				      len - offsetof(FILE_UNIX_INFO, FileName));
-+		nul_len = is_unicode ? sizeof(__le16) : sizeof(__u8);
- 		break;
- 	case SMB_FIND_FILE_DIRECTORY_INFO:
- 		if (len < offsetof(FILE_DIRECTORY_INFO, FileName))
-@@ -634,7 +640,8 @@ static int cifs_fill_dirent(struct cifs_
- 	}
- 
- 	if (de->name &&
--	    (end < de->name || (size_t)(end - de->name) < de->namelen)) {
-+	    (end < de->name ||
-+	     (size_t)(end - de->name) < de->namelen + nul_len)) {
- 		cifs_dbg(VFS, "%s: search entry name extends past end of SMB\n",
- 			 __func__);
- 		return -EINVAL;
+ 	/* Potentially, five new ACEs can be added to the ACL for U,G,O mapping */
+ 	if (pnmode && *pnmode != NO_CHANGE_64) { /* chmod */
++		nsecdesclen = sizeof(struct smb_acl) +
++			2 * sizeof(struct smb_sid);
+ 		if (posix)
+-			nsecdesclen = 1 * sizeof(struct smb_ace);
++			nsecdesclen += sizeof(struct smb_ntsd) +
++				       sizeof(struct smb_ace);
+ 		else if (mode_from_sid)
+-			nsecdesclen = secdesclen + (2 * sizeof(struct smb_ace));
++			nsecdesclen += secdesclen + 2 * sizeof(struct smb_ace);
+ 		else /* cifsacl */
+-			nsecdesclen = secdesclen + (5 * sizeof(struct smb_ace));
++			nsecdesclen += secdesclen + 5 * sizeof(struct smb_ace);
+ 	} else { /* chown */
+ 		/* When ownership changes, changes new owner sid length could be different */
+ 		nsecdesclen = sizeof(struct smb_ntsd) + (sizeof(struct smb_sid) * 2);
 
 
