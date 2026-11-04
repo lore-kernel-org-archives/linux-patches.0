@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829177;
-	b=BnHY7Lo8kWffhrw6R6NflaOEX+B5uoZD3EL+6q2oT9vuif6vY+eR2csjw9KMYqzkBjhk
-	 OznWMOekrNwjxDJ2hZHUsi926Yqdcn2uZy8AIH/plnxHxqmnO2Z47GEJlNXNcUuyhCCC8
-	 xuaeh0YBi2D+ncNbQjVmM0NZ24HbbBXnTUyhaQsnyH9lhzNW7YvDPMU24RlNmhsO+QK4i
-	 3/E8bqi/IbJg7U3X/K4PJz5Idgxi8F5hkqBri6DulcmEHcusYh1CWcqMP0dX4zKPPpKbo
-	 6cgDO9mk3iXa14STaQ/8BRYzpDZ735si8+sr6vhnWhhTOuexeP5pHFu0t4wktfvWw1w==
+	t=1793829183;
+	b=M1g8WtTlt10qGx0GRt2te6jqT9sF7kIOkg6+lYdYk6sYs6GvS5qgcB2UhE8bu59cvmF/
+	 XjU7c8+DJlmEYL/MueTM54m9+4gMS0PDGKZXjbGuTqmXKsRmD5Fy/OVIup2vsBEaoyHGe
+	 jjH988hvEK7sKdAiIy0e20iAZ6aXLQv/yDnK20/aMoX68iYjoqL9w/7FqkmqC9fHTSi0a
+	 dt0frhGKXZ/1emO1XrH46dBN1H90ryZyt6ZucCrk1OEAHOSU6Z5sH83y9z6tVFjoJpawF
+	 LhdGmKpJbf/wjqJk8RvC/qf4ETkdfnXYPyQI1erSgrHwjCv01pTT40I7XQiR9GwF8rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zkTWgouLLPnDh5S8ROkuJUHL/tNkqCBpF/RpN/CqQWg=;
-	b=twd6mxFf+EXGpOH9RGeRFrpsOHTTDjUZltm/r+3GHZEf6iqUQgzV6emXHP1x8+CTrxf7
-	 CShYxROnGEpIXLgfpb8cWyzDFITRWc3WVaSStVa/4ABglBmy/fU8/QYoB1WXfeRcLjEEK
-	 CnfPqnAJA1r4n3FfJ3HTdgnobUWRW3oI2wv+oI3ZdqMX+Gg1xrDRfCgsNyjE3cTcv9RQU
-	 gLyg4DDuK569eLMJGlDOC17Avr2t+ErOtHgCOnH+7eou1dNO6zinvgTTa84DZRxIz62Qc
-	 JQtJ6edApa4kqcs4bmmTMN5aKNzvG7UnTBgihAzGW19u90/hLvkY1UROaVleNqwMUeg==
+	bh=aKyonGnIke5DszEkXa3pbohOKVrGW8Ebzd49HULNBCA=;
+	b=sFennjODV6kJSRzxvrT7VXKId/kelKlssTZ0yhNJMcwCO9OwYWgmeViTsnTGgUV7n7F1
+	 lYlG+kP6XgZKKmXL/zBLHHAGce9kwD9OMb9MH5F3PTnzQ36fH1toqM/Epa6aa1jOjWsp3
+	 kNNVBolcKV/UAqgRS7payvL5e3GDUzKTfTynpd1Hx+JOS40QkmnaNub+IEtdV4KMYMSpf
+	 0YWtqcg+UQL/bd/VVoFGcZBmbLzhzSZv3G2h7/qc3BdmWi8Sbu15nQpCDlsiYVonpYOiH
+	 akrm7Ur1imJzQQabM//FVTt4DQIbu8kV56Xh+OXVWcFBVY8NwLuZLJ9K17SP+xX71tA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zf6Db2fv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nS72Cj+D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C8C606D806;
-	Wed,  4 Nov 2026 21:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA392606D806;
+	Wed,  4 Nov 2026 21:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zf6Db2fv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B12F1F000C1;
-	Wed,  4 Nov 2026 21:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nS72Cj+D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460801F000C1;
+	Wed,  4 Nov 2026 21:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829176;
-	bh=zkTWgouLLPnDh5S8ROkuJUHL/tNkqCBpF/RpN/CqQWg=;
+	s=korg; t=1793829182;
+	bh=aKyonGnIke5DszEkXa3pbohOKVrGW8Ebzd49HULNBCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zf6Db2fvWT/2OtB6IckV1uId7HezakSIJpTcOzmFqus4NvnPb+gMU5LcL6iJegW+E
-	 VraLuGm5sC2xSOyww0r+UTg7gcrShvMxRI/e7NLr7Ske4EyCx6Lgmi3rqd6VvoYEhw
-	 9aZC7/6U0r0T3+X5oSV3fke1J1Gzi/IBXgzhsaP8=
+	b=nS72Cj+Df4LVBFx6oLXCKELNgKqCV3xl/z/iSIauh7tWARiGV6vT/YwCCPbesqFnj
+	 mPN9rDIWf0UTZ6EPMOznaPJIZpLDpxsTfk1Y32myYRG9+jUTKp4w/trqVKJSOHmIUt
+	 3OS1c8DAAMvsJDItGVhfZIbE5nQd3k5/X+DHPvhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.3 494/547] HID: mcp2221: always initialize and cancel init_work
-Date: Wed,  4 Nov 2026 16:11:18 -0500
-Message-ID: <20261104211052.408239093@linuxfoundation.org>
+Subject: [PATCH 7.3 498/547] HID: pxrc: reject short input reports
+Date: Wed,  4 Nov 2026 16:11:22 -0500
+Message-ID: <20261104211052.528988519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,66 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit 6a006ff898b459e0bd10375d7fbe0ea7f7a132b9 upstream.
+commit 0deb22da5a8c6663c3e071f55fd7d7e3189f5517 upstream.
 
-The writable gpio_mode_enforce parameter can change between probe and
-remove.
+The HID core invokes raw_event callbacks before validating the report
+length.  pxrc_raw_event() reads byte seven and writes bytes one and seven
+without checking that the report contains those bytes.
 
-If it changes from false to true after probe, remove skips cancellation
-of init_work. Pending or running work can then access devm-managed
-driver state after teardown. Changing it from true to false can make
-remove cancel an uninitialized delayed work item.
+A one-byte input report reproduced the first invalid access under KASAN:
 
-Initialize init_work whenever IIO is reachable and cancel it
-unconditionally on remove. Keep the parameter check only for scheduling
-the initialization.
+  BUG: KASAN: slab-out-of-bounds in pxrc_raw_event+0x161/0x260
+  Read of size 1 by task hidtrigger/90
+  Call Trace:
+   pxrc_raw_event+0x161/0x260
+   kasan_report+0x139/0x170
 
-The false-to-true cancellation gap was previously reported by Sashiko.
-We also encountered this issue during our static-analysis research.
+Require all eight bytes before reading or rewriting the report.
 
-Fixes: 200e6c6e94fa ("HID: mcp2221: Add module parameter to enfoce GPIO mode")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/linux-input/20260715143415.916A21F00A3A@smtp.kernel.org/
-Assisted-by: LLM
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw_event length validation to hid-asus.
+
+Fixes: acc3e34613da ("HID: Add driver for PhoenixRC Flight Controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/hid/hid-pxrc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
-index db0b15622c39..053377dbced2 100644
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -1072,8 +1072,7 @@ static void mcp2221_remove(struct hid_device *hdev)
- #if IS_REACHABLE(CONFIG_IIO)
- 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
+--- a/drivers/hid/hid-pxrc.c
++++ b/drivers/hid/hid-pxrc.c
+@@ -55,6 +55,9 @@ static int pxrc_raw_event(struct hid_dev
+ {
+ 	struct pxrc_priv *priv = hid_get_drvdata(hdev);
  
--	if (!gpio_mode_enforce)
--		cancel_delayed_work_sync(&mcp->init_work);
-+	cancel_delayed_work_sync(&mcp->init_work);
- #endif
- }
- 
-@@ -1347,10 +1346,9 @@ static int mcp2221_probe(struct hid_device *hdev,
- #endif
- 
- #if IS_REACHABLE(CONFIG_IIO)
--	if (!gpio_mode_enforce) {
--		INIT_DELAYED_WORK(&mcp->init_work, mcp_init_work);
-+	INIT_DELAYED_WORK(&mcp->init_work, mcp_init_work);
-+	if (!gpio_mode_enforce)
- 		schedule_delayed_work(&mcp->init_work, msecs_to_jiffies(100));
--	}
- #endif
- 
- 	return 0;
--- 
-2.56.0
-
++	if (size < 8)
++		return 0;
++
+ 	if (priv->alternate)
+ 		priv->slider = data[7];
+ 	else
 
 
