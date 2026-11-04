@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829210;
-	b=iNdkdDbQ5Fx+s9Izy4WJRP9Fk2/5aprDswHzTz74+O7ON2Y48LO/ibIdPSoCk/NFHnC+
-	 TytFQZly3FZRTRXve+8Fm3JbhgvK/UWAOAq2BbM28to1OvDVDA6jFnLkFe9GvwfB3WOf1
-	 0xqAe/Ea+KrEisyFhpj+Pz/9NF8HmtDD8HAbK6ccjxtGQuckf36eq0n05/aI8e46k5amI
-	 f6hd7CcRxFBd2Aa7QZeDhuuf5z/N7SB1Tce86yqD/gLsRAYxDO3daeOKRuZ/dV/ORmMDq
-	 w4rXNTMgZx94eihA2B6VeQJY7XgjKdgUWp3RIbd0luPxzN1367RS9kZ/UqzECLVnFkQ==
+	t=1793829211;
+	b=uqqNFi9h8ccaBM3ub8J+td8mPQYQqNGtom5a8+cvhTqOTRSGAOLTP/J8WSsikQvSQbdQ
+	 TAjW4/egZZneh78OFe+vXuV1UGTpoAWHLfb8FCZKIeHyEa0DFHI/HjRk76/mGsaE+7Nc9
+	 W9JsYDuOY9caIfIY7nhl0emrkLtMkuj+bGKlyzQe7G+zmjKBM+kiQZzGcHQFOTErFvjsq
+	 uyQh4On2HlL/B85IoCUk2AAnWLA6ayNerEzOboqx7ngPk2iRfgZZL62WYFrrjM4wa+BtP
+	 kcS4274UNFeryFZUJGC8OW/jIy8QudtolopGmI5I3xiTTWRt/cQS6XOZ09mFP657HTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829210;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D9KMuSyo5DZ9oQHkFimpWAgyh0/yE3QHvfEIMB2Pkd8=;
-	b=NZATp3zuyIVVFfzOV4GKkDFmTcNWLeaffc+j2fTWBHHxJ6Y8WyS9Tw/TQKuZR1VMouRX
-	 7YSjL0vthvqeCQzQbFwoOHc0ySTQHUvpR7fyJ0Kbym2KMi8Q5eacvw5bkrPFm0BAR3Grf
-	 MPPDOLdNJSTF9KiWu0ux/mGylz2OK8s75xGb9Wsv/Je+0IvEcPKoGjTRoqD/H8XRxzRIk
-	 vLY89sfAp0fD/6vHB3CFBV3cR7gVW3rlAtQnX2xC64g/kVzK1Y0DVHOyZ54Byus71eOmi
-	 MqQ8Zq5nGehUNfH+kFcLiGTscjepGCfaBCmyMuOEg+NkCLrlv02i1oUI2w8vuDVdOFQ==
+	bh=KUK3wEFLlhKvnksjCjm+XRexUQFcMZ0HHsNjagr5B8U=;
+	b=xbRKSDSJDN4+SKy9/FnqUvbTm6J7bZCqcWWlrjU0p0bGmhwcie5NrpKzD+PpWKAsRnGq
+	 I2dJw8S5H34qLkIyEghcT78iy+gU7IjHUtylyFVMRIVI0JnTJJ1I5srPJz1xZggxcS9Fg
+	 y3KsSwZhpqiWSf02FE2KIGNAGvm63BYZbTXNuOZwLodwiCbQPrHwXya0KFom/XtRREPk4
+	 uFgKaQQpTMty4vt1uJe88mAVuvqDqvwNXz3Ab1+9SB63qdjc43FYkxv/m5BsVF84SWipH
+	 Tkydf/lLy76GXQXldpr1q7R+9GoUJ/9HeXcsEd6Iq3Vuwo4YXF+KdtMULnNI7bV5ZhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BuIkwZ5V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ze+YYVzp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A556070323;
-	Wed,  4 Nov 2026 21:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C0C60709A8;
+	Wed,  4 Nov 2026 21:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BuIkwZ5V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1397B1F000C1;
-	Wed,  4 Nov 2026 21:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ze+YYVzp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E5E1F00919;
+	Wed,  4 Nov 2026 21:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829209;
-	bh=D9KMuSyo5DZ9oQHkFimpWAgyh0/yE3QHvfEIMB2Pkd8=;
+	s=korg; t=1793829210;
+	bh=KUK3wEFLlhKvnksjCjm+XRexUQFcMZ0HHsNjagr5B8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BuIkwZ5VDeve9uNvbV78nFfC2suBgfQGbJpgJ+GuMJPBk5W3hFog3bVRwq5z3PNTp
-	 mVZKALOGwZAohW8dZTX0zcsRIB3vYAWQl9NDqP3Bc+FhFnG2K3VJHLV56tSr8fnT/y
-	 riRpJ9M7NHm9MKr0pNDlTALkOyWP+28YeMJtw4mM=
+	b=ze+YYVzpp1S11o7A7dASkLqGCXv4QbzSPyzrZvWel3rk2k2HWZf91xeqK06ekZAE3
+	 JmRnRMZoAiQI42DCd1VamsVnBS/iKv3eJU7je7KCXmEYp4rY8NGn6If0MhfM9+kxCr
+	 0OGZ8pvb3FSBT34OMwRkxwGqcoYnf+Ktp5Aqa/DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH 7.3 477/547] KVM: TDX: Enable Bus Lock VM exit
-Date: Wed,  4 Nov 2026 16:11:01 -0500
-Message-ID: <20261104211051.920976849@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.3 478/547] KVM: guest_memfd: Split bind() into prepare()+commit() phases
+Date: Wed,  4 Nov 2026 16:11:02 -0500
+Message-ID: <20261104211051.950834626@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -69,93 +67,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 63d196e2e20429de5ba501f1b6059d9b93140007 upstream.
+commit 83411f32b8ad96c6b05b1511d1a588daab44bd25 upstream.
 
-Enable Bus Lock VM exit functionality for TDX guests.
+Split binding a memslot to a guest_memfd instance into prepare() and
+commit() phases so that KVM can separate preparing the memslot from binding
+the memslot to the gmem instance, i.e. from committing the memslot.  This
+will allow waiting to commit the memslot+gmem binding until the memslot is
+fully prepared, which is necessary as the memslot becomes reachable when
+the binding is created.
 
-Bus Lock VM exit is an existing feature supported by KVM.  Userspace can
-enable Bus Lock VM exit through KVM_BUS_LOCK_DETECTION_EXIT when it's
-reported as supported.  However, KVM reports the support of this CAP
-just based on the hardware capability but doesn't differentiate between
-VMX and TDX.  This leads to the issue that userspace can enable this cap
-for TDX guests without getting an error, but the feature is not actually
-enabled because KVM doesn't call the TDX module API to program the
-relevant TD VMCS fields.
+As a bonus, drop the unwind-on-failure from the commit phase (other than
+nullifying the bindings), as the only reason bind() did the full unwind is
+because it technically didn't own the memslot, i.e. "needed" to leave
+memslot in the same state it started in.
 
-Enable Bus Lock VM exit for TDX guests by programming the
-BUS_LOCK_DETECTION control in the TD VMCS and by adding the exit handler.
+No functional change intended (the unwinding down on bind() failure was
+effectively dead code since KVM simply deletes the memslot on failure,
+i.e. there was nothing that could actually observe the unwind).
 
-Note, there is no enumeration bit for this feature by TDX module because
-all TDX modules support it and allow to set the TD VMCS as long as the
-hardware supports the feature.
-
-Fixes: 161d34609f9b ("KVM: TDX: Make TDX VM type supported")
 Cc: stable@vger.kernel.org
-Originally-by: Chenyi Qiang <chenyi.qiang@intel.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://patch.msgid.link/20260819094903.3060020-9-xiaoyao.li@intel.com
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://patch.msgid.link/20260922001332.1121266-5-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/tdx.c |   24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ virt/kvm/guest_memfd.c |   68 ++++++++++++++++++++++++++++---------------------
+ virt/kvm/guest_memfd.h |   19 ++++++++++---
+ virt/kvm/kvm_main.c    |   18 ++++++++++++
+ 3 files changed, 70 insertions(+), 35 deletions(-)
 
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -2050,7 +2050,7 @@ int tdx_complete_emulated_msr(struct kvm
+--- a/virt/kvm/guest_memfd.c
++++ b/virt/kvm/guest_memfd.c
+@@ -603,15 +603,14 @@ int kvm_gmem_create(struct kvm *kvm, str
+ 	return __kvm_gmem_create(kvm, size, flags);
  }
  
- 
--int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
-+static int __tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+-int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+-		  unsigned int fd, uoff_t offset)
++int kvm_gmem_prepare_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot,
++				   unsigned int fd, uoff_t offset)
  {
- 	struct vcpu_tdx *tdx = to_tdx(vcpu);
- 	u64 vp_enter_ret = tdx->vp_enter_ret;
-@@ -2151,6 +2151,8 @@ int tdx_handle_exit(struct kvm_vcpu *vcp
- 	case EXIT_REASON_NOTIFY:
- 		/* NMI blocking state is handled by TDX module */
- 		return __vt_handle_notify(vcpu, vmx_get_exit_qual(vcpu));
-+	case EXIT_REASON_BUS_LOCK:
-+		return vt_handle_bus_lock_vmexit(vcpu);
- 	default:
- 		break;
- 	}
-@@ -2160,6 +2162,22 @@ unhandled_exit:
- 	return 0;
- }
+ 	uoff_t size = slot->npages << PAGE_SHIFT;
+-	unsigned long start, end;
+ 	struct gmem_file *f;
+ 	struct inode *inode;
+ 	struct file *file;
+-	int r = -EINVAL;
++
  
-+int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
-+{
-+	int ret = __tdx_handle_exit(vcpu, fastpath);
+ 	BUILD_BUG_ON(sizeof(gpa_t) != sizeof(offset));
+ 	BUILD_BUG_ON(sizeof(gfn_t) != sizeof(slot->gmem.pgoff));
+@@ -635,44 +634,55 @@ int kvm_gmem_bind(struct kvm *kvm, struc
+ 	if (!PAGE_ALIGNED(offset) || offset + size > i_size_read(inode))
+ 		goto err;
+ 
+-	filemap_invalidate_lock(inode->i_mapping);
+-
+-	start = offset >> PAGE_SHIFT;
+-	end = start + slot->npages;
+-
+-	if (!xa_empty(&f->bindings) &&
+-	    xa_find(&f->bindings, &start, end - 1, XA_PRESENT)) {
+-		r = -EEXIST;
+-		filemap_invalidate_unlock(inode->i_mapping);
+-		goto err;
+-	}
+-
+ 	/*
+ 	 * memslots of flag KVM_MEM_GUEST_MEMFD are immutable to change, so
+ 	 * kvm_gmem_bind() must occur on a new memslot.  Because the memslot
+ 	 * is not visible yet, kvm_gmem_get_pfn() is guaranteed to see the file.
+ 	 */
+ 	WRITE_ONCE(slot->gmem.file, file);
+-	slot->gmem.pgoff = start;
++	slot->gmem.pgoff = offset >> PAGE_SHIFT;
+ 	if (kvm_gmem_supports_mmap(inode))
+ 		slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
+ 
+-	r = xa_err(xa_store_range(&f->bindings, start, end - 1, slot, GFP_KERNEL));
+-	if (r) {
+-		xa_store_range(&f->bindings, start, end - 1, NULL, GFP_KERNEL);
+-		slot->gmem.file = NULL;
+-		slot->gmem.pgoff = 0;
+-		slot->flags &= ~KVM_MEMSLOT_GMEM_ONLY;
+-	}
+-	filemap_invalidate_unlock(inode->i_mapping);
+-
+ 	/*
+-	 * Drop the reference to the file, even on success.  The file pins KVM,
+-	 * not the other way 'round.  Active bindings are invalidated if the
+-	 * file is closed before memslots are destroyed.
++	 * Gift the caller a reference to the file.  The reference will be
++	 * dropped after bindings are established, or if installing the new
++	 * memslot ultimately fails.
+ 	 */
++	return 0;
 +
-+	/* Exit to user space when bus lock was detected */
-+	if (vmx_get_exit_reason(vcpu).bus_lock_detected) {
-+		if (ret > 0) {
-+			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
-+			ret = 0;
-+		}
-+
-+		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
-+	}
-+	return ret;
+ err:
+ 	fput(file);
++	return -EINVAL;
 +}
 +
- void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
- 		u64 *info1, u64 *info2, u32 *intr_info, u32 *error_code)
- {
-@@ -3181,6 +3199,10 @@ static int tdx_vcpu_init(struct kvm_vcpu
- 				vcpu->kvm->arch.notify_window);
- 	}
- 
-+	if (vcpu->kvm->arch.bus_lock_detection_enabled)
-+		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
-+				 SECONDARY_EXEC_BUS_LOCK_DETECTION);
++int kvm_gmem_commit_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot)
++{
++	struct gmem_file *f = slot->gmem.file->private_data;
++	struct inode *inode = file_inode(slot->gmem.file);
++	unsigned long start, end;
++	int r;
 +
- 	tdx->state = VCPU_TD_STATE_INITIALIZED;
++	if (WARN_ON_ONCE(slot->gmem.file->f_op != &kvm_gmem_fops))
++		return -EIO;
++
++	filemap_invalidate_lock(inode->i_mapping);
++
++	start = slot->gmem.pgoff;
++	end = start + slot->npages;
++
++	if (!xa_empty(&f->bindings) &&
++	    xa_find(&f->bindings, &start, end - 1, XA_PRESENT)) {
++		filemap_invalidate_unlock(inode->i_mapping);
++		return -EEXIST;
++	}
++
++	r = xa_err(xa_store_range(&f->bindings, start, end - 1, slot, GFP_KERNEL));
++	if (r)
++		xa_store_range(&f->bindings, start, end - 1, NULL, GFP_KERNEL);
++
++	filemap_invalidate_unlock(inode->i_mapping);
++
+ 	return r;
+ }
  
+--- a/virt/kvm/guest_memfd.h
++++ b/virt/kvm/guest_memfd.h
+@@ -8,8 +8,9 @@
+ int kvm_gmem_init(struct module *module);
+ void kvm_gmem_exit(void);
+ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args);
+-int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+-		  unsigned int fd, uoff_t offset);
++int kvm_gmem_prepare_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot,
++				   unsigned int fd, uoff_t offset);
++int kvm_gmem_commit_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot);
+ void kvm_gmem_unbind(struct kvm_memory_slot *slot);
+ #else
+ static inline int kvm_gmem_init(struct module *module)
+@@ -17,9 +18,17 @@ static inline int kvm_gmem_init(struct m
  	return 0;
+ }
+ static inline void kvm_gmem_exit(void) {};
+-static inline int kvm_gmem_bind(struct kvm *kvm,
+-					 struct kvm_memory_slot *slot,
+-					 unsigned int fd, uoff_t offset)
++
++static inline int kvm_gmem_prepare_memory_region(struct kvm *kvm,
++						 struct kvm_memory_slot *slot,
++						 unsigned int fd, uoff_t offset)
++{
++	WARN_ON_ONCE(1);
++	return -EIO;
++}
++
++static inline int kvm_gmem_commit_memory_region(struct kvm *kvm,
++						struct kvm_memory_slot *slot)
+ {
+ 	WARN_ON_ONCE(1);
+ 	return -EIO;
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -2123,7 +2123,23 @@ static int kvm_set_memory_region(struct
+ 	new->flags = mem->flags;
+ 	new->userspace_addr = mem->userspace_addr;
+ 	if (change == KVM_MR_CREATE && (mem->flags & KVM_MEM_GUEST_MEMFD)) {
+-		r = kvm_gmem_bind(kvm, new, mem->guest_memfd, mem->guest_memfd_offset);
++		r = kvm_gmem_prepare_memory_region(kvm, new, mem->guest_memfd,
++						   mem->guest_memfd_offset);
++		if (r)
++			goto out;
++
++		r = kvm_gmem_commit_memory_region(kvm, new);
++
++		/*
++		 * Drop the reference to the file, even on success.  The file
++		 * pins KVM, not the other way 'round.  Active bindings are
++		 * invalidated if the file is closed before memslots are
++		 * destroyed.
++		 */
++#ifdef CONFIG_KVM_GUEST_MEMFD
++		 fput(new->gmem.file);
++#endif
++
+ 		if (r)
+ 			goto out;
+ 	}
 
 
