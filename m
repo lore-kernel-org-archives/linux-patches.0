@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827137;
-	b=xPRfeMkzOC7FsIV+Dw8LZB2AL5wA8uOIZE5N4HI0UIW6XsjJ4mNhm4CVSzTET8iPI4P+
-	 /FQRPo+eK/xjegacEQMpZ6UITYX1as/xEgnHVANKvppIgTj7CKgR5C6UbC+NtN8vHMamP
-	 xTbvQkoEmsUg0fOoHpHTv1+3aKafv2yCp5C6aAXq7ZqAbKeZpzTEiaeT6DHCc+pHG0j3P
-	 wM+EpZEs/t00FQAIULc8zYmTnkuazoadvu8gvjxdmDou7UaJSrT5QhX8jxaFy8cRy9Udc
-	 7TkLew7b0/Uh4lha5coWuWexJdt0H7Y2bS9vE/gFExiP9+3Ubwv71AcQkl3F2GTWcJw==
+	t=1793827139;
+	b=vdoFBNROZHT2T7pmopWFCVYLV+0YpVpBK/IJXPjtOKO968dFZb4TiNqUO6YfkWwaJWyQ
+	 b8XRrpJYWczvcsNpB+KlQZchXS/CZG4tvQRz5wdYOTX00hrCHJolbHEjOm/oDVdIjIwW8
+	 Z6qX4EWhDboJPy+/1tvvpYg1WbERzfN7gmQrr11tQFwtPj5lIWUdJg+NuP1KTIVrROIIH
+	 GT5ddIc7alDgsm3R3nVeNddtANpmOncJkJ7U6Hfnq4ite855tb9NZWgR1a8C86/7mJoQi
+	 3m3Q6Gq5QOgMS/MKsy76xdmGytzQOPMGbHgZH7S5ndNdDBf5dBNvs4tcUCMFEzYizwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827137;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827139;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YAY4a+Fz8GkHTsi8QhMtPerOyOtjYqsU9oz7OOYbo5I=;
-	b=fSCrqXIUXNKSlzBYy+yxUM8wHsH7TaixL9OQ9xl0NcApkDPEjWb1xkNxLC2Kdxl/10h5
-	 Z3joUtCA2p6ZKI8No7SARNfkmhXidqe1WVJCvfkMjeY7+Aa5UEi3C0VHqNFZy8GKgRGhz
-	 w/hpke4599vh7D9anJSqKY2rFay3p/vWzmZH99HoGjNuMAg2BEpVFrO0VeSe/yGaDT3O/
-	 usSkCayBxfc+fLVG+iaCD17EL//l8wVw0OI3o31ZDFt5+FHrDpNiMPjouguF9m/TJwUT9
-	 t/wwywYeyggITbkTRfL5Wthx+0YZfnZiSWINN39SY/2v4l3YFvEdGZm7hIfY1cHQFUQ==
+	bh=9fw/U31n6btOD0Y4yLRslCGlklzxbbmvwvZeogP9L64=;
+	b=YnEQnZqZOVY0wCSk/yGEyEkl1Zm4qQh2tzL6NU1MmrgTR4peWCGZhiwa8SeqmZwhPlkF
+	 y1n13swAe8ETQIhqKqKefnLTOOXYs3Z64j3YXzYd1yB2v1f3Sy7AW+8umgA2POkUOxzPA
+	 ci4SE3wTiuHn+/m8d+l7CRK2gnNvxvruOuhms5eUnF4AWjtbiOtLRmbWT1MYMYGC/39Cr
+	 tad7W8TI2n/nHVTKiPLXKN3okswgL9Bl3AlIdssk/rkkndWO3NnfdIYbS2UR7PU++Xg3d
+	 EZ4I5gc5FIkzoFEGB9QErBs6KIf/pN3qf3Ao9rcg413t64KZpd7TRZTXfbcXsGk1hKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4fWzQuh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSPhbZfk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D65606A849;
-	Wed,  4 Nov 2026 21:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17309606A87D;
+	Wed,  4 Nov 2026 21:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4fWzQuh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E1B1F000C1;
-	Wed,  4 Nov 2026 21:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSPhbZfk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C511F000C1;
+	Wed,  4 Nov 2026 21:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827137;
-	bh=YAY4a+Fz8GkHTsi8QhMtPerOyOtjYqsU9oz7OOYbo5I=;
+	s=korg; t=1793827139;
+	bh=9fw/U31n6btOD0Y4yLRslCGlklzxbbmvwvZeogP9L64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c4fWzQuhPVUKxuzg7DX5v9Z5KLZYQoWlEPqe6TbAP3ooxRg0sQ10AGOVi6rgYNqe9
-	 EbeJICTfOIwha9N4wYpliWv1dgG2TlFp0rRjRZ7XzHBR56iX06jJo4hvDmnuJ40p4Q
-	 YC7+tn90sdqF8HVyNpuT0Qq7fwe9SYQluRuKi828=
+	b=GSPhbZfkIJ2rgYgUH3js+bjlBN3w0/GF3LoVp/IJN1tS62CUP62H61dbQS/DKh6qM
+	 xY/29IUEyir3ClNSOXjcwu9KaOblhNyE7pQDPONgZ4Xefm+tNs/lzBuf5rl7FgNBn1
+	 5Ye1xwJ6QkVqA/3RIM3xduTAPMynw80IIZLcuyGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Viet Dung <dungvn2345@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.3 209/547] Bluetooth: hci_vhci: Pin module for debugfs file operations
-Date: Wed,  4 Nov 2026 16:06:33 -0500
-Message-ID: <20261104211044.084391279@linuxfoundation.org>
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Steven Price <steven.price@arm.com>
+Subject: [PATCH 7.3 210/547] drm/panthor: Fix TOCTOU race between GROUP_REGISTERED check and erase
+Date: Wed,  4 Nov 2026 16:06:34 -0500
+Message-ID: <20261104211044.116449022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,91 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Viet Dung <dungvn2345@gmail.com>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit 645ee6b176c958579cff1c783413d5cff65c8197 upstream.
+commit 7764289d76a38c3a2f9b093bf17e193ab54acd70 upstream.
 
-An open debugfs file retains its file_operations pointer in the
-debugfs proxy state. However, force_suspend_fops, force_wakeup_fops,
-aosp_capable_fops, and force_devcoredump_fops have no .owner set to
-THIS_MODULE. As a result, full_proxy_open_regular() calls fops_get()
-which succeeds without taking a reference to the hci_vhci module.
+panthor_group_destroy() checks the GROUP_REGISTERED mark and then calls
+xa_erase() without holding the xarray lock across both. If the handle is
+destroyed by another thread in between, and a concurrent GROUP_CREATE
+reuses the freed ID, the first destroy erases and releases the new,
+still-initializing group, leading to a use-after-free in
+panthor_group_create().
 
-When userspace opens any of these debugfs files and later closes
-the /dev/vhci file descriptor (triggering vhci_release() and
-debugfs file removal), the open debugfs file descriptor remains valid
-in userspace. Because the module refcount was not incremented,
-the hci_vhci module can be unloaded via delete_module (rmmod hci_vhci).
+Do the mark check and erase atomically under xa_lock().
 
-When the userspace process subsequently closes the debugfs file
-descriptor, full_proxy_release() accesses the already unmapped
-file_operations structure, resulting in a kernel page fault / oops:
-
-  BUG: unable to handle page fault for address: fffffbfff846f18b
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:full_proxy_release+0x8e/0x140
-  Call Trace:
-   <TASK>
-   __fput+0x39f/0xa60
-   fput_close_sync+0xff/0x200
-   __x64_sys_close+0x8c/0xf0
-   do_syscall_64+0xc3/0x590
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   </TASK>
-  Modules linked in: ... [last unloaded: hci_vhci(E)]
-
-The issue was discovered via manual code audit of
-drivers/bluetooth/hci_vhci.c and verified on a Linux 7.3-rc6 test VM
-with CONFIG_BT_VHCI=m by keeping a debugfs file open across controller
-teardown and module unload.
-
-Set .owner = THIS_MODULE on all four file_operations structures so that
-debugfs pins the module until all file descriptors are closed.
-
-Fixes: 28010791193a ("Bluetooth: vhci: Prevent use-after-free by removing debugfs files early")
+Fixes: eec7e23d848d ("drm/panthor: Prevent potential UAF in group creation")
+Assisted-by: Claude:claude-opus-5.5
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20261008100935.3059587-1-osama.abdelkader@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_vhci.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/panthor/panthor_sched.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/bluetooth/hci_vhci.c
-+++ b/drivers/bluetooth/hci_vhci.c
-@@ -155,6 +155,7 @@ static ssize_t force_suspend_write(struc
- }
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -3794,12 +3794,18 @@ int panthor_group_destroy(struct panthor
+ 	struct panthor_group_pool *gpool = pfile->groups;
+ 	struct panthor_device *ptdev = pfile->ptdev;
+ 	struct panthor_scheduler *sched = ptdev->scheduler;
+-	struct panthor_group *group;
++	struct panthor_group *group = NULL;
  
- static const struct file_operations force_suspend_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_suspend_read,
- 	.write		= force_suspend_write,
-@@ -194,6 +195,7 @@ static ssize_t force_wakeup_write(struct
- }
+-	if (!xa_get_mark(&gpool->xa, group_handle, GROUP_REGISTERED))
+-		return -EINVAL;
++	/*
++	 * Check the mark and erase the entry atomically, so a concurrent
++	 * destroy + create can't make us erase a group that's still being
++	 * initialized and happens to reuse the same handle.
++	 */
++	xa_lock(&gpool->xa);
++	if (xa_get_mark(&gpool->xa, group_handle, GROUP_REGISTERED))
++		group = __xa_erase(&gpool->xa, group_handle);
++	xa_unlock(&gpool->xa);
  
- static const struct file_operations force_wakeup_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_wakeup_read,
- 	.write		= force_wakeup_write,
-@@ -263,6 +265,7 @@ static ssize_t aosp_capable_write(struct
- }
+-	group = xa_erase(&gpool->xa, group_handle);
+ 	if (!group)
+ 		return -EINVAL;
  
- static const struct file_operations aosp_capable_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= aosp_capable_read,
- 	.write		= aosp_capable_write,
-@@ -386,6 +389,7 @@ static ssize_t force_devcd_write(struct
- }
- 
- static const struct file_operations force_devcoredump_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.write		= force_devcd_write,
- };
 
 
