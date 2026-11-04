@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829472;
-	b=0hIR7ugVke4hLAZBB1WN+oyrZsAdyc+NiP/iMJo5dAhs9CjxFnUPpwdy43agK5a3nl49
-	 pPYSkrtzvyOfT8OzAMpdeXBcE/64lsRE+GJzoeYh++xCthEZbs3ulUhUKdSsFI2SqjqL+
-	 GnILOWTXyPK5PEu5KqXJ1v3hPmEt0lfDuJhIMcW6zrPtcLb83OXq2cjX9wKU2E+dvyf1G
-	 6oRiEh+XSjyCOoSLKzi6F8yz5+neWscpiH9OeTHJiVvJ0hN0N+nZBOXdS+jxB78fNuuSs
-	 roW4f88xMA8PVoB5XaX7mBu3Hb2YDpEUJNCwwwhgYspUvXmQLsr0W7inKNKM+71weKw==
+	t=1793829473;
+	b=5FJsEY+Lhu9kbHwoPz/gtomXLpC7p9V12yOxOiNdBcVi87BLYNqILsFqPho9Adr7ww9b
+	 fnX8LfOvtrKoLhDYJKraXixnezziBC9YNxbBC6jwWTNIIt0RCGh8qwGhGkT4/ZzHgZc7h
+	 0oNWCtzn3DwD415NWfQzaUEtjQGOTv+wfSVcPNQUaeSQ2iCWJKJtGG24BdK98Geyq8+SD
+	 6mmaJ7mJ0LWQinAWiw5m8XVWWi2JYjcAiPx7BGeOjvS4i4djryS/AgbzhFIQNFeBe1UEY
+	 g7B4S80eHnFqq2EyHJUf87oWU77vNz5tkl/PGblumZi7z3DP+hNYCcwsELhnOhk4Z6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829473;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x5eRHDNhrYOF/67GU1JkkiAJVZU1d2rxAQ6F9QOewGc=;
-	b=aKGvxQwK5VH5orCgIT35mAkdtNuzcsdk1wy5bHhwMzawbOsHFJqh/f1duatC9ncePQjL
-	 IBx6Um06qr2XbmAagH1OwfhlQ9XG3r6MfDXTZGJmTRFsC6vcvzmiG5vXaCtatfIcTw7ia
-	 rYSrO+zQnAKDFicRnS+Z6/NU9okCj4TweDEOvS/HMwEy0J6oja6e/JAj3n/1rPDuo9g0D
-	 JKIAriMtdCp5kKhZ/XdvNd2cEzvaTiybvcrsB8Kd2UcOwVvDr737BLXLm84c5tll9eycF
-	 m5m0va6/E4hST9ZGHDS0lbFu1Uey5FvdVjWZLsq65szMHJQoGWrNVHKksHGbLI+X2/A==
+	bh=9AmnxbV4ChP9JuKZNWvj+yauyKGyHeOJABie/zo/L7w=;
+	b=K8QgnrJcYPvxT+99jTHXxMKPGw3tSqqkUobrl28gIOnRO2oVEQPf7a1pFmkFH3HbhZG7
+	 V6XivBZqBFkvxsay8deOjGIdnHHCHxHT2vIp0tSMTJNQB8YEi6NANafezXWzvOEb1+Fyg
+	 yhbQazrxV8M3dC9d3A4Vb2y2ubCcKjaEsy7pICW0g9Xndn/eG6OFwX4e0zMWEenUnQcUU
+	 GdlhwdQ51ERbHLm2403JHGALWBv7nz6XWVFqv1E5Q9OOGfeGzyIN1d+ZwxuDOuXFDF0DK
+	 8gU7PJ1OMmI7dlMZIOQ4cskPcl3TFuOsRk4BKYuBTYkG4sCGNlan820vXRaCElH8fhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RhXPWLib;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k7r+nhI+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE298606AB20;
-	Wed,  4 Nov 2026 21:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D78606AB15;
+	Wed,  4 Nov 2026 21:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RhXPWLib
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694901F000C1;
-	Wed,  4 Nov 2026 21:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k7r+nhI+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39E11F000C1;
+	Wed,  4 Nov 2026 21:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829471;
-	bh=x5eRHDNhrYOF/67GU1JkkiAJVZU1d2rxAQ6F9QOewGc=;
+	s=korg; t=1793829473;
+	bh=9AmnxbV4ChP9JuKZNWvj+yauyKGyHeOJABie/zo/L7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RhXPWLibcsZLOA0PQXFoidSSwBIu/W09mX03eMkZC9OUhn3I6RqHckZCeXMDiqlBw
-	 OmOEfk8QDd13YWrjEhqDRzzha8U8rHP6i8ucB5Iw509nNBw8KrXVQCWeYY9FnVl8Fh
-	 F++nD6QuySWt/QKE9UEuiVQVOLrfxmPJ+4yTiiDw=
+	b=k7r+nhI+ZyUER9J+BlI1r9VSpZBLqh8YMsZOTjtck/35vI3Y25ME3gyT2eMK+noyt
+	 aHlD838ZmEjixro47J3g3m3ZHODGAN0Oyh2zhrPbsXWsKJeNp7CqbIvKaW3XPizkhk
+	 wlxjaOof6Ie7usUgIHQeSQwcyk2owJl7rJu8Sjs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hari Mishal <harimishal1@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Jurison Murati <eng.juri@gmail.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0147/1005] nvme: clamp FDP nruhsd to allocated RUH status descriptor count
-Date: Wed,  4 Nov 2026 15:58:00 -0500
-Message-ID: <20261104211047.827689859@linuxfoundation.org>
+Subject: [PATCH 6.18 0148/1005] media: i2c: ov8865: Drop the runtime PM usage count on stream failure
+Date: Wed,  4 Nov 2026 15:58:01 -0500
+Message-ID: <20261104211047.858287146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,41 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Jurison Murati <eng.juri@gmail.com>
 
-[ Upstream commit 29261f8bb41662f2a660c479e5cf592942b53f78 ]
+[ Upstream commit 3fe797a12bfa9a49aa998ee722e5f25c957b9b15 ]
 
-nvme_query_fdp_info() allocates the RUH status buffer for at most S8_MAX
-- 1 descriptors, and then copies ruhs->ruhsd[] into head->plids[] using
-the controller reported ruhs->nruhsd directly as the loop bound.
-However, that count wasn't taken into account for the actual buffer's
-size, so there was a chance for a controller reporting a larger nruhsd
-to cause the copy to overflow the buffer.  Clamp nr_plids to the same
-bound used for the allocation.
+ov8865_s_stream() takes a runtime PM reference when enabling the
+stream, but returns without releasing it if ov8865_sw_standby()
+fails, leaving the reference unbalanced and the sensor powered
+indefinitely. The same applies to a failure while disabling the
+stream, in which case the reference acquired at stream start is
+never dropped.
 
-Assisted-by: gkh_clanker_t1000
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Drop the reference in a single place, both when disabling the
+stream and on failure, and only update the streaming state on
+success.
+
+Signed-off-by: Jurison Murati <eng.juri@gmail.com>
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov8865.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 5ed62e070f715..ad725e346c94e 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2313,7 +2313,7 @@ static int nvme_query_fdp_info(struct nvme_ns *ns, struct nvme_ns_info *info)
- 		goto free;
- 	}
+diff --git a/drivers/media/i2c/ov8865.c b/drivers/media/i2c/ov8865.c
+index a8586df14f777..5b909a8561287 100644
+--- a/drivers/media/i2c/ov8865.c
++++ b/drivers/media/i2c/ov8865.c
+@@ -2621,15 +2621,13 @@ static int ov8865_s_stream(struct v4l2_subdev *subdev, int enable)
+ 	ret = ov8865_sw_standby(sensor, !enable);
+ 	mutex_unlock(&sensor->mutex);
  
--	head->nr_plids = le16_to_cpu(ruhs->nruhsd);
-+	head->nr_plids = min(le16_to_cpu(ruhs->nruhsd), S8_MAX - 1);
- 	if (!head->nr_plids)
- 		goto free;
+-	if (ret)
+-		return ret;
+-
+-	state->streaming = !!enable;
+-
+-	if (!enable)
++	if (ret || !enable)
+ 		pm_runtime_put(sensor->dev);
  
+-	return 0;
++	if (!ret)
++		state->streaming = enable;
++
++	return ret;
+ }
+ 
+ static const struct v4l2_subdev_video_ops ov8865_subdev_video_ops = {
 -- 
 2.53.0
 
