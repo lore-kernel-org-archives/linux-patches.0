@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828925;
-	b=XtexPlxzhOgNNPs0I26cEZJMOddcnMzTb9RpG03WI6LbTj6DXOfNjpId6KMQqdOeJBFS
-	 e7dQ0pNzdCBrukbmmtEq8nyKZenWXvQTBh2iFWTZo6ekhZuDfbp6UHpooYXA5KAk3SVV2
-	 gYI2VKZda/b5vxM2+9Dy+YyVZbjeK2kZiyeqZ2PKoNFfqOAJZDqQ8UFZkWDjqt18ee2Pp
-	 lepX5jDdJwNJEc5LDuKTZcJ75FnykMY5hdCH0YAoGptGBGr9Qjz4Q/krmC55VMEIBEsId
-	 R9Is8gvvL/LeSuqJ/rA0scY4uyh0PPO5FSUcJ0hBPE3EnIqgFs/eXbvQPNmCVTEYXUg==
+	t=1793828927;
+	b=rRewXzTwATyP4B2IkOEeQN1lQxzq1L8eFfiPVUmaUqe34/RL2CFRLdTJ5oI8hRwtFKMK
+	 89wdD5zmBwuCvQPxYmlThpnJ9jkqP2QLf/ZftGnw1lKQpY/zaxAysGKWr/4BMaIcLLbQZ
+	 eLjtjbReIlAhnm/SSjms0N2aQZUs0vfLHYHoyfOhkRNlIIA1jN07keegYzhDRNV9p0Iam
+	 QBmLDoR0EkGQzKGluChNaz1tKcr+7Xc/mxGz7LxVdmCEQvdO5syg0cmlsHakax1IFKE00
+	 ZLnKteN04D3qdU/Bx9lH/xU/fIJqORyME/lZaFOB/4EK3ISjvdWfudMCJ5qXSv8fpng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FSe2lNlQpmeRwANfkDSvTuEo1n8P4vm5fhs40yKl/Ec=;
-	b=O+20JTiN9AUS7q17hw1GBPnDlIwZt3DQGszyfcx32Jp+IWr0thTkBR3Hg628lmJJAFkw
-	 zcWkOaZZLZy0/wtqtwAk4J7+g5mXKfLTvD8ELvUhxaJJHBxQqZAUvz8zDkkWLd0JkZMgq
-	 IbI9wrnqdK1NyDodyCR0YpVwksvt8yYMVw64oEzH0VX5qbFKtBQ8NaW9Mm1htUkysQF45
-	 KpkizbmZhbYu+IOTv2BHcbscpYeNoT7HeTP122SHFnjvJCeJGJvBKArue5aMgcEBycZwr
-	 /HX3aGbNPnmtgNAoebSrd7R61sUVoftXkjsCVj3//ILTe8U669RDckYJGZsKzcRsy8A==
+	bh=rIs2YyBDEZD03npTU/Gjrn706cKWq7CZRWus/8TJ5EE=;
+	b=QWGczTHGLGj1SRM7Sg9YDYWi/8E1DdpUxTIrkDW181xn0viwsLwq7gRio+ZFJdQTkMlk
+	 RnRuFh6ceaCgA8EwtnVPW1ZZxvGN/RnHF00N1jR1kNJkqI0TT0kjtpFccLWeo09kVejpN
+	 ovSqsYTQKYwxqIoYrwXkLeWVmlqvMqgxBSz86UOghGHoVjXVWTGwdR7JuxA/0f5sELlEX
+	 wUMU42uM/5b7LgUi/ZbX1mk/7k40v+cLXysUWWsXa+VTpVrkNW9nHasZ6CTK+oIBG1Xk8
+	 3J+iVnJ0Lid7wlc68l1els0krVeakPvB/5p5lrqEvDXBJE6UFfuaMxfVsRttBOGDN8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iVQ+i/nl";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXrl1w8x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B522606EEBE;
-	Wed,  4 Nov 2026 21:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC511606EEBE;
+	Wed,  4 Nov 2026 21:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iVQ+i/nl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090071F000C1;
-	Wed,  4 Nov 2026 21:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXrl1w8x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC571F000C1;
+	Wed,  4 Nov 2026 21:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828925;
-	bh=FSe2lNlQpmeRwANfkDSvTuEo1n8P4vm5fhs40yKl/Ec=;
+	s=korg; t=1793828926;
+	bh=rIs2YyBDEZD03npTU/Gjrn706cKWq7CZRWus/8TJ5EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iVQ+i/nlh+CQ7h0E0IZ31wtLEo4klB0hqG9IxxQ4/m5lebOBxBZbAJRVC8R08edHc
-	 IDurMhW5vN8NtEYzi9g2Oez/tBG1rGVu897tmynSbStH+bQFxxYSvV1z0PpAzfmv1C
-	 /IaHy8+N2cn/PEGo+2pvaJ0uOjzKqyxnCIoxH30c=
+	b=iXrl1w8xlrR4G92o115Jg9Zcv+Bj8BczSk5J47JeeSIgG50fL8xyU+xLfvzkxKga2
+	 FmfDrw8XZdhyn1o0N29HqJHoOQL4qvxanUF4+sYs06Ct1vTinsXMbu8Gkfrz4UWSp5
+	 /pgOQjV3Img+PzcJGbMeq7DjElOBz9taU8Z0ad4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 330/547] xfs: cross-reference the primary superblock
-Date: Wed,  4 Nov 2026 16:08:34 -0500
-Message-ID: <20261104211047.605532149@linuxfoundation.org>
+Subject: [PATCH 7.3 331/547] xfs: adjust checks for cross-AG reaping issues
+Date: Wed,  4 Nov 2026 16:08:35 -0500
+Message-ID: <20261104211047.633521390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,71 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 0c61016006ab08f8346f9e7b1e38559bd4ea499e upstream.
+commit 4c6668ecebc61bb0a53d4c6e95509bc960cf6bbc upstream.
 
-Make sure we cross-reference the primary superblock against the rest of
-the AG 0 space metadata.  Drop the unused @bp parameter of
-xchk_superblock_xref to avoid complaints about uninitialized variables.
+While analyzing the reaping code for the previous patch, I studied the
+xfs_fsblock_t code to reconstruct how this code works.  AGs have a
+superblock at the start of each AG which means that regions in the
+xfsb_bitmap (aka xfs_fsblock_t bitmap) cannot cross an AG boundary, so
+we don't need a loop here like we do for xfs_rtblock_t bitmaps.
 
-Cc: stable@vger.kernel.org # v4.16
-Fixes: 52dc4b44af7419 ("xfs: cross-reference with the bnobt")
+However, the checks here are not quite right -- there can be quite a lot
+of reserved space in COW forks, which means that the bitmap extent
+actually can exceed XFS_MAX_BMBT_EXTLEN.  We also don't have an explicit
+debugging check that we never cross AGs, so add that here.
+
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 66da11280f7ecd ("xfs: reintroduce reaping of file metadata blocks to xrep_reap_extents")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/agheader.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ fs/xfs/scrub/reap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/agheader.c
-+++ b/fs/xfs/scrub/agheader.c
-@@ -35,8 +35,7 @@ xchk_setup_agheader(
- /* Cross-reference with the other btrees. */
- STATIC void
- xchk_superblock_xref(
--	struct xfs_scrub	*sc,
--	struct xfs_buf		*bp)
-+	struct xfs_scrub	*sc)
- {
- 	struct xfs_mount	*mp = sc->mp;
- 	xfs_agnumber_t		agno = sc->sm->sm_agno;
-@@ -106,16 +105,12 @@ xchk_superblock(
- 	struct xfs_dsb		*sb;
- 	struct xfs_perag	*pag;
- 	size_t			sblen;
--	xfs_agnumber_t		agno;
-+	xfs_agnumber_t		agno = sc->sm->sm_agno;
- 	uint32_t		v2_ok;
- 	__be32			features_mask;
- 	int			error;
- 	__be16			vernum_mask;
+--- a/fs/xfs/scrub/reap.c
++++ b/fs/xfs/scrub/reap.c
+@@ -796,9 +796,9 @@ xreap_fsmeta_extent(
+ 	xfs_agblock_t		agbno_next = agbno + len;
+ 	int			error = 0;
  
--	agno = sc->sm->sm_agno;
--	if (agno == 0)
--		return 0;
--
+-	ASSERT(len <= XFS_MAX_BMBT_EXTLEN);
+ 	ASSERT(sc->ip != NULL);
+ 	ASSERT(!sc->sa.pag);
++	ASSERT(agno == XFS_FSB_TO_AGNO(sc->mp, fsbno + len - 1));
+ 
  	/*
- 	 * Grab an active reference to the perag structure.  If we can't get
- 	 * it, we're racing with something that's tearing down the AG, so
-@@ -125,6 +120,9 @@ xchk_superblock(
- 	if (!pag)
- 		return -ENOENT;
- 
-+	if (agno == 0)
-+		goto out_xref;
-+
- 	error = xfs_sb_read_secondary(mp, sc->tp, agno, &bp);
- 	/*
- 	 * The superblock verifier can return several different error codes
-@@ -430,7 +428,8 @@ xchk_superblock(
- 	if (memchr_inv((char *)sb + sblen, 0, BBTOB(bp->b_length) - sblen))
- 		xchk_block_set_corrupt(sc, bp);
- 
--	xchk_superblock_xref(sc, bp);
-+out_xref:
-+	xchk_superblock_xref(sc);
- out_pag:
- 	xfs_perag_put(pag);
- 	return error;
+ 	 * We're reaping blocks after repairing file metadata, which means that
 
 
