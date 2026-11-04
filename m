@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829676;
-	b=STC7Y12D/R/WVG7waNli3MCZh5AJ8FiG4/t1iDrjd5hFgHD9/kC4PS+bJMJ0qWIrrcLk
-	 gBbTK/zjwjyuLoTwjQ9hrix3iwrE7+yYowPCAQteGu2FNNeyvlfxzapD3lZ/oRyD45TVe
-	 td9SpdIFsbGRHVnApnvcro01T9Kfr9Mcla1/AgmkAbUMKGgCjevZ3YBqO/k9e9hvxFj9X
-	 oBUV7c1QSdNz6XXSfT/Umkil/vI6pZTtKSWe6f3oweuxI+SiPmiHkndJMqdomSwIdrGM0
-	 vw3A8WZhIQDobrRIr2n+I+Tu2a4MKPCK5b3o8d0pwfx1OGhMPpkgrjeIngJHVhoPTDQ==
+	t=1793829678;
+	b=aZLc3LnVr+NN71lyng7LgJBvu1g1QVNaaHKkhvhvZ8tj5U9Abbn/NLdT7rER6f5uqiPS
+	 8YDNr0b2OGLPxqzARO1r7NM/4LBUlE7LZ5i91qCZQAKjqKezLO7BxQmfovkLAj+XV6zsk
+	 RCqbS9Q5Bn9WZ8EzqdTr7w8NaX/1vs1HoKJpBZ4AkkuXbx5GspMjFtE4tMtVp7QqLRaAy
+	 68YUxut4cAws90aro0S/ewW6H8604rGbDA0kNeV0gAKH+9uwjjEpE5I7aD9RMBkyWi+iO
+	 dSYIB3pjCnzEfW751S/BqqimLJ781m69zc1b6DZ93wLj/Ahw2Xb5vjuJRbC97Flob+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829676;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829678;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sgizFHzBoFEiZeW6m5KRCDQAg/hGo3rM051wPVzAtZQ=;
-	b=d4M/AEkBMbzKeQlLmB2XrAyRDB7mKDyxB5cl/mJxXm6SioEfIT0fxUvSCim4fvxZHiMO
-	 5hUErllbE5QKPOCzSs4kqPv9147el7w2fYV2/QJ6h8ESp1PFakmHrv+rtOsd7bOPp2fMh
-	 70BIYEMLpS5HQuwISqCOuRMQNa0dQHi7A4MG/B+x5HRYyb8sdM8isONjnJE34HIzV25DL
-	 NHXtGXjAI0v2O6uph75FMwphbr3yxMNpsjwidhLLLg9R5z1HlkAiNSb9GOX+CMmx3Ty0Y
-	 i4eCdDHL4C/jhHC5VVVrwN01dRjIXKhBHxIETT3ANZAV85FsYSxiGp/X04wlO31lYmw==
+	bh=IfMQ9GM79e1ByQAJNR/YmseU/YqUwq2e3eCu/YcRkDQ=;
+	b=widyDpU4WCMB/D98WHlYiu/FdlstOIw5+RT6Fvk8ieVe24zvg4c5OdDMWv7Yz1kKPJDG
+	 G+BpPoPKmAcSXlO8qLE5VQ9KVLd7RDYUrlhCXRucuAmn1dD9JRo57VApd/0JsovJ8Mg1o
+	 3jpZr8Zzyo6mDiB5olE7gQwLZBKLM5kb1J5UBqNHyFhPqReoLcfPxkoVTZbsVodRGYqhs
+	 GcyTL78e1SjCDI445sIH3/29GI0xtaId26E0xF00/khgY1VTlTRssFxq2iEWGzOh5/2PK
+	 tZcwtodMfW1sGbt/BwVin9VJKQBNawXi72573Xc5V3wJDVk23MY7Z2EoP2ZYmjWCM0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIkhjK6u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYhscBor;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F07B60C29B3;
-	Wed,  4 Nov 2026 22:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E695D606C58E;
+	Wed,  4 Nov 2026 22:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIkhjK6u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E176D1F000C1;
-	Wed,  4 Nov 2026 22:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYhscBor
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8170F1F000C1;
+	Wed,  4 Nov 2026 22:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829676;
-	bh=sgizFHzBoFEiZeW6m5KRCDQAg/hGo3rM051wPVzAtZQ=;
+	s=korg; t=1793829677;
+	bh=IfMQ9GM79e1ByQAJNR/YmseU/YqUwq2e3eCu/YcRkDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIkhjK6uVDoX5UeFXujWISRxoGbBJ+TGcrMXU6kDwS+qZiKXTDggaURhmAEioq/WW
-	 AJAOfyqbEQWFXWjglC8n6WfNjwj8DxQwuii5J8Nu5oeC/1CErfgFwxdmvOg9U4SdAK
-	 M3iCT/YWPNY9pkGCum8RyliPCoT6lrJCg9bxfwHE=
+	b=LYhscBorK+hfh3X22LBRdNIa1AiMnKxYDnbUYNgw9/eQk38yHqm72Yys15oWs9oOC
+	 ZBG45LUc1YhWfyIC26VjyZ9VmF1vRLSi2SkpDcHeeJOf+a7AtbW+RUaPSvBPuWenq7
+	 JOYMn9JxWF/HnF7/Z26frUHPR9U+oG1BaSX8wDRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	wangdicheng <wangdicheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0274/1005] exfat: clean up new entry on add entry failure
-Date: Wed,  4 Nov 2026 16:00:07 -0500
-Message-ID: <20261104211051.558237978@linuxfoundation.org>
+Subject: [PATCH 6.18 0275/1005] ALSA: hda/conexant: Add NULL check for dc_mode_path
+Date: Wed,  4 Nov 2026 16:00:08 -0500
+Message-ID: <20261104211051.589165775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,70 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 0901a71e8cff5c60dd464529cba2ed30a2ab0a3f ]
+[ Upstream commit 273806f38ce95c95c288a03d3de1e423cd3e5543 ]
 
-exfat_add_entry() initializes a new directory entry set before writing it
-with exfat_put_dentry_set().  If the write fails, mkdir/create returns an
-error but a partially written entry may be left behind.
+snd_hda_add_new_path() returns NULL when no path exists between the
+given NIDs, but olpc_xo_update_mic_pins() passes dc_mode_path
+straight to snd_hda_activate_path() which dereferences it without
+checking. Add the missing NULL guards, same as the local path
+variable already has in the same function.
 
-For non-zero-size directories, the failure also happens after a cluster
-has been allocated for the new directory.  Clean up the new entry
-best-effort, and free the newly allocated directory cluster only when the
-cleanup writeback succeeds.  This avoids freeing a cluster that may still
-be referenced by an on-disk entry if the cleanup fails.
-
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://patch.msgid.link/20260729070935.548050-2-wangdich9700@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/namei.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ sound/hda/codecs/conexant.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
-index 06bed867b46ad..9fe6635c60a42 100644
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -476,6 +476,7 @@ static int exfat_add_entry(struct inode *inode, const char *path,
- 	struct exfat_entry_set_cache es;
- 	int clu_size = 0;
- 	unsigned int start_clu = EXFAT_FREE_CLUSTER;
-+	bool dir_allocated = false;
+diff --git a/sound/hda/codecs/conexant.c b/sound/hda/codecs/conexant.c
+index fe7445fabb887..56d6fbdd9b06d 100644
+--- a/sound/hda/codecs/conexant.c
++++ b/sound/hda/codecs/conexant.c
+@@ -457,7 +457,8 @@ static void olpc_xo_update_mic_pins(struct hda_codec *codec)
+ 	if (!spec->dc_enable) {
+ 		/* disable DC bias path and pin for port F */
+ 		update_mic_pin(codec, 0x1e, 0);
+-		snd_hda_activate_path(codec, spec->dc_mode_path, false, false);
++		if (spec->dc_mode_path)
++			snd_hda_activate_path(codec, spec->dc_mode_path, false, false);
  
- 	ret = exfat_resolve_path(inode, path, &uniname);
- 	if (ret)
-@@ -502,6 +503,7 @@ static int exfat_add_entry(struct inode *inode, const char *path,
- 		}
- 		start_clu = clu.dir;
- 		clu_size = sbi->cluster_size;
-+		dir_allocated = true;
+ 		/* update port B (ext mic) and C (int mic) */
+ 		/* OLPC defers mic widget control until when capture is
+@@ -493,7 +494,8 @@ static void olpc_xo_update_mic_pins(struct hda_codec *codec)
+ 		update_mic_pin(codec, 0x1b, 0);
+ 		/* enable DC bias path and pin */
+ 		update_mic_pin(codec, 0x1e, spec->recording ? PIN_IN : 0);
+-		snd_hda_activate_path(codec, spec->dc_mode_path, true, false);
++		if (spec->dc_mode_path)
++			snd_hda_activate_path(codec, spec->dc_mode_path, true, false);
  	}
+ }
  
- 	/* update the directory entry */
-@@ -512,8 +514,21 @@ static int exfat_add_entry(struct inode *inode, const char *path,
- 	exfat_init_ext_entry(&es, num_entries, &uniname, NULL, 0);
- 
- 	ret = exfat_put_dentry_set(&es, IS_DIRSYNC(inode));
--	if (ret)
-+	if (ret) {
-+		int cleanup_ret;
-+
-+		cleanup_ret = exfat_get_dentry_set(&es, sb, &info->dir,
-+						   dentry, ES_ALL_ENTRIES);
-+		if (!cleanup_ret) {
-+			exfat_remove_entries(inode, &es, ES_IDX_FILE, false);
-+			cleanup_ret = exfat_put_dentry_set(&es,
-+							   IS_DIRSYNC(inode));
-+		}
-+
-+		if (!cleanup_ret && dir_allocated)
-+			exfat_free_cluster(inode, &clu);
- 		goto out;
-+	}
- 
- 	info->entry = dentry;
- 	info->flags = ALLOC_NO_FAT_CHAIN;
 -- 
 2.53.0
 
