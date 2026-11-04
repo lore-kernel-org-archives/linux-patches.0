@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831383;
-	b=03CHGo//9CCMXXHS1SBnDawxmd4dhGpplez4UD1so5WETXGdN+1ihM2MaKXKzGqFzXYB
-	 4aFDooIF27s8WVBVuN2UnkTJliOuav68RzI7Wa4KwODHcLRoqmNGwiIFfrPke1+RXUvXG
-	 y9Bd/XVnimbLpMU/HLzzr37/iX98oId7XUCIrSx8L94PeCOiuKMCagXNRKRFYFXbJjoUM
-	 y/9segz7bxV3Zh8sv2n9bPSgWZJQXYxgjObOARHx0qPIFJYHsW6PpaoMu1PzAC9XvHDWr
-	 kXHSyAJXqk8aOzhWbSKjEczrXTCo/8bys/GWgxJwgpxHq1tdPozppXAamDflHAZylgA==
+	t=1793831385;
+	b=yMhy8NRY0GKTsKBufI4zqgHzEtpJ3ef0ScgsKIOmTOQCSnl+AzTQFPp12Zpi2YN8NmDG
+	 WQQia/Chdr1tgFV4TjTq2ybiYspgcpiO1O1yMQvTp0EQqB0A9dcgOeFfWcCuxMhVRw8Di
+	 uPayHT3eVN0w1DnTTC15a7k5PvP2R54MO82sI2wXLuB1lVeXh45Lqp+g3S0IcYQR443B2
+	 CWKtby7ounsQbX1eW8XtJogC1stcuCSHeawC7F0ETSf5LCl9Hm4Jn7jdXICtGgV91zgcB
+	 gCpjTHqDK37dKttANgYUF/yI9NfKh4oiMjVr3cfEzIOge20ckQ2cFgO8KbF84hhhUjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qqXAfbY8aqclJxwCcCkJoCS1JZTNHqz20YB3N63Kb4Y=;
-	b=Iq+OECmAI1u29uoj5FRv9kwN3D++5ag2A8WxJEG2vkMiU/H3P+SvcjDUT9ND1iu94OzL
-	 IWncy0Pgg2po2HkHajZM6zRpjB+iOiG6LaINn+6EY7QtwNnObwFGaTEF0qdYIn/gDTBSU
-	 qNWOfvpyAfZBmqIpCgkvI1W+jMMLSQe6yy73TqrPxZCw7O9TdB/308MRZvZL2jCkjlZgI
-	 x0bUiDNeOS796U+LUilBG1bDbsyINBSA3AzzADYYcA8nH515/TroV2L6YbzI8uiwIdfnV
-	 o9L2DvXBHvv73sDN9CepwPvBY1dhCz7p6QZGDDlYUsiivUlf0Ty03CVjvy4U7H2VZBA==
+	bh=yVmr5wQURwuahLpBpBQYDhpeP9RwUXE5h6YqFpFJOBU=;
+	b=L9JuKmVx4/GVzfWkiRjjxDfipphoV9JdX/ljxIfs2p6/AfTFs7TGsrOFCaYTwiruhUu7
+	 W9e5SDKLZv0Y4iXl7Dco4CHkFa0xP7MRRRo/S49+hx+qdm2awhe/4Kn8Ja9YdbmqWuwaa
+	 dA/PQSRdO/y3p5zmBzS/qFLibdOhAyl4SqMD8A/0AjPCMPcvoU/dayhMoOZ4arI4rfdED
+	 OMT2erjVd8tEGlYQpjAiQdXzyL0WRVOqQLWcBs7s0c5uoouuB1gcpDSLARay/WHDupAhR
+	 zacwIG/ErfF/U8hBo1vMVGdHAt93ktVnqlHPPM/R/nJbtGuh5ddHKA3BMWre/+An/Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1gPnT/NE";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cvmrk8vb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396F4606A337;
-	Wed,  4 Nov 2026 22:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56DF606A86F;
+	Wed,  4 Nov 2026 22:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1gPnT/NE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD0B1F000C1;
-	Wed,  4 Nov 2026 22:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cvmrk8vb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DE71F000C1;
+	Wed,  4 Nov 2026 22:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831383;
-	bh=qqXAfbY8aqclJxwCcCkJoCS1JZTNHqz20YB3N63Kb4Y=;
+	s=korg; t=1793831384;
+	bh=yVmr5wQURwuahLpBpBQYDhpeP9RwUXE5h6YqFpFJOBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1gPnT/NEQ1h+2gjxrJyRcsA2d6JD3KhGnvYEr6IizH/QZPelM9TbVlx4ZOU6NMsxx
-	 0zHtTOcIHxkP3oqUDdzuWrXgX2jIgZoAW44o4BiOZlaVxxTH4iMC6raM/z0AGJQ7Z6
-	 dHaCbDS9jLSaaXHxcf0hu9cJ7BlsJjt/5ctfZTJg=
+	b=Cvmrk8vb220bhSlhyd2WvHXeymGM1JN1Tg2pAf28Il6BJyL2VkEqM/SP9Gq/PThLH
+	 TaSGKG3gM3mJVSESkXjamqCc/D4c9ZksfHleoWK2/9KcoThXEwrAUiUE84dT0Mvefe
+	 J5tphGFMcqh/sfC+d7v3YyQHL5UBMnf8S0qtHVPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 0670/1005] nvmet-fc: fix use-after-free in nvmet_fc_ls_create_connection()
-Date: Wed,  4 Nov 2026 16:06:43 -0500
-Message-ID: <20261104211102.421161675@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Kameron Carr <kameroncarr@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.18 0635/1005] Drivers: hv: vmbus: Bounds check the shared ring buffer indices
+Date: Wed,  4 Nov 2026 16:06:08 -0500
+Message-ID: <20261104211101.561363306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,101 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Kameron Carr <kameroncarr@linux.microsoft.com>
 
-commit 2c29f8c9b9e598c09fa50aa02200136a107f6b3f upstream.
+commit 1d287c17cc5bfd6386fe0770999be410b248d021 upstream.
 
-nvmet_fc_ls_create_connection() looks up the association with
-nvmet_fc_find_target_assoc(), which returns it with a reference held,
-and drops that reference as soon as the target queue has been allocated.
-iod->assoc is then dereferenced again by nvmet_fc_makeconnid() while
-building the connection id.
+In a CoCo VM the host is untrusted. Since the VMBus ring buffer read and
+write indices live in shared memory, the guest has to treat both as
+potentially malicious.
 
-The queue only borrows the pointer and takes no reference of its own.
-Once the lookup reference is dropped the association is kept alive
-solely by the reference taken when it was created, so a disconnect LS or
-a remote port unregister running concurrently can free it before
-nvmet_fc_makeconnid() reads it:
+hv_ringbuffer_write() copies into the ring at write_index with no bounds
+checking, so the host can make the guest write packet data at any offset
+up to 4 GiB past the start of the ring buffer. read_index matters too:
+the available space derived from both indices is the only bound on how
+much is copied, and an out-of-range index can make it far larger than
+the ring.
 
-BUG: KASAN: slab-use-after-free in nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
-Read of size 8 at addr ffff888179f1b000 by task kworker/u9:2/1167
+The fix is to validate both indices before use and to use the validated
+snapshot instead of re-accessing. For invalid indices,
+hv_ringbuffer_write() logs and returns -EIO.
 
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: nvmet-wq nvmet_fc_handle_ls_rqst_work
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
- print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
- kasan_report (mm/kasan/report.c:595)
- nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
- process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
- worker_thread (kernel/workqueue.c:3486)
- kthread (kernel/kthread.c:436)
- ret_from_fork (archkernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
- </TASK>
+One re-read of write_index is left unchecked in this patch:
+hv_get_ring_bufferindices() fetches it again for the prev_indices
+trailer. The value is only returned to the host and is not used as an
+offset or length for indexing. Since this is not a security issue, it is
+addressed later in the series.
 
-Freed by task 1167 on cpu 0 at 405.998150s:
- kasan_save_track (mm/kasan/common.c:57 mm/kasan/common.c:78)
- kasan_save_free_info (mm/kasan/generic.c:584)
- __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
- kfree (include/linux/kasan.h:235 mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
- nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:1808 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
- process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
- worker_thread (kernel/workqueue.c:3486)
- kthread (kernel/kthread.c:436)
- ret_from_fork (archkernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+Open-coding the bytes available arithmetic keeps the fix free of
+prerequisites; a later patch refactors it into a helper function.
 
-The buggy address belongs to the object at ffff888179f1b000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 0 bytes inside of
- freed 2048-byte region [ffff888179f1b000, ffff888179f1b800)
-
-Hold the lookup reference until the response has been built, and drop it
-on the error path as well.
-
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-nvme/20260731204504.2396434-1-shuangpeng.kernel@gmail.com
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 3e7ee4902fe6 ("Staging: hv: add the Hyper-V virtual bus")
+Cc: stable@vger.kernel.org # 5.15.x
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Kameron Carr <kameroncarr@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/hv/ring_buffer.c |   29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1802,9 +1802,6 @@ nvmet_fc_ls_create_connection(struct nvm
- 					be16_to_cpu(rqst->connect_cmd.sqsize));
- 			if (!queue)
- 				ret = VERR_QUEUE_ALLOC_FAIL;
--
--			/* release get taken in nvmet_fc_find_target_assoc */
--			nvmet_fc_tgt_a_put(iod->assoc);
- 		}
+--- a/drivers/hv/ring_buffer.c
++++ b/drivers/hv/ring_buffer.c
+@@ -70,15 +70,6 @@ static void hv_signal_on_write(u32 old_w
  	}
- 
-@@ -1818,6 +1815,8 @@ nvmet_fc_ls_create_connection(struct nvm
- 					FCNVME_RJT_RC_INV_ASSOC :
- 					FCNVME_RJT_RC_LOGIC,
- 				FCNVME_RJT_EXP_NONE, 0);
-+		if (iod->assoc)
-+			nvmet_fc_tgt_a_put(iod->assoc);
- 		return;
- 	}
- 
-@@ -1839,6 +1838,9 @@ nvmet_fc_ls_create_connection(struct nvm
- 	acc->connectid.connection_id =
- 			cpu_to_be64(nvmet_fc_makeconnid(iod->assoc,
- 				be16_to_cpu(rqst->connect_cmd.qid)));
-+
-+	/* release get taken in nvmet_fc_find_target_assoc */
-+	nvmet_fc_tgt_a_put(iod->assoc);
  }
  
- /*
+-/* Get the next write location for the specified ring buffer. */
+-static inline u32
+-hv_get_next_write_location(struct hv_ring_buffer_info *ring_info)
+-{
+-	u32 next = ring_info->ring_buffer->write_index;
+-
+-	return next;
+-}
+-
+ /* Set the next write location for the specified ring buffer. */
+ static inline void
+ hv_set_next_write_location(struct hv_ring_buffer_info *ring_info,
+@@ -282,6 +273,7 @@ int hv_ringbuffer_write(struct vmbus_cha
+ 	u32 totalbytes_towrite = sizeof(u64);
+ 	u32 next_write_location;
+ 	u32 old_write;
++	u32 read_index;
+ 	u64 prev_indices;
+ 	unsigned long flags;
+ 	struct hv_ring_buffer_info *outring_info = &channel->outbound;
+@@ -296,7 +288,20 @@ int hv_ringbuffer_write(struct vmbus_cha
+ 
+ 	spin_lock_irqsave(&outring_info->ring_lock, flags);
+ 
+-	bytes_avail_towrite = hv_get_bytes_to_write(outring_info);
++	read_index = READ_ONCE(outring_info->ring_buffer->read_index);
++	old_write = READ_ONCE(outring_info->ring_buffer->write_index);
++	if (unlikely(read_index >= outring_info->ring_datasize ||
++		     old_write >= outring_info->ring_datasize)) {
++		spin_unlock_irqrestore(&outring_info->ring_lock, flags);
++		pr_err_ratelimited("outbound ring indices out of range: relid %u read %u write %u size %u\n",
++				   channel->offermsg.child_relid, read_index,
++				   old_write, outring_info->ring_datasize);
++		return -EIO;
++	}
++
++	bytes_avail_towrite = old_write >= read_index ?
++		outring_info->ring_datasize - (old_write - read_index) :
++		read_index - old_write;
+ 
+ 	/*
+ 	 * If there is only room for the packet, assume it is full.
+@@ -318,9 +323,7 @@ int hv_ringbuffer_write(struct vmbus_cha
+ 	channel->out_full_flag = false;
+ 
+ 	/* Write to the ring buffer */
+-	next_write_location = hv_get_next_write_location(outring_info);
+-
+-	old_write = next_write_location;
++	next_write_location = old_write;
+ 
+ 	for (i = 0; i < kv_count; i++) {
+ 		next_write_location = hv_copyto_ringbuffer(outring_info,
 
 
