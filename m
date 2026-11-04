@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829441;
-	b=cDAZaPigy+S3CkZBv4F6is0dmVCdB3UAb0vQvRAxLpqBFX/SvPGoGNh7kW2bUvBs3tmz
-	 md7JXBugve1GDCm7GHDFWups2XcmaF2d0svQRfWdqGFpFzEHGKEE3/iLhSWLWJBwKw82F
-	 w7m3UNOodDrQZ90Iwj9qfPDTGguoLN4seHDsD8hQCWoWcXQHhynXbGKvKtYGbj/n5a8Ag
-	 sKVCFiJEGVgaCpY7ag3moG7FCGDkwz8ZgmlwVevF9nrlZQk/XuZs2qclKXZWuhRo0HvUl
-	 dBj9yXDTQtd08IQ4INPFq0MJTM9w+rji1yrPugOC7Xn2+9JVqhH9sPDgu0UYCpzCFnQ==
+	t=1793829442;
+	b=zs8CS5br8GlwcREVUJ8I8JaGwr39BNWztW7OTwk/b38NLiEBpCLZ5y33vZhqK64WKwwa
+	 F/vQNKILp+cMMwidA+r6UkkGfmPdVyppReDwL19+fUwSYqBugYG6ay0xjGSI3shyZw3SP
+	 J4keI+YVB3AGrdbN69bBa238mug/KjQbBL5HGaKSFBv8L0jFdz29rf0jAPdQzk0uf9pTH
+	 1CeT9cwqAw9xcqeneqZObWygofhCu5R+2DsGk0BecLt0pPKNxHLyjrvTsupSczRESYZeI
+	 FA2j9DNjqUyhJ4OJ6ET+sZOkdPx5QmnMt3MEEImZ7wixCN1mR/JO9kTd7ZhGu+KQd+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZFe2myoJdf3pxJn/2s8nOCE9jtOKpm1zsMTKqDTj2XU=;
-	b=Q71iszShUWsLfj8qAkXCYy7uiXFwmAoWrlhx4wg074HJ7f6iAYGQH7Hh5EfbGzYYMW14
-	 y3jYmRaQmJHcxQOV+xC6oaMeU/WWR8Auqh23qNcgqq8SWxvTFccAgdVsuuk37YqHl8nQm
-	 8TlRgkuGARpL+i9YfDew7ZDmaceFhEgN6vZPj0Pil685mLJFe1ZRrZDueFw05+gl/1qrr
-	 aNAgUKeJWv1NUzgTeIl+5VldWTJqPQA628qXwPOkObBYSola8ePLFGmnxpj3aglx3xIjx
-	 4WnzLdaopMDpV/uMDjgV6XpiHVpL1mJF9BVwAFPP8c6mF2boucbgmwpcSlhBjHVPGPQ==
+	bh=gqL5MclRUPKw14/N3/KOXxyCA/CbgFof8xy2H7scsuk=;
+	b=ZzELMQJHljuaWgghd5/WXGKooVglETbovUIlW5Br/CxeTQN/bNAU7Giy4z3rR/rkqLXT
+	 XtJ3++d/E2hSf0QE8ue/MfkcS8taBZCjcpQUySpCxUwBpPmd8akFkbhtb6AyLKUsAlojw
+	 uMwR8gE2NqidcpHsMM+Mk0t/Cw/RDZxQ3+H24VZxZrQqfQm13cxsa3JcIoMTpOpcXcFLK
+	 swFwdX6TEACL6xIMU9BPNGeizTLv1sj/2qy38RSaddS9Ot+s5COT1ZkHh1xAXOy98AP1n
+	 RP4Ip8qYEJzr76XxB9zcY01ZUTKuU7wlD34QZjTCkEjN9x4nllfE8Etd6DpHnvYgaJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZiJy+Bkh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCl3gM2k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5763606A863;
-	Wed,  4 Nov 2026 21:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6C1606AE0E;
+	Wed,  4 Nov 2026 21:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZiJy+Bkh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E63F1F0093A;
-	Wed,  4 Nov 2026 21:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCl3gM2k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE9811F00919;
+	Wed,  4 Nov 2026 21:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829440;
-	bh=ZFe2myoJdf3pxJn/2s8nOCE9jtOKpm1zsMTKqDTj2XU=;
+	s=korg; t=1793829442;
+	bh=gqL5MclRUPKw14/N3/KOXxyCA/CbgFof8xy2H7scsuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZiJy+BkhVMChVhnGbaj3nfxVqtqgQdQt4ln0pKVz9k0IpcGKSdz9f8tb+B4RevLFo
-	 24AFFx2qmOH1ZTun5iJTYT3kLd/GMQ65QBYvTTExxbzDE/baX7NMXqgDQF8Je8BP27
-	 0FeUvkYnrf0CsYbLMhC8TX22L+pnDLdP/hPEdxoA=
+	b=BCl3gM2khqP2lGJTNiSdfbe1gKWKBpn3VWZLPdDo8aOutIraNZAUmD1M4EBRAfKh7
+	 t8pOSzf2Fx3D4Lp1bQkql+wi3b3hL4GgfpUsfGJ2qJmEpMjpemytdYoIp23zdvuh4c
+	 tMuuC7zWTKOEfhKN5DokRpBQsmmAUfVM2Vi5V3t4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Aniket Randive <aniket.randive@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0127/1005] tty: serial: pch_uart: add check for pci_get_slot()
-Date: Wed,  4 Nov 2026 15:57:40 -0500
-Message-ID: <20261104211047.236854778@linuxfoundation.org>
+Subject: [PATCH 6.18 0128/1005] serial: qcom_geni: Disable closing_wait for console to prevent shutdown timeout
+Date: Wed,  4 Nov 2026 15:57:41 -0500
+Message-ID: <20261104211047.264520649@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,38 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Aniket Randive <aniket.randive@oss.qualcomm.com>
 
-[ Upstream commit 970ede67de0e3f6a1e707ec99ae49d80bf3f2966 ]
+[ Upstream commit acba38e675dd66f52925cb9edf9ed8db16335875 ]
 
-Add check for pci_get_slot() to prevent a potetial
-null pointer dereference in pch_request_dma().
+During system power-off, systemd closes the console UART and blocks in
+tty_wait_until_sent() waiting for pending TX completion before
+uart_shutdown() can cancel pending TX operations. With the default
+closing_wait of 30s, this causes a watchdog reset when systemd is
+responsible for watchdog feeding.
 
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260623140539.2272473-1-haoxiang_li2024@163.com
+Set closing_wait to ASYNC_CLOSING_WAIT_NONE in startup() for console
+ports to bypass tty_wait_until_sent() on close, allowing uart_shutdown()
+to cancel TX commands cleanly. This change doesn't impact regular ports
+functionality.
+
+Signed-off-by: Aniket Randive <aniket.randive@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260706093749.836121-1-aniket.randive@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pch_uart.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/serial/qcom_geni_serial.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
-index c3f32e0590b7f..9104361ccb14f 100644
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -678,6 +678,11 @@ static void pch_request_dma(struct uart_port *port)
- 	/* Get DMA's dev information */
- 	dma_dev = pci_get_slot(priv->pdev->bus,
- 			PCI_DEVFN(PCI_SLOT(priv->pdev->devfn), 0));
-+	if (!dma_dev) {
-+		dev_err(priv->port.dev, "%s: failed to get DMA device\n",
-+			__func__);
-+		return;
-+	}
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 5d59a2cfab3e2..0807ca83d8078 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1244,6 +1244,7 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+ {
+ 	int ret;
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
++	struct tty_port *tport = &uport->state->port;
  
- 	/* Set Tx DMA */
- 	param = &priv->param_tx;
+ 	if (!port->setup) {
+ 		ret = qcom_geni_serial_port_setup(uport);
+@@ -1251,6 +1252,13 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+ 			return ret;
+ 	}
+ 
++	/*
++	 * Skip the close-time transmit drain for console ports so that
++	 * shutdown can proceed without waiting for pending TX completion.
++	 */
++	if (uart_console(uport))
++		tport->closing_wait = ASYNC_CLOSING_WAIT_NONE;
++
+ 	uart_port_lock_irq(uport);
+ 	qcom_geni_serial_start_rx(uport);
+ 	uart_port_unlock_irq(uport);
 -- 
 2.53.0
 
