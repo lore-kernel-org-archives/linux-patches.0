@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831400;
-	b=J3wDL+mWnNK00FFaaMjzD58TNqpk3uuR1bFOEn+NHSlwsPzILcxD+cxXRkbeTYqyGAe/
-	 n3wxTKIGdxcQGPKyg8MPLFHSo0minRW912yiH29B+W957lHmpvNBCVppjz/GQsvp/7+5f
-	 wIM0y+dKkdOCcEor4hPkb5gCcv85kpMpggVMDIRH8imGmDZ5krCoxvesJKRBQ6hPl/CkS
-	 Yg6+j0RfMcdLwPbWoTMNZWTmfrHyBQavehRfOuwuhfjIKAv3kXeCkiDlHT0cEhFm5WtGh
-	 PyjCbIpCglOnP4/+FzNIgRPIFc30fzf8osR1vgmg65Ir8oH4sM5pXKh2xztE26ShLMw==
+	t=1793831401;
+	b=gEUXYJnEImCIlL3EHIKZs/qbREfBsStb0S1gGVnxl/3gOrMX9y2f54o69n0tBOgWXuqc
+	 +tHWO7mm9MH5irEvAXbfOWspdSMU9Rki2gVqzAzH/k+oafU3znEypn9IR+mKPE2Gcs0DH
+	 amedxZg0MsDO4V9ngAQEuw4/GjAGSv2TFirMS32FVmoDcVChFbKV84mKBdrCoj999j8IK
+	 G5VizEPMSzeoILSCRXqgC67LuXXbTgOtXRlrGa7C5qNfKGd8IEY6NvUVxTWe0/s5oAw4R
+	 Gye2yGBaVFReYO1A3rfDcmEfa5leOYK7M6kfARk6WiNb3tpB4AtRJoQed3INNgm+zQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831400;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831401;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7APzoCNVUrQZEEnQb2q3T2GyGiDMsYxT/z4dTeHkNKk=;
-	b=B8Bc/z7MpWPtVytXSO+0ob6jG0IVlnrQJyWCfetsgLuXznJMrqs6lj2Jtb8keetA0yrs
-	 if/1YlnJHgijwrxNKDZtqqr5m0pNoLBQPpqKIaBszpBjvgmigDaEfnPjs/fY5MKFbS26+
-	 4rEJKGKyrj7f3QulfMiKbc5sx9r2EARjfg2n3e9IYkVGqAw7k9J78LdM+eBR2I1NVyiDG
-	 pTfck1X8fEwJzvGMltbRCeup/JuCPccTUjlfGAbx3QmaSyxy0JKbdFPlqLvcguX9TFNi4
-	 no3gs5GxX5Pig449i1prIOPubLrh8bar/RCNnFKwhvHgXSPjAbKc+kx6ojJK4si84Qw==
+	bh=zgeiTgHDw8J3WA7t7ps184zXeY5AboWkGO16ZYTzeuA=;
+	b=YSKS/O+GnN3OkiH/FGoitODc6vJNo01FUqa/T41q70ZSc7M/q04mcOTPVFjHMVlHyywp
+	 ronO4w+btSM7GanNhIS+vZyPVkx9IP4Hc4dX2yLa5+tephOnxtoqOBGbhPSvLQIU8v67N
+	 nTVYz4wtsZyUsx0pcRMWJeU5b8XjNelsJtJ2Ggvav08r2v20PylE3aKLb9+qDdLDUpXV/
+	 joKEOFPLrlz2VBimz5AAbSvxEmiGAGdoiNbp6dljg86uKarE9WWCF0ATZzw9XX9UzW6nt
+	 wL6DhUSClZ8+5LSdnc3wffL0mxNKcPzfnZMCiK8dcRk9C8jmijJkfuYY0VGrgwxmfsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L84nxNoS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmzBHq+t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93BE606AB0B;
-	Wed,  4 Nov 2026 22:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E81606AB19;
+	Wed,  4 Nov 2026 22:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L84nxNoS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD201F000C1;
-	Wed,  4 Nov 2026 22:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmzBHq+t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEA51F00A02;
+	Wed,  4 Nov 2026 22:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831399;
-	bh=7APzoCNVUrQZEEnQb2q3T2GyGiDMsYxT/z4dTeHkNKk=;
+	s=korg; t=1793831401;
+	bh=zgeiTgHDw8J3WA7t7ps184zXeY5AboWkGO16ZYTzeuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L84nxNoSlpmYN9R/4/8it7pSG1oldLrj9erH88qa8Za13dp22nCVV7qu/6KX4inkH
-	 FfQlM9CKYi1n/KgKHNAX64XVbj1WFgZJlO/mn0t6Oru3GraD0R88CfqZD93IBnCoSY
-	 PtfwZ5JobhIhLpstr4jZzp/5TUHS6SC4ORdryvt8=
+	b=xmzBHq+t6C5mMYP+JTXam5Azg8wHD5Y+tvaJPTq4bwkRj8GxBtK7gCLZ0JWNMiJ9S
+	 cx2CbH59Pyqr3z4+DDv2g0kz1C2UCpEzqmQ6nF2qx2w3Y7RbH15Oxn/lLpuTbCWsSE
+	 EkHHw2HhU6/GfQq76JepRP+WcDl1v7LCxjXr7UMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.18 0682/1005] ata: sata_fsl: Fix use-after-free of host_priv on probe() failure
-Date: Wed,  4 Nov 2026 16:06:55 -0500
-Message-ID: <20261104211102.735549111@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Rob Clark <robin.clark@oss.qualcomm.com>
+Subject: [PATCH 6.18 0683/1005] drm/msm: Fix vm_bo use-after-free in with_vm_locks()
+Date: Wed,  4 Nov 2026 16:06:56 -0500
+Message-ID: <20261104211102.760291060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -67,87 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 70b1196740d61aabda13b2ad0e9c1dfa2ef9cfa3 upstream.
+commit 81878aa1a2f551f51a3d3aef2a9509503ec34d8b upstream.
 
-sata_fsl_host_stop() releases hcr_base and host_priv:
+The unwind loop drops the vm_bo reference taken while locking before
+advancing to the next entry.  drm_gpuvm_bo_put() may drop the last
+reference, removing and freeing the vm_bo, after which the plain list
+iterator dereferences freed memory to advance.
 
-	static void sata_fsl_host_stop(struct ata_host *host)
-	{
-		struct sata_fsl_host_priv *host_priv = host->private_data;
+Use the safe iterator, which saves the next entry before the body runs.
 
-		iounmap(host_priv->hcr_base);
-		kfree(host_priv);
-	}
-
-->host_stop() is called by the driver core through the ata_host_stop()
-devres action which ata_host_start() registers, so it is called both when
-the device is unbound and when probe() fails after the host has been
-started.
-
-The error_exit_with_cleanup label of sata_fsl_probe() releases hcr_base
-and host_priv as well, and it is reachable from the two
-device_create_file() calls which are done after the host has been
-activated. In that case sata_fsl_host_stop() runs on an already freed
-host_priv, resulting in a use-after-free and a double iounmap()/kfree().
-
-Add a separate error label for the failures happening after the host has
-been activated, which only detaches the host and leaves hcr_base and
-host_priv to sata_fsl_host_stop().
-
-Note that ata_host_detach() is dropped from error_exit_with_cleanup, as
-that label is now only reachable while host is still NULL.
-
-Fixes: 6c8ad7e8cf29 ("sata_fsl: fix UAF in sata_fsl_port_stop when rmmod sata_fsl")
+Fixes: fe4952b5f27cca5d ("drm/msm: Convert vm locking")
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-11-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Patchwork: https://patchwork.freedesktop.org/patch/754331/
+Message-ID: <20260916175548.2089821-1-vulab@iscas.ac.cn>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/sata_fsl.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/ata/sata_fsl.c
-+++ b/drivers/ata/sata_fsl.c
-@@ -1499,7 +1499,7 @@ static int sata_fsl_probe(struct platfor
- 	host_priv->intr_coalescing.attr.mode = S_IRUGO | S_IWUSR;
- 	retval = device_create_file(host->dev, &host_priv->intr_coalescing);
- 	if (retval)
--		goto error_exit_with_cleanup;
-+		goto error_exit_detach;
+diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+index 9d2788f79ace..a626fbb869db 100644
+--- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
++++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+@@ -51,6 +51,7 @@ with_vm_locks(void (*fn)(struct drm_gem_object *obj),
+ 	 * success paths
+ 	 */
+ 	struct drm_gpuvm_bo *vm_bo, *last_locked = NULL;
++	struct drm_gpuvm_bo *next;
+ 	bool locked = true;
  
- 	host_priv->rx_watermark.show = fsl_sata_rx_watermark_show;
- 	host_priv->rx_watermark.store = fsl_sata_rx_watermark_store;
-@@ -1509,16 +1509,24 @@ static int sata_fsl_probe(struct platfor
- 	retval = device_create_file(host->dev, &host_priv->rx_watermark);
- 	if (retval) {
- 		device_remove_file(&ofdev->dev, &host_priv->intr_coalescing);
--		goto error_exit_with_cleanup;
-+		goto error_exit_detach;
- 	}
+ 	drm_gem_for_each_gpuvm_bo (vm_bo, obj) {
+@@ -82,7 +83,7 @@ with_vm_locks(void (*fn)(struct drm_gem_object *obj),
  
- 	return 0;
+ out_unlock:
+ 	if (last_locked) {
+-		drm_gem_for_each_gpuvm_bo (vm_bo, obj) {
++		drm_gem_for_each_gpuvm_bo_safe(vm_bo, next, obj) {
+ 			struct dma_resv *resv = drm_gpuvm_resv(vm_bo->vm);
  
--error_exit_with_cleanup:
-+error_exit_detach:
-+	/*
-+	 * Once the host has been activated, hcr_base and host_priv are
-+	 * released by sata_fsl_host_stop(), which is called by the driver core
-+	 * through the ata_host_stop() devres action registered by
-+	 * ata_host_start(). Releasing them here as well would result in a
-+	 * double iounmap() and a use-after-free.
-+	 */
-+	ata_host_detach(host);
- 
--	if (host)
--		ata_host_detach(host);
-+	return retval;
- 
-+error_exit_with_cleanup:
- 	if (hcr_base)
- 		iounmap(hcr_base);
- 	kfree(host_priv);
+ 			if (resv == obj->resv)
+-- 
+2.56.0
+
 
 
