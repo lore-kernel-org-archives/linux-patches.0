@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829725;
-	b=DBdzBgFaNuRWXQGcaP5P89NCiYbZI9v7unz/L+3JlkNgrXvQcIj9inN0CLmvb31YrTCX
-	 wYF16JzN1ZuLcIzEbVvZNV06heXT0sebKdQwroNm3aE5J5RstyhorjXcDsR/mVxirvICS
-	 WXgH5y4xV5J935j6Q4/23MpPAsHuqwqeeqtZiNom6K3nK602GOcWqiZvfh7+VuVQUeNJd
-	 119aiH8aA1sgCzY6x1kXYLFStkkx6hs4JS7t3wyytmVgObZ9sGqyskW8olAAgOFK4syXf
-	 j8q3HdzNJ8KzqIrDQMZ49hLqg+kjFnHdrjvH/A62nhLwDL5PmWFlplka2pnm/q+O3hA==
+	t=1793829727;
+	b=5Voq2bmlVYBeAtxUwNeTYKaD7RKZsagRydopI7XKJx3PCkhI/A1ZtDajnF3rYc6klvKh
+	 Jj7YMiHNmppQITJrPAGh1xCLHrB8bDehR9P+egF1V7tDZiTLsJLDehCzuy24sO+4hXKx7
+	 ano0yWmUlp6CDlZjN3mW7VTzBD3nSsv0sLeaXoVlm4/8viTbncVa1D8n+0WG1+XHXwxWT
+	 /vowZvVjgx21GjfNOcw1JaY+56v6+M3co9Y/J10OAyBteYrGqlCwCim5g8vY66O9wUZlj
+	 abMWa/6H1gqhtWxrWH9PuJA1hIBIZcWIE7PDwfuALQWHZPMpLa+yWG2gook+IdH4c3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829727;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wokLCnkbdOsKTJENkszH3cAPBqmk3nonb83PquwXKGA=;
-	b=S9iT+L8kq1UAzCvjvXHXc/dRSW+KVdBWn7Ntu60XPjVccI0S9UfQM74JzTdls2tGC0qO
-	 V7jUDEYXN4al4erFU9WeDt4KcBIBnmu8lLedjXVefYQxBZY8IwbsYqWMEhUdjZdLYQrhC
-	 MWFkVm8jAjugPb16UQ+DG8Tren0IG8GlcL1LsQ/2gHdXRyW4ku9BgrJUstVhMHpgmo284
-	 w82ROnP+FtnrrmqFlgoXW4NHG8doZLN1jInU+WWmlnJK5NSuJruaklq2y9a9H3LtLUbBo
-	 Vl/T8cMrhBQBKdRsu2fdqd5aibKMDZgyxi2BVaA8DNH6TN7sS7VoL83hk2BiPMUYrLw==
+	bh=6zQ8fr3Qk0atKsQ2DiymSj/y/vdPaKR0SwKZyVSq7fQ=;
+	b=kbc20yZSEcL+GQmAkI6nPLEul1un6ir22YOHlnTq0m66P9P56HFA24FRcfCq5K3yX+Rn
+	 r8YmSRmBKWBLXTIfLtSkO7Wvy0kVdqC4y8PJbZNvjwHyb8r4PZGqueL7R9r/ecRqNaAvV
+	 CQo2o7hprbOTrayDAfFNFw2hS8nx31bGxc1aL/HwhdYBhZC4KmWcWzFs7lEoeL3IMNO+t
+	 ha87+qnIpsgf6djkYFYgFF6Kpz//AwIO6aUf1L7mi0EleOPSO1Y6VOLe+pWkv+IToj57H
+	 hJWXoptIXM2pwnCjxokA5l9UZeay3tX4awXbukNRYWMAU7qRTVfYGbyGQ12adJbXLRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4h9K8+u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSFT28d6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45505606B2E6;
-	Wed,  4 Nov 2026 22:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4989606C90F;
+	Wed,  4 Nov 2026 22:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4h9K8+u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17E81F000C1;
-	Wed,  4 Nov 2026 22:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSFT28d6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EA91F000C1;
+	Wed,  4 Nov 2026 22:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829725;
-	bh=wokLCnkbdOsKTJENkszH3cAPBqmk3nonb83PquwXKGA=;
+	s=korg; t=1793829726;
+	bh=6zQ8fr3Qk0atKsQ2DiymSj/y/vdPaKR0SwKZyVSq7fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i4h9K8+uzRCVKu+30j2XamywG/GEqwKhQeY0U6JNMpV2Vm6PFNJgk9nBtcdNHUjlH
-	 gdNngh30c+wX5X9PYOgSIGLfRJ3FOFgyuyF7OmaYr7yn75IGqpy1cBnN/hWZhR6PPr
-	 RjtPlB3/RbvuT1Nlq5vq2WAyLQeBBzeMCKAx/1F8=
+	b=aSFT28d6R1I+tRWYcJ1EIQ1UMPN72h+5FjP79YK6dgEVYqpMHjCD5gzPXmhGdOwU2
+	 KXStoniQXh40Jnd8ZY5+8UCa8Q1ziIbWd9oCgrGoMm++PI30JOWMu/msDnZ3FmIa1l
+	 /aGjgsn6Zqm5t9zBi5yS/TNw8kFmjvVFM9wcKoX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0264/1005] clk: mediatek: mt6735-vdecsys: add missing MODULE_DEVICE_TABLE()
-Date: Wed,  4 Nov 2026 15:59:57 -0500
-Message-ID: <20261104211051.263330663@linuxfoundation.org>
+Subject: [PATCH 6.18 0265/1005] clk: mediatek: mt6735-vencsys: add missing MODULE_DEVICE_TABLE()
+Date: Wed,  4 Nov 2026 15:59:58 -0500
+Message-ID: <20261104211051.293924130@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,7 +70,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 096ab64a0e69460bfb3557d09e17d2933280a1c6 ]
+[ Upstream commit 36cf8d279ff90835f4b002dec28eedb059554842 ]
 
 The driver has an OF match table wired to .of_match_table, but does
 not export the table with MODULE_DEVICE_TABLE().
@@ -87,20 +87,20 @@ Reviewed-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt6735-vdecsys.c | 1 +
+ drivers/clk/mediatek/clk-mt6735-vencsys.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/mediatek/clk-mt6735-vdecsys.c b/drivers/clk/mediatek/clk-mt6735-vdecsys.c
-index 8817085fc1db4..d53ebf92e878d 100644
---- a/drivers/clk/mediatek/clk-mt6735-vdecsys.c
-+++ b/drivers/clk/mediatek/clk-mt6735-vdecsys.c
-@@ -63,6 +63,7 @@ static const struct of_device_id of_match_mt6735_vdecsys[] = {
- 	{ .compatible = "mediatek,mt6735-vdecsys", .data = &vdecsys_clks },
+diff --git a/drivers/clk/mediatek/clk-mt6735-vencsys.c b/drivers/clk/mediatek/clk-mt6735-vencsys.c
+index 8dec7f98492ac..64ba9da9fd427 100644
+--- a/drivers/clk/mediatek/clk-mt6735-vencsys.c
++++ b/drivers/clk/mediatek/clk-mt6735-vencsys.c
+@@ -37,6 +37,7 @@ static const struct of_device_id of_match_mt6735_vencsys[] = {
+ 	{ .compatible = "mediatek,mt6735-vencsys", .data = &vencsys_clks },
  	{ /* sentinel */ }
  };
-+MODULE_DEVICE_TABLE(of, of_match_mt6735_vdecsys);
++MODULE_DEVICE_TABLE(of, of_match_mt6735_vencsys);
  
- static struct platform_driver clk_mt6735_vdecsys = {
+ static struct platform_driver clk_mt6735_vencsys = {
  	.probe = mtk_clk_simple_probe,
 -- 
 2.53.0
