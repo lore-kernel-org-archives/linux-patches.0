@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829027;
-	b=vDV9+697OC/FVIIuTuAhYdr1yTC4spgJ9cDpz1U6gsB0cgpgaBrAnJijQU+HbgwAOzs3
-	 0gRJsf54fPkE/mSRvbPCbGOvRTT5MrmAQT37J8tkJL2DbRUHHzM6AQwQ16XXLoWngozhF
-	 6SvMlZ07hpo7DU397JkbfOSLytii+7DfdWUC3FRRybUQaE/5+SjhrEfGHraiSDIzhRCRK
-	 7Wy4JxVFaunjVji71cBOr3ptj7XWephaB4vzDVut2oLlhMdgjHy3d5b8Ejk//acK+2vNV
-	 ffnurG4unD9EO9fenY0CptpPFz5VzMIpZhchnHrff6LZeVIGEER8mROMGCema7KBYaQ==
+	t=1793829028;
+	b=ik5c7X07ZkIYkau46+htBNGFJm1rFxATc7ye6UUB3mcQ4/cVd44eYKTqKI6SEuqBCuKQ
+	 e5Ld6jJ+35ySNrS9UPHzznzrZTvxoKtBRbHNYM4N+0Pw5BNBdI0I8dCc5EhsosicxKGN0
+	 VOTbwYRCa42ESk314wrjvDtPJlymJDQvhRpT9UE062t00yCEF+rdok9+ySaJARrHUx5+8
+	 /KJfUCe+SwezmQV28acTjcRhLyKhbLmjHYRxwlZtzsyOHNOrQY1kU4g9XbgGzyTUPfQ98
+	 ETtWDvSTXI4bImAsqWFGsxgDh6T4MnQV+EcfayzK8siGegWa9Gty52GbKWjui8rNsPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829027;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=inF4aNo+0nUQIqFIAtUcHEU7HqvsNALtDA7nidG2BRM=;
-	b=FbBF/UAIPiO7aEElTmM7bxRAJr3xyhOZRHCWWw8tnVwZ2Xz7Cfzg/YkKxmbp4E/wW/5d
-	 PMxOeRS8skz/qEOJyUU1b21ZCYAPS1XqszdeW1NOWF41WBvaeDpKgYLQfglyTBF9eTBhe
-	 FB8qJj6uWAnH8J63F9nQt41OxF6V1pGoE9VGY+nrPUjwPOsaNS0y8o+VQYZGVMdls3kMX
-	 oTLYwtB0hYOVcUMawtqlkDX67VvfynT9wG75DLCKWCG1iBs/9EisP9e+xNzGDT2TnyKuR
-	 L2ogVmCW76cOevjOxHt8h/DSheS/QmtqWG/5mUJ+zBL1SYB/xI9+CfdEnr/ZOii9NIg==
+	bh=kLb0t1bU93cpmbh84sD9NXVlcEQdGgGLoqM59KoUN4s=;
+	b=ohufHiR3nzS8LknCTGnWihM6i+FH0F94QpiYWtCmuwz9emc91gaOwG4qKNx0+DTXsD3U
+	 Z3rvRlHBo3Em8lN3bNiJpZzf0ZVUUaM70aNucxBkdgJX6FmGdPYhgFriV6yn+2QOOZXE8
+	 DxnK4aG59Ea3KcAqHmVS6WjbqPsyOIcFcaW8ELPRPmURW1j/Ls5NC3y9frwGdQvuKzQ8d
+	 z2BlNTuoeYvLIWxd2KF1iSDLR7c/iam0cukkE2TbDiCxkgBV97Y6i7RcVDr3Zgu4RqJaH
+	 1gdcvuvlAru4RBiDyohfxF7AiMVTQEfXf9/sHh4VXfvH/FSUTybPBU0mLJtKc08/3RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fPxHHGLx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hUszRDxI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D1C6070745;
-	Wed,  4 Nov 2026 21:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1EE6070745;
+	Wed,  4 Nov 2026 21:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fPxHHGLx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A593E1F000C1;
-	Wed,  4 Nov 2026 21:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hUszRDxI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1A71F000C1;
+	Wed,  4 Nov 2026 21:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829026;
-	bh=inF4aNo+0nUQIqFIAtUcHEU7HqvsNALtDA7nidG2BRM=;
+	s=korg; t=1793829028;
+	bh=kLb0t1bU93cpmbh84sD9NXVlcEQdGgGLoqM59KoUN4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fPxHHGLx41tbAhxBiZlcwTfJhrvE/lo/5TB9qsPQnfDuAcILWE8/GYKStQAdcziMK
-	 ANBOZtVJKpmseptkw7tLvIl4GDffZq3GtdoqjxTk8ElBmUYsnmkfsDLCGOEVdYZVcb
-	 cCz+DtPyEoBG3skGtl3tzw3nlmuJSnV/4QoubmXQ=
+	b=hUszRDxIUpkrtK4eo3rj2uu2J6rEkDO3whz4Qia/1E6LWIE+rB9Cz/LNlWw7DS/tM
+	 nxekQ/fx1VQeZFgVXQTrgGMGGg80yLSOu3NN921CZyIEYAfEOdAvNCfplX1UiL306j
+	 0BZG+JxwWkzv4tQl4cNVnCG79hCKuXtI1HezTPVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 7.3 398/547] NFSv4/pnfs: Free the netid when draining a data-server address list
-Date: Wed,  4 Nov 2026 16:09:42 -0500
-Message-ID: <20261104211049.616165465@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 7.3 399/547] NFSv4: Fix a regression in the handling of CB_RECALL_ANY
+Date: Wed,  4 Nov 2026 16:09:43 -0500
+Message-ID: <20261104211049.645424087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -67,145 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit a7c8e96d1b9fa327cbdea514d047c8295b28d49a upstream.
+commit 25dde935988bc0cc2991cedbea90a2ce65066d54 upstream.
 
-nfs4_pnfs_ds_addr_free() releases all three of an address entry's
-allocations, but the four sites that drain a decoded list before it
-reaches a data server open-code the loop and free only da_remotestr and
-the entry, leaking da_netid.  Both layout drivers drain that list when
-nfs4_pnfs_ds_add() returned a data server already in the cache, and
-again on their error exits.
+When the flag NFS_DELEGATION_RETURN was replaced by the
+server->delegations_return list, the test in
+nfs_mark_return_if_closed_delegation() was replaced by one that stops
+all further marking of delegations for return when closed as soon as the
+server->delegations_return list is non-empty, breaking CB_RECALL_ANY
+behaviour.
 
-Lift the drain into nfs4_pnfs_ds_addr_list_free() so an address list has
-one owner.  A striping mount reaches the cached case on nearly every
-GETDEVICEINFO, since many deviceIDs name the same data servers.
+While the intention at the time was probably to check if
+delegation->entry was non-empty in order to emulate the effect of the
+NFS_DELEGATION_RETURN test, that is no longer an option, since
+delegation->entry is also used for the LRU list.
 
-Fixes: 4be78d26810b ("NFSv4/pNFS: Store the transport type in struct nfs4_pnfs_ds_addr")
+By just removing the offending check altogether, the patch can end up
+moving delegations from the server->delegations_delayed list
+prematurely, triggering an early retry. However that should be mostly
+harmless behaviour.
+
+Fixes: 0ebe655bd033 ("NFS: add a separate delegation return list")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/filelayout/filelayoutdev.c         |   17 ++---------------
- fs/nfs/flexfilelayout/flexfilelayoutdev.c |   17 ++---------------
- fs/nfs/pnfs.h                             |    1 +
- fs/nfs/pnfs_nfs.c                         |   21 +++++++++++++--------
- 4 files changed, 18 insertions(+), 38 deletions(-)
+ fs/nfs/delegation.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/nfs/filelayout/filelayoutdev.c
-+++ b/fs/nfs/filelayout/filelayoutdev.c
-@@ -177,27 +177,14 @@ nfs4_fl_alloc_deviceid_node(struct nfs_s
- 		trace_fl_getdevinfo(server, &pdev->dev_id, dsaddr->ds_list[i]->ds_remotestr);
- 
- 		/* If DS was already in cache, free ds addrs */
--		while (!list_empty(&dsaddrs)) {
--			da = list_first_entry(&dsaddrs,
--					      struct nfs4_pnfs_ds_addr,
--					      da_node);
--			list_del_init(&da->da_node);
--			kfree(da->da_remotestr);
--			kfree(da);
--		}
-+		nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 	}
- 
- 	folio_put(scratch);
- 	return dsaddr;
- 
- out_err_drain_dsaddrs:
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- out_err_free_deviceid:
- 	nfs4_fl_free_deviceid(dsaddr);
- 	/* stripe_indicies was part of dsaddr */
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -159,26 +159,13 @@ nfs4_ff_alloc_deviceid_node(struct nfs_s
- 		goto out_err_drain_dsaddrs;
- 
- 	/* If DS was already in cache, free ds addrs */
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs,
--				      struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 
- 	folio_put(scratch);
- 	return new_ds;
- 
- out_err_drain_dsaddrs:
--	while (!list_empty(&dsaddrs)) {
--		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		kfree(da->da_remotestr);
--		kfree(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
- 
- 	kfree(ds_versions);
- out_scratch:
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -427,6 +427,7 @@ int nfs4_pnfs_ds_connect(struct nfs_serv
- struct nfs4_pnfs_ds_addr *nfs4_decode_mp_ds_addr(struct net *net,
- 						 struct xdr_stream *xdr,
- 						 gfp_t gfp_flags);
-+void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs);
- void pnfs_layout_mark_request_commit(struct nfs_page *req,
- 				     struct pnfs_layout_segment *lseg,
- 				     struct nfs_commit_info *cinfo,
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -633,23 +633,28 @@ static void nfs4_pnfs_ds_addr_free(struc
- 	kfree(da);
- }
- 
--static void destroy_ds(struct nfs4_pnfs_ds *ds)
-+void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs)
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -934,8 +934,7 @@ nfs_mark_return_if_closed_delegation(str
  {
- 	struct nfs4_pnfs_ds_addr *da;
+ 	struct inode *inode;
  
-+	while (!list_empty(dsaddrs)) {
-+		da = list_first_entry(dsaddrs, struct nfs4_pnfs_ds_addr,
-+				      da_node);
-+		list_del_init(&da->da_node);
-+		nfs4_pnfs_ds_addr_free(da);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(nfs4_pnfs_ds_addr_list_free);
-+
-+static void destroy_ds(struct nfs4_pnfs_ds *ds)
-+{
- 	dprintk("--> %s\n", __func__);
- 	ifdebug(FACILITY)
- 		print_ds(ds);
- 
- 	nfs_put_client(ds->ds_clp);
- 
--	while (!list_empty(&ds->ds_addrs)) {
--		da = list_first_entry(&ds->ds_addrs,
--				      struct nfs4_pnfs_ds_addr,
--				      da_node);
--		list_del_init(&da->da_node);
--		nfs4_pnfs_ds_addr_free(da);
--	}
-+	nfs4_pnfs_ds_addr_list_free(&ds->ds_addrs);
- 
- 	kfree(ds->ds_remotestr);
- 	kfree(ds);
+-	if (!list_empty_careful(&server->delegations_return) ||
+-	    test_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags))
++	if (test_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags))
+ 		return;
+ 	spin_lock(&delegation->lock);
+ 	inode = delegation->inode;
 
 
