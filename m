@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831042;
-	b=S7jeGOq90najkBXw+fa1zqdmsStZbd8L58ClhC2+m6jI0PTTcVWrVU/paIGbRKPGrUCO
-	 +5VwsKAPfKnOK5e6G1SyfdbWxtQTn/KEGhjpB3GFURqHBCTy/IPsUqCrLbApWHhRwnk+s
-	 JtD8gnEC0BgyfwKOe6tJbXekbCcCz0aLWdvMGyT28yUEcdZI6oFeDUcsnMX42POwJj0Wn
-	 XZ8EZOA+9FfQltbZ5FIf2AdXSB1kuLGqXW/RCaxPS/LrTylsKlZsCcs3tHesUz1OgeCeI
-	 cz6GCUslqULm5w7jY+yR85ErhqaqaHDwea8SJR2ruDoIeK/Y5KvRTp3zT5+44nkFYJQ==
+	t=1793831044;
+	b=Ukqp/01hezUhUYcmljjgjtkPZ7xLI7VD8RLnvjdWOpAVJRswZEVv2EMBzC+baOQ2z+ZL
+	 89vfM5Zw9SZ9Qsgmf8m53JR/gKSiR6qh1bYHmA6Aextd5YBNw9Tho5GWizbDsIV5kNSQr
+	 0ebllj8XjOPxV3fifyUD2HkXwFPgE/RPov0/HX+u+G1OV7crW/LkIGsmwLJw8WfM8yXyk
+	 h9zgL/zGFEt6McVvEIXNDf2A+ZTBXJ+O5jIbAe8MaTZLXE43LgRltyMalGaGTFsBJJqlt
+	 I5xZxmqRoZGGYgHRal7Ghvq85H8bFS9Z3EPv6/wOmGhXG6U2iVbHMrcgCAuGJWSag0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831044;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4+Dr5C2NRh/AgyPfc5nP8rxY5oyeJIxLACB8sUAStOg=;
-	b=5KNJIOf7mkddDg+O8FuaXY0VnYuQF8xWMWhKZ53Cdn+rui6pJSP0flJsUvJFeKvOYqgW
-	 w6YZ/+LcjwvjH3ZgVFkyr7x/C6tXb0n/fAoAzmtAJG3EwcWsxH/08c//cpcpKdRnIk61n
-	 fDa6eT0fnYp/d2TKIMy7+CW7AFg9OPJ1Xv0JSbVfiuKjbbGPHFFi/zHzEDCqm7EUZf5+7
-	 4dZtKu6/DUeb49OwpHch7o7uIEDNs62YIyxjCiz0oYtbJVIflTj4AMosloa+EiuraEdie
-	 LF3wJKcz2pxwx3RlSTDvi6Muw9besB53ozDxPzzkGS2cem/v9yqlUaJYm/QTFJ6HhzA==
+	bh=mrlSm2XsoJvAPkYqhjCR088gRqxyJ/VxQsJXHqzkFhM=;
+	b=VCuN9yd4vTrAlwER1w7ThB0zhdzqQqAvU7sA8CZnT2y3oZ2DKTWKdH5HmLLJZORXd9ME
+	 A0ZKgnx0XdNM7Z6O0MmFrYi2Dh6z3LhOygKsYZ56A3uOzFtjcqxs7Yq6VvetePyjyZwKA
+	 P4j7E5rJIfCCXi0Iw3oVbkOUTwHi9HdrdDloBsUAiu2k/tMr6dGx7PMNSvbgh5xGIFwNl
+	 J9nD4HJB68eBr+nzGz7Wt3TsNSLeDaeq3Fbx//zHIVAJASIyYceUVd1DLjmRu+ivMZpTj
+	 v25O8UCTDJ4MbojId0qPG6XerNdxlb7cSmXZWq5IbzBr1UBKYFM+2t3SzzQ/elYPGig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stEC4haE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJjt8JMz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBA7606A864;
-	Wed,  4 Nov 2026 22:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E982606A843;
+	Wed,  4 Nov 2026 22:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stEC4haE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D091F00919;
-	Wed,  4 Nov 2026 22:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJjt8JMz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03D51F00919;
+	Wed,  4 Nov 2026 22:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831042;
-	bh=4+Dr5C2NRh/AgyPfc5nP8rxY5oyeJIxLACB8sUAStOg=;
+	s=korg; t=1793831044;
+	bh=mrlSm2XsoJvAPkYqhjCR088gRqxyJ/VxQsJXHqzkFhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=stEC4haENrjLEHZC+f9ja6G/UsbFDVF7sRLjHOfcV+uJGx6nijjAxx9tmliTUjRy0
-	 5gEkaYLl/VudowPfZdq3DlPoCBsa4UlNVLOMB2S/rAv1ZrgehG9gtPbFvaihQBkJkq
-	 twCsSkWfaS83JljiEib6qEPcYy86LJpuRvz82S1M=
+	b=IJjt8JMz3/bEyPsVF+SystCrHqHhymotQujx2jqb7L4sMKUHJrU7MDL5Tp/ZsdA0v
+	 /czRYdhqvJu7UGc3RFw1CoUFjVB5VTvwtBNLUpCYWNuRmTPV64cl7ouMW0RmsljjSv
+	 V3jIgHf50XuoscJgBr3fWiGG7N1Bq7BqqaRM2FiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youth Cao <cocoh2os08@gmail.com>,
+	Oleg Keri <okerixx@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0476/1005] HID: i2c-hid: Add i2c-hid-quirk-bad-input-size quirk for 0911:5288 device
-Date: Wed,  4 Nov 2026 16:03:29 -0500
-Message-ID: <20261104211057.331819575@linuxfoundation.org>
+Subject: [PATCH 6.18 0477/1005] HID: i2c-hid: add reset quirk for Lenovo Yoga Slim 7x Gen 11 keyboard
+Date: Wed,  4 Nov 2026 16:03:30 -0500
+Message-ID: <20261104211057.355960551@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -68,43 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youth Cao <cocoh2os08@gmail.com>
+From: Oleg Keri <okerixx@gmail.com>
 
-[ Upstream commit 58d97b45f3f43af0afd9c74e8480d22d36fd3f72 ]
+[ Upstream commit 39e8e085710a2d36d9ceade11739fb7b87f5aeb0 ]
 
-I have recently acquired a cheap Apollo Lake-based laptop that uses a
-Hynitron CST128-A touchpad controller. While booting from a Debian LiveCD,
-the kernel log is flooded with the following error (though the touchpad
-works well):
+The ITE controller behind the keyboard of the Lenovo Yoga Slim 7x Gen 11
+(048d:83db) carries out a reset but never raises the interrupt that
+acknowledges it. i2c_hid_finish_hwreset() therefore waits out its full
+one second timeout and logs "device did not ack reset within 1000 ms" on
+every probe and every resume, before the keyboard comes up regardless.
 
-  i2c_hid_acpi i2c-ALPS0001:00: i2c_hid_get_input: incomplete report (27/42405)
+Set I2C_HID_QUIRK_NO_IRQ_AFTER_RESET for it, as is already done for
+several other ITE parts, so the reset is followed by a fixed 100 ms sleep
+instead.
 
-The CST128-A was identified via ACPI as ALPS0001:00, and the I2C HID
-device ID (0911:5288) was shared with the Hantick 5288.
-
-Add the I2C_HID_QUIRK_BAD_INPUT_SIZE quirk option to the existing Hantick
-5288 quirk entry to suppress the kernel log flood.
-
-Signed-off-by: Youth Cao <cocoh2os08@gmail.com>
+Signed-off-by: Oleg Keri <okerixx@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-ids.h              | 1 +
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 11f120a5d1b90..a10b4ae0e3d8e 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -737,6 +737,7 @@
+ #define I2C_DEVICE_ID_ITE_LENOVO_LEGION_Y720	0x837a
+ #define USB_DEVICE_ID_ITE_LENOVO_YOGA900	0x8396
+ #define I2C_DEVICE_ID_ITE_LENOVO_YOGA_SLIM_7X_KEYBOARD	0x8987
++#define I2C_DEVICE_ID_ITE_LENOVO_YOGA_SLIM_7X_G11_KEYBOARD	0x83db
+ #define USB_DEVICE_ID_ITE8595		0x8595
+ #define USB_DEVICE_ID_ITE_MEDION_E1239T	0xce50
+ 
 diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 29c4f624f3c5c..e5a4c7deba502 100644
+index e5a4c7deba502..62b3dd0390a7c 100644
 --- a/drivers/hid/i2c-hid/i2c-hid-core.c
 +++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -123,7 +123,7 @@ static const struct i2c_hid_quirks {
- 	__u32 quirks;
- } i2c_hid_quirks[] = {
- 	{ I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288,
--		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
-+		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET | I2C_HID_QUIRK_BAD_INPUT_SIZE },
+@@ -126,6 +126,8 @@ static const struct i2c_hid_quirks {
+ 		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET | I2C_HID_QUIRK_BAD_INPUT_SIZE },
  	{ I2C_VENDOR_ID_ITE, I2C_DEVICE_ID_ITE_VOYO_WINPAD_A15,
  		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
++	{ USB_VENDOR_ID_ITE, I2C_DEVICE_ID_ITE_LENOVO_YOGA_SLIM_7X_G11_KEYBOARD,
++		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
  	{ I2C_VENDOR_ID_RAYDIUM, I2C_PRODUCT_ID_RAYDIUM_3118,
+ 		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
+ 	{ USB_VENDOR_ID_ALPS_JP, HID_ANY_ID,
 -- 
 2.53.0
 
