@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793829660;
-	b=C9ZDC853I8EfwXZm8ycfPuwYgml7edv5nY0gnHpvbCizy1POGwKu9NtIParv2ACUzmmj
-	 YLFAP9qSd3FKrc7MiwnAyefjmoKgRh1IMQwuUDFUB3wlhcL/aK/7wUGCplAmauklW3yIf
-	 VT1MalMoPeLZHIQ7JXyZmu3PR1y8vYnL4cN3V31AVf8CB0nlp1SxfjiU0dWQSABbLQYe2
-	 P99Z6qEpH+KqswTXDJvQxmNqW915cE43IjywqY9L5czAhmxGE7lhEWJRECqOD8WqSVK0o
-	 4/3s7NV4dc2ujoXPO2kYTsuAut5XM9k8BM9Cqy5fjuQat7c/dCn9S1iwL7P5FE/ETfQ==
+	t=1793829662;
+	b=VOeyGgUcjPICl8dE8aIE04aDiVhj21qc7YDbDU3gR2s/Ya5xgbU70uBFqzvtCuqyb7g7
+	 sKfqckCnvSUgxfUAQge1obLO0StOtLoig7R2O/K01357YWseqyWCrnJrbIxuPvnS72TaC
+	 q8UsDXuTH6jjDrOmLAOOA1Ix+RJCuQ3Vm2lvudf1dVVvdjkTPebKjnq8i5GO9Ti29LtJ8
+	 AJ0mV9Ul2pAH7OAHQYKIWUA8kKaHiaanbZnbXDiRW86AlKazogXhKY4aSypkU77jRJUFu
+	 yhjETQWcmVPJOncn1Pp1Axas/DtoQOg9BErL1zn3VRcApKz/By4LBGcr737afPG4eAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793829660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793829662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p3tT2U5pbGH1q75DreUvqYOiZ3UM+3qqOWRSXRxZqV0=;
-	b=lKzR0WetgVB+51f3K7gA788k9V9ysePimox7c+mv3qnvL6eiMpzklrG/l/6ConFZI3d3
-	 dQDnorK0D8ktfd9/X4XLYFPHJfVPc4e2+2X6I6BVcrfFQoj8NafS7ccbIVPs1WuvGMF8F
-	 S1ZmDBbJw5sBHQ4zy8BwcYilGt5X6q5hfk3nhwd1BKdzE1i91TPjY3Qc6P7VQmW/qLZAY
-	 +C1gdmkJtjeV+6BFP+Wp2KVHyHZ9FIJ2BAF4Hihd4D/KActU1kdRjFjhOXFFPazalg5sW
-	 qDqWuYVgJyB2J0/nkehtUwsd6JOEk85XqJSt8w3+VaCPIlYL3rSTgvlAso3FcrjtlEQ==
+	bh=CLjX7PuNGAB7TlZv8qXzKbCNDOK0igHh3EyjZ1s6wCw=;
+	b=5JMj6LXwTnkpM+vyanClLJxFvDbzE3jHa2UVFN2TBHZzkyWTVtNOFh7jg4ENVwl21t6a
+	 LEQaVmOqv5b5Awguw72LpBwfIDbz58y61A9lWBgWWsW+GDst+X1UiDK6RQpSlXYB3HOpI
+	 BRXaMUu6xUCdD6FV62Vnf1KyIJVWSDCPhDmyxEXGGz1xAuPy5pHdFzbiB1mfyYtZILMc8
+	 IzlI56A6KhrAzbIhCAhXFAECAEX35WMqJghh+Uzsz/+mWKnNV5Kc8sUtMUi34YoOdTZ58
+	 /WlE8N4WggwX0TdYOLNQFKysGv/z+LAiJLnF5iXJgTaYdzAAJWjsp2Kg2IVbUvIqkrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AlTQsGky;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQLZnpU2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAFB606BA0F;
-	Wed,  4 Nov 2026 22:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C438C606BA1D;
+	Wed,  4 Nov 2026 22:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AlTQsGky
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5671F00A16;
-	Wed,  4 Nov 2026 22:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQLZnpU2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D77C1F000C1;
+	Wed,  4 Nov 2026 22:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793829660;
-	bh=p3tT2U5pbGH1q75DreUvqYOiZ3UM+3qqOWRSXRxZqV0=;
+	s=korg; t=1793829661;
+	bh=CLjX7PuNGAB7TlZv8qXzKbCNDOK0igHh3EyjZ1s6wCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AlTQsGkyKd89Qlq2FkWAOPzZMLXtF4vSfk2LbjdrZa2LR2YXsuj/oOQNQlXkUj6Oc
-	 lEllfEki1o8gINgl60eZEw8jz94uHcpFscZ0ys5l18TztkZRTV0GR29wxhnjtvLG/I
-	 UQ8z6burKHcrTcbvPcOOjGTnTq9a4uG/UttDk9Go=
+	b=IQLZnpU2BHcCJ7H7lUtA8wWIgWJ/ob2wqgzTChyZIsqEwh7V9by879cM8lJ1BApjl
+	 sEh5fVwF6HH3yP7yPt/Btd91BVdsfmHiahCknXYSBW6KMpQwihMLFM0JS1kAR9YGhG
+	 KMmmhVwAqei8NCaCNw3H0F+feJzqU45FJJPR5x8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Esteban Urrutia <esteuwu@proton.me>,
-	Will Deacon <will@kernel.org>,
+	Heiko Schocher <hs@nabladev.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0224/1005] iommu/arm-smmu-qcom: Add SM8450 MDSS compatible
-Date: Wed,  4 Nov 2026 15:59:17 -0500
-Message-ID: <20261104211050.093196702@linuxfoundation.org>
+Subject: [PATCH 6.18 0225/1005] drm/panel: simple: Add Kyocera tcg070wvlq panel
+Date: Wed,  4 Nov 2026 15:59:18 -0500
+Message-ID: <20261104211050.126798687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -69,36 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esteban Urrutia <esteuwu@proton.me>
+From: Heiko Schocher <hs@nabladev.com>
 
-[ Upstream commit d149c8b2c0146a01f1be326ddb1e182b55aee638 ]
+[ Upstream commit 900517da69afca6f72dacf14278aee3b65275507 ]
 
-Add the compatible for the MDSS client on the Snapdragon 8 Gen 1 so it can
-be properly configured by the IOMMU driver.
+Commit 922fb2db0287 ("dt-bindings: display: simple: Add Kyocera
+tcg070wvlq panel") added the compatible string for the Kyocera
+tcg070wvlq panel to the devicetree bindings documentation
+(panel-simple.yaml), but the corresponding entry was not added
+to the panel-simple driver.
 
-Otherwise, there is an unhandled context fault, because the framebuffer is
-already configured in UEFI.
+Add the missing compatible entry to the driver.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Heiko Schocher <hs@nabladev.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260721041935.757240-1-hs@nabladev.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panel/panel-simple.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index f7cb7de80cfb9..b6493e92343be 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -394,6 +394,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,sm6375-mdss" },
- 	{ .compatible = "qcom,sm8150-mdss" },
- 	{ .compatible = "qcom,sm8250-mdss" },
-+	{ .compatible = "qcom,sm8450-mdss" },
- 	{ .compatible = "qcom,x1e80100-mdss" },
- 	{ }
- };
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 878a5dc7748fb..c784f67f58fa4 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -5245,6 +5245,9 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "koe,tx31d200vm0baa",
+ 		.data = &koe_tx31d200vm0baa,
++	}, {
++		.compatible = "kyo,tcg070wvlq",
++		.data = &lg_lb070wv8,
+ 	}, {
+ 		.compatible = "kyo,tcg121xglp",
+ 		.data = &kyo_tcg121xglp,
 -- 
 2.53.0
 
