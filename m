@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831477;
-	b=RziOZwhrYtDMhAu+7UBswxju0KBlt6Q8GpQEUv9khj3UVTIl+W7ZzNA2oK5Ll+gIkerx
-	 +PpBGarCwnsO9FLiu5NQUAU04f4MXELvFT87ee9NQ7/UtaTzQ0CEKuTltYJ5mgU8gj9Ab
-	 tuqAnS8k1XKQswGc2o42f6hp0ah9MBUw19IXja2sa3lb8dB+sTcKUfo2uGu9whW/x0+tp
-	 78r2aJqMshg0ZR9WeV7CIelUj5ZWMhVT0JIKIzEashlm6/g/6Ubro1TucaSUqT64uXJzF
-	 SumOzvSt3kFbwlP72RQI30AlNSaURVhORhcpk8uMLs7ZJ0I1BdIJzCkVBgAAgypNJ+A==
+	t=1793831479;
+	b=mpdx3q5ZtddbnRTBK6vhlrPz1R/P3fEB9ZNDa4FBR42zSLrjLdKgryEn3wMW2fXatdb/
+	 hTr6Y/62tgvNm6ueXNX4F8f3JsRjhqcjNjdW1v9iKMen4vn+Q+py3X/mkaKTJXx6xbD+D
+	 MpMAw2upp05fszUxsofYPlqDOhaZ2cxgfqr7iNbbFfELKQWDcnPRymb78TlLmuIUwEjlK
+	 tk/pMHe6DRJQl5sKxdeCegSuLaZMFDmvFni0ZIRwfEGzCPuofQOx7IxKEWIxFXNYx3EPq
+	 HHGL2ii65YU/4qvqpoRV3W/A3nfH2JwSLP3Uz4h7QB6ec/KhISUa3mI4bnhP45pvoXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EFYWagbdaJ/Dg4ucioCkGic+H7BL5U0AKytV9tydK/k=;
-	b=iJTTyW1Lsrp4aqtnzwaHkIeCN4Ij5ryoMgLGcP0FCvDOv37jhP+OLDx11i6+82BLNPBM
-	 Vc/QNfcre6N+ZRaHC2GTfhbJjko303DeiIbT0iSJx/vdBYAPBQ26DEfIFd6CNFJekH3gE
-	 oVHYiRiuZptlUWj22eYnCnQa36ZRJYNvUwVgkglQnQV9UdbLjyXYLcgd3CkZZ55Xl+VHG
-	 l3V3pgwaYpY9tYBF093ntNPYtuuovcYajxtbfeCZCMHNzSVGY8juDLPFq7c452rL73jFn
-	 9Qoshv+2CtQmF6uzr07iR2T+srbxd8JZSl0eK1a4KPQ0rlCiyIekK2PIfUHFW6fC7ZA==
+	bh=czLHp9PrnxFsvI+8UydVH9QLrkFc0TQX/7c6CkKis8A=;
+	b=sC8M3jagf3E6ACU9JiAaL3vveLqKfwW0I4xxwU7VpPANmNdCDFJBuIfiHdHCpdQAf6sX
+	 C0TIuFNvQBlXZsrEdthZthmkb2M7fnJfpvZbvH6cHtQAtqUrlLQ5gHigk9MzC6fJKwPtA
+	 EKa54mT0MlP/pvbN8P8yhDBkQzkyjYmAu2MWz31TvOawQCJIV4dMja1AHp6u/QM9xsalz
+	 IwHTIk0OZqJ9zdcQPtJexLtdvLeWRjTycGN0gQh6sLjR3qNPqA/uc+ekqhIufqvApWP08
+	 ZwokaigX2wZ9yrbxG94YOt0yobUG+QPiz/Skn8rSwQ+uOF8hEPKS0bJLqYmflsr/KwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JWaGbq5G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upW3NRCr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E75C606AC2A;
-	Wed,  4 Nov 2026 22:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63F4606AC2A;
+	Wed,  4 Nov 2026 22:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JWaGbq5G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0EF1F000C1;
-	Wed,  4 Nov 2026 22:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upW3NRCr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DBB1F000C1;
+	Wed,  4 Nov 2026 22:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831477;
-	bh=EFYWagbdaJ/Dg4ucioCkGic+H7BL5U0AKytV9tydK/k=;
+	s=korg; t=1793831478;
+	bh=czLHp9PrnxFsvI+8UydVH9QLrkFc0TQX/7c6CkKis8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JWaGbq5G3LLKZVmQ/G7YiJlUXUGQSFcbjUYyJd9jDXksf3pLWJ4HUg+IFAbAZaKNx
-	 CVxMRc/lF+hZY28BdWoDBZHZhvqnjlSrilrCyGkbbIo4q/sQ9txXtrJAJ7jga+0UlR
-	 iCF3T7d6TOd6PqIT8WbObljounIvwnQAyZtxCcrs=
+	b=upW3NRCraEKTU02v4hg9ZW3fWLKTYL3vy6VbeHz7W/SBqpk0fckzSAzs9Yd1YPd8Y
+	 QCe5hyN46agT1PVd9uicjvvEc5t8y+EdZpNZ2WiPkzVw0NqjRLMbbiS7jWFG97Le/c
+	 KVYm4FbaE7q9oCwXsd8nx+cuRf771MrED77D8qMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 0728/1005] media: s5p-mfc: use timer_shutdown_sync() for the self-rearming watchdog
-Date: Wed,  4 Nov 2026 16:07:41 -0500
-Message-ID: <20261104211103.891532101@linuxfoundation.org>
+	Imre Kaloz <kaloz@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 6.18 0729/1005] mm/slab: sample slab_state once in kmem_cache_destroy()
+Date: Wed,  4 Nov 2026 16:07:42 -0500
+Message-ID: <20261104211103.919931456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,58 +69,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Imre Kaloz <kaloz@kernel.org>
 
-commit 63069b5917cba2e15b1a78b3f4ff99e45102c56f upstream.
+commit 088bfdc0d7947d623f4899b9011c866e4445074d upstream.
 
-The MFC watchdog timer (s5p_mfc_watchdog) is self-rearming: every
-callback re-arms itself with add_timer() and, on a timeout, schedules
-watchdog_work. s5p_mfc_remove() tears this down with timer_delete_sync()
-followed by flush_work().
+kmem_cache_release() tests slab_state >= FULL after kmem_cache_destroy()
+has dropped slab_mutex and unlinked the cache, and for a
+SLAB_TYPESAFE_BY_RCU cache after rcu_barrier(). If slab_late_init() runs
+before that test it sets slab_state to FULL but skips the unlinked cache,
+which never got a sysfs entry, so sysfs_slab_release() calls kobject_put()
+on a kobject that was never initialized:
 
-timer_delete_sync() dequeues the timer and waits for a callback that is
-already running, but it does not prevent a subsequent re-arm. Because the
-watchdog callback re-arms via add_timer(), this is the wrong shutdown
-primitive: once the wait returns nothing guarantees a just-queued re-arm
-will not fire later, dereferencing dev (clock on/off, deinit_hw,
-load_firmware, init_hw) after video_unregister_device(), DMA teardown and
-s5p_mfc_final_pm() have run, a potential use-after-free.
+  WARNING: lib/kobject.c:734 at kobject_put+0x64/0x2c0, CPU#1: kworker/u8:3/55
+  kobject: '(null)' ((____ptrval____)): is not initialized, yet kobject_put() is being called.
+  refcount_t: underflow; use-after-free.
+  kobject_put+0x64/0x2c0
+  sysfs_slab_release+0xc/0x20
+  kmem_cache_destroy+0x104/0x1e0
+  bioset_exit+0x13c/0x1e0
+  disk_release+0x54/0x140
+  put_disk+0x18/0x40
+  floppy_async_init+0xbec/0xd10
 
-Use timer_shutdown_sync(), which puts the timer into a shutdown state so
-that any add_timer()/mod_timer() from the callback becomes a no-op and no
-later firing is possible. Switch flush_work() to cancel_work_sync() so any
-watchdog_work that was already queued before the timer was stopped is
-cancelled rather than allowed to run to completion against the torn-down
-device.
+slab_state >= FULL asks whether the cache has a kobject, which cache
+creation skips while slab_state <= UP. UP is the state just below FULL,
+so a false sample cannot skip a kobject_put() that was owed.
 
-This issue was found by an in-house static analysis tool. No runtime
-reproducer is available.
+Seen on sparc64 at boot, where the asynchronous floppy init tears down
+its bio slab while the late initcalls are running.
 
-Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
+Sample slab_state once, under slab_mutex which slab_late_init() holds
+when it sets FULL, and use the result for both the unlink and the
+release.
+
+The history of this problem dates back to v3.2:
+
+  Commit 69cb8e6b7c29 ("slub: free slabs without holding locks") in
+  v3.2 moved sysfs_slab_remove() outside slub_lock and introduced
+  a race condition between kmem_cache_destroy() and slab_sysfs_init().
+
+  Commit 945cf2b6199be ("mm/sl[aou]b: Extract a common function for
+  kmem_cache_destroy") in v3.7 accidentally closed the race while
+  extracting a common implementation for kmem_cache_destroy().
+
+  Commit 5413dfba88d6 ("slub: drop mutex before deleting sysfs entry")
+  in v3.8 re-opened the race by dropping slab_mutex around
+  sysfs_slab_remove() in __kmem_cache_shutdown(), to avoid a lockdep
+  splat between slab_mutex and the sysfs lock.
+
+  Commit 657dc2f97220 ("slab: remove synchronous rcu_barrier() call in
+  memcg cache release path") in v4.11 shifted from synchronous
+  rcu_barrier() to asynchronous RCU work for SLAB_TYPESAFE_BY_RCU caches.
+  That commit, again, accidentally closed the race by moving
+  sysfs_slab_release() to shutdown_cache(), but only for
+  !SLAB_TYPESAFE_BY_RCU caches because destruction of
+  SLAB_TYPESAFE_BY_RCU caches is done in an RCU work.
+
+  Commit 0495e337b703 ("mm/slab_common: Deleting kobject in
+  kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock") in
+  v6.0 re-introduced the race for !SLAB_TYPESAFE_BY_RCU caches.
+
+Fixes: 69cb8e6b7c29 ("slub: free slabs without holding locks")
+Fixes: 5413dfba88d6 ("slub: drop mutex before deleting sysfs entry")
+Fixes: 0495e337b703 ("mm/slab_common: Deleting kobject in kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock")
 Cc: stable@vger.kernel.org
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://patch.msgid.link/20261014150844.8536-1-kaloz@kernel.org
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/slab_common.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-@@ -1474,8 +1474,8 @@ static void s5p_mfc_remove(struct platfo
- 	}
- 	mutex_unlock(&dev->mfc_mutex);
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -498,10 +498,10 @@ EXPORT_SYMBOL(kmem_buckets_create);
+  * and release of the kobject does not need slab_mutex or cpu_hotplug_lock
+  * protection. So they are now done without holding those locks.
+  */
+-static void kmem_cache_release(struct kmem_cache *s)
++static void kmem_cache_release(struct kmem_cache *s, bool sysfs_ready)
+ {
+ 	kfence_shutdown_cache(s);
+-	if (__is_defined(SLAB_SUPPORTS_SYSFS) && slab_state >= FULL)
++	if (__is_defined(SLAB_SUPPORTS_SYSFS) && sysfs_ready)
+ 		sysfs_slab_release(s);
+ 	else
+ 		slab_kmem_cache_release(s);
+@@ -516,6 +516,7 @@ void slab_kmem_cache_release(struct kmem
  
--	timer_delete_sync(&dev->watchdog_timer);
--	flush_work(&dev->watchdog_work);
-+	timer_shutdown_sync(&dev->watchdog_timer);
-+	cancel_work_sync(&dev->watchdog_work);
+ void kmem_cache_destroy(struct kmem_cache *s)
+ {
++	bool sysfs_ready;
+ 	int err;
  
- 	video_unregister_device(dev->vfd_enc);
- 	video_unregister_device(dev->vfd_dec);
+ 	if (unlikely(!s) || !kasan_check_byte(s))
+@@ -563,10 +564,18 @@ void kmem_cache_destroy(struct kmem_cach
+ 
+ 	list_del(&s->list);
+ 
++	/*
++	 * slab_late_init() sets slab_state to FULL under slab_mutex and adds
++	 * sysfs entries only for caches still on the list. Sample the state
++	 * here, so that a cache unlinked before that point is not handed to
++	 * sysfs_slab_release() with an uninitialized kobject.
++	 */
++	sysfs_ready = slab_state >= FULL;
++
+ 	mutex_unlock(&slab_mutex);
+ 	cpus_read_unlock();
+ 
+-	if (slab_state >= FULL)
++	if (sysfs_ready)
+ 		sysfs_slab_unlink(s);
+ 	debugfs_slab_release(s);
+ 
+@@ -576,7 +585,7 @@ void kmem_cache_destroy(struct kmem_cach
+ 	if (s->flags & SLAB_TYPESAFE_BY_RCU)
+ 		rcu_barrier();
+ 
+-	kmem_cache_release(s);
++	kmem_cache_release(s, sysfs_ready);
+ }
+ EXPORT_SYMBOL(kmem_cache_destroy);
+ 
 
 
