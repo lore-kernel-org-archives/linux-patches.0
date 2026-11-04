@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827024;
-	b=3/DmyyRsbnrFjNBI0CDv5i0eu+PMYFdeo25EO0jx27+0A6treF1lOpQnMpKc/D/hGzMf
-	 89a9R1T3gtDYRE9WNFZN+BY4jLyi7UoX4ctZLfJ+z9wOvCGJWjDaaBcXXCeOgoKGP2XFf
-	 xEyla7AxX7vOTPGXNVnYIcfx7vBR7Rvzwmd6nupDJcI4RfRqxa6CwIY8ggPppNo+oju4N
-	 Re3yk5Vt28xS9xOvASqeOB2TRGzdqcLADkf3dsKFXU4BGKHew8fJm2BovPheqITUWipf6
-	 /kULPnkWyoZBGQ/5RBHDnPdU38lGihUq/1KJehD5PmLMz5JJAqNT8wR1lpZQuLD6P4A==
+	t=1793827026;
+	b=oThboCOPz3chzKvsHajE+UKcJq3pnmXZL0t+t4929ttCTjJfk1ok/6W5U/NbZ4dDBZKW
+	 RCK0aXcbc1FqOrOV3eQfPZQMrbudXz90RrHCY4wXRle1ci4AqdGPqlXYRIsDcSmBzZK17
+	 MjQL/W/v5wIBvM3fRTrRNhsPzc7cuICUPmUSiPzOgnQkJPj1+ML+5RQovm6CAguI+Szug
+	 /v/pnk81x2iQDHpNKG0XFYFSv3HYjN43WSSeXxlHq9IdgYjid3W4D7Tc8xUPjTHP/5Ied
+	 m7p4kHiTh8b1GNFBIb6Jeg4eXZNTTR2gOIHcHngnUEp48nRTHlmbWAvnRiMKP8jFpyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827024;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793827026;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+ptqqpyAfD4vhW/hBgj6QX2AedPWcXh9cL98X4KtnJQ=;
-	b=48KKYuWOBy1WRsIHmGpr65iB5GelibBo5Xhg2I+rrzJ7vp+6Mf1eDbPZJ0sE1JSGPz3T
-	 aYzBP/kF/pSOagg1PgMxsAeHB9c3MXU/QxqOGGYd7/DPPg1QYFT6EXK8dlbcdp4DlEGQk
-	 3KCqQi0FgmCRO6/qQSovnIoifyv05e5VJx0KY4Dynw4xfW/6jUm8HhjLyv605nqI9LdxO
-	 E6ecK/Qp4aGaoQ3fWptaM03pQHhO36smKPSYnmzwY7PBWCgcUPmcFzdO87KaYASoDSRxy
-	 0lrYpzJo3g61W0yNbPhjZtLGujZccRRoDt7Vs0/mLjAivsS+4iPdhFwM1E4ELA1Ei1w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=pv09KNf04NaAk5A0cAyuZw5dClmLNLk7SnSV1QkpKm4=;
+	b=Zj40PEIJTJSit5Wbpew7RUDSt0NUBu9lg564B9Jb/+8EVklg69yCxJSd2PW776kbZFG6
+	 AvPfqfzms7dlfC6KHyocrpTdc7FeQ1Gg9z9ucsvS+nwy7iv1Yd8dfgdcIB125pKERpmZ7
+	 vt7WOSxu+gsBzMb7KtEAg3GW57Wf9vGROCZVQf9rRQ/6qZ+sltJdHjV2Gb2gPiun2g1L3
+	 bCAE9s5qXq2c+Bbht8ux10hgy7mW92SL2dlaALl6WrPgnH555Uua+8scjxl0sGv9xIY2t
+	 MWpRrGYOB+TslK0d4TKz+Pl4XE19a3liHhtTH/imnlf/i6hfnp8SXgpG5PUA9iFUAHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAIiZrsh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zP8dQaP9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95390606A86B;
-	Wed,  4 Nov 2026 21:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41303606A86B;
+	Wed,  4 Nov 2026 21:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAIiZrsh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3023E1F00A02;
-	Wed,  4 Nov 2026 21:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zP8dQaP9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9371F00A02;
+	Wed,  4 Nov 2026 21:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793827024;
-	bh=+ptqqpyAfD4vhW/hBgj6QX2AedPWcXh9cL98X4KtnJQ=;
+	s=korg; t=1793827026;
+	bh=pv09KNf04NaAk5A0cAyuZw5dClmLNLk7SnSV1QkpKm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAIiZrsh9GAPE07lW7t1GRHCr7Mvm+wg8I9v7Jn0I/fWvzB4NvS0FSvuLBcR0sRre
-	 2E4rc6BoNjEEdghEWhLGAs6Tk3M2njQRMBGcFWU7tQgsR9c+LGimwSA4DeP9tjd8+g
-	 kljyk+Sa/12LNTULaZPV0DByjEurPrZnl8yuSljU=
+	b=zP8dQaP9XNj9VqJLaIXTrs/iHs551gAEdS7yu7zNw0/PCqop1ut0yMxfMqS3d06fz
+	 TF8/2Ggp4J5EXjzpc/gHEQaqkIUc7zqygj1eE9/q7sbmE77pT0lMim5W6runOMtH6X
+	 ObFxxW/6+x7BjEX5rvOWqOiUS5HH6niUbJ85+Amw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.3 150/547] PM: EM: Fix use-after-free of perf domain in netlink doit handlers
-Date: Wed,  4 Nov 2026 16:05:34 -0500
-Message-ID: <20261104211042.426602251@linuxfoundation.org>
+	Hugo Baigue <hugobaigue2004@gmail.com>,
+	Denis Benato <denis.benato@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 7.3 151/547] platform/x86: asus-wmi: fix use-after-free unregistering kbd_led led
+Date: Wed,  4 Nov 2026 16:05:35 -0500
+Message-ID: <20261104211042.453099561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -62,266 +62,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Denis Benato <denis.benato@linux.dev>
 
-commit f58dacfbadb7be7c7dbb2b95e9341ad56710849e upstream.
+commit 639bc2254816b7c4e7a9801a7b3aa71bfa3f915c upstream.
 
-The doit handlers dropped em_pd_list_mutex before dereferencing the
-perf domain, so a concurrent device unregister could free it while the
-reply was being built.
+kbd_led_update_all() registers asus->kbd_led with
+devm_led_classdev_register() on the platform device, but kbd_led is
+embedded in struct asus_wmi, which asus_wmi_remove() frees at its end.
+The driver core calls .remove() before devres_release_all(), so the
+deferred devres release runs led_classdev_unregister() on memory that
+has already been freed. Whether that faults depends on whether the
+slab has been reused in between, which makes the crash on module
+unload intermittent and silently corrupts the led classdev state in
+the remaining runs.
 
-Encode the reply from em_perf_domain_for_id() callbacks, which run
-under the mutex, and allocate the skb outside of it, like the dumpit
-path already does.
+Unregister the led classdev explicitly in asus_wmi_led_exit(), after
+the led workqueue has been destroyed: kbd_led_work can then neither
+run nor be queued anymore, since asus_ref.asus is NULL too, so
+kbd_led_registered is stable and the classdev can be released while
+the memory embedding it is still alive. devm_led_classdev_unregister()
+also drops the devres entry, leaving nothing to run at unbind cleanup
+time; it warns when no devres entry exists, hence the
+kbd_led_registered check.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 380ff27af25e ("PM: EM: Add dump to get-perf-domains in the EM YNL spec")
-Fixes: f2d2946eaa5c ("PM: EM: Implement em_nl_get_pd_table_doit()")
-Cc: All applicable <stable@vger.kernel.org>
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260922081052.321581-1-fanwu01@zju.edu.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: fac55d29581f ("platform/x86: asus-wmi: Add support for multiple kbd led handlers")
+Closes: https://lore.kernel.org/all/CAO84+x+P2_xyHP89+nGVSMV6bL+dy0P9=vyEEfZGnFhv0hBNWw@mail.gmail.com
+Reported-by: Hugo Baigue <hugobaigue2004@gmail.com>
+Tested-by: Hugo Baigue <hugobaigue2004@gmail.com>
+Cc: stable@vger.kernel.org
+Assisted-by: zcode:glm-5.3-flash
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
+Link: https://patch.msgid.link/20260915172608.14234-1-denis.benato@linux.dev
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/em_netlink.c   |  122 +++++++++++++++++++++++++++-----------------
- kernel/power/em_netlink.h   |    8 +-
- kernel/power/energy_model.c |    8 +-
- 3 files changed, 87 insertions(+), 51 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/kernel/power/em_netlink.c
-+++ b/kernel/power/em_netlink.c
-@@ -95,41 +95,62 @@ static int __em_nl_get_pd_for_dump(struc
- 	return ret;
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index c2af1f049b67..0eb43ca44119 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -2088,6 +2088,18 @@ static void asus_wmi_led_exit(struct asus_wmi *asus)
+ 
+ 	if (asus->led_workqueue)
+ 		destroy_workqueue(asus->led_workqueue);
++
++	/*
++	 * kbd_led is registered lazily by kbd_led_work: now that the
++	 * workqueue is destroyed and asus_ref.asus is NULL, the work can
++	 * neither run nor be queued anymore, furthermore leaving it to
++	 * devres would run the unregister from devres_release_all(),
++	 * after .remove() returned and the struct asus_wmi embedding
++	 * kbd_led has been freed.
++	 */
++	if (asus->kbd_led_registered)
++		devm_led_classdev_unregister(&asus->platform_device->dev,
++					     &asus->kbd_led);
  }
  
-+struct em_nl_doit_ctx {
-+	struct genl_info *info;
-+	int cmd;
-+	struct sk_buff *msg;
-+};
-+
-+static int __em_nl_get_pd_doit_fill(struct em_perf_domain *pd, void *data)
-+{
-+	struct em_nl_doit_ctx *ctx = data;
-+	void *hdr;
-+
-+	hdr = genlmsg_put_reply(ctx->msg, ctx->info, &dev_energymodel_nl_family, 0,
-+				ctx->cmd);
-+	if (!hdr)
-+		return -EMSGSIZE;
-+
-+	if (__em_nl_get_pd(pd, ctx->msg)) {
-+		genlmsg_cancel(ctx->msg, hdr);
-+		return -EMSGSIZE;
-+	}
-+
-+	genlmsg_end(ctx->msg, hdr);
-+	return 0;
-+}
-+
- int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
--					      struct genl_info *info)
-+					     struct genl_info *info)
- {
--	int id, ret = -EMSGSIZE, msg_sz = 0;
--	int cmd = info->genlhdr->cmd;
--	struct em_perf_domain *pd;
-+	struct em_nl_doit_ctx ctx = {
-+		.info = info,
-+		.cmd = info->genlhdr->cmd,
-+	};
- 	struct sk_buff *msg;
--	void *hdr;
-+	int id, ret, msg_sz = 0;
- 
- 	if (!info->attrs[DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID])
- 		return -EINVAL;
- 
- 	id = nla_get_u32(info->attrs[DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID]);
--	pd = em_perf_domain_get_by_id(id);
--	if (!pd)
--		return -EINVAL;
- 
--	__em_nl_get_pd_size(pd, &msg_sz);
-+	/* Encode under em_pd_list_mutex, like the dumpit path. */
-+	ret = em_perf_domain_for_id(id, __em_nl_get_pd_size, &msg_sz);
-+	if (ret)
-+		return ret;
-+
- 	msg = genlmsg_new(msg_sz, GFP_KERNEL);
- 	if (!msg)
- 		return -ENOMEM;
- 
--	hdr = genlmsg_put_reply(msg, info, &dev_energymodel_nl_family, 0, cmd);
--	if (!hdr)
--		goto out_free_msg;
--
--	ret = __em_nl_get_pd(pd, msg);
-+	ctx.msg = msg;
-+	ret = em_perf_domain_for_id(id, __em_nl_get_pd_doit_fill, &ctx);
- 	if (ret)
--		goto out_cancel_msg;
--	genlmsg_end(msg, hdr);
-+		goto out_free_msg;
- 
- 	return genlmsg_reply(msg, info);
- 
--out_cancel_msg:
--	genlmsg_cancel(msg, hdr);
- out_free_msg:
- 	nlmsg_free(msg);
- 	return ret;
-@@ -148,19 +169,6 @@ int dev_energymodel_nl_get_perf_domains_
- 	return for_each_em_perf_domain(__em_nl_get_pd_for_dump, &ctx);
- }
- 
--static struct em_perf_domain *__em_nl_get_pd_table_id(struct nlattr **attrs)
--{
--	struct em_perf_domain *pd;
--	int id;
--
--	if (!attrs[DEV_ENERGYMODEL_A_PERF_TABLE_PERF_DOMAIN_ID])
--		return NULL;
--
--	id = nla_get_u32(attrs[DEV_ENERGYMODEL_A_PERF_TABLE_PERF_DOMAIN_ID]);
--	pd = em_perf_domain_get_by_id(id);
--	return pd;
--}
--
- static int __em_nl_get_pd_table_size(const struct em_perf_domain *pd)
- {
- 	int id_sz, ps_sz;
-@@ -245,34 +253,58 @@ out_err:
- 	return -EMSGSIZE;
- }
- 
-+static int __em_nl_get_pd_table_size_cb(struct em_perf_domain *pd, void *data)
-+{
-+	*(int *)data = __em_nl_get_pd_table_size(pd);
-+	return 0;
-+}
-+
-+static int __em_nl_get_pd_table_doit_fill(struct em_perf_domain *pd,
-+					  void *data)
-+{
-+	struct em_nl_doit_ctx *ctx = data;
-+	void *hdr;
-+
-+	hdr = genlmsg_put_reply(ctx->msg, ctx->info, &dev_energymodel_nl_family, 0,
-+				ctx->cmd);
-+	if (!hdr)
-+		return -EMSGSIZE;
-+
-+	if (__em_nl_get_pd_table(ctx->msg, pd))
-+		return -EMSGSIZE;
-+
-+	genlmsg_end(ctx->msg, hdr);
-+	return 0;
-+}
-+
- int dev_energymodel_nl_get_perf_table_doit(struct sk_buff *skb,
--					    struct genl_info *info)
-+					   struct genl_info *info)
- {
--	int cmd = info->genlhdr->cmd;
--	int msg_sz, ret = -EMSGSIZE;
--	struct em_perf_domain *pd;
-+	struct em_nl_doit_ctx ctx = {
-+		.info = info,
-+		.cmd = info->genlhdr->cmd,
-+	};
- 	struct sk_buff *msg;
--	void *hdr;
-+	int id, ret, msg_sz;
- 
--	pd = __em_nl_get_pd_table_id(info->attrs);
--	if (!pd)
-+	if (!info->attrs[DEV_ENERGYMODEL_A_PERF_TABLE_PERF_DOMAIN_ID])
- 		return -EINVAL;
- 
--	msg_sz = __em_nl_get_pd_table_size(pd);
-+	id = nla_get_u32(info->attrs[DEV_ENERGYMODEL_A_PERF_TABLE_PERF_DOMAIN_ID]);
-+
-+	ret = em_perf_domain_for_id(id, __em_nl_get_pd_table_size_cb, &msg_sz);
-+	if (ret)
-+		return ret;
- 
- 	msg = genlmsg_new(msg_sz, GFP_KERNEL);
- 	if (!msg)
- 		return -ENOMEM;
- 
--	hdr = genlmsg_put_reply(msg, info, &dev_energymodel_nl_family, 0, cmd);
--	if (!hdr)
--		goto out_free_msg;
--
--	ret = __em_nl_get_pd_table(msg, pd);
-+	ctx.msg = msg;
-+	ret = em_perf_domain_for_id(id, __em_nl_get_pd_table_doit_fill, &ctx);
- 	if (ret)
- 		goto out_free_msg;
- 
--	genlmsg_end(msg, hdr);
- 	return genlmsg_reply(msg, info);
- 
- out_free_msg:
---- a/kernel/power/em_netlink.h
-+++ b/kernel/power/em_netlink.h
-@@ -12,7 +12,8 @@
- #if defined(CONFIG_ENERGY_MODEL) && defined(CONFIG_NET)
- int for_each_em_perf_domain(int (*cb)(struct em_perf_domain*, void *),
- 			    void *data);
--struct em_perf_domain *em_perf_domain_get_by_id(int id);
-+int em_perf_domain_for_id(int id, int (*cb)(struct em_perf_domain *, void *),
-+			  void *data);
- void em_notify_pd_created(const struct em_perf_domain *pd);
- void em_notify_pd_deleted(const struct em_perf_domain *pd);
- void em_notify_pd_updated(const struct em_perf_domain *pd);
-@@ -24,9 +25,10 @@ int for_each_em_perf_domain(int (*cb)(st
- 	return -EINVAL;
- }
- static inline
--struct em_perf_domain *em_perf_domain_get_by_id(int id)
-+int em_perf_domain_for_id(int id, int (*cb)(struct em_perf_domain *, void *),
-+			  void *data)
- {
--	return NULL;
-+	return -EINVAL;
- }
- 
- static inline void em_notify_pd_created(const struct em_perf_domain *pd) {}
---- a/kernel/power/energy_model.c
-+++ b/kernel/power/energy_model.c
-@@ -1031,7 +1031,9 @@ int for_each_em_perf_domain(int (*cb)(st
- 	return 0;
- }
- 
--struct em_perf_domain *em_perf_domain_get_by_id(int id)
-+/* Run @cb on the matching domain with em_pd_list_mutex held. */
-+int em_perf_domain_for_id(int id, int (*cb)(struct em_perf_domain *, void *),
-+			  void *data)
- {
- 	struct em_perf_domain *pd;
- 
-@@ -1040,9 +1042,9 @@ struct em_perf_domain *em_perf_domain_ge
- 
- 	list_for_each_entry(pd, &em_pd_list, node) {
- 		if (pd->id == id)
--			return pd;
-+			return cb(pd, data);
- 	}
- 
--	return NULL;
-+	return -EINVAL;
- }
- #endif
+ static int asus_wmi_led_init(struct asus_wmi *asus)
+-- 
+2.56.0
+
 
 
