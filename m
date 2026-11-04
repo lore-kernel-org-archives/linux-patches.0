@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831749;
-	b=X4UurVg3Rbd4jns2Ly2F5cpO2J6Oq+/XqOeV0/5+FGUbzVFPCVuyJhLv+1akkQ526UNs
-	 xb7TCMkRurSffm1Fl/FnMNWVTu+am6hIkjt+FZLoEBtEcNo0lBeJUwdBqDSewuSal5eBn
-	 Cbnd9wK459VGwwoKwKsjG3K3Azznl9yb2fiZA0tjdkD4RkDz26s7E2fQS+ug7xgaDThY+
-	 rzzwM1hg774yiStana68y3odd24ZXbKS471ZAV98bG7DaVbPU3Z894uZuo7IJmcRcGdNz
-	 QPXqKFuXbaEzURD7CQSy9QDaGf0fyyZOKvKpGNCDwrckZttXRj8Ka26mykGczDCY6Ig==
+	t=1793831750;
+	b=M60+DN9w8ICWbLLeQWWbquTcUdy1GGr1y686Jnj45mkbz4b6edADekabZrf0LrNu8Y+j
+	 LL48Z69Sr9dgKXFuuWnbT1fdK9HcDVVI/bubkJhXg9wqqWLwoFBXSrbL/DNSpmGVffH8b
+	 zGfY46CvDepRtltPT0p+XCDs/qEaQIRHOjIwt04Yza8UMjmVy3KBbQsQnBz+6I0KS48mT
+	 2WmBDEVYRtUpv956aKb+1i1CumQ+dzn1GqqXx0UhW8u+P8F9RaNtyWdgVaujQ7Z3ODzEj
+	 ZCxGZ+HKZj8KM0Hzx3R/29pGNPTWgepCl/eN0N+lB2tTt7nMWtEHVDISfsmsMV1ZLIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831749;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831750;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EKk+aS1F+iWRPjo7U382UZZqjQtmHHBDBci8iTA/+YE=;
-	b=d41tG2WSf20AGHCci5N7qedfB6QrLcdrrJzlQKWipHFErEZ9cdidFY90kjB4fu7R8kNi
-	 y4r1ulGa3Q9MUWR+99U6e71T2pI9zeBpBTepfKGgDbsZeEBErmLZZv0WdVM0SjmOaxz69
-	 TjKP2NvuDmBryqio8IkScWz4/bBeIln21AiRxdiDQKNt1mrod1SGis3xFpHPV+B2M+5e7
-	 5rH3kohlIHXeEnvG+eoHr9or3PptY3FXFprL6ixxzCnTYTOCpw37HKXXgg0q/jJbXuY3R
-	 3KWkgwThk691+906wfpyx3ayFROxzjPN70mczwUPHp4bkyTexPMAnnhR9Ow7ePoyNIQ==
+	bh=885e3uHrBclvmzn7an/RvTpD4Ow6ydBNRvYB0uO/ltQ=;
+	b=RyFxCemzpwxi/ZcwkkKVOVeqwt9u4SDDp1p6WT0t7kGCzAdv3KZWRYfk4K4FugT0c03N
+	 Ne/+YDvXL1ikYbvYMklk6TO6P/hWzO3A32It+sihHmcs6IrXYjAkGcU0tZeVvgHWnmRwx
+	 ivmZBQ5iQjIM5C8eEg5qJ96IgadJJJ48XErCfxKayXYEATTtLDfaNNoMjE+T3CKejE2YV
+	 LEPVUSr5cx3HHF6TCq8zl/J0ZhkDsPQAcct/nWEwZ9kajTMvABMW/2Y1Ur9SDhG4fmDz/
+	 dkJw7RdSr3ETm37x6D/tbYUFZbjQLTyRHgF4dRxGBC3CK7gjNIQualo7vWpR126W8rA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l6k2SMyK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7AP4v8+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3946606A31B;
-	Wed,  4 Nov 2026 22:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B99606A31B;
+	Wed,  4 Nov 2026 22:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l6k2SMyK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166441F000C1;
-	Wed,  4 Nov 2026 22:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7AP4v8+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D071B1F00A16;
+	Wed,  4 Nov 2026 22:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831748;
-	bh=EKk+aS1F+iWRPjo7U382UZZqjQtmHHBDBci8iTA/+YE=;
+	s=korg; t=1793831750;
+	bh=885e3uHrBclvmzn7an/RvTpD4Ow6ydBNRvYB0uO/ltQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l6k2SMyK9yPOwf9Cpvo80waN1ZWQlIb1Sdk++eEsJeztY4cWhHwFi0TOWWF2TiXIw
-	 9SSdACiWTaHDXWcO0pdkeaN4VqD59vi9hv0zVVaAptxC16o5fSkf8vxZGbW2OfIMnl
-	 XIsBbQkyz3k0UXIHKc4+fbJulQPKvGgzrIa2kKlA=
+	b=l7AP4v8+SQgHgS3xH+Q4wXPL7H5rqrC7WQqrFSRGeQXUm9XY2+FiBQdL2yOtuUbRe
+	 mgkdvX+qqR6KreD7d5mpBFJ1+cGsyoYnTkGPc6kxtRoUUPLc1GBxucc78AFmxPz7X4
+	 16EkMcAEP1KN7TRWpFZewU4iqjb8rDbokCG24lmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0844/1005] xfs: clear set[ug]id mode bits when zapping attr fork
-Date: Wed,  4 Nov 2026 16:09:37 -0500
-Message-ID: <20261104211106.962349918@linuxfoundation.org>
+Subject: [PATCH 6.18 0845/1005] xfs: complain loudly when dirtree checker finds broken links
+Date: Wed,  4 Nov 2026 16:09:38 -0500
+Message-ID: <20261104211106.989052756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,39 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit eb20a959760c21e3547cd811d0d9b0b29df98959 upstream.
+commit e09438cab72c2c6a32665829d4186155346bfee8 upstream.
 
-LOLLM observes that zapping a file's attr fork could result in ACLs
-being removed from the file.  Because we have no idea what we're
-deleting, we should clear the setuid and setgid bits in addition to the
-access mode bits so that nobody can access the file.
+LOLLM observed that the directory tree walk code bails out if it finds
+broken parent pointers along the way.  However, it flattens the return
+code to zero, which means that we can end up in the repair code having
+not completed the scan.  We should never proceed with a repair in this
+state, so let's mark the scrub incomplete and exit.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: e744cef2060559 ("xfs: zap broken inode forks")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 928b721a11789a ("xfs: teach online scrub to find directory tree structure problems")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/inode_repair.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/dirtree.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/inode_repair.c
-+++ b/fs/xfs/scrub/inode_repair.c
-@@ -1307,7 +1307,12 @@ xrep_dinode_zap_afork(
- 	 */
- 	if (dip->di_format != XFS_DINODE_FMT_BTREE)
- 		dip->di_forkoff = 0;
--	dip->di_mode = cpu_to_be16(mode & ~0777);
-+
-+	/*
-+	 * Zapping the attr fork could remove ACLs, so we clear suid/sgid and
-+	 * all access mode bits.
-+	 */
-+	dip->di_mode = cpu_to_be16(mode & ~(S_ISUID | S_ISGID | 0777));
- 	dip->di_uid = 0;
- 	dip->di_gid = 0;
- }
+--- a/fs/xfs/scrub/dirtree.c
++++ b/fs/xfs/scrub/dirtree.c
+@@ -860,7 +860,8 @@ xchk_dirtree_find_paths_to_root(
+ 				 * A parent pointer of @sc->ip is bad, don't
+ 				 * bother continuing.
+ 				 */
+-				break;
++				xchk_set_incomplete(sc);
++				return error;
+ 			}
+ 			if (error == -ESTALE) {
+ 				/* This had better be an invalidation. */
+@@ -981,6 +982,7 @@ xchk_dirtree(
+ 		 * parent pointers are corrupt; this scan cannot be completed
+ 		 * without full information.
+ 		 */
++		xchk_set_incomplete(sc);
+ 		xchk_ip_xref_set_corrupt(sc, sc->ip);
+ 		error = 0;
+ 		goto out_scanlock;
 
 
