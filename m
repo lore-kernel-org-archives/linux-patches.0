@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793828959;
-	b=glHrbcgkXXOXdcPxOaJqvBiaBEClLxsr9q7E4635FUCi65fcd9CnyyQ0qZBBFuysS1Q/
-	 ceY/9pu7/x5M2/EMo+y9PRmLGwMDmS0r8o0wf3KwPGP8rWpDNrTl9nzUMxuwC//lTcJtp
-	 cSbSpYvEy8VVu0XCK+zFqNg3wRYgzuHwpXoBwQRnOBvYtpfI9QOH8Q+3nzB579COqcsc6
-	 KkJZgBHbUlD2w/uQfHLmiGSHrgVA3u9rzMIDjz2Z0Zj+y+o7pQ9GWaDsHH8Vl2J/eFQKO
-	 KBnJQef2Foi32VZKrKMiw9uw0jnHQBQLnGRu4GAAy5gVdHsf9lezzUt8+YiJaGb5MHw==
+	t=1793828960;
+	b=ND9lh95uetmlrgMmz23n3HiB3bSpWjl331/TJbBTthrG5W4vk25M9nAH82AbOqQ/O6u9
+	 1jLSj1MzYW1iuGtYMXcWnDw39SgAJTKt7BTAKcWjfjw9aJgpSnV/4gT28+rJHfhavpx/c
+	 aDeoB3yZcouUVRYIXtv8qs7YKxkuYZXbC07y8+aqD2AJfa+g2teWh2HPh68RGw6m7q/sR
+	 K0E2pIz5JWYQHuMgrdFfdvcq4Iry1Z+LgusOe80hEaB7sYAckX4qllU/kwUed+eiqwEnH
+	 WpiE+joykeepdogZCLJENOQE6vp1yVAEcGUEJxlzlgmd29z/CCJsSYwq5a3sSC4jsKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793828959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qYoYGedmB1lkZFVI2fjj1KajB5XHxaVSpKYmIfTuwmw=;
-	b=bBN2VbNBRqpIJqUVCiFXnvasGlUURt2DjIH0PCVVZoKAtdOl5mQoIiP9HgnzkguhYwLd
-	 hdA5hZlE/6As+NL+NX5oL0oRpjMFRa6wcPzFryKM0aH/IELWmrsakIOcU6Mr+WnMK0DIk
-	 NsuLjK+izMFfRQtTZRv6djn63NICu43dYaCJ/fMxfK0jaHBBkEpRLZfGVruonixWBhMHb
-	 M55XPfFtbYZ6lmRuRSinrtJDiYSFckfofjXau74zzaaZOYLLDOs7dwSbqu9fZgc6/ZGub
-	 utThJAuCwAjPEwbbGFkcIzUr43cPIVIwRWTgw+aypUC9Gr9VhHxtm03tJy+dt0BGvfw==
+	bh=R1XvKuY0EAevieHitWbZNYQnwD8vYPXcwkjLYJsul2Q=;
+	b=HBkd+joWj85CnkCCXRBaaTLkqr6CjonsjsX2nStbx0uMHTv61sQJ9FJx7YXqOzxrxEiy
+	 fP3dKH9RUtkZypDNHTdoRl7klAQaZkqYEORkDGWgAlR15/ptz4rnyMi1qNYRL7/sPqL+J
+	 nMy1Rf4V/ByF3OAeVOMmyNAquP2WEG6wWTBSr3jhjsCyf4SmHRMxNqpeakpehPOZrzmB+
+	 8Vizby5EwbKwGW8b9ypR+L4/gDIjVkMxM0tuRZ3jhbsQhLEREXWGOKsC5OKoH+ycGtt1V
+	 yGvolAenc5iqwTQrUpIpAAlnGTcN+zyglVt7h3bRd0sPiysWG/lXfFHMNAqahLZtjZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqwfb8uo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XDKEcUUp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A72E607E4B9;
-	Wed,  4 Nov 2026 21:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51BC6070740;
+	Wed,  4 Nov 2026 21:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqwfb8uo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19FAD1F000C1;
-	Wed,  4 Nov 2026 21:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XDKEcUUp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875981F000C1;
+	Wed,  4 Nov 2026 21:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793828958;
-	bh=qYoYGedmB1lkZFVI2fjj1KajB5XHxaVSpKYmIfTuwmw=;
+	s=korg; t=1793828959;
+	bh=R1XvKuY0EAevieHitWbZNYQnwD8vYPXcwkjLYJsul2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqwfb8uoMUUC08PhaaZRMq9tdlk1rwDjOMijQof0YLpz7BNsdNjtR7x/cO+YPvyFY
-	 yT5n7T7Wsu1wkHvihBrhUHGoGiV6mALLro8SUKf1Ud2znSrUlOZ6LQeaHz3J/9sx8j
-	 n8BHEuGOcaNQQWC9NnYU5FYMd8mR4bKlcmgvSXCw=
+	b=XDKEcUUpNoVtJJIXa41PyJigljGqoGzue1T6huPYFbJH3TU/pZm12NRqLqSqq310O
+	 muNwddX1igeEqZ9JQvGYGHt5g7fgjzF5QPUxSVwGH0o+II2PT176CweEiuSeX/HHT8
+	 FlUXjfiD8Q+gqc6wm7cmLBcaqLgda7AG6LtPzakg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.3 303/547] xfs: fix missing xfs_qm_adjust_dqlimits call in quotacheck repair
-Date: Wed,  4 Nov 2026 16:08:07 -0500
-Message-ID: <20261104211046.816923658@linuxfoundation.org>
+Subject: [PATCH 7.3 346/547] xfs: always report scrub errors in tracepoints
+Date: Wed,  4 Nov 2026 16:08:50 -0500
+Message-ID: <20261104211048.097508032@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -70,154 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit da483b8a9c2c3e7b23655699680feb57a194000c upstream.
+commit 1ccc8f553d885d49c1bfe141ea1f331511940b3a upstream.
 
-LOLLM noticed that everywhere else in the kernel, a call to
-xfs_qm_adjust_dqlimits precedes every call to xfs_qm_adjust_dqtimers.
-In particular, mount-time quotacheck does this, but online quotacheck
-does not.
+LOLLM complains that the error processing functions in scrub will
+sometimes zero out *error before recording a tracepoint.  This makes
+diagnosing problems harder, so let's fix that.
 
-Looking at xfs_qm_adjust_dqlimits, that function is in charge of
-conveying default limits to a dquot if that dquot's limits have been
-zeroed.  That's quite possible in a repair, so we actually need to do
-that.
-
-However, there's a pre-existing pattern in the kernel -- for non-root
-dquots, first we call xfs_qm_adjust_dqlimits to set the dquot's limits
-to the defaults if they are zero, and then xfs_qm_adjust_dqtimers to
-start grace periods if the dquot's usage is above the softlimit.  The
-grace period decision cannot be made correctly if we forget to import
-the default limits.
-
-Therefore, let's combine both into a single xfs_qm_adjust_dqenforcement
-helper that takes care of both pieces, which fixes quotacheck and makes
-it hard to repeat this mistake.
-
-Cc: stable@vger.kernel.org # v6.9
-Fixes: 96ed2ae4a9b06b ("xfs: repair dquots based on live quotacheck results")
+Cc: stable@vger.kernel.org # v4.15
+Fixes: 4700d22980d459 ("xfs: create helpers to record and deal with scrub problems")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/quota_repair.c      |    5 +----
- fs/xfs/scrub/quotacheck_repair.c |    3 +--
- fs/xfs/xfs_dquot.c               |   20 +++++++++++++++-----
- fs/xfs/xfs_dquot.h               |    2 +-
- fs/xfs/xfs_qm.c                  |    6 +-----
- fs/xfs/xfs_trans_dquot.c         |    6 +-----
- 6 files changed, 20 insertions(+), 22 deletions(-)
+ fs/xfs/scrub/btree.c   |    8 +++++++-
+ fs/xfs/scrub/common.c  |    7 +++++--
+ fs/xfs/scrub/dabtree.c |    6 +++++-
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/scrub/quota_repair.c
-+++ b/fs/xfs/scrub/quota_repair.c
-@@ -248,10 +248,7 @@ xrep_quota_item(
- 
- 	dq->q_flags |= XFS_DQFLAG_DIRTY;
- 	xfs_trans_dqjoin(sc->tp, dq);
--	if (dq->q_id) {
--		xfs_qm_adjust_dqlimits(dq);
--		xfs_qm_adjust_dqtimers(dq);
--	}
-+	xfs_qm_adjust_dqenforcement(dq);
- 	xfs_trans_log_dquot(sc->tp, dq);
- 	return xfs_trans_roll(&sc->tp);
- 
---- a/fs/xfs/scrub/quotacheck_repair.c
-+++ b/fs/xfs/scrub/quotacheck_repair.c
-@@ -110,8 +110,7 @@ xqcheck_commit_dquot(
- 
- 	/* Commit the dirty dquot to disk. */
- 	dq->q_flags |= XFS_DQFLAG_DIRTY;
--	if (dq->q_id)
--		xfs_qm_adjust_dqtimers(dq);
-+	xfs_qm_adjust_dqenforcement(dq);
- 	xfs_trans_log_dquot(xqc->sc->tp, dq);
- 	return xrep_trans_commit(xqc->sc);
- 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -115,18 +115,15 @@ xfs_qm_dqdestroy(
-  * We overwrite the dquot limits only if they are zero and this
-  * is not the root dquot.
-  */
--void
-+static void
- xfs_qm_adjust_dqlimits(
- 	struct xfs_dquot	*dq)
- {
- 	struct xfs_mount	*mp = dq->q_mount;
- 	struct xfs_quotainfo	*q = mp->m_quotainfo;
--	struct xfs_def_quota	*defq;
-+	struct xfs_def_quota	*defq = xfs_get_defquota(q, xfs_dquot_type(dq));
- 	int			prealloc = 0;
- 
--	ASSERT(dq->q_id);
--	defq = xfs_get_defquota(q, xfs_dquot_type(dq));
--
- 	if (!dq->q_blk.softlimit) {
- 		dq->q_blk.softlimit = defq->blk.soft;
- 		prealloc = 1;
-@@ -223,6 +220,19 @@ xfs_qm_adjust_dqtimers(
- 	xfs_qm_adjust_res_timer(dq->q_mount, &dq->q_rtb, &defq->rtb);
- }
- 
-+/* Adjust enforcement limits and timers after a change in usage. */
-+void
-+xfs_qm_adjust_dqenforcement(
-+	struct xfs_dquot	*dq)
-+{
-+	if (dq->q_id == 0)
-+		return;
-+
-+	xfs_qm_adjust_dqlimits(dq);
-+	xfs_qm_adjust_dqtimers(dq);
-+	dq->q_flags |= XFS_DQFLAG_DIRTY;
-+}
-+
- /*
-  * initialize a buffer full of dquots and log the whole thing
-  */
---- a/fs/xfs/xfs_dquot.h
-+++ b/fs/xfs/xfs_dquot.h
-@@ -205,7 +205,7 @@ void		xfs_qm_dqdestroy(struct xfs_dquot
- int		xfs_qm_dqflush(struct xfs_dquot *dqp, struct xfs_buf *bp);
- void		xfs_qm_dqunpin_wait(struct xfs_dquot *dqp);
- void		xfs_qm_adjust_dqtimers(struct xfs_dquot *d);
--void		xfs_qm_adjust_dqlimits(struct xfs_dquot *d);
-+void		xfs_qm_adjust_dqenforcement(struct xfs_dquot *d);
- xfs_dqid_t	xfs_qm_id_for_quotatype(struct xfs_inode *ip,
- 				xfs_dqtype_t type);
- int		xfs_qm_dqget(struct xfs_mount *mp, xfs_dqid_t id,
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -1294,11 +1294,7 @@ xfs_qm_quotacheck_dqadjust(
- 	 *
- 	 * There are no timers for the default values set in the root dquot.
- 	 */
--	if (dqp->q_id) {
--		xfs_qm_adjust_dqlimits(dqp);
--		xfs_qm_adjust_dqtimers(dqp);
--	}
--
-+	xfs_qm_adjust_dqenforcement(dqp);
- 	dqp->q_flags |= XFS_DQFLAG_DIRTY;
- out_unlock:
- 	mutex_unlock(&dqp->q_qlock);
---- a/fs/xfs/xfs_trans_dquot.c
-+++ b/fs/xfs/xfs_trans_dquot.c
-@@ -566,11 +566,7 @@ xfs_trans_apply_dquot_deltas(
- 			 * Get any default limits in use.
- 			 * Start/reset the timer(s) if needed.
- 			 */
--			if (dqp->q_id) {
--				xfs_qm_adjust_dqlimits(dqp);
--				xfs_qm_adjust_dqtimers(dqp);
--			}
--
-+			xfs_qm_adjust_dqenforcement(dqp);
- 			dqp->q_flags |= XFS_DQFLAG_DIRTY;
- 			/*
- 			 * add this to the list of items to get logged
+--- a/fs/xfs/scrub/btree.c
++++ b/fs/xfs/scrub/btree.c
+@@ -46,8 +46,14 @@ __xchk_btree_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		if (cur->bc_ops->type == XFS_BTREE_TYPE_INODE)
++			trace_xchk_ifork_btree_op_error(sc, cur, level,
++					*error, ret_ip);
++		else
++			trace_xchk_btree_op_error(sc, cur, level,
++					*error, ret_ip);
+ 		*error = 0;
+-		fallthrough;
++		break;
+ 	default:
+ 		if (cur->bc_ops->type == XFS_BTREE_TYPE_INODE)
+ 			trace_xchk_ifork_btree_op_error(sc, cur, level,
+--- a/fs/xfs/scrub/common.c
++++ b/fs/xfs/scrub/common.c
+@@ -107,8 +107,9 @@ __xchk_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		trace_xchk_op_error(sc, agno, bno, *error, ret_ip);
+ 		*error = 0;
+-		fallthrough;
++		break;
+ 	default:
+ 		trace_xchk_op_error(sc, agno, bno, *error, ret_ip);
+ 		break;
+@@ -183,8 +184,10 @@ __xchk_fblock_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		trace_xchk_file_op_error(sc, whichfork, offset, *error,
++				ret_ip);
+ 		*error = 0;
+-		fallthrough;
++		break;
+ 	default:
+ 		trace_xchk_file_op_error(sc, whichfork, offset, *error,
+ 				ret_ip);
+--- a/fs/xfs/scrub/dabtree.c
++++ b/fs/xfs/scrub/dabtree.c
+@@ -49,8 +49,12 @@ xchk_da_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= XFS_SCRUB_OFLAG_CORRUPT;
++		trace_xchk_file_op_error(sc, ds->dargs.whichfork,
++				xfs_dir2_da_to_db(ds->dargs.geo,
++					ds->state->path.blk[level].blkno),
++				*error, __return_address);
+ 		*error = 0;
+-		fallthrough;
++		break;
+ 	default:
+ 		trace_xchk_file_op_error(sc, ds->dargs.whichfork,
+ 				xfs_dir2_da_to_db(ds->dargs.geo,
 
 
