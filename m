@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793826891;
-	b=OYl6AuF2BLf6EIW3NNNhP/RSg8TvLb6xi7RvjGSJlVVp46UTELZ9Aeav6vI/wwxl5Xgn
-	 lUoq/IOFbYnEDFQoFmFM+R5EAm/17b5mJoBLzTLb+cVi2OgYgNTkI64FVQgZsPydaDsWE
-	 I3TlxtX3fI0HC8eg7QlsRnC8iBmKX3//3lGTdO6/iPBBVbuiGGFmSM2oiuyCdaT+7j5tV
-	 WNbAxxQrDlxP4G9ipSvZMNF9Xtgh4m2WJyqL9Ep2VAwVLg2ax0TKxwWLco6JV+cKX6YsB
-	 6ZJrBH3JyyxlgvAE7ydo6NfNur1gkdr5zFRmGurq2B9xflQ+783OnVQdo9ALRqncIIA==
+	t=1793826893;
+	b=JmgraHQcmvY4JyEYNu11dC3efyxrinpUgVBJ9U+/NMhQwPdd1hRGu0m4oZbpa6nclR0d
+	 NG4W58qzlPbEn+YVPNtxT0Bg2QrmFm81iDS9eHhhY4YriDUGf1kShCrCA4/bareg0z0vW
+	 iBy17ADy772u07k1f8wDQPQeQ1/RHBt5I6C00T1J8t90SKUVH1Fxdi4JiDpKm0tm1P1/n
+	 6DW/UGRHk9WW94jf7KntJjM3N3NQuasvSzC9EYWoouawurR+Nx1d2Pq/fSKpxrzl/s2Sk
+	 gIKP2f/Tv5Ybq1PObBLVEVy6sHXdmmm2L9qsndJ0FpjJ9QV9gwqBPOdC37MBdtugzQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793826891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793826893;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZQy7mGS2SU9xP5VrYe3UXiuf9Fy084hcEKDQpSEH/UQ=;
-	b=jdquoM7NnYeK6XhtGgTd8jEgvs7T0Bz5i8LUyzDwLPa/8GMET2shuurUd33INkelOAw/
-	 eB9XzFXJy7H/PJUekkzRc31QtH3g7RymuxAIns1N0D9dKdcdTlkSzM/L3d2SPen7nxaIB
-	 y7ECCYE6XiwK8nzk0v5IIoFbzQV/xdO28e7UC2ElW/fHM9OESOqtDtWDV9JvAnvfSZxqe
-	 eZ4GB25cL9EjcRqeaDatn64KITuwZt6KboaDtgPkiYug9D8cqegFtP5O/hd4eIHhKCq58
-	 9SIhMNaidKppH1/qYuCxb25+iIIL7k96jF9Jkn8jhnNLrkuDkEtnJmhlgadp9dzXv1Q==
+	bh=KG6t7i+XBtMsELlwzn00XE39bNVHUODMb5Q05leb3BA=;
+	b=O2XN2ETKxkYG9m4pAZTaCjyF+JAc+y8THUOFudiQvHKssPg0jSj+slqQ2o4L6sow0Cq/
+	 o/uQzNfSRovdyz04G0RIwP3imKhcJiLR2e4L9HNRby8Q9MYjD8btMx48lRjMZFKapMG1p
+	 fcSxN9aXkFXLLeEGCPaGuBAjV8Yi5VL+7N0N21Von7WcRZafkDsnxzl4WGA2FIIYGcnmB
+	 vk+6U2U/utkXQ2LoxlanCN0bFstRvn/zc9tA/D4EC0qlcz5uGgYZLXItD2YEg/SWiw1Li
+	 zqfP/vtTOUgPSc9u/nzOPjgVoe7Z4P9oHqKvKKlNZxLG1vCEUY35bxPOL3eSdaVFvOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYd5grVa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gulcMlWa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878C1607075A;
-	Wed,  4 Nov 2026 21:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D43F607075C;
+	Wed,  4 Nov 2026 21:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYd5grVa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131831F00919;
-	Wed,  4 Nov 2026 21:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gulcMlWa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC7E1F00A1F;
+	Wed,  4 Nov 2026 21:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793826891;
-	bh=ZQy7mGS2SU9xP5VrYe3UXiuf9Fy084hcEKDQpSEH/UQ=;
+	s=korg; t=1793826893;
+	bh=KG6t7i+XBtMsELlwzn00XE39bNVHUODMb5Q05leb3BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HYd5grVajjhPV0qDL3ifUYE9JoQsDhWnIY6ugGr2Vh67jJHrzTp+JeJQCAdjzeKXl
-	 BglV4COsXpxeP/0jPDUnUE7UgVCLVtJ6PaOF9wZNEoQF2HbAG0yEh1mkDI/8poWelh
-	 4YNLAjJbTvMPdqoN6s8gquWQ37ExSuPe3IBDFgIE=
+	b=gulcMlWaX5Qwc7z5SJxq4dcyfVdQbT7WbmESlv0O6cclFqb1Weco2ZuLbaNaIsbSm
+	 C+ydTMBol67tOWAsw9KoJCDcGs6oa/AzUf9EVEkU5UuaqVoptDrknegQEZ2UVpcG70
+	 Pcb68HQDOYRtAC57j5WoohHZPcmXR+i+Q24CSYto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"ck.chang" <ck.chang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Chris Marshall <deepspace69@gmail.com>
-Subject: [PATCH 7.3 069/547] wifi: mt76: mt7925: fix reset panic caused by the WM2 rx irq mask
-Date: Wed,  4 Nov 2026 16:04:13 -0500
-Message-ID: <20261104211040.225778304@linuxfoundation.org>
+	Muchun Song <muchun.song@linux.dev>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 7.3 070/547] ARM: 9524/1: mm: align hugetlb mappings to the huge page size
+Date: Wed,  4 Nov 2026 16:04:14 -0500
+Message-ID: <20261104211040.253079079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 References: <20261104211038.406938024@linuxfoundation.org>
@@ -68,58 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ck.chang <ck.chang@mediatek.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit c182bfe944eb275f7526cc326f81229b0e974a0c upstream.
+commit 1eb87d8f77379d4e4b279487b8c859fb64bd1afb upstream.
 
-mt7925_irq_map sets wm2_complete_mask, but mt7925_dma_layout has no
-tx done ring, so the MT_RXQ_MCU_WA queue and its NAPI are never set up.
-On a chip reset, mt7925e_mac_reset() calls napi_disable() on that NAPI
-and crashes:
+mmap(MAP_HUGETLB) on 32-bit Arm can return an address which is not
+aligned to the huge page size. In a QEMU virt guest, unmapping the VMA
+then hits the alignment check in __unmap_hugepage_range():
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000a40
-  Workqueue: mt76 mt7925_mac_reset_work [mt7925_common]
-  RIP: 0010:mutex_lock+0x1c/0x50
-  Call Trace:
-   napi_disable+0x1d/0x50
-   mt7925e_mac_reset+0x327/0x420 [mt7925e]
-   mt7925_mac_reset_work+0x9a/0x1a0 [mt7925_common]
+  kernel BUG at mm/hugetlb.c:5213!
+  Internal error: Oops - BUG: 0 [#1] SMP ARM
+  PC is at __unmap_hugepage_range+0x540/0x584
+  LR is at __zap_vma_range+0x13a0/0x1410
 
-Remove the WM2 mask from mt7925_irq_map and from
-MT7925_INT_RX_DONE_ALL.
+Commit 7bd3f1e1a9ae ("mm: make hugetlb mappings go through
+mm_get_unmapped_area_vmflags") made hugetlb mappings use the
+architecture's arch_get_unmapped_area(). The generic implementations
+handle hugetlb alignment, but the Arm implementations only account for
+the optional SHMLBA cache-colouring constraint. A 4 KiB-page kernel can
+therefore align the mapping to 4 KiB or 16 KiB instead of the required
+2 MiB.
 
-Fixes: c4edf9e3e0e5 ("wifi: mt76: mt7925: replace shared rx irq masks with per-chip definitions")
-Signed-off-by: ck.chang <ck.chang@mediatek.com>
-Link: https://patch.msgid.link/20260805092409.1489401-1-eason.lai@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Cc: Chris Marshall <deepspace69@gmail.com>
+Set the alignment mask from the file's hstate for hugetlb mappings in
+both Arm implementations. Huge-page alignment also satisfies the
+SHMLBA constraint.
+
+Assisted-by: LLM
+
+Fixes: 7bd3f1e1a9ae ("mm: make hugetlb mappings go through mm_get_unmapped_area_vmflags")
+Cc: stable@vger.kernel.org
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Link: https://lore.kernel.org/r/20260901085740.66283-1-kmehltretter@gmail.com/
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/pci.c  |    1 -
- drivers/net/wireless/mediatek/mt76/mt7925/regs.h |    3 +--
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ arch/arm/mm/mmap.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-@@ -493,7 +493,6 @@ static const struct mt792x_irq_map mt792
- 		.all_complete_mask = MT7925_INT_RX_DONE_ALL,
- 		.data_complete_mask = MT7925_INT_RX_DONE_DATA,
- 		.wm_complete_mask = MT7925_INT_RX_DONE_WM,
--		.wm2_complete_mask = MT_INT_RX_DONE_WM2,
- 	},
- };
+--- a/arch/arm/mm/mmap.c
++++ b/arch/arm/mm/mmap.c
+@@ -11,6 +11,7 @@
+ #include <linux/io.h>
+ #include <linux/personality.h>
+ #include <linux/random.h>
++#include <linux/hugetlb.h>
+ #include <asm/cachetype.h>
  
---- a/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/regs.h
-@@ -48,8 +48,7 @@
- #define MT7925_INT_RX_DONE_DATA		HOST_RX_DONE_INT_ENA2
- #define MT7925_INT_RX_DONE_WM		HOST_RX_DONE_INT_ENA0
- #define MT7925_INT_RX_DONE_ALL		(MT7925_INT_RX_DONE_DATA | \
--					 MT7925_INT_RX_DONE_WM | \
--					 MT_INT_RX_DONE_WM2)
-+					 MT7925_INT_RX_DONE_WM)
+ #define COLOUR_ALIGN(addr,pgoff)		\
+@@ -72,7 +73,10 @@ arch_get_unmapped_area(struct file *filp
+ 	info.length = len;
+ 	info.low_limit = mm->mmap_base;
+ 	info.high_limit = TASK_SIZE;
+-	info.align_mask = do_align ? (PAGE_MASK & (SHMLBA - 1)) : 0;
++	if (filp && is_file_hugepages(filp))
++		info.align_mask = huge_page_mask_align(filp);
++	else
++		info.align_mask = do_align ? (PAGE_MASK & (SHMLBA - 1)) : 0;
+ 	info.align_offset = pgoff << PAGE_SHIFT;
+ 	return vm_unmapped_area(&info);
+ }
+@@ -123,7 +127,10 @@ arch_get_unmapped_area_topdown(struct fi
+ 	info.length = len;
+ 	info.low_limit = FIRST_USER_ADDRESS;
+ 	info.high_limit = mm->mmap_base;
+-	info.align_mask = do_align ? (PAGE_MASK & (SHMLBA - 1)) : 0;
++	if (filp && is_file_hugepages(filp))
++		info.align_mask = huge_page_mask_align(filp);
++	else
++		info.align_mask = do_align ? (PAGE_MASK & (SHMLBA - 1)) : 0;
+ 	info.align_offset = pgoff << PAGE_SHIFT;
+ 	addr = vm_unmapped_area(&info);
  
- #define MT7927_INT_RX_DONE_DATA		MT7927_RX_DONE_INT_ENA4
- #define MT7927_INT_RX_DONE_WM		MT7927_RX_DONE_INT_ENA6
 
 
