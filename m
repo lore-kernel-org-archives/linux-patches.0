@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793831582;
-	b=Zmiy+6BXgCIObTHXAynLi4NeY72LLtGML+l1sZQ4b+UYwBR10rQTV2YGlassYPCcecFo
-	 vT1Sczjtzc9RIQ1JjaG5DImn/Rt79JoznHkv8skK4ABwXEevlayKlPzlXrpM5AJWg+aJi
-	 0KkTxT8Hp7Xrpaqu/Xgxv77rbZv/5ypW3ds5PUPTWI9IjRCaTDTqg70a4xeDaE3mcMD98
-	 EORrPvMS9RCdwEimLV/hA4hD2L9HoJzhSHOeppynOT4ExLfcGyrXv21+JkBeYieK8dusO
-	 RNqF1m40y6lGxFTnKeGPVe+k1IWgibt5qaGVtZ5SUV/2xnSvMBUvOMSFB7Bvciuim3g==
+	t=1793831584;
+	b=Q5683RUIucFP9mo+1ic17Orc9zSFnPIHxLRAmWivnCr6jvuv+J/IaGzIz/NOqN6czUgh
+	 d9Sv+wnw9t0p4FW7TlHNViOskFZqmK6+UnARkQYTTUZ9Tnu21FZ4LMQmqvHEPGZ3GOojp
+	 RoNVkIxehZAJWKoY8jSNamSwZnCgrspzyYzjZmQEzV6R68rTISJKpc+X4rwfHiI70cfFP
+	 apZ2wA816f/j2BvwbRPxNofxtLZ2aWsaCIjeFV5a3iIIPR1jV02NKUrlLzefSCKX/Ft5z
+	 ya6ssDIhEY4EaOt9eaH4MRegST/I2Jr1un+n/KkYE/2MRcpFahIAGlhW+izqSvHyGSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793831582;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793831584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HAZ/qUb4D89JtZD0b1rLexMPJRXfDtPDiuOjZDMuj2U=;
-	b=sf0UN+EBmN9xCpgml9733AnawUT8SurlmIMrNtXaNZGtWCaPhzAU/8cWVqm0exxF7AVk
-	 d3iHmoY/xjVmr2KXok9PnHzJi1T2r5qQ5eJ9tO+tcASGKt0VwJcXw5HCufbd19+a3IYGg
-	 bubvwfH6Cy9YueLuMOcFFm62IGP1E8F7ajn8DWbTDjE6+oWTEff3W8B7rbZRwphkzM+no
-	 Xp8ELK2NKC16byBzcr0mpx3BWCRyMpMHNKIA0QpPRl3AY677HmOpe1tV2t/G1LEogeR/w
-	 Z13amq+j6PDaTbSnKc+d9kGT/PxVDpAs0i5SVL6rkgX/eoL0bQx5A+SKU/mHqAAE6aA==
+	bh=p0k26RVC93+Jbfuk2aLRJycmXTY7PaAUMlR3ma9+kzg=;
+	b=oxt1CweTaIpHBIl1ebWmW5gg65vbdsbBxwdOjO3k/oV6t4w0kMaitCe1wU41lY6vSZEM
+	 J9sPANrsNcx9dGOBBFOQkg/J2YCdlRU0iqdTfVMEXcrw9GguMi9Xqqd+hJeDUN9wKfLsa
+	 qqTm5xgxCwDmaPuGKs0XFsXoaZ8jpMbfFPBjumNi80EikRhff636udf8lBoqdnaOuGpJU
+	 dFtOZmdk1JM/g9iayLgx8YUA3tsjVM/1fIp5KXPc49jTW3OTsJQSf05xlPwvljJu98Obw
+	 +c7z+vuDZJG0rilMtga9CTOpom6rAArhb88dGJyI44tOQ2+g0EGOGjjKeWi2VzCyBaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr2+T74P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wN4tt56O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544F5606A844;
-	Wed,  4 Nov 2026 22:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD32E606A844;
+	Wed,  4 Nov 2026 22:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr2+T74P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F871F00919;
-	Wed,  4 Nov 2026 22:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wN4tt56O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F3A1F000C1;
+	Wed,  4 Nov 2026 22:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793831582;
-	bh=HAZ/qUb4D89JtZD0b1rLexMPJRXfDtPDiuOjZDMuj2U=;
+	s=korg; t=1793831583;
+	bh=p0k26RVC93+Jbfuk2aLRJycmXTY7PaAUMlR3ma9+kzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yr2+T74P1iQESNwo/CelCN11+tl8rLF8eonyG1sAxtXrzrpjIoIUhSNqmhcvxStx6
-	 K1q/ZsVw47V5rk0D8t2Nm5iSeeigNfaN1cWA/UmOwY6jaWe+VlPJdXsQ97ln5kGQ0q
-	 wSsvt3+qR0un/XwAQP1qHNcBA/lCDTbKGnFl4YG4=
+	b=wN4tt56OVtaVj9njayyXvevJKCUjGrnnTcHmJjq5coOeyhkDQHyOJ+mtc9gCg60ni
+	 zJRX5iuThYsqDU15GorqEmcXIKIhPdyGPPCTwVab72ksmeL1N/JE9u3f7LPwgiQSAd
+	 Ro3Lbq2j89esvg/NjKobvXBQ4bkZOpcw3LGZpt9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 0789/1005] xfs: zero out di_metatype when removing the metadir file iflag
-Date: Wed,  4 Nov 2026 16:08:42 -0500
-Message-ID: <20261104211105.442437506@linuxfoundation.org>
+Subject: [PATCH 6.18 0790/1005] xfs: flag excessive delalloc rt extents as corruption
+Date: Wed,  4 Nov 2026 16:08:43 -0500
+Message-ID: <20261104211105.469827385@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
 References: <20261104211043.516122098@linuxfoundation.org>
@@ -70,36 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit f5b4d8c8ce16675f77c25a4ff06caaa9a2739f31 upstream.
+commit 2b47be015a5e54f4a3d62afa636ba593de9b67f6 upstream.
 
-LOLLM pointed out that we should zero di_metatype (fka di_onlink) when
-we're clearing the METADIR inode flag because the file is no longer a
-metadata file.
+LOLLM observed that we should not allow repairs to proceed if the count
+of delayed-allocation realtime extents exceeds the number of free rt
+extents because we can't install negative numbers into the superblock.
+It's unclear how we could end up in that state in real life, but let's
+at least complain loudly about it if we ever encounter it.
 
-Cc: stable@vger.kernel.org # v6.13
-Fixes: 7297fd0bebbd70 ("xfs: enforce metadata inode flag")
+Cc: stable@vger.kernel.org # v6.2
+Fixes: e74331d6fa2c21 ("xfs: online checking of the free rt extent count")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/inode_repair.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/fscounters.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/xfs/scrub/inode_repair.c
-+++ b/fs/xfs/scrub/inode_repair.c
-@@ -579,8 +579,10 @@ xrep_dinode_flags(
- 
- 		fa = xfs_dinode_verify_metadir(sc->mp, dip, mode, flags,
- 				flags2);
--		if (fa)
-+		if (fa) {
- 			flags2 &= ~XFS_DIFLAG2_METADATA;
-+			dip->di_metatype = cpu_to_be16(XFS_METAFILE_UNKNOWN);
-+		}
+--- a/fs/xfs/scrub/fscounters.c
++++ b/fs/xfs/scrub/fscounters.c
+@@ -607,6 +607,13 @@ xchk_fscounters(
+ 			try_again = true;
  	}
  
- 	dip->di_flags = cpu_to_be16(flags);
++	if (!xfs_has_zoned(mp) && fsc->frextents < fsc->frextents_delayed) {
++		if (fsc->frozen)
++			xchk_set_incomplete(sc);
++		else
++			try_again = true;
++	}
++
+ 	if (!xfs_has_zoned(mp) &&
+ 	    !xchk_fscount_within_range(sc, frextents,
+ 			&mp->m_free[XC_FREE_RTEXTENTS].count,
 
 
