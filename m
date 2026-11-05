@@ -1,49 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793872529;
-	b=zwrhpOqPTYNZYSmfwJ44biKvfmwNSNCWTW6dgqCRtY6ajgVIAXR887vykqMVCIusDCdl
-	 re9FB0l/foTkMDnjjKqv4Uwnzvg7x42z6OZn3trbyQ5hMxGJBl8AXRbhT+P4dZtnDv+g5
-	 SgooIEio/5mS5fwcQbRdRw0kbRuygIipUzTriMD82mQd59+lcXJfB0qUkZ+/c63mq60Lt
-	 09jSdUuXVCDR0siZfThgQCfO5F5hw2pLTp1rT1tEYG/wK8yEZVcXyKSAeYApZ/gB/Rh/C
-	 Pyx7q9NPK6JNzS/mdh0VmTTa23+vpia7R1RJGt+QaRml4bGiNQRjcrUodGfmt1u10nQ==
+	t=1793877664;
+	b=fjxSnkbP6UK2rrs1F7dhEzge2k9FmaRONO5HmIqbzdxmdhjOVoAXExq/HLld3CdF7zNg
+	 m1z8yGERNxmjNNQt/sKxPjEKDdUQJGEGYD8zMvVArb22QazSrVevf89x6IDFxmwoJl6X2
+	 KqnFpMTViCUhgcRGQmOfDdFAZd+5uago6LPl0JGrPraOrwm8nX30Oqgfl6J/4zVoc6MEi
+	 0EtEiFgGCL1z8PYBERWMqC+lM92WjIZ3/Qi+vC+i4sYOZBuniWkEgwVlMH0bCaRVsaK49
+	 N8na1Z8+k9vJ0KLBzXlFuGc+V7CEsSdlu8wDJAQit/4VBGAptbht4lKOQ6fANya/asg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793872529;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=qCAlryKPiznzzC2bOV10w77gBQgnhQiwsYcCE2uHqbk=;
-	b=rZcfNC4/a3y+klGvm0gBfduyZHX8V+vSuOfmQrv4QE92DCsquY4afyyW4zw/Yu4h5zbc
-	 3m5/dhQjN11k3CwF3vEfHpU8RI0bn+1G4quDzobR3+1jeiWUzf37pK9GGKj4iLVHRelhu
-	 3dRjdK+3CjPBLvTXw/gkk3EGc6wMrJjGMX8U5AlHMT0Tz0TG+3nN+PVttahyQHy8ViRHT
-	 Wbcn/DsUOYMiD5N/UQjHbSoTqD0YPTaexfa5nZgRD0cEXonIqRnSJCprhJ+CtQQr6tceL
-	 GUiQDAbwDkTeuKkmYP0UxZp5vQn0oLORn7C00rO+BYSzW+2bMr0NtKdVnnVa1OVmcqg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793877664;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=ThJhfIe/RoF81mS3SA/yvhXJhwlYugcyCcxUCUQIdeQ=;
+	b=sEvxTXpcgkGO+zvZ7t8KwEGRVjpaRvZPwofERf6O3wTzxgZKRDLaiXIpz9QohEGTjpQ4
+	 X3/rbUA1ZUkPsgjBAFNVc3G/tiKBbtYzz2y2CjFDDdVonhTqfJS2+U2pukTONqkV//LSW
+	 1xAW9647G/E3m3cMv1qFSvXSmQz774TLt0aCnhYaUJWJbxFJKTy4JMC5KGiQDwBU0+JQ8
+	 m+SknA/9scsmTI+9HhlfxiVtgQKw0d44ihKXPlcj6Drz/KqGh9UZmSVJOZNwaXuF7KORT
+	 /ap32/FFqAKYNYpoeTsI4MD+5/dIwcZJCJuupd3ZrDPeOD+pMTe5NlxgZ3xqC4LvlHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="U8f+kw/m";
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25CF8606A329
-	for <patches@lists.linux.dev>; Thu,  5 Nov 2026 09:55:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25CF8606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2DYGjUG;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26377606A32F;
+	Thu,  5 Nov 2026 11:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=U8f+kw/m
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 45813152B;
-	Thu,  5 Nov 2026 01:55:24 -0800 (PST)
-Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 283183F628;
-	Thu,  5 Nov 2026 01:55:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793872527; bh=WrQxKHQ/kZJM4MHyEbrJUsdTlIaJZDfgjkNuyt20UIg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=U8f+kw/mbaMZU38BUKHT17/25RhQBok5piWEI8zzQc23DKGkUO3zKd/x7MkyTXPd2
-	 lVRtS1XWbrtqABoFEB862iRAtqeBSIaaYYBEH9mugx9WgX4w236RyD+Xq0+EH12oN2
-	 8X9fmk/JTqBZQSNk+2f7tWduYC6YLGu2zrZSLy0M=
-Message-ID: <93382997-2cdb-4433-8130-d03fe49fb0d9@arm.com>
-Date: Thu, 5 Nov 2026 09:55:23 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2DYGjUG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808681F0093A;
+	Thu,  5 Nov 2026 11:21:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1793877663;
+	bh=ThJhfIe/RoF81mS3SA/yvhXJhwlYugcyCcxUCUQIdeQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=P2DYGjUGKPNHM4NZ/eHgqzqKfKJOGODY21xGTmTCFWhm+XB0ZnIziUDEDYk4o0ogp
+	 R8pwdbcg81nFd3N6fIHfw/AZ8/+ux1hI3+t/OR4jr+Sy3QmCcuiEgB/iroAoj+ruVI
+	 OfznDT72auuax6fVK5lDIahdAfWD1mZBctpHV6TY=
+Date: Thu, 5 Nov 2026 06:21:02 -0500
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Chenyi Qiang <chenyi.qiang@intel.com>
+Subject: Re: [PATCH 6.18 0942/1005] KVM: TDX: Enable Bus Lock VM exit
+Message-ID: <2026110539-lived-blast-ef64@gregkh>
+References: <20261104211043.516122098@linuxfoundation.org>
+ <20261104211109.504581890@linuxfoundation.org>
+ <dac4e304-98e6-4e61-93f4-8d971069d936@intel.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -53,55 +57,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add Ben Horgan as fs/resctrl reviewer
-To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
- james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
- tglx@linutronix.de, dave.hansen@linux.intel.com
-Cc: x86@kernel.org, hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
- peternewman@google.com, yu.c.chen@intel.com, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <c68cbba4455d3f5e65c38b76b3daadc04217abca.1793838993.git.reinette.chatre@intel.com>
-Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <c68cbba4455d3f5e65c38b76b3daadc04217abca.1793838993.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dac4e304-98e6-4e61-93f4-8d971069d936@intel.com>
 
-Hi Reinette,
-
-On 05/11/2026 00:37, Reinette Chatre wrote:
-> The resctrl filesystem provides the user interface to the resource control
-> features of multiple architectures, among them Arm's MPAM. Ben Horgan,
-> MPAM maintainer, has consistently helped keep MPAM's requirements in view,
-> both in discussions about new resctrl features and in review of resctrl
-> changes.
+On Thu, Nov 05, 2026 at 03:04:56PM +0800, Xiaoyao Li wrote:
+> On 11/5/2026 5:11 AM, Greg Kroah-Hartman wrote:
+> > 6.18-stable review patch.  If anyone has any objections, please let me know.
 > 
-> Add Ben Horgan as a reviewer so that he is copied on resctrl submissions.
-> 
-> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+> There are some dependency patches failed to be backported [1][2][3]. What is the
+> preferred way to handle it? prepare a separate series for 6.18-stable with all
+> the necessary patches?
 
-Thank you for the kind words and adding me as a reviewer.
+Yes please.
 
-Acked-by: Ben Horgan <ben.horgan@arm.com>
+Do you want me to drop this one for now?
 
-> ---
-> Position entry to avoid conflict with RISC-V change in same area:
-> https://lore.kernel.org/lkml/20261104-dfustini-atl-sc-cbqri-dt-v10-6-1636a003a3c0@kernel.org/
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 93abbb315065..04bdbba16138 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -23460,6 +23460,7 @@ RDT - RESOURCE ALLOCATION
->  M:	Tony Luck <tony.luck@intel.com>
->  M:	Reinette Chatre <reinette.chatre@intel.com>
->  M:	x86@kernel.org
-> +R:	Ben Horgan <ben.horgan@arm.com>
->  R:	Dave Martin <Dave.Martin@arm.com>
->  R:	James Morse <james.morse@arm.com>
->  R:	Babu Moger <babu.moger@amd.com>
+thanks,
 
+greg k-h
