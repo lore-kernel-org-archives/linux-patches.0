@@ -1,68 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793862304;
-	b=ctOeajmhDe69qOWdDYGl1XObO1Q3KR+skblN3te1P4lFZmngeGpWqgrsBoM43SO04JqL
-	 4yhGBtqP1wz6CSE7eNNwYNL111/seSbbbMRE43oPglFMlAEc0bHzulbqt9kT7MjVEBH//
-	 1eWdGCSJL4R7dXAGkJ9G0fvJW71KuopINtocEQt7bmMGa36ISHoKD3KEj0KyeLjW9SUHJ
-	 duk41P7zQfRGIukJXRafnns+aGtx+IAvKyBwEy3B/xaX5ewzpkMciltbcIsBH9zet9jqG
-	 2+eZoTlGd0fFTygYtecVfjcg4flzjvUjkuFulnb0Rs/uutFbPX7dNGeQm+idNCRESQQ==
+	t=1793864339;
+	b=MYExuKJhGpaq8/s6A2UFTJpHiBDlzWt6+anbZHp8/rKpL1MsD8gQUxvWTWmzS49BKPc9
+	 Lw6Ch1TaYlDKIkDCjyesbHC7MmIuPddhAa7ZZRn1av8ayGZq+zGKNfxHWxR0bwqJgVtMj
+	 frvQrcaKBt/6kv73pYaf/N9Wq1kBRUOIq+7UhBLjt/a6FVmrZCpOQgHE+u50FR5/DxWJ8
+	 VDvJUb/QC6gar/uWoasvJDyRkigOWTJSuk5lhtPZlsivZJz+VyYocLF0YtA7pIPo0cCfA
+	 tuYaICw/29q02fiJ1d0bmQSsoI5lx8t23D1iSvNQ/PvdTz7ZT+t513X9vyjdaHpM2KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793862304;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793864339;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=QlIEuET91IH3iKQpMTAuGC8sBpbpkS1ruiNQt1cF4Q0=;
-	b=bZ+c5KUrLshLJ7E0b2pabHQasXFEHX8vAWnqEvR4VsP5yTL+2vZ/FTyPKAjvwhfpEPyq
-	 doH8E8HaQvOmNUxDP5huPzy2Oo0Da4lmkXbt6LzOVRL64UFW/dn9Ly2lxGrZ52YFfC6ir
-	 TEEgezzZ7HtSSwvT+NPeWidwy90hXzwI+UHq/zIygpzGHn1sUB65+5MNp6L0tiXNsqoho
-	 LNMelchFrlogl2WJ/nK5C34DzVJ9bLM6h6UEZNOVuwlG1LlBC6o0BFRgWPuCPcx45EsOx
-	 Y2PLQPZfgeVg5NlhjnI8pFrOb0TfIipeOo/WVwdsisBii2UfX7VV9KM3lU0sTe5tzPQ==
+	bh=CnrMMQppxmI6EGSsQCvw1P8oldla87L6eez+yQ0O3fk=;
+	b=oacfvs13rVkRJorzKe5OCfD5wtRCQ/tWaIdGcyxhp1K3AWMvwDEJu+8VbaCTh8UEKkyP
+	 S8gOxUiaf9579q0VL8bsMuRyQjmCI7Ip42JCB8OvqHRUwolDrxxbKyWc7XER6simQHVIv
+	 uiDyIfWmmWwj8dHGfpYm3FRSUojlzAEujOBpJz/60sISpfCDshoURah7onSqaAM9nj4g3
+	 dRN3HKtHM9hrkb57BrFh2/COeglQcLBgBO6tkOXiy4bS2o8+CdV/wxCx7OrbQlDuvtL/x
+	 4RwNNDBCnqN/goLXqPpBiCG91pNeG3mCIp3gx4gDhM+DqVMhS0blYWv4cZsMVZg+A/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=lwioWRqQ;
-	arc=none smtp.remote-ip=198.175.65.20
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=googlemail.com;
+	spf=pass smtp.mailfrom=googlemail.com;
+	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=YlIKMP7S;
+	arc=none smtp.remote-ip=209.85.221.47
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02328606A31B
-	for <patches@lists.linux.dev>; Thu,  5 Nov 2026 07:05:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02328606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892D5606A31B
+	for <patches@lists.linux.dev>; Thu,  5 Nov 2026 07:38:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 892D5606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=lwioWRqQ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793862302; x=1825398302;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=McgwgcpuKSeUPehU0yM05wGhCrOsl3CTnR9MbzE07xA=;
-  b=lwioWRqQNWpmdH+HjeD+9HUdjT4ckV5ZLcypRY9fYE53/U1FDRImhRxw
-   krEJ9AYEfrHmheMo2i5yhIPQ3SivdP2jiN7wPmUiTBXBiBonPQ+LGcnUr
-   snifna0DGvaqydyxz0JbR5Nnj8j+AOQpBrHSrMs0yawyHbI5DHtxgq72+
-   QQS+TI/y+0pGYE3Z8BIuIijj6sIvjS1hSni7h3KCBl55hOYuya+XM0iLq
-   OHceg/wCTgCEBXqC8UijIy9WL0t1qwvobqtO2FA+WBODQeHhnxQNAPHz9
-   qv/fq7dUVyAqGWSSGcLuQjMv3bz3OlCUE7yMILdVfh4I4+qr0wlwfPDCA
-   A==;
-X-CSE-ConnectionGUID: 1QGKr7zhT/ijptupwz8Ixw==
-X-CSE-MsgGUID: KQDlfZ8+Sj2+iq9XoT2KyQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2674189"
-X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
-   d="scan'208";a="2674189"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 23:05:01 -0800
-X-CSE-ConnectionGUID: ZMrSdDUEQjmQYyR8ZsLkSw==
-X-CSE-MsgGUID: YeWVfUnDSX2I1h6ejbK4BQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,196,1787036400"; 
-   d="scan'208";a="6996656"
-Received: from unknown (HELO [10.238.0.97]) ([10.238.0.97])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 23:04:59 -0800
-Message-ID: <dac4e304-98e6-4e61-93f4-8d971069d936@intel.com>
-Date: Thu, 5 Nov 2026 15:04:56 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=YlIKMP7S
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-48e10a70540so922488f8f.1
+        for <patches@lists.linux.dev>; Wed, 04 Nov 2026 23:38:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20260707; t=1793864337; x=1794469137; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=CnrMMQppxmI6EGSsQCvw1P8oldla87L6eez+yQ0O3fk=;
+        b=YlIKMP7SakFZE7buT4CbPlXFS2ozBErNKfORxVhgQ8/hOFBbVp11TjqTtK8AcAKIkU
+         aDPFrFbXHYJ2iLVphixC7eR4gsi8aktfrdiaiRnPG12iLphand28ap64NdgVA9ez/M1+
+         QfBp6HwG4K/oVc7iWA9ccfFjimWEKsLjUfkz9JPCQeYR4gRJ4NJpaLYYSfptnm6L8DnO
+         HzJu2XdnfcSuKk8NGwQI01XK5G6gjDDr3i3/ENZ2Srhqr2XfNt+r/p56/DkUOaN1610I
+         60Nv8F8iaNzq4xwns4u3bcFl+lCCVbZ7GXxQ1r/x/lSuU0Jj8bafZoBA+vEJM+59o+8A
+         U6Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793864337; x=1794469137;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=CnrMMQppxmI6EGSsQCvw1P8oldla87L6eez+yQ0O3fk=;
+        b=BbC25Pw994fufqBXjGGKI6MdZL5h4AblPqnr5Y9BD1ZQkoZ1JUOVqwQTICeCeSDINC
+         /g04yjWjO19cEzslX4/RCN+YVLQS2uXHAKS6o5/JsJZ9Evi40bT7upNT14zunQN5Sawf
+         sGKJp/0/Wmi4CwqHX7VQTedLby0z0SHay9Z6DLGmqqEmTIsQUT91FkA0oScDddViIOM1
+         lSoXr/Bx13ma45xj/LTVxFSATgv4I/Y9mI3kGIOSALutE8wUbZQLMJf81RrztRi/iRDL
+         TGsAwNYru5L2yciJdmguCWiKAqAUfyV48oQUztzT1C+BVH/HuoXfFJ4+w3yDjV2AIkO7
+         mj9Q==
+X-Gm-Message-State: APuU4Z9IFeV9mTdhnYpHaf16jZWde7tWxllFgSQcwTz3XIMs9O0PI/Ev
+	/7ZlP5g15v9Ja697RJRmSILgbA2+04DOdXwzPplgQmyzHZ0wuqVKL2A=
+X-Gm-Gg: AYBFou37rxc6t0naf60IeMZAq0lMX/B27aBFzRPOALXjI2VUVUQJb47A2HFKmFxgq4m
+	+ceLI62/ihGLF5uQ09Honmsia/2FRTC8zfQxEj24SDH/Hl7kvRQ2JtBXeYY6RajjVlxzo4I2/Qe
+	lFbOfGbnrRxlhdXwd+Qs7J9AaZRH8qp5WOPH4S2vWDOjsZigjpGQ1MnujK+9u0HD5/B97MTZYqt
+	QM9Z2gGva7va0whcmGnoarmljbkCgoSnoNYbS5i7t4QLJiZ6+Q06XSRHEK4p5oI9M8p0EXPRNer
+	kuxpeeyLWLN4Ek+qUzfhmJXugj0QOQWCq3YXjqhq+dnyE89JvHb+zKDALBgs8Qea8TOhwPtGRZ1
+	6pj2dOeTlJAIIiWXEhenaY5C1c9Lu9m35zSGeInee7pmCjEQTcFenAoDrHp8OJUEiEK7fFfhqqJ
+	2e81YchTP2LtH9FJ7IzA9VKgKe++l6JeE0fmglg+nJfvYs2eHQCOrA/52GjGm4BysQ8fjoG5DPy
+	Ua2We2oCRHGwxbsT3y4ifD+VUaRCDrAVoj7+TJAFq1jIjRljNCxqsTyrjPPoWjnTCny2TqmFLLE
+	Ii9X9Pg49gdp7+3d0QlsL865iAZ9ReowwhOBPvJVupXN8SsUzgugHazNoZTVoy3/ZeY2au8LkGo
+	JZA==
+X-Received: by 2002:a5d:5f07:0:b0:48d:ef7d:4b4c with SMTP id ffacd0b85a97d-48e6e4f8c4dmr38866485f8f.44.1793864336714;
+        Wed, 04 Nov 2026 23:38:56 -0800 (PST)
+Received: from [192.168.1.3] (p5b2b4618.dip0.t-ipconnect.de. [91.43.70.24])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48feda1f100sm8472216f8f.46.2026.11.04.23.38.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Nov 2026 23:38:56 -0800 (PST)
+Message-ID: <5588d6e7-8507-46c6-a872-20c536901f1d@googlemail.com>
+Date: Thu, 5 Nov 2026 08:38:55 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -72,119 +91,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 0942/1005] KVM: TDX: Enable Bus Lock VM exit
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 0000/1005] 6.18.61-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Nikolay Borisov <nik.borisov@suse.com>,
- Sean Christopherson <seanjc@google.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
 References: <20261104211043.516122098@linuxfoundation.org>
- <20261104211109.504581890@linuxfoundation.org>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20261104211109.504581890@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 11/5/2026 5:11 AM, Greg Kroah-Hartman wrote:
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
+Am 04.11.2026 um 21:55 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.18.61 release.
+> There are 1005 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-There are some dependency patches failed to be backported [1][2][3]. What is the
-preferred way to handle it? prepare a separate series for 6.18-stable with all
-the necessary patches?
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
 
-[1] https://lore.kernel.org/all/2026110415-porous-slather-09d5@gregkh/
-[2] https://lore.kernel.org/all/2026110443-stage-reproach-62d3@gregkh/
-[3] https://lore.kernel.org/all/2026110444-external-riverbed-0f47@gregkh/
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-> ------------------
-> 
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> 
-> commit 63d196e2e20429de5ba501f1b6059d9b93140007 upstream.
-> 
-> Enable Bus Lock VM exit functionality for TDX guests.
-> 
-> Bus Lock VM exit is an existing feature supported by KVM.  Userspace can
-> enable Bus Lock VM exit through KVM_BUS_LOCK_DETECTION_EXIT when it's
-> reported as supported.  However, KVM reports the support of this CAP
-> just based on the hardware capability but doesn't differentiate between
-> VMX and TDX.  This leads to the issue that userspace can enable this cap
-> for TDX guests without getting an error, but the feature is not actually
-> enabled because KVM doesn't call the TDX module API to program the
-> relevant TD VMCS fields.
-> 
-> Enable Bus Lock VM exit for TDX guests by programming the
-> BUS_LOCK_DETECTION control in the TD VMCS and by adding the exit handler.
-> 
-> Note, there is no enumeration bit for this feature by TDX module because
-> all TDX modules support it and allow to set the TD VMCS as long as the
-> hardware supports the feature.
-> 
-> Fixes: 161d34609f9b ("KVM: TDX: Make TDX VM type supported")
-> Cc: stable@vger.kernel.org
-> Originally-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-> Link: https://patch.msgid.link/20260819094903.3060020-9-xiaoyao.li@intel.com
-> Signed-off-by: Sean Christopherson <seanjc@google.com>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  arch/x86/kvm/vmx/tdx.c |   24 +++++++++++++++++++++++-
->  1 file changed, 23 insertions(+), 1 deletion(-)
-> 
-> --- a/arch/x86/kvm/vmx/tdx.c
-> +++ b/arch/x86/kvm/vmx/tdx.c
-> @@ -2042,7 +2042,7 @@ int tdx_complete_emulated_msr(struct kvm
->  }
->  
->  
-> -int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
-> +static int __tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
->  {
->  	struct vcpu_tdx *tdx = to_tdx(vcpu);
->  	u64 vp_enter_ret = tdx->vp_enter_ret;
-> @@ -2143,6 +2143,8 @@ int tdx_handle_exit(struct kvm_vcpu *vcp
->  	case EXIT_REASON_NOTIFY:
->  		/* NMI blocking state is handled by TDX module */
->  		return __vt_handle_notify(vcpu, vmx_get_exit_qual(vcpu));
-> +	case EXIT_REASON_BUS_LOCK:
-> +		return vt_handle_bus_lock_vmexit(vcpu);
->  	default:
->  		break;
->  	}
-> @@ -2156,6 +2158,22 @@ unhandled_exit:
->  	return 0;
->  }
->  
-> +int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
-> +{
-> +	int ret = __tdx_handle_exit(vcpu, fastpath);
-> +
-> +	/* Exit to user space when bus lock was detected */
-> +	if (vmx_get_exit_reason(vcpu).bus_lock_detected) {
-> +		if (ret > 0) {
-> +			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
-> +			ret = 0;
-> +		}
-> +
-> +		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
-> +	}
-> +	return ret;
-> +}
-> +
->  void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
->  		u64 *info1, u64 *info2, u32 *intr_info, u32 *error_code)
->  {
-> @@ -3151,6 +3169,10 @@ static int tdx_vcpu_init(struct kvm_vcpu
->  				vcpu->kvm->arch.notify_window);
->  	}
->  
-> +	if (vcpu->kvm->arch.bus_lock_detection_enabled)
-> +		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
-> +				 SECONDARY_EXEC_BUS_LOCK_DETECTION);
-> +
->  	tdx->state = VCPU_TD_STATE_INITIALIZED;
->  
->  	return 0;
 
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
