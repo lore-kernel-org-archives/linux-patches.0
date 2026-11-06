@@ -1,56 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793948753;
-	b=OJYJRgavbqW8H94DLoRIG0itp72w3VB2d+kT7gBeipKw8qMAZL602qUByO7ko8MTL/WQ
-	 UTc4Dft5a8f2D/ZFGYK1wiVn6zLHN/LlSAagHDHI6Dx2LDMtHDawi/rg8woCuzkDgMqZn
-	 2IUBE4kPUKICvb7wDTYu/yWhEEb4DTun7MJgGLWV6Sl5dcZet0p0T5DvfjF3bKpmsbC7l
-	 N1m4rJHFrWCN1LWREIgcxnXdSTvHxsb3ssxrl+RrqIzAXI4Y+vJOmFbZyjobWw/gxvE4E
-	 JKYHW/5kCWsWV61HvUMzwhpDSFBOfcnDijygiLD1VL3RAewldnuntwH7o5jtgLwyh0A==
+	t=1793948833;
+	b=1t+DGAh3dfrDyBBHJV0ylCbE8VrZt4vraEI7NWFy7KfSm2X0f4L8pHfqZkZK5hthcaI2
+	 oj976/oBPr3YGfN98pTrvJaVROM9UKM/JDevUNhydLxPOeD3X1pUajw0Oic4RiX5ex/0J
+	 8Ce9Ln5AHB3L0ZGeWAjEprj/tyZNf+8upsUociLAtncTOhdc0X++OzqAWuWakM8WPLWKv
+	 nWgyQ6AOPfDIVlAcH+9lZuS4Vs5luIXZg0sK9vPemoYwwcmwg0MSeFCmpcOWdFxCZurA+
+	 A7oVx7ht7NdOWxH/q0/2HfG4uwHlwaKZiyvOAnmeQvX5P72EhN8y7QrSsm46Tua4kvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793948753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793948833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=H+EQ5iHmQny3HKRPrm1r/INHyLhkn0X/JQimG80IxmY=;
-	b=R/ApLAPToJUzi/oHovmiu4rIYNtoiq+ARNRcURxDeXttdd866F/F7Gp7GUoq53DpW89L
-	 5eCvtjagNuUOSKZ6JxS5i1Hu65nLlgoYJkVuyvMrZ5TJa+Licnt9RrFYkPtP6n7E68kiO
-	 UCVLZ8mNzBdQ5PLRPK0mTD6+wXiM09D1UxjeMALww17ton+w0P6mZpkoLfku6PtJnfTPI
-	 uws3lGWNWEuGxbcVIe3th8Q/GwVXWHDXwdPB+lFyKKz80CKDAr6Gkx2z2v/nKZOZrFN/Z
-	 40vFZOwPk7GQr3JEsJamiDB2n3JAjyDhKE8nO69rDmhUWP970NNHeRlxGauDov+2VkA==
+	bh=yT0Ls4Uz/spnUSXjIJe5AEFI8sITXW0uYiih29/EVpw=;
+	b=hKRwxcMANXbemELaZrF9O6iUAsl2Tfxng+xjBLhOOChvLGBMye5essi5lndd2K6mnDl9
+	 tsI8j9Ao9z7ss++nq/32NDeEcocbftrMIXzTosgEWtan+XGcN89tm68PAjmS5Gt+yG4aa
+	 6oxEpKonK3MToZZcGYGrQxWKUUVW7PZE8L/XKezn2FYo2Lr5XJD//DiS9qml1AlzvCq0f
+	 h+eLIxbzgNKhYLm4ZTLElNaZvd2I5HBrn1/ZZEcoRnXuDAN8iQQ9Umyfyop6GKDtaPoqk
+	 It5qRaCJovmoNxWbLDuKazSb1Q+WaXI+XZDtyUTIy7921U1v1m3MRE8l6N6e+jdldEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PfjwyKvB;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Nfu6V/3/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6EA606A328;
-	Fri,  6 Nov 2026 07:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB740606A329;
+	Fri,  6 Nov 2026 07:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PfjwyKvB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA70D1F008A2;
-	Fri,  6 Nov 2026 07:05:50 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Nfu6V/3/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE311F008A1;
+	Fri,  6 Nov 2026 07:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793948752;
-	bh=H+EQ5iHmQny3HKRPrm1r/INHyLhkn0X/JQimG80IxmY=;
+	s=k20260515; t=1793948832;
+	bh=yT0Ls4Uz/spnUSXjIJe5AEFI8sITXW0uYiih29/EVpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PfjwyKvBNf6gIoRP0qUnJu6PRb9hysZam74s/yv507UkUm6AepNFMLP5yB79+7wZm
-	 mSZUrnL/H/ZkckbmyuzQ2EP1Uh9HS6iGojLXXuD5Bh5fotsNTfhUMrTNgoHL8qo4rI
-	 6zsYfk0FTwmUxYazFMoBEmwBvr7RXtrAZpMMdrB9KLqHImUAShqDxxxxUfqt4GGNQx
-	 khq5u+EWFgBBlETkXz97qNARZYDYfIL84J76eWQ8ZutyFQ8gHvNr7vpG/vzDlzYGqv
-	 4APfcOLEhKBIbAJnL/4nx+QRC07khAGTpQY0/eqT06JIrJdxCRWTZ9HnCde76ehP06
-	 N4Df2eMu2iszA==
+	b=Nfu6V/3/Lrj/gU0s4PvfELHxmFhwuGwVXRtxuVgM8ylMfvqXp3B1M5UI554eVwQ8/
+	 iLCclbp9xwkdtBM/DC0Ubis/5yWOTU7auDN9jBkIj+VaDV/w62ypMBYfyBGgcWEwGj
+	 rjx6i7DrNHnllItLRTqxj37Z6XbSdYqDr8ZoBL/0X02Vpar00t8s/15a6UKTd2+QkN
+	 gcG2uHgSUoo9lM3V2NyezbkGd1i3arosrivVwjfLOgPC+HSRHqU97CbgbPmDT8le18
+	 UsUk3OhoqAUaYOvH2k/ZRUuRE2/xyDH57kFP15bDozCGYFkgBlYZAltOdL/4J8rjMw
+	 sxGT3wpezW/IQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
-Cc: fujita.tomonori@gmail.com,
+Cc: burak.emir@gmail.com,
+	ecourtney@nvidia.com,
 	ojeda@kernel.org,
 	patches@lists.linux.dev,
-	sashal@kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 6.18 0552/1005] rust: bug: fix warn_on macro build error on UML
-Date: Fri,  6 Nov 2026 08:05:43 +0100
-Message-ID: <20261106070543.89122-1-ojeda@kernel.org>
-In-Reply-To: <20261104211059.353572803@linuxfoundation.org>
-References: <20261104211059.353572803@linuxfoundation.org>
+	stable@vger.kernel.org,
+	ynorov@nvidia.com,
+	Alice Ryhl <aliceryhl@google.com>,
+	Yury Norov <yury.norov@gmail.com>
+Subject: Re: [PATCH 6.18 0699/1005] rust: bitmap: restrict bitmap length to at most i32::MAX
+Date: Fri,  6 Nov 2026 08:07:01 +0100
+Message-ID: <20261106070701.89282-1-ojeda@kernel.org>
+In-Reply-To: <20261104211103.174756107@linuxfoundation.org>
+References: <20261104211103.174756107@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,25 +65,22 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 04 Nov 2026 16:04:45 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Wed, 04 Nov 2026 16:07:12 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> +                $crate::str::CStrExt::as_char_ptr($crate::c_str!(::core::file!())),
+> +/// This also matches [`BitmapVec::MAX_LEN`].
 
-We would need `CStrExt` that we don't have in 6.18.y for this to work:
+This is a broken intra-doc link -- it can be fixed with a trivial
+one-liner I just sent here:
 
-    error[E0433]: failed to resolve: could not find `CStrExt` in `str`
-       --> drivers/android/binder/freeze.rs:109:13
-        |
-    109 |             kernel::warn_on!(freeze.num_cleared_duplicates != 0);
-        |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ could not find `CStrExt` in `str`
-        |
-        = note: this error originates in the macro `$crate::warn_flags` which comes from the expansion of the macro `kernel::warn_on` (in Nightly builds, run with -Z macro-backtrace for more info)
+  https://lore.kernel.org/stable/20261106063745.87864-1-ojeda@kernel.org/
 
-We should instead do e.g.
+But another option (cleaner but a bigger change) is to cherry-pick:
 
-    $crate::str::CStr::as_char_ptr($crate::c_str!(::core::file!())),
+  f5535d78e126 ("rust: bitmap: add MAX_LEN and MAX_INLINE_LEN constants")
 
-I can send a custom one, but we should drop this one.
+Cc: Alice Ryhl <aliceryhl@google.com>
+Cc: Burak Emir <burak.emir@gmail.com>
+Cc: Yury Norov <yury.norov@gmail.com>
 
 Cheers,
 Miguel
