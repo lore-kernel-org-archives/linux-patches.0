@@ -1,72 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793982958;
-	b=x7/fQUGYTAyLQ+2yFtftLjdjBtVwFqPD2UquleV+B92FXgV1MppttwWdxft73jmp8pju
-	 MEa5YuM03npd5RpUor+/TpwoftZo8atlRrFAsQRpjIaB21YUZP+F8KTZ/1PHp6yurLHqI
-	 /mdcU6FvvWWd18VoqWb+P8Ew0CWXuyCUWJ36PJ++yJUtuXZzS8EXxjNfgDpFRQQrhbMcr
-	 il8rclmm+AJ1wVwtjJIaUCEGDNMTrvlO6NMkA+p4sefd0r9Xi/UlJUCsasLwQsSiReUAX
-	 0/Bw4SGZBy8ntxXkL4XgfiUO3pa84HokFD3/8dQJU+D6axzzJhzihvc3CyHi0ea5mfQ==
+	t=1793982971;
+	b=xF4RQDAKvqAGLHz5N+eQjoDffBwKDBcTraLqw1rqKwvt7aQ/cM0uDuchplbhZnMfYgRh
+	 3JIbD/cTXPNaGMj2okoJ3jrLm+A2FWyciqKZUjWTrx7cjGsod5AEg370fqJ28sMUHAo1Y
+	 dW1Do0yInIXWDgpyvfVf/G4T4mmf7H6pv4aDKhvth42HOFN+nMOTAheyMMepJ10BE8HyI
+	 SYUu/wuae2WXAAJH65B72NWGZj3JVMzSqt5ggZEdgQsJj8GF4z6d58oS9wmR5pfwHWTxn
+	 YsIw3+FUjNcPRh9vUHIvPkFLqCnJe/N8HqY1mv3xz7pnXI0TRV9GwBbB37nO3R1oCZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793982958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793982971;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=8oLI0jMRmvv1l9rLn/SvFZygTNaH4wbDO6RVrpAiPz0=;
-	b=LUcLr+nIUuTZRydjEYrd4NXWuFPEWNSaOkiAjFID2odlE41cSBu0LUx/Wtk/Xm5YWqOs
-	 ANFbTeesIum0iB/53rZgmVl7/Bz6TYI1AwBolHtnZG4yLiFrPFmHMdSFyYeaveZEbPudI
-	 CMYPUJxTxspZIkLWks6Y9InMREVBQMyqq220ojCYs+tYL8MZWqGLt4EyfpOoa/VXv64yX
-	 UN4oSDBSoAKL9M5ZIfAqfownUCowP0TGGoCNbVmxLfmuejxQct0wjr65v/cmgKvLsa/EV
-	 sWlNHih2jMN94KKRLlL6e+OzsGEWCL4BsE/shVImTzKJP/KJtaf3paPikvM4LC4Y3Pw==
+	bh=7o2tTUCKHyOfDrgMjYDFTqN7oDMZSwbcGWhBdhfpeRQ=;
+	b=h36q6znLEFnYYrRcZ0UvWvWmDkgFyT8SQf2TL1Nf4kxqYQ6DgVkqjC2A5HbUlF2vPjK6
+	 hJv19ZJGBwDNFBsIKNwu6cUjveWpoIG0lT0PzIik/CZ7U/9UCxpVk64r0hAYRGDI9ttvz
+	 VBYC4+6UZggXWfzlBpxN0MNPmJ+D9c6+uiJMeAH7DfFIw+b4BQSIdhH+tC9q4nGGptWEz
+	 SY0qmJAFVM3Q2cwlHcuJcFSoG4t4jlL4GfCzr0eRQ8cariV9d01x0pyPrFL22aKYiAxNQ
+	 SSpqvRl2SL3vLth2c4Y2f6SrroBm5uO4k9mHNVEBR+LkdZdpAXQiFiZc5WEEd9qJoIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ut8Kx1TF;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="A/pqPcJy";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2433A606A32D;
-	Fri,  6 Nov 2026 16:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B17606A337;
+	Fri,  6 Nov 2026 16:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ut8Kx1TF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC32C1F0089F;
-	Fri,  6 Nov 2026 16:35:55 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=A/pqPcJy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69F01F008A2;
+	Fri,  6 Nov 2026 16:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793982958;
-	bh=8oLI0jMRmvv1l9rLn/SvFZygTNaH4wbDO6RVrpAiPz0=;
+	s=k20260515; t=1793982970;
+	bh=7o2tTUCKHyOfDrgMjYDFTqN7oDMZSwbcGWhBdhfpeRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ut8Kx1TFDaYqjPfdPTO+th/yM3bDmGfVPf5EFpL47K3Pq+82z273gToamf4jPtWFX
-	 Bld+IFD4WVWgYOuxaKKs/U8g5UfF6gQg7HDOsrrV8E0ilRfah+Oe/zYR1ccDkLqPQJ
-	 IIS+Tel91O7u0YwOVjYu3bTnFD7DHhB1g12EdiPM6t2tZ/GURT6Dy1Whbd5CTa1kOc
-	 ZodpgwdMKRSNDUQaUsCVXx8jtDBAT3m/LE5BTYp3f5b8eajy42iWbqLh9hK8YApVrT
-	 DIPZ19xsmLU1CaTQWEElcc/sP8xUDlds0h8PdwS2JopuVNmJRQqfvOtkMb52UWFIj9
-	 VfmnfiL2zd+hg==
+	b=A/pqPcJyWMWTM+lzVj4f29uyWASY4Wq6BUxM1xO9zW7rBVNbQAhEroX8xpXUlgv81
+	 bM6vffoHJQTi6itBP3qvdI7Kx9jTRBaHD2KqQEfoUlVmIJKf7Qi9kfkzx/4Gu9ggU+
+	 mLwP0NGdFkK25OJnq2N+JfGuMQNIxvw50gdeE6pIrtjmUKa2K8HmrxydmzZFmXTj6N
+	 OUEMtzOlJyokIR38/xOy3SVqyMPsX03qIkhIFmRrauh6ZJ8THbTqST72REuLBgcIfJ
+	 tJmIi7ToXdEnC8LJAS8u8dG6F94w2bizOMnI0fm3JHCXJrHgQvsRxPtlVrjnI6gpFI
+	 kKFDzdseh5nQQ==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
+To: gregkh@linuxfoundation.org
 Cc: Sasha Levin <sashal@kernel.org>,
+	burak.emir@gmail.com,
+	ecourtney@nvidia.com,
+	ojeda@kernel.org,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Ronald Warsow <rwarsow@gmx.de>
-Subject: Re: [PATCH 7.3 000/547] 7.3.2-rc1 review
-Date: Fri,  6 Nov 2026 11:35:36 -0500
-Message-ID: <2026-11-06-1-daily-reply-0001-7.3.2-rc1-wx@kernel.org>
+	stable@vger.kernel.org,
+	ynorov@nvidia.com,
+	Alice Ryhl <aliceryhl@google.com>,
+	Yury Norov <yury.norov@gmail.com>
+Subject: Re: [PATCH 6.18 0699/1005] rust: bitmap: restrict bitmap length to at most i32::MAX
+Date: Fri,  6 Nov 2026 11:35:48 -0500
+Message-ID: <2026-11-06-1-daily-reply-0013-rust-bitmap-doc@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <3dfb9b8d-3bf7-4fa2-89ec-6561c1b7b70e@gmx.de>
-References: <3dfb9b8d-3bf7-4fa2-89ec-6561c1b7b70e@gmx.de>
+In-Reply-To: <20261106070701.89282-1-ojeda@kernel.org>
+References: <20261106070701.89282-1-ojeda@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -78,12 +67,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I need to revert:
+> But another option (cleaner but a bigger change) is to cherry-pick:
 >
-> "x86/mm/pat: Fix effective RW computation in lookup_address_in_pgd_attr()"
+>   f5535d78e126 ("rust: bitmap: add MAX_LEN and MAX_INLINE_LEN constants")
 
-Queued "x86/mm/pat: Use pr_warn() for early W^X warnings" for 7.3, 6.18, 6.12,
-6.6 and 6.1, which is the fix Jiri pointed to for this false positive.
+I took your one-liner for 6.18, since f5535d78e126 ("rust: bitmap: add MAX_LEN
+and MAX_INLINE_LEN constants") adds new API and is not a fix.
 
 -- 
 Thanks,
