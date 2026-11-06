@@ -1,49 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793979274;
-	b=sXQ0qxAPg+aXB40wMUK8lFr4grGwUUmjzXZ+wlKLPoSahkbTSM7xwxaLsVRh/U+F81Vy
-	 GOI4cDvqw8bRz4zqWl8NyHkpE+ufQEAtntmhh9FXEKiHWlC7OthueMWyVFo+tOele9Y3S
-	 ifYzMuvN2U4wqgyPZbrmXh6LFb0TwHAzkHoMktRq6KYGIT9LD9msHTDChoAEN4o441WRi
-	 sGyuCuhibkjPh6yKsUzPPGvwiIKoJ/Nq6NJM9vIspKSHMtiMVz8cwXY5N5o2nsL9W1FNf
-	 HdVmm7ygbYDyUZB3FPrcEWEJxoYq3lVkakyoXn3ph+fo61tZ/r07QHHuwEX44VXSM8Q==
+	t=1793979458;
+	b=39Ivo0y9d8AsZyUXgNV2tGvON3fOt1iK+T+V6ucexx7ukJWbDro6B94dSTzzasVp+jCY
+	 v10p5h7PRmSur3b8Pe45Xu34ZBJnCmvio47jMZvSvQNgzoxm5AYGobOrje+7BfznJuW6z
+	 kXLaQoXvFvreDQCZpyhp8PvthUl30c7PjNFW+9IFkXq5RLs2AC9sqDrfSQ6PdzRjI30Vk
+	 WH+adL1nsJ44XNju66Za6ugAL4aCM4wBy3WG8YilMQDCnD2lTjauuqiF51ZnorJtyWEYQ
+	 lW57M8LwFg9sOI2opMTySEZB9XRKdx7oQfVK56BYVYXp7Ku2q1B4zMYe7KW1ObB6M4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793979274;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=Uj6b08bxBrGPMBQHtFI05sMh6Xoy8ejNAgMPUPWV1BQ=;
-	b=b+AMX1GtUVMEl+CkEwK7CSLIUbt6rstJG9wUkvCmwIp6KXPOQUTDcnB1DbLE7PE7gAbQ
-	 h/j//j43wLtxoDsZrKJLPXCd8Vdu5GfprKfp1Lf2T2nX+MVkAhY+VoY/eCYkfl/QzjJ+j
-	 /4dGxOTjf8ageztAwskyFebFzOIHUveELyO5g1eC7ofiX3h9RTXpl3ZG4weHnL5XPMlsd
-	 /XmKZ9kwChwtss8ASndwT5FYUc6OJNsqY6p/+8mFrb2Cx8cHDYNZZD2N8BtqnwHLQAQhu
-	 9fy752m84rWRZ26gcgrN2UA3TdSTeCgPuRoPpFciJC2HElrP+NyfaQ6MwPZSYCBGzBQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793979458;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=3I1BCAsuvr/3ldrIukp083xit1CTPI4404rHCJ/nKZ8=;
+	b=jqS7qjTdoDDyBWz17f1gs7ftXe5KsM+DJzSdLRt7rqnPTUSQE4GHBXr0Yikbbdd+wI7A
+	 GVar4z0ka+5on/k6kZ4tdM3Au11OxQ6KuhKBCkCozc0KwU6PBmeFw4yiuGH8i6dBSqb5N
+	 UMj4aCTDB93+Bp3Pj5LGrpE8XdRtglt5UQ6iSUlDVeV8C9Y/r5xiRMYLduFHwLBlE2gs3
+	 zmv0vhjILLV92fEx5BUjOVhVgyV/J+XfkaJpYMtu3ufz0LZJY6wVMTYs0x7JnMrD6xHlV
+	 mxaopXOSnEY2T9bq/KV/sLY+YNUABnIgi+P6ew/G/ZvvOFOcgcOoQW1mKw9+QbWktRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=HoIuxL1I;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C312606A329;
-	Fri,  6 Nov 2026 15:34:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C312606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=none header.from=seanlyon.dev;
+	spf=pass smtp.mailfrom=seanlyon.dev;
+	dkim=pass header.d=seanlyon.dev header.i=@seanlyon.dev header.a=rsa-sha256 header.s=fm1 header.b=rjPCGEZm;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=k2eD09i9;
+	arc=none smtp.remote-ip=202.12.124.149
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591BC606A32F
+	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 15:37:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 591BC606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=seanlyon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seanlyon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=HoIuxL1I
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1F8F71650;
-	Fri,  6 Nov 2026 07:34:30 -0800 (PST)
-Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2B6803F632;
-	Fri,  6 Nov 2026 07:34:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793979273; bh=kbtuYZHukFIc3XIsRQp6dsFZOem1VpVxmEcgHFZmqd0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HoIuxL1ItDLUGlcavjNXD/JxrmPk3WBhtY7TT2qM8F45c/7Q3yyjSI+pQ153K1fb0
-	 YXClJGmCHDlVOTNxhr9aTezROBBizZumSyroGckV652hcFVqpuVFnjin2TJWlbTvqZ
-	 Bx38XYVnikraEyti5l13jjcvEmncaKF99Gps4Xng=
-Message-ID: <397b7702-ae85-472b-909e-05b3c4135c61@arm.com>
-Date: Fri, 6 Nov 2026 15:34:23 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=seanlyon.dev header.i=@seanlyon.dev header.a=rsa-sha256 header.s=fm1 header.b=rjPCGEZm;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=k2eD09i9
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id B36351D00050
+	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 10:37:36 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Fri, 06 Nov 2026 10:37:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seanlyon.dev; h=
+	cc:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1793979456; x=1794065856; bh=3I1BCAsuvr
+	/3ldrIukp083xit1CTPI4404rHCJ/nKZ8=; b=rjPCGEZmjsYU3jXZ3b2FLiJk9J
+	x8AgJnvLHDR7/e/bcV39ljL9RTgMw39Y6K1FpeqW1PXZ2p36FW+D4nRPlhodMdVl
+	rEKiT3w5VQy778hXyFSy3y4BGU6uGu1ZwkVBFMIyVW8A05G3blwSPxB2J04idGlP
+	WAJHgmCbgR6J25iBpGuktdWYEB0264Rug/YNLY6tlQAmkQIURbrxCYq51zeHV7Cl
+	gRZVQf39uct7gtgDKUuUUNSeWzWlzWuElkw5V7SRh3orjuCBp+X+rvye3fgEMxws
+	khVLT307oCWqVzeRgflSzaWzY48r9vY+wNwkGUDEwqWeu61H3ZJIlBVvbobQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1793979456; x=1794065856; bh=3I1BCAsuvr/3ldrIukp083xit1CTPI4404r
+	HCJ/nKZ8=; b=k2eD09i9waK+IsAcfULXGkuyAR1ao8FcpFn44UBKWaQvHYzPpCO
+	X2lPufqF/egMDHyXfj4qsggf2UJBaQK8sIvpZZ76J/BuN7VJLOkjOVhxEV+IWzfP
+	ulXaw3KDLY/HA69AVN+ucn68vdiOrhxDR9uV2Wk9qp0xObFH+GhhKmw8FWq9HwEa
+	ex53HxTy/XXrmUbFQ+sHityWmHIruCkRDIDFIYzpRHt+tQDr0PB2bwqpgjFgbe3N
+	bh7h3mW42A35VTomz45aneDwNSwiJVg3iwXt+uoaZa0k+E2oxoERPjA2dukllBaJ
+	DsPu1ojrx0t47FrGdcBdhog9ppykgbeXWrw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=seanlyon.dev a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1793979456; d=seanlyon.dev;
+	mf=PHNlYW5Ac2Vhbmx5b24uZGV2Pg==;
+	rt=PHBhdGNoZXNAbGlzdHMubGludXguZGV2Pg==;
+	s=fm1:rsa-sha256:IdoUwhwgnzVXTDJDVnpTl265Jj9B6o3+eDFhBwI6hP5p6hc
+	BSt1x46wFZXcTLhl0Hjjy+dc0bWgqK38sjl4UC7Nf7mRi00mb2nRpqQZjNXj0o9F
+	DyB9cOSLxc/ucL7nvVHvbsFeQM/2ASBi/EpryK13qCuby4E+6Q58ZJLnA8LKxwTS
+	mrYcPKkA47bQkmFdRMcwN+MO75VRvuulPhjKhDnXaMxdtQj/3mM3TF0vbhKVrqPz
+	NkwQk95wgbU+vWjb28mfVyxL4l73YfN8x2PRv27ANB/jvFlNriqFTFzFUzRJHDTF
+	4gpE4Qx+pnKkQTFHene7Vp+cXJg1ratf4rSqmVA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:hMWIR663YLcGpmRnr8B7JFwGzsfgwKDvBnpv4IVgMBw=:wzK9TzPZfmrjaEwIl+Vvxyoy1JTMv5wgohAotlyVAiY=;
+X-ME-Sender: <xms:P_TtarRD5fcUdnmQQZPdo5r-KpF_Jk7A-TAtpBdvV7v2ZiFS5e9c0w>
+    <xme:P_TtaoraZOVyzr2u2ChtojIiJJauRXgtGDL9x28O7THlMfjg5uUDVUw8m3gtcr6xh
+    DHZW3uow0HKgpd9pWr9E17-6KOJlGV-N_zfAZ3UOsNqDC52MOVqduuV>
+X-ME-Received: <xmr:P_TtasXvlHQ6gNMZJ4uCAwM8uksbt8y7s5_5991-lgeruu9Ze7EGgG7PxcqjBoAMNmg4_S7gFa_fxdG5wI9z_Ro26ts>
+X-ME-Proxy-Cause: dmFkZTE85sSYL6ax+V3Zv/R5qKBM/5s/tc8Ryip5ZndsHxL9I5o9azwy7zUowQCaVmya+y
+    pHU/TkBlm1ju10kwNaZXHavf7L/0dy3gtL8uWZZFTtK1+hzoay1Lihza/qqNhQ3EzpG9ZQ
+    DM3miZu6/rPJ8qbkfrAt1YU9yf05zlbzTi70E+ARo94OjBsFs0/nHVb4f3wGOwsxyZEamn
+    2M9L1N9AbiI8AlnVuEhQN5Clct3a+oS9eYzdKl2zbrcxQoV6rrS29gURqWW+LP6DbQftTf
+    z2tHZzvKWTOHUMturYQ6rmq+V2hzaR1sRdP0U6tEafCNJYdhDC4Yeby3Ps7cF8mPHdOZon
+    0nzio15v6y/iHyeIMtUSt6KeDwNnAv321Tzyk0acBkN5aS5RvRpNCFf4KJ4z89YlLqcwYv
+    oUNH+FVa79fXTqB+WreGkc7hbXop2pL5J5Ur5NprsiyKL6BiAG2FTbk/km9UbwjW+3aFdZ
+    EKgelrPpa5KrBzjP0DVPgqdHAZ8nDCEYNIbzQ7zPU9ep4i/vjlI8pNVYrjSBvny7YaCkrI
+    eeyC6FwHR4n6Aj6+2R7ePvDMoVWnEUFiFIW9cUQJyxHBUqlI21zvWZVYT6OiX3wv2Rmegc
+    Jjki6x1rGjcpJKC8qPoodZu3+ZHsoMOwIrtzoUHHChcC32F3N0VvW0h01f9Q
+X-ME-Proxy: <xmx:P_Ttau_-46WxxgzHGp3CmIS_pYETHfbEB1JRqIrF-Jq5G2s5VeNEIg>
+    <xmx:P_Ttasb-3Tq1qqOdllyWKtP1Hbq4LaNHRwchuozgrUkDa7wCmjc9Fw>
+    <xmx:P_Ttauf0TtaumaAc9uOe1xfqAKgQluR5eme9RZoBsj1KBsEevOJDsA>
+    <xmx:P_TtaurxY1CHBu2kLTJlEUSc4ILaG_4P8x3Tiw_oTQru53NBQRbCxA>
+    <xmx:QPTtamld-LUiOJKB8jTHcti8_ILBPCnxxVJazrf6Th2ovYR_jm8decZf>
+Feedback-ID: i07c64b5b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Nov 2026 10:37:35 -0500 (EST)
+Date: Fri, 6 Nov 2026 10:37:34 -0500
+From: Sean Lyon <sean@seanlyon.dev>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.3 000/547] 7.3.2-rc1 review
+Message-ID: <au30PlcYPAQDilX2@ncase>
+References: <20261104211038.406938024@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -53,89 +127,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 01/14] mm: Add an allocator for CoCo shared memory
-To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, linux-coco@lists.linux.dev
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
- Pasha Tatashin <pasha.tatashin@soleen.com>,
- Pratyush Yadav <pratyush@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Jason Gunthorpe <jgg@ziepe.ca>, Joerg Roedel <joro@8bytes.org>,
- Marc Zyngier <maz@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>,
- Robin Murphy <robin.murphy@arm.com>, Steven Price <steven.price@arm.com>,
- Sumit Semwal <sumit.semwal@linaro.org>, Thomas Gleixner <tglx@kernel.org>,
- Will Deacon <will@kernel.org>, Russell King <linux@armlinux.org.uk>,
- Benjamin Gaignard <benjamin.gaignard@collabora.com>,
- Brian Starkey <Brian.Starkey@arm.com>, John Stultz <jstultz@google.com>,
- Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
- "T.J. Mercier" <tjmercier@google.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- Christophe Leroy <chleroy@kernel.org>, Ritesh Harjani
- <ritesh.list@gmail.com>, Shrikanth Hegde <sshegde@linux.ibm.com>,
- Alexander Gordeev <agordeev@linux.ibm.com>,
- Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
- Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
- x86@kernel.org, "H . Peter Anvin" <hpa@zytor.com>,
- Kiryl Shutsemau <kas@kernel.org>, Rick Edgecombe
- <rick.p.edgecombe@intel.com>, "K . Y . Srinivasan" <kys@microsoft.com>,
- Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Dexuan Cui <decui@microsoft.com>, Long Li <longli@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- Andy Lutomirski <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
- dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
- linaro-mm-sig@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-media@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev,
- patches@lists.linux.dev
-References: <20261104164555.3555725-1-aneesh.kumar@kernel.org>
- <20261104164555.3555725-2-aneesh.kumar@kernel.org>
- <2e448ac1-7b4f-4d45-90db-dfe9dc5ad329@arm.com> <yq5ald76ou4m.fsf@kernel.org>
-Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <yq5ald76ou4m.fsf@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
 
-On 06/11/2026 15:30, Aneesh Kumar K.V wrote:
-> Suzuki K Poulose <suzuki.poulose@arm.com> writes:
-> 
->> On 04/11/2026 16:45, Aneesh Kumar K.V (Arm) wrote:
->>> Confidential-computing guests may require memory shared with the host to
->>> be aligned and transitioned in units larger than PAGE_SIZE. Several DMA
->>> users need struct page-backed allocations satisfying these requirements.
->>> Provide a common allocator instead of requiring each user to open-code
->>> this sequence.
->>>
->>> Add alloc_cc_shared_pages() and its node-aware variant. The allocator
->>> rounds the requested size to the architecture's shared granule,
->>> allocates suitably aligned contiguous pages and transitions the
->>> complete range to shared state. It also preserves the caller's GFP
->>> policy.
->>>
->>> A private-to-shared transition may alter memory contents. Mask
->>> __GFP_ZERO from the underlying allocation and when requested, clear the
->>> complete transitioned range after cc_make_shared() succeeds.
->>
->> This is not true for pKVM though. It is the other way around. i.e,
->> pages must be cleared before transition (e.g., from private to shared)
->> to make sure the contents don't leak into the host.
->>
->> Do we need to handle such cases with a pre_conversion and
->> post_conversion hook ?
->>
-> 
-> Patch 2 does something similar.
+On Wed, Nov 04, 2026 at 04:03:04PM -0500, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.3.2 release.
+> There are 547 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Ah, yes! Thanks
+Built, booted, and tested on hardware for x86_64:
 
-Cheers
-Suzuki
+- AMD Ryzen 9 5900X, Nvidia RTX 3080 (nouveau)
 
-> 
-> -aneesh
+No regressions found.
 
+Tested-by: Sean Lyon <sean@seanlyon.dev>
+
+Thanks!
+Sean
