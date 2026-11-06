@@ -1,115 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793951398;
-	b=ZTbZHKvpnez3+FSb592klKH/z8JN5FIXImWoq9cSNlzoy418KaO49ltxQ+YLimpI3fAU
-	 aA267GfThnh6FgOWSd9yI9ttCUB0tH2iq/sork28+Abt0Ufq5lAvR01I3wkvMa5rW/6ly
-	 r5kUk4Vf0khdduc1JaSapsy9exZgnIiiOSz8kRszQ4mVHCKrVVwlXNFPUpCqZj5UaNsnK
-	 tjejOdr6dTXgVOAL86fy1dTRrDDvW+HnqDChU+md9P1qU+dZ3T3r3oU38LnHG446qvKny
-	 dZpMil+ob2vb8R3o3vXnl8Fgr1RdwwlQIVTF/LpaAL8FoVMoGCuCgJG4A55bMiPHA8w==
+	t=1793953467;
+	b=x4ApWDhuQXcroSFmI3u+wJMZ0P7ThfehDM1IXzuSeUjS8CRl6rOVLbvUi7rhmyqOnesQ
+	 PSxFpq4jUzYELdHslgLDZDcWscBIoQwdQckWnjAZTX28fGMxDbCVF7Ki0Zy+CvbosE/wi
+	 oxZfuoHUqylnGq5LqFrI2lv9Kcv5mTGQWMR2QQ8wY/dZrNIS0m9FQAs3aGXIu9GlY/JPq
+	 RxdFzhvptQfD6iGMhMW2F5ExxLjqlBeON1/8zcjIcDEkBguWW623NjfQzE80lRI+gy/Q/
+	 6p/X0T/8yZD5qletr5+IFWqDK8xouQ6j0ZZQoTIpFbqnfi6qviTavO45sEfYDKfjnvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793951398;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=1AHI0cHVScIUZqupXxfL2S2LYfFvIDAWL/E9K98CHlg=;
-	b=RkfaC6VKuFB7eusEzTWhJbczJaWFGZL0x8IomXVtH5UCx7VxVAYKECU6Le957xNwkeR4
-	 6KPzl6wUK/5GlWW8XWJOY4Vfp6OyA85kSf2YzLgXLUMyoZsXRA/+mrdDrIAPiZ2V40fer
-	 0rqz9cs9/KlPLsfhfXnwuUL6TKEGnNDIFlUmQ2yHeg5jS8FCix39jjjq0xJeaxjC304pq
-	 XbAZux3dckUGPIP3x3ELBDZkXJf3JjpMAJ7PvY1uPl73hQcb7efPzyVqR60GxQwDNnphB
-	 PTOw0ubCMDX6TJuOEuAG5mLrQkZhR+5+BmjwqOxtZcJ6y9EpuflQHAhS7Z3bE4jLukQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793953467;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=JNN9fSulUqv+ZWRT5ZOWUQqvJRbmjv9przFDvv5FnSA=;
+	b=B3lg47N4kFFzW7pPPa6EBFccEj1IKpwKH+p00qLKiVDBLdi8j+UWdNPjKj4CjSCHt7HK
+	 qTr4FjF7PFl8EUR1QXF56ET6DI7g9GDmQJ+pPqfedn/GOq9T1sVJp0uExZzkxy7IC0/t4
+	 3YtqYGWiR2t3SgmXWT3B1/qM6k+hu7Sncf6q9W2rdqPm0m61dHkAB/DDeE0Vu0xoKTMZo
+	 dsvAgLovq0EQj+YVTSgww4C/B4aCp/O4GJ2mXNivUSDrgEx4LnHvZYtnuVDE93FyJzWJh
+	 WHQ/9do0uM0CjH83QzjH6TspfjD6Lj+CLG8FOLOCB9qZjYLG8D5a+Kbx96/qMTwMP+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=AhYgfsmG;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="GMU+T/4y";
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JGSwu+AT;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D05606A32C
-	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 07:49:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1D05606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABACC606A326;
+	Fri,  6 Nov 2026 08:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=AhYgfsmG;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GMU+T/4y
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id EC4F0EC023C
-	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 02:49:56 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 06 Nov 2026 02:49:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1793951396;
-	 x=1794037796; bh=1AHI0cHVScIUZqupXxfL2S2LYfFvIDAWL/E9K98CHlg=; b=
-	AhYgfsmGeDZa4/y4l3w/90waPCwb35P8koRZwK1P67HFJrdLKmLlKD9Yr+jNClix
-	thttOryLmGVvG93sREOKNtvjn4jrn9RdBeBEgGq3Yvijd99tGCFt2K4y4BVWnJRV
-	OTn/NoiVdlBFJfWJDUjqleDVezpnzAsdPMfjcaq16atGeEeQfefUQUFJCeWV8Ogr
-	2focazJ7DGMuDwSeu9UL3QMV11Y0Q/OstcA+90emcsjenb+RgfqzKi8drvS/u0PI
-	XJ5nEvxadFT9iVcxQCeaF/L3d/609R4o3CrtpPK1mTvVcSqPtSncB/dAPLtFs050
-	WCyO4b8EBqSYm/MoztQBPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1793951396; x=
-	1794037796; bh=1AHI0cHVScIUZqupXxfL2S2LYfFvIDAWL/E9K98CHlg=; b=G
-	MU+T/4yC3xU7sJY4lwPdj3Jd+cy9+eLdZPQJA9OXCyaL+jGsPkpnzLnAoYPl50d5
-	iicgCraTfSdKoluVdA5NIkyD9y5msb/kcl9WZ059rMglzbspFaJhKy39L39mKIBY
-	ZXd6lRAqRKxEzB8nm3vgWmwbqRQKUKSi7x+uyQMXLtFyCA5yW+lHPtmQWCDy37BD
-	0GocPCMLOFustRNxJ+Ei6xAaExiooHHlzkb3NMeiprGbGdR4cFc2OHA7BL8pS6s6
-	MWsJfRENJbfa+crYg2SBTkxsygoFu+4FY+j86oMH+9ZbxMEipS74CRMNfepsHctI
-	iuMSWIPJORf6oS07usewQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793951396; d=pobox.com;
-	mf=PGJhcnJ5bkBwb2JveC5jb20+;
-	rt=PHBhdGNoZXNAbGlzdHMubGludXguZGV2Pg==;
-	s=fm2:rsa-sha256:n+obGlnnomr0zChgoWpRmTPYaLSuOsawR90Mu3su+rIi7ZG
-	FhcVswME+UBUqMKAbviA/pHCxscfxhAnOwFUR4fQxlVUICq3kxe8FtCE5U+W3Yky
-	s7CRqO3bsVNYXhBIzdIf5pdoFdARL33g64/LUizxZiSU3OAbw8EEXjR57ZotHZre
-	3x2Pjw+sK8wxC9DxpequPlXr5jbINVIjUMGbNR4mGJ6WyWZfMZVkvppGhVS+P/Tw
-	U8z4BP3yrMrSeK4mNzM8vKx1ncOXL3U4WACvW55Yi7jJDKYnbWhQVTW0+72z8x+n
-	cRyvJEBnOEonmH/DyuZmUD2AWsJxUaPaSCkOeSw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=14;
-	hn=cc,content-language,content-transfer-encoding,content-type,
-	date,feedback-id,from,in-reply-to,message-id,mime-version,
-	references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:KIHw2e3xfPS+YXrajfvk65Yocyqa030eA4wRjeVGb4w=:ZvUPCHxS3O6LS4EixgV6YSZVVcpJv+np6nRlhY7v1+4=;
-X-ME-Sender: <xms:pIbtakR_amYMBEUB6E-QWeefd2HVmu59l1dtAYPNgFs8oAmWihxKnQ>
-    <xme:pIbtatqWYnCwAHmfcHQBLikYyEAJkJq-9iAEX31vyzkAJAfZ7vDV_PHQDdP04dIkO
-    1TQ2Cq8sJDPOA1b4dTKxf9-rv-uEIjlQroMecnntAz3IFxt0rNUgF8>
-X-ME-Received: <xmr:pIbtatX9jZNMWsaLnEmAuD4i-1UMXNGwA_i3ry8118mqmjk7F5G0Fr4oOs4whZnNzB2R4L3kIQ3uWvQlgOSRSWS3Ptn7of4Y>
-X-ME-Proxy-Cause: dmFkZTEUI4H6PQciHH1C0CTjTEnjL/+AMWtSU2echlVeolgKazYD6YGf/jp1/AUiVQw0Vc
-    b22NY8UD7W0YPFI0J2KMmNRLoechu8v/kX7oOmBz84ncHJvjlSUovwz4qgMh1SKRVBe8Z/
-    5ZjCeXkmh3z8IuoYffyLxHtkGDLObwXWUm091vKQ3RUMT6pRfAog4p7mSkKalMV7vdAhuT
-    uUnBL7oi36i7Zah1e4k9lvlFnJTDxj60I6igSytI/qIkf672YZkuIUbB7Zc6Isas9YspU+
-    0mNlCtDXC1t6hCmqwQ5C/d85MR78RM/1srLqU5nc8fMEAsP8Iu+lM0E9MqRNR+Dz4XgSFy
-    0YNg6jYE/w0MrFPCfZA2FrqN7hrziXa9c59+Woa7xZyvN+MYSAztTxA7gXfYcNz8qXUUpE
-    tJQ946pwRgsNDOpNVBuT6dYeKWlT0Li1lbIDl/UrFvaEfZTUUDCVtIkde/+vZfYYvkxrIv
-    +2XYWrZT3FgyIS1Y6zuArYz1IgVgPm4ompaRP99c2ILbnh0ldSFmhTgnSCOWfyZ0QwLTmr
-    HuIV2udmQuoaGaQyzRUNY/39Pre8AFsNld87DnbcQC8S57tn9Cbu82Ir4OVNFUmAY8Bc4H
-    OAsgSMINGnSjxGogNtoHGqz3YbCvhp/Wgo5LfctWDnMnemHPIONhloZLZ62g
-X-ME-Proxy: <xmx:pIbtar9bUW_MOSTIJnBBYi7LyE7IbFRgPhPVkneRHn11isJhF-_Spg>
-    <xmx:pIbtalZjkS-co1ma0Jj1-GcIMF1nvPbd2ui2hV1iWK9vSA4xCsavfQ>
-    <xmx:pIbtajcmyse4no46AtwihIz3DohQdLOb7FNAHsDh6-ZSIuXb9_Quag>
-    <xmx:pIbtavrQ5aXKANpBHROOLlv9A9MkapwBVvLVBYxS0ozFKbb80QFnWw>
-    <xmx:pIbtavl57qGsT3499otKlSu6KzlMMghN7ADE7VbLpcCzQgXUTiVKlQpA>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Nov 2026 02:49:54 -0500 (EST)
-Message-ID: <49bb4977-b5f5-450e-b3ba-9d494fd5a7ad@pobox.com>
-Date: Thu, 5 Nov 2026 23:49:53 -0800
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JGSwu+AT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FF61F0089F;
+	Fri,  6 Nov 2026 08:24:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793953466;
+	bh=JNN9fSulUqv+ZWRT5ZOWUQqvJRbmjv9przFDvv5FnSA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=JGSwu+AT80CV/HMl70hUGZrcOqgaDiIvhuYIBIyztIprWzJKhN3wRAqAocVThxyW7
+	 Vn7aLAq4uc2IaQKkrZZMbzutoGHl5C5VYOoAFx6ljaLf6dhlXCYcyuBR9A1G5HYVIZ
+	 I/79sUSXsTxjD6ynb78x9OSjlw8iZR+aOof8OaHaN6JX0JmxlYg6h8H9VYLIRSXJmg
+	 h9UmuKPfcsihs4e5KVY/1ZEe0JZ793dBzwMXv+V8l9dRwQ7Bw3Iin49abJsQVodX62
+	 9ZAsFsSab8PgPoP6rTEhpJxUIl9Ekjn3vxYCA4RQBHC5olfrlOOMUpyfmcJt/xewvE
+	 LnKzZYgdLR3Iw==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>, "Reshetova,
+	Elena" <elena.reshetova@intel.com>
+Cc: "Jiang, Dave" <dave.jiang@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
+	Jiri Pirko <jiri@resnulli.us>, "Tian,
+	Kevin" <kevin.tian@intel.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Kiryl Shutsemau <kas@kernel.org>, "Edgecombe,
+	Rick P" <rick.p.edgecombe@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	John Allen <john.allen@amd.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [RFC PATCH v1 10/11] virt: coco: arm-cca-host: Publish slot
+ zero and establish streams after acceptance
+In-Reply-To: <20261103151643.GI274202@nvidia.com>
+References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
+ <20261028152618.1356860-11-aneesh.kumar@kernel.org>
+ <26c24a66-be3d-40ac-8cb4-294deb0108db@intel.com>
+ <20261029171053.GD3734323@nvidia.com>
+ <DS4PPFA84FA90FC768B30DCFEBDE71F31CFE76D2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261030131543.GH3734323@nvidia.com> <yq5apkwqa5ve.fsf@kernel.org>
+ <DS4PPFA84FA90FCEFB18E5620217FDCA728E76A2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261102172640.GB274202@nvidia.com>
+ <DS4PPFA84FA90FC31B41ECA1F6ACF6D0600E7692@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261103151643.GI274202@nvidia.com>
+Date: Fri, 06 Nov 2026 13:54:17 +0530
+Message-ID: <yq5ay0b6pdu6.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -119,51 +87,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 000/547] 7.3.2-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261104211038.406938024@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 11/4/26 1:03 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.3.2 release.
-> There are 547 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 06 Nov 2026 21:07:23 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.2-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Jason Gunthorpe <jgg@nvidia.com> writes:
 
-I tested 7.3.1 + stable-queue as of commit
-aa65920a134b0366b65f438be80335f2060ed664 ("fuzz cleanup"). This is
-after the broken xfs patch was reverted, but before the tun patch
-was added to the queue.
+> On Tue, Nov 03, 2026 at 12:01:43PM +0000, Reshetova, Elena wrote:
+>
+> We will need some multi-step sequence from the uABI perspective:
+>
+> 1) CTLV command START CONNECT:
+>     TSM does:
+>      GET_VERSION / VERSION                          (VCA: Version)
+>      GET_CAPABILITIES / CAPABILITIES                (VCA: Capabilities)
+>      NEGOTIATE_ALGORITHMS / ALGORITHMS              (VCA: Algorithms)
+>      GET_DIGESTS / DIGESTS
+>
+> 2) CTLV commands:
+>     query certificates. TSM will issue on demand:
+>      GET_CERTIFICATE / CERTIFICATE                  (every slot in the slot mask, all chunks)
+>     query VCA items
+>
+> 3) CTLV commands:
+>    FINISH CONNECT with slot:
+>     TSM for 1.2 does:
+>      CHALLENGE(slot 0, fresh nonce) / CHALLENGE_AUTH
+>      KEY_EXCHANGE(slot S) / KEY_EXCHANGE_RSP       (clear text)
+>      FINISH / FINISH_RSP                           (in session, opaque to host)
+>     Or for 1.3 multi-key does:
+>      KEY_EXCHANGE(slot S) / KEY_EXCHANGE_RSP       (now includes DIGESTS and CERTIFICATE)
+>      FINISH / FINISH_RSP                           (in session, opaque to host)
+>
 
-Tested on 3 amd64 systems and an arm64 virtual machine. Working
-well, no regressions observed.
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+Does this split require us to guarantee that no GET_VERSION can be
+issued in between? Another GET_VERSION in the same requester context
+between START CONNECT and FINISH CONNECT would reset the responder's
+negotiated state and transcript, right?
+ 
+If so, can we avoid this split and always use RustSPDM, with or without
+multi-key support?
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
+Something like:
+Kc: public key used to verify CHALLENGE_AUTH from slot C.
+Ks: public key selected for session establishment by user using slot S.
+C and S may be different slots.
+
+Host / RustSPDM:
+    VCA -> GET_DIGESTS -> fetch certificate chains
+    CHALLENGE(C) -> retain the messages and CHALLENGE_AUTH signature
+    Stop communicating with the device.
+
+Host / userspace:
+    Examine the discovery results.
+    Select slot S and validate its certificate chain/key Ks.
+
+Host -> RMM/firmware:
+        Supply:
+          - C and Kc, S and Ks
+          - Algorithms
+
+    Fresh GET_VERSION -> CAPABILITIES -> ALGORITHMS
+    GET_DIGESTS immediately after VCA
+    GET_CERTIFICATE(C), GET_CERTIFICATE(S)
+    Check that Kc is the leaf public key in chain C. // Can the slot number change by now ?
+    // Do we need rust spdm challenge auth response here? 
+
+Is it possible to validate Kc and Ks in the step above?
+
+-aneesh
+
+
