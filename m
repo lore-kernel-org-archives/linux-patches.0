@@ -1,60 +1,72 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793949474;
-	b=3ErqA8uSUfyoqjJB6e22IFtDgQxPSnCrVL1aJNlA0jq1+mpBOnrw63AFGKgJl6l2BDJX
-	 pEAskJ4XDSHXYCkRT6mwpKQBgJ96TUknKPYjVltxvWYZ7uXLFjJwKTy69UdquZG+UOrQk
-	 hKte8mpzVr4oWHHDAF9eclGQXh29g1nNqIQAez6Or1A1DPSZrkhenrYMlChJRe7cMn+C5
-	 2s02NkdGTxIcQW9qUjxS6I1ltAKB6fQz6d+QHqaqETPczohQSOysGgWi+iODFXY4SpN6N
-	 Mhvb6Lfk5j2h8F9jx7sgiUkbTW81dXAzWTaHzLBsi5tPIia4nuU0fljZFG/HIiEyVlg==
+	t=1793949972;
+	b=TpdiSBLewbSO3Nq6zXZC0TnaGFNrWRMPw9HpFl6osPhjZHfeJezk1ju+CxuTNRWNZfUD
+	 Df4uqFvpVRWfDbkPzURE1K7fCKbf9ASln021zpRGe4PQW5CqokQPbTxFNwW6Km0CYkftg
+	 LoQbLjqlfiNF6Nt9Ftv19sYbHYP3mrw4KclbwfgazkTWm9A2IQpcMasn09Sfg2OP1f87x
+	 cNNuZ3F4WvM3B0/IEbZGtjL+chqOjDJ0XzHnCxnnQNsfQgn9LMCzgC9rnAjiJVeVBI6Iy
+	 1z3OyLETB9n7dEtDR6IWAqNNh4JnFn24vyCqdRjIhQ7oxVQSu8ttgRDOfehmH1btW5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793949474;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793949972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=LA7in417xxsvWeOSI/Y7AtXUJZchmZdeB24NIGGuWuQ=;
-	b=R6wCqRswkp2jJC1C+Pz7P45xKzS5IEptlhHu2aiYUP7sX1+gkRFuRwZTJAyMaJnP7xqj
-	 1b6h/uVEs8UkYNPwY2BLV1Ei1kuG3VLYp7pSGxvzxk2CgAD/fu6K9zXrf/L0EogR6b0GE
-	 SgI+HkIZKkqfXLdhNAAV7529VLuTyklyT4ryHhGJwWyE6HJya2zBsfJljrFKkaNVgrX3j
-	 qntRqzBctIQXK8xjrMVFE9vW5NZQDw8awuZMgyYqWi4p6W3MJqU2TmCDGkRziyDXGSvnt
-	 74HMq88WzJpoGz3KIfcYwhRVGpl3OdT5CxR5ZHB1yElghSHiVh9IEglbPl6SchSx5Sw==
+	bh=yDXzD4LpNs0QWYrDFXSMyqQ3Gk4yqaMPN5IR5YNQq6Q=;
+	b=V2uwr9phyGdo+WOpvrmI1LKMlXjWBSoDg66ca0sZt41eaPvd922+sAomHZs8QMarHKet
+	 mdW49mMj8N/bnQrYRvajiI0glfTNaHwLqbHak49uFfsLDB4w3bZ2qJOE2mX9LD2Ct+/NZ
+	 cs/UffYjt7gg4ePI+eE3F8K5jP0cMXb5usK33yDV3nVqoNvxoJhGSpoN3W9/dH3RR7qbt
+	 auDvy4fJDHl1+biyHuj3BVuHDOwh6rH8Wj7pcuz/UFw7VU+ULW/d52RfUapA8CYQ+YKsQ
+	 ZAnH1G25xOFJrc4pIngGuTvmAHD2/37WSzAJsX0fKDdMl2PtBsX0JpiE2xQnVwyaWlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AxqceAZP;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DcULH+Uo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75CB606A333;
-	Fri,  6 Nov 2026 07:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A99606A336;
+	Fri,  6 Nov 2026 07:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AxqceAZP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88DB1F008A3;
-	Fri,  6 Nov 2026 07:17:50 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DcULH+Uo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E599F1F0089F;
+	Fri,  6 Nov 2026 07:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793949473;
-	bh=LA7in417xxsvWeOSI/Y7AtXUJZchmZdeB24NIGGuWuQ=;
+	s=k20260515; t=1793949971;
+	bh=yDXzD4LpNs0QWYrDFXSMyqQ3Gk4yqaMPN5IR5YNQq6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AxqceAZP8HOAx6X5A6qmSYJDv3HLA99unJTCs9GmMJL++8mJzpOsqMFOH85IZK20+
-	 TilQjwaXqCszMmM0yf/zzGN6oHUivfQEBCZArXI+M0exT8O2/bfH4HmEuAGrC+5+mg
-	 hFtbKIGZI/OYre49UifOvi4ds7AFyuYJ1MjTWc1Jii1zBn4z5uEZb1lNiXxTRM/A63
-	 AobpO6ku9AnkJuh4av0P9D3rG8qwdBfAp+bIkNv/Ko7PBR+WjYMKdA0MK+FVIg+Fz1
-	 qcWqIK1kfthD9vteCUVTJ7ZvUuMSJBgvuDclojGHwF/OaENySdgP1u9egi6BQueG6K
-	 VfmO/VXfWRWSg==
+	b=DcULH+Uol8sp6/KVDXkGVE/rUznUzWIRD29mucp1hxUOYyLf6luqdzGhhBhGy+upS
+	 MA9pehoP7Z98vltYiG87FMojRQDtZZMebKX3e99/caEWwZXUX8jl5VNNiLDTxpUBzn
+	 dKhIE06MQ6oXILJPPywRKdOZ1NZaIm4ayv+dbI1JSxPt76D+F1Me+qlf+2u2YDa2AH
+	 FzK1QWApo0gSly334rnGQLnfIaF/CmiVpHA3pfLTM5enFWJwgnldM15mdavUuBjIxF
+	 1MIy38J2qcCrya+r52JZoy2WtVJMvDeAqfRuBq5QXtgUMSS3zFabEhq871sYjlFV9s
+	 ifCaJGiaROpiQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
-Cc: cem@kernel.org,
-	djwong@kernel.org,
-	hch@lst.de,
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
 	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
 	stable@vger.kernel.org,
-	linux-xfs@vger.kernel.org,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG Xuerui <kernel@xen0n.name>,
-	loongarch@lists.linux.dev
-Subject: Re: [PATCH 6.18 0805/1005] xfs: cross-reference the primary superblock
-Date: Fri,  6 Nov 2026 08:17:43 +0100
-Message-ID: <20261106071743.90363-1-ojeda@kernel.org>
-In-Reply-To: <20261104211105.901372401@linuxfoundation.org>
-References: <20261104211105.901372401@linuxfoundation.org>
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.18 0000/1005] 6.18.61-rc1 review
+Date: Fri,  6 Nov 2026 08:25:52 +0100
+Message-ID: <20261106072552.90943-1-ojeda@kernel.org>
+In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
+References: <20261104211043.516122098@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -66,55 +78,39 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 04 Nov 2026 16:08:58 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Wed, 04 Nov 2026 15:55:33 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
->  	int			error;
+> This is the start of the stable review cycle for the 6.18.61 release.
+> There are 1005 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 06 Nov 2026 21:07:23 +0000.
+> Anything received after that time might be too late.
 
-> +	if (agno == 0)
-> +		goto out_xref;
-> +
->  	error = xfs_sb_read_secondary(mp, sc->tp, agno, &bp);
+Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
+for loongarch64 and arm32:
 
-> +out_xref:
-> +	xchk_superblock_xref(sc);
->  out_pag:
->  	xfs_perag_put(pag);
->  	return error;
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-In loongarch64, like in 7.13.y, I am also seeing the following due to
-the code above:
+I replied individually about a few things I noticed in bitmap,
+loongarch64 and UML:
 
-    fs/xfs/scrub/agheader.c:123:6: warning: variable 'error' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
-      123 |         if (agno == 0)
-          |             ^~~~~~~~~
-    fs/xfs/scrub/agheader.c:435:9: note: uninitialized use occurs here
-      435 |         return error;
-          |                ^~~~~
-    fs/xfs/scrub/agheader.c:123:2: note: remove the 'if' if its condition is always false
-      123 |         if (agno == 0)
-          |         ^~~~~~~~~~~~~~
-      124 |                 goto out_xref;
-          |                 ~~~~~~~~~~~~~
-    fs/xfs/scrub/agheader.c:111:13: note: initialize the variable 'error' to silence this warning
-      111 |         int                     error;
-          |                                      ^
-          |                                       = 0
+  https://lore.kernel.org/stable/20261106070543.89122-1-ojeda@kernel.org/
+  https://lore.kernel.org/stable/20261106070701.89282-1-ojeda@kernel.org/
+  https://lore.kernel.org/stable/20261106071743.90363-1-ojeda@kernel.org/
 
-It seems this happened in mainline too, but `error` got initialized in
-a later commit:
+[ Cc'ing Konstantin: I guess this may have been mentioned before, in
+  which case I am sorry for the noise, but just in case: public-inbox
+  or Lore seems to have a maximum of 1000 emails in a thread (?), which
+  given the size of the recent stable releases, it makes it a bit hard
+  to see here the reports etc.:
 
-  612d2e7506c3 ("xfs: read primary superblock from disk during scrub")
+    https://lore.kernel.org/stable/20261104211043.516122098@linuxfoundation.org/
 
-So something needs to be changed for stable.
+  ]
 
-Cc: Carlos Maiolino <cem@kernel.org>
-Cc: linux-xfs@vger.kernel.org
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Christoph Hellwig <hch@lst.de>
-
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: WANG Xuerui <kernel@xen0n.name>
-Cc: loongarch@lists.linux.dev
+Thanks!
 
 Cheers,
 Miguel
