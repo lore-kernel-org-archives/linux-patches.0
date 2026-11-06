@@ -1,49 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.70.43.17
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793976128;
-	b=o8Ws7yQJ7H4TaoEXR3Ak6DaSCROxx9ejPBItqUMj1mHca4TPFQYsZJE7ci5JvaPbmIMS
-	 vYg1BpW3EcUEgtdxygnkHzJp0SlFHD9XOLTE3Qv1WZ6T2USBsQfN7o9ftN51mzIXWv6VL
-	 3kzHvSN0lc281+SgctIvzEKGgADxPLRAQrQX8jdWbHl9gAe0GnfabXkmnbmQS0BXzBKZE
-	 rZkGjVYb/9K4SV7AJmnmlwwZ31zT0c8yFYM9HcK2tD/CqXsMyhEpegvq6zi4uJF2jaOFl
-	 NwTt9+anQyjOdP6oJ9SAdlSmgvPTYI6HVNqMHlXKSDKIN7db7A+QrpMOty9Iaexqg8A==
+	t=1793977529;
+	b=yqLaQKCl3gwfcZA/Lzu5KXNkGqizMH42qrLRZKVCoSOndk7c5c6nGqVpOfCKgF67nhNU
+	 i8XcsDOxuEc+dZ6cGS9jk8x1m1kKO1s3FYlH2W8d3iglodmDsDF6H/ltIW6/UKO64ajHr
+	 tqqOC3mZlAUvfoE50ccRl/LhXSiRHnH8exU9VV5pGYPNgg9VXpDN8YQYuJDaLMAUhrT6X
+	 YhB0Aik9V2W4GgI4GxL21AJqzKvZ6kL9j5/uGNnLDqPtkA/2XOfdq5lwbM5Du9z9OePsN
+	 KYj8RQYRUM4x3QuYAfkOKk8EP0cbxzDc2xvLIHgRyD6ggT1YktRa95qFrty8mlZ29Yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793976128;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=dPrT1d3tfAdRZHoFdKvhwwCCJALbTuZcl0ma0HWZQHQ=;
-	b=VyGodivQrvBPd9TSRKbU6matx8c1uoehl52VWRv0PIEZstRWUoAYRK4+zLKzmyYL8dJm
-	 29ARuQQZ64QRf053wfdR3E+FZm+Qs/9+yjhzsK5K77pTlfR4p9v1FHcbqq51+t/I29rcc
-	 8B27Gkrd2p0oReCmqMhZZO9slfsSW1NWQAaItanOv95pZc5QtTcDFohpIWH3iSAfZSMdF
-	 rzLbyyQLEM453yIlw9Jj7/fLzqVO4yy/PdoQCF+yWeuDwhO9Qi836ytCBqflZ3b3QFifL
-	 ozceQGrvumiMwJnaOPdj54OVMAZflXZzXw9PY7DODu5l7I9jC9NXoM+b/ScQQNjVV3Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793977529;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=tWIw7GbbZmwRZyzRRDz9wqzLXFMD+qm3Vi2BTvOrqMQ=;
+	b=FYCyF3MDFqeBkWN1K4GLlXsehbmUoUsUstUcMroi9IeGwluhcoXFrsIsGQz00MNXqB+h
+	 0qOjPPDZUDOmi8YsTaTjxE5E4tOs5NSKYmaJZonyZlbUGj8fcT99yfUpgLDTm+CY6X7u9
+	 FE1oP+8C9LD5Nr2DRTPlMa57DM+CRDf+QEt5AFKMbu4iWk3wetCX2Vt1uZQW8kn25lsPW
+	 tpgJQlFFEJ/vMmTKHbjioPRW0LYezcan+k5yfNshI1oU5OFzhzbrviSBKbG1vR0PopwmE
+	 ZrAC/188N02Y0Xs8qrF7nR1lYbl4jMmCVxfhx9OVdcnXEgacIgo6n4BHRfmcg/uDvog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="B/mbpzSL";
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 838EC606A32E;
-	Fri,  6 Nov 2026 14:42:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 838EC606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=linuxtx.org;
+	spf=pass smtp.mailfrom=linuxtx.org;
+	dkim=pass header.d=linuxtx.org header.i=@linuxtx.org header.a=rsa-sha256 header.s=protonmail header.b=DCiOmy+K;
+	arc=none smtp.remote-ip=185.70.43.17
+Received: from mail-4317.protonmail.ch (mail-4317.protonmail.ch [185.70.43.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D980606D804
+	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 15:05:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1D980606D804
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=linuxtx.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=B/mbpzSL
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BFBD31682;
-	Fri,  6 Nov 2026 06:42:03 -0800 (PST)
-Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C297A3F673;
-	Fri,  6 Nov 2026 06:41:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793976126; bh=RROBsGVNy+Oakstf6DXz+xH01uQZXz9GOkcgQ0meiw4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=B/mbpzSLUIxkLsvdYEgUGs2NsLPfEoaHIS2u4uoKA+TM6l8BAPmmaFFiWCiMC/+zG
-	 RnZu7A5UIYQ7u/AWqfgGaXvhX9c5DxYbnRdfhdakUjLrptQLm8mu5OPAnNzPX6lE/G
-	 B3q1sAgPLmHroCXLRJ29Lu6hp0qwTMoNkNoh4n1Q=
-Message-ID: <2e448ac1-7b4f-4d45-90db-dfe9dc5ad329@arm.com>
-Date: Fri, 6 Nov 2026 14:41:57 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=linuxtx.org header.i=@linuxtx.org header.a=rsa-sha256 header.s=protonmail header.b=DCiOmy+K
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxtx.org;
+	s=protonmail; t=1793977520; x=1794236720;
+	bh=tWIw7GbbZmwRZyzRRDz9wqzLXFMD+qm3Vi2BTvOrqMQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=DCiOmy+KeCLdEUAFGkNrrmfAN0ExNrQqMZe5BtEro0hVg4MqFiBFbYp067qVcRFFQ
+	 RdN5IuP2VnNhRpREIkbok9nPnjTtwgRYsr6k9wEBE2KpxTRKS5a3U0IEZyDQuvRkV/
+	 f9Px3DzcYdMWptLpdM8iVbRvnUWTeoTht2Rj1Um1fmAjVe39qQO7Yvu577QLUSICST
+	 ygwPOxtQ56yDXA2vCPYzRjm4EIRITiQycRFOVQ1sDu9n48uIrGTTlu3QzCR2COalzF
+	 XFZ/BF8LqoNKT3u7awPdHJ7fN4vEctONlSoHnJ5l9hTY/fMDIInlkotqqoV87AJnkO
+	 AgvWzn0V+6C1w==
+Date: Fri, 06 Nov 2026 15:05:15 +0000
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Justin Forbes <jmforbes@linuxtx.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 7.3 000/547] 7.3.2-rc1 review
+Message-ID: <fa6VXGlKXtuVlSLWkggGaz2OVaAuB8DLwX4RhY2VNnz_BS1U7Qn32A2ihaYdhplnk8dNpDG_4ZVV6Zs4WigyYBl-mEb1I-cmKlES5Bchomw=@linuxtx.org>
+In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
+References: <20261104211038.406938024@linuxfoundation.org>
+Feedback-ID: 225434474:user:proton
+X-Pm-Message-ID: f82d7f49348ffd00d56e54c3a72d3058a0984ed4
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -53,78 +64,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 01/14] mm: Add an allocator for CoCo shared memory
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
- linux-coco@lists.linux.dev
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
- Pasha Tatashin <pasha.tatashin@soleen.com>,
- Pratyush Yadav <pratyush@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Jason Gunthorpe <jgg@ziepe.ca>, Joerg Roedel <joro@8bytes.org>,
- Marc Zyngier <maz@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>,
- Robin Murphy <robin.murphy@arm.com>, Steven Price <steven.price@arm.com>,
- Sumit Semwal <sumit.semwal@linaro.org>, Thomas Gleixner <tglx@kernel.org>,
- Will Deacon <will@kernel.org>, Russell King <linux@armlinux.org.uk>,
- Benjamin Gaignard <benjamin.gaignard@collabora.com>,
- Brian Starkey <Brian.Starkey@arm.com>, John Stultz <jstultz@google.com>,
- Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
- "T.J. Mercier" <tjmercier@google.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- Christophe Leroy <chleroy@kernel.org>, Ritesh Harjani
- <ritesh.list@gmail.com>, Shrikanth Hegde <sshegde@linux.ibm.com>,
- Alexander Gordeev <agordeev@linux.ibm.com>,
- Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
- Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
- x86@kernel.org, "H . Peter Anvin" <hpa@zytor.com>,
- Kiryl Shutsemau <kas@kernel.org>, Rick Edgecombe
- <rick.p.edgecombe@intel.com>, "K . Y . Srinivasan" <kys@microsoft.com>,
- Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Dexuan Cui <decui@microsoft.com>, Long Li <longli@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- Andy Lutomirski <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
- dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
- linaro-mm-sig@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-media@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev,
- patches@lists.linux.dev
-References: <20261104164555.3555725-1-aneesh.kumar@kernel.org>
- <20261104164555.3555725-2-aneesh.kumar@kernel.org>
-Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20261104164555.3555725-2-aneesh.kumar@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 04/11/2026 16:45, Aneesh Kumar K.V (Arm) wrote:
-> Confidential-computing guests may require memory shared with the host to
-> be aligned and transitioned in units larger than PAGE_SIZE. Several DMA
-> users need struct page-backed allocations satisfying these requirements.
-> Provide a common allocator instead of requiring each user to open-code
-> this sequence.
-> 
-> Add alloc_cc_shared_pages() and its node-aware variant. The allocator
-> rounds the requested size to the architecture's shared granule,
-> allocates suitably aligned contiguous pages and transitions the
-> complete range to shared state. It also preserves the caller's GFP
-> policy.
-> 
-> A private-to-shared transition may alter memory contents. Mask
-> __GFP_ZERO from the underlying allocation and when requested, clear the
-> complete transitioned range after cc_make_shared() succeeds.
 
-This is not true for pKVM though. It is the other way around. i.e,
-pages must be cleared before transition (e.g., from private to shared)
-to make sure the contents don't leak into the host.
 
-Do we need to handle such cases with a pre_conversion and 
-post_conversion hook ?
 
-Cheers
-Suzuki
 
+On Wednesday, November 4th, 2026 at 5:40 PM, Greg Kroah-Hartman <gregkh@lin=
+uxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 7.3.2 release.
+> There are 547 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Fri, 06 Nov 2026 21:07:23 +0000.
+> Anything received after that time might be too late.
+>=20
+> The whole patch series can be found in one patch at:
+> =09https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.2=
+-rc1.gz
+> or in the git tree and branch at:
+> =09git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.g=
+it linux-7.3.y
+> and the diffstat can be found below.
+>=20
+> thanks,
+>=20
+> greg k-h
+
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x, x86_64=
+), and boot tested x86_64. No regressions noted.
+
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
