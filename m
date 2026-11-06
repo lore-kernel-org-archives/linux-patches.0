@@ -1,108 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.33
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793974895;
-	b=jykBnBxWXGdf6/VLoEes83NSwd6E7xWGYPwHK7k0tWnlTNEGysvNYBGHUSSoLmPk9EBe
-	 +TfiGseYrZEp3lF+A41TBjfp7FBGHi4LtHBCKaFamK0EqUzYzPEupq3AyfJI83NNoJyfZ
-	 iIpviWBk9yu+hD7F+CHL7lqWH4w6v7bnP6u+4CsH2yw+JT6vV+N46Ixi/5Pkgfe+nObNx
-	 1ZNSMsu1tlldJUrtqUhR8TT89U8QXl4QKCh1NNwrNQak0UYCisT2Ymm8foVCDXOHEfMMp
-	 mShMn1RglWl2PauiPgYU40T06K9Rer6y1hFIHYiOoi1LLXpbAagiKlSlxdeyQ5oPgdg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793974895;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=LgazTQ+TfMOC9KhctR7bKf80rTZabzVXUlU5GV1VjGA=;
-	b=ZMLYw5gVyrd0kR8G5UHwQSne9PqaMlJDosBewDxrzFkYPj+R99PW+FaneXUuKG1CPZ9S
-	 hCA/MootujvGqodJK2sjACdeoI4hWA7u1re/HIV+FEVLdaQVfI1gXCavsD13+jzUGYs5M
-	 kg/i1KhjXVsGwDIa1N37gPQ9yIi9YD21joTKyN5B8VaJUtOZsfuEh990byDheO4Zv3d9G
-	 HcN11az9kU7x9N+CgXgjzScsBKK3mQYi7D2roXkQ/fyOtZsF0PWWtmJzVfVIVIFtMIHa/
-	 nocSJd3cmcMcwjvZ72ebN2txnacfClNPYhpFrAAkYt5wMwDOjGUQuM/tHvcU/89VaFw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b="pp/liVqg";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.33
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010033.outbound.protection.outlook.com [52.101.56.33])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA3F606A326;
-	Fri,  6 Nov 2026 14:21:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3BA3F606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793976128;
+	b=o8Ws7yQJ7H4TaoEXR3Ak6DaSCROxx9ejPBItqUMj1mHca4TPFQYsZJE7ci5JvaPbmIMS
+	 vYg1BpW3EcUEgtdxygnkHzJp0SlFHD9XOLTE3Qv1WZ6T2USBsQfN7o9ftN51mzIXWv6VL
+	 3kzHvSN0lc281+SgctIvzEKGgADxPLRAQrQX8jdWbHl9gAe0GnfabXkmnbmQS0BXzBKZE
+	 rZkGjVYb/9K4SV7AJmnmlwwZ31zT0c8yFYM9HcK2tD/CqXsMyhEpegvq6zi4uJF2jaOFl
+	 NwTt9+anQyjOdP6oJ9SAdlSmgvPTYI6HVNqMHlXKSDKIN7db7A+QrpMOty9Iaexqg8A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793976128;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=dPrT1d3tfAdRZHoFdKvhwwCCJALbTuZcl0ma0HWZQHQ=;
+	b=VyGodivQrvBPd9TSRKbU6matx8c1uoehl52VWRv0PIEZstRWUoAYRK4+zLKzmyYL8dJm
+	 29ARuQQZ64QRf053wfdR3E+FZm+Qs/9+yjhzsK5K77pTlfR4p9v1FHcbqq51+t/I29rcc
+	 8B27Gkrd2p0oReCmqMhZZO9slfsSW1NWQAaItanOv95pZc5QtTcDFohpIWH3iSAfZSMdF
+	 rzLbyyQLEM453yIlw9Jj7/fLzqVO4yy/PdoQCF+yWeuDwhO9Qi836ytCBqflZ3b3QFifL
+	 ozceQGrvumiMwJnaOPdj54OVMAZflXZzXw9PY7DODu5l7I9jC9NXoM+b/ScQQNjVV3Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="B/mbpzSL";
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 838EC606A32E;
+	Fri,  6 Nov 2026 14:42:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 838EC606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=pp/liVqg
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BYoSOAyYJgI6K0WhSqV/QJmrWIlyNuUV7JmH5DeUZWc/WDrUlY0nOK9l+lVWOCF8JamktWnECxzj6hd6efbt93cPZse20H0DdeqR6mc3PprvOFFmuNj9qWqpCdVNfr/3TPtJCLv0ktQOjYIT1O6e7efQ6ITXVkfLzBDg6P/QBIKXodWyTk2i9XUB2IkWvOkvxEa8umH9NFmfQFlqY5yxDJgnrcBblNc2kZNmw+02QdOIDBmGkTiCgj/2mfENsGb7c/Y0p/fKl5igsZCbH5bf0xKcLbzI1bKc+gvoIOTF0yT4R3dV4tXJDSbYlF+nrzI2G1CD/HGB8nocNgAe9OEQXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LgazTQ+TfMOC9KhctR7bKf80rTZabzVXUlU5GV1VjGA=;
- b=yJZ/VIUyHuzprJJyIj9b0L7QIBFnGxHWFJvnSyo6aahaX/vh1kDcvonKzPeeWqX6Gy7Rn/Ouib13S7AB8YNIbdLAVsV5mpiP9btJvPHdROuXTNt2IzNZ1Q3+EuHltbDSDjZRkvj0ddlTyXzDWFtD5aEksY8Nir0JjrKTzc/wmTC0XCib/ex7wqbj9zW0aJ292ih2+S3AVHoo4C5pRcWnrOApGsZodVxq4uOdPRNFkORVLO4aYr7HQFPIncwdLSMgIxAw4QAM0aDbuHDyzPa5sdBbJQkr/S5DPOTzUkbcA63PwUD0U1sVDM8EqXeHGSbG/0UNMRl0FQobl1j7gYsxrA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LgazTQ+TfMOC9KhctR7bKf80rTZabzVXUlU5GV1VjGA=;
- b=pp/liVqg4DxOPa2L+efZX8nogs3EDRpmU+8/C4Bs/aOCYSGeVdaNQAUjJGPGPg52ldzn3Bf/T60gO5paYku4qD/N5SV/IDxHjfigtF81xe0Nlnl4oZzG9Ikln1OVlX8GXLjUGiazJmsj0WXTH8cRRS6gibE0HIzmF/TGixZ0x1FZKzOpsDOODplaiYa5L6G1a7AEgDU9Z3J5Z+wStqAHmKzVLxAZzaaT/7Pz+6ptPjirrNR44wCs5Hwfen5pZMwkF+QVy7ymKkQzoWsWRma0v6MiCnTuY9QtLtsfDrdHIvW8U5EUKe3IdFrakiUz2RX8sK3ngDS7C1M4mdRd1u8mGQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by DS1PR12MB999190.namprd12.prod.outlook.com
- (2603:10b6:8:495::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Fri, 6 Nov
- 2026 14:21:30 +0000
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0592.010; Fri, 6 Nov 2026
- 14:21:30 +0000
-Date: Fri, 6 Nov 2026 10:21:29 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
-Cc: Alexey Kardashevskiy <aik@amd.com>, linux-coco@lists.linux.dev,
-	Jiri Pirko <jiri@resnulli.us>, Kevin Tian <kevin.tian@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	John Allen <john.allen@amd.com>, Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>, patches@lists.linux.dev
-Subject: Re: [RFC PATCH v1 09/11] crypto/ccp: Defer SEV-TIO link setup until
- evidence acceptance
-Message-ID: <20261106142129.GA770409@nvidia.com>
-References: <20261028152618.1356860-1-aneesh.kumar@kernel.org>
- <20261028152618.1356860-10-aneesh.kumar@kernel.org>
- <e8785bcb-45ed-492f-af66-deadfba6ac25@amd.com>
- <yq5ao6c2p0ek.fsf@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <yq5ao6c2p0ek.fsf@kernel.org>
-X-ClientProxiedBy: YT4PR01CA0046.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:fe::14) To CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12)
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=B/mbpzSL
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BFBD31682;
+	Fri,  6 Nov 2026 06:42:03 -0800 (PST)
+Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C297A3F673;
+	Fri,  6 Nov 2026 06:41:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793976126; bh=RROBsGVNy+Oakstf6DXz+xH01uQZXz9GOkcgQ0meiw4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=B/mbpzSLUIxkLsvdYEgUGs2NsLPfEoaHIS2u4uoKA+TM6l8BAPmmaFFiWCiMC/+zG
+	 RnZu7A5UIYQ7u/AWqfgGaXvhX9c5DxYbnRdfhdakUjLrptQLm8mu5OPAnNzPX6lE/G
+	 B3q1sAgPLmHroCXLRJ29Lu6hp0qwTMoNkNoh4n1Q=
+Message-ID: <2e448ac1-7b4f-4d45-90db-dfe9dc5ad329@arm.com>
+Date: Fri, 6 Nov 2026 14:41:57 +0000
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -112,85 +53,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|DS1PR12MB999190:EE_
-X-MS-Office365-Filtering-Correlation-Id: 397322df-9cb7-4332-c81b-08df3c11404b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|376014|7416014|366016|18002099003|22082099003|3023799007|10067099003|56012099006|5023799004|11063799006|4143699003|261026140227099003|261026121527099003|261102123227099003|261028144727099003|261021121427099003|261022105027099003|261022075727099003;
-X-Microsoft-Antispam-Message-Info:
-	5Eb6Xve/OwRhzcPZGIOMRERBXkFAWVXGSBbrRpt/yaQGMrATVUcthubDseIzSrP9RZN2CdJeKDXMv345qw74xKm8oYC3mitoCthn7wS67PtoeaOorTvr2p5U4xV+jkybvISOHZehqG+We+RXCGOgmji+3WzGBUEQTQiC5YMN86vBZZy49Up5x3oH5d2JxkeiW+EyCGaXuWcLFsq/d7PjhStRmRAsW/CE/bDtKZK4HK905CL2tPuw02biQtXNyUpr4yMiccRS1D60rPYKh9J8CkoS96cv59OCgrbJ+y90jvf75V/zg0CXHv+MLX1d9Uoi3z7kDJvrgAKd2PrL12hyzXPNXpofCLRKFU3CEz7fLjqQ2Q0q0CgUABGO4gr/WBRvNpo+Wx0qAnRhLnJ/8c7iG59egrcB++DHDwQsyVf3UYicdLkk/6m3/hV/78hgZOG/VhB374AF30i+46N0njpyw1hWiU3NEZHH7K/NwrTTOuQVvVlOVw4kWmlMrtfgpc82N6TVVA0aabKFPR+a8CMO0oWhKyLAencn0nLUgrbFbeWwLGwGUmn1aBUzzoHcKRpV7burClZFtprcEgwQjdE7/TIQg0K7zY9RSKpirpqfoGpxHJOvu0Qbom6+Vgd8Nq0k42HTB5Vo4NBaHOB+rFWrLfqi3PKjucK6173D0+D1fuQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(7416014)(366016)(18002099003)(22082099003)(3023799007)(10067099003)(56012099006)(5023799004)(11063799006)(4143699003)(261026140227099003)(261026121527099003)(261102123227099003)(261028144727099003)(261021121427099003)(261022105027099003)(261022075727099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xCaVJx+0TP7RPFlStrnfDIeKXgFa6kH7/qJKJUqh/9FzdB85vH4k1AIfN6Zu?=
- =?us-ascii?Q?N7qv4mSR72sI+Rl5jNiQjUu2+Rt7pLZ4KMe06oLJE8fGlnGdX5m01l4soH/+?=
- =?us-ascii?Q?bV/9Bw2DcQMR86oGV6MO7tPUfzpA3A2q0xZKBoTj6Kj7GKhXqctHT+C3ywTY?=
- =?us-ascii?Q?MQO3NWHLrpJcpS7tMac6CP5Yx61WaYs+pgozAA7SBHKtjq56GaOxZcKorWNB?=
- =?us-ascii?Q?0FpQ0cMK9YnL+b6oEYZP7qlk1qIExhcQZ9/AFj/34Cp6GyOCqXa5LYWiyEs9?=
- =?us-ascii?Q?zuvdJbFsDZdhxy8H26jlSG/1r+T3rvuO6M+f5iPg2ZUQlXZeLgZ+TpcrOZn6?=
- =?us-ascii?Q?KSucJ6pgTuF4OrduNswYjj32O52V+Gb4s55UzE+PMCIxGM3GypoX6biv7uS4?=
- =?us-ascii?Q?iKiX0Sn4a1GJppIbivGSiD33+OF66NlH3TP9MzIGDpACgceY5XtLdxRpHzd4?=
- =?us-ascii?Q?ELpfGxVYLmzXYLoj2cNnEMJlSFbet/GtgD2WX8Ye7JWUiHzez/8kfww3Gyz3?=
- =?us-ascii?Q?v83QY66DC4ddfwGpDeFvcNlcJRf1gAMLwxHOQhVbXoUhLlALXtmPNkO8tP5e?=
- =?us-ascii?Q?mCoxu7/x5KHtVRXbopL/+w9f8yN1BVmX2y9SuVLLqCqBiliDTI88VgK00uRA?=
- =?us-ascii?Q?xuSGlpOHgvF4jo2Z0BDHiT7qFxmTx3mRTj5ZLNYnuQjQZCt6x5mGZDZHMCUl?=
- =?us-ascii?Q?KCT2YYZmrP0zE1M9qyJSftLZGX7y562lCbUWZM63yTzdDSwrb2k3ATjv5000?=
- =?us-ascii?Q?bEHJL+LFtcSkjK/SXIIQBiR7aI/wKIoyD8rFN5GksS4WoT0gtFHmzouGN2HK?=
- =?us-ascii?Q?Z7nLYedT3a2qs83HfpMqPMR0N3wBEgd6T02h4qjhR28Q35cn+8yWYSSyYNM+?=
- =?us-ascii?Q?f/4xNfrH/R2U9U22FJ/DU+1U5Mb94luNvPGv7Vidzl3xLqtnyMkcKcL4jdot?=
- =?us-ascii?Q?wGGyigCduIamhPQuCAEtyIx1Y+N2M9GwB82HJTUMRzWgL3PjbCISuvw6GVFC?=
- =?us-ascii?Q?E/DNu8kBG+TAYsuE5bNvh7C+7rIRCwLfMCGuj5Lc49POTZqZ2kTLcsYB9fBf?=
- =?us-ascii?Q?20buyW+zQV6EDh5gtjpkngTLxpmZz4N29DznfNGmD4rYKaxa6s/Qu8eAQw1b?=
- =?us-ascii?Q?P2sLDbYgbAnXeSuTrd3dE04so4R8X7GiE2DwlpQcuMe1ztj9RSKABNxMtzIw?=
- =?us-ascii?Q?RCrdxXq6ABpNkzVS5vawxzX6MutUcqVC1XFAM9RGDNFPs4V2uYj/1aClirX1?=
- =?us-ascii?Q?vwb8KCvdLbeSWrrsELc1/NyJCuGIMJ9rdQeOdhh4zYQsmVyHfDHUVgaDJVkJ?=
- =?us-ascii?Q?XiV8RWr/jigALukdQQUe7KXXDeNWb/4SXlwGbEN6VDuCmzm+/t7Zg9qERBUy?=
- =?us-ascii?Q?FrZS/mth2P6CO29fmIYoBWsMPuBNWrygAS6VfVy6F6UYpxHi3Hfgew9A1QSF?=
- =?us-ascii?Q?SEHzj2HFqd93uDh0Nu5IzgwV3HYrXIzASPm0K9sDN3AIV1WTM9qu90gwTTQ6?=
- =?us-ascii?Q?ClVr89nHM7YGfqhKVU8FBVcVcbsvN64+TyswngtQbWFfpxKdqoyfRNpjhPHs?=
- =?us-ascii?Q?6OIU0v6Y86yV704JiAVwpY94ivRK+MShCG5UIvtF7NFFTTzeLUHgBl36nbyJ?=
- =?us-ascii?Q?LxBpmkyuCKZOIjmI12guXBBEoZI2a+22l+inztRMxQPKOV5Bn8WB0GLR9Xf2?=
- =?us-ascii?Q?Nsc/lNZ5RH/2D5lboEzRtEadoPRTj1RpycTUFR2L29ZyZLD0?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 397322df-9cb7-4332-c81b-08df3c11404b
-X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2026 14:21:30.1782
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mNYMJ3+i8PmdbUKyL2Joj466zmvczOD5dXhX0h13DnVI9mDkkxy0XRPsjmNztC0p
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS1PR12MB999190
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 01/14] mm: Add an allocator for CoCo shared memory
+To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+ linux-coco@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Pratyush Yadav <pratyush@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Joerg Roedel <joro@8bytes.org>,
+ Marc Zyngier <maz@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>,
+ Robin Murphy <robin.murphy@arm.com>, Steven Price <steven.price@arm.com>,
+ Sumit Semwal <sumit.semwal@linaro.org>, Thomas Gleixner <tglx@kernel.org>,
+ Will Deacon <will@kernel.org>, Russell King <linux@armlinux.org.uk>,
+ Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+ Brian Starkey <Brian.Starkey@arm.com>, John Stultz <jstultz@google.com>,
+ Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
+ "T.J. Mercier" <tjmercier@google.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+ Christophe Leroy <chleroy@kernel.org>, Ritesh Harjani
+ <ritesh.list@gmail.com>, Shrikanth Hegde <sshegde@linux.ibm.com>,
+ Alexander Gordeev <agordeev@linux.ibm.com>,
+ Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
+ x86@kernel.org, "H . Peter Anvin" <hpa@zytor.com>,
+ Kiryl Shutsemau <kas@kernel.org>, Rick Edgecombe
+ <rick.p.edgecombe@intel.com>, "K . Y . Srinivasan" <kys@microsoft.com>,
+ Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Dexuan Cui <decui@microsoft.com>, Long Li <longli@microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ Andy Lutomirski <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+ dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
+ linaro-mm-sig@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-media@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev,
+ patches@lists.linux.dev
+References: <20261104164555.3555725-1-aneesh.kumar@kernel.org>
+ <20261104164555.3555725-2-aneesh.kumar@kernel.org>
+Content-Language: en-US
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20261104164555.3555725-2-aneesh.kumar@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Nov 06, 2026 at 06:44:27PM +0530, Aneesh Kumar K.V wrote:
-> >> +	/* Reserve TC0's stream ID without programming or enabling IDE. */
-> >> +	memset(ids, 0xff, sizeof(ids));
-> >> +	ids[0] = dev_data->ide[0]->stream_id;
-> >> +	dev_data->cert_slot = 0;
-> >> +	ret = sev_tio_dev_connect(dev_data, BIT(0), ids, dev_data->cert_slot);
-> >> +	ret = dsm_collect_identity(dsm, ret);
-> >
-> > Cannot librspdm do that collection, directly via DOE? Ideally in the
-> > generic code? There nothing special for the PSP to do and stopping
-> > SEV-TIO's connect half way is weird.
+On 04/11/2026 16:45, Aneesh Kumar K.V (Arm) wrote:
+> Confidential-computing guests may require memory shared with the host to
+> be aligned and transitioned in units larger than PAGE_SIZE. Several DMA
+> users need struct page-backed allocations satisfying these requirements.
+> Provide a common allocator instead of requiring each user to open-code
+> this sequence.
 > 
-> This patch does not use rust-spdm and avoids introducing that
-> dependency. It uses slot 0 to initiate the session, retrieve the
-> certificate chain, and return it to the host. After host approval, it
-> resumes the session and enables IDE. Only slot 0 is supported, and the
-> host can reject the device identity before IDE is enabled.
+> Add alloc_cc_shared_pages() and its node-aware variant. The allocator
+> rounds the requested size to the architecture's shared granule,
+> allocates suitably aligned contiguous pages and transitions the
+> complete range to shared state. It also preserves the caller's GFP
+> policy.
+> 
+> A private-to-shared transition may alter memory contents. Mask
+> __GFP_ZERO from the underlying allocation and when requested, clear the
+> complete transitioned range after cc_make_shared() succeeds.
 
-I'm working toward and exact flow on what all the drivers should do,
-including the roadmap to SPDM 1.3 multikey. That should answer these
-questions. It wil look like close to this:
+This is not true for pKVM though. It is the other way around. i.e,
+pages must be cleared before transition (e.g., from private to shared)
+to make sure the contents don't leak into the host.
 
-https://lore.kernel.org/r/20261103151643.GI274202@nvidia.com
+Do we need to handle such cases with a pre_conversion and 
+post_conversion hook ?
 
-AFAICT AMD's current stuff fits fine, and the PSP protocol will need
-the same adjustment as everyone else for 1.3 multikey.
+Cheers
+Suzuki
 
-Jason
