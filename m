@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793946320;
-	b=0Gk2Mst+KCtEORB2bj12a348bKOs71JLlhGMJe3aVjJgI5WVpMs5LHyDPIsilRentn0T
-	 c/nLACqrC+esRJiUMWnDAC60DxsuGG7F02yXrhd3j5Hp0uJ7R91OdL3fr7h951aqTgsCk
-	 TKhdiEfjanYr4ZMqc91r4aX4lO1YpiettTmSvGNMbZikGW/h0sjFbTAmC4+BYPUy9rBjs
-	 DRE4vWXa4snBV7lCvzFe9xA12G7DTytTlIA7rp3BCnAVfp7Cp6AAtvk5Lovhj+RL+/VjI
-	 2ydqrtixwa1XDmVnqYsVGvOq7ChBqQLaMize6BCqgBxEC7Ex/aDznKFOCho09LQMuFA==
+	t=1793946334;
+	b=kodG3u9mRS7uyAf7uLSLWryby7Lroy4eQwb40m9tgnwtFhDyMjth6dIAoG95SphWmVgG
+	 frc/xZ+lDrrr/hh+ECJ87NtGIQ7mfd63L8G/usDvVaW74M3F8ZPaQ9KNqXHckrxzNQ9Z0
+	 6YaLQ21lH3o0tuwWokgbcpcSs75zCydyduICV01wPMZVn5fAr/gkjAMlqucY0ZmGB8oBN
+	 v5lg/Q4c+ik+T9sZJP6jkpm5C2clWfUJLVP3xe6PgZUwxYPmLZf7mcf1y5Sm2bMUMEazk
+	 cS8/BasjoIypQFIoUKsJ3YS7i6YRg1d/VENW0ZRkQIF44w8T+Kt/BlhWJK1LACtzUxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793946320;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793946334;
 	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:
 	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=RZr7vf5fgFHKXNA7mJ6w2EfU1zLqlhlVzr0/jpqQKrY=;
-	b=lXn61MnvPF0ujTBTUZNDH69uloPd96XhKDeK7O6QDMUtQiZWje7NsOCoBbbCWFJD+++N
-	 bjD8WOrMtavd16IFw4qIh1W8HzqG7c6PcB0LSFmdCu078LIIFPxC5sVozSlYrEVuBI6Gh
-	 fin5VBEn1eF26riKo+1mZIL6K3u9/IwWdQVdar00eBsnJ0IE8sXmGEgykOBvBPLHhWnsj
-	 YAVY+7LoKXEkxZNL54OQ1nEn5hf9qoAW2S4OqSNcGrzkT5Sninb01Zqe6IFxvflv5Z+Bl
-	 PerWMTZSogglnzQ8Zvft5lVrxSNVQLRGY6d7pXMftShp9HFSfRx3+xSxuBsL3tbVo+A==
+	bh=yh6Y7BZ84cxtCnoU0AticnfysmrdXRcXWUIexGoTN0g=;
+	b=xXu3cvyDEUQNhdSZFp/4M21nnDtRxWPBFpqp6LvBTsSO42iBZOTqTQY1gNzHu78ZVagx
+	 A4vZyndQc0InLAZlUs2HIfILes8uv8JV86sCnhr7tOSGvpJPjBcsoWIB6spRksASy3iGN
+	 q2YxH2U5bpZwSwriJ9ieljowjRavP9nCIwQ0U1NAPm4qHlBd/G8sCYyPZFsyanuNu4Vpg
+	 p36HoyN5cphFlb2ZqsrogGvERDZd4VWyt3K32ZrPtaCTyB79vNSC4b+DjUr6X/KNAuXeW
+	 CVVD+lrQ4BNuAGGnLYCWZsZDF/bGByzsfDCTPEOJoJKHq16VCPmqxVQtxWtNblELjXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HwTKaVbw;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ABeSUjkd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDBC606A331
-	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 06:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93379606A332
+	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 06:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HwTKaVbw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0681F008A6
-	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 06:25:19 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ABeSUjkd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABD91F008A3
+	for <patches@lists.linux.dev>; Fri,  6 Nov 2026 06:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793946319;
-	bh=RZr7vf5fgFHKXNA7mJ6w2EfU1zLqlhlVzr0/jpqQKrY=;
+	s=k20260515; t=1793946333;
+	bh=yh6Y7BZ84cxtCnoU0AticnfysmrdXRcXWUIexGoTN0g=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=HwTKaVbwq2lbALOZm1YK0BauOlDSkMv/LapAKU2HTo3n758op7IpWv+5yNPJHKs2V
-	 v3J3QwQHMLHnBdzQvzEF4Z3VeajDnlLBc4sVMBtR4gJyFX0buYEvM/ZWPcJZ3OqK8s
-	 MnENCYLXUGSdA+c21kKI4PIdEsHYtCOcrvqehMyLEvv74mS7f+WnFX78ARtlVJarML
-	 tPYIZOUI75R938Mt/2bkBToWm6EC68a1RmA/RqvEb++bui4/8Ee017wYaGQuXv8tPg
-	 WlfnwiO7Cb+n3nJvkg+oZnWgaVb1g6xAPqK3X8LwFNKeP+EB4pl+z61YOcicBscysx
-	 FeOhcu9H10s8w==
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a2069b9710so1975435e9.2
-        for <patches@lists.linux.dev>; Thu, 05 Nov 2026 22:25:19 -0800 (PST)
-X-Gm-Message-State: APuU4Z8zydWLYA+ZWoaoro1IHys/fhjtoVfqjfvZAWb2Z13ArTM+LTL4
-	NFCdkGwY+JhVaNTzlVO/Bombq7fO6AYKl5eekjPm2IuJ0FA/Of0ROmjkxzBYkLzQSvsA8q+EQx6
-	JifA5utDETrxswk9BfdL+Zwb/itpnXqk=
-X-Received: by 2002:a05:600c:34ca:b0:4a2:8c5:5e5 with SMTP id
- 5b1f17b1804b1-4b6dd63fd31mr20904695e9.7.1793946318506; Thu, 05 Nov 2026
- 22:25:18 -0800 (PST)
+	b=ABeSUjkdomXJlRp7OLxtnwqoEbxd50k36saBTReHLXk7wNcTEpjheYev6c2DOl3Ev
+	 u9XcUHi7pI8nT27gWz2PDVbFZG++fI7ee19hFVeuDfSIYDrFvz3nIakk1SQouYl7I+
+	 UQRweX56pYHUxt42PYDhwjnQYjQ9EEe+UsqZ2iivjdQu4FAE7T9DP5zFFpQ+QAK3jG
+	 HCJahhsOQ+rX6IaVNGvrorCWVyeghlCjarVR9xMQ3+V4xx64d9ixsOjY+K5vc+DYph
+	 7J5b/7xWjmGMe5O5BkaSZHoymzH47Pn4jPpjKbDZwrexlDzzwIt5M7bubVsIwwXgkz
+	 ajlXJqe/a6lxw==
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-49318428d98so45840f8f.1
+        for <patches@lists.linux.dev>; Thu, 05 Nov 2026 22:25:33 -0800 (PST)
+X-Gm-Message-State: APuU4Z+IF2gy1KlG/c9fio/8osfcqtLYbCB/B+53RvNzdN9zXtV4+jMa
+	HuBY9eH8FsyoIR5TtL1hkz3z0LIWRU8RrlXrg6579yJSXgTbbTGIMbhdwkmLPZsRkmI2vl3477i
+	H/F5gmb1YXXGGlnXGMKRgYO9CHqBzq2U=
+X-Received: by 2002:a05:600c:1c23:b0:4af:c210:5b3f with SMTP id
+ 5b1f17b1804b1-4b6df3fd28amr22873545e9.24.1793946331804; Thu, 05 Nov 2026
+ 22:25:31 -0800 (PST)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -58,14 +58,14 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261029202624.2685097-1-rdunlap@infradead.org> <20261029202624.2685097-2-rdunlap@infradead.org>
-In-Reply-To: <20261029202624.2685097-2-rdunlap@infradead.org>
+References: <20261029202624.2685097-1-rdunlap@infradead.org> <20261029202624.2685097-4-rdunlap@infradead.org>
+In-Reply-To: <20261029202624.2685097-4-rdunlap@infradead.org>
 From: Guo Ren <guoren@kernel.org>
-Date: Fri, 6 Nov 2026 14:25:06 +0800
-X-Gmail-Original-Message-ID: <CAJF2gTT7Oy-eHz8Qgwx-V6qT5eTAc1g0URWKEnvydaGcztmd9Q@mail.gmail.com>
-X-Gm-Features: AclHuK9rmRbqOnJR6vd1YhaPy3N3OKbaJPk7vBUltpQhWwpu-npAYOxMypOFvGE
-Message-ID: <CAJF2gTT7Oy-eHz8Qgwx-V6qT5eTAc1g0URWKEnvydaGcztmd9Q@mail.gmail.com>
-Subject: Re: [PATCH 1/4] csky: cachev2: add missing prototype
+Date: Fri, 6 Nov 2026 14:25:19 +0800
+X-Gmail-Original-Message-ID: <CAJF2gTQwaH15YmgDtKg9uXcnAMmt3=Z3Scperjh=4+PerR-kew@mail.gmail.com>
+X-Gm-Features: AclHuK8cgp4i24_xILUa4Qvec3rGOwQhNh1y33xNaaVBpsFMlgn5g6m_fQeuDvk
+Message-ID: <CAJF2gTQwaH15YmgDtKg9uXcnAMmt3=Z3Scperjh=4+PerR-kew@mail.gmail.com>
+Subject: Re: [PATCH 3/4] csky: kernel/process: add missing prototype
 To: Randy Dunlap <rdunlap@infradead.org>
 Cc: patches@lists.linux.dev, linux-csky@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -74,31 +74,32 @@ Content-Transfer-Encoding: quoted-printable
 On Fri, Oct 30, 2026 at 4:26=E2=80=AFAM Randy Dunlap <rdunlap@infradead.org=
 > wrote:
 >
-> Add a missing prototype to avoid a build warning:
+> Include <linux/cpu.h> to provide a function prototype that was missing:
 >
-> arch/csky/mm/cachev2.c:46:6: warning: no previous prototype for 'local_ic=
-ache_inv_range' [-Wmissing-prototypes]
->    46 | void local_icache_inv_range(void *priv)
+> arch/csky/kernel/process.c:90:6: warning: no previous prototype for 'arch=
+_cpu_idle' [-Wmissing-prototypes]
+>    90 | void arch_cpu_idle(void)
 >
 > Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 > ---
 > Cc: Guo Ren <guoren@kernel.org>
 > Cc: linux-csky@vger.kernel.org
 >
->  arch/csky/include/asm/cache.h |    1 +
+>  arch/csky/kernel/process.c |    1 +
 >  1 file changed, 1 insertion(+)
 >
-> --- linext-2026-1007.orig/arch/csky/include/asm/cache.h
-> +++ linext-2026-1007/arch/csky/include/asm/cache.h
-> @@ -17,6 +17,7 @@ void dcache_wb_line(unsigned long start)
->  void icache_inv_range(unsigned long start, unsigned long end);
->  void icache_inv_all(void);
->  void local_icache_inv_all(void *priv);
-> +void local_icache_inv_range(void *priv);
->
->  void dcache_wb_range(unsigned long start, unsigned long end);
->  void dcache_wbinv_all(void);
+> --- linext-2026-1007.orig/arch/csky/kernel/process.c
+> +++ linext-2026-1007/arch/csky/kernel/process.c
+> @@ -5,6 +5,7 @@
+>  #include <linux/sched.h>
+>  #include <linux/sched/task_stack.h>
+>  #include <linux/sched/debug.h>
+> +#include <linux/cpu.h>
+>  #include <linux/delay.h>
+>  #include <linux/kallsyms.h>
+>  #include <linux/uaccess.h>
 Thanks, I will queue this patch.
+
 
 --=20
 Best Regards
