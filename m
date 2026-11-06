@@ -1,83 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793920844;
-	b=MNPOPw0Pe5VmhG5f0F0rhTyXP9VE4IPD49WLLeulH9IZvFkqNAQJo949aVt9+SHIIA7q
-	 FL/Ys48nLVssRGC7zob1vZkW7xQCxPozos8a9enfen8XaEuFf3RifwCqkGGTBk6drckf+
-	 fMsHD0o+dh5ddcqSG/MLPbG2vZYetg4oESVeUwenR0BNHLJVkEWOgr4nX2xynHZ1IOn/o
-	 Fq/C324Zd8dALeCq7RcU0VOj2gEPdMbsDhBbsEtv5yRsAxuYUh+SUln3G9DtmqOQf6Vze
-	 e1cgR3idL1OaGxC0hy53oj+dkBSC+1xcKxBGqTwCjKKCDL0YTn0CFuYMhZ5tZG2/GtQ==
+	t=1793925112;
+	b=Hralmv98gAYdmg3Weje6fsD6wxBzTs46Q+sbTdfVtpD7vply11k+S8Vq5bkQjjMBV/bq
+	 XaDyg5HXg3XqXDIGQ1UrIv9iWQggzIdQcedoKwHSad7kNVwQOfcioVD//YkXaZAY6A3bU
+	 Icfh3bK8muM+gaKVeCjZF/bEvcJI5/LeLstModz8+p7YSGNgjh1pUdKM9K5uLpco0p61I
+	 yYLTibFRG3DBTHlL1c7SzDNe4Fm0JbCUdA2cNGD+NDE41knCXfo5e03Yim2nsqI5ciKtc
+	 hGojVGknWG6Iyt/L7DTewc9ziUQv8NKoFOPa+u7PnWxg8knV3FwsbTeUs/m3/9PcGiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793920844;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=7TboJa7vOyFx21F/S29MlnKjYaribdRj3iyzdvB38D4=;
-	b=jFpsVLpwn1tV3swTTj0kUC/f/46qbisSyf+n6IFDGOFh+WoYHeL30lP2Xwn9Wt59Bm/6
-	 O7Uck+SFeNWDFpml1zuoFYVsPtoHACK38Jcjvy2joJN9t5MM1CZ6+bmLaul/w7CJv0I9+
-	 KE71Nuv6lzfuBPo0rO7uV1jlSo0rVFbmRyhXAwDTM6egUamaRjvGg60li9e65yyT/RxGM
-	 i2R4s7RWbbi1mwRTeL41ovVrBFUHPrMMu7fidh1cVYn5MUzLnqDsBvNYi1Lw2qFZOiOin
-	 3GU8VnnRnF1X1OeI2nR+P+NdSILoEpQbzaPahtSIyZDeZRJCUHHHgNUYu4hHSaXkhrg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793925112;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=1otFFXdDof6ggI5sQakdV+w/DaicL2aXrQ4bTY44jlQ=;
+	b=IrkAdavgNz4TaErFh1Qk5rjuoQ8E9LhQeyN+coXSoVwmcmYVrLxCuY36uhBljDxIxwIy
+	 vHw6it4JVmuo9XRG9OGtIyMLVL1P/nkZH13Xcmh9VekAiM/RzkNa6GPUGS/FqVlAplWRy
+	 9JWLVOSsjPGI8pOUFiu4v66LZ02pyk2fPIXEqZWgLiD973I9K/+K9clNz33eyy3CjEjbC
+	 eF56SP7ryzk0qfJocKOhbGqLeU0AQarYcwwleETSDaoA05fPxYmLbV3csPqKfSYuuOqrB
+	 9fu6RvzSlLDon2PSzkzacueg5oRPl9gaZdxWrUf5qwy7vrbi1dGuF7c59gnt9ZVFrMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linuxfoundation.org;
-	spf=pass smtp.mailfrom=linuxfoundation.org;
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=gIYk4l6U;
-	arc=none smtp.remote-ip=209.85.161.54
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=J0kEdA0H;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7069D606A31B
-	for <patches@lists.linux.dev>; Thu,  5 Nov 2026 23:20:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7069D606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E634E606A31B;
+	Fri,  6 Nov 2026 00:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=gIYk4l6U
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-70b875f6f13so119710eaf.0
-        for <patches@lists.linux.dev>; Thu, 05 Nov 2026 15:20:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1793920842; x=1794525642; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7TboJa7vOyFx21F/S29MlnKjYaribdRj3iyzdvB38D4=;
-        b=gIYk4l6U5l6iSaXJyomxB9ZAJ/sj1Hro3WYuaRtARoOcVJVDHwubc23ctOLSRMfhjn
-         9xZt4jYpEmMN1UUiTjbd4g5XekoZtbrVT6TqZavxL2sq2Tw9APfVPz4p3cVcQ6AleqFJ
-         EwHQMD5fuyOZA3xow17m8LvHuTAfEKkDQuPpo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793920842; x=1794525642;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=7TboJa7vOyFx21F/S29MlnKjYaribdRj3iyzdvB38D4=;
-        b=e9nbAPJvWoO2IUPr+pEHP5ueUznGA2kAuBU7kYpjP1RHocFEPNiumNRitNfAjrs7Fx
-         itkbrlweyC25yyuiVf53G5OQdkDSRL7vhsg+v4hHCfnB69HrgoUEZdBHynAtIqBAVf/t
-         EPTdwISayrDXDprU3dYNOVZtW8RAUS/pCBjlwkCRBsX+LZi9Yk25HY/CR8XE/jBJ3aRW
-         M6RiwGH96NetKU0h0BtD4/lnj4k3UvLaxIdBkHgJli61t/PPW2yhG26/Obm6hrd2ok43
-         6qeDXeQ2zj+edKvbgrX3Wo9XLdfjlIxcVvTIO+li4riNdK7aDYfgZAtLLp3l6JYX2fys
-         ydXA==
-X-Gm-Message-State: APuU4Z+BK7/uxS38ZtS4fZIeGzZ6erRNW1NzoJJ0z65xBh3vsh7gX1RV
-	8OL7DfYbRbAMaV2zKrgbEEUghbWw9wJ7W3Q1EqHFCoFQBRNxGwqvxAPXPkQlzr7VGNs=
-X-Gm-Gg: AYBFou3M2l/zY3olIMlZe6rxc0UOzxT1GWmkfXD48JqWJ8F1QLXNFePDZe8oI8sIlX2
-	Hx6TzD6IPxVCiSX70gKThzScS9v6Sr4KADcZRljQrW2COdmh5EDiBMbF2T9FFBuRBRnqr8P9FXe
-	0nDHJuJJ+jnZtAMu0P4bpCugMDpg+UBDCdEB+qxKd3PVGosjXYOT4Y496J4WjSGbwZWcNKD0NvS
-	Yfr9z5GU5BXRP8wcdj+9qxqdW3RzArNrbNncutGUGXOw45dM7TcF08D/v+L0kT6+a8TDE6vtF8+
-	1ybdeqB+hCFNo7W0BwsHKdgCu2t25HimD/+g+835/aOhEM6x+kDiBr5/p/lmsQD07JBx1KyzkVy
-	zbQ3Z89CxGIxkGl1+J1Brp56CGlACxceyuJb7miX6hSc6/xac4PefMhzovYjyVMg+4Fvq3JrFnJ
-	T2QJlnMeAycZ43SpRl/0H3VIG/XQmckuEUZI6pknZhUuz7xoezNYAjbd5c7QTmSfJidNUMfLvb5
-	n3cCeaP7WnuZvALO4GgKI4KCZBslTC/Dk5R8VvxzMmGu+QY2XPXEz5SuqH3ky2RX3hIdNg+mjLz
-	EVOAOmXH6aeZAy8ZZeyxsgfYuPHHWs2UJv7Cgt08pw==
-X-Received: by 2002:a05:6820:1346:b0:6fd:4277:16e7 with SMTP id 006d021491bc7-716e78e3963mr715043eaf.23.1793920842324;
-        Thu, 05 Nov 2026 15:20:42 -0800 (PST)
-Received: from [192.168.1.128] ([38.15.57.99])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-716ea18a791sm484293eaf.14.2026.11.05.15.20.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Nov 2026 15:20:41 -0800 (PST)
-Message-ID: <76fbb257-cbe6-465d-97f4-f8ca51df01c1@linuxfoundation.org>
-Date: Thu, 5 Nov 2026 16:20:39 -0700
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=J0kEdA0H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7E81F0089F;
+	Fri,  6 Nov 2026 00:31:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793925111;
+	bh=1otFFXdDof6ggI5sQakdV+w/DaicL2aXrQ4bTY44jlQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=J0kEdA0H/7AskFv0xSLHnpmFKPu8OVP54rNURNvOmb16qmpSHm0vEv/ZENxdeGtyo
+	 KmafwdZA/Z00TIs6m9Zx6JoB2GJGNP2Br5Ld72sgTjuuKJ8hycIl1xitjn3EAMyEwb
+	 QztyeC0cz3YjBzqgm2dt6ht39WcPcM5UyQ49CNVwikNpFfsfEjt0D0CGbhji8d+4Ot
+	 WP+2nKCwEPK1Y5npFMffZ+jaQG0LZeg4Y8+1qJKaWeS0e7PuYeRiTMoNFe2PPYghCV
+	 HXOAtqZABR89ynrIymCWDdReJbyrNYZlcZXluSdL3eVJxkwKkGw0fEWGEJ6WDdf0vd
+	 CdwPNeN1QUI7Q==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	WANG Xuerui <kernel@xen0n.name>,
+	loongarch@lists.linux.dev,
+	Carlos Maiolino <cem@kernel.org>,
+	linux-xfs@vger.kernel.org
+Subject: Re: [PATCH 7.3 000/547] 7.3.2-rc1 review
+Date: Fri,  6 Nov 2026 01:31:38 +0100
+Message-ID: <20261106003138.73413-1-ojeda@kernel.org>
+In-Reply-To: <20261104211038.406938024@linuxfoundation.org>
+References: <20261104211038.406938024@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -87,47 +80,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 0000/1005] 6.18.61-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20261104211043.516122098@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20261104211043.516122098@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/4/26 13:55, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.61 release.
-> There are 1005 patches in this series, all will be posted as a response
+On Wed, 04 Nov 2026 16:03:04 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 7.3.2 release.
+> There are 547 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Fri, 06 Nov 2026 21:07:23 +0000.
 > Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.61-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
+for loongarch64 and arm32:
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-thanks,
--- Shuah
+On loongarch64, I am seeing:
+
+     fs/xfs/scrub/agheader.c:123:6: warning: variable 'error' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+      123 |         if (agno == 0)
+          |             ^~~~~~~~~
+    fs/xfs/scrub/agheader.c:435:9: note: uninitialized use occurs here
+      435 |         return error;
+          |                ^~~~~
+    fs/xfs/scrub/agheader.c:123:2: note: remove the 'if' if its condition is always false
+      123 |         if (agno == 0)
+          |         ^~~~~~~~~~~~~~
+      124 |                 goto out_xref;
+          |                 ~~~~~~~~~~~~~
+    fs/xfs/scrub/agheader.c:111:13: note: initialize the variable 'error' to silence this warning
+      111 |         int                     error;
+          |                                      ^
+          |                                       = 0
+
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Cc: loongarch@lists.linux.dev
+
+Cc: Carlos Maiolino <cem@kernel.org>
+Cc: linux-xfs@vger.kernel.org
+
+Thanks!
+
+Cheers,
+Miguel
