@@ -1,59 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793948833;
-	b=1t+DGAh3dfrDyBBHJV0ylCbE8VrZt4vraEI7NWFy7KfSm2X0f4L8pHfqZkZK5hthcaI2
-	 oj976/oBPr3YGfN98pTrvJaVROM9UKM/JDevUNhydLxPOeD3X1pUajw0Oic4RiX5ex/0J
-	 8Ce9Ln5AHB3L0ZGeWAjEprj/tyZNf+8upsUociLAtncTOhdc0X++OzqAWuWakM8WPLWKv
-	 nWgyQ6AOPfDIVlAcH+9lZuS4Vs5luIXZg0sK9vPemoYwwcmwg0MSeFCmpcOWdFxCZurA+
-	 A7oVx7ht7NdOWxH/q0/2HfG4uwHlwaKZiyvOAnmeQvX5P72EhN8y7QrSsm46Tua4kvw==
+	t=1793949474;
+	b=3ErqA8uSUfyoqjJB6e22IFtDgQxPSnCrVL1aJNlA0jq1+mpBOnrw63AFGKgJl6l2BDJX
+	 pEAskJ4XDSHXYCkRT6mwpKQBgJ96TUknKPYjVltxvWYZ7uXLFjJwKTy69UdquZG+UOrQk
+	 hKte8mpzVr4oWHHDAF9eclGQXh29g1nNqIQAez6Or1A1DPSZrkhenrYMlChJRe7cMn+C5
+	 2s02NkdGTxIcQW9qUjxS6I1ltAKB6fQz6d+QHqaqETPczohQSOysGgWi+iODFXY4SpN6N
+	 Mhvb6Lfk5j2h8F9jx7sgiUkbTW81dXAzWTaHzLBsi5tPIia4nuU0fljZFG/HIiEyVlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793948833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793949474;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=yT0Ls4Uz/spnUSXjIJe5AEFI8sITXW0uYiih29/EVpw=;
-	b=hKRwxcMANXbemELaZrF9O6iUAsl2Tfxng+xjBLhOOChvLGBMye5essi5lndd2K6mnDl9
-	 tsI8j9Ao9z7ss++nq/32NDeEcocbftrMIXzTosgEWtan+XGcN89tm68PAjmS5Gt+yG4aa
-	 6oxEpKonK3MToZZcGYGrQxWKUUVW7PZE8L/XKezn2FYo2Lr5XJD//DiS9qml1AlzvCq0f
-	 h+eLIxbzgNKhYLm4ZTLElNaZvd2I5HBrn1/ZZEcoRnXuDAN8iQQ9Umyfyop6GKDtaPoqk
-	 It5qRaCJovmoNxWbLDuKazSb1Q+WaXI+XZDtyUTIy7921U1v1m3MRE8l6N6e+jdldEg==
+	bh=LA7in417xxsvWeOSI/Y7AtXUJZchmZdeB24NIGGuWuQ=;
+	b=R6wCqRswkp2jJC1C+Pz7P45xKzS5IEptlhHu2aiYUP7sX1+gkRFuRwZTJAyMaJnP7xqj
+	 1b6h/uVEs8UkYNPwY2BLV1Ei1kuG3VLYp7pSGxvzxk2CgAD/fu6K9zXrf/L0EogR6b0GE
+	 SgI+HkIZKkqfXLdhNAAV7529VLuTyklyT4ryHhGJwWyE6HJya2zBsfJljrFKkaNVgrX3j
+	 qntRqzBctIQXK8xjrMVFE9vW5NZQDw8awuZMgyYqWi4p6W3MJqU2TmCDGkRziyDXGSvnt
+	 74HMq88WzJpoGz3KIfcYwhRVGpl3OdT5CxR5ZHB1yElghSHiVh9IEglbPl6SchSx5Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Nfu6V/3/";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AxqceAZP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB740606A329;
-	Fri,  6 Nov 2026 07:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75CB606A333;
+	Fri,  6 Nov 2026 07:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Nfu6V/3/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE311F008A1;
-	Fri,  6 Nov 2026 07:07:09 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AxqceAZP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88DB1F008A3;
+	Fri,  6 Nov 2026 07:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793948832;
-	bh=yT0Ls4Uz/spnUSXjIJe5AEFI8sITXW0uYiih29/EVpw=;
+	s=k20260515; t=1793949473;
+	bh=LA7in417xxsvWeOSI/Y7AtXUJZchmZdeB24NIGGuWuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nfu6V/3/Lrj/gU0s4PvfELHxmFhwuGwVXRtxuVgM8ylMfvqXp3B1M5UI554eVwQ8/
-	 iLCclbp9xwkdtBM/DC0Ubis/5yWOTU7auDN9jBkIj+VaDV/w62ypMBYfyBGgcWEwGj
-	 rjx6i7DrNHnllItLRTqxj37Z6XbSdYqDr8ZoBL/0X02Vpar00t8s/15a6UKTd2+QkN
-	 gcG2uHgSUoo9lM3V2NyezbkGd1i3arosrivVwjfLOgPC+HSRHqU97CbgbPmDT8le18
-	 UsUk3OhoqAUaYOvH2k/ZRUuRE2/xyDH57kFP15bDozCGYFkgBlYZAltOdL/4J8rjMw
-	 sxGT3wpezW/IQ==
+	b=AxqceAZP8HOAx6X5A6qmSYJDv3HLA99unJTCs9GmMJL++8mJzpOsqMFOH85IZK20+
+	 TilQjwaXqCszMmM0yf/zzGN6oHUivfQEBCZArXI+M0exT8O2/bfH4HmEuAGrC+5+mg
+	 hFtbKIGZI/OYre49UifOvi4ds7AFyuYJ1MjTWc1Jii1zBn4z5uEZb1lNiXxTRM/A63
+	 AobpO6ku9AnkJuh4av0P9D3rG8qwdBfAp+bIkNv/Ko7PBR+WjYMKdA0MK+FVIg+Fz1
+	 qcWqIK1kfthD9vteCUVTJ7ZvUuMSJBgvuDclojGHwF/OaENySdgP1u9egi6BQueG6K
+	 VfmO/VXfWRWSg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
-Cc: burak.emir@gmail.com,
-	ecourtney@nvidia.com,
-	ojeda@kernel.org,
+Cc: cem@kernel.org,
+	djwong@kernel.org,
+	hch@lst.de,
 	patches@lists.linux.dev,
 	stable@vger.kernel.org,
-	ynorov@nvidia.com,
-	Alice Ryhl <aliceryhl@google.com>,
-	Yury Norov <yury.norov@gmail.com>
-Subject: Re: [PATCH 6.18 0699/1005] rust: bitmap: restrict bitmap length to at most i32::MAX
-Date: Fri,  6 Nov 2026 08:07:01 +0100
-Message-ID: <20261106070701.89282-1-ojeda@kernel.org>
-In-Reply-To: <20261104211103.174756107@linuxfoundation.org>
-References: <20261104211103.174756107@linuxfoundation.org>
+	linux-xfs@vger.kernel.org,
+	Huacai Chen <chenhuacai@kernel.org>,
+	WANG Xuerui <kernel@xen0n.name>,
+	loongarch@lists.linux.dev
+Subject: Re: [PATCH 6.18 0805/1005] xfs: cross-reference the primary superblock
+Date: Fri,  6 Nov 2026 08:17:43 +0100
+Message-ID: <20261106071743.90363-1-ojeda@kernel.org>
+In-Reply-To: <20261104211105.901372401@linuxfoundation.org>
+References: <20261104211105.901372401@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -65,22 +66,55 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 04 Nov 2026 16:07:12 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Wed, 04 Nov 2026 16:08:58 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> +/// This also matches [`BitmapVec::MAX_LEN`].
+>  	int			error;
 
-This is a broken intra-doc link -- it can be fixed with a trivial
-one-liner I just sent here:
+> +	if (agno == 0)
+> +		goto out_xref;
+> +
+>  	error = xfs_sb_read_secondary(mp, sc->tp, agno, &bp);
 
-  https://lore.kernel.org/stable/20261106063745.87864-1-ojeda@kernel.org/
+> +out_xref:
+> +	xchk_superblock_xref(sc);
+>  out_pag:
+>  	xfs_perag_put(pag);
+>  	return error;
 
-But another option (cleaner but a bigger change) is to cherry-pick:
+In loongarch64, like in 7.13.y, I am also seeing the following due to
+the code above:
 
-  f5535d78e126 ("rust: bitmap: add MAX_LEN and MAX_INLINE_LEN constants")
+    fs/xfs/scrub/agheader.c:123:6: warning: variable 'error' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+      123 |         if (agno == 0)
+          |             ^~~~~~~~~
+    fs/xfs/scrub/agheader.c:435:9: note: uninitialized use occurs here
+      435 |         return error;
+          |                ^~~~~
+    fs/xfs/scrub/agheader.c:123:2: note: remove the 'if' if its condition is always false
+      123 |         if (agno == 0)
+          |         ^~~~~~~~~~~~~~
+      124 |                 goto out_xref;
+          |                 ~~~~~~~~~~~~~
+    fs/xfs/scrub/agheader.c:111:13: note: initialize the variable 'error' to silence this warning
+      111 |         int                     error;
+          |                                      ^
+          |                                       = 0
 
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: Burak Emir <burak.emir@gmail.com>
-Cc: Yury Norov <yury.norov@gmail.com>
+It seems this happened in mainline too, but `error` got initialized in
+a later commit:
+
+  612d2e7506c3 ("xfs: read primary superblock from disk during scrub")
+
+So something needs to be changed for stable.
+
+Cc: Carlos Maiolino <cem@kernel.org>
+Cc: linux-xfs@vger.kernel.org
+Cc: Darrick J. Wong <djwong@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Cc: loongarch@lists.linux.dev
 
 Cheers,
 Miguel
