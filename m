@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062228;
-	b=G6ndgw2U9+XWmtR0zQ3i4J+6y3sx+XlX0MUbPr8s0b9XsEKZI65kX1Ywk9ZJ15cqBXmh
-	 uV9R4KZhb6DDcsO8HCaGetUtGEdwsX0jaQLcWYv+NoSnu0w3+XbWA8P4HYJQcyb51knxx
-	 eR5wTklKRkzQCZQ1ea99W52xraF4TXyiR9o/bHaUxjl4uWIhgSEgo9FKuMRrRmAA4E/Np
-	 Qe+yikUAtkvhBnrOAHRXsb6zYsNpBatWkvfF+oXZaaBQIrhVgbEaO4qY27GnyAjNXZbX0
-	 Bxlznl4GcxhmJZyqVT5uFW86/D0wfllvH4uxHalKfMgVwMBBHAqzq0LOw7vQU1ksBnQ==
+	t=1794062229;
+	b=w8rjM4XnmtgVwrTaLs3DHIxVvHHuZ0uIvmcOl08sRttDyy+s90iwjJa9whfkpMQnaOBj
+	 opsTpRkUU8pvsPorRjl4EwK/M0kyswpgjniZWhQTf2cH9HprwNZ5o4gvgHCIBbKFhhEkO
+	 E+BPyBipY4n6CYP1bXkaYBpdZIrxDv16aQHh4GtUnyh3z4mR7/XUkb3ahoc4K/SOcOdmA
+	 3EqpvwsmhLivLymhn1Y41nvK/+AHskmhS3qOhxk11Z+VW4EhM5Ut9rGZ2QnhQZwUp30Qu
+	 ZG5wRsDPfjM+YDpCnaHWKcJEuPPIjystvqeTs+mNnNVUzieKP4ZNjEhiWakOo5b4UDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062229;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gWLVd4uaymVPlgqX5/IYO7FdB2ps1Vf6/is5idiWUVU=;
-	b=W20PgPleO+j5wk/ED69pMfbpdTWTTecXLAoi8XNhFHWRrARrTlWgVNMc0fi4Tc30H424
-	 YKy/r9/Hn7UVdRRE4imDeEyHkQnwJ88Ma6PO2BlNQ+H5+d2KJ+rw0o/gp8dpQJQXJCwtk
-	 8Yhsm8JklMZNipz5yQTFJiusnBI/lIEEEeYIXy4qBjCXOpa4RMQC8yxWv4L4+POQN4c+o
-	 L6Si4qN+r+DhVorn2irY/92nJ2qxsraRQtNQ7IqcFnfH+0RVeuPPPuaCH2FYzgbet5niC
-	 TzZEvi0MNn0wVHIubIGTlSOYrBka4bW8Q0HvVnGtk9VD7M+HZSOqSa6H0LnDnUzm13g==
+	bh=/6jQ7IVRx7zA5eL4MUWYYwB9Z2W1uA+7uMTDYeEC1GI=;
+	b=jLWPOnq32/iFW+R1HY1W8tg8202KXwkcgkpXwbP0cCzt+M4VaeHzWArDeb4D+GDsWxCi
+	 zg6wcz8Lk97rjLzhwgSN3mpa/533kyv9Nf0Ja6dl/p9zcoV/vRIDRSyfHKyeFqm6tnp8E
+	 YzXpUW3BnGEUYWGAotZ4rS6F5n3Tf93xY4+zxgyzU9luZeH6Fu871pLUAtl/Hmf4F0hdO
+	 eFdGP2i6ag40IZznzPQouit9Lcufek3Xe5E5kMQmUWx9hkevjxhx8GJ5If0cgd46xqy5P
+	 ovsfbAu5EsUEPnBo4DIjTHqt1y9YAPd3BL7fU8tT0CwFMVcO5wTu7sWii1Q2bK3+vww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PZi/or/P";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PT7VYsA4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E7A606D83C;
-	Sat,  7 Nov 2026 14:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05AB606D827;
+	Sat,  7 Nov 2026 14:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PZi/or/P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C591F008A3;
-	Sat,  7 Nov 2026 14:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PT7VYsA4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DAD01F008A2;
+	Sat,  7 Nov 2026 14:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062227;
-	bh=gWLVd4uaymVPlgqX5/IYO7FdB2ps1Vf6/is5idiWUVU=;
+	s=korg; t=1794062228;
+	bh=/6jQ7IVRx7zA5eL4MUWYYwB9Z2W1uA+7uMTDYeEC1GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PZi/or/Pk7erp1VmckmaP7/ku31X1ET39EwsNr45t3e88hcypZeV1Q241PMRRtoBf
-	 m3z/H6kABaQYlA5ZKWhgNF3hY/B3+am3QbRDTMbDcPz9CbyCmMJB9jFYx4b8dT7KLT
-	 kHbQjFvijAZoUQKn3LCn8wFpWJYXFXiOoYgMUAWo=
+	b=PT7VYsA4VMpyqIIws2fORWSTSckbny7n/zLiKSZfS2jRwISU/DLIDKHREXYI/Aip6
+	 Tao8XiCZye5alCKAf2Bueoc3kw5c8XtXDprxeQ9bm+PjvyNxCkqK+QJ5tSgPH5yQKd
+	 +0asmSpEx4Up5NlE9xFK1S9m+a4c5JqTuZtd+Ka8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orly Orge <orlyorge2004@gmail.com>,
-	Inanix <contact@inanix.fr>,
-	Mark Anthony Agarro <markanthonyagarro@gmail.com>,
 	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Eason Lai <eason.lai@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1179/1536] wifi: mt76: mt7615: do not tear down BSS/STA state for monitor vifs
-Date: Sat,  7 Nov 2026 08:53:15 -0500
-Message-ID: <20261107135030.855006497@linuxfoundation.org>
+Subject: [PATCH 6.12 1180/1536] wifi: mt76: mt792x: fix UAF in SDIO TX path when out of memory
+Date: Sat,  7 Nov 2026 08:53:16 -0500
+Message-ID: <20261107135030.882020009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,72 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Anthony Agarro <markanthonyagarro@gmail.com>
+From: Eason Lai <eason.lai@mediatek.com>
 
-[ Upstream commit f7517b3d8b7f1008e07edcb8bb692c6ca53ef23b ]
+[ Upstream commit f5dd4833463ed45794027e33928539b3c532f82d ]
 
-Tearing down a monitor interface oopses:
+Using __skb_pad() instead of skb_pad() in mt76_skb_adjust_pad()
+to prevent double-free, as the caller handles cleanup.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:mt76_connac_mcu_uni_add_bss+0x144/0x370 [mt76_connac_lib]
-  Call Trace:
-   mt7615_remove_interface+0x6a/0x200 [mt7615_common]
-   drv_remove_interface+0x60/0x140 [mac80211]
-   ieee80211_del_virtual_monitor+0x8f/0xc0 [mac80211]
-   ieee80211_do_open+0x550/0x7d0 [mac80211]
-   ieee80211_open+0xaa/0xb0 [mac80211]
-   __dev_open+0x11b/0x280
+Free the MCU message skb in __mt76x02u_mcu_send_msg() as well, which
+relied on skb_pad() to release it.
 
-mt7615_remove_interface() tears down BSS and STA state for every vif type.
-On MT7663 with offload firmware that reaches mt76_connac_mcu_uni_add_bss(),
-which has no monitor case in its iftype switch. It takes WARN_ON(1), then
-copies ETH_ALEN from vif->bss_conf.bssid, which is NULL for a monitor vif.
-
-mt76_connac_mcu_bss_basic_tlv() in the same file handles this. It has an
-NL80211_IFTYPE_MONITOR case and it copies phy->macaddr in place of the
-bssid. The uni variant has neither.
-
-There is nothing to tear down. mt7615_add_interface() only calls
-mt7615_mcu_add_dev_info(). The BSS and STA state comes from beacon enable
-in mt7615_bss_info_changed(), from mt7615_set_key() and from
-mt7615_mac_sta_add(), so a monitor vif never has any.
-
-Reported on mt7615e going from monitor back to managed, and on mt7663u on
-an "ip link set down", both through ieee80211_del_virtual_monitor().
-
-Fixes: d9852ab2f362 ("mt76: mt7615: keep mcu_add_bss_info enabled till interface removal")
+Fixes: 808f2767d421 ("wifi: mt76: mt792x: Fix memory leak in SDIO TX path")
 Cc: stable@vger.kernel.org
-Reported-by: Orly Orge <orlyorge2004@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/CANj5C4mTOHs6riyWee=dFdkE5p=714J8xs-x3hq3ewQ+r6O_Nw@mail.gmail.com/
-Reported-by: Inanix <contact@inanix.fr>
-Closes: https://github.com/morrownr/mt76/issues/79
-Tested-by: Inanix <contact@inanix.fr>
-Signed-off-by: Mark Anthony Agarro <markanthonyagarro@gmail.com>
+Closes: https://github.com/morrownr/mt76/issues/83
+Co-developed-by: Devin Wittmayer <lucid_duck@justthetip.ca>
 Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260813152059.15747-1-lucid_duck@justthetip.ca
+Signed-off-by: Eason Lai <eason.lai@mediatek.com>
+Link: https://patch.msgid.link/20260914021920.32246-2-eason.lai@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c | 2 +-
+ drivers/net/wireless/mediatek/mt76/tx.c              | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/main.c b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-index 27897d2d14966..c652a2bbb1bd5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-@@ -255,8 +255,10 @@ static void mt7615_remove_interface(struct ieee80211_hw *hw,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c
+index b2cc449142945..d06cc5ee07b2b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c
+@@ -90,7 +90,7 @@ __mt76x02u_mcu_send_msg(struct mt76_dev *dev, struct sk_buff *skb,
+ 	       MT_MCU_MSG_TYPE_CMD;
+ 	ret = mt76x02u_skb_dma_info(skb, CPU_TX_PORT, info);
+ 	if (ret)
+-		return ret;
++		goto out;
  
- 	mt7615_mutex_acquire(dev);
+ 	ret = mt76u_bulk_msg(dev, skb->data, skb->len, NULL, 500,
+ 			     MT_EP_OUT_INBAND_CMD);
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index 9cb00055ce302..ed1615192d644 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -792,7 +792,7 @@ int mt76_skb_adjust_pad(struct sk_buff *skb, int pad)
+ 		}
+ 	}
  
--	mt7615_mcu_add_bss_info(phy, vif, NULL, false);
--	mt7615_mcu_sta_add(phy, vif, NULL, false);
-+	if (vif->type != NL80211_IFTYPE_MONITOR) {
-+		mt7615_mcu_add_bss_info(phy, vif, NULL, false);
-+		mt7615_mcu_sta_add(phy, vif, NULL, false);
-+	}
+-	if (skb_pad(last, pad))
++	if (__skb_pad(last, pad, false))
+ 		return -ENOMEM;
  
- 	mt76_testmode_reset(phy->mt76, true);
- 	if (vif == phy->monitor_vif)
+ 	__skb_put(last, pad);
 -- 
 2.53.0
 
