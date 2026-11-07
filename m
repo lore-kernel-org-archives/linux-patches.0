@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062505;
-	b=jsrlC4xJDLldUuk7+7eArbjzZyMSAzS5jaRg89abXTFabqlynbEv/qZJ9zEyLw9LX7lv
-	 MuPBW3hnY6CYOFtGequG13G6Kk1TXEgmukdpUkvTNvtQqOltfmvfe4IC+m5NXXBxk1nxw
-	 xOEHIn7Y3Cd7MHPoosuOhhqgO8pn/vi9Yu8WHnp/c4ej7m9sfjpfg1Yx8EaTsFsSi7uIZ
-	 LB2UOXkpZwOmfBjKVa/civfGDDPBUKF87kKB8jJCKgS7aWG0kqVsZrg7D1sYrepkQCYxg
-	 4ouBVDavMUlXaCvGu1wnVv0p1pNpGDmcI9i1kRt2vHJelelk4KfEMV8ylpMl7T5iWTg==
+	t=1794062506;
+	b=G2JYJByMLxkdQ7uWKsiXqvbqz3YhfQ56KzCh4ZC8eyKsFS/4LSA33/bNnsVOLlFijCmV
+	 QSM6+aOxINREKCaYakVQq1ST/+qTPjodhv4Xa09Lk4PsIz9axu5XCdiMhZgyI7ZCSpae1
+	 NjTSnO5Gz+uUXvDsYURQxaCaY8NjsN9n7x4XZwHh361GT57mYZ0E3K6zE4qrfAdiBTGy8
+	 tR4IxukhzogJdoAF4PGLHs7hDIUtUWnzAqSr8bVm16/LlbQp3ZHt2Dl8R06s5skzGI8dT
+	 gpH9MT1uL2RGSUJz/31Skl2emXfWE+h0C74VHqW/ioXlvyg0juDS6zaOFJcdH/WgawQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062506;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V26TiMzslUCTrNMs/KDcV27KuBTayXvYpIsr/KWBn4Y=;
-	b=Jto40fMhdvg+SAVKDh1EuAMFpjwva2BmevOSI7bSQxKRqjtIknHBxjIwcFPTNCaA5dYt
-	 0+0xisBWd56cqmxdXjT7AwhlKIsryJg01j3/40n/h6eTnCFxV+TuuEPsXWBj7hbISqQiZ
-	 xVXfMuOK/2i7HC54VIoOcr+OwiF7rOpiPJoBbf5lWfcHf/aGOKzpcJwWSaP24yKjnrdNx
-	 RxzcNe4Bp3gyZb+XBUYJ68q87toTFMEOL1k4pYPryJ2oMiFben9E1sh43KL2SCGZuzjp0
-	 Tw7VFy7U30wDRqgkmpW98EcIQFLiwvhVuahA42OR0H7DU5nMX3XqGdrXBDNrhFNzoWg==
+	bh=tLHZnwpwiSvqM/7n9v5tA7JbyVII5TpWojF8LkQ5CEs=;
+	b=rh/Xof/6Ad8CiuQ9LhdtXsOvbwSNKSKzdrcsnnP+4y5ymr0ykCEtVxfNbiZUuEjWogXF
+	 q74HoDlX9PTSaj18RVIdNYx+zXekzFqGRkBdMoLOWTBGOEvxt6xIIX3bJV5kxLyXlZ2fb
+	 CERq1Ga+ahVLkeoUzmq/tG/abgaqfYS8sNTnls2YOwcvju3WAwFrod/v28XD5enEtlIH7
+	 ja3zIBC7fDG9/VU9xUmRt9AEAIylBjmjCjpH1oDd671J2XC8z3jjNXa+3AeukpZy+dIgL
+	 INkfX8e81uVa96kMmPXDHTM5Vi9N9l7xx5fNoqsS7t7VnEV+HZB0pH+QeJyV10AYHHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t3//Sgv1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2iGQ7Pri;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3F0606A331;
-	Sat,  7 Nov 2026 14:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3901D606A330;
+	Sat,  7 Nov 2026 14:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3//Sgv1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F481F0089F;
-	Sat,  7 Nov 2026 14:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2iGQ7Pri
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA7D1F0089F;
+	Sat,  7 Nov 2026 14:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062504;
-	bh=V26TiMzslUCTrNMs/KDcV27KuBTayXvYpIsr/KWBn4Y=;
+	s=korg; t=1794062506;
+	bh=tLHZnwpwiSvqM/7n9v5tA7JbyVII5TpWojF8LkQ5CEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t3//Sgv12AVrUPhLqIx0Jam7ffOLkzeCbvpqMta2dhV780Tq7alziE4sx4TEhxVEo
-	 ntB7qyIDpdN0VpvbzErRrINqWP4QH0y+W+tjJRI5vqqc7JIQd53XZ9LvX1MY1e8EZB
-	 JZ1+7qwS9UnoevRsGQf9yYk7kmQS/kHq1zulhNAU=
+	b=2iGQ7Prig9HKUqM1IrAINJUJyaqtnF+6qoCZOte3BpZKBl5USjoqVxcNLY1som2uN
+	 0GNQt5hf8NDjIKW7p5DVJ+T7bEUAoGtifX1WbpFPVJrA852+GzhqGMwEwRrx5EaShV
+	 C8sOGY6qNIhC8MPRHHJ2SQJDeqr+eTZBrDd9Zbqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Alexander Kochetkov <al.kochet@gmail.com>,
+	Siarhei Volkau <lis8215@gmail.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1364/1536] hwmon: (sht3x) Return the consumed count for heater writes
-Date: Sat,  7 Nov 2026 08:56:20 -0500
-Message-ID: <20261107135036.146875001@linuxfoundation.org>
+Subject: [PATCH 6.12 1365/1536] Revert "Input: matrix_keypad - force switch rows to input mode"
+Date: Sat,  7 Nov 2026 08:56:21 -0500
+Message-ID: <20261107135036.173953924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,49 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+From: Alexander Kochetkov <al.kochet@gmail.com>
 
-[ Upstream commit 817ac527100c8e20684211eb919ffd6d875adc7a ]
+[ Upstream commit 1527451f87dfe368b8ddeeb501c24ac9bde6b589 ]
 
-heater_enable_store() returns the result of i2c_master_send(), which is
-the two-byte command length on success rather than the sysfs input
-count. This can report more bytes than were supplied, or a partial write
-for a fully processed input. For example, writing "on\n" returns two
-instead of three, so a caller retrying the remaining newline gets
--EINVAL even though the heater command succeeded. Retrying the remainder
-of "off\n" can also send the heater-off command twice.
+This reverts commit 01c84b03d80aab9f04c4e3e1f9085f4202ff7c29.
 
-Return count after a complete command transfer. Preserve negative I2C
-errors and return -EIO for nonnegative incomplete transfers, so a
-zero-message transfer is not reported as a successful zero-byte write.
-Keep the existing boolean parsing, command selection and locking.
+The commit makes every scan call gpiod_direction_input() on the row
+GPIOs. On pin controllers where GPIO input and interrupt are separate
+pinmux functions this switches the row pins out of interrupt mode, and
+enable_row_irqs() does not switch them back: it only unmasks the
+interrupts. Row interrupts then never arrive and the keypad stops
+working. Seen with a matrix keypad on an Allwinner A64 board (PINE
+A64-LTS); it works again with the commit reverted.
 
-Fixes: 50c22cd154e5 ("hwmon: (sht3x) add humidity heater element control")
+The workaround is not needed on Ingenic either: the author of the
+reverted commit re-tested all available JZ47xx SoCs and they all report
+the live pin state in interrupt mode, see the thread in Link.
+
+Fixes: 01c84b03d80a ("Input: matrix_keypad - force switch rows to input mode")
+Link: https://lore.kernel.org/all/4130C026-2A83-408B-836A-ECA044491C47@gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
-Link: https://patch.msgid.link/20261019154718.2328055-1-pocj8ur4in@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
+Acked-by: Siarhei Volkau <lis8215@gmail.com>
+Acked-by: Paul Cercueil <paul@crapouillou.net>
+Link: https://patch.msgid.link/20261002100935.449473-1-al.kochet@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht3x.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/input/keyboard/matrix_keypad.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
-index 1f63c07cfb085..87f406cca6cae 100644
---- a/drivers/hwmon/sht3x.c
-+++ b/drivers/hwmon/sht3x.c
-@@ -546,7 +546,10 @@ static ssize_t heater_enable_store(struct device *dev,
+diff --git a/drivers/input/keyboard/matrix_keypad.c b/drivers/input/keyboard/matrix_keypad.c
+index 3c38bae576edd..c502ee266d1a8 100644
+--- a/drivers/input/keyboard/matrix_keypad.c
++++ b/drivers/input/keyboard/matrix_keypad.c
+@@ -118,9 +118,6 @@ static void matrix_keypad_scan(struct work_struct *work)
  
- 	mutex_unlock(&data->i2c_lock);
+ 	memset(new_state, 0, sizeof(new_state));
  
--	return ret;
-+	if (ret != SHT3X_CMD_LENGTH)
-+		return ret < 0 ? ret : -EIO;
-+
-+	return count;
- }
+-	for (row = 0; row < keypad->num_row_gpios; row++)
+-		gpiod_direction_input(keypad->row_gpios[row]);
+-
+ 	/* assert each column and read the row status out */
+ 	for (col = 0; col < keypad->num_col_gpios; col++) {
  
- static int update_interval_read(struct device *dev)
 -- 
 2.53.0
 
