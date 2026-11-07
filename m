@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061395;
-	b=uImpmLSMhT6ofAVVdez9fBSllVGcvmvCBk+UBei/NuTcScoj58tfcVYV4VCtLeJiyvwf
-	 mFQXifSccfdm6C0zUSu+5dV5UYo2PVbo50coj0fHRcyTxIHORrku6L5dlVQ0b+M6QRJ/R
-	 eR2cGZczEBio5woCUf23BYXtkSts7UVnA2IdbwVwgeQVH3reXckq0Zf8VprZ3MA/dAgOQ
-	 xzVavO1OeCXedhk1Z0QU3/xHQHj3jg3GJ1hEDE95LSKlWP4F36jftJCDSP1HHbrqpf9qi
-	 mtTHnFI/l7mf0+eesWDl+NYhSnAVq2v3ODICjpXFuLOqVwXZ+O0WuZLipI/T4hMbQCg==
+	t=1794061396;
+	b=Er72HQ4mDOcz7D3Wo53yGNfCyDF51wLvIkg6tjmmnmJ1dDLIqTlvCbZ+KXOUF70kw4hs
+	 g1v2XK/d7S7xbmvOnhrGX8fu+/mHcTzO+Brk/4sQq/+xF37MpcXOBkAXXZIk+TBokgpjZ
+	 4jtf2RGfONuMtHM3jwOEN3EN3qFjA7bvTAT+lfo/k0POmWQMHOSCPqMhS8F5hW752+InF
+	 vuyk53Hlldn7AtOvTvA3NgEWNvkrTkVWPtJiRTl5zVQ0fgN9f4v9miT+SaBkiC4ezhUow
+	 zODt+ynxBKgQRYulgXX62dhvFUh9zBCQHlDZMQyG6N86Pjg785VrH+iPR2z2yFw2WOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sut3LLmjSXqBsYOcOEYAbEQDIbekB/OqVKrElqXlNdY=;
-	b=asyZdZg+jQVb9bx1OY0IqY97FQk67Ik/hBK7dQD6iN/LpoUL7etK/Frs4r5WKzMxJyZV
-	 QqJXpY9zLGkl1XBSBA/L84tldTOE3l8IEQZoyjccWbwcQykF2f12DBO9smWyELW50oshn
-	 ErJ29PyCHMWvqVq8z9pRk3bYl1rTdJllwpptsokNeFUl6iMnZC20A05q+lPWzrCt5Iq/W
-	 O1QIR9FnWQlStLJH7J1bd34F8tlzHebfoegjb5CAL4v4elkCKKdPqdNd5sCh2nYePxnLe
-	 zmJLT695I7AHBW9BNqcP1KqjxsdVG5cYbcVoWWyd4MOsiU2p3Tn5BiFK6s1hAlxYdzQ==
+	bh=uNyAP0qSZzlXPelCFI88AJ45qjM60vHYpijqyQVE6YI=;
+	b=mlIIDtwFzlXPgiUSO3DPL7KSdNiv4rVm2F9Z6fv4VP78rOdSHEidQ+d9vKrTn9JTQuOD
+	 /oVHUycr3TLZsx7HrQjHiEZf47OVimXJhcxev1mQYRHpZNA+Jq8GpjyKE16kGylwNkL6Y
+	 0txaKTxxFeE1N7UAhHnpzh5s0+RQdYHp95MU+oOtEqrrUrn1z/siZ2I5VablQJs2MclO/
+	 +u90ksorFZezYgHV6w9hjE3+1Wfq4BNOAvw6wQ3ib+S86kfUk7Bi6gDoZB5//pJqWt9H8
+	 0OIXWoRGK3nmeD8ruJPzYdaSSl8MhH2MoX/Pzj883c4UW54+9+RRsJsBAiVuq1Xlszw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8ZaZWmz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSmz5kcN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00035606A331;
-	Sat,  7 Nov 2026 14:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905C2606A33E;
+	Sat,  7 Nov 2026 14:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8ZaZWmz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A321E1F0089F;
-	Sat,  7 Nov 2026 14:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSmz5kcN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB8F1F0089F;
+	Sat,  7 Nov 2026 14:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061394;
-	bh=sut3LLmjSXqBsYOcOEYAbEQDIbekB/OqVKrElqXlNdY=;
+	s=korg; t=1794061396;
+	bh=uNyAP0qSZzlXPelCFI88AJ45qjM60vHYpijqyQVE6YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P8ZaZWmzaHkhmw+GcVFhyv9+fVJEbXqve3xc54SWfRawIeSE4Olw11kS6WHUUy0g6
-	 f0wDMej1uP5Mpthw/8JF7yZy6qTzul/HzQYsgFflAsI3askBXYpiirZPs35cookG7B
-	 eHMWXSEor3xwf2xhuBUc3elQlWn74Rt+hxcUzHew=
+	b=QSmz5kcN+dgMX99jnkORa+d2sZmyHUKpSdjcIUm41hwuaPIrsvlNzwanbZ2lv0yZp
+	 N9+AqMjQ6II9zxx8wlOkv41c+LfH9ESQIOsAZuFSCmILrYaSHZv1Mo9+eD0TARxloc
+	 0zQbEUGyEikAyw8CAJt1bfFXEcKcsWOs64/2ny14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	Prike Liang <Prike.Liang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0514/1536] drm/amdgpu/pm: add workload profile pause helper
-Date: Sat,  7 Nov 2026 08:42:10 -0500
-Message-ID: <20261107135011.871878470@linuxfoundation.org>
+Subject: [PATCH 6.12 0515/1536] drm/amdgpu: skip gfx switch_power_profile during GPU reset
+Date: Sat,  7 Nov 2026 08:42:11 -0500
+Message-ID: <20261107135011.898575321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,79 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit 7f991dd3641ef52e0a25b43f27cc61440c4bdcb4 ]
+[ Upstream commit 1f1d43418d61c8511779e0f63a954a78b9433b43 ]
 
-To be used for display idle optimizations when
-we want to pause non-default profiles.
+During resume from GPU reset, the gfx idle work may invoke switch_power_profile
+before the reset completes. This causes the following assert error because the
+register access occurs without first releasing the GPU reset semaphore:
 
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+[ 1576.768935] CR2: 0000559ea133ead0 CR3: 00000002e6c42000 CR4: 0000000000350ef0
+[ 1576.768940] Call Trace:
+[ 1576.768944]  <TASK>
+[ 1576.768953]  amdgpu_device_rreg+0x21/0x50 [amdgpu]
+[ 1576.769158]  smu_msg_v1_send_msg+0x1a4/0x6e0 [amdgpu]
+[ 1576.769437]  smu_cmn_send_smc_msg_with_params_ext+0xba/0x120 [amdgpu]
+[ 1576.769721]  smu_cmn_send_smc_msg_with_param+0x33/0x40 [amdgpu]
+[ 1576.769993]  smu_v13_0_0_set_power_profile_mode+0x192/0x2b0 [amdgpu]
+[ 1576.770267]  smu_bump_power_profile_mode+0x5d/0x80 [amdgpu]
+[ 1576.770538]  smu_switch_power_profile+0xa4/0xf0 [amdgpu]
+[ 1576.770839]  amdgpu_dpm_switch_power_profile+0x6f/0x90 [amdgpu]
+[ 1576.771210]  amdgpu_gfx_profile_idle_work_handler+0xe9/0x130 [amdgpu]
+[ 1576.771460]  process_one_work+0x23e/0x6f0
+[ 1576.771491]  worker_thread+0x1c4/0x380
+[ 1576.771506]  kthread+0x10c/0x150
+[ 1576.771512]  ? __pfx_worker_thread+0x10/0x10
+[ 1576.771518]  ? __pfx_kthread+0x10/0x10
+[ 1576.771530]  ret_from_fork+0x314/0x390
+[ 1576.771537]  ? __pfx_kthread+0x10/0x10
+[ 1576.771546]  ret_from_fork_asm+0x1a/0x30
+
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6dafb5d4c7cdfc8f994e789d050e29e0d5ca6efd)
-Stable-dep-of: 1f1d43418d61 ("drm/amdgpu: skip gfx switch_power_profile during GPU reset")
+(cherry picked from commit d93b1ff538ce9750c01e0dd0aa62575579c0fc08)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/include/kgd_pp_interface.h    |  1 +
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c           | 19 +++++++++++++++++++
- drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h       |  2 ++
- 3 files changed, 22 insertions(+)
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-index 19a48d98830a3..a97b03232c0b9 100644
---- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-+++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-@@ -388,6 +388,7 @@ struct amd_pm_funcs {
- 	int (*set_pp_table)(void *handle, const char *buf, size_t size);
- 	void (*debugfs_print_current_performance_level)(void *handle, struct seq_file *m);
- 	int (*switch_power_profile)(void *handle, enum PP_SMC_POWER_PROFILE type, bool en);
-+	int (*pause_power_profile)(void *handle, bool pause);
- /* export to amdgpu */
- 	struct amd_vce_state *(*get_vce_clock_state)(void *handle, u32 idx);
- 	int (*dispatch_tasks)(void *handle, enum amd_pp_task task_id,
 diff --git a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-index 17c04963a7921..01ce378c36bca 100644
+index 01ce378c36bca..0f37d5ccf246f 100644
 --- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
 +++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -340,6 +340,25 @@ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
- 	return ret;
- }
+@@ -327,7 +327,8 @@ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
+ 	int ret = 0;
  
-+int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
-+				   bool pause)
-+{
-+	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
-+	int ret = 0;
-+
-+	if (amdgpu_sriov_vf(adev))
-+		return 0;
-+
-+	if (pp_funcs && pp_funcs->pause_power_profile) {
-+		mutex_lock(&adev->pm.mutex);
-+		ret = pp_funcs->pause_power_profile(
-+			adev->powerplay.pp_handle, pause);
-+		mutex_unlock(&adev->pm.mutex);
-+	}
-+
-+	return ret;
-+}
-+
- int amdgpu_dpm_set_xgmi_pstate(struct amdgpu_device *adev,
- 			       uint32_t pstate)
- {
-diff --git a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-index 4d88c0a9f453b..3e27050ccd123 100644
---- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-+++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-@@ -405,6 +405,8 @@ int amdgpu_dpm_set_xgmi_pstate(struct amdgpu_device *adev,
- int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
- 				    enum PP_SMC_POWER_PROFILE type,
- 				    bool en);
-+int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
-+				   bool pause);
+-	if (amdgpu_sriov_vf(adev))
++	if (amdgpu_sriov_vf(adev) ||
++		amdgpu_in_reset(adev))
+ 		return 0;
  
- int amdgpu_dpm_baco_reset(struct amdgpu_device *adev);
+ 	if (pp_funcs && pp_funcs->switch_power_profile) {
+@@ -346,7 +347,8 @@ int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
+ 	int ret = 0;
  
+-	if (amdgpu_sriov_vf(adev))
++	if (amdgpu_sriov_vf(adev) ||
++		amdgpu_in_reset(adev))
+ 		return 0;
+ 
+ 	if (pp_funcs && pp_funcs->pause_power_profile) {
 -- 
 2.53.0
 
