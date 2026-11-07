@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063826;
-	b=rhC2BDFTEfLilq+UdCLSk8b0VHuZ9pqnw4mEld3bu0NZOLaxLoYJn3wWQjG5ykGJBCGE
-	 rLLD1s4ppQ1yFSoLmT38i3EQFiTaqzCo3Gocm2k3EDl0QT1YEQpIAIVdx0loUwm4Itjx4
-	 jBBLHx/y7Iw3U6/P0TeUQmpE7IGPFVY0YIjpRj9HuSECJK42Mb51GJVzyKDecU2Bc1Jwz
-	 gN31SXVx2IQ0Pr2jstktgLZGaz2yEVA/gzEfCKne4MWj7QUt6mFZxIiC7+gbSiQ/liuar
-	 5HlHQaWKgmjKINxgErs7xMxG70jibanCpDiIK8oFKFT27OvmVbbHHZQoPvtEBjuFWhw==
+	t=1794063827;
+	b=YmOkwopd83CKDJe+2G0SK5wHpq2JAw5HVSFIHz4ojVwAcf1Uyb6YbbIq2bjIIuJbkWNs
+	 +OpLPk7xp86GdCVG2PJvcuTeNjMIqo2X1G15LN72uVR2eDI2tpI0b642Tw7dP5GYFZfY+
+	 7vemzEHxKFSLTfrvqmSOz+LU+MiIOynNPjtr/L/soXYB3xI3HYsaD58LJfPz+744A0/80
+	 9mbc/h3n8krZ9m/YKOYpyXvo5VJIBANklEby/slrLOT5jM7pu6Wr1i5O40JNJjfR5pBVr
+	 JaMUNgND4THmyeZYGgrpQZqeu+XhMDSr3viKAdXBH2LTfjgi9s6OQXK+0KO+0jyeGPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qAg1dpiq+f2GKS0EZHnzGglDCWNkYVosgpXhyVt+YZA=;
-	b=kTC34u8erGAZ7UGpuDAEzqoCFnWieAywZxpsqKyPb/ILcpzWHyd1G0zYNSxGDkTYX/gn
-	 H5biyn5R7CVznjxzPNgqPYCx31/MZ5PcBwInmArncLcyecJa3Oomt2jkV69i8u0Tmra35
-	 d70RJKo+3bdvx9XaJtM6RqVngZe5aeUXg+jan/ovEfpPJIUOIoDFdKHCPsrNKbq/CM+4o
-	 SFNUocRZAzyNRQwVdAPc/ibuoKwjYKUvU5Eepb37BIE2rHQJtnIdvDOAYyrvc9+SQWf04
-	 TMrIK0gr/D3O+tXRtunuEqB56pnUl/zkMnhecEIOnKNeuL+lXj3s/XaxC0Xwr5OS82A==
+	bh=dag5jVVdi2dLwCcuhlaUYCHul33v1fX/JhSb+TcAg/k=;
+	b=He8Q+6hipfl5fn9rKy9e7LpDq9xrAESpturAf9mUnhziocvzYKCzCYGtHYs7tAgoosd+
+	 jCLgeOJ5PvjIfZoK71FiTFDqxZ8CI/+iAr91+u1xYT8kQyo+nFw5P+35U7FzmPtxoekYf
+	 zwiNUerHtjRew1VU83H3K2of9WIfyyUyLBqbanrHtPBHE6GUKcvoBcSxfrN6by2FBAkxU
+	 hcrLGHA2d7HjDUJYrJg1cSfqQSMnkkg90nEp75yqUmkJOcUon9PSfRqMtFqHBvLeFwqy4
+	 +/4nT8kEFMFNN0zWNyFZpThG5lT69L4DCwombpyrQMdlr8U6KGxPqHV/X0wD1vHvHDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQ4vLPwO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gj/fSWyw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75A5606A326;
-	Sat,  7 Nov 2026 15:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C3D606A326;
+	Sat,  7 Nov 2026 15:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQ4vLPwO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8544D1F008A2;
-	Sat,  7 Nov 2026 15:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gj/fSWyw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85E11F0089F;
+	Sat,  7 Nov 2026 15:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063825;
-	bh=qAg1dpiq+f2GKS0EZHnzGglDCWNkYVosgpXhyVt+YZA=;
+	s=korg; t=1794063826;
+	bh=dag5jVVdi2dLwCcuhlaUYCHul33v1fX/JhSb+TcAg/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQ4vLPwOJFFELx4y1u7fh+sKEMsDchReRbdgK59q2DxdYiyEiHk0m/xru0Dcoga4c
-	 twtNzRRXg4GgtgXvbCAePjamkBvvF453j1O0c1/vPGfq8Tt+7DbPxXxiPa6t6PFmih
-	 47u/enc7I422nN5Eo+LQCqxwa6h33SJbGJdhCd34=
+	b=gj/fSWywUAPJxmYuz3iWFaWPiXdKRNPb5zwNBzCfk93IDYBnGx25hDV60HMN53O6L
+	 WkBX5tbewdZrzG911wIRHF2GymqfDdQvssBiAhpjtrfA+Fondab4AZPAQFyBKZJXZi
+	 gv+T0fL4VZVDnhCncnw0zPTUkka2rhbn/JPnbS5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxi Saparov <masaparov@coreweave.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0040/1257] kho: do not reserve scratch memory in the kdump kernel
-Date: Sat,  7 Nov 2026 08:38:56 -0500
-Message-ID: <20261107134940.514187004@linuxfoundation.org>
+Subject: [PATCH 7.3 0041/1257] remoteproc: elf_loader: Bound the section header table
+Date: Sat,  7 Nov 2026 08:38:57 -0500
+Message-ID: <20261107134940.542070826@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,67 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxi Saparov <masaparov@coreweave.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 48be325089e15077411785d0c41ddb9071a61081 ]
+[ Upstream commit b32177ead5f8925aa66ceed2bd533a85196f4f0c ]
 
-If a kernel with CONFIG_KEXEC_HANDOVER_ENABLE_DEFAULT=y (or kho=on)
-does not receive a handover FDT, it reserves KHO scratch memory in
-kho_reserve_scratch().
+The rproc_elf_sanity_check() only checks the image is big enough to hold
+one section header. But find_table() walks e_shnum of them, and first
+dereferences the header at e_shstrndx to locate the section name table.
+Both fields are u16 and both come from the image, so an e_shstrndx of
+65535 reads about 4 MB past the buffer.
 
-The kdump kernel always takes this path. Since commit a6715d7ec472
-("kho: skip KHO for crash kernel"), the kernel does not add KHO
-metadata to the crash kimage. As a result, the kdump kernel never
-receives a handover FDT and always reserves scratch memory.
+The commit 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read
+past the ELF header") added the same check to the MDT loader, and says
+the header "is sanitized beforehand" under remoteproc. That is what this
+patch makes true.
 
-The kdump kernel boots in the small crashkernel= memory reservation.
-On our x86 hosts, the kernel and initramfs make approximately 176 MB
-of early reservations. The scratch areas then use approximately
-650 MB more of the crashkernel memory. When a large early allocation
-fails, the kdump kernel panics:
+Check e_shoff against the image size first, so the two bounds can use
+size_add() without an e_shoff above SIZE_MAX wrapping on 32-bit. The
+bounds are separate because e_shnum may be zero while find_table() still
+reads the e_shstrndx header.
 
-  bio: can't create integrity buf pool
-
-A kdump kernel has nothing to hand over: its only task is to dump the
-memory of the old kernel and reboot. Fix is to disable KHO at the top of
-kho_memory_init() so that the kdump kernel does not reserve scratch
-memory.
-
-Fixes: 3dc92c311498 ("kexec: add Kexec HandOver (KHO) generation helpers")
+Fixes: 400e64df6b23 ("remoteproc: add framework for controlling remote processors")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maxi Saparov <masaparov@coreweave.com>
-Link: https://patch.msgid.link/20260811161857.3096-1-maxi.saparov@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://lore.kernel.org/r/20260724025322.2341205-1-sammiee5311@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/liveupdate/kexec_handover.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/remoteproc/remoteproc_elf_loader.c | 23 ++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/liveupdate/kexec_handover.c b/kernel/liveupdate/kexec_handover.c
-index 7c4d86daf86d5..3c87c2a3d6f09 100644
---- a/kernel/liveupdate/kexec_handover.c
-+++ b/kernel/liveupdate/kexec_handover.c
-@@ -12,6 +12,7 @@
+diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
+index 94177e4160473..da3cddbe7d4cb 100644
+--- a/drivers/remoteproc/remoteproc_elf_loader.c
++++ b/drivers/remoteproc/remoteproc_elf_loader.c
+@@ -46,8 +46,9 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
+ 	struct elf32_hdr *ehdr;
+ 	u32 elf_shdr_get_size;
+ 	u64 phoff, shoff;
++	size_t shend;
+ 	char class;
+-	u16 phnum;
++	u16 phnum, shnum, shstrndx;
  
- #include <linux/cleanup.h>
- #include <linux/cma.h>
-+#include <linux/crash_dump.h>
- #include <linux/kmemleak.h>
- #include <linux/count_zeros.h>
- #include <linux/kasan.h>
-@@ -1939,6 +1940,12 @@ void __init kho_memory_init_early(void)
+ 	if (!fw) {
+ 		dev_err(dev, "failed to load %s\n", name);
+@@ -90,9 +91,27 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
+ 	phoff = elf_hdr_get_e_phoff(class, fw->data);
+ 	shoff = elf_hdr_get_e_shoff(class, fw->data);
+ 	phnum =  elf_hdr_get_e_phnum(class, fw->data);
++	shnum = elf_hdr_get_e_shnum(class, fw->data);
++	shstrndx = elf_hdr_get_e_shstrndx(class, fw->data);
+ 	elf_shdr_get_size = elf_size_of_shdr(class);
  
- void __init kho_memory_init(void)
- {
-+	if (is_kdump_kernel()) {
-+		kho_enable = false;
-+		pr_info("disabled in the kdump kernel\n");
-+		return;
+-	if (fw->size < shoff + elf_shdr_get_size) {
++	/* keeps shoff in size_t range for the two bounds below */
++	if (shoff > fw->size) {
++		dev_err(dev, "Section header table is out of bounds\n");
++		return -EINVAL;
 +	}
 +
- 	if (kho_in.scratch_phys)
- 		kho_mem_retrieve();
- 	else
++	if (shnum) {
++		shend = size_add(size_mul(elf_shdr_get_size, shnum), shoff);
++		if (shend > fw->size) {
++			dev_err(dev, "Section headers are out of bounds\n");
++			return -EINVAL;
++		}
++	}
++
++	/* find_table() reads the header at shstrndx even with no sections */
++	shend = size_add(size_mul(elf_shdr_get_size, (size_t)shstrndx + 1), shoff);
++	if (shend > fw->size) {
+ 		dev_err(dev, "Image is too small\n");
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
