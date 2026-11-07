@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060731;
-	b=P5IcWim//22otiKuGXngj+IK2L1N2C2wERPcPyXtbb1t3t5fFSvOLGxsFG+MmjmLyNnJ
-	 /p/2T1otsVfJWL2hnYzSdR9Ul3TC5dHblUTETVFHD+/tE1zONHjNWOwqx/Q8cYxOYmtp5
-	 E8LQVCoCH71DaL7A1Q3WkJeFlCKdvCZtvCTp0OESuR3zBAqhqvoUBx6UJTkkm83AJ7RKK
-	 t4HxzCoP2C9dH0YbNuGr/YxkjpRp3PzzEB9OZPNPsNHQZ9M5jP/tpc3nWS7hcJ4ikbc8s
-	 Nj12T2P+QKNVtEa1Rw5dvP5PNXFgLezJ12tiSvwVTOEMmCK/HheS/ZPcgPYlsE+BoGA==
+	t=1794060732;
+	b=keUlUMCGP/NMU9xdJfmfb5jw9ztYKBxbIVHcP1DPdfabppDvsae5ylLRPfWPYVswta9B
+	 BpkXi3O9QCeM3TPvnXVZktYwJjap0pujqmyRkHZadABTyLR/5FSPhQxECi9G6eUye1nwN
+	 IFu4Sz0adJmpRiNwKXPvqly9mzqWM21olfz+R7MLIVoW0yZW1CSZMaIMDzoxt++mgcKWc
+	 YvKuxG5a0W1XT4dQBvjV/k37f+twe4XpTYNFY6YglFtFeB6blDY10rEXvc2Had2TlZpmb
+	 rEcMeD4u+YT5bm72U41ejkT/vd0VOkl9W2YiAOC2l4LJ9JT3NfbTPZeWyQ6iV9aRBow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060731;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fmX8Hj8r6GNSt1psMEdbPNJe3X5W7+8K3fdZARMst1U=;
-	b=bOWkFgVaLPWwVrsGD33O+OxNjn1e+dzhFdygqScYchpVynK+lzGYurzbfXrnGQ7qCR3o
-	 1DF5xnF2vd9eX10vdFsX+1+VpTaytkc1SFP9zobxO8secU6WamjIwlm2hBFVZyE4oU3WF
-	 GYraA4zrlKMA1xPe1hmqiV68kSjgwsha0BYFxvzFQ8RhZBb3Ptgr3e10Ba7Qt6UurPOuX
-	 UsLCiKiQ3P9wMqQQfgzml6/QkZYMqeD8hUeu0XMOFWikooiPMna4rq8f21U9P9A69rMiG
-	 G0Td6439S+x+1aE0x714mYIGQ7Wi9Fl9OjFcY1K3g3IEoZGtOk2uOHtxnTyixdON3qw==
+	bh=s+oyBK85GbX10LM25c0bTyxx9IT+yRVwi1trjNfOH+k=;
+	b=fS0vJjzrj6a/7UhNWEdjz2xN4g9yis2kK+8KwhRcz2l7rqrDx0lPcy040c/j5PyUyxGg
+	 TRBiKnMgU7v7BJn74GbM3uEFoiYTdM9X1f4pQA1qn8Xi+Syg/Y7lulO47cgUwic+Fgu7e
+	 VcV4ZZRjdBDYNXzwkqwa9QD79aSDeuBknqPJAR3xnhgtDUdcYVs+ESKaQk69WL+ibty2L
+	 QQPLQLabap6/ZFY6+KUBgDVUk2IhtqYnHYGF3SNwsSS3lMAxK8kMRHQyw7xVT288zZ69U
+	 1sMrHdDHTMKLIkfVrPzVP51HOSoblBYeMKXDj/OBJLpVD2MK9vmirvwg1ofa4GQm7FA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeoRiCKh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvsY1PBT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BD0606A326;
-	Sat,  7 Nov 2026 14:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED5C606A326;
+	Sat,  7 Nov 2026 14:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeoRiCKh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BC31F008A1;
-	Sat,  7 Nov 2026 14:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvsY1PBT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BD21F0089F;
+	Sat,  7 Nov 2026 14:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060731;
-	bh=fmX8Hj8r6GNSt1psMEdbPNJe3X5W7+8K3fdZARMst1U=;
+	s=korg; t=1794060732;
+	bh=s+oyBK85GbX10LM25c0bTyxx9IT+yRVwi1trjNfOH+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SeoRiCKhjf64mKMWU9nukpN5fTzEwb0NX/EFff5QMxBFfLU7SDAT0sPAVOUzaEYv3
-	 VCFbkxy581mEbygGm1CK4UwPodIGFY0gV40AFMVG7Z5VtwQv0vfdBMYWbJ3oH+i0Ya
-	 +Zvqyrs/OZ27kJiq4/pX9tR/qxCzS11dXk6YUNPw=
+	b=QvsY1PBTmMHl/Xp2dDE3W2odtjch1c7oHcLFnTLrl9MRpwSu+Dv+CjnDRZ6rrKI95
+	 sH9q5RnzyeLMejPPihyjrmQTmzsWJ8VN8JqqvvDJ9xH7fIpjtHLZG9vZcUDTFe+lTX
+	 plBVIYXnKG+QJsCTvPVS8eXlhNgSOgRtGNK9eO/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Ian Abbott <abbotti@mev.co.uk>,
+	Christoph Hellwig <hch@lst.de>,
+	Hari Mishal <harimishal1@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0150/1536] comedi: pcm711: Fix sanity check in interrupt handler
-Date: Sat,  7 Nov 2026 08:36:06 -0500
-Message-ID: <20261107135001.897715280@linuxfoundation.org>
+Subject: [PATCH 6.12 0124/1536] nvme: bound ns descriptor header and body to identify buffer
+Date: Sat,  7 Nov 2026 08:35:40 -0500
+Message-ID: <20261107135001.168904342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,52 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit f876cbfe3e066bc9e3f3210907bd534be82946c8 ]
+[ Upstream commit 3c568b35a0d309acb40746552bec2af24cd550ef ]
 
-The driver requests an interrupt handler for the device before it is
-fully set up.
+nvme_identify_ns_descs() allocates a buffer and gives it to the
+controller, which populates it and then iterates the buffer with
+variable byte increments that vary by type and body size.  But, there is
+no bounds check inside the iteration itself except the loop bound
+itself.  Fix this by checking and stopping iteration if the next header
+or its declared body would go past the buffer itself.
 
-For safety, the interrupt handler checks the dev->attached flag to
-ensure the device is fully set up, but it currently does that after
-dereferencing the dev->read_dev pointer which may be NULL if
-dev->attached is false.  Move the check to avoid the possible null
-pointer dereference.
-
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-7-abbotti@mev.co.uk
+Assisted-by: gkh_clanker_t1000
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcl711.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/comedi/drivers/pcl711.c b/drivers/comedi/drivers/pcl711.c
-index 0cf3917defe79..33407da84ef45 100644
---- a/drivers/comedi/drivers/pcl711.c
-+++ b/drivers/comedi/drivers/pcl711.c
-@@ -181,7 +181,7 @@ static irqreturn_t pcl711_interrupt(int irq, void *d)
- {
- 	struct comedi_device *dev = d;
- 	struct comedi_subdevice *s = dev->read_subdev;
--	struct comedi_cmd *cmd = &s->async->cmd;
-+	struct comedi_cmd *cmd;
- 	unsigned short data;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index bb274fecbec48..cf79a6c45ccd3 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1540,8 +1540,12 @@ static int nvme_identify_ns_descs(struct nvme_ctrl *ctrl,
+ 	for (pos = 0; pos < NVME_IDENTIFY_DATA_SIZE; pos += len) {
+ 		struct nvme_ns_id_desc *cur = data + pos;
  
- 	if (!dev->attached) {
-@@ -189,6 +189,7 @@ static irqreturn_t pcl711_interrupt(int irq, void *d)
- 		return IRQ_HANDLED;
- 	}
++		if (pos + sizeof(*cur) > NVME_IDENTIFY_DATA_SIZE)
++			break;
+ 		if (cur->nidl == 0)
+ 			break;
++		if (pos + sizeof(*cur) + cur->nidl > NVME_IDENTIFY_DATA_SIZE)
++			break;
  
-+	cmd = &s->async->cmd;
- 	data = pcl711_ai_get_sample(dev, s);
- 
- 	outb(PCL711_INT_STAT_CLR, dev->iobase + PCL711_INT_STAT_REG);
+ 		len = nvme_process_ns_desc(ctrl, &info->ids, cur, &csi_seen);
+ 		if (len < 0)
 -- 
 2.53.0
 
