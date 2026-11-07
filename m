@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063834;
-	b=hPmLmCYy4bv4RbNwRbr/T1IJbe8UCgUGGMBDRi7DYWV/SewmkqUKGci6IHq/FYdZDVuR
-	 AoZhxEOiqRPI2634xCmyZHR0B0xtYEuCuj2isoOctLYxKpdH43+KhYMdQxXSofV23nNeP
-	 VhUDfo13sRIaX4SWQ62jxX1FQ9BmkbaRATqGJDID7sz8v70cjWOtYEZ1BM3lELKygVWsw
-	 RMerTmzxU4Mk1lFfkPP3EJxK5euRyDsJrZMOuQrjgeQFIAwxhqt3koFvjqeH/Ryj8dhYm
-	 /nogR0T9p27yrt8k12+R5ncRkzLgVVlX+uyQnfTU6E0tHJ/Ya+LX2drCRNwZAZr3H+w==
+	t=1794063835;
+	b=RING6ZXqIeYr+JtI+sxsjuHNjDgjNPxV+h7IKYDPEi7T4f1uYHqOyeSw2V++6FQRZ6AH
+	 buwfy7PBlll40Y8vJQpv7JVMqhgcCY+n1kelTIkK+71uEFTwErCwo5HTqfGMEn7QnfELg
+	 yoIhMiC25OIRuLqbTKflOmOf55m9H3WkB4lW5gsrwAuzGiGkfMkPARcyYM3GAsZjkXnqt
+	 q2YaQQos4wXEtx8D+O9J+lresnVabe/7z6p4+vkKIYbvenpn7lorbpJ7oG71WoXp9fbhN
+	 yGdZu35RDodfUTccozMJT8faoHJC5aJ0k/Y7/+Lq49h1uS71C9K/7ilnQAuULewETyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063834;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=81O3iJdGP6FTv5Qbt9wpDr+MDjIU+WnLoyPsMMaKkWU=;
-	b=BvjEX7NIVCdEAQX8RC9n6TnkrEQjK6tOQH9Ml2MvVH3qtbSpuXyf1nz28RRIPQ4WKnbU
-	 4MnL7mxlEmj9mZU+dk+wNW2Gqh9d6L/t7nlCAOWDT7vGODwgq7u2ezPb6zSMt+NtHWwhg
-	 ik8+aFq7h4OlXUPtthPi1QQWnbVWPyDgwhY40RHflaUq0UNdvU4I+Q4M1ZhBrp/C0wx9h
-	 oR7LAvU+FgA7a8p9kaqMUpCNpDYAlf0AR9uHs/iuIHRYgRZ6BPbv6HAV7VRw6D52YMwrH
-	 FkBXVXLJFbD56EVvgqT1MFlauf00CZmJyMUJVzOeW3UNIqJxFwX3l8nFiSUkkASggNg==
+	bh=mIymRQQrVhP5+h0xKQiZN3WR9JSJ4Mx7cx53EDglWNI=;
+	b=J3qc1keYyup4inNY8BzdERAVVQf1s5jTI9BGj1mMbZBFQfXv7YxwIlVOFJz4WiwueoaE
+	 ttM87Q51Suogv1POrBQ3KshLnw2Vu22w6raNj3KfN7L5o+vq+visDRPPFNq8YV75Hoep7
+	 lLjy1FBCl/h6C/9syHCpxiXHbvgzEh7cOjo645vkAWm0Gua9XviWN1ey8ngl/IQTY2e0k
+	 Y9exVipnIZtXIJDxYUglyTokUDIMYuPbg7pig5ZHZ9XrCHGrPl8rKqlcBMOn1T5tfV+pG
+	 dKSMa3Z1PZz6rXPSk/itQmGkArl/Lga9qfdYMny4FRx7MW+g3Xp3UReEcI1rf8iSfTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=182mDdRB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uaURU96+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192C1606EEA8;
-	Sat,  7 Nov 2026 15:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F1D60A5BD5;
+	Sat,  7 Nov 2026 15:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=182mDdRB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AB61F008A1;
-	Sat,  7 Nov 2026 15:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uaURU96+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259BC1F008A1;
+	Sat,  7 Nov 2026 15:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063834;
-	bh=81O3iJdGP6FTv5Qbt9wpDr+MDjIU+WnLoyPsMMaKkWU=;
+	s=korg; t=1794063835;
+	bh=mIymRQQrVhP5+h0xKQiZN3WR9JSJ4Mx7cx53EDglWNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=182mDdRBLxHITDHWa4owe7f05qAZUOSRPkZweMs+wGFNotBqqdf9zQLkwdbWtWPG7
-	 NY4J0wasnCp0Sgcwl0UFg5o1Md8F33grUrrXNuCz6uX9B2mVJY/O4aMxXfuaH/qJFU
-	 +/fndltFb+DEBxS3LFjb3RNLpdavIyuXyBT6XPcc=
+	b=uaURU96+FowMth3eAOs+neqOj4fn998pjLCXkpNw7+atnrFlpcS40DD3mRcx6Spk/
+	 Ysr/hy2qOVYptjzKZzeuzdXDUr8Y1T23OUPnMbXTf42Hy9yMIzi9XS5iP5p4HVQmEe
+	 qUvFFjIzYvQ1mQ4NqEsXe1/Wv1omYctdPAZoUvHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhenhao Wan <whi4ed0g@gmail.com>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0014/1257] drm/nouveau: reject zero-size notifier object allocation
-Date: Sat,  7 Nov 2026 08:38:30 -0500
-Message-ID: <20261107134939.817452822@linuxfoundation.org>
+Subject: [PATCH 7.3 0015/1257] drm/nouveau/svm: drain fault handler before freeing svmm
+Date: Sat,  7 Nov 2026 08:38:31 -0500
+Message-ID: <20261107134939.845341000@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,52 +71,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhenhao Wan <whi4ed0g@gmail.com>
 
-[ Upstream commit 38125d38d850bd2fdd5d7840c3bd52d9d208995b ]
+[ Upstream commit b46ddaf0823405f81e681eb26ec98508f3eb9a07 ]
 
-nouveau_abi16_ioctl_notifierobj_alloc() passes the userspace-controlled
-info->size to nvkm_mm_head() as both size_max and size_min without a lower
-bound.  A zero size satisfies the allocator's "e - s < size_min" gate
-(size_min == 0 makes the unsigned comparison inert) and yields a
-zero-length node, after which
+The SVM fault handler nouveau_svm_fault() looks up each fault's
+nouveau_svmm under svm->mutex, caches it in the fault array, then drops
+svm->mutex and dereferences the svmm across blocking faults
+(mmu_interval_notifier_insert(), hmm_range_fault()).
 
-	args.limit = ntfy->node->offset + ntfy->node->length - 1;
+nouveau_svmm is not refcounted. On DRM file close nouveau_svmm_fini() ->
+mmu_notifier_put() frees it asynchronously via call_srcu() without
+waiting for the handler, and mmget_not_zero() pins the mm, not the svmm.
+flush_work() on the fault buffer otherwise runs only at device removal
+and suspend, never on close, so a fault handled concurrently with a close
+can dereference a freed svmm.
 
-underflows (offset 0, length 0 -> 0xffffffff) into an oversized ~4 GiB DMA
-window.  The dma object constructor only rejects start > limit, so the
-validly ordered [base, base + 0xffffffff] range passes and is programmed
-into the GPU DMA context.  The ioctl is DRM_RENDER_ALLOW, so any render
-node client can trigger this on pre-Fermi hardware.
+The instance is already unlinked by nouveau_svmm_part() earlier in the
+same close, so no new fault can resolve to it. Drain the handler in
+nouveau_svmm_fini() before the free, guarding the flush with a NULL check
+on drm->svm: on device teardown nouveau_svm_fini() runs first and frees
+drm->svm (NULL) after blocking the notify and flushing the buffer, so the
+handler is already drained; on per-client close drm->svm is alive and the
+flush runs.
 
-Reject a zero-size request before allocating anything.
-
-Fixes: ebb945a94bba ("drm/nouveau: port all engines to new engine module format")
+Fixes: eeaf06ac1a55 ("drm/nouveau/svm: initial support for shared virtual memory")
 Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
 Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260813-nouveau-abi16-notifierobj-zero-size-v1-1-20dee38077cb@gmail.com
+Link: https://patch.msgid.link/20260814-nouveau-svm-svmm-uaf-v2-1-8e6590519f07@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_abi16.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_svm.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_abi16.c b/drivers/gpu/drm/nouveau/nouveau_abi16.c
-index b776030460f77..e876f154963d0 100644
---- a/drivers/gpu/drm/nouveau/nouveau_abi16.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_abi16.c
-@@ -666,6 +666,10 @@ nouveau_abi16_ioctl_notifierobj_alloc(ABI16_IOCTL_ARGS)
- 	if (unlikely(device->info.family >= NV_DEVICE_INFO_V0_FERMI))
- 		return nouveau_abi16_put(abi16, -EINVAL);
- 
-+	/* zero size yields a zero-length node, underflowing args.limit */
-+	if (unlikely(!info->size))
-+		return nouveau_abi16_put(abi16, -EINVAL);
+diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
+index 58735446d7832..c519c28164fa0 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_svm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
+@@ -304,6 +304,19 @@ nouveau_svmm_fini(struct nouveau_svmm **psvmm)
+ {
+ 	struct nouveau_svmm *svmm = *psvmm;
+ 	if (svmm) {
++		struct nouveau_svm *svm = svmm->vmm->cli->drm->svm;
 +
- 	chan = nouveau_abi16_chan(abi16, info->channel);
- 	if (!chan)
- 		return nouveau_abi16_put(abi16, -ENOENT);
++		/* The fault handler caches svmm pointers under svm->mutex and
++		 * dereferences them after dropping it, across blocking faults.
++		 * The instance is already unlinked (nouveau_svmm_part), so drain
++		 * the handler before the free to release any in-flight reference.
++		 *
++		 * On device teardown nouveau_svm_fini() ran first and freed
++		 * drm->svm (NULL) after draining the buffer; nothing to flush.
++		 */
++		if (svm)
++			flush_work(&svm->buffer[0].work);
++
+ 		mutex_lock(&svmm->mutex);
+ 		svmm->vmm = NULL;
+ 		mutex_unlock(&svmm->mutex);
 -- 
 2.53.0
 
