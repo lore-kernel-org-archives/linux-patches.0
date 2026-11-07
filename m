@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061368;
-	b=mtkssKwQV4bl+3fHsDb6ELFXjXUly1gdIaCGkurmFTIJe3EY7bSm+RBRG7nU5cBzxsDD
-	 uozzGSeb9jEipWsivb36L1yno5bXw2jwGjP2QWY46Y8ZPSqNbz3QHLMioRTmQ1P7olmJz
-	 qaOhgfxH+AajwavR9wkXlgQQLAzQcjMVPzvs155FbFI16wiNz66yuNZIKvDWX3mqe7elM
-	 QTk68p/S5XJEoOLG3GPHxYvBy2wPWNTtd1P/DLHrK6Ox485+9qt+CEP2kwdv1MzLY/Aw4
-	 y9NnQ9rtd+JJbNecb3OmqkK9so+jDMUIZRN4HQH9bah5nN8Wt0IvQ/Hd2r9W8XZsktg==
+	t=1794061370;
+	b=EaeWiSYqwt9fa265jmAQTsPC2XUU6uGx19bdnj8QIOtYiZ8aiw6NphNzsWskOJcKe/Q2
+	 2k7uvn3dHdBCa6ZKOeTj1PSo2Ah8E22+5rovDiwbsY15LFazPAgAGhPJZfVGOeDfczh3K
+	 9ZLsl+Pw+h6nB7H+9wOG1Ej8YMDELsdueFNRSbzacXxofec2ofCbayB0ac8hqx21vNAGd
+	 rOYHjmAehX9O10l9aIIoZ1IIFP6qN7Hxans7wk4JiLbP+9R6KrK5GZBRem9XPpCiLha0k
+	 umJiPn9BsmJp8tCaXqpSh+fxjErvVZpZBqdSGUb7/BXYGcI0SmDjJK1qjs5LenXewYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061370;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f2IlX4YOFRrQo2t9vGAiukKPsY3CRzsOYCQWCikbo/8=;
-	b=1v3Yfllgx4ag7IQM2U3ukt9jCpKPg6I+nf3HTesWbdlJmD5fckV+TGBfqcJO1B60raG5
-	 lnKQjk0WQoy09ZRIKKmNBBTs3NyYIVggMEZWR7WFQZ3dLIsonjaGQISiCXo9vSgL3fu43
-	 uLzTR767fosGmuDTR2MRIkklAge8YRB9meE7U9SX4KYBiOQRInNRmxxIHRtVbIt+EhSXY
-	 KW72VfUMUiyaE1pkivNRbJy42pV3bmcvvDAM9uRTmJTKCHpYoSFJU04gBhNqpfzeAlqh0
-	 1Dhhug83tkBkeLBg/wVXaXbWF3MaVzsXEp6RrOUX3o1XcsnqO+TyAGPtGn0KV4d/jCg==
+	bh=8voPBZPajOHNO50JDGZ0P+ydqsOO/nXT0r+pkeyaeVw=;
+	b=yaUIe0+QR3CUEsbVQVFxr+kFP9AAOMyXmZq9jAf/ODYFFK33d6WwDpEkY4KHZo06lK/F
+	 fxWV45xwUP2+e36vvTjKDCRiU3uvq51tBuSzRqvpx0R1qlZlZFBHoypVsNEG0AujyNRgl
+	 pZl+4DEf2pHWQlB8Uh1rwc+LsOrvgsTwqw+ywkaTQr1MWXjGgnbIbYTS+aYA2AnQG780B
+	 nPxyqe7xDqQM5auNBUkB0pW77slvG5BcpNpMGDoX7Qb47b/qjmOlukIEP5hALouIpUPJE
+	 IP1n1E4YEd7wRNKgRXIbjN1QUAuXTsXoIFKQHQhSVpDS1xEEmIvYQ9EeGb+QNxIQ3SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4HUVJpN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X5o8ds1B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E23606D802;
-	Sat,  7 Nov 2026 14:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7C1606A332;
+	Sat,  7 Nov 2026 14:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4HUVJpN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEF51F008A3;
-	Sat,  7 Nov 2026 14:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X5o8ds1B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162341F008A1;
+	Sat,  7 Nov 2026 14:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061368;
-	bh=f2IlX4YOFRrQo2t9vGAiukKPsY3CRzsOYCQWCikbo/8=;
+	s=korg; t=1794061369;
+	bh=8voPBZPajOHNO50JDGZ0P+ydqsOO/nXT0r+pkeyaeVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u4HUVJpNeITuPC8U3J0v+CYE/n6R4nvUw5OuJp/OSg54uwOfo9oj6B+0Vv1A8S8vN
-	 XgQP8NEJeAsHMw35dum+e97uvWlNcEx74wcudPaKta9FOzRs7RoTcKCjdVNwp9QgxM
-	 wxdhPN5jD5OpTZVtfN9SLP2KdD0m9TmNKQjHvhJQ=
+	b=X5o8ds1Bs7H5Nm2Q1xHp9R4HYTD1RxH5ALimPbttG5KLetvBNuxa0zIv8YsnuZOye
+	 +G9Nh81iM9wJ/EeVEMTg6dniQ5FO8ED2HZhzmJSjAfpTlrq2KGObcfa0XdYZ8SCk9y
+	 0ims2BZvv5wi3JGLQwtRGRzJv8r+cXMeNElOW1QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eckhart Mohr <e.mohr@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Breno Leitao <leitao@debian.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Lance Yang <lance.yang@linux.dev>,
+	Qian Cai <cai@lca.pw>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0491/1536] ALSA: hda/realtek: Add quirk for TongFang XxAF5xxx
-Date: Sat,  7 Nov 2026 08:41:47 -0500
-Message-ID: <20261107135011.261242346@linuxfoundation.org>
+Subject: [PATCH 6.12 0492/1536] mm/kmemleak: stop the task stack scan early when interrupted
+Date: Sat,  7 Nov 2026 08:41:48 -0500
+Message-ID: <20261107135011.285502975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,34 +74,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eckhart Mohr <e.mohr@tuxedocomputers.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit e72d5659a2606056a0c34af212b46a3275a55bbf ]
+[ Upstream commit eb11f56eeca56069613d00bf623607e305b271d9 ]
 
-Fix microphone detection on built in headphone jack for some devices
+scan_block() already checks scan_should_stop() for every pointer and bails
+out of the current block, but the task stack walk cannot tell and keeps
+issuing a separate scan_should_stop() between every task.
 
-Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260821144437.27233-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Return that status from scan_block() and use it as the task stack loop
+condition, so the walk stops as soon as a scan is interrupted.
+
+Link: https://lore.kernel.org/20260615-kmemleak-stack-resched-v3-2-acecd7d7fd92@debian.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Qian Cai <cai@lca.pw>
+Cc: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 3541a2b06ecd ("mm/kmemleak: report RCU-tasks quiescent states during the scan")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/kmemleak.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 2eeb199f3bc95..1a39c59a79ea5 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11751,6 +11751,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d05, 0x3033, "TongFang X6SP45xU", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d05, 0x3034, "TongFang X6KK45xU", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1d05, 0x30ba, "TongFang XxAF5xxx", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
- 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
+diff --git a/mm/kmemleak.c b/mm/kmemleak.c
+index a54585f0406e6..44a3a95da9963 100644
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -1499,22 +1499,25 @@ static int scan_should_stop(void)
+ 
+ /*
+  * Scan a memory block (exclusive range) for valid pointers and add those
+- * found to the gray list.
++ * found to the gray list. Return non-zero if the scan was interrupted.
+  */
+-static void scan_block(void *_start, void *_end,
+-		       struct kmemleak_object *scanned)
++static int scan_block(void *_start, void *_end,
++		      struct kmemleak_object *scanned)
+ {
+ 	unsigned long *ptr;
+ 	unsigned long *start = PTR_ALIGN(_start, BYTES_PER_POINTER);
+ 	unsigned long *end = _end - (BYTES_PER_POINTER - 1);
+ 	unsigned long flags;
++	int stop = 0;
+ 
+ 	raw_spin_lock_irqsave(&kmemleak_lock, flags);
+ 	for (ptr = start; ptr < end; ptr++) {
+ 		unsigned long pointer;
+ 
+-		if (scan_should_stop())
++		if (scan_should_stop()) {
++			stop = 1;
+ 			break;
++		}
+ 
+ 		kasan_disable_current();
+ 		pointer = *(unsigned long *)kasan_reset_tag((void *)ptr);
+@@ -1524,6 +1527,8 @@ static void scan_block(void *_start, void *_end,
+ 		pointer_update_refs(scanned, pointer, OBJECT_PERCPU);
+ 	}
+ 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
++
++	return stop;
+ }
+ 
+ /*
+@@ -1679,6 +1684,7 @@ static void kmemleak_scan_task_stacks(void)
+ {
+ 	struct pid *pid;
+ 	int nr = 1;
++	int stop = 0;
+ 
+ 	do {
+ 		struct task_struct *p = NULL;
+@@ -1697,13 +1703,13 @@ static void kmemleak_scan_task_stacks(void)
+ 			void *stack = try_get_task_stack(p);
+ 
+ 			if (stack) {
+-				scan_block(stack, stack + THREAD_SIZE, NULL);
++				stop = scan_block(stack, stack + THREAD_SIZE, NULL);
+ 				put_task_stack(p);
+ 			}
+ 			put_task_struct(p);
+ 		}
+ 		cond_resched();
+-	} while (pid && !scan_should_stop());
++	} while (pid && !stop);
+ }
+ 
+ /*
 -- 
 2.53.0
 
