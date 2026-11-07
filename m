@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061168;
-	b=Kwg9YfFSSjYLHEBSSRs2QQsK/W3C0FqDSIzvbHt6OoFCRryFTlo0GPIskTw05TZn81Vi
-	 MjKxXEqReWd4wLSTna5QnDiMsrz5n4slkBNPNhcH0Bk3PctlSbF7gv3fv9IpFdzBwlQDv
-	 VG/nxqaZSBk2jbR9l2i7a1x2hL4xCyCYwXXCvieQOHKcqsBOMhT45oGOycpA9n+8tipxY
-	 a5ExYCJ9WbMLArLMeJMCrVJI/1RTHOOxE4HhdgkQ91sM8HbrLlX6yK/mlRdPmP4kfwGIa
-	 J8U7QAdi+GPGMv39XUh+mtwE89N/zT/JYH8jTy+Bnk42ACCnIpioPLfCbPjrzwjQCPQ==
+	t=1794061169;
+	b=u9/DtQa4Row8MrL7OqFpSEfIImDOw6DqGtPYRMt17ooPEaica2gZHLyMlFeQ4S+TUUQ3
+	 wKEqgDDB+cDV4pM3V8BCt28GEGQwvVQrmhAnSjiqE2jRaVVvyfwVtIV6mdwv/E9dOnbP7
+	 2I0+ukzdQ8aIN5qjfn0MboOHMOIwZl2ljZUHDQVjestJKD8pBdo3/FsUxmNccg2RRTxpX
+	 sWemkpTl/HBsr8ngTl9NaJ3Bw06tS+ba/4bepCNEK8985bz3+OT1FCz5P9fNy+5d97uc1
+	 g3S43JhmwSM04szuEk8tmhElBba8KrI0jhVnv6h30t5V89LRBuQM1fXS+7z4tyoDj9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=V7Tn7+Zx+fWVTakR5ZTqf9OmMYmGkKcWJDP/mX87s88=;
-	b=BXELn+kqh/EHY09ud1VGtBRhd2KXaNWUnSnH/1GQyUQJtQpi71ys/YrPwwOqi9p5/nWE
-	 8xCk6nvOgrPZDA/GpH1b4WWziqyh9DJsM6qGyBL9fPQojG5/Sf2/sF1XvFdqC7jLRfujb
-	 MpX6qGGBqVlXkQN3Z0pkqkFU5IOCAtJSO2hWF40XrJLxg1UY/wFYmiHcCTckyzjrXpPVH
-	 ZaFDLmNzcP/wCsuIzkejylU8r2sqvI4ewktnZOhYbQb8MEZpcBmVG8+avFCN/5CmGZI/p
-	 KDuC2eBSz66j9+z1QAjvIV9AGP9CMbj5+ZOalWZFBi43TaxSoVWZtjBfBjoKD377Wrg==
+	bh=JnN2dlaWv1cE6ekrVMZsJe3OVkJtZBeIJ0lQGu07M34=;
+	b=D+N3Ul2+nVhnr0TZ/M7lWAi94pO8bN3WaTZlsmw/F5yCkecK6/EZ3vk2UGOCCNbxR5fS
+	 59N9w/j5YIk8jC3buH/y1wH7pcnVW0iszV3vaSzpbLjxh0LzC0+viTm+pRaMj8CGWKnyC
+	 lF21S1cLjixYKRPfvXMZaXIjdT0WPDB2u9WmFLaOUcd4aRiKD1R1B20RfKjiXY+u9MuO1
+	 WKLrYrG66ixajWy79PWmGJrsikL3uFC8vgJKL62A1wYa6XRgKwuCPzqsbf7hthXa0VlaL
+	 RfSsG+z/xjjF6ddhTgprgfJhiwFonEDEYZoKDOupTzdmFhHuC9IUhQO3vuMUBwUU8qQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfdE017x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXyQ2YTw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297C6606A33A;
-	Sat,  7 Nov 2026 14:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBCA606A33A;
+	Sat,  7 Nov 2026 14:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfdE017x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E761F0089F;
-	Sat,  7 Nov 2026 14:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXyQ2YTw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD5F1F0089F;
+	Sat,  7 Nov 2026 14:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061168;
-	bh=V7Tn7+Zx+fWVTakR5ZTqf9OmMYmGkKcWJDP/mX87s88=;
+	s=korg; t=1794061169;
+	bh=JnN2dlaWv1cE6ekrVMZsJe3OVkJtZBeIJ0lQGu07M34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TfdE017xka0F0iX6pk8yAzV/AaXFcffUOCMwX0VENjDiT2xeFkTBMbFnzXAXP+BWA
-	 d8dy9aSUzvfTbruicWZXNspjr9lXN038PszQ8Ywqeb73yTgbSsE8JC5QnPqrDG89Ii
-	 oHfqKEe4CeDd+QewzWemVxj0GsmjO9h6KVifC0Ao=
+	b=OXyQ2YTw4YD8zO19xx2//cuv6Ah5ru+3a46Ev8GgJuHJMvEFev7BE391SBDRv+avB
+	 7Q2eY0ZNMSE8UlAECr4dY5A32GGjjZA4M+amR6lRPycs7H4jkKuYyJ0Rbjl6uiGQ2y
+	 piGH7IYzwzp5Vtd+/6LXZ+K+HxsgPdgB1C0TZlOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	=?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0455/1536] media: chips-media: wave5: Set inst->std during default format initialization
-Date: Sat,  7 Nov 2026 08:41:11 -0500
-Message-ID: <20261107135010.309389770@linuxfoundation.org>
+Subject: [PATCH 6.12 0473/1536] module: validate string table section types
+Date: Sat,  7 Nov 2026 08:41:29 -0500
+Message-ID: <20261107135010.789991843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,70 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackson Lee <jackson.lee@chipsnmedia.com>
+From: Thiébaud Weksteen <tweek@google.com>
 
-[ Upstream commit cfcefc5a996f6a00b310c963b5f811430f28a30a ]
+[ Upstream commit 9a5ff45689329835f874cefe5174e577d141d423 ]
 
-When the encoder is opened, wave5_set_default_format() sets up the
-default capture format (e.g. H.264) but does not initialize inst->std.
-As a result, inst->std remains zero, which does not match any valid
-encoder codec.
+In elf_validity_cache_sechdrs, section sizes and offsets are validated,
+unless the section type is SHT_NULL or SHT_NOBITS.
 
-If STREAMON is called before the user explicitly calls S_FMT on the
-capture queue — as v4l2-compliance does in testBlockingDQBuf — the
-codec/product check in wave5_vpu_enc_init_seq() fails with
-"Unsupported encoder-codec & product combination" because inst->std
-is neither W_HEVC_ENC nor W_AVC_ENC, returning -EOPNOTSUPP.
+Later, elf_validity_cache_secstrings and elf_validity_cache_index_str
+access the section name table (.shstrtab) and symbol string table
+(.strtab) headers without first ensuring that their types are
+SHT_STRTAB. If a section type is SHT_NULL or SHT_NOBITS, sh_offset has
+not been validated and may reference out-of-bounds memory when
+dereferenced in elf_validity_cache_secstrings or
+elf_validity_cache_strtab.
 
-Fix this by setting inst->std via wave5_to_vpu_std() in
-wave5_set_default_format(), so that the codec type is always consistent
-with the default capture pixel format from the moment the instance is
-opened.
+Validate that both string section headers are of type SHT_STRTAB before
+caching them.
 
-Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: Adapted wave5_set_default_format() to the older function body (fixed 416x240 format setup) and dropped the conf_win context lines this tree lacks, keeping the added inst->std assignment unchanged. ]
+Signed-off-by: Thiébaud Weksteen <tweek@google.com>
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/module/main.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-index 917264348b554..bcbd128da250b 100644
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-@@ -1424,7 +1424,8 @@ static const struct vb2_ops wave5_vpu_enc_vb2_ops = {
- 	.stop_streaming = wave5_vpu_enc_stop_streaming,
- };
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index c6ca520b5fd59..c6d07c8c0b4a9 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -1837,6 +1837,7 @@ static int elf_validity_cache_sechdrs(struct load_info *info)
+  * Specifically checks:
+  *
+  * * Section name table index is inbounds of section headers
++ * * Section name table type is SHT_STRTAB
+  * * Section name table is not empty
+  * * Section name table is NUL terminated
+  * * All section name offsets are inbounds of the section
+@@ -1864,6 +1865,11 @@ static int elf_validity_cache_secstrings(struct load_info *info)
  
--static void wave5_set_default_format(struct v4l2_pix_format_mplane *src_fmt,
-+static void wave5_set_default_format(struct vpu_instance *inst,
-+				     struct v4l2_pix_format_mplane *src_fmt,
- 				     struct v4l2_pix_format_mplane *dst_fmt)
- {
- 	unsigned int src_pix_fmt = enc_fmt_list[VPU_FMT_TYPE_RAW][0].v4l2_pix_fmt;
-@@ -1441,6 +1442,7 @@ static void wave5_set_default_format(struct v4l2_pix_format_mplane *src_fmt,
- 	dst_fmt->flags = 0;
- 	dst_fmt->num_planes = 1;
- 	wave5_update_pix_fmt(dst_fmt, 416, 240);
-+	inst->std = wave5_to_vpu_std(dst_fmt->pixelformat, inst->type);
+ 	strhdr = &info->sechdrs[info->hdr->e_shstrndx];
+ 
++	if (strhdr->sh_type != SHT_STRTAB) {
++		pr_err("Invalid ELF section name table type: %u\n", strhdr->sh_type);
++		return -ENOEXEC;
++	}
++
+ 	/*
+ 	 * The section name table must be NUL-terminated, as required
+ 	 * by the spec. This makes strcmp and pr_* calls that access
+@@ -2030,7 +2036,7 @@ static int elf_validity_cache_index_sym(struct load_info *info)
+  *        Must have &load_info->index.sym populated.
+  *
+  * Looks at the symbol table's associated string table, makes sure it is
+- * in-bounds, and caches it.
++ * in-bounds and of type SHT_STRTAB, and caches it.
+  *
+  * Return: %0 if valid, %-ENOEXEC on failure.
+  */
+@@ -2044,6 +2050,12 @@ static int elf_validity_cache_index_str(struct load_info *info)
+ 		return -ENOEXEC;
+ 	}
+ 
++	if (info->sechdrs[str_idx].sh_type != SHT_STRTAB) {
++		pr_err("Invalid ELF symbol string table type: %u\n",
++		       info->sechdrs[str_idx].sh_type);
++		return -ENOEXEC;
++	}
++
+ 	info->index.str = str_idx;
+ 	return 0;
  }
- 
- static int wave5_vpu_enc_queue_init(void *priv, struct vb2_queue *src_vq, struct vb2_queue *dst_vq)
-@@ -1697,7 +1699,7 @@ static int wave5_vpu_open_enc(struct file *filp)
- 	inst->v4l2_fh.ctrl_handler = v4l2_ctrl_hdl;
- 	v4l2_ctrl_handler_setup(v4l2_ctrl_hdl);
- 
--	wave5_set_default_format(&inst->src_fmt, &inst->dst_fmt);
-+	wave5_set_default_format(inst, &inst->src_fmt, &inst->dst_fmt);
- 	inst->colorspace = V4L2_COLORSPACE_REC709;
- 	inst->ycbcr_enc = V4L2_YCBCR_ENC_DEFAULT;
- 	inst->quantization = V4L2_QUANTIZATION_DEFAULT;
 -- 
 2.53.0
 
