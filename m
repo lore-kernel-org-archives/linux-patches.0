@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064354;
-	b=5TbsgLZMpD97l9cxjYrXGiVV28d0iDhneQVQ5aByiwu75GYfKcPRj4Nzrp/P4+p86bZR
-	 jSo0Wq9BSq2u3I+IYWfj9U7RqyZoya4G6xpmcJBnoAD8SA8xqPzVg0+I4ennhnCxS7rLc
-	 25B7mMt/PxwIOsII341hZwOS92HKSEYCpCr0HWiSUFgLKch9JvqD5rOiGRsCfnp+0SeUo
-	 mj4ImDsTCFWP4cdM0NUMLukEg1cK3rFsqBE/eif85QvvyeeVvl50kOdyER0mXBSV20NMU
-	 EkQ6XplM9pXSRFc8K7T371k7MBTPOnPcWcTqgbjRGxDg5SNPkABm15PDcKXVPv5zBHA==
+	t=1794064356;
+	b=QLOxOrGoil3BADWLYhFMvp3cqt8S3OTALVVwVVRyzIOvYtZbjKsJEcr8GGB+OmWMYViZ
+	 7+6T3UQ1Xwi+jibOo7XTdrX4BxxK4mDR1OlDzdc/nmBp1j8yhp8zI4yiETO/KQ56O4qOG
+	 adPFb2EFjdIJmrhJaNS6w6NCjmNZNiXCudPg3kZcgv3m8+60QbCdSGyOeS4feG2p/TB5V
+	 NTzk2rqmFu+/aYoI2EW7d6d6esIo3bVQRpz+Zxzc9RGOME1Iw4irchZDQ1sJfcefZmzLl
+	 UUwlpSL/KAjNVqnnDYW16I3ruGNxOfKUVdmS2XZ9mtPPiDGuNn944z1oKWYzunHUJHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064354;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064356;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B1X82OzuT3FO+TT8HzffAAKgq4yglPuSLJVjHB6waE4=;
-	b=HW3WvkuqFaflsaxXwwUzARV7eJA0UJsOpSImnRr3qh2jLwV3MFDlHZjA70sO/sICI8eb
-	 8LLOF2jPoAz10U6L5xNJ8oQ1Ac8tOGpUxRUTutFDC7vX87ilWZLHL5Xut0sE/6Onj+aRV
-	 KEVC2c8/CZ5yo08sRGl2VuoiyJ99pnXUDH3kGp0mwtNAPi7ChaQA1EVhgpPM9viafbIU3
-	 L9Y5oFwn1hqyqTBT3XD85Zqxe/uv3EKJC7sylDiJ5SLWtVxi6pueIEFl51QmjwIpWilkT
-	 iLp+/TEfqjSQ1DMaYiqnT+bCI7qUqGDOa5MuyMDVOxa25k8whCDoZxdqPhqBy2U4W3w==
+	bh=6PtHn0QYEG9lW0E303Wv+Fvl6QLYnSkiusnvL05FFY0=;
+	b=WVY2Yi7bAok0Oam9tljuQ5gReuLSWemXJrQK7/I0hr0NLJ+Ho1raC6O53PHwCB2/0qhS
+	 XjQVsKQdSCnTZPy4p+ZxOj9XY3E62cj2H4fsLvGImmNWMhIcyTjAT8v40xfDehU45jEUM
+	 6fNkMkr9Gp92oJwEQr4Gxt//alDPqWBGIJ4NMtSc0CLA3FV5KetwGol/tQYaNNgcC/3rv
+	 5b3c72M5kTR4ZEbmmLwIlUtYg2It4OfFgC7kZKbBKGBfLK7imOv5fyvW3KuIwfHIHX3EQ
+	 eV7hwYclSdAYxYl8sgy56pTW/vH1IPUhCkgowINWGxmJIQ9gwV4wsIHm45Hi+F0NCpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l5lLQZ3m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zhDf/35b";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C01606B88D;
-	Sat,  7 Nov 2026 15:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DBA606B88D;
+	Sat,  7 Nov 2026 15:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l5lLQZ3m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526991F008A1;
-	Sat,  7 Nov 2026 15:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zhDf/35b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D301F008A1;
+	Sat,  7 Nov 2026 15:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064354;
-	bh=B1X82OzuT3FO+TT8HzffAAKgq4yglPuSLJVjHB6waE4=;
+	s=korg; t=1794064355;
+	bh=6PtHn0QYEG9lW0E303Wv+Fvl6QLYnSkiusnvL05FFY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l5lLQZ3m4HuKp3zfXHPrnM2mG6jyKl+C2g6udfh1NgBfdjh9SfVUQsnyqIAjEW7GQ
-	 gaqJQ6QXRG7mDaMrb53Q5KwpL0XNif509PQptTrZq8i+O4dmsWVwU5wEaaGgLDI7Pr
-	 wufGoTMkxbDmDCbAYgqWPGpkleIuDUjmHYxItUxE=
+	b=zhDf/35b4FBC9rxs9DKeLk5Mvfni95AuE1nFqGk5kU8SujNC3afGBjVLjI3uGUSXN
+	 zT1dNiOw7AMotTObdM/IIadGRPOpa625RJ1O3sjBSnBQXGbig8/x+6I/KLlM+TXn7o
+	 IFavtG6x9AW//ETXaqE/DWGh7L/AOl/uADSRyxQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0420/1257] dm-writecache: fix uncommitted_blocks underflow
-Date: Sat,  7 Nov 2026 08:45:16 -0500
-Message-ID: <20261107134951.101492279@linuxfoundation.org>
+Subject: [PATCH 7.3 0438/1257] KVM: arm64: Pin the host vCPU before adjusting its PC under pKVM
+Date: Sat,  7 Nov 2026 08:45:34 -0500
+Message-ID: <20261107134951.584725267@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,44 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 8a0cc5f3446a324b13f62020eeddb32d6ba1c2db ]
+[ Upstream commit a2bb5f5c67a95ac97fcd6859dab51be421cf26fe ]
 
-Revert the commit 39495b12ef1cf602e6abd350dce2ef4199906531
+Under pKVM, a page the host shares with EL2 is mapped at EL2 only while
+it's pinned, and the host vCPU is pinned at its first KVM_RUN.
+KVM_SET_VCPU_EVENTS with ext_dabt_pending reaches __kvm_adjust_pc() at
+EL2 before that, and dereferencing the unmapped host vCPU panics the
+hypervisor. Any process holding /dev/kvm on a pKVM host can trigger it.
 
-writecache_bio_copy_ssd sets wc->uncommitted_blocks = 0; and then queues
-the flush work: queue_work(wc->writeback_wq, &wc->flush_work);
+Pin the host vCPU around the adjustment when no hyp vCPU is loaded for
+it. A loaded hyp vCPU implies it's pinned. A pin fails only for memory
+the host isn't sharing, and the request is then dropped like any other
+bad host pointer.
 
-It may be possible that discard is dispatched in this window, and the
-discard would decrement wc->uncommitted_blocks to -1U.
-
-Note that this bug is benign - wc->uncommitted_blocks is only used to
-trigged autocommit, so decrementing it to -1U will trigger a spurious
-autocommit, but won't cause any data corruption.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
-Fixes: 39495b12ef1c ("dm writecache: correct uncommitted_block when discarding uncommitted entry")
+Fixes: efa1368ba9f4b ("KVM: arm64: Commit exceptions from KVM_SET_VCPU_EVENTS immediately")
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Reviewed-by: Joey Gouly <joey.gouly@arm.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261001135711.1640520-4-fuad.tabba@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index 6ec3e20553174..302ebed4e6ceb 100644
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -899,8 +899,6 @@ static void writecache_discard(struct dm_writecache *wc, sector_t start, sector_
- 				}
- 				discarded_something = true;
- 			}
--			if (!writecache_entry_is_committed(wc, e))
--				wc->uncommitted_blocks--;
- 			writecache_free_entry(wc, e);
- 		}
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+index ac64a036b0a95..c8e6e50d2f353 100644
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+@@ -543,8 +543,27 @@ static void handle___pkvm_host_mkyoung_guest(struct kvm_cpu_context *host_ctxt)
+ static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
+ {
+ 	DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
++	struct pkvm_hyp_vcpu *hyp_vcpu;
++	struct kvm_vcpu *host_vcpu;
++
++	host_vcpu = __get_host_hyp_vcpus(vcpu, &hyp_vcpu);
++	if (host_vcpu) {
++		__kvm_adjust_pc(host_vcpu);
++		return;
++	}
++
++	/*
++	 * With no hyp vCPU loaded for it, the host vCPU may be unpinned,
++	 * and so unmapped at EL2: its first run pins it. A pin fails only
++	 * for memory the host isn't sharing, a bad pointer, so the request
++	 * is dropped.
++	 */
++	host_vcpu = kern_hyp_va(vcpu);
++	if (hyp_pin_shared_mem(host_vcpu, host_vcpu + 1))
++		return;
  
+-	__kvm_adjust_pc(kern_hyp_va(vcpu));
++	__kvm_adjust_pc(host_vcpu);
++	hyp_unpin_shared_mem(host_vcpu, host_vcpu + 1);
+ }
+ 
+ static void handle___kvm_flush_vm_context(struct kvm_cpu_context *host_ctxt)
 -- 
 2.53.0
 
