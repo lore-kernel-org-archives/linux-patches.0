@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063425;
-	b=R8JVIGJLIrmJOZwgXxgmP0FUhZ0WmPHHED/8cF56Ik0Rmvp9Eeu08xwr7SuSndkEXUih
-	 awr0vaZn5FxVsnxX963E3C5e9B8doXiTskCaoOBPP3bc8aIx9h/AN5vBfdE7/gcqwa0Ze
-	 7htfA0+wWlhSvHrmP1fpIdLSX9IKrsOKt9ImOMnQhDicRsv2gcz2ekvN/ob7OVaUoU6c5
-	 UCokRgTwB9A0N30u2GsmTfaGP6WjB/h+H1GGsV1GWVhG/QukYKWHMWKCR3K0iwvQigGhC
-	 WSVZzx7dpTY6pkAZ7nz8YXvvwLb8/t8GpTam35e9atL/GPWYd/4tSHCEgxcVvcahW+Q==
+	t=1794063427;
+	b=5c8VgeSMUgLsnAv+cJaHYV8qmiXiJ7OkL0DkZb/REWaTPdseNASb0IuTglNzQ1zwLsFl
+	 XBQ4ojVkDos5+wt11CzwdnlDvbFa8qZfB3lp7V8qOlU+RRFD8oe/N1uWcBuLSkiTImqJj
+	 pO9ySEvrlNqh6qjDfIhdMCOxq9rnIQsubQylc0Kd76yHjBqAeys0bI/dvx4+Yil/t9tS+
+	 UxWztf/Qtxf9DJKPh2MTaAY3VrbnVB7QZY1mzKiZZgcTHzut+/iibv2VKPIhy0RDbPgcC
+	 rPtHseK82anyOqTLm++920Oklid4MWvFBj9vp5lL6yFr7Br0OwpSg+aze1PbxzT3AOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063427;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q+fGBtEryFXugyCh6Rzurg9rlkG/ZEDHHKD7PUjK5lw=;
-	b=BKMldSVO38eg/cDXB+uqlYPvutzZlhEu933Ky3MuOflmJztM7Au7bBCyernb/3rLRsr6
-	 +gXt/DOupfmFCeHsNb82V+qXdOxBL1qB3hhlpg7wjNWYLzyDpPIBUr+cPbBSziXVNiuLO
-	 9q6qwVCwDKmhGFxtBNyKRmzF3znYO9ZYVM/R7BkXL/1B8zn8YnmWkiq3NirwAPpBWq5KR
-	 776VgivaNymXiccQCKh7NA00yDDKGZbHtlTjJ1ez//FP2rXj2Nlw54fUwgpP/OLYnfC7o
-	 CnMjzcUm1otd/Yyc7x4QPf5DncOqsNQDeqbhSSDXdCRCMrQrwM6YWFwMAg5mhxzzlHQ==
+	bh=qCKivfxsTo9Q5jlnex+RpDQBDn7b8gtfwEWTdQjFqjw=;
+	b=eAe3qhsZLr4ZGH88xGJTgBmj4woaJktFs/Elu/ZVdEwDah3b1RX4m6ggF50qDKE9W19w
+	 JS/blsjLg+J+kmD/ZAA1fdkOnr18VZd6qzSvp51I6ZoVouBQQPUQxMX8u+NIRdTa4CUgi
+	 Tu5ZIzGWywAeiIWW+5ZfmWzOR2YQvBMqkiLXfNgJYEsTHT4/XmW2SMEIlQKPHAhc/K5ia
+	 9S7GNsM7zoWJ/155jpINq8Ebf9IwdMInfLXQw5lNFEKXocbRDu+E9JMq8BsNpifmznbsF
+	 dzvzUbuv6ucQaKm6MJz2SabPCGVO06zIYNXWAe1BIonhMOizWUXbX+Z7/3Bml2x3XYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SN+GOEC9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ffNTiWlg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DA9606D83D;
-	Sat,  7 Nov 2026 14:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E0E606EE86;
+	Sat,  7 Nov 2026 14:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SN+GOEC9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254EB1F0089F;
-	Sat,  7 Nov 2026 14:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ffNTiWlg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626DB1F0089F;
+	Sat,  7 Nov 2026 14:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063425;
-	bh=Q+fGBtEryFXugyCh6Rzurg9rlkG/ZEDHHKD7PUjK5lw=;
+	s=korg; t=1794063426;
+	bh=qCKivfxsTo9Q5jlnex+RpDQBDn7b8gtfwEWTdQjFqjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SN+GOEC9mttK79Zvg00NLBmwVm3Fu9C7XhHb1gsTa2X1YFkeXmSVtEMpqtTWDUUop
-	 CWn8W5VFjSf4IXNP7PEj8NxkRkGO/Xpp7Fq/oEvWTqeIR4WsTudO19eOQqxJilXe1I
-	 xsoRXZZ6uwg4+MCU1pQhhFG/5wKJfEMuPLpRXN04=
+	b=ffNTiWlg6nPQYj+eKozVuMFkB45nbfPPKM2Gwc4NEzpMF/IAZWLCOT4wY7GX9hWRA
+	 3IgeElfmV+JFqWe4CLHzekUSK5n3yxkDH1HBn78NjsBCkhugaVsibHVGBRpor874XH
+	 TcFg9F98Fj0GjoJUEN5l3GYYV6AKniaG2by14HWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 590/869] mfd: tps65217: Check return value when masking interrupt sources
-Date: Sat,  7 Nov 2026 08:54:32 -0500
-Message-ID: <20261107134913.128363254@linuxfoundation.org>
+Subject: [PATCH 6.18 591/869] mfd: tps65217: Use devres for IRQ domain and wake teardown
+Date: Sat,  7 Nov 2026 08:54:33 -0500
+Message-ID: <20261107134913.154853937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,46 +70,138 @@ Content-Transfer-Encoding: 8bit
 
 From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
 
-[ Upstream commit 66ed12c1e5a986bee1dc63f9bd9c7f068138a69a ]
+[ Upstream commit cffd44d2d89524e2dda6adc7b0dd59363be1c8e6 ]
 
-tps65217_irq_init() ignores the error returned by
-tps65217_set_bits() when masking all interrupt sources. A failed
-register write leaves the driver's software mask out of sync with the
-hardware and may result in spurious interrupts.
+Removing the parent device used to tear the IRQ domain down in
+tps65217_remove() before the MFD children are unbound: the i2c core
+only releases the parent's devres after the remove callback returns,
+whereas devm_mfd_add_devices() registered its own devres action which
+unbinds the children. Children that requested interrupts from the
+domain (e.g. tps65217-charger) therefore call free_irq() on virtual
+IRQs whose descriptors have already been disposed. With
+CONFIG_SPARSE_IRQ free_irq() then returns early without stopping the
+threaded handler, leaking the irqaction, the IRQ kthread and a module
+reference.
 
-Check the return value and propagate the error to the caller.
+Register the domain teardown as a devres action right after the domain
+is created instead. Devres actions are released in reverse order of
+registration, so the MFD children release their IRQs first, then the
+parent interrupt is freed and its thread stopped, and only then is the
+domain torn down. The same ordering covers probe failure, which no
+longer needs manual cleanup, and the remove callback can be dropped
+entirely.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Balance the enable_irq_wake() in tps65217_irq_init() by registering
+disable_irq_wake() as a devres action as well. Only do so when
+enabling actually succeeded, since the parent chip may not support
+setting wake-up.
 
 Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
 Cc: stable@vger.kernel.org
 Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
-Link: https://patch.msgid.link/20261002113624.178588-3-r.zhambakiev@prosoftsystems.ru
+Link: https://patch.msgid.link/20261002113624.178588-4-r.zhambakiev@prosoftsystems.ru
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65217.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/mfd/tps65217.c | 57 +++++++++++++++++++++++++++++-------------
+ 1 file changed, 39 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
-index 2d04d9e0ae29c..ee640e3fcf7b4 100644
+index ee640e3fcf7b4..569c28c8b20f5 100644
 --- a/drivers/mfd/tps65217.c
 +++ b/drivers/mfd/tps65217.c
-@@ -155,8 +155,12 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+@@ -146,6 +146,31 @@ static const struct irq_domain_ops tps65217_irq_domain_ops = {
+ 	.map = tps65217_irq_map,
+ };
  
- 	/* Mask all interrupt sources */
- 	tps->irq_mask = TPS65217_INT_MASK;
--	tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
--			  TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
-+	ret = tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
-+				TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
-+	if (ret) {
-+		dev_err(tps->dev, "Failed to mask interrupt sources: %d\n", ret);
-+		return ret;
++static void tps65217_irq_cleanup(void *data)
++{
++	struct tps65217 *tps = data;
++	unsigned int virq;
++
++	if (!tps->irq_domain)
++		return;
++
++	for (int i = 0; i < TPS65217_NUM_IRQ; i++) {
++		virq = irq_find_mapping(tps->irq_domain, i);
++		if (virq)
++			irq_dispose_mapping(virq);
 +	}
++
++	irq_domain_remove(tps->irq_domain);
++	tps->irq_domain = NULL;
++}
++
++static void tps65217_irq_wake_disable(void *data)
++{
++	unsigned long irq = (unsigned long)data;
++
++	disable_irq_wake(irq);
++}
++
+ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+ {
+ 	int ret;
+@@ -169,6 +194,10 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+ 		return -ENOMEM;
+ 	}
  
- 	tps->irq_domain = irq_domain_create_linear(dev_fwnode(tps->dev), TPS65217_NUM_IRQ,
- 						   &tps65217_irq_domain_ops, tps);
++	ret = devm_add_action_or_reset(tps->dev, tps65217_irq_cleanup, tps);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_threaded_irq(tps->dev, irq, NULL,
+ 					tps65217_irq_thread, IRQF_ONESHOT,
+ 					"tps65217-irq", tps);
+@@ -178,7 +207,16 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+ 		return ret;
+ 	}
+ 
+-	enable_irq_wake(irq);
++	ret = enable_irq_wake(irq);
++	if (ret) {
++		dev_warn(tps->dev, "failed to enable IRQ wake: %d\n", ret);
++		return 0;
++	}
++
++	ret = devm_add_action_or_reset(tps->dev, tps65217_irq_wake_disable,
++				       (void *)(unsigned long)irq);
++	if (ret)
++		return ret;
+ 
+ 	return 0;
+ }
+@@ -379,22 +417,6 @@ static int tps65217_probe(struct i2c_client *client)
+ 	return 0;
+ }
+ 
+-static void tps65217_remove(struct i2c_client *client)
+-{
+-	struct tps65217 *tps = i2c_get_clientdata(client);
+-	unsigned int virq;
+-	int i;
+-
+-	for (i = 0; i < TPS65217_NUM_IRQ; i++) {
+-		virq = irq_find_mapping(tps->irq_domain, i);
+-		if (virq)
+-			irq_dispose_mapping(virq);
+-	}
+-
+-	irq_domain_remove(tps->irq_domain);
+-	tps->irq_domain = NULL;
+-}
+-
+ static const struct i2c_device_id tps65217_id_table[] = {
+ 	{"tps65217", TPS65217},
+ 	{ /* sentinel */ }
+@@ -408,7 +430,6 @@ static struct i2c_driver tps65217_driver = {
+ 	},
+ 	.id_table	= tps65217_id_table,
+ 	.probe		= tps65217_probe,
+-	.remove		= tps65217_remove,
+ };
+ 
+ static int __init tps65217_init(void)
 -- 
 2.53.0
 
