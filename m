@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065398;
-	b=3Ow/vZayi+BkEDJ+4BaRL5DHJxsrqaAs2DvzcMVUXAne7aSdLwm8jDZb3v+Px/lkTeNp
-	 Q2B7m9wWJ/IdmZMJ8pXYpP2YDH7lPL5/cchVaGTSdTPdhu3hw9rNEMuxF/JHzCzxzUTWX
-	 4p9FQ4liePmV1hpl7/jIBRU9USAMgkCNKlOrAPSm/UX6dvev+17AAlm35PRhQJphULNmz
-	 hc2lX/goijrZn0bU9GQMKrkwXpKUkjKCnXVPqKuwHsaUPxxykcZ3eooku3p+FayyY3GNx
-	 h3cweM7ha+anNQXd20sIpu+GUjptjwZUmZtdVAXZ6wYk2UJeyxYE+jsCglygNydnQzQ==
+	t=1794065400;
+	b=2sms2PK88if+gbRNSI860b3yTxWqc/UFcibi2YiKK9tvUVfdfVZBi4jPQTMCIz0iaEF0
+	 LhSU8wJHJc99yvjXbM/GOMeluRDz0AbS5e01LK+5fnWqb40urGCpu88uFLQ8qXlXGeM5q
+	 XQyh08lwgbAzpjpU7/fDjVAPXfXtlKecV8fSkZ4bXqGb1BFR7lJ5PUjoaoX5d3939cu2L
+	 WbeuKnlCZGde7tk9HamcK+4Utmw1p6584+raAkGl7FxiveniIiGZYCGarlkpW0RF9LhxP
+	 QTZEhB1fI9D0BkzVmNoLWkIkGCCBTxr0VgTF88itoFRBG8L0nLHV5tityPilHowymbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065400;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XZqO2VxQjw1MZu9ix+Zh19+ys2t31/LRKNBgaSRj9ag=;
-	b=q3hDNl1JL3TOZxOAbhYoHqj1Qsv9URtcsQ3Hz/UjhtoYQLlVe8ZoRdQlfL4uKMOOVb+R
-	 E0sbRuMhDZlDg3x35aPveXyAEAqPhNOWxUlKBYvJMDhdy74GR0obTuJxYIVEmINnx25uC
-	 7ehk3VBEnHm3EwglDFnpz6afy/yZCqutMJWrxTW0JPuznlRqnY5OncMI/KxD8vlH/GJya
-	 BtMCcp9s0DEtbVFC1xdobMNGxKBEiN10CupyHHdwAtY5yN885ODMn7+iJBpJXgOWEpsdG
-	 BbWosYbbmlgyUpr4aoa9cBLCnlJqNrT8gItN4hHogmCwccdNUUBbwJ/qzMeUw0dv3hw==
+	bh=RWZ8iJQmIColP7JbLo1AyZJmbyVMpVlRZd5PyvBDOBQ=;
+	b=Dckw9U6EIIs23c+gSzJpHALpF+VRkFJSzYTWdKdDa4Ehw8Ssxwx/SLyrrliFjy0msdvw
+	 P/VS2tbo8W3yafUQV1a/ndjPv1RIxZokJOwPK6D+aGD9+FTui5EJ6sZjnU+GC0Xgl2r7R
+	 x3b7vip4PAG/g8M3dUjX3X50ErCxiK5x2TLBX8TNQv9q4N4/9DQAilrL2NdKFW8K+/uOB
+	 z+VanpVyS5lV1/CXa1RzC4wRAxxf+jc4BcTj2c9qSrdeU8h2OUFkuIKfvQlrcxcsagxYe
+	 y3akCvVf26FczM6dCFwUuyWhiT1ndtTrAba8+3PBB9KNU77uoc8qd+VDKdHBzhOpQlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YQ0WqX0x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sspa02Lk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE74606A330;
-	Sat,  7 Nov 2026 15:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB59D606A330;
+	Sat,  7 Nov 2026 15:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YQ0WqX0x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CE61F0089F;
-	Sat,  7 Nov 2026 15:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sspa02Lk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225C01F0089F;
+	Sat,  7 Nov 2026 15:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065398;
-	bh=XZqO2VxQjw1MZu9ix+Zh19+ys2t31/LRKNBgaSRj9ag=;
+	s=korg; t=1794065399;
+	bh=RWZ8iJQmIColP7JbLo1AyZJmbyVMpVlRZd5PyvBDOBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YQ0WqX0x5DhaHZHRJW3MeOhOAUIe18Fpo0Vyt3xoGozFnil07CJrNsoyfwX3zdF6D
-	 4IutsZCh8EWDR7scG83JYMrEKFGYkEbO2hFFVVp3GDBRY75mUMe/L8iGOXor/xy/61
-	 Ex+6ADcbIBWsqrcSD4DDfWceejYqhFp9DARJEQ6Q=
+	b=sspa02Lk5oi2Qlpwx0ZOZpHK8/oFdPnYJ2Ib0WHhQrG+a85b/jkZR/z7WhMTJSjjH
+	 hr58NGEK14m6p7YtEV0bqn17rwwExQs8meVZ6tJZakPXmp7cfduzF8n48uydCVNfGn
+	 BzK3+xxwlnLaQTL/eWMmyPJjvvszkovL5NkJSRgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	tgopinath@linux.microsoft.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1119/1257] libceph: only set read_from_replica on read requests
-Date: Sat,  7 Nov 2026 08:56:55 -0500
-Message-ID: <20261107135010.145121058@linuxfoundation.org>
+Subject: [PATCH 7.3 1084/1257] userfaultfd: fix UFFDIO_MOVE livelock on large folio with extra references
+Date: Sat,  7 Nov 2026 08:56:20 -0500
+Message-ID: <20261107135009.198343225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,47 +75,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit d6c7a5fcd08873c45a2dcd645a0690fd1443af50 ]
+[ Upstream commit 454143aeb4c6c85ca7d50df36d1a66a64d88283e ]
 
-ceph_osdc_alloc_request() ORs the mount option's read_from_replica
-flag into r_flags for every request, writes included.  The flag is
-meant for reads: calc_target() skips the replica choice for any
-request that has CEPH_OSD_FLAG_WRITE, and the OSDs only know
-BALANCE_READS on read ops.  Sending it on writes is at best ignored;
-with read_from_replica=balance a buffered write that fell back to
-ceph_sync_write() after losing BUFFER to a revoke failed with -EIO,
-while the same run without the option works fine.
+To move one page out of a large folio, move_pages_ptes() first has to
+split the folio.  __folio_split() refuses if the folio has any reference
+beyond its page table mappings and the caller's own, and it reports the
+refusal as -EAGAIN.  move_pages() treats returned -EAGAIN as a transient
+race and keeps retrying the same address, holding the VMA read locks the
+whole time.  This is incorrect since in some cases userspace can hold such
+a reference indefinitely, such as by registering the page as an io_uring
+buffer.
 
-Gate the flag on CEPH_OSD_FLAG_READ.
+An unprivileged user can trigger this with three threads: first holds such
+a reference on a page of a THP, second calls UFFDIO_MOVE on another page
+of the same THP and spins in the kernel forever holding the VMA read
+locks, and third calls fork() or mprotect(), which takes mmap_lock for
+writing and then waits forever for those read locks.  From then on every
+mmap_lock user of that mm hangs, including other processes inspecting it
+through /proc/<pid>/, until the process is SIGKILLed.  The hung task
+detector reports the blocked tasks (third one), and with
+kernel.hung_task_panic=1 the machine panics:
 
-Cc: stable@vger.kernel.org
-Fixes: 22d2cfdffa5b ("libceph: move away from global osd_req_flags")
-Assisted-by: Cursor
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+  INFO: task wedge:95 blocked for more than 122 seconds.
+  task:wedge  state:D stack:12528 pid:95 tgid:95 ppid:94
+  Call Trace:
+   __schedule+0x596/0x1110
+   schedule+0x36/0xf0
+   __vma_start_exclude_readers+0x100/0x170
+   __vma_start_write+0x51/0xd0
+   __split_vma+0x208/0x3d0
+   vma_modify+0x6a8/0x840
+   vma_modify_flags+0xce/0x110
+   mprotect_fixup+0xbe/0x480
+   do_mprotect_pkey+0x2d9/0x580
+   __x64_sys_mprotect+0x1a/0x30
+
+Fix by returning -EBUSY instead of -EAGAIN in move_pages_ptes(), the
+caller of split_folio(), when the split fails.  Thus, move_pages() does
+not retry -EBUSY and the ioctl drops its locks and returns to userspace
+instead of spinning.
+
+Link: https://lore.kernel.org/20261012201514.97015-1-cenzhang@linux.microsoft.com
+Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: <AutonomousCodeSecurity@microsoft.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: <tgopinath@linux.microsoft.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osd_client.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/userfaultfd.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
-index f36ce5ae75680..8c2b89e2004ba 100644
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -1108,7 +1108,9 @@ struct ceph_osd_request *ceph_osdc_new_request(struct ceph_osd_client *osdc,
- 	req->r_base_oloc.pool = layout->pool_id;
- 	req->r_base_oloc.pool_ns = ceph_try_get_string(layout->pool_ns);
- 	ceph_oid_printf(&req->r_base_oid, "%llx.%08llx", vino.ino, objnum);
--	req->r_flags = flags | osdc->client->options->read_from_replica;
-+	req->r_flags = flags;
-+	if (flags & CEPH_OSD_FLAG_READ)
-+		req->r_flags |= osdc->client->options->read_from_replica;
- 
- 	req->r_snapid = vino.snap;
- 	if (flags & CEPH_OSD_FLAG_WRITE)
+diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
+index 74f04c323c50f..500962be11624 100644
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -1663,8 +1663,12 @@ static long move_pages_ptes(struct mm_struct *mm, pmd_t *dst_pmd, pmd_t *src_pmd
+ 			pte_unmap(dst_pte);
+ 			src_pte = dst_pte = NULL;
+ 			ret = split_folio(src_folio);
+-			if (ret)
++			if (ret) {
++				/* do not retry, extra refs may be held forever */
++				if (ret == -EAGAIN)
++					ret = -EBUSY;
+ 				goto out;
++			}
+ 			/* have to reacquire the folio after it got split */
+ 			folio_unlock(src_folio);
+ 			folio_put(src_folio);
 -- 
 2.53.0
 
