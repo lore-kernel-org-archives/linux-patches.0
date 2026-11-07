@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062198;
-	b=vkZwV6iOlYAiW2NwIlJcJQzfghjRAgbJtmYaJxAGmvRRazobrTEJ7rZmr84K/kUAWCm3
-	 O96HqiaqZTEuLU8ptGbhaMiXiY04kUCoUbkgGYLpqBYlEwFrKI3yKJEIWvWm4/NPmKruo
-	 hZ0NGRBPh7PkDEPYTn6lisJG5Z7o8mLfh2ZEiVEp/YDhjxMPk9CXPnaPHWGa+9JtaqTRU
-	 nTyh+TNoCUj7Mbc6KStRaoY5mWGow7mQaK+C2ia1JkKqA/Foeh0a/Dj9Sww+AuaWnJI96
-	 EribwQDvWGbu8yXBuxITBGYsOP+RWKWyErVuhHq3hEjonRhQSXqYtD2vx0To5DHDMJg==
+	t=1794062199;
+	b=ZHgDGThwsBlrvebR2N/5kAiiOE59SNENsUq3XSJi/2EHOPAg6Yi6a0gLGcAcYVEerPio
+	 mkV8jqSrjIAN940HZ2mH7Uxe/FkZNjyPR5QCVYgfLD08RNfqvrX14Z6MJF5NylJaB2Shm
+	 EWdKSN4ltj4YPYK3O4hoO4wfw8Xcz8WvS7J3K3V67GUcYu2+uCdebKbxhIpTwb9y6L3gj
+	 Wbmbwjul1ysYF2+qUFV9820ztYoJ4JU9taq6A0h58BxnzNCm93ccN81L3H7o3bIdtXsBs
+	 BFHHWvp+L4WCI0wnbJultp/Vvs2coQIuBxW7VDGRvWfvKouK+8twCDvSa48WhwB/Ulw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062198;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZeeIrwD5dKAhThp1Z2OA7rWq7Lx8wfMDmyv4X4B+Jgw=;
-	b=1SKkY6+sKS9+SICaGb9bgD96PblzGXjgWd8V0gsVr2jEkmdUno4RdUzCcPlyhx16DSOi
-	 BDplRbkgH3prCIju4R3GoJi1PrcQ496+Pivpz+R60WhjYJe4xshMch0OuwpDIlA+mLzLu
-	 bLAmJPY0Pq4AdzkZ3zZhRu+9JlRNOPKpU9JuYB5kYF52YLWU5Gip7pymwAFuCeUvCZ1y+
-	 MV4+H6OqzftDGd66nm2Q60XJ6g09w/55Ef32sLGtADh6Di0uoF6GrZdDkzh3TKrlv0TU1
-	 SbGEgldMgsxLV322f0oh5thUm3gARh1WRWHuuo44IYCDLCxXY5+Kx09Pe+M7tEftZAQ==
+	bh=/HHmeip4k8HoFSEnQGlyLhtJ2ns9Qq9wLGjrZBfHKys=;
+	b=A8Oqx/p2bTlUXHi37tRLVLti8Y9PCMWAQWgOPTCqqZ7PNWh6PWs3Fd5ps7z89hmgE78d
+	 +AruIi6Heke9DywHuYLOucm6+aGvcrh1Q19WJjsgfXWaqIgumaoQGKXWnMCEwP/0r3EyL
+	 wsOaTzhy7XS/BQrZL0o4I1M5X1WRS+0kfw6SO7MPXor8eLQw/lHF1JKoWZYCtfzGSWkGF
+	 PipQgsuOEm+fWEVoaQdsvTUgsHvd94Mwet7o9LILBs8jTz9NoJn6VOjrMSOdHD0HDbTCV
+	 j5WUG2HhC0zUWHK/WhZkZjgbjyd0j4Hvq15DNEaPfqrUPD2Z8MHNYMOvkjZxHI2l4mA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6JKpuLO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEaLTZHH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3E7606A326;
-	Sat,  7 Nov 2026 14:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38394606A326;
+	Sat,  7 Nov 2026 14:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6JKpuLO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6241F008A1;
-	Sat,  7 Nov 2026 14:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEaLTZHH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92751F0089F;
+	Sat,  7 Nov 2026 14:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062197;
-	bh=ZeeIrwD5dKAhThp1Z2OA7rWq7Lx8wfMDmyv4X4B+Jgw=;
+	s=korg; t=1794062199;
+	bh=/HHmeip4k8HoFSEnQGlyLhtJ2ns9Qq9wLGjrZBfHKys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K6JKpuLOcu/oYCHt58095lAhJJIvX7dhEiE4pRNgum/aJE29XgQK2gtUdpiVyOr3T
-	 ZhBBW/Zh1ce67MBiq2WRQlBSZnV1+08Zme5ilLrgvT2e9wBqZ3a+T1g/18lMMynfPs
-	 iXUVQpXxsbJ6zlIMcQciLl38b4ahLu6KL/2PEhKc=
+	b=QEaLTZHHeRrbs50ImBnz96kwrD1Z0RW593zIruvI+veyvMJvb6GF7qcTJU8Ill0Wn
+	 3JgEEeHV0asSwFXYdswzkLLsUzLs16LWbO/QnmUxkhTsRy50TrX90WG9aFDzxM1CBg
+	 iZmVNCTgpGwExSeoYrjlFvoI/9yREQhj5gd2iOUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1116/1536] staging: rtl8723bs: fix RX buffer OOB write from device-reported length
-Date: Sat,  7 Nov 2026 08:52:12 -0500
-Message-ID: <20261107135029.054492208@linuxfoundation.org>
+Subject: [PATCH 6.12 1117/1536] media: tw686x: fix V4L2 device lifetime on probe failure
+Date: Sat,  7 Nov 2026 08:52:13 -0500
+Message-ID: <20261107135029.081067727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,52 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit c52929073fccbc149267a2fd7458626a7e9abcfc ]
+[ Upstream commit ce6c6dd632b3b4a2c2bfc9efd8f656f4d2137dbd ]
 
-sd_recv_rxfifo() trusts the device-reported RX0_REQ_LEN value
-(hal->SdioRxFIFOSize, a u16 read from the card via CMD52) as the
-size of the next RX packet and passes it to sdio_read_port(), which
-copies that many bytes into the recvbuf skb whose data area is only
-MAX_RECVBUF_SZ (10240) bytes. A bogus device on SDIO can report up to
-65535 bytes, causing a heap overflow of up to ~55KB past the skb
-buffer.
+tw686x_video_init() registers the V4L2 device, which initializes its
+reference count. Successfully registered video devices take additional
+references to the V4L2 device as well.
 
-Bail out when the RX0_REQ_LEN exceeds MAX_RECVBUF_SZ. This is expected
-to keep behavior unchanged on normal devices.
+The probe failure paths currently tear down the PCI resources and then
+free the channel arrays and the tw686x device directly. This bypasses
+the V4L2 device reference count and the tw686x_dev_release() callback.
 
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
+If a video device still holds a reference, its eventual release will
+drop a reference to the already freed V4L2 device. Even when no extra
+references remain, directly freeing the device bypasses the lifetime
+management established by v4l2_device_register().
 
-Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
+After cleaning up the PCI resources, check whether the V4L2 device was
+registered. If so, mark the hardware unavailable and drop the driver's
+V4L2 device reference, letting tw686x_dev_release() free the backing
+objects when the final reference is released. Keep the existing direct
+free path for failures that occur before V4L2 device registration.
+
+This issue was found by manual code inspection.
+
+Fixes: 704a84ccdbf1 ("[media] media: Support Intersil/Techwell TW686x-based video capture cards")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/8114c3adc1acaea78523cc0fb4d4b25f7665cee9@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/hal/sdio_ops.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/pci/tw686x/tw686x-core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/staging/rtl8723bs/hal/sdio_ops.c b/drivers/staging/rtl8723bs/hal/sdio_ops.c
-index 21e9f18587452..b2b7c5f3a4bff 100644
---- a/drivers/staging/rtl8723bs/hal/sdio_ops.c
-+++ b/drivers/staging/rtl8723bs/hal/sdio_ops.c
-@@ -791,6 +791,13 @@ static struct recv_buf *sd_recv_rxfifo(struct adapter *adapter, u32 size)
- 	struct recv_priv *recv_priv;
- 	struct recv_buf	*recvbuf;
+diff --git a/drivers/media/pci/tw686x/tw686x-core.c b/drivers/media/pci/tw686x/tw686x-core.c
+index c53099c958ca8..dc6a2cc433d3a 100644
+--- a/drivers/media/pci/tw686x/tw686x-core.c
++++ b/drivers/media/pci/tw686x/tw686x-core.c
+@@ -241,6 +241,7 @@ static int tw686x_probe(struct pci_dev *pci_dev,
+ 			const struct pci_device_id *pci_id)
+ {
+ 	struct tw686x_dev *dev;
++	unsigned long flags;
+ 	int err;
  
-+	/* RX0_REQ_LEN is device-reported; the skb buffer is only
-+	 * MAX_RECVBUF_SZ bytes, reject bogus lengths instead of
-+	 * overflowing past it.
-+	 */
-+	if (size > MAX_RECVBUF_SZ)
-+		return NULL;
+ 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+@@ -352,6 +353,15 @@ static int tw686x_probe(struct pci_dev *pci_dev,
+ 	pci_release_regions(pci_dev);
+ disable_pci:
+ 	pci_disable_device(pci_dev);
++	if (dev->v4l2_dev.dev) {
++		spin_lock_irqsave(&dev->lock, flags);
++		dev->pci_dev = NULL;
++		spin_unlock_irqrestore(&dev->lock, flags);
 +
- 	/*  Patch for some SDIO Host 4 bytes issue */
- 	/*  ex. RK3188 */
- 	readsize = round_up(size, 4);
++		v4l2_device_put(&dev->v4l2_dev);
++		return err;
++	}
++
+ free_audio:
+ 	kfree(dev->audio_channels);
+ free_video:
 -- 
 2.53.0
 
