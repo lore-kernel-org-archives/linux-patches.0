@@ -1,66 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064560;
-	b=5ka1muhXllKG/ke4qPQglTsKTnJZYG429aK1mGsUGYEPHOFql+ingHpzzSSiOtrgTB5W
-	 wIOl9YB0E7biYPL7uKYHnVtraUbPgwv5afqSChISHvz8sqBvBOhGJfLMUqwIpO1PbOcZW
-	 BsZab4WzumN3obFe9dmPOgtadglVb04vGclh5u0a5XHqG5THvgwAOaNTPk277luR4UDit
-	 FCu5f9zcMw4aS99rsOqvh2R7jPpBq8N3+LORoPrFO1HF/1GReeyNfnYNUsvQ1dF/hcxbw
-	 YO89t+PjgRRk+ZW/QF65v+r/YlY+fZeYCz2dJLF3lzprkn8A5LiHyaXgE7EZvgVrZxQ==
+	t=1794064561;
+	b=iP+fqScacC7VrpBpQt0iBKgUp9ehhOeSUsZWWM4mrBNfSiXgjBL1hH014EDEWFZEqVbu
+	 2Q+UwFq65m7aEsEswniI0m7qX+H+j5rYSHVTCVYle6703sSj58mb8YCqMGxVKsGtsefo+
+	 BUQb6aGg5F5yN04vaOfVL+Cpr47gDvzUlrMAZ40S21s5aoQnalR0zo2SizesqXiXWyV8u
+	 QDgRsg7t1T+bB6B413Q804VT1mMlsy9joejY+p2tlxbyOAIjfbhqc1oz/ZsP0kv42MNlT
+	 L+z9P29bhduamTFO+wQLJ9H7VU57NHNbs/SnnD/pHm5n2YRyd/3T1lhRqTVy2xHqsAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064560;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064561;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tB0sv3O315SfGu9Pj5FPhBjTirpkF7LeNbUm7VKrIMc=;
-	b=e9uXhTlGPNcok2/WLEYH8uEb7QySgAbBsdlbHuoM+zURh1TM0/4P+zdKW16SPWAU/v0I
-	 tJUjhuvnrpJf1OE1rkD+gvqqJbxtIYZX9kgdqv0VtpCnyKxfD4kM8H6ud38MSJuSeRZmC
-	 X0ifNr+x//nG0zTSgcgeMH3irXATHc9ntdGB8F8f9VyuthhDjTKu8dBbqq2vm1SpfvUF1
-	 p5npeXKGgAXJhvIp+lhIn7UsOnq5B+M5W09AeGvn10VbfwVapkG9JjnhBDaDKLAe8FDQQ
-	 uljaVjuUXlgOeOLxeUawfC17zJfGaH82TRjRqJW9ESSGBb390DFOyCXSx5kppQmVGAg==
+	bh=/OxtmUffmO+miIur8OdqJXAQAuOwPYBcMNTMJzG/Vgc=;
+	b=aHOM6cvacunWzQwC6ICNI1+Q5JYQtPSdJHz/uE5uycDOy0rYDESwhm6fSfXl69DfLXk0
+	 5nV0oj7nD9C17jnypvHeQI6oqxXKqQgwyOykqgzizF95uesMCNE3QXxGu1OnDMEjSEGsn
+	 Vi/eLCRYOTw18nJnWEwbYeeS9EY6XxZQkNJZEmGNgfFznY0XQro6KO6og5kWOMEUQahJt
+	 wrhPZaQE0pGU2ttghjkIWES3AAbXTC/UHeQKCcdC3kfDC3oygZTTpbdiNTFX/pAL/cbkK
+	 iDDQ9UNVr2cQodkRRXAwp+nyE3pwaTK8oBcY8HDoo7cAZbJzbCiWaUsAk58Ngy3Ki5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNod4p9H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UFU/0P2S";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEE4606A32D;
-	Sat,  7 Nov 2026 15:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261EB606A32D;
+	Sat,  7 Nov 2026 15:16:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNod4p9H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B16F1F0089F;
-	Sat,  7 Nov 2026 15:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UFU/0P2S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89F81F0089F;
+	Sat,  7 Nov 2026 15:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064559;
-	bh=tB0sv3O315SfGu9Pj5FPhBjTirpkF7LeNbUm7VKrIMc=;
+	s=korg; t=1794064561;
+	bh=/OxtmUffmO+miIur8OdqJXAQAuOwPYBcMNTMJzG/Vgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNod4p9Hq4H3BWtZiOyccuEeeaYybFLHEn4//DEqlEglL5uzeyNakeJ7fOU0RmRGG
-	 TAOYxOROrLTKIsEnk6GNPAbQGNcf7Mc9FH4cmHB6SfHyrU6NkgvcyWjweXu+Kny5Hz
-	 yUwbu3on4EZBvjiIPQJdkKVl3VUVKTnAUMbftMII=
+	b=UFU/0P2SWZ5X7OgufyeLJP8GhzIVbl6NfqzZtQwdE/fJmgE8/WPr77YGFQ4g8iY9x
+	 ImKdpg+qlBrq6yw1hJGcF8dm5/e+t9xa6ueTpyf7CoaG91lIpGX4tBWMfXD4kqixS+
+	 BSaJjEpBs94ZSMcEyv1O8hVNpFtpNy7oIdsUwBsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bingfang Guo <bingfangguo@tencent.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kairui Song <kasong@tencent.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Baoquan He <baoquan.he@linux.dev>,
-	Barry Song <baohua@kernel.org>,
-	Chris Li <chrisl@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
+	Linlin Yang <yanglinlin@kylinos.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0581/1257] mm/memcg: clear folio memcg after changing per memcg stats
-Date: Sat,  7 Nov 2026 08:47:57 -0500
-Message-ID: <20261107134955.400786062@linuxfoundation.org>
+Subject: [PATCH 7.3 0546/1257] wifi: mt76: mt7996: fix PCI device reference leak in mt7996_pci_init_hif2()
+Date: Sat,  7 Nov 2026 08:47:22 -0500
+Message-ID: <20261107134954.477957240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -82,144 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingfang Guo <bingfangguo@tencent.com>
+From: Linlin Yang <yanglinlin@kylinos.cn>
 
-[ Upstream commit 0b1b457ecc4f636d85e1a0fade05f3dee264f59a ]
+[ Upstream commit d92bac6b6af2602516ee82ae112709c71af27cf6 ]
 
-I notice extremely high swapcached count in the per memcg level
-memory.stat when running tests with cgroupv1 setup by swapping pages in
-and out.  It seems that the counter never gets decreased so the value is
-rather useless and confusing to users reading it.  So I think fixing it so
-that the value can reflect the actual swapcache usage correctly could be
-helpful.
+pci_get_device() increments the reference count on the returned
+struct pci_dev. In mt7996_pci_init_hif2(), three pci_get_device()
+calls are made but their return values are only checked for NULL
+and then discarded. pci_dev_put() is never called, causing a PCI
+device reference count leak.
 
-__memcg1_swapout() transfers the memsw charge of a folio to its swap entry
-and clears folio->memcg_data as part of that.  In the vmscan swapout path
-it runs before __swap_cache_del_folio(), which then decrements the
-swapcache stats through lruvec_stat_mod_folio().  Since folio->memcg_data
-has already been cleared, folio_memcg() returns NULL and the NR_SWAPCACHE
-decrement only updates the node-level counter instead of the memcg's
-lruvec, leaking the per-memcg swapcache count.
+Fix this by storing the return value and calling pci_dev_put()
+before returning, following the same pattern already used in the
+sibling driver mt7915/pci.c.
 
-Users using swaps will read totally meaningless swapcache value from
-per memcg memory.stat, like 200GB of swapcache on a 64GB setup, which
-is quite confusing and may trigger monitoring alerts, if any.
-
-Move the __memcg1_swapout() call into __swap_cache_del_folio(), after the
-NR_FILE_PAGES and NR_SWAPCACHE updates but before
-__swap_cache_do_del_folio() removes the folio from the swap cache.  This
-keeps the stats attributed to the folio's memcg while still recording the
-swap cgroup with a valid folio->swap.  Add a swapout parameter so the
-plain swap_cache_del_folio() path is left unchanged.
-
-Link: https://lore.kernel.org/20260910-memcg-swapcache-stats-fix-v5-1-033f510ba748@tencent.com
-Fixes: 2732acda82c9 ("mm, swap: use swap cache as the swap in synchronize layer")
-Signed-off-by: Bingfang Guo <bingfangguo@tencent.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Kairui Song <kasong@tencent.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Linlin Yang <yanglinlin@kylinos.cn>
+Link: https://patch.msgid.link/20260824092937.683240-1-yanglinlin@kylinos.cn
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/swap.h       |  6 ++++--
- mm/swap_state.c | 13 ++++++++++---
- mm/vmscan.c     |  3 +--
- 3 files changed, 15 insertions(+), 7 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/pci.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/mm/swap.h b/mm/swap.h
-index 90a551a88df63..c9202516b413e 100644
---- a/mm/swap.h
-+++ b/mm/swap.h
-@@ -319,7 +319,8 @@ struct folio *swap_cache_alloc_folio(swp_entry_t target_entry, gfp_t gfp_mask,
- void __swap_cache_add_folio(struct swap_cluster_info *ci,
- 			    struct folio *folio, swp_entry_t entry);
- void __swap_cache_del_folio(struct swap_cluster_info *ci,
--			    struct folio *folio, swp_entry_t entry, void *shadow);
-+			    struct folio *folio, swp_entry_t entry, void *shadow,
-+			    bool swapout);
- void __swap_cache_replace_folio(struct swap_cluster_info *ci,
- 				struct folio *old, struct folio *new);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/pci.c b/drivers/net/wireless/mediatek/mt76/mt7996/pci.c
+index b7d9193e042f4..a7c23b33dde0b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/pci.c
+@@ -63,12 +63,18 @@ static void mt7996_put_hif2(struct mt7996_hif *hif)
  
-@@ -453,7 +454,8 @@ static inline void swap_cache_del_folio(struct folio *folio)
- }
- 
- static inline void __swap_cache_del_folio(struct swap_cluster_info *ci,
--		struct folio *folio, swp_entry_t entry, void *shadow)
-+		struct folio *folio, swp_entry_t entry, void *shadow,
-+		bool swapout)
+ static struct mt7996_hif *mt7996_pci_init_hif2(struct pci_dev *pdev)
  {
- }
- 
-diff --git a/mm/swap_state.c b/mm/swap_state.c
-index f3961fdd857dc..cb574030b814f 100644
---- a/mm/swap_state.c
-+++ b/mm/swap_state.c
-@@ -306,21 +306,28 @@ static void __swap_cache_do_del_folio(struct swap_cluster_info *ci,
-  * @folio: The folio.
-  * @entry: The first swap entry that the folio corresponds to.
-  * @shadow: shadow value to be filled in the swap cache.
-+ * @swapout: whether this folio is being reclaimed after swapout.
-  *
-  * Removes a folio from the swap cache and fills a shadow in place.
-  * This won't put the folio's refcount. The caller has to do that.
-  *
-  * Context: Caller must ensure the folio is locked and in the swap cache
-  * using the index of @entry, and lock the cluster that holds the entries.
-+ * If @swapout is set, the folio should be in reclaim path and IRQs
-+ * should be disabled.
-  */
- void __swap_cache_del_folio(struct swap_cluster_info *ci, struct folio *folio,
--			    swp_entry_t entry, void *shadow)
-+			    swp_entry_t entry, void *shadow, bool swapout)
- {
- 	unsigned long nr_pages = folio_nr_pages(folio);
- 
--	__swap_cache_do_del_folio(ci, folio, entry, shadow);
- 	node_stat_mod_folio(folio, NR_FILE_PAGES, -nr_pages);
- 	lruvec_stat_mod_folio(folio, NR_SWAPCACHE, -nr_pages);
++	struct pci_dev *tmp_pdev;
 +
-+	if (swapout)
-+		__memcg1_swapout(folio, ci);
-+
-+	__swap_cache_do_del_folio(ci, folio, entry, shadow);
- }
+ 	hif_idx++;
  
- /**
-@@ -339,7 +346,7 @@ void swap_cache_del_folio(struct folio *folio)
- 	swp_entry_t entry = folio->swap;
+-	if (!pci_get_device(PCI_VENDOR_ID_MEDIATEK, MT7996_DEVICE_ID_2, NULL) &&
+-	    !pci_get_device(PCI_VENDOR_ID_MEDIATEK, MT7992_DEVICE_ID_2, NULL) &&
+-	    !pci_get_device(PCI_VENDOR_ID_MEDIATEK, MT7990_DEVICE_ID_2, NULL))
++	tmp_pdev = pci_get_device(PCI_VENDOR_ID_MEDIATEK, MT7996_DEVICE_ID_2, NULL);
++	if (!tmp_pdev)
++		tmp_pdev = pci_get_device(PCI_VENDOR_ID_MEDIATEK, MT7992_DEVICE_ID_2, NULL);
++	if (!tmp_pdev)
++		tmp_pdev = pci_get_device(PCI_VENDOR_ID_MEDIATEK, MT7990_DEVICE_ID_2, NULL);
++	if (!tmp_pdev)
+ 		return NULL;
++	pci_dev_put(tmp_pdev);
  
- 	ci = swap_cluster_lock(__swap_entry_to_info(entry), swp_offset(entry));
--	__swap_cache_del_folio(ci, folio, entry, NULL);
-+	__swap_cache_del_folio(ci, folio, entry, NULL, false);
- 	swap_cluster_unlock(ci);
- 
- 	folio_ref_sub(folio, folio_nr_pages(folio));
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index f11491ee9ed5c..17ab01693ae8d 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -735,8 +735,7 @@ static int __remove_mapping(struct address_space *mapping, struct folio *folio,
- 
- 		if (reclaimed && !mapping_exiting(mapping))
- 			shadow = workingset_eviction(folio, target_memcg);
--		__memcg1_swapout(folio, ci);
--		__swap_cache_del_folio(ci, folio, swap, shadow);
-+		__swap_cache_del_folio(ci, folio, swap, shadow, true);
- 		swap_cluster_unlock_irq(ci);
- 	} else {
- 		void (*free_folio)(struct folio *);
+ 	writel(hif_idx | MT_PCIE_RECOG_ID_SEM,
+ 	       pcim_iomap_table(pdev)[0] + MT_PCIE_RECOG_ID);
 -- 
 2.53.0
 
