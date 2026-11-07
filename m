@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064247;
-	b=PR4win0mKhnEDI9TuXfUFigaOdXfWVElRVxC37VcKx+NXbqXQEK0eIAVlYlDX2n9erl3
-	 IzRGADc6hFd+ivWfRrYPcjkRL66yQ6VNMav2Dn7EEq9P5hgGKSHLw+T+BJ3APIqoeNVLn
-	 /5dBRPB5MB6AuMTEvR+yunzt9XZYwnmWhJryzDdQjO0df0Hd/2+3BESlFwV1H9i4nB9dq
-	 k3aeXQOGIw6LSN42dLNcamDxBc5unEG4W5J6wR15C9NBWMZkPalhlAITFfKaw/yaW2Y0u
-	 X1bD1RhI2xOwO9qZG2E3aRnaXwOK8g2risnl1xF/euarV7PxTyhqOX6NREl9uiJQy7A==
+	t=1794064248;
+	b=nHvp8ADR5HyRmY0wjDTMlFuezAIlSesfFuQa64Kqq2IhvKuLdVssePa9epLsdY+g6H/d
+	 wUoYVX2PBiVvhCsNdnXxgIo/LAw1y356VvQW+PdEqXk8I0Jz7/L/DQH7O9IKkFOOnvXrm
+	 UgPYrBnP+qG5KiSGtqjaVfJV2HuXg7juGv9+fcdfiXDWZcTdczqjkr5ZQ71n0nYEzGh/T
+	 z5Oy77ITJ/OV/ph5TfWoqbj4y+LzoX1QGLhP9s7FtWBn6z0frrqu+Ee3oQy+RxO6xKw4p
+	 tVtCc3uLxwz2xHUevouOimuy/ESt6AVgfKac8nxBt54oEGCG0Vj5Docqaq0rM3yoU1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064248;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SPGKl5Dntaz3Zld+uTNXIE+ASRdVApClcGa6gmJLAuo=;
-	b=Uv/aHJPlHVK6zH4esa+30kjim9Sl69vq+vQlNlL4uHGdeHvfhywuUSL/z+bxFK/DypU+
-	 +cDmLq9j0Kzt9QfpQ5ySqliLfKzzepknMmTPC1IkQnVIMTszHJi/r9FNARSfMOKHWLvxR
-	 adRkZupLpTXO+Er6/WBNyUN7DhYZHOE9iL8YOfb4X/KYeZhcjKZFkd8bcMETrbv8HaMVk
-	 43udPsw/E80Fw+dFGp0OfJPX4JBkTTrKGkGpWEst59p5a+T2l44r2qjcYHRcxIlUgwoES
-	 J73oz1kC2s5jApY41YJUOkEfBxIHY336PrPhUow9VZs/ymZO/EAHQwwsQGsbj8MdxAg==
+	bh=buW+enNKtaNsvZnu1sWWBnS9oQXeSr0Dm23JM5tHfaI=;
+	b=L/ZRuoZjGq6SyAoYL8fhJ64zQ7EyT+3zI2qXFDBfOZ7rzkW91rdjit5kuDxCk5anyyNP
+	 annlKIjjIqgSCqXFKiWP1yFGqINzEenz9upBCdvdulo7uIccPXPkzJCqP+U8eCnC8o7MV
+	 RbnWcSvOdjmmfrzWW7LuRtgYGPQ4jYIdD1P6YzmXjd9dAm7USFW3RSIzJR/BZtJlc6SGr
+	 I7+EVHjeC24j2a3ArKjL/O6+M8Pos45Yh/7SCeAFEr0RocAWE4z1Feuu17uHRO/P3hZFp
+	 BnkFr0uPPt9dsR7nGkq+Smx+Ryg9Nbf7+vZOQW2bBYBAX6UeJmmDPqFP1v/Fh9Xiziw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F/qhMrwd";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="E4z/rWGT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFE7606A332;
-	Sat,  7 Nov 2026 15:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61086606A332;
+	Sat,  7 Nov 2026 15:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F/qhMrwd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18191F0089F;
-	Sat,  7 Nov 2026 15:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4z/rWGT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4EA1F0089F;
+	Sat,  7 Nov 2026 15:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064247;
-	bh=SPGKl5Dntaz3Zld+uTNXIE+ASRdVApClcGa6gmJLAuo=;
+	s=korg; t=1794064248;
+	bh=buW+enNKtaNsvZnu1sWWBnS9oQXeSr0Dm23JM5tHfaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/qhMrwdGDfG/MWVw0LdaeyrYdOgBPrGK8Cy6qi68w8A+tPN1Rr9GyBjym8G4sl+l
-	 nZBTkqO/ZgS9P4vcIrkhBQ370ZlniMzY12LOO0aMGXk6VKarp9Z2r0eWIuii21qHKt
-	 UzAYlAr5GXQy/AfJNlVkt9HJ12iQM5aLKadYGJjo=
+	b=E4z/rWGThBQDF2mrC3okZ2eSlcjdPamUSXBaGc1rh98ATwWOidhFUIBsr4qsoh+ot
+	 NVySFB9wKa7kbBb8lt0SC7FHP34VDKGu9jUrA6NNfqPLQQ9cPfrXJwVbve4BGRKuPZ
+	 WKjSNtmNFeTFvwouba4dg32a6jr+WF1j82bPU1w8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Ariana Lazar <ariana.lazar@microchip.com>,
+	Cheick Traore <cheick.traore-ext@st.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0350/1257] iio: dac: mcp47feb02: Avoid unjustified probe error on missing label
-Date: Sat,  7 Nov 2026 08:44:06 -0500
-Message-ID: <20261107134949.062960793@linuxfoundation.org>
+Subject: [PATCH 7.3 0351/1257] iio: adc: stm32: fix minimum sampling time values
+Date: Sat,  7 Nov 2026 08:44:07 -0500
+Message-ID: <20261107134949.088244281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,59 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ariana Lazar <ariana.lazar@microchip.com>
+From: Cheick Traore <cheick.traore-ext@st.com>
 
-[ Upstream commit bce5b7e29e72538ba61f76c6d534a58ab3838438 ]
+[ Upstream commit ef04fdc999ee40a58d513ea48d391c7dc78c908c ]
 
-Fix unjustified probe error on missing optional 'label' property by
-replacing dev_err_probe() with dev_warn_probe(). Correct %pfw usage by
-passing the child fwnode handle directly in the error message. Besides the
-probe warning a read error is returned at the attempt of reading a null
-label.
+- On stm32mp15: vddcpu and vddq_ddr are not connected to internal
+channel, so their sampling time shouldn't be set.
 
-Fixes: bf394cc80369 ("iio: dac: adding support for Microchip MCP47FEB02")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260804134616.1D8A21F00A3E@smtp.kernel.org/
+- On stm32mp13: vddcpu and vddq_ddr are connected to internal channels
+and the value for vddcore was not correct. Values from the datasheet
+are 1us (e.g. 1000ns) for ts_vddcore, ts_vddcpu and ts_vddq_ddr.
+
+Fixes: 7cb2303dd024 ("iio: adc: stm32: manage min sampling time on all internal channels")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ariana Lazar <ariana.lazar@microchip.com>
+Signed-off-by: Cheick Traore <cheick.traore-ext@st.com>
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/mcp47feb02.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/iio/adc/stm32-adc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/dac/mcp47feb02.c b/drivers/iio/dac/mcp47feb02.c
-index 7758e37080958..baeb1be455c6f 100644
---- a/drivers/iio/dac/mcp47feb02.c
-+++ b/drivers/iio/dac/mcp47feb02.c
-@@ -921,7 +921,10 @@ static int mcp47feb02_read_label(struct iio_dev *indio_dev, struct iio_chan_spec
- {
- 	struct mcp47feb02_data *data = iio_priv(indio_dev);
+diff --git a/drivers/iio/adc/stm32-adc.c b/drivers/iio/adc/stm32-adc.c
+index 90f0e257e6d1b..b024326775aeb 100644
+--- a/drivers/iio/adc/stm32-adc.c
++++ b/drivers/iio/adc/stm32-adc.c
+@@ -2734,7 +2734,7 @@ static const struct stm32_adc_cfg stm32h7_adc_cfg = {
+ 	.set_ovs = stm32h7_adc_set_ovs,
+ };
  
--	return sysfs_emit(label, "%s\n", data->labels[ch->address]);
-+	if (data->labels[ch->address])
-+		return sysfs_emit(label, "%s\n", data->labels[ch->address]);
-+
-+	return -ENOENT;
- }
+-static const unsigned int stm32_adc_min_ts_mp1[] = { 100, 100, 100, 4300, 9800 };
++static const unsigned int stm32_adc_min_ts_mp1[] = { 100, 0, 0, 4300, 9800 };
+ static_assert(ARRAY_SIZE(stm32_adc_min_ts_mp1) == STM32_ADC_INT_CH_NB);
  
- static const struct iio_info mcp47feb02_info = {
-@@ -974,10 +977,11 @@ static int mcp47feb02_parse_fw(struct iio_dev *indio_dev,
+ static const struct stm32_adc_cfg stm32mp1_adc_cfg = {
+@@ -2756,7 +2756,7 @@ static const struct stm32_adc_cfg stm32mp1_adc_cfg = {
+ 	.set_ovs = stm32h7_adc_set_ovs,
+ };
  
- 		set_bit(reg, &data->active_channels_mask);
+-static const unsigned int stm32_adc_min_ts_mp13[] = { 100, 0, 0, 4300, 9800 };
++static const unsigned int stm32_adc_min_ts_mp13[] = { 1000, 1000, 1000, 4300, 9800 };
+ static_assert(ARRAY_SIZE(stm32_adc_min_ts_mp13) == STM32_ADC_INT_CH_NB);
  
--		ret = fwnode_property_read_string(child, "label", &data->labels[reg]);
--		if (ret)
--			return dev_err_probe(dev, ret, "%pfw: invalid label\n",
--					     fwnode_get_name(child));
-+		if (fwnode_property_present(child, "label")) {
-+			ret = fwnode_property_read_string(child, "label", &data->labels[reg]);
-+			if (ret)
-+				dev_warn_probe(dev, ret, "%pfw: invalid label\n", child);
-+		}
- 
- 		chanspec.address = reg;
- 		chanspec.channel = reg;
+ static const struct stm32_adc_cfg stm32mp13_adc_cfg = {
 -- 
 2.53.0
 
