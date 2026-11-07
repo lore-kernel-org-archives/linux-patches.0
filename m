@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064651;
-	b=THpyCJZbJUv3lr/Cwtn7nH5hHJoBk0yD+KHT0vQL0E2SXA0FATgZ0N9NyAAPwJIV33A6
-	 dJArttp+i1DBjN4IyzVHLaYM2QvvvXv7C8/UcGTUp572cjMYfqlm5NA2hB7/E1B8Hxzpj
-	 Ko6gssJyBcMLWVhmLLBKQqJ44lLuS7qqxFf9mx7DHc3nZ7p5eDBJsphp6Q6r7X7Rrljfb
-	 JM016lT1laJpPwMbtS5YWn3JAQ6MGfLSyDHWK/3XEXGqGKAOab4mLXN8UAz2RG9bBZKSP
-	 ++WafC8RaYzPJOLmSaGQDoBXV930puNuNhHdD8cOsPI2xoJ94af/KN8gvkP8czH0VLQ==
+	t=1794064652;
+	b=VY/v+y6Dab9zDmVn3sUMJFUppQudIp0UBFTzyN4hg9BGwRkTPxMQ4qfk1HmwyI1WUjqY
+	 CUblN7IlWm/FaL4/P1CBPdPDcoyaUzcGz/+afLcyzKkDJjRA54NbNuZ1YTpP3lEpOeBTk
+	 7miPeu8WdxRVEgz6GBbq9ZfSj5LxXHTxB8XQUWENpL9/dIPXdBUdKFlomZWvKnT4inNaa
+	 WDxW0B7jPQyJiu3Hd/beCs98ywESzmptN0hnlrcmv1d5am7x3hmU0IPkUoPmHP+gPPD9F
+	 Obrf2jiLaskK8Dr2wELRhYypa8ifeSXsm1fiXJ4utWMMGv0uZ3bvOUA8Pj5G/Yb8CNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064651;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tPHXrv46ImCIvFHIaFaIMmZdkDEHOLvNF7CFSW+USkM=;
-	b=aBylARHAcTmpo0vfYLwZ+wbqdzkig8T/QDXhzK2jNSDmX/QLvCMWcTKhBneKuSj3zNPk
-	 P0xcATo84VWt7tuOU1p79H/IiXNHKkXV95ylMIZdP8Iw0SzVmJf72ASS2K2D3PODIklMq
-	 d4h0W527diRxDtZ6E0I34g9wSsqJryUxYnHe9JMZUWJCwXtKvZdGSmn7z8KbSa2zhVKct
-	 BH3FZTtG/noR/NIgEeckkAcNgkNzB9U89Ch3e9NqtGtUvGc8z7xNpgRTg9DicQ+hFBYZT
-	 8p5+XS0LpfiuTYbAv6/wIuo6lXGASwnsTWQ5ui9Rw0dnycWBE2E4hvdzFB0uKF/NqoQ==
+	bh=vcq1L4t0WWPLNn2b/z7IjwS7E7QDYdtuTfH0Kl35q9g=;
+	b=kDHFjD6YPXur8+p2BbqoPtj+B+BCiM+6c6bA8PsAPGtHfbLzTU64F0f/25Ie/Obg08cx
+	 Il8e7SQ4n617I63nY1bOIMTDIkkr/xSN4Nu3Gs9OrMzc2pp/hoZVsWsThmUPNJyBSqdQV
+	 VM6CbDHsuoQkge78oYU6KRhZT+XUB5Nx2T+j2dkU99jA1CyQ9hq9HQOsdsNFHUBNDaF7k
+	 ApVeg3ojY/PkjkdNE3ZUAIAgJgAncwux1KBOck2ldGVn9TzptkLUd3yQlgzEhm5DX6XxT
+	 pw1CZIkeY4K9ivKG2+CgnAZG0M8kZ1gGyPijgORdqBbnaF4zZDrEpvXhFy20lsXnqnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vIoSCXEX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLZ9dxqn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4739606B880;
-	Sat,  7 Nov 2026 15:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A59606B887;
+	Sat,  7 Nov 2026 15:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vIoSCXEX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6362A1F008A1;
-	Sat,  7 Nov 2026 15:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLZ9dxqn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D641F008A1;
+	Sat,  7 Nov 2026 15:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064650;
-	bh=tPHXrv46ImCIvFHIaFaIMmZdkDEHOLvNF7CFSW+USkM=;
+	s=korg; t=1794064651;
+	bh=vcq1L4t0WWPLNn2b/z7IjwS7E7QDYdtuTfH0Kl35q9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vIoSCXEX2TzamphJbUC3ZvCy504Uw0Qg0I0uR+gokNKAbOJNYNhHG52/OkEjmF4ch
-	 PFD+ijGJOpBBsRA1wkBTHzI7WYmk4YUsiOrppPcC6IMorNB3S93dgRvAGAAiEcZPqr
-	 Xl0bgIcHWyTqRfaqo+9QmvrLhUOfsQIFTs0o3hZ0=
+	b=iLZ9dxqn3S6WwUsER5WpQS3RTkgWsFKE+TdMD/ogFF9CIexH0sT0eX0HDSSI+el96
+	 F9eAtRpzt5UBFYvwA/yIh3/B/PmCD03JkPwfz+D68RumRb5T1ClRZCHylv4DneJUIZ
+	 IH48KrIvKwHWoqILBkA0KNqMBhn6zV6gHr7b9OYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kunwu Chan <kunwu.chan@gmail.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Usama Arif <usamaarif642@gmail.com>,
+	stable <stable@kernel.org>,
+	Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0653/1257] mm/damon/core: return an error from damos_commit_filter_arg()
-Date: Sat,  7 Nov 2026 08:49:09 -0500
-Message-ID: <20261107134957.299397066@linuxfoundation.org>
+Subject: [PATCH 7.3 0627/1257] usb: typec: ucsi: ccg: Validate altmode index in GET_CURRENT_CAM response
+Date: Sat,  7 Nov 2026 08:48:43 -0500
+Message-ID: <20261107134956.611765376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,128 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 6f276422aded370174edea69549ebe6b1683ffcc ]
+[ Upstream commit 02ee864e8d2142c5648998944c3306ea6a763c26 ]
 
-damos_commit_filter_arg() is supposed to always succeed.  It may not in
-future, for example, if the given filter is invalid.  Prepare the case by
-modifying its signature to return an error when it failed.  Also pipe the
-return value to its callers and let them handle the error.
+When the PPM reports more than one DisplayPort alternate mode for a
+connector, ucsi_ccg_update_altmodes() merges them into a single entry
+in uc->updated[] and sets uc->has_multiple_dp. In that case,
+ucsi_ccg_update_get_current_cam_cmd() rewrites the response of the
+GET_CURRENT_CAM command. The response is a single byte holding the
+index of the currently active alternate mode, and it is provided by
+the PPM firmware.
 
-Link: https://lore.kernel.org/20260914142327.92510-4-sj@kernel.org
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@davidgow.net>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: <stable@vger.kernel.org>
+The function uses this byte directly as an index into uc->orig[], and
+then uses the linked_idx read from that entry as the translated index
+into uc->updated[]. Both arrays have UCSI_MAX_ALTMODES entries, but
+neither index is checked against that size.
+
+If a malicious or buggy PPM reports a value of UCSI_MAX_ALTMODES or
+larger, e.g. 0xFF, uc->orig[cam].linked_idx reads over the end of
+uc->orig[]. The byte read from there is then used as the index for
+writing cam into uc->updated[new_cam].active_idx, so the out-of-bounds
+read is followed by an out-of-bounds write. This happens without any
+userspace action, since the UCSI core issues GET_CURRENT_CAM on its own
+when handling connector changes.
+
+Fix this by rejecting responses whose index is out of range, printing an
+error and returning -EPROTO, so that the caller cannot accept this.
+Also check linked_idx before using it as an index, so that the write into
+uc->updated[] is always within bounds.
+
+The response is now only processed when the command completed without
+an error. ucsi_sync_control_common() only reads the response when the
+CCI reports command completion, so otherwise the buffer is not filled
+and must not be mistaken for an invalid index.
+
+This bug was found with a Python script that traces where firmware input
+is used.
+
+Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
+Cc: stable <stable@kernel.org>
+Reported-by: Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>
+Assisted-by: LLM
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20261003215520.611083-2-eeodqql09@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 41 ++++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 13 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 0a0fdff279d86..a4542a49ff80a 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1244,7 +1244,7 @@ static struct damos_filter *damos_nth_ops_filter(int n, struct damos *s)
- 	return NULL;
+diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
+index 91c2958a708c0..80e3e84b418d7 100644
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -384,14 +384,28 @@ static int ucsi_ccg_init(struct ucsi_ccg *uc)
+ 	return -ETIMEDOUT;
  }
  
--static void damos_commit_filter_arg(
-+static int damos_commit_filter_arg(
- 		struct damos_filter *dst, struct damos_filter *src)
+-static void ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
++static int ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
  {
- 	switch (dst->type) {
-@@ -1263,28 +1263,32 @@ static void damos_commit_filter_arg(
- 	default:
- 		break;
- 	}
+ 	u8 cam, new_cam;
+ 
+ 	cam = data[0];
++	if (cam >= UCSI_MAX_ALTMODES) {
++		dev_err(uc->dev, "PPM returned invalid alternate mode index %u\n",
++			cam);
++		return -EPROTO;
++	}
++
+ 	new_cam = uc->orig[cam].linked_idx;
++	if (new_cam >= UCSI_MAX_ALTMODES) {
++		dev_err(uc->dev, "invalid linked alternate mode index %u for %u\n",
++			new_cam, cam);
++		return -EPROTO;
++	}
++
+ 	uc->updated[new_cam].active_idx = cam;
+ 	data[0] = new_cam;
++
 +	return 0;
  }
  
--static void damos_commit_filter(
-+static int damos_commit_filter(
- 		struct damos_filter *dst, struct damos_filter *src)
- {
- 	dst->type = src->type;
- 	dst->matching = src->matching;
- 	dst->allow = src->allow;
--	damos_commit_filter_arg(dst, src);
-+	return damos_commit_filter_arg(dst, src);
- }
+ static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
+@@ -636,8 +650,10 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command, u32 *cci,
  
- static int damos_commit_core_filters(struct damos *dst, struct damos *src)
- {
- 	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
--	int i = 0, j = 0;
-+	int i = 0, j = 0, err;
- 
- 	damos_for_each_core_filter_safe(dst_filter, next, dst) {
- 		src_filter = damos_nth_core_filter(i++, src);
--		if (src_filter)
--			damos_commit_filter(dst_filter, src_filter);
--		else
-+		if (src_filter) {
-+			err = damos_commit_filter(dst_filter, src_filter);
-+			if (err)
-+				return err;
-+		} else {
- 			damos_destroy_filter(dst_filter);
-+		}
- 	}
- 
- 	damos_for_each_core_filter_safe(src_filter, next, src) {
-@@ -1296,7 +1300,11 @@ static int damos_commit_core_filters(struct damos *dst, struct damos *src)
- 				src_filter->allow);
- 		if (!new_filter)
- 			return -ENOMEM;
--		damos_commit_filter_arg(new_filter, src_filter);
-+		err = damos_commit_filter_arg(new_filter, src_filter);
-+		if (err) {
-+			damos_destroy_filter(new_filter);
-+			return err;
-+		}
- 		damos_add_filter(dst, new_filter);
- 	}
- 	return 0;
-@@ -1305,14 +1313,17 @@ static int damos_commit_core_filters(struct damos *dst, struct damos *src)
- static int damos_commit_ops_filters(struct damos *dst, struct damos *src)
- {
- 	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
--	int i = 0, j = 0;
-+	int i = 0, j = 0, err;
- 
- 	damos_for_each_ops_filter_safe(dst_filter, next, dst) {
- 		src_filter = damos_nth_ops_filter(i++, src);
--		if (src_filter)
--			damos_commit_filter(dst_filter, src_filter);
--		else
-+		if (src_filter) {
-+			err = damos_commit_filter(dst_filter, src_filter);
-+			if (err)
-+				return err;
-+		} else {
- 			damos_destroy_filter(dst_filter);
-+		}
- 	}
- 
- 	damos_for_each_ops_filter_safe(src_filter, next, src) {
-@@ -1324,7 +1335,11 @@ static int damos_commit_ops_filters(struct damos *dst, struct damos *src)
- 				src_filter->allow);
- 		if (!new_filter)
- 			return -ENOMEM;
--		damos_commit_filter_arg(new_filter, src_filter);
-+		err = damos_commit_filter_arg(new_filter, src_filter);
-+		if (err) {
-+			damos_destroy_filter(new_filter);
-+			return err;
-+		}
- 		damos_add_filter(dst, new_filter);
- 	}
- 	return 0;
+ 	switch (UCSI_COMMAND(command)) {
+ 	case UCSI_GET_CURRENT_CAM:
+-		if (uc->has_multiple_dp)
+-			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)data);
++		if (!ret && uc->has_multiple_dp &&
++		    (*cci & UCSI_CCI_COMMAND_COMPLETE) &&
++		    !(*cci & UCSI_CCI_ERROR))
++			ret = ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)data);
+ 		break;
+ 	case UCSI_GET_ALTERNATE_MODES:
+ 		if (UCSI_ALTMODE_RECIPIENT(command) == UCSI_RECIPIENT_SOP) {
 -- 
 2.53.0
 
