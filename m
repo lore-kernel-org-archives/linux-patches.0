@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061628;
-	b=cFxfjiqF1uPLY530Km8Q+sBc0jqRs3EevvXSiXVFEMdff+fpYLGB/Td8tYszz7Javyuz
-	 yRbiPBWyv0Sn0ohrL5rwZyUtGXLVpD77W1KfqvL4SuVeubfPywoG9S4CzjMnpYQs3OKlR
-	 I/TN8Vi7yD0FROoG0cyTgJKFkNH0Yto1dZOMF2kHfgbosdM7GAjdAQdAu5hMTvhPDSr9G
-	 uaINT8jejGa8etZ8BUCD9tGutqswnu2RXea7oTkkz4ZKilhCx13a6e6726vDhavbu1Fm2
-	 uT2uXyA0Ixsff4KIsen4I9eDuViDHQeXwYJLjjYxlQtXiXLphuTLhEkHWJ4Jt8ev/yg==
+	t=1794061629;
+	b=NXPgfN0AUGWcqi/GCZ+VrVo4lC2hr7MigkkRdg4+4BJ1ukfOI+UUGGBXjrTfDHWt5F08
+	 EnV8atwbfujGnYRw0xFFcNNYwhH/NScOER8J75O59fY9unXtf1jJ4LerDHEHArbogvs61
+	 5sUt7F8rQltHsC4bd9Q7NBDptxxiXQWUFl2bINhyLLKtgqlDjPoQ/mAIT8LKOZX5trg9k
+	 HyIDH0jKM0fFS0juQufOfVc17rwD6+HATZvd2REXxg745M8jBhdg7FFFlX5GveUUtS7nM
+	 N1CmQNV0lD004nS/WHAIn/3/du4XvmZ0wZjUzhiNiup9nOtNleXC8QHzRS/7UWC983g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=skwwk8fPnKyDh97EPTd75tBzjNCPNht4uWg0dmniggw=;
-	b=NG3rmXlbPnbJrOI5QJUqtKJvQHFyHQHtA9V4wUgnjDw6TzylmJJ2gUL9xzow7zdE+B0U
-	 UxNQFKvo91Gq7saMbAx+q8Ch241BpS9Zzt2MVHommmOpvdSKz4jhFffXwK1jJMGL7Xuft
-	 3wwVnRRiOvGdfggUnl6uomvJ+SobQ00YHulDaCGIRFXO1/gAvKGSObB/O7suYsRW+492c
-	 JXKB+9qDDeuj+U0QpbOez3VGM32xAiREDDVlnoT3Ogf8TWEVRTkKfe5AnQ4QMPjuAJK2C
-	 2j0bTMWCFHbnqEI+fuSv+kGLncLtPE2m6nveiVovqT2F5/dheFEGHPoldvK7pxscJQA==
+	bh=LmachH/xOCRFlDaBcZxp6wI14q0AVWxBCrcSH/FHGxg=;
+	b=CUtd7oywlX2djrauMJqJ50cJbbIYkV2Vzgensq4YNnxIvEjfwNnZyB1SnlH1j8fztcRD
+	 N/y1wCHS+yRdQIQIKBycpdDSp5cLr6GpXw+g6OxkpPSiJPf2nwtvZDj+wt3AQrZx3ezF3
+	 1w3tSvd+aLIi7Y8c8q/kW4mFnWkYxeJsB4lC0+GkyWE/kBZoFsOUJJGZ0sk/ufdSr1aj9
+	 fi8pwlP4n5qy2gudQGoYELQASvLKpXSX6h8xJkg2FNoWhtidoJQML8qOMIY3di65iUg5R
+	 QYyDUmXzFJt+kvHw+AdoTiKc9b5tyDgOrIhhQyip3g/69fIrqaDnK73EBbCgAJEiP5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuzGvnWf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B/d36fXR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D11606A330;
-	Sat,  7 Nov 2026 14:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78B7606A330;
+	Sat,  7 Nov 2026 14:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuzGvnWf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425851F008BC;
-	Sat,  7 Nov 2026 14:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B/d36fXR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747361F00900;
+	Sat,  7 Nov 2026 14:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061627;
-	bh=skwwk8fPnKyDh97EPTd75tBzjNCPNht4uWg0dmniggw=;
+	s=korg; t=1794061628;
+	bh=LmachH/xOCRFlDaBcZxp6wI14q0AVWxBCrcSH/FHGxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CuzGvnWfEEK0BH75i/wYz6FaIER+BlU4HFY0mmnwBL0Fe2CCmCL2gtTaDzsmyZJ8d
-	 apmzmuziUuZVYiHcHwPuyz3JLwPOlcANSRyPXfPJDXv2Z3L3Ek+Sj+/HW7sDFKbrkv
-	 4mdSFcUrFLz6/x8g3F3OtQgXLAKWeV92tCDRAePk=
+	b=B/d36fXRzmGwLVyACUtcBEMhC9l8dcPhahLJbELxF8Sx+ysTWfYjRVNc8wQ+Ahh53
+	 8L5mMBWUXlOBiQVmNc8Pj59SvYFN9f5RR2WN0e+KbtiKQO9/W2HklTYsfFdhmrA86L
+	 mPuHJ2YzTEZVUHGM+IAU9Puov6KA/ktYlA6NUk8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0693/1536] xfs: online quotacheck must dirty dquot if enforcement adjustments needed
-Date: Sat,  7 Nov 2026 08:45:09 -0500
-Message-ID: <20261107135016.953579717@linuxfoundation.org>
+Subject: [PATCH 6.12 0694/1536] xfs: fix unnecessary dapos truncation in xchk_dir_walk
+Date: Sat,  7 Nov 2026 08:45:10 -0500
+Message-ID: <20261107135016.982727714@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,91 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 244425cf63d7e3a0ff5736b41f0e0afe807f7031 upstream.
+commit f60a2ef8d8a7ac6dedf4d0c3325cc3fc2fe0d948 upstream.
 
-LOLLM noticed that we have no way to force xchk_commit_dquot to call
-xfs_qm_adjust_dqenforcement if nothing else is wrong with the dquot.
-Therefore, add a new predicate to force the dirty flag if the dquot has
-zero limits and there are default limits; or if the grace period timer
-needs adjusting.
+LOLLM points out that the all the implementations of xchk_dirent_fn can
+handle a signed @dapos parameter, so the truncation here breaks the
+information captured in scrub tracepoints if the directory is very
+large.  I don't think it ever made sense to do the truncation for the
+VFS readdir code for programs that can handle 64-bit offsets, but commit
+15440319767942 has been around for 17 years without complaints so I'll
+leave that alone.
 
-Cc: stable@vger.kernel.org # v6.9
-Fixes: 96ed2ae4a9b06b ("xfs: repair dquots based on live quotacheck results")
+Stumbled-over: 15440319767942 ("[XFS] truncate readdir offsets to signed 32 bit values")
+Cc: stable@vger.kernel.org # v6.4
+Fixes: 4c233b5c4f29df ("xfs: streamline the directory iteration code for scrub")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/quotacheck_repair.c |   51 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ fs/xfs/scrub/readdir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/quotacheck_repair.c
-+++ b/fs/xfs/scrub/quotacheck_repair.c
-@@ -39,6 +39,54 @@
-  * dquot is locked.
-  */
+--- a/fs/xfs/scrub/readdir.c
++++ b/fs/xfs/scrub/readdir.c
+@@ -238,7 +238,7 @@ xchk_dir_walk_leaf(
+ 		dep = bp->b_addr + offset;
+ 		length = xfs_dir2_data_entsize(mp, dep->namelen);
  
-+static bool
-+xqcheck_dqres_force_dirty(
-+	const struct xfs_dquot_res	*res,
-+	const struct xfs_quota_limits	*qlim)
-+{
-+	/* zero limits mean that we should set the default limits */
-+	if (res->softlimit == 0 && qlim->soft != 0)
-+		return true;
-+	if (res->hardlimit == 0 && qlim->hard != 0)
-+		return true;
-+
-+	/* do we need to adjust the timer setting? */
-+	if ((res->softlimit && res->count > res->softlimit) ||
-+	    (res->hardlimit && res->count > res->hardlimit)) {
-+		if (!res->timer)
-+			return true;
-+	} else {
-+		if (res->timer)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
-+/* Decide if we need to adjust the dquot limits or timers */
-+static bool
-+xqcheck_dquot_force_dirty(
-+	const struct xfs_dquot	*dq)
-+{
-+	struct xfs_quotainfo	*qi = dq->q_mount->m_quotainfo;
-+	struct xfs_def_quota	*defq;
-+
-+	/* root dquot does not enforce limits */
-+	if (dq->q_id == 0)
-+		return false;
-+
-+	defq = xfs_get_defquota(qi, xfs_dquot_type(dq));
-+
-+	if (xqcheck_dqres_force_dirty(&dq->q_blk, &defq->blk))
-+		return true;
-+	if (xqcheck_dqres_force_dirty(&dq->q_ino, &defq->ino))
-+		return true;
-+	if (xqcheck_dqres_force_dirty(&dq->q_rtb, &defq->rtb))
-+		return true;
-+
-+	return false;
-+}
-+
- /* Commit new counters to a dquot. */
- static int
- xqcheck_commit_dquot(
-@@ -93,6 +141,9 @@ xqcheck_commit_dquot(
- 		dirty = true;
- 	}
- 
-+	if (!dirty && xqcheck_dquot_force_dirty(dq))
-+		dirty = true;
-+
- 	xcdq.flags |= (XQCHECK_DQUOT_REPAIR_SCANNED | XQCHECK_DQUOT_WRITTEN);
- 	error = xfarray_store(counts, dq->q_id, &xcdq);
- 	if (error == -EFBIG) {
+-		dapos = xfs_dir2_byte_to_dataptr(curoff) & 0x7fffffff;
++		dapos = xfs_dir2_byte_to_dataptr(curoff);
+ 		ino = be64_to_cpu(dep->inumber);
+ 		name.name = dep->name;
+ 		name.len = dep->namelen;
 
 
