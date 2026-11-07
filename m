@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061669;
-	b=lf2TqkpmkYRPGi8m69H4EGQz+xgTIZDMMCwpRka6vwzuBlvewfGP0DqF0zetWHtW33Eo
-	 gd6+R8YWWLm3xOYvBB/MP7QBBbbmNCe1BBN+N+UMnn+c1YdoKi9ruIx5BO4cs3ap/wBoq
-	 7qzOxbaDscG1dteVLiC03vtmTasqoMq3P+MhiOL3LR+BOZeF4ydRtMLau7hPJLB47RH58
-	 SG5uQVkf86s+CKFBFcsDYAt1JTrXqjca4zJvEslrDtpghC6hw1+mmzKMT8/duLTCvZ44B
-	 5ISA/PcIoc+2QIKawZBk/a2GNVdzmQXjjWB4xuBcoEyXol6TCYNUCXd22s927vK8y6Q==
+	t=1794061670;
+	b=nqjBmsC1t8Kc01vk+ytUxV1pIaK7P8sgI9cQLtFYthrNwRCttmhLGMVZ0BQx5TKPQ3xg
+	 afPHiXc1qr9urbuHhel30oTMws0GNb68oSlGqT35SxX1YHPTzavUmBaj+p6kcprqP3jSE
+	 dWsXMdtt7qi6w+DxYoY80caGDUzLEro2M/y9yAp3O2E0yPdBy065vkq+abks/VMadSS2A
+	 /EXFX4Ff7pqg6ANAM7CxcumjUw211mfT+vW4/7GrTEh2Y4ft8F1PYVz7erkCKbiyZwzH/
+	 7JW5M8dXvU2kRHNz1/vPwy7ytNAMRzS9mTscWcQgBG/orc4eCyzcRmkns5vTr4Qmjzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bC8YmRL6DwWM211k9+6HEJsusW0uis72e2WBMQ+hDGc=;
-	b=lndHx0PulQnt3ve5BKmXET4jQ6Lytw2coj9tR1qGvcBOyRswy8cjBtpGAs98ihpVHo3Q
-	 86eK0C+HJG3gpJbwrjQ3yDead8/5cZhxqwzZYUBp19QanTNyOIBbN8XGfQynxYhHTBYyY
-	 17/G255hYuqZyk7+olhrJzPt+f80SrItCDVsQwx18K47uQ8w0LtRrwVqsrEBxXaN9PIKr
-	 GUUifP4JD4yLrXABhSEw2CnVa62Y3k3HAPCFHG1NFbeamLm1J4YT1vSDw+vQT8Ztlbp2Q
-	 50YefU9EUK8EbHS0ATrrU89Xl2MjhJbP7LZJrDT7hJBWu3BVKwGpee0zEoKMmK7Hnkw==
+	bh=R77XQicfJFoez1BPxX7PZpcXS30hhq71OGwKW10+t44=;
+	b=o1HJd+so0UiGtnTA6YyAOAR+fwo1k82atLaleCHH5dEA4P+tglhEwP3aDr2nZ+/3HwJG
+	 RI25hWrb+8Q+n76dM+7HdTiKUZtYkxCNqkL8vvHUlHHhPjmsgvVk91YKpbCWl1ZWJSVsr
+	 TAmRkMAPlmMSw6GvVoTRMbDi0fsymG8608tWZqnCUL/+99Zt+LXA6vLiiCg7od5nvnZQK
+	 BJ+GsqueiNwv8KHEbaY0ChLBc7MwBvT+ksc8bTBJXeQ+ZL5Z7q7YPTg4H2kpIPLRDiMOb
+	 S1IfnbUakdY8iXKthNn6iooopfEHUHEdpOhkiOzZXqJyv6pDuhvxfqV+nTIyWe1ofhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhghB6Ff;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BzbwQG5x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0E7606A32D;
-	Sat,  7 Nov 2026 14:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928A7606A32C;
+	Sat,  7 Nov 2026 14:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhghB6Ff
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B901F0089F;
-	Sat,  7 Nov 2026 14:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BzbwQG5x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334761F0089F;
+	Sat,  7 Nov 2026 14:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061669;
-	bh=bC8YmRL6DwWM211k9+6HEJsusW0uis72e2WBMQ+hDGc=;
+	s=korg; t=1794061670;
+	bh=R77XQicfJFoez1BPxX7PZpcXS30hhq71OGwKW10+t44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MhghB6FfWbWyxUAQOvCglpZKWzYvdIEs2SDbP67tdJZcLDz4f39WF+2ylwNtdL0GD
-	 XIfVxzK/NcYpcBg5xjwiysxcx0y6ceqTHtn5T/ZsFBcqddhX3OygNEXJvJ0z5R9HmB
-	 PTiIw5QL7Cq3DrLi09vs1gmo9fVNtGcOisrceFQ4=
+	b=BzbwQG5x6+ciD7/7A9d2/a0Oo5kAb0VsDMOWAPOetKcKvXa6rlhSV3sZH5HldCSNh
+	 kEDJvSyNbf55VItoODd4/HOGqqGH6opwd/01zi+GW34zx6KxiLC8deXDzKEkoufS7D
+	 7z1LNOFaSeXA4qYFdet8lecfdTP+fpftk3/MDVXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0724/1536] xfs: reject remote xattr entries with an out-of-range value length
-Date: Sat,  7 Nov 2026 08:45:40 -0500
-Message-ID: <20261107135017.833275572@linuxfoundation.org>
+Subject: [PATCH 6.12 0725/1536] xfs: abort directory tree repair whenever dl->aborted is set
+Date: Sat,  7 Nov 2026 08:45:41 -0500
+Message-ID: <20261107135017.861228189@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,46 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 15ccd92a782a0253f4a17895f3d3f71e5c1d1973 upstream.
+commit 4582327e7068194d55941b49dd66be211b9e3f90 upstream.
 
-xfs_attr3_leaf_verify_entry() validates a remote attribute entry's name
-but never bounds its on-disk value length (xfs_attr_leaf_name_remote.
-valuelen, a __be32). A crafted leaf with valuelen = 0x80000000 passes
-the verifier and the CRC.
+LOLLM observed that if the live update hooks for the directory tree
+repair code ever fail, they'll set dl->aborted, but then the main repair
+code path won't check it to exit early.  This can cause incorrect
+repairs, so let's check for hook errors and abort the repair.
 
-That length is later assigned into the signed int args->rmtvaluelen
-(xfs_attr3_leaf_getvalue), becoming negative, which slips past the signed
--ERANGE check in xfs_attr_copy_value(); a getxattr() with a small buffer
-then memcpy()s a full remote block into the small kvalue buffer
-(xfs_attr_rmtval_copyout) -- a heap out-of-bounds write with
-attacker-controlled content, from an unprivileged getxattr(2) on a
-mounted crafted image.
-
-Reject remote entries whose value length exceeds XFS_XATTR_SIZE_MAX in
-the leaf verifier, so the malicious block is rejected at read time.
-
-Fixes: c84760659dcf ("xfs: check attribute leaf block structure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 3f31406aef493b ("xfs: fix corruptions in the directory tree")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_attr_leaf.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/xfs/scrub/dirtree_repair.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_attr_leaf.c
-+++ b/fs/xfs/libxfs/xfs_attr_leaf.c
-@@ -296,6 +296,8 @@ xfs_attr3_leaf_verify_entry(
- 		if (!(ent->flags & XFS_ATTR_INCOMPLETE) &&
- 		    rentry->valueblk == 0)
- 			return __this_address;
-+		if (be32_to_cpu(rentry->valuelen) > XFS_XATTR_SIZE_MAX)
-+			return __this_address;
- 	}
+--- a/fs/xfs/scrub/dirtree_repair.c
++++ b/fs/xfs/scrub/dirtree_repair.c
+@@ -575,6 +575,8 @@ xrep_dirtree_delete_path(
  
- 	if (name_end > buf_end)
+ 	if (!error && dl->stale)
+ 		error = -ESTALE;
++	if (!error && dl->aborted)
++		error = -EIO;
+ 	return error;
+ }
+ 
+@@ -720,6 +722,11 @@ xrep_dirtree_adopt(
+ 		error = -ESTALE;
+ 		goto out_trans;
+ 	}
++	if (dl->aborted) {
++		mutex_unlock(&dl->lock);
++		error = -EIO;
++		goto out_trans;
++	}
+ 	error = xrep_dirtree_create_adoption_path(dl);
+ 	mutex_unlock(&dl->lock);
+ 	if (error)
+@@ -780,6 +787,8 @@ xrep_dirtree_move_to_orphanage(
+ 
+ 	if (!error && dl->stale)
+ 		error = -ESTALE;
++	if (!error && dl->aborted)
++		error = -EIO;
+ 	return error;
+ }
+ 
 
 
