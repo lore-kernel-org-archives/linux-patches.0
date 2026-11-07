@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065607;
-	b=axgItTQTBi9jN5ryx6rWV5n5ct9MsgD/CqUr9P4w1d0zl/iCQATVrpO8q6ZnA7Q2QDK3
-	 oWZJIS73A4C1bpUiySDevlDyPUKt04t7WeAuDg4C16OHK0T66QqGdHFFRH+S5nhOE79BG
-	 +cfugl5pLIx1r3vmaAr9m4xTne2hZ+3Sb6fgWWyjPmhNKESi2uY/zi13PFWxQOIUI9/tz
-	 nXj8/1ls+rWSFQdIKCAHyYLg/OAjFHJa0MLbLrHjx7yNiZ8JWoSNuFhqziTmi++q6pUJD
-	 zzoiuKn2vFsHwy/P6kZQuSeeoPyb6K1z5tCSaoXWZrHVCte0n+Qy9bNh7EIocD6Yydw==
+	t=1794065609;
+	b=OS+tYRDMaK51MWi7MdZF82HBSFrFOScrYpo9Tb6/tTEsvoO8W0Vix7FfpRs7CHQFNyBr
+	 1U2/2Voqs8ccLjtnDtP7aeB6x7MyCONxjLiXyglbB8Ktry4FIzOBB7ufsXPNT/owtMQ0z
+	 lgss6uUMoxEvSgGt9LqZruso/TrI4ItyqF+T4oDS7vWsR6BD7b3/1L+ePWiBsNZssmQR6
+	 sS3hG7I3bbtx5JGCwv537qhCJ0KieDC3VU2yIHJ7o3pv/tJpBmH1QiHujCE9GCOdriN+2
+	 MfzfkT+k99MB1UhAAO7+fQX9TD/IKAbYTVR0WCd2qe63VKEgrvMGh2URSeCJvr33xfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065609;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vK+K3JNgfDXjS4SMHc64qI4UPjfgxw+WmfIWmK722XQ=;
-	b=0YeQ5o2GF6O1xfwdcgEH5oNGjXY0tNN+ft9h+p/Fdb1nPY6n4zVUs/FyQLZD6cW6S6/0
-	 lg/I5OxmE6KHzlQcvHkOjtd3mCb2TdrcTenrpa04txqGSlr9dFqk7rAbcsL1BwMAVToPP
-	 /5kUfOIGNgsk8knf7CGHNekCj2mTC13oGsxWCDaLa+/THlnDCMIM2wVb6riVqrRuADHfp
-	 Xhm0E/7SnPO0dL+BHQV6siPge3K9s380Hk8sdfwDOr7pj96/Sz7l2qcR1ufPYak30zZv1
-	 Ya+RxRf3MPbXXSMWwSzCyIKd41RuAHJN4mt6BivODTxOl9VKGmrwgC6mNO24v2kDMjw==
+	bh=nEH/EIf6tk9cSveHiv4tr+sM+pss4MDRaP2dHJGN+EU=;
+	b=jW9Skek0VnsRk/7R+AgFZJYdDBw7zXzHmeIKTtVODYjsWFmOa4K0UZxhLZeNuk4xTvPo
+	 oosJ6O4SanGy6E/PtnZ+we+p5Zk5dJ3piK6sw3pxJpmFkP5jD0/cDwysrS3Gr/e2mSEWx
+	 B4UDZAHJfn+1H3l7li7ZtsI53xdLkUk5lmJXTR+dkV1YQDAxOeB5Lt7BRcJaeBi9OIzrq
+	 zg5XVaryZWT7c7rC/2UxYD0sNxfmdIQKoNy+7V0MQI0JazflGGFBEXtd1P90sKIIhhbv3
+	 gWe9vnNX4luumg0yf0e6chskJoa8kBHlfZqgIy6tYpX0MRKL4+AFoyoaeolW7ZhuhSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yR6LQrzG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AAwsVx7I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F73606A32C;
-	Sat,  7 Nov 2026 15:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF06F606A32C;
+	Sat,  7 Nov 2026 15:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yR6LQrzG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2215C1F0089F;
-	Sat,  7 Nov 2026 15:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AAwsVx7I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A72A1F0089F;
+	Sat,  7 Nov 2026 15:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065607;
-	bh=vK+K3JNgfDXjS4SMHc64qI4UPjfgxw+WmfIWmK722XQ=;
+	s=korg; t=1794065608;
+	bh=nEH/EIf6tk9cSveHiv4tr+sM+pss4MDRaP2dHJGN+EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yR6LQrzGm1f0V4+TwNM/LGhbYuKixOUm89Gqm6YHmKCjNNGmUhbjos2nWyRbqG+8d
-	 kfhk0hCNuAD71P+1pHRt9kIIrVzXA2qzUcUrZ2nGSiIc9lmjimlfU+p4E021PBuadc
-	 6IuLOyJoYtbAQ+mti67WcU2eiL14j8EtOdGhFKOc=
+	b=AAwsVx7Iv8dm3jc6dclGgqk0LJE207pjS9imtjmoS7LsuqEf1psx4QjigbQUGiPa4
+	 xzVYtzVsO5let3PgyDENXFr5qtGbc9qpN+58DFde67gugLxtS1bPcX3EmdZid3YLFG
+	 y60qfiwfO+7sNdorU4MphGkFDKqygOEfcGpznoC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Edvard Conrad <edvard@tuta.io>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1249/1257] splice: avoid stale f_pos writeback on error
-Date: Sat,  7 Nov 2026 08:59:05 -0500
-Message-ID: <20261107135013.816356152@linuxfoundation.org>
+Subject: [PATCH 7.3 1250/1257] fs: let backing files inherit FMODE_NONOTIFY from the user file
+Date: Sat,  7 Nov 2026 08:59:06 -0500
+Message-ID: <20261107135013.843339976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,68 +69,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Edvard Conrad <edvard@tuta.io>
 
-[ Upstream commit 79b496ebe382866e3a05090b7dc9ae95e85e65b2 ]
+[ Upstream commit c3d355f427cea70fbe31b49e21f1915dbf37f2e6 ]
 
-do_splice() snapshots an implicit file position before calling the splice
-helper. Since splice does not take f_pos_lock, another operation on the
-same open file description can update f_pos while the helper is blocked.
-If the helper then fails, the unconditional writeback restores the stale
-snapshot.
+When fanotify reports a permission event, copy_event_to_user() creates
+the event fd with dentry_open_nonotify(), so that the listener's use of
+that fd does not generate further events. If the event's path is on a
+stacked filesystem, the stacked filesystem's ->open() opens the real
+file with backing_file_open(). Since commit ebe559609d78 ("fs: get rid
+of __FMODE_NONOTIFY kludge"), FMODE_NONOTIFY lives in f_mode only and
+the backing file does not inherit it: it is allocated with the default
+fsnotify mode, and fsnotify_open_perm_and_set_mode() raises FS_OPEN_PERM
+on the real path if the backing filesystem has permission event
+watchers.
 
-For a directory without ->splice_read, a file-to-pipe splice fails with
--EINVAL. A concurrent directory mutation and getdents() call can advance
-f_pos and refresh the filesystem's revalidation cookie before that failure
-restores only the old position. The next ext2 readdir can then trust an
-offset inside a directory entry and copy data from the adjacent page to
-userspace.
+Before that commit __FMODE_NONOTIFY travelled in f_flags, and overlayfs
+copies the user file's f_flags into the backing open
+(ovl_open_realfile()), so the backing file was exempt implicitly. Commit
+bc2473c90fca ("ovl: enable fsnotify events on underlying real files")
+relied on that when it dropped FMODE_NONOTIFY from OVL_OPEN_FLAGS.
 
-Only update an implicit file position when splice returns a non-negative
-result, matching read and write. Keep explicit offset updates unchanged.
+The nested event is queued to the same group, from inside the
+listener's read(2), and can only be answered by another reader thread
+of that group. A listener holding filesystem marks on both the stacked
+and the backing filesystem therefore deadlocks as soon as all of its
+reader threads are inside such a read(2) at the same time, and every
+other task that touches a marked filesystem queues up behind it.
 
-Fixes: 7995bd287134 ("splice: don't pass the address of ->f_pos to methods")
+Observed with a commercial anti-malware agent (16 reader threads) on an
+ostree/composefs host: / is an overlayfs whose data layer is the ostree
+object store on the same btrfs that holds /etc and /home, and a
+systemd-sysext overlay sits on /usr. Every on-demand scan of /usr wedged
+the whole machine until the group was killed. Stack of a blocked reader
+thread on 7.2.7:
+
+  fanotify_get_response
+  fanotify_handle_event
+  send_to_group
+  fsnotify
+  __fsnotify_parent
+  do_dentry_open
+  vfs_open
+  backing_file_open
+  ovl_open_realfile [overlay]
+  ovl_open [overlay]
+  do_dentry_open
+  vfs_open
+  backing_file_open
+  ovl_open_realfile [overlay]
+  ovl_open [overlay]
+  do_dentry_open
+  vfs_open
+  dentry_open_nonotify
+  copy_event_to_user
+  fanotify_read
+  vfs_read
+  ksys_read
+
+Userspace cannot avoid this: the backing open happens while the kernel
+builds the fd, before the event is reported, and fid reporting is not
+available for permission event classes.
+
+Make a backing file inherit FMODE_NONOTIFY when the user file it is
+opened for must not generate events. This restores the pre-6.14
+behaviour for the fds that fanotify creates (and for any other
+FMODE_NONOTIFY file), while ordinary opens through a stacked filesystem
+keep generating events on the real path, as intended by bc2473c90fca.
+
+Verified with a self-contained reproducer (private tmpfs lower layers, an
+overlayfs over them, FAN_OPEN_PERM filesystem marks on the overlay and on
+one lower layer, a child opening a file through the overlay) in a qemu
+VM on this tree built with defconfig plus OVERLAY_FS, FANOTIFY and
+FANOTIFY_ACCESS_PERMISSIONS: without this patch the listener's read(2)
+never returns and the child's open is released only by the listener's
+death; with it read(2) returns, the event is answered and the open
+completes.
+
+backing_tmpfile_open() is left alone: its only caller is
+ovl_create_tmpfile(), whose user file is a regular overlayfs file.
+
+Fixes: ebe559609d78 ("fs: get rid of __FMODE_NONOTIFY kludge")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20261018051708.2422394-1-4ncienth@gmail.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Edvard Conrad <edvard@tuta.io>
+Link: https://patch.msgid.link/P58Wrer--F-9@tuta.io
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/splice.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/backing-file.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/splice.c b/fs/splice.c
-index 9d8f63e2fd1ab..96378d3e65580 100644
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -1349,10 +1349,10 @@ ssize_t do_splice(struct file *in, loff_t *off_in, struct file *out,
- 		ret = do_splice_from(ipipe, out, &offset, len, flags);
- 		file_end_write(out);
+diff --git a/fs/backing-file.c b/fs/backing-file.c
+index 83f0ba241fb0b..4f6b3b588f74d 100644
+--- a/fs/backing-file.c
++++ b/fs/backing-file.c
+@@ -55,6 +55,17 @@ struct file *backing_file_open(const struct file *user_file, int flags,
+ 	if (IS_ERR(f))
+ 		return f;
  
--		if (!off_out)
--			out->f_pos = offset;
--		else
-+		if (off_out)
- 			*off_out = offset;
-+		else if (ret >= 0)
-+			out->f_pos = offset;
- 	} else if (opipe) {
- 		if (off_out)
- 			return -ESPIPE;
-@@ -1373,10 +1373,10 @@ ssize_t do_splice(struct file *in, loff_t *off_in, struct file *out,
- 
- 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
- 
--		if (!off_in)
--			in->f_pos = offset;
--		else
-+		if (off_in)
- 			*off_in = offset;
-+		else if (ret >= 0)
-+			in->f_pos = offset;
- 	} else {
- 		ret = -EINVAL;
- 	}
++	/*
++	 * A user file that must not generate fsnotify events (e.g. the fd
++	 * that fanotify creates for a permission event with
++	 * dentry_open_nonotify()) must not generate them through its backing
++	 * file either. Otherwise a listener watching the backing filesystem
++	 * gets a nested permission event from its own read(2), which only
++	 * another reader of the same group can answer.
++	 */
++	if (FMODE_FSNOTIFY_NONE(user_file->f_mode))
++		file_set_fsnotify_mode(f, FMODE_NONOTIFY);
++
+ 	path_get(user_path);
+ 	backing_file_set_user_path(f, user_path);
+ 	error = vfs_open(real_path, f);
 -- 
 2.53.0
 
