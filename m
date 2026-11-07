@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062397;
-	b=NiLASCJda+5r9eNE8xgWr5ouEYYkB6N5E9R3kII+px7S0fT2seCobzijlPUp9sfVejfx
-	 4iUGbRub9EeKzZhHxtKPOeP8BeTHY0ttAqKivkq1aKms89EqNdi030MKScTYLZPkv8CMK
-	 e3JIEWhrShDrje4F4nDm5Etu4UKgEpvbi8sw2PdksxvlUmyZmUY6HVG7cUBiU1Af3grhh
-	 lgo4evrNxY6VKRye7NgfyAHwOnsifTFWtXdaeR6Ppc24d5YbGBxq4b+tcbi/M5ULPGZoe
-	 zrMeo1dUwl0w7XHRGiXQnGIKQnwdEbnlnATbj/b00rzTj0BaedkI+wl9vD/Sh/bhLKQ==
+	t=1794062399;
+	b=I/WpTf16qSMmMEG4Gxgraan2lDx98QAvPJUWYCED+OFSSkB8b49xf5ZanNfpv1FqVKSj
+	 AjmQW7FZRGkKVqybYAmnTckieY7hCM79pdy18U1jLV3+/NFADLt7twEX8PbDea/mfchB8
+	 kpPe9fl1tH/n8lafaxnOixsS27SKSlfuTedicB7PQyUOPhnHBle7WhAUoRpdPRMtyeYAo
+	 tNiLZqUXGfQP+i1G7L8340HhNN97K2dZF8zYA1Ery0VoGd5r9xW/zgsV5iS+3YZt25nEi
+	 m4LVRSp9LCK3iZvOYQzOf51kuPeB1e68mzXlR4yd+LdIvPQzG1LwHwAqFF1e9ec9qeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fsDo4Xw86lmlW6LjPxLVHm1Oq2M8jQxpU1BuUfVrhFU=;
-	b=jYoIraCKneQd0CmAgZ4ioC9HbbxzPr53L52jok86LJrmYgV+j26dbb6Xx0sbVPiOo5UH
-	 y7fZzokUSnQ0pRh3mQytCshB5KgTq0PxMpTi3+DgEWQJ2yBSEAbgfhpcGM+lWz6TYNKgw
-	 VYCDng3za0EBc7WHOZfrqhd/5XUxVjgnSO8K2+jbMVn0U1IM1LAan73ZTUwrJoT6jLyI6
-	 spf/ca5CRWNh6PKVOXyInGP9+wdSOH7eiZx8sNirJLsOcASc1kp4newOgVRWDCV3ZAO9V
-	 r8fAC0Jc5IMall5pxPRH0ztCyAYCegMRIMpWq6G6PaxqDRBkDFU+sW45eD6iVjSZjpg==
+	bh=V1Koiwn7qyN+mSbw1/F1d8z1+yJMYX7heppKO6/7M7s=;
+	b=Fga30Qtr0jCcg/TIN/NleytoafhcSVjxvTe9ilZ4zoJOGNIYEOkrD7/F68SmVkqcjaw/
+	 8L2TxB4AXdLBeLaEAQHQLMvcsSsT5vZkCB3Eo20CM49IJW0O3cL1dv9N3c2ZRQmn/ISOY
+	 qJZjbfVKIcRGqhDz3Jvf7ihDmuh/thqfPJBV0DFgjg74fY1livUH58xhdFItYqnxEWawA
+	 HPC0cg/0QZjgc22kRKmRrL3P7AuEAQzroRLRbVj+tMIkDcuEBRGYlorPe1p17ogw3wIBL
+	 yoeirfJAVPQQjaBXdK3TrNrx89rtO5+FpAUaqbfV1MGowoqqTQMR2EwigW9oWGMvSKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tX8zEAp6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0lRDlOmg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867DB608362B;
-	Sat,  7 Nov 2026 14:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DFE608362D;
+	Sat,  7 Nov 2026 14:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tX8zEAp6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BDA1F0089F;
-	Sat,  7 Nov 2026 14:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0lRDlOmg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F8F1F0089F;
+	Sat,  7 Nov 2026 14:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062397;
-	bh=fsDo4Xw86lmlW6LjPxLVHm1Oq2M8jQxpU1BuUfVrhFU=;
+	s=korg; t=1794062398;
+	bh=V1Koiwn7qyN+mSbw1/F1d8z1+yJMYX7heppKO6/7M7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tX8zEAp64ChZWicndSbr1icEJGQ0WRdRSNk0g4g21SsobptcKaNN0Zlqc/cblJ8qt
-	 4H55/Ogf91QSqhXDy2i8/u9Fb6Qd7Vu1PjItJKaYuELuczTF0AkIn1HsCm0EeO0L3L
-	 TVKC0zAuEhS29+qv544a5Xo5ebApd4k9Dk2q86Ao=
+	b=0lRDlOmgUXBJ1Yg/jy5C6inN8OntMCPxYcZ5hLxz5Lw5ag8i5Jf61OreyVNdRnkXB
+	 RUH1XQz62ncN45Fd9cL7VVngLV1G2MMHvy6+KVh/LFcoeJ8Uj5Mn5mdFkit+Tnckhz
+	 hBXNq54odpDyVrrlbY5fdGMQ/6NpExa7JeRfYnlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Ma Ke <make_ruc2021@163.com>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1315/1536] KVM: arm64: Turn vcpu->arch.pause into a counter
-Date: Sat,  7 Nov 2026 08:55:31 -0500
-Message-ID: <20261107135034.737115185@linuxfoundation.org>
+Subject: [PATCH 6.12 1280/1536] pinctrl: stm32: Fix fwnode reference leak in stm32_gpiolib_register_bank()
+Date: Sat,  7 Nov 2026 08:54:56 -0500
+Message-ID: <20261107135033.730128533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,118 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit e64309198eda29415a95113def92aa40196cd422 ]
+[ Upstream commit 54c66b5e47a9b10cbf4a1efe9b01301b7ffee205 ]
 
-We have situations where we can call kvm_arm_halt_guest() without
-holding config_lock, which means that halt and resume can overlap in
-funny ways when called from separate contexts, and result in situations
-where a vcpu is resumed while other parts of KVM assume it is halted.
-Consequences are left to the imagination of the reader.
+stm32_gpiolib_register_bank() walks the "gpio-ranges" property with
+fwnode_property_get_reference_args().  As documented in
+drivers/base/property.c:
 
-Fix this sorry situation by turning kvm_vcpu_arch::pause into an
-atomic counter, which makes the races described above harmless.
+ * The caller is responsible for calling fwnode_handle_put() on the
+ * returned @args->fwnode pointer.
 
-Fixes: 3b92830ad41b2 ("KVM: arm/arm64: implement kvm_arm_[halt,resume]_guest")
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+The returned reference is never put.  The function calls the helper
+twice, once directly and then repeatedly in a while loop, and each
+call overwrites args, so only the last reference is even reachable
+and all the earlier ones are leaked for good.
+
+Put the reference as soon as args.args[] has been consumed, both for
+the initial call and for every iteration of the loop.
+
+Found by code review.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015100539.1011760-5-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: bb949ed9b16b ("pinctrl: stm32: Switch to use for_each_gpiochip_node() helper")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h |  7 +++----
- arch/arm64/kvm/arm.c              | 21 ++++++++++++---------
- 2 files changed, 15 insertions(+), 13 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 4f6afd2c042fe..d955aa0aea8c2 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -703,11 +703,10 @@ struct kvm_vcpu_arch {
- 	/*
- 	 * Don't run the guest (internal implementation need).
- 	 *
--	 * Contrary to the flags above, this is set/cleared outside of
--	 * a vcpu context, and thus cannot be mixed with the flags
--	 * themselves (or the flag accesses need to be made atomic).
-+	 * Contrary to the flags above, this is updated outside of
-+	 * a vcpu context, and thus cannot be mixed with the flags.
- 	 */
--	bool pause;
-+	atomic_t pause;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 857ce101fab0c..79aff59b54f72 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1319,8 +1319,12 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
  
- 	/*
- 	 * We maintain more than a single set of debug registers to support
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 818a742f90ad0..97d993f52b575 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -487,6 +487,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
- 	kvm_arm_pvtime_vcpu_init(&vcpu->arch);
- 
- 	vcpu->arch.hw_mmu = &vcpu->kvm->arch.mmu;
-+	atomic_set(&vcpu->arch.pause, 0);
- 
- 	/*
- 	 * This vCPU may have been created after mpidr_data was initialized.
-@@ -727,6 +728,11 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
- 	return ret;
- }
- 
-+static bool vcpu_can_run(struct kvm_vcpu *vcpu)
-+{
-+	return !kvm_arm_vcpu_stopped(vcpu) && !atomic_read(&vcpu->arch.pause);
-+}
+ 		/* get the last defined gpio line (offset + nb of pins) */
+ 		npins = args.args[0] + args.args[2];
+-		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args))
++		fwnode_handle_put(args.fwnode);
 +
- /**
-  * kvm_arch_vcpu_runnable - determine if the vcpu can be scheduled
-  * @v:		The VCPU pointer
-@@ -742,8 +748,7 @@ int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
- 		      (kvm_timer_should_notify_user(v) ||
- 		       kvm_pmu_should_notify_user(v)));
- 
--	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
--		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
-+	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v)) && vcpu_can_run(v));
- }
- 
- bool kvm_arch_vcpu_in_kernel(struct kvm_vcpu *vcpu)
-@@ -897,7 +902,7 @@ void kvm_arm_halt_guest(struct kvm *kvm)
- 	struct kvm_vcpu *vcpu;
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm)
--		vcpu->arch.pause = true;
-+		atomic_inc(&vcpu->arch.pause);
- 	kvm_make_all_cpus_request(kvm, KVM_REQ_SLEEP);
- }
- 
-@@ -907,8 +912,8 @@ void kvm_arm_resume_guest(struct kvm *kvm)
- 	struct kvm_vcpu *vcpu;
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm) {
--		vcpu->arch.pause = false;
--		__kvm_vcpu_wake_up(vcpu);
-+		if (atomic_dec_and_test(&vcpu->arch.pause))
-+			__kvm_vcpu_wake_up(vcpu);
- 	}
- }
- 
-@@ -916,11 +921,9 @@ static void kvm_vcpu_sleep(struct kvm_vcpu *vcpu)
- {
- 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
- 
--	rcuwait_wait_event(wait,
--			   (!kvm_arm_vcpu_stopped(vcpu)) && (!vcpu->arch.pause),
--			   TASK_INTERRUPTIBLE);
-+	rcuwait_wait_event(wait, vcpu_can_run(vcpu), TASK_INTERRUPTIBLE);
- 
--	if (kvm_arm_vcpu_stopped(vcpu) || vcpu->arch.pause) {
-+	if (!vcpu_can_run(vcpu)) {
- 		/* Awaken to handle a signal, request we sleep again later. */
- 		kvm_make_request(KVM_REQ_SLEEP, vcpu);
- 	}
++		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args)) {
+ 			npins = max(npins, (int)(args.args[0] + args.args[2]));
++			fwnode_handle_put(args.fwnode);
++		}
+ 	} else {
+ 		bank_nr = pctl->nbanks;
+ 		bank->gpio_chip.base = bank_nr * STM32_GPIO_PINS_PER_BANK;
 -- 
 2.53.0
 
