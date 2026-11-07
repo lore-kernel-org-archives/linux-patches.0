@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060811;
-	b=ETF5kz/8ZQBWekz4fg63Jskoj77c6FqX6gbH5fVcdGUz24ohwNmjejH73iZkxvLoS3lL
-	 WaM3c1mibtgtnMTbQ9hOehW906OLZjo0OXfXJnpa1/kI9JZYWCGy52koJl5JdDavVy5S/
-	 zP8JMC9Eb9pFx8wCAqJvS2WXrDBZG3Z0MYcqepkuOCBfHdLXxUm4EGZbndiFeGUkCFZgW
-	 HUiyW5ApEE9+HYJBgJ1Z3gmGGkXtlxvRZ3essHninPLKPXQBVl5Y84A/Iu6BSD3we9R1h
-	 6p6StbAxxO5Hpxtw/PLinbAUIalUv+A/tKNDvDH0E+aV6jDQc5ppJywtT4ocrBqW1rw==
+	t=1794060812;
+	b=wNBQ7/kLakcVB6QVvJKpWZzJVGoPwyzMDk3C86m9vnndDLclnXjlUj33bQGurlQwgq2J
+	 aXjjyaudx/UYDPZf8tmcSjctdHRQusIcWb9Pjg16rOCu4DwPUkVO/iC4zSKC1ZPE2CLDR
+	 9F3qz0at7LXqJQoQ0F9j6UiDpSmrq+3s7lAiTenyQgtdXWiK4doMz+9Se96Io0RdgcpIi
+	 /Y/XV26SeLBwpvLlPs6RXr3VwR15NwUIWMkYOwdqtPy8kb8aTRzHVL50zbFzwx7gmmnpC
+	 n13LGfGdi4tkQbFOlpS+DIOVkDzxdgFUtOIyLPMnVVAbZPCL9bbI/4oms3YtQC7SkJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060812;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6G1TSrqtF7nWMRAVziBWYZ6hoyCGUgWFJOII/ADtOV0=;
-	b=OvbZifhWyNu3HWIKrAtKxTJsLqIoYmzt+bCsl9ciQtImO8Vgd/ml5G041nzafUrh+cfu
-	 kOmqPAEOWuyXl5pJnYddITEnUat0v05M6TATsScXZ0JqMx8WZ+ONGcUugEaIWOacdKf2i
-	 CiLFgGObe12VUYdHBppMXYjXjR8Vtpo2+09fjg8H835Cx6ZTEUCML+wDSYaJ+bC+2Cpqk
-	 gTuBIb5ZF2WPjFxgefgChQ+9yR0XQ89aAYCiDsdc5693/d/DaeZLz5wolzV83iD6LnL2G
-	 ZWQYqXE2eXvx+brJqN6YMe/EN8Yu4lHkXdX5jYNHdVk47ALap0MCYz6i6WIrU0ox3nw==
+	bh=PS9O2EyVqUqFBLdVlNnpKXrhb1u0Grs4vhPgz68QHlg=;
+	b=r/svL7sfrLZgoVB33WYvCzm2Jn3cpdPHRO3QEEsW6474JURGnWn2ruuJT7umQhXMaNsq
+	 DYHNMCMCLEWCk+u9/sasooqGzuIVsRMHuyTEbEod16iYB/3Rmkicc7/eczM2BRnhfRr64
+	 ffCF0/9sBOr/CJVy1f+cXWd6NC4N2MWzCKjGgMFuO5AsSPXky4b7L84vrQ3RlraMFGxsg
+	 1UG6zh9SMpqHDaGB9FAt4bVyhYa9fqKbJrejIOX+H+UGH2drfZ5J0B1l9iycFLdHgOlme
+	 OHsoCjFl32UP+390JHgkWpWlf9+h+Fa85NO1LNEUOWPsr65IuV3uYEBGVvQd/iwSrkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qGvBbUgT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g65E//Xp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD037606A326;
-	Sat,  7 Nov 2026 14:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56E7606A326;
+	Sat,  7 Nov 2026 14:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qGvBbUgT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569661F0089F;
-	Sat,  7 Nov 2026 14:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g65E//Xp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908721F0089F;
+	Sat,  7 Nov 2026 14:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060810;
-	bh=6G1TSrqtF7nWMRAVziBWYZ6hoyCGUgWFJOII/ADtOV0=;
+	s=korg; t=1794060811;
+	bh=PS9O2EyVqUqFBLdVlNnpKXrhb1u0Grs4vhPgz68QHlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qGvBbUgToO9x0hemCV5ucrh+nv7lx7fTULQ14OCEwf1j+t/Yt+q0tdnu5iKdaBTZp
-	 FNbgmSE/oEMYAN8USTj0Qiib9E0bbK98HX4ipV1JcNc+XiETXWQXMoq7zVYb8Ujct4
-	 p+vFqoigkVVjRMR+SR323S3LPpelX4xaN1wX51XI=
+	b=g65E//XpbKjTQbhtC+Lv9Jy4E4piY9IZ3bJX46sNyqK1zHzuP1jrFwFPz95ItZ+5E
+	 je5m31OSgCNBJ67ts0RjiVuf5CngKDPbMnXghV7rEZuhIBNIbm2+8A/XLv6KsNwK6s
+	 gVfUwsYVtj/Kk9QeXv9bWDfx1ffB3r+6A6YPXPvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0170/1536] ALSA: hda: Check snd_hda_power_pm construct error before executing verb
-Date: Sat,  7 Nov 2026 08:36:26 -0500
-Message-ID: <20261107135002.436813818@linuxfoundation.org>
+Subject: [PATCH 6.12 0171/1536] ACPI: FPDT: validate table and record lengths
+Date: Sat,  7 Nov 2026 08:36:27 -0500
+Message-ID: <20261107135002.464091954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,46 +68,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit df27e4dc80c4a30ad206432cb848aab00de22ca7 ]
+[ Upstream commit 458b40fcdd04a9a0334830de5a536d8425454e4b ]
 
-When userspace writes 1 to /sys/bus/pci/devices/XX/remove to remove
-HDA PCI device, the HDA hardware control path is shut down and devres
-unmaps the BAR virtual address bus->remap_addr automatically during
-driver removal.
+FPDT records are supplied by firmware and are walked through
+length fields stored in the table itself.
 
-If a delayed HDA verb command arrives after the MMIO region is
-unmapped, the driver will access invalid virtual addresses and trigger
-a page fault splat.
+Check the main-table entry length before reading an entry, check
+the mapped subtable length before remapping it, and check each
+record length before saving a typed record pointer for sysfs.
 
-So add an error check right after constructing snd_hda_power_pm.
+This keeps malformed firmware records from being interpreted as
+complete resume, suspend, or boot records when the current item
+is shorter than the structure consumed by the driver.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260717024948.506335-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260706094141.82438-1-pengpeng@iscas.ac.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_codec.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/acpi/acpi_fpdt.c | 53 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 47 insertions(+), 6 deletions(-)
 
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index b4006b31251f9..24ecb1101504c 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -38,6 +38,12 @@ static int call_exec_verb(struct hda_bus *bus, struct hda_codec *codec,
- 	int err;
+diff --git a/drivers/acpi/acpi_fpdt.c b/drivers/acpi/acpi_fpdt.c
+index 271092f2700a1..058d1ad47699a 100644
+--- a/drivers/acpi/acpi_fpdt.c
++++ b/drivers/acpi/acpi_fpdt.c
+@@ -165,7 +165,7 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
+ 	struct fpdt_subtable_header *subtable_header;
+ 	struct fpdt_record_header *record_header;
+ 	char *signature = (subtable_type == SUBTABLE_FBPT ? "FBPT" : "S3PT");
+-	u32 length, offset;
++	u32 length, offset, remaining;
+ 	int result;
  
- 	CLASS(snd_hda_power_pm, pm)(codec);
-+	if (pm.err < 0 && !bus->core.chip_init) {
-+		codec_warn(codec,
-+			   "Failed to send cmd 0x%x ret=[%d], hda control stopped\n",
-+			   cmd, pm.err);
-+		return pm.err;
+ 	if (!fpdt_address_valid(address)) {
+@@ -179,10 +179,17 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
+ 
+ 	if (strncmp((char *)&subtable_header->signature, signature, 4)) {
+ 		pr_info(FW_BUG "subtable signature and type mismatch!\n");
++		acpi_os_unmap_memory(subtable_header, sizeof(*subtable_header));
+ 		return -EINVAL;
+ 	}
+ 
+ 	length = subtable_header->length;
++	if (length < sizeof(*subtable_header)) {
++		pr_err(FW_BUG "Invalid FPDT subtable length %u.\n", length);
++		acpi_os_unmap_memory(subtable_header, sizeof(*subtable_header));
++		return -EINVAL;
 +	}
- 	guard(mutex)(&bus->core.cmd_mutex);
- 	if (flags & HDA_RW_NO_RESPONSE_FALLBACK)
- 		bus->no_response_fallback = 1;
++
+ 	acpi_os_unmap_memory(subtable_header, sizeof(*subtable_header));
+ 
+ 	subtable_header = acpi_os_map_memory(address, length);
+@@ -191,17 +198,29 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
+ 
+ 	offset = sizeof(*subtable_header);
+ 	while (offset < length) {
+-		record_header = (void *)subtable_header + offset;
+-		offset += record_header->length;
++		remaining = length - offset;
++		if (remaining < sizeof(*record_header)) {
++			pr_err(FW_BUG "Truncated FPDT record header.\n");
++			result = -EINVAL;
++			goto err;
++		}
+ 
+-		if (!record_header->length) {
+-			pr_err(FW_BUG "Zero-length record found in FPTD.\n");
++		record_header = (void *)subtable_header + offset;
++		if (record_header->length < sizeof(*record_header) ||
++		    record_header->length > remaining) {
++			pr_err(FW_BUG "Invalid FPDT record length %u.\n",
++			       record_header->length);
+ 			result = -EINVAL;
+ 			goto err;
+ 		}
++		offset += record_header->length;
+ 
+ 		switch (record_header->type) {
+ 		case RECORD_S3_RESUME:
++			if (record_header->length < sizeof(*record_resume)) {
++				result = -EINVAL;
++				goto err;
++			}
+ 			if (subtable_type != SUBTABLE_S3PT) {
+ 				pr_err(FW_BUG "Invalid record %d for subtable %s\n",
+ 				     record_header->type, signature);
+@@ -218,6 +237,10 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
+ 				goto err;
+ 			break;
+ 		case RECORD_S3_SUSPEND:
++			if (record_header->length < sizeof(*record_suspend)) {
++				result = -EINVAL;
++				goto err;
++			}
+ 			if (subtable_type != SUBTABLE_S3PT) {
+ 				pr_err(FW_BUG "Invalid %d for subtable %s\n",
+ 				     record_header->type, signature);
+@@ -233,6 +256,10 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
+ 				goto err;
+ 			break;
+ 		case RECORD_BOOT:
++			if (record_header->length < sizeof(*record_boot)) {
++				result = -EINVAL;
++				goto err;
++			}
+ 			if (subtable_type != SUBTABLE_FBPT) {
+ 				pr_err(FW_BUG "Invalid %d for subtable %s\n",
+ 				     record_header->type, signature);
+@@ -289,7 +316,21 @@ static int __init acpi_init_fpdt(void)
+ 	}
+ 
+ 	while (offset < header->length) {
++		if (header->length - offset < sizeof(*subtable)) {
++			pr_err(FW_BUG "Truncated FPDT subtable entry.\n");
++			result = -EINVAL;
++			goto err_subtable;
++		}
++
+ 		subtable = (void *)header + offset;
++		if (subtable->length < sizeof(*subtable) ||
++		    subtable->length > header->length - offset) {
++			pr_err(FW_BUG "Invalid FPDT subtable entry length %u.\n",
++			       subtable->length);
++			result = -EINVAL;
++			goto err_subtable;
++		}
++
+ 		switch (subtable->type) {
+ 		case SUBTABLE_FBPT:
+ 		case SUBTABLE_S3PT:
+@@ -302,7 +343,7 @@ static int __init acpi_init_fpdt(void)
+ 			/* Other types are reserved in ACPI 6.4 spec. */
+ 			break;
+ 		}
+-		offset += sizeof(*subtable);
++		offset += subtable->length;
+ 	}
+ 	return 0;
+ err_subtable:
 -- 
 2.53.0
 
