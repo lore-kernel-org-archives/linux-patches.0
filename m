@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064749;
-	b=ckb0I98/IK4biTdZ8Nu9TZPkaIVCDXfDgDM/t2rmr2D1HE/ilR0fG08VLZ1UTAM6/rox
-	 LNlStKTe+B0kI3Ptb3JkToDcgbhi12msPNjfPlo/WWKpkHSy7aWnrhGBYzSq5iV9NHRYd
-	 69ea9HHE+n8FaYD6UclOKrQSn57hXnVslTzj0x9HxsbhCTYOewENgs/M+O5t7TBzHZG5e
-	 goRlPseOUOJLL/eLgs4xqFl8sMDfiEo9MoK0B6ke+QwPkZ8Uc+3CRgHZMMEC2SdUGcTW4
-	 Wshld6KdOFqUqJJqrHcONCJLKH5uNxVgP6Eqigl67mnf6IlZPtDQD88P5QQZrveQpYw==
+	t=1794064750;
+	b=cfEFbYJB+fVrL7PGRH+p2opP1WrrKpxlm8WSe/a5NFcX4IkeTNGseswx8hs87fWZN0pl
+	 e6F8CPeABpcUeSc6EGZSBILSH046JA45KhTc4Xww2zpc4FnU9GBoisgKX3GthFZnkyTsE
+	 NMwouqZAmBSz1rE9kdpP99Wjrg76+f8XdsMttaZeNREBhixjqr52C8NqRXnuiSIg/B1+k
+	 ctVYccRMeYheWLcqS6wkn5QcUbaVGrBbQ9zILCyregZ2HhomRSorhVOoQG0J6ZY3Zpbg3
+	 wlmOlqTLwZ2OXT96+LJe0O80dJ2n+uFEiUFbkevgpjpGER2nEDrLMImHB3awvWe6SKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064749;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064750;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tcEBnYe+yd1vYaC/xIZsCiPuL+AZX/PeLTiuX0aztkM=;
-	b=rYh7jwYU3LG7IhtZ1qqTtde6D07xZSCZJ24iwulM3vfu6n/2LE/LF6dZRS9nrDr0ks8r
-	 7Aef7TXJsh98xgmpPstvSLuQq29Cbli9do5O7GDqj2O+2gnqPUBSUGv4sHu0zDrsO6JvT
-	 2gnkjd04eHeCjzLcCbJzG2H+IvGORePFZv3ZqavOF8U+boFOXxalIIy8A+SJhZBuYR3Lj
-	 QHz3yENO6Y7ly1k1mmF4Zs9J/DYx0HDiU3iSLMYqT83Qn3KdNgr4epZD6QnOhLiROZT4l
-	 rithP739lffXLUV+0QC3g2KBX3h8DzAAoLI0mcH6nxY1wqUU8LVPBdMmqOxVJ0d8Bng==
+	bh=HLcMBcU5eYXkgg7WBCptmcn5yPDmtLxLwiitrwiHBWo=;
+	b=dSrf8cpHi62euUsJXqKURKFl4fI8CLq+hjwOt7nOtfhjhk0/UxNMQ0TkOJwAMMjW4Ut9
+	 hq16ZM2RGdYXdHIzawixe0CN/Xl2j7xKt/2aqPprHKYcEBk1aZrMJKAGLC3VvRryFTY6m
+	 LDNPeyIC35LAKxxA7F94TvO0IFUqiO8Q5nWSgPJhoDMEqQPlIE+DyhI/1bTYOq1yH/ote
+	 mH9zJpQgg0RibytXbVxWPjN38bsnUoln49a2C+ZlymMFPp9aE45E1mJsuHWb/feAomKC2
+	 k/DCwAUH/9pHQMHgP9QEEyHJFkz5G3mYxH6P3kHTphcBl9jjHcy0oTBy0NHmYpAu6GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW6twKU3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BQotAmfU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233EB606A334;
-	Sat,  7 Nov 2026 15:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7592B606A334;
+	Sat,  7 Nov 2026 15:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW6twKU3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15871F008A3;
-	Sat,  7 Nov 2026 15:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BQotAmfU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259321F008A1;
+	Sat,  7 Nov 2026 15:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064749;
-	bh=tcEBnYe+yd1vYaC/xIZsCiPuL+AZX/PeLTiuX0aztkM=;
+	s=korg; t=1794064750;
+	bh=HLcMBcU5eYXkgg7WBCptmcn5yPDmtLxLwiitrwiHBWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HW6twKU3cRH3JpxjfBekN2kPyGqkVtsp3HVoeodmkBfYntB/Yb+sUdzbGFN4Iqt1R
-	 Sk5nprQklh/C2FKOAkn1cQNccutTXeccQJTSFyP9Vl5Oh/uPwF/dqg+e8RqxhTiEux
-	 J8RznWumcR2IOqizpTnunLjMuEkfzJwxRl8nDNGo=
+	b=BQotAmfUTDqExq/I4g/3Tt+bQLwY7W7i7G1RvG2Kt+s/nmdLPtdyEspNUcDuB1zOT
+	 uqj//HM4Ub8rVC9UNKYL+lZ32esHW3czEzob+yMBWCEtKxELGy1oIO1AFkbTEFLZFv
+	 mkDum7ezBx9AuA/lZ4rgLDGaZdM2LrGoi0t9jkk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kaixuan Li <kaixuanli0131@gmail.com>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0723/1257] f2fs: check every cur_*_segno[] entry on readonly images
-Date: Sat,  7 Nov 2026 08:50:19 -0500
-Message-ID: <20261107134959.232598171@linuxfoundation.org>
+Subject: [PATCH 7.3 0724/1257] f2fs: allow empty strings for journaled quota options
+Date: Sat,  7 Nov 2026 08:50:20 -0500
+Message-ID: <20261107134959.259469469@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,73 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixuan Li <kaixuanli0131@gmail.com>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit 9c4ee79190c8c23a9fb5c07d3bc87eaac514b2bb ]
+[ Upstream commit 0354a04b8c34e26cc66d0f43785d388163b6bacc ]
 
-sanity_check_ckpt() bounds-checks cur_node_segno[] and cur_data_segno[]
-against main_segs, but on an image with the RO feature the goto that skips
-the duplicate-segno cross-checks also leaves the enclosing loop, so only
-index 0 of each array is ever checked.
+Commit 2a3db1e02ce0 ("f2fs: allow empty mount string for
+Opt_usr|grp|projjquota") added support for passing usrjquota,
+grpjquota and prjjquota as flags to disable journaled quotas.
 
-An unchecked index reaches __set_sit_entry_type() through build_curseg() ->
-reset_curseg(), which writes se->type through &sit_i->sentries[segno]. With
-segment_count_main 120 and cur_data_segno[1] set to 200, KASAN reports
-three out-of-bounds writes during mount and the mount then succeeds.
+However, it also replaced fsparam_string_empty() with fsparam_string(),
+which rejects an empty string. As of now, mount(2) and
+fsconfig(FSCONFIG_SET_STRING) reject usrjquota=, grpjquota= and
+prjjquota= with EINVAL, although these forms are still documented in
+Documentation/filesystems/f2fs.rst.
 
-Use continue so every index is bounds-checked, and skip the node-vs-data
-cross-check explicitly, which is the other thing the old goto skipped.
+The issue can be reproduced on an F2FS device with:
 
-Cc: stable@kernel.org
-Fixes: a7d9fe3c3388 ("f2fs: support RO feature")
-Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
+    mount -t f2fs -o usrjquota= /dev/loop5 /mnt/f
+
+Before this commit, the command succeeds. Afterwards, it fails with
+EINVAL and logs "f2fs: Bad value for 'usrjquota'".
+The same failure occurs when remounting to clear a quota file name.
+
+This patch will restore fsparam_string_empty() for the three options
+while retaining the flag entries, so both forms are accepted.
+
+Fixes: 2a3db1e02ce0 ("f2fs: allow empty mount string for Opt_usr|grp|projjquota")
+Cc: stable@vger.kernel.org # 7.1+
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/f2fs/super.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 137b123777edc..7a7348b59f97e 100644
+index 7a7348b59f97e..0278f2f193fbc 100644
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -4307,7 +4307,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			return 1;
- 
- 		if (f2fs_sb_has_readonly(sbi))
--			goto check_data;
-+			continue;
- 
- 		for (j = i + 1; j < NR_CURSEG_NODE_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
-@@ -4319,14 +4319,14 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			}
- 		}
- 	}
--check_data:
-+
- 	for (i = 0; i < NR_CURSEG_DATA_TYPE; i++) {
- 		if (le32_to_cpu(ckpt->cur_data_segno[i]) >= main_segs ||
- 			le16_to_cpu(ckpt->cur_data_blkoff[i]) >= blocks_per_seg)
- 			return 1;
- 
- 		if (f2fs_sb_has_readonly(sbi))
--			goto skip_cross;
-+			continue;
- 
- 		for (j = i + 1; j < NR_CURSEG_DATA_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_data_segno[i]) ==
-@@ -4338,6 +4338,9 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			}
- 		}
- 	}
-+	if (f2fs_sb_has_readonly(sbi))
-+		goto skip_cross;
-+
- 	for (i = 0; i < NR_CURSEG_NODE_TYPE; i++) {
- 		for (j = 0; j < NR_CURSEG_DATA_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
+@@ -338,11 +338,11 @@ static const struct fs_parameter_spec f2fs_param_specs[] = {
+ 	fsparam_flag("usrquota", Opt_usrquota),
+ 	fsparam_flag("grpquota", Opt_grpquota),
+ 	fsparam_flag("prjquota", Opt_prjquota),
+-	fsparam_string("usrjquota", Opt_usrjquota),
++	fsparam_string_empty("usrjquota", Opt_usrjquota),
+ 	fsparam_flag("usrjquota", Opt_usrjquota),
+-	fsparam_string("grpjquota", Opt_grpjquota),
++	fsparam_string_empty("grpjquota", Opt_grpjquota),
+ 	fsparam_flag("grpjquota", Opt_grpjquota),
+-	fsparam_string("prjjquota", Opt_prjjquota),
++	fsparam_string_empty("prjjquota", Opt_prjjquota),
+ 	fsparam_flag("prjjquota", Opt_prjjquota),
+ 	fsparam_flag("nat_bits", Opt_nat_bits),
+ 	fsparam_enum("jqfmt", Opt_jqfmt, f2fs_param_jqfmt),
 -- 
 2.53.0
 
