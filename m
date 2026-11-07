@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794060997;
-	b=BfkOAFkGew2UW6XpEd19pKTI5m7nMkc3SImvUMycYlpeJ6Sx6rybNJOkvObnqIRUfN1p
-	 MPGqa83TEjsQ2q7qb2ORPpvgTjO2vV/YAXqju8rPN9XI8G92iDEmMXD9c0EZ7BYmBGGCc
-	 v5y7wDrP2CVBYmnO9sw2STWhPUg8rItft2yy0MVwPB5t5NEjlTQwcQIScpTsO806w2FUW
-	 rBMBeZow3/4iDaqaRsWhecAIKtuTp+tkyi0k1Lc1YvTVJLRBt6CQlnJkP4WhuRZdBUCop
-	 gb6dleoegymy8sNOhKq1sHz6VszUYoZzVO16NuKzsqoNKty56cO0nKkPGXlQxnrOrlg==
+	b=zcNcmRSGIJGAmX9Hd8fFJKZOzGXaf7Zg5ujqgL3ZvIEMvlN+n760imsSgWGjeNgLZXnC
+	 FKSHqQwENSp0OUikBxMar9ZMkDGehtkSb7UFoSF1CFKADlw8cAZZBAAFSq/JuDhHy7Xub
+	 ZHUdZT4FCEzBXzgmasu+HG1gyr4/Rdt/noLq1ukj+XNpOHi7Wn097B7dQoy2zX9tpdiX1
+	 z1PLfgnzUdE1liMmIW3gQVFGzBc5jwl//KTAQw34WB1+LmDF5WUw3J4aEjQeBwNPwVqYo
+	 4wbGT7z00MDt1NQ2epO3yGJ2+uPOtb4db7tZ2AsHwHtIXh/qHg1CarOEgaMUjTEA/kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794060997;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7w7MNnWv22+cHYB2LljtpnZeBN10WcschuRMHwBzvog=;
-	b=z+H08t3aNh7CFGQQVnQfei+QmSaoYM0yWmEV9Z67W59uJHlrdRaXM0XRwEpNjHYQB0Hx
-	 3H0VLlKc74pdKWCFR3kKhGGr/Dr2LkFGwNVcVy4qeKg3yxx3kRelTvffq1PuayGVt5AXR
-	 sA2QPumoZwcLol5pPY9xoChfLFyZbxX9XuONrPHJgrhLk2leBBzu3F/RbGfxMBNoa2iXk
-	 LPPy1M2gJ6owI5aIEw8x9AIXrnRr771dcDBSmyZyq7r2R7aD5sTGU7/QuT9wVXbA1rHQw
-	 CroyOnE5wTyhnQg4RXFIAxxS4fWSp2IcHy0S2HtC0JDIlEorf8Od7wdMfRut6WYm0Tg==
+	bh=ASD88ZdN/+XsvCex5GN3NkMTSkAwc6x8mvVde+aMGO4=;
+	b=I6niycvMDv4KUrBxPQLNNR9P0V7Th/ozTLZu/Fh3O2h/XoNtVxLb4D58dDAvIriWtfJL
+	 m6T1oXffF7XlbueBXrNGrIQHnS5eR6EUVwMkNJlH+bPRd/Rh1Oq0fJ6aV8gGRPqQc6hNV
+	 XBM9u/tAKXe3hKTBwoWBKKerijIA/0B6KQBZ/eNLoVYqGoabegKRTv/EwZEzz5j0pdgF9
+	 yxa1ylbAM8YFlXM/ROsHOkq9GTVsb2Bj72Sw4LqB957Pu+UYtOUAI9jNNL5xBtlhzRRBf
+	 w0SUVg9+vztyD3W7ii8JkBgKrOJdKvQVUBlCmrnfiRfxtyivSKuW6hC9fHXzvbknDHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A33Io6dg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElU03gxW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15E5606EE8D;
-	Sat,  7 Nov 2026 14:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB92606EEB8;
+	Sat,  7 Nov 2026 14:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A33Io6dg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0868E1F008BF;
-	Sat,  7 Nov 2026 14:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElU03gxW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200761F008A2;
+	Sat,  7 Nov 2026 14:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060993;
-	bh=7w7MNnWv22+cHYB2LljtpnZeBN10WcschuRMHwBzvog=;
+	s=korg; t=1794060997;
+	bh=ASD88ZdN/+XsvCex5GN3NkMTSkAwc6x8mvVde+aMGO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A33Io6dgmCIQtSkfgLN8j0Z5X5i7ZcroAj4JanqA0u1pXXdg/oYa6rGqqZA2jo4ju
-	 JBg24JWEMq/OE0T/dbiXm3Te5Gix0oRRXGs8zHm6Lrf9BGaJJDD5YUNmIxqIeXPly5
-	 sETJ2yBQUK5il3Hqs9Y7xlb3lUz/WjlSljLKSOdc=
+	b=ElU03gxWwrDWqBDaWxunfbIz6SKKXlZmPrb/EIlK34iT9OEaQjq3o6SWozUeCme15
+	 j1rvT3WF2pzdxstNwBbyJrivFkhDTUBIFbfa/ZGGtw84ocBDTtarFuiULYA3Fc7IVX
+	 Kntbf2U6PmEwxGvynFXdp8m+E83UUFDRpBKQvB4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0341/1536] ksmbd: reject SMB3.1.1 binding with mismatched cipher
-Date: Sat,  7 Nov 2026 08:39:17 -0500
-Message-ID: <20261107135007.260719643@linuxfoundation.org>
+Subject: [PATCH 6.12 0344/1536] ksmbd: handle empty QUERY_ALLOCATED_RANGES output
+Date: Sat,  7 Nov 2026 08:39:20 -0500
+Message-ID: <20261107135007.340928125@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,53 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 7019a11f79dc408f2b47b1027240e7f198784c9a ]
+[ Upstream commit 7f07791522a251e2be087d11ae9cd51eb3408f1d ]
 
-SMB3.1.1 multichannel connections belonging to the same session must use
-the same negotiated encryption cipher.
-
-ksmbd validates the dialect and client GUID during session binding, but
-does not compare the cipher negotiated by the new connection with the
-cipher used by the existing session channels. This allows a channel
-negotiated with AES-128-CCM to bind to a session using AES-128-GCM.
-
-Compare the new connection's cipher with an existing session channel and
-return STATUS_INVALID_PARAMETER when they differ.
-
-This fixes smb2.session.bind_negative_smb3encGtoCs.
+FSCTL_QUERY_ALLOCATED_RANGES can be issued with a valid input buffer but
+without room for an output range.  Do not reject the request before
+looking at the file layout.  If the query would produce a range, return
+STATUS_BUFFER_TOO_SMALL.  If it produces no ranges, return success with an
+empty output.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/smb/server/smb2pdu.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 89eea430e9155..5ec635d840cad 100644
+index 3ff76c851cc40..2c74e0fd82b9a 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -1756,6 +1756,21 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 			goto out_err;
- 		}
+@@ -8260,8 +8260,6 @@ static int fsctl_query_allocated_ranges(struct ksmbd_work *work, u64 id,
+ 	int ret = 0;
  
-+		if (conn->dialect == SMB311_PROT_ID) {
-+			struct channel *chann;
-+			unsigned long index;
+ 	*out_count = 0;
+-	if (in_count == 0)
+-		return -EINVAL;
+ 
+ 	start = le64_to_cpu(qar_req->file_offset);
+ 	length = le64_to_cpu(qar_req->length);
+@@ -8273,8 +8271,18 @@ static int fsctl_query_allocated_ranges(struct ksmbd_work *work, u64 id,
+ 	if (!fp)
+ 		return -ENOENT;
+ 
+-	ret = ksmbd_vfs_fqar_lseek(fp, start, length,
+-				   qar_rsp, in_count, out_count);
++	if (!in_count) {
++		struct file_allocated_range_buffer range;
 +
-+			down_read(&sess->chann_lock);
-+			xa_for_each(&sess->ksmbd_chann_list, index, chann) {
-+				if (conn->cipher_type != chann->conn->cipher_type)
-+					rc = -EINVAL;
-+				break;
-+			}
-+			up_read(&sess->chann_lock);
-+			if (rc)
-+				goto out_err;
-+		}
-+
- 		if (!(req->hdr.Flags & SMB2_FLAGS_SIGNED)) {
- 			rc = -EINVAL;
- 			goto out_err;
++		ret = ksmbd_vfs_fqar_lseek(fp, start, length, &range, 1,
++					   out_count);
++		if (!ret && *out_count)
++			ret = -ENOSPC;
++		*out_count = 0;
++	} else {
++		ret = ksmbd_vfs_fqar_lseek(fp, start, length,
++					   qar_rsp, in_count, out_count);
++	}
+ 	if (ret && ret != -E2BIG)
+ 		*out_count = 0;
+ 
 -- 
 2.53.0
 
