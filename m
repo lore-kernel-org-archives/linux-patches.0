@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063877;
-	b=LpWFPOB8+sbnl1QW+AegUbHs8xPwc0gNge9fcSrhDmMoUs79cCaXhH8D6u67Un+cY0d6
-	 YJ6wRQ/+YPM9djbRFf7jHaeSyHoFqUv1sYTsYnqp3rDUUzwSdeAAhpu2DyHZC2lPrvZ0Z
-	 vq2BO3mcxJs/o448ut/fDUJJwzsJVx9Z5yQWVLbYaCpO2Q6JCjtD/7v+V9XJLE+RnRvg7
-	 PnMndnWiLtTLmYW1PyfOqvAgYSF1zFQmdCg5h2oIVVJZTkxmqUAmnUIDnf8KOJyCIOTOR
-	 pquQl7pJ3AcSV6q6PXqXCLwO/oOsdRz+VHouW8SKha9jYct4yRD7eyfQIUhqCLCoCFg==
+	t=1794063878;
+	b=4gBqJOIdadwTBpN8BrOl2iK/vsvQVuZdraDZ7lShAwHlctZwYpk2eQzdIqTbriJm5GMT
+	 GzW+us8s9mjITYsVqWJNI77e/FFgUpB4vqDiIqJZqZONi3F737rX7rVrsSFOdE8eM0p+J
+	 8Eyo74WDd4fCBGm0idirJbC9Z3cxKVx5ZpLc908DItqSxt0Zl0Y6160RXlpI6gAwpuZ7j
+	 FHTN7j0iF94L/zx19AiVEgdyUqnsrAHrKc5i5GlVFq0HnltQg2Wo/PSD54xEXi3A7MXgc
+	 ZGuRcvTzeWYshIlkEyQIHs8p4fVpN9F7CCnPpN0S7AHP3ovBSb9FhBkjnEc4Lg3iarw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063878;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/vWIkIO0HaGT0R7rV31M0UwIJiW0wAGn4AR8PM/YZVs=;
-	b=z7phdwbSnTwksBbTG3bQS4CDnDzAKgrW2kcCuRlVWb2ikLskSxCGWmADRzr+zkHIFzuz
-	 HIad23cUnk5BxWsV8YpDxrmSrtFreB/Pl5BiN0T2KerfrOrrd03/JLF5DiZYApTZP0miM
-	 wUBtMSn+ho2p7K54qNeyUh8yit3/HOg4zemQs4PsqTWffKGfH138DsVr8zxo4sRrJT6nJ
-	 di2nuXmt8loEbAoHfM3SA+U5LDAmgIQwiG0flFgoUzZh/DjtHVKcUP6eAQKH6JQT8BM3j
-	 VDXEKoDcjnJbNOB1NY0ToXlLtYYqScFVjy1M8RI3Jt4Mb4SVl3NnHPsopkK4mSJoLOQ==
+	bh=bnMKaffwmDTk9YpoQTsCZDEYuPtJ8UUyFfrrf7RW14c=;
+	b=GERC+1JFElT8KZN4B8Wxi7LN4ICtWI99IkERX5RQPFzSKqfy2ViYxVNmsyk1gVyrYDHa
+	 /d6//DG/rlu7f7Q4remxRJ1EJfkXxsZ3dVm0OSYW+14FAcWWzCo7KTxUIYxea6yGdZy/c
+	 b1saKuuRFgZDvJMrPNFgHPuyiZMyyXPo136ZQLda9oix+eLojTKmPK8/61UGuZwM0IBxM
+	 BjiQnfPCQ/AxGAtHTCd/qDuIyX2PoUmWiU8gwqWOv/N3Nu/ZF4KG4/IZfR4tgZn5Tf7dX
+	 jgpa5+JNC62Iz86nzXoH5UCXjyLd2tyT9hgcdi0ZjU9udI5qZ5kv2BukZlmwY9Z8ZAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jl82P3No;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fTD/d8IZ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5827606A339;
-	Sat,  7 Nov 2026 15:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6A2606A32F;
+	Sat,  7 Nov 2026 15:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jl82P3No
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B391F0089F;
-	Sat,  7 Nov 2026 15:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTD/d8IZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5AD1F0089F;
+	Sat,  7 Nov 2026 15:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063876;
-	bh=/vWIkIO0HaGT0R7rV31M0UwIJiW0wAGn4AR8PM/YZVs=;
+	s=korg; t=1794063878;
+	bh=bnMKaffwmDTk9YpoQTsCZDEYuPtJ8UUyFfrrf7RW14c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jl82P3Noo98lgMaOPLCe0yvWqc19ugi39rIIA8FmMjI0UkKCYkgMYW9TpLvXayLGo
-	 KnOLWRmGcxj9y/KWfnjiHVkvk/iT7clWRiykLU4Fi3Hgg8vtinqOnCTHnsKE0Ql8Kb
-	 DGat4ibTzx3Q6SX1/NHkXLePQJhHs/bRBFuPbH2w=
+	b=fTD/d8IZ12T7e6cqnOHykXhL19GaCRet4xVv7jlLeOSNS+0HY94WKj9iaM4YRDstB
+	 YK5pmxFi4iI6N8el8PqkSgp82quS/yVKb8u+ZDB2ESWpdhMq/qzsqT2ztu8RBSDNvg
+	 iZeXaCbAIPBeWQNX5AoEDi1/dJqUwapME9BSQBKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0080/1257] thermal: intel: int340x: Fix temperature selection around 0 C
-Date: Sat,  7 Nov 2026 08:39:36 -0500
-Message-ID: <20261107134941.585231177@linuxfoundation.org>
+Subject: [PATCH 7.3 0081/1257] mtd: rawnand: ndfc: use devm_platform_ioremap_resource()
+Date: Sat,  7 Nov 2026 08:39:37 -0500
+Message-ID: <20261107134941.612586739@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,62 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit e56e2b49c67d132728e52ce493079e83cc914657 ]
+[ Upstream commit 0d66f9895f286d2fab396a71e6efeb95c4a7e5a6 ]
 
-Since commit 7251b9e8a007 ("thermal/intel: Fix intel_tcc_get_temp() to
-support negative CPU temperature"), intel_tcc_get_temp() can report
-negative temperatures.
+Replace the open-coded of_iomap()/iounmap() with the managed
+devm_platform_ioremap_resource() helper. This fixes a mapping leak on
+driver remove (the old code never called iounmap()) and simplifies the
+error path by dropping the manual cleanup in ndfc_probe().
 
-proc_thermal_get_zone_temp() still uses *temp as the current maximum and
-as an implicit "no reading yet" marker. However, this breaks when a CPU
-reports 0 C, because a subsequent negative reading can overwrite it.
+There is no overlapping memory-region concern introduced by this
+change: each supported board DT describes a single ndfc node with a
+unique 0x2000 register region, and the EBC parent uses dcr-reg rather
+than a MEM reg resource, so the newly added request_mem_region() cannot
+conflict with an existing reservation. Distinct chip selects map to
+distinct 64-bit physical addresses, so CS instances do not overlap.
 
-Use bool temp_valid to track whether a valid temperature has been read.
-Initialize *temp with the first valid reading and only update it with
-warmer readings.
-
-Fixes: 7251b9e8a007 ("thermal/intel: Fix intel_tcc_get_temp() to support negative CPU temperature")
-Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260826153144.299746-3-blum@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: a808ad3b0d28 ("[MTD] [NAND] ndfc driver")
+Cc: stable@vger.kernel.org
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/int340x_thermal/processor_thermal_device.c   | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/raw/ndfc.c | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
-index f80dbe2ca7e47..b0284c2e2e74d 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
-@@ -179,17 +179,21 @@ static int proc_thermal_get_zone_temp(struct thermal_zone_device *zone,
+diff --git a/drivers/mtd/nand/raw/ndfc.c b/drivers/mtd/nand/raw/ndfc.c
+index a48274297d3b1..d6db04d48c45a 100644
+--- a/drivers/mtd/nand/raw/ndfc.c
++++ b/drivers/mtd/nand/raw/ndfc.c
+@@ -185,10 +185,15 @@ static int ndfc_chip_init(struct ndfc_controller *ndfc,
+ static int ndfc_probe(struct platform_device *ofdev)
  {
- 	int cpu;
- 	int curr_temp, ret;
--
--	*temp = 0;
-+	bool temp_valid = false;
+ 	struct ndfc_controller *ndfc;
++	void __iomem *ndfcbase;
+ 	const __be32 *reg;
+ 	u32 ccr;
+ 	u32 cs;
+-	int err, len = 0;
++	int len = 0;
++
++	ndfcbase = devm_platform_ioremap_resource(ofdev, 0);
++	if (IS_ERR(ndfcbase))
++		return PTR_ERR(ndfcbase);
  
- 	for_each_online_cpu(cpu) {
- 		ret = intel_tcc_get_temp(cpu, &curr_temp, false);
- 		if (ret < 0)
- 			return ret;
--		if (!*temp || curr_temp > *temp)
-+		if (!temp_valid || curr_temp > *temp) {
- 			*temp = curr_temp;
-+			temp_valid = true;
-+		}
+ 	/* Read the reg property to get the chip select */
+ 	reg = of_get_property(ofdev->dev.of_node, "reg", &len);
+@@ -210,11 +215,7 @@ static int ndfc_probe(struct platform_device *ofdev)
+ 	ndfc->ofdev = ofdev;
+ 	dev_set_drvdata(&ofdev->dev, ndfc);
+ 
+-	ndfc->ndfcbase = of_iomap(ofdev->dev.of_node, 0);
+-	if (!ndfc->ndfcbase) {
+-		dev_err(&ofdev->dev, "failed to get memory\n");
+-		return -EIO;
+-	}
++	ndfc->ndfcbase = ndfcbase;
+ 
+ 	ccr = NDFC_CCR_BS(ndfc->chip_select);
+ 
+@@ -232,13 +233,7 @@ static int ndfc_probe(struct platform_device *ofdev)
+ 		iowrite32be(be32_to_cpup(reg), ndfc->ndfcbase + offset);
  	}
  
-+	if (!temp_valid)
-+		return -ENODATA;
-+
- 	*temp *= 1000;
+-	err = ndfc_chip_init(ndfc, ofdev->dev.of_node);
+-	if (err) {
+-		iounmap(ndfc->ndfcbase);
+-		return err;
+-	}
+-
+-	return 0;
++	return ndfc_chip_init(ndfc, ofdev->dev.of_node);
+ }
  
- 	return 0;
+ static void ndfc_remove(struct platform_device *ofdev)
 -- 
 2.53.0
 
