@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060774;
-	b=05YOHBUtONHCSi7BOU4F+Ud9xHDtk4Q3m6XLaPnCAYu3HbGk60BO2UrHFyMUsU+j87Kd
-	 CDEcjsTm8A+q1RdX8T50k8tOu3Ji2VfXGasRDTcDJtm41xOnKHNfXyPGJXi01DDsrkDDF
-	 FU0b5+hi09IklYRkdVuS1s/UNwPEoaZRbes2MRANgFYWRCkvDrfG7tg1u7QLezzXbs+f3
-	 vO5v+yCr6LKgrGhqd7AnRMVO77OuMRwPP6n0+zwhizfzI+A7FGWYlMyf063jHq59B4Dtt
-	 nbmw7GNU3gdEHYmMHdpcZDHAIlaTlrpvvaoMcjJU1N22ZS+P2Iu72Bn70i7PQ4MIVsA==
+	t=1794060776;
+	b=eIxLgF1aIGo5xhPQFGTw5W3Z6l6BnP5vAejhYxyZdxBS5PPWmijVtOs8ygPb/1fzPS4T
+	 2PPtbIB2qxiLtclEvGfBm1XG11SwbDnsZvK9J3UO3NUOUQNwaPHEB7Vq9fv661dTFPdLB
+	 0PswKAsiJ7c7X4+Fztl3xaAdF9yldJN48tGBam9tp60VFhvhgwkwDl672vh3WshNOvGz9
+	 xtnD/Vt03TSzoTzyMiM3ij1NiZ2InQdeH54VcUuaWNkDw6Sohw4hFx9t7HsjuMygQBduo
+	 xgccvvfkfwMPEdWlSX//V7jgsPurZ5usZXfDHXbMi5Q/40GyHW+8BPKGXG4vPFr42hA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060776;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mcBGxJdzelyhYfw1PBKSKVGgIy4fMVjJZfnDye5grjE=;
-	b=ljieeHMp3ZECzw+3d54TK+2GEtMOuSEk8dZ0Xy44ppFK2BnCx7ERM0YZ+Fz+Qlek5KYf
-	 Fz7+VRoZKsDQ+2U0vK80z1dnBP7B5GG8Gi0FuAHvWLshdnDl5R5xGlLigdtzOFImDjs7U
-	 UBV/Fv0bFROPkOOA8BR+ZfxK7MePvDDbyutZWxtyljM9agwEkvA1CSBmcDxFODt138dDm
-	 PYWdySVkCV4Wd67PJhXxvHzURBsZeGctyNSxMOEH/RGfwGAqjl0R5aD/R5gDzJBeTIrmw
-	 YyoKYJ+sCS+ZLgmUG9ASY0C+hTxdreau8aRRau0lxoL5p91bEaH0+oN8o/EkHAAxj3Q==
+	bh=K0jQmOjHXG9QvGpRhXmdvmi3bkRxt2La51ay9h5HoYA=;
+	b=JaAKDUhnH/OCl6Ogv31dfEFCoLS3VYqMYgbO4XfDBnMQc3qkP4pMChdkJBAdzqMYwib/
+	 RARbo6MKuiiwO40M8KumQ3fT42Z7DXV89Ol4sDhyZy8iFKGQy7F93NMx9TYRI08sBXhWR
+	 Wb+tBh1wImn3gGcDRZQZJ+MChBHMGGJxDpSMZTr30p/1TYTxQAyhCRs1c7nx9TDtATB73
+	 fNjTwyKjf9Js/2wV4FfSTtf13Ovj0SW2EhRVvvaghdHEr7lLdmIQ/kHYuCLtXn03p9Pjk
+	 ECaLDI26q71BnfSwoxAPvS4twCKDBtS45D3B1e/oWnk7IgqAzZ15oO+CFwaDD/HtDOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kAMI4I+d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4bzw1VG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A639606A326;
-	Sat,  7 Nov 2026 14:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3621606A326;
+	Sat,  7 Nov 2026 14:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kAMI4I+d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344E11F0089F;
-	Sat,  7 Nov 2026 14:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4bzw1VG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFC71F0089F;
+	Sat,  7 Nov 2026 14:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060774;
-	bh=mcBGxJdzelyhYfw1PBKSKVGgIy4fMVjJZfnDye5grjE=;
+	s=korg; t=1794060775;
+	bh=K0jQmOjHXG9QvGpRhXmdvmi3bkRxt2La51ay9h5HoYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kAMI4I+dUYra69W2NQbhGy/f3AExpddyw2PboWJFls9r13tXuW9c7rjWmTr6iRyzc
-	 JX7Mr5bg9b6ymAG9FQVR1gwTZkUKQWyiRyNVznja/v4IJbJBAgJGKOCRE+PifqMjx0
-	 MjdekRlC+xsXWYJwQu/HcKoMdhMUaJkmmfXpOlrA=
+	b=T4bzw1VGsfeALdLdnh1O/wxZt9AcgZKOh6nJCjRiKHozdqejkFFJwjLwuUfuWHiWl
+	 PH3rQ99KQir01bi91XefzH1tJD0H/V5i3ZHbYJqNP5Z48RDOLEywIAGVsCRQzqlMTj
+	 64wX6pJ0KIg1Or70Pbh/cDRA4yN2ffMetsidUUXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Sherawat <asherawa@qti.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0165/1536] drm/msm/adreno: Add support for A704 GPU
-Date: Sat,  7 Nov 2026 08:36:21 -0500
-Message-ID: <20261107135002.302785134@linuxfoundation.org>
+Subject: [PATCH 6.12 0183/1536] power: reset: piix4-poweroff: add missing MODULE_DEVICE_TABLE()
+Date: Sat,  7 Nov 2026 08:36:39 -0500
+Message-ID: <20261107135002.797866595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,41 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Sherawat <asherawa@qti.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 1f69339da06255a7f8560b4768fff83992c03deb ]
+[ Upstream commit ffefc5d9a052f67bc87b57d1107fd7cc1fa1a3d4 ]
 
-Adreno A704 GPU found in Shikra is an IP reuse of A702 GPU with very
-minimal changes. The only KMD facing difference is the chipid and the
-zap firmware which is specified via devicetree.
+The driver has a match table for the pci bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Just add the new chipid to enable support for A704 GPU in Shikra.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Signed-off-by: Aditya Sherawat <asherawa@qti.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/738931/
-Message-ID: <20260710-shikra-gpu-v6-1-b388ec5dce77@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704152336.51384-1-pengpeng@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/reset/piix4-poweroff.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-index 8bb23012994c6..829fb746645a8 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -1281,7 +1281,7 @@ DECLARE_ADRENO_PROTECT(a730_protect, 48);
+diff --git a/drivers/power/reset/piix4-poweroff.c b/drivers/power/reset/piix4-poweroff.c
+index e6822c0210000..1a6f3d22d2974 100644
+--- a/drivers/power/reset/piix4-poweroff.c
++++ b/drivers/power/reset/piix4-poweroff.c
+@@ -96,6 +96,7 @@ static const struct pci_device_id piix4_poweroff_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82371AB_3) },
+ 	{ 0 },
+ };
++MODULE_DEVICE_TABLE(pci, piix4_poweroff_ids);
  
- static const struct adreno_info a7xx_gpus[] = {
- 	{
--		.chip_ids = ADRENO_CHIP_IDS(0x07000200),
-+		.chip_ids = ADRENO_CHIP_IDS(0x07000200, 0x07000400),
- 		.family = ADRENO_6XX_GEN1, /* NOT a mistake! */
- 		.fw = {
- 			[ADRENO_FW_SQE] = "a702_sqe.fw",
+ static struct pci_driver piix4_poweroff_driver = {
+ 	.name		= "piix4-poweroff",
 -- 
 2.53.0
 
