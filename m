@@ -1,64 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063626;
-	b=FVSYATsIdMOxN5WiJZBxjtRce0L7tJz7/kTVIxV5d/848oVW10TSOs41G+DfFK+vxkrT
-	 VjvGGFeR+YETgIMqUiIZrbudCfnMNW081BFWBDkJz3BmkVOlycw2hAVgy3kxv683+fUf3
-	 BcDgYVzJiD7pxcvw94qiFsTolFa5cUPyJIRwNk9SFX/kYMgd9HqKvWJ1f0oZVxHahSEeT
-	 Vx+ftJuUddMMSzcoxmS1lHuQZoHXvjFPZ3Fq11Og5vllAqI9NQ7dYVND4w8+BqCS20F7Q
-	 Jpnt4sm9Qi5V+wnsfFlB6zvz0R4kthxv5UXmqoyhN+yJVJdUZZKSRMrj0e6nXWOmvDQ==
+	t=1794063627;
+	b=UDa3FhZDfU5kWVVYe9f4JzfuN08ge9VlgdI4BE51LGAs03Rt8gkjYn4BEKrmwtexxNCl
+	 cnDt0RBkYfNDKwxPoUxri1ODU2fklVKwOJa95IlY6hjg1O+FhDe7K3mVvLgWl81Se8sCs
+	 mlP6as5BrEv/BrXX0A9xQDiJrxf4AXOfDbIUuBqp0X7GPFzds+/fJI8Vy8pexMSMrM6ul
+	 EQUDniZaqBoA444/8JQrW8Ysj41WoYXOAHiMPqFPQBfst/O05AgBOZVDo7WYFI1Tqz6uJ
+	 pTP0LfRo1BMvb7oDfKb90LpzHo3k6vU53fOz9w0kNvYx8UakFk+TQroVlfSVKbnIh9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063627;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZWAXOumCFwczrMWOP4ImlEW7R7AmMzXnyKhOqwa7JuU=;
-	b=NzGluHPOjV+6nSzmXkIS8S8P5QY5CKWJEv5HWlkvc7gF4IKI62FhxUBugUM0mROOeS6T
-	 y8CzTJduDPqBb4/GOAGpWDNK0YUcGTrDnJ5aeaiAlllOaaDS1elCzf7n26WXLBszubGRc
-	 sNEzMyOfC2mPRh3wPYojczo3t9xfSkYwXPeJC9oIIDsC+J2r986+P9o4XwWdsabJo3Dzd
-	 1CqhcC24nlDtyH5STgdm0MJPtvXrkROv6zb4Gt2EzyIQbEs4gBsWZ7hfdp7yVhOuuWpoj
-	 tW78bXwuUW/lllKvjoK2FSWDbXaI2wl8/R+RkwA4SqN2utK1nLwrdXoL5LV1u62qg6Q==
+	bh=O74PPJk14VcsnIRu6kW/HfV1cpTiQVBi1NBlnHnflX0=;
+	b=Mrqux2n1NhmFFepmsB8ZoTs6H1f5tmWmzgaFOOCEi3sqy0uBRBkiqHpqr9spxpUb0Eld
+	 aXR9Ct7/QhLYACB4pIZEHVt1ETBmE3TZoeUVD1UfXPLObDIjTrSVpRYhUTA0hmUXLzlBb
+	 L66SRucPRG/MGGvtyKIYxakrXaOVHiWHnvxw2NSrVIHS9EsQqyhCCDcKy+gx0IXCS6UST
+	 JzXuZM24cKfkla2KweZ0aMlNBadRLoJPb5wmOjc/HzRs9yY6w0PatGvuMLAmtGULGO6Xx
+	 KGrfV+SYTijA6FnG06yAPsIm9VYHWC+FSGwPSnLdIkVKjSH9/zik0ntXX4LHERmS46g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XugMcdom;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g8agJfui;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E762F606A333;
-	Sat,  7 Nov 2026 15:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F98606A333;
+	Sat,  7 Nov 2026 15:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XugMcdom
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CB31F0089F;
-	Sat,  7 Nov 2026 15:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g8agJfui
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C849C1F0089F;
+	Sat,  7 Nov 2026 15:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063625;
-	bh=ZWAXOumCFwczrMWOP4ImlEW7R7AmMzXnyKhOqwa7JuU=;
+	s=korg; t=1794063627;
+	bh=O74PPJk14VcsnIRu6kW/HfV1cpTiQVBi1NBlnHnflX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XugMcdomc4S9Ikhrt2XkFmN79C9y9Iyr5A6YkYPwzHRmJd1Hu9PiJbnviOoBoSOwb
-	 qHvqIDh3s2jgs0Xye/rFfeLG/AFcfqyVBgbnEY739Ce9UxVnqAxhb8dB9AIK2Fd86t
-	 DyxJT/ZfKofov2FYg9Z032T6COaGu9El94LhDJag=
+	b=g8agJfuiG3ww7rzqZfkshObPYQw44dMpa6Jwzq6ZL4OMKMyZZsMXSPuo9GjE9BnYX
+	 hBoaAyq41AVYYmFxR2s6Zr42HUHxzdVDfq6/BnJ7ojHUJyNli/8w9BeU6/KgwR2mjV
+	 FP0HuLjFhcKIBumX+vLRj1nETL+qywuaAyK0H/ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Wei Yang <albinwyang@tencent.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	Vlastimil Babka <vbabka@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Rik van Riel <riel@redhat.com>,
+	Jann Horn <jannh@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 744/869] mm: disallow ioremaping ordinary RAM in generic_access_phys()
-Date: Sat,  7 Nov 2026 08:57:06 -0500
-Message-ID: <20261107134918.022281016@linuxfoundation.org>
+Subject: [PATCH 6.18 745/869] mm/madvise: add cond_resched() in THP branch of madvise_cold_or_pageout_pte_range()
+Date: Sat,  7 Nov 2026 08:57:07 -0500
+Message-ID: <20261107134918.050137834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -80,97 +74,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Wei Yang <albinwyang@tencent.com>
 
-[ Upstream commit 4590752e20aa393cc0d4fe538c0747d14a98c97a ]
+[ Upstream commit f5cfc8e3b20ad71949a1e5623ff45882c063a71b ]
 
-generic_access_phys() can end up getting called on CoW PFNMAP mappings,
-resulting in it trying to ioremap anonymous folios, which especially
-the x86 code doesn't enjoy, and which is in general just odd/wrong.
+During stress testing with stress-ng on a 256-CPU system, a softlockup was
+observed when madvise(MADV_COLD) was called on a 31GB memory region backed
+by transparent hugepages.  The region contains 15935 THP PMD entries, and
+the softlockup was triggered after 14485 of them had been processed.
 
-E.g., with a CoW mapping of a PCI BAR:
+The THP branch of madvise_cold_or_pageout_pte_range() has no scheduling
+point.  walk_pmd_range() invokes it once per 2MB PMD entry with no
+cond_resched() anywhere in the loop.  Each iteration calls
+pmdp_invalidate() which issues a synchronous TLB shootdown (dsb ish)
+waiting for all CPUs to acknowledge.  This operation can be time-consuming
+under heavy system load, causing the accumulated time across all PMD
+entries to exceed the softlockup threshold (20s) and panic when
+softlockup_panic=1.  On a CONFIG_PREEMPT_NONE=y kernel, there is no other
+opportunity to reschedule during this entire traversal.
 
-ioremap on RAM at 0x0000000045623000 - 0x0000000045623fff
-  WARNING: arch/x86/mm/ioremap.c:216 at __ioremap_caller.isra.0+0x4c2/0x5f0
-  Call Trace:
-   generic_access_phys+0x130/0x4d0 mm/memory.c:7178
-   kernfs_vma_access+0x1ce/0x280 fs/kernfs/file.c:437
-   __access_remote_vm+0x58f/0x890 mm/memory.c:7256
-   mem_rw+0x2a1/0x670 fs/proc/base.c:912
+The regular PTE path already has an unconditional cond_resched() at the
+function tail (introduced by commit 9c276cc65a58 ("mm: introduce
+MADV_COLD") and commit 1a4e58cce84e ("mm: introduce MADV_PAGEOUT") when
+MADV_COLD and MADV_PAGEOUT were first introduced) and a conditional one
+inside the loop (commit b2f557a21bc8 ("mm/madvise: add cond_resched() in
+madvise_cold_or_pageout_pte_range()")).  The THP branch never received
+equivalent treatment.
 
-But more generically, we should disallow access to anything that looks
-like ordinary RAM in the system: including allocating memory (e.g.,
-alloc_pages) and mapping them in a VM_PFNMAP.
+Fix by adding cond_resched() at the huge_unlock exit path after
+spin_unlock(ptl) and reclaim_pages(), which is the single exit point for
+all goto paths in the THP branch.
 
-For pages with an online memmap, allow only pages marked as reserved
-(PageReserved). This also includes memblock allocations, however,
-distinguishing them from other MMIO is tricky, and nobody should really
-be mapping them in a PFNMAP (except someone abusing /dev/mem, which we
-do not care about).
+Crash log:
+  watchdog: BUG: soft lockup - CPU#63 stuck for 23s! [stress-ng-vm:1665914]
+  ...
+  Call trace:
+  pmdp_invalidate+0x48/0x68
+  madvise_cold_or_pageout_pte_range+0x84c/0xb00
+  walk_pmd_range.isra.0+0x1ac/0x3b0
+  walk_pud_range+0x120/0x190
+  walk_pgd_range+0x170/0x1b8
+  __walk_page_range+0x184/0x198
+  walk_page_range_vma+0x94/0x128
+  madvise_cold+0xd8/0x198
+  madvise_vma_behavior+0x234/0x638
+  madvise_walk_vmas.constprop.0+0xdc/0x210
+  madvise_do_behavior+0xa8/0x328
+  do_madvise+0xd8/0x140
+  __arm64_sys_madvise+0x2c/0xe0
 
-So only allow access if there is no online memmap, or if the pages are
-marked reserved. Reject other pages with -EINVAL.
-
-Note that, just like other pfn_to_online_page() users, we won't care about
-concurrent memory offlining; mapping memory that can concurrently get
-offlined is highly dubious.
-
-Link: https://lore.kernel.org/20261013-generic_access_phys-v1-1-b3963ef76e37@kernel.org
-Fixes: 28b2ee20c7cb ("access_process_vm device memory infrastructure")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://lore.kernel.org/20261010024042.4070048-1-albin_yang@163.com
+Signed-off-by: Wei Yang <albinwyang@tencent.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=49b1021becba70c1f3f6
-Reported-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Closes: https://lore.kernel.org/r/20261001152524.171115-1-ngocthang2710.1999@gmail.com/
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Cc: Liam R. Howlett <liam@infradead.org>
 Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
-Cc: Rik van Riel <riel@redhat.com>
+Cc: Jann Horn <jannh@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mm/madvise.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index d755b5c1f1287..01d14ca0e74d2 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -6808,6 +6808,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	resource_size_t phys_addr;
- 	pgprot_t prot = __pgprot(0);
- 	void __iomem *maddr;
-+	struct page *page;
- 	int offset = offset_in_page(addr);
- 	int ret = -EINVAL;
- 	bool writable;
-@@ -6822,6 +6823,19 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- retry:
- 	if (follow_pfnmap_start(&args))
- 		return -EINVAL;
-+
-+	/*
-+	 * Reject anything that looks like ordinary RAM, including anonymous
-+	 * folios in CoW mappings or allocated kernel memory. Note that we
-+	 * cannot distinguish memblock allocations from non-RAM reliably, so
-+	 * we cannot easily reject them here.
-+	 */
-+	page = pfn_to_online_page(args.pfn);
-+	if (page && !PageReserved(page)) {
-+		follow_pfnmap_end(&args);
-+		return -EINVAL;
-+	}
-+
- 	prot = args.pgprot;
- 	phys_addr = (resource_size_t)args.pfn << PAGE_SHIFT;
- 	writable = args.writable;
+diff --git a/mm/madvise.c b/mm/madvise.c
+index 505a580cd9c4c..bb02220e1959b 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -452,6 +452,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 		spin_unlock(ptl);
+ 		if (pageout)
+ 			reclaim_pages(&folio_list);
++		cond_resched();
+ 		return 0;
+ 	}
+ 
 -- 
 2.53.0
 
