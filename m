@@ -1,56 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061898;
-	b=rFqWhLjZO3bG7IqKTQZefbHqiyXzsaAQgBiFzsBeY+/oAaYGLjG8b/0d1iloS2If8t/j
-	 yEpGzNQVeTCKu3ITGB3YpKGNnHn5paB9RHklbuTU+sI/Q4k2bCrGgxKfyhoBSSLBJKv2M
-	 2NuOVMj/GiPW6/nQniqowdh2t2YKIhcvLC3Pw+yvwHFolqDiyAIQSuVr/8vbp/TuyKtxR
-	 i8BydTaaXF+7TKOXgxJWTXdl8K7wyn8w+NI9G7vSdGgJrinHlrcZEGQZowyekmKS0l1VM
-	 M+awGLiPzRuaWC3IRCuU0u2By1kRIS9a8XWz86bOUukh25RmUpTatXgxqKAAvbs5syg==
+	t=1794061899;
+	b=A5BG1Fg+WCcxtUUPydpWithwOaIIDDP/hIfGN4LjZoxNvqR9runl6ogu6CmkFOs86whl
+	 PjEHSVARrpbzyNEry4VyeM4dwApk3GWpSQpayzz830P1V0LbkC2xJAKvT6qdz9XmTa/mh
+	 b8sQj9jIWxYhC7ilSvsNVX7zZ1IRu6SauOLL7Rkf2BrsEqh+ujZoLaUwQd9c+RLhWK3Gw
+	 nWp3f+lzBVj1F1NgM0fKpi9lswHcmnqzj2yHqhVD7keeemQXbWRPLbMv8cUsrl6Dakz2N
+	 oTxRjxacWDheQwSZrqZLvG7VIJd2eS29YzsLEo4VJARAuTN7b5T/ZWQHFO4Jrz8VSmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tYZT3+8pZag26IsCABqnXJ/uycos7yySl9eIxV2Z3pk=;
-	b=gurcmLt4zi1MvPthHPtOdhXpNpT4tZMZ0PSo4RyndP6Qi8/LmHp3WGsabVcfM9DKWIzc
-	 vaVfGq6NE++0VAdbNJFb18uvvMJX/3b9GsoVScWx5AzGtZbmpUWtuMr67dnM/1VSKGT1q
-	 afrB/IeB4sCC6yaRxywtH1JRS8njQtoZO2AMd+JifoRpf1Q9ZlFVIeJjyJLs7aBQC2TH3
-	 dArrUqQ1QdKKvKj3Dd6RmHGkugU7H+vrOiXHdYIlMc4vfBzszbg0+FJhG6yEUIv9EVUrW
-	 snWHgBQm6EHnXvtkBlj5bUb82lHc129cd9uEAkiIFng9mK+/U7HFtTmOrb+prK4o6HQ==
+	bh=h7aZ0Jbe1z5k6opdFA33C1j0/mHxq79l7JrQnIhJrUY=;
+	b=y2w+PT0BesK7xmHrjzz/ALTzWEJ1Mmyzu3QnCa1c4GqSlK71cHao6kWomkN0wGaCyudm
+	 6fgPh0n/AtB86ZboqAFrjIyzNa3MZKR26Ah92GPh6DgOBKx0GWXsQHr67ADjoDtrq8AWd
+	 PxHObizrglEKCBYBa4brUHaypw1DegViPTze9AaYqo/CHRgcRl9VqyElbcFP6JJK/zhKm
+	 6dvxT+dTjZrCSGJDR7CAXCczh4Ayi+WBSNRZvzp2sIHHRd6/u33+43PY9eV931cvfSquF
+	 DpcVfd1L+0Nx0u80Tq6pEk/S6qBCzpU9WFUv9+mpxNeMU6waMVL2dgjESN9ZT9CWbSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMPbn4la;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nyfhw9YK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A806606A330;
-	Sat,  7 Nov 2026 14:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C350606A32F;
+	Sat,  7 Nov 2026 14:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMPbn4la
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B801F0089F;
-	Sat,  7 Nov 2026 14:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nyfhw9YK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3D61F0089F;
+	Sat,  7 Nov 2026 14:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061897;
-	bh=tYZT3+8pZag26IsCABqnXJ/uycos7yySl9eIxV2Z3pk=;
+	s=korg; t=1794061899;
+	bh=h7aZ0Jbe1z5k6opdFA33C1j0/mHxq79l7JrQnIhJrUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RMPbn4laXoeMVGmR+BfuKdxun6PfeOVPkia9t8SJ3nIZge7G/g5acFGIE96ApFUq5
-	 dCNRkYl8MUy4Xidbo4vGXkxKkpJOnmYt8s2gNh3wgVhGLoQk4rg5QdIoy0OTkZXPG7
-	 fmgVAN9EQpb0fVhDujehr3w6dOhMC1aLI6O8kn6c=
+	b=Nyfhw9YK9OrEvJES1dxpMavCcv6xKzKyvORoajBL/WRYETi/YopERTvKLZORfLUmv
+	 k14mWEkU7Xg1yfhhVmfuumEP3CZCmy3xYAdFP35LILFRCqQfHtcAdWYhZ0ZSDMzLnC
+	 5HQ4hcBpvt/l7eJBan5iVxDnoMEUTR38QBPrZ3GE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@redhat.com>,
-	Gavin Guo <gavinguo@igalia.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Peter Xu <peterx@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Oscar Salvador <osalvador@suse.de>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Adam Litke <agl@us.ibm.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Rik van Riel <riel@surriel.com>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0870/1536] mm,hugetlb: sort out folio locking in the faulting path
-Date: Sat,  7 Nov 2026 08:48:06 -0500
-Message-ID: <20261107135021.981676626@linuxfoundation.org>
+Subject: [PATCH 6.12 0871/1536] mm/hugetlb: fix use-after-free of a new anon folio
+Date: Sat,  7 Nov 2026 08:48:07 -0500
+Message-ID: <20261107135022.009325172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,98 +85,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Salvador <osalvador@suse.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 9293fb4765527c0d2375eb441d045a5a75f5210d ]
+[ Upstream commit 824cc56bf43c714319992bad3558803cac6e77c0 ]
 
-Recent conversations showed that there was a misunderstanding about why we
-were locking the folio prior to call in hugetlb_wp().  In fact, as soon as
-we have the folio mapped into the pagetables, we no longer need to hold it
-locked, because we know that no concurrent truncation could have happened.
+For a fault in a private mapping with nothing in the page cache,
+hugetlb_no_page() allocates a folio, locks it and maps it.  The folio has
+one reference, which belongs to the page table entry from then on.  After
+dropping the page table lock the function still sets the migratable flag
+of the folio and unlocks it.
 
-There is only one case where the folio needs to be locked, and that is
-when we are handling an anonymous folio, because hugetlb_wp() will check
-whether it can re-use it exclusively for the process that is faulting it
-in.
+Whoever zaps the entry in between frees the folio.  The fault holds the
+fault mutex and the lock of the vma.  MADV_DONTNEED and the first unmap of
+a hole punch, hugetlb_vmdelete_list(), do not take the fault mutex, and a
+private vma only has a lock if it owns a reservation map: not with
+MAP_NORESERVE, and not in the child after fork().
 
-So, pass the folio locked to hugetlb_wp() when that is the case.
+Then the flag is set in, and folio_unlock() is called on, a folio that is
+free or has a new owner.  A surplus page goes back to the page allocator
+while it is locked:
 
-Link: https://lkml.kernel.org/r/20250627102904.107202-3-osalvador@suse.de
-Link: https://lkml.kernel.org/r/20250630144212.156938-3-osalvador@suse.de
-Signed-off-by: Oscar Salvador <osalvador@suse.de>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Gavin Guo <gavinguo@igalia.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Peter Xu <peterx@redhat.com>
+  BUG: Bad page state in process init  pfn:108e00
+  flags: 0x200000000000059(locked|uptodate|dirty|head|node=0|zone=2)
+  page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set
+
+A page of the pool can be given to the next user, of any file, who locks
+it and loses the lock to the late folio_unlock():
+
+  kernel BUG at mm/filemap.c:1532!
+   hugetlb_no_page+0x111b/0x23e0
+   hugetlb_fault+0x3a9/0x14a0
+
+An unprivileged process is enough: threads that write to a MAP_PRIVATE |
+MAP_NORESERVE hugetlb mapping, threads that call MADV_DONTNEED on it, and
+one that takes the freed pages for another file.
+
+Until commit 3a47c54f09c4 ("hugetlbfs: revert use i_mmap_rwsem for more
+pmd sharing synchronization") the fault held i_mmap_rwsem for reading,
+which everybody who zaps takes for writing.  The lock that commit
+bf4916922c60 ("hugetlbfs: extend hugetlb_vma_lock to private VMAs") gave
+to private vmas closed the window again, but only for those with a
+reservation map.
+
+Be done with the folio before the page table lock is dropped, as
+hugetlb_wp() is with its copy.  The function already unlocks page cache
+folios under that lock.
+
+Original fix generated by an LLM and sent in private by Josef.
+
+[david@kernel.org: simplify+move comment]
+Link: https://lore.kernel.org/20261015-urgent_fixes-v1-2-42796911043b@kernel.org
+Fixes: 3a47c54f09c4 ("hugetlbfs: revert use i_mmap_rwsem for more pmd sharing synchronization")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 824cc56bf43c ("mm/hugetlb: fix use-after-free of a new anon folio")
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Adam Litke <agl@us.ibm.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ mm/hugetlb.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 4d80b8497142a..5196c1a816e38 100644
+index 5196c1a816e38..049726560c1aa 100644
 --- a/mm/hugetlb.c
 +++ b/mm/hugetlb.c
-@@ -6116,6 +6116,7 @@ static vm_fault_t hugetlb_no_page(struct address_space *mapping,
- 	pte_t new_pte;
- 	bool new_folio, new_pagecache_folio = false;
- 	u32 hash = hugetlb_fault_mutex_hash(mapping, vmf->pgoff);
-+	bool folio_locked = true;
- 
- 	/*
- 	 * Currently, we are forced to kill the process in the event the
-@@ -6282,6 +6283,14 @@ static vm_fault_t hugetlb_no_page(struct address_space *mapping,
- 
- 	hugetlb_count_add(pages_per_huge_page(h), mm);
- 	if ((vmf->flags & FAULT_FLAG_WRITE) && !(vma->vm_flags & VM_SHARED)) {
-+		/*
-+		 * No need to keep file folios locked. See comment in
-+		 * hugetlb_fault().
-+		 */
-+		if (!anon_rmap) {
-+			folio_locked = false;
-+			folio_unlock(folio);
-+		}
- 		/* Optimization, do the COW without a second fault */
+@@ -6295,8 +6295,6 @@ static vm_fault_t hugetlb_no_page(struct address_space *mapping,
  		ret = hugetlb_wp(vmf);
  	}
-@@ -6296,7 +6305,8 @@ static vm_fault_t hugetlb_no_page(struct address_space *mapping,
- 	if (new_folio)
- 		folio_set_hugetlb_migratable(folio);
  
--	folio_unlock(folio);
-+	if (folio_locked)
-+		folio_unlock(folio);
+-	spin_unlock(vmf->ptl);
+-
+ 	/*
+ 	 * Only set hugetlb_migratable in newly allocated pages.  Existing pages
+ 	 * found in the pagecache may not have hugetlb_migratable if they have
+@@ -6307,6 +6305,12 @@ static vm_fault_t hugetlb_no_page(struct address_space *mapping,
+ 
+ 	if (folio_locked)
+ 		folio_unlock(folio);
++
++	/*
++	 * Hold the PTL until we're done with the folio: the page table owns the
++	 * folio reference now.
++	 */
++	spin_unlock(vmf->ptl);
  out:
  	hugetlb_vma_unlock_read(vma);
  
-@@ -6480,15 +6490,20 @@ vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
- 
- 	if (flags & (FAULT_FLAG_WRITE|FAULT_FLAG_UNSHARE)) {
- 		if (!huge_pte_write(vmf.orig_pte)) {
--			/* hugetlb_wp() requires page locks of pte_page(vmf.orig_pte) */
-+			/*
-+			 * Anonymous folios need to be lock since hugetlb_wp()
-+			 * checks whether we can re-use the folio exclusively
-+			 * for us in case we are the only user of it.
-+			 */
- 			folio = page_folio(pte_page(vmf.orig_pte));
--			if (!folio_trylock(folio)) {
-+			if (folio_test_anon(folio) && !folio_trylock(folio)) {
- 				need_wait_lock = true;
- 				goto out_ptl;
- 			}
- 			folio_get(folio);
- 			ret = hugetlb_wp(&vmf);
--			folio_unlock(folio);
-+			if (folio_test_anon(folio))
-+				folio_unlock(folio);
- 			folio_put(folio);
- 			goto out_ptl;
- 		} else if (likely(flags & FAULT_FLAG_WRITE)) {
 -- 
 2.53.0
 
