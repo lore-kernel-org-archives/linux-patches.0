@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062600;
-	b=m8ppeKCOGrNUWsU54rfGB94kU3GnWvTsPm0viCIeg88iViBPLp2GvlLETBx4QErgbq5+
-	 6+Ct/n1zLnA/TUp4BwylrFhjGagHbNiOO9eKrm37GUaQ4VFqVjtvJ8fvkgxukQ/PoQwHS
-	 5eDInlBslNsyU4O/0u8JR7sG+9EodUNb8mP4m29XDlUjGcykNFaFQtx4LznOPmaBoOBsq
-	 5DkLUELz44AmEbGGJW5Nh30W4q0if/wm08oenugl736dLI/xkep8rtIzmlWhgiC9czyix
-	 p4Qlx6HKEVGU0kK985//KJFX1FwKoJLibItaXV08Oy+pYcOb+uWx3QyMEqSmVyuGsxA==
+	t=1794062601;
+	b=lbE8cAi2AOXnr7qxg+F85RqEet9QZb2SFoFY/k7E2OWysMtjJewg1preKxivBkR1SQjp
+	 h1bInwN9jesggfNT3r0EoJjMtsrLIWfCrsjmroQOnjktlAtdqmd4lsnBY2kh0SyYNSAZg
+	 b0WZNXd/7wLs32K2hXfB94cSRsYhp7jCKpDB9d3xTylSqCEaj8KW+NpO6vstHLV53XdjY
+	 mGfQ5zENfEh5q+ueqmlw+Jvh1qzMzgvQVd7VQ9epoEvL5dPD++CmJdGblemEqymK0R6Y0
+	 Po9XycQ8UU6RMtf3DiSEnjFzlDX4wxi7Lys0lKrLFErm5r5tp1lsViVCLRG50u7HeDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062600;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jzIiOBbm1EFNyI/0D4JgeGH6hMdBjgbDeBKSfgcQPdU=;
-	b=COO11KXW9tQf6w2yfBAymy3wBU4wBuxQTEbD/J6OIDmk7A/ZnV989fX7HiSB7FLUZpjz
-	 MlUsl+MSrh0ho8S8h1+AW800Fozj3TQbILwbZ3B3COjOqc9Zd+mIHIxvJMtPXUAeQjpSh
-	 ndAEVStaU3aosna6m3/MjadKM65y848RZ+zDCiYB0XwUad9EhEd2wVjUvABUPYZ8rd+Sy
-	 ICG3jodoEe1v3P03fEiAHAWK9adtpef800+SqilRQl3xHzIdS30mUeh9O92RFdjipYaBd
-	 yaKe7OniL6h5cgKy6oIeKrzS3/nzq7OE6n0Z99c8YVUPlbb4swSQKf65MTbQAagvEOw==
+	bh=WnXLrdAat4nTPgU6dAY7xyfUE0d9wTuh+fFnF2NnfG8=;
+	b=Hnq7DKggySRi28YQLMiJlZETzIhLn0dl4j9Uuj/94fbhnHDmIvLZ2fw3jcqUg5FOJY10
+	 XCxHMrCMNezc7m7y7qUOhmxvsiZ2C4yVi99fNfElWZJOSoWSbUZJds4WWs4p+nH90inHh
+	 yQcnp+S8BjJSv5kiqOJ3bxetQ+ozLb529vAJ6u97POKupVgq+GLkU2JzvjFtar/qiTVkg
+	 CltVBSHBHFdyF2XUsURLC62IF/ShKcy9pkyblWZsn3P/L9vQqJLn7HB5MxFNFqMG+K5dh
+	 EEqfRLcFKtQ8s2g+IQAR3U2azRMrYfgWMeVDhDDT4a4ums5Qua7vltSsYcmS7EI2NSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M4lOOuEB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwvuBXND;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17060606D81E;
-	Sat,  7 Nov 2026 14:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A526606D817;
+	Sat,  7 Nov 2026 14:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M4lOOuEB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42CA1F0089F;
-	Sat,  7 Nov 2026 14:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwvuBXND
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381EE1F0089F;
+	Sat,  7 Nov 2026 14:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062599;
-	bh=jzIiOBbm1EFNyI/0D4JgeGH6hMdBjgbDeBKSfgcQPdU=;
+	s=korg; t=1794062601;
+	bh=WnXLrdAat4nTPgU6dAY7xyfUE0d9wTuh+fFnF2NnfG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M4lOOuEB0gsi0eAibEsT1/l430JUPEnO1CIcyveGHj1UmZt475D1OUMYusry+GYtY
-	 aFONDKWUwudLHwUSDqKdZpSSlEDW4d4BXwPX9OkgjNQ2v1kCVKvZfHzMgx7wzc6hHE
-	 N0MF0Vd7OYiX4T3Qag04La/RVcvxo3vBJAoGSz9A=
+	b=XwvuBXNDlr1Os85CLiW9pEkA3vgZinvXmcHeezqawxIgd9RbzJbUDeKhdLVtiQhoo
+	 67It9+yqSG1/ZFdzz0SM5obYifhUUF1NBwn8FimVTkyP3IsWcKt7ZE+0zezNtQCXPS
+	 11pChbnpQee6gFE2FUZdKWDcYlLB4pAH1ryIh9ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Val Packett <val@packett.cool>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1474/1536] ASoC: qcom: qdsp6: q6afe: fix clk vote response type mismatch
-Date: Sat,  7 Nov 2026 08:58:10 -0500
-Message-ID: <20261107135039.249791410@linuxfoundation.org>
+Subject: [PATCH 6.12 1475/1536] ASoC: codecs: wsa884x: Accept temperatures across the full trim range
+Date: Sat,  7 Nov 2026 08:58:11 -0500
+Message-ID: <20261107135039.278822617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,88 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit f3c7bee984aa0ba2b48a44e16a6f3ec2c27f851e ]
+[ Upstream commit 00535515e3c14fbee20de4a1aa61cfb3390f0f50 ]
 
-The response sent by the firmware when requesting a clock vote (opcode
-AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST) does not actually have
-the same opcode + status payload as APR_BASIC_RSP_RESULT. Rather, it
-returns one single u32 which is the client_handle that must be used in
-future unvote requests for the same clock.
+wsa884x_get_temp() rejects any reading outside 5..45 degC with -EAGAIN.
+A speaker that has been playing, or sits in a warm laptop, easily runs
+above 45 degC, so its temperature becomes unreadable when it matters.
 
-As a result of this type confusion, the status returned by the callback
-to q6afe_vote_lpass_core_hw was actually an out-of-bounds read. It was
-only interpreted as success (0) most of the time due to luck, but there
-are some reports of random errors such as:
+The check only needs to drop bogus conversions, such as the all-zero
+reading before the PA is first enabled. Bound it by the -10..150 degC
+two-point trim range instead.
 
-[   20.961100] qcom-q6afe aprsvc:service:4:4: AFE failed to vote (3)
-[   20.961131] Failed to prepare clk 'core': -110
-
-Fix by correctly interpreting the response as a single u32, and actually
-store it as the client_handle to ensure unvote would work correctly.
-
+Fixes: 6b99dc62d940 ("ASoC: codecs: wsa884x: Implement temperature reading and hwmon")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/5976946.DvuYhMxLoT@antlia/
-Fixes: 55e07531d922 ("ASoC: q6dsp: q6afe: add lpass hw voting support")
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Val Packett <val@packett.cool>
-Link: https://patch.msgid.link/20261016063536.598610-1-val@packett.cool
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261023171316.819857-3-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6afe.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wsa884x.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6afe.c b/sound/soc/qcom/qdsp6/q6afe.c
-index ef7557be5d664..f33f1c97c1368 100644
---- a/sound/soc/qcom/qdsp6/q6afe.c
-+++ b/sound/soc/qcom/qdsp6/q6afe.c
-@@ -370,6 +370,7 @@ struct q6afe {
- 	struct q6core_svc_api_info ainfo;
- 	struct mutex lock;
- 	struct aprv2_ibasic_rsp_result_t result;
-+	uint32_t vote_result;
- 	wait_queue_head_t wait;
- 	struct list_head port_list;
- 	spinlock_t port_list_lock;
-@@ -874,13 +875,14 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
- 	struct aprv2_ibasic_rsp_result_t *res;
- 	struct apr_hdr *hdr = &data->hdr;
- 	struct q6afe_port *port;
-+	uint32_t *vote_res;
+diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
+index 951cb51d39f1d..1e42093849742 100644
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -720,10 +720,11 @@
  
- 	if (!data->payload_size)
- 		return 0;
+ /*
+  * Device will report senseless data in many cases, so discard any measurements
+- * outside of valid range.
++ * outside of the two-point trim range. Do not narrow this to ambient: a
++ * speaker that has been playing easily runs well above 45 degC.
+  */
+-#define WSA884X_LOW_TEMP_THRESHOLD	5
+-#define WSA884X_HIGH_TEMP_THRESHOLD	45
++#define WSA884X_LOW_TEMP_THRESHOLD	WSA884X_T1_TEMP
++#define WSA884X_HIGH_TEMP_THRESHOLD	WSA884X_T2_TEMP
  
--	res = data->payload;
- 	switch (hdr->opcode) {
- 	case APR_BASIC_RSP_RESULT: {
-+		res = data->payload;
- 		if (res->status) {
- 			dev_err(afe->dev, "cmd = 0x%x returned error = 0x%x\n",
- 				res->opcode, res->status);
-@@ -907,8 +909,10 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
- 	}
- 		break;
- 	case AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST:
-+		vote_res = data->payload;
- 		afe->result.opcode = hdr->opcode;
--		afe->result.status = res->status;
-+		afe->result.status = 0;
-+		afe->vote_result = *vote_res;
- 		wake_up(&afe->wait);
- 		break;
- 	default:
-@@ -1722,6 +1726,8 @@ int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
- 			       AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST);
- 	if (ret)
- 		dev_err(afe->dev, "AFE failed to vote (%d)\n", hw_block_id);
-+	else
-+		*client_handle = afe->vote_result;
+ struct wsa884x_priv {
+ 	struct regmap *regmap;
+@@ -1931,8 +1932,8 @@ static int wsa884x_get_temp(struct wsa884x_priv *wsa884x, long *temp)
+ 	dev_dbg(wsa884x->dev, "Measured temp %ld (dmeas=%d, d1=%d, d2=%d)\n",
+ 		val, dmeas, d1, d2);
  
- 
- 	kfree(pkt);
+-	if ((val > WSA884X_LOW_TEMP_THRESHOLD) &&
+-	    (val < WSA884X_HIGH_TEMP_THRESHOLD)) {
++	if (val >= WSA884X_LOW_TEMP_THRESHOLD &&
++	    val <= WSA884X_HIGH_TEMP_THRESHOLD) {
+ 		wsa884x->temperature = val;
+ 		*temp = val * 1000;
+ 		ret = 0;
 -- 
 2.53.0
 
