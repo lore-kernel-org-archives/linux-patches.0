@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065215;
-	b=2XA3Rg04pnml4xsS57PfBL/9fl3nodVaq8yCe/8jXM51/8B4+T73ua4BLsu5u4qWwZ1M
-	 PL4xG1IHH9+arMDFDPUHKxcNfDk/zmdv3fi2iH4GPqsQy9vvsaLPOuFv+sgRLYAJS1Q1Z
-	 97wtvJ+CrUA8GHTn2PNUWiruYALyySYiXljZk26DjTI4NSX2xJgqL0EAt2ugLr/vvKdIV
-	 ZHeUCMPsIMtgxjWBGid6W6af1wNkuH13sAv1f3XMMW9K3cbyGorpgBhn+DMPSSy9jkWya
-	 fY1HnRGju+q819WpXZMHTvNJJ38MdNLjcVOTOG51Cfp6uGVHj8gGPukQBGSUabhPE/g==
+	t=1794065216;
+	b=naphqVynlRPMNmZ5KTh3uKIAu3blMCYTWNOnVNnoCaXnT3/ZyKTfzHMbDrFnaBKyy5J2
+	 2aPpRtOEDPOFTVp/2J01/Q3z3beV6k83J+vPP6v3nFz4glhnmOfGGwMWmJH8QjW+5vaGc
+	 ZwaGkIURn67AO0b5uKh8nbtU/XgjxtKnHBdfFdqsIZS+Xx9xHbt/zofQ5JHr+xqQEwJsc
+	 o7QYCBH+SKiTNQyZrKAUmWTrV9CwITbVhn09SS1qpodAaRyt3WHceaeiyhPenME3kWNYn
+	 Q7i29Afpv1kxLkOgNSrWYNz7Bgh+32bm4jofjL3zSZnOV/6a5Ju7rHGfSsKqPy55YxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065215;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065216;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XrvjouC3ro/PLdrFPuzwsrHc5ppvStvYxI9xIBte2Fo=;
-	b=pY9pplOBvu9KagxPNfwlc3+VoIrv10zFt44Vd9NhL9vPF+uNd0IY9CJN+yXVb//WiRFT
-	 +3UMFghKM+Z28zxE6R1WwQz/9ER5YY6kX+1PkmiLpvryNMg2ZQXylkZFk0Erbu3G0F4oO
-	 7y1gjQhso5DdpfTT6spa3m3qpzloKFNkSdTo7jZGtqoMZPAfqix/NCjXW6ORrINPN3A40
-	 IyZklglNWkUpGcKvTz1NKc7MNyKsz3b0hS2KDCqcbIdl2HIN0324VyCV2hdkyNOdQXXZc
-	 fv4CJ1dR/DwsJMN0lsPDpCYt7DGyghWfJWuqPkhuNQWqbArBPBsritvy0s40n4aorig==
+	bh=hBepUiAOrwhRfhFIxvlkmM59TTUh+LVMYlTIBRylMLo=;
+	b=cW9QNv33tMaClR/VbwfdYiXCmGH29jQMZGvCQy8/6PC+wsiOSH6rwFGpM7NCXfQelyAp
+	 YyWiPaGmNy200vqrKEIBUdSGt2WZ293384oXJTW+BBz2memN5lKtW1Ytv077UrTqYIt+O
+	 uvR2bkQMExUaGgeV+dmOz7/sa0gy997uqwqiK7DxFvW7imjGpQm6P4IcjWK9tHqdDtEWG
+	 5KprMoJZ5Pb4UCeSlPFl9OWCIFOBzIRG48pIplSN/LX7Y/Oz9x0eysdGlnby+6iAYcYfm
+	 0+yolJILMTbN/nLCQVW56xhMH3IqXpUp4Hsu0j2mnWIzwclqNymzjqdj6H3VnfdBFnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WT7o8oO0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z2RiUjZU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B889606A32E;
-	Sat,  7 Nov 2026 15:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B15606A32E;
+	Sat,  7 Nov 2026 15:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WT7o8oO0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF891F0089F;
-	Sat,  7 Nov 2026 15:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z2RiUjZU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2D11F0089F;
+	Sat,  7 Nov 2026 15:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065214;
-	bh=XrvjouC3ro/PLdrFPuzwsrHc5ppvStvYxI9xIBte2Fo=;
+	s=korg; t=1794065216;
+	bh=hBepUiAOrwhRfhFIxvlkmM59TTUh+LVMYlTIBRylMLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WT7o8oO0CB6oLrNakA81dYhOYf+KPSksfHrwj7B65CB7eOclQbiwwft+b/3MRheH1
-	 a9Hy3dO4zsIm2H6Eslj6ZYQoox+KuHzsMmKOj4U5dkuV1atnyBwlR8AyQeBD9dmozR
-	 rdFrnF2IK9wf+DuG3pCoPJFAazyow88tkRaWYSZw=
+	b=Z2RiUjZUJJpATxfZ8ftVLxvXpGzifYaSRSzDG88v1BhRdCZYvQoupMNfNpcFmr+8C
+	 wHk/ZblNFMgg0q+hzeLI8CCueKhC1tHg0Em9avIkZCgrI+3V9PcQcG6rvmWk31RY54
+	 NHs5MOyjYCCOV89u/CsU8eWZKN0Xd3M2Seb4rfzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Yu Zhang <yuz08559@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1009/1257] PCI/pwrctrl: Only destroy devices created by pwrctrl core
-Date: Sat,  7 Nov 2026 08:55:05 -0500
-Message-ID: <20261107135007.208549858@linuxfoundation.org>
+Subject: [PATCH 7.3 1010/1257] nvmet: take subsys->lock while force-reconnecting in nvmet_subsys_attr_qid_max_store()
+Date: Sat,  7 Nov 2026 08:55:06 -0500
+Message-ID: <20261107135007.235696142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,47 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-[ Upstream commit 7bf2ebcb7ca1e8814d3d0e35214a8e4b2193a619 ]
+[ Upstream commit 9f426f14051181e251590783e68ce589a63e2b1c ]
 
-pci_pwrctrl_create_device() only creates platform devices for OF nodes
-that pci_pwrctrl_is_required() accepts, but pci_pwrctrl_destroy_device()
-unregisters the platform device of every available child node without
-that check.
+nvmet_subsys_attr_qid_max_store() sets subsys->max_qid and then walks
+subsys->ctrls to force every controller to reconnect, but it holds only
+nvmet_config_sem (for write).  subsys->ctrls is protected by subsys->lock:
+nvmet_alloc_ctrl() adds an entry under subsys->lock, and nvmet_ctrl_free()
+removes it under subsys->lock with list_del() + kfree() (not kfree_rcu).
+The free path takes no nvmet_config_sem, so the two locks are independent.
 
-Nodes under a PCI host controller that are not pwrctrl devices may have
-been populated by another mechanism.  Destroying them here would tear down
-devices owned by other code.
+A controller teardown (host disconnect, keep-alive timeout or fatal error
+-> nvmet_sq_destroy() -> nvmet_ctrl_put() -> nvmet_ctrl_free()) can
+therefore list_del() an entry while qid_max_store() is iterating the list,
+corrupting the walk.
 
-Mirror the check done at creation time so that only devices created by the
-pwrctrl core are removed.
+KASAN, concurrent "echo 128 > .../subsystems/<nqn>/attr_qid_max" racing
+nvme-loop controllers connecting and disconnecting, panics in seconds:
 
-Fixes: 4c4132489201 ("PCI/pwrctrl: Add APIs to create, destroy pwrctrl devices")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+  BUG: KASAN: null-ptr-deref in nvmet_subsys_attr_qid_max_store+0x10d/0x1b0
+  Read of size 8 at addr 0000000000000090
+  Call Trace:
+   nvmet_subsys_attr_qid_max_store+0x10d/0x1b0
+   configfs_write_iter+0x1a7/0x250
+   vfs_write+0x5df/0x940
+   ksys_write+0xfd/0x1e0
+
+(also seen as a general-protection fault dereferencing a LIST_POISON
+pointer at the same instruction.)
+
+Take subsys->lock around the list_for_each_entry() loop, matching every
+other subsys->ctrls accessor.  ->delete_ctrl() only queues asynchronous
+controller teardown, so it does not re-enter subsys->lock under the loop.
+
+Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/1791446700-100166-1-git-send-email-shawn.lin@rock-chips.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Tested-by: Yu Zhang <yuz08559@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pwrctrl/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/target/configfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
-index 10d817aefb096..c14df117ece37 100644
---- a/drivers/pci/pwrctrl/core.c
-+++ b/drivers/pci/pwrctrl/core.c
-@@ -388,6 +388,9 @@ static void pci_pwrctrl_destroy_device(struct device_node *np)
- 	for_each_available_child_of_node_scoped(np, child)
- 		pci_pwrctrl_destroy_device(child);
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index b03b5d1c2dc3d..83b86180c50f8 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -1689,8 +1689,10 @@ static ssize_t nvmet_subsys_attr_qid_max_store(struct config_item *item,
+ 	subsys->max_qid = qid_max;
  
-+	if (!pci_pwrctrl_is_required(np))
-+		return;
-+
- 	pdev = of_find_device_by_node(np);
- 	if (!pdev)
- 		return;
+ 	/* Force reconnect */
++	mutex_lock(&subsys->lock);
+ 	list_for_each_entry(ctrl, &subsys->ctrls, subsys_entry)
+ 		ctrl->ops->delete_ctrl(ctrl);
++	mutex_unlock(&subsys->lock);
+ 	up_write(&nvmet_config_sem);
+ 
+ 	return cnt;
 -- 
 2.53.0
 
