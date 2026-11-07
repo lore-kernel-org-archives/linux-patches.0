@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065429;
-	b=J42ms+aghdAZQb0MtqO2oM5mIrX/bFgem/xw0LG8kIuYAaTuE5Rp8YyzIkjQqlrNIXXD
-	 dynTZQBHE+YYahu3dZWrwozQ2/lVpKBu32KmGZkOZQDm3bi+jB+pB3d2rayxJ2d64EEWU
-	 GTJMxjKzBu2mmiz1JHLVEBTnR/jEdalhhpZTVoG+RX+rPdrWXV8qVdtim7FO2gNTkaRva
-	 TtlwH7CNFtcaKggJIvmOuw3ifyCbJhz+z9fSuincg2K689T8LagFhIU7vSvdLlJCTRyGB
-	 6208JQo7t6xD6YR5iAqPQ6eYcdPcS13qrMtYg1q5w39nJZygxT4Y4rhje/D47NVoB+Q==
+	t=1794065431;
+	b=3gHyFmFVXsxAjXYY6OLJuy1qH7MH2uiHam+25WDieQlMvAwFTgNVmDOmd9QpjIZPIFn6
+	 ddf60jx0K6bH3DS0VxmCjePrgFhc2loCst41UTbAO1x7kjqRcK79nywP9WGBFitSgmhXE
+	 DxX7bA1HKWIZrAM4dm45sXLE28YgI8trLyF8IJIim7H7MzoPXN34BQLl64WQhv+rUCv6T
+	 Gcd50cesMWTbpCjogQR8kUrVtvtxDiIU9NyiUM5JQZlAPP4j4SZ3fxwRwEBeveVq+mV0x
+	 3/fsxHDyiBLUpZh0tm5VcVJmDm7xADO6V5RzigHcatNmAl7xl5RdZ+o+0M9UAnZdb6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065429;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065431;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UWlktoF5DSeH+Nx6nUAY4fP67F/FDVlRY5gWWesci30=;
-	b=XhI2MhktoI3ZMoLuqF2JH+PRHl+7zDmlOZSgBqVDgw3sHkQP2O4ZMflbULD2l9mglBsH
-	 oqQL0T5kYT4imRjX08pifgS8f/6V4ocWg24/nhbICnzShPTjE9Y9YiiJlynlq68KiUOUA
-	 Php5SThqBHf63A9sBvO4Fmx5iDlhhvex9VJED2cJYFYUZef8kQ4Rl/5vl69ezfXRIXOWx
-	 dQfaJ6V7VrMaqjcqwVv+JmhDX2IApWHgUsBPYD4WFumcPk6KNjum/Gf8X7FrYzu1xM1bd
-	 qPZXz/2BsFIT0vRnKQnz3yLMn5diDmJAK8hb5Xknz6EpRfJqinbOG202uv+uDpL8+lw==
+	bh=1Zr/Hm3oaVewKJBUBXtLCcBc3UDbG/qj/LnY/uRBU6Y=;
+	b=gIY5tr6F7bsO+37Hs+xpeLmW2iPkWpxw/2IPnGvsWnwpVvWTMaCSl0nYWLWMeWT/gqVG
+	 lT5U3Sc2reaWsL2SRcH1G/S6yrGbkKDHEHvifDctzc6gLugIuBz/u4Q3tieSMrSe5agzp
+	 A5KmXct7yB9bDuJnWiqzZ6uxY7yXO6ej/6pIWTKkiyvtL2BotxdWsqR8qLpYRJB98iPC4
+	 Sn9tWLVv2rm8sklMZd5p5QuKirKya0bizxAfnjUcH7WGstX7TrRbATXUZdrdmiOvEUF22
+	 0Uoi2lozSQXPvuyiSgWnm25P1UaTFdke894Q6CK26mrqwS4PfCA8Kh6WIDVRaN2tkVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G05Q85no;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uXhYVhsV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7089E606A33F;
-	Sat,  7 Nov 2026 15:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F3F606D813;
+	Sat,  7 Nov 2026 15:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G05Q85no
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9C01F008A1;
-	Sat,  7 Nov 2026 15:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uXhYVhsV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E211F0089F;
+	Sat,  7 Nov 2026 15:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065429;
-	bh=UWlktoF5DSeH+Nx6nUAY4fP67F/FDVlRY5gWWesci30=;
+	s=korg; t=1794065430;
+	bh=1Zr/Hm3oaVewKJBUBXtLCcBc3UDbG/qj/LnY/uRBU6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G05Q85nobzVYSmCth+zy69mgL0hA/m0xzyF12juSw/S0wM2AUsLUs2Xd0usFbQ6Vy
-	 53vlxaMtwaqAjcC7QmAU5V620OL6AKMYHeFXWbCY+yjRzDvHYzeLKVSWqy38rxPHxK
-	 iYHLvx1Tde7nLe6ZnmOn3P6PN8t2aX947YaWnkwY=
+	b=uXhYVhsVcbUMYrj6f7OyqWWkLy9FsEy4U2cZwwkCo54w0CJ7ZWX4HmXCpv4O874uu
+	 YWNq67VYPTNgTWvt6EbHp0BC+Lpb/1GdnpJbG1jGRngFktswfYNyF++BIecBZ8Y6mc
+	 rGT9zCp1iqMV1f4bfVSivpHz6J/GIPxLR1jU7pqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1140/1257] ASoC: qcom: q6apm: Clear the right handle on pos buffer unmap
-Date: Sat,  7 Nov 2026 08:57:16 -0500
-Message-ID: <20261107135010.713878914@linuxfoundation.org>
+Subject: [PATCH 7.3 1123/1257] libceph: reject an initial monmap with no monitors
+Date: Sat,  7 Nov 2026 08:56:59 -0500
+Message-ID: <20261107135010.255373253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,70 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 43c69604271d8b54c494fde70bd4a9eaab7a974d ]
+[ Upstream commit 94dbce2ae4fdb57bdb53ffa3456da777a5cfb981 ]
 
-Push/pull graphs map two shared-memory regions per graph, the circular
-buffer and the position buffer, and keep a separate DSP handle for
-each. The map path tags its token with APM_MMAP_TOKEN_MAP_TYPE_POS_BUF
-so the response lands in the right handle, but the unmap path sends a
-bare graph ID and the response handler always clears mem_map_handle.
+build_initial_monmap() takes the monitor count straight from
+ceph_options::num_mon and builds a monmap with that many entries without
+checking that there is at least one. ceph_parse_ips() writes *count only
+after it has parsed an address successfully, so a ceph_options that went
+through a failed parse still has num_mon == 0 and the resulting monmap
+has no monitors in it at all.
 
-Unmapping the position buffer therefore wipes the circular buffer's
-handle and leaves pos_buf_mem_map_handle set. A subsequent unmap of the
-circular buffer is skipped, leaking that DSP mapping, and a remap of
-the position buffer is skipped because the stale handle looks valid.
+The first thing the client does with that monmap is open a session, and
+pick_new_mon() asserts the invariant that it is non-empty:
 
-Tag the unmap token the same way as the map token and decode it in the
-response handler to clear the matching handle.
+  kernel BUG at net/ceph/mon_client.c:211!
+  RIP: 0010:pick_new_mon net/ceph/mon_client.c:211 [inline]
+  RIP: 0010:__open_session+0x60f/0x740 net/ceph/mon_client.c:245
+  Call Trace:
+   ceph_monc_open_session+0x46/0x60 net/ceph/mon_client.c:534
+   __ceph_open_session+0x135/0x590 net/ceph/ceph_common.c:798
+   ceph_real_mount fs/ceph/super.c:1173 [inline]
+   ceph_get_tree+0xd98/0x1fd0 fs/ceph/super.c:1362
+   vfs_get_tree+0x92/0x320 fs/super.c:1947
+   vfs_cmd_create+0xd7/0x2a0 fs/fsopen.c:231
+   __do_sys_fsconfig+0x55a/0xcb0 fs/fsopen.c:463
 
-Fixes: 7c1ac23b178a ("ASoC: qcom: audioreach: Add support for shared memory push/pull modules")
+The reproducer gets there through the new device syntax: an fsconfig()
+mon_addr= that does not resolve ("libceph: resolve '127.0.0.' (ret=-3):
+failed") leaves fsopt->mon_addr set but num_mon at 0, so the "No monitor
+address" check in ceph_get_tree() passes and the mount proceeds with an
+empty monmap. The next patch stops that string from being kept, but the
+assertion should not be reachable from a mount option in the first place.
+
+Commit 40480eee361e ("libceph: Reject monmaps advertising zero monitors")
+made the same BUG_ON() unreachable from the wire by rejecting
+num_mon == 0 in ceph_monmap_decode(). Apply the same rule to the initial
+monmap, which is the only other way one gets built, and fail the mount
+with -EINVAL rather than assert afterwards.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261021041044.2080369-3-shengchao.guo@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7b19b4db5add ("ceph: new device mount syntax")
+Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
+Assisted-by: Cursor
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/ceph/mon_client.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index ed55747923ea9..1f8d915b5e699 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -327,8 +327,9 @@ static int __q6apm_unmap_memory_fixed_region(struct device *dev, unsigned int gr
- 	struct q6apm *apm = dev_get_drvdata(dev->parent);
- 	struct audioreach_graph_info *info;
- 	uint32_t mem_map_handle;
-+	uint32_t pos_mask = is_pos_buf ? APM_MMAP_TOKEN_MAP_TYPE_POS_BUF : 0;
- 	struct gpr_pkt *pkt __free(kfree) = audioreach_alloc_apm_cmd_pkt(sizeof(*cmd),
--						APM_CMD_SHARED_MEM_UNMAP_REGIONS, graph_id);
-+					APM_CMD_SHARED_MEM_UNMAP_REGIONS, (graph_id | pos_mask));
- 	if (IS_ERR(pkt))
- 		return PTR_ERR(pkt);
+diff --git a/net/ceph/mon_client.c b/net/ceph/mon_client.c
+index 59b304eca2732..2f0181b2566dc 100644
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -1141,6 +1141,9 @@ static int build_initial_monmap(struct ceph_mon_client *monc)
+ 	int num_mon = opt->num_mon;
+ 	int i;
  
-@@ -959,9 +960,16 @@ static int apm_callback(const struct gpr_resp_pkt *data, void *priv, int op)
- 				dev_err(dev, "Error (%d) Processing 0x%08x cmd\n", result->status,
- 					result->opcode);
- 
--			info = idr_find(&apm->graph_info_idr, hdr->token);
--			if (info && !result->status)
--				info->mem_map_handle = 0;
-+			graph_id = hdr->token & APM_MMAP_TOKEN_GID_MASK;
-+			is_pos_buf = hdr->token & APM_MMAP_TOKEN_MAP_TYPE_POS_BUF;
++	if (num_mon < 1 || num_mon > CEPH_MAX_MON)
++		return -EINVAL;
 +
-+			info = idr_find(&apm->graph_info_idr, graph_id);
-+			if (info && !result->status) {
-+				if (is_pos_buf)
-+					info->pos_buf_mem_map_handle = 0;
-+				else
-+					info->mem_map_handle = 0;
-+			}
- 
- 			wake_up(&apm->wait);
- 			break;
+ 	/* build initial monmap */
+ 	monc->monmap = kzalloc_flex(*monc->monmap, mon_inst, num_mon);
+ 	if (!monc->monmap)
 -- 
 2.53.0
 
