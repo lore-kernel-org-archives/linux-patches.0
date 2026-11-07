@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062985;
-	b=cmcO2KV7VOh8KIM8zaNt9BMYacB3qBnZ3J5b1V0+jb4iOhQF6RAs+nW2vr1PP9FxumBI
-	 ibFdPlx2Vv4OMUgh9T8RcF59NPcDzaoS2VE8C1DNT2jCh0Z1GR4T5c8dp8gOsKlBXBo0M
-	 T1YyAWPPp+U9erCoyJ+VahP2yr02qoMglYGfC/psXcwB/q2GzaVOctYRfQc69Ifho/RKa
-	 /5MZfS8XBvMH0oQFJDbL3HkbMONUE0ZF/k4bIls4Bxn5LgonY7a7/pWmFB8byx94JKYI6
-	 P0w7ImSa/ReOPtSYjyBFUneEuIJiR3+KAKNtBdyLeAh9F1x9HgOSER5J08hHzpxjYpQ==
+	t=1794062986;
+	b=TrJkfyAZJ9y3KXglbMsZ88qgiO0dlTgUcNx6FwSvXyzEFbaVX0fF4pWOoY1zyJA6EZto
+	 ZtZk0A0CSQzw1ASakd1ZwIjQxEja3DgETk44q3L0Ek7WXVB5LZM4gY5r/R8VVPmAY0Jus
+	 82ia6qrpFv68qOzxJO9782WhfhH/vWFKo4lodFFy/QD6hm9u1Vh1F5ZC+EiNPVUk60xlm
+	 FdzifNDlCvL4sq7F6pjl7wRBBB0j6pwgE8H6ijezURrB9wsWyKHxYmDJ8k3NWaZwMFYBB
+	 0vB4iK4HxKsTaKFYmhYDukhVUrYghiwh6vQLIUf9l2xpdVHVMeFzCO5ElBsBn+vpZ4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TQiBj0hnFoVpQMRj24WXUXY1dYX8CSmB4EmpdPLnypo=;
-	b=mjnIhhJLIbENZB4zaI8WEB/zq+e1kIZpiaZqf8rPaNQKh7f8aoF3WAjWo6rGtZyxYCtb
-	 4tDeTApkhLdJ5DGQSIiXUjd3PFaUp5RFibuqYjgzoIGk4m7gzCcT0lsUTmFFMW7DYhwpK
-	 uFU7/WvqOGi0A7ZwPWSTI51y3SotqHfVe582iymufFaeHUVib2G1vzvtaMAOdscP1FuLo
-	 oiMRkwlztCTmq9pegADZ0iLs0MSId08w3r7/pWwKtVHoojzExgL4imVEMCXLw6XeUcCU/
-	 iyxnYsj3EPmiIMg1UGC608bf5K4n2wOoGhkT83No36JJkalmM1peILUSMPHJLgDRwOQ==
+	bh=jSSCii8chl9wOSRWP/6z5NdbR5FYjLzaNH/7wNGSEGA=;
+	b=0tJBbA8rmWuNZNZLUN6pQitMNn4CAmSPSE2Ow6OVazdOtcp7ho91UubyWqvcv7a1V8ls
+	 jR2qQO5I0agUE9hzPNPYFh8OqXmAPEtZkrC5hl/wbPRDtOGJWfHVAnELA01n4/jXn1EJL
+	 MLM2vQYPlO0cO17CdNkWReJaG9XsyOHpVP9fXrHAH1ZSJnV5NuxSIlxuiSpFCH0Hzt4tH
+	 h+HS4a0c8LCi21gxAvDcCXgqKeUjRJIRvnCi4d4gOTb08aFmI10V97kv8u0Jp0M2uufpt
+	 LwsNAA3q/bFLXZehFNBeE8XQoZjmZEXSjx7gaI9/MoY0wSDSgbCnKmCLmXLFqRrUN7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COi8vWjg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTVORvwj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4B4606A326;
-	Sat,  7 Nov 2026 14:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C3D606A326;
+	Sat,  7 Nov 2026 14:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COi8vWjg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8501E1F0089F;
-	Sat,  7 Nov 2026 14:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTVORvwj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02AE1F0089F;
+	Sat,  7 Nov 2026 14:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062984;
-	bh=TQiBj0hnFoVpQMRj24WXUXY1dYX8CSmB4EmpdPLnypo=;
+	s=korg; t=1794062986;
+	bh=jSSCii8chl9wOSRWP/6z5NdbR5FYjLzaNH/7wNGSEGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=COi8vWjg9gRMrSmvxSYCbarHQl2FLpb8kIfwLCR49DDbOSO0LNDXNMmpL68Hakbf5
-	 p8slrLEyH0X8BbC9I5vaMmp1zHOfRzq1VVY8y2KfoxLrSGXAHkJ6rrlXMRAv/5eBpi
-	 AFC7RTE6f8B9JcRGl8DHCcuesxFkg1reYmE0N8Ic=
+	b=qTVORvwjW3n9ypsd3ZlEeVPJaUGOYmk/0KljhcEf4OIgfoxq5357AKX3e38TiU1MO
+	 1vG0bGblsLtFxLl1zDih5SnacKBuXVKj50tDtKGvJqxZXsX9ZihRE5VZjnF8qUnrl+
+	 wWPe3Jd3EYWulH/H98VXUK3y8QD1+d5eJBvBGcfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 244/869] mtd: rawnand: atmel: Fix MCK clock leak in atmel_nand_controller_init()
-Date: Sat,  7 Nov 2026 08:48:46 -0500
-Message-ID: <20261107134900.078369711@linuxfoundation.org>
+Subject: [PATCH 6.18 245/869] mtd: maps: pci: balance PCI enable on cleanup
+Date: Sat,  7 Nov 2026 08:48:47 -0500
+Message-ID: <20261107134900.105203953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,59 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 94edcda45d888c3bb1310de11e10e4537c166f00 ]
+[ Upstream commit 3be16e5d4990bf96309ac5ba35cb369c6015bce7 ]
 
-atmel_nand_controller_init() takes a reference to the MCK clock with
-of_clk_get() and keeps it in nc->mck for the lifetime of the
-controller.  If the "atmel,smc" phandle is missing or the SMC regmap
-cannot be obtained afterwards, the error path jumps to out_release_dma
-which only releases the DMA channel, so the clock reference is leaked.
-The callers return the error directly and never run
-atmel_nand_controller_cleanup(), where the clock is normally put.
+mtd_pci_probe() leaves the PCI device enabled on later probe failure and
+mtd_pci_remove() does not disable it either. Use pcim_enable_device() to
+release the enable reference after the existing map and region cleanup.
 
-Release the reference on those error paths.  The path on which
-of_clk_get() itself fails keeps jumping to out_release_dma, as nc->mck
-only holds an error pointer there.
+The imbalance is already present in the initial Git import.
 
-Fixes: f9ce2eddf176 ("mtd: nand: atmel: Add ->setup_data_interface() hooks")
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/nand-controller.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mtd/maps/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
-index 83ba4ebd02d41..b954e70b4c6b3 100644
---- a/drivers/mtd/nand/raw/atmel/nand-controller.c
-+++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
-@@ -2086,7 +2086,7 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
- 	if (!np) {
- 		dev_err(dev, "Missing or invalid atmel,smc property\n");
- 		ret = -EINVAL;
--		goto out_release_dma;
-+		goto out_put_mck;
- 	}
+diff --git a/drivers/mtd/maps/pci.c b/drivers/mtd/maps/pci.c
+index ca00d211e73e4..c6bbce6aed417 100644
+--- a/drivers/mtd/maps/pci.c
++++ b/drivers/mtd/maps/pci.c
+@@ -256,7 +256,7 @@ static int mtd_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	struct mtd_info *mtd = NULL;
+ 	int err;
  
- 	nc->smc = syscon_node_to_regmap(np);
-@@ -2094,11 +2094,13 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
- 	if (IS_ERR(nc->smc)) {
- 		ret = PTR_ERR(nc->smc);
- 		dev_err(dev, "Could not get SMC regmap (err = %d)\n", ret);
--		goto out_release_dma;
-+		goto out_put_mck;
- 	}
+-	err = pci_enable_device(dev);
++	err = pcim_enable_device(dev);
+ 	if (err)
+ 		goto out;
  
- 	return 0;
- 
-+out_put_mck:
-+	clk_put(nc->mck);
- out_release_dma:
- 	if (nc->dmac)
- 		dma_release_channel(nc->dmac);
 -- 
 2.53.0
 
