@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063603;
-	b=WOkul8t+YSBKxHhDVsxExYp0FpF7HbBWF1ygMprnNl54ikekiciSK2AD16wdtASELOmZ
-	 WYXzmj69eV3LOLCxO6pnjZZY6KigxcIlBjWlT4RPHsLGjWJcp/m7PYxLBtpZNksPNs77n
-	 c+EtvHbU5hmVNs3yvrTR88RbJLDv20XGgRsdja4l9wZIGe5Wm6aKevs8WDA3/yRZXKDlW
-	 uCtlfldjpUmT1I/UaVZqXe2JzWrjN0nBHqNmPVdUWXWMfvwY0WZlwq0v4hkAPs83G5a0+
-	 w4N+d9KL649qVNEH6wNzlWE6Qdbo7MfuSj0AYpIBUp3Tm0hOYSkQwNKMt62TUwu9eIg==
+	t=1794063604;
+	b=WDMnGyxMtuCYgNT69d91bpkmHRHkjnh1jgbIstYCNLnSyK9R9IaH+rn9OWBWsX0+cS0j
+	 nJnf3mWbGXEQpxlm+ZMIhOaQ4/ExPbF94jQSyBWBHc7JDRW5c3Zix5R4HNiUuF94JNDKQ
+	 Ds0i29i9JYYlMim7yC8MxLij8tpb+YB8cXTKGukvckZK+DK8Z11ffLjzGCeXDYIYk482Y
+	 XkHBXof/jlHYUaXrjHqrOqI2FP1+zWrWyMUVGsNPknWjQNHcao0hyDZ60bIbMh/i9HMZW
+	 eiVgEF4oLXO2S2HhBN5JkPoW/m7bJWa6SttzDyMXEB5jzjOsF02/lSdV8d7aAsc22ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063604;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mkvpaD/j+cX8GhZiqjJBQcmvKilPS/tIFrKxQMHRLbY=;
-	b=xovKRUvaq3FdbD+Gom1qqhHAgf9JoHEwGCqmpo0YJUkPf7JA+qW+ecJitInkCE7q/5Z5
-	 crIiGZOTRqU5a7CoSs64s/8PYBmKAVUUldf5pCo2tAPzQQRwBwDlG5teqcPgMe7XgEPz4
-	 6B1LRtYJB7mlAyjJbalE+pInt/7BCsCO0qMPZ6V/DNa0y2ABTzcoZp1RbhFSEO2QZHFBz
-	 9WcVYYvdqmvrONdY9LlzVMt7aokAq2X0YJCcUr0WQSK0ry1UyUa1GJGJCx+DGUwcCe83K
-	 tdXVNhxIXZb11oYEP6LX0E6mEDCT3xIrRMnmRo7fuK70sc9K1W3LHxHngGaJKN4pNXw==
+	bh=AbAKcyfCa3U0l9c9iWNZ1U6Jo6XLk7kcZWHP6V4Fqfo=;
+	b=MVz7mjzKzHH+bxyIighSo18B6KwxeR+bMsaUbWgk5U9TFFOSpCacnKdWep2lXVqGoApb
+	 zrQ0nxHF1ixAihpkA9YwqyVgj2GlK3gu+E51lGIBkgeaN3JCIi74f9HiHn+YRnjGqZ+Nc
+	 NVchA73VRiKGkHCxMz26ayhLwgYqFozldBcALg2+oJbM20BkBPACRjzSBwJuehfIcixaE
+	 86lyXBX3krLJME5LYDyWwjrqin7ajf27G3A3wJu1+XOv0+ZTnZRwqv7tX5B95rYo9zUja
+	 3HHmMVI+OxUHfKVt7S634dZnExZ6myBP213cmfYVnXDHdwRA7ssuCjPz6DUIZvh4RwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lWtRhzAm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAMp6ila;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607FD6082BDF;
-	Sat,  7 Nov 2026 15:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F676082BDC;
+	Sat,  7 Nov 2026 15:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lWtRhzAm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060CF1F0089F;
-	Sat,  7 Nov 2026 15:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAMp6ila
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC341F0089F;
+	Sat,  7 Nov 2026 15:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063603;
-	bh=mkvpaD/j+cX8GhZiqjJBQcmvKilPS/tIFrKxQMHRLbY=;
+	s=korg; t=1794063604;
+	bh=AbAKcyfCa3U0l9c9iWNZ1U6Jo6XLk7kcZWHP6V4Fqfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lWtRhzAmP8JcaE3f3Mz3L/tf9+A9t75kwGp9O0c0u50/5jZUUnSkTs5ZV9Cnis0k2
-	 ArSaJ1NkP2KdIdYW73l5t3PHwhTziqKQwv3BmKVTxn1BhiRVHFL0Bd2c+NSM2Zu7VA
-	 m8bGXZQdwZf1itMA+TTijrxQ+JfPOMlqovu0/keQ=
+	b=lAMp6ilaNdhvwxN5KhAqmSLcXDVPtUlFAJnnb24AUWCWdxSS44k684wUCUzetfc1v
+	 GIHeahQCyhstHSnSauSx0vWKTZwGfwUV8khIA/q92C6dno+9mwaG7xq9ptzMVbfcaG
+	 fARC3N+NidpbB+PPLJbIv5vp+SmwJH2QTcKg3poA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tingjie Zhong <catme0w@live.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 688/869] ipv6: do not restart DAD for a dead ifaddr
-Date: Sat,  7 Nov 2026 08:56:10 -0500
-Message-ID: <20261107134916.352990789@linuxfoundation.org>
+Subject: [PATCH 6.18 689/869] fbdev: bitblit: Fix glyph clipping when fbcon pans
+Date: Sat,  7 Nov 2026 08:56:11 -0500
+Message-ID: <20261107134916.383976306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,75 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Tingjie Zhong <catme0w@live.cn>
 
-[ Upstream commit ffb668669ce4144347973d8b2fad449e9be0563d ]
+[ Upstream commit 06fccf840640d8f6b0e08a1756f8d2f0435b4cbe ]
 
-addrconf_dad_failure() can create a stable-privacy replacement without
-RTNL. After ipv6_add_addr() publishes it, addrconf_ifdown() can mark the
-new ifaddr DEAD, clear its route, and unlink it before the recovery path
-takes ifp2->lock.
+Commit 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix
+vmalloc-out-of-bounds") made bit_putcs() clip glyphs to var.yres. When
+fbcon scrolls by panning, it draws text rows up to var.yres_virtual,
+so after the first pan most new text is not drawn until the next full
+redraw. This affects fbdev drivers that set FBINFO_HWACCEL_YPAN or
+FBINFO_HWACCEL_YWRAP, such as vesafb with the ypan option, when
+CONFIG_FRAMEBUFFER_CONSOLE_LEGACY_ACCELERATION=y.
 
-The recovery path then unconditionally changes the state back to PREDAD
-and queues delayed DAD work. The MTU teardown path can leave IF_READY
-set. For an optimistic address, addrconf_dad_begin() can consequently
-pass the cleared NULL route to ip6_ins_rt().
+Clip to GETVYRES() instead, which fbcon_ud.c and fbcon_ccw.c already
+use as the drawing area height. When fbcon does not pan, GETVYRES()
+returns var.yres, keeping the existing bound. When fbcon pans, it
+returns var.yres_virtual, which the framebuffer memory must cover
+anyway for panning to work.
 
-This follow-on was found by source review and was not separately
-triggered at runtime.
-
-The new ifaddr is already initialized in PREDAD. Under ifp2->lock, record
-the retry and queue DAD only if teardown has not changed the state to
-DEAD. If teardown wins after this check, the work observes DEAD and exits
-without reviving the address.
-
-This complements the existing lock_errdad check that preserves the original
-ifaddr's DEAD state after the same function reacquires its lock.
-
-Fixes: 5f40ef77adb2 ("ipv6: do retries on stable privacy addresses")
+Fixes: 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds")
+Reported-by: Thomas Zimmermann <tzimmermann@suse.de>
+Closes: https://lore.kernel.org/linux-fbdev/b8b52ffd-ecec-4fba-b432-ba32135c2f99@suse.de/
+Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://lore.kernel.org/r/179161099408.434549.14449036924552933828@kernel.org
-Link: https://lore.kernel.org/r/20260513025509.3776405-1-lilinmao@kylinos.cn
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261015050651.1841557-5-4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tingjie Zhong <catme0w@live.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/core/bitblit.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index e277b78313686..527ae9fc1c41c 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2198,6 +2198,7 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 			     ifp->idev->dev->name, &ifp->addr, eth_hdr(skb)->h_source);
+diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
+index 8f6a2d1736d39..86ae7a7252d21 100644
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -18,6 +18,7 @@
+ #include <linux/console.h>
+ #include <asm/types.h>
+ #include "fbcon.h"
++#include "fbcon_rotate.h"
  
- 	if (ifp->flags & IFA_F_STABLE_PRIVACY) {
-+		bool start_dad = false;
- 		struct in6_addr new_addr;
- 		struct inet6_ifaddr *ifp2;
- 		int retries = ifp->stable_privacy_retry + 1;
-@@ -2236,11 +2237,14 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 			goto lock_errdad;
+ /*
+  * Accelerated handlers.
+@@ -151,7 +152,9 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
+ 		      const unsigned short *s, int count, int yy, int xx,
+ 		      int fg, int bg)
+ {
++	struct fbcon_par *par = info->fbcon_par;
+ 	struct fb_image image;
++	u32 vyres = GETVYRES(par->p, info);
+ 	u32 width = DIV_ROUND_UP(vc->vc_font.width, 8);
+ 	u32 cellsize = width * vc->vc_font.height;
+ 	u32 maxcnt = info->pixmap.size/cellsize;
+@@ -168,10 +171,10 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
+ 	image.height = vc->vc_font.height;
+ 	image.depth = 1;
  
- 		spin_lock_bh(&ifp2->lock);
--		ifp2->stable_privacy_retry = retries;
--		ifp2->state = INET6_IFADDR_STATE_PREDAD;
-+		if (ifp2->state != INET6_IFADDR_STATE_DEAD) {
-+			ifp2->stable_privacy_retry = retries;
-+			start_dad = true;
-+		}
- 		spin_unlock_bh(&ifp2->lock);
+-	if (image.dy >= info->var.yres)
++	if (image.dy >= vyres)
+ 		return;
  
--		addrconf_mod_dad_work(ifp2, net->ipv6.sysctl.idgen_delay);
-+		if (start_dad)
-+			addrconf_mod_dad_work(ifp2, net->ipv6.sysctl.idgen_delay);
- 		in6_ifa_put(ifp2);
- lock_errdad:
- 		spin_lock_bh(&ifp->lock);
+-	image.height = min(image.height, info->var.yres - image.dy);
++	image.height = min(image.height, vyres - image.dy);
+ 
+ 	if (attribute) {
+ 		buf = kmalloc(cellsize, GFP_ATOMIC);
 -- 
 2.53.0
 
