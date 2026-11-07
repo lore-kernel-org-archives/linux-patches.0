@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061757;
-	b=tJqQM3adSN6UzQHU+jrm4DBXA7zZvNpt/AjWZJpHCcRsxhQSUaLRFvI45FhmdUy0t/Co
-	 Aq2ZGR5HqhbhZE9+pj3PapTc9EQDP/JVnWDrNybmV5GGsMt5ayt/ZQ8VUURN5a6olRgmu
-	 72ATD0BX0AwRAYOIZDzxwwaMnvvQ+O6oxP3jBJs2A2cMS+8uETyiiw4pHBwektZzcYLnF
-	 4oo74BijJYmTw4XeRoEYhMVXpqv1otoTgkR6Awm4M5WNTPurK5n2qwwuT/M7+Cgr6Nd9V
-	 aYbPfa/pnqTLfy59zOrKMF8pIbJxfKe/0YQY+EnM1g1E5ptiw1pk+SAWubmwFgJwMcg==
+	t=1794061758;
+	b=DRzEgnE/oZehVjYERk4GAB0njTL3SCUTK2CUPA4cyPEX5jIhH3dKDYs4X4y7mrACGd3d
+	 0KSGKxyC9oKB77y1e+w1JQ66YI0hlE0xUymJJnciQ17RiWSYSZ1Z3KnjWqMQ88uvFfbN9
+	 rwUqyVAKnhfQms1eTEN6GSlj43SwN3eORrOY37eDATIEyh5Nk2R+WuhDstjoueeJ28RgC
+	 bySEe7kBUp7lEs7B7oEprAMvSoL56HhYytqL0Yob7Ym0DDH5DM88/pSY/IToxowxqdT6n
+	 5UxU2F8j50jGKNd3nddjCFASRCDuiePogpjV+2Iibd9xdHmgvlPgMTRqirOZHzvjgLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XrHsdnHZc64WifmKHhqXWSQp6sBnlHTMZqCy74e8fpM=;
-	b=3MKE2moSIwDo93RST7lBKq9LAunZR4JA666YR0UXyw/lQed9jfVjYFhAONhqIv2VTiYY
-	 jmiPLATfXAPYEPudnpMo1pHRFSo91rJcLIl7YpKrT7Gogm2W7OMtI3kln6Q0iTgYGQ5Cl
-	 yUBiNLLeszeprxSd59RpXt5kyL88nGlTQNxyk3ciGjNSxHJfkIeFYF17liHy1QxeabF9E
-	 RFkCdtBlAuxrjfLJmLTLILtauub3rl2Sp5oAys/qJVSw0Y6NkbRR/1xDkm7/YIYd/Z/J+
-	 SeTkNnrYsOunlP0eOofsDzvfu52CI7lblcQdM8hzu1PXtabYbeQxl01t4VQ1a93D+HA==
+	bh=bQUHFR3Z0zCTsQrLbpgDB4GKeDkslIq/+o7yb16H4Q4=;
+	b=M0XLZuJr3cANCTVg+rrlXMFCnWmDGkf3V8jr87WIIeE8P3x9kfPNw1xFQoya+817V+W3
+	 tMCLImSiZn1pEBOJAhBmBko/IJ8G/9FUxZNQiWWbCJje85s011tBD1mTxlP+jVRuckRK9
+	 L87Kq/JuZso9rp3beYoPBnQs6x/7WP6JpH+S4OlZ/VVYOIX2BBNvzgRXujD5mjLhkyB7+
+	 LRmprylKWe63UXrsaoMsrIU1Sg/1KOCOZfPncv25oLtIbN1Y0w7+B7/Wikm5Z6LCpWMnH
+	 l/7dBJte3suET48NxG8JljugeEaV6perHh7k48WMVMCCuzwQeB9l+R+iY3LgZLtG47A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qS8jlI+T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v066DLSV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16528606A32C;
-	Sat,  7 Nov 2026 14:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4544A606A32C;
+	Sat,  7 Nov 2026 14:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qS8jlI+T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88531F008A1;
-	Sat,  7 Nov 2026 14:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v066DLSV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A661F008A2;
+	Sat,  7 Nov 2026 14:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061756;
-	bh=XrHsdnHZc64WifmKHhqXWSQp6sBnlHTMZqCy74e8fpM=;
+	s=korg; t=1794061758;
+	bh=bQUHFR3Z0zCTsQrLbpgDB4GKeDkslIq/+o7yb16H4Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qS8jlI+TEdkvTC9HXuVMcz6wTxFVTyy7YuoA5HDTcxQrZl9KGd2CFlMm6Uw4a5HOu
-	 rCKRLItC72Mq28TY11lvi3Xl1JEPNdIpBnSIeg2OBmQt2dgdPvC4v8IZa+Vk+erRbZ
-	 j58YNXA6VvppvcHYnpZsyeuOqDmP12jL5K6gAFBE=
+	b=v066DLSVFupuoy+m9g47ZfFAounkeIzbPSYKX8lLAd0aXq3FKw05g9Y+kXPBwqWyX
+	 yxThYlJcxBweUFSxJazRkuJ5uJVPxE7t7Fct8CxJe1z4OZQXYqDXCtGtDEWZRRoy6/
+	 a4cPY9rLRPFBLu0ZFbNrRu03D8PDQvw1mx0Waidw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Ackerley Tng <ackerleytng@google.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 0795/1536] KVM: Use goto to handle errors during memslot preparation
-Date: Sat,  7 Nov 2026 08:46:51 -0500
-Message-ID: <20261107135019.879108056@linuxfoundation.org>
+Subject: [PATCH 6.12 0796/1536] KVM: x86/mmu: Bug the VM if KVM attempts to walk more levels than the MMU has
+Date: Sat,  7 Nov 2026 08:46:52 -0500
+Message-ID: <20261107135019.904658078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,71 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 23a205797cec86f391d0be886b9bc741e1262063 upstream.
+commit 115f9405a2ed6d78ee7ad8436bdd638743f6d1d4 upstream.
 
-Use a goto to unwind early memslot changes if preparing for a memslot
-operation fails.  This will allow moving the creation of guest_memfd
-bindings into kvm_set_memslot() without needing to copy+paste the unwind
-logic.
+Extend the "EFER.LMA && !CR4.PAE" check, which exists largely to guard
+against KVM configuring a paging32 MMU with more than 2 levels of paging,
+with a very explicit check for exactly that: that KVM isn't trying to walk
+more levels of paging than the MMU template provides.  I.e. harden KVM
+against all bugs that would cause KVM to generates accesses beyond the
+bounds of guest_walker's arrays, regardless of how KVM ended up with the
+misconfigured MMU.
 
-No functional change intended.
+Note, don't use w->cpu_role.base.level directly as the paging64 template
+only provides two levels of page tables for PAE paging on 32-bit hosts, and
+handles the third level by manually emulating the PDPTR access.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Ackerley Tng <ackerleytng@google.com>
-Link: https://patch.msgid.link/20260922001332.1121266-3-seanjc@google.com
+Link: https://patch.msgid.link/20260902232028.2767071-4-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/kvm_main.c |   31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ arch/x86/kvm/mmu/paging_tmpl.h |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -1914,21 +1914,8 @@ static int kvm_set_memslot(struct kvm *k
- 	}
- 
- 	r = kvm_prepare_memory_region(kvm, old, new, change);
--	if (r) {
--		/*
--		 * For DELETE/MOVE, revert the above INVALID change.  No
--		 * modifications required since the original slot was preserved
--		 * in the inactive slots.  Changing the active memslots also
--		 * release slots_arch_lock.
--		 */
--		if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
--			kvm_activate_memslot(kvm, invalid_slot, old);
--			kfree(invalid_slot);
--		} else {
--			mutex_unlock(&kvm->slots_arch_lock);
--		}
--		return r;
--	}
-+	if (r)
-+		goto err;
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -349,13 +349,14 @@ retry_walk:
+ 	pte_access = ~0;
  
  	/*
- 	 * For DELETE and MOVE, the working slot is now active as the INVALID
-@@ -1960,6 +1947,20 @@ static int kvm_set_memslot(struct kvm *k
- 	kvm_commit_memory_region(kvm, old, new, change);
+-	 * Queue a page fault for injection if this assertion fails, as callers
+-	 * assume that walker.fault contains sane info on a walk failure.  I.e.
+-	 * avoid making the situation worse by inducing even worse badness
+-	 * between when the assertion fails and when KVM kicks the vCPU out to
+-	 * userspace (because the VM is bugged).
++	 * Queue a page fault for injection if any of the below assertions fail,
++	 * as callers assume that walker.fault contains sane info on a walk
++	 * failure.  I.e. avoid making the situation worse by inducing even
++	 * worse badness between when the assertion fails and when KVM kicks
++	 * the vCPU out to userspace (because the VM is bugged).
+ 	 */
+-	if (KVM_BUG_ON(is_long_mode(vcpu) && !is_pae(vcpu), vcpu->kvm))
++	if (KVM_BUG_ON(is_long_mode(vcpu) && !is_pae(vcpu), vcpu->kvm) ||
++	    KVM_BUG_ON(walker->max_level > PT_MAX_FULL_LEVELS, vcpu->kvm))
+ 		goto error;
  
- 	return 0;
-+
-+err:
-+	/*
-+	 * For DELETE/MOVE, revert the above INVALID change.  No modifications
-+	 * required since the original slot was preserved in the inactive slots.
-+	 * Changing the active memslots also release slots_arch_lock.
-+	 */
-+	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
-+		kvm_activate_memslot(kvm, invalid_slot, old);
-+		kfree(invalid_slot);
-+	} else {
-+		mutex_unlock(&kvm->slots_arch_lock);
-+	}
-+	return r;
- }
- 
- static bool kvm_check_memslot_overlap(struct kvm_memslots *slots, int id,
+ 	++walker->level;
 
 
