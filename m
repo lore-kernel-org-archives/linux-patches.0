@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065223;
-	b=XrudTQFrMK0xZvMbvJzD0Cj/ZX4XmM0HgsRh0SN92T7AkaVyeBdtlqOW9+xgttIK9gqe
-	 iVYWJMnAHxKq2nxW5SP/B0LlF9Lrkgz0Dg5XyKr3Xkk63zeh0tbKJtLwaMZE88/JiCGNd
-	 Gw0fHBGjHkbPLGxj2reFsyoiGu6NRIVAnJt4f5tYmsDwryqZ0c3yD0JBPlj0Z+CubdkFZ
-	 3d3UrrGc6WtcZDzRvKPhA6kk0+3GTnzE2FhCHRnVurZcFXVKYH6L0rJ23AnH3rxI/QMXW
-	 CX6cs/FX8zl2gadUz/2W4DNUjUev1fAnEhCpt3r41EMzWV7bVZ12uMxgVOrqVplKefA==
+	t=1794065225;
+	b=TJwdEsqPBdOjlfzuXHj2iGvjzP0QsYd2eH6PoLOjs717abj/PAi7xFktW7WnSq0CGTMc
+	 qAJOTBSRfw9pBy/632V4tdtskWrZDWOZmtth8kvU1lirqXqjy0EMOuiyRSZzvz3B9XmTm
+	 f0CRLAuda/w0VHd2E6q1ibxKlsD8drFX4xlU1WVdI5f31zPmmenS7z+ADEK4OXwrZEhg4
+	 UsYgS51q7vwYxei8FNv8ROiYvE9kyZkWUSXwEmCzxP8KYvNvCzuUrF0bjmHiF3fZJDfU+
+	 bMJrrP0xM2sq9k3UBXJVMo1lDZrKPkCyZ2J+Z3yoiDDpdTf5sU/BKSTj4rMaO7hO7og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qRE3a11SwexEY0ZXErZ9u8uOMqziQOqYduOluuKcKa8=;
-	b=xp6810FPcRwtcZyFwQRwhHLTaDjH3YvBM8GV+gDuPM1ZvRLozxjayGyrUZKs0qCa1jM6
-	 Lc7sBcXT06tTv6KWw1k2uIxMqiGlREoEghjIr2TM1MfynB+K73C5TpNL5sOFEFKeaKo2u
-	 SIjpcFJVPV8JfEqK1b6TEQ00PUrxiocol4q8IUCXqaLMaNk13juFYWxcAVCO/qG72MMlj
-	 Ewz9yfr0rwbNX+nOKAzNqQYKbDrRSm9j65zd5BXf1kpuOo6a3iAUQyjCjv28BjaSf+o92
-	 NEi4W9PjqmLpUoDUjX8uOa2pPqyoh7eTV9fGz93bnlrYL6/9o93lQ6vjeRq41B5zDew==
+	bh=6DNU5qhugjPLgBlLIt/FgPQ84sWbkHehbC+sAeaHx7Y=;
+	b=y1SnGxnMPAfID1sbasPOyAYugEulZ0MtXgI84UjVlhXjN/hly/hj04a8OzZpWzTlfj5l
+	 4ZvjqXCpG26kOS8xluHeDVaZqE9B/Px206fgyxA3j0SrO4vLPdh+XhibO3PW6HMKDHOBY
+	 Ll6Lj1y7QF2cM2Z4w67+q6o0wsCAr359JqjykXGhF0Bw+CqBLnRng0VDF6RwW6r5vM5nT
+	 38A1leY3AazEmSdDlMWBXHdUH7yeOlM+PZTDuRzmWDcqiqXUUk5d6yM7CJo7TzLZfVj1v
+	 A6NxqqlTq0Lp99G9ZxIQxfshJ+pWECX1wXe4SPrt1mQqdCWzJcl89C+MNcTAzMVyqFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCccJg9l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zKxaeMop;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D97606D805;
-	Sat,  7 Nov 2026 15:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2B0606D811;
+	Sat,  7 Nov 2026 15:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCccJg9l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BB61F0089F;
-	Sat,  7 Nov 2026 15:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zKxaeMop
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F701F0089F;
+	Sat,  7 Nov 2026 15:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065223;
-	bh=qRE3a11SwexEY0ZXErZ9u8uOMqziQOqYduOluuKcKa8=;
+	s=korg; t=1794065224;
+	bh=6DNU5qhugjPLgBlLIt/FgPQ84sWbkHehbC+sAeaHx7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iCccJg9l+xwNhjM3HgPL8qwbynOcSACHZ99H/fLmON0GTqRxIQKEUC7+NbXUiJRvv
-	 aBF/X18ssF+hNttUsNDJRJyX9ofWleIsagQN4UFpJYh5vO0vTOR0/mIlAoQdyw/v0x
-	 ugYtDFEYJ0SOTraphmNlwJtIkz+eViOXEjjv9S+Y=
+	b=zKxaeMopNLU+vI7gPvwA4vlCIBQca8mdEKamw+XGGuDsCxGnno7SHiSGAVw974i6M
+	 +EBV5iDTizE3onJSVaM4+qOyUQd0WGwyFwk7bhDl+zCGGSCqPfgV2fkre53Xsmlics
+	 GbuxIDawinj2IevZx+rnedyOYiRcS536fCWFf0JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1014/1257] ata: libata-sff: fix race between IRQ deferral and ata_sff_flush_pio_task()
-Date: Sat,  7 Nov 2026 08:55:10 -0500
-Message-ID: <20261107135007.342194555@linuxfoundation.org>
+Subject: [PATCH 7.3 1015/1257] tipc: fix broadcast sender hang on last acker departure
+Date: Sat,  7 Nov 2026 08:55:11 -0500
+Message-ID: <20261107135007.368176146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,124 +69,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 69be770908ae57354a41d7e1cc99ab46278d2e86 ]
+[ Upstream commit f4377bf85887f57b59abb5479f7660a81ffe4449 ]
 
-Commit 4a2e5409472e ("ata: libata-sff: don't busy-wait for PIO data-in
-command completion") allowed the interrupt handler to queue
-ap->sff_pio_task from ata_sff_hsm_move() when a PIO data-in command is
-still busy after its final data block.
+TIPC group broadcast senders are blocked while a replicast still has
+outstanding member acks: tipc_group_bc_cong() returns true as long as
+grp->bc_ackers is non-zero, and clears *grp->open, which is what
+tipc_poll() uses to report EPOLLOUT (via tsk->group_is_open).
 
-ata_sff_flush_pio_task(), however, was written under the assumption that
-cancel_delayed_work_sync() is enough to prevent sff_pio_task from being
-queued again before the HSM state is reset to HSM_ST_IDLE and
-sff_pio_task_link is cleared.
+When the last outstanding acker departs before acking,
+tipc_group_delete_member() decrements grp->bc_ackers to zero but
+never restores *grp->open.  As a result poll(EPOLLOUT) never fires
+again.  A writer blocked in sendmsg() is only released if some other
+wakeup happens after the deletion: with TIPC_GROUP_MEMBER_EVTS the
+leave event delivery calls sk_data_ready() and wakes it, but without
+member events nothing does and it sleeps indefinitely, since the
+default send timeout is MAX_SCHEDULE_TIMEOUT.
 
-The flush runs early during error handling, at a point where the timed
-out command is still active, the port is not frozen yet, and interrupts
-are still being serviced.  If the final data-block interrupt of a PIO
-data-in command is serviced in the window between
-cancel_delayed_work_sync() and the reset of hsm_task_state, the
-interrupt handler queues sff_pio_task after the cancel has completed.
-When that work item then executes on ata_sff_wq after the flush cleared
-ap->sff_pio_task_link, ata_sff_pio_task() hits
-BUG_ON(ap->sff_pio_task_link == NULL) while holding the host lock with
-interrupts disabled; alternatively it proceeds on a stale link while
-error handling owns the port.
+Commit 99cc2a62e07a ("tipc: reject invalid and unexpected
+GRP_ACK_MSG to prevent bc_ackers underflow") already calls this out
+in its changelog as a pre-existing issue.
 
-Fix this by resetting hsm_task_state to HSM_ST_IDLE before cancelling
-the work item.  Once the state is IDLE, __ata_sff_port_intr() can no
-longer enter ata_sff_hsm_move(), so the interrupt handler can no longer
-queue the pio task, and cancel_delayed_work_sync() drains whatever was
-queued before the reset.
+Restore the open state exactly on the 1->0 transition in the delete
+path, mirroring the GRP_ACK_MSG completion path, and invoke
+sk->sk_write_space() from tipc_sk_filter_rcv() when the group just
+became writable again.
 
-Also make ata_sff_pio_task() bail out quietly when the HSM state was
-marked idle by the flush, both at entry and after re-acquiring the port
-lock following ata_msleep(), since a work item can already be running
-when the flush resets the state.
+Also make the ack accounting precise.  The delete path used to test
+less(m->bc_acked, grp->bc_snd_nxt - 1), which also matches members
+that were never counted for the current replicast (JOINING/LEAVING
+members keep a stale bc_acked), and the GRP_ACK_MSG handler accepted
+an ack from any member whose bc_acked differed from the expected
+value.  Either could zero bc_ackers on behalf of a member that owes
+nothing and silently void an ack still owed by a real acker.  Track
+whether a member owes an ack for the current replicast in a new
+per-member bc_pending flag, set when the member is counted and
+cleared when its ack arrives, and use it both to accept an ack and
+to decide on deletion.  bc_acked has no remaining user and is
+removed.  Suggested by Tung Quang Nguyen.
 
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/linux-ide/sashiko-outbox-177477@kernel.org/
-Fixes: 4a2e5409472e ("ata: libata-sff: don't busy-wait for PIO data-in command completion")
+This issue was discovered by Tencent CodeBuddy Security.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261020101107.1449635-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20261019115859.3471295-1-bsdhenrymartin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-sff.c | 32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
+ net/tipc/group.c  | 19 ++++++++++---------
+ net/tipc/socket.c | 12 +++++++++++-
+ 2 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
-index d5ef0338735c3..c2aad525010cd 100644
---- a/drivers/ata/libata-sff.c
-+++ b/drivers/ata/libata-sff.c
-@@ -1196,8 +1196,6 @@ void ata_sff_flush_pio_task(struct ata_port *ap)
- {
- 	trace_ata_sff_flush_pio_task(ap);
+diff --git a/net/tipc/group.c b/net/tipc/group.c
+index 74f6d3dac0784..0c6a762000b02 100644
+--- a/net/tipc/group.c
++++ b/net/tipc/group.c
+@@ -74,7 +74,7 @@ struct tipc_member {
+ 	u16 window;
+ 	u16 bc_rcv_nxt;
+ 	u16 bc_syncpt;
+-	u16 bc_acked;
++	bool bc_pending;
+ };
  
--	cancel_delayed_work_sync(&ap->sff_pio_task);
--
- 	/*
- 	 * We wanna reset the HSM state to IDLE.  If we do so without
- 	 * grabbing the port lock, critical sections protected by it which
-@@ -1205,11 +1203,26 @@ void ata_sff_flush_pio_task(struct ata_port *ap)
- 	 * example, we may set IDLE in between the time
- 	 * __ata_sff_port_intr() checks for HSM_ST_IDLE and before it calls
- 	 * ata_sff_hsm_move() causing ata_sff_hsm_move() to BUG().
-+	 *
-+	 * Reset the state before cancelling the work item: once the state
-+	 * is IDLE, __ata_sff_port_intr() can no longer enter
-+	 * ata_sff_hsm_move(), which prevents the interrupt handler from
-+	 * queueing sff_pio_task when deferring the completion of a PIO
-+	 * data-in command.  The SCSI error handler cannot dispatch new
-+	 * commands while error handling is in progress, so issue-time
-+	 * queuing is not possible either.
- 	 */
- 	spin_lock_irq(ap->lock);
- 	ap->hsm_task_state = HSM_ST_IDLE;
- 	spin_unlock_irq(ap->lock);
+ struct tipc_group {
+@@ -316,7 +316,6 @@ static struct tipc_member *tipc_group_create_member(struct tipc_group *grp,
+ 	m->node = node;
+ 	m->port = port;
+ 	m->instance = instance;
+-	m->bc_acked = grp->bc_snd_nxt - 1;
+ 	ret = tipc_group_add_to_tree(grp, m);
+ 	if (ret < 0) {
+ 		kfree(m);
+@@ -340,9 +339,12 @@ static void tipc_group_delete_member(struct tipc_group *grp,
+ 	rb_erase(&m->tree_node, &grp->members);
+ 	grp->member_cnt--;
  
-+	/*
-+	 * Now that the interrupt handler can no longer queue the pio task,
-+	 * cancel it.  This also drains a work item that the interrupt
-+	 * handler managed to queue before the HSM state was reset.
+-	/* Check if we were waiting for replicast ack from this member */
+-	if (grp->bc_ackers && less(m->bc_acked, grp->bc_snd_nxt - 1))
+-		grp->bc_ackers--;
++	/* If this member owed an ack for the current replicast and it
++	 * was the last one, restore the open state so blocked broadcast
++	 * senders can proceed.
 +	 */
-+	cancel_delayed_work_sync(&ap->sff_pio_task);
-+
- 	ap->sff_pio_task_link = NULL;
- }
++	if (grp->bc_ackers && m->bc_pending && !--grp->bc_ackers)
++		*grp->open = true;
  
-@@ -1233,7 +1246,13 @@ static void ata_sff_pio_task(struct work_struct *work)
+ 	list_del_init(&m->list);
+ 	list_del_init(&m->small_win);
+@@ -394,7 +396,6 @@ void tipc_group_update_member(struct tipc_member *m, int len)
+ 
+ void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
+ {
+-	u16 prev = grp->bc_snd_nxt - 1;
+ 	struct tipc_member *m;
+ 	struct rb_node *n;
+ 	u16 ackers = 0;
+@@ -403,8 +404,8 @@ void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
+ 		m = container_of(n, struct tipc_member, tree_node);
+ 		if (tipc_group_is_receiver(m)) {
+ 			tipc_group_update_member(m, len);
+-			m->bc_acked = prev;
+ 			ackers++;
++			m->bc_pending = ack;
+ 		}
  	}
  
- fsm_start:
--	WARN_ON_ONCE(ap->hsm_task_state == HSM_ST_IDLE);
-+	/*
-+	 * ata_sff_flush_pio_task() may have marked the HSM idle after this
-+	 * work item was queued or while it was running.  There is nothing
-+	 * left to do.
-+	 */
-+	if (ap->hsm_task_state == HSM_ST_IDLE)
-+		goto out_unlock;
+@@ -800,9 +801,9 @@ void tipc_group_proto_rcv(struct tipc_group *grp, bool *usr_wakeup,
+ 		if (!m || !grp->bc_ackers)
+ 			return;
+ 		acked = msg_grp_bc_acked(hdr);
+-		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
++		if (acked != grp->bc_snd_nxt || !m->bc_pending)
+ 			return;
+-		m->bc_acked = acked;
++		m->bc_pending = false;
+ 		if (--grp->bc_ackers)
+ 			return;
+ 		list_del_init(&m->small_win);
+diff --git a/net/tipc/socket.c b/net/tipc/socket.c
+index d5d70eb230b56..65cc0c4964b31 100644
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -2356,8 +2356,18 @@ static void tipc_sk_filter_rcv(struct sock *sk, struct sk_buff *skb,
+ 	if (unlikely(!msg_isdata(hdr)))
+ 		tipc_sk_proto_rcv(sk, &inputq, xmitq);
  
- 	wait_mask = ATA_BUSY;
- 	if (ap->hsm_task_state == HSM_ST_LAST)
-@@ -1252,6 +1271,13 @@ static void ata_sff_pio_task(struct work_struct *work)
- 		ata_msleep(ap, 2);
- 		spin_lock_irq(ap->lock);
- 
-+		/*
-+		 * ata_sff_flush_pio_task() may have marked the HSM idle
-+		 * while the port lock was dropped for ata_msleep().
-+		 */
-+		if (ap->hsm_task_state == HSM_ST_IDLE)
-+			goto out_unlock;
+-	if (unlikely(grp))
++	if (unlikely(grp)) {
++		bool was_open = tsk->group_is_open;
 +
- 		status = ata_sff_busy_wait(ap, wait_mask, 10);
- 		if (status & wait_mask) {
- 			ata_sff_queue_pio_task(link, ATA_SHORT_PAUSE);
+ 		tipc_group_filter_msg(grp, &inputq, xmitq);
++		/* A departing member may have held the last outstanding
++		 * replicast ack, which can restore the open state inside
++		 * tipc_group_filter_msg(); wake up senders blocked in
++		 * poll()/write() if the group just became writable.
++		 */
++		if (!was_open && tsk->group_is_open)
++			sk->sk_write_space(sk);
++	}
+ 
+ 	if (unlikely(!grp) && mtyp == TIPC_MCAST_MSG)
+ 		tipc_mcast_filter_msg(net, &tsk->mc_method.deferredq, &inputq);
 -- 
 2.53.0
 
