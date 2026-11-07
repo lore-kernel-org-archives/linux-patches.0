@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063435;
-	b=qI0W+VEAN7SLGvcvnomSFxIJWseyVKamstueg/gPIEkHAuUPIlIiwTsipwGMrvfKDgw0
-	 1m2NXcQbr2fUtU6OUNv87Qrc+4lAR8w/DTGbL5FGAXxLvJnjZohVyx1s/gqDpDCjdtW4X
-	 aiK1qeO3ZHToaRBWRvW5oY4mwHF0pG7fDk+Euq6eEKC7Twl908JkRXX70ejksqoYzRFwD
-	 uUJdmrScPRS/MgV1gDrFKM9aNdMhRspxAUazWNuxLgu/vLE1AqeJt+IGdHktYOiv+NkXG
-	 H9JvQHqREqHuIu41vO7kKtveOfhF+Z5hYDx0PR5tYlDEVo1w0RYjkFd/yJYHbd3A2yQ==
+	t=1794063436;
+	b=IOiFicQhfc04vVO7Yx9uSbb12JGkG7NXt98tINLMDnqVzxukcElDf8GDi5iVd9C6UsGb
+	 pjgzMgW2KBtcgtbRfRAyJ0QJJNQk9h3O4NEHF9NzPV4tsEuHr7uXkefmneYJO9hcU+Zo8
+	 jYbYf+gJEVi53zCmOttBVJ0pvVaFVGqTLb5PGYygNI0TRX3ZDhi0hmvBW25DTUesjpioz
+	 WKG4nuzjDWKIjWRp++NOk6TBEefDgbPRyi1seIZ+4bfaqdsgcd/rfjaGRR2f5O53JVovS
+	 xLAPPjxGfg3WeWO+mIRPW2nTyhh1R8cMGiaeqH2sNZtv5PmJx5bXvj++C/q59FuhaLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BkMLqvaYqVDV3W44XAJv13qJUOgJxzL2+MYSt1alY/s=;
-	b=MvPz98WS+9oWEbSC49fLNefM/79Ze20WsW6VYqvneoSdJuRb6r/2HvGNQrk/IdPdKdK1
-	 /r+AzF4g/4U8WH1cVTNQpQ1RytDqVs+A+ROZgQTGjFNmtdBhRSlqcVRjolUe+zw2FuFoh
-	 sxsHon+QR6e4ojePYeAoWtX6ZoZJoj7sgaEr7Kie85aOaNrmGLsUWPGwYpEuj3AstfUK/
-	 Wn0BZ/j5xbCmsXJzKaE5EwPqPn/vAUoHLYPSH1IfL8jrOv11b9awbbF6WYP/VqZjPgHg4
-	 yT7HCvnRzSsKiTdsx+RaGxyBIfejHNzlfdfGa3IlwoeaCgqAESdEG46NC3vMf3x3dfA==
+	bh=tcajINutfoWWq+Yp+nh2rt9PE5ek7Q9SrkxiAzJ9nGU=;
+	b=g7ZV6Nh/K17BSwgPw4CC4efD8IX75O+7xXrew6F19ukmY/Y/E50mF88jeId08p3doVGT
+	 e31Bb4bpGb73Gaws1pkZtXNQ1sn60aD4ZnzkIhGjDpyfPZWGpTI6gz32a2BokfCQT/WFK
+	 pbXdnlrj1HvkRyXuNKzZRNN67LU2miYhpjBdIVv/B7XXulWcvOa3B7GDDfSnp/FmBjK2A
+	 TfqzOcItFyCVPAWEUYQmVcwes6ExhiRfzK4tgrKg/vACEsy3NsTS16XxNR6tcRbyoeb6y
+	 v66L5jPHsmU32beHX+5vRAvBVHlkP06vClZdEyhmCSsEHbOzKna6wa3M90QXg6mrQLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJOfBirI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6BLCzT3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5BB606D801;
-	Sat,  7 Nov 2026 14:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA91608362D;
+	Sat,  7 Nov 2026 14:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJOfBirI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F4D1F0089F;
-	Sat,  7 Nov 2026 14:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6BLCzT3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7221F0089F;
+	Sat,  7 Nov 2026 14:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063435;
-	bh=BkMLqvaYqVDV3W44XAJv13qJUOgJxzL2+MYSt1alY/s=;
+	s=korg; t=1794063436;
+	bh=tcajINutfoWWq+Yp+nh2rt9PE5ek7Q9SrkxiAzJ9nGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iJOfBirI0LDfa6QKvO47/R6i9yc0sS+JB6gqsQsve082Nu39o4wEvT13n/IQ8gTKu
-	 a9mbyRrAGTRf+KZ+WuiKbXlSEhNvQ6oLXH2VTLfFbvDhtraz1NecmyCbGiIk33JNQr
-	 iWq0z3klSW8fE6BurLe9fVSubrdi8/gaMS17ewdo=
+	b=a6BLCzT3GFOglU8doKuFk5EuDOLQA7XzVIoISlwFl2QD8FS79mEGhJ/obWLoEi91o
+	 76nEohqXWvvkeg7Z8K+dc4ULZWoiUo0IZCO1mQUUhFXKumwRMjS47K9C+KXhur+pdu
+	 8UMkyC7n+CpJqdzexwW2vJrkeSLzt6tUEQGtFlPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Stian Halseth <stian@itx.no>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tony Rodriguez <unixpro1970@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 597/869] ring-buffer: Take cpus_read_lock() when changing the subbuf order
-Date: Sat,  7 Nov 2026 08:54:39 -0500
-Message-ID: <20261107134913.324751926@linuxfoundation.org>
+Subject: [PATCH 6.18 562/869] PCI: Set supported_speeds in set_pcie_port_type()
+Date: Sat,  7 Nov 2026 08:54:04 -0500
+Message-ID: <20261107134912.353545069@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,41 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Stian Halseth <stian@itx.no>
 
-[ Upstream commit 453d0f47b174cac387af48d303c503b84f82212e ]
+[ Upstream commit 926767a9be8866d26cc27ca46c46c03d921e2193 ]
 
-A CPU coming online for the first time gets its per CPU buffer allocated
-by trace_rb_cpu_prepare(), which then adds it to buffer->cpumask. If that
-happens while ring_buffer_subbuf_order_set() is running, the CPU shows up
-after the allocation loop and the install loop walks it with an empty
-new_pages list, corrupting the buffer.
+sparc64 and powerpc create PCI devices from the device tree in
+of_create_pci_dev(), which calls set_pcie_port_type() but not
+pci_setup_device(). Since d2bd39c0456b, supported_speeds is only set in
+pci_setup_device(), so it stays 0 for these devices.
 
-Take cpus_read_lock() as ring_buffer_resize() does.
+pcie_get_speed_cap() then returns PCI_SPEED_UNKNOWN, the sysfs
+'max_link_speed' attribute reads "Unknown", and the failed link retraining
+quirk passes PCI_SPEED_UNKNOWN to pcie_set_target_speed(), which warns on a
+SPARC T7-1:
 
+  WARNING: drivers/pci/pcie/bwctrl.c:125 at pcie_set_target_speed+0x284/0x2e0
+
+Set supported_speeds in set_pcie_port_type(), which all three paths call.
+
+Fixes: d2bd39c0456b ("PCI: Store all PCIe Supported Link Speeds")
+Closes: https://github.com/sparclinux/issues/issues/109
+Signed-off-by: Stian Halseth <stian@itx.no>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Tony Rodriguez <unixpro1970@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
-Link: https://patch.msgid.link/20260916192628.274136-1-devnexen@gmail.com
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20261007131304.309511-1-stian@itx.no
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/probe.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index f74acc78866d8..dcb762664ce73 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -7004,6 +7004,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- 	if (psize > RB_WRITE_MASK + 1)
- 		return -EINVAL;
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 4e4e38e626912..082c51ce88936 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1661,6 +1661,8 @@ void set_pcie_port_type(struct pci_dev *pdev)
+ 		pdev->aspm_l1_support = 1;
+ #endif
  
-+	guard(cpus_read_lock)();
++	pdev->supported_speeds = pcie_get_supported_speeds(pdev);
 +
- 	/* prevent another thread from changing buffer sizes */
- 	guard(mutex)(&buffer->mutex);
+ 	parent = pci_upstream_bridge(pdev);
+ 	if (!parent)
+ 		return;
+@@ -2046,9 +2048,6 @@ int pci_setup_device(struct pci_dev *dev)
+ 
+ 	set_pcie_untrusted(dev);
+ 
+-	if (pci_is_pcie(dev))
+-		dev->supported_speeds = pcie_get_supported_speeds(dev);
+-
+ 	/* "Unknown power state" */
+ 	dev->current_state = PCI_UNKNOWN;
  
 -- 
 2.53.0
