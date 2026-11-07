@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062660;
-	b=du443J/5yCKgwz7dwriyiLV5/8EZQcK0IPeuvk73D7rffbcmcA+vYvyBFHkAShbqg8qO
-	 X0YSNfUHjASh8mteADJUBTrWbOacdDaJCzKyLZfRfroxkKVk8pBjBKsic9KWeBYOUQxZN
-	 3HBchUanHlfUFsV5V1NsupAnOAUmhU2Cv5BKoIY2xPGNKJO5H0U2rylQ75cEk8QXfr7FG
-	 lkpVZ3yzQYnPsJQsXXISP2Cy9+HPYEU1MyzvVWojs+S8V92IC+gNEjJ0hR06LYRCGnbCG
-	 XTff+KCotmDK7FpZ8RyazK64FAXJqwsEgmkxRtAK2p22LsZt1ytv7OEdg/Y9q64k2yQ==
+	t=1794062662;
+	b=rNo/2eUkN5gFx1aO6KV1D/WlvLBTqiMsSlJtB2tyimrYewBp53KLfMHZN8p/0vyeBaHR
+	 zNWOqLNaaq73f+0KesRHN3LJwolw+2jlwnq+ppj4yvDXA6V8FKRUzHFZcFL+RTgYTjWlA
+	 xpTFRrIfKdw5XoBI8vyvtfrVki54PwEupDRt+4TPxdWzNsAbpCwNwzo2/hlI24lE3F26K
+	 mFGWwIbQzZk2nEdEstf3fH5G84IbHpWyLcsEYbH09hfb/hCt84edLyZg8CuzkHqs6gRMk
+	 3MLSa4FxWjA7Z4gJ8FXCKb8oNgrMkjOvZIJidfJYoYKdn1JvaErPz2pXMaT3QkTwyig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=77FNc77tD/Rg4XT0/EcQF7H0hQY+DSVtlREOQfGtrSo=;
-	b=WNy5S5oy0xdm70/gTSEc6dHn9pGeNyU5cQCeaEU/xMX/usMhi+7vnwN2ou9IlFqEUjll
-	 MOds3SxSfsYxuqgutBhz8nn5EiK6YZhfrlBD3Z4MzsMy2+xR5BI2YKCQA9tAmy3XuDazl
-	 HBVIWEZ6Q/bE5icm67mtCjKT07odDavxgEwa8yMojqLXk40vKj8PmGHpIKjH+NyWrFhpb
-	 jfeSjgU5BBU/P6ZNxYJoZidDlMPjW2AdWwQlJRQVM8sXN+iF4l0TnZBmLPVNdEFawTmJ6
-	 BLs2wbM0OfVqLg8GDwpcqsp9Vz7Cv2ry4fZnpVDdtWDwdqQ3g80y3VQ8EMe4tLFgHpw==
+	bh=n8u9q3zxj6T89hO4TXmnVJBtkwHOT196HrhzG6mSjww=;
+	b=QxqT+i3yQk8kos3ldlPlwcBLUjTVM92dGY/KJT6bPzsJkLSAwCYqFOknohh/R15eO8cQ
+	 jh+OmIYTAwSp9jkPESPQ3qFxmqBfwmbENijYttV0j91DU5yoUX7zI0ThFOi8pHz0MWLM5
+	 5Qhm/oMfZiY44j3xbOTD/x2KON0mpP6240TE6q1P5m2sJM3LoD4rj+/vDizJOeOjGUf3o
+	 QAdgibkuseufJmMh7w21SzXTbovmZVqiqiqHYmRcH+CGqm0fm/jgKjpb/EEGLg4XPl/rn
+	 /Wdn65WtPxjMgz9gm9RbekeZHEqJfO5smqLobagvz61toBTMJCgCuoww5ZNXUKfstkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/8uOeFx";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZwXC7eV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A85606A333;
-	Sat,  7 Nov 2026 14:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DDA606A331;
+	Sat,  7 Nov 2026 14:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/8uOeFx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287101F0089F;
-	Sat,  7 Nov 2026 14:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZwXC7eV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D20B1F0089F;
+	Sat,  7 Nov 2026 14:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062660;
-	bh=77FNc77tD/Rg4XT0/EcQF7H0hQY+DSVtlREOQfGtrSo=;
+	s=korg; t=1794062661;
+	bh=n8u9q3zxj6T89hO4TXmnVJBtkwHOT196HrhzG6mSjww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/8uOeFxvNtfg3FrB5fc3h/tTqbK2Z+UH+WzEyl9bAmVtRjMBllKorBnyeHa8WI0I
-	 /8oZty6D+7HSJB1FNCm2DIVWNNntaVXKGnqsW34TNCku9nqpvwv71gljYENN6oyVWq
-	 Ec0zCR3uPg0MMlAik9H37mYanKCj2U+sYknXw+o8=
+	b=NZwXC7eVroLVVeb0WKWvNNBG6Czaz7SEA4ADumOrb+3BNnjcp2YctUJBHl5uwPdnA
+	 gHvClWGKZfOm2BqfLljVatPgRjNFf8MZtrmErMNZrEdcqR4nbXDf164Z69DAQpBMVR
+	 x51p/l1lniTfHv5eqETFx0JMhZsP3djtsAG7kYdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Li <vincent.mc.li@gmail.com>,
-	Xi Ruoyao <xry111@xry111.site>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Vega <vega@nebusec.ai>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1487/1536] LoongArch: Remove arch-specific __smp_mb__{before,after}_atomic()
-Date: Sat,  7 Nov 2026 08:58:23 -0500
-Message-ID: <20261107135039.618939105@linuxfoundation.org>
+Subject: [PATCH 6.12 1523/1536] tcp: check congestion control restriction first
+Date: Sat,  7 Nov 2026 08:58:59 -0500
+Message-ID: <20261107135040.655000409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,67 +72,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 85cebdfee765e92e748e71b9b91889eef5988282 ]
+[ Upstream commit dda51b73721684637ab8e9bd97c78228b99c4bd2 ]
 
-When running BPF selftest "test_progs -t timer_lockup" on a LoongArch
-machine, the kernel intermittently experiences soft lockups and panics
-in hrtimer_cancel().
+tcp_set_default_congestion_control() takes a reference to an algorithm
+before checking whether a non-init network namespace may select it. A
+rejected request returns -EPERM without dropping the reference.
 
-The root cause is that the bpf_timer_cancel() implementation relies on
-smp_mb__after_atomic() to provide a full data barrier after a relaxed
-atomic_inc() to ensure the proper store-load ordering before performing
-lockless dependency checks on weakly-ordered architectures, such as on
-LoongArch, but the current definition of smp_mb__after_atomic() is just
-a plain compiler barrier.
+This affects module-backed algorithms too; BPF is not required. For
+example, after root loads tcp_bbr, a user with CAP_NET_ADMIN in a
+non-init network namespace can repeatedly request it as the default
+although it is not in tcp_allowed_congestion_control. Each rejected
+write leaks a module reference. Since module->refcnt is an atomic_t,
+2^31 such writes can make it negative; later module_put() calls warn,
+and rmmod can hit the BUG_ON() in try_release_module_ref().
 
-This allows a subsequent read to bypass the prior write due to store-
-load reordering, enabling concurrent CPUs to simultaneously bypass the
-software deadlock detection, enter hrtimer_cancel(), and then trigger a
-severe ABBA deadlock in the hrtimer core.
+Check the namespace restriction before acquiring the reference, as
+tcp_set_congestion_control() already does.
 
-Moreover, there are hundreds of smp_mb__after_atomic() call sites across
-the core kernel (kernel/, drivers/, mm/, net/, fs/) that currently lack
-necessary full data barriers on LoongArch, which have potential risks.
-
-To comply with the LKMM specification, fix this by removing the arch-
-specific definition of __smp_mb__after_atomic(), so that this macro can
-automatically fall back to the generic definition in asm-generic that
-maps to __smp_mb() and emits the required hardware DBAR instruction.
-
-While at it, do the same thing for __smp_mb__before_atomic().
-
-With this patch the BPF timer_lockup selftest was stressed for millions
-consecutive loops on a physical LoongArch machine, without encountering
-any further lockups.
-
-Cc: stable@vger.kernel.org # 6.7+
-Fixes: affef66b65889a0e ("LoongArch: Relax memory ordering for atomic operations")
-Closes: https://lore.kernel.org/loongarch/CAK3+h2xOSEZUHhou7N2cRL-aGrZCNSm45g+P7thObMe+fpgYCA@mail.gmail.com/
-Reported-by: Vincent Li <vincent.mc.li@gmail.com>
-Reviewed-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 8d432592f30f ("net: Only allow init netns to set default tcp cong to a restricted algo")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Eric Dumazet <edumazet@kernel.org>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/71c142b2d45af6a2fe7fc6cd4a5ca52c53afbe23.1793075984.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/barrier.h | 3 ---
- 1 file changed, 3 deletions(-)
+ net/ipv4/tcp_cong.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/barrier.h b/arch/loongarch/include/asm/barrier.h
-index 4b663f1977061..84c6d739119d1 100644
---- a/arch/loongarch/include/asm/barrier.h
-+++ b/arch/loongarch/include/asm/barrier.h
-@@ -57,9 +57,6 @@
- #define __WEAK_LLSC_MB		"			\n"
- #endif
- 
--#define __smp_mb__before_atomic()	barrier()
--#define __smp_mb__after_atomic()	barrier()
--
- /**
-  * array_index_mask_nospec() - generate a ~0 mask when index < size, 0 otherwise
-  * @index: array element index
+diff --git a/net/ipv4/tcp_cong.c b/net/ipv4/tcp_cong.c
+index f3c516da0a942..cfef6dbac6421 100644
+--- a/net/ipv4/tcp_cong.c
++++ b/net/ipv4/tcp_cong.c
+@@ -286,12 +286,12 @@ int tcp_set_default_congestion_control(struct net *net, const char *name)
+ 	ca = tcp_ca_find_autoload(name);
+ 	if (!ca) {
+ 		ret = -ENOENT;
+-	} else if (!bpf_try_module_get(ca, ca->owner)) {
+-		ret = -EBUSY;
+ 	} else if (!net_eq(net, &init_net) &&
+ 			!(ca->flags & TCP_CONG_NON_RESTRICTED)) {
+ 		/* Only init netns can set default to a restricted algorithm */
+ 		ret = -EPERM;
++	} else if (!bpf_try_module_get(ca, ca->owner)) {
++		ret = -EBUSY;
+ 	} else {
+ 		prev = xchg(&net->ipv4.tcp_congestion_control, ca);
+ 		if (prev)
 -- 
 2.53.0
 
