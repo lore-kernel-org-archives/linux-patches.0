@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061894;
-	b=lO8rFCjXFXQ7/7X4UU/1ZNfSJkEy5Pn+uquPLtU7uMWX+sa3XnES1aeYOVlTopX56OZ2
-	 zqPW1du1IynbwZ+qdLAV5u0HEsbkiFXnF23YJuPW76Znm2QqK00Sbzn0cjDPiGMkPdTb5
-	 OzsUKub5ykhn8jjSYtBadBjdmpVDBejbp2Jc/EPSQ//vyQy4N7YjhIDqiBmp+aksDD1fm
-	 HmR4TIEJnqLz+CPav8KDBOLIcpYhUnzCIVarM+IQWhvjyDr0qHpyptqpazs8qfr8qjT/T
-	 1HqcdvVQpruGLI5gH2VIBMny7WAEwWKZtorNiC6vGrmI/uuOpXDJLJwBaFlYTWWA+ug==
+	t=1794061895;
+	b=TI4LvOufKQFEOjBR5A3XvSbtrN0VQf20amCMlPdcL5s6f3JoShwA6eQ+QEk7/ZKefYBb
+	 Q9LHsWtcuLHV5F8W4RqabPGSxwsL18iEQAW04DWbYai+H8tzxemrbxEFmKLMfqQVcUlCy
+	 nwyn1PnKIiXzeLZIR45ovPlWt69JKcwFwDE17xXZgbw0RoT8ITHDRMcTpWzFfkKAiBkk9
+	 FEX/u2p6kLl83GOi1Hpvt78PlXeH2JwqeJSg41/5T/tpZoc6BJ2aszcnZq7h05jEHGUhL
+	 CCENAQ8+sskimp7e/czxmpnKd58ecFJ5EMYrxJIn7aekA9f9YnYVQyeRYy1HjVB1cFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ykemrqOvrHlrcFAKl9vSxQpIMrCjMRNL9bxygQjRbxw=;
-	b=2ezWvD5tDFgE0Ahjg96Q39sH+nP5V+d894r0V+T4HNjZofyO2WplZcwEuYMV34gXAdgl
-	 vjV5wecoBtkNSJHai3TNUclIGg7I7OfAhJr1VGtAcQojRI21boU55wqkdaJNVFLIb4rk0
-	 u7iKacCPObH6OSagCjbRyK+axo5exkM2Hsbcgpw9Ciy+8DQ2Zg/36OLpyPt3kB0ZERH3h
-	 X3aRBFi2YL8DobMGw+02vWlX0OMgIYyYk0RxN3LFE/BB9WKNT5s6/HlrlfiSICYTPJmle
-	 y2P4zMRhR/X0SlNW4xXJ3EC0InsCfrIhlUIjlupJ9NQzorGZqhhbgp7vLMYZKxD+5WQ==
+	bh=TzbcDb3TweN4OEXqxauWYpuZhuLTHlhTB+TURTS3PCM=;
+	b=1UjKCe6OluCE6TYU/rk8scsZkZw7cDeegfp8FcalyzN8L+G4GAeb8gdhKSsEJsNTrBxz
+	 tNJndZ/sb2DhZGg3QDNXs54u2wzvsjG3wLqcYHpZpyuhEnJoP504wKfoY5+Wm54bl96GE
+	 3B+LCqADjeCFOS3nfA5pyzGG0qUy7FeIM6cS+kjfRhSOUfPIaQC2UrX4pMHgfHwxhPlNh
+	 BkQw1GHhZ/3/iPmjFDk+F/nHxOeY/H4GwiG2IjyossBsnXkGz2ffOPtH/xFOjaKVTwd3C
+	 1DxbINdQ8mUW2edC7g50/Grra673MkrleUxKV39xkiqlWzo3OX8IVmIkAw8xkcxirxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pm4+6aiz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nBaiXeib;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E837606A330;
-	Sat,  7 Nov 2026 14:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF22606A32C;
+	Sat,  7 Nov 2026 14:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pm4+6aiz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DEC1F008A1;
-	Sat,  7 Nov 2026 14:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nBaiXeib
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F5C1F0089F;
+	Sat,  7 Nov 2026 14:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061894;
-	bh=ykemrqOvrHlrcFAKl9vSxQpIMrCjMRNL9bxygQjRbxw=;
+	s=korg; t=1794061895;
+	bh=TzbcDb3TweN4OEXqxauWYpuZhuLTHlhTB+TURTS3PCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pm4+6aizcTQE9gERcYuElOZprRzUQ0QzPhuC3uXIfRHXWlS6OG1I3HTACIe8R8RER
-	 5kRoF61o9kvVGZphqJ8sXlsQlW+Rf5GsGgt0vVTmnvQbBD4S87VhY7CruWSiDLOKrW
-	 cMlb9Y+LU10Lp4FKTN1IAryiR1XPObyDomnuf5S4=
+	b=nBaiXeibJ266U7fdnn7OI3GA0YXBIYO70OlDxUI0HCZ78ehoB8Qn2VOP1rYYPwJfS
+	 OlHtoCx0C/rcX3GRvMSDYYT1j1TSLzQxfGWvGYF+/Bqukd8VjCY16vOm5cmNadIuC3
+	 ITXWUNoJC4bUgQBAv7pdADewNyp1xBM8iePXTCdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Breno Leitao <leitao@debian.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0868/1536] mm/hugetlb: rename avoid_reserve to cow_from_owner
-Date: Sat,  7 Nov 2026 08:48:04 -0500
-Message-ID: <20261107135021.925202406@linuxfoundation.org>
+Subject: [PATCH 6.12 0904/1536] aio: prevent eventfd/epoll recursion on poll
+Date: Sat,  7 Nov 2026 08:48:40 -0500
+Message-ID: <20261107135023.025739729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -75,205 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 30cef82bc6e8975a360ec05b707f7fb194c875ed ]
+[ Upstream commit 398e3fa789aa5ffddc8689d8cbc7b31e1824130c ]
 
-The old name "avoid_reserve" can be too generic and can be used wrongly in
-the new call sites that want to allocate a hugetlb folio.
+aio_poll_wake() can complete a keyed poll request inline while the
+provider waitqueue lock is held.  If the polled file is an epoll instance
+and the AIO result eventfd is watched by that same instance, signaling the
+result can feed back into epoll and try to take the provider waitqueue lock
+again.
 
-It's confusing on two things: (1) whether one can opt-in to avoid global
-reservation, and (2) whether it should take more than one count.
+For example, a timerfd wake can follow this path:
 
-In reality, this flag is only used in an extremely hacky path, in an
-extremely hacky way in hugetlb CoW path only, and always use with 1 saying
-"skip global reservation".  Rename the flag to avoid future abuse of this
-flag, making it a boolean so as to reflect its true representation that
-it's not a counter.  To make it even harder to abuse, add a comment above
-the function to explain it.
+  timerfd -> ep_poll_callback -> aio_poll_wake -> aio_complete
+          -> eventfd_signal -> ep_poll_callback -> ep_poll_safewake
 
-Link: https://lkml.kernel.org/r/20250107204002.2683356-4-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Ackerley Tng <ackerleytng@google.com>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 824cc56bf43c ("mm/hugetlb: fix use-after-free of a new anon folio")
+The second ep_poll_safewake() recursively acquires ep->poll_wait.lock.
+eventfd_signal_allowed() does not prevent this because the wake chain did
+not begin in eventfd, so the task's eventfd recursion bit is still clear
+when aio_poll_wake() decides to complete inline.
+
+An unprivileged process can construct this graph and make a CPU spin on the
+recursive lock.  DEBUG_SPINLOCK reports "BUG: spinlock recursion", and
+lockdep reports the same epoll waitqueue lock as both held and requested.
+
+Always defer eventfd-backed poll completions through the existing
+aio_poll_put_work() path.  At this point the request has already been
+detached from the waitqueue and active request list, so the work item can
+publish the completion after the provider callback releases its lock.
+Poll completions without a result eventfd remain inline.
+
+Fixes: e8693bcfa0b4 ("aio: allow direct aio poll comletions for keyed wakeups")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20260813133843.2933127-1-4ncienth@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hugetlbfs/inode.c    |  2 +-
- include/linux/hugetlb.h |  4 ++--
- mm/hugetlb.c            | 33 ++++++++++++++++++++-------------
- 3 files changed, 23 insertions(+), 16 deletions(-)
+ fs/aio.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-index 734eb08bafc92..1a12932b58806 100644
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -884,7 +884,7 @@ static long hugetlbfs_fallocate(struct file *file, int mode, loff_t offset,
- 		 * folios in these areas, we need to consume the reserves
- 		 * to keep reservation accounting consistent.
- 		 */
--		folio = alloc_hugetlb_folio(&pseudo_vma, addr, 0);
-+		folio = alloc_hugetlb_folio(&pseudo_vma, addr, false);
- 		if (IS_ERR(folio)) {
- 			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 			error = PTR_ERR(folio);
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index 7eaabacdf1105..32cbaaaccfe54 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -691,7 +691,7 @@ struct huge_bootmem_page {
- int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list);
- void wait_for_freed_hugetlb_folios(void);
- struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
--				unsigned long addr, int avoid_reserve);
-+				unsigned long addr, bool cow_from_owner);
- struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
- 				nodemask_t *nmask, gfp_t gfp_mask,
- 				bool allow_alloc_fallback);
-@@ -1083,7 +1083,7 @@ static inline void wait_for_freed_hugetlb_folios(void)
- 
- static inline struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 					   unsigned long addr,
--					   int avoid_reserve)
-+					   bool cow_from_owner)
- {
- 	return NULL;
- }
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index a1dc40a06eb0a..2805ddda5adeb 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2991,8 +2991,15 @@ void wait_for_freed_hugetlb_folios(void)
- 	flush_work(&free_hpage_work);
- }
- 
-+/*
-+ * NOTE! "cow_from_owner" represents a very hacky usage only used in CoW
-+ * faults of hugetlb private mappings on top of a non-page-cache folio (in
-+ * which case even if there's a private vma resv map it won't cover such
-+ * allocation).  New call sites should (probably) never set it to true!!
-+ * When it's set, the allocation will bypass all vma level reservations.
-+ */
- struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
--				    unsigned long addr, int avoid_reserve)
-+				    unsigned long addr, bool cow_from_owner)
- {
- 	struct hugepage_subpool *spool = subpool_vma(vma);
- 	struct hstate *h = hstate_vma(vma);
-@@ -3034,7 +3041,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 	 * Allocations for MAP_NORESERVE mappings also need to be
- 	 * checked against any subpool limit.
- 	 */
--	if (map_chg || avoid_reserve) {
-+	if (map_chg || cow_from_owner) {
- 		gbl_chg = hugepage_subpool_get_pages(spool, 1);
- 		if (gbl_chg < 0)
- 			goto out_end_reservation;
-@@ -3042,7 +3049,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 
- 	/* If this allocation is not consuming a reservation, charge it now.
- 	 */
--	deferred_reserve = map_chg || avoid_reserve;
-+	deferred_reserve = map_chg || cow_from_owner;
- 	if (deferred_reserve) {
- 		ret = hugetlb_cgroup_charge_cgroup_rsvd(
- 			idx, pages_per_huge_page(h), &h_cg_rsvd);
-@@ -3067,7 +3074,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 		if (!folio)
- 			goto out_uncharge_cgroup;
- 		spin_lock_irq(&hugetlb_lock);
--		if (!avoid_reserve && vma_has_reserves(vma, gbl_chg)) {
-+		if (!cow_from_owner && vma_has_reserves(vma, gbl_chg)) {
- 			folio_set_hugetlb_restore_reserve(folio);
- 			h->resv_huge_pages--;
- 		}
-@@ -3125,7 +3132,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 		hugetlb_cgroup_uncharge_cgroup_rsvd(idx, pages_per_huge_page(h),
- 						    h_cg_rsvd);
- out_subpool_put:
--	if (map_chg || avoid_reserve)
-+	if (map_chg || cow_from_owner)
- 		hugepage_subpool_put_pages(spool, 1);
- out_end_reservation:
- 	vma_end_reservation(h, vma, addr);
-@@ -5366,7 +5373,7 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
- 				spin_unlock(src_ptl);
- 				spin_unlock(dst_ptl);
- 				/* Do not use reserve as it's private owned */
--				new_folio = alloc_hugetlb_folio(dst_vma, addr, 0);
-+				new_folio = alloc_hugetlb_folio(dst_vma, addr, false);
- 				if (IS_ERR(new_folio)) {
- 					folio_put(pte_folio);
- 					ret = PTR_ERR(new_folio);
-@@ -5827,7 +5834,7 @@ static vm_fault_t hugetlb_wp(struct folio *pagecache_folio,
- 	struct hstate *h = hstate_vma(vma);
- 	struct folio *old_folio;
- 	struct folio *new_folio;
--	int outside_reserve = 0;
-+	bool cow_from_owner = 0;
- 	vm_fault_t ret = 0;
- 	struct mmu_notifier_range range;
- 
-@@ -5896,7 +5903,7 @@ static vm_fault_t hugetlb_wp(struct folio *pagecache_folio,
- 	 */
- 	if (is_vma_resv_set(vma, HPAGE_RESV_OWNER) &&
- 			old_folio != pagecache_folio)
--		outside_reserve = 1;
-+		cow_from_owner = true;
- 
- 	folio_get(old_folio);
- 
-@@ -5905,7 +5912,7 @@ static vm_fault_t hugetlb_wp(struct folio *pagecache_folio,
- 	 * be acquired again before returning to the caller, as expected.
- 	 */
- 	spin_unlock(vmf->ptl);
--	new_folio = alloc_hugetlb_folio(vma, vmf->address, outside_reserve);
-+	new_folio = alloc_hugetlb_folio(vma, vmf->address, cow_from_owner);
- 
- 	if (IS_ERR(new_folio)) {
- 		/*
-@@ -5915,7 +5922,7 @@ static vm_fault_t hugetlb_wp(struct folio *pagecache_folio,
- 		 * reliability, unmap the page from child processes. The child
- 		 * may get SIGKILLed if it later faults.
- 		 */
--		if (outside_reserve) {
-+		if (cow_from_owner) {
- 			struct address_space *mapping = vma->vm_file->f_mapping;
- 			pgoff_t idx;
- 			u32 hash;
-@@ -6166,7 +6173,7 @@ static vm_fault_t hugetlb_no_page(struct address_space *mapping,
- 				goto out;
- 		}
- 
--		folio = alloc_hugetlb_folio(vma, vmf->address, 0);
-+		folio = alloc_hugetlb_folio(vma, vmf->address, false);
- 		if (IS_ERR(folio)) {
- 			/*
- 			 * Returning error will result in faulting task being
-@@ -6630,7 +6637,7 @@ int hugetlb_mfill_atomic_pte(pte_t *dst_pte,
- 			goto out;
- 		}
- 
--		folio = alloc_hugetlb_folio(dst_vma, dst_addr, 0);
-+		folio = alloc_hugetlb_folio(dst_vma, dst_addr, false);
- 		if (IS_ERR(folio)) {
- 			ret = -ENOMEM;
- 			goto out;
-@@ -6672,7 +6679,7 @@ int hugetlb_mfill_atomic_pte(pte_t *dst_pte,
- 			goto out;
- 		}
- 
--		folio = alloc_hugetlb_folio(dst_vma, dst_addr, 0);
-+		folio = alloc_hugetlb_folio(dst_vma, dst_addr, false);
- 		if (IS_ERR(folio)) {
- 			folio_put(*foliop);
- 			ret = -ENOMEM;
+diff --git a/fs/aio.c b/fs/aio.c
+index e8920178b50f7..59620eb01df49 100644
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -1815,7 +1815,12 @@ static int aio_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
+ 		list_del_init(&req->wait.entry);
+ 		list_del(&iocb->ki_list);
+ 		iocb->ki_res.res = mangle_poll(mask);
+-		if (iocb->ki_eventfd && !eventfd_signal_allowed()) {
++		/*
++		 * We hold an arbitrary provider waitqueue lock here.  Signaling a
++		 * result eventfd can feed back through epoll and try to take the same
++		 * lock again.  Defer all eventfd-backed poll completions.
++		 */
++		if (iocb->ki_eventfd) {
+ 			iocb = NULL;
+ 			INIT_WORK(&req->work, aio_poll_put_work);
+ 			schedule_work(&req->work);
 -- 
 2.53.0
 
