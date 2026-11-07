@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064947;
-	b=3ASHqEGH3qHdRNsSLHbVCsNxR6DbqVUAbMNPASQUt5EsbEcSS3wZk8qTxugaCV6vsYVt
-	 UhMDMqwQjx7BYuqzTR3Jm6NR/dGvh1v0wcOgOE+c1sEZZoRQ9aGHSusse/pZigLnelUku
-	 zX/aZDfxt7LETvQ4EofjaYUxfa3Wpt/qQNPXNFmKNE065cHtSPV2KLXC6GR1PRRghtHPa
-	 O/7bE/eQp/hhoTgD52x8nIf+BybYXXcif8XTYLh7uB2BjmQzrKx2O4sACL+5yo+es4LU8
-	 YaItQOGmxVI8vChZKKl5M1c8gCh/DRAvLmj6rYQwO0fAKM0PCWMXmaa1hHA2WpVtuaQ==
+	t=1794064949;
+	b=l+14l77hAVgYUWVP1XY/KXW8HyM1gYh/UQecyL1VsRsnN5DotR2W7DoLelChXm5NTIQU
+	 c5JubIlEe1ETUM4Lyn+fkzCkHfJSdarp8JDBlqrNLrytqS632gVATZuyYIWbPcGWB4X1n
+	 ofIJ+mPNaHn3oC8r2/4x65+a9ZKOTcd54uDeMeyUicmN2lzeqK4ATgiEZpsZJgajLuMyi
+	 LuA/l8/n/o2kvEqmskaxsgh9E7/KJUJo1gqvR3O+nbquY31fuazVToaqQ7yvblUHw/TMS
+	 mmQNlOxN0e+5JZL4cRag0fNddoS+d95Qh5CSBtDJn2ATzj2a9XmGMqjUDrISfbAp8Mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LipX2abKVEEVvHb3V9Xqh9wq3qCvVoBd+ud06XVJjP0=;
-	b=rQCh4cgkFDUX/BaHlaYJv5rU1EwPXMseJjkwLO8yYrE55Envvf1iP+q3auw3/4T2pj/z
-	 MQIx7GkG95CJvoHb7hyz29xMZdja7s/6jluJqb9w1D9GPq69m487+DyiI5xcM7J2cdyRC
-	 5ha3wgs1r9rEkuEp5OwQWIpUXtXqD+J8BWXTEL/ggoJebNS/I6KuW5DkNEmXXa+bIuqRu
-	 kdo19dlkLccGQGHmS7nEhHNtFF5V/1WvU6BvLIE8FPdK579QvkT2EkWAbKheENJbk3UXe
-	 OADtKwLNcQ6Q1u7KHVdLoV1+WVXt4YO1kUByfsOPcj7y4Gv6NTjbOkLUoXdIIcb1+wg==
+	bh=MKGDx/eMqbQPO3DlSA4Ap5yNeTOAMhiAkFGZlMUfB4U=;
+	b=SXDgT9T12MhmLrRqNScs8ck6M72ZQ9XhlFKYmdx+xjym+4A+TAeSmkMo74hGOdutU48h
+	 mPlqIzd3kPhuV3Bwbal+rBSf3J/xDQwgYgPbZeYLgqXj3nF8f3xAKpHeQiqC3GtHFZEhW
+	 jiyvs81YiVu/mLkbO6yTCqqXvUBzkR/4Re+6Eo8PmZrN9SoQP312LmeFvpZfF1wXQSwak
+	 QPqAL5Ex5/yxV3iEMVDtVIUbNrHYtehjqC4bm/IxQxZ05ra0NPYBkxmAkxUnbyUJHIr5e
+	 oxkG1V4B1xRvQMWIhzTOos+kWDK7rQ3wAbPBuML7rNEWRPE2HWnQZEaR71XcNvpLu1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a9e6GZhS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JgH+9SG0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9973F606A331;
-	Sat,  7 Nov 2026 15:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC19F606A9C0;
+	Sat,  7 Nov 2026 15:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a9e6GZhS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4755B1F0089F;
-	Sat,  7 Nov 2026 15:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JgH+9SG0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892671F0089F;
+	Sat,  7 Nov 2026 15:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064947;
-	bh=LipX2abKVEEVvHb3V9Xqh9wq3qCvVoBd+ud06XVJjP0=;
+	s=korg; t=1794064948;
+	bh=MKGDx/eMqbQPO3DlSA4Ap5yNeTOAMhiAkFGZlMUfB4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a9e6GZhSOkzeTZ0Bs4Pn4lHv1rMDSw0LxMiu2lRuAavYlmd1d4b8mrcooxCL3Nmd+
-	 vJ6PPzASzd1EjIO1vRjGcxzhNuzxC7xZc3YnuFRqemKo93XcGY5gVHTr2uogPRVMSf
-	 b2Q9fYvbPpWu7AfPW6pxt/xGkOwcE39s/WbhbxYU=
+	b=JgH+9SG0n3CTRqSDtZ67wb00Y+GKvN6vu9Z5CbY/d+ShUlddXO//pFaDcqmHXqq5c
+	 +8ZZF7nAVOYcpj5YGx+tU+wSmdkO7y1q5x7O1hPu/LkgIoa+yn0qBuC1SRCXnYdsWV
+	 8lgnza1jcPZPc6/7U9mxvTnu0C57w8Kw1I7w2HoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0796/1257] efi/libstub: arm64: Dont use the platform register x18
-Date: Sat,  7 Nov 2026 08:51:32 -0500
-Message-ID: <20261107135001.314888024@linuxfoundation.org>
+Subject: [PATCH 7.3 0797/1257] efi/libstub: Dont replace an existing LINUX_EFI_MEMRESERVE table
+Date: Sat,  7 Nov 2026 08:51:33 -0500
+Message-ID: <20261107135001.340714198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,43 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 4c86b5f3fa78347fa9cbc9e8ec06615b2f80e397 ]
+[ Upstream commit aaf3ed0f46298e18ec8bc477cf0a37478e41f2ea ]
 
-The UEFI specification designates x18, the platform register, as "do not
-use" on AArch64, so that UEFI code is compatible both with an OS that
-assigns a fixed role to x18, and with one that uses it as a temporary
-register.
+The LINUX_EFI_MEMRESERVE table is the root of a linked list of memory
+reservations that need to persist across kexec, such as the GICv3 LPI
+pending and property tables, which cannot be moved once the
+redistributors have been enabled. Each kernel adds its own reservations
+to the list that it finds via the EFI configuration table, and honours
+the ones made by its predecessors.
 
-The arm64 EFI stub and the EFI zboot decompressor only avoid x18 if the
-kernel is built with shadow call stacks, as that is the only case where
--ffixed-x18 is added to KBUILD_CFLAGS, which the stub inherits.
-Otherwise, the compiler is free to use x18 as a temporary register, and
-it does so.
+The EFI stub installs a new, empty table unconditionally, replacing any
+existing one. This is fine on a cold boot, but not if the stub is being
+executed by a loader that passes on the configuration tables of an
+earlier kernel, e.g., a kexec loader that runs the incoming kernel's EFI
+stub, as the reservations made by earlier kernels would be lost.
 
-So pass -ffixed-x18 unconditionally when building the stub for arm64,
-so that the image can be run by loaders that rely on x18 being left
-alone, such as a kernel that uses it for its shadow call stack.
+So leave an existing table in place, and only install a new one if none
+exists yet.
 
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/efi/libstub/efi-stub.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-index 77a2b2d74f3f6..48982d05c441e 100644
---- a/drivers/firmware/efi/libstub/Makefile
-+++ b/drivers/firmware/efi/libstub/Makefile
-@@ -21,7 +21,7 @@ cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ $(CC_FLAGS_DIALECT) \
+diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
+index 42d6073bcd062..a4cb39656b031 100644
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -83,6 +83,14 @@ static void install_memreserve_table(void)
+ 	efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
+ 	efi_status_t status;
  
- # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
- # disable the stackleak plugin
--cflags-$(CONFIG_ARM64)		+= -fpie $(DISABLE_KSTACK_ERASE) \
-+cflags-$(CONFIG_ARM64)		+= -fpie $(DISABLE_KSTACK_ERASE) -ffixed-x18 \
- 				   -fno-unwind-tables -fno-asynchronous-unwind-tables
- cflags-$(CONFIG_ARM)		+= -DEFI_HAVE_STRLEN -DEFI_HAVE_STRNLEN \
- 				   -DEFI_HAVE_MEMCHR -DEFI_HAVE_STRRCHR \
++	/*
++	 * If an earlier boot stage installed a memreserve table already, e.g.,
++	 * a kexec loader passing on the persistent reservations made by the
++	 * previous kernel, use it as is: installing a new one would replace it.
++	 */
++	if (get_efi_config_table(memreserve_table_guid))
++		return;
++
+ 	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, sizeof(*rsv),
+ 			     (void **)&rsv);
+ 	if (status != EFI_SUCCESS) {
 -- 
 2.53.0
 
