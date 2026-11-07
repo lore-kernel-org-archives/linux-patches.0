@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064261;
-	b=C0yDk4nvrFclN7NCvoGQ76q10ijpCGL/cyhaL/8M+GgJqoTgPVfoozHgiZMvJrxC52ik
-	 grI0a6yw9Tbnnl+FxJG3VzIwBFPW7Nby73okR9xji/UvWN8tNAlRVKP6c7C0waI7umwbC
-	 4BO5GDxuzz6f7Vc/3ROqeaLGQEcVRlnCAT9nn36tTBWhVEE85y/ja5+9k4YsJuGJAMtOr
-	 8XFzg0Tuhsaunv5KhtrxhguMh64n7nvEe9XlfF5gc0WuBWoCp4XClxDy0aUWOBoDAGwaD
-	 kYmDABqvL36/+92HVHFQRDPkmRrg1wWkvvkKtomH16c+8ieAH7QnJX8MK+apg+T8qPQ==
+	t=1794064262;
+	b=SxBj37JlGfugaKhPE8tFFpxx/Mm+e6vra8KGM+I09NQ0Zj6wi9/wgVnqwZCmSKrpfS4p
+	 +l/oDzRmBX0t8c0CfrgxDBY/NuleUbbDAkJQNCsgllx9SNvgPSpLS5Gawlx5Svw70YHqI
+	 H59PS3G57mZML5toUxL1UD9RyeVIetdKv0H9CsMbBE7mXQMi1WTL6inxjJxC8BNtxdDZ1
+	 0OwsirJppuA7fxxHvZniz09XSXCb7c/fxO7iBF/6BQ4/UnZzS/EZQNxDRPTR79+UE9aqa
+	 jlUj0OacMtGfTTnrE3njkl8c6juDZUK1Vl+bo13LGViJmrZCvfqaMepulY8xucCgwSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064262;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=moOwTBqWI/bPQv9OlLL1IWUd17OIAxVO/ZyVxYLm2Cg=;
-	b=OKB3yE2OTZQQ935lYYqVYHtC/1QcQrSMJzu7t+MUrORtArKeNPe3R/7Bi4QbrRA0ywg1
-	 asVxt7TDt4sQZPw+17PfYKaBWX1TqEjkDtUor0xfpmrB1MqzPEvWdzixw2Dq4YMbTb0xj
-	 aNkH697hT2fdxYRsqrxSk4oOkJ56/EO31ucKYMiPYdFveLkvYQmu7FBEgmSjJXTq1YXIF
-	 rNxdD8kgclydejulMjfty0s3orOmXxgMgMGvLshNaW55hmUiaLVGt1HVn1Kuw+Of2RvQS
-	 EUg3qmuAnYFvEwICDf3KqOSqdK8A4Y/+yJjn7Oh+8BAXgiTmEnotb+jPZqmK5OknrkQ==
+	bh=MEPXR/6pqKAuzcvNtOqwDgaESNMDDMbJmT7DF/Y5DDU=;
+	b=n1uPWb33whLCyySy85WogO5yEbtMpQRBKH8t3O7cQQKLUP/v+Y2iNvFsVcxTtstoSefx
+	 BH9JTyv25UnJoJd+h5t6SIpEgUI3FrT06pm0p+hmACVFdZF/DrYIfdF5ehpg1qUY6nveg
+	 ywGIOjPBSLP9SjzhUNrFlTfdvhbwc8Pgu5dvxnRQexdMNl0Q96fMKReCLDENIR4Dx858L
+	 2k6MOYGMVbp9cKwVZIbke7JtN/kgoC788c03HS0Yvpb0hz+2RSHtoIgFwlCoTl8Lv8FD/
+	 pxmnFNvQ3QkUXzrWVY+zpBMuR3ZVQavshOWOtN7AZ/dzmHZ+tPYMe6t/AJC9hRYMwJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dq1rWkm0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sk9zzyE4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADF0606A334;
-	Sat,  7 Nov 2026 15:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E179D606A9D3;
+	Sat,  7 Nov 2026 15:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dq1rWkm0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A301F0089F;
-	Sat,  7 Nov 2026 15:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sk9zzyE4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEB71F0089F;
+	Sat,  7 Nov 2026 15:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064260;
-	bh=moOwTBqWI/bPQv9OlLL1IWUd17OIAxVO/ZyVxYLm2Cg=;
+	s=korg; t=1794064261;
+	bh=MEPXR/6pqKAuzcvNtOqwDgaESNMDDMbJmT7DF/Y5DDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dq1rWkm0StErBXmZX6Gp2mmy8TX5KPkUEfhiGhFxPSeNXnjnwZajjWZ8ZA3XhhsIT
-	 YCHNzVHvBP2FCVCmotPL0M49i4WrL2r2aDnxvze1hzt+wVOHOBLY+oJXOvyUPLdX7I
-	 s7MiggcAQLjhuHnc+GyBh53hwTGNVFBjZkcCqs1k=
+	b=sk9zzyE4JdXbaapolK7V0fCdBvbVUp0jZPbEZr/noaKynSEQE0zIyxzexpJ/071LH
+	 Xq/2MUhKD8zgjGw00hc/6qDpzSOe+Jk936lkHl3GpIu0hwHEw04Wp5SlK01ayUeTYs
+	 cjG4XNcL4A5ZZULSHJ1bu/B/tgdea8DY5PxCAl10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hitesh Patel <hitesh@ebytelogic.com>,
+	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Cory Keitz <ckeitz@amazon.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0360/1257] media: qcom: camss: vfe: Fix VFE reset while another line is streaming
-Date: Sat,  7 Nov 2026 08:44:16 -0500
-Message-ID: <20261107134949.364506618@linuxfoundation.org>
+Subject: [PATCH 7.3 0361/1257] media: qcom: camss: Add "gcc_axi_hf" to 8775p VFE lite clock lists
+Date: Sat,  7 Nov 2026 08:44:17 -0500
+Message-ID: <20261107134949.442195747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,91 +73,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hitesh Patel <hitesh@ebytelogic.com>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-[ Upstream commit e5d4b0e69a4017fd39354499c9d7583f625f0524 ]
+[ Upstream commit 583b27edfe669fe27c631b4ac77c0ce0250f7bba ]
 
-vfe_disable_output() stops the write masters of the line being
-disabled and then resets the whole VFE. The reset is not limited to
-that line.
+The "gcc_axi_hf" clock is correctly listed in the clock list of the
+8775p 2 main VFE-s, but it is missing from all the VFE-lite clock lists,
+causing these to not work on platforms where the firmware allows turning
+off "gcc_axi_hf".
 
-When two lines of one VFE stream at the same time, which is the case
-whenever a CSID demultiplexes several virtual channels to different
-RDIs, stopping the first line resets the VFE underneath the second
-line. The second line's write master configuration is wiped, the
-buffers it had in flight are never completed, and the VFE is left in
-a state in which the next global reset is not acknowledged. Stopping
-or restarting the second line then fails with:
+Add the missing "gcc_axi_hf" to fix the VFE-lite blocks not working on
+these platforms.
 
-  VFE reset timeout
-
-Move the reset to vfe_disable() and do it under stream_lock, as part
-of the decrement that makes the count reach zero, so that exactly one
-caller resets and no line can be enabled while the reset runs.
-Stopping the line's write masters is enough to quiesce that line on
-its own. With a single line streaming, the reset happens exactly as
-before.
-
-Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
+Fixes: 924f45e58b1fe ("media: qcom: camss: Add missing clocks for VFE lite on sa8775p")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hitesh Patel <hitesh@ebytelogic.com>
-Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Suggested-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-[bod: Converted vfe_disable_output to void]
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Tested-by: Cory Keitz <ckeitz@amazon.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/media/platform/qcom/camss/camss.c | 25 ++++++++++++++---------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 319d191589884..55c0a0ee398fe 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -808,7 +808,7 @@ int vfe_put_output(struct vfe_line *line)
- 	return 0;
- }
- 
--static int vfe_disable_output(struct vfe_line *line)
-+static void vfe_disable_output(struct vfe_line *line)
- {
- 	struct vfe_device *vfe = to_vfe(line);
- 	struct vfe_output *output = &line->output;
-@@ -820,8 +820,6 @@ static int vfe_disable_output(struct vfe_line *line)
- 		vfe->res->hw_ops->vfe_wm_stop(vfe, output->wm_idx[i]);
- 	output->gen2.active_num = 0;
- 	spin_unlock_irqrestore(&vfe->output_lock, flags);
--
--	return vfe_reset(vfe);
- }
- 
- /*
-@@ -833,21 +831,19 @@ static int vfe_disable_output(struct vfe_line *line)
- int vfe_disable(struct vfe_line *line)
- {
- 	struct vfe_device *vfe = to_vfe(line);
--	int ret;
-+	int ret = 0;
- 
--	ret = vfe_disable_output(line);
--	if (ret)
--		goto error;
-+	vfe_disable_output(line);
- 
- 	vfe_put_output(line);
- 
- 	mutex_lock(&vfe->stream_lock);
- 
--	vfe->stream_count--;
-+	if (--vfe->stream_count == 0)
-+		ret = vfe_reset(vfe);
- 
- 	mutex_unlock(&vfe->stream_lock);
- 
--error:
- 	return ret;
- }
- 
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 2123f6388e3d7..68491b16d6476 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -4037,10 +4037,11 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
+ 	/* VFE2 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
++		.clock = { "cpas_ahb", "gcc_axi_hf", "cpas_vfe_lite",
++			   "vfe_lite_ahb", "vfe_lite_csid", "vfe_lite_cphy_rx",
+ 			   "vfe_lite", "camnoc_axi"},
+ 		.clock_rate = {
++			{ 0 },
+ 			{ 0 },
+ 			{ 0 },
+ 			{ 300000000, 400000000, 400000000, 400000000 },
+@@ -4062,10 +4063,11 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
+ 	/* VFE3 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
++		.clock = { "cpas_ahb", "gcc_axi_hf", "cpas_vfe_lite",
++			   "vfe_lite_ahb", "vfe_lite_csid", "vfe_lite_cphy_rx",
+ 			   "vfe_lite", "camnoc_axi"},
+ 		.clock_rate = {
++			{ 0 },
+ 			{ 0 },
+ 			{ 0 },
+ 			{ 300000000, 400000000, 400000000, 400000000 },
+@@ -4087,10 +4089,11 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
+ 	/* VFE4 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
++		.clock = { "cpas_ahb", "gcc_axi_hf", "cpas_vfe_lite",
++			   "vfe_lite_ahb", "vfe_lite_csid", "vfe_lite_cphy_rx",
+ 			   "vfe_lite", "camnoc_axi"},
+ 		.clock_rate = {
++			{ 0 },
+ 			{ 0 },
+ 			{ 0 },
+ 			{ 300000000, 400000000, 400000000, 400000000 },
+@@ -4112,10 +4115,11 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
+ 	/* VFE5 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
++		.clock = { "cpas_ahb", "gcc_axi_hf", "cpas_vfe_lite",
++			   "vfe_lite_ahb", "vfe_lite_csid", "vfe_lite_cphy_rx",
+ 			   "vfe_lite", "camnoc_axi"},
+ 		.clock_rate = {
++			{ 0 },
+ 			{ 0 },
+ 			{ 0 },
+ 			{ 300000000, 400000000, 400000000, 400000000 },
+@@ -4137,10 +4141,11 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
+ 	/* VFE6 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
++		.clock = { "cpas_ahb", "gcc_axi_hf", "cpas_vfe_lite",
++			   "vfe_lite_ahb", "vfe_lite_csid", "vfe_lite_cphy_rx",
+ 			   "vfe_lite", "camnoc_axi"},
+ 		.clock_rate = {
++			{ 0 },
+ 			{ 0 },
+ 			{ 0 },
+ 			{ 300000000, 400000000, 400000000, 400000000 },
 -- 
 2.53.0
 
