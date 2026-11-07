@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064301;
-	b=ZOoS/1ip+67ZD+oAaU9dDPb5w/fCpugc8wGlw6y2hF/GtOm0L5vOYnyHZpWeOx7wpdCS
-	 E1NbdhqpYD7JJkOvVFjxoO1/JYJcmKnmyQKIOTWEE7vJt+J3ehef9gqwmO3mjWjc1wsCR
-	 nBhK5+LtLeRCSpI36XMN0G811o2MDPC21PlSUjJ4rTLoduvnSmVj4FC8+tK/jlbxxzy71
-	 TBbumQz4CAcixDtRbz5ZTp7uP6gXHcN2jdLtZRRb1IQ4E6Xf/Ir1hN6YZ+qnUB9Lrr3wf
-	 zHs3ZUW5UKlU5N0UjSaRkptqcJ1VF0mgMs8GHOfqhOJFotK3eb0c7KNSKzsBQqFJaKw==
+	t=1794064302;
+	b=mP9kenfpEZEoblbQ8SG8p9lZHsKLJqqC39Y7K/5+V6Mr1TePCS+AcqR+kqcgFJNXjVDQ
+	 1d2Y6SwH5AmT9HU96LVpvGgeubpfyk11n4jMi5VCTmMFZc6SYea4GNSmBhfETcFhJfiI8
+	 iB17oH68jLbMq9uYQvUy4ZiBiSOTWge3VodgHHoT3ULKUv8q3mvOaiTq69GWEuu5P8tjG
+	 25HRYBttVoNPbKQiyMTCm8DAGVpKElE/Jx9TBNlWnGrUHFgf0Y1hlbMvP4Bj0xpY28vy8
+	 +P6NKHpCJSG2i29nQWmCyX7PwOnDQrNnDzhBLhKsxvNBqdPFfJwmxl3ujpcgEj9k6Mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064302;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n3PXHhYJ9Y4W/1VZcoc8i0lTjBw92Yr7cytKGvTzwdc=;
-	b=ciFSijDWljYN/kkyanik55CaCZzhJppwNHrBMncsFryjM+QcvjqBH0r42sRBcHa8UiJZ
-	 HddOhguZgLY0eayYDdynML4G/QTsKTLSPELjMzsDXMcVGA2V7bg/PnUYIlM5Nv97q9V+R
-	 ZUovVxLMGmAWOtlPyYI2iSd1rxSiC+arx9b35k8FlIj+jYlBb8kKgWDMZvGkXipb0E889
-	 WXYwH3ItAKpvvzmKHuwsE4aOAgovhD+Ldig4Gn+Ylvh2Ukjk+XzTckR6kNZchPLhRpc6q
-	 Rk8dBrfZlVi2Svank/Ty8pw11agV7OmeBYXaUUUdwoCjI1sx4mI0duaY8acNhc0Gjig==
+	bh=Hj25dSlCqOgbMA1eeXJ2z64ickT44YOZaM80DrdjDSg=;
+	b=SSBYvPcfoQbT7DfueIikYcvVHkagUFAalYmyby6ahjxH8gyWB32W29nBxDmGReGHNOKC
+	 pso+l5R+56ZT1NuZm94hIO8hwyWw8lPWUMuI79/m9IhxWoQthxMJSEza+gjfbAaX0LsyO
+	 OgqulSBM9/owFH2D3f1lXhYLd9zb1st9esCZp/I0kOLJ3qPPPe0DKR7woJ3ysTLNU3IIx
+	 WI4MVjFwXkKuZbzrTcz91BHI81RJdJ7AMzAKbDWQyW/WXy546tQPdprvI2+MsYbBKu0zo
+	 eqmhjztR6H7rqTD8DCJ0fZxRfV1IcXeb1ZMEHTb3zZq3jzoGGW3s/S/QXxPd1oWlyfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hdh8U2n0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0da8qHPB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A08B606A9CC;
-	Sat,  7 Nov 2026 15:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37110606A9CC;
+	Sat,  7 Nov 2026 15:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hdh8U2n0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4CF1F0089F;
-	Sat,  7 Nov 2026 15:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0da8qHPB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B751F0089F;
+	Sat,  7 Nov 2026 15:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064300;
-	bh=n3PXHhYJ9Y4W/1VZcoc8i0lTjBw92Yr7cytKGvTzwdc=;
+	s=korg; t=1794064302;
+	bh=Hj25dSlCqOgbMA1eeXJ2z64ickT44YOZaM80DrdjDSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hdh8U2n0TXMSzvxbyv7Rk3jUDWztth+lzFCq/krDikHK9doCMBLl1jLDoZNcQqw6n
-	 Ubl8yBYGldO06/NCl+VVix/9+5tDdeXJRHUTJBmFPmy5P5lGdtuVYFT8OItdTqcRN4
-	 oHp+1UkY7ZlCfIOvDjMo7na+LEZUpni4A6A1H5U4=
+	b=0da8qHPBbboIE8uomIbfN7EYikpsQ5SISSa5RTboGu/xYFf5DwPzQgeojjggEQjP6
+	 4T4Ai8YKp6OlJBeJu5j7kMB07dhmyYTpdLou7+K4nGAsBhYU2cTnWJAyHOO2eG+s1X
+	 3KaOkocxNez55waud1fFImR2QxTqTfynUgMoWud0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Franz Schnyder <franz.schnyder@toradex.com>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0394/1257] arm64: dts: freescale: imx95-aquila: Enable I2C_3_DSI1 on Clover board
-Date: Sat,  7 Nov 2026 08:44:50 -0500
-Message-ID: <20261107134950.427314464@linuxfoundation.org>
+Subject: [PATCH 7.3 0395/1257] i3c: master: adi: free the IRQ before unregistering the master
+Date: Sat,  7 Nov 2026 08:44:51 -0500
+Message-ID: <20261107134950.452838992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,38 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Franz Schnyder <franz.schnyder@toradex.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit cffbc25c212bd41885094648918a935da0115a0e ]
+[ Upstream commit 1c1e2d90aa452764df66bb1dd774aa0d06d89cc8 ]
 
-Enable lpi2c8, which is used for the I2C_3_DSI1 signals on the Clover
-carrier board. It was left disabled by mistake in the initial commit.
+adi_i3c_master_irq() is requested with devm_request_irq(), so it stays
+registered when adi_i3c_master_remove() runs, and the writes masking the
+controller IRQ sources do not synchronize with a handler that is already
+running on another CPU. i3c_master_unregister() then frees the
+struct i3c_dev_desc objects that master->ibi.slots[] still point to, so
+the IBI path in adi_i3c_master_handle_ibi() can dereference freed memory.
 
-Fixes: 3f519121e120 ("arm64: dts: freescale: imx95-aquila: Add Clover carrier board")
+Fix this by storing the IRQ number in the private structure and calling
+devm_free_irq() after the IRQ sources are masked, so a running handler
+is finished before the master is torn down.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: a79ac2cdc91d ("i3c: master: Add driver for Analog Devices I3C Controller IP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260923085340.490776-1-fanwu01@zju.edu.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx95-aquila-clover.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/i3c/master/adi-i3c-master.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila-clover.dts b/arch/arm64/boot/dts/freescale/imx95-aquila-clover.dts
-index fd93043314466..435567b257087 100644
---- a/arch/arm64/boot/dts/freescale/imx95-aquila-clover.dts
-+++ b/arch/arm64/boot/dts/freescale/imx95-aquila-clover.dts
-@@ -188,6 +188,11 @@ &lpi2c5 {
- 	status = "okay";
- };
+diff --git a/drivers/i3c/master/adi-i3c-master.c b/drivers/i3c/master/adi-i3c-master.c
+index b35386260350c..ad57b7500678d 100644
+--- a/drivers/i3c/master/adi-i3c-master.c
++++ b/drivers/i3c/master/adi-i3c-master.c
+@@ -115,6 +115,7 @@ struct adi_i3c_master {
+ 		spinlock_t lock; /* Protect transfer */
+ 	} xferqueue;
+ 	void __iomem *regs;
++	int irq;
+ 	struct clk *clk;
+ 	unsigned long i3c_scl_lim;
+ 	struct {
+@@ -957,6 +958,7 @@ static int adi_i3c_master_probe(struct platform_device *pdev)
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+ 		return irq;
++	master->irq = irq;
  
-+/* Aquila I2C_3_DSI1 */
-+&lpi2c8 {
-+	status = "okay";
-+};
+ 	version = readl(master->regs + ADI_AXI_REG_VERSION);
+ 	if (ADI_AXI_PCORE_VER_MAJOR(version) != 1)
+@@ -1001,6 +1003,8 @@ static void adi_i3c_master_remove(struct platform_device *pdev)
+ 	writel(0x00, master->regs + REG_IRQ_MASK);
+ 	writel(0x01, master->regs + REG_ENABLE);
+ 
++	devm_free_irq(&pdev->dev, master->irq, master);
 +
- /* Aquila SPI_1 */
- &lpspi6 {
- 	pinctrl-names = "default";
+ 	i3c_master_unregister(&master->base);
+ }
+ 
 -- 
 2.53.0
 
