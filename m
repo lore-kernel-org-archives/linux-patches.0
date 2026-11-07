@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065378;
-	b=HXDRqzrorVa9knYFZ/YJJAy9BDZQRoyVP/eXiN+juuRuJMTgRtR2GQ/gGuXmpa6kbjOX
-	 DMgczFOE1WALGudML+ZXi6SBf6ssxhl3g0Tq0mffvTkctcrvcFZPFjqqLJ2LV6PKBjYK3
-	 vhlcJTbxdrN8xmQIlIZrPyBS+Cv0BFosHB4VwHi/n/0otLuj6LMuxRD+8PEz2anTPqsEW
-	 5W++113JahLlVQkoGP2PSg/Q8JigIxLmrlyTK/CJFNykVN23Kb2PxWaN1EPuD2OYI5+SE
-	 9rhmLDt4rtQjXLTImZCQDl/K1QE7TcNUq/Bi3IWMXfpfSysaV7fz4tnZmuEpS1LYgWA==
+	t=1794065379;
+	b=yeavDv/S7tjNFeVY/2udUg7kv8+IhPjDTq6BTyRsgG23crR3ujdi5W9yTa7qB0u8ZQHV
+	 wGeojdS+VVwBu2Ar1GEnE5TAP+UAspOiI2635E/PMAEvAaF3SaNA7OeUV6n4FSAYpXSTI
+	 aMwsOBB6SGfCiyRi5XKBDdMqsh4BEheAYq0DQN4eHl3AaMRSV35wwi7+ufFm6vGNJ8aFM
+	 vwkdY9utT8WpIEduSTkeJQLsjar49iF579G1it99I805QTJQyzMKw4xS5sER27H+62cK8
+	 JfxUs0gqrgnySB4xMxmalg6BQUdLoPHjFuil41QXr01iYqzfDN8YQmwsd95fgfIxHIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065379;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MEw05vrJDsDoyQ7Qqkeou4+i5P/OlaWZRGWe2KOPWwY=;
-	b=eGVOVPgoDr2MPkg+yp4z3/m1JAlwdkBYo8Jitt5bqfZTpRlz//y05x6MRETv87ScBYal
-	 bkYutB2rGmUNfFvEIS/R09W8q6i5jZOfmHhcqawn0ir3oxL9Acyc6xJGQSHv8id0ui9X8
-	 p2nTTex2EXfO1COh97tLZ2jqNps1LqaFOR6a2+lvaClUl9xH3GhYqjSTP2MUtJIfzpfCA
-	 zdSS2yGTomVBfADz/2xkrjMAcjHJvARv8AkIDBnNXDn/k6DrIowLK0sevbSne08QWO4p9
-	 z9DzmZ+/mGzfAp2SxROk6UXvwsu4g9Oo+JtA+S4VFVB5wJPsd6aRbNwKItbLL39GNVw==
+	bh=/Lu6IAco07RARuInpSjacHw422jfpzYsg9SETYPe9hQ=;
+	b=rA8akwcJu71hxH5nK7PiQhHp88bRpZvy9I4CUixUemfO8X4Eo/3Q6vVczSWx4alSd/xU
+	 Nf68tZIOLB3gi6Lu8oo8gp4HPVd0FjVp29xCKl970BZzV9jjkwp/jI3QxqjVw3eit2Cu0
+	 sGzKoj3vejFFD8rG6rPGdbvD0eR+k1AcwUwTjTC95RvE2qdSWEsfi7BhNHWtdrk86YX/N
+	 yQcmHA3hOrYj9rOeYd0XVZHc8uXsn1bo3gV5xVC13MLj/ceYVWXPNsntpvegP57Vi5Vwv
+	 q92qG1EoB3e1ZVfF1qa68X5ACsmK5fQelemRtKccnGqmJFlaIYf+bFz63y6vGmTzUtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JggTxjf0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9F25EFH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E70606A32C;
-	Sat,  7 Nov 2026 15:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60390606A32C;
+	Sat,  7 Nov 2026 15:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JggTxjf0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C181F0089F;
-	Sat,  7 Nov 2026 15:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9F25EFH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE211F0089F;
+	Sat,  7 Nov 2026 15:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065378;
-	bh=MEw05vrJDsDoyQ7Qqkeou4+i5P/OlaWZRGWe2KOPWwY=;
+	s=korg; t=1794065379;
+	bh=/Lu6IAco07RARuInpSjacHw422jfpzYsg9SETYPe9hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JggTxjf02tuOk7zauP6eFVBP/qzSUFOX3DMwiU6vQF9/V6FTqwEhBKup+MlRtPeAP
-	 qZ/gkJ3OOIgee7Fdp1zLaSOAy3Pr/BlFuaRfh6dBDPjYOsvMvgl8+5OunNlen574KY
-	 4NKv0itLATNZiSIartZh0fF6o1IqtRua7L6Z9JAE=
+	b=x9F25EFHriGwCBftn7fh7byfCgVDwDocG+2IJd2dMUJcba1mZjoV1bbBPGZ7G7W8h
+	 ndptfAFXYShOn+aBixU9Sl5riWLa+hXVcYGissWjB5Go1ty3VZcSBV5Dqulmllju8D
+	 41ujv8dySLfhwHWm5/BfxgKsoZSynioU5L6mfiZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YoungWoo Rim <xsapiens75@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	"Gao Xiang (Docker)" <xiang@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1105/1257] erofs: hold real inodes for shared files
-Date: Sat,  7 Nov 2026 08:56:41 -0500
-Message-ID: <20261107135009.778634748@linuxfoundation.org>
+Subject: [PATCH 7.3 1106/1257] posix-timers: Accept NULL clock_getres() output in stubs
+Date: Sat,  7 Nov 2026 08:56:42 -0500
+Message-ID: <20261107135009.803884503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,142 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <xiang@kernel.org>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 7259fb011c14977661b7a4680886b466a3089ea7 ]
+[ Upstream commit 5b819071e4346256c4edbae5cc2095dff25694fc ]
 
-EROFS page cache sharing uses shared inodes. However, a mmaped VMA
-keeps the shared file even after the corresponding fd is closed, while
-currently the real inode is never held by any reference associated
-with the shared file.
+With CONFIG_POSIX_TIMERS disabled, clock_getres() returns -EFAULT for a
+supported clock when the result pointer is NULL. POSIX permits a NULL
+result pointer to suppress returning the clock resolution.
 
-As a result, the real inode could be evicted and removed from the
-shared inode's list while the page fault can still invoke on the
-shared inode's address space, which causes no candidate is
-successfully acquired by erofs_real_inode().
+Only copy the result when a destination is provided, in both the native
+and time32 stubs. This matches the full POSIX timer implementation and
+preserves clock ID validation.
 
-Fix this by simply keeping the original inode in the shared backing
-file's private data.
-
-Also replace confusing "realfile"/"rf" names with "sf" (sharedfile)
-to unify the terms as well as nullify realinode in erofs_real_inode()
-to avoid returning an uninitialized pointer.
-
-Fixes: 5ef3208e3be5 ("erofs: introduce the page cache share feature")
-Reported-by: YoungWoo Rim <xsapiens75@gmail.com>
-Closes: https://lore.kernel.org/r/atzSVuvqYKgmvDmO@MacBookPro
-Cc: stable@vger.kernel.org # 7.0+
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang (Docker) <xiang@kernel.org>
+Fixes: baa73d9e478f ("posix-timers: Make them configurable")
+Fixes: d822cdcce43f ("posix-timers: Move compat versions of clock_gettime/settime/getres")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261020161121.85042-1-dennylin0707@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/ishare.c | 43 ++++++++++++++++++++++++++++++-------------
- 1 file changed, 30 insertions(+), 13 deletions(-)
+ kernel/time/posix-stubs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/erofs/ishare.c b/fs/erofs/ishare.c
-index a1cf2aff8d321..61f48ceb6cb66 100644
---- a/fs/erofs/ishare.c
-+++ b/fs/erofs/ishare.c
-@@ -30,9 +30,18 @@ static int erofs_ishare_iget5_set(struct inode *inode, void *data)
- 	return 0;
- }
- 
-+static int erofs_ishare_backing_release(struct inode *inode, struct file *file)
-+{
-+	iput(file->private_data);
-+	file->private_data = NULL;
-+	return 0;
-+}
-+
- bool erofs_ishare_fill_inode(struct inode *inode)
- {
--	static const struct file_operations empty_fops = {};
-+	static const struct file_operations backing_fops = {
-+		.release = erofs_ishare_backing_release,
-+	};
- 	struct erofs_sb_info *sbi = EROFS_SB(inode->i_sb);
- 	const struct address_space_operations *aops;
- 	struct erofs_inode *vi = EROFS_I(inode);
-@@ -50,7 +59,7 @@ bool erofs_ishare_fill_inode(struct inode *inode)
- 			  xxh32(fp.opaque, fp.size, 0),
- 			  erofs_ishare_iget5_eq, erofs_ishare_iget5_set, &fp);
- 	if (si && (inode_state_read_once(si) & I_NEW)) {
--		si->i_fop = &empty_fops;
-+		si->i_fop = &backing_fops;
- 		si->i_mapping->a_ops = aops;
- 		si->i_mode = 0444 | S_IFREG;
- 		si->i_size = inode->i_size;
-@@ -100,16 +109,24 @@ static int erofs_ishare_file_open(struct inode *inode, struct file *file)
- 		.mnt = erofs_ishare_mnt,
- 		.dentry = EROFS_I(inode)->sharedentry,
- 	};
--	struct file *rf;
-+	struct file *sf;
- 
- 	if (file->f_flags & O_DIRECT)
- 		return -EINVAL;
- 
--	rf = backing_file_open(file, file->f_flags | O_NOATIME,
-+	sf = backing_file_open(file, file->f_flags | O_NOATIME,
- 			       &sharedpath, current_cred());
--	if (IS_ERR(rf))
--		return PTR_ERR(rf);
--	file->private_data = rf;
-+	if (IS_ERR(sf))
-+		return PTR_ERR(sf);
-+	/*
-+	 * A VMA only holds a reference to the shared file so that the original
-+	 * file may be released: the shared file must therefore hold a reference
-+	 * to one of the real inodes ("inode" passed here), and that reference
-+	 * will be released by erofs_ishare_backing_release().
-+	 */
-+	ihold(inode);
-+	sf->private_data = inode;
-+	file->private_data = sf;
- 	return 0;
- }
- 
-@@ -123,13 +140,13 @@ static int erofs_ishare_file_release(struct inode *inode, struct file *file)
- static ssize_t erofs_ishare_file_read_iter(struct kiocb *iocb,
- 					   struct iov_iter *to)
- {
--	struct file *realfile = iocb->ki_filp->private_data;
-+	struct file *sf = iocb->ki_filp->private_data;
- 	struct kiocb dedup_iocb;
- 	ssize_t nread;
- 
- 	if (!iov_iter_count(to))
+diff --git a/kernel/time/posix-stubs.c b/kernel/time/posix-stubs.c
+index 9b6fcb8d85e78..5a27335a917ec 100644
+--- a/kernel/time/posix-stubs.c
++++ b/kernel/time/posix-stubs.c
+@@ -83,7 +83,7 @@ SYSCALL_DEFINE2(clock_getres, const clockid_t, which_clock, struct __kernel_time
+ 	case CLOCK_REALTIME:
+ 	case CLOCK_MONOTONIC:
+ 	case CLOCK_BOOTTIME:
+-		if (put_timespec64(&rtn_tp, tp))
++		if (tp && put_timespec64(&rtn_tp, tp))
+ 			return -EFAULT;
  		return 0;
--	kiocb_clone(&dedup_iocb, iocb, realfile);
-+	kiocb_clone(&dedup_iocb, iocb, sf);
- 	nread = filemap_read(&dedup_iocb, to, 0);
- 	iocb->ki_pos = dedup_iocb.ki_pos;
- 	return nread;
-@@ -137,12 +154,12 @@ static ssize_t erofs_ishare_file_read_iter(struct kiocb *iocb,
- 
- static int erofs_ishare_mmap(struct file *file, struct vm_area_struct *vma)
- {
--	struct file *realfile = file->private_data;
-+	struct file *sf = file->private_data;
- 	int err;
- 
--	vma_set_file(vma, realfile);
-+	vma_set_file(vma, sf);
- 
--	err = security_mmap_backing_file(vma, realfile, file);
-+	err = security_mmap_backing_file(vma, sf, file);
- 	if (err)
- 		return err;
- 
-@@ -176,7 +193,7 @@ const struct file_operations erofs_ishare_fops = {
- struct inode *erofs_real_inode(struct inode *inode, bool *need_iput)
- {
- 	struct erofs_inode *vi, *vi_share;
--	struct inode *realinode;
-+	struct inode *realinode = NULL;
- 
- 	*need_iput = false;
- 	if (inode->i_sb != erofs_ishare_mnt->mnt_sb)
+ 	default:
+@@ -166,7 +166,7 @@ SYSCALL_DEFINE2(clock_getres_time32, clockid_t, which_clock,
+ 	case CLOCK_REALTIME:
+ 	case CLOCK_MONOTONIC:
+ 	case CLOCK_BOOTTIME:
+-		if (put_old_timespec32(&rtn_tp, tp))
++		if (tp && put_old_timespec32(&rtn_tp, tp))
+ 			return -EFAULT;
+ 		return 0;
+ 	default:
 -- 
 2.53.0
 
