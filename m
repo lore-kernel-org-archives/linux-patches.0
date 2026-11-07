@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062953;
-	b=XcMmQTzaHw8215RFGi1QfDhkMx+l4Zn5Z6lDAx7/2viub/HoCy5WONqYiVyqoDLk2xVl
-	 JKKtUuKGJfzelwpkfW/u641XCuX1bFy92ldEAOLbwZy/uMqjJBVYXd1vs1qedNHL7aPqk
-	 ENLSjZRfv0kf7Gi0LAd/Nqv19jWEVn/XLsE76owKyKGi0M3KXBdbEdTxx6DifOm9DxI+e
-	 AVOwD10olw3B6TOJgRm/Sd0NUaxc9bfkR01Mj2H37/H085wTqLAY0ncBnx7MFhfxAkxEZ
-	 qQlD4lrp6oPpznlwEkMvK2gw8UbhZmAcTme74yJI7BTnlRQ7cdeBPzhJUQxc+K5SOyg==
+	t=1794062954;
+	b=dr7pIFvhylgpwT1wl7xi//vbRipKIGNjSMCU8OMc8nerKwZsOb7Oqq8Be+JcdgT/87C+
+	 pJmpCAXoHErMShvgxTr4Ald7HbdjbkGbvUrpOlC3jzpK4aBbvBK2wSisGL/RF2quGpS+l
+	 a8EjWyCaoGjQw1SiulMAVmwJsv9MRo9HmwA1bSV1SUX5T3FSPoB9wGoYnByc0E8pwqwEP
+	 ofAt8eJQoApDTbrtj84igs6wlDVkU4KeDIjU340vKDLkTQ+TGiYqh9DGreb7LKZW6ytVt
+	 gV8jN/9irSBj3P4/Qv4BQDdhtXBwug49YrAkcK07cuYGP0F9FnYQfsIF788Kp6L0ZGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062953;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kszl4sxdbyd6u13YlSbdF9YUlX3wgj+tsorSHJzqQ8M=;
-	b=hU0uJ45aMPyO8C5pYthKs29H7yl8Q54UxQqSHFPfTV38RJX8mIcW7AMmo3kjlixkd6Yh
-	 iih3/zO5fjxLGLEKQmmkMh9rZpBFJwLG4LR0FeF0LPzMMjTxniPVTc20MRQgdoYVxVoR3
-	 RneARDgyNUUqTUnf4JpOQbjLZxe4XnJ9JpgevngtTJfx+PdtO90LNFPEh27tadna03j6h
-	 VkQCI0eFE6MuQ1nPhBy2RugrX/FeeixN+mWv22FZkCp9aWP+P6vYCSzrSg3lPVZoMymfp
-	 HBmRFO0QHTheO3EBXOOdD0fcK8dspecIVicLuahOUZQ8wJo/qLiEzwct8KMGjfQTAyw==
+	bh=veeYRh/99tbZDOvkJMmD7mZzqDAWgTc9BVLvQ+yFFM0=;
+	b=tEpgF23R+G4vSdvEtMl1QjKInTdyPLQUDN5mOEzG9yetDSncy9fiLEkazxxIH4iSPQVn
+	 kcep2PJ4YhEe6G0VC3EQCLuvVGATD55djleynMuTlOqhGMpjFTbH0crgFmUIrNh1YMbkE
+	 tnMO2vy8D87g6zSv2Hu5202TWz2wpdIxfVWcO5gc8E9rJsGvHX7nx4EgTum4jb1NbRFtP
+	 hfkB++Tz8oyiZXPCv8tuU9OAEO3b4YhOKM9F43J+wMWbyUla1idYYQuFvjVVlCmXfhUeG
+	 6XAIywSlF+8ZTMA6kQmpxNsaRcZp3W61oe6dqLolhADU2fE01pK/55tjdbjJ9aUt0RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gWmK+YYN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOcFbp+4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABE1606A32C;
-	Sat,  7 Nov 2026 14:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3875B606A326;
+	Sat,  7 Nov 2026 14:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gWmK+YYN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6711F0089F;
-	Sat,  7 Nov 2026 14:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOcFbp+4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01471F0089F;
+	Sat,  7 Nov 2026 14:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062952;
-	bh=Kszl4sxdbyd6u13YlSbdF9YUlX3wgj+tsorSHJzqQ8M=;
+	s=korg; t=1794062954;
+	bh=veeYRh/99tbZDOvkJMmD7mZzqDAWgTc9BVLvQ+yFFM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gWmK+YYNUmflay0JE2nD4wTPRTFS7E5DxoCPIBM8kY4dwXyUheGN2nsPqXWolXBYS
-	 jqKQm+bXeMsVBsj9esW2r6v721KOZ9WUO6eiUTts4z8SZ2poAuaJjGOeN23d2shfiu
-	 FwhRHlFqpTPKL7yXNL7ebF7wHiPvDN2MDR6otC70=
+	b=gOcFbp+4RmBrMcKYLS8FhJqL7oQaQ5cp4EvAOPTSqKTICAKdNTeyHGE8AufNek3dN
+	 nXlF0PQKnMigw62wMRhmNxEl2Yp6kaQ1XVXKhfzJNMzo5fW1f8+Qdfy9QU9X0feW+b
+	 llCwubWK2+2hJMvLM/4AuHlWJWSVJ1HJlP23RfDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Lucas Sinn <lucas.sinn@wolfvision.net>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 217/869] media: vpif_display: Fix i2c adapter reference leak in vpif_probe()
-Date: Sat,  7 Nov 2026 08:48:19 -0500
-Message-ID: <20261107134859.286701935@linuxfoundation.org>
+Subject: [PATCH 6.18 218/869] media: synopsys: hdmirx: fetch colordepth before calculating pixelclock
+Date: Sat,  7 Nov 2026 08:48:20 -0500
+Message-ID: <20261107134859.311056879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,45 +70,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Lucas Sinn <lucas.sinn@wolfvision.net>
 
-[ Upstream commit f5863ea3f99265e5e297e3dcf0f47432fee2b8ac ]
+[ Upstream commit e8554ac860356f1f4cd9bce454271dce1ed35fc1 ]
 
-vpif_probe() takes a reference to the i2c adapter with
-i2c_get_adapter() and passes it to v4l2_i2c_new_subdev_board(),
-which does not consume it, but the reference is never released, so
-it is leaked both when the probe succeeds and when it fails after
-the adapter has been acquired.
+hdmirx_get_detected_timings() divides the TMDS clock by
+hdmirx_dev->color_depth, but nothing on its own path ever sets it. The
+only producer is hdmirx_get_colordepth(), reached solely from
+hdmirx_format_change() at the tail of hdmirx_wait_signal_lock().
 
-Release the reference with i2c_put_adapter() on the success path and
-in the probe_subdev_out cleanup.
+VIDIOC_QUERY_DV_TIMINGS does not come through there. It only refuses to
+proceed while signal_not_lock() is true, and that reads the lock state
+straight out of the hardware, so it can already be false while the work
+ending in hdmirx_format_change() has yet to run. Query the timings in
+that window, on the first lock after a boot, and color_depth is still
+zero from devm_kzalloc().
 
-Fixes: e7332e3a552f ("V4L/DVB (12176): davinci/vpif_display: Add VPIF display driver")
+The division does not fault. do_div() is plain C on 64 bit and arm64
+compiles it to udiv, which returns zero for a zero divisor. What comes
+out is a pixelclock of zero, and a stitched output frame.
+
+Read the colordepth where it is used instead.
+
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Lucas Sinn <lucas.sinn@wolfvision.net>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Fixes: 7b59b132ad43 ("media: platform: synopsys: Add support for HDMI input driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti/davinci/vpif_display.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../platform/synopsys/hdmirx/snps_hdmirx.c    | 71 ++++++++++---------
+ 1 file changed, 36 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/media/platform/ti/davinci/vpif_display.c b/drivers/media/platform/ti/davinci/vpif_display.c
-index 1e7815e9f8e07..ba16370b70f98 100644
---- a/drivers/media/platform/ti/davinci/vpif_display.c
-+++ b/drivers/media/platform/ti/davinci/vpif_display.c
-@@ -1289,9 +1289,12 @@ static int vpif_probe(struct platform_device *pdev)
- 	if (err)
- 		goto probe_subdev_out;
+diff --git a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+index dbbd33f5908e5..22a5e137f5b6d 100644
+--- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
++++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+@@ -154,7 +154,6 @@ struct snps_hdmirx_dev {
+ 	int num_clks;
+ 	u32 edid_blocks_written;
+ 	u32 cur_fmt_fourcc;
+-	u32 color_depth;
+ 	spinlock_t rst_lock; /* to lock register access */
+ 	u8 edid[EDID_NUM_BLOCKS_MAX * EDID_BLOCK_SIZE];
+ };
+@@ -378,6 +377,38 @@ static void hdmirx_toggle_polarity(struct snps_hdmirx_dev *hdmirx_dev)
+ 			   VPROC_HSYNC_POL_OVR_EN, 0);
+ }
  
-+	i2c_put_adapter(i2c_adap);
++static u32 hdmirx_get_colordepth(struct snps_hdmirx_dev *hdmirx_dev)
++{
++	struct v4l2_device *v4l2_dev = &hdmirx_dev->v4l2_dev;
++	u32 val, color_depth_reg, color_depth;
 +
- 	return 0;
++	val = hdmirx_readl(hdmirx_dev, DMA_STATUS11);
++	color_depth_reg = (val & HDMIRX_COLOR_DEPTH_MASK) >> 3;
++
++	switch (color_depth_reg) {
++	case 0x4:
++		color_depth = 24;
++		break;
++	case 0x5:
++		color_depth = 30;
++		break;
++	case 0x6:
++		color_depth = 36;
++		break;
++	case 0x7:
++		color_depth = 48;
++		break;
++	default:
++		color_depth = 24;
++		break;
++	}
++
++	v4l2_dbg(1, debug, v4l2_dev, "%s: color_depth: %d, reg_val:%d\n",
++		 __func__, color_depth, color_depth_reg);
++
++	return color_depth;
++}
++
+ /*
+  * When querying DV timings during preview, if the DMA's timing is stable,
+  * we retrieve the timings directly from the DMA. However, if the current
+@@ -391,7 +422,7 @@ static int hdmirx_get_detected_timings(struct snps_hdmirx_dev *hdmirx_dev,
+ 	struct v4l2_bt_timings *bt = &timings->bt;
+ 	u32 val, tmdsqpclk_freq, pix_clk;
+ 	unsigned int num_retries = 0;
+-	u32 field_type, deframer_st;
++	u32 field_type, deframer_st, color_depth;
+ 	u64 tmp_data, tmds_clk;
+ 	bool is_dvi_mode;
+ 	int ret;
+@@ -412,10 +443,11 @@ static int hdmirx_get_detected_timings(struct snps_hdmirx_dev *hdmirx_dev,
+ 	deframer_st = hdmirx_readl(hdmirx_dev, DEFRAMER_STATUS);
+ 	is_dvi_mode = !(deframer_st & OPMODE_STS_MASK);
  
- probe_subdev_out:
-+	i2c_put_adapter(i2c_adap);
- 	kfree(vpif_obj.sd);
- vpif_unregister:
- 	v4l2_device_unregister(&vpif_obj.v4l2_dev);
++	color_depth = hdmirx_get_colordepth(hdmirx_dev);
+ 	tmdsqpclk_freq = hdmirx_readl(hdmirx_dev, CMU_TMDSQPCLK_FREQ);
+ 	tmds_clk = tmdsqpclk_freq * 4 * 1000;
+ 	tmp_data = tmds_clk * 24;
+-	do_div(tmp_data, hdmirx_dev->color_depth);
++	do_div(tmp_data, color_depth);
+ 	pix_clk = tmp_data;
+ 	bt->pixelclock = pix_clk;
+ 
+@@ -427,7 +459,7 @@ static int hdmirx_get_detected_timings(struct snps_hdmirx_dev *hdmirx_dev,
+ 	v4l2_dbg(2, debug, v4l2_dev, "tmds_clk:%llu, pix_clk:%d\n", tmds_clk, pix_clk);
+ 	v4l2_dbg(1, debug, v4l2_dev, "interlace:%d, fmt:%d, color:%d, mode:%s\n",
+ 		 bt->interlaced, hdmirx_dev->pix_fmt,
+-		 hdmirx_dev->color_depth,
++		 color_depth,
+ 		 is_dvi_mode ? "dvi" : "hdmi");
+ 	v4l2_dbg(2, debug, v4l2_dev, "deframer_st:%#x\n", deframer_st);
+ 
+@@ -947,36 +979,6 @@ static void hdmirx_controller_init(struct snps_hdmirx_dev *hdmirx_dev)
+ 			   VS_REMAPFILTER_EN_QST | VS_FILTER_ORDER_QST(0x3));
+ }
+ 
+-static void hdmirx_get_colordepth(struct snps_hdmirx_dev *hdmirx_dev)
+-{
+-	struct v4l2_device *v4l2_dev = &hdmirx_dev->v4l2_dev;
+-	u32 val, color_depth_reg;
+-
+-	val = hdmirx_readl(hdmirx_dev, DMA_STATUS11);
+-	color_depth_reg = (val & HDMIRX_COLOR_DEPTH_MASK) >> 3;
+-
+-	switch (color_depth_reg) {
+-	case 0x4:
+-		hdmirx_dev->color_depth = 24;
+-		break;
+-	case 0x5:
+-		hdmirx_dev->color_depth = 30;
+-		break;
+-	case 0x6:
+-		hdmirx_dev->color_depth = 36;
+-		break;
+-	case 0x7:
+-		hdmirx_dev->color_depth = 48;
+-		break;
+-	default:
+-		hdmirx_dev->color_depth = 24;
+-		break;
+-	}
+-
+-	v4l2_dbg(1, debug, v4l2_dev, "%s: color_depth: %d, reg_val:%d\n",
+-		 __func__, hdmirx_dev->color_depth, color_depth_reg);
+-}
+-
+ static void hdmirx_get_pix_fmt(struct snps_hdmirx_dev *hdmirx_dev)
+ {
+ 	struct v4l2_device *v4l2_dev = &hdmirx_dev->v4l2_dev;
+@@ -1087,7 +1089,6 @@ static void hdmirx_format_change(struct snps_hdmirx_dev *hdmirx_dev)
+ 	};
+ 
+ 	hdmirx_get_pix_fmt(hdmirx_dev);
+-	hdmirx_get_colordepth(hdmirx_dev);
+ 	hdmirx_get_avi_infoframe(hdmirx_dev);
+ 
+ 	v4l2_dbg(1, debug, v4l2_dev, "%s: queue res_chg_event\n", __func__);
 -- 
 2.53.0
 
