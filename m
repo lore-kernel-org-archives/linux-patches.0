@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062450;
-	b=m/TfMou88oPhgHdFboeDgEtz77th+rjUci8/U6xZWASq8LvOE2uWkW+j53ggLCsvsdNw
-	 rY1LVFNnn6InsKC/nfpPe73Naguk9QmauKuyNeWlwkrFhKOK9ie2K+MHJhtV0cUgDz6fS
-	 RrEdsXQID5D7q3tyicvwOmzVwTG6aBvekW5u0VIfTM2fgZ0L3e6yoUmcaIIGnac0Jix+8
-	 uOvlxsDJm0zoKk9jjz6KJjrvN299gdZ7tAUsuu/cm9Gzfc8cE+C20x847E7W36yEuEHMg
-	 2gFuIlpuO7ABt4h2GZixPugAqpfBWf2C2G8DHWbbWza4CL6BCS1vQam1pHvktfnbREQ==
+	t=1794062451;
+	b=wwCDVGWNZGRFcMu8Q3odkuX1IoC2uBI1sncEIaq0Q8WEuzj+0vOZTlSjoQNo+L9i58cz
+	 c/voqyeVNL2Vih9325gjevcg7vtwL4b3By2R15m3kYmGaHWBG4XR40/P46TEfMLHKYEcm
+	 VJrgA9WJdJk48yqEd0Qzouh3eQ/+ZvpA9gV/xxqSVZwj/BUn7R78zpjqrLCAKMWilZcGN
+	 5u7xX+3a+mB8ok6kRVJy7Z/xOClDPKW9lKQmxcjwxJsONk77oS7XKnZ9cLwZtJOSLNj9M
+	 ozZAGeDnmr6d8y6UY2ANZ6Jpo2onXsFIe+hLnz0KRKBSduZQxpO1PqshVrMhNzRw6tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062450;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062451;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CeI1nOgi7OTzC/+QKtQ0Zjwh2nyLQziu+A+OAfLnfRA=;
-	b=D3BkG/00qfp5PY1+lYfYO3Bpu/nlwOYdd9pNgwAnVnlEaUa6sPZ3/8U+e0cPaNXIpsuA
-	 rX8YGEK9I1+QN5g7fuDO8eAcLc0Wj2OeAccdmaxZmkfZd5kPHna5tE8szbKpnteSC+IwJ
-	 NfWOp/qvQJl7VGwGP0BcLz87loyinaQO0slGkyQEnKRiB/8BwXIFkzDuRfk4MjJ6t5XdW
-	 Fp+UEZ3tpC2tJ2TjgzVntNgQI8PXLYHAHZ0EK/9GEki3keHHN5K+dtRwnhkdZz04VSaMm
-	 Fvlehx2/Jnbx/EZfEK+4pWiThKRILOj5dSdxsLCD4fvnYw1v5/DltFktK8u6Ju4ZlEQ==
+	bh=ZzQq02t7vGoSPw9kfQ2zBqgDRdIDSyjqONi8UacX150=;
+	b=Pg3ThNUm4Trxx+R+PfQFqD5dwV1gwe32er2PNDvk6BG3p4s1+VPmK468iYYsRyYL5RGB
+	 TDUXZ3iWzfY0PACBf+nq/d51lonTzmpfHcGbEx+QfXxNRtuQFVBYKDhEwl+N6m4bZoKBF
+	 LEqYeYprbo4q4Y/cVjxZsDYtMUwxWNlo3iEb7hmHuoHHHE0/XHnLm3kde9Mv6W+M7ZsLb
+	 eK9Bzc7MPmG1qk90/y/0/6PaexLqHaYzx8F4b3dtSdyrwQf+oJtJ1aQrnyRuiVECNPDoz
+	 ELUszXRSyxu64P57Ots+OyPGNMkWrIJgz1idi1SEsS5MjZQoThAoYF6q0uTfMBVTgiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MakSFmud;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0OxEo4fJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF054606D815;
-	Sat,  7 Nov 2026 14:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35567606A642;
+	Sat,  7 Nov 2026 14:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MakSFmud
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2651F0089F;
-	Sat,  7 Nov 2026 14:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0OxEo4fJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88D11F0089F;
+	Sat,  7 Nov 2026 14:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062449;
-	bh=CeI1nOgi7OTzC/+QKtQ0Zjwh2nyLQziu+A+OAfLnfRA=;
+	s=korg; t=1794062451;
+	bh=ZzQq02t7vGoSPw9kfQ2zBqgDRdIDSyjqONi8UacX150=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MakSFmud/G/JFtGBbPAsyu4WUqoTF8Zg0/SrmGxhsr6JAM0W400YzB3DnvkmyxczZ
-	 jqzTrLGFo9/G6zzpUC/9eUNEqJHFE4ZTLDiv6ZQrKrWKHW0sM8WXkEZhpAIGgKC67B
-	 UieTtcfC/j6xB6Fdlz40inD2isMRLb5wF2LvtepE=
+	b=0OxEo4fJn5u4MfdhF4e/XLKP+4oAnlfnw2QEtg/nSI0Tv09tN1d5Zh3lryN8B00KA
+	 KW2KP9bJitaryQO16rEmBQ8qxqcoEJRwv+HiquCKMP5gqXNZpb8XaXEgdrFQSqpJKp
+	 sJ3fVE3wBONjlj/kWJ0VlI4ucimPag/btLt5bVpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1357/1536] netfilter: nf_reject: initialize IPCB at inet ingress
-Date: Sat,  7 Nov 2026 08:56:13 -0500
-Message-ID: <20261107135035.944530617@linuxfoundation.org>
+Subject: [PATCH 6.12 1322/1536] spi: amd: fix len==0 underflow and FIFO overflow
+Date: Sat,  7 Nov 2026 08:55:38 -0500
+Message-ID: <20261107135034.942179851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,78 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit 73a73d442f9986353fe284bd1b504d0313d0f153 ]
+[ Upstream commit e2f4edfc061e493fddde16c4bbe1c4f230f41e4a ]
 
-The inet ingress hook runs before ip_rcv_core() and ip6_rcv_core(), so
-neither IPCB nor IP6CB has been initialized when nft_reject_inet passes
-a packet to nf_send_unreach() or nf_send_unreach6(). skb->cb can
-therefore retain metadata from an earlier protocol layer.
+amd_spi_fifo_xfer() unconditionally decrements xfer->len when a tx_buf
+is present. The SPI core does not reject zero-length transfers, so a
+transfer submitted through the SPI_IOC_MESSAGE ioctl with len == 0 and
+a tx_buf makes the u32 len wrap to 0xFFFFFFFF, and the following
+per-byte loop writes far past the FIFO window.
 
-For IPv4, icmp_send() treats IPCB(skb)->opt as parsed IPv4 options.
-Stale option offsets can make __ip_options_echo() copy an
-attacker-controlled length into its 40-byte reply option buffer and
-overflow the stack. On an unpatched v7.2-rc5 kernel, the IPv4
-reproducer produced:
+The driver also never checks the cumulative FIFO offset against
+AMD_SPI_FIFO_SIZE. The core splits each transfer down to the
+controller's max transfer size but does not bound the total message
+length, so a message of several transfers whose total exceeds the FIFO
+overflows it with out-of-bounds MMIO writes (tx) and reads (rx).
 
-  BUG: KASAN: stack-out-of-bounds in __ip_options_echo()
-  Write of size 255
+Skip zero-length transfers and reject any transfer that would run past
+the end of the FIFO window.
 
-For IPv6, icmpv6_send() consumes IP6CB(skb) as parsed IPv6 metadata. It
-always uses iif for source selection and, when MIP6 is enabled, uses
-dsthao as an extension-header offset. These fields must not be stale.
+Tested with a user-space replica of the fifo_xfer length arithmetic
+(ASAN build): a zero-length transfer with tx_buf makes len-- wrap to
+0xffffffff, and skipping zero-length transfers avoids the wrap. No AMD
+SPI hardware was available, so the FIFO bound check was verified by
+inspection against AMD_SPI_FIFO_SIZE.
 
-For NF_INET_INGRESS, clear the address-family-specific control block and
-restore its input interface before constructing the ICMP error.  This
-matches similar initialization normally performed by ip_rcv_core() and
-ip6_rcv_core().
-
-Fixes: 117ca1f8920c ("netfilter: nft_reject_inet: allow to use reject from inet ingress")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: bbb336f39efc ("spi: spi-amd: Add AMD SPI controller driver support")
+Cc: stable@vger.kernel.org # 5.8+
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261014-spi-amd-fifo-fix-v1-1-9fec9ab753e8@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 5 +++++
- net/ipv6/netfilter/nf_reject_ipv6.c | 5 +++++
- 2 files changed, 10 insertions(+)
+ drivers/spi/spi-amd.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 021638aef1706..29c70e92a1722 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -350,6 +350,11 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
+diff --git a/drivers/spi/spi-amd.c b/drivers/spi/spi-amd.c
+index 2245ad54b03aa..8f8d1ac4f722d 100644
+--- a/drivers/spi/spi-amd.c
++++ b/drivers/spi/spi-amd.c
+@@ -286,11 +286,22 @@ static inline int amd_spi_fifo_xfer(struct amd_spi *amd_spi,
  
-+	if (hook == NF_INET_INGRESS) {
-+		memset(IPCB(skb_in), 0, sizeof(*IPCB(skb_in)));
-+		IPCB(skb_in)->iif = skb_in->skb_iif;
-+	}
+ 	list_for_each_entry(xfer, &message->transfers,
+ 			    transfer_list) {
++		/* Skip zero-length transfers to avoid len underflow below */
++		if (!xfer->len)
++			continue;
 +
- 	if (skb_csum_unnecessary(skb_in) ||
- 	    !nf_reject_verify_csum(skb_in, dataoff, proto)) {
- 		icmp_send(skb_in, ICMP_DEST_UNREACH, code, 0);
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index 95ddd533c506c..7beb12046486f 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -431,6 +431,11 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
+ 		if (xfer->speed_hz)
+ 			amd_set_spi_freq(amd_spi, xfer->speed_hz);
+ 		else
+ 			amd_set_spi_freq(amd_spi, spi->max_speed_hz);
  
-+	if (hooknum == NF_INET_INGRESS) {
-+		memset(IP6CB(skb_in), 0, sizeof(*IP6CB(skb_in)));
-+		IP6CB(skb_in)->iif = skb_in->skb_iif;
-+	}
++		/* Reject transfers that would overflow the FIFO window */
++		if (fifo_pos + xfer->len >
++		    AMD_SPI_FIFO_BASE + AMD_SPI_FIFO_SIZE) {
++			message->status = -EMSGSIZE;
++			goto fin_msg;
++		}
 +
- 	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
+ 		if (xfer->tx_buf) {
+ 			buf = (u8 *)xfer->tx_buf;
+ 			if (!tx_len) {
+@@ -333,6 +344,12 @@ static inline int amd_spi_fifo_xfer(struct amd_spi *amd_spi,
  
+ 		list_for_each_entry(xfer, &message->transfers, transfer_list)
+ 			if (xfer->rx_buf) {
++				/* Reject transfers that would overflow the FIFO window */
++				if (fifo_pos + xfer->len >
++				    AMD_SPI_FIFO_BASE + AMD_SPI_FIFO_SIZE) {
++					message->status = -EMSGSIZE;
++					goto fin_msg;
++				}
+ 				buf = (u8 *)xfer->rx_buf;
+ 				/* Read data from FIFO to receive buffer */
+ 				for (i = 0; i < xfer->len; i++)
 -- 
 2.53.0
 
