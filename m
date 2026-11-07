@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061466;
-	b=qq5LZn1ZISU+tfHF/0+GnnavK2vkiJOnYie63NQjpSF+t/d4ad4AbWXXABLxfvSoPnu3
-	 9lHhXGXHJZnUGk1XYS9qHH+r9q5inNoTcu/TEmwisP7TT37ipCxK+j8oC7OEhEslqicUv
-	 wUWBZK4s3dJz74fgXcrSnxjC6BZ9gtUu3zXoSeQbtDG4T6tvtpA6BQcQ2Ab+QHTzt4uZ2
-	 ZNRdLBiTQQuUord6Ef/0nVd9GlswxFrxW03AZCT/nIL+x/wjJzEN39pX8IJWj/Y4+uYTp
-	 dPK9S57nft/rDT+UMt+8lWIXiLeCwAj32Nr2LoJMNW1ad0udJsEeZtk2LZlkD39IdRA==
+	t=1794061467;
+	b=bEiM4/Ee0kw0U3M0hHv8qAgmEKC4xItUAHkwcxnACbB502XF9Op6Js3sMEuZlvN/B+Pd
+	 6t6QgwLcPvLfn5d1P07D93DvtdiSsYz5iSMrUuNUGGQpZ50MwhJZPxf63zmLRJSm+aGgu
+	 7Xi2ukEdiN0NhPteSuj+d934XXZbMfYo4gTOofHwzhvDDwaq4KZ0uP0p5Fn2QNe/EYGaO
+	 g0LRq4tdtHGZSvGYVDQEkN9PpT8S/7tIASime/l9WEMvUc7h7ZSqqPWI3TDnYVx+fdWDw
+	 5MaA48zz/Rmsik0c4S9bOmxeTiNblAikNjKj1vihPlKtBf8EhEXdR8AFBrMbb7JxavA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061466;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061467;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PaJT8wZ+6fOhTsFmQDFafSNmtwHge5H4pWoA3MLekZ4=;
-	b=ayij/hWoqDE94Ge8Rew+iJxOw0fsVQnGheYNvWpVcWLLGGWd9O3n5s655XbZ/91vYaM9
-	 JvQEEtoOP9UF+xw0URxzhWGs0Fn8zGOEmAPH08Qd8J2wnX21rjbRypPPEYN9FyJ6e3FhR
-	 SEMdFj8tbyeWLRfxMRtLP+wNmEJE8drO/+RXSslNb1nX6oRAj0l1yvsfbNe2SdPoAGnxG
-	 tfkyuMUo3WQ0yA+EjFC8FuyexXIgZepRD21leyjeCcIYb+XK3RAGTwkR+MZy1KvoWNA8o
-	 kbUT0D+oWMcL3FNfNCvLrVdoHwaQwCzjilgSW6Gn9ikzmjybgqIRIGwJLKveXx1ttig==
+	bh=FjSNOvHj6P/LFxX3nPHhNA8NypoifTrijLy6ew5+S3s=;
+	b=LNwY/5deJY3moYyG3gQoGATpckdCUzkjm3k/VGACxetRNwiNYT0RQL70dQNnMOUmvgjv
+	 AKbNqtacZFOl8BdolMbBBEhi//R4CMjt/gTFBcGCRaAKgWgJMnz7QFQ+yQZ3cQb7qCvQU
+	 iXkPIgD9LDV0MYgoq06hDu7ICn4RTwpn/TGXStlbaRtEdRt1Sg/mUxYcWyARYelQKRM7Y
+	 L7a0f6CQx68pyKx3az9zCrSjJisx+k4CNbA2yCDj4CZEGsVarA4mSsMOoBlkWA8q5dHQD
+	 KQBf/FTzCDquMK7oBUy4wEEJlOYa1s7ykllKS/buZ/GlxuoPBWoyzwsYNdXEGVtfQsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDEIqiEz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GQvGZozu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7E6606A336;
-	Sat,  7 Nov 2026 14:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E44606A326;
+	Sat,  7 Nov 2026 14:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDEIqiEz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041471F0089F;
-	Sat,  7 Nov 2026 14:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GQvGZozu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4582E1F0089F;
+	Sat,  7 Nov 2026 14:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061466;
-	bh=PaJT8wZ+6fOhTsFmQDFafSNmtwHge5H4pWoA3MLekZ4=;
+	s=korg; t=1794061467;
+	bh=FjSNOvHj6P/LFxX3nPHhNA8NypoifTrijLy6ew5+S3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IDEIqiEzp6EQazC/SExJJrIZ9+UqTUm4NocrspgJtD+FmVwyy7cdyjqTsWuScnMOG
-	 1Q5volavftbbgi0esY6HB8CPtw4gakiCAcI16fwrjcMRr8TcDQGRq8S82nWDzZjvUn
-	 ZvApr8jQiUErHv68drjaqge9BiO2DdaTQBiIIHhE=
+	b=GQvGZozu4xpJprM+zU7h/HD5anO/4JFfG2BHJ3klcU5iMhw4hIDy0QR4zqAntcwA7
+	 XtSMWX8gD8gMK+8pDVVluStL+UE9hRZXc/Uz3X88IYIJo54KNOzKHDXGsWGfyYvYzo
+	 L5F9N/7i1feTeYZdY/1qpKUxyGbLzKWeyHhfLwJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Mishal <harimishal1@gmail.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0567/1536] drm/amd/display: guard dc_sink dereferences in MST mode validation
-Date: Sat,  7 Nov 2026 08:43:03 -0500
-Message-ID: <20261107135013.502131668@linuxfoundation.org>
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 0568/1536] net/sched: cls_bpf: accept dev-bound programs on shared blocks
+Date: Sat,  7 Nov 2026 08:43:04 -0500
+Message-ID: <20261107135013.528046605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,56 +70,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 217f64f348c90cba62164e7ff38e0ccf78a5ca09 ]
+commit d305547d1632a242818c5ebb430c85121a2ed434 upstream.
 
-dm_dp_mst_is_port_support_mode() reads
-aconnector->dc_sink->dsc_caps... for the DSC branch-throughput check,
-and get_conv_frl_bw()'s HDMI-PCON FRL-bandwidth path reads
-aconnector->dc_sink->edid_caps.max_frl_rate, both without a NULL
-check. dc_sink is cleared asynchronously on MST unplug, and both
-functions run from paths that the driver's own comments document as
-racing that teardown: the connector probe worker's ->mode_valid
-callback and a compositor's atomic check, neither of which holds the
-MST manager lock that the teardown path uses. The former does have an
-existing dsc_aux NULL check, but dsc_aux isn't reliably cleared in
-every path that clears dc_sink, so it doesn't cover this.
+The issue:
+Follow-up to commit 120977e2c096 ("net/sched: cls_bpf: reject dev-bound
+programs bound to a different device"), which derived the target device
+from block->q:
 
-Fail the port-support check and skip the FRL conversion path when the
-sink is already gone.
+	dev = block->q ? qdisc_dev(block->q) : NULL;
 
-Fixes: f04d275d94e1 ("drm/amd/display: add mst port output bw check")
-Fixes: 5c9b8b27a883 ("drm/amd/display: Tie FRL support into amdgpu_dm")
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Reviewed-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7c3db8da4e039698ae198c870712428644e965c7)
+tcf_block_create() leaves block->q NULL for shared blocks, so a
+device-bound program attached through a shared block is rejected with
+-EINVAL even when it is bound to a netdev that owns the block.  The
+offload path (cls_bpf_offload_cmd()) never consults block->q and drives
+the per-device callbacks for shared blocks as before.
+
+The Fix:
+Accept the attach on a shared block when bpf_offload_dev_match() matches
+every netdev bound to the block, and reject an empty block.  Every member
+must match because the offload path broadcasts the program to every
+callback registered on the block, so an any-member check would re-admit
+the wrong-device attach on a mixed block.  Every dev-bound SCHED_CLS
+attach is skip_sw, which becomes err_stop and aborts the offload on the
+first failing callback, so the all-members rule is the offload path's own
+semantics.
+
+Iterate the public block->ports xarray (913b47d3424e, v6.8-rc1) rather
+than block->owner_list, which is private to cls_api.c.  The shared-block
+rejection reports "Program is not bound to every device in the block",
+distinct from the non-shared message, because a member can exist without
+a registered callback (netdevsim registers its block callback
+ingress-only).
+
+Context note:
+This patch is not an independent fix: it re-exposes the shared-block
+replay path that commit 120977e2c096 ("net/sched: cls_bpf: reject
+dev-bound programs bound to a different device") had closed, so patch 1
+must be applied first, including in stable.  A stable tree taking this
+patch alone would re-enable shared-block attaches on a kernel whose
+netdevsim callback is still unchecked.
+
+Conditions to recreate the bug:
+  - CONFIG_NETDEVSIM=y, CONFIG_NET_CLS_BPF=y
+  - load a dev-bound SCHED_CLS program for netdevsim device B
+    (prog_ifindex=B), pin it in bpffs
+  - tc qdisc add dev B ingress_block 22 clsact
+  - tc filter add block 22 ingress bpf da object-pinned <pin> skip_sw
+  Unfixed, the filter add fails with -EINVAL ("Program is bound to a
+  different device"); fixed, it succeeds.  Adding a second, independently
+  backed netdevsim device to the same block makes the attach fail again.
+
+Fixes: 120977e2c096 ("net/sched: cls_bpf: reject dev-bound programs bound to a different device")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/netdev/20260809094418.901607-1-jhs@mojatatu.com/
+Link: https://lore.kernel.org/netdev/QDISC-PYC7.v1.20261003103747@mojatatu.com/
 Cc: stable@vger.kernel.org
-[ sashal: Dropped the conflicting get_conv_frl_bw() hunk because this tree has no HDMI-PCON FRL code, keeping only the dc_sink NULL guard in dm_dp_mst_is_port_support_mode(). ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-PYC7.v2.20261010165947-3@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/cls_bpf.c |   28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 9a3deb26149d8..8db1ce500fbcf 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1819,6 +1819,9 @@ enum dc_status dm_dp_mst_is_port_support_mode(
- 	struct dc_dsc_config_options dsc_options = {0};
- 	uint32_t stream_kbps;
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -392,11 +392,31 @@ static int cls_bpf_prog_from_efd(struct
+ 	if (bpf_prog_is_dev_bound(fp->aux)) {
+ 		struct tcf_block *block = tp->chain->block;
+ 		struct net_device *dev;
++		unsigned long ifindex;
++		bool match = false;
  
-+	if (!aconnector->dc_sink)
-+		return DC_FAIL_BANDWIDTH_VALIDATE;
+-		dev = block->q ? qdisc_dev(block->q) : NULL;
+-		if (!dev || !bpf_offload_dev_match(fp, dev)) {
+-			NL_SET_ERR_MSG(extack,
+-				       "Program is bound to a different device");
++		/* A shared block has no qdisc of its own, but it may bind
++		 * several netdevs and the program is offloaded to all of them;
++		 * require a match with every member.
++		 */
++		if (!tcf_block_shared(block)) {
++			dev = qdisc_dev(tcf_block_q(block));
++			match = bpf_offload_dev_match(fp, dev);
++			if (!match)
++				NL_SET_ERR_MSG(extack,
++					       "Program is bound to a different device");
++		} else {
++			xa_for_each(&block->ports, ifindex, dev) {
++				match = bpf_offload_dev_match(fp, dev);
++				if (!match)
++					break;
++			}
++			if (!match)
++				NL_SET_ERR_MSG(extack,
++					       "Program is not bound to every device in the block");
++		}
 +
- 	/* DSC unnecessary case
- 	 * Check if timing could be supported within end-to-end BW
- 	 */
--- 
-2.53.0
-
++		if (!match) {
+ 			bpf_prog_put(fp);
+ 			return -EINVAL;
+ 		}
 
 
