@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064634;
-	b=UdMF3F+6VIOU5QkcxCC0EK/MW7oMBe2v+ryQ8ajwrof/4x8+1PkHLfM9DkADDD0HKy1T
-	 nahqk97IuVWQov0Op8FRZ0Y4JR4BRcCd9KUqoDD47CIcY9mS3qiaB/CnvutKGxAURKUW9
-	 06+wE3VvGMci75Q6lN8DgWsbJmcQoAcpwgb7/VFCWRhIIZh09ZIDRlQyohlLjnQ7R9r5i
-	 8aCCIkSmTYwHmpvfmAMOBlYs8fQIpUGqCICidJuRCixyx233qRABymfyvv9j8RdGw+vFG
-	 aELBf05gV5jgai2nJ6wLVIqBWIri8f9cIJfZxocsLC5rsR4KLZ525xHgUEOA8M4T0BQ==
+	t=1794064635;
+	b=qvO/SQ+T8Zqh9JQ+4x+4T35ZZz34Ewmu4kp1jBTNKeJy+qQqyEwqOjfmmk2k0o64tL5p
+	 BNnXP6bAYmB1AzI1p7zdv+lFHal24jp3F3ZRmzT23iY3eteBaqOau6whWvQz/AecL2O07
+	 2ccvakMC6UkHFCV11bxaq912fYitY6Cbva7MOJZU2SdL9QyeJxRZ5EEsf9dbMu8DsbbrM
+	 P0GaBiDp7VDG2DkcztGas2EcpyDC74PYWbQL3aPnO7JCc9GTkaoIVVa3JRIqHIkz9UbSv
+	 WtyN0h2LJZ8UGrkwRHt3h6X7Vhj7qiDWEWft7AoPZXmwJu2QQ0IvQVuh7g9yN4YSuRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064634;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064635;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IvZlEnFz/ujguoD84inyN+AMa+JgJJz8lonvNjHLyTM=;
-	b=Rc5vBSzNdFcCIsNx+uuqY924HkE7lHaTAjB9xUZi8DFIJyLANqLsNuJFYPE/KNvoJcsa
-	 vd83gqsJ9v6wR9FtITh99Nyp/bjiCWJywepd1SkIXpTsNuykyi+26AFyqifaXuI7ikKjg
-	 XRIB06DxZefN3RIFWZAePtdgxGFqLG0dkjZJL71KNUR2DPqmGNmEeZCIQ1MmlP3eHGChe
-	 PS9YAwnv+8vEwSRSORuFXTLLODukMjlypocqM81qmbhNZaxUJcSDPGsy9vYKP0lr4j7Wj
-	 u8FaHlzeKiOczVnRoQrXWwgIyxkt4n5LU4hXobS8f9dw4RojWNT0z5TgcjMmdOShgxA==
+	bh=G5RV1R0MzUX73Pf3WCAii1oYbdTM7xQDPjg5FodOVvc=;
+	b=DmAyZ4Y9OKzfAD0ORBfjCUln9TLt19MswSDeUZvMjPv+wXUcJjkS9ZkfhDd3TTkVHvGN
+	 TSdYWLXnbYNDREg1XIQ96TdMP42SCnaM5OX3DRAJM5EKDSC8fOi+KcNR3aezzCdTdT3tr
+	 khdmhO52t2qbetfVS4i1rMiYZGcgWT9l7UkXmRMTJ3BqNfe+pMWyeqZLk9zh1VNLCJVVJ
+	 GB6XO2c3EFQYq0U9DoRseJS+z44LxDo3Ts6zw/EIRcueStB1IYpFhTQvJSV42rzK7kbQ3
+	 z71MhgTxTF0bNVLW0mTibFI+XoCPaa1J964noaT3AiNSiwhqejCO7jRfgPWRj+aIj2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A69R7KQs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G0gGESbs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BEE606A9C2;
-	Sat,  7 Nov 2026 15:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFAD606A33D;
+	Sat,  7 Nov 2026 15:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A69R7KQs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788441F0089F;
-	Sat,  7 Nov 2026 15:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G0gGESbs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6681F0089F;
+	Sat,  7 Nov 2026 15:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064633;
-	bh=IvZlEnFz/ujguoD84inyN+AMa+JgJJz8lonvNjHLyTM=;
+	s=korg; t=1794064635;
+	bh=G5RV1R0MzUX73Pf3WCAii1oYbdTM7xQDPjg5FodOVvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A69R7KQs3y+FJJ654haZqgsCjhmfmekRQUuHi6VQhCz8lrw6JMjL5aO+aqHuikUo2
-	 tD0ojBCvdV51tWlR/1VjI0B2JIPu8cOFwVhXz9srNwX2Ry5fwiQFiOwgu1llIdJdFP
-	 MhqxsPTMWdYHWvo3uWaaTIkzcTxGy9tIpVO9uPZQ=
+	b=G0gGESbsesYjBTtvtWSCVIh1bBfxqFYKT2dQHotvP1+3u5BHFz0ZLAyxYJPf7/eK1
+	 42w8O1IeFgtPgrjbMNlPeLlGcTLUcqSrBAJdWKg30M4GLkFk9axXvd5YghGcHHrY4P
+	 V5exsIcBRd0M2BeY611aEbrlm/UgKlNMqrGwVQTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0641/1257] ACPI: APEI: accumulate the queued flag across error sections
-Date: Sat,  7 Nov 2026 08:48:57 -0500
-Message-ID: <20261107134956.981987852@linuxfoundation.org>
+Subject: [PATCH 7.3 0642/1257] arm64/efi: Clear PTE_WRITE when applying EFI_MEMORY_RO
+Date: Sat,  7 Nov 2026 08:48:58 -0500
+Message-ID: <20261107134957.007843079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,64 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit f341307a14895e5da056fb419a31ef7fb534ab18 ]
+[ Upstream commit 215d7b6622733603751f546b9faf9b84b0c281d4 ]
 
-ghes_do_proc() walks every error section of a CPER record, and
-ghes_handle_arm_hw_error() walks every error-info entry of an ARM
-processor section.  Both assign to "queued" instead of OR-ing into it,
-so only the last iteration counts: a later section or entry that queues
-no memory-failure work clears the flag an earlier one set.
+set_permissions() sets PTE_RDONLY for regions that the Memory Attributes
+Table describes as read-only, but leaves PTE_WRITE set.  PTE_WRITE is
+the DBM bit, so when hardware dirty state management is enabled
+(TCR_EL1.HD), such a descriptor is writable-clean rather than read-only,
+and a write by the firmware will be permitted by the hardware (which
+marks the entry dirty) instead of faulting.
 
-Instead of reassigning the variable at every time, just do an `OR`, so,
-if there was a single match, it will return "queued" as set.
+Clear PTE_WRITE as well, as pte_wrprotect() does.
 
-The comment above the check says "If no memory failure
-work is queued", which is the semantics this patch implements. I.e, only
-SIGBUS if there are queue was not handled at all. If we want to SIGBUS
-if any event was not handled/queued at all, we will need something more
-sophisticated.
-
-Fixes: 7f17b4a121d0 ("ACPI: APEI: Kick the memory_failure() queue for synchronous errors")
-Fixes: ccb5ecdc2dde ("ACPI: APEI: fix synchronous external aborts in user-mode")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Link: https://patch.msgid.link/20260925-ghes-queued-accumulate-v1-1-df50553957d4@debian.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/efi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index fe10ab0e02f68..ec2d5ca51db02 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -603,7 +603,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
- 		 * and don't filter out 'corrected' error here.
- 		 */
- 		if (is_cache && has_pa) {
--			queued = ghes_do_memory_failure(err_info->physical_fault_addr, flags);
-+			queued |= ghes_do_memory_failure(err_info->physical_fault_addr, flags);
- 			p += err_info->length;
- 			continue;
- 		}
-@@ -951,11 +951,11 @@ static void ghes_do_proc(struct ghes *ghes,
- 			atomic_notifier_call_chain(&ghes_report_chain, sev, mem_err);
+diff --git a/arch/arm64/kernel/efi.c b/arch/arm64/kernel/efi.c
+index 0ec90fd1754ed..6f34aef3d04ef 100644
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -117,8 +117,14 @@ static int __init set_permissions(pte_t *ptep, unsigned long addr, void *data)
+ 	const efi_memory_desc_t *md = spd->md;
+ 	pte_t pte = __ptep_get(ptep);
  
- 			arch_apei_report_mem_error(sev, mem_err);
--			queued = ghes_handle_memory_failure(gdata, sev, sync);
-+			queued |= ghes_handle_memory_failure(gdata, sev, sync);
- 		} else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
- 			ghes_handle_aer(gdata);
- 		} else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
--			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
-+			queued |= ghes_handle_arm_hw_error(gdata, sev, sync);
- 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_PROT_ERR)) {
- 			struct cxl_cper_sec_prot_err *prot_err = acpi_hest_get_payload(gdata);
- 
++	/*
++	 * Clear PTE_WRITE as well: it doubles as the DBM bit, and leaving it
++	 * set would permit the hardware to make the mapping writable again
++	 * when TCR_EL1.HD is set.
++	 */
+ 	if (md->attribute & EFI_MEMORY_RO)
+-		pte = set_pte_bit(pte, __pgprot(PTE_RDONLY));
++		pte = set_pte_bit(clear_pte_bit(pte, __pgprot(PTE_WRITE)),
++				  __pgprot(PTE_RDONLY));
+ 	if (md->attribute & EFI_MEMORY_XP)
+ 		pte = set_pte_bit(pte, __pgprot(PTE_PXN));
+ 	else if (system_supports_bti_kernel() && spd->has_bti)
 -- 
 2.53.0
 
