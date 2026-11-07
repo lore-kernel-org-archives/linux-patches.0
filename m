@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065245;
-	b=slejSSXXdryM6D2bZx3mUQU/JCLURIkJSn/sBwG1HtWNttWFZU1RBxNshiSk0osciFMR
-	 +5drYJCifRaka5cF7UxBXIYSQvqbu5lMQV5UFNrH1v3tON6q8hsv6H6z+yJZumMOFBFIV
-	 gkoyXAd2NJgoReQp6qxWl/ra7s4EUbOPZTt9Q9iQKiH7mIEEB+zOAnFR0QGmQKs0hL2ei
-	 XfSQRU14JhqUSju3tu3S1oX+6kFMaMtuYTNCnN3jNYVeyOUdJgnQpCJgLlClfzQJOJKXk
-	 t33ro0Rqyub7NxvmDiBIKFk9UVc5xKnBMAIBal8gL28ytm8d0rj+7Pjt6p4CNWKBO2w==
+	t=1794065247;
+	b=dGUiWDBs+tMT/Yjqx64TVy8z3rQVncbrAgveIuimuDtn3CVGF/13cfe59eFEBQhOU05l
+	 60bjg7I7OXHcAuJb3NV46dZ6VoaYfwwjvmoTXOHRclqDY5xQJfq13IX7va3T8OddvaVa3
+	 2KdOjwmolLu+Dot6Rb6GRwifzLPI/l4LkFhrvfSI8yl1B1spxPIxEciJtv7QTBOvKNplA
+	 R/4+8AZOkzksJ1WbmvBePkTfJA6ze01JCOVZXyFsDYEg/Dkh34OYsk66ns0q+/IWXiWDP
+	 aiQ7rDMIZ3GPQjiV06uAUEOEAWjiawidQuL8Jx0QNZVr993SAlx5Ox+jMA/xz+fB+wA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zQ6QCzBKlaVO6x/QVzCEgyS4kG6y1zDqAHoQCHbKfyM=;
-	b=wFBxn5Zm0jZhIHd6qVhKVAruTAJxY23B7e+l1yfkUzOD6q2yy5P3HUtvzJiq8iSgTYjb
-	 vxV0YyfzFmeWjGF74fn0dt8MqaNs71CkI4mgteuAlEpCSii6/jxtn8TVHDlgTXnkA0ivy
-	 yZ8vj96AjqLuYE0uSrpbhF8F5ZGKAzqlKvRntBx4EL/RzPBUQZEncVoBHF/BbOnb9bVcJ
-	 cv9SveOa4/LglA2u7zwjsok30VrMY0AjxNzyEfqgRdeYVpX6v3eRkRgzPZrjoC5iZlXAU
-	 q7VVi4uyinOhVrkRLyGd/AwZx+VSS5plHDt2zVaH95mFtjlISUdymu2r/rFrqFJzQhg==
+	bh=xg17c6ywKEQXDWjUWB3mPjs4X6IJn79sfanP30gCHAA=;
+	b=3GjufkNNO9oBPFC70gHgzl1LGaX3RN/a8Ao/MSmeRcz/gt2v9xxC6dctKg2HeUm7QKZx
+	 tgmBsk33itB+NxJlRql5of28254GYh5b0hzauIlJMni45QiJL/UaVzGcu8UDjdbR9FFhJ
+	 lQr4eMvc76tk7Nlm4ERV6ankVRjo+dIszbs+ql0ZQNZGpovBQ86NWjjxlgkuOKkm23ytb
+	 27qzN6N4WSWcdVtFY3asMsCgk/QSjbsvcBNIDi+ojsPNQgC9Fm06iFknwxH5ZD+VU919L
+	 vJ1btbkuLIbpZv8BHANWz9kAIcbND1uDy/HI316Ybh2OtXzp3avgOQI2LA9anPGQCBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+LskTQ0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ePKnqO/8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0294A606A32E;
-	Sat,  7 Nov 2026 15:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE1B606A326;
+	Sat,  7 Nov 2026 15:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+LskTQ0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238471F0089F;
-	Sat,  7 Nov 2026 15:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ePKnqO/8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D2E1F0089F;
+	Sat,  7 Nov 2026 15:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065244;
-	bh=zQ6QCzBKlaVO6x/QVzCEgyS4kG6y1zDqAHoQCHbKfyM=;
+	s=korg; t=1794065246;
+	bh=xg17c6ywKEQXDWjUWB3mPjs4X6IJn79sfanP30gCHAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+LskTQ0A64LNjMXf/d6m995OjuWmEBJGleVpS7j/RfCbVin5n25fqYEEsxqMh0+2
-	 4ZVEIhbziJ3zJmkxTEgHOgJ3RGJq4urfwfebQLlyJn7kGqwGJasArwQMsZxCCCSqSJ
-	 +gnHwAFOu9w/dhvrqzsKs5YGYdjZQALmT/emAzh8=
+	b=ePKnqO/8GPOhDeIxOhExcAGe8elSoZBOm7LIHVj2oRYzGRmDYYurbN5YsWzJW/9jX
+	 DPHryYBuP6Pf3mNMoldI7W/SgRqHFo8Pl1OUol/VwjUxvWEWyPNXkI0BCWryXf122q
+	 +MU7d5mDvcEw9P7bfXS++AJTyCLJSAjvL+Eh7qVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shaos <shawnq1@163.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Nikolaos Karaolidis <nick@karaolidis.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1021/1257] listmount: dont wrap around with a U64_MAX cursor
-Date: Sat,  7 Nov 2026 08:55:17 -0500
-Message-ID: <20261107135007.529836735@linuxfoundation.org>
+Subject: [PATCH 7.3 1022/1257] fs: dont lose inodes that another LRU walker is isolating
+Date: Sat,  7 Nov 2026 08:55:18 -0500
+Message-ID: <20261107135007.557015111@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,100 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Nikolaos Karaolidis <nick@karaolidis.com>
 
-[ Upstream commit 95a5412022e437691f4eb1924ff249d9044f5ed1 ]
+[ Upstream commit 8dc4116041e2b377e5e1b62ba98b37636f9f3968 ]
 
-do_listmount() takes the last mount id the caller saw and looks up the
-first mount after it by searching for last_mnt_id + 1. With U64_MAX
-that wraps around to zero and the search finds the first mount in the
-namespace. So a cursor at the largest possible id restarts the listing
-from the beginning instead of ending it. A cursor of U64_MAX - 1
-correctly returns nothing.
+When inode_lru_isolate() finds an unused inode that still has page
+cache, it sets I_LRU_ISOLATING, drops i_lock and the list_lru lock,
+invalidates the page cache, clears the flag again and returns
+LRU_RETRY so that the restarted walk can free the inode.
 
-No mount will ever have that id. Mount ids come from a counter that
-starts at MNT_UNIQUE_ID_OFFSET + 1 and a caller that only feeds back
-ids it got from us can't hit this. It's still wrong. Nothing can come
-after the largest possible id so return no entries for it, just like
-for any other cursor past the last mount.
+Another walker of the same list can reach the inode in that window.
+It sees a non-zero i_state and takes the inode off the LRU, as it
+would an inode that is in use. Page cache deletion requeues the inode
+once the mapping is shrinkable, so this is harmless if it happens
+before the last deletion. If it happens after, nothing puts the inode
+back: it stays in memory, unused, clean and without page cache, out
+of reach of the shrinker and of drop_caches, until it is looked up
+again or the filesystem is unmounted.
 
-The reverse direction isn't affected. A cursor of zero is special-cased
-and anything else is larger than MNT_UNIQUE_ID_OFFSET so last_mnt_id - 1
-can't underflow.
+Before commit 2a0629834cd8 ("vfs: Don't evict inode under the inode
+lru traversing context") the pin was an i_count reference, and the
+final iput() put the inode back on the LRU.
 
-Reproducer, unprivileged:
+Skip inodes that are being isolated and leave them to the walker that
+pinned them, which restarts its walk once it has unpinned them.
 
-    #define _GNU_SOURCE
-    #include <errno.h>
-    #include <stdint.h>
-    #include <stdio.h>
-    #include <sys/syscall.h>
-    #include <unistd.h>
-    #define LSMT_ROOT 0xffffffffffffffffULL
-    struct mnt_id_req {
-    	uint32_t size, mnt_ns_fd;
-    	uint64_t mnt_id, param, mnt_ns_id;
-    };
-    static void list(uint64_t cursor)
-    {
-    	struct mnt_id_req req = {
-    		.size = sizeof(req), .mnt_id = LSMT_ROOT, .param = cursor,
-    	};
-    	uint64_t ids[8];
-    	long ret;
-    	errno = 0;
-    	ret = syscall(__NR_listmount, &req, ids, 8, 0);
-    	printf("cursor %llu: ret %ld errno %d", (unsigned long long)cursor,
-    	       ret, errno);
-    	for (long i = 0; i < ret && i < 1; i++)
-    		printf("%s%llu", i ? "," : " ids ", (unsigned long long)ids[i]);
-    	printf("%s\n", ret > 1 ? ",..." : "");
-    }
-    int main(void)
-    {
-    	list(0);
-    	list(UINT64_MAX - 1);
-    	list(UINT64_MAX);
-    	return 0;
-    }
+The window is reached by any unused inode with page cache on
+CONFIG_HIGHMEM kernels, and otherwise by inodes whose page cache is a
+single shadow entry at index 0. On an i386 HIGHMEM guest, eight
+concurrent "echo 2 > /proc/sys/vm/drop_caches" over 2000 freshly read
+one-page ext4 files leave roughly 400 of the inodes off the LRU per
+round; on x86_64, with the files' pages first evicted through
+memory.reclaim, 3 to 4 per round. With this patch, none in either case.
 
-Before, on 7.3.0-rc7-00252-g4e3259b08c54 (vfs.fixes) in a VM:
-
-    cursor 0: ret 5 errno 0 ids 2147483651,...
-    cursor 18446744073709551614: ret 0 errno 0
-    cursor 18446744073709551615: ret 5 errno 0 ids 2147483651,...
-
-After:
-
-    cursor 0: ret 5 errno 0 ids 2147483651,...
-    cursor 18446744073709551614: ret 0 errno 0
-    cursor 18446744073709551615: ret 0 errno 0
-
-Reported-by: shaos <shawnq1@163.com>
-Link: https://lore.kernel.org/r/20261020110732.959552-1-shawnq1@163.com
-Fixes: b4c2bea8ceaa ("add listmount(2) syscall")
+Fixes: 2a0629834cd8 ("vfs: Don't evict inode under the inode lru traversing context")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261021-work-mount-statmount_listns_fixes-v1-3-8917a4c1bd14@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Nikolaos Karaolidis <nick@karaolidis.com>
+Link: https://patch.msgid.link/20261009142431.713875-1-nick@karaolidis.com
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/inode.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 6c9c0cdbe890e..dd60123a0cb0c 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -6253,6 +6253,8 @@ static ssize_t do_listmount(struct klistmount *kls, bool reverse)
- 	} else {
- 		if (reverse)
- 			first = mnt_find_id_at_reverse(ns, last_mnt_id - 1);
-+		else if (last_mnt_id == U64_MAX)
-+			first = NULL; /* nothing comes after the largest id */
- 		else
- 			first = mnt_find_id_at(ns, last_mnt_id + 1);
- 	}
+diff --git a/fs/inode.c b/fs/inode.c
+index 1614a97ce9531..bc93c1757a380 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -941,6 +941,12 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+ 	if (!spin_trylock(&inode->i_lock))
+ 		return LRU_SKIP;
+ 
++	/* Another walker is dropping its page cache, leave it to that one */
++	if (inode_state_read(inode) & I_LRU_ISOLATING) {
++		spin_unlock(&inode->i_lock);
++		return LRU_SKIP;
++	}
++
+ 	/*
+ 	 * Inodes can get referenced, redirtied, or repopulated while
+ 	 * they're already on the LRU, and this can make them
 -- 
 2.53.0
 
