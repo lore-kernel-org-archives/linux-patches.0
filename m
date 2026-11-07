@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060368;
-	b=rb7LU9H3jQtTZUy+hRVJmROmBXHBbrRQfybNbk+37E0Oo3sto/Rmv+g4YwLaf3N6bace
-	 gudxWci/axVApgst6w/Vw1s7rvk6TJVKXC2Sy2sukK0SJ0vW3YaE24lN5pfeu2ae5UpVc
-	 tewhWQ23+HECaeQlhojmInEuAbbZEi4dVJHcEVvIO9YCIzCG3I9ESKr8nyxSuNyJ8t+hI
-	 SW7lQtSPoMeOKrdhtzH0+0nQr+NJSOSGLyMSWIZZ/vmWySffKoTrPiApOsTLFZBF6BqcM
-	 arXr5cRKf1tmzRkJy3TyNkOWr3JnaIMKFt85cGHE5W4xRZ4PKdl+Xe9TdEY4ZI1++Gg==
+	t=1794060369;
+	b=F/Ysu+uHoAI1b+V7V7JZrb0VZd8yziTOclczPQCQ6uaisA2NgZT9izQWVhsciPL2JgA1
+	 VD2ZuqysrTJTSKxsOn8axnkL/1LOmcusRkSAvS36RscrxyIdpTQtI/ppHrS08ml/PCgT6
+	 JPgsf6mrDGIHsppKCj0hZHzjUlxdFqFiKAzJdEgqpGoZ4oZsuMBrzoJ1R3Z2hZ7La6I2l
+	 7M+2kKvBNtE59H+8kRsNO+uP/LeT3LBz+zxVZA0gn9SuCnrQLFiKpq8YHjA92WqKBy6wv
+	 bRGs9ZsCeFeIluvSye3E9QhjGHtL7JKgMWYM09OB0Wapaz5amkNnSssHI7RWwuxOJDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060369;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JtAk6khGaJSYjYY6i3glwkLC5tJhcUZYP/6JRAf/xvI=;
-	b=Yfze/LlYKiovEu4UXeT1mTMcI+0yw9IvARmvmnsNT5VA4+y8Qmj53ibnfeMNaC87AUCb
-	 rcDnx0mtqhPrl+H2InsxcF+YLYUuBZd4B1cY75DY32H9d8e4fWlEF+MQRrbw54PzBf+5G
-	 Xzqvzfho51t4TDJghWj7qFoty+Aqqeg8HyAAfD3RSTYQyCRaQxZhV65jlKMjjA+HObFaZ
-	 kzOhUulIihpG2QLWBtnlg5EoNPdAFecQeMYaFxSyeMJXrMJEkLRTMjhZrOG1R5wiNUsg4
-	 syV6dBSSADqQvirfBsVp/qxPDF+45rJkbv/6LmM2HQphgyc5olHZ6jReRWUt+DNvOWw==
+	bh=WtG6vhte5VWEUpNlX21mycBpChJHDHbrLUc0rs6J4mw=;
+	b=WY3Wcz5xNf6zZPivf6XJui28N7S9l3MrT95R3RXDk8dNGNUdus39S0EAvHLrsSup7ihL
+	 O8IQ4FDbnUh0tkUdQd87yQaq+EMh7YPHvtVmiuk/Hhn26vPd3B5x2/8dTj1iMrQzJyRvz
+	 +pJTmCYTdSLJo6Qd79Eyr5pfv3CKjhfNXrUh1/1qJLhZEjY5bLXOFY9FOuIVFuMHWQZh6
+	 n5VUq0dRj6HSZ38CmdelSh9BJAibGkHx5AKJdXgr+6eXq6o6+olOfXrV/VfWdPANQa0at
+	 aWOjzEj9ILR1YWr4CtV9txx8Ck6H8NanAxMwQxRXGEh84fARk+XJlsUgqaGDevaWukg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XP1VbZ2t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nJ/P41dZ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A56606A32C;
-	Sat,  7 Nov 2026 14:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06F4606A330;
+	Sat,  7 Nov 2026 14:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XP1VbZ2t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3897B1F0089F;
-	Sat,  7 Nov 2026 14:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJ/P41dZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5701F008A1;
+	Sat,  7 Nov 2026 14:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060367;
-	bh=JtAk6khGaJSYjYY6i3glwkLC5tJhcUZYP/6JRAf/xvI=;
+	s=korg; t=1794060368;
+	bh=WtG6vhte5VWEUpNlX21mycBpChJHDHbrLUc0rs6J4mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XP1VbZ2tCMHFGyVOqhXRh2eaoY++Zf1XHQilzoXxfvtmE2PJgMt1mVR+XFufP3VeY
-	 7TGPjreRzUUDQFMGLImuGgtQMTNWxGA4d7E0baktoBjR8ptrwYRP8BBFQM500Od8iT
-	 Ke6wfhNhNFr8Iyw5yhoDO8L8ghOHfhxX3zgO2gWY=
+	b=nJ/P41dZx6Pa/5qS1shLabGLvP9xMQiIr1FWq/tRmAsX+XlztbbEHiHf24H+oppwd
+	 dDCBp+Zrwseg9EpdcS+gIaIBbUPRjWnb7YtIdfbKaPoyM28d0TtuEb85bRdBYEpEMJ
+	 0eItZZZ5lggVKo6T2YiWQvA1FI/TwsTOipWIyp6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0004/1257] mptcp: fix MP_CAPABLE token migration when cloning reqsk
-Date: Sat,  7 Nov 2026 08:38:20 -0500
-Message-ID: <20261107134939.559872441@linuxfoundation.org>
+Subject: [PATCH 7.3 0005/1257] x86/mm/pat: Use pr_warn() for early W^X warnings
+Date: Sat,  7 Nov 2026 08:38:21 -0500
+Message-ID: <20261107134939.585484475@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,295 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 2093bc7fa50056fef8620d2b82bcb2e9a0a5575d ]
+[ Upstream commit ea6fd393cb9e6811a748c7551de0dd3090f9dcde ]
 
-TCP request migration clones pending request sockets with
-inet_reqsk_clone().  For MPTCP MP_CAPABLE requests this byte-copies the
-token_node hlist state into the clone even though the token table still
-names the original request, and the following warning can be seen:
+Nathan Chancellor reports the following warning:
 
-  WARNING: net/mptcp/token.c:364 at mptcp_token_destroy_request+0x2b0/0x330, CPU#2: swapper/2/0
-  CPU: 2 UID: 0 PID: 0 Comm: swapper/2 Not tainted 7.2.0-rc5-00353-gc27e36054537 #10 PREEMPT(full)
-  RIP: 0010:mptcp_token_destroy_request (net/mptcp/token.c:364 (discriminator 1))
-  Call Trace:
-   <IRQ>
-   subflow_v4_req_destructor (net/mptcp/subflow.c:694)
-   __reqsk_free (net/ipv4/inet_connection_sock.c:906)
-   reqsk_timer_handler (include/net/request_sock.h:137 net/ipv4/inet_connection_sock.c:1147)
-   call_timer_fn (kernel/time/timer.c:1748)
+  CPA detected W^X violation: 8000000000000123 -> 0000000000000123 range: 0xffffffffc0400000 - 0xffffffffc0400fff PFN 100e00
 
-Move token request ownership from the original request to the clone under
-the token bucket lock.  Make mptcp_token_accept() and
-mptcp_token_destroy_request() re-check token_node under the same lock and
-treat an already moved or removed request as a normal race instead of
-warning.  This also keeps token bucket chain_len accounting balanced.
+from its_alloc() doing set_memory_x() during early retpoline setup.
 
-If a passive MP_CAPABLE socket cannot claim the token, destroy the
-provisional MPTCP socket and let the subflow fall back rather than
-installing a socket with mismatched token ownership.  Mark that path as a
-passive handshake fallback so MPCapableFallbackACK records the downgrade.
+The warning is not factually wrong but it is unproductive. First, the RWX
+permission is temporary and fixed up by execmem_restore_rox(). Second,
+at the time of the warning, all kernel text is mapped RWX. So there is not
+even a transient actual security issue.
 
-If the speculative clone later loses the inet_ehash_insert() ownership
-arbitration, the original request may find that its token was already moved
-and fall back to plain TCP.  The clone destructor then releases the token
-reservation and keeps chain_len balanced.  This trades an exceptionally
-rare fallback for eliminating the warning and persistent accounting drift.
+The right way to fix this up is to relax RWX detection during boot but
+make a final verification pass over all kernel page tables before running
+userspace.  There is code to do that today (debug_checkwx()) but it
+must be enabled explicitly in Kconfig.
 
-Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/86e2514b533bf4d55d4aa2fdbf1404022e8c9430.1776149210.git.caoruide123%40gmail.com
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-4-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For now, retain the warning even if it's unproductive, but make it
+scream less loudly: use pr_warn_once() rather than WARN_ONCE().
+
+Remove the warning once debug_checkwx() behavior becomes unconditional.
+
+Closes: https://lore.kernel.org/all/20260905044253.GA3816371@ax162
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://patch.msgid.link/20260913-fixes-verify-rwx-v3-1-5e1d6a08bd02@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c   | 31 +++++++++++++++----
- net/mptcp/protocol.h   |  4 ++-
- net/mptcp/subflow.c    |  6 +++-
- net/mptcp/token.c      | 68 +++++++++++++++++++++++++++++++++++++-----
- net/mptcp/token_test.c |  4 +--
- 5 files changed, 97 insertions(+), 16 deletions(-)
+ arch/x86/mm/pat/set_memory.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index e89a69ab927c9..b902e24acd68b 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3706,6 +3706,24 @@ static void mptcp_copy_ip_options(struct sock *newsk, const struct sock *sk)
- 	rcu_read_unlock();
- }
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 226660973d515..c71f6774a2f32 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -719,6 +719,21 @@ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long star
+ 		return new;
  
-+static void mptcp_sk_clone_destroy(struct sock *nsk)
-+{
-+	struct mptcp_sock *msk = mptcp_sk(nsk);
+ 	end = start + npg * PAGE_SIZE - 1;
 +
-+	mptcp_release_sched(msk);
-+	mptcp_set_state(nsk, TCP_CLOSE);
-+	/* inet_csk_prepare_forced_close() clears TCP sock_ops state via
-+	 * tcp_sk(), but nsk is an MPTCP master socket; keep the inet-level
-+	 * destroy preparation here.
++	/*
++	 * If the kernel text is still RWX, gently complain, this could be a
++	 * false positive.
++	 * Once debug_checkwx() becomes mandatory for CONFIG_STRICT_KERNEL_RWX,
++	 * the warning can be removed completely.
 +	 */
-+	bh_unlock_sock(nsk);
-+	sock_put(nsk);
-+	sock_set_flag(nsk, SOCK_DEAD);
-+	tcp_orphan_count_inc();
-+	inet_sk(nsk)->inet_num = 0;
-+	inet_csk_destroy_sock(nsk);
-+}
-+
- struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 				 const struct mptcp_options_received *mp_opt,
- 				 struct sock *ssk,
-@@ -3765,11 +3783,6 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 	list_add(&subflow->node, &msk->conn_list);
- 	sock_hold(ssk);
- 
--	/* new mpc subflow takes ownership of the newly
--	 * created mptcp socket
--	 */
--	mptcp_token_accept(subflow_req, msk);
--
- 	/* set msk addresses early to ensure mptcp_pm_get_local_id()
- 	 * uses the correct data
- 	 */
-@@ -3778,6 +3791,14 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 	mptcp_rcv_space_init(msk, ssk);
- 	msk->rcvq_space.time = mptcp_stamp();
- 
-+	if (!mptcp_token_accept(subflow_req, msk)) {
-+		list_del_init(&subflow->node);
-+		WRITE_ONCE(msk->first, NULL);
-+		sock_put(ssk);
-+		mptcp_sk_clone_destroy(nsk);
-+		return NULL;
++	if (!kernel_set_to_readonly) {
++		pr_warn_once("CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
++		  (unsigned long long)pgprot_val(old),
++		  (unsigned long long)pgprot_val(new),
++		  start, end, pfn);
++		return new;
 +	}
 +
- 	if (mp_opt->suboptions & OPTION_MPTCP_MPC_ACK)
- 		__mptcp_subflow_fully_established(msk, subflow, mp_opt);
- 	bh_unlock_sock(nsk);
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 0384d6a023f9d..3c9ad99ee7ef0 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1081,9 +1081,11 @@ static inline void mptcp_token_init_request(struct request_sock *req)
- }
- 
- int mptcp_token_new_request(struct request_sock *req);
-+void mptcp_token_move_request(struct request_sock *req,
-+			      struct request_sock *new_req);
- void mptcp_token_destroy_request(struct request_sock *req);
- int mptcp_token_new_connect(struct sock *ssk);
--void mptcp_token_accept(struct mptcp_subflow_request_sock *r,
-+bool mptcp_token_accept(struct mptcp_subflow_request_sock *r,
- 			struct mptcp_sock *msk);
- bool mptcp_token_exists(u32 token);
- struct mptcp_sock *mptcp_token_get_sock(struct net *net, u32 token);
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 3139a9ab2853a..2c72cb50fbf36 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -78,6 +78,8 @@ void mptcp_subflow_reqsk_clone(struct request_sock *req,
- 	}
- 
- 	new_subflow_req->msk = msk;
-+
-+	mptcp_token_move_request(req, new_req);
- }
- 
- static void subflow_generate_hmac(u64 key1, u64 key2, u32 nonce1, u32 nonce2,
-@@ -922,8 +924,10 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 
- 		if (ctx->mp_capable) {
- 			ctx->conn = mptcp_sk_clone_init(listener->conn, &mp_opt, child, req);
--			if (!ctx->conn)
-+			if (!ctx->conn) {
-+				fallback = true;
- 				goto fallback;
-+			}
- 
- 			ctx->subflow_id = 1;
- 			owner = mptcp_sk(ctx->conn);
-diff --git a/net/mptcp/token.c b/net/mptcp/token.c
-index f1a50f367add8..e0f2823f92efb 100644
---- a/net/mptcp/token.c
-+++ b/net/mptcp/token.c
-@@ -180,6 +180,43 @@ int mptcp_token_new_connect(struct sock *ssk)
- 	return 0;
- }
- 
-+/**
-+ * mptcp_token_move_request - move request token ownership to a clone
-+ * @req: original request socket
-+ * @new_req: cloned request socket
-+ *
-+ * Move the token hash entry from the original request to its clone.
-+ */
-+void mptcp_token_move_request(struct request_sock *req,
-+			      struct request_sock *new_req)
-+{
-+	struct mptcp_subflow_request_sock *subflow_req = mptcp_subflow_rsk(req);
-+	struct mptcp_subflow_request_sock *new_subflow_req;
-+	struct mptcp_subflow_request_sock *pos;
-+	struct token_bucket *bucket;
-+
-+	new_subflow_req = mptcp_subflow_rsk(new_req);
-+
-+	if (hlist_nulls_unhashed_lockless(&subflow_req->token_node)) {
-+		mptcp_token_init_request(new_req);
-+		return;
-+	}
-+
-+	bucket = token_bucket(subflow_req->token);
-+	spin_lock_bh(&bucket->lock);
-+	if (hlist_nulls_unhashed(&subflow_req->token_node)) {
-+		mptcp_token_init_request(new_req);
-+	} else {
-+		pos = __token_lookup_req(bucket, subflow_req->token);
-+		if (pos == subflow_req)
-+			hlist_nulls_replace_init_rcu(&subflow_req->token_node,
-+						     &new_subflow_req->token_node);
-+		else
-+			mptcp_token_init_request(new_req);
-+	}
-+	spin_unlock_bh(&bucket->lock);
-+}
-+
- /**
-  * mptcp_token_accept - replace a req sk with full sock in token hash
-  * @req: the request socket to be removed
-@@ -187,24 +224,36 @@ int mptcp_token_new_connect(struct sock *ssk)
-  *
-  * Called when a SYN packet creates a new logical connection, i.e.
-  * is not a join request.
-+ *
-+ * Return: true on success.
-  */
--void mptcp_token_accept(struct mptcp_subflow_request_sock *req,
-+bool mptcp_token_accept(struct mptcp_subflow_request_sock *req,
- 			struct mptcp_sock *msk)
- {
- 	struct mptcp_subflow_request_sock *pos;
- 	struct sock *sk = (struct sock *)msk;
- 	struct token_bucket *bucket;
-+	bool ret = false;
- 
--	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
- 	bucket = token_bucket(req->token);
- 	spin_lock_bh(&bucket->lock);
-+	if (hlist_nulls_unhashed(&req->token_node))
-+		goto unlock;
- 
--	/* pedantic lookup check for the moved token */
- 	pos = __token_lookup_req(bucket, req->token);
--	if (!WARN_ON_ONCE(pos != req))
--		hlist_nulls_del_init_rcu(&req->token_node);
-+	if (pos != req)
-+		goto unlock;
-+
-+	hlist_nulls_del_init_rcu(&req->token_node);
- 	__sk_nulls_add_node_rcu((struct sock *)msk, &bucket->msk_chain);
-+	ret = true;
-+
-+unlock:
- 	spin_unlock_bh(&bucket->lock);
-+	if (ret)
-+		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
-+
-+	return ret;
- }
- 
- bool mptcp_token_exists(u32 token)
-@@ -355,16 +404,21 @@ void mptcp_token_destroy_request(struct request_sock *req)
- 	struct mptcp_subflow_request_sock *pos;
- 	struct token_bucket *bucket;
- 
--	if (hlist_nulls_unhashed(&subflow_req->token_node))
-+	if (hlist_nulls_unhashed_lockless(&subflow_req->token_node))
- 		return;
- 
- 	bucket = token_bucket(subflow_req->token);
- 	spin_lock_bh(&bucket->lock);
-+	if (hlist_nulls_unhashed(&subflow_req->token_node))
-+		goto unlock;
-+
- 	pos = __token_lookup_req(bucket, subflow_req->token);
--	if (!WARN_ON_ONCE(pos != subflow_req)) {
-+	if (pos == subflow_req) {
- 		hlist_nulls_del_init_rcu(&pos->token_node);
- 		bucket->chain_len--;
- 	}
-+
-+unlock:
- 	spin_unlock_bh(&bucket->lock);
- }
- 
-diff --git a/net/mptcp/token_test.c b/net/mptcp/token_test.c
-index 4fc39fa2e262d..be9acce8a5673 100644
---- a/net/mptcp/token_test.c
-+++ b/net/mptcp/token_test.c
-@@ -99,7 +99,7 @@ static void mptcp_token_test_accept(struct kunit *test)
- 	KUNIT_ASSERT_EQ(test, 0,
- 			mptcp_token_new_request((struct request_sock *)req));
- 	msk->token = req->token;
--	mptcp_token_accept(req, msk);
-+	KUNIT_EXPECT_TRUE(test, mptcp_token_accept(req, msk));
- 	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(&init_net, msk->token));
- 
- 	/* this is now a no-op */
-@@ -122,7 +122,7 @@ static void mptcp_token_test_destroyed(struct kunit *test)
- 	KUNIT_ASSERT_EQ(test, 0,
- 			mptcp_token_new_request((struct request_sock *)req));
- 	msk->token = req->token;
--	mptcp_token_accept(req, msk);
-+	KUNIT_EXPECT_TRUE(test, mptcp_token_accept(req, msk));
- 
- 	/* simulate race on removal */
- 	refcount_set(&sk->sk_refcnt, 0);
+ 	WARN_ONCE(1, "CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
+ 		  (unsigned long long)pgprot_val(old),
+ 		  (unsigned long long)pgprot_val(new),
 -- 
 2.53.0
 
