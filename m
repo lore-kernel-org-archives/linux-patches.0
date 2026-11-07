@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062644;
-	b=qdFSV0VEqtQCjlQW7qoaMH/9LHZqMg7ZQ9EDqkCdwx3D2mfO4DA120gs2LzyyfDBF/3F
-	 vUNXToutDDvku/PKh1JOhdTtH51dZZP+hrY6ir3IxwYqJKZNUQ+J02t8SEPq0VQJL4Rs6
-	 F8cFRq/sXFKkSUT4ExEiH+NvjeRrIXTtlU8SeE07KZRccFH/oelF+YcjfF1wHJIholLdr
-	 J9PtE86RejDg7B85AQ3mdy3ihBX+Buh3uEtGjthJit3gT4ae2dnd4bCE2HWYs+DnBcdc3
-	 vyxl+9xJRqB9ShPxFE2EBBHcC48ml/GjTx5JeOqdn10Ail/5rCzIGIq8g6TpT+oMs3g==
+	t=1794062646;
+	b=0KqrBovU2br5L1fXEQaapFi2dlb4ysAwKRddtlgWHDceyypaBNEzkmb/Fhk2De579qu1
+	 fWdYJOiHI6aXjkkwy+WHO6xTAfvsYectE/PqKo1OuXDKkMVv47K07GJ6YZVKk5djA1xay
+	 GoYqR8dZtlaY2In1MEj9YnGAEERlABKo2b/6QlHgHAMcj07bMk3ikWv9XE3q06KNhvzBw
+	 3kCtw0n0TY69arlMKfZR6w7/GwIDnnMEpCCrrwACjeI97V5wB+sj9RI3IGgHn6s8iC6TI
+	 FdNRjCaVzN0paSarXuO6SdniXP32SZYbmL5s1KNFkUeYrAFTuZsFqqQs6YllapW/fdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062644;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062646;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8NHQXlwfOC4cGNy0eK7D6fiKG0GA/hEI2nqpZ2RI9vc=;
-	b=dhQgACLJfmphJL1AFrwq2qPoWJ5NPpurfIvqaH1Du97qe+3R9ITHn1EbQcnSjkiX/UGV
-	 Dt+OUlZzFYND7dtDCVBjFgCylD9oEzH7zlIbYD7Qs6VB8JDjgdg48wcxvX49LDhDzuJIr
-	 ZHv7nQoWSWQkxAkMHjmpA3GvljHVGexoT4f1jyTvIrLKjyBS+LJS2HH2OgD7mDg3twcnt
-	 vy6P0KZK/u2/9wUt/L7egLA5gekLW9UvxdSTkjkU0hWgr/pBJhlyCtFwKFb9o2Lnulqh3
-	 6kjAJzlomtwaciph0Ieb5/9wXVMbGO5gUDVglYOaz3wvYuhYbcIxKxv0/EsTwbhrEJA==
+	bh=OlBWvtGADBlrm66oiuUC6YYoQZjuMknlz+VFGMq5dLI=;
+	b=Xp5EokeWz/WxBG0XOgqN67YCftGOwcqGzxEZJPzmr/YcWWYdDFWBsUXVeVfNphOHEJC/
+	 RLloFjzTQekSGoJs4b8DaMQyUkCpqj/Uh2S6JIw6KIbFYXSYB5TzemTPPH9Blkcmx/yXv
+	 nZI12/vzf7xQU+v1zKbpnQVWiMFATeZWrn1wBLXmaYAWAMMaoLikDWR0lWGn74SvKEFS9
+	 ZLsH8qB8dTAzfQlztHgHtKpUQZQgfhYCOasrMZKslFZb8V+fIu5D0WVbAwbF1rBjAxNgf
+	 TOkcFTspD5XxyCB6q3liCIVbVFLjUJwMv76gFylAT/35lmKQNoMlYUrcA9y1ym5juMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlfvZIx0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKI5UJqP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B3D606A32D;
-	Sat,  7 Nov 2026 14:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF16606A339;
+	Sat,  7 Nov 2026 14:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlfvZIx0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DE11F0089F;
-	Sat,  7 Nov 2026 14:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKI5UJqP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6D41F0089F;
+	Sat,  7 Nov 2026 14:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062644;
-	bh=8NHQXlwfOC4cGNy0eK7D6fiKG0GA/hEI2nqpZ2RI9vc=;
+	s=korg; t=1794062645;
+	bh=OlBWvtGADBlrm66oiuUC6YYoQZjuMknlz+VFGMq5dLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlfvZIx0+0wWMUoG7CuQg04/bgbumdBrwdbkCiqLorP13W668uFqbzADVU2uBhmTm
-	 H/w39jPKgiZ200TXhj2a/gJ8E78OmH6EWqfxnjck5W1vKEv673vbXJk/xpZPX9n1ww
-	 +drKk15eNWPVz9z1L0p2/RnU00tFN0CVesSD/eXk=
+	b=rKI5UJqPJEhm0yRcRZM1GL3lt3VZiCfNoOmGks/m5tatINnVZIwG2lk0KH4EaHz1F
+	 Rxg5ysSeZ2jpebk2h7OfzLR7Fj+NL7v2GP5xJ6GxQhhLy+AkjaokZQFE+fzz0q6spc
+	 A7IZWk97pO/HDyGSgTkWRE5UvR/R3CLid+htWxSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Guixin Liu <kanie@linux.alibaba.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Martin Belanger <martin.belanger@dell.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1511/1536] nvmet-fc: Tear down the association when the admin queue allocation fails
-Date: Sat,  7 Nov 2026 08:58:47 -0500
-Message-ID: <20261107135040.302986163@linuxfoundation.org>
+Subject: [PATCH 6.12 1512/1536] nvme-tcp: start error recovery when read_sock fails
+Date: Sat,  7 Nov 2026 08:58:48 -0500
+Message-ID: <20261107135040.330054503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,50 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Martin Belanger <martin.belanger@dell.com>
 
-[ Upstream commit 11db8ab55e1a7533e9cfe57687ab142ba67d3c84 ]
+[ Upstream commit 288cfa187208cc9d0809eb8e1508658151a444dd ]
 
-When the initial admin queue allocation fails after a new association
-was created, nvmet_fc_ls_create_association() only drops the
-association reference, which frees the association.  By then the
-association is already on the target port's assoc_list, though, and
-removal from that list only happens in nvmet_fc_delete_target_assoc(),
-which this error path never calls.  The freed association stays on the
-list, where later lookups and the port teardown can access it, and the
-target port reference taken at allocation time leaks.
+nvme_tcp_recv_skb() disables the queue and starts error recovery for
+errors it detects itself. An error returned by the transport reaches
+nvme_tcp_try_recv() without either action.
 
-A remote host can trigger this reliably with a Create Association LS
-requesting a queue too large to allocate.
+nvme_tcp_io_work() returns on a negative result and does not requeue
+itself, so the queue stops receiving and remains stalled until a command
+times out.
 
-Schedule the regular association teardown instead of dropping the
-reference directly.  The teardown removes the association from the
-list and releases the target port reference before the final reference
-drop frees it.
+Report the error and start error recovery when the queue is still
+enabled, which indicates that the error was not handled by the actor.
+Do this under the socket lock, as nvme_tcp_recv_skb() does.
 
-Fixes: 0cab4404874f ("nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association")
+Fixes: be8e82caa685 ("nvme-tcp: enable TLS handshake upcall")
 Cc: stable@vger.kernel.org
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Assisted-by: LLM
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Martin Belanger <martin.belanger@dell.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 90948e09b5d2a..f20338e7b669e 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1685,7 +1685,7 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
- 					be16_to_cpu(rqst->assoc_cmd.sqsize));
- 			if (!queue) {
- 				ret = VERR_QUEUE_ALLOC_FAIL;
--				nvmet_fc_tgt_a_put(iod->assoc);
-+				nvmet_fc_schedule_delete_assoc(iod->assoc);
- 			}
- 		}
- 	}
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 93e743d6e9846..67d02cfb47ec7 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1421,6 +1421,19 @@ static int nvme_tcp_try_recv(struct nvme_tcp_queue *queue)
+ 	lock_sock(sk);
+ 	queue->nr_cqe = 0;
+ 	consumed = sock->ops->read_sock(sk, &rd_desc, nvme_tcp_recv_skb);
++	/*
++	 * nvme_tcp_recv_skb() handles its own errors, so a queue that is
++	 * still enabled failed inside read_sock(). Handle it before
++	 * release_sock() processes the backlog.
++	 */
++	if (unlikely(consumed < 0 && consumed != -EAGAIN &&
++		     queue->rd_enabled)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"queue %d: receive failed: %d\n",
++			nvme_tcp_queue_id(queue), consumed);
++		queue->rd_enabled = false;
++		nvme_tcp_error_recovery(&queue->ctrl->ctrl);
++	}
+ 	release_sock(sk);
+ 	return consumed == -EAGAIN ? 0 : consumed;
+ }
 -- 
 2.53.0
 
