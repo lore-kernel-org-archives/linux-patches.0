@@ -1,64 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065343;
-	b=oa3t1w72SIbKty/it3THDfm5qxQcNHYbliHV+Kzrwmccg6dY1/el6hg3H40IoXVFbib9
-	 h7YQPnFTcVu363eY98XE6LN1OeWHb+4xTEoC3DpT5uEqx1wXFulCNV6aXd/iYFv5Vniki
-	 42yY5AoSLXsRRh8FwIHnMzGTGF3gZ9NhOryKwbgncWBw3MKsh+ZvTQufmT5N9wW8iTGGp
-	 c1SnbNNDu0omRi/Mgh8Ricse5glB/cLxcHechMpU2e/T8y4knr/qKIRRLT0NEDM/3eaE6
-	 F+dByZRtZdK/L0n9QDhpIuohPiiz89/3aSld+0ocqs5v3Yx7NJCYR+RWFe2b/R1qyXg==
+	t=1794065344;
+	b=E+3bAAHq9HAgnBMcNcVRoN2c+vIQ32DS/HHtRkWZu0hZIaTApm0281k74xnPv7RQJVuO
+	 hWwJG2VQDPxLjh/THzU9mfvHAOgDXEUqY0DofRjhAqW/x2l2xEClcaUGheXuX9454U88v
+	 svk4unth1/YaDL1fxqo7BN0CQJ3NXdpRfDxioTBUpEdZKgDaOkbmvD7md6PA0eM9eKNGA
+	 CbR7q04NUiDz7cEWUz0rj7DkhvsVBzYwoRMI+tCAxV6OOJQNVhcAHleGX2zNQQuBYWHnx
+	 le7+Tqf1nYzZMCSX+A3qRo1doaSnJM1wzol8C6czo8iMv/nTcIgCF4N4jrSBG1ILJbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065343;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065344;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pOKEbmE4EcFc84tkPBEgwFmnjNeXTMDaz7Y9PMlZU+0=;
-	b=CnNG5nm1dzOH1W6iG1NVk7DjcPIQp30u/Cj7VFFNWBX2/8Al+BN5yCPBf98rxmYnkqCP
-	 s8yCbaPsAKEve3qm2w3wOEAUhES3k7t/+U08EXp4RjZfL+sVNoXwNjf7P7t+xiXfuWY3K
-	 ByqCbwiXsrzPKnrWdX+3LV+CyONwtOPd18JsMkcyys+nSYR3LpPmjCMrK9JvczYxVjG/o
-	 KfbRZgUlgt6DLHunQ18dpM66gM3vqdrWWc6PWWWYy6++k8hzrnVOM141hyoBDkLSL0YAj
-	 cJPeb6f2WOw9iaoaFuNKNa+tB4aWxKOpaflmgmTUOlKuguxp/I4eNhWaM0JZ5/m9y2A==
+	bh=ptnSOVszen+J8UufZiTa/PBGsc0DD9f8VMO8UPL2QPQ=;
+	b=B88S0m36l0CHFZn4MFssKKhrf2aOLqcnbp5dQl5r0x2HgMd7+B9TvoQDlz5uqU2puFtS
+	 YQC7hU+M4j1ybMaW7RcCleLNdoD+i7PKcRz22ai41uaDaPTPSgeNOXsLYC6UvpBKUstQO
+	 s73oXE1e06tLMrchJrxleRHvbB2y6MTQ7nGdGrSlk1pdA4ce+OHw1spOsvyH6TRexuJSx
+	 qa0v3GCVOKlhgCRLZtaqXECarTLQoB3YH9fCElaparwdhA/g1rgq/X3+ac6gBDO4NgrKK
+	 t4sA/2DLgzsc+/XeQd7OT2RQc2Hn907d10++mfPPfg4ZL4VPc5IVrS6KAEo+RmWPseg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tr5NeG8I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dgF5sVaN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E570606A326;
-	Sat,  7 Nov 2026 15:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FCE606A326;
+	Sat,  7 Nov 2026 15:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tr5NeG8I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CB61F0089F;
-	Sat,  7 Nov 2026 15:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dgF5sVaN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CB61F0089F;
+	Sat,  7 Nov 2026 15:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065343;
-	bh=pOKEbmE4EcFc84tkPBEgwFmnjNeXTMDaz7Y9PMlZU+0=;
+	s=korg; t=1794065344;
+	bh=ptnSOVszen+J8UufZiTa/PBGsc0DD9f8VMO8UPL2QPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tr5NeG8Ipae5J7FX0PDGT6ZO8vRt6ZhfQdOwrt70cWP9ysAZqCiafUJlY3M8m46zY
-	 2nj8XfxMRJmAy2eoFVPYZtBFhs6UAy1VBCKx6osrE8nKkiFH3cnQvb+2rKTOnf/n1t
-	 cl+YCqbXq2xHVS3tzmUnZrNl98+Xr1BR/of6+Z4c=
+	b=dgF5sVaN4AgPQf9I0B6FZhXSCfCwuHR3VlNF9KHv3gy/40cyhb2SksImYNw9UZmAf
+	 mt1Qb4/a4igBJU4VleJoOAi60piCMfLEJkl171Te4LNWN2Tc8tSNtkWgbZDr6bLH4i
+	 5aJoUNozZ8s0EiLtK8ViK2v8k1vjiqq2kmu3Uq2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Rik van Riel <riel@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1079/1257] mm: disallow ioremaping ordinary RAM in generic_access_phys()
-Date: Sat,  7 Nov 2026 08:56:15 -0500
-Message-ID: <20261107135009.064743148@linuxfoundation.org>
+Subject: [PATCH 7.3 1033/1257] gpiolib: dont report -ENOMEM for a requested line without a label
+Date: Sat,  7 Nov 2026 08:55:29 -0500
+Message-ID: <20261107135007.853882731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -80,97 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
 
-[ Upstream commit 4590752e20aa393cc0d4fe538c0747d14a98c97a ]
+[ Upstream commit dae739137441667d67fbfcc4d303a0ecc6618662 ]
 
-generic_access_phys() can end up getting called on CoW PFNMAP mappings,
-resulting in it trying to ioremap anonymous folios, which especially
-the x86 code doesn't enjoy, and which is in general just odd/wrong.
+gpiod_request_commit() sets GPIOD_FLAG_REQUESTED, calls ->request() and
+only then sets the label. A line in between has no label, so
+gpiochip_dup_line_label() passes NULL to kstrdup() and returns
+ERR_PTR(-ENOMEM), which for_each_hwgpio() then passes to kfree():
 
-E.g., with a CoW mapping of a PCI BAR:
-
-ioremap on RAM at 0x0000000045623000 - 0x0000000045623fff
-  WARNING: arch/x86/mm/ioremap.c:216 at __ioremap_caller.isra.0+0x4c2/0x5f0
+  BUG: unable to handle page fault for address: ffcc73074355ffc8
   Call Trace:
-   generic_access_phys+0x130/0x4d0 mm/memory.c:7178
-   kernfs_vma_access+0x1ce/0x280 fs/kernfs/file.c:437
-   __access_remote_vm+0x58f/0x890 mm/memory.c:7256
-   mem_rw+0x2a1/0x670 fs/proc/base.c:912
+   gpio_sim_dbg_show
+   gpiolib_seq_show
+   seq_read_iter
 
-But more generically, we should disallow access to anything that looks
-like ordinary RAM in the system: including allocating memory (e.g.,
-alloc_pages) and mapping them in a VM_PFNMAP.
+Return NULL for such a line, as for an unrequested one.
 
-For pages with an online memmap, allow only pages marked as reserved
-(PageReserved). This also includes memblock allocations, however,
-distinguishing them from other MMIO is tricky, and nobody should really
-be mapping them in a PFNMAP (except someone abusing /dev/mem, which we
-do not care about).
+Reproduced with gpio-sim: reading /sys/kernel/debug/gpio in a loop while
+lines are requested and released oopses within seconds; with this
+change, 100000 cycles pass.
 
-So only allow access if there is no online memmap, or if the pages are
-marked reserved. Reject other pages with -EINVAL.
-
-Note that, just like other pfn_to_online_page() users, we won't care about
-concurrent memory offlining; mapping memory that can concurrently get
-offlined is highly dubious.
-
-Link: https://lore.kernel.org/20261013-generic_access_phys-v1-1-b3963ef76e37@kernel.org
-Fixes: 28b2ee20c7cb ("access_process_vm device memory infrastructure")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=49b1021becba70c1f3f6
-Reported-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Closes: https://lore.kernel.org/r/20261001152524.171115-1-ngocthang2710.1999@gmail.com/
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
-Cc: Rik van Riel <riel@redhat.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 35b545332b80 ("gpio: remove gpio_lock")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20261020-gpiolib-chip-removal-v3-0-aambrozewicz@nvidia.com?part=2
+Assisted-by: LLM
+Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+Link: https://patch.msgid.link/20261022083343.3905973-3-aambrozewicz@nvidia.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpio/gpiolib.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 4f8199de44afb..9e395ad33ffdf 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -7159,6 +7159,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	resource_size_t phys_addr;
- 	pgprot_t prot = __pgprot(0);
- 	void __iomem *maddr;
-+	struct page *page;
- 	int offset = offset_in_page(addr);
- 	int ret = -EINVAL;
- 	bool writable;
-@@ -7173,6 +7174,19 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- retry:
- 	if (follow_pfnmap_start(&args))
- 		return -EINVAL;
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 239c0d54843b3..226ed5b8d4442 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -2719,6 +2719,7 @@ void gpiod_free(struct gpio_desc *desc)
+ char *gpiochip_dup_line_label(struct gpio_chip *gc, unsigned int offset)
+ {
+ 	struct gpio_desc *desc;
++	const char *name;
+ 	char *label;
+ 
+ 	desc = gpiochip_get_desc(gc, offset);
+@@ -2730,7 +2731,11 @@ char *gpiochip_dup_line_label(struct gpio_chip *gc, unsigned int offset)
+ 
+ 	guard(srcu)(&desc->gdev->desc_srcu);
+ 
+-	label = kstrdup(gpiod_get_label(desc), GFP_KERNEL);
++	name = gpiod_get_label(desc);
++	if (!name)
++		return NULL;
 +
-+	/*
-+	 * Reject anything that looks like ordinary RAM, including anonymous
-+	 * folios in CoW mappings or allocated kernel memory. Note that we
-+	 * cannot distinguish memblock allocations from non-RAM reliably, so
-+	 * we cannot easily reject them here.
-+	 */
-+	page = pfn_to_online_page(args.pfn);
-+	if (page && !PageReserved(page)) {
-+		follow_pfnmap_end(&args);
-+		return -EINVAL;
-+	}
-+
- 	prot = args.pgprot;
- 	phys_addr = (resource_size_t)args.pfn << PAGE_SHIFT;
- 	writable = args.writable;
++	label = kstrdup(name, GFP_KERNEL);
+ 	if (!label)
+ 		return ERR_PTR(-ENOMEM);
+ 
 -- 
 2.53.0
 
