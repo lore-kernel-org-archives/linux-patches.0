@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062877;
-	b=kSDQNVSaOB7XuqvWOWBha9aiHkA728oBww6Zi5HCGHRYt9kw31uvT+PTkQhuJIw/lHL4
-	 IL+qdrjxUatLSMCkgUD7FW8UO/aSxCjaOIfkqtjtYlysKBj0Ov71Ax2+NJ3sT4PIKcWRw
-	 G6aJ9k6PK8MAHXNce07HQUPxc/o9wzXCReulJkw1yq8qHrL/DL3hluGZajHdgWvqVCOVJ
-	 fu4437oQOm1qppCUKAIzFvPmIeIe6CJVuZ6F+GLMrfHIYDcQjwpl+Rr0kTxQmmPQcspR4
-	 Vwbp85jpVOoH4GEqXJgnETXLond//c0/pASyKBoR6Z5CL8ASvdEZH5B0Bs9LB373G3A==
+	t=1794062878;
+	b=L7OLXWjJ6jjd/97Xfde5d1N9tp9T4/c+NjcofY+YowajDmMQuRFSbtwfoBUr0fRJnNo5
+	 DsJQzohm9am4V0D6cdUGrEmpPLdD22oD3CG0CqcyddF0BmM2Rl3+6O0UdR/SG7aCiy5J4
+	 ddfFLh4LY2XX72JMYwNEoK5btumDPFqOT7wZCdwz31D9x3qhiyYJTSgXLRjEVd3iXUisT
+	 2i4fkJESmAH3jT0qg8GLFlH2cnMoRwDzhkxFjT0u7eiE8p6nSn7bfrnuGzaza8L0ZwD6p
+	 I+OHUw5UiN4vcWgjKStllCp7AUO+6lGQwxIO276+c+QO3oWlYE3ooCfWtU9TK7Tdm8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062878;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vAJLn9l1IDK95Swaw3OyqQRAMHaFjMpF01y5dH2ocwE=;
-	b=QZ7QDvbGvSP+3JaeBHhPYMicyibYyTejsVJVD3nOF3EIWmrPQ1SSyCT3nUs1R/AZiqHg
-	 dXf2/TWKQGeTeKT7NGERF4MHPqzPq9TKr4QLs5eZEUEHJgG1+VoIco2H2tK/KVgGzMGvv
-	 qkr9MAcXzI5IX7phSawtEn/FDOAuUV0p5r4O4ddciMOAqYQnPrPJ1v8GITUCEN8p5b9X4
-	 SQ2itkqg1PlVBJBQxKuTZsW4btSw75QXB0RsFsw84l5XV3Tnn11nQDJvm+J0XZ39bquk2
-	 +PJ/1IdzaAmlR+Vtq5B9i0Ia5I9HCDpih51Qf+gNOUF5mHzarKc7j+Q70MBfTUlyEwg==
+	bh=P/6JFABvKj02kmIGRXYir3ANtlp/LYvpRU6mVWDxvf0=;
+	b=2VK3B/zuXPYblnrcr+3sWejxaIaYrIXiSxco39w6qHZL/iw0mFKeJ2LwIMlzfqQ39bVa
+	 4vAejDU/h/bzDwMYwsa28v4eGpiFZSiSzjiFCUfimDGh+Sr+stRUQbfLBN6pVTTy6HiYm
+	 srO9uVciOH8BV0WzQ4le3hJ8tBROzSQUhVS16RUfmlTkA8Cgc/v+OsN23F7GxAQDaVz42
+	 Ldkn8apTeZhWoKXJCqp+bFlZ8qGfkIB84nKX6ljmb+3BZdhFIOqP0ShSiHAnGYTkxjHT4
+	 oCJ5QdBl8AgRgOKG8HBXvQxrFUdzyGqu23tq7MAbI38FYtmIwGgWhFKChIYeiZ7WxCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3RuPrtS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T5h16d3k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2994606A32F;
-	Sat,  7 Nov 2026 14:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28345606A326;
+	Sat,  7 Nov 2026 14:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3RuPrtS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A691F0089F;
-	Sat,  7 Nov 2026 14:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T5h16d3k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91261F0089F;
+	Sat,  7 Nov 2026 14:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062876;
-	bh=vAJLn9l1IDK95Swaw3OyqQRAMHaFjMpF01y5dH2ocwE=;
+	s=korg; t=1794062878;
+	bh=P/6JFABvKj02kmIGRXYir3ANtlp/LYvpRU6mVWDxvf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h3RuPrtSmX2ds71uwp5Cdo5r23Bd4yKk3WpT2K4jSmWdz/KNrPvAtw/K3iELPxWSY
-	 g+P7GIQhssjrtm0zNczVOjnOPwnkauaqh8cbDl991Sfn4U1FGMSyFdrzYNpcBedBb8
-	 xgX1uqh/qn38MzZQ26jDPbTtoL0nV0kl0RC3oGzc=
+	b=T5h16d3ksgCRV1Sokxbvlx1Q57V9+YIrEtUH1gTL8vpmvcuDtS0gsybdvXiw/qyA+
+	 V2pgJSzd+TwUxNS41L/5fS+tn6AmcYUi2PQi6Vd8Q3Q8FMv6RC+1TCMJgt9xZ402dq
+	 UcjNWRp8wBYrnw7BhMpR3ckrQPSq2gy1+m7T3OF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Haiyang <luo.haiyang@zte.com.cn>,
-	Run Zhang <zhang.run@zte.com.cn>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Shengming Hu <hu.shengming@zte.com.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 159/869] cpufreq: conservative: Restrict deferred downscaling to low load
-Date: Sat,  7 Nov 2026 08:47:21 -0500
-Message-ID: <20261107134857.682006044@linuxfoundation.org>
+Subject: [PATCH 6.18 160/869] nilfs2: force clear dirty state when restoring from the shadow map
+Date: Sat,  7 Nov 2026 08:47:22 -0500
+Message-ID: <20261107134857.710642917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,210 +69,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengming Hu <hu.shengming@zte.com.cn>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit 0fa55c5539173bceaeb400c69b1974aaa0cdb8dc ]
+[ Upstream commit cb6702e63e0a16afd83875294e5ce53becdd1b1f ]
 
-For a shared cpufreq policy, dbs_update() derives the load used for the
-frequency decision from the maximum load among its CPUs, but it may
-also record deferred idle periods accumulated by an idle CPU in the
-policy.
+When garbage collection fails, nilfs2 rolls the DAT metadata file's page
+cache back to a shadow copy taken before GC started.
+nilfs_clear_dirty_pages() drops the dirty state of the folios in the DAT
+cache, then nilfs_copy_back_pages() overwrites them with the saved
+contents and warns if one is still dirty:
 
-Consequently, a single update can contain both a high decision load
-from one CPU and multiple deferred idle periods from another CPU. The
-conservative governor applies the deferred down steps before evaluating
-the decision load. If that load subsequently triggers an up step, the
-deferred down steps can outweigh the single up step and produce a net
-frequency reduction.
+	/* overwrite existing folio in the destination cache */
+	WARN_ON(folio_test_dirty(dfolio));
 
-This was observed on a policy shared by CPUs 2 and 3. A CPU-bound
-SCHED_EXT task kept CPU 2 fully utilized while CPU 3 remained idle.
-On this system, SCHED_EXT generated update-util callbacks less
-frequently than CFS, resulting in sparse DBS updates such as:
+nilfs_clear_dirty_pages() used to clear the dirty state unconditionally,
+which is safe here because the rollback runs with the log writer
+stopped, so nothing else can dirty the cache while it runs.  The same
+helper is also used when writeback finds dirty folios after the
+filesystem has degraded to read-only, where it does run concurrently
+with the log writer, so commit ca76bb226bf4 ("nilfs2: do not force clear
+folio if buffer is referenced") made nilfs_clear_folio_dirty() skip a
+folio if any of its buffer heads is busy.  The rollback caller shares
+that helper, so its clearing step can now return with a folio still
+dirty.
 
- load=100 idle_periods=7 interval=59 ms
- load=100 idle_periods=4 interval=39 ms
- load=100 idle_periods=2 interval=19 ms
- load=100 idle_periods=7 interval=59 ms
+A DAT folio can hold a busy buffer head without anyone modifying the
+folio: nilfs_mdt_read_block() submits read-ahead for the blocks
+following the one it was asked for and waits only for the first, so the
+read-ahead buffers are still locked when it returns.  With a block size
+smaller than the page size, a locked read-ahead buffer can share a folio
+with a block that GC dirtied and keep the whole folio dirty past the
+clearing step.
 
-With the default 5% frequency step and a 2.6 GHz policy maximum, seven
-deferred periods reduce the requested frequency by seven 130 MHz steps
-before the high decision load adds only one step. Repeated updates
-therefore keep the policy near 530 MHz even though CPU 2 is fully
-utilized.
+Add a force flag to nilfs_clear_dirty_pages() and
+nilfs_clear_folio_dirty() that skips the busy buffer check, and set it
+in the two calls from nilfs_mdt_restore_from_shadow_map().  The
+read-only fallback callers keep passing false, so that commit still
+protects them and the WARN_ON() is left alone.
 
-There are two load values relevant to this behavior:
-
-  * sample_load is calculated from the busy and elapsed time of the
-    current sample.
-
-  * decision_load is returned by dbs_update() for the governor's
-    frequency decision. After a long idle interval, it may reuse
-    prev_load to improve the response to a waking task and can therefore
-    differ from sample_load.
-
-The problem is that idle_periods is derived from accumulated idle time
-and is applied independently of whether the current sample load is in
-the conservative governor's downscaling region. A high sample load and
-multiple deferred idle periods can therefore coexist, particularly
-when updates are sparse.
-
-As suggested by Zhongqiu Han, calculate the sample load separately from
-the decision load. If no time has elapsed, use prev_load for the sample
-load as the existing load calculation does, since no load can be
-calculated for that interval.
-
-Record the maximum sample load for the policy and apply deferred down
-steps only when it is below down_threshold. This makes deferred
-downscaling follow the same threshold that the conservative governor
-normally uses to determine whether the policy load is low enough to
-reduce the frequency.
-
-The existing code applies deferred down steps whenever idle_periods is
-valid, regardless of the sample load. When the decision load is in the
-hold region, the locally adjusted frequency is not submitted unless
-another frequency-update branch is taken. Thus, when the sample and
-decision loads are the same and both are in the hold region, this
-change does not alter the requested frequency.
-
-The difference becomes visible when the decision load causes a
-frequency update. In particular, if it exceeds up_threshold, the
-governor applies a single up step after the deferred down steps and
-submits the resulting request. Multiple deferred down steps can then
-outweigh that up step and cause a frequency reduction even when the
-sample load is above down_threshold.
-
-With this change, deferred down steps are skipped whenever the maximum
-sample load is at or above down_threshold, keeping deferred downscaling
-consistent with the conservative governor's threshold semantics. The
-requested frequency may therefore be higher than with the existing
-behavior when deferred idle periods are present and the decision load
-causes a frequency update. This is intentional, because the lower
-request previously resulted from applying deferred downscaling while
-the sampled policy load was outside the governor's downscaling region.
-Accelerated deferred downscaling remains available when the policy
-sample load is below down_threshold, including after a workload has
-completed and the policy has become idle.
-
-Fixes: 00bfe05889e9 ("cpufreq: conservative: Decrease frequency faster for deferred updates")
-Cc: All applicable <stable@vger.kernel.org>
-Reviewed-by: Luo Haiyang <luo.haiyang@zte.com.cn>
-Reviewed-by: Run Zhang <zhang.run@zte.com.cn>
-Suggested-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
-Link: https://patch.msgid.link/20260916140926740-DCokXh6dAgtqDn1EWdCh@zte.com.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: ca76bb226bf4 ("nilfs2: do not force clear folio if buffer is referenced")
+Closes: https://lore.kernel.org/lkml/CANypQFZSYrtcshnUzOPiqatyLd-M8_OReOewQoAi_V5yY0dTtg@mail.gmail.com/
+Cc: stable@vger.kernel.org
+Suggested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Assisted-by: Claude Code:claude-opus-5
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq_conservative.c |  8 ++++---
- drivers/cpufreq/cpufreq_governor.c     | 29 +++++++++++++++++++-------
- drivers/cpufreq/cpufreq_governor.h     |  2 ++
- 3 files changed, 29 insertions(+), 10 deletions(-)
+ fs/nilfs2/inode.c |  2 +-
+ fs/nilfs2/mdt.c   |  6 +++---
+ fs/nilfs2/page.c  | 50 +++++++++++++++++++++++++++--------------------
+ fs/nilfs2/page.h  |  4 ++--
+ 4 files changed, 35 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
-index 60bab2b71b1b9..4ee6990ab2ba9 100644
---- a/drivers/cpufreq/cpufreq_conservative.c
-+++ b/drivers/cpufreq/cpufreq_conservative.c
-@@ -85,10 +85,12 @@ static unsigned int cs_dbs_update(struct cpufreq_policy *policy)
- 	freq_step = get_freq_step(cs_tuners, policy);
+diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
+index 87ddde159f0c9..1099864acabcb 100644
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -163,7 +163,7 @@ static int nilfs_writepages(struct address_space *mapping,
+ 	int err = 0;
  
- 	/*
--	 * Decrease requested_freq one freq_step for each idle period that
--	 * we didn't update the frequency.
-+	 * Apply deferred down steps only when the policy sample load is
-+	 * below down_threshold. Otherwise, multiple deferred down steps may
-+	 * cause a net frequency decrease outside the downscaling region.
- 	 */
--	if (policy_dbs->idle_periods < UINT_MAX) {
-+	if (policy_dbs->max_sample_load < cs_tuners->down_threshold &&
-+	    policy_dbs->idle_periods < UINT_MAX) {
- 		unsigned int freq_steps = policy_dbs->idle_periods * freq_step;
- 
- 		if (requested_freq > policy->min + freq_steps)
-diff --git a/drivers/cpufreq/cpufreq_governor.c b/drivers/cpufreq/cpufreq_governor.c
-index 00a26fa6292c5..a10cf44600ffa 100644
---- a/drivers/cpufreq/cpufreq_governor.c
-+++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -116,7 +116,8 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
- 	struct policy_dbs_info *policy_dbs = policy->governor_data;
- 	struct dbs_data *dbs_data = policy_dbs->dbs_data;
- 	unsigned int ignore_nice = dbs_data->ignore_nice_load;
--	unsigned int max_load = 0, idle_periods = UINT_MAX;
-+	unsigned int max_load = 0, max_sample_load = 0;
-+	unsigned int idle_periods = UINT_MAX;
- 	unsigned int sampling_rate, io_busy, j;
- 
- 	/*
-@@ -138,7 +139,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
- 		struct cpu_dbs_info *j_cdbs = &per_cpu(cpu_dbs, j);
- 		u64 update_time, cur_idle_time;
- 		unsigned int idle_time, time_elapsed;
--		unsigned int load;
-+		unsigned int load, sample_load;
- 
- 		cur_idle_time = get_cpu_idle_time(j, &update_time, io_busy);
- 
-@@ -171,6 +172,20 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
- 			j_cdbs->prev_cpu_nice = cur_nice;
- 		}
- 
-+		/*
-+		 * Compute the sample load separately from the prev_load value
-+		 * that may be reused after a long idle interval. The conservative
-+		 * governor uses it to decide whether to apply deferred down steps.
-+		 * If no time has elapsed, retain the existing behavior and use
-+		 * prev_load.
-+		 */
-+		if (unlikely(!time_elapsed))
-+			sample_load = j_cdbs->prev_load;
-+		else if (time_elapsed > idle_time)
-+			sample_load = 100 * (time_elapsed - idle_time) / time_elapsed;
-+		else
-+			sample_load = 0;
-+
- 		if (unlikely(!time_elapsed)) {
- 			/*
- 			 * That can only happen when this function is called
-@@ -205,11 +220,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
- 			load = j_cdbs->prev_load;
- 			j_cdbs->prev_load = 0;
- 		} else {
--			if (time_elapsed > idle_time)
--				load = 100 * (time_elapsed - idle_time) / time_elapsed;
--			else
--				load = 0;
--
-+			load = sample_load;
- 			j_cdbs->prev_load = load;
- 		}
- 
-@@ -222,9 +233,13 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
- 
- 		if (load > max_load)
- 			max_load = load;
-+
-+		if (sample_load > max_sample_load)
-+			max_sample_load = sample_load;
+ 	if (sb_rdonly(inode->i_sb)) {
+-		nilfs_clear_dirty_pages(mapping);
++		nilfs_clear_dirty_pages(mapping, false);
+ 		return -EROFS;
  	}
  
- 	policy_dbs->idle_periods = idle_periods;
-+	policy_dbs->max_sample_load = max_sample_load;
+diff --git a/fs/nilfs2/mdt.c b/fs/nilfs2/mdt.c
+index 946b0d3534a5f..79e662e2bf334 100644
+--- a/fs/nilfs2/mdt.c
++++ b/fs/nilfs2/mdt.c
+@@ -407,7 +407,7 @@ static int nilfs_mdt_write_folio(struct folio *folio,
+ 		 * have dirty folios that try to be flushed in background.
+ 		 * So, here we simply discard this dirty folio.
+ 		 */
+-		nilfs_clear_folio_dirty(folio);
++		nilfs_clear_folio_dirty(folio, false);
+ 		folio_unlock(folio);
+ 		return -EROFS;
+ 	}
+@@ -650,10 +650,10 @@ void nilfs_mdt_restore_from_shadow_map(struct inode *inode)
+ 	if (mi->mi_palloc_cache)
+ 		nilfs_palloc_clear_cache(inode);
  
- 	return max_load;
- }
-diff --git a/drivers/cpufreq/cpufreq_governor.h b/drivers/cpufreq/cpufreq_governor.h
-index 1462d59277bd1..ceb33336b2b30 100644
---- a/drivers/cpufreq/cpufreq_governor.h
-+++ b/drivers/cpufreq/cpufreq_governor.h
-@@ -94,6 +94,8 @@ struct policy_dbs_info {
- 	/* Multiplier for increasing sample delay temporarily. */
- 	unsigned int rate_mult;
- 	unsigned int idle_periods;	/* For conservative */
-+	/* Maximum load from the current policy sample. */
-+	unsigned int max_sample_load;
- 	/* Status indicators */
- 	bool is_shared;		/* This object is used by multiple CPUs */
- 	bool work_in_progress;	/* Work is being queued up or in progress */
+-	nilfs_clear_dirty_pages(inode->i_mapping);
++	nilfs_clear_dirty_pages(inode->i_mapping, true);
+ 	nilfs_copy_back_pages(inode->i_mapping, shadow->inode->i_mapping);
+ 
+-	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping);
++	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping, true);
+ 	nilfs_copy_back_pages(ii->i_assoc_inode->i_mapping,
+ 			      NILFS_I(shadow->inode)->i_assoc_inode->i_mapping);
+ 
+diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
+index 89180e2f59fef..969e96ce0b843 100644
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -370,8 +370,9 @@ void nilfs_copy_back_pages(struct address_space *dmap,
+ /**
+  * nilfs_clear_dirty_pages - discard dirty pages in address space
+  * @mapping: address space with dirty pages for discarding
++ * @force: whether to clear the dirty state regardless of busy buffer heads
+  */
+-void nilfs_clear_dirty_pages(struct address_space *mapping)
++void nilfs_clear_dirty_pages(struct address_space *mapping, bool force)
+ {
+ 	struct folio_batch fbatch;
+ 	unsigned int i;
+@@ -392,7 +393,7 @@ void nilfs_clear_dirty_pages(struct address_space *mapping)
+ 			 * was acquired.  Skip processing in that case.
+ 			 */
+ 			if (likely(folio->mapping == mapping))
+-				nilfs_clear_folio_dirty(folio);
++				nilfs_clear_folio_dirty(folio, force);
+ 
+ 			folio_unlock(folio);
+ 		}
+@@ -404,13 +405,16 @@ void nilfs_clear_dirty_pages(struct address_space *mapping)
+ /**
+  * nilfs_clear_folio_dirty - discard dirty folio
+  * @folio: dirty folio that will be discarded
++ * @force: whether to clear the states regardless of busy buffer heads
+  *
+  * nilfs_clear_folio_dirty() clears working states including dirty state for
+- * the folio and its buffers.  If the folio has buffers, clear only if it is
+- * confirmed that none of the buffer heads are busy (none have valid
+- * references and none are locked).
++ * the folio and its buffers.  If the folio has buffers and force is false,
++ * clear only if it is confirmed that none of the buffer heads are busy (none
++ * have valid references and none are locked).  If force is true, the states
++ * are cleared unconditionally, the caller should guarantee that the folio is
++ * not being modified concurrently.
+  */
+-void nilfs_clear_folio_dirty(struct folio *folio)
++void nilfs_clear_folio_dirty(struct folio *folio, bool force)
+ {
+ 	struct buffer_head *bh, *head;
+ 
+@@ -423,24 +427,28 @@ void nilfs_clear_folio_dirty(struct folio *folio)
+ 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
+ 			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
+ 			 BIT(BH_Delay));
+-		bool busy, invalidated = false;
++
++		if (!force) {
++			bool busy, invalidated = false;
+ 
+ recheck_buffers:
+-		busy = false;
+-		bh = head;
+-		do {
+-			if (atomic_read(&bh->b_count) | buffer_locked(bh)) {
+-				busy = true;
+-				break;
++			busy = false;
++			bh = head;
++			do {
++				if (atomic_read(&bh->b_count) |
++				    buffer_locked(bh)) {
++					busy = true;
++					break;
++				}
++			} while (bh = bh->b_this_page, bh != head);
++
++			if (busy) {
++				if (invalidated)
++					return;
++				invalidate_bh_lrus();
++				invalidated = true;
++				goto recheck_buffers;
+ 			}
+-		} while (bh = bh->b_this_page, bh != head);
+-
+-		if (busy) {
+-			if (invalidated)
+-				return;
+-			invalidate_bh_lrus();
+-			invalidated = true;
+-			goto recheck_buffers;
+ 		}
+ 
+ 		bh = head;
+diff --git a/fs/nilfs2/page.h b/fs/nilfs2/page.h
+index 136cd1c143c9c..c3ba3468af5cb 100644
+--- a/fs/nilfs2/page.h
++++ b/fs/nilfs2/page.h
+@@ -41,8 +41,8 @@ void nilfs_folio_bug(struct folio *);
+ 
+ int nilfs_copy_dirty_pages(struct address_space *, struct address_space *);
+ void nilfs_copy_back_pages(struct address_space *, struct address_space *);
+-void nilfs_clear_folio_dirty(struct folio *folio);
+-void nilfs_clear_dirty_pages(struct address_space *mapping);
++void nilfs_clear_folio_dirty(struct folio *folio, bool force);
++void nilfs_clear_dirty_pages(struct address_space *mapping, bool force);
+ unsigned int nilfs_page_count_clean_buffers(struct folio *folio,
+ 		unsigned int from, unsigned int to);
+ unsigned long nilfs_find_uncommitted_extent(struct inode *inode,
 -- 
 2.53.0
 
