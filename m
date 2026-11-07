@@ -1,57 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064558;
-	b=Z21FKdZ0v6/el1JhyrnH6xS2zEsjWpO7MQNH8Q9B6npSTucv3twZX91Ps55kAqg1eK0+
-	 kY4NtCepjtwn3QnPYP7qqoz26HDzkKbb7z6WpfAl5M+nz1thDUOMLki6guRSszRUPQU9f
-	 kyIiMNm6aQc4nQUta5tNEZyICWDd1a1+d2scnMVRZm1SEslcabuNj3baoEqLBq4vfO03S
-	 UFZEQYjE7p2pVm7n4X0r0jxOq8v1ecmVi/zv/dR3fx3c6yBozR/AxA4v6IkZuV85ylxH6
-	 0hz4Lf8GsVl+esN7qx7QiaVJpdd2cCMIfq8SxxwEmVN+YVvtaqD10bmBfORW+SR0YPQ==
+	t=1794064560;
+	b=5ka1muhXllKG/ke4qPQglTsKTnJZYG429aK1mGsUGYEPHOFql+ingHpzzSSiOtrgTB5W
+	 wIOl9YB0E7biYPL7uKYHnVtraUbPgwv5afqSChISHvz8sqBvBOhGJfLMUqwIpO1PbOcZW
+	 BsZab4WzumN3obFe9dmPOgtadglVb04vGclh5u0a5XHqG5THvgwAOaNTPk277luR4UDit
+	 FCu5f9zcMw4aS99rsOqvh2R7jPpBq8N3+LORoPrFO1HF/1GReeyNfnYNUsvQ1dF/hcxbw
+	 YO89t+PjgRRk+ZW/QF65v+r/YlY+fZeYCz2dJLF3lzprkn8A5LiHyaXgE7EZvgVrZxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064560;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DS8UXzKTEWfx7B1g56QlJrsmv1oiFWGbYEPyfMOk8tQ=;
-	b=BDpsyiz/Mabd56jsanQT1+hvAAvo3DrOzZzOUkBzn8tqNVem2EKcN71jJzv9PTornc+B
-	 ZPFN+oe+SsvQYsHnFBMzMCGgkYHXhTaKtSE/GPYjomkcN11RXe4sM8UK77lewyGCmTJzX
-	 RjfR8uE5aOhrC++xJXr7RJsTdGUIVMnS/2HXtRFZDE8mzlBuSqvSo7wjVSnS5jy2hRwLX
-	 hkXO9AlLmlD4ZpLUJYvHG+VFM/wfx6n0oZ11b03vWZtF3jDUg9VL6Q6OwFrlpOJ9OafQ4
-	 t8CgCNpDG5U2QitYITwW3f+NUthXlQggmstEPafE8ZW4NzAtkYpCdh17O59RYGrkI1Q==
+	bh=tB0sv3O315SfGu9Pj5FPhBjTirpkF7LeNbUm7VKrIMc=;
+	b=e9uXhTlGPNcok2/WLEYH8uEb7QySgAbBsdlbHuoM+zURh1TM0/4P+zdKW16SPWAU/v0I
+	 tJUjhuvnrpJf1OE1rkD+gvqqJbxtIYZX9kgdqv0VtpCnyKxfD4kM8H6ud38MSJuSeRZmC
+	 X0ifNr+x//nG0zTSgcgeMH3irXATHc9ntdGB8F8f9VyuthhDjTKu8dBbqq2vm1SpfvUF1
+	 p5npeXKGgAXJhvIp+lhIn7UsOnq5B+M5W09AeGvn10VbfwVapkG9JjnhBDaDKLAe8FDQQ
+	 uljaVjuUXlgOeOLxeUawfC17zJfGaH82TRjRqJW9ESSGBb390DFOyCXSx5kppQmVGAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJ48FimY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNod4p9H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63938606A331;
-	Sat,  7 Nov 2026 15:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEE4606A32D;
+	Sat,  7 Nov 2026 15:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJ48FimY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146751F0089F;
-	Sat,  7 Nov 2026 15:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNod4p9H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B16F1F0089F;
+	Sat,  7 Nov 2026 15:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064558;
-	bh=DS8UXzKTEWfx7B1g56QlJrsmv1oiFWGbYEPyfMOk8tQ=;
+	s=korg; t=1794064559;
+	bh=tB0sv3O315SfGu9Pj5FPhBjTirpkF7LeNbUm7VKrIMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iJ48FimYFo+MIPFGfHkAoNHfc3BDX23F6byKHI7Nnn+nMjHVgQpeMa/15ZOp35gWV
-	 vA+eUegAg1F8iOlBok+/2saN9a+qTqLocFSd2hQ+jWrqSH351pulWl+wqCcGSgzMIY
-	 OVw+efp4QS+Y7ZovrG7p4KnHfmmmBoIn6YbpVBxg=
+	b=nNod4p9Hq4H3BWtZiOyccuEeeaYybFLHEn4//DEqlEglL5uzeyNakeJ7fOU0RmRGG
+	 TAOYxOROrLTKIsEnk6GNPAbQGNcf7Mc9FH4cmHB6SfHyrU6NkgvcyWjweXu+Kny5Hz
+	 yUwbu3on4EZBvjiIPQJdkKVl3VUVKTnAUMbftMII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
+	Bingfang Guo <bingfangguo@tencent.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
+	Kairui Song <kasong@tencent.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Chris Li <chrisl@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
 	Johannes Weiner <hannes@cmpxchg.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0580/1257] mm/zswap: publish the initial pool with list_add_rcu()
-Date: Sat,  7 Nov 2026 08:47:56 -0500
-Message-ID: <20261107134955.372621386@linuxfoundation.org>
+Subject: [PATCH 7.3 0581/1257] mm/memcg: clear folio memcg after changing per memcg stats
+Date: Sat,  7 Nov 2026 08:47:57 -0500
+Message-ID: <20261107134955.400786062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -73,61 +82,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Bingfang Guo <bingfangguo@tencent.com>
 
-[ Upstream commit c1dd5e24a82d19bff8eef50ba8205d4776584aff ]
+[ Upstream commit 0b1b457ecc4f636d85e1a0fade05f3dee264f59a ]
 
-zswap_setup() publishes the pool on the zswap_pools list with a plain
-list_add(), but the list is walked by concurrent RCU readers holding
-nothing but rcu_read_lock() through zswap_total_pages(), e.g.
-/proc/meminfo and the shrinker count path.
+I notice extremely high swapcached count in the per memcg level
+memory.stat when running tests with cgroupv1 setup by swapping pages in
+and out.  It seems that the counter never gets decreased so the value is
+rather useless and confusing to users reading it.  So I think fixing it so
+that the value can reflect the actual swapcache usage correctly could be
+helpful.
 
-    CPU 0 (writer)                          CPU 1 (reader)
-    --------------                          --------------
-    zswap_pool_create():
-      pool->zs_pool = zs_create_pool(); (1)
-    list_add() -> __list_add():
-      WRITE_ONCE(zswap_pools.next,
-          &pool->list);                (2)   zswap_total_pages():
-                                                pool = READ_ONCE(     (a)
-                                                    zswap_pools.next);
-                                                zs_get_total_pages(   (b)
-                                                    pool->zs_pool);
+__memcg1_swapout() transfers the memsw charge of a folio to its swap entry
+and clears folio->memcg_data as part of that.  In the vmscan swapout path
+it runs before __swap_cache_del_folio(), which then decrements the
+swapcache stats through lruvec_stat_mod_folio().  Since folio->memcg_data
+has already been cleared, folio_memcg() returns NULL and the NR_SWAPCACHE
+decrement only updates the node-level counter instead of the memcg's
+lruvec, leaking the per-memcg swapcache count.
 
-If (2) becomes visible to CPU 1 before (1), CPU 1 finds the pool at (a)
-but dereferences a wild pointer at (b).  Publish the node with
-list_add_rcu().
+Users using swaps will read totally meaningless swapcache value from
+per memcg memory.stat, like 200GB of swapcache on a 64GB setup, which
+is quite confusing and may trigger monitoring alerts, if any.
 
-Link: https://lore.kernel.org/20260908012801.1864430-1-xialonglong2025@163.com
-Fixes: 91cdcd8d624b ("mm: zswap: optimize zswap pool size tracking")
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Move the __memcg1_swapout() call into __swap_cache_del_folio(), after the
+NR_FILE_PAGES and NR_SWAPCACHE updates but before
+__swap_cache_do_del_folio() removes the folio from the swap cache.  This
+keeps the stats attributed to the folio's memcg while still recording the
+swap cgroup with a valid folio->swap.  Add a swapout parameter so the
+plain swap_cache_del_folio() path is left unchanged.
+
+Link: https://lore.kernel.org/20260910-memcg-swapcache-stats-fix-v5-1-033f510ba748@tencent.com
+Fixes: 2732acda82c9 ("mm, swap: use swap cache as the swap in synchronize layer")
+Signed-off-by: Bingfang Guo <bingfangguo@tencent.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260906133601.3563324-1-xialonglong2025%40163.com
-Acked-by: Yosry Ahmed <yosry@kernel.org>
-Acked-by: Nhat Pham <nphamcs@gmail.com>
-Assisted-by: Zcode:GLM-5.3
-Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Acked-by: Kairui Song <kasong@tencent.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
 Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/zswap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/swap.h       |  6 ++++--
+ mm/swap_state.c | 13 ++++++++++---
+ mm/vmscan.c     |  3 +--
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/mm/zswap.c b/mm/zswap.c
-index 37f34e406c8e3..cb5a0855fd2a7 100644
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -1803,7 +1803,7 @@ static int zswap_setup(void)
- 	pool = __zswap_pool_create_fallback();
- 	if (pool) {
- 		pr_info("loaded using pool %s\n", pool->tfm_name);
--		list_add(&pool->list, &zswap_pools);
-+		list_add_rcu(&pool->list, &zswap_pools);
- 		zswap_has_pool = true;
- 		static_branch_enable(&zswap_ever_enabled);
+diff --git a/mm/swap.h b/mm/swap.h
+index 90a551a88df63..c9202516b413e 100644
+--- a/mm/swap.h
++++ b/mm/swap.h
+@@ -319,7 +319,8 @@ struct folio *swap_cache_alloc_folio(swp_entry_t target_entry, gfp_t gfp_mask,
+ void __swap_cache_add_folio(struct swap_cluster_info *ci,
+ 			    struct folio *folio, swp_entry_t entry);
+ void __swap_cache_del_folio(struct swap_cluster_info *ci,
+-			    struct folio *folio, swp_entry_t entry, void *shadow);
++			    struct folio *folio, swp_entry_t entry, void *shadow,
++			    bool swapout);
+ void __swap_cache_replace_folio(struct swap_cluster_info *ci,
+ 				struct folio *old, struct folio *new);
+ 
+@@ -453,7 +454,8 @@ static inline void swap_cache_del_folio(struct folio *folio)
+ }
+ 
+ static inline void __swap_cache_del_folio(struct swap_cluster_info *ci,
+-		struct folio *folio, swp_entry_t entry, void *shadow)
++		struct folio *folio, swp_entry_t entry, void *shadow,
++		bool swapout)
+ {
+ }
+ 
+diff --git a/mm/swap_state.c b/mm/swap_state.c
+index f3961fdd857dc..cb574030b814f 100644
+--- a/mm/swap_state.c
++++ b/mm/swap_state.c
+@@ -306,21 +306,28 @@ static void __swap_cache_do_del_folio(struct swap_cluster_info *ci,
+  * @folio: The folio.
+  * @entry: The first swap entry that the folio corresponds to.
+  * @shadow: shadow value to be filled in the swap cache.
++ * @swapout: whether this folio is being reclaimed after swapout.
+  *
+  * Removes a folio from the swap cache and fills a shadow in place.
+  * This won't put the folio's refcount. The caller has to do that.
+  *
+  * Context: Caller must ensure the folio is locked and in the swap cache
+  * using the index of @entry, and lock the cluster that holds the entries.
++ * If @swapout is set, the folio should be in reclaim path and IRQs
++ * should be disabled.
+  */
+ void __swap_cache_del_folio(struct swap_cluster_info *ci, struct folio *folio,
+-			    swp_entry_t entry, void *shadow)
++			    swp_entry_t entry, void *shadow, bool swapout)
+ {
+ 	unsigned long nr_pages = folio_nr_pages(folio);
+ 
+-	__swap_cache_do_del_folio(ci, folio, entry, shadow);
+ 	node_stat_mod_folio(folio, NR_FILE_PAGES, -nr_pages);
+ 	lruvec_stat_mod_folio(folio, NR_SWAPCACHE, -nr_pages);
++
++	if (swapout)
++		__memcg1_swapout(folio, ci);
++
++	__swap_cache_do_del_folio(ci, folio, entry, shadow);
+ }
+ 
+ /**
+@@ -339,7 +346,7 @@ void swap_cache_del_folio(struct folio *folio)
+ 	swp_entry_t entry = folio->swap;
+ 
+ 	ci = swap_cluster_lock(__swap_entry_to_info(entry), swp_offset(entry));
+-	__swap_cache_del_folio(ci, folio, entry, NULL);
++	__swap_cache_del_folio(ci, folio, entry, NULL, false);
+ 	swap_cluster_unlock(ci);
+ 
+ 	folio_ref_sub(folio, folio_nr_pages(folio));
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index f11491ee9ed5c..17ab01693ae8d 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -735,8 +735,7 @@ static int __remove_mapping(struct address_space *mapping, struct folio *folio,
+ 
+ 		if (reclaimed && !mapping_exiting(mapping))
+ 			shadow = workingset_eviction(folio, target_memcg);
+-		__memcg1_swapout(folio, ci);
+-		__swap_cache_del_folio(ci, folio, swap, shadow);
++		__swap_cache_del_folio(ci, folio, swap, shadow, true);
+ 		swap_cluster_unlock_irq(ci);
  	} else {
+ 		void (*free_folio)(struct folio *);
 -- 
 2.53.0
 
