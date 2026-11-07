@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061379;
-	b=q/C81d8Cfp48gGN5Sporhk7+42gDIGjph8l/qNrKVU6dcQPuPGE/qF+ERUynM3j/o64Z
-	 rWSnIpq793ai+yEeS5IMGWgxwJmSABF7gwXH4RzOjUjJtmxnX8ULfaZ3kCNG7ge24lbPT
-	 tLOevBHVjKFpwpHZ6056DnG+Z8QIQjjMw5fXYG7LXHrazE4w/JaA3MTf65lQELQZkDxA1
-	 PmLfBISjjURJ7cVUqPDmPU553mNjqIMuj+EyBgXE5Gmty5AAzkKF6AVeeWcE+T5XH/43i
-	 NLOP67Pq8F2Wtf24LEiiBJr1yFeoTlJNWeKqmN1tNSm2S8bqux6xD1iGS0Kq4cWXnPQ==
+	t=1794061382;
+	b=R7x3UYG4PskoBpz4QJw4tqROc8xF4u9O2VZZHXayN9bhtibzEpvhbQhr2JOFHVDJSLXE
+	 5NgqH7dEGdMpNR53gu9NAAizZEnpxCs+DDOTHzsme5UgqPRCGMt2X8BRLN/tILoabBXVB
+	 +euKSdsuWdeARcqc4VuUzNukUPTwZpktoDjQTuKJ5WKYmwubFMzczOuOVLz9jIjt5K0cT
+	 KyZxH7DCcZxYYgoCJyetU16hdV4ZvPUZl1VjDIfQmnzWqWkcHxkeHQkGFHGNk/WByIwdY
+	 lAjThaaJbi3ANV+HSv6yrhbjgAd4iQ2iRxunXnBUNTP48tDF0pl34DNf9IYvarnllJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061379;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HMOkF/ah7fNtmGVvY3UIcOvh/L3VBWSU9JzsBsmEFPI=;
-	b=t5VHqoauIbqD9USUt04s7mimVFTdRjDdtxpizz9/tdmeriXkusmCoXMfK3/GDBwt8Yhw
-	 +chrudFiKEnEXDPSsRMlbvjjqzNttfPS1siFKG738AMPK8LOeqaK8h+cqigpX5w/UQpLj
-	 ayWCsg2SE71FH6l2ZpWSGgHrSpck/Tg9K3mlItKl66EOY/Aa+vcmtJbZY7+4DPVaLMdCB
-	 W9MVJgC4lx+Gh3cw7s0ZFHuJCSteZ4aH/aGgqPYnu7J29V4/NHB7GTIRG8HG+Fv/SlaRx
-	 E2vOA/7mbwcS0KpjeHoDR2NeMYkko1XmKn+f8/t+GM4H1FZa/ekt4SSicBrLxeiJxIw==
+	bh=90ojAt9qa1CFrmECrew4qeXkLhYbhm2xkJoRaUHWjZM=;
+	b=4tk0f1NJ0HUnL2iSttjgGoIU/U6uuR/qLr5HxCKA0P6JrZL37/jA5nxdrtwkjWg0qBQe
+	 rRr97myBhm5g6J39eBa/hT/iIAiNJ8VlexMVJ5iRoSzKk66P4tkytWtD9svhxUkwgvWQK
+	 Fy5+QDTg6Cft19FrNCNx7Rkdv6CRxzJZQZNkVipJ3AcZGhgyqOhdoy9umD9++x8FUwjPv
+	 ZxWIE7ldlLmdeipSrHhR88MDCnjKKExkLxm19pkzRhLoxKGEv2tGFpv77MQY0ZOFtCqFE
+	 AMci6t8z3C/atxeTxKl2r3uolewLzAF3q4mx2+8ds/i0Mn9Hbc8TIJjK2STsOYB/J5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GCpPqo5y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WxkYSQnv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EED6606A339;
-	Sat,  7 Nov 2026 14:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89D1606A33B;
+	Sat,  7 Nov 2026 14:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GCpPqo5y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00B21F0089F;
-	Sat,  7 Nov 2026 14:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WxkYSQnv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5876F1F008A1;
+	Sat,  7 Nov 2026 14:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061379;
-	bh=HMOkF/ah7fNtmGVvY3UIcOvh/L3VBWSU9JzsBsmEFPI=;
+	s=korg; t=1794061381;
+	bh=90ojAt9qa1CFrmECrew4qeXkLhYbhm2xkJoRaUHWjZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GCpPqo5yKlsjX/YIegSeLj9G0jisNcxV6oLavt7LkVP2fekx/O92JXyPhOsxLpf4T
-	 EXsNarYr6JKhUS828mQ4pk/bAd58757YCuzvoeXVXPwcn2KpdiwsNRaNdl7/C2nCtP
-	 hTK7MnhoZrBw6Ygi09KjPxcQOqPKT5esRYn71Ohw=
+	b=WxkYSQnvnO2273DkSKxmu3pyvEp2o840sGw/wQKOqoDhVkZt89NSSzAO1Ab/mjaZT
+	 HboOU8e1ezGS+LinueNtJkiVKrbAEylxKs6YCTeexBQnX7KAwTrgBNg+ddUOWa5lvb
+	 KiZeyT2TNmFsE73OLbIzmzoLIxnkiS0YM+H0SCbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0453/1536] KVM: SEV: Mark vCPU RUNNABLE after AP_CREATE, even if VMSA is unusable
-Date: Sat,  7 Nov 2026 08:41:09 -0500
-Message-ID: <20261107135010.256051741@linuxfoundation.org>
+Subject: [PATCH 6.12 0504/1536] dm-integrity: fix NULL pointer dereference when the R flag is used
+Date: Sat,  7 Nov 2026 08:42:00 -0500
+Message-ID: <20261107135011.603223500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,61 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 98ade8c48c28c227fe2e80e545ff0c57cd4712a3 ]
+[ Upstream commit 7d4d4f3b668d708d94f62ecdd33ac330a6fd8a84 ]
 
-Always mark the vCPU as RUNNABLE after responding to AP_CREATE, even if the
-guest-specified VMSA is unusable, e.g. isn't backed by a memslot or doesn't
-have a backing guest_memfd page.  If the VMSA is unusable, leaving the vCPU
-in a non-running state will effectively hang the vCPU instead of reporting
-an error to userspace.  This will also allow retrying the VMSA load in the
-future, to fix a bug where KVM doesn't honor guest_memfd invalidation
-events, e.g. if AP_CREATION races with PUNCH_HOLE.
+If the dm-integrity device has the SB_FLAG_DIRTY_BITMAP flag set and the
+user activates the device in the 'R' mode, a crash in dm_integrity_resume
+happens because the function attempts to read the journal containing the
+bitmap.
 
-Cc: stable@vger.kernel.org # 6.12.x
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Link: https://patch.msgid.link/20260709204948.1988414-4-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: Replaced the missing kvm_set_mp_state() helper with open-coded pv_unhalted/mp_state assignments, and the function is non-static in this tree. ]
+This patch makes dm-integrity skip any writes to the device in
+dm_integrity_resume if the device is activated in the 'R' mode.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 468dfca38b1a ("dm integrity: add a bitmap mode")
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/md/dm-integrity.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index e7f20e1b8d86f..2c6122bc90d76 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3988,10 +3988,6 @@ static void sev_snp_reload_vmsa(struct kvm_vcpu *vcpu, gpa_t gpa)
- 	svm->sev_es.snp_guest_vmsa_gpa = gpa;
- 	svm->vmcb->control.vmsa_pa = pfn_to_hpa(pfn);
- 
--	/* Mark the vCPU as runnable */
--	vcpu->arch.pv.pv_unhalted = false;
--	vcpu->arch.mp_state = KVM_MP_STATE_RUNNABLE;
--
- 	/*
- 	 * gmem pages aren't currently migratable, but if this ever changes
- 	 * then care should be taken to ensure svm->sev_es.vmsa is pinned
-@@ -4026,6 +4022,17 @@ void sev_snp_init_protected_guest_state(struct kvm_vcpu *vcpu)
- 	svm->sev_es.snp_pending_vmsa_gpa = INVALID_PAGE;
- 
- 	sev_snp_reload_vmsa(vcpu, gpa);
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index cc0d49510434b..dbfe8128fcb26 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -3723,6 +3723,10 @@ static void dm_integrity_resume(struct dm_target *ti)
+ 	r = sync_rw_sb(ic, REQ_OP_READ);
+ 	if (r)
+ 		dm_integrity_io_error(ic, "reading superblock", r);
 +
-+	/*
-+	 * Mark the vCPU as runnable for CREATE requests, indicated by a valid
-+	 * VMSA GPA, even if installing the VMSA failed, so that KVM_RUN will
-+	 * fail instead of blocking indefinitely and hanging the vCPU, e.g. if
-+	 * the backing guest_memfd page is unavailable.
-+	 */
-+	if (VALID_PAGE(gpa)) {
-+		vcpu->arch.pv.pv_unhalted = false;
-+		vcpu->arch.mp_state = KVM_MP_STATE_RUNNABLE;
-+	}
- }
++	if (ic->mode == 'R')
++		goto skip_writes;
++
+ 	if ((ic->sb->flags & flags) != flags) {
+ 		ic->sb->flags |= flags;
+ 		r = sync_rw_sb(ic, REQ_OP_WRITE | REQ_FUA);
+@@ -3832,6 +3836,7 @@ static void dm_integrity_resume(struct dm_target *ti)
+ 		}
+ 	}
  
- static int sev_snp_ap_creation(struct vcpu_svm *svm)
++skip_writes:
+ 	ic->reboot_notifier.notifier_call = dm_integrity_reboot;
+ 	ic->reboot_notifier.next = NULL;
+ 	ic->reboot_notifier.priority = INT_MAX - 1;	/* be notified after md and before hardware drivers */
 -- 
 2.53.0
 
