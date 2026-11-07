@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063929;
-	b=DycgDwhpTopqihxCl5TZA2kD74y1mBjJ/IafwDJpvX2Mc0S6OJqQEO0MA9Ar6Pw1LmAf
-	 8Rw7dRduoUNeh7eCj4+sPD7b4PugT7Iyz9Uj42Uq3S4i4S81brYiC4JACRwl+RQo/NeXC
-	 C8SNty6ARBKV3FPvHktVMJQ4zO9lrGiGxRvayq0hwXat09rAdWw9d8WNOWFLyvrkCCaeD
-	 n+9rVDh7/HyKhandOADKTg86xUGikdkJa9HEn4K2jWvd5x2wZcyilPrXyoMVTVqoF7Uo2
-	 emeR9UAedTT8QvifrBuCH6TqgBfrXrHCVvY423yA8DuxwF6XTj+MM3DfjGXGW42tYDQ==
+	t=1794063930;
+	b=viPnTX97OXsh+QNTtFM8uK6cz/RpdBaheV3idlYeChkCQqRy406zRIMoTPNmDZkKEHVb
+	 vXQ0RgCtr9T4mbEdZ9JZYV8K69Sj59Cp6TrTHkpnrpogfnOgenI8BPupf9FGbtMuhmqfw
+	 OfhxC509AwfnqFQwJ6yy2GHLDFaGNCsVrgYzRkc6k/jv3fkR+3Xo8w0XY/DhKFDvFeJgj
+	 rTwhaLnKZIMgCvdusSG7NQYyQ1BnVBFYMzXQByFC9arjXRb8yuOC+DpJavEcEfBKU/dmc
+	 Unw+Hr3DbXfjveaz8UBK/PmcfQDoVBBflQcBu6d2BlVUQTc8NJnVfZuOF0gLiYGCyCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nCDc1GDp5OCovWnbnDFTq1Mi8n6GFME+4LrcaGOYhU8=;
-	b=Gv4uNlE6Wm3TbU8aw/Cv8w6a1yXdHMfzCZfbTdkp7d+7z7giYkUkVAnBXzSi4JI4WLPA
-	 QjcO43B9+n/RZ8XyrKQrMw5LeedpeN8KSi6UXGGZEu+Emh8XSq07qvsmv2JQXmTEB7Rq0
-	 lH1g45Ose2L7CMCAjuQWDoBsSdSTi8gKxJmpqmUA1JWLitRz+qcex8c6gs5HrziqvG4ib
-	 jnXC4bmRQQg4p0Vl4cGbgsln6cyUaIepzZTzfP8Qb7T3iRJjCEEG2b+2V644XXXHmjld1
-	 jhi5+7lL2058eJrF9ev8chUiVWx51tMaq7598+vMvdM8sABYbWfgXMsfhcjD9JAcfwQ==
+	bh=m8s9cJRPSOHFQ4cV6NtFwotQr4IL+lgXlZ9h9piYlLU=;
+	b=MrrzBvWhjCxdNkdArv9yB+47IRTlj0M77g0fCW68bNXCu0IvOQzyBnIhdrXw88swSIFO
+	 L+M/AB+Kks+NdMWPCWhtEziPwH1b/P47RWD0MUlPbQA3XfeSYtMFp54PoGfYTzvZlhDok
+	 IHBEqwAgEFvSV+taCkT8aYVR3jgEGPrtmPdRFQIkltIJGB2uPJGgPiMXoPTzT/f8OVKtc
+	 AUKpoub94N9Dpb1B+flyP9B5/w6JUz4OtgXaEb2Z7XHr2nuxkmFsfN6l14ZbgXXIUcmAL
+	 hJuRQXqflc7yV9Qsz1l11H8RM6Ky3tdOOVdPCHnAweG2glPxpfa1BuchPi5VpiLwciQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hX0QaSEm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gUn1/3kk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4A9606D802;
-	Sat,  7 Nov 2026 15:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80537606EEB3;
+	Sat,  7 Nov 2026 15:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hX0QaSEm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED7E1F0089F;
-	Sat,  7 Nov 2026 15:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gUn1/3kk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1F41F0089F;
+	Sat,  7 Nov 2026 15:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063929;
-	bh=nCDc1GDp5OCovWnbnDFTq1Mi8n6GFME+4LrcaGOYhU8=;
+	s=korg; t=1794063930;
+	bh=m8s9cJRPSOHFQ4cV6NtFwotQr4IL+lgXlZ9h9piYlLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hX0QaSEmJVAWxY1qUTpqqlQ/0VYvjJRsMqLclcLjX2f00f6CnHxG0DMRE2YCMDDML
-	 bh+gGXBwKgP0xcIP0lwCJatrZIOK+5ncI9Bc3SphyNEhzlpgBBhLu8rE88JY99LPN5
-	 Ek0KQvLhCfuRoCZ3r6GcACJtBNrsh8x5nOnObf0k=
+	b=gUn1/3kk5/l2bLWOgbLiYJngBevI2TmZzlIEMu6cyLYr8sD+WIS+v5kGV6klYdF74
+	 AG8ukniqr4Rvjb8xcRVhaRJpM9gyjHKWvs+IaayV3pV725WMWW1QKr3bIE8J1fiQUD
+	 d+fEm+3MfrXk588Sz3Zw76sDzRJOy2NArrTJLUgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Ben Hoff <hoff.benjamin.k@gmail.com>,
+	stable@kernel.org,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Marvin Lin <kflin@nuvoton.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0087/1257] media: pci: hws: only init channels the device actually has
-Date: Sat,  7 Nov 2026 08:39:43 -0500
-Message-ID: <20261107134941.767200287@linuxfoundation.org>
+Subject: [PATCH 7.3 0123/1257] media: nuvoton: npcm-video: quiesce VCD IRQ before teardown
+Date: Sat,  7 Nov 2026 08:40:19 -0500
+Message-ID: <20261107134942.727076015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,39 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit ad5390c35ccf98cec66ef1009351305f25b5a757 ]
+[ Upstream commit ae8a4b51df30e39c07704efd5500361d8138c4d0 ]
 
-hws_probe() initializes max_channels (always 4) control handlers, but
-register/unregister only walk cur_max_video_ch (1 or 2 on smaller
-chips). The extra handlers are never freed.
+The VCD IRQ is devm-requested, but npcm_video_remove() frees the video
+object before devres releases that IRQ.  The threaded handler dereferences
+video->vcd_regmap before checking VIDEO_STREAMING, so an interrupt in that
+interval can access freed memory.
 
-Initialize the same number of channels that cleanup uses.
+Request the IRQ with IRQF_NO_AUTOEN.  Enable it after starting capture and
+setting VIDEO_STREAMING, and disable it first in stop_streaming().
+disable_irq() waits for an in-flight threaded handler to finish, after
+which stop_streaming() can mask and reset the VCD without a handler
+re-enabling it.
 
-Fixes: ba07fd2f5742 ("media: pci: add AVMatrix HWS capture driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Reviewed-by: Ben Hoff <hoff.benjamin.k@gmail.com>
+Use vb2_video_unregister_device() during remove.  It releases the vb2
+queue and calls stop_streaming() for an active stream, ensuring that the
+IRQ is disabled before the video object is freed.  Do not release the queue
+separately.
+
+If streaming is never started, IRQF_NO_AUTOEN keeps the IRQ disabled
+until devres releases it.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Tested-by: Marvin Lin <kflin@nuvoton.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/hws/hws_pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/nuvoton/npcm-video.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/pci/hws/hws_pci.c b/drivers/media/pci/hws/hws_pci.c
-index 30bb7d34465b8..87ba27877f29a 100644
---- a/drivers/media/pci/hws/hws_pci.c
-+++ b/drivers/media/pci/hws/hws_pci.c
-@@ -441,7 +441,7 @@ static int hws_probe(struct pci_dev *pdev, const struct pci_device_id *pci_id)
- 	hws_init_video_sys(hws, false);
+diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
+index 52505af35c087..c28d9d7edd834 100644
+--- a/drivers/media/platform/nuvoton/npcm-video.c
++++ b/drivers/media/platform/nuvoton/npcm-video.c
+@@ -120,6 +120,7 @@ struct npcm_video {
  
- 	/* 5) Init channels (video state, locks, vb2, ctrls) */
--	for (i = 0; i < hws->max_channels; i++) {
-+	for (i = 0; i < hws->cur_max_video_ch; i++) {
- 		ret = hws_video_init_channel(hws, i);
- 		if (ret) {
- 			dev_err(&pdev->dev, "video channel init failed (ch=%d)\n", i);
+ 	struct list_head buffers;
+ 	struct mutex buffer_lock; /* buffer list lock */
++	int irq;
+ 	unsigned long flags;
+ 	unsigned int sequence;
+ 
+@@ -1486,6 +1487,7 @@ static int npcm_video_start_streaming(struct vb2_queue *q, unsigned int count)
+ 	}
+ 
+ 	set_bit(VIDEO_STREAMING, &video->flags);
++	enable_irq(video->irq);
+ 	return 0;
+ }
+ 
+@@ -1494,6 +1496,7 @@ static void npcm_video_stop_streaming(struct vb2_queue *q)
+ 	struct npcm_video *video = vb2_get_drv_priv(q);
+ 	struct regmap *vcd = video->vcd_regmap;
+ 
++	disable_irq(video->irq);
+ 	clear_bit(VIDEO_STREAMING, &video->flags);
+ 	regmap_write(vcd, VCD_INTE, 0);
+ 	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
+@@ -1707,9 +1710,10 @@ static int npcm_video_init(struct npcm_video *video)
+ 		dev_err(dev, "Failed to find VCD IRQ\n");
+ 		return -ENODEV;
+ 	}
++	video->irq = irq;
+ 
+ 	rc = devm_request_threaded_irq(dev, irq, NULL, npcm_video_irq,
+-				       IRQF_ONESHOT, DEVICE_NAME, video);
++				       IRQF_ONESHOT | IRQF_NO_AUTOEN, DEVICE_NAME, video);
+ 	if (rc < 0) {
+ 		dev_err(dev, "Failed to request IRQ %d\n", irq);
+ 		return rc;
+@@ -1807,8 +1811,7 @@ static void npcm_video_remove(struct platform_device *pdev)
+ 	struct v4l2_device *v4l2_dev = dev_get_drvdata(dev);
+ 	struct npcm_video *video = to_npcm_video(v4l2_dev);
+ 
+-	video_unregister_device(&video->vdev);
+-	vb2_queue_release(&video->queue);
++	vb2_video_unregister_device(&video->vdev);
+ 	v4l2_ctrl_handler_free(&video->ctrl_handler);
+ 	v4l2_device_unregister(v4l2_dev);
+ 	if (video->ece.enable)
 -- 
 2.53.0
 
