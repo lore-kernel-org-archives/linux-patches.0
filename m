@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062890;
-	b=Agqf0fgSV72epNxKQ9I4X1IOBZDrQ2VYSy6hsmNBcSCAJiyGvcZ+Vs5Y3YfxunKjbzEu
-	 g9EEHBawrHIBfNL17gGvFKSJ4IYMH1estJKKFwSykvZSyxQh7zd5R6oNBil3+xKf1OzsT
-	 H3q9i1jXSosxIJxvjtI1MfhvW6pWKhZY9eBHUDn2QS1z4IAFOkoi2unNX5FWjTSm61Yrt
-	 lqy//IliBAx+Le0MbRarQk53H5SFZXx+eTK3Qd9v4lsnGZlUhWGRgtMrQxUtjbBcoq/El
-	 Hw6StwHz/bNfRxxtxEhpJsQ8s4WMqdDdchSJNBIkCs5Gd6+ai9fv+6VRNrhaKW/gtNA==
+	t=1794062891;
+	b=ibRDL+PEyJX1ghl11tMiFAaBASzWuDURYItQUN35I2m1eAYsQgjp/6Z5xMZzAyHKWFn8
+	 Xyk129r5a8wjBexEj5npbYTGwkMfOwKQk2oW+1UMZcvK4xYvWbRJEQR9WWP4S6P5gkgK/
+	 JB887gCLNl475EQ4Sy7KoymJdGbRCfSuvL75Z2B2bn4ac2ZPP3OBBq41Qx9grAvqz/R1E
+	 rwbGrPdNXi4R6cVu9weHmwXiyuZRwXE1xH9X+czN+FYE18WyENS73jvoLrC7M1pWQwqKX
+	 fe1rCJ+lCsF8RyE20DKx7dt2MMNP4PRHqR0HC+488vTi0IeQkU7hoF6L2XpCNoEQxLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062890;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jduO1YGlCY3FLg9FYiJ1jCxt5ppfWZim+VSA20pseHM=;
-	b=lAy6z0cczSQGA+E8hrdLIZcQCyqvNb9WSEROu+eu+EcnSUZgWgcGGeWwrbndRkgGDZdH
-	 JMfkffB1BKp2XpuIMyfT2/65F/79ClS8neoUmC+os7uinX0CGDSzx+U5cz8bAzcHbdDvu
-	 fV82r67gxw0tIvMHuhgPvn5dU+KWKGFV+EJz2rPTjJkPveEeiWK9DgDjG46g8wfvuxcQl
-	 qan8JkDEeOzTKHd2FJbTPD5f5zamG1VpU63RN7Z/i9JNfmjv99aRzdY7nseJJJNE4P4nC
-	 j/P6oesx9zUplwCmBwzlsAnli8/5PHWiL4zyakxrv1SbEq0fnveId9jUBufI/zOU83Q==
+	bh=Afmx7QwV8Kb+XhG1BodMEjSG5ZfxzyJzDJzsbbBFwaw=;
+	b=GWm05MQZBBaaWHLOQeqM4eL6l6cai4Ur6px1XqHkP5Wl4mijfm1J+snmMiK+Q6h6Nqs/
+	 L3VmSqVPulfGQkJuQNjWHNjU0IiUETEXvefb6x3LnMXu9O2JRnMcY3qq5n2XYm4qoUqqq
+	 CH9lqwf80OxdbW52n7A5Qu5fsDYd0GyaqBcOWcylgPCFPOo4QulK/ZxzQtbb/2a/ZLa03
+	 9/iL98uYPMUUMdiCInwyBJmAUmxhUh5Ywi6S7C5+5dWbtr3xyryMVz5SHN8Afdo7UNT91
+	 gJO5IWaCsKYg5+L9qO2CXfoaFLTHgbja/+O5i28HJud3V+fXtMDr74O2uHKUf8rNx8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQYn2BpN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RK+OrKZ/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A15606A326;
-	Sat,  7 Nov 2026 14:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427F2606A326;
+	Sat,  7 Nov 2026 14:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQYn2BpN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27CD1F0089F;
-	Sat,  7 Nov 2026 14:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RK+OrKZ/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C861F0089F;
+	Sat,  7 Nov 2026 14:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062889;
-	bh=jduO1YGlCY3FLg9FYiJ1jCxt5ppfWZim+VSA20pseHM=;
+	s=korg; t=1794062891;
+	bh=Afmx7QwV8Kb+XhG1BodMEjSG5ZfxzyJzDJzsbbBFwaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQYn2BpN/QySCyGrG4E38M5smAUxiCoWh7jN4+WcuEJnn7cBSVhYdGi4j4KdW7DkO
-	 V96WGDozRQ7OvzdFkvuAYt0UcHmeMpgexklpA4lw/ThhrXfkYSpDkpHU0TSBIomG/P
-	 3Mv5V7OGttnOEWeRclunSszkB/RZBAuR2G5yvd6c=
+	b=RK+OrKZ/9v70mCOjeAiZj/RmNBixylBYzJNV2rEJT8US9XyyQajQeslTFQFovoDKM
+	 8u7eOujS52ySufhqnVddLB8iXGN536jCQvcAfrtiETWgG/WUopaX8U1jkbogUJ23RM
+	 v3EvLQgQqHopP35OMzlbUCb/1f/W/d8HdOWXzo4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	ChiYuan Huang <cy_huang@richtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shehryar Ahmad <shehryar.amd@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 168/869] regulator: rt6190: Fix runtime PM imbalance in rt6190_out_enable()
-Date: Sat,  7 Nov 2026 08:47:30 -0500
-Message-ID: <20261107134857.927845540@linuxfoundation.org>
+Subject: [PATCH 6.18 169/869] iio: accel: adis16201: fix channel order for buffer mode
+Date: Sat,  7 Nov 2026 08:47:31 -0500
+Message-ID: <20261107134857.953069095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,66 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Shehryar Ahmad <shehryar.amd@gmail.com>
 
-[ Upstream commit e0d673e5a5c4084f0da90c06ed3b0bc45e47d679 ]
+[ Upstream commit a4b9f1137b76faab6891ce0bd3f5c02dda7c392d ]
 
-In rt6190_out_enable(), pm_runtime_get_sync() is called at the start of
-the function. However, if any subsequent regmap or regulator operation
-fails, the function returns directly without dropping the runtime PM
-reference, causing a runtime PM reference leak.
+Reshuffle adis16201_channels to ascending scan_index order to avoid data
+corruption during IIO core demultiplexing since the ADIS driver builds
+the buffer in channel array order, while the IIO core demultiplexes it
+in scan_index order.
 
-Add an error handling path with pm_runtime_put() to keep the reference
-count balanced on failure.
+This changes the raw buffer byte layout for existing adis16201 users
+reading buffered data directly.
 
-Fixes: e6999e7cca7e ("regulator: rt6190: Add support for Richtek RT6190 regulator")
+Fixes: 591298e54cea ("Staging: iio: accel: adis16201: Move adis16201 driver out of staging")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: ChiYuan Huang <cy_huang@richtek.com>
-Link: https://patch.msgid.link/20260916072541.1968033-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shehryar Ahmad <shehryar.amd@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/rt6190-regulator.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/iio/accel/adis16201.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/regulator/rt6190-regulator.c b/drivers/regulator/rt6190-regulator.c
-index 3883440295edf..bf99e18f6d5b0 100644
---- a/drivers/regulator/rt6190-regulator.c
-+++ b/drivers/regulator/rt6190-regulator.c
-@@ -109,19 +109,27 @@ static int rt6190_out_enable(struct regulator_dev *rdev)
- 	ret = regmap_raw_read(regmap, RT6190_REG_OUTV, out_cfg,
- 			      sizeof(out_cfg));
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
- 
- 	ret = regulator_enable_regmap(rdev);
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
- 
- 	ret = regmap_raw_write(regmap, RT6190_REG_OUTV, out_cfg,
- 			       sizeof(out_cfg));
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
-+
-+	ret = regmap_update_bits(regmap, RT6190_REG_SET5, RT6190_ENGCP_MASK,
-+				 RT6190_ENGCP_MASK);
-+	if (ret)
-+		goto err_pm_put;
-+
-+	return 0;
- 
--	return regmap_update_bits(regmap, RT6190_REG_SET5, RT6190_ENGCP_MASK,
--				  RT6190_ENGCP_MASK);
-+err_pm_put:
-+	pm_runtime_put(data->dev);
-+	return ret;
+diff --git a/drivers/iio/accel/adis16201.c b/drivers/iio/accel/adis16201.c
+index 5127e58eebc7d..f0cf3783bcd9a 100644
+--- a/drivers/iio/accel/adis16201.c
++++ b/drivers/iio/accel/adis16201.c
+@@ -202,19 +202,19 @@ static int adis16201_write_raw(struct iio_dev *indio_dev,
  }
  
- static int rt6190_out_disable(struct regulator_dev *rdev)
+ static const struct iio_chan_spec adis16201_channels[] = {
+-	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
+-			 12),
+-	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
+ 	ADIS_ACCEL_CHAN(X, ADIS16201_XACCL_OUT_REG, ADIS16201_SCAN_ACC_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+ 	ADIS_ACCEL_CHAN(Y, ADIS16201_YACCL_OUT_REG, ADIS16201_SCAN_ACC_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+-	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
+ 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+-	IIO_CHAN_SOFT_TIMESTAMP(7)
++	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
++			 12),
++	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
++	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
++	IIO_CHAN_SOFT_TIMESTAMP(7),
+ };
+ 
+ static const struct iio_info adis16201_info = {
 -- 
 2.53.0
 
