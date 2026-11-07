@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065319;
-	b=2q08Uka2I/RLg+4L6CbIUQnUgRCkYzhti6BzccukBMs1Hlw3Evy2umCWlICyDG+2ZJSU
-	 IgaAQ7j53T8wdatMtimBoJRQ1nPiyuCXQpZNDqRME5BpMwfrJ8sga3biD8w5r9CC7SzqF
-	 pEnDyjKrPnrosLkxAT69FAOBDiDVNS1Ws/Oqjl2GdGWpcnw8KV/+eDRnws1J1u+1e2E24
-	 jdtW8ssDt0vD7puM3pFx1KRknCxuGY4fF/Ya3izL6FDtK+xcvqE1ZEqoRSQQsLf4c7/wg
-	 XDe+qSyrksNZHO+8YlEpisA8yffLMNnsuJ4g8701DeJyuyEI1bvpniTCRHE2MFSo8ow==
+	t=1794065321;
+	b=VLG85SSGM9ktCyOJN0zzlSuOISh0G4ACqlCIm03mNdU3g4RltqrHIfNcXn7FlQGfUwcu
+	 rlcdyD9gMXkc32/Jh9eZQQja6m3JQ7S66kOsaFELBB7ypgRsIG4VPUc8bXeHb3n4+7o8i
+	 MpNjRK4uY9kz4ISqc7QuqQNvsbi9ni8z5/E3NYlPcDX3scogpCbdXk6dkG4kPMy7h3+mv
+	 BTR0tZu9xVsF6zB1CT9kpIDvqBaBvSYQ9lJbPiPGWwz6s3CmGLNVAlkwVJhYL0mRxDeJC
+	 xIGoqDwMNXWfXZ24Sn5imzVawGAbhkA8XOP+Ba5f8twsLDTaZwWEhYwiWI2IxtxMRZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065321;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VYsq57mT+k1WMCXXwE9VcuaXLdO36yE0NPTS+3R6evc=;
-	b=0+KxUdR+J6/agnMBzdB53PWp2S6RqPHnT42n9pywn1MHkSbOsGlnl+uPCctEwGagliry
-	 nIb1MYZV6L2Mn8SDdiibBn7gbsDNsbDR+DtnTivu7Rek3jpmnBMBCYwehK06Hp2i+MNTV
-	 NbE6URKzqkOtJ7b59HerwDLLhEDiy2MFfchl1qLv5Ens40Mg/na/Re7OgN+LcXtUajTI5
-	 jjc8MvKoGPOeoXDsSERgTK83kEUKfzYuqjMyWf5KXBP5vxHPGZ4xeavVCgWKXs8GMMoK/
-	 I7qNGHUUik8dD1kkasXhD6NCqTIHGf0J/Bb7WU2TRlENRzCZcCmG2iNlvn56z/IjElQ==
+	bh=FeW/p02qHj5gQDY7kKOGJPb/VGl+VPDGGSGBXiaY7J0=;
+	b=LWT6Vjc62k17TakDW5o6WB9A1YSacjc8O52IPgh7LA8C9EZITBLodEBUgZgU+pQ9k4dD
+	 oQ/ds4dYFNrhYjmjjGdj1qNGqEGKEUv9/QaW+LKkNctL/+q+dyOb1PxRksbDSiwD1i3D9
+	 vPRPMaicQ35baYbrBXt8R0qiN22XZ6mOF9shuTmXeJbUh5nwIOdv/KPpzAkwWFMWVfhdL
+	 e9I4AGgElfBCXRBrf9oNNlV/1iurgIY5HjVM0jr4U3E9EozDjmpQ6agFkIqhtocRjscu0
+	 BA7OBsxWaMVPHBah0MOEBDj1sHmKM1XyNAoInwmeNWR8/A0uunBsfUINH9QcAm568Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYtP9IRk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HqKvUBz7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548B0606A326;
-	Sat,  7 Nov 2026 15:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DB7606A32D;
+	Sat,  7 Nov 2026 15:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYtP9IRk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E940D1F0089F;
-	Sat,  7 Nov 2026 15:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HqKvUBz7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB9F1F0089F;
+	Sat,  7 Nov 2026 15:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065319;
-	bh=VYsq57mT+k1WMCXXwE9VcuaXLdO36yE0NPTS+3R6evc=;
+	s=korg; t=1794065321;
+	bh=FeW/p02qHj5gQDY7kKOGJPb/VGl+VPDGGSGBXiaY7J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYtP9IRkxQD+ZsioMzzFeoOw5JoZBUAWKYmHgQOaE3bdLTb9lZbgH9+cYNHHEpHYI
-	 faAR9JC7qFBMWIWx07jF6wDkhwrrmluSK0HBWVCbvTR1uo490p2m+7OCs5KeTipRIF
-	 OGFXCOqQzuFgpa1o+SZYNFq79faW/w8vIL554WPQ=
+	b=HqKvUBz7iXK+UeehbtHLaCLR/XkPM0vpCKodlwzILvTx6Ieao0ly6BFaS2tu6g3WW
+	 mf/GWa7V9Fw+I9O7YUj4ex4sZkLSiKMGc1LvBtyB0cJPQm/qbQp6L7+7JiYMCrGeuP
+	 Rpau4CR+irn3xxWInkyC55HkHLpdy+4gRZtUwxn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -50,9 +50,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jia-Ju Bai <baijiaju1990@gmail.com>,
 	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1065/1257] ocfs2: snapshot the dentry name while tracing file release
-Date: Sat,  7 Nov 2026 08:56:01 -0500
-Message-ID: <20261107135008.690983595@linuxfoundation.org>
+Subject: [PATCH 7.3 1066/1257] ocfs2/cluster: remove zero-address nodes from IP tree on teardown
+Date: Sat,  7 Nov 2026 08:56:02 -0500
+Message-ID: <20261107135008.718056149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -76,27 +76,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 5898987d4a92b70ae73fd8355cc3a388b4dfa4e6 ]
+[ Upstream commit 5dd57e77eff4ba3e85b3df126a55417c88245708 ]
 
-ocfs2_file_release() passes the live dentry name and length to a trace
-event while holding oi->ip_lock. This lock protects the open count and
-delays RCU reclamation of external names, but it does not serialize name
-changes during rename. The dentry can switch between inline and external
-names, and a separately loaded length can describe a different name.
+o2nm_node_ipv4_address_store() accepts 0.0.0.0. It sets
+O2NM_NODE_ATTR_ADDRESS and links nd_ip_node into cl_node_ip_tree under
+cl_nodes_lock, but o2nm_node_group_drop_item() uses nd_ipv4_address as a
+membership test. A zero address therefore leaves the rbtree node linked
+when config_item_put() releases and frees struct o2nm_node. A later
+address store or IP lookup can then walk the stale node and dereference
+freed memory.
 
-The ocfs2__file_ops event sizes and copies its __string separately.
-A concurrently rewritten inline name need not remain consistent between
-those operations. External names can also be selected at this call site;
-the existing spinlock critical section protects their allocation lifetime,
-while a snapshot additionally pairs a stable name with its length.
+During teardown, drop_item takes cl_nodes_lock, skips rb_erase()
+for the zero key, and then calls config_item_put(). A later
+o2nm_node_ipv4_address_store() duplicate check or o2nm_get_node_by_ip()
+lookup takes the same lock and walks the stale cl_node_ip_tree entry. Use
+O2NM_NODE_ATTR_ADDRESS for teardown so every published nd_ip_node is
+erased before configfs can release the node, without rejecting 0.0.0.0
+or changing lookup semantics.
 
-Take a name snapshot before acquiring oi->ip_lock and release it after
-dropping the lock. Keep the trace call and open-count argument inside
-the original critical section. Cache the event-enabled check so the
-snapshot stays paired even if tracing is toggled meanwhile.
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-2@gmail.com
-Fixes: 468eedde23d6 ("ocfs2: Remove mlog(0) from fs/ocfs2/file.c")
+Link: https://lore.kernel.org/pm-ocfs2-node-ip-rbtree-zero-address-uaf-v5-e7f64be16b7c3b0988d1@gmail.com
+Fixes: 0c83ed8eeb28 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
@@ -109,45 +108,27 @@ Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/file.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ fs/ocfs2/cluster/nodemanager.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
-index c6e7606ff9e1f..b3a37b9d259a0 100644
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -141,18 +141,26 @@ static int ocfs2_file_open(struct inode *inode, struct file *file)
- static int ocfs2_file_release(struct inode *inode, struct file *file)
- {
- 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
-+	struct dentry *dentry = file->f_path.dentry;
-+	struct name_snapshot name;
-+	bool trace_enabled = trace_ocfs2_file_release_enabled();
-+
-+	if (trace_enabled)
-+		take_dentry_name_snapshot(&name, dentry);
+diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
+index ced4fe6d3b592..91f8fcc6193f4 100644
+--- a/fs/ocfs2/cluster/nodemanager.c
++++ b/fs/ocfs2/cluster/nodemanager.c
+@@ -627,8 +627,11 @@ static void o2nm_node_group_drop_item(struct config_group *group,
  
- 	spin_lock(&oi->ip_lock);
- 	if (!--oi->ip_open_count)
- 		oi->ip_flags &= ~OCFS2_INODE_OPEN_DIRECT;
+ 	write_lock(&cluster->cl_nodes_lock);
  
--	trace_ocfs2_file_release(inode, file, file->f_path.dentry,
--				 oi->ip_blkno,
--				 file->f_path.dentry->d_name.len,
--				 file->f_path.dentry->d_name.name,
--				 oi->ip_open_count);
-+	if (trace_enabled)
-+		trace_ocfs2_file_release(inode, file, dentry,
-+					 oi->ip_blkno, name.name.len,
-+					 name.name.name, oi->ip_open_count);
- 	spin_unlock(&oi->ip_lock);
+-	/* XXX sloppy */
+-	if (node->nd_ipv4_address)
++	/*
++	 * 0.0.0.0 is a valid configured address, so nd_ipv4_address does
++	 * not tell us whether nd_ip_node was published in the IP tree.
++	 */
++	if (test_bit(O2NM_NODE_ATTR_ADDRESS, &node->nd_set_attributes))
+ 		rb_erase(&node->nd_ip_node, &cluster->cl_node_ip_tree);
  
-+	if (trace_enabled)
-+		release_dentry_name_snapshot(&name);
-+
- 	ocfs2_free_file_private(inode, file);
- 
- 	return 0;
+ 	/* nd_num might be 0 if the node number hasn't been set.. */
 -- 
 2.53.0
 
