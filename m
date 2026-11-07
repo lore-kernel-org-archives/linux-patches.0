@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064734;
-	b=uYcE98V1AF9wYlSDubfSJyR/b5Ub1Ww03M2gn0PtyWUYiMjptynwSY+auKRami+BV7iC
-	 EOuea1lzFtwO6whFFMObFLlR8C0dJOO5a6THvifzn5+JGNTwIzhbSEMh8sBJPceKOQNZy
-	 3hsXFgKVMR9JBIl/SiixtFjSMg1UmngtSMKCHOpEw/37Ob9yXr0vNLUdcQegGqjbaKM6c
-	 bYVmsJnfzSLmkB027CRn/N8Z5mDn8MIHhd6im+zwgh8Hd9ijJCo++szaCIO8uwrf1SVAi
-	 ttSXLC9p3JdcPvOsghC4qlhR4AhFaeJi04zrCBezzw0i9vhDotlLy2VkTzccOJkh1sg==
+	t=1794064735;
+	b=NDpPLBtaNq0JngQdD1nk/zU1W9ptu/Qzw6a/3DhuQpJxxwQiSGCvsy4kl/kg2yJsGXGy
+	 bDqvmlW5DEKwFTN15sRXNUaqd29Jf9QQHiMD9OHVx+x/vV0hIS2FdcjH7kTxjO7hLsBSW
+	 edRsKRWs1ETpLth6SUtNrODWPmO3/8QJRA7XHkdExdqy0GNeO8oLLrzC72Txu5IUHnoWC
+	 q7DKZvXlAIAldAm37bEOJD4d9Pqop43NsJ1cpBbxrKDW3Xodpi+3sUS6RclBG5p4fyTq3
+	 niJzCE33/RAEbasar+IWS8dyCetG382Ls+gMMovqvH1URkMp40A6arf/V7770dh3ajA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064735;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=iSSgXx91Q1/7psrPYr9y8uhtCSFz7msUHgWCn9iPR6g=;
-	b=jt4fHNCbWqnqbP5N3+a7lJld1vmJ+kByE+QwgIYT9l49qYLdAc+M98djMArSbMl4f99v
-	 VuXg7ZBD2KNtuaTllKQnx5oVTZsXdl0n2D5j3ylMf63yGO2E8YxLibiKqd8d/qj5FPr4c
-	 Cyj51LK3KrKKArmHw11K3juTgDS2cV7KMO3VguDciNfavSrRanpOEA5tw5odYlPpTdbUD
-	 8RabZ7PG0fo6c7+cf9O5+lCNExXlR676o3wiOR0JcZg18mmV5qINI/26HjQheTfB905AE
-	 CztH8x4zI/f/yV18OKDWj6dEI3Cbzt0TXWo6yOPk1UPz34nkedHEX4NnFDpCWwP/tSA==
+	bh=AP0jTZmFC6geAclGxdc/QBzzqfpX5ZAzxU5PRLB1D4Y=;
+	b=b+gDQl0bNIXtGI826yT4/nNzIgMZGHE90KTC88JzBnK6SCeh73OIk9zoAHOvhrc3LkO2
+	 fLTO+qRvclyqDtXRrAqJuak6vDYj+SdpC6DdYLbKGjNWBSKTBHlf3tsPp6pxbfEHIblph
+	 cOhedazz5cYKDkAaljlP7H/+ag8yUZIdq7qG+dqxPIk4Fmmfc9SE0t1w6GfJ9F9LLCVJ8
+	 MtBH5mnJLeMARP3GftDbKbFQYkRn/vKSxuqRbAbyYIrHsbsQeOYN5IEpSP2WjtgqA1uOm
+	 rSXaK18cU/EqHlHNRgKK1XSCP9kyJWvxworBAfbzVCixt0mnyO6P1Zqca/eUxL92bTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kSB4n1Is;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEIP7wxS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5362606A9C9;
-	Sat,  7 Nov 2026 15:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A76606A9C9;
+	Sat,  7 Nov 2026 15:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kSB4n1Is
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641CE1F0089F;
-	Sat,  7 Nov 2026 15:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEIP7wxS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EC21F008A2;
+	Sat,  7 Nov 2026 15:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064733;
-	bh=iSSgXx91Q1/7psrPYr9y8uhtCSFz7msUHgWCn9iPR6g=;
+	s=korg; t=1794064734;
+	bh=AP0jTZmFC6geAclGxdc/QBzzqfpX5ZAzxU5PRLB1D4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kSB4n1Isfb2lW0noY+Z2fidnJGdLRXmaQqFSsZg8YKdQWYOCQgx6R0VnmwDtM5sK6
-	 8hQP+B7MqL5khhtvThF6JUpFl4uFzW2K19kgDdgJkskoodMz7zb3ESgQqoZFAASLj1
-	 TvLII5SdRuV127j9u3VFUm8l6PH324YGRnXQ71Ps=
+	b=DEIP7wxSEuhuRJuZYs99/29G2x3/Cxh0bDyNls+MrCbWYxD733/zB4E6zjtKh2LUs
+	 MvS4OhhG1vescsq+17P4FIt/CKUS/vXYAOBMCpZ5SYqaEvjRMSKdUBnXyfY+jMmCMR
+	 ZOBtuoyYCI65O1SzsxOMu81rBDI9OxNPzzUuVsbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Baigue <hugobaigue2004@gmail.com>,
-	Denis Benato <denis.benato@linux.dev>,
+	Josh Snyder <josh@code406.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0671/1257] platform/x86: asus-wmi: fix screenpad power state detection
-Date: Sat,  7 Nov 2026 08:49:27 -0500
-Message-ID: <20261107134957.791913486@linuxfoundation.org>
+Subject: [PATCH 7.3 0672/1257] platform/x86: hp-bioscfg: fix 16-byte heap overflow for empty auth token
+Date: Sat,  7 Nov 2026 08:49:28 -0500
+Message-ID: <20261107134957.817915840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,100 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Benato <denis.benato@linux.dev>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit f9a1cd14b392a82fdc73474894bf8b198757dfb2 ]
+[ Upstream commit 540b8ae192afb5566c1b13b6884aee87107a26b9 ]
 
-On some models, e.g. the UX5400EA, the screenpad power state cannot be
-read back: DSTS(ASUS_WMI_DEVID_SCREENPAD_POWER) never sets
-ASUS_WMI_DSTS_STATUS_BIT, so asus_wmi_get_devstate_simple() reports the
-panel as powered off regardless of its real state.
+hp_calculate_security_buffer() special-cases an empty authentication
+string and returns a fixed 4 bytes (sizeof(u16) * 2). But
+hp_populate_security_buffer() does not special-case that same input:
+for any authentication string that does not start with BEAM_PREFIX,
+including the empty string, it always builds "UTF_PREFIX +
+authentication" and converts the result to UTF-16, writing a 2-byte
+length header plus 2 bytes per character of "<utf-16/>" (9 characters),
+20 bytes total, regardless of how long "authentication" itself is.
 
-The DSDT shows DSTS 0x00050031 (POWER) and DSTS 0x00050032 (LIGHT)
-both read the same two-byte EC register, each returning a different
-byte: byte 0 is a raw EC status byte, which is 0xa0 when the panel is
-powered and 0x00 when it is off, and byte 1 is the brightness. Read
-the power state from the low byte instead of
-ASUS_WMI_DSTS_STATUS_BIT: firmware reporting the power through the
-status bit is covered too, since ASUS_WMI_DSTS_STATUS_BIT lies inside
-ASUS_WMI_DSTS_BRIGHTNESS_MASK.
+The caller, hp_set_attribute(), sizes its kmalloc() buffer using
+hp_calculate_security_buffer()'s return value, so for an empty
+authentication token it allocates 4 bytes for the security area but
+hp_populate_security_buffer() then writes 20 bytes into it, causing a
+16-byte heap buffer overflow.
 
-Reuse read_screenpad_backlight_power() in asus_screenpad_init() in
-place of the raw devstate read. This makes the brightness read
-reachable on models like the UX5400EA, so mask the SCREENPAD_LIGHT
-value with ASUS_WMI_DSTS_BRIGHTNESS_MASK before storing it: the
-unmasked devstate (0x0001ffa0 when the panel is on) would otherwise be
-exposed to userspace as an out-of-range brightness (max_brightness is
-255) which systemd-backlight then persists.
+The authentication token used here is the current admin/setup
+password, which is an empty string by default until one is
+configured. Any write to a writable BIOS attribute while no admin
+password has been set reaches this path.
 
-While at it, pass asus_wmi_get_devstate() the u32 it expects.
+Fix by removing the special-case early return for an empty string in
+hp_calculate_security_buffer(). The generic calculation that follows
+already accounts for the UTF_PREFIX correctly, which naturally yields
+the same 20 bytes that hp_populate_security_buffer() writes for an empty
+string, avoiding duplicate logic for special cases.
 
-Fixes: 130d29c5627c ("platform/x86: asus-wmi: adjust screenpad power/brightness handling")
-Reported-by: Hugo Baigue <hugobaigue2004@gmail.com>
-Closes: https://lore.kernel.org/all/CAO84+x+P2_xyHP89+nGVSMV6bL+dy0P9=vyEEfZGnFhv0hBNWw@mail.gmail.com/
-Suggested-by: Hugo Baigue <hugobaigue2004@gmail.com>
-Tested-by: Hugo Baigue <hugobaigue2004@gmail.com>
+Fixes: b2715aa2e135 ("platform/x86: hp-bioscfg: spmobj-attributes")
+Reported-by: Josh Snyder <josh@code406.com>
+Closes: https://lore.kernel.org/platform-driver-x86/20260402-hp-bioscfg-overflow-v1-1-6985f8c9e67c@code406.com/
 Cc: stable@vger.kernel.org
-Assisted-by: zcode:glm-5.3-flash
-Signed-off-by: Denis Benato <denis.benato@linux.dev>
-Link: https://patch.msgid.link/20260916143838.170950-3-denis.benato@linux.dev
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260919060037.84602-1-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index 10c8fcb075b2d..3cc0b96baeb34 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -4498,13 +4498,20 @@ static int is_display_toggle(int code)
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+index 4d94e48c1a4c8..abf8ce20fe15c 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+@@ -47,9 +47,6 @@ size_t hp_calculate_security_buffer(const char *authentication)
+ 		return sizeof(u16) * 2;
  
- static int read_screenpad_backlight_power(struct asus_wmi *asus)
- {
--	int ret;
-+	int ret, retval;
- 
--	ret = asus_wmi_get_devstate_simple(asus, ASUS_WMI_DEVID_SCREENPAD_POWER);
-+	ret = asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_SCREENPAD_POWER, &retval);
- 	if (ret < 0)
- 		return ret;
--	/* 1 == powered */
--	return ret ? BACKLIGHT_POWER_ON : BACKLIGHT_POWER_OFF;
-+
-+	/*
-+	 * The firmware reports the panel power in the low byte of the
-+	 * devstate as a raw EC status byte that is non-zero when the
-+	 * panel is powered; other models report it through
-+	 * ASUS_WMI_DSTS_STATUS_BIT, which lies inside the same mask.
-+	 */
-+	return (retval & ASUS_WMI_DSTS_BRIGHTNESS_MASK) ?
-+		BACKLIGHT_POWER_ON : BACKLIGHT_POWER_OFF;
- }
- 
- static int read_screenpad_brightness(struct backlight_device *bd)
-@@ -4568,16 +4575,17 @@ static int asus_screenpad_init(struct asus_wmi *asus)
- 	struct backlight_device *bd;
- 	struct backlight_properties props;
- 	int err, power;
--	int brightness = 0;
-+	u32 brightness = 0;
- 
--	power = asus_wmi_get_devstate_simple(asus, ASUS_WMI_DEVID_SCREENPAD_POWER);
-+	power = read_screenpad_backlight_power(asus);
- 	if (power < 0)
- 		return power;
- 
--	if (power) {
-+	if (power == BACKLIGHT_POWER_ON) {
- 		err = asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_SCREENPAD_LIGHT, &brightness);
- 		if (err < 0)
- 			return err;
-+		brightness &= ASUS_WMI_DSTS_BRIGHTNESS_MASK;
- 	}
- 
- 	memset(&props, 0, sizeof(struct backlight_properties));
+ 	authlen = strlen(authentication);
+-	if (!authlen)
+-		return sizeof(u16) * 2;
+-
+ 	size = sizeof(u16) + authlen * sizeof(u16);
+ 	if (!strstarts(authentication, BEAM_PREFIX))
+ 		size += strlen(UTF_PREFIX) * sizeof(u16);
 -- 
 2.53.0
 
