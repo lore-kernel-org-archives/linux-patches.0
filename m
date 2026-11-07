@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063995;
-	b=eHn3b++51hPk/4Pz+7Tykim+s4oYnY8pgVKSGa1I3QT3xs3RMg2rzmTXn1uQ5ZkEzTEk
-	 UJbqPT2IxeRW+QgD+F8700Ns74JlI8xsAD2DEFz7REiXU3jZf8AcBNh6TQkwQtYigLKAX
-	 Xr+8i3gXjsFXlBAq2CgKeZgh0JZhNFSYeTVIVZBL9+s0sT9U+JflcGYVpqY6fk8WguokJ
-	 QnlEP/UbL9s8m0mEEm6d047UTyp0ow1ZPIBe/BgtF89i7Dedh3OP6IEiT2CBvQoXQ11t1
-	 h+6B4VyKslVaKP+klorQI17eLX7LGrPJfeeqMFj8mqsSI7MU4FIY/oXSuAUR21o7cuA==
+	t=1794063996;
+	b=3PKvLvW9M9a/MkS3C/o0yZMFX8vNyAIcOwGwsqz3ueAZdJkuGyeTxPkG0q5o4OMN063k
+	 DH83ts7s/3rOYSd8VOPyqf2YL388TgclSuknY+ittKtj0vsuLOHt1cunqUtPzHrJ6fpG6
+	 fmBR08qLEA4bW0LT+Ik1kAPp72Rp6ojDDPHOrfezfYsSzrS0W63XrAoKIAThhQUbKbG8B
+	 iHgUgmiZ62/vOU9xlc6BE/ATY9saGsV2XNqy1VKmsu6tpFr2EeCo2S7HzNbg1a+tk7ilj
+	 2IIdOC1ZT7IGJk08152rsuB++Z6UAoqcj9YFvlTZlr7djgmCSIV/L+8/e26i5ARRAjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063995;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063996;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TamXucSCCdo2SP0FhGhGDQt4kmXkAHGzeIpDx70tdiQ=;
-	b=TIVuR35N3Eql3iZdnFTRopmLVRA02oATPSthKEe2ZbBozoPHtT1DLqA2izcgIjVe8Tr3
-	 S6HdDkgnyvI90pRUO0pgFnSuZ2sbW6ORr+81hjz+5P+vYsmLkCjSkwJOThrzG8R3ByI36
-	 HH1M3Cp/MktwM/uSz290TsnFZxgZ8gl6jx50nGbAHm1l71Brjq0NPVKaF6W8tAU0FWdWj
-	 tWyvnXmFRqD/0bRyvP5D+U8Gvy/OwMevLp/y9fJ6BHXc4eq+RvXoWmRfuYsriE/pXlWUE
-	 EJKsF6JBwXgQ82GBKsSaRDGqulAHyhYPVyA3hyZOsLLs92sIYPosJYYuqWspAPCYGxQ==
+	bh=1P8zq4qaZWonbRZWw72xVf84Rfngu29alJR65AOViFU=;
+	b=AZw0oiTAcnqkyyKzl6M72UU1hyAHClgGcm5P/Fy/89nbvSZa9D3wjQBs/fmMbCYtKKBO
+	 zg5f5gBqPvOoAZH+ycoHIAQtvuJZeriXdE2VrsebmHcF/ww5GAh26jc7T1LuC3lkwYwfu
+	 +ZJVEJshn/p/HL77E/Z6nCN+8bkc4u7goZ1VT45oCNjTYsY2nDMSV6gijI9ikP1pH/gvP
+	 AOIszMZWVmCOmQt9qDuigXWFcEVc36bh1KJBOrApI9OZ7dObC7gJhQ/j5t1XSW2PgQvlu
+	 QZ2vGJ44+IaXKY09CqFku0fMtvYK8p/MO0D5u3KfHPlWMyn0hITfwlpq9nbixwigK4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sOeUFDKL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BHQnFmtw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C174E606A332;
-	Sat,  7 Nov 2026 15:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A46606A332;
+	Sat,  7 Nov 2026 15:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sOeUFDKL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED9A1F008A1;
-	Sat,  7 Nov 2026 15:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BHQnFmtw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988291F008A1;
+	Sat,  7 Nov 2026 15:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063994;
-	bh=TamXucSCCdo2SP0FhGhGDQt4kmXkAHGzeIpDx70tdiQ=;
+	s=korg; t=1794063995;
+	bh=1P8zq4qaZWonbRZWw72xVf84Rfngu29alJR65AOViFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sOeUFDKLVtd13oQRHnDMDHnI/s5D8ROZEL0yps5HjmoBQVGJYB3D67lxAPqLDI1In
-	 OMvl/Z0DgqoJKyKmguU8D1hYeMpc3RikykrQIBzEKbk6tcWRQh0CbnBnAqwZ9RYasO
-	 rPYzVY6aBjsxNXq0oNmGOHJetRJB5v0RyvPt65nk=
+	b=BHQnFmtwMFXQH33ktAppvz5kuI9leLR6QoDQ5zO9331s8s3wJNQka6BJbkiNlRUiT
+	 52w39XgZa2UrWa5U4aaIg2IwzCYK9Jx/EshyhKFO7rgpJEoGMIlUnZYtAjnnxEwCQV
+	 X1MCLuoQZMITlwDsA/oe/BGnGN9b4iH52yeEErJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45ef5a8d661162757547@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thorsten Blum <blum@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0177/1257] ntfs3: bound index head insertions by buffer capacity
-Date: Sat,  7 Nov 2026 08:41:13 -0500
-Message-ID: <20261107134944.349258692@linuxfoundation.org>
+Subject: [PATCH 7.3 0178/1257] crypto: atmel-tdes - sync output bounce buffer before DMA
+Date: Sat,  7 Nov 2026 08:41:14 -0500
+Message-ID: <20261107134944.373547605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,67 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 2f497d23652ff23da07b08cfb4b4a1c2a87f1892 ]
+[ Upstream commit a38fdcb9c944525ca71e6aaf35e708586d0ae87d ]
 
-hdr_insert_head() shifts the existing index entries by ins_bytes without
-checking that the resulting used size fits within hdr->total. A directory
-index root larger than the newly allocated index buffer can therefore make
-the memmove write beyond the buffer.
+The slow path maps its output bounce buffer once at probe time with
+dma_map_single() and DMA_FROM_DEVICE, then reuses the mapping for every
+request.  After the CPU copies a result from the buffer,
+dma_sync_single_for_device() must hand the buffer back to the device before
+the next DMA transfer.  The driver omits this call, so cache lines from the
+previous result can remain valid while the device writes the next one.
 
-Reject insertions whose size would exceed the index header capacity and
-make both split callers unwind the new node when that happens.
+This bug was masked by the completion paths calling
+dma_sync_single_for_device() immediately before the CPU copied the output,
+where dma_sync_single_for_cpu() was required.  For DMA_FROM_DEVICE on
+ARM926, dma_sync_single_for_device() invokes arm926_dma_map_area(), which
+invalidates the cache lines.  The misplaced call therefore discarded the
+stale lines before every copy-out.
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Reported-by: syzbot+45ef5a8d661162757547@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=45ef5a8d661162757547
+Commit c8a9a647532f ("crypto: atmel-tdes - fix DMA sync direction")
+correctly changed the completion paths to call dma_sync_single_for_cpu().
+On ARM926, that function invokes arm926_dma_unmap_area(), which is a no-op.
+The missing pre-DMA dma_sync_single_for_device() was therefore exposed on
+ARM926-based SAM9X60 and SAM9X7 SoCs.
+
+With CONFIG_CRYPTO_SELFTESTS=y all four DES/TDES algorithms fail on
+SAM9X75:
+
+  alg: skcipher: atmel-ecb-tdes encryption test failed (wrong result) on
+  test vector 2, cfg="unaligned buffer, offset=1"
+
+Call dma_sync_single_for_device() for the output buffer before starting DMA
+in both atmel_tdes_crypt_pdc() and atmel_tdes_crypt_dma().
+
+Fixes: c8a9a647532f ("crypto: atmel-tdes - fix DMA sync direction")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/index.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/crypto/atmel-tdes.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 689712d3463d4..37e3e16b1f841 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -594,6 +594,8 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
- 
- 	if (!e)
- 		return NULL;
-+	if (size_add(used, ins_bytes) > le32_to_cpu(hdr->total))
-+		return NULL;
- 
- 	/* Now we just make room for the inserted entries and jam it in. */
- 	to_move = used - le32_to_cpu(hdr->de_off);
-@@ -1801,7 +1803,10 @@ static int indx_insert_into_root(struct ntfs_index *indx, struct ntfs_inode *ni,
+diff --git a/drivers/crypto/atmel-tdes.c b/drivers/crypto/atmel-tdes.c
+index 2756dab3f4c7f..ed80423b4209c 100644
+--- a/drivers/crypto/atmel-tdes.c
++++ b/drivers/crypto/atmel-tdes.c
+@@ -370,6 +370,8 @@ static int atmel_tdes_crypt_pdc(struct atmel_tdes_dev *dd,
+ 	if (!(dd->flags & TDES_FLAGS_FAST)) {
+ 		dma_sync_single_for_device(dd->dev, dma_addr_in, length,
+ 					   DMA_TO_DEVICE);
++		dma_sync_single_for_device(dd->dev, dma_addr_out, length,
++					   DMA_FROM_DEVICE);
  	}
  
- 	/* Copy root entries into new buffer. */
--	hdr_insert_head(hdr, re, to_move);
-+	if (!hdr_insert_head(hdr, re, to_move)) {
-+		err = -EINVAL;
-+		goto out_put_n;
-+	}
+ 	len32 = DIV_ROUND_UP(length, sizeof(u32));
+@@ -402,6 +404,8 @@ static int atmel_tdes_crypt_dma(struct atmel_tdes_dev *dd,
+ 	if (!(dd->flags & TDES_FLAGS_FAST)) {
+ 		dma_sync_single_for_device(dd->dev, dma_addr_in, length,
+ 					   DMA_TO_DEVICE);
++		dma_sync_single_for_device(dd->dev, dma_addr_out, length,
++					   DMA_FROM_DEVICE);
+ 	}
  
- 	/* Update bitmap attribute. */
- 	indx_mark_used(indx, ni, new_vbn >> indx->idx2vbn_bits);
-@@ -1955,7 +1960,11 @@ static int indx_insert_into_buffer(struct ntfs_index *indx,
- 	/* Copy all the entries <= sp into the new buffer. */
- 	de_t = hdr_first_de(hdr1);
- 	to_copy = PtrOffset(de_t, sp);
--	hdr_insert_head(hdr2, de_t, to_copy);
-+	if (!hdr_insert_head(hdr2, de_t, to_copy)) {
-+		err = -EINVAL;
-+		put_indx_node(n2);
-+		goto out;
-+	}
- 
- 	/* Remove all entries (sp including) from hdr1. */
- 	used = used1 - to_copy - sp_size;
+ 	addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
 -- 
 2.53.0
 
