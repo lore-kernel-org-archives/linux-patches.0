@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060787;
-	b=F4OSjOlko+i72AWAITAa80J0ZRKAgeuen2cJbZUlXbxvJJbRBe9oYRLRtI5su2sHKSbc
-	 dpHlzmUcdtO8l8LwLO5aRtmk6OSaPj7VVk0Rqls4fV7nTiwXmE77j2nQMUhHpRfST1eGP
-	 CQzaFH3kuYyc3jmlsTHDpFqCGEc4ctndCZa7TrlnHwCpUS8MW8Rx7FOI4vqyNQg79an2e
-	 4bfY3n3FEeY8iftQFtJcPYnQDQrFZLX1nkyP5kJZF2OJiWS6k34rOnOxvRESs6/17XEYk
-	 kun29fTTqs4h7FEKnIdTz01XboPBTK7Q2PJWtxaiSQ/HWmoMre0agZZGGuGE6+jyLyQ==
+	t=1794060789;
+	b=TI4ukjeJesLmN956aU9jnoQCuBR3VFwo6enAAoCZxUf+0IlGr5p5CCRpjuPEH1J/Ll/h
+	 2gqV91+Odz1cGKmgSzKpn88hGfVwGnfYZXsOfdWpBV+xbdDPk13P5Kpk0NS8eK6wlOsjI
+	 JHmfb4yOdNxtts7T3up3DXN5Gw1aIVKVdaOUp5Js/O/R6sfUnRawkHwNbN6ZkfeG+AUPk
+	 qxGvF2B0/0wdb68lw/X2UXOMpxsdg4mS9dy0t8YY7i3YWrlE/jY4PeaNo1oAkiXMuniE0
+	 eNZ+lE1/16L6IP116hJ725VBgPSTN+rIR2DIUUphSdvgM+uD66VSiBzhxcO04+mV4XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QAVOY4mPhJR1mbC0o8Ln4+T6LYUMg/y4zTwNhKcLEHQ=;
-	b=qwi+AxnM+VwOH/8rTFE3k7+J03KK/T1BS/lCfiuuxJl2fOaF537kB5xAsPBCMwgVaHYQ
-	 5RQMe9YLbrbyXtp8sgJskr0jB+TXce89PwkLchRO7vKEbcCpEL6y9eloU9XsRI+fsvJa/
-	 vBW9deg3FVsMv+5eXqrwiJLoABCv3eXfU2yzywQlNB5EiRAHFVjGkxhE73oL29daLbr+g
-	 re7U0WVpyOort9oHNxd92aW2vc7pYS47lUHclHGDB4FtEOXL+q6xmrRdn3fZ/QmqG9GcO
-	 mhnm9/L2Z24Epy1Qkw3RI73yfCw+9XR54dAl436d6euIEVhD8UlagXBccfoRPtPdyFg==
+	bh=7e08uW0nvbYI6Kj7mOHaORrSRs9MMmmI2X5kmNS6c/4=;
+	b=ACfWvKzJpJyU470+CbIud8q/1fjsiR0Il5KBxPuksg5zqGYNJRAuIsaPtZuuHTjLptZ/
+	 zAWtXQpnejusEAL8OHvDFmhQ0uU6PNbSkOW3qhgLMdnHYcQ0ddNAr5Zn1laTFGT2PgFuC
+	 vwGmavYmHEoOC6qZYSMRNR4UPX63s5oaI+qqnHGrSFOPBaOFj8wSikao5JkRD918KTSyD
+	 kY0XvcSM5ezaDPEs6fme2Tq2ocwhmMRg8rxNnjIgQ8e4smRQQGpZ9TsyYtAGqJlkliU2f
+	 9aWuqzDfAKjuQQR+aSILWUam9Bu4N46hmrwQd+WuS2ORe/aj4xA5ROYvciuRHTuDx5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i9/fdxKe";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XIyq94Eq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3137606A326;
-	Sat,  7 Nov 2026 14:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB55A606A326;
+	Sat,  7 Nov 2026 14:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9/fdxKe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD141F0089F;
-	Sat,  7 Nov 2026 14:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XIyq94Eq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945C81F0089F;
+	Sat,  7 Nov 2026 14:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060787;
-	bh=QAVOY4mPhJR1mbC0o8Ln4+T6LYUMg/y4zTwNhKcLEHQ=;
+	s=korg; t=1794060788;
+	bh=7e08uW0nvbYI6Kj7mOHaORrSRs9MMmmI2X5kmNS6c/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i9/fdxKeIc6HqZsSAe7e1DOMVc/K5g1408QefzZKQGk5B6BCmMXfxywJrJMeDyvlG
-	 REJN1mfcB2h1A/4G1xrimW/BkRBc51ynWbwIFil1du+2ei4aCI4fIsnixVMMVBjMcc
-	 IUHwXwhSvdX9EGLaO3PVcBIf3FsrTz2kP75ajC/0=
+	b=XIyq94EqKJgTYX90E/hTr+c4Rw4RdlEfXKoFukbpAL5pzTL4L64vwNsOGjliczx6h
+	 NhF98f1kvXnGirFEjEgisQEceDScwsEavI4543sSJbGCYZKwJQ1TUoC2deyHIZnzUy
+	 HyiJr6/P2LAnoMOBKbPW/zN69EhFo9Jbf2yoM2ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0192/1536] iommu/qcom: Publish pgtbl_ops before releasing init_mutex
-Date: Sat,  7 Nov 2026 08:36:48 -0500
-Message-ID: <20261107135003.055034083@linuxfoundation.org>
+Subject: [PATCH 6.12 0166/1536] wifi: iwlwifi: mvm: ignore sync frames when sync is disabled
+Date: Sat,  7 Nov 2026 08:36:22 -0500
+Message-ID: <20261107135002.330613248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,47 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit a05b67cd45ad09a19f41b2d37255da714512e0ca ]
+[ Upstream commit a790f60cc4d7dc64a2d7cadb94a3d9f60392bed4 ]
 
-qcom_domain->pgtbl_ops was assigned after mutex_unlock(). Another thread
-calling qcom_iommu_init_domain() would see qcom_domain->iommu already set
-(domain fully initialized) and skip re-initialization under the mutex.
-If it then called qcom_iommu_map() before the first thread set pgtbl_ops,
-it would observe a NULL ops pointer and return -ENODEV for valid mappings.
+Gate time-sync frame interception on the active flag so frames are not
+queued after time-sync teardown.
 
-Move the assignment to before mutex_unlock() so that once the mutex is
-released the domain is fully visible to concurrent operations.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Assisted-by: GitHubCopilot:GPT-5.3-Codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260717172958.ac73ee199a25.Ic1489244f9b02da93060f0a0e5b300a73527f265@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index fff2771958363..3c1d2303f1b8e 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -308,13 +308,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 		ctx->domain = domain;
- 	}
- 
--	mutex_unlock(&qcom_domain->init_mutex);
--
- 	/* Publish page table ops for map/unmap */
- 	qcom_domain->pgtbl_ops = pgtbl_ops;
- 
--	return 0;
-+	mutex_unlock(&qcom_domain->init_mutex);
- 
-+	return 0;
- out_clear_iommu:
- 	qcom_domain->iommu = NULL;
- out_unlock:
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h b/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
+index 2cfd0fb5e781a..7bdbacb640787 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+  * Copyright (C) 2022 Intel Corporation
++ * Copyright (C) 2026 Intel Corporation
+  */
+ #ifndef __TIME_SYNC_H__
+ #define __TIME_SYNC_H__
+@@ -19,6 +20,9 @@ int iwl_mvm_time_sync_config(struct iwl_mvm *mvm, const u8 *addr,
+ static inline
+ bool iwl_mvm_time_sync_frame(struct iwl_mvm *mvm, struct sk_buff *skb, u8 *addr)
+ {
++	if (!mvm->time_sync.active)
++		return false;
++
+ 	if (ether_addr_equal(mvm->time_sync.peer_addr, addr) &&
+ 	    (ieee80211_is_timing_measurement(skb) || ieee80211_is_ftm(skb))) {
+ 		skb_queue_tail(&mvm->time_sync.frame_list, skb);
 -- 
 2.53.0
 
