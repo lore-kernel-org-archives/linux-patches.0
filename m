@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064060;
-	b=AdOatplG56VVRc0G1FN3m8XWYLNRIJmRN7oiEqj+Bh0enCWVlUtl68i2AuYbuor81pQn
-	 Eu1joEt42mFY/5cyKNZ8i8Wq49+y7yJyDmHgmPcBAI2ysmpVxgsSsuAn2h2Ok6r3SMawQ
-	 qYX2uV8rXvpnMu9XhxROWaiiXIPrj6DULQh42Wa4tDdGZBY1kWkXqikrBzpuruMjssxsG
-	 ACXETbTnAQ+BcumOo3xkIsUl58t/QbpZv061SoOdPAqbJiYsEfKWGOrw7lYjt1SVKZmrW
-	 mQh/skwPuYrOXdkAZp+WZZU3zH7/P07bghb4ro1u1ttxUGcr4WytwIZPwE0J2waiOKw==
+	t=1794064061;
+	b=qkQJyFi7EPtZYmm9Zfokm8HyxsOwc5KW8/tx/8qoMGXleDxFMdDQHpd/bPiGRHEAsD1O
+	 GCvfh9PRZ06Ih8CsnawH/SAX2g6v5yTNIwm6WTdfLsoun5B9BbpTAR0vlpOp5zAI+5Owe
+	 zjMxXZ0k/keiLG1JcuQnFZOAepzs1qCDUgZii9aRttvNv1CVOe72453BzdrzsJxpPPdqH
+	 If3gcLeb/HW8Sa7EqJ07wTa6H6GyZL78GxmeXvU4eoL+Trsawo5R9nrN1efR8wcrPiokM
+	 BfrTjpE4Ie11fiwI/FprgbouhJvXbrBHkmwhr59Ld6hmcQnKBv2mSolgxlAEZtmi2RA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jKiXHCa1A+Nopxa8dc1AMTWyly17TGzKy3XnaC5NkEo=;
-	b=N+iHocy9nx9sfZOGY/UxURn0FSyvprHDwqVYcz3GY4IFX40z9aC8nRgsYJTPAgrYmzMb
-	 /nOntbhBnJdhwtEfzyGPRGKhViqd26eubTsw84eJLncZtp+/gxZJyMbre3g41kAWvhqG9
-	 CDegCVSgj5pc0ncifRIJhMQAmFp55HwQygUhnTWtUpb+AklIoorVCsHZRzZ5R6IsD+Rq5
-	 ej1b3sPdBqt+2jM0GQuHi2Soq/wFHz2jkvwuRdR/iEC01eZfihbHJvRcAxcfUkP4H+A8q
-	 XzZXFYLuOCOduLeOGIudma7hNGDIiORHucVHq7LynnSffQBIPCtQpli2ITDFcM83t6A==
+	bh=XljQnURcD0FRreBkv4MeC1EfoxFt3V8BtCrZ2kknTpc=;
+	b=C/4TM2kJTT+KKeloWD5TvaRn6IOnIaFntcMQlbX6NP7oHDFGoiOoIpkQUQNHJz5M27XF
+	 mQ2nnUbjBwlYSUamFum5GIs3gGx0iICC4UPJeVNDJs/OyTuCMoqWrM6AGGV+ZR17/l6aQ
+	 s6zJ68GfdP6Vo1IhT80O46BMdKC7dl4H1a9iOWcQWj9JI3oLhW6bTTCF0Z0+wCejfVQ+Q
+	 VRdnAJxz3Ked6ZomULgGS8zJNh3ekH/+R/TMZoWq2Rqk4yt3AEkEXute1W1O8zE4QjfZ8
+	 k+qJqBb89pXSa5G/fd5TCaqej2QXrufGMsm0ppgOhPt1/aaZA4jNc2lmhNzF+Hrx7Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2G7TcUX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cbHPezq3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F159606A9D4;
-	Sat,  7 Nov 2026 15:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641D4606A9EC;
+	Sat,  7 Nov 2026 15:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2G7TcUX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EC41F008A2;
-	Sat,  7 Nov 2026 15:07:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cbHPezq3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1059F1F008A1;
+	Sat,  7 Nov 2026 15:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064060;
-	bh=jKiXHCa1A+Nopxa8dc1AMTWyly17TGzKy3XnaC5NkEo=;
+	s=korg; t=1794064061;
+	bh=XljQnURcD0FRreBkv4MeC1EfoxFt3V8BtCrZ2kknTpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P2G7TcUX7q7DktyPR+ZQkLLyHGmInce4mWUr8Gnt9PZiDci7bXoVWtyUQXtSkaqAG
-	 spzvyxv1bsJfp/x0ablmXn7o6aHi5U3SYfUC0NUgZ0xgce71bNVce7nE4HTIa75F0R
-	 NhMk1hBzKXbsFYYnhg5dfGbbZenJWkfrVhJKTkHA=
+	b=cbHPezq3RDA4cMM5ih0FsTbH8SWILqTHdIcQwYpKW0c64yw5tdp+Pc3Lnuc/5Y6S+
+	 m8S04Og4R3UNlc1vHWR1JGWN/uKiJOTuvjYFY/ULjvyehb+M2sugGXRG5k3EzwxhP5
+	 iVwErK/o/0Wu2cFvj3uuQjCV8dP3H2XRthxGNEX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Sen Wang <sen@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Judith Mendez <jm@ti.com>,
+	Moteen Shah <m-shah@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0230/1257] ASoC: ti: davinci-mcasp: Fix runtime PM imbalance in __davinci_mcasp_set_clkdiv()
-Date: Sat,  7 Nov 2026 08:42:06 -0500
-Message-ID: <20261107134945.879501485@linuxfoundation.org>
+Subject: [PATCH 7.3 0231/1257] arm64: dts: ti: k3-am62a: Fix MMC0_CLK register address
+Date: Sat,  7 Nov 2026 08:42:07 -0500
+Message-ID: <20261107134945.905722669@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,40 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit ba593d662183de74d2b733b4c6e8cd26f04f0a65 ]
+[ Upstream commit 9852f2badc438de82b6828c11c80ef0a656f1d4d ]
 
-In __davinci_mcasp_set_clkdiv(), pm_runtime_get_sync() is called at the
-entry of the function. If an invalid div_id is provided, the function
-hits the default switch case and directly returns -EINVAL without calling
-pm_runtime_put(), resulting in a runtime PM reference leak.
+MMC0_CLKLB and MMC0_CLK have incorrectly swapped register addresses
+as per datasheet [0]. Set the correct MMC0_CLK address and drop the
+unneeded MMC0_CLKLB pin configuration.
 
-Add pm_runtime_put() in the default case before returning -EINVAL.
+[0] https://www.ti.com/lit/gpn/am62a7 Rev. E: Table 5-1. Pin Attributes
 
-Fixes: 4ed8c9b737b6 ("ASoC: McASP: add support for clock dividers")
+Fixes: e041ec6e86e7 ("arm64: dts: ti: k3-am62a7-sk: Enable eMMC support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Tested-by: Sen Wang <sen@ti.com>
-Link: https://patch.msgid.link/20260916073136.1971673-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Judith Mendez <jm@ti.com>
+Reviewed-by: Moteen Shah <m-shah@ti.com>
+Acked-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://patch.msgid.link/20260909214743.899477-2-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/davinci-mcasp.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/ti/davinci-mcasp.c b/sound/soc/ti/davinci-mcasp.c
-index 79239131b6598..d3c9797c03dd8 100644
---- a/sound/soc/ti/davinci-mcasp.c
-+++ b/sound/soc/ti/davinci-mcasp.c
-@@ -799,6 +799,7 @@ static int __davinci_mcasp_set_clkdiv(struct davinci_mcasp *mcasp, int div_id,
- 		break;
- 
- 	default:
-+		pm_runtime_put(mcasp->dev);
- 		return -EINVAL;
- 	}
- 
+diff --git a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+index d3b3675e7a8fc..b04636cab71c7 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+@@ -328,8 +328,7 @@ AM62AX_IOPAD(0x0b4, PIN_INPUT_PULLUP, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */
+ 	main_mmc0_pins_default: main-mmc0-default-pins {
+ 		pinctrl-single,pins = <
+ 			AM62AX_IOPAD(0x220, PIN_INPUT, 0) /* (Y3) MMC0_CMD */
+-			AM62AX_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLKLB */
+-			AM62AX_IOPAD(0x21c, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
++			AM62AX_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
+ 			AM62AX_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
+ 			AM62AX_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
+ 			AM62AX_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
 -- 
 2.53.0
 
