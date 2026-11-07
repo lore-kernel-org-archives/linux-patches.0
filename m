@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063330;
-	b=gCE8Y/yWPnypNf9EOxixXlLwetvuo+Wmf6669cu1i5o/qmoANgjZ2SbAeUZx9XFccyTp
-	 gBW09Fm6ax3Ib5zcRGkCovkQd5zgcte6F4l0c6vA3RJ2VvpNvRH3N/xRaY3AWVyy21aOL
-	 aoImkYHVOmEEtfLANOYvYzLjRy+F6nNBZOe3tFf9RkHKPPcYqGH3w+zB3lsj5XzaqE2Gt
-	 K7iFdvouTElsVSEShdTZSMt7Zm6e6ixRS1Xxi+v5bE252OhuLgWUtEIsIPvurHBdixxVi
-	 vH6iWQdjKdHpp5IPm3K/Ku5Ukflhqp2P7IdyRCnrar0bRY+vOP7PN/fNFLh/vODXBwA==
+	t=1794063331;
+	b=t7gx7ll7dWrDMIX5uXBEJqby7ebdG5CmaLqEIRgGgNcb5GT/8ePow1/phjA8qt7Pz3dD
+	 3U7lJGDL1318BUwmG/f35l47FoCE4Rq019+usL+uWER1W/GoCh4CxKYh4FDTkH2nmAGA9
+	 jQGbAl0JI/rpiTsqdgg/EPxyEWQwED6hbPrkrfgIHPJ0Gh8YdfuqQrHq20H3+D+VlT5AC
+	 htf/QQmdO4zkA0UG1RZ2cdSj6QoJJZU5QzeFZ98IJj14gxPYbkXs6AUKCuBsC1FEpZsub
+	 2TAg3C4G9HEDCyKeaSMxkiPKDRswbwsEB5XxbNhllmQSjyBv1i6eO8GTDkMS+ETtIFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=asI1emWs9ZJQGxTHilaH1px6mlvEFlBke/vMQSbNHlY=;
-	b=olS+3v0vOihZVoXt+5ZnVAaxwx+f3uf1m86ahwdaN9jwNzwGAbfMA33CzrdRgTZ6oabO
-	 KlTVrJR8TuPn2y1VMsGmN1crpcM/WRyakgdK4F6R1XZAruVy1dvXPaDke6UpklGfISIwQ
-	 dPm4MHcXLjipaC39/fjZhcXZbfc6CaD8Qf9a0cXJxqLu0hxQoATNSXojzFMm82quzuxC+
-	 rYuxBTrJa4+65lNDnknAAdTVeOP42jYau1dKE4O9ejakCZcLPVwvTA+zqVFOeKVDq6238
-	 NaIHlDriP8KTqR9Y/cf04ONFmAZupvIxBkJ+RY7HN0l9kpEl7ZDhTAt/3HwkA+aZTiA==
+	bh=S4SXRyL03nDLOeyxlJ1KVzEj2KWaO3bwbgwDi8oKgI8=;
+	b=XCT2oXjeTSOYYzQq74sADMAfPIhtBGv9HU8JNpHaKW2STejG/nH28J95hBkGtlOmIQ6n
+	 ytDnLjnFM2nklLW60IgVUd0cIJE0DtBineXiJxvqrodQwC0CyhZXSj5RoajwEZUvcNDux
+	 8xiVVo97tvrjPd1BcSHmirw7PAVHOt+4lrgt9BTuG7p/5ili/slluq5jNHkc/fTK0AgF/
+	 HV8z0A7KD1oTz93m3CnafjpIg/J3/ka4B32U/wYQboDnXxYzpRZDUCemKdIOZXWNOTX+D
+	 bsbRLEc3yWP9bj4CqCnsEvfQXGUgXhTEItuvTEdrooIKnEtQjzQMWlegwXlV4ABLcNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSQyBtZg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0O/kWbRJ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E036082BD0;
-	Sat,  7 Nov 2026 14:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECEC606D823;
+	Sat,  7 Nov 2026 14:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSQyBtZg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55081F008A5;
-	Sat,  7 Nov 2026 14:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0O/kWbRJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D172B1F008A1;
+	Sat,  7 Nov 2026 14:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063329;
-	bh=asI1emWs9ZJQGxTHilaH1px6mlvEFlBke/vMQSbNHlY=;
+	s=korg; t=1794063331;
+	bh=S4SXRyL03nDLOeyxlJ1KVzEj2KWaO3bwbgwDi8oKgI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HSQyBtZgUXvFwjOxPSSBw4PGciIqT8kArq9y2A25WerGuBh3IdvMlphDJPOa4P0zn
-	 MphUJ7S44FE/JlM2/BEy81Yw0+IXSaNq7AukjmM5iZFHEy/G+o16S8tzBSeGvc0wU6
-	 D2DInqe0/GHzGCL0+itpAhFL/3q7uSuZb60W1AFQ=
+	b=0O/kWbRJrTIlwlbLLq9L5mVtmC7nxhfTals4eYCSfqL4/hZhgeyxGVNqXghtE4aq2
+	 66jZ59TieRMHQXmC3So5L2P1tD12qzaok4dp+rUm21u8YULjqJqu26O7FYop6sT92y
+	 X9MiRogtjIqXobDIPFWGVixkUcCiEzy/brQm647c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Usama Arif <usamaarif642@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 513/869] clk: qcom: ipq5332: add 24MHz rate for USB UTMI clock
-Date: Sat,  7 Nov 2026 08:53:15 -0500
-Message-ID: <20261107134910.957381418@linuxfoundation.org>
+Subject: [PATCH 6.18 478/869] mm/damon/sysfs-schemes: read sysfs_filter->addr_range only once
+Date: Sat,  7 Nov 2026 08:52:40 -0500
+Message-ID: <20261107134909.810475326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,41 +71,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 19b62f31e15ef70dc927aab91b1576ea6c37f992 ]
+[ Upstream commit 60e58be27d5e16d35e0728298f994dcae9f208a5 ]
 
-The USB UTMI reference clock must operate at 24 MHz, as recommended
-by the hardware team, for reliable USB operation.
+Patch series "mm/damon: move damos filter range arguments validation to
+core".
 
-Validation showed that USB 3.2 hub enumeration with USB 2.0 devices
-fails when the UTMI reference clock is not configured to the required
-24 MHz rate. Configuring the UTMI reference clock to 24 MHz to resolve
-the enumeration failure and ensure successful device detection.
+DAMOS filter range arguments are being validated in the DAMON sysfs
+interface.  Some of those have minor time-of-check to time-of-use (TOCTOU)
+bugs.  In future, other callers might have duplicated validations with
+similar bugs.
 
-Cc: stable@vger.kernel.org
-Fixes: 3d89d52970fd ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC")
-Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260921-ipq_clk_changes-v1-2-d242e3d49648@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix the bugs and further refactor the code to move the validation to the
+core layer.  Also add kunit test cases for the validations.
+
+Patches 1 and 2 fix the existing TOCTOU bugs.  Patches 3 and 4 adds the
+validation in the core layer.  Patch 5 drops the replicated validation in
+DAMON sysfs interface.  Patch 6 further cleanup the code.  Patches 7 and 8
+extends kunit tests to test the validation.
+
+This patch (of 8):
+
+DAMON sysfs interface reads the user-provided address range arguments for
+addr type DAMOS filter twice.  Once for validation, and once again for
+assignments to the variable that will be passed to the core layer.  If the
+user updates the argument in parallel, an invalid address range could be
+passed to the core layer.  Avoid it by doing the assignments first, and
+then validating the assigned variables before passing those to the core
+layer.
+
+User impact of the bug should be trivial.  From the core layer's
+perspective, the invalid address range is not really invalid.  It just
+works as having a weird address range.  No critical issues such as a crash
+or a leak could happen.  And sane users ain't do such parallel arguments
+update anyway.  If they do, such racy behavior is arguably somewhat
+expected and deserved.  That said, there is no reason to keep such races.
+
+Link: https://lore.kernel.org/20260914142327.92510-1-sj@kernel.org
+Link: https://lore.kernel.org/20260914142327.92510-2-sj@kernel.org
+Fixes: 2f1abcfccd86 ("mm/damon/sysfs-schemes: support address range type DAMOS filter")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@davidgow.net>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq5332.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/damon/sysfs-schemes.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-index 9246e97d785a1..1d02c35c67225 100644
---- a/drivers/clk/qcom/gcc-ipq5332.c
-+++ b/drivers/clk/qcom/gcc-ipq5332.c
-@@ -1039,6 +1039,7 @@ static struct clk_rcg2 gcc_usb0_master_clk_src = {
- };
- 
- static const struct freq_tbl ftbl_gcc_usb0_mock_utmi_clk_src[] = {
-+	F(24000000, P_XO, 1, 0, 0),
- 	F(60000000, P_GPLL4_OUT_AUX, 10, 1, 2),
- 	{ }
- };
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 37e0a8bef4b1f..e95cddca0a10d 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2484,12 +2484,12 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
+ 				return err;
+ 			}
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_ADDR) {
+-			if (sysfs_filter->addr_range.end <
+-					sysfs_filter->addr_range.start) {
++			filter->addr_range = sysfs_filter->addr_range;
++			if (filter->addr_range.end <
++					filter->addr_range.start) {
+ 				damos_destroy_filter(filter);
+ 				return -EINVAL;
+ 			}
+-			filter->addr_range = sysfs_filter->addr_range;
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
+ 			filter->target_idx = sysfs_filter->target_idx;
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
 -- 
 2.53.0
 
