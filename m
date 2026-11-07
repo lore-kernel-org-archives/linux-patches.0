@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065283;
-	b=Q9VpFEeJX6/wDxAYbiNiP92Q+gSgD2OU1m4CIgzDQKso25qC2fiDFCv5Jo483+b4L9MX
-	 xlVy1UjNUmvHIoeG9WxkjAOPHYZAL0mNzxwUEOVjB+/deoq4teVZn55igPZi4az7vYbda
-	 8g1I2hDW8D03hMjvfa36ZNCPEMMjfhHHDY5qd6iNd3Rlu+tHiMuxUmfSKyvArFZztWOJi
-	 OVafBWSpVOcQSBfniGVdeMKagetW+EDO+X4bXTPYdqyzCK2YMYCNKjHnNwWgePIo/qhLi
-	 xaq5H82hpGJFXeGdu+haDkNHPNSGkItFHFjMsi79v6tb5avexc0eOY7cF5DVf0CGlqg==
+	t=1794065285;
+	b=I7Y83cLe38g4GpdC/J2ymnOKSyurnaE0IMqlTchf0dNdB+re510l6J3yXRNvQBeFL8Px
+	 ohL8AAIwDMjskXlvitZ+83XzaNxoYCBmdtEqS+cB7Jn0Y3kKidf63cihp6DVW+3xuLDfY
+	 gJH4mgVn6htDdCMxdMBFxHJaY9vZQl1xd9lfZyeqeFiKSn3owOH6lDj1ydbpfuHvGOyfS
+	 eqWxEKvxPlXo9v+uEFj1x0aPJHKGEA7rtDKt/aaSyhuzXR/lWt4o0VkmPaZeJWxwwKWoD
+	 tYypoQ7nv5CrWVPTqeoPCLzxka/b0+F36bilgm/kEnRyKsazmktPE2EaAIrLOXLgCdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u1UoSpWvw+u4unU5qN4gIek/8JP2794gDuuJBVPD9JA=;
-	b=anerD0u9PH01IPXYuqkUfCyuMJaNM1vE5cos33Tahmrr8c+R5NyU7CT4z7TaRLAFN1sZ
-	 u6cllnPwqogE65cmwGLOJfR1HvHjLx9CKsQw/B0RtM9rQrwy+wJ8DujJFL5kh0motS8Co
-	 +7INs2UItlgpqRcd/lfrk20OSdWCX+/tS3yLEH53i0X6JeX1mIBx4Q9hTN1q2bEqHua95
-	 PRcAi0V22IGWrXSIQzulMjzua732rk6j6vSM9IyLyMuYcm7ePe070cMkdWYDdibIvu6Hd
-	 HIrLZXDQkT0R43G6G7flfxkz63CuOQHtZQR6Z5qkMBh3wIgctTPn25uEywxXQBUYfhA==
+	bh=Z1C2RxqTcMbk9URwcLSfX1gEF/SpEijCW4yTY0CDSa4=;
+	b=bykUDtZKZ3CzJRUx7WxVFn06EkjvKwShXvHAATY2AX5Lhj3/MJtlx2i5+d9UBd2v5Jlw
+	 cuUeXPzlLEMA9OQmLh2bpQSUmAYIzMDd0ke0QIZjT5Pxvt7jCEUxLa6eqaCI+djjbFfsF
+	 Cup2ekDtePrK+hN7Ilj7mrDW64O4+NU6qbIX3hGnc/8jjT0FklKv8JtIMrrQTiyupGvSW
+	 pG4yKmhHnmqhJep7OEOWfo6CNRja14xlgYNLrqsHl/hKiywskqyXj03uYQHOUUuwWWmst
+	 n+aq1+MqVksJMZoxta/KX3+CzFOS0rFvYOjqBbPjhCQT3sgnAvSeOlKDEhkBa/H1M4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LiXPbfxf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BuQO7b/k";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DF2606A326;
-	Sat,  7 Nov 2026 15:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4E1606A32E;
+	Sat,  7 Nov 2026 15:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LiXPbfxf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377641F008A1;
-	Sat,  7 Nov 2026 15:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BuQO7b/k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B19B1F008A1;
+	Sat,  7 Nov 2026 15:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065283;
-	bh=u1UoSpWvw+u4unU5qN4gIek/8JP2794gDuuJBVPD9JA=;
+	s=korg; t=1794065284;
+	bh=Z1C2RxqTcMbk9URwcLSfX1gEF/SpEijCW4yTY0CDSa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LiXPbfxfCAiMaIpAz8q4QVXLReLTG6EPrDQHx8p4C80mQl2ssQo93kx8mZi3FBi44
-	 ICvGEoc01a6EExIVFCsumJPE38Rm55BqHOZsG7oKXbPWWq9H5lEFFPfYYDqoOM3sXx
-	 tWUMMKc01MbhxQV3mFCkh+iHc/F5MlONX0iahYz8=
+	b=BuQO7b/kCefzpfiEIr8IOPnw8Z3UkRekU3kJNaO5q+TzCWdmPBddPmidExfw2Svkj
+	 gujSXdrV9DQNdXQLiCXTsXbCzWUvKoNuf5hHp1FeDCnvbfbxZYNlAZIUIKwsW0kfHc
+	 D19S5SbLCcJihK8qLutCLKRQVa5QkHzKuscF26NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.3 1044/1257] cgroup: dont kill migrated processes through their exiting threads
-Date: Sat,  7 Nov 2026 08:55:40 -0500
-Message-ID: <20261107135008.144227505@linuxfoundation.org>
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Eugene Lee <eugenehlee@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 1045/1257] gve: fix out-of-bounds read in gve_get_flow_rule_entry()
+Date: Sat,  7 Nov 2026 08:55:41 -0500
+Message-ID: <20261107135008.170174062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,59 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 5f4a3f743acc96987ae5c2e966947942c34ba56c ]
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-Since commit da13e0e72a73 ("cgroup: fix cgroup.kill for exited thread
-group leader"), __cgroup_kill() visits every thread in the cgroup and
-sends SIGKILL with PIDTYPE_TGID, so each visited thread takes down its
-whole thread group.
+[ Upstream commit 45e0a63f9c86a558afc70d79b6df38f8ec7f502a ]
 
-A thread that has started exiting can stay in a cgroup after its process
-has been moved out of it. cgroup_migrate_add_task() skips PF_EXITING
-tasks, and the thread is only unlinked by cgroup_task_dead() after its
-final context switch. mm_release() clears the thread's clear_child_tid
-word and wakes the joiner well before that, so pthread_join() can return
-while the thread is still in the old cgroup.
+gve_get_flow_rule_entry() checks the requested location against the
+first and last cached rules, but rules_cache_num can be 0 while
+rules_cache_synced is true: GVE_FLOW_RULE_QUERY_RULES returns the rules
+from the requested location onwards, so a request past the last
+installed rule - or any request when no rules are installed - returns
+zero rules, which the driver accepts and marks as synced.
 
-If cgroup.kill is written in that window, __cgroup_kill() finds the
-exiting thread and complete_signal() passes the group-wide SIGKILL on to
-a live thread, killing a process that already left the cgroup. The cgroup
-selftest test_stress.sh runs into this: test_cgcore_proc_migration()
-joins its threads, moves itself back to the root cgroup, and cg_destroy()
-falls back to cgroup.kill on the old cgroup when rmdir() fails with
-EBUSY, so test_core kills itself. KernelCI has been reporting
-"with_stress.sh: line 94: ... Killed" on several arm64 boards since the
-commit reached linux-next.
+The next query evaluates rules_cache[*cache_num - 1] with
+*cache_num == 0. The zero-initialised cache does not trip the earlier
+comparison, *cache_num - 1 wraps to 0xFFFFFFFF in u32, and the read
+faults about 352 GiB past the cache. ETHTOOL_GRXCLSRULE needs no
+capability, so an unprivileged user can trigger it:
 
-Keep visiting every thread, but go back to sending SIGKILL to the thread
-that was found. A SIGKILL sent to a live thread still kills its whole
-thread group, so both cases fixed by that commit stay fixed, and
-task_can_queue_signal() drops one sent to a thread that is already
-exiting.
+    BUG: unable to handle page fault for address: ff240996c4c64fa8
+    #PF: supervisor read access in kernel mode
+    RIP: gve_get_flow_rule_entry+0xd4/0x110 [gve]
 
-Fixes: da13e0e72a73 ("cgroup: fix cgroup.kill for exited thread group leader")
-Cc: stable@vger.kernel.org # v5.14+
-Link: https://lore.kernel.org/all/179272264722.329188.4773475583351189022@6e52bff8000c/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Treat an empty cache as a cache miss and re-query.
+
+Fixes: 6f3bc487565d ("gve: Add flow steering ethtool support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Reviewed-by: Eugene Lee <eugenehlee@google.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/AS8P251MB0001135AF3233180DC42DCD1C8672@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve_flow_rule.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index a1cc11009e49e..2d582603a7114 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -4299,7 +4299,7 @@ static void __cgroup_kill(struct cgroup *cgrp)
- 		if (__fatal_signal_pending(task))
- 			continue;
+diff --git a/drivers/net/ethernet/google/gve/gve_flow_rule.c b/drivers/net/ethernet/google/gve/gve_flow_rule.c
+index 2c80cda28ef30..db8b9a39bfc89 100644
+--- a/drivers/net/ethernet/google/gve/gve_flow_rule.c
++++ b/drivers/net/ethernet/google/gve/gve_flow_rule.c
+@@ -206,6 +206,7 @@ int gve_get_flow_rule_entry(struct gve_priv *priv, struct ethtool_rxnfc *cmd)
+ 		return -EOPNOTSUPP;
  
--		do_send_sig_info(SIGKILL, SEND_SIG_NOINFO, task, PIDTYPE_TGID);
-+		send_sig(SIGKILL, task, 0);
- 	}
- 	css_task_iter_end(&it);
- }
+ 	if (!priv->flow_rules_cache.rules_cache_synced ||
++	    !*cache_num ||
+ 	    fsp->location < be32_to_cpu(rules_cache[0].location) ||
+ 	    fsp->location > be32_to_cpu(rules_cache[*cache_num - 1].location)) {
+ 		err = gve_adminq_query_flow_rules(priv, GVE_FLOW_RULE_QUERY_RULES, fsp->location);
 -- 
 2.53.0
 
