@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062963;
-	b=iuRVJihbxeTtl2sACfImSUJJHtkUglGdSuh/XCms8IbkoJg1I92O24NoDgUyPBJkxjJi
-	 kpvbpQFoCjCxYJmlT0WumZB6Jt4tXUKwzPT9JdNRd6tbzZXVL2QmPcqABVC7Qg7I19A98
-	 Ru2turaH0DnKHxpNjjfMk+5BVThEY2NhkGxZku6/9YbqwIofNlO6fYdByy/itM6kyyaCa
-	 OwLMo/4A0z7gVLEsVM/2rVsHtUvUSkhK9wNduJvNKk/ZnxtdYSaKtc2KD7yCg3Cc9x4WB
-	 HrMcamnuO6Gsuq7Q6d8GCLcnhcQHRIFnTNn+SHtLLFJVvQbadxdMSK/nycFqmsT229w==
+	t=1794062964;
+	b=ytOZ0aFG0Yu1d7McO5Lhk4onI264ruvq/nLJdTm3X6IETPGK5+7btX0n4ZVgnQ3a40FX
+	 JT8lIfAMekS/Wk5It0NPhXsXJrFsKPeTLGFkZrKpjg5Drt1RbOd8OZYcFdddwG5Q4wFxM
+	 mWG8kB5akWwxypvxUw/KUSx7qcpzP8qLI6ZiQ/XK++Wd8xUvVUtVrChVzwyZ2wg5zpy1+
+	 DMil8YLFBdHR4VloctNE63BVMlt2BHZ5IJrambbgwFsSoHsnolp+5HHSa6YNwOao9pCx5
+	 4L+Iu9NE9uk48JkNujtjKuV0Hfa8QFxvx+mz7EFfhBw/GEq69Dp+wIKRH6ZViCjkpZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062963;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OMNq+Y6cG7A/iIM7S5K3DYJelKD4QZCkzEuikpth6Ww=;
-	b=InnfKBtBKEy3hp2SyK8ScyofNbQQYKOtW7Ub4n4+DlqegECHfFVI7jNZzl1G8MfesGwN
-	 AfNP2R0/bnbg23m6nmkXsrx3SpUAGiI59IWBaHqISuKEBkcT6xurBcTii9vJKZUqtmGsl
-	 FEvlmEYr88p6mdyAJICKr2wKlC0B0s88anF/vOJjnxReCOgV7YiCg09wFlGVlCX/G11cG
-	 frvGKqUDVIGt+YvYAIfWKKv7mC7paEDZGn2HCz0hdoZjJ7P1uZmOE6ch/yzLF3HIujKbV
-	 5NhJP2KgSKYCqBQ9iqFU/TuhLHs53v9r+81AQmg3fm0PDkJ/DoiXSVt9mGgfM0+78wQ==
+	bh=daXHdOlJaPOGv5AfODQhcZpZ7rNlEbo9VmEXjbbSrPE=;
+	b=BAlX7bXQfPSqHHmUePhJL1owB5JtKkrCA2ABtCZPNeUokQ+BfC42KY13lC3IFT1d5ki9
+	 /zGbFB87hpPCNwcNrQNU86QYUX5kZi8m4NWoxuW8NGYvUWeK/CPbGf+5YMliEHX7tL9Ii
+	 2mMdLghxDrhQdtHVjswU6SEF/p9dZoFrFZcihYm6nnpHek21SAlZ2UhJV89JvAm8bPgH5
+	 UBRHNCx2F8kEmNCya8ptLULVem5CPQlZUABPYl2HsjyuTb3QLlu0N8Cwp7zp7baGd0vfM
+	 wmAZuA9bbB/HeQ3/R31+9iKUj4EJM0tSvFtG8eEvsp2wQi5BmXuLn3lL8us6N106csg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unSS167W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FOBJE9OK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56807606A32C;
-	Sat,  7 Nov 2026 14:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85790606A32C;
+	Sat,  7 Nov 2026 14:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unSS167W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045821F0089F;
-	Sat,  7 Nov 2026 14:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FOBJE9OK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AFF1F0089F;
+	Sat,  7 Nov 2026 14:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062963;
-	bh=OMNq+Y6cG7A/iIM7S5K3DYJelKD4QZCkzEuikpth6Ww=;
+	s=korg; t=1794062964;
+	bh=daXHdOlJaPOGv5AfODQhcZpZ7rNlEbo9VmEXjbbSrPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=unSS167WjNl7N4STHHJLdnXO7jMVWva58LvV+i1rQsNTL+ekcshiyFXmEPnqU6DD4
-	 8u2gpcUlFRWajnXYnidQMLY8+BpPPYUPKGNW7tmbnxALzMwveXe6pbjGxubFFLok9U
-	 7QsHMcy37d/w9R75gqksirHghnwwGnT+66L7kJ1k=
+	b=FOBJE9OK+TIIN7PNSeDGQtVYathfu3HKZrtzksi0b5zc8tw/cECJdovN9IS5stdEW
+	 m/NTwtR8HHLrxl79YO6GXF8bLhdXgLaq8zpETHugWDjygxOD/5Kk9cbqJka2OgONFq
+	 u/Qiq4A8U4vb8iOWuGEot03GjTsy46hIMd/inEis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 224/869] arm64: dts: freescale: imx8mp-toradex-smarc: fix SMARC_SLEEP# gpio-line-names typo
-Date: Sat,  7 Nov 2026 08:48:26 -0500
-Message-ID: <20261107134859.477992798@linuxfoundation.org>
+Subject: [PATCH 6.18 225/869] arm64: dts: freescale: imx8mp-verdin-yavia: fix external GPIOs
+Date: Sat,  7 Nov 2026 08:48:27 -0500
+Message-ID: <20261107134859.507313322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,42 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 90bc5a53c7f0733ec37a5c041b4e1aefa3d8d965 ]
+[ Upstream commit f377ac5999a5d045168ddd25d204691c6653c06a ]
 
-gpio3's gpio-line-names has "SLEEP#" instead of "SMARC_SLEEP#" for the
-SMARC SLEEP# connector signal, while the gpio-keys node driven by the
-very same GPIO line already labels it "SMARC_SLEEP#", and the imx95
-Toradex SMARC variant names the equivalent line "SMARC_SLEEP#" too.
+pinctrl_gpios_ext_yavia (SODIMM 64/66) is defined but never applied to
+gpio3, so those pins stay at their NAND reset function instead of GPIO.
 
-GPIO line names are meant to be stable across the whole Toradex SMARC
-family, using the official SMARC-connector signal names from the
-SMARC specification and the SoM datasheet's pin assignment table, so
-userspace GPIO tooling that looks up a line by name works the same on
-any Toradex SMARC board.
+Fix SODIMM 64 to the correct pad, MX8MP_IOMUXC_NAND_READY_B (GPIO3_IO16).
 
-Fixes: 97dc91c04558 ("arm64: dts: freescale: add Toradex SMARC iMX8MP")
+Fixes: b694fbe2ff40 ("arm64: dts: imx8mp-verdin: Add yavia carrier board")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
 Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi
-index bebe19eb360f8..576da7875601f 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi
-@@ -323,7 +323,7 @@ &gpio3 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
+index cc389cda2af2e..20d99012d4f32 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
+@@ -117,6 +117,11 @@ &flexcan1 {
+ 	status = "okay";
+ };
+ 
++&gpio3 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_gpios_ext_yavia>;
++};
++
+ &gpio4 {
  	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_lvds_dsi_sel>;
- 	gpio-line-names = "ETH_0_INT#", /* 0 */
--			  "SLEEP#",
-+			  "SMARC_SLEEP#",
- 			  "",
- 			  "",
- 			  "",
+ 	pinctrl-0 = <&pinctrl_ctrl_sleep_moci>;
+@@ -262,7 +267,7 @@ MX8MP_IOMUXC_NAND_DATA03__GPIO3_IO09	0x106	/* SODIMM 62 */
+ 
+ 	pinctrl_gpios_ext_yavia: gpiosextyaviagrp {
+ 		fsl,pins = <
+-			MX8MP_IOMUXC_NAND_CE1_B__GPIO3_IO02	0x106	/* SODIMM 64 */
++			MX8MP_IOMUXC_NAND_READY_B__GPIO3_IO16	0x106	/* SODIMM 64 */
+ 			MX8MP_IOMUXC_NAND_DQS__GPIO3_IO14	0x106	/* SODIMM 66 */
+ 		>;
+ 	};
 -- 
 2.53.0
 
