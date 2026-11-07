@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063135;
-	b=R8m004uVNFXVd6oKoqYuwNZf6KJeDosbu9ClcgQD9hIq5jifGZZZEX750FMAA3y4cf7y
-	 0I5Jvlryv/M5fjSs8mC1pcRvaucN1K6MqshXFJi58WGJhv8r1tD3gF0+tZQzrAjS1NY+Z
-	 tOZda2ADO8H8rKflKX5h4dh0RS2kgdveKpcXj7TJcMTz6T0A6fnk58aQ782bHddadCBqf
-	 4FJpf0TQwIefcTZB+bvuv5SLn80pQw4kuweaO0k/20Sd9gk+fe/GutIb/tUMxQvxwoWc+
-	 vSTlimRi2Z5wJap46Ya3oGZmBQTm+ljkSF/KmYjgPRAKipPToQB/wQ5iUqcEsJKn6eg==
+	t=1794063137;
+	b=GBA728RZJkuvxsuISyvO1Wf/88NMXxuA0nVe/AzeXhg88SWlNe68vCmxbvi56vWBwAcp
+	 9Su1v2tFezPLRL/oMzAqxTqBD/evY0feYFHh+VXmhRGGg3hKwAhrlptAv/Mz9q/Ob2bxB
+	 BMXJlpQq2A6LYhog+jsV7/2zvnjwqvHM+jp69Lg54HihaO7DpgOBoshGjpbE6Kku9JgPe
+	 X8KVOt0N4oqjIdG3mBlcib7s2oWl3acWnMbTzezM5SalqAsPfhNIXeBgikNJqAEv1Gj/S
+	 xsvIcLGv4t0SugGZJ22vjIScf6EiHuWNa+EvGCVLdeZZvkMEK+JMEJqQNSnGddTZZTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063137;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6huHyqFeIBKMvGDHzWGxho6A1r78PXkv6qo8rjIodcY=;
-	b=PmwL4AtJ6gyN5td3kd7T6a1lS7w3/4su9vXFwgMqAitpRka2ZRCgT4TnAoHExpGqC8Eh
-	 jSWpM/tE8ZxEIu2u1578xUk9WSmYTqrBg/RucfkiM45b951MJ43MInwyxJUjnc7XkhAIV
-	 Y1q7uUYalWqY9hNgItwi473OfRVMUsn/sMwrW/Lcy52psGT3J5ikNCWKE/JJUfqihFDEn
-	 5n+DDgpLp58jrrDE36diDtzWuEyAj/ygNo9XQDIc7f35niwIpKxXXDsDUFItBHkCgbTHc
-	 fMWOaJa57MFd1Fl+g5Z6KYP8y8pqAWfywmRFc8WThgw4ywEOAZXeeLxOaYEgbK+p8UQ==
+	bh=pc9IRZ54AUeKErUXvyrvvVsxNeINTUz+TKZPyrQ1Bn8=;
+	b=rE/kiLuWR5UVsIaoyaOslNgRiVwrSTVS+o9UsCG9NA3fY6gsxjL5aJPS1F8pKKnfomkU
+	 WkfnFOHver/+huY0FIz9MBum9d9Of7axdOWAk0CtzpQ/e9z1DH8gb3AZ0bJiUaThcL1Tv
+	 QEm/UkS8EqNbyXNzsoCuSLtDztg7KvEAvf5O9pATn6E2zRtYue/dyCp0HykUkdWGc7bUx
+	 nUKEZMm3Gr6rrqDgY0rP1mupSBe3/jJgUvo+5S8QzUm56E9D/Yxk6vZdSCtln2qMqXHv9
+	 wuFhfPc2Ip4pwe475DIvW6xR4l3sqK+pRbrOel9dcSdzRgL2KMMHIQadb3o9G18E1qQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nc1ga4no;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SO3B5Gdv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE77606D81B;
-	Sat,  7 Nov 2026 14:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9E9606D814;
+	Sat,  7 Nov 2026 14:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nc1ga4no
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9581F008A1;
-	Sat,  7 Nov 2026 14:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SO3B5Gdv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7EE1F008A1;
+	Sat,  7 Nov 2026 14:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063135;
-	bh=6huHyqFeIBKMvGDHzWGxho6A1r78PXkv6qo8rjIodcY=;
+	s=korg; t=1794063137;
+	bh=pc9IRZ54AUeKErUXvyrvvVsxNeINTUz+TKZPyrQ1Bn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nc1ga4nowMlDNPB0syv9787YNNmwsl2PSpXw7mSI8ZT6Vc7cxvoQurgBiDNLPjvMl
-	 X6thPz7bkTQxC3xBJCFE0E7D2KRAnhnW8umDHQpKAq4f6ezje7vixjo0+phFjfHd1R
-	 XjYJ9y93pRCxc9QoQkT0THVRZPm96SIuwa1nZTd4=
+	b=SO3B5Gdv/+3LGwEMkE/J/zWEwlp+bSEQs2OgoADjVBzpZnf7HSEdkOvA5IOVrPeZo
+	 NT+VbYxxZC1A4XUZUxquOzPDRnzL0nIck5319yuDqX7SsJLFnuAd5soprEYazjUxXC
+	 sCRF9vEzU945VTDaIqcf15JMmtwu5HC1wt8BFHME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 364/869] power: supply: ab8500_fg: Report sub-percent charge changes
-Date: Sat,  7 Nov 2026 08:50:46 -0500
-Message-ID: <20261107134904.985556412@linuxfoundation.org>
+Subject: [PATCH 6.18 366/869] svcrdma: Grant credits from the clamped sc_max_requests
+Date: Sat,  7 Nov 2026 08:50:48 -0500
+Message-ID: <20261107134905.122634092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,55 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 4d40dba1815d46c6ef9019ed80e3b998b0fc443d ]
+[ Upstream commit b7037e5da3fb81abcd6309daecb112f1d5926760 ]
 
-The fuel gauge updates bat_cap.mah from the coulomb counter but exposes
-bat_cap.prev_mah through CHARGE_NOW and ENERGY_NOW. It only refreshes
-prev_mah when the rounded integer capacity percentage changes, making the
-momentary properties appear frozen between percentage steps.
+svc_rdma_accept() computes sc_fc_credits from sc_max_requests before
+the Receive Queue depth is checked against the device's max_qp_wr.
+When that check lowers sc_max_requests, the credit grant keeps the
+original value, so the server advertises more credits than it has
+Receives posted. A client that uses the full grant overruns the
+Receive Queue, and the connection is lost with an RNR error.
 
-Refresh prev_mah and notify userspace whenever the new charge remains
-within the currently accepted percentage. If a discharge estimate tries
-to cross upward into a higher percentage, the existing rejection still
-leaves both the reported percentage and charge unchanged.
+Set sc_fc_credits after the clamp so the grant matches the number
+of Receives the server posts.
 
-The AB8500 fuel-gauge implementations in the Samsung-GT-I8160-Codina,
-Samsung-GT-I8160_HD-Codina, Samsung-GT-I8530-Gavini,
-Samsung-GT-S7710-Skomer, Samsung-SGH-I407-Kyle and
-Samsung-SGH-T599-Codina-TMO product trees retain the same percentage-gated
-prev_mah update and contain no finer-grained reporting workaround.
-
-Fixes: 13151631b5bd ("ab8500-fg: A8500 fuel gauge driver")
+Fixes: fc2e69db82c1 ("svcrdma: Clean up comment in svc_rdma_accept()")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-2-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://patch.msgid.link/20260828135036.796842-2-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_fg.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index b122bd473c773..3b0a5bdd352b5 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -1387,6 +1387,13 @@ static void ab8500_fg_check_capacity_limits(struct ab8500_fg *di, bool init)
- 		}
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+index 4afa662430cae..d9bc86fa09bce 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -469,7 +469,6 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 	newxprt->sc_max_requests = svcrdma_max_requests;
+ 	newxprt->sc_max_bc_requests = svcrdma_max_bc_requests;
+ 	newxprt->sc_recv_batch = RPCRDMA_MAX_RECV_BATCH;
+-	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
+ 
+ 	/* Qualify the transport's resource defaults with the
+ 	 * capabilities of this particular device.
+@@ -490,6 +489,8 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 		newxprt->sc_max_bc_requests = 2;
  	}
  
-+	/* Keep the charge properties current between percentage changes. */
-+	if (di->bat_cap.prev_percent == percent &&
-+	    di->bat_cap.prev_mah != di->bat_cap.mah) {
-+		di->bat_cap.prev_mah = di->bat_cap.mah;
-+		changed = true;
-+	}
++	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
 +
- 	if (changed) {
- 		if (di->bm->capacity_scaling) {
- 			di->bat_cap.cap_scale.scaled_cap =
+ 	/* Estimate the needed number of rdma_rw contexts. The maximum
+ 	 * Read and Write chunks have one segment each. Each request
+ 	 * can involve one Read chunk and either a Write chunk or Reply
 -- 
 2.53.0
 
