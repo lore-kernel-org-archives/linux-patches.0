@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063393;
-	b=mVCb2IHpBBmHmw3d4WY3CuznmSRTv0UXs50bGXMv3yVN5luBDSvfImDokUdfWf7rhIhy
-	 u9zIKmgR7cXJCKhoveaFIa+ltNDMq/bpvQbgvk+wSGcKxK+qqRcaghD7aj3CZLbTGTY7Q
-	 mdRD4+Nr85Vm+dLNpj1RDR8DacTryxOjhkh6iU5yLatrSi77nz1TCPgtt/YjrIjl5LkPn
-	 y5Ax+8juL61qw1kHgD9QVfWPBaIyp1ZXWUgL2JFxxFD1qRH8yKZa9tSfO8H3kuNx9Pyl8
-	 sM3/T6h/a2Hx0D/ZTejKw2uvkbbRasknoKpp0wxdADCdAvG3K3CH3LKhhfzM9l8jHpQ==
+	t=1794063394;
+	b=p+w1nGgIzZkJHN1Y/0nd6rx8pgzQ+t1MwH2hsbkfkWB5UNkOAIl/lqXbFr5VO4j6QGeZ
+	 9KtXhryo/eXR/CUnvvyLYBHQOtzR2ThajVTjUdxoS401SHRALeBwSEat+81oRqIxKhS3o
+	 snRs3PMDL8YFL86yeFo72YGQswCxn5jioLOmszBF4x8CQVI0lvK4m8eA4P6gwsaz8b97D
+	 cwmhNurrDHDHj40fcruHNmAHB2/3tk3J4pt3umdHfn/2KC/8KrOa/Jhis5cDa+9vuWqYR
+	 tTU70YL534rysCbbZf9SMCGE8v52KaFeobXxUEe15z/Ef3SPudRFeSeoJZVJPjHsi0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063394;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pxq7ZubBvZRvonRtAMko4FQw27ec4G0hqxc6sMbdpd4=;
-	b=iQzqwgqAXcKBWN2COGV2rc7btv6DTjZlDBUjnyWm1sy4bSmtWkzoReJ96jMw/T1/r1r6
-	 wch0aDJ2n1WwDO0OM1QWRAKISElcoCOovopEccBRjZAiAOBGd5EX8JD7sm4J0/+zWOr73
-	 8Pqtqr7DO0zIM/iRYabp3JTUw9N5t/NCwZqSK3FIc2cO4V2Oi74Vqz0zrISmZaISFrBq+
-	 Kvh7u1jxGGtH/QUx40vLkb/HF46mg64a8HEgpDZmRBpa5Sii3zYJQ2SDzBCS8X1ytjRjE
-	 pfkmc0bCYAJlJd45T6BK9MnZQV6ljfr+MGVdtqc/y0BxFaCfT4Aflmha1axoJQn0Kag==
+	bh=venoDySSttDYBBjNOh1JPOO5BXeou1IV4ef6gMk+z2I=;
+	b=EjBaz48FI0Q/L+vXd75WqRbolzboNS2XkNtWr40Bgl03VEk6tVIPAQgJVMWI3snxpGWt
+	 d8D0pAh/nfriHDbNMaYVR4ERznZ6xRtgKnEOROTx0N7WK7QV/wFQtgzKSynPWNf6uKgaI
+	 /Th2Bzf5dwzycN3DHUrzZ+vloB9eLX9qKDLEy5e19K+MMxjRuQI2iAPLokUsZApupXdOV
+	 53tUqr5R3KHlMS5GsK/I56/zji4VqhVnt4OIi7c43R90frJ/Cu6k/3dbybfq9gGJ/EbZz
+	 86TpOU6FGaARdVVogvMjtloADDAuCIsJBaRUdHzTMf49b26vVIYiObYiQm6hwssOXwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hAFxRQs1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+vvTAh9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB1F606A333;
-	Sat,  7 Nov 2026 14:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B08C606A333;
+	Sat,  7 Nov 2026 14:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hAFxRQs1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B213E1F0089F;
-	Sat,  7 Nov 2026 14:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+vvTAh9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234371F0089F;
+	Sat,  7 Nov 2026 14:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063392;
-	bh=pxq7ZubBvZRvonRtAMko4FQw27ec4G0hqxc6sMbdpd4=;
+	s=korg; t=1794063394;
+	bh=venoDySSttDYBBjNOh1JPOO5BXeou1IV4ef6gMk+z2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hAFxRQs1GDXT1JlUbMvwsq1qACa8vD/QMnU1UhgEtzWVwueCAoprfDLuNKrrIWWJo
-	 1oUz/fwBOEqeUTitIqlJ+SvhBJor171PhuWouj5MfopbfqhIi4/RcLRJm6Hn27Lvz1
-	 5kNYma3MkKopXwU4F7WF0w6oN4KnOsyvSBOVGQoA=
+	b=C+vvTAh9ydigVESG1qdvNA07I+gKDFsJcjSlQ5j96Ns5UnWrFk2jTPHcRjlWzuNfd
+	 rGMBaPjonvH2CMc1ICJ8fY4imFFTKWQkLW5S0kKARbLNZY2hR4wzCZflW21ewG5mHZ
+	 7nJdotkOKRBArIB3W+Hk7npWhVyft4WeaYkzr+Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 558/869] ARM: 9520/1: cacheinfo: avoid out-of-bounds write in populate_cache_leaves()
-Date: Sat,  7 Nov 2026 08:54:00 -0500
-Message-ID: <20261107134912.244418019@linuxfoundation.org>
+Subject: [PATCH 6.18 567/869] Bluetooth: L2CAP: Reject mode changes on connected channels
+Date: Sat,  7 Nov 2026 08:54:09 -0500
+Message-ID: <20261107134912.492086465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,66 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit 41a3f4bc3e4ae4722fd24743bf3f286cea14e3dc ]
+[ Upstream commit c1398cf11b31a94c27ed810ba69515e0df5ce379 ]
 
-populate_cache_leaves() advances its bounds-checking index once per
-cache level, but split instruction/data caches consume two entries.
-CLIDR-based allocation supplies enough entries. Early allocation from
-the device tree can supply fewer and expose an out-of-bounds write.
+A peer can send a configuration response with an RFC
+option for another mode to a connected channel, for
+example to switch it from Streaming to ERTM mode.
+l2cap_parse_conf_rsp() then changes chan->mode, but
+l2cap_ertm_init() is not called again, so the ERTM
+sequence lists are never allocated. The next
+out-of-sequence I-frame makes l2cap_seq_list_clear()
+write through the NULL srej_list.list.
 
-Count each written leaf and stop before a split level that does not
-fit. This prepares ARM for DT-based early allocation and matches
-commit 875d742cf532 ("arm64: cacheinfo: Avoid out-of-bounds write to
-cacheinfo array").
+Refuse the channel when a response tries to change
+the mode of a connected channel.
 
-Assisted-by: LLM
-
-Fixes: a9ff94477836 ("ARM: 9433/2: implement cacheinfo support")
+Fixes: f2fcfcd67025 ("Bluetooth: Add configuration support for ERTM and Streaming mode")
 Cc: stable@vger.kernel.org
-Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20260912195552.76673-2-kmehltretter@gmail.com/
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Closes: https://sashiko.dev/#/patchset/20261007144717.3832330-1-oss%40fourdim.xyz
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/cacheinfo.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/kernel/cacheinfo.c b/arch/arm/kernel/cacheinfo.c
-index e1469b6417804..860eeb03cfe5d 100644
---- a/arch/arm/kernel/cacheinfo.c
-+++ b/arch/arm/kernel/cacheinfo.c
-@@ -151,7 +151,7 @@ int populate_cache_leaves(unsigned int cpu)
- 	unsigned int level, idx;
- 	enum cache_type type;
- 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
--	struct cacheinfo *this_leaf = this_cpu_ci->info_list;
-+	struct cacheinfo *infos = this_cpu_ci->info_list;
- 	unsigned int arch = cpu_architecture();
- 
- 	/* CLIDR is not present before ARMv7/v7m */
-@@ -159,13 +159,15 @@ int populate_cache_leaves(unsigned int cpu)
- 		return -EOPNOTSUPP;
- 
- 	for (idx = 0, level = 1; level <= this_cpu_ci->num_levels &&
--	     idx < this_cpu_ci->num_leaves; idx++, level++) {
-+	     idx < this_cpu_ci->num_leaves; level++) {
- 		type = get_cache_type(level);
- 		if (type == CACHE_TYPE_SEPARATE) {
--			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
--			ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
-+			if (idx + 1 >= this_cpu_ci->num_leaves)
-+				break;
-+			ci_leaf_init(&infos[idx++], CACHE_TYPE_DATA, level);
-+			ci_leaf_init(&infos[idx++], CACHE_TYPE_INST, level);
- 		} else {
--			ci_leaf_init(this_leaf++, type, level);
-+			ci_leaf_init(&infos[idx++], type, level);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 462667a6e6ac2..4e1c21f05e54e 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3801,7 +3801,11 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
  		}
  	}
  
+-	if (chan->mode == L2CAP_MODE_BASIC && chan->mode != rfc.mode)
++	/* A connected channel cannot change its mode, as the new mode would
++	 * not be initialized.
++	 */
++	if (chan->mode != rfc.mode &&
++	    (chan->mode == L2CAP_MODE_BASIC || chan->state == BT_CONNECTED))
+ 		return -ECONNREFUSED;
+ 
+ 	chan->mode = rfc.mode;
 -- 
 2.53.0
 
