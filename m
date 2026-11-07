@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061390;
-	b=mX5I3WWYG+R/pceqiT9qcAEcDmB7H138oWTpsEUIRESi1/WVtb8PNjMO+cTnLdd3qeEp
-	 mgymvYHopPACMFW2skPkz6U8Nl7LYhOhkg6W+8WgHrJ9EYOV/+KTr7d/EMYaAFmad05vP
-	 FVMd563+PAnx6PX/rsPLdwuGdmylYHt4k0f8AvAG7HiWKvIEKhr4USY5nt5D26SczozQ7
-	 pNCcI2999d2mplnvxPuzXImm7o1OmElXOygGbaPXhHtFYoFA+pUMAKLc9BhHkAR7MwzUd
-	 Vc1Rql7MPB+x69hlLw7UuYR88jKVwnFxpL3W+FYHkC2c1P7FT6hIAbYoU0kw/Kpv5Dw==
+	t=1794061391;
+	b=jhAzCOa31Kxaob1gG+SdMJXlyuNtBtnle9gVX3MZ8mgbzDyudS02UJthgrBivWzGAB9/
+	 6HQHUg00g0Emq2GkrsjCDo6P7xUg7Q6dhB7BUdUx+LiVGMH/SKGOiXXC3FXDqKg1HI+rx
+	 WDZ5goUEdE3uNS2shoDvdxk0xUubE9xrM8zLNgPmLoofgjbrvQ6wQ7o/2czWLcO32w0wU
+	 GzA0ta/Vll2cf5KpD0V2k8+e2tzkf0dHa/Rb4oSVJVApC7luq76RptFYUerwm8lBAIkIa
+	 2dzHkasZA0wiwphahkhPf6X+azGmkxB4qyfM0Fbtu5i/vYkxPMFxrpqFsWVZGPPd1+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061391;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=FOKhp/hh1xlzHwbmYtU2hDX3DkLoQsObz1hnYNGj04c=;
-	b=Y174GyNkD6wRE7OvqrobBBOl0RlXLI3mrWQM2F4G1jAi9wShWaeYH+/Ztzz+3CjnFqDr
-	 6WdJ7nPpN4b+QFQTg/7orFvOC9jHkZdAyRE9KKzmrNon8JQbjq+tZe2ZDjuIEAyIX6NPH
-	 PJ6HSeYrRdZluMyE9NoP+Rf61tPtAKYsH5IEhhUac2CtvGsXptDn4sCWTQwVZWjpfZT0z
-	 6hU9DVoCX7WzqGljDy0uLf1Wnd58SUhPG+9zfroZz+tM/Avb6kA1HmmFgnSmGUxw5JlHP
-	 FCrs0DqtCnZjG/su1lon7zSdV5qOWQoPUE2HdmlQjSWqmYO3Hks6HDG0fYTxNBU/pDw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=5JK7/JlR6X8rlBtZk5CmEtKF2Byf5JwgRKACSKN9KM8=;
+	b=ebnHG/fUQnGyV67VKklvBuAUSGkRYqAkAT6Xgbbc6d3+rq7EtY/WKNhYZh6dztmGXnFB
+	 qtEJv/skGfcnGMk34Hvi4e9UgoWh3N3eT+wBa+SA6m6LxGOwlOhIs3Z7KyjCnPJyKI8hK
+	 91sJ5eyg7PzNIJF37Fdb1CAjR2R+ZMlLl9xCfeF+qacbDEo6NcyudLg5Uj7XeqbL2fsgD
+	 QpIWjW225zDnCfrwLn3LRK5O3uils4kXhcGBzmI2SHJS0BH9HYbTVFZr6UnYGJwnh9oA4
+	 a5AIFkabmuuRFX6mpv4QZUJcvYjt0lxm7ZEY5n0GK/Yxw/QTLKWo+jUtvqEp3PjbsTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L4CISInM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EUt6OkIb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273AA606A333;
-	Sat,  7 Nov 2026 14:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59235606A333;
+	Sat,  7 Nov 2026 14:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L4CISInM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB01E1F0089F;
-	Sat,  7 Nov 2026 14:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EUt6OkIb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5921F0089F;
+	Sat,  7 Nov 2026 14:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061390;
-	bh=FOKhp/hh1xlzHwbmYtU2hDX3DkLoQsObz1hnYNGj04c=;
+	s=korg; t=1794061391;
+	bh=5JK7/JlR6X8rlBtZk5CmEtKF2Byf5JwgRKACSKN9KM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L4CISInMTGdxBJ4xVmwhFdKTHCmBK/PtsLFEnl0UitbB4CVbyIwtLomQDTNam6hLG
-	 8+jBzqN1DLCgzO8pGnGJmkXfTPrCO0tZ9yBUYJhXSkBX5qnVrz8YkE1WSSMFQSm8xO
-	 zQGVHV42dL86HXy14laWDfmG0w3S/qn3Ao5yUbJI=
+	b=EUt6OkIbtMRro17EXCKGGQNRNdfbMEjcdWU9XOjwh1TtpHaLUaHzD49YsBucrPD9P
+	 NsLfzdiPj3Bzewiktr7MO/YpHESpH8mYPcWz0Z2ZDiVbFwotCB1NjTGdi9YBQpX0yk
+	 Ak1dnfjJCHrPPAleo3oustmCKsrfZZEn+AX1KJw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0511/1536] cifs: Rename struct reparse_posix_data to reparse_nfs_data_buffer and move to common/smb2pdu.h
-Date: Sat,  7 Nov 2026 08:42:07 -0500
-Message-ID: <20261107135011.790379950@linuxfoundation.org>
+Subject: [PATCH 6.12 0512/1536] smb: client: fix file type corruption in posix_reparse_to_fattr()
+Date: Sat,  7 Nov 2026 08:42:08 -0500
+Message-ID: <20261107135011.817124043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -64,153 +66,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit b6d002f0a345218edbe9de049693004482a81327 ]
+[ Upstream commit 65d5dbdc089be42fc48a6f77bc6b648307f34b17 ]
 
-Function parse_reparse_posix() parses NFS-style reparse points, which are
-used only by Windows NFS server since Windows Server 2012 version. This
-style is not understood by Microsoft POSIX/Interix/SFU/SUA subsystems.
+Setting the file type in cf_mode without clearing the existing S_IFMT
+bits first is wrong as it corrupts the file type when cf_mode already
+has type bits set (e.g. S_IFREG | S_IFCHR == S_IFLNK).
 
-So make it clear that parse_reparse_posix() function and reparse_posix_data
-structure are not POSIX general, but rather NFS specific.
+Use a local ftype variable to collect the new file type and apply it
+after validation succeeds, clearing S_IFMT and setting the new type in
+a single assignment.  This avoids stripping cf_mode on malformed
+reparse points where the function returns false early.
 
-All reparse buffer structures are defined in common/smb2pdu.h and have
-_buffer suffix. So move struct reparse_posix_data from client/cifspdu.h to
-common/smb2pdu.h and rename it to reparse_nfs_data_buffer for consistency.
-Note that also SMB specification in [MS-FSCC] document, section 2.1.2.6
-defines it under name "Network File System (NFS) Reparse Data Buffer".
-So use this name for consistency.
-
-Having this structure in common/smb2pdu.h can be useful for ksmbd server
-code as NFS-style reparse points is the preferred way for implementing
-support for special files.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Closes: https://sashiko.dev/#/patchset/20260906172005.627163-1-pc%40manguebit.org
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 65d5dbdc089b ("smb: client: fix file type corruption in posix_reparse_to_fattr()")
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifspdu.h | 14 --------------
- fs/smb/client/reparse.c | 12 ++++++------
- fs/smb/common/smb2pdu.h | 14 +++++++++++++-
- 3 files changed, 19 insertions(+), 21 deletions(-)
+ fs/smb/client/reparse.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
-index 30bdb424c81f2..55514393acdfb 100644
---- a/fs/smb/client/cifspdu.h
-+++ b/fs/smb/client/cifspdu.h
-@@ -1475,20 +1475,6 @@ struct file_notify_information {
- 	__u8  FileName[];
- } __attribute__((packed));
- 
--/* For IO_REPARSE_TAG_NFS */
--#define NFS_SPECFILE_LNK	0x00000000014B4E4C
--#define NFS_SPECFILE_CHR	0x0000000000524843
--#define NFS_SPECFILE_BLK	0x00000000004B4C42
--#define NFS_SPECFILE_FIFO	0x000000004F464946
--#define NFS_SPECFILE_SOCK	0x000000004B434F53
--struct reparse_posix_data {
--	__le32	ReparseTag;
--	__le16	ReparseDataLength;
--	__u16	Reserved;
--	__le64	InodeType; /* LNK, FIFO, CHR etc. */
--	__u8	DataBuffer[];
--} __attribute__((packed));
--
- struct cifs_quota_data {
- 	__u32	rsrvd1;  /* 0 */
- 	__u32	sid_size;
 diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index de070b108180b..53ed9bae23a86 100644
+index 53ed9bae23a86..ceddb4ec10ba1 100644
 --- a/fs/smb/client/reparse.c
 +++ b/fs/smb/client/reparse.c
-@@ -242,7 +242,7 @@ static int detect_directory_symlink_target(struct cifs_sb_info *cifs_sb,
- 	return 0;
- }
- 
--static int nfs_set_reparse_buf(struct reparse_posix_data *buf,
-+static int nfs_set_reparse_buf(struct reparse_nfs_data_buffer *buf,
- 			       mode_t mode, dev_t dev,
- 			       struct kvec *iov)
- {
-@@ -281,13 +281,13 @@ static int mknod_nfs(unsigned int xid, struct inode *inode,
- 		     const char *full_path, umode_t mode, dev_t dev)
- {
- 	struct cifs_open_info_data data;
--	struct reparse_posix_data *p;
-+	struct reparse_nfs_data_buffer *p;
- 	struct inode *new;
- 	struct kvec iov;
- 	__u8 buf[sizeof(*p) + sizeof(__le64)];
- 	int rc;
- 
--	p = (struct reparse_posix_data *)buf;
-+	p = (struct reparse_nfs_data_buffer *)buf;
- 	rc = nfs_set_reparse_buf(p, mode, dev, &iov);
- 	if (rc)
- 		return rc;
-@@ -474,7 +474,7 @@ int smb2_mknod_reparse(unsigned int xid, struct inode *inode,
- }
- 
- /* See MS-FSCC 2.1.2.6 for the 'NFS' style reparse tags */
--static int parse_reparse_posix(struct reparse_posix_data *buf,
-+static int parse_reparse_nfs(struct reparse_nfs_data_buffer *buf,
- 			       struct cifs_sb_info *cifs_sb,
- 			       struct cifs_open_info_data *data)
- {
-@@ -639,7 +639,7 @@ int parse_reparse_point(struct reparse_data_buffer *buf,
- 	/* See MS-FSCC 2.1.2 */
- 	switch (le32_to_cpu(buf->ReparseTag)) {
- 	case IO_REPARSE_TAG_NFS:
--		return parse_reparse_posix((struct reparse_posix_data *)buf,
-+		return parse_reparse_nfs((struct reparse_nfs_data_buffer *)buf,
- 					   cifs_sb, data);
- 	case IO_REPARSE_TAG_SYMLINK:
- 		return parse_reparse_symlink(
-@@ -753,7 +753,7 @@ static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
- 				   struct cifs_fattr *fattr,
+@@ -754,6 +754,7 @@ static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
  				   struct cifs_open_info_data *data)
  {
--	struct reparse_posix_data *buf = (struct reparse_posix_data *)data->reparse.buf;
-+	struct reparse_nfs_data_buffer *buf = (struct reparse_nfs_data_buffer *)data->reparse.buf;
+ 	struct reparse_nfs_data_buffer *buf = (struct reparse_nfs_data_buffer *)data->reparse.buf;
++	umode_t ftype;
  
  	if (buf == NULL)
  		return true;
-diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index 6fab72b5b60d7..e4211f871370f 100644
---- a/fs/smb/common/smb2pdu.h
-+++ b/fs/smb/common/smb2pdu.h
-@@ -1582,7 +1582,19 @@ struct reparse_symlink_data_buffer {
- 	__u8	PathBuffer[]; /* Variable Length */
- } __packed;
+@@ -769,7 +770,7 @@ static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
+ 			WARN_ON_ONCE(1);
+ 			return false;
+ 		}
+-		fattr->cf_mode |= S_IFCHR;
++		ftype = S_IFCHR;
+ 		fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
+ 		break;
+ 	case NFS_SPECFILE_BLK:
+@@ -777,22 +778,23 @@ static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
+ 			WARN_ON_ONCE(1);
+ 			return false;
+ 		}
+-		fattr->cf_mode |= S_IFBLK;
++		ftype = S_IFBLK;
+ 		fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
+ 		break;
+ 	case NFS_SPECFILE_FIFO:
+-		fattr->cf_mode |= S_IFIFO;
++		ftype = S_IFIFO;
+ 		break;
+ 	case NFS_SPECFILE_SOCK:
+-		fattr->cf_mode |= S_IFSOCK;
++		ftype = S_IFSOCK;
+ 		break;
+ 	case NFS_SPECFILE_LNK:
+-		fattr->cf_mode |= S_IFLNK;
++		ftype = S_IFLNK;
+ 		break;
+ 	default:
+ 		WARN_ON_ONCE(1);
+ 		return false;
+ 	}
++	fattr->cf_mode = (fattr->cf_mode & ~S_IFMT) | ftype;
+ 	return true;
+ }
  
--/* See MS-FSCC 2.1.2.6 and cifspdu.h for struct reparse_posix_data */
-+/* For IO_REPARSE_TAG_NFS - see MS-FSCC 2.1.2.6 */
-+#define NFS_SPECFILE_LNK	0x00000000014B4E4C
-+#define NFS_SPECFILE_CHR	0x0000000000524843
-+#define NFS_SPECFILE_BLK	0x00000000004B4C42
-+#define NFS_SPECFILE_FIFO	0x000000004F464946
-+#define NFS_SPECFILE_SOCK	0x000000004B434F53
-+struct reparse_nfs_data_buffer {
-+	__le32	ReparseTag;
-+	__le16	ReparseDataLength;
-+	__u16	Reserved;
-+	__le64	InodeType; /* NFS_SPECFILE_* */
-+	__u8	DataBuffer[];
-+} __packed;
- 
- struct validate_negotiate_info_req {
- 	__le32 Capabilities;
 -- 
 2.53.0
 
