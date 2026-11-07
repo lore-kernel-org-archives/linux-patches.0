@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064729;
-	b=cb7iAKHJEPTotBRQHgBNliuTHxa8G6nNPgLjECBZYCSL+WLFPbK1ZSuw1ifxtgaz3EHO
-	 4vP7SWx7PQcsThD4MpVVSIi8jY9B6MI/Xvts46U06GdGzE+MSwhgicuW0rJrO7L2CdCJ6
-	 0T3xIS95thL9r2xHYaCrBUVll4nHeSFvNluxOkxQIXFRqrzI6Gj8W+vfHqdcjwDbzAyzC
-	 T6aAI2mPhP770xUfh78Hu1QoNV5ff4nxHXULubMs7MpgaDSi+3sCNjbsaBXB5WHRb4XiL
-	 ynA01KsmDm5UodFRo5jmRT8D4OeyrlczOnf0Kf+G9Rt8QDeIOxae/s7UsasCSmnTHMw==
+	t=1794064731;
+	b=lcMz8rj+8QgGXpXQenmXLpNCMZRr/X+e6PSy17EzUfv4w34aF0NUDT4TQYkz4wKnuGWh
+	 Vg35xLngDUfKc7nrzB43BC6WIjjeS2MV6UZfC1b9iR3G4H8rwrtOXPG1hN7efe2ihYeIc
+	 Ej4XKu8gLtNIKt8kVWx0CZ4g6wOHhKU0hNqiQEem72VfUamsHCxPS/c3zZkuXxady+Sit
+	 uRqiZp6Ps9X1F2nIv4QAsZnTeoHKwRb/gHkN1Ns4BsjnExxqz/oe1qQeMEQ6RKU477d5V
+	 df/1K2srjXb9DDuDHVT7lDwksu+MMEvMRBbPR2om/0iHPnkorqXJ7UhsYEyxUA0cgOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064729;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lb8LhMeXNyvmSo5zq4TXHw6PPQTJ85mV4RDc0xiCxYs=;
-	b=1HAlRzs2zSl5LByL/rozKIXoKjgSMobqgdhVa55eW9OGgsB/VXkioW1RiGOQEJyu7nh4
-	 thrTojo+SZGEBptuEfADIBXU/ij3opPKQ00vvZwu/iUXnG/5L54nXzDN8VFJaYuXn69cr
-	 aVnIWHb6T20OttFCURmi9RTIS8f9M/v/4bi2nh3CWSAir48ccpXIGubZwj71JTaNDF1Yr
-	 lWMOh52ni7ESOL5t2Wx+Yr3r0GSW77Usd029IGodWHXFZyTX5tqVtknWRnyx5sMf1oozu
-	 AS7yj+MITIOqkMO6rexIRLD/Pb80jGTE8HYp6E+iZx5JH+snIYiFo4+Gz9WaBYZvmrw==
+	bh=BU1osPfhF63qk2h4tPzVE3trhYenjbfAHqOnSz0oGtI=;
+	b=ovx3wV0szIWvGbpX9lhj5X/ybCCTGNL4+vRPnhEvvOhIxxXqbZTEy9gAof/KWxXfnpi1
+	 aFydDbWxdJPNGOIiiJiX/39PC683uPC6FyJWGRI7jZLdG31J0606yonOXW6y397CSg1nJ
+	 YyAqVM94BEM8ouyBenHP3mj0lZDzw9/4seqEnSmT/olxLVXkETKZY4ty/1jWcATSRR9s1
+	 Nmj39BOfbuuOZW+rkjn3sl4+i/OOJlPefH7lbITCX6v0Vl43OCU9P+hqCw/bkoFOwSvKN
+	 9R6zYwanTmqNiMGZf4lMpTNlPoFopJXtp1BJq0oNtqoe0gYKzf0YEsKTbYUph+5Zl3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U6CYfzEQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq9k6giJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741F7606A9C9;
-	Sat,  7 Nov 2026 15:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E475C606A9C9;
+	Sat,  7 Nov 2026 15:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U6CYfzEQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3C01F008A1;
-	Sat,  7 Nov 2026 15:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq9k6giJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979941F0089F;
+	Sat,  7 Nov 2026 15:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064729;
-	bh=lb8LhMeXNyvmSo5zq4TXHw6PPQTJ85mV4RDc0xiCxYs=;
+	s=korg; t=1794064730;
+	bh=BU1osPfhF63qk2h4tPzVE3trhYenjbfAHqOnSz0oGtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U6CYfzEQdQhUgJK3T1H1fMq2udum81brK7JQk+obiGr8jgM5RYtQ6Y3v8+IkQKA11
-	 w+5O/9N2o9GzvrxyQEAf/kKKpR3pgL7MwJ4o1QdT8rH+HGb+IWA55ofVcItLw/iHd9
-	 AghucZKLOtuK0sa/WaeCUEPeFJ4xwkXo7P6FBLow=
+	b=hq9k6giJxXVQMQjzZu3vSpuQiEzEEdp5WHUM3WDE6LudiCMlmFP6tsumWeW85X4OI
+	 zHEUNlDfdIzsYt/w9m+rHaU8uWSTPBtBn3Hsujx/Yea1lSQzndaKQE8n9WfB/SbM8F
+	 PHgM51Jo7L8GZ/Zs+49ZlDLdF1YXG2yuSBx4t8Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Pankaj Raghav <p.raghav@samsung.com>,
 	Andrea Parri <parri.andrea@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0705/1257] iomap: dont lose a fiemap iteration error when emitting the last extent
-Date: Sat,  7 Nov 2026 08:50:01 -0500
-Message-ID: <20261107134958.724595671@linuxfoundation.org>
+Subject: [PATCH 7.3 0706/1257] iomap: dont lose a failed direct I/O bios error when zeroing the tail
+Date: Sat,  7 Nov 2026 08:50:02 -0500
+Message-ID: <20261107134958.753445717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -73,62 +73,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 0d0104adc2c8316433b660cdf6d182a09881864f ]
+[ Upstream commit a9fd24bcbe690ed4a5b8ea6a7516fa297fae9360 ]
 
-iomap_fiemap() emits extents one behind: iomap_fiemap_iter() flushes the
-previous extent and remembers the current one, and the remembered extent
-is written with FIEMAP_EXTENT_LAST after the iteration loop.
+iomap_dio_bio_iter() falls through to the sub-block tail zeroing when
+the data bio submission fails, so that the rest of the block is still
+zeroed and stale data is not exposed.  The zeroing result was assigned
+to ret, which overwrote the submission error with the successful
+zeroing result (zero) and the failed write was reported as success.
 
-That final flush overwrites ret, so when ->iomap_begin() fails partway
-through the iteration the error is replaced by the result of
-iomap_to_fiemap() (zero on success) and iomap_fiemap() returns success
-with a truncated extent list whose last entry is wrongly marked as the
-last extent in the file.  The pre-iomap_iter code returned the error
-from inside the loop, before flushing the pending extent.
+iomap_dio_zero() can only return an error from a can't-happen
+WARN_ON_ONCE() (nr_vecs exceeding BIO_MAX_VECS, which the existing
+comment there says "shall never be reached" for any in-tree
+filesystem), so it isn't a real runtime failure worth reporting to
+userspace, let alone one worth losing the actual submission error for.
+Make iomap_dio_zero() return void and drop the error handling at both
+call sites instead of threading the result through a separate
+variable.
 
-Check for the iteration error before flushing the pending extent, so
-that real errors are propagated and only a successful iteration emits
-the final FIEMAP_EXTENT_LAST extent.  -ENOENT (no mapping) is still not
-an error, and the pending extent is still emitted in that case.
-
-Fixes: 7892386d3571 ("iomap: switch iomap_fiemap to use iomap_iter")
-Cc: stable@vger.kernel.org # v5.15
-Reviewed-by: Brian Foster <bfoster@redhat.com>
+Fixes: 10553a91652d ("iomap: fix iomap_dio_zero() for fs bs > system page size")
+Cc: stable@vger.kernel.org # v6.12
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
 Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/250226e33b3b23c6b1714a45dc3c465c2a45cdc0.1790342457.git.parri.andrea@gmail.com
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Link: https://patch.msgid.link/0cbce1012f5333690be36a9adafb3e190fe2ca77.1790342457.git.parri.andrea@gmail.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/fiemap.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/iomap/direct-io.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/fs/iomap/fiemap.c b/fs/iomap/fiemap.c
-index d11dadff82865..54b824b7edb5c 100644
---- a/fs/iomap/fiemap.c
-+++ b/fs/iomap/fiemap.c
-@@ -76,15 +76,15 @@ int iomap_fiemap(struct inode *inode, struct fiemap_extent_info *fi,
- 	while ((ret = iomap_iter(&iter, ops)) > 0)
- 		iter.status = iomap_fiemap_iter(&iter, fi, &prev);
- 
-+	/* inode with no (attribute) mapping will give ENOENT */
-+	if (ret < 0 && ret != -ENOENT)
-+		return ret;
-+
- 	if (prev.type != IOMAP_HOLE) {
- 		ret = iomap_to_fiemap(fi, &prev, FIEMAP_EXTENT_LAST);
- 		if (ret < 0)
- 			return ret;
- 	}
--
--	/* inode with no (attribute) mapping will give ENOENT */
--	if (ret < 0 && ret != -ENOENT)
--		return ret;
- 	return 0;
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index 8b4039d16ce89..7f1e85f95a469 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -296,7 +296,7 @@ u32 iomap_finish_ioend_direct(struct iomap_ioend *ioend)
+ 	return vec_count;
  }
- EXPORT_SYMBOL_GPL(iomap_fiemap);
+ 
+-static int iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
++static void iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
+ 		loff_t pos, unsigned len)
+ {
+ 	struct inode *inode = file_inode(dio->iocb->ki_filp);
+@@ -305,14 +305,14 @@ static int iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
+ 	int nr_vecs = max(1, i_blocksize(inode) / folio_size(zero_folio));
+ 
+ 	if (!len)
+-		return 0;
++		return;
+ 
+ 	/*
+ 	 * This limit shall never be reached as most filesystems have a
+ 	 * maximum blocksize of 64k.
+ 	 */
+ 	if (WARN_ON_ONCE(nr_vecs > BIO_MAX_VECS))
+-		return -EINVAL;
++		return;
+ 
+ 	bio = iomap_dio_alloc_bio(iter, dio, nr_vecs,
+ 				  REQ_OP_WRITE | REQ_SYNC | REQ_IDLE);
+@@ -328,8 +328,6 @@ static int iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
+ 		len -= io_len;
+ 	}
+ 	iomap_dio_submit_bio(iter, dio, bio, pos);
+-
+-	return 0;
+ }
+ 
+ static ssize_t iomap_dio_bio_iter_one(struct iomap_iter *iter,
+@@ -541,10 +539,7 @@ static int iomap_dio_bio_iter(struct iomap_iter *iter, struct iomap_dio *dio)
+ 	if (need_zeroout) {
+ 		/* zero out from the start of the block to the write offset */
+ 		pad = pos & (fs_block_size - 1);
+-
+-		ret = iomap_dio_zero(iter, dio, pos - pad, pad);
+-		if (ret)
+-			goto out;
++		iomap_dio_zero(iter, dio, pos - pad, pad);
+ 	}
+ 
+ 	do {
+@@ -582,8 +577,7 @@ static int iomap_dio_bio_iter(struct iomap_iter *iter, struct iomap_dio *dio)
+ 		/* zero out from the end of the write to the end of the block */
+ 		pad = pos & (fs_block_size - 1);
+ 		if (pad)
+-			ret = iomap_dio_zero(iter, dio, pos,
+-					     fs_block_size - pad);
++			iomap_dio_zero(iter, dio, pos, fs_block_size - pad);
+ 	}
+ out:
+ 	/* Undo iter limitation to current extent */
 -- 
 2.53.0
 
