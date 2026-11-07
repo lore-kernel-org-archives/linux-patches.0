@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062796;
-	b=MUh/Muk826HU9xaebEzylp1G5791SK9FpJ5C+qjWkIvCC03H7cIRrEXMG82AASKDfHYt
-	 9LV7GTNEp77M579+o/wFG4YTxQaCE7mAz4nnphQmbY5p1+VrrRWudTXJ9A7RH3WtcTXG9
-	 loPXU5MXK1cxSaMgK0VrqPiQJqqCOoLJsw9OBs2BiI0A1Ce13vUXiqvhrQVhRZmbFi35x
-	 Y05SvJ0Si4ymXkfVAYI75L79wEw1cJmBZiyTcjeUHSj44kaFiCo9qfiWkf30uI0yullkM
-	 9tHtc9AJtTXx6LgEjW04UriEaARFZSbUTHllwpTeHnAke3K27UV8Pg2loIfiPbzVzNQ==
+	t=1794062797;
+	b=TFSgSyCOdxcnjgTOptJGUyrc3yOyYn9xfb4Z9n2gUG6h3gyhilcNTvlWcl64neJz1STk
+	 tPm2pDHw1d73FY1MZfvfkB5dJeAN0Cno3JJBCGyYie6+szIs+56Th5+hdxJoRwnhJ4n95
+	 4/l9PzelWA+Ju4b7dtZ1QV5B7PNl8lX7DiwgGyXvVGjik/kbMvl/7wu+/N4myZd9uW0u2
+	 e+he7FR9oq5efiwwJYbU7/ycA8nbdjLhMLCAzCbw/1B5BVWM9mJy1ArOvJoE54BN1FERh
+	 Rw0HD1wcBjsawH7DbcPyWOyKh1nMRllGPEFpHEtOfKkwwaGbxTCmLI++m6tMDMKPHXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PhlIYYQS/uyQjvSEgYQyUvMtbaHCabPdwU3QLieh1RM=;
-	b=JEZBtlwg/wkBPB3clEnfH7+DZHxcagRS63/haEF9BDAvGXDIGEFpfXAovnUDgNmlbLnZ
-	 7mhqUB90MXaTcbx/+JK53TOzfyEV7HNbSnwP+Y5UgSo+tMAjl/DOO2iRo8RbpJFdM3FW6
-	 rDKM7dLM4p0C0Fad/MMbR0dbR/EunEESk4C/Mw61XqYLYFBqszR2IgTyNA5nhcgJj0eKU
-	 KklHm9z9EVct4TPg3dXSWmyM4Oy7zPv22Cqg8EQXc+FVvH5nnzkD1PIdDm6+zKKs14y6K
-	 w3MtfLRNOxr4zsshKK9tRnrgAPi3Hc6dF2MOtdLlwgvmrEfF7pJteMl10tQikCGWtWg==
+	bh=dOmuqP6LjLXKmejMbgN8TEgX/95sMNAeSsZUp/EdTv0=;
+	b=HQ7iQZlV5ys9/Vtq0Ff0zYECSIDtr47I1H6NTGHBcnyA4wdVZp1GiLbqLsep5NFT9SsV
+	 Zbsw4JfXnrvBRHrvKmvJqxwhi/u0ad80mEXs8BUYrbIF7L5atuLEk5qsqqNEciFK7LK/l
+	 r17Ux7H3QM3U9SqofIxVH2Xg3EWLhXgb9bXbSqYAditsymzXpC3fh0Z4lV70DYRntBJx4
+	 gQmmt2EcBKupSHDI0MaF7GjKvtm1U2JcpQLWrCBq1//3sODW+wPx79IveoYrAeVR/cWkL
+	 2fJaY+tk7f5BzMcKz6U4WasYiIqUELXZqLFnjgr+gKQjdEDYdoCzwvMgrSUzFrIl3SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vhg+W1sa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq9oSHXD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F64F606D81E;
-	Sat,  7 Nov 2026 14:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAAB606D804;
+	Sat,  7 Nov 2026 14:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vhg+W1sa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29921F008A3;
-	Sat,  7 Nov 2026 14:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq9oSHXD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497DE1F008A2;
+	Sat,  7 Nov 2026 14:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062796;
-	bh=PhlIYYQS/uyQjvSEgYQyUvMtbaHCabPdwU3QLieh1RM=;
+	s=korg; t=1794062797;
+	bh=dOmuqP6LjLXKmejMbgN8TEgX/95sMNAeSsZUp/EdTv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vhg+W1saJtciHgcuYh9Z+plncBtp1IzVCTcMGAKDu1aoBYN07DsIJBbwSWFciv6TF
-	 iMeBV17YI+sIY/j6kbO/AkCK+vjEF/rOwVEyytkbm5AF5PsSRIACnWogdpMDDMHkaS
-	 OsimM8FD0t+DAxASI/VSA4lnAleig2499J7/6wDI=
+	b=hq9oSHXD7Ur3bMqSf5DDmFmTHOa+dfTwns+eGdyIJXCLM7cLY3JGFktz3Nw0r7jQZ
+	 Joef2llBg0RT+5ZALSzilDsBehRikystZv8ie7YIrtZCeG+K4H3tAYupy6+CjKCl2J
+	 EbVOKRkERETlPZGw6ciEQzo1kqrUlDRPKvMRMzo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Eugen Hristev <ehristev@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 100/869] media: microchip-isc: dont sleep in the clk .is_enabled callback
-Date: Sat,  7 Nov 2026 08:46:22 -0500
-Message-ID: <20261107134856.042405503@linuxfoundation.org>
+Subject: [PATCH 6.18 083/869] media: saa7146: Initialize interrupt lock before requesting IRQ
+Date: Sat,  7 Nov 2026 08:46:05 -0500
+Message-ID: <20261107134855.517035387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,53 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 61490ff518c7b3ea3ff1cd16bbc012e9e4f1ab74 ]
+[ Upstream commit e07c75a6bc4adf1ed09ede31756261e2c6bdede5 ]
 
-isc_clk_is_enabled() calls pm_runtime_resume_and_get() and
-pm_runtime_put_sync(), which can sleep and are not safe here, as
-.is_enabled must run in atomic context. clk_disable_unused() calls it so
-at boot, and CONFIG_DEBUG_ATOMIC_SLEEP reports a "sleeping function
-called from invalid context" BUG.
+The saa7146 interrupt handler can call SAA7146_IER_DISABLE(), which
+serializes register access with dev->int_slock. request_irq() allows the
+shared handler to run before saa7146_init_one() reaches the current lock
+initialization block.
 
-Use the atomic-safe pm_runtime_get_if_active() and pm_runtime_put()
-instead. A suspended ISC has its clocks gated, so report the clock
-disabled when the device is not already active.
+Initialize dev->int_slock before requesting the interrupt so every handler
+path sees an initialized lock.
 
-Fixes: 01192aa1c5c2 ("media: atmel-isc: Enable the clocks during probe")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/microchip/microchip-isc-clk.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/media/common/saa7146/saa7146_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-clk.c b/drivers/media/platform/microchip/microchip-isc-clk.c
-index 24358d804e75d..66dc522a61908 100644
---- a/drivers/media/platform/microchip/microchip-isc-clk.c
-+++ b/drivers/media/platform/microchip/microchip-isc-clk.c
-@@ -98,15 +98,14 @@ static int isc_clk_is_enabled(struct clk_hw *hw)
- {
- 	struct isc_clk *isc_clk = to_isc_clk(hw);
- 	u32 status;
--	int ret;
+diff --git a/drivers/media/common/saa7146/saa7146_core.c b/drivers/media/common/saa7146/saa7146_core.c
+index 27c53eed8fe39..e908af0693d26 100644
+--- a/drivers/media/common/saa7146/saa7146_core.c
++++ b/drivers/media/common/saa7146/saa7146_core.c
+@@ -340,6 +340,8 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
+ 		goto out;
+ 	}
  
--	ret = pm_runtime_resume_and_get(isc_clk->dev);
--	if (ret < 0)
-+	/* Runs in atomic context, so must not sleep to resume the ISC. */
-+	if (pm_runtime_get_if_active(isc_clk->dev) <= 0)
- 		return 0;
++	spin_lock_init(&dev->int_slock);
++
+ 	/* create a nice device name */
+ 	sprintf(dev->name, "saa7146 (%d)", saa7146_num);
  
- 	regmap_read(isc_clk->regmap, ISC_CLKSR, &status);
+@@ -425,7 +427,6 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
+ 	dev->ext = ext;
  
--	pm_runtime_put_sync(isc_clk->dev);
-+	pm_runtime_put(isc_clk->dev);
+ 	mutex_init(&dev->v4l2_lock);
+-	spin_lock_init(&dev->int_slock);
+ 	spin_lock_init(&dev->slock);
  
- 	return status & ISC_CLK(isc_clk->id) ? 1 : 0;
- }
+ 	mutex_init(&dev->i2c_lock);
 -- 
 2.53.0
 
