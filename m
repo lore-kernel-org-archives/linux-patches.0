@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061758;
-	b=DRzEgnE/oZehVjYERk4GAB0njTL3SCUTK2CUPA4cyPEX5jIhH3dKDYs4X4y7mrACGd3d
-	 0KSGKxyC9oKB77y1e+w1JQ66YI0hlE0xUymJJnciQ17RiWSYSZ1Z3KnjWqMQ88uvFfbN9
-	 rwUqyVAKnhfQms1eTEN6GSlj43SwN3eORrOY37eDATIEyh5Nk2R+WuhDstjoueeJ28RgC
-	 bySEe7kBUp7lEs7B7oEprAMvSoL56HhYytqL0Yob7Ym0DDH5DM88/pSY/IToxowxqdT6n
-	 5UxU2F8j50jGKNd3nddjCFASRCDuiePogpjV+2Iibd9xdHmgvlPgMTRqirOZHzvjgLQ==
+	t=1794061759;
+	b=g3QbI2+mukIFWBpsfGP1zr69PyiIblkEdoBQwBN3xbZyFJ0GBAsDK2xSkR2pvznj4Q55
+	 MJyGLjtzvxb70G9OLfSB5EFIFYCZZjalYp3g+XtJ/puFl0z8sx/I/BTo/euO5pnuDWEsO
+	 /4KQm0ddRJZUMVe6HjHPFlJTP/k9V3KoCle6vOZ//haa+RW0oqCMbMO3KauCCbM9v4zLf
+	 fW3njMFAascnyf6HWHmhRgYEUyU8gvnM3PLwMQ9ZY2urTF1Q2a6aCWsXJPgoML255nypa
+	 4MpeEf9ngt3B3St19OEX3q4M6SFGO1lPg0FrgpKW/Z1Rc3dzjEZ6aNqGcz65HnX8VfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061759;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bQUHFR3Z0zCTsQrLbpgDB4GKeDkslIq/+o7yb16H4Q4=;
-	b=M0XLZuJr3cANCTVg+rrlXMFCnWmDGkf3V8jr87WIIeE8P3x9kfPNw1xFQoya+817V+W3
-	 tMCLImSiZn1pEBOJAhBmBko/IJ8G/9FUxZNQiWWbCJje85s011tBD1mTxlP+jVRuckRK9
-	 L87Kq/JuZso9rp3beYoPBnQs6x/7WP6JpH+S4OlZ/VVYOIX2BBNvzgRXujD5mjLhkyB7+
-	 LRmprylKWe63UXrsaoMsrIU1Sg/1KOCOZfPncv25oLtIbN1Y0w7+B7/Wikm5Z6LCpWMnH
-	 l/7dBJte3suET48NxG8JljugeEaV6perHh7k48WMVMCCuzwQeB9l+R+iY3LgZLtG47A==
+	bh=2iWWC57zf0pR/FKqwEQEMWnBe0dXbR1TG1V2QNtclUc=;
+	b=rakV+GezqOnCu1RAbYIc/KPeuCYs8Ly0oktAOReNySuWQjjuwYEz2zaRLSruzcnwuhiF
+	 jN9aCCBDhCMcD+Gzdyvq6MmPpyK7E4BEXq1O+KQua5KeQLhAbPQ+F/kqQlo5k0XXrzItE
+	 ep2JzweAOCiI4zdtrxaj8nroNSXQvcDvj6IAmFPcIUkC2kfEKK0f8WD7D973a7V9P4Lyp
+	 azqiFxbFtCKBrGwgLgzMGnflq1sw9cJf4i1hbkqFsLgZo9iZ6PyngW14uof33NRYqceXN
+	 2XFXX7Ow6Q2Vp6I+9p3CbCGsQ/ZjFzryTBXqBLrEPEdT2b2sqxUi/kZZC7CqqRir2GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v066DLSV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XiAbkfJ5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4544A606A32C;
-	Sat,  7 Nov 2026 14:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD11606A32C;
+	Sat,  7 Nov 2026 14:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v066DLSV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A661F008A2;
-	Sat,  7 Nov 2026 14:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XiAbkfJ5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DFF1F008A2;
+	Sat,  7 Nov 2026 14:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061758;
-	bh=bQUHFR3Z0zCTsQrLbpgDB4GKeDkslIq/+o7yb16H4Q4=;
+	s=korg; t=1794061759;
+	bh=2iWWC57zf0pR/FKqwEQEMWnBe0dXbR1TG1V2QNtclUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v066DLSVFupuoy+m9g47ZfFAounkeIzbPSYKX8lLAd0aXq3FKw05g9Y+kXPBwqWyX
-	 yxThYlJcxBweUFSxJazRkuJ5uJVPxE7t7Fct8CxJe1z4OZQXYqDXCtGtDEWZRRoy6/
-	 a4cPY9rLRPFBLu0ZFbNrRu03D8PDQvw1mx0Waidw=
+	b=XiAbkfJ5WaEhzlzzwSrbz1bMjnjjnIOmql5g6fJkilgQazzH2qbglrLpBdV152EAF
+	 3EIFTDI6pq2KyVUoiELDCyiWf9QDiEg3aWScIYb/cfDLvadO+NnSAImdVjEULE364i
+	 o8Lct/dg2h6VC8gHBffgeC1wEM5P2QPJdra9yuJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 0796/1536] KVM: x86/mmu: Bug the VM if KVM attempts to walk more levels than the MMU has
-Date: Sat,  7 Nov 2026 08:46:52 -0500
-Message-ID: <20261107135019.904658078@linuxfoundation.org>
+Subject: [PATCH 6.12 0797/1536] KVM: x86/mmu: Bug the VM if KVM calcs a CPU role with EFER.LMA=1 && CR4.PAE=0
+Date: Sat,  7 Nov 2026 08:46:53 -0500
+Message-ID: <20261107135019.932320225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,50 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 115f9405a2ed6d78ee7ad8436bdd638743f6d1d4 upstream.
+commit 34dacbe7ae93f2d3c26cd0bf3e08200b1fa2c180 upstream.
 
-Extend the "EFER.LMA && !CR4.PAE" check, which exists largely to guard
-against KVM configuring a paging32 MMU with more than 2 levels of paging,
-with a very explicit check for exactly that: that KVM isn't trying to walk
-more levels of paging than the MMU template provides.  I.e. harden KVM
-against all bugs that would cause KVM to generates accesses beyond the
-bounds of guest_walker's arrays, regardless of how KVM ended up with the
-misconfigured MMU.
-
-Note, don't use w->cpu_role.base.level directly as the paging64 template
-only provides two levels of page tables for PAE paging on 32-bit hosts, and
-handles the third level by manually emulating the PDPTR access.
+Bug the VM if KVM attempts to construct a CPU role with the should-be-
+impossible combination of long mode being active without PAE paging being
+enabled.  KVM's MMU construction assumes that EFER.LMA can be set if and
+only CR4.PAE is set, and will create a completely invalid MMU if that
+assumption fails.  FNAME(walk_addr_generic) already has sanity checks to
+try and mitigate the fallout, but attempt to catch such bugs earlier, as
+this is (at least) the second time KVM has had bugs that escaped into
+FNAME(walk_addr_generic), and it's entirely possible the bad state could
+cause problems elsewhere.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260902232028.2767071-4-seanjc@google.com
+Link: https://patch.msgid.link/20260902232028.2767071-5-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/paging_tmpl.h |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ arch/x86/kvm/mmu/mmu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -349,13 +349,14 @@ retry_walk:
- 	pte_access = ~0;
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -5449,6 +5449,9 @@ static union kvm_cpu_role kvm_calc_cpu_r
+ 		return role;
+ 	}
  
- 	/*
--	 * Queue a page fault for injection if this assertion fails, as callers
--	 * assume that walker.fault contains sane info on a walk failure.  I.e.
--	 * avoid making the situation worse by inducing even worse badness
--	 * between when the assertion fails and when KVM kicks the vCPU out to
--	 * userspace (because the VM is bugged).
-+	 * Queue a page fault for injection if any of the below assertions fail,
-+	 * as callers assume that walker.fault contains sane info on a walk
-+	 * failure.  I.e. avoid making the situation worse by inducing even
-+	 * worse badness between when the assertion fails and when KVM kicks
-+	 * the vCPU out to userspace (because the VM is bugged).
- 	 */
--	if (KVM_BUG_ON(is_long_mode(vcpu) && !is_pae(vcpu), vcpu->kvm))
-+	if (KVM_BUG_ON(is_long_mode(vcpu) && !is_pae(vcpu), vcpu->kvm) ||
-+	    KVM_BUG_ON(walker->max_level > PT_MAX_FULL_LEVELS, vcpu->kvm))
- 		goto error;
- 
- 	++walker->level;
++	if (KVM_BUG_ON(____is_efer_lma(regs) && !____is_cr4_pae(regs), vcpu->kvm))
++		*(u64 *)&regs->efer &= ~EFER_LMA;
++
+ 	role.base.efer_nx = ____is_efer_nx(regs);
+ 	role.base.cr0_wp = ____is_cr0_wp(regs);
+ 	role.base.smep_andnot_wp = ____is_cr4_smep(regs) && !____is_cr0_wp(regs);
 
 
