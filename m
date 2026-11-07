@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064972;
-	b=Q/+8/78ucy9kEVx8kz5cYoWrWoS+nCG/DILr5txAX6wTglzALv2eyGitXkQ0MVOohdgQ
-	 glsKGTkZrgOpXwZZKBdU18Zd+rxl3fH7FoTQzn/PNZ0DNub0DEhWnPBlewq2HXaiEHJZw
-	 yusvqh74l3yhWdSm8DrzpvwXCuqdUH6GB8jdRplqDOyAj9cYt3LSgKQeZ8ZGLFnKnFygP
-	 XkPJZxBG2ja3w/tJJPkiVFqVrFT7qYaKC/rwxg9+1p24PsxXiO692+5LT86snK9NBIevr
-	 lizsusuSlS7zUMPKYJqhX4vRtGYeASo0rrs2doWbXPVo7xgGOfxbC+r9URbC4icBTIw==
+	t=1794064973;
+	b=sOhy5j3mil4+DFBDU9M4OD09AJfpcxST5oIhLydbf4G0nfMRzwGfBuPOQtgu0Ba0MXCa
+	 PRww5afZM9eijhJTAz9LqhfEjodKhrnd4/k7IDya8lKglkAWsxantJb7FPb7niMoreo96
+	 nozPdlfQqOHg54ZgER9rGDccvZbbJr7rtlI5HVbV9W6CWkEgp4NAc8dC39A4Cfk/y4hsS
+	 nfqicGVKyNYWD8x1CzkhTKeDHaXL+Y6dWddQu5WU8ZFIQ/Bu79CTwpo67vz8T2OU24ErS
+	 RPuoLkdKxqkrQ3drEKE0ZXs8km/+DpKVNcOifo+R5SelAcNn2s2naJwks0kT30e3xbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064973;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=FGxj7Ad9quHFEy/ZvktPodwDEJL4LCjh8YqX4qpolb0=;
-	b=mnkI8HeBevRK0xE5UX4nywnHaJzmBjPP09nR8quGfx560HS2suYllFCa0fo9cflwe4en
-	 w7KUPVQ5HuqRXUby9UmC+nHV0R0KGnSus8tUL44FFaPq7M2JLseqfePu43P1lwQ08+ILX
-	 VHWrFtsnCrb5e4k4J7JCcX0aqX7vx/minmF7mT/N0xW3ytmRNx9VQc6XhdijZc7Ncag1r
-	 n72qXsrteGpdmBk+y5HfihhAgxgnNWqrdYn2j4qaqIzOR60I44OyNrRzTk7iHtIF5DG2v
-	 cLuV4930rQ8v1iLvKi6C/ScauZvih06yZiD22wYpxHlVikmHjIXwaAPZhGwxjwE8eUQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=lYpV0F9K8AsMNlF+k8zBc6pnukd4YVOc0aaRVrLRk3k=;
+	b=R5na7fQzCOLt6D86fN4HOOYN4Ryrg9CQnxcbp7YZPcMHNdiV5dWUyo4usTanUYK8jST8
+	 z32/OIooUEYmgBTjm0+ZFXXdHH+wOFd5xhkdS8wM4Ims5jahE6kHEXsd+9VLdzinp/JMf
+	 bmWvmUMBdd2eQClZof+8j7EZVBbvgbvulhGQggSGR31XIVmm0HnDjJOYsknc6ok1774em
+	 ihvgxKf/nOxjFpDQf0VU+B51opppuG3cU/lGzx9SsUlH3/gtdjQCsOf9M8J8sDh6H4/QI
+	 M/Vl7PljsrlILhageRTWlgtZmO29lJHUyx7vvtm8nUkCmRpPMcERij1myPcsVWoDNOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NGtbUnLA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YwcYkW8c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40956606A334;
-	Sat,  7 Nov 2026 15:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F61F606A9DA;
+	Sat,  7 Nov 2026 15:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NGtbUnLA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11161F0089F;
-	Sat,  7 Nov 2026 15:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YwcYkW8c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB911F0089F;
+	Sat,  7 Nov 2026 15:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064972;
-	bh=FGxj7Ad9quHFEy/ZvktPodwDEJL4LCjh8YqX4qpolb0=;
+	s=korg; t=1794064973;
+	bh=lYpV0F9K8AsMNlF+k8zBc6pnukd4YVOc0aaRVrLRk3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NGtbUnLANHav9nKMhSzuWiZDUr02FJ8pWn6Bb6eUyaT5ZJk36NjtDhodMIccmnSs/
-	 OGvlaBMRsITa2qiBjgNmlB1kJu00K2C7HXZtIaz0ij9yAuknKGyp5Zxza3mV9Rrd9F
-	 DNeq/PzOGl6V35wWNTjuWwZ5fERV9cszVTnMZQrA=
+	b=YwcYkW8cseKWqpnE8a3qFdwnphoJfgq0k7Sz6hA/rk+WIhllMpljeufPqFEVBw4VJ
+	 0Ircl0FhgTGwcbOLjWgYKOqMUqH6X+o0YcWUJXHYHX7Gy84JXVCSHNpaKL7hTzzL2+
+	 nN31i/V52icb013AS0BsJQMmYTiId6K79N8j0sl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabricio Akio <fabricioakio@gmail.com>,
+	Andrew Pam <andrew@fastmailteam.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0852/1257] power: supply: qcom_smbx: set the charge enable after software control
-Date: Sat,  7 Nov 2026 08:52:28 -0500
-Message-ID: <20261107135002.860013005@linuxfoundation.org>
+Subject: [PATCH 7.3 0853/1257] power: supply: cros_charge-control: restore EC state on resume
+Date: Sat,  7 Nov 2026 08:52:29 -0500
+Message-ID: <20261107135002.891719870@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,64 +64,122 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabricio Akio <fabricioakio@gmail.com>
+From: Andrew Pam <andrew@fastmailteam.com>
 
-[ Upstream commit 1fba787142011145e1071cee9448b3677fb2323d ]
+[ Upstream commit 1f2a40f954c848dff9d8bb6d81e404f9e47f0e81 ]
 
-The init sequence sets CHARGING_ENABLE_CMD before CHGR_CFG2 selects
-software control of the charge enable.
+The EC resets its charge control configuration when the AP powers off,
+so configured sustainer thresholds and charge behaviour are lost across
+hibernation.
 
-The Motorola Moto X4's bootloader leaves the charger watchdog armed to
-disable charging when it bites, which it does after a few minutes in
-fastboot. Charging then stays disabled in the next boot until the cable
-is replugged. Setting the command after CHGR_CFG2 re-enables it.
+Nothing notices the reset. Commit 4fc88ba435da ("power: supply:
+cros_charge-control: adopt EC charge state on probe"), in the
+power-supply tree, made the driver adopt the EC's charge state, but only
+at probe, and a resume is not a probe. Sysfs therefore keeps reporting
+the configured values while the EC charges the battery to full. On a
+Framework Laptop 16 (Ryzen AI 300, charge control command version 3)
+with charge_control_end_threshold set to 80, a hibernate and resume
+cycle leaves the attribute still reading 80 while the battery charges
+past it to 100%.
 
-Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
+Add a system sleep resume hook that reprograms the EC from the cached
+state. The same EC behaviour and the same fix already exist for another
+driver, see commit 2643187ccb86 ("platform/x86: ayaneo-ec: Add suspend
+hook").
+
+Reprogramming the EC is only strictly required after hibernation, but it
+is cheap and idempotent, so hook every resume path rather than rely on
+the EC preserving its state across each kind of sleep transition.
+
+Note that re-reading the state from the EC on resume, by reusing
+cros_chctl_init_state() or otherwise, would be wrong even on the command
+versions that support GET: the EC has been reset to its defaults by the
+time the hook runs, so adopting that state would silently discard the
+configuration the user asked for. The driver's cached state is the only
+remaining record of it, which is why it is pushed to the EC rather than
+refreshed from it.
+
+Fixes: c6ed48ef5259 ("power: supply: add ChromeOS EC based charge control driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fabricio Akio <fabricioakio@gmail.com>
-Link: https://patch.msgid.link/20261002-qcom-smbx-enable-order-v1-1-7df92bd809db@gmail.com
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Andrew Pam <andrew@fastmailteam.com>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Acked-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://patch.msgid.link/20261005043418.243937-1-andrew@fastmailteam.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_smbx.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/power/supply/cros_charge-control.c | 29 +++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/qcom_smbx.c b/drivers/power/supply/qcom_smbx.c
-index f5557b8cc92ae..8c6b7c46b85f0 100644
---- a/drivers/power/supply/qcom_smbx.c
-+++ b/drivers/power/supply/qcom_smbx.c
-@@ -819,11 +819,7 @@ static const struct smb_init_register smb_init_seq[] = {
- 	  .mask = SOC_LT_CHG_RECHARGE_THRESH_SEL_BIT |
- 		  VBT_LT_CHG_RECHARGE_THRESH_SEL_BIT,
- 	  .val = VBT_LT_CHG_RECHARGE_THRESH_SEL_BIT },
--	/* Enable charging */
- 	{ .addr = USBIN_OPTIONS_1_CFG, .mask = HVDCP_EN_BIT, .val = 0 },
--	{ .addr = CHARGING_ENABLE_CMD,
--	  .mask = CHARGING_ENABLE_CMD_BIT,
--	  .val = CHARGING_ENABLE_CMD_BIT },
- 	/*
- 	 * Match downstream defaults
- 	 * CHG_EN_SRC_BIT - charger enable is controlled by software
-@@ -844,6 +840,13 @@ static const struct smb_init_register smb_init_seq[] = {
- 		  AUTO_RECHG_BIT | EN_ANALOG_DROP_IN_VBATT_BIT |
- 		  CHARGER_INHIBIT_BIT,
- 	  .val = CHARGER_INHIBIT_BIT },
+diff --git a/drivers/power/supply/cros_charge-control.c b/drivers/power/supply/cros_charge-control.c
+index e0f168624807e..0b4aff1c29508 100644
+--- a/drivers/power/supply/cros_charge-control.c
++++ b/drivers/power/supply/cros_charge-control.c
+@@ -13,6 +13,7 @@
+ #include <linux/platform_data/cros_ec_commands.h>
+ #include <linux/platform_data/cros_ec_proto.h>
+ #include <linux/platform_device.h>
++#include <linux/pm.h>
+ #include <linux/types.h>
+ 
+ #define EC_CHARGE_CONTROL_BEHAVIOURS	(BIT(POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO)             | \
+@@ -293,6 +294,7 @@ static int cros_chctl_probe(struct platform_device *pdev)
+ 
+ 	priv->dev = dev;
+ 	priv->cros_ec = cros_ec;
++	dev_set_drvdata(dev, priv);
+ 
+ 	if (priv->cmd_version == 1)
+ 		priv->psy_ext = &cros_chctl_psy_ext_v1;
+@@ -318,6 +320,28 @@ static int cros_chctl_probe(struct platform_device *pdev)
+ 	return devm_battery_hook_register(dev, &priv->battery_hook);
+ }
+ 
++static int cros_chctl_resume(struct device *dev)
++{
++	struct cros_chctl_priv *priv = dev_get_drvdata(dev);
++	int ret;
++
 +	/*
-+	 * Set the enable command only once CHGR_CFG2 has selected software
-+	 * control, or a charger its watchdog has disabled stays disabled.
++	 * The EC resets its charge control state when the AP powers off, so the
++	 * configuration is lost across hibernation, while the values exposed to
++	 * userspace still describe it. The cached state is the only remaining
++	 * record of that configuration: reprogram the EC from it rather than
++	 * re-reading the EC, which would adopt the reset defaults instead.
 +	 */
-+	{ .addr = CHARGING_ENABLE_CMD,
-+	  .mask = CHARGING_ENABLE_CMD_BIT,
-+	  .val = CHARGING_ENABLE_CMD_BIT },
- 	/* STAT pin software override, match downstream. Parallel charging? */
- 	{ .addr = STAT_CFG,
- 	  .mask = STAT_SW_OVERRIDE_CFG_BIT,
++	guard(mutex)(&priv->lock);
++	ret = cros_chctl_configure_ec(priv);
++	if (ret)
++		dev_err(dev, "failed to restore charge control state: %d\n", ret);
++
++	return ret;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(cros_chctl_pm_ops, NULL, cros_chctl_resume);
++
+ static const struct platform_device_id cros_chctl_id[] = {
+ 	{ .name = "cros-charge-control" },
+ 	{ }
+@@ -325,7 +349,10 @@ static const struct platform_device_id cros_chctl_id[] = {
+ MODULE_DEVICE_TABLE(platform, cros_chctl_id);
+ 
+ static struct platform_driver cros_chctl_driver = {
+-	.driver.name	= "cros-charge-control",
++	.driver = {
++		.name	= "cros-charge-control",
++		.pm	= pm_sleep_ptr(&cros_chctl_pm_ops),
++	},
+ 	.probe		= cros_chctl_probe,
+ 	.id_table	= cros_chctl_id,
+ };
 -- 
 2.53.0
 
