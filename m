@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061847;
-	b=IWRB1P+M6vfzLOWyGmIc+0Hm37vOv5tGWeXV2EFlogVpdQ3FNXpFTKcO/8lvlPoFsi6h
-	 +BIReM0VN4wU3fxbopzJA3Pdb7yDen7+lBwk0j1WFlNaDEdWaqkiIc71yVQZo2934zuyn
-	 S+CFyqIyLuefXpPiSeYeVrBqLaX4R6PRhlNbKBkANmc2NVYiqVlepAzJPGKixaapJ2iko
-	 Osoi+HS1dEmM1eEUMA4h4qIXKgs7H14EzhJBdEO7IB3Z0mxklGUquQn0QWAMor4rftQzT
-	 Fq+N7EvMyHbxmZo8JnUVcBIVFT99mP1x77CadmpQ+SepniR4DgwsrbVb2iqPSwz/eqw==
+	t=1794061848;
+	b=AUo5IrFXQvqJaID3kt/Gxw84emyMkTI731a+sUV8XCuSctomu8SlnWxhe7IxdD1EsMSg
+	 W5wCHdi9GE7NMfV1gLAO06bwiaTjJwE2UNTzI2P/lYgqjhxouJGiQB8dQYcWIBGTpRV7n
+	 gcxyxK1AlZYXz8dye5oYXi6r7ZSypQuXowG240rZ0d9PdE+4rPsDbY16YFb/9km5WPOtA
+	 tEJVhbbWZfCCe5zC+sLcxhdHKU9vYHpy7GK/THe8ud93G99Wy420RrN3Wbh4hzMm6JyGr
+	 /L7TfEskK++9dY0665r/+84fCKLFfC8KCqE8IEO89Oth75UGken1UPhnzuKDaHCTsnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061847;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ST0p6GGsAef8MYuTQKFhua93lciTCtxoK/gIeIzQyk0=;
-	b=SQQRkGnRSaFHhGGP1P2pNgWh1QsbKGgvgWl3CmG1J2BneD1owwAbZaBr/vpmSSA2Ga5K
-	 BuXGUv+tUzxgTUN+/TgWYgEvA0RGc2VCRpIBf0Sx4e1pufyArdZd/zINyMxO9YDqatIHk
-	 Tu1pWMyzRFWwHt6ZVVtduhLg20yUqXyb5pL/Os1ftAbEruZYQjPwFU3ufVZ255sd23yhn
-	 awSpjbEe/d1LBza3EOXTPLcFJLC3n5OjGF9kWEk8v6k1rGHTp/bMW2TKqyx8sgpYnEjqe
-	 vPVNoMzjrAQ4C2dUC6S6VtP3dziRBntDvHncpuU/CtpDJ0A1xaR40i0IQWEh/OwkzMg==
+	bh=IZWafHOcVlNS3IN5ZwviSYiOER8o4pp5bzWUpAQ2nWE=;
+	b=rzUBwZUmc+zziKgcWuH7vdOOn/aRr0yAz7mTHMdAs8XYDSWuZmyHfRyUH9WhPlV+XBig
+	 avG3xrSsfsmvoIgh1qldkFmarAIHQGhrZFlnePKhA2vxKQc75kSnI6oDNGYPSZV7py83P
+	 DivVwyse55apFdoMHLk0JwRa+kbifHhsCG4L2DFt4JojDEAhHAbpc2Z/f9Gu3AwTDYdws
+	 60ZfrtMPuFAEsqUBjwmSyPwS1sV9trChUzSOtEXZpMazS8TTy/+HU8ga7O4EYfKVkoveq
+	 /op00pJ0A8Rf+s8+lnMLzKwGkAsAjhRfOU0Tus+8Kv0gZW/OIgfevrM1FT1nzJBKfFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AiY4z+UG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IARv336I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB191606A326;
-	Sat,  7 Nov 2026 14:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC45606A32C;
+	Sat,  7 Nov 2026 14:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AiY4z+UG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55ECC1F0089F;
-	Sat,  7 Nov 2026 14:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IARv336I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5A51F0089F;
+	Sat,  7 Nov 2026 14:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061846;
-	bh=ST0p6GGsAef8MYuTQKFhua93lciTCtxoK/gIeIzQyk0=;
+	s=korg; t=1794061847;
+	bh=IZWafHOcVlNS3IN5ZwviSYiOER8o4pp5bzWUpAQ2nWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AiY4z+UGCky4J6oap4Nym17YqOfh5129/cQTf7qzczaNGgzdkZ2hBq8Grkwgj9zAc
-	 ejCYvLih7C5o4YV9nLiy2dy2QbYGyoZevnd8K2Zp2o5wbL+eI6aypTOzHIB0dqNpdP
-	 xCL5b+ky3pzjllH4qxsd1d1RlerunLWMyGijkNQI=
+	b=IARv336IwEZVgVQQKT2V2qYcIHm0vTt6YSzsv52c+tshz6KpvN3B74qqqdY+9zYbu
+	 EOTuxd34ZMPDpvPc9/0B5fTk5VcaiX54qqOqCtMKFKh0V7CQWV5sDLBX/p7NvVeJSb
+	 niVa7n6RyayPAlSf1OUEFiYbk8Pltd3hNK0RDgmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yichong Chen <chenyichong@uniontech.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 0828/1536] io_uring/kbuf: advance head when a pickup empties the buffer ring
-Date: Sat,  7 Nov 2026 08:47:24 -0500
-Message-ID: <20261107135020.800714844@linuxfoundation.org>
+Subject: [PATCH 6.12 0829/1536] io_uring/net: keep recvmsg buffer select length within MAX_RW_COUNT
+Date: Sat,  7 Nov 2026 08:47:25 -0500
+Message-ID: <20261107135020.830363405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,38 +69,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Yichong Chen <chenyichong@uniontech.com>
 
-Commit 8742f4b5a472c347fe568a73468a2d9e4d630b33 upstream.
+Commit 18d3f56eb6e6500a65d81cf265f0fe74fd9ecab6 upstream.
 
-io_ring_buffers_peek() flags the request with REQ_F_BL_EMPTY if the
-buffers it picked were the last ones available, comparing head to tail.
-When the loop breaks because max_len was exhausted the buffer was picked,
-but head is left pointing at it, so the flag isn't set if it was the last
-buffer. A bundle receive then retries, finds no buffer, and the request,
-which has received data, is marked as failed on account of the -ENOBUFS.
-That severs a link, and ends a multishot.
+io_recvmsg() takes the transfer length from the ring provided buffer when
+sqe->len is 0, and such a buffer can be up to 4G. min_ret is an int, so 2G
+or more makes it negative and the (ret < min_ret) block is skipped, and the
+oversized length reaches the socket layer unchanged: an empty socket then
+completes with 0 instead of arming poll, and a short read is reported as
+complete. Clamp the length to MAX_RW_COUNT, as io_recv() does.
 
-Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
+Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
 Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Link: https://patch.msgid.link/20261023091711.83481-1-chenyichong@uniontech.com
+Link: https://patch.msgid.link/20261023112209.87979-1-chenyichong@uniontech.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ io_uring/net.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -302,8 +302,10 @@ static int io_ring_buffers_peek(struct i
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1061,6 +1061,7 @@ retry_multishot:
+ 		sel = io_buffer_select(req, &len, issue_flags);
+ 		if (!sel.addr)
+ 			return -ENOBUFS;
++		len = min_t(size_t, len, MAX_RW_COUNT);
  
- 		arg->out_len += len;
- 		arg->max_len -= len;
--		if (!arg->max_len)
-+		if (!arg->max_len) {
-+			head++;
- 			break;
-+		}
- 
- 		buf = io_ring_head_to_buf(br, ++head, bl->mask);
- 	} while (--nr_iovs);
+ 		if (req->flags & REQ_F_APOLL_MULTISHOT) {
+ 			ret = io_recvmsg_prep_multishot(kmsg, sr, &sel.addr, &len);
 
 
