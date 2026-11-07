@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063687;
-	b=gchGwTtq66ANReH5CUo2X1kHFKjLu/lV8qvQCkrzocQAfrWrwxuM2+cfRuLbZg/lE8L8
-	 Y8ngb528L3nWJ8FlkspKHhmbqTr5URR3ImCu2zE04QwqKL4dDVFDVEVn+Sr4sJOYEsGZj
-	 iAIQlEpzcoQYezyeOOYb/u2h0QAssNUaWpMRri8cfQpOq6je8+aOHPdtJVceyjXs6106h
-	 FVLCEqVEX9+M7VrJe00tvvSwI1htDkkPUeaplA57jBvgIMRGyRNbDRcUAF5BrApIn/Url
-	 PzxB2O/VJ6xVShPq5zf7Kkq1dkrDuIrzc3ZQ3uzipcqj70EOS9wvBdowhpWLAa5sHow==
+	t=1794063688;
+	b=YFgCxlvrdKTCqwfcGFDdWIiYU7zy4nBzq8FaW/xeUY7hcbYuaYQaVejlXtqvVMOOPVCW
+	 8ixe2njGAnhZCngT0pSk5w5vRLhBIZlNZ9C+jyOjzxfq9h595mH/EAAmnVhUrLGSmIsTE
+	 wEFWz6LaEANmTDyb0TgrpR6YX+Wgxkm9kT8g9l5MsATsxI9aiskS3OrUwm9ZT4p0hJ0n/
+	 JC5DhvRqiqaIMZyEgGRZYcYyR+QYkN21+D8qiOf43OMO1ocEXnUbLFzR2QXgAv6josytQ
+	 tMtSCdy75ok8x9ILSLX4raSlEbR6UjKRsyQT0nrQajLHGbvdzzSmHKwdrahpu7wC4sQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063687;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063688;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tSx7HtjvyRPfMQUpUhiXrVa/q9xM5UqZHSrqaYAOvG8=;
-	b=CLwNnPYon1FFBNBHKIz3PfnTZadSTYkb1aZ5W3GySsvdqME2FoSOpab2aibPbT4y9Lay
-	 ySBlUix8ld79q4wMvUO8jMcB1a3vPSXCXZJYBMZcLwa6CkX0dFGWG1hi6+2kL70+6VhjT
-	 NoBb7ev/2BfkbkQoKZXZojUGqhDeWx115dm1paogk4ycqlpmAvJppqkcFgt8wWjVc4FHw
-	 l7ivldPkzYH9Gwn8wpQJ+uhLuRwjmMCVSgkeNpnfDoHr7RcKW5HXe6sQB3tvZ2yt5Dt6C
-	 AWv/vMTpug5uczi3BkfaBt369YMe69yUGA6VDtn0FvVrgEYFoccktm+BGbTle4qtLZw==
+	bh=HsY1SkLPRx9fN3jScb4xDnLSYsw2s8D1E6+wr2iUzKk=;
+	b=3438gMyqLS71HlAcIF9NqT4tScqksmFKgElrRTprV6t/dHyzdqXrV4nrqKFlTI3NaW9W
+	 nZdSFe8IzDPl7H2nxUB2m/Ov7CEVTE+xaahek6tST92/A0WOh7TuKaMpd4E5OqExwm7BP
+	 dxAV8gNFCo77ZnJ4z2w6X8DI5zn8cfQZrQasRT2/KMoywiapJNDH7EFQwDoWAYO0Y9k2n
+	 iFEBNTZx6Hn6P3eGs/93D9usH1HkElSTWDO/HXkgAuOq+f8UqC0Yv9oFKkFf6+hqTQk17
+	 cuGm16VYLO85QUAH5T3butB28rToZeJiZZg/36eLhYVT90UuYCE1XDNrtffnmEiL9pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uZS98FPA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0YCasLAi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB33606A32C;
-	Sat,  7 Nov 2026 15:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4A1606A32C;
+	Sat,  7 Nov 2026 15:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uZS98FPA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462B61F0089F;
-	Sat,  7 Nov 2026 15:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0YCasLAi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB0D1F0089F;
+	Sat,  7 Nov 2026 15:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063686;
-	bh=tSx7HtjvyRPfMQUpUhiXrVa/q9xM5UqZHSrqaYAOvG8=;
+	s=korg; t=1794063687;
+	bh=HsY1SkLPRx9fN3jScb4xDnLSYsw2s8D1E6+wr2iUzKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uZS98FPAFdy03v1LUm3KKaNQthvoCc4UC0WkJWpRdjoeIIBDs/m38LFpHVU6lx3iB
-	 xGJb4uEaYTlmFmKNrbuXA4JQC+DYtlBz02pzNSf3WrVgVtIoNvb23dmn65PBa8cCML
-	 DLo77grbxbVHcR7oInXrqihoIR/vP60Y6Wst6rdU=
+	b=0YCasLAioVkK7hOocu8FHnSQRhUqWtmMuQY/ZhLjXKgAeiVyMWkD3lGWhNY59pfOc
+	 pEW9t3tjjS4ba+wawCXcn6YH1H3Op/LCQTjZ4A5k4zpjloTPh7lo0mWlk6U4c6IDxo
+	 jb6a6Aj0cFifWJ8L/wLqRoeH0zcOBaLCBfhhOvvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 793/869] ipmr: fully initialize the synthetic IP header in ipmr_get_route()
-Date: Sat,  7 Nov 2026 08:57:55 -0500
-Message-ID: <20261107134919.638993832@linuxfoundation.org>
+Subject: [PATCH 6.18 794/869] dt-bindings: clock: ma35d1: Document the missing crystal inputs
+Date: Sat,  7 Nov 2026 08:57:56 -0500
+Message-ID: <20261107134919.685627444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,82 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 134351edc28e083c61012b6c69e8e54dd7fa5bcc ]
+[ Upstream commit ea1f41802312e77b58113146a060fb0546b2234d ]
 
-For an unresolved multicast route query, ipmr_get_route() builds a
-synthetic IP header in the headroom obtained from
-skb_realloc_headroom(), which does not zero the memory it allocates.
-Only a few fields are initialized, leaving others as stale heap
-contents.
+The MA35D1 clock controller takes two crystal oscillator inputs from
+the board:
+- HXT, a high-speed 24 MHz crystal for most of the system
+- LXT, a low-speed 32.768 kHz crytal for the RTC and low power modes
 
-ipmr_cache_report() copies this header into the IGMPMSG_NOCACHE report
-that is queued to the mroute socket, so a recvmsg() on that socket leaks
-the uninitialized bytes to user space: the 'tos' field [1] and the 'id'
-and 'frag_off' fields [2].
+So far the binding was expecting a single crystal. The example named it
+HXT, but no real definition for it was given. LXT was not even
+described. In order to remain backward compatible, we will continue to
+allow either one (HXT) or two (HXT then LXT) input clocks. I propose to
+give those phandles a name to clarify what these entries expect, but I'm
+not listing the clock-names property in the required block, for backward
+compatibility. The rates are fixed by the TRM, so even if the second
+oscillator is not described, the OS can make an educated guess.
 
-Fix by zeroing the IP header before filling in the few fields that are
-used, so that the entire header is initialized, as in ip6mr_get_route().
-
-[1]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter
- raw_recvmsg
-
-Uninit was stored to memory at:
- ipmr_cache_report
- ipmr_cache_unresolved
- ipmr_get_route
-
-Uninit was created at:
- pskb_expand_head
- skb_realloc_headroom
- ipmr_get_route
-
-Byte 1 of 28 is uninitialized
-
-[2]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter
- raw_recvmsg
-
-Uninit was stored to memory at:
- ipmr_cache_report
- ipmr_cache_unresolved
- ipmr_get_route
-
-Uninit was created at:
- pskb_expand_head
- skb_realloc_headroom
- ipmr_get_route
-
-Bytes 4-7 of 28 are uninitialized
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 2f8b5eb589cb ("dt-bindings: clock: nuvoton: add binding for ma35d1 clock controller")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/0545f0c83f5ee2f6696210f87268e811ef655715.1792476357.git.zhilinz%40nebusec.ai
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261025071729.34967-2-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260930-perso-ma35d1-upstream-clk-v6-2-48937ee6c9bb@bootlin.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../bindings/clock/nuvoton,ma35d1-clk.yaml       | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index b1282c01a77e0..66a7f25f236b8 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -2474,6 +2474,7 @@ int ipmr_get_route(struct net *net, struct sk_buff *skb,
- 		skb_push(skb2, sizeof(struct iphdr));
- 		skb_reset_network_header(skb2);
- 		iph = ip_hdr(skb2);
-+		memset(iph, 0, sizeof(*iph));
- 		iph->ihl = sizeof(struct iphdr) >> 2;
- 		iph->saddr = saddr;
- 		iph->daddr = daddr;
+diff --git a/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml b/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
+index 8f0c43683729b..9649feda8d7a5 100644
+--- a/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
++++ b/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
+@@ -29,7 +29,18 @@ properties:
+     const: 1
+ 
+   clocks:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
++    description:
++      The controller takes 2 crystal oscillator inputs from the board.
++      HXT is a 24 MHz crystal feeding the internal PLLs. LXT is a 32.768
++      kHz crystal, for RTC and low power operations.
++
++  clock-names:
++    minItems: 1
++    items:
++      - const: hxt
++      - const: lxt
+ 
+   nuvoton,pll-mode:
+     description:
+@@ -58,6 +69,7 @@ examples:
+         compatible = "nuvoton,ma35d1-clk";
+         reg = <0x40460200 0x100>;
+         #clock-cells = <1>;
+-        clocks = <&clk_hxt>;
++        clocks = <&clk_hxt>, <&clk_lxt>;
++        clock-names = "hxt", "lxt";
+     };
+ ...
 -- 
 2.53.0
 
