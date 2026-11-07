@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061101;
-	b=GyfT92jCDpT1mOW9rRXShhAxfyDltoraD3Pfd3KTFhMoaJE8IcnYYqvjwfo1nxjDMXtR
-	 Lw/RhzcrGXOHlBeUSxucxVU9VTv9YSk0D3jN755q9WDzIyUUcwE8GwmLcozsbV3gU/NWA
-	 SYsWqadOhYTyseNx6LGgbG6X23sq2D9Ru6BJIaKgwxMTriNJPG0NopBmDNygnIdhNza75
-	 OM/feFWL5BP59qokH5q9t6QX23KERj60UJ/nFLZLb0nz05sr9j3sLvJ0iXLfWGqcHhvSY
-	 O6wLI+p6LkkkueJ5iiF/BZACuCfNRanpKzDraM/TrDhtupGFH7FPCcE4NbJoD42DE+g==
+	t=1794061102;
+	b=VPiwOxhe+CWmMM24mP7y/a29FmzEAB+5Tm1eNrQv2xR7WdbRrs6KQG6qmEth9QwUh3jG
+	 5Df9YGxZs3qLeDkkgDXEy96fD8yDTr26V2NtUavu8Rv8jZvf7080dWxvPUTckFlun7Ffd
+	 fIo9l5itlDRrDYKnL8ndUtgDY9K1W94PTgE5AE1UPaiYBpSsJnhG9Ddy88mqqCgqbjjYN
+	 cnizoqYG8A4vtUW6iGvamI40S+pxW0iFBRC8lxYGRl+Z/WOnHlm9dINNc5HzlkyJNgOBc
+	 Y6Vpjzc6hVKdKd4i0ewaRJ8vUgEK8je2VSeiYb4mGgKmF7Klm3KTgUlZ4EiwPa4y/Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oS1eH4rln1f6uxddEsyOj8ZGH8m8nRv8KEWmTaQeN2M=;
-	b=DHV7rx5ffqtwXyBWGyHWI9KsUKB75g2cB2iwwZOwX5Mz+7j86dwIYgTCArKqxegPtOy3
-	 IlwzR/R51umPgOBGvwd1Tv0nx5wV0f4Idq76Yr0iBoJR5JeBoLQm3VsewVtiPJq/0D29Z
-	 O+FA7GIKy7YtSjAqtMhKGOEJK6NvHd5CE6bE/DBKqCefFDvb1WCro6juRWvtrI+1JZjqV
-	 UEeYZBXZCtQenqYnNOTF9ovTFsFDPTt5HMKedE4o+11e12eYxVUhwS/2E+owPIuvFMaDZ
-	 wlBFhjHk69UZUcTV8GG/FoZHiGIEiwfntGm0ox9/OmRAyqrvQKTuvbwtDm/p+FyA5gg==
+	bh=25zDKKDXcub6wowTpYewGMRhlU+vATfPPz4I02YQoqA=;
+	b=saguyY8cU2ejewuaFVW5GbkHQuqqp0weY5uahaSageePjongD3bgcP4LGLRLonxoXiqK
+	 Ax2QfRha//E6UJwlFT3rdtr53wNbZIU0d510rLcPpAX2s+qAOeUGkPo9E5WJY+WBTDLLM
+	 w6026ccbwPa8/iz3FbXXtuaOOVZx/Bf+wOk1o1Hvhiuw2wvhxRV7p6/TIr4BQWmNKSpFR
+	 DeNlm8U4Oik70Rm7GvYU3Ahwrm+KcQLzgNQeOYNlQF3wVAqRKVilpb1pFR8xIpiXMCsDd
+	 5dfgYoj0j7+q9dAe0BZgVVBdchJTQEQ1ELypznvwjrlVq1NLcgOMBBXNFH9TP80CYqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U26BayjL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0jYuQiR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4848606D82F;
-	Sat,  7 Nov 2026 14:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AAD606D82F;
+	Sat,  7 Nov 2026 14:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U26BayjL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581AF1F008A1;
-	Sat,  7 Nov 2026 14:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0jYuQiR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F091F008A4;
+	Sat,  7 Nov 2026 14:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061100;
-	bh=oS1eH4rln1f6uxddEsyOj8ZGH8m8nRv8KEWmTaQeN2M=;
+	s=korg; t=1794061102;
+	bh=25zDKKDXcub6wowTpYewGMRhlU+vATfPPz4I02YQoqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U26BayjLIqPikatirIMtDY136XIeGC8SpUiWr0lmezIoP4QD5LUpuzqMD/CwKtB31
-	 dZa6H5QzUYLvJwTZxmuJMNEVdpUR2TzFPt55hlJPWkgGpzEfoPbnIU5kEW7VFW3bh9
-	 9Vd9fzE53/iY/cVI8nAZ24sdAPUZ6PiibmWdiGjU=
+	b=g0jYuQiRJvur3AO0vtSwJ6wGrWrnUlaoqjsKTBAM8Y5RhjLIe18DpharB7AoylEXg
+	 EJ7tcWI9XzXIAaoymj5zlrbVZR17pegM3MMSbFT39TEISgKUGeExOsPWnjBqwRDctt
+	 VESwDaWJ4h7QJ9UaJsFOEKfuGtf8c/x69lHBz+74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hernan Ganzo <gp@sneemgp.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0412/1536] ALSA: hda/realtek: Limit internal mic boost on HP Pavilion 15 (103c:2164)
-Date: Sat,  7 Nov 2026 08:40:28 -0500
-Message-ID: <20261107135009.145129381@linuxfoundation.org>
+Subject: [PATCH 6.12 0421/1536] usb: mtu3: Fix double dereference in TP_printk
+Date: Sat,  7 Nov 2026 08:40:37 -0500
+Message-ID: <20261107135009.397692943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,63 +70,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hernan Ganzo <gp@sneemgp.com>
+From: Vladimir Murzin <vladimir.murzin@arm.com>
 
-[ Upstream commit 786fb6b3f513937f712db5a9ba6a12cbc6982ba9 ]
+[ Upstream commit cfb3293c4573289f11f913611f530ea6b1926d67 ]
 
-The HP Pavilion 15 with the ALC3227 codec (SSID 103c:2164) exposes the full
-four-step internal mic boost on pin 0x12: nsteps=3 with stepsize=0x2f, that is
-0, 12, 24 and 36 dB. Combined with the ADC capture gain of +30 dB the analogue
-cascade reaches 66 dB, and the internal microphone clips on the ambient noise of
-a quiet room; the upper two steps are unusable at any useful input level. This
-is the defect class ALC269_FIXUP_LIMIT_INT_MIC_BOOST exists for.
+Paul reported kernel splat:
 
-The machine matches no SSID quirk and falls through to the pin table, which
-selects ALC269_FIXUP_HP_MUTE_LED_MIC1 through a pin signature shared with
-several other HP models. Add an SSID entry instead, using
-ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED: the existing fixup that applies
-alc269_fixup_limit_int_mic_boost() and chains to the same mute LED fixup, as
-already done for 103c:218b. The boost becomes 0 or 12 dB and the LED handling is
-unchanged.
+[    0.000000] TRACE EVENT ERROR: Event mtu3_gadget_ep_set_halt has double dereference in TP_printk: &REC->gpd_ring->dma
+[    0.000000] ------------[ cut here ]------------
+[    0.000000] Event mtu3_gadget_ep_set_halt has double dereference in TP_printk: &REC->gpd_ring->dma
+[    0.000000] WARNING: kernel/trace/trace_events.c:420 at test_double_dereference+0x144/0x14c, CPU#0: swapper/0/0
+[    0.000000] Modules linked in:
+[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.3.0-rc1 #15247 PREEMPT
+[    0.000000] Hardware name: linux,dummy-virt (DT)
+[    0.000000] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    0.000000] pc : test_double_dereference+0x144/0x14c
+[    0.000000] lr : test_double_dereference+0x144/0x14c
+[    0.000000] sp : ffffc80aa7633bf0
+[    0.000000] x29: ffffc80aa7633bf0 x28: ffffc80aa7c0f047 x27: 000508b58019388f
+[    0.000000] x26: 0000000000000003 x25: 0000000000000007 x24: ffffc80aa5fceff8
+[    0.000000] x23: ffffc80aa7c0f05a x22: ffffc80aa64edfe8 x21: ffffc80aa7c0fce8
+[    0.000000] x20: ffffc80aa7c0f047 x19: 0000000000000013 x18: 0000000000000001
+[    0.000000] x17: 6572656420656c62 x16: 756f642073616820 x15: 746c61685f746573
+[    0.000000] x14: 0000000000000000 x13: ffff000139d90000 x12: 0000000000000045
+[    0.000000] x11: 00000000000000cf x10: ffff00013f546428 x9 : ffff000139d90000
+[    0.000000] x8 : 3fffffffffffc000 x7 : 0000000000000001 x6 : 0000000000000001
+[    0.000000] x5 : ffff00013f4e6440 x4 : 0000000000000000 x3 : 0000000000000000
+[    0.000000] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffc80aa764a700
+[    0.000000] Call trace:
+[    0.000000]  test_double_dereference+0x144/0x14c (P)
+[    0.000000]  trace_event_raw_init+0x37c/0x5d8
+[    0.000000]  event_init+0x34/0xc0
+[    0.000000]  trace_event_init+0xec/0x588
+[    0.000000]  trace_init+0x24/0x6e0
+[    0.000000]  start_kernel+0x4a0/0x8ec
+[    0.000000]  __primary_switched+0x88/0x90
+[    0.000000] irq event stamp: 0
+[    0.000000] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
+[    0.000000] hardirqs last disabled at (0): [<0000000000000000>] 0x0
+[    0.000000] softirqs last  enabled at (0): [<0000000000000000>] 0x0
+[    0.000000] softirqs last disabled at (0): [<0000000000000000>] 0x0
+[    0.000000] ---[ end trace 0000000000000000 ]---
+[    0.000000] TRACE EVENT ERROR: Event mtu3_gadget_ep_disable has double dereference in TP_printk: &REC->gpd_ring->dma
+[    0.000000] TRACE EVENT ERROR: Event mtu3_gadget_ep_enable has double dereference in TP_printk: &REC->gpd_ring->dma
 
-Tested on the affected machine by selecting the same fixup through the model
-string (snd-hda-intel.model), which bypasses the SSID and pin tables, with the
-driver confirming the selection:
+Which also observed by Mark and myself.
 
-  snd_hda_codec_alc269 hdaudioC1D0: ALC3227: picked fixup limit-mic-boost (model specified)
+The splat it result of new check introduced by b5cc230af5e5 ("tracing:
+Warn when an event dereferences a pointer in TP_printk()") which
+correctly catches issue with %pad dereferencing the address saved in
+the ring buffer. TP_fast_assign() logic gets executed when the
+tracepoint is triggered, however the TP_printk() is executed when the
+user reads the trace buffer which could be seconds, minutes, hours,
+days, even months later and nothing guarantee that __entry->gpd_ring
+pointer will still be pointing to what it was when it was recorded.
 
-With that, Internal Mic Boost reports Limits 0 - 1 (0 or 12 dB) instead of 0 - 3
-(0 to 36 dB), so alc269_fixup_limit_int_mic_boost() clamps this codec's internal
-mic pin as intended. Note that /proc/asound/card1/codec#0 keeps printing the
-unclamped hardware caps (nsteps=0x03): that file reads codec parameters uncached
-by design, while the fixup overrides the driver's cached parameter that the
-control is built from.
+Fix the issue by capturing immediate value of gpd_ring.dma when trace
+point is triggered.
 
-This does not by itself make the default capture volume sane -- the remaining
-12 dB on top of the +30 dB ADC gain is still hotter than this machine's usable
-operating point. It removes the two unusable steps from the hardware range, which
-is what a quirk of this class can do.
-
-Signed-off-by: Hernan Ganzo <gp@sneemgp.com>
-Link: https://patch.msgid.link/20260921205538.41192-1-gp@sneemgp.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Paul E. McKenney <paulmck@kernel.org>
+Tested-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/mtu3/mtu3_trace.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index e25664efd9c15..8847d06fcba79 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10845,6 +10845,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1028, 0x164b, "Dell", ALC293_FIXUP_DELL1_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x1586, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x18e6, "HP", ALC269_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x2164, "HP Pavilion 15 Notebook PC", ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x218b, "HP", ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x21f9, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC1),
- 	SND_PCI_QUIRK(0x103c, 0x2210, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC1),
+diff --git a/drivers/usb/mtu3/mtu3_trace.h b/drivers/usb/mtu3/mtu3_trace.h
+index 89870175d6356..9aaa167d69c13 100644
+--- a/drivers/usb/mtu3/mtu3_trace.h
++++ b/drivers/usb/mtu3/mtu3_trace.h
+@@ -224,6 +224,7 @@ DECLARE_EVENT_CLASS(mtu3_log_ep,
+ 		__field(unsigned int, flags)
+ 		__field(unsigned int, direction)
+ 		__field(struct mtu3_gpd_ring *, gpd_ring)
++		__field(dma_addr_t, gpd_ring_dma)
+ 	),
+ 	TP_fast_assign(
+ 		__assign_str(name);
+@@ -235,12 +236,13 @@ DECLARE_EVENT_CLASS(mtu3_log_ep,
+ 		__entry->flags = mep->flags;
+ 		__entry->direction = mep->is_in;
+ 		__entry->gpd_ring = &mep->gpd_ring;
++		__entry->gpd_ring_dma = mep->gpd_ring.dma
+ 	),
+ 	TP_printk("%s: type %s maxp %d slot %d mult %d burst %d ring %p/%pad flags %c:%c%c%c:%c",
+ 		__get_str(name), usb_ep_type_string(__entry->type),
+ 		__entry->maxp, __entry->slot,
+ 		__entry->mult, __entry->maxburst,
+-		__entry->gpd_ring, &__entry->gpd_ring->dma,
++		__entry->gpd_ring, &__entry->gpd_ring_dma,
+ 		__entry->flags & MTU3_EP_ENABLED ? 'E' : 'e',
+ 		__entry->flags & MTU3_EP_STALL ? 'S' : 's',
+ 		__entry->flags & MTU3_EP_WEDGE ? 'W' : 'w',
 -- 
 2.53.0
 
