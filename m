@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064874;
-	b=MylW/3/f97SttG8NyuSFCKZv9lXNi2/M1MD7Ughm9OLgPpBXdnQDQBtgWedwytj1444Z
-	 W/04jwFCmWdbh18I9Uvg3bTmgON5jSv02GzSf0btZS8MuN99xixGfBzS2qCrSUDHRB+Io
-	 IsoFH8TfBv71XZc4XNjnx6E7aIq+XvEZPsVVgw6q5NN787qWtXAFNtf1xBrTs6q/ASOzL
-	 IZo1sUBcZSArsQg4THpIRaYABinKxpdg/UU/s1f/RyiC/hC8CQZwhrHCdICoGqXqAAPIf
-	 eimzxG5fISKl5AHSSvnNXn44XOxFVZx8q4ibVjee+ynAIFAH2ca6VYOol5FgIFdvqtw==
+	t=1794064876;
+	b=QbxSy3lI7S8URnd9rTM8pCWdxjM9f0ZLtXfoqQJ560+mvFZHWInFarw+a7OKGknC6lZc
+	 S1l020ZvkI77stdeRBfEZVeEmF4FSW5xZ9Fb/sVAMtBaqvWvr3nTAjqbQyeGPPQLIgzjU
+	 D+tExkq98OtsTjh2XvQd7RAa0BGVZbZva7ez/toLOcWAm/lRjmhIuw0tgH8uClKS6x1/p
+	 ucfIP2nMb9+IqpleS7ApnXRjNtKqiVCHF3g8DsRpUlQ0oEx1ii7WmKgazfhk3BFDEqhkV
+	 YPkaXyzKsXx8hvvjdXI0gRA3TsslHhsku92Bk2kLcc0U7HJfJ4wAlqg7knBOB8CArpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064876;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=1+ukuAyRYzkxFt0XT5dxiduhN+VE+RHr8nHFCwg/ME4=;
-	b=M7+seql8ryUb/9mLkfFLxcindsVQWein3cgELS9OH9EuRr6gUFZRY49pBkctX0Rmo3tz
-	 aGM8i5pFdS8Rwox3j6ZjI/CnXNeBNKSIoDYGiFzYqQUKSN7yMsXPHxidtFstv4ui7DIm/
-	 kEnosdwVRmU0TSUGeEQXQEIbqzymKFg83kwRKNdZEmfU+m1o54/gcdS8hQIqWk6scCbbF
-	 XaAdCiZXi6WQyhHV4vH/S5pI1Xq63SF1S4t0QG8EneRkWVT/mYw2lhqH7L/Vnpm9aAf44
-	 wjQBHcaMtTUWJaquQS4PjnxddhPck3d9bempGGPN2PyT70VurXFWJiz47fabtnshicw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=C/qKEbDYpIiC+wbLuoPkR8jl/l9xnb2T30QHYJoxOIU=;
+	b=yM5aqzTblSTOOzTRvc/Ji/uzwUq9t+an0kOMhjwFb+9DaU0zSZCGNXVuaJEH9uBnxFGs
+	 7Nh4ZVwElp4MfVh+YWYUE5e0Yo+J/IKGsY0Ijzm7oE3XWwzsPQJdiXXwiuwMt/cR5Qd+q
+	 fmTveiHBYmWdDElgDH1dGIma8Iw2WN1WIY4ySCCJacaOR748jNcGHUJou8heU7JywKIPy
+	 oA9wXGGHKKKaidUP4fWQsp5xFAw1ZwT8/jBBfdd6rpXk3jARsII/eVWt8HS87+hazlney
+	 XpTMZeQme7wU8HkCz1x7Us9UaObNkMRN/KG4hi/gw0cg7Nn72qMTuC5RVmVdzsRd+Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZEdKcbZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DL7rz9FG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4634606CE4A;
-	Sat,  7 Nov 2026 15:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B79606CE4E;
+	Sat,  7 Nov 2026 15:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZEdKcbZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E841F0089F;
-	Sat,  7 Nov 2026 15:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DL7rz9FG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7621F0089F;
+	Sat,  7 Nov 2026 15:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064873;
-	bh=1+ukuAyRYzkxFt0XT5dxiduhN+VE+RHr8nHFCwg/ME4=;
+	s=korg; t=1794064875;
+	bh=C/qKEbDYpIiC+wbLuoPkR8jl/l9xnb2T30QHYJoxOIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hZEdKcbZ4s3w5zn/WNlbH+OGqjlVIphaa1urvBS1tw6WsxsxRcnd2NiVE2C5kFHe7
-	 Xb50Am8yyf5cSdAejReNz/sN9JVFsDfydtgVYUySJp6vY4U4h7HkZKzchoHtdkZYOb
-	 0/xPkWaNLIcjkPFgmLyTv2w+u1x7UT7Oe5LAbfF4=
+	b=DL7rz9FGrEPkYMPAzafk+6x6xEbWxGkoXMiBa96mUp613GTKDvxlhJB7M5d/WW/Ob
+	 HMR0LvqQHCwLf7dhmrwtXPrncrgmH5yNelYsDqPiN4xyXIk7NcxLgljYiIcR7VcQ8K
+	 OydXl22OMWu4R5jeNehGHxoyDgmTQLQpxbmvY2kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	stable@kernel.org,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	linux-serial@vger.kernel.org,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0752/1257] serial: 8250_lpss: do not touch uninitialized line in ehl_serial_exit()
-Date: Sat,  7 Nov 2026 08:50:48 -0500
-Message-ID: <20261107135000.057796246@linuxfoundation.org>
+Subject: [PATCH 7.3 0788/1257] irqchip/imx-intmux: Fix runtime PM teardown on remove
+Date: Sat,  7 Nov 2026 08:51:24 -0500
+Message-ID: <20261107135001.087210396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -65,68 +64,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 3e3ae95a3d84a6028f37a07ab7ad78bb14689f2e ]
+[ Upstream commit b167c1a30e9e020e4c5e102c7a555943742c024b ]
 
-lpss8250_probe() calls lpss->board->exit() on its error path. For the
-EHL board, that is ehl_serial_exit() and it does:
-serial8250_get_port(lpss->data.line)->dma = NULL;
+imx_intmux_probe() enables the IPG clock and then drops its runtime PM
+reference with pm_runtime_put(). With CONFIG_PM enabled, the runtime
+suspend callback disables the IPG clock. With CONFIG_PM disabled, the
+clock remains enabled after probe.
 
-But when lpss8250_dma_setup() or serial8250_register_8250_port() fails,
-lpss->data.line was never assigned. As lpss is kzalloc()ed, line is 0
-and ehl_serial_exit() clears the dma pointer of an unrelated port --
-serial8250_ports[0], i.e. ttyS0, which is often the console.
+imx_intmux_remove() accesses the CHANIER registers without first making
+sure that the device is runtime active. The device may therefore be
+runtime suspended with the IPG clock disabled when these registers are
+accessed. In addition, the remove path only calls pm_runtime_disable()
+and does not balance the clock enable when CONFIG_PM is disabled.
 
-Initialize lpss->data.line to -1 in probe and skip the clearing in
-ehl_serial_exit() if no port was registered.
+Resume the device and acquire a runtime PM reference before accessing
+the registers. If resume fails, skip the register accesses but still
+tear down the chained handlers and IRQ domains. Disable runtime PM
+afterwards, drop the acquired reference without triggering another
+runtime suspend, and explicitly disable the IPG clock.
 
-Fixes: 5318f70da7e8 ("serial: 8250_lpss: Balance reference count for PCI DMA device")
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Assisted-by: LLM
-Cc: "Ilpo Järvinen" <ilpo.jarvinen@linux.intel.com>
-Cc: stable@kernel.org
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: linux-serial@vger.kernel.org
-Link: https://patch.msgid.link/f389df34aaa538270313ebd4cea75c2baaf46b95.1791873876.git.jirislaby@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This keeps the clock enabled while the hardware registers are accessed
+and balances the clk_prepare_enable() performed during probe for both
+CONFIG_PM configurations.
+
+This issue was found by manual code inspection.
+
+Fixes: bb403111e017 ("irqchip/imx-intmux: Implement intmux runtime power management")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260914134211.1734163-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_lpss.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/irqchip/irq-imx-intmux.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_lpss.c b/drivers/tty/serial/8250/8250_lpss.c
-index 776ec1ef29d62..325e587ae2c42 100644
---- a/drivers/tty/serial/8250/8250_lpss.c
-+++ b/drivers/tty/serial/8250/8250_lpss.c
-@@ -183,9 +183,8 @@ static int ehl_serial_setup(struct lpss8250 *lpss, struct uart_port *port)
- 
- static void ehl_serial_exit(struct lpss8250 *lpss)
+diff --git a/drivers/irqchip/irq-imx-intmux.c b/drivers/irqchip/irq-imx-intmux.c
+index 47c2681d138a0..de2a8f98f6255 100644
+--- a/drivers/irqchip/irq-imx-intmux.c
++++ b/drivers/irqchip/irq-imx-intmux.c
+@@ -288,12 +288,16 @@ static int imx_intmux_probe(struct platform_device *pdev)
+ static void imx_intmux_remove(struct platform_device *pdev)
  {
--	struct uart_8250_port *up = serial8250_get_port(lpss->data.line);
+ 	struct intmux_data *data = platform_get_drvdata(pdev);
+-	int i;
++	int i, ret;
++
++	ret = pm_runtime_resume_and_get(&pdev->dev);
++	if (ret < 0)
++		dev_warn(&pdev->dev, "failed to resume device: %d\n", ret);
+ 
+ 	for (i = 0; i < data->channum; i++) {
+ 		/* disable all interrupt sources of this channel */
+-		writel_relaxed(0, data->regs + CHANIER(i));
 -
--	up->dma = NULL;
-+	if (lpss->data.line >= 0)
-+		serial8250_get_port(lpss->data.line)->dma = NULL;
++		if (ret >= 0)
++			writel_relaxed(0, data->regs + CHANIER(i));
+ 		irq_set_chained_handler_and_data(data->irqchip_data[i].irq,
+ 						 NULL, NULL);
+ 
+@@ -301,6 +305,11 @@ static void imx_intmux_remove(struct platform_device *pdev)
+ 	}
+ 
+ 	pm_runtime_disable(&pdev->dev);
++	if (ret >= 0) {
++		pm_runtime_put_noidle(&pdev->dev);
++		clk_disable_unprepare(data->ipg_clk);
++		pm_runtime_set_suspended(&pdev->dev);
++	}
  }
  
- #ifdef CONFIG_SERIAL_8250_DMA
-@@ -329,6 +328,8 @@ static int lpss8250_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		return ret;
- 
- 	lpss->board = (struct lpss8250_board *)id->driver_data;
-+	/* for tests in lpss->board->exit() */
-+	lpss->data.line = -1;
- 
- 	memset(&uart, 0, sizeof(struct uart_8250_port));
- 
+ #ifdef CONFIG_PM
 -- 
 2.53.0
 
