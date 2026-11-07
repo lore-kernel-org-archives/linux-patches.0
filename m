@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061020;
-	b=LvlrBGuf9w8TNI5NkelcdtvtBzgVEPS1kk5QENUhXOVWZqre3qmlhd1y5y3Kg2Ye7uKE
-	 cyFdM+ZFBVz9qyo8Wr8CmqWZdiMHJcgXc3gMV/0wd/rXg0OHeu6NjCgeAvXUHP0mzig1H
-	 K/T6uiaH73eQsE8Rh3Bq7HlNihHsRpagWW0KqwObxhi4fP2TX8vBn5Lx3QtCVkg3uVuaJ
-	 p0BDGKWfdGFI12ezR/KTU4NuRtExPblbw9t7MtTbQ75E7sftk4iLUSgLU89a7Gubl5oZx
-	 olJI4cMKd0/Pbeg2AS62He82T5aqJtMuF098Qrt78qpcQxYmqmu7uuU58ucWhT9maQw==
+	t=1794061022;
+	b=5V9G8DrJ9pMg2ou9CwMHL8ATyFi5grI2Rs2rtmA+sYDaYzQAscRKNLfCZRmS7ByHhSBP
+	 rXb3Hy6VPLwyQfy+wKk769QNGa/5UY1yWYEDUtPYD3iwuPSvWzE65F+JaN9CNNFJklo64
+	 okL2eBUC7l2bSUIguKtBlC1iXPHHxaRPn9IFdbpBUxTzFICT0m/0uA4Z0FqKxW69ls96H
+	 mDIc8YzceAdx+o96aDlwuGqZnHSXfawoCEeG36fDh7uem47p6AxOiCR5N2qQg4IhSaKv4
+	 UDjZvnjQT35hTlBrTBIIzgE2gbPrfBZ4Tbl1T4fLfNVykbesY1v80pA4KY2O2owN3NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061020;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061022;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yypc5MMmOkKGc6fLSaWXS9zKNAun9tOtDFvtyN43SmA=;
-	b=gQU7+dN2xP7TSEwntmJ0Efutn80fYj7yIvhsY+9DvRsjjZs7xcyHXoRv8r/2wedE9l6k
-	 EzO6UTrkugicEXb00kcoQ6tW161MLUdFB6fo9z9jMeFWG1kN+tsVW4n9BxiicFYfpe1bS
-	 kvcVA74sTg6wfMfeR65oD/9rAtBLHEGO5a43qlR3gsYiVtn1IjrDDTkehMoeaauvxichp
-	 4mrFQXk+MlrjUCmzrzDiEmF3m1LgeYHJEoeuHk58Ljaat25AkvIlnvz2B4YO/WrYYj9jg
-	 q7FQab3G6ERtiSxe94ZxY/5w0CrMOqGTo3Tw4pYjETFkqPJZvfkhbrNWcTL64G8msLg==
+	bh=rrOS0LZALFqRuEOgMoCyC0VNqClLzub6kWslokmnSvg=;
+	b=LmiEjSPVhjHe/Z6qI2c2bkkIo3Nkl5Ce1tQY4qyZy+XJQSHUj7s3kit8AYcKpKvdRIbo
+	 4b5v3cyVlnaY7XNA3ZklV3jvXjQipUeUQ23qK1wta+V/arDmVwYFNBDlTYAWObvfWR24S
+	 Nsi+x3aAcRemIte4UoryFi+7MIJzE6koLUpOQs5wuSn7mWHtZ7B2D6m6oheHAYJ2msrwV
+	 WfQb7Uue8okuZje7H9OP7oAgADNL8ULWci54eoUosJwEHAqCqFOcgyeB9hMM3teKY+2fx
+	 /vdeukW/YWOs11TT3GAtmDtmXKk71GNQ7rf/dwlMFj9SXtehGLuLBLhzYw6q8FweFAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hV+ObElU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Iptz+lR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61A0606EEAB;
-	Sat,  7 Nov 2026 14:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F946082BE2;
+	Sat,  7 Nov 2026 14:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hV+ObElU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA381F008A1;
-	Sat,  7 Nov 2026 14:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Iptz+lR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5771D1F0089F;
+	Sat,  7 Nov 2026 14:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061019;
-	bh=Yypc5MMmOkKGc6fLSaWXS9zKNAun9tOtDFvtyN43SmA=;
+	s=korg; t=1794061021;
+	bh=rrOS0LZALFqRuEOgMoCyC0VNqClLzub6kWslokmnSvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hV+ObElU20RfSANrMtOT0UK2PS5m8i3ZYi65bIdMHKOUXKNaPvq2mK0qTGkiQJ12T
-	 J5MJTWADEBBmth6NwNIOwNmaz7/0IUojBBm8Ubm/CCK7ag6Cv8lYnnPVifOgadfAKA
-	 jUxhWJGdWuh4Eevu9oNEdnOVnhiZr+7J1mKdeJNg=
+	b=0Iptz+lRV6xfELD9KoJbWqJ0qoUzsJrsqCsBvUo1zxhFyKBfZB6C/6SHh743xXFqG
+	 sd7785qQG6cQBxenDHuXQpTO83y5ugwslQ1hE8VcQc1uOO4kH4tC65b7oLhC1/fywJ
+	 V43dJtTLB7D8rhRFLiZ69CHk0N7KmMPpyoZnN754=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Jackie Liu <liuyun01@kylinos.cn>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0358/1536] smb: server: Free session data in user_session.c with kfree_sensitive()
-Date: Sat,  7 Nov 2026 08:39:34 -0500
-Message-ID: <20261107135007.715784054@linuxfoundation.org>
+Subject: [PATCH 6.12 0359/1536] NFS: Verify symlink inode before caching target
+Date: Sat,  7 Nov 2026 08:39:35 -0500
+Message-ID: <20261107135007.742798291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,39 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 9a4bd6507c21f66e84dc021705a4b9d84773111e ]
+[ Upstream commit 3265f1998ae9a9282a8a6ca95467d9572d6ebb82 ]
 
-struct ksmbd_session contains some arrays with sensitive information, like
-sess_key, smb3encryptionkey, smb3decryptionkey and smb3signingkey. Thus
-let's make sure that this information cannot leak via the heap and use
-kfree_sensitive() to free it.
+nfs_symlink() copies the symlink target into a folio before issuing the
+SYMLINK RPC.  After a successful reply, it caches that folio in the
+instantiated inode mapping and assumes that the dentry now names a
+symlink.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+If the dentry is instantiated with a non-symlink inode, the raw symlink
+target folio can be inserted into the wrong mapping.  When that inode is
+a directory, reclaim or unmount later calls nfs_readdir_clear_array()
+through nfs_dir_aops and interprets the symlink target as a readdir
+cache array, which can lead to invalid kfree() calls.
+
+A vmcore from a 4.19-based kernel showed the crash when reclaiming a
+directory mapping on unmount:
+
+  Stack trace:
+   nfs_readdir_clear_array+0x4d/0x70 [nfs]
+   page_cache_free_page.isra.35+0x1a/0x90
+   delete_from_page_cache_batch+0x1cf/0x2c0
+   truncate_inode_pages_range+0x24d/0x910
+   [...]
+   nfs_evict_inode+0x15/0x30 [nfs]
+   evict+0x115/0x2b0
+   dispose_list+0x48/0x60
+   evict_inodes+0x16c/0x1b0
+   generic_shutdown_super+0x3f/0x120
+   nfs_kill_super+0x1b/0x40 [nfs]
+   deactivate_locked_super+0x3f/0x70
+   cleanup_mnt+0x3b/0x80
+
+The current code still has the same unchecked cache insertion pattern,
+so it may be susceptible to the same failure mode.
+
+Verify that the instantiated inode is a symlink before caching the
+target folio.  If the type is wrong, drop the suspect dentry and skip
+the cache insertion while preserving the successful SYMLINK result.
+
+Co-developed-by: Jackie Liu <liuyun01@kylinos.cn>
+Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/dir.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 0c65a862f8589..1dd955a977be3 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -168,10 +168,10 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
- 	ksmbd_launch_ksmbd_durable_scavenger();
- 	ksmbd_session_rpc_clear_list(sess);
- 	free_channel_list(sess);
--	kfree(sess->Preauth_HashValue);
-+	kfree_sensitive(sess->Preauth_HashValue);
- 	ksmbd_release_id(&session_ida, sess->id);
- 	ida_destroy(&sess->tree_conn_ida);
--	kfree(sess);
-+	kfree_sensitive(sess);
- }
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index 5c9c156838678..0356b80e4a357 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -2648,6 +2648,12 @@ int nfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
+ 		return error;
+ 	}
  
- struct ksmbd_session *__session_lookup(unsigned long long id)
++	if (unlikely(!d_is_symlink(dentry))) {
++		d_drop(dentry);
++		folio_put(folio);
++		return 0;
++	}
++
+ 	nfs_set_verifier(dentry, nfs_save_change_attribute(dir));
+ 
+ 	/*
 -- 
 2.53.0
 
