@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065148;
-	b=ogzsrxXk34uBlEaXw2aWwXsEmw21BlJZ+FyqXoSaG5pMMvgMU5VZGpu3YnBkNl0/7/7q
-	 O6+WSzJHOVLrTqbPfalPDOcj4K/15y3FPNHzH3m4mPe0fsuprVGbtt4X3JKZH6/5JbB/i
-	 sB1jjjGJKCjBD6OVZR/bfAiSSPitkX/wpRSJwR0aCiqcF0Md2h3tYxGa2lERjvQehG0+w
-	 hTtgdCZXwMI/ZHo+6XIpHfh94vCzMJ46PYWein6zucc+NLmd+OesUXTnpC2w1GRo6QQk9
-	 c5wDCm3jYScb4UPC1qbKLnj1MwbKckYEdjaC+mIqhlm4MMaUc8MlJYEycBqvERNW1Bw==
+	t=1794065151;
+	b=4bQJvG4tROZ7cMnept0DK/jQ4AV2ucFW6snwKGM0Zh597X+qRVN9ZJLANBGsCPb1iFsP
+	 QDoxtDT0VbyBH1z7QedOyGgy4H/DOx0z9Wi+JMYn8qWj9E4kAqSkS6Y0N9LdH1uKYjYx1
+	 vfSkZS6uuRJ4WP9X9Uzystzvf8gZNLtWZI98IxfIHUuyI2GGRPLrQQWQxTMhqbX1jC0ay
+	 GrEiZfRSinSOLL8MWuyd8q3VJZbZXt87vDurYuBH4/gfrUtp2ihxEVh4pBJpKV3CLxz+O
+	 J1TCOlelCX1SVPQ96+mRMl8l68QDVqaORB8cHzOSXFg8tapeeMsmGuZYz7393ZScVHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b/N9raOstToGmcsmeyfQkMaGuezVs8jxsJ3IRZMO/Rw=;
-	b=cUwidQqOofmdHBByrjV2puiyFVM2FqeVczmie5GwnSca5giSX3cOuo4dMFjmKWAHoQ9q
-	 ebSGCvJ6w0aXTxfaR/nEjiaX/VYxRbcVPdQ5h6x4MGjgFzumzaznHOPjx63G/iyYrBiEi
-	 u+lCm12xO0JCtW+BGgjGoV/ZHEgcfp92Uam5CvINxktXkkuFvLRwMitmPX7RGj71/jayn
-	 jcE3GoIvNIeTlrzP7hsnb4YAtf3QmG0erGT73wCQCSCccqxhnYf1YVPAvV2lzCV1zo1nH
-	 8bGCdJ8F0nN8Hr2/MySS3xxt3GINZhiPoyrIqes6grAsEt/2bwq/HDQD1jTt6wYck+A==
+	bh=V9Ft01f7TVKlbqsKyiffGsdVNYKD7DBiWpjc/4srzzo=;
+	b=4Omc2SqJKNLEx3FJL59aZAmAZJxm/Y/KXZvfuiKsE1BDaLwyJjxXaWEEroIWNCydSkCy
+	 /Oxq811Yhpe2CUcyfluZOtsNKggfFkf2eT0BfKtYXnFCR4ME2ObedFzucjVbhHvooh96X
+	 oxOyZ1SUhOehHig+ILTaqUXdBa8uLKnC5eXkaFWAfyS6SgjFxdLd8DpMSmQFAEPDG3sQx
+	 7xyzbv/sm/IVqmbwdjlfZkwD/VfNnEjDVGl9JHbxURFsYwm735/k/FtJXNYvOupmaeACj
+	 W15rWAUHgXvgRKuSt23QCozoj4ROLpX83eCZyUXfzeC8Qmq1cScBiX8qz67s6RZ0HCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cC33ewDx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2ornGpI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C73606A32E;
-	Sat,  7 Nov 2026 15:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04EA606A335;
+	Sat,  7 Nov 2026 15:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cC33ewDx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A85F1F0089F;
-	Sat,  7 Nov 2026 15:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2ornGpI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649D11F0089F;
+	Sat,  7 Nov 2026 15:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065148;
-	bh=b/N9raOstToGmcsmeyfQkMaGuezVs8jxsJ3IRZMO/Rw=;
+	s=korg; t=1794065150;
+	bh=V9Ft01f7TVKlbqsKyiffGsdVNYKD7DBiWpjc/4srzzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cC33ewDxqpGAEysMEHcdEW4MZWn4HnGiMDFfs+3oEQ/EBBf8HrqIOlSN+9TDAHyeZ
-	 8BrWfRFLpamweNBiVxK8GVTCW7zcLUgfGXbdvZZ8ycWosBZmUU8cYbS3kvjxzECH5t
-	 704kKB13k2UJGt8/nz5lV9tI3XGBFhbjNni49SDc=
+	b=T2ornGpIpkM5lajhnO1BSLECpyb5aOnT8/92dR9tWnhv1C6FoAXNZz2tTFrOYY3sj
+	 ZP9iKkWS5XkY86P+2K4Qu2aWYbEcoToIuRuTLsN0EYnwT+RB+ZCyJVdxu2f3e74M77
+	 TGQzl5kZC3DMr4tJP+/7e651BxYXQu6u5ndCYXaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Mukul Joshi <mukul.joshi@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0961/1257] drm/amdkfd: dont drop an SVM CWSR reference that was never taken
-Date: Sat,  7 Nov 2026 08:54:17 -0500
-Message-ID: <20261107135005.882452382@linuxfoundation.org>
+Subject: [PATCH 7.3 0962/1257] drm/amdkfd: fix NULL deref in SDMA HQD debugfs dump on GC 12.1
+Date: Sat,  7 Nov 2026 08:54:18 -0500
+Message-ID: <20261107135005.910017674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,90 +69,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
 
-[ Upstream commit 030d47cc6720e0f07b502876cdbd266e309f9461 ]
+[ Upstream commit 0fe236afa2b9b28540fa1f8c789ef5d499c5d0ee ]
 
-When kfd_queue_acquire_buffers() fails, its error path calls
-kfd_queue_release_buffers(), which also drops a queue_refcount on the
-SVM range at ctx_save_restore_area_address. The SVM range is the last
-buffer acquired, and kfd_queue_buffer_svm_get() takes no reference when
-it fails, so on every error path this reference was never taken. If
-another queue of the process uses that CWSR range, its reference is
-dropped instead, and unmapping the range no longer evicts that queue
-while its CWSR area is unmapped from the GPU.
+Reading the KFD HQD debugfs node (dqm_debugfs_hqds) on a gc_12_1_0 part
+oopses with a NULL pointer dereference:
 
-On navi31, with queue A using an SVM CWSR range: munmap() of the range
-logs
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: hqd_sdma_dump_v12_1+0x6a [amdgpu]
+  Call Trace:
+   dqm_debugfs_hqds+0x2da/0x360 [amdgpu]
+   kfd_debugfs_hqds_by_device+0x74/0xa0 [amdgpu]
+   seq_read ... __x64_sys_read
 
-  Freeing queue vital buffer 0x..., queue evicted
+get_sdma_rlc_reg_offset() assumes an interleaved layout where the second
+SDMA per XCC lives in a separate SDMA1_HWIP register aperture. On
+gc_12_1_0 that aperture does not exist.
 
-but after a CREATE_QUEUE that reuses A's CWSR address with an unmapped
-write pointer (-EINVAL), the same munmap() leaves A running without the
-message.
+Rewrite get_sdma_rlc_reg_offset() to mirror sdma_v7_1_get_reg_offset():
+base the offset on adev->reg_offset[GC_HWIP][xcc_id][0] and add the
+per-instance SDMA1 offset for the odd instance.
 
-Only put the BOs on the acquire error path. The warning and the eviction
-are back after the failed CREATE_QUEUE.
-
-Fixes: b049504e211e ("drm/amdkfd: Validate user queue svm memory residency")
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Fixes: 7bd5d763b8e1 ("drm/amdkfd: Add gfx_v12_1_kfd2kgd interface for GFX12_1")
+Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Reviewed-by: Mukul Joshi <mukul.joshi@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9a08122e6361ef73f4b512d5db9596d561305519)
+(cherry picked from commit 94b2c5b06d37adc0e9a23138252758657b64b58a)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_queue.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ .../drm/amd/amdgpu/amdgpu_amdkfd_gfx_v12_1.c  | 44 +++++++++++--------
+ .../drm/amd/amdkfd/kfd_device_queue_manager.c |  9 ++++
+ 2 files changed, 34 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-index 15eeaaebbbcd7..910d695bb962e 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-@@ -230,6 +230,15 @@ void kfd_queue_buffer_put(struct amdgpu_bo **bo)
- 	amdgpu_bo_unref(bo);
- }
- 
-+static void kfd_queue_put_bos(struct queue_properties *properties)
-+{
-+	kfd_queue_buffer_put(&properties->wptr_bo);
-+	kfd_queue_buffer_put(&properties->rptr_bo);
-+	kfd_queue_buffer_put(&properties->ring_bo);
-+	kfd_queue_buffer_put(&properties->eop_buf_bo);
-+	kfd_queue_buffer_put(&properties->cwsr_bo);
-+}
-+
- int kfd_queue_acquire_buffers(struct kfd_process_device *pdd, struct queue_properties *properties)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v12_1.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v12_1.c
+index 070001fd34b0f..7b04258c38931 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v12_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v12_1.c
+@@ -77,25 +77,21 @@ static uint32_t get_sdma_rlc_reg_offset(struct amdgpu_device *adev,
+ 				unsigned int engine_id,
+ 				unsigned int queue_id)
  {
- 	struct kfd_topology_device *topo_dev;
-@@ -343,7 +352,13 @@ int kfd_queue_acquire_buffers(struct kfd_process_device *pdd, struct queue_prope
- 	 * dropping the VM reservation.
- 	 */
- 	kfd_queue_unref_bo_vas(pdd, properties);
--	kfd_queue_release_buffers(pdd, properties);
+-	uint32_t sdma_engine_reg_base = 0;
+-	uint32_t sdma_rlc_reg_offset;
+ 	uint32_t dev_inst = GET_INST(SDMA0, engine_id);
++	int xcc_id = adev->sdma.instance[engine_id].xcc_id;
++	int xcc_inst = dev_inst % adev->sdma.num_inst_per_xcc;
++	uint32_t sdma_engine_reg_base;
++	uint32_t sdma_rlc_reg_offset;
+ 
+-	switch (dev_inst % adev->sdma.num_inst_per_xcc) {
+-	case 0:
+-		sdma_engine_reg_base = SOC15_REG_OFFSET(SDMA0,
+-				dev_inst / adev->sdma.num_inst_per_xcc,
+-				regSDMA0_SDMA_QUEUE0_RB_CNTL) - regSDMA0_SDMA_QUEUE0_RB_CNTL;
+-		break;
+-	case 1:
+-		sdma_engine_reg_base = SOC15_REG_OFFSET(SDMA1,
+-				dev_inst / adev->sdma.num_inst_per_xcc,
+-				regSDMA1_SDMA_QUEUE0_RB_CNTL) - regSDMA0_SDMA_QUEUE0_RB_CNTL;
+-		break;
+-	default:
+-		WARN(1, "Invalid SDMA engine id %d\n", engine_id);
+-		break;
+-	}
 +	/*
-+	 * The SVM CWSR range is the last thing acquired and a failed
-+	 * kfd_queue_buffer_svm_get() takes nothing, so only the BOs are held
-+	 * here. Dropping the SVM reference would drop the one of another queue
-+	 * using the same CWSR address.
++	 * On SDMA v7 (gc_12_x) all SDMA queue registers live in the GC_HWIP
++	 * aperture. The second SDMA per XCC is reached by adding a fixed
++	 * offset (regSDMA1_* - regSDMA0_* == SDMA1_REG_OFFSET
 +	 */
-+	kfd_queue_put_bos(properties);
- 	return err;
- }
++	sdma_engine_reg_base = adev->reg_offset[GC_HWIP][xcc_id][0];
++	if (xcc_inst != 0)
++		sdma_engine_reg_base +=
++			regSDMA1_SDMA_QUEUE0_RB_CNTL - regSDMA0_SDMA_QUEUE0_RB_CNTL;
  
-@@ -352,11 +367,7 @@ int kfd_queue_release_buffers(struct kfd_process_device *pdd, struct queue_prope
- 	struct kfd_topology_device *topo_dev;
- 	u64 total_cwsr_size;
+ 	sdma_rlc_reg_offset = sdma_engine_reg_base
+ 		+ queue_id * (regSDMA0_SDMA_QUEUE1_RB_CNTL - regSDMA0_SDMA_QUEUE0_RB_CNTL);
+@@ -141,8 +137,7 @@ static int hqd_sdma_dump_v12_1(struct amdgpu_device *adev,
+ 			     uint32_t engine_id, uint32_t queue_id,
+ 			     uint32_t (**dump)[2], uint32_t *n_regs)
+ {
+-	uint32_t sdma_rlc_reg_offset = get_sdma_rlc_reg_offset(adev,
+-			engine_id, queue_id);
++	uint32_t sdma_rlc_reg_offset;
+ 	uint32_t i = 0, reg;
  
--	kfd_queue_buffer_put(&properties->wptr_bo);
--	kfd_queue_buffer_put(&properties->rptr_bo);
--	kfd_queue_buffer_put(&properties->ring_bo);
--	kfd_queue_buffer_put(&properties->eop_buf_bo);
--	kfd_queue_buffer_put(&properties->cwsr_bo);
-+	kfd_queue_put_bos(properties);
+ 	const uint32_t first_reg = regSDMA0_SDMA_QUEUE0_RB_CNTL;
+@@ -150,6 +145,17 @@ static int hqd_sdma_dump_v12_1(struct amdgpu_device *adev,
+ #undef HQD_N_REGS
+ #define HQD_N_REGS (last_reg - first_reg + 1)
  
- 	topo_dev = kfd_topology_device_by_id(pdd->dev->id);
- 	if (!topo_dev)
++	/*
++	 * dqm_debugfs_hqds() iterates engine_id over
++	 * node_id * get_num_all_sdma_engines()..+get_num_all_sdma_engines().
++	 * On partitioned devices that range can address a logical SDMA engine
++	 * beyond the instances that actually exist on this node; reject it
++	 */
++	if (engine_id >= adev->sdma.num_instances)
++		return -EINVAL;
++
++	sdma_rlc_reg_offset = get_sdma_rlc_reg_offset(adev, engine_id, queue_id);
++
+ 	*dump = kmalloc(HQD_N_REGS*2*sizeof(uint32_t), GFP_KERNEL);
+ 	if (*dump == NULL)
+ 		return -ENOMEM;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 4594824985e1e..dd2c8ac7cb9c4 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -4046,6 +4046,15 @@ int dqm_debugfs_hqds(struct seq_file *m, void *data)
+ 		     queue++) {
+ 			r = dqm->dev->kfd2kgd->hqd_sdma_dump(
+ 				dqm->dev->adev, pipe, queue, &dump, &n_regs);
++			if (r == -EINVAL) {
++				/*
++				 * SDMA engine not present/mapped on this
++				 * device; skip it instead of aborting the
++				 * whole dump.
++				 */
++				r = 0;
++				break;
++			}
+ 			if (r)
+ 				break;
+ 
 -- 
 2.53.0
 
