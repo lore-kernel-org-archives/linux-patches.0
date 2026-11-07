@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063548;
-	b=nlhgyYFPSpbmBXs2LvfL5yGgEno7orehAn0D6o3gu4XP4XB9kC2tWLmJNzDPzIzmMpng
-	 XIRQXzKVwtiTKK9RF/i9c8RNe3XRPOkRYAHoY290/Jb3yiDk2YTno028MUYUkOTzoXkbj
-	 g2aA5fADDwJ3YiLgYZUwTGpQ671YpFoQs7sw6N+DtxBH/9Ip1W1iqRMjmUBdSG/badML+
-	 W1ovhQ9Vwyn8m1FWV1SMY9cqBMs1crb1le5ldbBqKw+wtWkTPzisF6FfYdEl0LATYRGcR
-	 +7914OiJ/Vg0UpeD0cAKl99LIo5lXEiuEEuXaKWNkbJ/pdjrTE6HKNN0t/4l6H/Le4w==
+	t=1794063549;
+	b=SsZRyOjaq3ztRDpxlTtJm2wzNCQwZrNjiM3JVODcfFXukGUC14XQ35voQQzaklUIwI4A
+	 MdLqw0momaxYeCAwAZyttL6842u7C8MyVsfFe09S0HCV7S04oy1ou7BPSqqqiy6FE/GHp
+	 7mtLxUC0G4F9Dr08FCnoLG5EO/cEMdleTiBp8irBKFBRrBlgpG8l6jULypaz6xQ+yrd+0
+	 uB2LhQcQSxyRch1oZkAM+SxG43VYHCZvV9jj+tTcNCGgJVl+hmgDmefCVsODeBuA7urbM
+	 HEeBKUGb2jbT/3n1Jtppx5u9G7aMtQlSo7bZBju1xKoetTigYWapm6dCUEZYAAl8iGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063548;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/ocyamQba2lZDbXFPojCqTcqB+o+G8bKVJrDNzU3dSI=;
-	b=HOI5136d+Ukd4Ku8G9Z9Ng87SzywsoKVTW0kDOSqf525X0STJ8oSBfviuTiEXQQ2DSzG
-	 ubue64yImk/eQQ7gOMlMJWX4Ncoe1dz71n2ax6ORCbHf+6u3CRdCU8uRfgvuNHBcy9pr0
-	 IEQzPBkbxus/G0hc7ZHc6oEb3axQejpNOB7cRBE4nxsNYTeX/j/2IcVD2HtUERa4Y/6DX
-	 VaHQCK6VdJOg5iNAVnhzkplUEu0evuwRDDpGkk9/M51F2x79T1kgBdaeQLNQtF9fKvN0g
-	 deJNaiRsOcs2M85GntsajlQXfIgUF2Rk3aFCaTChgFhFfMvfPdWqjr1uNMw0+1eYdxQ==
+	bh=nsDF5Qu8dACc40WUTkMjM45LodcVsJIIsSA6RKk8azw=;
+	b=u8KKnV94AR4KJAWziDiYs1utCGADZ0lEUciutUFMzs11M/a8mMbS/R9H5DRhw+UFzTOE
+	 cD8b1tUYPItaC+PQH6lUudqg5xp0q/5Ojwm89a1VFJOoTTfNxJplq4jTD73+6iGCbRf5T
+	 5P1aMvOnYNTuYXojcDYlcoViaVSNYXPnlIRCSn30hI5mwcSp6QodPDF6Y8o9wSBKXoXGR
+	 +eJc4Q231F9Ivq9weVRmz1isxxF++BQ6TVc7oD9Q6zLyJ8Qk1N7NRbYygb/ph1jDmw/nu
+	 Dv1sQ+DhnR/6dfLMRYF+kPJ7NHheiSRpEaJBAZLjcWobvIPnxQPq65Ap6KNxTRfHuuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upPfmq7s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QMZdUqyz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88F36082BCB;
-	Sat,  7 Nov 2026 14:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D50E606A32D;
+	Sat,  7 Nov 2026 14:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upPfmq7s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A191F0089F;
-	Sat,  7 Nov 2026 14:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QMZdUqyz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC921F0089F;
+	Sat,  7 Nov 2026 14:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063547;
-	bh=/ocyamQba2lZDbXFPojCqTcqB+o+G8bKVJrDNzU3dSI=;
+	s=korg; t=1794063549;
+	bh=nsDF5Qu8dACc40WUTkMjM45LodcVsJIIsSA6RKk8azw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=upPfmq7shNxgiGNyrpd13+5ZOzUq/nto/Vqq+ccsUSPO2l1YOcUoOXJhysZc+8GEp
-	 gPdLSYxsMAWsb5iaRaHr+w2JdB1DsFonqu1Eul1KCt2l1d8iCkyIEj1CNEUp1PagbP
-	 FOwfbXaFf2WUsw8IzvqaviiaIHwBjzLD/vFtb3O8=
+	b=QMZdUqyzGb8Y/RJDJVAsgA7dOuH64Uxvug2P64k+c4Xb7Sy6MiDVnA7o9E/0BKgfA
+	 RCXYor8ac/gs3T/KzU5B7Xqj5UZOKCcwEL4+lHHJ6HCNnvE0ntGzorm89fEN+Dh56V
+	 uun2hJvM/27LhVIqelFo/MrwuTT5QXIDr99j8YCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 645/869] hwmon: (gigabyte_waterforce) reject short input reports
-Date: Sat,  7 Nov 2026 08:55:27 -0500
-Message-ID: <20261107134914.824136747@linuxfoundation.org>
+Subject: [PATCH 6.18 646/869] f2fs: flush SIT journal during filesystem resize
+Date: Sat,  7 Nov 2026 08:55:28 -0500
+Message-ID: <20261107134914.870383204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,53 +71,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit 400be69515c327ced60082b27ede902a8d93cbdb ]
+[ Upstream commit a6ede405455106bf42164ec96fd84008c5aabdd9 ]
 
-The HID raw_event callback runs before HID core validates the received
-report length. waterforce_raw_event() reads command bytes and then accesses
-fixed offsets for firmware or status data without any length checks. A
-truncated report can therefore cause out-of-bounds reads and update hwmon
-state with unrelated data.
+During a filesystem resize, SBI_IS_RESIZEFS prevents new SIT entries
+from being added to the journal and forces existing entries to the SIT
+area. However, f2fs_flush_sit_entries() returns early when there are no
+new dirty sentries, leaving existing journal entries behind.
 
-Require every report to contain the firmware response fields, which also
-covers both command bytes. After identifying a status response, require
-the byte at the highest status offset before accessing its payload.
+After the main area shrinks, a later checkpoint can access a journal
+entry whose segment number is outside the new geometry and trigger
+f2fs_bug_on().
 
-Fixes: 42ac68e3d4ba ("hwmon: Add driver for Gigabyte AORUS Waterforce AIO coolers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260927084959.893708-1-yaojiale02@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Only take the zero-dirty fast path when entries may be written back to
+the journal. This lets resize drain existing entries through
+remove_sits_in_journal() even when there are no new dirty sentries.
+
+Cc: stable@kernel.org
+Fixes: 04f0b2eaa3b3 ("f2fs: ioctl for removing a range from F2FS")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/gigabyte_waterforce.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/gigabyte_waterforce.c b/drivers/hwmon/gigabyte_waterforce.c
-index 4eea05f8b569c..f4d0376dd68e0 100644
---- a/drivers/hwmon/gigabyte_waterforce.c
-+++ b/drivers/hwmon/gigabyte_waterforce.c
-@@ -257,6 +257,9 @@ static int waterforce_raw_event(struct hid_device *hdev, struct hid_report *repo
- {
- 	struct waterforce_data *priv = hid_get_drvdata(hdev);
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 510d073f8ec54..23f9b76ee0145 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -4687,7 +4687,7 @@ void f2fs_flush_sit_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
  
-+	if (size <= FIRMWARE_VER_START_OFFSET_2)
-+		return 0;
-+
- 	if (data[0] == get_firmware_ver_cmd[0] && data[1] == get_firmware_ver_cmd[1]) {
- 		/* Received a firmware version report */
- 		priv->firmware_version =
-@@ -269,6 +272,8 @@ static int waterforce_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 	down_write(&sit_i->sentry_lock);
  
- 	if (data[0] != get_status_cmd[0] || data[1] != get_status_cmd[1])
- 		return 0;
-+	if (size <= WATERFORCE_TEMP_SENSOR)
-+		return 0;
+-	if (!sit_i->dirty_sentries)
++	if (!sit_i->dirty_sentries && to_journal)
+ 		goto out;
  
- 	priv->temp_input[0] = data[WATERFORCE_TEMP_SENSOR] * 1000;
- 	priv->speed_input[0] = get_unaligned_le16(data + WATERFORCE_FAN_SPEED);
+ 	/*
 -- 
 2.53.0
 
