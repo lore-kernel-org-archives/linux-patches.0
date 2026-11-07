@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061699;
-	b=5oqbV96MkW4s7WeSKc+zlErqHu0s1iWgSy+9ltBr2hKRShQEq/YtFsSWDwynF7t9ZDZ9
-	 8OoqXjvWU9epLTHdZZvz7/D09CWZFRRrIdCXEl9yAE0WW++LIYu3BtYVcsmjXJpDG+DLV
-	 EnyX79w9Ym9DK34OuN/TRDDtmcNq3opWG9FibvYbCqnjrGzz0r4oZXwWbbja2UzS+oad6
-	 0ymUCEkSZ9yy66rRwswzcjhems2vM2dTl525pvnQIOKErWuAIjuUpM7AVW+clalBkDtVx
-	 ykXzYuqHKoCRg6wDu3I84vYvvjhTcpjXkvpVVM2hxAjcdEXyfTcO51bKs2Ng5B4EsbA==
+	t=1794061700;
+	b=cM4MdTTBSx20gbVd94Zucr+Q3xRe63vsDcD/Qo5Z/WFGHiEfbeZzV58N2yx3n6859Uad
+	 Ia1siECVfuxBi6yeNNEchlAjZkhY4Y4MG/rbDfaXaA8pKxOlBh2tt1RsWDEaNxRIRkjiP
+	 vI2YBYFcXnvIE+LpcmoKiqs7tuZVIsBw0+f5pqiMQRXkycxPeyxIqHD/RK/P8y92N2CSr
+	 NN5dr5XU6ZcDOUbdO4wtekBRcUhnlKy3WGJYWMGih8I8AWYd7ZMZieNDY6VD8joSn7eoG
+	 lQ0n6cH5fXk/MVJqUA/TsbiXYaEKZZxah6xHLGRVxPSJZFZhb/3XDZwxwuW64xu/qdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FgCtNNI6TypLNW+LOy5JB+gCg3WctqE5EUqbm9ShYco=;
-	b=tmI1RC+AtraFMiXLMHKsgRCrS+3rdNVaq0YwVPUpO53RkWcjbU51C7KHM2qa5DzBhw1I
-	 1XjthOovoefv7sbl/PpjYmtkCT1iPdKAVrhVZc4FhadSXsa1eS7SOTB6gsilz8sBR13a4
-	 c2kztqOiLo/Jokac9PyMC4ftA4meEickgERv4XG2lKGeZj0qp+rukCQVcOJtvKyL0YEM8
-	 sbYaebm+tj9u5CNjbdNhWwSqQO5PAfGsxEhvF8pdKNlw3odHw/+RaKq+BtKmboK3ijb4s
-	 GzISx5qs0RpOGZtHdybwAVPu5cx+w34e/p7efyp9/5rkBwERy/11hZMFmOqvlnBnB1g==
+	bh=rKyBPuzVTHVOaC916zPYgjYa4ChwXUs9riJNCnoS2Ns=;
+	b=GlXYF9XHRpGCOaZTC+b8GPIuL+WOtdE0vlV1kPtEYBZFxp6vGPiVi+zCkyH4cuAmoOPi
+	 MyQAF1QNGh3o6JsiOnU7d9K+QDV5nKC8IB+gSElqDPpBOjYzuWAbdyDR4RjEFLhIyPk9o
+	 S3P7aULlcxgyjGGpglW3xcDptlcH4w+/xjSkHagW0JsJceK8KwfBc4werW/N+/WnZO6fD
+	 m8v4HhIeyjv7uP9mQ/fFtfZv/q0PXZ+YXcvfaPGooahtzMmLoZXDAYmHouw72c4MInl1e
+	 NMcXO724VfYF9oQfT8BN+jZVu1PLeISsF46OO9fbQjSoCNFd/j2oggohYMtrQfs9w9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vaOOqjxa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3XU7WgO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C58606A326;
-	Sat,  7 Nov 2026 14:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B072606A326;
+	Sat,  7 Nov 2026 14:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vaOOqjxa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13C71F0089F;
-	Sat,  7 Nov 2026 14:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3XU7WgO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8BA1F0089F;
+	Sat,  7 Nov 2026 14:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061698;
-	bh=FgCtNNI6TypLNW+LOy5JB+gCg3WctqE5EUqbm9ShYco=;
+	s=korg; t=1794061700;
+	bh=rKyBPuzVTHVOaC916zPYgjYa4ChwXUs9riJNCnoS2Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vaOOqjxaXb4KQ1HcmjeJr3UmD90jWrLFrf+15btTqb4d+NSVkdJGvYcqDF6UBuruQ
-	 AUO6cyXd0OHsIsbJXeGbEG+ptf2Zi18vqbfZP5tangNKUhtgWOms+FKeOPrNl1xB0M
-	 eAT6UbP301y85v6EhyKezCRsxFSrMMZ0RYiDir4U=
+	b=s3XU7WgOhEpKuvBC9PrF3Yzp6VAvp14lIENjo6a+aHjbdRCTNdtSoBYpDZh+ul8FI
+	 NNu0aod3IHv3I5CP9vcqm3WDBvbPbR1By0UbBo0mvDaIMLdWkJ6dra5KKWvF7cpGuN
+	 hXT61QASPVVJX9cQvEr0sYdMpQcJ/KZZZ3Xqtpgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0710/1536] xfs: check fork type against dabtree block magic number
-Date: Sat,  7 Nov 2026 08:45:26 -0500
-Message-ID: <20261107135017.440963202@linuxfoundation.org>
+Subject: [PATCH 6.12 0701/1536] xfs: dont proceed with xattr repair if the live update fails
+Date: Sat,  7 Nov 2026 08:45:17 -0500
+Message-ID: <20261107135017.183144587@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,57 +70,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 43030b72a11a532e7e3c21ac84a8625425b4201b upstream.
+commit 833f98b3be45bc7c6ce4c87bdc4892f546ab72ee upstream.
 
-LOLLM complains that we fail to flag dabtree blocks that should never be
-associated with the file fork -- data forks can't point to xattr leaves,
-and attr forks can't point to dirent blocks.  Add the missing checks.
+LOLLM observes that we ought to make one last check for failed live
+updates before replacing the xattr structure.  Let's be cautious here.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: 7c4a07a424c18d ("xfs: scrub directory/attribute btrees")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: e5d7ce0364d8ee ("xfs: replay unlocked parent pointer updates that accrue during xattr repair")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dabtree.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/xfs/scrub/attr_repair.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/xfs/scrub/dabtree.c
-+++ b/fs/xfs/scrub/dabtree.c
-@@ -410,6 +410,10 @@ xchk_da_btree_block(
- 				XFS_BLFT_ATTR_LEAF_BUF);
- 		blk->magic = XFS_ATTR_LEAF_MAGIC;
- 		blk->hashval = xfs_attr_leaf_lasthash(blk->bp, pmaxrecs);
-+		if (dargs->whichfork != XFS_ATTR_FORK) {
-+			xchk_da_set_corrupt(ds, level);
-+			goto out_freebp;
-+		}
- 		if (ds->tree_level != 0)
- 			xchk_da_set_corrupt(ds, level);
- 		break;
-@@ -419,6 +423,10 @@ xchk_da_btree_block(
- 				XFS_BLFT_DIR_LEAFN_BUF);
- 		blk->magic = XFS_DIR2_LEAFN_MAGIC;
- 		blk->hashval = xfs_dir2_leaf_lasthash(ip, blk->bp, pmaxrecs);
-+		if (dargs->whichfork != XFS_DATA_FORK) {
-+			xchk_da_set_corrupt(ds, level);
-+			goto out_freebp;
-+		}
- 		if (ds->tree_level != 0)
- 			xchk_da_set_corrupt(ds, level);
- 		break;
-@@ -428,6 +436,10 @@ xchk_da_btree_block(
- 				XFS_BLFT_DIR_LEAF1_BUF);
- 		blk->magic = XFS_DIR2_LEAF1_MAGIC;
- 		blk->hashval = xfs_dir2_leaf_lasthash(ip, blk->bp, pmaxrecs);
-+		if (dargs->whichfork != XFS_DATA_FORK) {
-+			xchk_da_set_corrupt(ds, level);
-+			goto out_freebp;
-+		}
- 		if (ds->tree_level != 0)
- 			xchk_da_set_corrupt(ds, level);
- 		break;
+--- a/fs/xfs/scrub/attr_repair.c
++++ b/fs/xfs/scrub/attr_repair.c
+@@ -1477,6 +1477,9 @@ xrep_xattr_rebuild_tree(
+ 	if (error)
+ 		return error;
+ 
++	if (rx->live_update_aborted)
++		return -EIO;
++
+ 	/*
+ 	 * Exchange the blocks mapped by the tempfile's attr fork with the file
+ 	 * being repaired.  The old attr blocks will then be attached to the
 
 
