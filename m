@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064438;
-	b=3bNFDzjucOaji/yTR2fV5xzXlzK6D+wg3DulWpCMAfikq6wGYdnCF2MD1VY5rRAYLyIx
-	 zfTbraoCqSSUdneW4OZQubOHfZNMcrbS3b1JkGypz/Oq5fPBizdlr7w0fAMqtnGL2aXBb
-	 g8iZI7Miy7c8yn4oWtepikrN6ZKUYjXG0jvwMjY78DKrqXvLee5fCxpY1qLRhqmsGays3
-	 lOxGvuH/IDIM5npOfIPgmeYEkvHE3rQ77yCyX+ty1R52wB+xh67sXqJaM5AmE9U/DuSB9
-	 IKvimMDZEMEjMzFJjBRbUQegnLLtMP1QWxicKSAppsQOIAXiEXuvfUpIp+9SakDFWUw==
+	t=1794064439;
+	b=mYLeGJwgxE7EmNXNdDFlwU4Gp2LRnCx6aMRMzmKFOvTwNqFyjmDv2ayS+/ltnMAm3jgu
+	 WK4Y4hXwCGktfeI3MRhlSOLOqR480+GaGb+74SYP3bou1spLGASZ15Dsqd1nbU6gAgWfu
+	 cCtWsYwJ9n62OYk3hvfzNQjHwA7CHdGD6LKDJK3npBUuHGpfdDQcROP8JBO4queC/cmKL
+	 meBBuyqJSkABEdTC3nUVz0pSS9OREMYF8IIFrQsU9slKyhKaSYPN8TpP2Mq6jkf+Ypxr7
+	 eajddlnhN8dslqvqQMUw2wMBjTbc+c1aWrOFQ2cHGHv3A/EFEWkgwK7kyspq4WQyXGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N1tLVI5vki76L0wjpuLO9kY/Eh2SeXBEysHC4WvyEKE=;
-	b=ZDd5Nrx0cVH3TB0UWCXcbRBat3XFmKjeCsWbEl6cBzVVjw5qeH9gk94sP21wAWvd9ZQF
-	 zpts5PzlMdAqV4u1tmutgTq5cOD1bNUkhhg0dvgbjanPkr/LPN5jOXt1+AnM3KS6J9PpJ
-	 bCkgL1/Gag1prUzaLlTlXvWHifyOrvLYCiYqVfAQ9oa8nDfIzvNzlxbYWPYEcit/1LiLa
-	 ULxsGqNANFVoYte/xr9v1sX15qdY+lOapVztQpRzxEnLAEIcLiR9UotwGS3sTiOQe/BJh
-	 XUDFnfvXvyahLV9qwwDHQgPt699UVefcFS6QDWRCMS3T+slIQXdIHUXly74IUIPL9OA==
+	bh=VOPCnKBntPSPPcjB8Rj8/EPv4RPygdHCG2iuYWOOMKw=;
+	b=VBNlr8TnxaOlhRaS0popy57VYnOA4v46RJmC483s+xWLVW/X3bvhFK5QERrELtyLm3wX
+	 +ZmIlYxtvFZ62yBJWoC+4Y0dGOpIiJewXS1Bucp/rty99tldSchV1eeFZ+LPeLOETzXDL
+	 CG3j8QvmpKXYoJgnIwsVsAYJeHbASLD2qDPxpF76LbohCa8+Zi64IjA5lbaonOnR/v/Sj
+	 0ybZNFBIDCnnl29bL956ENc6CsryKaZu98qu26L2gbnlhGqU17CbcuWUTnDVmgpFvdXnz
+	 1AWZ08rUbUk2gdH8jgnjvKnjqilnX1JrGbOJbj/eG1A8NTbMMZ6Ne2nQHwfAGEaS+qA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngvRYKkG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tHLb/OZC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA5D606A9DB;
-	Sat,  7 Nov 2026 15:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC5A606A9DB;
+	Sat,  7 Nov 2026 15:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngvRYKkG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893701F0089F;
-	Sat,  7 Nov 2026 15:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tHLb/OZC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC57F1F0089F;
+	Sat,  7 Nov 2026 15:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064437;
-	bh=N1tLVI5vki76L0wjpuLO9kY/Eh2SeXBEysHC4WvyEKE=;
+	s=korg; t=1794064439;
+	bh=VOPCnKBntPSPPcjB8Rj8/EPv4RPygdHCG2iuYWOOMKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ngvRYKkGNNqG+utL7qYiXNo6TX6FMyFOqHGhd9C/dnwXjpQz52SnOLJAUdIUG6VCc
-	 CUG7DdvnPcqnuxAlQo4P1jabfCuv7jZl4X1b18CksKwKkeJ7ITFnn0fj7/pHxt+fxq
-	 FSlY3ZmyY79MPnJ+AhRc9HhPAAxiYc5OhOo7bnYE=
+	b=tHLb/OZCcnnRKoyM2c33+eLs7TFmImyuUj3ZO2eIhHcExvmpGYISrvyq1RNuIAIUv
+	 2la/pKWMuNh4l49Pi4SwyaFXWPvSCwF72WDlgwoCsGLF3DzfvPxG9NluJDYlJFRp/u
+	 Ciggcq7xfm6jx8A0p3Ahx/19zuJd/aCiS8ie1Lxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Denis Efremov (Oracle)" <efremov@linux.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0484/1257] floppy: return the drive state flags from the 32-bit FDGETDRVSTAT
-Date: Sat,  7 Nov 2026 08:46:20 -0500
-Message-ID: <20261107134952.813810302@linuxfoundation.org>
+Subject: [PATCH 7.3 0485/1257] dmaengine: sh: rz-dmac: Fix off-by-one in residue lmdesc lookup
+Date: Sat,  7 Nov 2026 08:46:21 -0500
+Message-ID: <20261107134952.839368220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,54 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Efremov (Oracle) <efremov@linux.com>
+From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 
-[ Upstream commit bb38473f1bcb287567f2fa7980e483a778092504 ]
+[ Upstream commit 9db8e502b34bc1df8078abd0169a4fa0624de3bb ]
 
-compat_getdrvstat() copies every field of the drive state to a 32-bit
-caller except ->flags, which stays zero. 32-bit FDGETDRVSTAT and
-FDPOLLDRVSTAT therefore never report FD_DISK_WRITABLE, FD_DISK_CHANGED
-or FD_VERIFY: i386 fdutils (floppycontrol -P, fdmount), and other
-32-bit users see every disk as write-protected and never see a disk
-change. The compat code in block/compat_ioctl.c copied the field;
-it was lost when that code moved into floppy.c
+lmdesc->nxla is the address of the next descriptor, so comparing it
+against CRLA, which is the address of the current descriptor,
+finds the descriptor before the active one, not the active one.
+The residue loops below then summed one lmdesc too many on top of
+that.
 
-Also declare the field as compat_ulong_t: the 32-bit struct
-floppy_drive_struct starts with an unsigned long, and a signed char at
-offset 0 only lines up with its low byte on little-endian machines. The
-size and offsets of the compat structure, and so FDGETDRVSTAT32, do not
-change.
+Compare each descriptor's own address to CRLA instead, and add tb
+after advancing to the next lmdesc.
 
+Fixes: 21323b118c16 ("dmaengine: sh: rz-dmac: Add device_tx_status() callback")
+Fixes: 172bfb57481c ("dmaengine: sh: rz-dmac: Add cyclic DMA support")
 Cc: stable@vger.kernel.org
-Fixes: 229b53c9bf4e ("take floppy compat ioctls to sodding floppy.c")
-Link: https://patch.msgid.link/20260924112825.3525931-1-efremov@linux.com
-Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
+Suggested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260922092037.224884-1-claudiu.beznea@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/sh/rz-dmac.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
-index 02a34de691025..7465e10f36d46 100644
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -3600,7 +3600,7 @@ struct compat_floppy_drive_params {
- };
+diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
+index ca76f1bb45c41..fdd7131e890ab 100644
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -937,7 +937,7 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
+ 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
+ 	u32 residue = 0, i = 0;
  
- struct compat_floppy_drive_struct {
--	signed char	flags;
-+	compat_ulong_t	flags;
- 	compat_ulong_t	spinup_date;
- 	compat_ulong_t	select_date;
- 	compat_ulong_t	first_read_date;
-@@ -3784,6 +3784,7 @@ static int compat_getdrvstat(int drive, bool poll,
- 			goto Eintr;
- 		process_fd_request();
+-	while (lmdesc->nxla != crla) {
++	while (rz_dmac_lmdesc_addr(channel, lmdesc) != crla) {
+ 		lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
+ 		if (++i >= DMAC_NR_LMDESC)
+ 			return 0;
+@@ -948,13 +948,13 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
+ 		u32 start_lmdesc_addr = rz_dmac_lmdesc_addr(channel, desc->start_lmdesc);
+ 
+ 		while (lmdesc->nxla != start_lmdesc_addr) {
+-			residue += lmdesc->tb;
+ 			lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
++			residue += lmdesc->tb;
+ 		}
+ 	} else {
+ 		while (lmdesc->chcfg & CHCFG_DEM) {
+-			residue += lmdesc->tb;
+ 			lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
++			residue += lmdesc->tb;
+ 		}
  	}
-+	v.flags = drive_state[drive].flags;
- 	v.spinup_date = drive_state[drive].spinup_date;
- 	v.select_date = drive_state[drive].select_date;
- 	v.first_read_date = drive_state[drive].first_read_date;
+ 
 -- 
 2.53.0
 
