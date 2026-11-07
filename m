@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061119;
-	b=dLtHWiyGWKByd11Jwr7D1o/z7rczbdmtKTnavELNkwSCijuxDQ9t+VFBAwIl4FO6r/Zj
-	 Nr8Cf4DYNfESDfMZ24o5NrJx6jfePOB5YRDK1lY3aFWML4PWGYoUr29PVWkHCe1KmLnb7
-	 ZrtI/gzXR3fA50a0XYA2AfkZqJ0bcYu8SyFNpBGaOPM/ZCkaEJ6zHHaeHHYi773TWrm/y
-	 bDsJHfNExKG3RODejLowTV6S+SLm6jAr0mZyvBWwhDTvAugHVbWNipHcDvbRdk2gMg5Rf
-	 CKOSnzGzNXtMDe63gZFdnt1Ob9FpOT7ydhe3cTyTDanGuPyhxQvZuL1s41qV04bgxPw==
+	t=1794061120;
+	b=DXLV571WQwmJ1YmdJS/yKmdRwJi6Dr+EF3Hz7xHYaTgVHjuyaI4mZV+ZRES80bZo/1qD
+	 Rzaon0JiW001Y1DkCJzsDXTiUSPfWgTz5j/noBNIwTCrTO+8uAkZE420rY/dI5SLA2iQ6
+	 oQmqkb78uPkuUSL1I7/xko1ioQbgpEOpnxoAInjotT1l+gMsgOAsb+/nTnQIom2ldbP9J
+	 qcN0mY5pENjXYFfhJC4bLmWrjKS6BR46tjUwBd2yLBpI91mrWnpBhYyNcEjUfMRhz+yoj
+	 Dg49gbqV1Y3x7C0aPpwR3F69eh/yhF+1x5PedCzKB/GjF//z+PzN99OwVVcTY5+GWdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061119;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061120;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VfYk3Rpd9KF2kZPQJgd/SbawJ1Qdr3yC3aTHRorcGyk=;
-	b=tHW6A9RG9BAOjGGcoXPRO24or4NNzcNd6czusOZqHJfLQf9XJ7Wt4/7q+0C2KO/YsCU/
-	 zZ+w1UrnY/iQkdAwHtQZ8hRgEkl3LyVn+GsDTLgLOd+isBi38tCk+Oo+/D+EVHsERCl/B
-	 cXaE4xMryVQbpvHhcrHAqObiMTHPxR0sytJ/ouoS2kMcQOp2CwPjnoQ2FF/DEuiZPGUs6
-	 YzmZ+OLIzTE7ewAREFp2xNKQfKMsEFJ1vw4P83/X27AKrLb9FkxjeAfklB6yAXvALO1R6
-	 NPcDKESPQfbeabFd4zHKTaBMZI9sVqE4lDyMg/jU6DEtga3u5nuekau2zH5gmlCvnjQ==
+	bh=EsCBfzTjq9BA9EpCwfKASZNX6vz8KBVS2ij0l1BZeXg=;
+	b=kWI085/5oTeioXmcJ+DL/eYLOODwpY/PSbF8OZXrzG+ZHMC7YpKQWaAh7X66E1U6VrGB
+	 q4iBBSWYvLzxsiQOoY3lrf5WIsfeX1mKeBxreocNKPlNrcDwSPeEMfp58/ZFzytlnTtlT
+	 cJNYXjtZeKGb5HvDTO19ZqPkowNtZmHT9LuzNUdKw0w60W8S6qN7bPRWbL181rJPvB0En
+	 lOYO1/0PUm8TvOLHFkqEWg7cc2utv5mJ7gfAmL+UwyGBrWIIf5SZSXR+zB7I3L1FNY/0Y
+	 1rPDD0MhFXtjyz+JFKHuq0+KLI/JFluyGNvl8vodh4nUExkA2VqIz0Q+PG2FQfTWxUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EbwVs3hH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="y/NjKTWB";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE2B606A332;
-	Sat,  7 Nov 2026 14:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256C0606A32F;
+	Sat,  7 Nov 2026 14:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EbwVs3hH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C7E1F0089F;
-	Sat,  7 Nov 2026 14:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y/NjKTWB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C810A1F0089F;
+	Sat,  7 Nov 2026 14:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061118;
-	bh=VfYk3Rpd9KF2kZPQJgd/SbawJ1Qdr3yC3aTHRorcGyk=;
+	s=korg; t=1794061120;
+	bh=EsCBfzTjq9BA9EpCwfKASZNX6vz8KBVS2ij0l1BZeXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EbwVs3hHwHHjtwVAYGHmzWTSbgU8jexyndYQYWSFO/Kn5HcA/rY7ihmcnqLC1stry
-	 W4N8ksPRoN1xhnpypSZxB53h1u+t9IvXsGazoVEDfdFmuQUeVHMUPE52ycx2mLIkEF
-	 zLLGH3pnW29H8u5BcQgpXpvbjKb2ODpULh5CVntQ=
+	b=y/NjKTWBEIeNmRC0MRx7OODhIdz3fioSfbU3O27IjcHPd4WI1fNcmIirxWnPE89Ny
+	 mTty2XrC/RIbr0PRIamO1RmSyKAiiKNY85kMmELFi5nTDnRx8bo3wvUzNk/+Nso2e7
+	 5nDmLekX9AgExxI+FM0UHSgFV037uqgM67ZG4Xl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
 	Marco Elver <elver@google.com>,
-	Victor Chibotaru <tchibo@google.com>
-Subject: [PATCH 6.12 0433/1536] kcov: ignore an out-of-range comparison count in write_comp_data()
-Date: Sat,  7 Nov 2026 08:40:49 -0500
-Message-ID: <20261107135009.725788639@linuxfoundation.org>
+	Andrea Parri <parri.andrea@gmail.com>
+Subject: [PATCH 6.12 0434/1536] kcsan: Avoid division by zero in kcsan_prandom_u32_max()
+Date: Sat,  7 Nov 2026 08:40:50 -0500
+Message-ID: <20261107135009.752949276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,82 +67,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-commit f5263bee9eb84d2388fd7555a18d518e17226894 upstream.
+commit 99b6fcce87037cfb6b5e177848342e97f5141205 upstream.
 
-write_comp_data() reads the comparison record count from area[0] and uses
-it to index the coverage buffer:
+KCSAN's skip_watch, udelay_task and udelay_interrupt parameters can be
+changed at runtime through /sys/module/kcsan/parameters/, where 0 means
+watching every access or not delaying at all. With the default
+CONFIG_KCSAN_SKIP_WATCH_RANDOMIZE=y and CONFIG_KCSAN_DELAY_RANDOMIZE=y,
+writing 0 to any of them makes the next watchpoint setup divide by zero:
 
-	area = (u64 *)t->kcov_area;
-	max_pos = t->kcov_size * sizeof(unsigned long);
-
-	count = READ_ONCE(area[0]);
-
-	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
-	start_index = 1 + count * KCOV_WORDS_PER_CMP;
-	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
-	if (likely(end_pos <= max_pos)) {
-
-The buffer is mmap'd writable into the collecting process, so count is
-under its control and end_pos <= max_pos is its only bound.  A count that
-wraps the u64 multiply leaves end_pos below max_pos, so the check passes
-while the record store lands 24 bytes before the buffer, in the unmapped
-vmalloc guard page, and faults:
-
-  BUG: unable to handle page fault for address: ffa0000000b60fe8
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  Oops: 0002 [#1] SMP KASAN NOPTI
-  RIP: 0010:write_comp_data+0x7e/0xa0
+  # echo 0 > /sys/module/kcsan/parameters/udelay_task
+  Oops: divide error: 0000 [#1] SMP NOPTI
+  CPU: 0 UID: 0 PID: 93 Comm: sh Not tainted 7.3.0-rc5 #3 PREEMPT(lazy)
+  RIP: 0010:kcsan_setup_watchpoint+0x1b5/0x410
+  Code: ... 65 89 05 ad 8d 98 02 d3 ee <f7> f6 29 d7 e8 22 0e 0f 01 ...
+  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
   ...
-  Kernel panic - not syncing: Fatal exception
+   __show_trace_log_lvl+0x1bd/0x315
+   __die_body.cold+0x19/0x2b
+   die+0x34/0x50
+  ...
+  BUG: TASK stack guard page was hit at ffffd3ab001fbfe8 (...)
 
-Bound count first: only max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP)
-records fit, so a larger count is not a valid index and is dropped.
-kcov_move_area() bounds the same untrusted count this way, and no count
-the end_pos <= max_pos check accepts reaches that limit, so no valid
-record is lost.
+reset_kcsan_skip() and delay_access() pass these values unchecked to
+kcsan_prandom_u32_max(), which returns "state % ep_ro". delay_access()
+halves the delay for compound and assert accesses, so
+udelay_interrupt=1 is enough there.
 
-kcov is a root-only debugfs file (debugfs_create_file_unsafe("kcov", 0600,
-...)) and write_comp_data() exists only under
-CONFIG_KCOV_ENABLE_COMPARISONS, so this is a local, debug-kernel
-robustness fix: the process corrupts its own buffer and the kernel oopses.
-It crosses no privilege boundary.  Additional details at [1]
+The oops path runs instrumented code, which faults again until the stack
+overflows. With skip_watch=0 the guest hangs without printing anything.
 
-Link: https://lore.kernel.org/20260917104306.22145-1-fangxy@xiaopeng.com [1]
-Fixes: ded97d2c2b2c ("kcov: support comparison operands collection")
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Assisted-by: Hawkeye:GLM-5.3-flash
-Assisted-by: Qoder:Qwen3.8-Max
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Victor Chibotaru <tchibo@google.com>
-Cc: <stable@vger.kernel.org>
+The division came in with commit 71a076f4a61a ("kcsan: Rewrite
+kcsan_prandom_u32_max() without prandom_u32_state()"). Before it, the
+helper scaled the random value with a multiply-shift, which yields 0 for
+ep_ro == 0. Go back to that via reciprocal_scale().
+
+Tested in an x86-64 KCSAN guest with virtme-ng: after this patch,
+writing 0 to each parameter, or 1 to udelay_interrupt, no longer
+oopses. skip_watch=0 now watches every access, which is very slow with
+the default delays but completes when they are set to 0.
+
+Fixes: 71a076f4a61a ("kcsan: Rewrite kcsan_prandom_u32_max() without prandom_u32_state()")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Reviewed-by: Marco Elver <elver@google.com>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Signed-off-by: Marco Elver <elver@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcov.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/kcsan/core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -253,6 +253,14 @@ static void notrace write_comp_data(u64
+--- a/kernel/kcsan/core.c
++++ b/kernel/kcsan/core.c
+@@ -290,8 +290,9 @@ should_watch(struct kcsan_ctx *ctx, cons
+ }
  
- 	count = READ_ONCE(area[0]);
+ /*
+- * Returns a pseudo-random number in interval [0, ep_ro). Simple linear
+- * congruential generator, using constants from "Numerical Recipes".
++ * Returns a pseudo-random number in interval [0, ep_ro), or 0 if ep_ro is 0,
++ * which the runtime-tunable callers may pass. Simple linear congruential
++ * generator, using constants from "Numerical Recipes".
+  */
+ static u32 kcsan_prandom_u32_max(u32 ep_ro)
+ {
+@@ -300,7 +301,7 @@ static u32 kcsan_prandom_u32_max(u32 ep_
+ 	state = 1664525 * state + 1013904223;
+ 	this_cpu_write(kcsan_rand_state, state);
  
-+	/*
-+	 * area[0] is writable by the collecting process, so count cannot be
-+	 * trusted. Bound it to the records that fit, as kcov_move_area()
-+	 * does, so the end_pos multiply below cannot wrap past its check.
-+	 */
-+	if (count >= max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP))
-+		return;
-+
- 	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
- 	start_index = 1 + count * KCOV_WORDS_PER_CMP;
- 	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
+-	return state % ep_ro;
++	return reciprocal_scale(state, ep_ro);
+ }
+ 
+ static inline void reset_kcsan_skip(void)
 
 
