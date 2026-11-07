@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063699;
-	b=XPYFnhV4Zm7kjaOfgNemtlOP7RD4ovETmoIkZu0NCNXu2XWHKssBQvqLDb26DCKqxYg9
-	 CCkcbtAkFfZ5Sd8/MsEg6+Mz/m75u1S5TWzqkAu/NGyrU2/Yjms7OUFEWP6IVAgnhYbHE
-	 goKWWkLaSDy3d3xp3zTWLzyP8w5ZSIm9RWuJBzihF5lDDOkWif2ugkjYaU2W/4//fy0mg
-	 TJz638RdGFuCqngjTbbjmwvCQL6m6cONrVAOIeI+9briWPCgeHgTFLHv/b5ffdYyNylGX
-	 fIycnmfluY5pN1y+p4oUO2mXvalhWsheaG9F6ZaEx71MDHtmuEbFj0AIesG0oUgakyA==
+	t=1794063701;
+	b=uAQ8mY/gm09sjRDPaCPL+iBYRTCHJqCyQNxriGzgNZHaWHi2/UbZQC7aFQgir1JeDSx/
+	 yLdM7Z2Ph8akaMYD7cJ/hdwsXXFhZHiWSWBBVR1WBCPagJB8D9REdgWUhdMM5bpay4PTi
+	 KAnRh8RWdZiyTPXuexBRhvE2D2zhe2dOxCCrXGAr1pkK6Bpi6w086xg9IP+LMvd0KEt5N
+	 x61Mcq6FYjDDfZ1iC79ZEu+Km+T61NhRglg/ptSRocV2fRIXuMRrrtY3J9Rgxmix03ZI3
+	 gQwLG4y/+mC2ZXxonhv/8CkfQRkx+biNZcbZpQf3+zyNe73QtikU9t5AAB/AsqAgDSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063701;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QdrsRuvZVGu6FvjYljfJh7lQ6SpJLXm2GDFy6MRgtwA=;
-	b=4PiB+yYzPHLbeRdJlCpjQ07dyAksuCWo1e4wLsgEfggDjlCo8tben9WkMbvQ6z/F7SWs
-	 989AhYBIuZzFuIBEB0gvEJyCy0tDRC+9OqjQm+ux2guwnbI0Lt5gJUOQsf5SxSJ2ZJnDD
-	 qxIFw7CxoB/19hWSIScJ6j3f56+6ZMQmXDToF9vIhctzH1w3yUuLnYvyB8asiwrHqVUwD
-	 5UAt7AE1eZggt1zjYPGtI6HIY7bQcrdbmOjVM3IUImZ1nbaQPfRf6fORERsz+xj3hqrdB
-	 ZeqiwpN8a6k5mKETso4/yvSh9xHYoO74g9Aum5jwc5Rvom4Hzc5zo/cYCQgru0epcxA==
+	bh=hstaBIEo0dzr/Ed784izEB9o3RvtNiiUIROxtb7kKZ4=;
+	b=NoLjA8/bEqWF7mQmPDb0xGwJs3EznpXeKibLp3/6AjKD3fUZbhpSBlD2AjbA74IpsM70
+	 pdQpewomtWWpgYGZClyRefNsVi/GnC/wPtozFS2K7tzH8j16z7beUAXhA6LVht1HiXHEV
+	 RSed5SgqnUzgHcmMUiPKbPcQFNUQ3DC92y79KKMtzlVKxdU5SsYe5fA5v3MpVMhyBl9/Y
+	 Ry64p6HCsBwziyBBgfY+e3P9/mvatNzfQ/bxoDNKTotKCHq9M6V2qrNG95eolH9T99qsU
+	 3K07uhQymo1p1ro96IXj/Zp+qbuvx7CwwHddHCi67fcEDsABfZkVC+Y4x31ajC3Bb/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qJRYHef;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i7oVD2L6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB38606B8A4;
-	Sat,  7 Nov 2026 15:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61DC60A6F61;
+	Sat,  7 Nov 2026 15:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qJRYHef
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1E91F008A1;
-	Sat,  7 Nov 2026 15:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i7oVD2L6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8411F0089F;
+	Sat,  7 Nov 2026 15:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063698;
-	bh=QdrsRuvZVGu6FvjYljfJh7lQ6SpJLXm2GDFy6MRgtwA=;
+	s=korg; t=1794063700;
+	bh=hstaBIEo0dzr/Ed784izEB9o3RvtNiiUIROxtb7kKZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qJRYHefT5uXrDLvKkFABrz+OqS7o+sdQqO2g78nSK3eIbAxiTLz60tmGz5mPxoL5
-	 3xTZMrb0+y0xv5tOr1Fl8uVvXMNXfFLiV+y3DEFBUdz88vnu+onalOERNu/K0qisDE
-	 /IXSUFoYNTR8UJhtXei4Cp/Vq3LSnn8QNmDpIMsU=
+	b=i7oVD2L6omz9uYfdgKuQhcAoje/dNOm9fuPi5BhK4bRHXEMSt2KeYxsyQ8LH/fGyW
+	 QKuLY35qChD4xCSjEr32naD/tBKHVNuNMgz0IafWQ+WGMxzp3HaYpfSzw1PmDGM9ce
+	 KgRwx/btQsUQBC4Wu7BwbYvTUSgdCWQELaMqLw1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 802/869] LoongArch: Call cpu_final_simd() with pure_initcall()
-Date: Sat,  7 Nov 2026 08:58:04 -0500
-Message-ID: <20261107134920.112638142@linuxfoundation.org>
+Subject: [PATCH 6.18 767/869] ceph: fix out-of-bounds read in ceph_netfs_issue_op_inline()
+Date: Sat,  7 Nov 2026 08:57:29 -0500
+Message-ID: <20261107134918.722770761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -67,39 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Guanglei Zhu <zhugl3@xiaopeng.com>
 
-[ Upstream commit 9b56c3659a7e5d930ab3c07ea74cc46af65b6d20 ]
+[ Upstream commit cdbb60f00f87297a9db2652847dfc0eaaf3c45aa ]
 
-After commit 35ebc4de105989034f12 ("xor: remove macro abuse for XOR
-implementation registrations"), using "simd=128" to limit SIMD on a
-platform with 256bit SIMD instructions causes a boot failure.
+The read offset is validated against i_size but never against
+inline_len, and the two fields come from the MDS independently.  When
+a read starts past the end of the inline data, the subtraction
 
-Because cpu_final_simd() is called with arch_initcall() now, which is
-after xor_init(), LASX flavors are selected but not workable.
+	len = min_t(size_t, iinfo->inline_len - subreq->start, subreq->len);
 
-Call cpu_final_simd() with pure_initcall() which is before xor_init().
+underflows and min_t() ends up with subreq->len, so copy_to_iter()
+reads past the end of the inline buffer straight into the user
+buffer.  A malicious or buggy MDS reporting a short inline payload
+together with an inflated i_size can thus leak kernel heap memory to
+userspace.
+
+Bail out with -ENODATA when the offset is not within the inline
+data.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 5b19f1eba459 ("ceph: make ceph_netfs_issue_op() handle inlined data")
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/cpu-probe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ceph/addr.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/loongarch/kernel/cpu-probe.c b/arch/loongarch/kernel/cpu-probe.c
-index 4ac9c95991670..9f0f9fdac011b 100644
---- a/arch/loongarch/kernel/cpu-probe.c
-+++ b/arch/loongarch/kernel/cpu-probe.c
-@@ -93,7 +93,7 @@ static int __init cpu_final_simd(void)
- 	return 0;
- }
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index cfbd88412f047..f58eba5456e36 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -314,6 +314,12 @@ static bool ceph_netfs_issue_op_inline(struct netfs_io_subrequest *subreq)
+ 		return false;
+ 	}
  
--arch_initcall(cpu_final_simd);
-+pure_initcall(cpu_final_simd);
- 
- static inline void set_elf_platform(int cpu, const char *plat)
- {
++	if (subreq->start >= iinfo->inline_len) {
++		ceph_mdsc_put_request(req);
++		err = -ENODATA;
++		goto out;
++	}
++
+ 	len = min_t(size_t, iinfo->inline_len - subreq->start, subreq->len);
+ 	err = copy_to_iter(iinfo->inline_data + subreq->start, len, &subreq->io_iter);
+ 	if (err == 0) {
 -- 
 2.53.0
 
