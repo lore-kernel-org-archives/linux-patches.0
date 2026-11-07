@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063760;
-	b=ntp8ABOJkkjvBpMeCGVG4Q8r/6zU5IzV7vA1YLxN80iYW4ZryA8kNUJtXplxW79hk6Nw
-	 adsg2po6ZsdNT4fWuztIFuRZXrSYFUu5kKvIGBqH7u0Wm2x9YBXr4G4BmdrzUTjpa/9ci
-	 CS8uR6od88jRfXXUJ40e6kqpOf3WaCFZIGAwGj0N1hWMTZWcdf6B/hn0UrnLLmi23UZEz
-	 JMAvyws/bNRol82VYjPjU9Pp4c9PrPaPByMD+tiEbPNfqyxzZpGPwTf9VHWJrMr1V/ndu
-	 W2+PF6wiqIPUpxovv8VWgSYamrvtb4p/rzI6jHG4ZXIEkpqq7P9slZm2BZUvntI2k7A==
+	t=1794063761;
+	b=pIv6QVYfyButZqsA1q/OKfa79W2sc227BLs7LiG40p8qnIoLpeT14hP+jrQsFj7m3MAh
+	 xt5ettXlq8TBP0LE7tWke+Gya+NBwd/EE4rrMJ51kEcTgpeGX2ZpIaxC6/Z2lPulGgNq3
+	 34AWFvHD8K30xyS35H2HIMq/31e15C+LIOQXj0t1F4SktQJzGW+85Q0nECbMBrzY39AW+
+	 PkyM09iogLRrGyqm9hKREmyWb0WQNhUN3e7h3UuDzBXHBE4Pas4AsIVjdJe7ybMyaz8iX
+	 VMiEsyMPc+iXRG/37J3P8CtSGzlmK/JTeOQV5Ktj5VoRbQOwIu3h5jO2vn5upN9UCKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=oTaFyWjA1M3iMBiNvXl83wEuMc0ASujNG2r3bMLVONc=;
-	b=cia/im4OdSV1xbDJgiiM0i/RD7QE4IhA0rl887p65uxf+YTxd7ZSqIEKoOF14/ooQ/4G
-	 BVYZs0iMmjVzMgV1HlDABKy9s3FjP/n9kxmWnwcD1E2QKEgjyPewTqpxKSLTWZsiRttp+
-	 t+xuyNR6pLurbrMMNbgIZ64D5vZfOXIVRtug32IcmsX9pvkXjBLKjoxdX5M/qEZweEfcw
-	 QBLTDEMJyiTAeGj+M5stSx3rFHtPIMyo15qJjGyktBcqlx3yXhbG6MWlytJMoLKnVqhTh
-	 jeaowJXiAY2+46NRkSJUwI+dn+72U0TDzoZhrhHcfzoWM7bbqMDbtTHq6g2fZVxZOWw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ewSO2obtSolPvDRTT37tE5dH7mhdNQuvgKqg79bAxhM=;
+	b=bBYwgiDAuNUJJ1PdT4no8l7uY8qkWjKrKKhq0boOOWagFdY52Fx4QomLKU64kWmTMUlK
+	 zklJu8ZvkDHAxOl/a8gRWgOmQX1TQ9Una6L1zaoxryb0sNFU8ndRCWF2EnehimWJAa1Rc
+	 G3g9B0SFlGTgkiC1AcJgMwZShhrsFNDc6NY7gtTJkJKO5HFnZadUGFlnYooQkMEj1O9l0
+	 kf283yWMCGeqUqUjTMcxgMc63YEJtp1DTKGmhMKP4glZZpAuGijzk51fifFQ//7N585Lg
+	 VS0iMt+WqVBSFgk5QJnNG02FIBd+bTsDbZzT9wQG5NQjArC/OzyKaS17FaCtfMIIbAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WdNPUUvg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVUfcF1K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71DB606D81B;
-	Sat,  7 Nov 2026 15:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21A76083637;
+	Sat,  7 Nov 2026 15:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WdNPUUvg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B59B1F0089F;
-	Sat,  7 Nov 2026 15:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVUfcF1K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906EF1F0089F;
+	Sat,  7 Nov 2026 15:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063759;
-	bh=oTaFyWjA1M3iMBiNvXl83wEuMc0ASujNG2r3bMLVONc=;
+	s=korg; t=1794063760;
+	bh=ewSO2obtSolPvDRTT37tE5dH7mhdNQuvgKqg79bAxhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WdNPUUvgfXIKZeiihoyOtb1nb25QgFRTQkCQaJVa5an4wF3EjcICqhWMsxaigysN0
-	 DXXxDVw2hXCgeu05hCd1BzeYCObXVuWdqStP5zIiof/ofj0i/h+AP8Wydb61hGUDnW
-	 VxYty99pGsIs5YklbAF7sHKM2K8oME4/RvETHQEs=
+	b=GVUfcF1KAvkrecchto1krBfoqe9eS6I6lQyQ5lmAmRaS85GJu44CnS/kYISA5+pdz
+	 Fmkds18Awx5ss+5IWB2BlJBD30KjjAi2AlqucZeywhkz3o5dH6J8SzuNz5o7es6ajx
+	 TWfJ89il/8CA0CnkjD1iGUt5qsbEW/4w6OFP2U7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	=?UTF-8?q?Fabian=20Gr=C3=BCnbichler?= <f.gruenbichler@proxmox.com>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
+	Li RongQing <lirongqing@baidu.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 845/869] apparmor: fix NULL ctx->peer derefs in unix socket ctx updates
-Date: Sat,  7 Nov 2026 08:58:47 -0500
-Message-ID: <20261107134921.484764092@linuxfoundation.org>
+Subject: [PATCH 6.18 854/869] apparmor: avoid potential double free when remapping DFA tables
+Date: Sat,  7 Nov 2026 08:58:56 -0500
+Message-ID: <20261107134921.729563903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -65,103 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Bélair <maxime.belair@canonical.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 4de32fd05ce9e63b492899215ea929e7d306cdab ]
+[ Upstream commit 7ccd884a5e5386f4c7d98625113f4924f70286b4 ]
 
-aa_unix_file_perm lazily refreshes the AppArmor context cached on a unix
-socket. Two of the helpers it uses assume ctx->peer has already been set:
+When unpacking a DFA, aa_dfa_unpack() stores a table in dfa->tables
+before attempting to remap a 16-bit table to 32-bit.
 
-	update_peer_ctx ->  l = aa_label_merge(old, label, GFP_ATOMIC);
-	update_sk_ctx   ->  } else if (aa_label_is_subset(plabel, old)) {
+However, remap_data16_to_data32() frees the original table when
+allocation of the new table fails. This leaves the corresponding
+dfa->tables entry pointing to freed memory. If the unpacking then
+fails, dfa_free() attempts to free the same table again.
 
-where @old is ctx->peer. Neither aa_label_merge nor aa_label_is_subset
-allows NULL. So both fault on the aa_label->size load.
+Only publish the table to dfa->tables after any required remapping
+has completed successfully, so that dfa->tables never contains a
+pointer to a table that has already been freed.
 
-  BUG: kernel NULL pointer dereference, address: 000000000000004c
-  RIP: 0010:__aa_label_next_not_in_set+0xb/0xd0
-  Call Trace:
-   aa_label_is_subset+0x3f/0x70
-   aa_unix_file_perm+0x5e8/0x9d0
-   aa_file_perm+0x45a/0x550
-   apparmor_file_permission+0x44/0xb0
-   security_file_permission+0x40/0x100
-   rw_verify_area+0x56/0x180
-   vfs_write+0x7c/0x480
-   ksys_write+0xbf/0xf0
-
-ctx->peer is only recorded for stream connections and socket pairs.
-unix_dgram_connect sets unix_peer(sk) without going through that path,
-so a connected AF_UNIX datagram socket has unix_peer(sk) set while
-ctx->peer is still NULL, and the first write that needs revalidation
-reaches the helpers above.
-
-Both derefs date back to the Fixes: commit, but the update_sk_ctx() one
-was dormant until commit 4483efe4f215 ("apparmor: fix shadowing of plabel
-that prevents cache from being updated") stopped @plabel being shadowed,
-which is why bisecting the oops lands there.
-
-A NULL @old just means no peer label has been recorded yet, so install
-the label directly instead of merging or comparing against it.
-
-Fixes: 88fec3526e84 ("apparmor: make sure unix socket labeling is correctly updated.")
+Fixes: 9208c05f9fdf ("apparmor: add support for 2^24 states to the dfa state machine.")
 Cc: stable@vger.kernel.org
-Reported-by: Aurelien Jarno <aurelien@aurel32.net>
-Closes: https://bugs.debian.org/1145111
-Tested-by: Fabian Grünbichler <f.gruenbichler@proxmox.com>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/af_unix.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ security/apparmor/match.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/security/apparmor/af_unix.c b/security/apparmor/af_unix.c
-index 834a3b1c2f0af..aa2b31d5598cd 100644
---- a/security/apparmor/af_unix.c
-+++ b/security/apparmor/af_unix.c
-@@ -676,7 +676,7 @@ static void update_sk_ctx(struct sock *sk, struct aa_label *label,
- 		if (old == plabel) {
- 			rcu_assign_pointer(ctx->peer_lastupdate,
- 					   aa_get_label(plabel));
--		} else if (aa_label_is_subset(plabel, old)) {
-+		} else if (!old || aa_label_is_subset(plabel, old)) {
- 			rcu_assign_pointer(ctx->peer_lastupdate,
- 					   aa_get_label(plabel));
- 			rcu_assign_pointer(ctx->peer, aa_get_label(plabel));
-@@ -694,13 +694,17 @@ static void update_peer_ctx(struct sock *sk, struct aa_sk_ctx *ctx,
- 	spin_lock(&unix_sk(sk)->lock);
- 	old = rcu_dereference_protected(ctx->peer,
- 					lockdep_is_held(&unix_sk(sk)->lock));
--	l = aa_label_merge(old, label, GFP_ATOMIC);
--	if (l) {
--		if (l != old) {
--			rcu_assign_pointer(ctx->peer, l);
--			aa_put_label(old);
--		} else
--			aa_put_label(l);
-+	if (!old) {
-+		rcu_assign_pointer(ctx->peer, aa_get_label(label));
-+	} else {
-+		l = aa_label_merge(old, label, GFP_ATOMIC);
-+		if (l) {
-+			if (l != old) {
-+				rcu_assign_pointer(ctx->peer, l);
-+				aa_put_label(old);
-+			} else
-+				aa_put_label(l);
-+		}
+diff --git a/security/apparmor/match.c b/security/apparmor/match.c
+index b2a4bee4e3939..e4ef1057e2c06 100644
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -397,7 +397,6 @@ struct aa_dfa *aa_dfa_unpack(void *blob, size_t size, int flags)
+ 		/* check for duplicate table entry */
+ 		if (dfa->tables[table->td_id])
+ 			goto fail;
+-		dfa->tables[table->td_id] = table;
+ 		data += table_size(table->td_lolen, table->td_flags);
+ 		size -= table_size(table->td_lolen, table->td_flags);
+ 
+@@ -414,9 +413,9 @@ struct aa_dfa *aa_dfa_unpack(void *blob, size_t size, int flags)
+ 				if (!table)
+ 					goto fail;
+ 			}
+-			dfa->tables[table->td_id] = table;
+ 			break;
+ 		}
++		dfa->tables[table->td_id] = table;
+ 		table = NULL;
  	}
- 	spin_unlock(&unix_sk(sk)->lock);
- }
+ 	error = verify_table_headers(dfa->tables, flags);
 -- 
 2.53.0
 
