@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060930;
-	b=A/mt0zW/7cun2fE5o6oD77sKYe/haI1sM1iwKJdJC+howNIGCK4w2VosDSbSKMHUKzX8
-	 uTannVA+DkGCvhKWkFV/Nr5RxGUWJ0m0jlmq01g4kUYBkHcUWWG71I31UOVbIKK1+bRrB
-	 qrRJXpBH9uEZ3ChRssBxIPRRXZG3z8E+5JihkzENtUACCt6G6dRqQs4DRzo3hXKL5I0O/
-	 mLDzIO687mJ6QR7JTZtpxrrMKZry7wMPQRQ+IFJV3PTXD5FNcy5hItsmjV14/TMWnI7SZ
-	 VT3CzEtrUO3hjvw1nvTnHetmnJyP8MUylp553Ivz4F0IyT+P9sr+UT1iYBlUqTyvC/g==
+	t=1794060931;
+	b=i/zNKASlKcTkI72yVf9lcdcHs24Cuy5fkanITy++xM34X8DmfxBdj1Lbo9ZYCqLik7mY
+	 pOGDvlZbzrfADLVKO9rn7Sd3lLJF5XnheyA5TrEUJpiNiGE4dMeEY4BsiUoEADR9FqpXa
+	 HonSJl6wNIJU4lCH0lmm6ZK2jsYQBOwlTNwfsq13OcYFfkm9WqJQmk+xueyeCAK33LfZr
+	 +D9Srn3L7sB+wvCo2xarOVZcqH9HF8Yp6bLw6rNT1YkwMlEsESUBVcdhkIWl/gNwG07UC
+	 j2atlOi1G43OjmRdOWSKy3GBATuYb9z8y4MVQJikjsMohpsLzTdirMtcoZX3wbDnVaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060931;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0LAYQWBhtFhsvZR3Ac+LziQzJJQGDdidVOcLjVLwZVU=;
-	b=Sy99Dx/mbZrv8B1Nt1+4aUXzBO7SYuh9CMB0eRkY5PKmpXtbvN2eTUO5T9adhXySCIzF
-	 FL3F4qL9uiNheTSBUd6Np8QZ6TOzmBbQZDW53ITlbS9PDGNkyOu+HvMdOdOzW5IycRq+O
-	 Zy/L1nrJ55J3H/Z4m1q+xCW3nHYLnrEY0+NhsBKwtqCCmF/kZQIEKdOw+wWgYahMfAk/N
-	 pwvXNa90t557P1RFjxTzaCJMBccKAdFNsm8BPG3d4NESFIFjFsbD2QBKoja0ESwKLrV0+
-	 h77VZNG4Uz++Cxp9itRua6GtO/8FwiaQ3dmEg2v71Yp6p5Dlog77/McC+++AQO3vmdA==
+	bh=Lr6hRc47/sForvU65hAhUMMHbYupQdMTLs8JVG0UFZo=;
+	b=L0CEa2JZjo+JThEFx8IO+gYrMgObz/Y4jjwfzJdOFyuvn6GayGvTseeRtPLqsfgSdEkR
+	 7Zcw0GyHYH7/gM4Hco5jP9WbFeBeTlvTlUwdVQnjrsPER+FL/yPCd6WtedpeJQ/KyJ3KA
+	 2aUz94gddkKzfDnKUWQqLecHwWM0yY0NNlUbPyT3RBVvHE5VI256PGdxjSnpiDygixUgF
+	 AU8LWW07vglVbCe237YTpjvnSFfEzraK/m8DBsW3F/WibCvM+FzUHAy8JVLVcLTSG5KOb
+	 9e+7Wp6XNJw/rqDQBnlnc4yyaJ1jln2Y1Ep6V6htjd4cUMjIONzXlAFmC+cgjPGlbFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hb5wiGJl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fve4Kmbn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE223606A330;
-	Sat,  7 Nov 2026 14:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F57606D82C;
+	Sat,  7 Nov 2026 14:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hb5wiGJl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FC91F0089F;
-	Sat,  7 Nov 2026 14:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fve4Kmbn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A611F0089F;
+	Sat,  7 Nov 2026 14:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060929;
-	bh=0LAYQWBhtFhsvZR3Ac+LziQzJJQGDdidVOcLjVLwZVU=;
+	s=korg; t=1794060931;
+	bh=Lr6hRc47/sForvU65hAhUMMHbYupQdMTLs8JVG0UFZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hb5wiGJl2fMVuJqLGRnAXBm0BoLxtMaLm4DA+YPGRG38C1/sv/T+0wFrEkjjGCyUC
-	 +jyJd+HkX6QQT5Z11yzh7O9rLI+ZEN6yZw/niBstQDr326VhDFKmSgBQehxQlXenJx
-	 G3SLZn1wI73jj089GJqV0iQWJSu3vyqaSGMu/Ya4=
+	b=Fve4KmbnK2pNq3ZBRIR9BDEEFJtug8q9MaryYPwvLaEjWll54Nxzv5FtfG07WcCfT
+	 zSN//G1Dbl9VXKVKM9ZkoqRo99TxihBxbQ9nxmQcPYQjlf8l7bkzxjwA+At7V2wGBl
+	 /odlubWwsJYPSTT5lsjdchiIu/zQbhqZ0GuEnPr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mariano Baragiola <mbaragiola@linux.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0257/1536] wifi: wilc1000: validate monitor transmit frame headers
-Date: Sat,  7 Nov 2026 08:37:53 -0500
-Message-ID: <20261107135004.901352877@linuxfoundation.org>
+Subject: [PATCH 6.12 0248/1536] netfilter: nf_tables: call skb_valid_dst() before skb_dst()
+Date: Sat,  7 Nov 2026 08:37:44 -0500
+Message-ID: <20261107135004.647431605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,95 +67,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mariano Baragiola <mbaragiola@linux.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 9d96e037ff90a2fc81a841b2002d500a5a4a5351 ]
+[ Upstream commit 689db98e535bf8efb5bc9c36f4fd3de3bd715eb6 ]
 
-wilc_wfi_mon_xmit() reads the radiotap length before ensuring that the
-fixed header is present. After stripping that header, it reads the frame
-type and all three 802.11 addresses without checking how much frame data
-remains.
+When fetching the dst_entry from the skb, check if it valid, ie. this is
+not a template dst, for extensions that can be used from the netdev
+ingress and egress chains.
 
-A truncated monitor injection can therefore cause out-of-bounds reads.
-Validate the radiotap header first, use the common 802.11 helper to check
-the variable header length, and require a complete three-address header
-before using the addresses. This covers QoS and four-address data headers
-while rejecting short control headers that this path cannot classify.
-
-Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
-Link: https://patch.msgid.link/20260728192610.2236361-1-mbaragiola@linux.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/microchip/wilc1000/mon.c | 30 +++++++++++++++----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ net/ipv4/netfilter/nf_reject_ipv4.c | 6 ++++--
+ net/ipv6/netfilter/nf_reject_ipv6.c | 8 ++++++--
+ net/netfilter/nft_meta.c            | 6 ++++--
+ net/netfilter/nft_rt.c              | 6 ++++--
+ net/netfilter/nft_xfrm.c            | 9 ++++++++-
+ 5 files changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/microchip/wilc1000/mon.c b/drivers/net/wireless/microchip/wilc1000/mon.c
-index c3d27aaec2974..c0fde3b0d8aab 100644
---- a/drivers/net/wireless/microchip/wilc1000/mon.c
-+++ b/drivers/net/wireless/microchip/wilc1000/mon.c
-@@ -142,6 +142,9 @@ static int mon_mgmt_tx(struct net_device *dev, const u8 *buf, size_t len)
- static netdev_tx_t wilc_wfi_mon_xmit(struct sk_buff *skb,
- 				     struct net_device *dev)
- {
-+	struct ieee80211_radiotap_header_fixed *rtap_hdr;
-+	struct ieee80211_hdr_3addr *hdr;
-+	unsigned int hdr_len;
- 	u32 rtap_len, ret = 0;
- 	struct wilc_wfi_mon_priv  *mon_priv;
- 	struct sk_buff *skb2;
-@@ -153,13 +156,26 @@ static netdev_tx_t wilc_wfi_mon_xmit(struct sk_buff *skb,
- 	if (!mon_priv)
- 		return -EFAULT;
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index 57ccff9ab076a..021638aef1706 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -8,6 +8,7 @@
+ #include <net/tcp.h>
+ #include <net/route.h>
+ #include <net/dst.h>
++#include <net/dst_metadata.h>
+ #include <net/netfilter/ipv4/nf_reject.h>
+ #include <linux/netfilter_ipv4.h>
+ #include <linux/netfilter_bridge.h>
+@@ -256,6 +257,7 @@ static int nf_reject_fill_skb_dst(struct sk_buff *skb_in)
+ 	if (!dst)
+ 		return -1;
  
-+	if (skb->len < sizeof(*rtap_hdr))
-+		goto drop;
-+
-+	rtap_hdr = (void *)skb->data;
-+	if (rtap_hdr->it_version)
-+		goto drop;
-+
- 	rtap_len = ieee80211_get_radiotap_len(skb->data);
--	if (skb->len < rtap_len)
--		return -1;
-+	if (rtap_len < sizeof(*rtap_hdr) || skb->len < rtap_len)
-+		goto drop;
- 
- 	skb_pull(skb, rtap_len);
-+	hdr_len = ieee80211_get_hdrlen_from_skb(skb);
-+	if (hdr_len < sizeof(*hdr))
-+		goto drop;
- 
--	if (skb->data[0] == 0xc0 && is_broadcast_ether_addr(&skb->data[4])) {
-+	hdr = (void *)skb->data;
-+
-+	if (ieee80211_is_deauth(hdr->frame_control) &&
-+	    is_broadcast_ether_addr(hdr->addr1)) {
- 		skb2 = dev_alloc_skb(skb->len + sizeof(*cb_hdr));
- 		if (!skb2)
- 			return -ENOMEM;
-@@ -191,8 +207,8 @@ static netdev_tx_t wilc_wfi_mon_xmit(struct sk_buff *skb,
- 	}
- 	skb->dev = mon_priv->real_ndev;
- 
--	ether_addr_copy(srcadd, &skb->data[10]);
--	ether_addr_copy(bssid, &skb->data[16]);
-+	ether_addr_copy(srcadd, hdr->addr2);
-+	ether_addr_copy(bssid, hdr->addr3);
- 	/*
- 	 * Identify if data or mgmt packet, if source address and bssid
- 	 * fields are equal send it to mgmt frames handler
-@@ -207,6 +223,10 @@ static netdev_tx_t wilc_wfi_mon_xmit(struct sk_buff *skb,
- 	}
- 
- 	return ret;
-+
-+drop:
-+	dev_kfree_skb(skb);
-+	return NETDEV_TX_OK;
++	skb_dst_drop(skb_in);
+ 	skb_dst_set(skb_in, dst);
+ 	return 0;
  }
+@@ -272,7 +274,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	if (!oth)
+ 		return;
  
- static const struct net_device_ops wilc_wfi_netdev_ops = {
+-	if (!skb_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
++	if (!skb_valid_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
+ 		return;
+ 
+ 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
+@@ -345,7 +347,7 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
+ 	if (iph->frag_off & htons(IP_OFFSET))
+ 		return;
+ 
+-	if (!skb_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
++	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
+ 		return;
+ 
+ 	if (skb_csum_unnecessary(skb_in) ||
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index 3c56e94e6943b..95ddd533c506c 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -8,6 +8,7 @@
+ #include <net/ip6_route.h>
+ #include <net/ip6_fib.h>
+ #include <net/ip6_checksum.h>
++#include <net/dst_metadata.h>
+ #include <net/netfilter/ipv6/nf_reject.h>
+ #include <linux/netfilter_ipv6.h>
+ #include <linux/netfilter_bridge.h>
+@@ -291,6 +292,7 @@ static int nf_reject6_fill_skb_dst(struct sk_buff *skb_in)
+ 	if (!dst)
+ 		return -1;
+ 
++	skb_dst_drop(skb_in);
+ 	skb_dst_set(skb_in, dst);
+ 	return 0;
+ }
+@@ -323,10 +325,12 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	fl6.fl6_sport = otcph->dest;
+ 	fl6.fl6_dport = otcph->source;
+ 
+-	if (!skb_dst(oldskb)) {
++	if (!skb_valid_dst(oldskb)) {
+ 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
+ 		if (!dst)
+ 			return;
++
++		skb_dst_drop(oldskb);
+ 		skb_dst_set(oldskb, dst);
+ 	}
+ 
+@@ -427,7 +431,7 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
+ 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
+ 		skb_in->dev = net->loopback_dev;
+ 
+-	if (!skb_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
++	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
+ 		return;
+ 
+ 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
+diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
+index 983158274c68d..9ef4173976c04 100644
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -20,6 +20,7 @@
+ #include <net/dst.h>
+ #include <net/ip.h>
+ #include <net/sock.h>
++#include <net/dst_metadata.h>
+ #include <net/tcp_states.h> /* for TCP_TIME_WAIT */
+ #include <net/netfilter/nf_tables.h>
+ #include <net/netfilter/nf_tables_core.h>
+@@ -274,11 +275,12 @@ static bool nft_meta_get_eval_ifname(enum nft_meta_keys key, u32 *dest,
+ static noinline bool
+ nft_meta_get_eval_rtclassid(const struct sk_buff *skb, u32 *dest)
+ {
+-	const struct dst_entry *dst = skb_dst(skb);
++	const struct dst_entry *dst;
+ 
+-	if (!dst)
++	if (!skb_valid_dst(skb))
+ 		return false;
+ 
++	dst = skb_dst(skb);
+ 	*dest = dst->tclassid;
+ 	return true;
+ }
+diff --git a/net/netfilter/nft_rt.c b/net/netfilter/nft_rt.c
+index ad527f3596c03..cb7dff336bbdc 100644
+--- a/net/netfilter/nft_rt.c
++++ b/net/netfilter/nft_rt.c
+@@ -8,6 +8,7 @@
+ #include <linux/netfilter.h>
+ #include <linux/netfilter/nf_tables.h>
+ #include <net/dst.h>
++#include <net/dst_metadata.h>
+ #include <net/ip6_route.h>
+ #include <net/route.h>
+ #include <net/netfilter/nf_tables.h>
+@@ -59,10 +60,11 @@ void nft_rt_get_eval(const struct nft_expr *expr,
+ 	u32 *dest = &regs->data[priv->dreg];
+ 	const struct dst_entry *dst;
+ 
+-	dst = skb_dst(skb);
+-	if (!dst)
++	if (!skb_valid_dst(skb))
+ 		goto err;
+ 
++	dst = skb_dst(skb);
++
+ 	switch (priv->key) {
+ #ifdef CONFIG_IP_ROUTE_CLASSID
+ 	case NFT_RT_CLASSID:
+diff --git a/net/netfilter/nft_xfrm.c b/net/netfilter/nft_xfrm.c
+index 81cbe8408c83c..924d6bd389843 100644
+--- a/net/netfilter/nft_xfrm.c
++++ b/net/netfilter/nft_xfrm.c
+@@ -12,6 +12,7 @@
+ #include <linux/netfilter/nf_tables.h>
+ #include <net/netfilter/nf_tables_core.h>
+ #include <net/netfilter/nf_tables.h>
++#include <net/dst_metadata.h>
+ #include <linux/in.h>
+ #include <net/xfrm.h>
+ 
+@@ -176,9 +177,15 @@ static void nft_xfrm_get_eval_out(const struct nft_xfrm *priv,
+ 				  struct nft_regs *regs,
+ 				  const struct nft_pktinfo *pkt)
+ {
+-	const struct dst_entry *dst = skb_dst(pkt->skb);
++	const struct dst_entry *dst;
+ 	int i;
+ 
++	if (!skb_valid_dst(pkt->skb)) {
++		regs->verdict.code = NFT_BREAK;
++		return;
++	}
++
++	dst = skb_dst(pkt->skb);
+ 	for (i = 0; dst && dst->xfrm;
+ 	     dst = ((const struct xfrm_dst *)dst)->child, i++) {
+ 		if (i < priv->spnum)
 -- 
 2.53.0
 
