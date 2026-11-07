@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064417;
-	b=A74ZrwZ0fm5Xe8a9F9c6sam2Q/CSEMYf+Xi6weMgRQLwb7llzzghbNMPEFveDCRWj4Qe
-	 /OgQapCgLDuIx1cYl8fQ/Iaw+cXjOtgoj56SmXfkoTqik0uaMPWxQV+xl6y988FXLJZ9D
-	 vuQ8nY5EoGymhgd865zxU21D1TUjdq4i+inLiWcPrPWjxp4jSBVvlIoLqwgM13P9cn8N0
-	 MbgVbSXpqIYU3AKa3qFMVDEfB61tViZhboOq+DelLxG5y+8uu0+db2XGkwG1+y2/n33NA
-	 BSaPN1dnmn5gNA/TQuGwZDGB4dMeeR0ry1ITIRoxN8X6+ATkG4BccoLsJ4+KUa74cmg==
+	t=1794064418;
+	b=ZEo5REVUzhsudY7Z5nQgPXxI3ABZNnWDIaepjTu2Nnu/KHoBxVFYnqovamodyT+dIwmL
+	 wSY4MxRaApWXuB/7uy9XGuIX7qhg5JIdAwwdIDhF0rFjmPtjWOmE0SqDUjAJpB4nfGJcK
+	 UGmd+8okZ19fvHbb028aZVasrMXVnoqEQ7CeNt0ZJrR4U2EFwcHi2l3mv/+6MON8In3kL
+	 izSbX/yjiIbKiDGOJVFQmHd/SPL/lM/QFGhkdevkkngwUOYSF8OBB3v6+e6LVEdaBiT83
+	 383g2XL9ynemxrGfChaPamDX7yQFaA+YpbHwwt4Jxwz2QTXOjKHvFW4PKmT4yXMy7mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WTTe/viX5Bhux2G82Y3kx8/OEYz8VpWNORZ7Wpyp50Q=;
-	b=DZwTWrTkme5K5FqaAc2DwUG5g/x9EmN6NWlKZ4dLXD43oOgjynfebJjbqaSW0fSiGBFH
-	 Wd40vpBLIofdiwS4JzTRo6f6en3BP/W9vTW0z60mAuSRzeHv0S9d7vF8MS7Mz7PIErIdR
-	 RYwiDp9PQ4JcHVPR8P8ulmWMDZUvYS4kU0HRe0quxzXJcYJ6afFtbhOc5LUJcQXbu1iMn
-	 Yw+bGTw6Cd+XRTY5Va7GAkVZ5cAhyRdwE5H4wKuxBP9eJpXrGd0JQ/aeCs3wrLAwcWXp3
-	 I+5XRvbD/pKuCEQqfaAhx1Q2xNGssQWZ8a71RGVkxPSvIdH2WRjz1K1kVoJXIQcHbzQ==
+	bh=i2fa9Y/IUhNs4ZDZEVgV5AVuoEy7Tvv8TZ1Anjyc2Kk=;
+	b=K7QOX0UscgtZclLoNPTgrDOZ3ItChTGzpSQkZkuOP5ruCeTmy0cc5AKyFHVGUkqQdhq1
+	 YzS83IpmBDy5vfPk7dS4qOWNoEE6KOeC8qlWzOu4W0R4NY9IsKlpxGOHzgGIwHnNV0FBY
+	 uID55BlZTWmecveg8qnXw9ejfMFFA1VM62or7hm3Dr1N8GeZIMRa//ZKBU3YqAGSXHhX5
+	 zvQ6/4pUnAM1fdptZBrAMG3wfo0L27mqqbvram9yYUxFaSlqxjbuz89ldKYdHRjez7aF5
+	 abKQPn/agEal/kdIeyezK6gIhfQ/cnXtRaEPgNiw7//tinJPaTc7Mx/7iMS1rqtzYIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F26pASjL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YlpqQOeo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E15606A333;
-	Sat,  7 Nov 2026 15:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60586606D834;
+	Sat,  7 Nov 2026 15:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F26pASjL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F6E1F008A1;
-	Sat,  7 Nov 2026 15:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YlpqQOeo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2801F0089F;
+	Sat,  7 Nov 2026 15:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064417;
-	bh=WTTe/viX5Bhux2G82Y3kx8/OEYz8VpWNORZ7Wpyp50Q=;
+	s=korg; t=1794064418;
+	bh=i2fa9Y/IUhNs4ZDZEVgV5AVuoEy7Tvv8TZ1Anjyc2Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F26pASjL8391ax5K571TGrcPq4aOqQZGo441hvP7JrioY+R5etGSXK55lI+fKoXcI
-	 IW2bIEs53tPzOG/pVARtJYjxdktZOgSnd4O9ZKoJIwP4WEjqEq93PUhqQVrmZOkc25
-	 rDwafec/MaW9S+Nvag5/FT6MRk5Yor7Vwl0vLI2M=
+	b=YlpqQOeo57Twm4CdrrO3M3U0cJ05V5DPAUBnXegthERO7HAQGfQd1IB0rKGNoFyMk
+	 lXACVx38mXbLOKizHpEtdGzbdGRvTPYgwmF2O3lUbEfdrJO3izOP4vByFoDB+iaZCU
+	 W7367pnWYV/BGMN/hSrqdp2bk/LgkaT508thEcX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0418/1257] dm-writecache: fix a quirk in statistics
-Date: Sat,  7 Nov 2026 08:45:14 -0500
-Message-ID: <20261107134951.051982324@linuxfoundation.org>
+Subject: [PATCH 7.3 0461/1257] media: mediatek: vpu: release reserved memory on remove
+Date: Sat,  7 Nov 2026 08:45:57 -0500
+Message-ID: <20261107134952.198257866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,49 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit c1ab80af0d99a906b60b769f2e692c37d2db1323 ]
+[ Upstream commit 8af0e2bdd9791848d9caf3761825ac51a67c2b9c ]
 
-writecache_bio_copy_ssd() unconditionally adds the number of extra blocks
-in the merged bio to stats.writes_allocate. That is only correct when the
-entries were taken off the freelist.
+mtk_vpu_probe() may assign a reserved memory region to the VPU device
+with of_reserved_mem_device_init(). The probe failure path releases the
+assignment with of_reserved_mem_device_release(), but the normal remove
+path does not perform the corresponding cleanup.
 
-When the function is called with search_used == true -- i.e. from the
-write_hits_uncommitted / write_hits_committed paths in
-writecache_map_write() -- the first entry was found in the rbtree and
-every following entry is picked up with rb_next(), so nothing is
-allocated at all. Accordingly the writes_allocate++ that accompanies a
-successful writecache_pop_from_freelist() is skipped for that case, but
-the batch accounting below still adds n - 1.
+As a result, removing the VPU driver after a successful probe can leave
+the reserved memory assignment associated with the device after its
+lifetime has ended.
 
-An in-place overwrite of n contiguous cached blocks therefore reports n -
-1 allocations that never happened. Only the dmsetup status output is
-affected; there is no functional change.
+Release the reserved memory assignment after freeing the VPU external
+firmware memory, matching the cleanup performed by the probe failure
+path.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+This issue was found by manual code inspection.
+
+Fixes: 3003a180ef6b ("[media] VPU: mediatek: support Mediatek VPU")
 Cc: stable@vger.kernel.org
-Fixes: b2676e1482af ("dm writecache: count number of blocks written, not number of write bios")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/mediatek/vpu/mtk_vpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index 5804cbc62a511..e4559d1de3dde 100644
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -1424,7 +1424,8 @@ static void writecache_bio_copy_ssd(struct dm_writecache *wc, struct bio *bio,
- 	dm_accept_partial_bio(bio, bio_size >> SECTOR_SHIFT);
- 
- 	wc->stats.writes += bio->bi_iter.bi_size >> wc->block_size_bits;
--	wc->stats.writes_allocate += (bio->bi_iter.bi_size - wc->block_size) >> wc->block_size_bits;
-+	if (!search_used)
-+		wc->stats.writes_allocate += (bio->bi_iter.bi_size - wc->block_size) >> wc->block_size_bits;
- 
- 	if (unlikely(wc->uncommitted_blocks >= wc->autocommit_blocks)) {
- 		wc->uncommitted_blocks = 0;
+diff --git a/drivers/media/platform/mediatek/vpu/mtk_vpu.c b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
+index b6bd80b684459..9dff1d971d37c 100644
+--- a/drivers/media/platform/mediatek/vpu/mtk_vpu.c
++++ b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
+@@ -967,6 +967,7 @@ static void mtk_vpu_remove(struct platform_device *pdev)
+ 		destroy_workqueue(vpu->wdt.wq);
+ 	vpu_free_ext_mem(vpu, P_FW);
+ 	vpu_free_ext_mem(vpu, D_FW);
++	of_reserved_mem_device_release(&pdev->dev);
+ 	mutex_destroy(&vpu->vpu_mutex);
+ 	clk_unprepare(vpu->clk);
+ }
 -- 
 2.53.0
 
