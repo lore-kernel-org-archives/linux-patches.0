@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065458;
-	b=u+JrgNlc3cUJcPPeVScCxMx3o8yii7kirFPjAwZxz4ZwSvVtybCe1LTPvO9I842YqspO
-	 1h+ajsuVD63+rSZkjsyQKINWpEqmt5+hX61rM9qEOQ1isjCQNYFbSIhHO2Rsq4KR3v9kN
-	 d422XekfaItq7xkJHPNAaX0DT/IgEfGYhEcT467AtyQjrQoPHAdVsPz8ECUIa772H0SAv
-	 G/B2ay9C/yVQN5eOASPaKtcxNhJ8YBCRycMzOcYoHEdsAkSGMrdh8TZL/ne6kqEm4VTUP
-	 aprOVZG9UUlrxGujUQtgYa1Rj8jna7pFRTZuYEEJdGCVfcWCvalDpv5pXrbX1tZ4YMg==
+	t=1794065459;
+	b=DgvM98VYIc06QjnCch2B6y/zzlgdAMqI8Bde63WmZIsnj27E0x3pUFCtELB+L2kCYXnx
+	 SI5kd+SH1P7a41fDVl84tFf/sYe70+NdGdkgOMB2C+iZkXN4rZ/hJel+l+1Rgrl62NGga
+	 XsHSUBHebZskmlSUzspZ8DvuwI1mlihtlscZFCNsIwmkVsvxjRFu3NWzXnJOQrt1EEDRs
+	 9WH7R7v4SIg8Us/mLY0pk4vizUPPcyaiQDEwzZSPlWDpKr+/wzUID598Tc02wvK/IBZBS
+	 RR02VNy1RSamZrRckSvfGjV/Q1ivxZxVrLyanlKVuMvCQqv/Tu7iN50HFQYTnAz1Khw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ga/iWb0th1hKGl/VwAbWFcACN+Y8L22CC5xZ6WeZbSM=;
-	b=cby4bofvegg07TJhuuANfXykZKabK0tJ3BZMpwhoWk0Wnw0uXbgdk0DqIlcQX3rCXki1
-	 m17baYW5eGwmL6iSJ16Wj363TF4AK3kYHUz8aiwzRR2Ai2AIxB7efVYwLPlkbu3oHfrYN
-	 FUtaxRD7kwjvy1yP+nBr7WpKySRSLiQgguuROr49mO1GBGZ0hB+Dsvc8wBoPnft4TcRx9
-	 14PcIRg/RfqIidDPslwhGlcb3kz0hLDBEnOqN7qSD5Vlp3Jh9Kgbxto9hwu32oEpUieAp
-	 q75ncljSKQU6LihIRyZ7KyWOCFd0IQmioYiCXykne/Otq86aRhG01+UEfDrKiEbPV8A==
+	bh=7SmcqzyzTz4aQZCe1/6Sj4yycbC5mQo95+SvmEGl0B4=;
+	b=0XZ5ApcIwdV38eFVxBDhicpOYnr1dPeEPvcHm2F8z306l2CaaQgFMh3bR4xLpy7XlWTZ
+	 /ZXObEg+qQJwDt+/w/GB3R0URjj67rn8NtAP2Rd+02+lBGmCvQYxu5GAsnXLZfgCj+zm/
+	 X3ERqt8IG4LPa5mYRb7NjpPoBjBX4j9vz+VN9QybQF65kiI6sT+ZJCb6oDQHGCa0vjrUK
+	 BaqUso7/Hccj6+i8WF9CyIgGNEo9MR9y/lHlJDo4BNRd0muIDsIJKpF/TFIFpcK3GHyA0
+	 edNPaZXIKw/3NcO74FzKCpWuz4VwlghTwmQDwcBoWJJwM3EUmk0II0yf4GONd3Pwghg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ChI/rJXI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHa1w5wh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09D7606A330;
-	Sat,  7 Nov 2026 15:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C17B606A32C;
+	Sat,  7 Nov 2026 15:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ChI/rJXI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C83F1F0089F;
-	Sat,  7 Nov 2026 15:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHa1w5wh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BF71F0089F;
+	Sat,  7 Nov 2026 15:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065457;
-	bh=Ga/iWb0th1hKGl/VwAbWFcACN+Y8L22CC5xZ6WeZbSM=;
+	s=korg; t=1794065459;
+	bh=7SmcqzyzTz4aQZCe1/6Sj4yycbC5mQo95+SvmEGl0B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ChI/rJXI7m93Q3lwH3Eth9Uc5GSSnTqPghubwihM06MFbrs/i/2xUR630fSA0mOvY
-	 0NDqE30DR/ra4i1+MG/oT36v7XCsnzS5wHje67AIIIg7/xbpH/gIPWknDXClS2m02D
-	 5GfYhMFc0pqut9ZKTDfH68dhWD3OO0ysz7OZENrs=
+	b=ZHa1w5whGykd3qgOyTrVWF8EbHY1fFByCujiMWeZcyo+Jip1GbNhjGS/wFIIyHkCg
+	 Cob76LIqqEpfuLwdjKaWbSxNevS4Uw/0Fng0toIetb/awCY8hG70x1fLttanLWU3MG
+	 F8Gv+bLmuo0RxI/BcoX2OuBW6yOIQbZn17Ke1oYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sinan Turunc <enscrpt@pm.me>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1156/1257] ALSA: usb-audio: Bound packet copies by the PCM buffer size
-Date: Sat,  7 Nov 2026 08:57:32 -0500
-Message-ID: <20261107135011.130258476@linuxfoundation.org>
+Subject: [PATCH 7.3 1157/1257] ALSA: ua101: Bound packet copies by the PCM buffer size
+Date: Sat,  7 Nov 2026 08:57:33 -0500
+Message-ID: <20261107135011.156753335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,94 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit 06be918062adc1a5a76dc346803b136b20bdb5ae ]
+[ Upstream commit 493a77a9f20fca07ca5654f61c1b03bef035df25 ]
 
-retire_capture_urb() and prepare_playback_urb() assume that one USB
-packet never carries more data than the whole ALSA ring buffer. Nothing
-enforces that: the packet size comes from the device (wMaxPacketSize,
-and curpacksize == maxpacksize when the class-specific endpoint
-descriptor sets MaxPacketsOnly), while the PCM hardware constraints only
-require 64-byte periods, two periods and a period time of one data
-interval. An 8 kHz mono U8 stream on a 128-byte buffer is legal, and a
-full-speed device can send 1023-byte packets into it.
+copy_capture_data() and copy_playback_data() wrap the ring buffer
+position once and split the memcpy() in two at the buffer end, which is
+only correct when one packet holds at most buffer_size frames. The
+capture packet size is the device's (actual_length up to wMaxPacketSize,
+divided by 3 * bNrChannels from its own descriptor), the playback packet
+size is taken from the capture packets, and set_stream_hw() lets the
+PCM client pick period_bytes_min 1, periods_min 2 and a period time of
+1.5 packet intervals: 9 frames at 44.1 kHz high speed, an 18-frame
+buffer. A device sending 672-byte mono 24-bit packets delivers 224
+frames per packet.
 
-On the first oversized packet hwptr_done is wrapped once and stays
-beyond buffer_bytes (895 for 1023 bytes into 128). On the next packet
-the wrap arithmetic in the copy path computes
+After the first packet buffer_pos is 206 and stays beyond buffer_size.
+On the next packet frames1 = buffer_size - buffer_pos wraps and memcpy()
+runs away:
 
-    bytes1 = subs->buffer_bytes - oldptr
+  snd-ua101 2-1:1.0: invalid position: , pos = 206, buffer size = 18,
+period size = 9
+  BUG: KASAN: slab-out-of-bounds in capture_urb_complete+0x9eb/0xcb0
+  Read of size 4294966732 at addr ffff88800d73e7e0 by task vhci_rx/81
 
-with oldptr > buffer_bytes, so bytes1 wraps to about 4 GB and memcpy()
-runs off the end of the URB buffer and of the vmalloc'd DMA buffer:
+and for playback:
 
-  BUG: KASAN: slab-out-of-bounds in retire_capture_urb+0x251/0x870
-  Read of size 4294966529 at addr ffff88800c1e2800 by task vhci_rx/82
+  BUG: KASAN: vmalloc-out-of-bounds in playback_work+0x789/0xac0
+  Read of size 4294966732 at addr ffffc9000002626a by task kworker/0:1H/80
 
-and for playback, where copy_to_urb() has the same shape:
+Clamp the capture copy to buffer_size. On playback, copy at most one
+buffer and fill the rest of the packet with silence, so the URB length,
+the delay accounting and the data sent stay consistent. With that bound
+the single wrap and both memcpy() halves stay inside the buffer. A
+device whose packets do not fit the buffer never played correctly
+anyway.
 
-  BUG: KASAN: vmalloc-out-of-bounds in copy_to_urb.isra.0+0x188/0x430
-  Read of size 4294966529 at addr ffffc9000004537f by task vhci_rx/79
-   prepare_playback_urb+0x98a/0x1fc0
+Reproduced on 7.3-rc7 with a USB/IP device presenting the UA-101
+interface layout and a 672-byte isochronous endpoint.
 
-Truncate an oversized capture packet to the buffer size, and stop
-filling a playback URB once it holds a whole buffer. With bytes <=
-buffer_bytes the single wrap of hwptr_done and the two-part memcpy()
-in both copy paths stay inside the buffer. A device whose packets do
-not fit the buffer at all was never going to play correctly anyway.
-
-Reproduced on 7.3-rc7 with a USB/IP device (dummy_hcd cannot carry
-isochronous data) advertising a UAC1 endpoint with MaxPacketsOnly and
-wMaxPacketSize 1023, and a PCM client using period_size 64, periods 2.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Sinan Turunc <enscrpt@pm.me>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261026223543.620-2-enscrpt@pm.me
+Link: https://patch.msgid.link/20261026223543.620-3-enscrpt@pm.me
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/pcm.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ sound/usb/misc/ua101.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index 682b6c1fe76ba..c2f7b08607ac8 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1343,6 +1343,18 @@ static void retire_capture_urb(struct snd_usb_substream *subs,
- 			bytes -= adj;
- 			subs->stream_offset_adj -= adj;
- 		}
-+		/*
-+		 * A packet can be as large as the endpoint's maxpacksize, which
-+		 * the device chooses, while the ring buffer can be as small as
-+		 * two 64-byte periods. The hwptr_done wrap below handles one
-+		 * wrap only, so never take more than one buffer from a packet.
-+		 */
-+		if (unlikely(bytes > subs->buffer_bytes)) {
-+			dev_warn_ratelimited(&subs->dev->dev,
-+					     "%u-byte packet exceeds %u-byte buffer, truncating\n",
-+					     bytes, subs->buffer_bytes);
-+			bytes = subs->buffer_bytes;
-+		}
- 		frames = bytes / stride;
- 		if (!subs->txfr_quirk)
- 			bytes = frames * stride;
-@@ -1553,8 +1565,14 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
+diff --git a/sound/usb/misc/ua101.c b/sound/usb/misc/ua101.c
+index 58d8a3cdc8b98..bd8e0ed0ba5d6 100644
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -285,13 +285,29 @@ static void playback_work(struct work_struct *work)
+ 			/* fill packet with data or silence */
+ 			urb->iso_frame_desc[0].length =
+ 				frames * ua->playback.frame_bytes;
+-			if (test_bit(ALSA_PLAYBACK_RUNNING, &ua->states))
++			if (test_bit(ALSA_PLAYBACK_RUNNING, &ua->states)) {
++				/*
++				 * The packet size comes from the capture stream,
++				 * i.e. from the device, while the ring buffer can
++				 * be as small as two tiny periods. The single wrap
++				 * in copy_playback_data() is only valid for
++				 * frames <= buffer_size, so copy at most one
++				 * buffer and send silence for the rest.
++				 */
++				unsigned int copy_frames = min(frames,
++					ua->playback.substream->runtime->buffer_size);
++
+ 				do_period_elapsed |= copy_playback_data(&ua->playback,
+ 									urb,
+-									frames);
+-			else
++									copy_frames);
++				memset(urb->transfer_buffer +
++				       copy_frames * ua->playback.frame_bytes, 0,
++				       (frames - copy_frames) *
++				       ua->playback.frame_bytes);
++			} else {
+ 				memset(urb->transfer_buffer, 0,
+ 				       urb->iso_frame_desc[0].length);
++			}
  
- 		for (i = 0; i < ctx->packets; i++) {
- 			counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
-+			/*
-+			 * Bound by the ring buffer as well as by the URB:
-+			 * copy_to_urb() wraps hwptr_done once, so one URB must
-+			 * never carry more than the whole buffer.
-+			 */
- 			if (counts < 0 ||
--			    (frames + counts) * stride > ctx->buffer_size)
-+			    (frames + counts) * stride > ctx->buffer_size ||
-+			    (frames + counts) * stride > subs->buffer_bytes)
- 				break;
- 			/* set up descriptor */
- 			urb->iso_frame_desc[i].offset = frames * stride;
+ 			/* and off you go ... */
+ 			err = usb_submit_urb(urb, GFP_ATOMIC);
+@@ -320,6 +336,13 @@ static bool copy_capture_data(struct ua101_stream *stream, struct urb *urb,
+ 
+ 	runtime = stream->substream->runtime;
+ 	frame_bytes = stream->frame_bytes;
++	/*
++	 * A packet can carry up to max_packet_bytes, the device's
++	 * wMaxPacketSize, which may exceed the whole ring buffer; keep what
++	 * fits so the single wrap below stays valid.
++	 */
++	if (unlikely(frames > runtime->buffer_size))
++		frames = runtime->buffer_size;
+ 	dest = runtime->dma_area + stream->buffer_pos * frame_bytes;
+ 	if (stream->buffer_pos + frames <= runtime->buffer_size) {
+ 		memcpy(dest, urb->transfer_buffer, frames * frame_bytes);
 -- 
 2.53.0
 
