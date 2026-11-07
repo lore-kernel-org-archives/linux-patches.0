@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064671;
-	b=4Qf575kgci17R0yNt+ubgJPfUhmD/TpwhS91ejioPjKy8tetefvBiE1050WSJGnmIOad
-	 CywENrjEu2BJm5CN5v2lW16tk8cPTC/zkGVQBkGsAT+RKljIZEz+ExlxD7BCQmSqBirI6
-	 3i7/3M8IuUDfX24MMk5GERRO4JYDs9MnVtEPv9r+zEO2HIWnhEy29m+y7VGWnlIahf1FZ
-	 /6TVC1aAT6xaK1OBvgRO6ohp+ViRQwUBwegh8dBLPJKOHMDtYaFa34Rg9n/BUhYizAZgz
-	 8nOby+tpTueQhLb+f/YkMibGXHzhvj0b5KJJxTrY0Gnl/w4odjvZAjobovShNeGQJig==
+	t=1794064674;
+	b=NLxLgxzBI6O3GGkB9gpIKEXhMpifNH6tPL5Rmfop41dpabyTYJl06Rpl48HXLOzLJD6H
+	 /0wjA0cKo9nZvpBsfEFJp/gPuhxnKbQ6WWpohp/ZUkJjUnFWk0JtL2QG0eluKBakaQxAW
+	 VSLGX70mzSD/epCnMmvPOFe7UVIFZce57XpTWzM+4OLk/Lgh0d8AwJFKbclKFv4CsloD+
+	 CIsPjgNYxp4EpRJ9Pa9dzUKFp0imqvLs0WsBOVx5SR3cx06YJqDjLvSviT4Sx1yQwFhqJ
+	 pADxKXHI33x2i/VMEOcGiKp9xCcHJlwhOFmiK4Dv3GWHBhM0JbcjVr0TRjmA0Y4V9Ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U0Hbq5fgqRORVxN/6+KuVP1bPxbgJy0Hc6sTMJtW2bc=;
-	b=aHsGmLd7xJHgK6/RWmv0Vwm28PP+e3cLVTF+KqUUvCMZkt4b6dTjdK4KjWh+TgFqaPl2
-	 iCYALnKL3ehZYl8CuuoJ/DVHZN6ju6ux5j9tSXBbnSprqTY7e0JBnCIcSFVcnzQImVE5K
-	 VhsNhh+cjgXsMZawzzKwhzV4txaM8UUMOzX/q2F+EO1JTJCJdoBn1eKK8vBYDiswJuQU4
-	 2pVAGYsZVYx0osKQfK+x3Mzg9BnzuyTMO2BCcXo81ubaG6AzL9+6WO2PgbSKVh7/COl9g
-	 9PBDX/RecQz7icKn37BwHoHbf5hzb0kchalz/nFxyf+KcwahGbkHFVhxx0dKDbayd7w==
+	bh=KZibGajun3azg9tYCbY4KJygAUQULKwzwgjnZhnP8RY=;
+	b=0k8CSwLrlVJIsSyBec3CTxHbWZBZkT2rMNzi9X11kARfSjlkASyDawez2Eiiz7a3sJU5
+	 8OjuCQKfnOY2Y0e6aKUSdIyAX+H13aYamyu0KdZG2RUKYr5H4saq6ThukVx87SH9cc6fk
+	 2gadJ5z9aUCkI+ztTezOky3SaJrWAPwVYoaweUV5Rz49ZfqLPySm6VaS3oKWCpouSVjPD
+	 sGWlKMdFlFafIAX5V1W7Gx/3/SElVksC8EsxZGdlopUHZQV3RWArz03Se+3RrUM7JPNKP
+	 YsJEJ/GhQsYtjtUb42FdUoHhQzkCqVf5RX6MYPjfozX5XHoumbdh8ZGx7hNx8IxpmhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FcQZ1mM3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRQ8UA9V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925F6606A33C;
-	Sat,  7 Nov 2026 15:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4487606B894;
+	Sat,  7 Nov 2026 15:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FcQZ1mM3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFCE1F0089F;
-	Sat,  7 Nov 2026 15:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRQ8UA9V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516311F008A2;
+	Sat,  7 Nov 2026 15:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064671;
-	bh=U0Hbq5fgqRORVxN/6+KuVP1bPxbgJy0Hc6sTMJtW2bc=;
+	s=korg; t=1794064673;
+	bh=KZibGajun3azg9tYCbY4KJygAUQULKwzwgjnZhnP8RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcQZ1mM3nOK/id9QIr9J1Y6md+2Nqt4eLXC2bU421i2frbTtkZR0ElgfPCDbF20LD
-	 K4i/GZpAOWP2ETr0Wh1NefNbMW0z7rhlTw4jrUHp5to+d9gkIhlZX0RKC9uqZzHEJw
-	 rOZjgBrUqfnPIqltgDtqxW2DDwZK4Jt0pZfdm4tA=
+	b=LRQ8UA9V/loWWHJ6+rzQJ52fLJQqSrBAcQs+Ut80DMVjrOYNamkK07vUiby1FDLEO
+	 gUoW3tmjjlqnQ7z9c0AvIxY5vRu/iip9jit3cjF3kLKA2MsG3RDsqHUeSPv2y7z7BE
+	 RzFC/ZebM+k2dBSNSAq+3Z48rtBInPBNGiosrmBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Wayne Chang <waynec@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0631/1257] usb: typec: ucsi_ccg: Add retry mechanism in ccg_read
-Date: Sat,  7 Nov 2026 08:48:47 -0500
-Message-ID: <20261107134956.721904504@linuxfoundation.org>
+Subject: [PATCH 7.3 0632/1257] mailbox: altera: shut down RX polling timer on channel teardown
+Date: Sat,  7 Nov 2026 08:48:48 -0500
+Message-ID: <20261107134956.746564350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,80 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit bbf6b99a57b2479bf51c3c8ad0946f4b8c33ed69 ]
+[ Upstream commit 0cf10e65639cba32d05994f85e6a8f08dd0ffe08 ]
 
-CCG4 firmware occasionally fails to respond to I2C read requests,
-especially when reading cci and intr_reg from the ISR path. In these
-cases, i2c_transfer() returns -EREMOTEIO.
+The RX polling callback unconditionally rearms the timer after it
+processes mailbox data.  altera_mbox_shutdown() uses
+timer_delete_sync(), which waits for a running callback but does not
+prevent that callback from rearming the timer after the deletion.
 
-The CCG4 is EOL, and Infineon no longer supports firmware updates, so
-a software workaround is necessary.
+Use timer_shutdown_sync() for the final polling teardown so the timer
+cannot be queued again while the mailbox channel is being released.
+The timer is reinitialized with timer_setup() on a later channel startup,
+so polling mode remains reusable.
 
-Attempt the read up to CCG_READ_MAX_RETRIES (4) times in total when
--EREMOTEIO is returned, sleeping ~1 ms via fsleep() between attempts.
-This allows recovery from transient I2C failures without affecting
-other error paths.
-
-The sleep is safe because ccg_read() is called both from process
-context and from ccg_irq_handler(), which runs in threaded IRQ
-context (registered via request_threaded_irq() with a NULL hard-IRQ
-handler), so sleeping is allowed in both cases.
-
-Fixes: 247c554a14aa ("usb: typec: ucsi: add support for Cypress CCGx")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260916061858.1471606-1-waynec@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f62092f6d77d ("mailbox: Add Altera mailbox driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/mailbox/mailbox-altera.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index 80e3e84b418d7..3f12db95c7f46 100644
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -135,6 +135,8 @@ struct version_format {
- #define NVIDIA_FTB_DP_OFFSET	(2)
- #define NVIDIA_FTB_DBG_OFFSET	(3)
+diff --git a/drivers/mailbox/mailbox-altera.c b/drivers/mailbox/mailbox-altera.c
+index 17278c2571d34..7cb91413ef7fc 100644
+--- a/drivers/mailbox/mailbox-altera.c
++++ b/drivers/mailbox/mailbox-altera.c
+@@ -270,7 +270,7 @@ static void altera_mbox_shutdown(struct mbox_chan *chan)
+ 		writel_relaxed(~0, mbox->mbox_base + MAILBOX_INTMASK_REG);
+ 		free_irq(mbox->irq, chan);
+ 	} else if (!mbox->is_sender) {
+-		timer_delete_sync(&mbox->rxpoll_timer);
++		timer_shutdown_sync(&mbox->rxpoll_timer);
+ 	}
+ }
  
-+#define CCG_READ_MAX_RETRIES	4
-+
- struct version_info {
- 	struct version_format base;
- 	struct version_format app;
-@@ -255,6 +257,7 @@ static int ccg_read(struct ucsi_ccg *uc, u16 rab, u8 *data, u32 len)
- 	};
- 	u32 rlen, rem_len = len, max_read_len = len;
- 	int status;
-+	int retry_count;
- 
- 	/* check any max_read_len limitation on i2c adapter */
- 	if (quirks && quirks->max_read_len)
-@@ -266,7 +269,17 @@ static int ccg_read(struct ucsi_ccg *uc, u16 rab, u8 *data, u32 len)
- 		rlen = min_t(u16, rem_len, max_read_len);
- 		msgs[1].len = rlen;
- 		put_unaligned_le16(rab, buf);
--		status = i2c_transfer(client->adapter, msgs, ARRAY_SIZE(msgs));
-+
-+		for (retry_count = 0; retry_count < CCG_READ_MAX_RETRIES; retry_count++) {
-+			status = i2c_transfer(client->adapter, msgs, ARRAY_SIZE(msgs));
-+
-+			/* Only retry on -EREMOTEIO, and not after the last attempt */
-+			if (status != -EREMOTEIO || retry_count == CCG_READ_MAX_RETRIES - 1)
-+				break;
-+
-+			fsleep(1000);
-+		}
-+
- 		if (status < 0) {
- 			dev_err(uc->dev, "i2c_transfer failed %d\n", status);
- 			pm_runtime_put_sync(uc->dev);
 -- 
 2.53.0
 
