@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064821;
-	b=Au8Q9PiFinMO7ria9HBgqjCe4G65BMMn/n0MvJ+ox7oTwo8ld2Uqdj4dJywF9u6iamvo
-	 C774ZNugCCZ/br6tmp9laCpq6uTLGZBfjqoEq8SV6rr1J0vaLkYUPr9jCKxkDVWNM/46U
-	 bnR8bwaDYikgxgKM8T0OXBdkowV6RHeoapwS/aS4FP6cUwjhz95tDTLYvw89Jyxhk+7ye
-	 ixUOzPcfuhuDkG3Zi4dfN4leDLqSTRqZWjO18yL+Qkaz7uwLStpw2NgnR67FTxNEahvHQ
-	 tKWPlv7TEodr5TiKyc00B/EFURJCtq4jNn8Wn71ZUeqx/HfvU8Yvd7H7b/pszuevJ7A==
+	t=1794064824;
+	b=o+Ij28v35EXobi31wpTqk/U8QtWDrVAwxhQPfDmNK3Ol1Dp34laReoRyxeMHd9+dCv8D
+	 Zw5xJajXvb98DdsoQQRhxPDWb31xh2G+JXJa1Fihse6uitXJqBVgFBuJ7yERc4Um4iq99
+	 EeJIHHrx1g7uOijb6e1Zo3fo/qLSYdtaBf6wIA7nPHeRA8Sec4iOt4jtb24d60TLkn80W
+	 Frz4YBK5xGfMfhX3666cdIIdIkTIoUvSXcygKVL7cssdmzmMHsuGXu65nJtkHkfa+k7HV
+	 WDJL/4KmJRUtSD1W75Gu2rSUQXnnZfqNlIN9T3fs6yYFQ/BX2ZLNi9Lo9rOlSoJkJeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064821;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=a+F47RL+g65tsX1zhZT/afuiT1Wg1ShuKgHcnwAdsUs=;
-	b=359pmLwcO8YG4t+zSJtsA/OWh1tevyBbHkW4JSBnP+7zleUOiKUp4wiYx+om4+X8jvUV
-	 xfV/dQvPBH7hVv8dsQKryqg7Zg7F3UXW5mrijBlss2thUOP/kDxD+w3qR1kXKjQlBoYJk
-	 jI0pcMUtljS05UrF5Fxjgx6Z6OKOYiq4IrGp8Jw+Go7hY7ooW12wWpbkrI1bEqEe/xPbL
-	 peM9fhki5Du/Lu8JLTZsO+7c2aONvys6lHZHChEN3d8nuAgdCZ/dAah9Io4v3Q2ADszvd
-	 dy9dgOLPe4lZrvIi6QpwVw8e1PSZM/XXtteOhs+YjQcoNWdhWrV+Pk1uZFNRqUiGgFQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=8q3+1ky0NX/nhOHuhiGoTSpiLUjMCk0+GwfXsSn7DTc=;
+	b=Kt9IbI/pRJ0ndsxnO98EhkzISgZsWbAbBjiSc/Hk9TrlTEsjMZM64fmcMKFpWgMhXNIF
+	 N+G+IcJ0+3uczqKbz8h90cWVuglcCikgfnGEkagQadospjcUgj54fHCh9EZV4t14RPb8g
+	 J8XZwKAjxa3E1jsIOsvaq9/kkueygALxsGaKkbMjwpRz090vTAC0LweS8Jj8ZwuPWpVSJ
+	 axUaY1FEGL6nQq6Wo9HsRQPURu7wUTunKC79KQiP4yNSzHARCLx15A8ub5O/9yvQ5XLFW
+	 6eaYHcmhogN//zt9kvAylXsPk2TY4SJakID2nHGHZ1MV2XKpHTS4ooa9+CbO5RBa3wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=goO5JtKR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUjyQBLV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B927606B88F;
-	Sat,  7 Nov 2026 15:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06108606A33A;
+	Sat,  7 Nov 2026 15:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=goO5JtKR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A501F0089F;
-	Sat,  7 Nov 2026 15:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUjyQBLV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF3C1F0089F;
+	Sat,  7 Nov 2026 15:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064820;
-	bh=a+F47RL+g65tsX1zhZT/afuiT1Wg1ShuKgHcnwAdsUs=;
+	s=korg; t=1794064823;
+	bh=8q3+1ky0NX/nhOHuhiGoTSpiLUjMCk0+GwfXsSn7DTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=goO5JtKRMvq9YarnHq9IYzbn9CDjFQ1Nh+0Fx/5Ukx5cBoq42/G0ayu+Im08YayvT
-	 C04u5t+gErxsFZdzZ+MnTgHUpfAo/Uzzzc8IZtm403HLBVZF3ydeEDfxkUlDRChEfm
-	 YmrcZHBcb2V6YszSjHyeHs6xn/1VN9Ko5eN7NNNw=
+	b=aUjyQBLVkKf6bI81CGAOPz0jd2aivy3s6P8oTZH/aMemLyUf7j+bAPJGwBJzQfib9
+	 JvGMpt/TFixsT4MSA4k/GtRPBj5z3v0Q/eZoDN6aAiuv1TUToLcheoAKRatt1X4RLp
+	 36riN5IAhj8roHEh5oMdEd+HglJqfpYQS3JLu7aY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Ankit Soni <Ankit.Soni@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Matt Fleming <mfleming@cloudflare.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0749/1257] platform/x86: hp-bioscfg: return -E2BIG from validate_password_input()
-Date: Sat,  7 Nov 2026 08:50:45 -0500
-Message-ID: <20261107134959.976484333@linuxfoundation.org>
+Subject: [PATCH 7.3 0758/1257] iommu/amd: Program device table when kdump reuse fails
+Date: Sat,  7 Nov 2026 08:50:54 -0500
+Message-ID: <20261107135000.223253170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,60 +65,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-[ Upstream commit a4f19c589b21e18567d3c0ac7b9294f81e29b1de ]
+[ Upstream commit 05d62be400f3ae0f6856f6910a1281e67cbaabcf ]
 
-validate_password_input() returns the positive INVALID_BIOS_AUTH on
-rejection. store_password_instance() skips the store on nonzero ret,
-but its final "return ret < 0 ? ret : count" treats the positive value
-as success, so userspace sees count instead of an error.
+Commit 38e5f33ee359 ("iommu/amd: Reuse device table for kdump") made
+iommu_set_device_table() return early in every kdump kernel. That is
+needed when the previous kernel's device table is reused: the base
+register already points at it, and on SNP-enabled systems the register
+is locked.
 
-Return -E2BIG for an invalid password length.
+But if reuse isn't possible, early_enable_iommus() falls back to the
+freshly allocated table and calls early_enable_iommu(). Because of the
+early return, that table is never written to the base register. The
+IOMMU keeps using whatever table the register pointed at before, while
+the driver writes entries into the new one.
 
-Tested on HP EliteBook 840 G2 (Fedora 44, Linux 7.2.7): writing 999
-bytes to current_password returned 999 before this change.
+Only skip the write when the previous kernel's table was reused.
 
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+Fixes: 38e5f33ee359 ("iommu/amd: Reuse device table for kdump")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
-Link: https://patch.msgid.link/20261007134711.473857-4-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Ashish Kalra <ashish.kalra@amd.com>
+Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/iommu/amd/init.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index a9e1786374162..3f4c45d9b9f95 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -70,12 +70,13 @@ static int validate_password_input(int instance_id, const char *buf)
- 		length--;
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index edcc187b8f14f..102b7b5d2021e 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -390,7 +390,13 @@ static void iommu_set_device_table(struct amd_iommu *iommu)
  
- 	if (length > MAX_PASSWD_SIZE)
--		return INVALID_BIOS_AUTH;
-+		return -E2BIG;
+ 	BUG_ON(iommu->mmio_base == NULL);
  
- 	if (password_data->min_password_length > length ||
- 	    password_data->max_password_length < length)
--		return INVALID_BIOS_AUTH;
--	return SUCCESS;
-+		return -E2BIG;
-+
-+	return 0;
- }
+-	if (is_kdump_kernel())
++	/*
++	 * A kdump kernel that reuses the previous kernel's device table must
++	 * leave the base register alone. It already points at that table, and
++	 * with SNP enabled the register is locked. If reuse failed, program
++	 * the freshly allocated table like a normal boot.
++	 */
++	if (iommu->pci_seg->old_dev_tbl_cpy)
+ 		return;
  
- ATTRIBUTE_N_PROPERTY_SHOW(is_enabled, password);
+ 	entry = iommu_virt_to_phys(dev_table);
 -- 
 2.53.0
 
