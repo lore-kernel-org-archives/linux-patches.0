@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064139;
-	b=hEJhZ6ab8OdqCiLkV910V/IIlShWhNv73jPHihg44uhvefFokBBzgKGcARf9Z0SMHNWj
-	 4gIsKFrQUeLc9yw8FnRpd+kecYNfdjwHbNwYh/76Qs55oCheTno97MEzaY0vvNDKimYAv
-	 kcu1mWARyp/weRenQON24xg522URm+IOVpYnDcQmEd5XdhLTMj9kkDGhGvtnINdaK2lDZ
-	 9Mg2dInMVi5voFuRUg/rKRv8a3cpCb7PY9Ry27LO3m/PaIywy09IKdG4ln3SrduErDQY8
-	 okZ0teJnlasoiZ0tz0g7zsqKHtQUVuWRECmmkCsPPaXvcdArErTelnPncgY2kgnKagA==
+	t=1794064140;
+	b=EEX/sw5FnQ/OXCIGq8iJz5rxZaG//q0l7BeNbhNL7R5aILABRzyyc5K/cmFn2GW8NGZC
+	 lScz7F6X/IVxROQ1pmhwDrZSsUghfyRhFJvbuXMXjzGJPp6JPU4y3Yh/ULRYjkld+bn24
+	 d6w+ecQBd337ERyhxBCIM11qSE/zOYOIHWNu/O6CJX/igz8n4qCNDcH18ZoMSG/ke5yJK
+	 zgf+9YE3/K7XGuDQyVCejjYSpjM4kIVBnVOuegN24zGgTE1nXYfzIMbhs89maBLYJ2wUN
+	 SqkJ0tDOUfNw2anogzLE3PgrW/BAUqJxnMIXw3Dc8i47ljKU7XJH8uF2rnPNE+fx/CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yjCoduKeDqhIuB+6HmbZ93Zf7fE9zLhmGXZmXib7qyA=;
-	b=wpMon15t23DqruEoP+rPa/02CBsd1maRL66+FwreiPVR4xthfA3VT0eF3TWimCgdvki9
-	 /jywLfWH7j29uhfWWw7QjW85l7Lm75BL0mtiVU2tRqNXG7Y7fRV6LEUUg/V+ldh5Rc+h7
-	 +ILvK0MihDtvyEbYnKuVkQleCLlGufyS4KpBcCFG0KjCeySFstWsq5OUSLRyqndCithTe
-	 7QUKTDGeBSapqX5/9YaBF3ndNvmTbVEQubsM/mo97U9DDp7HWYVsSeyD5X9Enfp4WMYSd
-	 szYQEkNub9GlEaYNgvhnOv3BcdGeelu1D/slbRA0+5CYtPQiuHIQnxMlcKv1CEusr6A==
+	bh=66IkLSn9Mysq2BTqiEX3OqT79g3rLG7lWpN2T0dVkt4=;
+	b=l/JT3ZeD8SsJQDh7BRSCB7Rfh4MNokhuRHgaplUn3O0btvjCFbCsWr8ej2AX70v8bBZ3
+	 ZJnDkZf4tw9ehwgiVVQjiUNHOLy8ZC91tsKpog2OsOVRuaTvewYEALF9p8BZmJOEM/HCB
+	 41sLGnOHJz5K5Bc8XqyOBDVpERJynHCgZzYF+vLI9AbmZihxsmI/xKm8VOc+A8juNm5OQ
+	 c1b9xRU3GDsGaTPhw/TWzR8jSlToEr53SEHAC3sQm4Jn2viAjouMduku/mFBrpeMr/4DO
+	 tlkjKTtZbTPzdW9vBzkHjYWb85+OBB5ySfpYQvAGXMcHiIbUoCleXEydXME+JE27COA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncr2FFN0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHl6Ln2z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EA8606A33F;
-	Sat,  7 Nov 2026 15:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDFE606B89A;
+	Sat,  7 Nov 2026 15:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncr2FFN0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04ACE1F0089F;
-	Sat,  7 Nov 2026 15:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mHl6Ln2z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC501F0089F;
+	Sat,  7 Nov 2026 15:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064139;
-	bh=yjCoduKeDqhIuB+6HmbZ93Zf7fE9zLhmGXZmXib7qyA=;
+	s=korg; t=1794064140;
+	bh=66IkLSn9Mysq2BTqiEX3OqT79g3rLG7lWpN2T0dVkt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ncr2FFN0ue/Fp2plQP23mlcZ2TeF5FGDiDf7Gt/v9cNglEz1EhtTHhnhA/lZzsugC
-	 EiqcEB0nIa1sV8wqt53hEHbMEkKob47Ar/bOgVj9aMOqSRarwHz53bsXwSXJ15Z61Z
-	 IWur/pM2cwNw+pd+DJL4SwKq3i0f+M3Fhvh60I+8=
+	b=mHl6Ln2zUGdr+yaXV92n5w6ku9a8QHd9kLH8yMoiQgsF4xXpUm3DmMhoucpcrG0gM
+	 chtBUiDfdtoTTI2DjE9+HWHdBRwnk7fZGsPqhzKvv/bjzjf7u1DE6dphb1cigmBqPz
+	 Y/LeCgnQ3Mqka+/F54y9+ldtlPLVKH1POwPBFzIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0288/1257] perf loongarch: Fix discarded const qualifier in _get_field()
-Date: Sat,  7 Nov 2026 08:43:04 -0500
-Message-ID: <20261107134947.423937905@linuxfoundation.org>
+Subject: [PATCH 7.3 0289/1257] nilfs2: fix deadlock between nilfs_evict_inode() and find_inode()
+Date: Sat,  7 Nov 2026 08:43:05 -0500
+Message-ID: <20261107134947.449731305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,55 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit ed1293302f811fa709897d4a90ad78592938e4aa ]
+[ Upstream commit ff1227f70eead8704ecfec69259fb4c041f92cda ]
 
-When building perf on LoongArch, the following compilation errors occur:
+Syzbot reported a deadlock between nilfs_evict_inode(), executed via
+an asynchronous workqueue (kworker) as:
 
-  CC      arch/loongarch/util/header.o
-arch/loongarch/util/header.c: In function '_get_field':
-arch/loongarch/util/header.c:31:15: error: assignment discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
-   31 |         line2 = strrchr(line, ' ');
-      |               ^
-arch/loongarch/util/header.c:36:12: error: assignment discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
-   36 |         nl = strrchr(line, '\n');
-      |            ^
-cc1: all warnings being treated as errors
+  process_one_work()
+    process_scheduled_works()
+      nilfs_iput_work_func()
+        nilfs_dispose_list()
+          iput()
+            iput_final()
+              evict()
+                s_op->evict_inode()
+                  nilfs_evict_inode()
 
-Declare 'line2' and 'nl' as const char * to ensure type safety. In modern
-glibc versions, strrchr() returns a 'const char *' if the input string is
-const.
+and find_inode(), called via
 
-This is similar to commit 7378b6656aa4 ("perf riscv: Fix discarded const
-qualifier in _get_field()").
+  nilfs_mkdir()
+    nilfs_new_inode()
+      nilfs_insert_inode_locked()
+        insert_inode_locked4()
+          inode_insert5()
+            find_inode()
 
-Fixes: 492ac37fa38faf52 ("perf kvm: Add kvm-stat for loongarch64")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Acked-by: Huacai Chen <chenhuacai@loongson.cn>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Bibo Mao <maobibo@loongson.cn>
-Cc: Huacai Chen <chenhuacai@kernel.org>
+When an inode is deleted (i_nlink == 0), nilfs_evict_inode() clears its
+ifile bitmap entry and then synchronously triggers the log writer via
+nilfs_transaction_commit() if IS_SYNC(inode) is true.
+
+If a concurrent directory creation via nilfs_new_inode() attempts to
+allocate the same newly freed inode number, however, find_inode() called
+just before inserting it into the inode hash, blocks waiting for the old
+inode's evict() to complete.
+
+Meanwhile, the synchronous log writer invoked from nilfs_evict_inode()
+tries to acquire a write lock on 'ns_segctor_sem' which is read locked
+by the caller of nilfs_new_inode() (in this case, nilfs_mkdir()),
+resulting in a deadlock.
+
+The synchronous log writer invocation from nilfs_evict_inode() is a
+legacy artifact; it is no longer necessary because the call itself
+(triggered by iput()) is now handled asynchronously with a kworker
+if i_nlink == 0.  It merely increases the risk of deadlock.
+
+Fix this deadlock by removing the synchronous log writer trigger from
+nilfs_evict_inode().
+
+Reported-by: syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6646318bbcf419411bc5
+Fixes: 7ef3ff2fea8b ("nilfs2: fix deadlock of segment constructor over I_SYNC flag")
+Tested-by: syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/loongarch/util/header.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/inode.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/tools/perf/arch/loongarch/util/header.c b/tools/perf/arch/loongarch/util/header.c
-index 0c6d823334a21..46f53a74f71e8 100644
---- a/tools/perf/arch/loongarch/util/header.c
-+++ b/tools/perf/arch/loongarch/util/header.c
-@@ -26,7 +26,7 @@
+diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
+index 64437aed83903..33490e8063ebd 100644
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -895,13 +895,7 @@ void nilfs_evict_inode(struct inode *inode)
  
- static char *_get_field(const char *line)
- {
--	char *line2, *nl;
-+	const char *line2, *nl;
+ 	nilfs_clear_inode(inode);
  
- 	line2 = strrchr(line, ' ');
- 	if (!line2)
+-	if (IS_SYNC(inode))
+-		nilfs_set_transaction_flag(NILFS_TI_SYNC);
+ 	nilfs_transaction_commit(sb);
+-	/*
+-	 * May construct a logical segment and may fail in sync mode.
+-	 * But delete_inode has no return value.
+-	 */
+ }
+ 
+ int nilfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
 -- 
 2.53.0
 
