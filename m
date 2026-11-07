@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063384;
-	b=zef/syPnZaN88/SpGuAI1mUV2nPmYFnwe0uVVy+zT9LUG9t/W/ZqU327kOSP9mwCSZg8
-	 8u+Z90E5IzFg9d5p9f486wbJCE4fRgBcRlVybhU8hM/Oc3egZXbnqxhb0GUFWiYlJRdt3
-	 PtCaE0/w177gsMQbacq8Rb8+sG5V6CAfQXfeciphXmeD6WxWth3hXU07ww9aXb29p7bvR
-	 Q3nOvXjR1NNDnwM3HYAyaVBxAw/ftMjzA+PIf/lTUTwcQQS2XkCNL10kYhs0HS/W3Iy0J
-	 iIswSARgSrTsIsXYTO8+8Css/ne8QQw/lRyQrGGert8hiE215mRrq1dohZaGNpAwu2A==
+	t=1794063385;
+	b=3EF0rRBD/dBKOyKu6S4/FBfWdz0CJlcoZOe1tMPFZ5CSc3AXRM7SkvTH9glgrl2aieTE
+	 bTOQkpnp5tuhYpqolgc4CBFbe8Z72+Y/B9gTHhyJYOo9bFxMuhiYo75emdIHf2uKO4Z+L
+	 +rR+w1qNHBkBQz5VhmUJ6q3RTgAz/O+eEKxjDLbMd60Rzhsf/+9UOd3E8/qJz6nK9Z4my
+	 1W5nuOyCm6sigRnVzSxw9kXWDh3am33pCl30ab10xR/V8Q5686SLXkQhoB4F6z876RAnI
+	 iXhhfvGORxYoeik80uWBh5ywOUagoROIeVtk2STqcEKFiDT9BxKvLMpT0OGVNAKlPqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063384;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6qIBvFGcnFO2hI16o+NwwKc8q4Bv5qCCqSa42ac3kWk=;
-	b=KQzqdNyjYNb41rU+YtpsIK+U8/TK8AMfk2Lnf1HJhY0DA5XTl12ecZxCE7mgBoA+sRWF
-	 x5QoGUysDeWuSDDPCVqp/l5ukP2lH7OQV5QlKuQRkFKfOWye26NdLj+KAtRaVsZoJaI19
-	 upioz44eZdZuGARHB8hDjI4W5rczYNipzNQOG0p+8jGz+X9pyHtAkQPyKmgV5yRr56FWr
-	 Xsmh4K644WB6HuYeIwofBu7xzztR5TlNDVaVyAxIUSNK1DC8PpTqhDblYXmvNTiytBTE/
-	 C5ex9bFNRJ6vRpj5wrlZWb7v0w+6Yhe8U2HjxK1BhWnJcGlZhlSFOv6Aft/3j6BWDGg==
+	bh=qPDg0K3oJhx2BylxpDNCpi0z+DPWIr1tidiV1NXpx3Q=;
+	b=rmldSwjd7lR9N1FQSchfvXjZ8JknuKIVYKJ6gnJTScaIvzHwIq2N11Gqj6oaNWbdh7Ea
+	 AKtdmV2SruasVMIgcHiTI0hE/Mb0SXkvhB9p9Jfdrffs2PLsgy9MCgwW1tlr1ax44MflB
+	 CcpDPlxdZdhutb+7NW41xGeGJOqA8Ai7/AdJBkv/IpAQIgVP4YitxUa6SYpuSL1PwglTz
+	 0xfPKjw9WbV2kDJ7ZxwMVQbgGND4bNlV7LKLkbPMaHldrKUCCQvDFItcJKt6f3jScUpi/
+	 2063RH71c0wLj3N2aa7S25fZKJeqTvGspRglbhHksSI+rbxQrVY6wMjoSSmUFPI9UbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpaieytj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cnfe86dS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DC0606D810;
-	Sat,  7 Nov 2026 14:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8432E606D820;
+	Sat,  7 Nov 2026 14:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpaieytj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1701F0089F;
-	Sat,  7 Nov 2026 14:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cnfe86dS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318471F0089F;
+	Sat,  7 Nov 2026 14:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063384;
-	bh=6qIBvFGcnFO2hI16o+NwwKc8q4Bv5qCCqSa42ac3kWk=;
+	s=korg; t=1794063385;
+	bh=qPDg0K3oJhx2BylxpDNCpi0z+DPWIr1tidiV1NXpx3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fpaieytjhPhDVcwVH3OnADnPYk+ELY16+sutvfAoYCqK2ZP7H5mu5EziRD77NTYDS
-	 NbtdsmV4Z8C8vToMhXkzqOW70YlWEuKLKljxLIprlo440ULrZ1k+SrpDV3Yu+T14pW
-	 3xZu337Awq5JMBH1RB6acWPPWwwjqX7GjyiS+k+U=
+	b=cnfe86dS1e5NmgwGyobL7LxJTc7UvqkE/KfgsujwrWojFvG/yuad+nfTo8bqTygZ5
+	 6XF0jFQAhx4FKVTZ9JyCSEQMdjeqy36TIEgyQx+F3/H7MPpF3uvaqT3xvLPnVjTZHn
+	 Ed7I1sAK7ZZNk6CcN4zxVH40WPnphzWp9n9xaFfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 556/869] ARM: 9488/1: smp: set current pointer in assembly before jumping into C
-Date: Sat,  7 Nov 2026 08:53:58 -0500
-Message-ID: <20261107134912.189840864@linuxfoundation.org>
+Subject: [PATCH 6.18 520/869] nvme: bound FDP config log reads to the received buffer
+Date: Sat,  7 Nov 2026 08:53:22 -0500
+Message-ID: <20261107134911.152512458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,125 +70,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit f6e551e7d515579b952422c93415470fb672d848 ]
+[ Upstream commit 3cf6de080d97d0d9641fbdb613d546c0734905dd ]
 
-With CONFIG_KCOV_INSTRUMENT_ALL=y, secondary CPUs fail to come online
-on ARMv6K/ARMv7 SMP:
+nvme_query_fdp_granularity() parses the FDP Configurations log using
+sizes the controller returns, without checking that they fit the buffer
+it was given.  The log size is only bounded from above before
+kvmalloc(), so a size below the log header makes
+le16_to_cpu(h->numfdpc) read past the allocation, and a size of zero
+yields ZERO_SIZE_PTR and faults.  Each configuration descriptor is then
+dereferenced (dsze while walking, and nrg and runs on the selected one)
+without checking that the whole descriptor lies within the buffer, so a
+descriptor at or past the end is read out of bounds.  The out-of-bounds
+runs value is then exposed to userspace through
+/sys/block/nvmeXnY/queue/write_stream_granularity.
 
-  CPU1: failed to boot: -38
+A device-supplied dsze that is not a multiple of eight also leaves the
+following descriptors unaligned, and the structure is not packed, so
+reading nrg and runs from one can fault on architectures without
+efficient unaligned access.
 
-The compiler inserts a call to __sanitizer_cov_trace_pc() at the entry
-of secondary_start_kernel(), before set_current(task). The KCOV hook
-dereferences current while TPIDRURO is still uninitialized, causing a
-data abort before cpu_init() has installed the exception stacks. The
-secondary CPU consequently never completes startup.
+A malicious or buggy controller triggers this during namespace scan with a
+short FDP Configurations log:
 
-Initialize current in the secondary assembly handoff, as
-__mmap_switched already does for the boot CPU.
+[    1.104828] BUG: KASAN: slab-out-of-bounds in nvme_alloc_ns+0x39a6/0x4480
+[    1.104848] Read of size 8 at addr ffff888009fd8fe0 by task kworker/u8:3/52
+[    1.104852]
+[    1.104857] CPU: 1 UID: 0 PID: 52 Comm: kworker/u8:3 Not tainted 7.3.0-rc6-00063-g0c2669a9f4a1 #1 PREEMPT(lazy)
+[    1.104862] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[    1.104866] Workqueue: async async_run_entry_fn
+[    1.104873] Call Trace:
+[    1.104876]  <TASK>
+[    1.104878]  dump_stack_lvl+0x66/0xa0
+[    1.104886]  print_report+0xd0/0x630
+[    1.104893]  ? nvme_alloc_ns+0x39a6/0x4480
+[    1.104897]  ? __virt_addr_valid+0x209/0x3f0
+[    1.104903]  ? nvme_alloc_ns+0x39a6/0x4480
+[    1.104907]  kasan_report+0xe4/0x120
+[    1.104913]  ? nvme_alloc_ns+0x39a6/0x4480
+[    1.104919]  nvme_alloc_ns+0x39a6/0x4480
+[    1.104926]  ? __pfx_nvme_alloc_ns+0x10/0x10
+[    1.104931]  ? check_prev_add+0xfd/0xe80
+[    1.104942]  ? lock_acquire+0x18d/0x300
+[    1.104948]  ? nvme_find_get_ns+0xbb/0x2e0
+[    1.104952]  ? find_held_lock+0x2b/0x80
+[    1.104956]  ? nvme_find_get_ns+0x221/0x2e0
+[    1.104962]  ? nvme_find_get_ns+0x231/0x2e0
+[    1.104967]  ? nvme_scan_ns+0x2e1/0x8d0
+[    1.104971]  ? kfree+0x2e5/0x510
+[    1.104976]  ? __lock_acquire+0x570/0x1b00
+[    1.104982]  nvme_scan_ns+0x56a/0x8d0
+[    1.104987]  ? __pfx_nvme_scan_ns+0x10/0x10
+[    1.104994]  ? lockdep_hardirqs_on_prepare+0xdc/0x190
+[    1.104999]  ? trace_hardirqs_on+0x18/0x160
+[    1.105005]  ? kvm_clock_get_cycles+0x19/0x40
+[    1.105011]  ? __pfx_nvme_scan_ns_async+0x10/0x10
+[    1.105015]  async_run_entry_fn+0x8d/0x290
+[    1.105020]  process_one_work+0x8ac/0x1b00
+[    1.105029]  ? __pfx_process_one_work+0x10/0x10
+[    1.105034]  ? lock_acquire+0x18d/0x300
+[    1.105040]  ? lock_is_held_type+0x8f/0x100
+[    1.105046]  ? __pfx_async_run_entry_fn+0x10/0x10
+[    1.105050]  worker_thread+0x4ee/0xe70
+[    1.105056]  ? lockdep_hardirqs_on_prepare+0xdc/0x190
+[    1.105061]  ? trace_hardirqs_on+0x18/0x160
+[    1.105066]  ? __pfx_worker_thread+0x10/0x10
+[    1.105071]  ? __pfx_worker_thread+0x10/0x10
+[    1.105076]  kthread+0x2ce/0x3b0
+[    1.105080]  ? __pfx_kthread+0x10/0x10
+[    1.105085]  ret_from_fork+0x52e/0x780
+[    1.105090]  ? __pfx_ret_from_fork+0x10/0x10
+[    1.105094]  ? __switch_to+0x572/0xde0
+[    1.105101]  ? __pfx_kthread+0x10/0x10
+[    1.105105]  ret_from_fork_asm+0x1a/0x30
+[    1.105114]  </TASK>
+[    1.105116]
+[    1.105117] Allocated by task 52:
+[    1.105119]  kasan_save_stack+0x33/0x60
+[    1.105123]  kasan_save_track+0x14/0x30
+[    1.105126]  __kasan_kmalloc+0x8f/0xa0
+[    1.105129]  __kvmalloc_node_noprof+0x2e1/0x820
+[    1.105134]  nvme_alloc_ns+0x1097/0x4480
+[    1.105138]  nvme_scan_ns+0x56a/0x8d0
+[    1.105142]  async_run_entry_fn+0x8d/0x290
+[    1.105145]  process_one_work+0x8ac/0x1b00
+[    1.105148]  worker_thread+0x4ee/0xe70
+[    1.105152]  kthread+0x2ce/0x3b0
+[    1.105155]  ret_from_fork+0x52e/0x780
+[    1.105159]  ret_from_fork_asm+0x1a/0x30
+[    1.105163]
+[    1.105164] The buggy address belongs to the object at ffff888009fd8fc0
+[    1.105164]  which belongs to the cache kmalloc-32 of size 32
+[    1.105167] The buggy address is located 8 bytes to the right of
+[    1.105167]  allocated 24-byte region [ffff888009fd8fc0, ffff888009fd8fd8)
+[    1.105171]
+[    1.105172] The buggy address belongs to the physical page:
+[    1.105175] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9fd8
+[    1.105179] flags: 0x100000000000000(node=0|zone=1)
+[    1.105183] page_type: f5(slab)
+[    1.105188] raw: 0100000000000000 ffff888008c41780 dead000000000100 dead000000000122
+[    1.105192] raw: 0000000000000000 0000000000400040 00000000f5000000 0000000000000000
+[    1.105194] page dumped because: kasan: bad access detected
+[    1.105195]
+[    1.105196] Memory state around the buggy address:
+[    1.105198]  ffff888009fd8e80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    1.105201]  ffff888009fd8f00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    1.105203] >ffff888009fd8f80: fc fc fc fc fc fc fc fc 00 00 00 fc fc fc fc fc
+[    1.105205]                                                        ^
+[    1.105207]  ffff888009fd9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 fc
+[    1.105210]  ffff888009fd9080: fc fc fc fc fc fc fc fc 00 00 00 00 00 00 00 00
+[    1.105212] ==================================================================
 
-With current set in assembly, the set_current() call in
-secondary_start_kernel() is redundant. Drop it together with the
-function and the task argument. The hotplug resuscitate path in
-arch_cpu_idle_dead() needs no hand-off either, as smp_ops.cpu_die()
-can only return if the CPU kept its register state, TPIDRURO included.
+Reject a log smaller than its header plus one configuration descriptor,
+zero the buffer so a short transfer leaves no uninitialized tail to parse,
+require each descriptor's declared size to be at least a descriptor and to
+leave room for the next one before walking it, and read the descriptor
+fields with the unaligned accessors.
 
-Assisted-by: Claude:claude-fable-5
-
-Fixes: 50596b7559bf ("ARM: smp: Store current pointer in TPIDRURO register if available")
+Fixes: 30b5f20bb2dda ("nvme: register fdp parameters with the block layer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Suggested-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/smp.h   |  2 +-
- arch/arm/kernel/head-nommu.S |  1 +
- arch/arm/kernel/head.S       |  1 +
- arch/arm/kernel/smp.c        | 15 ++-------------
- 4 files changed, 5 insertions(+), 14 deletions(-)
+ drivers/nvme/host/core.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/include/asm/smp.h b/arch/arm/include/asm/smp.h
-index 8c05a7f374d8b..84aa6a663e816 100644
---- a/arch/arm/include/asm/smp.h
-+++ b/arch/arm/include/asm/smp.h
-@@ -43,7 +43,7 @@ extern void set_smp_ipi_range(int ipi_base, int nr_ipi);
-  * Called from platform specific assembly code, this is the
-  * secondary CPU entry point.
-  */
--asmlinkage void secondary_start_kernel(struct task_struct *task);
-+asmlinkage void secondary_start_kernel(void);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index ad725e346c94e..99a8e2953b02a 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2210,13 +2210,18 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
+ 	}
  
+ 	size = le32_to_cpu(hdr.sze);
++	if (size < sizeof(*h) + sizeof(*desc)) {
++		dev_warn(ctrl->device, "FDP config size too small:%zu\n",
++			 size);
++		return 0;
++	}
+ 	if (size > PAGE_SIZE * MAX_ORDER_NR_PAGES) {
+ 		dev_warn(ctrl->device, "FDP config size too large:%zu\n",
+ 			 size);
+ 		return 0;
+ 	}
  
- /*
-diff --git a/arch/arm/kernel/head-nommu.S b/arch/arm/kernel/head-nommu.S
-index b9d6818f1ee16..f80bbfbd3a6f8 100644
---- a/arch/arm/kernel/head-nommu.S
-+++ b/arch/arm/kernel/head-nommu.S
-@@ -116,6 +116,7 @@ ENTRY(secondary_startup)
- 	ldr	r7, __secondary_data		@ reload r7
- 	ldr	sp, [r7, #12]			@ set up the stack pointer
- 	ldr	r0, [r7, #16]			@ set up task pointer
-+	set_current r0, r1
- 	mov	fp, #0
- 	b	secondary_start_kernel
- ENDPROC(secondary_startup)
-diff --git a/arch/arm/kernel/head.S b/arch/arm/kernel/head.S
-index f22c50d4bd417..a22403a629efa 100644
---- a/arch/arm/kernel/head.S
-+++ b/arch/arm/kernel/head.S
-@@ -442,6 +442,7 @@ ENTRY(__secondary_switched)
- 	adr_l	r7, secondary_data + 12		@ get secondary_data.stack
- 	ldr	sp, [r7]
- 	ldr	r0, [r7, #4]			@ get secondary_data.task
-+	set_current r0, r1
- 	mov	fp, #0
- 	b	secondary_start_kernel
- ENDPROC(__secondary_switched)
-diff --git a/arch/arm/kernel/smp.c b/arch/arm/kernel/smp.c
-index 50999886a8b5c..e302063658779 100644
---- a/arch/arm/kernel/smp.c
-+++ b/arch/arm/kernel/smp.c
-@@ -371,12 +371,9 @@ void __noreturn arch_cpu_idle_dead(void)
- 	 */
- 	__asm__("mov	sp, %0\n"
- 	"	mov	fp, #0\n"
--	"	mov	r0, %1\n"
- 	"	b	secondary_start_kernel"
- 		:
--		: "r" (task_stack_page(current) + THREAD_SIZE - 8),
--		  "r" (current)
--		: "r0");
-+		: "r" (task_stack_page(current) + THREAD_SIZE - 8));
+-	h = kvmalloc(size, GFP_KERNEL);
++	h = kvzalloc(size, GFP_KERNEL);
+ 	if (!h)
+ 		return -ENOMEM;
  
- 	unreachable();
- }
-@@ -397,23 +394,15 @@ static void smp_store_cpu_info(unsigned int cpuid)
- 	check_cpu_icache_size(cpuid);
- }
+@@ -2242,9 +2247,9 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
+ 	desc = log;
+ 	end = log + size - sizeof(*h);
+ 	for (i = 0; i < fdp_idx; i++) {
+-		u16 dsze = le16_to_cpu(desc->dsze);
++		u16 dsze = get_unaligned_le16(&desc->dsze);
  
--static void set_current(struct task_struct *cur)
--{
--	/* Set TPIDRURO */
--	asm("mcr p15, 0, %0, c13, c0, 3" :: "r"(cur) : "memory");
--}
--
- /*
-  * This is the secondary CPU boot entry.  We're using this CPUs
-  * idle thread stack, but a set of temporary page tables.
-  */
--asmlinkage void secondary_start_kernel(struct task_struct *task)
-+asmlinkage void secondary_start_kernel(void)
- {
- 	struct mm_struct *mm = &init_mm;
- 	unsigned int cpu;
+-		if (!dsze || log + dsze > end) {
++		if (dsze < sizeof(*desc) || log + dsze + sizeof(*desc) > end) {
+ 			dev_warn(ctrl->device,
+ 				 "FDP invalid config descriptor at index %d\n", i);
+ 			ret = 0;
+@@ -2254,13 +2259,13 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
+ 		desc = log;
+ 	}
  
--	set_current(task);
--
- 	secondary_biglittle_init();
+-	if (le32_to_cpu(desc->nrg) > 1) {
++	if (get_unaligned_le32(&desc->nrg) > 1) {
+ 		dev_warn(ctrl->device, "FDP NRG > 1 not supported\n");
+ 		ret = 0;
+ 		goto out;
+ 	}
  
- 	/*
+-	info->runs = le64_to_cpu(desc->runs);
++	info->runs = get_unaligned_le64(&desc->runs);
+ out:
+ 	kvfree(h);
+ 	return ret;
 -- 
 2.53.0
 
