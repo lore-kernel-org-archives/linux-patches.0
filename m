@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062770;
-	b=MRm4pPZQbw3kdQ87MQCkYzYAZ9LEGE2XLl9GG9ds0F0DSd5KWe08KHcNzgGrQimcPY2N
-	 8CyJ5D2akPSOC7uCBowMGCh0MmkEALAJOu4gSvwdlWyUMCc+iJp9ljkqNcgDJDWVQ8quk
-	 LdtpcEoTUApaINP4qmupyuoXZVTzF/9NqeFhr+S7XhElKHCjAU9npsY1haqg3Lhev8muY
-	 DmcJjUxcf5nd9LVdUbLk0bysqvrZHU/oGCS40+zAxc5vDEE302pmUIOPQ+yGqjrcLY13t
-	 yDRLwLJSaYqHBI7XiR5rjxpAR9prF5QPotkJHHaRYoG8oXER4ZwkyYCJvHD20kQKVCA==
+	t=1794062772;
+	b=a+el3Hx015BEnF/tOMex0MfzU4ra61LeZoM3J0oWktm6PddYAnI7Igrxz7aAWRgkoyz9
+	 igGNX1jvjzkE2Vqr7figg6eT5nuihrcovxtPc4MJg/eUrQC2Xjk+LDAnW30ZNDq1mSaSZ
+	 bFsgi37/GuNAfGNAB4dDtGp2LNerIm3EwRpBjxO54vXDr0nc1lhm1xyiSx7R49H9iiw/8
+	 Xr8RCYsRjppP0Wum6tkMPZ4f4qqbTgS3ssBBgYhoi29P8Vus4KmHryXclcVe20hF8FXdL
+	 hKFC5XPEnRXdyIpvvD59u8XVPDT6ljzj/qVgLL0zH3KQpBVoR9xEP6FwBfjtNRsgjfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VMpDK/3vlgCVrv9YLW1YavrlcfSPc6WvjdBYp85ZKjQ=;
-	b=1nV/hvsTfG1gFf9EES1r1TuNDeWLXbh+0fpMXatslY4F/3+ZU2dOMyS0UKEL+EL5VOc1
-	 B3rpScrV1qHoUCrKYH0qCQ3q1AIoNd6K8haGTLKfZL2Wn5AKXoA76GdCOxx2TdKU18cLF
-	 0Eel/1E/R6G8u+SJ8/IiEoAKL+Bj8J0iLTTwM/H/BP/0sX/+JDT1iR6vVcbJFyT/4iocd
-	 6XrPj4e9zChoFRsZKgHg7mHJANYBHfZhxGhAyoqba5Ctgpn5IHry8/Fmx8LBobYw1KqTh
-	 04EDSbS8urqwejLxvrg7SdepEciQrCuISfjJQ10CyuNO9hGFiw9Oqx/64CCCI4kCCDw==
+	bh=anh11rJJCCGiX6ThgOZvpr1RPh7QlkV2BLD3Z1gg8x8=;
+	b=NGfaDzgrDBn1LOF8uTfEGciPThLLBSbaoUOyiM1EXYO3o6bdteTSvqqhmNdpbuN5gN7G
+	 ykEuq4MZVPiS2xUQrG/SjnBkCcrWyNG5rCivoBXjDx+7ZNEE1k7fLCBnELuv+CKBJuhYR
+	 iUNCz1Xqff7vWvjUWEufTIhvsUpKC4JfQYEOZt7lr+TEi1kLeGDTz9oTcG+aQdWqveT56
+	 9iNDnY0t882KOsK9T855v9ysaRLFwRrHrHEgBapH//Wv2DI7HmsJGtZSkR/qRFWXQBx0w
+	 AjilfYBmCvptXwopltwgNfrsUrjDRfyXAe8q2PSfOjIr9MPpWqcjfzyeOv0l4R0y4qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YlBsTaak;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JBz0CzW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF07606A32D;
-	Sat,  7 Nov 2026 14:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76BD606A32C;
+	Sat,  7 Nov 2026 14:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YlBsTaak
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3431F008A1;
-	Sat,  7 Nov 2026 14:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JBz0CzW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC711F008A2;
+	Sat,  7 Nov 2026 14:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062770;
-	bh=VMpDK/3vlgCVrv9YLW1YavrlcfSPc6WvjdBYp85ZKjQ=;
+	s=korg; t=1794062771;
+	bh=anh11rJJCCGiX6ThgOZvpr1RPh7QlkV2BLD3Z1gg8x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YlBsTaak/cTKeqPZZqqKtMsUI4Z6kI6l9ytEXoR5JAUKqnNqZcpGEIgoADgKiYSfH
-	 QR5GUiczzeaIf4+hj+wrDpwGy5p56+X3GXpwPieWyKTZXvnjCrGEYv2iWove/w520q
-	 oIuLq1PI+4IF/StX/Do17QDGLLlz3Ng1dffCAXfw=
+	b=2JBz0CzWY22vg8ojc+BnIY5EBkadHaU/UTWlzrWr2G4h+LVcET1ScUH2pI7HaA0La
+	 TJcAnTQnvFp3zEX5g6MODioZppeDw16COgiO76QkwdacQBWJhCY1YuqwokiYh6Huds
+	 CoP1PEDrI8e62F/nqGoRFHY5P1Yp5FzJcDrAHv6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 078/869] media: cx231xx: Fix cleanup path on failure
-Date: Sat,  7 Nov 2026 08:46:00 -0500
-Message-ID: <20261107134855.377931330@linuxfoundation.org>
+Subject: [PATCH 6.18 079/869] firewire: core: fix source bus ID detection for AT context in big-endian systems
+Date: Sat,  7 Nov 2026 08:46:01 -0500
+Message-ID: <20261107134855.405387149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,56 +67,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@kernel.org>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 6e30287eaf3e41b86dfb86df3b811526693d74b4 ]
+[ Upstream commit 6393d75914a6ac95a05621db8d9d6a98eafe72f7 ]
 
-If cx231xx_init_v4l2() fails the probe currently jumps to
-err_init, which only unregisters the V4L2 device. The analog
-devices and I2C resources are left registered while the driver
-state can be released.
+The source bus ID bit in AT DMA context is not detected correctly on
+big-endian systems because the little-endian data is not converted to
+CPU endianness.
 
-A subsequent driver bind attempts to create the same I2C mux
-channel links and triggers a warning when the existing
-"channel-0" link is encountered. The remaining devices may also
-access released driver state. This produces the following warning
+Fix the bug. The helper functions related to this are never used in
+driver code, so extend the test to check the field instead.
 
-    can't create symlink to channel 0
-    WARNING: drivers/i2c/i2c-mux.c:403 at i2c_mux_add_adapter+0xcd8/0xeb0
-    Call Trace:
-     i2c_mux_add_adapter+0xcdc/0xeb0
-     cx231xx_dev_init+0x2fb/0x1260
-     cx231xx_usb_probe+0xc48/0x2140
-     usb_probe_interface+0x657/0xc70
-     ...
-
-Jump to err_video_alt instead, which performs the full device
-cleanup before unregistering the V4L2 device.
-
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://github.com/farhad-alemi/public_bug_reports/tree/main/185-warning-in-i2c-mux-add-adapter/
-Fixes: 4d2a7d3509f5 ("[media] cx231xx: move analog init code to a separate function")
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Cc: <stable@vger.kernel.org> # v3.17+
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: stable@vger.kernel.org # v6.12
+Fixes: 8db9d1557122 ("firewire: ohci: add static inline functions to serialize/deserialize data of AT DMA")
+Link: https://lore.kernel.org/r/20260908122840.2886621-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-cards.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firewire/ohci-serdes-test.c | 4 ++--
+ drivers/firewire/ohci.h             | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-cards.c b/drivers/media/usb/cx231xx/cx231xx-cards.c
-index d96b9ab276b76..1824e36e541f8 100644
---- a/drivers/media/usb/cx231xx/cx231xx-cards.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
-@@ -1828,7 +1828,7 @@ static int cx231xx_usb_probe(struct usb_interface *interface,
+diff --git a/drivers/firewire/ohci-serdes-test.c b/drivers/firewire/ohci-serdes-test.c
+index 258f668619ef1..87b136e041de3 100644
+--- a/drivers/firewire/ohci-serdes-test.c
++++ b/drivers/firewire/ohci-serdes-test.c
+@@ -43,7 +43,7 @@ static void test_self_id_receive_buffer_deserialization(struct kunit *test)
+ static void test_at_data_serdes(struct kunit *test)
+ {
+ 	static const __le32 expected[] = {
+-		cpu_to_le32(0x00020e80),
++		cpu_to_le32(0x00820e80),
+ 		cpu_to_le32(0xffc2ffff),
+ 		cpu_to_le32(0xe0000000),
+ 	};
+@@ -56,7 +56,7 @@ static void test_at_data_serdes(struct kunit *test)
+ 	unsigned int destination_id = ohci1394_at_data_get_destination_id(expected);
+ 	u64 destination_offset = ohci1394_at_data_get_destination_offset(expected);
  
- 	retval = cx231xx_init_v4l2(dev, udev, interface, isoc_pipe);
- 	if (retval)
--		goto err_init;
-+		goto err_video_alt;
+-	KUNIT_EXPECT_FALSE(test, has_src_bus_id);
++	KUNIT_EXPECT_TRUE(test, has_src_bus_id);
+ 	KUNIT_EXPECT_EQ(test, 0x02, speed);
+ 	KUNIT_EXPECT_EQ(test, 0x03, tlabel);
+ 	KUNIT_EXPECT_EQ(test, 0x02, retry);
+diff --git a/drivers/firewire/ohci.h b/drivers/firewire/ohci.h
+index 218666cfe14a5..63ccf2f445045 100644
+--- a/drivers/firewire/ohci.h
++++ b/drivers/firewire/ohci.h
+@@ -178,7 +178,7 @@
  
- 	if (dev->current_pcb_config.ts1_source != 0xff) {
- 		/* compute alternate max packet sizes for TS1 */
+ static inline bool ohci1394_at_data_get_src_bus_id(const __le32 *data)
+ {
+-	return !!((data[0] & OHCI1394_AT_DATA_Q0_srcBusID_MASK) >> OHCI1394_AT_DATA_Q0_srcBusID_SHIFT);
++	return !!((le32_to_cpu(data[0]) & OHCI1394_AT_DATA_Q0_srcBusID_MASK) >> OHCI1394_AT_DATA_Q0_srcBusID_SHIFT);
+ }
+ 
+ static inline void ohci1394_at_data_set_src_bus_id(__le32 *data, bool src_bus_id)
 -- 
 2.53.0
 
