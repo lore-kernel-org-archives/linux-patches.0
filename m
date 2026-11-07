@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064737;
-	b=oSBKrQoss9eXpnjdVAQdQpL7qKq0eg22KN+0MMi8PEPvF3766f9O9ODfSDryzwCrggFH
-	 XWod0342OUe/rCKkOE4x6+NkT4DQ918gLX1gFnx4rjx/2kTr5oT1fp2lDQPUdzCRTqqft
-	 qd6dCxn0rsv1dedAcvNzSMdbhQEp6jKdFosrygywnnWmIPHb5QhpNibft4F5X/Ra9KwfM
-	 5YCWIfNpvTQco9SDV30blFja/evOpcMiTfPvbYWrhIsaID7vTrKmFkdqu1WhxsnYIM1p9
-	 SCudzsM3/JybFFV6UO90HS2dl6pfo5+o+Sk+fAV19nXvrh2+AcAfKgh/lS1NIXZWKsg==
+	t=1794064739;
+	b=xqlWrM8tFkD9NGt2NuvTXEamBpaDkG5EFQJMdwU2COcxixEojJpQqDSNzX+UIKI5L7kL
+	 zS2jwovQKLYUXCZK/0L0zJbDnBSpav8PZWp2bcxbsAXcf5LGvdhb+JvnKzl1AM90Q7xLy
+	 FYnvFiM8lA2x6ZAmfW3gxdhq95RFbLCHKUCp1/0ZzMZL/REmsmMUfLpLLJINa0bFH+HKf
+	 9nURj5Jt70UteuJWxnN2NSSk5hne5g/4rtXSDLluISxuhIsMMt5+GGv83gA0j2XnMGqOz
+	 PX3pvqtSPJeXvP9n8utq9J0wcUJJKq9KEc7q7DrI9NMtpkoWDOPbsD1bzDWzE9e0y/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=lae1KDA3bApdfOVWlfIpjM2uTe9vPkssvhnydjHIhWk=;
-	b=BMIAAcQ9auxzSkY/CPdd3G30CXw48I0mMYkcfJV1veJeVLwfBZsPy+clYLQcmx48bHBD
-	 ktCdLS9Tk2QRTvGBEtfHow4vRXlQksLXBlSAhxR76GSuCYwDWnM2PfwxRXmgHLrOWNcMj
-	 w/yI9wJRrGzOMHrtWcdjAbDtGQib2t0ag7G6YsWd77QPySU8svc1QGO0G1gEm91D63INw
-	 3phBDeZFMFqkKLzvHJnpMr+t8VCwurBSp5VMtghX8ffHLsWLu03GvZuY4CNTdTvknj6Pm
-	 mVK5wZqu/TfMieFI2RfYEQkkhvqTwmY5+Y9fjfc363B3U4ReHrln1dU9r/WK9BTVvUw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=n6KgWXviOqxWrJ+Kf+wXtBfRrechNNbDLaeKYl3d7u8=;
+	b=YOfbYMWSYDiYzXzr5huTL6oEE31PwAqIl6107d9wgL3b0SJmo3aD9W6Z4E5JybwfFvNe
+	 znomKLjnw+10eF+asxl2IiNd7fsGbi6es+OGyopO4X1FqQfQOZgchF+T91QwRKOVBX8e5
+	 B2w6KXrrPrc85gjmrmTb9PiWWHUvIvnJh4hCQmZZrh8/uch8C7JQ6DOd6bqfassxHw154
+	 YfjzBjjL+6QNDWDcGAwW7U/GDPGUqulx8Cs9qiWx6qmuWknIZzB80WJLUDWopJdpPbMOw
+	 iCiUbEOy4TS63QkhC/B243JSCWVbPSA069ntrzLqeIJqM1uBSmJYWkX/FJR4ICNANCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CHgOuZeZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJx5ojnw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864DA606A9C9;
-	Sat,  7 Nov 2026 15:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FB8606A9C9;
+	Sat,  7 Nov 2026 15:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CHgOuZeZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBE11F008A1;
-	Sat,  7 Nov 2026 15:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJx5ojnw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612C01F008A1;
+	Sat,  7 Nov 2026 15:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064737;
-	bh=lae1KDA3bApdfOVWlfIpjM2uTe9vPkssvhnydjHIhWk=;
+	s=korg; t=1794064738;
+	bh=n6KgWXviOqxWrJ+Kf+wXtBfRrechNNbDLaeKYl3d7u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CHgOuZeZULZKvFmrTchEPPf1s6aqQ4+4TOlouLkuX6yMXtAM3625V3eJnKs2FYu4P
-	 F2HiSBVyhQeNsmlsnpL9yKYK2CTMrcqGEc3maVEDedciZ+6R6+VUtMW8asae/iQI7k
-	 xNGwPvAVHHzUqqw6Q8GIwMTby3qrpEwbnQQJKNYA=
+	b=mJx5ojnwaCQXdQdddbizXwI/SQ6rHGVaf7cVqgYWQCDusQkD4cDiwzIf/80F+dB+b
+	 S9Q3Vs3r7qNLYeFOfCfUgRwqjfuNdampCvofI4Fez9isD8/w19X7vCEyUfNbM3gusz
+	 rALkT9tSpq8nJ5nz+iS16fsuLbpbjt4BX8NZxqZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Boykin <jtboykin.jb@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <david@davidgow.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0674/1257] platform/x86/amd/pmf: Fix power_supply refcount leak in amd_pmf_get_battery_prop()
-Date: Sat,  7 Nov 2026 08:49:30 -0500
-Message-ID: <20261107134957.871962204@linuxfoundation.org>
+Subject: [PATCH 7.3 0665/1257] mm/damon/core: charge only the part of a region the filter left
+Date: Sat,  7 Nov 2026 08:49:21 -0500
+Message-ID: <20261107134957.620039228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,63 +65,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jack Boykin <jtboykin.jb@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 9f3eebbbd1033de0abcc2694ba4b455d30fe33f9 ]
+[ Upstream commit 4ff3b4a54a32142497fb44b79d0920aa6ba3393d ]
 
-power_supply_get_by_name() takes a reference that is only dropped on
-the error path. On success it leaks, five times per policy evaluation.
-Unregistering the battery later trips the use_cnt WARN_ON in
-power_supply_unregister() and never frees it.
+Patch series "mm/damon/core: fix the size charged for a filter-trimmed
+region", v2.
 
-While here, return -ENODEV instead of an uninitialised 'value' when
-no battery matches, and stop at the first supply found rather than
-letting the last one in the table win.
+An address range DAMOS filter that partially overlaps a monitoring region
+splits it, so the scheme action reaches only one side of the boundary.
+damos_apply_scheme() reads the region size before that split and never
+re-reads it, so the quota charge and schemes/<S>/stats/sz_tried account
+for the whole original region.
 
-Found by reading the code. Fix and changelog drafted with Claude Code
-(Fable 5.1) and reviewed by hand. Compile-tested only (allmodconfig,
-W=1, sparse); not run on Smart PC hardware.
+Patch 1 re-reads the size after the core filters have run.  Patch 2 adds
+KUnit coverage for what the function charges and reports, for the trimmed
+cases and for the cases that must not change.
 
-Fixes: f4627dfd0e19 ("platform/x86/amd/pmf: Add support to get inputs from other subsystems")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM sparse
-Signed-off-by: Jack Boykin <jtboykin.jb@gmail.com>
-Link: https://patch.msgid.link/20260902210217.69483-1-jtboykin.jb@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+This patch (of 2):
+
+An address range DAMOS filter that partially overlaps a monitoring region
+splits the region at the filter boundary, so the scheme action is applied
+to only one side of it.  damos_apply_scheme() reads the region size once
+on entry, before damos_core_filter_out() performs that split.
+
+The quota charge and the statistics update therefore account for the
+region as it was before the trim.  schemes/<S>/stats/sz_tried counts
+memory the filter excluded, which Documentation/mm/damon/design.rst says
+is not counted as tried, and with quotas/bytes set the excluded part is
+charged against the budget, throttling the scheme to a fraction of what
+was configured.
+
+User impact is that DAMOS could unexpectedly slowly run, due to
+over-charged quota.  DAMOS stat could also be confusing.  No critical
+events such as crashes or leask happen.
+
+Re-read the region size after the core filters have run.
+
+Link: https://lore.kernel.org/20260921152443.80132-1-sj@kernel.org
+Link: https://lore.kernel.org/20260921152443.80132-2-sj@kernel.org
+Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: SJ Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <david@davidgow.net>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/spc.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ mm/damon/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/amd/pmf/spc.c b/drivers/platform/x86/amd/pmf/spc.c
-index 592ba4de4c7f1..efb09a7915f72 100644
---- a/drivers/platform/x86/amd/pmf/spc.c
-+++ b/drivers/platform/x86/amd/pmf/spc.c
-@@ -199,13 +199,11 @@ static int amd_pmf_get_battery_prop(enum power_supply_property prop)
- 			continue;
- 
- 		ret = power_supply_get_property(psy, prop, &value);
--		if (ret) {
--			power_supply_put(psy);
--			return ret;
--		}
-+		power_supply_put(psy);
-+		return ret ? ret : value.intval;
- 	}
- 
--	return value.intval;
-+	return -ENODEV;
- }
- 
- static int amd_pmf_get_battery_info(struct amd_pmf_dev *dev, struct ta_pmf_enact_table *in)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index a4542a49ff80a..4290e2a1c7e8d 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2653,6 +2653,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 		}
+ 		if (damos_core_filter_out(c, t, r, s))
+ 			return;
++		sz = damon_sz_region(r);
+ 		ktime_get_coarse_ts64(&begin);
+ 		trace_damos_before_apply(cidx, sidx, tidx, r, nr_accesses,
+ 				damon_nr_regions(t), do_trace);
 -- 
 2.53.0
 
