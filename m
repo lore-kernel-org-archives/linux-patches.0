@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065218;
-	b=iIkHd6mbqTeYNBugNNQXfTSsOAWPTDdvyRgt0XvJddtsI1YB0SK80up36Od1PbBAJAke
-	 ubxmmbEFA8vYvXb6llkEvZoLcmg0+nEbrT9eHr3KLuiY9NSspA5YlR+5qQPz5IXL6YOao
-	 QvGwuNuNo/6RENNLiUyc34wNfVNSbJLOK1/hXfeZ5WJ/KOZJJPjcNri56Ax2Jv+dxQM3p
-	 89sjlL5yletH7Poc6u+91ojHPja45jg2og36efiALVnIDZG19HwJGfglWvoQjbiCu63s1
-	 1Gm0gcupD5/bLNrpyOpzuymjzEg4IZ28xBOnGmdjAsecPEoAlWSOLXYqr7hjbcR1qXQ==
+	t=1794065223;
+	b=XrudTQFrMK0xZvMbvJzD0Cj/ZX4XmM0HgsRh0SN92T7AkaVyeBdtlqOW9+xgttIK9gqe
+	 iVYWJMnAHxKq2nxW5SP/B0LlF9Lrkgz0Dg5XyKr3Xkk63zeh0tbKJtLwaMZE88/JiCGNd
+	 Gw0fHBGjHkbPLGxj2reFsyoiGu6NRIVAnJt4f5tYmsDwryqZ0c3yD0JBPlj0Z+CubdkFZ
+	 3d3UrrGc6WtcZDzRvKPhA6kk0+3GTnzE2FhCHRnVurZcFXVKYH6L0rJ23AnH3rxI/QMXW
+	 CX6cs/FX8zl2gadUz/2W4DNUjUev1fAnEhCpt3r41EMzWV7bVZ12uMxgVOrqVplKefA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065223;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QGazwSKHCs71ooC4udure0TdZgHO2BSgOWYI7wKNX5Q=;
-	b=LvFeafhOStallEgUmxq8GUhLNNbOt3pYYaRI8bAXXydITqusGrcY9KD/b2SvZ2kbiL4R
-	 Lq92A3sVGgKFoTVQPLZvbHJ/3phk7NGKyfwFfEkXrX4tpRr3i0WOdnO4Dx/yRBWpFZawM
-	 CdMHUCCzMc51zZfh2qijjb0yEQrrxuYKkSP2RRc4wbfwap+HO/62OQqxsrb8nLRWDTBWK
-	 ywSTCZ/AbV997nROCDcBCeU0wbTr+wBZdU5mRy957o9wMm9NfG99YCFd18hxNov1ZitkQ
-	 A9XAZx4l5YlbAkUz/NZGo/GIyw4HKzOkvBP7CVobiDebSOj16To0NlSp8dTNF8ApYmw==
+	bh=qRE3a11SwexEY0ZXErZ9u8uOMqziQOqYduOluuKcKa8=;
+	b=xp6810FPcRwtcZyFwQRwhHLTaDjH3YvBM8GV+gDuPM1ZvRLozxjayGyrUZKs0qCa1jM6
+	 Lc7sBcXT06tTv6KWw1k2uIxMqiGlREoEghjIr2TM1MfynB+K73C5TpNL5sOFEFKeaKo2u
+	 SIjpcFJVPV8JfEqK1b6TEQ00PUrxiocol4q8IUCXqaLMaNk13juFYWxcAVCO/qG72MMlj
+	 Ewz9yfr0rwbNX+nOKAzNqQYKbDrRSm9j65zd5BXf1kpuOo6a3iAUQyjCjv28BjaSf+o92
+	 NEi4W9PjqmLpUoDUjX8uOa2pPqyoh7eTV9fGz93bnlrYL6/9o93lQ6vjeRq41B5zDew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQ9BdLnd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCccJg9l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC054606A33F;
-	Sat,  7 Nov 2026 15:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D97606D805;
+	Sat,  7 Nov 2026 15:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQ9BdLnd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5901C1F0089F;
-	Sat,  7 Nov 2026 15:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCccJg9l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BB61F0089F;
+	Sat,  7 Nov 2026 15:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065217;
-	bh=QGazwSKHCs71ooC4udure0TdZgHO2BSgOWYI7wKNX5Q=;
+	s=korg; t=1794065223;
+	bh=qRE3a11SwexEY0ZXErZ9u8uOMqziQOqYduOluuKcKa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQ9BdLnd6ZkIyiM1TWugbk+W0+cOJglexaubUeOQFjRvx8S9mqqpAunzsIuCaCjjF
-	 cqLx3ibiCmeWXVMMcAtbH1IQCLRl3yY6cCBRK7fSUPo/wpXt/nmRQjb1PcVnF5tZvs
-	 geyRDRzI5OHcmKh8ibj/GsBULPnugjXOtceRlVCc=
+	b=iCccJg9l+xwNhjM3HgPL8qwbynOcSACHZ99H/fLmON0GTqRxIQKEUC7+NbXUiJRvv
+	 aBF/X18ssF+hNttUsNDJRJyX9ofWleIsagQN4UFpJYh5vO0vTOR0/mIlAoQdyw/v0x
+	 ugYtDFEYJ0SOTraphmNlwJtIkz+eViOXEjjv9S+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1011/1257] mshv_vtl: reject poll files with multiple waitqueues
-Date: Sat,  7 Nov 2026 08:55:07 -0500
-Message-ID: <20261107135007.260213851@linuxfoundation.org>
+Subject: [PATCH 7.3 1014/1257] ata: libata-sff: fix race between IRQ deferral and ata_sff_flush_pio_task()
+Date: Sat,  7 Nov 2026 08:55:10 -0500
+Message-ID: <20261107135007.342194555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,108 +69,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 70cd4623f3e5068a72c72791b96f2dcb4c991131 ]
+[ Upstream commit 69be770908ae57354a41d7e1cc99ab46278d2e86 ]
 
-MSHV_SET_POLL_FILE invokes a file descriptor poll callback with a poll
-table backed by a single embedded wait entry. A poll callback may,
-however, register the table with more than one waitqueue. pipe_poll()
-does this naturally for an O_RDWR FIFO.
+Commit 4a2e5409472e ("ata: libata-sff: don't busy-wait for PIO data-in
+command completion") allowed the interrupt handler to queue
+ap->sff_pio_task from ata_sff_hsm_move() when a PIO data-in command is
+still busy after its final data block.
 
-The second registration currently warns but then inserts the same list
-node into another list. The new insertion overwrites the entry links while
-the first waitqueue still points at it, corrupting the first waitqueue and
-causing an invalid callback traversal when that queue wakes.
+ata_sff_flush_pio_task(), however, was written under the assumption that
+cancel_delayed_work_sync() is enough to prevent sff_pio_task from being
+queued again before the HSM state is reset to HSM_ST_IDLE and
+sff_pio_task_link is cleared.
 
-Reject a second distinct waitqueue, remove the first registration through
-the common removal helper, and return -EINVAL from the ioctl. Repeated
-registration of the same waitqueue is treated as a no-op. A rejected
-replacement leaves the CPU slot unregistered, consistent with the existing
-remove-before-register ordering. Single-waitqueue users such as the OpenHCL
-io_uring poll file keep their existing behavior.
+The flush runs early during error handling, at a point where the timed
+out command is still active, the port is not frozen yet, and interrupts
+are still being serviced.  If the final data-block interrupt of a PIO
+data-in command is serviced in the window between
+cancel_delayed_work_sync() and the reset of hsm_task_state, the
+interrupt handler queues sff_pio_task after the cancel has completed.
+When that work item then executes on ata_sff_wq after the flush cleared
+ap->sff_pio_task_link, ata_sff_pio_task() hits
+BUG_ON(ap->sff_pio_task_link == NULL) while holding the host lock with
+interrupts disabled; alternatively it proceeds on a stale link while
+error handling owns the port.
 
-An LLM assisted the source audit, fix development, and validation of this
-issue.
+Fix this by resetting hsm_task_state to HSM_ST_IDLE before cancelling
+the work item.  Once the state is IDLE, __ata_sff_port_intr() can no
+longer enter ata_sff_hsm_move(), so the interrupt handler can no longer
+queue the pio task, and cancel_delayed_work_sync() drains whatever was
+queued before the reset.
 
-Fixes: 7bfe3b8ea6e3 ("Drivers: hv: Introduce mshv_vtl driver")
+Also make ata_sff_pio_task() bail out quietly when the HSM state was
+marked idle by the flush, both at entry and after re-acquiring the port
+lock following ata_msleep(), since a work item can already be running
+when the flush resets the state.
+
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-ide/sashiko-outbox-177477@kernel.org/
+Fixes: 4a2e5409472e ("ata: libata-sff: don't busy-wait for PIO data-in command completion")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20261020101107.1449635-2-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/mshv_vtl_main.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/ata/libata-sff.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hv/mshv_vtl_main.c b/drivers/hv/mshv_vtl_main.c
-index c6f1e2157d258..9133646b5b66c 100644
---- a/drivers/hv/mshv_vtl_main.c
-+++ b/drivers/hv/mshv_vtl_main.c
-@@ -73,6 +73,7 @@ struct mshv_vtl_poll_file {
- 	wait_queue_entry_t wait;
- 	wait_queue_head_t *wqh;
- 	poll_table pt;
-+	int error;
- 	int cpu;
- };
- 
-@@ -482,7 +483,18 @@ static void mshv_vtl_ptable_queue_proc(struct file *file, wait_queue_head_t *wqh
+diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
+index d5ef0338735c3..c2aad525010cd 100644
+--- a/drivers/ata/libata-sff.c
++++ b/drivers/ata/libata-sff.c
+@@ -1196,8 +1196,6 @@ void ata_sff_flush_pio_task(struct ata_port *ap)
  {
- 	struct mshv_vtl_poll_file *poll_file = container_of(pt, struct mshv_vtl_poll_file, pt);
+ 	trace_ata_sff_flush_pio_task(ap);
  
--	WARN_ON(poll_file->wqh);
-+	if (poll_file->error)
-+		return;
+-	cancel_delayed_work_sync(&ap->sff_pio_task);
+-
+ 	/*
+ 	 * We wanna reset the HSM state to IDLE.  If we do so without
+ 	 * grabbing the port lock, critical sections protected by it which
+@@ -1205,11 +1203,26 @@ void ata_sff_flush_pio_task(struct ata_port *ap)
+ 	 * example, we may set IDLE in between the time
+ 	 * __ata_sff_port_intr() checks for HSM_ST_IDLE and before it calls
+ 	 * ata_sff_hsm_move() causing ata_sff_hsm_move() to BUG().
++	 *
++	 * Reset the state before cancelling the work item: once the state
++	 * is IDLE, __ata_sff_port_intr() can no longer enter
++	 * ata_sff_hsm_move(), which prevents the interrupt handler from
++	 * queueing sff_pio_task when deferring the completion of a PIO
++	 * data-in command.  The SCSI error handler cannot dispatch new
++	 * commands while error handling is in progress, so issue-time
++	 * queuing is not possible either.
+ 	 */
+ 	spin_lock_irq(ap->lock);
+ 	ap->hsm_task_state = HSM_ST_IDLE;
+ 	spin_unlock_irq(ap->lock);
+ 
++	/*
++	 * Now that the interrupt handler can no longer queue the pio task,
++	 * cancel it.  This also drains a work item that the interrupt
++	 * handler managed to queue before the HSM state was reset.
++	 */
++	cancel_delayed_work_sync(&ap->sff_pio_task);
 +
-+	if (poll_file->wqh) {
-+		if (poll_file->wqh == wqh)
-+			return;
-+
-+		mshv_vtl_poll_file_remove_wait_queue(poll_file);
-+		poll_file->error = -EINVAL;
-+		return;
-+	}
-+
- 	poll_file->wqh = wqh;
- 	add_wait_queue(wqh, &poll_file->wait);
+ 	ap->sff_pio_task_link = NULL;
  }
-@@ -492,6 +504,7 @@ static int mshv_vtl_ioctl_set_poll_file(struct mshv_vtl_set_poll_file __user *us
- 	struct file *file, *old_file;
- 	struct mshv_vtl_poll_file *poll_file;
- 	struct mshv_vtl_set_poll_file input;
-+	int ret;
  
- 	if (copy_from_user(&input, user_input, sizeof(input)))
- 		return -EFAULT;
-@@ -518,6 +531,7 @@ static int mshv_vtl_ioctl_set_poll_file(struct mshv_vtl_set_poll_file __user *us
- 
- 	old_file = poll_file->file;
- 	poll_file->file = file;
-+	poll_file->error = 0;
- 	poll_file->cpu = input.cpu;
- 
- 	if (file) {
-@@ -525,13 +539,18 @@ static int mshv_vtl_ioctl_set_poll_file(struct mshv_vtl_set_poll_file __user *us
- 		init_poll_funcptr(&poll_file->pt, mshv_vtl_ptable_queue_proc);
- 		vfs_poll(file, &poll_file->pt);
+@@ -1233,7 +1246,13 @@ static void ata_sff_pio_task(struct work_struct *work)
  	}
-+	ret = poll_file->error;
-+	if (ret)
-+		poll_file->file = NULL;
  
- 	mutex_unlock(&mshv_vtl_poll_file_lock);
+ fsm_start:
+-	WARN_ON_ONCE(ap->hsm_task_state == HSM_ST_IDLE);
++	/*
++	 * ata_sff_flush_pio_task() may have marked the HSM idle after this
++	 * work item was queued or while it was running.  There is nothing
++	 * left to do.
++	 */
++	if (ap->hsm_task_state == HSM_ST_IDLE)
++		goto out_unlock;
  
- 	if (old_file)
- 		fput(old_file);
-+	if (ret)
-+		fput(file);
+ 	wait_mask = ATA_BUSY;
+ 	if (ap->hsm_task_state == HSM_ST_LAST)
+@@ -1252,6 +1271,13 @@ static void ata_sff_pio_task(struct work_struct *work)
+ 		ata_msleep(ap, 2);
+ 		spin_lock_irq(ap->lock);
  
--	return 0;
-+	return ret;
- }
- 
- /* Static table mapping register names to their corresponding actions */
++		/*
++		 * ata_sff_flush_pio_task() may have marked the HSM idle
++		 * while the port lock was dropped for ata_msleep().
++		 */
++		if (ap->hsm_task_state == HSM_ST_IDLE)
++			goto out_unlock;
++
+ 		status = ata_sff_busy_wait(ap, wait_mask, 10);
+ 		if (status & wait_mask) {
+ 			ata_sff_queue_pio_task(link, ATA_SHORT_PAUSE);
 -- 
 2.53.0
 
