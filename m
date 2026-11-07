@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064566;
-	b=5C+oNaXbf4qn4sfpyHNRLAp2uL30/XqTfQiUk14U13MjjiAV1RH8q333D5bN/YA8PyTr
-	 AJLWF1M6XMJfcwUJquzfnmnjxnR8zb1woTHoAYczoAm8denn6T/e9cWeo4F2/0RL423mJ
-	 mFTz02AQ3ZEh4LHneVD2pyRiKEFr5QV38gCRG/wQNtTnOaHb4H4UlLAuEHnfaNgctEJKV
-	 36qSoyGWKhpPbvoTc65wKF5NaCSeg+4AxrlVf3vnWmv7pB6xORnJuNttWjz9qtrZ1bgAM
-	 Cyq25tU0dCWCaPtISe5Lufcc+fwKtEFRLPDCcuj/4j8e8GccqOXHA5gfkAeyz6t9KWQ==
+	t=1794064568;
+	b=nXHgoN8xpyN2MFeHZuawYTO9NLpv/OHuBgUq+0a4KnDA6aWkS8+PK6u8N8KyFHr04UL3
+	 g42whRW0x6XUOiBDycdQr5azqpSGucuNvWhGVXf1umn8cGMyKUUcMowvCSmXG7y4G+6wz
+	 AvfNVGHMwobmRQw6oWVfDARJZM0gUw9fd5QSW6Grb+VwAigGKSqHXtsqAOe3iD3hsadsX
+	 5GkAucgNNmFIn8po7MQhbtjhcu27zW18sdSy3ghCKPkl8jCv0mtxa8mR3MrOhWtvk2XUK
+	 uIn+XXgmlkAxHnTP3l+t3ZImeGI8FsptK0evt7xxDSs8g72bRh4SRVRfxZA7VO77smg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Px7SN9YtQJwnRh2wVz4qNbR0k7awOEviv0DkhtA3YkM=;
-	b=CZe+7BP5nuILgbCxx5Louo2m0nAacGWPfsaTWRGjGEDKTPrbzghqdrl5SvWwo21R52vr
-	 ZBp5S32j4XY0JGvBmQLtk0TbvpzcLfCPLCkVKutbiiLkNqhZf1oh7zN7g7SieQME1dvlX
-	 QkhlpSkg6e1GC4NP6Ey8zlazuVYjOBBa1N/5JLgDWh1BhbK/2SngZYqKBylQCkYVCGXV8
-	 wiQY/4rkB+zcgw2NvpNEUhkmxhL1EsgaKZeQG5wRarg4+PoYv+okViK1atIAGA5xI88F4
-	 56L23QotyZZwvspRbCunkcMF22PRoeXjJC1Q3EzBsW5pW4bXhKGBzL1w0nY3PhKLEJA==
+	bh=NTybZX3tE+317WdxPF9YFnPVz2ArU0s7P6wK2W3w49I=;
+	b=2bHgbCzTRbsFfSgJ/HB8nTlq3R+lg0zgb+YDJoo5frxA1LihhUt3zdkANDr+GC+SkHly
+	 2AtNivRiqXdjOwzLKqjq5VxTy7MZjYiyGfX+VyafWlpFmHswrrUuU5hYpgmec1oimlsY+
+	 7r7bd3qSblqwG7o0RLAxj1/xM6GvwQHcPh3ZGK+XjwTAaPMdf1XcCIsMT22bP96sv7fFT
+	 6U9Nzc0wE5jYUhVyyRL051PxykD2c3mBsF73Ab3aP8ocWx4ghP+Wo800uZXXdjjKXjCFz
+	 68QGaUDQy0zGO4iB4lygcdN3ENxIbfen+26PgZg/qNtBIv1ZeT15KrGGdusthgygKaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7ajyVgt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLJIp3Ey;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A94C606D827;
-	Sat,  7 Nov 2026 15:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B151C606D809;
+	Sat,  7 Nov 2026 15:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7ajyVgt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268461F0089F;
-	Sat,  7 Nov 2026 15:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLJIp3Ey
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E45E1F0089F;
+	Sat,  7 Nov 2026 15:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064566;
-	bh=Px7SN9YtQJwnRh2wVz4qNbR0k7awOEviv0DkhtA3YkM=;
+	s=korg; t=1794064567;
+	bh=NTybZX3tE+317WdxPF9YFnPVz2ArU0s7P6wK2W3w49I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L7ajyVgt033xwCg5mzUm+ab+bqBiRP8W1gNn8DG1FxqOP7sv6qPqb/lDUlkXb4qid
-	 T8G2rginjrY39dVrya4vbjDjKofvXGOkX8Z6ImXMO8/GC4+/w0Okf7C5lFwvvM/Ytt
-	 0n9zUy9KBTlUIJTRNj22lsr0Ck0abijWqV6kN/RM=
+	b=jLJIp3Eyz/xqTbavLz3gJnZG6w8jFhHiie0+Kv5FPRYaQNpvm/fFhmVHGHT2r8uIn
+	 GKufWMAQCFuPGKQ5gnNAM6l95eqPm+aVHQqEGdExIhux/yzYMD+TuisA2Qa6Fr4/Xn
+	 mbuuvzP8/3wc7+wDkRS2rlqIbNsGu8R362t33vuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-Hao Chen <billy920225@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0549/1257] spi: stm32: fix double free of SRAM buffer on MDMA fallback
-Date: Sat,  7 Nov 2026 08:47:25 -0500
-Message-ID: <20261107134954.555223452@linuxfoundation.org>
+Subject: [PATCH 7.3 0550/1257] aoe: pull in the headers each received packet type reads
+Date: Sat,  7 Nov 2026 08:47:26 -0500
+Message-ID: <20261107134954.582371292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,56 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pin-Hao Chen <billy920225@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 0c5b0c3eb1d6daa1117dacd32589196f52109cab ]
+[ Upstream commit e1274a6bc40a4618f6fbaebbdc51cca865d51bed ]
 
-When the "rxm2m" MDMA channel cannot be obtained, the driver frees the
-SRAM buffer and falls back to DMA-only mode. However, sram_rx_buf is
-left pointing to the freed buffer.
+aoenet_rcv() only pulls the AoE and ATA headers into the skb head when
+the packet is long enough to hold both.  A shorter packet goes through
+unpulled, and aoenet_rcv() reads the AoE header from it anyway.  CFG
+responses go on to aoecmd_cfg_rsp(), which reads the config header
+after it, and ATA responses get queued for ktiocomplete(), which
+skb_pull()s both headers.  Ethernet pads frames to 60 bytes, so this
+mostly takes a virtual link, but nothing stops a short frame from
+getting here.
 
-As a result, stm32_spi_unprepare_msg() may clear the released SRAM
-area, while stm32_spi_remove() or a later probe error path may free the
-buffer again, triggering BUG_ON() in gen_pool_free_owner().
+Pull the AoE header up front and drop the packet if it isn't there,
+then pull the ATA or config header in the switch arm that hands the
+packet on, so each path gets the headers it reads.  This also replaces
+the open-coded __pskb_pull_tail() with pskb_may_pull().
 
-The probe error path also checks sram_pool instead of sram_rx_buf. If
-the SRAM allocation failed and a later probe step fails,
-gen_pool_free() may therefore be called with an unallocated buffer.
-
-Clear sram_rx_buf after freeing it on the MDMA fallback path and use
-the buffer pointer to determine whether cleanup is needed.
-
-Fixes: d17dd2f1d8a1 ("spi: stm32: use STM32 DMA with STM32 MDMA to enhance DDR use")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pin-Hao Chen <billy920225@gmail.com>
-Link: https://patch.msgid.link/20261005220528.7199-1-billy920225@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261007-b4-aoe-short-packets-v1-1-db5155f7bb9c@toxicpanda.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/aoe/aoenet.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
-index be88e62075af6..605b847d87738 100644
---- a/drivers/spi/spi-stm32.c
-+++ b/drivers/spi/spi-stm32.c
-@@ -2511,6 +2511,7 @@ static int stm32_spi_probe(struct platform_device *pdev)
- 					gen_pool_free(spi->sram_pool,
- 						      (unsigned long)spi->sram_rx_buf,
- 						      spi->sram_rx_buf_size);
-+					spi->sram_rx_buf = NULL;
- 					dev_warn(&pdev->dev,
- 						 "failed to request rx mdma channel, DMA only\n");
- 				}
-@@ -2548,7 +2549,7 @@ static int stm32_spi_probe(struct platform_device *pdev)
- 	if (spi->mdma_rx)
- 		dma_release_channel(spi->mdma_rx);
- err_pool_free:
--	if (spi->sram_pool)
-+	if (spi->sram_rx_buf)
- 		gen_pool_free(spi->sram_pool, (unsigned long)spi->sram_rx_buf,
- 			      spi->sram_rx_buf_size);
- 	if (spi->dma_rx)
+diff --git a/drivers/block/aoe/aoenet.c b/drivers/block/aoe/aoenet.c
+index 66e617664c143..cd7c735bb43b7 100644
+--- a/drivers/block/aoe/aoenet.c
++++ b/drivers/block/aoe/aoenet.c
+@@ -131,9 +131,7 @@ static int
+ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt, struct net_device *orig_dev)
+ {
+ 	struct aoe_hdr *h;
+-	struct aoe_atahdr *ah;
+ 	u32 n;
+-	int sn;
+ 
+ 	if (dev_net(ifp) != &init_net)
+ 		goto exit;
+@@ -144,12 +142,8 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt,
+ 	if (!is_aoe_netif(ifp))
+ 		goto exit;
+ 	skb_push(skb, ETH_HLEN);	/* (1) */
+-	sn = sizeof(*h) + sizeof(*ah);
+-	if (skb->len >= sn) {
+-		sn -= skb_headlen(skb);
+-		if (sn > 0 && !__pskb_pull_tail(skb, sn))
+-			goto exit;
+-	}
++	if (!pskb_may_pull(skb, sizeof(*h)))
++		goto exit;
+ 	h = (struct aoe_hdr *) skb->data;
+ 	n = get_unaligned_be32(&h->tag);
+ 	if ((h->verfl & AOEFL_RSP) == 0 || (n & 1<<31))
+@@ -171,10 +165,14 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt,
+ 
+ 	switch (h->cmd) {
+ 	case AOECMD_ATA:
++		if (!pskb_may_pull(skb, sizeof(*h) + sizeof(struct aoe_atahdr)))
++			goto exit;
+ 		/* ata_rsp may keep skb for later processing or give it back */
+ 		skb = aoecmd_ata_rsp(skb);
+ 		break;
+ 	case AOECMD_CFG:
++		if (!pskb_may_pull(skb, sizeof(*h) + sizeof(struct aoe_cfghdr)))
++			goto exit;
+ 		aoecmd_cfg_rsp(skb);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
