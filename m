@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062394;
-	b=f44MYRXXa1RkK4V5cpHkGS5a2ja3keufiLbXVnnwzmaagySzX8sKiWDJd/gABL4lFVxz
-	 kph0Feule725JUucNiKlmJzfBiVkF+hLZYyQ/hot7Fi42nbyLZz2M2Np4H150sRJx07Ik
-	 QQffCW3QMqAB15cb8BGnm9ovmzVwvsQ2twX5UMbSQRdVYbuJ/26cirYgxThpluZiCu4Tx
-	 azLF8Z+eg34U9cuLQD0bEsrBCu8bTr5QSuXTYQA0WlWmyFXU84k66PRHlCDQlfX9LwHEq
-	 mR3x8yYMsQZB3C3r8mloaL8ZNVS7eMslslb67lsmb6FBJ7vnoFp6f664ro0LKPpodAg==
+	t=1794062395;
+	b=WHzCXSD1TlSlBq6tokmWVk7NAqDhTBxptfScqHDGQ2zhFRATs9NTTuJWutpln5HTBHIy
+	 JNcHeGe16rmzyKTi6iIUAiHRRXuIEa5pBRs/v1PKDV2poBeRciH/fwCbvECB1ldi6sXb/
+	 aCUbS6W5Dc4itEtGSnkuIPOdsLppgs01wVIRSfmq6PavFQeNZO0l9t0EE86UqmtMXJuM0
+	 D4llxLWMjl+mQqooj8TR+DFr7pcuMBh4zNuqzh/85A+zEFG9UIbPc8VvfjX9jd4t2ax93
+	 Dz0UuR/jeRfXmqikRLSC0IQzXvt658QtdytgvL+Fk3cbVoZphN1R6qZbvoNUuisHn8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LIEPEa4lX+ZFty3Ku/z3ZLWF29NngmXWgjvARfIT1oY=;
-	b=Hw6N1MpV/mOhgztykGKw+fiYkHUyJQK+BE7YNdId8lPTjKCg+z+kX9fWfE48zYapZRI9
-	 +eEPUTr303qvJCYCJ10M+yfEzNplMasAOquJGvEe8d2sx4rk+otN+dqsVECCwZk8gDomY
-	 GqVS0Jo+7v7qkDXSpK+FzvJKKF/FZ0PyH4eZOTtPcwJHSNWJR9SjW4VKES96JSVkJniOE
-	 RbMmnJN5bwaOBFJ5tO6dfU44FEYI1i6aqDzobgdNjkzR+tj1NYfqqYhUr1Zol4uiGWSLn
-	 FHOV8sJTgIyDW/6RJVECdkmf3P/ABrw/GNftMycnkgAgHIHVEoIxjWSfFn2tjeXcGyw==
+	bh=HHna0GgF9C/b2+oyKhg1pPYyAGuFiJO43P19hrYC0nA=;
+	b=diVmifJF0jsEkJN8GBaSIHBQxsxTDod5oO+tSlOiDYN57sLEOEFmb0a07Ut0DMWXHf7Z
+	 a+Lt2YlkXzoAyINuaISJvLFxzXW7TFM+Y2Atvfw69FHycUtH8kXefEfv+HuhRvH/IPGA6
+	 cByGKKPkdiUq61H5h3zzOdak9rjomzTnE2aiVOb9iKUwOoiIXUtonk6g3gb3F3oJkh5Wr
+	 EQGlVIwdCatKTfXtYAH5hKHDtnCKCj284vJtC4TaZv0WX7wKrQKYX90Jd5aKXNs8wuDbD
+	 2ZR2bj+XlIo/n+m83qCihspHorJv61mK0P1gLQaIL+v6DDxX5syKDvKLRJxpSAoievg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5grQ0UJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXWbIvfe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BF4606D839;
-	Sat,  7 Nov 2026 14:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1938B606D839;
+	Sat,  7 Nov 2026 14:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5grQ0UJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839851F0089F;
-	Sat,  7 Nov 2026 14:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXWbIvfe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9731F0089F;
+	Sat,  7 Nov 2026 14:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062393;
-	bh=LIEPEa4lX+ZFty3Ku/z3ZLWF29NngmXWgjvARfIT1oY=;
+	s=korg; t=1794062395;
+	bh=HHna0GgF9C/b2+oyKhg1pPYyAGuFiJO43P19hrYC0nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B5grQ0UJ4P5kfn/qbBL+mvYRAL+M5pd4v96FSW9+4FNdPw7UgGLh6z4C6MHZhMUAm
-	 HyqVM7+zcS5fijH9N28PoiVB0Lv+ov8LYO6+vbmK1djkU2jengStKpqCChtLjl7FZH
-	 59gjmHKtUeeW0wwO7BFBoNGfOYsM1IW9+SgVhAns=
+	b=sXWbIvfeokD2Q2GEcTXcG9PWdIFQ45kc0k3D+6T6wylMSv7Vh98lvESORMP5Chj/P
+	 Qp21q1yhdy76k8/fbmh8r3S5/jHAZ8qL6FwPyBsCbRtK/jLGJCX323AH6Pw+ngnlYh
+	 K7cvWzS9Y/fGeTTduBB3putPs7tot3uVkGXX814U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1312/1536] spi: jcore: fix divide-by-zero when speed_hz is zero
-Date: Sat,  7 Nov 2026 08:55:28 -0500
-Message-ID: <20261107135034.648943974@linuxfoundation.org>
+Subject: [PATCH 6.12 1313/1536] efi/libstub: Dont replace an existing LINUX_EFI_MEMRESERVE table
+Date: Sat,  7 Nov 2026 08:55:29 -0500
+Message-ID: <20261107135034.679170954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,51 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 7db773075501248893c22b11bedc6745d6d0be45 ]
+[ Upstream commit aaf3ed0f46298e18ec8bc477cf0a37478e41f2ea ]
 
-jcore_spi_baudrate() computes hw->clock_freq / 2 / speed without
-validating speed. The SPI core fills transfer.speed_hz from
-spi->max_speed_hz when it is zero, and jcore_spi_probe() never sets
-host->max_speed_hz, so the clamp in __spi_setup() is skipped. A
-spi_device created via the sysfs new_device interface (or a DT node
-without spi-max-frequency) therefore has max_speed_hz == 0, and any
-SPI_IOC_MESSAGE transfer reaches jcore_spi_baudrate() with speed == 0,
-causing a division by zero and a kernel panic.
+The LINUX_EFI_MEMRESERVE table is the root of a linked list of memory
+reservations that need to persist across kexec, such as the GICv3 LPI
+pending and property tables, which cannot be moved once the
+redistributors have been enabled. Each kernel adds its own reservations
+to the list that it finds via the EFI configuration table, and honours
+the ones made by its predecessors.
 
-Clamp speed to a minimum of 1 Hz before the division so the divisor is
-never zero. The computed divider then truncates to the register field
-width and the transfer simply runs at the slowest supported rate.
+The EFI stub installs a new, empty table unconditionally, replacing any
+existing one. This is fine on a cold boot, but not if the stub is being
+executed by a loader that passes on the configuration tables of an
+earlier kernel, e.g., a kexec loader that runs the incoming kernel's EFI
+stub, as the reservations made by earlier kernels would be lost.
 
-Verified by inspection of the __spi_setup() clamp and
-__spi_validate()'s speed_hz handling; the division-by-zero path
-requires the J-Core controller, which was not available.
+So leave an existing table in place, and only install a new one if none
+exists yet.
 
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Fixes: 2cb1b3b3ac0a ("spi: add driver for J-Core SPI controller")
-Cc: stable@vger.kernel.org # 4.9+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261014-spi-jcore-divzero-v1-1-a8205d30f2d1@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-jcore.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/efi/libstub/efi-stub.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/spi/spi-jcore.c b/drivers/spi/spi-jcore.c
-index e37ca22e04ba6..2bde899eb2b49 100644
---- a/drivers/spi/spi-jcore.c
-+++ b/drivers/spi/spi-jcore.c
-@@ -84,6 +84,8 @@ static void jcore_spi_baudrate(struct jcore_spi *hw, int speed)
- {
- 	if (speed == hw->speed_hz)
- 		return;
-+	if (speed <= 0)
-+		speed = 1;
- 	hw->speed_hz = speed;
- 	if (speed >= hw->clock_freq / 2)
- 		hw->speed_reg = 0;
+diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
+index df5ffe2364429..438c7aed2d287 100644
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -81,6 +81,14 @@ static void install_memreserve_table(void)
+ 	efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
+ 	efi_status_t status;
+ 
++	/*
++	 * If an earlier boot stage installed a memreserve table already, e.g.,
++	 * a kexec loader passing on the persistent reservations made by the
++	 * previous kernel, use it as is: installing a new one would replace it.
++	 */
++	if (get_efi_config_table(memreserve_table_guid))
++		return;
++
+ 	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, sizeof(*rsv),
+ 			     (void **)&rsv);
+ 	if (status != EFI_SUCCESS) {
 -- 
 2.53.0
 
