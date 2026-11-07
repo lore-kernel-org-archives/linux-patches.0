@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062785;
-	b=RSn85Ma4QNsrsrbCRW9a8+4uAI5tuN3fs55fT93U39PjBBeNRt2gBXc4gPMNAVFthAAV
-	 y9Nu4MhHb/QBY5sFYedJRyZCWFgNubtOPT4SpwIjGErU1IRUZQ++LMxVmmT/HVe+XMYGe
-	 l7MPabynxbohiWuIQNZDKuQjh22dpCZGC6BG8c9V+HI1j7/gx9EW/4mJ1I1FixylXsBro
-	 niqlcDfe8C7GVSmdq8GEKetgDnJxAEXzreEZ5FSlI24YRafjo+8MU/3Qb4HDEwOzlSM94
-	 jHxdPDT34dpTM9MKVlGSfQF8NN7ISpeeEE/ILBCKhGh2JxzrfABnteKCtVR1ydx/W8g==
+	t=1794062786;
+	b=VB7mZ6j532VHQJCp9uGrp+YUGRAGNTRyz16+mX8ZuUImGfrrXVpO1D9+jaKI+xH8fXH0
+	 04eIZijYBddktC46yvLPiTKcukdEdjQ8r9DjzFJtacHRpQgsHHRL3+9aJATnuGEQi+Qok
+	 a5wKbZ9k8wMZrezEBZvjQyLv3DfO/ECYBMk1n8ajignB5G82C4RCFVLDAS/5amqreLzgL
+	 EUos+ftTaKCcEqaoPnAgHq5lIfOX04LGlWedE/DJwyIW9DZ5rGJIST82cuf5+PqCAP9v/
+	 n79KQWQyAaC6FxF7cq2sRai26q7/abhpfQnQ0BECagKQck2r+DsRAV+J0+V9GANTKnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OmAPLmRmyIW448tSDZwr9jBLwDaS9wDSASpVQUbiJe8=;
-	b=J/thaegQqQGnrlod0ujql8oLZ/68+K/+anmSLgToL846IpwzRcUcMPrZrONKFxjrUxw5
-	 ee1DEu9nmZj+wF6Y2cIU9wBPGe/0Ai+MT9ziYhHAyEKXFSvYYlWwUWpBfVKA6fywyh1st
-	 czr/UL8MZQhZo66Cg+PomVrueRPNiR8Mc9nfdSp0RJDEJLP7yaBNQ1q8wOkv5ERSg4CTO
-	 capjpI7B//J4ErgXcRRS1FYDn9PaBEfR8ySChZYxw533ZdL/WegDQX8SdNyFL7DJ3iaeT
-	 z7XT4bXqycB0CZ5JGCACyjhKb881vlfE0FPEacmuctuVLyrEUfpP2c/6V77gCivMrag==
+	bh=2z2AX5NWl0BEmuw7Gxecw806Zqs7Z3qX4sIlGURSSqg=;
+	b=ZiSbNoM8GLfAXLsFXCjHoceiKZsv1/eQJjqCi8nWFbfvul2KOaWDV/uo554GXFPpdKYE
+	 WNJG4tMnYwIzlAEuH40EA/zl0E5FqcvBHbJfxBM48zTPacBmwXFb3y4fjdQ2K1xAkgOju
+	 leLdn/gg/KVxZ9JkB+c3e99ag8tGpp8+eSwV+NUIV7R55OupCKmRX8aquqHGBM0CkG1sr
+	 +RH2R+rCindwep1c/iSnuMhEL8A3n+wlufkBIjRIu6gvMYL5GasU/WoZWM7JmXAHtoCw5
+	 7GkBamfKa4NAmo5ipRHLrAz3txL/oB9uWVwiFL70xpQf8KNQ2RkBvhyV3/MHwqFYZHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bj6WlEgo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzSab9VJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A304606A326;
-	Sat,  7 Nov 2026 14:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318AD606A326;
+	Sat,  7 Nov 2026 14:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bj6WlEgo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD761F0089F;
-	Sat,  7 Nov 2026 14:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzSab9VJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DC41F0089F;
+	Sat,  7 Nov 2026 14:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062784;
-	bh=OmAPLmRmyIW448tSDZwr9jBLwDaS9wDSASpVQUbiJe8=;
+	s=korg; t=1794062786;
+	bh=2z2AX5NWl0BEmuw7Gxecw806Zqs7Z3qX4sIlGURSSqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bj6WlEgoOmAnahJKL5dDb7zgaCBm8/TLick+RFu1dF4Kn6jRJrXlF+irdIkUVxdNt
-	 uyMDn2p4Gsg3TjXy7l0qGNBb3+Eh55MyAIXkHjRG1F6wds60E7Zemz9ipr4N86ShCB
-	 yNz3/k+CFIy0UyfTvztLluSumYFfrLFVoCHmBZiY=
+	b=dzSab9VJxmElBcC9ojvdmFQ+gN8bxY06Kd58My+0gh9+lGrxJePlLq7hQXMeeEKoX
+	 DTfuO5a2UlpkQmp2XurMa32lrZS5597mPPHHxEWzUb3Vxv7OFFzYnRfLqNk7DK+H2t
+	 Ye+frTzMhEIuSIVBQQJzk/isUMmJTLIjE9FHoD6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Xu Rao <raoxu@uniontech.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 092/869] media: m2m-deinterlace: fix default capture field
-Date: Sat,  7 Nov 2026 08:46:14 -0500
-Message-ID: <20261107134855.825204031@linuxfoundation.org>
+Subject: [PATCH 6.18 093/869] ASoC: codecs: lpass-wsa-macro: use v2.5 Compander1 addresses on v2.5+
+Date: Sat,  7 Nov 2026 08:46:15 -0500
+Message-ID: <20261107134855.852576320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,49 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 4ee3ebede5d01efdcdd88c94f9df271d2eb237de ]
+[ Upstream commit 233d36a96009682208cc4ca1139b9e5641a8bf09 ]
 
-queue_init() initializes default formats for both the source and capture
-queues.  It first sets the source field to V4L2_FIELD_SEQ_TB, but then
-stores the capture default, V4L2_FIELD_INTERLACED_TB, in the source queue
-again while initializing the capture queue.
+wsa_macro_set_spkr_mode() unconditionally writes CDC_WSA_COMPANDER1_CTL3
+(0x5CC) and CDC_WSA_COMPANDER1_CTL7 (0x5DC).  On v2.5+ silicon these
+registers moved to CDC_2_5_WSA_COMPANDER1_CTL3 (0x5EC) and
+CDC_2_5_WSA_COMPANDER1_CTL7 (0x5FC); the v2.1 addresses are dead on
+that hardware, so the update_bits() calls take a bus error:
 
-This overwrites the valid source default and leaves the capture field at
-its zero-initialized value, V4L2_FIELD_ANY.  vidioc_streamon() accepts
-only V4L2_FIELD_SEQ_TB or V4L2_FIELD_SEQ_BT on the source queue, and
-requires the capture queue to use a compatible interlaced or NONE field.
-Userspace that relies on the default formats can therefore get -EINVAL
-when starting streaming.
+  wsa_macro 6c90000.codec: ASoC error (-5): at
+    snd_soc_component_update_bits() on 6c90000.codec for
+    register: [0x000005dc]
 
-Initialize the capture field instead.  The bug is usually hidden because
-mem2mem applications commonly call S_FMT on both queues before streaming;
-the TRY_FMT paths normalize the fields and S_FMT overwrites q_data[].field.
+The flat regcache had been hiding the read side of this by returning
+the zero-initialised cache slot instead of doing a bus read, so the
+error only becomes visible once the cache reports the miss honestly
+and regmap falls back to a real bus read.
 
-Fixes: 8f0755c06b90 ("[media] media: Add mem2mem deinterlacing driver")
+Select the correct address for Compander1 CTL3/CTL7 based on
+codec_version.  The Compander0 and Boost registers used in the same
+function have the same address across versions, so they stay
+unchanged.  Also collapse the two mode branches to a single sequence
+with mode-selected values, which is what the switch was doing anyway.
+
+Fixes: 727de4fbc546 ("ASoC: codecs: lpass-wsa-macro: Correct support for newer v2.5 version")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260908082806.648797-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/m2m-deinterlace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/lpass-wsa-macro.c | 42 ++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/media/platform/m2m-deinterlace.c b/drivers/media/platform/m2m-deinterlace.c
-index e07e57d4206ba..83d6c54f015db 100644
---- a/drivers/media/platform/m2m-deinterlace.c
-+++ b/drivers/media/platform/m2m-deinterlace.c
-@@ -829,7 +829,7 @@ static int queue_init(void *priv, struct vb2_queue *src_vq,
- 	q_data[V4L2_M2M_DST].width = 640;
- 	q_data[V4L2_M2M_DST].height = 480;
- 	q_data[V4L2_M2M_DST].sizeimage = (640 * 480 * 3) / 2;
--	q_data[V4L2_M2M_SRC].field = V4L2_FIELD_INTERLACED_TB;
-+	q_data[V4L2_M2M_DST].field = V4L2_FIELD_INTERLACED_TB;
+diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+index 8350b02b575fb..f094225ba40a4 100644
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -1129,27 +1129,35 @@ static const struct regmap_config wsa_regmap_config = {
+ int wsa_macro_set_spkr_mode(struct snd_soc_component *component, int mode)
+ {
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
++	unsigned int comp1_ctl3, comp1_ctl7;
++	u8 comp_val, boost_val;
  
- 	return vb2_queue_init(dst_vq);
+ 	wsa->spkr_mode = mode;
+ 
+-	switch (mode) {
+-	case WSA_MACRO_SPKR_MODE_1:
+-		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL3, 0x80, 0x00);
+-		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER1_CTL3, 0x80, 0x00);
+-		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL7, 0x01, 0x00);
+-		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER1_CTL7, 0x01, 0x00);
+-		snd_soc_component_update_bits(component, CDC_WSA_BOOST0_BOOST_CTL, 0x7C, 0x44);
+-		snd_soc_component_update_bits(component, CDC_WSA_BOOST1_BOOST_CTL, 0x7C, 0x44);
+-		break;
+-	default:
+-		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL3, 0x80, 0x80);
+-		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER1_CTL3, 0x80, 0x80);
+-		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL7, 0x01, 0x01);
+-		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER1_CTL7, 0x01, 0x01);
+-		snd_soc_component_update_bits(component, CDC_WSA_BOOST0_BOOST_CTL, 0x7C, 0x58);
+-		snd_soc_component_update_bits(component, CDC_WSA_BOOST1_BOOST_CTL, 0x7C, 0x58);
+-		break;
++	/* Compander1 CTL3/CTL7 moved on v2.5+ silicon. */
++	if (wsa->codec_version >= LPASS_CODEC_VERSION_2_5) {
++		comp1_ctl3 = CDC_2_5_WSA_COMPANDER1_CTL3;
++		comp1_ctl7 = CDC_2_5_WSA_COMPANDER1_CTL7;
++	} else {
++		comp1_ctl3 = CDC_WSA_COMPANDER1_CTL3;
++		comp1_ctl7 = CDC_WSA_COMPANDER1_CTL7;
+ 	}
++
++	if (mode == WSA_MACRO_SPKR_MODE_1) {
++		comp_val = 0x00;
++		boost_val = 0x44;
++	} else {
++		comp_val = 0x80;
++		boost_val = 0x58;
++	}
++
++	snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL3, 0x80, comp_val);
++	snd_soc_component_update_bits(component, comp1_ctl3, 0x80, comp_val);
++	snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL7, 0x01, comp_val ? 0x01 : 0x00);
++	snd_soc_component_update_bits(component, comp1_ctl7, 0x01, comp_val ? 0x01 : 0x00);
++	snd_soc_component_update_bits(component, CDC_WSA_BOOST0_BOOST_CTL, 0x7C, boost_val);
++	snd_soc_component_update_bits(component, CDC_WSA_BOOST1_BOOST_CTL, 0x7C, boost_val);
++
+ 	return 0;
  }
+ EXPORT_SYMBOL(wsa_macro_set_spkr_mode);
 -- 
 2.53.0
 
