@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063434;
-	b=pnkp+fKYQZCpBD9rFFk8Z9YKIPGElwxFPcNvFoUnXVvD+c5EtaKw0QX8oxVnkOFhfUc7
-	 x0PiHSHklKBPOxhc8e/CWMVrWqpJDcoMmjpQ5O7WaADdX+VGOEc4SzXBklAYc1PsWeTvm
-	 cYqPB3OfRZB9ddcjB5n+uFbXQJg2ziu2d6gTGvH0E2/UiczJsroHgbUIZu2kP/qFDz5bc
-	 ne/XQZQx8CS6aGq7Jami/iUdfz61jxndW2qoNmSRt0QS2T50Fi6B6ZlQTddjPqXXd0gNq
-	 U5Hh8QiQ9L/E0rXprLH91OAB9BKugMY95mgs4IDEfnI32YGkZ7WxPHmLvT248erEkwA==
+	t=1794063435;
+	b=qI0W+VEAN7SLGvcvnomSFxIJWseyVKamstueg/gPIEkHAuUPIlIiwTsipwGMrvfKDgw0
+	 1m2NXcQbr2fUtU6OUNv87Qrc+4lAR8w/DTGbL5FGAXxLvJnjZohVyx1s/gqDpDCjdtW4X
+	 aiK1qeO3ZHToaRBWRvW5oY4mwHF0pG7fDk+Euq6eEKC7Twl908JkRXX70ejksqoYzRFwD
+	 uUJdmrScPRS/MgV1gDrFKM9aNdMhRspxAUazWNuxLgu/vLE1AqeJt+IGdHktYOiv+NkXG
+	 H9JvQHqREqHuIu41vO7kKtveOfhF+Z5hYDx0PR5tYlDEVo1w0RYjkFd/yJYHbd3A2yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063435;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nNO9n5gfmnZUzG44j0mmuQ35Wx5rrQRquyMKBobdea8=;
-	b=pQyzAod0Ew6puWfgIBS93dR4fxdsLPwTuC3Nk96ObLoXxZXcOttVDEZ0x7XAZqOlP768
-	 BCQw+1SXS0p7AcazYJkqeT8VY8T/mdnuxu3LAONunh7QyABZmtdFEuEYhC7MhL7eDAY9T
-	 H3ZqWRyjqMT6dgkHNqrHtLfLcZflfcXADYO2WaR1e6xYNoCC3RQYcM8ITlvKF6fbt7KxE
-	 DOMuBzxRzAMTUc7Gx0x5QqyDRtYHBJZ/3GTM3t6zjuuT8Io9SpkG1WS1kazdP3m+6+bgJ
-	 P4mUd1udqM+ewzRIw5SHGFakPy8d4Mkn/AZe0fx+dV5rowZSAke17+5IStXQQj8ObVg==
+	bh=BkMLqvaYqVDV3W44XAJv13qJUOgJxzL2+MYSt1alY/s=;
+	b=MvPz98WS+9oWEbSC49fLNefM/79Ze20WsW6VYqvneoSdJuRb6r/2HvGNQrk/IdPdKdK1
+	 /r+AzF4g/4U8WH1cVTNQpQ1RytDqVs+A+ROZgQTGjFNmtdBhRSlqcVRjolUe+zw2FuFoh
+	 sxsHon+QR6e4ojePYeAoWtX6ZoZJoj7sgaEr7Kie85aOaNrmGLsUWPGwYpEuj3AstfUK/
+	 Wn0BZ/j5xbCmsXJzKaE5EwPqPn/vAUoHLYPSH1IfL8jrOv11b9awbbF6WYP/VqZjPgHg4
+	 yT7HCvnRzSsKiTdsx+RaGxyBIfejHNzlfdfGa3IlwoeaCgqAESdEG46NC3vMf3x3dfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXO7fEh2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJOfBirI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07625606D801;
-	Sat,  7 Nov 2026 14:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5BB606D801;
+	Sat,  7 Nov 2026 14:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXO7fEh2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C361F008A3;
-	Sat,  7 Nov 2026 14:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJOfBirI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F4D1F0089F;
+	Sat,  7 Nov 2026 14:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063433;
-	bh=nNO9n5gfmnZUzG44j0mmuQ35Wx5rrQRquyMKBobdea8=;
+	s=korg; t=1794063435;
+	bh=BkMLqvaYqVDV3W44XAJv13qJUOgJxzL2+MYSt1alY/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IXO7fEh2ZkoiJxd6eln/u9MlFq9IPP5otvZIIdWkZTLe4h77kMUl6mHYKAmjQ8ezQ
-	 tYbORN97hN6TCB1s5OH+1oIDyaPbU2U/EkRDCBdFzIxDtJs4QQ5nEO83E42MEqvDP7
-	 DA2USG34EjYkpOJ/6WoJpxZnEKoEgGHDVQO2HYNw=
+	b=iJOfBirI0LDfa6QKvO47/R6i9yc0sS+JB6gqsQsve082Nu39o4wEvT13n/IQ8gTKu
+	 a9mbyRrAGTRf+KZ+WuiKbXlSEhNvQ6oLXH2VTLfFbvDhtraz1NecmyCbGiIk33JNQr
+	 iWq0z3klSW8fE6BurLe9fVSubrdi8/gaMS17ewdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	David Carlier <devnexen@gmail.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 561/869] ARM: 9523/1: topology: allocate the cacheinfo early on the boot CPU
-Date: Sat,  7 Nov 2026 08:54:03 -0500
-Message-ID: <20261107134912.326161472@linuxfoundation.org>
+Subject: [PATCH 6.18 597/869] ring-buffer: Take cpus_read_lock() when changing the subbuf order
+Date: Sat,  7 Nov 2026 08:54:39 -0500
+Message-ID: <20261107134913.324751926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,71 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 2d4234f99900403842b2c031fefb4c5816ac4df8 ]
+[ Upstream commit 453d0f47b174cac387af48d303c503b84f82212e ]
 
-ARM secondary CPUs allocate cacheinfo in detect_cache_attributes(),
-called from secondary_start_kernel() with interrupts disabled. With
-PREEMPT_RT, the allocation takes a sleeping lock and triggers
-"BUG: sleeping function called from invalid context".
+A CPU coming online for the first time gets its per CPU buffer allocated
+by trace_rb_cpu_prepare(), which then adds it to buffer->cpumask. If that
+happens while ring_buffer_subbuf_order_set() is running, the CPU shows up
+after the allocation loop and the install loop walks it with an empty
+new_pages list, corrupting the buffer.
 
-Call fetch_cache_info() for each possible CPU from init_cpu_topology()
-on the boot CPU, following commit 5944ce092b97 ("arch_topology: Build
-cacheinfo from primary CPU"). This supplies the arrays before secondary
-CPUs populate them. Suppress -ENOENT and -EOPNOTSUPP, which leave cache
-detection to the existing late path.
+Take cpus_read_lock() as ring_buffer_resize() does.
 
-The CLIDR fallback uses the boot CPU's cache geometry. A secondary CPU
-with more cache leaves can still require late reallocation and trigger
-the warning.
-
-Assisted-by: LLM
-
-Fixes: a9ff94477836 ("ARM: 9433/2: implement cacheinfo support")
 Cc: stable@vger.kernel.org
-Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20260912195552.76673-5-kmehltretter@gmail.com/
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
+Link: https://patch.msgid.link/20260916192628.274136-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/topology.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ kernel/trace/ring_buffer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/kernel/topology.c b/arch/arm/kernel/topology.c
-index 2336ee2aa44a2..e6b50cd43ce53 100644
---- a/arch/arm/kernel/topology.c
-+++ b/arch/arm/kernel/topology.c
-@@ -12,6 +12,7 @@
-  */
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index f74acc78866d8..dcb762664ce73 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -7004,6 +7004,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
+ 	if (psize > RB_WRITE_MASK + 1)
+ 		return -EINVAL;
  
- #include <linux/arch_topology.h>
-+#include <linux/cacheinfo.h>
- #include <linux/cpu.h>
- #include <linux/cpufreq.h>
- #include <linux/cpumask.h>
-@@ -238,8 +239,20 @@ void store_cpu_topology(unsigned int cpuid)
-  */
- void __init init_cpu_topology(void)
- {
-+	int cpu, ret;
++	guard(cpus_read_lock)();
 +
- 	reset_cpu_topology();
- 	smp_wmb();
+ 	/* prevent another thread from changing buffer sizes */
+ 	guard(mutex)(&buffer->mutex);
  
- 	parse_dt_topology();
-+
-+	for_each_possible_cpu(cpu) {
-+		ret = fetch_cache_info(cpu);
-+		if (!ret)
-+			continue;
-+		/* CPUs without a usable CLIDR return -EOPNOTSUPP. */
-+		if (ret != -ENOENT && ret != -EOPNOTSUPP)
-+			pr_err("Early cacheinfo failed, ret = %d\n", ret);
-+		return;
-+	}
- }
 -- 
 2.53.0
 
