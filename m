@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061730;
-	b=4tg1+DPt95tTAAyfsBjHDAaE8mbImCQ+/N7zl0awS+aQahc9WpvsNSDEEgCYFzt035t8
-	 Cc784toSSgFOo9emx9HlRHNp/vmFfFRd4ymgQuQMp9P3uPHcixcLRyGfb+sVTCvBGq3kw
-	 bkurD8OPBEb5nVGrWibtBvC5Z/SMXWDaAI5TD3OzHKlzwJfjRVIOcNQtmn5QI6N2A6z88
-	 eRtTt6hrjPPy0JA4EdjexYe69ouDQRUQH7VX9LK7P5id5HfSZ0rARkTcrKdlMJXXSbs3G
-	 +0kbQ7Yhp7M+CcY3za7hFoEeK35F0UajLj52fOeWzyx7x+WxoBTseQBbco5P6iP3qJg==
+	t=1794061732;
+	b=p6GQD5VyoSPHTHyoxBgza7hFeNLtsVfXTzEjenE3kLjT0uqO/gBmdSkaBn1h+7ZHLFb7
+	 qqt7ubZFWWeteaaLwuucNUQuAV6oQjzRvzPhbIwtcTSiReI3kYe9VI+vHE5e1KiO7/PQs
+	 WFE5KHtMFu34tNJE260pJoYzjv4ljJrVJkFpQQQIfBgEv8+uQKBDLFv5VfaCFWWnIyqEo
+	 f0gj17Q9alrut/zvwxJeUiYW2iDKLxc1V5efD5FLEeRK7pZy993Ao9N7sts7VZljwBheG
+	 0o2QHYEkEc6qPyJwSiXwwdWgmJXFhsxALdVAi7JBq5yW0nUcQIkcVGxnRQ/7dTEIw+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oYPqRLYehh+49EsCGkWQdTTcXdKKIOO/Q0cdxWZAlss=;
-	b=c3NilHzO0AzgNQdyANSvThaU3JFhb75sk0JlaX7G937Wm5E/BRWAj5L86RacicNqC6CU
-	 hgd7TK8rWUV6XN0SrHT/AyUTCaAeFvpkFqzxxJgduLhx3GV4TPK2lVohQQa6HlW9QGodG
-	 5BQHVuQjgfiaOy53gTdcTl97vteO8yDAcPuEaQuofVrdVod0cwviJQlxHeiN+e5oKCmXa
-	 AYDz4Wb23+iBZ/0iyVDRDLLQIqGtRhX7UAQWxt1HGRaq9fCM34R9kQtITTzQL/2WETcHc
-	 W9PhrOFLxtuu6M1k3r86DAoqGOSVS5WUv+LpVqnM7TyFLj978JsOlc9HXWdDoRoLlcQ==
+	bh=PvOVIqybI3uVfq7H979AF+15XTNtbb7V+h4o3Fcggxc=;
+	b=oHoLYEtZcsnZfTyfze5WwmsFQBQOsb08D0Fh40feF4IyhMdMTGWsG7mUy0gtqdaoPIVi
+	 6DKgma6umLxKQa5DIE356JruWMevSEYwsh21JvrIjaMC5TJvYoaPhf6QHb3XLddkJLFGr
+	 T1l+J2zCNbF06z1H9cCgxhjFRm1ShzckEFQhgaJPzqqB0PIwc+geHcNx5O89z/ldmJ0rT
+	 jRNqH/3lz3ku9q+17Fv9DCaref/AAWeAIu8gQkZNjckLUEZHmUJy2Gosxl7cNKBlHac4I
+	 BluHiBlicQgfLynu2wDbrb9gz5dP0VvN0hso/UIMl1bxY8cxUp7guepdy2iuAIS2Q/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sbd0CEhk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzxKUq6u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E8C606A32E;
-	Sat,  7 Nov 2026 14:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FB0606A32E;
+	Sat,  7 Nov 2026 14:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sbd0CEhk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359131F0089F;
-	Sat,  7 Nov 2026 14:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzxKUq6u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A821F0089F;
+	Sat,  7 Nov 2026 14:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061730;
-	bh=oYPqRLYehh+49EsCGkWQdTTcXdKKIOO/Q0cdxWZAlss=;
+	s=korg; t=1794061731;
+	bh=PvOVIqybI3uVfq7H979AF+15XTNtbb7V+h4o3Fcggxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sbd0CEhkqixb/1pITAltK6AQwSkYvPuP/gIrs+ufFDjRMOOEUtf5I8Z4sd+0m3ab1
-	 sFhIEgF1mtgdUoC0tPpDFNiCmNKbt0tqHqLmDrnTOUX5PX6UIho43eaFQdGJeNd4CC
-	 3Op1b1ODwQAU8uQdxTRZaeCAdUjwDLsas3J5bfhA=
+	b=ZzxKUq6u03CRQC09mdsKXAxfsVrMELrXaU+YWBthBcDftw7IdSSXdVafaQTHg4x5z
+	 hMXF2sP7nk1X9PFVISQsSebzBLeNNC8K/4uqd4bHHNv4WeW5Dk81s/NCfudD/y8j71
+	 mdXq2hfm9YApKBrNypxTI7kMq3TVuBqO//3nplr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0772/1536] nfsd: propagate SETXATTR value decode errors
-Date: Sat,  7 Nov 2026 08:46:28 -0500
-Message-ID: <20261107135019.215714137@linuxfoundation.org>
+Subject: [PATCH 6.12 0773/1536] NFSD: Reject an oversized principal hash from nfsdcld
+Date: Sat,  7 Nov 2026 08:46:29 -0500
+Message-ID: <20261107135019.243077193@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,39 +66,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit cfcfe0b38a66bbc4122c78a2b75e1b97b3534761 upstream.
+commit dbed9418c48906dae1a7bc328fb3bc0d0d0020c8 upstream.
 
-nfsd4_decode_setxattr() stores the status returned while assembling a
-non-empty attribute value, but then unconditionally returns nfs_ok. An
-allocation failure can therefore leave a NULL value buffer paired with a
-non-zero length and allow compound processing to continue.
+__cld_pipe_inprogress_downcall() takes the principal hash length
+from the daemon's GraceStart downcall without checking it against
+the cc_princhash payload it describes, which holds at most
+SHA256_DIGEST_SIZE bytes. The length is stored verbatim in the
+reclaim record, and nfsd4_cld_check_v2() later hands it to memcmp()
+against a digest array of SHA256_DIGEST_SIZE bytes on the stack. A
+length up to U8_MAX reads past the end of that array, and the stray
+bytes can only make the comparison fail, denying the client its
+reclaim. The pipe is mode 0600 in rpc_pipefs, so the trigger is a
+broken or hostile nfsdcld rather than an unprivileged task.
 
-Return the decoder status so that the operation stops on the original
-error.
+Reject a length larger than the wire field, as the existing check
+on the client name length does.
 
-Fixes: 23e50fe3a5e6 ("nfsd: implement the xattr functions and en/decode logic")
+Fixes: 6ee95d1c8991 ("nfsd: add support for upcall version 2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915125636.2849626-1-qwe.aldo@gmail.com
+Link: https://patch.msgid.link/20260901-alemi-v2-4-e163f94a3a6e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4recover.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -2279,7 +2279,7 @@ nfsd4_decode_setxattr(struct nfsd4_compo
- 						&setxattr->setxa_buf, size);
- 	}
- 
--	return nfs_ok;
-+	return status;
- }
- 
- static __be32
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -809,6 +809,11 @@ __cld_pipe_inprogress_downcall(const str
+ 			name.len = namelen;
+ 			if (get_user(princhashlen, &ci->cc_princhash.cp_len))
+ 				return -EFAULT;
++			if (princhashlen > SHA256_DIGEST_SIZE) {
++				dprintk("%s: invalid princhashlen (%u)",
++					__func__, princhashlen);
++				return -EINVAL;
++			}
+ 			if (princhashlen > 0) {
+ 				princhashcopy = memdup_user(
+ 					&ci->cc_princhash.cp_data,
 
 
