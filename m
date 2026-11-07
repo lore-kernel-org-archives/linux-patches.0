@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063817;
-	b=2ymPttZGBcn7DdulHt6GjUyZr169gsoNc8zWSUpIbZtwtX+clR70dGO8hf20/gosLJNu
-	 Tcg3HaVFLNkgKsyZvD308VpXLX1TVfTu9t6Bmty3jQ07G2j/anFFGBPKVlsFgJcHrHsGE
-	 Iix1EJTIY7SZdOTFxGro6w4BK77zyQ8EHgqn5ZB9GDFxB6/l71TBcnP9Pj97J2uo/RpNG
-	 GE3Z0Vl5lvXdw21216nGYDNR08CRZ5is5jrTA7Eb7oc+ATppJIW3yHJH2U3+nUJrQZBNq
-	 8hTBSN7aByqmu5a0VY2XtizkyDffPtaxdPpEd2JRTe40SSHTy0+yURIN3q/OHoFZGiQ==
+	t=1794063818;
+	b=zWKO8AbondWnLVa+GgVHkhei5lNdZfi+jU6cZGAanNu5/RNKnwmwqYzbUDHKeA7DuAPL
+	 LWD3tLiqt8lXpY7dhIz1uxZhNRrK4w72IT2gEieWL5ZN0Stj1Wz7tveuVmOfEY5DwCUhQ
+	 yc59EpP4DpbPmXkQsfGkwZ+WqppllG4ylC3LSqdzWTDOaSQcDqI8pVbn4oyjJWQFMe32b
+	 OBvVJ+HZo8bBy/ekzKnSvTPYXGnQTwQhl9K7HK7oFZbYwzSt5Ay5YEsctfqHGfl/KOS/R
+	 HgwcHjc7wcMgUpYICxV0ljvVkWTR5UaaTSVbAjt+/2EjvXF86DcMfTEw+oQAYBVbXCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063818;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xyx2BlTwXTDEISEgqrv9Tf8srweXEnZo62CWsPw8nsI=;
-	b=HJXgmEpjCbqXR209SNZq9jnhQP8F7B3X2CxXV3klhU1jVCgvr5AMN7bYiGLIpTItraSj
-	 +0q7knYLLr1q+Id7XCWfNljz/4Oq1raY8iIV+Qa5ADL1sJFz27zbaJObAopTJxMfmoeQQ
-	 KvenwWypXpPBVpSYEPW1N5kuXW/kQSbQAtT5k6Aupf+ajJDySS987aaHULJ2qEKkXZMGu
-	 lEQCl/vsDSW3kAe3s2zSxXDIb/nG1tHaLinpt8e/Oe3xLBl9585dt/uDuTxci181UCTft
-	 X/ieAgecfHzDxYgcqtl2KsYtqwZVgb11mpE0SeLp2E6z7s+RLBR+WP9JUTxphkG8kpw==
+	bh=gb5YHOvy1HQFhlu07qL7sQBxXuP+6eZS1RKTcFDEYEk=;
+	b=NzJO6Cc2zkGRAB6yoRj/CTWoMZq1Aj8eToI6BWgYaPeWG7mzO4bNBew2L6BQFacSgnVQ
+	 hdWcU+TQXBmkhwqBOz5fKmyqRNDsaZgTtU5HCSglT5z20LYwi33vRz4/UZn9iDIgnSpIQ
+	 3Az7zw0eCXFoUXj8B0KzQGkVX6njhqHDJqGFpyj4piYuQm6lShy8TBcbvcw6Sh+uOT5gv
+	 6nJh/NABJfQpwS+7PZpJStbsu7lLlYUtUAWtRsyLCidHyXBjza7TYPbPoil/tSWRaVFN7
+	 BYde3/ZbyEyhQuMdwN6+MjoJ6Mk2VGwsbjozEPx5KQtzH4zg/z+qbAb/eh9+OXDh8Yg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IW6nGgmD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r4oVmVYC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5A3606D822;
-	Sat,  7 Nov 2026 15:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDBF606D822;
+	Sat,  7 Nov 2026 15:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IW6nGgmD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261681F008A4;
-	Sat,  7 Nov 2026 15:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r4oVmVYC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7CA1F0089F;
+	Sat,  7 Nov 2026 15:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063817;
-	bh=xyx2BlTwXTDEISEgqrv9Tf8srweXEnZo62CWsPw8nsI=;
+	s=korg; t=1794063818;
+	bh=gb5YHOvy1HQFhlu07qL7sQBxXuP+6eZS1RKTcFDEYEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IW6nGgmD6BzsSJydAuVn2Tk+rBWJFf0jsi2fTLt0QIsxLPVuF/N6yhuGvv5KiS++x
-	 HFq2q5zcIg1XQD8xiQvy6Z0y1cyukM6EsIG0qVoDmHi+mn7dWxkUutsiwyzlBS3jW7
-	 ykELHwrkELsif15qjgvqBzeZhb6Ri/0apG9B7pz8=
+	b=r4oVmVYCZqncDtIz76l0bQP8Pj6Kha47gs5XZ6hbvY9UKB6LZCoxa69N/Efa+0i0o
+	 BjKCcJH8ptBivKyfT17KPFRCs6PEqpJ1v0uG0LaGwf7x4/c9aKOLGSGYl9b6ntgI//
+	 zqLv+nYIZRLJTyzUFB/L1wUo0oUopAa9Z2SdsZRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Michal Simek <monstr@monstr.eu>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0034/1257] media: imx-jpeg: finish the job on device_run() error paths
-Date: Sat,  7 Nov 2026 08:38:50 -0500
-Message-ID: <20261107134940.348384307@linuxfoundation.org>
+Subject: [PATCH 7.3 0035/1257] microblaze: Fix MB_MANAGER build with older binutils
+Date: Sat,  7 Nov 2026 08:38:51 -0500
+Message-ID: <20261107134940.374664089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,96 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 30b35fd2b999e1b8c26f8191d974d20c8848d2d6 ]
+[ Upstream commit 79c8aa4da3d5453dd956d2170d1c9c716311ea06 ]
 
-mxc_jpeg_device_run() returns early through a shared "end" label on several
-error paths (no free slot, mxc_jpeg_alloc_slot_data() failure, or missing
-buffers or queue data), and none of them calls v4l2_m2m_job_finish().
-Since the delayed work is queued only after the hardware is started, those
-paths neither finish the job directly nor queue timeout work that could
-finish it later. The job is left with TRANS_RUNNING set, so the
-wait_event() in v4l2_m2m_cancel_job() (reached from v4l2_m2m_ctx_release()
-at close) waits indefinitely and the close hangs.
+Commit 88707ebe77e2 ("microblaze: Add custom break vector handler for mb
+manager") added the suspend mnemonic to the MB Manager break handler.
 
-mxc_jpeg_alloc_slot_data() uses dma_alloc_coherent(), so the failure path
-is reachable under memory pressure.
+GNU as only learned this mnemonic in binutils 2.42. Linux supports
+binutils 2.30, where enabling CONFIG_MB_MANAGER fails:
 
-Return the src/dst buffers with VB2_BUF_STATE_ERROR and call
-v4l2_m2m_job_finish() on those paths: paths that have buffers use a
-"buf_finish" label; the no-buffer path uses "job_finish" directly. This
-mirrors the existing jpeg_parse_error path.
+  arch/microblaze/kernel/entry.S:946: Error: unknown opcode "suspend"
 
-This bug was found by static analysis.
+The suspend mnemonic is an alias for mbar 24, and both encode as
+0xbb020004. Use the underlying instruction, which GNU as 2.30 already
+supports.
 
-Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
+Fixes: 88707ebe77e2 ("microblaze: Add custom break vector handler for mb manager")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310310151.UhB396Qs-lkp@intel.com/
+Suggested-by: Michal Simek <monstr@monstr.eu>
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260813024026.5402-1-kmehltretter@gmail.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/nxp/imx-jpeg/mxc-jpeg.c    | 21 +++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ arch/microblaze/kernel/entry.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-index ea2fad5dd646d..e170859354352 100644
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -1590,15 +1590,15 @@ static void mxc_jpeg_device_run(void *priv)
- 	dst_buf = v4l2_m2m_next_dst_buf(ctx->fh.m2m_ctx);
- 	if (!src_buf || !dst_buf) {
- 		dev_err(dev, "Null src or dst buf\n");
--		goto end;
-+		goto job_finish;
- 	}
+diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
+index 582d7256d8154..ad44341a5dbc7 100644
+--- a/arch/microblaze/kernel/entry.S
++++ b/arch/microblaze/kernel/entry.S
+@@ -943,7 +943,7 @@ ret_from_break:
+ 	mbar	1
+ 	mbar	2
+ 	bri	4
+-	suspend
++	mbar	24 /* suspend */
+ 	nop
+ #endif
  
- 	q_data_cap = mxc_jpeg_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_CAPTURE);
- 	if (!q_data_cap)
--		goto end;
-+		goto buf_finish;
- 	q_data_out = mxc_jpeg_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_OUTPUT);
- 	if (!q_data_out)
--		goto end;
-+		goto buf_finish;
- 	src_buf->sequence = q_data_out->sequence++;
- 	dst_buf->sequence = q_data_cap->sequence++;
- 
-@@ -1636,11 +1636,11 @@ static void mxc_jpeg_device_run(void *priv)
- 	ctx->slot = mxc_get_free_slot(&jpeg->slot_data);
- 	if (ctx->slot < 0) {
- 		dev_err(dev, "No more free slots\n");
--		goto end;
-+		goto buf_finish;
- 	}
- 	if (!mxc_jpeg_alloc_slot_data(jpeg)) {
- 		dev_err(dev, "Cannot allocate slot data\n");
--		goto end;
-+		goto buf_finish;
- 	}
- 
- 	mxc_jpeg_enable_slot(reg, ctx->slot);
-@@ -1660,8 +1660,17 @@ static void mxc_jpeg_device_run(void *priv)
- 		mxc_jpeg_dec_mode_go(dev, reg);
- 	}
- 	schedule_delayed_work(&ctx->task_timer, msecs_to_jiffies(hw_timeout));
--end:
-+
- 	spin_unlock_irqrestore(&ctx->mxc_jpeg->hw_lock, flags);
-+	return;
-+buf_finish:
-+	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
-+	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
-+	v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_ERROR);
-+	v4l2_m2m_buf_done(dst_buf, VB2_BUF_STATE_ERROR);
-+job_finish:
-+	spin_unlock_irqrestore(&ctx->mxc_jpeg->hw_lock, flags);
-+	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
- }
- 
- static int mxc_jpeg_decoder_cmd(struct file *file, void *priv,
 -- 
 2.53.0
 
