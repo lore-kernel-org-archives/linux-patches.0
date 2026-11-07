@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063289;
-	b=4HNCAokUEqF3dUfNEe8Ez8Ix3wJGjGMmrmp78N42rmUs5O1dD+AaorZxzfPkOlyJFg97
-	 flHpqSqX3gHjntLuyjeRIoEyvKExrVjURu4NYengMo6pQBfXawCMySiqHu4fe0EQJOML7
-	 M8EK25B7/MLtqs4DITGZ84LG60wZS2/QgUIPcX5Ku7llnSa6EBnf0M0lH+3BU53Vg63zE
-	 UJEbdm/ku+6jV4xxzSGldQTwUeo1Vr+sxMQJG7g7cI2FekZv3EpsL2nHAfPm9tXChnsxm
-	 9he5Lc/OHsC6FT/C+XcWBriPQ4sK5eepwoyUH1Gc4Bil2nZ86xXFvsuWXNp9XSWAdaw==
+	t=1794063291;
+	b=HOoTaePEqHOeYWturFpuLQ8Y8H/M1YLMYDxS2lFDFOCjeXjdSnKmiLk/Stpho5BIe6xm
+	 Xn0ThrlhcPkmkO1FzxQFqTLcSVXbT6xurT6QFrKv8YtnZNKdu8jbC+vqcWpf7q3CvwRFP
+	 Ea5sVPt6RW3ZxnUZOh6DmxNsPhIBQ2lHXuQKJ7mamxfiM4aVIaZpah+Qd/ICkR3phvfY9
+	 AGsv2AOy946iwBF9pZk7MMNxKO7uAMN0FmP8LbPFjqixEASHVHNaFs8Vtuq6DCHtid1Jd
+	 opWaGdYkSMRK2FZXMAOCIkZ2mVLogMfAOnfcERxh338uwuWDD/ZXDF6lQtRChQJuNLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063291;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LF7esuhXoIb22C7b+sFC+aW0xVhEfrLdtbMi95PNT9g=;
-	b=2Sy1Hn1d5W0fMYKhNrPOBQy5gOP91bzQjry4NKshqB8OJbgWE90tIyB9EU/Ie0slIBe8
-	 zhkycJjfj33V+xD33rZRwxRuDEmcqqeWOhF5yVhUGtmH4YYiCbqlfRA90jQaHb780W4JN
-	 PfoR4o4xZOmOqgb5Nfl2kpuSNrBVzIW8HcWiGjbosIwVXHJktB6pTDAInB5JIc4F2M87g
-	 hHPGw9N7gPbV8ckoNIpNEjmkv2w5tYOo+obl0Jc4HN5QoBvSLKjbNljgGWf3wn8ew0kdR
-	 8WSCGq3+1hmLbm9r8pcbyLQyYlrkggfxt6gm0Ea6oOAIGpBMkiN9JQi5bti+zE+tnUA==
+	bh=nFpOE08zt6LKiYAJkddKnt9FS54yYK4DK4eA7f2RHXU=;
+	b=ecWjaNIOt2IIkyD2sXQli6kWQROhxw6u///DvupXo5sLHM2+fdfdiwxvcQupDWp/1sB4
+	 CvpW08urYZ9Z/oq3I7noEnx+cc5To5ReML8TCnxuV3RuHGVXA76e/9k4U3TIY20bV21oO
+	 zDnz1BOgY0354Fyc91hos98zZ8rp+tv+YeIjC3YQlnHA55L0+1RZC6Tgk69rqK9JWuDGQ
+	 P0NMFGlGtTeWpH8uWc1UJlTVdRK492zHHfsHOqxOv9Hkn8NzyJnBG5kiyopYeeOgKyKZi
+	 bIK0kKikQwoSeOX6PikSxABx6gpjZ2qH+PFaFaFSDE9QbL7bi1iNjMhP1cF00hQxsAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr9COJ58;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rq2Zy7PN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791F5606A32C;
-	Sat,  7 Nov 2026 14:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C1E606D805;
+	Sat,  7 Nov 2026 14:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr9COJ58
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227CF1F0089F;
-	Sat,  7 Nov 2026 14:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rq2Zy7PN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857E81F0089F;
+	Sat,  7 Nov 2026 14:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063289;
-	bh=LF7esuhXoIb22C7b+sFC+aW0xVhEfrLdtbMi95PNT9g=;
+	s=korg; t=1794063290;
+	bh=nFpOE08zt6LKiYAJkddKnt9FS54yYK4DK4eA7f2RHXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yr9COJ58oZsJKu+Caf7NrVzA3mQz/vjS4oDkFnWRXd+S2w8LoeLP5hRKcyHU6hjC/
-	 TO1rnL8lGXCaCNIIkgqkkGtN2GiqE7fzlbaOCrUVF+JudQst/ZHgrgT5a7oNBhpEN7
-	 4zH9WJI0+Vs630uUnKMYeNBcUHutu+TqZRxo1aIU=
+	b=rq2Zy7PNG4FNL3sG6eExzJmWOFbaT+/YtNn8JH4opriLZODdOS/z3M/oXXuylVkM5
+	 DHlqq1HWhaUZPTx5UEPTHJdbtG3PVBHIxZp3X9stAJWrnKLcc4eFdyyvmTJ/JFDSDs
+	 d/wHARLMXkmhM8bMK4O6D6JugbiCQmzZuKn1v91I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Menninger <tmenninger@everpuredata.com>,
-	Chuck Lever <cel@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Breno Leitao <leitao@debian.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	SJ Park <sj@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 475/869] xprtrdma: prevent disconnect feedback during endpoint teardown
-Date: Sat,  7 Nov 2026 08:52:37 -0500
-Message-ID: <20261107134909.722541073@linuxfoundation.org>
+Subject: [PATCH 6.18 484/869] mm/shmem: report RCU-tasks quiescent states while undoing a range
+Date: Sat,  7 Nov 2026 08:52:46 -0500
+Message-ID: <20261107134909.991060057@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,91 +72,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Menninger <tmenninger@everpuredata.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 0b5bb4e586f7b0a449f4d90a524f76a3be5db355 ]
+[ Upstream commit ebd1a08c192109c83a87ddf42793ed6283180faf ]
 
-xprt_autoclose() clears XPRT_CLOSE_WAIT before invoking the transport's
-->close() operation. For RPC/RDMA, ->close() calls
-rpcrdma_xprt_disconnect(), which disconnects the RDMA CM endpoint and
-drains its QP.
+This shows up in the Meta fleet on ftruncate() of large tmpfs files:
 
-Since commit 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on
-connect"), RDMA_CM_EVENT_DISCONNECTED requests a SUNRPC transport
-disconnect. Today that path, along with failed completion handling,
-reaches xprt_force_disconnect() through rpcrdma_force_disconnect().
+  INFO: rcu_tasks detected stalls on tasks:
+  00000000752fd185: .. nvcsw: 59455/59455 holdout: 1 idle_cpu: -1/0
+  task:rocksdb:bottom  state:R  running task
+    __folio_split
+    find_get_entry
+    find_get_entries
+    truncate_inode_partial_folio
+    shmem_undo_range
+    shmem_setattr
+    notify_change
+    do_ftruncate
+    __x64_sys_ftruncate
+    do_syscall_64
 
-Commit c487eb7d8e41 ("xprtrdma: Clean up disconnect") later added
-re_force_disconnect to ensure that multiple failure indications request
-only one SUNRPC disconnect. However, the gate remains open when SUNRPC
-itself begins endpoint teardown.
+shmem_undo_range() walks the whole of the requested range in folio_batch
+sized steps, twice, and its two cond_resched() calls are the only
+reschedule points in that walk.
 
-If re_force_disconnect is still clear, either a CM disconnect event or a
-completion error can set XPRT_CLOSE_WAIT again while the current close
-is in progress. When the transport send lock is subsequently released,
-xprt_clear_locked() observes XPRT_CLOSE_WAIT and queues another
-autoclose.
+cond_resched() is not an RCU-tasks quiescent state.  Use
+cond_resched_tasks_rcu_qs() at both points so the walk reports an
+RCU-tasks quiescent state as it proceeds.
 
-Requesting a disconnect this way is necessary when a connection is lost
-unexpectedly, but not when the event was generated by
-rpcrdma_xprt_disconnect() itself. In that case SUNRPC is already
-committed to closing the transport.
-
-Mark re_force_disconnect before initiating local endpoint teardown so
-that CM events and completion errors caused by that teardown cannot
-request another close. An unexpected error that wins the race before
-local endpoint teardown begins can still request a disconnect normally.
-
-Use a fully ordered exchange so that the gate is globally closed before
-rdma_disconnect() can transition the QP to error and generate the
-callbacks that the gate suppresses.
-
-In 30-second traces of a sustained recovery loop, without this change
-there were 7,693 xprt_force_disconnect() calls, 6,267 SUNRPC autocloses,
-and 172,892 receive-side IB_WC_WR_FLUSH_ERR completions. With this
-change, the same tracepoints recorded 3,512 xprt_force_disconnect()
-calls, 3,212 autocloses, and 131,287 receive-side flush completions.
-Thus QP teardown continues to produce flushed completions, but closing
-the disconnect gate before teardown substantially reduces their
-feedback into the SUNRPC close path.
-
-Fixes: 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on connect")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
-Reviewed-by: Chuck Lever <cel@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Link: https://lore.kernel.org/20260918-shmem-tasks-rcu-v1-1-79acf91a2569@debian.org
+Fixes: 8315f42295d2 ("rcu: Add call_rcu_tasks()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: SJ Park <sj@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: "Paul E . McKenney" <paulmck@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ mm/shmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 8449107b2a095..111c415f1aeda 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -114,9 +114,9 @@ static void rpcrdma_xprt_drain(struct rpcrdma_xprt *r_xprt)
- 	rpcrdma_ep_put(ep);
- }
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 0100110f77b8e..f2b5a11e88a55 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1129,7 +1129,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 		}
+ 		folio_batch_remove_exceptionals(&fbatch);
+ 		folio_batch_release(&fbatch);
+-		cond_resched();
++		cond_resched_tasks_rcu_qs();
+ 	}
  
--/* Ensure xprt_force_disconnect() is invoked exactly once when a
-- * connection is closed or lost. (The important thing is it needs
-- * to be invoked "at least" once).
-+/* Ensure xprt_force_disconnect() is invoked at most once for an
-+ * unexpected endpoint failure. Local endpoint teardown closes this
-+ * gate before it can generate CM events and flushed completions.
-  */
- void rpcrdma_force_disconnect(struct rpcrdma_ep *ep)
- {
-@@ -587,6 +587,9 @@ void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt)
- 	if (!ep)
- 		return;
+ 	/*
+@@ -1170,7 +1170,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
  
-+	/* Prevent teardown-generated events from requesting another close. */
-+	atomic_xchg(&ep->re_force_disconnect, 1);
-+
- 	id = ep->re_id;
- 	rc = rdma_disconnect(id);
- 	trace_xprtrdma_disconnect(r_xprt, rc);
+ 	index = start;
+ 	while (index < end) {
+-		cond_resched();
++		cond_resched_tasks_rcu_qs();
+ 
+ 		if (!find_get_entries(mapping, &index, end - 1, &fbatch,
+ 				indices)) {
 -- 
 2.53.0
 
