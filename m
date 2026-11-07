@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062139;
-	b=zO9++Kbfbqtuu0mrjEgaMl2YIuA3rGXr2ZjSoSuuQyPlLDqXUeRKjaxWEkq/TnGzS65d
-	 W8R0J05i30gm/2YQ1A3NMvI3020V5IMe2HUhpKYjVhW586ddfZRN8eScfmDGuxguHHnoS
-	 Hfw4i4PjHL8mN38SU0aMOiBdhm2ykVoD8VKMNCyTmdFe2e/SEWCa4JDS+r7KJUjn2eTPj
-	 U34iRfXgh51Smfaws2mf/UhyPrab/uukklxXIfDXP82ACtZBImOKHl/qUakS9pDLd9drb
-	 DqSdcjHoiLYf/0M2SISr5Yfz/VQtdt/n1WVC8QZufbyh299l2h60kn8mfxe9z0U2Vuw==
+	t=1794062140;
+	b=ZIJviHsZgOIQyWYIcAzZaBC3ykubtsiEV3OklS7JFqvOjQdPuqv7iJrXpLRpesbFqXQd
+	 CStbxJ6Z2Sw4Vh/tyyC2JcEvix9FUc2RSXdL8WeK4GtH6bMdqpWmojJFqtiaX6u5UL/IB
+	 wKqUGEGtc8+YvWAQwEaOgWd3bBx+5AHhOrRvo02SfXrAiCK2tg7+qmXPtfKa4nmzLA4+A
+	 X1LM9gDns9ZVNe+Fy7VuLjQp72aQt5GDf2neeWyvrkmFa1y2EIb0L0fb0M1UFz7KyUFXw
+	 U1Mk/6h53HJPkj3YUEY3wvrz/S73UVuhYvFWH74qRS9TS1fEfLKouxgur1Tn7B/xjgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jitSmH4wXqrSdNzeMo6bpaUABAC0YwWZLZOz2MaQyxU=;
-	b=suaxwf8B3FyoxQQVSqDrxq3rYhO3VF3stIC3hAIScCffN150OlWnC1di38rzS6op7JE4
-	 TcbhhottILepvC8ddfwx8cSrgb4HdEm81KdQ1Qg3ld4/CpJNxzJTOMnoIbRtiJbgXzNfh
-	 jMjMZvOoMjW/jDQf7qIAqTOUuweFQAsfDWFz3Bz+3cIFVYeo+oykcrHrFDbKs7VM2ADlS
-	 pNdULfl/KdTKpScYeCAzj59FxTNe5PRJmVBlanHJrONj4Rj8j+xBCjsXmzaMqO36lzbHu
-	 x4N97QGg9iwTUtyNReCLxNfDxgWKp/iq4NGNi4xwjaw4lg20gKrpgXrnftv+6twt9BQ==
+	bh=3lexRMWh8C0yz5RUZRqks9MfHZ4ks415+FoyGhl//90=;
+	b=P95FnogdNkj78/T+kpn75ffZzVEcBQx6DplnothiL+vW8JkwJ82lU4JPcB7hvMVIp/bM
+	 yzIYkaDjuKawL/DhJtyBYgmKCkhZnLmxqc3ucPN8dMuIKWA24YUH2bX11CZOx/V6XV2V3
+	 M95a22T/2Y4YksvoPTx/l+N4PHaqiLZJjsbl+zHfC3JfBAX4oxu9EJM1cy8O+zWpcNVZe
+	 RgppTL8UhUOl+I3ZQbK6WAQyHXKJYerYB4HIJipUY4sXApJsYYAlYu5iZ6N+PtQC00re6
+	 ao1h2p8cwpaK3vAvT2RpN74KNThv7kryum1C+y1/q4kuz3NCenHNunJsCgXDdr+HQlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BwvTUDev;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC2yxwN6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1D4606A653;
-	Sat,  7 Nov 2026 14:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2460606A653;
+	Sat,  7 Nov 2026 14:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BwvTUDev
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF501F008A1;
-	Sat,  7 Nov 2026 14:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC2yxwN6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8DE1F008A3;
+	Sat,  7 Nov 2026 14:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062138;
-	bh=jitSmH4wXqrSdNzeMo6bpaUABAC0YwWZLZOz2MaQyxU=;
+	s=korg; t=1794062139;
+	bh=3lexRMWh8C0yz5RUZRqks9MfHZ4ks415+FoyGhl//90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BwvTUDevuIBGPA671Hihd5h6WkRRA9cGgLKRy8x7Bv2YYn8WicI5RMYKg4sXQ1hD2
-	 JnYo1/ORRdRivab9F4HXtMF3cyaqfd0p0ZFOpqvhKv0grSX3xF2YuYyzIx90bsXJXT
-	 EDXwL1dr0TTO0Vjl5NQBPb7Vr5Yx8dUQzbXMUxso=
+	b=hC2yxwN6XHyqjRrVguoWdspPxL0bKo0v/h1+eocKmxHssELJ/oMk7jqJ0RAkOIBGC
+	 RCySxuGFmQboRf3fUTZ4YXwz5itBhYH/BpBBrIOmINtC8UtBl+1wQZWnhtGI8KEDa+
+	 5n0rL/o2P8jTNmqGEFUjeojKdlK+ebVS0l4JL/IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hal Feng <hal.feng@starfivetech.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1104/1536] clk: starfive: jh7110-isp: fix refcount leak in jh7110_ispcrg_probe()
-Date: Sat,  7 Nov 2026 08:52:00 -0500
-Message-ID: <20261107135028.710616922@linuxfoundation.org>
+Subject: [PATCH 6.12 1105/1536] pseries/plpks: fix error handling in plpks_read_var()
+Date: Sat,  7 Nov 2026 08:52:01 -0500
+Message-ID: <20261107135028.738362042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,45 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Srish Srinivasan <ssrish@linux.ibm.com>
 
-[ Upstream commit 1c4f9480473917558908c083d1293b4ebb3d50c5 ]
+[ Upstream commit d52a1659cb1718f93166ab8dd8621237e564a1c4 ]
 
-In jh7110_ispcrg_probe(), the error path for pm_runtime_get_sync()
-failure directly returns without releasing the runtime PM reference
-count. The call to __pm_runtime_resume() increments the usage count
-unconditionally before attempting to resume, and does not decrement it
-on failure. Thus the leaked reference makes it impossible to suspend
-the device later.
+When a PLPKS variable is initialized without a policy and used to read an
+object with the PLPKS_WRAPPINGKEY policy set, the hypervisor returns
+H_AUTHORITY along with the object's policy. However, plpks_read_var()
+currently treats this the same as any other H_AUTHORITY failure and returns
+an error without propagating the policy information to the caller.
 
-All other error paths correctly jump to err_exit and call
-pm_runtime_put_sync(). Fix this by replacing pm_runtime_get_sync()
-with pm_runtime_resume_and_get(), which properly balances the
-reference count on error.
+Distinguish this case from other H_AUTHORITY failures and propagate the
+returned policy to the caller while preserving the authorization error.
+Remove the explicit assignment of zero to rc on H_SUCCESS, as it is
+redundant.
 
-Cc: stable@vger.kernel.org
-Fixes: 81279f5d0812 ("clk: starfive: Add StarFive JH7110 Image-Signal-Process clock driver")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Hal Feng <hal.feng@starfivetech.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Also validate the PLPKS variable pointer before dereferencing it.
+
+Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
+Cc: stable@vger.kernel.org # 6.0
+Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260923182816.151451-2-ssrish@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/starfive/clk-starfive-jh7110-isp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/plpks.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/starfive/clk-starfive-jh7110-isp.c b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
-index 8c4c3a958a9f4..ace2c2eeac90a 100644
---- a/drivers/clk/starfive/clk-starfive-jh7110-isp.c
-+++ b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
-@@ -140,7 +140,7 @@ static int jh7110_ispcrg_probe(struct platform_device *pdev)
+diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
+index b1667ed05f988..1ea3ef0a36254 100644
+--- a/arch/powerpc/platforms/pseries/plpks.c
++++ b/arch/powerpc/platforms/pseries/plpks.c
+@@ -562,6 +562,9 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
+ 	u8 *output;
+ 	int rc;
  
- 	/* enable power domain and clocks */
- 	pm_runtime_enable(priv->dev);
--	ret = pm_runtime_get_sync(priv->dev);
-+	ret = pm_runtime_resume_and_get(priv->dev);
- 	if (ret < 0)
- 		return dev_err_probe(priv->dev, ret, "failed to turn on power\n");
++	if (!var)
++		return -EINVAL;
++
+ 	if (var->namelen > PLPKS_MAX_NAME_SIZE)
+ 		return -EINVAL;
  
+@@ -593,22 +596,21 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
+ 				 virt_to_phys(var->name), var->namelen, virt_to_phys(output),
+ 				 maxobjsize);
+ 
+-
+ 	if (rc != H_SUCCESS) {
+ 		rc = pseries_status_to_err(rc);
+-		goto out_free_output;
++		if (rc != -EPERM || !retbuf[1])
++			goto out_free_output;
++		goto out_copy_policy;
+ 	}
+ 
+ 	if (!var->data || var->datalen > retbuf[0])
+ 		var->datalen = retbuf[0];
+ 
+-	var->policy = retbuf[1];
+-
+ 	if (var->data)
+ 		memcpy(var->data, output, var->datalen);
+ 
+-	rc = 0;
+-
++out_copy_policy:
++	var->policy = retbuf[1];
+ out_free_output:
+ 	kfree(output);
+ out_free_label:
 -- 
 2.53.0
 
