@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061689;
-	b=HjrIcpitSGnzUEDJaj/mpQiP6UytyMNURWofl/DhBXVrJh72b0jy0My9ZVbT4Ozhb1mW
-	 ncbntK1dU6leYPAyy/d+hpz8xFZO9ud4fJUlH90yZqhzlv8kUMZqRx2iyoiQjIPeyz0J9
-	 UqYsJB/MDznjY8UnL2UVDWxbb/t6iFHQpyOp2S16vU2c/GyD+jxZj43l8m3Qzjapt8qFc
-	 eCOss0TMCb2bR642IFyMn5XoNIrawg4km9ynk6ZG1fMNr9RoPX9CLjQm8KfwBwNgEymEW
-	 DYWgY2RnhtZ/Nw6slIAG0uUSSK8TeT8bKeXvcGUeZh1mLExhp0C5fc7v0Su8iz6XYGQ==
+	t=1794061690;
+	b=QwzQlCWAkb5Fip/ygVOtZmmxXIkmks5t/B0RfIH4obFD6RoK6uCzB2kECPiPF0gxOgb+
+	 nUtSRMCI/KhaMqxlsc2Xp6rgmoE+NLC2GLB7ZFoU5B9FbtKt1P7vHjDwcFLFU6WZoubS1
+	 UggFqVNS1g7wHtvi6uR+/fhEkH4ZBmdcaF1iwedBZ2bPCH1Z6phjI2ns6tRDYsjvBYoET
+	 0yVqderADLEksBIbS8ZtczquHYzxITScGbTaYcjRymapiWH9MikNGGvWBa7ydE610g6NP
+	 8qMeegA+eUroKLQ++O1t4iiVpSpHi44lu3xNpkWqLb9dI8GvdtUfNPpT5BIdHaHUGjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061689;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061690;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6Ux94dwCteUxtXK0d61d/XfUZBg/sOid5QLDwS0J5Tw=;
-	b=RwNEfUNjoc44I5TYoN9ffYx+GL9izdXGQEhr0HDjrdYHc2bNkSwu3MtOwYd+ezNVUMDP
-	 oomDDWGwZFEVUq772L5OtypyV9qsUhpEZICEJfssTEQxMHc8GngubZLi4pq7/xbxD0bk5
-	 FlyP9CtaVPSXItS2tal3n16wfxXZJWy4aZf6NTI6N6aGsYiuJcOoiuUA3pFfLrOWL7hbt
-	 QTF/Im4coqEjY4bm8Az8wL/p/gAzl2WrFS2Ux8ntBfIu/9R5zjwjbRaVlm0y6zny2e4fV
-	 lQC06hiAxJpqip/hW6cdjrXuqPJyef4H2jjr27dyY9AqSg5L4ngC29lQnBTQxQ3GXZA==
+	bh=MGvrM1rxZDMdlbTkLUfvve5gqWP2oH34y4VdsnDRInc=;
+	b=04ResUFHu7IqM4Dn/iTukk6cRNaM0i1LrbILseH+3pe+mxSXzzY2JiUjiwoVPQ5w9FKf
+	 7plppWTRqbX7k5HU60iApHbdX3EJrc9UOlFZw4rLRdC4qG8JtrAGICyrUaMoKXQzJGAkQ
+	 J4Dv87Xt43S2AjHExEyo70CW7SS4C9N2fvfsDOjx9ahtPeolQxbIX/6jqnMreyvl8pOja
+	 eprGrVs23rqsRqBtDwvklSOmc4K0ZgCfLnqJmfJ/2wrzNYaupfaOBNz+Zj1clyC8Oai9g
+	 Cq8hqQz5zI9H14TZhZbR8M2kNa03wE99i5epU4+2qEjPUbT715h1RPK/qCpYwlHrQZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkNiMrJx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WuWNEFF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F9B606A32C;
-	Sat,  7 Nov 2026 14:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4CA606A326;
+	Sat,  7 Nov 2026 14:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkNiMrJx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AA21F008A1;
-	Sat,  7 Nov 2026 14:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WuWNEFF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD051F0089F;
+	Sat,  7 Nov 2026 14:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061689;
-	bh=6Ux94dwCteUxtXK0d61d/XfUZBg/sOid5QLDwS0J5Tw=;
+	s=korg; t=1794061690;
+	bh=MGvrM1rxZDMdlbTkLUfvve5gqWP2oH34y4VdsnDRInc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wkNiMrJxS0WOeGbMArYspECd41XDXL+PKYR0WR2aMt+k8iDxzC6r0WQn3Qn2ENJ90
-	 tk4OxWP/xC3Qr6/IrqIXsePVdMQ8RGh9h1ECJG9nJn6LESGyP6NQb4G/GDS2Ps4Wuu
-	 8vZC/BEkXHo8q+9nDJ7fRQX0cVRwvJVo3kp42pAE=
+	b=2WuWNEFFaLy/PoNs/5xrCct7EVPfAzSZQHx2GGIH+c5vMO7mMCdgWMcs9roaxn2Oo
+	 vaLm+SOO8kE0wr+0kYJ63N/JH/4j99m+ClNgiKqSfKyBiK7SEwtaUMzEOpefpQIkn8
+	 aUN5yBFeOTuehgk0PaMrij8tlShwOoWfBxZ6JJLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0739/1536] xfs: dont subtract excess usage twice when computing agf_btreeblks
-Date: Sat,  7 Nov 2026 08:45:55 -0500
-Message-ID: <20261107135018.276634319@linuxfoundation.org>
+Subject: [PATCH 6.12 0740/1536] xfs: fix correction of unwritten extents in quota file data fork
+Date: Sat,  7 Nov 2026 08:45:56 -0500
+Message-ID: <20261107135018.306527949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,73 +70,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 4439b626fb5104204952aa2f169451688fb6be26 upstream.
+commit 6f2792720673f569fa3e1f68181b9d6fd26802b5 upstream.
 
-LOLLM noticed that the free space btree repair code calculates
-agf_btreeblks from the number of blocks we wrote to rebuild the free
-space btrees (minus the roots).  That's correct.  However, it observes
-that we subtract the "excess" reservation, which is not correct.  Fix
-this accounting problem.
+LOLLM noticed a couple of problems with the code that fixes unwritten
+mappings in the quota file's data fork: first, we should zero the ondisk
+contents as part of converting them to "unwritten" just in case we crash
+shortly after the conversion.  Second, and more importantly, it noticed
+that we fail to resynchronize the iext tree cursor after modifying the
+iext tree.  If the tree shape changes, we could be in a world of hurt.
+Third, we should force a quotacheck if we reset an ondisk dquot.  Fix
+all issues.
 
 Cc: stable@vger.kernel.org # v6.8
-Fixes: 4bdfd7d15747b1 ("xfs: repair free space btrees")
+Fixes: a5b91555403e3a ("xfs: repair quotas")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/alloc_repair.c |    6 +-----
- fs/xfs/scrub/newbt.c        |   13 -------------
- fs/xfs/scrub/newbt.h        |    1 -
- 3 files changed, 1 insertion(+), 19 deletions(-)
+ fs/xfs/scrub/quota_repair.c |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/alloc_repair.c
-+++ b/fs/xfs/scrub/alloc_repair.c
-@@ -663,15 +663,11 @@ xrep_abt_reset_counters(
+--- a/fs/xfs/scrub/quota_repair.c
++++ b/fs/xfs/scrub/quota_repair.c
+@@ -418,7 +418,9 @@ xrep_quota_data_fork(
+ 	/* Check for data fork problems that apply only to quota files. */
+ 	max_dqid_off = XFS_DQ_ID_MAX / qi->qi_dqperchunk;
+ 	ifp = xfs_ifork_ptr(sc->ip, XFS_DATA_FORK);
+-	for_each_xfs_iext(ifp, &icur, &irec) {
++	xfs_iext_first(ifp, &icur);
++
++	while (xfs_iext_get_extent(ifp, &icur, &irec)) {
+ 		if (isnullstartblock(irec.br_startblock)) {
+ 			error = -EFSCORRUPTED;
+ 			goto out;
+@@ -442,16 +444,35 @@ xrep_quota_data_fork(
  
- 	/*
- 	 * Compute the contribution to agf_btreeblks for the new free space
--	 * btrees.  This is the computed btree size minus anything we didn't
--	 * use.
-+	 * btrees.  This is the computed btree size minus the root block.
- 	 */
- 	freesp_btreeblks += ra->new_bnobt.bload.nr_blocks - 1;
- 	freesp_btreeblks += ra->new_cntbt.bload.nr_blocks - 1;
+ 			error = xfs_bmapi_write(sc->tp, sc->ip,
+ 					irec.br_startoff, irec.br_blockcount,
+-					XFS_BMAPI_CONVERT, 0, &nrec, &nmap);
++					XFS_BMAPI_CONVERT | XFS_BMAPI_ZERO, 0,
++					&nrec, &nmap);
+ 			if (error)
+ 				goto out;
+ 			ASSERT(nrec.br_startoff == irec.br_startoff);
+ 			ASSERT(nrec.br_blockcount == irec.br_blockcount);
  
--	freesp_btreeblks -= xrep_newbt_unused_blocks(&ra->new_bnobt);
--	freesp_btreeblks -= xrep_newbt_unused_blocks(&ra->new_cntbt);
--
- 	/*
- 	 * The AGF header contains extra information related to the free space
- 	 * btrees, so we must update those fields here.
---- a/fs/xfs/scrub/newbt.c
-+++ b/fs/xfs/scrub/newbt.c
-@@ -555,16 +555,3 @@ xrep_newbt_claim_block(
- 	/* Relog all the EFIs. */
- 	return xrep_defer_finish(xnr->sc);
- }
--
--/* How many reserved blocks are unused? */
--unsigned int
--xrep_newbt_unused_blocks(
--	struct xrep_newbt	*xnr)
--{
--	struct xrep_newbt_resv	*resv;
--	unsigned int		unused = 0;
--
--	list_for_each_entry(resv, &xnr->resv_list, list)
--		unused += resv->len - resv->used;
--	return unused;
--}
---- a/fs/xfs/scrub/newbt.h
-+++ b/fs/xfs/scrub/newbt.h
-@@ -70,6 +70,5 @@ void xrep_newbt_cancel(struct xrep_newbt
- int xrep_newbt_commit(struct xrep_newbt *xnr);
- int xrep_newbt_claim_block(struct xfs_btree_cur *cur, struct xrep_newbt *xnr,
- 		union xfs_btree_ptr *ptr);
--unsigned int xrep_newbt_unused_blocks(struct xrep_newbt *xnr);
++			/*
++			 * We just zeroed the ondisk dquot, so counts could be
++			 * wrong.  Schedule a quotacheck to fix that.
++			 */
++			xrep_force_quotacheck(sc, dqtype);
+ 			error = xfs_defer_finish(&sc->tp);
+ 			if (error)
+ 				goto out;
++
++			/*
++			 * Set cursor to the next block past the extent we just
++			 * converted because bmapi write could have merged
++			 * records.
++			 */
++			if (!xfs_iext_lookup_extent(sc->ip, ifp,
++					irec.br_startoff + irec.br_blockcount,
++					&icur, &irec))
++				break;
++			continue;
+ 		}
++
++		xfs_iext_next(ifp, &icur);
+ 	}
  
- #endif /* __XFS_SCRUB_NEWBT_H__ */
+ 	if (!joined) {
 
 
