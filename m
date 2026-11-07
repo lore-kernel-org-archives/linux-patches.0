@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061829;
-	b=VecoVMgnaeVWIl+NELjm5jPcN1mL+xdksUX8EvwEwTyomaFlx99YdpJ9WvXLkqb6LpmE
-	 MVZwncvibcxsPej0WJKrMbMWF2y0AehP+0IcXPpMG09okdZoiqtEsGqCAXPXlR+MXeb5M
-	 5ChT7l1+1u0Gq7XGmz0Uxmq8SkFzZrJyBeXMnkvbWG9n6p4PSnG0eG0qKt3X0Uo1RvugA
-	 QMx1/uZ0JVj2J7CFh9QZVeW2Y/dSK62IaXJe/u0auyLWohXV+bs7cmyQY8hv6+yHo8yR6
-	 MIn+MOgW8cuU0Ve9vsvfUOenJQlmT4gl5Y1g8TrPpfm7/eubGDso7XpvILEKJrvuXEg==
+	t=1794061830;
+	b=bR+odAAPj9aO638I6hr6f5Id5Lm5Bxrn9RZLmCFFw3fqtYPJ1YhYpGbskR7ZOK6wfVTj
+	 plbXTjOMIeBfx4X/sMxJ9aCKqf2S2wNm1AsSlJnDrnF0wTFmJngCa3cZAyFcN+1AvD0Q4
+	 oA8Flz912DezM9A8dQZFrl4xmgfeUBqW+GqV8Axo8+rRT9LMv4HO2S4hlplwh0UWmE3qu
+	 3TJTRZfV8nE4ybPqK7B85v8yjhtzX/tJAUStVO2haBmZ19qVSultXW8WoRxq1wVm+sijg
+	 wTgszcctb13vPgBPoddoII4uxBVleBvLq8T2mrPJjunI/uIEjiTw5Ja+lY7geJ1zzqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061829;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QifpIns6P/+22wsGW5N9y5CcexsocDAXdiDDn5Z7D4M=;
-	b=uAhyFGyWfpqpML6mAKIFZeLsb3lJdOIQx/SU7H6NUXNAmCcaPQEhPW6LKXA9uVyukzmd
-	 CT+iZ6+EvfZ4VT0l+8lliZuzNobybXjN5Q0EHOUK7Jrv2fxlIQI9NI4Km7VLYPRU0bh8L
-	 ADBXizCa0/5XAg056D+GnwLMzLkYyONrVxOyllSVbP3FJ7mNmvtCkFSahGtaEOaAlxFEV
-	 tKTDdrl4fZX87iPomgqKDa55pgIlf5dt+tWnGt6e8OhtZWcfqk2BKac7b9PMAav4yhDaK
-	 Ut2iMhihGRtPkBGDFvHk5h+Dq906uwTcowpKwAegoQfnnTgnSPr0QsUmSWJJORsiibw==
+	bh=jMa+/+lma61HXhz1lmq23iQR4XewKZ3T0K6fC3oUWBI=;
+	b=ziPhEBwIzZZsUCYxyRWV4SeCeCGSTFEnren9WdMhfRg8HfERaTli29ybR7Ph3FgrymfR
+	 KMQ2T5eQZhCqJOKOD2hM8wwkvcpDk9PMy9gTV3ocWPednLdZUisGWtQ4lJgtfNOty1tFH
+	 AFfv/p9FGwJzfZo5ThSXkHJgeme3EtKifEy0dblsoodP/VDH85NSn0xDZrEy7Bd0Rpsz+
+	 HAZzesuqlHpMUrUEUbuWgoMAZ1MuxjGZnTOfEc6LWqfUWo2m/Hq5AsrGLJAqYpLtXkCGo
+	 ucxjeZOmQDFTSGYxq+rJAivWqSjeoFlEqJpQdPt6w105RU55TLxaD8YkwcbVWTU/Rmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FhAbxgsQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcKQwZea;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EA9606A326;
-	Sat,  7 Nov 2026 14:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84641606A326;
+	Sat,  7 Nov 2026 14:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FhAbxgsQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0123B1F0089F;
-	Sat,  7 Nov 2026 14:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcKQwZea
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335281F0089F;
+	Sat,  7 Nov 2026 14:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061829;
-	bh=QifpIns6P/+22wsGW5N9y5CcexsocDAXdiDDn5Z7D4M=;
+	s=korg; t=1794061830;
+	bh=jMa+/+lma61HXhz1lmq23iQR4XewKZ3T0K6fC3oUWBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FhAbxgsQJRtOQC2uw7+z8aq/KUb5aCeKplWmZFv98z5xO4m5BOdZzcqOmOL8UVxak
-	 PpHqO1b2g32tj/ZQqQksLmjgx4ibhEiQARB2COY3a90RRfyE9nHeuPJGB93wDLMxfG
-	 P/HGghVws759X31KZUfLcT14VBihTQN5iTWpbwBA=
+	b=lcKQwZeaWto3q1qS48WlIlSQ78zf1lbdqkg7dk1Yxv1Z9ib7xB++oYYkJt6Vnplxy
+	 1xtWfnxQQT6Q7BWSsCSbKkEZcDzRsTrDP4xT7Yh87Y2H7x6E/mCRq3jmxFRTwmKs4B
+	 5mtpOkV21v4ptSZWo5Nw4PWbZJV18QVn76FLCu8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Vincent Liu <vincent.liu@nutanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0851/1536] KVM: VMX: Preserve negative return value in vmx_handle_exit() with bus lock detected
-Date: Sat,  7 Nov 2026 08:47:47 -0500
-Message-ID: <20261107135021.449266839@linuxfoundation.org>
+Subject: [PATCH 6.12 0852/1536] driver core: Check drivers_autoprobe for all added devices
+Date: Sat,  7 Nov 2026 08:47:48 -0500
+Message-ID: <20261107135021.478546646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,50 +67,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Vincent Liu <vincent.liu@nutanix.com>
 
-[ Upstream commit cef48693da1e964e9f192bfc16cd0ed287c48337 ]
+[ Upstream commit ea34511aaf755349999a1067b2984a541bee1492 ]
 
-Preserve the negative return value from __vmx_handle_exit() when a bus
-lock is detected, instead of always overwriting it with 0.
+When a device is hot-plugged, the drivers_autoprobe sysfs attribute is
+not checked (at least for PCI devices). This means that
+drivers_autoprobe is not working as intended, e.g. hot-plugged PCI
+devices will still be autoprobed and bound to drivers even with
+drivers_autoprobe disabled.
 
-The purpose of bus_lock_detected handling is to force a userspace exit to
-inform userspace that a bus lock happened. The negative return value can
-achieve this purpose, and changing the negative value to 0 fails to return
-an error to userspace. So, preserve the negative return value.
+The problem likely started when device_add() was removed from
+pci_bus_add_device() in commit 4f535093cf8f ("PCI: Put pci_dev in device
+tree as early as possible") which means that the check for
+drivers_autoprobe which used to happen in bus_probe_device() is no
+longer present (previously bus_add_device() calls bus_probe_device()).
+Conveniently, in commit 91703041697c ("PCI: Allow built-in drivers to
+use async initial probing") device_attach() was replaced with
+device_initial_probe() which faciliates this change to push the check
+for drivers_autoprobe into device_initial_probe().
 
-Fixes: fe6b6bc802b4 ("KVM: VMX: Enable bus lock VM exit")
-Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260805034602.5B2BB1F000E9@smtp.kernel.org/
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-7-xiaoyao.li@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Make sure all devices check drivers_autoprobe by pushing the
+drivers_autoprobe check into device_initial_probe(). This will only
+affect devices on the PCI bus for now as device_initial_probe() is only
+called by pci_bus_add_device() and bus_probe_device(), but
+bus_probe_device() already checks for autoprobe, so callers of
+bus_probe_device() should not observe changes on autoprobing.
+Note also that pushing this check into device_initial_probe() rather
+than device_attach() makes it only affect automatic probing of
+drivers (e.g. when a device is hot-plugged), userspace can still choose
+to manually bind a driver by writing to drivers_probe sysfs attribute,
+even with autoprobe disabled.
+
+Any future callers of device_initial_probe() will respect the
+drivers_autoprobe sysfs attribute, which is the intended purpose of
+drivers_autoprobe.
+
+Signed-off-by: Vincent Liu <vincent.liu@nutanix.com>
+Link: https://patch.msgid.link/20251022120740.2476482-1-vincent.liu@nutanix.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+Adapt the bus-side change to __bus_probe_device(), which is shared by
+the normal and deferred probe entry points. Preserve the deferred probe
+wrapper and its parent locking.
+
+Retain this change to provide the device_initial_probe() layout needed
+by the asynchronous attach parent-lock fix. PCI still calls
+device_attach() directly, so this change does not alter PCI probing.
+
+Stable-dep-of: 187a62f99da2 ("driver core: take parent lock in async device attach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/base/bus.c |  3 +--
+ drivers/base/dd.c  | 10 +++++++++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 7e098fb60bbf7..b6361df62269f 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6625,11 +6625,12 @@ int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
- 	 * a bus lock in guest.
- 	 */
- 	if (to_vmx(vcpu)->exit_reason.bus_lock_detected) {
--		if (ret > 0)
-+		if (ret > 0) {
- 			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
-+			ret = 0;
-+		}
+diff --git a/drivers/base/bus.c b/drivers/base/bus.c
+index e0afc8e371438..36383037f2dd2 100644
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -570,8 +570,7 @@ static void __bus_probe_device(struct device *dev)
+ 	if (!sp)
+ 		return;
  
- 		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
--		return 0;
- 	}
- 	return ret;
+-	if (sp->drivers_autoprobe)
+-		device_initial_probe(dev);
++	device_initial_probe(dev);
+ 
+ 	mutex_lock(&sp->mutex);
+ 	list_for_each_entry(sif, &sp->interfaces, node)
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 9d1e231d41f53..57aa8d8b00428 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1155,7 +1155,15 @@ EXPORT_SYMBOL_GPL(device_attach);
+ 
+ void device_initial_probe(struct device *dev)
+ {
+-	__device_attach(dev, true);
++	struct subsys_private *sp = bus_to_subsys(dev->bus);
++
++	if (!sp)
++		return;
++
++	if (sp->drivers_autoprobe)
++		__device_attach(dev, true);
++
++	subsys_put(sp);
  }
+ 
+ /*
 -- 
 2.53.0
 
