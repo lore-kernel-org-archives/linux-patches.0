@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065557;
-	b=0oigWWC31xFC5meg59icLaRxFikeglfz/y+g07agP0pUCZvgoCEXvFcW0D3pZi8cEkMk
-	 sVkA9FgNIFwECPPT0KUllwhp+LTAv3MdoD1j7diVTveD2zQDkyw6hte+0AQTjffV6HDZ2
-	 rwln1+6odR9OtPfRexqG3uoSyZ6aoXPK1Zepcg70ZGUlJFwtDAbcgsI+schbribwt3dG3
-	 Hq+y/2fMJIZKuap11xBCVKMN57evrK8OcK5lqNffQ8z+DGY71eKtp9hJEEZbWxBds/eIV
-	 gCy8NT8BAWkl3zl7GhcjVhZiSNGMM8t1WkCud0ptL6/aYIxOi8AE3jhbOyl8lD5bztQ==
+	t=1794065558;
+	b=WXWLPblN1+GVito+hziwldtQ7TfVUj+Trh5kyd/pDjkLpIm4hwX2buAzsxdhC2uyeqQE
+	 Jb2HuqAwzCYPE8G72FYuGvhJk7LIkWibO3NyCdizo1OOPePcefcd2s6kUm4bPqvKOwZtQ
+	 9KKVbNjPyWWS5G+vH0piv+gL0XYNXdRUIFj0Q91AwIDWMK+/H+xqPNEHg5dyaVDdxSAat
+	 DJTK39DGGCHTQK5nAVb0S8+9AokjKb1xbHQtad44Sogrgw03Qgv9y1y8C0ZO6s8CJJYhO
+	 5gM1D892kW+P7BsEEmS3xjrHAi/tF4S6s5Um7qFmt+1+EQvqhEVZL8g1O2S/M6Z479w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065557;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vniFeLcO1lj6INhRxoIJULGCSdNxyWPHaW83b8U7A6I=;
-	b=5LPOeK/uZkfr4XHawvbxYIu4+uKakAn0eiyJxciBXbxcycrGzdSwGutj37g1hU+JD7Uv
-	 ZV5fU5ghrhPySNq9HW/f3eoWtVDHg9kHq4YYL3UALFWTjFhJim//uoWA3CTrL83fsEt6n
-	 cLOPmLN50FQw2ameEERz660+JAddkX+c3MfTt/eNTdfDBQfa9K5ccFxRj0C3vJz/546DJ
-	 IDHjyXdHPCO+7BIOTFrSdT8DG5sRyLG0IRzjlOTzasuSCPeLQ7eLJyZVHyX553pLRo3wV
-	 XyukTNcmR7c8oUGOf0AW7cMUJPFyMsep7NVAnp0/dP9vCEi9SOjazcl7xRndC6PsXhQ==
+	bh=ozjW6BibT6ZrlC6Z634Ps59US9AG+SIsDSiAVzVNM10=;
+	b=HsYe2V5Uv1gcnI6Ukme65tofhjxegUk1yoXnCjrraWpeXo56xHoZCMwjhShQnTOS7mlK
+	 CfUiONX/GwxYxfka6INcggs+W2t6Lcn0T+Wbbs52Dzw6PYzLEYBO7M91hlPd8FPKMvASj
+	 QLGPSFv1fnSFr2+ALI12nHR2fpW7V+hAriPlnwxm7PSXXL3hshASRoLwrUAP8eTNE01N9
+	 /eC57zQmlr54ClyJa4Liee703vOB6oFaHW9xnspD82N+H/DptddcWRepQdM8iZPjLZUxq
+	 l9iyiWHSZOf2xKZsVGJZVksqTaO9FjT0DHmM6wUvtzvyOI3gmq6c4w/EL1xo9ZXt2SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYmsHVYd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ig+DfAkH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3A5606D814;
-	Sat,  7 Nov 2026 15:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E788606D814;
+	Sat,  7 Nov 2026 15:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYmsHVYd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743AF1F0089F;
-	Sat,  7 Nov 2026 15:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ig+DfAkH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EEB1F008A1;
+	Sat,  7 Nov 2026 15:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065556;
-	bh=vniFeLcO1lj6INhRxoIJULGCSdNxyWPHaW83b8U7A6I=;
+	s=korg; t=1794065558;
+	bh=ozjW6BibT6ZrlC6Z634Ps59US9AG+SIsDSiAVzVNM10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cYmsHVYds+kBn/GyLaBPud3CDuKGrdKGw25jDEhEkuvkI82wOxPirRL59+styyT6c
-	 /QTfaephbSW+BhffdgwhezpG7kiwX5aqGf+BLS1+jF2yDs41rBZr3Tzu9DA3y0HBcU
-	 DbTX7qObs0zsw3P5jWxYYNgSbv6URzhm8en7UbrI=
+	b=Ig+DfAkHZXvuMCv+WoPwKISQmv7OGxDaLMdgAGIST0AwRdP0XuPLlzGI6suB2yy0B
+	 Eo+VM1fyRQpQ7U+OcM4GMOLCAcZPA5D8PbjlAXlEcjAmRWRlmQJ98xElOe93nme3ye
+	 fbn3NM4AJHx7z7tE9NvHLRlZ1UT/GRhe10gDsWzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1228/1257] iomap: keep large chunks from defeating the bio cap
-Date: Sat,  7 Nov 2026 08:58:44 -0500
-Message-ID: <20261107135013.259953725@linuxfoundation.org>
+Subject: [PATCH 7.3 1229/1257] mount: refuse setns() with a shared fs_struct again
+Date: Sat,  7 Nov 2026 08:58:45 -0500
+Message-ID: <20261107135013.287792801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,89 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit eb8ab8c23e71c6ae77dedc45de2a57a61558e5d5 ]
+[ Upstream commit 948e604aca8af30490accf7d46d44814ffa26f80 ]
 
-For integrity I/O a bio must not grow beyond max_integrity_io_size()
-because the integrity buffer is a single allocation of at most 2 MiB.
-Writeback and buffered reads check that before adding to a bio:
+mntns_install() refuses to switch the mount namespace of a task that
+shares its fs_struct, since root and cwd of the others would move to a
+namespace they are not in.  It looks at nsset->fs for that.  If more
+than the mount namespace is asked for, that is a private copy made by
+prepare_nsset(), which has one user by definition; commit_nsset() then
+writes root and cwd of the copy to the fs_struct of the task.
 
-        bio->bi_iter.bi_size > iomap_max_bio_size(iomap) - len
+A thread of a process with two threads, pidfd of a task in another
+mount namespace:
 
-The subtraction is done in size_t and wraps if len alone is above the
-limit. The check then never fires and the bio grows until it runs out
-of bio_vecs.
+	setns(pidfd, CLONE_NEWNS)			-EINVAL
+	setns(pidfd, CLONE_NEWNS | CLONE_NEWUTS)	0
 
-That's easy to hit. The limit is also capped by the maximum segment size
-which is 64 KiB for SCSI hosts that don't set it, such as lpfc and
-qla2xxx, and XFS uses folios of up to 2 MiB. Writeback of a preallocated
-300 MiB file then builds a single bio that needs 4.7 MiB of PI with 512
-byte sectors and 8 byte tuples. That's more than kmalloc() can do, so
-bio_integrity_alloc_buf() falls back to a 2 MiB mempool element and
-generating the PI writes 2.7 MiB past its end.
+and after the second call the other thread, still in the old mount
+namespace, has lost its cwd (/tmp became /) and sees the mounts of the
+other namespace under /.
 
-Check the length on its own first. A chunk above the limit still gets a
-bio of its own which is never larger than a folio.
+Look at the fs_struct that is going to be changed.  The second call then
+fails with -EINVAL like the first one.
 
-Fixes: 0b10a370529c ("iomap: support T10 protection information")
-Cc: stable@vger.kernel.org # v7.1+
+Fixes: 303cc571d107 ("nsproxy: attach to namespaces via pidfds")
+Cc: stable@vger.kernel.org # v5.8+
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261029-work-iomap-ai-fixes-v1-2-7eda63bc1b13@kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/bio.c      | 2 +-
- fs/iomap/internal.h | 9 +++++++++
- fs/iomap/ioend.c    | 3 +--
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ fs/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/iomap/bio.c b/fs/iomap/bio.c
-index 48100c614431c..ee85b009c5c13 100644
---- a/fs/iomap/bio.c
-+++ b/fs/iomap/bio.c
-@@ -151,7 +151,7 @@ int iomap_bio_read_folio_range(const struct iomap_iter *iter,
+diff --git a/fs/namespace.c b/fs/namespace.c
+index dd60123a0cb0c..cf627543572b3 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -6720,7 +6720,7 @@ static int mntns_install(struct nsset *nsset, struct ns_common *ns)
+ 	if (is_anon_ns(mnt_ns))
+ 		return -EINVAL;
  
- 	if (!bio ||
- 	    bio_end_sector(bio) != iomap_sector(&iter->iomap, iter->pos) ||
--	    bio->bi_iter.bi_size > iomap_max_bio_size(&iter->iomap) - plen ||
-+	    !iomap_bio_has_room(&iter->iomap, bio, plen) ||
- 	    !bio_add_folio(bio, folio, plen, offset_in_folio(folio, iter->pos)))
- 		iomap_read_alloc_bio(iter, ctx, plen);
- 	return 0;
-diff --git a/fs/iomap/internal.h b/fs/iomap/internal.h
-index 74e898b196dc1..e69b3ac02cc22 100644
---- a/fs/iomap/internal.h
-+++ b/fs/iomap/internal.h
-@@ -17,6 +17,15 @@ static inline size_t iomap_max_bio_size(const struct iomap *iomap)
- 	return BIO_MAX_SIZE;
- }
+-	if (fs->users != 1)
++	if (current->fs->users != 1)
+ 		return -EINVAL;
  
-+/* Can @len more bytes go into @bio? */
-+static inline bool iomap_bio_has_room(const struct iomap *iomap,
-+		const struct bio *bio, size_t len)
-+{
-+	size_t max_size = iomap_max_bio_size(iomap);
-+
-+	return len <= max_size && bio->bi_iter.bi_size <= max_size - len;
-+}
-+
- u32 iomap_finish_ioend_buffered_read(struct iomap_ioend *ioend);
- u32 iomap_finish_ioend_direct(struct iomap_ioend *ioend);
- 
-diff --git a/fs/iomap/ioend.c b/fs/iomap/ioend.c
-index 32ae292a84cbe..c2891d640e827 100644
---- a/fs/iomap/ioend.c
-+++ b/fs/iomap/ioend.c
-@@ -176,8 +176,7 @@ static bool iomap_can_add_to_ioend(struct iomap_writepage_ctx *wpc, loff_t pos,
- {
- 	struct iomap_ioend *ioend = wpc->wb_ctx;
- 
--	if (ioend->io_bio.bi_iter.bi_size >
--	    iomap_max_bio_size(&wpc->iomap) - map_len)
-+	if (!iomap_bio_has_room(&wpc->iomap, &ioend->io_bio, map_len))
- 		return false;
- 	if (ioend_flags & IOMAP_IOEND_BOUNDARY)
- 		return false;
+ 	get_mnt_ns(mnt_ns);
 -- 
 2.53.0
 
