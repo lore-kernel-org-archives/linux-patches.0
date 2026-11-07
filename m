@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060766;
-	b=5IoocWT11VSe0ahW9pAxyltTCM9NNT+Iw3CDMfY7dQ0JxCtepdvHWDfRkSJbgTJmjIxv
-	 Zr+YT677cDy3FqwlMZiyUdK5yIOXkcQAhGV+b9p3oSizC1IrqsxogOJ8O/lyy5Y8tRs9Y
-	 l+bwMj7nWls3fzm6DBz7UWwrmXZ3XIsXRgpIiaZlz5QiZSxBPe+OudW+74NX7uoDHcO4V
-	 ZW5uHvCuFtS1BfD4gJM/0w/w+IVMAETpKO3Il3FXNaUceTNBhGJgbwgjDEKi8m0tcotqJ
-	 HSv3MPgUkIwocJUnZ1r6INMZu93krN+FVTUAkzQp/zU1Z0kSfzMxtjGjTtNHA/L1cEw==
+	t=1794060768;
+	b=UeqG1ZrTiNxezUsTr8O7CE1vosjyKsAJZvMJLRtMQnrbDwTCjJNDUyd/Z1qaqVNRNfRU
+	 nOs6QFNZsMQbklav+pQseCbpgmgirNlQ0eDUARD/rqJcEaxeEcmn7kcdB2oow01J5OKHz
+	 atOgTXXj4Y8tlHAtbezCuVEMl/VCJzh97K85aejr2lpVioFclLvNcfG0CjHO3h7NrmLFh
+	 Hl4VUofAZWf4ZNJrmd6lgDJdO+/OVtPm+k8y8S2qVOAL2T8x7elaJ9MQdufxn6svPjTlk
+	 bgqylcJMad7HfHvh+yCf4Ar24ox72YsHxvXvYSAObXjGEK02HlYQFRAAkTgRDS+0mKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060768;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U5iTFZKTwBlWspfg3ABqQV20uhrHDM0EoEUx2BMueiM=;
-	b=RQT2M3knqv0mGRV951M0dXpGUz7pihYxVfYNhwvUNUnZtdWQiwA6yS7KfI3JWeOB7+Ff
-	 ZwmTgBk+NI+hKnIeXSDRdZDkI2r5xIaHlFnS/yThIbjbNNgUTKqcNjl/FMZygY8zb6kUY
-	 WRi+2z4MJm7Z+T0ktR+FhFJfz4T1Jf0SQVYmO+tGcbV5zhdD5yShKu28s6N0nOzpTHFNZ
-	 O3q2hqCxwKJLS+aEzPvzkSvBBYeacBx7hQ43A0dhk9cKjbUUhlWMJoX/lyQrmC0xMa3jL
-	 qTLNkA65FwylBMGPUCh+JQSai8P3nEzk0mKnCCTjbxMHLIhL7gZ3kLw0T7ifOox39qg==
+	bh=R9ZnV+M7IEXHGG0SGvrRnSYYeE0JPojUEJtjhiaO2Z0=;
+	b=eMvFpQ+fPzKclSnt05OyfS0bn5Vov9YY43quFUHtivThALshXhv2rtY1K1O6Q3MlSOaG
+	 RzaNvOPB8WZ9ZWgUfFnRgj2VmS+CjdmsUWxLukGAEbBuNAfyV/8v3RNabHabYW3suamGX
+	 w9/c87yhQHkMnEuOX3wp0q7/UN2a/fl5gGv4BOlY4X4nPJ1T2foMdHo95DAo7guZ/sE7Z
+	 rzgUs+LDU3YcFFlObyd7Yg41JI8vH252WbfUmiJIpzLe9bVFT4k8rRtoTHOwWO06/Zv1s
+	 WYpXxZGTFtQD570ZS24LIOg6W1N7Q/GQn27rCixo3qmKu2nBWFKXQae6mmyEsAyokbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUoSpPcs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8SkOWZX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765A0606A326;
-	Sat,  7 Nov 2026 14:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D757606A326;
+	Sat,  7 Nov 2026 14:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUoSpPcs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C12D1F0089F;
-	Sat,  7 Nov 2026 14:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8SkOWZX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD9E1F0089F;
+	Sat,  7 Nov 2026 14:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060766;
-	bh=U5iTFZKTwBlWspfg3ABqQV20uhrHDM0EoEUx2BMueiM=;
+	s=korg; t=1794060767;
+	bh=R9ZnV+M7IEXHGG0SGvrRnSYYeE0JPojUEJtjhiaO2Z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pUoSpPcsuttho4QQOOILUyQDhQRrK/5KQ72aDZRujwag0GV+PmmTA8dlW84HiJsr7
-	 rgiCjaOPxV4Z1FIDKxSdbj/xP8aj9kwHEHYlp/uXOdtqO+F/FLjwFUNFZKYPu63f2G
-	 +ruj3NE1xFfEeb7M9+wmXowV77aQ14SjMGqpd8Gs=
+	b=Y8SkOWZXBI7LCPALw05JQdmBNPlzBxtQO04HUpgNYn2tX/u0dqAqhGKkEMcIAzs5R
+	 gRk+6MeLnectyMObccgf0cLapZ+l4kPxsZrIfBl0EwtKvdqTrLXntf7JV+yXyaCMeT
+	 ovwRR+tS1e5ZZigef+4lFglF6KQzOn1cjiTPvAwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Renninger <trenn@suse.de>,
-	Michal Suchanek <msuchanek@suse.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0178/1536] ACPI: sysfs: Properly map BERT and CCEL data to their ACPI tables
-Date: Sat,  7 Nov 2026 08:36:34 -0500
-Message-ID: <20261107135002.658596263@linuxfoundation.org>
+Subject: [PATCH 6.12 0179/1536] riscv, bpf: Add support for BPF_SDIV and BPF_SMOD in RV32 JIT
+Date: Sat,  7 Nov 2026 08:36:35 -0500
+Message-ID: <20261107135002.689290563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,92 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Renninger <trenn@suse.de>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit e45ee607ca6f9f97a2f97be356d844a912971a16 ]
+[ Upstream commit 2e0fa2389c50fd3a69bb738efa74e127b7516938 ]
 
-In the case of multiple BERT ACPI tables, one gets:
+The current rv32 bpf jit compiler incorrectly treats BPF_SDIV and
+BPF_SMOD as unsigned operations. The BPF instruction set allows
+signed division and modulo by reusing the BPF_DIV and BPF_MOD opcodes
+with the instruction offset set to 1.
 
-sysfs: cannot create duplicate filename '/firmware/acpi/tables/data/BERT'
+Update the emit_alu_r32() function to accept an 'is_sdiv' variable and
+emit the correct div and rem instructions when the offset is 1.
 
-This is because both:
+Before this patch:
+[   44.161771] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+[   44.167385] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+[   44.171053] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+[   44.172081] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
 
-/firmware/acpi/tables/BERT1
-/firmware/acpi/tables/BERT2
+After this patch:
+[   16.002192] test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 95 PASS
+[   16.002983] test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 1059 PASS
+[   16.017167] test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 136 PASS
+[   16.023002] test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 109 PASS
 
-are attempted to be mapped to the same data table:
-
-/firmware/acpi/tables/data/BERT
-
-Address this problem by passing and using the same filename for data
-tables.
-
-Signed-off-by: Thomas Renninger <trenn@suse.de>
-Reported-by: Michal Suchanek <msuchanek@suse.com>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1270211
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20260717065129.72924-3-trenn@suse.de
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Link: https://lore.kernel.org/bpf/20260714002451.4091139-2-visitorckw@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/sysfs.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/riscv/net/bpf_jit_comp32.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/sysfs.c b/drivers/acpi/sysfs.c
-index 687524b500859..4cedc599263fd 100644
---- a/drivers/acpi/sysfs.c
-+++ b/drivers/acpi/sysfs.c
-@@ -316,6 +316,7 @@ struct acpi_table_attr {
- struct acpi_data_attr {
- 	struct bin_attribute attr;
- 	u64	addr;
-+	char filename[ACPI_NAMESEG_SIZE+ACPI_INST_SIZE];
- };
- 
- static ssize_t acpi_table_show(struct file *filp, struct kobject *kobj,
-@@ -453,7 +454,6 @@ static int acpi_bert_data_init(void *th, struct acpi_data_attr *data_attr)
- 	}
- 	data_attr->addr = bert->address;
- 	data_attr->attr.size = bert->region_length;
--	data_attr->attr.attr.name = "BERT";
- 
- 	return sysfs_create_bin_file(tables_data_kobj, &data_attr->attr);
+diff --git a/arch/riscv/net/bpf_jit_comp32.c b/arch/riscv/net/bpf_jit_comp32.c
+index 592dd86fbf811..89153946a4e46 100644
+--- a/arch/riscv/net/bpf_jit_comp32.c
++++ b/arch/riscv/net/bpf_jit_comp32.c
+@@ -509,12 +509,15 @@ static void emit_alu_r64(const s8 *dst, const s8 *src,
  }
-@@ -469,7 +469,6 @@ static int acpi_ccel_data_init(void *th, struct acpi_data_attr *data_attr)
- 	}
- 	data_attr->addr = ccel->log_area_start_address;
- 	data_attr->attr.size = ccel->log_area_minimum_length;
--	data_attr->attr.attr.name = "CCEL";
  
- 	return sysfs_create_bin_file(tables_data_kobj, &data_attr->attr);
- }
-@@ -484,7 +483,7 @@ static struct acpi_data_obj {
- 
- #define NUM_ACPI_DATA_OBJS ARRAY_SIZE(acpi_data_objs)
- 
--static int acpi_table_data_init(struct acpi_table_header *th)
-+static int acpi_table_data_init(struct acpi_table_header *th, struct acpi_table_attr *table_attr)
+ static void emit_alu_r32(const s8 *dst, const s8 *src,
+-			 struct rv_jit_context *ctx, const u8 op)
++			 struct rv_jit_context *ctx,
++			 const struct bpf_insn *insn)
  {
- 	struct acpi_data_attr *data_attr;
- 	int i;
-@@ -497,6 +496,8 @@ static int acpi_table_data_init(struct acpi_table_header *th)
- 			sysfs_attr_init(&data_attr->attr.attr);
- 			data_attr->attr.read = acpi_data_show;
- 			data_attr->attr.attr.mode = 0400;
-+			strscpy(data_attr->filename, table_attr->filename);
-+			data_attr->attr.attr.name = data_attr->filename;
- 			return acpi_data_objs[i].fn(th, data_attr);
- 		}
- 	}
-@@ -543,7 +544,7 @@ static int acpi_tables_sysfs_init(void)
- 			return ret;
- 		}
- 		list_add_tail(&table_attr->node, &acpi_table_attr_list);
--		acpi_table_data_init(table_header);
-+		acpi_table_data_init(table_header, table_attr);
- 	}
+ 	const s8 *tmp1 = bpf2rv32[TMP_REG_1];
+ 	const s8 *tmp2 = bpf2rv32[TMP_REG_2];
+ 	const s8 *rd = bpf_get_reg32(dst, tmp1, ctx);
+ 	const s8 *rs = bpf_get_reg32(src, tmp2, ctx);
++	u8 op = BPF_OP(insn->code);
++	bool is_signed = insn->off == 1;
  
- 	kobject_uevent(tables_kobj, KOBJ_ADD);
+ 	switch (op) {
+ 	case BPF_MOV:
+@@ -539,10 +542,12 @@ static void emit_alu_r32(const s8 *dst, const s8 *src,
+ 		emit(rv_mul(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_DIV:
+-		emit(rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
++		emit(is_signed ? rv_div(lo(rd), lo(rd), lo(rs)) :
++				 rv_divu(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_MOD:
+-		emit(rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
++		emit(is_signed ? rv_rem(lo(rd), lo(rd), lo(rs)) :
++				 rv_remu(lo(rd), lo(rd), lo(rs)), ctx);
+ 		break;
+ 	case BPF_LSH:
+ 		emit(rv_sll(lo(rd), lo(rd), lo(rs)), ctx);
+@@ -1041,7 +1046,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 			emit_imm32(tmp2, imm, ctx);
+ 			src = tmp2;
+ 		}
+-		emit_alu_r32(dst, src, ctx, BPF_OP(code));
++		emit_alu_r32(dst, src, ctx, insn);
+ 		break;
+ 
+ 	case BPF_ALU | BPF_MOV | BPF_K:
+@@ -1065,7 +1070,7 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 		 * src is ignored---choose tmp2 as a dummy register since it
+ 		 * is not on the stack.
+ 		 */
+-		emit_alu_r32(dst, tmp2, ctx, BPF_OP(code));
++		emit_alu_r32(dst, tmp2, ctx, insn);
+ 		break;
+ 
+ 	case BPF_ALU | BPF_END | BPF_FROM_LE:
 -- 
 2.53.0
 
