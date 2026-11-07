@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061099;
-	b=BHhjFq6PhVki2/7mFJ2HM/Po1fduX4NFSWBxvAzDFzT2omcOjvqzaBdbI2kPQYmbCLvJ
-	 4a4BUoUW9BndrlyzVe1p643aXT8hxXJKPcxF9vXNLJEThSTgEYiwmHyt5rP3FWubBTBV2
-	 vDaemB4rlGmIdq1eeIeo4IrVrsb3lBP+1dPL8FKObdWyOmRadEr7A76hriX1sQIdZEYD3
-	 Q0sBSaZ4zGLjyk2Q1KytBIz/S59/DyWXLLbMNeFeVhhuCBMnLWyUXzZJLpYyunbejzbK/
-	 fMXf8WeeeONFc6mgiClVBHiMzZRtxazOCklCf0ZcMCq/gWVxpF69xTjP9ANH1+klS4g==
+	t=1794061101;
+	b=GyfT92jCDpT1mOW9rRXShhAxfyDltoraD3Pfd3KTFhMoaJE8IcnYYqvjwfo1nxjDMXtR
+	 Lw/RhzcrGXOHlBeUSxucxVU9VTv9YSk0D3jN755q9WDzIyUUcwE8GwmLcozsbV3gU/NWA
+	 SYsWqadOhYTyseNx6LGgbG6X23sq2D9Ru6BJIaKgwxMTriNJPG0NopBmDNygnIdhNza75
+	 OM/feFWL5BP59qokH5q9t6QX23KERj60UJ/nFLZLb0nz05sr9j3sLvJ0iXLfWGqcHhvSY
+	 O6wLI+p6LkkkueJ5iiF/BZACuCfNRanpKzDraM/TrDhtupGFH7FPCcE4NbJoD42DE+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061101;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=03iKMbvikphZXGA4rV3s4GGQBc8xhqxR3/Z9x8MJyV8=;
-	b=2RsLNiXPa4uBd/38s4WZdvHlipKBLSdGP1LTDyYmQSrB42XZzWu8jc8TzOE+yHnB+B7b
-	 6krhpr0eyfheUQfW3AtE5TBVJ/W4cZYrqs5brx7Uw9f7uqx7wrmnojeHPlFPwwZMd7nmm
-	 VClresNqfZ7wZYyQe/IwzayLkChMuQQzaks1iENI7qOwebd4j/nzxgLrGEr8R4IeiaNku
-	 gUN1uCHJbJLJkjZt49ILQZtj7wk6IfYMc+n6O90HV5jA82s4cOFh0/GCpe4lrhsTR3pDK
-	 cZeVavXupnfRkdljabEJ7UghXhVCkTcRNG4lWzkTnIe3JR5OMS+vAwSOKUD4VJJJOWQ==
+	bh=oS1eH4rln1f6uxddEsyOj8ZGH8m8nRv8KEWmTaQeN2M=;
+	b=DHV7rx5ffqtwXyBWGyHWI9KsUKB75g2cB2iwwZOwX5Mz+7j86dwIYgTCArKqxegPtOy3
+	 IlwzR/R51umPgOBGvwd1Tv0nx5wV0f4Idq76Yr0iBoJR5JeBoLQm3VsewVtiPJq/0D29Z
+	 O+FA7GIKy7YtSjAqtMhKGOEJK6NvHd5CE6bE/DBKqCefFDvb1WCro6juRWvtrI+1JZjqV
+	 UEeYZBXZCtQenqYnNOTF9ovTFsFDPTt5HMKedE4o+11e12eYxVUhwS/2E+owPIuvFMaDZ
+	 wlBFhjHk69UZUcTV8GG/FoZHiGIEiwfntGm0ox9/OmRAyqrvQKTuvbwtDm/p+FyA5gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EuaEqrAc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U26BayjL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE5C606D837;
-	Sat,  7 Nov 2026 14:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4848606D82F;
+	Sat,  7 Nov 2026 14:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EuaEqrAc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FA81F008A1;
-	Sat,  7 Nov 2026 14:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U26BayjL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581AF1F008A1;
+	Sat,  7 Nov 2026 14:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061098;
-	bh=03iKMbvikphZXGA4rV3s4GGQBc8xhqxR3/Z9x8MJyV8=;
+	s=korg; t=1794061100;
+	bh=oS1eH4rln1f6uxddEsyOj8ZGH8m8nRv8KEWmTaQeN2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EuaEqrAcPHJ3M83Sg69Js3YQoRgjBFumx+S0TnELHZrNY2qNDrRe0KXrjFjdqCR0Y
-	 R7xcihn7oxqzXPx3xqo8OmPSc/og6ddCFcQ7QpwJQcSpmDbbM6FmAXpCgJAmihsGWj
-	 p54X9PUkBUvO8zEr/XLBPX8RPux9RQ/JikzeZRlI=
+	b=U26BayjLIqPikatirIMtDY136XIeGC8SpUiWr0lmezIoP4QD5LUpuzqMD/CwKtB31
+	 dZa6H5QzUYLvJwTZxmuJMNEVdpUR2TzFPt55hlJPWkgGpzEfoPbnIU5kEW7VFW3bh9
+	 9Vd9fzE53/iY/cVI8nAZ24sdAPUZ6PiibmWdiGjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Hernan Ganzo <gp@sneemgp.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0369/1536] rtc: ab-eoz9: add missing MODULE_DEVICE_TABLE()
-Date: Sat,  7 Nov 2026 08:39:45 -0500
-Message-ID: <20261107135008.013718135@linuxfoundation.org>
+Subject: [PATCH 6.12 0412/1536] ALSA: hda/realtek: Limit internal mic boost on HP Pavilion 15 (103c:2164)
+Date: Sat,  7 Nov 2026 08:40:28 -0500
+Message-ID: <20261107135009.145129381@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,41 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Hernan Ganzo <gp@sneemgp.com>
 
-[ Upstream commit 7490b8356e52e09c196645912f2c054f79aa5f3a ]
+[ Upstream commit 786fb6b3f513937f712db5a9ba6a12cbc6982ba9 ]
 
-The driver has a match table for the i2c bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+The HP Pavilion 15 with the ALC3227 codec (SSID 103c:2164) exposes the full
+four-step internal mic boost on pin 0x12: nsteps=3 with stepsize=0x2f, that is
+0, 12, 24 and 36 dB. Combined with the ADC capture gain of +30 dB the analogue
+cascade reaches 66 dB, and the internal microphone clips on the ambient noise of
+a quiet room; the upper two steps are unusable at any useful input level. This
+is the defect class ALC269_FIXUP_LIMIT_INT_MIC_BOOST exists for.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+The machine matches no SSID quirk and falls through to the pin table, which
+selects ALC269_FIXUP_HP_MUTE_LED_MIC1 through a pin signature shared with
+several other HP models. Add an SSID entry instead, using
+ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED: the existing fixup that applies
+alc269_fixup_limit_int_mic_boost() and chains to the same mute LED fixup, as
+already done for 103c:218b. The boost becomes 0 or 12 dB and the LED handling is
+unchanged.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
+Tested on the affected machine by selecting the same fixup through the model
+string (snd-hda-intel.model), which bypasses the SSID and pin tables, with the
+driver confirming the selection:
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704152528.53258-1-pengpeng@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  snd_hda_codec_alc269 hdaudioC1D0: ALC3227: picked fixup limit-mic-boost (model specified)
+
+With that, Internal Mic Boost reports Limits 0 - 1 (0 or 12 dB) instead of 0 - 3
+(0 to 36 dB), so alc269_fixup_limit_int_mic_boost() clamps this codec's internal
+mic pin as intended. Note that /proc/asound/card1/codec#0 keeps printing the
+unclamped hardware caps (nsteps=0x03): that file reads codec parameters uncached
+by design, while the fixup overrides the driver's cached parameter that the
+control is built from.
+
+This does not by itself make the default capture volume sane -- the remaining
+12 dB on top of the +30 dB ADC gain is still hotter than this machine's usable
+operating point. It removes the two unusable steps from the hardware range, which
+is what a quirk of this class can do.
+
+Signed-off-by: Hernan Ganzo <gp@sneemgp.com>
+Link: https://patch.msgid.link/20260921205538.41192-1-gp@sneemgp.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ab-eoz9.c | 1 +
+ sound/pci/hda/patch_realtek.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
-index e17bce9a27468..2d7b7535ea520 100644
---- a/drivers/rtc/rtc-ab-eoz9.c
-+++ b/drivers/rtc/rtc-ab-eoz9.c
-@@ -571,6 +571,7 @@ static const struct i2c_device_id abeoz9_id[] = {
- 	{ "abeoz9" },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(i2c, abeoz9_id);
- 
- static struct i2c_driver abeoz9_driver = {
- 	.driver = {
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index e25664efd9c15..8847d06fcba79 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10845,6 +10845,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1028, 0x164b, "Dell", ALC293_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x1586, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC2),
+ 	SND_PCI_QUIRK(0x103c, 0x18e6, "HP", ALC269_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x2164, "HP Pavilion 15 Notebook PC", ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x218b, "HP", ALC269_FIXUP_LIMIT_INT_MIC_BOOST_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x21f9, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC1),
+ 	SND_PCI_QUIRK(0x103c, 0x2210, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC1),
 -- 
 2.53.0
 
