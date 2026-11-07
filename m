@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064669;
-	b=EphnkGSgcb6bT3Z58n3GfrN7kLzNskr1gJw/54Il+zLiSoFzm03zbDytxJd2q+3aIx6e
-	 cCG1z3F/E45b900EJi/YIlh2LUUJEqE8GJVmgMFLCDMn2ya8THg1lbpgKqKC50Lg/3kwq
-	 TecAQ/sdlcdZGK8EGJoOZWg9qnKPyk2baWha+A91eTRTtxQNPZHKU33up8HCFXCHRzbS8
-	 hysgzYt48Z07eKXUhBxbMLqnlPlAHfE8Sk4SAKRGV/pe9JyiNgE0Hwnk4uP1kRLYaoR7F
-	 0lI0TD9gjceNhie2/BdB/uDbhn0zoxB+YCfgtN3GPxNVh6ECJuL2WWV9NBES3Z6+jjA==
+	t=1794064670;
+	b=LV0Se26aE85hYMznqt1gqvADIk+LDlUuTmlrSeDD1MmiwQERJTDuteWP/JCg9vSjO2Dg
+	 WZl8fqrYFVQbgs+NWwX/IPXGpu7uKBCVxduE/oMT0HDk6Jtzt/kprdY3+eAEryrEECebT
+	 Ovc/IvYUuLO7akNceBAdZMPsbzzGUG/GYbH7IjU6KZwDEPlvxcMqf+DaKcW9kTbalXNP4
+	 RDZqq3R+dnlniNIhPKKW2Ie2mu1C1/0y0dkI1xoA711r73yS6M5qUMn2z4Pq3f5Lza36f
+	 hrj12x6Mbs/4FxmzoVbFEEnf6v36VaIzdgdkpNkrwpHzEym8pblcSd6JWlTqQJyeOGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FKPP1j1mg6pmAjCCZEQ4biFgsV5HseZgjUEhu408H9Y=;
-	b=LokDgYaNVy1CAsg6Zh1mDu+x9g0co5/EhL/58vDoOai312cN/dc4Rq0Zv3JyWrIQ9pB9
-	 dsjZQGvnnvcJmcy5Qdc36Yqxm8zUa26u3kLUioN+nHDxsLykn0aUmRW6hxv0oX7XA9k6u
-	 vIZ/yJhcCNfHyH5LYwChEM4LFfvsfXLW+O55nBbQxhu1OKNJf7OmJrhakyu/AAwvJ3n8f
-	 SyOj5j0QRNBfu6Y4Feo67oIjxbtARICoKHIUx6jXilm6vuxmIkve8FE8ZyESY58isUxWy
-	 EGSIGHTNPghBhW1xuUmUD76ze79ewL37OiUu6c639YgIr3m+GACnsqz4gBPRJKY19FA==
+	bh=xxx65RGxpaP2za65su+FKSwHw5eVJ3KMgNYe7nNxpwc=;
+	b=sGRuWZWkBUfthB6ZrsudVerjoKzbVLGTa9YEicAFr2WEzxNQp9wxOT8+3tKG94qVYW8D
+	 wCOWm4akQ3vBpEnB7upTX7yJbLusTOw7V79IPH+nH/SfghG/wqm9/XZHvjZKPDmnbGFFu
+	 2iu5IJzJSSaxPJrHs1Uglkb9OQft6g0vcl4r9IV+nXED6yKfcbxqI6diwD+PVD4Ds2eaH
+	 POa7y/AygseNcwvGExRlkT3mASa+cd9BtdNDc4iyUC93dI/45AR0fuGMpAIUpanixu1fU
+	 FUmaTmowhVwLjTM949yJg97pzTOR0lvW02askh4hHGWL4YBx8WvLVJbfymQK0KCRuYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MdhbWzd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1e2HJlUI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5034606A9CF;
-	Sat,  7 Nov 2026 15:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A48606A9CF;
+	Sat,  7 Nov 2026 15:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MdhbWzd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428661F0089F;
-	Sat,  7 Nov 2026 15:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1e2HJlUI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DC81F008A1;
+	Sat,  7 Nov 2026 15:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064668;
-	bh=FKPP1j1mg6pmAjCCZEQ4biFgsV5HseZgjUEhu408H9Y=;
+	s=korg; t=1794064670;
+	bh=xxx65RGxpaP2za65su+FKSwHw5eVJ3KMgNYe7nNxpwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0MdhbWzdCH6e8XuyG/2AfT74eApULmNhxnXO2ERN1mwH/txy5LVlvAKL7gKJPCgZL
-	 ZqdJ5qygXMS1LBDz1OFlFqoS/TFJ6++odWrWMtOTjYOmA3gnMyCzYUskmqXuKqrgvi
-	 xb/ksV09jbZnpqAg8QpnQK1sqNo7yYvJPzn8T57o=
+	b=1e2HJlUIISI/+HZ7hkBHuXPP3e2lxquf7nQ8fFJj8ZbyT8rMadBkXx5JOTvsO47FM
+	 zRbEScxrJCnLbGe5JN9sUQW/S9ecn71g3A2nC56//WFTLdiXHs3bQBoE7vItYXqGxW
+	 k/N8ZP38WNi8i+U1PwrmcluJrCJ/3TY+wabnbh/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lianqin Hu <hulianqin@vivo.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Jihong Min <hurryman2212@gmail.com>,
+	Stephen Horvath <linux@stevetech.au>,
+	Mirko Jechow <mirko.jechow@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0629/1257] xhci: Prevent invalid vdev dereference during sideband unregister
-Date: Sat,  7 Nov 2026 08:48:45 -0500
-Message-ID: <20261107134956.665583852@linuxfoundation.org>
+Subject: [PATCH 7.3 0630/1257] usb: xhci-pci: Add AMD 600 series to xhci-pci-prom21
+Date: Sat,  7 Nov 2026 08:48:46 -0500
+Message-ID: <20261107134956.693350158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,82 +70,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Stephen Horvath <linux@stevetech.au>
 
-[ Upstream commit fd616dc74e8f58f351f2b295620027116cd6e92e ]
+[ Upstream commit 29381088ac50a4910d18a5f8079d9bd505f839be ]
 
-Offloaded USB audio devices using the xhci-sideband API store a pointer to
-the xhci virtual device (vdev) in the sideband structure when registering.
+It seems the xhci-pci-prom21 module only has IDs for the 800 series
+chipsets. However, the 600 series chipsets also have Promontory 21
+chips, so we should add their IDs to the list as well.
 
-This pointer typically remains valid throughout the lifetime of the USB
-device. If a configured offloaded device requires a reset, the USB core
-usually unbinds or notifies the audio driver beforehand, ensuring that the
-sideband is unregistered before the vdev is freed.
+I have tested this on my X670 board featuring DID `0x43f7`.
 
-An exception occurs when the USB core resets a device to recover from a
-failed resume, but a subsequent 'address device' request also fails. To
-recover in this specific scenario, the xHCI driver disables and re-enables
-the slot, which frees and re-allocates the vdev.
+`1022:43f7` also appears on the PCI ID database
+(https://pci-ids.ucw.cz/read/PC/1022/43f7).
+Device IDs `0x43f9` (B665) & `0x43fa` (A620) were suggested by Shyam.
 
-xhci_sideband_unregister() later dereferences the stale, previously freed
-vdev pointer during disconnect, triggering a kernel oops:
+Also list the new IDs in Documentation/hwmon/prom21-xhci.rst.
 
- Unable to handle kernel paging request at virtual address dead000000000122
- Call trace:
-  xhci_get_ep_ctx+0x0/0x38
-  xhci_sideband_unregister+0x68/0xf0
-  uaudio_disconnect+0x70/0x144
-  usb_audio_disconnect+0x7c/0x268
-  usb_unbind_interface+0x13c/0x340
-  device_release_driver_internal+0x1c4/0x2bc
-  usb_disable_device+0x84/0x190
-  usb_disconnect+0xe8/0x338
-  hub_event+0xbd8/0x19ac
-
-Fix this by preventing the reallocation of the vdev in this specific error
-path if the device is registered for sideband use.
-
-Just propagate the error directly to the USB core. It should either retry
-enumeration or detect the disconnected device, and handle it accordingly.
-
-Debugging this issue to the dangling vdev pointer, reporting it, testing,
-and initial patch with different solution by Lianqin Hu
-
-Reported-by: Lianqin Hu <hulianqin@vivo.com>
-Closes: https://lore.kernel.org/linux-usb/TYUPR06MB6217000B59003EDF233D7246D2B22@TYUPR06MB6217.apcprd06.prod.outlook.com/
-Tested-by: Lianqin Hu <hulianqin@vivo.com>
-Fixes: de66754e9f80 ("xhci: sideband: add initial api to register a secondary interrupter entity")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261009151624.618967-12-mathias.nyman@linux.intel.com
+Cc: stable@vger.kernel.org # 7.2.x
+Cc: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Cc: Jihong Min <hurryman2212@gmail.com>
+Signed-off-by: Stephen Horvath <linux@stevetech.au>
+Tested-by: Mirko Jechow <mirko.jechow@gmx.de>
+[mirko.jechow@gmx.de: add new IDs to prom21-xhci.rst]
+Signed-off-by: Mirko Jechow <mirko.jechow@gmx.de>
+Link: https://patch.msgid.link/20261004002731.49927-1-mirko.jechow@gmx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ Documentation/hwmon/prom21-xhci.rst | 2 +-
+ drivers/usb/host/xhci-pci-prom21.c  | 3 +++
+ drivers/usb/host/xhci-pci.c         | 3 +++
+ drivers/usb/host/xhci-pci.h         | 3 +++
+ 4 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index a9e47e178c280..28bfe5fd0b6f4 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -4435,10 +4435,13 @@ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
- 		dev_warn(&udev->dev, "Device not responding to setup %s.\n", act);
+diff --git a/Documentation/hwmon/prom21-xhci.rst b/Documentation/hwmon/prom21-xhci.rst
+index 7984fb187bd8a..6c0b6e7368921 100644
+--- a/Documentation/hwmon/prom21-xhci.rst
++++ b/Documentation/hwmon/prom21-xhci.rst
+@@ -9,7 +9,7 @@ Supported chips:
  
- 		mutex_unlock(&xhci->mutex);
--		ret = xhci_disable_and_free_slot(xhci, udev->slot_id);
--		if (!ret) {
--			if (xhci_alloc_dev(hcd, udev) == 1)
--				xhci_setup_addressable_virt_dev(xhci, udev);
-+
-+		if (!virt_dev->sideband) {
-+			ret = xhci_disable_and_free_slot(xhci, udev->slot_id);
-+			if (!ret) {
-+				if (xhci_alloc_dev(hcd, udev) == 1)
-+					xhci_setup_addressable_virt_dev(xhci, udev);
-+			}
- 		}
- 		kfree(command->completion);
- 		kfree(command);
+     Prefix: 'prom21_xhci'
+ 
+-    PCI IDs: 1022:43fc, 1022:43fd
++    PCI IDs: 1022:43f7, 1022:43f9, 1022:43fa, 1022:43fc, 1022:43fd
+ 
+ Author:
+ 
+diff --git a/drivers/usb/host/xhci-pci-prom21.c b/drivers/usb/host/xhci-pci-prom21.c
+index 6486f4a093455..5f088a47d79f3 100644
+--- a/drivers/usb/host/xhci-pci-prom21.c
++++ b/drivers/usb/host/xhci-pci-prom21.c
+@@ -111,6 +111,9 @@ static void prom21_xhci_remove(struct pci_dev *dev)
+ }
+ 
+ static const struct pci_device_id pci_ids[] = {
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43F7) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43F9) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43FA) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43FC) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43FD) },
+ 	{ /* end: all zeroes */ }
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index a8889081ae824..b407676808fca 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -701,6 +701,9 @@ static const struct pci_device_id pci_ids_renesas[] = {
+ 
+ /* handled by xhci-pci-prom21 if enabled */
+ static const struct pci_device_id pci_ids_prom21[] = {
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43F7) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43F9) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43FA) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43FC) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_PROM21_XHCI_43FD) },
+ 	{ /* end: all zeroes */ }
+diff --git a/drivers/usb/host/xhci-pci.h b/drivers/usb/host/xhci-pci.h
+index 11f435f94322a..533efc7db8012 100644
+--- a/drivers/usb/host/xhci-pci.h
++++ b/drivers/usb/host/xhci-pci.h
+@@ -4,6 +4,9 @@
+ #ifndef XHCI_PCI_H
+ #define XHCI_PCI_H
+ 
++#define PCI_DEVICE_ID_AMD_PROM21_XHCI_43F7	0x43f7
++#define PCI_DEVICE_ID_AMD_PROM21_XHCI_43F9	0x43f9
++#define PCI_DEVICE_ID_AMD_PROM21_XHCI_43FA	0x43fa
+ #define PCI_DEVICE_ID_AMD_PROM21_XHCI_43FC	0x43fc
+ #define PCI_DEVICE_ID_AMD_PROM21_XHCI_43FD	0x43fd
+ 
 -- 
 2.53.0
 
