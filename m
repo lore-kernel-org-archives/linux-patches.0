@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061438;
-	b=KeebI0JmTvN+Fp1gNhthmSC70vr/sOP0Qm67AnCpfInFPY9Sf3QfNdLuQp94Ohcc1e4y
-	 BXjN2tsotIvWZdxC9QGyLIo0kddyDymvOTWDnZl43b8d28XVqIt9vXRYc5Hw0EZM0CuHi
-	 +Wh+uSzQgZ5WWIVCmaeEVHIVbfVhcNyTeKzLDdL+zmvc4nYztbPCK9RgPDVVhkOcaoeu4
-	 AEUF3Y3PvUtD7Ou/CXcRmZoThOVOnf2oCd/RbelYyNDatbmv4GO5qQpfTH0/kyYV2+aJz
-	 6K6/QIowYeeyjnn/nLIJ4/f7XzAgVC7lPceAgWmVE4OC2B0GXHVor0Ex52rcq6WylZg==
+	t=1794061439;
+	b=m0O1C15p405ehK+WaXcVmvOaNJaOijOYQOUtsZQqnAX9JuLIpzsOlfoA2nag1XxxHdho
+	 fm+9pZFh0sXWiTg0AoCdFEAyvIvQ+lEHB2merwWaCLr1EOAgQipEVIiV5tL7jXRk7vsgE
+	 /URCiURG+fb0Tc4lmtaJOGFOfendW4VAOU9+bA/cYnxMj8T0wKbELexcwpUJki6x3C9ec
+	 TxowPjfz9xDjg0pyiPodD2iiQh+gD7aDQKpJzHGt756d4glriZajzTugdXW5giWLWU6wZ
+	 I+jSn9mk9PAWpVJbeP1Y8L/mrgIXDYWwsb7VwVoRp00PaBZm6Bd3lYeRx55NKYs86FA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=P7ba1KeOB8AQWLG4U3iSc+YO6sX02ACMWavNXVboQ30=;
-	b=V/e30dQiKLlxwdBzX8B4PJTJ2lwkZWZMuuDEN9gxxtqYJhtHnHoJvT9dQNG87FX3RikO
-	 VFU0dC5rDFlzfzuTgl72U5M8Q6WUroQm18WTS8BfPLZ6yS7gF+bCiHBoTFeJBVzV0Aoi8
-	 OFagvFHSlfa8pqVlYuUm6NIvAW4VIRrudZRTBqI+ZKU5X8Wbel8PyPYIfKy2sYmT6S27f
-	 TihPBL4jCHYnYinih4jI8aaklWnfFmr4EcsPTyv2b2jNl9XLlrSTaqUT0DlNxX3yrdAaf
-	 1i2hfzpuDn2hH7Py4Kl1a3cZM3+UveXcFZe+T39tfYNkBJM0om2f2ADmAmRikHPueGQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=bjyqhVatNSlSXCHObYRf7kxutveOEiykbc8mTmx4Lz4=;
+	b=uv+tWlr9O/Z8lySvxlezD6weC1xHbwEY2O3YGtp/J1J/k2hPoDPLDw7VDjK5QLeip4OV
+	 o4SCa6ZHrTmAfgWaUl8RMZDwV+TBoFnpZZnnRorR/smAqqCvG8M64+MixJ7lZIHGcyC+0
+	 9B0TJ1rbxOb+om52CiWJ2UVjlTg56ur7ehzs7oDbtKajEy/rMkMSQ210sYQE8a7HWsOpR
+	 gVdalxRFe2Hl5qVXKZghWRX3VqcxXgex2TPUSjzgWU10H0cQ8121bgbav6vlH3J6nJIJW
+	 K3MQP8gj9QQIIFpRNFC54v+OoL4Kpj9o5YHokElyr5TAyVf+9nKUYRHHSBuNkO9bH9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aoyCYobP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DGX1fCwy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EA1606A326;
-	Sat,  7 Nov 2026 14:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA7E606A326;
+	Sat,  7 Nov 2026 14:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aoyCYobP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9751F0089F;
-	Sat,  7 Nov 2026 14:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DGX1fCwy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2F21F0089F;
+	Sat,  7 Nov 2026 14:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061437;
-	bh=P7ba1KeOB8AQWLG4U3iSc+YO6sX02ACMWavNXVboQ30=;
+	s=korg; t=1794061439;
+	bh=bjyqhVatNSlSXCHObYRf7kxutveOEiykbc8mTmx4Lz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aoyCYobPDfvBL0rpL+EsbyBH8cAe+tMVkPxJ6SVBHrL45NZ4iYi2DxvD6n5waYYzJ
-	 0h/GVYssCjjIZZiF1w16LUQX1I7veKdqWXkO3ooz2+HXN9xIXhS+RO0i+dWZk0AV2a
-	 +vn9svWdHu7iTcISE3UblMB1IXx9nHPc1LFXUlyo=
+	b=DGX1fCwy1I8UQPF5k00S1oKXN75kra6F1nZc6BXaRTvnaCGD41Ek7I+0gL0LWzTN6
+	 gjTQt9p2oUl337HVAvQ7LpKNapC/IGL70LjMNwaLXmoz61LiIQQiZcuTw9BRlts3eF
+	 Mh8JepHrAAsjW7Y4DSPyPkk0NhlBSOS2iC6Rrlzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0547/1536] namespace: check a recursive bind mount for mount namespace loops
-Date: Sat,  7 Nov 2026 08:42:43 -0500
-Message-ID: <20261107135012.976029150@linuxfoundation.org>
+Subject: [PATCH 6.12 0548/1536] drm/amd/display: Fix fast updates on DCE 6.x
+Date: Sat,  7 Nov 2026 08:42:44 -0500
+Message-ID: <20261107135013.001056561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -61,85 +63,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit c640a01a78e42302879006ed7b7d5a9a943ba815 ]
+[ Upstream commit 88427119e1f039c8cdffd63726c136a986ef519f ]
 
-do_loopback() refuses to bind mount the file of a mount namespace that
-is as old as the caller's or older because a mount namespace that holds
-a mount of its own file, or of an ancestor's, would cause a cycle. But
-it only checks the dentry the bind mount starts from. With MS_REC
-everything below it is copied and do_loopback() passes
-CL_COPY_MNT_NS_FILE so mount namespace files below the source are
-copied.
+DCE6 should use legacy fast updates, just like all DCE8 - DCN2.
+Set that flag for DCE 6.0, 6.1 and 6.4 (all DCE6 versions).
 
-That's fine for a source in the caller's own mount namespace. Every
-mount namespace file in there passed the same check when it was
-bind-mounted. It isn't fine for a source in another mount namespace.
-may_copy_tree() accepts a bind mount of any nsfs or pidfs file no matter
-what mount namespace it lives in so that /proc/<pid>/ns/<ns> and pidfds
-can be bind mounted. If we create a bind-mount stack of mount namespaces
-file descriptors the kernel will copy them irrespective of their
-ancestoral relationship to the mount namespace in question:
+Technically DCE6 should have been included when the fast update
+code was refactored, but it just happened to work until now.
 
-  151 146 0:7 net:[4026531833] /tmp/nrc/y rw - nsfs nsfs rw
-  152 151 0:7 mnt:[4026532293] /tmp/nrc/y rw - nsfs nsfs rw
+A recent commit "Attach only plane updates that actually changed"
+has exposed this issue because with that commit, DC accidentally
+took the new fast update code path for DCE6 as well, which caused
+it to boot into a black screen with a flip done timeout.
 
-Mount 152 is a mount of the mount namespace file of mount namespace
-4026532293 inside mount namespace 4026532293. That namespace and every
-mount in it are leaked... All it takes is a process in an older mount
-namespace that stacks the file and repeating it leaks without limit:
+This fix should be backported to all kernel versions that
+have "Refactor fast update to use new HWSS build sequence",
+but this patch won't apply cleanly to older kernels due to
+another refactor in "Remove dc param from check_update".
 
-  after control: Shmem:               380 kB
-  child: mount(/proc/self/fd/6, MS_BIND|MS_REC): ok
-  after cycle: Shmem:             65916 kB
-
-do_move_mount() runs check_for_nsfs_mounts() over a detached tree for
-exactly that reason. Do the same for the copy before it is grafted.
-
-Fixes: e149ed2b805f ("take the targets of /proc/*/ns/* symlinks to separate fs")
-Fixes: ef4144ac2dec ("pidfs: allow bind-mounts")
+Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
+Fixes: 9ec11bb842b6 ("drm/amd/display: Remove dc param from check_update")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260923122033.1046651-1-timur.kristof@gmail.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 698fda6e360625850413a2d1a90b72ae5f03073d)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930-work-mount-fixes-3-v1-4-be34c83956ae@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Uses lock_mount() with separate parent and mp, so the call is graft_tree(mnt, parent, mp), and adds a forward declaration of check_for_nsfs_mounts() ahead of its use. ]
+[ sashal: Set enable_legacy_fast_update in debug_defaults instead of a separate config_defaults/check_config, and dropped the is_apu context line in dce64_construct. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 036d56df28289..ebdc223c142e0 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2805,6 +2805,8 @@ static int do_change_type(struct path *path, int ms_flags)
- 	return err;
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
+index c5bf95b71b1a1..3f27dbd4f99b2 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
+@@ -438,6 +438,10 @@ static const struct dce_abm_mask abm_mask = {
+ 		ABM_MASK_SH_LIST_DCE110(_MASK)
+ };
  
-+static bool check_for_nsfs_mounts(struct mount *subtree);
++static const struct dc_debug_options debug_defaults = {
++	.enable_legacy_fast_update = true,
++};
 +
- static struct mount *__do_loopback(struct path *old_path, int recurse)
- {
- 	struct mount *mnt = ERR_PTR(-EINVAL), *old = real_mount(old_path->mnt);
-@@ -2872,7 +2874,11 @@ static int do_loopback(struct path *path, const char *old_name,
- 		goto out2;
- 	}
+ #define CTX  ctx
+ #define REG(reg) mm ## reg
  
--	err = graft_tree(mnt, parent, mp);
-+	/* the copy may carry mount namespace files from below the source */
-+	if (recurse && !check_for_nsfs_mounts(mnt))
-+		err = -EINVAL;
-+	else
-+		err = graft_tree(mnt, parent, mp);
- 	if (err) {
- 		lock_mount_hash();
- 		umount_tree(mnt, UMOUNT_SYNC);
+@@ -973,6 +977,7 @@ static bool dce60_construct(
+ 	dc->caps.max_cursor_size = 64;
+ 	dc->caps.dual_link_dvi = true;
+ 	dc->caps.extended_aux_timeout_support = false;
++	dc->debug = debug_defaults;
+ 
+ 	/*************************************************
+ 	 *  Create resources                             *
+@@ -1170,6 +1175,7 @@ static bool dce61_construct(
+ 	dc->caps.i2c_speed_in_khz = 40;
+ 	dc->caps.max_cursor_size = 64;
+ 	dc->caps.is_apu = true;
++	dc->debug = debug_defaults;
+ 
+ 	/*************************************************
+ 	 *  Create resources                             *
+@@ -1367,6 +1373,7 @@ static bool dce64_construct(
+ 	dc->caps.max_downscale_ratio = 200;
+ 	dc->caps.i2c_speed_in_khz = 40;
+ 	dc->caps.max_cursor_size = 64;
++	dc->debug = debug_defaults;
+ 
+ 	/*************************************************
+ 	 *  Create resources                             *
 -- 
 2.53.0
 
