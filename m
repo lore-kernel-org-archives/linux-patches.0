@@ -1,57 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065354;
-	b=RCK2isYC0s7diqRF64DF7PA0VA/dR/IJ55Kjlt6UyAhTBFv0ct9UUNHvl5eTujYA7Kxt
-	 lgHhaPPzLGkjmxqsx9I1hqeOSG3MLDFw0GvnyDE3cghfnmQtXYxApC5vF35qZijv4tS6N
-	 ZWNw6vT2v/KoyVNpY6fgTRhY5lCA8TU4o5mEIh2XhWCmHTQRXiT12J6VQF5sUN7CtbrJE
-	 roZNaIwtBzLnheLM0eqIUFyjGacGaB8xl7dEeYsWHZ4pJ5CH9nIBHrTwRrynmyYGjunex
-	 OlOsBarxZf4ggfhCWxHeXyBlBaFIO8BVza6F8AZJwsz90klg9zRd/+7AJ5TnBBIs4IQ==
+	t=1794065356;
+	b=O2SkyKW88QJL0ogFd9K3/RwiffE4hgWQGImxnXp//a48ZtsCmzH1XEK+jPog1qeFZjVU
+	 GzlteUEkbzUoRl/oP6QQRMEj9NhmIlh8rpyy0wbmhuLM4FurMCEpDslMxhzzaq2F70kMM
+	 Z9bUNMfLhkVFRGvzZ+WbHvQ6j+GGZxU1OAIuUprxHwPKoSYegcRxKQwERzkvN/6qWGKHb
+	 5e7EqgmqTWN/BwGwMjnw3jjp9Jmp3eslVczAuQC9pl1X1txZSFAR/eXZY4INQP/ig8IMl
+	 aeHMsp+TWM68T8lowKyYx+Va0OrStNxxzXSUgbsBULaeBslVqbBMbxAKvvOFB3bSMCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065354;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065356;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iTs2e6uhC93jTJPIp7tDOKyoKwvb0LaX7bidPJ24Q+E=;
-	b=txmKe7W4WRvAvScibEQvM6jZ+GqgH8CbSv1gphdGz3jY7kvRm91H7wwnsBSZRkshJYE0
-	 iYic+64697awc1Tx4JbG8AN9JNHEcFwsjpNDzntKqVFb/Guri9eJmQVwSM1PjEJ2Bh8ws
-	 nyBe1ixw1qzB3bI0hvFV/LDMDq0s1Qo7CS+zEvWVJBM3TK+diG3+tIm0GGD9BbqPQxU4J
-	 RJQu5H4xbFDKlPUMf5eA+cdtBNIx9UguYCG4TuaCjjUPCCCIJQtOj2s+zZ6rZD9zBPtCU
-	 Ik83KX+DNl922uvGzFQQDdVBuy6rx2zGkhjSCh8HMMMqhEB3mGfcUSJEVDrvwcfmo/w==
+	bh=aaq7UE7QX8t3riLMNHlu3ATuK5e42gdbIL1TSEULCZY=;
+	b=tHIWivqnpULJJ5+Ml+yiEQiGaAJVWHbnBXiudv682gBTuI/nl7UO0KhYpZPzF7rPErol
+	 mO5AWGyeLMFHGevp7HH2PqEag/I5EhSBcqNO6IUAWYG1G798/y46YMWZ/SjmmmL+jy6HS
+	 p4K2pHhGF2rPQKoY0JgacazuBWsUJ+OijZcE/QgSlnZjEYiIojSrSTxi7Btvzfztq1jOx
+	 iujT6f0DxJWe4e3u4FBlyFrLH2owA+AhlbcRCSJ78+GdUHcgZk5iVe2aD2vZ9dWFH1rgJ
+	 bobi8i9fXt2Ml5YWnf1cJQUAl3nFNCht6F2NXfx1IOG3pAAvZDhoPD55mpSSQN/kSYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Vim/EBnq";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0kcxBr3e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7963B606A326;
-	Sat,  7 Nov 2026 15:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628FE606A32C;
+	Sat,  7 Nov 2026 15:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vim/EBnq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4401F0089F;
-	Sat,  7 Nov 2026 15:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0kcxBr3e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DDB1F0089F;
+	Sat,  7 Nov 2026 15:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065354;
-	bh=iTs2e6uhC93jTJPIp7tDOKyoKwvb0LaX7bidPJ24Q+E=;
+	s=korg; t=1794065356;
+	bh=aaq7UE7QX8t3riLMNHlu3ATuK5e42gdbIL1TSEULCZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vim/EBnqqY7i8ErGHji2g1Ak6OdulY/l6NgN6lH3B8b7Y1DDCHosD6Q7g3ucwutRJ
-	 NFRZU4WYSUT0OeC6d2iWCtKjSfwShMVzK9lM5xK1JstabSOdNNYkGQJZpzXccPqKk+
-	 xsPo4kjxaMgcz0ZkqH80LMKrx+TuiACWp11A8XuU=
+	b=0kcxBr3eDMmPbtIr2rGdHGsXUdE1q4RupLz6qtByAAyuTqxnQ9nHf1GPedmySu9vq
+	 GnZ0ZlhiCIEdXRNf0ahyHRTEzygFnnYAnKJddZc94oAamFlCfym+vWhrf80xsezOUV
+	 Dc5eux8RS4QI8FvvzkC1g9yI98x4gxGQAzUlQ4OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Kyle Zeng <kylebot@openai.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Brian Foster <bfoster@redhat.com>,
-	Theodore Tso <tytso@mit.edu>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1091/1257] mm/truncate: fix the zeroing end of pagecache_isize_extended()
-Date: Sat,  7 Nov 2026 08:56:27 -0500
-Message-ID: <20261107135009.399069858@linuxfoundation.org>
+Subject: [PATCH 7.3 1092/1257] mm/page_vma_mapped: continue past nonmatching huge PMDs
+Date: Sat,  7 Nov 2026 08:56:28 -0500
+Message-ID: <20261107135009.427009969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -73,73 +76,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 8f9039840588dd618c72a726c192126bb7b98228 ]
+[ Upstream commit 1a2993227e8a27fc4cdea305bbdae82d290bc885 ]
 
-A process that extends a file by 4 GiB or more past a dirty folio, on a
-file system whose block size is smaller than the page size (ext4 with 1k
-blocks), reads back the bytes it wrote through a shared mapping beyond the
-old end of file instead of zeroes, and a later write into that block
-carries them to the disk.  With the example of commit 52aecaee1c26 ("mm:
-zero range of eof folio exposed by inode size extension") and the truncate
-taken 4 GiB further (pwrite 2k at 0, mmap the first page and write 'X'
-over [2k, 4k), truncate(2) to 4 GiB + 2k), the read of [2k, 4k) returns
-the 2048 'X' bytes, and a pwrite of 16 bytes at 3k followed by fsync() and
-a remount leaves 1008 'X' bytes on the disk in [3k+16, 4k).  No privilege
-is needed, and every size extension of 4 GiB or more reaches it:
-truncate(2)/ftruncate(2) through truncate_setsize(), writes beyond the end
-of file through generic_write_end(), ext4, iomap, btrfs, exfat, ntfs, afs
-and orangefs.  Affected since v6.13.
+A PTE-mapped large folio can straddle PMD boundaries after an unaligned
+mremap().  If the first part is discarded and replaced with an unrelated
+huge PMD, page_vma_mapped_walk() stops instead of looking for the rest of
+the folio in subsequent PMDs.
 
-pagecache_isize_extended() zeroes the part of the dirty folio straddling
-the old end of file that the size extension exposes, from the old size to
-the new size or the end of the folio, whichever comes first:
+This also affects migration entries.  A walk that stops at an unrelated
+huge PMD can leave migration PTEs behind when migration or an anonymous
+folio split restores the mappings.  Those entries do not hold mapping
+references and can outlive the source folio.
 
-	end = min_t(unsigned int, to - folio_pos(folio), folio_size(folio));
+This issue can lead to memory corruption and I have a reproducer for
+it.
 
-min_t() converts both operands to unsigned int before comparing, so the
-loff_t difference to - folio_pos(folio) is reduced modulo 2^32 first.
-When the file grows by 4 GiB or more past the folio, end is that residue
-instead of folio_size(folio): below offset nothing is zeroed, above it
-only [offset, end) is.  The bytes beyond the old end of file stay in the
-dirty folio and, now inside i_size, are file data.
+Skip the current PMD rather than ending the walk on a flag or PFN
+mismatch.  Do the same if the PMD became nonpresent before the locked
+recheck.  Release the PMD lock, clear the per-PMD state and advance with
+step_forward(), so the existing range limit controls termination.  This
+covers present, migration and device-private huge PMDs while preserving
+the matching-PMD and split-to-PTE paths.
 
-Compare in loff_t; the result is at most folio_size(folio) and fits end.
-
-Found while formally verifying pagecache_isize_extended() against the
-kernel binary.
-
-Link: https://lore.kernel.org/20261016222721.791785-1-nickolai@csail.mit.edu
-Fixes: 52aecaee1c26 ("mm: zero range of eof folio exposed by inode size extension")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://lore.kernel.org/20261016011549.61146-1-kylebot@openai.com
+Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 Assisted-by: LLM
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Brian Foster <bfoster@redhat.com>
-Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Lance Yang <lance.yang@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/truncate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ mm/page_vma_mapped.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/mm/truncate.c b/mm/truncate.c
-index 7912d3123170e..29782aced8bad 100644
---- a/mm/truncate.c
-+++ b/mm/truncate.c
-@@ -880,8 +880,7 @@ void pagecache_isize_extended(struct inode *inode, loff_t from, loff_t to)
- 		unsigned int offset, end;
+diff --git a/mm/page_vma_mapped.c b/mm/page_vma_mapped.c
+index 4e964545e5e85..67c8039e9d282 100644
+--- a/mm/page_vma_mapped.c
++++ b/mm/page_vma_mapped.c
+@@ -258,28 +258,28 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
+ 				softleaf_t entry;
  
- 		offset = from - folio_pos(folio);
--		end = min_t(unsigned int, to - folio_pos(folio),
--			    folio_size(folio));
-+		end = min_t(loff_t, to - folio_pos(folio), folio_size(folio));
- 		folio_zero_segment(folio, offset, end);
- 	}
+ 				if (!(pvmw->flags & PVMW_MIGRATION))
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				entry = softleaf_from_pmd(pmde);
+ 				if (!check_pmd(softleaf_to_pfn(entry), pvmw))
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				return true;
+ 			} else if (pmd_is_device_private_entry(pmde)) {
+ 				softleaf_t entry;
  
+ 				if (pvmw->flags & PVMW_MIGRATION)
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				entry = softleaf_from_pmd(pmde);
+ 				if (!check_pmd(softleaf_to_pfn(entry), pvmw))
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				return true;
+ 			} else if (!pmd_present(pmde)) {
+-				return not_found(pvmw);
++				goto next_pmd;
+ 			}
+ 			if (likely(pmd_trans_huge(pmde))) {
+ 				if (pvmw->flags & PVMW_MIGRATION)
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				if (!check_pmd(pmd_pfn(pmde), pvmw))
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				return true;
+ 			}
+ 			/* THP/device-private pmd was split under us: handle on pte level */
+@@ -292,8 +292,7 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
+ 			    (pvmw->nr_pages >= HPAGE_PMD_NR))
+ 				sync_with_folio_pmd_zap(mm, pvmw->pmd);
+ 
+-			step_forward(pvmw, PMD_SIZE);
+-			continue;
++			goto next_pmd;
+ 		}
+ 		if (!map_pte(pvmw, &pmde, &ptl)) {
+ 			if (!pvmw->pte)
+@@ -336,6 +335,17 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
+ 			pvmw->ptl = ptl;
+ 		}
+ 		goto this_pte;
++next_pmd:
++		/*
++		 * A large folio can be PTE-mapped across PMDs, so a
++		 * nonmatching PMD does not end the walk.
++		 */
++		if (pvmw->ptl) {
++			spin_unlock(pvmw->ptl);
++			pvmw->ptl = NULL;
++		}
++		pvmw->pmd = NULL;
++		step_forward(pvmw, PMD_SIZE);
+ 	} while (pvmw->address < end);
+ 
+ 	return false;
 -- 
 2.53.0
 
