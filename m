@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061069;
-	b=SzuTCsrVlmNw30h2qhF4upY78yNPY892zKU0UGdGmWZjV+oYJeNia9VyWgsryboiqli+
-	 r5xENSTo3c5UzHWCGsgvpAUxjWE2eWxUOwdFn3pA0lpY/I77QAvmHx0PZ770VC23VChWB
-	 8+BQF3EomABVLymTJwP9meOJL5MUjY5n7NFRFu7MuzBf5RbZ/QEq5o036vNNOYCXfwJsk
-	 oLrBa5mHGkkOdxx1E2azC/KpiftwZmB4As18bfPNXh6N2E/8ToWXu0/Ng6QUCKvaLemrV
-	 lUrYWsOWiUxG9fAWBGesDesd/Xv+c6Bbj2l76TOwt/xJmAPwSNpr7yXOdrmdQicSntA==
+	t=1794061070;
+	b=oOkP3JPvPrblyPfyv2iPXLbv4RnbL09WpD8Cuntlc2/oQJj5WIJJBiPSZEnAJYIIRM0i
+	 trjtF0pXBbIW4oSO1bNGomxDupAL/YMzZsuWCbuYIdlqjqUBkjwCtTsznmUX2W+ETL5/G
+	 /dD3de55ygLxRh/dDfiGNtOCGuYELOGK/3sy/mt7FiE7GsjvwKrUaLZMzUhqxWAQT75Az
+	 qHlN1orLrV0jmfOTWxYeHJIKDTdo2qGboOYIobNghKzZHNSxaYntZk6L197rp+JY34sw+
+	 MaINJNXiIAUX7ODM+7uO3mvxnYyR7X2YwHpfcdzmCQwsLWuW3bbaA35iLeaBn4qKQnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061069;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=wn8xhDNsQpIwtMLij+/RAmsQ9sCcQatxsLbbXNY6274=;
-	b=GXdmrY9roKVVaDX/kq86yIBt2zahYhAw3+PsMmM9H01KL8cdlXaGNtaXzTpeSjv0VDoF
-	 e6TEEGY3N9R1NMV3d50oMh+qPpm4wfh9NFJF2HK399KWodtrPzCKqHhF+ETjugBzr3yGz
-	 sHj+iY2m+BWGf2eubiM8ljbbqhl6xVkVyjC3sJe1l0MrRirWhcZytC7sFwekrboMKaJ/z
-	 DFGKgGXGhREips0IeDTycRpBwa4aGc530g51TiHIcF5GwX2D4Z39+wXC8PnIqFpyphqnm
-	 xPsHPgjw7lZHegSXqZlOUZ+JWDtZgJaOyNzaTiI+NI917tAEbzNe79kN2YBlyVTDtLg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=HiNXxvND8fbAlPg04DnETYxu8p3UNii6FWN6+46pXIk=;
+	b=CYnxus3D56Cz+XGOw9Ee+hlVZsexZETntvOw7SE5zZzwjtKT7XNQBGoKyOW9faD1B29O
+	 9HMnr24pi32fygIYRYSRq9+/17j14ZT8UT5h6GHnIi5cuwsJx3Ip7NKMn7zG+zzPtOWmD
+	 qcX2KTY4Z8HFmwte3+tAXGvoKQe43ynNtaoyNjizR113IPII+SmGz1OeAwxVxjr72FF7R
+	 NZfbgCTLfrmPumPASFEhCF5NEIT3cAnHeh44vvGgpidF5NKR3gDtaB1DJBOoa3TDl0pDc
+	 0pu/Y37S0TWXhZCGHIYlzJrZwO4UZ7k4qYxkVwaVkkfLaa1xck8G0+00GFpzb+Xrwrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ykm9oqV5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R6xj666i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD07606A336;
-	Sat,  7 Nov 2026 14:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE55606A336;
+	Sat,  7 Nov 2026 14:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ykm9oqV5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CABF1F0089F;
-	Sat,  7 Nov 2026 14:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R6xj666i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AE31F0089F;
+	Sat,  7 Nov 2026 14:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061069;
-	bh=wn8xhDNsQpIwtMLij+/RAmsQ9sCcQatxsLbbXNY6274=;
+	s=korg; t=1794061070;
+	bh=HiNXxvND8fbAlPg04DnETYxu8p3UNii6FWN6+46pXIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ykm9oqV5yXiMRLSi2pUu4R6TMXG/MAhr7RFkQb3ZwU3dyDee2A+7VbnHRS4YIA9QP
-	 ZItGy0rJt1vmlds6USuUd7s9LqZQ3lS0/lsUoB9vhfzFNM9SuWI24vY/INSQzcpncu
-	 AVNKN9jjmQ+3gsY/h1tIiPf32UV9WYqKOCROWgoM=
+	b=R6xj666i3GJ2GrvRYFiT3PhLilXYPK+rsJhJylBx5QM+PGPDBagcAkCz7BYvUUBSa
+	 bZak1Azqe2X5chhU64BxVXhkKFKRlIE2/QyKVJ6RYI7/ybR+1Kf92MejJK5DTzv/k1
+	 RL2cS3siXMx/3TUjVhIwKenWnaYBmK71wtGZqCgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehmet Aysel <mehmet4ysel@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andras Pataki <apataki@flatironinstitute.org>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0396/1536] ASoC: amd: acp3x-es83xx: Add HVY-WXX9/M1060 DMI quirk
-Date: Sat,  7 Nov 2026 08:40:12 -0500
-Message-ID: <20261107135008.715617702@linuxfoundation.org>
+Subject: [PATCH 6.12 0397/1536] ceph: do not cache negative dentries for snapped directories
+Date: Sat,  7 Nov 2026 08:40:13 -0500
+Message-ID: <20261107135008.742706828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,48 +64,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mehmet Aysel <mehmet4ysel@gmail.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit c1a39c228aceebc0ede83781ea906d257e324009 ]
+[ Upstream commit af59562a5b3d34fb3aa7753f2543393578d06dbf ]
 
-Add matching DMI table entry for the ES83xx machine driver, so the
-HUAWEI HVY-WXX9 / M1060 board (MateBook D16 2021, Ryzen 5 4600H) can
-successfully probe its ES8316 codec via the acp3x-es83xx machine
-driver, consistent with the existing M1010/M1020/M1040 entries for
-the same board name.
+When a LOOKUP/LOOKUPSNAP in a snapped directory returns ENOENT
+without a trace, ceph_finish_lookup() creates a negative dentry
+via d_add(dentry, NULL).  For live directories this is fine — the
+dentry naturally expires.  But for snapped directories,
+ceph_d_revalidate() unconditionally trusts all cached dentries
+(valid = 1), so a negative dentry created by a transient error
+persists forever, hiding entries that genuinely exist in the
+snapshot.
 
-Signed-off-by: Mehmet Aysel <mehmet4ysel@gmail.com>
-Link: https://patch.msgid.link/20260825092432.56292-2-mehmet4ysel@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Only cache negative dentries for live (non-snapshotted) parent
+directories.  For snapped parents, skip the negative dentry so
+that VFS retries the lookup on the next access.  Since the
+conditions that trigger a negative dentry (MDS transient error,
+local ENOENT shortcut, or MDS null dentry lease) are all rare in
+snapped directories, the performance impact of this change is
+negligible.
+
+Link: https://tracker.ceph.com/issues/78529
+Reported-by: Andras Pataki <apataki@flatironinstitute.org>
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ceph/dir.c   | 10 ++++++++--
+ fs/ceph/inode.c |  3 ++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-index 2b0aa270a3e9d..3dc41dae158cb 100644
---- a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-+++ b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-@@ -378,6 +378,14 @@ static const struct dmi_system_id acp3x_es83xx_dmi_table[] = {
- 		},
- 		.driver_data = (void *)(ES83XX_ENABLE_DMIC),
- 	},
-+	{
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "HUAWEI"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "HVY-WXX9"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "M1060"),
-+		},
-+		.driver_data = (void *)(ES83XX_ENABLE_DMIC),
-+	},
- 	{}
- };
+diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
+index 90ab0d55d9478..4896e27583e1d 100644
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -774,8 +774,13 @@ struct dentry *ceph_finish_lookup(struct ceph_mds_request *req,
+ 				d_drop(dentry);
+ 				err = -ENOENT;
+ 			} else {
+-				if (d_unhashed(dentry))
+-					d_add(dentry, NULL);
++				if (d_unhashed(dentry)) {
++					struct inode *parent =
++						d_inode(dentry->d_parent);
++					if (!parent ||
++					    ceph_snap(parent) == CEPH_NOSNAP)
++						d_add(dentry, NULL);
++				}
+ 			}
+ 		}
+ 	}
+@@ -840,6 +845,7 @@ static struct dentry *ceph_lookup(struct inode *dir, struct dentry *dentry,
+ 			    dentry->d_name.len) &&
+ 		    !is_root_ceph_dentry(dir, dentry) &&
+ 		    ceph_test_mount_opt(fsc, DCACHE) &&
++		    ceph_snap(dir) == CEPH_NOSNAP &&
+ 		    __ceph_dir_is_complete(ci) &&
+ 		    __ceph_caps_issued_mask_metric(ci, CEPH_CAP_FILE_SHARED, 1)) {
+ 			__ceph_touch_fmode(ci, mdsc, CEPH_FILE_MODE_RD);
+diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
+index 92ea6085957c7..32f612934f839 100644
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -1782,7 +1782,8 @@ int ceph_fill_trace(struct super_block *sb, struct ceph_mds_request *req)
+ 				ceph_dir_clear_ordered(dir);
+ 				d_delete(dn);
+ 			} else if (have_lease) {
+-				if (d_unhashed(dn))
++				if (d_unhashed(dn) &&
++				    ceph_snap(dir) == CEPH_NOSNAP)
+ 					d_add(dn, NULL);
+ 			}
  
 -- 
 2.53.0
