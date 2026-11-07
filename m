@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061686;
-	b=wGHzWVgfHJSTRz6uBkTIjcZsMltFwehcYHQelR/JAbE18kb2K6IVVexFElugZINWv0Qo
-	 KE/QUStnFbdCNrAWSlH1tz3/5AzhobCpPsNlatMVBhHKhy8nQhYCAPGIttbuO5uIGwemA
-	 bWrlTVHDc9tUPoljhFFzxZe/yMuBbYSZAMGq7neDk2qJfSaY5DGENgb9Q4L2Lrv7SirVn
-	 oQdh2rfhSwabe/EJ/8R8xNbBlNcVOL2fapLOjqOcmrTycgGPHfWSfZccR7sX65qIFa4vk
-	 2uXGX097sFPJf9Bu/PZ2td6ll6n0RYRa/0gBrg9dV001rU3mkmGpzKKsPHM8FR0qVGw==
+	t=1794061687;
+	b=vzNEH4Ha2VehPQ1aT8+MXh7LhTIkl4fOXP6dYhaxa4eKpyJtK+yU70L4S0/m84ZJDPkA
+	 ON/t9tYMx0aSgtPGjy6jY6urPbiDNnq096HjNx6q1hCyJeCII3L1iqH+BzMDjH/btRZnu
+	 8Q2oPSgh11bfempnP/NbCA6G4qHBPjK/c/aLJn8UADi5NLg7PYnVO7Zy15AQyY1ciWg2l
+	 FUSe/6HTPwYfweQAdtMq+AnCoRur5HJTcOL+SLOF608vU5tBL6pULLacwbNH2ve2gPsJo
+	 RhHSA2FanKpgrPaZEkuY4voa2a3+mbjp2nqf5jd64YUI4M8mxa8S9yFmb+VosiYguFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061687;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uWvzxA4prNiHslDSZiH+B4JCPIynZly4izQ4O+8hpLs=;
-	b=nRFZMi0ljrXBbHjYGivhyvLI3IFa2+F2GFGWPWmp9ZVPv0OI0BI8KTBTXZuYm6H8t/5X
-	 pqHeVMMxISKuzCX103qwIuuWOzcq+RRiPNVNNpg9VxVQC+hVRP+4mdWBj/XwI5Nt7UU8S
-	 bH7WxstPlruQFQ3u2x6EsTOjLaeMOsHklGCgquBz5OSkj3EEP13IoHfhA8zse/ti8aJ0z
-	 g1vVI69nuFCwccQ5ZuSKmKQs88GJjRxMfX5HAU/wxrUElDJXr7iUyOHHOElvrJ06ZN8oa
-	 XSwnd4VTfo0t/WSHWkuaFQjf3P1kleC2IrUUbmNlDcupl/JppLgaWhhas/wF0c+D/Ng==
+	bh=teCvVRChWbulfxhM/4stTkcB9t+vybpo+42Td+BIdxs=;
+	b=uj+3D981hOFVgiMyx9I+eGbcowG+F3xZfAd6nqFxkoLhgbmFfxLBQz3+78L/GfzxxDzF
+	 y5cR1mXPl614Kp1awtzUTU1sUci+/drJfeAkf9DTSmJxBp5h7Qd2Fc0lTu44b6d6VmU63
+	 QvES8a08jEeCPN4JuvDrX2Kb40TUd88k74RvTkZ3wepWVF8oSStxEwWM8QOJl8cU3PV59
+	 KpvICM9m0WLmvZWlj4w6zFPYpefSCpZulojD0TgNYQdKitvJHpE0oqLpp6DF7iwfjTGTa
+	 j1tCVq010oTH7uMYwiPAsnVtMUsaTkYsXxwS1woLPHEzQ2AQp/FIYvhXyd205/14z3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FT+fvujd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yQTu4NH7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8E9606A32C;
-	Sat,  7 Nov 2026 14:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86A3606A32C;
+	Sat,  7 Nov 2026 14:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FT+fvujd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D011F0089F;
-	Sat,  7 Nov 2026 14:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yQTu4NH7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D6B1F0089F;
+	Sat,  7 Nov 2026 14:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061685;
-	bh=uWvzxA4prNiHslDSZiH+B4JCPIynZly4izQ4O+8hpLs=;
+	s=korg; t=1794061686;
+	bh=teCvVRChWbulfxhM/4stTkcB9t+vybpo+42Td+BIdxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FT+fvujdF4+m72OdiGgxlHQv8HiOi4fhCMBUqjIgApEI717OUrSAZ2i813m1/0beW
-	 /4FIWwSYjyyThPbL0RHPgrm9plWz+DOJjS8kMhv7WuZJgqoai06i5OfWcGN5+xFoXz
-	 a1RD97FGBz9yJl+0JLjnGmqbP/d3cBIzMH6juylY=
+	b=yQTu4NH79ZRWxPHfYF5IAN+0Ww2VhxzoiCSfEK37r+CIzbTGu6bF0bWRTAY+9jTNB
+	 w2zV1J4g9dZdxUumuGfogoPFLDY822oqDaroS1IKMAwbqzRmG8fR5h7zlL0Er9YjDA
+	 Up8EDGHatlQebDJY362+FVt7Pb7WxfCU6sDcKTYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0736/1536] xfs: dont clear COWEXTSIZE on directories on reflink filesystems
-Date: Sat,  7 Nov 2026 08:45:52 -0500
-Message-ID: <20261107135018.186665085@linuxfoundation.org>
+Subject: [PATCH 6.12 0737/1536] xfs: dont overrun incore inode when cleaning attr forks
+Date: Sat,  7 Nov 2026 08:45:53 -0500
+Message-ID: <20261107135018.216116587@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,15 +70,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 3978b1f3109dfd5c648442bb040f9abd58608226 upstream.
+commit c28b4b48deac17749ed1ebe4289a4ba73541ddc6 upstream.
 
-LOLLM noticed that xrep_dinode_flags clears the COWEXTSIZE flag
-unnecessarily on directories on reflink filesystems.  Directories just
-pass the hint along to new children, so it's valid to leave the flag
-set.
+LOLLM noticed that xrep_dinode_check_afork doesn't check for a
+di_forkoff value that is so large that the attr fork would begin after
+the end of the inode space.  This causes afork_{ptr,size} to be
+nonsense.  What we really ought to do here is zap the attr fork.
 
 Cc: stable@vger.kernel.org # v6.8
-Fixes: 2d295fe65776d1 ("xfs: repair inode records")
+Fixes: e744cef2060559 ("xfs: zap broken inode forks")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
@@ -90,14 +90,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/fs/xfs/scrub/inode_repair.c
 +++ b/fs/xfs/scrub/inode_repair.c
-@@ -553,6 +553,8 @@ xrep_dinode_flags(
- 	 */
- 	if (xfs_has_reflink(mp) && S_ISREG(mode))
- 		flags2 |= XFS_DIFLAG2_REFLINK;
-+	else if (xfs_has_reflink(mp) && S_ISDIR(mode))
-+		flags2 &= ~XFS_DIFLAG2_REFLINK;
- 	else
- 		flags2 &= ~(XFS_DIFLAG2_REFLINK | XFS_DIFLAG2_COWEXTSIZE);
- 	if (flags & XFS_DIFLAG_REALTIME)
+@@ -1071,6 +1071,8 @@ xrep_dinode_check_afork(
+ 	if (XFS_DFORK_BOFF(dip) == 0)
+ 		return dip->di_aformat != XFS_DINODE_FMT_EXTENTS ||
+ 		       xfs_dfork_attr_extents(dip) != 0;
++	if (XFS_DFORK_BOFF(dip) >= XFS_LITINO(sc->mp))
++		return true;
+ 
+ 	afork_size = XFS_DFORK_SIZE(dip, sc->mp, XFS_ATTR_FORK);
+ 	afork_ptr = XFS_DFORK_PTR(dip, XFS_ATTR_FORK);
 
 
