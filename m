@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063213;
-	b=L1iRx6xb6sGXPzHjvKlCs+teDYu2BC2WPLc/C/nrTgIS+PXNh4eGu4ESMFIVXUF84O/i
-	 udeZ1mIfHWDWvlROldpfB82/fspXjoGB6hHN/lRv3RMLNtuCcxxjmZb5l0jwmzfgvyYnV
-	 pfMYyxlZarbakMwbQJsIvZaGbz+NpdFL5TOyXIq6ZV03umN8C1mwhyBBs23/XlCdRprjP
-	 ykqFJi3g5LoqnQoNy8a/p+ox8oxM7AT7jBk36D1RMxFet7/vRtr5Atlv5895GIewE9N7M
-	 dAp5wq/lNxf2QH8VhY9o/rtE5+XkkT1FDDTnv+IXKyK9e1n+Oi9x/2w1lp4uCnMyuSQ==
+	t=1794063215;
+	b=1iV35JAR0xCQafNnxD8VQRhVO4pRDkfDseeL+mRQq4WZt4cbMnhPq0c+EYQgLPNfyzfB
+	 lArd0p6b3/RAwqQen6xhw0PRAs3VZKGwqsaghxKAYMuFlqloI+kGTVwquLCYc24vqoH9I
+	 EsRUj6eN7ny4+emc0gcx1P9nzxU7u+waVcY0b957vC+zbnVuflypp1MVftBmI9dJNEmHY
+	 2/OeONKw0c3ivzaAGNwO8MN5j5sSMd9JK36vJqRJeBa2MXyJi8YGemxZhap4eKH9U9Q6z
+	 MYPQoM5ckIYaIpK+q9ey6rxcjP6MnpUdfzMEkRRxremN5UqdfkYwXN7QeRI/ko4Pe0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063215;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q7qwcW+cYMFhVUAWU7w7+Zuyf+AhqcFtC1U9FFGz8+s=;
-	b=eaWdT9A7yt1jDA8HIGTe4S+aOviMUVYdDSFV1oEJ4fQ1KtEbc+76mOyspsJdjJHxVzLf
-	 F9ZwmyUYnwVw3PPBOJ2QFat77G8q09ElR9R+YctiOgaRaq3OD0zQGx+P+KRuFPcvaJIOZ
-	 hnEQ0b1BpKObbHyZPxcHTJbGd3PhXcrexu7NrBu3jA5QyJuFHA6WTDbRFE9KnCqqYJ9pT
-	 zgVzPdWVoxd3fG8ymkM6btgisthtqz+Ftjap1+RYVB5XARG6WJqBftVcU37K0C+Qj4Ihd
-	 aI/j+27euSWfd5T4cRA8y4zSCWOSxpjzrvJSU6wbc0q1Tzlc4omp65Wu1Nn+8KV5Vtg==
+	bh=AAMpqzpPYv2V7adUf53t6QVisq4fQW1x9iHGOGp5opA=;
+	b=RoPAHCItZWgVasSUAGP5X+md6RJXYayvSHEI9JY/HoWebSJQ35V069yz8vxPWxeJaSj0
+	 3/C12h43nDoAFvV5clLDuPAuqKsf5L8DNIjlXuf2OKVtAeVrwCjrNFKipG4r+NY7krFwR
+	 D0CsDC8aEm9SvrZf8SC4gc8oONuOMzKG33IMyZkz27nMwjjqj+NnGSWlxk5mld1I4d4+a
+	 f15MNwy1kZdUoLdgD8rF3FejnIqeapUvbb0AiTPxZ6Ea2mxMGL0EA76MG01cIXwBXcQNv
+	 Ft1NUPjqkwiK4dF1ldVXGIKAORU6tMU2A+7uh7JY36qhuEnTX955Dc1cp1FzWLuat/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hsJalICQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mcVkGAdY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E714606A326;
-	Sat,  7 Nov 2026 14:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5DA606A326;
+	Sat,  7 Nov 2026 14:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hsJalICQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464651F008A2;
-	Sat,  7 Nov 2026 14:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mcVkGAdY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6712F1F0089F;
+	Sat,  7 Nov 2026 14:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063213;
-	bh=q7qwcW+cYMFhVUAWU7w7+Zuyf+AhqcFtC1U9FFGz8+s=;
+	s=korg; t=1794063214;
+	bh=AAMpqzpPYv2V7adUf53t6QVisq4fQW1x9iHGOGp5opA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hsJalICQUyOb7wISFhPPXfVzqftVEHJSos5naHFhl18iKno81Zx/ahI/1SHKRZHOZ
-	 L+im5tO4zQA7FNJvbr1sKhAyTI73YpahlEsb40V1g88Hd27M23PMiKQsbx3bNIGIvN
-	 F1EDLBy+jPPsMJD6ngkOUEOIsWOXXeTuYttcoACw=
+	b=mcVkGAdYQVZ7qEH1MgdIk73kyUv6/W3aVTXlVxsmZ8aj4+9eZ5oyyZFm/XudUrq+3
+	 fLgP1Wr9oCMacZKnsRaM8W+aEdjMksDag5KBaCAhHjHF62B0NZVVrzZg5iZli9rMEf
+	 /xd76FEvGfZQ7kqB5SdwoKe+1ct2IPcYw9Ywdey8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Theodore Tso" <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Jake Labelle <southampton.jake.labelle@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 423/869] ext4: fix out-of-bounds read in ext4_get_group_info()
-Date: Sat,  7 Nov 2026 08:51:45 -0500
-Message-ID: <20261107134907.983901017@linuxfoundation.org>
+Subject: [PATCH 6.18 424/869] nilfs2: validate directory position after llseek in readdir
+Date: Sat,  7 Nov 2026 08:51:46 -0500
+Message-ID: <20261107134908.090723947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -74,79 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Jake Labelle <southampton.jake.labelle@gmail.com>
 
-[ Upstream commit b067d3c1f90b536e9aa9f48b19580475a0b34f0f ]
+[ Upstream commit de7f49c12566cc5c7437a2f26c6c754b9d4d5648 ]
 
-A plain read of s_groups_count in ext4_get_group_info() allows CPU
-load-load reordering. On weak memory models, speculative prefetch of
-s_group_info prior to the boundary check could lead to an out-of-bounds
-read if a concurrent online resize expands the array and increments
-s_groups_count.
+nilfs_readdir() uses ctx->pos, which userspace can set to an arbitrary
+value via llseek, as an offset into the directory folio and parses
+whatever bytes sit there as a directory entry.  A position pointing
+into the middle of an entry -- or at unused bytes of a corrupted image
+that the page validator never inspected -- makes dir_emit() copy up to
+255 (name_len) bytes from a bogus entry, possibly reading past the end
+of the folio and returning unrelated memory contents to userspace.
 
-The data race occurs between the ioctl configuration path (holding the
-resize lock via ext4_resize_begin) and the lockless metadata lookup path:
+Snap unaligned positions onto a valid entry boundary by walking the
+rec_len chain from the chunk start before parsing, as ext2 does in
+ext2_validate_entry().
 
-   CPU 0 (Writer, Resize Lock)                CPU 1 (Reader, Lockless)
-   ---------------------------                ------------------------
-   ext4_ioctl()
-     [EXT4_IOC_GROUP_ADD]
-     ext4_ioctl_group_add()
-       ext4_resize_begin() // Takes lock
-       ext4_group_add()
-         ext4_mb_alloc_groupinfo()
-           // Publishes expanded array via RCU
-           rcu_assign_pointer(s_group_info, ...)
+[ryusuke: fixed offset wrap-around in nilfs_validate_entry() and
+ conformed AI tag to guidelines]
 
-         ext4_flex_group_add()
-           ext4_update_super()
-                                              ext4_get_group_info()
-                                                // Speculative / out-of-order read
-                                                [Loads old/smaller s_group_info pointer]
-             [Plain C store / smp_wmb()]
-             sbi->s_groups_count += ...;
-                                                // Reads new s_groups_count,
-                                                // boundary check passes
-                                                if (group >= s_groups_count)
-
-                                                // Out-of-bounds array access!
-                                                sbi_array_rcu_deref(..., s_group_info)
-
-Fix this by using ext4_get_groups_count() to enforce acquire semantics.
-
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Assisted-by: Claude:claude-mythos-5
+Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
 Cc: stable@vger.kernel.org
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Baokun Li <libaokun@linux.alibaba.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Zhang Yi <yi.zhang@huawei.com>
-Fixes: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
-Link: https://sashiko.dev/#/patchset/20260825095422.3166067-1-ruanjinjie%40huawei.com
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20260902074805.398540-8-ruanjinjie@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/balloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/dir.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
-index 08556dd45760d..b7d59eec7b3f6 100644
---- a/fs/ext4/balloc.c
-+++ b/fs/ext4/balloc.c
-@@ -329,7 +329,7 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
- 	struct ext4_group_info **grp_info;
- 	long indexv, indexh;
+diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
+index 6ca3d74be1e16..3e137c9ca1382 100644
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -231,11 +231,27 @@ static struct nilfs_dir_entry *nilfs_next_entry(struct nilfs_dir_entry *p)
+ 					  nilfs_rec_len_from_disk(p->rec_len));
+ }
  
--	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
-+	if (unlikely(group >= ext4_get_groups_count(sb)))
- 		return NULL;
- 	if (unlikely(!EXT4_SB(sb)->s_group_info))
- 		return NULL;
++static inline unsigned int
++nilfs_validate_entry(char *base, unsigned int offset, unsigned int mask)
++{
++	struct nilfs_dir_entry *de = (struct nilfs_dir_entry *)(base + offset);
++	struct nilfs_dir_entry *p =
++		(struct nilfs_dir_entry *)(base + (offset & mask));
++
++	while ((char *)p < (char *)de) {
++		if (p->rec_len == 0)
++			break;
++		p = nilfs_next_entry(p);
++	}
++	return (char *)p - base;
++}
++
+ static int nilfs_readdir(struct file *file, struct dir_context *ctx)
+ {
+ 	loff_t pos = ctx->pos;
+ 	struct inode *inode = file_inode(file);
+ 	struct super_block *sb = inode->i_sb;
++	unsigned int chunk_size = nilfs_chunk_size(inode);
+ 	unsigned int offset = pos & ~PAGE_MASK;
+ 	unsigned long n = pos >> PAGE_SHIFT;
+ 	unsigned long npages = dir_pages(inode);
+@@ -254,6 +270,24 @@ static int nilfs_readdir(struct file *file, struct dir_context *ctx)
+ 			ctx->pos += PAGE_SIZE - offset;
+ 			return -EIO;
+ 		}
++		/*
++		 * ctx->pos comes from userspace via llseek and may point
++		 * into the middle of an entry -- or at unvalidated bytes
++		 * of a crafted image. offset is only nonzero here on the
++		 * very first iteration (subsequent pages always start at
++		 * offset 0, which -- like any chunk boundary -- is always
++		 * a legitimate entry start, since no rec_len chain crosses
++		 * a chunk boundary). Snap a non-chunk-aligned offset onto
++		 * a real entry boundary by walking the chain from the
++		 * enclosing chunk's start, as ext2 does; otherwise
++		 * dir_emit() copies name_len bytes from a fake entry,
++		 * reading past the end of the folio.
++		 */
++		if (offset & (chunk_size - 1)) {
++			offset = nilfs_validate_entry(kaddr, offset,
++					~(chunk_size - 1));
++			ctx->pos = ((loff_t)n << PAGE_SHIFT) + offset;
++		}
+ 		de = (struct nilfs_dir_entry *)(kaddr + offset);
+ 		limit = kaddr + nilfs_last_byte(inode, n) -
+ 			NILFS_DIR_REC_LEN(1);
 -- 
 2.53.0
 
