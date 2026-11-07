@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061361;
-	b=B4tIVV8VsmY5U1BObGIiX+QYQrr7PSy3e7lNKhCaGBhtV4Wj8oJYWamAWKmz0lDHp6rC
-	 YxsH26Aj4P4aWJs7nnC1nMi/GncalUyoprtEJTMG1TQawcX2pI4WK3kCX0SXdSz/3E5Lo
-	 ZfDaAhedgxFaOqlJvYuO329qdKTCxZRQR8IKLY6Y6jmab05sQWG0Y5r6OvvseGFHdlksk
-	 /juWJ35RecL3WdLkY6zHWCbTpCpzNQUaIr1t7B1QyAxRBKkSsrgJTwf/10TokV4AdEba0
-	 0NDrGGJT4Oin84oPjRpqnMn8fSHW3qFa6QtXBcg3D3VH7bQXEONfx1KPtowdakAIcjw==
+	t=1794061362;
+	b=tKLXYJiabO3Fod3ZGueUu/N3LawKxJSsv766jPLXnxlu3k40E7OJX8FstG41eMHIBHFN
+	 oekpbL77rLBQ16j8agqq4Bd9Bi21fqQL6ksiYaiurpN+48avPCoMYMYiVmxftAfPkT5To
+	 gU0l9/8qKRNcahRlCUMu1i+Notck6qzfZZOObwTinCLY6/xuUGo5i1bmnlo7Ns3/5gGqW
+	 mEYgC6Vf7KddPRSjePiKeP6pfWXh6F4iiwyqz4GItWTRNEkmMv1BGmI5aHcwUSEkkPzjI
+	 EEFPsDS7WeT79qpmfkJvftspmT/9fWfunE2QJsZmVqfwTrNIDeTjuwfHlHNAvJRBXbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E1zIpUtzS2yXZSzlPNU48U3LB9PuL1N9qNBjftT1qvQ=;
-	b=tGX2X1dYLtSDNr/DbkHH4AActvpYIWdY5FYDPwufrSpVTAZAsUJC/GSlKKbXhpdpJ+yd
-	 1BicMAGr/Z00dgXAuidxUrhBNmg9cJwJ1655KVj9X8ygXotg/9gGUAMQMnX/BafSn+bAr
-	 UPOt2if7EW6gEC7JdkknjPkG8Cf4epQZSx2kIzq9w0owsW55yJh/wR7uB6JdDFxxPjbuL
-	 vlA8x5+G4Fjsk0MxIUgTtaeGeyo3i5HWmv0OrqLVvFwFf9L8QFI53SA6sJXTik31TnKWD
-	 A+eZaKKApBAKYvT15EtH9E5Qfy6bf5doG7a0d2+GgdVNfMcJ5iQ5k9UNEdpFnxHJ9rw==
+	bh=A25czGYoYJzLTl+Bdrz03ftkvVYhkJGxXzryMdCZD+w=;
+	b=bUD2pInP7Bnd5mjm8R3GxE+N0mK3QaMWL7Y81AomX1pb86w2rtkkVrQwHBmCzAWn6EFs
+	 oLf3HOIay1PDruNHGJuVJ4Tv3DvZdD4rE3MeTGTP61nmf+8Wc5pasaqRoXngUGNPqPKRd
+	 HICTlOl6VTK7AqcDSviSDUyG0Xp4oejv49Zw6YBo9cZsZPuC5DrEFzhRsuQJ9MjR1Kcj5
+	 6wJU6LlOq7yQAWuDsMbWxBsra8dk49yLpRdBBAYt0s/G4KJzCFaDg2jICcL0HDmo8AjaK
+	 MqUP2kkxKXotWabsH49KWCW6sGehSOFvb+l+1xpwjx0+sB5IQ2mGFVhQfvbTlhh6ctQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlYEliED;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AdVaL10E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03F9606A326;
-	Sat,  7 Nov 2026 14:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17E7606A326;
+	Sat,  7 Nov 2026 14:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlYEliED
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5AC1F008A3;
-	Sat,  7 Nov 2026 14:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AdVaL10E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03681F008A3;
+	Sat,  7 Nov 2026 14:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061360;
-	bh=E1zIpUtzS2yXZSzlPNU48U3LB9PuL1N9qNBjftT1qvQ=;
+	s=korg; t=1794061361;
+	bh=A25czGYoYJzLTl+Bdrz03ftkvVYhkJGxXzryMdCZD+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FlYEliEDkLmMNDoU4ttxoT8gYKwpuki8goobRxEW7bdDTBP1ENwLSDHbFy2ETu6lh
-	 vGaUyEEiAseJyPU2Ett4nTmYwCBHc3ImdVpqNzJyWYQ0MbcLpsTmIN49T0I4ac+sNl
-	 tr8R0q0b6jw6PeAjJHTcRDjAV0oNnIX/aUoiEO50=
+	b=AdVaL10EMMyxGfJF77Ej+uoIKP2gfSTFm+bE9+7oRtkQBDyFrorWdets80gBRA02z
+	 zrms4r/RUWvxGEO/2R2YAZBHpa23nIioPKbh1zENgR/95fbt830iJq0Ed18PgdWJoX
+	 Ev1i9lJQiPXn0LCj00gl+sXk/uGlFtGm1CLg9JjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Candice Li <candice.li@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0485/1536] LoongArch: Expand module virtual address space to 2GB
-Date: Sat,  7 Nov 2026 08:41:41 -0500
-Message-ID: <20261107135011.104892851@linuxfoundation.org>
+Subject: [PATCH 6.12 0486/1536] drm/amdgpu: Disable runtime PM for externally attached dGPUs
+Date: Sat,  7 Nov 2026 08:41:42 -0500
+Message-ID: <20261107135011.131436244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,89 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 18210a104bb97e28c26dc31fd9fc7b5c381fec62 ]
+[ Upstream commit c52feb4365396b6a881b5e8a95540517ffabb3b7 ]
 
-The current 256MB module virtual address space is easily exhausted when
-loading massive graphics drivers such as amdgpu along with the large
-unstripped symbol tables, resulting in allocation failures of "execmem:
-unable to allocate memory".
+pci_is_thunderbolt_attached() requires an upstream PCI bridge with
+is_thunderbolt set from an Intel Thunderbolt VSEC. This does not cover
+the affected ASM4242 USB4 PCI hierarchy:
 
-Thus, expand the module virtual address space to 2GB while keeping
-the current normal code model '-mcmodel=normal', rather than using the
-medium code model '-mcmodel=medium'. This approach avoids the extra
-performance overhead and larger binary size of forcing every function
-call into a 2-instruction sequence of 'pcaddu18i + jirl'.
+  00:02.2
+    \- 0f:00.0 [1b21:2421]
+       +- 10:01.0 [1b21:2423] -> 45:00.0 -> 46:00.0
+       |  -> 47:00.0 -> 48:00.0 -> 49:00.0 [1002:7590]
+       \- 10:03.0 -> 76:00.0 [1b21:2425] USB4 Host Router
 
-Given that individual module code segments rarely exceed 128MB, most
-jumps remain fast direct calls by using the bl instruction. For the
-long-distance jumps exceeding the +/-128MB limit, apply_r_larch_b26()
-emits PLT entries, while signed_imm_check() guarantees the run-time
-safety by rejecting any out-of-bound instruction offsets.
-
-There is still a risk that the distance between .init.text and .text of
-the same module exceeds 128MB. So we divide the 2GB virtual space to be
-two sub-regions: the first 256MB is for module text, and the rest is for
-module data.
+The host router is outside the GPU upstream bridge chain, leaving no
+ancestor with is_thunderbolt set. PCI core propagates DEVICE_REMOVABLE
+below the external-facing PCIe tunnel. Disable Runtime PM when either
+pci_is_thunderbolt_attached() or dev_is_removable() is true.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-[ sashal: Adapted the hunk context to this tree, where the MODULES_VADDR defines sit outside CONFIG_64BIT and the init guard is plain CONFIG_EXECMEM, leaving the changed lines identical to upstream. ]
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ sashal: Adapted the context to this tree's older code, where amdgpu_device_supports_baco() takes dev (a drm_device) instead of adev. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/pgtable.h |  2 +-
- arch/loongarch/mm/init.c             | 17 ++++++++++++++---
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/loongarch/include/asm/pgtable.h b/arch/loongarch/include/asm/pgtable.h
-index 8f1df75686e2d..59c5925a78a53 100644
---- a/arch/loongarch/include/asm/pgtable.h
-+++ b/arch/loongarch/include/asm/pgtable.h
-@@ -80,7 +80,7 @@ extern unsigned long empty_zero_page[PAGE_SIZE / sizeof(unsigned long)];
-  * still reliably trap.
-  */
- #define MODULES_VADDR	(vm_map_base + PCI_IOSIZE + (2 * PAGE_SIZE))
--#define MODULES_END	(MODULES_VADDR + SZ_256M)
-+#define MODULES_END	(MODULES_VADDR + SZ_2G) /* 256MB for text, rest for data */
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 13363330820a8..f022f8cc97306 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -380,6 +380,13 @@ void amdgpu_device_detect_runtime_pm_mode(struct amdgpu_device *adev)
+ 	dev = adev_to_drm(adev);
  
- #ifdef CONFIG_KFENCE
- #define KFENCE_AREA_SIZE	(((CONFIG_KFENCE_NUM_OBJECTS + 1) * 2 + 2) * PAGE_SIZE)
-diff --git a/arch/loongarch/mm/init.c b/arch/loongarch/mm/init.c
-index a6c5fd2df2f6d..9cd297fae9e64 100644
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -247,15 +247,26 @@ pte_t invalid_pte_table[PTRS_PER_PTE] __page_aligned_bss;
- EXPORT_SYMBOL(invalid_pte_table);
- 
- #ifdef CONFIG_EXECMEM
-+#define MODULES_TEXT_START (MODULES_VADDR)
-+#define MODULES_TEXT_END   (MODULES_VADDR + SZ_256M)
-+#define MODULES_DATA_START (MODULES_VADDR + SZ_256M)
-+#define MODULES_DATA_END   (MODULES_END)
+ 	adev->pm.rpm_mode = AMDGPU_RUNPM_NONE;
++	if (pci_is_thunderbolt_attached(adev->pdev) ||
++	    dev_is_removable(&adev->pdev->dev)) {
++		dev_info(adev->dev,
++			 "Runtime PM disabled for externally attached device\n");
++		return;
++	}
 +
- static struct execmem_info execmem_info __ro_after_init;
+ 	bamaco_support = amdgpu_device_supports_baco(dev);
  
- struct execmem_info __init *execmem_arch_setup(void)
- {
- 	execmem_info = (struct execmem_info){
- 		.ranges = {
--			[EXECMEM_DEFAULT] = {
--				.start	= MODULES_VADDR,
--				.end	= MODULES_END,
-+			[EXECMEM_MODULE_TEXT] = {
-+				.start	= MODULES_TEXT_START,
-+				.end	= MODULES_TEXT_END,
-+				.pgprot	= PAGE_KERNEL,
-+				.alignment = 1,
-+			},
-+			[EXECMEM_MODULE_DATA] = {
-+				.start	= MODULES_DATA_START,
-+				.end	= MODULES_DATA_END,
- 				.pgprot	= PAGE_KERNEL,
- 				.alignment = 1,
- 			},
+ 	switch (amdgpu_runtime_pm) {
 -- 
 2.53.0
 
