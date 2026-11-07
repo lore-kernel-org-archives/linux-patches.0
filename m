@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063493;
-	b=kMeu2sz8U9s87utEMfMCOGwCyWhUMs3MT8Pq6NkONz/hezyyQ05/DkcK1fm5y4ujggkh
-	 aNzC6a2T5wcDv9zJaLNmXTC6/E57vrQOkO3cWQM0iAN/Ognk9AOWihaeSw2EkMnIS2I5l
-	 MdVwgBxvuddEr6edrXJXtnP9j5nB5i/Q6mc/5CnxtNYhIZ2dMWQ/zrUvQGf3bCEXYbkwA
-	 jUocmCUusDVvxsytm/xbxuuyJ5DWxBO7JKwijsIIqK67hJartctczHlTIaKfju7aljEOV
-	 jG+SIXOu2LqORLvNShdkFWZ1ViVZ0uLZ+UyL0ouIHgcGFLLrKZeaADyZCy0upm6amzw==
+	t=1794063494;
+	b=5pewq97fozJoz/WWeJtSxZEw5yvDtKYddCdxGNiy25b14L5kxdu1aFW4A4pV15onEeSn
+	 ayPlulIT6hQBIMimCokbdnYhHtYGL7KsP+VvvdI4uSb8CBZvrWjQpwbKN48OKdEKtTnBy
+	 FlDjDLPwTlpThoP0trHLjBzfPAMfP1s0w8LBSAlAYjxHQOo+7rByTU88MqMH2yFv5e0Q3
+	 KKJl3EtOv1ZhKmd7vzHRL0iqq2dGB9RpJ6QTgKDGLCi3n3Dl38/ljCSTsAtgl7o2/hIGi
+	 xDar45XltiXaTZKHmTqYGUXMs+FDypbl5HBfXLRFVazViJEeqT3oa/5oYlf2glxnBAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063493;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063494;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FLDJK2QP7lgP1FTABZkZg8z7mOPcwMqIMrBfYmFf3dU=;
-	b=c4zBCilgzDiJCogFZRgiU0gquNWCavD7VScgwouPUmFQNlQb88XrKx5/DqL08Y1tYy4c
-	 PfO/d4vGkB2qLrkUU5+2AMjO1xK/YLVlXpV/jIEk6Kky+THOkFTxcg8UkXTBwtx7q683w
-	 hKhvLgFlvbb9XV9PFwbGECAI1MNwSZy3A/bB2CM1/yGziw9dUwd0wnrw+/fTAfCAnA9re
-	 tT7XaSxcsmUYbT126CTiueofLsMfKLdqU4eGoLGL2IUOgdknPx1csdUv2ItHqP3qOCnZb
-	 oCsjO6rONotVExz7EzNgcO+wQLI0ctiQF+AXcfiZTGfZOx3zYpsQ98NcobnB4e7jIYA==
+	bh=/wB83PgTxmnWQ0SLXRqctgvs7oAQtEJYLv9RNNHly68=;
+	b=3YnotDd5joL1prr4UiQELf1Y2Mn3TAI3l1vB5p//H5wqXDzVVEiOPU6zO0Qx7XiKkYa4
+	 f+DKhPaTBrB5tjjkbNnWBQUvlPHUKl51R8lew+Cz2cqwqo6FLBM15SVUykhvFKYhD9hQr
+	 aGmCs2FsThSLwCN2O2gQ1GcQuboW+nT/SvP1qJKguawHmgGBgHkJOLi3YvjxpVRVmnaAV
+	 ris/AgJ9T/vp2Acizgki9dbIJSG1ONi4y0n29FVKgWHlUy0tw0NxUPqEz6NX0E8XuHdqF
+	 DGss35Dm3GoJOcMpbBxJ/dG38GHc+vR1sNNanQOFcSc6MHBklVJk3NAH6fx+K5oW71w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RflxIv8P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWy1ICrR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFC7606A33A;
-	Sat,  7 Nov 2026 14:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3AD606B894;
+	Sat,  7 Nov 2026 14:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RflxIv8P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFCE1F008A2;
-	Sat,  7 Nov 2026 14:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWy1ICrR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF21F1F008A2;
+	Sat,  7 Nov 2026 14:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063493;
-	bh=FLDJK2QP7lgP1FTABZkZg8z7mOPcwMqIMrBfYmFf3dU=;
+	s=korg; t=1794063494;
+	bh=/wB83PgTxmnWQ0SLXRqctgvs7oAQtEJYLv9RNNHly68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RflxIv8PloxsNaIDsJr1dYG/d8FLwi96TKklr7S1Pqr8lbAg4pm0LSob2UD7vYqxs
-	 bRYstI9f2mcaXJHrRpJJGkk3f1BtCF97NumcevWyLnznE3fOMh5ObxqM0WEFcyqwFk
-	 9QgjrTKh2Sp+FAb6vVNfPgooFdorCNjBgMLKKRr0=
+	b=uWy1ICrRXDrHxisaqMEVfKQnYzPyutNuGT3XXloZMzHpdlZ77v8wB6opYP1q+lpQY
+	 Fl25O7bnYr3jofhGtbAQrNsyaYJO75+znpTII7gW/oS9R4uDKqbBF14ulRkKDnkZlo
+	 AYJkB1ObLFwS8pwtZCHD7zvr+ULISoio4XEkq7SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 602/869] net: skbuff: dont BUG() on a bad csum_start in skb_copy_and_csum_dev()
-Date: Sat,  7 Nov 2026 08:54:44 -0500
-Message-ID: <20261107134913.459829108@linuxfoundation.org>
+Subject: [PATCH 6.18 638/869] hwmon: (sht4x) Reject incomplete heater command transfers
+Date: Sat,  7 Nov 2026 08:55:20 -0500
+Message-ID: <20261107134914.566031894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,62 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit 56453199d28f0072a8196fba14b2d702632e2219 ]
+[ Upstream commit 0e1d292233c83d41530df6ffa4ec5a382f118b12 ]
 
-skb_copy_and_csum_dev() copies everything up to the checksum start out
-of the linear area, and BUG()s if the checksum start is past the end of
-the linear area.  It misses the other direction: a CHECKSUM_PARTIAL skb
-that has been pulled past its csum_start gives a negative offset, which
-gets past the check and becomes a ~4GB copy.  It also trusts
-csum_offset when it stores the folded checksum.  So far
-skb_copy_and_csum_bits() BUG()ing on a short skb has covered for that,
-but once it returns instead, a bad csum_offset would write past the end
-of the caller's buffer.
+heater_enable_store() treats a zero return from i2c_master_send() as
+success. It updates the heater state and returns count, so another
+attempt to enable the heater fails with -EBUSY.
 
-The function returns void and its callers are drivers copying a frame
-into a bounce buffer just before handing it to the hardware.  There's
-nothing for them to back out of, so check both ends of csum_start and
-that the checksum field fits in the frame, and if not, copy the whole
-frame with skb_copy_bits() without filling in the checksum, with a
-DEBUG_NET_WARN_ON_ONCE() for debug kernels.  The frame
-goes out with a bad checksum and is dropped by the receiver.  If even
-that copy fails, zero the buffer so the driver doesn't send stale bytes.
+i2c-virtio can return zero when the first message fails. Require
+SHT4X_CMD_LEN before updating the heater state, as sht4x_probe()
+already does for the reset command.
 
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Cc: stable? The trailers only have Assisted-by: and Signed-off-by:. No
-Link: https://patch.msgid.link/20261007-b4-skbuff-bug-on-v2-5-b9a5f732895b@toxicpanda.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0eed6fc3d2b9 ("hwmon: (sht4x): add heater support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Link: https://patch.msgid.link/20261017205234.1084949-1-pocj8ur4in@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/hwmon/sht4x.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 1808bed195af1..227c889fba578 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3899,7 +3899,18 @@ void skb_copy_and_csum_dev(const struct sk_buff *skb, u8 *to)
- 	else
- 		csstart = skb_headlen(skb);
+diff --git a/drivers/hwmon/sht4x.c b/drivers/hwmon/sht4x.c
+index f757265a82a6d..83dc3ca67046b 100644
+--- a/drivers/hwmon/sht4x.c
++++ b/drivers/hwmon/sht4x.c
+@@ -287,6 +287,8 @@ static ssize_t heater_enable_store(struct device *dev,
+ 	ret = i2c_master_send(data->client, &cmd, SHT4X_CMD_LEN);
+ 	if (ret < 0)
+ 		return ret;
++	if (ret != SHT4X_CMD_LEN)
++		return -EIO;
  
--	BUG_ON(csstart > skb_headlen(skb));
-+	if (unlikely(csstart < 0 || csstart > skb_headlen(skb) ||
-+		     (skb->ip_summed == CHECKSUM_PARTIAL &&
-+		      csstart + skb->csum_offset + sizeof(__sum16) >
-+		      skb->len))) {
-+		DEBUG_NET_WARN_ON_ONCE(1);
-+		/* Send the frame without the checksum filled in, or send
-+		 * zeroes if we can't even copy it.
-+		 */
-+		if (skb_copy_bits(skb, 0, to, skb->len))
-+			memset(to, 0, skb->len);
-+		return;
-+	}
- 
- 	skb_copy_from_linear_data(skb, to, csstart);
- 
+ 	data->heating_complete = get_jiffies_64() + msecs_to_jiffies(heating_time_bound);
+ 	data->data_pending = true;
 -- 
 2.53.0
 
