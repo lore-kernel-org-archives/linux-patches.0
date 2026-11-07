@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060800;
-	b=MQmDtEjW4LsYX+6jYMXTfEl3eSpei3BGPMbhtvZ4/FXghsBn3U4QnWym2ad3MmXEjgB+
-	 AjII1YeajANLvOeMbgnJkBl1G2CEXXmfsXrVE5lrVp/caUJTu06zgnU2k4E1ikdaimD5K
-	 ChxfiMfERHPXNYGHVEbffxIzOnwGGS1WS54CBAUqyMd7vBHaMK56yr9SnIPzEWhKG9nh9
-	 KUiGPHRJf8O3hy/pBjmTAQ6ErZt1nV2hhf7KocXPLV6F72FCEFD1T2fmEjwPMgODC+tTh
-	 NvZRmahgpGylPrbWlw0CGznl9BhDwDC+UYHPyGfqk1YOg4GVLLEDln+DiFlOmvquVeQ==
+	t=1794060802;
+	b=WUH+8uAh7HiN5UF9F4rg7wm0umu01XkxF7acqfT3doai8xEtvOq/+A2VGvUGXK1ct1rn
+	 o8aNTAsrtgWZYdhLKahCyJeUCo0lyQc4dKVgol34yBWzRGjoh80KJSNL71B7WnDkLtD2L
+	 CFhOMkRYEviqS2h/5xzcyrTcC6glZ7/5eBcx2ip96N2CcMf+qw9RRowxSj/7JsrmrZKHQ
+	 nhO90npNtHavoarM39t2VCXi60s76+ijDpWM/P+2x3AhMeZv+iwX2d2soRaVecF4vXSoq
+	 oQsTpDbttpHKSeSlbbBLPVsDl/qMbLaSQnPGnG4aOsxIcEJwRH5s3RAuxzQ78Mt00tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060802;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OEa1H7qcjw1OMZsP02a9Hajqe7jbvw55axDdvY7NmoI=;
-	b=fhi4XAOnzd9MHnPxsZlSTSVOBwc5ga0jD8d3pqVwPQNnJqROyEdy82PIcEwuIlACIdoi
-	 EfYLiB6jgmVKlcq4tl0TMSJ1LQR+2iJlo0BafJSr1K5jXuk5CpsbUvod9S9Z7hJK0qmr/
-	 87Fnqn5wiFeC0oDLZXVlOsRqxXSvcO/2HOpsL4/4DeN5n/QsCBXyfWFy9DEvyLn0AV1f9
-	 OvM1ehOYTWv7EDxMBHTvCVeCxYzemXPobkhJrWejrJtqS/Jtxdxd2DsZPSeXxZkaP884f
-	 4aVlm0EiP1ogTxtD4iBsIaiU1jExfIeEA56fM0czvM2dMI8vJ3cv4odVjg5MGd0jINA==
+	bh=zzl72BKSfANWnXGNgpc/YGjl0hhh6mElT6BU/86Avjw=;
+	b=f7BBNYrLo8rRGoFHb9cXQnwxUurANTFv7LnuCa+dRZv0DVUjXxlxKjYUMG1EA0lL6yY9
+	 W8xQkoFCjUQsGfk7/6/UaZxICZeZw7SBiJ0GXosOyocpR5lwv1viuTHAWcRDG+X8E1+aT
+	 Hr5ar53y5m/kqn+SZGmvGbXKbU49EjBx6CGUggeklbivSPIxr4ynmrUBtOH/C/042sKIp
+	 x0DILXwQ1OpAWxbxey7SWZsDv3ipgPZCnPy10bs+tzayC961oUINMBwTzEajyRGBWMutD
+	 1lXjcgiC2uYmYwAFRyV/eMlSZZzBZf+Tpg1KHbUvy9/2tFmOUK12jYjToehzwKW+DTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DztaSxlK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mZhjXqNF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00B2606A326;
-	Sat,  7 Nov 2026 14:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71F8606A326;
+	Sat,  7 Nov 2026 14:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DztaSxlK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0111F0089F;
-	Sat,  7 Nov 2026 14:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mZhjXqNF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BE01F0089F;
+	Sat,  7 Nov 2026 14:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060800;
-	bh=OEa1H7qcjw1OMZsP02a9Hajqe7jbvw55axDdvY7NmoI=;
+	s=korg; t=1794060801;
+	bh=zzl72BKSfANWnXGNgpc/YGjl0hhh6mElT6BU/86Avjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DztaSxlKiwsjhyq+6BfKqP9hclDEtNvyLmWaemo93fh8T5Tb2XTt4YgX7Gml2PlIq
-	 fm+fToC/V4KzTX91pS9O9mNlsvOFQLfvMnk5JWWy3GfZK5ehkLDgBlpHoz2Q5ByMin
-	 u6CVFJuXY2cfVag6hE/ud9Xju1XrduppLRRm2QyE=
+	b=mZhjXqNFIfas3sMa7yYr3q58eBazarPLcA0ncTeSefb/RGc1oBC4ovnEbuRrtqeO1
+	 /uKcEk+ICoLswZWnkrRd3ptM/d0iE2qj32eSGlrXWybKt8rLD5kqY/Z5THdhTyidCo
+	 wryOiukRZMgSq2x2B4IPHAjLyElrYAyO+i+iG4wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randolph Sapp <rs@ti.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0200/1536] drm/etnaviv: force flush on power register ops
-Date: Sat,  7 Nov 2026 08:36:56 -0500
-Message-ID: <20261107135003.278572661@linuxfoundation.org>
+Subject: [PATCH 6.12 0201/1536] soc: ixp4xx: qmgr: add missing MODULE_DEVICE_TABLE()
+Date: Sat,  7 Nov 2026 08:36:57 -0500
+Message-ID: <20261107135003.304918901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,91 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randolph Sapp <rs@ti.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit c182a2ae13886463f7ae36e034449477306d182b ]
+[ Upstream commit 01479280fa5d4691013bcd64fdfd935117b69769 ]
 
-Add gpu_write_power_sync to verify that power register modifications
-have reached the endpoint device in sequence specific sections that do
-not validate device state.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-These sequence specific areas have been detected experimentally with an
-am57xx-evm through numerous boot and module load+unload cycles.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-Signed-off-by: Randolph Sapp <rs@ti.com>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Link: https://patch.msgid.link/20251013170122.1145387-2-rs@ti.com
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Message-ID: <20260704121851.63805-1-pengpeng@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 10 +++++-----
- drivers/gpu/drm/etnaviv/etnaviv_gpu.h |  6 ++++++
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/soc/ixp4xx/ixp4xx-qmgr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index d2f9ad9d9e89d..919bf6b38e8a7 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -519,13 +519,13 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
- 		u32 pulse_eater = 0x01590880;
+diff --git a/drivers/soc/ixp4xx/ixp4xx-qmgr.c b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
+index 475e229039e30..e3ad0e0237a77 100644
+--- a/drivers/soc/ixp4xx/ixp4xx-qmgr.c
++++ b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
+@@ -454,6 +454,7 @@ static const struct of_device_id ixp4xx_qmgr_of_match[] = {
+         },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, ixp4xx_qmgr_of_match);
  
- 		/* disable clock gating */
--		gpu_write_power(gpu, VIVS_PM_POWER_CONTROLS, 0x0);
-+		gpu_write_power_sync(gpu, VIVS_PM_POWER_CONTROLS, 0x0);
- 
- 		/* disable pulse eater */
- 		pulse_eater |= BIT(17);
- 		gpu_write_power(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
- 		pulse_eater |= BIT(0);
--		gpu_write_power(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
-+		gpu_write_power_sync(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
- 
- 		/* enable clock */
- 		control = VIVS_HI_CLOCK_CONTROL_FSCALE_VAL(fscale);
-@@ -619,7 +619,7 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
- 	    gpu->identity.revision == 0x4302)
- 		ppc |= VIVS_PM_POWER_CONTROLS_DISABLE_STALL_MODULE_CLOCK_GATING;
- 
--	gpu_write_power(gpu, VIVS_PM_POWER_CONTROLS, ppc);
-+	gpu_write_power_sync(gpu, VIVS_PM_POWER_CONTROLS, ppc);
- 
- 	pmc = gpu_read_power(gpu, VIVS_PM_MODULE_CONTROLS);
- 
-@@ -663,7 +663,7 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
- 	pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA_HZ;
- 	pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA_EZ;
- 
--	gpu_write_power(gpu, VIVS_PM_MODULE_CONTROLS, pmc);
-+	gpu_write_power_sync(gpu, VIVS_PM_MODULE_CONTROLS, pmc);
- }
- 
- void etnaviv_gpu_start_fe(struct etnaviv_gpu *gpu, u32 address, u16 prefetch)
-@@ -729,7 +729,7 @@ static void etnaviv_gpu_setup_pulse_eater(struct etnaviv_gpu *gpu)
- 		pulse_eater |= BIT(18);
- 	}
- 
--	gpu_write_power(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
-+	gpu_write_power_sync(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
- }
- 
- static void etnaviv_gpu_hw_init(struct etnaviv_gpu *gpu)
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.h b/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
-index 31322195b9e41..c9f26d86f26af 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
-@@ -201,6 +201,12 @@ static inline u32 gpu_read_power(struct etnaviv_gpu *gpu, u32 reg)
- 	return readl(gpu->mmio + gpu_fix_power_address(gpu, reg));
- }
- 
-+static inline void gpu_write_power_sync(struct etnaviv_gpu *gpu, u32 reg, u32 data)
-+{
-+	gpu_write_power(gpu, reg, data);
-+	gpu_read_power(gpu, reg);
-+}
-+
- int etnaviv_gpu_get_param(struct etnaviv_gpu *gpu, u32 param, u64 *value);
- 
- int etnaviv_gpu_init(struct etnaviv_gpu *gpu);
+ static struct platform_driver ixp4xx_qmgr_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
