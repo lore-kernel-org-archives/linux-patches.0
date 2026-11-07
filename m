@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064086;
-	b=Ms35Z+SpDpzxV4BFHbmM/poGjtKScSIsLSmWqWbs8Z0JKlUahOIuUYzJ0YX4tqH/EPzJ
-	 7+4Sg89bRjvgi0FOsGN4QnU/p8qQ70kP5ZinX9rThKVddfMWNqMG2DfzMdS4STv+7CcEr
-	 MpqQ7kGvza3gKefWQLCBGSciz9/tnrX1Cx3nXtNNcEeUbVmcrjPj7rTLDWRVAb3vTZNRb
-	 wbkz6AXVJDVG2vMo+b5ovspzP6Lg1wneLzsssXpi5R1A8jypSSjcyUYFkHy6vbZEBqmRl
-	 8pt+Ax1OZmSFCYNz2XCGZGh4b2n4+fp9Xq4HKeMvCQyeIjFKucOhq1DzmlRDJ3e8wGg==
+	t=1794064089;
+	b=lyGh4qOGWwbc0fO53wQ0/KZVRziwlP9Hb8l+KywQnXul1uNWApDDBFJyHWyfa6Ol6IjI
+	 S904CL9ABRSAUuzHiBaaHj5E7FwFQ1TW1wOUl8tMcQ+g3mAtPu8g7rYf+sx1D28nW1wIs
+	 i6Qz31oCmvmiiri67MeO5Ih75J8U/4Tt2rGfpd23sPuQ5ZI9uXqjaEjIGXqIJ7PNrzgPY
+	 JgVWDiwVd0Y7sDKd3+XGEc/WZYLkfw1iFvs0kcOU7P8buFpvFeMVYlN6rfLYecPvwcZs2
+	 XFb/jd6/X7FZXJgUXBZUge5qQm/2KyQDeDoMn7berF2FXvoRQria2ISoT7vJ8vtYGDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bShoOGb3P1sUlS2tWmGZHvRS9gu07P6nBilRHI8saB8=;
-	b=hMhyJpBRlSKo01YToz52IMY/RvqMbMNJDhBn5m7pxBxzjqBkggLuWhCcSEEARsoko0ER
-	 FSWT7MW17ghzYcTuYI1O4ub00IAWdLEmt9tZDPVvOntf+UaLMCYkrWkKboEvsZabrnVJF
-	 4g4IF5SAsx7uElIKjrMRxGX6fdqWzSktjGgJFk0hBNSd1BhbNr19INL6MxN1WCPxIm3QL
-	 WfNrNzeIPBxemvIZ3Ds90LWbKhhQZ04fGfRvynDEsD2LHg/Rofbrgi+FarhTy44KkvMUg
-	 T9FAaDZrTn4JBd1cJq1qKPRJ3WBPMtVJg4i16psaC5XjqHa0BZInzLsUI9ggKH3IFvg==
+	bh=YDrZ6iMHoJJKv3fk/mljjbdcq/apkTVaAHHHRfwM1Bc=;
+	b=o0eafjA4MRHdlg2C4unaY94DDlYur0P8XDvu82WoQkSHS1aG6pXt7zfv1sp7nWUCHi4E
+	 +nyMER3JQ9giF7vZp/gxRvcv2juLLalgyNnsetu/uFrr985gsg9hzrY/fBZa4RmFt1JsY
+	 e+nb2ndehjexUb3CEFLlcRDCxGItZZtv7fziQUntoXeKWQJkQjfVQvIdWdBZAgMC4aN7s
+	 PXN2rUl9lFi5xWYj7bFqTXwxnPqW8M33S9Mrkip/iM24uTXp3KAF23TSURt1SObfikvYa
+	 OiIhjBM++bdNZYBvXn2Fnko3KkxOQ4HTfMHyYYifJZksSqoaEOeUITsx49wxZriKmyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p7WN1Hxc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HzXft0Fa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1C2606C026;
-	Sat,  7 Nov 2026 15:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A312606A9FB;
+	Sat,  7 Nov 2026 15:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p7WN1Hxc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9EB1F0089F;
-	Sat,  7 Nov 2026 15:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HzXft0Fa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562881F0089F;
+	Sat,  7 Nov 2026 15:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064086;
-	bh=bShoOGb3P1sUlS2tWmGZHvRS9gu07P6nBilRHI8saB8=;
+	s=korg; t=1794064088;
+	bh=YDrZ6iMHoJJKv3fk/mljjbdcq/apkTVaAHHHRfwM1Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p7WN1HxckvdzUnAHbTS49mZn5DPf/WwkqysP9S6J0lOzrD/NTDbEzP/4Srzv8D2U+
-	 7L3Raq+hgzttr88Rz3BOHoIf+XLGreaytV4nZn2639YTW9mCeHPBDk0CIkCIb8Rurd
-	 Lf754f2hC3RK4R0DsiSjr/AH1N6tjL2yKLsX/+m4=
+	b=HzXft0Fa94kyaJcuOuS1xG+vnpr20C0C6/QsNGUIRg1owtZ6eI+CItmZypUDR56yn
+	 ue7St7dNDRrQfTd3XEeX+0Mj08QQd0tFNT+SP+bk4/TQYi1kX46+KnWiFy5l1maFMO
+	 j+Of6Wl2Lu/TvhkQU5TzVsxFkSFt6MYExIDvxHUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Ariana Lazar <ariana.lazar@microchip.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Shehryar Ahmad <shehryar.amd@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0213/1257] iio: dac: mcp47feb02: Increase EEPROM Programming Write Cycle Time
-Date: Sat,  7 Nov 2026 08:41:49 -0500
-Message-ID: <20261107134945.425704452@linuxfoundation.org>
+Subject: [PATCH 7.3 0214/1257] iio: accel: adis16201: fix channel order for buffer mode
+Date: Sat,  7 Nov 2026 08:41:50 -0500
+Message-ID: <20261107134945.451042523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,48 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ariana Lazar <ariana.lazar@microchip.com>
+From: Shehryar Ahmad <shehryar.amd@gmail.com>
 
-[ Upstream commit 77f5e4bd63db9be9978a6d2ac821a249a3d5fd82 ]
+[ Upstream commit a4b9f1137b76faab6891ce0bd3f5c02dda7c392d ]
 
-Increase the EEPROM write polling timeout to prevent -ETIMEDOUT errors and
-incomplete nonvolatile write cycle, according to the time specified in the
-datasheets (11-16 ms).
+Reshuffle adis16201_channels to ascending scan_index order to avoid data
+corruption during IIO core demultiplexing since the ADIS driver builds
+the buffer in channel array order, while the IIO core demultiplexes it
+in scan_index order.
 
-Fixes: bf394cc80369 ("iio: dac: adding support for Microchip MCP47FEB02")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260819125300.6B9211F000E9@smtp.kernel.org/
+This changes the raw buffer byte layout for existing adis16201 users
+reading buffered data directly.
+
+Fixes: 591298e54cea ("Staging: iio: accel: adis16201: Move adis16201 driver out of staging")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ariana Lazar <ariana.lazar@microchip.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Shehryar Ahmad <shehryar.amd@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/mcp47feb02.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/accel/adis16201.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iio/dac/mcp47feb02.c b/drivers/iio/dac/mcp47feb02.c
-index fdc266ba1536f..7758e37080958 100644
---- a/drivers/iio/dac/mcp47feb02.c
-+++ b/drivers/iio/dac/mcp47feb02.c
-@@ -447,7 +447,7 @@ static int mcp47feb02_write_to_eeprom(struct mcp47feb02_data *data, unsigned int
- 	ret = regmap_read_poll_timeout(data->regmap, MCP47FEB02_GAIN_CTRL_STATUS_REG_ADDR,
- 				       eewa_val,
- 				       !(eewa_val & MCP47FEB02_GAIN_BIT_STATUS_EEWA_MASK),
--				       USEC_PER_MSEC, USEC_PER_MSEC * 5);
-+				       1 * USEC_PER_MSEC, 150 * USEC_PER_MSEC);
- 	if (ret)
- 		return ret;
+diff --git a/drivers/iio/accel/adis16201.c b/drivers/iio/accel/adis16201.c
+index ba0f97944c6d5..834714fb94a50 100644
+--- a/drivers/iio/accel/adis16201.c
++++ b/drivers/iio/accel/adis16201.c
+@@ -202,19 +202,19 @@ static int adis16201_write_raw(struct iio_dev *indio_dev,
+ }
  
-@@ -507,7 +507,7 @@ static ssize_t store_eeprom_store(struct device *dev, struct device_attribute *a
+ static const struct iio_chan_spec adis16201_channels[] = {
+-	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
+-			 12),
+-	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
+ 	ADIS_ACCEL_CHAN(X, ADIS16201_XACCL_OUT_REG, ADIS16201_SCAN_ACC_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+ 	ADIS_ACCEL_CHAN(Y, ADIS16201_YACCL_OUT_REG, ADIS16201_SCAN_ACC_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+-	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
+ 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+-	IIO_CHAN_SOFT_TIMESTAMP(7)
++	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
++			 12),
++	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
++	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
++	IIO_CHAN_SOFT_TIMESTAMP(7),
+ };
  
- 	ret = regmap_read_poll_timeout(data->regmap, MCP47FEB02_GAIN_CTRL_STATUS_REG_ADDR, eewa_val,
- 				       !(eewa_val & MCP47FEB02_GAIN_BIT_STATUS_EEWA_MASK),
--				       USEC_PER_MSEC, USEC_PER_MSEC * 5);
-+				       1 * USEC_PER_MSEC, 150 * USEC_PER_MSEC);
- 	if (ret)
- 		return ret;
- 
+ static const struct iio_info adis16201_info = {
 -- 
 2.53.0
 
