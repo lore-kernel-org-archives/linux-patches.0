@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064796;
-	b=csjVo9e0+Q4j3GEA6fOzMSvHmsZ+jkjCUsUpJClzC41/2qK6Z11vlcwGMICUy+9JHHtp
-	 mYjp05PfeflIX1+s54dv883bHxlPMrZzZBTjLSzDs+zYMkCu6nESru9/B8vZ2tmVOYcAR
-	 VbT3Q1E5/K3Fjuy+SDpD8qGc3LXvu4CuP7WKCdmbVPB+w2hHY8lcbmtyAwVKtXto6eLFP
-	 Z/ZLBrZaWjjk3s/Vo6OcsIashuFgazbfqnXVOD08JAeBxlGnDvkuvoL1rfXN/3wbwI5wH
-	 KYNpNPW6rJOw8YBoylRjqKWDhZWEN5LrTe1QdqfYX9VGHUaaP/jxO5/DT8BN7aD+4xw==
+	t=1794064797;
+	b=pdSpgKijUWA+ssF0/5l4iGNTT+5u1fGyWgXYTVBfgQBJV69fcxyA3c4jgclsf+LagPY1
+	 pAl1ePVmFJJ7gEcrE0lJyTKGwRx4qzwmQmuQ2MnEhsNQdrLAahyC/wZYt94Y6URPys55u
+	 W63k9SiYNxcwdixBZYgSy0FGaHWh+029ydpPfsQNXon10pFqbeD3AiZQYDMiNG1Tpb6u/
+	 MGlZ+H5n+7iaBb+ntA8LiHpSg5TpwEJIt9nQSUavwki0kUdx15i4X8fMRWbxPbC94KNhp
+	 fTIDRNAChS4puYTbaolOKu1Pxgm904kdeoA6N0DaROSobGm3pzKUA2Qba6lKmk0X9Mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=FjQSJSrB2RmrEbJACj6eVwRwDmsh44s0LqkucIpqUX4=;
-	b=hGbl1pO0v5OTi1dCVQVAOKLzyAEzva2X4VjwyAsyU2S+fOTkwIL0bGC/dVW09JdzUpNH
-	 1EBhDkPKqe4G6hD4c+EGNu4x85ONkrAjETnxsGubzvPCh+xeSqigdiGrEJFFPdoutILak
-	 G6bTLkXcUMdiDQJuHizyi2k//pQ0KQ7BDvZ3JgW6Va3Gu6bYYiTL3+xYGIQLaaWdRGnBX
-	 c8QVfGasQvE/BV+mbmVpMaNP+2dbmNBna0IKFIhr88oRPrpgtacbQu5mx1JxHEex7XbIi
-	 6O6PdjsYHqCSHF9rZSMxrQIBDyJJgS6i/tWTVTBvuU8xYkQcrOScoKquF/n+H/UihbA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PQbdSOqTFiAFxCo9VDKPTSfvvrfrGo9Y5UtjZpbCGio=;
+	b=JfJdNIpFX8hPDFLOq9snuRis/9Rq7CU3RQ4HMB0t/RmDqxfPjM4+jpHFK4Nd1Vj20PYO
+	 PiKDnj66pRwLzu5JzyU1UIND62aT8AQJe729KEvxXK2c0JycVBWX1KVaiIK8OFI83xAbw
+	 5g5rz/QCKqpj8GCq7f7IE10+xwE8ZfWtw3NqkxS06qPfn6y9go7HwFVUassJqDJ+558XR
+	 0McU3w/n1m77Bv8owk1hk/2T5A7nbEvjOnrgErbfn07Xbj0Llm7g9uM7iwz6AgBWTVk0E
+	 FaprbjmrnmaIZOg518EKgBTjgxUP6sA4g8XZ6jTWLBCJeS/IfBXYOy9X0ZcBlk2kYcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biwHOTrl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j2JR7Wmh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567D0606A9D5;
-	Sat,  7 Nov 2026 15:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4BE606C01A;
+	Sat,  7 Nov 2026 15:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biwHOTrl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FA31F008A2;
-	Sat,  7 Nov 2026 15:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j2JR7Wmh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D9C1F0089F;
+	Sat,  7 Nov 2026 15:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064795;
-	bh=FjQSJSrB2RmrEbJACj6eVwRwDmsh44s0LqkucIpqUX4=;
+	s=korg; t=1794064797;
+	bh=PQbdSOqTFiAFxCo9VDKPTSfvvrfrGo9Y5UtjZpbCGio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=biwHOTrldluME5uZY/mTjACW0Wtem7g+yRBcOX/rZutGbwQ9GSaGriDZidx4GIF5h
-	 v4m0wBLWOwU4fWqPA4MK9RLUahJ5nvJwn5ThLAM3mesXPIYtVntr+lsBBFkZuS9tkJ
-	 va9AOSrIHTdw04EebN6maot5yIwSUF1Q2q9sKhsY=
+	b=j2JR7Wmh09Zvr20/rPN88pr0fjUDTjv2+BvQ2rCWzYY7tyJLyQ451IUvKbu6LZAWI
+	 beo/sUpxFNvujXVf87IKUyuzjnXbmSQYpLXOF830/qcM0Q3w3sKcOJ+rARrRNlOJ8s
+	 eALtwzmAbzKTWQl1exzfwhoUOjqQDbpeRRHEc2GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giorgi Kobakhia <gkobakhi@asu.edu>,
+	Kazuki Hanai <hnkz.64@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Xiang Mei <xmei5@asu.edu>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	Gabriel Krisman Bertazi <gabriel@krisman.be>,
+	Hugh Dickins <hughd@google.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0739/1257] ocfs2: fix array out of bound access in __ocfs2_find_path()
-Date: Sat,  7 Nov 2026 08:50:35 -0500
-Message-ID: <20261107134959.694656696@linuxfoundation.org>
+Subject: [PATCH 7.3 0740/1257] tmpfs: fix unicode_map leaks in casefold option handling
+Date: Sat,  7 Nov 2026 08:50:36 -0500
+Message-ID: <20261107134959.725539502@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -66,94 +67,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giorgi Kobakhia <gkobakhi@asu.edu>
+From: Kazuki Hanai <hnkz.64@gmail.com>
 
-[ Upstream commit 6193ce7896afb52a321a0063c8b6a45e477a84e2 ]
+[ Upstream commit f439d79e8cd19f89e04cbb3b532347edacd72c79 ]
 
-__ocfs2_find_path() walks down the extent tree and records path by calling
-find_path_ins(), which appends entry to path->p_node[].  It only has 5
-spots.
+shmem_parse_opt_casefold() stores the unicode_map returned by utf8_load()
+in ctx->encoding.  A filesystem context can receive the casefold parameter
+more than once, and a second successful parse overwrites the stored map
+without releasing it.
 
-A corrupted ocfs2 image whose extent block is pointing to itself causes
-__ocfs2_find_path() descent endlessly, writing past the end of
-path->p_node[] array.
+The map is also leaked when an unmounted filesystem context is freed.
+This includes the temporary context used for remount, because
+shmem_reconfigure() does not take ownership of ctx->encoding.
 
- UBSAN: array-index-out-of-bounds in fs/ocfs2/alloc.c:677:14
- index 5 is out of range for type 'ocfs2_path_item [5]'
- Call Trace:
-  <TASK>
-  find_path_ins (fs/ocfs2/alloc.c:677 fs/ocfs2/alloc.c:1914)
-  __ocfs2_find_path.constprop.0 (fs/ocfs2/alloc.c:1882)
-  ocfs2_commit_truncate (fs/ocfs2/alloc.c:1924 fs/ocfs2/alloc.c:7286)
-  ocfs2_truncate_file (fs/ocfs2/file.c:515)
-  ocfs2_setattr (fs/ocfs2/file.c:1224)
-  notify_change (fs/attr.c:556)
-  do_truncate (fs/open.c:68)
-  do_ftruncate (fs/open.c:194 (discriminator 1))
-  ksys_ftruncate (fs/open.c:206)
-  __x64_sys_ftruncate (fs/open.c:211 fs/open.c:209 fs/open.c:209)
+Reject a second casefold setting, clear ctx->encoding after transferring
+ownership to the superblock, and release any remaining map from
+shmem_free_fc().
 
-Commit a406aff8c051 ("ocfs2: validate l_tree_depth to avoid out-of-bounds
-access") already restricts el->l_tree_depth to be less than
-OCFS2_MAX_PATH_DEPTH, which is equal to 5.  However, does not handle the
-infinite descent case.
+An unprivileged user can repeatedly create tmpfs filesystem contexts, set
+the casefold parameter, and close them from a user namespace.  This causes
+unbounded kernel memory consumption and can result in a local denial of
+service.
 
-Check if the el->l_tree_depth decreases on each descent.  Maximum descents
-are restricted to 4 and the path->p_node[] array does not overflow.
-
-Link: https://lore.kernel.org/20260922202159.2421642-1-gkobakhi@asu.edu
-Fixes: dcd0538ff4e8 ("ocfs2: sparse b-tree support")
-Signed-off-by: Giorgi Kobakhia <gkobakhi@asu.edu>
+Link: https://lore.kernel.org/20261002081306.637148-1-hnkz.64@gmail.com
+Fixes: 58e55efd6c72 ("tmpfs: Add casefold lookup support")
+Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
+Suggested-by: Gabriel Krisman Bertazi <gabriel@krisman.be>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: André Almeida <andrealmeid@igalia.com>
+Cc: Christian Brauner <brauner@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/alloc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ mm/shmem.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
-index be09e766ac1fc..c85a472965d5b 100644
---- a/fs/ocfs2/alloc.c
-+++ b/fs/ocfs2/alloc.c
-@@ -1817,6 +1817,7 @@ static int __ocfs2_find_path(struct ocfs2_caching_info *ci,
- 	int i, ret = 0;
- 	u32 range;
- 	u64 blkno;
-+	u32 prev_depth = OCFS2_MAX_PATH_DEPTH;
- 	struct buffer_head *bh = NULL;
- 	struct ocfs2_extent_block *eb;
- 	struct ocfs2_extent_list *el;
-@@ -1824,14 +1825,16 @@ static int __ocfs2_find_path(struct ocfs2_caching_info *ci,
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 93714b47f414b..de2362209cc38 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -4511,6 +4511,9 @@ static int shmem_parse_opt_casefold(struct fs_context *fc, struct fs_parameter *
+ 	struct unicode_map *encoding;
+ 	char *version_str = param->string + 5;
  
- 	el = root_el;
- 	while (el->l_tree_depth) {
--		if (unlikely(le16_to_cpu(el->l_tree_depth) >= OCFS2_MAX_PATH_DEPTH)) {
-+		if (unlikely(le16_to_cpu(el->l_tree_depth) >= prev_depth)) {
- 			ocfs2_error(ocfs2_metadata_cache_get_super(ci),
--				    "Owner %llu has invalid tree depth %u in extent list\n",
-+				    "Owner %llu has invalid tree depth %u in extent list (max %u)\n",
- 				    (unsigned long long)ocfs2_metadata_cache_owner(ci),
--				    le16_to_cpu(el->l_tree_depth));
-+				    le16_to_cpu(el->l_tree_depth), prev_depth - 1);
- 			ret = -EROFS;
- 			goto out;
- 		}
-+		prev_depth = le16_to_cpu(el->l_tree_depth);
++	if (ctx->encoding)
++		return invalfc(fc, "casefold parameter cannot be specified twice\n");
 +
- 		if (!el->l_next_free_rec || !el->l_count) {
- 			ocfs2_error(ocfs2_metadata_cache_get_super(ci),
- 				    "Owner %llu has empty extent list at depth %u\n"
+ 	if (!latest_version) {
+ 		if (strncmp(param->string, "utf8-", 5))
+ 			return invalfc(fc, "Only UTF-8 encodings are supported "
+@@ -5000,6 +5003,7 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
+ 
+ 	if (ctx->encoding) {
+ 		sb->s_encoding = ctx->encoding;
++		ctx->encoding = NULL;
+ 		set_default_d_op(sb, &shmem_ci_dentry_ops);
+ 		if (ctx->strict_encoding)
+ 			sb->s_encoding_flags = SB_ENC_STRICT_MODE_FL;
+@@ -5097,6 +5101,9 @@ static void shmem_free_fc(struct fs_context *fc)
+ 	struct shmem_options *ctx = fc->fs_private;
+ 
+ 	if (ctx) {
++#if IS_ENABLED(CONFIG_UNICODE)
++		utf8_unload(ctx->encoding);
++#endif
+ 		mpol_put(ctx->mpol);
+ 		kfree(ctx);
+ 	}
 -- 
 2.53.0
 
