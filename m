@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062772;
-	b=a+el3Hx015BEnF/tOMex0MfzU4ra61LeZoM3J0oWktm6PddYAnI7Igrxz7aAWRgkoyz9
-	 igGNX1jvjzkE2Vqr7figg6eT5nuihrcovxtPc4MJg/eUrQC2Xjk+LDAnW30ZNDq1mSaSZ
-	 bFsgi37/GuNAfGNAB4dDtGp2LNerIm3EwRpBjxO54vXDr0nc1lhm1xyiSx7R49H9iiw/8
-	 Xr8RCYsRjppP0Wum6tkMPZ4f4qqbTgS3ssBBgYhoi29P8Vus4KmHryXclcVe20hF8FXdL
-	 hKFC5XPEnRXdyIpvvD59u8XVPDT6ljzj/qVgLL0zH3KQpBVoR9xEP6FwBfjtNRsgjfQ==
+	t=1794062773;
+	b=tKG92T9AUNkzjfX+8kPn+SHLY0roibiA3PJsMweTDJnnZ15y2UiY2x70jsHr7k6CxNE5
+	 alltAGE4+B+awPf1ltE6Fb7dfVeul1sr9tugGlw0dWHKGWChnWy1mhOZY+yBn3H7mqCEC
+	 O4zKmIBHZr7GLViAhQqVfjofvNyuQw4qttWDPK7r/Mx12nbO+5wgS5WG2nSc1N8D3F0ZE
+	 2jp3Qk/USX+eY2+IVuUnUArCrYxjNXZNfgIdA1B+qNVBDesMw9icG9WPORWDJBkb9Rd0K
+	 Es835MRF8jETKc8nZaFmomo2uAYsvCET42/a+B1CTf3m2tNg9l7+qUwU+6zLzPAMfXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062773;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=anh11rJJCCGiX6ThgOZvpr1RPh7QlkV2BLD3Z1gg8x8=;
-	b=NGfaDzgrDBn1LOF8uTfEGciPThLLBSbaoUOyiM1EXYO3o6bdteTSvqqhmNdpbuN5gN7G
-	 ykEuq4MZVPiS2xUQrG/SjnBkCcrWyNG5rCivoBXjDx+7ZNEE1k7fLCBnELuv+CKBJuhYR
-	 iUNCz1Xqff7vWvjUWEufTIhvsUpKC4JfQYEOZt7lr+TEi1kLeGDTz9oTcG+aQdWqveT56
-	 9iNDnY0t882KOsK9T855v9ysaRLFwRrHrHEgBapH//Wv2DI7HmsJGtZSkR/qRFWXQBx0w
-	 AjilfYBmCvptXwopltwgNfrsUrjDRfyXAe8q2PSfOjIr9MPpWqcjfzyeOv0l4R0y4qg==
+	bh=skKDIUKk9CK7XfW7m7fCdF/V1vWSh7rcYUC4iJskXfM=;
+	b=onTjOUFXko3+IpCG9JYovgKsyIkhw8YVACCgYJpG42I71sNUbbO3rwk7dgaNknGVI7Wd
+	 X46Pi3RPdCb6EUSd+AUz8jq5bKzui1NWuDRHHMWxpmvWZfxEBF1FB1kLV32LSJBPnSrK1
+	 9rbDHIOkpJsBFdnzcZoYYzJlhlEmgjmThs/9JMeLElTT5NEGE8vueWUHyoIqF2r7DqrJj
+	 dS5+TWIua16SzNTegCn3ZZqmiLUg7+a+fao8USrEcgGUqYw/jlMlZxFeP6gTQCMlUPVTM
+	 NMVnA8/q++X77FNzAr+hKz5CiU9qsnZhCREK1fEL5iocIh+titkCmiG29Kq/h2OWWxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JBz0CzW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tj368CBs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76BD606A32C;
-	Sat,  7 Nov 2026 14:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA5D606A32C;
+	Sat,  7 Nov 2026 14:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JBz0CzW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC711F008A2;
-	Sat,  7 Nov 2026 14:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tj368CBs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC8A1F0089F;
+	Sat,  7 Nov 2026 14:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062771;
-	bh=anh11rJJCCGiX6ThgOZvpr1RPh7QlkV2BLD3Z1gg8x8=;
+	s=korg; t=1794062772;
+	bh=skKDIUKk9CK7XfW7m7fCdF/V1vWSh7rcYUC4iJskXfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JBz0CzWY22vg8ojc+BnIY5EBkadHaU/UTWlzrWr2G4h+LVcET1ScUH2pI7HaA0La
-	 TJcAnTQnvFp3zEX5g6MODioZppeDw16COgiO76QkwdacQBWJhCY1YuqwokiYh6Huds
-	 CoP1PEDrI8e62F/nqGoRFHY5P1Yp5FzJcDrAHv6M=
+	b=Tj368CBsK7Vs+zgFxWogWlry1n2nMLQkWm21BwJ1daisr7UPH8neMCisGcVH9cSBl
+	 FnMFN/F7475qEVvA1ezeEqmRHizuzyoDYBL8kDoMpO8ZytbhfYTkyFlKqAoeByHVea
+	 DvBnGyxeWCebhSoTDpp1xXNMKd4gWssA/rbuufdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 079/869] firewire: core: fix source bus ID detection for AT context in big-endian systems
-Date: Sat,  7 Nov 2026 08:46:01 -0500
-Message-ID: <20261107134855.405387149@linuxfoundation.org>
+Subject: [PATCH 6.18 044/869] remoteproc: elf_loader: Bound the section header table
+Date: Sat,  7 Nov 2026 08:45:26 -0500
+Message-ID: <20261107134853.622848085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -67,62 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 6393d75914a6ac95a05621db8d9d6a98eafe72f7 ]
+[ Upstream commit b32177ead5f8925aa66ceed2bd533a85196f4f0c ]
 
-The source bus ID bit in AT DMA context is not detected correctly on
-big-endian systems because the little-endian data is not converted to
-CPU endianness.
+The rproc_elf_sanity_check() only checks the image is big enough to hold
+one section header. But find_table() walks e_shnum of them, and first
+dereferences the header at e_shstrndx to locate the section name table.
+Both fields are u16 and both come from the image, so an e_shstrndx of
+65535 reads about 4 MB past the buffer.
 
-Fix the bug. The helper functions related to this are never used in
-driver code, so extend the test to check the field instead.
+The commit 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read
+past the ELF header") added the same check to the MDT loader, and says
+the header "is sanitized beforehand" under remoteproc. That is what this
+patch makes true.
 
-Cc: stable@vger.kernel.org # v6.12
-Fixes: 8db9d1557122 ("firewire: ohci: add static inline functions to serialize/deserialize data of AT DMA")
-Link: https://lore.kernel.org/r/20260908122840.2886621-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Check e_shoff against the image size first, so the two bounds can use
+size_add() without an e_shoff above SIZE_MAX wrapping on 32-bit. The
+bounds are separate because e_shnum may be zero while find_table() still
+reads the e_shstrndx header.
+
+Fixes: 400e64df6b23 ("remoteproc: add framework for controlling remote processors")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://lore.kernel.org/r/20260724025322.2341205-1-sammiee5311@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/ohci-serdes-test.c | 4 ++--
- drivers/firewire/ohci.h             | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/remoteproc/remoteproc_elf_loader.c | 23 ++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firewire/ohci-serdes-test.c b/drivers/firewire/ohci-serdes-test.c
-index 258f668619ef1..87b136e041de3 100644
---- a/drivers/firewire/ohci-serdes-test.c
-+++ b/drivers/firewire/ohci-serdes-test.c
-@@ -43,7 +43,7 @@ static void test_self_id_receive_buffer_deserialization(struct kunit *test)
- static void test_at_data_serdes(struct kunit *test)
- {
- 	static const __le32 expected[] = {
--		cpu_to_le32(0x00020e80),
-+		cpu_to_le32(0x00820e80),
- 		cpu_to_le32(0xffc2ffff),
- 		cpu_to_le32(0xe0000000),
- 	};
-@@ -56,7 +56,7 @@ static void test_at_data_serdes(struct kunit *test)
- 	unsigned int destination_id = ohci1394_at_data_get_destination_id(expected);
- 	u64 destination_offset = ohci1394_at_data_get_destination_offset(expected);
+diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
+index 94177e4160473..da3cddbe7d4cb 100644
+--- a/drivers/remoteproc/remoteproc_elf_loader.c
++++ b/drivers/remoteproc/remoteproc_elf_loader.c
+@@ -46,8 +46,9 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
+ 	struct elf32_hdr *ehdr;
+ 	u32 elf_shdr_get_size;
+ 	u64 phoff, shoff;
++	size_t shend;
+ 	char class;
+-	u16 phnum;
++	u16 phnum, shnum, shstrndx;
  
--	KUNIT_EXPECT_FALSE(test, has_src_bus_id);
-+	KUNIT_EXPECT_TRUE(test, has_src_bus_id);
- 	KUNIT_EXPECT_EQ(test, 0x02, speed);
- 	KUNIT_EXPECT_EQ(test, 0x03, tlabel);
- 	KUNIT_EXPECT_EQ(test, 0x02, retry);
-diff --git a/drivers/firewire/ohci.h b/drivers/firewire/ohci.h
-index 218666cfe14a5..63ccf2f445045 100644
---- a/drivers/firewire/ohci.h
-+++ b/drivers/firewire/ohci.h
-@@ -178,7 +178,7 @@
+ 	if (!fw) {
+ 		dev_err(dev, "failed to load %s\n", name);
+@@ -90,9 +91,27 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
+ 	phoff = elf_hdr_get_e_phoff(class, fw->data);
+ 	shoff = elf_hdr_get_e_shoff(class, fw->data);
+ 	phnum =  elf_hdr_get_e_phnum(class, fw->data);
++	shnum = elf_hdr_get_e_shnum(class, fw->data);
++	shstrndx = elf_hdr_get_e_shstrndx(class, fw->data);
+ 	elf_shdr_get_size = elf_size_of_shdr(class);
  
- static inline bool ohci1394_at_data_get_src_bus_id(const __le32 *data)
- {
--	return !!((data[0] & OHCI1394_AT_DATA_Q0_srcBusID_MASK) >> OHCI1394_AT_DATA_Q0_srcBusID_SHIFT);
-+	return !!((le32_to_cpu(data[0]) & OHCI1394_AT_DATA_Q0_srcBusID_MASK) >> OHCI1394_AT_DATA_Q0_srcBusID_SHIFT);
- }
- 
- static inline void ohci1394_at_data_set_src_bus_id(__le32 *data, bool src_bus_id)
+-	if (fw->size < shoff + elf_shdr_get_size) {
++	/* keeps shoff in size_t range for the two bounds below */
++	if (shoff > fw->size) {
++		dev_err(dev, "Section header table is out of bounds\n");
++		return -EINVAL;
++	}
++
++	if (shnum) {
++		shend = size_add(size_mul(elf_shdr_get_size, shnum), shoff);
++		if (shend > fw->size) {
++			dev_err(dev, "Section headers are out of bounds\n");
++			return -EINVAL;
++		}
++	}
++
++	/* find_table() reads the header at shstrndx even with no sections */
++	shend = size_add(size_mul(elf_shdr_get_size, (size_t)shstrndx + 1), shoff);
++	if (shend > fw->size) {
+ 		dev_err(dev, "Image is too small\n");
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
