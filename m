@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062048;
-	b=nwiCAsaRvnQ9hWt2kTiahOv6ODosyMSXcKg9oH34f6RH2bMFwpMMrAklTKervGi/apca
-	 dOoVzgpgVuFiluXRCQylMOZX3oVuOZQbB+DNm2VDAWRgBy+0xjA+SJauSEzK/DxMmDNGu
-	 iWVVBFTKW/FloH8oQDtnw8ZoTZF/jXMrGAiXhv5huC8a6aIa94bIFJ+2j0jruoU1CNOuf
-	 o0G4gpJov5GwrUMPlRK3D0FIR8fAemUQw9fObjzjew5nKkrFESUrDSXA/Km9z5bUmDoCW
-	 J/T2hcD08+SHwfEbqq3yqEcWNQ2ohik2chp8Is1xlns44wERNqFEXm3oNnZi8RVvAGQ==
+	t=1794062049;
+	b=Mjxh3Ii56LpOWLy0edXQ3ZHIw3Pm1IVvFUTeH5+YrUAMpILELeAm72R9m7vz1DN51ruf
+	 ZB0MZP3mrygMDQ6Nwa0epHhAYOFs9iU0GZ//pNkDz4Mb2M2f4nn43kXkiTJs9EkH8uy/i
+	 /hvzNy9jIkLWCpBL5Pu5sYjNCmiyzvNa2rVxABGneTEEEqJj6UOqN7fVwM3ZLzs0fxwSx
+	 tS+aQGomWXEWG++nX9kXA9cmznhaXgRKJdFm5rM+K+RYte/C7fmktvAz2EgizXG8hmzJE
+	 0Ta8bmpq89OP6PALvKyz2BGGHYkarsF8sm2eauKg5i9tZ6U6gRqQCWjZqzTcOjLJPuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aAGpOkljyik/1cfiV8V4+ktrhFmyDURKkgU7kzYo5jw=;
-	b=K9/4DFi3f/ITTS04wyHYgX4KBSguxKr3DTicuBjyIZegn64Ya/EdUTgKRag1rBrOdgnr
-	 xD8IqsUeB7Jn/u675AzuLjQky/ycgIhO6UYmFsXqamg7lXZTzGrUiQACnlYNagjFRscF9
-	 Hr1Hrp8kgSYTMOPFw9jm2/1xfXeWxKXoUtbI+jyY2hyAk/qyU7NSe/ugxMCQBUZ0uBUKc
-	 QB4gWA1dTzyyRGOkDyxaE5A1NPJkVgINXVjpk3vmS0Gcowcg7PMS6RmcNpaCXqpxGSeiS
-	 DVAGpCxa8k45vk+lb28GoQke/ELdF/TZGsJoM4ZPB4I3fZV87RSefH9/mfo12mPphOA==
+	bh=HvLWGEPs5GEGojQHvTzqrm9AnD1Ea3b56ylQGAPuvCs=;
+	b=2m6xV+HXQdRBxq3ucAvj1XpZ90ndObObuWMdbuAbRamPZJ2hAEcpLer/Tmnhw+szZFC4
+	 GMjHMSlj4B1KVvtYwD6nj8zYjCz+Eo6RPVOIHGIXrWHNBx1cUqHbHahN9R3ORsKlpMYMO
+	 Ep+9G23P5UgfTg/valECDhAbh+n2hVUZDg2ut52T69PzXZvUnAjN04iffyQzoXs5U6wWz
+	 j6uVwsF1MgyVcGkXAJr90z6kLNcQkPTp4XcxjXBs4VpWHxxotcH4zqiLSAZZ7PE609pG3
+	 qeO9KAvzFNU1O8rN+O//HWem8c0OrjbVy4ExTajq5RhK3UV5okLRomjmIvFzgAfBEXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="W3nm/t1Z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rZG6xCZU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBFB606A334;
-	Sat,  7 Nov 2026 14:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AE0606A334;
+	Sat,  7 Nov 2026 14:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3nm/t1Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3EAA1F0089F;
-	Sat,  7 Nov 2026 14:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rZG6xCZU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E4F1F008A2;
+	Sat,  7 Nov 2026 14:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062048;
-	bh=aAGpOkljyik/1cfiV8V4+ktrhFmyDURKkgU7kzYo5jw=;
+	s=korg; t=1794062049;
+	bh=HvLWGEPs5GEGojQHvTzqrm9AnD1Ea3b56ylQGAPuvCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W3nm/t1ZwFNF9NGPEoQG19Iijs9IuXozFPIv0OBX4kwJihqxorGn3p68ccgS5DJFh
-	 DUs4e9RTFzR0LZRPRrjJ/BmqkCeLltFGeoDegkMJPmC1Rag+8mx9V8/D8dRKq0NxoQ
-	 GoMwtisN4Y/T/iiywDiYda7B7xfI8hanRJxMYV2E=
+	b=rZG6xCZUZk3OvJ2VqaEAm4CaXcsKZSseQigb/vl90KaUEyMwcxKaigXoCKAn+uXHb
+	 VCbiZQiDRqGoeyf3+zwr72tVW99hCcWd7WwAKg0yQ3aeofNW4l8Uc0SKgPkncKUuVi
+	 asugIhnEj/NpGbRvOx8DyA/EwSaACFHgOjbxwdtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Moteen Shah <m-shah@ti.com>,
-	Wadim Egorov <w.egorov@phytec.de>,
-	Nishanth Menon <nm@ti.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1028/1536] arm64: dts: ti: k3-am62x-phyboard-lyra: Set SD clock pin as OUTPUT
-Date: Sat,  7 Nov 2026 08:50:44 -0500
-Message-ID: <20261107135026.549411403@linuxfoundation.org>
+Subject: [PATCH 6.12 0993/1536] ASoC: wm8994: Fix runtime PM imbalance in wm8994_component_probe()
+Date: Sat,  7 Nov 2026 08:50:09 -0500
+Message-ID: <20261107135025.555581254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,41 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 1d62ef8d47b535d31fb9cf38e5c36eb55b0189a4 ]
+[ Upstream commit 480a5528cb6268d626632d45d4a1f29b4c0c11df ]
 
-MMC clock pins must be configured as OUTPUT-only per TRM [0] with
-receiver disabled (RXACTIVE bit = 0). Change MMC CLK pins from
-PIN_INPUT to PIN_OUTPUT to match documentation.
+In wm8994_component_probe(), pm_runtime_get_sync() is invoked before
+reading the GPIO configuration registers. If either regmap_read() fails,
+the function jumps to err_irq without calling pm_runtime_put(), leaving
+the runtime PM usage count incremented and causing a leak.
 
-[0] https://www.ti.com/lit/pdf/spruiv7 Rev. C: Table 12-246. MMCSDi I/O Signals
+Add pm_runtime_put() on both GPIO read failure paths before jumping to
+err_irq.
 
-Fixes: f1b3adade045 ("arm64: dts: ti: Add am62x-phyboard-lyra carrier board")
+Fixes: f5a2cda4f1db ("ASoC: wm8994: Ensure the device is resumed in wm89xx_mic_detect functions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Moteen Shah <m-shah@ti.com>
-Acked-by: Wadim Egorov <w.egorov@phytec.de>
-Link: https://patch.msgid.link/20260909214743.899477-16-jm@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260916072737.1970990-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wm8994.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi b/arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi
-index d6ce53c6d7481..c93bdae757145 100644
---- a/arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62x-phyboard-lyra.dtsi
-@@ -207,7 +207,7 @@ AM62X_IOPAD(0x068, PIN_INPUT, 3) /* (R21) GPMC0_AD11.MCASP2_AXR3 */
- 	main_mmc1_pins_default: main-mmc1-default-pins {
- 		pinctrl-single,pins = <
- 			AM62X_IOPAD(0x23c, PIN_INPUT_PULLUP, 0) /* (A21) MMC1_CMD */
--			AM62X_IOPAD(0x234, PIN_INPUT_PULLDOWN, 0) /* (B22) MMC1_CLK */
-+			AM62X_IOPAD(0x234, PIN_OUTPUT_PULLDOWN, 0) /* (B22) MMC1_CLK */
- 			AM62X_IOPAD(0x230, PIN_INPUT_PULLUP, 0) /* (A22) MMC1_DAT0 */
- 			AM62X_IOPAD(0x22c, PIN_INPUT_PULLUP, 0) /* (B21) MMC1_DAT1 */
- 			AM62X_IOPAD(0x228, PIN_INPUT_PULLUP, 0) /* (C21) MMC1_DAT2 */
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index a4abe6e53bfc5..4f11b95c78834 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -4352,6 +4352,7 @@ static int wm8994_component_probe(struct snd_soc_component *component)
+ 	ret = regmap_read(control->regmap, WM8994_GPIO_1, &reg);
+ 	if (ret < 0) {
+ 		dev_err(component->dev, "Failed to read GPIO1 state: %d\n", ret);
++		pm_runtime_put(component->dev);
+ 		goto err_irq;
+ 	}
+ 	if ((reg & WM8994_GPN_FN_MASK) != WM8994_GP_FN_PIN_SPECIFIC) {
+@@ -4364,6 +4365,7 @@ static int wm8994_component_probe(struct snd_soc_component *component)
+ 	ret = regmap_read(control->regmap, WM8994_GPIO_6, &reg);
+ 	if (ret < 0) {
+ 		dev_err(component->dev, "Failed to read GPIO6 state: %d\n", ret);
++		pm_runtime_put(component->dev);
+ 		goto err_irq;
+ 	}
+ 	if ((reg & WM8994_GPN_FN_MASK) != WM8994_GP_FN_PIN_SPECIFIC) {
 -- 
 2.53.0
 
