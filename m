@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061971;
-	b=WwtwA2y6dXbwuyjWtoF/rmJrIeb13l569mO8of4+tY8pMao5MMkWuQiNFID17A7dHbNw
-	 AB2A7D9ZF3QaK25xGf/6MOFp7JNALvfa7mWbONqFmXubHqC4FNwgLK2pszMeJ7Uu7Tk5u
-	 3xTzOl7h11mmhukkSPTgudZPVb0+TBGUs9sBmppeJO9Dv9fO1brfI3emqzCj1bYOF44OC
-	 Y2cZejfemPqd/t++V6gNdlI1FLN0YfisKtnb5c67siHy5vwBq00+owM4SrVmPg+w1TH5Y
-	 0bSm7OTAqr4RwNMmfnGF3qi551NpGUjfIH4PLPA6SDyeY/GXP6FFg0iqbcCNeSAGI6A==
+	t=1794061972;
+	b=ONZCRu81USVT6L2kuoTf5sWnoUXphRsyCeIaGp7jAurjhwp1J/wnHCnmotnNQBJOwFWx
+	 E4JLtSfEptY5DNGc24H8zEgBtfMz42rh31bQMrDnP2zbO7jZKCGqDYfHCptCxksWtdqv6
+	 zB+xgp3UGGvTEiKqkrNCPhnLwjb4WE2LZXVd53QqsIVzQfeGwdRF38O/lYHYa7luATDZx
+	 QHyf/ogGoHaysrYqQ6s6Yhp/+0y6vtif8gVGvBc7TNxP7yxXXVwTUifYxwm/AFEX4gmJn
+	 B8NZ0irKOWYTeZD2HG3IMhZxUg/rKMRzi0U1KvK/2sZCE+E261q3CetLZxGqXAwrCLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tSG+Xx9re8dGyGlgo6iq/ilQ3gby2ch5PAwRkmoTUa4=;
-	b=BqF42ir0mLkr4DjvzsZSOYFjmGGy9iEgKKFeL6unEz8zb5pwwlq5blZcUEYU+bwbTc2X
-	 5xEp1ejSb3NfVTxDcYSt6e6Qz9FPB3zN8akNX6JV8md9OdfMRuVKREMd5jOeBsF0Txxjb
-	 9+Kn2gR0rGVFgX+oBZ1+DNjCh89BA22ZJvELbirbyg4TNPE65ys3vExII4w2IoqzxjwyB
-	 Dyb6u/g1xwyJQyJOZfR/7zTxLvFnbjmQh10pAZJPH5ujGIRbwfnWNOe3Otan6xO6UGFkb
-	 fBzm02kodPNwBniQpnQevdphyuNTVFqeDtXwkZ8q4zT+Vp9pRivXt3a5BlCP1r+Tfjg==
+	bh=/B4VUzTs4MlEfr4e08omDFT4tT66Vj6nbfjM1aa6j6Q=;
+	b=WKZmZcxy8IaWYYQD/rl33mbjxiCHTezbXRc88uVJ/Id+JGJSkGqaIt9K6xiTjTtG8/nq
+	 +1ysF+rSVXITx8LkyIsVU003x+l7BsN2MwzKj9NQhitIRNdjxFM8OmSy1C4SyccP/9OO4
+	 4gIB/PfWxcc1eQYQE7HEuUNEKtl+6OGIg5/RMh0NeIH4s+SMt/3uhIhR+1VtWziM0NEZJ
+	 tQUz1rZT568+TZigLD+bJRurjVDgQYcWUZKQPru7m5iVXMgiHneaBSswU18EnOyIIvZgC
+	 837Fx6SmbjMUyDYps5V7Z5BcCHOIDzNriauYCYRFMU35OV+tXhasQau3Q91+7M7jFHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C21cncBB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dW5idA75;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF93606A32E;
-	Sat,  7 Nov 2026 14:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F385606A32E;
+	Sat,  7 Nov 2026 14:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C21cncBB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BAA1F0089F;
-	Sat,  7 Nov 2026 14:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dW5idA75
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90DB1F0089F;
+	Sat,  7 Nov 2026 14:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061970;
-	bh=tSG+Xx9re8dGyGlgo6iq/ilQ3gby2ch5PAwRkmoTUa4=;
+	s=korg; t=1794061972;
+	bh=/B4VUzTs4MlEfr4e08omDFT4tT66Vj6nbfjM1aa6j6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C21cncBBq3Jt1Zss6VbQYLsafzJuUlscs+InI2J7n7T7x2ph1r9ust+YmjaybmWKJ
-	 uGzbpKsh2mI1OMD+ASs1T6LADhTIbbTq+JoN5iQN5BdZObuUlbf/YxBnNzzv/97gwb
-	 cNY9seEcsvytxxKUmCYdZcAr48za9SQlpots8Z2g=
+	b=dW5idA75QTEWiE7gWbbKfr4h8B2X30loy03IZtrohieVuFo0AEr4hP6sTY4egCvHZ
+	 6CoPiv6n8+88Z21KTNyFosf+a9RogBVX7qkbNHKwcpW0WgRvmxZ+U474q1hheA+Ljw
+	 TY+Bn4Wl2OqMOFS7EDaLUmxtcMJtsOt2DqdcvSUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Eugen Hristev <ehristev@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0949/1536] media: microchip-isc: synchronize the IRQ before disabling clocks on stop
-Date: Sat,  7 Nov 2026 08:49:25 -0500
-Message-ID: <20261107135024.310810964@linuxfoundation.org>
+Subject: [PATCH 6.12 0967/1536] iio: imu: inv_icm42600: fix odr change not caught in certain cases
+Date: Sat,  7 Nov 2026 08:49:43 -0500
+Message-ID: <20261107135024.809216243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,84 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit 19fa5407da5ef3e605cacfcd90f70d8b2c121cd7 ]
+[ Upstream commit f670d4d3477386d62017936f0121909f93ac17f8 ]
 
-isc_stop_streaming() masks the DMA interrupt and then drops the runtime
-PM reference, which disables the ISC clocks. microchip_isc_interrupt()
-may still be executing on another CPU at that point; it reads ISC_INTSR
-over regmap, and touching the unclocked registers triggers an external
-abort.
+When using both accel and gyro with different frequencies, the ODR
+change flag in the FIFO header can be sometime in a packet with
+invalid data. Since we are ignoring these packets, we miss the ODR
+change and any further change are blocked until sensor is turned off.
 
-Store the IRQ number at probe and call synchronize_irq() after masking
-the interrupt, before dropping the PM reference.
+Fix this by moving the packet data validity check after the ODR change
+flag check.
 
-Fixes: 106267444f12 ("[media] atmel-isc: add the Image Sensor Controller code")
+Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
 Cc: stable@vger.kernel.org
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/microchip/microchip-isc-base.c    | 3 +++
- drivers/media/platform/microchip/microchip-isc.h         | 1 +
- drivers/media/platform/microchip/microchip-sama5d2-isc.c | 2 ++
- drivers/media/platform/microchip/microchip-sama7g5-isc.c | 2 ++
- 4 files changed, 8 insertions(+)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c | 8 ++++----
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index 44d50196bb304..8223991ae7dda 100644
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -425,6 +425,9 @@ static void isc_stop_streaming(struct vb2_queue *vq)
- 	/* Disable DMA interrupt */
- 	regmap_write(isc->regmap, ISC_INTDIS, ISC_INT_DDONE);
+diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+index 3168bdeffd42a..37fe7ab353a56 100644
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -918,15 +918,15 @@ int inv_icm42600_accel_parse_fifo(struct iio_dev *indio_dev)
+ 		if (size <= 0)
+ 			return size;
  
-+	/* let a running IRQ handler finish before the clock is disabled */
-+	synchronize_irq(isc->irq);
+-		/* skip packet if no accel data or data is invalid */
+-		if (accel == NULL || !inv_icm42600_fifo_is_data_valid(accel))
+-			continue;
+-
+ 		/* update odr */
+ 		if (odr & INV_ICM42600_SENSOR_ACCEL)
+ 			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
+ 							st->fifo.nb.total, no);
+ 
++		/* skip packet if no accel data or data is invalid */
++		if (accel == NULL || !inv_icm42600_fifo_is_data_valid(accel))
++			continue;
 +
- 	pm_runtime_put_sync(isc->dev);
+ 		memcpy(&buffer.accel, accel, sizeof(buffer.accel));
+ 		/* convert 8 bits FIFO temperature in high resolution format */
+ 		buffer.temp = temp ? (*temp * 64) : 0;
+diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+index 7997535fcb2f7..5ef684a0043ee 100644
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -822,15 +822,15 @@ int inv_icm42600_gyro_parse_fifo(struct iio_dev *indio_dev)
+ 		if (size <= 0)
+ 			return size;
  
- 	/* Disable stream on the sub device */
-diff --git a/drivers/media/platform/microchip/microchip-isc.h b/drivers/media/platform/microchip/microchip-isc.h
-index ad4e98a1dd8fc..f5e322c2e36bc 100644
---- a/drivers/media/platform/microchip/microchip-isc.h
-+++ b/drivers/media/platform/microchip/microchip-isc.h
-@@ -287,6 +287,7 @@ struct isc_device {
- 	u32			dcfg;
+-		/* skip packet if no gyro data or data is invalid */
+-		if (gyro == NULL || !inv_icm42600_fifo_is_data_valid(gyro))
+-			continue;
+-
+ 		/* update odr */
+ 		if (odr & INV_ICM42600_SENSOR_GYRO)
+ 			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
+ 							st->fifo.nb.total, no);
  
- 	struct device		*dev;
-+	int			irq;
- 	struct v4l2_device	v4l2_dev;
- 	struct video_device	video_dev;
- 
-diff --git a/drivers/media/platform/microchip/microchip-sama5d2-isc.c b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-index 7cedfd29ac130..583d3c4dca54f 100644
---- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-@@ -448,6 +448,8 @@ static int microchip_isc_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
- 
-+	isc->irq = irq;
++		/* skip packet if no gyro data or data is invalid */
++		if (gyro == NULL || !inv_icm42600_fifo_is_data_valid(gyro))
++			continue;
 +
- 	ret = devm_request_irq(dev, irq, microchip_isc_interrupt, 0,
- 			       "microchip-sama5d2-isc", isc);
- 	if (ret < 0) {
-diff --git a/drivers/media/platform/microchip/microchip-sama7g5-isc.c b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-index 36f52ea38d55b..d2e1899869c43 100644
---- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-@@ -437,6 +437,8 @@ static int microchip_xisc_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
- 
-+	isc->irq = irq;
-+
- 	ret = devm_request_irq(dev, irq, microchip_isc_interrupt, 0,
- 			       "microchip-sama7g5-xisc", isc);
- 	if (ret < 0) {
+ 		memcpy(&buffer.gyro, gyro, sizeof(buffer.gyro));
+ 		/* convert 8 bits FIFO temperature in high resolution format */
+ 		buffer.temp = temp ? (*temp * 64) : 0;
 -- 
 2.53.0
 
