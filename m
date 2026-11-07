@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062559;
-	b=ICqZ/Xpq93HE2g5a7v+H66LuXvuqkB8ZqESSbWycUJT4Acq7HCc0plvP9+kG1nEhHCe5
-	 5sI8zCLYsVrLSUPa4bvVPFH60YDewE3y3ufXW5Cr9wThwalhUGmisVeP9BREpASatemc+
-	 bawIggTiLGZIOdWfC5TG62LgC5cqAJ3fC2xgKKfUhLPL/bE7rRqeUWD6WmRLvtJVFzOUJ
-	 oBwbxFJxgzx2ZM911pyOtsxLlmuQswKcDlk8E3RAAlKBxsBKBKc/Z22r1XWaQJmG8Q6PI
-	 rkNCleEqhCqq834ds1iqbK5zUgTVtljSqHJ7WmQqvtWufFJKsGPLGyFe2q1ehDHPl0A==
+	t=1794062560;
+	b=LM3iiueCrWV7owxLc5Os8/1Nj2EuJkpgdlQyVrD5dXcB4XPN0nVVRNTlEPmvuJ3c8/vz
+	 biej+d+IjWZlAEyoDNdCQMgkVGwsOeC7YkGRe8bWf8aIJTjYdctAklmUKNr4NfcqvYTI4
+	 +i2nZw91bsZ59ecfnFhOxETQ4hBaQ5FGTQecqzc5qQkIPYpWdItqesgHzbQQN7gWdazIz
+	 8poeL5Xx0mnZfUySGOA4cVreGvzBxtXu94LxlfdY6NqoStbQFFdOnsSRlWzhjGvOUZtag
+	 ZCem7veRvLF6MhPkcXJ58apBlUpWBikTRIgt+Vjf9jkwjGyEo3rWZpQmGEKnsPNLNvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062559;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062560;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mWI5BJnqp0q7fcTRupXz+RivCT7G7gkOhkAzc/eGrnI=;
-	b=I+Hg6Cuvm2Xrz14SNeWrdnPEjLsC2m5wf0vaF8TfmSIu3Z28dpn+gBglJyVllOsRUJFt
-	 K23nA+a+ygi4oMcfXCrbWcr+P9hJZS4melfR/pfrgXcvYA9blFmQ/wMqxwlN0H1FU8lvf
-	 +vSesBYrCAaY7jwNEKZCIeKA6haWMYPk4iWpEMoqZmMvAsIJ3G8lyPmbgxzAndkSCFgIc
-	 eHLKzx7lDu7ySlawasegpcForY1p5qdzy/HgIVm/7ZacNLa9XlQbspfxY0SD2o+uGEwN7
-	 8Wyv3/YPetwuZJ1E67N5DOdWQmjHFsRP9L1U1fY7F/6oQZbNNVPlZzKX7XJhbK0fyKA==
+	bh=5gHr/VMr5D40rp+7dnt4QqbC8x0qsA184t7mWU/nU+g=;
+	b=X59cG7jt+q6v/1zKlmEDJH9wfBqveXHEw9UmFtQePv2SxdJ9Xp5DZ9VkdVifSBgash9r
+	 vqxJlm7QONEv/n4CeyKOgMeeoO3QgRDSufKuc1LJIx0/74W6Q1bAw8Y66UE4gNKbxxQEr
+	 3WABRXaqs42hu8nOZmLNRVDBB3ZzZtolbkRKckybmUxsBXGGRti//PeHYwpxR7RyK/5Cp
+	 pnbkFi8hjb5Sa5SD0n5G7NKRUEx+CzZonDxVARpXYerNQ9ptEMC4I9AEppp70HoZcW70u
+	 wt8Y7rzhr/yHl2zOGOT7dc/GZ3oMF3bDYifE8IvjgLiu0/9Ed7Y5nduJMD3NFuD+O5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fh+3M8um;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ab6BkF7u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94D2606A64A;
-	Sat,  7 Nov 2026 14:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20380606A642;
+	Sat,  7 Nov 2026 14:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fh+3M8um
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768081F008A5;
-	Sat,  7 Nov 2026 14:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ab6BkF7u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4541F008AB;
+	Sat,  7 Nov 2026 14:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062558;
-	bh=mWI5BJnqp0q7fcTRupXz+RivCT7G7gkOhkAzc/eGrnI=;
+	s=korg; t=1794062560;
+	bh=5gHr/VMr5D40rp+7dnt4QqbC8x0qsA184t7mWU/nU+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fh+3M8um3vu7d8k4fSLPlpY6H6dmCa38Imh5rbAO0m+85N483mANfMG987Muji6lh
-	 wQE4zy3umyWxbe9+OuuWJ+BFwO3paFZws+sB1GpH/PRfVzQ3Q3Jald3gxNxvklllqq
-	 GvjyShUPPW7SVAoGBmbYBGQrvv0Kem+xF4Wa5PJs=
+	b=Ab6BkF7uqLtrX+8ODn5itFyV9vb6meRYmuTQ1odCnPQRbVs4sJx4j99AWx/bj2f0M
+	 fFdyQK3lTUDs4UC+WVEK/4btBA5Ftkp+rin3onUvFEp9TeeInyz+Bc+FT68r7ykuy0
+	 liTluantZXZ/4AQMF35aksR+KFgW7hY0GDxfKlVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao@bytedance.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Henrik Enquist <henrik.enquist@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1405/1536] writeback: clear old wb dirty state after inode switches
-Date: Sat,  7 Nov 2026 08:57:01 -0500
-Message-ID: <20261107135037.287414893@linuxfoundation.org>
+Subject: [PATCH 6.12 1406/1536] ALSA: aloop: Update the PCM Slave controls for a matching playback
+Date: Sat,  7 Nov 2026 08:57:02 -0500
+Message-ID: <20261107135037.315502139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,46 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao@bytedance.com>
+From: Henrik Enquist <henrik.enquist@gmail.com>
 
-[ Upstream commit a396fe9f74ea367ae3fab2dcb70b24e83db9f0cb ]
+[ Upstream commit c3bde2beacbcb40790f0e3c3f909f9e16bbced9c ]
 
-Switching an inode to another wb updates the target wb's dirty-I/O state,
-but no longer checks whether the source wb's dirty-I/O lists became empty.
-The check was lost when inode_io_list_del_locked(inode, old_wb) was
-removed to support tracking clean attached inodes.
+The "PCM Slave" format, rate, channels and access controls report the
+parameters of the playback side of a cable. loopback_check_format()
+updates them when a playback starts, but returns early when a capture
+is open and its parameters match. The controls then keep the module
+defaults, or the parameters of an earlier stream.
 
-If the last dirty inode is moved, WB_has_dirty_io remains set on the old
-wb and its bandwidth contribution remains in bdi->tot_write_bandwidth.
-This can keep an empty wb scheduled for periodic writeback and overstate
-the total bandwidth used to distribute writeback work.
+A playback that joins an open capture with the same parameters is the
+normal case without notify, where it is constrained to the capture's
+parameters, and also with notify whenever the player happens to use
+them. An application that reads the controls to find the playback's
+parameters, for example to reopen the capture side at the right rate
+after a restart, then gets the wrong values.
 
-Call wb_io_lists_depopulated() on the old wb after the batch of inode
-switches, while its list_lock is still held. This clears the flag and
-removes the bandwidth contribution if its dirty-I/O lists are empty.
+Only skip the capture stop when the parameters match, and update the
+controls in every case. A value event is still sent only for a control
+whose value changes.
 
-Fixes: f3b6a6df38aa ("writeback, cgroup: keep list of inodes attached to bdi_writeback")
+Reproducer:
+  arecord -D hw:Loopback,1,0 -r 44100 -f S16_LE -c 2 /dev/null &
+  aplay -D hw:Loopback,0,0 -t raw -r 44100 -f S16_LE -c 2 /dev/zero &
+  amixer -c Loopback cget "iface=PCM,name='PCM Slave Rate',device=1"
+Before: the control reports 48000, the module default.
+After: it reports 44100.
+
+Fixes: 597603d615d2 ("ALSA: introduce the snd-aloop module for the PCM loopback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Link: https://patch.msgid.link/20261016115230.3640770-3-sunjunchao@bytedance.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Henrik Enquist <henrik.enquist@gmail.com>
+Link: https://patch.msgid.link/20261021-aloop-slave-controls-v1-1-62297727177f@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/drivers/aloop.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 925fc4a42c67d..435f14b7e2cca 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -535,6 +535,7 @@ static void process_inode_switch_wbs(struct bdi_writeback *new_wb,
- 		}
- 	}
- 
-+	wb_io_lists_depopulated(old_wb);
- 	spin_unlock(&new_wb->list_lock);
- 	spin_unlock(&old_wb->list_lock);
- 
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index bb75051be5ee1..50b8e7b3d8179 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -364,11 +364,14 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
+ 			runtime->channels != cruntime->channels ||
+ 			is_access_interleaved(runtime->access) !=
+ 			is_access_interleaved(cruntime->access);
+-			if (!check)
+-				return 0;
+-			if (stream == SNDRV_PCM_STREAM_CAPTURE)
++			/*
++			 * Matching params also go on to the update below, so that
++			 * the setup controls follow a playback that joins an open
++			 * capture.
++			 */
++			if (check && stream == SNDRV_PCM_STREAM_CAPTURE)
+ 				return -EIO;
+-			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING) {
++			else if (check && cruntime->state == SNDRV_PCM_STATE_RUNNING) {
+ 				/* close must not free the peer runtime below */
+ 				atomic_inc(&cable->stop_count);
+ 				stop_capture = true;
 -- 
 2.53.0
 
