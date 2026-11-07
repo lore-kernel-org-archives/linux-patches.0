@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062906;
-	b=23uf8W/tiYVS+fxNds2qhv7nsx+GfQaPY8QL7Q2GOaAwoNxRP3hTr1Q0fThIkTwkfAC4
-	 sloYW3+4UfVnNiPnTRFbc2ytwDJG8yr294yrit9/fPlDax59I8bDDKUd15F06MuaANYxt
-	 GSdOirSr7KnlSi41aCY7nYGPQTJI+KVk2frGgnS3wAe4/gdLTpw4TyVn5nVnytqOyTArz
-	 K8kG1sGlJ7Cl3XOD9XO2WtPhax43GOCGai2VKnd1bAhEsPTn+JldX03Nu4Gbo3UEZffLu
-	 9IaNbmmCluHCHNEW2BijlM2b/k/DaDt9Bajx+YUXGE8bjK4R9aYw2x+tqGwsDQvJF6A==
+	t=1794062908;
+	b=i8NtVGapMY/6Gw7FVCqcsvMXKPaihrHOrCNVKWfiqIHBFlLhLypZ7RxuHbcUHeXayzV9
+	 gdu9LmNWeTVfx1VBjJtWyNYGlIl/LZqi4B/HqhfHTk3T1PMJMzeHaoLqhTlsHv5ITEj3c
+	 6c53Ifx3i1a2+Hce25egIRSuBsz7fdd7ieY3WMJY5o0OFUeMP1eG/ef53BfEXOf6aaIV1
+	 y7H4GSJygIMByOUwCaVnGp4Xv/fDOvv34Acf3yoKJGnT59ZkrE6s2h8A4xe8+HCGc4Cf0
+	 HekEKa+PI9cSVvcayWxNfCwGUBEu7RJwGiAOxAwVcb6v29rQ2HBXeJ9KaV3G+SuO+lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062908;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9ie4xruDtGmVbjMSLMc8lEbt4QLnq5Jqa5phEVJ1qlg=;
-	b=KTA2G61xpO4pt4Rg9JsP8RsU/Q1QewkGJPFJFbNqJYUsZgC0+Kj8ghBoHruwPXsjsmS5
-	 ofynSC7mtj+zaEKMVQCRcgJMzp8Jy1LOeQ+WXMAZyK+y7Hx5ky8b5IaxQkBkw006k/87W
-	 LggT1VYRCmLjhL36mciWS1Gf6WlUl0V7FijGZJXl4sA+c/CgLcv/66oJOcEDDliZUyRfw
-	 gAxjgP63yQf9kD60/5tCy6B9Ghw94XVpDJTLpbssQYLsALWyzc6ENaf/iZaDT0bT6mNyA
-	 8T5x42xL8ZMQbcLTfpDzGmR7nzSuB3npffG3p6HSiJXPlvL8dn5NWeYF2VyThp5OVIw==
+	bh=M2XbZnZ15y72FXFKQ9zIbTL/Z2qIOGveIpGg9XGbc+A=;
+	b=4xpYXNXH0XujjICV+znc37C/AUSOhoB2osQgqDpl3d81+lsWFXB2ohss4qYgr1VbuXUh
+	 aUFwc44rLwAoA3ADIJ+b3pkpUFNWEDzyFNfaw3XjNMHVwlrRU13/R3Tildj6uuLwP5hfN
+	 HVwdGnadABGgGROmfZsWaDOWN/pU8UA4MhirbDJzjJYGihxncVDnEcFSuEcaiEioi+lKS
+	 EAlSOEjM6Er6OnxxnMj69V7MuiSAA+ACwDokaBze+fcxZsfl2lZ081vFfa5pQKGjrF++s
+	 vi0ls0RoUVcFzBFZp4jhVo/TR3QrSH9Mb/61exk9wTttwl2OnXopVGKNMwW87Cenp/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cs/YHGev";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gc9VQLc4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834C0606A326;
-	Sat,  7 Nov 2026 14:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDA8606A326;
+	Sat,  7 Nov 2026 14:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cs/YHGev
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9951F008A1;
-	Sat,  7 Nov 2026 14:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gc9VQLc4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA231F008A1;
+	Sat,  7 Nov 2026 14:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062906;
-	bh=9ie4xruDtGmVbjMSLMc8lEbt4QLnq5Jqa5phEVJ1qlg=;
+	s=korg; t=1794062907;
+	bh=M2XbZnZ15y72FXFKQ9zIbTL/Z2qIOGveIpGg9XGbc+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cs/YHGev+WEGwlrmmhuxgSUjLYGepqVb64e6z7qVJ5SOtGLuKUFoXhdwIGxXgFi20
-	 7W/4lcNS4CluSGP9DgHPjGyFseDXV0kyWvc08OuzKU/A5YLfH3o1bfIivkgVSt3iXT
-	 tM93S1SQOyMsvZ1o2oAdrD3DTy+EAdg4x/C+pIIM=
+	b=Gc9VQLc4RlYdcoYM/RsGWkHiLA/sEUGy2fXeDmLUUKtPj/Gzjud+O6XjCqcGtYZdD
+	 VlfNIPmC/3T8nNUWcj9a40qNreW/oDpsZeq6XU9rbH+8emL10lw1NsAm4OwdLT7Xyo
+	 B3YGiJkWz98eWoMqmuucdBQw0vd3rTxYC2Jnt2tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 131/869] PM: CPU: Restore synchronize_rcu() to cpu_pm_unregister_notifier()
-Date: Sat,  7 Nov 2026 08:46:53 -0500
-Message-ID: <20261107134856.900735577@linuxfoundation.org>
+Subject: [PATCH 6.18 132/869] affs: validate blocks before freeing them
+Date: Sat,  7 Nov 2026 08:46:54 -0500
+Message-ID: <20261107134856.927334547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,89 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 61f7eee7d4664079fbce821576891c3ee5ccf597 ]
+[ Upstream commit 78ea2058abf3ee053c0bd9c1b9a77304cb4ae58b ]
 
-cpu_pm_notify() walks the notifier chain lockless under only
-rcu_read_lock(). That only works if a removed notifier block is not
-freed until every concurrent walker is done with it.
+affs_free_block() accepts block numbers from on-disk file block tables
+when truncating or unlinking files. The function currently rejects only
+block numbers greater than s_partition_size before subtracting
+s_reserved and using the result to index the in-memory bitmap descriptor
+array.
 
-The chain used to be an atomic_notifier, whose unregister ends in
-synchronize_rcu(). Commit b2f6662ac08d ("PM: cpu: Make notifier chain
-use a raw_spinlock_t") switched it over to a raw_notifier, and in
-doing so replaced that with raw_notifier_chain_unregister(), which
-does not synchronize. The grace period quietly went away, so a driver
-that frees the memory holding its notifier block right after
-cpu_pm_unregister_notifier() returns can race with a concurrent
-walker:
+That check still accepts reserved blocks and the one-past-end block at
+s_partition_size. A crafted image can therefore make the subtraction
+underflow or make the computed bitmap index equal to s_bmap_count,
+leading to an out-of-bounds access on s_bitmap before the bitmap block is
+read and updated.
 
-  cpu1 (idle exit)                  cpu2 (driver remove)
-  ----------------                  --------------------
-  cpu_pm_notify(CPU_PM_EXIT)
-    rcu_read_lock()
-    nb = rcu_dereference_raw(*nl)
-                                    cpu_pm_unregister_notifier(&od->nb)
-                                      unlink, no grace period
-                                      remove() frees od (devm)
-    nb->notifier_call(nb, ...)
-      /* use after free */
+Use the existing AFFS block validity helper so freeing uses the same
+range as block reads and writes: s_reserved <= block < s_partition_size.
 
-The rcu_read_lock() on cpu1 does not stop cpu2 from freeing the
-block, and nothing else does. The read side is the idle exit path,
-so this can hit on any system where a driver with a cpu_pm notifier
-gets unbound.
-
-Add the grace period back. It is only needed when a notifier was
-actually removed, so wait on success and return -ENOENT without
-waiting otherwise. The kerneldoc gets back the "may sleep" note that
-the same commit dropped.
-
-Fixes: b2f6662ac08d ("PM: cpu: Make notifier chain use a raw_spinlock_t")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-[ rjw: Subject tweak ]
-Link: https://patch.msgid.link/20260813074343.26460-3-include@grrlz.net
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+CC: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cpu_pm.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/affs/bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cpu_pm.c b/kernel/cpu_pm.c
-index 7481fbb947d32..a2a598ad6e6d5 100644
---- a/kernel/cpu_pm.c
-+++ b/kernel/cpu_pm.c
-@@ -10,6 +10,7 @@
- #include <linux/cpu_pm.h>
- #include <linux/module.h>
- #include <linux/notifier.h>
-+#include <linux/rcupdate.h>
- #include <linux/spinlock.h>
- #include <linux/syscore_ops.h>
+diff --git a/fs/affs/bitmap.c b/fs/affs/bitmap.c
+index 5ba9ef2742f6e..f400b28eea28d 100644
+--- a/fs/affs/bitmap.c
++++ b/fs/affs/bitmap.c
+@@ -46,7 +46,7 @@ affs_free_block(struct super_block *sb, u32 block)
  
-@@ -76,7 +77,8 @@ EXPORT_SYMBOL_GPL(cpu_pm_register_notifier);
-  *
-  * Remove a driver from the CPU PM notifier list.
-  *
-- * This function has the same return conditions as raw_notifier_chain_unregister.
-+ * This function may sleep, and has the same return conditions as
-+ * raw_notifier_chain_unregister.
-  */
- int cpu_pm_unregister_notifier(struct notifier_block *nb)
- {
-@@ -86,6 +88,11 @@ int cpu_pm_unregister_notifier(struct notifier_block *nb)
- 	raw_spin_lock_irqsave(&cpu_pm_notifier.lock, flags);
- 	ret = raw_notifier_chain_unregister(&cpu_pm_notifier.chain, nb);
- 	raw_spin_unlock_irqrestore(&cpu_pm_notifier.lock, flags);
-+
-+	/* Wait for the rcu_read_lock() walkers in cpu_pm_notify(). */
-+	if (!ret)
-+		synchronize_rcu();
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(cpu_pm_unregister_notifier);
+ 	pr_debug("%s(%u)\n", __func__, block);
+ 
+-	if (block > sbi->s_partition_size)
++	if (!affs_validblock(sb, block))
+ 		goto err_range;
+ 
+ 	blk     = block - sbi->s_reserved;
 -- 
 2.53.0
 
