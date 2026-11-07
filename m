@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063234;
-	b=kOq+GDJwprbUItNJcE4/WfQ2pTf2ocxg2sfV8JlFaweAilGzMxKfNqYImSsJ6utW49bS
-	 khsZ9txq9AskDUmzKC1nsTbDjnGmdg5fvr1gOMYevlAVqNDmKVczYCm50fL92b0AEe9Iy
-	 f6M5AcEDHoEMo/HGs25k8jxj+GenPtAmFZORQE+YChdGf4krgNbJ1sK2SbJzyFs6ZSCz3
-	 TZz1lmxnFeFvj//AY4UO+p5+SwekqIPmFxdzoWJFflma3MpbzN5y4S067qaW6+12EdiIw
-	 onEbr5XDtODjsLsGkULlNTSmkj9Y8L/rMD/Q3hT+r5CYJWCLZWn80tqcxiqH61eajjw==
+	t=1794063235;
+	b=rJY8p/xbDzj8i6Of5vAkGeaNIX42lcJDf9dMBxovDkbw20BtkdAzJ/lv+f0lXU193t86
+	 LBM7O+qT6zFmwnJ33itAb2rV2MAg2f67NZMTSeKXBr2LdF8jdcamwOec75/8Qg8fghQ1Z
+	 i6XMuZpnqACNq7D9TQBG5p0yBqTyV3y4NUKvv6CNu9++6d045puDZJRcmBgRfnPSmKDM5
+	 M07j0guO7+RLqeRC38tPl62W8t8c6sAiGrBIYSq1vVnx2q77pSSF0tBUjzfvU0WUwGEB5
+	 bJpvn7I8jDB4acZRalQUWyB3n1FZY+0Bzi22xafeQs4sdyxu2eHC9vOxvjlmpftpMpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063234;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063235;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DtNUgwRDaBcG63uSuw35ic/XZkomzRtHrTyiug28Lhk=;
-	b=gCVtw6uk9cFULJnMnyKQUyZjRHRk6mydtwGZCwERhNXSFvXoP9Dec1AOCOlR0jziBKxZ
-	 x4Cco3w52nGSzfKAPod3lPUKxSqyOSZPKRZvWNIWn8msOl0UN5q5g4cSbsO6pcAwp5xDi
-	 BEMUhuVhmKOHt2KMmENZd/QBxW/dgA5TpnGgN1IumIc0g3cLXGHfzIA1zGHZ0zvUgu7Hm
-	 8DBsAN1l/2ciDYmrRLbsGDoftj6jFyaZjP/DxWOSl9/ilkKQFhFkIufQvOe0qXnJYVMrS
-	 r07NARX/+QmGq/MGYnHuGpFtjEfiZWxHCKEZWRdv/46FzpAHn6Kj8s95pST3aUE0zFw==
+	bh=8QKRCJyZMekr29nEp4h08ObjIr+Wm2vpqqRIlimz1FY=;
+	b=mAWqidwRIHSG4RKGsafnLSjBCNZ24DHTJ/4SHG+Q/ugx8Eu74D+sqh8TMJeMCL6pyZa/
+	 N1ZR/IUGNdzcoj8zgLjqcMa93YVlzPiVUSGos5tuXYQyg0MQn8978o1yJ4MSULzkYuNit
+	 Pegt6dFgCf0p+gmPhsTdqDdFFcdhWsoCureX/lbU7w81J+whczEL5zKUoj5elBCBfGF+F
+	 WBoY7oi/SivC/OoWlaulWKCrlku3lZX4h3PaU4tA207yC3Qi4XEoKPQqALRfX5YH0jJSQ
+	 um4QY4ydHAX+dSUpbTU57+8zkGVaiKPoueyxal4Y6G9Ld7lwYtKfIZlwtLCYU06Ddsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTACeDP2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2o6b5lu0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF74606D805;
-	Sat,  7 Nov 2026 14:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBA0606D833;
+	Sat,  7 Nov 2026 14:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTACeDP2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFF21F0089F;
-	Sat,  7 Nov 2026 14:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2o6b5lu0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F260E1F0089F;
+	Sat,  7 Nov 2026 14:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063233;
-	bh=DtNUgwRDaBcG63uSuw35ic/XZkomzRtHrTyiug28Lhk=;
+	s=korg; t=1794063235;
+	bh=8QKRCJyZMekr29nEp4h08ObjIr+Wm2vpqqRIlimz1FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTACeDP2DdO945vippPei119KKbmijMdlBv49Ns6+2nUtFUlSotE6fYaiugeXDoyH
-	 xvuqBrcqd4uG1Iyx97b7AbKAymQOABPI9RQ8o/V6U71vNU0r7H2gsGQ47LTQQFeNPT
-	 09t5PevJxD7VcAE55+QCLtx2pYIw8RDJraGCoOuI=
+	b=2o6b5lu0LY8EFfYWzbWgI4p6oOEdq8Yej/J6Gexs7n1PSkDDbdt5/1V1fNKA/Lr4V
+	 ekFPSfgrsJPQPOIedzv86mxHgE00h6x6apfId+cIeSFTy6vxRlU8B9rwJV7X4Po2CN
+	 ROyT9ceu+8gFv3cZxrNtRwy1KcJ2qB17+PEzt+PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 392/869] ocfs2: free replay slots in ocfs2_recovery_exit()
-Date: Sat,  7 Nov 2026 08:51:14 -0500
-Message-ID: <20261107134906.717387464@linuxfoundation.org>
+Subject: [PATCH 6.18 434/869] xen/gntdev: prevent private mappings from becoming writable
+Date: Sat,  7 Nov 2026 08:51:56 -0500
+Message-ID: <20261107134908.514371240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -74,105 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-[ Upstream commit 1ddadc6d41c1a29fd8fad1891bdcd2956e08b7f0 ]
+[ Upstream commit 2176dea8d8c19cb43a9b3651bfa1cb21eab1b31a ]
 
-Commit ce2fcf1516d6 ("ocfs2: fix memory leak in ocfs2_mount_volume()")
-added ocfs2_free_replay_slots() calls to the mount error paths
-out_dismount and out_check_volume to fix a leak of osb->replay_map.
-However these calls are unlocked while the bail path of the recovery
-thread, which is woken up by out_dismount right before the call, also
-frees the replay slots under osb->recovery_lock.  Both sides can thus
-observe a non-NULL osb->replay_map and trigger a double free.
+gntdev_mmap() rejects writable private (non-shared) mappings of foreign
+grant pages, because a private writable mapping takes the COW path on
+pages that have no proper struct-page backing.  However, VM_MAYWRITE is
+left set, so userspace can map the grant read-only and then upgrade the
+mapping to writable with mprotect(), hitting the same COW path the
+check was written to prevent.
 
-Fix this by moving ocfs2_free_replay_slots() into ocfs2_recovery_exit()
-after ocfs2_recovery_disable(), which waits for a running recovery thread
-to exit under osb->recovery_lock, and drop the unlocked call sites.  Both
-ocfs2_dismount_volume() and the out_super path of ocfs2_fill_super() call
-ocfs2_recovery_exit(), so the replay slots are freed on every path.  Since
-super.c no longer references it, make ocfs2_free_replay_slots() static
-again.
+Clear VM_MAYWRITE for private mappings, as i915 does for its read-only
+objects and as fixed in drm/vc4 (CVE-2026-68445) and drm/panthor
+(CVE-2024-53071) and ptp: vmclock (commit
+a5edadbae57e2298a56cf7a4e774a027905a331f).
 
-Link: https://lore.kernel.org/20260828112825.666097-2-joseph.qi@linux.alibaba.com
-Fixes: ce2fcf1516d6 ("ocfs2: fix memory leak in ocfs2_mount_volume()")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: <stable@vger.kernel.org>
+Fixes: ab31523c2fcac ("xen/gntdev: allow usermode to map granted pages")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+
+Message-ID: <20260819084217.1577-1-suruurism@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/journal.c | 3 ++-
- fs/ocfs2/journal.h | 1 -
- fs/ocfs2/super.c   | 5 +----
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ drivers/xen/gntdev.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
-index 8c07610692d06..2b8b57e914f08 100644
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -158,7 +158,7 @@ static void ocfs2_queue_replay_slots(struct ocfs2_super *osb,
- 	replay_map->rm_state = REPLAY_DONE;
- }
+diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
+index 1e21b75114e5e..02ebbdba86101 100644
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -1072,6 +1072,13 @@ static int gntdev_mmap(struct file *flip, struct vm_area_struct *vma)
+ 	if ((vma->vm_flags & VM_WRITE) && !(vma->vm_flags & VM_SHARED))
+ 		return -EINVAL;
  
--void ocfs2_free_replay_slots(struct ocfs2_super *osb)
-+static void ocfs2_free_replay_slots(struct ocfs2_super *osb)
- {
- 	struct ocfs2_replay_map *replay_map = osb->replay_map;
++	/*
++	 * Private mappings of foreign grant pages must never become
++	 * writable: they would take the COW path on granted pages.
++	 */
++	if (!(vma->vm_flags & VM_SHARED))
++		vm_flags_clear(vma, VM_MAYWRITE);
++
+ 	pr_debug("map %d+%d at %lx (pgoff %lx)\n",
+ 		 index, count, vma->vm_start, vma->vm_pgoff);
  
-@@ -246,6 +246,7 @@ void ocfs2_recovery_exit(struct ocfs2_super *osb)
- 	/* XXX: Should we bug if there are dirty entries? */
- 
- 	kfree(rm);
-+	ocfs2_free_replay_slots(osb);
- }
- 
- static int __ocfs2_recovery_map_test(struct ocfs2_super *osb,
-diff --git a/fs/ocfs2/journal.h b/fs/ocfs2/journal.h
-index f8b3b2a3d6309..19fc920d26b1c 100644
---- a/fs/ocfs2/journal.h
-+++ b/fs/ocfs2/journal.h
-@@ -151,7 +151,6 @@ void ocfs2_recovery_exit(struct ocfs2_super *osb);
- void ocfs2_recovery_disable_quota(struct ocfs2_super *osb);
- 
- int ocfs2_compute_replay_slots(struct ocfs2_super *osb);
--void ocfs2_free_replay_slots(struct ocfs2_super *osb);
- /*
-  *  Journal Control:
-  *  Initialize, Load, Shutdown, Wipe a journal.
-diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
-index 433b673ae5158..fe4ab1659e0d9 100644
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -1163,7 +1163,6 @@ static int ocfs2_fill_super(struct super_block *sb, struct fs_context *fc)
- out_dismount:
- 	atomic_set(&osb->vol_state, VOLUME_DISABLED);
- 	wake_up(&osb->osb_mount_event);
--	ocfs2_free_replay_slots(osb);
- 	ocfs2_dismount_volume(sb, 1);
- 	goto out;
- 
-@@ -1778,14 +1777,12 @@ static int ocfs2_mount_volume(struct super_block *sb)
- 	status = ocfs2_truncate_log_init(osb);
- 	if (status < 0) {
- 		mlog_errno(status);
--		goto out_check_volume;
-+		goto out_system_inodes;
- 	}
- 
- 	ocfs2_super_unlock(osb, 1);
- 	return 0;
- 
--out_check_volume:
--	ocfs2_free_replay_slots(osb);
- out_system_inodes:
- 	if (osb->local_alloc_state == OCFS2_LA_ENABLED)
- 		ocfs2_shutdown_local_alloc(osb);
 -- 
 2.53.0
 
