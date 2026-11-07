@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062147;
-	b=NEsSefyj/M87gVhpPVX/JaQ4YTI3TjZlLDhh10gFiuh9CKDKNbQnTGQQAJ6sgNHJTWGR
-	 /iQnGvqA9FLT5bSOpmpyqqbKpt+M7CL5q8nWm/ESlrinV54lzO3/fS3fA/iIWgglKU0ql
-	 TLlqqpzdWXGjfoc/gm6wqctU98w9U2pkcdLbqCYW4ovpJZ6a5rqgbtfO40HG+qaYPVk9F
-	 AwgK/2rnd8a4gqAzwQPgwRpWeZyHlwalpG+0429TWtFCTJ/M+jFIl8YNGP5gxA3EyoZZk
-	 O7mYx+N/nPViGP/k5LIjqsPO22dFuYRWtTNhVbkzyurNdB/IJTRaWtgs/XgOOJ5fv0Q==
+	t=1794062148;
+	b=b1ZSdv0FMkeyE4e5yivQmBMk8eBTXwFFQMlKBUjme0nBlUyI39E2ZA6u0wYvzOLxmC6d
+	 jSwYFPXAJ1sd8p6JU/33FOGqX3P3/fGrQwc/SKO6J/FD2Kj6QfK+lnyVWPDovl5zX6qJm
+	 k2xODbKfCbz+GA+N5uud4685LBsC1jDn9Pgno/M14vV8SoBZq2d6Zh7KXiCkAL37GhmZl
+	 q61W2AI9SEA8p0QbusGQgRJes0Om8QDeF/ud7hK+Cajbb1jT2tGRjRyfhcFRcfH4plI+9
+	 MIjFcVTqLqBsGsr8xhrmzj62MwGeRb51yc+cHjYOd6dF0oWXEDFLSnsqWI7yQXmhOFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062147;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KkTmWadQ6LtJ0oae/1rFlC/5dgIDIKnlK8XDW0xAp0k=;
-	b=S1XVCTaLvfu7xN1ebx7EwP9hl94dQXkvpZE2cQvmGn+BVuOkKQK6+uOPqfzaEgGv8yv4
-	 HbjCFJwiLaPFbaTGvXH0ibI5tM4WEtfdVhM0gCBjN8n5xu4tgNgnREaRZmT4pRxPCUkuj
-	 sZl8zFP/8trnfZS8cryb4nRUnfFfdqshL1uPZQ+pXq+x2ZUhUgqdoytW4RYI9p7fq9kmF
-	 wKKwwq0aqZXVNxcjznA1KLOd+82qGtXFeVmKFcT0R9I9ryVLhfzywanXMawh+BjWyh2c6
-	 W875zhfeyufo5io6AhFGSxGms9qtjlkn4z20jXVQVW4bzAvMv/Smrg/i6JKKnpU8+kQ==
+	bh=TkjueNYHvJqYfc5WL6bNfOJldIv2r1PPJ/AQoAYNP6M=;
+	b=k32Nvpl1lcQf8nIUqakd8JJ15VDJgqgHNAEz/wagRbAg1YA5O8YA/o4Nrtp4eVAY9vE9
+	 9RihpHC1wxxvvZBlYZZWo88iAuvLPU+xiVCwWsdIt8/HGUvnWHmOF0oygktuv9jOZm/QB
+	 VAFU3XWBJhPVd2jLETMErjWIdTK5yIWnsHUNJIZcqvcXgUQCokC22XMPx3qf8VgrLv5Q1
+	 z3r0seW+361UItTtBRyYR40vpnHQt3U25qbOMs83mb2HJhxjNzyXe0RjdvSAPPyk9hzSv
+	 /psEbE2XMwGpzRJPMOKjY4BOQPM31We3s0zxqvalLKf9sD0btbQ5NGbjDzkT3oKo/WQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QE5zi6is;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kno56V01;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23356606A333;
-	Sat,  7 Nov 2026 14:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F61606A66A;
+	Sat,  7 Nov 2026 14:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QE5zi6is
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7B11F008A3;
-	Sat,  7 Nov 2026 14:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kno56V01
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CD61F008A6;
+	Sat,  7 Nov 2026 14:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062147;
-	bh=KkTmWadQ6LtJ0oae/1rFlC/5dgIDIKnlK8XDW0xAp0k=;
+	s=korg; t=1794062148;
+	bh=TkjueNYHvJqYfc5WL6bNfOJldIv2r1PPJ/AQoAYNP6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QE5zi6is69k1rfEILh7a1Vjp2fUFusarZGW8i4xgfghvt7SpoeOvfKd9kX2mdjCTq
-	 Zx1b9L5MFw6Kfh19R8ep501wHf0oeZK5MHvUmh/wEwwtUang6PUa5qYKqCy3SK6OTu
-	 CNVdo9TAmPvmYOMEUs5vF63825T8m/u5qH6AEObc=
+	b=kno56V01TvaQF56CK2Dr8LcuAF108GZA1bFLLEMjwrNbu2VDaMwSfpIcVgT/wzdBU
+	 oIwsu0CVMTgERnsw3mtRNKg0WcyLpB4trq9dKIEJ/4zMQJLcFkvAHINNnAtdsY6XDR
+	 UBxmhQKLI8qo5kgtyUuYv/9OwyZVfnK88lOHSIeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1110/1536] ASoC: pcm6240: do not free an unrequested IRQ
-Date: Sat,  7 Nov 2026 08:52:06 -0500
-Message-ID: <20261107135028.882763579@linuxfoundation.org>
+Subject: [PATCH 6.12 1075/1536] dcache: report a Tasks-RCU quiescent state in dentry_kill()
+Date: Sat,  7 Nov 2026 08:51:31 -0500
+Message-ID: <20261107135027.886705701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,40 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 995b96380ba5d98131acc162608da3538e1395d8 ]
+[ Upstream commit a647a53bc89a046bee4a12a0a5627f2dfaaef807 ]
 
-The driver obtains an IRQ number from device tree but never requests an
-IRQ handler for the PCM6240 device.  Removing the device must not pass
-that number to free_irq().
+I am constantly seeing the following warning on Meta's fleet:
 
-Leave IRQ ownership to a matching request path if one is added later.
+  INFO: rcu_tasks detected stalls on tasks:
+    native_queued_spin_lock_slowpath
+    locked_inode_to_wb_and_lock_list
+    inode_io_list_del
+    evict
+    __dentry_kill
+    shrink_dentry_list
+    shrink_dcache_tree
+    d_invalidate
+    btrfs_delete_subvolume
+    btrfs_ioctl_snap_destroy
+    btrfs_ioctl
+    do_syscall_64
 
-Fixes: 1324eafd37aa ("ASoc: PCM6240: Create PCM6240 Family driver code")
+dentry_kill() is the common funnel for dentry teardown: dput(),
+shrink_dentry_list() and shrink_dcache_tree() all reach it, once per
+dentry, and its cond_resched() is the only reschedule point on that path.
+
+cond_resched() is not an RCU-tasks quiescent state.
+
+Use cond_resched_tasks_rcu_qs() so the teardown reports an RCU-tasks
+quiescent state as it proceeds.
+
+Fixes: 9c5f1d30199d ("dcache: move cond_resched() into the end of __dentry_kill()")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260929095920.2092147-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260918-dcache-task-rcu-qa-v1-1-963ec83e6d0b@debian.org
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/pcm6240.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/dcache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/pcm6240.c b/sound/soc/codecs/pcm6240.c
-index e59bb77edf091..b2865b38f99b2 100644
---- a/sound/soc/codecs/pcm6240.c
-+++ b/sound/soc/codecs/pcm6240.c
-@@ -2035,8 +2035,6 @@ static const struct regmap_config pcmdevice_i2c_regmap = {
+diff --git a/fs/dcache.c b/fs/dcache.c
+index ad31c9dd53f77..482b8b6d0eeeb 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -632,7 +632,7 @@ static struct dentry *__dentry_kill(struct dentry *dentry)
+ 	if (dentry->d_op && dentry->d_op->d_release)
+ 		dentry->d_op->d_release(dentry);
  
- static void pcmdevice_remove(struct pcmdevice_priv *pcm_dev)
- {
--	if (pcm_dev->irq)
--		free_irq(pcm_dev->irq, pcm_dev);
- 	mutex_destroy(&pcm_dev->codec_lock);
- }
- 
+-	cond_resched();
++	cond_resched_tasks_rcu_qs();
+ 	/* now that it's negative, ->d_parent is stable */
+ 	if (!IS_ROOT(dentry)) {
+ 		parent = dentry->d_parent;
 -- 
 2.53.0
 
