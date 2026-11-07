@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062576;
-	b=Bi8IieP3UpkW2BOISeFkzzS8gfyE/CnpcaNIBXl0dIsZcfDxn7jaCW8HDPH0uKvZJJz8
-	 V8HrAMcHQWm3UPNbBBl8qZi7SOCVp3Um+yhJP4hYZ2uEn0w4bAm+mZ8f4qLbt/0DS0OgR
-	 g1oRozpVDz7oJfMZ7AUHnwXpdtx3eTtGM4EOuQ+ZfIYqMbRgU5YxfzV8RqqXLMIDjpWtQ
-	 Z4HjU/u7UvTjg4CZrDlyNL3zmjpXcp68MD44LgM3bMJpRgxbqu5rVURq0Cg/C3H/BQLc+
-	 FyJ3oVmzpshnHCa/orUT0TWuTPo883UYX7/vp3fHyMzt9bfAxQqANmCaroq6FZLUnJg==
+	t=1794062577;
+	b=WwmrMorVXlBxejiF/XegHBcUeYKT16GEXU3QXPpNQ0/zA84prw6Cmz68ueSrO21HdmBV
+	 nWKldjPMhaI/ZZvujlwklIXt5c5IDwqS8mJZuaC4wIL3rKEHslfuvkRiyY/cTrHbKIs4e
+	 eVKPgsJuaU8HLkfy85ImsLw7vGE+xkkUXo6ELFuQaczw0h6hi8Q+6/mlO//53dZpftSJa
+	 OYUPolM1t+BZx4YSCpAxqoCoKd+lxFXd3Hkk7pOzug1ipP75RRZrS3Cu4oFgDc1V0tWA3
+	 +N2GowbM+IM2z5bsnDkV/ZUCc1MxyPVn6b7Ogo3x4HcuhtAXEL6OwEV10D9WpSD9Cbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hTHlSZYFIJ/wLItCJ51hPVhhMQ6+rqoDAMN1huqKi0Q=;
-	b=suW938mmnmbRYelNUGZM41V2VyjoTXud/ANibYkr8yKivuXZN3vY104C0M21E6RA4ASc
-	 Dy5CK8vGRCahKyD/QUI7COUtFgVMu/rSw/YSAlkSJlcD8tNnpjN7O54KKTI15gQmqmp67
-	 Cb7gagtN0cDlnNMd1e1tu2QLRBmXckYz0jYbcAOOTj2y4AQqVa5a3SIqEMwzUdpXE6nwu
-	 OZAvcRlslqXeKBzkrWE/m6n0cWKhQF1By4kGw/UTAuyEVkav9Gwj3IuQHqoqUHRNusd32
-	 JL3+S0QhQRpjfitWZRWWc92fuQphP3vUnkZpFfSwePoZqDQm834lSUR3Dxw8TEUCa8w==
+	bh=3zz07q0+3LgnCo2xF6yNX/SriiFtGXoK9Jyxl9bKlvY=;
+	b=rjHMQ8WyX6epytIKmtuq/acHiwffnybjUrz21Thih8jhdw/8F6QoQ4Rsvi3GbjpEAnP1
+	 oDALWlmvKavLFBgvQFnUyt0dqROrRBiKKYpQRvOfBM3oEAXCw82y1lVSzOz1z2MUGb6Ys
+	 vmQ/B/2x8spWlEw/Aw82LEnL988qAkbRh0Hw7beq4H0FjRiklKYm5vYp42+1Z6+m+wZ7g
+	 hnPKnII/155sIoORMcsJ8n6R616bGc5cVx7PbxwQrFAZU+YT+wL29m1YO9Ho1jdJFmUz+
+	 G2dkJgfOou3dRZTOsOt1n0DuNK2uLm7+v6jyUvluB4LiFg51NRutzQeHLPG9QoaeS0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hwQzQu6g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oi5cVrN9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ED4606A32D;
-	Sat,  7 Nov 2026 14:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5F0606A66B;
+	Sat,  7 Nov 2026 14:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hwQzQu6g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFD71F008A1;
-	Sat,  7 Nov 2026 14:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oi5cVrN9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FA31F0089F;
+	Sat,  7 Nov 2026 14:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062575;
-	bh=hTHlSZYFIJ/wLItCJ51hPVhhMQ6+rqoDAMN1huqKi0Q=;
+	s=korg; t=1794062576;
+	bh=3zz07q0+3LgnCo2xF6yNX/SriiFtGXoK9Jyxl9bKlvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hwQzQu6gvSPC+b4RC3a2CPSNQZqNK8NXpORRI22CohXSQJOj/DhF8gJLdxtA/3DYn
-	 WqHWYfVBuR9wkS1kcJuzI9fcZTqPAgCq1lfgUN+STurJ5EKQkn/hpNbaGni//2KZbB
-	 ZE0XE+B4kXmtdAXq86ddkVpZ2ZzlrvEZePqCkrfo=
+	b=oi5cVrN9PNaaRr+bc8WykjO7LP4j+MRAb5hbzSEqqd58uogUwe0pQpg0xxYIUbXyH
+	 518LxblbQWj1DYxokBTwWjvxo9KQ8oZw5mgOmo+Dxs6/69nGqH5IRTwAqSDdWrJ0QK
+	 oNGEv6c/0nXbqPd5U5XAfwhqnmcN8qM55YVf2UZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1458/1536] libceph: Fix unsafe decode in ceph_redirect_decode()
-Date: Sat,  7 Nov 2026 08:57:54 -0500
-Message-ID: <20261107135038.790012321@linuxfoundation.org>
+Subject: [PATCH 6.12 1459/1536] libceph: Fix multiple unsafe decodes in ceph_oloc_decode()
+Date: Sat,  7 Nov 2026 08:57:55 -0500
+Message-ID: <20261107135038.817823283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,19 +71,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-[ Upstream commit 0405670e50f213594366ab7eddc07002bd7f84c0 ]
+[ Upstream commit 10655007b9b679e46a9e383202c7bb791e5d1d13 ]
 
-ceph_redirect_decode handles unchecked data received over the network
-from an OSD. Currently, there is only a bounds check covering the first
-three decode operations. After decoding the first len field from the
-message, the only remaining check ensures there is enough buffer space
-to hold len bytes. However, there is no guarantee that this value is
-large enough to hold the subsequently decoded fields. The decoding of
-the second len field is missing an explicit bounds check. Consequently,
-a corrupted message can trigger an out-of-bounds read.
+ceph_oloc_decode handles unchecked data received over the network from
+an OSD. Currently, there are multiple decode operations that aren't
+covered by any bounds check. Decoding these fields can therefore result
+in out-of-bounds reads if a corrupted message is received.
 
-This patch fixes the issue by switching the decoding from
-ceph_decode_32() to the bounds-checked version ceph_decode_32_safe().
+This patch fixes the issue by adding bounds checks covering all
+previously uncovered decode operations.
+
+[ idryomov: use ceph_decode_64_safe() for hash ]
 
 Cc: stable@vger.kernel.org
 Fixes: 205ee1187a67 ("libceph: follow redirect replies from osds")
@@ -93,22 +91,41 @@ Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osd_client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/osd_client.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
-index c27c8858b1652..b1e95ef61761a 100644
+index b1e95ef61761a..86935dd755a71 100644
 --- a/net/ceph/osd_client.c
 +++ b/net/ceph/osd_client.c
-@@ -3665,7 +3665,7 @@ static int ceph_redirect_decode(void **p, void *end,
- 	if (ret)
- 		goto out;
+@@ -3593,6 +3593,7 @@ static int ceph_oloc_decode(void **p, void *end,
+ 	ceph_decode_need(p, end, len, e_inval);
+ 	struct_end = *p + len;
  
--	len = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len > 0) {
- 		pr_warn("ceph_request_redirect::object_name is set\n");
- 		goto e_inval;
++	ceph_decode_need(p, end, 8 + 4 + 4, e_inval);
+ 	oloc->pool = ceph_decode_64(p);
+ 	*p += 4; /* skip preferred */
+ 
+@@ -3605,7 +3606,7 @@ static int ceph_oloc_decode(void **p, void *end,
+ 	if (struct_v >= 5) {
+ 		bool changed = false;
+ 
+-		len = ceph_decode_32(p);
++		ceph_decode_32_safe(p, end, len, e_inval);
+ 		if (len > 0) {
+ 			ceph_decode_need(p, end, len, e_inval);
+ 			if (!oloc->pool_ns ||
+@@ -3624,7 +3625,9 @@ static int ceph_oloc_decode(void **p, void *end,
+ 	}
+ 
+ 	if (struct_v >= 6) {
+-		s64 hash = ceph_decode_64(p);
++		s64 hash;
++
++		ceph_decode_64_safe(p, end, hash, e_inval);
+ 		if (hash != -1) {
+ 			pr_warn("ceph_object_locator::hash is set\n");
+ 			goto e_inval;
 -- 
 2.53.0
 
