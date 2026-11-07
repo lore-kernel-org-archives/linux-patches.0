@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061601;
-	b=cR2F9EAf+nuLejoLdYqrL6ndLVBPKpNAJfiQIRCbEuJFoxjBkZ5uLJE/0PeLVkbwfZny
-	 8c16i4GkHZJ0o4M+vEbDJBLudj3awiR2YS84gTxGcDB0u3MGlhc6uUCburVbh+oe3KTuV
-	 LCe2twtU1VMxNx9jBllGjdfTuUTTRtVBIkH913VYPI/DWISuepZcEbWcbkCT+OJFQTLnS
-	 DAVVSLMpAHj4uXc75BhK08beRPFmZ/iBCfXGgFRg1KMcNKCRb2LS0anRpUMlUFuohuu1m
-	 GQ/hyI9f/w6UrOuYDpZXot0XY681dWQoOpN9WY8xcHXb/RbhoyuwzjaPpeOZfwVHMLw==
+	t=1794061602;
+	b=uIobn1p+qubEEI4egmEErmFhLo9gQbN/JZOP9Uc6jwYnZGkreJatnUIwy9cwUB6zpMAF
+	 pOYgMwnA85seK8NKh/uMSrYBLFSTyWmBOgsoW8RwUTXtBWJW6zah14+lt9TgI/82adNAJ
+	 mqDLwa0sX/1M48zi6qRsTuFrp8bqoBj9+Xgibe2xNCEQ8TabnODhKhtodkmPTfFRVS3dP
+	 x8bUa+ryavRzbmR6VzsqZklImZlAOLi5OllDLgR9Y2RDnzfzzYMPbGt0GUU7tGixU2Dyf
+	 JAMiPkEli0YxlvhpIB8h/vn6ItNXkK6TsmTGR/cztTeADzSkvOgPdozRqAfIrJaMjlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L7yTk3hgLw4WyRklPAaEYLsbtqmW4kC+vYUuAaLl6bc=;
-	b=RqYIxhkv5egqWsNQMj8FHt6P+It/27nIcx3OMJGOvj3uLNZlBtTjitjfkLgwOcFR/FWD
-	 HqE3NJfFrW/sjG8umNELD8mLyyLXYBgq7tJTjVpL7+CLHEDHFq6oUg2eZ0jr7k6ocUk71
-	 ZJ8L2i0/x1FlZiF81ttOfZ6Hra6XIV5ILOQ9jPwZFG5PE0lij4jKPHJS00Rh1WYeZ85t2
-	 BFeCnGzy7iHhzG5mlHg8Nu7MFxgWMqMuPNhGh8x2bM2k7chEhNOnHPWLxpE7TqQc1VUPl
-	 WbLinHKBPjcnYAk+qKTMqieJQ8f1c7q2tvyVZs2r2ildmDqV9QoAXKf9d8aEyXVEbLw==
+	bh=DhjZcMP7k5gdjwL04bMfCpRSvwdAgeDj2oKSXu6WBZU=;
+	b=1H1knqsTHyYoAr2zKaG5bt+n16hCuMoBObOSs18p6qjd0faOlgYNpmIZsMy25FZHR1Z4
+	 lwcH71kBKLpmE4WnpfwTIvdhE9fOqcYQIaqAm3g6eibbNPo4xTaMoTZI9i6lAipC9ZKTw
+	 8tjlGNsaBVCrl88Dan3zHNUSr9si3VGb9je4Z4dHB/z7IQZmLsnutoT9voSg6HLmipxCa
+	 AZeUYGbbpeorIzm8dl5jY89UkaJCF1aklW83mCZ6LkwC9RmGweQd3wTcpBSeHubnckL2A
+	 QLuvXmjDfACJAZsN6KKb5xWqrk9H9mxDa9lt/yj8Jb3D61VDnwM5I8MBsz48SdQxD7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14vFFgay;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJNh986X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D88606A326;
-	Sat,  7 Nov 2026 14:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAFF606A326;
+	Sat,  7 Nov 2026 14:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14vFFgay
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3D51F0089F;
-	Sat,  7 Nov 2026 14:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJNh986X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87A91F0089F;
+	Sat,  7 Nov 2026 14:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061600;
-	bh=L7yTk3hgLw4WyRklPAaEYLsbtqmW4kC+vYUuAaLl6bc=;
+	s=korg; t=1794061602;
+	bh=DhjZcMP7k5gdjwL04bMfCpRSvwdAgeDj2oKSXu6WBZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=14vFFgayRXU3z4NlO0Y2msPLXlACFqMhql49M33ajdXwJhSmxgvbevFm00VyQdWsz
-	 wLQOmnw6lIZc/HtfBxKmqRtzps6REwJZE/Lb/0Ix5VKzjzI/OS8O5dj5EZvLq7nJQa
-	 cPctmTfuHp3SpQAM0cva+0++jc0nBegPomzyy3J0=
+	b=jJNh986XujqSJH1P+6rdn1BpqCR8qVW3GaZlviyEpMgtXFDrhjhghYdZYuKNscdlA
+	 AMAIISDPsAV0ELGGr0dnHTjoKCJaFWRK2Mj5QImpkUkSwYypjNS9TABPkKuCZK/LVk
+	 1g8nvgMUXZr3XMsau/aUCRDnUbIzYThDAD4qUpTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,12 +47,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Heming Zhao <heming.zhao@suse.com>,
-	Tao Ma <tao.ma@oracle.com>,
 	Jia-Ju Bai <baijiaju1990@gmail.com>,
 	jjzuming@gmail.com
-Subject: [PATCH 6.12 0674/1536] ocfs2: pin refcount trees before dropping the lookup lock
-Date: Sat,  7 Nov 2026 08:44:50 -0500
-Message-ID: <20261107135016.413490462@linuxfoundation.org>
+Subject: [PATCH 6.12 0675/1536] ocfs2: snapshot dentry names in file and setattr traces
+Date: Sat,  7 Nov 2026 08:44:51 -0500
+Message-ID: <20261107135016.442298037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -76,153 +75,136 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 8c714a074074af7ae59233c1fa6ef9d7aa710462 upstream.
+commit 8cd3ff30659775a6831c66687a69d2b83d163591 upstream.
 
-A refcount tree returned to ocfs2_lock_refcount_tree() must stay alive
-until that caller releases its operation reference. However,
-ocfs2_get_refcount_tree() returns the cached pointer after dropping
-osb_lock, and the caller only takes its kref afterwards. The registry
-reference does not protect this gap from concurrent removal.
+Patch series "ocfs2: stabilize dentry names in file and setattr traces",
+v4.
 
-This can happen when another node frees a refcount root and reuses its
-block with a different generation while this mount retains the old
-cached tree. Two local operations on different inodes sharing the new
-root, such as data CoW and an external xattr update, can then look up
-the same stale tree. Their inode locks are independent, and both the
-REFCOUNT DLM lock and rf_sem are acquired after the first operation
-reference.
+Snapshot names at all six users of ocfs2__file_ops and at the separate
+setattr event. Patch 1 handles the five ordinary file-operation callers
+and setattr. Patch 2 handles release separately to preserve its locked
+open-count sample and take the snapshot outside that critical section.
 
-The following ordering is possible, with no other operation references:
+The release explanation distinguishes its existing RCU lifetime coverage
+from name/length consistency. It does not claim that the ordinary
+callers' external-name UAF interleaving crosses the held inode spinlock.
+The release source change is unchanged from v3.
 
-  Data CoW                         Xattr update
-  --------                         ------------
-  Look up the old tree under
-    osb_lock, then drop osb_lock
-                                   Look up the same tree and take a kref
-                                   Acquire the tree locks and read the
-                                     new on-disk generation
-                                   Erase the old tree under osb_lock
-                                   Unlock and drop the operation kref
-                                   Drop the registry kref, freeing tree
-  Take a kref through the
-    freed tree pointer
+Patch 1 also removes the read callback's redundant NULL-inode check.
+The two patches apply independently and leave trace formats unchanged.
 
-The final kref_get() accesses freed rf_getcnt storage, and subsequent
-accesses in ocfs2_lock_refcount_tree() also use the freed allocation.
 
-Take the operation reference in ocfs2_get_refcount_tree() before
-releasing osb_lock, including when an insertion loses to another lookup.
-Removal must acquire the same lock, so it cannot drop the registry
-reference before the lookup has pinned the tree. Keep the existing
-unlock and error path puts. The two callers that already hold the
-refcount tree lock keep their borrowed lookup behavior and do not
-acquire an extra reference.
+This patch (of 2):
+
+The open, fsync, read, write and splice-read trace calls pass the live
+dentry name and length to the shared ocfs2__file_ops event class.
+ocfs2_setattr() passes the same unprotected arguments to its own event.
+Both events size and copy a __string field separately. A reference to
+the dentry does not pin the external storage backing an individual name.
+
+With an event enabled, a caller can be preempted after loading the name
+pointer. A long-to-short rename can then replace the name and reclaim its
+old external allocation before the trace callback sizes or copies it,
+provided no other snapshot retains that allocation.
+
+The setattr inode lock does not exclude every rename: a same-directory
+rename of a source directory need not take that directory's inode lock.
+It can therefore change the dentry name while setattr records its event.
+Inline names and separately loaded lengths can also change during trace
+record sizing and copying.
+
+Take a dentry name snapshot around each of these six trace calls and
+pass both the string and length from the snapshot. Check event enablement
+before taking a snapshot. Keep the event classes and formats unchanged.
+
+Also remove the redundant NULL-inode check in the read callback.
+file_inode() returns the open file's inode, which is already used by the
+trace call above the check.
+
+The historical report below is from the read path.
 
 KASAN report as below:
 
-    BUG: KASAN: slab-use-after-free in ocfs2_lock_refcount_tree+0x94a/0x9b0
-    Read of size 4 at addr ffff888117212820 by task python3/497
+    BUG: KASAN: slab-use-after-free in strlen+0x85/0xa0
+    Read of size 1 at addr ffff88810a5b2b18 by task python3/496
 
-[Kernel and hardware identification omitted.]
-
+    [CPU and host details omitted.]
     Call Trace:
      <TASK>
      dump_stack_lvl+0x93/0xd0
      print_report+0xce/0x630
-     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
+     ? strlen+0x85/0xa0
      ? srso_alias_return_thunk+0x5/0xfbef5
      ? __virt_addr_valid+0x20e/0x420
-     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
+     ? strlen+0x85/0xa0
      kasan_report+0xe0/0x110
-     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
-     ocfs2_lock_refcount_tree+0x94a/0x9b0
-     ? __pfx_ocfs2_lock_refcount_tree+0x10/0x10
+     ? strlen+0x85/0xa0
+     strlen+0x85/0xa0
+     trace_event_raw_event_ocfs2__file_ops+0xf0/0x480
+     ? __pfx_trace_event_raw_event_ocfs2__file_ops+0x10/0x10
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? ocfs2_refcount_cow+0x3b6/0xd90
+     ? pmbd_probe_hit_cookie+0xe7/0x1c0
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __kmalloc_cache_noprof+0x28d/0x610
-     ? ocfs2_refcount_cow+0x3b6/0xd90
-     ocfs2_refcount_cow+0x410/0xd90
-     ? __pfx_ocfs2_refcount_cow+0x10/0x10
-     ? __pfx___might_resched+0x10/0x10
-     ? down_write+0x11a/0x1f0
-     ? __pfx_down_write+0x10/0x10
-     ? ocfs2_inode_unlock+0x1a9/0x260
-     ? __pfx_ocfs2_inode_unlock+0x10/0x10
-     ? ocfs2_file_write_iter+0x1413/0x1d30
-     ocfs2_file_write_iter+0x157b/0x1d30
-     ? __pfx_ocfs2_file_write_iter+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? __x64_sys_pwrite64+0x1b7/0x220
-     ? __pfx___might_resched+0x10/0x10
+     ? __pfx_pmbd_probe_hit_cookie+0x10/0x10
+     ocfs2_file_read_iter+0x6cd/0xb30
+     ? __pfx_ocfs2_file_read_iter+0x10/0x10
+     ? selinux_file_permission+0x11d/0x540
      ? srso_alias_return_thunk+0x5/0xfbef5
      ? security_file_permission+0x26/0x80
+     vfs_read+0x7d2/0xc20
+     ? __pfx_vfs_read+0x10/0x10
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_is_held_type+0x8f/0x100
-     vfs_write+0x639/0x1010
-     ? __pfx_ocfs2_file_write_iter+0x10/0x10
-     ? lock_vma_under_rcu+0x154/0x4a0
-     ? __pfx_vfs_write+0x10/0x10
-     ? lock_release+0x121/0x290
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     __x64_sys_pwrite64+0x1b7/0x220
-     ? __pfx___x64_sys_pwrite64+0x10/0x10
+     ? __pfx_do_sys_openat2+0x10/0x10
+     ksys_read+0x111/0x200
+     ? __pfx_ksys_read+0x10/0x10
      ? irqentry_exit+0xbe/0x820
      ? srso_alias_return_thunk+0x5/0xfbef5
      ? trace_hardirqs_on_prepare+0x11d/0x150
      ? srso_alias_return_thunk+0x5/0xfbef5
      do_syscall_64+0x114/0x620
      entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-[Register dump omitted.]
-
+    [User register dump omitted.]
      </TASK>
 
-    Allocated by task 491:
+    Allocated by task 489:
      kasan_save_stack+0x33/0x60
      kasan_save_track+0x14/0x30
      __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x28d/0x610
-     ocfs2_allocate_refcount_tree+0x49/0x1a0
-     ocfs2_create_refcount_tree+0x5d7/0x1630
-     ocfs2_attach_refcount_tree+0x57d/0x1100
-     __ocfs2_reflink.isra.0+0x1c4/0x1940
-     ocfs2_reflink+0x501/0x9b0
-     ocfs2_reflink_ioctl+0x6b2/0x920
-     ocfs2_ioctl+0x538/0x640
-     __x64_sys_ioctl+0x163/0x1d0
+     __kmalloc_noprof+0x2de/0x780
+     __d_alloc+0x5fc/0x8c0
+     d_alloc_parallel+0x106/0x11d0
+     lookup_open+0x3ff/0x13e0
+     path_openat+0x95e/0x2020
+     do_file_open+0x21e/0x470
+     do_sys_openat2+0xf4/0x1b0
+     __x64_sys_openat+0x136/0x1e0
      do_syscall_64+0x114/0x620
      entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-    Freed by task 498:
+    Freed by task 0:
      kasan_save_stack+0x33/0x60
      kasan_save_track+0x14/0x30
      kasan_save_free_info+0x3b/0x60
      __kasan_slab_free+0x5f/0x80
-     kfree+0x308/0x580
-     ocfs2_lock_refcount_tree+0x672/0x9b0
-     ocfs2_xattr_set+0x72c/0x2530
-     ocfs2_xattr_user_set+0xaf/0xf0
-     __vfs_setxattr+0x143/0x1b0
-     __vfs_setxattr_noperm+0x112/0x5b0
-     __vfs_setxattr_locked+0xfe/0x2b0
-     vfs_setxattr+0x13c/0x370
-     do_setxattr+0x128/0x170
-     filename_setxattr+0x147/0x190
-     path_setxattrat+0x1ac/0x260
-     __x64_sys_setxattr+0xcb/0x140
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+     __rcu_free_sheaf_prepare+0x65/0x2a0
+     rcu_free_sheaf_nobarn+0x1d/0x50
+     rcu_core+0x6be/0x1ed0
+     handle_softirqs+0x1fa/0x8d0
+     __irq_exit_rcu+0x113/0x1e0
+     irq_exit_rcu+0xe/0x20
+     sysvec_apic_timer_interrupt+0x6c/0x80
+     asm_sysvec_apic_timer_interrupt+0x1a/0x20
 
-    The buggy address belongs to the object at ffff888117212800
-     which belongs to the cache kmalloc-1k of size 1024
-    The buggy address is located 32 bytes inside of
-     freed 1024-byte region [ffff888117212800, ffff888117212c00)
+    The buggy address belongs to the object at ffff88810a5b2b00
+     which belongs to the cache kmalloc-rcl-192 of size 192
+    The buggy address is located 24 bytes inside of
+     freed 192-byte region [ffff88810a5b2b00, ffff88810a5b2bc0)
 
-[Page and memory dumps omitted.]
+    [Page and shadow-memory dumps omitted.]
 
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0037-v4-9f1a261dfbc341721689@gmail.com
-Fixes: 374a263e790c ("ocfs2: Add refcount tree lock mechanism.")
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-0@gmail.com
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-1@gmail.com
+Fixes: 468eedde23d6 ("ocfs2: Remove mlog(0) from fs/ocfs2/file.c")
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
@@ -230,72 +212,161 @@ Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Tao Ma <tao.ma@oracle.com>
 Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
 Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/refcounttree.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/ocfs2/file.c |  102 +++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 65 insertions(+), 37 deletions(-)
 
---- a/fs/ocfs2/refcounttree.c
-+++ b/fs/ocfs2/refcounttree.c
-@@ -348,8 +348,10 @@ ocfs2_allocate_refcount_tree(struct ocfs
- 	return new;
- }
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -84,10 +84,17 @@ static int ocfs2_file_open(struct inode
+ 	int mode = file->f_flags;
+ 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
  
-+/* Callers without the refcount tree lock must request a reference. */
- static int ocfs2_get_refcount_tree(struct ocfs2_super *osb, u64 rf_blkno,
--				   struct ocfs2_refcount_tree **ret_tree)
-+				   struct ocfs2_refcount_tree **ret_tree,
-+				   bool get_ref)
- {
- 	int ret = 0;
- 	struct ocfs2_refcount_tree *tree, *new = NULL;
-@@ -406,6 +408,8 @@ static int ocfs2_get_refcount_tree(struc
- 	new = NULL;
+-	trace_ocfs2_file_open(inode, file, file->f_path.dentry,
+-			      (unsigned long long)oi->ip_blkno,
+-			      file->f_path.dentry->d_name.len,
+-			      file->f_path.dentry->d_name.name, mode);
++	if (trace_ocfs2_file_open_enabled()) {
++		struct dentry *dentry = file->f_path.dentry;
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_file_open(inode, file, dentry,
++				      oi->ip_blkno,
++				      name.name.len, name.name.name,
++				      mode);
++		release_dentry_name_snapshot(&name);
++	}
  
- out:
-+	if (get_ref)
-+		ocfs2_refcount_tree_get(tree);
- 	*ret_tree = tree;
+ 	if (file->f_mode & FMODE_WRITE) {
+ 		status = dquot_initialize(inode);
+@@ -173,11 +180,17 @@ static int ocfs2_sync_file(struct file *
+ 	tid_t commit_tid;
+ 	bool needs_barrier = false;
  
- 	osb->osb_ref_tree_lru = tree;
-@@ -479,14 +483,12 @@ int ocfs2_lock_refcount_tree(struct ocfs
- 	struct ocfs2_refcount_block *rb;
+-	trace_ocfs2_sync_file(inode, file, file->f_path.dentry,
+-			      oi->ip_blkno,
+-			      file->f_path.dentry->d_name.len,
+-			      file->f_path.dentry->d_name.name,
+-			      (unsigned long long)datasync);
++	if (trace_ocfs2_sync_file_enabled()) {
++		struct dentry *dentry = file->f_path.dentry;
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_sync_file(inode, file, dentry,
++				      oi->ip_blkno,
++				      name.name.len, name.name.name,
++				      (unsigned long long)datasync);
++		release_dentry_name_snapshot(&name);
++	}
  
- again:
--	ret = ocfs2_get_refcount_tree(osb, ref_blkno, &tree);
-+	ret = ocfs2_get_refcount_tree(osb, ref_blkno, &tree, true);
- 	if (ret) {
- 		mlog_errno(ret);
- 		return ret;
- 	}
+ 	if (ocfs2_is_hard_readonly(osb) || ocfs2_is_soft_readonly(osb))
+ 		return -EROFS;
+@@ -1126,15 +1139,19 @@ int ocfs2_setattr(struct mnt_idmap *idma
+ 	int had_lock;
+ 	struct ocfs2_lock_holder oh;
  
--	ocfs2_refcount_tree_get(tree);
+-	trace_ocfs2_setattr(inode, dentry,
+-			    (unsigned long long)OCFS2_I(inode)->ip_blkno,
+-			    dentry->d_name.len, dentry->d_name.name,
+-			    attr->ia_valid,
+-				attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
+-				attr->ia_valid & ATTR_UID ?
++	if (trace_ocfs2_setattr_enabled()) {
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_setattr(inode, dentry, OCFS2_I(inode)->ip_blkno,
++				    name.name.len, name.name.name, attr->ia_valid,
++				    attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
++				    attr->ia_valid & ATTR_UID ?
+ 					from_kuid(&init_user_ns, attr->ia_uid) : 0,
+-				attr->ia_valid & ATTR_GID ?
++				    attr->ia_valid & ATTR_GID ?
+ 					from_kgid(&init_user_ns, attr->ia_gid) : 0);
++		release_dentry_name_snapshot(&name);
++	}
+ 
+ 	/* ensuring we don't even attempt to truncate a symlink */
+ 	if (S_ISLNK(inode->i_mode))
+@@ -2380,11 +2397,17 @@ static ssize_t ocfs2_file_write_iter(str
+ 	int direct_io = iocb->ki_flags & IOCB_DIRECT ? 1 : 0;
+ 	int nowait = iocb->ki_flags & IOCB_NOWAIT ? 1 : 0;
+ 
+-	trace_ocfs2_file_write_iter(inode, file, file->f_path.dentry,
+-		(unsigned long long)OCFS2_I(inode)->ip_blkno,
+-		file->f_path.dentry->d_name.len,
+-		file->f_path.dentry->d_name.name,
+-		(unsigned int)from->nr_segs);	/* GRRRRR */
++	if (trace_ocfs2_file_write_iter_enabled()) {
++		struct dentry *dentry = file->f_path.dentry;
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_file_write_iter(inode, file, dentry,
++					    OCFS2_I(inode)->ip_blkno,
++					    name.name.len, name.name.name,
++					    (unsigned int)from->nr_segs);
++		release_dentry_name_snapshot(&name);
++	}
+ 
+ 	if (!direct_io && nowait)
+ 		return -EOPNOTSUPP;
+@@ -2530,17 +2553,16 @@ static ssize_t ocfs2_file_read_iter(stru
+ 	int direct_io = iocb->ki_flags & IOCB_DIRECT ? 1 : 0;
+ 	int nowait = iocb->ki_flags & IOCB_NOWAIT ? 1 : 0;
+ 
+-	trace_ocfs2_file_read_iter(inode, filp, filp->f_path.dentry,
+-			(unsigned long long)OCFS2_I(inode)->ip_blkno,
+-			filp->f_path.dentry->d_name.len,
+-			filp->f_path.dentry->d_name.name,
+-			to->nr_segs);	/* GRRRRR */
 -
- 	ret = __ocfs2_lock_refcount_tree(osb, tree, rw);
- 	if (ret) {
- 		mlog_errno(ret);
-@@ -2323,7 +2325,8 @@ int ocfs2_decrease_refcount(struct inode
- 		goto out;
+-
+-	if (!inode) {
+-		ret = -EINVAL;
+-		mlog_errno(ret);
+-		goto bail;
++	if (trace_ocfs2_file_read_iter_enabled()) {
++		struct dentry *dentry = filp->f_path.dentry;
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_file_read_iter(inode, filp, dentry,
++					   OCFS2_I(inode)->ip_blkno,
++					   name.name.len, name.name.name,
++					   to->nr_segs);
++		release_dentry_name_snapshot(&name);
  	}
  
--	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb), ref_blkno, &tree);
-+	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb), ref_blkno,
-+				      &tree, false);
- 	if (ret) {
- 		mlog_errno(ret);
- 		goto out;
-@@ -2558,7 +2561,7 @@ int ocfs2_prepare_refcount_change_for_de
- 	BUG_ON(!ocfs2_is_refcount_inode(inode));
+ 	if (!direct_io && nowait)
+@@ -2612,11 +2634,17 @@ static ssize_t ocfs2_file_splice_read(st
+ 	ssize_t ret = 0;
+ 	int lock_level = 0;
  
- 	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb),
--				      refcount_loc, &tree);
-+				      refcount_loc, &tree, false);
- 	if (ret) {
- 		mlog_errno(ret);
- 		goto out;
+-	trace_ocfs2_file_splice_read(inode, in, in->f_path.dentry,
+-				     (unsigned long long)OCFS2_I(inode)->ip_blkno,
+-				     in->f_path.dentry->d_name.len,
+-				     in->f_path.dentry->d_name.name,
+-				     flags);
++	if (trace_ocfs2_file_splice_read_enabled()) {
++		struct dentry *dentry = in->f_path.dentry;
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_file_splice_read(inode, in, dentry,
++					     OCFS2_I(inode)->ip_blkno,
++					     name.name.len, name.name.name,
++					     flags);
++		release_dentry_name_snapshot(&name);
++	}
+ 
+ 	/*
+ 	 * We're fine letting folks race truncates and extending writes with
 
 
