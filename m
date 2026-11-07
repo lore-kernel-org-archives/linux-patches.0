@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061096;
-	b=KiBY4FO8qJ1whBgooGpYf7WVzhUyVyEkjSSNtMs750dAssu4jbKV7UUND7WYynek2UoI
-	 gEt2xDLwmspdEzdxxsywayWtlqdQk95EZ4bJIeJsx7dvjkatYt6cMh8vVue8jyRl0bC8Q
-	 wWMIMQFoP7lnoO0ZuiLQzckekXost1s6BGk0rL64pVFxULsgdBT14Vpga44602CVdQ6Fj
-	 tlxU97pE59AFGkjEdHtXfSx20P2jDicY41UfjMGd5tpZeTHrvRoTCz50HJD6d2546qpkc
-	 gdHEhQUpATIf3IFoYZrKfd49xuZRtAejdQhSwcOMUWiGYsZC/DLRvjVwGQOHFh1GkFQ==
+	t=1794061097;
+	b=OCsjYI11AdBLM2djITsudclH9KOvPUslBxgAL4ucdfZKXVSTJYuqe8TOdak1JIIiP+rY
+	 DAvWWNRdl/nzG8zXmRnHLVY/sdgq+8OlIQgD+o+JTeOxk8sKOPjW9x2+qgDAH31DCGYM5
+	 oFvKKnGNqX3k3Di7YLvlSNMNPiszV0lYW6eFGSpIAsAk6x2jayIC39UtFhRe+ZlZ4D5a2
+	 C9KaAozXMvrqx6tScut/J8ei+4yhQWDgtpp74y22nZR14Tj/ehI6o088Jcy19WW1ulskH
+	 Ch3otblABM2IpQhOksoEPeYK5YF6Y0rrSXGd1eE8FwCHrlArhJ79yi3GnT4FyIxo4ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EJ9/TVVBuA7N507wpEbRkFdbOfiFxYaI7xLQWAKu/Aw=;
-	b=2fIdIhMfGaglWj6yacPhj+iSZeOc57D9nYEKvmPEMQCDQSECSA6MsFrFdjgTBiAvDWd4
-	 9ATOCjS4uZL+gzuX9RO0z7Gfzl41oNm0X0/BdyyI+bz89zo/qr71KLDXWrn34wdyDXnBp
-	 ytxDjNTA8Ox0E7e+f07NX8tN1vJg1i3BMukO5K3Po3cL/+zNi7yJS93nrP3B35ltTwTAn
-	 l7w3mDsSZ+mp6LOd4l+SUiqHFocGKTSXE7tjJO0N/kd7RClj9SY9h8g07qulhSaKgS96b
-	 7P5vnVe0uV+SDsm6HoQ4e3PbxAOb9SQTkBTGRPmRsvjBN3gBaE1nCWhIRNRb8d7L6oA==
+	bh=qURZPpFr78LVU6wb5nyoX3EdNgA2OGoAGi4Z5TWWgs0=;
+	b=cZi5npL4mW2wweinTuK66athUP4aJGLZYxPhMPArjCAtyezLb55TQbfnYSjmGOrHzc5c
+	 KfOd+UzV4w2WmFnivn+Z4Lx5qmcPd4+sqy7rzG4uZAXTdaS5Rm+ceNetgMwXb1eQpjLSO
+	 QgccLnLD5ZNDVuYzcahM8SsxJU1ji3lz7PCJx5A5MQ+d32PT+uulCNFwpmWtJDi79s3DX
+	 AXN6LPzCgGzWBfP09w1HsFIUx57Rp2NN4WJ9ajeHnAukVUd3FNLOtQSKyTmwqAocCO3bL
+	 KXNsMYutM8xXAfxJOsv14f/ZzNKn3n8pyq1G2SEhRiMi4cM5eRDvO9K6cvfDdstw35A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bz4S3RuL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="acgJrvV/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C477606D837;
-	Sat,  7 Nov 2026 14:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B2C606D837;
+	Sat,  7 Nov 2026 14:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bz4S3RuL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D441F008A1;
-	Sat,  7 Nov 2026 14:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=acgJrvV/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E541F008A1;
+	Sat,  7 Nov 2026 14:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061095;
-	bh=EJ9/TVVBuA7N507wpEbRkFdbOfiFxYaI7xLQWAKu/Aw=;
+	s=korg; t=1794061097;
+	bh=qURZPpFr78LVU6wb5nyoX3EdNgA2OGoAGi4Z5TWWgs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bz4S3RuLPSCM3yvUzSOEY273NnmxzkIF+RGhcKmIIl5nYK8zoGMKFZoWAjUCn7YjW
-	 dHK/GaLM4SW4oh0cKPCAfT8gYqCAbc+XE0/lHM+3pdNLqnvtRwXoVsJV0c2HL+vtMU
-	 ZhpQB8LnP0YPRHiY/LCmwTXazQZLOVqhF4uy9+hk=
+	b=acgJrvV/+A452Vqpddkbar1dx/YBz9KYOfuviDY9J7c0z+freeDl96B5iwc6Xd4Il
+	 bb1Ydm8Mu34SQY5ayN9fm5Z0skl3DtA9/ATJ+UPHoRjw2sC/2WseArbuNB0HBFHUV9
+	 DWOBEcBgD7g1CFtZW1ryA4n1GI/0AzHRcdakx3vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0377/1536] ksmbd: enable TCP keepalive for accepted connections
-Date: Sat,  7 Nov 2026 08:39:53 -0500
-Message-ID: <20261107135008.219619310@linuxfoundation.org>
+Subject: [PATCH 6.12 0378/1536] sched_ext/scx_flatcg: expire cached hweights on weight changes
+Date: Sat,  7 Nov 2026 08:39:54 -0500
+Message-ID: <20261107135008.245050605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,43 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 56549c18a4f75309161ca780feaa4d17904e3ee9 ]
+[ Upstream commit 94c20e1fb334c2082b443c4470a86ad982f67282 ]
 
-A client that disappears without sending a FIN or RST can leave its
-ksmbd connection in ESTABLISHED indefinitely. ksmbd sets a socket
-receive timeout, but the connection receive loop retries timeout errors
-without a limit, so the connection remains in conn_list and consumes the
-per-IP connection quota.
+fcg_cgroup_set_weight() updates cgc->weight and the parent's
+child_weight_sum but doesn't bump hweight_gen, so the hweights cached by
+cgrp_refresh_hweight() stay stale until some task activation bumps the
+generation. For cgroups whose tasks never go through a 0->n runnable
+transition (e.g. persistently busy ones), a cpu.weight change never
+propagates to scheduling at all.
 
-Enable SO_KEEPALIVE on accepted TCP sockets so the TCP stack can detect a
-silent peer failure. The keepalive idle time, interval, and probe count
-remain controlled by the existing TCP sysctl settings.
+Bump hweight_gen on weight changes so the next refresh recomputes with
+the new weight.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Verified on a flatcg VM: a live cpu.weight 100->800 change on a busy
+cgroup leaves HWT update at 0 and the distribution unchanged; with it,
+hweight_gen increments and the refresh recomputes.
+
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_tcp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/sched_ext/scx_flatcg.bpf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
-index 902a6265e323c..2356edc0e29e7 100644
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -325,6 +325,12 @@ static int ksmbd_kthread_fn(void *p)
- 		ksmbd_debug(CONN, "connect success: accepted new connection\n");
- 		client_sk->sk->sk_rcvtimeo = KSMBD_TCP_RECV_TIMEOUT;
- 		client_sk->sk->sk_sndtimeo = KSMBD_TCP_SEND_TIMEOUT;
-+		/*
-+		 * Detect peers that disappear without sending a FIN or RST.
-+		 * Otherwise the connection handler can retry receive timeouts
-+		 * indefinitely and keep the connection in conn_list.
-+		 */
-+		sock_set_keepalive(client_sk->sk);
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index 05e3b4495ac5c..d9cd322210799 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -606,6 +606,9 @@ void BPF_STRUCT_OPS(fcg_cgroup_set_weight, struct cgroup *cgrp, u32 weight)
+ 		pcgc->child_weight_sum += (s64)weight - cgc->weight;
+ 	cgc->weight = weight;
+ 	bpf_spin_unlock(&cgv_tree_lock);
++
++	/* expire cached hweights so the new weight propagates */
++	__sync_fetch_and_add(&hweight_gen, 1);
+ }
  
- 		ksmbd_tcp_new_connection(client_sk);
- 	}
+ static bool try_pick_next_cgroup(u64 *cgidp)
 -- 
 2.53.0
 
