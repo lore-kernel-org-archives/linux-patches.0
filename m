@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060844;
-	b=eCC6b2OZ/o1krMtawjFg5i56KV6SrwqM3hM2+lyLOaz3QXa73FLAqG5PSrlcrVlimJeS
-	 lX2R/WHHckDZJ5+p7NaZoc8vuHVT8V4R7zBpZH/vczVdOq8HAjXY8G/eNHImv8R0enBW9
-	 CStf21A00onp9/TyGN0Hba8Su+OyohVJDfNImnKsKQVtecpv1BhxPiebjbvhUIDprITgq
-	 mEk1phvUpjO9icPPu+h/VDPw5UMA9zXJ2sjA4TEUOiO/w4aj6nchHIMNUMm0TJk5Xfxoh
-	 /0x05pOVo2P5+D2Fhg24blPyrTv7bONICPcPj6ijXgvYFQmGs5NHw8ENU8D66Qh3zQA==
+	t=1794060846;
+	b=uImGaTfTPwZfMcBzAKUDlZrGga+G1dJFBAR4IvJHRHW2gmQhYQi9MtInpVwjH0vaj1Wg
+	 LUoJl2SJbCqtVHzq1oJQExVZFyXr0gynfdm+Lacuk/wGV2ljnNZDwG3SRRgHBSLXmvWCQ
+	 mKbjhrNI3cY0ZdBgvIgeBSttl3uEhNf/PSuq/qZisfOKn29QHKCli+saTsbAZ85kp4oUA
+	 au0CK4LNlmhf3UpE4c8mTseQef7/ZR7AMmQ05EfLP8dmhTgkLorAg+Xi8gV5q08fvFtwo
+	 fzXRSqPc4qwRGdqJEBTfKl0MaiDnS/ZjPj0PrxUVmRrwB1AapKsTXA9NMkKBnO15eFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060846;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7CLNIrsXCkV6M/iqzFDEix9XrDIXTedi2Em4ymJ/CT4=;
-	b=sJgauiiNky2uq0nMWHPgqSMoUNIKZJgofn5jdv2nNEA79b4qKpHJ0xVuEpt09wwz0byx
-	 5OuFnHe9g0pQpvhmYU6cbQ0KHIPWSbwXAWaZWSeEE+G/XcRQfioYMuPptZ8qWEnuUsg5q
-	 fIANd3Js8hvMclCS78UVN5mVVlDoC5PKgiD+5wLEJ+RPybVW3wvPUsSYEFWedyN3SZVFw
-	 qoKqN1TdBoHlbzW9IQu2GEUORl5OVppo/BDVciojbCDLu3fzBZ7CkiFogiiUMircK+AS4
-	 Tj0D32rW+pVdHn7EcmoOnO3NdJcEjyl/nsD3WH3/4N8Sm6AR+SnKSC1eFPapsamn05A==
+	bh=hBOUuQ/arzCDXnql907aePnn9QWnLXc3M5YZjIpqFl0=;
+	b=uM+wbphjtOFB+pKxY3q3auggMJHQLnhSHlBNQ13eckDStRlN+aT4Wu1RRgfoFXVHS60j
+	 TYjhLBoVgnE3p1kc2medOSAC/Mirgp/PNrNcKCEPutOyGgvHdsysyMEPyyo+OH/s6Fzvd
+	 HwI2aI04IifzBMXQJmMKRztuPBr2xcpO8uk5URVLui9H4twFlar4gz15bQV+oB7UX5Kda
+	 pbbMvCdUfUAhUEU9lCTVfMaWi2qfJEtKJSCwkHBEdjF2Ff8tNATfkbuAIj70ZP98MG7mu
+	 +p4baeIN7HyIdnfedXVy1w56XsApFnMBR7vIJ/dmqbX69wGkNFMo8Yb1JB5/uLO2nog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPqikrDO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+RqJr6Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF95606A330;
-	Sat,  7 Nov 2026 14:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49C6606A330;
+	Sat,  7 Nov 2026 14:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPqikrDO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9121F0089F;
-	Sat,  7 Nov 2026 14:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+RqJr6Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3EA1F0089F;
+	Sat,  7 Nov 2026 14:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060844;
-	bh=7CLNIrsXCkV6M/iqzFDEix9XrDIXTedi2Em4ymJ/CT4=;
+	s=korg; t=1794060845;
+	bh=hBOUuQ/arzCDXnql907aePnn9QWnLXc3M5YZjIpqFl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPqikrDOwuHEPMkOI5RighMOMIi1UQ1aPDurQd/slF7GWMwWPNmFhkULFLw+RC29c
-	 CjlfI7D4pyQk7WTqh3V1mv3hD809I/295hI3zoxkYe1oXm7M1D8ZCGA2L6CAjWkoeI
-	 6rWN0KK6QOx01mrWnvtYah5B8qXmzR08aYYGc78A=
+	b=Q+RqJr6QKEGLa/KELRP1b5tq8ERQIhnCUDKXf3VvgIfAFOo9RHhCMzhqa+GrZ+Ey9
+	 3PUkjU85HRJFGGdopU6sZjdIaMABdO6YKeXTMpXGw/bOYtGWn6sy77jUPlh4R/aIwZ
+	 jP42+EWA3zP/Zbqm0VwJ/E+5996S/8m2rLzoI5VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	sashiko-bot@kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0233/1536] fs/ntfs3: Fix memory leak in indx_find_sort()
-Date: Sat,  7 Nov 2026 08:37:29 -0500
-Message-ID: <20261107135004.217144347@linuxfoundation.org>
+Subject: [PATCH 6.12 0234/1536] mfd: ipaq-micro: Fix out-of-bounds stack read in ipaq_micro_str
+Date: Sat,  7 Nov 2026 08:37:30 -0500
+Message-ID: <20261107135004.246099685@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,34 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 194491be54e1c9e4d29d3ee777b05ff031c4b670 ]
+[ Upstream commit da3a98c941753255418616d249e5b40db0927c26 ]
 
-When popping a level from the index lookup stack, indx_find_sort() frees
-the struct indx_node but not the index buffer it owns. Every call that
-descends and then pops a level leaks that allocation.
+ipaq_micro_str() decodes a UTF-16LE string into an ASCII string.
+It copies characters to a stack buffer retstr, but fails to
+null-terminate it. When kstrdup() is called on retstr, it can read past
+the buffer into uninitialized stack memory, potentially leaking stack
+contents.
 
-Free n->index before freeing the node itself.
+Fix this by initializing retstr to zero.
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reported-by: sashiko-bot@kernel.org
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/aintJF4X5tWDW-Ej@google.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/index.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/ipaq-micro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index edfcd28573ef9..03ae5a817c1b4 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1325,6 +1325,7 @@ int indx_find_sort(struct ntfs_index *indx, struct ntfs_inode *ni,
- 		/* Pop one level. */
- 		if (n) {
- 			fnd_pop(fnd);
-+			kfree(n->index);
- 			kfree(n);
- 		}
+diff --git a/drivers/mfd/ipaq-micro.c b/drivers/mfd/ipaq-micro.c
+index c964ea6539aa6..9ac26a17b6202 100644
+--- a/drivers/mfd/ipaq-micro.c
++++ b/drivers/mfd/ipaq-micro.c
+@@ -219,7 +219,7 @@ static void ipaq_micro_eeprom_read(struct ipaq_micro *micro,
  
+ static char *ipaq_micro_str(u8 *wchar, u8 len)
+ {
+-	char retstr[256];
++	char retstr[256] = { 0 };
+ 	u8 i;
+ 
+ 	for (i = 0; i < len / 2; i++)
 -- 
 2.53.0
 
