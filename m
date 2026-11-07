@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062290;
-	b=VHnACiLL+jAsfG2hPhZAJebMbWQWayJ6qOPrvHsl/wt2hqqBJVrFM9CqL5FfM2KJ0mjw
-	 nOR4BqSbc9/pbBKjpQgyLGCrorBLckAap3k/oVIVyIM2xqZvpBo/WE19mhwILk9JXAkYP
-	 OgLGORvHQdDX0c+/YteCcVopEhTwr6Uhxa02Y+fAvOzMuvhkPCH4jfwjL3K3EcjlrGP7H
-	 6LwpcL8R4uSDhYppKatdLIrSGcwrB31EX7AHvRXMrl0Ry5onOmxWA5ncbeasTc0khPgs9
-	 wMVBPUMs4Z2SeuxuvGzX5469LMJP9XXkOMY16XaJmkOCLTtAovybvqcMEcQeXvdUKFg==
+	t=1794062292;
+	b=WrzHa2Ozb7RSoZEc739KszuStPA6qIhPUImiKlZiAUYHCQnx+P02j4l+Mog39OKGvv2M
+	 vb4Ihr8gU8X0aUgdA3HHjxo2XwAlJGIVTh0vD88jRLR0tbO210RK5WmP3dRxf0qkgXPph
+	 pZ9t8ux4lI6qj7HQIZHgoXjP6BCTTmy3hibWbX9CvzLZ2WzavhzP1nRn6IFt/+vQs+dxA
+	 GVNXTqRsa6sdu4FV+sv8ThtupWoKUdC0YUbtCD0LU2XmpmVrmWAcwNFKnDmhx/YRm16W4
+	 a/BYy4OnTsMYtQHMCf/TSbgrbaI6ZshXb0s26tqqBqQjTI/AeGZIdlcDPmyT2R0tzUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062290;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FOK+AW0w6rZ0bo9sI61LUWH+fOaNsztd4YU0VgrW8HM=;
-	b=pM6FwdvIElDgSv0AxZIN0YCQlMRbhWzgrrHCcEwybqtu0XN5db7mWQbYL/W7EFjpfuN2
-	 cO58FbbcfhwhNVO9kjpoN/olmDdwvzHMPq3bw/6COs2ISDLg0jViTujPMr7N+YdWHV1DG
-	 6cTykQrv4184LGJtBTj5Nw/9wUy01/mA2XgbBLSESnN7ZdefPha1+7b9VnaxSFYoIF6Hs
-	 uXRCHr+ITGoOhnpDDvz6LLv/c1/F0TFCg1WCkhpSRqCnTLx/JpiYfXlg+eI+vn+p8Jd5/
-	 h41O91e1whgzL0CIOUI/OxKJrfcwG5p8tbEf04xnlLMGy23V/SAceCL3WIS+t/OPkFg==
+	bh=4F06CyB08Ap5yYY3WzdBXY3Gp+ihQ1drsD6TGLLwc/I=;
+	b=hlCGCaf+9/LPkKJt8m5Y4LdolLDaWylB/jQDE9Zc5jLOaqagpKcRE2g2Nj+c2+q98CWG
+	 pSazuMx3BTHC+dKtjfaWNN5xDTlz+9asGhei7eY2tKMzjMu1t6XMpZj/pnGArwIPtC539
+	 kkRrhtW8ebxMXZDLq//ZdJ4isSvCn/6p3IXST47Px4PTJtlZwBb+hEbeY9k8ZncWoz6vF
+	 kdhYd3wBCvySXp4AYLS8HykpJoABIddi7RhUrjY1yIAD511p8u0iUC3799z0qEXB2Jj+O
+	 2Tn1woEbPTW4OSeCmVVYxNhkMoPSOrzuuFRKZQJtwc9mkxGaw40sawRgB5+kPx7I5JQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=subJqXBO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r++2gLvO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD9E606D816;
-	Sat,  7 Nov 2026 14:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9842606D816;
+	Sat,  7 Nov 2026 14:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=subJqXBO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7021F0089F;
-	Sat,  7 Nov 2026 14:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r++2gLvO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD5F1F0089F;
+	Sat,  7 Nov 2026 14:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062290;
-	bh=FOK+AW0w6rZ0bo9sI61LUWH+fOaNsztd4YU0VgrW8HM=;
+	s=korg; t=1794062291;
+	bh=4F06CyB08Ap5yYY3WzdBXY3Gp+ihQ1drsD6TGLLwc/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=subJqXBO5s6J+74iCIPPjad21npoETLmCdf+LHL2XvYKgq7MJXM4Y+xxbZgg9S2Zf
-	 gyTRr25UfARQVgjkonJCa49yKxJUaU09u/U+f3QYpFgX0UI1TTqFNFkuvNNvKGnmXm
-	 NpjDJl7zanRrxC/pJIO8zRE0zhapM+41n2bkZWIg=
+	b=r++2gLvO7DIdwFnTZ0SUrmrcLk5dPCOpIz59FjXMQo2b5sw4WEak5Ut+ifDjX/HNG
+	 REs+MLUwNKTRjwZK7eWVGCilt6terY2wp+awScY8w/yi/YKcn22WkMGcddWlTBsuej
+	 h6vxKFj/Si+pioo86vMG5K8DEUodcQe1ohHcPkqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Oliver Neukum <oliver@neukum.org>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1227/1536] mailbox: qcom-ipcc: Guard against NULL con_priv in send_data()
-Date: Sat,  7 Nov 2026 08:54:03 -0500
-Message-ID: <20261107135032.220652775@linuxfoundation.org>
+Subject: [PATCH 6.12 1228/1536] USB: serial: sierra: fix urb leak on write completion
+Date: Sat,  7 Nov 2026 08:54:04 -0500
+Message-ID: <20261107135032.249149737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,68 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 7b3cc361b5942ac600f38e5dff7aed009be34964 ]
+[ Upstream commit e7daa54802c566ed3f22e81513f84c8c9197c5d1 ]
 
-qcom_ipcc_mbox_shutdown() clears chan->con_priv with no locking.
-qcom_ipcc_mbox_send_data() dereferences the same field without
-checking for NULL first, so a send racing a concurrent shutdown can
-crash:
+Make sure to drop the reference taken by usb_anchor_urb() also on
+successful submission of delayed write URBs during runtime resume to
+prevent them from leaking on completion.
 
-  mchan = chan->con_priv;
-  ...
-  hwirq = qcom_ipcc_get_hwirq(mchan->client_id, mchan->signal_id);
-
-Add the same NULL guard mbox_send_message() already uses for
-chan->cl, and bail out before dereferencing a cleared con_priv.
-
-To close the remaining race where send_data() reads con_priv a moment
-before a concurrent shutdown clears it, acquire the spinlock in
-qcom_ipcc_mbox_shutdown() using the modern guard(spinlock_irqsave)
-primitive before setting con_priv to NULL.
-
-Fixes: d6fbfdbc1274 ("mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion")
-Cc: stable@vger.kernel.org
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: e6929a9020ac ("USB: support for autosuspend in sierra while online")
+Reported-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/20260916165352.2085480-1-vulab@iscas.ac.cn
+Cc: stable@vger.kernel.org	# 2.6.32
+Cc: Oliver Neukum <oliver@neukum.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/qcom-ipcc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/serial/sierra.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index 6465c444dfd3d..9e7c82c7af0a4 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -10,6 +10,7 @@
- #include <linux/mailbox_controller.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/spinlock.h>
+diff --git a/drivers/usb/serial/sierra.c b/drivers/usb/serial/sierra.c
+index 64a2e0bb5723e..abeef92e24817 100644
+--- a/drivers/usb/serial/sierra.c
++++ b/drivers/usb/serial/sierra.c
+@@ -972,12 +972,13 @@ static int sierra_submit_delayed_urbs(struct usb_serial_port *port)
+ 			intfdata->in_flight--;
+ 			usb_unanchor_urb(urb);
+ 			kfree(urb->transfer_buffer);
+-			usb_free_urb(urb);
  
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- 
-@@ -149,6 +150,9 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
- 	struct qcom_ipcc_chan_info *mchan = chan->con_priv;
- 	u32 hwirq;
- 
-+	if (!mchan)
-+		return -EINVAL;
+ 			spin_lock(&portdata->lock);
+ 			portdata->outstanding_urbs--;
+ 			spin_unlock(&portdata->lock);
+ 		}
 +
- 	hwirq = qcom_ipcc_get_hwirq(mchan->client_id, mchan->signal_id);
- 	writel(hwirq, ipcc->base + IPCC_REG_SEND_ID);
++		usb_put_urb(urb);
+ 	}
  
-@@ -157,6 +161,8 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
- 
- static void qcom_ipcc_mbox_shutdown(struct mbox_chan *chan)
- {
-+	guard(spinlock_irqsave)(&chan->lock);
-+
- 	chan->con_priv = NULL;
- }
- 
+ 	if (ec)
 -- 
 2.53.0
 
