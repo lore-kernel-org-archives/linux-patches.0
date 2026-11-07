@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061750;
-	b=ygFfSLvclZ+Y8UhgYnYqMxXGYZn/CZbrkzCAHdracKpU/GAWFKjgh5LvDllDFI3BPJcE
-	 BYduurnx3eNGe6NNJ6WXCVGmizpF3JAAgX5NFcnmuMi0OVaCiGKZaqXFmNMqvhA/fBbXS
-	 QHVSb2xzsTNl5Sal0Ym2HgW10Vy5ZEnD15H90Y3giKtpp+494qQZwG7leo7Lw6xrLzfty
-	 LOiH+q3QZb+iF56/H2Ly6EeeaGgCkaXkltm462u4gcJ+XMD1gMudEPZ5ctLjjQs16NGKy
-	 DicEzoEHXxe4lEuR4lVpna7L4mk2jycIVXRl4kPBfXbsqVOfBNMFvp7FBGkKsKR1Ecw==
+	t=1794061752;
+	b=dCZQf6a6CSO2j1aFq7mbfhdcBt9ZvRbm80qdJAFhon4qdGCwUZtdLY28HFhf89UGI9lS
+	 bDRtEKL+0qdTtT6qtqSaacHiwLXPpDGwfMUDrNNWaGtwiwVf8j+YzqdtVD/IHSx6iAo6O
+	 qGqML/tNMZETX7+OWW9+Ec0NdcliAYiGpp5wm88BF2M9gN0OovCTLCfdG8bhi0sicvLlE
+	 gLcwzql/ErBxzeZhgiA7ZhRBVJ52LJFXsXcdKTf3H8ITQVxgsA6S+NgAlxWQqZWB/HDEw
+	 5QIyo1E2WZBREGk0ze0isldKY7fUo5i3NMP2eKuEuECf8d0zGLQ2XwS7fkrs1p0+7+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061750;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061752;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UKITI4LdAkHCYxte+vMMO3QevbAJvG503U7ov7FrXuI=;
-	b=Da+aFsPo3oioqyAJtux0vU1bviCaeTyKahgBotosbJ4frBsIjL3ydlHvoptfMO280PsV
-	 0w6ttxtVFTUiJtaHQ4D9+sN1u5zDr9+YCmHXx8Fhb6hRPtKpukUfPKgCNxBbf9f0hF7at
-	 JMQx9Hb0jtKPuWDxAz9GcNFRRNPtd0L2E6JdOIn6bMA37d993QTe786ic5iK6OArmYI1D
-	 VC5GnN9ZP6uEM+ZVNc1qZLDJ07EdASWOWGdDw7vNXVevRxRh89h3RmX6dh4LBsd49dFqH
-	 ZxkfCoUKT/9YfdmZ4gvbc5ALQcf+0K3TtxsyS3uOlgwxWlO+g2kzOA+ZaErowwO5TIA==
+	bh=w++XAy6VixJZg3nZq3JZnnnzlqt5yRZgb/Cwq6OY7pI=;
+	b=JHQSAagMxWQlkkG7UuUMVm1keR68nFVjl4y0XexSQ0FiOjL5tVc9yvMNIEEWNiZVUrs9
+	 QKdREDwcn+z0NKd1YOR0GTY9WBL85DNfOrhCFWj6MqQTQQGWEOFI8OQKB7bQSFTESjkF6
+	 Z2IIyn+d3QtobjSGktUr+08a4uLKfmcASfypOG04KmBKq/AJAk5fyYypnwlcShjWpr3CK
+	 P9UQw1WdhSMSLc6oqmhGzxcb00OMWddzgNyiQANpjHhvxqVryPTOzoaxt+0c3cifKNKFq
+	 UkaexwpjaycA7BMjtdZ3ktqo8tRRGa7Go6yjzxO5hkyAQdOgu7zb9cKQrHFzuPprKaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HiAJX5/A";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iyc7eCVB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5647606A326;
-	Sat,  7 Nov 2026 14:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA536606A326;
+	Sat,  7 Nov 2026 14:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HiAJX5/A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49AF51F0089F;
-	Sat,  7 Nov 2026 14:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iyc7eCVB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910F21F008A1;
+	Sat,  7 Nov 2026 14:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061750;
-	bh=UKITI4LdAkHCYxte+vMMO3QevbAJvG503U7ov7FrXuI=;
+	s=korg; t=1794061751;
+	bh=w++XAy6VixJZg3nZq3JZnnnzlqt5yRZgb/Cwq6OY7pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HiAJX5/Av2Og9DM2ZR2Kpv4GqQgg7b8IsFJm7ygwfFlZSxsPZBg0JZZazdi3CV/wH
-	 IRMLom7dtWRfbrAvmCfCJkhmiOGYwyRV54nXGctmEnL9gGBFkGgS7Q22l3RnHUcgjn
-	 Rc03mOMfuLtKYoApO+J1hl0590zcZPJ7Y5hIQXnM=
+	b=iyc7eCVB7Hx/0R6+hOq8Cf/OdJ0tmlxqvbfZdDhFCmqjmvyYl3Zm8/V3t4L4RRR0M
+	 IXLhSGi52abj5DK0KWWDymj6GxmDnJKNmmoLi8/Zh0fuxzHyUcaPjCGfKe9Rj1Cu2k
+	 r85pTZUY8TnhXrfaLBEOKk5OqTP0uZwWrNCg/A5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Maier <dmnk@google.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 0751/1536] smb: client: fix slab-out-of-bounds write in id_mode_to_cifs_acl()
-Date: Sat,  7 Nov 2026 08:46:07 -0500
-Message-ID: <20261107135018.624229317@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 0742/1536] xfs: never reset the default quota timer
+Date: Sat,  7 Nov 2026 08:45:58 -0500
+Message-ID: <20261107135018.365449530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,63 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominik Maier <dmnk@google.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit a377a3645c7d0246af0bc4ef24db94bb2670bdde upstream.
+commit ddf4fe30c3fd7d37cf9bad3887ddb69984954cf4 upstream.
 
-In id_mode_to_cifs_acl(), while the chown branch reserves
-sizeof(struct smb_ntsd) + 2 * sizeof(struct smb_sid) (plus
-sizeof(struct smb_acl) and the worst-case ACE space after
-commit 0ee150794c75 ("smb: client: fix heap overflow in DACL owner/group
-rewrite")), the chmod branch only adds 2 * sizeof(struct smb_ace) or
-5 * sizeof(struct smb_ace) to secdesclen (or 1 * sizeof(struct smb_ace)
-on posix).
+LOLLM notices that xrep_quota_fix_timer doesn't check the dquot id,
+which means that it can inadvertently reset the default quota timer when
+we really meant to ensure that a (non-root) quota overage timeout has a
+sane timestamp.  Fix that.
 
-However, the chmod branch also invokes build_sec_desc() ->
-copy_sec_desc(), which unconditionally writes the Owner SID at
-pnntsd + sidsoffset and the Group SID at
-pnntsd + sidsoffset + sizeof(struct smb_sid) (2 * 68 = 136 bytes total),
-and set_chmod_dacl() always writes a struct smb_acl header (8 bytes)
-even when the source descriptor has dacloffset == 0. When a security
-descriptor has compact or overlapping Owner/Group SIDs (or
-dacloffset == 0), calling chmod() under-allocates pnntsd and writes past
-the end of the slab buffer.
-
-Reserve sizeof(struct smb_acl) + 2 * sizeof(struct smb_sid) (plus
-sizeof(struct smb_ntsd) on the posix path) in the chmod branch of
-id_mode_to_cifs_acl().
-
-Fixes: 7ee0b4c635c0 ("cifs: fix hardcoded default security descriptor length")
-Fixes: f5065508897a ("cifs: Retain old ACEs when converting between mode bits and ACL.")
-Assisted-by: ARTIST LLM
-Signed-off-by: Dominik Maier <dmnk@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: a5b91555403e3a ("xfs: repair quotas")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/xfs/scrub/quota_repair.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1771,12 +1771,15 @@ id_mode_to_cifs_acl(struct inode *inode,
+--- a/fs/xfs/scrub/quota_repair.c
++++ b/fs/xfs/scrub/quota_repair.c
+@@ -274,6 +274,9 @@ xrep_quota_fix_timer(
+ 	time64_t		new_timer;
+ 	uint32_t		t;
  
- 	/* Potentially, five new ACEs can be added to the ACL for U,G,O mapping */
- 	if (pnmode && *pnmode != NO_CHANGE_64) { /* chmod */
-+		nsecdesclen = sizeof(struct smb_acl) +
-+			2 * sizeof(struct smb_sid);
- 		if (posix)
--			nsecdesclen = 1 * sizeof(struct smb_ace);
-+			nsecdesclen += sizeof(struct smb_ntsd) +
-+				       sizeof(struct smb_ace);
- 		else if (mode_from_sid)
--			nsecdesclen = secdesclen + (2 * sizeof(struct smb_ace));
-+			nsecdesclen += secdesclen + 2 * sizeof(struct smb_ace);
- 		else /* cifsacl */
--			nsecdesclen = secdesclen + (5 * sizeof(struct smb_ace));
-+			nsecdesclen += secdesclen + 5 * sizeof(struct smb_ace);
- 	} else { /* chown */
- 		/* When ownership changes, changes new owner sid length could be different */
- 		nsecdesclen = sizeof(struct smb_ntsd) + (sizeof(struct smb_sid) * 2);
++	/* never reset the default quota timer */
++	if (ddq->d_id == 0)
++		return;
+ 	if (!soft || count <= soft || *timer != 0)
+ 		return;
+ 
 
 
