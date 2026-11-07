@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061091;
-	b=DOIzprKBZ3NjLNCDWHB6UUpUYiNT0szRqG9b9V9XVYrtmSZ8kHshgvoZ9/yJEELaa4Gl
-	 +DSu/bg0pMjTUuGTeS3wSWuNuTsdiuJ/tksvBDFtPbSW5GXeiYvRCRW/eqgQFgQajX8QB
-	 mF7+TUzv9Ze9vww8P3j9Z282oIWKqc1yPSPQ5ehfLk94h0LKUbCuFaAyvntpeBHYHKgUb
-	 uelSZ/oNfbmqB+f/e9nlOsk7ePM5Ryq+b0427HHokm0qWBXiZVcr7G2YrpYaCwvIglr3j
-	 PBtqw++RLcA+ZKzl+L7fNU8nlVTX8uGelaL/bogIOsDD3m5Y6OJ05MfOFx+0RbF51Dw==
+	t=1794061092;
+	b=4pLnOpfAQGFiGfmqpG3/V+dSnCR0eUouTjgS1SG0ojFn40ijE0AuXMX8E391vYMDSXkS
+	 366dXuGg0sIGIYdyMOH+e3DAruylj7pMoPxg+41vNC9Hi8wcHr6njz9Omg6jeahPGpm+i
+	 NyNpWQReSgckPov/I1VtSr6SoROGAwwOmaHLaDu0E5/zc1Ydn1q2zZSg6/pi1CF4TVJui
+	 SNF8XYQi1ViX0BAOb+kQNH9laLn/fXNkXcxXW8arvnuwpeEWSgmbhZrhHrIa7lY4we3d6
+	 SZX+21sExSj8I7NnJvoPtLc7h1Y2lG48CfKThHP6Ch3l8tcmSncp3ghyD9sYV+BAU6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HFW0JzSjz+107Bld7nHtDezCyuDAEo3FnLnJQ96+3g4=;
-	b=SxyePYQ2Hklz09SRMOFc1B7BKJeUP5jhj/S+r7MhtvcVoFkHD+LFoI1jdR9n8BfJZDEI
-	 +yE6Qk+rE/hm3gfr6J8YBTEewtD85j2iOAV/JjpNG1Km237ZrmIKJ5o2pJsSfjpR9T5g2
-	 a5M4llKAKT6ix7NW8p7tJMkFhMyBA42ZyvIA20ITxR7tVJFGKivKEsv/epSzNrxId0vk9
-	 vapG27I+2zoD67AOmJaV/5xZLeZobzh3mMoVdfe2SM3cR7dEEq2X7AtYmjEE1+rfhadq5
-	 ZBk5j0aOlBujucjTGG3Flq/3g1tpezi0CADpNGzwMVirVn1LCAEwa4r/twzLMIiIwIg==
+	bh=7/tW0Qio/UJj9TL3dpV4C7x8Woh9Jch/i+I+UdsyX/E=;
+	b=RmjagPMdmITAEDgi1EniJ7LpjFLm+DDA9i8koCCvG88xQJlG8/dpOFQzCIk7U6X+eGm6
+	 YCM1nErCIU0yzUimh0a8ty9TUiquVe9FZGiyL3kPtO3xJ+7VhRfHCUM/OA8kOHSXBNmAU
+	 nyXAA93onSxovgRdy91/E9pDA40XcMzbfmP1BE7TtxizFSulGCZyVPYW2uxsR6duWzh4i
+	 efCvIQit9IgtANp9VAK+dJ6nq+0LMKgfgINZToGV4oJ1G+cwO57qCy3NTP+Jixd+x5MXt
+	 N2xKaJ+2bzC4kCmnh2fq4v3d7mmF/YU5T8dE+FfplSJLKeSIXJo8YJKciDpp0hcTsnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ofcbbF3e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vKPIDFMH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EA7606D833;
-	Sat,  7 Nov 2026 14:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D2660A2605;
+	Sat,  7 Nov 2026 14:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ofcbbF3e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742481F008A4;
-	Sat,  7 Nov 2026 14:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vKPIDFMH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40041F008A4;
+	Sat,  7 Nov 2026 14:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061090;
-	bh=HFW0JzSjz+107Bld7nHtDezCyuDAEo3FnLnJQ96+3g4=;
+	s=korg; t=1794061092;
+	bh=7/tW0Qio/UJj9TL3dpV4C7x8Woh9Jch/i+I+UdsyX/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ofcbbF3e6aVM47XYaxmldkRVeR+vBWwTPuyFCsxyzSQcWtwILwgCDlDeonN4ab7WU
-	 Ak+KMfjgrBhWOZoTJSTw3ChxYJwH6BeSV4vA5i4YWGhmBsvntCs750D2P5tq5v52RU
-	 mMfQ17iFyhmVEJMwk7pE2nT9bR1AB/zGWI33hjKs=
+	b=vKPIDFMHAO06v41HQacIAJrPsYcHdqPNSpeW3OL/7zuxNcYJ3e2bSAGGXUth8pm9B
+	 BiLjVsPNvW9YeQf8sKsnTNTggtozAPSv5tnnvFYvEQUHvrzeornB38y9d0oVw2b2gO
+	 pTMip+fq+dMA0HnnFpkmJ4BAnbj0pwzrKmKJVvq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0374/1536] i2c: imx-lpi2c: properly unwind resources on probe failure
-Date: Sat,  7 Nov 2026 08:39:50 -0500
-Message-ID: <20261107135008.144710343@linuxfoundation.org>
+Subject: [PATCH 6.12 0375/1536] fbdev: maxine: fix 64-bit build error
+Date: Sat,  7 Nov 2026 08:39:51 -0500
+Message-ID: <20261107135008.169294042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,82 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit cbd043b00ee3f542c115c8809c4d9a67465c07d5 ]
+[ Upstream commit 3adec5c640dc09dca5605043e138412fd5a0629d ]
 
-When probe fails at devm_clk_rate_exclusive_get() or clk_get_rate(),
-which occur before runtime PM is initialized, the clocks enabled by
-clk_bulk_prepare_enable() are never disabled.
+The KSEG1ADDR() macro is only defined for non-64BIT builds.
+Use the CKSEG1ADDR() macro instead.
 
-When probe fails after runtime PM is initialized, the previous error
-path called pm_runtime_put_sync(), which triggers the runtime suspend
-callback. However, due to different clock management strategies on
-different SoCs[1] (to avoid deadlocks between the global prepare_lock
-and runtime PM), the callback may only disable clocks without
-unpreparing them, causing an incomplete unwind.
+In file included from ../drivers/video/fbdev/maxinefb.c:34:
+../drivers/video/fbdev/maxinefb.c: In function 'maxinefb_ims332_write_register':
+../include/video/maxinefb.h:16:41: error: implicit declaration of function 'KSEG1ADDR'; did you mean 'CKSEG1ADDR'? [-Wimplicit-function-declaration]
+   16 | #define MAXINEFB_IMS332_ADDRESS         KSEG1ADDR(0x1c140000)
+../drivers/video/fbdev/maxinefb.c:66:49: note: in expansion of macro 'MAXINEFB_IMS332_ADDRESS'
+   66 |         register unsigned char *regs = (char *) MAXINEFB_IMS332_ADDRESS;
+../drivers/video/fbdev/maxinefb.c:66:40: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   66 |         register unsigned char *regs = (char *) MAXINEFB_IMS332_ADDRESS;
 
-Introduce a new error label 'clk_disable' to explicitly invoke
-clk_bulk_disable_unprepare(). Replace pm_runtime_put_sync() with the
-sequence of pm_runtime_disable(), pm_runtime_set_suspended() and
-pm_runtime_put_noidle() to bypass the runtime suspend callback during
-error recovery. During the LPI2C driver probe phase, clock APIs are
-used exclusively to manage clocks. Once probing succeeds, clock
-management is handed over to the runtime PM core.
-
-[1] https://lore.kernel.org/all/20251125084718.2156168-1-carlos.song@nxp.com/
-
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260716071957.2670263-2-carlos.song@oss.nxp.com
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ include/video/maxinefb.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
-index 86b41cd48ad4c..8103c14876d57 100644
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -615,14 +615,18 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
- 	 * each transfer
- 	 */
- 	ret = devm_clk_rate_exclusive_get(&pdev->dev, lpi2c_imx->clks[0].clk);
--	if (ret)
--		return dev_err_probe(&pdev->dev, ret,
--				     "can't lock I2C peripheral clock rate\n");
-+	if (ret) {
-+		ret = dev_err_probe(&pdev->dev, ret,
-+				    "can't lock I2C peripheral clock rate\n");
-+		goto clk_disable;
-+	}
+diff --git a/include/video/maxinefb.h b/include/video/maxinefb.h
+index 6aeb4acca2bdb..2b66b32f355cf 100644
+--- a/include/video/maxinefb.h
++++ b/include/video/maxinefb.h
+@@ -13,13 +13,13 @@
+ /*
+  * IMS332 video controller register base address
+  */
+-#define MAXINEFB_IMS332_ADDRESS		KSEG1ADDR(0x1c140000)
++#define MAXINEFB_IMS332_ADDRESS		CKSEG1ADDR(0x1c140000)
  
- 	lpi2c_imx->rate_per = clk_get_rate(lpi2c_imx->clks[0].clk);
--	if (!lpi2c_imx->rate_per)
--		return dev_err_probe(&pdev->dev, -EINVAL,
--				     "can't get I2C peripheral clock rate\n");
-+	if (!lpi2c_imx->rate_per) {
-+		ret = dev_err_probe(&pdev->dev, -EINVAL,
-+				    "can't get I2C peripheral clock rate\n");
-+		goto clk_disable;
-+	}
+ /*
+  * Begin of DECstation 5000/xx onboard framebuffer memory, default resolution
+  * is 1024x768x8
+  */
+-#define DS5000_xx_ONBOARD_FBMEM_START	KSEG1ADDR(0x0a000000)
++#define DS5000_xx_ONBOARD_FBMEM_START	CKSEG1ADDR(0x0a000000)
  
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, I2C_PM_TIMEOUT);
- 	pm_runtime_use_autosuspend(&pdev->dev);
-@@ -653,8 +657,11 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
- 
- rpm_disable:
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
--	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
-+clk_disable:
-+	clk_bulk_disable_unprepare(lpi2c_imx->num_clks, lpi2c_imx->clks);
- 
- 	return ret;
- }
+ /*
+  *      The IMS 332 video controller used in the DECstation 5000/xx series
 -- 
 2.53.0
 
