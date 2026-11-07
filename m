@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061970;
-	b=FfsaKHB5fRLk1znKVF3Ud1k/4ULHtdsMATmcselnPI1ui0Uaq8GMg2361S96wj5fGles
-	 VdWCV2ynpHCVvyAP+Gf1Wj++f2Et7xF0e0chE1anJZHVu8hf7YE01KlIT4WCUdmEfJPPc
-	 IjYBzyrSH1u93CKDrH1s9yGwi+t+E3eUa54RoQ+wkaHJt4bLzPOWA+JVU4kaJnOgtVzI+
-	 2KeDnK5svASOnljXp7GUIjPPZm7mcJ8i9K1oTaxBTp8dGjR5UGgORvivFrb49vSVn+HU2
-	 Aopxp2R8Vut1M3ximDWi5ww2qCTgrBLbk0c4241ebbOy3eXcWI1lVJqV0SPkacYKElA==
+	t=1794061971;
+	b=WwtwA2y6dXbwuyjWtoF/rmJrIeb13l569mO8of4+tY8pMao5MMkWuQiNFID17A7dHbNw
+	 AB2A7D9ZF3QaK25xGf/6MOFp7JNALvfa7mWbONqFmXubHqC4FNwgLK2pszMeJ7Uu7Tk5u
+	 3xTzOl7h11mmhukkSPTgudZPVb0+TBGUs9sBmppeJO9Dv9fO1brfI3emqzCj1bYOF44OC
+	 Y2cZejfemPqd/t++V6gNdlI1FLN0YfisKtnb5c67siHy5vwBq00+owM4SrVmPg+w1TH5Y
+	 0bSm7OTAqr4RwNMmfnGF3qi551NpGUjfIH4PLPA6SDyeY/GXP6FFg0iqbcCNeSAGI6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061970;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061971;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q4vNBI7yno6pj+YKxA2dcojZ94uxRO0KxsC1tBnJ4vQ=;
-	b=4XyApRTbKvMGdrKeNa49cjoAm7tuoM6UJNsJbNWiiGl2m6nbtcLW3+7avb1XP5NTc2X9
-	 HRjskNb9QmDU6SsPsKcIOLhRgbpeU3nkhMFUcq6auXh5YnmQAAcBcKUMNZmfXLo/GJwxH
-	 GPbkS8aYeTUHqomXxyNcoBpbaEcIsdsH7FKxnWViZKZphJekxMAdDlaeD6LeaeXUBshrJ
-	 6o4uwhUv/fk71Iw9s9zTFIq0Vy2E+N2aziPavtE1qgjQ6mncvDaYxM6peq1d3PFqdPp06
-	 V4LxWLw9WbqyLHfPwoOhc0hQL7SReq7NZEx0jkEsHNGz57h8UbE5ePPuCU25jwEEBIw==
+	bh=tSG+Xx9re8dGyGlgo6iq/ilQ3gby2ch5PAwRkmoTUa4=;
+	b=BqF42ir0mLkr4DjvzsZSOYFjmGGy9iEgKKFeL6unEz8zb5pwwlq5blZcUEYU+bwbTc2X
+	 5xEp1ejSb3NfVTxDcYSt6e6Qz9FPB3zN8akNX6JV8md9OdfMRuVKREMd5jOeBsF0Txxjb
+	 9+Kn2gR0rGVFgX+oBZ1+DNjCh89BA22ZJvELbirbyg4TNPE65ys3vExII4w2IoqzxjwyB
+	 Dyb6u/g1xwyJQyJOZfR/7zTxLvFnbjmQh10pAZJPH5ujGIRbwfnWNOe3Otan6xO6UGFkb
+	 fBzm02kodPNwBniQpnQevdphyuNTVFqeDtXwkZ8q4zT+Vp9pRivXt3a5BlCP1r+Tfjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEoWhCTN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C21cncBB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B846E606A32E;
-	Sat,  7 Nov 2026 14:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF93606A32E;
+	Sat,  7 Nov 2026 14:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEoWhCTN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663B11F0089F;
-	Sat,  7 Nov 2026 14:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C21cncBB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BAA1F0089F;
+	Sat,  7 Nov 2026 14:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061969;
-	bh=Q4vNBI7yno6pj+YKxA2dcojZ94uxRO0KxsC1tBnJ4vQ=;
+	s=korg; t=1794061970;
+	bh=tSG+Xx9re8dGyGlgo6iq/ilQ3gby2ch5PAwRkmoTUa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YEoWhCTNSmSlylk15ig4ke3PhJRg7kKDQNo3TFp5+fSZE2tNHZl7We4p3IrDRsZ6w
-	 kiU+dr+//zXsEfMbenguHf9fIZLzeQcvKNT5vSCtXvQQi48Q1CfeusLpFiAWthWYNv
-	 5rQcWqxiFXc4Ky/c74musmwnsh/HiyDeLqbcZxLY=
+	b=C21cncBBq3Jt1Zss6VbQYLsafzJuUlscs+InI2J7n7T7x2ph1r9ust+YmjaybmWKJ
+	 uGzbpKsh2mI1OMD+ASs1T6LADhTIbbTq+JoN5iQN5BdZObuUlbf/YxBnNzzv/97gwb
+	 cNY9seEcsvytxxKUmCYdZcAr48za9SQlpots8Z2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengzhuo Wei <me@cherr.cc>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0966/1536] power: supply: bq27xxx: synchronize work cancellation on suspend
-Date: Sat,  7 Nov 2026 08:49:42 -0500
-Message-ID: <20261107135024.782540821@linuxfoundation.org>
+Subject: [PATCH 6.12 0949/1536] media: microchip-isc: synchronize the IRQ before disabling clocks on stop
+Date: Sat,  7 Nov 2026 08:49:25 -0500
+Message-ID: <20261107135024.310810964@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,42 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengzhuo Wei <me@cherr.cc>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit f0ff5673aa07ded2bb383ac526c1faee4fe9ca07 ]
+[ Upstream commit 19fa5407da5ef3e605cacfcd90f70d8b2c121cd7 ]
 
-The poll work requeues itself via mod_delayed_work() while the device
-is not removed. cancel_delayed_work() does not wait for a callback
-that is already running, so a poll racing with suspend can keep
-issuing I2C transfers after suspend returns and requeue itself into
-early resume.
+isc_stop_streaming() masks the DMA interrupt and then drops the runtime
+PM reference, which disables the ISC clocks. microchip_isc_interrupt()
+may still be executing on another CPU at that point; it reads ISC_INTSR
+over regmap, and touching the unclocked registers triggers an external
+abort.
 
-Use cancel_delayed_work_sync() to quiesce polling before suspend
-completes, as the teardown path already does.
+Store the IRQ number at probe and call synchronize_irq() after masking
+the interrupt, before dropping the PM reference.
 
-Fixes: dfcb264a01a9 ("power: supply: bq27xxx: Stop and start delayed work in suspend and resume")
+Fixes: 106267444f12 ("[media] atmel-isc: add the Image Sensor Controller code")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shengzhuo Wei <me@cherr.cc>
-Link: https://patch.msgid.link/20260827-bq27xxx-suspend-cancel-sync-v1-1-77a67711cbc3@cherr.cc
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/microchip/microchip-isc-base.c    | 3 +++
+ drivers/media/platform/microchip/microchip-isc.h         | 1 +
+ drivers/media/platform/microchip/microchip-sama5d2-isc.c | 2 ++
+ drivers/media/platform/microchip/microchip-sama7g5-isc.c | 2 ++
+ 4 files changed, 8 insertions(+)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index fb16354fcb975..19c73aad769a5 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -2225,7 +2225,7 @@ static int bq27xxx_battery_suspend(struct device *dev)
- {
- 	struct bq27xxx_device_info *di = dev_get_drvdata(dev);
+diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
+index 44d50196bb304..8223991ae7dda 100644
+--- a/drivers/media/platform/microchip/microchip-isc-base.c
++++ b/drivers/media/platform/microchip/microchip-isc-base.c
+@@ -425,6 +425,9 @@ static void isc_stop_streaming(struct vb2_queue *vq)
+ 	/* Disable DMA interrupt */
+ 	regmap_write(isc->regmap, ISC_INTDIS, ISC_INT_DDONE);
  
--	cancel_delayed_work(&di->work);
-+	cancel_delayed_work_sync(&di->work);
- 	return 0;
- }
++	/* let a running IRQ handler finish before the clock is disabled */
++	synchronize_irq(isc->irq);
++
+ 	pm_runtime_put_sync(isc->dev);
  
+ 	/* Disable stream on the sub device */
+diff --git a/drivers/media/platform/microchip/microchip-isc.h b/drivers/media/platform/microchip/microchip-isc.h
+index ad4e98a1dd8fc..f5e322c2e36bc 100644
+--- a/drivers/media/platform/microchip/microchip-isc.h
++++ b/drivers/media/platform/microchip/microchip-isc.h
+@@ -287,6 +287,7 @@ struct isc_device {
+ 	u32			dcfg;
+ 
+ 	struct device		*dev;
++	int			irq;
+ 	struct v4l2_device	v4l2_dev;
+ 	struct video_device	video_dev;
+ 
+diff --git a/drivers/media/platform/microchip/microchip-sama5d2-isc.c b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
+index 7cedfd29ac130..583d3c4dca54f 100644
+--- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
++++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
+@@ -448,6 +448,8 @@ static int microchip_isc_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
+ 
++	isc->irq = irq;
++
+ 	ret = devm_request_irq(dev, irq, microchip_isc_interrupt, 0,
+ 			       "microchip-sama5d2-isc", isc);
+ 	if (ret < 0) {
+diff --git a/drivers/media/platform/microchip/microchip-sama7g5-isc.c b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
+index 36f52ea38d55b..d2e1899869c43 100644
+--- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
++++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
+@@ -437,6 +437,8 @@ static int microchip_xisc_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
+ 
++	isc->irq = irq;
++
+ 	ret = devm_request_irq(dev, irq, microchip_isc_interrupt, 0,
+ 			       "microchip-sama7g5-xisc", isc);
+ 	if (ret < 0) {
 -- 
 2.53.0
 
