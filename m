@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062151;
-	b=OwRJuaoGpT3LxzeUYBrekuGWyxaIO8ylDUMKbe1b+SRfAjEF0Zck6bZac1xKhbXWVRF0
-	 efhiiBPUg2ksrVYUTsQ05SusbNTnop8AIQqPQMb97B3MrChAXjNxx99KRRAKZKu34XUEq
-	 DpMcilbK/oyLWyhs8sTZAI2Fpc2rwY7j6n+mpTk8M8NS9TLwdPGP7Flav0VPLIYFrpxMw
-	 4OHkC641t6siuPS82YcUDto5HCwF6nOIsfQljFq4GgJbODBGDSCQNvENE/BB0VxKyvLNH
-	 OZpSDJm8lb6uZ26ZhhF6PC9kfusbFuwJ1ootcQCWWkE+xoJE/E7qOB9bTCs7u+B97wQ==
+	t=1794062152;
+	b=l1fCFSTvlik3NTZIPu+2tHlNmYtnbZNt66C94N1oGp4+u9dww7vmp2aTpCaUqxWJSLfH
+	 I1F1oismhp/ulXgGvWJfHtrUkWx4ZwD0WfgDvBKk0+7nx1Zig0ZszmtqmGQOayHBddXZ6
+	 2cQ3WeZXjL8OBTJmMQz4trWTlc51k8izIrlG7bYUQZMlPIL986IJu2CGYsYDF8g4l4bKu
+	 41AthO9987EILDRV3/NM2E+oNVWG6UxnvNfCXE3lk05NW8TorZeXWHa13IglytkUkIH6x
+	 vimvl7/uxqS5/wHAe1nITBshr+cO2u4S+UXs8PEH6sTlgrCHoogpqacpTxVEPzyKQ9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062151;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062152;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+a1/nSIJyXtSfbJah+VwRbi7lrETFCoN6w8LXpV7hyk=;
-	b=cVuAVSRbePi37h/0n4FTLk6K5qIdKE7DVqne0EPGhXusOQT8TYI3XZL2ec6qp12wyI/r
-	 5hdB+uxp/xT1/92lCBkhBTrcraX3UKyex4udoo+wdSlnNMGEKeLgF3DssJrf7GhPgDaG9
-	 ajW9NO63mzbpDps4lXMbbnSJfgjwZILYycluLPAwJwTy6iJS/L1gXuTvdJ83PTaAPA6pG
-	 ZRz/NxtWV7Kyol7whsSjZmzeK72QpSi/OGr58EyRUF1anFBZXf3PpfSFQu8mSZ+cLx9by
-	 +f92WZqlpEe2zwAYjgaMR7TgblLc7xJg/KXSWfzppUJSZGaatPpuLpcpKIRRsseJCpg==
+	bh=i4C+RKgVGuGL9iqZZrwpo5TA8fhDOihzU6wN1I8mGBc=;
+	b=23fEr0MxLHjMs2XjYMAv2mW7B5cBtLTVUasyBNbvIn1a6qmdb7Z4+/DhSIBIr6wWoWPp
+	 XbpJHiRouZxpo65OjDGoRXf9qb7P4r3dWuZcL2y7pMN4OhEbcb6LIkDDv20hB8WujpIEA
+	 yl+qq2gE5UKIcygopWT1ZiJUqR8ji3cZRT3Sfuq/4OLGczTEh1Piv+WaBnb8YOnMQWOHm
+	 v/4HavZLmOlbkTXJySrseQvGOOlkOvIBoGjoWf5gU6zKHPgEpC4sIg76H10D+4CKLGPxE
+	 Z68Hpk3rKloe92o+3TCDfZRpmKzKtnoqlApQWRserLFO0nhC7osZ2Aef7lx1PqQaO9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="X2HA/OJF";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWRr6zFp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F1C606A66A;
-	Sat,  7 Nov 2026 14:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02279606A66A;
+	Sat,  7 Nov 2026 14:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2HA/OJF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7746A1F008A6;
-	Sat,  7 Nov 2026 14:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWRr6zFp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A292D1F008A6;
+	Sat,  7 Nov 2026 14:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062150;
-	bh=+a1/nSIJyXtSfbJah+VwRbi7lrETFCoN6w8LXpV7hyk=;
+	s=korg; t=1794062151;
+	bh=i4C+RKgVGuGL9iqZZrwpo5TA8fhDOihzU6wN1I8mGBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X2HA/OJFiwY2KS9L0DDL4kEmlVNVOynynb6/6gdN3itYcDFR/R9Aj3LYcI+G6+8PB
-	 PDFL8eVsXB+bJuCIPN7NLoWHibqoX+U07RYoJIjOuL2aG10rPfMOVYig+Ii37XFdpg
-	 cwxHNwArA70p+KA3SjwnRJHiS2fL1nw+Y/qobsmA=
+	b=MWRr6zFporGl+5fNBaqO1LfPTU/vdRL5VUZd7CLR1KhYLlY+JjpdD5VCM1UiaHbc8
+	 debCkIoCuapg/W6NLoPZneYQI3od0v0hsa/adAMYN3quftBCUI5SGOo5zcs30MnsSL
+	 BkLv4X6gYi+ug7YlwwwdIt7fs/7jAAJbCyBRsuRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Iwona Winiarska <iwona.winiarska@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1077/1536] ASoC: wcd9335: Fix device reference leak in wcd9335_slim_status()
-Date: Sat,  7 Nov 2026 08:51:33 -0500
-Message-ID: <20261107135027.945080475@linuxfoundation.org>
+Subject: [PATCH 6.12 1078/1536] peci: aspeed: Initialize state before requesting IRQ
+Date: Sat,  7 Nov 2026 08:51:34 -0500
+Message-ID: <20261107135027.971632393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,60 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit f0cc352be29ba616e0682f66f551d3f3029886fd ]
+[ Upstream commit 61cf765b654b76a62510269521a65e4e4a488f4c ]
 
-wcd9335_slim_status() obtains the SLIM interface device with
-of_slim_get_device(), which uses device_find_child() internally and
-returns the device with a reference held.  As the device_find_child()
-documentation says: you will need to drop the reference with
-put_device() after use. The reference is stored in wcd->slim_ifc_dev
-and never dropped, so the SLIM interface device cannot be released.
-Fix it by using devm_add_action_or_reset() or put_device() respectively.
+The PECI interrupt handler uses the lock and completion object as soon as
+the interrupt is delivered. Initialize both before registering the
+handler so an early interrupt cannot access uninitialized state.
 
-Found by code review.
-
-Fixes: 20aedafdf492 ("ASoC: wcd9335: add support to wcd9335 codec")
+Fixes: a85e4c52086c ("peci: Add peci-aspeed controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Link: https://patch.msgid.link/20260914095009.12049-1-make_ruc2021@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Iwona Winiarska <iwona.winiarska@intel.com>
+Link: https://lore.kernel.org/r/20260902142600.3580382-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd9335.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/peci/controller/peci-aspeed.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
-index 1375ac571fbf3..a1fa5957f6468 100644
---- a/sound/soc/codecs/wcd9335.c
-+++ b/sound/soc/codecs/wcd9335.c
-@@ -5095,6 +5095,13 @@ static int wcd9335_slim_probe(struct slim_device *slim)
- 	return 0;
- }
+diff --git a/drivers/peci/controller/peci-aspeed.c b/drivers/peci/controller/peci-aspeed.c
+index b93eb6f43b98f..e5961ed11a8c2 100644
+--- a/drivers/peci/controller/peci-aspeed.c
++++ b/drivers/peci/controller/peci-aspeed.c
+@@ -527,14 +527,14 @@ static int aspeed_peci_probe(struct platform_device *pdev)
+ 	if (priv->irq < 0)
+ 		return priv->irq;
  
-+static void wcd9335_put_device_action(void *data)
-+{
-+	struct device *dev = data;
++	init_completion(&priv->xfer_complete);
++	spin_lock_init(&priv->lock);
 +
-+	put_device(dev);
-+}
-+
- static int wcd9335_slim_status(struct slim_device *sdev,
- 			       enum slim_device_status status)
- {
-@@ -5119,6 +5126,11 @@ static int wcd9335_slim_status(struct slim_device *sdev,
- 		return -EINVAL;
- 	}
+ 	ret = devm_request_irq(&pdev->dev, priv->irq, aspeed_peci_irq_handler,
+ 			       0, "peci-aspeed", priv);
+ 	if (ret)
+ 		return ret;
  
-+	ret = devm_add_action_or_reset(dev, wcd9335_put_device_action,
-+			&wcd->slim_ifc_dev->dev);
-+	if (ret)
-+		return ret;
-+
- 	slim_get_logical_addr(wcd->slim_ifc_dev);
- 
- 	wcd->regmap = regmap_init_slimbus(sdev, &wcd9335_regmap_config);
+-	init_completion(&priv->xfer_complete);
+-	spin_lock_init(&priv->lock);
+-
+ 	priv->rst = devm_reset_control_get(&pdev->dev, NULL);
+ 	if (IS_ERR(priv->rst))
+ 		return dev_err_probe(priv->dev, PTR_ERR(priv->rst),
 -- 
 2.53.0
 
