@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062795;
-	b=N6/9VrTIY8pN0bIFHjUP0UzF7YgAUZqmae/sdBIjo0LSTX+v3OAPpEUdxyzazxqQ6R+S
-	 ouCr1BCdi+b1kUnRt36IQCZbOxNgagU5AbWHTM2FVYAtJVIN9wAoULeGWFLnHszeYeunG
-	 MnChtj4KDep7IY5eyQb0kR1DWw8sjVkHsM+Q6AdS/pEc2KU+/ROOVAeRPoMEqYBiO51AW
-	 KcrFQOAkyEPXWOMLva6CxclzCV2QVYBz3l+edNGIKpZFASgReebWdBTSfoHoLIOtofhpl
-	 0TJedhyRXJGridx6ar70bWjIxBpxWPAjHH1fcMKqb1EIxle7SQZPq/7tZmzNFkVbQaA==
+	t=1794062796;
+	b=MUh/Muk826HU9xaebEzylp1G5791SK9FpJ5C+qjWkIvCC03H7cIRrEXMG82AASKDfHYt
+	 9LV7GTNEp77M579+o/wFG4YTxQaCE7mAz4nnphQmbY5p1+VrrRWudTXJ9A7RH3WtcTXG9
+	 loPXU5MXK1cxSaMgK0VrqPiQJqqCOoLJsw9OBs2BiI0A1Ce13vUXiqvhrQVhRZmbFi35x
+	 Y05SvJ0Si4ymXkfVAYI75L79wEw1cJmBZiyTcjeUHSj44kaFiCo9qfiWkf30uI0yullkM
+	 9tHtc9AJtTXx6LgEjW04UriEaARFZSbUTHllwpTeHnAke3K27UV8Pg2loIfiPbzVzNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062795;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062796;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XnalLnkyGRT7vCf/Gfi8X41aDZFO4lu5XWApPq9Bnco=;
-	b=uAILtggGOLYnjx+i6x6i99+3kwsrpC97f/LsOVfb/9/jjH53ALI3wB+eZ6GhVtv4BBK2
-	 tsayD/cwmPRUrZbu3c+a0I/m7BDqa6oV7Dl/swz4UIJ0TsfhmVed2g36dm8pSKXecL2LQ
-	 o/1igOmYIy/TkuULcYQNyZn17Dtrs33dJy/R+ElEeRIFnhdlOFlioCob6IeA4uKMM6LbZ
-	 nE/1LaUFxIkL55B+BFufS6XrxSS6mFCiNLc/iihUQdw4y7DIPe+zCpqIou+4+v/MDd4Vr
-	 QG/g4lGg4bUqtaAqgi3cX0nBPk4QYNuRM6gJBu9jwNdV/bM8lHpKoOfKJ0DwtmdiR9w==
+	bh=PhlIYYQS/uyQjvSEgYQyUvMtbaHCabPdwU3QLieh1RM=;
+	b=JEZBtlwg/wkBPB3clEnfH7+DZHxcagRS63/haEF9BDAvGXDIGEFpfXAovnUDgNmlbLnZ
+	 7mhqUB90MXaTcbx/+JK53TOzfyEV7HNbSnwP+Y5UgSo+tMAjl/DOO2iRo8RbpJFdM3FW6
+	 rDKM7dLM4p0C0Fad/MMbR0dbR/EunEESk4C/Mw61XqYLYFBqszR2IgTyNA5nhcgJj0eKU
+	 KklHm9z9EVct4TPg3dXSWmyM4Oy7zPv22Cqg8EQXc+FVvH5nnzkD1PIdDm6+zKKs14y6K
+	 w3MtfLRNOxr4zsshKK9tRnrgAPi3Hc6dF2MOtdLlwgvmrEfF7pJteMl10tQikCGWtWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCimmdE2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vhg+W1sa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357A8606D804;
-	Sat,  7 Nov 2026 14:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F64F606D81E;
+	Sat,  7 Nov 2026 14:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BCimmdE2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60C71F008A4;
-	Sat,  7 Nov 2026 14:46:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vhg+W1sa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29921F008A3;
+	Sat,  7 Nov 2026 14:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062794;
-	bh=XnalLnkyGRT7vCf/Gfi8X41aDZFO4lu5XWApPq9Bnco=;
+	s=korg; t=1794062796;
+	bh=PhlIYYQS/uyQjvSEgYQyUvMtbaHCabPdwU3QLieh1RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BCimmdE2YHMvTI9SoO/H1S+h5mVtiWnkDUuBdu6tf/SdWG67t6G0baUDxIHu4dioE
-	 pxkcCvYnAUdEeQOX+Kz2y5Ic1pCoPGlEd6H84hZk9lXgHb69m0bk0Ypqonfwmop5vg
-	 EqJgAyieoV7YFuTnhU28lp/0q08WzQYqR9EYfO94=
+	b=Vhg+W1saJtciHgcuYh9Z+plncBtp1IzVCTcMGAKDu1aoBYN07DsIJBbwSWFciv6TF
+	 iMeBV17YI+sIY/j6kbO/AkCK+vjEF/rOwVEyytkbm5AF5PsSRIACnWogdpMDDMHkaS
+	 OsimM8FD0t+DAxASI/VSA4lnAleig2499J7/6wDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eugen Hristev <ehristev@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 099/869] media: microchip-isc: fix PM runtime leak in AWB work handler
-Date: Sat,  7 Nov 2026 08:46:21 -0500
-Message-ID: <20261107134856.015709286@linuxfoundation.org>
+Subject: [PATCH 6.18 100/869] media: microchip-isc: dont sleep in the clk .is_enabled callback
+Date: Sat,  7 Nov 2026 08:46:22 -0500
+Message-ID: <20261107134856.042405503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,42 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit 21ad8225822a892c4c273bf1368d477a83a19dbb ]
+[ Upstream commit 61490ff518c7b3ea3ff1cd16bbc012e9e4f1ab74 ]
 
-Early return when streaming stops skips pm_runtime_put_sync(),
-leaking the reference and preventing runtime suspend.
+isc_clk_is_enabled() calls pm_runtime_resume_and_get() and
+pm_runtime_put_sync(), which can sleep and are not safe here, as
+.is_enabled must run in atomic context. clk_disable_unused() calls it so
+at boot, and CONFIG_DEBUG_ATOMIC_SLEEP reports a "sleeping function
+called from invalid context" BUG.
 
-Fixes: 314c96e5203d ("media: atmel: atmel-isc-base: use mutex to lock awb workq from streaming")
+Use the atomic-safe pm_runtime_get_if_active() and pm_runtime_put()
+instead. A suspended ISC has its clocks gated, so report the clock
+disabled when the device is not already active.
+
+Fixes: 01192aa1c5c2 ("media: atmel-isc: Enable the clocks during probe")
 Cc: stable@vger.kernel.org
 Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 Reviewed-by: Eugen Hristev <ehristev@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/microchip/microchip-isc-base.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/microchip/microchip-isc-clk.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index cf4611443fd13..21d108eb93c7b 100644
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -1432,7 +1432,7 @@ static void isc_awb_work(struct work_struct *w)
- 	/* streaming is not active anymore */
- 	if (isc->stop) {
- 		mutex_unlock(&isc->awb_mutex);
--		return;
-+		goto out_pm_put;
- 	}
+diff --git a/drivers/media/platform/microchip/microchip-isc-clk.c b/drivers/media/platform/microchip/microchip-isc-clk.c
+index 24358d804e75d..66dc522a61908 100644
+--- a/drivers/media/platform/microchip/microchip-isc-clk.c
++++ b/drivers/media/platform/microchip/microchip-isc-clk.c
+@@ -98,15 +98,14 @@ static int isc_clk_is_enabled(struct clk_hw *hw)
+ {
+ 	struct isc_clk *isc_clk = to_isc_clk(hw);
+ 	u32 status;
+-	int ret;
  
- 	isc_update_profile(isc);
-@@ -1443,6 +1443,7 @@ static void isc_awb_work(struct work_struct *w)
- 	if (ctrls->awb)
- 		regmap_write(regmap, ISC_CTRLEN, ISC_CTRL_HISREQ);
+-	ret = pm_runtime_resume_and_get(isc_clk->dev);
+-	if (ret < 0)
++	/* Runs in atomic context, so must not sleep to resume the ISC. */
++	if (pm_runtime_get_if_active(isc_clk->dev) <= 0)
+ 		return 0;
  
-+out_pm_put:
- 	pm_runtime_put_sync(isc->dev);
+ 	regmap_read(isc_clk->regmap, ISC_CLKSR, &status);
+ 
+-	pm_runtime_put_sync(isc_clk->dev);
++	pm_runtime_put(isc_clk->dev);
+ 
+ 	return status & ISC_CLK(isc_clk->id) ? 1 : 0;
  }
- 
 -- 
 2.53.0
 
