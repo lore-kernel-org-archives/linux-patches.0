@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063660;
-	b=ViNonI4+hUU/n3OGSWWtXmfagMUElEvyXHfTGW37CBQqSVujpHj3FupgrLzKU5LjqRMm
-	 +z3JS8WbU0K/m0rictionMwiIqVbMrxf0TkCpIY33n9mxlD0jrDJ8Nj6bHo15Et/HsW0J
-	 NeuFTMqdHlBQjAwbbbW8E/pUlRIHt7DsIE9avI+KzuRN+LpyTU1WaMQ3xK5Cod92hXNTW
-	 KJtjthlL0E316LLT+Aw3tsfKmpzQnfjnNvjz/8W+uWKUVHWg3GxSsk+uX2VLerFsO2zdf
-	 xxX5ImNiJ7pIak/Jvth5AEn3K2PbVrqJJv1GSHmfs09jnSC7HIhoNBCjpXAL0KuNk2Q==
+	t=1794063662;
+	b=UoNDHIohJ2Pp+fFk37QuzjuYGCkynlyAL+PXZf4SGpktUkKqpdYOJDgk4nj21unFdhyq
+	 /kWsrYsA1jIVwcbfWMRfMZOEdOOuTntNacoqhS111SCp0Qq2vyo3eSVy1fvicA+B5XVmU
+	 nngZZiqIgHBWbLa9ALJNJHnYULgGpR/f7bmirwCLLzE5I4gi856e+AS0W8SstaLgo3zKs
+	 j8EcmnCifPAHQxZAWNdF+p0bFCG+RTVm2z7cdvQJL8INyOdWa0oQYUA2OH2CnDxQVmemt
+	 P+fWfIRiMBummvEcmOD7iCNCN3B632+ztoFDDTuBMdKdLU1zdsFWngKFt1Nkge/AmIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8YLlhBhLV7mDQcs8MXjXo80cwHUjF6DuQqW2wnEj1pc=;
-	b=lHrV/EKoCeX3Ah7C8Qqy6GT//nI/mkPgKzjxGTurk3u3wucCLNwmHkTZkujgxt6kaDkH
-	 LvRqL1QaZPMdADyIF0hfkQH1+xm5ol8aiuIdOZoYoL40U83M8QpNfsRSVQ082Hqtx/wKW
-	 bxiJuifnmo2n3pYeBIsxE5xRckEj1PfdXOzMqvSteUXg6KxIdaNHmADj9QLNfZf9wlcxJ
-	 RTgQTd5KQ+hlQNdD8bPASsIKY/5gIRV8/w6+Pzo98RxI9Ja8d14Nr1PHZV8aKbUDfCnMH
-	 HhAGIZuhabJgUiSGDWkSMcp+A9yFA3eMFDylRZEXkZifj3zLxXzuKDiogIjkLLvAQ6w==
+	bh=OVao9QcNMcEjfVpV9hR9B73+qtczPgAL9/RzYbiezNw=;
+	b=eQT6bfZ3iHsrZSOMI/BVk3BJfhUa3Gt4wSrvsJpBk6GI63BwRW5ymfFQOh12JHqjq49H
+	 o/NMODUTnvRU5+lHhd7DeSzB7IN5oWkByR1R4D+EJYd+A9XLWvcJjE8k/FhkK5ftHeXyI
+	 BernQndEi35yHxBoqm1bos4cpqN7i1P/Vwqn18PNLU4e9Tz9yGvToqxmKEs+kt2LsTSmd
+	 693NtYByK91tH3QVT6xlPKXxmRKoJWP4wrRah9RAr5TKKql16NGb9QdE156Pb2WRHvN85
+	 04fWk6MP9d4/imZuo5O8slM6vCTA4opsMPL2ah7hZZCpEq+2KX/q2vlyYT2G35kd4mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZrzY+RfO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KxQsM7bi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C411606A9E4;
-	Sat,  7 Nov 2026 15:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FC4606A9DA;
+	Sat,  7 Nov 2026 15:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZrzY+RfO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0771F0089F;
-	Sat,  7 Nov 2026 15:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KxQsM7bi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887A61F0089F;
+	Sat,  7 Nov 2026 15:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063660;
-	bh=8YLlhBhLV7mDQcs8MXjXo80cwHUjF6DuQqW2wnEj1pc=;
+	s=korg; t=1794063661;
+	bh=OVao9QcNMcEjfVpV9hR9B73+qtczPgAL9/RzYbiezNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZrzY+RfOzB7d1ryMZWcTw0THsgzngt5LpRWKeK0wG7AWz8FNz8FwP6MU9LTfTXK3M
-	 kW78/kVI0JHRuYSHSZ1lI8SP3L6l0yM4MRQzymnLfnwVLAjQTP6yjBYAeZ1as5k4fO
-	 AbZugwC6s7cNflrMIYoFO4hoWC6O/HgD/A4q8Wqk=
+	b=KxQsM7bi2QTM03+twDK24c4KbQ1zDh7oh9YqMXlDVZ4OfC3y4NfDlTGChbaoQ0rKG
+	 LqRJmPsD+gYS8MiYg4zR5+0ngqlHXGyzjXA0TAIEMD58TnAsUYVakDpp9SbaOkinN4
+	 wTRsjEId5DLAMDxecugdSMC3rZGuNXtHd/Wi4L2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	co+ecaada42f806f629@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 774/869] libceph: reject an initial monmap with no monitors
-Date: Sat,  7 Nov 2026 08:57:36 -0500
-Message-ID: <20261107134918.937487196@linuxfoundation.org>
+Subject: [PATCH 6.18 775/869] ceph: fix integer overflow in the snap trace bounds check
+Date: Sat,  7 Nov 2026 08:57:37 -0500
+Message-ID: <20261107134918.963243887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,72 +70,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 94dbce2ae4fdb57bdb53ffa3456da777a5cfb981 ]
+[ Upstream commit b3bf89767e3ca9506f1c7167cac97c41ec254d42 ]
 
-build_initial_monmap() takes the monitor count straight from
-ceph_options::num_mon and builds a monmap with that many entries without
-checking that there is at least one. ceph_parse_ips() writes *count only
-after it has parsed an address successfully, so a ceph_options that went
-through a failed parse still has num_mon == 0 and the resulting monmap
-has no monitors in it at all.
+ceph_update_snap_trace() bounds the two encoded snapid arrays that follow a
+struct ceph_mds_snap_realm with sizeof(u64) * (num_snaps +
+num_prior_parent_snaps).  Both counts come straight off the wire as __le32,
+so the addition is evaluated in unsigned int and wraps before sizeof(u64)
+promotes it to size_t: an MDS sending num_snaps = 1 and
+num_prior_parent_snaps = 0xffffffff makes the sum zero and the check
+degenerates to ceph_decode_need(&p, e, 0, bad), which always passes.
+dup_array() then reads num_snaps * 8 bytes past the end of the message
+front, which ceph_msg_new2() allocates at exactly front_len bytes.  An
+unsolicited CEPH_MSG_CLIENT_SNAP reaches this from a malicious or
+compromised MDS with no client-side action, as do the snaptraces carried in
+an MDS reply and in a cap import.
 
-The first thing the client does with that monmap is open a session, and
-pick_new_mon() asserts the invariant that it is non-empty:
+Compute the length with size_add()/size_mul() so it saturates at SIZE_MAX
+instead of wrapping, in the style fs/ceph/mdsmap.c already uses for
+num_export_targets.
 
-  kernel BUG at net/ceph/mon_client.c:211!
-  RIP: 0010:pick_new_mon net/ceph/mon_client.c:211 [inline]
-  RIP: 0010:__open_session+0x60f/0x740 net/ceph/mon_client.c:245
+  BUG: KASAN: slab-out-of-bounds in dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
+  Read of size 8 at addr ffff8880102a16c8 by task kworker/1:2/129
+  Workqueue: ceph-msgr ceph_con_workfn
   Call Trace:
-   ceph_monc_open_session+0x46/0x60 net/ceph/mon_client.c:534
-   __ceph_open_session+0x135/0x590 net/ceph/ceph_common.c:798
-   ceph_real_mount fs/ceph/super.c:1173 [inline]
-   ceph_get_tree+0xd98/0x1fd0 fs/ceph/super.c:1362
-   vfs_get_tree+0x92/0x320 fs/super.c:1947
-   vfs_cmd_create+0xd7/0x2a0 fs/fsopen.c:231
-   __do_sys_fsconfig+0x55a/0xcb0 fs/fsopen.c:463
-
-The reproducer gets there through the new device syntax: an fsconfig()
-mon_addr= that does not resolve ("libceph: resolve '127.0.0.' (ret=-3):
-failed") leaves fsopt->mon_addr set but num_mon at 0, so the "No monitor
-address" check in ceph_get_tree() passes and the mount proceeds with an
-empty monmap. The next patch stops that string from being kept, but the
-assertion should not be reachable from a mount option in the first place.
-
-Commit 40480eee361e ("libceph: Reject monmaps advertising zero monitors")
-made the same BUG_ON() unreachable from the wire by rejecting
-num_mon == 0 in ceph_monmap_decode(). Apply the same rule to the initial
-monmap, which is the only other way one gets built, and fail the mount
-with -EINVAL rather than assert afterwards.
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
+   ceph_update_snap_trace (fs/ceph/snap.c:836)
+   ceph_handle_snap (fs/ceph/snap.c:1155)
+   mds_dispatch (fs/ceph/mds_client.c:7234)
+   ceph_con_process_message (net/ceph/messenger.c:1424)
+   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
+   ceph_con_workfn (net/ceph/messenger.c:1576)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  ...
+  The buggy address is located 0 bytes to the right of
+   allocated 72-byte region [ffff8880102a1680, ffff8880102a16c8)
 
 Cc: stable@vger.kernel.org
-Fixes: 7b19b4db5add ("ceph: new device mount syntax")
-Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
-Assisted-by: Cursor
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Fixes: 963b61eb041e ("ceph: snapshot management")
+Reported-by: co+ecaada42f806f629@bugs.sh
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/mon_client.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ceph/snap.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/ceph/mon_client.c b/net/ceph/mon_client.c
-index 614d2bba9fd60..a406fff75ba0d 100644
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -1141,6 +1141,9 @@ static int build_initial_monmap(struct ceph_mon_client *monc)
- 	int num_mon = opt->num_mon;
- 	int i;
- 
-+	if (num_mon < 1 || num_mon > CEPH_MAX_MON)
-+		return -EINVAL;
-+
- 	/* build initial monmap */
- 	monc->monmap = kzalloc(struct_size(monc->monmap, mon_inst, num_mon),
- 			       GFP_KERNEL);
+diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
+index c65f2b202b2b3..00cfcef5fbb25 100644
+--- a/fs/ceph/snap.c
++++ b/fs/ceph/snap.c
+@@ -788,6 +788,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	struct ceph_snap_realm *first_realm = NULL;
+ 	struct ceph_snap_realm *realm_to_rebuild = NULL;
+ 	struct ceph_client *client = mdsc->fsc->client;
++	size_t snaps_len;
+ 	int rebuild_snapcs;
+ 	int err = -ENOMEM;
+ 	int ret;
+@@ -802,8 +803,10 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	ceph_decode_need(&p, e, sizeof(*ri), bad);
+ 	ri = p;
+ 	p += sizeof(*ri);
+-	ceph_decode_need(&p, e, sizeof(u64)*(le32_to_cpu(ri->num_snaps) +
+-			    le32_to_cpu(ri->num_prior_parent_snaps)), bad);
++	snaps_len = size_mul(size_add(le32_to_cpu(ri->num_snaps),
++				      le32_to_cpu(ri->num_prior_parent_snaps)),
++			     sizeof(u64));
++	ceph_decode_need(&p, e, snaps_len, bad);
+ 	snaps = p;
+ 	p += sizeof(u64) * le32_to_cpu(ri->num_snaps);
+ 	prior_parent_snaps = p;
 -- 
 2.53.0
 
