@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061610;
-	b=3MlvXvP0shf3cZwk68E+r448dOGMiVgCYHb3v095mEQNWdeaiVnBc/Mv5O8QFKs06iWy
-	 snPE0xq240Dzhw06rhrm2SnvqrAEQnHq/GOlM/QkLlsIU6IU0M8RE6utf7oGPIzVmFJIr
-	 acrcKJsGFm8DEyOJ7nI2Z1bWyGZHXOHCf8dTBZlZp+EMaIAnTKvEyr8rxOHmnVsbzYK4k
-	 0uvqDMkT8N7AODUKahD7F/trb0pw0NQ2WDUX+685pVA0YhkgQfDCaWGHexmwFIhC8TtM0
-	 FHHZxxBjHZX1con4kJmN84xMfgEp7kkUhI1B7+eZOPn/1ncgx8krmkOZeN66rQD/k2g==
+	t=1794061611;
+	b=tWHIrn8f5rzg6g3loFhxrcOACZm6tPuM++VxDWERIptXz2ZeaRWapJetQE4AJeusV5pg
+	 OkkCibbztWjZLSgbUw3hVcPpo0xtrSnJ3ADUrC8t61FHKQszoWEf4eHyTz9rjD94RCyPl
+	 6Mwo6kvZSjaE6FyK0CjNSgL6LVd0PujL3BBL61jhGn1PkWA/W9DWH/bbmEskMMJRgKSQg
+	 wMmbsFP6P1Hignbq6ynKdCJpM68QLnRuzOgTqQmlIYnEjCXjFb8rMOqufchJYgrg67r/t
+	 e7Ql12+UWOWfzCA/tZGZ8Vz2eXqojV5yXh+tvMdaiJTAhA5MK8DHa5vZW23JXR6MaNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o8doDsJyhBFUChenZXef/3r2mXRUw851/YSWSpBhbA0=;
-	b=m5749B846WDwlM1sH4sSUVVXKw+qUXv3gMEqgsapFaYUJSmRb7vIbw5xKElSYycFAvaj
-	 liAMh7fVOV+KkETEF4MONs/23CD3gn7RzVJ9+8zGWoOAzHIaT4R339NSod6h6y0ebcA4B
-	 S43eWS4GlZi1NSSDisvTTULc1/uTi4aVcDTB2cqB8Pb0H4AdQxIcDtgudrvR03qjAKVk1
-	 TapVoaBJ9M3x9enXxdnxgcmWS2LFaLL95s6woVNWZd+hpDQg/GgnB3FhHhr7CNSns/gtw
-	 LZql3to+kq9I+AZjoStwRqpIKShIeemUP1F6czDP96smLdAUfazgX0v1ZA6mPoRnbLw==
+	bh=+e1L83lV+8Pu+aBfD29RA39IH2EoQMI8vSg0aOMOO6E=;
+	b=C8sAKvW9iSq2FvNmco1cG+pIBwE6OJcvXF/CphMB4XamLgmVGD7xYDx5zKwiqZI4E4Mo
+	 jt32oywUvs8Q9ChPQGoz7mrgnEWuFteiurqJMN1XJjNEwuDlRiMbJLK0CBcVtWLll2Y0s
+	 5XZRFeEGNpURw73l4poZcEeM7/fWiAKk+Y2kiU2TJO4KjBJWPq5ZvwQKup89M2BfeDNZI
+	 NhjZ2wrlYDeX9IAH9b2V4iJmdD/cpQzDcPLa/d4H+mTbOb0h/Yko+xnXTgmgxzWvYhrXh
+	 RW8ELsQirX2X9VAUhSDKa1mZtx1vw664d29ykcwrocEhg0ocnmjtesAuk+CEWjh9JrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n/cra1it";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDQpVVek;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC64F606A326;
-	Sat,  7 Nov 2026 14:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC1B606A326;
+	Sat,  7 Nov 2026 14:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n/cra1it
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B201F0089F;
-	Sat,  7 Nov 2026 14:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oDQpVVek
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6BB1F0089F;
+	Sat,  7 Nov 2026 14:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061609;
-	bh=o8doDsJyhBFUChenZXef/3r2mXRUw851/YSWSpBhbA0=;
+	s=korg; t=1794061610;
+	bh=+e1L83lV+8Pu+aBfD29RA39IH2EoQMI8vSg0aOMOO6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n/cra1itblVlNDG6fyAD3rj64lZ/8ji6KohDcccNDBD4RkumnEVNyNPd8cpxG/gQ6
-	 H6fmIZUwdMNqKFO62KKEJtIhKxHT2CuR1puWv0o7FOv5Hm1kwABC8+xgeFlS0NUjSW
-	 dc3fjcukI7HkBN+e7b94dSFchvZup2wklMpRiVEA=
+	b=oDQpVVekt/60wv/hAbDyZxIGlPWXiDeZ3xTOrH4TW/3sD27vWyPV/o6EEX8wQ3u3x
+	 KZgGWcif7zjCmrLV3xMB3CDrGj3PDaGVwJterrleE7HNSj+rWpPx/H0lj8FlJT2Akt
+	 43J7drCZw9LU06MrXnNA5kGlVHKYc9K/kR5L3C1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Fahad Alharbi <fahad@codepure.com>,
 	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.12 0680/1536] ovl: always encode the origin fh when index is enabled
-Date: Sat,  7 Nov 2026 08:44:56 -0500
-Message-ID: <20261107135016.584367770@linuxfoundation.org>
+Subject: [PATCH 6.12 0681/1536] ovl: do not copy up an xattr value that was never read
+Date: Sat,  7 Nov 2026 08:44:57 -0500
+Message-ID: <20261107135016.612889260@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,60 +71,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-commit 949f9d8a5580c77a45fa759123367682aba4d173 upstream.
+commit 755b5c5c9277be251a51623d6065abab948c61bc upstream.
 
-On an overlay with index=on,nfs_export=on, copy up of a directory
-crashes the kernel once an LSM has started to deny CAP_DAC_READ_SEARCH
-to the mounter, the task that mounted the overlay. The mount and the LSM
-policy change require root. After that, any user who can write to a
-directory that exists only in a lower layer triggers the oops by doing
-so.
+Copy-up stores uninitialized kernel memory in an xattr of the upper
+file, where the user can read it.
 
-Before a file or directory that exists only in a lower layer is changed
-for the first time, overlayfs copies it to the writable upper layer.
-This is called copy up.
+ovl_copy_xattr() may only pass bytes to ovl_do_setxattr() that
+ovl_do_getxattr() has read. When the read fails with -ERANGE the
+function asks for the size again, and if the new size fits the buffer
+it stores the buffer although nothing was read into it. The buffer
+comes from kvmalloc(), or it still holds the value of the previous
+xattr.
 
-On copy up, ovl_get_origin_fh() encodes the file handle of the lower
-inode, called the origin. It returns NULL if ovl_can_decode_fh() says
-that the lower filesystem cannot decode handles. Whether the callers can
-handle NULL depends on the index option:
+A FUSE lower layer that answers every sized GETXATTR with -ERANGE made
+copy-up store 4096 bytes that the server never sent, with a kernel
+pointer in them, as an xattr of the upper file.
 
-- Without an index, NULL is fine: the callers store an empty origin
-  xattr.
-- With index enabled, overlayfs keeps entries for copied up inodes in an
-  internal index directory. The name of an index entry is derived from
-  the handle, so ovl_get_origin_fh() must return a handle or an error.
+Fix this by failing the copy-up with -EIO when the size that follows
+-ERANGE fits the buffer.
 
-The mount only enables the index if ovl_can_decode_fh() succeeds for all
-layers, but the result can change later. The function checks the export
-operations of the filesystem and capable(CAP_DAC_READ_SEARCH). Copy up
-runs with the mounter's credentials, and an LSM can start to deny the
-capability to those credentials after the mount. ovl_get_origin_fh()
-then returns NULL with index enabled.
-
-This goes wrong in two callers:
-
-- With nfs_export=on, copy up of a directory creates an index entry for
-  the directory. ovl_create_index() passes the NULL handle to
-  ovl_get_index_name_fh(), which dereferences it.
-- If the result changes while mount(2) is still running,
-  ovl_get_indexdir() passes a NULL from ovl_get_origin_fh() to
-  ovl_verify_set_fh() in the same way.
-
-Before the commit in the Fixes tag, these two callers encoded the handle
-themselves, without consulting ovl_can_decode_fh().
-
-Reproduced with a BPF LSM program that started to deny the capability
-after the mount. An unprivileged touch in a directory that had not been
-copied up yet oopsed in ovl_get_index_name_fh(). With this patch the
-touch succeeds and the directory gets its index entry.
-
-Fix this by calling ovl_can_decode_fh() in ovl_get_origin_fh() only when
-index is disabled.
-
-Fixes: 5b02bfc1e7e3 ("ovl: do not encode lower fh with upper sb_writers held")
+Reported-by: Fahad Alharbi <fahad@codepure.com>
+Closes: https://lore.kernel.org/linux-fsdevel/CAOQ4uxjhfpNVvoVrTayj46H2CViTOc3oxzM6xdb8+E7ikE2CSA@mail.gmail.com/
+Fixes: e4ad29fa0d22 ("ovl: use a minimal buffer in ovl_copy_xattr")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -131,19 +104,19 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/fs/overlayfs/copy_up.c
 +++ b/fs/overlayfs/copy_up.c
-@@ -476,8 +476,12 @@ struct ovl_fh *ovl_get_origin_fh(struct
- 	 * When lower layer doesn't support export operations store a 'null' fh,
- 	 * so we can use the overlay.origin xattr to distignuish between a copy
- 	 * up and a pure upper inode.
-+	 *
-+	 * With index enabled, mount already found that all layers can decode
-+	 * file handles.  Do not ask again, because an LSM may change its answer
-+	 * about CAP_DAC_READ_SEARCH and index users cannot cope with a 'null' fh.
- 	 */
--	if (!ovl_can_decode_fh(origin->d_sb))
-+	if (!ofs->config.index && !ovl_can_decode_fh(origin->d_sb))
- 		return NULL;
+@@ -131,8 +131,12 @@ int ovl_copy_xattr(struct super_block *s
  
- 	return ovl_encode_real_fh(ofs, d_inode(origin), false);
+ retry:
+ 		size = ovl_do_getxattr(oldpath, name, value, value_size);
+-		if (size == -ERANGE)
++		if (size == -ERANGE) {
+ 			size = ovl_do_getxattr(oldpath, name, NULL, 0);
++			/* Nothing was read into value, so it must not be used */
++			if (size >= 0 && size <= value_size)
++				size = -EIO;
++		}
+ 
+ 		if (size < 0) {
+ 			error = size;
 
 
