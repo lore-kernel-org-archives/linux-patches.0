@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065518;
-	b=1pE0QCnV0+smVIsIuILSpkn0pNUnyGjflXoXGfREWskIIubcAeGVCXEHo8O5gfL+48s7
-	 +rXBqzrF4sl6mhTqb09n4XnYbY2BEsfQTt9nCj4dlFoJoBo/KFti31tUoECYUWEVG/4ca
-	 GRZ59JKqwEoIYw3Nc7ER3ceRCPC0guG577zCJ946n7I9kGW/RwbVSoEeQo+1xsyjjZFc5
-	 I+9ZpE7EkUxmTfWqBgKI9xIGf+6cdln+juVFxPIKEodRhyai6IIPs6DMS0KtEQbBhCOYF
-	 gqACG2lgeyKRp07oMOuNUcct3sFYitXoadi86oSDEZlLYuKf5GuQPQaBs4egUthPpZA==
+	t=1794065519;
+	b=ZhJvQar0UjEEm852YiMnElngONba4SBlnqE3l/o7vnicXO88G5ptCQLV2lMNx9NHkN1U
+	 Kghbcquo6yUP9aVYfLnXHZZy6jUt7q0uZD7xVScMqJLgWCtVRUd5e+zVKH6LdcO1G//oQ
+	 C1a9HvmGq67LTO/CvQjHgdN+NY9gmvNeBlp6bEH6YV6ESNxA2BVk0D09D0/1suVl7Uax1
+	 YG3dzQW6UuyUu5rNFrW96gDR2sgaoCGCjHkAXAqT72yZnl+7p42VYp4Se7KL2RSgPk1Wi
+	 Mw8gZNyBFWk1ndbG5BLDJyj1pbBq4d8jWvV1Aolq66aLDlDvj/tJOIHChC11NclujoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065519;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=V95TmVwb1uVcShif0QI50cgCemyCJ7WMZiM6N613i/E=;
-	b=XVrKZM/YGLZwRAY8zUCvXIbe5MugMSnsWEa/CPNYB+EvXzd6j2WQQkm/pyYRNk4IU5g5
-	 BpOUp2KQFUreYxStxrpdqofakzLn1/cEy5mhbSgs3xwr6hmjJT3IHFw3QE9EpP8ne+C4h
-	 B8N9pDhIodx138h6/p3/MK1ch9BT28Td4FWQfALvjsKlkbOlpKIpXF+T0WZcQOsrDpJPZ
-	 bEOGdikTzEHtP2TS6o0PqRf7xBJEQnclpCHe6cZuxKpc57RiQelJS+gARbb4mt3LTXJtd
-	 89q+BP0fvFliqX4gZTZ9OifYLDKXYswv50nssSUnI9AKtpjaXb2C5Lf8NQ1RUk5EenQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Ssza+YUrofN+aNIo1ppGVZ2KVXO2MwWk4STf9kg/x8A=;
+	b=tXn5z1hczOc3vsZoVU+yUdnCjBFb9M+I1DyhWtLGyKHlKpY2+kVgzaRo3O8v7r9PQ6HL
+	 ui7U6HkI734+/zJqFjn+FtqAWHxREiLHQxI7Fu9EjewXhRbszyGhOGaaYJeR3J+kiQIj4
+	 dkD9ceYzED3RbuVgWf3ky8t59zxPV948egkdTLr5VZCeROESbCekBzP+M+vJbhW16Nl46
+	 2lH0edgpg9p8KcHIO/bnPZyukj2IkCWXiv3QRQIQpx7umo12/v9wpLUX63r8xSns/lHg4
+	 VqY9tKHQWxqcPmx73BSiCm53CA+Dh8/ns7B3FZgPoha/SC52eeBPfXLiWSz4s9NHicQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0j9Va4vz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wL2r3lzS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87D1606A32C;
-	Sat,  7 Nov 2026 15:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B849606A32C;
+	Sat,  7 Nov 2026 15:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0j9Va4vz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855C31F0089F;
-	Sat,  7 Nov 2026 15:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wL2r3lzS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE831F0089F;
+	Sat,  7 Nov 2026 15:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065517;
-	bh=V95TmVwb1uVcShif0QI50cgCemyCJ7WMZiM6N613i/E=;
+	s=korg; t=1794065519;
+	bh=Ssza+YUrofN+aNIo1ppGVZ2KVXO2MwWk4STf9kg/x8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0j9Va4vz0Z/WZ46T0U89BKpsZdtpQWOJhjV6Ug03cQ2WqV01M3yuGcQaAwptakq0B
-	 goosw58J1c51tiD+Z9TNIJqWbWvVlU4gNnebb9z691m68Ey1pqH49bwfSkAfQ3oGcQ
-	 YhgNpJQ10dmhk4/3urB8ZtHGd1BwQGoLPAl8UP7g=
+	b=wL2r3lzSGbkKHhs/QkqtvoXWIZwqUY62d1wBgGuu+WgETetpe4bVq0T7ArohjUyXl
+	 ZDU7brrNlFhj8fMS5TMVXJiCLNs8QmkEoNxsxDNjPMYe79zhAseJDaGhbyMkriENbN
+	 JPhvsk4RvaE0gH0zasxPt8yCdAGha2YaGTzZv7nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Eric Dumazet <edumazet@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
 	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1199/1257] inet: frags: prevent acceptance of partially authenticated reassembly
-Date: Sat,  7 Nov 2026 08:58:15 -0500
-Message-ID: <20261107135012.471825964@linuxfoundation.org>
+Subject: [PATCH 7.3 1200/1257] ppp: fix stale pointer access after pskb_may_pull in ppp_ccp_peek
+Date: Sat,  7 Nov 2026 08:58:16 -0500
+Message-ID: <20261107135012.498483712@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,133 +62,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 6fb4e32f2ce3234ae0c416872e911706a3484430 ]
+[ Upstream commit 1e860f42f41c6fbf3304f6a52be38245b9394982 ]
 
-A reassembled skb retains the secpath from its first fragment, which
-makes it possible for the final policy check to accept bytes that were
-not covered by the transform recorded on the skb. This can affect IPsec
-tunnel traffic, including AH and ESP, and allow a packet to be accepted
-even though only part of its payload was authenticated.
+ppp_ccp_peek() caches a pointer to skb->data in dp after the first
+pskb_may_pull(), then uses dp after a second pskb_may_pull(skb, len + 2)
+in the CCP_CONFACK handler. If the second pull triggers
+pskb_expand_head() due to a cloned skb or frag linearization,
+skb->head is freed and reallocated, leaving dp stale.
 
-Reject a fragment when its secpath differs from the fragments already
-in the queue, and keep overlap statistics limited to actual overlaps.
+The stale dp is subsequently used in CCP_OPT_LENGTH() and passed to
+decomp_init()/comp_init() which read from the freed memory.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Re-derive dp from skb->data after the second pskb_may_pull.
+
+Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_frag.h  |  1 +
- include/net/xfrm.h       | 17 +++++++++++++++++
- net/ipv4/inet_fragment.c |  5 +++++
- net/ipv4/ip_fragment.c   |  3 ++-
- net/ipv6/reassembly.c    |  3 ++-
- 5 files changed, 27 insertions(+), 2 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
-index 365925c9d2628..b02d2472b003e 100644
---- a/include/net/inet_frag.h
-+++ b/include/net/inet_frag.h
-@@ -171,6 +171,7 @@ extern const u8 ip_frag_ecn_table[16];
- #define IPFRAG_OK	0
- #define IPFRAG_DUP	1
- #define IPFRAG_OVERLAP	2
-+#define IPFRAG_MIXED_SECPATH	3
- int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 			   int offset, int end);
- void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index a6d69aaa6cd2d..298ca9bb00835 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -1201,6 +1201,23 @@ secpath_reset(struct sk_buff *skb)
- #endif
- }
- 
-+static inline bool
-+secpath_equal(const struct sk_buff *skb1, const struct sk_buff *skb2)
-+{
-+	const struct sec_path *sp1 = skb_sec_path(skb1);
-+	const struct sec_path *sp2 = skb_sec_path(skb2);
-+	int i;
-+
-+	if (!sp1 || !sp2)
-+		return sp1 == sp2;
-+	if (sp1->len != sp2->len)
-+		return false;
-+	for (i = 0; i < sp1->len; i++)
-+		if (sp1->xvec[i] != sp2->xvec[i])
-+			return false;
-+	return true;
-+}
-+
- static inline int
- xfrm_addr_any(const xfrm_address_t *addr, unsigned short family)
- {
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index b286ee429da8f..c18da91c1f031 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -23,6 +23,7 @@
- #include <net/inet_ecn.h>
- #include <net/ip.h>
- #include <net/ipv6.h>
-+#include <net/xfrm.h>
- 
- /* Use skb->cb to track consecutive/adjacent fragments coming at
-  * the end of the queue. Nodes in the rb-tree queue will
-@@ -441,6 +442,10 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- {
- 	struct sk_buff *last = q->fragments_tail;
- 
-+	/* The reassembled skb keeps the first fragment's secpath. */
-+	if (last && !secpath_equal(last, skb))
-+		return IPFRAG_MIXED_SECPATH;
-+
- 	/* An IP fragment is never a GSO packet, but an untrusted source
- 	 * (virtio_net_hdr) may have attached GSO metadata to it. Do not let
- 	 * that reach the reassembled skb, whose head keeps the first
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index c790d2f494870..36105dd192823 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -378,8 +378,9 @@ static int ip_frag_queue(struct ipq *qp, struct sk_buff *skb, int *refs)
- 		err = -EINVAL;
- 		goto err;
- 	}
-+	if (err == IPFRAG_OVERLAP)
-+		__IP_INC_STATS(net, IPSTATS_MIB_REASM_OVERLAPS);
- 	err = -EINVAL;
--	__IP_INC_STATS(net, IPSTATS_MIB_REASM_OVERLAPS);
- discard_qp:
- 	inet_frag_kill(&qp->q, refs);
- 	__IP_INC_STATS(net, IPSTATS_MIB_REASMFAILS);
-diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
-index a7964125c764c..8418ed9423f4b 100644
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -241,8 +241,9 @@ static int ip6_frag_queue(struct net *net,
- 		err = -EINVAL;
- 		goto err;
- 	}
-+	if (err == IPFRAG_OVERLAP)
-+		__IP6_INC_STATS(net, idev, IPSTATS_MIB_REASM_OVERLAPS);
- 	err = -EINVAL;
--	__IP6_INC_STATS(net, idev, IPSTATS_MIB_REASM_OVERLAPS);
- discard_fq:
- 	inet_frag_kill(&fq->q, refs);
- 	__IP6_INC_STATS(net, idev, IPSTATS_MIB_REASMFAILS);
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 1a610a18893ba..3998ce4332f42 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -3157,6 +3157,7 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 		len = CCP_LENGTH(dp);
+ 		if (!pskb_may_pull(skb, len + 2))
+ 			return;		/* too short */
++		dp = skb->data + 2;
+ 		dp += CCP_HDRLEN;
+ 		len -= CCP_HDRLEN;
+ 		if (len < CCP_OPT_MINLEN || len < CCP_OPT_LENGTH(dp))
 -- 
 2.53.0
 
