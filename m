@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062148;
-	b=b1ZSdv0FMkeyE4e5yivQmBMk8eBTXwFFQMlKBUjme0nBlUyI39E2ZA6u0wYvzOLxmC6d
-	 jSwYFPXAJ1sd8p6JU/33FOGqX3P3/fGrQwc/SKO6J/FD2Kj6QfK+lnyVWPDovl5zX6qJm
-	 k2xODbKfCbz+GA+N5uud4685LBsC1jDn9Pgno/M14vV8SoBZq2d6Zh7KXiCkAL37GhmZl
-	 q61W2AI9SEA8p0QbusGQgRJes0Om8QDeF/ud7hK+Cajbb1jT2tGRjRyfhcFRcfH4plI+9
-	 MIjFcVTqLqBsGsr8xhrmzj62MwGeRb51yc+cHjYOd6dF0oWXEDFLSnsqWI7yQXmhOFA==
+	t=1794062149;
+	b=fjmnArf7KWk91Ab8EySbuncOnRwzCYhDDXQ/S9z55ieCKlRQG5+Za9CLMxwtSUu3snW3
+	 M0ilx2rpBqNMqEX6t9p8+leiCr7RBoDYx6QA/v3tp4TEiV/1y/NX36eD8se3RMpi4XZvv
+	 u4qb9e1zHsUFhZYkb3jcf2ojn3BG3/r5dbl7726ykqV+JjMxA1ZZ01jlnSnH46pbi2jGt
+	 xAzNqyTRBD3BHcIkgtqzZNLL3US3M3DuBipvJyee759rjQr6LOCw8Z+Ec+cmZbpTUCD5Z
+	 tEMcc8y45JAPb3X9dlHzRLAm5E3b/6euxmpJHw0mLc0Y+ts2gr/FwvYGUk8LBBqgrFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062149;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TkjueNYHvJqYfc5WL6bNfOJldIv2r1PPJ/AQoAYNP6M=;
-	b=k32Nvpl1lcQf8nIUqakd8JJ15VDJgqgHNAEz/wagRbAg1YA5O8YA/o4Nrtp4eVAY9vE9
-	 9RihpHC1wxxvvZBlYZZWo88iAuvLPU+xiVCwWsdIt8/HGUvnWHmOF0oygktuv9jOZm/QB
-	 VAFU3XWBJhPVd2jLETMErjWIdTK5yIWnsHUNJIZcqvcXgUQCokC22XMPx3qf8VgrLv5Q1
-	 z3r0seW+361UItTtBRyYR40vpnHQt3U25qbOMs83mb2HJhxjNzyXe0RjdvSAPPyk9hzSv
-	 /psEbE2XMwGpzRJPMOKjY4BOQPM31We3s0zxqvalLKf9sD0btbQ5NGbjDzkT3oKo/WQ==
+	bh=VEBYh91y1kwQU/twuf4x4UfUiUPfmSm1MDNcmJgtXbY=;
+	b=NwVzP7juAeW4BwN5hyVhRLDiWbbf+q924Kb6zv93763l6m2pFyrb1eNPtlGp07BAK7X4
+	 LG/bLLbkMiVbROj7ctHf00XB1ku36wJsi9hDJiVGECX0lH4iLzMhXTNM3i6XCTr+9w3+v
+	 FKpt6/3J5mLNjdXZaUuPb5BHDW+uUYbrFjZGhOOg/6TxiLcKiSzxUbKUMnc9puDXKeKWJ
+	 Sq/BEj+1rwohA1hhmCKCKGMLdBVC99hJ+/AZbox4WivZ32sLIUuHqdNzN7/+z/liu3JzE
+	 iJXESz+nGmYcmRoOJ5YMLbXU14eXyh1nuXIt45Fv+ITQVJ4PrBzfZYMMjUO9sPktbtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kno56V01;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTvRM5b1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F61606A66A;
-	Sat,  7 Nov 2026 14:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BDB606A66A;
+	Sat,  7 Nov 2026 14:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kno56V01
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CD61F008A6;
-	Sat,  7 Nov 2026 14:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTvRM5b1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425031F008A6;
+	Sat,  7 Nov 2026 14:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062148;
-	bh=TkjueNYHvJqYfc5WL6bNfOJldIv2r1PPJ/AQoAYNP6M=;
+	s=korg; t=1794062149;
+	bh=VEBYh91y1kwQU/twuf4x4UfUiUPfmSm1MDNcmJgtXbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kno56V01TvaQF56CK2Dr8LcuAF108GZA1bFLLEMjwrNbu2VDaMwSfpIcVgT/wzdBU
-	 oIwsu0CVMTgERnsw3mtRNKg0WcyLpB4trq9dKIEJ/4zMQJLcFkvAHINNnAtdsY6XDR
-	 UBxmhQKLI8qo5kgtyUuYv/9OwyZVfnK88lOHSIeM=
+	b=sTvRM5b1BefyY5SyXMZiKRHYpaagixMp5f2izpjntYs9JBJwOl4jerS3qPa9ayuIr
+	 Dv0xmT/meec6Zd2aP3e2BYP+ivu/y59hrtFKqHLJqNNHULtRXouPaT0ZcUM9U/neji
+	 2M6Xi4ZaB3ESX2YvEWDElQSHS520URvybpKto4rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	David Cemin <dcemin@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1075/1536] dcache: report a Tasks-RCU quiescent state in dentry_kill()
-Date: Sat,  7 Nov 2026 08:51:31 -0500
-Message-ID: <20261107135027.886705701@linuxfoundation.org>
+Subject: [PATCH 6.12 1076/1536] ASoC: sdw_utils: clear stale RT711 device reference on exit
+Date: Sat,  7 Nov 2026 08:51:32 -0500
+Message-ID: <20261107135027.915113768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,59 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: David Cemin <dcemin@nvidia.com>
 
-[ Upstream commit a647a53bc89a046bee4a12a0a5627f2dfaaef807 ]
+[ Upstream commit 7c7df141dcabaa5370b5e52a9d64e2c1ea13a338 ]
 
-I am constantly seeing the following warning on Meta's fleet:
+asoc_sdw_rt711_exit() drops the reference held in ctx->headset_codec_dev
+but leaves the pointer populated. If the card cleanup path reaches the
+exit hook more than once after a failed or deferred probe, a later
+invocation reuses the stale pointer and calls put_device() again,
+underflowing the refcount and leading to oopses when later probe,
+driver bind, or suspend paths walk the SoundWire bus after the device
+reference was released. Observed as boot- and suspend-time oopses on an
+arm64 platform with an RT712 headset codec, reproducible
+deterministically by repeated machine-driver probe cycling with the
+codec drivers unloaded.
 
-  INFO: rcu_tasks detected stalls on tasks:
-    native_queued_spin_lock_slowpath
-    locked_inode_to_wb_and_lock_list
-    inode_io_list_del
-    evict
-    __dentry_kill
-    shrink_dentry_list
-    shrink_dcache_tree
-    d_invalidate
-    btrfs_delete_subvolume
-    btrfs_ioctl_snap_destroy
-    btrfs_ioctl
-    do_syscall_64
+Clear the pointer after put_device() so repeated cleanup becomes a
+no-op, which also makes the existing NULL check at the top of the exit
+hook effective. This matches what commit 046173b98de3 ("ASoC: sdw_utils:
+fix double put_device() on aggregated amps") did for the aggregated amp
+references.
 
-dentry_kill() is the common funnel for dentry teardown: dput(),
-shrink_dentry_list() and shrink_dcache_tree() all reach it, once per
-dentry, and its cond_resched() is the only reschedule point on that path.
-
-cond_resched() is not an RCU-tasks quiescent state.
-
-Use cond_resched_tasks_rcu_qs() so the teardown reports an RCU-tasks
-quiescent state as it proceeds.
-
-Fixes: 9c5f1d30199d ("dcache: move cond_resched() into the end of __dentry_kill()")
+Fixes: 811648340707 ("ASoC: Intel: sof_sdw: avoid oops in error handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260918-dcache-task-rcu-qa-v1-1-963ec83e6d0b@debian.org
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: David Cemin <dcemin@nvidia.com>
+Link: https://patch.msgid.link/20260912182131.1156475-1-dcemin@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dcache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sdw_utils/soc_sdw_rt711.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/dcache.c b/fs/dcache.c
-index ad31c9dd53f77..482b8b6d0eeeb 100644
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -632,7 +632,7 @@ static struct dentry *__dentry_kill(struct dentry *dentry)
- 	if (dentry->d_op && dentry->d_op->d_release)
- 		dentry->d_op->d_release(dentry);
+diff --git a/sound/soc/sdw_utils/soc_sdw_rt711.c b/sound/soc/sdw_utils/soc_sdw_rt711.c
+index 38b4126dd45f1..4f0c78466edc8 100644
+--- a/sound/soc/sdw_utils/soc_sdw_rt711.c
++++ b/sound/soc/sdw_utils/soc_sdw_rt711.c
+@@ -123,6 +123,7 @@ int asoc_sdw_rt711_exit(struct snd_soc_card *card, struct snd_soc_dai_link *dai_
  
--	cond_resched();
-+	cond_resched_tasks_rcu_qs();
- 	/* now that it's negative, ->d_parent is stable */
- 	if (!IS_ROOT(dentry)) {
- 		parent = dentry->d_parent;
+ 	device_remove_software_node(ctx->headset_codec_dev);
+ 	put_device(ctx->headset_codec_dev);
++	ctx->headset_codec_dev = NULL;
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
