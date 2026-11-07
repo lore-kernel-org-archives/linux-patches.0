@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062528;
-	b=fbnE9FJk5EynFnyLaZvqVQD3ticCQFC5PgWKSidhcqlAN5Nu+RidBdqGD32wWHx3Oay/
-	 1otab+CWm08lTbjjsshEUjMxLcl8B/qV4l01gUC8xWRLnXnQdH+Jms6xsbvjgZLR75DhX
-	 VPSbp3J+LxL/jKsL9UqEDZAi8e/fToH6wVYMxDOvo/71l79NvdmqqcEfebt3vEkc2sFpB
-	 UK92DDZmtC71tQwsvB8E9pJQmA9Pe1gHJ7XIUEkoL6192ZxysXTUx7FsiMy47PPyDt8zR
-	 AMCwQ3+vJOmokXH1LAsZRTAOgLD8DNsfQSW6K5dBTyo3TVYZ2ybRLDQpP93yU/pGM5Q==
+	t=1794062529;
+	b=wfXdmLvTrfN5b9ELT5HXsyRFLfckgMyXIaRWvlCoyf8PAPBd/j+v8RY+4ewj3Pi4vGbr
+	 F+5OKWVJh6Q5uO/vgMCskPrOho92ti87Sgu0n5cgm3XzdxHXk4hZcqUyIuoLrMFMcwjfE
+	 Kxc1l3VRG+MxS+YDWh0LMxVl5ZHqrWEpnODZhSIl7zQnNBaN3J6frCMOWDqyUbyvrtLgG
+	 0PMDSw9PiGl+C96hUu57vCrCX3E3Lygh9yynyYgleykQRx95FQ53u0HfZ6v2mTFAdyHzq
+	 /RjhPtoZLwD/lkrpKdjfpYpH4brVJ5WSRVzjq183+bL4Uq+AAWLoUWY98aIMbnnRzDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o0OGux6q7meN3RiHw5QBeSUHlSSeYyBEdW0VHIwYpuA=;
-	b=JIFVlajhcBCR70389a5ZFDOgNXSszCfa6jl32NTchPJuTVYpzTDodxSkU06y6bIdfypY
-	 z0Li6KLKvYYeRu9bWZivTv0SQRAZd9Vd7MutpZEfY6zW6uV9vTSF0k8Ja/Hyzjibul92D
-	 8zkbVOJgoSQk5edrirAs0AxkQcAoXErQ/8PsqMsSeVZvIuSxOhubcHuLTlcC7lXV25TQZ
-	 DhknFvEbWijclTosBiCSMPZ1w5pk3x1RASmD0MVacSyDlEC/1anI5JCfQI8/oN1C7TMwP
-	 Szcp658wNrU25Y4Srm4eqvX9WTzseQDlBo4dNomItpJqq/kMtobsAQ4IBk29WCesMYA==
+	bh=tbMm5EdPw+CajNdr6LqUZdQTpUk9+a7vK3ms7ozgYlw=;
+	b=kydv/TXQyvnBoY8YfJXan+uARSwaA6nAQ/xQduiMcIasWyhJIQQC8qp0hGP9NnfwIAGm
+	 zCqpGaowDtm88WLZxxsFFONPnEoMSApgNyNmcsbuO5mEASD1Sd4qw1Hslm668aul/FQP2
+	 UsP51UNQsz0W9Z3BGz6tcpz5qbgCVqzGMqc0DEdvo4RQH74dLSjAjnyCXhElhQ49Ldl2K
+	 xPSuBpUczauhFiHqXfpvbAdYqi9/zZX2UBoj5iapcKE+XJMtdgML328UtARzj/3k4QCip
+	 eoHobgcFJ5lo46/MCkK8MsaVqEE2YlsFVwXBonOLniT/8IemkP5f2qpPnzeSKctEiHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V667FF4U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kK8sYVDK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10346606D80F;
-	Sat,  7 Nov 2026 14:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6C1606D80F;
+	Sat,  7 Nov 2026 14:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V667FF4U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B130A1F0089F;
-	Sat,  7 Nov 2026 14:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kK8sYVDK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4031F0089F;
+	Sat,  7 Nov 2026 14:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062527;
-	bh=o0OGux6q7meN3RiHw5QBeSUHlSSeYyBEdW0VHIwYpuA=;
+	s=korg; t=1794062529;
+	bh=tbMm5EdPw+CajNdr6LqUZdQTpUk9+a7vK3ms7ozgYlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V667FF4UUl+7J8wndPbcBohT9VkS19/tlsnbpO+BZJ8O5aqCEl5jm9XF3NZOJUQuw
-	 9N+zHuNqycQ5/F4oixldKdCgBmeWn7mKJl7MDy9Zog2lhKBeJuZppN7AZ8h8gksV53
-	 q+0S+2X5Arghl0KGLpd36kEXqbsdzTXKkjol+TUw=
+	b=kK8sYVDKp0Bdvri/Y2XFbycDxL80gdrKRr5zDRrSY6DAw83R8CN1BdWcB9+hHcs0G
+	 CkiUyBYbbUDd2IXcTuLROdJgEmnWq3zEkgbB1EpJpbwjqY3fk+bGKToOizbCUpKQnd
+	 S+zRkuzLDmzom2XnYsuJJL+KWzc7nMhQaJGPbTPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1420/1536] tpm: fix zero-length read discarding the pending response
-Date: Sat,  7 Nov 2026 08:57:16 -0500
-Message-ID: <20261107135037.711969459@linuxfoundation.org>
+Subject: [PATCH 6.12 1421/1536] gpiolib: dont report -ENOMEM for a requested line without a label
+Date: Sat,  7 Nov 2026 08:57:17 -0500
+Message-ID: <20261107135037.738527832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,48 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
 
-[ Upstream commit 6fc1b05077b8ac7c3193616f0bc419f6185988c6 ]
+[ Upstream commit dae739137441667d67fbfcc4d303a0ecc6618662 ]
 
-POSIX requires that a read() with a count of zero returns zero and
-has no other effects.  tpm_common_read() treats such a call as a
-consumed response: it marks the pending response as read and drops
-it, so the response can never be retrieved; subsequent reads return
-zero and the next write() is allowed to overwrite the response
-buffer, silently breaking the command/response pairing of the TPM
-character devices.
+gpiod_request_commit() sets GPIOD_FLAG_REQUESTED, calls ->request() and
+only then sets the label. A line in between has no label, so
+gpiochip_dup_line_label() passes NULL to kstrdup() and returns
+ERR_PTR(-ENOMEM), which for_each_hwgpio() then passes to kfree():
 
-Return early when the caller passes a zero count, leaving any
-pending response untouched for the next read.  A zero-length read
-will not report a deferred asynchronous error; POSIX permits read()
-to skip error detection for a zero count.
+  BUG: unable to handle page fault for address: ffcc73074355ffc8
+  Call Trace:
+   gpio_sim_dbg_show
+   gpiolib_seq_show
+   seq_read_iter
 
+Return NULL for such a line, as for an unrequested one.
+
+Reproduced with gpio-sim: reading /sys/kernel/debug/gpio in a loop while
+lines are requested and released oopses within seconds; with this
+change, 100000 cycles pass.
+
+Fixes: 35b545332b80 ("gpio: remove gpio_lock")
 Cc: stable@vger.kernel.org
-Fixes: 9488585b21be ("tpm: add support for partial reads")
-Assisted-by: GLM-5.3
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://lore.kernel.org/r/3f15140ab3c26e98b49d6aceaaa826585d56960b.1791015549.git.xiaopei01@kylinos.cn
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20261020-gpiolib-chip-removal-v3-0-aambrozewicz@nvidia.com?part=2
+Assisted-by: LLM
+Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+Link: https://patch.msgid.link/20261022083343.3905973-3-aambrozewicz@nvidia.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm-dev-common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpiolib.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm-dev-common.c b/drivers/char/tpm/tpm-dev-common.c
-index 48ff87444f851..1bfdcb9794e20 100644
---- a/drivers/char/tpm/tpm-dev-common.c
-+++ b/drivers/char/tpm/tpm-dev-common.c
-@@ -134,6 +134,9 @@ ssize_t tpm_common_read(struct file *file, char __user *buf,
- 	ssize_t ret_size = 0;
- 	int rc;
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 115bf569dbdd0..02a322f8330c2 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -2471,6 +2471,7 @@ void gpiod_free(struct gpio_desc *desc)
+ char *gpiochip_dup_line_label(struct gpio_chip *gc, unsigned int offset)
+ {
+ 	struct gpio_desc *desc;
++	const char *name;
+ 	char *label;
  
-+	if (!size)
-+		return 0;
+ 	desc = gpiochip_get_desc(gc, offset);
+@@ -2482,7 +2483,11 @@ char *gpiochip_dup_line_label(struct gpio_chip *gc, unsigned int offset)
+ 
+ 	guard(srcu)(&desc->gdev->desc_srcu);
+ 
+-	label = kstrdup(gpiod_get_label(desc), GFP_KERNEL);
++	name = gpiod_get_label(desc);
++	if (!name)
++		return NULL;
 +
- 	mutex_lock(&priv->buffer_mutex);
++	label = kstrdup(name, GFP_KERNEL);
+ 	if (!label)
+ 		return ERR_PTR(-ENOMEM);
  
- 	if (priv->response_length) {
 -- 
 2.53.0
 
