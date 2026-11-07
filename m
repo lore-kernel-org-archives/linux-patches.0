@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063696;
-	b=uMj4OV0/8ariIAMeCYlxnSyKUIQCFlpxcSoCk8KzoACcqpN6ajNgME+RyaJ1mjwL5e1b
-	 91f2ms11rQxDlv+aWu4yHCwOg09oFQk+aIlLEaHjkrhsEP2bKTVc29Ayc6UNlIKxdE2uS
-	 BSYTSuCSJ1kFfBLrhp5CoK5L3gQ8r9BBOqGv8scV/fv527qx6L8JujE8AH2pWhWkfvOwL
-	 anGDfN09i9yeKEJRra8qnv49ej0BgILmy+DTOmBwzvOZo2K1QrISpIa6s7QEsd6cFKGyf
-	 IXQ95I+NOIsJu+6+C1r1VnNY6zUJ5gluLlBbqp4Hgr0tAvvldDgVdAG28vA+9uYdfVQ==
+	t=1794063699;
+	b=XPYFnhV4Zm7kjaOfgNemtlOP7RD4ovETmoIkZu0NCNXu2XWHKssBQvqLDb26DCKqxYg9
+	 CCkcbtAkFfZ5Sd8/MsEg6+Mz/m75u1S5TWzqkAu/NGyrU2/Yjms7OUFEWP6IVAgnhYbHE
+	 goKWWkLaSDy3d3xp3zTWLzyP8w5ZSIm9RWuJBzihF5lDDOkWif2ugkjYaU2W/4//fy0mg
+	 TJz638RdGFuCqngjTbbjmwvCQL6m6cONrVAOIeI+9briWPCgeHgTFLHv/b5ffdYyNylGX
+	 fIycnmfluY5pN1y+p4oUO2mXvalhWsheaG9F6ZaEx71MDHtmuEbFj0AIesG0oUgakyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063696;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063699;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SAIEpre/N4pqCSQdel7EkFZ/WqYBYdg42iJVGNTxBxI=;
-	b=Of41RPRWhN5/WcTHy6b/npmPVAS0gK9Fuh+SpP9sbESqxweqiCwKtwUjfPDhDB7fI5/K
-	 PphiQxcoztPV3Ff3KJkH2mBtcSsl5ilPLF9/2cu1w1HqsdKau0wJcztdTXN4h2A8CBWzb
-	 12ziRttPLRRL6J0nQa+4OwX2fm6q0pBF61DdBcQhSo4UMawKB4pyW4LOGDaaQ49JzWf7l
-	 WjuMrwImnV2q83rwkmn5/1r+4NNULxlhyEuwDtmLPnPC73TMr+FkhVxo2T6msigEtmLX+
-	 x2d4VicjDbg5HlSKuo/B4DwLHY3rQUboiLoJEWTrCpxEyZr2MSPLaCCe2hkuLuz495Q==
+	bh=QdrsRuvZVGu6FvjYljfJh7lQ6SpJLXm2GDFy6MRgtwA=;
+	b=4PiB+yYzPHLbeRdJlCpjQ07dyAksuCWo1e4wLsgEfggDjlCo8tben9WkMbvQ6z/F7SWs
+	 989AhYBIuZzFuIBEB0gvEJyCy0tDRC+9OqjQm+ux2guwnbI0Lt5gJUOQsf5SxSJ2ZJnDD
+	 qxIFw7CxoB/19hWSIScJ6j3f56+6ZMQmXDToF9vIhctzH1w3yUuLnYvyB8asiwrHqVUwD
+	 5UAt7AE1eZggt1zjYPGtI6HIY7bQcrdbmOjVM3IUImZ1nbaQPfRf6fORERsz+xj3hqrdB
+	 ZeqiwpN8a6k5mKETso4/yvSh9xHYoO74g9Aum5jwc5Rvom4Hzc5zo/cYCQgru0epcxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbJD7DkI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qJRYHef;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACA6606A32C;
-	Sat,  7 Nov 2026 15:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB38606B8A4;
+	Sat,  7 Nov 2026 15:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbJD7DkI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318581F0089F;
-	Sat,  7 Nov 2026 15:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qJRYHef
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1E91F008A1;
+	Sat,  7 Nov 2026 15:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063696;
-	bh=SAIEpre/N4pqCSQdel7EkFZ/WqYBYdg42iJVGNTxBxI=;
+	s=korg; t=1794063698;
+	bh=QdrsRuvZVGu6FvjYljfJh7lQ6SpJLXm2GDFy6MRgtwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IbJD7DkItYn2d5XQguMAL3lJckatxXuBYyrBZkKLQirT8oRRdIYwU0JoE8qVdS/Ds
-	 DYQYH/nvC6e2c+QVbPIxUTdEsjWmC5rBMvkTEgKiAtYvFbUNk4NrNwdjhIgesSRgbo
-	 YDehzVlS25Exvqtw47bR1s0ge8wdUt/cha4G8esQ=
+	b=0qJRYHefT5uXrDLvKkFABrz+OqS7o+sdQqO2g78nSK3eIbAxiTLz60tmGz5mPxoL5
+	 3xTZMrb0+y0xv5tOr1Fl8uVvXMNXfFLiV+y3DEFBUdz88vnu+onalOERNu/K0qisDE
+	 /IXSUFoYNTR8UJhtXei4Cp/Vq3LSnn8QNmDpIMsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 801/869] ASoC: hdac_hda: Balance the runtime PM disable in codec remove
-Date: Sat,  7 Nov 2026 08:58:03 -0500
-Message-ID: <20261107134920.018311284@linuxfoundation.org>
+Subject: [PATCH 6.18 802/869] LoongArch: Call cpu_final_simd() with pure_initcall()
+Date: Sat,  7 Nov 2026 08:58:04 -0500
+Message-ID: <20261107134920.112638142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,56 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit f26c0d5f91d918bb66cbbc8916f41836adb38346 ]
+[ Upstream commit 9b56c3659a7e5d930ab3c07ea74cc46af65b6d20 ]
 
-hdac_hda_codec_remove() disables runtime PM of the codec device before
-releasing the HDA link and calling the codec driver's remove callback,
-so that no runtime resume can race with the teardown and access the
-link or the already freed codec driver data.
-snd_hda_codec_cleanup_for_unbind() then disables runtime PM again.
+After commit 35ebc4de105989034f12 ("xor: remove macro abuse for XOR
+implementation registrations"), using "simd=128" to limit SIMD on a
+platform with 256bit SIMD instructions causes a boot failure.
 
-On the next probe snd_hda_codec_register() enables runtime PM only once,
-leaving it disabled after the ASoC card or the codec driver has been
-unbound and bound again: the codec stays powered and runtime_status
-reads 'unsupported'.
+Because cpu_final_simd() is called with arch_initcall() now, which is
+after xor_init(), LASX flavors are selected but not workable.
 
-Re-enable runtime PM at the end of hdac_hda_codec_remove() to balance
-its own disable. The codec remains disabled until it is registered again.
+Call cpu_final_simd() with pure_initcall() which is before xor_init().
 
-Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027083840.28813-4-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/loongarch/kernel/cpu-probe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index b4d93b9404bb7..1a89f570fd1f4 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -557,6 +557,7 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 		return;
- 	}
- 
-+	/* prevent runtime PM callbacks while the link and the codec are torn down */
- 	pm_runtime_disable(&hdev->dev);
- 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 
-@@ -564,6 +565,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 		driver->ops->remove(codec);
- 
- 	snd_hda_codec_cleanup_for_unbind(codec);
-+
-+	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
-+	pm_runtime_enable(&hdev->dev);
+diff --git a/arch/loongarch/kernel/cpu-probe.c b/arch/loongarch/kernel/cpu-probe.c
+index 4ac9c95991670..9f0f9fdac011b 100644
+--- a/arch/loongarch/kernel/cpu-probe.c
++++ b/arch/loongarch/kernel/cpu-probe.c
+@@ -93,7 +93,7 @@ static int __init cpu_final_simd(void)
+ 	return 0;
  }
  
- static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
+-arch_initcall(cpu_final_simd);
++pure_initcall(cpu_final_simd);
+ 
+ static inline void set_elf_platform(int cpu, const char *plat)
+ {
 -- 
 2.53.0
 
