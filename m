@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064491;
-	b=c53vHiEhjKEV92ed2KRdRWrLg/4vd4ni9Gc6/YV1oFGvZgy8GORHGzUeOmxbbiAHLLZI
-	 bR6Rts06bDZAFn+ytrjL/QdUSQJOAKZb2wcHMjx+Hw0Ks2eqBzYuXnFJme+p948xo+661
-	 2a4pM8MTGYjoUhfdy8gML9qo8p4LOczthjXnx1xDRhbdflocnaC2UPDSFwhs0QbYB4c3u
-	 DzJztLD1DirJnYGaNrI7FC7IaYFR34HjMN6N2l+rZmLEofL+hmZagZnQMPl0PVcifyxVy
-	 kbx9YFNlUKieMUhXuTWRUofPFGFJ82HUuW9lLJWVl8yvVCdOek+mmwWqQFwrYYu/UFg==
+	t=1794064493;
+	b=wZbS3aeEXe4CQ4U6CxVUnfb/+0Sh9zg/Vf7SuTcqSYSjOADy6VfJp0iEv1CSS8czCAgv
+	 5GCixlcTBCkP6s1sx3BgKFJZ643AmjdEiCi1W145ouomF1XqD/UlJuEyA/Ts46ppqWXH1
+	 EV0IgvBZKBUdONTfNWYyid7UO6fqeRDtkEhrYDeLYH7faDzRt3SOsORzZ3u6ACnpV+oST
+	 TLEMCvSfgBVNyJ6WB69LmMv/Zi4vS7sAGfGjYOo9mbqgs3aLpFkiBeMJNHG0T/8ZVXZS1
+	 9lRL/EdC0kAtNjStiTVp5MGVFuOQHl/PF1lcnip6vrbcnVGAU3f3Z6PNUNlDboZgCvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064491;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cnr5IRu6t/iudtUN4NUyaclXPUP83MtqXK8dDe+28ig=;
-	b=KxA7xByRCuRjaZ0IKTAmXVY9CXyG+Ksb1QkR83z67cxp5nXH0cuAuKpfOMSOQwPO3C4g
-	 CO600nfoXG7JATM2QKk8RtYeWDKVCyZj87pA1o6C89f1WvIWSvngtjObBtBdVD+hDfAN9
-	 uhGhvCU97jCbYl3RaenpsjJLu6htp8Ui+8f94EF33jNuBJEGSDrL1Mxjix4Ub4vYdyzeM
-	 v86G4P+w40Rh+hXTNjQWX8KAe53TpF4NzfqkOw3qQsZNk47WD5zIL4p5wB+qlXrM8C3gL
-	 QjjZN5sd42OMNAQUXTaJbLaOY15dZxcJMEV5shR6c76iL/HJdULLe63TvMKrLGxQvvg==
+	bh=8VoZvj4Dr3N6Yj8cH8df4UYWmfLFh6NBJDszl6Td8M0=;
+	b=bxp2OXpVjj5kZd2AahL9lClxmmbiBJpqAxFCNn479eqyPK0W95Q5n9+Zsq5HA9GJjUpf
+	 YriPdjo2MbWe5MU281/4TudNOcOhcLbfUnkgbXmsgFWeKevWa1/AKyzFtC+Hj40q1AxUv
+	 WVKffGoRBRUzxMA1ckXM3WjuiqZWk/XOStfAz4LzQDO6TffbbHBV4KOAfBBHoGRSv7BtO
+	 aL6SfKwxQSckPoX3Wg+Uf7n4n7N+AoK6xIyt84y1emBhGh0NYHVT59IrWd3PNyTnpmici
+	 7Sxg/WbR7bJutrcpHxx7OAuZvvgR2eCHrJnne2q+m2HSMpLSLKCceKTPPighqFLjXkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTwyCH5V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fQWbvNms;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2F6606A9EE;
-	Sat,  7 Nov 2026 15:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5C5606A9EE;
+	Sat,  7 Nov 2026 15:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTwyCH5V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A83A1F008A2;
-	Sat,  7 Nov 2026 15:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fQWbvNms
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8705C1F008A2;
+	Sat,  7 Nov 2026 15:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064491;
-	bh=cnr5IRu6t/iudtUN4NUyaclXPUP83MtqXK8dDe+28ig=;
+	s=korg; t=1794064492;
+	bh=8VoZvj4Dr3N6Yj8cH8df4UYWmfLFh6NBJDszl6Td8M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTwyCH5VkjA5Xa8J6RKwJqzGAtLt+0X9/TXwV+POq+GfQCZzWAF4YMlj0x0hCUwKz
-	 n6G5HsQK0ojC3x1bS2jQrdgZYNgKNt96/RmL8T9M3G8uIMIXCuPLLD8+yrhvs41Dqj
-	 rNZGQEzI9Gjjsdv38KZetnbpDPNk5r2qIApDn69E=
+	b=fQWbvNmsq2d/u2eSm+Z5R+rdmzl49pIEF+OIke3Zan8uur8P+Jhi3fxa5x5Ofjss+
+	 6PTcds8obNG32my6xBK2sLWX6wyQrRm6WVvPKXy+qjjwhW/3EA7GF5VoLQ6ltdNqSa
+	 WCkElI7ET6Fib+h614RUv7X6+tO+Po7UpkvxtuoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Khorenko <khorenko@virtuozzo.com>,
-	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0527/1257] selftests/core: fix unshare_test with large fs.nr_open
-Date: Sat,  7 Nov 2026 08:47:03 -0500
-Message-ID: <20261107134953.970332482@linuxfoundation.org>
+Subject: [PATCH 7.3 0528/1257] xor: add missing vzeroupper to AVX code
+Date: Sat,  7 Nov 2026 08:47:04 -0500
+Message-ID: <20261107134953.995725252@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,86 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit df0b7e0ea59c43708cff8c7e34da5e2f8d430e5e ]
+[ Upstream commit 7b8fc26c40d6cf4c6751a045c9e42bbb7e78d81b ]
 
-The test assumes fs.nr_open is close to the default 1048576, but some
-systems set it much higher (e.g.  1073741816).  This is systemd's doing:
-since systemd v240 (2018), PID 1 bumps fs.nr_open and fs.file-max to their
-largest possible values on boot, as file descriptors are already accounted
-for by memcg [1].
+Since the AVX optimized XOR code uses YMM registers, execute vzeroupper
+before returning from it.  This is needed to avoid degrading the
+performance of any later SSE code that may happen to be executed.
 
-In that case, dup2() to nr_open + 64 requires the kernel to allocate a
-file descriptor table with ~1 billion entries, which fails with ENOMEM.
-
-On a kernel that already carries 04a2c4b4511d1, dup2() no longer fails
-with ENOMEM.  The allocation is now rejected up front and the caller
-gets EMFILE instead, without the WARNING, but the test still fails.
-
-Cap the nr_open value used for the test's own arithmetic to a known
-reasonable base value (1048576) and restore the true original value once
-the test has completed.
-
-Link: https://lore.kernel.org/20260814165709.513263-1-khorenko@virtuozzo.com
-Link: https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812 [1]
-Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
-Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+Link: https://lore.kernel.org/20260831212248.213805-1-ebiggers@kernel.org
+Fixes: ea4d26ae24e5 ("raid5: add AVX optimized RAID5 checksumming")
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@gmail.com>
+Cc: Christoph Hellwig <hch@lst.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/core/unshare_test.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ lib/raid/xor/x86/xor-avx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/core/unshare_test.c b/tools/testing/selftests/core/unshare_test.c
-index ffce75a6c228f..d40e963dd5205 100644
---- a/tools/testing/selftests/core/unshare_test.c
-+++ b/tools/testing/selftests/core/unshare_test.c
-@@ -40,6 +40,14 @@ TEST(unshare_EMFILE)
- 
- 	ASSERT_EQ(sscanf(buf, "%d", &nr_open), 1);
- 
-+	/*
-+	 * Cap nr_open for the duration of the test to avoid ENOMEM from a
-+	 * huge fd table allocation; buf/n keep the real original value so
-+	 * fs.nr_open can be restored to it once the test is done.
-+	 */
-+	if (nr_open > 1024 * 1024)
-+		nr_open = 1024 * 1024;
-+
- 	ASSERT_EQ(0, getrlimit(RLIMIT_NOFILE, &rlimit));
- 
- 	/* bump fs.nr_open */
-@@ -73,10 +81,13 @@ TEST(unshare_EMFILE)
- 
- 	if (pid == 0) {
- 		int err;
-+		char buf3[32];
-+		ssize_t n3;
- 
--		/* restore fs.nr_open */
-+		/* restore fs.nr_open to the (possibly capped) test baseline */
-+		n3 = sprintf(buf3, "%d\n", nr_open);
- 		lseek(fd, 0, SEEK_SET);
--		write(fd, buf, n);
-+		write(fd, buf3, n3);
- 		/* ... and now unshare(CLONE_FILES) must fail with EMFILE */
- 		err = unshare(CLONE_FILES);
- 		EXPECT_EQ(err, -1)
-@@ -89,6 +100,10 @@ TEST(unshare_EMFILE)
- 	EXPECT_EQ(waitpid(pid, &status, 0), pid);
- 	EXPECT_EQ(true, WIFEXITED(status));
- 	EXPECT_EQ(0, WEXITSTATUS(status));
-+
-+	/* restore the real fs.nr_open value */
-+	lseek(fd, 0, SEEK_SET);
-+	write(fd, buf, n);
+diff --git a/lib/raid/xor/x86/xor-avx.c b/lib/raid/xor/x86/xor-avx.c
+index f7777d7aa269b..95b21e7225e8d 100644
+--- a/lib/raid/xor/x86/xor-avx.c
++++ b/lib/raid/xor/x86/xor-avx.c
+@@ -147,6 +147,7 @@ static void xor_gen_avx(void *dest, void **srcs, unsigned int src_cnt,
+ {
+ 	kernel_fpu_begin();
+ 	xor_gen_avx_inner(dest, srcs, src_cnt, bytes);
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
  }
  
- TEST_HARNESS_MAIN
 -- 
 2.53.0
 
