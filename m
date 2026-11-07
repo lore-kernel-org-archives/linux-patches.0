@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065492;
-	b=sCPmXnpkM0BDPc5s3bAjhWhSsuohvxDy/eG/T6uNYwhLa6VBCP9av3Nwvzg8lMF6cXxw
-	 wvxOceRlZQXrPPk1AA7HfvMR70d1wXuo76eRS+yYzDSflfFKoKLyFLNe3ipmirXqZUZ+A
-	 oJWNuBWr8xmbAclu9QdUAtDGwso/7zGzkHC5BNfuAOu3yoC4FJouEavIdU9ORlOKnpFa4
-	 PfeItJEtzlMTHf5XlphOS43Zxy1TnzmB95D3+/Vk3qh9v+0wnFDe+/0FScDmRYDGoG7wW
-	 AmFqvwGAgkTCK1Tyqc/L8dxEcCsxojTg46xILVwsT9MM2ufxiabWMoBTIv02eS/wxug==
+	t=1794065494;
+	b=1J0iGPQt2BdfUyylSozoFzL30LYb9lCG8i5zNBSMiqfPWuQbrFMjitg26atlJTLZmafn
+	 yx01HMRZV2B3+T4h1mA8SUb+mBFYqRlkTZ8G08Wreu67DapPBLfMx/51U95V95SgsKAZp
+	 FCg4NtG5A+pxsJ9jwLRUppf25P3mNwji0vr/KAGcqgkJA62ASVYEdrfHnGSugkRsPjWIb
+	 Kk1kQTYii4K5AsEK/zqX6JJranX+/vKV8cq8ViEDMaOl88QURf/zPfekf00QWMMtta9X6
+	 +aNBgx5KcVffgfs9vamYmOzrdye4iqGsZSEQr6cPxYAb5nRemSpW7BKRqnxzfDWU9Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065494;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Lu2A6vSzob+KeqiNXnN5aVBCd8HYe8YJu8VK5sNiNE=;
-	b=Z+w2jqaPZSHnkZfqrnoX6skWpgxTciH7O+bjwToSQEHkGAbF2R9SRjNBupqlHspyVcdo
-	 +rt6bnJOQDLKuN7MM9pfdq/Nmv0W6pL1f4uvS5B/h2D6t+lXg8xVnQ3/uLPkZgU3Q9/bL
-	 nOutVL3cTWJD48GCTy/GtKFxrebV+G67CyfeHpRNYb1HsEIDH9yce3k+wZwTSB2tZIZwO
-	 CAsWNyfAdlByhcKd3aopVHLgFX4b0RFB6Q92uHimQl24DmT1V7M5w6o6NDzR4PZCyf6qw
-	 FmNpOUyG0Oh3NrnOyQ0IbiJ8Q2gm2Up9N0xkMHf3C21EleBome/CSvzp88LT/CTIryQ==
+	bh=w42MmA579+yHLGtYvk6FHiv7CWlElcRiaG2JKbN0T4g=;
+	b=OY6fMf3tVWTf+bkZYqPPcKtm8zvY/cAgOYhptwTLL3xycsTLZJh4kMhHPF0Wv9vwDizD
+	 MxBR3KuYOBNzgQbNFy6EbCMpJQOAAQrZrlFLfpDXB9hsFTwXTvO1wBMQzAKs028oPAFOO
+	 R8oszLDlHrn1N33MziJt5OHF6wvRWNbfXNUU/NsE4rqXW4qqvwvJ/iMP755qC3y0iCjlA
+	 SkVFKGpY0C+mZQiifd3fRKKEWURPW18yHAmemxDbQW4o8EfYNTj+7cmC+BY88SjweawSx
+	 IymsYvFkjDKXu8fzxM1jw1T/QUxSe+qhe1q0nxbDUOzgPXnQpPebxgqZeiwGRIDG+gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ezH/dmt0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hnf5VF0n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BFC606A335;
-	Sat,  7 Nov 2026 15:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C9E606A33D;
+	Sat,  7 Nov 2026 15:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezH/dmt0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F771F008A1;
-	Sat,  7 Nov 2026 15:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hnf5VF0n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED281F008A1;
+	Sat,  7 Nov 2026 15:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065492;
-	bh=1Lu2A6vSzob+KeqiNXnN5aVBCd8HYe8YJu8VK5sNiNE=;
+	s=korg; t=1794065493;
+	bh=w42MmA579+yHLGtYvk6FHiv7CWlElcRiaG2JKbN0T4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ezH/dmt0d1e7QQP6VOrcJpxgLiEgO8uvwla8UyuhYWzkE4tvok+tZAQ+sCpGDiI+X
-	 FQ053KujEboCj2xD68tyXXX/HyFj8tAtSKzU6k7vlia9ieaN+jYHa6nxeha+oDaRKl
-	 A14hi06yU4bq8i3NkKx3jjSXKGxYh2ZeHjn353pw=
+	b=Hnf5VF0nHsxbhZR53RD8EfXxvbMoGtkA9AmLhg9xutpJzM8wBgFE0SLi3TWjn9wmN
+	 tu/SfdI0zd8q/Yhkeu0tHaA9XA4fXXuauJBhbDHoY2BcJgB9QaOyGQtpmQO0ulWLqu
+	 T6GJTl1812wuwn3IWJtifGZJ2849F6RzJOcOngms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <philip.yang@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1182/1257] drm/amdkfd: split vram_pages of SVM ranges prefetched without a GPU mapping
-Date: Sat,  7 Nov 2026 08:57:58 -0500
-Message-ID: <20261107135011.816949214@linuxfoundation.org>
+Subject: [PATCH 7.3 1183/1257] drm/amd/display: Initialize missing TD-LUT programming inputs
+Date: Sat,  7 Nov 2026 08:57:59 -0500
+Message-ID: <20261107135011.844428946@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,90 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 52957e813f2f025c86e4aa6e86cb4963ef94fd00 ]
+[ Upstream commit 167df3b94680b8670c4cacc08af232e3bfcab5ff ]
 
-When an SVM range is split, svm_range_split_pages() gives the new range
-the number of VRAM pages counted in its part of the dma_addr arrays and
-subtracts it from the old range. Pages migrated to VRAM by a prefetch
-have no dma_addr entries until the range is mapped on a GPU, e.g. with
-no ACCESS attribute, or with XNACK off before the delayed restore worker
-mapped it, so the new range gets 0 and the old one keeps the count for
-both.
+dml_core_mode_programming() memsets (clears) its scratch structure
+before calculating TD-LUT settings, but does not initialize
+tdlut_mpc_width_flag or is_gfx11.
 
-Migrating the parts back to system memory then gets the accounting
-wrong: the old part keeps a VRAM page count after all its pages are
-gone, so its svm_bo is never freed, and the new part underflows. On
-navi31, as an unprivileged process: prefetch 4 MiB to the GPU, prefetch
-the upper 2 MiB and then the lower 2 MiB back to system memory:
+Both inputs therefore remain false regardless of the plane
+configuration which can result in incorrect calculations.
 
-  Recorded vram pages(0x0) should not be less than migration pages(0x200).
-  WARNING: ../amdkfd/kfd_migrate.c:922 at svm_migrate_vram_to_ram+0xbdc/0xcd0 [amdgpu]
+Initialize both fields using the same sources as the mode
+support path (now both paths are aligned).
 
-and /sys/class/kfd/kfd/proc/<pid>/vram_<gpu_id> stays at 4194304 until
-the process exits.
-
-Without dma_addr arrays, the split is still exact when the old range is
-completely in VRAM, which is what a prefetch of the whole range leaves.
-Give the new range all its pages in that case. The warning is gone and
-the VRAM usage drops back to 0.
-
-This doesn't cover a range that is only partly in VRAM without dma_addr
-arrays, e.g. after a partial migration, since svm_migrate_ram_to_vram()
-only counts the pages it actually migrated. That would need VRAM
-residency to be tracked per page independently of dma_addr.
-
-v2:
-- Rename counted to has_dma_addr and compare against old->npages (Philip)
-- Mention the XNACK off case and the partial migration limitation (Philip)
-
-Fixes: 006ad514a50c ("drm/amdkfd: Use partial hmm page walk during buffer validation in SVM")
-Reviewed-by: Philip Yang <philip.yang@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Fixes: 70839da63605 ("drm/amd/display: Add new DCN401 sources")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7ca6f3359b557a267c7b07a2fd748b1473395e10)
+(cherry picked from commit ad8d216e7d9fc050cdf39278e5fae17f61c36931)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ .../dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c        | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 54bdae99d4971..ff7a895bdd7cd 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -1019,9 +1019,12 @@ svm_range_split_pages(struct svm_range *new, struct svm_range *old,
- 		      uint64_t start, uint64_t last)
- {
- 	uint64_t npages = last - start + 1;
-+	bool has_dma_addr = false;
- 	int i, r;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+index 72acf12e92516..0ee385e8ba5f5 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+@@ -11074,6 +11074,8 @@ static bool dml_core_mode_programming(struct dml2_core_calcs_mode_programming_ex
+ 		calculate_tdlut_setting_params->cursor_buffer_size = mode_lib->ip.cursor_buffer_size;
+ 		calculate_tdlut_setting_params->gpuvm_enable = display_cfg->gpuvm_enable;
+ 		calculate_tdlut_setting_params->gpuvm_page_size_kbytes = display_cfg->plane_descriptors[k].overrides.gpuvm_min_page_size_kbytes;
++		calculate_tdlut_setting_params->tdlut_mpc_width_flag = display_cfg->plane_descriptors[k].tdlut.tdlut_mpc_width_flag;
++		calculate_tdlut_setting_params->is_gfx11 = dml_get_gfx_version(display_cfg->plane_descriptors[k].surface.tiling);
  
- 	for (i = 0; i < MAX_GPU_INSTANCE; i++) {
-+		if (old->dma_addr[i])
-+			has_dma_addr = true;
- 		r = svm_range_split_array(&new->dma_addr[i], &old->dma_addr[i],
- 					  sizeof(*old->dma_addr[i]), old->start,
- 					  npages, new->start, new->npages,
-@@ -1029,8 +1032,16 @@ svm_range_split_pages(struct svm_range *new, struct svm_range *old,
- 		if (r)
- 			return r;
- 	}
--	if (old->actual_loc)
-+	if (old->actual_loc) {
-+		/*
-+		 * Pages migrated by prefetch have no dma_addr until they are
-+		 * mapped on a GPU. A fully resident range still splits exactly,
-+		 * old->npages isn't adjusted yet here.
-+		 */
-+		if (!has_dma_addr && old->vram_pages == old->npages)
-+			new->vram_pages = new->npages;
- 		old->vram_pages -= new->vram_pages;
-+	}
- 
- 	return 0;
- }
+ 		// output
+ 		calculate_tdlut_setting_params->tdlut_pte_bytes_per_frame = &s->tdlut_pte_bytes_per_frame[k];
 -- 
 2.53.0
 
