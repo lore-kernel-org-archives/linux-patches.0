@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061486;
-	b=QVbE/D/U7gAIoKZGICBLJkDflMZ1DzojXe/mzRaafGvI3FO9/vaSmT3+LDCWAGXx7dB1
-	 TZJXXCTJ03FeQqcutwsdOJqiO7I8ubfYPabKaks8ysBTqa6A67NL6Cbm72E/nETQxWEU8
-	 3ybahIYUNGW/sMgW3payj4XFeOxy8ObxJQ7J1/TpNN6bSLzSlARVWSLohxYsEj8HGyTiF
-	 NI1pMWqz+/ecRrfAwkpT+udYiEPREf5TOg5RNM3FAXlBbZAoXHOW68IWpu5OFh52JmWAt
-	 2NnUwhwhu0UUXZgHK0keGd5p/AXKp3dFrJVQnyk2WiwlPryDWC2B9Y8oEwaoFbb7x9A==
+	t=1794061488;
+	b=ZP/EynFCd9TLZTMjX9DfViG8ocWsf4adqE51i7fBgUYmWnRzPOJH2ee7iNotFGzX+Wy5
+	 GuoDRCg5yACQ2EJ2wl/veVfpTd5fNQxmdG49iPkvQ/73QEIeQ0QcS8TLO72KS7fqgQ/Na
+	 AksnaYJ6RKXcSYht2iWdkHKmUxK/C+hiU8OxUkLbp+rii0+5rhHvHiQZ5ky6BQyxRf7aW
+	 qEDa3KDS79BJvxdLpi6sl6yRmeN19y64msW6x6iGKfXOnxE0yCJtPe7V7Ggq95jiKo+Fn
+	 +d6Mtmh7yIGupejhmkdeZSrssSiVFocHG6pSP1ntaEx6t8j3XJuwbIrJ5WTVl9ufj4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WIaB8zsRcSAz0ioRb3WurbUHXcH19OQhvy/xmjBN6tA=;
-	b=ul+B+2tQ9/oo/1f24PWHkwv8c17QSGhXp6SmMrd1ChO9y8awptR1+Q5F6O/t+aQ79cIR
-	 5r25tRdkgOG07BI66WgcOzHz7opJVrIYobBMvF/tybBOhPio8aMdyVOvFEEhnyfTLl8uI
-	 ehReXd53PZ20VqinvFiiQ9cJI9NDxt7botXg7DII49ptppWnigMD+TWY3tbBAtKE29RDH
-	 pMP+EgUMVR7JokTncGwL/96ouOz0oSlRxmHFi3qEs1NFuK5OVhfhlRq9nggY8KeAlX6Vb
-	 gxvd4e9cAI7AkyEcB+u2qvzDII4BDu/zQOp7j/rVRiivpZ7HdHb2veine34aJhfF16g==
+	bh=n/P3nDQMGIJNu7KYLLNHxJOnXiYa5KQ8ZIi3VLRgD/k=;
+	b=0cTGVsQJPOx+O3mgCF2qIGUiSkT75hJWpUg9+s1CV+AMqbub/Tz3kGLqJ/c0nRX190lS
+	 g+kH5mweC7twkQd6tCV57PvDvnZniLhlYTUNuSNJ0wmbFVK0loWva9vIv3uDsWABtME9j
+	 kSh4MhdaOv7mO+j5ddK3UwXh/oosaSwHMTyw2MXZBjN+ykeZeWP3Tcqkx+eAaNuA0+cUT
+	 je1Leeco4JTF33xf9qp3hon+BgSUuix0Rf8PDkaPlr4BUxbD3YvOCaYsKafM3fxK9irnj
+	 36kLUg3EUBTjxK3iK0aBaDHjjRxI0K9niM1zRnTPVsKQ+r9dlHOY4B41HU35J621YCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BH39PlYt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bRyaMDPH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99190606A326;
-	Sat,  7 Nov 2026 14:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD22606A326;
+	Sat,  7 Nov 2026 14:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BH39PlYt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D87F1F0089F;
-	Sat,  7 Nov 2026 14:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bRyaMDPH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712451F0089F;
+	Sat,  7 Nov 2026 14:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061486;
-	bh=WIaB8zsRcSAz0ioRb3WurbUHXcH19OQhvy/xmjBN6tA=;
+	s=korg; t=1794061487;
+	bh=n/P3nDQMGIJNu7KYLLNHxJOnXiYa5KQ8ZIi3VLRgD/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BH39PlYtKHBIGj7nHrKhjUdGq8noCE2WYtsPtm87f6cyqPEuqlgm15DoS1dN1o6Hl
-	 lPSyOh9p5SYmI8ABJA5qw0l3DtmgU3vlfK8u1VjdE6I+xrkxVeMvgq544jHL0zqx1b
-	 l1qjsGmq4R7iPCqXUksiEbuiXnSTUbMips6QWh0I=
+	b=bRyaMDPHVNw/5iIUoRRWZ9Z7jPUT3wRykFfj0FPDVss6CjBO6eDpdQEInrXAHJXWM
+	 iF3P5K87pfqRxMaoaENo5PWHxjj2h5+olK314Nm1qSeCJcOjW4A7dsn721Ak9Ye7c9
+	 CsNi6DHJ2A0l4MsZYprEjbo+Ew7A7wLN8BHzZVhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -51,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0544/1536] smb: client: only require read lease for size-extending zero range
-Date: Sat,  7 Nov 2026 08:42:40 -0500
-Message-ID: <20261107135012.899261033@linuxfoundation.org>
+Subject: [PATCH 6.12 0545/1536] smb: client: require stable pages for signed connections
+Date: Sat,  7 Nov 2026 08:42:41 -0500
+Message-ID: <20261107135012.924407655@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -77,57 +77,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit fafc68cccf8a00ed0a1f47c1413a3f16ce4dcdfa ]
+[ Upstream commit 53c5c2c1095eb21e214811fec16cd75f89d72ee2 ]
 
-smb3_zero_range() refuses any FALLOC_FL_ZERO_RANGE that clears
-FALLOC_FL_KEEP_SIZE with -EOPNOTSUPP whenever the inode is not read
-caching:
+When signing, cifs computes the SMB signature over the pagecache folios
+in place and then hands those same folios to the socket.  If a buffered
+write mutates a folio while a write subrequest is still in flight, the
+signature no longer matches the data that follows it, the server rejects
+the write with STATUS_ACCESS_DENIED (-EACCES), and the error is latched
+in the mapping, so the next fsync()/fallocate() returns -EIO.
 
-	/* if file not oplocked can't be sure whether asking to extend size */
-	rc = -EOPNOTSUPP;
-	if (keep_size == false && !CIFS_CACHE_READ(cifsi))
-		goto zero_range_exit;
+Mark the mapping for stable writes so netfs_perform_write() waits for
+writeback to complete before modifying an in-flight folio.  This is
+only needed when the connection is signed.
 
-The read lease is only needed to trust the cached i_size when deciding
-whether the range extends the file. When it is not held, the size can
-instead be fetched from the server, which is authoritative, rather than
-refusing the request outright: query the server's end of file and take
-the larger of it and the cached size for the interior-vs-extend
-decision. The larger of the two is used because the server's end of
-file reflects another client's growth while the cached size reflects
-this client's own writes that may not have reached the server yet;
-using the server size alone would wrongly shrink the file when the
-range flush above left an extending write unwritten.
-
-The query isn't lease-protected either, so its result is only trusted to
-confirm the range is interior, never to justify extending: if it still
-shows the range going past EOF, refuse with -EOPNOTSUPP instead of
-calling SMB2_set_eof(), which could otherwise shrink the file if another
-client extended it further between the query and the call.  For the same
-reason, take the larger of the already-computed i_size and a fresh
-i_size_read(inode) right before that call, instead of relying on either
-alone: the local variable carries the query's result, which is never
-written back to the inode, while a concurrent write on this client can
-still extend the cached i_size during the flush, the query, or the
-zero-data round trip that happen in between.
-
-Rejecting interior ranges is observed as generic/363 randomly failing
-against Windows Server with
-
-	do_zero_range: fallocate: Operation not supported
-
-fsx issues an interior, non-KEEP_SIZE zero range while the inode is
-transiently not read caching: the server had just downgraded the file's
-lease from RWH to RH after breaking the write caching, and the ensuing
-handle reopen/revalidation left CIFS_CACHE_READ momentarily clear. The
-range sat well within the server's end of file, so no extend was
-needed, yet the range was refused and fsx aborted. This keeps the
-emulation correct even when a genuine lease break from another client
-leaves the inode without read caching -- the case the -EOPNOTSUPP guard
-turned into a hard failure. The extra round trip only happens on the
-no-lease path; the common cached case is unchanged.
-
-Fixes: 30175628bf7f ("[SMB3] Enable fallocate -z support for SMB3 mounts")
+Fixes: 3ee1a1fc3981 ("cifs: Cut over to using netfslib")
 Reviewed-by: David Howells <dhowells@redhat.com>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
@@ -138,77 +101,25 @@ Cc: Shyam Prasad N <sprasad@microsoft.com>
 Cc: Tom Talpey <tom@talpey.com>
 Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-[ sashal: added the missing remote_i_size local declaration in smb3_zero_range() so the new code compiles; the rest of the patch is unchanged. ]
+[ sashal: Replaced the missing local tcon in cifs_set_ops() with cifs_sb_master_tcon(cifs_sb) when checking ses->server->sign. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ fs/smb/client/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 14ccca3f209db..8012c9687bc88 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3478,6 +3478,21 @@ static long smb3_zero_data(struct file *file, struct cifs_tcon *tcon,
- 			  0, NULL, NULL);
- }
- 
-+static long query_server_eof(const unsigned int xid,
-+			     struct cifs_tcon *tcon,
-+			     struct cifsFileInfo *cfile,
-+			     unsigned long long *eof)
-+{
-+	struct smb2_file_all_info file_inf = {};
-+	long rc;
-+
-+	rc = SMB2_query_info(xid, tcon, cfile->fid.persistent_fid,
-+			     cfile->fid.volatile_fid, &file_inf);
-+	if (!rc)
-+		*eof = le64_to_cpu(file_inf.EndOfFile);
-+	return rc;
-+}
-+
- static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 			    unsigned long long offset, unsigned long long len,
- 			    bool keep_size)
-@@ -3486,7 +3501,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	struct inode *inode = file_inode(file);
- 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
- 	struct cifsFileInfo *cfile = file->private_data;
--	unsigned long long i_size, new_size;
-+	unsigned long long i_size, new_size, remote_i_size;
- 	long rc;
- 	unsigned int xid;
- 
-@@ -3521,10 +3536,16 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	truncate_pagecache_range(inode, min(offset, i_size), offset + len - 1);
- 	netfs_wait_for_outstanding_io(inode);
- 
--	/* if file not oplocked can't be sure whether asking to extend size */
--	rc = -EOPNOTSUPP;
--	if (keep_size == false && !CIFS_CACHE_READ(cifsi))
--		goto zero_range_exit;
-+	if (!keep_size && !CIFS_CACHE_READ(cifsi)) {
-+		rc = query_server_eof(xid, tcon, cfile, &remote_i_size);
-+		if (rc)
-+			goto zero_range_exit;
-+		i_size = max(i_size, remote_i_size);
-+		if (i_size < new_size) {
-+			rc = -EOPNOTSUPP;
-+			goto zero_range_exit;
-+		}
-+	}
- 
- 	fscache_invalidate(cifs_inode_cookie(inode), NULL,
- 			   i_size_read(inode), 0);
-@@ -3536,7 +3557,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	/*
- 	 * do we also need to change the size of the file?
- 	 */
--	if (keep_size == false && (unsigned long long)i_size_read(inode) < new_size) {
-+	if (!keep_size && umax(i_size, i_size_read(inode)) < new_size) {
- 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
- 				  cfile->fid.volatile_fid, cfile->pid, new_size);
- 		if (rc >= 0) {
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index a7142ce90ecd8..9307a2ad9e444 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -87,6 +87,8 @@ static void cifs_set_ops(struct inode *inode)
+ 		else
+ 			inode->i_data.a_ops = &cifs_addr_ops;
+ 		mapping_set_large_folios(inode->i_mapping);
++		if (cifs_sb_master_tcon(cifs_sb)->ses->server->sign)
++			mapping_set_stable_writes(inode->i_mapping);
+ 		break;
+ 	case S_IFDIR:
+ 		if (IS_AUTOMOUNT(inode)) {
 -- 
 2.53.0
 
