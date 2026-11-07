@@ -1,58 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065352;
-	b=w/v2KQ9evqNpiRQZSw6tFEV6LIF+PSOI0cQ/eHi5OogR0G6EbayrwKHlYfBmyFYBtyA+
-	 yZJco0Pkfu2uKUXqa0abI41GU+TYrBABzZ2FCopdcce7hvFwPX1qLmwUIPCt0NjR5jYuK
-	 i+jby//3ub5Wz6MfKQj3xn/LGnU5txrbbRPo3VT3YYr7qwOkhSWY8buDgov97cuNQVWns
-	 dJMwRNU7TGlGCl7zP1TmNTxfDE3w3UMbQqOeRRwzDMLzirYxM8/cWNE7LU14DVx+MpZRb
-	 f60E8ig3l5b3TJcrJqmGAhhUVikGYmPEPUY+O9ZARBV9mwtIgUcz+UMYT0m+ff6JmRg==
+	t=1794065353;
+	b=iDdr3j1jwtbNIjgH8GBHAdcQX722IgBZcIrpOFrZdXlCD70+YszhBDc2AWEX/mpIJ18n
+	 tR7TAlvJNqPHVi4wJxHiVjWSpDxhtSzY97Hne9gwlY52lthXLQD+xj/8OB9rQLFpIabha
+	 KmPqdh31hwselIsQacsAj0IC9iK9P60bDUZgZMNEwcw2GApRoDQyb8pd8WQoMQyw5YF+P
+	 +9HiFOo2bddnwgVyoIkj7cXxwlU4B/n0My5Q8f3zK2i4s7QRtrsk4Swt/YMFTGuamNIWD
+	 vED1JwUhOdsi2PLh0ynqHBASCvAASWNNca0Li/WpC2005B4BG2jvrp88Azt4O+pQvIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065353;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Eu40GmeGIcGrmK39ma8uzmBDdPCc8IKKF5iUu7/GgTI=;
-	b=xFcqyCEuqizgq5/ScDj3HV4/7bKPM9q+pVrnO+sCWGwpVQdJHCDOblWyxrPwVfxs1I8l
-	 QRKZM34lukpMF+DMqxExXJ7VtXdcG40WgmCfOmbxjg7MuEUsePNr3Bw7PfI8SN+u3Pxy2
-	 rwwUL2ZoGyQd71KD9npiY22UM5lzng8AfBMTfGP2JSd+UkV1qkXovMeJz7CQtWLAO9sSg
-	 TNyiL9WXVb+nvusprOr07zWnlAE96lIm93pnGTQ49ZY32baLQhSHfwxCZEVF5esMiszyJ
-	 X6bgTS8Anu6PTSeM0XgYLExUg8IRfcwTdV1PaAlvQ5r6NhV2dgmGVtS6Q2YX5Xb+KHA==
+	bh=VW9WgNBhgPZPxk/jkRJD2LtjD8aIQURj5LboCyFgQcQ=;
+	b=BtxDMLWI1+bVyLu/2Vsq/4TNlm5Jf3VPvgzTW8HD1cf1ahqrhimPoQGPyTgFp97hJ4va
+	 PJN6tpaOyoSksGsA9QiL7CY2S5LjOGiRkwsyoQ4Royzrf3oSZ/ivTDphXFi5gZq9tz57G
+	 RLKrhUWyVk+m2lgFXZ8WaXXls9CM22JVz+J8Hi4LGqFQND0UP+fRnpV56KQylQ4ZQbuS2
+	 8kOB/qF5QyR3SErFsLKbDdSZw6yiP7A6brjNDbWD4NNzS47GpqSgfhyVmGsWsuRwGbSvR
+	 z9Nqz6lwxUKlCdN+ntHLNZNm6mUESxXXt7fvttuDwg7bVVZRGBrsze8umDRFr0RhN0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LdCV/kus";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1xKZKvuS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A3A606A326;
-	Sat,  7 Nov 2026 15:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B9D606A32E;
+	Sat,  7 Nov 2026 15:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LdCV/kus
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5948A1F0089F;
-	Sat,  7 Nov 2026 15:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1xKZKvuS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AEE1F0089F;
+	Sat,  7 Nov 2026 15:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065351;
-	bh=Eu40GmeGIcGrmK39ma8uzmBDdPCc8IKKF5iUu7/GgTI=;
+	s=korg; t=1794065352;
+	bh=VW9WgNBhgPZPxk/jkRJD2LtjD8aIQURj5LboCyFgQcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LdCV/kusshliFtHqfR5vERSOiKKnAoOVxbTm1dkEtUTHQwEphpfgwOaA8nvbFUW5F
-	 h0kCCleM5LxcxNYZlX/zFjdgG759lTkz7e1siQC3wZsgIiZlffoYbb/bgQXTjU2VpM
-	 Pm7WY7SAwVZDwYQYwKZr+YF2KVcxJqB5AvFtpEmQ=
+	b=1xKZKvuSciW7cd3YRR22QQPK4G7787HWg05zx3wyVxwSDqAvA18/eQCjC4cvhAVg5
+	 ExFz6TmbdDjLMbmOH8mo+/+vnjgsqc3gz9PF/LV++UqyKWbawv/FuCeE24J0CyPiys
+	 IVvgA/Aj+GAqJt6Xl4UWg4Bl30y2ShY8LlvXy8ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <albinwyang@tencent.com>,
+	Rik van Riel <riel@surriel.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Dev Jain <dev.jain@arm.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Kairui Song <kasong@tencent.com>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Baoquan He <baoquan.he@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Frank van der Linden <fvdl@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1081/1257] mm/madvise: add cond_resched() in THP branch of madvise_cold_or_pageout_pte_range()
-Date: Sat,  7 Nov 2026 08:56:17 -0500
-Message-ID: <20261107135009.118826400@linuxfoundation.org>
+Subject: [PATCH 7.3 1090/1257] mm/page_alloc: count guard pages as free again when their buddy merges
+Date: Sat,  7 Nov 2026 08:56:26 -0500
+Message-ID: <20261107135009.371227797@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -74,82 +82,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <albinwyang@tencent.com>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit f5cfc8e3b20ad71949a1e5623ff45882c063a71b ]
+[ Upstream commit 1503710b3b0cec02b531978129c6c1eb70a7c490 ]
 
-During stress testing with stress-ng on a 256-CPU system, a softlockup was
-observed when madvise(MADV_COLD) was called on a 31GB memory region backed
-by transparent hugepages.  The region contains 15935 THP PMD entries, and
-the softlockup was triggered after 14485 of them had been processed.
+With debug_guardpage_minorder set, expand() turns the unused halves of a
+split into guard pages, which page_del_and_expand() leaves out of the free
+counts.  Freeing the allocated half credits only that half, and
+__free_one_page() then merges the guard buddy with clear_page_guard(),
+which no longer touches the counters.
 
-The THP branch of madvise_cold_or_pageout_pte_range() has no scheduling
-point.  walk_pmd_range() invokes it once per 2MB PMD entry with no
-cond_resched() anywhere in the loop.  Each iteration calls
-pmdp_invalidate() which issues a synchronous TLB shootdown (dsb ish)
-waiting for all CPUs to acknowledge.  This operation can be time-consuming
-under heavy system load, causing the accumulated time across all PMD
-entries to exceed the softlockup threshold (20s) and panic when
-softlockup_panic=1.  On a CONFIG_PREEMPT_NONE=y kernel, there is no other
-opportunity to reschedule during this entire traversal.
+The merged block goes on a free list with the guard pages never counted,
+so NR_FREE_PAGES falls behind the free lists by every guard that merges.
+Before commit e0932b6c1f94 ("mm: page_alloc: consolidate free page
+accounting"), __set_page_guard() and __clear_page_guard() adjusted the
+counts themselves; that commit dropped both adjustments but kept the
+subtraction implicit in expand().
 
-The regular PTE path already has an unconditional cond_resched() at the
-function tail (introduced by commit 9c276cc65a58 ("mm: introduce
-MADV_COLD") and commit 1a4e58cce84e ("mm: introduce MADV_PAGEOUT") when
-MADV_COLD and MADV_PAGEOUT were first introduced) and a conditional one
-inside the loop (commit b2f557a21bc8 ("mm/madvise: add cond_resched() in
-madvise_cold_or_pageout_pte_range()")).  The THP branch never received
-equivalent treatment.
+Count the guard pages under the merged block's migratetype when the buddy
+is cleared.  account_freepages() skips an isolated block as it does for
+every other free page, and moving the block off the isolated list counts
+it then.
 
-Fix by adding cond_resched() at the huge_unlock exit path after
-spin_unlock(ptl) and reclaim_pages(), which is the single exit point for
-all goto paths in the THP branch.
+Booting a 16GB VM with debug_pagealloc=on debug_guardpage_minorder=1,
+check the difference in free pages reported between /proc/vmstat and
+/proc/buddyinfo.
 
-Crash log:
-  watchdog: BUG: soft lockup - CPU#63 stuck for 23s! [stress-ng-vm:1665914]
-  ...
-  Call trace:
-  pmdp_invalidate+0x48/0x68
-  madvise_cold_or_pageout_pte_range+0x84c/0xb00
-  walk_pmd_range.isra.0+0x1ac/0x3b0
-  walk_pud_range+0x120/0x190
-  walk_pgd_range+0x170/0x1b8
-  __walk_page_range+0x184/0x198
-  walk_page_range_vma+0x94/0x128
-  madvise_cold+0xd8/0x198
-  madvise_vma_behavior+0x234/0x638
-  madvise_walk_vmas.constprop.0+0xdc/0x210
-  madvise_do_behavior+0xa8/0x328
-  do_madvise+0xd8/0x140
-  __arm64_sys_madvise+0x2c/0xe0
+At three points (idle, after a read and file-creation load, after a second
+load), check the difference between nr_free_pages and the buddyinfo
+numbers in the normal zone, as a number of pages:
 
-Link: https://lore.kernel.org/20261010024042.4070048-1-albin_yang@163.com
-Signed-off-by: Wei Yang <albinwyang@tencent.com>
+                idle   after load   after second load
+    unpatched   -130        79205               99121
+    patched      -16           45                   0
+
+The small remaining difference seems to be due to the numbers not being
+read at exactly the same time, and is also seen without guard pages.
+
+Link: https://lore.kernel.org/20261016122304.5b1eba8e@fangorn
+Fixes: e0932b6c1f94 ("mm: page_alloc: consolidate free page accounting")
+Signed-off-by: Rik van Riel <riel@surriel.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Assisted-by: LLM
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Qi Zheng <qi.zheng@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Frank van der Linden <fvdl@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/page_alloc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 39480d78b7ad6..aa52fd4708845 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -453,6 +453,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		spin_unlock(ptl);
- 		if (pageout)
- 			reclaim_pages(&folio_list);
-+		cond_resched();
- 		return 0;
- 	}
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index c1cc9c705d2c1..8ca2289d0491b 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -989,10 +989,12 @@ static inline void __free_one_page(struct page *page,
+ 		 * Our buddy is free or it is CONFIG_DEBUG_PAGEALLOC guard page,
+ 		 * merge with it and move up one order.
+ 		 */
+-		if (page_is_guard(buddy))
++		if (page_is_guard(buddy)) {
+ 			clear_page_guard(zone, buddy, order);
+-		else
++			account_freepages(zone, 1 << order, migratetype);
++		} else {
+ 			__del_page_from_free_list(buddy, zone, order, buddy_mt);
++		}
  
+ 		if (unlikely(buddy_mt != migratetype)) {
+ 			/*
 -- 
 2.53.0
 
