@@ -1,56 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062565;
-	b=e4TzxQuAp5WyXD5fkQb0BeeUD1yd4y0pOYxD5XXAebJZt8jSj6BWwP59GjbAVzg4zsKW
-	 X/ZEENBbe4EUl3QuBzTBhp3q8pnNnoUdcznzxofL3MPcDha4F4tDnk9U4pDnp+nA7+yQx
-	 yR3t6/onbLcn2XmHRk7X6ePVVlZV0SkSHo0VAzIxUJ6/q0OADG+Wj/Gml5Z1W3SzZt/oZ
-	 OVhiHnIuttp3T+6/zVsZo1kR8bN5uGYNsuItUDgbIbOyqaeO69K5afjLgBv8BhI79mJNQ
-	 bEsEER9kT1mCL+NrkDmhOFKeTe6oYcTVxkGP8CsZwWZqNSCHS9o4XFqIQ17eRsozpgg==
+	t=1794062566;
+	b=IPFEZOlhjjP89azmXCU0fnO2vjJA9Ps80NAVTUZnf2T59dgOGR0UfbHbVcnst1upg5Gr
+	 qVelw61bUKkjIxx3Jm0O39dtuYmZXBPeI003HV6T27qdhZzLL3KhlTyM622WH7YmiX9xq
+	 V9BgeiV++nigrjqEOTNoGU2OwRSMj6uZZkY51C842SKbZCl5GpHualliIaslb9bIiJU7I
+	 t7gLF8S+kadW/oyuloTgd00az6oCYG7CZnJqrtBC75Y7DU2pDpI5AIZmBFuQxfEQ0k+kI
+	 XKpHMnOZc8+KJGy5sA0muYJrblnsUw67F+6ew5a8jN5aeOTL3OIfdT5eFkWucbN6ZxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062566;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=INaoWl4eTChVSk4TP49vxgOcaZ3h5fyllubX5DNHrGQ=;
-	b=4IZkySPDGsdDIseKCK1tIna8fAMnQ0z4Rz9IrAYWGWo80WP7DU8kiAsuAEs5hyvdT0yY
-	 cnLYt7kvt/FPcaPd6sj1nTlQ4znozBvFi8fyxFGDJPJt3aEnwQ51pwvoDjTOjEUse7xtD
-	 8Rxd/78RC/KtDlB6Y5/xAuxvm9NFX/rubcMKF3fJAMuLyLWJr6vuQL1QCG82/PHYlEp5G
-	 H7CnTQYej7e0T30pm5r4L0giT3GPNa0ckVM0D/sO4V7Imyz0Z3xiHQrs0lMRWJ0GeZRo0
-	 3l0j7M2FiiumgPNp8s31PufeBNhG9A/xEjaG6orMZKxqHlbRXZYTUDmHsSnVdefhPTw==
+	bh=uj56g6s06BAHAULlVGRMiqjMMNzxskaGSXiqR6RW69o=;
+	b=f/7wOutW7rDMRXGyR26zsd2lOvRTTNrI6Icg1pX6MO8UlZyZlZY5fq9uOwt/VH+0wgxN
+	 5OG70f00kbwBxrTd1BxyrGSEBZQ5k4b41FBRyiMhYlBIF45Ip2el9G60O/nAZBZu3hyzO
+	 gsJrIB7YNJ4mBTWbVabnCvcg+q3N2+4+1/LM4hSBRY8KRq2AoN3G3fs99E7PvwC7Q5TtW
+	 V0dN4Ksopju4if/N3w/FoYaRg/gFKb8OfZgwsm31FwuDZwUftpwNnK2S5Be6hHtwgZr6s
+	 U9Kzk+hmdvYISSevBMPKMWluu+6Ny7fRMgsq4FIccpeBHPu2l380o/yrq6RhKHLtbuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RpvN1Q2p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCUbjJ6a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF02606A333;
-	Sat,  7 Nov 2026 14:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24161606A333;
+	Sat,  7 Nov 2026 14:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RpvN1Q2p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25131F0089F;
-	Sat,  7 Nov 2026 14:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCUbjJ6a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE131F008A2;
+	Sat,  7 Nov 2026 14:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062564;
-	bh=INaoWl4eTChVSk4TP49vxgOcaZ3h5fyllubX5DNHrGQ=;
+	s=korg; t=1794062566;
+	bh=uj56g6s06BAHAULlVGRMiqjMMNzxskaGSXiqR6RW69o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RpvN1Q2p8oXX5EAKVFfoespxcXXsQVRzQCH+rK0ZRIbtTtbrEs+AnpRiOWkkBeJ/a
-	 uGlLBjt5bYCFl5mzuoUPjpPKT0h02X3IZZazIL9r+Zs8emWuQSO+IIfUw16oex3D5J
-	 v1BfkdiipEExJEsb8ISk2Fmui45sNOjw/CFngqPY=
+	b=vCUbjJ6avDynEq0kjJ8zr3i7gGNtzOT4XIkIJLa94Hqki01C5qMJWhad5pHWBgS2I
+	 TouvXckiv/8f3aaZs7q1JQEJi68nCasja2a6Nh+vqsBPb4qClv7xCa8V6HSZ/O/ENJ
+	 AVuA/0MdFUg33mvKYTEToFKm3cKtfaovmmSSdWqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Anderson Ferneda <anderson.ferneda@braza.com.br>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Dennis Zhou <dennis@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Lameter <cl@gentwo.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Hao Ge <hao.ge@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1400/1536] ocfs2: deal with legacy signed xattr name hash values
-Date: Sat,  7 Nov 2026 08:56:56 -0500
-Message-ID: <20261107135037.144082679@linuxfoundation.org>
+Subject: [PATCH 6.12 1442/1536] mm/percpu: account full object size for percpu memory allocations
+Date: Sat,  7 Nov 2026 08:57:38 -0500
+Message-ID: <20261107135038.336739066@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,197 +74,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Harry Yoo (Meta) <harry@kernel.org>
 
-[ Upstream commit 824d26d11448b4d4f19677bce27c7fe5e962f4c6 ]
+[ Upstream commit c7a467fbcbbc31e57a5077bfc9456d9f29cb1571 ]
 
-Commit 3bc753c06dd0 ("kbuild: treat char as always unsigned") set
--funsigned-char globally, which changed the result of the naked 'char'
-load in ocfs2_xattr_name_hash():
+When memory allocation profiling is enabled, the pages backing percpu
+memory chunks are attributed to func:pcpu_alloc_pages.  However, the
+accounting of individual percpu memory allocations via alloc_percpu()
+and friends record only the size of a single object rather than its
+full size across all CPUs.
 
-	hash = (hash << OCFS2_HASH_SHIFT) ^
-	       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT)) ^
-	       *name++;
+As a result, it is often not straightforward to identify which kernel code
+is actually responsible for percpu memory, because the size is
+under-accounted by a factor of num_possible_cpus().
 
-A name byte >= 0x80 used to sign-extend and now zero-extends, so the
-hash no longer matches the xe_name_hash an older kernel stored.  An
-indexed xattr tree is searched by that hash alone, and both the bucket
-binary search and the entry scan within it stop as soon as the wanted
-hash falls below an entry's, so the entry is never reached: getxattr,
-setxattr and removexattr return -ENODATA for a name that listxattr
-still lists.
+Account full object size with pcpu_obj_full_size(size) instead, which
+multiplies the object size by num_possible_cpus() and adds the objcg
+pointer overhead.  This is consistent with what memcg already does for
+charging percpu allocations.
 
-Search with the current unsigned hash and, on a miss, retry with the
-legacy signed one, as ext4 does in commit f3bbac32475b2 ("ext4: deal
-with legacy signed xattr name hash values").  New entries are always
-stored under the unsigned hash.  Skip the retry when the two hashes are
-equal, so that a miss on an ASCII name does not walk the tree twice.
+Verified with 64-CPU VM by spawning 400 processes in a memory cgroup and
+measuring mm_init()'s rss_stat counters.
 
-A miss is not empty handed: ocfs2_xattr_bucket_find() leaves xs->bucket
-holding the bucket a new entry would go into.  So after a double miss
-drop it and search once more with the unsigned hash, otherwise a new
-entry would be placed by its legacy hash and stored under its unsigned
-one, breaking the ordering the search relies on.
+Delta of kernel/fork.c:1142 func:mm_init in /proc/allocinfo:
 
-Only indexed trees are affected; inline xattrs and non-indexed xattr
-blocks compare names with memcmp and never look at the hash.
+                  bytes   calls   per allocation
+    unpatched      6320     395         16
+    patched      418176     396       1056
 
-Also spell out the signedness instead of leaving the current hash to
--funsigned-char, as commit 854f0912f813 ("ext4: make xattr char
-unsignedness in hash explicit") did, so that both variants stay correct
-if this is backported to a kernel without the flag.
+'percpu' field in memory.stat: 422400 (1056 bytes per process)
 
-Link: https://lore.kernel.org/20261009083002.2621201-4-joseph.qi@linux.alibaba.com
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Memory allocation profiling now accounts the same amount of memory as
+what memcg charges.
+
+Link: https://lore.kernel.org/20261013-fix-alloc-percpu-accounting-v1-1-03e788a1e41f@kernel.org
+Fixes: 60fa4a9e2323 ("mm: percpu: add codetag reference into pcpuobj_ext")
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Anderson Ferneda <anderson.ferneda@braza.com.br>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org> # 6.2+
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Assisted-by: LLM # Verification
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Christoph Lameter <cl@gentwo.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Hao Ge <hao.ge@linux.dev>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 93 ++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 82 insertions(+), 11 deletions(-)
+ mm/percpu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 8689a1ba0e43a..de4a7070d4ac5 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -557,9 +557,10 @@ static inline const char *ocfs2_xattr_prefix(int name_index)
- 	return handler ? xattr_prefix(handler) : NULL;
- }
- 
--static u32 ocfs2_xattr_name_hash(struct inode *inode,
--				 const char *name,
--				 int name_len)
-+static u32 __ocfs2_xattr_name_hash(struct inode *inode,
-+				   const char *name,
-+				   int name_len,
-+				   bool legacy_signed)
+diff --git a/mm/percpu.c b/mm/percpu.c
+index 44764720b6d8f..cd28926438da5 100644
+--- a/mm/percpu.c
++++ b/mm/percpu.c
+@@ -1705,14 +1705,15 @@ static void pcpu_alloc_tag_alloc_hook(struct pcpu_chunk *chunk, int off,
  {
- 	/* Get hash value of uuid from super block */
- 	u32 hash = OCFS2_SB(inode->i_sb)->uuid_hash;
-@@ -568,13 +569,30 @@ static u32 ocfs2_xattr_name_hash(struct inode *inode,
- 	/* hash extended attribute name */
- 	for (i = 0; i < name_len; i++) {
- 		hash = (hash << OCFS2_HASH_SHIFT) ^
--		       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT)) ^
--		       *name++;
-+		       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT));
-+		if (legacy_signed)
-+			hash ^= (signed char)name[i];
-+		else
-+			hash ^= (unsigned char)name[i];
+ 	if (mem_alloc_profiling_enabled() && likely(chunk->obj_exts)) {
+ 		alloc_tag_add(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag,
+-			      current->alloc_tag, size);
++			      current->alloc_tag, pcpu_obj_full_size(size));
  	}
- 
- 	return hash;
  }
  
-+static u32 ocfs2_xattr_name_hash(struct inode *inode,
-+				 const char *name,
-+				 int name_len)
-+{
-+	return __ocfs2_xattr_name_hash(inode, name, name_len, false);
-+}
-+
-+static u32 ocfs2_xattr_name_hash_signed(struct inode *inode,
-+					const char *name,
-+					int name_len)
-+{
-+	return __ocfs2_xattr_name_hash(inode, name, name_len, true);
-+}
-+
- static int ocfs2_xattr_entry_real_size(int name_len, size_t value_len)
+ static void pcpu_alloc_tag_free_hook(struct pcpu_chunk *chunk, int off, size_t size)
  {
- 	return namevalue_size(name_len, value_len) +
-@@ -4164,11 +4182,12 @@ static int ocfs2_xattr_bucket_find(struct inode *inode,
- 	return ret;
+ 	if (mem_alloc_profiling_enabled() && likely(chunk->obj_exts))
+-		alloc_tag_sub(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag, size);
++		alloc_tag_sub(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag,
++			      pcpu_obj_full_size(size));
  }
- 
--static int ocfs2_xattr_index_block_find(struct inode *inode,
--					struct buffer_head *root_bh,
--					int name_index,
--					const char *name,
--					struct ocfs2_xattr_search *xs)
-+static int __ocfs2_xattr_index_block_find(struct inode *inode,
-+					  struct buffer_head *root_bh,
-+					  int name_index,
-+					  const char *name,
-+					  u32 name_hash,
-+					  struct ocfs2_xattr_search *xs)
- {
- 	int ret;
- 	struct ocfs2_xattr_block *xb =
-@@ -4177,7 +4196,6 @@ static int ocfs2_xattr_index_block_find(struct inode *inode,
- 	struct ocfs2_extent_list *el = &xb_root->xt_list;
- 	u64 p_blkno = 0;
- 	u32 first_hash, num_clusters = 0;
--	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
- 
- 	if (le16_to_cpu(el->l_next_free_rec) == 0)
- 		return -ENODATA;
-@@ -4208,6 +4226,59 @@ static int ocfs2_xattr_index_block_find(struct inode *inode,
- 	return ret;
- }
- 
-+static int ocfs2_xattr_index_block_find(struct inode *inode,
-+					struct buffer_head *root_bh,
-+					int name_index,
-+					const char *name,
-+					struct ocfs2_xattr_search *xs)
-+{
-+	u32 name_hash, legacy_hash;
-+	int name_len = strlen(name);
-+	int ret;
-+
-+	name_hash = ocfs2_xattr_name_hash(inode, name, name_len);
-+
-+	ret = __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					     name_hash, xs);
-+	if (ret != -ENODATA)
-+		return ret;
-+
-+	/*
-+	 * Nothing under the current hash.  The entry may have been stored by
-+	 * an older kernel, which sign-extended the name bytes when hashing.
-+	 * Skip the retry when the two hashes are equal, so that a name made
-+	 * only of ASCII does not have to walk the tree twice.
-+	 */
-+	legacy_hash = ocfs2_xattr_name_hash_signed(inode, name, name_len);
-+	if (legacy_hash == name_hash)
-+		return ret;
-+
-+	/*
-+	 * A miss still leaves xs->bucket holding the bucket a new entry would
-+	 * be inserted into, so drop it before searching again.
-+	 */
-+	ocfs2_xattr_bucket_relse(xs->bucket);
-+
-+	ret = __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					     legacy_hash, xs);
-+	if (!ret) {
-+		pr_warn_once("ocfs2: xattr tree with signed name hash\n");
-+		return ret;
-+	}
-+	if (ret != -ENODATA)
-+		return ret;
-+
-+	/*
-+	 * Not under either hash.  Restore the unsigned placement, since that
-+	 * is where a new entry is stored: leaving the bucket where the legacy
-+	 * hash put it would break the ordering the search relies on.
-+	 */
-+	ocfs2_xattr_bucket_relse(xs->bucket);
-+
-+	return __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					      name_hash, xs);
-+}
-+
- static int ocfs2_iterate_xattr_buckets(struct inode *inode,
- 				       u64 blkno,
- 				       u32 clusters,
+ #else
+ static void pcpu_alloc_tag_alloc_hook(struct pcpu_chunk *chunk, int off,
 -- 
 2.53.0
 
