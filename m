@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062409;
-	b=0dBxIpU/BDRJFNXwnVXzH/EBIQio/J0jNL8H7tV5P89XMvbOiM96hwZxMrVWUcmfKaaB
-	 o6nof0QyOerFlvnBMmq31b+9sLPZwmz22CnmiigzARojJlLzgXXD2u7zl4aun7jexKcp1
-	 EFsXl80YzYrXv2rq0KB02/bhNLO/5eVilVaPT8rsQ/1fSmAUaiJfnct8jv7ozDNd1pTyB
-	 LlAqDdFO39ePmwS05hYrTYSkLC4kBXIKTcDzmL7sY8TjYB0DWeYSQtlTclhDAMlVbna2P
-	 slJHFAxJEu9Yl6xcZU79p0c1M+47vktHLqXYee59IOdvu9Xv+SPpf4tFoBJA2HcWaMQ==
+	t=1794062410;
+	b=P+2TDhTVNCAOiVtB01F/PsLGydEkZSWuQ918lx0RvHK94ucbv7vgE1Q6ziHdGr5OhUhN
+	 eHnP7Xnu4oWLBsYeSMzAFM4LJId2SAOqBkq9hugeA8l0hZcuwmJY4vcC25o2mYkaw9Sdx
+	 TVPXaHmYmOg86oUpGRXjQuxmrr6m71Ncvoiv62MukKmTmh5Wwc+wcTbbmK/JM3Clk5R+D
+	 JHqV+ZJuaE2usqv8JKUdcKCWNLxZdokqBx9SJgS2lICwwpgqWWzUHYRMB2WCtm8G8FP9y
+	 rvsrY57tS/TLDESt2oyPrIfcJ8idggo1lP0xmiPHrYnkFY55+ITp2D9NoyiakJVBUfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062410;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BPPvnpkH0jnegNarQZls+EavPDc+oLsusY/KuWOfDEE=;
-	b=TffUnZVimFLBqM4S56v615JTuBkS7xf053096zawzRnvXZDkSyhNaxPh+qBQfWZMglk+
-	 0HqqWdYrrN1N2htmQfSJbUn0Qbh/voG9cG2ho/PTepprGqWysr1jP97U4n7Z4rmWVH8zL
-	 SsZP/qM7aibPmahCrCEtltMoY0ca8fYKfjGXJbduoU30bv4YlB9/P/B4JuqtsJKcgXtE/
-	 pWScelTjr7vw2LwWvFWDepEBACMsf5nNRBItIJEria0go7e9lAzr2foVJhM9qdY8PVBdA
-	 Ypc9q8suMRhTekW91QyCoW6OEhdF83uboePDoreiUxs+fKFX6UiYosVPKjjS+6+G5EA==
+	bh=ZtTDoV/qqmoCMWo76/JUY/IygxdNjegSe5DtgAV22tE=;
+	b=CdDwSCx6UFMpm+cDti/oWhIabmGQFygjFSvr1eQnWW6TJ1AVaDXkn4tahp6hom4tGjZH
+	 Y+19hDX5HgYAZx3Lv+VkyMIUrnj/hDgC5CdkrDKnUTTd/prgo4hhAO0IbfXL4kHvI+x7y
+	 xy8PbQ1BJ02ulCHKI8aY89U+UAKepKsgZxBBCblQPAZkruRU3cuAkZleztxrZctLXKBGC
+	 CmNxAqi6cq/n17kwplIs3fc2yuHmpd0av/Mc7ubaQKa6fZEm5X3FjJURnMADMmduDpavr
+	 //yvKN8g7vss5PXs44Eb9E+8buIRoInzWSgp+nGYrTsjk1ffpCeTsZ1pw+A5ipCAl8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBWZ7dNF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILp1RtTi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E435B606A33C;
-	Sat,  7 Nov 2026 14:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F560606A33C;
+	Sat,  7 Nov 2026 14:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBWZ7dNF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7E61F008A3;
-	Sat,  7 Nov 2026 14:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILp1RtTi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3451F0089F;
+	Sat,  7 Nov 2026 14:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062408;
-	bh=BPPvnpkH0jnegNarQZls+EavPDc+oLsusY/KuWOfDEE=;
+	s=korg; t=1794062410;
+	bh=ZtTDoV/qqmoCMWo76/JUY/IygxdNjegSe5DtgAV22tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DBWZ7dNFDa1a6nq0YGEGT57wBRwTJD92ei+SnEeHv8nZD/GzkhKxDtrmJi7jLWfFH
-	 ac8SLqeHCdaZX4jaTXarKL8LWJG+XEaTaV9M1n1f69BCB8otnUWL5hNprOIUS8ovHn
-	 wxmDR66aC/wudK32f8EIDCbnHEn00ZWxPLC51LBo=
+	b=ILp1RtTiNO0CeMZ1T9JRHonOKJtW12ryLxP5y0jIDhnlSt5NUtJiUQ0ldNBo/zAl6
+	 QbvETZm8+Xk7K64vK+1XN/YMFWhdWXECu5DI+OGlHQx7E5zh7idgPFUQejVw37gxRP
+	 2US5sCbXVB+g2TOEqNb5wLuXyx0KN6nKAXioE/eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kaixuan Li <kaixuanli0131@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1276/1536] f2fs: check every cur_*_segno[] entry on readonly images
-Date: Sat,  7 Nov 2026 08:54:52 -0500
-Message-ID: <20261107135033.618144794@linuxfoundation.org>
+Subject: [PATCH 6.12 1319/1536] mfd: tps65217: Use devres for IRQ domain and wake teardown
+Date: Sat,  7 Nov 2026 08:55:35 -0500
+Message-ID: <20261107135034.853095685@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,73 +68,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixuan Li <kaixuanli0131@gmail.com>
+From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
 
-[ Upstream commit 9c4ee79190c8c23a9fb5c07d3bc87eaac514b2bb ]
+[ Upstream commit cffd44d2d89524e2dda6adc7b0dd59363be1c8e6 ]
 
-sanity_check_ckpt() bounds-checks cur_node_segno[] and cur_data_segno[]
-against main_segs, but on an image with the RO feature the goto that skips
-the duplicate-segno cross-checks also leaves the enclosing loop, so only
-index 0 of each array is ever checked.
+Removing the parent device used to tear the IRQ domain down in
+tps65217_remove() before the MFD children are unbound: the i2c core
+only releases the parent's devres after the remove callback returns,
+whereas devm_mfd_add_devices() registered its own devres action which
+unbinds the children. Children that requested interrupts from the
+domain (e.g. tps65217-charger) therefore call free_irq() on virtual
+IRQs whose descriptors have already been disposed. With
+CONFIG_SPARSE_IRQ free_irq() then returns early without stopping the
+threaded handler, leaking the irqaction, the IRQ kthread and a module
+reference.
 
-An unchecked index reaches __set_sit_entry_type() through build_curseg() ->
-reset_curseg(), which writes se->type through &sit_i->sentries[segno]. With
-segment_count_main 120 and cur_data_segno[1] set to 200, KASAN reports
-three out-of-bounds writes during mount and the mount then succeeds.
+Register the domain teardown as a devres action right after the domain
+is created instead. Devres actions are released in reverse order of
+registration, so the MFD children release their IRQs first, then the
+parent interrupt is freed and its thread stopped, and only then is the
+domain torn down. The same ordering covers probe failure, which no
+longer needs manual cleanup, and the remove callback can be dropped
+entirely.
 
-Use continue so every index is bounds-checked, and skip the node-vs-data
-cross-check explicitly, which is the other thing the old goto skipped.
+Balance the enable_irq_wake() in tps65217_irq_init() by registering
+disable_irq_wake() as a devres action as well. Only do so when
+enabling actually succeeded, since the parent chip may not support
+setting wake-up.
 
-Cc: stable@kernel.org
-Fixes: a7d9fe3c3388 ("f2fs: support RO feature")
-Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
+Link: https://patch.msgid.link/20261002113624.178588-4-r.zhambakiev@prosoftsystems.ru
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/mfd/tps65217.c | 57 +++++++++++++++++++++++++++++-------------
+ 1 file changed, 39 insertions(+), 18 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 1e5aea6352497..31724ab224d4a 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3831,7 +3831,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			return 1;
+diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
+index d4f09e5bf24cd..518c109a02589 100644
+--- a/drivers/mfd/tps65217.c
++++ b/drivers/mfd/tps65217.c
+@@ -146,6 +146,31 @@ static const struct irq_domain_ops tps65217_irq_domain_ops = {
+ 	.map = tps65217_irq_map,
+ };
  
- 		if (f2fs_sb_has_readonly(sbi))
--			goto check_data;
-+			continue;
- 
- 		for (j = i + 1; j < NR_CURSEG_NODE_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
-@@ -3843,14 +3843,14 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			}
- 		}
- 	}
--check_data:
++static void tps65217_irq_cleanup(void *data)
++{
++	struct tps65217 *tps = data;
++	unsigned int virq;
 +
- 	for (i = 0; i < NR_CURSEG_DATA_TYPE; i++) {
- 		if (le32_to_cpu(ckpt->cur_data_segno[i]) >= main_segs ||
- 			le16_to_cpu(ckpt->cur_data_blkoff[i]) >= blocks_per_seg)
- 			return 1;
- 
- 		if (f2fs_sb_has_readonly(sbi))
--			goto skip_cross;
-+			continue;
- 
- 		for (j = i + 1; j < NR_CURSEG_DATA_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_data_segno[i]) ==
-@@ -3862,6 +3862,9 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			}
- 		}
- 	}
-+	if (f2fs_sb_has_readonly(sbi))
-+		goto skip_cross;
++	if (!tps->irq_domain)
++		return;
 +
- 	for (i = 0; i < NR_CURSEG_NODE_TYPE; i++) {
- 		for (j = 0; j < NR_CURSEG_DATA_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
++	for (int i = 0; i < TPS65217_NUM_IRQ; i++) {
++		virq = irq_find_mapping(tps->irq_domain, i);
++		if (virq)
++			irq_dispose_mapping(virq);
++	}
++
++	irq_domain_remove(tps->irq_domain);
++	tps->irq_domain = NULL;
++}
++
++static void tps65217_irq_wake_disable(void *data)
++{
++	unsigned long irq = (unsigned long)data;
++
++	disable_irq_wake(irq);
++}
++
+ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+ {
+ 	int ret;
+@@ -169,6 +194,10 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+ 		return -ENOMEM;
+ 	}
+ 
++	ret = devm_add_action_or_reset(tps->dev, tps65217_irq_cleanup, tps);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_threaded_irq(tps->dev, irq, NULL,
+ 					tps65217_irq_thread, IRQF_ONESHOT,
+ 					"tps65217-irq", tps);
+@@ -178,7 +207,16 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+ 		return ret;
+ 	}
+ 
+-	enable_irq_wake(irq);
++	ret = enable_irq_wake(irq);
++	if (ret) {
++		dev_warn(tps->dev, "failed to enable IRQ wake: %d\n", ret);
++		return 0;
++	}
++
++	ret = devm_add_action_or_reset(tps->dev, tps65217_irq_wake_disable,
++				       (void *)(unsigned long)irq);
++	if (ret)
++		return ret;
+ 
+ 	return 0;
+ }
+@@ -379,22 +417,6 @@ static int tps65217_probe(struct i2c_client *client)
+ 	return 0;
+ }
+ 
+-static void tps65217_remove(struct i2c_client *client)
+-{
+-	struct tps65217 *tps = i2c_get_clientdata(client);
+-	unsigned int virq;
+-	int i;
+-
+-	for (i = 0; i < TPS65217_NUM_IRQ; i++) {
+-		virq = irq_find_mapping(tps->irq_domain, i);
+-		if (virq)
+-			irq_dispose_mapping(virq);
+-	}
+-
+-	irq_domain_remove(tps->irq_domain);
+-	tps->irq_domain = NULL;
+-}
+-
+ static const struct i2c_device_id tps65217_id_table[] = {
+ 	{"tps65217", TPS65217},
+ 	{ /* sentinel */ }
+@@ -408,7 +430,6 @@ static struct i2c_driver tps65217_driver = {
+ 	},
+ 	.id_table	= tps65217_id_table,
+ 	.probe		= tps65217_probe,
+-	.remove		= tps65217_remove,
+ };
+ 
+ static int __init tps65217_init(void)
 -- 
 2.53.0
 
