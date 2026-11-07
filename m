@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063356;
-	b=c8NU8OFe9I5oiO9D9gS+WJ7bIqV8Btd8ZPlunT0wCf4TZNu4vYyHflaPsAd5KtfwBKue
-	 m0vLQZJwxZ22k0cAlqF8t68p9mpq48d87SrRvthhlyrJYtAsvjqjz+mCsPRw5yAWyz2NQ
-	 dHfG+YV7t0cemT4UE/mctVXy5gZBGGvi2k+4BE69oV55yHeNbNrErrY/TLxxsGguIGqoL
-	 uliPz8XWb4osxIjKL3mRRGoUC/Si6zvrbyLlQCGDKyrQ7oRbNI7vnLBUXSkSYju4mjlrd
-	 Dxs15sqxs5/YBiVNnuPEMZ3Q4kobsHVpQ/J11af2lqEN1ZkGMYd6CZpu24gx/2h/XQQ==
+	t=1794063357;
+	b=paBZ0Ndlv1IW/bDnjbe5DBcmSKI9nOsvjTWj1YIWjAe55aGW/5wk7lSOtXH8Cl32Ziww
+	 xSkP5tKvYSYlAZRRWD9jbqUVIlQVgOCfjB6PNvQf6exDx2nzzJbL95fpnC/rT02Su5J0f
+	 Mc+rX/glyTVeOXugSJ5FsHnwOZQnKngRr0QCO5/lh9zA4FwYmdCiMEKTNmodp66H8bSWB
+	 lB+oHwv7qdqghy3+wtPZqEBLsKGCNqvmYeTdTT8w8rmXZw6svEB2jNwPJzMeeyrYXuJTm
+	 +FalpDVu15LAL3qZEJRsfB/eN6D63J9FLc7ud2ohAeEF2GxblsaBEHHBCpNHiEEtHEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063357;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ujMIjsQeHsjU2opVEnDOgtPlpgf5xotYESAEM5HBHj8=;
-	b=yxX5COWx+E8vAnqdHgYkYwJ3x1+00CQ+jzXyjxnD+FMx/Ngsvi7bX7XRMyf7EwGKoXpy
-	 BXYFBZ0fJdHkjiZ4Dm4OWinWhhj5G4TyiX4qGGp0ALNrRM0in3SALIXAsW9cqPyfzkED6
-	 oG6ltWv+HS65iWNrBEc40PUMhOeaEgDmo5f3cLRQVwKonEILJIgjDchy7Z34AB24pRgYh
-	 DNeR7tzp0DiG9nJ0ql83G/7vzqk0f0YDvIb8/xnI8WAsrxnDas7faxJK7Ce5JcjKGxDqe
-	 dGVxEyMehQUIzhYmGjv4yDxKmrWETrLQzs95PmsgF1v8yWqtDtdbaWOgPBchFNBQ7Jg==
+	bh=HUwhMjgV4B2QE9ndvlkk2yHEjm3VmOOK3bUbe7t8W3E=;
+	b=gqL1NLMUDcy7+oIP76Rpv1stUvgPNqvFAMOH3g8ZsVUaoPPc1w5GaBJ+d0PampPF8gbt
+	 Z22PHwEcQXg+Y8C9UDmVXGw8v8QbvYvNHG3Owykmog2niF7Z9YCVYQhcUJ8nJa+JjCkn3
+	 Fmr1fz8LxrTmC8vfTnCd1tqGXU3hUssWms22BPOXd22PJUZH3NGSioxwQ+FowgbYBLTdB
+	 JwamoXaMdDX7heWzKQrMXuUQGy4ae31SYRghn+7iSoGh2wOdWRLZRTZ0lOJTc+T8GjgUk
+	 hEkM/Et4pljzB4pcKeO4jTGhRbX9sc9FxnwSTW/ul9C7oDkmkHwsVyT98b/CaiDly3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RFpjClQa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xErSNM70;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37194606D808;
-	Sat,  7 Nov 2026 14:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E8F606A336;
+	Sat,  7 Nov 2026 14:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RFpjClQa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E671F0089F;
-	Sat,  7 Nov 2026 14:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xErSNM70
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB9F1F0089F;
+	Sat,  7 Nov 2026 14:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063356;
-	bh=ujMIjsQeHsjU2opVEnDOgtPlpgf5xotYESAEM5HBHj8=;
+	s=korg; t=1794063357;
+	bh=HUwhMjgV4B2QE9ndvlkk2yHEjm3VmOOK3bUbe7t8W3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RFpjClQaBPdDbavUnJu0JzcPnVaGTSi/9or30jLrbjzs95VUYKWdXQgD27k+VTBL0
-	 6qRLlb8lDedt+u/FPTQLgctHXDNsFjOC0OXz7AMRefNPdWcQeVuIvS+EcblnkRcClK
-	 SxBdG0uDNFmqJ/1AedeUrTzCMqDKWVqZF4A1qzZA=
+	b=xErSNM70MDctUqfEo9TijsDa3FDwVVXrj4req+295X/Qptc3ZT5vzVpb6Z8K5nayc
+	 dwm/6Muzq0R8JXo+zt7chXwJm+CCdCVAE/21Fa17n7TZhAufoeH4j5AuU30qxLNsKp
+	 LF4GV3Uq95Th4IQiCYQdX8E598pZcQWGiFCnZ1Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
+	Bradley Morgan <brads@mainlining.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Alain Knaff <alain@knaff.lu>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Guenetr Roeck <linux@roeck-us.net>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Wang Jinchao <wangjinchao600@gmail.com>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 535/869] lib/decompress_bunzip2: fix off-by-one in run-length bounds check
-Date: Sat,  7 Nov 2026 08:53:37 -0500
-Message-ID: <20261107134911.583321409@linuxfoundation.org>
+Subject: [PATCH 6.18 536/869] panic: flatten nmi_panic control flow
+Date: Sat,  7 Nov 2026 08:53:38 -0500
+Message-ID: <20261107134911.613874956@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,57 +73,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Bradley Morgan <brads@mainlining.org>
 
-[ Upstream commit 69919be2b93ef3922f646729ff42b4bd9a30846b ]
+[ Upstream commit 75eb687ff2bcec9fba31bbe266e5f91e5c283efe ]
 
-The run-length path rejects a block when dbufCount+t equals dbufSize, but
-the loop that follows writes exactly t bytes starting at dbufCount, so a
-block that fills the buffer exactly is legal.  bzip2 allows it too: its
-decompressor bounds a block at 100000 * blockSize100k and checks that
-limit per byte appended.  Use > instead of >=.
+panic() is __noreturn, so the else after panic_try_start() is dead.  Drop
+it so the force_cpu path can be added cleanly on top.
 
-bzip2's encoder stops filling a block 19 bytes early, so nothing it
-produces ever reaches the limit and the bug stays hidden.  Compressors
-that use the full block size do reach it: an lbzip2 -9 image whose block
-ends on a run fails to decode, and a self-extracting kernel built that way
-does not boot.
-
-This code came from busybox, which fixed the same line in 2013 in commit
-932e233a491b ("bunzip2: fix off-by-one check").
-
-I ran into this because my system uses lbzip2 as /bin/bzip2 -- a common
-thing on Gentoo I believe.  As far as I can tell, anyone using lbzip2
-as their system bzip2 would run into this and it's only because it's
-very uncommon these days to compress a kernel with bzip2 that no one
-has noticed.  I only noticed because I was adding support for various
-compression formats on alpha.
-
-Link: https://lore.kernel.org/20260912-b4-bunzip2-blocksize-fix-v1-1-c7384bbfc954@gmail.com
-Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Link: https://lore.kernel.org/20260916182957.7788-3-brads@mainlining.org
+Signed-off-by: Bradley Morgan <brads@mainlining.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Alain Knaff <alain@knaff.lu>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Cc: Guenetr Roeck <linux@roeck-us.net>
+Cc: Sashiko <sashiko-bot@kernel.org>
+Cc: Wang Jinchao <wangjinchao600@gmail.com>
+Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_bunzip2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/panic.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
-index ca736166f1000..4f98cdea7e0b3 100644
---- a/lib/decompress_bunzip2.c
-+++ b/lib/decompress_bunzip2.c
-@@ -439,7 +439,7 @@ static int INIT get_next_block(struct bunzip_data *bd)
- 		   array.) */
- 		if (runPos) {
- 			runPos = 0;
--			if (dbufCount+t >= dbufSize)
-+			if (dbufCount+t > dbufSize)
- 				return RETVAL_DATA_ERROR;
- 
- 			uc = symToByte[mtfSymbol[0]];
+diff --git a/kernel/panic.c b/kernel/panic.c
+index b13f040680ac1..7f8725f2154b8 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -364,7 +364,8 @@ void nmi_panic(struct pt_regs *regs, const char *msg)
+ {
+ 	if (panic_try_start())
+ 		panic("%s", msg);
+-	else if (panic_on_other_cpu())
++
++	if (panic_on_other_cpu())
+ 		nmi_panic_self_stop(regs);
+ }
+ EXPORT_SYMBOL(nmi_panic);
 -- 
 2.53.0
 
