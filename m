@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064661;
-	b=ZqF0e26VqUyoFR+snTA3c77UlJxFqgIVhFJM6eYBcpOfZ5x4TelsI4dlPyxLlcD5KNAf
-	 gL9m2MNAva9uinEQZRyIRhjCd8IY9Yr+2EKeW1Scv+vm4UqL/Tv5V4A3dMxxipNiwVsD0
-	 ZCAiZSkogNI8+tMashult/k1FeJQYCt109fgxc2ytp2du1EdUcXN6mXgB3q+QT20tgN4B
-	 /doEMT4OQKE14QBK+tAUwnMHGNd2mQBZjMCJ18A9jiQsmiVanskUTBd8V3l9hTfyBFBEY
-	 IQi+mbNIGc44koeAImkp5wNCYpwhHoy76xrRaqWyQFbSiFJk9V8ENZzR5yCnbNbKbUQ==
+	t=1794064662;
+	b=uCtr+L7uezJG42aAoi3X/MLc2QbtSw9Z3c9ux3kxTgok7FqAorpTxp4kFu4yN0OopyKD
+	 W+NvQu4Kg24MGZ9Uf3aN/vd4I8qjzeXry7AzVH5QZsvbZ8egi+YbwCJmX62TdjLqv0iM2
+	 qQd8DrpU6mPvnrDPET9GYjAPPY3yIvKWLTSQoDN3aldBzJT/8WhKLmpj9KuXa/kjRPhV4
+	 RzYS3gS2rsfo46WLNR0VliyzPnX8rueKGtiBAfXmQwa6jiQuH/BgYYg1g8Vw1CiGN6d9P
+	 uACCr80x1H7zrMnmFw66d6ZL/tdPxQaP7TNKpWQkAcyC/rci0ip/G9ddSM/a4/kcM9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064661;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6Tb9nJMHIaiol+gvE2igfX0uLHkCUCxikD/ss5F4bUA=;
-	b=LYj4+0mSnMm5xEEuEu2rN0iN1HUCg6Py3ja23okEeRQgyiop0IgX1rt6c8Cm+owC9U0z
-	 HhPZLN8gb1K4JbnuX6cBsAPycUaChdzMPmVGCwFLbifb7K7V1mFE8ePvHWLLDF4d83u/q
-	 Ab9v1zNiT+esqvLYLw7dahl764Gmki7ACKW0fa8r8ybJYiCYEUzuputAV/0w8uypAMDtI
-	 SEWWMLSKl4P/Vpx7OITNlKC7bnrNq8rUBmQb3pcbs/AXiI19yXtl6a120lzYuU0pQ96Dq
-	 RH1cK8Sxa7fVP4Lp33ZUy6pXn0X0aNKmnqVdg7xyVIAzy5GCu6TgeGohU2Fy7iFpG1A==
+	bh=hyuwtZfAiLdY7pxUrOjQ8Kr4ogQCX9YPrgIHnpu9i64=;
+	b=wBp6KkSwRoCBM8bKHG7Ra/KWr/eFcl5IcO+HBzp8KOu9x1wSRIwv8AV+26U800PLeGZS
+	 EuFNjyKgHS1DtNLSO3ZWg6GGj7/gYM6w4I125Ras0Bq+mUP9+AXLh3xskHp1J++c+FDCU
+	 dHjmwdLPgN6XKNdKS3Dc7Ws34UC/JZR48DplXc380UNLCgZLieKPtcMefkIxcx3bvFe6U
+	 pm+VRJwrLib7YiQC4giLA+A8Nq3yyIInw2dzUqPe9Tsfq4WZSptOUiD5FrQ4M1EAdpwO+
+	 p0sfFzIC1NNda3SN9niqFEqtNpCNnpNC4SDEZNMh2Ixn4dEq0AJxZBtjjVw7R5Hc4tA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2mKCR/uM";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IqPnz2T0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0590A606CE44;
-	Sat,  7 Nov 2026 15:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806B8606CE5B;
+	Sat,  7 Nov 2026 15:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mKCR/uM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2851F0089F;
-	Sat,  7 Nov 2026 15:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IqPnz2T0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362CA1F008A1;
+	Sat,  7 Nov 2026 15:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064660;
-	bh=6Tb9nJMHIaiol+gvE2igfX0uLHkCUCxikD/ss5F4bUA=;
+	s=korg; t=1794064662;
+	bh=hyuwtZfAiLdY7pxUrOjQ8Kr4ogQCX9YPrgIHnpu9i64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2mKCR/uMeZpmBVqiLApTPbibadMf6+TfYuJsE/pE5Td96UWLV43YaBkHQfS4FBBlH
-	 kgrGPlH4C/hFqKBRUxZumr+CnvQRJPCO9/bgsXTre9xuzN2tYgJ2EPX7EhkTHTF/qb
-	 V2t72e/Cq3xG11/XdsTVJTwg4OoobKrFWbuuIgdg=
+	b=IqPnz2T0NfDJjVKmw0jqtQ+PdD1P4TEedl+23ZgEHu0vBWY+sFx5nOtYYN9c67XDy
+	 8nf6gSr9q1J3lCRWGLo5XX9CKlsvHaVGuydV81yj75nIwNeEyxSUIcxCKJTuMbrFaD
+	 mfKWYayFpx5tWG1JHWiFAPkyypLdeVXzZgZhyZRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -51,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Oscar Salvador <osalvador@suse.de>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0660/1257] mm/hugetlb_cgroup: move per-node usage on cross node migration
-Date: Sat,  7 Nov 2026 08:49:16 -0500
-Message-ID: <20261107134957.487454729@linuxfoundation.org>
+Subject: [PATCH 7.3 0661/1257] mm/hugetlb_cgroup: move per-node usage on cgroup reparenting
+Date: Sat,  7 Nov 2026 08:49:17 -0500
+Message-ID: <20261107134957.513536858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -77,46 +77,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Hongfu Li <lihongfu@kylinos.cn>
 
-[ Upstream commit fe0ba1909c59660f078560f5130e7af7c6004f12 ]
+[ Upstream commit 23fac055c21176f66ed453394b533bdfc00f7fba ]
 
-Patch series "mm/hugetlb_cgroup: move the per-node usage along with the
-folio", v2.
+hugetlb_cgroup_css_offline() hands the folios of a dying cgroup over to
+its parent with hugetlb_cgroup_move_parent(), which moves the page_counter
+charges and the hugetlb_cgroup pointer of the folio but not its per-node
+usage.  The parent's hugetlb.<size>.numa_stat is short by that usage while
+they are charged, and underflows once they are freed, exposing incorrect
+per-node usage values to userspace.
 
-The per-node usage reported by hugetlb.<size>.numa_stat is accounted
-against folio_nid() in __hugetlb_cgroup_commit_charge() and
-__hugetlb_cgroup_uncharge_folio(), so it is only correct while a folio
-stays charged on the same node and in the same hugetlb_cgroup.
+Move the per-node usage to the parent as well.  The folios keep their node
+here, so only the cgroup which holds the usage changes.
 
-Two paths move a folio which stays charged, and neither moves the usage
-with it.  hugetlb_cgroup_migrate() only moves the hugetlb_cgroup pointers
-of a folio migrated to another node, and hugetlb_cgroup_move_parent() only
-moves the page_counter charges and the hugetlb_cgroup pointer of the
-folios of a dying cgroup.  In both cases the node (or cgroup) which was
-charged keeps a usage which never goes away, while the node (or cgroup)
-which ends up uncharging the folio underflows as soon as the folio is
-freed.
-
-Patch 1/2 moves the usage along with the folio on cross node migration,
-patch 2/2 does the same for the folios a dying cgroup reparents.
-
-This patch (of 2):
-
-hugetlb.<size>.numa_stat uses folio_nid() to account usage in
-__hugetlb_cgroup_commit_charge() and __hugetlb_cgroup_uncharge_folio().
-hugetlb_cgroup_migrate() only moves hugetlb_cgroup pointers, leaving
-per-node usage behind on the source node during cross-node migration.
-
-When the migrated folio gets uncharged, we subtract usage from the
-destination node counter.  This creates stale usage on the source node and
-unsigned long counter underflow on the destination node.  The
-hugetlb.<size>.numa_stat interface exposes these incorrect per-node usage
-values to userspace.
-
-Add a hugetlb_cgroup_move_usage() helper which moves the usage from the
-old node to the new node, and call it from hugetlb_cgroup_migrate().
-
-Link: https://lore.kernel.org/20260918-for-hugetlb-charge-v2-0-2b6d8c2bdc36@kylinos.cn
-Link: https://lore.kernel.org/20260918-for-hugetlb-charge-v2-1-2b6d8c2bdc36@kylinos.cn
+Link: https://lore.kernel.org/20260918-for-hugetlb-charge-v2-2-2b6d8c2bdc36@kylinos.cn
 Fixes: f47761999052 ("hugetlb: add hugetlb.*.numa_stat file")
 Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
@@ -130,58 +103,22 @@ Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb_cgroup.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ mm/hugetlb_cgroup.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/mm/hugetlb_cgroup.c b/mm/hugetlb_cgroup.c
-index ecb6e0b7819a0..7cf7c18119b43 100644
+index 7cf7c18119b43..3fb41311e4c7d 100644
 --- a/mm/hugetlb_cgroup.c
 +++ b/mm/hugetlb_cgroup.c
-@@ -179,6 +179,34 @@ static void hugetlb_cgroup_css_free(struct cgroup_subsys_state *css)
- 	hugetlb_cgroup_free(hugetlb_cgroup_from_css(css));
- }
+@@ -241,6 +241,8 @@ static void hugetlb_cgroup_move_parent(int idx, struct hugetlb_cgroup *h_cg,
+ 	/* Take the pages off the local counter */
+ 	page_counter_cancel(counter, nr_pages);
  
-+static void hugetlb_cgroup_move_usage(struct hugetlb_cgroup *from,
-+				      struct hugetlb_cgroup *to,
-+				      struct folio *from_folio,
-+				      struct folio *to_folio)
-+{
-+	int idx = hstate_index(folio_hstate(from_folio));
-+	unsigned long nr_pages = folio_nr_pages(from_folio);
-+	int from_nid = folio_nid(from_folio);
-+	int to_nid = folio_nid(to_folio);
-+	unsigned long usage;
++	hugetlb_cgroup_move_usage(h_cg, parent, folio, folio);
 +
-+	lockdep_assert_held(&hugetlb_lock);
-+
-+	if (!from || !to)
-+		return;
-+
-+	if (from == to && from_nid == to_nid)
-+		return;
-+
-+	usage = from->nodeinfo[from_nid]->usage[idx];
-+	if (WARN_ON_ONCE(usage < nr_pages))
-+		return;
-+	WRITE_ONCE(from->nodeinfo[from_nid]->usage[idx], usage - nr_pages);
-+
-+	usage = to->nodeinfo[to_nid]->usage[idx];
-+	WRITE_ONCE(to->nodeinfo[to_nid]->usage[idx], usage + nr_pages);
-+}
-+
- /*
-  * Should be called with hugetlb_lock held.
-  * Since we are holding hugetlb_lock, pages cannot get moved from
-@@ -906,6 +934,9 @@ void hugetlb_cgroup_migrate(struct folio *old_folio, struct folio *new_folio)
- 	/* move the h_cg details to new cgroup */
- 	set_hugetlb_cgroup(new_folio, h_cg);
- 	set_hugetlb_cgroup_rsvd(new_folio, h_cg_rsvd);
-+
-+	hugetlb_cgroup_move_usage(h_cg, h_cg, old_folio, new_folio);
-+
- 	list_move(&new_folio->lru, &h->hugepage_activelist);
- 	spin_unlock_irq(&hugetlb_lock);
- }
+ 	set_hugetlb_cgroup(folio, parent);
+ out:
+ 	return;
 -- 
 2.53.0
 
