@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062962;
-	b=Sj1NEl55ZeSHiqlBGi8LqOUzC9cCV/EL/4ovQvgB6500TLFkWgbGPXnnfMqnbE/8q0LQ
-	 WYbpMtwAbhRgz+IPdoaItIuO3A7GsNOTqN/0hA2Gw9rvWztM3WPGy28v1UMhCzDqr+uVp
-	 0rrcZzf2NXvi1XwifRLGIQ+hC2wyZpt5UqbJNqhk9xCs3FL43UIR5CUzCu8kSFgXNribd
-	 MTuYwSSfSmgGYSbgKbX5uEqnLm0W92OLcbfeFo7aj8utLjC7M+mm3rqfn4d6N/GEAZGQT
-	 iYuGYH+0jQoU1/lxDDjBTaUUkw1Ratvb6L/Bc1t7FEwRVrXI4phFw8GFkMtgwEayLhA==
+	t=1794062963;
+	b=iuRVJihbxeTtl2sACfImSUJJHtkUglGdSuh/XCms8IbkoJg1I92O24NoDgUyPBJkxjJi
+	 kpvbpQFoCjCxYJmlT0WumZB6Jt4tXUKwzPT9JdNRd6tbzZXVL2QmPcqABVC7Qg7I19A98
+	 Ru2turaH0DnKHxpNjjfMk+5BVThEY2NhkGxZku6/9YbqwIofNlO6fYdByy/itM6kyyaCa
+	 OwLMo/4A0z7gVLEsVM/2rVsHtUvUSkhK9wNduJvNKk/ZnxtdYSaKtc2KD7yCg3Cc9x4WB
+	 HrMcamnuO6Gsuq7Q6d8GCLcnhcQHRIFnTNn+SHtLLFJVvQbadxdMSK/nycFqmsT229w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062963;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cm8vcgXtY+hqB686Iqg/RblebZJDaY92rb2wNzCknVo=;
-	b=c2NhLaP9fo7qNWL64/RUT2IGHQO5ozrVfd873ao3mXytRbGm92cNKT4feTizNig4kfZA
-	 BUct8Q21lEOqLtWVRIJ+WAFQuGOFGgSL6NN2ExDiR3bKKnoKdnyO/9YaZtQOnJH3boqkB
-	 rskdFfK9CQfkfCchksB9nrkWW0DjM+FVMEPmiba49Gwkv93yjVN9iU3tOBjL1vzc/qH3B
-	 /+LU5Y4NRQwkquSBHfTFkvsAOE2AK894KUA5LBr16c7oDHIDHtaGIO3kLSo20imEodV0O
-	 hPeKs+C/0SlGa6I7PSBh9MTStT4xUQ8xzIKrNqDu0HCQ5dpAcvTc9ULriEX95ENwTgA==
+	bh=OMNq+Y6cG7A/iIM7S5K3DYJelKD4QZCkzEuikpth6Ww=;
+	b=InnfKBtBKEy3hp2SyK8ScyofNbQQYKOtW7Ub4n4+DlqegECHfFVI7jNZzl1G8MfesGwN
+	 AfNP2R0/bnbg23m6nmkXsrx3SpUAGiI59IWBaHqISuKEBkcT6xurBcTii9vJKZUqtmGsl
+	 FEvlmEYr88p6mdyAJICKr2wKlC0B0s88anF/vOJjnxReCOgV7YiCg09wFlGVlCX/G11cG
+	 frvGKqUDVIGt+YvYAIfWKKv7mC7paEDZGn2HCz0hdoZjJ7P1uZmOE6ch/yzLF3HIujKbV
+	 5NhJP2KgSKYCqBQ9iqFU/TuhLHs53v9r+81AQmg3fm0PDkJ/DoiXSVt9mGgfM0+78wQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ0NdCN9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unSS167W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDC4606A330;
-	Sat,  7 Nov 2026 14:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56807606A32C;
+	Sat,  7 Nov 2026 14:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ0NdCN9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38B01F008A2;
-	Sat,  7 Nov 2026 14:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unSS167W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045821F0089F;
+	Sat,  7 Nov 2026 14:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062962;
-	bh=cm8vcgXtY+hqB686Iqg/RblebZJDaY92rb2wNzCknVo=;
+	s=korg; t=1794062963;
+	bh=OMNq+Y6cG7A/iIM7S5K3DYJelKD4QZCkzEuikpth6Ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZ0NdCN9E9Sisq14KuTRHWUi4zmx52+sbGvVS0IV5XL1tAO/t6yoIaT6qBq5SYaVm
-	 M7i2cVPzeYvBFO4bWxQ12CRMR3G7YD0qtPfimVl80MUl2HRN3Gy5Mnv4dXOJSRi4J1
-	 YidoqlQnFS4U9+hnJJPuT6uZVJ/xgNhJKBVRmWrg=
+	b=unSS167WjNl7N4STHHJLdnXO7jMVWva58LvV+i1rQsNTL+ekcshiyFXmEPnqU6DD4
+	 8u2gpcUlFRWajnXYnidQMLY8+BpPPYUPKGNW7tmbnxALzMwveXe6pbjGxubFFLok9U
+	 7QsHMcy37d/w9R75gqksirHghnwwGnT+66L7kJ1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 223/869] arm64: dts: freescale: imx8mp-verdin-ivy: fix DIGI_1/DIGI_2 gpio-line-names
-Date: Sat,  7 Nov 2026 08:48:25 -0500
-Message-ID: <20261107134859.451079578@linuxfoundation.org>
+Subject: [PATCH 6.18 224/869] arm64: dts: freescale: imx8mp-toradex-smarc: fix SMARC_SLEEP# gpio-line-names typo
+Date: Sat,  7 Nov 2026 08:48:26 -0500
+Message-ID: <20261107134859.477992798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,44 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit cb45264c27fad31f7c58fbb1a5c2f7ec16018dae ]
+[ Upstream commit 90bc5a53c7f0733ec37a5c041b4e1aefa3d8d965 ]
 
-gpio3's gpio-line-names names the two Ivy digital inputs "DIG_1" and
-"DIG_2", while the official Ivy Carrier Board datasheet (Section 2.10,
-Table 12) names them DIGI_1 and DIGI_2, matching the
-k3-am62-verdin-ivy.dtsi variant for the same carrier board pins.
+gpio3's gpio-line-names has "SLEEP#" instead of "SMARC_SLEEP#" for the
+SMARC SLEEP# connector signal, while the gpio-keys node driven by the
+very same GPIO line already labels it "SMARC_SLEEP#", and the imx95
+Toradex SMARC variant names the equivalent line "SMARC_SLEEP#" too.
 
-GPIO line names are meant to be stable across the whole Verdin family
-and its carrier boards, so userspace GPIO tooling that looks up a line
-by name works the same regardless of which Verdin SoM is fitted on
-Ivy.
+GPIO line names are meant to be stable across the whole Toradex SMARC
+family, using the official SMARC-connector signal names from the
+SMARC specification and the SoM datasheet's pin assignment table, so
+userspace GPIO tooling that looks up a line by name works the same on
+any Toradex SMARC board.
 
-Fixes: b98948b04295 ("arm64: dts: freescale: imx8mp-verdin: Add Ivy carrier board")
+Fixes: 97dc91c04558 ("arm64: dts: freescale: add Toradex SMARC iMX8MP")
 Cc: stable@vger.kernel.org
-Link: https://docs.toradex.com/116799-ivy_carrier_board_datasheet.pdf
 Assisted-by: LLM
 Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
-index db1b4ee7728c0..bf021e85cfc94 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
-@@ -333,8 +333,8 @@ &gpio3 {
- 		"",
- 		"",
- 		"",
--		"DIG_1", /* SODIMM 56 */
--		"DIG_2", /* SODIMM 58 */
-+		"DIGI_1", /* SODIMM 56 */
-+		"DIGI_2", /* SODIMM 58 */
- 		"REL1",  /* SODIMM 60 */
- 		"REL2",  /* SODIMM 62 */
- 		"", /* 10 */
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi
+index bebe19eb360f8..576da7875601f 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-toradex-smarc.dtsi
+@@ -323,7 +323,7 @@ &gpio3 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_lvds_dsi_sel>;
+ 	gpio-line-names = "ETH_0_INT#", /* 0 */
+-			  "SLEEP#",
++			  "SMARC_SLEEP#",
+ 			  "",
+ 			  "",
+ 			  "",
 -- 
 2.53.0
 
