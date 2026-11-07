@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062137;
-	b=QRAn8qzQAFL9jOoaxbLRUWM6Rxg25iBPaw+UniGPcmgKiH5QG2cCpmKnkGeJ0nowA0Pr
-	 odwNEqLAPm0hYcDyhVUK2Z1RWd5VOzVIVnuy1Q9KKtrMj8UaRX1DH2RBU44ZTssjIRdZP
-	 jtLsnwE0YhjTyyKqUreU21dsA8mxx9FSAwIj7kX7PKhBIpwnFPUjOPsE4E12XWNqKB8IY
-	 kecR9g3XQeIK382YK6VozQq2ePNVo+8e2rTnOEltjQ0dFsd5+qLW0rY0LeMhretLqHn+g
-	 69wsjQNwvD38lI19XdD3dWYcRNOLW3km4DB2TBbSIPMPNUVb1PF4m97K0v4Kh4ycdZg==
+	t=1794062139;
+	b=zO9++Kbfbqtuu0mrjEgaMl2YIuA3rGXr2ZjSoSuuQyPlLDqXUeRKjaxWEkq/TnGzS65d
+	 W8R0J05i30gm/2YQ1A3NMvI3020V5IMe2HUhpKYjVhW586ddfZRN8eScfmDGuxguHHnoS
+	 Hfw4i4PjHL8mN38SU0aMOiBdhm2ykVoD8VKMNCyTmdFe2e/SEWCa4JDS+r7KJUjn2eTPj
+	 U34iRfXgh51Smfaws2mf/UhyPrab/uukklxXIfDXP82ACtZBImOKHl/qUakS9pDLd9drb
+	 DqSdcjHoiLYf/0M2SISr5Yfz/VQtdt/n1WVC8QZufbyh299l2h60kn8mfxe9z0U2Vuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062137;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062139;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q0sMguYZewpExcXJd9eellAXyGXe/qjfpygWaFQQ8t4=;
-	b=Ivb2DQ9GRo5Tuux0RyDwPmYar7DUM4a+04GdnSby18KyPgA12lxJ2iwQc09W2bR33URs
-	 ecr9omfouQUfJiS7KS3evch9Hwj+PtanuXmQN6dsSaRD6/ES+xl7cCkabhy7B3E5N4Hzl
-	 0Ac5LbPncnkygNEXzS3PQiqvBT0ysn5VWLhWRBFewkK8hVucemcRolzz0fbflYzBq9JwJ
-	 sNWo7AKk1ipQol4nffo7WsG9z4iS8EH9EutD5w14ruShyPq2Kcn7L2QECdO//vCLUtCql
-	 /Me+haRSt1Em6B53rvt6NsPUjc+m7CmVvOlXaMMKXDBxZDd4PJuirsv6fOA00xkPZSQ==
+	bh=jitSmH4wXqrSdNzeMo6bpaUABAC0YwWZLZOz2MaQyxU=;
+	b=suaxwf8B3FyoxQQVSqDrxq3rYhO3VF3stIC3hAIScCffN150OlWnC1di38rzS6op7JE4
+	 TcbhhottILepvC8ddfwx8cSrgb4HdEm81KdQ1Qg3ld4/CpJNxzJTOMnoIbRtiJbgXzNfh
+	 jMjMZvOoMjW/jDQf7qIAqTOUuweFQAsfDWFz3Bz+3cIFVYeo+oykcrHrFDbKs7VM2ADlS
+	 pNdULfl/KdTKpScYeCAzj59FxTNe5PRJmVBlanHJrONj4Rj8j+xBCjsXmzaMqO36lzbHu
+	 x4N97QGg9iwTUtyNReCLxNfDxgWKp/iq4NGNi4xwjaw4lg20gKrpgXrnftv+6twt9BQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2POzHJm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BwvTUDev;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C635606A653;
-	Sat,  7 Nov 2026 14:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1D4606A653;
+	Sat,  7 Nov 2026 14:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2POzHJm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C2A1F0089F;
-	Sat,  7 Nov 2026 14:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BwvTUDev
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF501F008A1;
+	Sat,  7 Nov 2026 14:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062137;
-	bh=Q0sMguYZewpExcXJd9eellAXyGXe/qjfpygWaFQQ8t4=;
+	s=korg; t=1794062138;
+	bh=jitSmH4wXqrSdNzeMo6bpaUABAC0YwWZLZOz2MaQyxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y2POzHJm2KWh3v+UrzBdJEU1z+h89eygUwnyCkk9ZYnNxtKbGwD1jgm+DPtSf3aFn
-	 BT++BYoz3Czn0Qcyg3SwcgLoqLWHiJGwpnMeA2zH6UcNL5yraCYfhOVB8LE7PBILhk
-	 S89MU0Xa2KQtoNpUH9hnIIMN3ksSV8Ip4Sh77CA8=
+	b=BwvTUDevuIBGPA671Hihd5h6WkRRA9cGgLKRy8x7Bv2YYn8WicI5RMYKg4sXQ1hD2
+	 JnYo1/ORRdRivab9F4HXtMF3cyaqfd0p0ZFOpqvhKv0grSX3xF2YuYyzIx90bsXJXT
+	 EDXwL1dr0TTO0Vjl5NQBPb7Vr5Yx8dUQzbXMUxso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Hal Feng <hal.feng@starfivetech.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1103/1536] ALSA: core: Check shutdown flag at D0 power-state, too
-Date: Sat,  7 Nov 2026 08:51:59 -0500
-Message-ID: <20261107135028.680601367@linuxfoundation.org>
+Subject: [PATCH 6.12 1104/1536] clk: starfive: jh7110-isp: fix refcount leak in jh7110_ispcrg_probe()
+Date: Sat,  7 Nov 2026 08:52:00 -0500
+Message-ID: <20261107135028.710616922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,50 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit ad63c5b62843895e8c3cd7291ed07cc659df0355 ]
+[ Upstream commit 1c4f9480473917558908c083d1293b4ebb3d50c5 ]
 
-The snd_power_ref_and_wait() skips the card->shutdown check when the
-card is already in D0 state and immediately returns as successful, by
-assuming the all-green in D0.  This assumption makes the code after
-this sync point behaving as if all power is up and ready, even though
-actually it might have been already at the disconnected state.
+In jh7110_ispcrg_probe(), the error path for pm_runtime_get_sync()
+failure directly returns without releasing the runtime PM reference
+count. The call to __pm_runtime_resume() increments the usage count
+unconditionally before attempting to resume, and does not decrement it
+on failure. Thus the leaked reference makes it impossible to suspend
+the device later.
 
-Add the missing check of shutdown flag there for the more consistent
-behavior.
+All other error paths correctly jump to err_exit and call
+pm_runtime_put_sync(). Fix this by replacing pm_runtime_get_sync()
+with pm_runtime_resume_and_get(), which properly balances the
+reference count on error.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260929125346.1478631-2-tiwai@suse.de
+Fixes: 81279f5d0812 ("clk: starfive: Add StarFive JH7110 Image-Signal-Process clock driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Hal Feng <hal.feng@starfivetech.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/init.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/clk/starfive/clk-starfive-jh7110-isp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/init.c b/sound/core/init.c
-index 87c10bd900a73..92dff1736cfe9 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -1143,12 +1143,12 @@ EXPORT_SYMBOL(snd_card_file_remove);
- int snd_power_ref_and_wait(struct snd_card *card)
- {
- 	snd_power_ref(card);
--	if (snd_power_get_state(card) == SNDRV_CTL_POWER_D0)
--		return 0;
--	wait_event_cmd(card->power_sleep,
--		       card->shutdown ||
--		       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
--		       snd_power_unref(card), snd_power_ref(card));
-+	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
-+		wait_event_cmd(card->power_sleep,
-+			       card->shutdown ||
-+			       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
-+			       snd_power_unref(card), snd_power_ref(card));
-+	}
- 	if (card->shutdown) {
- 		snd_power_unref(card);
- 		return  -ENODEV;
+diff --git a/drivers/clk/starfive/clk-starfive-jh7110-isp.c b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
+index 8c4c3a958a9f4..ace2c2eeac90a 100644
+--- a/drivers/clk/starfive/clk-starfive-jh7110-isp.c
++++ b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
+@@ -140,7 +140,7 @@ static int jh7110_ispcrg_probe(struct platform_device *pdev)
+ 
+ 	/* enable power domain and clocks */
+ 	pm_runtime_enable(priv->dev);
+-	ret = pm_runtime_get_sync(priv->dev);
++	ret = pm_runtime_resume_and_get(priv->dev);
+ 	if (ret < 0)
+ 		return dev_err_probe(priv->dev, ret, "failed to turn on power\n");
+ 
 -- 
 2.53.0
 
