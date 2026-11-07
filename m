@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060931;
-	b=i/zNKASlKcTkI72yVf9lcdcHs24Cuy5fkanITy++xM34X8DmfxBdj1Lbo9ZYCqLik7mY
-	 pOGDvlZbzrfADLVKO9rn7Sd3lLJF5XnheyA5TrEUJpiNiGE4dMeEY4BsiUoEADR9FqpXa
-	 HonSJl6wNIJU4lCH0lmm6ZK2jsYQBOwlTNwfsq13OcYFfkm9WqJQmk+xueyeCAK33LfZr
-	 +D9Srn3L7sB+wvCo2xarOVZcqH9HF8Yp6bLw6rNT1YkwMlEsESUBVcdhkIWl/gNwG07UC
-	 j2atlOi1G43OjmRdOWSKy3GBATuYb9z8y4MVQJikjsMohpsLzTdirMtcoZX3wbDnVaw==
+	t=1794060932;
+	b=Msqx5qISXobQ/FYNvlHBReqBZKEq2hiVI7exYk7Nf7E5wOMOn5ZDpUYo5Hrs3lOMpEe0
+	 VPVt27gH8xSdmM8RVmf5+gKVLEqABNdnPmsbABqRnlrIVhIfzElE8FbGvuv81+NrFgGkN
+	 q0BW72N7G8/ymq1WBWiM0ZqEjARJf7+AjvWidPQrZFB5Romg+HI7t35bfX0Cw37CJKKWM
+	 vFUyzkeXYN5NPffx30/6NpqEwN3bZve7l5uWl25puzhj/FOONv+Ru6uXwrqLbFy18wvsA
+	 e+HFLEzOASpVCWtjDPmGTDB0MDX+tpHOHVJu8di4Z+BKgwggpS1jfZtpSHBbY/vrq2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060931;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lr6hRc47/sForvU65hAhUMMHbYupQdMTLs8JVG0UFZo=;
-	b=L0CEa2JZjo+JThEFx8IO+gYrMgObz/Y4jjwfzJdOFyuvn6GayGvTseeRtPLqsfgSdEkR
-	 7Zcw0GyHYH7/gM4Hco5jP9WbFeBeTlvTlUwdVQnjrsPER+FL/yPCd6WtedpeJQ/KyJ3KA
-	 2aUz94gddkKzfDnKUWQqLecHwWM0yY0NNlUbPyT3RBVvHE5VI256PGdxjSnpiDygixUgF
-	 AU8LWW07vglVbCe237YTpjvnSFfEzraK/m8DBsW3F/WibCvM+FzUHAy8JVLVcLTSG5KOb
-	 9e+7Wp6XNJw/rqDQBnlnc4yyaJ1jln2Y1Ep6V6htjd4cUMjIONzXlAFmC+cgjPGlbFA==
+	bh=EX20CXYSEpSegSBKr4/fAQlBHq/bzvIMhpUlJeH2USE=;
+	b=E8lB0a12hMB7z3n6o2fetUUfcgyGJrWrGucyaiE5xnKjdDFhvVHVvw1FHd1565r5trJd
+	 lqErqQzVio0fKr5LFhh6ePIoThuH6/8wT8DTd1gmd1TBaJmX3E4ZcHeyZZHGZtJ3XYMBm
+	 pR8iirXbxWooq3ji9I8ADeKKDxWAtCbkBq+NB6oPbk1vHOMtkE/gQ7AJersg4pX0gmMmu
+	 yty/U/Skz3AzJlbJzKf5LAHFwA58L7uQOGgFEEHiwt+268CLq8z+jFAfLMJIaqTW/zDA+
+	 mxbk1K5H6eCOu5SJfUritYpZfQ6GdnihKmOR/tCbU7EpjERh4UWxyXz4GeuTtCw3XTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fve4Kmbn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=th972L1V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F57606D82C;
-	Sat,  7 Nov 2026 14:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E091606D819;
+	Sat,  7 Nov 2026 14:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fve4Kmbn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A611F0089F;
-	Sat,  7 Nov 2026 14:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=th972L1V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285031F0089F;
+	Sat,  7 Nov 2026 14:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060931;
-	bh=Lr6hRc47/sForvU65hAhUMMHbYupQdMTLs8JVG0UFZo=;
+	s=korg; t=1794060932;
+	bh=EX20CXYSEpSegSBKr4/fAQlBHq/bzvIMhpUlJeH2USE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fve4KmbnK2pNq3ZBRIR9BDEEFJtug8q9MaryYPwvLaEjWll54Nxzv5FtfG07WcCfT
-	 zSN//G1Dbl9VXKVKM9ZkoqRo99TxihBxbQ9nxmQcPYQjlf8l7bkzxjwA+At7V2wGBl
-	 /odlubWwsJYPSTT5lsjdchiIu/zQbhqZ0GuEnPr4=
+	b=th972L1VIP8LVxXo8XPpRQy7gEaKuE8IfN+c/EuPKFIR/LfyhebpOBXS8IMLBd0h1
+	 rnH1NDU4Pckx28x19mLHo8BGrBFbpE3VTcUsDymOSyEIG6dTMlbhwexIt/4ShCG4Yb
+	 AtH1UtaeQmslgRmi0HQT1rHFOdohHvF4nkGIHVxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Junhao He <hejunhao3@h-partners.com>,
+	Wupeng Ma <mawupeng1@huawei.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Tony Luck <tony.luck@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0248/1536] netfilter: nf_tables: call skb_valid_dst() before skb_dst()
-Date: Sat,  7 Nov 2026 08:37:44 -0500
-Message-ID: <20261107135004.647431605@linuxfoundation.org>
+Subject: [PATCH 6.12 0290/1536] ACPI: APEI: Handle repeated SEA error storms
+Date: Sat,  7 Nov 2026 08:38:26 -0500
+Message-ID: <20261107135005.876557163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,187 +71,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Junhao He <hejunhao3@h-partners.com>
 
-[ Upstream commit 689db98e535bf8efb5bc9c36f4fd3de3bd715eb6 ]
+[ Upstream commit e61487226b7df39e5f4683b036ee6aa7a5039d7b ]
 
-When fetching the dst_entry from the skb, check if it valid, ie. this is
-not a template dst, for extensions that can be used from the netdev
-ingress and egress chains.
+When hardware memory corruption occurs and a user process accesses the
+corrupted page, the CPU triggers a Synchronous External Abort (SEA).
+The kernel invokes do_sea() to handle the exception, which calls
+memory_failure() to handle the faulty page.
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Scenario 1: Memory Error Interrupt First, then SEA
+The page is already poisoned by the memory error interrupt path. The
+subsequent SEA handler sends a SIGBUS to the task, which accesses the
+poisoned page. This flow is correct.
+
+Scenario 2: SEA first, then memory error interrupt (problematic scenario)
+If a user task directly accesses corrupted memory through a PFNMAP-style
+mapping (e.g., devmem), the page may still be in the free-buddy state when
+SEA is handled. In this case, memory_failure() will poison the page without
+invoking kill_accessing_process(), and then takes the free-buddy recovery
+path.
+
+After the CPU returns to the task context, the task re-enters the SEA
+handler due to the same access. However, ghes_estatus_cached() suppresses
+all subsequent entries during the 10-second window, preventing
+ghes_do_proc() from being called. This suppression blocks the
+MF_ACTION_REQUIRED-based SIGBUS delivery, causing the kernel to fail to
+kill the task immediately. Consequently, the process keeps re-entering
+the SEA handler, leading to an SEA storm. Later, the memory error
+interrupt path also cannot kill the task, leaving the system stuck in
+this repeated loop.
+
+The following error logs are explained using the devmem process:
+  NOTICE:  SEA Handle
+  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
+  [Hardware Error]: event severity: recoverable
+  [Hardware Error]:   section_type: ARM processor error
+  [Hardware Error]:    physical fault address: 0x0000001000093c00
+  [T54990] Memory failure: 0x1000093: recovery action for free buddy page: Recovered
+  [ T9955] EDAC MC0: 1 UE Multi-bit ECC on unknown memory
+           (page:0x1000093 offset:0xc00 grain:1 - APEI location: ...)
+  NOTICE:  SEA Handle
+  NOTICE:  SEA Handle
+  ...
+  ...        ---> SEA storm
+  ...
+  NOTICE:  SEA Handle
+  [ T9955] Memory failure: 0x1000093: already hardware poisoned
+  ghes_print_estatus: 1 callbacks suppressed
+  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
+  [Hardware Error]: event severity: recoverable
+  [Hardware Error]:   section_type: ARM processor error
+  [Hardware Error]:    physical fault address: 0x0000001000093c00
+  [T54990] Memory failure: 0x1000093: already hardware poisoned
+  [T54990] 0x1000093: Sending SIGBUS to devmem:54990 due to hardware memory corruption
+
+To resolve this, return an error when encountering the same SEA again.
+The subsequent SEA handler invocation uses arm64_notify_die() to send a
+SIGBUS signal to the task, which terminates the process and prevents it
+from re-entering the handler loop.
+
+Signed-off-by: Junhao He <hejunhao3@h-partners.com>
+Reviewed-by: Wupeng Ma <mawupeng1@huawei.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20260527082707.2013499-1-hejunhao3@h-partners.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 6 ++++--
- net/ipv6/netfilter/nf_reject_ipv6.c | 8 ++++++--
- net/netfilter/nft_meta.c            | 6 ++++--
- net/netfilter/nft_rt.c              | 6 ++++--
- net/netfilter/nft_xfrm.c            | 9 ++++++++-
- 5 files changed, 26 insertions(+), 9 deletions(-)
+ drivers/acpi/apei/ghes.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 57ccff9ab076a..021638aef1706 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -8,6 +8,7 @@
- #include <net/tcp.h>
- #include <net/route.h>
- #include <net/dst.h>
-+#include <net/dst_metadata.h>
- #include <net/netfilter/ipv4/nf_reject.h>
- #include <linux/netfilter_ipv4.h>
- #include <linux/netfilter_bridge.h>
-@@ -256,6 +257,7 @@ static int nf_reject_fill_skb_dst(struct sk_buff *skb_in)
- 	if (!dst)
- 		return -1;
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index e1cbc35919cbf..03cf3d63e609c 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -1267,8 +1267,16 @@ static int ghes_in_nmi_queue_one_entry(struct ghes *ghes,
+ 	ghes_clear_estatus(ghes, &tmp_header, buf_paddr, fixmap_idx);
  
-+	skb_dst_drop(skb_in);
- 	skb_dst_set(skb_in, dst);
- 	return 0;
- }
-@@ -272,7 +274,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	if (!oth)
- 		return;
- 
--	if (!skb_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
-+	if (!skb_valid_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
- 		return;
- 
- 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
-@@ -345,7 +347,7 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (iph->frag_off & htons(IP_OFFSET))
- 		return;
- 
--	if (!skb_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
-+	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
- 
- 	if (skb_csum_unnecessary(skb_in) ||
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index 3c56e94e6943b..95ddd533c506c 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -8,6 +8,7 @@
- #include <net/ip6_route.h>
- #include <net/ip6_fib.h>
- #include <net/ip6_checksum.h>
-+#include <net/dst_metadata.h>
- #include <net/netfilter/ipv6/nf_reject.h>
- #include <linux/netfilter_ipv6.h>
- #include <linux/netfilter_bridge.h>
-@@ -291,6 +292,7 @@ static int nf_reject6_fill_skb_dst(struct sk_buff *skb_in)
- 	if (!dst)
- 		return -1;
- 
-+	skb_dst_drop(skb_in);
- 	skb_dst_set(skb_in, dst);
- 	return 0;
- }
-@@ -323,10 +325,12 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	fl6.fl6_sport = otcph->dest;
- 	fl6.fl6_dport = otcph->source;
- 
--	if (!skb_dst(oldskb)) {
-+	if (!skb_valid_dst(oldskb)) {
- 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
- 		if (!dst)
- 			return;
-+
-+		skb_dst_drop(oldskb);
- 		skb_dst_set(oldskb, dst);
- 	}
- 
-@@ -427,7 +431,7 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
- 
--	if (!skb_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
-+	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
- 
- 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
-diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
-index 983158274c68d..9ef4173976c04 100644
---- a/net/netfilter/nft_meta.c
-+++ b/net/netfilter/nft_meta.c
-@@ -20,6 +20,7 @@
- #include <net/dst.h>
- #include <net/ip.h>
- #include <net/sock.h>
-+#include <net/dst_metadata.h>
- #include <net/tcp_states.h> /* for TCP_TIME_WAIT */
- #include <net/netfilter/nf_tables.h>
- #include <net/netfilter/nf_tables_core.h>
-@@ -274,11 +275,12 @@ static bool nft_meta_get_eval_ifname(enum nft_meta_keys key, u32 *dest,
- static noinline bool
- nft_meta_get_eval_rtclassid(const struct sk_buff *skb, u32 *dest)
- {
--	const struct dst_entry *dst = skb_dst(skb);
-+	const struct dst_entry *dst;
- 
--	if (!dst)
-+	if (!skb_valid_dst(skb))
- 		return false;
- 
-+	dst = skb_dst(skb);
- 	*dest = dst->tclassid;
- 	return true;
- }
-diff --git a/net/netfilter/nft_rt.c b/net/netfilter/nft_rt.c
-index ad527f3596c03..cb7dff336bbdc 100644
---- a/net/netfilter/nft_rt.c
-+++ b/net/netfilter/nft_rt.c
-@@ -8,6 +8,7 @@
- #include <linux/netfilter.h>
- #include <linux/netfilter/nf_tables.h>
- #include <net/dst.h>
-+#include <net/dst_metadata.h>
- #include <net/ip6_route.h>
- #include <net/route.h>
- #include <net/netfilter/nf_tables.h>
-@@ -59,10 +60,11 @@ void nft_rt_get_eval(const struct nft_expr *expr,
- 	u32 *dest = &regs->data[priv->dreg];
- 	const struct dst_entry *dst;
- 
--	dst = skb_dst(skb);
--	if (!dst)
-+	if (!skb_valid_dst(skb))
- 		goto err;
- 
-+	dst = skb_dst(skb);
-+
- 	switch (priv->key) {
- #ifdef CONFIG_IP_ROUTE_CLASSID
- 	case NFT_RT_CLASSID:
-diff --git a/net/netfilter/nft_xfrm.c b/net/netfilter/nft_xfrm.c
-index 81cbe8408c83c..924d6bd389843 100644
---- a/net/netfilter/nft_xfrm.c
-+++ b/net/netfilter/nft_xfrm.c
-@@ -12,6 +12,7 @@
- #include <linux/netfilter/nf_tables.h>
- #include <net/netfilter/nf_tables_core.h>
- #include <net/netfilter/nf_tables.h>
-+#include <net/dst_metadata.h>
- #include <linux/in.h>
- #include <net/xfrm.h>
- 
-@@ -176,9 +177,15 @@ static void nft_xfrm_get_eval_out(const struct nft_xfrm *priv,
- 				  struct nft_regs *regs,
- 				  const struct nft_pktinfo *pkt)
- {
--	const struct dst_entry *dst = skb_dst(pkt->skb);
-+	const struct dst_entry *dst;
- 	int i;
- 
-+	if (!skb_valid_dst(pkt->skb)) {
-+		regs->verdict.code = NFT_BREAK;
-+		return;
+ 	/* This error has been reported before, don't process it again. */
+-	if (ghes_estatus_cached(estatus))
++	if (ghes_estatus_cached(estatus)) {
++		/*
++		 * Return failure on duplicate SEA entries so that the
++		 * subsequent SEA handler invocation sends a SIGBUS signal to
++		 * the task to prevent it from re-entering the handler loop.
++		 */
++		if (is_hest_sync_notify(ghes))
++			rc = -ECANCELED;
+ 		goto no_work;
 +	}
-+
-+	dst = skb_dst(pkt->skb);
- 	for (i = 0; dst && dst->xfrm;
- 	     dst = ((const struct xfrm_dst *)dst)->child, i++) {
- 		if (i < priv->spnum)
+ 
+ 	llist_add(&estatus_node->llnode, &ghes_estatus_llist);
+ 
 -- 
 2.53.0
 
