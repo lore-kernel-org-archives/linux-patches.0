@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064463;
-	b=OksnUzPEv1O/cSn3OA+/2Hn/H4BntMXuJYAh2SRF3gtItVL7c+nlJGvgqL1PtQ7cbOVx
-	 3wy6KvhlrYH1Drx1c8SjEiGrBXL50ERD+itxAhBaurFyazkhHB8LyPRSUrHGCPt/Mm7UT
-	 RLWtyW3qr5sGbYXvdHO4u7MqzMtK9g7IaxiAcv2mXTuMhECco4LpHFEGgOPdQGYSXAHGt
-	 OtdHLBGL+drIEEdMDbAK8hoAEse32MhZza5cbuVBLxG5o71OyReZP61dvwJt43C9r5bjU
-	 6kbMbNOcMBMHUC1HEMV88JFgC4G2H4fcv66otHNyT43EERHKSlMcdZz51IgcbXymUpg==
+	t=1794064464;
+	b=R69EveCKgO49Yv6DyifXRVFeS9BEdzHFSr3MXkKaH4smnA1a6vAVKESPXoxCm20qVGje
+	 g9nyGq2VuIuaOJQHxu8/txbH39ODcZT5pdHnbjHu7WkT2bi7gZsB3i8H1ibMCpFTUYIkE
+	 gC+GW8F7jiasIRYAIoZYivG6OEziVREcxA55xVeeGo/2SGAsZP7fIV4ITv5LyGRJnBbim
+	 trCqPoy9XzyiljYe9CobNV5oHFMA69EB/tyeY5G6OmbE5kcl/Z7kvNUzqrhUXYUKswRjV
+	 bsWRmq33Yo3dxB6BqNpNNiz1aA7XembManKu33q3JVzk/T1pZfgII4vlkqdPOZXaZsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U9BL02B7l7LEN6mIvp1lgK6Hmd5y26tImZZbReeHUO8=;
-	b=B4cOofoxOY3Q8RHpkRDBoJ5Ibjy9rDWV//do1HeBvCCRIpAB3wbRGYYXnkTo5pbvn0SY
-	 aA1kWjmvyUNiQ9yCLXM+WQtVPGRnkNB7/FMHzvF4VNG2/OHX8ljNL2krA1UxV5Zyno1HU
-	 DHDLMCwaVY+chO9luHtnNFtg29VvLkZ3+W8CjrkwNPglA4KIcz4lZhNWcfvnInk7ElbDM
-	 GyPHaW/6Bg+nK7CLeYQWiZeus4o2uzH9AkrYq2Nt6zbpM6Jcm61NWjhbi110Ycim7ZSwY
-	 +gY5osaD+5t61a00JIwqL5BGPi+cNFG7QE/aoLJ+VtR1uFXQk0F1mxm/ns4ckw+CGXQ==
+	bh=3hU4JUP9d/i8iFdVAxN2xBPp1JPPSxz8i4AZS6pUOOM=;
+	b=LMFcH1vKW6VMjt8PDVkSRYN/5yX+66Frz4DJMG6cJ34SAq4ITFuoLSR4pGHrvdqc0lSw
+	 EEj/n4KYWnplC6reH+HCZizlYX61XX4T6I439PsRqwgDniSSBllxocFsCRDV5OppdOWr7
+	 ti814k/Tmf+q+WZlmavaLSedoAB+XCG1sMitQ5zK5HIWn/4Ndv8Obk43vEQYZ9lAiDk7b
+	 jYv9CvXUHaLGBUX/TpEd2zE+Zg1SDap/y4Vx9B/ceY6gfLNyCU/QWUIP647udupq7bOPa
+	 FCIkyJ3ItJL4ZMOtqop6kQS0VV6wrrLv0B320w5OFb3Vpb96jWJDMwcu+96fvNlTECg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIpTPV39;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bbjb7W8v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEBF606A9E7;
-	Sat,  7 Nov 2026 15:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D058606A9E7;
+	Sat,  7 Nov 2026 15:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIpTPV39
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7CA1F008A3;
-	Sat,  7 Nov 2026 15:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bbjb7W8v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C8C1F008A3;
+	Sat,  7 Nov 2026 15:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064462;
-	bh=U9BL02B7l7LEN6mIvp1lgK6Hmd5y26tImZZbReeHUO8=;
+	s=korg; t=1794064464;
+	bh=3hU4JUP9d/i8iFdVAxN2xBPp1JPPSxz8i4AZS6pUOOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sIpTPV39uDh2NvNjQBnqG/96VRsE+qYqzBuDqRiVxQUbcSkeww8BZnGdX2Up/7Lwz
-	 YmG2UOTQ7oybslaog6CQ25Tp/ZAioifPVfaYtv3px7zuVotvT1ez7++WDQA9I9SaN4
-	 azkTCbSPCbIupkButicz/LRXEcQTzzUQI2z6OSfM=
+	b=Bbjb7W8vUhF+LRhtkKZaa5gku8PnkPElSOBubDB1PgeU/QHOZJ3ngUm+qwg9Re67X
+	 0glHlZcMGsCjov/JxoeWJyZZoLl4o3sK7mnhIcnBuL8jPIm7puwJsmHBbTtSvsokuP
+	 vSHHU9NfEG2fx2WQ0bekANbU4IbdQNNi/RUrF8bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0466/1257] media: hantro: Harden MPEG-2 control access against NULL
-Date: Sat,  7 Nov 2026 08:46:02 -0500
-Message-ID: <20261107134952.335715169@linuxfoundation.org>
+Subject: [PATCH 7.3 0467/1257] media: hantro: release runtime resources when device_run fails
+Date: Sat,  7 Nov 2026 08:46:03 -0500
+Message-ID: <20261107134952.361015758@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,47 +72,163 @@ Content-Transfer-Encoding: 8bit
 
 From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
 
-[ Upstream commit 2b685dba4226792933f45b1cbf8991e89ccd21ce ]
+[ Upstream commit 556ab0b2741d653455637ffdd453d65c0439914a ]
 
-The MPEG-2 sequence and picture controls are validated
-before a job is queued, so hantro_get_ctrl() is not expected to return
-NULL in hantro_g1_mpeg2_dec_run(). The controls are nonetheless
-dereferenced unconditionally.
+device_run() acquires a runtime PM reference and enables the VPU clocks
+before invoking the codec-specific run callback.
 
-Harden the invariant by checking the sequence and picture controls with
-WARN_ON().
+If clk_bulk_enable() fails, the runtime PM reference is left held. If
+the codec-specific run callback fails, both the enabled clocks and the
+runtime PM reference are left held.
 
-Found by code inspection.
+Make the clocks part of the device's runtime PM state by enabling them
+from the runtime-resume callback and disabling them from the
+runtime-suspend callback.
 
-Fixes: f329e21e9dad ("media: uapi: mpeg2: Split sequence and picture parameters")
+Fixes: 775fec69008d ("media: add Rockchip VPU JPEG encoder driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../media/platform/verisilicon/hantro_drv.c   | 66 +++++++++++--------
+ 1 file changed, 39 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c b/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
-index e0d6bd0a6e44f..6a942f4b8a2dd 100644
---- a/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
-+++ b/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
-@@ -161,8 +161,13 @@ int hantro_g1_mpeg2_dec_run(struct hantro_ctx *ctx)
+diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
+index ad71c0402ef3b..43f67b9fcf273 100644
+--- a/drivers/media/platform/verisilicon/hantro_drv.c
++++ b/drivers/media/platform/verisilicon/hantro_drv.c
+@@ -59,8 +59,7 @@ static const struct v4l2_event hantro_eos_event = {
+ 	.type = V4L2_EVENT_EOS
+ };
  
- 	seq = hantro_get_ctrl(ctx,
- 			      V4L2_CID_STATELESS_MPEG2_SEQUENCE);
-+	if (WARN_ON(!seq))
-+		return -EINVAL;
+-static void hantro_job_finish_no_pm(struct hantro_dev *vpu,
+-				    struct hantro_ctx *ctx,
++static void hantro_job_finish_no_pm(struct hantro_ctx *ctx,
+ 				    enum vb2_buffer_state result)
+ {
+ 	struct vb2_v4l2_buffer *src, *dst;
+@@ -86,15 +85,13 @@ static void hantro_job_finish_no_pm(struct hantro_dev *vpu,
+ 					 result);
+ }
+ 
+-static void hantro_job_finish(struct hantro_dev *vpu,
+-			      struct hantro_ctx *ctx,
++static void hantro_job_finish(struct hantro_ctx *ctx,
+ 			      enum vb2_buffer_state result)
+ {
+-	pm_runtime_put_autosuspend(vpu->dev);
+-
+-	clk_bulk_disable(vpu->variant->num_clocks, vpu->clocks);
++	struct hantro_dev *vpu = ctx->dev;
+ 
+-	hantro_job_finish_no_pm(vpu, ctx, result);
++	pm_runtime_put_autosuspend(vpu->dev);
++	hantro_job_finish_no_pm(ctx, result);
+ }
+ 
+ void hantro_irq_done(struct hantro_dev *vpu,
+@@ -111,7 +108,7 @@ void hantro_irq_done(struct hantro_dev *vpu,
+ 	if (cancel_delayed_work(&vpu->watchdog_work)) {
+ 		if (result == VB2_BUF_STATE_DONE && ctx->codec_ops->done)
+ 			ctx->codec_ops->done(ctx);
+-		hantro_job_finish(vpu, ctx, result);
++		hantro_job_finish(ctx, result);
+ 	}
+ }
+ 
+@@ -127,7 +124,7 @@ void hantro_watchdog(struct work_struct *work)
+ 		vpu_err("frame processing timed out!\n");
+ 		if (ctx->codec_ops->reset)
+ 			ctx->codec_ops->reset(ctx);
+-		hantro_job_finish(vpu, ctx, VB2_BUF_STATE_ERROR);
++		hantro_job_finish(ctx, VB2_BUF_STATE_ERROR);
+ 	}
+ }
+ 
+@@ -170,29 +167,24 @@ void hantro_end_prepare_run(struct hantro_ctx *ctx)
+ static void device_run(void *priv)
+ {
+ 	struct hantro_ctx *ctx = priv;
++	struct hantro_dev *vpu = ctx->dev;
+ 	struct vb2_v4l2_buffer *src, *dst;
+ 	int ret;
+ 
+ 	src = hantro_get_src_buf(ctx);
+ 	dst = hantro_get_dst_buf(ctx);
+ 
+-	ret = pm_runtime_resume_and_get(ctx->dev->dev);
+-	if (ret < 0)
+-		goto err_cancel_job;
+-
+-	ret = clk_bulk_enable(ctx->dev->variant->num_clocks, ctx->dev->clocks);
+-	if (ret)
+-		goto err_cancel_job;
++	ret = pm_runtime_resume_and_get(vpu->dev);
++	if (ret < 0) {
++		hantro_job_finish_no_pm(ctx, VB2_BUF_STATE_ERROR);
++		return;
++	}
+ 
+ 	v4l2_m2m_buf_copy_metadata(src, dst);
+ 
+-	if (ctx->codec_ops->run(ctx))
+-		goto err_cancel_job;
+-
+-	return;
+-
+-err_cancel_job:
+-	hantro_job_finish_no_pm(ctx->dev, ctx, VB2_BUF_STATE_ERROR);
++	ret = ctx->codec_ops->run(ctx);
++	if (ret)
++		hantro_job_finish(ctx, VB2_BUF_STATE_ERROR);
+ }
+ 
+ static const struct v4l2_m2m_ops vpu_m2m_ops = {
+@@ -1302,10 +1294,30 @@ static void hantro_remove(struct platform_device *pdev)
+ static int hantro_runtime_resume(struct device *dev)
+ {
+ 	struct hantro_dev *vpu = dev_get_drvdata(dev);
++	int ret;
 +
- 	pic = hantro_get_ctrl(ctx,
- 			      V4L2_CID_STATELESS_MPEG2_PICTURE);
-+	if (WARN_ON(!pic))
-+		return -EINVAL;
++	ret = clk_bulk_enable(vpu->variant->num_clocks, vpu->clocks);
++	if (ret)
++		return ret;
++
++	if (vpu->variant->runtime_resume) {
++		ret = vpu->variant->runtime_resume(vpu);
++		if (ret)
++			goto err_disable_clocks;
++	}
++
++	return 0;
  
- 	reg = G1_REG_DEC_AXI_RD_ID(0) |
- 	      G1_REG_DEC_TIMEOUT_E(1) |
+-	if (vpu->variant->runtime_resume)
+-		return vpu->variant->runtime_resume(vpu);
++err_disable_clocks:
++	clk_bulk_disable(vpu->variant->num_clocks, vpu->clocks);
++	return ret;
++}
+ 
++static int hantro_runtime_suspend(struct device *dev)
++{
++	struct hantro_dev *vpu = dev_get_drvdata(dev);
++
++	clk_bulk_disable(vpu->variant->num_clocks, vpu->clocks);
+ 	return 0;
+ }
+ #endif
+@@ -1313,7 +1325,7 @@ static int hantro_runtime_resume(struct device *dev)
+ static const struct dev_pm_ops hantro_pm_ops = {
+ 	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+ 				pm_runtime_force_resume)
+-	SET_RUNTIME_PM_OPS(NULL, hantro_runtime_resume, NULL)
++	SET_RUNTIME_PM_OPS(hantro_runtime_suspend, hantro_runtime_resume, NULL)
+ };
+ 
+ static struct platform_driver hantro_driver = {
 -- 
 2.53.0
 
