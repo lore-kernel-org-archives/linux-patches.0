@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060819;
-	b=4YTPXmLmLEAeMbz7XgOV7r3pJKM6lHPZpsOT4HFtwTdUup7fQ+cBYZtkcni9JmW/jNbK
-	 ATF79inGITCvnp9FEEBIrSkPnG6iP2EalXBJ/z+LvDg5BC646x63d0FXmfP81aKBlrA8N
-	 n2nn36ZRZ/iUb7mAzsIj4PSHPEdDq9oStelw7KGCS2LnWadV/fpsV62a/r60ytlPUmiAS
-	 8fML80ZqWVHewVUUxiBzAVVhDwY8bP8qy2kzmP5tC8xE9cx7NhOoe/NHV4/6KLjOfCpoS
-	 Em33C6CVw0AI9KLBDsK69vN7VV1Lo7q5C3z2OWZIU3LcLggW+b9F5uJQXz9BMp3vmIw==
+	t=1794060821;
+	b=0o9lYLdeeKWCYCikgqPFWyA35yVsd0jAdu9CTQqpGE3nIO8/Cbw9c+JAwuUk0VCXG5Ar
+	 OpoCKNw7bd/mha6HDm4EZ74Yj/IFTdeLuiSAM8SxlSUHlfjPbLvnQo2lbaY/06kCXouvJ
+	 w1Zbg3YX4wyfIzD47NHqlf6VOeWl7QvQySU/ShVyhYDsLg4HmFiT0HOz16+H5c6Mv0r4S
+	 43wfpntxRdJPAt73ozl523Uyt1pJvItKnFLfvG7NtV5feo69GFzU6lNwQ2NfFbCZ+x8CA
+	 jSMY5lWD6GG82+Om0WVq8MvtH80Grr6AlQW7rCp1pd1o8FcDjc4LJwqAYgJg9DD8xmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060819;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7JzmeyIRBJ2zrBcYufh6DcdQMD/F3OdQy0DUngacz1A=;
-	b=0khuZK7rz8/0s2j5PdbiMBG5o0HMDdV8aqI+NpTzcT3eetKnzRnRHGwZD2rcJdGTq5Xc
-	 1ikvfxvMr2V1khMuaq0y1jVMGu0b/q/J/qT5H/rULN2n+kKZDk+bRRpTiGj/Kp2VJJcq9
-	 E2qJ+B5MbEZc43uAfs9HKas+AdYCZ2AXT2F+QlUC5+mlko31W5+nZk7vVn0LlHYLj2leM
-	 3jdOa9rPmUdB7/kObUoCjsnbFobqdYqQT3Z6zf2KFPIP40EL/H1bgAtCeGu2NahBW6Y+X
-	 fwtb/7NFtLU9v3lc39A+2hP+3FXbzEqEQuiyetMNT9wCK6iCbDAhJXMciai9F3RLjTg==
+	bh=47IP3164yjGWYNO71Af7SFd4usslLiGbcDH6abhrQfw=;
+	b=d2nbTWf5v1QImoiPPNjtOTh2FkqrRb9Mxslbs/RXUrf26il3uaiXKsHy7WaPzRA9Ar1r
+	 SCSDN7SGJQCzyauz7Tmk0uyIweS0su+ZzOLYC1j3Zvm/LMOZLHp/yg9LM/if09boCdbIZ
+	 DpXdtdRsFNqmHdYkbTYCLm/tmqsjmu22H6xg5WsHMloQW/4APr1bDmfUK+Qu0KVODPttG
+	 dK55ZsHMOuXfcXE21Jsnf8QD7UrxQyoD1eUD9YlmsdrbnbKfm5vy65MUr2Wu7r7kPMLPt
+	 2s+rPNzdzn+pLjjAEwyz9Oy5Ny82IgXLpTrhdv5zuOqLYBlPIDzIcdOWIH36HgpUaOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fOD6QII4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDfBIK2V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FF7606A326;
-	Sat,  7 Nov 2026 14:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A39606A326;
+	Sat,  7 Nov 2026 14:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fOD6QII4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489351F0089F;
-	Sat,  7 Nov 2026 14:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDfBIK2V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57101F0089F;
+	Sat,  7 Nov 2026 14:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060819;
-	bh=7JzmeyIRBJ2zrBcYufh6DcdQMD/F3OdQy0DUngacz1A=;
+	s=korg; t=1794060820;
+	bh=47IP3164yjGWYNO71Af7SFd4usslLiGbcDH6abhrQfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fOD6QII4aq39cM1uCHNLYAKv3APmt/6Ppb0v3Fv6s0le6nzOv74dnF6QcRonLrcTg
-	 NOARAlyIF9Unskrxy7SFEX1T91KUISsswuWRhL3ZTU9i4YV4gm1fa+nS8x8dQYO4ja
-	 9FL8HIsJZxM6QqAHeyu9p5PolgnzPj6TLLYkX2wU=
+	b=JDfBIK2Vz7AuOkZNSzfKjA48hhYqRV4YJmnL8PiPKmQzVud8x1DBPbMtwtz8DK+Pr
+	 6xwcRxtQDnB0omskBiPm/Qiowwu/SaeGFQsGnEgzWwXgJS/sbEokD7xZBUzi95CAua
+	 DhoEo5o4H52gN4xmd2h8qAAfCP7okv635X3I7Z4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyrel Datwyler <tyreld@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0217/1536] scsi: ibmvfc: free ibmvfc_target allocations with mempool_free
-Date: Sat,  7 Nov 2026 08:37:13 -0500
-Message-ID: <20261107135003.751101852@linuxfoundation.org>
+Subject: [PATCH 6.12 0218/1536] udf: Fix bh leak for unallocated space entries
+Date: Sat,  7 Nov 2026 08:37:14 -0500
+Message-ID: <20261107135003.783294433@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,38 +67,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyrel Datwyler <tyreld@linux.ibm.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 99143433f7f14139ac373c553ec8e1317d0ae58a ]
+[ Upstream commit d95094d4c0a62ea17b8a7c6399b42381b8a55bc0 ]
 
-The ibmvfc_target *tgt structures for discovery are allocated using
-mempool_alloc but in turn free'd via kfree in ibmvfc_release_target
-breaking pool guarentees.
+When processing unallocated space entries we didn't properly release the
+inode bh. Fix it.
 
-Fixup ibmvfc_release_target to call mempool_free instead so that memory
-is properly returned to the mempool instead of the general allocator.
-
-Signed-off-by: Tyrel Datwyler <tyreld@linux.ibm.com>
-Link: https://patch.msgid.link/20260723000149.969416-5-tyreld@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ibmvscsi/ibmvfc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/ibmvscsi/ibmvfc.c b/drivers/scsi/ibmvscsi/ibmvfc.c
-index 63cd0bab785ba..f73d6d49385c3 100644
---- a/drivers/scsi/ibmvscsi/ibmvfc.c
-+++ b/drivers/scsi/ibmvscsi/ibmvfc.c
-@@ -1366,7 +1366,7 @@ static void ibmvfc_set_rport_dev_loss_tmo(struct fc_rport *rport, u32 timeout)
- static void ibmvfc_release_tgt(struct kref *kref)
- {
- 	struct ibmvfc_target *tgt = container_of(kref, struct ibmvfc_target, kref);
--	kfree(tgt);
-+	mempool_free(tgt, tgt->vhost->tgt_pool);
- }
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index cc4fe471b325a..05eddd60e80a7 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -1488,6 +1488,7 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
+ 		memcpy(iinfo->i_data,
+ 		       bh->b_data + sizeof(struct unallocSpaceEntry),
+ 		       bs - sizeof(struct unallocSpaceEntry));
++		brelse(bh);
+ 		return 0;
+ 	}
  
- /**
 -- 
 2.53.0
 
