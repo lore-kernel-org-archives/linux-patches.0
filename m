@@ -1,53 +1,70 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064459;
-	b=2VKk+DsTvLLV19DBI/fbHMqDXn3c7ll0+NF5Dg6silq4vuNBzbiL1GmmI96b9lZohoTr
-	 NB/lY9LFoRo51GRjQQjj0qV4t6gTydJrwvTzRmutiyUN7a2lXwwCLaP0Bd40tpTyrvgGT
-	 9N8+J6cQqUmRpUy3sIkIKPGWVF/wAfGR00yJHqW/XvUVbiW4uDVx6PwuXLwWu3uUobgeO
-	 d1GVXhz4b0xmiguhuR7cXRDuOfr0WZwpS8P4Zc6BaQxUxO6NqqwpcLQhmhuo+pGYJFfz+
-	 LW7Q8R6FU5vfuCRnDnjP/a0ax4gUSVt9A9c7jSMvfHsC6nqClrfWAlZKRQd7Ok9p1Tw==
+	t=1794064460;
+	b=HW5kqT1G01kztJ86+S7Yn1k0QedYAhUd+RD8Uq4NgD2HqGvZD1QcyUUL79pKvJYNkf5z
+	 tjoyh0u0ymGJlrd7TR0iTQBfUMz6tKqDp3/JR48zAHsmmmoTkbsIMLvAi4FCWRTX2tBpT
+	 YpK2zjJlMch3cgd0AJArSeF6ONTiZLRrQqcflVKJjG5A2Mc/QVs1syVnmjPTxqRTKgYg4
+	 3CpOn2vg2OYiG0oIHvyEclxjs1WhjX/3/kYHQivN1VMrFtHeodIRKylQheC7Bla/2OFG2
+	 Uo92Ly0n8w0Gkiipk2+1JwHVixtGGNBK8eCjzIypoT+RE01QV7vbP21De0pK0A53Cgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8jy9HLr2zXkfTET8YOm2hP9q1cZI8VupGbFz47FGE0M=;
-	b=0RCf7lcjhDHxyaRc7Wp0TiFYkWhetElsNAuxh6RtJ6EZx1EZG99BHQRHmFxrLttn/vUj
-	 xkoegItUr656aASUn7/cbiPA7l++onGQxXqbNgsxnr91b/XKZrk40KV+pHxrz1D5bYXdO
-	 b2NCEReKGuDHziNPIfU+a9zR3g9P2D4o17QFNlXwtq7sfhbl1woVP4q+Hcc3TT001nxv0
-	 w9icbiGb2MI5qjmUdWaJ94L/eHktqQxQkJqQmoiEi40PhLvCwt7tDx8VEDwH5xSLlxJ0y
-	 vbR4FDzxKo5pBt10vaAs7q/nxDCVkaROdydv5d90bsX0FBTgspGnp8w2kAcEiEc/rlg==
+	bh=1ytzPab2Mx9ii+alS4i+f5QH3xdAHgXKgv7T3OlfHpg=;
+	b=AFhYVMpmorizcAGUfyYnrrHLMf69pPJXp639yC4GPgUeC1Yi5Zxk1vavS4rmZIWrDlKZ
+	 uGwvJIPmiwpaWedJL5wjXnJ4KawOsexJlwJEeSuykv5Kp+VFuQTmjoQtkMVoFDsO3QUyq
+	 OMmZ1776jbk+VfvhjStn6yUHPJzV5sJpoHF1nrpBuCJwbT+FqOHu8LxvEDE9Z4NYS91Rv
+	 RLmZK0cDJZjpcay0CmFNAX0Z2vKP21Y6Fj5wO0jdigCR/ldXhyz3XseyehfK5Qs0kNZG0
+	 fmCgvhIc2ncYt6fu4HI1CJo/SzX4P709l9Ci2ER763Fj+Fb0RBqmU5lKxFJFrYbJmxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KEL/jdiy";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wah3XoLz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9636082BFF;
-	Sat,  7 Nov 2026 15:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDCE606C013;
+	Sat,  7 Nov 2026 15:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KEL/jdiy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEDC1F008A1;
-	Sat,  7 Nov 2026 15:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wah3XoLz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE67D1F008A2;
+	Sat,  7 Nov 2026 15:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064458;
-	bh=8jy9HLr2zXkfTET8YOm2hP9q1cZI8VupGbFz47FGE0M=;
+	s=korg; t=1794064460;
+	bh=1ytzPab2Mx9ii+alS4i+f5QH3xdAHgXKgv7T3OlfHpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KEL/jdiyf4chYdzCfndMrgQD4ESBcg/zu9eruGCp+T32RQoQa3J8xWDr3+IciyEPc
-	 3kgVfQdZfIMSUtARMParxXXeQRaOJw/UnwqZl3AfCurvWKXMlVRoGkzMLTP61nyJdr
-	 J6aX2liJba7B523t0ghiy153h0VsHhkQ7cbkH6yU=
+	b=wah3XoLzT1qITjOzBFNaGuceCpHzyarx/W5xlQhZ2rg835DCmpCknj3pcE6Bg3WeK
+	 A6OmgA3jnkaHZ2+JmNEF0c46gZnSSf1Z5LiRh29XoNyRDbORqRcv/RacfgsArMQjk5
+	 6ClKg1/F03lIMAXudUz3tDh5En1gUdiaWTFMy8oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Alistair Popple <apopple@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Byungchul Park <byungchul@sk.com>,
+	Dev Jain <dev.jain@arm.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Jann Horn <jannh@google.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0464/1257] media: mediatek: jpeg: retry HW selection after successful wait
-Date: Sat,  7 Nov 2026 08:46:00 -0500
-Message-ID: <20261107134952.275333822@linuxfoundation.org>
+Subject: [PATCH 7.3 0500/1257] mm/mempolicy: skip zone device folios when queueing folios
+Date: Sat,  7 Nov 2026 08:46:36 -0500
+Message-ID: <20261107134953.241137878@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,56 +86,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit eb0bbd0ad679bf363387e3b8be8892cfbedabb72 ]
+[ Upstream commit 1f834ba9b42e3f3c298c7e8ef1df21b9947c92b4 ]
 
-wait_event_interruptible_timeout() returns a positive value when its
-condition becomes true before the timeout. mtk_jpegdec_worker() treats
-every nonzero result as a failure, so a normal decoder wakeup finishes
-the mem2mem job as though no hardware became available.
+queue_folios_pte_range() already pairs vm_normal_folio() with an explicit
+folio_is_zone_device() check before adding folios to the migration
+pagelist.
 
-Handle interrupted waits and exhausted timeout retries separately, and
-retry hardware selection after a successful wakeup. Increment the retry
-count only for actual timeouts. The encoder uses
-wait_event_interruptible(), whose successful return is zero, so its
-existing check is correct; leave that separate no-timeout policy
-unchanged.
+vm_normal_folio() alone does not reject zone device memory (a present
+device-coherent page in a normal VMA is returned as "normal").
 
-Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Mirror the explicit check in queue_folios_pmd() as well.
+
+queue_folios_pmd() uses pmd_folio() directly and can encounter a present
+zone device PMD - e.g. a device-coherent THP.
+
+This is not filtered by existing checks:
+  !pmd_present()   - only rejects non-present device-private and
+                     migration entries
+
+  vma_migratable() - excludes DAX and VM_PFNMAP.
+
+The early return also means such a folio is no longer counted in
+qp->nr_failed under MPOL_MF_STRICT.  This is the same pattern used by
+queue_folios_pte_range() (skipping zone device without failing).
+
+Link: https://lore.kernel.org/20260817220810.1175596-4-gourry@gourry.net
+Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ mm/mempolicy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index bddd0a070d665..cc375309e4f34 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1698,9 +1698,15 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 		ret = wait_event_interruptible_timeout(jpeg->hw_wq,
- 						       atomic_read(&jpeg->hw_rdy) > 0,
- 						       MTK_JPEG_HW_TIMEOUT_MSEC);
--		if (ret != 0 || (i++ > MTK_JPEG_MAX_RETRY_TIME)) {
--			dev_err(jpeg->dev, "%s : %d, all HW are busy\n",
--				__func__, __LINE__);
-+		if (ret < 0) {
-+			dev_err(jpeg->dev, "decoder HW wait interrupted: %d\n",
-+				ret);
-+			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
-+			return;
-+		}
-+
-+		if (!ret && i++ > MTK_JPEG_MAX_RETRY_TIME) {
-+			dev_err(jpeg->dev, "all decoder HW are busy\n");
- 			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
- 			return;
- 		}
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index 060a0eb269170..7627d33e509c3 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -662,6 +662,8 @@ static void queue_folios_pmd(pmd_t *pmd, struct mm_walk *walk)
+ 		return;
+ 	}
+ 	folio = pmd_folio(pmdval);
++	if (folio_is_zone_device(folio))
++		return;
+ 	if (is_huge_zero_folio(folio)) {
+ 		walk->action = ACTION_CONTINUE;
+ 		return;
 -- 
 2.53.0
 
