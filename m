@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061626;
-	b=QDoHifGQ8RG+Q5P9dntWHtNgBqyRa9HDILIsFXM4G4pujw1Ux9I0tVuXH7MouXPGJB8S
-	 zt50g/t2qbl/RUJva3ke+vCwxl9BMWGkUFducClQeSWNMeyjzwSckn7ePO3HF0+lxSLGJ
-	 w+qsQfpgVypF9eQ8QfHE9B9XT0etshliVS3C5p6f/8ZaFtFN0f3DblHc1Qrxl1sMThS8i
-	 rfIfm2VzyTZDhe4lvE9jrtnb6pDUnNgvBHQfETbEyiRGlcUFHlc7RlXPqaRWd5550K8z3
-	 KYykY2EivT0+rCPNzJ4WC93X0hOi2RO8BxLCIVEgU2dwHKEfCB8iPmYr+vrScwP+41w==
+	t=1794061628;
+	b=cFxfjiqF1uPLY530Km8Q+sBc0jqRs3EevvXSiXVFEMdff+fpYLGB/Td8tYszz7Javyuz
+	 yRbiPBWyv0Sn0ohrL5rwZyUtGXLVpD77W1KfqvL4SuVeubfPywoG9S4CzjMnpYQs3OKlR
+	 I/TN8Vi7yD0FROoG0cyTgJKFkNH0Yto1dZOMF2kHfgbosdM7GAjdAQdAu5hMTvhPDSr9G
+	 uaINT8jejGa8etZ8BUCD9tGutqswnu2RXea7oTkkz4ZKilhCx13a6e6726vDhavbu1Fm2
+	 uT2uXyA0Ixsff4KIsen4I9eDuViDHQeXwYJLjjYxlQtXiXLphuTLhEkHWJ4Jt8ev/yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061628;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nxh/BVfFDwljPrIpwPEytxwF0eLGkKPn+irH+1IUTpk=;
-	b=ZB78Z3Tr7OFid+w6w/VUEHifrCAjApkh0ucwKtgPiEY+jV8vU8pA5JzbHa+qen8dl67r
-	 xk6lsQYZujBsBIn3ldutxWyjWrOLllEwwzTYK0PNahWbxYE8FC3QGb9osXwl5/Q4+BBu9
-	 07eFs9i82Xc5aCw/UCugM8p5R9FLRXaHM3iUsaD/f681z21rqm3Ufc+BRY9k83gKp7OzB
-	 808mNnLM3DQIRynJxbMhcKo1M7E+MUgnt/Yzw2MlB11ytxqu+qnABJP2ZrjnHGq+z36z1
-	 GP0dekrezfHb2BMOhq4aBOuLtQQSTM/lmPHJib323EOB59oLMqPPwMc5ti4YJkjHrWQ==
+	bh=skwwk8fPnKyDh97EPTd75tBzjNCPNht4uWg0dmniggw=;
+	b=NG3rmXlbPnbJrOI5QJUqtKJvQHFyHQHtA9V4wUgnjDw6TzylmJJ2gUL9xzow7zdE+B0U
+	 UxNQFKvo91Gq7saMbAx+q8Ch241BpS9Zzt2MVHommmOpvdSKz4jhFffXwK1jJMGL7Xuft
+	 3wwVnRRiOvGdfggUnl6uomvJ+SobQ00YHulDaCGIRFXO1/gAvKGSObB/O7suYsRW+492c
+	 JXKB+9qDDeuj+U0QpbOez3VGM32xAiREDDVlnoT3Ogf8TWEVRTkKfe5AnQ4QMPjuAJK2C
+	 2j0bTMWCFHbnqEI+fuSv+kGLncLtPE2m6nveiVovqT2F5/dheFEGHPoldvK7pxscJQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w8z89A1E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuzGvnWf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EABE606A32D;
-	Sat,  7 Nov 2026 14:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D11606A330;
+	Sat,  7 Nov 2026 14:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w8z89A1E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1411F0089F;
-	Sat,  7 Nov 2026 14:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuzGvnWf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425851F008BC;
+	Sat,  7 Nov 2026 14:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061626;
-	bh=nxh/BVfFDwljPrIpwPEytxwF0eLGkKPn+irH+1IUTpk=;
+	s=korg; t=1794061627;
+	bh=skwwk8fPnKyDh97EPTd75tBzjNCPNht4uWg0dmniggw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w8z89A1E3zGFlUHVYRadj5VEjCBVK0zi7LB+WwWaob0CUk7wv18DZCDNmDI2VOvJL
-	 7yi3oeo2AvKrfNLqXRANLNLD4RRyT0oXB3KD/JG4/8w7BmAievh5mkYkKOAEoI7Tbt
-	 W3TQfa4l8URlbxu5YroSxvE8LvF6gEspVph3VTPc=
+	b=CuzGvnWfEEK0BH75i/wYz6FaIER+BlU4HFY0mmnwBL0Fe2CCmCL2gtTaDzsmyZJ8d
+	 apmzmuziUuZVYiHcHwPuyz3JLwPOlcANSRyPXfPJDXv2Z3L3Ek+Sj+/HW7sDFKbrkv
+	 4mdSFcUrFLz6/x8g3F3OtQgXLAKWeV92tCDRAePk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0692/1536] xfs: fix buffer overruns in xfs_ioc_attr_list
-Date: Sat,  7 Nov 2026 08:45:08 -0500
-Message-ID: <20261107135016.925559953@linuxfoundation.org>
+Subject: [PATCH 6.12 0693/1536] xfs: online quotacheck must dirty dquot if enforcement adjustments needed
+Date: Sat,  7 Nov 2026 08:45:09 -0500
+Message-ID: <20261107135016.953579717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,35 +70,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 0b9081a774ee7b9dff1e9ac3765b73c1d6bba5b2 upstream.
+commit 244425cf63d7e3a0ff5736b41f0e0afe807f7031 upstream.
 
-When we converted the al_offset array in struct xfs_attrlist into a VLA,
-the size of the object shrank by 4 bytes.  Unfortunately, the buffer
-size validation in the attrlist ioctl wasn't updated to notice this, so
-the al_offset[0] assignment blindly writes off the end of the buffer.
-LOLLM noticed the omitted check and complained.
+LOLLM noticed that we have no way to force xchk_commit_dquot to call
+xfs_qm_adjust_dqenforcement if nothing else is wrong with the dquot.
+Therefore, add a new predicate to force the dirty flag if the dquot has
+zero limits and there are default limits; or if the grace period timer
+needs adjusting.
 
-Cc: stable@vger.kernel.org # v6.5
-Fixes: 371baf5c9750a2 ("xfs: convert flex-array declarations in struct xfs_attrlist*")
+Cc: stable@vger.kernel.org # v6.9
+Fixes: 96ed2ae4a9b06b ("xfs: repair dquots based on live quotacheck results")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_handle.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/quotacheck_repair.c |   51 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
---- a/fs/xfs/xfs_handle.c
-+++ b/fs/xfs/xfs_handle.c
-@@ -433,7 +433,7 @@ xfs_ioc_attr_list(
- 	void				*buffer;
- 	int				error;
+--- a/fs/xfs/scrub/quotacheck_repair.c
++++ b/fs/xfs/scrub/quotacheck_repair.c
+@@ -39,6 +39,54 @@
+  * dquot is locked.
+  */
  
--	if (bufsize < sizeof(struct xfs_attrlist) ||
-+	if (bufsize < struct_size(alist, al_offset, 1) ||
- 	    bufsize > XFS_XATTR_LIST_MAX)
- 		return -EINVAL;
++static bool
++xqcheck_dqres_force_dirty(
++	const struct xfs_dquot_res	*res,
++	const struct xfs_quota_limits	*qlim)
++{
++	/* zero limits mean that we should set the default limits */
++	if (res->softlimit == 0 && qlim->soft != 0)
++		return true;
++	if (res->hardlimit == 0 && qlim->hard != 0)
++		return true;
++
++	/* do we need to adjust the timer setting? */
++	if ((res->softlimit && res->count > res->softlimit) ||
++	    (res->hardlimit && res->count > res->hardlimit)) {
++		if (!res->timer)
++			return true;
++	} else {
++		if (res->timer)
++			return true;
++	}
++
++	return false;
++}
++
++/* Decide if we need to adjust the dquot limits or timers */
++static bool
++xqcheck_dquot_force_dirty(
++	const struct xfs_dquot	*dq)
++{
++	struct xfs_quotainfo	*qi = dq->q_mount->m_quotainfo;
++	struct xfs_def_quota	*defq;
++
++	/* root dquot does not enforce limits */
++	if (dq->q_id == 0)
++		return false;
++
++	defq = xfs_get_defquota(qi, xfs_dquot_type(dq));
++
++	if (xqcheck_dqres_force_dirty(&dq->q_blk, &defq->blk))
++		return true;
++	if (xqcheck_dqres_force_dirty(&dq->q_ino, &defq->ino))
++		return true;
++	if (xqcheck_dqres_force_dirty(&dq->q_rtb, &defq->rtb))
++		return true;
++
++	return false;
++}
++
+ /* Commit new counters to a dquot. */
+ static int
+ xqcheck_commit_dquot(
+@@ -93,6 +141,9 @@ xqcheck_commit_dquot(
+ 		dirty = true;
+ 	}
  
++	if (!dirty && xqcheck_dquot_force_dirty(dq))
++		dirty = true;
++
+ 	xcdq.flags |= (XQCHECK_DQUOT_REPAIR_SCANNED | XQCHECK_DQUOT_WRITTEN);
+ 	error = xfarray_store(counts, dq->q_id, &xcdq);
+ 	if (error == -EFBIG) {
 
 
