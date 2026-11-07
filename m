@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063048;
-	b=L+yxj5NyOONUB0re2ucLHB0Q0m/cdbj0J0Cv7Y/TmrTXdQxb20Xu/MHXcmvH8cStz7WS
-	 yGdOxcJ73JTB34DXhqogVG4mfIN/KgjdDYUE0doC84Q10VN66K920UdJjkAQ9xeKPEv6s
-	 G5XIaGJxubQNpEUkD0oa+xeZar6GtFL3Eue70Hk5uxw8nvbh92JSEZ5JE3s05+eh8HoZn
-	 X0t//4kO2+ZWKv158/iHP6GLjZSdOKeDitYMZ0c5GpRZnoY74Js+9pCXuya9W6P+A3eKj
-	 m7rPWTUYsRa33bB8a0UgrH51zDpEuYjchSQ3CeS2o5pZ3JmbFHHCj1GdNOGKYNvlUwQ==
+	t=1794063049;
+	b=1TV0EjPmmkO648R6Xm6Y16vTwm1Y+4jVwZqRg34oVj56rPaPOrKwSsoaWhVydacEWBoF
+	 GMNqs+FqLa0YsN7oYC+DTLnGU/iFDhWnT+koAhBIEI+gFNIPV+yRKnzx7HsoCjF17C1uz
+	 /VpjxUVpTLsKn9Ipcda3PvL48gPEuEmGUNXwtdT5/PcI/1yyEIAlSDIe09HmtXcqBjc99
+	 kmrQry0HOM37ABKHrDAOCoPxotgsI1B4lFSVerpsPoFzWIUmfbDxywI8xge6TF50xxtmh
+	 fQSVKlcGZMBE6QzEPd4CGfhXx9gssTyAVnC5LKm0d1sE9ZeUs5w4NDTqEqRauI/4WgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bZpHpZFaUwtnG/Wcc769QJ1PtNHvEn/eggBEMymVl/Y=;
-	b=DwcNj+USj0jp8wYsaW0PRyXCPa9hOz77trv00JGm+eUsDjfIOp+lBAEb7ALmXSgeGfBJ
-	 aUT+YWytz75rV9QIqvAIT9/sVmYQKBsyMm0xkR+koR6IGHx83UiqDMpQfYemw9PwtK0AD
-	 8P/sgQrk8ybS5NQ6b2SzpFvifR9MxUhcRGxaScPcSYvf1eyVWX3CZ17sb5BPBx+wvr/Uy
-	 1qm9jOQrp/9kyuIwSkuwaHLvhRf4ChtbRNki7XzkwTnHvdCGrSeoyIAQPJitAynVQvH0T
-	 p9fzACjWktqsClSg4FmKjX3rgE8Q4TSE2D2iWpKwvoIIFYh2A4OnSuhuzBm+ZxQ9lbQ==
+	bh=+nDOL11drOn8MqNE9xvTk2Ww4hGnikW6YPyQk8eqUb8=;
+	b=jkhUfYF3JJGmbbloRN8OB4m566ByqrAs1ekfBsbkoha1FwNZPjZW/vb3uKrBz5ROlquI
+	 X4ta3z8BmLgpq9UTw94xcezqZkJE2wYKK0a0eKbaK4m3czhlpc/Y+DTLeR8WOJT8GovJQ
+	 yQldrA4mV5GacHSuGzf4WfkIzso6qa4rSNnwLcAUwGmQe2dRcYsFDQQSEcZlyDGbd4Csr
+	 qimz3qyamKznumLkwWF2X+JU0dhgWVvFGwnIwTzcrDVKEG1Unx+gNmWxWG1hY6TRIoj/h
+	 2mcKOD6dEm+q2vruaneSZmJtk9vrQXhQssLsKLKOTwjFca23TP57WpVAMZh0p1bXSJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OZw+GAGN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lXDWa7kv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173D5606D808;
-	Sat,  7 Nov 2026 14:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A138606D801;
+	Sat,  7 Nov 2026 14:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OZw+GAGN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E171F0089F;
-	Sat,  7 Nov 2026 14:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lXDWa7kv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9D81F0089F;
+	Sat,  7 Nov 2026 14:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063047;
-	bh=bZpHpZFaUwtnG/Wcc769QJ1PtNHvEn/eggBEMymVl/Y=;
+	s=korg; t=1794063049;
+	bh=+nDOL11drOn8MqNE9xvTk2Ww4hGnikW6YPyQk8eqUb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OZw+GAGNtgy8Gy0L17om85qZk9VrlwRxwCd4nlimDLJ3itvL01bT3Ms79arKgLo4/
-	 ElZceVQVEV/TB723+L4gUkimgYg/QFmLTZy95KAov5G5/c+7wewPw9uSEK91ut+8zv
-	 Q9XCrHH4ifsKflJpagf/leM8TEVHBP3uJ8oIlJ1A=
+	b=lXDWa7kvwmAsRJhj88LMdfHB9AQFLBMlhQtfUTtSGSuhHfF8JDJgYVXLP9QHr8+80
+	 OHx1ibsKZSK4lW0WgR66mF3dgJQhJszVk1+UfNyr9yfTugVwPA+Wo9y9uzwF8+AW54
+	 ipkwor0nXTCJvggftQ18bSvA0kXX6F+F91OxX71Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	R Nageswara Sastry <rnsastry@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 293/869] pseries/plpks: fix error handling in plpks_read_var()
-Date: Sat,  7 Nov 2026 08:49:35 -0500
-Message-ID: <20261107134901.885003372@linuxfoundation.org>
+Subject: [PATCH 6.18 294/869] pseries/plpks: validate input to plpks_signed_update_var()
+Date: Sat,  7 Nov 2026 08:49:36 -0500
+Message-ID: <20261107134902.003472954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,74 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Srish Srinivasan <ssrish@linux.ibm.com>
 
-[ Upstream commit d52a1659cb1718f93166ab8dd8621237e564a1c4 ]
+[ Upstream commit b59ff2d50b817eeec1259f357aae821c7834007f ]
 
-When a PLPKS variable is initialized without a policy and used to read an
-object with the PLPKS_WRAPPINGKEY policy set, the hypervisor returns
-H_AUTHORITY along with the object's policy. However, plpks_read_var()
-currently treats this the same as any other H_AUTHORITY failure and returns
-an error without propagating the policy information to the caller.
+plpks_signed_update_var() dereferences the supplied PLPKS variable pointer
+without validating it. A NULL argument could therefore result in a NULL
+pointer dereference.
 
-Distinguish this case from other H_AUTHORITY failures and propagate the
-returned policy to the caller while preserving the authorization error.
-Remove the explicit assignment of zero to rc on H_SUCCESS, as it is
-redundant.
+Reject a NULL pointer argument with -EINVAL.
 
-Also validate the PLPKS variable pointer before dereferencing it.
-
-Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
-Cc: stable@vger.kernel.org # 6.0
+Fixes: 899d9b8fee66 ("powerpc/pseries: Implement signed update for PLPKS objects")
+Cc: stable@vger.kernel.org # 6.3
 Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
 Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260923182816.151451-2-ssrish@linux.ibm.com
+Link: https://patch.msgid.link/20260923182816.151451-4-ssrish@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/plpks.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ arch/powerpc/platforms/pseries/plpks.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index b1667ed05f988..1ea3ef0a36254 100644
+index 1ea3ef0a36254..3686d66277262 100644
 --- a/arch/powerpc/platforms/pseries/plpks.c
 +++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -562,6 +562,9 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
- 	u8 *output;
- 	int rc;
+@@ -434,6 +434,9 @@ int plpks_signed_update_var(struct plpks_var *var, u64 flags)
+ 	u64 continuetoken = 0;
+ 	u64 timeout = 0;
  
 +	if (!var)
 +		return -EINVAL;
 +
- 	if (var->namelen > PLPKS_MAX_NAME_SIZE)
+ 	if (!var->data || var->datalen <= 0 || var->namelen > PLPKS_MAX_NAME_SIZE)
  		return -EINVAL;
  
-@@ -593,22 +596,21 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
- 				 virt_to_phys(var->name), var->namelen, virt_to_phys(output),
- 				 maxobjsize);
- 
--
- 	if (rc != H_SUCCESS) {
- 		rc = pseries_status_to_err(rc);
--		goto out_free_output;
-+		if (rc != -EPERM || !retbuf[1])
-+			goto out_free_output;
-+		goto out_copy_policy;
- 	}
- 
- 	if (!var->data || var->datalen > retbuf[0])
- 		var->datalen = retbuf[0];
- 
--	var->policy = retbuf[1];
--
- 	if (var->data)
- 		memcpy(var->data, output, var->datalen);
- 
--	rc = 0;
--
-+out_copy_policy:
-+	var->policy = retbuf[1];
- out_free_output:
- 	kfree(output);
- out_free_label:
 -- 
 2.53.0
 
