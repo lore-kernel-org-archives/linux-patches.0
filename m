@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064578;
-	b=jj8Za/0NPcWHv3n+yKFJnJpGD/XcQ1Lv0+DKHxwR3wboq+dHzspp/+QHRfA0ZtQ/8AkK
-	 IvtVm+UQ+wULLXmhghHDeay3MSKX9UPhGdM49+mSdTXCMSw6RyiEOym86HHMaZr7c7r9C
-	 dBDkeWJbBRNHdvZwVYVKUqS1GXQalhVLcMwquuL5CK4TKALIsJT3qPg1Bj97+cxTmfe1w
-	 VLA15AubSrISgswDeIEDVRPiBCnJ9VdWOdjpQTqLKOZ+WGqWsesIX3oYadDGl5hVay9cB
-	 J2cMGlTwGG7Ve0Jl9dnAmgD9GtzDAcQJXI27/1At1/VhjXpzt+v86xinkifMs218hPg==
+	t=1794064579;
+	b=jgbJJgR+inzFFCQOOmeTrPDSEiN+AvdZdipd3B0kTpz6WB/UWhiWKfIDCPAYaxNjw2Vq
+	 HdHQt0c/nfRC4OQCOoUS9jr2gRttcWP0J68EFaYMN1C8R2bSB0FYJOD7HlNkyRrljtZQj
+	 OkZkBokpFRocVMowWVSu0/pvLcOVFVPAY24I3RTgl0DyLlVtgii3ItRLYwtITEn0rNG2s
+	 ALbLZhYxZkJrT4dhyG7VpRCq3v6Fw15kjtzsaJTitZ0pwuVyobJMBcqAWsIg50ClEkuNe
+	 JGWb1rWQ36j2meZxxbEPg96SM9fI+Y7bq8orrdwuQrE9sPONXDJC8T7Wmq569zGli3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064579;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=wbLugK9uVtd/K0G8ZxuHGP3wGPzA7IRj2I5Vop+4vuQ=;
-	b=SzxlZUQIW74J9styno7SodaFudcwQczPVnBf4xFuZOHSK2sJEPdlCAHlz5d5bKQ4ps+z
-	 yqcauBoJYcDrGNigorN0TbrIN0yv6P8O3oLV/Dsq6Vb5onW0Z+8lvV2+/YqDuM/b1ETTe
-	 eeHzegDL7Y86BtdPMCq4w/D3V1Ja93eXYkxR3MEw3oweUAbymvQWZF6wckD2+izn+oW49
-	 fidV9gDkedJbdDiXU1iPm9qyAOnR2aZ9xt+0tLg3Aw6YFtbH0GYI2sy3doIuJfN3bmdms
-	 vkmyDMV8ibmJa5tNMLp7NWlcyq6GBPHwGva6AqZaG5JSfIKkoL0JgiNoFmZWH2xc+MA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=wOZYDAFp68GzO37nSFUlmuLuVcDfMf5QeKt19u1XcPg=;
+	b=keK/OvCLcQMfK9DEgyGv0bYY2/isKYbLXV1vgxymi/jTfLvO7eWw9liKA66X5Aq8nbup
+	 +AbgLZ0M1rkPa8J5jCkrpKHLx2iB9R3DdSTQrVBQRGhtlx+5bb/4jcNsK49ge6fV6NpQX
+	 5YLwcYNqAJOhBWFmCbaI3X8kWANPrkb/yGBmQ+91S1horGB9kHni/hF5dfGp2XrNqO/7/
+	 RxoxfNyujrcTkEWOfiqpdtUNZBCwnU+wAOJSJFn2wQEOEwEa+7IzXGtEHl9MJI8I7UfOU
+	 38oXkeEUySU1RYiLbZ9iiNphw01/zistNXvEmWhvxPWizQ0Zp3Iml0x5EKP/p+taboA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZJdMcTf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ErSNMczQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C000C606D809;
-	Sat,  7 Nov 2026 15:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED11A606D809;
+	Sat,  7 Nov 2026 15:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hZJdMcTf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D95F1F0089F;
-	Sat,  7 Nov 2026 15:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ErSNMczQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE521F0089F;
+	Sat,  7 Nov 2026 15:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064577;
-	bh=wbLugK9uVtd/K0G8ZxuHGP3wGPzA7IRj2I5Vop+4vuQ=;
+	s=korg; t=1794064578;
+	bh=wOZYDAFp68GzO37nSFUlmuLuVcDfMf5QeKt19u1XcPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hZJdMcTfvnibQQ0LbSUx0PddzDDwEI831VjnqNi0wkMpaLVvq0K5I7fqE3dk+PtgU
-	 DubKwivnEK293X0ML14mRduqIVY2T4RqW/pZ+ELd8i7Cnn/lPsL3bP5gzbp42Ji91u
-	 OFnDgJJchuPZ/HVY8168kSGJ18MAOL4vcEIahipY=
+	b=ErSNMczQglRSy0D5GbIQBuzt7Rh9PhkU5+aCdn+DNk4m0UqKO3fwPVEQgeAmWkUck
+	 NCUQn3PA6iAZphPRUz9bU1xPjMz+Nd1krxorZneWhyS9ZLoXIJSjma9cOHHyy/UinJ
+	 sN5qXhE8eX8rd3s9+f1dy5qtW6qlJtyULu0nG0ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0597/1257] iommu/dma: Catch scatterlist length overflows
-Date: Sat,  7 Nov 2026 08:48:13 -0500
-Message-ID: <20261107134955.813952460@linuxfoundation.org>
+Subject: [PATCH 7.3 0598/1257] drm/ttm: return an error when kmapping a BO without pages
+Date: Sat,  7 Nov 2026 08:48:14 -0500
+Message-ID: <20261107134955.840071165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -64,76 +63,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 1c8f6308e557f32412e9d4678b3f029f47f6d9aa ]
+[ Upstream commit fd485d47437ba1700dd47205a63b9f389a00aa36 ]
 
-It is possible, when a very large mapping uses only one
-scatterlist, that padding overflows scatterlist's length field.
-This results in:
- 1) silently wrapping the value
- 2) smaller than desired mappings produced by iommu_map_sg
- 3) leaving mapped bytes in memory (no iommu_unmap)
+ttm_tt objects for imported sg tables (ttm_bo_type_sg, set up by
+ttm_sg_tt_init() with TTM_TT_FLAG_EXTERNAL) only have DMA addresses and
+no pages array. ttm_bo_kmap() and ttm_bo_vmap() still dereference
+ttm->pages for them, so a driver that tries to CPU map such a BO oopses
+instead of getting an error:
 
-Address this issue by adding overflow detection for scatterlist
-length field.
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: 0010:ttm_bo_kmap+0x26c/0x300 [ttm]
+  Call Trace:
+   amdgpu_bo_kmap+0x89/0xb0 [amdgpu]
+   amdgpu_userq_fence_read_wptr+0x116/0x170 [amdgpu]
+   amdgpu_userq_signal_ioctl+0x3fe/0xbb0 [amdgpu]
 
-Fixes: 809eac54cdd6 ("iommu/dma: Implement scatterlist segment merging")
+Return -EINVAL in that case, like ttm_bo_kmap_try_from_panic() already
+checks for a missing pages array.
+
+Fixes: 75a57669cbc8 ("drm/ttm: add ttm_sg_tt_init")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Link: https://patch.msgid.link/20261009103419.4122940-1-Jesse.Zhang@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/dma-iommu.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_bo_util.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 68ee57800fefc..795a0d6248ceb 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -1477,6 +1477,11 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg, int nents,
- 		sg_dma_len(s) = s_length;
- 		s->offset -= s_iova_off;
- 		s_length = iova_align(iovad, s_length + s_iova_off);
-+		if (overflows_type(s_length, s->length)) {
-+			ret = -EOVERFLOW;
-+
-+			goto out_restore_sg;
-+		}
- 		s->length = s_length;
+diff --git a/drivers/gpu/drm/ttm/ttm_bo_util.c b/drivers/gpu/drm/ttm/ttm_bo_util.c
+index bd0b23ac2cc4b..f9458a4d5a09d 100644
+--- a/drivers/gpu/drm/ttm/ttm_bo_util.c
++++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
+@@ -356,6 +356,10 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
+ 	if (ret)
+ 		return ret;
  
++	/* Imported sg tables only come with DMA addresses, no pages to map. */
++	if (!ttm->pages)
++		return -EINVAL;
++
+ 	if (num_pages == 1 && ttm->caching == ttm_cached &&
+ 	    !(man->use_tt && (ttm->page_flags & TTM_TT_FLAG_DECRYPTED))) {
  		/*
-@@ -1493,7 +1498,20 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg, int nents,
- 		 *   time through here (i.e. before it has a meaningful value).
- 		 */
- 		if (pad_len && pad_len < s_length - 1) {
--			prev->length += pad_len;
-+			unsigned int new_prev_len;
-+
-+			/*
-+			 * For large mappings spanning multiple GBs we
-+			 * may not be able to fit all needed padding into
-+			 * sg->length.
-+			 */
-+			if (check_add_overflow(prev->length, pad_len, &new_prev_len)) {
-+				ret = -EOVERFLOW;
-+
-+				goto out_restore_sg;
-+			}
-+
-+			prev->length = new_prev_len;
- 			iova_len += pad_len;
- 		}
+@@ -419,7 +423,7 @@ EXPORT_SYMBOL(ttm_bo_kmap_try_from_panic);
+  *
+  * Returns
+  * -ENOMEM: Out of memory.
+- * -EINVAL: Invalid range.
++ * -EINVAL: Invalid range or the BO has no pages to map.
+  */
+ int ttm_bo_kmap(struct ttm_buffer_object *bo,
+ 		unsigned long start_page, unsigned long num_pages,
+@@ -493,7 +497,7 @@ EXPORT_SYMBOL(ttm_bo_kunmap);
+  *
+  * Returns
+  * -ENOMEM: Out of memory.
+- * -EINVAL: Invalid range.
++ * -EINVAL: Invalid range or the BO has no pages to map.
+  */
+ int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
+ {
+@@ -537,6 +541,9 @@ int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
+ 		if (ret)
+ 			return ret;
  
++		if (!ttm->pages)
++			return -EINVAL;
++
+ 		/*
+ 		 * We need to use vmap to get the desired page protection
+ 		 * or to make the buffer object look contiguous.
 -- 
 2.53.0
 
