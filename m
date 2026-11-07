@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062299;
-	b=Ha0JDazUC9mvl0vIalBPOzRem3Nu8l7HzCJFwSYHQw1NwwuYizuLi7YoINnVlkhT4MOR
-	 S+gB1jsz+egTjYEjR8fN8WIcGkS9bdOZ15NhqABWH39s4ZI5Tra6B4WH3Q+F3AVgRVGiI
-	 72JL5qZ7tpqvZPK3QOecMnyZLXBKJkkIfnOjgUHe8E1rpT5Fconqb1nqZvIuglkzi1rpX
-	 CIzXHHjBRUbdhtr9MjPgtEmNZFDtXkk0jC8t4bY9e4Arv2WbryaPJtRJo8qjkc+yYa1/O
-	 UpmJAagkiSSxxtoU6MBe4k/ZDiXFDlIt+6jkR3jkImTaJ7LsfnmYAQ879DroFD1OoMQ==
+	t=1794062300;
+	b=bg6BsHOiczrHsRVkveG481slClFRfzOnXz6IpB3B8Us1NkvJvW2+FnfePh1Ndf8svf+A
+	 nfCkjvZQpnTcxKKXJ8KPGKLv4jXBy/fpqd3vjbxRkJHEIa7xUn1OlCSjpZ6h/dV1z9Dj1
+	 OPgzd+9nXbYEsq1oUCWq20J2PZwo/RFGefhW8yfsWAENixPtI9dyOCP45oNDzJ8oV7ko9
+	 M11M5ZWVuCshcusTyKSQEuDmIBilcDJ5ZjU19IzlpthyraU5H5K/gjW/uB9CLSpZ4BQLu
+	 IhhKwoz2xfggKWyciNr4yBTXly21Ih9Ahtk9SDL3H+fXvTGVlKhi3pRtfTAy8WiB9zQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062299;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a5yR/GQ/trbPp/YHWmkAlr206zj85UZuRpqi+P3a7v0=;
-	b=qPqxl8JBF/y9VIcdQiKM1MzQmWFuOJw8yJCRqhM+Kqg5R32SHWDLzp0o4m3A2qIHR3tv
-	 Sr1B340jo4L7LVY72OXaBoqitIcyKM/unAzqrsr3pzQNpCz+bs6P7mRXTJuPHt669p1PY
-	 ighPcUy5gKjnH6vZ0fOcg2VwAZIA2ekvyYsGw199x9aCnELBwWqLs2reWlXLE7xlfD3Wt
-	 hmYqM5tST0cUjkcRdlXRKI3M8ye9XwCAjadkqWKkBPomFXTj1ph71Pgl5kg/BYfLBuZtn
-	 7SaEzJUA5hkIPd0E+wojOUrQU2I/v8GmZEzL/rfhfFLIJU865q0Cqg3sOqZEazaw2JQ==
+	bh=LUNH8d1MxfR7/I7cxunKtI2xszJoa1dLsAOFLETdqF0=;
+	b=yzqp7Is1znEL+PoSmrv0xF3rcCdjHWYKRGyRFDfWmsc1+1Ciz/4JR1dYHYPWcX2ahvZO
+	 d13AIv4Oi+tLJl4+a7DgXSF6ixl2mCUFvX7Rvuhkve/JRnpBiq5F0hvukCuAlDtDIRxSZ
+	 MosG1ZAfCEA38cVwstQIcNNFtvmStm0/q2eRWyxbJ2LgxEWyInfqcWg+ruQQu4U51jwSK
+	 MRS78F6VMlt2dGmp/l9okhQ7sA7XaJt3QOC8vYON38YCp3lNyL7DkX54BRJr2bCM4w1UO
+	 QVqx8sfuSiKw65rUIqvGeZ9soQdLm6ziM4ElDUhHjiYFmCYD7//QirP9bodaeOgtEYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EHGFfijw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OSwFzzha;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EB760A3833;
-	Sat,  7 Nov 2026 14:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB842606EEB7;
+	Sat,  7 Nov 2026 14:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EHGFfijw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FC51F0089F;
-	Sat,  7 Nov 2026 14:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OSwFzzha
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8705C1F0089F;
+	Sat,  7 Nov 2026 14:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062298;
-	bh=a5yR/GQ/trbPp/YHWmkAlr206zj85UZuRpqi+P3a7v0=;
+	s=korg; t=1794062299;
+	bh=LUNH8d1MxfR7/I7cxunKtI2xszJoa1dLsAOFLETdqF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EHGFfijwmDWvH1vxFuw8Vr1twED3wqzGh9TWuc8T8AHhptYSR16+cYD/UZpSyq74L
-	 WfnQCbJzx6f0tmBziJNvJm2nhrWNbCDxh0VWK/IVoDCiieNfhTxUT4QIxkWNw+bduf
-	 wu4xO9My2OWsvnfhg917jU7yXvHwzX9BmMYvdSoQ=
+	b=OSwFzzhaStvgedgxlQNzCF5fxmmfhYp27dFWkM3xSAipemf4t0yy7gfLEMQj99QrW
+	 F7N6/3kRAnQ392derHqV7ndazVc8WWwQjVRygW/vkK/SAsg9cY9ZWtjDeFR7ehjNhM
+	 GMToCTsJ0IR+iN8iOm42borbu9NyfJzjuMetYTMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Labelle <southampton.jake.labelle@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Tim Menninger <tmenninger@everpuredata.com>,
+	Chuck Lever <cel@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1198/1536] nilfs2: validate directory position after llseek in readdir
-Date: Sat,  7 Nov 2026 08:53:34 -0500
-Message-ID: <20261107135031.395911266@linuxfoundation.org>
+Subject: [PATCH 6.12 1234/1536] xprtrdma: prevent disconnect feedback during endpoint teardown
+Date: Sat,  7 Nov 2026 08:54:10 -0500
+Message-ID: <20261107135032.416218518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,93 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jake Labelle <southampton.jake.labelle@gmail.com>
+From: Tim Menninger <tmenninger@everpuredata.com>
 
-[ Upstream commit de7f49c12566cc5c7437a2f26c6c754b9d4d5648 ]
+[ Upstream commit 0b5bb4e586f7b0a449f4d90a524f76a3be5db355 ]
 
-nilfs_readdir() uses ctx->pos, which userspace can set to an arbitrary
-value via llseek, as an offset into the directory folio and parses
-whatever bytes sit there as a directory entry.  A position pointing
-into the middle of an entry -- or at unused bytes of a corrupted image
-that the page validator never inspected -- makes dir_emit() copy up to
-255 (name_len) bytes from a bogus entry, possibly reading past the end
-of the folio and returning unrelated memory contents to userspace.
+xprt_autoclose() clears XPRT_CLOSE_WAIT before invoking the transport's
+->close() operation. For RPC/RDMA, ->close() calls
+rpcrdma_xprt_disconnect(), which disconnects the RDMA CM endpoint and
+drains its QP.
 
-Snap unaligned positions onto a valid entry boundary by walking the
-rec_len chain from the chunk start before parsing, as ext2 does in
-ext2_validate_entry().
+Since commit 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on
+connect"), RDMA_CM_EVENT_DISCONNECTED requests a SUNRPC transport
+disconnect. Today that path, along with failed completion handling,
+reaches xprt_force_disconnect() through rpcrdma_force_disconnect().
 
-[ryusuke: fixed offset wrap-around in nilfs_validate_entry() and
- conformed AI tag to guidelines]
+Commit c487eb7d8e41 ("xprtrdma: Clean up disconnect") later added
+re_force_disconnect to ensure that multiple failure indications request
+only one SUNRPC disconnect. However, the gate remains open when SUNRPC
+itself begins endpoint teardown.
 
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Assisted-by: Claude:claude-mythos-5
-Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
+If re_force_disconnect is still clear, either a CM disconnect event or a
+completion error can set XPRT_CLOSE_WAIT again while the current close
+is in progress. When the transport send lock is subsequently released,
+xprt_clear_locked() observes XPRT_CLOSE_WAIT and queues another
+autoclose.
+
+Requesting a disconnect this way is necessary when a connection is lost
+unexpectedly, but not when the event was generated by
+rpcrdma_xprt_disconnect() itself. In that case SUNRPC is already
+committed to closing the transport.
+
+Mark re_force_disconnect before initiating local endpoint teardown so
+that CM events and completion errors caused by that teardown cannot
+request another close. An unexpected error that wins the race before
+local endpoint teardown begins can still request a disconnect normally.
+
+Use a fully ordered exchange so that the gate is globally closed before
+rdma_disconnect() can transition the QP to error and generate the
+callbacks that the gate suppresses.
+
+In 30-second traces of a sustained recovery loop, without this change
+there were 7,693 xprt_force_disconnect() calls, 6,267 SUNRPC autocloses,
+and 172,892 receive-side IB_WC_WR_FLUSH_ERR completions. With this
+change, the same tracepoints recorded 3,512 xprt_force_disconnect()
+calls, 3,212 autocloses, and 131,287 receive-side flush completions.
+Thus QP teardown continues to produce flushed completions, but closing
+the disconnect gate before teardown substantially reduces their
+feedback into the SUNRPC close path.
+
+Fixes: 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on connect")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/dir.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ net/sunrpc/xprtrdma/verbs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
-index 0cc32e9c71cbf..b0f182b1da8d0 100644
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -231,11 +231,27 @@ static struct nilfs_dir_entry *nilfs_next_entry(struct nilfs_dir_entry *p)
- 					  nilfs_rec_len_from_disk(p->rec_len));
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 8449107b2a095..111c415f1aeda 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -114,9 +114,9 @@ static void rpcrdma_xprt_drain(struct rpcrdma_xprt *r_xprt)
+ 	rpcrdma_ep_put(ep);
  }
  
-+static inline unsigned int
-+nilfs_validate_entry(char *base, unsigned int offset, unsigned int mask)
-+{
-+	struct nilfs_dir_entry *de = (struct nilfs_dir_entry *)(base + offset);
-+	struct nilfs_dir_entry *p =
-+		(struct nilfs_dir_entry *)(base + (offset & mask));
-+
-+	while ((char *)p < (char *)de) {
-+		if (p->rec_len == 0)
-+			break;
-+		p = nilfs_next_entry(p);
-+	}
-+	return (char *)p - base;
-+}
-+
- static int nilfs_readdir(struct file *file, struct dir_context *ctx)
+-/* Ensure xprt_force_disconnect() is invoked exactly once when a
+- * connection is closed or lost. (The important thing is it needs
+- * to be invoked "at least" once).
++/* Ensure xprt_force_disconnect() is invoked at most once for an
++ * unexpected endpoint failure. Local endpoint teardown closes this
++ * gate before it can generate CM events and flushed completions.
+  */
+ void rpcrdma_force_disconnect(struct rpcrdma_ep *ep)
  {
- 	loff_t pos = ctx->pos;
- 	struct inode *inode = file_inode(file);
- 	struct super_block *sb = inode->i_sb;
-+	unsigned int chunk_size = nilfs_chunk_size(inode);
- 	unsigned int offset = pos & ~PAGE_MASK;
- 	unsigned long n = pos >> PAGE_SHIFT;
- 	unsigned long npages = dir_pages(inode);
-@@ -254,6 +270,24 @@ static int nilfs_readdir(struct file *file, struct dir_context *ctx)
- 			ctx->pos += PAGE_SIZE - offset;
- 			return -EIO;
- 		}
-+		/*
-+		 * ctx->pos comes from userspace via llseek and may point
-+		 * into the middle of an entry -- or at unvalidated bytes
-+		 * of a crafted image. offset is only nonzero here on the
-+		 * very first iteration (subsequent pages always start at
-+		 * offset 0, which -- like any chunk boundary -- is always
-+		 * a legitimate entry start, since no rec_len chain crosses
-+		 * a chunk boundary). Snap a non-chunk-aligned offset onto
-+		 * a real entry boundary by walking the chain from the
-+		 * enclosing chunk's start, as ext2 does; otherwise
-+		 * dir_emit() copies name_len bytes from a fake entry,
-+		 * reading past the end of the folio.
-+		 */
-+		if (offset & (chunk_size - 1)) {
-+			offset = nilfs_validate_entry(kaddr, offset,
-+					~(chunk_size - 1));
-+			ctx->pos = ((loff_t)n << PAGE_SHIFT) + offset;
-+		}
- 		de = (struct nilfs_dir_entry *)(kaddr + offset);
- 		limit = kaddr + nilfs_last_byte(inode, n) -
- 			NILFS_DIR_REC_LEN(1);
+@@ -587,6 +587,9 @@ void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt)
+ 	if (!ep)
+ 		return;
+ 
++	/* Prevent teardown-generated events from requesting another close. */
++	atomic_xchg(&ep->re_force_disconnect, 1);
++
+ 	id = ep->re_id;
+ 	rc = rdma_disconnect(id);
+ 	trace_xprtrdma_disconnect(r_xprt, rc);
 -- 
 2.53.0
 
