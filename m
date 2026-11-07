@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064977;
-	b=SAraZ+GETKgTy5YqDx7g6wnq3z9pH4QP+N7yfkrk13YIMTjJihfViFISWVVQ0g9zj6QH
-	 43m3ddzIEJN1YwiCTe36QLTntevsqMA1HZgw3hI8FWySxVz5Ng7o7atYHifDFoALeG0Lp
-	 mvQ7WFg2AxTd0lJEGWQcHgJyMySk30NB0E1jnX9L+RfWbZc73Ium/mBYJMRukjShJPUbw
-	 raT6goCvtNnBwSWSGn1WIfXN/uhibR0CdsRIeWTyxFZz9tWtNnx7q6Uqkjvpt5o23idRN
-	 xJs1O/NBsR0nXyR0eHPOLCsL6mO5GAIe18PrQaCx+StGG2WrDH76g8lfUk3W7umkJLA==
+	t=1794064978;
+	b=YUpfIKt58FNhVUb6gBqKqVbRZ3TNyhRFSH6ybnqgm1hHibYlG849HittdNZ+/gc4J2Tl
+	 nUTM2DMOpQYzVD4MeBy4es3NYAoZIPuzqosl5e27VXkXVTJS5mptI8Z98DwgcmZk8+hkl
+	 ouPNpqhD/bukIbzh35Es7ZtbRl0SkPkv/1wEC9aj09H6l1kbUVy8PkpRLQ+IWWuPF1wG/
+	 oMyaaqGtkaOeE0AyaOyu+k5IGbbDfX8Fy8tosSxADCEVWDdX50iS53hzUb8XMefP66IsA
+	 G41W7Wz/vVofFwHJLGvNDMfhxDULF1pU05sqT6rZgfzTAmp4hBhABjDapiDuy0lvv6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xfj3DP+yPaOXAPkb3o85FeFvysxJpsKO8hnqOSl9oQA=;
-	b=Qj5jC6iLb6tyrJwlBIBWYmSvE2RMIHcCQ/7yDjR3bBWOp29+bm6VAgvesM7uWS9OkDhG
-	 RpIYalNIA9d1iltxUDsULrHTxgF0KkDH/QG0C17k51tTbyYOsApypsqR68p1MJox2ibv5
-	 RP07P41nft65ptcNFIiwu6CNyK6NITGMITT3UuXnBMlsGPoWJrkul0R6GRXIk2ZSvHNss
-	 6HUTOFuSD49MwiNl47+1c6c7nk+1plBxnzTLcbv32mLNl5Ub632pvqB8wzojd8r1kUvdf
-	 BcHVm5AisOsrvnhBLVlkjXpIGvlhh5RcJWtMgameC+5OPURBJIhB5j8jUML3uP4mQUg==
+	bh=5CdQbI3xWm2qf8jUnRnqbJK6n3/RAexIDV3tH1GeW5g=;
+	b=xf+pdCnGX9udYzUY5X1u0UViW2Eq3qoVVHgGP/GxIeYk90v6JKzrMuHmStdVcSFK+H5l
+	 KAMjIqEGUbZ5hRK0p7s+9yOnh/mzWUmugniwsVXuelamUBChHMZNXPxRl+j3T/IC5zda2
+	 /4R9PISSB1UOWmCCJt3ap9B6romd66Lz80PAvrHeeDDTg5gv2ZIsPqNO4t42rudySCRWz
+	 ZgytDzfsYlWkWvzXerdK1Jx8f48D8CAZ6UIMq19nDPyVF+1/zwznZ5sAqWM3OXbu4SA+3
+	 HVwKD20Erl88SVWwVuDWIvFcPretl5t4HnNc1QtCLaGe3FeI8J6dyULz7Atb1kTRH4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AF+/3zTg";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AgqJFqZC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6700606A9DA;
-	Sat,  7 Nov 2026 15:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384D4606A336;
+	Sat,  7 Nov 2026 15:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AF+/3zTg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305A01F008A1;
-	Sat,  7 Nov 2026 15:22:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AgqJFqZC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71911F0089F;
+	Sat,  7 Nov 2026 15:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064976;
-	bh=xfj3DP+yPaOXAPkb3o85FeFvysxJpsKO8hnqOSl9oQA=;
+	s=korg; t=1794064978;
+	bh=5CdQbI3xWm2qf8jUnRnqbJK6n3/RAexIDV3tH1GeW5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AF+/3zTg7xbmXCmxhHHWNjXMvQKO1PY/GaOcvk4HQL5qBLA11yxvYnrtw5o5r+LbH
-	 abhit++Npt/P4ki6aACfqK4RwRp4t0xbPGUqxcpbbNm2Dn4dwprMvJhQMqkhaGLpfm
-	 BIqqK9yhjTlCMcZhxGIF6qfQYfFkh2XyfXrI/Fo4=
+	b=AgqJFqZCjpftoqsBKneqkupXx0hDT/m+afx7/UDtWXMXYAcJ7mIKac9oTlV9Nrg8w
+	 KJzYSxXg12585x6RGilFg52BMohTREM2p1DZyYJAlMnjIYA/I50n8R+bef+0IyQvaH
+	 4ZoQXWJPNAGXuyLctegUB3wmtsk0GX/UxXSpl1Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brandon Williams <turbine.bmw@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0855/1257] power: supply: qcom_battmgr: Notify charger supplies of online changes
-Date: Sat,  7 Nov 2026 08:52:31 -0500
-Message-ID: <20261107135002.946901777@linuxfoundation.org>
+Subject: [PATCH 7.3 0856/1257] sched_ext: Dont queue balance callbacks from a core-sched pick
+Date: Sat,  7 Nov 2026 08:52:32 -0500
+Message-ID: <20261107135002.972471425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,80 +68,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brandon Williams <turbine.bmw@gmail.com>
+From: Andrea Righi <arighi@nvidia.com>
 
-[ Upstream commit 87fd20da8ca8bacdaa9bff5860167f208077dc51 ]
+[ Upstream commit 680edc7f23ad71e0ecce8a2364af3ae7f30dd11a ]
 
-On SC8280XP and X1E80100 the AC, USB and wireless supplies take their
-online state from the charging source in the battery status response.
-The firmware sends no notification for those supplies when the charging
-source changes, and the driver only announces the battery, so userspace
-never learns that the charger was plugged in or out. UPower keeps the
-state it read at startup: a laptop booted on the charger never goes on
-battery.
+Commit ff0545e0c263 ("sched_ext: Don't leave balance callbacks queued
+across a pick retry") queues the deferred work as a balance callback
+only when do_pick_task_scx() returns a final pick. However, under core
+scheduling, a pick that returns a task isn't final either:
+pick_next_task() goes on to pick the SMT siblings, and their dispatch
+can release the shared rq lock with the callback still queued,
+triggering the rq_pin_lock() warning.
 
-Call power_supply_changed() for a supply whose online state changes when
-a status response is parsed. A supply that is not registered yet, when
-the battery is read during probe, reports its state when it registers.
+Moreover, dispatch_core_pick() returns early when another dispatch is
+in flight on the rq, and do_pick_task_scx() then consumes
+%SCX_RQ_BAL_CB_PENDING set by that dispatch while it's still running.
 
-Tested on a Microsoft Surface Pro 11 (X1E80100): after restarting UPower
-on the charger, unplugging now sets OnBattery, and plugging in clears it.
+This can be reproduced running scx_qmap -I on SMT siblings with
+coresched-tagged workloads that frequently sleep, mixed with untagged
+CPU-bound tasks.
 
-Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Brandon Williams <turbine.bmw@gmail.com>
-Link: https://patch.msgid.link/20261013-upstream-battmgr-charger-online-v1-1-731973e133a0@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fix this by always deferring the pending work to the irq_work path from
+dispatch_core_pick() under core scheduling, for both the local and the
+sibling picks, and by leaving %SCX_RQ_BAL_CB_PENDING alone in
+do_pick_task_scx(), so that it's handled by the dispatch that set it.
+Sample the core scheduling state once at the start of the pick, since
+core scheduling can get enabled while a non-core dispatch has the rq lock
+released, and the follow-up work must match the dispatch path that ran.
+
+Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
+Cc: stable@vger.kernel.org # v6.19+
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ kernel/sched/ext/ext.c | 35 ++++++++++++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 7716eb9e1aff5..97c8501c29961 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -1254,6 +1254,23 @@ static unsigned int qcom_battmgr_sc8280xp_convert_temp(unsigned int temperature)
- 	return DIV_ROUND_CLOSEST(temperature, 10);
- }
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 8fc3f791c88f4..60e8bacc14bb9 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -3372,15 +3372,20 @@ static enum scx_dsp_verdict dispatch_core_pick(struct rq *rq, struct rq_flags *r
  
-+/*
-+ * The charger supplies' online state comes from the battery status response,
-+ * and the firmware sends no notification of its own when it changes, so
-+ * announce the change here. A supply that is not registered yet announces its
-+ * state when it is.
-+ */
-+static void qcom_battmgr_sc8280xp_set_online(struct power_supply *psy,
-+					     bool *online, bool value)
-+{
-+	if (*online == value)
-+		return;
-+
-+	*online = value;
-+	if (psy)
-+		power_supply_changed(psy);
-+}
-+
- static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
- 					   const struct qcom_battmgr_message *resp,
- 					   size_t len)
-@@ -1323,9 +1340,12 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
- 		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
+ 	verdict = dispatch_one(rq, prev);
  
- 		source = le32_to_cpu(resp->status.charging_source);
--		battmgr->ac.online = source == BATTMGR_CHARGING_SOURCE_AC;
--		battmgr->usb.online = source == BATTMGR_CHARGING_SOURCE_USB;
--		battmgr->wireless.online = source == BATTMGR_CHARGING_SOURCE_WIRELESS;
-+		qcom_battmgr_sc8280xp_set_online(battmgr->ac_psy, &battmgr->ac.online,
-+						 source == BATTMGR_CHARGING_SOURCE_AC);
-+		qcom_battmgr_sc8280xp_set_online(battmgr->usb_psy, &battmgr->usb.online,
-+						 source == BATTMGR_CHARGING_SOURCE_USB);
-+		qcom_battmgr_sc8280xp_set_online(battmgr->wls_psy, &battmgr->wireless.online,
-+						 source == BATTMGR_CHARGING_SOURCE_WIRELESS);
- 		if (battmgr->info.last_full_capacity != 0) {
- 			/*
- 			 * 100 * battmgr->status.capacity can overflow a 32bit
+-	if (cpu_of(rq) != smp_processor_id() &&
+-	    unlikely(rq->scx.flags & SCX_RQ_BAL_CB_PENDING)) {
+-		/*
+-		 * Balance callbacks must run in the context that queued them,
+-		 * so they can't be queued on another CPU's rq. Run the deferred
+-		 * work directly instead.
+-		 */
++	/*
++	 * A pick that returns a task isn't final under core scheduling: the
++	 * selection goes on to pick the siblings, and their dispatch can
++	 * release the rq lock, which can't happen with balance callbacks
++	 * queued. Don't queue the deferred work as a balance callback, for this
++	 * CPU or a sibling, and run it from irq_work instead.
++	 *
++	 * do_pick_task_scx() leaves %SCX_RQ_BAL_CB_PENDING alone under core
++	 * scheduling, so that the early return above leaves it to the dispatch
++	 * in flight, which handles it here.
++	 */
++	if (unlikely(rq->scx.flags & SCX_RQ_BAL_CB_PENDING)) {
+ 		rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
+-		run_deferred(rq);
++		schedule_deferred(rq);
+ 	}
+ 
+ 	rq_repin_lock(rq, rf);
+@@ -3403,6 +3408,7 @@ static struct task_struct *
+ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ {
+ 	struct task_struct *prev = rq->curr;
++	bool core_sched = sched_core_enabled(rq);
+ 	enum scx_dsp_verdict verdict;
+ 	struct task_struct *p;
+ 
+@@ -3411,7 +3417,12 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ 
+ 	rq_modified_begin(rq, &ext_sched_class);
+ 
+-	if (sched_core_enabled(rq))
++	/*
++	 * Core scheduling can get enabled while dispatch_pick() has the rq lock
++	 * released. Stick to @core_sched, so that the follow-up work below
++	 * matches the dispatch that ran.
++	 */
++	if (core_sched)
+ 		verdict = dispatch_core_pick(rq, rf, prev);
+ 	else
+ 		verdict = dispatch_pick(rq, rf, prev);
+@@ -3477,7 +3488,9 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ 	 * for the next pick.
+ 	 */
+ 	if (p != RETRY_TASK && (p || !force_scx)) {
+-		maybe_queue_balance_callback(rq);
++		/* under core scheduling, see dispatch_core_pick() */
++		if (!core_sched)
++			maybe_queue_balance_callback(rq);
+ 
+ 		/*
+ 		 * Defer to a balance callback which can drop rq lock and enable
+@@ -3490,7 +3503,7 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ 			queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb,
+ 					       kick_sync_wait_bal_cb);
+ 		}
+-	} else if (rq->scx.flags & SCX_RQ_BAL_CB_PENDING) {
++	} else if (!core_sched && (rq->scx.flags & SCX_RQ_BAL_CB_PENDING)) {
+ 		rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
+ 		schedule_deferred(rq);
+ 	}
 -- 
 2.53.0
 
