@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063206;
-	b=ZctBLCm2FbpXDBUyuvnANP55APgTTs6cooTJIuRlmsiFx3FiMj9vEHEXtLD7yRmJOF+R
-	 jP80A19meCivhOKqTHUI4asaPtcRcjv0bMPN8m4yHmTYlI1OSCw4nQllLCKuHwb0BFlcd
-	 lrv5oh2E4OUGBkTrZpgx0ZarVP/XenFF4uyLT4bXXXazmlBG6vo+saCsM/d9AjFughWl/
-	 hwOapFS1qmaQ+tuUbqbaEsyZbdCS+EUVu1n3Rb/AngNnFTDPkCctdN6Ti2ADDC0yODjqe
-	 ngfqNL42shvq6oOGqHEZKsY7Qkv9NJ4z0z2M8W/k8EWUcRlEZw81MncSIAqE69W1hOg==
+	t=1794063207;
+	b=YJneVuuyMQ0Dt13vft0k/FUUsXbrc6ts/6cLfgfdgDQie35Bm5czOks5i3JLqGcAYR7s
+	 ihYvvemcJiV4P/2RGD/2badSAfC93J/xkCmd5f3LjaW3aTXfodiK1gZYJDrwd6t6iSvUb
+	 f4FzRZ4oLlNE3M3RwLJHsm6FmOTbg2/3Ztyk5+9UnY8N+cVYcJcU6+CuU87D7fxkf4X0P
+	 I+JoWnE5y87bI5IFIfGfmNToXPPGrOzWv/yFt3aOmKjX7GtEjki0ogdiOrxLzLpzwVXD2
+	 DLyPgEkLZEbt3uI3G3W1yOPXTbsC78bvKtjoLHGxM8r9Tv5xvzG5LhkMFwc33d5Ia9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063206;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P5K0EOo0LWdj6ZYajYwXV+Dm/K+M9svGRlvpN9TXhpo=;
-	b=a+PlNqY0CXwOdcB7ZLjiNTGoBVD+KhCXbdM6gEqEV2KVo0TbNzH1hMMWazZYoOt/hEKc
-	 Uy9DLMT6oBGR5UVRDa+1PokTrKnho1nVQ+rAS2ozcmXhSRVBhYaWBle8Hb951WE7b8Xhn
-	 uS6sKTpwm7sp14kNIsGC6lHBOWT9rMMIC6kxj88Pe+QIQKGSh3SNmZut4ss7IwB54hmJB
-	 4iGL1dMXMMpVl/hzNk7NMILx7nPpO0W/6v7eS1iyawtdtHpg+Zb4cq5U9FhAKWB0vEsG4
-	 nPaynd+0KaKIN9r29ps1JCX8X1ohfao9CdHKHYvygldPO+0KFYCoDAW6YiUx0gDrfEw==
+	bh=EpcfQhwn8aHveHhfd73+SqW7Yxom94zA5F8if++hW8o=;
+	b=vtXdDKM/dOhqTTGxNe9Akc7IaOtjo2kdqBnMT0Byr0MQdU3b2Q4NY7bY3LwE2D5+iymf
+	 E6gTy/OmPwQdSmU+S0cbMrrbWSdcsYqI5g0LNDtqSbtIkaFx+jZ1Z7UjtYulQVRXVjTh9
+	 I1enldoF3Alqk3inoUKPPcB/3wa9LMTVwAZuXMyeIBeYrENbZZaelK/Ho5YfwwDDFeuWU
+	 yfKYC31JNx/3rnx+tcxgxw4cEhgKHnRtlGsfdDVHKMy4y4N/aLjv2FOPusAYOykWfA/B9
+	 8I2RIRoKdxMvKlTzgipLE54Yd6VlCtZkO8I+ewEfgMW///rfEE3yltR4lxeXVZVWiCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvOGd8jk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d/7ID7pu";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6533E606D802;
-	Sat,  7 Nov 2026 14:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6E5606D81B;
+	Sat,  7 Nov 2026 14:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvOGd8jk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52401F0089F;
-	Sat,  7 Nov 2026 14:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d/7ID7pu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF7A1F008A1;
+	Sat,  7 Nov 2026 14:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063206;
-	bh=P5K0EOo0LWdj6ZYajYwXV+Dm/K+M9svGRlvpN9TXhpo=;
+	s=korg; t=1794063207;
+	bh=EpcfQhwn8aHveHhfd73+SqW7Yxom94zA5F8if++hW8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YvOGd8jkK8mSupsfiT5Hxsr3TL4OHSWng70Vy7E+zlCcLUkM1lQSeNAfTu2M6mKdG
-	 dxAPoumdbz6aNNizzsaZR7+SZB4swmgpd0WoZ/3wRg7yJj4kC7vgIQij5kGTfgJylh
-	 5Vabf3sFmBV1FwF+SiHKjHwY1dnHNj/WKkTCUjIg=
+	b=d/7ID7pu7/Q/my+W/MRavUduQe3oYNxwGmV3yIr0IaAWupWx/YWV/QLgTgUzvnNiQ
+	 wm6NXzFA6FGmaliINtqD6mejnQbTco2jKFtaKK6EHzmh+Fg20Ct3aa2uqXiOYJBloh
+	 KaqZl7DmmwSogTyU7WLA4oo/hDwCMVKqMRNoy8oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	guzebing <guzebing1612@gmail.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	stable@kernel.org,
+	Yu Junzhe <junzheyu1@gmail.com>,
+	Daejun Park <daejun7.park@samsung.com>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 418/869] ext4: reject delalloc to nodelalloc before applying remount options
-Date: Sat,  7 Nov 2026 08:51:40 -0500
-Message-ID: <20261107134907.592861785@linuxfoundation.org>
+Subject: [PATCH 6.18 419/869] jbd2: dont advance j_fc_off before the buffer is recorded
+Date: Sat,  7 Nov 2026 08:51:41 -0500
+Message-ID: <20261107134907.630043315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,96 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guzebing <guzebing1612@gmail.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 26a3ff309c91986dbedb05d0e0f0050ea0aa629c ]
+[ Upstream commit 9f359c031885bb50add7d23c7a5a0e9755b134c9 ]
 
-Commit 97f5ec3b166d ("ext4: prevent delalloc to nodelalloc on
-remount") rejects switching a mounted filesystem from delalloc to
-nodelalloc.  However, it performs the check after ext4_apply_options()
-has already cleared EXT4_MOUNT_DELALLOC in the live superblock.  The
-failure path eventually restores the bit, but leaves a window where
-other CPUs can observe nodelalloc.
+jbd2_fc_get_buf() increments journal->j_fc_off before jbd2_journal_bmap()
+and __getblk() have had a chance to fail.  When either does, the slot
+j_fc_wbuf[fc_off] is never assigned, but j_fc_off already counts it.
 
-test_opt() reads s_mount_opt directly without a lock shared with
-remount.  If a concurrent truncate's __es_remove_extent() hits this
-window and observes nodelalloc, it sets count_reserved to false.
-Delayed extent status entries are then removed without calculating
-their cluster reservations, leaving reserved at zero.
-ext4_es_remove_extent() therefore calls ext4_da_release_space() with
-zero, leaving i_reserved_data_blocks and s_dirtyclusters_counter
-elevated.  When the inode is later evicted after unlink,
-ext4_destroy_inode() reports:
+ext4 then fails the fast commit and falls back, and the fallback path
+reaches jbd2_fc_release_bufs() via ext4_fc_commit ->
+jbd2_fc_end_commit_fallback -> __jbd2_fc_end_commit -> ext4_fc_cleanup.
+That walks down from j_fc_off - 1 and put_bh()es every slot until it
+sees NULL, so it also touches the slot that was never written.
+j_fc_wbuf comes from a plain kmalloc() and is never zeroed, so a slot
+used for the first time holds uninitialised heap data.
 
-  i_reserved_data_blocks (...) not cleared!
+Advance j_fc_off only after the buffer head has been stored.  That
+restores the invariant that j_fc_off covers exactly the filled slots,
+which is what jbd2_fc_release_bufs() relies on: the live buffers of the
+current fast commit sit above the NULLs the previous one released, so
+stopping at the first NULL is correct.
 
-CPU 0                             CPU 1
-                                  ksys_truncate()
-                                    ...
-                                    ext4_es_remove_extent()
-ext4_reconfigure()
-  ext4_check_opt_consistency()
-  __ext4_remount()
-    ext4_apply_options()
-      clear EXT4_MOUNT_DELALLOC
-                                      __es_remove_extent()
-                                        test_opt() sees !DELALLOC
-                                        count_reserved = false
-    reject delalloc -> nodelalloc
-    restore EXT4_MOUNT_DELALLOC
-                                        remove delayed ES
-                                    ext4_da_release_space(0)
+Reproduced on a KASAN kernel with an ext4 fast_commit filesystem on a
+loop device, truncating the backing file under the live mount so that
+only the journal's fast-commit region falls past the end of the device.
+__getblk() then fails for the first fast-commit block while the rest of
+the journal is still addressable, so the journal is not aborted and the
+fast commit reaches the fallback path.  j_fc_wbuf was poisoned to make
+the read of the never-written slot visible:
 
-Follow the pre-apply validation approach used by
-ext4_check_quota_consistency() and reject the transition in
-ext4_check_opt_consistency(), before ext4_apply_options() changes live
-state.  Use mask_s_mount_opt to determine whether delalloc/nodelalloc
-was specified and ctx_test_mount_opt() to check the final parsed value.
+  BUG: KASAN: wild-memory-access in jbd2_fc_release_bufs+0x6b/0xd0
+  Write of size 4 at addr 5a5a5a5a5a5a5ab2 by task sync/961
+   jbd2_fc_release_bufs+0x6b/0xd0
+   ext4_fc_cleanup+0x97/0x830
+   __jbd2_fc_end_commit+0x37/0xc0
+   ext4_fc_commit+0x524/0x560
+   ext4_sync_file+0x3c4/0x4b0
+   __x64_sys_fsync+0x20/0x30
 
-Fixes: 97f5ec3b166d ("ext4: prevent delalloc to nodelalloc on remount")
-Cc: stable@vger.kernel.org
-Signed-off-by: guzebing <guzebing1612@gmail.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+With this patch the same run leaves j_fc_off at 0 across repeated
+__getblk() failures and completes cleanly.
+
+Fixes: ff780b91efe9 ("jbd2: add fast commit machinery")
+Cc: stable@kernel.org
+Reported-by: Yu Junzhe <junzheyu1@gmail.com>
+Closes: https://lore.kernel.org/linux-ext4/7e4b109d-64c3-444f-a5dc-93c2ca4576cc@gmail.com/
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260814034855.1573759-1-guzebing1612@gmail.com
+Link: https://patch.msgid.link/20260819060939epcms2p37bb8589b2f8a52a2b14bef38fadcf69d@epcms2p3
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ fs/jbd2/journal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 2762628bbfc95..613b04b64b14d 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2783,6 +2783,14 @@ static int ext4_check_opt_consistency(struct fs_context *fc,
- 	}
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index fa0fb738db0c4..1184dbad43e57 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -844,7 +844,6 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
  
- 	if (is_remount) {
-+		if (test_opt(sb, DELALLOC) &&
-+		    (ctx->mask_s_mount_opt & EXT4_MOUNT_DELALLOC) &&
-+		    !ctx_test_mount_opt(ctx, EXT4_MOUNT_DELALLOC)) {
-+			ext4_msg(sb, KERN_ERR,
-+				 "can't disable delalloc during remount");
-+			return -EINVAL;
-+		}
-+
- 		if (!sbi->s_journal &&
- 		    ctx_test_mount_opt(ctx, EXT4_MOUNT_DATA_ERR_ABORT)) {
- 			ext4_msg(NULL, KERN_WARNING,
-@@ -6595,13 +6603,6 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
- 		goto restore_opts;
- 	}
+ 	fc_off = journal->j_fc_off;
+ 	blocknr = journal->j_fc_first + fc_off;
+-	journal->j_fc_off++;
+ 	ret = jbd2_journal_bmap(journal, blocknr, &pblock);
+ 	if (ret)
+ 		return ret;
+@@ -854,6 +853,7 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
+ 		return -ENOMEM;
  
--	if ((old_opts.s_mount_opt & EXT4_MOUNT_DELALLOC) &&
--	    !test_opt(sb, DELALLOC)) {
--		ext4_msg(sb, KERN_ERR, "can't disable delalloc during remount");
--		err = -EINVAL;
--		goto restore_opts;
--	}
--
- 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
- 		(test_opt(sb, POSIX_ACL) ? SB_POSIXACL : 0);
+ 	journal->j_fc_wbuf[fc_off] = bh;
++	journal->j_fc_off++;
+ 
+ 	*bh_out = bh;
  
 -- 
 2.53.0
