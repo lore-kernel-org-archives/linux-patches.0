@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064748;
-	b=oQWRPzVBnSeIJelUeOtpG5isvV/qD+PJEt4VAxAeZ/3lFNxnU6wLdLReTb+TONGsPL+4
-	 ZiadacmMDc68naZ32oyzpOgHaqG9q3TMpwrE9hzYqhh2adBwmOw4M2YZlaJEWWHCBFb3L
-	 wlwK85s2iNggX9ZU53k6bgOADHDfijci5jyFwpeRu+FCmeN833JGGX1QHIqKqYOD1nR79
-	 1l1cfx8p/ZBl6vmbVuTGXd12/9LW+IKNGEBZVxQbF8r0mnIBjSRUdKJGEvYs/X1RYXTlV
-	 hWPiicZ5nt0FJU2tN3J9jzRjMOCJfQR+Du0tlV+bdqgPZbs0mbM3Re0BqGhXpMaNgsQ==
+	t=1794064749;
+	b=ckb0I98/IK4biTdZ8Nu9TZPkaIVCDXfDgDM/t2rmr2D1HE/ilR0fG08VLZ1UTAM6/rox
+	 LNlStKTe+B0kI3Ptb3JkToDcgbhi12msPNjfPlo/WWKpkHSy7aWnrhGBYzSq5iV9NHRYd
+	 69ea9HHE+n8FaYD6UclOKrQSn57hXnVslTzj0x9HxsbhCTYOewENgs/M+O5t7TBzHZG5e
+	 goRlPseOUOJLL/eLgs4xqFl8sMDfiEo9MoK0B6ke+QwPkZ8Uc+3CRgHZMMEC2SdUGcTW4
+	 Wshld6KdOFqUqJJqrHcONCJLKH5uNxVgP6Eqigl67mnf6IlZPtDQD88P5QQZrveQpYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064748;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064749;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZcggKSe1vu0rrSjVxaVQ1RkcR3UZfcprGtETrjlHV0c=;
-	b=h4PH2fD+xoCYNDRun6mwO4ELAf69qBP7DvhlkOuBeRlru5Sk71KbX1CK6/xyWH3kJBb1
-	 myeLcUM+PfLZL4suXIXs0BRi9NosfeQMgRrv4t6h9VUojCluKah2oiNM7n9aulnk79qeu
-	 ng1EeeClxXOtBRhoRY111uH2osi4Q/mENSbkrLE51JVqrJSKgpkkssuFWxvr2w2wZdUrs
-	 lzGqyg0eEbcvzciEGo1vqQjiTrnaeVhTuyH+z18JHxxRrkpNted5roH5t5aExn+1fTuDA
-	 Zl5P0jl4sDb41qbEyQluCktJJAyQrqrGsBwpGNCMP4PF62LQua1GiquNYKy6396C3rw==
+	bh=tcEBnYe+yd1vYaC/xIZsCiPuL+AZX/PeLTiuX0aztkM=;
+	b=rYh7jwYU3LG7IhtZ1qqTtde6D07xZSCZJ24iwulM3vfu6n/2LE/LF6dZRS9nrDr0ks8r
+	 7Aef7TXJsh98xgmpPstvSLuQq29Cbli9do5O7GDqj2O+2gnqPUBSUGv4sHu0zDrsO6JvT
+	 2gnkjd04eHeCjzLcCbJzG2H+IvGORePFZv3ZqavOF8U+boFOXxalIIy8A+SJhZBuYR3Lj
+	 QHz3yENO6Y7ly1k1mmF4Zs9J/DYx0HDiU3iSLMYqT83Qn3KdNgr4epZD6QnOhLiROZT4l
+	 rithP739lffXLUV+0QC3g2KBX3h8DzAAoLI0mcH6nxY1wqUU8LVPBdMmqOxVJ0d8Bng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iU2Dk7AY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW6twKU3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C495E606A334;
-	Sat,  7 Nov 2026 15:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233EB606A334;
+	Sat,  7 Nov 2026 15:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iU2Dk7AY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F321F008A3;
-	Sat,  7 Nov 2026 15:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW6twKU3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15871F008A3;
+	Sat,  7 Nov 2026 15:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064747;
-	bh=ZcggKSe1vu0rrSjVxaVQ1RkcR3UZfcprGtETrjlHV0c=;
+	s=korg; t=1794064749;
+	bh=tcEBnYe+yd1vYaC/xIZsCiPuL+AZX/PeLTiuX0aztkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iU2Dk7AYU23kKl/OcseqLW5KWeZ81IGx/+f2Boi3f4KYD9+/jrjz+Mrvw4ofAmRPA
-	 Og3R+SQVzdBg4Wu3DISc0qxGCr2rIWsEuF+sSyLHXzqi2+UskNuxsyQXiIoUtxqJko
-	 drqAFEsJ8QnEVDBo8+PDaXdbPowXehOCUFhiYuFY=
+	b=HW6twKU3cRH3JpxjfBekN2kPyGqkVtsp3HVoeodmkBfYntB/Yb+sUdzbGFN4Iqt1R
+	 Sk5nprQklh/C2FKOAkn1cQNccutTXeccQJTSFyP9Vl5Oh/uPwF/dqg+e8RqxhTiEux
+	 J8RznWumcR2IOqizpTnunLjMuEkfzJwxRl8nDNGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Nanzhe Zhao <zhaonanzhe@xiaomi.com>,
+	stable@kernel.org,
+	Kaixuan Li <kaixuanli0131@gmail.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0722/1257] f2fs: read i_size once in f2fs_vm_page_mkwrite
-Date: Sat,  7 Nov 2026 08:50:18 -0500
-Message-ID: <20261107134959.202457186@linuxfoundation.org>
+Subject: [PATCH 7.3 0723/1257] f2fs: check every cur_*_segno[] entry on readonly images
+Date: Sat,  7 Nov 2026 08:50:19 -0500
+Message-ID: <20261107134959.232598171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,90 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
+From: Kaixuan Li <kaixuanli0131@gmail.com>
 
-[ Upstream commit c04f209773ecb31e592cababce0d6658ee0b8d58 ]
+[ Upstream commit 9c4ee79190c8c23a9fb5c07d3bc87eaac514b2bb ]
 
-f2fs_vm_page_mkwrite() reads i_size twice: once to check whether the
-folio is partially beyond EOF, and once to calculate the offset for
-folio_zero_segment(). But a concurrent buffered write can extend isize
-and cause the following race condition to corrupt data:
+sanity_check_ckpt() bounds-checks cur_node_segno[] and cur_data_segno[]
+against main_segs, but on an image with the RO feature the goto that skips
+the duplicate-segno cross-checks also leaves the enclosing loop, so only
+index 0 of each array is ever checked.
 
-buffered write writes [0,3500)
+An unchecked index reaches __set_sit_entry_type() through build_curseg() ->
+reset_curseg(), which writes se->type through &sit_i->sentries[segno]. With
+segment_count_main 120 and cur_data_segno[1] set to 200, KASAN reports
+three out-of-bounds writes during mount and the mount then succeeds.
 
-CPU0 (write fault)                        CPU1 (buffered write)
- ----                                     ----
- f2fs_vm_page_mkwrite()
- folio_lock(folio)
- if (((loff_t)(folio->index + 1) << PAGE_SHIFT) >
- i_size_read(inode))
- /* i_size_read() = 3500 */
-                                           write(fd, buf, 200, 4096)
-                                           /* writes into page1, does not
-                                              wait for folio lock */
-                                           i_size_write(inode, 4296)
- offset = i_size_read(inode) & ~PAGE_MASK
- /* i_size_read() = 4296, offset = 200 */
- folio_zero_segment(folio, offset, folio_size(folio))
- /* valid data [200, 3500) is zeroed */
+Use continue so every index is bounds-checked, and skip the node-vs-data
+cross-check explicitly, which is the other thing the old goto skipped.
 
-Fix this by reading i_size once and using the same value for both the
-EOF check and the zeroing offset.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20261012030315.978375-1-zhaonanzhe%40xiaomi.com
-Fixes: fbfa2cc58d53 ("f2fs: add file operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
+Cc: stable@kernel.org
+Fixes: a7d9fe3c3388 ("f2fs: support RO feature")
+Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/f2fs/super.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index b391ced41edda..6843c2aa67444 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -124,6 +124,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	struct dnode_of_data dn;
- 	bool need_alloc = !f2fs_is_pinned_file(inode);
-+	loff_t isize;
- 	int err = 0;
- 	vm_fault_t ret;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 137b123777edc..7a7348b59f97e 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4307,7 +4307,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			return 1;
  
-@@ -187,8 +188,14 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
- 	filemap_invalidate_lock_shared(inode->i_mapping);
+ 		if (f2fs_sb_has_readonly(sbi))
+-			goto check_data;
++			continue;
  
- 	folio_lock(folio);
-+	/*
-+	 * A concurrent buffered write can extend isize, so we store isize in a
-+	 * local variable to let the zeroing offset match the EOF check below.
-+	 */
-+	isize = i_size_read(inode);
-+
- 	if (unlikely(folio->mapping != inode->i_mapping ||
--			folio_pos(folio) > i_size_read(inode) ||
-+			folio_pos(folio) > isize ||
- 			!folio_test_uptodate(folio))) {
- 		folio_unlock(folio);
- 		err = -EFAULT;
-@@ -218,11 +225,10 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
- 	f2fs_wait_on_block_writeback(inode, dn.data_blkaddr);
- 
- 	/* page is wholly or partially inside EOF */
--	if (((loff_t)(folio->index + 1) << PAGE_SHIFT) >
--						i_size_read(inode)) {
-+	if (((loff_t)(folio->index + 1) << PAGE_SHIFT) > isize) {
- 		loff_t offset;
- 
--		offset = i_size_read(inode) & ~PAGE_MASK;
-+		offset = isize & ~PAGE_MASK;
- 		folio_zero_segment(folio, offset, folio_size(folio));
+ 		for (j = i + 1; j < NR_CURSEG_NODE_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
+@@ -4319,14 +4319,14 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			}
+ 		}
  	}
- 	folio_mark_dirty(folio);
+-check_data:
++
+ 	for (i = 0; i < NR_CURSEG_DATA_TYPE; i++) {
+ 		if (le32_to_cpu(ckpt->cur_data_segno[i]) >= main_segs ||
+ 			le16_to_cpu(ckpt->cur_data_blkoff[i]) >= blocks_per_seg)
+ 			return 1;
+ 
+ 		if (f2fs_sb_has_readonly(sbi))
+-			goto skip_cross;
++			continue;
+ 
+ 		for (j = i + 1; j < NR_CURSEG_DATA_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_data_segno[i]) ==
+@@ -4338,6 +4338,9 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
+ 			}
+ 		}
+ 	}
++	if (f2fs_sb_has_readonly(sbi))
++		goto skip_cross;
++
+ 	for (i = 0; i < NR_CURSEG_NODE_TYPE; i++) {
+ 		for (j = 0; j < NR_CURSEG_DATA_TYPE; j++) {
+ 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
 -- 
 2.53.0
 
