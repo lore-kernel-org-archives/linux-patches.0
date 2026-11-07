@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062884;
-	b=if5tXiBLclmjK/K81L4VRIzSxT2srFk3aB+m15Eg3AZbygiUHg6hYqVnhN/qfwxDNe3k
-	 LCkbbuSYJK//wpxzSniWMybDOATwF6b+e6wnWIo1SS3sITAEOex9CYZeVjwlo9i4ewIuL
-	 fxTTawkoxnNfq4KXF37uxtjiVS1PDK0GlS7V0xqWARuIylNdXjiUTeh1rsnViQyx/bS8h
-	 C9bd+gNRD0OeJnJrCk2KpVMwy79yRaQbVy7P/bk17MPK6Z2mtjfwfxG+JmTIw1YDWZ7LN
-	 +vJE1etKueDZFb5ia+Eaae00wBCXFQNPRvdE3iIVo81NBTaMcuPwUVOfH5mkiFhs5lw==
+	t=1794062885;
+	b=1Eeby5N6MHODOaO6tYDkcz/zK1G3kNryy+EVwads6E2sEuSfqKPdwczwWkiomn6AY8rU
+	 qVvAnXkgA/xDJsunhFwhkLcwHr/MaOVuSPW1pCpt2hZX3JYI/ra3SQJZ85c3PBm13Pm4q
+	 mfdI7CBzqliYMa/CHYmdm66TszBTHN6vIYCMb/ONHTdAEK8LuH3Ne5b8bgEGBBg8y9jhM
+	 0PObVjy/JtlLzlcLTXMJNjahdzWn4GOMuTViw+D55HVTnrHvmfxV9Qpk0ysj2Z6c+JO9t
+	 Dqwhc2cx9feKC52cRp7b+n+pOpQd434NbyoRcWIqDpkgrb1OZcHIF2wf7iHgvB0DC9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062884;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hEyQr8f7kCCui8EkIcvLnNMtvtsGtzZy2dWEB39rgPM=;
-	b=FoeR6T0ZrFo1k0EOUQFi1I04LaUPDspgt81GBeD/9/PBT91im1iEIGxvaqsxdn7ACR1V
-	 h/KhaxuMgbvhP9seQz7st3GK6ss7uQ9xIxA7YTxxqaXM2kZv8UIqUJk02lIsWGd6/92sB
-	 UztenaACAb4vjgnsqDjDucqScZbmpmGXr0PBOh8+ZHvKb9B825vH1eJ5ChrYw3k6YrfGC
-	 SRzD6chklvk8JGuxa0lGRnxgxt+vtxV2SwtQdXlZbvMWPge6Z1esfTdrEh35xMBj6ddGi
-	 /Gje/x3W8O3Bxqe2qnRyIBAAAO/mfw5GoiJK5WFL50fuMkgAW1Jl9XLZQjgXct4rOfQ==
+	bh=gn634J/7olAmzweYuKZb2v/WKk/jTtLeMlIod6FbBs0=;
+	b=RfPfYvZxCPJR2F1T3tmzWbGkriVf4tfBck6lqYybjzzvrFEGDFTBc9Pifpx6+fBw82Z1
+	 sk7fDU9P5eZqBbXkzKE585CgCXoIvbYOKUgTVtPrwes4GZ0cVV1Rc7iNLplRdvDvXjRUb
+	 69VwBWdGnXlZYzJ0QMcz2dcb7e6OQrE1qdYEnREgvDrf0n4Sd69SaqGd46Ch96L4sHOCL
+	 7Blv7IfVmx+DbMeYBWNNgon4qsFWImrV+W3H73G9V4tBhrh6X6lm2ml3TZO2T86nULDX6
+	 vAmCzvgAFl9Nj5PTKKHtxiWMc762YxF95t+SygRcUqowsNj8rJBfb33UrJj+jBVw6bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQto6TDc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X4xPmFMa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74B9606A32D;
-	Sat,  7 Nov 2026 14:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E103606A32C;
+	Sat,  7 Nov 2026 14:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQto6TDc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945861F0089F;
-	Sat,  7 Nov 2026 14:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X4xPmFMa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C7D1F0089F;
+	Sat,  7 Nov 2026 14:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062883;
-	bh=hEyQr8f7kCCui8EkIcvLnNMtvtsGtzZy2dWEB39rgPM=;
+	s=korg; t=1794062885;
+	bh=gn634J/7olAmzweYuKZb2v/WKk/jTtLeMlIod6FbBs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQto6TDcVz38mvFwOM11OUJifpQ7/zciVsb3UfAnVUHp8ffsg8Y+bTrF5p2rRcyJJ
-	 IBKStoF8vIoxJwujE2MKhu+X2/mK4FlpREDD7K11Z6+punr03fDPQltb6OfYZxSSxG
-	 gI/4mNDYR6nG4K3KtOn4x46jVoKsGIz4HZXfoPiI=
+	b=X4xPmFMaB+5mbFExjVIVFBYfFDJQ856dqIPwLiPGXKqJqLEUDe04dD/g4aHHny9sX
+	 KF+SbdssNpGxe0VzYtUPqSBWub8Szz1zsjGTzJTLhAfKJSYf8KPoPGX855yyuFfNYT
+	 7mUwduM6rCnqROwvoL0kkbVnVfa3PWGZ1Yv3n1O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thorsten Blum <blum@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 128/869] lib/842: reject output overflows from index and short data
-Date: Sat,  7 Nov 2026 08:46:50 -0500
-Message-ID: <20261107134856.818740834@linuxfoundation.org>
+Subject: [PATCH 6.18 164/869] crypto: zynqmp-sha - fix NULL pointer dereference in init_tfm
+Date: Sat,  7 Nov 2026 08:47:26 -0500
+Message-ID: <20261107134857.819146464@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,62 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Thorsten Blum <blum@kernel.org>
 
-[ Upstream commit 38ed7182f3491ec1449ff246551e11ad82adba45 ]
+[ Upstream commit 016f22d2268e02df705868110fe4e402b51bfffc ]
 
-The output length passed to sw842_decompress() is the caller's buffer
-capacity. Indexed copies write 2, 4 or 8 bytes and short-data templates
-write up to 7, but neither checks that capacity before writing and
-decrementing p->olen.
+zynqmp_sha_init_tfm() checks crypto_shash_statesize(tfm_ctx->fbk_tfm)
+before assigning the fallback transform to it, which dereferences a NULL
+pointer since the transform context is zero-initialized. Use the local
+fallback_tfm pointer for the size check instead.
 
-Overwriting an undersized destination then underflows p->olen, which is
-unsigned, so every later bounds check in the stream passes. Subsequent
-operations keep writing past the destination, and a matching CRC lets
-sw842_decompress() return success with an output length larger than the
-capacity the caller supplied.
-
-This is reachable through zram's compressed writeback path. With 842
-selected, targeted corruption of the compressed data on its backing device
-made a KASAN kernel report vmalloc-out-of-bounds writes in __do_index() and
-sw842_decompress() when zram read the page back.
-
-Check the remaining output before both operations and return -ENOSPC,
-matching the other output-producing templates.
-
-Fixes: 2da572c959dd ("lib: add software 842 compression/decompression")
+Fixes: c1dd353d18e5 ("crypto: zynqmp-sha - Make descsize an algorithm attribute")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Thorsten Blum <blum@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/842/842_decompress.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/crypto/xilinx/zynqmp-sha.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/842/842_decompress.c b/lib/842/842_decompress.c
-index 582085ef8b49c..87d1e0f8a4926 100644
---- a/lib/842/842_decompress.c
-+++ b/lib/842/842_decompress.c
-@@ -165,6 +165,9 @@ static int __do_index(struct sw842_param *p, u8 size, u8 bits, u64 fsize)
- 	u64 index, offset, total = round_down(p->out - p->ostart, 8);
- 	int ret;
+diff --git a/drivers/crypto/xilinx/zynqmp-sha.c b/drivers/crypto/xilinx/zynqmp-sha.c
+index 5813017b6b79d..cd051e1f42753 100644
+--- a/drivers/crypto/xilinx/zynqmp-sha.c
++++ b/drivers/crypto/xilinx/zynqmp-sha.c
+@@ -59,7 +59,7 @@ static int zynqmp_sha_init_tfm(struct crypto_shash *hash)
+ 		return PTR_ERR(fallback_tfm);
  
-+	if (size > p->olen)
-+		return -ENOSPC;
-+
- 	ret = next_bits(p, &index, bits);
- 	if (ret)
- 		return ret;
-@@ -344,6 +347,8 @@ int sw842_decompress(const u8 *in, unsigned int ilen,
- 
- 			if (!bytes || bytes > SHORT_DATA_BITS_MAX)
- 				return -EINVAL;
-+			if (bytes > p.olen)
-+				return -ENOSPC;
- 
- 			while (bytes-- > 0) {
- 				ret = next_bits(&p, &tmp, 8);
+ 	if (crypto_shash_descsize(hash) <
+-	    crypto_shash_statesize(tfm_ctx->fbk_tfm)) {
++	    crypto_shash_statesize(fallback_tfm)) {
+ 		crypto_free_shash(fallback_tfm);
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
