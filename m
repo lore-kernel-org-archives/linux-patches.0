@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065523;
-	b=rj+7gzeaf4Nb8a+aBZzH171Namb1rRZboUz2/fC32P9w8QWrNE+gZoG+af5pkwfzprGh
-	 yGGaLkfgF+qWFAPebn3i8ntqcq1SvYlG3SVOEOJ8OjAznZ+9JstP1vSUuXZtqV6wCY2eC
-	 h6HXkHc8AvqORn6e1e5FtcP6Nez36uw4aKuPfnN/yapWIy+4EpnHzOPWcX4kdxbBqQnri
-	 uoVK4MOJwBagTY78dkh4wLRkeBxT0eRKae/bacJ8DXxcrpU9IC5aAjkb0qaaQI8mgrCcU
-	 AjsL3SOV1BTN5VFtKHt56eWSNAHp3IwzlnOpgrIt/kOgJyJ6YoXBwCEdmDtOMAUph4g==
+	t=1794065525;
+	b=X0YKmP6RpLPImQuyd8FUSv647DzJf/NHUnHncSfVJA7KpxeVG7xxUcax4FFLTE6YLTfD
+	 JQbje7cF7XROKFACQCX+aJfu/AHKxLrbr7Shl9hZBT7UtR79eBwlOLmK9w9GOUCcgKKWV
+	 AnzQw6iABxEhQYuB0lOohjRJKiydETMe9flNr9tEBBz5Hz8+5FmjgY1py/iKJaR+r+lWT
+	 DVEFVUHL7tP1zqr0Zr5wJmfVUqm6JR5dsRt2KW3pK6jr8KBQemARAYGCKiAuot2H7cMiy
+	 AACWK8xVYEgIY438hUN8TQwdappydIbwVESI/aofekcOvQbtlwA0f2KdT4hwjPZktXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065523;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065525;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=07mKt5yGOLMYWFh5xdT2UJs6blZtgWAuxZMSfwrbAdo=;
-	b=5I3QF+kXg3+70aPuNXQRjygE1PhS2B/n592vF+/XVyztJtJ4l1XsFHFCIKexQFzTgUMY
-	 DOb4L5x4oNTRS6q3biK04Un7W04FHbxfUiKACXGuo7AD6hxaxbXq0RumlOcp4LjdxiLIj
-	 w/2SCcEhd3pYUa9RTGwNPYqpZAABqEUsvTjT5XiLqe89ilIss+4pIqweZJHHlWNqswt3x
-	 GcHNgyCzNIQx4Q73VSLpJJExlJ86DpqfMjo+WC8HlQQCWNDRk1SEbOXO0L7kfy8mcNTFw
-	 zvsmPEvvmPvMD67X8A3GzNIBwV98iufEJu/h24Ng68L9Ldr9n007O6LSm6DnWvY95uQ==
+	bh=dYZJUgLLDMpi4Yj5qvpCEMz91hfDVIXS505nG71NQ+M=;
+	b=K8USWqMoBGU+GBtarDYAqQ/KVy2Y1JsXtSAOxmN5iU9nIioITZ7a/yTVJnFXzenNARXn
+	 oSFW7e8NFRYrnVHnvKyLzXp6fPDyuSYWWd3YpnwJqGLKohSzgjNsN/YqCAzMOkztmMh5a
+	 VRhjbUbzdHFZgY482+lW0De/K4LTJH4zaZdl9nn1TTm43P2Y4FX0aWfBAGf8BEzYq/sSl
+	 Sy/nDF7HuQgrTWTZjN1Cx3tcKQjYN+SUCVv5jaX077YEl0N/qrcSh894BRzjKjwpOY5I7
+	 8NrXyFzsl6m6pW0UhTqtUcdePCIPYYsZf1QEntUu7oTS3S2iGrRdHB9L0duFvjPk/Yg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CfTR9vM6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WkHfr9jT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7F9606A32C;
-	Sat,  7 Nov 2026 15:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720C1606A32C;
+	Sat,  7 Nov 2026 15:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CfTR9vM6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31381F0089F;
-	Sat,  7 Nov 2026 15:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WkHfr9jT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0721F0089F;
+	Sat,  7 Nov 2026 15:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065523;
-	bh=07mKt5yGOLMYWFh5xdT2UJs6blZtgWAuxZMSfwrbAdo=;
+	s=korg; t=1794065525;
+	bh=dYZJUgLLDMpi4Yj5qvpCEMz91hfDVIXS505nG71NQ+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CfTR9vM63YWQVinvjxoaezHhPwtTXthp2pQqOZ+9txF+sh6pLTXirgeWTWayYjAkX
-	 an63H9/gQUegBYGsZDGN2mg6rnqZ1cYRzB6VH3tc6VdWCjTnmcJNsS/SnwATiiBNqm
-	 UkQ3BTuR+i+Oe/QxYTLQsg5hWmLmJiKYPc4P8+T4=
+	b=WkHfr9jTqmlCuTf9oE0xC8WeKkKe2v2r5dCqZHL1ulD+gIfdlvvLXgavSNZT5RyVn
+	 oCkAcW94wquY64AZBzt1FBAO5aIKCMWLb3whMMNNWuz+CrGlxZXJumIJatVbuezAwH
+	 CoHW/s8OZvZNFgJ7RlkDrLPpXGwsR7QaYsBd1zBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Keith Busch <kbusch@kernel.org>,
-	Andrew Stellman <astellman@stellman-greene.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1202/1257] nvmet-rdma: fix out-of-bounds write in nvmet_rdma_map_sgl_inline()
-Date: Sat,  7 Nov 2026 08:58:18 -0500
-Message-ID: <20261107135012.553340102@linuxfoundation.org>
+Subject: [PATCH 7.3 1167/1257] LoongArch: Fix bitmask corruption in update_bp_registers()
+Date: Sat,  7 Nov 2026 08:57:43 -0500
+Message-ID: <20261107135011.417698358@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,66 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Stellman <astellman@stellman-greene.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit d1512773a0d539669440bd9f6d050b8e12923b5f ]
+[ Upstream commit 30c52672bf456decf675c11f3c65acd73a6bcca8 ]
 
-nvmet_rdma_map_sgl_inline() bounds the host-supplied in-capsule SGL
-offset with "off + len > inline_data_size", evaluated in 64-bit
-arithmetic. off is taken straight from the host SGL descriptor
-(le64_to_cpu(sgl->addr)) and len is promoted to 64-bit, so the sum
-wraps: an off within len of 2^64 makes it small and the check passes.
-off is then used as page_idx = off / PAGE_SIZE to index the fixed-size
-rsp->cmd->inline_sg[] array (NVMET_RDMA_MAX_INLINE_SGE entries), so a
-crafted offset yields an out-of-bounds scatterlist index that is written
-through in nvmet_rdma_use_inline_sg().
+In update_bp_registers(), when disabling a LOAD or STORE watchpoint,
+the code attempts to clear the bit of LoadEn or StoreEn by using the
+standard bit-clearing pattern.
 
-The mapping runs while handling a received capsule, before the command
-executes, so a remote RDMA peer can reach it (the Connect capsule is a
-write and takes this path on a queue that has no controller yet). The
-host controls only the low bits of the resulting displacement, so the
-expected impact is an out-of-bounds write that faults the target
-(remote denial of service).
+However, due to the omission of parentheses, the bitwise NOT operator
+'~' takes higher precedence than the left shift operator '<<'. Then:
+(1) ~0x1 << MWPnCFG3_LoadEn evaluates to "(~0x1) << 8 = 0xFFFFFE00",
+(2) ~0x1 << MWPnCFG3_StoreEn evaluates to "(~0x1) << 9 = 0xFFFFFC00",
+that incorrectly clears all configuration fields in the lower 8 bits.
 
-This wrap was reported, with a KASAN reproduction, on linux-nvme in May,
-and the check below was suggested in that thread. The fix that was
-applied, 48c0162f647b, reworked how the offset is mapped but kept the
-original check, and its page index turns a wrapped offset into an
-out-of-bounds index into inline_sg[].
+These fields in the lower 8 bits contain critical configurations such
+as DSOnly (bit 0), PLV0-PLV3 privilege levels (bits 1-4), and LCL (bit
+7). Writing back these corrupted values severely breaks configuration
+isolation and ruins the hardware watchpoint states.
 
-Reject the offset before it can wrap.
+Add parentheses to ensure the correct evaluation order, so that only
+the targeted LoadEn/StoreEn bit is cleared while preserving the other
+crucial configuration bits in the lower 8 bits.
 
-Found independently by static analysis with AI assistance, not
-reproduced at runtime.
-
-Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
-Fixes: 48c0162f647b ("nvmet-rdma: handle inline data with a nonzero offset")
-Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
-Closes: https://lore.kernel.org/all/LM21QIR-1-qJb7PViyJKCnGBnUzizeiNJVWQ3wb7ZwGezodjgKg3f-iobqOyequ-sT1jFCKJImfqNO_BKU3KO80xFITnaI5GTV_GxLUNDDc=@proton.me/
-Suggested-by: Keith Busch <kbusch@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/loongarch/kernel/hw_breakpoint.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 075ab58d8c884..ebf4a7bde524b 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -864,7 +864,8 @@ static u16 nvmet_rdma_map_sgl_inline(struct nvmet_rdma_rsp *rsp)
- 		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 	}
- 
--	if (off + len > rsp->queue->dev->inline_data_size) {
-+	if (off > (u64)rsp->queue->dev->inline_data_size ||
-+	    len > (u64)rsp->queue->dev->inline_data_size - off) {
- 		pr_err("invalid inline data offset!\n");
- 		return NVME_SC_SGL_INVALID_OFFSET | NVME_STATUS_DNR;
- 	}
+diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
+index deeb2f9795705..bd891b3808a6b 100644
+--- a/arch/loongarch/kernel/hw_breakpoint.c
++++ b/arch/loongarch/kernel/hw_breakpoint.c
+@@ -468,9 +468,9 @@ static void update_bp_registers(struct pt_regs *regs, int enable, int type)
+ 			} else {
+ 				ctrl = read_wb_reg(CSR_CFG_CTRL, i, 1);
+ 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_LOAD)
+-					ctrl &= ~0x1 << MWPnCFG3_LoadEn;
++					ctrl &= ~(0x1 << MWPnCFG3_LoadEn);
+ 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_STORE)
+-					ctrl &= ~0x1 << MWPnCFG3_StoreEn;
++					ctrl &= ~(0x1 << MWPnCFG3_StoreEn);
+ 				write_wb_reg(CSR_CFG_CTRL, i, 1, ctrl);
+ 			}
+ 			regs->csr_prmd &= ~CSR_PRMD_PWE;
 -- 
 2.53.0
 
