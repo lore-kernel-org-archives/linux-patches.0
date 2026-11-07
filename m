@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063992;
-	b=jb/vpuwA9GS0AMRubVioDPYLIvlqT+1hXTRuUVQaoJE8dZ+tgGFj0pXj9xIVF/G2Yg/z
-	 N0lU9AuApjU7UjhlpAA88LARK/EFqEqyStf2ggp7nFkIOHPz/rOTjGV8XFCa6fjM9NQFx
-	 LNoBt4IuHzrmzUqA9J/hmkJLAFIpDhgholGPf0yD9UhRM+0ob7Y2FmqRaiQxCF3c51lSw
-	 AjOVNdkB3UM+LW/9w3jKBPjma7X9DvD4vyVMzWqumlvInZ4n4W2EplDvcYwS0YS8efc7l
-	 kOl/tL/2L28kh3L0ytvSKhZ3slxhCWKUrlprIeIzf9DNUXrTky6snkCQLhl4ACj+1YA==
+	t=1794063993;
+	b=3OyojroxTV9WdVRPkw3V8ZAVFifHJGzWogHDPkBRjYozy5LXNmAfR9qlZoPoLDQrK1O6
+	 4eFzlrNdgwStlhI6BBC178WMC0AXecrEAt//VvgMKWACz1ybgPUbJeh7ICMUt5eX+6CSN
+	 YOTjjO/YoznURKzGcZA/0XQu7/Dz7C+kIVWd4qjo5ScJvyMQWL2HJDx57hpHAbVTsWtOa
+	 0BBXps4L+HM/TYvWhfwxTwaeVLWP4iJLqfZ/8xkeyv29KLojNXM0YfL0K0VFMjbb55YB/
+	 Zhvs7LXVh6du5tXedZ1Nz99XATM7tWMDT8Biefb0f4c4Ch/uIWblYPp36eXJakqTJYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NodC98CwZFdVdpOjeU8yY18UxKPuYZuidO4AzYRmuCU=;
-	b=ny1NO/L1L1mWoVctn7GNV6UudkLL6wRdEZTVvZpn7n77/es06NAt05qQJWZTCFe0rn7I
-	 8HW39dS44+R8J3kqCyanl019BaE5kQKt3+fQsW8tynjD7VdFJpYWZd6TKXRoeBdtHg+14
-	 8OVWXk33t8zS/dD8fQ6ZiFuOSm5n1QI4Hui1NZdnxhtF8QEKRUUEtnIP7odrYYhuuOxqV
-	 Dy4NbIrPtkO6k121ZLnBxBEr54eC2glxuLqKsI32NPxJdE5pw7OvJXj5UQfPLRhJ5i116
-	 21XxMr8uVxghiofbfyh+G4E7a1ozxi6VnN+84g2Rs7rDc2e6ebCc1dRVeS6+ennstfA==
+	bh=SZ+lpMZFb0PhBIMP9nCb7Secma83Z0y+ITEPEaPUhGI=;
+	b=wVPeqkF4E8oEmchmZ1pbqy18eQe1jWjWWgvwMnxIJEa60sA+KgnwIaSafT3Bt1Q2039V
+	 CuiCupGOG4ERjlZuBy8Oy0w8b2kKXS1DL+lsiqCpdScDFPDURThkbeTf6JVXEColUNbid
+	 MTN9q6EZvooDR7WyGaCBh/5yrMVPAj/CCcgRpV7EU/ZPdFejIzuXh4iTk66iD5rRxVfaO
+	 tjyxbU/6Nivl67DyfkJ+RFGVTMUZPwDdO6Vi0diLlVtd0+nC8G5dq0qCc1QpM7JP2PBFy
+	 l3RzGwxBt8/avXnLhPFEW87T6zG4E9sZdoZdaf/WqJ8gM2KhNUTz3uI6b6otSRBzxXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qKjQjsRi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UbLoo1zl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6895F606D82B;
-	Sat,  7 Nov 2026 15:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950B4606A332;
+	Sat,  7 Nov 2026 15:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qKjQjsRi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FB11F008A1;
-	Sat,  7 Nov 2026 15:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UbLoo1zl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401A81F008A1;
+	Sat,  7 Nov 2026 15:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063992;
-	bh=NodC98CwZFdVdpOjeU8yY18UxKPuYZuidO4AzYRmuCU=;
+	s=korg; t=1794063993;
+	bh=SZ+lpMZFb0PhBIMP9nCb7Secma83Z0y+ITEPEaPUhGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qKjQjsRiDRk9uttvT46LNHRRZ5JSC8ZugyeTb3cIqgrtdsxlguKfCeonf4QwVL1E4
-	 yoVQfcjdmpKExK2fvHhgJS/i63otOnPontErqk+a22Rk2jGdv2YwVA7cjsqyZPfw3Y
-	 7RRImop4QFCXOpl+hx6A5+e9AI5edtsReWm2VU2w=
+	b=UbLoo1zl04RLXrLCJbwYYZT9ykgVOrNAoamJNY4ZXOlzlDBsrnRBUKku/zCS5ES2o
+	 HxkwbVY9G/OLvmHP+pyP8itoNme2CKblqCpTCED9BLGzNA3mMbqa4QrWQ3VHYbTMvN
+	 ItAzbam07f/p4xOv0Z5sR6wQgNYU0lSbdRjo8Kr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	syzbot+4b4ec878e25fafefa70f@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0167/1257] pinctrl: renesas: rzt2h: Fix reading pin value in IRQ function
-Date: Sat,  7 Nov 2026 08:41:03 -0500
-Message-ID: <20261107134943.952070062@linuxfoundation.org>
+Subject: [PATCH 7.3 0176/1257] ntfs3: reject empty iomap before reading its LCN
+Date: Sat,  7 Nov 2026 08:41:12 -0500
+Message-ID: <20261107134944.325037731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,70 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 55297a587c3748f320485a3b37fcccfe6f0440bb ]
+[ Upstream commit 666af227b12fcc3f4ac9827d449ee0910f7bcf9f ]
 
-rzt2h_gpio_get() only reports a level for pins in input or output mode
-and returns -EINVAL otherwise. When a pin is requested as an interrupt
-it is switched to IRQ function and its I/O mode is set to Hi-Z, so its
-value can no longer be read.
+attr_data_get_block() can return success with a zero run length when no
+cached or on-disk mapping covers a read VCN. In that case it does not
+initialize the LCN output.
 
-gpiolib calls gpiod_get_value_cansleep() to determine the edge's
-direction when a line is watched with GPIO_V2_LINE_FLAG_EDGE_BOTH.
-Non-zero values are translated to a rising edge, zero to a falling edge.
+Check the returned length before comparing the LCN against the special
+mapping values. This preserves the existing -EINVAL result for an empty
+mapping without passing an uninitialized LCN to the comparisons.
 
-Since gpiod_get_value_cansleep() ends up calling rzt2h_gpio_get() which
-returns -EINVAL when the pin is in IRQ function, every edge is reported
-as rising.
-
-When using the IRQ function, the input buffers are enabled and the PINm
-registers reflect the live state of the input.
-
-Report the input level even when the pin is used as an IRQ.
-
-Cc: stable@kernel.org
-Fixes: 829dde3369a9 ("pinctrl: renesas: rzt2h: Add GPIO IRQ chip to handle interrupts")
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260913195654.3371385-4-cosmin-gabriel.tanislav.xa@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: ecbb433f9a8e ("fs/ntfs3: fold file size handling into ntfs_set_size()")
+Reported-by: syzbot+4b4ec878e25fafefa70f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b4ec878e25fafefa70f
+Cc: stable@vger.kernel.org
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzt2h.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/ntfs3/inode.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzt2h.c b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
-index f8e64c3a015cd..5cfce6d68cd98 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzt2h.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
-@@ -171,6 +171,16 @@ static int rzt2h_validate_pin(struct rzt2h_pinctrl *pctrl, unsigned int offset)
- 	return (pincfg & BIT(pin)) ? 0 : -EINVAL;
- }
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 4ac26c80bd34f..fd844f9c556a8 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -981,6 +981,8 @@ static int ntfs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ 	if (err) {
+ 		return err;
+ 	}
++	if (!clen)
++		return -EINVAL;
  
-+static bool rzt2h_pin_mode_is_peripheral(struct rzt2h_pinctrl *pctrl, u8 port, u8 bit)
-+{
-+	return rzt2h_pinctrl_readb(pctrl, port, PMC(port)) & BIT(bit);
-+}
-+
-+static bool rzt2h_pin_read_input(struct rzt2h_pinctrl *pctrl, u8 port, u8 bit)
-+{
-+	return rzt2h_pinctrl_readb(pctrl, port, PIN(port)) & BIT(bit);
-+}
-+
- static u8 rzt2h_pin_read_pm(struct rzt2h_pinctrl *pctrl, u8 port, u8 pin)
- {
- 	u16 reg = rzt2h_pinctrl_readw(pctrl, port, PM(port));
-@@ -848,6 +858,9 @@ static int rzt2h_gpio_get(struct gpio_chip *chip, unsigned int offset)
- 	u8 bit = RZT2H_PIN_ID_TO_PIN(offset);
- 	u16 reg;
+ 	if (lcn == EOF_LCN) {
+ 		/* request out of file. */
+@@ -1016,11 +1018,6 @@ static int ntfs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ 		return 0;
+ 	}
  
-+	if (rzt2h_pin_mode_is_peripheral(pctrl, port, bit))
-+		return rzt2h_pin_read_input(pctrl, port, bit);
-+
- 	reg = rzt2h_pinctrl_readw(pctrl, port, PM(port));
- 	reg = (reg >> (bit * 2)) & PM_MASK;
- 	if (reg & PM_INPUT)
+-	if (!clen) {
+-		/* broken file? */
+-		return -EINVAL;
+-	}
+-
+ 	iomap->bdev = inode->i_sb->s_bdev;
+ 	iomap->offset = offset;
+ 	iomap->length = ((loff_t)clen << cluster_bits) - off;
 -- 
 2.53.0
 
