@@ -1,50 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061759;
-	b=g3QbI2+mukIFWBpsfGP1zr69PyiIblkEdoBQwBN3xbZyFJ0GBAsDK2xSkR2pvznj4Q55
-	 MJyGLjtzvxb70G9OLfSB5EFIFYCZZjalYp3g+XtJ/puFl0z8sx/I/BTo/euO5pnuDWEsO
-	 /4KQm0ddRJZUMVe6HjHPFlJTP/k9V3KoCle6vOZ//haa+RW0oqCMbMO3KauCCbM9v4zLf
-	 fW3njMFAascnyf6HWHmhRgYEUyU8gvnM3PLwMQ9ZY2urTF1Q2a6aCWsXJPgoML255nypa
-	 4MpeEf9ngt3B3St19OEX3q4M6SFGO1lPg0FrgpKW/Z1Rc3dzjEZ6aNqGcz65HnX8VfQ==
+	t=1794061761;
+	b=hL7bLG0072FuieU1ukKrznZIAn5KGKCQP9XEie4SLw5M6CbjWPuLzS29ojlsq/63YNly
+	 pN5ePRD3qLUE/LElaB40YyI96Zprp32Lu5NIdcrR8SbtAjJG06OFkpMLrrn0yAWM4KTQx
+	 92nxXF9w//KLwDJFq4rolzA+vUpW+sapL3ONRyAp0cCv+bRvh1hPy8g8NpZOB+s/JPx8V
+	 /BdhgTNrwpAQBDlUwaQ5t/ZjQgjCE+LX1D5BcM7bz/G3lhWZJVuz4KhatUp7OIeObFXWZ
+	 2NESGHoEAw/ti4fZAXK1w3kQ9l4hkwwFxzLNkVd1axxCxdMqaxIvLFFUtlFCjKgvyAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061759;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2iWWC57zf0pR/FKqwEQEMWnBe0dXbR1TG1V2QNtclUc=;
-	b=rakV+GezqOnCu1RAbYIc/KPeuCYs8Ly0oktAOReNySuWQjjuwYEz2zaRLSruzcnwuhiF
-	 jN9aCCBDhCMcD+Gzdyvq6MmPpyK7E4BEXq1O+KQua5KeQLhAbPQ+F/kqQlo5k0XXrzItE
-	 ep2JzweAOCiI4zdtrxaj8nroNSXQvcDvj6IAmFPcIUkC2kfEKK0f8WD7D973a7V9P4Lyp
-	 azqiFxbFtCKBrGwgLgzMGnflq1sw9cJf4i1hbkqFsLgZo9iZ6PyngW14uof33NRYqceXN
-	 2XFXX7Ow6Q2Vp6I+9p3CbCGsQ/ZjFzryTBXqBLrEPEdT2b2sqxUi/kZZC7CqqRir2GQ==
+	bh=DHXjAZWaVb40SIbkl7vGPrsVF+1/T3e3L4xszKq1TkM=;
+	b=YxFrmzDHi0mDfFf0irwWzwVk21Zpz15ElO/TqSRKG/fc3GmwfrKQv4YJxSCMOBCk3q2f
+	 9pjG6isHUrMHxv7CD7V2CAlx47TGA+Rzv0jA8Ed9CYuee5hsVOCuCH6Q6qsJtvjLv1ehn
+	 HkfaqRmSCLBz5EL14ZMmq4b9amaaoBMxJnV/jUb0ANfdn9EtOmZJhuDJ0TbHDwbbkvTnv
+	 feIi1dJa9IWTUMtga7/8XIq+Jgbas6oxf2zNmLuaK0hxK/2+vOI2JzIhDNJvG0cgaqwRf
+	 0sIOCszwbci2RE7Gdc7ZonPL8zaafJ/kWKc6UEzxSFaH2zNuhRNzSNumMH6hs4q2/jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XiAbkfJ5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bUImgxm2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD11606A32C;
-	Sat,  7 Nov 2026 14:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A8A606A326;
+	Sat,  7 Nov 2026 14:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XiAbkfJ5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DFF1F008A2;
-	Sat,  7 Nov 2026 14:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bUImgxm2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7318B1F0089F;
+	Sat,  7 Nov 2026 14:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061759;
-	bh=2iWWC57zf0pR/FKqwEQEMWnBe0dXbR1TG1V2QNtclUc=;
+	s=korg; t=1794061760;
+	bh=DHXjAZWaVb40SIbkl7vGPrsVF+1/T3e3L4xszKq1TkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XiAbkfJ5WaEhzlzzwSrbz1bMjnjjnIOmql5g6fJkilgQazzH2qbglrLpBdV152EAF
-	 3EIFTDI6pq2KyVUoiELDCyiWf9QDiEg3aWScIYb/cfDLvadO+NnSAImdVjEULE364i
-	 o8Lct/dg2h6VC8gHBffgeC1wEM5P2QPJdra9yuJI=
+	b=bUImgxm2Pn5PWYbMZ3XomwCnPpO7G97SOgPV26eCnC53ycTSZWS7zTPgDFleczOzZ
+	 1zG0d30R7s3jqSJV37vYkPw19HS10NLIMq3q7lG+kHLPpw0V3bdH4kToR0BAEp7X6e
+	 HQg6A0kX8yuBrTDdbk+KNKjar6vc3tbbkkkiXaKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 0797/1536] KVM: x86/mmu: Bug the VM if KVM calcs a CPU role with EFER.LMA=1 && CR4.PAE=0
-Date: Sat,  7 Nov 2026 08:46:53 -0500
-Message-ID: <20261107135019.932320225@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Paul Durrant <paul@xen.org>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 0798/1536] KVM: x86/xen: Enforce 4-byte alignment of vcpu_info registration
+Date: Sat,  7 Nov 2026 08:46:54 -0500
+Message-ID: <20261107135019.961173788@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -66,39 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 34dacbe7ae93f2d3c26cd0bf3e08200b1fa2c180 upstream.
+commit eacdb76c5f04956035c5d7f7e1973028f30684a2 upstream.
 
-Bug the VM if KVM attempts to construct a CPU role with the should-be-
-impossible combination of long mode being active without PAE paging being
-enabled.  KVM's MMU construction assumes that EFER.LMA can be set if and
-only CR4.PAE is set, and will create a completely invalid MMU if that
-assumption fails.  FNAME(walk_addr_generic) already has sanity checks to
-try and mitigate the fallout, but attempt to catch such bugs earlier, as
-this is (at least) the second time KVM has had bugs that escaped into
-FNAME(walk_addr_generic), and it's entirely possible the bad state could
-cause problems elsewhere.
+Xen's map_guest_area() enforces that vcpu_info is aligned to
+sizeof(xen_ulong_t). KVM has no such check, allowing a guest to
+register vcpu_info at an arbitrary byte alignment.
+
+Enforce unconditional 4-byte alignment regardless of the current
+shinfo mode. This is sufficient because subsequent commits ensure
+that all locked atomic operations on vcpu_info fields use at most
+32-bit accesses. Return -ENXIO on failure, matching Xen's
+map_guest_area() behaviour for unaligned requests.
+
+Originally observed in review of an unrelated patch:
+https://lore.kernel.org/all/20260604193554.1BA311F00893@smtp.kernel.org/
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260902232028.2767071-5-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 73e69a86347a ("KVM: x86/xen: register vcpu info")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260604193554.1BA311F00893@smtp.kernel.org
+Assisted-by: Kiro:claude-opus-4.6-1m
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Link: https://patch.msgid.link/20260831213632.81023-7-dwmw2@infradead.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/xen.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -5449,6 +5449,9 @@ static union kvm_cpu_role kvm_calc_cpu_r
- 		return role;
- 	}
+--- a/arch/x86/kvm/xen.c
++++ b/arch/x86/kvm/xen.c
+@@ -878,6 +878,10 @@ int kvm_xen_vcpu_set_attr(struct kvm_vcp
+ 				break;
+ 			}
  
-+	if (KVM_BUG_ON(____is_efer_lma(regs) && !____is_cr4_pae(regs), vcpu->kvm))
-+		*(u64 *)&regs->efer &= ~EFER_LMA;
++			r = -ENXIO;
++			if (!IS_ALIGNED(data->u.gpa, sizeof(u32)))
++				break;
 +
- 	role.base.efer_nx = ____is_efer_nx(regs);
- 	role.base.cr0_wp = ____is_cr0_wp(regs);
- 	role.base.smep_andnot_wp = ____is_cr4_smep(regs) && !____is_cr0_wp(regs);
+ 			r = kvm_gpc_activate(&vcpu->arch.xen.vcpu_info_cache,
+ 					     data->u.gpa, sizeof(struct vcpu_info));
+ 		} else {
+@@ -887,6 +891,10 @@ int kvm_xen_vcpu_set_attr(struct kvm_vcp
+ 				break;
+ 			}
+ 
++			r = -ENXIO;
++			if (!IS_ALIGNED(data->u.hva, sizeof(u32)))
++				break;
++
+ 			r = kvm_gpc_activate_hva(&vcpu->arch.xen.vcpu_info_cache,
+ 						 data->u.hva, sizeof(struct vcpu_info));
+ 		}
 
 
