@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065397;
-	b=rroPHoIw02/NxrbbUCPRHy+YI7dUu4Ng7NLMWy311BPb+C9kMOw+u6hPziyE1B+hRz1H
-	 oiHxtfir34G9Ob1Sn0Z3CVYBbllKiTZM2d6N84K1nWGkZbnjuzpsFydEso53qTeIAm9Hg
-	 J4ZCHunU80XShq3gIDEFWm1QpAzzhWBdgTp5XGo+k3AAMxJ3h7PKnTw/YEAaWaVQdOkFO
-	 AbqAmjmZWopDijexdtjv3i0j+ISnLwo0OPqjYzZyLSZw+smgBNa1et4WPQfHoOevB/2nM
-	 JEVjbeixjnYVJm9Abu0uKKprNOQZF0qQieIufuOQcEm8xBCUyAVwbZ4PZR2HD1mB82w==
+	t=1794065398;
+	b=3Ow/vZayi+BkEDJ+4BaRL5DHJxsrqaAs2DvzcMVUXAne7aSdLwm8jDZb3v+Px/lkTeNp
+	 Q2B7m9wWJ/IdmZMJ8pXYpP2YDH7lPL5/cchVaGTSdTPdhu3hw9rNEMuxF/JHzCzxzUTWX
+	 4p9FQ4liePmV1hpl7/jIBRU9USAMgkCNKlOrAPSm/UX6dvev+17AAlm35PRhQJphULNmz
+	 hc2lX/goijrZn0bU9GQMKrkwXpKUkjKCnXVPqKuwHsaUPxxykcZ3eooku3p+FayyY3GNx
+	 h3cweM7ha+anNQXd20sIpu+GUjptjwZUmZtdVAXZ6wYk2UJeyxYE+jsCglygNydnQzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065398;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ncrIpWClMOwfeoVsGzUTcuhQLzKlBeMUuoUtY/3Ro9I=;
-	b=bWMJmnNi6v7/PdpRkvdo71c+dywbnMO67SvOf+Drl7tdb7cizA4ocU9yfOH84iJ1LjJn
-	 3qgdrxVe+dkH76AYxE0ACNNc1fMEPWf40MidUZPC05q24V7FNhUyu8GefsCO4h4rlKhsO
-	 lPqxzlb5bQ83AvBxN+Gcwe3kF/am1U3OqtHpJVqRHMjbnyQvaYySiGwEeDKvrZfbD7HpZ
-	 nux2HoEwNEKAjsD8pGKaBwGy0hUBSzxrxNknXaj6TlQsFuUujR1rEotqYHK9K2fgdioFu
-	 6WEqvJFUniE23oCQPmtKVutP9UaBAmz/hGSxw1G9dInRg6zismkQyrcOO68cDFCHUuw==
+	bh=XZqO2VxQjw1MZu9ix+Zh19+ys2t31/LRKNBgaSRj9ag=;
+	b=q3hDNl1JL3TOZxOAbhYoHqj1Qsv9URtcsQ3Hz/UjhtoYQLlVe8ZoRdQlfL4uKMOOVb+R
+	 E0sbRuMhDZlDg3x35aPveXyAEAqPhNOWxUlKBYvJMDhdy74GR0obTuJxYIVEmINnx25uC
+	 7ehk3VBEnHm3EwglDFnpz6afy/yZCqutMJWrxTW0JPuznlRqnY5OncMI/KxD8vlH/GJya
+	 BtMCcp9s0DEtbVFC1xdobMNGxKBEiN10CupyHHdwAtY5yN885ODMn7+iJBpJXgOWEpsdG
+	 BbWosYbbmlgyUpr4aoa9cBLCnlJqNrT8gItN4hHogmCwccdNUUBbwJ/qzMeUw0dv3hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A28vAUuy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YQ0WqX0x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2462F606A33D;
-	Sat,  7 Nov 2026 15:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE74606A330;
+	Sat,  7 Nov 2026 15:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A28vAUuy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18231F008A1;
-	Sat,  7 Nov 2026 15:29:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YQ0WqX0x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CE61F0089F;
+	Sat,  7 Nov 2026 15:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065397;
-	bh=ncrIpWClMOwfeoVsGzUTcuhQLzKlBeMUuoUtY/3Ro9I=;
+	s=korg; t=1794065398;
+	bh=XZqO2VxQjw1MZu9ix+Zh19+ys2t31/LRKNBgaSRj9ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A28vAUuyKOhEKPqaQEkapOIvefAIWI2iAfGCwfQCahF2uh0UM/BvSpYt+Cis5XmD7
-	 d8duXWXUhIJpDCoj0/rvMbuHXiuiv80L/JDXnDyCr4OSeFQWt8xjVz32i7em2IVJ/f
-	 2Xni2BUDThIbXbRhqpuFixaHrQgBwGPAvO0iXC2o=
+	b=YQ0WqX0x5DhaHZHRJW3MeOhOAUIe18Fpo0Vyt3xoGozFnil07CJrNsoyfwX3zdF6D
+	 4IutsZCh8EWDR7scG83JYMrEKFGYkEbO2hFFVVp3GDBRY75mUMe/L8iGOXor/xy/61
+	 Ex+6ADcbIBWsqrcSD4DDfWceejYqhFp9DARJEQ6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+f92fbe44e3c6df69@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
+	Xiubo Li <xiubo.li@clyso.com>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1118/1257] ceph: require the dentry lease record to cover struct ceph_mds_reply_lease
-Date: Sat,  7 Nov 2026 08:56:54 -0500
-Message-ID: <20261107135010.119843396@linuxfoundation.org>
+Subject: [PATCH 7.3 1119/1257] libceph: only set read_from_replica on read requests
+Date: Sat,  7 Nov 2026 08:56:55 -0500
+Message-ID: <20261107135010.145121058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,67 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit 7286b2ffe04d4b39b4e9884f714792589d94f316 ]
+[ Upstream commit d6c7a5fcd08873c45a2dcd645a0690fd1443af50 ]
 
-parse_reply_info_lease() reads a 32-bit struct_len off the wire and only
-checks that many bytes are present, without requiring struct_len to cover
-sizeof(struct ceph_mds_reply_lease) (10 bytes).  A malicious MDS can
-declare a shorter record and still get the pointer published: the
-following *p += sizeof(**lease) overshoot is undone by *p = lend, so
-nothing downstream rejects the reply.  ceph_fill_trace() ->
-update_dentry_lease() then reads 10 bytes through that pointer on any
-lookup on a mounted CephFS, running past the end of the message front.
+ceph_osdc_alloc_request() ORs the mount option's read_from_replica
+flag into r_flags for every request, writes included.  The flag is
+meant for reads: calc_target() skips the replica choice for any
+request that has CEPH_OSD_FLAG_WRITE, and the OSDs only know
+BALANCE_READS on read ops.  Sending it on writes is at best ignored;
+with read_from_replica=balance a buffered write that fell back to
+ceph_sync_write() after losing BUFFER to a revoke failed with -EIO,
+while the same run without the option works fine.
 
-Require the record to cover the structure, matching the sibling
-parse_reply_info_dir().  A conforming MDS always encodes the full 10
-bytes.
-
-  BUG: KASAN: slab-out-of-bounds in __update_dentry_lease.constprop.0 (fs/ceph/inode.c:1459)
-  Read of size 4 at addr ffff888026c63d65 by task kworker/0:3/2366
-  Workqueue: ceph-msgr ceph_con_workfn
-  Call Trace:
-   __update_dentry_lease.constprop.0 (fs/ceph/inode.c:1459)
-   ceph_fill_trace (fs/ceph/inode.c:1474 fs/ceph/inode.c:1823)
-   mds_dispatch (fs/ceph/mds_client.c:4229 fs/ceph/mds_client.c:7225)
-   ceph_con_process_message (net/ceph/messenger.c:1424)
-   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
-   ceph_con_workfn (net/ceph/messenger.c:1576)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-  The buggy address is located 357 bytes inside of
-   allocated 360-byte region [ffff888026c63c00, ffff888026c63d68)
+Gate the flag on CEPH_OSD_FLAG_READ.
 
 Cc: stable@vger.kernel.org
-Fixes: 4ac4c23eaa38 ("ceph: decode alternate_name in lease info")
-Reported-by: co+f92fbe44e3c6df69@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Fixes: 22d2cfdffa5b ("libceph: move away from global osd_req_flags")
+Assisted-by: Cursor
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ceph/osd_client.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index 085ae0cfb5f7f..073d9f4a3adbb 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -380,6 +380,8 @@ static int parse_reply_info_lease(void **p, void *end,
+diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
+index f36ce5ae75680..8c2b89e2004ba 100644
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -1108,7 +1108,9 @@ struct ceph_osd_request *ceph_osdc_new_request(struct ceph_osd_client *osdc,
+ 	req->r_base_oloc.pool = layout->pool_id;
+ 	req->r_base_oloc.pool_ns = ceph_try_get_string(layout->pool_ns);
+ 	ceph_oid_printf(&req->r_base_oid, "%llx.%08llx", vino.ino, objnum);
+-	req->r_flags = flags | osdc->client->options->read_from_replica;
++	req->r_flags = flags;
++	if (flags & CEPH_OSD_FLAG_READ)
++		req->r_flags |= osdc->client->options->read_from_replica;
  
- 	lend = *p + struct_len;
- 	ceph_decode_need(p, end, struct_len, bad);
-+	if (struct_len < sizeof(**lease))
-+		goto bad;
- 	*lease = *p;
- 	*p += sizeof(**lease);
- 
+ 	req->r_snapid = vino.snap;
+ 	if (flags & CEPH_OSD_FLAG_WRITE)
 -- 
 2.53.0
 
