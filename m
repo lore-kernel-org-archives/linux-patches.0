@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061118;
-	b=T8pq7CQkpXqQTWzupFsLg0XEXx2pz2lwGDRN6uY+o4e+2TprOEm2SYf/mydVDT4OoIGa
-	 gKQCZncEUMUi7jZYTpGIW5cvb+raSsl1pFYKZgN6pDPzX+weno9fCFOBhc/NQEQwIzWfD
-	 S6qK4aXtAd6swMwwWXGg0DLVyHJUAE8kJXP6alFKKbTte6RlqLaK98aV/xvRNGtZdVIMq
-	 FUHAyCcvsSUVrzd/6ktjC9z3WOCcmROR2hg082iWoiAP5/WK+KWRSWmnVuvtuA3nhIlNc
-	 3ydcZrkYPxe8kRVh6761e9CsxPrVzDoGUZhOCYvxtIuBsR9LglsXz9QzwQ00ywJPyCw==
+	t=1794061119;
+	b=dLtHWiyGWKByd11Jwr7D1o/z7rczbdmtKTnavELNkwSCijuxDQ9t+VFBAwIl4FO6r/Zj
+	 Nr8Cf4DYNfESDfMZ24o5NrJx6jfePOB5YRDK1lY3aFWML4PWGYoUr29PVWkHCe1KmLnb7
+	 ZrtI/gzXR3fA50a0XYA2AfkZqJ0bcYu8SyFNpBGaOPM/ZCkaEJ6zHHaeHHYi773TWrm/y
+	 bDsJHfNExKG3RODejLowTV6S+SLm6jAr0mZyvBWwhDTvAugHVbWNipHcDvbRdk2gMg5Rf
+	 CKOSnzGzNXtMDe63gZFdnt1Ob9FpOT7ydhe3cTyTDanGuPyhxQvZuL1s41qV04bgxPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9GsuYxLZy7J1cv6W7XAZYxvGYLlHiKM1FePwopOptk4=;
-	b=MQ9m4p5c3n8USyfW3g9+xMnOinKcShLlxatmsTuYNM0Kf+dY04h6G95MQcxFyzzhWdss
-	 QudqbMKkpkdFxezuYr+Bzap2amwzFzGh4OhRCgXrccaJrYBJeIvPK7vYdgdFQgRwzX40o
-	 e0ELNbu3P44DjgkuhNizSh3bNblfZgu+3Op3kbkPBUiPHXo18O+SQaYT4TS2bL7B8xkC+
-	 yMW+WO9JhbbIPoiCFyegv2mSRCUoVdnmzyFyl0imFIbmxtwVa6KoVcqHaB8qGeg2Byo3c
-	 hOknCuAwnBATBflj9mwH7rZtTID56pMAnSQqXe/aci+8t+N8ao5AntyuAOi8Dd+p+5Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=VfYk3Rpd9KF2kZPQJgd/SbawJ1Qdr3yC3aTHRorcGyk=;
+	b=tHW6A9RG9BAOjGGcoXPRO24or4NNzcNd6czusOZqHJfLQf9XJ7Wt4/7q+0C2KO/YsCU/
+	 zZ+w1UrnY/iQkdAwHtQZ8hRgEkl3LyVn+GsDTLgLOd+isBi38tCk+Oo+/D+EVHsERCl/B
+	 cXaE4xMryVQbpvHhcrHAqObiMTHPxR0sytJ/ouoS2kMcQOp2CwPjnoQ2FF/DEuiZPGUs6
+	 YzmZ+OLIzTE7ewAREFp2xNKQfKMsEFJ1vw4P83/X27AKrLb9FkxjeAfklB6yAXvALO1R6
+	 NPcDKESPQfbeabFd4zHKTaBMZI9sVqE4lDyMg/jU6DEtga3u5nuekau2zH5gmlCvnjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFDUA9Ps;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EbwVs3hH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3790606A332;
-	Sat,  7 Nov 2026 14:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE2B606A332;
+	Sat,  7 Nov 2026 14:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFDUA9Ps
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6109F1F0089F;
-	Sat,  7 Nov 2026 14:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EbwVs3hH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C7E1F0089F;
+	Sat,  7 Nov 2026 14:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061117;
-	bh=9GsuYxLZy7J1cv6W7XAZYxvGYLlHiKM1FePwopOptk4=;
+	s=korg; t=1794061118;
+	bh=VfYk3Rpd9KF2kZPQJgd/SbawJ1Qdr3yC3aTHRorcGyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xFDUA9PsO9Fic6E2X4NBm9fd9gI42UWwuswTIRhYMjLY6S8PPro78Ij8J9H+LAvN2
-	 S6+sUnnmoT9umHsUJ6YZ4LMbO18ovQXW94JdxSWO8O4EJHqc+U8y7bSVas5AB4pAIf
-	 8ggg6lJIRyiY0yXcZTV9sFqnVqAt31aHfRvwN6S0=
+	b=EbwVs3hHwHHjtwVAYGHmzWTSbgU8jexyndYQYWSFO/Kn5HcA/rY7ihmcnqLC1stry
+	 W4N8ksPRoN1xhnpypSZxB53h1u+t9IvXsGazoVEDfdFmuQUeVHMUPE52ycx2mLIkEF
+	 zLLGH3pnW29H8u5BcQgpXpvbjKb2ODpULh5CVntQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 0432/1536] ceph: fail readdir when the MDS reply carries no dirfrag
-Date: Sat,  7 Nov 2026 08:40:48 -0500
-Message-ID: <20261107135009.699876818@linuxfoundation.org>
+	Fang Xieyan <fangxy@xiaopeng.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Victor Chibotaru <tchibo@google.com>
+Subject: [PATCH 6.12 0433/1536] kcov: ignore an out-of-range comparison count in write_comp_data()
+Date: Sat,  7 Nov 2026 08:40:49 -0500
+Message-ID: <20261107135009.725788639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,87 +66,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+From: Fang Xieyan <fangxy@xiaopeng.com>
 
-commit 728c856d7da04fb79f7aa00e974ffb6f55e55995 upstream.
+commit f5263bee9eb84d2388fd7555a18d518e17226894 upstream.
 
-A ceph mount oopses in ceph_readdir() when the MDS answers a READDIR
-request with a reply whose extra blob is empty.  parse_reply_info()
-skips reply blobs whose length is zero, so parse_reply_info_readdir()
-never runs, r_reply_info.dir_dir stays NULL, and the reply still
-parses as successful.  ceph_mdsc_do_request() returns 0 and
-ceph_readdir() then reads rinfo->dir_dir->frag with no NULL check:
+write_comp_data() reads the comparison record count from area[0] and uses
+it to index the coverage buffer:
 
-	/* extra */
-	ceph_decode_32_safe(&p, end, len, bad);
-	if (len > 0) {
-		...
-		err = parse_reply_info_extra(&p, p + len, req, features, s);
-		...
-	}
+	area = (u64 *)t->kcov_area;
+	max_pos = t->kcov_size * sizeof(unsigned long);
 
-The oops on v7.3.0-rc4-00537-ga3ff15db6820, one getdents64(2) on the
-mount root after an ms_mode=legacy mount, trimmed:
+	count = READ_ONCE(area[0]);
 
-BUG: KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-CPU: 1 UID: 0 PID: 266 Comm: ls Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
-RIP: 0010:ceph_readdir+0xbff/0x3ea0
-Call Trace:
- <TASK>
- ? __pfx_ceph_readdir+0x10/0x10
- wrap_directory_iterator+0xa2/0xe0
- iterate_dir+0x1da/0x5d0
- __x64_sys_getdents64+0x13b/0x2a0
- do_syscall_64+0xdd/0x4a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
+	start_index = 1 + count * KCOV_WORDS_PER_CMP;
+	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
+	if (likely(end_pos <= max_pos)) {
 
-The unconditional frag read came in with 81c6aea5275ea ("ceph: handle
-frag mismatch between readdir request and reply"), so the bug is old.
+The buffer is mmap'd writable into the collecting process, so count is
+under its control and end_pos <= max_pos is its only bound.  A count that
+wraps the u64 multiply leaves end_pos below max_pos, so the check passes
+while the record store lands 24 bytes before the buffer, in the unmapped
+vmalloc guard page, and faults:
 
-Treat a reply with no dirfrag as a protocol violation: warn once,
-drop the request and return -EIO, the same way ceph_readdir() already
-handles the two malformed-reply cases later in the function.
+  BUG: unable to handle page fault for address: ffa0000000b60fe8
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  Oops: 0002 [#1] SMP KASAN NOPTI
+  RIP: 0010:write_comp_data+0x7e/0xa0
+  ...
+  Kernel panic - not syncing: Fatal exception
 
-Tested on v7.3.0-rc4-00537-ga3ff15db6820 (KASAN).  Unpatched, the
-getdents64(2) above takes the machine down (oops=panic) on the first
-READDIR reply.  With the patch it warns once and getdents64(2)
-returns -EIO, no oops, no hang.  A conformant reply for an empty
-directory — dirfrag present, zero entries, FRAG_END|FRAG_COMPLETE —
-still lists "." and ".." and returns EOF on both kernels, so normal
-readdir behavior is unchanged.  The oops is still present in
-v7.3-rc5 (72d3fcf802c45).
+Bound count first: only max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP)
+records fit, so a larger count is not a valid index and is dropped.
+kcov_move_area() bounds the same untrusted count this way, and no count
+the end_pos <= max_pos check accepts reaches that limit, so no valid
+record is lost.
 
-Cc: stable@vger.kernel.org
-Fixes: 81c6aea5275ea ("ceph: handle frag mismatch between readdir request and reply")
-Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+kcov is a root-only debugfs file (debugfs_create_file_unsafe("kcov", 0600,
+...)) and write_comp_data() exists only under
+CONFIG_KCOV_ENABLE_COMPARISONS, so this is a local, debug-kernel
+robustness fix: the process corrupts its own buffer and the kernel oopses.
+It crosses no privilege boundary.  Additional details at [1]
+
+Link: https://lore.kernel.org/20260917104306.22145-1-fangxy@xiaopeng.com [1]
+Fixes: ded97d2c2b2c ("kcov: support comparison operands collection")
+Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Assisted-by: Hawkeye:GLM-5.3-flash
+Assisted-by: Qoder:Qwen3.8-Max
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Victor Chibotaru <tchibo@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/kcov.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -466,6 +466,10 @@ more:
- 		      (int)req->r_reply_info.hash_order);
+--- a/kernel/kcov.c
++++ b/kernel/kcov.c
+@@ -253,6 +253,14 @@ static void notrace write_comp_data(u64
  
- 		rinfo = &req->r_reply_info;
-+		if (WARN_ON_ONCE(!rinfo->dir_dir)) {
-+			ceph_mdsc_put_request(req);
-+			return -EIO;
-+		}
- 		if (le32_to_cpu(rinfo->dir_dir->frag) != frag) {
- 			frag = le32_to_cpu(rinfo->dir_dir->frag);
- 			if (!rinfo->hash_order) {
+ 	count = READ_ONCE(area[0]);
+ 
++	/*
++	 * area[0] is writable by the collecting process, so count cannot be
++	 * trusted. Bound it to the records that fit, as kcov_move_area()
++	 * does, so the end_pos multiply below cannot wrap past its check.
++	 */
++	if (count >= max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP))
++		return;
++
+ 	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
+ 	start_index = 1 + count * KCOV_WORDS_PER_CMP;
+ 	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
 
 
