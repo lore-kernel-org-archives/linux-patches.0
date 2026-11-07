@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062715;
-	b=SroYpPX9TPagmEgRNbexsjwR/t3hR+a2v2LHhAgCjMVvBcH6XfFvK+zbQEvjQyci8VRz
-	 QVmVSfHDCDL8Rgdf441prGrXQf0FYdhMxwj16kQ0jZ7xeDFc87K4UKtPXGjNSx64haeqG
-	 sBulhSSw+1ISFzJp2dIt+CTNnfCHW6TumCe1hPXUKYg8ue791J/geZsKJVeWpfDg+2w0/
-	 iBXDQbw1OOEwqGBX4RrFuzdTUD9ZzT32n97YKa7JDkOuSxuQEKGlIqJ24dxG/BL37a9At
-	 XBNpfns7U4iwbCdr5lslin0nxosH+ciMaMiVyzNL6A/p7SlKHiOVH5MbfDq3f2eLpxw==
+	t=1794062716;
+	b=NtlH7qf5IENl1h5TdA4IzjpVL61waUuK3TN3LBpELXY+scDTR/A3k+JGIxsdQ0nmMEZX
+	 hkny5wGwSb6xIxY3aPlXeTRAZZbV71XKq2brYZSjMB4HRe+hCznLf1CWc5+WlnvEs+MhK
+	 pwn7zEUUPm8o3/qP8Ox/cqBKaFk+nobrhIBzLSNYDqYMrnWwuAVpVUU7oifFyy6GMv6g6
+	 iAgJxIU6eXaPrI/sKTxxggb5MzzzIGlwFRNIn1U/ENCPaC5WU05UUmRpsp8LaqdIQ7J/1
+	 d5HlGMEQTpeIkbsToKmFWbtIBzDv+2QH9sYDlni28O0UZBTT+5UJnwcJOW5DtV3WqEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062715;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062716;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BoyGQIO41IfCl2m+dZgcw7yfcJpUUTn4CZ578AsmB4g=;
-	b=dB+RoQ6Ly5xvp7rmoC/dnh9FRZyP6MGl7HDF2CyofuNJ3WQ8ruO0lw4MU4YuXWSz9Tsb
-	 S8g0raAqbn2Mxr9GrVt7dpOBXATgAuyPnFZMJL+TsYVbq8I8X0kkH2XAe3TuCv+oZTDy9
-	 zPOcmFT+0AmIvqqmO/w8PK6dwunls0OySg6BX/p9RhtuxHxcKZ/xRxGHAYW48/NncTDQC
-	 du3ZomzLUn2IFiDOs9N+0KptSMwApwTlKYBmiBBaNZJ+KuUtO3RLkGezQ4PnK8BQWuhC7
-	 lw4H+eqtcUyu3FUnd3ADAl/QtIwQKZ8a5VX7EYAnyWeGQ1Aa0cC8IAa4dUbFqXH0YhQ==
+	bh=z6468zWWBZbbbvcrz7j6Ji8T843eLmaA09Ez+7OrY9o=;
+	b=tU/E3oe2vteqeZbNxrbYNMzsw3U+qFs/3BdNVL4IBokkdjdnjPUN5sJELl9qZlV5a1Tj
+	 INF2hA1Hb+k8SXUatTfqaSSptl1DkHcSpDvSARPigsCQVkWTVappRFux/1UWXevANuOCU
+	 ynS+grJbbfXMDLCAOCTy0yWX2vbBP+QnPh7PraAkobvw8JcOfDpXIyD79JkwLFlBxgmEL
+	 h3EYfKZJBrtMnlJJDAy5yE/fu41Dk1IlEP8W5wND8h/yXcI3nQ69tgkx/9hZiQ3fjmfWG
+	 sbEEZ1it3LBTyDZnmLiZbQvspTbMZpOkSEmxymn9DB0sf+bwJZfouVz907HnGyGGkxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SZsqOnIf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i89DcmTY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42933606A326;
-	Sat,  7 Nov 2026 14:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC2D606A336;
+	Sat,  7 Nov 2026 14:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SZsqOnIf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D5C1F0089F;
-	Sat,  7 Nov 2026 14:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i89DcmTY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242601F0089F;
+	Sat,  7 Nov 2026 14:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062715;
-	bh=BoyGQIO41IfCl2m+dZgcw7yfcJpUUTn4CZ578AsmB4g=;
+	s=korg; t=1794062716;
+	bh=z6468zWWBZbbbvcrz7j6Ji8T843eLmaA09Ez+7OrY9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SZsqOnIffkWG8J0DrZB164VnxHcJcl3MiifQqzzJWEJ9u7rcehncpAo8lLWw6z4cX
-	 zfWkyOp3sVdOipduYy0uAd1p1vySH4nRTbRF3kU0Il6/fDPhAFqzv37LidDNR9Q2ek
-	 n0r048ZJ1Ih7Ntjehx26GPfsz4kRN0J+mDOExkwA=
+	b=i89DcmTYbk4lW1v6qqbn0Z0D0/ySDGhOFSVCWLK9vtpH+gSkunNo6tA5Wty1e1YNz
+	 CLPl97+qQyVhDKgyd69prGL8vmYCk3ja6FCTqjOkNcNY7mDIk8Vcy3cysF18Yn2TZw
+	 E4WIAEEGcvN1qaHVFzlvma309Pc2WwVqLxpfWMFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 009/869] tcp: Remove timeout arg from reqsk_timeout().
-Date: Sat,  7 Nov 2026 08:44:51 -0500
-Message-ID: <20261107134852.343459720@linuxfoundation.org>
+Subject: [PATCH 6.18 036/869] media: meson-ir-tx: Ensure rc_free_device() is called on unbind
+Date: Sat,  7 Nov 2026 08:45:18 -0500
+Message-ID: <20261107134853.403998122@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,103 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 207ce0f6bc131812c96cf4f6db328af5396cebac ]
+[ Upstream commit 32999b8a9d5c4f497c9739e70ac4ee390cd650a7 ]
 
-reqsk_timeout() is always called with @timeout being TCP_RTO_MAX.
+Make rc_dev devm managed.
 
-Let's remove the arg.
-
-As a prep for the next patch, reqsk_timeout() is moved to tcp.h
-and renamed to tcp_reqsk_timeout().
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251106003357.273403-5-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c9c90cf437a9 ("mptcp: hold MP_JOIN msk ref when cloning reqsk")
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Signed-off-by: Sean Young <sean@mess.org>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_connection_sock.h | 8 --------
- include/net/tcp.h                  | 7 +++++++
- net/ipv4/inet_connection_sock.c    | 2 +-
- net/ipv4/tcp_minisocks.c           | 5 +++--
- 4 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/media/rc/meson-ir-tx.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
-index d50e0afc3193f..39ccb785dd4c1 100644
---- a/include/net/inet_connection_sock.h
-+++ b/include/net/inet_connection_sock.h
-@@ -297,14 +297,6 @@ static inline int inet_csk_reqsk_queue_is_full(const struct sock *sk)
- bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req);
- void inet_csk_reqsk_queue_drop_and_put(struct sock *sk, struct request_sock *req);
+diff --git a/drivers/media/rc/meson-ir-tx.c b/drivers/media/rc/meson-ir-tx.c
+index 6beb9e97453dd..e8e3c1a303279 100644
+--- a/drivers/media/rc/meson-ir-tx.c
++++ b/drivers/media/rc/meson-ir-tx.c
+@@ -346,7 +346,7 @@ static int meson_irtx_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "irq request failed\n");
  
--static inline unsigned long
--reqsk_timeout(struct request_sock *req, unsigned long max_timeout)
--{
--	u64 timeout = (u64)req->timeout << req->num_timeout;
--
--	return (unsigned long)min_t(u64, timeout, max_timeout);
--}
--
- void inet_csk_destroy_sock(struct sock *sk);
- void inet_csk_prepare_for_destroy_sock(struct sock *sk);
- void inet_csk_prepare_forced_close(struct sock *sk);
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index e40bad5606486..f9bcfa8773a3a 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -838,6 +838,13 @@ static inline u32 __tcp_set_rto(const struct tcp_sock *tp)
- 	return usecs_to_jiffies((tp->srtt_us >> 3) + tp->rttvar_us);
+-	rc = rc_allocate_device(RC_DRIVER_IR_RAW_TX);
++	rc = devm_rc_allocate_device(dev, RC_DRIVER_IR_RAW_TX);
+ 	if (!rc)
+ 		return -ENOMEM;
+ 
+@@ -359,10 +359,8 @@ static int meson_irtx_probe(struct platform_device *pdev)
+ 	rc->s_tx_duty_cycle = meson_irtx_set_duty_cycle;
+ 
+ 	ret = devm_rc_register_device(dev, rc);
+-	if (ret < 0) {
+-		rc_free_device(rc);
++	if (ret < 0)
+ 		return dev_err_probe(dev, ret, "rc_dev registration failed\n");
+-	}
+ 
+ 	return 0;
  }
- 
-+static inline unsigned long tcp_reqsk_timeout(struct request_sock *req)
-+{
-+	u64 timeout = (u64)req->timeout << req->num_timeout;
-+
-+	return (unsigned long)min_t(u64, timeout, TCP_RTO_MAX);
-+}
-+
- u32 tcp_delack_max(const struct sock *sk);
- 
- /* Compute the actual rto_min value */
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 3e9eaf9d341d1..9a87ea6c63b46 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1128,7 +1128,7 @@ static void reqsk_timer_handler(struct timer_list *t)
- 	     inet_rsk(req)->acked)) {
- 		if (req->num_timeout++ == 0)
- 			atomic_dec(&queue->young);
--		mod_timer(&req->rsk_timer, jiffies + reqsk_timeout(req, TCP_RTO_MAX));
-+		mod_timer(&req->rsk_timer, jiffies + tcp_reqsk_timeout(req));
- 
- 		if (!nreq)
- 			return;
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index d05009f985afc..2d78801866396 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -717,7 +717,8 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 			 * it can be estimated (approximately)
- 			 * from another data.
- 			 */
--			tmp_opt.ts_recent_stamp = ktime_get_seconds() - reqsk_timeout(req, TCP_RTO_MAX) / HZ;
-+			tmp_opt.ts_recent_stamp = ktime_get_seconds() -
-+				tcp_reqsk_timeout(req) / HZ;
- 			paws_reject = tcp_paws_reject(&tmp_opt, th->rst);
- 		}
- 	}
-@@ -756,7 +757,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 		    !tcp_rtx_synack(sk, req)) {
- 			unsigned long expires = jiffies;
- 
--			expires += reqsk_timeout(req, TCP_RTO_MAX);
-+			expires += tcp_reqsk_timeout(req);
- 			if (!fastopen)
- 				mod_timer_pending(&req->rsk_timer, expires);
- 			else
 -- 
 2.53.0
 
