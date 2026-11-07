@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064901;
-	b=YMdRqXE655Y3wPZ0/52UwSIkjTf5QS0ottQfexKsbcbJdAUK06kBPyHE6H9B1hva446m
-	 9BPyjhOxuXSPM/AF/IwqQ+qUD1IiSbww44zirndKnAC2HvBPmPJmzm7EKOyfH9nl3+V9B
-	 4EtUO8rnL53H0xIeYMK8Izqi64pOWPowGLmu2ji95tXTtyl0YB+ZkuId0cvBxNb2a0Iw7
-	 w0eaK59b6jSzh0FpGRsxjuX/+4optGQEJPhI0OAglTpbblbTI5dqav4duILqOBjiDeWZG
-	 Wt678Np/gwq3npiB+qNiO38LTSR37jsTOMa/aKsS38YwobNmcxYDwsGjEj1QRz9R7YQ==
+	t=1794064902;
+	b=t8EojOit7QC9kbcS/HqWDxmzuPqx6oq7M9/LmuxmFYslXfgMMGQwv51GPIhq34KeK99D
+	 tWfdu3kjHkLrn6D8q3D+lU2BC9Jj0Djym/pJI8QQgQmbiPdBsMqBPWBsPR0RAt/NEzyeu
+	 Hc79dXB0RJ9WJossvreF8pY1kE6f52xBuDTWdF787ZhqY+QMCpAdXfLdStRyZJFacZ1aK
+	 hztPN4MAFQGlZXCQdqk65ugL+l1Kb8TfKU/p3yugWjwhPRYDWZGcTnGeNz9RoxJOuw6SG
+	 MbbrCNvmbEI2wrLDF6HOVARvoEqJfc6tj00hMhiYzLkNHjwMk0h4+QYLYr+70gknMDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064901;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wO1ErzqQQSGorw+q/pEQ00ThJCffR97y78CaZV15G9k=;
-	b=U3U9vFdhSvIZGf+8tttwrIeMHIJJmL7r/PvFEKInikFmWYvz3tnivOvlJHsz+p8+aX3E
-	 lclphGBXVaHyGw1hqW/9vyvcyncgXwGdjsWCDUKSYcGLClPJv9h6GQcJkBkmh175iWxXq
-	 ZDlsMc8BKCzTwQzvJk61kCI8hbw/h3fpdVq4ozDIXPfYCrgvWPbThP5IjFFOwsSYfRhAp
-	 PePDehmbDAfVybT2ExP8JlOhjvESSqf0QwXuhI0GASuydDd2AYZc57ydUb6fysVRfsiTo
-	 1jacLYHZMUfenqYxHoEekB5R6+D0z4FkYL43AzZH4koG+qZebuM3TBGyjc9ivj7c/rA==
+	bh=LUGahXTd2/I4ZNKre6lxJO6BBociBnZIybDkzRuDdPQ=;
+	b=bXwDVTyhMuKALGS/y/Z6+vZLASa2RRH1cBKvkelL+Inwny7OIr/8tJgrq0HQTUvt5Mbb
+	 ptZhdcP6v3afHnq7uAfXtvPKtyckXWCef1hSMsDcpPpKr7qB81DUeI+XFOiZI0eXl9Etp
+	 1RgHwa7U69LncTNwE24kVMGyXuIs2sGTeajXd72yOi+Yh8WfBWrPrzX9kWjXGrcikosGY
+	 Qcp3vGm/UScdQsIjGTT8qX7aOtL1Ffx8JrMwrw1qbjI9Z5dTM3j9y+7MxwwMpRmCcmczW
+	 NIyqX5Euw74khG6gZ19cfk7iNqQOgpn17GV1Mv2WCUpyvh3M5g2J3odkc7HWMde40Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSlDSdYW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=19WbhbKD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9FE606A9D4;
-	Sat,  7 Nov 2026 15:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533E7606A9D4;
+	Sat,  7 Nov 2026 15:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSlDSdYW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C401F008A1;
-	Sat,  7 Nov 2026 15:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=19WbhbKD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA13D1F0089F;
+	Sat,  7 Nov 2026 15:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064900;
-	bh=wO1ErzqQQSGorw+q/pEQ00ThJCffR97y78CaZV15G9k=;
+	s=korg; t=1794064902;
+	bh=LUGahXTd2/I4ZNKre6lxJO6BBociBnZIybDkzRuDdPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QSlDSdYWkKc5zgXtNvxj06WmTVCWt3Pj+ShCGQMbCSTVr6wXJz7x25VWudGEUJOvr
-	 8heSVHMx63AW6FykMVgApub9EeMtcGJ3rkkBjMsehMdUf8mJL/XFJ3sJRyHK1dSBYi
-	 NfrHVDQTozIo2C/AZxf3dB2uiC0FajhDBlPSQDp8=
+	b=19WbhbKDww+8siEFnOnjfpOoZnvdrf3IkrWu3FR5ZwSHSi1uJ8nb4qjAV1WOep6b8
+	 xZNqEbDruDdlQsX27nK+OdQ5/Hbmj97JYxGqPSp1oeBJ7HelE3M6JHFQsjbv+ELIA8
+	 T2K9QWJvrygRs+c8Dqg0VQDcAejyH0Q0pX5UDLFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
-	Andreas Kemnade <andreas@kemnade.info>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0805/1257] mfd: tps65217: Fix NULL pointer dereference on IRQ init failure
-Date: Sat,  7 Nov 2026 08:51:41 -0500
-Message-ID: <20261107135001.568842412@linuxfoundation.org>
+Subject: [PATCH 7.3 0806/1257] mfd: tps65217: Check return value when masking interrupt sources
+Date: Sat,  7 Nov 2026 08:51:42 -0500
+Message-ID: <20261107135001.596598222@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,45 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
 
-[ Upstream commit 0473a5b0663663b75573bf284beb77459e07c461 ]
+[ Upstream commit 66ed12c1e5a986bee1dc63f9bd9c7f068138a69a ]
 
-tps65217_probe() ignores the return value of tps65217_irq_init(), so
-when the irq domain creation fails the probe still completes and the
-driver ends up bound with a NULL tps->irq_domain. Unloading the
-module then makes tps65217_remove() call irq_domain_remove() on the
-NULL pointer and oops the kernel. On top of that, irq_find_mapping()
-may fall back to the default irq domain and dispose of mappings that
-belong to other interrupt controllers.
+tps65217_irq_init() ignores the error returned by
+tps65217_set_bits() when masking all interrupt sources. A failed
+register write leaves the driver's software mask out of sync with the
+hardware and may result in spurious interrupts.
 
-Check the return value and abort the probe on failure so the error
-is reported and no inconsistent state is left for removal.
+Check the return value and propagate the error to the caller.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
 Cc: stable@vger.kernel.org
 Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
-Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20261002113624.178588-2-r.zhambakiev@prosoftsystems.ru
+Link: https://patch.msgid.link/20261002113624.178588-3-r.zhambakiev@prosoftsystems.ru
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65217.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mfd/tps65217.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
-index c240fac0ede76..2d04d9e0ae29c 100644
+index 2d04d9e0ae29c..ee640e3fcf7b4 100644
 --- a/drivers/mfd/tps65217.c
 +++ b/drivers/mfd/tps65217.c
-@@ -333,7 +333,9 @@ static int tps65217_probe(struct i2c_client *client)
- 	}
+@@ -155,8 +155,12 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
  
- 	if (client->irq) {
--		tps65217_irq_init(tps, client->irq);
-+		ret = tps65217_irq_init(tps, client->irq);
-+		if (ret)
-+			return ret;
- 	} else {
- 		int i;
+ 	/* Mask all interrupt sources */
+ 	tps->irq_mask = TPS65217_INT_MASK;
+-	tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
+-			  TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
++	ret = tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
++				TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
++	if (ret) {
++		dev_err(tps->dev, "Failed to mask interrupt sources: %d\n", ret);
++		return ret;
++	}
  
+ 	tps->irq_domain = irq_domain_create_linear(dev_fwnode(tps->dev), TPS65217_NUM_IRQ,
+ 						   &tps65217_irq_domain_ops, tps);
 -- 
 2.53.0
 
