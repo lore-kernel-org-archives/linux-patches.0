@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064356;
-	b=QLOxOrGoil3BADWLYhFMvp3cqt8S3OTALVVwVVRyzIOvYtZbjKsJEcr8GGB+OmWMYViZ
-	 7+6T3UQ1Xwi+jibOo7XTdrX4BxxK4mDR1OlDzdc/nmBp1j8yhp8zI4yiETO/KQ56O4qOG
-	 adPFb2EFjdIJmrhJaNS6w6NCjmNZNiXCudPg3kZcgv3m8+60QbCdSGyOeS4feG2p/TB5V
-	 NTzk2rqmFu+/aYoI2EW7d6d6esIo3bVQRpz+Zxzc9RGOME1Iw4irchZDQ1sJfcefZmzLl
-	 UUwlpSL/KAjNVqnnDYW16I3ruGNxOfKUVdmS2XZ9mtPPiDGuNn944z1oKWYzunHUJHg==
+	t=1794064357;
+	b=Yu/NAz7XWa1m0dp4fn4S8+Dp4PhD9UPr7s3rg+X3Z4Yv0bFQVjdOEG6AUa3e8w+Lpi3A
+	 HyFhFBR2fCfT5khVtnoeKjVPmR9bRSjTgQLMeIiEwCAxEdKFjYE0BFWgcciCUXDAn68O2
+	 6dOAhbCH32YPc5jhGHZG7jZt4kb1A78ChGWN6Ut+ewIwST2Sp2omMppb9s4rz2r6E8Wgv
+	 Ce0brd3u0IC+o9YJGeP602qFRfS8+w7+aV1S1SrpGDG+dSEtmp3K1eyMV25U+Ev7ZjHQU
+	 sLP686LRvShkAkGtVbEfvtTbafbXK+CBgCVl47fMBeaNJ7LYkYhmoWvANkyU4NKmKfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064357;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6PtHn0QYEG9lW0E303Wv+Fvl6QLYnSkiusnvL05FFY0=;
-	b=WVY2Yi7bAok0Oam9tljuQ5gReuLSWemXJrQK7/I0hr0NLJ+Ho1raC6O53PHwCB2/0qhS
-	 XjQVsKQdSCnTZPy4p+ZxOj9XY3E62cj2H4fsLvGImmNWMhIcyTjAT8v40xfDehU45jEUM
-	 6fNkMkr9Gp92oJwEQr4Gxt//alDPqWBGIJ4NMtSc0CLA3FV5KetwGol/tQYaNNgcC/3rv
-	 5b3c72M5kTR4ZEbmmLwIlUtYg2It4OfFgC7kZKbBKGBfLK7imOv5fyvW3KuIwfHIHX3EQ
-	 eV7hwYclSdAYxYl8sgy56pTW/vH1IPUhCkgowINWGxmJIQ9gwV4wsIHm45Hi+F0NCpA==
+	bh=YMtq9Aac2AcKb/FY0Z77O2+q5Ei5Ttci3+yBjP6HEB4=;
+	b=XfpPXKdUTlWApFutremeZtJ8fVJ3ocns8vNlyKKrva4qP08DXuZ4Ul6G4m0gOZBt6+Fn
+	 oO/8Lu1+bA7/u9xHBt4kvYjreCDVrpH+6rGqJZgFuOiTW7QThg1KUkj5Tbz8vmtS8ofLl
+	 tmKXOCraScgRjSAK6c6GFT+XAfduv0+KN03CMZAYPiWAIBkH/Zvr/wyVq5GSdt+e9k4Ag
+	 Plbd0Dw7rA2WOniyC2F/+BTZs4rqliA/gx+bA3xplt/DY2x5wJiLayzSby5j4F1W+8PTb
+	 VD0gpIYtZAqiGtNsserkS3GDvo325zLPLJZXZ56whxbmelq40Q90oQBENQffZ0Ouhpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zhDf/35b";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZv4vd9d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DBA606B88D;
-	Sat,  7 Nov 2026 15:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E111606B88E;
+	Sat,  7 Nov 2026 15:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zhDf/35b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D301F008A1;
-	Sat,  7 Nov 2026 15:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZv4vd9d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF88C1F0089F;
+	Sat,  7 Nov 2026 15:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064355;
-	bh=6PtHn0QYEG9lW0E303Wv+Fvl6QLYnSkiusnvL05FFY0=;
+	s=korg; t=1794064356;
+	bh=YMtq9Aac2AcKb/FY0Z77O2+q5Ei5Ttci3+yBjP6HEB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zhDf/35b4FBC9rxs9DKeLk5Mvfni95AuE1nFqGk5kU8SujNC3afGBjVLjI3uGUSXN
-	 zT1dNiOw7AMotTObdM/IIadGRPOpa625RJ1O3sjBSnBQXGbig8/x+6I/KLlM+TXn7o
-	 IFavtG6x9AW//ETXaqE/DWGh7L/AOl/uADSRyxQk=
+	b=gZv4vd9dszfshl5bUjMN/zGHwGNXH76QsI31XqH+7+wEKMlU98sShsu/DdboSAXDb
+	 UBQsGP9RQ4nCIVMUzXvJSfi5BEbBa8XSk/Cy8LWjs9OZBaAXaOgVKs6hMO79uO73MN
+	 2+d0gTjPtlFrUtrXaUMjKkCUMJBzlu4KVaEFZISs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Kim Phillips <kim.phillips@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0438/1257] KVM: arm64: Pin the host vCPU before adjusting its PC under pKVM
-Date: Sat,  7 Nov 2026 08:45:34 -0500
-Message-ID: <20261107134951.584725267@linuxfoundation.org>
+Subject: [PATCH 7.3 0439/1257] x86/bugs: Fix CONFIG_MITIGATION_RETPOLINE=n mitigation reporting
+Date: Sat,  7 Nov 2026 08:45:35 -0500
+Message-ID: <20261107134951.611765720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,66 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Kim Phillips <kim.phillips@amd.com>
 
-[ Upstream commit a2bb5f5c67a95ac97fcd6859dab51be421cf26fe ]
+[ Upstream commit 1847c80537891baead3975f3ca969233ff7b2a11 ]
 
-Under pKVM, a page the host shares with EL2 is mapped at EL2 only while
-it's pinned, and the host vCPU is pinned at its first KVM_RUN.
-KVM_SET_VCPU_EVENTS with ext_dabt_pending reaches __kvm_adjust_pc() at
-EL2 before that, and dereferencing the unmapped host vCPU panics the
-hypervisor. Any process holding /dev/kvm on a pKVM host can trigger it.
+When the kernel lacks retpoline support, spectre_v2_select_retpoline()
+emits
 
-Pin the host vCPU around the adjustment when no hyp vCPU is loaded for
-it. A loaded hyp vCPU implies it's pinned. A pin fails only for memory
-the host isn't sharing, and the request is then dropped like any other
-bad host pointer.
+  "Kernel not compiled with retpoline; no mitigation available!"
 
-Fixes: efa1368ba9f4b ("KVM: arm64: Commit exceptions from KVM_SET_VCPU_EVENTS immediately")
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Joey Gouly <joey.gouly@arm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261001135711.1640520-4-fuad.tabba@linux.dev
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+before returning SPECTRE_V2_NONE to its callers.  SPECTRE_V2_NONE is not
+the final answer, though: spectre_v2_update_mitigation() runs afterwards
+and can still upgrade the mitigation.
+
+On an Intel CPU affected by RETBleed, built with
+
+  CONFIG_MITIGATION_IBRS_ENTRY=y and
+  CONFIG_MITIGATION_RETPOLINE=n,
+
+and booted with spectre_v2=auto, retbleed_select_mitigation() picks
+RETBLEED_MITIGATION_IBRS, and spectre_v2_update_mitigation() then promotes
+SPECTRE_V2_NONE to SPECTRE_V2_IBRS.  The boot log claims no mitigation is
+available immediately before reporting
+
+  "Spectre V2 : Mitigation: IBRS",
+
+and sysfs reports the machine as mitigated.  The message is alarming and
+simply wrong.
+
+Drop "no mitigation available!" because the final mitigation state is printed
+afterwards in spectre_v2_update_mitigation() anyway.
+
+  [ bp: Drop CC:stable, massage commit message. ]
+
+Fixes: 480e803dacf8 ("x86/bugs: Restructure spectre_v2 mitigation")
+Suggested-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Assisted-by: LLM
+Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Link: https://patch.msgid.link/20260831210916.987152-1-kim.phillips@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/hyp-main.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/bugs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index ac64a036b0a95..c8e6e50d2f353 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -543,8 +543,27 @@ static void handle___pkvm_host_mkyoung_guest(struct kvm_cpu_context *host_ctxt)
- static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 1b2381da4d831..000ebee2d247b 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1958,7 +1958,7 @@ early_param("spectre_v2", spectre_v2_parse_cmdline);
+ static enum spectre_v2_mitigation __init spectre_v2_select_retpoline(void)
  {
- 	DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
-+	struct pkvm_hyp_vcpu *hyp_vcpu;
-+	struct kvm_vcpu *host_vcpu;
-+
-+	host_vcpu = __get_host_hyp_vcpus(vcpu, &hyp_vcpu);
-+	if (host_vcpu) {
-+		__kvm_adjust_pc(host_vcpu);
-+		return;
-+	}
-+
-+	/*
-+	 * With no hyp vCPU loaded for it, the host vCPU may be unpinned,
-+	 * and so unmapped at EL2: its first run pins it. A pin fails only
-+	 * for memory the host isn't sharing, a bad pointer, so the request
-+	 * is dropped.
-+	 */
-+	host_vcpu = kern_hyp_va(vcpu);
-+	if (hyp_pin_shared_mem(host_vcpu, host_vcpu + 1))
-+		return;
+ 	if (!IS_ENABLED(CONFIG_MITIGATION_RETPOLINE)) {
+-		pr_err("Kernel not compiled with retpoline; no mitigation available!");
++		pr_err("Kernel not compiled with retpoline");
+ 		return SPECTRE_V2_NONE;
+ 	}
  
--	__kvm_adjust_pc(kern_hyp_va(vcpu));
-+	__kvm_adjust_pc(host_vcpu);
-+	hyp_unpin_shared_mem(host_vcpu, host_vcpu + 1);
- }
- 
- static void handle___kvm_flush_vm_context(struct kvm_cpu_context *host_ctxt)
 -- 
 2.53.0
 
