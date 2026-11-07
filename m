@@ -1,52 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064546;
-	b=b823Z/WqayNSci1Iw8ri3jRNdTVxFDsP/Gd/fQRVi2BZTV48aR2EXrPhn+KeoHPn5Hz0
-	 yUIRr9crKQrmwUC62Xci8u1mR0ABhuD+C5IS7HdzqjEi/t3EmztOFfUesqL6qcvgg1b8T
-	 mcViA+ZK44LftKq6+VAOnClQdQ1CDL7u67Xklvv9oufffXJYlQqGJ2TJLGQebYGt7jjVt
-	 KmIloFIYqo7a6CNTwjhWGa31G+HK5/2elzQKL7pcL8g7HKA5ezPtteW/9cg5+vZZJtcBz
-	 sfLyGqXtSSYlm8GeGONOFWk7A+ibs88hBDvUBO+jhoNnLwjeqNNiYmvn0tQLcV6sbSg==
+	t=1794064548;
+	b=LJDtpjAb+wUcgwsUR5pFgwy24tY9oJlpcFlMal6zrk1R7SYOo9uQGP5ZMyZM0KuOrSn/
+	 GomfKA2IRxj6KJZ1dfLFl8YPGCgp9K7BaH9MCjJzzxAVDNj5pv+JrpBrwOy0dyiBHUz8s
+	 Jov7i+ndcRuhIPun+s8XTfi8xpEHJcY5LkPcp8WNCJzi/sPDPF64IhNHcDDyCBcusBBAw
+	 eeozcJZBS5Mx4+x6ytYuJaJnzZWjjf6mdqeKK6/riiG7ACMxa7S2CcAM8ycDmWVDyiQcp
+	 3YLs1Y3nBvz5W2l3bvYAKzeVJ90QAmm5iy9ODJcqPAj7+RjpoCR0C1c+Au/Z5g6Lg9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064548;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nxomo+oUjoFhQ8rLWj4uWxhhyduruB7seHpIOrvBeNU=;
-	b=Jpqr3p/EmqSQhX7+AXG31DajkghR4rGZkNeWubxhNYM9Go7Fi0GlYsiymWue25AP1Asz
-	 SJEVpZfutT1ic3NtxHcxl0wqqgHP9m8C0r+BGouhcKqmi6MXBJi9hY1paWneHZhzXqKUA
-	 xzooCe8UnBwxGvPdPtJ+PUR/2b+QumSmAWw/1UOMbNC7SknwScaE7yriHc1u1sdH0gWOr
-	 JyfbOwUHCgZefSJP92Xpb+1lcUzBhfoGlhRorPhoCsUwrXTpsWdu0RyUSzn5lA5sM7Bsw
-	 UvKwfhRPNiUZYg3UPqT5ajnmcMBNzhGIsARNaV/hXoowMrybLl8wawpVg9S7NsIqcVQ==
+	bh=Nus3TZgKp4mJl8QUhGwn6iS+/fqVGYgL0KYRVx578yw=;
+	b=s7WTsN68EsrVwNSjaTGqEaOcEyL7FViRz7mVMXtNxVzqK0KHolkcD0N+NaGLdfziBZSk
+	 b2jVq293d6z7JREyDWosdB03h1hWd5g5HYxkPmDKC2rrTLduulFaD7xhwuRKHeNWUc8ob
+	 peWVnVQd8MNNMmkh8QDzg8iCMu6fumussXfXqKVGTdeTCljpxkYwUTKHEMF1LKSgfmczY
+	 hqCjftY5INXwH1rnHDtvZ+6V51JFqeS/4JuB5LP5jHhObSYYXOgQnHbQ3R6RFgbMA/lYB
+	 33jKgpPyDnlIqa4B3FmuDdYhVPSrBv+1t2NRm+ikBoI8dLw/ccsrwslA7KBe2ptY6lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJZAtdSj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QnE8/lAo";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE9D606B8A6;
-	Sat,  7 Nov 2026 15:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF384606CE78;
+	Sat,  7 Nov 2026 15:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJZAtdSj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7191F008AB;
-	Sat,  7 Nov 2026 15:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QnE8/lAo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7345F1F0089F;
+	Sat,  7 Nov 2026 15:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064546;
-	bh=nxomo+oUjoFhQ8rLWj4uWxhhyduruB7seHpIOrvBeNU=;
+	s=korg; t=1794064547;
+	bh=Nus3TZgKp4mJl8QUhGwn6iS+/fqVGYgL0KYRVx578yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uJZAtdSjyXkEXsSGr+0O+0npTRfm061xvFlAIj73A31tcdMxVHrxRQ41mjSduQ3nh
-	 wcLGtkXomIyGadaVkgEmuliXZ1u+Kf+chHbtOlsr33No3oLGrzIlGD3sf0GuUe7VxL
-	 RSbu2dFXVQKNMD7RUPkbWLm5jtaroxxLIV0u/7ys=
+	b=QnE8/lAodiD69D2lQKMQfWXpIh0KFPy+rWgF/vo8X+SwXR/w6cx4aacx/kPa5UrMJ
+	 v28gP3DRpO6an/VFKGJobA/IVIS+DW/yIhMVjrpZ0Ps8BuFTWGI2bxnc99K+JupyiQ
+	 qe9Ldpy/LGSgK8P9FHnZA9psJkVz4PiaTJAnHzOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Cong <yicong@kylinos.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Vega <vega@nebusec.ai>,
+	David Hildenbrand <david@kernel.org>,
+	Grazvydas Ignotas <notasas@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0545/1257] wifi: mt76: mt792x: fix negative errno truncation in offload capability
-Date: Sat,  7 Nov 2026 08:47:21 -0500
-Message-ID: <20261107134954.450571409@linuxfoundation.org>
+Subject: [PATCH 7.3 0572/1257] mm/memory: constrain generic_access_phys() to page boundary
+Date: Sat,  7 Nov 2026 08:47:48 -0500
+Message-ID: <20261107134955.149803606@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,58 +78,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Cong <yicong@kylinos.cn>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-[ Upstream commit d0115096429ca090a592770c7645f9553a839954 ]
+[ Upstream commit ae0298a5fbeff32951c0d31398ccec97ec6aa0ea ]
 
-Returning a negative errno as u8 turned -ENOENT into 0xfe, wrongly
-enabling CNM and NAN caps. Return int and default to no caps on error.
+This patch addresses an issue in generic_access_phys() where accessing
+memory across page boundaries in PFNMAP VMAs assumes physical pages are
+contiguous, which can lead to accessing unintended physical memory or
+exceeding VMA boundaries.
 
-Fixes: e8a264ccd2de ("wifi: mt76: mt7921: move init shared code in mt792x-lib module")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yi Cong <yicong@kylinos.cn>
-Link: https://patch.msgid.link/20260824021429.43761-1-cong.yi@linux.dev
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+generic_access_phys() improperly validates the memory access range: it
+only validates the start address using follow_pfnmap_start() and passes
+PAGE_ALIGN(len + offset) to ioremap_prot().
+
+This poses two problems:
+1. In PFNMAP VMAs, consecutive virtual pages are not guaranteed to be
+   physically contiguous, and individual PTEs may have different access
+   permissions or writability.
+2. The mapping may cross VMA boundaries if len extends beyond vma->vm_end.
+
+Constrain the access in generic_access_phys() to at most the current page
+boundary (PAGE_SIZE - offset) and map only a single PAGE_SIZE via
+ioremap_prot().  Since the caller __access_remote_vm() already loops over
+the requested length and handles partial transfers, it will naturally
+iterate over the remaining pages.
+
+Also add a missing (resource_size_t) cast during PFN re-validation to
+avoid truncation on 32-bit PAE systems.
+
+Link: https://lore.kernel.org/e06e28a46c2a176238f03b5740df0913e57c2861.1788842306.git.rakukuip@gmail.com
+Fixes: 9cb12d7b4cca ("mm/memory.c: actually remap enough memory")
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: David Hildenbrand <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Grazvydas Ignotas <notasas@gmail.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt792x_core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ mm/memory.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-index f56f03bfe3874..3ce6c6ceac81c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-@@ -858,7 +858,7 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
- }
- EXPORT_SYMBOL_GPL(mt792x_init_wiphy);
+diff --git a/mm/memory.c b/mm/memory.c
+index 8b0c2c735d3de..4f8199de44afb 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -7164,6 +7164,12 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	bool writable;
+ 	struct follow_pfnmap_args args = { .vma = vma, .address = addr };
  
--static u8
-+static int
- mt792x_get_offload_capability(struct device *dev, const char *fw_wm)
- {
- 	const struct mt76_connac2_fw_trailer *hdr;
-@@ -927,13 +927,20 @@ mt792x_get_mac80211_ops(struct device *dev,
- 			void *drv_data, u8 *fw_features)
- {
- 	struct ieee80211_ops *ops;
-+	int ret;
++	/*
++	 * Limit access to one page at a time, as that's what follow_pfnmap_start()
++	 * guarantees; expect the caller to retry to read larger ranges.
++	 */
++	len = min_t(int, len, PAGE_SIZE - offset);
++
+ retry:
+ 	if (follow_pfnmap_start(&args))
+ 		return -EINVAL;
+@@ -7175,7 +7181,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	if ((write & FOLL_WRITE) && !writable)
+ 		return -EINVAL;
  
- 	ops = devm_kmemdup(dev, mac80211_ops, sizeof(struct ieee80211_ops),
- 			   GFP_KERNEL);
- 	if (!ops)
- 		return NULL;
+-	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
++	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
+ 	if (!maddr)
+ 		return -ENOMEM;
  
--	*fw_features = mt792x_get_offload_capability(dev, drv_data);
-+	ret = mt792x_get_offload_capability(dev, drv_data);
-+	if (ret < 0) {
-+		dev_warn(dev, "failed to read firmware offload caps: %d\n", ret);
-+		*fw_features = 0;
-+	} else {
-+		*fw_features = ret;
-+	}
+@@ -7183,7 +7189,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 		goto out_unmap;
  
- 	if (mt792x_needs_cnm_runtime(drv_data))
- 		*fw_features |= MT792x_FW_CAP_CNM;
+ 	if ((pgprot_val(prot) != pgprot_val(args.pgprot)) ||
+-	    (phys_addr != (args.pfn << PAGE_SHIFT)) ||
++	    (phys_addr != ((resource_size_t)args.pfn << PAGE_SHIFT)) ||
+ 	    (writable != args.writable)) {
+ 		follow_pfnmap_end(&args);
+ 		iounmap(maddr);
 -- 
 2.53.0
 
