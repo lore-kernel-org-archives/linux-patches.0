@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060974;
-	b=kcuU6UR39G7xwmwrX96VTekjCs9ner0D6RtxCT1iDB/Xm1oCJbzkP9/gQlq2w645KcD1
-	 n44C2w2cbcXM7X7sYDgO4SJruitrP/LTtpncAtA1Snig1jPtoIBnFfMUZFN3BIWGDCX5k
-	 fdVs3U1Fy5ufC8T5VaV7Kx2l9wihz8RmLssatvPaolmwjy/5p6msOonPgG4oLsfnbXvVR
-	 uSrZu7taWMZGG3giD6o0AxARee9KTGsoHM1ypWXCFwI4tBKG3ITkEZ1JHsaGUZs5k6fSN
-	 0tU3LNP//2whdIJ14W6Vy9fMuFK7/4xWejv+kUy2mOLq6k8W6c+i3dmBzwJsO7d6QUw==
+	t=1794060975;
+	b=EzZ11gRJIM2L40pasE/vpBgBEdlvH2M827fTACTJE/sdoK3ROgecOHxQOvPECFwTKmUB
+	 ibCRL8NBIKVQmZaiK0n9nSdq8bksGOjK3/BzLYLhaHaUSlKU/HT3yv/aok1VhANBaf0bF
+	 vxzi3QAEqwpkd9d+fpIgBNUVDCeY/HT/3ODTQ9Dz3kUWKh9gHz9hYh9MZQczBZMeYzEze
+	 iH0QwNbqPQcs657mam4/YaH9lmMgK9F/BxNufx+U7OrFwibALbxgMPo73bKcdZpOCMs7w
+	 Ag1i51kWjuqoq6B10CkZlpBHoVP7/uCuOr6BRqkNoFuftKGlNfBG7rjTADSM98COmhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GtZcXu7QsekBo1FD/lNjLdZZOw2gD3oDjMdOZWMrRmM=;
-	b=qEZckt8lpHkWBc5CdDncpjAzveqmy7HWuYDRdrTcaQ5LK79maJL97PBK4TtjROPq1G9s
-	 Uzqqg7h6uTwcyzM/QCDNyHWhgQIsCRVKrcOGYOAHvg1dPaY+nkuPGlyZojEA6FGIJXHBy
-	 mcUNf6P/cJMICEw55N9SFwWg5kk2219JKJ0CoR2LFO3usH+D7KgdiVjf5oTBBayB2hh8g
-	 CV5q/AxKmTwYYhrxcApmo6yRg6/96R3z7yZdumOeVZkWG/pliyslrmP0GqqBVj/ekI95T
-	 fdQ/GelKRG/VnM6WCidzxG3kTTzEDF7DXafmQ1QE2hlkH6+9mg/0SHiwJlv8JRpmfRw==
+	bh=zSG5d1QyUbo48w/Q/k+E23MT+5cl/bOSFL/SShtlEgU=;
+	b=hZ7qfz81/L4nHMBLKIAK9Ft+QqGznH/PX3W9Aa/ncxIXRMfLEnfDI5r4jlU4PnLFZ4MR
+	 IYAg8fQU6czY+hvvMnJ3vG/rOqzmJa+ZIuf8JHocV3xuSJB8boPZ4kvhyT22dte+SBarX
+	 emsQjXg4p+0CVdKnNsYi1+hh8GP0PJUEZkA8+QyFerrMq8IzNEXm2z0/abJACx5qcpUwA
+	 EWJNlQAYeT1aCZASO/Od3s1hsd1IUOUr+XXAw5/2OXTgiuxlYHoSm7j6H58/Q0OGLCoKa
+	 iyOkNwTtifaHsiGRSdaTFRc56/ENzmqaL6T7iCqrU6x4QRdR1B8zXFjceWWRFn3pMBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOJfaLGw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nRryan4r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B787D606D82E;
-	Sat,  7 Nov 2026 14:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFD3606D83E;
+	Sat,  7 Nov 2026 14:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOJfaLGw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A351F0089F;
-	Sat,  7 Nov 2026 14:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nRryan4r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D3D1F008A1;
+	Sat,  7 Nov 2026 14:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060973;
-	bh=GtZcXu7QsekBo1FD/lNjLdZZOw2gD3oDjMdOZWMrRmM=;
+	s=korg; t=1794060974;
+	bh=zSG5d1QyUbo48w/Q/k+E23MT+5cl/bOSFL/SShtlEgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rOJfaLGwiOweyxBnvHHILR9OQez/PGGx3sLKKrjhOKzMwNqUxg3KPUMWU3u7hE4r8
-	 VjrokzsuYznwOE3NJd0gMGHfqRDH7dJZ9u33PLX/XPrHoy7gv+Xlq5XnyjZKUvKDAk
-	 o0DmGZed8tkf6+QUGKFVO+weUCwlERTulcfUcIAo=
+	b=nRryan4r19+tKCVTpSKCaGboi3CUcs65vWpjhukDyMM4Js6e6+MhNvcjTS/vXPxdt
+	 UovJKmPuHblpHMuEuHuxxKZ5phcYyLmu60Gs4U6UpzGsTufp9pYr8yVifZJ5r9jsc+
+	 mlAJ8SUZ9Yf5/VJnqdgWd4Bn4G90N06jRRld5ArQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0326/1536] PCI: Avoid saving config space state if inaccessible
-Date: Sat,  7 Nov 2026 08:39:02 -0500
-Message-ID: <20261107135006.868982250@linuxfoundation.org>
+Subject: [PATCH 6.12 0293/1536] Bluetooth: btrsi: Move set_bt_context after successful HCI registration
+Date: Sat,  7 Nov 2026 08:38:29 -0500
+Message-ID: <20261107135005.961168479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,74 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit e18d1abc3bff0a24a5299f3c150ab9546e9439aa ]
+[ Upstream commit 290a3644609526f7ac12529cd1618042fa5a32db ]
 
-The current reset process saves the device's config space state before
-reset and restores it afterward. However errors may occur unexpectedly and
-it may then be impossible to save config space because the device may be
-inaccessible (e.g. DPC). This results in saving invalid values that get
-written back to the device during state restoration.
+In rsi_hci_attach(), ops->set_bt_context() stores the newly allocated
+h_adapter into common->bt_adapter before hci_alloc_dev() and
+hci_register_dev() are called. If either of these fails, h_adapter
+is freed but common->bt_adapter remains a non-NULL dangling pointer.
 
-With a reset we want to recover/restore the device into a functional state.
-So avoid saving the state of the config space when the device config space
-is inaccessible.
+This causes a deterministically reachable use-after-free when the
+device operates in a BT+WiFi coexistence mode and CONFIG_RSI_COEX
+is enabled. The following software-only trigger paths exist:
 
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-[bhelgaas: comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260805165518.794-4-alifm@linux.ibm.com
+  1. SDIO driver .remove  (rsi_disconnect)
+  2. USB  driver .disconnect (rsi_disconnect)
+  3. SDIO driver .shutdown (rsi_shutdown)
+  4. Hibernation .freeze  (rsi_freeze)
+
+All four paths check:
+    if (IS_ENABLED(CONFIG_RSI_COEX) && coex_mode > 1 && bt_adapter)
+        rsi_bt_ops.detach(bt_adapter);  // use-after-free
+
+coex_mode is set during rsi_91x_init(), before rsi_hci_attach() is
+called, and is not cleared on attach failure. Since set_bt_context()
+already wrote bt_adapter before the failure, the deinit paths see a
+non-NULL dangling pointer and proceed to detach it.
+
+Fix this by moving set_bt_context() after hci_register_dev() succeeds.
+On failure paths bt_adapter stays NULL, and the deinit callers correctly
+skip the detach call.
+
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/bluetooth/btrsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index f96801d1c833f..296f28073ec56 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -782,6 +782,28 @@ u16 pci_find_dvsec_capability(struct pci_dev *dev, u16 vendor, u16 dvsec)
- }
- EXPORT_SYMBOL_GPL(pci_find_dvsec_capability);
+diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
+index 6c1f584c8a337..0e2894e93e82e 100644
+--- a/drivers/bluetooth/btrsi.c
++++ b/drivers/bluetooth/btrsi.c
+@@ -117,7 +117,6 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		return -ENOMEM;
  
-+static bool pci_dev_config_accessible(struct pci_dev *dev, char *msg)
-+{
-+	u32 val;
-+
-+	/*
-+	 * If a device's config space is inaccessible, reads typically
-+	 * return ~0.  Since Device and Vendor ID are always ~0 for VFs,
-+	 * check the Command and Status registers instead.
-+	 *
-+	 * N.B. This is racy because the device may become inaccessible
-+	 * before the next access.
-+	 */
-+	pci_read_config_dword(dev, PCI_COMMAND, &val);
-+	if (PCI_POSSIBLE_ERROR(val)) {
-+		pci_warn(dev, "Device config space inaccessible; unable to %s\n",
-+				msg);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
- /**
-  * pci_find_parent_resource - return resource region of parent bus of given
-  *			      region
-@@ -5085,6 +5107,9 @@ static void pci_dev_save_and_disable(struct pci_dev *dev)
- 	 */
- 	pci_set_power_state(dev, PCI_D0);
+ 	h_adapter->priv = priv;
+-	ops->set_bt_context(priv, h_adapter);
+ 	h_adapter->proto_ops = ops;
  
-+	if (!pci_dev_config_accessible(dev, "save state"))
-+		return;
+ 	hdev = hci_alloc_dev();
+@@ -146,6 +145,8 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		goto err;
+ 	}
+ 
++	ops->set_bt_context(priv, h_adapter);
 +
- 	pci_save_state(dev);
- 	/*
- 	 * Disable the device by clearing the Command register, except for
+ 	return 0;
+ err:
+ 	h_adapter->hdev = NULL;
 -- 
 2.53.0
 
