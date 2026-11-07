@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061554;
-	b=RMN9sdniDNb7FROSJVN1ZrPxMX6BmlI9Gtg7rz5qIQORUdq65E32Xdej+KRY0E2gkCtT
-	 hHOWaoIZIGCw35Rqxonn/i1RgnSAhfSzBvaCMaQlJnxCHsGIBQL/B5Q4QCda0Ap51LD8r
-	 Ls9sMcFkx6lMcHRleRKRllBAADP9ph5MqBy9OP7+rgqnio9A9zhpMnY7oNICRvLY1/aAs
-	 JqC70Tc8xdz6uzAUezdcKtyb9kjeT5fprDTAgKTeVdh351SUpgLEwwW8kDGREg4b2Kn03
-	 tOjUQdGo5/KTxUFeoqZ63rJxH1NWUIAHjV9VT8szXIWvH5KBx651vGCLwJlwI2VQ2Bg==
+	t=1794061556;
+	b=Kr4FJHDGpLmlrX7qhUfu3upgKC3V9AZ+9O2BKsJYMOhiS9hD0cgJ/lecsNlL6q9ErCnk
+	 sPcM+rpC/OSQxrMJOuWcGVU06MKmox0FGwMLFemLt1JE4AGB6NDFwpUqETyz7PBe3XUFT
+	 6elWvU2TbVpdOapBN5LJvCj9pPAMYZek08jTI8hHWkD0kEbMyZsi14Y6apq5Ix0/INNmE
+	 5jiDz3r895FF/jHwd9XTjVmyh1LxZWdUqZTrZ2N6iMf+XTdifVSLqhyy14VCj1Lz1tBYT
+	 HAC5O5T/OePu/Ahf2UO+IoFrQ5zoPfi0+l+IjChbDVsqfO9eVXLf2u4Ayw0f87i4FjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8LHDuwWVYhpvpet+nAiEXOjoBOwb3i/9EMdJcpxu9kA=;
-	b=U9UPmuESBb1O7prGTet6JN6eFaTLDJFQ61knLrzOCAGSQuJb/hyuGAtjzLjQpUa+sK3/
-	 mE2kOuXdg0ZNMnWPm795kNICN5RA4C8sTsJnYHqwsHamr8LUQTbpc3+wqpFV+o+nXGxDN
-	 5HgWty6VJWAXY7Ke8E90YVZ9gMtGNGXnthjVY/Sxhvc4VwaId4wTaBZcn85VNlmG5Eg+Q
-	 fwh/jBvrgHHFJswsorV2pknvilj1aiwrYkMD7EEp8pk/iL1HwEzC9EaW6CNv8fLxWW4sB
-	 FtPb11RXzKiwUHsBjhl9rbN1VYDxKtuZtRg9zLFDXMK/Lkq2eZF6p+J1Vbj2Xq3355Q==
+	bh=xnL5fkWehCNcYC/zbY5TnRLB1OeVgaeFTgFV5z+9uSk=;
+	b=Nc3Sl3ZUC5k0fWmLDSU2IZL9sTyO3Jx5BFT+N3lvbO12U33oNXWB5cEnwfQul2yoFh7Q
+	 uIyi9Cid8HgRbBKTgHF9mLs+2uNBI8MA7Bu184Vlp7+llicboAvgKOTVHI5MwjlvOG0I/
+	 dLcz2xMffG3H75ZoKbdpZO/wlBRXCektvd2G7BXeYgaPupaBw55h/Q35nw92tvd/cfsGS
+	 hP5uTWumU2oLNKLbGTVGa0wQjUaL/cJz8tr5vo9uf+GCnwZZHlI2sqXOkmcW9TUjM/G1i
+	 4o9zHnjAntgfs3jCsf7QJ0vP6djkZkZzvxywGV4Gf+r7nOzAcFarNCWbbTV/597Nw8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R2OLczNH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKBw1q2U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D6E606A326;
-	Sat,  7 Nov 2026 14:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8793C606A331;
+	Sat,  7 Nov 2026 14:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R2OLczNH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F7E1F0089F;
-	Sat,  7 Nov 2026 14:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKBw1q2U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E2D1F008A1;
+	Sat,  7 Nov 2026 14:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061554;
-	bh=8LHDuwWVYhpvpet+nAiEXOjoBOwb3i/9EMdJcpxu9kA=;
+	s=korg; t=1794061556;
+	bh=xnL5fkWehCNcYC/zbY5TnRLB1OeVgaeFTgFV5z+9uSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R2OLczNH5X2zMjnoETMFI1MMta+mXFUWIHm+1bKxIe5rmbeGLlhqFMtz4hbk6TBEf
-	 gwNioZEE9rci4PJiAHKCdm6Jb2ibAjLcu6b4KAzCQ0gVOe1j88Z9OtHGU+sxjyXab8
-	 cpk3VKbgLzgDGOjVlyzb8u3fWN5HYT1sjklQ2WhU=
+	b=JKBw1q2U9DiR6fyjT5GKUyj5odCRo4sbntvwdZZD8EjTBu08JLhvx3V7ls/4CCexc
+	 cMscg5hoJew8wgFPSrHFV86XqxMommB6DexQ7Xv9np/+aiDnLud2/uM56sy5uQfhDv
+	 C1UAdKg7s7ObaaNYZZKJEJHTKJM9Vyd1q1X4V6WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ngoc Quy <ngocquy0700@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>
-Subject: [PATCH 6.12 0637/1536] fs/proc/task_mmu: pin mm_users in do_pagemap_scan()
-Date: Sat,  7 Nov 2026 08:44:13 -0500
-Message-ID: <20261107135015.425536315@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 0621/1536] HID: wacom: Use hdev->product in wacom_setup_touch_input_capabilities
+Date: Sat,  7 Nov 2026 08:43:57 -0500
+Message-ID: <20261107135014.974841444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -73,85 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ngoc Quy <ngocquy0700@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 4fb975471717c953f912776bb60301add1ffae11 upstream.
+commit 86472508a7ef74b525e79a79d2d02d911a641d6b upstream.
 
-The PAGEMAP_SCAN ioctl takes mmap_read_lock() on an mm obtained from
-/proc/<pid>/pagemap without holding a reference to mm_users.
+Replace the lookup-dependent 'wacom_wac->shared->touch->product' references
+with 'hdev->product' inside wacom_setup_touch_input_capabilities() since
+'hdev' is already available (via container_of) and represents the touch
+device itself.
 
-proc_mem_open() deliberately grabs only mm_count, so a consumer that
-touches the address space has to call mmget_not_zero() first.  Every other
-consumer in this file does -- m_start(), do_procmap_query(),
-show_smaps_rollup() and pagemap_read() -- but do_pagemap_scan() does not.
-
-Without that reference the target can reach exit_mmap() concurrently, and
-exit_mmap() calls unmap_vmas() while holding mmap_lock only for reading,
-which does not exclude the scanner.  For ordinary VMAs this is harmless,
-as free_pgtables() and remove_vma() run afterwards under mmap_write_lock.
-A shared hugetlb VMA is different: __hugetlb_zap_end() frees the VMA's
-hugetlb_vma_lock inside the read-locked phase.
-
-walk_hugetlb_range() can therefore load vma->vm_private_data, have the
-lock freed underneath it, and then down_read() a freed rw_semaphore.  The
-load happens before the freeing side clears the pointer, so this is a
-use-after-free and not a NULL dereference.  Any unprivileged user can
-reach it with no huge pages configured, as hugetlb_reserve_pages()
-allocates the lock before the VM_NORESERVE early return.
-
-Pin mm_users across the scan, the way the other consumers do.  mmput()
-from the exiting task can then no longer reach exit_mmap() while a walk is
-in progress.
-
-[akpm@linux-foundation.org: remove unneeded & undesirable test for !mm]
-Link: https://lore.kernel.org/20261014095540.3261469-1-ngocquy0700@gmail.com
-Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
-Signed-off-by: Ngoc Quy <ngocquy0700@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: Claude:claude-opus-5
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Muhammad Usama Anjum <usama.anjum@arm.com>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Ping Cheng <ping.cheng@wacom.com>
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/hid/wacom_wac.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -2862,15 +2862,18 @@ static long do_pagemap_scan(struct mm_st
- 	size_t n_ranges_out = 0;
- 	int ret;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -3961,8 +3961,8 @@ int wacom_setup_pen_input_capabilities(s
+ int wacom_setup_touch_input_capabilities(struct input_dev *input_dev,
+ 					 struct wacom_wac *wacom_wac)
+ {
++	struct hid_device *hdev = container_of(wacom_wac, struct wacom, wacom_wac)->hdev;
+ 	struct wacom_features *features = &wacom_wac->features;
+-
+ 	if (!(features->device_type & WACOM_DEVICETYPE_TOUCH))
+ 		return -ENODEV;
  
-+	if (!mmget_not_zero(mm))
-+		return -ESRCH;
-+
- 	ret = pagemap_scan_get_args(&p.arg, uarg);
- 	if (ret)
--		return ret;
-+		goto out_mmput;
+@@ -3971,9 +3971,11 @@ int wacom_setup_touch_input_capabilities
+ 	else
+ 		__set_bit(INPUT_PROP_POINTER, input_dev->propbit);
  
- 	p.masks_of_interest = p.arg.category_mask | p.arg.category_anyof_mask |
- 			      p.arg.return_mask;
- 	ret = pagemap_scan_init_bounce_buffer(&p);
- 	if (ret)
--		return ret;
-+		goto out_mmput;
+-	if (features->type == HID_GENERIC)
++	if (features->type == HID_GENERIC) {
++		hid_dbg(hdev, "generic touch setup\n");
+ 		/* setup has already been done */
+ 		return 0;
++	}
  
- 	for (walk_start = p.arg.start; walk_start < p.arg.end;
- 			walk_start = p.arg.walk_end) {
-@@ -2925,6 +2928,8 @@ static long do_pagemap_scan(struct mm_st
- 		ret = -EFAULT;
+ 	input_dev->evbit[0] |= BIT_MASK(EV_KEY) | BIT_MASK(EV_ABS);
+ 	__set_bit(BTN_TOUCH, input_dev->keybit);
+@@ -4005,19 +4007,17 @@ int wacom_setup_touch_input_capabilities
+ 		input_dev->evbit[0] |= BIT_MASK(EV_SW);
+ 		__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
  
- 	kfree(p.vec_buf);
-+out_mmput:
-+	mmput(mm);
- 	return ret;
- }
+-		if (wacom_wac->shared->touch->product == 0x361) {
++		if (hdev->product == 0x361) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 12440, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+ 					     0, 8640, 4, 0);
+-		}
+-		else if (wacom_wac->shared->touch->product == 0x360) {
++		} else if (hdev->product == 0x360) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 8960, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+ 					     0, 5920, 4, 0);
+-		}
+-		else if (wacom_wac->shared->touch->product == 0x393) {
++		} else if (hdev->product == 0x393) {
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
+ 					     0, 6400, 4, 0);
+ 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
+@@ -4047,8 +4047,8 @@ int wacom_setup_touch_input_capabilities
+ 		fallthrough;
  
+ 	case WACOM_27QHDT:
+-		if (wacom_wac->shared->touch->product == 0x32C ||
+-		    wacom_wac->shared->touch->product == 0xF6) {
++		if (hdev->product == 0x32C ||
++		    hdev->product == 0xF6) {
+ 			input_dev->evbit[0] |= BIT_MASK(EV_SW);
+ 			__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
+ 			wacom_wac->has_mute_touch_switch = true;
 
 
