@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060556;
-	b=QnzoJA+W3DtKaf35OYO1nzA4QJPdlZA5JLoNb0S4L6GHYTCsPdtgPM1iLdyXR7LVEY6y
-	 lKndaNHuLYijfX2c3Rmnnc6OT4gfbfKZx6Sg+x08iLFjcHFh4PSIN2nbA7NcdTWO+w8Pz
-	 u+WO+6sGrzxVUBHZpqjss4PZOe66ENeZYZI5Yy2FFuU5k2JHtknRmlrGatfmn17XUoKKx
-	 w9YmUR63+/naNMAvEX11mvY0zd/ifDIBl02xR80DyH2ff4lrgTzOhVy3ip1J6veneuabv
-	 Ow1ZLn04mZlfiReVvygAidkC1py2UEbMnROi8TD9Balj1ZLsLXxTm/qz+oOloEu5EHA==
+	t=1794060557;
+	b=iAo2T2WHCmE5NIWozEkP2mkVJE4CMPuLnlD5W94q+BWzb5DwSip+gOYR+53V1pligpBl
+	 kuYOdRq8sokm5IBxbXmyVerJg5+RVMhnV/+EeLx9aQtJQDZiQsencby1ez01AHlnYeCdI
+	 G0fOOBo8puenX7W+KIMXy1wgZzQ1xsCEPfpDo30hAiz6syQBgryTF9nWGqIbDb9cV2Dwk
+	 uOOid4y8E6CUf/xbdaOffA5d7uTOJ4vHOdrycFN/1/XC5TsT7ehxNoMNaMRIrXKgPwFx/
+	 jyFF6rNqkK6VzyrYbi/Jhf66iXp9ZeqG/sCBGmZTW2pdnJ5w5oMLANLjM3BhiurQ6GA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1lcRIlXYms9GbVp7bIuG+yY9esNGAcIdoz17ETtvynI=;
-	b=xJw9shRcZQpfUFF+QrG4ojozuUr6Dssx8+rccWDG5Z3vUF578cH8a5uXEllgirk3DTrF
-	 rQkXVEM0KaUAp9kIKnwnMC1t1mYKMe3cV5A5jYDhdmbLS+cYBKcx/k1R+kyLcFl5kZu2r
-	 HV1xCRzp3hmkFy2nU44fS3zE4vh+gnap30VDcc5sHf8KBuG521SDLAp3TLai1t3X4bgLT
-	 zbOAoeitznFt5XweHQOSHQG7Ew5CT1GGN5T9W5smO/QYQU8eV3yJkE43fyxUsOh0mNSot
-	 obSdeSYlHjrRrLPK8d7wJQkpelhWbz5p/vVB3B6Gjo7Ty2BSJnKgOPZ1HMZ3N+5PkTw==
+	bh=1yiNTGZxl29LlJxCOtLMougQfNkWInkl9xUZiDTKl4Q=;
+	b=Ii4McVYYand8M2c9gXji6dAYutLKRtw/UjQ7hVA1XvB3yoGsw9vI5wDayfLT5NgpQG4n
+	 CMhjIgLX8iKhMikhOtCmYaM7U1MQHCzjJE0tWzayY2ucvm/BRZqVTvIkllaXUtmtbz3qv
+	 ZJViJaT0ER+PamyuqQv1trdP/fa5B7RWQozsWL9pkfcx3VaVisyI7eA6UZgwEzi3Rhhzn
+	 3yacq5yG9hSN/HdfSK72bFcqnaR6lwm6Goz+EZ38hKPWRMseN3Cm7dg/WFyxbLON892eV
+	 TLIEH4rl3nlrCU1Thxt43i8B+ybkDyUH8DPjS28ZCK/M1dghqrRtroNmLnO0nUw563g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Gl/UD/lT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6d3Snqd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A4F606A32C;
-	Sat,  7 Nov 2026 14:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D54D606A32C;
+	Sat,  7 Nov 2026 14:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gl/UD/lT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042231F0089F;
-	Sat,  7 Nov 2026 14:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6d3Snqd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0111F008A1;
+	Sat,  7 Nov 2026 14:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060556;
-	bh=1lcRIlXYms9GbVp7bIuG+yY9esNGAcIdoz17ETtvynI=;
+	s=korg; t=1794060557;
+	bh=1yiNTGZxl29LlJxCOtLMougQfNkWInkl9xUZiDTKl4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gl/UD/lTGP4OUceual5vgcvI1UTcd5K8023cWooElhowMYVx4HZXPWEQobCnzNznB
-	 kMV79U6BZQpCLE64iEYuR3Nm8dHNLdpYQRTlRz+d8PM2EKhfiRsoNPnFwc2elACEYj
-	 pOR4r1bAupt63wKD2m9iN3XVOMxgblqfu7H6+pUc=
+	b=C6d3SnqdzqLZUv/gBjlgLSfY6Aj1TfuBDXd/Rl25OfrJRrGY1z/CJFmRjPX5jVa/A
+	 nIuQcr7kWwishsv54qhsR8k073xIyljLYJXJOE1cR7iRjrmvJRe7Wx4ByslenZcLte
+	 At75GK4DVN0Hp5foYDcYOKV3qEu2kQ1R5CPKNDFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Ting-Han Hou <ue081723@gmail.com>
-Subject: [PATCH 6.12 0021/1536] net: gso: limit recursive IP-in-IP segmentation
-Date: Sat,  7 Nov 2026 08:33:57 -0500
-Message-ID: <20261107134958.275392912@linuxfoundation.org>
+	syzbot+5322c5c260eb44d209ed@syzkaller.appspotmail.com,
+	Yao Kai <yaokai34@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.12 0022/1536] ext4: validate readdir offset before accessing dirent
+Date: Sat,  7 Nov 2026 08:33:58 -0500
+Message-ID: <20261107134958.301302981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,109 +72,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Yao Kai <yaokai34@huawei.com>
 
-commit 006c8b834aed8b02bd8fb9fb05e9e7ead37d1763 upstream.
+commit bc4b7b0414c33b2c8898eb04386df0d21a13dad8 upstream.
 
-IP-in-IP GSO can re-enter inet_gso_segment() or ipv6_gso_segment()
-for each nested IP header. encap_level tracks header bytes, not callback
-depth, so a deep chain can exhaust the kernel stack. Making
-inet_gso_segment() stackable introduced unbounded IPv4 nesting; IPIP
-GSO/TSO later made the path reachable. The IPv6 stackable path was
-introduced separately and uses the same guard.
+A corrupted directory can trigger the following KASAN report when
+ext4_readdir() resumes from an invalid position:
 
-Count IPv4 and IPv6 GSO handler entries in skb_gso_cb, initialized once
-per top-level GSO operation and preserved across GRE/UDP context changes.
-Use the existing IP_TUNNEL_RECURSION_LIMIT for both handlers. The first
-five entries pass, and the sixth returns -EINVAL before dispatching
-another GSO callback.
+  BUG: KASAN: use-after-free in __ext4_check_dir_entry+0x5ef/0x820
+  Read of size 2 at addr ffff88810a646000 by task repro_linear/509
 
-Fixes: 3347c9602955 ("ipv4: gso: make inet_gso_segment() stackable")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Closes: https://lore.kernel.org/all/cover.1790157745.git.zihanx@nebusec.ai/
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260924051521.32568-2-zihanx@nebusec.ai
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Ting-Han: ipv6_gso_segment() still calls ipv6_hopopt_jumbo_remove()
-  right after skb_reset_network_header() in this version; keep the new
-  recursion check directly after skb_reset_network_header() as upstream
-  does, before the jumbo removal ]
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x53/0x70
+   print_report+0xd0/0x630
+   kasan_report+0xce/0x100
+   __ext4_check_dir_entry+0x5ef/0x820
+   ext4_readdir+0xcde/0x2b70
+   iterate_dir+0x1a1/0x520
+   __x64_sys_getdents64+0x12b/0x220
+   do_syscall_64+0xf9/0x540
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+
+KASAN reports use-after-free because the out-of-bounds access lands in an
+adjacent freed page. The directory buffer itself is still referenced.
+
+ext4_dir_llseek() invalidates the directory cookie so that ext4_readdir()
+rescans directory entries from the start of the block. The rescan checks
+only the lower bound of rec_len before advancing. A corrupted rec_len can
+therefore place the offset where the block has insufficient space for a
+complete directory entry. The rescan itself may dereference that truncated
+entry, or the main loop may pass it to __ext4_check_dir_entry(). The latter
+reads de->rec_len before validating the range. For example:
+
+  block offset  0                           4092  4096
+                |---- de1.rec_len = 4092 -----|----|
+                                               de2.inode
+                                                    | de2.rec_len
+                                                    ^ OOB, reported as UAF
+
+de2 starts at offset 4092 in this 4 KiB block. Its four-byte inode fits in
+the block, but its rec_len starts at offset 4096 and crosses the boundary.
+
+The minimum safe length is inode-dependent. Encrypted and casefolded
+directory entries need eight additional hash bytes, while a valid metadata
+checksum tail is only 12 bytes.
+
+Cache the metadata checksum feature state and derive the minimum directory
+entry length from the on-disk format. Use it to bound both the rescan and
+the offset passed to the main loop. Report an offset in a truncated block
+tail and skip the remainder of the block, while continuing to accept an
+offset exactly at the block boundary.
+
+Reported-by: syzbot+5322c5c260eb44d209ed@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5322c5c260eb44d209ed
+Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
+Signed-off-by: Yao Kai <yaokai34@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260706041313.708346-1-yaokai34@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/gso.h      |    8 ++++++++
- net/core/gso.c         |    1 +
- net/ipv4/af_inet.c     |    3 +++
- net/ipv6/ip6_offload.c |    4 ++++
- 4 files changed, 16 insertions(+)
+ fs/ext4/dir.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/include/net/gso.h
-+++ b/include/net/gso.h
-@@ -19,10 +19,18 @@ struct skb_gso_cb {
- 	int	encap_level;
- 	__wsum	csum;
- 	__u16	csum_start;
-+	/* Number of IPv4/IPv6 GSO handler entries for this packet. */
-+	u8	recursion_counter;
- };
- #define SKB_GSO_CB_OFFSET	32
- #define SKB_GSO_CB(skb) ((struct skb_gso_cb *)((skb)->cb + SKB_GSO_CB_OFFSET))
+--- a/fs/ext4/dir.c
++++ b/fs/ext4/dir.c
+@@ -137,6 +137,7 @@ static int ext4_readdir(struct file *fil
+ 	struct buffer_head *bh = NULL;
+ 	struct fscrypt_str fstr = FSTR_INIT(NULL, 0);
+ 	struct dir_private_info *info = file->private_data;
++	bool has_csum = ext4_has_metadata_csum(sb);
  
-+static inline bool gso_recursion_inc_test(struct sk_buff *skb,
-+					  unsigned int limit)
-+{
-+	return ++SKB_GSO_CB(skb)->recursion_counter > limit;
-+}
-+
- static inline int skb_tnl_header_len(const struct sk_buff *inner_skb)
- {
- 	return (skb_mac_header(inner_skb) - inner_skb->head) -
---- a/net/core/gso.c
-+++ b/net/core/gso.c
-@@ -117,6 +117,7 @@ struct sk_buff *__skb_gso_segment(struct
- 
- 	SKB_GSO_CB(skb)->mac_offset = skb_headroom(skb);
- 	SKB_GSO_CB(skb)->encap_level = 0;
-+	SKB_GSO_CB(skb)->recursion_counter = 0;
- 
- 	skb_reset_mac_header(skb);
- 	skb_reset_mac_len(skb);
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -1380,6 +1380,9 @@ struct sk_buff *inet_gso_segment(struct
- 	int id;
- 
- 	skb_reset_network_header(skb);
-+	if (unlikely(gso_recursion_inc_test(skb,
-+					   IP_TUNNEL_RECURSION_LIMIT)))
-+		goto out;
- 	nhoff = skb_network_header(skb) - skb_mac_header(skb);
- 	if (unlikely(!pskb_may_pull(skb, sizeof(*iph))))
- 		goto out;
---- a/net/ipv6/ip6_offload.c
-+++ b/net/ipv6/ip6_offload.c
-@@ -17,6 +17,7 @@
- #include <net/udp.h>
- #include <net/gro.h>
- #include <net/gso.h>
-+#include <net/ip_tunnels.h>
- 
- #include "ip6_offload.h"
- 
-@@ -120,6 +121,9 @@ static struct sk_buff *ipv6_gso_segment(
- 	bool gso_partial;
- 
- 	skb_reset_network_header(skb);
-+	if (unlikely(gso_recursion_inc_test(skb,
-+					   IP_TUNNEL_RECURSION_LIMIT)))
-+		goto out;
- 	err = ipv6_hopopt_jumbo_remove(skb);
+ 	err = fscrypt_prepare_readdir(inode);
  	if (err)
- 		return ERR_PTR(err);
+@@ -148,7 +149,7 @@ static int ext4_readdir(struct file *fil
+ 			return err;
+ 
+ 		/* Can we just clear INDEX flag to ignore htree information? */
+-		if (!ext4_has_metadata_csum(sb)) {
++		if (!has_csum) {
+ 			/*
+ 			 * We don't set the inode dirty flag since it's not
+ 			 * critical that it gets flushed back to the disk.
+@@ -234,7 +235,10 @@ static int ext4_readdir(struct file *fil
+ 		 * dirent right now.  Scan from the start of the block
+ 		 * to make sure. */
+ 		if (!inode_eq_iversion(inode, info->cookie)) {
+-			for (i = 0; i < sb->s_blocksize && i < offset; ) {
++			for (i = 0;
++			     i <= sb->s_blocksize -
++				  ext4_dir_rec_len(1, has_csum ? NULL : inode) &&
++			     i < offset;) {
+ 				de = (struct ext4_dir_entry_2 *)
+ 					(bh->b_data + i);
+ 				/* It's too expensive to do a full
+@@ -256,6 +260,17 @@ static int ext4_readdir(struct file *fil
+ 			info->cookie = inode_query_iversion(inode);
+ 		}
+ 
++		if (unlikely(offset < sb->s_blocksize &&
++			     offset > sb->s_blocksize -
++			     ext4_dir_rec_len(1, has_csum ? NULL : inode))) {
++			EXT4_ERROR_FILE(file, bh->b_blocknr,
++					"bad entry in directory: %s - offset=%u, size=%lu",
++					"directory entry too close to block end",
++					offset, sb->s_blocksize);
++			ctx->pos = round_up(ctx->pos, sb->s_blocksize);
++			goto next_block;
++		}
++
+ 		while (ctx->pos < inode->i_size
+ 		       && offset < sb->s_blocksize) {
+ 			de = (struct ext4_dir_entry_2 *) (bh->b_data + offset);
+@@ -311,6 +326,7 @@ static int ext4_readdir(struct file *fil
+ 			ctx->pos += ext4_rec_len_from_disk(de->rec_len,
+ 						sb->s_blocksize);
+ 		}
++next_block:
+ 		if ((ctx->pos < inode->i_size) && !dir_relax_shared(inode))
+ 			goto done;
+ 		brelse(bh);
 
 
