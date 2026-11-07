@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062678;
-	b=otq4Vi6pdhSWnHsbTbHq6B55vlrc2DA7ngk1GaUERBct13u9eGgrrZvpzl67pwWh0WgF
-	 wViva89UyPG11fL3Bp7hLPL1VvZoivevzpwuIVdYLos6hcu7l4YlzO1VVd00M2hvhCkdK
-	 ZxF307pcHcssqV8Rzld798hfO2qPW3ZfNy1x867NfpTug7dLoneMztepu8zzvO2227Otk
-	 TGc+vHc13YcnnOET4+6rLRc4QvizG5z1RMqEr1wuO0cRX4WUgkPnYl6PFviLzIqwItHs/
-	 bfB2nMoaiND2cwTt/SnhFjntw+311jR5PVunDcaQqkcv9o2abXkW5SrpefziYlSERIg==
+	t=1794062679;
+	b=RKvPKhG1QzxpDdOAvtukK7QGV0onOXmf5LbgBYC17ICmso76H2jMxo7PoOiooNMdE8Py
+	 a9td/BQ8FKSw+Q3DDyimSQzWWhaypXvOL3fAweYFQIQ7TXpwJ2878CwkZJsd7mRKyA8gy
+	 xbWLG6+l4DXWDO/S0jqou8CkOdtSGQZFCGwuN2qPYnquRWJNG+nBxCoXMjoLXLr8BlPNC
+	 j9WJRLs3NJNZgyh7C4xtjf0nQ2R8QlXGjEMBmLAg+sVy5C32DJeKbE8DWQra/wQNJZcUb
+	 E5apvDrheq0DbqxKm8O/7aMHCBmTZuVp1HpplmZKDpSwujzG47oc9EDSyUx5OYZC13A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062678;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062679;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=guM5P1S9BW0vbQSXW1B8s2sAu5OiFmWpZCc5Vi2y5Nc=;
-	b=eARoEczjfJn6YQDA9lDMrmt9WktDwGKzdYT5mTQWm4NKmLMXssn4fQWcHo1wdNUMEram
-	 7wURqBqidzEY6OfSp/uFT48M4p6RxqgYQxqPfDYD4vuOEO8zOl/vO9PmjfLD4nRc4Bg2I
-	 VDbIwTKUvW75qY8MtraC1ToCOsXoN9Bq31pfjtdftztDP+KTsP5r72QBFxH8UHrCe5H2e
-	 I5m5rKzx8US34GniHvDQpWRHkQHFGf54kkMZ82Ny6RxGnX0jo+Mhp1H862ctWRj5DK0yc
-	 Vd9pZIxWpnURNm+ZwXO8WAk2H/wWvgGSTxQsFrXdOrVQLBxRBYt6FNG/xt2ZVGlIRkQ==
+	bh=GEvFAk1DY3IKyN4wP8YlzQNoLhtRcPPdEqfQsY+nSlQ=;
+	b=4IVqln4KeQp6qYCqJSeE8Xa8nf3jrPcNxJbNJZo/qBAZ8a7Bst3ysrnphw9UZ4SYKUTb
+	 DaPe61ajF1MnlZ5VMUySdYuwUBFs0s5sjNIGbm3BJlNZLVc5sQQFRT+JGKwJY0MtOVu+9
+	 1ELaonp3Ar/fdHgCoDLHCGzzCGZ+qO8wsMJ8BdG0QGb/wnRW1fNAiTQAstpCdGucuYJLX
+	 sVu+9I6w1oszv5q6iw6lmE4EmxiPmU0ysC41cL22Rb3UafZOh+PyVYttudJ6mI/1nalV9
+	 6KtZcv2EooMWbvFYbeRS15c0t0EuSZjRB2Q5iFGYJFnFAn0BGm9bS9niksroI0qY8vA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m2J8hHVP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jRryPkY7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B95D606A32D;
-	Sat,  7 Nov 2026 14:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D045606A326;
+	Sat,  7 Nov 2026 14:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m2J8hHVP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCE31F0089F;
-	Sat,  7 Nov 2026 14:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jRryPkY7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCA51F0089F;
+	Sat,  7 Nov 2026 14:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062677;
-	bh=guM5P1S9BW0vbQSXW1B8s2sAu5OiFmWpZCc5Vi2y5Nc=;
+	s=korg; t=1794062679;
+	bh=GEvFAk1DY3IKyN4wP8YlzQNoLhtRcPPdEqfQsY+nSlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m2J8hHVPtG9d4b3HWY/XPCUodlDvXo9Yz/buUntWFsD6JTf4mp0hUzHkQtLiMDzcX
-	 j6b5TfniQAHjI1xjCjbfnub+YlJjoe77EgwPVc9gX/BfKUhz28INvEKFGd2w0IcZXk
-	 hMEadjSM2uo7WTf/vlmnxu0cG2eu0XcWmSEU58QI=
+	b=jRryPkY7Zq4ClsiioFQ+o+uzYJ0iNM4muo3YS4yZxRdToVzAsTcCWP23DT4clD9I3
+	 FhAu1jzKsCH62IStWuvm1YcPZzpDMVads/taKGFvybmbpSudeQrh2qLSjWy4KfSD7B
+	 wKfC2kpVQ1NaZJkVmNV1ZmRm0IxdPiw22xyYRFRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1528/1536] aio: fix NULL deref when a fault races ring truncation
-Date: Sat,  7 Nov 2026 08:59:04 -0500
-Message-ID: <20261107135040.796093852@linuxfoundation.org>
+Subject: [PATCH 6.12 1529/1536] splice: avoid stale f_pos writeback on error
+Date: Sat,  7 Nov 2026 08:59:05 -0500
+Message-ID: <20261107135040.825868957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,94 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit d53b5aa5cfae27e4d236fc0ab9581085d27f7d33 ]
+[ Upstream commit 79b496ebe382866e3a05090b7dc9ae95e85e65b2 ]
 
-The aio ring lives in a file on the aio pseudo filesystem and the ring
-VMA uses filemap_fault(). aio_ctx_aops doesn't have a ->read_folio
-because aio_setup_ring() puts all folios of the ring into the page
-cache. So a fault on the ring only works as long as it finds its folio
-in the page cache. If it doesn't, filemap_fault() calls ->read_folio
-without checking and we jump to NULL.
+do_splice() snapshots an implicit file position before calling the splice
+helper. Since splice does not take f_pos_lock, another operation on the
+same open file description can update f_pos while the helper is blocked.
+If the helper then fails, the unconditional writeback restores the stale
+snapshot.
 
-We already fixed this twice this year. A forked child could inherit the
-ring mapping, fixed by commit c03ce4173c7b ("fs: aio: set
-VMA_DONTCOPY_BIT in mmap to fix NULL-pointer-dereference error"). And a
-partial mremap() could leave part of the ring mapped, fixed by
-commit 3adf7ae18bf4 ("fs: aio: reject partial mremap to avoid
-Null-pointer-dereference error"). Both times a VMA outlived the ring and
-the ring file was truncated under it.
+For a directory without ->splice_read, a file-to-pipe splice fails with
+-EINVAL. A concurrent directory mutation and getdents() call can advance
+f_pos and refresh the filesystem's revalidation cookie before that failure
+restores only the old position. The next ext2 readdir can then trust an
+offset inside a directory entry and copy data from the adjacent page to
+userspace.
 
-There's a third way to get there. kill_ioctx() and the error path of
-ioctx_alloc() unmap the ring with vm_munmap() and ignore the return
-value. If vm_munmap() has to wait for mmap_lock and a fatal signal is
-pending it returns -EINTR and the VMA stays. free_ioctx() then calls
-put_aio_ring_file() which truncates the ring file to zero. A fault that
-passed the i_size check in filemap_fault() before that doesn't find its
-folio anymore, allocates a new one and calls ->read_folio:
+Only update an implicit file position when splice returns a non-negative
+result, matching read and write. Keep explicit offset updates unchanged.
 
-    fault on the ring                 io_destroy() with SIGKILL pending
-    =================                 =================================
-                                      vm_munmap() returns -EINTR
-    filemap_fault()
-      i_size check passes
-                                      free_ioctx()
-                                        put_aio_ring_file()
-                                          truncate_setsize(inode, 0)
-      no folio, allocate a new one
-      filemap_read_folio()
-        ->read_folio == NULL
-
-All that's needed is a second process that shares the mm. If a CLONE_VM
-child calls io_destroy() and gets SIGKILLed while it waits for mmap_lock
-the ring stays mapped for the threads of the parent. Any user can do
-that.
-
-Instead of plugging the routes one by one give the ring a ->read_folio
-that unlocks the folio and returns -EIO. All folios of a live ring are
-in the page cache so a fault can only end up there if the ring was
-truncated. The fault now gets SIGBUS. Nothing else reads the ring file
-and the aio filesystem uses noop_backing_dev_info so there's no
-readahead either.
-
-Making vm_munmap() unkillable in those two places would only close this
-one route and bring back what commit ae7987835643 ("mm: make vm_munmap
-killable") fixed.
-
-Fixes: 36bc08cc0170 ("fs/aio: Add support to aio ring pages migration")
+Fixes: 7995bd287134 ("splice: don't pass the address of ->f_pos to methods")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-1-88f22792f6f7@kernel.org
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20261018051708.2422394-1-4ncienth@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/aio.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/splice.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/aio.c b/fs/aio.c
-index 59620eb01df49..44447e4af6286 100644
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -474,7 +474,18 @@ static int aio_migrate_folio(struct address_space *mapping, struct folio *dst,
- #define aio_migrate_folio NULL
- #endif
+diff --git a/fs/splice.c b/fs/splice.c
+index ed8177f6d620f..a8f4ec2b7de10 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -1357,10 +1357,10 @@ ssize_t do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 		ret = do_splice_from(ipipe, out, &offset, len, flags);
+ 		file_end_write(out);
  
-+/*
-+ * filemap_fault() reads a folio that it did not find in the page cache. All
-+ * folios of a live ring are there, so the ring was truncated under the fault.
-+ */
-+static int aio_read_folio(struct file *file, struct folio *folio)
-+{
-+	folio_unlock(folio);
-+	return -EIO;
-+}
-+
- static const struct address_space_operations aio_ctx_aops = {
-+	.read_folio	= aio_read_folio,
- 	.dirty_folio	= noop_dirty_folio,
- 	.migrate_folio	= aio_migrate_folio,
- };
+-		if (!off_out)
+-			out->f_pos = offset;
+-		else
++		if (off_out)
+ 			*off_out = offset;
++		else if (ret >= 0)
++			out->f_pos = offset;
+ 	} else if (opipe) {
+ 		if (off_out)
+ 			return -ESPIPE;
+@@ -1381,10 +1381,10 @@ ssize_t do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 
+ 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
+ 
+-		if (!off_in)
+-			in->f_pos = offset;
+-		else
++		if (off_in)
+ 			*off_in = offset;
++		else if (ret >= 0)
++			in->f_pos = offset;
+ 	} else {
+ 		ret = -EINVAL;
+ 	}
 -- 
 2.53.0
 
