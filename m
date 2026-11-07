@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061925;
-	b=GeTGLIJ2ARj0eqBRhkbhjRExY1sdUzSNDwxmTSbeMd0viZBCeby3MVO6J9r5O50IhDf1
-	 snw2nyzXTIrR/7uO1XvVGlLVb2/QYlGIHtjTYEgIqPFSN1eN6K3nN5Zt/Vz4L61v8L/aW
-	 dCKxtneCdRLoZxFojtLeOiWmCshYVyLNlO0UaDQVVmmA8xFBkv65pvOMbjY7SJlVBIz60
-	 Bt6lcp4yhBmgrSoPcUNTNZ5GyFMuzGfHhNWOv8whdTHYM1qMXjt5y7otvlTrt44jkHAVn
-	 jg6g9sQVbokA1JhwpNsqSHE1yg8Ov3eUcZ5IX/74g0E4NVqV0c6dtWJXPLJfFtOMwWg==
+	t=1794061926;
+	b=Z1w0S7Far6oTTm4272Tl4p6/FM+323zvIRv/sujvPJb4TVSZq2wJD6giXbx+FHr6gucX
+	 /isS2vRi2YKmFeRreXLRktfE5TnYaXy/06PMn9XOHM82w1Q8NPJt920JxM2OiVCH9mC8r
+	 x3UQWQMXsdSMCEoM90627ZqVMZUypYtqIxNfqoHZLztVNZ092GSPAajR1BmZ6RNS2/XHU
+	 g32L/qJrsCcUML1TYbUiJRVNU98xLqYuHIkDYb0/5mBRXk/esL9HfhHjRlkaDvDqn8DRK
+	 SA718FLm+XWahw2INofe1em7oxNCXDSwk/YYX+LZA2kAzRKjKcAeUDLD6rYu24FuoIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=chTjb8aC2NSqjyLs/hzzcg0QUdIH/ZR8Rlm25Yjg0tI=;
-	b=ACHJNpkvQ4StOqWHy+59db4pr1Wr/poPVFQ1Ya/AaaFKMgQdzqgjgSuynWK/C689P7qE
-	 bv8OmoltGlhkcTv7gAeLMQ1KWSRcKYkc56Y4B77csuXZ0+6vsCL6BmKtbatbHDZ4QOllT
-	 Yr89UyvM8J8AaRK29gfTAOcL23/lUjt7yHwhDHxiCo47pNSDDk71O1Fg/g9/6ryFDoN2q
-	 qlzs6zZZQDdaWsBWvDNxjkBR2kS2tAsLgijCag3yph6c8z6ISbRNRMF1gKNVps+xjQclp
-	 NYVAl5C5kGHzaZBLfyDwHVs9JcbAHFZ02+cw1pGEITBxkHzFI/cLNkBwM9Evu3UZLRw==
+	bh=b7f8dbk/Gn8rV5DUYtpluZd5hmtggbX11uMChwkEw0M=;
+	b=meg461AusQh6XoywEEpcBEEXWZmUvyPBnUPBjgg0LvtPrQJ5YooDehAm9rLFh8c6FTTK
+	 p7XEF1cMPa55XdMii7qCRzw6GSoBX2gnuw9jmR9UYUNnm8/S311PLLy9b03UCY0LKtLM0
+	 0iGHbWtHgho3oo7aGrsOO/aCghh8gxH9EDIly0NUf2HzFM/FCec64ZyrYeniEQSFbkV3u
+	 aaK6JM3344rv8ZL7d3V8Jw6FVSv4AElunjSFNFvCkLnoOnZLxN35joalrcDpVAJ7Rsxfo
+	 bzvk1MKQ3k82u0vayDvlU+UuOYY0lb/bOYVzDSNV9bsp86h84CVbZKr9b2T09lKif+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFPgwYdH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l2erldss;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9491606A32D;
-	Sat,  7 Nov 2026 14:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DC9606A326;
+	Sat,  7 Nov 2026 14:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFPgwYdH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682C21F0089F;
-	Sat,  7 Nov 2026 14:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l2erldss
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A051F0089F;
+	Sat,  7 Nov 2026 14:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061924;
-	bh=chTjb8aC2NSqjyLs/hzzcg0QUdIH/ZR8Rlm25Yjg0tI=;
+	s=korg; t=1794061925;
+	bh=b7f8dbk/Gn8rV5DUYtpluZd5hmtggbX11uMChwkEw0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zFPgwYdHIClnY0LpSxUgpPp1e1FUMokqaKKfoS6kj/CpKxznONapMJYgHMC7xi27B
-	 355j5ofUukV5HULP2X8bLvAAksbHYAkH9h0gmC6lmUE6q2LZN6qBbL7ZC/pKEfCw9Z
-	 Km3v3GIIdWHDruiRj5hiYtx6hq1C3C8Ck2hclzg8=
+	b=l2erldssavWEcfrMdUeaHXJ/PJjxxqxIsAbtnG8unMik8u1YaRGrhXGbLER597nJw
+	 3cdREW7wdkpasWaNLVQJJmMrL7IFeP73+ZU1QcTlHvoCFhvh89k/3FVE0uT5KmP959
+	 QChJb2svu1cr/dGE6hdUOBPWxqezeKOzya9UtMnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Pesaresi <andreapesaresi82@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0930/1536] arm64: dts: mediatek: mt7986: correct timer frequency
-Date: Sat,  7 Nov 2026 08:49:06 -0500
-Message-ID: <20261107135023.769431261@linuxfoundation.org>
+Subject: [PATCH 6.12 0931/1536] media: cx231xx-audio: drain wq_trigger before audio fini
+Date: Sat,  7 Nov 2026 08:49:07 -0500
+Message-ID: <20261107135023.796513471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,43 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Pesaresi <andreapesaresi82@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 1cf18e4b9815beaf0439c5b57b65b45151c82ad7 ]
+[ Upstream commit a691c54986412e1fa87f036d2577d5a78a75e658 ]
 
-The MT7986 architected timer runs at 12,986,200 Hz rather than 13 MHz.
-Firmware reports 13 MHz through CNTFRQ_EL0, causing the system clock to
-run slow by about 1062 ppm. This exceeds the kernel's 500 ppm NTP
-correction limit and leaves clock discipline saturated.
+audio_trigger() is deferred work (dev->wq_trigger) armed from
+snd_cx231xx_capture_trigger() on every PCM START/STOP; it dereferences
+dev->adev state and may free the URBs via cx231xx_isoc_audio_deinit().
+cx231xx_audio_fini() tore down that state without draining wq_trigger,
+so work armed before or racing fini ran against freed state.
 
-The corrected rate comes from MediaTek's downstream OpenWrt feed, where
-it is applied to both MT7986A and MT7986B. Since upstream mt7986b.dtsi
-includes mt7986a.dtsi, add it once to the common timer node so the
-architected timer driver uses the actual counter rate.
+Use disable_work_sync() in fini to drain the work and prevent further
+queueing.  Initialize the work, lock and stream_started counter at the
+top of cx231xx_audio_init(), before any fallible allocation, and clear
+the partially-built audio state on its error path, so fini is safe even
+if a later step fails.
 
-Fixes: 50137c150f5f ("arm64: dts: mediatek: add basic mt7986 support")
-Cc: stable@vger.kernel.org
-Link: https://github.com/mediatek/mtk-openwrt-feeds/commit/6a4c41c41410cd5042ad10c39da6593ba036283c
-Link: https://github.com/openwrt/openwrt/issues/24789
-Signed-off-by: Andrea Pesaresi <andreapesaresi82@gmail.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+This issue was found by an in-house static analysis tool.
+
+Fixes: 61b04cb24a12 ("[media] cx231xx-audio: fix some locking issues")
+Cc: stable@vger.kernel.org # v6.10+
+Link: https://lore.kernel.org/r/8c7e1294-b906-4636-890c-b64d03b0e1d0@kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/cx231xx/cx231xx-audio.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-index 05bd2938242fc..60c4c2f24c515 100644
---- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
-@@ -637,6 +637,7 @@ cpu_trip_active_low: active-low {
- 	timer {
- 		compatible = "arm,armv8-timer";
- 		interrupt-parent = <&gic>;
-+		clock-frequency = <12986200>;
- 		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
- 			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
- 			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+diff --git a/drivers/media/usb/cx231xx/cx231xx-audio.c b/drivers/media/usb/cx231xx/cx231xx-audio.c
+index 9c71b32552df3..1179cb0334f4d 100644
+--- a/drivers/media/usb/cx231xx/cx231xx-audio.c
++++ b/drivers/media/usb/cx231xx/cx231xx-audio.c
+@@ -576,12 +576,19 @@ static int cx231xx_audio_init(struct cx231xx *dev)
+ 	dev_dbg(dev->dev,
+ 		"probing for cx231xx non standard usbaudio\n");
+ 
++	/*
++	 * Extension init errors are ignored by the cx231xx core, so fini()
++	 * must be safe even if initialization fails part way through.
++	 */
++	spin_lock_init(&adev->slock);
++	INIT_WORK(&dev->wq_trigger, audio_trigger);
++	atomic_set(&dev->stream_started, 0);
++
+ 	err = snd_card_new(dev->dev, index[devnr], "Cx231xx Audio",
+ 			   THIS_MODULE, 0, &card);
+ 	if (err < 0)
+ 		return err;
+ 
+-	spin_lock_init(&adev->slock);
+ 	err = snd_pcm_new(card, "Cx231xx Audio", 0, 0, 1, &pcm);
+ 	if (err < 0)
+ 		goto err_free_card;
+@@ -596,8 +603,6 @@ static int cx231xx_audio_init(struct cx231xx *dev)
+ 	strscpy(card->shortname, "Cx231xx Audio", sizeof(card->shortname));
+ 	strscpy(card->longname, "Conexant cx231xx Audio", sizeof(card->longname));
+ 
+-	INIT_WORK(&dev->wq_trigger, audio_trigger);
+-
+ 	err = snd_card_register(card);
+ 	if (err < 0)
+ 		goto err_free_card;
+@@ -651,8 +656,10 @@ static int cx231xx_audio_init(struct cx231xx *dev)
+ 
+ err_free_pkt_size:
+ 	kfree(adev->alt_max_pkt_size);
++	adev->alt_max_pkt_size = NULL;
+ err_free_card:
+ 	snd_card_free(card);
++	adev->sndcard = NULL;
+ 
+ 	return err;
+ }
+@@ -669,6 +676,8 @@ static int cx231xx_audio_fini(struct cx231xx *dev)
+ 		return 0;
+ 	}
+ 
++	disable_work_sync(&dev->wq_trigger);
++
+ 	if (dev->adev.sndcard) {
+ 		snd_card_free_when_closed(dev->adev.sndcard);
+ 		kfree(dev->adev.alt_max_pkt_size);
 -- 
 2.53.0
 
