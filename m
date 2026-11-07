@@ -1,66 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064470;
-	b=ljZ5boFUKbnH0beITVm43ZNvXpuobYv1AANAOSzajkZhdyr8CKepI5SNOEHSWnbHZAkJ
-	 HynTQv4moAmzNGx28+vN8UtEmfJVNQKCpGkFj634M4E5usaa64mniGQncfczmjkK5cYOX
-	 hB9aKV4HF4l6t2/+3GzZGYBkzxJZrs6JshYOos30EmMXXhZVbsoOUTCXUy9zdNt1w3NX8
-	 flgda/YiyWVwM6+vmtvPsLigmOfaQceo6QEn3KAN6Rk60PEqeBZAlLUsIVKa9G6hVHvhv
-	 V61BU3iWuvkpwa9MAASpbpoIrvRqxbJYHlYenA9nghGDdvkGb6hi2vQWW7FuNBg5/Pg==
+	t=1794064471;
+	b=BVO3d5UdwHCiJ7X9TF5GrzER5DIszTkqoG2RuDclX7PkX4Kzti7M+imxKcKojOnMi/FG
+	 YA7ho+/YKycWQ5MnHwyYNdsAgMGFjimA/r57kMG2iHMg0O9kX5pbiO1mPAeSXOhsqudPx
+	 0YaeMUjN1Nop+CR1Ogh4inea7scbAVTeZJyooaRWbaT/iOZmJXCl41I6yEDaRq+B9ZiiM
+	 BFlo82k38RUUteKOdovP9/z6vPbhC7++QGIL196TJHSWZSkMPJ634aeBV3tjgtGQPB1dm
+	 BejsV7vo1b8aeqZb/liJzVYX36NwNgchvwENqA760XWibkp/Fgnwf8xd+XX9esA4Hmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064471;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jf0hvp5zMR73ZVl61+h/SQaw3fBo7bbynDaitm8/lHI=;
-	b=k1Va6tgbmUldicJLZfkdaU7gf0OwgrklYxSYgFH10D744YJEsN1E6T3Mq4Zy9vqBaAdB
-	 98Fj56PGgG9E+0la/ta9E9FcTW5ha2BBQ7zbdmbhQtmSVdRDdEsnMFLADEZjj6l0lnuU8
-	 0n2Afc5tVg454NU+w1zkMCF+L83JzGvRhfxfoBipJH+DWPDER/3PW/Ch+wHQEXw8JmQwM
-	 87033gPq02R1SvPivq7eCrzjEdKTiDSQALW+Pk1XspLDjsSUv5a9rgatbP9ExW5STx8du
-	 UH9oaqogSjeOtI2Wm0lM8RL02GfP6NgRGQasRXuf7JF34D3ZUkMFzMgUqRzBdwwyHmA==
+	bh=22aTDe2RHeY3G/IWytZEGQOlo9REHrd9IPCKlRilcf8=;
+	b=RnwcmHgMI06ErwCb9IaPbD+aCZHKF7aj9xEkBT1kWE8DJDPdjeBiYgAjePvNJiTlYiHK
+	 TAUDl84x2Q0QC6z2besukuHwNzNI1I92OIujFmw/rOj/Uvizg4LJ+ZpkPAclWFj5wzNa1
+	 Lt2BXQjtzT8vY4TLKRxZXTNmoqs3BZU670J63uh9NLsRtIU32Na94RbFjsxgWd8dcce/e
+	 vY/OwgvcEjwZvJFTJEWbdQ7sRZ0vbA5OIoTD/uV7+kphGmazrWtJTzjpR+FnrWtbt21nl
+	 8Fv3w1kMc26EChNE8M6tlAbYKBR9No3gj9AD6HRm6K1dNlJPc/iH9A/g3eNIEvfa5MA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujavUMLb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGe5dVr4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B102606A9D4;
-	Sat,  7 Nov 2026 15:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB9B606A9D4;
+	Sat,  7 Nov 2026 15:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujavUMLb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B459B1F008A2;
-	Sat,  7 Nov 2026 15:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGe5dVr4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF3E1F008A2;
+	Sat,  7 Nov 2026 15:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064470;
-	bh=jf0hvp5zMR73ZVl61+h/SQaw3fBo7bbynDaitm8/lHI=;
+	s=korg; t=1794064471;
+	bh=22aTDe2RHeY3G/IWytZEGQOlo9REHrd9IPCKlRilcf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ujavUMLbyFkgaQOgYQx8SDdwYBvusEeN0tZoRvKBVeOvWIigE2zcyMKZvXYmwedqT
-	 3dtfZmKvhoY89gaM6ShBUjFzeCJwt6Lt/eSuRe78BALpsUykFLdBOBOAvusonPu3n3
-	 ukyenUOG3p6wj1nG/cc8ilmc75BgPgwh7z3H7ipk=
+	b=MGe5dVr4P/s9epoahODSbASCcKVA9U4CCC3a8pVIXCqBW7qEGhkRPEDOa6yE72Jx2
+	 S8UxFmFmjN5EHNMZnrufe9Sp0rB4BlGmL0bzvw/osUChTxZaoRCV2hZzDDaoriqyah
+	 mkLwIo/AabcQxXmJeh4iC7PqdYIaTMmkuKWG2qDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Usama Arif <usama.arif@linux.dev>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Hugh Dickins <hughd@google.com>,
-	Kairui Song <kasong@tencent.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
+	Usama Arif <usamaarif642@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0502/1257] mm/huge_memory: do not touch frozen folios in deferred_split_isolate()
-Date: Sat,  7 Nov 2026 08:46:38 -0500
-Message-ID: <20261107134953.294429212@linuxfoundation.org>
+Subject: [PATCH 7.3 0511/1257] mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
+Date: Sat,  7 Nov 2026 08:46:47 -0500
+Message-ID: <20261107134953.548583508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -82,195 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 5da8ec3262bbb40f057f3b0dacc18f37bda06f95 ]
+[ Upstream commit d9e43f46fb324e0a311146f937f0d214f023dc63 ]
 
-Patch series "Fix deferred_split_isolate() and drop the split workaround",
-v2.
+damos_get_in_active_mem_bp() uses the sum of the active and inactive
+memory amount as a denominator.  In an extreme and unlikely environment,
+active and inactive memory might be zero.  In this case, hence, it results
+in a divide by zero problem.  Avoid it by changing the denominator to one
+if it is zero, before it is being used.
 
-deferred_split_isolate() probes each queued folio with folio_try_get().
-folio_try_get() failure is treated as a lost race with folio_put().
+The issue was discovered [1] by Sashiko.
 
-It leads to wrong results when !folio_try_get() was not caused by
-folio_put(): for a frozen folio, PG_partially_mapped gets wrongfully
-cleared and the folio dropped from the queue.
-
-It came up in the review of my collapse RFC series:
-
-  https://lore.kernel.org/all/20260824131224.73344-1-lance.yang@linux.dev/
-
-The bug is inert in upstream code:
-
-  - __folio_split() works around it;
-  - __folio_migrate_mapping() freezes a folio it is about to replace;
-  - reclaim freezes only what try_to_unmap() already unmapped.
-
-No cc:stable needed.  But my collapse rework steps on it, so it is worth
-fixing.
-
-The branch the first patch removes also hid an inert, pre-existing bug in
-the zone device path:
-
-  https://lore.kernel.org/all/20260827163838.1813081-1-usama.arif@linux.dev/
-
-The first patch fixes deferred_split_isolate().
-
-The second patch removes the workaround for this deferred_split_isolate()
-behaviour from __folio_freeze_and_split_unmapped().
-
-Tested in a VM: split_huge_page_test, folio_split_race_test and cow pass.
-
-Also ran a test that leaves 16 partially mapped THPs on the deferred split
-queue and drives thp-deferred_split through debugfs, checking
-nr_anon_partially_mapped.
-
-This patch (of 2):
-
-deferred_split_isolate() probes each queued folio with folio_try_get().
-folio_try_get() failure is treated as a lost race with folio_put(): clear
-PG_partially_mapped, correct MTHP_STAT_NR_ANON_PARTIALLY_MAPPED, take the
-folio off the queue.
-
-The folio_put() race is the most common case for !folio_try_get(), but it
-is not the only option.  Another scenario is folio_ref_freeze().
-
-A zero refcount in such cases does not mean the folio is going away.  It
-means "don't touch me" and current deferred_split_isolate() doesn't
-respect it.  It can lead to unqueueing folios from the deferred list for
-no reason:
-
-    CPU 0                            CPU 1
-    ---------------------------      ------------------------------
-    freeze a mapped folio            deferred_split_scan()
-      folio_ref_freeze()               folio_try_get() fails
-                                       folio_clear_partially_mapped()
-                                       NR_ANON_PARTIALLY_MAPPED--
-                                       folio off the queue
-    give up, put it back
-      folio_ref_unfreeze()
-
-The folio is still partially mapped, but it is no longer a split
-candidate.  Nothing queues it again until part of it is unmapped once
-more.
-
-Skip the folio instead: whoever freezes the folio, owns it and owner is
-responsible for its fate.  It also covers the folio_put() case:
-__folio_put() unqueues the folio via folio_unqueue_deferred_split().
-
-Nothing is lost by skipping.  Everything that frees a queued folio
-unqueues it first, and folio_unqueue_deferred_split() clears
-PG_partially_mapped and brings MTHP_STAT_NR_ANON_PARTIALLY_MAPPED down on
-the way:
-
-    __folio_put(), folios_put_refs()   mm/folio.c
-    __folio_migrate_mapping()          mm/migrate.c
-    shrink_folio_list()                mm/vmscan.c
-
-__folio_freeze_and_split_unmapped() does the same by hand, under the
-list_lru lock it holds across the freeze.  A freeze that ends in
-folio_ref_unfreeze() leaves a folio that is still partially mapped and
-still belongs on the queue.
-
-Link: https://lore.kernel.org/20260831091514.1879786-1-kirill@shutemov.name
-Link: https://lore.kernel.org/20260831091514.1879786-2-kirill@shutemov.name
-Fixes: 8422acdc97ed ("mm: introduce a pageflag for partially mapped folios")
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Link: https://lore.kernel.org/20260901131850.98037-9-sj@kernel.org
+Link: https://lore.kernel.org/20260721034756.147011-1-sj@kernel.org [1]
+Fixes: 4835e2871321 ("mm/damon/core: introduce [in]active memory ratio damos quota goal metric")
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Lance Yang <lance.yang@linux.dev>
-Closes: https://lore.kernel.org/all/20260824131224.73344-1-lance.yang@linux.dev/
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: Usama Arif <usama.arif@linux.dev>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: Claude-Code:claude-opus-5
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-
-deferred_split_isolate() probes each queued folio with folio_try_get().
-folio_try_get() failure is treated as a lost race with folio_put().
-
-It leads to wrong results when !folio_try_get() was not caused by
-folio_put(): for a frozen folio, PG_partially_mapped gets wrongfully
-cleared and the folio dropped from the queue.
-
-It came up in the review of my collapse RFC series:
-
-  https://lore.kernel.org/all/20260824131224.73344-1-lance.yang@linux.dev/
-
-The bug is inert in upstream code:
-
-  - __folio_split() works around it;
-  - __folio_migrate_mapping() freezes a folio it is about to replace;
-  - reclaim freezes only what try_to_unmap() already unmapped.
-
-No cc:stable needed.  But my collapse rework steps on it, so it is worth
-fixing.
-
-The branch the first patch removes also hid an inert, pre-existing bug in
-the zone device path:
-
-  https://lore.kernel.org/all/20260827163838.1813081-1-usama.arif@linux.dev/
-
-The first patch fixes deferred_split_isolate().
-
-The second patch removes the workaround for this deferred_split_isolate()
-behaviour from __folio_freeze_and_split_unmapped().
-
-Tested in a VM: split_huge_page_test, folio_split_race_test and cow pass.
-
-Also ran a test that leaves 16 partially mapped THPs on the deferred split
-queue and drives thp-deferred_split through debugfs, checking
-nr_anon_partially_mapped.
-
-This patch (of 2):
-
-deferred_split_isolate() probes each queued folio with folio_try_get().
-
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: <stable@vger.kernel.org> # 7.0.x
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 54494c3fa9835..779c02e0bf6cc 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -4638,22 +4638,11 @@ static enum lru_status deferred_split_isolate(struct list_head *item,
- 	struct folio *folio = container_of(item, struct folio, _deferred_list);
- 	struct list_head *freeable = cb_arg;
- 
--	if (folio_try_get(folio)) {
--		list_lru_isolate_move(lru, item, freeable);
--		return LRU_REMOVED;
--	}
-+	/* Lost race to folio_put() or the folio is under folio_ref_freeze() */
-+	if (!folio_try_get(folio))
-+		return LRU_SKIP;
- 
--	/*
--	 * We lost race with folio_put(). Read folio state before the
--	 * isolate: folio_unqueue_deferred_split() checks list_empty()
--	 * locklessly, so once removed the folio can be freed any time.
--	 */
--	if (folio_test_partially_mapped(folio)) {
--		folio_clear_partially_mapped(folio);
--		mod_mthp_stat(folio_order(folio),
--			      MTHP_STAT_NR_ANON_PARTIALLY_MAPPED, -1);
--	}
--	list_lru_isolate(lru, item);
-+	list_lru_isolate_move(lru, item, freeable);
- 	return LRU_REMOVED;
- }
- 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index f4b586188c68a..acbf32232c3f3 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3028,7 +3028,7 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
+ 		global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_FILE);
+ 	inactive = global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_ANON) +
+ 		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
+-	total = active + inactive;
++	total = max(active + inactive, 1);
+ 	if (active_ratio)
+ 		return mult_frac(active, 10000, total);
+ 	return mult_frac(inactive, 10000, total);
 -- 
 2.53.0
 
