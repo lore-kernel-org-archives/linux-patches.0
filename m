@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063986;
-	b=C82sRTOuTRf0oKdgLk5FdRwdD1iMqrbV5/xoPwpJsx67J12ZeBbHlq8WwUpJtzeiPGUj
-	 eTAVJR1graQuhLtybSALAc07cAi06KRpnG+/3yS8IoMkzv3kPC/EuA7QjNxQyOYHcoBtf
-	 JUxSTQEnQBR7Fsd0yYTbHb3f1ev50EBMiBDH+x19m5zOB+7EmfrdAjRMMcqW/PNlWPfm1
-	 2U2JvEWwET0UUKTOPu7t3lw82FgIlXW5j4A51G6bJJGiHGlgi4oxGlWpy7eCOUR/gparS
-	 +RstrCNI4RH8DXKNwsK0+O1awieBEt/o0cTBUHG1ftWoZthJ1ah3zYJz1RX98xymxCw==
+	t=1794063988;
+	b=VtWQg9vVd7q/DiIicFJxGLtsYr3z0VeMMPvI3YaQ3u8vGnJpqcXjw1nbHhsARgDcc/RY
+	 Mzop/7wkBZBfgbkw3kQhYgD695wAdUpuj4lkjWydrxTxI4ElrTugvVUkpDgOpNyQr7slw
+	 iOUMdOM1yQ3kbdh33ePtXY6gmeIKDIedhD9Fv+1enYGAzcvs7KxkRUmQ5bSw04AQ6XQuB
+	 bVF1B6SsZv8LV01LhW6A2iiT4fDwakwoDiwmH5B4xRft+hAWPVwdc5x3Nn/2s5/bTJPDi
+	 wYdtO8Aq1UnmkKFFYTvfrmY8fQRpW7HiVaLyEk7Wa+AuXswb/k5ahqyL300iSdaR9yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dKPpBz+F+JLUge0DsiWhUKE698SkqNaDU7og1r+G+8E=;
-	b=Untytu/liVmrefLc8zn78fIDzfIpnYtJ3fN/4OVOA0Pzhnk++fEDKy1h3vb64AgT3Scc
-	 7K0ZTHayyePpIgKMnpl0+C0LqmbDgkNfMRw3SJzWl8tL++bxQUQJ/atJu11upx/ZoRsB8
-	 xYAY67Ic2UzsmZY3JLG25O/Br0DLFJMZT5/83cFe3l8t/Qdz5Q+oIejQKdWZBxelvDQFB
-	 uIkkhW6PowbjdFyttyJ9LJfrxFlTXQ2NaB9pbx90X+JebcAO1OKpevrGo+yyuwY830dRk
-	 udvhA3fm1TdChlet8sHgZime6ePHqfnQ2xn/byf9AndJfjlY6LESY5fDZwz/VAL68mQ==
+	bh=zwFuOQ2PSZ7OaxOVw7l60Nvjf4ZS6sL0Vk1cFibjCr4=;
+	b=W/klHwM/GLer5v4yrq5gWUGKREed5QEhy2opV+x6X2e0lNNSxRB0UE+ee+3y781FWjnv
+	 DVUjPtXzAyHfOyZdiSL2KizqWIe3F3YZM5Gv8H5WUnQaXPV9ibSu+Dv3D/5xvwadWFbWG
+	 7dVPur1/pyJWGzS8PUGK+zp+TCk3V0Q6aF3/jfWk5AX0TbU5AZuiY6IRAM8H3FGCdi2Y/
+	 YDz8x2S2GwThaVhdx4FUnOzIkVdFsN9f+pmlFVMZisv/T+JUsDnn9xMmMkKKlYrda83zf
+	 VY8tOC9O9p4NkLBLFDTpWW/uqsYAChBaNq0i7hHB2NeIzJbVpDTPIe01V6mVBVrpblw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrGREg7O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3veqNLO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D5D6082BD5;
-	Sat,  7 Nov 2026 15:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDC2606D83C;
+	Sat,  7 Nov 2026 15:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrGREg7O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350761F008A3;
-	Sat,  7 Nov 2026 15:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3veqNLO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF5C1F0089F;
+	Sat,  7 Nov 2026 15:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063986;
-	bh=dKPpBz+F+JLUge0DsiWhUKE698SkqNaDU7og1r+G+8E=;
+	s=korg; t=1794063987;
+	bh=zwFuOQ2PSZ7OaxOVw7l60Nvjf4ZS6sL0Vk1cFibjCr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wrGREg7OEDLh8hEG37Jv5s99JTH9RgzLSGYjhflBs/6qXMxW7b1vqQSeAj5klZgPF
-	 O/sPcnGXrQQAw5UouO5PlVSv+jTf7FUHiYI8Mwh+LVDc8WKGrqCmxA+7vjOyL6GU1d
-	 O+Qd5gWciuRWRjwgsHU+aN4AoPMPouKl/mju3OGw=
+	b=g3veqNLOeNGi/zwwAUPTFY+k/F98JbUCw/CD6FrLHwAJ9OoAl7CVscsJQaqJQ2MMS
+	 xbS2Lc6hKrGvL/r4GDlravFPfnrQG5fCvVJDAp9ekdYY1nH3CHkWcJ0ZQvIc4bokp6
+	 IrQuHaoazJufTH8cWx05O8cqnoqJKnwwa2fPg410=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0131/1257] power: supply: qcom_smbx: test battery health status bits
-Date: Sat,  7 Nov 2026 08:40:27 -0500
-Message-ID: <20261107134942.936871514@linuxfoundation.org>
+Subject: [PATCH 7.3 0132/1257] power: supply: qcom_smbx: fix float voltage selector
+Date: Sat,  7 Nov 2026 08:40:28 -0500
+Message-ID: <20261107134942.962280975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,66 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Robin Snyders <robin@snyders.xyz>
 
-[ Upstream commit 68f645192f64e1037685dbdb0dffb41a5a012056 ]
+[ Upstream commit 2a26d260e72a95e9f13b9e475f63aa404600fcb2 ]
 
-BATTERY_CHARGER_STATUS_2 contains independent status and fault bits.
-Switching on the complete register only recognizes a fault when it is the
-sole asserted bit, and can report a healthy battery when another status
-bit is set at the same time.
+FLOAT_VOLTAGE_CFG encodes 3,487,500 uV as selector zero and advances in
+7,500 uV steps. The current calculation adds one to that selector, so it
+programs the requested float voltage one step too high.
 
-Test the relevant fault bits in priority order, matching the Qualcomm
-downstream driver handling.
+Remove the extra offset and name the hardware encoding constants.
 
 Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Robin Snyders <robin@snyders.xyz>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-2-eb48246be599@snyders.xyz
+Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-3-eb48246be599@snyders.xyz
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_smbx.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ drivers/power/supply/qcom_smbx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/power/supply/qcom_smbx.c b/drivers/power/supply/qcom_smbx.c
-index e6f2328f295c7..0e50d81aefc2a 100644
+index 0e50d81aefc2a..e236b95c0ebf3 100644
 --- a/drivers/power/supply/qcom_smbx.c
 +++ b/drivers/power/supply/qcom_smbx.c
-@@ -632,26 +632,20 @@ static int smb_get_prop_health(struct smb_chip *chip, int *val)
- 		return rc;
- 	}
+@@ -352,6 +352,8 @@
  
--	switch (stat) {
--	case CHARGER_ERROR_STATUS_BAT_OV_BIT:
-+	if (stat & CHARGER_ERROR_STATUS_BAT_OV_BIT)
- 		*val = POWER_SUPPLY_HEALTH_OVERVOLTAGE;
--		return 0;
--	case BAT_TEMP_STATUS_TOO_COLD_BIT:
-+	else if (stat & BAT_TEMP_STATUS_TOO_COLD_BIT)
- 		*val = POWER_SUPPLY_HEALTH_COLD;
--		return 0;
--	case BAT_TEMP_STATUS_TOO_HOT_BIT:
-+	else if (stat & BAT_TEMP_STATUS_TOO_HOT_BIT)
- 		*val = POWER_SUPPLY_HEALTH_OVERHEAT;
--		return 0;
--	case BAT_TEMP_STATUS_COLD_SOFT_LIMIT_BIT:
-+	else if (stat & BAT_TEMP_STATUS_COLD_SOFT_LIMIT_BIT)
- 		*val = POWER_SUPPLY_HEALTH_COOL;
--		return 0;
--	case BAT_TEMP_STATUS_HOT_SOFT_LIMIT_BIT:
-+	else if (stat & BAT_TEMP_STATUS_HOT_SOFT_LIMIT_BIT)
- 		*val = POWER_SUPPLY_HEALTH_WARM;
--		return 0;
--	default:
-+	else
- 		*val = POWER_SUPPLY_HEALTH_GOOD;
--		return 0;
--	}
-+
-+	return 0;
- }
+ /* pmi8998 registers represent current in increments of 1/40th of an amp */
+ #define CURRENT_SCALE_FACTOR				25000
++#define SMB2_FLOAT_VOLTAGE_MIN_UV			3487500
++#define SMB2_FLOAT_VOLTAGE_STEP_UV			7500
+ /* clang-format on */
  
- static int smb_get_property(struct power_supply *psy,
+ enum charger_status {
+@@ -993,7 +995,8 @@ static int smb_probe(struct platform_device *pdev)
+ 		return dev_err_probe(chip->dev, rc,
+ 				     "Failed to init status change work\n");
+ 
+-	rc = (chip->batt_info->voltage_max_design_uv - 3487500) / 7500 + 1;
++	rc = (chip->batt_info->voltage_max_design_uv -
++	      SMB2_FLOAT_VOLTAGE_MIN_UV) / SMB2_FLOAT_VOLTAGE_STEP_UV;
+ 	rc = regmap_update_bits(chip->regmap, chip->base + FLOAT_VOLTAGE_CFG,
+ 				FLOAT_VOLTAGE_SETTING_MASK, rc);
+ 	if (rc < 0)
 -- 
 2.53.0
 
