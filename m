@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062053;
-	b=jY55zRKFmZkgmHI1LgC6yd02WSUiiHqrUnoxR/cf1FYcXxmEnZ1k5o3RJKA+FkDUDoAP
-	 bK8x3VHGuvhmEJVdkHy1opoO26vPfHJL3TfqYZ+CJ2I991aeLfbLyrD7tvbP6wa1Ss/4c
-	 qHiCGvU3vwOTJUCJRMlWoQ3i0yefD9x0+03Jc/emZ4WH8W++WzUXieX+SRr3u6kZsaXE8
-	 dNVPiPS0oT2uLLkflzJ3FASbTgK6CVO7X07mppDtfDUEj2UdPhytlvtr5ggoPHc7n7nwV
-	 bYtrsrcMKkJiZD6aQGLV41CPiWI6QapXjN0Tx99Nq5SB+vzv9TGlK0mXp2PgYWKtB3w==
+	t=1794062054;
+	b=IdOBVsqTtdPCF6LRGEpLLGf1p1m3dGrrRuc8Yn7/H/HBpbkoEXgQBN8WeoS8TmE2W2iN
+	 0UeLAkNyfRh5QEYvWMshzhKgK0bnbKjaoas/A1AQfBQ3lqf9HDH8Go5gg1JMz3aRNgD8t
+	 zYQE7xwHog2+4eNkz256PUsPEIbVwYqyy97LvJNFULwukHerz3yPRFqZ9W7wJhwaXN4B8
+	 PKZ8cq+3+DwC7QTJYh7y7JkapFC+s/mlly8dlA5nBNKrwW2H0CIm6HBf1QAmJFGj7qnkv
+	 Q/t/oOcefmexpUS4PRC/4h2ziiMlDbHMudtt574xmNcUNNG4FFu+yCsC0QdXQ/OVPvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062053;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GJsrbnym00+AElhPB3ydlIXSPPCgsT59fkryGxynVzk=;
-	b=1WSloltlPNpadupWMYqATjoe/hOE5Ac+B3udf2G+CUszqN9HS9JSCDZQTByFFJmNTfJj
-	 nfu2joE23vObSea7o7z6EtdIOjSvfVKGvhZXI2TXEoB7TZg2+3dmq1GrEQq8oR67X4JrS
-	 zaA0OlpIzLeeTx/eybnsPBQAOAz8F2IFLq8JfZYIKKFyW+30CIDFbT6BxcbQM/QaV9I3p
-	 5pQkpWF+S2PfAYq+w7bSvz/XbWPmV8iJlB9PhYD77yE09ooTKqlGvy67pJUdCmtrMtIZM
-	 feWexWOIWODV5dq95ENpRAI9U2nsaFRtJvo+Kir0OhPIimcqgFsDWfJ2lprf17I6a6Q==
+	bh=XBXvHX0s7t2GFvJDUZ+cxVeF8JBfpb44ufENSF69vT8=;
+	b=DFeEuTRug4DpJ81jcw5eM8icuBq3VrAZ1YcPhe4vZJZgr2S7T+fASSXgMJeMtr9Jk+zi
+	 J/zogRhiUC9Mm5HJCSoQ5GYbrku28AiBbSi8vrZ5W+8KbdcXhj+TUZSZWHczbrnQprp2R
+	 pC4rg9PZExL/HZVs1eBBem+nU4FWw9qANN36lcsJ7ls2JY674zN2JctdR7TZlumUDsDwG
+	 F5KlgsBOCDkX0DHBTJtMGZiA0JMKC/Vws388oFErwbLbaJydedwkSLmC39MzNiMDqC4x2
+	 YeJxEdtrC3+irWiRLU0ZSYtoBSs6fMfIxa65O6APwON+wxdgrTOCcK1odxEzVkNixmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1ftJJhQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QUtRtCw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22420606A334;
-	Sat,  7 Nov 2026 14:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535B3606A337;
+	Sat,  7 Nov 2026 14:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1ftJJhQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AD11F0089F;
-	Sat,  7 Nov 2026 14:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QUtRtCw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EF71F0089F;
+	Sat,  7 Nov 2026 14:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062053;
-	bh=GJsrbnym00+AElhPB3ydlIXSPPCgsT59fkryGxynVzk=;
+	s=korg; t=1794062054;
+	bh=XBXvHX0s7t2GFvJDUZ+cxVeF8JBfpb44ufENSF69vT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g1ftJJhQyCJqYW33SvlhtogHyGt8jWB2DzR/FqCdxcXA5Zoq97adc6quz075VLkep
-	 ooqqpVpf7tElbb+ZhRfY3zIxW7rpiwFmF9m3PIJAiNGUQmgc6Iq04HP8VVLEdiknXH
-	 boZmDkIRVpGXIwgoRO8NkemDxbYQ0NXp0RavuzDY=
+	b=0QUtRtCw5QhyeudyOckiXKLiRo7ioElxiNoasP3rgjl9XBjpb80Oia4bJXYnPtY9q
+	 fTpSP12kWeMYZls0pdLxPszeVepBHf59coyDtZu1YfcP+qTifR2GeVzGHwg3VfRMwP
+	 v8htBpbdSDicyoiuPDfdyhKY+LXXPKgefHZRRIBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0996/1536] iio: accel: mma9551: disable autosuspend on remove
-Date: Sat,  7 Nov 2026 08:50:12 -0500
-Message-ID: <20261107135025.640199412@linuxfoundation.org>
+Subject: [PATCH 6.12 0997/1536] iio: accel: mma9553: disable autosuspend on remove
+Date: Sat,  7 Nov 2026 08:50:13 -0500
+Message-ID: <20261107135025.668887849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,9 +71,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 8061720f6be1811478914f8b6143778d70f6033f ]
+[ Upstream commit 4dda1f9d25fb889649e81bbf015809daa512a049 ]
 
-mma9551_probe() enables runtime PM autosuspend with
+mma9553_probe() enables runtime PM autosuspend with
 pm_runtime_use_autosuspend(). The probe error path correctly undoes
 this setting with pm_runtime_dont_use_autosuspend(), but the normal
 remove path only disables runtime PM.
@@ -89,21 +89,21 @@ path.
 
 This issue was found by manual code inspection.
 
-Fixes: 6da93a6710a3 ("iio: accel: mma9551: Add runtime pm support")
+Fixes: 40cb761306d6 ("iio: add driver for Freescale MMA9553")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma9551.c | 1 +
+ drivers/iio/accel/mma9553.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/accel/mma9551.c b/drivers/iio/accel/mma9551.c
-index fa1799b0b0dff..a547e0bbde711 100644
---- a/drivers/iio/accel/mma9551.c
-+++ b/drivers/iio/accel/mma9551.c
-@@ -516,6 +516,7 @@ static void mma9551_remove(struct i2c_client *client)
+diff --git a/drivers/iio/accel/mma9553.c b/drivers/iio/accel/mma9553.c
+index 86543f34ef17c..2840ccc40a80c 100644
+--- a/drivers/iio/accel/mma9553.c
++++ b/drivers/iio/accel/mma9553.c
+@@ -1155,6 +1155,7 @@ static void mma9553_remove(struct i2c_client *client)
  
  	iio_device_unregister(indio_dev);
  
