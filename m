@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063755;
-	b=JBLGfvpOfvrb1R2cGwKuVrx2yH0Uwll7SGTIQci5ZUfTaReHVKjL7Ruq8DxzTqw/MgMf
-	 FOb/BkJbqH5FWv94RC7pa3M6kS3G9E01QOvmCn5piDkbZM0oLcxowyzdkhLoAC3HQ3use
-	 FG62AjSmtHESNMu0kUnRDyXfSST4zUACfPk3ID2gVEIkNdnexhKX36vaaXZg1e0So7GNO
-	 sjIRiPhHHXZmxSTQjA9GE3lWiC55DQQt5HTsNCez/juW4qTZ4GYlmlH50J52K/NXW/u0T
-	 jcGItclGokQf65s/G5Y4DkFUv7VvYWzItD2U0+9n16BmPLzTxIsQgQ5HhqoX2mLE78g==
+	t=1794063756;
+	b=DL17iDX5fuFO6ZqvRgKSrF++II9aQi0qby44qOCGyJh6v6wOrcyP4IlS00yb8NH1uuvL
+	 dlcCBxdSWvewkUlt1bG3n9GpLie87zyOo89pBeZAOC3XYsbEqeaXOmI0RmVnbtedgmXBy
+	 YtHZ75OeU5t+8g/mdaeGkZmhdcgaJz62P35EQyavREMqoLnoFUNZL+7bxn4KtE5YzAIkd
+	 LxIueGpJ/JOr3fAiRIJposGaZPfCPahBXs45BMoJO3uq7JtAqfaSkVym7xRifkuR9VcHm
+	 nEPyUfLwyM4/t3ZaGJcU7Dr7nKvLgnrdr4soGE5Bd7Hed7LzjKg+QSITCxn74g9BEiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063755;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063756;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=raSa26pDbYd8w4xQL9UVkTi3Ob0+NS5iM940IHp7Osg=;
-	b=LZtgPXA/0SHX56Tum6/IXcxGtxKpGNKP0zAKX/WpKLNBWFYHzDNvCNUqHNNezNedcRc9
-	 Vqh4LwYxTPPlyT0JKPy/VNOgAIekO5YQ2FNmHE6QuXgWsorFi9MTET2gDVlbXtoXZW5eq
-	 nu3cy82huk762kxsN42W8Q5H+8xZ1nf5/qDvwpZTBlRfC6FL6oXgBd3DEn7XtamX5bJ8o
-	 PVOegWMO0aw8vHCsPDB8AeRHIcRMDnLUdkL7J+MVH7nNfds/oGAKaY6GIMJQk3iHtL9+H
-	 LZDeKpME+9iDKRPzNuqfebHZuiTgeeJdVvcwM0l/yRtIpVbTo2KU1h1R4oEX3S3laTA==
+	bh=B9+LbpOXpCowFeJY6JPWOWJvaSEnuV52DkSgT0FGH0g=;
+	b=wGEsIEgJle2ZJj/YI1dC84PXDMYEzmpwtq9vuuCOAVAluG4y2amnRGKvgljRbw88dOAE
+	 34VBUzwAY+QAVc7pyxnyb3Awhnv2kP+mGhS9UEPs8mzUU3A4dZvoNCryH/WHmPiLl5+bL
+	 h+X1S+79itZmQkE1uBCwNr6r68OE8XaJaDtpCGYmJRL6ZkOAvDcTmHNHqvPMw1gl2LYRL
+	 1lv1MsSU76uujEKSYypdKTjYMwV1Z6VV3dTPZcAlGQ09RRV8CadKvZ7fDqGwrCjwsMVVw
+	 3o8c0736n3V+wzHZDNs3+ycGULtsI0nVgZktB9VuWz9wkphzlEZbiIdApeUa9ow4MMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AKkx3W2y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZaNnbjJY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FC8608362E;
-	Sat,  7 Nov 2026 15:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D17608362E;
+	Sat,  7 Nov 2026 15:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AKkx3W2y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8617A1F0089F;
-	Sat,  7 Nov 2026 15:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZaNnbjJY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C979B1F0089F;
+	Sat,  7 Nov 2026 15:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063754;
-	bh=raSa26pDbYd8w4xQL9UVkTi3Ob0+NS5iM940IHp7Osg=;
+	s=korg; t=1794063756;
+	bh=B9+LbpOXpCowFeJY6JPWOWJvaSEnuV52DkSgT0FGH0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AKkx3W2yaGlzYHfDQqk9dF9HFolOtJm3ZweUZ4ImHi1HduVcERlih4LjhFQj+QcgQ
-	 8++/YcP07c/NkxkAfOjX10cmWWymWdwkkLok6rIhit/VDCTu+bU4lY49c34BPzckuf
-	 aYetzic9lw7RY39zSML4nabyQ5I/IkQrDfCEs/lg=
+	b=ZaNnbjJYBzuPS38oAxxhIo0YKXBeVjQhJ2o9Pum5sYoRS3hE0/LBo+rlM7c3wnEYh
+	 mz3O3twgFNnKb30HQWvedUm/jZ0nThxbG6T1wHSvGOkJTwmSQFFsCbI8+IYfZU+bYy
+	 vUAGoV/fBQkfkWIIMk6eFDyFt8rOx4MaQtEkqsj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 810/869] cpufreq: stats: Fix potential out-of-bounds access in deferred reset
-Date: Sat,  7 Nov 2026 08:58:12 -0500
-Message-ID: <20261107134920.506682606@linuxfoundation.org>
+Subject: [PATCH 6.18 811/869] arm64/mm: restrict transparent contpte mappings to valid PTEs
+Date: Sat,  7 Nov 2026 08:58:13 -0500
+Message-ID: <20261107134920.534027270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,53 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-[ Upstream commit 8a702989677216489e471a6f27599da53f753567 ]
+[ Upstream commit 486d396b19e93f6e56e0a0ba96c14a9ccc1a5977 ]
 
-cpufreq_stats_create_table() sets stats->last_index to -1 if policy->cur
-is not in the frequency table. It then stays at -1, because
-cpufreq_stats_record_transition() returns early on old_index == -1 before
-it gets to update last_index.
+The transparent contpte layer treats PTE_CONT as software grouping state.
+When a valid PTE has PTE_CONT set, the contpte helpers may align an
+operation to a CONT_PTE_SIZE block and operate on the whole block. The
+current single-PTE helpers use pte_valid_cont() to identify such groups;
+this is a helper contract, not an architectural restriction on using
+PTE_CONT with present-invalid descriptors. Explicit users such as hugetlb
+manage their contiguous encodings separately.
 
-Commit 46a310b80bc2 ("[CPUFREQ] Don't set stat->last_index to -1 if
-the pol->cur has incorrect value.") added that check. However, since
-commit 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to
-cpufreq_stats_record_transition()"), the stats reset is deferred to the
-beginning of cpufreq_stats_record_transition(), before that check, and
-cpufreq_stats_reset_table() ends with an unconditional
-cpufreq_stats_update(). So if the "reset" attribute is written while
-last_index is -1, the next frequency transition accesses
-time_in_state[-1].
+contpte_set_ptes() currently sets PTE_CONT from alignment alone. Batched
+set_ptes() users can therefore install present-invalid PTEs with
+PTE_CONT set, for example mprotect(PROT_NONE), NUMA hinting through
+modify_prot_commit_ptes(), fork() copying a PROT_NONE large folio, or a
+PMD split installing PAGE_NONE PTEs.
 
-Fix it by also returning early on last_index == -1 in
-cpufreq_stats_reset_table().
+This is not a hardware programming problem: invalid descriptors are not
+translated, so the hardware ignores descriptor bits such as PTE_CONT. It
+is a software-state problem. Some arm64 fast paths, such as
+test_and_clear_young_ptes(), test pte_cont() directly instead of
+pte_valid_cont().
 
-Fixes: 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to cpufreq_stats_record_transition()")
-Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027133332.377546-1-zhongqiu.han@oss.qualcomm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+In the observed failure, mprotect(PROT_NONE) installed a full
+CONT_PTE_SIZE range of present-invalid PTEs with PTE_CONT set.
+MADV_GUARD_INSTALL then zapped one PTE. The nr == 1 clear_full_ptes()
+path only unfolds pte_valid_cont() entries, so the neighbouring
+present-invalid entries kept PTE_CONT while the target entry became a
+guard marker.
+
+clear_refs_pte_range() then reached the marker through:
+
+  ptep_test_and_clear_young()
+  test_and_clear_young_ptes()
+  contpte_test_and_clear_young_ptes()
+  contpte_align_addr_ptep()
+  __ptep_test_and_clear_young()
+
+The marker changed from old_pte=0x00000000000047c0 to
+new_pte=0x00000000000043c0 by clearing PTE_AF. For swap PTEs, bit 10 is
+part of the swap type field, bits 6-10: 0x47c0 is SWP_PTE_MARKER with
+offset 4, while 0x43c0 has type 15 and is decoded as an ordinary swap
+entry. Zap later warned in swap_put_entries_direct() with a bad swap
+entry.
+
+Present-invalid PTEs could retain PTE_CONT as software grouping state,
+but their single-PTE modification paths would then need to recognize
+and unfold those groups consistently. Since current helpers mostly use
+pte_valid_cont() for membership, avoid creating present-invalid
+transparent contpte groups in contpte_set_ptes(). They bring no hardware
+benefit while invalid, and eligible valid ranges can be grouped again
+when they are installed.
+
+The public set_ptes() wrapper already clears PTE_CONT before calling
+contpte_set_ptes(). Return invalid PTEs through __set_ptes() directly,
+and warn if a future direct caller unexpectedly passes an invalid PTE
+with PTE_CONT set.
+
+This is triggerable by a user process against its own address space. On
+systems running with panic_on_warn, the warning becomes a denial of
+service.
+
+Fixes: 4602e5757bcc ("arm64/mm: wire up PTE_CONT for user mappings")
+Cc: stable@vger.kernel.org
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq_stats.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/include/asm/pgtable.h | 3 +++
+ arch/arm64/mm/contpte.c          | 4 +++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
-index 40a9ff18da068..d457848b3eabd 100644
---- a/drivers/cpufreq/cpufreq_stats.c
-+++ b/drivers/cpufreq/cpufreq_stats.c
-@@ -52,6 +52,10 @@ static void cpufreq_stats_reset_table(struct cpufreq_stats *stats)
- 	 * reset_pending accesses in cpufreq_stats_record_transition().
+diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
+index 1765e484fb9f0..2ce69d64e60ca 100644
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -1675,6 +1675,9 @@ extern void modify_prot_commit_ptes(struct vm_area_struct *vma, unsigned long ad
+  * The contpte APIs are used to transparently manage the contiguous bit in ptes
+  * where it is possible and makes sense to do so. The PTE_CONT bit is considered
+  * a private implementation detail of the public ptep API (see below).
++ * Single-PTE transparent contpte helpers use pte_valid_cont() to identify
++ * grouped PTEs; explicit contiguous-encoding users such as hugetlb manage
++ * their entries separately.
+  */
+ extern void __contpte_try_fold(struct mm_struct *mm, unsigned long addr,
+ 				pte_t *ptep, pte_t pte);
+diff --git a/arch/arm64/mm/contpte.c b/arch/arm64/mm/contpte.c
+index 29024e20e876d..c39a290c6b5a2 100644
+--- a/arch/arm64/mm/contpte.c
++++ b/arch/arm64/mm/contpte.c
+@@ -444,8 +444,10 @@ void contpte_set_ptes(struct mm_struct *mm, unsigned long addr,
  	 */
- 	smp_rmb();
-+
-+	if (stats->last_index == -1)
-+		return;
-+
- 	cpufreq_stats_update(stats, READ_ONCE(stats->reset_time));
- }
+ 	VM_WARN_ON(nr == 1);
  
+-	if (!mm_is_user(mm))
++	if (!mm_is_user(mm) || !pte_valid(pte)) {
++		VM_WARN_ON_ONCE(!pte_valid(pte) && pte_cont(pte));
+ 		return __set_ptes(mm, addr, ptep, pte, nr);
++	}
+ 
+ 	end = addr + (nr << PAGE_SHIFT);
+ 	pfn = pte_pfn(pte);
 -- 
 2.53.0
 
