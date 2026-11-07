@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061874;
-	b=GhyWC0gyAR9K+OsgJEziZXFLY9NDzMTduNIr9D3VXO0PklfXSLQO2jZ2J2mxaZAAwDT0
-	 QyikeaslXqdy5pusoqPZJF27tzo18cMyqBdpXHLPyD93pv9VFya3Qi68aafiAKjn0jFXi
-	 g8p5rf9/cIiFx67oBa2vS7ZIz3mOrMvuTvl0e5HOu9/HT2+KQrpPalPtyLXw9ClP6Fs/S
-	 Ae2RZgT9qcxOFnF/7uKVhA2fl2PbcOr0mALNMggXZE563tZvimxJcFZZ2R5/3rqOasmdo
-	 U17mcnhF2FJWBA+nFciubIdZrQgb7/0bRP05TVOJbeRUFdeBPRGqpYrAcPIfAj8ayHw==
+	t=1794061876;
+	b=5CouAGiHG5hehOIKaORNOvjFY4Df77ax97ACXWnKmCyOKH0WUnqLwJQ0zUKqe4N6HWnS
+	 WTygLRvY2btyCLfeTgIXKWavbMkmKJc3hJnWu4S66GhY2YFM0yQH/L5MzkrYe32INUQ6u
+	 7DpwR31RSwPavaqOr20SH3tUu/sGmCfBj8xGkvgqVee6TfY2LKA0GYb95IIEV4Dli/gFw
+	 /krM2RgFSE2+Wo33Kqen6xzw+UFSp1dsIew1WXYih3VL+3TSZmQ2MR4zom932DduzzLzS
+	 W7DcB3eqUIC9hCV7kbUz4ditEnGVJz/KvyNgVVpb5ITpkP5w783uzeQ7F7oZslqnoFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061876;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y4cU7MTI6Tv1Sm1KZWxuOS0Fno7ab3bcs6goAqLa2C4=;
-	b=AX8r2CIsPVqCrJg/ib6hhIpPvlVrX744x+MurQnBbypD2pMgWpBjFRX6WZZ0P/I/lDCd
-	 nu9sQHBt1IdM8C22F4la4Wn6d5W93f1nniM7qr+54JQKq7PRiTsK65o+OSAkifWA+YG+Z
-	 REnQqTAD3S1golygTqAi6i+HGUkPPW+m8Z5Pxgw98M4odQyFsnWSDkMlfcfE//CdONTvW
-	 YC/bnPbOqlihKnGC40QzbXKizKKiE56Csfs1VvkvXd6oNaWOYcyDbu552k1adLnKOTua2
-	 tcUUDLavOX0BOZ0/J140S36br3MQnNK6FC+QaMER0SWnxMe5rblHx9eSv0Tgd7LZaQw==
+	bh=02Z1VKoYDuPrFqkQmydKPvRvDJQe9JJe9huckTmck0Y=;
+	b=KrxLV+HIdwtV9eYy2rMHr95V/T8GEICyZpJMzaFqkhFR816ARv45B/qCsHSgqeJ7GAlM
+	 iJNVZ98ykH7EecOb2HOZhWql+A6WnSjLHfp1CJ9hs/V3P3PZ1sGIVH0FWcpZNpfs5dCP2
+	 fmEy1lAK5+F0TLnwiiTQFRo4awK2IWOPRojlni+v1RYejz1E4BlfQRXN2SeuwZ6OkLFmD
+	 jEQiwDbNWo/iBxspV3sm11Sb3abxeT37bTWBRJJujVdND7If5QKLE5/wItGbW3fcvR7SQ
+	 /eWKR2+A/aHqqt67uYLux91JAGeFL7genZ1GVG6T7jXV69MNQGxAP1hALICNARq20/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4b+2PRn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lB4V3lSs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A8C606A326;
-	Sat,  7 Nov 2026 14:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDE1606A331;
+	Sat,  7 Nov 2026 14:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4b+2PRn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60241F0089F;
-	Sat,  7 Nov 2026 14:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lB4V3lSs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF03C1F0089F;
+	Sat,  7 Nov 2026 14:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061873;
-	bh=y4cU7MTI6Tv1Sm1KZWxuOS0Fno7ab3bcs6goAqLa2C4=;
+	s=korg; t=1794061875;
+	bh=02Z1VKoYDuPrFqkQmydKPvRvDJQe9JJe9huckTmck0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4b+2PRnpays+/jKrVq8ZKMWaENdvH2BQbAuU3fq2q7Gaup/FqmTAtDpq7OrMxOm1
-	 a9P44fSxuUZ1b8Kj6bnbGdoMzDnbdrR8WuMcn4jw0kAsafs/uRUSFrrTIe8Lcu0lCM
-	 /lS0FhQtDpBSJ+Xr5BiYcc4PIirisRDeWJ4HB6UI=
+	b=lB4V3lSstJO/aptQJpKgRE4utHfGW+7K4pqKoSyweuXUI6FGU8DPz3jAyhq47OLmC
+	 ZzPwbIvIKML26iRPOyAH4cYmLNcr1DnVWRbC8UiQiaF3f5Bkz6z1jguCXfzw4THdm0
+	 anYJc8AjEYoNrjMmxHZI9HojRhoGC7coiG4udKbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marek Czernohous <marek@czernohous.de>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0888/1536] drm/nouveau: disable the fence uevent work instead of just cancelling it
-Date: Sat,  7 Nov 2026 08:48:24 -0500
-Message-ID: <20261107135022.565977103@linuxfoundation.org>
+Subject: [PATCH 6.12 0889/1536] drm/nouveau: cancel the DP IRQ work before freeing the connector
+Date: Sat,  7 Nov 2026 08:48:25 -0500
+Message-ID: <20261107135022.594992147@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,116 +71,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Czernohous <marek@czernohous.de>
 
-[ Upstream commit 827eb9328eaed831d7cc426ac2705038a40835b6 ]
+[ Upstream commit f60849975a886d70883bcb6b3658c0fa83c6971f ]
 
-nouveau_fence_context_del() drains the uevent work while the event that
-feeds it is still armed:
+nouveau_connector_destroy() tears the two nvif events down and then
+frees the connector, but never cancels the work the IRQ event queues:
 
-	cancel_work_sync(&fctx->uevent_work);
-	nouveau_fence_context_kill(fctx, 0);
-	nvif_event_dtor(&fctx->event);
+	nvif_event_dtor(&nv_connector->irq);
+	nvif_event_dtor(&nv_connector->hpd);
+	kfree(nv_connector->edid);
+	...
+	kfree(connector);
 
-nouveau_fence_wait_uevent_handler() queues the work unconditionally:
+nouveau_connector_irq() queues that work unconditionally:
 
-	schedule_work(&fctx->uevent_work);
+	schedule_work(&nv_connector->irq_work);
 	return NVIF_EVENT_KEEP;
 
-so a non-stall interrupt arriving after cancel_work_sync() has returned
-re-arms the work that was just drained.  The window closes in two steps,
-neither of which is the drain.  The kill blocks the event when the last
-fence holding a notify_ref is signalled, which reaches
-atomic_xchg(&ntfy->allowed, 0) (nvkm/core/event.c:104), and
-nvkm_event_ntfy() skips a ntfy that is not allowed (:183).  That stops
-further handlers from starting, but not one that is already inside
-nvkm_event_ntfy(): the event is created with wait = false
-(nouveau_fence.c:201), so nvkm_event_ntfy_block_() leaves it on the list
-and never takes event->list_lock.  Only nvif_event_dtor() waits that one
-out: nvkm_event_ntfy_del() (:141) goes through nvkm_event_ntfy_remove(),
-which takes write_lock_irq() on that same list_lock (:84).
+A DP IRQ arriving just before nvif_event_dtor() therefore leaves
+nv_connector->irq_work on the system queue past the kfree(). When it
+runs, nouveau_dp_irq() derives both nv_connector and connector from the
+work_struct and dereferences them, and goes on to take
+outp->dp.hpd_irq_lock.
 
-Either way the re-arm happens after the drain, and the caller drops its
-reference immediately afterwards, for example nv84_fence_context_del():
+There is no cancel_work_sync() for irq_work anywhere in the driver, so
+nothing else covers this. Add it after the event teardown, where no
+further work can be queued, and before anything is freed.
 
-	nouveau_fence_context_del(&fctx->base);
-	chan->fence = NULL;
-	nouveau_fence_context_free(&fctx->base);
-
-That is a kref_put() on fctx->fence_ref, so the context outlives the
-teardown only while emitted fences still hold a reference of their own.
-That is no safety net: whenever none do, the count reaches zero right
-there and nouveau_fence_context_put() kfree()s fctx while the work is
-still queued.  &fctx->uevent_work is embedded in that allocation, so the
-workqueue already dereferences freed memory when it picks the item up,
-and nouveau_fence_uevent_work() can then take fctx->lock on it.  With
-CONFIG_DEBUG_OBJECTS_WORK and CONFIG_DEBUG_OBJECTS_FREE, kfree() of a
-still-queued work item is reported as the free of an active object.
-
-On live memory the re-armed work has nothing left to do:
-nouveau_fence_context_kill() empties fctx->pending and sets fctx->killed
-under fctx->lock, nouveau_fence_emit() then returns -ENODEV rather than
-queueing anything new, and nouveau_fence_update() only reaches
-nvif_event_block() if it signalled something off that list.  The defect
-is the access to freed memory, not what the work would have found.
-
-Only chips from G84 on can reach this at all: nouveau_fence_context_new()
-returns before nvif_event_ctor() when priv->uevent is clear, and
-nv84_fence_create() is the only place that sets it.
-nv84_fence_context_del() is the context_del for all of those, because
-nvc0_fence_create() and gv100_fence_create() build on nv84_fence_create()
-and override only context_new.
-
-Use disable_work_sync() instead.  It drains the work exactly like
-cancel_work_sync() does, and additionally increments the work item's
-disable count, after which "any attempt to queue @work will fail and
-return %false" (kernel/workqueue.c, disable_work()).  The handler's
-schedule_work() then has nothing to re-arm, and the teardown order stays
-as it is.
-
-Draining a second time after nvif_event_dtor() would close the window as
-well, and without the newer API: once nvkm_event_ntfy_remove() has
-returned, no handler can start or still be running, so nothing re-arms
-the work past that point.  disable_work_sync() is preferred here because
-it needs one synchronisation point instead of two, it keeps the work
-from being queued at all rather than cleaning up after it, and it is
-what drm has settled on for this (drm/xe, drm/panthor, drm_pagemap).
-Blocking the event rather than the work is not an option: fctx->event is
-created with wait = false, so a handler already inside nvkm_event_ntfy()
-can still queue the work.
-
-Note for backports: disable_work_sync() arrived in v6.10 with
-commit 86898fa6b8cd ("workqueue: Implement disable/enable for (delayed)
-work items"), while the fix being corrected here reached 6.6.18 and
-6.7.6.  linux-6.6.y therefore carries this bug without the API, and this
-patch would apply there and then fail to build.  A 6.6.y backport wants
-the second drain described above instead, as its own patch.
+Reported by the Sashiko review bot as a pre-existing issue, in its review
+of an earlier nv04 FIFO series of mine, and confirmed against the source.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260812233022.159301F000E9@smtp.kernel.org/
-Fixes: 39126abc5e20 ("nouveau: offload fence uevents work to workqueue")
-Cc: <stable@vger.kernel.org> # 6.10.x
+Link: https://sashiko.dev/#/patchset/20260812231330.705425-1-mczernohous@gmail.com?part=1
+Fixes: 773eb04d14a1 ("drm/nouveau/disp: expose conn event class")
+Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5
 Signed-off-by: Marek Czernohous <marek@czernohous.de>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/178688513268.513871.3468844663561639695@gmail.com
+Link: https://patch.msgid.link/178682366002.3748010.4096452389040554615@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_fence.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_connector.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_fence.c b/drivers/gpu/drm/nouveau/nouveau_fence.c
-index 65b7974defa10..17df6c3c17f94 100644
---- a/drivers/gpu/drm/nouveau/nouveau_fence.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
-@@ -103,7 +103,7 @@ nouveau_fence_context_kill(struct nouveau_fence_chan *fctx, int error)
- void
- nouveau_fence_context_del(struct nouveau_fence_chan *fctx)
- {
--	cancel_work_sync(&fctx->uevent_work);
-+	disable_work_sync(&fctx->uevent_work);
- 	nouveau_fence_context_kill(fctx, 0);
- 	nvif_event_dtor(&fctx->event);
- 	fctx->dead = 1;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
+index ea666d4f668d9..6f90b73d79ae4 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -397,6 +397,7 @@ nouveau_connector_destroy(struct drm_connector *connector)
+ 	struct nouveau_connector *nv_connector = nouveau_connector(connector);
+ 	nvif_event_dtor(&nv_connector->irq);
+ 	nvif_event_dtor(&nv_connector->hpd);
++	cancel_work_sync(&nv_connector->irq_work);
+ 	kfree(nv_connector->edid);
+ 	drm_connector_unregister(connector);
+ 	drm_connector_cleanup(connector);
 -- 
 2.53.0
 
