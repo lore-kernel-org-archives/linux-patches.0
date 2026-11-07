@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061516;
-	b=B0sRGO6dcVrvId7TyGP4CAqjE1TenoUM0AvqLBcGd88+anHKbGVuWBn2Uf69HO54nXnO
-	 qIWkBtnAJSLrbdWeqpAFx3Br3UzoS9U/sL4GFkXz7CjvoXfggLXs8pTgX8tVotP+ENAe1
-	 /dym8FPBzo5sarHpK6w6s7/nrsjAgcQ8vwbDImS7RuM3nsKFAd0IIL3tZPKxgsfhlcFYX
-	 uSccGRKfc5Uvak/LoBYeX17j651tOUswqNuVYPG//RYLe3tS3FWUm1dltc/MHzeh4+j+P
-	 y4U/LvAJcwjZNOSaDMGDqtzD+lgsI1MwOLVvCWNH9hiIP9CxZqgglHSG3vbxdlD2OXQ==
+	t=1794061517;
+	b=WfaljbIT2PoLJHkJMovuqjP30hTEmcOu+MJwQVMmsSRmOkxa5QZa/NcvCVozOVdFP+s7
+	 HY398iuXBEOzxsHU09zRNlRnbVGSDFjGcm5dIpX07HFl1WUP6fkh2Lfb2eADN70bkECw9
+	 dTiMPp0Ep0S0bPwQtb+7BPp/wcbpucubyfZV+sF1fM/SV7D9dqD9QQTTLKgDZ1/3uZ7wE
+	 WNXHrTef+ShOh+iA81B5P1JnsP0hTaTIkpkJ3p5FkxsozoHqQP7R2lGA9F6asz1wnvm7P
+	 1/VwugYy75E0kpoa1Al3/rc+VGsKBigTE6OIcxPsRvdPMv5V5j7PT1VU9X2jrGb1IBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061516;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=keE+vP5Tx/p/Gijkdlt9rjJlAY5DG0vUWxGqYeJPY7Y=;
-	b=5g6GO1iAxIttMRs58QUqPUenuuZb5lr5uspaFrNpcivWwVcfXmdL0yqw3kLikiZa8e6A
-	 +TWPuf1jD67+MCWIH4KweCGUxRE0Co9C5A1SH0XJnGB7o9Q6UutF1SEyfpKINSF2QkjQC
-	 uu8jHqtDCETBQI8pOR2bcgw1shNiZPGi4ZvDjd2rVxXFEpgf4j7be7GH+gSxH6K+8hxHh
-	 NUEwoeCCtDeukN5nfrGoSvMnxi/fvQucQOBEeZbMRAtzi33H/9iXcpaKaJGajwWOpr+QW
-	 jed8WeNL5q340wjE3ta9bByxxOIldtE8CLB3ljg8JeMxVxVUFIf/XVj5cq6IOJbM89Q==
+	bh=QrPNhxG2TztbYM/WgqGNBhJjMZI/HqVLxK1h2+z9E4Y=;
+	b=awxu4VJ3MDqROFaJSTeDkhjNge+V8W9ReY/asQ9rFaWGpNy0dZLT5KBwmu70qo+9HBK9
+	 A77N9ryEyU9nrFR0pjjPTntjrNU27Z6zzH/hzP8M0DYifR8jfJgyls67g3QwONK0XKSVP
+	 UY8Il7myVER2Me8XpBKNq7ybw9HjHMIJ1Q0sl8O6Igjv3nn2fPiigLj7DYcuIwL1ePqal
+	 RdDGJABfa62f/dbA9lOaBtUReDv1RhHNgqpoSIZ8qW108kh8PUJayhMf3pECEIUrPYANx
+	 1tE675RqGAIvngfhlXon+bK6kFe7F3/cTnblirB69gPzFhi0vJi+LfMYR4llG76kZ1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y7rd3fLA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hixFXY66;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C328606A32C;
-	Sat,  7 Nov 2026 14:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA05606A336;
+	Sat,  7 Nov 2026 14:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y7rd3fLA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDE11F008A1;
-	Sat,  7 Nov 2026 14:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hixFXY66
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193ED1F0089F;
+	Sat,  7 Nov 2026 14:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061516;
-	bh=keE+vP5Tx/p/Gijkdlt9rjJlAY5DG0vUWxGqYeJPY7Y=;
+	s=korg; t=1794061512;
+	bh=QrPNhxG2TztbYM/WgqGNBhJjMZI/HqVLxK1h2+z9E4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y7rd3fLA1Tcc93gvIL6ypyo/04WqVXxn2BU4Delgp7gfEAt63uvFJLcWHiN6E98eA
-	 d2vFqqApLDTnvpwH1cD9nxA3NglpQapBqij9BgaW9saCZS8m8knnXZ8I9GHg6VS8mE
-	 Gig1BVWfeX8Sl9ZVj0avzXVWDi0h6waH3vawVePQ=
+	b=hixFXY66Q0ATkXLizwTyin3lFu1Z+87ElTQK4iDXQERNRX7qYRKx8mCEBFWJ51yzv
+	 nyreAdSRbBnMuQJNv9fmG6wiflRhLun6vsardDmiOSjRnSveBdTnX2T227M4Lot/v2
+	 h/BLOrIy0u6Yz4opBTcFrc81w7+zcTcazfXkW2nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Matt Porter <mporter@kernel.crashing.org>
-Subject: [PATCH 6.12 0606/1536] rapidio: mport_cdev: fix use-after-free in mport_mm_close()
-Date: Sat,  7 Nov 2026 08:43:42 -0500
-Message-ID: <20261107135014.562461044@linuxfoundation.org>
+	Zijing Yin <yzjaurora@gmail.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 0603/1536] SUNRPC: fix netns use-after-free in write_gssp()
+Date: Sat,  7 Nov 2026 08:43:39 -0500
+Message-ID: <20261107135014.478222027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,63 +67,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Zijing Yin <yzjaurora@gmail.com>
 
-commit 0f2cd84858e67cf8e02438bf28243bcdc67aa49a upstream.
+commit e7a8721b7edb54a157623f9e31d71345333b5fb9 upstream.
 
-A use-after-free vulnerability was identified in mport_mm_close() in
-drivers/rapidio/devices/rio_mport_cdev.c, identical to the pattern
-previously addressed in dma_req_free().
+While fuzzing with a customized syzkaller, I hit a refcount warning in
+xprt_alloc(), reached from a write to /proc/net/rpc/use-gss-proxy:
 
-This is observable from userspace when an application creates an mmap
-mapping via the RapidIO character device and subsequently unmaps it (or
-terminates, triggering exit_mmap()).  During munmap, mport_mm_close() is
-invoked and drops the mapping reference via kref_put().
+  refcount_t: addition on 0; use-after-free.
+  WARNING: lib/refcount.c:25 at refcount_warn_saturate+0xf8/0x120
+  CPU: 0 PID: 10404 Comm: syz.0.17 Not tainted 7.3.0-rc1-00096-gcfebfd3db73d
+  Call Trace:
+   <TASK>
+   xprt_alloc+0x83f/0x9d0
+   xs_setup_xprt+0xaf/0x3c0
+   xs_setup_local+0x47/0x7f0
+   xprt_create_transport+0x16c/0x730
+   rpc_create+0x38e/0x7f0
+   gssp_rpc_create+0xe2/0x180
+   set_gssp_clnt+0xba/0x1b0
+   write_gssp+0x200/0x310
+   proc_reg_write+0x240/0x330
+   vfs_write+0x2aa/0x1050
+   ksys_write+0x12a/0x250
+   do_syscall_64+0x117/0x750
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
 
-If kref_put() drops the last reference, mport_release_mapping() is called,
-which frees the underlying rio_mport_mapping structure.  The subsequent
-mutex_unlock() then dereferences map->md to unlock buf_mutex, leading to a
-use-after-free:
+create_use_gss_proxy_proc_entry() stores the struct net pointer as the
+proc entry's private data without taking a reference on it, and an open
+file descriptor does not pin the namespace either, as procfs only pins
+the proc_dir_entry. write_gssp() reads that pointer back with
+pde_data() and hands it to set_gssp_clnt(), which reaches xprt_init():
 
-   mport_mm_close()
-     -> mutex_lock(&map->md->buf_mutex);
-     ...
-     -> kref_put(&map->ref, mport_release_mapping); /* map is freed */
-     -> mutex_unlock(&map->md->buf_mutex);          /* UAF: map used */
+	xprt->xprt_net = get_net_track(net, &xprt->ns_tracker, GFP_KERNEL);
 
-Fix this by caching map->md before kref_put() and using the cached pointer
-for mutex unlocking, ensuring that freed memory is not accessed.
+get_net_track() -> get_net() -> refcount_inc() is unconditional, so
+rpc_create() assumes its caller holds a reference on args.net.
+write_gssp() does not.
 
-Link: https://lore.kernel.org/20260914042327.49798-1-james010kim@gmail.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: <stable@vger.kernel.org>
+Dropping the last ns.count reference does not make the file go away.
+__put_net() only queues cleanup_net() on a workqueue, and the
+remove_proc_entry() that fences off further writes runs from the
+rpcsec_gss pernet .exit method, that is, from inside cleanup_net(). A
+write landing between those two points increments a refcount that is
+already zero. cleanup_net() does not re-read ns.count, so the namespace
+is freed anyway and the rpc_xprt -- along with the AF_LOCAL socket
+opened for it -- is left pointing at freed memory. The resurrected
+count is visible to the rest of that teardown too: with
+CONFIG_IPV6_MROUTE the same cleanup_net() worker then trips
+!mr_can_free_table() in ip6mr_free_table(), which tests check_net() on
+the namespace it is freeing.
+
+It reduces to opening /proc/net/rpc/use-gss-proxy inside a new network
+namespace, calling setns() back to the original one to drop the last
+reference, and then writing "1" to the still-open descriptor.
+
+Take the reference in write_gssp() itself and refuse the write when the
+namespace is already gone. This is what procfs does for every other
+/proc/net file: get_proc_net() is maybe_get_net(PDE_NET(PDE(inode)))
+and seq_open_net() returns -ENXIO when it fails. PDE_NET() cannot be
+reused here because the parent directory /proc/net/rpc carries no
+namespace pointer. Adding a .pre_exit to rpcsec_gss_net_ops so the
+entry is removed earlier would only narrow the window, since pre_exit
+also runs from cleanup_net().
+
+Live namespaces are unaffected: a write still returns the error from
+set_gssp_clnt(), a write of "2" still returns -EINVAL, and reads are
+untouched.
+
+Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
+Link: https://patch.msgid.link/20260907085435.644076-1-yzjaurora@gmail.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -2188,11 +2188,12 @@ static void mport_mm_open(struct vm_area
- static void mport_mm_close(struct vm_area_struct *vma)
- {
- 	struct rio_mport_mapping *map = vma->vm_private_data;
-+	struct mport_dev *md = map->md;
- 
- 	rmcd_debug(MMAP, "%pad", &map->phys_addr);
--	mutex_lock(&map->md->buf_mutex);
-+	mutex_lock(&md->buf_mutex);
- 	kref_put(&map->ref, mport_release_mapping);
--	mutex_unlock(&map->md->buf_mutex);
-+	mutex_unlock(&md->buf_mutex);
- }
- 
- static const struct vm_operations_struct vm_ops = {
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1420,10 +1420,18 @@ static ssize_t write_gssp(struct file *f
+ 		return res;
+ 	if (i != 1)
+ 		return -EINVAL;
++
++	/*
++	 * Neither the proc entry nor an open descriptor pins @net, so it
++	 * might already be dying when rpc_create() takes its reference.
++	 */
++	if (!maybe_get_net(net))
++		return -ENXIO;
++
+ 	res = set_gssp_clnt(net);
+-	if (res)
+-		return res;
+-	res = set_gss_proxy(net, 1);
++	if (!res)
++		res = set_gss_proxy(net, 1);
++	put_net(net);
+ 	if (res)
+ 		return res;
+ 	return count;
 
 
