@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061594;
-	b=Md+M0PveIWm/I6lwUy9w7sfvMdUNJ8rL5HmQZ4omG3XUT+hjuO5+GSjDUqSa9WSdBIIH
-	 zB8LceyXdCqI1i2/pVwCNEjA+VjUOgRJrRjL1ZypbNRXjcKToySW3vrNQIfaGSVgf1IXT
-	 R1NEPS/V4+kWVWFEpQS5u/j5RYpkx5BCb874AZhPSWwtZZRy6emVfGxLGzQCs0Gy4YtZz
-	 NWhfhJvn4xxIAYT9uP/eIShr9vdgb2o6ng9r3k5iqvQWMrEeIYf934lUW9l2t47EMWTYW
-	 796WDS2CqeQ0PZH2zf7mCs/9rRtaRehv09oyuAmoXlAMpwnEV6JI3G2Zw+jo/yBaMEQ==
+	t=1794061595;
+	b=bKlGIEPv4qvcaYWc6ALDinjOPRciPyIT7lllTshu8/XfjRKmtt9ockuHeIQqUdP+XqYu
+	 OKiOPb6PutOKo1RyZ8Rq2s4MYoMYaQG5vq81i5Ds6rMN8IY7/sIyu1szGR3y21ydODFuG
+	 ckZJWii605eJWy0zqhpEfM48/ZVqG0yFHjM1S2dtNWOqazDuCa2C8TAvOz1h+z0tTa0xe
+	 5JsdDmsajdNdrhf9DELNTZqFbaoZerY4rJEAmlkHR9BKbsqc7ZuwBhvNrSzFgSw68EimC
+	 MTz1/WBEkpTrBTwN1y1CLBXX9fMClMHbvoSr+gyxgGgU9GM17+jTGNj72q+otvKtHRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061595;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ffk9wnZ1YQn1vdhOVF/HvPRTnEPlPa0WGky46k+zkdw=;
-	b=Wgd5w3DLn8aw8c1CKDdmquSrk1F8UUCN1AFQgQ8NcVb26/ANrVb99+06NxR3onapA59y
-	 rcZawny1vvjoOyaSdhsJvNg4pStbnekQ9LZYYayn1Yd9UgzW0t1ZelpZ0PlUyi88qW1LB
-	 ybbbGS9dYXv8l2fclbuetTSytI0TLhMmlR94NO3gxhnTgkOr15jrI45pgKgfZiBrkClAA
-	 5igLkEuQ7X3DQwtG0ObK4rYb7ItbQSWj0ZdPQ3rJLrecF30v5jjXUx8CdXmFwFcyNdxYb
-	 BwX35pd2TPpic7I7mom8BqzSYWQoylluNLqV70UgcF/zOv1TKZrUVG09+1dvCFUts1Q==
+	bh=hg3vaou/jBBcyFE661MkIz3mWVU9L+oD+MVtL4pMcSc=;
+	b=QKMy/aQBWQJiKxDFLIbWDS6s1oq/nmbhJKqq0pJ8mw+uNyhCtikk1Arnx/gL7o2YiaJ3
+	 ut+1KQayWPoY9t+W60KHpe6yw5Aw7ca0CJb7g04dBPsS5XINVnADhwxSbqkh+29mobf/s
+	 kmhNwS/4vtYdfemo8x5wTJwDlFZSPLyk7axX0+u2QbUFKwjwHwJ+7OwhHg8SgaHemUuAj
+	 FIREig9AT7JBLJFf6B7Nk3ZyqEA8FCLo8AeapNwQpLdmkuekqyiLJ7wEa+u/B+b5KU6dr
+	 Z8PsOgsNyi8nzNEw1wBMcf+CM4EZqfhRSP3SGiX6ZUbCkXBiZBFVlsF1PgkLwHOjpXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Aj4srcI3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ucc+hOCo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62F3606A32D;
-	Sat,  7 Nov 2026 14:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8F4606A32E;
+	Sat,  7 Nov 2026 14:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Aj4srcI3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4027B1F0089F;
-	Sat,  7 Nov 2026 14:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ucc+hOCo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6941F0089F;
+	Sat,  7 Nov 2026 14:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061593;
-	bh=Ffk9wnZ1YQn1vdhOVF/HvPRTnEPlPa0WGky46k+zkdw=;
+	s=korg; t=1794061595;
+	bh=hg3vaou/jBBcyFE661MkIz3mWVU9L+oD+MVtL4pMcSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aj4srcI3MIP42ZJYtsprKrZQeAO4knf1Xf43sktnhsKY+fa7VeP6HcnT/tOPRsxJf
-	 gY8f3daAcdbOrBcC70nPoA63LhYs6t3pHlOtG33PPdy4fbn1hpZdAUzNy0OWqmcztw
-	 SR3yp90SG8TkDLfVrAUHXIS7Mz5xPSubYxYuwF88=
+	b=ucc+hOCoBpMMTRPpvSKkwgVJt0l1DBxoEcBcOkin7qd+FZqw/SrBy9uSPwp7B/q0C
+	 1QiVFVzcvjUlTKLdiTelsldfC6GYhIEbBepC3yYS5YXd+TPBfZucOKN9euylbqV9H2
+	 zTWGHHF9AqwxtByrookDCh6Z6gFDRemYwsJhEuOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 0619/1536] s390/signal: Fix incorrect return address in signal frame
-Date: Sat,  7 Nov 2026 08:43:55 -0500
-Message-ID: <20261107135014.920122240@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 0661/1536] media: rc: Ensure that rc_unregister_device() does not free input device
+Date: Sat,  7 Nov 2026 08:44:37 -0500
+Message-ID: <20261107135016.081531400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -66,77 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Sean Young <sean@mess.org>
 
-commit adc9e872f7350e3ac29c1818d8c68b0760b4ba23 upstream.
+commit 61c7ca95d2483c77dfdde1b007cbe846f145dec4 upstream.
 
-exit_to_user_mode_loop() can call arch_do_signal_or_restart() multiple
-times when signals are pending.
+During or after rc_unregister_device(), IR may still be reported which
+results in a input event being reported. This could result in a null
+pointer deref in rc_keydown() or a use-after-free of the input device if
+the pointer was read before it is set to NULL.
 
-If the first call set up a vDSO system call restart by saving the real
-user return address and adjusting psw.addr so it points to the vDSO stub,
-a second call builds the signal frame with the wrong return address.
-
-Restore psw.addr from arch_data, and set the return code to -EINTR before
-building the signal frame.
-
-This requires restart_block.arch_data to be properly initialized for all
-tasks. Move the initialization in copy_thread() in front of the kernel
-thread check, so that it also covers kernel threads and their children
-(PID 1, usermode helpers). Only PID 0 is left uninitialized, since it
-never returns to user space.
-
-Fixes: df29a7440c4b ("s390/signal: switch to using vdso for sigreturn and syscall restart")
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/process.c |   12 ++++++------
- arch/s390/kernel/signal.c  |    6 +++++-
- 2 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/media/rc/rc-main.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/s390/kernel/process.c
-+++ b/arch/s390/kernel/process.c
-@@ -133,6 +133,12 @@ int copy_thread(struct task_struct *p, c
- 	p->thread.hardirq_timer = 0;
- 	p->thread.softirq_timer = 0;
- 	p->thread.last_break = 1;
-+	/*
-+	 * s390 stores the svc return address in arch_data when calling
-+	 * sigreturn()/restart_syscall() via vdso. 1 means no valid address
-+	 * stored.
-+	 */
-+	p->restart_block.arch_data = 1;
+--- a/drivers/media/rc/rc-main.c
++++ b/drivers/media/rc/rc-main.c
+@@ -1742,7 +1742,7 @@ void rc_free_device(struct rc_dev *dev)
+ 	if (!dev)
+ 		return;
  
- 	frame->sf.back_chain = 0;
- 	frame->sf.gprs[11 - 6] = (unsigned long)&frame->childregs;
-@@ -174,12 +180,6 @@ int copy_thread(struct task_struct *p, c
- 			p->thread.acrs[1] = (unsigned int)tls;
- 		}
- 	}
--	/*
--	 * s390 stores the svc return address in arch_data when calling
--	 * sigreturn()/restart_syscall() via vdso. 1 means no valid address
--	 * stored.
--	 */
--	p->restart_block.arch_data = 1;
- 	return 0;
+-	input_free_device(dev->input_dev);
++	input_put_device(dev->input_dev);
+ 
+ 	put_device(&dev->dev);
+ 
+@@ -1854,6 +1854,8 @@ static int rc_setup_rx_device(struct rc_
+ 	if (rc)
+ 		return rc;
+ 
++	input_get_device(dev->input_dev);
++
+ 	/*
+ 	 * Default delay of 250ms is too short for some protocols, especially
+ 	 * since the timeout is currently set to 250ms. Increase it to 500ms,
+@@ -1880,10 +1882,8 @@ static void rc_free_rx_device(struct rc_
+ 	if (!dev)
+ 		return;
+ 
+-	if (dev->input_dev) {
++	if (dev->input_dev)
+ 		input_unregister_device(dev->input_dev);
+-		dev->input_dev = NULL;
+-	}
+ 
+ 	ir_free_table(&dev->rc_map);
  }
- 
---- a/arch/s390/kernel/signal.c
-+++ b/arch/s390/kernel/signal.c
-@@ -488,7 +488,11 @@ void arch_do_signal_or_restart(struct pt
- 		}
- 		/* No longer in a system call */
- 		clear_pt_regs_flag(regs, PIF_SYSCALL);
--
-+		if (!(current->restart_block.arch_data & 1)) {
-+			regs->psw.addr = current->restart_block.arch_data;
-+			current->restart_block.arch_data = 1;
-+			regs->gprs[2] = -EINTR;
-+		}
- 		rseq_signal_deliver(&ksig, regs);
- 		if (is_compat_task())
- 			handle_signal32(&ksig, oldset, regs);
 
 
