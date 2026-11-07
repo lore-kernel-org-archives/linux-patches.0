@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063727;
-	b=Wd8Reimsk3wO9EGQnQc+FUCH3/xv/S3pllj+B6c3JgVlbGqLfoSIfkIAFY2lMaM9FgHH
-	 5ufPJaL/XExYrRA7Z/N3ztmQt8W34wlEES8X1ESmEy/yzeoaP9YEPuSZWxoURR6FzXoUQ
-	 RDWwKBcd1oNhSukUkrwK+JLx6SCgokELyzXS0vMUWLOIO5S8QfihEapD4QJAE9GF/mGJN
-	 teQL72LX2fABDmDrNYQ03dLawJ0BSxgejeB5+zoxKoARd/a2tlLJNI8BrDV5IjCMnZSlz
-	 f2+dOVmZ54EKcLhJIf+01WCzR6y1hd2t3w4RfPfdR63wMFHa+siKRjViATM2mU7EyuA==
+	t=1794063728;
+	b=LVaKLlDScAjgCSbahkH2r3IrDtX260GMpU6KFJ2wnmZpoJv53uPdprIQxuW3oLWXBGFQ
+	 QFAjNcCspcTfhe3QGvSTowtF9TLwIKN0FL8PeKnjGXQTkoLvub75mSJRoqt5b+qn920zn
+	 cxlGQrpYuOm02z9DO3007ssy6I6Vnq4hHTil0+MWqXtNKedjUlcDrQxHBA2RCna8eCjiA
+	 dB5GRs1VpnBFiIHJVNmbeLdw+aF43jhjwzLmN6JsFpA1HIZZo0FI71qmcuzXYhPpqiWcV
+	 5Y024cMFjrNrvEuWgWBKZ53ZC4rIzJIryI7J3Gs/qjwP8qDRqycTs35Guw52EqBNGVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063727;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BD2dN9TRHBjKCiWBzdNK17G2qyuituZBf/ldJGHhI/0=;
-	b=r6sG/dTHJMqhwrJ+gcKUwR4s2ZjZVgOWBpiJbIplO5HpEuR6QJLZ/sIomu8FktYhf8KN
-	 lfZ/6PTAhb7Ohk5fJ8DEuV7T1lE9C27ls6m06OsYGmd0j5FfPEDIvp99MvmwJeI9/QCZr
-	 e9lCRFB5AMriyIfw63Aid5+0TTFX5j9KvuizV2pXgFRY1X+aDGP6Vz2eAjZ8uF4VQJpmK
-	 U9tzvx4YgdxunktcBtpoJhtO95/5b2aV2pLmdRbMASoW6Oy/3EUXq/xX8883aiW7McJsX
-	 Gcn+VfHYRKTtSrA7Z3ZjbPDLjO7RgOp0DLxYvsDjBUhmnOfX9NWpRPmvEVKQSrryduA==
+	bh=YU2iecN6VcbIHpX/BKajDy9GLF8IA89nkjK6UxztQV0=;
+	b=wIKd2tgoTMcrEtrPd6kw8E23g/pQaYUWig0y7LNNqB5g3XGVrBwO6Evk+vX6jYwSTzEM
+	 lNFyemFDxQdWjORzMeinWyiJ3ZkkFzcRgvaxvxNW7hUi4Y+GsVtjJ6uc9HW92MRkP/uLe
+	 A66Yx2C+lSTc0DYb+TlJ4ZOciRw+FoD9fI+jspwJwlU5wBslsdeB4IQE0waI9utwoqbds
+	 ce5PQjbJePEJS1kXu8KL9x5kO8bZ27UPVHpIrohFqfxSc1nv2KFuFUT3+dzl7qRvPPBwZ
+	 MrvRmNaSKLWeSZfp5hahCXh3Lhl8oDS2qiUUj/jRqg27bodamhyiJQ8f5LjyBFXNhPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVzf18On;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAqnBQ9H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52935606EEBD;
-	Sat,  7 Nov 2026 15:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D91F6082BC8;
+	Sat,  7 Nov 2026 15:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cVzf18On
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A241F0089F;
-	Sat,  7 Nov 2026 15:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAqnBQ9H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5CC1F0089F;
+	Sat,  7 Nov 2026 15:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063727;
-	bh=BD2dN9TRHBjKCiWBzdNK17G2qyuituZBf/ldJGHhI/0=;
+	s=korg; t=1794063728;
+	bh=YU2iecN6VcbIHpX/BKajDy9GLF8IA89nkjK6UxztQV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cVzf18OnGK86ZXhfTQYhVLggVCpYmq3/tjf/jQmHbj+n0WSg63pHU1wU7KpN6o+ox
-	 DUwpmabFWAxRl4jKFGSYffzDQQ4yJF+MWjltKxTdDdlNHxjFrIku8EYfo75XjsftXa
-	 2dLSlz2Hd6iaeeL+ZJQaLmUMzd1a2G32eTmtEw/A=
+	b=RAqnBQ9HR7AvGyqL4FuqbPG1wrwOA7BuaYLQed5D88PyNvH53kSLzqc/NnSxZXuIc
+	 BiKczL6OYDpa1tL7++kf9MM2FaJVBKpmXNaTJliPf1lOckub+m9HrITuJdcmwLbpht
+	 FX4AuG8ogLchofm6mpHyiYvQQcgbCMdSUdjFXJBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 825/869] ntfs3: fix mapping pairs bounds check for alignment
-Date: Sat,  7 Nov 2026 08:58:27 -0500
-Message-ID: <20261107134920.933281614@linuxfoundation.org>
+Subject: [PATCH 6.18 826/869] ASoC: hdac_hda: Keep runtime PM state in sync across codec remove/probe
+Date: Sat,  7 Nov 2026 08:58:28 -0500
+Message-ID: <20261107134920.960366455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,42 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit f517cae6333121783043d9ba5142b50f5d1cf75b ]
+[ Upstream commit 99203e8d8968def973e82bb712ea959c6a46c16e ]
 
-In the UpdateMappingPairs action, the expansion check compares the
-unaligned new attribute size with the available record space. The new
-size is aligned to an 8-byte boundary before the mapping pairs are
-updated, so the check can underestimate the required space by up to
-seven bytes.
+After the codec has been removed, its runtime PM status is
+RPM_SUSPENDED while hdac_hda_codec_probe() powers the codec up via
+snd_hda_codec_device_new(). The pm_runtime_put()/snd_hda_power_down()
+calls on probe and registration then see an already suspended device,
+the codec suspend callback is not called and the codec, its HDA link and
+the codec_powered bit stay set, preventing the controller from runtime
+suspending.
 
-Use the aligned size in the expansion check to ensure that the
-subsequent update cannot exceed the available record space.
+The remove has a similar problem with the codec link accounting:
+hdac_hda_codec_remove() drops the link reference taken in probe without
+looking at the runtime PM state of the codec. If the codec was already
+runtime suspended, the link reference has been dropped by the codec
+suspend callback and the remove drops it a second time.
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Resume the codec in hdac_hda_codec_remove() before disabling runtime PM
+so that the link reference and the codec_powered bit are always in the
+same state as after the probe, and mark the device active on probe once
+the codec has been powered up.
+
+Finally mark the codec device suspended at the end of the remove. Its
+runtime PM is disabled at this point and if only the ASoC card is
+unbound (e.g. by unbinding the machine driver), a following system
+suspend would otherwise call the runtime suspend callback on the already
+cleaned up codec via pm_runtime_force_suspend().
+
+This is a followup patch to address Sashiko reports.
+
+Link: https://lore.kernel.org/linux-sound/20261027083840.28813-4-peter.ujfalusi@linux.intel.com/
+Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261027144655.31988-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/hdac_hda.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index e2668c57066b4..4753fcab4d81c 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -3436,7 +3436,8 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
+diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
+index 1a89f570fd1f4..ac28b3cadb69f 100644
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -517,6 +517,9 @@ static int hdac_hda_codec_probe(struct snd_soc_component *component)
+ 		snd_hdac_display_power(hdev->bus,
+ 				       HDA_CODEC_IDX_CONTROLLER, false);
  
- 		if (!check_if_attr(rec, lrh) || !attr->non_res ||
- 		    aoff < le16_to_cpu(attr->nres.run_off) || aoff > asize ||
--		    (nsize > asize && nsize - asize > record_size - used)) {
-+		    (nsize > asize &&
-+		     ALIGN(nsize, 8) - asize > record_size - used)) {
- 			goto dirty_vol;
- 		}
++	/* The codec is in D0, the status is RPM_SUSPENDED after a previous unbind */
++	pm_runtime_set_active(&hdev->dev);
++
+ 	/* match for forbid call in snd_hda_codec_device_new() */
+ 	pm_runtime_allow(&hdev->dev);
  
+@@ -557,6 +560,12 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 		return;
+ 	}
+ 
++	/*
++	 * Resume the codec to have its link reference (dropped below) and
++	 * codec_powered bit in the same state as after the probe.
++	 */
++	pm_runtime_get_sync(&hdev->dev);
++
+ 	/* prevent runtime PM callbacks while the link and the codec are torn down */
+ 	pm_runtime_disable(&hdev->dev);
+ 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+@@ -568,6 +577,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 
+ 	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
+ 	pm_runtime_enable(&hdev->dev);
++	pm_runtime_put_noidle(&hdev->dev);
++	/* The codec is cleaned up, system suspend must skip it from now on */
++	pm_runtime_set_suspended(&hdev->dev);
+ }
+ 
+ static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
 -- 
 2.53.0
 
