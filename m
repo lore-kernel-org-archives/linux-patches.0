@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061695;
-	b=ZlTyYmCbWQYyQGxi3aC5NQJHFRA+23Ot7+ou027gRRW8V7Djv+z8F1TeLZC8F6aIPPbv
-	 bp3HZ4GiWPSsmRr3xHYLnHWEhZCyDP4EMNtp8s3O7Ngdq26VVua1REmCWPvSPNIikh3Vu
-	 I2yZYznkVb8h/dqs5cFjfDMSQV/DtSkZA5YjxvgZA0XXmIV4QNybYMhNfFMSHXx9OuBlb
-	 vOr4WeGVtMydNPqluiVdsafKhEuLiv0O1rf7uPU5+YSHx5wX1FbavG4IMKVWgWRZZ50Gl
-	 3W3eVd51e27SGymu8vVqfhQmnTHmu/AqnUY8JKQBRzOmw8r7QFWHgWuK0QUI3u5t4Hg==
+	t=1794061696;
+	b=q2BVq1oVZT4KXXOfan4CmjNYiBWgKAHoYmkup7h9Q8TeAFMp9MiLYkmpuXbc7f7lQ6/G
+	 h1nNSFznrOtunEl+VMhC+ZLQ0FPSRusMbK4u4ie40398zoUpz/7LEDfIb8LoRyTn2gTXt
+	 32dBrvlNiE2heDSbJBAyIGh8loYjuKN77IjYP3YnZK0kA2EJXw2dHRer88ByexqlXIcOC
+	 IVAD5b1duGx32JMnr5XXToZHb2BlUrweaPMFdTRDWFWl0fGBfBVHubhwlKogrn+z8OifS
+	 g4NXlR0VqAoQj0Z31bg80sMfpAFguPW9H9qTNiC5wHmNUD2ifHYKTruVN9IhP2euv5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061695;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z7BuWmz1z0EGStd3ClCq8tfO0fO3AXi1TxjAzXdgc+4=;
-	b=MLB9pDlomuQslfeg2gmbIUUVF8CCZPbKPfi0qdXB5frG7LjC8pD1605IIa2PPwlYGq/H
-	 zJrREabxLl1YOzCjvwAgpLPxM4D/x7TngMAcZ3zYjrIe5ltcOkLsFRMTi0Fi14gCnhvVE
-	 exFP7n+TQEnlpvn9yao2R08eMBlkoNskzvvM7x0v4b6DIPSdJmLTPS+X/jlt9wj6ZjHPL
-	 1waRsjsCDxt9XSnSDuaaCm547NvP8E3UbTked7hOSezHY1XCNgdOG6xYjxzf9W5k+Ibql
-	 sud3PTl2VJKlJLcI1LnYaiG9e0u3b+5x1tUMf8KTbLCzfzS4P01Irz76qNSdOdewjNw==
+	bh=1AXEBxqW8/QFNpUgK2VdwZ5oDFh5kJbhBXRS7m0Uzpg=;
+	b=Hp/+Ti4VLDk7HpjVBkbZylPnt7/TrASSZj0TNw+9xUrlf8ea6GL9BRv0Olp9rh5z5zcR
+	 qTrmZoVxKoAKdPUPjddRCWtP6AXAFP5bSR8VEyO9+tORxdUUnUcSu88v5K+Oy0xYWCkEY
+	 3pRUei6hix9UGOgArvZrsaizlYW1cf7mHWEtFZVwLouXiPtRXvxUvlfdVNr3mwpfR0/X+
+	 CFw1xi3O+ZdZnK2LMH4adLKHgm5e90Lna97bqr4fF7oeRXAONKMRPRyHgR8vOIkjw/y97
+	 hHUHQrYp0pikQ/6/e3JOr2EjD6xiKaUQ7nv0OGaIjlpJm6KxMMSicW75htaVin067+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jrD8z6k8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=08iWZgVB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A07A606A326;
-	Sat,  7 Nov 2026 14:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AACF606A326;
+	Sat,  7 Nov 2026 14:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jrD8z6k8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FCF1F0089F;
-	Sat,  7 Nov 2026 14:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=08iWZgVB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DFF1F0089F;
+	Sat,  7 Nov 2026 14:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061695;
-	bh=Z7BuWmz1z0EGStd3ClCq8tfO0fO3AXi1TxjAzXdgc+4=;
+	s=korg; t=1794061696;
+	bh=1AXEBxqW8/QFNpUgK2VdwZ5oDFh5kJbhBXRS7m0Uzpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jrD8z6k8H/umP38PJxSiaUZ4bL46kYhSYfy/lZhvv+bc/0ZaBPVjMaCaFx/J6XZ7j
-	 mwNJsM1lD4w5sFU27ktYkVwquQ05LQQTgrez6t8ruGcGhgrlEdw2GNufQ6rPvKdS/e
-	 CuN8REZ9KHMfBhIV5LqPTJ+PxDkDdHYKhdd0kurk=
+	b=08iWZgVBnLtOyihgzYm0x5AtW8bXQkZXtDOz33CBcdCIO7xqdfSj+fOcOiDmB3pFs
+	 XirtrSG//dSiogGXkrkUzUrNEzjLSHRELbYArn56L0uK66E8aaLJ7buWR5C1OpP0Go
+	 uXIKQDB52+K2i+/0lm8ueOnDAqydf3tWwgpxwJf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0707/1536] xfs: bail out of directory tree repairs on error
-Date: Sat,  7 Nov 2026 08:45:23 -0500
-Message-ID: <20261107135017.356640008@linuxfoundation.org>
+Subject: [PATCH 6.12 0708/1536] xfs: fix revalidation of xchk_dquot_iter cached mappings
+Date: Sat,  7 Nov 2026 08:45:24 -0500
+Message-ID: <20261107135017.384597143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,203 +70,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit d83ca4e7cc65dce6a02fd3427cefd174517657a3 upstream.
+commit 6c64d650460b455980a6023d43bc6c8859c1cfd2 upstream.
 
-LOLLM complains that we ignore errors returned by
-xrep_dirpath_retain_parent and can set the dotdot entry to random stack
-garbage.  Fix that by passing errors all the way out.
+LOLLM noticed that the purpose of xchk_dquot_iter_revalidate_bmap is to
+revalidate the quota file mapping after we've (presumably) done
+something to the quota file contents.  However, the "yes this is valid"
+code isn't quite strong enough -- the mapping must cover at least the
+block at fileoff, not just end after fileoff.  Fix that.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 3f31406aef493b ("xfs: fix corruptions in the directory tree")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 21d7500929c8a0 ("xfs: improve dquot iteration for scrub")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dirtree_repair.c |   57 ++++++++++++++++++++++++++----------------
- 1 file changed, 36 insertions(+), 21 deletions(-)
+ fs/xfs/scrub/dqiterate.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/scrub/dirtree_repair.c
-+++ b/fs/xfs/scrub/dirtree_repair.c
-@@ -94,7 +94,7 @@ xrep_dirtree_delete_all_paths(
- }
- 
- /* Since this is the surviving path, set the dotdot entry to this value. */
--STATIC void
-+STATIC int
- xrep_dirpath_retain_parent(
- 	struct xchk_dirtree		*dl,
- 	struct xchk_dirpath		*path)
-@@ -104,18 +104,20 @@ xrep_dirpath_retain_parent(
- 
- 	error = xfarray_load(dl->path_steps, path->first_step, &step);
- 	if (error)
--		return;
-+		return error;
- 
- 	dl->parent_ino = be64_to_cpu(step.pptr_rec.p_ino);
-+	return 0;
- }
- 
- /* Find the one surviving path so we know how to set dotdot. */
--STATIC void
-+STATIC int
- xrep_dirtree_find_surviving_path(
- 	struct xchk_dirtree		*dl,
- 	struct xchk_dirtree_outcomes	*oc)
- {
- 	struct xchk_dirpath		*path;
-+	int				error;
- 	bool				foundit = false;
- 
- 	xchk_dirtree_for_each_path(dl, path) {
-@@ -124,7 +126,10 @@ xrep_dirtree_find_surviving_path(
- 		case XCHK_DIRPATH_LOOP:
- 		case XCHK_DIRPATH_OK:
- 			if (!foundit) {
--				xrep_dirpath_retain_parent(dl, path);
-+				error = xrep_dirpath_retain_parent(dl, path);
-+				if (error)
-+					return error;
-+
- 				foundit = true;
- 				continue;
- 			}
-@@ -136,16 +141,19 @@ xrep_dirtree_find_surviving_path(
- 	}
- 
- 	ASSERT(oc->suspect + oc->good == 1);
-+
-+	return 0;
- }
- 
- /* Delete all paths except for the one good one. */
--STATIC void
-+STATIC int
- xrep_dirtree_keep_one_good_path(
- 	struct xchk_dirtree		*dl,
- 	struct xchk_dirtree_outcomes	*oc)
- {
- 	struct xchk_dirpath		*path;
- 	bool				foundit = false;
-+	int				error;
- 
- 	xchk_dirtree_for_each_path(dl, path) {
- 		switch (path->outcome) {
-@@ -157,7 +165,10 @@ xrep_dirtree_keep_one_good_path(
- 			break;
- 		case XCHK_DIRPATH_OK:
- 			if (!foundit) {
--				xrep_dirpath_retain_parent(dl, path);
-+				error = xrep_dirpath_retain_parent(dl, path);
-+				if (error)
-+					return error;
-+
- 				foundit = true;
- 				continue;
- 			}
-@@ -172,23 +183,28 @@ xrep_dirtree_keep_one_good_path(
- 
- 	ASSERT(oc->suspect == 0);
- 	ASSERT(oc->good < 2);
-+	return 0;
- }
- 
- /* Delete all paths except for one suspect one. */
--STATIC void
-+STATIC int
- xrep_dirtree_keep_one_suspect_path(
- 	struct xchk_dirtree		*dl,
- 	struct xchk_dirtree_outcomes	*oc)
- {
- 	struct xchk_dirpath		*path;
- 	bool				foundit = false;
-+	int				error = 0;
- 
- 	xchk_dirtree_for_each_path(dl, path) {
- 		switch (path->outcome) {
- 		case XCHK_DIRPATH_CORRUPT:
- 		case XCHK_DIRPATH_LOOP:
- 			if (!foundit) {
--				xrep_dirpath_retain_parent(dl, path);
-+				error = xrep_dirpath_retain_parent(dl, path);
-+				if (error)
-+					return error;
-+
- 				foundit = true;
- 				continue;
- 			}
-@@ -206,13 +222,14 @@ xrep_dirtree_keep_one_suspect_path(
- 
- 	ASSERT(oc->suspect == 1);
- 	ASSERT(oc->good == 0);
-+	return error;
- }
- 
- /*
-  * Figure out what to do with the paths we tried to find.  Returns -EDEADLOCK
-  * if the scan results have become stale.
-  */
--STATIC void
-+STATIC int
- xrep_dirtree_decide_fate(
- 	struct xchk_dirtree		*dl,
- 	struct xchk_dirtree_outcomes	*oc)
-@@ -222,36 +239,32 @@ xrep_dirtree_decide_fate(
- 	/* Parentless directories should not have any paths at all. */
- 	if (xchk_dirtree_parentless(dl)) {
- 		xrep_dirtree_delete_all_paths(dl, oc);
--		return;
-+		return 0;
- 	}
- 
- 	/* One path is exactly the number of paths we want. */
--	if (oc->good + oc->suspect == 1) {
--		xrep_dirtree_find_surviving_path(dl, oc);
--		return;
--	}
-+	if (oc->good + oc->suspect == 1)
-+		return xrep_dirtree_find_surviving_path(dl, oc);
- 
- 	/* Zero paths means we should reattach the subdir to the orphanage. */
- 	if (oc->good + oc->suspect == 0) {
- 		if (dl->sc->orphanage)
- 			oc->needs_adoption = true;
--		return;
-+		return 0;
- 	}
- 
- 	/*
- 	 * Otherwise, this subdirectory has too many parents.  If there's at
- 	 * least one good path, keep it and delete the others.
+--- a/fs/xfs/scrub/dqiterate.c
++++ b/fs/xfs/scrub/dqiterate.c
+@@ -58,6 +58,7 @@ xchk_dquot_iter_revalidate_bmap(
+ 	 * no need to reread the bmbt.
  	 */
--	if (oc->good > 0) {
--		xrep_dirtree_keep_one_good_path(dl, oc);
--		return;
--	}
-+	if (oc->good > 0)
-+		return xrep_dirtree_keep_one_good_path(dl, oc);
- 
- 	/*
- 	 * There are no good paths and there are too many suspect paths.
- 	 * Keep the first suspect path and delete the rest.
- 	 */
--	xrep_dirtree_keep_one_suspect_path(dl, oc);
-+	return xrep_dirtree_keep_one_suspect_path(dl, oc);
- }
- 
- /*
-@@ -824,7 +837,9 @@ xrep_dirtree(
- 		 * to walk again.
- 		 */
- 		if (!dl->stale) {
--			xrep_dirtree_decide_fate(dl, &oc);
-+			error = xrep_dirtree_decide_fate(dl, &oc);
-+			if (error)
-+				break;
- 
- 			trace_xrep_dirtree_decided_fate(dl, &oc);
- 
+ 	if (cursor->bmap.br_startoff != NULLFILEOFF &&
++	    cursor->bmap.br_startoff <= fileoff &&
+ 	    cursor->if_seq == ifp->if_seq &&
+ 	    cursor->bmap.br_startoff + cursor->bmap.br_blockcount > fileoff)
+ 		return 0;
 
 
