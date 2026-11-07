@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060773;
-	b=mVgp/zJ2qghpbzR+yjUcULrL/rKCiYk72tCGKkAwC9Vyk2IQKJCUcB8dogNMvOBDPOAm
-	 QJ3DcJGfdaymOejVn/Oz353dbm6lhqo9Bm1fr3+/BXL8agNXFy1wvlK07D+yyuIR6hciu
-	 ARcoUAi/VrQSWSF6BZUK/h0TElvy+gTx44ibugx0tLdRQRTLXmze4xtvh7jkqh5sj8X04
-	 qI/2+HM3kuDXubEWbKJpLMHn4gsd8p8EjqO8+JFQPDaP1xLSYxPDmve+U6RssX5yh9UIk
-	 jyq9MXHnXXZuIxfReqWeMkKGIxwvAY/BKrREtUZGKHh85NzMqt685STNjBaysakfRcQ==
+	t=1794060774;
+	b=05YOHBUtONHCSi7BOU4F+Ud9xHDtk4Q3m6XLaPnCAYu3HbGk60BO2UrHFyMUsU+j87Kd
+	 CDEcjsTm8A+q1RdX8T50k8tOu3Ji2VfXGasRDTcDJtm41xOnKHNfXyPGJXi01DDsrkDDF
+	 FU0b5+hi09IklYRkdVuS1s/UNwPEoaZRbes2MRANgFYWRCkvDrfG7tg1u7QLezzXbs+f3
+	 vO5v+yCr6LKgrGhqd7AnRMVO77OuMRwPP6n0+zwhizfzI+A7FGWYlMyf063jHq59B4Dtt
+	 nbmw7GNU3gdEHYmMHdpcZDHAIlaTlrpvvaoMcjJU1N22ZS+P2Iu72Bn70i7PQ4MIVsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060774;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JDPScyye4AegKSI6eyO2VPZ5gS8FRpn96+uoZR67rL0=;
-	b=Oj7OVtdvwJgmMiqnGD6C3/nmeMjYPgMDlfd32KTSsJerZ5MoRvcY+U0B0pvr2yXCW4El
-	 p3LNo6WlOOUeTcnGoB3jmkWk4gJ3AZV7CzkctEUoN+ZQYDryrqwwr52woRgjuTygDt76g
-	 z1NuMYvksnq6ff5TZlYtUEX8Qh/lCfX4w+55y8F0EofyyjDRPympnWaKioVMtIhsMi8wd
-	 CE7QNCiKwXf65shxHniB+2EvEM4FUNFPuiwNlZHwCfSCHh7xgiGH0RHmEoghf4P6l/txr
-	 B014OFl7KYVik69Vx6/G1nmiYaSUTwqpNmqhHvUMggNqQXmB/vtT+3TnFH8PPBp/AIg==
+	bh=mcBGxJdzelyhYfw1PBKSKVGgIy4fMVjJZfnDye5grjE=;
+	b=ljieeHMp3ZECzw+3d54TK+2GEtMOuSEk8dZ0Xy44ppFK2BnCx7ERM0YZ+Fz+Qlek5KYf
+	 Fz7+VRoZKsDQ+2U0vK80z1dnBP7B5GG8Gi0FuAHvWLshdnDl5R5xGlLigdtzOFImDjs7U
+	 UBV/Fv0bFROPkOOA8BR+ZfxK7MePvDDbyutZWxtyljM9agwEkvA1CSBmcDxFODt138dDm
+	 PYWdySVkCV4Wd67PJhXxvHzURBsZeGctyNSxMOEH/RGfwGAqjl0R5aD/R5gDzJBeTIrmw
+	 YyoKYJ+sCS+ZLgmUG9ASY0C+hTxdreau8aRRau0lxoL5p91bEaH0+oN8o/EkHAAxj3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmYN3lCH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kAMI4I+d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA93606A330;
-	Sat,  7 Nov 2026 14:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A639606A326;
+	Sat,  7 Nov 2026 14:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmYN3lCH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C041F1F0089F;
-	Sat,  7 Nov 2026 14:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kAMI4I+d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344E11F0089F;
+	Sat,  7 Nov 2026 14:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060773;
-	bh=JDPScyye4AegKSI6eyO2VPZ5gS8FRpn96+uoZR67rL0=;
+	s=korg; t=1794060774;
+	bh=mcBGxJdzelyhYfw1PBKSKVGgIy4fMVjJZfnDye5grjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HmYN3lCHvKPv5WaqC8i8rj9bpYnXsYStW1iOqZuC+zkJFcQobpZdFPRZjZXNv88/8
-	 bp5+EFWR1Y8xlDL08xR2M4UoLvxb6RwBnBqqJeXXcVXDfkiXVO7ON7iThfi76Echh9
-	 AfO3KmEw9NB0wmXlENF6iSThUI7vmxiOOjCYjVI4=
+	b=kAMI4I+dUYra69W2NQbhGy/f3AExpddyw2PboWJFls9r13tXuW9c7rjWmTr6iRyzc
+	 JX7Mr5bg9b6ymAG9FQVR1gwTZkUKQWyiRyNVznja/v4IJbJBAgJGKOCRE+PifqMjx0
+	 MjdekRlC+xsXWYJwQu/HcKoMdhMUaJkmmfXpOlrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Yuyang Huang <yuyanghuang@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aditya Sherawat <asherawa@qti.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0182/1536] net: prestera: ignore duplicate RIF destruction events
-Date: Sat,  7 Nov 2026 08:36:38 -0500
-Message-ID: <20261107135002.771509568@linuxfoundation.org>
+Subject: [PATCH 6.12 0165/1536] drm/msm/adreno: Add support for A704 GPU
+Date: Sat,  7 Nov 2026 08:36:21 -0500
+Message-ID: <20261107135002.302785134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,42 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuyang Huang <yuyanghuang@google.com>
+From: Aditya Sherawat <asherawa@qti.qualcomm.com>
 
-[ Upstream commit 3cbbc9fa33382d03f2813118e672eb318eba9cde ]
+[ Upstream commit 1f69339da06255a7f8560b4768fff83992c03deb ]
 
-During address teardown, the inetaddr notifier may be called multiple
-times for the same interface. Ignore NETDEV_DOWN events if the RIF has
-already been destroyed, rather than returning -EEXIST, which aborts the
-notifier chain.
+Adreno A704 GPU found in Shikra is an IP reuse of A702 GPU with very
+minimal changes. The only KMD facing difference is the chipid and the
+zap firmware which is specified via devicetree.
 
-Cc: Ido Schimmel <idosch@nvidia.com>
-Cc: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
-Link: https://patch.msgid.link/20260711005405.2861680-2-yuyanghuang@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Just add the new chipid to enable support for A704 GPU in Shikra.
+
+Signed-off-by: Aditya Sherawat <asherawa@qti.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/738931/
+Message-ID: <20260710-shikra-gpu-v6-1-b388ec5dce77@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_router.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/prestera/prestera_router.c b/drivers/net/ethernet/marvell/prestera/prestera_router.c
-index de317179a7dcc..e36d023fe9c30 100644
---- a/drivers/net/ethernet/marvell/prestera/prestera_router.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_router.c
-@@ -1302,10 +1302,8 @@ static int __prestera_inetaddr_port_event(struct net_device *port_dev,
- 		dev_hold(port_dev);
- 		break;
- 	case NETDEV_DOWN:
--		if (!re) {
--			NL_SET_ERR_MSG_MOD(extack, "Can't find RIF");
--			return -EEXIST;
--		}
-+		if (!re)
-+			return 0;
- 		prestera_rif_entry_destroy(port->sw, re);
- 		dev_put(port_dev);
- 		break;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index 8bb23012994c6..829fb746645a8 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1281,7 +1281,7 @@ DECLARE_ADRENO_PROTECT(a730_protect, 48);
+ 
+ static const struct adreno_info a7xx_gpus[] = {
+ 	{
+-		.chip_ids = ADRENO_CHIP_IDS(0x07000200),
++		.chip_ids = ADRENO_CHIP_IDS(0x07000200, 0x07000400),
+ 		.family = ADRENO_6XX_GEN1, /* NOT a mistake! */
+ 		.fw = {
+ 			[ADRENO_FW_SQE] = "a702_sqe.fw",
 -- 
 2.53.0
 
