@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061715;
-	b=SSOFrO9bpS88yX1rXZazI959rtbwfDm7Tmgjm/uWBBPFppZ/28NaRBx99xJT8qoouLHf
-	 yFckJfisXURxfkC70uo9z2tMxFgGXVWhux8sQqPPq9NeX4GUsI8aVNn8O0a1E6PhTdEQZ
-	 QrJ+BbZborU+CQjodcv3oBLaC4N9/23vWIhsYCYAfelPf37PFAEMM1rhpnKe7tKR4YXxE
-	 s0OeKY08nVYu/r6XJ8DajLJQZm8IX4vT3JDZVoalAk4fwTN6YXiahgCJf1o4/YHKjA3Tz
-	 rrLQcx00L07Lzn8G6vevdV5Z5SUerXvx7yFgStyAqpE5PAupBO9GSOsAkeRpwKQ/GFw==
+	t=1794061717;
+	b=oxlGvOSRCP/B4o12P/Ge7Dj9J7QdPK+Z2hN5ehlQUMwIiBfFvtS1CKGFIxVLS2SXoNp4
+	 0LJ0s7ljg9ut7TotO0ysGGdQ9TO8oUt4e+Iy7JVylbbllTqMLNJ+Padh0kAdjeT8WLTJE
+	 Ge+hJeKBqTPIuVSP9NmHN+V0CHMbjtCPmsMa7ZjQ8amMJzAvVmQWisGd2NmD0clPKgq+L
+	 YkxzfQALb93qdvJ7a4oACz2fvp5X8/6CXcx7zQmFHVRHoNvPr+0WMAaDKK7M4kFd9rON3
+	 jxxGBd12DB1Nmw2DCpkhXrKg2bq5y54fAPkrMCTkAttU8kB6Awhje/wTcXcf+9wW/EA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061715;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KIAsBTwqvvbnrmgtvq85OSM9LXbQgvsHkJjNuW8P15Y=;
-	b=XJ1aTIlkQM7f7ESWbO+vUZnGa3mIGavt+PPPgB2SvEeJ9/UTCqjaFaJq7GXT0bQKf+Ej
-	 ONOQ+BqAVyNG32FnP53TGuxihfqGtdRLTVNBAEr2w/xAPgm8/wmoQwyhBaZnRorECvp5H
-	 riLdA51BndXbiUQdSTEDDON6S6QAl0rv8OzDLDJei7bMYiPQUCa3NcZ4s/u/jhe32/DcC
-	 oA4EuRLovk8O4/XZbyh5dMm6jSJB9j4K8S7/ukJwEpbQg5VnxduUUKXL+Jid6rbVIADe9
-	 eG/2QK4oAtjEIdAZHS5bm+EaGkbMKUnQZnE+Dkm4H6Dig6Ga0QZ1mvLbxHar3xd/gaw==
+	bh=hy/qhTnMpci1KFVcNni7vICYOaZpwAIInsQHsOiaKzA=;
+	b=s/QOHIZXIhEHzz/P48AbnSEANY2cq1eDdju1+5D3v3DLGywGKKFhaziLcNCCE8XLLehG
+	 mfQ7zH4IM3HrsRozGFK5q7D9skPtuCzP02BGxoj7ybK8MSY+JpzcXu1DD1q47BLvzzQxu
+	 jXnJhrv1kATCYbgar/2vpxdFKUVZpCMb8GfSdTIepzHhmx50Kc7h7PjQG+/KCot9jeVDF
+	 I6CftxP6osJRSespk8fX8JQGsfXioYll8PUsE/wwKG0C6OUsUBA4ChNcVpYI5SEprc+ni
+	 knnvKxOrZqSDkvNfkzhCswaVk3SoXywtqBf/xK1CO1G3eytY2BY73Kpe06QeOHT3iGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n0+D4/46";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fnLtzIVL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845DF606A32C;
-	Sat,  7 Nov 2026 14:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9D8606A330;
+	Sat,  7 Nov 2026 14:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0+D4/46
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6091F008A1;
-	Sat,  7 Nov 2026 14:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fnLtzIVL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640F01F0089F;
+	Sat,  7 Nov 2026 14:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061715;
-	bh=KIAsBTwqvvbnrmgtvq85OSM9LXbQgvsHkJjNuW8P15Y=;
+	s=korg; t=1794061716;
+	bh=hy/qhTnMpci1KFVcNni7vICYOaZpwAIInsQHsOiaKzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n0+D4/46XjZ29ea3eIFTpc9SbqbTV/1s4h2mPQH75xkKKbouRizvN013SMQbQIn3J
-	 cLzIyAsSVEc6DsKQaXSSr860HtEAoYsUiM99irpd7fS88K+JoQgmI+OkZ+5JFTy1Ek
-	 1bHU4h8IXf2gmr89uKRyt9MazBBVmKbMqEEQCEqo=
+	b=fnLtzIVLS9+ItUiZHQjHfA7h8hNzcp/2nODq2wVXUskeNqCUGDZfrWv3Oucq7HIvv
+	 jUK3RH36h0HLEw7qyYlA/3msfztKOvP/U6FoMVKE8Yog6NEMrmJCl3SjkkbMas+dZt
+	 vGXt80JfdFprtXuFV626RXU3AwtaybTkxR/WQq1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0744/1536] xfs: opportunistically skip btree block checks
-Date: Sat,  7 Nov 2026 08:46:00 -0500
-Message-ID: <20261107135018.424857074@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 0762/1536] NFSD: Do not send CB_RECALL_ANY to NFSv4.0 clients
+Date: Sat,  7 Nov 2026 08:46:18 -0500
+Message-ID: <20261107135018.934490285@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,43 +67,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-commit 4ce244b234c251963fca6dff9de6edf26a209d08 upstream.
+commit 95ff0c079b9cab91f2327beb4197a3bc48c71f55 upstream.
 
-LOLLM notices that both callers of xchk_btree_get_block will return
-early if *pblock is NULL after a successful return.  However,
-xchk_btree_get_block itself can return 0 after flagging a corruption.
-There's no point in continuing after we've found a corruption, so null
-the pointer out.
+deleg_reaper() sends CB_RECALL_ANY to every ACTIVE client holding
+delegations, but CB_RECALL_ANY is an NFSv4.1 operation. An NFSv4.0
+client's callback service accepts only CB_GETATTR and CB_RECALL, so it
+replies OP_ILLEGAL. The decoder maps the unexpected opnum to -EIO, and
+nfsd4_cb_done() marks the client's callback channel down.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: cc3e0948d2686f ("xfs: scrub the shape of a metadata btree")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Nothing brings the channel back. nfsd4_run_cb_work() sets NFSD4_CB_UP
+only for a minor version above zero, and the only nfsd4_probe_callback()
+call site an NFSv4.0 client reaches is nfsd4_setclientid_confirm(). One
+visit from the reaper therefore leaves the channel marked down until the
+client re-establishes its clientid. RENEW then returns
+NFS4ERR_CB_PATH_DOWN for as long as the client holds delegations.
+nfsd4_cb_channel_good() stops returning true, so the client is granted
+no further delegations.
+
+Skip clients at minor version zero.
+
+Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260817-recall-any-keep-count-v5-1-3b2cffce701e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/btree.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/nfsd/nfs4state.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/scrub/btree.c
-+++ b/fs/xfs/scrub/btree.c
-@@ -608,6 +608,14 @@ xchk_btree_get_block(
- 	xfs_btree_get_block(bs->cur, level, pbp);
- 	if (__xfs_btree_check_block(bs->cur, *pblock, level, *pbp)) {
- 		xchk_btree_set_corrupt(bs->sc, bs->cur, level);
-+		/*
-+		 * The btree block fails basic checks, so we know it's corrupt.
-+		 * There's no need to continue looking for corruptions, so we
-+		 * null out pblock.  If *pbp is non-null then it's also
-+		 * attached to the transaction so we won't leak it despite the
-+		 * 0 return code.
-+		 */
-+		*pblock = NULL;
- 		return 0;
- 	}
- 	if (*pbp)
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6977,6 +6977,8 @@ deleg_reaper(struct nfsd_net *nn)
+ 	list_for_each_safe(pos, next, &nn->client_lru) {
+ 		clp = list_entry(pos, struct nfs4_client, cl_lru);
+ 
++		if (clp->cl_minorversion == 0)
++			continue;
+ 		if (clp->cl_state != NFSD4_ACTIVE)
+ 			continue;
+ 		if (list_empty(&clp->cl_delegations))
 
 
