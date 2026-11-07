@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062889;
-	b=cm9KsQwKHXHK4L3yRhixhuyOrex/+QnwIHqiXBkkWqLJrPGbQL9+Fu6p/obgfpsXpsyy
-	 J/kpcsdsDHanToNxqJJgcQLbuBJsZDywCblLPxTSqZ+Il8vfa83oJMrmHcsopxW7R+a1A
-	 4dGBalQ3WHZgei+f42u0DvYeW0s0+c2PQjGFsH72DSI+6wzNibZj6d/C/ZSnYH2OMD296
-	 gyCWgFj0lhokuBB+871RuJmwT6KstGzf4vakf9UX3MEP/1SUatx5Ro246glbzmtBEoco6
-	 kT2TzOgjfdon9hP80wrW56zEDOe+enqH5SuwVbBjp1JEXN7lmFFQHP/hnRyTQ4ULYxg==
+	t=1794062890;
+	b=Agqf0fgSV72epNxKQ9I4X1IOBZDrQ2VYSy6hsmNBcSCAJiyGvcZ+Vs5Y3YfxunKjbzEu
+	 g9EEHBawrHIBfNL17gGvFKSJ4IYMH1estJKKFwSykvZSyxQh7zd5R6oNBil3+xKf1OzsT
+	 H3q9i1jXSosxIJxvjtI1MfhvW6pWKhZY9eBHUDn2QS1z4IAFOkoi2unNX5FWjTSm61Yrt
+	 lqy//IliBAx+Le0MbRarQk53H5SFZXx+eTK3Qd9v4lsnGZlUhWGRgtMrQxUtjbBcoq/El
+	 Hw6StwHz/bNfRxxtxEhpJsQ8s4WMqdDdchSJNBIkCs5Gd6+ai9fv+6VRNrhaKW/gtNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062889;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062890;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZftNqLesApGLMBVlEl81Bd3uzX8cxO0qTvO5RYJuHRk=;
-	b=zGc7l9pSlXzGl1r602ILZqpW/YuA+b9IeWSJ9lDdz28kmgHSzdx+eueOkCUOvtJrW918
-	 3EueiXSZcf2zk2ybY0j+lMo4hPhbBGWhvu3uxnj1tc1rmeKYk3DXVALabvT7TZW8oXcit
-	 IbBgr6qnEtloMqb/r/RRHLLfU5z+TsJsUV5dpC44jpmMvj+DS01roBFX35xdGQaOQKFxv
-	 loGIj7TfPIHHetXUoO7GT+nnoXEY0kG6ry0gihgsAVoBWyUh+HEc0g42XFDI9zXjYqQac
-	 V9zfUMfHoOWdkQFNlkaZc7xjIH9A0gw4pXOwQwNL5VFYv7W0HbUn0rAMiiM/1nLJ0Qw==
+	bh=jduO1YGlCY3FLg9FYiJ1jCxt5ppfWZim+VSA20pseHM=;
+	b=lAy6z0cczSQGA+E8hrdLIZcQCyqvNb9WSEROu+eu+EcnSUZgWgcGGeWwrbndRkgGDZdH
+	 JMfkffB1BKp2XpuIMyfT2/65F/79ClS8neoUmC+os7uinX0CGDSzx+U5cz8bAzcHbdDvu
+	 fV82r67gxw0tIvMHuhgPvn5dU+KWKGFV+EJz2rPTjJkPveEeiWK9DgDjG46g8wfvuxcQl
+	 qan8JkDEeOzTKHd2FJbTPD5f5zamG1VpU63RN7Z/i9JNfmjv99aRzdY7nseJJJNE4P4nC
+	 j/P6oesx9zUplwCmBwzlsAnli8/5PHWiL4zyakxrv1SbEq0fnveId9jUBufI/zOU83Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+9F8gp1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQYn2BpN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1A4606A32C;
-	Sat,  7 Nov 2026 14:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A15606A326;
+	Sat,  7 Nov 2026 14:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+9F8gp1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876ED1F0089F;
-	Sat,  7 Nov 2026 14:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQYn2BpN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27CD1F0089F;
+	Sat,  7 Nov 2026 14:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062888;
-	bh=ZftNqLesApGLMBVlEl81Bd3uzX8cxO0qTvO5RYJuHRk=;
+	s=korg; t=1794062889;
+	bh=jduO1YGlCY3FLg9FYiJ1jCxt5ppfWZim+VSA20pseHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+9F8gp1OQsXU4xzApu/f/3SrI+r1bn7QBuscyGB29GWv++zSxZCXGN/0tp55ozNf
-	 4MGYuzr4qNU0U3y/DKO9OwDx9fKX8jwSMUAD3Y/n0qQmEn1b7c35A3EIb1hdbA66Tp
-	 j9kUt4jUVdOfW2s8wZFlpNNwN+HLhZfAk2VkR9mk=
+	b=eQYn2BpN/QySCyGrG4E38M5smAUxiCoWh7jN4+WcuEJnn7cBSVhYdGi4j4KdW7DkO
+	 V96WGDozRQ7OvzdFkvuAYt0UcHmeMpgexklpA4lw/ThhrXfkYSpDkpHU0TSBIomG/P
+	 3Mv5V7OGttnOEWeRclunSszkB/RZBAuR2G5yvd6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	ChiYuan Huang <cy_huang@richtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 167/869] fpga: Fix of_fpga_mgr_get() reference in fpga_mgr_lock() docs
-Date: Sat,  7 Nov 2026 08:47:29 -0500
-Message-ID: <20261107134857.900816455@linuxfoundation.org>
+Subject: [PATCH 6.18 168/869] regulator: rt6190: Fix runtime PM imbalance in rt6190_out_enable()
+Date: Sat,  7 Nov 2026 08:47:30 -0500
+Message-ID: <20261107134857.927845540@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,39 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit ac02245b0ca28388ba16273f2fa683c90da2e5dc ]
+[ Upstream commit e0d673e5a5c4084f0da90c06ed3b0bc45e47d679 ]
 
-The fpga_mgr_lock() comment lists of_fpga_mgr_put() as a source of a
-manager pointer. The helper which obtains that pointer is
-of_fpga_mgr_get(). Correct the reference.
+In rt6190_out_enable(), pm_runtime_get_sync() is called at the start of
+the function. However, if any subsequent regmap or regulator operation
+fails, the function returns directly without dropping the runtime PM
+reference, causing a runtime PM reference leak.
 
-Fixes: ebf877a51ad7 ("fpga: mgr: separate getting/locking FPGA manager")
+Add an error handling path with pm_runtime_put() to keep the reference
+count balanced on failure.
+
+Fixes: e6999e7cca7e ("regulator: rt6190: Add support for Richtek RT6190 regulator")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20260912100937.86316-1-kmehltretter@gmail.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: ChiYuan Huang <cy_huang@richtek.com>
+Link: https://patch.msgid.link/20260916072541.1968033-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/fpga-mgr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/rt6190-regulator.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/fpga/fpga-mgr.c b/drivers/fpga/fpga-mgr.c
-index 0f4035b089a2e..f6856aabf27d5 100644
---- a/drivers/fpga/fpga-mgr.c
-+++ b/drivers/fpga/fpga-mgr.c
-@@ -744,7 +744,7 @@ EXPORT_SYMBOL_GPL(fpga_mgr_put);
-  * @mgr:	fpga manager
-  *
-  * Given a pointer to FPGA Manager (from fpga_mgr_get() or
-- * of_fpga_mgr_put()) attempt to get the mutex. The user should call
-+ * of_fpga_mgr_get()) attempt to get the mutex. The user should call
-  * fpga_mgr_lock() and verify that it returns 0 before attempting to
-  * program the FPGA.  Likewise, the user should call fpga_mgr_unlock
-  * when done programming the FPGA.
+diff --git a/drivers/regulator/rt6190-regulator.c b/drivers/regulator/rt6190-regulator.c
+index 3883440295edf..bf99e18f6d5b0 100644
+--- a/drivers/regulator/rt6190-regulator.c
++++ b/drivers/regulator/rt6190-regulator.c
+@@ -109,19 +109,27 @@ static int rt6190_out_enable(struct regulator_dev *rdev)
+ 	ret = regmap_raw_read(regmap, RT6190_REG_OUTV, out_cfg,
+ 			      sizeof(out_cfg));
+ 	if (ret)
+-		return ret;
++		goto err_pm_put;
+ 
+ 	ret = regulator_enable_regmap(rdev);
+ 	if (ret)
+-		return ret;
++		goto err_pm_put;
+ 
+ 	ret = regmap_raw_write(regmap, RT6190_REG_OUTV, out_cfg,
+ 			       sizeof(out_cfg));
+ 	if (ret)
+-		return ret;
++		goto err_pm_put;
++
++	ret = regmap_update_bits(regmap, RT6190_REG_SET5, RT6190_ENGCP_MASK,
++				 RT6190_ENGCP_MASK);
++	if (ret)
++		goto err_pm_put;
++
++	return 0;
+ 
+-	return regmap_update_bits(regmap, RT6190_REG_SET5, RT6190_ENGCP_MASK,
+-				  RT6190_ENGCP_MASK);
++err_pm_put:
++	pm_runtime_put(data->dev);
++	return ret;
+ }
+ 
+ static int rt6190_out_disable(struct regulator_dev *rdev)
 -- 
 2.53.0
 
