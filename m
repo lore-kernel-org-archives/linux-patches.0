@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062957;
-	b=jjYv4EHB5dXfPnV9OdYE+lM1uvuJYNo3D4CDn+MQU0rQunZnV45bBpYaKP9oEKwF81/O
-	 Q2I4vgCq+IDBjMqb+nVS+KLocTcz1sw/qJ4QU554GinR0qTBYFNW/XAoUQdwmKvjglc8G
-	 y5xiILZEv+USdvDKoLh9s+cJMm5OUjCuL+VcdTaW3zB+hHoMLxQ3dh0zZM7GNeFmVy5j4
-	 0gT7uOD+6azIDC+/Kp/qujrI+gX0F4oKsdtFymmD53v6b1U39OE58lz3uGCUEptcjh7Ub
-	 j/PPcnPG3NgfUn35TRT9Klisy80i6jkkFxezcUXb73kBhPhRqLWLwaS/CWZBWwVH5Lg==
+	t=1794062958;
+	b=AQ9t8w6PzWRkPC9AOP1+a2pw+kNHyLEcgsSckWoY58GRVf6iBYkQW48iGUYcaq7wDto4
+	 Bo5Ov8HQxnB3khJaFhteTrKSl81ENyNZhavSEs/OKUytOhe77iEowt6QRQWzAE8nLsCXH
+	 c07fr8JdN8LTvq71mhO6aMja4jUHm+DJ8v7FqMjHsZU6T0afi8Hp+uDOEH0bZEi3uDjRt
+	 0Fg7h1cjdMOILbU5Bq/ch9K7gZZjKNVHpAgpFl+E7okeLXsyZmFM3esrZj1uQlP6veL2T
+	 4aAsLroovb0Fu3afnyuKfxD14FrN3oNvvMEEOH/TpQ/6WjlWVd9QERcNzaPYJAgj3qA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062957;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5sxvMqtQ0yZuUXmv8itz6mhFfqrTZaq4Cgn1XVNU5Bs=;
-	b=RALwQjTVntgdZ8FkzG/tE28BHhVJgQ4zjbZwz1tMXjbgp+14rhUkASEUHx4MInHNxRDt
-	 utljQo1gi2pQI/X39w48mOSzFbhHyOoyuCEG3TAdkDdrMJqS9FdzWd3mK7FhrPxPkNc1f
-	 37mLdCOeAhNKCjZpxod+2HKiLdcQqe1rr/uUOl33FRstJYyaHCnukknAIlh79nEr3qPCt
-	 IuADpjPnrfX8ANuMQVQjDwSOSaiK9bwLJe2bkRyN/yNrX0VZeOIh8Goy+TIbMUedggkyQ
-	 JxvUlJnwtsWGXIZciQ78ShIIZ94ofmewgI8KnkJFeRnpwISX6Pi3ck45AP3lpu57ZWw==
+	bh=ZyaiAjhKzkyIRCYqdHD9Ko7hIQ2aL74EGJx58pkSZ80=;
+	b=rtXGCoFqRyPROF3u38bw6MA6IvTMqH2FneGZ5oVBYEskUyuiFuGk/OxTQ+CNjZp2P9cf
+	 Re6iOeO80cXRG2VDrdSuYYr3csS7aC3TwBxyxG9K374/hZyQo5KGVq0VwZYoJUa88X0nt
+	 HgSVD3+fRUDODIyUNK/PnICBwRew3fq0cgWUB/EOHMZ9viRvNZ9nd4ZUrIPEIyE7/94Qo
+	 LaRGUKBlXbADVMPkHyc/8tGTCYYxK1i9NzFbb+U9psBUaKHcc6GYoaYoRCo512t3zSaza
+	 t/0uJbiwfPF2Cd25vjDHwvM9oP0WvGpMe3kTVCmYzfSYpDNENfGlP94K0Pcgq1Hssxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttC7SMGd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m1vzWJij;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A0D606A33F;
-	Sat,  7 Nov 2026 14:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61F0606D808;
+	Sat,  7 Nov 2026 14:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttC7SMGd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DB31F008A2;
-	Sat,  7 Nov 2026 14:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m1vzWJij
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953F81F008A5;
+	Sat,  7 Nov 2026 14:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062956;
-	bh=5sxvMqtQ0yZuUXmv8itz6mhFfqrTZaq4Cgn1XVNU5Bs=;
+	s=korg; t=1794062957;
+	bh=ZyaiAjhKzkyIRCYqdHD9Ko7hIQ2aL74EGJx58pkSZ80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ttC7SMGdfkUrojNQlYwYg6CIZSSteufFacVEjD3FCz6nvTUGFw7zaECAcI1Skzqhu
-	 rFo78xSc7QXrS2uAWRryl7GUrgHtEKVXwqe3lGeI3asDb2rgdGGougjTwbLuABSEwz
-	 J0w/Xai0vl+xIQURNW8EKH5+HPsTUrvu78UYbjo0=
+	b=m1vzWJijSQmj7faUBHgqR0uAiyXTMbQGfAu9ZFmevNTJ7+AaaOX973QlHyB0Kbo7K
+	 SMRRaiauKtfZ8VErvl4lgGz4LgznYqKFK3Y1DdQHnt2GHSL+2mqE/sI1vljd2is3W7
+	 pJngcCwAoOc9K28jIS1X2svgaTyQ4lQEpcnEpTBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Eugen Hristev <ehristev@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 219/869] media: atmel-isi: release unregistered video device on remove
-Date: Sat,  7 Nov 2026 08:48:21 -0500
-Message-ID: <20261107134859.340336594@linuxfoundation.org>
+Subject: [PATCH 6.18 220/869] ASoC: fsl_xcvr: free IRQ before canceling reset work
+Date: Sat,  7 Nov 2026 08:48:22 -0500
+Message-ID: <20261107134859.367076519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,68 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit c0a6d78dad3af1def80f04df82bfd70456ec406c ]
+[ Upstream commit 83701fdb2d8d644c547773791da48d6ecb3a5e1d ]
 
-atmel_isi_probe() allocates the video device before registering the
-V4L2 async notifier. The video device is registered later from the
-notifier complete callback once the remote subdevice has been bound.
+irq0_isr() schedules work_rst on a preamble error, and reset_rx_work()
+touches regmap.  remove() cancels that work while the IRQ is still
+registered, so the handler can queue it again during teardown.  The IRQ
+is also requested before INIT_WORK() and spin_lock_init().  Probe
+failure does not call remove(), so freeing the IRQ leaves queued work
+running, and an earlier interrupt schedules uninitialized work.
 
-The remove path relies on the notifier unbind callback to unregister
-the video device. However, if the remote subdevice is never bound, or
-the complete callback fails before video_register_device() succeeds,
-the video device remains unregistered. In that case the unbind path
-does not release the object allocated by video_device_alloc(), and the
-remove path leaks it.
+Initialize the lock and devm_work_autocancel() before the IRQ.  Failed
+probe then frees the IRQ and cancels the work.  Unbind frees the IRQ
+before cancel_work_sync() and pm_runtime_disable().
 
-Only unregister the video device from the unbind callback when it has
-actually been registered, and clear the driver pointer afterwards.
-After unregistering and cleaning up the notifier, release the video
-device directly if the pointer is still present. This covers devices
-that were allocated but never registered while avoiding a second
-release of successfully registered devices.
-
-This issue was found by manual code inspection.
-
-Fixes: d12c9088c0b2a ("[media] atmel-isi: remove dependency of the soc-camera framework")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 1e5d0f106164 ("ASoC: fsl_xcvr: reset RX dpath after wrong preamble")
+Cc: stable@vger.kernel.org # 6.13+
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Link: https://patch.msgid.link/20260923054017.93553-1-mhun512@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/atmel/atmel-isi.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_xcvr.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/platform/atmel/atmel-isi.c b/drivers/media/platform/atmel/atmel-isi.c
-index a05a744cbb756..6a7e240c5b180 100644
---- a/drivers/media/platform/atmel/atmel-isi.c
-+++ b/drivers/media/platform/atmel/atmel-isi.c
-@@ -1121,10 +1121,13 @@ static void isi_graph_notify_unbind(struct v4l2_async_notifier *notifier,
- {
- 	struct atmel_isi *isi = notifier_to_isi(notifier);
+diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
+index d7a823384c08a..08683f989cee2 100644
+--- a/sound/soc/fsl/fsl_xcvr.c
++++ b/sound/soc/fsl/fsl_xcvr.c
+@@ -3,6 +3,7 @@
  
-+	if (!video_is_registered(isi->vdev))
-+		return;
+ #include <linux/bitrev.h>
+ #include <linux/clk.h>
++#include <linux/devm-helpers.h>
+ #include <linux/firmware.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
+@@ -57,6 +58,7 @@ struct fsl_xcvr {
+ 	struct snd_aes_iec958 tx_iec958;
+ 	u8 cap_ds[FSL_XCVR_CAPDS_SIZE];
+ 	struct work_struct work_rst;
++	int irq;
+ 	spinlock_t lock; /* Protect hw_reset and trigger */
+ 	struct snd_pcm_hw_constraint_list spdif_constr_rates;
+ 	u32 spdif_constr_rates_list[SPDIF_NUM_RATES];
+@@ -1555,7 +1557,7 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
+ 	struct fsl_xcvr *xcvr;
+ 	struct resource *rx_res, *tx_res;
+ 	void __iomem *regs;
+-	int ret, irq;
++	int ret;
+ 
+ 	xcvr = devm_kzalloc(dev, sizeof(*xcvr), GFP_KERNEL);
+ 	if (!xcvr)
+@@ -1643,12 +1645,22 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, PTR_ERR(xcvr->reset),
+ 				     "failed to get XCVR reset control\n");
+ 
++	/*
++	 * irq0_isr() schedules work_rst. Prepare the work and its lock
++	 * before the IRQ, and register the cancel action first so a failed
++	 * probe frees the IRQ and then cancels any queued work.
++	 */
++	spin_lock_init(&xcvr->lock);
++	ret = devm_work_autocancel(dev, &xcvr->work_rst, reset_rx_work);
++	if (ret)
++		return ret;
 +
- 	dev_dbg(isi->dev, "Removing %s\n", video_device_node_name(isi->vdev));
+ 	/* get IRQs */
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
++	xcvr->irq = platform_get_irq(pdev, 0);
++	if (xcvr->irq < 0)
++		return xcvr->irq;
  
--	/* Checks internally if vdev have been init or not */
- 	video_unregister_device(isi->vdev);
-+	isi->vdev = NULL;
+-	ret = devm_request_irq(dev, irq, irq0_isr, 0, pdev->name, xcvr);
++	ret = devm_request_irq(dev, xcvr->irq, irq0_isr, 0, pdev->name, xcvr);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "failed to claim IRQ0\n");
+ 
+@@ -1689,8 +1701,6 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
+ 			fsl_xcvr_comp.name);
+ 	}
+ 
+-	INIT_WORK(&xcvr->work_rst, reset_rx_work);
+-	spin_lock_init(&xcvr->lock);
+ 	return ret;
  }
  
- static int isi_graph_notify_bound(struct v4l2_async_notifier *notifier,
-@@ -1323,6 +1326,8 @@ static void atmel_isi_remove(struct platform_device *pdev)
+@@ -1698,6 +1708,8 @@ static void fsl_xcvr_remove(struct platform_device *pdev)
+ {
+ 	struct fsl_xcvr *xcvr = dev_get_drvdata(&pdev->dev);
+ 
++	/* Free the IRQ first so irq0_isr() cannot requeue work_rst. */
++	devm_free_irq(&pdev->dev, xcvr->irq, xcvr);
+ 	cancel_work_sync(&xcvr->work_rst);
  	pm_runtime_disable(&pdev->dev);
- 	v4l2_async_nf_unregister(&isi->notifier);
- 	v4l2_async_nf_cleanup(&isi->notifier);
-+	if (isi->vdev)
-+		video_device_release(isi->vdev);
- 	v4l2_device_unregister(&isi->v4l2_dev);
  }
- 
 -- 
 2.53.0
 
