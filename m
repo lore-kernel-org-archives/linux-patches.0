@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062460;
-	b=1wp7zDj3IHZ91g46imeCedOaweSpRLpQnF4drUHvMX1umw/AH6kxEftEw4aVYer0zC5r
-	 j8EHrRGjmoEkGGS8bijAiebu56WDrvaKRaKoX3QITgVxY3JWQO4Etzzp4UTyzbiRlwNqu
-	 NBYiVTfLyXiWRnIKfL92wVThItg2T/hKrNGchDmvOOEMsvqeUAGhVQ24gr90QeHuojzTH
-	 M+AX3rXw/5kPBhf+qIXHrWtu7FsR9TZyPEnFuiD/5iGCnFSAEUKvz0ykhZcA8TYYV+uhW
-	 UowsrpqpYICtwR9Jyrzaod4jddfImvpeGKTGXoNe53m0V/xgtpEaaX5Yt4CTaD3EwwQ==
+	t=1794062462;
+	b=raVGSZun3eYa1LhoIQbLLcbGqF+xQTTvA4hnZbF7mSummxu6pSmBJoZMMgy75aPje2Jn
+	 VLYcNMIQnLoALCqpcC723/uuUBi+xAtutdHiG1B0iv8iOUQikC7Sp+PscGmjUSkqPfSRe
+	 Rcn2AeKnjtaM9lsG6tgkyImgA8Op9/pFLLfdC2VStLaIhshtGVfa6L/Q8h5ajCpWFxqv1
+	 pUsedoFw2mBfHOsnOUuNl5yW26mopmCmh29yhqwwVPXhEALTSgeP/nLPKD0VOHJnKJ4n0
+	 WZ//DVjdeXjDZ/iOqabDe/vlYZWmsLKyI8ahyJpA/e44T0K6xphKn+zluwceqS/2pbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062460;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EtYzySafA6aYNGueThD/Sc5k+DrFMsMA46iDgxtL2Sw=;
-	b=Rgd0Js1Ra/YNr3kq6Iirnc2nH18XxlVKxv1pQcLo8tTOBYx6+KQeTh05+ZCabEXtrM9b
-	 FwFivnrrlz31pn1XGEGVpQ3UMbQ+0bkHjfgQi2s77mVGQlr9k1DkH0dR6OAnZWYQDtwvK
-	 B0tELmroBiTnGGS84WtNMh4LsAL0rzbOSI9Zc0FZ88FIiRUL75ZZBDtbdTnblLt18MiEC
-	 /hbYyOHdu/2/09QRrwOBS3pEVZMk9pHxPIJEuTQ6CY2EVKgciLTuBagqFI5z4SHxmmVhA
-	 cM3rY1KeORyRbw+EQl2II6RteObpTF6f2frK/gNwui4Yo9GQ7IYv60DgrtEeqWqsRIg==
+	bh=SUCfv7IrVHsfYvypXDf3mHAHyf2hsqxtz0Jz8D3s1+Q=;
+	b=zQYiQR/pAxKpVknQ5HQ01j90seYPksYigJgPspGs4rllbaNhGvqz7K28oKP2COprjw5h
+	 iIK+igKX636KSrJH2LcjU2PeDUSOYHKKxFhdLds2SVCMgthHofsgbWDsAEQp8P0K75jBJ
+	 sCNWqMS2OWVSucnAXSsibV4aeTiKIZHahDTxGnnElwtjodHFsj3jU6V2fpGJE63hF2M3i
+	 iBd+gz2GPZvLl8WM2tBuRYUoVtEWQNYEbdBz3hakqZBwBR4VGKPmKMB8hxRE+d5KejwAG
+	 31NcZ1lBlaNQTFjW/H2lFIonXMNRSXdVijSmo/CwE92XyOEZjkUYMLyy+tgsp94UFKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbi3lp9G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B/CEoxFE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B892606A642;
-	Sat,  7 Nov 2026 14:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA62B606A642;
+	Sat,  7 Nov 2026 14:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbi3lp9G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5AB1F0089F;
-	Sat,  7 Nov 2026 14:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B/CEoxFE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774071F0089F;
+	Sat,  7 Nov 2026 14:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062460;
-	bh=EtYzySafA6aYNGueThD/Sc5k+DrFMsMA46iDgxtL2Sw=;
+	s=korg; t=1794062461;
+	bh=SUCfv7IrVHsfYvypXDf3mHAHyf2hsqxtz0Jz8D3s1+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gbi3lp9Gz7Pgla7sRHQKOq1JzyVR+KhHHwb5rDrKNSf0Tk/yBF7cOfjktv3AGSk1k
-	 YGXAG7dimDWdnT6V8EcpyZdIxCsYA2oWN36Fwa0xAuky4OtrP1JqZkqEl8HRB+tfHW
-	 uiPUbBJwYrrJxfg0sjlrQPNaymS/G12f+Dv3kfY0=
+	b=B/CEoxFEdkHMxt7RtMF9xjZP/0U+e08CzY7CfBt3BZp0LlsfLg9GH7+EHRJUwi1xk
+	 czJNUTLTgG/m5JF3hx3dUxURVr9VRRovPaEp/1hNIZa2L6Nl31DyLTu2Tm6t5aJ/iR
+	 ht5rCurRhkwmZ1pQNm8FgEMuv83g/TX0XIDrZl5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
-	Lee Jones <lee@kernel.org>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1318/1536] mfd: tps65217: Check return value when masking interrupt sources
-Date: Sat,  7 Nov 2026 08:55:34 -0500
-Message-ID: <20261107135034.826053568@linuxfoundation.org>
+Subject: [PATCH 6.12 1360/1536] f2fs: flush SIT journal during filesystem resize
+Date: Sat,  7 Nov 2026 08:56:16 -0500
+Message-ID: <20261107135036.031197792@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,48 +71,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit 66ed12c1e5a986bee1dc63f9bd9c7f068138a69a ]
+[ Upstream commit a6ede405455106bf42164ec96fd84008c5aabdd9 ]
 
-tps65217_irq_init() ignores the error returned by
-tps65217_set_bits() when masking all interrupt sources. A failed
-register write leaves the driver's software mask out of sync with the
-hardware and may result in spurious interrupts.
+During a filesystem resize, SBI_IS_RESIZEFS prevents new SIT entries
+from being added to the journal and forces existing entries to the SIT
+area. However, f2fs_flush_sit_entries() returns early when there are no
+new dirty sentries, leaving existing journal entries behind.
 
-Check the return value and propagate the error to the caller.
+After the main area shrinks, a later checkpoint can access a journal
+entry whose segment number is outside the new geometry and trigger
+f2fs_bug_on().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Only take the zero-dirty fast path when entries may be written back to
+the journal. This lets resize drain existing entries through
+remove_sits_in_journal() even when there are no new dirty sentries.
 
-Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
-Link: https://patch.msgid.link/20261002113624.178588-3-r.zhambakiev@prosoftsystems.ru
-Signed-off-by: Lee Jones <lee@kernel.org>
+Cc: stable@kernel.org
+Fixes: 04f0b2eaa3b3 ("f2fs: ioctl for removing a range from F2FS")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65217.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
-index a88dd69a2febc..d4f09e5bf24cd 100644
---- a/drivers/mfd/tps65217.c
-+++ b/drivers/mfd/tps65217.c
-@@ -155,8 +155,12 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 1ec43e1537fb2..6abe435b9f0d8 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -4553,7 +4553,7 @@ void f2fs_flush_sit_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
  
- 	/* Mask all interrupt sources */
- 	tps->irq_mask = TPS65217_INT_MASK;
--	tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
--			  TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
-+	ret = tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
-+				TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
-+	if (ret) {
-+		dev_err(tps->dev, "Failed to mask interrupt sources: %d\n", ret);
-+		return ret;
-+	}
+ 	down_write(&sit_i->sentry_lock);
  
- 	tps->irq_domain = irq_domain_add_linear(tps->dev->of_node,
- 		TPS65217_NUM_IRQ, &tps65217_irq_domain_ops, tps);
+-	if (!sit_i->dirty_sentries)
++	if (!sit_i->dirty_sentries && to_journal)
+ 		goto out;
+ 
+ 	/*
 -- 
 2.53.0
 
