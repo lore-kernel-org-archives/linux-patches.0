@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064440;
-	b=aK1FW0v08QVM9n8m5oSWdgV6msXg3clc/qW8WXavmZ5usf9KoFn9zvHmW9K205x48SR1
-	 5FnbLUJLJZXLP4G8t+HC4JxPrBDQ8fZ2xTCTMFDhXQiebM17LSoRh/fl3XRORC+r3VoXQ
-	 3aZo56GKyIQt8rZH8cSL7l9MncfaKEXKiVuP9Vm1xcVijRRg7IQJJtVqtTJaC7Ky6v+q4
-	 o4bBfTyTyrM+KwFoSNHRYc88ZnyR4lgRWSDhhKx3sFUJPKKup90fqECAovf+rstW4N93w
-	 ZjMpfwz21RITUBK+2SELBE5stHvv5QLss2Ar3bpvoSZTtZt1opAAHYmHkpcfHF7q8NQ==
+	t=1794064442;
+	b=VDN4TJopJ3jZsYquBCVsQ5CsEq03XrxPGJZCyLUB4upxkiovfq4WYYQ/zganLZx0Kb0Y
+	 4SRMRZjdxNqRG0YB1W/D6d5xaCMW831XB8TVOG/AWwm9duTkZZQ07mIMmLDhOKAbD7Y8B
+	 4WZV8ohPtdMo3UyNgZu363S1KjCfsPDB7hdfN50hSoLHCvG6gIlZTpOl4cU38EMQPqIlf
+	 P4eYji6Lqe4G5M7Q3ISAdyhj4Pg8xWX+vAqoryXL1+uJvWVTcM4EYjwdAx4G/YvHaEz9f
+	 RxlDVLadJ249Ih2C/N43ZQ0v7UfiEom9CRK0O6sCtoGSFlvCuC2GVZnqGkMgm03905A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064440;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zuEy4cm0nfI+QJxutiRXDn4TzisQMFrtP7E4tV8JNj0=;
-	b=Pue+Gl87DCgBJWN7tnnKrbSyyBDPQ2Pn2z/4TEhk4vIX/a+XuD99gMzR5jcJRBLxYjUg
-	 kmwWC0HDnrLoI3H+yrcDsIuP3pSyNwnSKmx2HUnj06HcpD/76irhdm1S/Vktus3omNQb0
-	 aErVFiLZvEI9mZP7DrJ1zmiiCQdvhw160E6nsQlv1l6ELvXMzv9B9Ifz6q3B4zTDHln7p
-	 nDYzeaeGKvg6l6q5et+/g3mhmKiNF7dPXlgb5JDHgWXXWn/bFB/FlXHpeAfU9mcvDMGbE
-	 X0EJWOI9E2fat4DpQljkckafa2p5DA+ZV5OsDsL4MS/HeqsqI3xs2oh0Mme1vzVEFwQ==
+	bh=WiehN63RQHjh5NbgcC1lAw2otGKfsREWXWV5tYZWMQg=;
+	b=UHmXyyrBTobBtU4t0vV7vHOqrRAkIOi3M2hoY6qPY3ysngQdiFCyEaj3R8DtssfHgk3i
+	 NhIHDuDwXL+W4M9sUvkSKDGAIROcdHlp+qc4oJvATzopIaLq4NVeh5rzVaFx4NoG2AKgo
+	 LLSC7T/No1InmkRP4GrzJKps/+nQ4PtDx40eXc8KeVdtJRG25gfnUxe4snPplN1+er51Y
+	 l/97raVBuK4usugXLkPmoa0aV5qXDNtDZxka1X+k4ilNRahAeX9Oz8EpLOyiIhtzwAkZN
+	 q4tmOYB6PQd9oL3I5qr0t75gGLZIF+9twZ4wN3W8GlmGq1j08g35Xjak2JR4KXHHhOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cf9tIA9C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hKIhSEAS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C1A606A9DB;
-	Sat,  7 Nov 2026 15:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE074606A334;
+	Sat,  7 Nov 2026 15:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cf9tIA9C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08D31F0089F;
-	Sat,  7 Nov 2026 15:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hKIhSEAS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9A81F0089F;
+	Sat,  7 Nov 2026 15:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064440;
-	bh=zuEy4cm0nfI+QJxutiRXDn4TzisQMFrtP7E4tV8JNj0=;
+	s=korg; t=1794064441;
+	bh=WiehN63RQHjh5NbgcC1lAw2otGKfsREWXWV5tYZWMQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cf9tIA9CUi1C5G6vw5tMH+CfAtY44ZTGaLMKqRvDGqPROcreq0qVgFrKylzTetpBk
-	 xwOoqAjlUH9Ycl+B6CUhcxZj/qTItyQ40wJBUhiMSlflqDrmkGz/jePtO1YBleplfW
-	 +pJRbpf6+ohHtPgE6/yDxC9jpLJHgxWmXfIz4KMg=
+	b=hKIhSEASHfCcpPb9UyUJPIcwfntNu6SPrIhKsgeEzIg6JNCwQbhXKOXYJQPgFpQ9M
+	 3D4ActqDLWGj02DtQd6gLaaDtJgA3DXvjnaUBuMoZKUCSsOiHV+08E1NBpHrPNfGZe
+	 hHy50fNlOhpu0EYuT6PZ95mrDWcd5CPItqrpZkx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Teigland <teigland@redhat.com>,
-	Alexander Aring <aahringo@redhat.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alistair Francis <alistair@alistair23.me>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0486/1257] dlm: fix send buffer backpressure handling
-Date: Sat,  7 Nov 2026 08:46:22 -0500
-Message-ID: <20261107134952.867581041@linuxfoundation.org>
+Subject: [PATCH 7.3 0487/1257] PCI/DOE: Fix double free of a duplicate features sysfs name
+Date: Sat,  7 Nov 2026 08:46:23 -0500
+Message-ID: <20261107134952.895096428@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,86 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit e234d7625598b2eaded84fa99f53c8062650828f ]
+[ Upstream commit 624ee129620a054466b6a29d98cd7a40ccc239cd ]
 
-lowcomms.c tests and clears SOCKWQ_ASYNC_NOSPACE in con->sock->flags,
-but this bit has not been stored there for ten years.
+When a DOE feature is reported twice, sysfs_add_file_to_group() fails
+with -EEXIST for the second copy and pci_doe_sysfs_feature_populate()
+frees that attribute's name, but leaves the pointer in place.
+pci_doe_sysfs_feature_remove() frees every name again when the device
+is removed, or when a later feature fails to register, so the name is
+freed twice:
 
-Commit 9cd3e072b0be ("net: rename SOCK_ASYNC_NOSPACE and
-SOCK_ASYNC_WAITDATA") mechanically renamed the two dlm users, then
-commit ceb5d58b2170 ("net: fix sock_wake_async() rcu protection") moved
-the bit from socket->flags to the RCU protected socket_wq->flags, where
-it is reachable only through sk_set_bit() and sk_clear_bit(), and is
-only maintained for sockets having SOCK_FASYNC set.  dlm uses kernel
-sockets, which never have SOCK_FASYNC set, and never sets the bit
-itself, so the test in send_to_sock() has been false ever since.
+  BUG: KASAN: double-free in pci_doe_sysfs_feature_remove+0x117/0x1b0
+  Call Trace:
+   kfree+0x11a/0x420
+   pci_doe_sysfs_feature_remove+0x117/0x1b0
+   pci_doe_sysfs_teardown+0x90/0xf0
+   pci_remove_bus_device+0x128/0x2e0
+   pci_stop_and_remove_bus_device_locked+0x1d/0x30
+   remove_store+0xd2/0xf0
 
-The consequence is that when sock_sendmsg() returns -EAGAIN because the
-socket send buffer is full, dlm no longer sets CF_APP_LIMITED, does not
-increment sk_write_pending, and does not return DLM_IO_END to wait for
-lowcomms_write_space().  It returns DLM_IO_RESCHED instead, and
-process_send_sockets() immediately requeues the send work.  A connection
-to a peer that is slow to drain thus keeps cycling through
-sock_sendmsg() and -EAGAIN, burning CPU, instead of sleeping until TCP
-reports that space is available again.
+Clear the pointer after freeing the name.
 
-Test SOCK_NOSPACE instead.  This is the bit that lives in socket->flags,
-that TCP sets whenever sendmsg() returns -EAGAIN for lack of send buffer
-space (tcp_sendmsg_locked() and sk_stream_wait_memory()), and that
-lowcomms_write_space() already clears.  This restores the semantics dlm
-had before the bit moved.
-
-Also remove the clear_bit() of SOCKWQ_ASYNC_NOSPACE from
-lowcomms_write_space(), for the same reason.
-
-SCTP connections are deliberately left as they are.  SCTP does not set
-SOCK_NOSPACE, and it never calls sk->sk_write_space(): sctp_wfree() ends
-up in sctp_wake_up_waiters(), which calls sctp_write_space() directly.
-lowcomms_write_space() is thus never invoked for an SCTP connection, and
-the test added here stays false, so send_to_sock() keeps returning
-DLM_IO_RESCHED as it does today.  This is the only safe behavior, as
-returning DLM_IO_END would wait for a callback that never comes.
-
-Fixes: ceb5d58b2170 ("net: fix sock_wake_async() rcu protection")
+Fixes: 2311ab1820fe ("PCI/DOE: Expose DOE features via sysfs")
+Suggested-by: Alistair Francis <alistair@alistair23.me>
+Assisted-by: LLM
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alistair Francis <alistair@alistair23.me>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Cc: David Teigland <teigland@redhat.com>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20260929071743.23624-2-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20261003102221.59894-1-donggeunyoo.kernel@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lowcomms.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/pci/doe.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
-index 2aff1c7c17de4..abe9ae4c643fa 100644
---- a/fs/dlm/lowcomms.c
-+++ b/fs/dlm/lowcomms.c
-@@ -522,10 +522,8 @@ static void lowcomms_write_space(struct sock *sk)
- 	clear_bit(SOCK_NOSPACE, &con->sock->flags);
+diff --git a/drivers/pci/doe.c b/drivers/pci/doe.c
+index ac95b1d2d9997..6b5d9ba8e9697 100644
+--- a/drivers/pci/doe.c
++++ b/drivers/pci/doe.c
+@@ -208,8 +208,9 @@ static int pci_doe_sysfs_feature_populate(struct pci_dev *pdev,
+ 				pci_warn(pdev, "Failed adding %s to sysfs group\n",
+ 					 attrs[i].attr.name);
+ 				goto fail;
+-			} else
+-				kfree(attrs[i].attr.name);
++			}
++			kfree(attrs[i].attr.name);
++			attrs[i].attr.name = NULL;
+ 		}
+ 	}
  
- 	spin_lock_bh(&con->writequeue_lock);
--	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags)) {
-+	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags))
- 		con->sock->sk->sk_write_pending--;
--		clear_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags);
--	}
- 
- 	lowcomms_queue_swork(con);
- 	spin_unlock_bh(&con->writequeue_lock);
-@@ -1391,7 +1389,7 @@ static int send_to_sock(struct connection *con)
- 	if (ret == -EAGAIN || ret == 0) {
- 		lock_sock(con->sock->sk);
- 		spin_lock_bh(&con->writequeue_lock);
--		if (test_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags) &&
-+		if (test_bit(SOCK_NOSPACE, &con->sock->flags) &&
- 		    !test_and_set_bit(CF_APP_LIMITED, &con->flags)) {
- 			/* Notify TCP that we're limited by the
- 			 * application window size.
 -- 
 2.53.0
 
