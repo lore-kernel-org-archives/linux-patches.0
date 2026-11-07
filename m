@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063303;
-	b=0sSiL2A9wtmd5LyodVF+ebUVB7QEKJ2sTyBU2xBp2lBTRfeu8FhDe+BodetUTARtbdzB
-	 vckb3OW3juR6h6YpndP5ix66JGXILTpiyuvHfflNMtbcUS0hfhdH9GrDJkWBDfnj7myO5
-	 HwjAJqsskIdPLnvDrPbPfWBBL+SC6xHeclIsQSZRkyYuhnStY2m6mOT0S1JnvUvx+lE1q
-	 u//6fI2XunuhYBJbWKXMV8xTqkPV1x/B/y5T6pT9rQ39XF01nGL5IvDm4gdrt3LDcGTLX
-	 DE5VLOjeF9EBepASG0aNlocN7bLcHviq0pcN0/+JkFSiFL1rT1cIIwKfzbORRQ6kL6A==
+	t=1794063305;
+	b=cXW+zwaN0iZNdzCWjKB01MSBPefGsoJZnG1wvcuKUqUooJdFIw7qmE2W2WfFFNK7S0Ez
+	 DLfWlNCZmsthgTfYTfNPtf6Cq0+T8r0ib/NXZURF5G8xp9J5bjwSWwcUU+KFRQZy0dOtq
+	 YxLk2dmipTr9H1GySqz+yRsiJJqJurnV/PLc88ucU9usmZESXWxAYsuPxsexPRi+arsFN
+	 ngG3Njnj2Hn/0B9I+IvL7sG6wy7wf1F1iUSD86HwyjfTEe9X4cVWCQGn1ZhsL/6YUGCIg
+	 cwB3z7YJ77scJcj+bxav7bw10V/MDB4a91A5UKe3KCBsG4nG6QPzrFRwBwY/Ey77jUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063305;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=3hp36+nP8H+X41127efY7JIzX4y3KEXJ3Q+7R1pMJQs=;
-	b=ntHlt5tVciyMV4f4pu3k66t+IRq/DTSRzPNQ6X7ZuDzEcztCBNxCJyzAnpGkl+zYWx0x
-	 azN13neX37ONwhILmzXFmjtmTlV+xBz2c9HwJpCu3Xks45TIKu1cKxJb9/LJGyWEV3e8k
-	 GG2rzieNo0hC4mIKC6tVfQGL7dJ0auwv2WtQF4CHG8NNtVVmwXiv2QfM3jJCFymO2MWKG
-	 kJS7bhe3DuEpjIon91oxy2AdSyfpZXJF/moU+fINYWwIyP/xODvOdnxNSE7tZr9beT5Qu
-	 D7VQgOieB2yLlSXfHY2MyJZswco2Bc3QonTeRFulF9jZZpdgTysV9DaxpBuiZsATJ6A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=jpnGQjLj7+OZvTObVUykEv/rCT4SeNDpwQoOZtYnw3w=;
+	b=CSIjAMdL8dR8pt4NC8xpnK28h+gKbJw3pBrtt+9u3Ig6OcC8eOxXYnA2bgyq9Cxueuwr
+	 KvrUmoKMMIFrG0iyzuKO6sUHBLArs0ZSBjUwaOe9CFvIseflbXI44iQoa4svZH6+qppFi
+	 oksmJ6xl9mmXtjYN3LWA80YkhyKt7XDKTQEx72ewQt8XqL9yTtNUkHgyR19HBAF1Mvp4Y
+	 rVpwfzdLojAXCbqzjhYZQciEPpnwu33yKQPEG3xd3AO39qUDY4a/n4CnrxRURu5Zw/zHP
+	 bgMTN1t1ZUwj/o5k2kAkZezh7b0dLlYhL7BjPe1I8XDZkdGnJn9kLByKGJm1R9yQ3iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Eygt5/BC";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EAgqnfrI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C83D606D833;
-	Sat,  7 Nov 2026 14:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52F3606A334;
+	Sat,  7 Nov 2026 14:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eygt5/BC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7391F008A1;
-	Sat,  7 Nov 2026 14:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EAgqnfrI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7301B1F008A1;
+	Sat,  7 Nov 2026 14:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063303;
-	bh=3hp36+nP8H+X41127efY7JIzX4y3KEXJ3Q+7R1pMJQs=;
+	s=korg; t=1794063304;
+	bh=jpnGQjLj7+OZvTObVUykEv/rCT4SeNDpwQoOZtYnw3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eygt5/BC0eoliQtLavaJ1AvXm473AwNldwbAOV0Pp5dPijy9js6TdyxRUVvRdxGao
-	 Y5Db11Ya7FsjipCDpjsRIg6RhIsRIEY9wpwHVsNeTloJKlMTD9AVEqliV9mbvwd6gr
-	 GkBDNRkPHfzqaROyk/53lD1nAAMWkr3IOdtTMgDk=
+	b=EAgqnfrIboe+6+8QwA60/40SjPulUzkp3tZhBKEflUlkQKRd1HKMlE8ZNmY0NAhyX
+	 FJSrIwIUy43QEghW/NpsLrsnPX+WHb7jgNr+lbbwWZ8E1tvb9+JexxKgX3a7SrSHmc
+	 rAxQn1PSKa1UB7MA1feh77w2drFZJFO7r8rUf2ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongjian Mu <ymu@everpuredata.com>,
-	Chuck Lever <cel@kernel.org>,
-	Tim Menninger <tmenninger@everpuredata.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Jack Boykin <jtboykin.jb@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 476/869] xprtrdma: trim head iovec when the payload arrives via a Write chunk
-Date: Sat,  7 Nov 2026 08:52:38 -0500
-Message-ID: <20261107134909.751623203@linuxfoundation.org>
+Subject: [PATCH 6.18 494/869] platform/x86/amd/pmf: Fix power_supply refcount leak in amd_pmf_get_battery_prop()
+Date: Sat,  7 Nov 2026 08:52:56 -0500
+Message-ID: <20261107134910.293349949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -64,144 +62,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongjian Mu <ymu@everpuredata.com>
+From: Jack Boykin <jtboykin.jb@gmail.com>
 
-[ Upstream commit 9ee534a75912361308b1f956bc3e7895a082a422 ]
+[ Upstream commit 9f3eebbbd1033de0abcc2694ba4b455d30fe33f9 ]
 
-The upper layer sets rq_rcv_buf.head[0].iov_len from its estimate of the
-reply header size. For RPCSEC_GSS that estimate includes
-auth->au_ralign, which gss_create_new() initializes to GSS_VERF_SLACK >>
-2 (25 XDR words, or 100 bytes) and which is corrected to the real
-verifier size only after the first reply on that rpc_auth has been
-unwrapped. In this case, the krb5 MIC verifier is 36 bytes, so every
-request encoded before the first reply completes has a head that is 64
-bytes too long.
+power_supply_get_by_name() takes a reference that is only dropped on
+the error path. On success it leaks, five times per policy evaluation.
+Unregistering the battery later trips the use_cnt WARN_ON in
+power_supply_unregister() and never frees it.
 
-On TCP this is harmless: xdr_realign_pages() moves the excess head
-bytes, which are genuine reply data, into the page list. With
-RPC-over-RDMA and a Write chunk (sec=krb5, i.e. RPC_GSS_SVC_NONE, where
-DDP is allowed), the payload has already been placed directly into the
-page list, and the receive buffer holds only the inline part of the
-reply. rpcrdma_inline_fixup() clamps its local copy of the head length
-to the inline length but leaves head.iov_len untouched, so
-xdr_realign_pages() still sees iov_len > cur and shifts whatever lies
-past the inline reply in the receive buffer into the front of the
-directly-placed payload:
+While here, return -ENODEV instead of an uninitialised 'value' when
+no battery matches, and stop at the first supply found rather than
+letting the last one in the table win.
 
-  rpc_xdr_recvfrom:  head=[...,196] page=524288 tail=[...,64]
-  rpc_xdr_alignment: nfsv4 READ offset=132 copied=64
+Found by reading the code. Fix and changelog drafted with Claude Code
+(Fable 5.1) and reviewed by hand. Compile-tested only (allmodconfig,
+W=1, sparse); not run on Smart PC hardware.
 
-The first 64 bytes returned by each such READ are incorrect (zeroed, or
-shifted right by 64 bytes depending on the kernel's xdr_shrink_bufhead()
-implementation). This is readily hit with pNFS flexfiles over RDMA and
-sec=krb5: the per-DS rpc_clnt gets a fresh rpc_auth whose first RPC is a
-large READ. Reads following the first completed reply return the
-expected data.
-
-Commit cb0ae1fbb2f5 ("xprtrdma: Do not update {head, tail}.iov_len in
-rpcrdma_inline_fixup()") removed the head-length correction while fixing
-the handling of pure-inline krb5p replies.
-
-When a Write chunk conveyed the payload, trim head.iov_len (in both
-rq_rcv_buf and rq_private_buf, which call_decode() expects to match) to
-the inline length actually received so that the XDR layer does not
-realign the page list. These READ replies have no trailing inline
-fields, and the payload is already in the page list, so the upper
-layer's head estimate can be safely reduced. Reduce buflen by the same
-amount to avoid treating unused head capacity as additional tail
-capacity. Pure inline replies and Reply chunk replies are unchanged.
-
-Tested on Linux 6.8.0 and 7.3-rc4 with NFSv4.1 pNFS flexfiles over
-RPC/RDMA and sec=krb5.
-
-Fixes: cb0ae1fbb2f5 ("xprtrdma: Do not update {head, tail}.iov_len in rpcrdma_inline_fixup()")
+Fixes: f4627dfd0e19 ("platform/x86/amd/pmf: Add support to get inputs from other subsystems")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yongjian Mu <ymu@everpuredata.com>
-Reviewed-by: Chuck Lever <cel@kernel.org>
-Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Assisted-by: LLM sparse
+Signed-off-by: Jack Boykin <jtboykin.jb@gmail.com>
+Link: https://patch.msgid.link/20260902210217.69483-1-jtboykin.jb@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c | 27 +++++++++++++++++++++++----
- 1 file changed, 23 insertions(+), 4 deletions(-)
+ drivers/platform/x86/amd/pmf/spc.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index e2694fb03ba1b..091b8cb415ec7 100644
---- a/net/sunrpc/xprtrdma/rpc_rdma.c
-+++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -1033,12 +1033,16 @@ void rpcrdma_reset_cwnd(struct rpcrdma_xprt *r_xprt)
-  * @rqst: controlling RPC request
-  * @srcp: points to RPC message payload in receive buffer
-  * @copy_len: remaining length of receive buffer content
-- * @pad: Write chunk pad bytes needed (zero for pure inline)
-+ * @writelist: bytes conveyed by the Write chunk (zero for pure inline)
-  *
-  * The upper layer has set the maximum number of bytes it can
-  * receive in each component of rq_rcv_buf. These values are set in
-  * the head.iov_len, page_len, tail.iov_len, and buflen fields.
-  *
-+ * For READ replies with a Write chunk, the payload is already in
-+ * the page list. An overestimated head length and buflen can be
-+ * reduced without moving reply data.
-+ *
-  * Unlike the TCP equivalent (xdr_partial_copy_from_skb), in
-  * many cases this function simply updates iov_base pointers in
-  * rq_rcv_buf to point directly to the received reply data, to
-@@ -1047,13 +1051,16 @@ void rpcrdma_reset_cwnd(struct rpcrdma_xprt *r_xprt)
-  * Returns the count of bytes which had to be memcopied.
-  */
- static unsigned long
--rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len, int pad)
-+rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len,
-+		     u32 writelist)
- {
- 	unsigned long fixup_copy_count;
- 	int i, npages, curlen;
- 	char *destp;
- 	struct page **ppages;
- 	int page_base;
-+	int pad = writelist & 3;
-+	unsigned int delta;
+diff --git a/drivers/platform/x86/amd/pmf/spc.c b/drivers/platform/x86/amd/pmf/spc.c
+index 85192c7536b80..cbe4eef5b8bb4 100644
+--- a/drivers/platform/x86/amd/pmf/spc.c
++++ b/drivers/platform/x86/amd/pmf/spc.c
+@@ -244,13 +244,11 @@ static int amd_pmf_get_battery_prop(enum power_supply_property prop)
+ 			continue;
  
- 	/* The head iovec is redirected to the RPC reply message
- 	 * in the receive buffer, to avoid a memcopy.
-@@ -1065,8 +1072,20 @@ rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len, int pad)
- 	 * head.iov_len bytes are copied into the page list.
- 	 */
- 	curlen = rqst->rq_rcv_buf.head[0].iov_len;
--	if (curlen > copy_len)
-+	if (curlen > copy_len) {
-+		/* These READ replies have no inline fields after the payload.
-+		 * Trim the head without moving the directly-placed data.
-+		 */
-+		if (writelist) {
-+			delta = curlen - copy_len;
-+
-+			rqst->rq_rcv_buf.head[0].iov_len = copy_len;
-+			rqst->rq_private_buf.head[0].iov_len = copy_len;
-+			rqst->rq_rcv_buf.buflen -= delta;
-+			rqst->rq_private_buf.buflen -= delta;
-+		}
- 		curlen = copy_len;
-+	}
- 	srcp += curlen;
- 	copy_len -= curlen;
+ 		ret = power_supply_get_property(psy, prop, &value);
+-		if (ret) {
+-			power_supply_put(psy);
+-			return ret;
+-		}
++		power_supply_put(psy);
++		return ret ? ret : value.intval;
+ 	}
  
-@@ -1294,7 +1313,7 @@ rpcrdma_decode_msg(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep,
- 	base = (char *)xdr_inline_decode(xdr, 0);
- 	rpclen = xdr_stream_remaining(xdr);
- 	r_xprt->rx_stats.fixup_copy_count +=
--		rpcrdma_inline_fixup(rqst, base, rpclen, writelist & 3);
-+		rpcrdma_inline_fixup(rqst, base, rpclen, writelist);
+-	return value.intval;
++	return -ENODEV;
+ }
  
- 	r_xprt->rx_stats.total_rdma_reply += writelist;
- 	return rpclen + xdr_align_size(writelist);
+ static int amd_pmf_get_battery_info(struct amd_pmf_dev *dev, struct ta_pmf_enact_table *in)
 -- 
 2.53.0
 
