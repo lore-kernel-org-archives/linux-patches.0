@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061548;
-	b=E6h94uSla9wu3vN8PE5zzLa1q4ke5fLfZ0k92SM5DsgyQSzdMQ9W9yzPTHgdFrJzj/0m
-	 Z962ihM8nlQB7yOfo3qZJiRN7d5rzdX4BXz2J2OlZRzMM6dZBHuKTFLxhjw7oYZSCs0A3
-	 4pzih1jNvnvD5ZYzPYbpY92Qfd0UHW48cK7+yTeMEUe3oKcAi9HrCQIPur6K3W/O0RB75
-	 wYN///CEBq9Y7l+Ln2d0UKTbenwKOhkO+Lo5t1WCeqZbeTiJ/+fJrnZdsuBj4s9WQ/PyG
-	 Tfqk6vhuGtq/rzGySdU6xZScaMZSWi6SMgSWLFopfqEdcFW48DgUpfnZi7O0zueyBUg==
+	t=1794061549;
+	b=L0cm7hS2Somjjc4/npte/r469iw6mBJZkLV2T6RSCh+P0LIAlWFMTiw+muBEVpcjeXuR
+	 R90LzuUhcuw4aFxfsV85GIbaZWXuWlH31M1Lq8v9wrKG+8RaCgd9vkP8+QTYJVe+3pZTX
+	 /Wd+GVw4pYLesX6Qr2UUXd0S7tnw9aEL+e6rId56IDGQrpCQRNZrWDZPtITkp3L3HfhM9
+	 0+OU0mCbD3jl7O3M1MQrJwWZpIy2CV0AGfIY9w4FHYzGduu7rUSepJCx/Jni9ooL+o9h+
+	 xvvzqOJkuJo5xy1YgQYU+bMu2/CMpn3LhyT/Y2lE1IOLeXjzcEtKeUeOM/LKliuQSjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061548;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x6lJ1k90OFhYqX4TvYamPUdq7urTqW4Y4ojq60RAkVg=;
-	b=d23Ss9x1DUeCXuvs83HLIMzx2EzBGaqwKM5KYsuX/1O6ZCu/af/QbFFTmC0voV9ha45u
-	 3MjZDVPVxFs2EKsbpv7ZVCoZjk6wsn23+0f9xBk6+BZ8hEFMf+V8U8lF20iJybB6yCwX0
-	 KIasv337Te7dZjbSsp5R0AsfUkp0vNAvwAK63ShzyYFXC0ZdhlbhlkId9VQX8c3LbVyQT
-	 FqY/imVeFX1/uQwMkh4747xoSdJCmAD8uSJVEunaxmbaD7F28v0nJ68RuHRxL3/8l+wCv
-	 rkzGq676eTbv/NzqB0f5ijcjBCr433x/cr6XLBzA9XChMog9WRi3LWdGZ2+PddT1Mzg==
+	bh=vvyqcc8g/9Eo1IMf/1CO1H2wTnW+m/5cUyW/CWPvf7A=;
+	b=a1ZS4fhpJJToXveaYEDF7uZYuIzQuSn5Su/eMX3/K6g+VJA2tyNqTxweSzdlPjE8k8Ld
+	 P4ic7zDFcFqhv46EcplE4t4X+KU7q7zavm3mszerwVQqYz7LCYzgwNR0FAbE7lrBL8pAk
+	 AmgbfkFfWDa4UQNDOI4loqGlTdRLEcba+KmCH35fSRKgqLrn5UJB91sEFD2WNMkXYPc8E
+	 AtZz28uXbslrmwXrX9G13Wguy+bcouclkO2nYT1bR948CDPkpGJxtATYSSRtclp+JOq9o
+	 eYOtG19AgITH9YdQmta32gAApNPqxTXn1o1/wr/gQoV/LMbacW2A7ZRGCUPEuTBYBkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rUZB2XN1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2pIqQwU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DD5606A326;
-	Sat,  7 Nov 2026 14:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B86606A326;
+	Sat,  7 Nov 2026 14:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rUZB2XN1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92131F0089F;
-	Sat,  7 Nov 2026 14:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2pIqQwU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23941F0089F;
+	Sat,  7 Nov 2026 14:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061548;
-	bh=x6lJ1k90OFhYqX4TvYamPUdq7urTqW4Y4ojq60RAkVg=;
+	s=korg; t=1794061549;
+	bh=vvyqcc8g/9Eo1IMf/1CO1H2wTnW+m/5cUyW/CWPvf7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rUZB2XN1BkozLhhuGLqWNC81TLUFnqGTRBPkDXmSiyW61/GzYmRHyMdjRRli9MoPn
-	 QQw/YN0D4svRshWmueCPGRY88dIbsaxkLKr0B5h+4WIrFcxssTs4kuEGHfJYbXfyXx
-	 4tdCT5cE6EAxF6ox9NlVzFmGvJY5RGSTrBN7m0cQ=
+	b=X2pIqQwUrLwjXLsgXgzHiqX3CGMPivzD2MZa0/DmM5LEzaPFiIKt/3pTxbyEnQZaP
+	 2U/Y7pKIZ+3Qox9E+js2dli3yL0LGsbXeC7ctRIx70OKQB/+lTgwAu/H5LfYKO1K+h
+	 bGIpwFjel+sfYCMsi1SWOnlwS/MMlltPNNXU0zdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 0632/1536] ALSA: pcmtest: handle multiple wraps in random capture fill
-Date: Sat,  7 Nov 2026 08:44:08 -0500
-Message-ID: <20261107135015.286249081@linuxfoundation.org>
+	Bui Viet Dung <dungvn2345@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 0633/1536] Bluetooth: hci_vhci: Pin module for debugfs file operations
+Date: Sat,  7 Nov 2026 08:44:09 -0500
+Message-ID: <20261107135015.312952756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,110 +67,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Bui Viet Dung <dungvn2345@gmail.com>
 
-commit 6541871e8e63e721733cd120af4d9cd22c5ef62f upstream.
+commit 645ee6b176c958579cff1c783413d5cff65c8197 upstream.
 
-The random capture helpers assume that the data generated for one timer
-tick wraps the DMA ring at most once. However, b_rw describes 200 ms of
-audio because the timer runs at 5 Hz, so it can be several times larger
-than a small ring.
+An open debugfs file retains its file_operations pointer in the
+debugfs proxy state. However, force_suspend_fops, force_wakeup_fops,
+aosp_capable_fops, and force_devcoredump_fops have no .owner set to
+THIS_MODULE. As a result, full_proxy_open_regular() calls fops_get()
+which succeeds without taking a reference to the hci_vhci module.
 
-For 48 kHz, S16_LE, four-channel capture with a 512-frame buffer, the DMA
-ring is 4096 bytes while one tick generates 76800 bytes. After filling the
-4096-byte tail, the existing code issues a second 72704-byte write from the
-ring base, writing 68608 bytes beyond the ring. Both interleaved and
-non-interleaved capture are affected.
+When userspace opens any of these debugfs files and later closes
+the /dev/vhci file descriptor (triggering vhci_release() and
+debugfs file removal), the open debugfs file descriptor remains valid
+in userspace. Because the module refcount was not incremented,
+the hci_vhci module can be unloaded via delete_module (rmmod hci_vhci).
 
-KASAN reports the first write into the adjacent free page as a
-use-after-free in the random-byte generator. The underlying defect is an
-out-of-bounds write from the live DMA ring, not a stale DMA allocation.
+When the userspace process subsequently closes the debugfs file
+descriptor, full_proxy_release() accesses the already unmapped
+file_operations structure, resulting in a kernel page fault / oops:
 
-Split each random write repeatedly at the interleaved ring or per-channel
-block boundary. Keep the hardware-pointer update exactly once after the
-complete logical write.
+  BUG: unable to handle page fault for address: fffffbfff846f18b
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:full_proxy_release+0x8e/0x140
+  Call Trace:
+   <TASK>
+   __fput+0x39f/0xa60
+   fput_close_sync+0xff/0x200
+   __x64_sys_close+0x8c/0xf0
+   do_syscall_64+0xc3/0x590
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
+  Modules linked in: ... [last unloaded: hci_vhci(E)]
 
-The issue reproduced on three of three clean boots. With this change, the
-same vulnerable geometry completed six times without a sanitizer finding.
-Boundary, pattern-fill, no-timer, open/close, and module-reload controls
-also completed normally.
+The issue was discovered via manual code audit of
+drivers/bluetooth/hci_vhci.c and verified on a Linux 7.3-rc6 test VM
+with CONFIG_BT_VHCI=m by keeping a debugfs file open across controller
+teardown and module unload.
 
-snd-pcmtest is a test driver, and selecting random fill requires an
-administrator-controlled module parameter. The written values come from the
-kernel random generator; no privilege escalation or attacker-controlled
-write primitive was demonstrated.
+Set .owner = THIS_MODULE on all four file_operations structures so that
+debugfs pins the module until all file descriptors are closed.
 
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
+Fixes: 28010791193a ("Bluetooth: vhci: Prevent use-after-free by removing debugfs files early")
 Cc: stable@vger.kernel.org
-Assisted-by: OpenAI Codex
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Link: https://patch.msgid.link/20261003101854.1423146-1-tjdqudcks0424@naver.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/pcmtest.c |   42 +++++++++++++++++++-----------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ drivers/bluetooth/hci_vhci.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -279,39 +279,35 @@ static void fill_block_pattern(struct pc
- 		fill_block_pattern_n(v_iter, runtime);
+--- a/drivers/bluetooth/hci_vhci.c
++++ b/drivers/bluetooth/hci_vhci.c
+@@ -155,6 +155,7 @@ static ssize_t force_suspend_write(struc
  }
  
-+static void fill_random_block(char *buf, size_t buf_size, size_t pos,
-+			      size_t count)
-+{
-+	while (count) {
-+		size_t chunk = min(count, buf_size - pos);
-+
-+		get_random_bytes(buf + pos, chunk);
-+		count -= chunk;
-+		pos = 0;
-+	}
-+}
-+
- static void fill_block_rand_n(struct pcmtst_buf_iter *v_iter, struct snd_pcm_runtime *runtime)
- {
- 	unsigned int channels = runtime->channels;
--	// Remaining space in all channel buffers
--	size_t bytes_remain = runtime->dma_bytes - v_iter->buf_pos;
-+	size_t pos = v_iter->buf_pos / channels;
- 	unsigned int i;
- 
--	for (i = 0; i < channels; i++) {
--		if (v_iter->b_rw <= bytes_remain) {
--			//b_rw - count of bytes must be written for all channels at each timer tick
--			get_random_bytes(runtime->dma_area + buf_pos_n(v_iter, channels, i),
--					 v_iter->b_rw / channels);
--		} else {
--			// Write to the end of buffer and start from the beginning of it
--			get_random_bytes(runtime->dma_area + buf_pos_n(v_iter, channels, i),
--					 bytes_remain / channels);
--			get_random_bytes(runtime->dma_area + v_iter->chan_block * i,
--					 (v_iter->b_rw - bytes_remain) / channels);
--		}
--	}
-+	for (i = 0; i < channels; i++)
-+		fill_random_block(runtime->dma_area + v_iter->chan_block * i,
-+				  v_iter->chan_block, pos,
-+				  v_iter->b_rw / channels);
- 	inc_buf_pos(v_iter, v_iter->b_rw, runtime->dma_bytes);
+ static const struct file_operations force_suspend_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= force_suspend_read,
+ 	.write		= force_suspend_write,
+@@ -194,6 +195,7 @@ static ssize_t force_wakeup_write(struct
  }
  
- static void fill_block_rand_i(struct pcmtst_buf_iter *v_iter, struct snd_pcm_runtime *runtime)
- {
--	size_t in_cur_block = runtime->dma_bytes - v_iter->buf_pos;
--
--	if (v_iter->b_rw <= in_cur_block) {
--		get_random_bytes(&runtime->dma_area[v_iter->buf_pos], v_iter->b_rw);
--	} else {
--		get_random_bytes(&runtime->dma_area[v_iter->buf_pos], in_cur_block);
--		get_random_bytes(runtime->dma_area, v_iter->b_rw - in_cur_block);
--	}
-+	fill_random_block(runtime->dma_area, runtime->dma_bytes,
-+			  v_iter->buf_pos, v_iter->b_rw);
- 	inc_buf_pos(v_iter, v_iter->b_rw, runtime->dma_bytes);
+ static const struct file_operations force_wakeup_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= force_wakeup_read,
+ 	.write		= force_wakeup_write,
+@@ -263,6 +265,7 @@ static ssize_t aosp_capable_write(struct
  }
  
+ static const struct file_operations aosp_capable_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= aosp_capable_read,
+ 	.write		= aosp_capable_write,
+@@ -386,6 +389,7 @@ static ssize_t force_devcd_write(struct
+ }
+ 
+ static const struct file_operations force_devcoredump_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.write		= force_devcd_write,
+ };
 
 
