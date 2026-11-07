@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062168;
-	b=zMhgaIBUlhoDpCPg+zF30+kNSTyv3irtk9n+4PuSLNrgREaiqQNiPC/PqwchdnbBwR38
-	 3q70yhMMHJvyzFoxQQPMkSyPOlRBRWiC3914OM9Gw3h4+9gbnOl0gOWa8xU9W741VtPBW
-	 7Awfb4RZfjDR0hKzL7vKUqcf/J+kUFlhyLlAJ/QnfcyO9MlPXm8ZJ8/rz9svPS3SVKCW3
-	 G0SD9MeGmC2XZ2g57F1gDTbt7P9s0bjDlB/d/s1CX8SHPi4wDneMrp2mB/1oUqxIJB/hY
-	 oc8xAtiJmMOgN3+dk5AjxpoXLcpV6LxvzB/Ol9inx9teC7SHsAoTJMjmwQK/jNoQwhA==
+	t=1794062169;
+	b=f9fDpHOEj7T9Qo0jUOa9Tuxt+z6jtjQOFCTauHrLYM9Xb3Z6hkweACqrmBSZgdNl2nzY
+	 pg0KWkSIFyQnSUteDjZiEDabGRVLCDxn86OssrcIDoLMRixnG9D7Q/xvduCjB+LhD0nZl
+	 A34aIXjCMhF01Qp0Zi9kUUAv0FC+lmIN0YsZ5AnHKX6PBaO5oPhTcw3AMQX04LJ0OiB5l
+	 0Tf+6z0AUc2yVZE1BTapbKyS4qJE41eZPVMgBKmAJ/MnAXR/NeL8RAShYW5RVbD6Bv29a
+	 LAk9gBdYTDik02/ol4EJrKPMRacHl/XD9wQrGUrosx5Vn9yrOjIQ0nzFQJAk+wWkHWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rLF/NO4xgpCoiza7bY9/vWS0+Ctmla2nUlzwBTNNs+M=;
-	b=Jtv9KRsbiLTbW9slPQqjASsJVXDiJ6e6+qbDHS2SA1ALBW0tjrvYLrWn05fau2DznKsV
-	 Su8btLjV4C19Dx8GXO+vlemVMaSDmfaIlO4zgoNV/NqcF2eBlPAgpJb57/0icV22lJb+s
-	 23+F0gaENCsEZSZbc3DzqTqpxfsTa6FzA4QKqb64Zidk6i9ikAEloLFNSTn1cKQiBnpPs
-	 zIxDso1vLp2cBaEgoRhuzP2FBYgi56z/pjvIWn+hr6aWBht1VdeJC9F/IuEaQXyZw/dna
-	 thakAvg1+rprKKC/7iDWK78y9AqhSgGELLCkPe2xHBHsau5KAnTyn5PcPDul1yqqiGw==
+	bh=cLp5lzT5hfASSlRsgOAUc7Dno0MbbRW5MtsxfvCFn0E=;
+	b=fSe3my7n6iS0xvx+R/A8fQNA0jsFrYPeXE6rOPis8OmqYJaP/KIRTiCw53HzEs3cC+Ry
+	 QU3cyT7+RJXxQqUMMijYi45EacNe0a5M+jgJ/1/P0weBGasT5E/hSDxJsHKBNVJx5gEG4
+	 ouesHc18Xu72cT4Iiao1Y6qJr7YgsmMoibn9b0aZBnfobJLFAvPVZP/UdZNxFDNxmWDDD
+	 +RGtiie397OMx4tWYiBjGHv7bvK5MsPLEBbbQqiQZYS025GlMIjSDcmwpO4jt9vgcAEWk
+	 EUY17G1uyye+aXL16QS8W0Kv97GixbYYx8/hcHpcB4f0eMON+snvjc/YzZbcAy7ABPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7TXTpE6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YyyxklKy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5131606A326;
-	Sat,  7 Nov 2026 14:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AB3606A326;
+	Sat,  7 Nov 2026 14:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7TXTpE6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855C21F0089F;
-	Sat,  7 Nov 2026 14:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YyyxklKy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA13C1F0089F;
+	Sat,  7 Nov 2026 14:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062167;
-	bh=rLF/NO4xgpCoiza7bY9/vWS0+Ctmla2nUlzwBTNNs+M=;
+	s=korg; t=1794062168;
+	bh=cLp5lzT5hfASSlRsgOAUc7Dno0MbbRW5MtsxfvCFn0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V7TXTpE6Fp9HEW9K/MmplPc17qGbT4qF1Gn9AMe9R4Bys3AbvCRY47kWfo6i9+AtA
-	 uEdZEYr7kS+b3v/SO0Gha1aNvpOAkbOiCeYnaFix9p+ZftrM2fLZ/ihJ0KRwne4P9v
-	 DMreB92PkYx0M6co8bE9aneDEishxptVvT/aCL9s=
+	b=YyyxklKynGsTXOH+bWwTpYlasln7FOl0Qzo9Jf8vCDwYX91+uKLEAOJHeo5AhMe2w
+	 USQLVcq1fL3Sgt6oIzpvDakAwFa1SANmjlJG7ysjRa667Cne+642rLmXn89Zgrzkfo
+	 gaIMlk02m26KugH1GRZ0XRx5SoF+rEI1Nbf4kLqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Jie Law <98lawweijie@gmail.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1130/1536] media: uvcvideo: Fix NULL deref on events for uninitialized controls
-Date: Sat,  7 Nov 2026 08:52:26 -0500
-Message-ID: <20261107135029.449757223@linuxfoundation.org>
+Subject: [PATCH 6.12 1113/1536] drm/msm/hdmi_phy: Cleanup after msm_hdmi_phy_resource_enable() failure
+Date: Sat,  7 Nov 2026 08:52:09 -0500
+Message-ID: <20261107135028.969532320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,51 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie Law <98lawweijie@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit daa379e2b74d6c10ba4e3b56eeca5aa8c8704fca ]
+[ Upstream commit d27f831aaf20aaf06e41ceb1b260e10672269155 ]
 
-A null-ptr-deref exists in v6.12.105 and upstream. KASAN crash log:
+If msm_hdmi_phy_resource_enable() fails, e.g. when enabling regulators,
+it should reverse the state of things already changed.
+msm_hdmi_phy_resource_enable() is used also in probe path, thus such
+failure, which could be simple deferred probe, would leave these
+resources permanently enabled for the rest of the runtime.
 
-  KASAN: null-ptr-deref in range [0x0000000000000080-0x0000000000000087]
-  Workqueue: events uvc_ctrl_status_event_work
-  RIP: 0010:uvc_ctrl_status_event+0x105/0x280
-   uvc_ctrl_status_event_work+0x82/0x240
-   process_one_work+0x66f/0x10b0
-
-XU controls are initialized lazily, on the first UVCIOC_CTRL_MAP or
-UVCIOC_CTRL_QUERY.  Until then ctrl->info is all zeroes, so
-info.mappings is not a valid list head, list_empty() returns false, and
-uvc_ctrl_status_event() walks it from a NULL next pointer.
-
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
-Assisted-by: LLM
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20260907121844.2592492-1-98lawweijie@gmail.com
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752654/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-1-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 957d620ad671c..bae1d0733444f 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1662,7 +1662,7 @@ bool uvc_ctrl_status_event_async(struct urb *urb, struct uvc_video_chain *chain,
- 	struct uvc_device *dev = chain->dev;
- 	struct uvc_ctrl_work *w = &dev->async_ctrl;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+index 9f3623cc747ea..be4d43300e6a4 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+@@ -63,16 +63,28 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
+ 	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to enable regulators: (%d)\n", ret);
+-		return ret;
++		goto err_pm_put;
+ 	}
  
--	if (list_empty(&ctrl->info.mappings))
-+	if (!ctrl->initialized || list_empty(&ctrl->info.mappings))
- 		return false;
+ 	for (i = 0; i < cfg->num_clks; i++) {
+ 		ret = clk_prepare_enable(phy->clks[i]);
+-		if (ret)
++		if (ret) {
+ 			DRM_DEV_ERROR(dev, "failed to enable clock: %s (%d)\n",
+ 				cfg->clk_names[i], ret);
++			goto err_clk_unprepare;
++		}
+ 	}
  
- 	w->data = data;
++	return 0;
++
++err_clk_unprepare:
++	for (; i > 0; i--)
++		clk_disable_unprepare(phy->clks[i - 1]);
++	regulator_bulk_disable(cfg->num_regs, phy->regs);
++
++err_pm_put:
++	pm_runtime_put_sync(dev);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
