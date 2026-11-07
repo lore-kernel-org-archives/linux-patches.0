@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062668;
-	b=4HKHVWrVPGNvYySMTu+tawq7tPtvmCV05uI2vBopJI89A7E9JuKHaTfuCHt3j+g//LeP
-	 txsn4I7hJaj3DwVT52KSSQCOO65oT8FJBJMc+FXE85X8KbwDaia94Jlj8DawvL28qIf1/
-	 iLXbgw51UwGk0Y0ThYUCtEyBP26/G3fnbIqVcozCZkqi3XPqa1rEsBgj4Bg6D4sRH/4yX
-	 IHrd6O7fefV7rnNxsbqWKOeJJCjIT+esaxY6mdCjn2tfnw0LrbmqroJJwY8b0ZTEu5nPO
-	 qwOuqfv+zGKvPVOkx/l3NsYQAPGCqzuxQKwT2Cd/BcD5+Z+Oaxa70zYTJodB2F2OV3Q==
+	t=1794062669;
+	b=hV4Xc2NxOOOrNewXwiUFl8wvhhiQjL2v/HFAa7YSoOpmZ3FDwhhEZA1y0BCClKVRWbTW
+	 VZodQewmu0UQC+KGh53FfcpEdVLhFF7MeJzUadvRb+d8LEoGKt7AN2ihIBYoP3LRHbzn2
+	 w5zCMIm/iymQOf82xBakq7je1pa6yXuoA8u6SQ1tEye+2CPBQcjR6tb7obTGCFuxS00Nb
+	 5fyygUi4+F3Vh20za5E/aCEAY2/8cULo99iB/8QbxLTwlGSOBG0XFK+BcAqIuSJtwqaXY
+	 BKLp+ajBT191XqkMxA0uBj4e+yailAdpUd2jpG81NPvfuc3l8uHYYuNi/AJKtaib5Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FFu9NA4lbDappeEoU4CXWpHW/jn7p8I8Y4S68DcwnAc=;
-	b=MTVNDg1zDKbfa4jT31oOhmmSHK26AJQX0iZubBqQOjZon5mVs9Tl6NXWmUJaVL/XoeA6
-	 dgEg1jTmRlUcteVPiD16aQepmGNNellFFK+A++oW0dYsfn/iB3ImDx02gMw9bq3Jfa4l0
-	 lHQ/dNqAAXiZeHNbeBQ9Nw5S+kletlZ7gEQS6q3TIeAWCOphgC3ka/khuwDEUPzbpKrcc
-	 Xrx6DJXWhDNdwUfVfrIsPOtEIhhzOAl9fLAWxxryZ5lVn+IU6eM7rxfSxeXM+chURNEtK
-	 1aRka2yGJbNwuXJxaBIfiJF/GID+pHfaUjwwG1dRMLY8kbQp06GYfKqP171HEPa0UvA==
+	bh=A4q5mmeezCMISi92D/fMxiTgSnyhsI4RA0f7ZlGh0LI=;
+	b=O0c4tWEfaSnLX9IA0tcjm+TdcjJfwkKvDOCjzoo7OSPzs58oMyW8OuusmVvn7WYzdSbp
+	 AQtvPwF9nkbenWq9B3zJpUVquLCzpSb9CpYhLGBexfo2hKC6zqx243/ZMW6EFQIyT6os5
+	 o+DiWz/6X7q2cjUxkQkM0YLvA+hPMTzbJidHrvoQ6TzB8yh7T9guYs6xrithNVWYZTLCr
+	 FUJF9YukskSxPiXozsodHTsfRXkJKm40S1oBgV+kkUnwrl0Q5s5iA+Xgn2oj7CJHBtWSl
+	 Q7DFyaaO8cUHGWIc/5Cl5FN8PEqXLT2ovKgsf8xp0QhKnCxzUJNSb8duNROgvUsLl+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WAIdDkBc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="M/XNxvY1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556B7606A32C;
-	Sat,  7 Nov 2026 14:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856D6606A32C;
+	Sat,  7 Nov 2026 14:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WAIdDkBc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0407E1F0089F;
-	Sat,  7 Nov 2026 14:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M/XNxvY1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D251F0089F;
+	Sat,  7 Nov 2026 14:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062668;
-	bh=FFu9NA4lbDappeEoU4CXWpHW/jn7p8I8Y4S68DcwnAc=;
+	s=korg; t=1794062669;
+	bh=A4q5mmeezCMISi92D/fMxiTgSnyhsI4RA0f7ZlGh0LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WAIdDkBcYDMiOyIVdR5w3li5JiJVkDxC6mciBJNumrCNOXWez5frdz56pFzQdRBNd
-	 AOSYR5OvwJv1sDQAgVeECFdYs7heXgL4EMymOvDGIz4er/3I6qk+xzc3aMFGGe6arb
-	 MwEt9KIWWAntOP1N02ah/Pul8cPEoxEPiAtUf+yE=
+	b=M/XNxvY1qqG9fv6D27UwCwvTZw8d8+3wjDH4f2pVLh4OuVQHzv/xfuOu1YG9KL4Ei
+	 1Ul9dI7yXrC1+TMmdeBXeEqRfxhUPHQqcHmKe18tnw0il7ra0KTqQ9u9KD+cmOriav
+	 9kIx7DhUrcLAy8zpG99tdBvKU9fFhz07Tjam7aDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1492/1536] LoongArch: Fix perf hardware breakpoint failure via installation
-Date: Sat,  7 Nov 2026 08:58:28 -0500
-Message-ID: <20261107135039.764826030@linuxfoundation.org>
+Subject: [PATCH 6.12 1483/1536] ALSA: hda: Reject codec reset on ASoC (ext_ops) buses
+Date: Sat,  7 Nov 2026 08:58:19 -0500
+Message-ID: <20261107135039.506248197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,99 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit f5c0f8427469e703465c719c4304ce91282a32eb ]
+[ Upstream commit a4311e9447bbb219044db38897f95be112f46a8a ]
 
-In hw_breakpoint_control(), the logic to enable CSR_PRMD_PWE (global
-watchpoint enable) incorrectly relies on TIF_LOAD_WATCH. This thread
-flag is only set during ptrace operations, meaning that the standard
-hardware breakpoints created via perf_event_open() will never have
-this flag set.
+Writing to the reconfig or clear sysfs nodes of a codec handled by ASoC
+(SOF via hdac_hda, AVS via codecs/hda) hangs the writer.
 
-As a result, the CSR_PRMD_PWE switch is skipped, leaving the hardware
-breakpoint completely inactive in perf usage.
+snd_hda_codec_reset() sets card->shutdown and calls
+device_release_driver(). With ext_ops the driver unbind unregisters the
+ASoC component, which unbinds and frees the whole ASoC card:
+- snd_card_disconnect() returns early as card->shutdown is already set,
+  so the card's child devices are not removed and snd_card_free() waits
+  for the card release forever.
+- Even without that, freeing the card removes the codec's hwdep device,
+  which owns the sysfs node the reset was issued from, deadlocking in
+  kernfs while waiting for the active write to finish.
 
-Fix this by decoupling the CSR_PRMD_PWE from the ptrace specific flag
-TIF_LOAD_WATCH, which ensures that CSR_PRMD_PWE is enabled whenever a
-hardware breakpoint is installed.
+The legacy HDA driver keeps the card across a driver rebind, ASoC does
+not, so the reset cannot be supported there. Return -EOPNOTSUPP and skip
+the misleading "codec is being used" messages in the callers.
 
-Here is a user-space reproducer to demonstrate the issue:
-
-(1) Test program (test_perf_install.c):
-
-  #include <stdio.h>
-  #include <unistd.h>
-  #include <sys/syscall.h>
-  #include <sys/ioctl.h>
-  #include <linux/perf_event.h>
-  #include <linux/hw_breakpoint.h>
-
-  static int var = 0;
-
-  int main(void)
-  {
-  	size_t count = 0;
-  	struct perf_event_attr attr = {
-  		.type = PERF_TYPE_BREAKPOINT,
-  		.size = sizeof(attr),
-  		.bp_type = HW_BREAKPOINT_W,
-  		.bp_addr = (unsigned long)&var,
-  		.bp_len = HW_BREAKPOINT_LEN_1,
-  		.exclude_kernel = 1,
-  	};
-
-  	int fd = syscall(__NR_perf_event_open, &attr, 0, -1, -1, 0);
-  	ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
-
-  	asm volatile("st.b %1, %0" : "=m"(var) : "r"(11) : "memory");
-
-  	ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
-  	read(fd, &count, sizeof(size_t));
-
-  	printf("Watchpoint counts: expected = 1, actual = %zu\n", count);
-
-  	close(fd);
-  	return 0;
-  }
-
-(2) Test steps:
-
-  $ gcc test_perf_install.c -o test_perf_install
-  $ ./test_perf_install
-
-(3) Test results:
-
-Without this patch:
-
-  Watchpoint counts: expected = 1, actual = 0
-
-With this patch:
-
-  Watchpoint counts: expected = 1, actual = 1
-
+Fixes: 6bae5ea94989 ("ASoC: hdac_hda: add asoc extension for legacy HDA codec drivers")
 Cc: stable@vger.kernel.org
-Fixes: 3892b11eac5a ("LoongArch: Check TIF_LOAD_WATCH to enable user space watchpoint")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222182
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261027072835.4796-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/hw_breakpoint.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/hda_codec.c | 6 ++++++
+ sound/pci/hda/hda_sysfs.c | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
-index d009ed780cf02..1a05350159f7b 100644
---- a/arch/loongarch/kernel/hw_breakpoint.c
-+++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -233,7 +233,7 @@ static int hw_breakpoint_control(struct perf_event *bp,
- 		}
- 		enable = csr_read64(LOONGARCH_CSR_CRMD);
- 		csr_write64(CSR_CRMD_WE | enable, LOONGARCH_CSR_CRMD);
--		if (bp->hw.target && test_tsk_thread_flag(bp->hw.target, TIF_LOAD_WATCH))
-+		if (bp->hw.target)
- 			regs->csr_prmd |= CSR_PRMD_PWE;
- 		break;
- 	case HW_BREAKPOINT_UNINSTALL:
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index 24ecb1101504c..1a7291ddee570 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -1849,6 +1849,12 @@ int snd_hda_codec_reset(struct hda_codec *codec)
+ {
+ 	struct hda_bus *bus = codec->bus;
+ 
++	/* ASoC: driver unbind frees the card, incl. the hwdep issuing the reset */
++	if (bus->core.ext_ops) {
++		codec_err(codec, "Codec reset is not supported with ASoC\n");
++		return -EOPNOTSUPP;
++	}
++
+ 	if (snd_hda_lock_devices(bus) < 0)
+ 		return -EBUSY;
+ 
+diff --git a/sound/pci/hda/hda_sysfs.c b/sound/pci/hda/hda_sysfs.c
+index dc7dfda2847cd..c6081f3c1ccd8 100644
+--- a/sound/pci/hda/hda_sysfs.c
++++ b/sound/pci/hda/hda_sysfs.c
+@@ -117,6 +117,8 @@ static int clear_codec(struct hda_codec *codec)
+ 	int err;
+ 
+ 	err = snd_hda_codec_reset(codec);
++	if (err == -EOPNOTSUPP)
++		return err;
+ 	if (err < 0) {
+ 		codec_err(codec, "The codec is being used, can't free.\n");
+ 		return err;
+@@ -132,6 +134,8 @@ static int reconfig_codec(struct hda_codec *codec)
+ 	CLASS(snd_hda_power, pm)(codec);
+ 	codec_info(codec, "hda-codec: reconfiguring\n");
+ 	err = snd_hda_codec_reset(codec);
++	if (err == -EOPNOTSUPP)
++		return err;
+ 	if (err < 0) {
+ 		codec_err(codec,
+ 			   "The codec is being used, can't reconfigure.\n");
 -- 
 2.53.0
 
