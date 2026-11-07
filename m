@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062402;
-	b=J5kpLIdEos382Qxi4wW3gdBtUhKHhLkoK9zQHcP/FBJ5e7nsqp+BDGmgwX5tcO92XMTo
-	 iCg80n5NVeSNNL9QkA4qCW1sVMVdCCd0O5eLNgWecAvIZS+Xd7Vaq1IiPY9UzYr824M5c
-	 yOYFFc6ML59s0e2KUao/WhHr64fbCR8dU/zYIv8+86N7tpJVaxyAdqXVQUUUF15yKQr+A
-	 sDPt/vGEkwQFH8hTuPvsQaKtitfDwsHXpHmx+vIyT4R5oM4oKsFyuESM3qjD+pKW5OTjR
-	 V/FC3JEulRjyo/1Il12EYeAffJHk4kh8ElGK7nIu8NJNHvmBFH7b4J+X8RfU6B1TZ+g==
+	t=1794062404;
+	b=Sl5j52gWIX3D2An36nJPKheuHXuAy9nyvi+pXiOlbEnPLapcFSp7/WXauN/Mjs3/yJCp
+	 K/Pquh654An8NCISoHDf5a0Ldtm1fdT5V76AM0g8bGpMpeQqYBmXOqEw31so5HNA1eic9
+	 ESYyeF0iwfZR4CnRAJsXEQGJ1+jGB/rfaVV2cNp64pl862exj5o8Wiv1OpWRHHJKvEXuw
+	 0fLEIcRQ2qxdJYNWX7vvVXrrI3fTBDrpr8PKjwOBaVxY7WH2ek9LzZjBLqpGa13cTeNKH
+	 FhC/+Db+oqPtfQ2SeYICOgKGvQS+GRDTduluEve9JN+iU1mbAV2BhjumChu2pfuWomA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062402;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062404;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xt/OiDbN55zAO7cSiv6iaQfc3yN5IFWe/Vq3kpBSAcA=;
-	b=yqzKi8FdfFx7LWYfQwLf/McHI7ly/8NBd/Kr2Lri4Qqko6DEcB8eGz0/exE34QeGYJs/
-	 Au90FpCHu8Kms57peZDheFeO0ZRDdY93RSQUKrk2QR2pSUcXak4XlHrxuk+0swrHkNuxQ
-	 gJcMeZA38V3gMDVUJff/Us+Ft3NbGk698GFqgqtTUNrDEMom+LOdDNgO3lVsThmypwmbq
-	 okqrCbVm+mZ+JBUry3z7bBDelPVbL6jKbZvH43IfDfYDJNPeTHDjcWnjqhmgqcjCY2/qd
-	 giN8b5v7fpeqwErYTcQ+HV568B0h0tbyQxfoJYsChofaqxt4wrqTVVPg6ZQetmYHKSg==
+	bh=0FYXnAXbCX6sqNFIfmQWi7BP0paUEPD3V4EQCD5mWHs=;
+	b=Wh0NKRZjo5TSDSK/1gxXmmqzfxxsBLSH2Ax1kbKCpZzekkR3PIdaGzBmCkG3gv2nwC2X
+	 rduAJu9WJaig1XKf8M6oX52za7M52kpabUIoY8RcnOnJyZZCpD5xaQaFQdnVFJJVRn/gc
+	 HgydyUQS/8Kr0lsbKbSB/KohoWo6ZIXBWj2gMbkPNTRsiKtM3QQfeeuxy4XojGr7+fciZ
+	 vaCeFwBrNwvZ9vgDJpJ7Z4oTuEjzJ5W9tkeUvgi6G8hpROiiZK8gjQJjrtTw0eRncKS40
+	 KlQQ6KtbUEmY+dSDWrcoVWaXYXR8iZdldenePhYhj20ePBsP5o7lZARZdh4aFY1fLQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="G+KNysM/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bbo860T0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8144A606EE96;
-	Sat,  7 Nov 2026 14:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46E4606EE96;
+	Sat,  7 Nov 2026 14:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G+KNysM/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381121F0089F;
-	Sat,  7 Nov 2026 14:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bbo860T0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798C91F008A1;
+	Sat,  7 Nov 2026 14:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062402;
-	bh=xt/OiDbN55zAO7cSiv6iaQfc3yN5IFWe/Vq3kpBSAcA=;
+	s=korg; t=1794062403;
+	bh=0FYXnAXbCX6sqNFIfmQWi7BP0paUEPD3V4EQCD5mWHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G+KNysM/FtttDXjF06s/+LoFs+insh/8e1CnPRvO/kHhFNBVys4a2aNJmDLg12LiY
-	 95378F0ItVe9RPB2Xpv5uWHTltu0xxa4hzT+j8bzTAYcTwwjuqicKSLQSMArnJosvS
-	 U8eVlzSIcLjnba5Ytl+ViDMqPmGyA40v4VgVXQ44=
+	b=Bbo860T0+aQx1pK2g7jR7z9BE4EUwXcQhoYyZLnTX1ulVw4trL7CEwmaARpqXEzxM
+	 IkG71WNiXeBLtKi1iWYoW5hCHhm8LXkxKKM9ahgbq9dONfKoITBSzAMUa3lAkAOX1d
+	 Q256gUMH/edOvIMdkBopsiMBWuQG/Zn8ShYgtAHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Alain Knaff <alain@knaff.lu>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1281/1536] lib/decompress_bunzip2: fix off-by-one in run-length bounds check
-Date: Sat,  7 Nov 2026 08:54:57 -0500
-Message-ID: <20261107135033.758809825@linuxfoundation.org>
+Subject: [PATCH 6.12 1282/1536] lib: decompress_bunzip2: fix integer overflow in run-length decoding
+Date: Sat,  7 Nov 2026 08:54:58 -0500
+Message-ID: <20261107135033.788739796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,57 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit 69919be2b93ef3922f646729ff42b4bd9a30846b ]
+[ Upstream commit b822ad8d702df0be9fe3f24f71caeb0522d72319 ]
 
-The run-length path rejects a block when dbufCount+t equals dbufSize, but
-the loop that follows writes exactly t bytes starting at dbufCount, so a
-block that fills the buffer exactly is legal.  bzip2 allows it too: its
-decompressor bounds a block at 100000 * blockSize100k and checks that
-limit per byte appended.  Use > instead of >=.
+The RUNA/RUNB decoder in get_next_block() accumulates a run length into
+the signed int t with no bound.  runPos doubles per symbol, so t grows as
+at least 2^n-1 and reaches INT_MAX after 31 RUNA symbols.  The guard that
+follows, dbufCount+t >= dbufSize, is itself a signed addition, and as the
+kernel builds with -fno-strict-overflow it wraps negative once dbufCount
+is nonzero, so the guard is skipped.  while (t--) dbuf[dbufCount++] = uc
+then writes INT_MAX entries into a buffer holding at most 900000.  One
+literal symbol ahead of the run is enough to make dbufCount nonzero.
 
-bzip2's encoder stops filling a block 19 bytes early, so nothing it
-produces ever reaches the limit and the bug stays hidden.  Compressors
-that use the full block size do reach it: an lbzip2 -9 image whose block
-ends on a run fails to decode, and a self-extracting kernel built that way
-does not boot.
+Bound t to the block size as it is accumulated.  t only grows within a
+run, so the value tested never exceeds the final run length; any stream
+that decodes today satisfies dbufCount+t < dbufSize at the flush, hence t
+< dbufSize throughout, and no such stream is rejected.  Because t grows as
+at least 2^n-1 the bound trips by the 20th symbol, leaving runPos at most
+2^19, so the following runPos <<= 1 cannot overflow either.
 
-This code came from busybox, which fixed the same line in 2013 in commit
-932e233a491b ("bunzip2: fix off-by-one check").
-
-I ran into this because my system uses lbzip2 as /bin/bzip2 -- a common
-thing on Gentoo I believe.  As far as I can tell, anyone using lbzip2
-as their system bzip2 would run into this and it's only because it's
-very uncommon these days to compress a kernel with bzip2 that no one
-has noticed.  I only noticed because I was adding support for various
-compression formats on alpha.
-
-Link: https://lore.kernel.org/20260912-b4-bunzip2-blocksize-fix-v1-1-c7384bbfc954@gmail.com
+Link: https://lore.kernel.org/AS8P251MB00010FE5E38D253CF98A652AC8B92@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
 Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: LLM
 Cc: Alain Knaff <alain@knaff.lu>
 Cc: "H. Peter Anvin" <hpa@zytor.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_bunzip2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/decompress_bunzip2.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
-index ca736166f1000..4f98cdea7e0b3 100644
+index 4f98cdea7e0b3..b8fb40ed06d22 100644
 --- a/lib/decompress_bunzip2.c
 +++ b/lib/decompress_bunzip2.c
-@@ -439,7 +439,7 @@ static int INIT get_next_block(struct bunzip_data *bd)
- 		   array.) */
- 		if (runPos) {
- 			runPos = 0;
--			if (dbufCount+t >= dbufSize)
-+			if (dbufCount+t > dbufSize)
- 				return RETVAL_DATA_ERROR;
+@@ -428,6 +428,10 @@ static int INIT get_next_block(struct bunzip_data *bd)
+ 			t += (runPos << nextSym);
+ 			/* +runPos if RUNA; +2*runPos if RUNB */
  
- 			uc = symToByte[mtfSymbol[0]];
++			/* Bound the run so t and runPos cannot overflow. */
++			if (t >= dbufSize)
++				return RETVAL_DATA_ERROR;
++
+ 			runPos <<= 1;
+ 			continue;
+ 		}
 -- 
 2.53.0
 
