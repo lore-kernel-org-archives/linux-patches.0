@@ -1,78 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064481;
-	b=JbuA7tw3c0Lo65d3bIRV3if9zMvUzPN/hOcyG1SQnVz4hhomp4eOpDMWX7nMb4333C/J
-	 EQHjCzw/uKWcnnv34Jb4ABmd9QB6kHVyJVMlYRR5pPRphu2PU4GQICQU5ew15W0L41mdw
-	 ZFpL5zmsC3vQvouzVjEg6NM4oUfiZLpdFX9hOP+NjY4jhek3hRjZ47vNKtKG6vbuzoQWI
-	 X2SHMnzRIOW6HC4ehy32R3Rp8v0GGoYJ2emTrWUNjHk1TtHCTZOWwlTEpCi+mhsSgeNJ1
-	 3Zu5/u4WK0YMJI3v8REoBcE9GDtm2JcyuEbI44aPiVZPXps0ela2cZUQqrxTrEtI9Zw==
+	t=1794064482;
+	b=22q2AKrGK55/XqDEPiKbgICie1c7buCQ6MGOY1uq5SuGruZzc7HaUyo/B385BqUguMwU
+	 6dlHecF8J++Op4ka0VoioXDb0sx5cdD1xBcJ3heU3Ndel8NqOMXUy35Ib5uhmFjQx9wrB
+	 /8meY5inhm/JPVnOlh2TtvoSJwA8oOtBcRLFqXxml/uqYjiAbVv1623qat2bw77uyUtnO
+	 MJo4L/C9B7AuVI8oIYimzihcFG86Uyc47UeIYOL5oDfWWerikbOgqOfooXzAgi5ODgPGm
+	 MJJ5CvvQmhY1Zo3eaiBmEILMBuKyzggp6KmRL29N7VcXM7w/+1MIR2JWdM1kCELqVQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064482;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gcR/vsX/QD5Q3kj/Dy2s7NdBhas9IIHikzKQJXJdWp4=;
-	b=uiRG7z6fUjS9apll58KUHiA8pOv8I2c4FKhYZ03r4nnGBT7Z3UKr1Do5NtaWjO7Yp3u9
-	 bsA6WCQh6KC7AViE/PP/pCuk+ldjiLDkos6hlTGMcuz42zHGrh0i0Xm4DbwxD38VCLodh
-	 9oGh7UvWeClRmcQj30D9TW9/2og/YBYvOzlBYy8GhZEPILzs8B9JcHcuNCEyB+13rVLzX
-	 /TfSVmtd0qvD9kiejNDge3qeimqW6ChfXudjLuvNkkTzyRE5Whp1s0B30ZKJw2k9diZWA
-	 FR5ERTW31BThde2/WI5bNMseu+UZmVUwlwivaNWpKLjojinaHz1YNBiUtJzDgXTkKNQ==
+	bh=9XqxGSQZNUxOIjm5x1dWA4MtULR08b4s9L880YKIZpA=;
+	b=1YHJBz7GrVLatt7werr+Xt9g8xzKfrRC4tO520H0uHrFY7CHdi+QhMl4NNDFcTMRizW9
+	 oiWyHAHChN8BRciAGL3Mij9DoKq/iS7Ji4v4w+xy/59QaLgtto+G68oDzFsywew8t7IvI
+	 BUm1OZXvtTWDdwkSNWN5aV7WI3bjUH5vqE4sOyyOJY6mrMjSLGva/Wuu5fCO83UtTcSa5
+	 y5hmYqtCsmyEm8ZymByzDWUFY+qRZMPH4w2uNwcPPzjJjOwzjb0Px2x1emRqQlvFGj/Mu
+	 tcBjzKcTfLleOKc/z95iPSkH1QG5NCmpBUi616pMtSE0vLp0uBe2Rr46BtDjn0MPvsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQmt5hbS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkHezP+U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31CE606A9F0;
-	Sat,  7 Nov 2026 15:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE806606A9F0;
+	Sat,  7 Nov 2026 15:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQmt5hbS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB9D1F008A2;
-	Sat,  7 Nov 2026 15:14:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkHezP+U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A112E1F008A2;
+	Sat,  7 Nov 2026 15:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064480;
-	bh=gcR/vsX/QD5Q3kj/Dy2s7NdBhas9IIHikzKQJXJdWp4=;
+	s=korg; t=1794064481;
+	bh=9XqxGSQZNUxOIjm5x1dWA4MtULR08b4s9L880YKIZpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQmt5hbSOnBuMz7tYAgLGtYvexbuvjxhrTZea4z/wJvP+weKj9IYs1BcUS/D2zHUu
-	 grvHawkggclL/tUp5PLhNb62nbBw5DPjdOoB4nlYyZqZ3gj87I5tYYxPup1KNqpsSq
-	 shIHxZ1CDP6oJ4OYjxBlcmRZe9P0j1MWvWwvHQzg=
+	b=SkHezP+UN5OFaoxui/w/O1d+AwUY2EvopYko+w0nuxWverMXFlKhoULoaE0kgFdLq
+	 PzJStMa9mgKUIPtkEyXIltdkb9c8w3xMrAUFHmyDMqH7+CLYgpuG0hf3Pat0zTjPTf
+	 ZnMnthGgByzrBmu/cQMe0xcRxcVqdFdI3Ek2ZULk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ackerley Tng <ackerleytng@google.com>,
+	DAI RENJIE <drj19981414013@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Alex Shi <alexs@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Frank van der Linden <fvdl@google.com>,
-	Hongxiang Lou <louhongxiang@huawei.com>,
-	James Houghton <jthoughton@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vishal Annapurve <vannapurve@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Yanteng Si <si.yanteng@linux.dev>,
+	Bradley Morgan <brads@mainlining.org>,
+	Mark Brown <broonie@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0519/1257] mm: hugetlb: drop refcount before freeing on memcg charge failure
-Date: Sat,  7 Nov 2026 08:46:55 -0500
-Message-ID: <20261107134953.764677109@linuxfoundation.org>
+Subject: [PATCH 7.3 0520/1257] resource: fix lost wakeup when waiting for a muxed region
+Date: Sat,  7 Nov 2026 08:46:56 -0500
+Message-ID: <20261107134953.791540444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -94,72 +72,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ackerley Tng <ackerleytng@google.com>
+From: DAI RENJIE <drj19981414013@gmail.com>
 
-[ Upstream commit e95d29c5df84f19881cd30b491fc81aa98f44b45 ]
+[ Upstream commit 405c00e43a9c72a0b9b318cc2d2e298386ffb58e ]
 
-When mem_cgroup_charge_hugetlb(folio, gfp) returns -ENOMEM, the folio has
-its refcount set to 1 via folio_ref_unfreeze(folio, 1).
+A task waiting for a muxed region can sleep forever in
+TASK_UNINTERRUPTIBLE even though the region it waits for is already free.
+__request_region_locked() queues itself on muxed_resource_wait and drops
+resource_lock before setting TASK_UNINTERRUPTIBLE, while
+__release_region() wakes the queue after dropping the same lock.  A wakeup
+landing in between finds TASK_RUNNING, does not match TASK_NORMAL and is
+discarded; callers hold a muxed region only across a bounded transaction,
+so no further release is coming.  The task is unkillable and its caller
+never returns.
 
-The error path calls free_huge_folio(folio) directly, which expects a
-refcount of 0.  Hence, VM_BUG_ON_FOLIO(folio_ref_count(folio), folio) is
-triggered.
+The window is one store wide, but an interrupt is enough to hold the
+waiter in it, and the machine this was seen on runs PREEMPT_DYNAMIC in its
+voluntary default.  Since v6.11 spd5118 exports the DDR5 sensors of AMD
+boards through i2c-piix4, which takes a muxed region per SMBus
+transaction; a third of the in-tree users of request_muxed_region() are
+hwmon drivers, so reading a world-readable attribute is all an
+unprivileged user needs to drive the contention.  The blocked task sleeps
+holding the i2c adapter bus lock, and 27 more piled up behind it.
 
-Even with CONFIG_DEBUG_VM disabled, returning a folio with refcount 1 to
-the freelist can corrupt allocator state later.
+Reproduced by building a kernel with the two orderings selectable at
+runtime and a 2ms delay inside the window.  Switching only that knob, a
+two-thread barriered reproducer loses the wakeup 200 times out of 200
+before the fix and 0 out of 200 after it; without the delay it goes 20000
+times through the wait path and loses none.
 
-Use folio_put(folio) instead of free_huge_folio(folio) to properly drop
-the reference before freeing it.
+Fix it by setting the task state before dropping resource_lock, as
+prepare_to_wait() does: the releasing side needs resource_lock to unlink
+the resource, so it cannot reach the wakeup before the state is published.
 
-Link: https://lore.kernel.org/20260909-hugetlb-alloc-folio-memcg-charge-error-handling-v2-2-4b4a8a19a7f7@google.com
-Fixes: 991135774c0e ("memcg/hugetlb: introduce mem_cgroup_charge_hugetlb")
-Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+Link: https://lore.kernel.org/20260821-b4-resource-muxed-lost-wakeup-v1-1-37eb6473a76c@gmail.com
+Fixes: 8b6d043b7ee2 ("resource: shared I/O region support")
+Signed-off-by: DAI RENJIE <drj19981414013@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Alex Shi <alexs@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Dongliang Mu <dzm91@hust.edu.cn>
-Cc: Frank van der Linden <fvdl@google.com>
-Cc: Hongxiang Lou <louhongxiang@huawei.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Ma Wupeng <mawupeng1@huawei.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vishal Annapurve <vannapurve@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Yanteng Si <si.yanteng@linux.dev>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: Claude:claude-opus-5
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 2 +-
+ kernel/resource.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 7a8f605881d86..930e40ac77077 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2900,7 +2900,7 @@ struct folio *hugetlb_alloc_folio(struct hstate *h,
- 	lruvec_stat_mod_folio(folio, NR_HUGETLB, nr_pages);
- 
- 	if (ret == -ENOMEM) {
--		free_huge_folio(folio);
-+		folio_put(folio);
- 		/*
- 		 * Skip uncharging hugetlb_cgroup since the charges
- 		 * were committed to the folio and freeing the folio
+diff --git a/kernel/resource.c b/kernel/resource.c
+index 08bd7579cf403..a98fd2b29ceac 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1350,8 +1350,8 @@ static int __request_region_locked(struct resource *res, struct resource *parent
+ 		}
+ 		if (conflict->flags & flags & IORESOURCE_MUXED) {
+ 			add_wait_queue(&muxed_resource_wait, &wait);
+-			write_unlock(&resource_lock);
+ 			set_current_state(TASK_UNINTERRUPTIBLE);
++			write_unlock(&resource_lock);
+ 			schedule();
+ 			remove_wait_queue(&muxed_resource_wait, &wait);
+ 			write_lock(&resource_lock);
 -- 
 2.53.0
 
