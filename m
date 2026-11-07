@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062417;
-	b=BF6kAt94OzFWMd5WQfn0JGd26BLfakKxaNHxsx1s5hhxSU7cR8CaLYcGlG7Rh0YTV0TN
-	 Pwdpi044fPSjxucOmQVS1RGoAgK4XfsDKH2W2L3paChvN4We1t6xaUkKma7sF8aeUWfaQ
-	 5/KwWo4Gf7FgatIMWAG8AhB8cpRN8KhQBplkN2QoOH0siONl0oyPMsdlTVX9wMG5lK+fm
-	 WUU58htuoh3HM+xkkrK3M5EpFgl+cY24nxnlOnMoV7w+rcp4Zol4DZ5cWkcFD/daLKeD9
-	 6RsoF0yndVo880hLNNKZhBwlUx5d0LB7w94ol2EcI6fkR90xNinwkzfFTUKHCc7yzUA==
+	t=1794062418;
+	b=pT1i9zyLVWzi+V6Py/MmhU5ziNOh+ggKQDAUHlD1/KMO6eaY9p+cEhGBu2ZZSLGxN0ZI
+	 mV8UuwEEGY0q5on2da7tifWGPcanbE5BXpmk6XrlCrn7hQhARDSk2cN1aeTdvfiapcyae
+	 Pbwud9bf3vq8W0YAboFbqidiH79xfR89A5amzbxY41BG/skFTqWZJVA597wV1xDrLpCnf
+	 Ox39DtlWwiIEjsq5J6FItxP6fr0S88yPi1F7+BT25Ytw5zoUQCOqUL/97ulfU+AEe0vpQ
+	 vkGj1oyfN3P/HgpVTXbfnaIFqCHJPOcvMCQGFhJGfNYiBpfwQti1q+CS8CeIBZxnKzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u9GwF04cgIJqttg9vPMgXyhPySSbvbghWXk3sN+oUco=;
-	b=t8fMRuWQBPVOkvWGiX4bqSPv/bmuKPXOfnCOWpETgF6ccpYAWwdjWPttRlw6D9BQKQLz
-	 iruwx9dQjQx18Fc898CBOs1lBSkFbW492na3z4BFN65xqZgZn/eWJ6RBQLgWK6XOIgCXb
-	 ZIF7oDI3eLstWLXGr/u511IKa/vExIaRVTuZ3i6vn37+mKfEftfIb8vNn52ugeak1jkaT
-	 zipSIs9VbspVO/WxmS2ZgBeZ4iZsZKynIdZxiRx2xX6+gmyA9RazPq1OwwMJTQCUN/rxY
-	 dtRY5bWmNpJbzU2aQqHkDB5bFJFxxgIwmjAYqT0/6WoFxzrVrAjViJM4bnpB2WNYF+A==
+	bh=i0kr1J0/J1oAkZc3Ij6j95duKDLJPaScwAx/CRu2Koo=;
+	b=uEKx4btABNLe7+6ILL8iqYx9jtCpo60Ccqiv59b0FJ9JSS5xlPJdzQQcxxhfiAAZj4g2
+	 8lMrA/TG24ChNgKznjQXBvy9tLweZdUrrGuU9uTiOxaf5T2Gs6j37J8kgJQeJGkDY5VWP
+	 zwrO30NdVD8pIaawmhii9gmjULWMN9yYa+mHP5WXfa1WnubxIQEd3brNz/CJd2SZ94vtm
+	 k620a9mtd3UBF7ntmJpXVpuPhPi42b5n6SY8bsZPnlpxIpFTv/RFTl2ItByPlmhnHuD03
+	 jgkR6wlcXdh4VTfHAxuTVR5Q2/P5EA/lryCW9Jvsf5xnPHZSqZtn11pdcft/Gkv349Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1p9Ih9cQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sraJaj0q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDAE606A33C;
-	Sat,  7 Nov 2026 14:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E570C606EE9B;
+	Sat,  7 Nov 2026 14:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1p9Ih9cQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4B51F0089F;
-	Sat,  7 Nov 2026 14:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sraJaj0q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926851F0089F;
+	Sat,  7 Nov 2026 14:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062416;
-	bh=u9GwF04cgIJqttg9vPMgXyhPySSbvbghWXk3sN+oUco=;
+	s=korg; t=1794062417;
+	bh=i0kr1J0/J1oAkZc3Ij6j95duKDLJPaScwAx/CRu2Koo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1p9Ih9cQjvRoVMktcaJsH0+fTDk2nSD+F0FsAJo2qaRxv0V8hwaJ06JvC1VnMCrCZ
-	 3Fpd9pw8/TIWyiCtY5kFRgVd4zZGMrTFzij1NBQ0lUtdo5C3jitIdSjyELDMZpXWG8
-	 BQF4frEulaVFULTN0afrCjDW5r0X8HK3z56/HAIs=
+	b=sraJaj0qeQgi5JoJEWusaMqao30UcQa20NQX+A3thHI/b41KughlvAUXF9o65vtRi
+	 fpXwsMTq5/olzCwaXNFIdU/v8bAuFaiXdV8WQVaqbkEK5x7qrKsgzh8S5szsLi+ZqR
+	 QHjvLH81eJfXV1Bs77kCX2pxWB2iZ99fuKt4klxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1332/1536] cpufreq: loongson3: Adjust the width of id and val in smc_message
-Date: Sat,  7 Nov 2026 08:55:48 -0500
-Message-ID: <20261107135035.231305585@linuxfoundation.org>
+Subject: [PATCH 6.12 1333/1536] cpufreq: loongson3: Replace per-package mutex with per-node
+Date: Sat,  7 Nov 2026 08:55:49 -0500
+Message-ID: <20261107135035.258955175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,20 +72,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 290814d3c22b300eb36b74dc76ad36bd7fdc1220 ]
+[ Upstream commit 5d7802ada30b3101f408706b7399b0e170d2febd ]
 
-The id field of smc_message is usually stand for the CPU ID. In the past
-this driver was only tested for desktop and laptop productions so 4-bits
-are enough. But now we have servers that can have as many as 256 cores,
-so we need 8-bits CPU ID.
-
-On the other hand, the val field is usually stand for CPU frequency so
-12-bits are enough to represent 4GHz, and for higher frequencies there
-is an extra bit to extend (enough for 8GHz).
-
-In theory, this is a incompatible change, but fortunately the old SMC
-firmwares are not widely shipped and can be updated on the air, thus we
-can safely adjust the widths.
+Our server productions (e.g. Loongson-3D6000/3E6000) can have multiple
+nodes in one package and SMC mailboxes are also per-node. So replace the
+per-package mutex with per-node one.
 
 Cc: stable@vger.kernel.org
 Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
@@ -95,25 +86,63 @@ Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/loongson3_cpufreq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpufreq/loongson3_cpufreq.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
-index a923e196ec86e..ee7c1f2d3e519 100644
+index ee7c1f2d3e519..a2a798d921cb5 100644
 --- a/drivers/cpufreq/loongson3_cpufreq.c
 +++ b/drivers/cpufreq/loongson3_cpufreq.c
-@@ -21,9 +21,9 @@
- union smc_message {
- 	u32 value;
- 	struct {
--		u32 id		: 4;
-+		u32 id		: 8;
- 		u32 info	: 4;
--		u32 val		: 16;
-+		u32 val		: 12;
- 		u32 cmd		: 6;
- 		u32 extra	: 1;
- 		u32 complete	: 1;
+@@ -169,7 +169,7 @@ struct loongson3_freq_data {
+ 	struct cpufreq_frequency_table table[];
+ };
+ 
+-static struct mutex cpufreq_mutex[MAX_PACKAGES];
++static struct mutex cpufreq_mutex[MAX_NUMNODES];
+ static struct cpufreq_driver loongson3_cpufreq_driver;
+ static DEFINE_PER_CPU(struct loongson3_freq_data *, freq_data);
+ 
+@@ -177,14 +177,14 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+ {
+ 	int retries;
+ 	unsigned int cpu = raw_smp_processor_id();
+-	unsigned int package = cpu_data[cpu].package;
++	unsigned int nid = cpu_to_node(cpu);
+ 	union smc_message msg, last;
+ 
+-	mutex_lock(&cpufreq_mutex[package]);
++	mutex_lock(&cpufreq_mutex[nid]);
+ 
+ 	last.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
+ 	if (!last.complete) {
+-		mutex_unlock(&cpufreq_mutex[package]);
++		mutex_unlock(&cpufreq_mutex[nid]);
+ 		return -EPERM;
+ 	}
+ 
+@@ -208,11 +208,11 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+ 	}
+ 
+ 	if (!msg.complete || msg.cmd != CMD_OK) {
+-		mutex_unlock(&cpufreq_mutex[package]);
++		mutex_unlock(&cpufreq_mutex[nid]);
+ 		return -EPERM;
+ 	}
+ 
+-	mutex_unlock(&cpufreq_mutex[package]);
++	mutex_unlock(&cpufreq_mutex[nid]);
+ 
+ 	return msg.val;
+ }
+@@ -346,7 +346,7 @@ static int loongson3_cpufreq_probe(struct platform_device *pdev)
+ {
+ 	int i, ret;
+ 
+-	for (i = 0; i < MAX_PACKAGES; i++) {
++	for (i = 0; i < MAX_NUMNODES; i++) {
+ 		ret = devm_mutex_init(&pdev->dev, &cpufreq_mutex[i]);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
