@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064851;
-	b=2KdZ8fWR44XQXJjSJr2HDV6yPgl6Wjp0GEpEq9xUYfS4j1nahbZbRltxiqEek99+D3uJ
-	 7dHnPunaUTaJogEZ7c/O2KQnWrBcbLYw9IQIKoyOp813/qBEjveT0XsM43M55uKYawtaw
-	 pvQzUQyITLY6P4XyC5eKlEgFDLXDxLkvEbdlGBvAx8lzv0RYOKvzTCn0vgpsAJ13r3R8t
-	 p6ep5W/YA88A8MQ7jednM1to2cQEqgH1IB/+3rmTUmkxW8KlNxXbIKlWrqoXldzuA4ch4
-	 Zu6k2uyKmnjckc1jJqLUwUDh3uCWZL7DWWg/Nu0HywLN03MCyaf1D+WswPVz2jOVUNQ==
+	t=1794064853;
+	b=rQvzNITUQWcOYrMoxMaz22iK2oC78RjFCND+8gdLH74rLB9oBEtr3uUxD6+tz20CQSAq
+	 texJekuY6ktuSLvRZUMfl6oYcknLJfujxjvfvph2q6B2x93B+2zsmh4QjiHpaJ7wwsESe
+	 fbXTtAZu9GtIR1p6jNBNc775wV0USaLjGObao8oz6EWSE4FnyQlkqmdqUqAafs7HAc5OY
+	 +IgKYyYydqT9csIE6tcjUFXRqmzqW2tYPK0xtInLquoX4iFdx1D9B0UwSf+3YunG8bcLr
+	 3UA3jdDOU5/vCoRH2Ywdu0zY6B4FVBVjVLRMYoSTXcEDxJo6P4kvN9PsNqyLUr6AkOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064851;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064853;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BhYTQNSBmR/Him6ZZcj78vzrrMWs2a+CBNj74aZoJEU=;
-	b=yFuONkPDdgOxklL8BldpRNJPsHoyTumCHRYyk2AH+ix1ReOIoDNHo7GqIfrifzYE9A6a
-	 hWFAGyBQFBWGFm3ZNTV1xdE/PDPqMudpovWyd/GbrMD6MRh54O+G/0DS6reIodXd7udwm
-	 g5qNejKUpdplJnwc3D3oxdmytWseU7nYOF701wtP7jp5CaRqQIpwEwwmjCZ5jCMCiF0AA
-	 /+yDZA21QFJvKDooBzzdX6k646W2Uc9sH9WRJGKIuV+/lHCS8fduXRrFUOFQbk6KYvAfw
-	 FaIjV9trV+AJOvzMY/DzuCzNpM+ySs8M5Zey27c5Hc9ihlBCeY/6ca1FCwxfk2fUN7A==
+	bh=+ir9gfSb9kdBTBK4MUsSk9ouEfe2fb5fUpFwkwJKO1I=;
+	b=JaEQJfwYJt/yXuoQJtjQtXJ4R1B781RZetZp0xib8GRKqOuPNXxoEPA9eq6h5IhrlqNt
+	 CdUEbFzoMVnSvZX/GzFGx1kfo9AdG8lb76BNb5fr+N607V+EYxy7Bf/Mw5sRA8Bmd1YbS
+	 +aGVFojEkL887W4TlGPiIqDBdl5VVSdQ/vPug0Kw7N4Ynvc5VLgeRpdIA0I4G/iud5FRI
+	 JPQRm/rWixBw82uYIHnlNC27FjVHJPtZVYtTFIukionCFsWg/m1peVLSc1yoTsJ03Ba59
+	 l5P35Uo5/e5jMhK653orOhjMjJDUoL8KWXI4S/gVBuH9cLgG1cPvpSu0gXy+gc5t9pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEhY6BsC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEp7Vpmk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE22606B8B2;
-	Sat,  7 Nov 2026 15:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB6B606A335;
+	Sat,  7 Nov 2026 15:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEhY6BsC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0181F0089F;
-	Sat,  7 Nov 2026 15:20:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEp7Vpmk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1F81F0089F;
+	Sat,  7 Nov 2026 15:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064851;
-	bh=BhYTQNSBmR/Him6ZZcj78vzrrMWs2a+CBNj74aZoJEU=;
+	s=korg; t=1794064852;
+	bh=+ir9gfSb9kdBTBK4MUsSk9ouEfe2fb5fUpFwkwJKO1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yEhY6BsCLyOuyv1qkodraDlDJNuV0cijoMGHUX35V7tiSBYEmoGF5P7HQdvjSLs9Q
-	 roxk1YDtZicY1WApcgOBAEYqDs+/uMHcpp+GxSm6UwJCS6capYkWZO6PvR/bD+wwb3
-	 EO9Xx0yuGSMZ7oMfAOskWbdDO3iF48Jk/mNgsivc=
+	b=LEp7Vpmkjy7Iv01FtMl1y7sYshD1ap7RPIa4uoXeonzC/X0fJmcR4CFuo1cLmtSJ1
+	 BYzfg+uaJ/LC4ehXxl3kBfFk37+UMC2McTIGY0G9YnHwc3KJvA23Donvp87ze1ndmk
+	 aOK9TR4swBiFA4QGMUJ+U7PWqNFR14iTFcJmD0Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bui Viet Dung <dungvn2345@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0774/1257] Bluetooth: hci_debugfs: Pin module for debugfs file operations
-Date: Sat,  7 Nov 2026 08:51:10 -0500
-Message-ID: <20261107135000.679509248@linuxfoundation.org>
+Subject: [PATCH 7.3 0775/1257] Bluetooth: selftest: Pin module for selftest debugfs file operations
+Date: Sat,  7 Nov 2026 08:51:11 -0500
+Message-ID: <20261107135000.708718898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,20 +70,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Bui Viet Dung <dungvn2345@gmail.com>
 
-[ Upstream commit 2a3e2287877b1ee40ffb80b7d769b633866533f3 ]
+[ Upstream commit 64aabf94ecccb1120a63b4ee5a6761871a181a41 ]
 
 An open debugfs file retains its file_operations pointer in the
-debugfs proxy state. However, the file_operations defined in
-hci_debugfs.c (use_debug_keys_fops, sc_only_mode_fops,
-ssp_debug_mode_fops, force_bredr_smp_fops, force_static_address_fops,
-force_no_mitm_fops, dut_mode_fops, vendor_diag_fops, and the
-DEFINE_QUIRK_ATTRIBUTE macro) have no .owner set to THIS_MODULE.
+debugfs proxy state. However, test_smp_fops in net/bluetooth/smp.c and
+test_ecdh_fops in net/bluetooth/selftest.c have no .owner set to
+THIS_MODULE.
 
 As a result, full_proxy_open_regular() calls fops_get() which succeeds
-without taking a reference to the bluetooth module. When a userspace
-process opens any of these debugfs files, a subsequent controller removal
-and module unload (rmmod bluetooth) can succeed while the file descriptor
-remains open.
+without taking a reference to the bluetooth module. When CONFIG_BT=m
+and selftests are enabled, a userspace process can open either
+/sys/kernel/debug/bluetooth/selftest_smp or
+/sys/kernel/debug/bluetooth/selftest_ecdh and keep the file descriptor
+open while the module is unloaded (rmmod bluetooth).
 
 When the userspace process subsequently closes the descriptor,
 full_proxy_release() accesses the already unmapped file_operations
@@ -102,99 +101,47 @@ structure, triggering a kernel oops in full_proxy_release():
    entry_SYSCALL_64_after_hwframe+0x77/0x7f
    </TASK>
 
-The issue was discovered via manual code audit of
-net/bluetooth/hci_debugfs.c and verified on a Linux 7.3-rc6 test VM
-with CONFIG_BT=m.
+The issue was discovered via manual code audit of net/bluetooth/smp.c
+and net/bluetooth/selftest.c.
 
-Set .owner = THIS_MODULE on all debugfs file_operations tables in
-hci_debugfs.c so that debugfs keeps the module loaded until close has
-finished.
+Set .owner = THIS_MODULE on test_smp_fops and test_ecdh_fops so that
+debugfs keeps the module pinned until the file descriptors are closed.
 
-Fixes: 0886aea6acd2 ("Bluetooth: Expose debug keys usage setting via debugfs")
+Fixes: 64dd374eac15 ("Bluetooth: Export SMP selftest result in debugfs")
+Fixes: 6de50f9fdb60 ("Bluetooth: Export ECDH selftest result in debugfs")
 Cc: stable@vger.kernel.org
 Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_debugfs.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/bluetooth/selftest.c | 1 +
+ net/bluetooth/smp.c      | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_debugfs.c b/net/bluetooth/hci_debugfs.c
-index 2559fb6324d63..cd5ef398f2382 100644
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -65,6 +65,7 @@ static ssize_t __name ## _write(struct file *file,			      \
- }									      \
- 									      \
- static const struct file_operations __name ## _fops = {			      \
-+	.owner		= THIS_MODULE,					      \
- 	.open		= simple_open,					      \
- 	.read		= __name ## _read,				      \
- 	.write		= __name ## _write,				      \
-@@ -283,6 +284,7 @@ static ssize_t use_debug_keys_read(struct file *file, char __user *user_buf,
+diff --git a/net/bluetooth/selftest.c b/net/bluetooth/selftest.c
+index ae5b44bb9d3d3..cdfc40e0016b4 100644
+--- a/net/bluetooth/selftest.c
++++ b/net/bluetooth/selftest.c
+@@ -188,6 +188,7 @@ static ssize_t test_ecdh_read(struct file *file, char __user *user_buf,
  }
  
- static const struct file_operations use_debug_keys_fops = {
+ static const struct file_operations test_ecdh_fops = {
 +	.owner		= THIS_MODULE,
  	.open		= simple_open,
- 	.read		= use_debug_keys_read,
+ 	.read		= test_ecdh_read,
  	.llseek		= default_llseek,
-@@ -301,6 +303,7 @@ static ssize_t sc_only_mode_read(struct file *file, char __user *user_buf,
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 2df303f6a38fa..81d255525fe07 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -3696,6 +3696,7 @@ static ssize_t test_smp_read(struct file *file, char __user *user_buf,
  }
  
- static const struct file_operations sc_only_mode_fops = {
+ static const struct file_operations test_smp_fops = {
 +	.owner		= THIS_MODULE,
  	.open		= simple_open,
- 	.read		= sc_only_mode_read,
+ 	.read		= test_smp_read,
  	.llseek		= default_llseek,
-@@ -437,6 +440,7 @@ static ssize_t ssp_debug_mode_read(struct file *file, char __user *user_buf,
- }
- 
- static const struct file_operations ssp_debug_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= ssp_debug_mode_read,
- 	.llseek		= default_llseek,
-@@ -529,6 +533,7 @@ static ssize_t force_bredr_smp_write(struct file *file,
- }
- 
- static const struct file_operations force_bredr_smp_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_bredr_smp_read,
- 	.write		= force_bredr_smp_write,
-@@ -778,6 +783,7 @@ static ssize_t force_static_address_write(struct file *file,
- }
- 
- static const struct file_operations force_static_address_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_static_address_read,
- 	.write		= force_static_address_write,
-@@ -1177,6 +1183,7 @@ static ssize_t force_no_mitm_write(struct file *file,
- }
- 
- static const struct file_operations force_no_mitm_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_no_mitm_read,
- 	.write		= force_no_mitm_write,
-@@ -1315,6 +1322,7 @@ static ssize_t dut_mode_write(struct file *file, const char __user *user_buf,
- }
- 
- static const struct file_operations dut_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= dut_mode_read,
- 	.write		= dut_mode_write,
-@@ -1371,6 +1379,7 @@ static ssize_t vendor_diag_write(struct file *file, const char __user *user_buf,
- }
- 
- static const struct file_operations vendor_diag_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= vendor_diag_read,
- 	.write		= vendor_diag_write,
 -- 
 2.53.0
 
