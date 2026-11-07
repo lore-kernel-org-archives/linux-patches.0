@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062805;
-	b=B5gCCjPJj/PeyJT1LtwJax0AA/oI9Y3E7z/lZRFg4r2mztnCq26K3JcU6c2GzohPmcPg
-	 qsgqOy++cvqUFRo1Bz57exAPYbLHBDLVQjt+fMUgtgg46tawXtLqkd0nDe03ldl1n7/Uf
-	 disfwoFksRXANpY+6RSDSqx7ZCcLPh3WrChGwKydx1eYN28A9LEQVgRBI9x7LqArzZXuS
-	 8Q+f0One0HN/vUnwuG2WBtvOU3oX5YEKL7EKN/YAvzhmSo8n9aVlf6gdxAoFuEA0/Mx1V
-	 VzTprc20lIl7eCk2wp+cIQKx0PTMPWxPGCUm5lVlTc9li9p/3KBE3SaBQr8mds9lUmA==
+	t=1794062806;
+	b=fVCsVCHdRzNkR46w5yiAQ/rh+dmpD8dd+V6NxEqtwHtatEu9+g+0pVRm0IDHGAhuXFRZ
+	 xMVGFfDMzUS+VXpxchIMnWGBU2RbhBqXhZ/+FlKS0Byn+dX2lVCuvLOy8nhtJf9Wyt50p
+	 LsVSbiyx+pMpmYdHmdX+K3f+Qkxze19Y3QAbjOkWRkgiPVgKCL5w6AWAiVp7s+nUiFrbS
+	 r4Lk1EfYJRa3hpQiSbZdrZUG3/rQpsAlKGSlr3q43X4B4chOdaZmwQnLWUWONb6wUttIp
+	 1hqfQAP1aWdgf4QprAvelfiSms9MYt4wTdHZ2ntuZi2VyalSMe3mJ0FVPWFiuixMBSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062806;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lSkX8m90nTuPlszUNUzdEUpw1BCy7IwbzQoVXAtxJ5E=;
-	b=30rhnNc0kkeHRfxyqE7UyUF7k0SgzRbIi8dngQw96AUH2AfZpxoXkMGbEYL73+vggoiR
-	 DdhZE0vZCf3uy4xZyigJReAGyOi8JmoI3wPohA91NNmDeyrnq4SR2yRXknMcrgbxb9Zm/
-	 dDDiA5vNQ4ZbPNlVnpxRaci4lXRNMtYyFEDaBlorO3a/KC9OUZIpI+xVQiEwWUM+XBccN
-	 uqLCgTN88xcBI8ufI4IFKJ3mrfGWRdqh6lTCA72ib5gQJOoiXyD7EQNzZFawq1OYyQIWs
-	 +FeLmQ/wXNwuawPBWTFLUQvn6hjhHRWm6FdEn5YE5yWMPLMUSyfNswtXDJP5UjatrxA==
+	bh=9XG63cyNP+7Y1koh32Ke49wOb7gyHfDr+KSVOHEViRg=;
+	b=s0NY8HjDd+8Cdvk71sjh2Q0SSrwUoSU3cfvdXfFKcmX9kPTOkiiuiYncpwCTOYNePQq6
+	 XXrbdxgpgEGSI15Yg7dBs/9F7NR5VaERdU4BOgqeSQLoS05TUsdaZ/mu4hp2ra3xuZUH5
+	 Pt5FqiOimC9NUzBFQjlabDBQ7ENaXTemjEpgHY3dfY2VZ3fExSfC3ntIjn62QORC4tFs4
+	 8OQhlAsn5MvmHX4yvDcDKjJqzwyJZfUBwMVmDb6bFRGFHcEcPjF36RAQ1xMUOPVBf6zex
+	 mRS4swHXSxjYSgE0UZlbw0x3QBZiQkGSyNHnMp7A+GIaEcELLtF96gvy7Iv/TIiM4Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rvZgHbvd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pON7uTd5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F47606A338;
-	Sat,  7 Nov 2026 14:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E76E606A338;
+	Sat,  7 Nov 2026 14:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rvZgHbvd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779431F0089F;
-	Sat,  7 Nov 2026 14:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pON7uTd5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE041F0089F;
+	Sat,  7 Nov 2026 14:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062804;
-	bh=lSkX8m90nTuPlszUNUzdEUpw1BCy7IwbzQoVXAtxJ5E=;
+	s=korg; t=1794062806;
+	bh=9XG63cyNP+7Y1koh32Ke49wOb7gyHfDr+KSVOHEViRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rvZgHbvdvTIQVurr+qhX6U5C7cCQdjcAwwigirItnZEMzfJogJT4z6g0HIlvd8io5
-	 2mDNYZtQSAWRY5sgZg3ksSQ0OjxmVp+YcYk3Bgkhd2rxik/i/Eg+XIQyupqcImm3cg
-	 WGCP0lNpnsR6L+7HeYzUVg8+3nVfo525G+BDHBcM=
+	b=pON7uTd5UgLsf7Jh3xupf3zkBxpP7VpGPtIeVJgV4WVbB2sH70hx1cbtF4ibqK6Sg
+	 7Z3OBDATxNWQ6P3OCPZm6xDy+/6ZNDegJ+3FLAGya/PQq0fwdAqyptF+0ChqM2yyzF
+	 vEe1GwLZIypg+zXd6MctiLvbr7djWcRnptTgfJNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 106/869] media: stv0900: bound DiSEqC reply length to msg[] size
-Date: Sat,  7 Nov 2026 08:46:28 -0500
-Message-ID: <20261107134856.208378946@linuxfoundation.org>
+Subject: [PATCH 6.18 107/869] media: synopsys: hdmirx: use request_any_context_irq() for 5V detection IRQ
+Date: Sat,  7 Nov 2026 08:46:29 -0500
+Message-ID: <20261107134856.236002004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,42 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Alexander Shiyan <eagle.alexander923@gmail.com>
 
-[ Upstream commit 6d7e70111b9c80a9e4cb17fe6a6c4f5470847722 ]
+[ Upstream commit fce1e4fa3867c0ff19a31f9977741696710855a6 ]
 
-The FIFO_BYTENBR field is 4 bits (mask 0x0f), giving a length of 0..15
-but reply->msg is __u8[4] in struct dvb_diseqc_slave_reply.  A faulty or
-malicious device reporting more than 4 bytes will the array and clobber
-the stack.
+Replace devm_request_irq() with devm_request_any_context_irq()
+for the 5V detection interrupt handler. This allows the kernel
+to choose the appropriate execution context (hardirq or threaded)
+depending on the underlying interrupt controller. On some platforms,
+the interrupt may be nested or require a threaded handler, and
+using the fixed hardirq version can cause probe failures.
+Switching to the more flexible function improves driver portability
+without affecting functionality.
 
-The stb0899, tda10071, and s5h1420 drivers all properly bound the FIFO
-count against sizeof(reply->msg) before the read loop, so do the same
-thing in this driver.
-
-Fixes: 99277b3824e4 ("V4L/DVB (10803): Add core code for ST STV0900 dual demodulator.")
+Fixes: 7b59b132ad43 ("media: platform: synopsys: Add support for HDMI input driver")
 Cc: stable@kernel.org
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/stv0900_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/stv0900_core.c b/drivers/media/dvb-frontends/stv0900_core.c
-index e7b9b9b11d7df..ce228f2ef330c 100644
---- a/drivers/media/dvb-frontends/stv0900_core.c
-+++ b/drivers/media/dvb-frontends/stv0900_core.c
-@@ -1775,6 +1775,8 @@ static int stv0900_recv_slave_reply(struct dvb_frontend *fe,
+diff --git a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+index 8e6f452f76c73..dbbd33f5908e5 100644
+--- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
++++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+@@ -2532,10 +2532,11 @@ static int hdmirx_setup_irq(struct snps_hdmirx_dev *hdmirx_dev,
+ 	irq_set_status_flags(irq, IRQ_NOAUTOEN);
  
- 	if (stv0900_get_bits(intp, RX_END)) {
- 		reply->msg_len = stv0900_get_bits(intp, FIFO_BYTENBR);
-+		if (reply->msg_len > sizeof(reply->msg))
-+			reply->msg_len = sizeof(reply->msg);
- 
- 		for (i = 0; i < reply->msg_len; i++)
- 			reply->msg[i] = stv0900_read_reg(intp, DISRXDATA);
+ 	hdmirx_dev->det_irq = irq;
+-	ret = devm_request_irq(dev, irq, hdmirx_5v_det_irq_handler,
+-			       IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING,
+-			       "rk_hdmirx-5v", hdmirx_dev);
+-	if (ret) {
++	ret = devm_request_any_context_irq(dev, irq, hdmirx_5v_det_irq_handler,
++					   IRQF_TRIGGER_FALLING |
++					   IRQF_TRIGGER_RISING,
++					   "rk_hdmirx-5v", hdmirx_dev);
++	if (ret < 0) {
+ 		dev_err_probe(dev, ret, "failed to request hdmirx-5v irq\n");
+ 		return ret;
+ 	}
 -- 
 2.53.0
 
