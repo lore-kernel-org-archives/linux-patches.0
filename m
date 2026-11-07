@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063408;
-	b=KQNx5crmDn25PVUQ2Hd/B/6UIvvcqwyocG/nBgXb0pdPEHrXM46TNiRoPT4CVw8wLdry
-	 DyWkToBukn2MPUqTX5TfRyyYzH2XhBG88PSx//0jwvZvpEIejPKRR6YofrUebF2a5cXbi
-	 kpxIVPC0S5v2wlYW9OKCtHbaNkVZztpN53I8g+KSMF5BEucXAT94K3+LpGft7ACBC77YH
-	 CLyqz/s4OxHkFXcRnnoSTb6W2/UxOyZHB86CVSomQfiSdMNGasyMcGBj2ygq6DB2e7ogy
-	 9wLEemYWcV4c8NasPiJo8aNdDkCWtcZn6pxy8sGwVMG4B53qYr/xFfxcvL7IZNjH3NQ==
+	t=1794063409;
+	b=qCpMEOfUE3c+GcMlrQKhhOZ1wy7XEIijmqdKZdpL2x5poQs10jO7zBKZAmwfKxpdS9Zb
+	 LCYKybaL8Dazj0nL/KMjDYkS8DR1A3XUVqaj0RR1VIMlNnlao6AFcp14acVHaE7Ly6TeD
+	 xkPfyVRzRKlhVjJG7+rZZkcCW9G4V+V1n9TwcJ8vhPPMojh6cNNGH7VTBRWH6RJCfwFCR
+	 2HY/pzvX5LdH6MGqu8Ao2JXi5qY4fJ74zW35ZdekKNv+Zg2Z/tNvVT7anvYyK8cK0G3Rb
+	 ndRU0T2cGY8d18/uNffeJG37+Ow3wVCgI/GfOcqBJp0u4a5aW+vfr//dtiDXWvmMs9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063409;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A4dLTONXQS2Xwx0yYaG6GghPr6T+JgReMXnZf6mY4e0=;
-	b=r+kJGcsw4b2KK+5NWLoRDDYLso+ookz262khjreWmVGlcdE1ZHJqBCFFgpb2+TNpNSlb
-	 K6pkJRFD1xhR3e6BDS2YQSiNxb90dpN03VkQqefr4J2ouKsrTRpS2CCWlfAH7O6X3ohXw
-	 6018lNsV0Ft34JOzQnzMsQ8GOznj2wyKvsz1x+ZDHUG90XJkNurr8AcnRKT0OcgzOvgSu
-	 2HuGGFCOXiotbE4LHtFXVmNV8joIHvFNojfBMMVBHc2e+xD/kbZTYTY8GZ8dyHhiviVHc
-	 FCgn27zhyMLW3tFYeoV4mMXBIqvV2e0C/fyBRdeKKJIHLLJO+M1MfIvg104PQ7m6VRA==
+	bh=7IPYM53Ps9luV2idogAEgANlPWCdz4bEPUVAsf2UleE=;
+	b=L+n9Sr67dcLA22Ec36w/yfi9vchxlgF/SYwjui5QwupLBkABXOk2/sIMX59UCwN5q74R
+	 mqTkAzYIC3avb8A+5g/G4W0YrdgrpyzpvW6hB3Www028cuENi3svX0Lq7uYMZTVvDNq83
+	 jsgto/4AnQz7IJwNVdux3Ve/fAEpqxmng/0ZUMJN7uMeSHpQenn1UmvqwDKxrVKyG+tkE
+	 6dv8W676D8JbQpgfUe/Uf94iy+5XKP3UywZNlEobXmpXq3l1xYXo+ELzmbzroRsKPpQzW
+	 LhL1SW0xM5VpbgbZeBZtDxvG7Uyk2Y3zMdHajQmSpkLJA6SpeqS+VN2m3mvi+Dfe80Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cmyhz3EU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jf496xWT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA1B606EEA8;
-	Sat,  7 Nov 2026 14:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645206082BF4;
+	Sat,  7 Nov 2026 14:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cmyhz3EU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07501F008A1;
-	Sat,  7 Nov 2026 14:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jf496xWT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2F91F0089F;
+	Sat,  7 Nov 2026 14:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063408;
-	bh=A4dLTONXQS2Xwx0yYaG6GghPr6T+JgReMXnZf6mY4e0=;
+	s=korg; t=1794063409;
+	bh=7IPYM53Ps9luV2idogAEgANlPWCdz4bEPUVAsf2UleE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cmyhz3EU07xOfIvXTImpoDpzvIEbnIpjIpVcg1atxowCD/PYc12xSmVsxF6Z9veK0
-	 +0jaqHzexRpNgN5VJ0lPLtbnlGl7Kpwmmszq+hrXUmkonCz0h0NYvlZubHW3h8cVLV
-	 3m0uUoG1mabPdbHrYkfFybodu3WFxvZPa9pw1Ko0=
+	b=jf496xWTXfuvmr03Wor7899PdrVVy+73MVjNKY8U3/jLcRWQ5t/znr7gjxKpwaAMH
+	 Zg0dPAgc2B96hdHAnVu1wXkecTfy3AJInp/i4R6wdBbUknr3cRGhhr+NjDwmi6GLL1
+	 d06xsFT0S6WvXumwP2PD2OuaPFa8ePt6EvjdGAfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Thomas Gleixner <tglx@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 577/869] irqchip/imx-intmux: Fix runtime PM teardown on remove
-Date: Sat,  7 Nov 2026 08:54:19 -0500
-Message-ID: <20261107134912.769778437@linuxfoundation.org>
+Subject: [PATCH 6.18 578/869] irqchip/mchp-eic: Fix clock reference leak in mchp_eic_probe()
+Date: Sat,  7 Nov 2026 08:54:20 -0500
+Message-ID: <20261107134912.796952819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,81 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b167c1a30e9e020e4c5e102c7a555943742c024b ]
+[ Upstream commit af9c707eb065a7d48eb92dc15acdb4346acf5db0 ]
 
-imx_intmux_probe() enables the IPG clock and then drops its runtime PM
-reference with pm_runtime_put(). With CONFIG_PM enabled, the runtime
-suspend callback disables the IPG clock. With CONFIG_PM disabled, the
-clock remains enabled after probe.
+of_clk_get_by_name() returns the clock with an elevated reference count
+that mchp_eic_probe() keeps for the lifetime of the driver, but none of
+the probe error paths drops it, so the reference is leaked whenever
+probe fails after the clock has been obtained.
 
-imx_intmux_remove() accesses the CHANIER registers without first making
-sure that the device is runtime active. The device may therefore be
-runtime suspended with the IPG clock disabled when these registers are
-accessed. In addition, the remove path only calls pm_runtime_disable()
-and does not balance the clock enable when CONFIG_PM is disabled.
+Put the reference in the error cleanup.  The clk_prepare_enable()
+failure path must jump there directly as it cannot call
+clk_disable_unprepare() on a clock that was never enabled.
 
-Resume the device and acquire a runtime PM reference before accessing
-the registers. If resume fails, skip the register accesses but still
-tear down the chained handlers and IRQ domains. Disable runtime PM
-afterwards, drop the acquired reference without triggering another
-runtime suspend, and explicitly disable the IPG clock.
-
-This keeps the clock enabled while the hardware registers are accessed
-and balances the clk_prepare_enable() performed during probe for both
-CONFIG_PM configurations.
-
-This issue was found by manual code inspection.
-
-Fixes: bb403111e017 ("irqchip/imx-intmux: Implement intmux runtime power management")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: 00fa3461c86d ("irqchip/mchp-eic: Add support for the Microchip EIC")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Radu Rendec <radu@rendec.net>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260914134211.1734163-1-lgs201920130244@gmail.com
+Link: https://patch.msgid.link/20260916190349.2094401-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-imx-intmux.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/irqchip/irq-mchp-eic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-imx-intmux.c b/drivers/irqchip/irq-imx-intmux.c
-index 5f9b204d350b2..18e214e5b1b59 100644
---- a/drivers/irqchip/irq-imx-intmux.c
-+++ b/drivers/irqchip/irq-imx-intmux.c
-@@ -289,12 +289,16 @@ static int imx_intmux_probe(struct platform_device *pdev)
- static void imx_intmux_remove(struct platform_device *pdev)
- {
- 	struct intmux_data *data = platform_get_drvdata(pdev);
--	int i;
-+	int i, ret;
-+
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret < 0)
-+		dev_warn(&pdev->dev, "failed to resume device: %d\n", ret);
+diff --git a/drivers/irqchip/irq-mchp-eic.c b/drivers/irqchip/irq-mchp-eic.c
+index 31093a8ab67c3..82cb0513bbb8d 100644
+--- a/drivers/irqchip/irq-mchp-eic.c
++++ b/drivers/irqchip/irq-mchp-eic.c
+@@ -233,7 +233,7 @@ static int mchp_eic_probe(struct platform_device *pdev, struct device_node *pare
  
- 	for (i = 0; i < data->channum; i++) {
- 		/* disable all interrupt sources of this channel */
--		writel_relaxed(0, data->regs + CHANIER(i));
--
-+		if (ret >= 0)
-+			writel_relaxed(0, data->regs + CHANIER(i));
- 		irq_set_chained_handler_and_data(data->irqchip_data[i].irq,
- 						 NULL, NULL);
+ 	ret = clk_prepare_enable(eic->clk);
+ 	if (ret)
+-		goto unmap;
++		goto clk_put;
  
-@@ -302,6 +306,11 @@ static void imx_intmux_remove(struct platform_device *pdev)
- 	}
+ 	for (i = 0; i < MCHP_EIC_NIRQ; i++) {
+ 		struct of_phandle_args irq;
+@@ -270,6 +270,8 @@ static int mchp_eic_probe(struct platform_device *pdev, struct device_node *pare
  
- 	pm_runtime_disable(&pdev->dev);
-+	if (ret >= 0) {
-+		pm_runtime_put_noidle(&pdev->dev);
-+		clk_disable_unprepare(data->ipg_clk);
-+		pm_runtime_set_suspended(&pdev->dev);
-+	}
- }
- 
- #ifdef CONFIG_PM
+ clk_unprepare:
+ 	clk_disable_unprepare(eic->clk);
++clk_put:
++	clk_put(eic->clk);
+ unmap:
+ 	iounmap(eic->base);
+ free:
 -- 
 2.53.0
 
