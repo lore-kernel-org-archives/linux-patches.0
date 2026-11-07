@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061672;
-	b=nEpgg070F2qmUF8tUot67zHGlK3pNYYtQ4uOwr+cKm7bGBgPwy0chWEpjwPhLYrIhldN
-	 y+jXEz0Dfr7e9FJe1Sapxe1H1FX9YxCNA6CVnRgt7umV3HPTeo3ow7qx8z+nusLTdM5PL
-	 UlnAt74vMPYJVB88NOcYSvH8Z13uDlWnjndvJ9gP1z9JeauwnfgGkvE62anQRwR7/YGop
-	 PBaShUeOsWkW590F+6L5V9vr2S1vw8J4BVk13a+Y8Q1NpNIYBvI7MCwxa7J4wJEE3jkix
-	 /34eyBBS8Ybge5fDbTsTBk1nx30gY2F7UetsoTxORJyXkFyFoGhP+K3dOQFwX7v7LJw==
+	t=1794061673;
+	b=fQN7Asolhva3zyU+ycjS2fUNdpjpZu9DkACN/KaOcM/Q6WdCLuCC+dS2Lx45OIaegxCw
+	 rjIA1rp6Wj9QPCjFD4VQK9raDB8VZcQC03sA2HgQBEuvgkUtTIbG9hpYYTbkpTKmQn7n2
+	 t+GxF18JqqS/lM21CuCM7t0hX0HkV3PLBiSqGJA/pzxElXrLNqc6wkTzp61ArQoIpclim
+	 FT+7jAzZ+JBHeK0lrYXZABh+J20UF/Z4SNmTpI5Ei+ZLr21lZw7L2w7+Gde8sk9uRnFz0
+	 iXM+azCDFnjnwHW98tDta28lksVFM2BdTicLvZBiK1XWcFepFzlxCmfIrbgPDCmGKvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061673;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dxhcmj1AbKBV9CfJWAbgcKoTZI8HbgVRLL0nCZZRsFA=;
-	b=2zceSyiHHbelHUGvfDXoo8LFntbpLEWlJcwhZiNuc0wuTx78JdVV9j3sj9z5s7jvVMss
-	 NBXUXKsU9bkGe8kOym321FlLHCz7kfXJiWdxHbHfFJ0BsOKoqK2/IGLScQlms8sdiaeog
-	 KM/N+xCfSzIguT2U3PImc8jaAvsEBQP9ZnVff6HSbFhWUfma3pvldQhGcX5K145tmYY6K
-	 rUnpmbyIq93o7jXy9LbF+TY4omgWzcSLA73s5PVQJSrKZInUsu2heDM2+uyoCna7djRzh
-	 TZIJB8mXExRnyetPI9vJjOse2xSqVPGJKAqjeCUq8jn+ilg7hKcjwbxgjaziSR81TrQ==
+	bh=zErtV+ZMqwds/Cfp+nCZ3xmxf/0JorOPmwkmuEXvyEA=;
+	b=sx8KkofAMzhP4EQgE9pV584QsWIK7LbQq0wOZHZ/ICx7d8zhH4+QEzLu4M2ZPhqVFfH/
+	 MYWqzKaMXhxNOYHKQZqCLoFls0LUsQuivwMdF8xUDxRNnXDeuUFUNY9ZWFbYjYoSjxiuI
+	 Yx4vV6yl9CLyqnivfirJh9UO2Wjbk8U37VtelCjwmJ5mWELVbYS5HcBTxS73TVEs0vcX2
+	 fJcwRhPiViwqEZcdp91UraiVHkMAiHRnSDKBSoioUeIyzNT9ilG++YZza2BLtDbcNKm2x
+	 lquhjwh/9wtgKPBSllWPk8Tmen1PwKjakZl1hP6vhZW0mLyGeKTxnGf29+9QYQ7Zksw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZT8bAx62;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bQXdKtnM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C314B606A331;
-	Sat,  7 Nov 2026 14:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F242E606A32E;
+	Sat,  7 Nov 2026 14:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZT8bAx62
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7208C1F0089F;
-	Sat,  7 Nov 2026 14:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bQXdKtnM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26741F0089F;
+	Sat,  7 Nov 2026 14:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061671;
-	bh=dxhcmj1AbKBV9CfJWAbgcKoTZI8HbgVRLL0nCZZRsFA=;
+	s=korg; t=1794061672;
+	bh=zErtV+ZMqwds/Cfp+nCZ3xmxf/0JorOPmwkmuEXvyEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZT8bAx62TcRNQLY967Idv5uEt3EOuKuF8mJADYUNCqm5UGGScDdkVFW8Wgh1iXxah
-	 XC70sdEMEOdGldzvFnob8zzaCqFaOLhGWisEYRsbzVKPUls+quSYzYt+hlLfHV5Jk7
-	 5Ca9fkFpJDAtZ18bW5z2BjklDiTmGFQlruceeoW0=
+	b=bQXdKtnMuHCSNzLuJNems5si9sEn8epOiF2yayInJ8l+EhKebLI5VlDPvd+1OL4k5
+	 4FDbt7WZ03VLgrA7mGcSX/anDsnaYsAl97suzKOD7IJxrQBrptRe3XNy6gCYe1Kxtv
+	 Or4rsAuwhe5fY58ZZ4cWB5wPHAQWE4AJDa9aj+RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0726/1536] xfs: always forget cached ACLs if the attr fork swap succeeds
-Date: Sat,  7 Nov 2026 08:45:42 -0500
-Message-ID: <20261107135017.890085273@linuxfoundation.org>
+Subject: [PATCH 6.12 0727/1536] xfs: always report inode repair setup failures
+Date: Sat,  7 Nov 2026 08:45:43 -0500
+Message-ID: <20261107135017.921107855@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,53 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 41ee987f53785b9443388a756912b1a0fe3c9592 upstream.
+commit ce9098338a7e1a77246684242d10779fc4d4a539 upstream.
 
-LOLLM complains that xrep_xattr_rebuild_tree omits the xfs_forget_acl
-call if the attr fork swap succeeds (and hence the acls might have
-changed) but reaping the old attr fork fails.  Fix it so that we always
-purge the cached acls if the swap succeeds, even if subsequent steps do
-not.  This avoids some cache coherency problems with access controls.
+LOLLM noticed that xchk_setup_inode silently discards errors being
+returned by xrep_setup_inode.  Fix that, and fix the stub macro so that
+it actually "returns" a value.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: e47dcf113ae348 ("xfs: repair extended attributes")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 2d295fe65776d1 ("xfs: repair inode records")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/attr_repair.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/xfs/scrub/inode.c  |    2 +-
+ fs/xfs/scrub/repair.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/attr_repair.c
-+++ b/fs/xfs/scrub/attr_repair.c
-@@ -1491,7 +1491,7 @@ xrep_xattr_rebuild_tree(
- 
- 	error = xrep_xattr_reset_tempfile_fork(sc);
- 	if (error)
--		return error;
-+		goto forget_acls;
- 
- 	/*
- 	 * Roll to get a transaction without any inodes joined to it.  Then we
-@@ -1500,7 +1500,7 @@ xrep_xattr_rebuild_tree(
+--- a/fs/xfs/scrub/inode.c
++++ b/fs/xfs/scrub/inode.c
+@@ -190,7 +190,7 @@ xchk_setup_inode(
+ 	 * make repairs to the ondisk inode buffer.
  	 */
- 	error = xfs_trans_roll(&sc->tp);
- 	if (error)
--		return error;
-+		goto forget_acls;
+ 	if (xchk_could_repair(sc))
+-		xrep_setup_inode(sc, &imap);
++		return xrep_setup_inode(sc, &imap);
+ 	return 0;
  
- 	xrep_tempfile_iunlock(sc);
- 	xrep_tempfile_iounlock(sc);
-@@ -1509,7 +1509,7 @@ forget_acls:
- 	/* Invalidate cached ACLs now that we've reloaded all the xattrs. */
- 	xfs_forget_acl(VFS_I(sc->ip), SGI_ACL_FILE);
- 	xfs_forget_acl(VFS_I(sc->ip), SGI_ACL_DEFAULT);
--	return 0;
-+	return error;
- }
+ out_cancel:
+--- a/fs/xfs/scrub/repair.h
++++ b/fs/xfs/scrub/repair.h
+@@ -218,7 +218,7 @@ xrep_setup_nothing(
+ #define xrep_setup_nlinks		xrep_setup_nothing
+ #define xrep_setup_dirtree		xrep_setup_nothing
  
- /* Tear down all the incore scan stuff we created. */
+-#define xrep_setup_inode(sc, imap)	((void)0)
++#define xrep_setup_inode(sc, imap)	(0)
+ 
+ static inline int xrep_setup_symlink(struct xfs_scrub *sc, unsigned int *x)
+ {
 
 
