@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061530;
-	b=Wo/cLmiVRng8mSTrahaugi+lhoCfzgJcLL1o5GeSHibrGh5w8mp+zIdQu6NklPuqdSI3
-	 8hJSQL/hpuLkNbwmCu6Dj4aRCJydeYQCi0WrzRJVSdWGuw9UpidcumC+1UKtSS35KbojA
-	 lLPdRdh1RvG9vu36fSLb8U+kugKAzl8pZ9B3g11oT23UIq5Fhc2JfanLK5ZvSvmrPmBd7
-	 0AMx9jNjE/G+WPTmKTD9xETmNKXIt82cuhL9FIBCjxqzZ2QKFGLigthShBg7ouy7lCraa
-	 DO/kMYOeuLBlviPmWsQUG6UFZGuQRO6+Vgt1XZCRu91JycEjJgvopmZBTu3rLCSofZQ==
+	t=1794061532;
+	b=Lqi7NMp55/dWPDQZji+OBGb7Ou0Huy0RWNI7sIYjjURZYnXBfZNWOO+Q3uAvojN5zIwv
+	 2Co8V7dYog2fofybWCyKMtx/U4dL5sO9WOUR1VNVezeHUa64Dy3SZSXdhAS7eGGJVOKEQ
+	 0rHbqO4sa2Tz1iTFhQvd4mwd3MOfCG41j4QYMpyAiRWgZo5/XoXdRQky5VRE2PYOkDNZv
+	 3+RJhuhZhqiQobNCsxfKZMRv654eVvkTZrrZlL7m1erNPsCDwSJIh8y80J+TyBICrmRXS
+	 pvQAT3EF7H9I9QzxL6U4rtufSNYkXyzGqNAhvJ7YIMnRqC/W42Doqmq8efVJo8tQgSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cSnWznrahvOR9P3XBDPYQ7rxX6qlob7BBmu+vT0ZFOs=;
-	b=fTkwG+TcLB/xJ507Erir+MgVo4PyQEQx8h7x+HRgKESShidJ0cICRd+Z+mzdOxOZ695m
-	 GqRn/YdF0wJJAlYiKFNX7oA5IqcRnBiAc5eOh/DR89bQUx7p9HMAm0CNf7z4jSnpZ1bOC
-	 Nj2mm40gx26o+AoZGoKxf9RS6qdUDpB2EaVs9bZdqj7qbw6LhQCc/lZ8XGtEFTXi6iBJh
-	 m4pe2AsA3ESPZHZ3H335HI/J6e8KfBQdN+YC3NEJkRH69ReAvuCgsO9tT6XKhNTGJctOX
-	 oYmhe/fzhaxzkAgsa1qVPdyg0TwUF/MmtZGvXRh9hXtztm1R1y7k0ttdWj4N9fHy40g==
+	bh=UdeDaA9Bqj1Nb0f2JeF87WnRr/ev7kyPFoYjgxseKME=;
+	b=wAsmBEpi7wckFyi9v68B0Bu1z0Elfc/+kBWJjfZWlWMaP8IVp1dHYiGfz9EUeFp646k7
+	 i6i9hWlwekh2AD4CeDk/IWjAn3X7MN9nYzcXF35e8vGJT8/1gMOTPUsndKs7EbXMG126q
+	 cuCIZvedJf+BEWkNMPJVXwiLvJDEMR2c8305j0wyHeQeh1umldJjMLoysUv3yukoUlWiz
+	 DG/3kK7aq/UUJRY5CBY6czn2ukQvrryj7IsOK8R6wd9CEP0/38QZIURSxF+HRNRurO1cB
+	 fiLxyAar2/iSXILmqpw9Bg7TOSegaHAXrWiEzKZ8YbiDqAD+/DHUqjWOXjUgFwstsFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAiaKltD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v3Jg5259;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD59606A32D;
-	Sat,  7 Nov 2026 14:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE151606A330;
+	Sat,  7 Nov 2026 14:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAiaKltD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396D11F0089F;
-	Sat,  7 Nov 2026 14:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v3Jg5259
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975D21F0089F;
+	Sat,  7 Nov 2026 14:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061530;
-	bh=cSnWznrahvOR9P3XBDPYQ7rxX6qlob7BBmu+vT0ZFOs=;
+	s=korg; t=1794061531;
+	bh=UdeDaA9Bqj1Nb0f2JeF87WnRr/ev7kyPFoYjgxseKME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wAiaKltDP3KZWjsaOqmElSMF64Xp7W6vgQyX2wKvKDDmF16t8PnrzgjEIisA3+9i6
-	 L3ulRKjzVTM3fyOVBLDT/Sr2wUlI/U7QRLs4kLgjEN5uGMrNsNnhYwArQP0ZWJBp14
-	 5GMYU5+XvrBUXKAESCXXUZS1hWyqjiUieE5o/KMw=
+	b=v3Jg5259rsVHJVuo4nHABSeNOYyPzaHJ0pZuaWsgmKxGyIaTPbdsDQVHKOJxup6mN
+	 hL5vegI8CxuTXtOExpPKcztFWOLgsd3EYA/wk2BxQad8+gMK098QA/eAG6BWMRtg6J
+	 SfBGnuc/l/eWXgnjbquFewOiaByWMBpQt3CsZnvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 0616/1536] ata: sata_fsl: Fix use-after-free of host_priv on probe() failure
-Date: Sat,  7 Nov 2026 08:43:52 -0500
-Message-ID: <20261107135014.837313161@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.12 0617/1536] s390/cpum_cf: Check session mask before cpu offline
+Date: Sat,  7 Nov 2026 08:43:53 -0500
+Message-ID: <20261107135014.865372618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,87 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 70b1196740d61aabda13b2ad0e9c1dfa2ef9cfa3 upstream.
+commit 99a95985dfc85eecad97f0991a2401d2fcef294c upstream.
 
-sata_fsl_host_stop() releases hcr_base and host_priv:
+cfset_offline_cpu() stops counter sets for every active session without
+checking whether the outgoing cpu belongs to the session mask.
 
-	static void sata_fsl_host_stop(struct ata_host *host)
-	{
-		struct sata_fsl_host_priv *host_priv = host->private_data;
+For example, run an hwctr session on cpu0 and a cpu bound perf event on
+cpu1:
 
-		iounmap(host_priv->hcr_base);
-		kfree(host_priv);
-	}
+lshwc -l 9999 -i 5 0:b
+perf stat -C 1 -e cpum_cf/CPU_CYCLES/ sleep 120
+chcpu -d 1
+chcpu -e 1
 
-->host_stop() is called by the driver core through the ata_host_stop()
-devres action which ata_host_start() registers, so it is called both when
-the device is unbound and when probe() fails after the host has been
-started.
+Although the hwctr session does not include cpu1, cfset_offline_cpu()
+decrements its counter set reference count. The subsequent perf teardown
+decrements it again, causing it to underflow.
 
-The error_exit_with_cleanup label of sata_fsl_probe() releases hcr_base
-and host_priv as well, and it is reachable from the two
-device_create_file() calls which are done after the host has been
-activated. In that case sata_fsl_host_stop() runs on an already freed
-host_priv, resulting in a use-after-free and a double iounmap()/kfree().
+The perf event keeps the percpu state alive across hotplug. When cpu1
+comes online, the hwctr session is started there and the reference count
+moves from -1 to 0. Stopping the hwctr session then decrements it to -1
+again, so the zero triggered counter set disable path is skipped.
 
-Add a separate error label for the failures happening after the host has
-been activated, which only detaches the host and leaves hcr_base and
-host_priv to sata_fsl_host_stop().
+Check the session mask before stopping counter sets on the outgoing cpu.
+This prevents the unmatched decrement and the resulting reference count
+underflow.
 
-Note that ata_host_detach() is dropped from error_exit_with_cleanup, as
-that label is now only reachable while host is still NULL.
-
-Fixes: 6c8ad7e8cf29 ("sata_fsl: fix UAF in sata_fsl_port_stop when rmmod sata_fsl")
-Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-11-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: a029a4eab39e ("s390/cpumf: Allow concurrent access for CPU Measurement Counter Facility")
+Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: stable@vger.kernel.org # v5.14+
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/sata_fsl.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ arch/s390/kernel/perf_cpum_cf.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/ata/sata_fsl.c
-+++ b/drivers/ata/sata_fsl.c
-@@ -1499,7 +1499,7 @@ static int sata_fsl_probe(struct platfor
- 	host_priv->intr_coalescing.attr.mode = S_IRUGO | S_IWUSR;
- 	retval = device_create_file(host->dev, &host_priv->intr_coalescing);
- 	if (retval)
--		goto error_exit_with_cleanup;
-+		goto error_exit_detach;
+--- a/arch/s390/kernel/perf_cpum_cf.c
++++ b/arch/s390/kernel/perf_cpum_cf.c
+@@ -1803,6 +1803,9 @@ static int cfset_offline_cpu(unsigned in
  
- 	host_priv->rx_watermark.show = fsl_sata_rx_watermark_show;
- 	host_priv->rx_watermark.store = fsl_sata_rx_watermark_store;
-@@ -1509,16 +1509,24 @@ static int sata_fsl_probe(struct platfor
- 	retval = device_create_file(host->dev, &host_priv->rx_watermark);
- 	if (retval) {
- 		device_remove_file(&ofdev->dev, &host_priv->intr_coalescing);
--		goto error_exit_with_cleanup;
-+		goto error_exit_detach;
- 	}
- 
- 	return 0;
- 
--error_exit_with_cleanup:
-+error_exit_detach:
-+	/*
-+	 * Once the host has been activated, hcr_base and host_priv are
-+	 * released by sata_fsl_host_stop(), which is called by the driver core
-+	 * through the ata_host_stop() devres action registered by
-+	 * ata_host_start(). Releasing them here as well would result in a
-+	 * double iounmap() and a use-after-free.
-+	 */
-+	ata_host_detach(host);
- 
--	if (host)
--		ata_host_detach(host);
-+	return retval;
- 
-+error_exit_with_cleanup:
- 	if (hcr_base)
- 		iounmap(hcr_base);
- 	kfree(host_priv);
+ 	if (!list_empty(&cfset_session.head)) {
+ 		list_for_each_entry(rp, &cfset_session.head, node) {
++			if (!cpumask_test_cpu(cpu, &rp->mask))
++				continue;
++
+ 			p.sets = rp->ctrset;
+ 			cfset_ioctl_off(&p);
+ 			cpumask_clear_cpu(cpu, &rp->mask);
 
 
