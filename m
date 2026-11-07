@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063302;
-	b=oK8zO1Qy4cs/5vkwrubhK72/PRwzP/ZE0vGeDCo52bCWdu3qq46wdqNQuvtOJwW4t9nH
-	 AuHBbqmDidOqc1WlxrllKJkOP1fMG4F7k6y2W6ayV1J3/IxNXypdP/Mw3jqtxBBuvz4V2
-	 7werf84tUxUz4F9kdw++PlBM3HM8WIY7EA7o2WwVZcneogeEaQCTKnOln1KQaONacnVEF
-	 ot8lIq5VPaaCQbQZxKyaOG8/Uf/TdUNlBvL+J7/fLliORcfnBzODTEcEf0FEMuGB8GJ8R
-	 UjGk4vKDRMYRdKBjT/BzzTWcje4hRyYH2MBgO6R3TveCURIdm/z19PKe8pWGYG539bg==
+	t=1794063303;
+	b=0sSiL2A9wtmd5LyodVF+ebUVB7QEKJ2sTyBU2xBp2lBTRfeu8FhDe+BodetUTARtbdzB
+	 vckb3OW3juR6h6YpndP5ix66JGXILTpiyuvHfflNMtbcUS0hfhdH9GrDJkWBDfnj7myO5
+	 HwjAJqsskIdPLnvDrPbPfWBBL+SC6xHeclIsQSZRkyYuhnStY2m6mOT0S1JnvUvx+lE1q
+	 u//6fI2XunuhYBJbWKXMV8xTqkPV1x/B/y5T6pT9rQ39XF01nGL5IvDm4gdrt3LDcGTLX
+	 DE5VLOjeF9EBepASG0aNlocN7bLcHviq0pcN0/+JkFSiFL1rT1cIIwKfzbORRQ6kL6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063302;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=j9EnOf8L80ApiTUQdrxvrxhSbmm+IsAwHa2CvSa9DCE=;
-	b=K+pMJItQ9ByWjRoaVu4Tc3yRHwMQmTocOgZYaTLn7+fgznk9DxF+4uPxx/GC8QUCPz9D
-	 yZuB7bHxK168mnH++ic1Ly6x6F1mRyxYmvignN+sD4f/AF+jW24Wuuc6LBwTzG+YiBNKI
-	 uebcKL3gVpZCJ61BjHu4tfREb8ApM8WUFZ0mTShGv1BjNgqL7NtDCKpPr+asmj6kb3mE0
-	 cq5kL9XXhxMG4f516BCFTaEGcasdiu+PzV9UwBD6VDjNyBv8GF3EpQC5ghVwBAKsS0Hha
-	 5fHM3bRUA6CBgUH7bpOELw8YRYsICeNlQpBPPOKUflw3ePvzyj7zxi4YT71xcRPS9dA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3hp36+nP8H+X41127efY7JIzX4y3KEXJ3Q+7R1pMJQs=;
+	b=ntHlt5tVciyMV4f4pu3k66t+IRq/DTSRzPNQ6X7ZuDzEcztCBNxCJyzAnpGkl+zYWx0x
+	 azN13neX37ONwhILmzXFmjtmTlV+xBz2c9HwJpCu3Xks45TIKu1cKxJb9/LJGyWEV3e8k
+	 GG2rzieNo0hC4mIKC6tVfQGL7dJ0auwv2WtQF4CHG8NNtVVmwXiv2QfM3jJCFymO2MWKG
+	 kJS7bhe3DuEpjIon91oxy2AdSyfpZXJF/moU+fINYWwIyP/xODvOdnxNSE7tZr9beT5Qu
+	 D7VQgOieB2yLlSXfHY2MyJZswco2Bc3QonTeRFulF9jZZpdgTysV9DaxpBuiZsATJ6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KvufEsvW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Eygt5/BC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB69606EEB1;
-	Sat,  7 Nov 2026 14:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C83D606D833;
+	Sat,  7 Nov 2026 14:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KvufEsvW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075821F008A2;
-	Sat,  7 Nov 2026 14:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eygt5/BC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7391F008A1;
+	Sat,  7 Nov 2026 14:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063302;
-	bh=j9EnOf8L80ApiTUQdrxvrxhSbmm+IsAwHa2CvSa9DCE=;
+	s=korg; t=1794063303;
+	bh=3hp36+nP8H+X41127efY7JIzX4y3KEXJ3Q+7R1pMJQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KvufEsvWmNUF6F/k3kk26rm4JmgQVAHDeWiGAfdj6nmsFM5A48nFF8GktrfOIYofC
-	 hJgveNyjASXXAuMMo4bjlLs/Kx5/BoWHT6QxxV1zWx3ifUcQUP+kgELm7NsIZweIuR
-	 ScEDzxZqlTTf0Ko3T1ogWIlySBRbFX18ucAWfN04=
+	b=Eygt5/BC0eoliQtLavaJ1AvXm473AwNldwbAOV0Pp5dPijy9js6TdyxRUVvRdxGao
+	 Y5Db11Ya7FsjipCDpjsRIg6RhIsRIEY9wpwHVsNeTloJKlMTD9AVEqliV9mbvwd6gr
+	 GkBDNRkPHfzqaROyk/53lD1nAAMWkr3IOdtTMgDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Yongjian Mu <ymu@everpuredata.com>,
+	Chuck Lever <cel@kernel.org>,
+	Tim Menninger <tmenninger@everpuredata.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 493/869] platform/x86: hp-wmi: fix heap OOB read and memory corruption in hp_wmi_perform_query()
-Date: Sat,  7 Nov 2026 08:52:55 -0500
-Message-ID: <20261107134910.263715775@linuxfoundation.org>
+Subject: [PATCH 6.18 476/869] xprtrdma: trim head iovec when the payload arrives via a Write chunk
+Date: Sat,  7 Nov 2026 08:52:38 -0500
+Message-ID: <20261107134909.751623203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -62,79 +64,144 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Yongjian Mu <ymu@everpuredata.com>
 
-[ Upstream commit 6dea092b261f04d632411c2be52d13190f5f67b1 ]
+[ Upstream commit 9ee534a75912361308b1f956bc3e7895a082a422 ]
 
-hp_wmi_perform_query() evaluates an ACPI WMI method and expects a
-struct bios_return header in the returned buffer. However, it only
-checks that the ACPI object type is ACPI_TYPE_BUFFER without verifying
-that obj->buffer.length is at least sizeof(*bios_return) (8 bytes).
+The upper layer sets rq_rcv_buf.head[0].iov_len from its estimate of the
+reply header size. For RPCSEC_GSS that estimate includes
+auth->au_ralign, which gss_create_new() initializes to GSS_VERF_SLACK >>
+2 (25 XDR words, or 100 bytes) and which is corrected to the real
+verifier size only after the first reply on that rpc_auth has been
+unwrapped. In this case, the krb5 MIC verifier is 36 bytes, so every
+request encoded before the first reply completes has a head that is 64
+bytes too long.
 
-If the firmware or ACPI method returns a buffer shorter than 8 bytes:
+On TCP this is harmless: xdr_realign_pages() moves the excess head
+bytes, which are genuine reply data, into the page list. With
+RPC-over-RDMA and a Write chunk (sec=krb5, i.e. RPC_GSS_SVC_NONE, where
+DDP is allowed), the payload has already been placed directly into the
+page list, and the receive buffer holds only the inline part of the
+reply. rpcrdma_inline_fixup() clamps its local copy of the head length
+to the inline length but leaves head.iov_len untouched, so
+xdr_realign_pages() still sees iov_len > cur and shifts whatever lies
+past the inline reply in the receive buffer into the front of the
+directly-placed payload:
 
-1. bios_return->return_code at offset 4 reads out of bounds from the
-   allocated ACPI buffer slab.
+  rpc_xdr_recvfrom:  head=[...,196] page=524288 tail=[...,64]
+  rpc_xdr_alignment: nfsv4 READ offset=132 copied=64
 
-2. If return_code evaluates to 0 and outsize is non-zero,
-   (int)(obj->buffer.length - sizeof(*bios_return)) evaluates to a
-   negative integer (e.g. -8 for a 0-length buffer). actual_outsize is
-   set to this negative value and passed to memcpy(buffer, ...,
-   actual_outsize), where the signed negative value is cast to
-   size_t (e.g. 0xfffffffffffffff8), attempting to copy ~18 Exabytes
-   and triggering an immediate kernel crash. Additionally,
-   memset(buffer + actual_outsize, ...) performs an out-of-bounds
-   write before buffer.
+The first 64 bytes returned by each such READ are incorrect (zeroed, or
+shifted right by 64 bytes depending on the kernel's xdr_shrink_bufhead()
+implementation). This is readily hit with pNFS flexfiles over RDMA and
+sec=krb5: the per-DS rpc_clnt gets a fresh rpc_auth whose first RPC is a
+large READ. Reads following the first completed reply return the
+expected data.
 
-Fix this by ensuring obj->buffer.length is at least sizeof(*bios_return)
-before accessing the return code, and compute actual_outsize safely
-using min_t(u32, ...), which is sound specifically because the guard
-above already rules out obj->buffer.length being smaller than
-sizeof(*bios_return) by the time that subtraction runs.
+Commit cb0ae1fbb2f5 ("xprtrdma: Do not update {head, tail}.iov_len in
+rpcrdma_inline_fixup()") removed the head-length correction while fixing
+the handling of pure-inline krb5p replies.
 
-Fixes: c3021ea1beee ("hp-wmi: allow setting input and output buffer sizes separately")
+When a Write chunk conveyed the payload, trim head.iov_len (in both
+rq_rcv_buf and rq_private_buf, which call_decode() expects to match) to
+the inline length actually received so that the XDR layer does not
+realign the page list. These READ replies have no trailing inline
+fields, and the payload is already in the page list, so the upper
+layer's head estimate can be safely reduced. Reduce buflen by the same
+amount to avoid treating unused head capacity as additional tail
+capacity. Pure inline replies and Reply chunk replies are unchanged.
+
+Tested on Linux 6.8.0 and 7.3-rc4 with NFSv4.1 pNFS flexfiles over
+RPC/RDMA and sec=krb5.
+
+Fixes: cb0ae1fbb2f5 ("xprtrdma: Do not update {head, tail}.iov_len in rpcrdma_inline_fixup()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260826103012.240453-1-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Yongjian Mu <ymu@everpuredata.com>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtrdma/rpc_rdma.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 5eb2aade44cca..f92bb3dca2e30 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -491,8 +491,9 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
- 		goto out_free;
- 	}
+diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
+index e2694fb03ba1b..091b8cb415ec7 100644
+--- a/net/sunrpc/xprtrdma/rpc_rdma.c
++++ b/net/sunrpc/xprtrdma/rpc_rdma.c
+@@ -1033,12 +1033,16 @@ void rpcrdma_reset_cwnd(struct rpcrdma_xprt *r_xprt)
+  * @rqst: controlling RPC request
+  * @srcp: points to RPC message payload in receive buffer
+  * @copy_len: remaining length of receive buffer content
+- * @pad: Write chunk pad bytes needed (zero for pure inline)
++ * @writelist: bytes conveyed by the Write chunk (zero for pure inline)
+  *
+  * The upper layer has set the maximum number of bytes it can
+  * receive in each component of rq_rcv_buf. These values are set in
+  * the head.iov_len, page_len, tail.iov_len, and buflen fields.
+  *
++ * For READ replies with a Write chunk, the payload is already in
++ * the page list. An overestimated head length and buflen can be
++ * reduced without moving reply data.
++ *
+  * Unlike the TCP equivalent (xdr_partial_copy_from_skb), in
+  * many cases this function simply updates iov_base pointers in
+  * rq_rcv_buf to point directly to the received reply data, to
+@@ -1047,13 +1051,16 @@ void rpcrdma_reset_cwnd(struct rpcrdma_xprt *r_xprt)
+  * Returns the count of bytes which had to be memcopied.
+  */
+ static unsigned long
+-rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len, int pad)
++rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len,
++		     u32 writelist)
+ {
+ 	unsigned long fixup_copy_count;
+ 	int i, npages, curlen;
+ 	char *destp;
+ 	struct page **ppages;
+ 	int page_base;
++	int pad = writelist & 3;
++	unsigned int delta;
  
--	if (obj->type != ACPI_TYPE_BUFFER) {
--		pr_warn("query 0x%x returned an invalid object 0x%x\n", query, ret);
-+	if (obj->type != ACPI_TYPE_BUFFER ||
-+	    obj->buffer.length < sizeof(*bios_return)) {
-+		pr_warn("query 0x%x returned wrong type or too small buffer\n", query);
- 		ret = -EINVAL;
- 		goto out_free;
- 	}
-@@ -511,7 +512,7 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
- 	if (!outsize)
- 		goto out_free;
+ 	/* The head iovec is redirected to the RPC reply message
+ 	 * in the receive buffer, to avoid a memcopy.
+@@ -1065,8 +1072,20 @@ rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len, int pad)
+ 	 * head.iov_len bytes are copied into the page list.
+ 	 */
+ 	curlen = rqst->rq_rcv_buf.head[0].iov_len;
+-	if (curlen > copy_len)
++	if (curlen > copy_len) {
++		/* These READ replies have no inline fields after the payload.
++		 * Trim the head without moving the directly-placed data.
++		 */
++		if (writelist) {
++			delta = curlen - copy_len;
++
++			rqst->rq_rcv_buf.head[0].iov_len = copy_len;
++			rqst->rq_private_buf.head[0].iov_len = copy_len;
++			rqst->rq_rcv_buf.buflen -= delta;
++			rqst->rq_private_buf.buflen -= delta;
++		}
+ 		curlen = copy_len;
++	}
+ 	srcp += curlen;
+ 	copy_len -= curlen;
  
--	actual_outsize = min(outsize, (int)(obj->buffer.length - sizeof(*bios_return)));
-+	actual_outsize = min_t(u32, outsize, obj->buffer.length - sizeof(*bios_return));
- 	memcpy(buffer, obj->buffer.pointer + sizeof(*bios_return), actual_outsize);
- 	memset(buffer + actual_outsize, 0, outsize - actual_outsize);
+@@ -1294,7 +1313,7 @@ rpcrdma_decode_msg(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep,
+ 	base = (char *)xdr_inline_decode(xdr, 0);
+ 	rpclen = xdr_stream_remaining(xdr);
+ 	r_xprt->rx_stats.fixup_copy_count +=
+-		rpcrdma_inline_fixup(rqst, base, rpclen, writelist & 3);
++		rpcrdma_inline_fixup(rqst, base, rpclen, writelist);
  
+ 	r_xprt->rx_stats.total_rdma_reply += writelist;
+ 	return rpclen + xdr_align_size(writelist);
 -- 
 2.53.0
 
