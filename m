@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061727;
-	b=D0aMI6hpjPxOpcj8CvitxP8pft0tGB/NlKttlARwLjuRXI8yGIR0IhL71xRKrVG4k0Xh
-	 5NUs2xCMIlvaP8IFftjTSyJOaUbjbCIHtlxrsp0gCb9NDrftIJ+LrSI3MNl+mN641yQQP
-	 K6MEOJQtEn+NzcoX71JDOk+0K2TmSlpAFfOjmsUdrCFv4FS74pl6aB+jtWBqJ+w0RB+JT
-	 bavb0Fb9uFY4UpWuJkt78Qb2y/22IrupuBnzfz47BE2DPAKpZ+SRThZtTFXHZLtecE0ll
-	 4joGooCjPeWMRsxXuukoWdP7uopOMiWvtlsvsM4rLQ+pTR/YvfpZ6Apb5Q3MK6PPT3g==
+	t=1794061728;
+	b=O1RhlQrKmDw8uBYrB4PTMR2Zv7yIeF0S9I2R97w3tnTiTs9GhMXIkvQC6MMCnx40wMiy
+	 fqU4VUvSMwejR1BS1JArlPrduvfaAZPeA89VL0JDAZL8rJboTrvU1B5LEZXQ4hy1JDome
+	 8xr4O36IOtbqyaKGyD3Gqqh7y5pdIIdJ2Go/Yr6e8HZKnrRkhIzM1JIkffXBt7HfkT5wp
+	 186L9mjarCJ/ep0H701Pi+tqkaHCxWRkSZHIsBX8Oi+2r7pIebZEqZJyO+eSgT/PI8G2O
+	 dzWtEJgKYK9bIXPk0EIzbb6Zcv3YJUklKVYOiLEd50xzIczTOoxm2U+2vsL5C+8YNMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061727;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=UDlr7kQOYSAgq8jWldG8eXjRo8q1V9mHUt1agHjvMEo=;
-	b=Ohdoz1SjZIkyjrznuD2eJ2ytDD2B9dH6UwONcHg1T5Az4d9CI0Koe0zlFu9QoOgdx0su
-	 JsaXsEfcJLlESBtP6O4v2qEo0eEx/fJAVLTbuU4m/xJVCUdi/ap70QZtqUMhXM+0pva9u
-	 DAJ89L2mjnPqC36RfKGEW7RZ3xFQo08arQFHjr9kPBbyG1043nViawBtliT701vyI+8Lc
-	 TsRmIQ7R8JdFl2dJMOPYOVc/7qfMfZABPGZ6QxP2/uMMIzCSn33NxTuCuSct3aV20yfX8
-	 iTwK1uKRrm3GmwoCSWvSYKd9r6K6dO0jsss4Q1YNE1bzSozKKD6b8BvOP9X+W/flxcQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=WJEmi9sa3+0ls8ncHtDDnUFMFxk9tpOLrHcrU9BziZA=;
+	b=k0nj8DZtBgbqVidkpvPEVD264O8RY3Oe4D65gZJmOX66Mc5H/Sbo7cIp3WrkB/G0aw2h
+	 sOu5bwusUXoyx4pn4Gcpgy40d9gWwSN6ZqaW8ndw3T5OqT+zPs64JmoPaG2DV+muWlano
+	 03KF1qcusB5gz4HZh5cGFCPR09NhX82Cm9u2bYqNNy5sRmDrShteUA8OxKD0R6WjIFEcK
+	 Kth58DmvniFRlWIil60ZD2DV29m6RALtROxYkohjy0/J1N5Ge48Y1fGBhXsMHIS3tbj6q
+	 nAUG7A14tamSl6T+jo37sCk3/zPwhHlZB8BmKDSIWx+IbPVtksXjaS+7wtmudaXzquA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ufr79oFB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3r1Gney;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D04606A326;
-	Sat,  7 Nov 2026 14:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63837606A32F;
+	Sat,  7 Nov 2026 14:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ufr79oFB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750731F0089F;
-	Sat,  7 Nov 2026 14:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3r1Gney
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48BE1F0089F;
+	Sat,  7 Nov 2026 14:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061726;
-	bh=UDlr7kQOYSAgq8jWldG8eXjRo8q1V9mHUt1agHjvMEo=;
+	s=korg; t=1794061728;
+	bh=WJEmi9sa3+0ls8ncHtDDnUFMFxk9tpOLrHcrU9BziZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ufr79oFBIEr4xI3Zlbgct7LFUlvYTn3anlLOHTx+ojo998syoF2/WXt2S4iTvpR+D
-	 QIQCI+LQAvoWGVo/9blBt3ewqD97jxQAPA0mKtWaOTXYVUSsJNbrl3iOOFXzrMqtX2
-	 pXjgpmCEb/ym6+veM0BmFlnQCq+obVTzYl4twNig=
+	b=x3r1GneyA+9seHDz9+e4kkSrJUVW36JcS+xy90Yquy9WOQMyuq+zg7erZg7XSVln+
+	 BwT6Uz8ZiIm5jn9eklsL7WTsitIKQLtuDO1vXjSRKwsC5czOLvgpFAWvR6JNPmC50Q
+	 QdGqJVAysoLGmb8QMpX+snjP68MICkp4xMXm1HHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	"Mayank Jangid (OpenSec Intelligence)" <mayank.jangid.moon@gmail.com>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0770/1536] NFSD: map fh_verify() status codes for NFS_ACLv3 replies
-Date: Sat,  7 Nov 2026 08:46:26 -0500
-Message-ID: <20261107135019.159663851@linuxfoundation.org>
+Subject: [PATCH 6.12 0771/1536] nfsd: preflight SEQUENCE replies before accepting a slot
+Date: Sat,  7 Nov 2026 08:46:27 -0500
+Message-ID: <20261107135019.187846029@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -61,77 +62,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit b1eb9f1aea88a0d7ec8116a70c33b7b31ad0a3eb upstream.
+commit 35ff1a7a7e3835c3e974bc5c45d335897564ceae upstream.
 
-The NFS_ACLv3 protocol shares its status code space with NFSv3,
-which has NFS3ERR_BADHANDLE but no NFSERR_NOFILEHANDLE. An
-NFS_ACLv3 GETACL or SETACL request that carries an empty file
-handle gets a reply with status 10020, a value the client cannot
-interpret.
+nfsd4_sequence() narrows the reply buffer to the session's cached
+reply limit before it accepts the slot seqid. A client may negotiate
+ca_maxresponsesize_cached down to NFSD_MIN_HDR_SEQ_SZ, and
+nfsd4_alloc_slot() then gives every slot a zero-length sl_data[]. A
+COMPOUND tag can fill that narrowed buffer until it holds the
+SEQUENCE opcode but not the status word that follows.
+nfsd4_encode_operation() returns without running
+nfsd4_encode_sequence(), so cstate.data_offset stays zero. It leaves
+op->status at nfs_ok as well, so the COMPOUND is treated as having
+succeeded.
 
-Commit 1459ad57673b ("nfsd: Move error code mapping to per-version
-proc code.") made fh_verify() return nfserr_nofilehandle for an
-empty handle regardless of protocol version. The NFSv3 procedures
-gained nfsd3_map_status() in exchange, but the NFS_ACLv3 procedures
-did not, so the unmapped status reaches the encoder.
+nfsd4_store_cache_entry() declines to cache a lone SEQUENCE that
+returned an error. That test reads the status the operation
+reported, so it passes here. The copy starts at offset zero and
+takes the whole reply, RPC and COMPOUND headers included, into the
+zero-length sl_data[]. The COMPOUND tag is copied along with it, so
+the client picks most of the bytes written past the end of the slot:
 
-Add the same mapping to the NFS_ACLv3 procedures.
+  BUG: KASAN: slab-out-of-bounds in read_bytes_from_xdr_buf+0x1bc/0x390
+  Write of size 80 at addr ffff888003a549cd by task kunit_try_catch/24
+   __asan_memcpy+0x38/0x60
+   read_bytes_from_xdr_buf+0x1bc/0x390
+   nfsd4_sequence_done+0x5b0/0x810
+   nfs4svc_encode_compoundres+0x1bf/0x240
 
-Fixes: 1459ad57673b ("nfsd: Move error code mapping to per-version proc code.")
+Check that the fixed-size SEQUENCE result, plus room for a following
+operation's error status, fits the negotiated limit before narrowing
+the buffer and consuming the slot seqid. The slot and its reply
+cache are left unchanged, as RFC 8881 Section 2.10.6.1.2 requires of
+an error returned from SEQUENCE.
+
+Fixes: 47ee52986472 ("nfsd4: adjust buflen to session channel limit")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260916004240.141975-2-cel@kernel.org
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Tested-by: Mayank Jangid (OpenSec Intelligence) <mayank.jangid.moon@gmail.com>
+Link: https://patch.msgid.link/20260817-jean-v1-1-9e356596ab85@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs3acl.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/nfsd/nfs4state.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs3acl.c
-+++ b/fs/nfsd/nfs3acl.c
-@@ -13,6 +13,19 @@
- #include "xdr3.h"
- #include "vfs.h"
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4384,6 +4384,7 @@ __be32
+ nfsd4_sequence(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		union nfsd4_op_u *u)
+ {
++	struct nfsd4_compoundargs *args = rqstp->rq_argp;
+ 	struct nfsd4_sequence *seq = &u->sequence;
+ 	struct nfsd4_compoundres *resp = rqstp->rq_resp;
+ 	struct xdr_stream *xdr = resp->xdr;
+@@ -4393,6 +4394,7 @@ nfsd4_sequence(struct svc_rqst *rqstp, s
+ 	struct nfsd4_conn *conn;
+ 	__be32 status;
+ 	int buflen;
++	u32 maxlen, respsize;
+ 	struct net *net = SVC_NET(rqstp);
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
-+static __be32 nfsd3_map_status(__be32 status)
-+{
-+	switch (status) {
-+	case nfserr_nofilehandle:
-+		status = nfserr_badhandle;
-+		break;
-+	case nfserr_wrongsec:
-+		status = nfserr_acces;
-+		break;
-+	}
-+	return status;
-+}
+@@ -4465,7 +4467,22 @@ nfsd4_sequence(struct svc_rqst *rqstp, s
+ 			session->se_fchannel.maxresp_sz;
+ 	status = (seq->cachethis) ? nfserr_rep_too_big_to_cache :
+ 				    nfserr_rep_too_big;
+-	if (xdr_restrict_buflen(xdr, buflen - rqstp->rq_auth_slack))
++	if (buflen < rqstp->rq_auth_slack)
++		goto out_put_session;
++	maxlen = buflen - rqstp->rq_auth_slack;
 +
- /*
-  * NULL call.
-  */
-@@ -71,6 +84,7 @@ static __be32 nfsd3_proc_getacl(struct s
- 
- 	/* resp->acl_{access,default} are released in nfs3svc_release_getacl. */
- out:
-+	resp->status = nfsd3_map_status(resp->status);
- 	return rpc_success;
- 
- fail:
-@@ -124,6 +138,7 @@ out_errno:
- 	resp->status = nfserrno(error);
- out:
- 	/* argp->acl_{access,default} are released in nfs3svc_release_setacl. */
-+	resp->status = nfsd3_map_status(resp->status);
- 	return rpc_success;
- }
++	/*
++	 * A SEQUENCE result too large for maxlen never reaches
++	 * nfsd4_encode_sequence(), so cstate.data_offset stays zero and
++	 * the reply cache overruns the slot.
++	 */
++	respsize = nfsd4_max_reply(rqstp, &args->ops[0]);
++	if (!nfsd4_last_compound_op(rqstp))
++		respsize += COMPOUND_ERR_SLACK_SPACE;
++	if (xdr->buf->len + respsize > maxlen)
++		goto out_put_session;
++
++	if (xdr_restrict_buflen(xdr, maxlen))
+ 		goto out_put_session;
+ 	svc_reserve(rqstp, buflen);
  
 
 
