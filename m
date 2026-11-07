@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061417;
-	b=l+hZFQ+PNImOTjQNVpgud/NymOOpw6TtjIf4WIQ6BUlQuN9HOQh1+8//ohSJYM6i8GCG
-	 /ZFQhT2hao94v4/V02v5cDjCrBF6WrvwzVkUvoWaYWI8ziG38cRRRV/cXABdEOpACXOld
-	 ep/gEJKWQrS4UKBJlOMBev0uSvpsmOWH2ax2VsXh8ocdwit0WhvWIWXlJS5JnNxrOREZt
-	 2ZfDObmE3CPW+pzKHqZXDJQibY4iQ0QTv8uODY7X9cYsMafU5kgWxpWymDyAaAe79hkge
-	 fuT8JtbIqYEx+RhQN141M5QsRQl8G+1JG8e83ZUGyUAMRk1RQd3Wg7epQd4RPNQNvpg==
+	t=1794061418;
+	b=MPNe+sZ5bD66NIsCTqd5/kqnOeBHIVrxXAIP05ycBxoxF3kzB4QQOOHBpQ7O7/UITbg2
+	 nNEeSezx6Lj8T/UoAtbn7/v+f12qs0zyOxyICmW50EZ1A1Bc297tu5lCHVfN3Wq/px9le
+	 TuL3NCc+LrvvkdJZvmJyhFSlZY/DVqMJ+Epd5e/Ev4p7aKO8sGyWsL5nSD6lcDmIwNK5X
+	 5tPYmzaG9jUt5e3w8QYuhxXaDn2N4Q8UF0AyFtfmqnMThtj0Tr+LVaod/uh063mQZDwjG
+	 /zCgELIfXINQ6PT7WlO1InriCFcxesIrHxuvWK/WoK3dFvOQY186020wMVaLDcBfcHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=98SuR+MI2P0VSaja3VE4Alsq0u0Z9kLI/gxZ/aTPkcA=;
-	b=q0S4qYKxmlzTD4RVtg1DZvHmgt7Hp55ahWKKT1mkoELn0yjQKd6Bb72dX3pdJNAzDYzZ
-	 81h5Dc27MXD6omxRExATrioxCBgKImmIi5hX9QY9d8UliIIws1IKoUugBV5qGOs2wE3oF
-	 2ZTHCJP9HKvkXCNHCozFyFTPkxYx2zClCgGyKY/MoQkAZM1OqcD3AUhy9ppHeLhtJW7Eh
-	 /6SiL79Wrt8xWhx0r4okb0JP1txcZhLG36G7JWKA4w1YKAeO5PrevrjoA/ao4U9d2uYfZ
-	 /xxndUWeO5cFF7BXW8fF+F9HJ138oTBAz71iQx4DPV4/FlCtT6NKS6IQFfV1dLHfPbg==
+	bh=GKGeXhp8lnVXEuZLbT8sFiYVp5BvFWNIhU38C87sGvg=;
+	b=FXCAlOIONxB2kZODE0XcFYLZL7MNywlLJ2a8fgAt1Idt5En5dnacUMT0A0AVTz8t/z+A
+	 9laLLuglF/SGyFnM312B+sV+8VfClkYAbNyl1050+q7NgngW0xd8cm4ZrEbpkJWB2DLkV
+	 dtpB4Hbg/q80w+YYAdEucvUrVBoEYf0ysHGPb6zK9J2xjGCULqmLJbs5VlDeRRbGIQHYa
+	 KubIPlk9u5WnIJjb1PNX+ydCh1W+LJd0Car0RKp9t8BhOZHdZ2vTeip+pVEQ1rA790lq2
+	 3phTcNXHd7Q1JU0eaN2ky9RAK0XmHbfDcMebksXrx/wMB6ewXyEHs96mz6Vf/wtJbcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvaaKX+0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tp8OL9Us;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3161C606A32F;
-	Sat,  7 Nov 2026 14:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD99606A326;
+	Sat,  7 Nov 2026 14:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvaaKX+0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C141F0089F;
-	Sat,  7 Nov 2026 14:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tp8OL9Us
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1441A1F0089F;
+	Sat,  7 Nov 2026 14:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061417;
-	bh=98SuR+MI2P0VSaja3VE4Alsq0u0Z9kLI/gxZ/aTPkcA=;
+	s=korg; t=1794061418;
+	bh=GKGeXhp8lnVXEuZLbT8sFiYVp5BvFWNIhU38C87sGvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvaaKX+0Qwcnf5RfK0MCw0oTgjuXEwrPiYW7RI0QqmGwZtggCQZQcF/yKlFaBvO6k
-	 dtFw8hyF3nyDRqcLLltZOULYKsge3mYfum0hD9BWGrfRr9tYb2ukykE1MbRwhLof0l
-	 os4n44Nv2yeB+mPgWEb/0s1JbGj4mdicqLz56KX0=
+	b=Tp8OL9UsL2273t9U/7abJTM6YF9xk5ilJY62XkBuQx6WsaEnGej0gpWQTdvt0i294
+	 gY/lBPf/AoMK/mNpD+fR7Om9Qge6ftj9jFdK4i5aQ94Age0I0azUbIRgI0Qw3c8q/M
+	 U9brAfEBzVPlfVR2Ls59OVe+hyUMqp42qmfWNBAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Coelho <luciano.coelho@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Jinwoo Lee <rkskek9254@gmail.com>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0529/1536] drm/i915/dp_mst: Fix configuring TUs for a disconnected stream
-Date: Sat,  7 Nov 2026 08:42:25 -0500
-Message-ID: <20261107135012.471721522@linuxfoundation.org>
+Subject: [PATCH 6.12 0530/1536] KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails
+Date: Sat,  7 Nov 2026 08:42:26 -0500
+Message-ID: <20261107135012.502425120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,102 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit a443e0b8d647c1401b110d9f919d8c6cb8607260 ]
+[ Upstream commit 10180a277549339020b08000206092c07e0bff5a ]
 
-During an atomic commit after all the MST stream CRTC state is computed
-the driver ensures that the sum of TUs of all the streams on a given MST
-topology link is within limits (63 for 8b10 and 64 for 128b132b). For a
-disconnected stream the DRM MST core's BW verification doesn't ensure
-this, because the topology state it uses for this is destroyed as soon
-as the stream (i.e. MST connector/port) is disconnected. The driver
-should keep the link state valid even for such disconnected streams, as
-userspace may disable them one-by-one only in a deferred way. Ensure the
-link's sum of TUs stays within limits in this case by simply reusing the
-maximum link BPP limit from the stream's (i.e. CRTC's) old state.
+Re-pend GET_NESTED_STATE_PAGES before exiting to userspace if getting the
+nested pages fails in the KVM_RUN path.  If userspace re-runs the vCPU, and
+vmcs02 holds valid PFNs from the *previous* run of L2, then KVM could
+re-enter L2 with stale, unpinned PFNs mapped into e.g. the vAPIC page.
 
-The disconnection can happen either via the whole topology getting
-disconnected or via only the given stream's port getting disconnected.
-Check for both of these conditions separately, as a connector gets
-unregistered after a link disconnect event only in a deferred way.
+Note, both SVM and VMX (as of commit 11722439fb20 ("KVM: nVMX: Ensure
+KVM_REQ_GET_NESTED_STATE_PAGES is cleared on VM-Exit") ensure the request
+is cleared on VM-Exit (including the "forced" case), i.e. there is no risk
+of double-mapping due to emulated VMLAUNCH/VMRESUME/VMRUN *and* the request
+trying to map the nested pages.
 
-Cc: stable@vger.kernel.org # v6.10+
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16073
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16384
-Reviewed-by: Luca Coelho <luciano.coelho@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260907174413.741851-2-imre.deak@intel.com
-(cherry picked from commit ee00f8fbb2b202002ab90834e02e9ba372773a36)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-[ sashal: Replaced the undeclared crtc argument with intel_crtc_for_pipe(display, pipe) in the intel_dp_mst_stream_disconnected() call in intel_link_bw_init_limits(), since this tree has no local crtc variable there. ]
+Fixes: 671ddc700fd0 ("KVM: nVMX: Don't leak L1 MMIO regions to L2")
+Cc: stable@vger.kernel.org
+Reported-by: Jinwoo Lee <rkskek9254@gmail.com>
+Closes: https://lore.kernel.org/all/20260813043932.3214460-1-rkskek9254@gmail.com
+Reported-by: Stefan Teodorescu <fane@google.com>
+Link: https://patch.msgid.link/20260921211608.1030158-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ sashal: Replaced the kvm_nested_call(get_nested_state_pages)(vcpu) context line with a direct kvm_x86_ops.nested_ops->get_nested_state_pages(vcpu) call, since the wrapper doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_mst.c  | 21 ++++++++++++++++++++
- drivers/gpu/drm/i915/display/intel_dp_mst.h  |  2 ++
- drivers/gpu/drm/i915/display/intel_link_bw.c |  4 +++-
- 3 files changed, 26 insertions(+), 1 deletion(-)
+ arch/x86/kvm/x86.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp_mst.c b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-index 5d5d8adcfb6af..f74767266da0f 100644
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -2054,6 +2054,27 @@ bool intel_dp_mst_crtc_needs_modeset(struct intel_atomic_state *state,
- 	return false;
- }
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 6c358aab53287..0e7fac0012605 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10300,6 +10300,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
  
-+bool intel_dp_mst_stream_disconnected(struct intel_atomic_state *state,
-+				      const struct intel_crtc *crtc)
-+{
-+	struct intel_connector *connector;
-+
-+	connector = get_connector_in_state_for_crtc(state, crtc);
-+	if (!connector)
-+		return false;
-+
-+	if (!connector->mst.dp)
-+		return false;
-+
-+	if (!connector->mst.dp->mst.mgr.mst_state)
-+		return true;
-+
-+	if (drm_connector_is_unregistered(&connector->base))
-+		return true;
-+
-+	return false;
-+}
-+
- /**
-  * intel_dp_mst_prepare_probe - Prepare an MST link for topology probing
-  * @intel_dp: DP port object
-diff --git a/drivers/gpu/drm/i915/display/intel_dp_mst.h b/drivers/gpu/drm/i915/display/intel_dp_mst.h
-index 8343804ce3f8d..261a97e24d91e 100644
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.h
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.h
-@@ -27,6 +27,8 @@ int intel_dp_mst_atomic_check_link(struct intel_atomic_state *state,
- 				   struct intel_link_bw_limits *limits);
- bool intel_dp_mst_crtc_needs_modeset(struct intel_atomic_state *state,
- 				     struct intel_crtc *crtc);
-+bool intel_dp_mst_stream_disconnected(struct intel_atomic_state *state,
-+				      const struct intel_crtc *crtc);
- void intel_dp_mst_prepare_probe(struct intel_dp *intel_dp);
- bool intel_dp_mst_verify_dpcd_state(struct intel_dp *intel_dp);
- 
-diff --git a/drivers/gpu/drm/i915/display/intel_link_bw.c b/drivers/gpu/drm/i915/display/intel_link_bw.c
-index c87cd1d16d0a2..5aa0db5636078 100644
---- a/drivers/gpu/drm/i915/display/intel_link_bw.c
-+++ b/drivers/gpu/drm/i915/display/intel_link_bw.c
-@@ -35,7 +35,9 @@ void intel_link_bw_init_limits(struct intel_atomic_state *state,
- 			intel_atomic_get_new_crtc_state(state,
- 							intel_crtc_for_pipe(display, pipe));
- 
--		if (state->base.duplicated && crtc_state) {
-+		if ((state->base.duplicated && crtc_state) ||
-+		    intel_dp_mst_stream_disconnected(state,
-+						 intel_crtc_for_pipe(display, pipe))) {
- 			limits->max_bpp_x16[pipe] = crtc_state->max_link_bpp_x16;
- 			if (crtc_state->fec_enable)
- 				limits->force_fec_pipes |= BIT(pipe);
+ 		if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
+ 			if (unlikely(!kvm_x86_ops.nested_ops->get_nested_state_pages(vcpu))) {
++				kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
+ 				r = 0;
+ 				goto out;
+ 			}
 -- 
 2.53.0
 
