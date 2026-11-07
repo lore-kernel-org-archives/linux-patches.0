@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063716;
-	b=4FKDHqCCCW1Iu3a3fTIko6fYKTnSJWew0LQSL+oAvo4LYFdyphQqwsOlj7P8B/LmwxUB
-	 FINhTzt4th2u/z/CWNtsEcuULEO5RG+vjkq6vzE/0iVCyMg3jmQudpHV5n+5TUIs5e54A
-	 2baSkeCQS5RKMfS1+hAYKr8wUpSnNoqhXg+fAUo6ZQxqvLtrMugTYXKsbE4AN1Wbpu7wv
-	 wRPTtD3SlbU0L3aPczTKg6HHOSdKC1HLeRB/NflFykw9eCkVajq0ItF0IVLu+/NHdUjKd
-	 5phcqwcFSQMKwpabLVR5zHkJUyljsG8pbwuMrYvzVGrKV/dRpFJx1jm4eiwkDErSEKQ==
+	t=1794063718;
+	b=baMkSs82k85cclPPz5kOyv4CTHJLjeVHXODYzBnwxj8P6FVzjuaDCOmLQ+WPAMiBPuf/
+	 vj5Ne/3QD3IepwgjJuPt+sC9w5l2nmVQ/QzSI1tE4rFfXaA+YZxqdyqcQ8GdAfw3WuxTQ
+	 qdrk/GWWkIdUR0AHaH3EKPJWFLgVKfH2+rfOuVDgxiaAZQIEmRED9px6Em2EsD8mql/as
+	 LikQi7jopaCgn+3eX3hiNAP8zXDcjY0csVzBH1gNoYhA0EOwrp5ZegQ0lP2sE9A8nfXXH
+	 Y0Sp4gjiQdb1avN3bpLf+zLLPTqHxTb5CxAhlYzAR3YgMPpq9k2x5SESN5hwKNijyvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fRhzJfqiid+6Ywsw1qHSovfHvn63J+YFZSrzAbX6/oM=;
-	b=EGOLDeIpNQ03TjCRaElEMyjvjD7zct6mbk2XFEaUgr8Wic+0jauoRxmLDK+M2Z2Np3Ai
-	 6kpxbwmzMZv4ud/ce62yXuui/0RtX4DR2ju0y9pHEvJxWj3dxQBs0H17unZ1pYnzcKGNa
-	 pSenehrVLOHgiWv8WWNX5Ylj8ikZxo5R0aE+yHmWu5CIpPK1QeQ7oVIeHCBIqvSgPo8N0
-	 HuLjF8Pn3dGzzWX2As8Jsgf1XQiOuf8L1EnJdIFXEH2oeFM5ESwv5kSWewhlFCs0Vqe8/
-	 R9zVl3+61mD2drlwGKETb+CDmrPzBBBn7WyjRf9lusSiqIh+u3K+SbxUTb49+JlvTrQ==
+	bh=rUoozHSqT8KCkljhHqewdCrloWX2f0Oz1UmZv7pQhYU=;
+	b=0XmYZHM9E/RKs3hpnnLzWSJIymlIKHW8A22h73htoioiBBYGjPxUpDdHtyD0y48R3pQl
+	 nk5GdAToHvtH1DHVaHUfvxmxYaNS0ZUBaBoiQs/yNabqNnQRt5MVqyMPP7ETf6t7oCrup
+	 OI/n4zEc6W/bLK39JncQtEmCsrCIfBT0nKOaNU6lm5qERTc6zsEJEpIuIez5eWMzXiPBD
+	 jWm9MN1SGkAY647QPkPp/X17Ir/jwNxcIQwga1p3eYkD7MiUeJhsc3hGRuAXkE3KIqSab
+	 6JI5pez/uAYtcEllq2EljsUuwjUXTsgf2wH4iKO72lxXY/ukcG3LBiPXKvhgbbEhb/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sik0ko03;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AcEOE0XB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C532606A32E;
-	Sat,  7 Nov 2026 15:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C831F606D83F;
+	Sat,  7 Nov 2026 15:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sik0ko03
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7FF1F0089F;
-	Sat,  7 Nov 2026 15:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AcEOE0XB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779FB1F0089F;
+	Sat,  7 Nov 2026 15:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063716;
-	bh=fRhzJfqiid+6Ywsw1qHSovfHvn63J+YFZSrzAbX6/oM=;
+	s=korg; t=1794063717;
+	bh=rUoozHSqT8KCkljhHqewdCrloWX2f0Oz1UmZv7pQhYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sik0ko03bgOMb2ShmZeXdLT7jxI51OqDH15KX5XvKFGt4345Y8KC2Xtbs/TZq62dP
-	 H9CKAE5TYvStAQG7lUW0mhrno68luWSIsUUa0Adl01bvHg1ZEG2nbut0Xu0OP83ml8
-	 KapYHx6lYjl8H1GJze9Jf7fLD/Svn7CoArJ4y1hU=
+	b=AcEOE0XBIUNMk7kWU7qhL6eCcOVRPTTD8D3012FsHItr7P/L6rBu16X4vLybK/bEb
+	 ShXN/cpP5qyHaOBwymGZF5UIJguzZ+oMnziub+ThQKloW50d3tCQQVe8xPH4Z5L0Ot
+	 6hq8PIWMwWILcpiSyKSlqimuamrJi7w6WQVy5p1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 817/869] drm/amd/display: Initialize missing TD-LUT programming inputs
-Date: Sat,  7 Nov 2026 08:58:19 -0500
-Message-ID: <20261107134920.700828959@linuxfoundation.org>
+Subject: [PATCH 6.18 818/869] drm/amdkfd: validate SRAT subtables before parsing
+Date: Sat,  7 Nov 2026 08:58:20 -0500
+Message-ID: <20261107134920.728991707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,46 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 167df3b94680b8670c4cacc08af232e3bfcab5ff ]
+[ Upstream commit 9866cb13ba4d39aa8fed34b765d4aecabe04f02e ]
 
-dml_core_mode_programming() memsets (clears) its scratch structure
-before calculating TD-LUT settings, but does not initialize
-tdlut_mpc_width_flag or is_gfx11.
+The KFD SRAT walker reads the first subtable length without checking
+that a header is present and trusts subsequent lengths when accessing
+CPU and generic affinity records. Invalid firmware lengths can therefore
+cause out-of-bounds reads.
 
-Both inputs therefore remain false regardless of the plane
-configuration which can result in incorrect calculations.
+Validate the table header, every generic subtable range, and each
+supported typed record before reading its fields.
 
-Initialize both fields using the same sources as the mode
-support path (now both paths are aligned).
-
-Fixes: 70839da63605 ("drm/amd/display: Add new DCN401 sources")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Fixes: ddec8d3be0f8 ("drm/amdkfd: add ACPI SRAT parsing for topology")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ad8d216e7d9fc050cdf39278e5fae17f61c36931)
+(cherry picked from commit d76b655c98e8cc9e791b31502ad274f47dee2aae)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c  | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 35 ++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-index d2a237fcf5b08..ccc7ce0db2e1a 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-@@ -10921,6 +10921,8 @@ static bool dml_core_mode_programming(struct dml2_core_calcs_mode_programming_ex
- 		calculate_tdlut_setting_params->cursor_buffer_size = mode_lib->ip.cursor_buffer_size;
- 		calculate_tdlut_setting_params->gpuvm_enable = display_cfg->gpuvm_enable;
- 		calculate_tdlut_setting_params->gpuvm_page_size_kbytes = display_cfg->plane_descriptors[k].overrides.gpuvm_min_page_size_kbytes;
-+		calculate_tdlut_setting_params->tdlut_mpc_width_flag = display_cfg->plane_descriptors[k].tdlut.tdlut_mpc_width_flag;
-+		calculate_tdlut_setting_params->is_gfx11 = dml_get_gfx_version(display_cfg->plane_descriptors[k].surface.tiling);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+index b0e87bdc29114..ee6c17e88976a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
+@@ -2051,27 +2051,33 @@ static void kfd_find_numa_node_in_srat(struct kfd_node *kdev)
+ 		return;
+ 	}
  
- 		// output
- 		calculate_tdlut_setting_params->tdlut_pte_bytes_per_frame = &s->tdlut_pte_bytes_per_frame[k];
++	if (table_header->length < sizeof(struct acpi_table_srat))
++		goto invalid_srat;
++
+ 	table_end = (unsigned long)table_header + table_header->length;
+ 
+ 	/* Parse all entries looking for a match. */
+ 	sub_header = (struct acpi_subtable_header *)
+ 			((unsigned long)table_header +
+ 			sizeof(struct acpi_table_srat));
+-	subtable_len = sub_header->length;
+ 
+-	while (((unsigned long)sub_header) + subtable_len  < table_end) {
+-		/*
+-		 * If length is 0, break from this loop to avoid
+-		 * infinite loop.
+-		 */
+-		if (subtable_len == 0) {
+-			pr_err("SRAT invalid zero length\n");
+-			break;
+-		}
++	while ((unsigned long)sub_header < table_end) {
++		unsigned long start = (unsigned long)sub_header;
++
++		if (table_end - start < sizeof(*sub_header))
++			goto invalid_srat;
++
++		subtable_len = sub_header->length;
++		if (subtable_len < sizeof(*sub_header) ||
++		    subtable_len > table_end - start)
++			goto invalid_srat;
+ 
+ 		switch (sub_header->type) {
+ 		case ACPI_SRAT_TYPE_CPU_AFFINITY:
+ 			cpu = (struct acpi_srat_cpu_affinity *)sub_header;
++			if (subtable_len < sizeof(*cpu))
++				goto invalid_srat;
++
+ 			pxm = *((u32 *)cpu->proximity_domain_hi) << 8 |
+ 					cpu->proximity_domain_lo;
+ 			if (pxm > max_pxm)
+@@ -2079,6 +2085,9 @@ static void kfd_find_numa_node_in_srat(struct kfd_node *kdev)
+ 			break;
+ 		case ACPI_SRAT_TYPE_GENERIC_AFFINITY:
+ 			gpu = (struct acpi_srat_generic_affinity *)sub_header;
++			if (subtable_len < sizeof(*gpu))
++				goto invalid_srat;
++
+ 			bdf = *((u16 *)(&gpu->device_handle[0])) << 16 |
+ 					*((u16 *)(&gpu->device_handle[2]));
+ 			if (bdf == pci_id) {
+@@ -2095,9 +2104,13 @@ static void kfd_find_numa_node_in_srat(struct kfd_node *kdev)
+ 
+ 		sub_header = (struct acpi_subtable_header *)
+ 				((unsigned long)sub_header + subtable_len);
+-		subtable_len = sub_header->length;
+ 	}
+ 
++	goto out;
++
++invalid_srat:
++	pr_err("SRAT contains an invalid subtable\n");
++out:
+ 	acpi_put_table(table_header);
+ 
+ 	/* Workaround bad cpu-gpu binding case */
 -- 
 2.53.0
 
