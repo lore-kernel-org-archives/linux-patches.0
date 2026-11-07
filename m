@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062197;
-	b=bryeJ5tu8aqrO0HgUJgLhmwBhNAMfb4mfbA6P11bkEzmKGgky51MiZxzOz5mNpYFYhTW
-	 AqPcuAO7rrjlfVMZIy0cjU7l1YHTspLK5a092GYY1vybRnzITrLMfF6LP7mF3UumouApO
-	 u1NzbcJOb5QMVp5xk2RvrZRCdN1fSgtZfsp2WEatQ4f89lnqIbjGXPdtXxYou1lJnglHt
-	 hbrMLNTZEO+QAvJFIdMgF5iA0maaJpGlh9Ck2TQHuxMdUUsx7wkeqJyHAKsbEav1zldH7
-	 qmA/423+u8RMjKCjBnmaJvfaA1HZT67AbMglAiAGVDq0RBLHPJi8i490G4/m4SOUS+g==
+	t=1794062198;
+	b=vkZwV6iOlYAiW2NwIlJcJQzfghjRAgbJtmYaJxAGmvRRazobrTEJ7rZmr84K/kUAWCm3
+	 O96HqiaqZTEuLU8ptGbhaMiXiY04kUCoUbkgGYLpqBYlEwFrKI3yKJEIWvWm4/NPmKruo
+	 hZ0NGRBPh7PkDEPYTn6lisJG5Z7o8mLfh2ZEiVEp/YDhjxMPk9CXPnaPHWGa+9JtaqTRU
+	 nTyh+TNoCUj7Mbc6KStRaoY5mWGow7mQaK+C2ia1JkKqA/Foeh0a/Dj9Sww+AuaWnJI96
+	 EribwQDvWGbu8yXBuxITBGYsOP+RWKWyErVuhHq3hEjonRhQSXqYtD2vx0To5DHDMJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062197;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fEfNZSEjeH3AnZLIIITcz/Ye4HzsZd63EnutnQ+6PZU=;
-	b=1qEPn3bTzd5sy+53SQMm5AgzLKr/wCdFcd3HEBKxgxBLANXyiNhJp/XH84hXBkxm/sjU
-	 BsIq5Nx9h8rbOAf3+x5cFoDLWhyPTSscDdRUlWy5ExRS//5wwdtLsI5EP3LWkM1YMnVBO
-	 XFYOCaV0ZL7rUFhWxExD5kyJ42wsHdnU0Vp7XE62fyIGKNbdjPX28PWIW/Zuzl7D8nD1Q
-	 RyZuR6mf7+M4LF+zA8z3cZNSu/hY4HHkLB15k8szTYBUuLEEsrr327ZbpfRdaAxwO7V27
-	 TPD4q4H7EHi8JXVxQyO9g3SN2hs6ZqxgwhcINWRA4HOfhID692h4Z3s71R93otEiPJw==
+	bh=ZeeIrwD5dKAhThp1Z2OA7rWq7Lx8wfMDmyv4X4B+Jgw=;
+	b=1SKkY6+sKS9+SICaGb9bgD96PblzGXjgWd8V0gsVr2jEkmdUno4RdUzCcPlyhx16DSOi
+	 BDplRbkgH3prCIju4R3GoJi1PrcQ496+Pivpz+R60WhjYJe4xshMch0OuwpDIlA+mLzLu
+	 bLAmJPY0Pq4AdzkZ3zZhRu+9JlRNOPKpU9JuYB5kYF52YLWU5Gip7pymwAFuCeUvCZ1y+
+	 MV4+H6OqzftDGd66nm2Q60XJ6g09w/55Ef32sLGtADh6Di0uoF6GrZdDkzh3TKrlv0TU1
+	 SbGEgldMgsxLV322f0oh5thUm3gARh1WRWHuuo44IYCDLCxXY5+Kx09Pe+M7tEftZAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d/ft53O0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6JKpuLO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AE8606A326;
-	Sat,  7 Nov 2026 14:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3E7606A326;
+	Sat,  7 Nov 2026 14:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d/ft53O0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2F21F0089F;
-	Sat,  7 Nov 2026 14:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6JKpuLO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6241F008A1;
+	Sat,  7 Nov 2026 14:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062196;
-	bh=fEfNZSEjeH3AnZLIIITcz/Ye4HzsZd63EnutnQ+6PZU=;
+	s=korg; t=1794062197;
+	bh=ZeeIrwD5dKAhThp1Z2OA7rWq7Lx8wfMDmyv4X4B+Jgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/ft53O04MzE8VjKtjRpEyuU4oX9tgUmfkTo7fUHCVMrE3qEwvREmvU4xs4dwwh/B
-	 FUMq73JMbeBj3lMuQybrZrd3v2LeTUmdq8LSO+vRzBinZpnkyj6+vIGTOZdyJcieUw
-	 KAcewT3SAFxuLipEn8d9bC15PSHH69fenGwOOw/Y=
+	b=K6JKpuLOcu/oYCHt58095lAhJJIvX7dhEiE4pRNgum/aJE29XgQK2gtUdpiVyOr3T
+	 ZhBBW/Zh1ce67MBiq2WRQlBSZnV1+08Zme5ilLrgvT2e9wBqZ3a+T1g/18lMMynfPs
+	 iXUVQpXxsbJ6zlIMcQciLl38b4ahLu6KL/2PEhKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1151/1536] media: mediatek: jpeg: retry HW selection after successful wait
-Date: Sat,  7 Nov 2026 08:52:47 -0500
-Message-ID: <20261107135030.053715508@linuxfoundation.org>
+Subject: [PATCH 6.12 1116/1536] staging: rtl8723bs: fix RX buffer OOB write from device-reported length
+Date: Sat,  7 Nov 2026 08:52:12 -0500
+Message-ID: <20261107135029.054492208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,56 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit eb0bbd0ad679bf363387e3b8be8892cfbedabb72 ]
+[ Upstream commit c52929073fccbc149267a2fd7458626a7e9abcfc ]
 
-wait_event_interruptible_timeout() returns a positive value when its
-condition becomes true before the timeout. mtk_jpegdec_worker() treats
-every nonzero result as a failure, so a normal decoder wakeup finishes
-the mem2mem job as though no hardware became available.
+sd_recv_rxfifo() trusts the device-reported RX0_REQ_LEN value
+(hal->SdioRxFIFOSize, a u16 read from the card via CMD52) as the
+size of the next RX packet and passes it to sdio_read_port(), which
+copies that many bytes into the recvbuf skb whose data area is only
+MAX_RECVBUF_SZ (10240) bytes. A bogus device on SDIO can report up to
+65535 bytes, causing a heap overflow of up to ~55KB past the skb
+buffer.
 
-Handle interrupted waits and exhausted timeout retries separately, and
-retry hardware selection after a successful wakeup. Increment the retry
-count only for actual timeouts. The encoder uses
-wait_event_interruptible(), whose successful return is zero, so its
-existing check is correct; leave that separate no-timeout policy
-unchanged.
+Bail out when the RX0_REQ_LEN exceeds MAX_RECVBUF_SZ. This is expected
+to keep behavior unchanged on normal devices.
 
-Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/8114c3adc1acaea78523cc0fb4d4b25f7665cee9@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/staging/rtl8723bs/hal/sdio_ops.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index 2bb86ce85109b..3a7027459731c 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1708,9 +1708,15 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 		ret = wait_event_interruptible_timeout(jpeg->hw_wq,
- 						       atomic_read(&jpeg->hw_rdy) > 0,
- 						       MTK_JPEG_HW_TIMEOUT_MSEC);
--		if (ret != 0 || (i++ > MTK_JPEG_MAX_RETRY_TIME)) {
--			dev_err(jpeg->dev, "%s : %d, all HW are busy\n",
--				__func__, __LINE__);
-+		if (ret < 0) {
-+			dev_err(jpeg->dev, "decoder HW wait interrupted: %d\n",
-+				ret);
-+			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
-+			return;
-+		}
+diff --git a/drivers/staging/rtl8723bs/hal/sdio_ops.c b/drivers/staging/rtl8723bs/hal/sdio_ops.c
+index 21e9f18587452..b2b7c5f3a4bff 100644
+--- a/drivers/staging/rtl8723bs/hal/sdio_ops.c
++++ b/drivers/staging/rtl8723bs/hal/sdio_ops.c
+@@ -791,6 +791,13 @@ static struct recv_buf *sd_recv_rxfifo(struct adapter *adapter, u32 size)
+ 	struct recv_priv *recv_priv;
+ 	struct recv_buf	*recvbuf;
+ 
++	/* RX0_REQ_LEN is device-reported; the skb buffer is only
++	 * MAX_RECVBUF_SZ bytes, reject bogus lengths instead of
++	 * overflowing past it.
++	 */
++	if (size > MAX_RECVBUF_SZ)
++		return NULL;
 +
-+		if (!ret && i++ > MTK_JPEG_MAX_RETRY_TIME) {
-+			dev_err(jpeg->dev, "all decoder HW are busy\n");
- 			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
- 			return;
- 		}
+ 	/*  Patch for some SDIO Host 4 bytes issue */
+ 	/*  ex. RK3188 */
+ 	readsize = round_up(size, 4);
 -- 
 2.53.0
 
