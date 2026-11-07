@@ -1,61 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794083261;
-	b=nBuOt8KCH0dw4VEfJKkzAoUAum6GmKLlYGl6llfJrKR4+inHm6svFHLKKeIW8jpAI189
-	 r98IX6F+koLqJ9p/sOperIM896KY3WisJ6N2uPEwVUXQVYEA7WAdm+qmQNNmsqbU89W/q
-	 HqPqJX78cVhBXePiyBThQuGgzlDGqABg0ddmrQF3atnilGufb4BFeWT4DSNqRCIdjvOmU
-	 dMNF/ceYTslV4xAaZ/mhi2MqB9Av8wPLpPEytb1/XkhD7UAxAg60JbDcRwKiYFNMrkzk7
-	 6NYOAKMstxx7WeMjIyQYRxP7yWts/BjaN/qgjR3FDJNwGpJvUHy9aQIV3P2ppfFiTeg==
+	t=1794091098;
+	b=1e+8IBnyquePJxPyY1Patkg2ijkkHub3rKLH1pidMMtnOsmeC0zxpDcNpMv3OKwTOoWm
+	 x2NX96NmvOL0SSxTs3Gwler5ThsHkNOAQ7OhA4aET+GpH59IZySkBK4sVDX1Wmlr+mO0e
+	 lSPMhr3Fm4nQlGqOopnuLZ9Oa26xL5dvxthPlYo65eSJ8JJQxOTImm0WS7sV3gny4MTdu
+	 PZo2OXVhwS0gJ73NHc0EZDBti17OzNlIE+qdhMWnBGzcRxK8OmOpZm9D0BdOCHpbmAC7w
+	 ES2Fm5YpN31HmWMQDZ4Ifd6B7N3eokIQB3xkhyjhLI2ads5i5scPRJpZKZdpwNRE2Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794083261;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=+DUELhgEaqAYntYFp1DpQZLJYBain+UJS9q9wsG5xwM=;
-	b=jhlpSDyRp6pSegL79ytDQokA6GHrYZz7Pe6QQWu6pwhUwg+3lsUn62BmRceSmkMCwNy6
-	 lpNgjsPGEygu3DoprbeN7Otx3h69rn4d+lYgtwcvu2qpDxF22BO5vCErIvqFNLSUKwiHr
-	 nak7/kWSlpEjAq6iQzHEjXqsqsh0BqUYbRd6WROWVnwsUo25gGLZAfhTFCME1RPGq4oZG
-	 8hn4d4swx2Dx0YVYjkAI5HdP0dE6UyXjC21AjbqiYNDPhtkJ7Zn/vDGNdgP5wOZJpWWZu
-	 Mki+2thvC+098BJxr31XBFF1OgOQGkQckueQdo9VBuvmdEfMdcofXXrt2KLV4JKurmw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794091098;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=LTsAVe7V0nL/Wxk//NqKgJ3Wt7Pv5zbdU+ocORt2kGI=;
+	b=OImsJrlImuvOCFTXw9qOWW4o7nctSSFBNYEZkbzCX0obq952yXERkKgYSkLRBLqLxYxT
+	 HkbMk+r2p+3i26mU1yzYa5k/9Su3zSbgn/MXHqd6XZJuvKzHstsyMlNe72jtLfw6QaJak
+	 z6qU9pi9Yr+R6vJEMgjaYjreUcP2VHTBa3aHLIDKKLkp4KR6sOZ/pF6soYP0J4E5kL3hM
+	 zUsKgc9tf1XvRNr1DEqFTKB6D7XLUGacyCOS3qbwuKBIYkciz/cQMF+Jl1/VwHtQi8/ec
+	 +OyOJ2Vl/WItHvZWkKrM6tL1Ib7NZdlVgIN/ng3ydR0qpAX8v5Ad78nCBciPwrQiISw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hw8Ig7N8;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="j6V/DbGA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E7D606A32C;
-	Sat,  7 Nov 2026 20:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E49F606A326;
+	Sat,  7 Nov 2026 22:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hw8Ig7N8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273561F0089F;
-	Sat,  7 Nov 2026 20:27:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j6V/DbGA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA7E1F0089F;
+	Sat,  7 Nov 2026 22:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794083261;
-	bh=+DUELhgEaqAYntYFp1DpQZLJYBain+UJS9q9wsG5xwM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hw8Ig7N8ipyfZ3oLF7oLXIIZROi1iV2VlJcpQRKDu+rHlxJAzQELrbHXUg4YZpqRD
-	 UV76H4ugRrTqydRRici07WNIQ/tX/4TS2nIEkIOlyvnsK277QeSwN9+8hGYsdFpYgL
-	 U5pMd+DJp82x4qomj0SHutM6mLqvYF8rdurufBYAf038bETyufr2jLGEQl5c3ndEs+
-	 H2tdwboDLY9XhTZ2Euj9vsT0snFGnkFuhUqFpi/ajjyNlqhnzge/RYgia14Ae6wZcd
-	 tregYEgMbom2x6RbsmuavUlH3hHrRxpt0si+ySATU5xLB9x1JXYBf5CQQpUDlLGhlT
-	 M2UNz6wQztZdw==
-From: SJ Park <sj@kernel.org>
+	s=k20260515; t=1794091097;
+	bh=LTsAVe7V0nL/Wxk//NqKgJ3Wt7Pv5zbdU+ocORt2kGI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=j6V/DbGA7pbh758tbM60REv+1sRCusoHIFODIiVuyjMicfGxy7Xjyd/zkJ3kWIhce
+	 GhYE+43hWmeIRwEdDNbw07UM0w+FbtJI5aCDsZNv1cam7vuFKsqC+UwIoYW8/MIzyU
+	 AdDWxmot1TI9yJTabHh35KyMMyYhaQ6O4w2ZcxiwpJuY92VIVtsYkwc43nt4AusHr8
+	 X1WwA0GkU8O1U+MPLu989yjM3lm0ylLwfBq7DTMfYeXV5UEmoIRCYI0F/J5zOwd/av
+	 Hp3013CUHVLpeMpUHhqL0dKWZU0QmqeP86GxKa5qcQeOydbGgF0/iWLJOXZBJSudes
+	 G8myPdHcd53mA==
+Date: Sat, 7 Nov 2026 14:38:16 -0800
+From: Eric Biggers <ebiggers@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <david@davidgow.net>,
-	Sasha Levin <sashal@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.18 487/869] mm/damon/tests/core-kunit: test the size charged for a filter-trimmed region
-Date: Sat,  7 Nov 2026 12:27:33 -0800
-Message-ID: <20261107202734.231272-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261107134910.088452714@linuxfoundation.org>
-References: 
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Alberto Garcia <berto@igalia.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 7.3 1103/1257] ext4: reject encrypted inodes when block
+ size > page size
+Message-ID: <20261107223816.GA190954@quark>
+References: <20261107134939.434104957@linuxfoundation.org>
+ <20261107135009.727232083@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -65,20 +60,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261107135009.727232083@linuxfoundation.org>
 
-On Sat, 7 Nov 2026 08:52:49 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Sat, Nov 07, 2026 at 08:56:39AM -0500, Greg Kroah-Hartman wrote:
+> 7.3-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Alberto Garcia <berto@igalia.com>
+> 
+> [ Upstream commit a5e894bc87b76fd980075892ba77e6bdeeb5e4d0 ]
+> 
+> Encryption is not supported when a filesystem's block size is larger
+> than the page size. ext4_check_large_folio() refuses to mount a
+> filesystem like that if the "encrypt" feature is already enabled, and
+> ext4_set_context() refuses to create encrypted inodes if the feature
+> is enabled after mounting.
+> 
+> However, a corrupted or hand-crafted filesystem can still have
+> encrypted inodes even if the "encrypt" feature is not set, and those
+> inodes can be unlocked if they're using v1 policies.
+> 
+> Check this in __ext4_iget() and reject them as corrupted.
+> 
+> Fixes: 709f0f1f1bf5 ("ext4: add checks for large folio incompatibilities when BS > PS")
+> Suggested-by: Eric Biggers <ebiggers@kernel.org>
+> Cc: stable@vger.kernel.org # v6.19+
+> Signed-off-by: Alberto Garcia <berto@igalia.com>
+> Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+> Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+> Link: https://patch.msgid.link/aeb8efa8beb72721fb4b13cffe6eb22c795ec33f.1790343958.git.berto@igalia.com
+> Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/ext4/inode.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+> index fb0548b3355c5..6697c33d3aa33 100644
+> --- a/fs/ext4/inode.c
+> +++ b/fs/ext4/inode.c
+> @@ -5671,6 +5671,12 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+>  		ret = -EFSCORRUPTED;
+>  		goto bad_inode;
+>  	}
+> +	if (IS_ENCRYPTED(inode) && sb->s_blocksize > PAGE_SIZE) {
+> +		ext4_error_inode(inode, function, line, 0,
+> +				 "encrypted inode with block size larger than page size");
+> +		ret = -EFSCORRUPTED;
+> +		goto bad_inode;
+> +	}
+>  
+>  	ext4_set_inode_mapping_order(inode);
 
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
+This particular patch should be fine, but I have a question about
+whether it's guaranteed that the diffs in these stable-review emails
+will match the ones that actually get released.
 
-Please drop this.  This is not intended to be picked for stable tree, and
-causing a DAMON kunit test failure.
+As we know
+(https://lore.kernel.org/linux-crypto/20261021164836.GB1879@quark/), the
+cherry-pick process used by the stable maintainers doesn't actually use
+'git cherry-pick' as expected, but rather formats the upstream patch as
+a patch file with 3 lines of context, then applies it with a fuzz of 2.
+That means only 1 line of context has to match for the patch to apply.
 
-The Cc:stable@ tag was wrongly added due to a mix of Cc:stable@ and
-non-Cc:stable@ patches in a series.
+For this patch, those context lines are just a closing brace and an
+empty line.  Those are very common!  So there are actually quite a few
+other places in the file that the patch could have been applied to; it
+seems the only thing that saves us in most cases is chance and the line
+numbers not having shifted too much.
 
+So my question is this: let's suppose the upstream commit did get
+applied to the wrong place in the file that happened to share the same 1
+line of context.  Of course, this email is being sent out with the
+standard 3 lines of context.  Is this email the original patch file that
+was applied (and thus the context doesn't necessarily match the context
+in the commit that actually gets released), or is a new patch file
+generated after application and that is what is sent out for review?
 
-Thanks,
-SJ
-
-[...]
+- Eric
