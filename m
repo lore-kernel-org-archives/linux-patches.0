@@ -1,53 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064471;
-	b=BVO3d5UdwHCiJ7X9TF5GrzER5DIszTkqoG2RuDclX7PkX4Kzti7M+imxKcKojOnMi/FG
-	 YA7ho+/YKycWQ5MnHwyYNdsAgMGFjimA/r57kMG2iHMg0O9kX5pbiO1mPAeSXOhsqudPx
-	 0YaeMUjN1Nop+CR1Ogh4inea7scbAVTeZJyooaRWbaT/iOZmJXCl41I6yEDaRq+B9ZiiM
-	 BFlo82k38RUUteKOdovP9/z6vPbhC7++QGIL196TJHSWZSkMPJ634aeBV3tjgtGQPB1dm
-	 BejsV7vo1b8aeqZb/liJzVYX36NwNgchvwENqA760XWibkp/Fgnwf8xd+XX9esA4Hmw==
+	t=1794064472;
+	b=zqZltsiUynEdvH1V8NAI+1F4m8gYrArKNZYEd1HKZWKo7uMfEkYW7zbk/fqs+UiJH7gY
+	 8Uvotyj/wXjgryToJJZenCl3Cz5faZxU/S6TlRYTIRQfj0RNmtpDoRpGTWk3Eh7su0QoI
+	 ww8BETdCkKAwqb8HIH5ZODRc/l8+sQ/dKiXDrIL2rhKcZoNqXvnGwapISqnukgazDaE3p
+	 jpCGlmeRs/l672O7ogYoDDFW0Svjppxl/ZYgvwCMWnLfB9mZfjzAC7hYv8X2InPuPkzvL
+	 B0CP5dEM/GUdCWjCrz43m55sKHL9Oavw8nFimSnWZY37gZX1aFUA5emVguYQ4HNeSZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064471;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=22aTDe2RHeY3G/IWytZEGQOlo9REHrd9IPCKlRilcf8=;
-	b=RnwcmHgMI06ErwCb9IaPbD+aCZHKF7aj9xEkBT1kWE8DJDPdjeBiYgAjePvNJiTlYiHK
-	 TAUDl84x2Q0QC6z2besukuHwNzNI1I92OIujFmw/rOj/Uvizg4LJ+ZpkPAclWFj5wzNa1
-	 Lt2BXQjtzT8vY4TLKRxZXTNmoqs3BZU670J63uh9NLsRtIU32Na94RbFjsxgWd8dcce/e
-	 vY/OwgvcEjwZvJFTJEWbdQ7sRZ0vbA5OIoTD/uV7+kphGmazrWtJTzjpR+FnrWtbt21nl
-	 8Fv3w1kMc26EChNE8M6tlAbYKBR9No3gj9AD6HRm6K1dNlJPc/iH9A/g3eNIEvfa5MA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gLKghrZpIA8ao8ZWY4wtESPKRwteZflFaXWXEu70zko=;
+	b=y+o//A9M4CW+A7WNJ8ckxTVxAuz9xVV9zYtAgFe27D09rCKm6QKGRa9rHzi89uJw/9Zr
+	 uTmMXd63n1lwwdKZHnhnBfCcytwiLOKLOg1PABWiodfg3ic+vjtRKlWnrKkVbtgLsWE/P
+	 l3UjsH/KeyNfJJRy9sjIrUwm1zSVpt7lfZpqKZ23OYgMQ16AXUl4OxAFzPfgCbgcRGN8i
+	 XoQJgJtvz5aebuXFP0grgvyG7SrI+aCYam/zVBPfGwjx3bgUvGEiBkzLXe1KmIevH+97v
+	 dlCySdEvNNDwYXC8Sx69N+kg+strMrlkfSry+C5SvVonYRtv4Z/H5Hz6Tz48V5gtdjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGe5dVr4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RySsYpPv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB9B606A9D4;
-	Sat,  7 Nov 2026 15:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65687606C015;
+	Sat,  7 Nov 2026 15:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGe5dVr4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF3E1F008A2;
-	Sat,  7 Nov 2026 15:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RySsYpPv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D541F0089F;
+	Sat,  7 Nov 2026 15:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064471;
-	bh=22aTDe2RHeY3G/IWytZEGQOlo9REHrd9IPCKlRilcf8=;
+	s=korg; t=1794064472;
+	bh=gLKghrZpIA8ao8ZWY4wtESPKRwteZflFaXWXEu70zko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MGe5dVr4P/s9epoahODSbASCcKVA9U4CCC3a8pVIXCqBW7qEGhkRPEDOa6yE72Jx2
-	 S8UxFmFmjN5EHNMZnrufe9Sp0rB4BlGmL0bzvw/osUChTxZaoRCV2hZzDDaoriqyah
-	 mkLwIo/AabcQxXmJeh4iC7PqdYIaTMmkuKWG2qDM=
+	b=RySsYpPvDZSCx8h+cXuF/7M1DkWvdFqH1n2Bc93MlCzlyGdWZcoJl1liXE/lPtbhj
+	 uGo8r0wx2gsK6Kh2TuxvhyPnohezG557fAgt6ckXOVw+n5iNzmqQqya1EnFTNaZDeH
+	 KHAUAuxOtXTfWEdmUORdjN3kikkQhEZRAxT5nYak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+	Qinyun Tan <qinyuntan@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Usama Arif <usamaarif642@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Dave Chinner <david@fromorbit.com>,
+	David Hildenbrand <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Xunlei Pang <xlpang@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0511/1257] mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
-Date: Sat,  7 Nov 2026 08:46:47 -0500
-Message-ID: <20261107134953.548583508@linuxfoundation.org>
+Subject: [PATCH 7.3 0512/1257] mm/list_lru: dont copy stale shrinker id from non-memcg-aware shrinkers
+Date: Sat,  7 Nov 2026 08:46:48 -0500
+Message-ID: <20261107134953.575761604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,49 +74,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Qinyun Tan <qinyuntan@linux.alibaba.com>
 
-[ Upstream commit d9e43f46fb324e0a311146f937f0d214f023dc63 ]
+[ Upstream commit 6a100811c7c5fa39d452ff2e380bd14efbc0208e ]
 
-damos_get_in_active_mem_bp() uses the sum of the active and inactive
-memory amount as a denominator.  In an extreme and unlikely environment,
-active and inactive memory might be zero.  In this case, hence, it results
-in a divide by zero problem.  Avoid it by changing the denominator to one
-if it is zero, before it is being used.
+With cgroup.memory=nokmem, shrinker_memcg_alloc() fails with -ENOSYS for
+shrinkers without SHRINKER_NONSLAB, and shrinker_alloc() falls back to a
+non-memcg-aware shrinker.  On this fallback path, shrinker->id is never
+assigned and keeps 0 from kzalloc(), which is a valid id belonging to
+whichever memcg-aware shrinker registers first.
 
-The issue was discovered [1] by Sashiko.
+__list_lru_init() copies shrinker->id unconditionally, so every list_lru
+backed by such a fallback shrinker (thp-deferred_split, zswap-shrinker,
+workingset shadow nodes, superblock lrus, ...) ends up with
+lru->shrinker_id == 0 instead of -1.
 
-Link: https://lore.kernel.org/20260901131850.98037-9-sj@kernel.org
-Link: https://lore.kernel.org/20260721034756.147011-1-sj@kernel.org [1]
-Fixes: 4835e2871321 ("mm/damon/core: introduce [in]active memory ratio damos quota goal metric")
-Signed-off-by: SJ Park <sj@kernel.org>
+Under nokmem the list_lru collapses to the shared per-node lists, but
+__list_lru_add() still calls set_shrinker_bit() against the memcg of
+the added object.  Most list_lru users are unaffected because their
+objects resolve to a NULL memcg without kmem accounting, but the THP
+deferred split queue holds user folios, which are charged regardless of
+nokmem.  On a system where no SHRINKER_NONSLAB shrinker registers,
+shrinker_nr_max stays 0 and every memcg's shrinker_info has map_nr_max
+== 0, so the first folio added by khugepaged triggers on every boot:
+
+  WARNING: mm/shrinker.c:212 at set_shrinker_bit+0x99/0xa0
+
+On systems where a SHRINKER_NONSLAB shrinker (btrfs, xfs) did register and
+expand the maps, there is no warning; instead bit 0 is set spuriously for
+an unrelated shrinker.
+
+shrinker->id is only meaningful while SHRINKER_MEMCG_AWARE is set, and all
+readers inside mm/shrinker.c already check the flag before using the id.
+Make __list_lru_init() do the same and fall back to -1, so
+set_shrinker_bit() is never reached with a bogus id.  The stale
+shrinker->id itself is left as is; cleaning that up is a separate topic.
+
+Verified on a machine booting with cgroup.memory=nokmem and
+CONFIG_TRANSPARENT_HUGEPAGE=y: the warning fires once per boot from
+khugepaged, disappears when nokmem is removed from the command line, and
+no longer triggers with this fix applied and nokmem set.
+
+Link: https://lore.kernel.org/20260901115104.2944996-1-qinyuntan@linux.alibaba.com
+Fixes: fafaeceb89a5e ("mm: switch deferred split shrinker to list_lru")
+Signed-off-by: Qinyun Tan <qinyuntan@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: <stable@vger.kernel.org> # 7.0.x
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reported-by: Wentao Guan <guanwentao@uniontech.com>
+Closes: https://lore.kernel.org/linux-mm/20260904190028.21542-1-guanwentao@uniontech.com/
+Tested-by: Wentao Guan <guanwentao@uniontech.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Michal Koutný <mkoutny@suse.com>
+Cc: Xunlei Pang <xlpang@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/list_lru.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index f4b586188c68a..acbf32232c3f3 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3028,7 +3028,7 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
- 		global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_FILE);
- 	inactive = global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_ANON) +
- 		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
--	total = active + inactive;
-+	total = max(active + inactive, 1);
- 	if (active_ratio)
- 		return mult_frac(active, 10000, total);
- 	return mult_frac(inactive, 10000, total);
+diff --git a/mm/list_lru.c b/mm/list_lru.c
+index 36662d02ff963..96d02ea206a88 100644
+--- a/mm/list_lru.c
++++ b/mm/list_lru.c
+@@ -666,7 +666,12 @@ int __list_lru_init(struct list_lru *lru, bool memcg_aware, struct shrinker *shr
+ 	int i;
+ 
+ #ifdef CONFIG_MEMCG
+-	if (shrinker)
++	/*
++	 * If the shrinker fell back to being non-memcg-aware (e.g. with
++	 * cgroup.memory=nokmem), its id was never assigned and holds a
++	 * stale 0. Don't let set_shrinker_bit() act on it.
++	 */
++	if (shrinker && (shrinker->flags & SHRINKER_MEMCG_AWARE))
+ 		lru->shrinker_id = shrinker->id;
+ 	else
+ 		lru->shrinker_id = -1;
 -- 
 2.53.0
 
