@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062940;
-	b=4VSRSV9QQA29EVU4oOVGx5tiAvrLu6giJCvxpbaGdjrkZ/pHaGx5nQaBD+/N3jjGDfqK
-	 tqhjgEBeGccBg1GnpAwMzV3ZKFrjrZD+3hnAtpxYG13r+zL5eVAe8+pA2snScQprcAJfC
-	 1jCU91V1TwNPeBXHQN5GrtH5c1+jKPFsHB43IKoU25AjYGC3QA/YdzhN10/cof0I68iJ1
-	 Lsn/w3FSQXWTHMKptVbTSLIFl4KGc1j0Hgzg7CAEqAt4+dQk1l0bYLY/EJ6S+O+IXVGyo
-	 DN9u2xRK87neBsC/z6cedoJWDMxxjgEHDbMMx0SDCuFMdvrGtCfdkl6oyqJPFYo5AOw==
+	t=1794062941;
+	b=FimA1+mQotIeITeMBMOa5/GQ125+//JLcPbW2qxEk/VodKIWfEWrDpN3HxFVcFnxjxjR
+	 8qm4G+5AMRIxlPq/QrwhxRj01l6S7nFTcZ8qLzk/9ai0JxN+wW6zKa2fRj9XO09UmMXbA
+	 aYaUG5I2ROMfq0qgpCnNxGau2yNu5P1NtoCm9wNZ61VaPF/bVqN3h7tX9bmS6A4IeVoYu
+	 V2dZU9X3RiAuw7Ij9R2OrfsRwgOxA97CV7GGFc+H1GuUKReqhYzAUpaOJhxZfxzWlZ1CV
+	 2wWp1SzKORvl3dGWylL0dgKPF9S0b6Z4YV1x/bduost6IkQJsmfoQdjQOhtRU9SlgJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062941;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yIQ6qtXT6+utuKG2nxErFY+3fomT0wKrKl1Ze0WVAcI=;
-	b=r1WBKIUIef/4CZScKY58ndcVVn267HMqKmt1t8xm6vrgakWcW0qXhQkK5aqL7JYlxLuh
-	 ih18kgz3wQrwhulYxt+OyJqTQeAkAl+Mc3/uPZC3HeukjK460k0t+BAb8ce3XhC5fdCIj
-	 pi9TbtXQOQ6ec3bW1G8rhMDRIzxJDtvH2z/D1XPAbg+jZSgD/27sjkDQW4Jul52VHwE9F
-	 dkK+jE3yx12wG3uP8dvK0EffG8XvQDYRjPxjRXRLdKq/ubWfv9n+BF3FVqLxT9LujTfKn
-	 WjsnDyKy8ZAheeBTkwD0R1ri/eKsIZqx0Ef93AVaYFR+yBNl2Gamh+rDcPnOqo+3Fig==
+	bh=oBuYbHxpLvK//A4k5slK+jfYmeKnwBUSfrwCDwZkP+k=;
+	b=xBhSemIgzF7n1Y+/wAAehmAqAjiLz867aPpdcT81RAoTCIH70+Wj3GC7OTk8B3+QpZF1
+	 jmiY0o+bt15B2Bj9fIK3UtvCxsJzYTBsAfZTNy/gff2FK7zOg8O2lwtvSKon/HJgLKi8y
+	 maKLLQVAHjUOZwhgerQtuvUsA8LgMM6slciv2wgOXmiFH8HUMwPVJxk4gN2MWr5h4wjiC
+	 9ftRg2aC0Y+LJyBYvYw8MT+alELwbzgJ/df4utcckjSVzS39kClYXHcUzukuXfe12TbHf
+	 7rL50a/8NMI5xY/sUqs/Npqfp3ioqyuocwJHlkYP8zYtp0JBot+GS81W5fmVzLByRSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2eII3x5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJKKoymC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FACF606A326;
-	Sat,  7 Nov 2026 14:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623EE606A326;
+	Sat,  7 Nov 2026 14:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2eII3x5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7A91F0089F;
-	Sat,  7 Nov 2026 14:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJKKoymC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF741F0089F;
+	Sat,  7 Nov 2026 14:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062940;
-	bh=yIQ6qtXT6+utuKG2nxErFY+3fomT0wKrKl1Ze0WVAcI=;
+	s=korg; t=1794062941;
+	bh=oBuYbHxpLvK//A4k5slK+jfYmeKnwBUSfrwCDwZkP+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O2eII3x5G252stLdBs7QajOZQeKaE0pVsdKJJfI420hktOZ/bMCqC1mPnLZ2etwE8
-	 ou1v5PGMFnJc1e62//Y7C+VWKxkpQmLT3YjqKormbJXYgZzadzKa9A2F7xMTNepyUJ
-	 KffUrFSQwf2g8WI+kLICY+PcsoHuDvzsuier7nQg=
+	b=lJKKoymCcoRIdNnJDFmLfCVRr/L4GKAYGN3xGHvwy815kxiOF5MLBzDm/jhcJOof4
+	 Ywy+C41vwhAoU2Zx7eeVRRgdc0rYFcjXgf44233JxL/I4gpIyW14MojsH7PtHO+2KA
+	 T+5Q2+DxgHpWk/EccZLaEKCYvozvv95b1mXSWvbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
+	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 208/869] media: cec: extron: clear response tail before dispatch
-Date: Sat,  7 Nov 2026 08:48:10 -0500
-Message-ID: <20261107134859.030958529@linuxfoundation.org>
+Subject: [PATCH 6.18 182/869] media: ir_toy: Validate the maximum tx carrier
+Date: Sat,  7 Nov 2026 08:47:44 -0500
+Message-ID: <20261107134858.307651753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,47 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit a601427f03e015e3d4d2ba44cfa6e0de144983b9 ]
+[ Upstream commit 27303392aa87b61692faadec8b00e0ca66bf98dd ]
 
-The serial receive buffer is reused between responses. Terminating a
-short response with one NUL leaves bytes from the previous response
-behind it, while the dispatcher also checks fixed offsets beyond some
-prefixes. Those checks can consume stale tail bytes.
+Reject any carrier the hardware cannot generate. This also fixes
+a divide by zero if a carrier of U32_MAX/16 is set.
 
-Clear up to ten bytes at the end of each completed response, limited by
-the remaining array capacity. This includes the terminator and covers
-the dispatcher's fixed-offset tests without adding a separate length
-condition to every prefix branch.
-
-The issue was found by our static-analysis tool.
-
-Fixes: 056f2821b631 ("media: cec: extron-da-hd-4k-plus: add the Extron DA HD 4K Plus CEC driver")
+Fixes: 8bff1386d62d ("media: ir_toy: allow tx carrier to be set")
 Cc: stable@vger.kernel.org
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sean Young <sean@mess.org>
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/rc/ir_toy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
-index 48410ce33490c..638def4cb5691 100644
---- a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
-+++ b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
-@@ -846,7 +846,9 @@ static irqreturn_t extron_interrupt(struct serio *serio, unsigned char data,
- 			return IRQ_HANDLED;
- 		memcpy(extron->data, extron->buf, extron->idx);
- 		extron->len = extron->idx;
--		extron->data[extron->len] = 0;
-+		/* Keep fixed-offset response tests from using stale tail bytes. */
-+		memset(extron->data + extron->len, 0,
-+		       min_t(size_t, 10, sizeof(extron->data) - extron->len));
- 		if (debug)
- 			dev_info(extron->dev, "received %s\n", extron->data);
- 		extron->idx = 0;
+diff --git a/drivers/media/rc/ir_toy.c b/drivers/media/rc/ir_toy.c
+index e79de56997a42..ba6c042127078 100644
+--- a/drivers/media/rc/ir_toy.c
++++ b/drivers/media/rc/ir_toy.c
+@@ -373,7 +373,7 @@ static int irtoy_tx_carrier(struct rc_dev *rc, uint32_t carrier)
+ 	u8 buf[3];
+ 	int err;
+ 
+-	if (carrier < 11800)
++	if (carrier < 11800 || carrier > 3000000)
+ 		return -EINVAL;
+ 
+ 	buf[0] = 0x06;
 -- 
 2.53.0
 
