@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063019;
-	b=wTe/zXtbSVLLNkqxW+EIynSCCuJyQDangYRpDl+11FmegaZH9c0SqpYL5sdbthehpd+b
-	 D6nx87icd2Ecqd4QYB6WaOvcQkK1pCMMfcz0amdXRTZ5puJ8uP5WPhCmWlqoUHCGU6gm+
-	 5xYSDu095VE/m134O6Ujwf+4iRl+dN2e/m5BgknWPf5a7e2jxzautWEL8S/2SQ53joAHp
-	 WMhAQrR/+HR2R6NWHLXH1Kk6QWNRzCOaEGFAAmsRyZ22cG7r08Fi3dYczhGTkQENBCbLm
-	 4VxQZWL2QZ0qOC3vXDQ8OpwWV/BhZy5y9jnSj8hrzzB5bc3kBapTNLMpKQ64GKz3GtA==
+	t=1794063020;
+	b=BO2jQdvXuFvhIevr0nWi56APKocuOpbHZXVPyHEIJhvYJlwSFB7QzdQ7ows/nqVlSY5H
+	 qBm1Cc/az59jajDXJSmfuRyWkhDG+F4VifHsxRDrxR1fBFWsHLTa4cHumn0+T13aOJc4K
+	 rJg5kkiaSQT6PiUYmJslh5NlwpYnkMzyXgjWdMeGnrVmRaVeCwMKAVdIxkqNms73Xw5TV
+	 6BcTA10zBia0tYWsbgPiDInD/xoAIOyrSzP+1fmbmdrBoh4R07OXQJaCv0bCJNYBGwkYM
+	 0VxCuJnXDdm3Me5lqEyvnrejyQy1K5xqqiGYgUKFYHY0gYt7RFqQu0lzGQwS5/gmiFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zU2B8Y0V4R9c6Ym/h33H5H7pOQXCYnNzZepQAdx/Vic=;
-	b=3zCOxMH+j4slwaWF5iIXqzcDXx08Ud1slQvSrGSXVvYJWs0wvjgo6u6o2gh4ePwV5+mk
-	 7yW2hRuzEKiUQKOtJxZWjHI913PANbt/wOUEZMVaq62pHxSrbDmRb5QQ80TgZDTk0t7z+
-	 GhGJM0bsvm/3kbgnDG8OW9NpoQQ8yvgHfhyR5PzqsN70wtE3yo7Wv+KiQaz6YxSwR/OaW
-	 +blbmtiaSG+9GKUGPgWU3lwntVNTzirl5S4zwVu+/JpOIe/f1DxrXTlmfszUKg+/5hcZk
-	 4sHpxpb/1MKvqewzFJIF6niG5Lg0uqEcztqxOnp5F55llFfLd8hq6YBtMHloxkiovOQ==
+	bh=XBsrx0mY6sS3nDsMu4QG7//IZkmGQfPBat77ZoR7I3I=;
+	b=3zAIpLhHJ0h3Cbg22FnCGpDIoWmtp8JBSFGP6eVOGZLs7cbDs+vCjWTIvUZkaMC1OWn2
+	 BWiXqfwl7MN0CqZs1q/AG0CHsSjSK1Apmnx+ewcpv9H+Dlw/UVQl0e0gq9zBP4aBPvUGl
+	 ctUxnXjPuc+VrQK1UbOki1AwJ1/EMaEN1KT9SjPre4UFTaJe6af12CBIiqnm/LNdvp6bi
+	 te66BHZMdiwX2G32Gw8I0LdNZSRww+LA/OOsWJUkJRfbkpG0pblascw4O5H5kZaWWpnh+
+	 SsWpBXrFDxSme6EybDi2dQJjH0oPsnvq43MaZsx4Gtmm4fooBeiYoL/Wx+2G77OT2AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKAKcd8x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GaNKMO6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454F9606D801;
-	Sat,  7 Nov 2026 14:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D29606D827;
+	Sat,  7 Nov 2026 14:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKAKcd8x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F281F0089F;
-	Sat,  7 Nov 2026 14:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GaNKMO6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3801F0089F;
+	Sat,  7 Nov 2026 14:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063019;
-	bh=zU2B8Y0V4R9c6Ym/h33H5H7pOQXCYnNzZepQAdx/Vic=;
+	s=korg; t=1794063020;
+	bh=XBsrx0mY6sS3nDsMu4QG7//IZkmGQfPBat77ZoR7I3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKAKcd8x2qWS2snbtiIWnAr12q1qdTTlYIoB36NaUufkwYdO/I+yF5vKhm31LqvYg
-	 gglfu3NcNKguW6fLb/WOul78G8knxJRSy1D7y7kZ8/3huC0TPH1TWs6WVrYwnRGoQs
-	 +nzd5wsvCHHem6yy0BIYRDdqkdvypoyZsDF8T4Cs=
+	b=2GaNKMO60UmyZwNyu8/qswRY4jbUu6E7uO86Hys9Q0TLWTdJ7lD9cf6JZA7igl6Uj
+	 aqhTbhlxW8ljWNTdTCfdJV+RGtFycqdeqRi/p9xgTUmtdds9oeBQZ5UTveJd4mg+BE
+	 FppQo/7/ebYE1lTeTN9Zq6NN9vDjEoch0iECzFDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Wang <wanglin@open-hieco.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Bibo Mao <maobibo@loongson.cn>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 232/869] hwmon: (k10temp) Stop matching Hygon devices
-Date: Sat,  7 Nov 2026 08:48:34 -0500
-Message-ID: <20261107134859.704181167@linuxfoundation.org>
+Subject: [PATCH 6.18 233/869] perf loongarch: Fix discarded const qualifier in _get_field()
+Date: Sat,  7 Nov 2026 08:48:35 -0500
+Message-ID: <20261107134859.730495269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,88 +72,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Wang <wanglin@open-hieco.net>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 08e6615c909b2504a5862764f3a7fca00c7ab066 ]
+[ Upstream commit ed1293302f811fa709897d4a90ad78592938e4aa ]
 
-k10temp matches the Hygon F3 device, but derives the node passed to
-amd_smn_read() from the F3 PCI slot using the AMD fixed-slot mapping
-(slot - 0x18). Hygon PCI slots do not encode DF node identity, and
-their SMN roots are grouped by socket.
+When building perf on LoongArch, the following compilation errors occur:
 
-The derived node number therefore cannot identify a valid Hygon SMN
-target or provide usable temperature monitoring. Removing the match
-does not disable a working monitoring path.
+  CC      arch/loongarch/util/header.o
+arch/loongarch/util/header.c: In function '_get_field':
+arch/loongarch/util/header.c:31:15: error: assignment discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
+   31 |         line2 = strrchr(line, ' ');
+      |               ^
+arch/loongarch/util/header.c:36:12: error: assignment discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
+   36 |         nl = strrchr(line, '\n');
+      |            ^
+cc1: all warnings being treated as errors
 
-Remove the Hygon PCI match and Family 0x18 branch. Hygon temperature
-monitoring will use the Hygon node and SMN interfaces in a separate
-series.
+Declare 'line2' and 'nl' as const char * to ensure type safety. In modern
+glibc versions, strrchr() returns a 'const char *' if the input string is
+const.
 
-Fixes: d93217d84c6c ("hwmon: (k10temp) Add Hygon Dhyana support")
+This is similar to commit 7378b6656aa4 ("perf riscv: Fix discarded const
+qualifier in _get_field()").
+
+Fixes: 492ac37fa38faf52 ("perf kvm: Add kvm-stat for loongarch64")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Acked-by: Huacai Chen <chenhuacai@loongson.cn>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Huacai Chen <chenhuacai@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Lin Wang <wanglin@open-hieco.net>
-Link: https://patch.msgid.link/20260921055603.25112-6-wanglin@open-hieco.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/k10temp.rst | 8 +++-----
- drivers/hwmon/k10temp.c         | 5 ++---
- 2 files changed, 5 insertions(+), 8 deletions(-)
+ tools/perf/arch/loongarch/util/header.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/hwmon/k10temp.rst b/Documentation/hwmon/k10temp.rst
-index 91b99adc6c487..9680c4f3383c3 100644
---- a/Documentation/hwmon/k10temp.rst
-+++ b/Documentation/hwmon/k10temp.rst
-@@ -28,8 +28,6 @@ Supported chips:
+diff --git a/tools/perf/arch/loongarch/util/header.c b/tools/perf/arch/loongarch/util/header.c
+index 0c6d823334a21..46f53a74f71e8 100644
+--- a/tools/perf/arch/loongarch/util/header.c
++++ b/tools/perf/arch/loongarch/util/header.c
+@@ -26,7 +26,7 @@
  
- * AMD Family 17h processors: "Zen", "Zen 2"
+ static char *_get_field(const char *line)
+ {
+-	char *line2, *nl;
++	const char *line2, *nl;
  
--* AMD Family 18h processors: "Hygon Dhyana"
--
- * AMD Family 19h processors: "Zen 3"
- 
-   Prefix: 'k10temp'
-@@ -128,7 +126,7 @@ it.
- Models from 17h family report relative temperature, the driver aims to
- compensate and report the real temperature.
- 
--On Family 17h and Family 18h CPUs, additional temperature sensors may report
--Core Complex Die (CCD) temperatures. Up to 8 such temperatures are reported
--as temp{3..10}_input, labeled Tccd{1..8}. Actual support depends on the CPU
-+On Family 17h CPUs, additional temperature sensors may report Core Complex
-+Die (CCD) temperatures. Up to 8 such temperatures are reported as
-+temp{3..10}_input, labeled Tccd{1..8}. Actual support depends on the CPU
- variant.
-diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
-index b98d5ec72c4ff..15a0518ff209a 100644
---- a/drivers/hwmon/k10temp.c
-+++ b/drivers/hwmon/k10temp.c
-@@ -65,7 +65,7 @@ static DEFINE_MUTEX(nb_smu_ind_mutex);
- #define F15H_M60H_HARDWARE_TEMP_CTRL_OFFSET	0xd8200c64
- #define F15H_M60H_REPORTED_TEMP_CTRL_OFFSET	0xd8200ca4
- 
--/* Common for Zen CPU families (Family 17h and 18h and 19h and 1Ah) */
-+/* Common for Zen CPU families (Family 17h, 19h and 1Ah) */
- #define ZEN_REPORTED_TEMP_CTRL_BASE		0x00059800
- 
- #define ZEN_CCD_TEMP(offset, x)			(ZEN_REPORTED_TEMP_CTRL_BASE + \
-@@ -464,7 +464,7 @@ static int k10temp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		data->read_tempreg = read_tempreg_pci;
- 	}
- 
--	if (boot_cpu_data.x86 == 0x17 || boot_cpu_data.x86 == 0x18) {
-+	if (boot_cpu_data.x86 == 0x17) {
- 		switch (boot_cpu_data.x86_model) {
- 		case 0x1:	/* Zen */
- 		case 0x8:	/* Zen+ */
-@@ -567,7 +567,6 @@ static const struct pci_device_id k10temp_id_table[] = {
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M60H_DF_F3) },
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M70H_DF_F3) },
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3) },
--	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
- 	{}
- };
- MODULE_DEVICE_TABLE(pci, k10temp_id_table);
+ 	line2 = strrchr(line, ' ');
+ 	if (!line2)
 -- 
 2.53.0
 
