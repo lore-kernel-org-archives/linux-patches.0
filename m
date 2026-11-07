@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062838;
-	b=G5j2qxP8jgYDLEqc83XGXzfHVsGRvAoeKechteSK/2cct/RuIUT+QMSxbF50+iJfm0gs
-	 ZfwlWx03aYj0gOz626ZX4aGRQGWqaPxmjZwkpsu4P0hCqQNn5Mq4/9VWSDCMnS5nCsQuv
-	 Ut4mifEtvM/9OcNH8ZsUiisq/fiGyqw4km3HhJr+LfLik8n3aJnlNO4xQ9heVnr+MsRno
-	 qEnKxw4884yCVgJPrWWlylrYkBi47SqxHmReTjN/K8t1JfV4HXChDt9/o0u97bSp5VY3X
-	 UFg/BEQV5AyEJfRKA3Jax7lLTh6Zeh4+EL8aYUB4+DJU3fOWL3kbni5EdCNALcSN+ZQ==
+	t=1794062839;
+	b=Ls9SDPV5ng1ZXXxAoodPkcdB0EtaA/6keZ2LFEqmOZG9R+Icuomv9BgyJ2rjgFDE4+Ch
+	 jlNGEa28L/L6sICyK8oP3j0DHCdY6PxzfW3AkCkFbknslfcigfwSr++u9Q15bNsBVmR04
+	 vl/beLcQtSddKRgx+D/rWtYP3V1L9zRux2h0aHuJLXMZeBTC+aEc3lz5Rd0HaxHtc2tnY
+	 IsKwdGcAoSMTk/qkKmH2NIEb9TCWLU1wso/VDaDizVNfkErfKoBly39ZnspCECZZadGar
+	 VdV+K3ll9BbAEpHiKUjmmDZFAYRSyiBOw1DuQh1TG/hgHg9+kG4N7afFr8bCpgEV4Mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+NbzLX93PponeIYlonZY1D28imrVDEfuD1OBugW9Rq8=;
-	b=Lzxcq1qkI6Lekj9z/12znJ+udGJVxgs7NDsiOb7lbOU38wtD9BN0NQtqrFVFkIl+WGe0
-	 kXNYleIO+ZUBohZj/a3az/LAX/lz7Mm5PB5HNcqAOiN8LNkRJ3axywoDxf8K7EHN63trZ
-	 QmSb+LFmZPTjrUoNeHctMaNq1rBstB6q/ZJ8mOPAO28dWl3UHo/yhMYvWbrhlu1u5mwPW
-	 T3iJxyw/Ypg4y4nC9WmFh/KRBdq4bT46yCToT+TSZNf5jUjHiIxZxlQXl5DmkJLaUtqmd
-	 LTTM6PjRURnRdVjNlNvoAnnuyGX6lCf7rAN2Ro8UxH8MiXo3WEoQMxoBvI8jy8uS4NA==
+	bh=9vL2ZiRii47S4zejAJ5xgTRfirlg9lCY9Ofl8hxvOXg=;
+	b=4PUoC20dj+zTxrGrbIzolOXMRJMaCOi53q/KTHhunFU/pI4wtk1pJWAgv2rO8dxdx1iR
+	 Ksyr0Wl3ZXnFXOY7RQwVKuKvzba0in3FVX/2kq//mXdyOZB3ka+zOVGYEieylulVITOkA
+	 GShpisllaPVVjRkl7cSvQEeFIyFgWCaCIYXYs1xuEaNTRWOeueP9Li7zEH6TenFvqWGiY
+	 AIKgDqDHMyZIMmp833waoyXZqZ/zHGNX3ZNplURJwJGgESknb/jBwK5YeJLRuxawipyrM
+	 EVohyRBFUcMbbAIPGw3EkrW99JyLmO1zcqWOpsSqT1el7ZXGVQgk30e5IG2l9bDMeag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDE0lmyx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxiI7zjV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AA2606A334;
-	Sat,  7 Nov 2026 14:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C6D606A334;
+	Sat,  7 Nov 2026 14:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDE0lmyx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893C71F0089F;
-	Sat,  7 Nov 2026 14:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxiI7zjV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46CE1F0089F;
+	Sat,  7 Nov 2026 14:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062837;
-	bh=+NbzLX93PponeIYlonZY1D28imrVDEfuD1OBugW9Rq8=;
+	s=korg; t=1794062839;
+	bh=9vL2ZiRii47S4zejAJ5xgTRfirlg9lCY9Ofl8hxvOXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fDE0lmyx2hGCHtVadj+JhPgJIAr0YF6bz66APmXuLcYUM7KZ2ina+E8pjMpdof/RB
-	 I/lhooCtv+NJC6IqwYtTPIyVhKw+dMYZbaYUX67/EpA6ByTzPBRxAvwOoNN3BPLjjh
-	 r/MWiIXnnECr36gm8P3nyp2JEyK8EoOvBw3vGzyw=
+	b=AxiI7zjVJCVs3AyjTjWY+T1OBgx685PjHkuzA2MsebJqYgkW6oRP/TklIWS4AdzWb
+	 ljfP/hwuXt8howYHMdNHWa/o+0MEbdVDJUT/PXczLm81CxfoqykINxywzr/Qf9YYFH
+	 EFtR6i0NVR98ztFswEJyxXTipG+IOZkkeSP3SUUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Matthew Sakai <msakai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/869] media: vicodec: zero-initialize stateful decoder heap buffers
-Date: Sat,  7 Nov 2026 08:46:47 -0500
-Message-ID: <20261107134856.735406190@linuxfoundation.org>
+Subject: [PATCH 6.18 134/869] dm vdo indexer: validate record page numbers better
+Date: Sat,  7 Nov 2026 08:46:56 -0500
+Message-ID: <20261107134856.980867120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,50 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Matthew Sakai <msakai@redhat.com>
 
-[ Upstream commit 27953c044974baf7e24dee3e9342fe0103dea80c ]
+[ Upstream commit e3683a76a313a81f3f7bc7f65e4fc1e61232838b ]
 
-The stateful decoder leaks uninitialized kernel heap memory to userspace.
-A process that can open the decoder video node gets it back in the CAPTURE
-buffers it dequeues.
+Move the record_page_number validation check into the
+chapter index lookup function in order to detect (and
+discard) corrupted values on all paths.
 
-The reference frame and the compressed frame buffer are allocated with
-kvmalloc() in vicodec_start_streaming(), and the decoder can read them
-before they have been written. The first frame is allowed to be a P-frame,
-in which case it is decoded against a reference frame that was never
-produced, and the padding rows below the visible area are never written
-for any frame.
-
-Use kvzalloc() for both allocations.
-
-Fixes: 256bf813ba39 ("media: vicodec: add the virtual codec driver")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+Signed-off-by: Matthew Sakai <msakai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vicodec/vicodec-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-vdo/indexer/chapter-index.c | 15 +++++++++++----
+ drivers/md/dm-vdo/indexer/volume.c        |  6 ------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
-index cdc3af33b4bbe..841dc03d0edd2 100644
---- a/drivers/media/test-drivers/vicodec/vicodec-core.c
-+++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
-@@ -1606,9 +1606,9 @@ static int vicodec_start_streaming(struct vb2_queue *q,
- 	}
- 	state->ref_stride = q_data->coded_width * info->luma_alpha_step;
+diff --git a/drivers/md/dm-vdo/indexer/chapter-index.c b/drivers/md/dm-vdo/indexer/chapter-index.c
+index fb1db41c794b3..7a744b2da28f9 100644
+--- a/drivers/md/dm-vdo/indexer/chapter-index.c
++++ b/drivers/md/dm-vdo/indexer/chapter-index.c
+@@ -284,10 +284,17 @@ int uds_search_chapter_index_page(struct delta_index_page *index_page,
+ 	if (result != UDS_SUCCESS)
+ 		return result;
  
--	state->ref_frame.buf = kvmalloc(total_planes_size, GFP_KERNEL);
-+	state->ref_frame.buf = kvzalloc(total_planes_size, GFP_KERNEL);
- 	state->ref_frame.luma = state->ref_frame.buf;
--	new_comp_frame = kvmalloc(ctx->comp_max_size, GFP_KERNEL);
-+	new_comp_frame = kvzalloc(ctx->comp_max_size, GFP_KERNEL);
+-	if (was_entry_found(&entry, address))
+-		*record_page_ptr = uds_get_delta_entry_value(&entry);
+-	else
++	if (!was_entry_found(&entry, address)) {
+ 		*record_page_ptr = NO_CHAPTER_INDEX_ENTRY;
++		return UDS_SUCCESS;
++	}
  
- 	if (!state->ref_frame.luma || !new_comp_frame) {
- 		kvfree(state->ref_frame.luma);
+-	return UDS_SUCCESS;
++	*record_page_ptr = uds_get_delta_entry_value(&entry);
++	result = VDO_ASSERT(*record_page_ptr < geometry->record_pages_per_chapter,
++			    "0 <= %d < %u", *record_page_ptr,
++			    geometry->record_pages_per_chapter);
++	if (result != VDO_SUCCESS)
++		*record_page_ptr = NO_CHAPTER_INDEX_ENTRY;
++
++	return result;
+ }
+diff --git a/drivers/md/dm-vdo/indexer/volume.c b/drivers/md/dm-vdo/indexer/volume.c
+index 425b3a74f4dba..f7de78e0d0dbd 100644
+--- a/drivers/md/dm-vdo/indexer/volume.c
++++ b/drivers/md/dm-vdo/indexer/volume.c
+@@ -891,12 +891,6 @@ int uds_search_cached_record_page(struct volume *volume, struct uds_request *req
+ 	if (record_page_number == NO_CHAPTER_INDEX_ENTRY)
+ 		return UDS_SUCCESS;
+ 
+-	result = VDO_ASSERT(record_page_number < geometry->record_pages_per_chapter,
+-			    "0 <= %d < %u", record_page_number,
+-			    geometry->record_pages_per_chapter);
+-	if (result != VDO_SUCCESS)
+-		return result;
+-
+ 	page_number = geometry->index_pages_per_chapter + record_page_number;
+ 
+ 	physical_page = map_to_physical_page(volume->geometry, chapter, page_number);
 -- 
 2.53.0
 
