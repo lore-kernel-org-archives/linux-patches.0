@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065454;
-	b=WfGd+hLYi2T63MbPsHysgbPYMmG9PrX04H3A2AmW92DJ3q8I/WjeAomqXTbZ4Oq2NYYv
-	 OeSpjy5pMPR6NImOQ7ZS+Yp9wkpGrR2lYEWdhmQqQ0yhX6L8g5ZVuxkpQ1MHmRsvwg48S
-	 tSGrt+yda8S4Z5SofNSHxpBMLPJ8EORaEj5KC/VoS+sHvuyPn7YwuwrP6CTw/Stp6Yx8H
-	 Bd01jvyp6Jzw7khkTdCDvLvPXlxibVZf4dAyhgPtZD4szPKSy00PLtPcnfksc/+BLnZ1w
-	 gFLi+3jgdSQJDL43dqRgKWmgm+sdiwTF/5Ltq7PxjOtPXe5Xf2AjT1bjZFyaMJEaZJA==
+	t=1794065456;
+	b=QMgLIvZnvn/3fB0nyGV7HtMOmM9Nfy+/ungJWlHi2Rc/frJfU1QETaom9EsWkrwRznmO
+	 wjNV+JVMqGMDVU84hjcQPwGoMThX3l0yV2f87YnYSjjQ1aJaMx6aUkdQc9B3V64N/qcew
+	 +OrOA7MFXFlcWp16uL3SMJtb3bZF8fWFIzfvRwMOAPgC0jeKoDGiPEo+UBwv/HF6O6fvq
+	 5Xlmis+pT5+4WsdZ8N3bUMiF5iKE1tVKXBBeB+9/wHF0M2sQp31aWKGvXGZYe1g6/XplM
+	 uuIoNYM5VB1PyksvTnQUQabORpKJGwiQJAlmD+3AANh6u7Pn+TRVu88S2d4r146odeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065454;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065456;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JXDK32gcmRX+YsHuKPbX6Y2TJGmcDuDUFDVcS/taoos=;
-	b=MBhkAHXKZaHLxhRNFTfngBv8D3tQgl8cL6J21PDtvJ9bTj20dG9ikgSnvpXFTM2hORyO
-	 H54/kLE/GhUIqvj+K8/nuGvTyKEzuzRKjKSFWtBXklgLpqTQDOuj51FUrXNrzWbZJzC9Z
-	 VBqB1NiFNE58r0LuyLrt+SHqHe/s/ehQh4bg0h4H1HyE5UnRjPOWQhhxFgRgaKUB0zgkm
-	 ujJX4V+nHnmU58v/oaslFQMH92iSwWXh+DGyxiUGPkAqkHJxDVX5Uuts5mG+jEzHofj1y
-	 hRS9utarmQd+kcVINF+yLhHIgz6nqWUgNxjmSGZ2IpK90jPGt/8P5oj+oyVjSil/cAQ==
+	bh=ZkRirIZu+RaMj13DH4UybH+8jYENrv7xfvXO0wOL6SM=;
+	b=Ye4dnHfuLLB/732WfRZf6Yjpc5irSP/GLMbkLU4VQ3PG1UTyea+MBwa2fDPWUKFh4cRO
+	 QT1tFNGjo9P4jnI56WbKFLewS+oD9Zxovhq61SHhDst2WKyKvZEl98KvD+H/30aKZM/ME
+	 DE5Mtd0fy7kSISD0hyPEG+G7DGKcEFRjNFrKHf2APZMLUOsvTQ6lCJvBPZK5Sb0wy8fb4
+	 IVao1IjS+iQkDAEVzGdVEaHK7SOPR2kRBB3gciC+CbEoRV/ZG5T5ryog1SKXZmnBACqPK
+	 2kOJSvodYZfYZpzId89fmZphh4+qepz+9+oKCRIqmwiFvcywdyqkjD5/htbm3FfRXgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eec1UrsF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUA6i95p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B925606A335;
-	Sat,  7 Nov 2026 15:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3F2606A335;
+	Sat,  7 Nov 2026 15:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eec1UrsF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3EB1F008A2;
-	Sat,  7 Nov 2026 15:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUA6i95p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9541F1F0089F;
+	Sat,  7 Nov 2026 15:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065454;
-	bh=JXDK32gcmRX+YsHuKPbX6Y2TJGmcDuDUFDVcS/taoos=;
+	s=korg; t=1794065455;
+	bh=ZkRirIZu+RaMj13DH4UybH+8jYENrv7xfvXO0wOL6SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eec1UrsFXGtaVxOz8b5uFQmpnOZvleb8Ff8OqfLXBpYracT3Ma9EsrUvyhNM2f50U
-	 cpLLpNkGHSew4ieOmLtQwW1zpkalAhtTNNWcIy0ojJWv2LxhjCWcEchFYymy1bQ3w/
-	 gjnle8hgN4ClFL73+NdK8ss6SFfeuOMa8GAT+XtM=
+	b=YUA6i95pPjZgIyf2K2x1oXecX88KwcaVzaahMWNWs0vi7CqQ4Aal0OP7FC52O+AEw
+	 ECnBs0ykNf/qIC+xBX78SEwK3fFNuIafPx34Xk+iO71+7QNHfq/dluF1/LDqjKFk05
+	 rvnPNt/6koIxF4ttREhqjW4rd1Y7ubqWbCPZ2JFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dominik Maier <dmnk@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1154/1257] xsk: restore UMEM flags after failed pool assignment
-Date: Sat,  7 Nov 2026 08:57:30 -0500
-Message-ID: <20261107135011.078387962@linuxfoundation.org>
+Subject: [PATCH 7.3 1155/1257] loop: check for read-write open mode on LOOP_SET_STATUS in lo_compat_ioctl()
+Date: Sat,  7 Nov 2026 08:57:31 -0500
+Message-ID: <20261107135011.103423276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,57 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moses <p@1g4.org>
+From: Dominik Maier <dmnk@google.com>
 
-[ Upstream commit b88b826ec54a06f48a42580c609ba81293ebec8e ]
+[ Upstream commit 87409eedc543d288cdd49c2174f7d61eca7b8db5 ]
 
-xp_assign_dev() sets XDP_UMEM_SG_FLAG before checking whether the
-device supports multibuffer zero-copy. If assignment fails, xsk_bind()
-destroys the pool but retains the registered UMEM. A subsequent bind
-without XDP_USE_SG inherits the stale flag.
+lo_ioctl() checks for (mode & BLK_OPEN_WRITE) || capable(CAP_SYS_ADMIN)
+before allowing LOOP_SET_STATUS or LOOP_SET_STATUS64, but not
+lo_compat_ioctl(), the handler used by 32-bit user space on 64-bit
+kernels.
 
-The flag also changes RX buffer sizing after DMA mapping. On igc, a
-failed SG bind followed by a non-SG retry with 4096-byte chunks and
-1792 bytes of headroom passes admission with 2048 bytes, but programs
-a 1024-byte RX buffer. On I225-V hardware, an ordinary 1514-byte frame
-is truncated to 1024 bytes or 1008 with RX timestamps enabled.
-Restoring the original flags eliminates the truncation in both cases.
+As a result, on 64-bit kernels with CONFIG_COMPAT=y, a 32-bit
+unprivileged user-space process holding a read-only (O_RDONLY) file
+descriptor to an active /dev/loopN device can issue a compat
+LOOP_SET_STATUS ioctl to modify lo_offset, clear lo_sizelimit to 0
+(exposing backing-file data past the configured limit), or alter
+lo_flags.
 
-Save the UMEM flags before assignment and restore them on failure.
+Enforce the same (mode & BLK_OPEN_WRITE) || capable(CAP_SYS_ADMIN) check
+on LOOP_SET_STATUS in lo_compat_ioctl().
 
-Discovered during development of AF_XDP changes for igc.
-
-Fixes: d609f3d228a8 ("xsk: add multi-buffer support for sockets sharing umem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Moses <p@1g4.org>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://patch.msgid.link/20261021224705.2078753-1-p@1g4.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: ARTIST LLM
+Signed-off-by: Dominik Maier <dmnk@google.com>
+Reviewed-by: Bart Van Assche bvanassche@acm.org
+Link: https://patch.msgid.link/20261025200740.2064379-1-dmnk@google.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk_buff_pool.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/loop.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index 9d2d94f1fb759..e836eca469b0b 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -166,6 +166,7 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- {
- 	u32 needed = netdev->mtu + ETH_PAD_LEN;
- 	u32 segs = netdev->xdp_zc_max_segs;
-+	u8 umem_flags = pool->umem->flags;
- 	bool mbuf = flags & XDP_USE_SG;
- 	bool force_zc, force_copy;
- 	struct netdev_bpf bpf;
-@@ -264,6 +265,7 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- 	if (!force_zc)
- 		err = 0; /* fallback to copy mode */
- 	if (err) {
-+		pool->umem->flags = umem_flags;
- 		xsk_clear_pool_at_qid(netdev, queue_id);
- 		dev_put(netdev);
- 	}
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 758c20678bf6c..f15a5cae5c639 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1708,8 +1708,10 @@ static int lo_compat_ioctl(struct block_device *bdev, blk_mode_t mode,
+ 
+ 	switch(cmd) {
+ 	case LOOP_SET_STATUS:
+-		err = loop_set_status_compat(lo,
+-			     (const struct compat_loop_info __user *)arg);
++		err = -EPERM;
++		if ((mode & BLK_OPEN_WRITE) || capable(CAP_SYS_ADMIN))
++			err = loop_set_status_compat(lo,
++				(const struct compat_loop_info __user *)arg);
+ 		break;
+ 	case LOOP_GET_STATUS:
+ 		err = loop_get_status_compat(lo,
 -- 
 2.53.0
 
