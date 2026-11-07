@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060785;
-	b=39hT2jnou2ZAspsBrrnLZu4A4bJGBMVJTsyyeYT6+LZ5uxQkFnWXBT/hbj0DvclUhMN1
-	 xYo3s1lkWZOPZ29O+gZxj7kFO5zAA6yXuz9YCgK8qk6rx+gRNQMgPP9jJdw63h8DCucRp
-	 nq4/zoyy8yuh++TC8xiGkZzxnsVROtYBrDKgwp4MdhlJJIKGmP7PWTufn/lV2F2taRsdw
-	 mq7D0S6JXj/QcW10BTlrBUoCb9IADoSsmO4e6hIQhheWgxOOareNbQ8AQmRiwR26X87g3
-	 6uiML63z4YrD529/n9HJiRnI93gRamOepjuGrA1g30mjsa+6PG8QC6/YoDCLHM7JcHA==
+	t=1794060786;
+	b=Zp9JFAgHT5+/XE6OxXqsqf45dzKOiKTeCUrceftGi/zNVrQ8Dy3aK+nynFSHpFR9MzbA
+	 7/wZyYRFp+0rt8KLf53poMGaYEyHTLNkBEtm5ZSFGRVWcXfduiCbe9r2tmCgOQUAsaVi9
+	 EIC1Xb+p8oGEApswtiieXTBSetE52rSJLoaMyvxBCMk37uslWcJdWXdGzNdumWI7Lx6yY
+	 IZUf1xW/FISe/BK4mI2bv93Y1EX4hnpFouW/h79c0G9Hh/oRaR9pGBpw/Cg26S9rIqG6v
+	 SRYxeBKIPSjiBB60yjtgdWpMe2twF4TePhUJqboa9FTMzH9fsg8jfB7zX3vjXOqZGpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LawUtFBm1nLfTy9YZkC1icCHTnamaVHIGWRnmvrrjv4=;
-	b=EuyLm3tPOW4GXdvD943bG6HhSv1/4jjxhy+GD8Ln0csKRpHQMO6XYomOK2bwtwFMDNmi
-	 awOOdVU4TOB55tzirrnav04aE5NFchOeQYwSNYhbPjXBrWxraztobEwe14jdjNBNMU/ma
-	 asK1SPk6pg5OjI8oPyu1+J8kKUgpwu87WkPXjM1cyxZDgNzcctP3XS/Ud71KJKbkVUtz5
-	 nEu03/5F6idt/ILjj8adnz27qvYwuWipVY8mjTUM3IEZ0VkHv/C8jgnKWZSl2pmcYLkc+
-	 sz3MBiKjyVtxGPE9PcldACXtmg4X4QxIiM1wgWnmAE/qAVQNGw7JMkU1GONz9KjWcrQ==
+	bh=WO4flPg2ceyEetTolxRAjcUXIlqjwdlhxlAVU1DYa6k=;
+	b=jPzzJ14Je/AjdnhoOOG34X+iYQbL7BqSaFr7fpLDmITRcKVQdZJQOb1TCaapQfKtCQxJ
+	 xGDlLKig3L+HefyticUYvaQoOIUnz0WmSH4gOsSMBY4SfO39tmLOfXbr4SHKIMm1lacSb
+	 IePTapucM+eW1p+wPh4HG2H6DP/qGvwJSjaXBNheqMBINQgDdrrcGG9ecJo8xTrryLOqr
+	 eLGgD2DeAzoALdClTglvw7EgXv5FTEO/TBWvFQse2mxX4Jcc42O/WbI71ZenNtFP7csL3
+	 pBnF5OGJCeuNUHsQiaDF+AeZe95HntWSJqPcertQxrPvMr236qbPGMVeDtXaCYE5DPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Le71tc8I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zfYWW+Fm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB347606A326;
-	Sat,  7 Nov 2026 14:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E346606A326;
+	Sat,  7 Nov 2026 14:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Le71tc8I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A8A1F0089F;
-	Sat,  7 Nov 2026 14:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zfYWW+Fm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7851F0089F;
+	Sat,  7 Nov 2026 14:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060784;
-	bh=LawUtFBm1nLfTy9YZkC1icCHTnamaVHIGWRnmvrrjv4=;
+	s=korg; t=1794060786;
+	bh=WO4flPg2ceyEetTolxRAjcUXIlqjwdlhxlAVU1DYa6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Le71tc8IdDOdC6//ohxtxkTJWj9M9wWB2jtCR+GkCf72AW8vhMziE8Guixxfu8q8W
-	 mBotKQLu2+9939EkEnXdX3XUJeWckyvaC5acPa5jtIfNwdXpkSOQltJipwFYkcacl5
-	 GMHXVqfeNc5ulm+V6r8sxZNBTXPpwixWr+Bb2Jqs=
+	b=zfYWW+FmoD9El8A3Z/quwUlEKdAIdjR/QUXeZB9rPc0wIhdIbjo5Mx3N39xnBCQIh
+	 e6Jo1ySapw1AryLk2znvRZdiJes1KzxESdyGOz9ZzIJ+1DmZLVO0FgMlSqyed9wHnz
+	 kCUJWaAxNC/h+yWVWox2/Z6XNaTPq1bdcRj/BNXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0190/1536] iommu/qcom: Enable clocks before hardware access in qcom_iommu_ctx_probe()
-Date: Sat,  7 Nov 2026 08:36:46 -0500
-Message-ID: <20261107135002.997519502@linuxfoundation.org>
+Subject: [PATCH 6.12 0191/1536] thermal: intel: int340x: clean up RFIM groups on DVFS failure
+Date: Sat,  7 Nov 2026 08:36:47 -0500
+Message-ID: <20261107135003.029208305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,48 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit cb776a03a53429aa59e25a8cbc3d1a48bd11afdb ]
+[ Upstream commit 28f34d7dafa6dfa657efd6760b7c78e98c9b2f6a ]
 
-qcom_iommu_ctx_probe() reads and writes the CB_FSR register to clear any
-stale IRQ left by the bootloader. This happens during
-devm_of_platform_populate() which is called from the parent device's
-probe before any pm_runtime_get(). The parent's clocks (iface, bus, tbu)
-are therefore not guaranteed to be on, making the register access
-unreliable on rebind or after a suspend cycle.
+proc_thermal_rfim_add() can create the FIVR and DLVR sysfs groups
+before creating the DVFS group.
 
-Use pm_runtime_resume_and_get() on the parent device to ensure clocks
-are enabled before the register access, and release the reference
-immediately after.
+If DVFS group creation fails while both earlier groups are enabled, the
+current error handling removes only one group: the FIVR branch returns
+before the DLVR cleanup branch can run.  This leaves the DLVR group
+behind even though RFIM setup fails.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Use one DVFS failure path that removes all previously created RFIM
+groups before returning the error.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260615065245.84252-1-pengpeng@iscas.ac.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../intel/int340x_thermal/processor_thermal_rfim.c    | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 45bfb0f1b4b6a..fff2771958363 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -705,8 +705,13 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
- 	/* clear IRQs before registering fault handler, just in case the
- 	 * boot-loader left us a surprise:
- 	 */
--	if (!ctx->secured_ctx)
-+	if (!ctx->secured_ctx) {
-+		ret = pm_runtime_resume_and_get(dev->parent);
-+		if (ret)
-+			return ret;
- 		iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
-+		pm_runtime_put_sync(dev->parent);
-+	}
+diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
+index c9c7451c34d7e..abff73fef369e 100644
+--- a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
++++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
+@@ -458,12 +458,11 @@ int proc_thermal_rfim_add(struct pci_dev *pdev, struct proc_thermal_device *proc
  
- 	ret = devm_request_irq(dev, irq,
- 			       qcom_iommu_fault,
+ 	if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_DVFS) {
+ 		ret = sysfs_create_group(&pdev->dev.kobj, &dvfs_attribute_group);
+-		if (ret && proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_FIVR) {
+-			sysfs_remove_group(&pdev->dev.kobj, &fivr_attribute_group);
+-			return ret;
+-		}
+-		if (ret && proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_DLVR) {
+-			sysfs_remove_group(&pdev->dev.kobj, &dlvr_attribute_group);
++		if (ret) {
++			if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_DLVR)
++				sysfs_remove_group(&pdev->dev.kobj, &dlvr_attribute_group);
++			if (proc_priv->mmio_feature_mask & PROC_THERMAL_FEATURE_FIVR)
++				sysfs_remove_group(&pdev->dev.kobj, &fivr_attribute_group);
+ 			return ret;
+ 		}
+ 	}
 -- 
 2.53.0
 
