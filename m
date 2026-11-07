@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061833;
-	b=PYNMxe9ZbtVRCIkyUvwMCddMHWeOiU/59BSJ/SUgtF36/3MmZPL7tTem/S183qGI713K
-	 vJm/3CFpGdj/+15zvRUa4cI8FvWQJvZQq4i+yybiIjNnsoEcuyVO60vQEFzyyp0ymQkfp
-	 0zPqbx7plAvJNCH4y5lRi8edfyNjHkD4MGoLcErDBUqmqyBfFsU1R5zKzmqgvC5ao0Xe+
-	 xBgOBK2FA3FPWSNtZAQEWi56GHi98u4rb74tYJIbTgx/sHG5aooVzLNI3w72EVlkGoq6d
-	 WxnwFxth774bLrodMRemamLQ/zXVljSeJBjXsvMWFvguiOrOMzK8M6TtDEanRUiIipg==
+	t=1794061834;
+	b=cs3K9HmwioCxVleT6GUzxv22BpuMzO4qlsTa9k0ocV3om1oB7wn6010QTRDKbTPSETAe
+	 pY5KCLmWxDAtpHREi9i9hjMHcLdW0eao7sZdJuwpPwNSWA1uMGkMmCq57lOK3ry2caanA
+	 u/BpQfwLs9LfMleGluHHFGJmbSV+IbFUhJ5QR6/zsYV2ZogVvw4Z5RJS2eluwZm+qrgCy
+	 /N65oqmZZArJI5586bczbSi8QXjp3iKbdlwvWAjjnzFD/wK8b4qMqt7pniKnEqycBTwSn
+	 gztNJL3Ve9XXRkih64FyZYFvotmEwRZMeDgxk8twoUruPbTCMkcMwZGMVeEi1d5SU5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hAIcLPucytEBnt4MuU46Dw84Vn2tkVxE6BjTk8QpJac=;
-	b=QuPSo7oO+lh8Lwa5ApYikAtVe0VCYjjY+90z2Zj+UKVguzHijN+H46X/D4KB2+3KuPek
-	 XXLKptI8UrqVkw6nwm1QPA4RriXfhfa/CPYNzjh7kR9+aMADOuxVZ6fF6F4Q30BWYrl0E
-	 YT/D96mo7hfkEeai8cDGV3DwFbWKZjkopRELAUIl9TnrJ0lDO1Ed8EAE5tNMX8438GCu9
-	 yq+yadFUdumMs70was6lBpvm8o+sOjaCfM4D37Vk+pOP7vbJXFX+GJWZ0XoOIZxMJ9Eoi
-	 g50exVkoiyTdeFrtgT/iy99NgLbls2vREvpk/ky2RjOAw9Xplt4ChFA33NsXSW1Ygtw==
+	bh=osCJSW680TgngsfLj/e7xN3PQ87p9ln2386Oc1Hpcug=;
+	b=J5c1B/TL0xcEgmkPqIXGEA/nFwVZyggQfEif3JJvdsj08/n60XYTE6En8sM0w56FSyvD
+	 zg+Ef+x8OFvSTXkTrk2L3JsC4b/wqTNtafusVrSro+FKHWLptCBST6xfDYI5atDko+RQn
+	 Z8eS0XWx2dKNOaz24QgMrZnQ8T0mO8at15c66d0AiAjSjjRIx02AIXLumsmXFoIOo5CNr
+	 OAPx+hY0Jl8kWfPDO+OYoTdtyW5e4lzefRiODUx/xczZjkNaAof9RA20JEdQIoqk1MfvO
+	 Y5HxKlTUgza/ixw4vGzf/qwBcOgXFVtzHg8ZPwonbgAJPTKPSH5SeyPRcx9T31YnmAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BH49znO7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ASYjZ3Rx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1943F606A326;
-	Sat,  7 Nov 2026 14:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A70B606A326;
+	Sat,  7 Nov 2026 14:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BH49znO7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4291F0089F;
-	Sat,  7 Nov 2026 14:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ASYjZ3Rx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 057BA1F0089F;
+	Sat,  7 Nov 2026 14:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061833;
-	bh=hAIcLPucytEBnt4MuU46Dw84Vn2tkVxE6BjTk8QpJac=;
+	s=korg; t=1794061834;
+	bh=osCJSW680TgngsfLj/e7xN3PQ87p9ln2386Oc1Hpcug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BH49znO7PQfMghwZZ4RoFgJ2mWdr/B+73GvwjlOJuR1tRyCXC8O5GGXFCGOVRLrah
-	 Y0GNgbXeMckzE+JyVcb+CzuSKMcJQOsyH+g/VMggT8jbAD7Ee6fFBqGkVQ12B9Ky2Q
-	 XOdHp7OXOWoGGqzzhhFs43lGVyfh7+ijsGhuGguU=
+	b=ASYjZ3RxE5YScVeRvElKqx0xoF+ise3InZNvmrdEfjpWlR6XxTKCflWh82oaQ0vV+
+	 gluTJnfmMxN3oPqM1fqpYbTsMlASVqeGKH9V3bucLHqWldrIBOjlYbvKDC57dyT06B
+	 kOwEX0IubUIo+AXqxFa863Isch/HCEbwCKRUZEyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.12 0827/1536] ovl: set OVL_WHITEOUTS before publishing the upper dir
-Date: Sat,  7 Nov 2026 08:47:23 -0500
-Message-ID: <20261107135020.770141918@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0854/1536] ksmbd: fix session reference leak on compounded SESSION_SETUP
+Date: Sat,  7 Nov 2026 08:47:50 -0500
+Message-ID: <20261107135021.534423765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,70 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Ian Bridges <icb@fastmail.org>
 
-commit cbec8610ec5aaf35df50094ff639febc23f20773 upstream.
+[ Upstream commit 03bd8f5279e490e15e0c0f0fa388ffbd2fbacd65 ]
 
-Listing a directory while it is copied up causes a use-after-free of
-the readdir cache.
+A compound request can place SESSION_SETUP after another command. That
+earlier command leaves a reference to its session in work->sess.
+smb2_sess_setup() then overwrites work->sess with the session it looks up
+or creates, and the dispatcher later puts work->sess only once. The
+inherited reference is never dropped. That leaks the session, together
+with its setup connection and socket, and every repeat of the compound
+leaks another.
 
-A merge directory must never be iterated as a real upper directory:
-that mode frees the cache in OVL_I(inode)->cache without looking at
-its refcount, while files opened in merged mode still use it.
-ovl_copy_up_workdir() publishes the upper dentry before it sets
-OVL_WHITEOUTS, and ovl_dir_open() samples both without a lock, so an
-open between the two stores finds the upper directory and takes it
-for a real one.
+  unreferenced object (size 512):
+    __kmalloc_cache_noprof+0x32c/0x3a0
+    ksmbd_smb2_session_create+0xf6/0x9c0 [ksmbd]
+    smb2_sess_setup+0xda4/0x6280 [ksmbd]
+    handle_ksmbd_work+0x88c/0x1cb0 [ksmbd]
 
-With a delay between the two stores, an unprivileged process that
-listed a directory during its copy-up saw only "." and "..", and its
-next getdents freed the readdir cache of another descriptor.
+Save the inherited session on entry. After the request has been
+processed, release it once, but only when smb2_sess_setup() has replaced
+work->sess with its own session or cleared it. Do this after
+ksmbd_conn_unlock() so the put does not run under srv_mutex. An error path
+may instead leave the inherited session in work->sess. Keep it there, so
+the dispatcher still puts it and the error response is still signed or
+encrypted with it as before.
 
-Fix this by setting OVL_WHITEOUTS before ovl_inode_update(), so that
-ovl_dir_reset() agrees with ovl_dir_open(), and by testing
-OVL_TYPE_MERGE() of the path type in ovl_dir_open(), so that an open
-that observes the upper dentry never iterates a merge dir as a real
-dir, regardless of the order in which it observes the flag.
-
-Fixes: b79e05aaa166 ("ovl: no direct iteration for dir with origin xattr")
+Fixes: 7aa8804c0b67 ("ksmbd: fix user-after-free from session log off")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: test OVL_TYPE_MERGE() instead of smp_rmb() in ovl_dir_open()]
-Link: https://lore.kernel.org/linux-unionfs/CAOQ4uxh-1J2OBjnDVbrrrjy1puSOW0kABvghN85ih6dtKUBTyA@mail.gmail.com/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: omitted the installed flag update for the absent early work->sess assignment ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-[ backport: context: the store is followed by the unlock: label ]
+ fs/smb/server/smb2pdu.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
- fs/overlayfs/copy_up.c |    2 +-
- fs/overlayfs/readdir.c |    3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -845,9 +845,9 @@ static int ovl_copy_up_workdir(struct ov
- 
- 	if (!c->metacopy)
- 		ovl_set_upperdata(inode);
--	ovl_inode_update(inode, temp);
- 	if (S_ISDIR(inode->i_mode))
- 		ovl_set_flag(OVL_WHITEOUTS, inode);
-+	ovl_inode_update(inode, temp);
- unlock:
- 	unlock_rename(c->workdir, c->destdir);
- out:
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -961,7 +961,8 @@ static int ovl_dir_open(struct inode *in
- 		return PTR_ERR(realfile);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index b5a71ca407b65..2219bb6b73b29 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1714,6 +1714,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 	struct smb2_sess_setup_req *req;
+ 	struct smb2_sess_setup_rsp *rsp;
+ 	struct ksmbd_session *sess;
++	struct ksmbd_session *prev_sess = work->sess;
++	bool installed = false;
+ 	struct negotiate_message *negblob;
+ 	unsigned int negblob_len, negblob_off;
+ 	int rc = 0;
+@@ -1851,6 +1853,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 		conn->binding = false;
  	}
- 	od->realfile = realfile;
--	od->is_real = ovl_dir_is_real(inode);
-+	od->is_real = !OVL_TYPE_MERGE(type) &&
-+		      !ovl_test_flag(OVL_WHITEOUTS, inode);
- 	od->is_upper = OVL_TYPE_UPPER(type);
- 	file->private_data = od;
+ 	work->sess = sess;
++	installed = true;
  
+ 	negblob_off = le16_to_cpu(req->SecurityBufferOffset);
+ 	negblob_len = le16_to_cpu(req->SecurityBufferLength);
+@@ -2004,6 +2007,14 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 	}
+ 
+ 	ksmbd_conn_unlock(conn);
++
++	/*
++	 * Later in a compound, work->sess holds the reference that an
++	 * earlier command took. Drop it once this request has installed
++	 * its own session there or cleared it.
++	 */
++	if (prev_sess && (installed || !work->sess))
++		ksmbd_user_session_put(prev_sess);
+ 	return rc;
+ }
+ 
+-- 
+2.53.0
+
 
 
