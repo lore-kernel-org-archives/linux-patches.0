@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062090;
-	b=IGnLWEpaateOxrUgT5DHH4Ka4wwRZvFmCE3aBlvZwezYO+9+gIV7LqJEH+uLDYSv7dFm
-	 DTZ4KNM4PxDLbMsWM5IySQFlJbFPgCeVIKpFebH7p3WdxolxXvajr5daiVhP0+O4bdQ+S
-	 BRAlI87KOHdgD7BfzDacrj6UXoFFEzwu4W0IXl3d1TmvxTId3kNHiBDNIuZwx5lVzbRa4
-	 GcASejCwqCYQyB56IVvobczhZCPFdYlwdH/+juaxIdfewuDp7lDhKXpU/2iwaQi3NOKj+
-	 0yag6qlTujVdz4ahFJQ5Ou2i4vlQtU6geFb2Ts/xwwzi51FmwaO9clVkfQ3OBH1aoIg==
+	t=1794062092;
+	b=kWYE3ZGdDmJ0MS7l7Va4YuMjkk30acUAj9IHfPbJ4Eaj7J/UHV+nhsUENsT4rs47BRpK
+	 /CROX+JC90YcBa6Zwhj8URFuaLTyp9xnQpI2kceH54Fyo979sjbd57jBYkdOG7ii2ZXg8
+	 YoGAPZLmGCIitaRQpmUy06aq59+VU7G+Ot2hcnuOw9EhLP0WbFHZFWa9jjJyYQxQS8iaz
+	 bkuIqYqNYVEy5nerM/U/1K038t64UBcXO5mComM9gCJ/H/eQDnSohZBdtuk7WiQ3jZ5ho
+	 KLIDYtgUH7LI91c/cdakN5Q/3D9RPSw8C8vttmmI8UUNV5IyvaiyAaxrqcV9XaFukmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062090;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ynuVOh7XeM6I9pE9MjWxRBxBuIbho0hILwmvIvQCdMk=;
-	b=oIO5qUnz+GzuQjEPaYAsweV3U9PHWuWKzVpwL1dqDa67GeuMJG8uRxKGd6kNaEvRUmMl
-	 d7pvtGcBiHzh3ywpMG85WyM94vjpcFw//tQSrHGw+i+EkthrZDjbHz+XIH8SLhF8Ll1Mp
-	 k16+jzy+87v11nj/qwrHZWIW0C8yY5/Tsst8GO02gkv57UD2lvU+BkRy2kmd0CsXfzqTU
-	 Ox7QBBuZU5UxjF07T5OUp1gDA7unYuRpSxGnJwu0pINKaaiCMHBASDTvXmFfGSxC1C2zv
-	 BCcpccQDYT4egVe7d5oMNDI5m3mj1iPQrBI2J0i5OWqClE7FdTl6xCqoyoa4yVkw3AA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=GMPIV7xCBxHv7RoI3GK3oxSdm0W3O62xDx/X8tlozuU=;
+	b=cWMy+yJP2moEpQwUiUI0RxmtiWBGpdpUPIctK0ugefHLzr6Y2BZsuVQnPOzEUqTy8Wvm
+	 xhrZBuQwYlTwsBCYvZacRwDans73V+TDYrFuO5qBsANP7Y22NLfqniCMqvMuM9ERfv/fM
+	 WUVtrLmIlwwtR2DSrwGycUTPSI94MhRO6VAam93G74tcPfAsVu0pggCKyvLZfeLbnCEgH
+	 kvPUTKZuAkdFhNoDe+mn8vFbeTiHy5spzGy877qINFYEBv+MGLhvzoiWT13ORmfHlIy5k
+	 Z0LRe0jKhnV3YI0bap2V4FV/D9jhK9UrI4rOiD1KzFhN8E87cgVes2n44jIyBOIE28Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvZytM9J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kc+8XFPv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785AA608360D;
-	Sat,  7 Nov 2026 14:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B1B6083615;
+	Sat,  7 Nov 2026 14:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvZytM9J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256641F008A5;
-	Sat,  7 Nov 2026 14:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kc+8XFPv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FC61F008A3;
+	Sat,  7 Nov 2026 14:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062090;
-	bh=ynuVOh7XeM6I9pE9MjWxRBxBuIbho0hILwmvIvQCdMk=;
+	s=korg; t=1794062091;
+	bh=GMPIV7xCBxHv7RoI3GK3oxSdm0W3O62xDx/X8tlozuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DvZytM9Jv3Z54X1UuUwc8mZf1dXHI1SSoxQaC0TP/bouaKkPr/Bz0V53kSMI7Cw3D
-	 6RunUTyE26Ab6gX4YPCu33YY/QNwYlj7760z85glQLUq241je7aObpOiFVkF0seFfk
-	 MFS3ZhhXcKG0alyv2U+hxvRNTYBKsqoamQG1ykto=
+	b=kc+8XFPvTuV8ADO+RqNiN/HWVAEbb/b+GE3dZGGSw1A4BZKuqoRza04RHCLYQOl7n
+	 j+ZDJ53T9c1oSaJaLXVpOb4gH+dZjc2vdikmuOoOx81ybl1rv2rqZ/8ZEij8wTqkqb
+	 3bAz9gRU8L9XWSJ6T+izPNixUghdtScQAqnrKDkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1064/1536] hwmon: (lm95245) Fix negative temperature conversion
-Date: Sat,  7 Nov 2026 08:51:20 -0500
-Message-ID: <20261107135027.569596612@linuxfoundation.org>
+Subject: [PATCH 6.12 1065/1536] platform/x86/intel/pmt: Block mmap when callback is present
+Date: Sat,  7 Nov 2026 08:51:21 -0500
+Message-ID: <20261107135027.597855770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,54 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Michael J. Ruhl <michael.j.ruhl@intel.com>
 
-[ Upstream commit f58c16056f8585ebafb0f1f5d90c23085443a4b9 ]
+[ Upstream commit 0d4cd92b41dd33a3112959f9be86002ff309de73 ]
 
-temp_from_reg_signed() uses only the high byte when the sign bit is set
-and drops the fractional bits in the low byte. Writing -500 to
-temp2_offset stores 0xff80 (-0.5 degrees C) in the offset registers,
-but reading temp2_offset back returns -1000.
+With the introduction of the .read_telem() callback, control
+for access to a devices data area must be done by the callback
+owner.
 
-Negative temp1_input and temp2_input values are rounded down to the
-next whole degree the same way. The chip reports -0.125 degrees C as
-0xffe0, which the driver returns as -1000.
+This means that an area cannot be mmap-ed with the default PMT
+handler.
 
-Treat the register pair as a single 16-bit two's complement value.
+If the .read_telem() callback is present, do not support mmap.
 
-Fixes: fffd80ccc1e6 ("hwmon: LM95245 driver")
+Fixes: 045a513040cc ("platform/x86/intel/pmt: Use PMT callbacks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260923172551.1593798-1-khurana.ridham222@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Link: https://patch.msgid.link/20260910135954.1586360-2-michael.j.ruhl@intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm95245.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/platform/x86/intel/pmt/class.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/lm95245.c b/drivers/hwmon/lm95245.c
-index 3bdc305308479..9c977d2820f9c 100644
---- a/drivers/hwmon/lm95245.c
-+++ b/drivers/hwmon/lm95245.c
-@@ -98,9 +98,9 @@ static int temp_from_reg_unsigned(u8 val_h, u8 val_l)
- 
- static int temp_from_reg_signed(u8 val_h, u8 val_l)
- {
--	if (val_h & 0x80)
--		return (val_h - 0x100) * 1000;
--	return temp_from_reg_unsigned(val_h, val_l);
-+	s16 val_hl = (val_h << 8) | val_l;
+diff --git a/drivers/platform/x86/intel/pmt/class.c b/drivers/platform/x86/intel/pmt/class.c
+index d2f0aea6ea500..072460ad5fa3f 100644
+--- a/drivers/platform/x86/intel/pmt/class.c
++++ b/drivers/platform/x86/intel/pmt/class.c
+@@ -308,7 +308,14 @@ static int intel_pmt_dev_register(struct intel_pmt_entry *entry,
+ 	sysfs_bin_attr_init(&entry->pmt_bin_attr);
+ 	entry->pmt_bin_attr.attr.name = ns->name;
+ 	entry->pmt_bin_attr.attr.mode = 0440;
+-	entry->pmt_bin_attr.mmap = intel_pmt_mmap;
 +
-+	return val_hl * 1000 / 256;
- }
++	/*
++	 * The read_telem callback controls access to the memory area. Block
++	 * usage if the read_telem callback is present.
++	 */
++	if (!(entry->cb && entry->cb->read_telem))
++		entry->pmt_bin_attr.mmap = intel_pmt_mmap;
++
+ 	entry->pmt_bin_attr.read = intel_pmt_read;
+ 	entry->pmt_bin_attr.size = entry->size;
  
- static int lm95245_read_conversion_rate(struct lm95245_data *data)
 -- 
 2.53.0
 
