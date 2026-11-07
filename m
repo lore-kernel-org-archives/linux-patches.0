@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063007;
-	b=bd0BrZ1//PcMqI//Z+mAWXGC7V9T6utexaaHrrTLOSQuW9eACj3J9+etDJUqJYyGUE/7
-	 N04/CI7XxNsrIzjWjOD5TcUojpSaHsDI8EsM3MxQtZRY9P/rgRPYU2/dsH0BKEmu4/miC
-	 jbTFFwk3P7HS3Y1W0X2AjjGYzwTM4t7/6zLySU1wmT6FPo0ERqDt2rl27asfM1X7ikbf/
-	 +DnWMNpPaSLSe49Na3tcCoWXpyPw06fFSwNqex698WiGHLOwvOIrkVOj1dDGeJ4H3B79N
-	 UfQjcc0MRIaxtQLfT6WX8gyegfE4ZWkD+fmPRlaLK8SXMqEIMj4QocdQttKDC4gVGUA==
+	t=1794063008;
+	b=uaoNGuImSIcEKXRAD6v6mwPamCqTOgtn/EBsrdl5TcDdyfbRF8Sxjb1lK28AFPgXggoO
+	 UYrfuLaaFK4Yk9/VlyzBykP6d/Tp0oumuJGW9l4gJQYpO5CSbavFGY6KW/lobIqfo4ldZ
+	 IXXE3ZgrTPdXpOx9sgnPIlf57T5KWZFWn3INu4KjU9567nTHPZaMUGp6/tGnYxfulEbwW
+	 xWWgvZX/sycb4GhkazgMIfzlSTRgRdc/9TWGfbNZfGCAE/tabgUJ1CfBhOD7w4IZ33GhI
+	 bxkS54oil5MJobKOJRZLqxGC5kvtj6VwXoQGXcXOFyQIEFEoP7FCTshJEBWLyHn23DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063008;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zlA1nr77DsWHWNPZF4B2tLKhr5wXSmpupQowO5xPlms=;
-	b=RUOCXHL297YwHPNQtv2d1g+0EcZwc2N7HDbTnGPp5KWL2htshFUskLteXPDD1FDvoRwg
-	 EzGooABZYqonCz5mFcpR+uvWhrakDwrEe/lC3GdkeQQgDyYqM5AKQ6eeT3obL39MEibD8
-	 7z6xNWLjFkCvlPj00+n8IOSnSjk4yO8SZJmDwMVq3MxJ/eEDECTcuDxvOWYTF5FxQDkec
-	 KHkWW3PceDS2Aqt2pMZGp5pLqQF3Rh56nQlVQDK79x425oIMSAwptNYT6vIWSg0lhaNYN
-	 AMst7VbXEMznZgBmkvcH95uT/6bUJuOJxGxi4i8xFEXuXkMaPdBjOszCP25UoibuSXg==
+	bh=9JcNI+UDUvb97IPM2bJTfEo1lSw5cwIruI6F6zA336s=;
+	b=BbEPG9ro+3RI7iro/G4Grnm8LNfrPTCyyTZLgk+43kwoPLGrf4CBhVmOh9UayiK8lk7v
+	 +nZKyKuWD+9Yel0kMwIDLwojkc7pQE+mI0fgzGW2pAOatjlsPvc5nSjHZ44FIbwm5nftA
+	 dA3wgq8cYZLvvClCcr5JRezewBuO7fVQQOaP1H+jykiHDARqOby/LzBmgadMgW/XkLMYB
+	 EqnAyu7Kla1vw2qXWVsOjYyB1csz1jPve1vkeC4sdSrYRwK0qApWYa3b0B7MDOTPdAVi7
+	 oLJqoYtvTGGumrufUR5WCkslr3DrNe70z3xXWbYH2fF84PAhfFrAkDs7CNMn3U4Olqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbwjKAwZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7hnNajj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01918606D833;
-	Sat,  7 Nov 2026 14:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2C2606EE84;
+	Sat,  7 Nov 2026 14:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nbwjKAwZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDA71F008A1;
-	Sat,  7 Nov 2026 14:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7hnNajj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24C11F008BE;
+	Sat,  7 Nov 2026 14:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063006;
-	bh=zlA1nr77DsWHWNPZF4B2tLKhr5wXSmpupQowO5xPlms=;
+	s=korg; t=1794063008;
+	bh=9JcNI+UDUvb97IPM2bJTfEo1lSw5cwIruI6F6zA336s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nbwjKAwZ4kjLkJXZDJtiFzXA/rBoWXWvh9j/hMcAh8Ymis5nyIkfnCUBUPddbW2g9
-	 zoogJSOKKwAiob3hrAt+QitlZq4Uo8/RPc7iMf6nf+aabEzgEhyu8ecpuWyMSK83s8
-	 6mDpTlja+lqXVXPwxwomXz89OG0dBrDSs1TIlcCg=
+	b=g7hnNajjP4uppiA+5RyB+KXbASvgmiOncQ+GWlS0z9VKqdQgrYy2JSXNFeadrfFM6
+	 D2vJl9AA1FAMPp9biV8UenmPhuTzfNPqCU8mSqMrPbZzgKRib4SNUQ6/De8+cmXQB7
+	 ZE+N1VFSOoqe9rDtYnWZTJev0FRZmZy4uZQpMLvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orgad Shaneh <orgads@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Piotr Kubik <piotr@kubik.pl>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 259/869] MIPS: mm: do not write a huge TLB entry when the probe misses
-Date: Sat,  7 Nov 2026 08:49:01 -0500
-Message-ID: <20261107134900.544515166@linuxfoundation.org>
+Subject: [PATCH 6.18 260/869] netfilter: ctnetlink: fix inverted IPv6 address match in dump filter
+Date: Sat,  7 Nov 2026 08:49:02 -0500
+Message-ID: <20261107134900.573706104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,88 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: Piotr Kubik <piotr@kubik.pl>
 
-[ Upstream commit 0cb17268887e1df5c425ea052f5146b42d126323 ]
+[ Upstream commit 1ae2d094b0200f687923298c0e42579273558988 ]
 
-__update_tlb() probes for the 8K pair at the address it is given and,
-for a huge pmd, writes the huge entry with tlbwi at the probed index or
-with tlbwr when the probe misses. That works only if the caller passes
-the faulting address, so that the probe finds the 4K entry the refill
-handler loaded for the faulting page and the huge entry replaces it.
+ctnetlink_filter_match_tuple() rejects an entry when
+!ipv6_addr_cmp(filter, entry) is true. ipv6_addr_cmp() is a memcmp() and
+returns 0 for equal addresses, so the condition is true exactly when the
+addresses match: a CTA_FILTER dump with an IPv6 CTA_IP_SRC or CTA_IP_DST
+skips every entry that matches the requested address and returns all the
+others. The IPv4 branch compares with != and behaves correctly.
 
-update_mmu_cache_pmd() is not called that way. do_set_pmd() has always
-passed the huge-aligned address, and since commit ebcfc63d6bca ("mm:
-abstract THP allocation") the anonymous THP fault path does too
-(map_anon_folio_pmd()). The probe then misses the stale 4K entry, which
-sits at the faulting page somewhere else in the 2 MB range, tlbwr adds
-a huge entry next to it, and the TLB holds two entries matching the
-faulting address. Octeon raises "Machine Check exception - caused by
-multiple matching entries in the TLB" on the next refill of that page;
-a process on a CN63XX board died this way within a second of start, on
-the first anonymous THP of its bss.
+Observed with libnetfilter_conntrack NFCT_FILTER_DUMP_TUPLE: a dump
+filtered on src 2001:db8::10 returned only the unrelated entries, and a
+dump filtered on ::1 returned every entry except the ::1 ones.
+conntrack-tools does not use the tuple filter for -L, which is why this
+went unnoticed.
 
-Skip the write when the probe misses. The refill and TLBL/TLBS handlers
-probe the faulting address themselves and rewrite the stale entry with
-the huge one (they also set the software young bit), so the entry is
-installed on the next access at the cost of one exception.
+Use ipv6_addr_equal() so the IPv6 branch mirrors the IPv4 one.
 
-Fixes: fd062c847a8c ("MIPS: TLB support for hugetlbfs.")
+Fixes: cb8aa9a3affb ("netfilter: ctnetlink: add kernel side filtering for dump")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Piotr Kubik <piotr@kubik.pl>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/tlb-r4k.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
-index 24fe85fa169d1..78bafa317fa6f 100644
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -332,6 +332,19 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
- 	/* this could be a huge page  */
- 	if (pmd_leaf(*pmdp)) {
- 		unsigned long lo;
-+
-+		/*
-+		 * The probe above only covers the 8K pair at @address, and
-+		 * a huge mapping is installed with the huge-aligned address
-+		 * while the refill that started the fault left a 4K entry
-+		 * for the faulting page elsewhere in the range. Writing the
-+		 * huge entry to a random index would leave two entries
-+		 * matching the faulting address; leave it to the refill and
-+		 * TLBL/TLBS handlers, which probe the faulting address.
-+		 */
-+		if (idx < 0)
-+			goto out;
-+
- 		write_c0_pagemask(PM_HUGE_MASK);
- 		ptep = (pte_t *)pmdp;
- 		lo = pte_to_entrylo(pte_val(*ptep));
-@@ -339,10 +352,7 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
- 		write_c0_entrylo1(lo + (HPAGE_SIZE >> 7));
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 6ccb23a640d85..0ff9da922c392 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -1098,13 +1098,13 @@ static int ctnetlink_filter_match_tuple(struct nf_conntrack_tuple *filter_tuple,
+ 		break;
+ 	case NFPROTO_IPV6:
+ 		if ((flags & CTA_FILTER_FLAG(CTA_IP_SRC)) &&
+-		    !ipv6_addr_cmp(&filter_tuple->src.u3.in6,
+-				   &ct_tuple->src.u3.in6))
++		    !ipv6_addr_equal(&filter_tuple->src.u3.in6,
++				     &ct_tuple->src.u3.in6))
+ 			return 0;
  
- 		mtc0_tlbw_hazard();
--		if (idx < 0)
--			tlb_write_random();
--		else
--			tlb_write_indexed();
-+		tlb_write_indexed();
- 		tlbw_use_hazard();
- 		write_c0_pagemask(PM_DEFAULT_MASK);
- 	} else
-@@ -380,6 +390,9 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
- 			tlb_write_indexed();
+ 		if ((flags & CTA_FILTER_FLAG(CTA_IP_DST)) &&
+-		    !ipv6_addr_cmp(&filter_tuple->dst.u3.in6,
+-				   &ct_tuple->dst.u3.in6))
++		    !ipv6_addr_equal(&filter_tuple->dst.u3.in6,
++				     &ct_tuple->dst.u3.in6))
+ 			return 0;
+ 		break;
  	}
- 	tlbw_use_hazard();
-+#ifdef CONFIG_MIPS_HUGE_TLB_SUPPORT
-+out:
-+#endif
- 	htw_start();
- 	flush_micro_tlb_vm(vma);
- 
 -- 
 2.53.0
 
