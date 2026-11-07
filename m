@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061391;
-	b=jhAzCOa31Kxaob1gG+SdMJXlyuNtBtnle9gVX3MZ8mgbzDyudS02UJthgrBivWzGAB9/
-	 6HQHUg00g0Emq2GkrsjCDo6P7xUg7Q6dhB7BUdUx+LiVGMH/SKGOiXXC3FXDqKg1HI+rx
-	 WDZ5goUEdE3uNS2shoDvdxk0xUubE9xrM8zLNgPmLoofgjbrvQ6wQ7o/2czWLcO32w0wU
-	 GzA0ta/Vll2cf5KpD0V2k8+e2tzkf0dHa/Rb4oSVJVApC7luq76RptFYUerwm8lBAIkIa
-	 2dzHkasZA0wiwphahkhPf6X+azGmkxB4qyfM0Fbtu5i/vYkxPMFxrpqFsWVZGPPd1+Q==
+	t=1794061392;
+	b=sH0d4+2Y0sBfzRmRrR7AkNG8csiFQjeNUAKjZ/Dx8REkhPterw9RUoUHFilsCdXrwC6m
+	 gP4tx1cS6kY+2eqX7fe0qi1S5Nqu4T/IbIfv6psa79UK1NFAv4CXJFP1rQCpAkxA/4UF7
+	 PubwiM9IwIF7wkAUAeOqaymMyE0Mn2ynYCwFd4uJQc9Xw85/mNMJyN5MA8H7bC5puFVFr
+	 xURNP98fdbWRF1a5m+PhM6TBdxEV9ubEjwV9EofKZC7l4AJ2k1hv3MQ4KYorSvm2QfC98
+	 JpeQEv6wBromqmAtatEkNWn6PSQMsyJRp9ij4ZAWZ9lQgnJdLHa/1tXcThqXDkjrwFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5JK7/JlR6X8rlBtZk5CmEtKF2Byf5JwgRKACSKN9KM8=;
-	b=ebnHG/fUQnGyV67VKklvBuAUSGkRYqAkAT6Xgbbc6d3+rq7EtY/WKNhYZh6dztmGXnFB
-	 qtEJv/skGfcnGMk34Hvi4e9UgoWh3N3eT+wBa+SA6m6LxGOwlOhIs3Z7KyjCnPJyKI8hK
-	 91sJ5eyg7PzNIJF37Fdb1CAjR2R+ZMlLl9xCfeF+qacbDEo6NcyudLg5Uj7XeqbL2fsgD
-	 QpIWjW225zDnCfrwLn3LRK5O3uils4kXhcGBzmI2SHJS0BH9HYbTVFZr6UnYGJwnh9oA4
-	 a5AIFkabmuuRFX6mpv4QZUJcvYjt0lxm7ZEY5n0GK/Yxw/QTLKWo+jUtvqEp3PjbsTg==
+	bh=3oeGV2GPu3Mkqa2faAA8Zh/R/d7dxWHCEWyFXWRv1Cw=;
+	b=Q9GExdWkak5UdP/rrtGPN347rFgHT6y9NCxDWbpG1B0GOh2+7w8CbDRqxlYN0BDEfDT4
+	 h3cxKpuLxb38M5rWLs+8dwoZ+2+jKd/8wMoxbMkUtMhzTItqkeJu326G92tNRQRlsRCaB
+	 ApadOyA3gkjAxrm9pUabbdW2oX2oQQlywSHrdFp/DQv+v2nt2LjjVjJAu7xWYtKft9OzP
+	 vwBzcTexakQp3mb2q681dvV44jVKykXP3A9DIVBEmE+bB0sCthKWcHU2F4CJotTQgfI/9
+	 bymLTKrz5zLpx9QDoKLTE5zsuJPWlc2p3vLjvin6JAR6BcKbqGcJqakoL/c3hQ+8FEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EUt6OkIb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJY4ZEeX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59235606A333;
-	Sat,  7 Nov 2026 14:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91573606A333;
+	Sat,  7 Nov 2026 14:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EUt6OkIb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5921F0089F;
-	Sat,  7 Nov 2026 14:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJY4ZEeX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3141F0089F;
+	Sat,  7 Nov 2026 14:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061391;
-	bh=5JK7/JlR6X8rlBtZk5CmEtKF2Byf5JwgRKACSKN9KM8=;
+	s=korg; t=1794061392;
+	bh=3oeGV2GPu3Mkqa2faAA8Zh/R/d7dxWHCEWyFXWRv1Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EUt6OkIbtMRro17EXCKGGQNRNdfbMEjcdWU9XOjwh1TtpHaLUaHzD49YsBucrPD9P
-	 NsLfzdiPj3Bzewiktr7MO/YpHESpH8mYPcWz0Z2ZDiVbFwotCB1NjTGdi9YBQpX0yk
-	 Ak1dnfjJCHrPPAleo3oustmCKsrfZZEn+AX1KJw8=
+	b=PJY4ZEeXUhdETGBPexoAn0mtLt9GsIZz02Mttotgjx+h1YSP7Gof4SZ+b+Eld/Jsl
+	 /l7f5t7o2FDi7/npyJZACw32waG1rmF8y9ZvMloQbK7MYwtOxDuLrXq2xHBOGA+bxa
+	 0hxKAHINSGahH2ZvnF1JCLv8FVOD64REh/MEopKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Arie Miller <renari@arimil.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0512/1536] smb: client: fix file type corruption in posix_reparse_to_fattr()
-Date: Sat,  7 Nov 2026 08:42:08 -0500
-Message-ID: <20261107135011.817124043@linuxfoundation.org>
+Subject: [PATCH 6.12 0513/1536] hwmon: (asus_rog_ryujin) Synchronize HID command and report handling
+Date: Sat,  7 Nov 2026 08:42:09 -0500
+Message-ID: <20261107135011.844007828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,79 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Arie Miller <renari@arimil.com>
 
-[ Upstream commit 65d5dbdc089be42fc48a6f77bc6b648307f34b17 ]
+[ Upstream commit 06d48355bf41028c1321acda6a4391cd70098be8 ]
 
-Setting the file type in cf_mode without clearing the existing S_IFMT
-bits first is wrong as it corrupts the file type when cf_mode already
-has type bits set (e.g. S_IFREG | S_IFCHR == S_IFLNK).
+rog_ryujin_execute_cmd() holds status_report_request_lock while
+reinitializing a completion, intending to exclude raw-event handling.
+However, rog_ryujin_raw_event() does not acquire the lock when it updates
+the completion. A response can therefore race with reinit_completion() and
+be lost, leaving the command to time out.
 
-Use a local ftype variable to collect the new file type and apply it
-after validation succeeds, clearing S_IFMT and setting the new type in
-a single assignment.  This avoids stripping cf_mode on malformed
-reparse points where the function returns false early.
+Hold the lock while parsing reports and updating their completions. Use the
+irqsave variants in both paths because raw-event handling may run in
+interrupt context.
 
-Closes: https://sashiko.dev/#/patchset/20260906172005.627163-1-pc%40manguebit.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+Fixes: ed3e03790c5c ("hwmon: Add driver for ASUS ROG RYUJIN II 360 AIO cooler")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-hwmon/20260812104617.858D01F000E9@smtp.kernel.org/
 Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6-sol sparse
+Signed-off-by: Arie Miller <renari@arimil.com>
+Link: https://patch.msgid.link/20260904022129.97896-3-renari@arimil.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/hwmon/asus_rog_ryujin.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 53ed9bae23a86..ceddb4ec10ba1 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -754,6 +754,7 @@ static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
- 				   struct cifs_open_info_data *data)
+diff --git a/drivers/hwmon/asus_rog_ryujin.c b/drivers/hwmon/asus_rog_ryujin.c
+index 593950802b39d..f352036f0e52e 100644
+--- a/drivers/hwmon/asus_rog_ryujin.c
++++ b/drivers/hwmon/asus_rog_ryujin.c
+@@ -173,6 +173,7 @@ static int rog_ryujin_write_expanded(struct rog_ryujin_data *priv, const u8 *cmd
+ static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, int cmd_length,
+ 				  struct completion *status_completion)
  {
- 	struct reparse_nfs_data_buffer *buf = (struct reparse_nfs_data_buffer *)data->reparse.buf;
-+	umode_t ftype;
++	unsigned long flags;
+ 	int ret;
  
- 	if (buf == NULL)
- 		return true;
-@@ -769,7 +770,7 @@ static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
- 			WARN_ON_ONCE(1);
- 			return false;
+ 	/*
+@@ -180,9 +181,9 @@ static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, i
+ 	 * completion. Reinit is done because hidraw could have triggered
+ 	 * the raw event parsing and marked the passed in completion as done.
+ 	 */
+-	spin_lock_bh(&priv->status_report_request_lock);
++	spin_lock_irqsave(&priv->status_report_request_lock, flags);
+ 	reinit_completion(status_completion);
+-	spin_unlock_bh(&priv->status_report_request_lock);
++	spin_unlock_irqrestore(&priv->status_report_request_lock, flags);
+ 
+ 	/* Send command for getting data */
+ 	ret = rog_ryujin_write_expanded(priv, cmd, cmd_length);
+@@ -410,15 +411,18 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 				int size)
+ {
+ 	struct rog_ryujin_data *priv = hid_get_drvdata(hdev);
++	unsigned long flags;
+ 
+ 	if (size < 2 || data[0] != RYUJIN_CMD_PREFIX)
+ 		return 0;
+ 
++	spin_lock_irqsave(&priv->status_report_request_lock, flags);
++
+ 	if (data[1] == RYUJIN_GET_COOLER_STATUS_CMD_RESPONSE) {
+ 		if (size <= priv->info->temp_offset + 1 ||
+ 		    size <= priv->info->pump_speed_offset + 1 ||
+ 		    size <= priv->info->fan_speed_offset + 1)
+-			return 0;
++			goto unlock;
+ 
+ 		/* Received coolant temp and speeds of pump and internal fan */
+ 		priv->temp_input[0] = data[priv->info->temp_offset] * 1000 +
+@@ -432,7 +436,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 			complete_all(&priv->cooler_status_received);
+ 	} else if (data[1] == RYUJIN_GET_CONTROLLER_SPEED_CMD_RESPONSE) {
+ 		if (size <= RYUJIN_CONTROLLER_SPEED_3 + 1)
+-			return 0;
++			goto unlock;
+ 
+ 		/* Received speeds of four fans attached to the controller */
+ 		priv->speed_input[2] = get_unaligned_le16(data + RYUJIN_CONTROLLER_SPEED_1);
+@@ -444,7 +448,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 			complete_all(&priv->controller_status_received);
+ 	} else if (data[1] == RYUJIN_GET_COOLER_DUTY_CMD_RESPONSE) {
+ 		if (size <= RYUJIN_INTERNAL_FAN_DUTY)
+-			return 0;
++			goto unlock;
+ 
+ 		/* Received report for pump and internal fan duties (in %) */
+ 		if (data[RYUJIN_PUMP_DUTY] == 0 && data[RYUJIN_INTERNAL_FAN_DUTY] == 0) {
+@@ -463,7 +467,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 				 * We're expecting a report, so parse it.
+ 				 */
+ 				goto read_cooler_duty;
+-			return 0;
++			goto unlock;
  		}
--		fattr->cf_mode |= S_IFCHR;
-+		ftype = S_IFCHR;
- 		fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
- 		break;
- 	case NFS_SPECFILE_BLK:
-@@ -777,22 +778,23 @@ static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
- 			WARN_ON_ONCE(1);
- 			return false;
+ read_cooler_duty:
+ 		priv->duty_input[0] = rog_ryujin_percent_to_pwm(data[RYUJIN_PUMP_DUTY]);
+@@ -473,7 +477,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 			complete_all(&priv->cooler_duty_received);
+ 	} else if (data[1] == RYUJIN_GET_CONTROLLER_DUTY_CMD_RESPONSE) {
+ 		if (size <= RYUJIN_CONTROLLER_DUTY)
+-			return 0;
++			goto unlock;
+ 
+ 		/* Received report for controller duty for fans (in PWM) */
+ 		if (data[RYUJIN_CONTROLLER_DUTY] == 0) {
+@@ -492,7 +496,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 				 * We're expecting a report, so parse it.
+ 				 */
+ 				goto read_controller_duty;
+-			return 0;
++			goto unlock;
  		}
--		fattr->cf_mode |= S_IFBLK;
-+		ftype = S_IFBLK;
- 		fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
- 		break;
- 	case NFS_SPECFILE_FIFO:
--		fattr->cf_mode |= S_IFIFO;
-+		ftype = S_IFIFO;
- 		break;
- 	case NFS_SPECFILE_SOCK:
--		fattr->cf_mode |= S_IFSOCK;
-+		ftype = S_IFSOCK;
- 		break;
- 	case NFS_SPECFILE_LNK:
--		fattr->cf_mode |= S_IFLNK;
-+		ftype = S_IFLNK;
- 		break;
- 	default:
- 		WARN_ON_ONCE(1);
- 		return false;
+ read_controller_duty:
+ 		priv->duty_input[2] = data[RYUJIN_CONTROLLER_DUTY];
+@@ -501,6 +505,8 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 			complete_all(&priv->controller_duty_received);
  	}
-+	fattr->cf_mode = (fattr->cf_mode & ~S_IFMT) | ftype;
- 	return true;
+ 
++unlock:
++	spin_unlock_irqrestore(&priv->status_report_request_lock, flags);
+ 	return 0;
  }
  
 -- 
