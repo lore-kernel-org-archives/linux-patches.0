@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064328;
-	b=aBvHTLCqeOvBfzLhbNNNsWTHp/OTMYyDUFI1esBIy+Jg9hzoeSRJQv1Bc2waR+V8wfK/
-	 cR/SaP4fRYG1AKDPAXQI+eTrQWLGe8HcAGB4Y/JBAgeuxq4h0UI1lLqL8rRM8oKpocVR0
-	 kAFY/4nwPvnOLvvB/06jC/KCwyE7tr+1fMUUhmS8rLTkCNmOog1NCm4UHT08AaweKacIq
-	 O6c1rNpwhzJA5fy50BRPFzLgP/8n1uQg2XHsiqWi5oXfKgACrSo5WT+/QabKqN6+ZuPef
-	 oljQiyG+8TzzSxD8iHC2XBu4fHT3RK5E0HwSin0n5/qUTjGNpz7zCQIddFcrYECMnLg==
+	t=1794064329;
+	b=Ng3HudChqwvOsAtABIM5I7AP9+1WllQ2ZGGK/QKvwrh0jml8C8oivgJ7gF+XaUVX8xkj
+	 FPHO3AqlI2f43dGY9OXs4FnHSS8VVBQEx24cJTLjDQVVJv8fOYdjET6EQS4XvMDvh0JrO
+	 ZSMYNVa+ThU/JWeoigEGgSHZEVsfS/3s/NuJKrOLk0hzEYE7WtFQQxSFtTwlduRO6Ald7
+	 ImacVukg/WfGnAf0lxBu3CWhzOoua73NkCynZTHolhyYvmznxNmNEfBpPyFBi/LWDSVe4
+	 5w/gAv6mzZ7yuOc5R030HFYSaC3eIkGTqHTtbGkOd2/5VBLEHw6pjI7KqjBnwMwppUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qab7je4d1ZZPu80FPq0ZtvNprgJQzAdFxyExGPhjUis=;
-	b=wYnZhP7FBOUpl8JZ9cLRpp+1sDRW9Yb56FQTXmYyDLDlzMJbzFMj8/JVwXGhY7n9taVt
-	 6UavzzEFRFxyslNapc09UOnLp/6l+85kTR6UxrwTxjJbM4bjwdGoxNUYbnJ/R5REQ6TNx
-	 gr0TMFaZ5JjI3fBChXCIgjx0jq09QA1PGtNiGLfEjSFT1bIC2i/x5xCboxxZ8lJo0ISgK
-	 ef/gN+hyA57T8lBtexyLDO1u3ympeswklYJSbLJEZt0UINVw3Fv9vmSmqG3uCZ4fA9n0c
-	 qWNs+ZbzmMXg9Ja9cD4PMhHn7fUegjPrgfcyNf4gsKlEvRdRwu1b5C/KnX08KFTjk+w==
+	bh=12iOKMwQWpI4XjnxgqqhwuXvdFGbiCyYFrwUsIOv0AI=;
+	b=ftm7mIIXpFq0OvFOPkm99ckGpywVRPrZtnkQKfn6lJ3+KA/bkf+H17TXnoPFd47YyO/r
+	 H+zu1GPG0bRLuAI9UVnks2ARk35lRelx0t3hxKn49nZFTTDzLs01oG+mOXXU2WP+qo8YM
+	 81GiYIZLgCCCDW11iWqIG//lF7RlIM2X4mnRGYxk/Dz94GIi43OKVzlot9Ju74qQunFy1
+	 xHuGkWiGULLjxzLsKT7okdZPOMh97IyM7QBvltMyesuZtJR+alcSqcdFNCc8ZM2ECahRD
+	 JZaAdAjXsb9xhL0UE74KBjJx+AspH53OaKpdhku/aqhHPgDTDzWwnionlHYRXEee/KA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EBoM6boW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oEycfLJe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95A2606A9EF;
-	Sat,  7 Nov 2026 15:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1537D606A336;
+	Sat,  7 Nov 2026 15:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EBoM6boW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7D61F0089F;
-	Sat,  7 Nov 2026 15:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oEycfLJe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C6F1F0089F;
+	Sat,  7 Nov 2026 15:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064327;
-	bh=qab7je4d1ZZPu80FPq0ZtvNprgJQzAdFxyExGPhjUis=;
+	s=korg; t=1794064328;
+	bh=12iOKMwQWpI4XjnxgqqhwuXvdFGbiCyYFrwUsIOv0AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EBoM6boWO/lIFcvfiQDhMJm9bkJKtQa4QTGKTkP8ktm+aKqnYVx32wkpIuAtq8pdx
-	 RRYe1yuwyxiOXPxUiAAsm6Uts7o/tCaixwMHFOxL29nJsrHXX6sdvWE/ahgwMP8UmD
-	 XKAsFEQhYgpvZjVEeQfl6kKxcBxAWaCkRIFSlvic=
+	b=oEycfLJeAy3Bt+OKBGCpY4irPJIjgG8jsbYLFWCz43VUVVGvnqNbs00Ki7ME2uSWu
+	 K2UvmaCRuI0pvHCJPY90MqFMpqxMUWaE9ZT4N2MtvTqDii13ahK/PiWrtqctw624nO
+	 eLMZELO8ZgqWhSKWzBExB94/y1haGKW+6HiQRlME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+6a04efcebe0fc0ce@bugs.sh,
-	Kaho Jiang <kj2864@nyu.edu>,
+	Christopher Snowhill <chris@kode54.net>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0414/1257] media: em28xx: fix double free in em28xx_alloc_urbs
-Date: Sat,  7 Nov 2026 08:45:10 -0500
-Message-ID: <20261107134950.948228986@linuxfoundation.org>
+Subject: [PATCH 7.3 0415/1257] media: em28xx: fix inverted tuner capability check for VBI device
+Date: Sat,  7 Nov 2026 08:45:11 -0500
+Message-ID: <20261107134950.975180011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,92 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaho Jiang <kj2864@nyu.edu>
+From: Christopher Snowhill <chris@kode54.net>
 
-[ Upstream commit fd427b8adae437cac78a2332241a03cac56e95c2 ]
+[ Upstream commit a8296bfabd1112e690aad9acc7de3c431f39d0e6 ]
 
-When allocation of usb_bufs->buf[i] fails, em28xx_alloc_urbs()
-explicitly frees all items within usb_bufs->buf before calling
-em28xx_uninit_usb_xfer(), which also frees these items, causing them to be
-freed twice.
+Commit 8e53399c63c3 ("media: em28xx: Add support for Empia em2828X
+bridge") changed the condition for setting V4L2_CAP_TUNER on the VBI
+device from "dev->tuner_type != TUNER_ABSENT" to a check of the video
+device's capabilities, but inverted it: the VBI node now advertises a
+tuner only when the video node does not have one.
 
-BUG: KASAN: double-free in usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
-Free of addr ffff88802fd37c00 by task kworker/1:2/1182
-Workqueue: events request_module_async
-Call Trace:
-  kasan_report_invalid_free (mm/kasan/report.c:557)
-  check_slab_allocation (mm/kasan/common.c:235)
-  kfree (./include/linux/kasan.h:199 (discriminator 1) mm/slub.c:2693 (discriminator 1) mm/slub.c:6508 (discriminator 1) mm/slub.c:6801 (discriminator 1))
-  usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
-  usb_free_urb (drivers/usb/core/urb.c:95)
-  em28xx_uninit_usb_xfer (drivers/media/usb/em28xx/em28xx-core.c:964)
-  em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1076)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  Allocated by task 1182:
-  kasan_save_stack (mm/kasan/common.c:57)
-  kasan_save_track (mm/kasan/common.c:78)
-  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-  __kmalloc_noprof (./include/linux/kasan.h:263 mm/slub.c:5414 mm/slub.c:5439)
-  em28xx_alloc_urbs (./include/linux/slab.h:995 ./include/linux/slab.h:1312 drivers/media/usb/em28xx/em28xx-core.c:1081)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  Freed by task 1182:
-  kasan_save_stack (mm/kasan/common.c:57)
-  kasan_save_track (mm/kasan/common.c:78)
-  kasan_save_free_info (mm/kasan/generic.c:584)
-  __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
-  kfree (./include/linux/kasan.h:235 mm/slub.c:2748 mm/slub.c:6508 mm/slub.c:6801)
-  em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1084)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+On boards without a tuner (e.g. the MyGica iGrabber, card=105) the VBI
+device's device_caps therefore contain V4L2_CAP_TUNER, while the shared
+vidioc_querycap() correctly omits it from cap->capabilities. This trips
+the sanity check in v4l_querycap() whenever the VBI node is queried,
+for example by udev's v4l_id on every hotplug:
 
-Remove the explicit cleanup loop and let em28xx_uninit_usb_xfer()
-handle the cleanup.
+  WARNING: drivers/media/v4l2-core/v4l2-ioctl.c:1119 at v4l_querycap+0xff/0x110 [videodev]
+  (cap->capabilities & (vfd->device_caps | V4L2_CAP_DEVICE_CAPS)) != (vfd->device_caps | V4L2_CAP_DEVICE_CAPS)
 
-Fixes: d571b592c6206 ("media: em28xx: don't use coherent buffer for DMA transfers")
-Cc: stable@vger.kernel.org
-Reported-by: co+6a04efcebe0fc0ce@bugs.sh
+It also leaves the tuner ioctls enabled on the VBI node of tuner-less
+boards and disables them on boards that do have a tuner.
+
+Restore the intended logic so the VBI device has V4L2_CAP_TUNER exactly
+when the video device does.
+
+Fixes: 8e53399c63c3 ("media: em28xx: Add support for Empia em2828X bridge")
 Assisted-by: LLM
-Signed-off-by: Kaho Jiang <kj2864@nyu.edu>
+Signed-off-by: Christopher Snowhill <chris@kode54.net>
+Cc: stable@vger.kernel.org
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/em28xx/em28xx-core.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/media/usb/em28xx/em28xx-video.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-core.c b/drivers/media/usb/em28xx/em28xx-core.c
-index 0b998e7cafef8..62a1c25a2de13 100644
---- a/drivers/media/usb/em28xx/em28xx-core.c
-+++ b/drivers/media/usb/em28xx/em28xx-core.c
-@@ -1080,9 +1080,6 @@ int em28xx_alloc_urbs(struct em28xx *dev, enum em28xx_mode mode, int xfer_bulk,
+diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
+index 79af154767c17..e441f221dbb7a 100644
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -3001,7 +3001,7 @@ static int em28xx_v4l2_init(struct em28xx *dev)
+ 		v4l2->vbi_dev.queue->lock = &v4l2->vb_vbi_queue_lock;
+ 		v4l2->vbi_dev.device_caps = V4L2_CAP_STREAMING |
+ 			V4L2_CAP_READWRITE | V4L2_CAP_VBI_CAPTURE;
+-		if ((v4l2->vdev.device_caps & V4L2_CAP_TUNER) == 0)
++		if (v4l2->vdev.device_caps & V4L2_CAP_TUNER)
+ 			v4l2->vbi_dev.device_caps |= V4L2_CAP_TUNER;
  
- 		usb_bufs->buf[i] = kzalloc(sb_size, GFP_KERNEL);
- 		if (!usb_bufs->buf[i]) {
--			for (i--; i >= 0; i--)
--				kfree(usb_bufs->buf[i]);
--
- 			em28xx_uninit_usb_xfer(dev, mode);
- 			return -ENOMEM;
- 		}
+ 		/* disable inapplicable ioctls */
 -- 
 2.53.0
 
