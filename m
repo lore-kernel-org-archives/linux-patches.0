@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062523;
-	b=RQfLgn0H0d1Z19V7Rj3zj4Xkn5H+Iciel41/X3gGoced475GbxEP3VPLj9uDcuWW4KQ2
-	 0t3sXsGL+DaKJEOhr3gInC1K9DqZ1eAC8iIesPTggRH059boTMFirJ5cQH27a2x21jNRl
-	 jZQ2BUl6s3HDy9XpAsYOlngNVC9BRyhO1Vg6lQOekmsApKMrQGeT139Qer7xlqxHfF1nA
-	 wrZ9Csp4v/Be0t11/zsnHxnvJWv53MwH8vz354dBxss9hff4Kwjgj+T8THminTrKRCv7M
-	 ymNcEpJjRVrfow8UqYMEYq5ZkiAaSpA1t6uaWlBF6hQRTgb20f1Ba6QGM9/Fro7hGSQ==
+	t=1794062524;
+	b=qKgjunYNkI6Ua5iqIc9Lg6+23qgCf9H5zHjHlkYM7eVmjFzvgnR4q7LDOxYNEmS7Zn+H
+	 SWLgE/42ABKK2hBCN2bhf64yvBhODfAncbxSGAC69felBb6ZxG3V8A6pWpbF6CaBC9vCN
+	 QK+N4NuJd7fUEsGD+91CZf630ESF0adZMBe8SUlYgOKw3gVql4FCXXAs9MLBVzcv3yZbz
+	 85lN3JKkEIapJNlWN9FGg+G1Lu05zAGCsb28BVD16YbOB1CM+RtKqO+1Ku5Idd4vAuIdV
+	 fb+1O4pvOnEzTF+/StzvaVUanVuyz0V1GCQwJHwtU3Oq/742G3aVxv9wElNGg8RCxQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062523;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ADCOOl4KleEm/VZSZ0GMwLItK1mBw1tj2i+GHyzJCIk=;
-	b=Jw52Aeaodpbq/aKdV62pqRD95DIA3BCfRXptRejpPliRfwDffw/1CG7GB5CDJACNmQtu
-	 MKG2ge25qelHvG3rv04kWpFUmMfJanhfzsksts7JHD10D+Twp5VcZxaU89J1WZf+7QSVi
-	 wNhDmDe1FfnazzYk+8ydHPHVnKyrRbxB88tqBwxZUlpc27aQ9sn1P2ozBlfFjsHJS8jWc
-	 3gct9wmdggijC9k/v+D/ntmO+AfyRcCmXl4aiolB1tE97amiNzUpAPw6x3OkJFvZ42THz
-	 An4ctwUlWnO8kI84tz6I7ZB2R2wzkqtYFYmMsxqCxWFoTnrv0h4ew7CMH+73ckItTgw==
+	bh=iykjAiI5+EipGxM4jwhl/WOLIZ0BU5QxqdTQlvvmx8k=;
+	b=WRnHSRDtPQlMadDbZDyz/1g6ZS9/r3igXWmj4EoQ4LC/et836wFqUyI876XZS6n2m+fg
+	 4kRGuQ8BzZMqjn9PgY5jm90zCNUp3gBmoQguPT7PLPi/LjdCyXSEoiLhrZcwFbo4ds6Zr
+	 W35DPAr0TutLLRh9k4dl7qIdnvypmAA2h4DBLO6YsWRnbrDja/OtCnOH0kOuQ/DXW+PlQ
+	 lk1FRDhBbvtclaWFRwEX4bBSOo5efechNN8iPRWZ8TcGgCVKlOrsZEitIpz6YhA39OPuO
+	 6Wsyksgn8kPvA9YNMfuUpwPUnQuKmqP7Y1W/JwoDOEVBuAepoXkrUmNMdUCqCeY3FJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc8JLeXl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KcXVaEG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE3E60A382D;
-	Sat,  7 Nov 2026 14:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70BE36083615;
+	Sat,  7 Nov 2026 14:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc8JLeXl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD531F008A2;
-	Sat,  7 Nov 2026 14:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KcXVaEG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3991F008A3;
+	Sat,  7 Nov 2026 14:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062523;
-	bh=ADCOOl4KleEm/VZSZ0GMwLItK1mBw1tj2i+GHyzJCIk=;
+	s=korg; t=1794062524;
+	bh=iykjAiI5+EipGxM4jwhl/WOLIZ0BU5QxqdTQlvvmx8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sc8JLeXlhUsLX4SK2Yp9uA4KI3qIG/C3r7bnp6N4+2CJq6bbV+XqitRARjqA0SInD
-	 M9aZVdK+2jUQ8VR0ymJnhzFO7IPTTLfOOCUiQUinl2i0Aof77DgN7Rug/8rmICtqY1
-	 8mtkYW9H+IxNZjVV7PCFwDw5fHnmSMp3GWAWZz9Y=
+	b=2KcXVaEG9NLHuyuXeEFf7AMNFNqWtT8974/REF60ckqJfkKf4epL+hHLEJsn+A9pt
+	 OWo6EwjmNkvuLU1q5K6+VWZ3lBSS01TPjypiUu3ZToiRzOxBsVMQXndc/kiWWDQXid
+	 OXDBrsKeoGidzdCB7Hz+wTR7NBMdx5dQ8j5jgIxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Navon John Lukose <navonjohnlukose@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1417/1536] i2c: designware: queue only one read command for block reads
-Date: Sat,  7 Nov 2026 08:57:13 -0500
-Message-ID: <20261107135037.627683123@linuxfoundation.org>
+Subject: [PATCH 6.12 1418/1536] tpm: tpm_nsc: fix NULL pointer dereference on init failure
+Date: Sat,  7 Nov 2026 08:57:14 -0500
+Message-ID: <20261107135037.656218310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,52 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Navon John Lukose <navonjohnlukose@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 73dae605cad7921800677d982bfaeb81cc930dec ]
+[ Upstream commit 1900449684cf71427a51e0bb1d7914c0c8b39152 ]
 
-i2c_dw_xfer_msg() pre-queues up to rx_fifo_depth read commands based
-on the initial msg.len. For I2C_M_RECV_LEN transfers the real length
-is unknown until the first byte arrives and i2c_dw_recv_len() runs.
-When a large initial length is passed, the surplus pre-queued reads
-leave rx_outstanding non-zero after i2c_dw_recv_len() adjusts
-msg.len, so the completion condition is never met and the transfer
-times out. In a loop, this repeatedly times out the controller and
-disrupts unrelated driver-bound devices on the same adapter.
+tpm_nsc_remove() is used as the release callback of the hand-created
+platform device and dereferences the chip drvdata unconditionally.
+If init fails before tpmm_chip_alloc() (e.g. request_region() cannot
+claim the ports), the error path drops the last device reference and
+the release callback runs with chip == NULL, crashing module init.
 
-Queue only one read command while I2C_M_RECV_LEN is pending.
-i2c_dw_recv_len() re-enables TX_EMPTY, and the rest are queued once
-the device-reported length is known.
+Return early when the chip has not been created yet.
 
-Fixes: c3ae106050b9 ("i2c: designware: Implement support for SMBus block read and write")
-Signed-off-by: Navon John Lukose <navonjohnlukose@gmail.com>
-Cc: <stable@vger.kernel.org> # v4.10+
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: afb5abc262e9 ("tpm: two-phase chip management functions")
+Assisted-by: GLM-5.3
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/d5f0b38d6d6c17c01519c879d26448dbae388b0e.1791015549.git.xiaopei01@kylinos.cn
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-master.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/char/tpm/tpm_nsc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index 196bb073c6bcc..b2e916ebb5a77 100644
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -495,6 +495,14 @@ i2c_dw_xfer_msg(struct dw_i2c_dev *dev)
- 				if (dev->rx_outstanding >= dev->rx_fifo_depth)
- 					break;
- 
-+				/*
-+				 * For block reads, queue only the length
-+				 * byte until i2c_dw_recv_len() runs.
-+				 */
-+				if ((flags & I2C_M_RECV_LEN) &&
-+				    buf_len < msgs[dev->msg_write_idx].len)
-+					break;
+diff --git a/drivers/char/tpm/tpm_nsc.c b/drivers/char/tpm/tpm_nsc.c
+index 0f62bbc940daa..b165b274680d6 100644
+--- a/drivers/char/tpm/tpm_nsc.c
++++ b/drivers/char/tpm/tpm_nsc.c
+@@ -258,7 +258,12 @@ static struct platform_device *pdev = NULL;
+ static void tpm_nsc_remove(struct device *dev)
+ {
+ 	struct tpm_chip *chip = dev_get_drvdata(dev);
+-	struct tpm_nsc_priv *priv = dev_get_drvdata(&chip->dev);
++	struct tpm_nsc_priv *priv;
 +
- 				regmap_write(dev->map, DW_IC_DATA_CMD,
- 					     cmd | 0x100);
- 				rx_limit--;
++	if (!chip)
++		return;
++
++	priv = dev_get_drvdata(&chip->dev);
+ 
+ 	tpm_chip_unregister(chip);
+ 	release_region(priv->base, 2);
 -- 
 2.53.0
 
