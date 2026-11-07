@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064314;
-	b=PZnRQ5QCedpDmQ1xutSo1twWcM8N8C6b8J9AyaffhU8/nF5lMPhtegUWkb61UfqnIWEs
-	 EjbyaRDokT/2QqaROeVxflX0PzTm5x5mTsvo01/oJONf4WX7l5f4JZl4yUtD6nKFVGmBF
-	 xy+9B5kyzqFtkjI3tifda1dHJnoe7eWcbjF9mnFS/kOEzxwLTcbZzyOFIKEtwKzMFw5k6
-	 DK6gagns3PbF7lfYxemuyGkg2vBzDkEp6v2tNrlhqS1wDiaLwACPA4zHxdae/UiYIQm1Y
-	 9ondiy+CvQ+PsL7YAOtI5SYS07YaNX5rhuw1evLAJixLHHZb6XKCmzzbPU6/sa+cH7A==
+	t=1794064316;
+	b=Llktfc1TBNX8IxbGYgHddv/ljvQ5ECjvVRJrx7BqgeLFtvhFULnKZm+Ye17S+gkj4xx4
+	 icVRQIjdWsSwcXsj39/zEIel9dn/ZfbYAqNQ3xjJsIfnDR0NvBgDPxawV5kmml1exCOgX
+	 6Nuh3jJGmmYi+ToFbofsiYhkYqHmTYTZXlgjo6/IxsVgZsexf/cle7FKO5J7V6UPEnX+b
+	 Bfg0hlmw8AL/h0vxY7K0yLW1EHH795UGoeqwT/b4NgtlcLtd0Zz3pMOqxXqkAmdHP57O3
+	 arQbOvwFAVbbgLh9SQveYiwFRAniTazv5YNkOgHC/+YPlwj1tx7EGypLPfoHC6UpSlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064316;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mnFk18tjRgb5xzkbMV9GFGFmBtQafb8AQdu8+3RellY=;
-	b=sumDXmzHUp0LMjkUQJwMJT3xKTR2X32Ue0/WooFpN14HLGWykkSq3Kp0o9qPIMf0zm/x
-	 yi8Nifa25wVixe+bO9KbAGU6hGXYncICvXln6CvWRGeulyh+steLFwha25VFk75C8ssMC
-	 abe+Ny0R6sXYiGOW5Rqa7qg+2qjgihFViHhgPdwboc5b3s1dHG3Y8WY+OrKgW/dd5iXii
-	 rumDXV6Ap2TBJut+ofFO8yzlH6REYHCjOYgDnbrcr2NxIu55NapQsERoeBRpIVohlYrn5
-	 Qrx8bocM2ajFl9+Lq+KecbIsUeebmFBGZLYRTsmcJiJOLjOSz3Visym4/PndWr4CNxw==
+	bh=tu6epZIJWEQVHfZheNjwm6vS5oKJBooNMHKb90mcDKc=;
+	b=DUQH/m+XMw/qGgDexFrUdn6AA/QvKmxUAU+smYaBRvlWwqGAV3yNZMGy46/MBSnIYHuB
+	 ajvHz0pJxZOGulkmVCRd9gdcBu+bZZSNWovwH9In+Cn6CKm15idBlE77f5Yp7Q2fZCVTD
+	 gBSJ/u5fjMSBrGCO0/HC2PlVbWC6u/K/4X5IG5z1VsW/2DC6tgDVycZJ5ZyFZTmF231xG
+	 4yKAe/A77OHb4VD1weQkwuC6SH/0qEowkVhAY7uF/9ZKPpo7k4pvtzs7M5/3dcO3ZRMM8
+	 gFPn7SUH9nT4oilWjQ+KOlQcm7E1ZXtv4jLNvrUX2CoWIzpH4yNWxCBnQaER6X3Wv8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vQK07g/K";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZI2UAoNO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C39606A9FF;
-	Sat,  7 Nov 2026 15:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC83606A9FF;
+	Sat,  7 Nov 2026 15:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQK07g/K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37B91F008A1;
-	Sat,  7 Nov 2026 15:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZI2UAoNO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EED91F0089F;
+	Sat,  7 Nov 2026 15:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064314;
-	bh=mnFk18tjRgb5xzkbMV9GFGFmBtQafb8AQdu8+3RellY=;
+	s=korg; t=1794064315;
+	bh=tu6epZIJWEQVHfZheNjwm6vS5oKJBooNMHKb90mcDKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vQK07g/KLA9fwXCshKzvvRgZrXb/1atncwK5DOKGJbvPMNXpeu+5rbaex9T4et1Gs
-	 X4cPn6F4srFFmWDLHut2ThJ5y47gtm7dXDCkeavpK+D+vMLU8kKpp5McxRfuy5l5tx
-	 XYooyD8rc55puMUxfE0gUd1Tef5mar5an3+1wRBU=
+	b=ZI2UAoNOgJE66okR/bYWGU8Nxekl5SXkFeeVviYVlcuLHpb3WPPpIzlveEDaksfuE
+	 gMv2/gnaqbxbYzkWs4MWnxW6F9VjDHMjo6WqAojR4NUU8uo10EsfkA9neugUAt+PRy
+	 Ves1+u9jro0cSZHSyhcsMJzPYHWmG8Ywu1aWNxBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	David Carlier <devnexen@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0404/1257] media: v4l2-isp: reject zero-sized parameter blocks
-Date: Sat,  7 Nov 2026 08:45:00 -0500
-Message-ID: <20261107134950.686624820@linuxfoundation.org>
+Subject: [PATCH 7.3 0405/1257] media: mali-c55: fail power-on when safe stop times out
+Date: Sat,  7 Nov 2026 08:45:01 -0500
+Message-ID: <20261107134950.713090855@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,75 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 43ba38e1e02bbfbe99d3c4145df3c24797586c97 ]
+[ Upstream commit 73d3d5c97c9c0d71ef9ac6bc72520fb1dc547702 ]
 
-v4l2_isp_params_validate_buffer() walks the blocks of a parameters
-buffer by adding block->size to the current offset. A block whose
-type_info[] entry is an uninitialised hole passes every check on the
-way there: a size of 0 is not caught by the block->size > buffer_size
-test, and the match against the type info size compares 0 with the
-hole's own 0 and passes as well. The walk then makes no forward
-progress and loops forever.
+The power-on path requests safe stop to establish a non-streaming state but
+ignores the polling result and publishes runtime resume success.
 
-Drivers build their type_info[] arrays with designated initialisers
-indexed by their block type enumeration, so an enumerator left without
-an entry leaves a zeroed hole rather than failing the build. Drivers
-call the validator from vb2 .buf_prepare, so such a hole turns a
-VIDIOC_QBUF on the parameters video device into an unkillable task
-spinning with the queue mutex held.
+Power the block back off and propagate a safe-stop timeout.
 
-Reject a block whose type info entry is empty. The driver does not
-implement the type, so it cannot tell whether the block content is
-meaningful, and accepting it silently would leave that content
-unconstrained until a later kernel implements the type and starts
-validating it. The size match then always runs against a non-zero
-size, and no block can advance the walk by zero.
-
-Fixes: 3cb6de6fafb8 ("media: v4l2-core: Introduce v4l2-isp.c")
+Fixes: d5f281f3dd29 ("media: mali-c55: Add Mali-C55 ISP driver")
 Cc: stable@vger.kernel.org
-Suggested-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-isp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/media/platform/arm/mali-c55/mali-c55-core.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-isp.c b/drivers/media/v4l2-core/v4l2-isp.c
-index 1eb46e080afa1..8e6c2ef326aaa 100644
---- a/drivers/media/v4l2-core/v4l2-isp.c
-+++ b/drivers/media/v4l2-core/v4l2-isp.c
-@@ -99,12 +99,25 @@ int v4l2_isp_params_validate_buffer(struct device *dev, struct vb2_buffer *vb,
- 			return -EINVAL;
- 		}
+diff --git a/drivers/media/platform/arm/mali-c55/mali-c55-core.c b/drivers/media/platform/arm/mali-c55/mali-c55-core.c
+index f28e9f4354aca..288fba4831808 100644
+--- a/drivers/media/platform/arm/mali-c55/mali-c55-core.c
++++ b/drivers/media/platform/arm/mali-c55/mali-c55-core.c
+@@ -730,8 +730,13 @@ static int __mali_c55_power_on(struct mali_c55 *mali_c55)
+ 	/* Set safe stop to ensure we're in a non-streaming state */
+ 	mali_c55_write(mali_c55, MALI_C55_REG_INPUT_MODE_REQUEST,
+ 		       MALI_C55_INPUT_SAFE_STOP);
+-	readl_poll_timeout(mali_c55->base + MALI_C55_REG_MODE_STATUS,
+-			   val, !val, 10 * USEC_PER_MSEC, 250 * USEC_PER_MSEC);
++	ret = readl_poll_timeout(mali_c55->base + MALI_C55_REG_MODE_STATUS,
++				 val, !val, 10 * USEC_PER_MSEC, 250 * USEC_PER_MSEC);
++	if (ret) {
++		dev_err(mali_c55->dev, "safe stop timed out\n");
++		__mali_c55_power_off(mali_c55);
++		return ret;
++	}
  
-+		/*
-+		 * An empty type info entry denotes a block type the driver
-+		 * does not support. Reject the buffer instead of ignoring the
-+		 * block: accepting it silently would let userspace fill it
-+		 * with data that a later kernel, once it implements the type,
-+		 * would validate and possibly reject.
-+		 */
-+		info = &type_info[block->type];
-+		if (!info->size) {
-+			dev_dbg(dev, "Unsupported block type %u at offset %zu\n",
-+				block->type, block_offset);
-+			return -EINVAL;
-+		}
-+
- 		/*
- 		 * Match the block reported size against the type info provided
- 		 * one, but allow the block to only contain the header in
- 		 * case it is going to be disabled.
- 		 */
--		info = &type_info[block->type];
- 		if (block->size != info->size &&
- 		    (!(block->flags & V4L2_ISP_PARAMS_FL_BLOCK_DISABLE) ||
- 		    block->size != sizeof(*block))) {
+ 	return 0;
+ }
 -- 
 2.53.0
 
