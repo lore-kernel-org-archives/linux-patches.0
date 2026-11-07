@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060569;
-	b=efR8RJOiyRoTX67EeMnqH8DS9DFKcrW8gdJNvmRvMLubFhNFvqmOiyHLQACS43+zXywp
-	 c2vwE1URV49AG+GoWNBs/EZj5wkIkCIhpID3R7w9Qc3DDTpDI11oQe9alH51InRRdRqlQ
-	 FGaLSR8+sEGs0U9TvAsHy388bSfpaejiMljTQizrykWmA9EnkaBodCfKrtvp2Qw+Lunj5
-	 Iqi8QWgrJAKQVEp1mqtz2cFiHtBj1RDTCo+RhLet30Nl9F+fZ1xWqbVdkB+JvTD/fgIDT
-	 SwovLE6Npv38MWXQ+mVLWUC2Tdg6Aw01Z5Q+iP4Uk7x5lvVxJsTezMDiyaynROHwJ/A==
+	t=1794060570;
+	b=fb0O8Bqmfc3PG8DrcZRL4RYGI9PB3PMco6JR6qLs2JzhDrA6HutMN1L6ZRHtO1UM5Lbk
+	 9kbQc/QonuQO4XLDq+OyzZqdNX8DxEEugM7LyX6Achq6ETcexi1qYwHPGHoBY8qlieUcv
+	 19r5H3fQTYHpvuRnio/37qHiNSMgHCa0LC3qgw2EYQYVFpGFlr+AvUXX2k9uWAFRrY6tU
+	 4gscNN0Ik7GnecYgwfcmsDdcaZjsAgOASvvt+cusDVsUkf0ACtns7qpQH2yQ0l9DTd8iS
+	 LFMc8jaNMFN7hf+uzPkI+FiXy8JLm2aHcQ8YrFhtdm2F3FRhKf/rkhUm5lqrzuPeCpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DtdblSmqJ4KnZbquaWTU/g8stRhOzIo8ttxv8FLxbSQ=;
-	b=uGEeUtLscZ7R4UtPdGHG/K71Kc4IfqFYbjDbUGCihvAZiSLeH1oI2FobE1MbNF5b2p4M
-	 01NjaGBIxOnlq9gukOfObiPAIHUfk80G2ay+PqkPVgfKtcqb0LzSwuR5l2fFfu+VP8asf
-	 MAy4QBkY59+WQ1T5/jb56utKzDmxg4mwMxQFoeOp3et9ldLaev+UdOmqpQkuz4TZ7oDUl
-	 pgU3iwgh6SJoubcXnN23CA3ZHCK9Gl+9PggscuF45Xzk0beidqsyLZDW6kWONUBQR8joM
-	 H/Bkm4U382Py+u+btA4QZPolWPyWV4lvtvKHQI1ZhADdNxOnDKDlinqIFecgcLAVTHw==
+	bh=7jbCb/yIhOj5cbNRWwN6e4WqRUy8C06KeRRZh/ZroV8=;
+	b=kv/y/sXJDfNHsOFtRvlDzekF63kwWnUMSHTWYwrCBi4di0EA6ScHMTcGiPMd5G3ULUpH
+	 wobl3vv/j8rvrolhN1dl9hHYyH1Gg7lH99DoKG5KW8Nh3mhWBGY7JgCMRDM/8SQCAndQG
+	 SDccyXqs/hj+5oct7ZcifMCQNHIv9tJkfaTUSl3kxq6LVnELh6ePU9yUYglFV27554o0D
+	 cjmmGrMnKQBkEGnLqGiMIL5Z8G2dU3gd3lwYZEISR18Hw3FO84IzUxW+uq+Bjxy8u3kEf
+	 5IjIWjUxXjWa+sPdnIVLh+9R2jS8TCr+lI6IocWIPz5MlUupgNdDW1CqbzpR3sWdQQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmEcatQR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XHRGEYLS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53978606A326;
-	Sat,  7 Nov 2026 14:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4204606A326;
+	Sat,  7 Nov 2026 14:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmEcatQR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F104A1F008A1;
-	Sat,  7 Nov 2026 14:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XHRGEYLS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457011F0089F;
+	Sat,  7 Nov 2026 14:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060569;
-	bh=DtdblSmqJ4KnZbquaWTU/g8stRhOzIo8ttxv8FLxbSQ=;
+	s=korg; t=1794060570;
+	bh=7jbCb/yIhOj5cbNRWwN6e4WqRUy8C06KeRRZh/ZroV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmEcatQReD0j/zd6H8qqBLo7eQh+WHhYSkOZ/M3lQZ7HaufU9PuDgjl6H5FktrnzI
-	 mpWpoPjAv12ECQJ9m/z2bg0/9jmnMpshn3chxBVmiZRoLDr+TMTheDEaySB6n/oBsu
-	 7oAX4/5tCVr1TvKID4Hoiqk+PSllPThZnbJJGBJE=
+	b=XHRGEYLSHhZ23G62dKa2b0Or7qiMS1lJfmEVMw5iOQRahf45+RZ/F0Cm/GlgW+EwS
+	 d3WgvP52yPIftJKddD8DCIOBeQ3RwcbYtV5+Ga/+SypXtTzF7SFYulySfaWNgKm7Kt
+	 FobJZfLi0VkYCyZdNKOMKdWOpHi+bLItt8G2LQ8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YiPeng Chai <YiPeng.Chai@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0030/1536] drm/amdgpu: add bounds check to prevent array overflow
-Date: Sat,  7 Nov 2026 08:34:06 -0500
-Message-ID: <20261107134958.517117337@linuxfoundation.org>
+Subject: [PATCH 6.12 0031/1536] gpio: pca9570: Use I2C match data
+Date: Sat,  7 Nov 2026 08:34:07 -0500
+Message-ID: <20261107134958.546107716@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,41 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YiPeng Chai <YiPeng.Chai@amd.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit db15c49a17b8fab9ada38f3a548e5353d7d6b1a8 ]
+[ Upstream commit 415c63896b76fd98883e190bc7518383cb01779c ]
 
-Add bounds check to prevent array overflow.
+The driver stores chip metadata in both the OF match table and the I2C
+id table, but probe currently reads it with device_get_match_data().
+That helper only returns firmware-node match data, so an I2C-id/modalias
+match can leave chip_data NULL before the driver dereferences it to read
+ngpio.
 
-v2:
-  Add warning messages.
+Use i2c_get_match_data() so the I2C id table driver_data is consumed
+when firmware match data is not present.
 
-Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260624053744.72612-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpio/gpio-pca9570.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-index 1784e484798b5..fda0e5c429f68 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-@@ -4248,6 +4248,13 @@ static void amdgpu_register_bad_pages_mca_notifier(struct amdgpu_device *adev)
- 	 * Use this list instead of mgpu_info to find the amdgpu
- 	 * device on which the UMC error was reported.
- 	 */
-+	if (mce_adev_list.num_gpu >= MAX_GPU_INSTANCE) {
-+		dev_warn_ratelimited(adev->dev,
-+			"mce_adev_list full, skip notifier registration (max=%d)\n",
-+			MAX_GPU_INSTANCE);
-+		return;
-+	}
-+
- 	mce_adev_list.devs[mce_adev_list.num_gpu++] = adev;
+diff --git a/drivers/gpio/gpio-pca9570.c b/drivers/gpio/gpio-pca9570.c
+index d37ba40493683..29fd67ca41268 100644
+--- a/drivers/gpio/gpio-pca9570.c
++++ b/drivers/gpio/gpio-pca9570.c
+@@ -127,7 +127,7 @@ static int pca9570_probe(struct i2c_client *client)
+ 	gpio->chip.get = pca9570_get;
+ 	gpio->chip.set = pca9570_set;
+ 	gpio->chip.base = -1;
+-	gpio->chip_data = device_get_match_data(&client->dev);
++	gpio->chip_data = i2c_get_match_data(client);
+ 	gpio->chip.ngpio = gpio->chip_data->ngpio;
+ 	gpio->chip.can_sleep = true;
  
- 	/*
 -- 
 2.53.0
 
