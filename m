@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064312;
-	b=Wm07DpFJAzlgvyO5liYry0XYplILBdVUd+nXDG2CEuXEQillQdwM3st+jAHHDi4zSYHX
-	 yvypqfzoNjoon4CII0z6sNIurkDoeUamnIO+cUOxIe5S52kq2Ox+ZOdif6fQh3u5M7uSe
-	 W4yxe+J8MpwO9KQAMmYF4+mB03rAs/W0IEYE55xIOOGTF5FGX+2jDuooSkuXbhn528Rxx
-	 yglWyPopAwJdyr9D59we16WITae04OteEKBfpY1ao94mXhIO4ARkkykXiDy+qVfe1u/Ca
-	 HLn5iHVdHEEormtqkGrPWIbhdpHM61nzlG8G3zXNgHseLW7pVrJszukxDJi5HNLxhDA==
+	t=1794064313;
+	b=nreBz0J7Rx6Xzly+jowEGigKLzQxAy7ru4C2bnZj1gi5o7jg2SyCkS3kE8msxfFY/I2U
+	 Y9x7SHwZBxv00u9FYWwr2xeZrKGK3GbKTZJwoTDyORPSUswLzryyurzoZymIK5DSvJaKz
+	 dcf3AqiLph6g1eWBdLGooi03EpEKLwwsDFrYwiXQ4RI8MUwXHdVNklwsbHRD+wg4ljLV+
+	 bRLo62TJp7FTiQAOyrPmZXMVU6fatQXGO0ivbW1UnYfHnkEKHd4/Wex6yFgWDo6x+o2uB
+	 Jz4MpuFfmKGDnK+jGcrC3BX2ycLw48ctyR+IXyMr5LJdKXFO9mvlt1zOWptzdpXidcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064312;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RYa5bx89O5vyGOt2z+v0NLeixrUtGWmv8r0G6+IyTgA=;
-	b=IbnR4Qa1gGOUfTFTE5qWDvjdpaMXvq646bvEVhWDWP6MOryMb7jjDHyw0Vf1zyINxO7L
-	 /RaSqTuCH0CihbDWUoNzlrpLAWdnemB1LafEMvpRtgTWYLlVJt+weYwP3y8HgjV1MxT69
-	 5/go/nsxWQA3YyuwCvDtOQtOstFrnv/mBFfC0DtpB9wfjEtcLm2jjSkJkAEPj6Ub91UcS
-	 nAxeaqUYxKbyA8BpXDlcBNMpLWI8DYencv7b1IKPxnHIx4SRZRX79d4cxtd2FNVx218dy
-	 WDQAIql7pNHrpWYM1nZkRP1qzJX47bkK80r22wuLwSyy4VhZn2NzhCcjkeVvLuEoB4A==
+	bh=1QgCEOdA0ZDn5dHR1SGfYuzies2xBzX0dfd/9uky7KU=;
+	b=vqCkkxeBeiZF/RH1K5wzP5MTwvmDYTrTj24AxotL86tRlWoNeBVvo8QrP4WxVucU+ZHe
+	 quGZ9OUUWpKuT9yFJaFy5s4bPV2Fc+Trtt8j/+k6B1j2LbeKhrIgOlw32B7AGxsi5vI4B
+	 fEnpvHaLgXyK9z4f36YZ/n/nzST5fbBn4VDS1NZlopG3lCgiUFoL7PUA7G90ahrlJPYlj
+	 iSfCJjrquGant32UTDX8U2DCby0bzEiqH0s/887vwXGulp3lKNOQOndTWiBW7IHp/88pS
+	 d9uBDIna+BlOSCkchj2wUh/3UMIgc8EFnZie6+NZU9ZGVGHVK80HcqiJmZ08AtLA0Fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z5kJ++hJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MbFgqfg6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9473606C02E;
-	Sat,  7 Nov 2026 15:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170C6606C02E;
+	Sat,  7 Nov 2026 15:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z5kJ++hJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EE61F0089F;
-	Sat,  7 Nov 2026 15:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MbFgqfg6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B989E1F0089F;
+	Sat,  7 Nov 2026 15:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064311;
-	bh=RYa5bx89O5vyGOt2z+v0NLeixrUtGWmv8r0G6+IyTgA=;
+	s=korg; t=1794064312;
+	bh=1QgCEOdA0ZDn5dHR1SGfYuzies2xBzX0dfd/9uky7KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z5kJ++hJLfqrSQPY7I2JidDxpNQftr7KO3aMBBq65vrUe8a6ZNTPy0VHFJhrfeNLt
-	 BSJhRrqfCPzpOhfX7oB3wRWW5eZXoyc8u4tQIGGiUOjLR7D2do9I7SfycX39K0VrvG
-	 wweYHaUEff/1bsBuKzfo3PtDu2fTlwqbFRqp6DLA=
+	b=MbFgqfg6tsxkYX5lJpfwmZviEizB9h82CJP0HgrS4WfGn0xEmX/4qIQVm6xrQ9biX
+	 6uI8z6ZbBxVo2Wl2Lttsayva5ve0jvOeomEVnBBSdDZBmKPMYPE74G01FC3bnUX1mI
+	 bY/KBCAhDlHKkJG9pG0w8kfdFl2DQPxGYx+fnaQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0402/1257] media: mali-c55: add padding to mali_c55_params_ccm structure
-Date: Sat,  7 Nov 2026 08:44:58 -0500
-Message-ID: <20261107134950.635240644@linuxfoundation.org>
+Subject: [PATCH 7.3 0403/1257] media: renesas: rzv2h-ivc: manage runtime PM with devres
+Date: Sat,  7 Nov 2026 08:44:59 -0500
+Message-ID: <20261107134950.660520197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,50 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 2d3873cadda8537d8991abb24484bc590001fcbe ]
+[ Upstream commit 64e07ebcb3d054672cff678edb5344586d2d3286 ]
 
-The newly added structure has extra padding on the on
-some architectures, which triggers a pedantic uapi check:
+Runtime PM is enabled before the IRQ is looked up.  If that lookup
+fails, probe returns without disabling runtime PM.  The subdevice
+initialization error path disables runtime PM but leaves autosuspend
+enabled, while the remove path does neither.
 
-./usr/include/linux/media/arm/mali-c55-config.h:807:1: error: padding struct size to alignment boundary with 2 bytes [-Werror=padded]
+Use devm_pm_runtime_enable() so the driver core disables autosuspend and
+runtime PM on every failed probe and after remove.  This also makes the
+manual subdevice error unwind unnecessary.
 
-Add explicit padding here to avoid risking information leaks
-and incompatibilities between architectures.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fixes: bb401df68c06 ("media: mali-c55: Add support for CCM")
+Fixes: f0b3984d821b ("media: platform: Add Renesas Input Video Control block driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/media/arm/mali-c55-config.h | 2 ++
- 1 file changed, 2 insertions(+)
+ .../media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c  | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/include/uapi/linux/media/arm/mali-c55-config.h b/include/uapi/linux/media/arm/mali-c55-config.h
-index ef0fe17df96e7..3ba416d81cd70 100644
---- a/include/uapi/linux/media/arm/mali-c55-config.h
-+++ b/include/uapi/linux/media/arm/mali-c55-config.h
-@@ -794,12 +794,14 @@ struct mali_c55_params_mesh_shading_selection {
-  *		Q4.8 format
-  * @gains:	Gains for red, green and blue channels in unsigned Q4.8 format
-  * @offs:	Offsets for red, green and blue channels
-+ * @__pad:	Reserved bytes
-  */
- struct mali_c55_params_ccm {
- 	struct v4l2_isp_params_block_header header;
- 	__u16 coeffs[3][3];
- 	__u16 gains[3];
- 	__u16 offs[3];
-+	__u16 __pad;
- };
+diff --git a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c
+index 355842abb24b8..48f9fd818bfff 100644
+--- a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c
++++ b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c
+@@ -202,7 +202,9 @@ static int rzv2h_ivc_probe(struct platform_device *pdev)
  
- /**
+ 	pm_runtime_set_autosuspend_delay(dev, 2000);
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
+ 
+ 	ivc->irqnum = platform_get_irq(pdev, 0);
+ 	if (ivc->irqnum < 0)
+@@ -210,14 +212,9 @@ static int rzv2h_ivc_probe(struct platform_device *pdev)
+ 
+ 	ret = rzv2h_ivc_initialise_subdevice(ivc);
+ 	if (ret)
+-		goto err_disable_pm_runtime;
++		return ret;
+ 
+ 	return 0;
+-
+-err_disable_pm_runtime:
+-	pm_runtime_disable(dev);
+-
+-	return ret;
+ }
+ 
+ static void rzv2h_ivc_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
