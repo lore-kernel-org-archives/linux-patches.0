@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063379;
-	b=0VXFGJESinjhg8In0hrQQjkMCa3y4VYhi1n24q5Qr8jarsUoxNARfHIClD3vlNZWISsR
-	 LCGO1OmuR8k/psm4zFj6+IMYtTqN8ICZlYm+qZTDfYQsCN8Ij/YaOemN8Bw4MPYeGOq9f
-	 TH+iHBHviSbVE0HECJ9xNiwhKwKhEo71/0frWxBeLVudEkV/QEhI+3Sm8ngbGoYvTwM16
-	 mOemKZXB3WkNwCEghWBAqPTnRWRAWQKh4/WBbDdQrbi4txv0fkPTdD0i0h8C6V8RYYIPB
-	 oZs/jIVTqB+8wsi33JeyAKGYD/s8XLoRnKf3X9jJjlEYiv5nUOuL6wlND4bF9BZm62A==
+	t=1794063381;
+	b=3+J5AfH5KQnP+2WAtUDflGv57n8ZP+X5Zeu1c73yXiOmc29/nCtPWjgTAaeINW2tsf86
+	 lwajXRH2kxYz3XZXizliyiXbb/HzXGzu9dFf41HdNULkVlzGq1M4RA7OhUQXrOyxDeJ0y
+	 vTfIzHWpeQVeZphajuzt8tMbIln3KXAzDG4aYiGcskKr4OD2TGdOojOLzhNUnmGPOq87t
+	 6ZZBF7QpXUd0nv5tsJ1ha/sRvWOk2fO+lAqt8ucfobQ2uHzsw+tvk1PhvAEN5zfvFCGas
+	 sqVypyuqJen64a4+zsJK0m835D8lcpTRQfgQXQtwclrvyhNLuckeKHIchfnnlW860eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063379;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063381;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jPMwIE8uCnKDFVV6K/DnZybekHQfaGyQigUTlBssBTU=;
-	b=ZZsrV0yaBMUwm3BB4oSw1TdG08sH/HQfPqTbvUHqlIp4FR+4OEujgqinpuiLd33VKIGS
-	 REJRuzBzv9t+f0bc+QuSbBc8OpoNmXxo8OuwWJ9RfBJQaRZxSTylNuShJ4cBL5ybHMu/u
-	 PvrE9BcWaumGH9HCw4b88K7N4hLoxDiAyjpQol9lQ9gYBQ2KdhnI/75PwpDJUQIMmbpjy
-	 HOfl0NOIkwnX7W6yQXbwjaKgyToNA3H1cTVkfhNX1W2o5vfDeetEXPCodMfdviiVvo62s
-	 KONtuTC0nNE7J6l+GfwkIgQUzolbCO7F/YCzwZnQ+Vq+I8ZT1bKUPVzcq7Y2slKkAxg==
+	bh=CHpPG5RUh7VtCncuUlhDcvhypdYlqamP2WD/dLK4p94=;
+	b=uBuofPGkMJ2f/7fZtjU7YFg82CMLXX0F6o3iusW/RjP7EllZjOVn7fxDiy/JCKI4KZSR
+	 QxeAlj6njPrWwhqIugJKNCtOxMRsW/iwi/UVv4EMJ9l6zMGidOlfyzD5VF4LykzdIf/95
+	 igllejE+wV6oo7SYP0dr5V5bDaObZz9zXG+RgW2gK6c+YISVtJ9iUspn/mWAUZU9LK3EB
+	 TJLxFhwfhWFxaqo4ly58iGAJ9VkR1vvY2dyxK+ck3nqr0Qw07dOi659qip9yqKYcwFpaf
+	 ZS/7K5gm9zoooJqmuCLYPyIqSRUyrA6tIo6emw9xVXqqv6LtDY7NkVmpVvY5MN5NFKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jsBKPR/h";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YkaDCFEg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798A1606D81C;
-	Sat,  7 Nov 2026 14:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AF0606D81C;
+	Sat,  7 Nov 2026 14:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jsBKPR/h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7FC1F008A1;
-	Sat,  7 Nov 2026 14:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YkaDCFEg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B871F0089F;
+	Sat,  7 Nov 2026 14:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063379;
-	bh=jPMwIE8uCnKDFVV6K/DnZybekHQfaGyQigUTlBssBTU=;
+	s=korg; t=1794063380;
+	bh=CHpPG5RUh7VtCncuUlhDcvhypdYlqamP2WD/dLK4p94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jsBKPR/h1Ot4mdQViukl9Szzmo8CekIzAfSYiLRdhGGOlhpNyJ5lANnR8VboCjvSF
-	 8Ty13oDiErc3dEL0ApgpzNDiq+gNjBKDX6rh6rA4NN6hWbyOD+Bc7tywZ+kS9WzzVv
-	 lWo+YdNx6tRF+j/Ox5QbnJmOYJubXQaLHp11KtyU=
+	b=YkaDCFEgCqk9ZHb6Leta8TI9eLSdofIGzIjDh7nO+AEVeCmqLboFyG+S6Q9orz/6c
+	 L0NJZRBCtaj/3zlEp0o31YPq9LlxKm+x2iscK55JaTL7Gh/Foky+tGSTxUkw1UdDZB
+	 457tkkI3KoaEcCJJl/iq18IxGgPoAVX/OU4Z/jIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Ankit Soni <Ankit.Soni@amd.com>,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Daniel Wagner <dwagner@suse.de>,
+	Martin Belanger <martin.nvme.dev@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 553/869] iommu/amd: Dont allocate kdump device table from DMA32
-Date: Sat,  7 Nov 2026 08:53:55 -0500
-Message-ID: <20261107134912.104848533@linuxfoundation.org>
+Subject: [PATCH 6.18 554/869] nvme: make the DH-HMAC-CHAP secret attributes readable by root only
+Date: Sat,  7 Nov 2026 08:53:56 -0500
+Message-ID: <20261107134912.131936708@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,83 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Martin Belanger <martin.nvme.dev@gmail.com>
 
-[ Upstream commit bae0d3760661ac77148944e88aafef698cf7b2bf ]
+[ Upstream commit bbca7c312ab25efd0024eb87545c51a76ab2ea39 ]
 
-Booting a kdump kernel with crashkernel=X,high crashkernel=0,low on an
-AMD system fails the per-segment device table allocation because there
-is no memory below 4G:
+The dhchap_secret and dhchap_ctrl_secret sysfs attributes have mode
+0644. Their show functions return the secret, so any local user can
+read the DH-HMAC-CHAP secrets of a connected controller.
 
-  swapper/0: page allocation failure: order:9, mode:0x40104(GFP_DMA32|__GFP_ZERO|__GFP_COMP)
-  iommu_alloc_pages_node_sz+0x7f/0x150
-  alloc_pci_segment+0x4bd/0x650
-  iommu_go_to_state+0x213d/0x34e0
-  amd_iommu_prepare+0x39/0xa0
-  irq_remapping_prepare+0x83/0xd0
-  enable_IR_x2apic+0x61/0x370
+Define them with DEVICE_ATTR_ADMIN_RW(), which sets mode 0600. The
+macro takes the show and store functions from the attribute name, so
+rename them. Writing the attributes was already limited to root and is
+not changed.
 
-On our E810 systems, the kdump kernel booted but ice MSI-X interrupts
-never fired and the TX queues timed out.
-
-Commit b336781b82cc ("iommu/amd: Allocate memory below 4G for dev table
-if translation pre-enabled") allocated device tables below 4G. At the
-time, the kdump kernel programmed a copy of the old table into the base
-register with the IOMMU still enabled. The 64-bit register is updated
-as two 32-bit halves, so the running IOMMU could see a half-written,
-invalid table pointer. Keeping both tables below 4G leaves the upper
-half zero throughout the update, so the pointer stays valid.
-
-Since commit 38e5f33ee359 ("iommu/amd: Reuse device table for kdump")
-the kdump kernel reuses the previous kernel's table without writing the
-base register, so its newly allocated table is discarded when reuse
-succeeds. If reuse fails, the previous patch programs the new table only
-after disabling the IOMMU. Either way, the kdump kernel's table doesn't
-need to be below 4G.
-
-The previous kernel still allocates its table from DMA32, so the kdump
-kernel's check that the old table is below 4G still works. Drop
-GFP_DMA32 for kdump kernels only.
-
-Cc: stable@vger.kernel.org # 6.18.x
-Reviewed-by: Ashish Kalra <ashish.kalra@amd.com>
-Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Reviewed-by: Ashish Kalra <ashish.kalra@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
+Cc: stable@vger.kernel.org
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Assisted-by: LLM
+Signed-off-by: Martin Belanger <martin.nvme.dev@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/nvme/host/sysfs.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 0572e1a674f0b..16c26d75f46f4 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -648,8 +648,19 @@ static int __init find_last_devid_acpi(struct acpi_table_header *table, u16 pci_
- /* Allocate per PCI segment device table */
- static inline int __init alloc_dev_table(struct amd_iommu_pci_seg *pci_seg)
- {
--	pci_seg->dev_table = iommu_alloc_pages_sz(GFP_KERNEL | GFP_DMA32,
--						  pci_seg->dev_table_size);
-+	gfp_t gfp = GFP_KERNEL;
-+
-+	/*
-+	 * Keep normal kernel device tables below 4G because a later kdump
-+	 * kernel only trusts and reuses old tables below that limit. A kdump
-+	 * kernel's new table is either discarded when reuse succeeds or
-+	 * programmed after the IOMMU is disabled, so the table does not
-+	 * need DMA32 memory (which the crashkernel may not have).
-+	 */
-+	if (!is_kdump_kernel())
-+		gfp |= GFP_DMA32;
-+
-+	pci_seg->dev_table = iommu_alloc_pages_sz(gfp, pci_seg->dev_table_size);
- 	if (!pci_seg->dev_table)
- 		return -ENOMEM;
+diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
+index 12478e0297356..2b6085359a950 100644
+--- a/drivers/nvme/host/sysfs.c
++++ b/drivers/nvme/host/sysfs.c
+@@ -626,7 +626,7 @@ static ssize_t quirks_show(struct device *dev, struct device_attribute *attr,
+ static DEVICE_ATTR_RO(quirks);
  
+ #ifdef CONFIG_NVME_HOST_AUTH
+-static ssize_t nvme_ctrl_dhchap_secret_show(struct device *dev,
++static ssize_t dhchap_secret_show(struct device *dev,
+ 		struct device_attribute *attr, char *buf)
+ {
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+@@ -637,7 +637,7 @@ static ssize_t nvme_ctrl_dhchap_secret_show(struct device *dev,
+ 	return sysfs_emit(buf, "%s\n", opts->dhchap_secret);
+ }
+ 
+-static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
++static ssize_t dhchap_secret_store(struct device *dev,
+ 		struct device_attribute *attr, const char *buf, size_t count)
+ {
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+@@ -681,10 +681,9 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
+ 	return count;
+ }
+ 
+-static DEVICE_ATTR(dhchap_secret, S_IRUGO | S_IWUSR,
+-	nvme_ctrl_dhchap_secret_show, nvme_ctrl_dhchap_secret_store);
++static DEVICE_ATTR_ADMIN_RW(dhchap_secret);
+ 
+-static ssize_t nvme_ctrl_dhchap_ctrl_secret_show(struct device *dev,
++static ssize_t dhchap_ctrl_secret_show(struct device *dev,
+ 		struct device_attribute *attr, char *buf)
+ {
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+@@ -695,7 +694,7 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_show(struct device *dev,
+ 	return sysfs_emit(buf, "%s\n", opts->dhchap_ctrl_secret);
+ }
+ 
+-static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
++static ssize_t dhchap_ctrl_secret_store(struct device *dev,
+ 		struct device_attribute *attr, const char *buf, size_t count)
+ {
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+@@ -739,8 +738,7 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
+ 	return count;
+ }
+ 
+-static DEVICE_ATTR(dhchap_ctrl_secret, S_IRUGO | S_IWUSR,
+-	nvme_ctrl_dhchap_ctrl_secret_show, nvme_ctrl_dhchap_ctrl_secret_store);
++static DEVICE_ATTR_ADMIN_RW(dhchap_ctrl_secret);
+ #endif
+ 
+ static struct attribute *nvme_dev_attrs[] = {
 -- 
 2.53.0
 
