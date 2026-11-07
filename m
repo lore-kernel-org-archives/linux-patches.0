@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063259;
-	b=3vl2pqgdCIcpcQvYCKu0NQfF0IMdzcqUT0iJ1zhOviDrDvJ+GFgQ66LaZMTf0bytVRu6
-	 GDkBaWnDWEdcBEOc4l/c2tmPZznAjR/AVNZlDOo6fjcDEJMCvbVp/IUxO5bOAjfGmCAFY
-	 g57mealyPpfrtl7lPbK+esF8tgQesSj8MXC96ZFissqPUsYuFnvEhz3tyCS08YPrTUF+A
-	 ERl2yZDxle+bLOI5EtQhGNNxkzgDct2NCdaNRxRy2n61Vv2txt9pFaJNWkLzyK5eDDnZZ
-	 rR+VRl2Aew5kuCM4ANuX8SDOKBmQd4XOYO8J2PWZGCqOsgqVDV3BMhj/eTDtg+VwaFQ==
+	t=1794063260;
+	b=gi7ajinZYLm28QaNT9C+K5u+XBsFZ6nYwL589IZPya8svAkhjsVG8xQ9NiW9nb1/MsGt
+	 qtg9fIGaX7v5+YYJP50D3F0+ITMgPolJ5GU0ZLKonXG1Mu7DnEfiCgOe0tH3c+P882yHg
+	 Dc0G5FbZENvK2eO7YQ/ccQoj3cWkqSEk7mBUzwaD5/rD+O+D4KpnwzBZAbIRrbNiV+bgO
+	 N5E8F4RuMgqmtinsMSZdoLT3f+jqdq6KVyvQ7mXnGeAYVKoLSzxRNf4w7gpv3NeAelijl
+	 RLlzpdd6eLelyUH1pH81vlyfqX3Q8zsyYPBy2j4lQm2nUcwTnLDr5Y6SuhUErvUwFwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063259;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+n38DzSX5a0rLMiyJFVtPm7JBKfx2v6eLQePS6UeGUA=;
-	b=AJZjQP1/S8REUAwJCWmljgzSYfdLwW0cxCqyu9HbAGSOCFKXgAafefwSWAct7JVbNllG
-	 dWv9PjHwep7YKVCvDKLlEIojOvXr0RLAqT+OBSey06Ow6zo1z65jDg8O3VKUIh89B/g6d
-	 /6OxQS7baD+J/+oM2hO5yLLG78N+chXuZUjQiR/bIg7TMGziPNHHI/CTxX2oFrbwXnhhZ
-	 EKVcqiXdKAqW+zUe+ufI3TPruSNy0P1FL3M98Ez9IXwBY+bGe7QmnWt9eww+Q4dLrKaWO
-	 j6WHAfhU/hsZuhpKyzT0KbYPS2U/LPWN91/6g+En8XjQj1wJXcE9PDSByTE8H32ha3Q==
+	bh=Oez1XYfl6F+k0FWfTkgVHRG13rsZsDZwG6VhqyoAUnA=;
+	b=XaEMfHaUU1VfwwPkv0pEPavw9KnZ74Y/+OYajjeJ7JSR2qNTsAGfbOqxIhTLfJjCZrCD
+	 xp+/y8cQccY4fkWe6deCbVxmWZ84k0KDIvxLAQHU3pqH6jCuP2lw2ySOUIO4JevmD44KK
+	 wdcW3HPRftvvac/jR5Mhkfa5+bR0FSU5UOtwAdIXlD6XMKAPJ9dEBW8hjqza935salURH
+	 uMR4gRsVP1aybFRNyK03FVcYmVsVoIpDMG3FsRsO6YHurWa3i6xrOSKLThKDjI5axNiYH
+	 XkQpuRbH8POwL95aPu1SFwbmgLCDg8WoWRmHCEUbzJQdDrMnoGMElOVHQojTgo3SVAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VnutTCUa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQ4XWWuW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE481606D81F;
-	Sat,  7 Nov 2026 14:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FFD606A331;
+	Sat,  7 Nov 2026 14:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VnutTCUa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FA51F0089F;
-	Sat,  7 Nov 2026 14:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQ4XWWuW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BFD1F0089F;
+	Sat,  7 Nov 2026 14:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063258;
-	bh=+n38DzSX5a0rLMiyJFVtPm7JBKfx2v6eLQePS6UeGUA=;
+	s=korg; t=1794063259;
+	bh=Oez1XYfl6F+k0FWfTkgVHRG13rsZsDZwG6VhqyoAUnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VnutTCUafdat0soyZ3hyo/Ac7+1XKacHzBtNI3ccXG8U48Z1a4mQAD0vetwx9zzSW
-	 249z2/CbMwSds/oX3x29HZx9uhZc02qmIv/Z2DeK2Ak+Hy+jVH1uvaSsh6evKbpSMS
-	 fkyqxZ8E4YuzrnXIOunV/TwO8ygCDtgWOjH/Uu4Y=
+	b=qQ4XWWuW4OYLIO4EnXZqb7BCTqa0zoOrozK+tx0bt9aDwAbmDVhmZB3hB+JlLf3Bj
+	 OhP5Jvp1Mj4f0nM/IUbfXTTAXzxDwjNo4bLsJK4+kx7gobzcEgP61I5bnjAOcmghw5
+	 7+B9LEYCbPaY/2QKXpGpSB+ynWWYHVf5nZ4/ga6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ali Resool Tuama <aliresool567@gmail.com>,
+	Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 459/869] USB: quirks: add USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE for GameSir G7 SE
-Date: Sat,  7 Nov 2026 08:52:21 -0500
-Message-ID: <20261107134909.247656005@linuxfoundation.org>
+Subject: [PATCH 6.18 460/869] usb: typec: ucsi: ccg: Validate altmode index in GET_CURRENT_CAM response
+Date: Sat,  7 Nov 2026 08:52:22 -0500
+Message-ID: <20261107134909.277381611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,51 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Resool Tuama <aliresool567@gmail.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 40224df29729618ecd88c5c0077e71b1e82c7a3a ]
+[ Upstream commit 02ee864e8d2142c5648998944c3306ea6a763c26 ]
 
-The GameSir G7 SE wired controller first enumerates as 3537:10a0 and
-then re-enumerates in a mode it picks from how the host enumerated it.
+When the PPM reports more than one DisplayPort alternate mode for a
+connector, ucsi_ccg_update_altmodes() merges them into a single entry
+in uc->updated[] and sets uc->has_multiple_dp. In that case,
+ucsi_ccg_update_get_current_cam_cmd() rewrites the response of the
+GET_CURRENT_CAM command. The response is a single byte holding the
+index of the currently active alternate mode, and it is provided by
+the PPM firmware.
 
-When the configuration descriptor is fetched the Linux way, 9 bytes
-followed by the full 80, the controller disconnects about 1 ms after
-its string descriptors have been read, before SET_CONFIGURATION, and
-comes back as 3537:1082, a generic HID gamepad without force feedback.
+The function uses this byte directly as an index into uc->orig[], and
+then uses the linked_idx read from that entry as the translated index
+into uc->updated[]. Both arrays have UCSI_MAX_ALTMODES entries, but
+neither index is checked against that size.
 
-When the configuration descriptor is fetched in one 255-byte request,
-as Windows does, it comes back as 3537:1010 in Xbox One (GIP) mode,
-which xpad already supports, including rumble.
+If a malicious or buggy PPM reports a value of UCSI_MAX_ALTMODES or
+larger, e.g. 0xFF, uc->orig[cam].linked_idx reads over the end of
+uc->orig[]. The byte read from there is then used as the index for
+writing cam into uc->updated[new_cam].active_idx, so the out-of-bounds
+read is followed by an out-of-bounds write. This happens without any
+userspace action, since the UCSI core issues GET_CURRENT_CAM on its own
+when handling connector changes.
 
-Skipping the device qualifier requests (USB_QUIRK_DEVICE_QUALIFIER)
-makes no difference; the configuration descriptor request size alone
-decides the mode. Add USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE for the 10a0
-identity, as is already done for the ShanWan Wireless Gamepad.
+Fix this by rejecting responses whose index is out of range, printing an
+error and returning -EPROTO, so that the caller cannot accept this.
+Also check linked_idx before using it as an index, so that the write into
+uc->updated[] is always within bounds.
 
+The response is now only processed when the command completed without
+an error. ucsi_sync_control_common() only reads the response when the
+CCI reports command completion, so otherwise the buffer is not filled
+and must not be mistaken for an invalid index.
+
+This bug was found with a Python script that traces where firmware input
+is used.
+
+Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
 Cc: stable <stable@kernel.org>
-Assisted-by: claude-opus-5-5
-Signed-off-by: Ali Resool Tuama <aliresool567@gmail.com>
-Link: https://patch.msgid.link/20261002-master-v2-1-24b05d8792b5@gmail.com
+Reported-by: Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>
+Assisted-by: LLM
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20261003215520.611083-2-eeodqql09@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/quirks.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_ccg.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
-index 0f804a52ab763..a8e5016fee982 100644
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -613,6 +613,9 @@ static const struct usb_device_id usb_quirk_list[] = {
- 	/* ezcap401 - BOS descriptor fetch hangs at SuperSpeed Plus */
- 	{ USB_DEVICE(0x32ed, 0x0401), .driver_info = USB_QUIRK_NO_BOS },
+diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
+index 6c1f62c78ac25..18236d5c30922 100644
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -383,14 +383,28 @@ static int ucsi_ccg_init(struct ucsi_ccg *uc)
+ 	return -ETIMEDOUT;
+ }
  
-+	/* GameSir G7 SE */
-+	{ USB_DEVICE(0x3537, 0x10a0), .driver_info = USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE },
+-static void ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
++static int ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
+ {
+ 	u8 cam, new_cam;
+ 
+ 	cam = data[0];
++	if (cam >= UCSI_MAX_ALTMODES) {
++		dev_err(uc->dev, "PPM returned invalid alternate mode index %u\n",
++			cam);
++		return -EPROTO;
++	}
 +
- 	/* DELL USB GEN2 */
- 	{ USB_DEVICE(0x413c, 0xb062), .driver_info = USB_QUIRK_NO_LPM | USB_QUIRK_RESET_RESUME },
+ 	new_cam = uc->orig[cam].linked_idx;
++	if (new_cam >= UCSI_MAX_ALTMODES) {
++		dev_err(uc->dev, "invalid linked alternate mode index %u for %u\n",
++			new_cam, cam);
++		return -EPROTO;
++	}
++
+ 	uc->updated[new_cam].active_idx = cam;
+ 	data[0] = new_cam;
++
++	return 0;
+ }
  
+ static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
+@@ -633,8 +647,10 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command, u32 *cci,
+ 
+ 	switch (UCSI_COMMAND(command)) {
+ 	case UCSI_GET_CURRENT_CAM:
+-		if (uc->has_multiple_dp)
+-			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)data);
++		if (!ret && uc->has_multiple_dp &&
++		    (*cci & UCSI_CCI_COMMAND_COMPLETE) &&
++		    !(*cci & UCSI_CCI_ERROR))
++			ret = ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)data);
+ 		break;
+ 	case UCSI_GET_ALTERNATE_MODES:
+ 		if (UCSI_ALTMODE_RECIPIENT(command) == UCSI_RECIPIENT_SOP) {
 -- 
 2.53.0
 
