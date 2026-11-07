@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063276;
-	b=Uq9yF3Jgv9bo5Gv14anubTUq+0TaWclzgV9CSS5WFlyust582k9FEBc0wCB+0+ZXRpBV
-	 Yo7b1FHM6FjvsaxNjRVlPpwzogH8r4r+/DZD3PgedCyZ4Stypgt0cHK4GQZrM/T65U+KU
-	 VExZu3ZoLNwTJbu5mEfHdz2QmWTRrWcPdHBXuB+A/LhIy2CRgNYHewek78HA8FUz2xE3n
-	 26ryLH6nc20ZYGKDae6axKrlRzxtdb5MIOhsxFI7gteyKYkcxeOP1Yx1b3dhWGXss33LI
-	 hD4REYXtBYIqE77UIG7KIEyhSEUfXzrviHS0AOWedfMKniUxsHL3Djstga+f/Q622Lg==
+	t=1794063278;
+	b=Bnf6eAs+Qn73V/Vuq7707pepva4q2eNusSJ2vuidnLpOAQSyeYkpHYFs1GhsdD9ST95f
+	 hG5GdzZAnte0z1oV35AdAeJrmOrOKNmes3oVDOR7x0eXjovT9fJApXP9KOuB9kCyZqCkT
+	 qp7MIB3PO/mLZ27zauSldm3+75j/F0zJlp1ykxcIZhsLp0jSI6q7aD92stS0QW2nT9Ev1
+	 +fuQ7f0U5H8q5KmgVTYOSdEXZgjkWdxItqC1r56S4k4XCZjA16Cr1DDdUcLjUseOsHQBJ
+	 HCV+KtV5UNUpamAtdLRQMvJoQIRPcfKIq1oDL0xh+uerFMVQeOR4ulsRW8zLW2Tpp5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3vXjwtzG4m44EBVKgQD5LYHrNo/mCJuQ6NS26APexAQ=;
-	b=wMQG8Jb9QvR31sku5dCsY9AKJq+4kd2MFEHMaeBpQztdxJ7e/HcU6r1JQwBGTgbsOFLo
-	 L3lJRwxx/9+XS2sXqqc1SPi5u1tp4UAmYOA96Mn+loEsJVjEWFysO+xjnTZDVSOJptrHG
-	 H4M35KGjmTMxCLXRdyuzQdDR3MmHeaLCEZ8XlOuR80G1taycF/G7WRbRR7BBkMRoacQ1N
-	 iDokdGlWSd/XoklTYRdtv3ZQrnArKvD6c7+K4CoiaG6jaa+LBBU/mp2r5S18+CLC6D55W
-	 LS/NyT07a1hgHa0BNMslSMbLm2I+ZpRnm/INVIE6qIef23lv24Q/ZdJ3XzEgOO4Gb5w==
+	bh=j02t9I3+nxujIHcjrfj9aNe0CRVLpq6v/8a41MUiKo0=;
+	b=pyXr0v8mxt4flD0RfZIW2SRjnQloo/5D4Ija4/KIuUcE+C+Y9wS9RL3oAFkz3NcfRpyD
+	 qeszHpmM/YYUXDhJxZ0+ooa0rNmhIPMYejV+Gjb5Ejpq/Pg/D1/V5yevQEMjmybCobGTX
+	 9TbNBtNAG1dRkwJnFUc4I6vJ+zpOIIrGaDaJefnfPx7512YHGXY+JlqQaTYfNgOY8iRam
+	 FNQ8zc4hun851EVRKg9LHMFhFlZAibKo521pF/bOu4pmK/A4aKgJrIFxxYmi3Vh1wAg0Y
+	 U13343YnSbL287UOpHRSoHtMKkSOs/aajlirIXlHSBE3C56KmbrcnKnqkvKbgvnMGRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tlsMkFX/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Mstk/WYi";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B74606A337;
-	Sat,  7 Nov 2026 14:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C520E606A32D;
+	Sat,  7 Nov 2026 14:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlsMkFX/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C4A1F0089F;
-	Sat,  7 Nov 2026 14:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mstk/WYi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F17C1F0089F;
+	Sat,  7 Nov 2026 14:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063276;
-	bh=3vXjwtzG4m44EBVKgQD5LYHrNo/mCJuQ6NS26APexAQ=;
+	s=korg; t=1794063277;
+	bh=j02t9I3+nxujIHcjrfj9aNe0CRVLpq6v/8a41MUiKo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tlsMkFX/hAQhhJpc0skl7nOrmCrKW7TaWKUArUp0YAp5d4aPDLvahxkRSFUU9Bhsm
-	 9V9EE8f2oVOkHQVFjsuGVTQeuKp/BjrRf7f+B/N9Tklg2Di1mKuDtmlUTXlsRQOniz
-	 F4B6mUWvx+a5c3HK0/AGfDRn6ZANlkMua9gOMF18=
+	b=Mstk/WYirx/1wA4n78+qSAQaIBBaPByd6dNALy11dVmngUBGmbp8zN8munJX9ZQqd
+	 76Kg/wYnC1+5qhsim3DF+lQUkbZolx5t2ux84afpXWf6Ii9NOeWS8rCrvd96n1zy6d
+	 1Z4jArJc7sjfudyVrVQ2Yo9z2vH7F0C0cJctJ5TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Hengyu Liang <hengyul@cs.unc.edu>,
-	David Sterba <dsterba@suse.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 472/869] btrfs: return -ENOTTY for unknown ioctls on the control device
-Date: Sat,  7 Nov 2026 08:52:34 -0500
-Message-ID: <20261107134909.628407144@linuxfoundation.org>
+Subject: [PATCH 6.18 437/869] soc: fsl: dpio: Free the IRQ before releasing the I/O object
+Date: Sat,  7 Nov 2026 08:51:59 -0500
+Message-ID: <20261107134908.594779608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,75 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 9985f1643ac3f8595862e2f82108f0ccae4cf959 ]
+[ Upstream commit a7831c657c90e8f9165f6bbe0cc56262fee075e8 ]
 
-Commit 5ab2b180884c ("btrfs: factor out validation of
-btrfs_ioctl_vol_args::name") made btrfs_control_ioctl() store the result
-of btrfs_check_ioctl_vol_args_path() in ret before it looks at the
-command.
+The DPIO interrupt handler accesses priv->io, but dpaa2_dpio_remove()
+releases that object before tearing down the interrupts. The IRQ was
+requested with devm_request_irq(), and unregister_dpio_irq_handlers()
+only clears its affinity hint. fsl_mc_free_irqs() returns IRQ resources
+to the MC resource pool without freeing the handler. An interrupt can
+therefore access the freed I/O object before devres releases the IRQ.
 
-However, ret is initialized to -ENOTTY and the switch has no default
-case, so this initial value was what an unknown command returned. As of
-now, every unknown ioctl on /dev/btrfs-control returns 0. A tool that
-tries a control ioctl which the running kernel does not have is told
-that the ioctl succeeded.
+Explicitly free the managed IRQ in unregister_dpio_irq_handlers() before
+returning its resource to the pool, and perform IRQ teardown before
+releasing the I/O object. This also waits for an in-flight handler while
+the object is still valid.
 
-The issue can be reproduced with a simple C program, run as root:
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-    #include <fcntl.h>
-    #include <stdio.h>
-    #include <sys/ioctl.h>
-
-    int main(void)
-    {
-            static char buf[4096];
-            int fd = open("/dev/btrfs-control", O_RDWR);
-
-            if (ioctl(fd, TCGETS, buf) < 0)
-                    perror("ioctl");
-            else
-                    printf("ioctl succeeded\n");
-            return 0;
-    }
-
-Before commit 5ab2b180884c ("btrfs: factor out validation of
-btrfs_ioctl_vol_args::name"), the result is:
-
-    ioctl: Inappropriate ioctl for device
-
-After that commit, the result is:
-
-    ioctl succeeded
-
-This patch will add a default case that returns -ENOTTY.
-
-Fixes: 5ab2b180884c ("btrfs: factor out validation of btrfs_ioctl_vol_args::name")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 993fec7e11ca ("bus: fsl-mc: dpio: add the DPAA2 DPIO object driver")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20261002194802.375497-3-mhun512@gmail.com
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/super.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/soc/fsl/dpio/dpio-driver.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index 6cc4fe2ccd8a7..61a0575fd162a 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2284,6 +2284,9 @@ static long btrfs_control_ioctl(struct file *file, unsigned int cmd,
- 	case BTRFS_IOC_GET_SUPPORTED_FEATURES:
- 		ret = btrfs_ioctl_get_supported_features((void __user*)arg);
- 		break;
-+	default:
-+		ret = -ENOTTY;
-+		break;
- 	}
+diff --git a/drivers/soc/fsl/dpio/dpio-driver.c b/drivers/soc/fsl/dpio/dpio-driver.c
+index 7dc65f38d2fdb..2962e66e2e413 100644
+--- a/drivers/soc/fsl/dpio/dpio-driver.c
++++ b/drivers/soc/fsl/dpio/dpio-driver.c
+@@ -88,6 +88,7 @@ static void unregister_dpio_irq_handlers(struct fsl_mc_device *dpio_dev)
  
- out:
+ 	/* clear the affinity hint */
+ 	irq_set_affinity_hint(irq->virq, NULL);
++	devm_free_irq(&dpio_dev->dev, irq->virq, &dpio_dev->dev);
+ }
+ 
+ static int register_dpio_irq_handlers(struct fsl_mc_device *dpio_dev, int cpu)
+@@ -280,10 +281,10 @@ static void dpaa2_dpio_remove(struct fsl_mc_device *dpio_dev)
+ 	priv = dev_get_drvdata(dev);
+ 	cpu = dpaa2_io_get_cpu(priv->io);
+ 
+-	dpaa2_io_down(priv->io);
+-
+ 	dpio_teardown_irqs(dpio_dev);
+ 
++	dpaa2_io_down(priv->io);
++
+ 	cpumask_set_cpu(cpu, cpus_unused_mask);
+ 
+ 	err = dpio_open(dpio_dev->mc_io, 0, dpio_dev->obj_desc.id,
 -- 
 2.53.0
 
