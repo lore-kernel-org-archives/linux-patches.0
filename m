@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061984;
-	b=3Krv1Hwl6d70HaOWihQShXaH1KKdiXhAGFWFStwb3Y1N7M4TMUvTwEiZur3VzYFM0dWB
-	 fieGFBLaDb3q5u+X9f+U5JuFVAy1L+V8x80/rSTSAxfYxalInegChir/X/W6Swl0i/AKo
-	 Vq+sxz2ZhgVWlMK/VAdS/+2o0m+9vYqf7Z65y0lf8ZN0iZf85JJ3+hTbepVhJlZBeEddq
-	 YBl+j8iz4Mj7HErg/ZCCUDExbQ8vxoUd9u6Qkw8esUbce52S7krcqW29vnbQ3tfmldufi
-	 y+8pk2Ooulu+l6+QxEGbCErNaCir7hld4QBKgPlygKV3gtFL3LIBMUV744qeAcizTvg==
+	t=1794061985;
+	b=xovKJrLz7ndOJhpsynq4FwkzgY1oCvyuYbBwhjeDVY9CEDbeFHwStSFjnc39LxfajB6W
+	 /CYpR5IAU0YlcvmGvaUOJFnjsjuF/GzKleQKt5POHiAuJMWdInKCToYW4LqGlBhZpUgqV
+	 Ujjl0UjDzzEJJJ4WEgRbAnbg4bLQKq3Q/GX5Lbd20uHCzTn51Q062Q6UdzrgxqXLyWGsJ
+	 u/8yYkLV4hDfCcZdXVzWIWpvbeR2y1j6qmF7iZ0NmsaC7D/T/qRgf0BhsnJUBYDUdofZu
+	 JdLLh9A3SKv+R7ciHGD/PsURYxDCEmS5Fj/4dRkKy7kW9gmzmWm2tmgQ12RAPxzz0CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YFla4eCRcw7GMAHzOu2L/JATQNif0IM00f/5rMHY7Os=;
-	b=dmTnhsFZQ0bvPH0FiQILMfJicX0rQTX4Q/nA6BSqcHxx4fIvZQGtrVzZSM5LkUVBWcMf
-	 FInoKsNurwYUJSdml9s6VqO7uPV4C+C6ml5gO8tcdlMc0oXIEApmrG79L+vT/JMtARtBO
-	 iSS1asL36igV3SrXDLux1GMcARCdnr5d35nn+K8zbHIMMmYuUFPHC81k8q9tp8pZUlW8O
-	 7Enstt2WMn6c9j7Eqph2R1Wq8jmBeLI3+m4PkvVXW/0OZMnrsu79Qg4hn4LMb5mTg7kYT
-	 L/eJBxsbWQRxM1KCdtz1BA1FS47QkjOY0Pb0Savehnxu+kfuAXZ4ORtovE7CtEg8Tow==
+	bh=WVDqm4q+jNU587JVQTP5si+AY7pJRXzChVVcZ6mDobg=;
+	b=mfYcPuho8p6Pj2EJZvgX9K4iNP7nmzwowGhjJE+7rPkQePZ9UVOolSLr18cuoBAjMj6w
+	 Z1jOCMOctBTWaRm1qvBWh6/Og0OKJAfH7lMkee1UtU4ppjzp1JZTfs/GrWqSWB2HjhMMQ
+	 TIemAURuSUPlCz8KdZc63V5BfhU70hB5jz0oVL4SNbvmYu1Gu0nuKdC8y5BM8fsrvvz+l
+	 caPz35xTQn/Zl3PsuZYkTfJt2mxmmZlDb4mCdIuYYR9Yb3z7tQO8N5EB1GBA7lzxfFgQi
+	 0yrveejPRKHOH7llXAQ+cpKJ2KHb1f6vb5wgUOIeVlVUVUIqDwBX/1UyHvnMBFlRtwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i3GNvXx+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yk/twkV6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BCD606A335;
-	Sat,  7 Nov 2026 14:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE38606A334;
+	Sat,  7 Nov 2026 14:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i3GNvXx+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77A51F0089F;
-	Sat,  7 Nov 2026 14:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yk/twkV6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2649B1F008A4;
+	Sat,  7 Nov 2026 14:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061984;
-	bh=YFla4eCRcw7GMAHzOu2L/JATQNif0IM00f/5rMHY7Os=;
+	s=korg; t=1794061985;
+	bh=WVDqm4q+jNU587JVQTP5si+AY7pJRXzChVVcZ6mDobg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i3GNvXx+SmJIGCZr8hvQJqf/Vl9zccSJplj2v4hnCE5kkDrTDK34zwm88Y80x3uoP
-	 UXpJux7GFUcTjPW3jxFjh0/SlAg8Jm7IkXk8UleSpYFjkVJhCrr/qcheAviMjpb2Zm
-	 m57yyDLpRInHRAfbolAYJfMGLA4fwxhpE2TDCPKU=
+	b=yk/twkV6tZZBLhw6zERPZJ4b4kWOOkM9fhknp/daIyDk8dM1dP9XseSdyjxpx8wdy
+	 m/oaBj6ReEwDft3nmKjbBaocO7OHpp/wHClSCwXYX7Bhfx6sUAFH4VegsPqlrUYhkm
+	 6LcMRj/+1ROiZ7CQ7YrGi9V/LxV6tqz+QOHKocqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Eugen Hristev <ehristev@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0950/1536] media: microchip-isc: disable histogram and flush AWB work on teardown
-Date: Sat,  7 Nov 2026 08:49:26 -0500
-Message-ID: <20261107135024.338656500@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>
+Subject: [PATCH 6.12 0977/1536] crypto: ccp - Initialize DBC ioctl mutex before registering device
+Date: Sat,  7 Nov 2026 08:49:53 -0500
+Message-ID: <20261107135025.088950898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,76 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 00d87c379915a3689b2488bd37f490875d79e20f ]
+[ Upstream commit e9b1d168f2a70c0764d5748893fdf631c504c171 ]
 
-isc_stop_streaming() and the isc_start_streaming() error path dropped the
-runtime PM reference with the histogram still enabled. A HISDONE firing
-just before the stop, or a failed isc_update_profile() on the start path,
-can queue isc_awb_work(), which reads the histogram registers before
-taking its own PM reference and faults on the unclocked device.
+dbc_dev_init() registers the DBC misc device before initializing
+ioctl_mutex. Once misc_register() publishes the device, userspace can
+open it and invoke dbc_ioctl() while the mutex is still uninitialized.
 
-Disable the histogram, synchronize the IRQ and flush the work before the
-device is left unclocked. isc_configure() is the one enabling the
-histogram and then calling isc_update_profile(), so do the cleanup in its
-own failure path; isc_stop_streaming() does the same on teardown.
-synchronize_irq() must come before cancel_work_sync(), so an in-flight
-handler cannot re-queue awb_work after it is cancelled.
+Initialize ioctl_mutex before calling misc_register() so the published
+ioctl callback always sees an initialized mutex.
 
-Fixes: 93d4a26c3dab ("[media] atmel-isc: add the isc pipeline function")
+Fixes: c04cf9e14f10 ("crypto: ccp - Add support for fetching a nonce for dynamic boost control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://lore.kernel.org/all/20260829133410.1708684-1-runyu.xiao@seu.edu.cn/
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Assisted-by: Codex:GPT-5
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>> ---
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/microchip/microchip-isc-base.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/crypto/ccp/dbc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index 8223991ae7dda..97506304f2391 100644
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -289,6 +289,7 @@ static int isc_configure(struct isc_device *isc)
- 	struct regmap *regmap = isc->regmap;
- 	u32 pfe_cfg0, dcfg, mask, pipeline;
- 	struct isc_subdev_entity *subdev = isc->current_subdev;
-+	int ret;
+diff --git a/drivers/crypto/ccp/dbc.c b/drivers/crypto/ccp/dbc.c
+index 5b105a23f6997..c9a4431ec80e5 100644
+--- a/drivers/crypto/ccp/dbc.c
++++ b/drivers/crypto/ccp/dbc.c
+@@ -249,6 +249,8 @@ int dbc_dev_init(struct psp_device *psp)
+ 		goto cleanup_mbox;
+ 	}
  
- 	pfe_cfg0 = isc->config.sd_format->pfe_cfg0_bps;
- 	pipeline = isc->config.bits_pipeline;
-@@ -321,7 +322,15 @@ static int isc_configure(struct isc_device *isc)
- 		isc_set_histogram(isc, false);
- 
- 	/* Update profile */
--	return isc_update_profile(isc);
-+	ret = isc_update_profile(isc);
-+	if (ret) {
-+		/* flush the histogram work before the clocks are gated */
-+		isc_set_histogram(isc, false);
-+		synchronize_irq(isc->irq);
-+		cancel_work_sync(&isc->awb_work);
-+	}
++	mutex_init(&dbc_dev->ioctl_mutex);
 +
-+	return ret;
- }
+ 	dbc_dev->char_dev.minor = MISC_DYNAMIC_MINOR;
+ 	dbc_dev->char_dev.name = "dbc";
+ 	dbc_dev->char_dev.fops = &dbc_fops;
+@@ -257,8 +259,6 @@ int dbc_dev_init(struct psp_device *psp)
+ 	if (ret)
+ 		goto cleanup_mbox;
  
- static int isc_prepare_streaming(struct vb2_queue *vq)
-@@ -425,9 +434,13 @@ static void isc_stop_streaming(struct vb2_queue *vq)
- 	/* Disable DMA interrupt */
- 	regmap_write(isc->regmap, ISC_INTDIS, ISC_INT_DDONE);
+-	mutex_init(&dbc_dev->ioctl_mutex);
+-
+ 	return 0;
  
-+	isc_set_histogram(isc, false);
-+
- 	/* let a running IRQ handler finish before the clock is disabled */
- 	synchronize_irq(isc->irq);
- 
-+	cancel_work_sync(&isc->awb_work);
-+
- 	pm_runtime_put_sync(isc->dev);
- 
- 	/* Disable stream on the sub device */
+ cleanup_mbox:
 -- 
 2.53.0
 
