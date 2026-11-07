@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061805;
-	b=NNyWpIP6jbHRA4cfCuXTC7PXtLAR/lW9Cn7UI0ZDWsvDMjCdVo6LRW3tV+F4DFHoBzTg
-	 P71kEMqeNpJOiKsIYSHHHDlwnbn0PrIZLt68bKB/PyclWqLy8rDWFAbVYD/mf3PBsrtE9
-	 sI9G6wacOfuC2uGTaNGFtE7rFSa34kF1/1cOYJVSK2E1JY/R+Ji4Aynfh3hYXHTCQBzfj
-	 dvEqknk75xDsByNk3yfEFUJzuBqHhV0dzYxUuKU/4UOyV0L3Bjae9m3d0mswvPk1Vpm52
-	 AwvpqslyhZMG1XT3fXXUMzgla/U3tfqbnbgGV2PA/GPZVOwygAbIWAi+RnfKuyGXkbA==
+	t=1794061806;
+	b=hWMTOe12U/HUrKpqc5YDhkL5nlrlUY//O4u6+o6OGGWQTKETtDJqaxEursFsbbSdaWBY
+	 wQS9MTz/wB4OG4y/4FUwqgZLDj+1qiiDmXH+/ns46pQdybr8l6H/urc/dL+eOvvkx3BkQ
+	 ZJ8bPfz36f8QPSIv03V5D/x5cM5SLxmbqtEGRdM5snSw7llX/KdAEpuS2S3aGfXIMiEGk
+	 23BU62UAkls1WEz0ArVXOt+xv5bnyK0FBZH+fdKztMLrx24G2yu25hXI0MVXxNNSQM0/N
+	 nRKPjvwGqgdWMwrpHjY+k/T0Io7RwWHwa0Grq9NcYhb+GhOoUpWJC9dJkpAKRPTFaUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061806;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pmhMI7kt11Cb5Z6+w9s0kyi3R+NUHisNe3wWFzwGbqU=;
-	b=lAPEPeNDsoM1DQxs63QqyQ2ddFX5Gmmi8Ybx09eh9yKrZ+BpNAUYzsUsuiQk5EVLV8OF
-	 S4sdLRNPrH2eFCzTNSmkkgos/c3eDACHOJqQSnqhJ2czXO6SOYJ8zLPDepPks4VjjrXwL
-	 tir8DeAX3mU6HvK0lyAxBcOfnCabYPhq9hxZmM+q3gYKvoP3WZnHDXZJPgIP/szuo8RsB
-	 r7laTCEOCRLZ8Vj7q5mxX5rNo8KN452sTCiwYGQc5bRCvkNTPB9p+gGHk1o7/+Aw0G4RR
-	 /pLt/K6kz+N0sxSrqedE5tBTbMV2nIQSDNyPAVj5Sms9eVzXEdGx2vWvinN1ZR8yFlQ==
+	bh=+6Oqn0hlMMbwr3Aq31xblxVrC68gx4JIK5mdPs4WAow=;
+	b=mK7hbsN4KevLy769Enti1XVzBK5JAkrdSlMdB4JhAk+melstUpr6fyUeeRDETYXBHoRO
+	 4hA+4H2BnUFBdmNTdcHyj4/eI8KQlm5smr/xWQrtmReevzLWD8Spgbc06EFUuUk/fH6/n
+	 Va5ObkOPDYpNW1PTNDB+T1J8+jxISSoLwgHoxZ9pUracMDeVj6faVuFiH0ZX+VuHAAEmY
+	 bK/QRLiZOlmrTEHpYDu/5p2JWZI1s5D+8fKI1jjQcrWw+VnELatFJiLcwZugxtetv9sXc
+	 hlPvg0MwREq3aTNWipyKnvnNlZPf7bzpKa3rSII1ICrFbWLWkrya3cRAy7ZzUeZHSFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZX02vy8y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfiHus4m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78E6606A330;
-	Sat,  7 Nov 2026 14:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7737606A333;
+	Sat,  7 Nov 2026 14:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZX02vy8y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F112F1F008A1;
-	Sat,  7 Nov 2026 14:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfiHus4m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D6A1F0089F;
+	Sat,  7 Nov 2026 14:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061804;
-	bh=pmhMI7kt11Cb5Z6+w9s0kyi3R+NUHisNe3wWFzwGbqU=;
+	s=korg; t=1794061805;
+	bh=+6Oqn0hlMMbwr3Aq31xblxVrC68gx4JIK5mdPs4WAow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZX02vy8yy10baV93Yaq5bIf8tjemTYMhY34G+jMIYJ1luKMOKB7qL1xVq0G8AZF0s
-	 pPWpM1CbmAc2g5x63V3U1FMw9sEIsESsayNrD2kklJzrFLIKc7a/rUNAkaYGNPYvdv
-	 eb8of5iKNMe82F3eFijMr2/v/yCzW/9OUc1P7E+M=
+	b=HfiHus4md8iI6Au3aGTGdhumOsDJkXRAMQjkQLZ6aBQMvTVkpY6RzUrtwvf0i6wyj
+	 XfI54Cn89auDUA3ORk6/wfUJDwwyvNDIwNQowGREU33x+1ypE8kKFKXoC8zrEcEQmL
+	 vm5saS/zLYu1FxkNHg6wjikAY2RZrDZ0l6oEvjOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0783/1536] sunrpc: pin gss module across auth_domain RCU free
-Date: Sat,  7 Nov 2026 08:46:39 -0500
-Message-ID: <20261107135019.532314383@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.12 0825/1536] HID: roccat: ryos: reject short special reports
+Date: Sat,  7 Nov 2026 08:47:21 -0500
+Message-ID: <20261107135020.715998333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,87 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit b64d21116374688c33302a6704387c27d1156d72 upstream.
+commit 02f3607d0beb82e76481568bf631235e6a319b47 upstream.
 
-A gss auth_domain stores a raw pointer to svcauthops_gss in
-dom->flavour, and its release queues svcauth_gss_domain_release_rcu()
-via call_rcu(). Both live in auth_rpcgss.ko text, and nothing pins the
-module while a domain referencing it is reachable. rmmod auth_rpcgss
-can therefore unmap that text while an NFSD export still holds a
-reference to the domain.
+The raw event callback runs before HID core validates and zero-pads the
+report.  It reads the report number without checking the received length
+and passes matching data to roccat_report_event(), which copies a complete
+struct ryos_report_special.  A truncated report can therefore cause an
+out-of-bounds read and expose adjacent data through the Roccat character
+device.
 
-The export cache is one such holder. When the export is finally
-released, the domain reference drops from module text:
+Require a complete special report before inspecting or forwarding it.
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw-event length validation to hid-asus.
 
-    svc_export_put()
-      auth_domain_put(exp->ex_client)
-        auth_domain_release()
-          dom->flavour->domain_release(dom)   /* into module text */
-            svcauth_gss_domain_release()
-              call_rcu(&dom->rcu_head,
-                       svcauth_gss_domain_release_rcu)
-
-Once auth_rpcgss is unloaded, the domain_release call lands in
-unmapped memory. The rcu_barrier() in exit_rpcsec_gss() does not
-help: it waits only for callbacks already queued, and this one is
-not queued until the export goes away.
-
-NFSD's NFSv4 objects import symbols from auth_rpcgss.ko, so only a
-server built without CONFIG_NFSD_V4 can unload auth_rpcgss while
-exports still name a gss domain.
-
-Take a module reference in svcauth_gss_register_pseudoflavor() before
-publishing the domain and drop it at the end of
-svcauth_gss_domain_release_rcu(). The rcu_barrier() then holds the
-module image until this callback has returned.
-
-Fixes: 608a0ab2f54a ("SUNRPC: Add lockless lookup of the server's auth domain")
+Fixes: 6f3a19360545 ("HID: roccat: add support for Ryos MK keyboards")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Chris Mason <clm@meta.com>
-[ cel: rewrote description ]
-Link: https://patch.msgid.link/20260913160706.384180-1-cel@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/hid/hid-roccat-ryos.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -824,12 +824,18 @@ svcauth_gss_register_pseudoflavor(u32 ps
- 	new->h.flavour = &svcauthops_gss;
- 	new->pseudoflavor = pseudoflavor;
+--- a/drivers/hid/hid-roccat-ryos.c
++++ b/drivers/hid/hid-roccat-ryos.c
+@@ -189,6 +189,9 @@ static int ryos_raw_event(struct hid_dev
+ 			!= RYOS_USB_INTERFACE_PROTOCOL)
+ 		return 0;
  
-+	if (!try_module_get(svcauthops_gss.owner)) {
-+		stat = -ENODEV;
-+		goto out_free_name;
-+	}
++	if (size < sizeof(struct ryos_report_special))
++		return 0;
 +
- 	test = auth_domain_lookup(name, &new->h);
- 	if (test != &new->h) {
- 		pr_warn("svc: duplicate registration of gss pseudo flavour %s.\n",
- 			name);
- 		stat = -EADDRINUSE;
- 		auth_domain_put(test);
-+		module_put(svcauthops_gss.owner);
- 		goto out_free_name;
- 	}
- 	return test;
-@@ -2003,9 +2009,11 @@ svcauth_gss_domain_release_rcu(struct rc
- {
- 	struct auth_domain *dom = container_of(head, struct auth_domain, rcu_head);
- 	struct gss_domain *gd = container_of(dom, struct gss_domain, h);
-+	struct module *owner = dom->flavour->owner;
+ 	if (data[0] != RYOS_REPORT_NUMBER_SPECIAL)
+ 		return 0;
  
- 	kfree(dom->name);
- 	kfree(gd);
-+	module_put(owner);
- }
- 
- static void
 
 
