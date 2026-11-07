@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064031;
-	b=qYDFDjIf/Thk3bhDZgOuMeA7YdVVi2HDrW8dBkQYu3Ql51RsvQ/EfEGB3dpBzi9z11HS
-	 G9/VJTbu1icGsuYgDhRHhn9v23SXpt+c75bVG7FmACOlzViXPErChs8NFG3aBL79htgNT
-	 coFJGgMQR1WutNR00+j5Cs2kmEtUUR13Zs92N+Uo4IC6YhQ28jlqaU4ybbVbHPge5J6DR
-	 I0qdSsYSPlPpcF6qwACqB7KHcyLRyr3sQjoSH1ghF08C00uPkZSoQJAxKFcvIZA7dg3bO
-	 tjHLTwtTZU8ZuedXTmO0LY5pliyVx+NjnLPiRhb1ieGQgX3S38xMiFSN620Da6/pX/g==
+	t=1794064032;
+	b=F8HImbMeqIOd7+aNccOJAPonBYlpaBVfTv1eExNbi8NdLsXO84n47F56Hh9ImWVWaW58
+	 XRq/uOURc7nMI6BCSy6pIFbpIR1cKLfQ8h1drC4OYN+wYX+laKdVazAH+8o+eB/8o2IEv
+	 zgQXbzU9xJCp218BXS9iuyzI9vXvYJBd2eNnilxcg/OmIBOa0gAec0vEygWxd411OQDSd
+	 wpE8ynHlrf9PiScJZNQ6zP+sfiK+Yvqu2DyiHIh0zCBSBVUeETeREi99hB9w6TGzMl94J
+	 zZdjTRkaWygt68OeYuKkg2C4F24iKEzyVtqyP2dA4mb9CPvMe+s/0q3AVhpzn5Qfi3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2ZM93kuxkqwuAS1rZbWn07zzYWOlCKRTfSs1uCnKAkc=;
-	b=z2fAtdl+FbkfqzN2VgvZC1Zp9NApf24IQhABW+t7t4ugUucQxpHodd9oyldduDuzClTI
-	 4af+5zHxJvTJyMkM7gzVXo08gOFLJeM9gF41v3MNZwCh4HuZ/3qaQ8ccQazZqeS0/WvXm
-	 DcYqXUxQLuE8vp5qhBTxoIFtqKhpRY4qgbdW0nF4NTLKUp3fq1Y1+1VP57x2frOUKbqFg
-	 3wPqS4wF3CgShqENptts56N5nq951KTZMFeqCiRkHviTwgwpFfVcBGeJMoIcsoqBd7KGb
-	 VntwKPCP69M2ijHZzywNCCuQw/1h8kCRpFLLCzgR2bPn2KbzL0talIXmlnPuelQKPVw==
+	bh=PAjVCRbtIm5lT1lywt8AJc4ASm0SXvajKQN7g0HV2qA=;
+	b=j97gIpJjjcUQB3ARoSFg+OKnhvZiPCUdKK5fOudbT0Oa6vdZPY+CYNAwLWnMdpMVXyfR
+	 Rdwo1taMnWl9dPEMKBTdQcUacwGpGq/ROQCSDdhYrfEgJAfGS1Y4WPle7SPmMP8udEJMS
+	 oQqqMqCKkIuqrJjecmah0vsX9cHKCigAnwCxpFCk9JY8gme8+NRvFb+W14qvSM9ltoi5k
+	 MshzY1B2cQw3m0rop8Ql8+pPV/4NDeEcYWcrUQ9A0+grsBCEC+HO0sz9iOmWsvwqTQ2Ur
+	 SUkCEzMN2VhFXXySXvt2S3BZY1vSTgnQ1dU3ggEwDwNrjaBQVa4Ag0TZiTHT+aGRJqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VuHVDam+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2FjqL21;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C312606A9CB;
-	Sat,  7 Nov 2026 15:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364E8606A9CB;
+	Sat,  7 Nov 2026 15:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VuHVDam+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDE21F008A2;
-	Sat,  7 Nov 2026 15:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2FjqL21
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D966F1F008A2;
+	Sat,  7 Nov 2026 15:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064030;
-	bh=2ZM93kuxkqwuAS1rZbWn07zzYWOlCKRTfSs1uCnKAkc=;
+	s=korg; t=1794064032;
+	bh=PAjVCRbtIm5lT1lywt8AJc4ASm0SXvajKQN7g0HV2qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VuHVDam+o0kLQRe4R7zBEh0oOxTE2iv51Q/tXudAWBmQGQ+8SGVwjMuny1H5NdjRZ
-	 sHAU0cgpmTZuOCEeMXABYxtI/OnmadE5saTwDNXsgkDLDMgeKhyP5PJRE6lBwtlW0O
-	 KEHR9mtJ645maaoCW9WftPzzdGue3Olg2Gc7cQ+g=
+	b=x2FjqL21dKv1kNVuuSwaNJTC8M201vdL1d0v4HKbPvfpTeoSr8yoDRIwRyFZ+mRLw
+	 0QhnQ88tKnj5ySqeb9m8XqlJxy8gBvRO+wgvNELdOcLUY0EPuUGmkax16uwk9pjNC5
+	 4RkxdCNC6An23tgu9En/Vz2pd6kAi8McFPFyCwpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0205/1257] ACPI: CPPC: Propagate errors from cross-CPU FFH calls
-Date: Sat,  7 Nov 2026 08:41:41 -0500
-Message-ID: <20261107134945.206093988@linuxfoundation.org>
+Subject: [PATCH 7.3 0170/1257] ata: libahci: Free the IRQs when activating a multi-IRQ host fails
+Date: Sat,  7 Nov 2026 08:41:06 -0500
+Message-ID: <20261107134944.040100980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,125 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 36e96b469da24868f727b4cd168d7cf01cbd163d ]
+[ Upstream commit 34a4a34431ed81d85d14f8fb8035e5a25214ad39 ]
 
-The arm64 and RISC-V CPPC FFH accessors ignore the return value of
-smp_call_function_single(). If the target CPU is offline, the call can
-return -ENXIO without running the callback. The accessors then consume
-callback output which was never initialized and may report success.
+ahci_host_activate_multi_irqs() requests one IRQ per port, but it does
+not free them when requesting one of them, or when registering the host,
+fails. The IRQs are only freed by the driver core, when it releases the
+devres of the device after probe() has returned, while the caller of
+ahci_host_activate() releases the resources of the host in its probe()
+error path, e.g. ahci_probe() disables the clocks, regulators, resets and
+PHYs of the host. An IRQ handler running in that window would access the
+MMIO of a host which is no longer clocked.
 
-CPU offlining leaves the CPU's CPPC sysfs attributes present. On arm64,
-the AMU feature mask does not exclude an offline CPU, so a paired counter
-read can expose uninitialized stack values through feedback_ctrs. RISC-V
-has the same problem in both SBI and CSR reads, and its write paths also
-inspect an uninitialized callback status after a failed cross-CPU call.
+ahci_host_activate_multi_irqs() did free the IRQs until commit
+0a142b26921c ("ahci: cleanup ahci_host_activate_multi_irqs"), which
+removed the explicit free because devm makes it unnecessary. That is true
+for freeing the IRQs as such, but not for the window described above:
+devres is only released after probe() has returned, i.e. after the error
+path of the caller has released the resources of the host.
 
-Return the SMP call error before using callback output. The arm64 single
-and paired counter readers already check the helper's return value. For
-RISC-V, also check the callback status before copying a read value: an
-unsupported CSR sets the error but does not initialize the value.
+Note that this window cannot be hit with the current users: the only user
+of AHCI_HFLAG_MULTI_MSI is the AHCI PCI driver, which does not release
+any resource in its probe() error path, and the ports of the host are
+still frozen, i.e. their interrupts are masked, when ata_host_register()
+fails.
 
-Fixes: 68c5debcc06d ("arm64: implement CPPC FFH support using AMUs")
-Fixes: 30f3ffbee86b ("ACPI: RISC-V: Add CPPC driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20260916162805.1039247-18-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Free the IRQs explicitly again, like ata_host_activate() does, so that
+the IRQ handlers cannot run once ahci_host_activate() has failed.
+
+Fixes: 0a142b26921c ("ahci: cleanup ahci_host_activate_multi_irqs")
+Cc: stable@vger.kernel.org
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-12-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/topology.c |  2 +-
- drivers/acpi/riscv/cppc.c    | 26 ++++++++++++++++++++------
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ drivers/ata/libahci.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
-index 806373aac3dbf..b8baba2811666 100644
---- a/arch/arm64/kernel/topology.c
-+++ b/arch/arm64/kernel/topology.c
-@@ -426,7 +426,7 @@ int counters_read_on_cpu(int cpu, smp_call_func_t func, void *val)
- 			return -EPERM;
- 		func(val);
- 	} else {
--		smp_call_function_single(cpu, func, val, 1);
-+		return smp_call_function_single(cpu, func, val, 1);
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index 08ab56e955662..950c26e6953d0 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -2736,11 +2736,33 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
+ 				0, pp->irq_desc, host->ports[i]);
+ 
+ 		if (rc)
+-			return rc;
++			goto free_irqs;
+ 		ata_port_desc_misc(host->ports[i], irq);
  	}
  
- 	return 0;
-diff --git a/drivers/acpi/riscv/cppc.c b/drivers/acpi/riscv/cppc.c
-index 42c1a90524707..4ea4ddedd91f1 100644
---- a/drivers/acpi/riscv/cppc.c
-+++ b/drivers/acpi/riscv/cppc.c
-@@ -97,6 +97,7 @@ bool cpc_ffh_supported(void)
- int cpc_read_ffh(int cpu, struct cpc_reg *reg, u64 *val)
- {
- 	struct sbi_cppc_data data;
-+	int ret;
+-	return ata_host_register(host, sht);
++	rc = ata_host_register(host, sht);
++	if (rc)
++		goto free_irqs;
++
++	return 0;
++
++free_irqs:
++	/*
++	 * Free the IRQs which have been requested, so that the handlers can no
++	 * longer access the MMIO of the host once we return, e.g. after the
++	 * caller has disabled the clocks of the host.
++	 */
++	while (--i >= 0) {
++		struct ahci_port_priv *pp = host->ports[i]->private_data;
++
++		if (!pp)
++			continue;
++
++		devm_free_irq(host->dev, hpriv->get_irq_vector(host, i),
++			      host->ports[i]);
++	}
++
++	return rc;
+ }
  
- 	if (WARN_ON_ONCE(irqs_disabled()))
- 		return -EPERM;
-@@ -107,19 +108,27 @@ int cpc_read_ffh(int cpu, struct cpc_reg *reg, u64 *val)
- 
- 		data.reg = FFH_CPPC_SBI_REG(reg->address);
- 
--		smp_call_function_single(cpu, sbi_cppc_read, &data, 1);
-+		ret = smp_call_function_single(cpu, sbi_cppc_read, &data, 1);
-+		if (ret)
-+			return ret;
-+		if (data.ret.error)
-+			return sbi_err_map_linux_errno(data.ret.error);
- 
- 		*val = data.ret.value;
- 
--		return (data.ret.error) ? sbi_err_map_linux_errno(data.ret.error) : 0;
-+		return 0;
- 	} else if (FFH_CPPC_TYPE(reg->address) == FFH_CPPC_CSR) {
- 		data.reg = FFH_CPPC_CSR_NUM(reg->address);
- 
--		smp_call_function_single(cpu, cppc_ffh_csr_read, &data, 1);
-+		ret = smp_call_function_single(cpu, cppc_ffh_csr_read, &data, 1);
-+		if (ret)
-+			return ret;
-+		if (data.ret.error)
-+			return data.ret.error;
- 
- 		*val = data.ret.value;
- 
--		return data.ret.error;
-+		return 0;
- 	}
- 
- 	return -EINVAL;
-@@ -128,6 +137,7 @@ int cpc_read_ffh(int cpu, struct cpc_reg *reg, u64 *val)
- int cpc_write_ffh(int cpu, struct cpc_reg *reg, u64 val)
- {
- 	struct sbi_cppc_data data;
-+	int ret;
- 
- 	if (WARN_ON_ONCE(irqs_disabled()))
- 		return -EPERM;
-@@ -139,14 +149,18 @@ int cpc_write_ffh(int cpu, struct cpc_reg *reg, u64 val)
- 		data.reg = FFH_CPPC_SBI_REG(reg->address);
- 		data.val = val;
- 
--		smp_call_function_single(cpu, sbi_cppc_write, &data, 1);
-+		ret = smp_call_function_single(cpu, sbi_cppc_write, &data, 1);
-+		if (ret)
-+			return ret;
- 
- 		return (data.ret.error) ? sbi_err_map_linux_errno(data.ret.error) : 0;
- 	} else if (FFH_CPPC_TYPE(reg->address) == FFH_CPPC_CSR) {
- 		data.reg = FFH_CPPC_CSR_NUM(reg->address);
- 		data.val = val;
- 
--		smp_call_function_single(cpu, cppc_ffh_csr_write, &data, 1);
-+		ret = smp_call_function_single(cpu, cppc_ffh_csr_write, &data, 1);
-+		if (ret)
-+			return ret;
- 
- 		return data.ret.error;
- 	}
+ /**
 -- 
 2.53.0
 
