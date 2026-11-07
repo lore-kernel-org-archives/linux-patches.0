@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063461;
-	b=Y0RX6kb0Qzq6lX8BgsyTCDqCU/8jo9rdQ41Bt5bQWTZx+KsZXE8aVOCCAggWjaZ7IIvj
-	 ek+o9QJeJWzM2b/IbUp7lPhVlUC+bANrYOT8vlQRqTLVXBmtN/uEYG4vjafiv8p4iqOpS
-	 REsOds/fiajjkP0y/UGQnshtEb2vf1WGNdSUR/q30M6kO86yftzTIqSStUoc3S5HqZujX
-	 Nx2aytAp6eiIZ7VhMVx9xexQid3yG63C5JWlIYvxyUDQshrBUo0u13OL/SEAsFvnv4Vws
-	 9szLVUbMEYx0g1h5D63e4UoFCQgaBUiBvF937xyT/KMPwTsDHHLCPA1i+67ZWBmmUzA==
+	t=1794063462;
+	b=B4M529n+4hEgvKQvrOGHSRZ8ZD/gh9CrjMU2UPLv/ALxI8aK1df18x7Aq6PpRSDTfck/
+	 kwj3XkvK2ExJtEq0wrs33BnOUHXD1up8Cpm8hBXsSTy74HbgGuW5AKwSpvsBo3uQ3tP8G
+	 1a9seBsWtaNbubRVr86TscTHmk+rfmVnALW2VPB3uj/VNn5v4jezizeY3roJ06sREa8u4
+	 cO4AFaZrQkWCQwvXM8aYjyU5kPdFYJSSpIpH7HWLM03CiX51RT5Qse/GzZy9AcMgdownV
+	 JJrGrCHlnR1iJ7cfEQUCScTP79pn+HdJR5ZosY8al1UqdxsOCdlfYJqM3FpPrfU9GCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=M9Xgx20CJVgTPUu8VRqYAWKh5ye0V4ECiTWsK1L/vb4=;
-	b=R9dluUDPYsnx4iHJHZto6IBwU7+Tjw0969eItjqxLYIhMHKrepI1momLKySTcAu1GQ2s
-	 HXx9T+R8TbFiyv7G1bip4YNtDljVxflUJLSzIyRSyFyHrMJz5OXWBg8jFopB4wX9tXt9V
-	 J448p+6BM1SoZbFyzMumlT8poJg2sbDoyRutHU6MF8B0NsF2QI5UYaUsLboVQa/vVjakk
-	 29yCrJy0Ka1oEjLY/q/HKCK/PYlBJLOA9ci7IY331Z1l6GPCuJfqRAwOwaIA7/m8Qg+ra
-	 kGxafe2cBeCO6CfsHYy52vb+ARaw/8o0HJi1USCzvA8MQdMQJ7KmYKo0pMtfx5B+Zmg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oXlZ1/aUbtQpyd0iBRV00AJpU7v6tKwaWUfc8tdDv04=;
+	b=5stMqHFtfPgk4Gv3OLb0vvpRQeI5nJ8cnq1OowNglhITs1kMlc/TRbimJTBzgQoTiwwC
+	 JDWB29opFNU9BFWC9TUKK8OH4HshFgByDkoaY/YEk6fT5DfiFgsmKljFj5ODhKIN2tJ2Q
+	 HimoPIeBHPYOVSIUvfPut+ggAqBrshxA3HHor8gFcbq8nRPAN1uHKGktIICLSMu1eHSlZ
+	 X0tLoO+S8s0gqNz96tGGr/PymP3fmOuXGq6Wb+TYBpEH6keipECGSZefnKt+nttpi0GJy
+	 Qm9b5MkQ+cY8HRX7HLulkhRU0kxhfhmk3EK/o0SXEqYS2DyB6ePIaeHkOeCO0F7QgCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V6nhXRol;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzKKugiS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B7A606EE8F;
-	Sat,  7 Nov 2026 14:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8C8606D82B;
+	Sat,  7 Nov 2026 14:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V6nhXRol
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DD01F008AB;
-	Sat,  7 Nov 2026 14:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzKKugiS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196651F008A5;
+	Sat,  7 Nov 2026 14:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063461;
-	bh=M9Xgx20CJVgTPUu8VRqYAWKh5ye0V4ECiTWsK1L/vb4=;
+	s=korg; t=1794063462;
+	bh=oXlZ1/aUbtQpyd0iBRV00AJpU7v6tKwaWUfc8tdDv04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V6nhXRolnO4PQbywFra9E8GoDxB/+DH6DzkF3M3rFuCAvXvn5wOuMIHG0kfEpt6sU
-	 yaqPU84Z+1/NKSIK/LixKTqUq6awx59Vjzv4wzHZaX2X4/6nXJvdu05KsyBEAiVJzk
-	 ypbHhq0sahnw5PFTWpLVUMwTA1NqBXtksoND4jmE=
+	b=dzKKugiSO2326KeD8usqb1cbvlVq6WncsE0Aurr+LgKjLfebDDzKZlE8cTlQ1frpb
+	 0CsKeZOnL+bTBLNETOLC7e5+6JPyupwto8oGWKTOPtmCxkzBkPF96xsUnpHDFiVwoB
+	 bLVu2K2Jk5AhGoRrmNa8mfED5zAcBIM9kfWvspU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 617/869] mptcp: fix subflow bitfield misuse
-Date: Sat,  7 Nov 2026 08:54:59 -0500
-Message-ID: <20261107134913.968897462@linuxfoundation.org>
+Subject: [PATCH 6.18 600/869] ublk: reset the FETCH round in release also without a disk
+Date: Sat,  7 Nov 2026 08:54:42 -0500
+Message-ID: <20261107134913.405098396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -63,61 +63,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Ming Lei <tom.leiming@gmail.com>
 
-[ Upstream commit 7538fa33bb2f66b8b809ff39d58308be48e197a0 ]
+[ Upstream commit f06ca594eafcdf58a399a0f92480631192e06032 ]
 
-The subflow status bitfield is protected by the subflow socket lock,
-with one notable exception: the `close_event_done` bit is actually under
-the msk socket lock protection.
+The release of /dev/ublkcN resets the queues only when the device has a
+disk. Without one it skips ublk_reset_ch_dev():
 
-As reported by Clashiko [1], flipping the latter bit may corrupt other
-entries in the same bitfield.
+  server fetches, never starts;         old server exits
+  or STOP_DEV removed the disk           release: no disk → skip reset
+                                         ios stay ACTIVE / CANCELED,
+                                         nr_io_ready stays full
+  new server opens /dev/ublkcN           FETCH: -EBUSY (still ready), or
+                                         -EINVAL after a partial round
+                                         → the device can only be deleted
 
-Move the `close_event_done` outside the bitfield, in a 32bit hole.
+All uring_cmds are done when the release work runs, with or without a
+disk, so the reset is safe either way. Do it in both cases. Then a new
+server can fetch and start the device again, as the STOP_DEV entry in
+Documentation/block/ublk.rst says ("ublk device is ready for the new
+process").
 
-Link: https://lore.kernel.org/178959153492.22033.1944011998010756543@kernel.org
-Fixes: d82809b6c5f2 ("mptcp: avoid duplicated SUB_CLOSED events")
+Fixes: 82a8a30c581b ("ublk: improve detection and handling of ublk server exit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-2-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20261011063555.1142277-5-tom.leiming@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/block/ublk_drv.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index dc8920a6a90c3..184831b5b624a 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -543,14 +543,16 @@ struct mptcp_subflow_context {
- 		closing : 1,	    /* must not pass rx data to msk anymore */
- 		valid_csum_seen : 1,        /* at least one csum validated */
- 		is_mptfo : 1,	    /* subflow is doing TFO */
--		close_event_done : 1,       /* has done the post-closed part */
- 		mpc_drop : 1,	    /* the MPC option has been dropped in a rtx */
- 		resetting : 1,	    /* subflow is resetting */
--		__unused : 8;
-+		__unused : 9;
- 	bool	data_avail;
- 	bool	scheduled;
- 	bool	pm_listener;	    /* a listener managed by the kernel PM? */
- 	bool	fully_established;  /* path validated */
-+	bool	close_event_done;   /* has done the post-closed part,
-+				     * protected by msk socket lock
-+				     */
- 	u32	lent_mem_frag;
- 	u32	remote_nonce;
- 	u64	thmac;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index f44512ed12176..f85d66cee9c3a 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1761,12 +1761,13 @@ static void ublk_ch_release_work_fn(struct work_struct *work)
+ 	}
+ 
+ 	/*
+-	 * disk isn't attached yet, either device isn't live, or it has
+-	 * been removed already, so we needn't to do anything
++	 * No disk: the device isn't live, or it has been removed already.
++	 * There are no requests to abort, but the round still has to be
++	 * reset, so that a new server can fetch and start the device.
+ 	 */
+ 	disk = ublk_get_disk(ub);
+ 	if (!disk)
+-		goto out;
++		goto reset;
+ 
+ 	/*
+ 	 * All uring_cmd are done now, so abort any request outstanding to
+@@ -1827,10 +1828,9 @@ static void ublk_ch_release_work_fn(struct work_struct *work)
+ unlock:
+ 	mutex_unlock(&ub->mutex);
+ 	ublk_put_disk(disk);
+-
++reset:
+ 	/* all uring_cmd has been done now, reset device & ubq */
+ 	ublk_reset_ch_dev(ub);
+-out:
+ 	clear_bit(UB_STATE_OPEN, &ub->state);
+ 
+ 	/* put the reference grabbed in ublk_ch_release() */
 -- 
 2.53.0
 
