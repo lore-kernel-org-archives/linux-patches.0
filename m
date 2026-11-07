@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065003;
-	b=x154OdginyOeBUWe0XKIT3Pst9HaHWRDiDErWV5CkSKRQrAuGViz4zXNhssowLUDh8Nq
-	 ZAz4jxjpMI0MmFVLZsPSoslCTHjkvJqsFxrDfpXlnO2YmIe+CiG6d35kBy0C1KSntBGYh
-	 Hfsvv4YhijlPFnbtAEBbcMrAQtgiBiD/r4x9LT+UA5ogeEeGiFfOitYDtWlvvP47zX9IW
-	 H3qxAlFroLAgAPNs/7jkgnE0Dq2MxT0eAQXED5APamjg6DXj42vvRTwCVjF84ysWJuxEN
-	 LT4YfltRkiP5rT0i/38ga5gGx056v2dvJbgx+GtuFrXh0b4qUz2Kra8Ai0EpcyHvYtQ==
+	t=1794065005;
+	b=JS+XWEN2/iOyUWQBO0SjeBObixamPK7uIkUqK4KEne5duLxU4lBLCFZTQpnx+IdMlo/o
+	 X5crHZ1CNtNEnJrnmKgQDxt6qNpKTzo7vNbp6iVhmZ4lQ8TpWXiLuzeb/ges662aUQg1X
+	 Omy4IG3OnqUyx+izc92CuyZryezptYd+g+EsoawkunOctJt17kXyxgTX8Hl8umzy9Q/Na
+	 Cr6lUEevYCcn/rxKOC7BX4JwNdnxjtqBB95lKFW+Fbb9hr/h7QSAMpHCJKnC4kCgo+yl+
+	 A/et8RV6YBaB04Y/oIIKhcYB/4GbJkF2nBirxpL+c16w+BvUhNl4RmG79uI6hAGTk0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bPaJHldjgt6m4g13PmyQTsHiXgOo5U930gzh/1st9/c=;
-	b=C47ZK0Lj152hHQEp/UNXlOKtDjHqAl97rWGP1AgQhG9+B4iUeg7NcsphbzfyMKqtWJOb
-	 sCAAlQ5WkHLalfKlMYEGLhiLbGR2FaYctlIYwwl7NOQ+pL9+tR4Ivw8RdHP06fk4h91MW
-	 NJ51f0LyiWofQEeKni3s7O+8W0RjHtQV24oOLMjx8Heb9m2M2nCgVNIVKebDXezfYJUqe
-	 b5xMQVV+PjFAO3EC7s94ZqGsHs3apbZ/4r1sdgcsX/IfpFTUAy/EICUPr6pvxMgOdN1M4
-	 BD0yIy0DJ9Zrz0BQacq0n7JH+CDr7XL7dtZqVIcAK9rOkFQ33m4msKzXQTVe85btBlQ==
+	bh=eWmcHRePCw3zy9prGrOUkHbXLQMyvvc/NcVk7J2aHnE=;
+	b=Iyybi81ICPSesc9sIifiDSuuPaMNKe8KN2p2ETP3Vb6ovus3GINqZ2IYY3Eyd8e/FopY
+	 Gx0wTN9pOLeYSlxL+MTPMWw2vvPKYyOmEQWlNQhfcJpHwRyVeFbWpJfBHDKjRCnS6toxX
+	 U+gmtjDUr6mkmYWehhb2feO6Ph/PaLbrUxQ2lkt+VpvswefQbNPcWVrN11+l+ow9maOyu
+	 a2vVdHqKUS9CImlV/jZ1S/JHZ58e6i1Vj6/4AOL62FX5SqvMfHYPAV195PDRF5q3RynNs
+	 /PnPFf41+ZyoBtQ3a1j5kR/NAriXPbtTBcIFMTwwZqJ3Th63i9tgC1a2Eypo3gWO6rA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yKNRR+QM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUNpG0RM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94021606A333;
-	Sat,  7 Nov 2026 15:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE97606A333;
+	Sat,  7 Nov 2026 15:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yKNRR+QM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422A31F0089F;
-	Sat,  7 Nov 2026 15:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUNpG0RM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7201F0089F;
+	Sat,  7 Nov 2026 15:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065003;
-	bh=bPaJHldjgt6m4g13PmyQTsHiXgOo5U930gzh/1st9/c=;
+	s=korg; t=1794065005;
+	bh=eWmcHRePCw3zy9prGrOUkHbXLQMyvvc/NcVk7J2aHnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yKNRR+QM1cWUvYr09Mc+Dp2K+TS3YHfRexqcM5HkiSWPXu3o+V/dV5bcxD/osm0hx
-	 wXO2cxeV7HJdgKxedngeb9Fu4jHyN4nBGuESsDR7BNC7J+4BuHGK3myG84rQguwna3
-	 Arb7G12IIm/hX9hiRhCAPw3Qf45VDMiMYgdZJbvQ=
+	b=DUNpG0RMMxXGmWoskCW1iNiWND7P4AStNOnvbasq7Aua/WrdccxsrDFxKuoemOXdN
+	 SktdAsOY9CDZ5G3WgK+SjviPXwJp+p7PKGluBd/I7A4wprIqP50yGs3jp6zzDe40UN
+	 cCErrymT8FjWn8flsJIfivFHdG+NFPT2wsTr9ue8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Verdonck <tom.verdonck@inspiral.be>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0871/1257] hwmon: (sht4x) Fix jiffies wraparound in heater-ready check
-Date: Sat,  7 Nov 2026 08:52:47 -0500
-Message-ID: <20261107135003.385348009@linuxfoundation.org>
+Subject: [PATCH 7.3 0836/1257] cpufreq: loongson3: Replace IOCSR read/write with MMIO ones
+Date: Sat,  7 Nov 2026 08:52:12 -0500
+Message-ID: <20261107135002.419867533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,113 +70,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Verdonck <tom.verdonck@inspiral.be>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit ce3ff350c4a3b9466bd67bfe2adb2e3bea732b9e ]
+[ Upstream commit 81792daacfb41ca07b04bd3956ea9e672080cc98 ]
 
-sht4x stores in ->heating_complete the jiffies deadline at which the
-current heater pulse finishes. It is set once at probe (to jiffies) and
-only updated when the heater is explicitly enabled via sysfs, so in the
-common case where the heater is never used it stays frozen at its probe
-value.
+Our server productions (e.g. Loongson-3D6000/3E6000) can have multiple
+nodes in one package and SMC mailboxes are also per-node. However, IOCSR
+read/write can only perform on the current node, while sometimes we want
+to perform on other nodes (e.g. when switch governor, the get and target
+callbacks are not run on target core). So replace IOCSR read/write with
+MMIO ones.
 
-->heating_complete is an unsigned long compared with time_before(),
-whose signed difference is only meaningful while the two values are
-within LONG_MAX jiffies of each other. Because the deadline is frozen,
-jiffies keeps advancing away from it, and after 2^31 jiffies the
-difference flips sign. On a 32-bit HZ=100 kernel that happens ~248.5
-days after boot. time_before() in sht4x_read_values() then wrongly
-reports that heating is still in progress and the read path executes
-
-	msleep(jiffies_to_msecs(data->heating_complete - curr_jiffies));
-
-with a bogus, huge delta, blocking the temperature read for a very long
-time instead of returning data. The heater_enable sysfs attributes are
-affected the same way (spurious -EBUSY and "1" readback).
-
-Store the deadline as a 64-bit jiffies value and compare it with
-get_jiffies_64()/time_before64(), which does not wrap in any practical
-uptime.
-
-Fixes: 0eed6fc3d2b9 ("hwmon: (sht4x): add heater support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
-Link: https://patch.msgid.link/7b2087ccb963e097cf3f6333efaec0c46549003b.1790358356.git.tom.verdonck@inspiral.be
-[groeck: Squashed 'Fix torn read' patch into this one]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
+Tested-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht4x.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/cpufreq/loongson3_cpufreq.c | 34 +++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hwmon/sht4x.c b/drivers/hwmon/sht4x.c
-index a97dda9e92dc5..27fddff703542 100644
---- a/drivers/hwmon/sht4x.c
-+++ b/drivers/hwmon/sht4x.c
-@@ -67,7 +67,7 @@ DECLARE_CRC8_TABLE(sht4x_crc8_table);
-  */
- struct sht4x_data {
- 	struct i2c_client	*client;
--	unsigned long		heating_complete;	/* in jiffies */
-+	u64			heating_complete;	/* in jiffies */
- 	bool			data_pending;
- 	u32			heater_power;	/* in milli-watts */
- 	u32			heater_time;	/* in milli-seconds */
-@@ -92,14 +92,14 @@ static int sht4x_read_values(struct sht4x_data *data)
- 	u8 crc;
- 	u8 cmd[SHT4X_CMD_LEN] = {SHT4X_CMD_MEASURE_HPM};
- 	u8 raw_data[SHT4X_RESPONSE_LENGTH];
--	unsigned long curr_jiffies;
-+	u64 curr_jiffies;
+diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
+index 1ae821e265fbf..aea7c31e155a4 100644
+--- a/drivers/cpufreq/loongson3_cpufreq.c
++++ b/drivers/cpufreq/loongson3_cpufreq.c
+@@ -17,6 +17,7 @@
+ #include <asm/loongarch.h>
+ #include <asm/loongson.h>
+ #include <asm/smp.h>
++#include <asm/numa.h>
  
--	curr_jiffies = jiffies;
--	if (time_before(curr_jiffies, data->heating_complete))
-+	curr_jiffies = get_jiffies_64();
-+	if (time_before64(curr_jiffies, data->heating_complete))
- 		msleep(jiffies_to_msecs(data->heating_complete - curr_jiffies));
+ /* Message */
+ union smc_message {
+@@ -165,6 +166,12 @@ union smc_message {
  
- 	if (data->data_pending &&
--	    time_before(jiffies, data->heating_complete + data->update_interval)) {
-+	    time_before64(get_jiffies_64(), data->heating_complete + data->update_interval)) {
- 		data->data_pending = false;
- 	} else {
- 		next_update = data->last_updated +
-@@ -237,7 +237,9 @@ static ssize_t heater_enable_show(struct device *dev,
- {
- 	struct sht4x_data *data = dev_get_drvdata(dev);
+ #define FREQ_MAX_LEVEL			16
  
--	return sysfs_emit(buf, "%u\n", time_before(jiffies, data->heating_complete));
-+	guard(hwmon_lock)(dev);
++#define MMIO_SMCMBX(node) \
++	((void __iomem *)(nid_to_addrbase(node) | IO_BASE | LOONGSON_REG_BASE | LOONGARCH_IOCSR_SMCMBX))
 +
-+	return sysfs_emit(buf, "%u\n", time_before64(get_jiffies_64(), data->heating_complete));
- }
++#define MMIO_MISC_FUNC(node) \
++	((void __iomem *)(nid_to_addrbase(node) | IO_BASE | LOONGSON_REG_BASE | LOONGARCH_IOCSR_MISC_FUNC))
++
+ struct loongson3_freq_data {
+ 	unsigned int def_freq_level;
+ 	struct cpufreq_frequency_table table[];
+@@ -177,13 +184,27 @@ static DEFINE_PER_CPU(struct loongson3_freq_data *, freq_data);
+ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 extra)
+ {
+ 	int retries;
+-	unsigned int cpu = raw_smp_processor_id();
+-	unsigned int nid = cpu_to_node(cpu);
++	unsigned int cpu = 0, nid;
+ 	union smc_message msg, last;
  
- static ssize_t heater_enable_store(struct device *dev,
-@@ -279,14 +281,14 @@ static ssize_t heater_enable_store(struct device *dev,
++#ifdef CONFIG_SMP
++	switch (cmd) {
++	case CMD_GET_FREQ_INFO:
++	case CMD_SET_FREQ_INFO:
++	case CMD_GET_FREQ_LEVEL_NUM:
++	case CMD_GET_FREQ_LEVEL_INFO:
++	case CMD_GET_FREQ_BOOST_LEVEL:
++		cpu = cpu_number_map(id);
++		break;
++	default:
++		cpu = raw_smp_processor_id();
++	}
++#endif
++	nid = cpu_to_node(cpu);
++
+ 	mutex_lock(&cpufreq_mutex[nid]);
  
- 	guard(hwmon_lock)(dev);
+-	last.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
++	last.value = readl(MMIO_SMCMBX(nid));
+ 	if (!last.complete) {
+ 		mutex_unlock(&cpufreq_mutex[nid]);
+ 		return -EPERM;
+@@ -196,12 +217,11 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+ 	msg.extra	= extra;
+ 	msg.complete	= 0;
  
--	if (time_before(jiffies, data->heating_complete))
-+	if (time_before64(get_jiffies_64(), data->heating_complete))
- 		return -EBUSY;
+-	iocsr_write32(msg.value, LOONGARCH_IOCSR_SMCMBX);
+-	iocsr_write32(iocsr_read32(LOONGARCH_IOCSR_MISC_FUNC) | IOCSR_MISC_FUNC_SOFT_INT,
+-		      LOONGARCH_IOCSR_MISC_FUNC);
++	writel(msg.value, MMIO_SMCMBX(nid));
++	writel(readl(MMIO_MISC_FUNC(nid)) | IOCSR_MISC_FUNC_SOFT_INT, MMIO_MISC_FUNC(nid));
  
- 	ret = i2c_master_send(data->client, &cmd, SHT4X_CMD_LEN);
- 	if (ret < 0)
- 		return ret;
- 
--	data->heating_complete = jiffies + msecs_to_jiffies(heating_time_bound);
-+	data->heating_complete = get_jiffies_64() + msecs_to_jiffies(heating_time_bound);
- 	data->data_pending = true;
- 	return count;
- }
-@@ -410,7 +412,7 @@ static int sht4x_probe(struct i2c_client *client)
- 	data->client = client;
- 	data->heater_power = 200;
- 	data->heater_time = 1000;
--	data->heating_complete = jiffies;
-+	data->heating_complete = get_jiffies_64();
- 
- 	crc8_populate_msb(sht4x_crc8_table, SHT4X_CRC8_POLYNOMIAL);
+ 	for (retries = 0; retries < 10000; retries++) {
+-		msg.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
++		msg.value = readl(MMIO_SMCMBX(nid));
+ 		if (msg.complete)
+ 			break;
  
 -- 
 2.53.0
