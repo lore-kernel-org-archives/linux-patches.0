@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063990;
-	b=oIAFZMxKCmkRN/xxce07RkFsJylG3Y+1tTlyBm5t//RkEtGxwamGAbXnXDoeyMju60Hn
-	 caDqAbROFWq2o79WHczm1AcAN+3F5npEU8gskWFYU6Y984J66A/Y8tPjRyJu8BFBmcjUR
-	 Hd0Y+HkLeZLvNawXj/S2z9XjpW1uEgDAZTZnxiZ8WDavQcNuH5zdWHMDJi/0+Mjjd7xdU
-	 uhz3lhlP+syF+BFP7ab2svsJu7c+Y7YnzHPXX56r7nJcMw8wJTuREG9UlVy4RisGyQstT
-	 imYYAiAZBmimUdI48Q/Vd+tjaEZxkF9JMZRtNHG9D3k8UT163IJQiuWvz8SpSLYVQ0w==
+	t=1794063991;
+	b=wCxCbuQr4oE6OhAz8tXK/DxKBMoc0f1zujL/X7w7uZu8jpZ/BbiiRmTCJs0mSwqlxm7G
+	 isACJzLqtPTPqW/V2u7nJS4miyua3v+z5zgHQG+7ux73Nf1CHiPjCrxu6+K25S6K8+Pq6
+	 iuAtJmejvRPUnAQ2xgV+8RDojtSth/RPdKRNX8d+DN4PZS8ww2vyuriyU3Tg5ZanF89YZ
+	 I8GX37rd4xd7WHRbq7ldgFEAhqi/mM15BSS8k9ERx0UCMaZ27oMZFnWT4OGl2j9Pvpw0A
+	 FQCsm3HWtcUBhyEsGu07qZo6zhVppEdKNvwTemyISdpTZcIRi48R2RAch/EKZqB2PXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063991;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I/lei3gDO5xxwLM3PvuUzokyy5xjyy3cuuW/Um9OoME=;
-	b=UHMcAdtBO2qJcH6J6iNK63IJfwqVoTZ86csgNfzHYvxpg3Ajv3QZL3yJJbvgcJmIrdQH
-	 8J5uC3z1zcZSuInQ7ADKdCVb5qvbjdZpe2NQYOEXhN2dHr56kSJDb5vG8crNQKQDuwb8k
-	 toW4HmApEKjmxAcgDNkvZpnDuJg4CPJw467ItAUAADcrUnFaUQuehyqFgjvzFMSWXC0Ws
-	 MnI+zG/twPiK4kVVXJtv9FmIiJWwtbarhnWIAoVLeWfHILpunCqHIg//KF7yloOPRUQed
-	 TfevVcJtKNaWQwOq4u/ySJOolWDKmGFbltbyAOQqczIil15Pj3wkGF3N1kjfzCo7shw==
+	bh=4C/jRg6sJFTO7ihTvY3dVzvxNfVBhGp6pGy88gl7KMs=;
+	b=hWLlw3cb3SxB8XPGBJbsncWGCQZM73h2JUmRg/EMvNJP8LAn8nkt117WUINjfhYjVZIG
+	 81oHkaj2pSZumiGflKhjySTM49mX1ymEPhw5TWLQelWQokVMDgusWSlop9FNZi6OesAVo
+	 zVGYJJ5xRAGRCV8DH04T7MYXVXJt1gwaqGdnQsJB+jn0Ie9f7DNgD6w6iQc+Nm9s7ZwDQ
+	 /15Bxak/pJ8Sjcp8AQLzi19eWx0iqYL8EKu3E0iP1hNubpEgcTjfwyP35bRRqthLCdFZM
+	 ITvE6CrLHJXdn9brZEvB1zAeZuR3Rv5quctd5ihEWNz52R14f908YZyWELSCSuq6DCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WsPws2l8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gH/9lmdM";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04685606D83C;
-	Sat,  7 Nov 2026 15:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3668660A2616;
+	Sat,  7 Nov 2026 15:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WsPws2l8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A694B1F008A1;
-	Sat,  7 Nov 2026 15:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gH/9lmdM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68581F008A7;
+	Sat,  7 Nov 2026 15:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063989;
-	bh=I/lei3gDO5xxwLM3PvuUzokyy5xjyy3cuuW/Um9OoME=;
+	s=korg; t=1794063991;
+	bh=4C/jRg6sJFTO7ihTvY3dVzvxNfVBhGp6pGy88gl7KMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WsPws2l8+mdbJ+GRRdQvPwBu4FyUci5FR97iL3FuRc8q9F41GvcE4/tfohz24yZQ2
-	 HqfGSiRNIK1ipGES4y4z3je1CnOuKfLBXZO+QWGSFnF5i6IzW3v11wuTyYKb69cUr8
-	 OHtnYb2F8zTEtq/eRYLb3MS5VRJTqZ5w97+nQtGc=
+	b=gH/9lmdM+tLggk4KbDjAYeFdKyJavXUDWhwhHcDdFrYhKvH4aw5gKS3yLMPW3I3DB
+	 FFpMnCPIzfL1W0u/VzfpIINgEFHwE6SJOcFaAAaFu8dPiyazhoIX88xLsdR+qMNYkI
+	 qxuMw+vorfHi/O6CtlAyJL3QvC2+lmXQ8/f7oBdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Snyders <robin@snyders.xyz>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	stable@kernel.org,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0134/1257] power: supply: qcom_smbx: notify battery overvoltage recovery
-Date: Sat,  7 Nov 2026 08:40:30 -0500
-Message-ID: <20261107134943.016190221@linuxfoundation.org>
+Subject: [PATCH 7.3 0125/1257] media: require two-byte Cypress type 04 records
+Date: Sat,  7 Nov 2026 08:40:21 -0500
+Message-ID: <20261107134942.779011762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,58 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Snyders <robin@snyders.xyz>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 2548e4fa576a87a3b0d1b15a9c3f909bc54887b5 ]
+[ Upstream commit e22872703386c3885d8c6bd595124587bc4e5081 ]
 
-The battery-overvoltage IRQ is configured for both edges, but its handler
-only notifies the power-supply core while the fault bit is asserted. The
-falling edge therefore does not publish the recovered health and status.
-The handler also ignores register-read failures before testing status.
+Both Cypress Intel HEX parsers read two address bytes from type 04
+records. Generic record framing permits any record length, so a short
+record can make the parser consume the checksum or bytes beyond the
+firmware record. A longer record also violates the Intel HEX type 04
+layout.
 
-Handle read errors, log only an asserted fault, and notify the
-power-supply core after every successful edge read.
+Require the type 04 payload length to be exactly two bytes in both
+implementations.
 
-Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Robin Snyders <robin@snyders.xyz>
-Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-5-eb48246be599@snyders.xyz
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 79a63c60a6a2 ("[media] media: move dvb-usb-v2/cypress_firmware.c to media/common")
+Fixes: 776338e121b9 ("[PATCH] dvb: Add generalized dvb-usb driver")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_smbx.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/common/cypress_firmware.c      | 2 ++
+ drivers/media/usb/dvb-usb/dvb-usb-firmware.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/power/supply/qcom_smbx.c b/drivers/power/supply/qcom_smbx.c
-index 55ffe9857e494..f5557b8cc92ae 100644
---- a/drivers/power/supply/qcom_smbx.c
-+++ b/drivers/power/supply/qcom_smbx.c
-@@ -722,16 +722,22 @@ static irqreturn_t smb_handle_batt_overvoltage(int irq, void *data)
- {
- 	struct smb_chip *chip = data;
- 	unsigned int status;
-+	int rc;
- 
--	regmap_read(chip->regmap, chip->base + BATTERY_CHARGER_STATUS_2,
--		    &status);
-+	rc = regmap_read(chip->regmap,
-+			 chip->base + BATTERY_CHARGER_STATUS_2, &status);
-+	if (rc < 0) {
-+		dev_err(chip->dev, "Couldn't read charger status: %d\n", rc);
-+		return IRQ_HANDLED;
-+	}
- 
- 	if (status & CHARGER_ERROR_STATUS_BAT_OV_BIT) {
- 		/* The hardware stops charging automatically */
- 		dev_err(chip->dev, "battery overvoltage detected\n");
--		power_supply_changed(chip->chg_psy);
+diff --git a/drivers/media/common/cypress_firmware.c b/drivers/media/common/cypress_firmware.c
+index 66274fdf52438..d0f66ed01c4b1 100644
+--- a/drivers/media/common/cypress_firmware.c
++++ b/drivers/media/common/cypress_firmware.c
+@@ -59,6 +59,8 @@ static int cypress_get_hexline(const struct firmware *fw,
+ 	if (hx->type == 0x04) {
+ 		/* b[4] and b[5] are the Extended linear address record data
+ 		 * field */
++		if (hx->len != 2)
++			return -EINVAL;
+ 		hx->addr |= (b[4] << 24) | (b[5] << 16);
  	}
  
-+	power_supply_changed(chip->chg_psy);
-+
- 	return IRQ_HANDLED;
- }
+diff --git a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
+index 0fb3fa6100e4a..675d9d1d4f472 100644
+--- a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
++++ b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
+@@ -141,6 +141,8 @@ int dvb_usb_get_hexline(const struct firmware *fw, struct hexline *hx,
  
+ 	if (hx->type == 0x04) {
+ 		/* b[4] and b[5] are the Extended linear address record data field */
++		if (hx->len != 2)
++			return -EINVAL;
+ 		hx->addr |= (b[4] << 24) | (b[5] << 16);
+ /*		hx->len -= 2;
+ 		data_offs += 2; */
 -- 
 2.53.0
 
