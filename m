@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064144;
-	b=KCTREHSi//s9fK41QaVzPoQx3vIZYPMjzfnXx5yoIznaZebg38Fbn0MjOz7Nz5IX8ZOT
-	 cDmdI24EINKLRsSU47k45tt3LdTaS1TiJSdVTuJKbtCS46d1Kn7VasxswqA/3AFE5XRpa
-	 J1GEsx/KkUWszse20EdQJZ4w8/AfwXQwwQNHJ+VS908lYF4eo/UkS/lAxwIXdAe/l7w7B
-	 FiRid17ZHv8AZVLimk6rPzxhA915Lrl28kjcaba9AQwrskx5vfcMTKWpDaMlU2YdkvTPj
-	 t3WbM5jQZ38aWNUTzdIOmQ/wL2f1wAk5HPHHB3UopPnGjDhNJ7hYH3WeLcFK+ezl4Yw==
+	t=1794064145;
+	b=zTvmZImO+65THur7SDlmDyqR8cHrCwV2d5NmxBBbuSFtrfyKNjKCot0KMpRHe7h8ipyW
+	 6LiJgjjL8qjCSxnLlD8DvuSnY/KYDmZf7D9ccpLwF3lKPAlSvHGnI48UlQ7tKRZLh3TOt
+	 +hYMhosYftkHNK4cIvKeBt0YIm/wZyKduRDqipSU+GbLn9FjASao87IOIbN/wZ4aK1HEG
+	 F64YgkxCdils16M0bq2u5L1pl4on9SReBK6e3ZHhKuW1tE7zObgZ33LyJ9+m9A1grCx8N
+	 jxpu6SsKvqGztoGgugBXcbNwIY/PaHB+dMFV8cBqw3/ArfgcOTLmmA7ESxu0qhBKO2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064145;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IasYLd+CS8/vVI9o0sbHU2smA1OF4wN4M50iEGegFKE=;
-	b=06cOjHjDPih7CbY8MwLHoVC4D1dIgT7VCsd46xQHeOBg/GRvEkOT2wGDkVtM1LQtyFHJ
-	 Ebh/9CBEkadJl70516/pMdnJIWz/TN8dskwd95YTjYWwx6YXvIp44H9mZgpxAkiyxslgG
-	 Lc4usKK7buhaOILMzTxiLWyC0Aaie1gt6KrA4gE9mISAdcpk0c5eY0Q4S6OrWPvbRq1n0
-	 evh1uORI6Bpr0ppN+6DOE7a+BVzvImHwheMDPoZMpzDhEODEpXbDt7dlZX9cXu45zHf2B
-	 8K3qrEYNxMXdEr3cLUcqkBkFV2PzmQB/JWmExizRqrKokV5Sd81LqAyZ4MFmrSUerww==
+	bh=tOA7MLsws3xi64yoGXJyT5EVFZdYQXT/2VxMX+iu34g=;
+	b=5Vnin6vmrQo5CG6ThlCDrLjtEfg0MUsK6K4oFRX/no4I3SdagfpXEeQZihEVXgchmTlx
+	 M7ZJ3ZpeprR6Xc/Jw70HJuKtzsFtnt1xace/8vSJboAy+FMKABN67EcBUPLSqk6wozTEr
+	 ktTWlJB4LNUmCq41+h5HZeKLDONWlSmya4uZQETwAYWO3Ac3X6PNXeufa5x3BQSi4lhHJ
+	 f1OHURbJgXd8xFMGSM0Gbn5kqxvzTAoj92N0JPoYEZqXTiAuAi85eg42eVMogOSFTIH8D
+	 xs5gcWPlYTzKJormDbmTK8DpwkY1ybcvWfb/8/a6za8srzwQzvv8pR4XWrGjYKsSxVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rz67r4x8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SE3mZ6mj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7926C606A33F;
-	Sat,  7 Nov 2026 15:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68FA606A33F;
+	Sat,  7 Nov 2026 15:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rz67r4x8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268401F0089F;
-	Sat,  7 Nov 2026 15:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SE3mZ6mj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537561F008A2;
+	Sat,  7 Nov 2026 15:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064144;
-	bh=IasYLd+CS8/vVI9o0sbHU2smA1OF4wN4M50iEGegFKE=;
+	s=korg; t=1794064145;
+	bh=tOA7MLsws3xi64yoGXJyT5EVFZdYQXT/2VxMX+iu34g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rz67r4x8jAPcpL1zjsMs81HKeQVPSnm9/06ElD36v1b5k3JKcr4FSUSclKboPd8JO
-	 mJCJim84m4cdirNnv/4vAQnlZt3NaSvPAFDUpzszXwqijvut9tLVOg1W87xPzoWfab
-	 bzqRms1k1tL2tqPXS59j++QUcyXxhtU7d5ca3hh8=
+	b=SE3mZ6mjiWqR6fXApAROiYQy97DtdH3rv/6cvMcRKLXwXwc4dSMXDBSsHyuW+Dzos
+	 DfvY8xQ0VsIJv9EqKvarN/jcfh5cauvNWRcmaxWyHLbbq17K4LfUA34qhiO8dXkfOR
+	 mMMxEDqwMln2sKrNzt0Z7vb/jQ5TX6z++2HDTo+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Weili Qian <qianweili@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0253/1257] crypto: hisilicon/hpre - fix pointer dereference before length check
-Date: Sat,  7 Nov 2026 08:42:29 -0500
-Message-ID: <20261107134946.494658875@linuxfoundation.org>
+Subject: [PATCH 7.3 0254/1257] crypto: hisilicon/hpre - return -EOVERFLOW for small ECDH output buffer
+Date: Sat,  7 Nov 2026 08:42:30 -0500
+Message-ID: <20261107134946.520283775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,14 +70,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 9770bb7d335f8f8db01e99168bbdd9ce2cb6238c ]
+[ Upstream commit 232804a5ed70a8ace32c46d341d438aeba54bc67 ]
 
-In hpre_rsa_drop_leading_zeros(), the loop condition dereferences *ptr
-before checking *len, causing an out-of-bounds read when *len is zero.
+hpre_ecdh_msg_request_set() returns -EINVAL when the output buffer
+is too small, after setting req->dst_len to the required size.
+-EINVAL is misleading because the caller can retry with a larger
+buffer. Return -EOVERFLOW as other kpp implementations do.
 
-Swap to while (*len && !**ptr) to test length first.
-
-Fixes: c8b4b477079d ("crypto: hisilicon - add HiSilicon HPRE accelerator")
+Fixes: 05e7b906aa7c ("crypto: hisilicon/hpre - add 'ECDH' algorithm")
 Cc: stable@vger.kernel.org
 Signed-off-by: Weili Qian <qianweili@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
@@ -87,18 +87,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index 09077abbf6ade..7894211b99727 100644
+index 7894211b99727..bad9fe5d8c3c2 100644
 --- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
 +++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -720,7 +720,7 @@ static void hpre_dh_exit_tfm(struct crypto_kpp *tfm)
+@@ -1452,7 +1452,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
  
- static void hpre_rsa_drop_leading_zeros(const char **ptr, size_t *len)
- {
--	while (!**ptr && *len) {
-+	while (*len && !**ptr) {
- 		(*ptr)++;
- 		(*len)--;
+ 	if (req->dst_len < ctx->key_sz << 1) {
+ 		req->dst_len = ctx->key_sz << 1;
+-		return -EINVAL;
++		return -EOVERFLOW;
  	}
+ 
+ 	tmp = kpp_request_ctx(req);
 -- 
 2.53.0
 
