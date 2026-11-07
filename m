@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063194;
-	b=z0VrccNpobaJaasRcbygLZC+G86Y+CQyHVPJwol+rYeAnoqArbSZ3S3y/f0PzJug4aKB
-	 BqQlw3m+Sykw6w/awYrSSPToJfXopy4FGSWWf9SB44DAdLTJtJyzn3+x8mrmN+kziCppx
-	 5W5/40IJlqmi8hgMsPsoqd8HYCZ49bFDZKwlmc/qsfPNumYnz7fvDzp1O9FAB6wFXKPnR
-	 DajvP1UAYpDfenp7uLm5ZXomfHKMw0pWHXVq/WIz/hWlEe24rqqMCr8rjYDy+WgSLmUc7
-	 Cn7axny5KsGDdVvc+xPbo6oH8Q38AwbUdJRhlRDgs8cnGBH4lR2SPCxj6lKYlWx0j2Q==
+	t=1794063195;
+	b=r2wG2FdCpFjpxUJeBSuLGVbaEAmeDorjlz32iDGz6MsO/o4guOTw70KvipJUfGANtWk5
+	 f27GfAuZlrzSbcc0rWC4vsF0JqUpum4OzcF9JuT0QIwGhkA6uy+4qEziUXXaBHVJrU1wF
+	 jWoTtspjr5M5vQ0ZE0DWFWSrt/DKWhik2P4j1v+cc1a9zbxAgR6pFlVj8TGSVnchLx2JP
+	 h+tMpirj5fZy4M/TXSKq4umZGCJk5D1tqGR2Wj+WtBmMD6guoReJuEhrkzj5VORdAJgeB
+	 2MqJU+Ol7AjqW9sCrcLERPwKeEGxyf5VEAQVKAi20q4BchPb7XN3+/hg+1+vaHhmndw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063194;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=QDpDlHer/dAYWXH5N+SCd6Rng/3dXU08edizt8rXk9I=;
-	b=WfI4+OAAz+UMYUNkwORdKDRkBRtgZ6qJjZ55ilQLC7ZOVKU+7Wf/cfAThJFrcRIsrXfB
-	 Sw1juKeubnv2CcyqArKa/ncW497p+xmK+GGkm/JCtSOSEUt1fhjqWXB8sN7esrsKHjbsy
-	 y8BKfCB9O36DDSiAIkD3ASqRBPOzwc9XRgs/1ctFjN2Bhd82KO4Sb+OUbaLrgekdT18ce
-	 EMo6uVgqIYDLUZBDAq8uYC8yKwXat0USFfkqHHNVzgaVKM1owlHNa5SO9ALSzfnin/Dzg
-	 SmSQDV8I0A2wJJ74NDttFip44aujBAewT68lSOj4nREFeTytyp++6PWfk9XJN5I6TCg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=JjVMusyI1bTLXf5L4Hj5aQrxt14bxsGH97pQ6vs5V0c=;
+	b=Q4/JPaLiachVRxEHed/YOrpWpg+vmwK/KI4R5EX9IUvvuwHJWJcx/Dp5YS2/LfYOS0Xv
+	 JI0T+NK0+I2JMqyoRIzqnTo94547bikOrrjgK8ZzUp+AnYdLEks/srcOwFjp+qWLEOPUN
+	 YdC8NhiX6I/eATrDozN6IYxAE7LTvIk+pIkV2ASN+Z1PMMwuD27XgXhKDGNcKp7wxnTXt
+	 r+SP57qbSont3FDLVjl+hjo/vmYE++QT+b9LrfPEraNvvBRGXnhYlk0cg0fegL3ywzhNw
+	 XxLbJ7568bvffUOv6bRIpE+BYgXx7qnqBm2vHQZtZYhTc+frKzwFCt+Sip/8mg6EbIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SwlCmYG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bOl2DIBp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C685E606D81F;
-	Sat,  7 Nov 2026 14:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADD5606D83F;
+	Sat,  7 Nov 2026 14:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SwlCmYG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 609E01F0089F;
-	Sat,  7 Nov 2026 14:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bOl2DIBp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C271F0089F;
+	Sat,  7 Nov 2026 14:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063193;
-	bh=QDpDlHer/dAYWXH5N+SCd6Rng/3dXU08edizt8rXk9I=;
+	s=korg; t=1794063194;
+	bh=JjVMusyI1bTLXf5L4Hj5aQrxt14bxsGH97pQ6vs5V0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SwlCmYGcagqp/g82709alkOt0zwIUkxWUCLwTZfj7Zdi4a6RhY/E/C95ximcDUzH
-	 E9LS4kF3t5y/pTzZ3UiOwzdC6Y8WN4Ayyy9yeMRW9QETxV2+FOY6aO+dI9wpaE3RNl
-	 GENoVCrtMTeFX+/x4H38oyPIpBfKmk5/2RfS74ng=
+	b=bOl2DIBp/vTIwEwkgYsVwUIFN7YABE1B93YEa4JCmJi6Kr8JdXkZc/Pf7JyhNAdL6
+	 iDjXUmCH367LMuu9a5f9+cg1KX1QHr0kjIsSTQ04/xJ4ovMCxAMyh+h7wbc82xp87P
+	 sMqYZcHVkmJQIbK61gpruOB0FXkrmoOMPDw0Dno8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 409/869] aoe: pull in the headers each received packet type reads
-Date: Sat,  7 Nov 2026 08:51:31 -0500
-Message-ID: <20261107134907.216133918@linuxfoundation.org>
+Subject: [PATCH 6.18 410/869] PCI/sysfs: Pass the device name length in UTF-16 code units
+Date: Sat,  7 Nov 2026 08:51:32 -0500
+Message-ID: <20261107134907.245605493@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -62,85 +62,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit e1274a6bc40a4618f6fbaebbdc51cca865d51bed ]
+[ Upstream commit af5ca2d75147bf283239e8ef0fbf6e5e0488ca91 ]
 
-aoenet_rcv() only pulls the AoE and ATA headers into the skb head when
-the packet is long enough to hold both.  A shorter packet goes through
-unpulled, and aoenet_rcv() reads the AoE header from it anyway.  CFG
-responses go on to aoecmd_cfg_rsp(), which reads the config header
-after it, and ATA responses get queued for ktiocomplete(), which
-skb_pull()s both headers.  Ethernet pads frames to 60 bytes, so this
-mostly takes a virtual link, but nothing stops a short frame from
-getting here.
+Currently, dsm_label_utf16s_to_utf8s() passes the ACPI buffer length to
+utf16s_to_utf8s() unchanged.  The Device Name _DSM may return the device
+name as a buffer holding a UTF-16 string, and the ACPI length counts bytes
+while the converter counts wchar_t elements.  The converter therefore
+receives a count twice the number of code units the buffer holds, and that
+count is its only bound on the input.
 
-Pull the AoE header up front and drop the packet if it isn't there,
-then pull the ATA or config header in the switch arm that hands the
-packet on, so each path gets the headers it reads.  This also replaces
-the open-coded __pskb_pull_tail() with pskb_may_pull().
+A NUL code unit ends the conversion early, so a name that carries one is
+converted correctly and the error stays hidden.  ACPICA zeroes the entire
+result allocation, and the padding placed after the buffer supplies that
+NUL for most lengths.  Lengths that leave no padding, or a single byte of
+it, do not, and the conversion then runs up to its own length in bytes past
+the end of the allocation.  The bytes beyond the allocation are decoded
+into the "label" attribute, which is world readable.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Divide the buffer length by the size of wchar_t so that the converter
+receives a count of code units.  The division truncates, so the converter
+is never told to read more bytes than the buffer holds, including for an
+odd length.
+
+Reaching the out of bounds read needs firmware that returns the name as a
+buffer and omits the terminator.
+
+Fixes: 6058989bad05 ("PCI: Export ACPI _DSM provided firmware instance number and string name to sysfs")
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261007-b4-aoe-short-packets-v1-1-db5155f7bb9c@toxicpanda.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://patch.msgid.link/20260814070522.2327975-5-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/aoe/aoenet.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/pci/pci-label.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/aoe/aoenet.c b/drivers/block/aoe/aoenet.c
-index 66e617664c143..cd7c735bb43b7 100644
---- a/drivers/block/aoe/aoenet.c
-+++ b/drivers/block/aoe/aoenet.c
-@@ -131,9 +131,7 @@ static int
- aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt, struct net_device *orig_dev)
- {
- 	struct aoe_hdr *h;
--	struct aoe_atahdr *ah;
- 	u32 n;
--	int sn;
+diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
+index 0c64465196404..c224619b9a266 100644
+--- a/drivers/pci/pci-label.c
++++ b/drivers/pci/pci-label.c
+@@ -144,7 +144,7 @@ static int dsm_label_utf16s_to_utf8s(union acpi_object *obj, char *buf)
+ 	int len;
  
- 	if (dev_net(ifp) != &init_net)
- 		goto exit;
-@@ -144,12 +142,8 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt,
- 	if (!is_aoe_netif(ifp))
- 		goto exit;
- 	skb_push(skb, ETH_HLEN);	/* (1) */
--	sn = sizeof(*h) + sizeof(*ah);
--	if (skb->len >= sn) {
--		sn -= skb_headlen(skb);
--		if (sn > 0 && !__pskb_pull_tail(skb, sn))
--			goto exit;
--	}
-+	if (!pskb_may_pull(skb, sizeof(*h)))
-+		goto exit;
- 	h = (struct aoe_hdr *) skb->data;
- 	n = get_unaligned_be32(&h->tag);
- 	if ((h->verfl & AOEFL_RSP) == 0 || (n & 1<<31))
-@@ -171,10 +165,14 @@ aoenet_rcv(struct sk_buff *skb, struct net_device *ifp, struct packet_type *pt,
- 
- 	switch (h->cmd) {
- 	case AOECMD_ATA:
-+		if (!pskb_may_pull(skb, sizeof(*h) + sizeof(struct aoe_atahdr)))
-+			goto exit;
- 		/* ata_rsp may keep skb for later processing or give it back */
- 		skb = aoecmd_ata_rsp(skb);
- 		break;
- 	case AOECMD_CFG:
-+		if (!pskb_may_pull(skb, sizeof(*h) + sizeof(struct aoe_cfghdr)))
-+			goto exit;
- 		aoecmd_cfg_rsp(skb);
- 		break;
- 	default:
+ 	len = utf16s_to_utf8s((const wchar_t *)obj->buffer.pointer,
+-			      obj->buffer.length,
++			      obj->buffer.length / sizeof(wchar_t),
+ 			      UTF16_LITTLE_ENDIAN,
+ 			      buf, PAGE_SIZE - 1);
+ 	buf[len++] = '\n';
 -- 
 2.53.0
 
