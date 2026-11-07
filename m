@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065027;
-	b=ZqKSJTQ4j1OCZFIuYl2zRSaeXhR/Yt8fhidu5QgxGo6qvCX5J/xYisfmYaESj0rHibK8
-	 1i7EK4pn0+ZMn5y32yaiStNvdoRwbXDOGSzaRihBixlx1f5YXbxy5mxxCdDElmAO4/xIr
-	 OD67D6rydSD0+oF+jhmKku1QiJcjw2CJyh8jhOjxE9iH9gjXKjLxhaPVm2qyjsykZ4bCF
-	 7tjYWj/PctwS+fonuD3ZvuqhW2w0P6yTna8nag5lz3ajDJdbssPRXkF6biisxVkXa0m/q
-	 SUxChOg01GDZ2DmOTAWcdsPaQeF2pD23LmFUpGGmHW0kxFXxIme0O+LPLuEtcMVGsOg==
+	t=1794065028;
+	b=SGU8zuQlR79If2KdUQlbCl/MijaelGXS9Cn9xifean8MdXQvZdXCsLyr7IUWMBl6YRn7
+	 jhBffWA8hiiRuOwAsUk2Voadh/oThEJPMERQd/OSJaHv2QS1ltF68IOeuK9Nwa8xxl8Ww
+	 No3GxliXnRKpw2/Zha11PlqyyF75vNnekyHhJU1GfZLsjmZWmojXUru43FvkMSaI+pkQq
+	 /4F0s/1VagrxDHJHvbUM1aHgTQxEI0sj53EiztU2vDP1urQ8riwv6wrYiMcOIlX9VXDVs
+	 ezgby0GICmC+DUyL6rDYfaMF60m9hdBK1gf7WUnGNjt54RZLoZeOflO0dcQ9CC7HH8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065027;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IRUDZiRVzqn7C11MtvDw3q9Emw8R9cikvQz0jD4r1G4=;
-	b=O0mPi/JWJDVOs0HLqx/JixLuph4Kw+fFSsMN0t89RdjJF7EgoTR5UsV9zVTnrIn3HBVg
-	 kycLiASOM0aIzcXXmd/kT1sahs3SQ4g+LIOXdOi4RvBfvIaAXxLmr2sA/HJrbXln4I2dC
-	 EQZXVcoVFRsDZiok2VIx/XU16GF9ukwZRIdbgD3RRP2ej7EqcUXsPKsSeeQmm4xOPbXoh
-	 KYdYNW3wWD6svkZw3sx8EWPNi176NRPVZonCjc0SldS3R7yoPNIrL+Ftic0UrUUbpCo/1
-	 QZmT0+2dHXrJWB4+BwZgOUHmvJtMSqKrkJVojsjIRLWLQMGS9RR780+c/Oq+LnuAzyg==
+	bh=OCjIk8O+u46JtAEzpuKelUKn6WEZxsubJtZFOVM6tEs=;
+	b=UbtzCRTJ+bOXfPuMPBMvecfaSDCDfGZGCvAUMJbNl6FkTvaE1QolQKRfSYgqlbKAkoRa
+	 u+QrwZC5QB9N9/xtUIMBEEUKNlOpJdmpYu6ggMMzS/JOn8h/pMYC7BDEJx59A3PghBb+m
+	 O8JOO+5x4R2H2PMkQ23Eif5qDxvyAdspuud2SjtvxEd3v76fDpKSoFA50j4YBf7Z24SnA
+	 mERvq2l1hHVmFVcVYLxM1JBJjIYZGqg6IQe8Z6F62djIRfUc55SRte8gn5wdkKJ0PaY8J
+	 00YhpAYZkV5sPq3q1jeeblPNn3Lx1aSOEoLh+TlHlcVw1xZ1nZRr2emDDKHLmrG+Tvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j+RFpJ1u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUkwMthb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E825A606A9E7;
-	Sat,  7 Nov 2026 15:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26148606A336;
+	Sat,  7 Nov 2026 15:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j+RFpJ1u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FF41F0089F;
-	Sat,  7 Nov 2026 15:23:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUkwMthb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ADC1F0089F;
+	Sat,  7 Nov 2026 15:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065026;
-	bh=IRUDZiRVzqn7C11MtvDw3q9Emw8R9cikvQz0jD4r1G4=;
+	s=korg; t=1794065028;
+	bh=OCjIk8O+u46JtAEzpuKelUKn6WEZxsubJtZFOVM6tEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j+RFpJ1u+MERMSOsM6SVpu/MXs5QzcxU5GisnUStQjecBxvnZECmRkihri7RIh2ZG
-	 kc+g9FwRBSBjItTJ61FK4tjMpXzAbO0vg8paSA2/1lPxBT1Jop2cXWr3Ux3V1qPjqa
-	 NgJPvgN1U6hOIngJq6s7xX7qHfnmM1sMC8XmqpiA=
+	b=cUkwMthbFZ15Mjgk/aspS4Ff0wfRqRCiL8RTAdL7HceA15WaUjvP77khTKLnxlJDj
+	 3zq57DU3Dc2YICZ6+lud3xi1Med/FRehSbz80hX5UhktfEjfHCi98rP54+zcBBINQ5
+	 97oMaZ7DK8vAJsdaaY89Zgum5Wrv4nDjgQRQSkKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0886/1257] rtc: cmos: Disable ACPI RTC event before handling it
-Date: Sat,  7 Nov 2026 08:53:02 -0500
-Message-ID: <20261107135003.790287693@linuxfoundation.org>
+Subject: [PATCH 7.3 0887/1257] rtc: cmos: Honor explicit use_acpi_alarm parameter value
+Date: Sat,  7 Nov 2026 08:53:03 -0500
+Message-ID: <20261107135003.819494186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,72 +70,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 3f67038df8b5cba07254d1cff60d73e988b49ab7 ]
+[ Upstream commit 3c7acb209e1d630b734a2ec72bd988f5da2ac55c ]
 
-Users of RTC_UIE_ON can stop receiving update interrupts when rtc-cmos
-handles alarms through ACPI. In one 50-run test, 40 runs passed and 10
-timed out after receiving between one and four of five expected events.
+An explicit rtc_cmos.use_acpi_alarm=0 command-line argument is ignored
+on systems where use_acpi_alarm_quirks() enables ACPI RTC alarms. The
+argument appears in /proc/cmdline, but the read-only parameter reports Y.
 
-The ACPI ff_rt_clk counter stopped at 218, exactly matching the number
-of events delivered to userspace, and reported:
+The boolean parameter defaults to false, so the driver cannot distinguish
+an omitted argument from an explicit false value. Use a custom setter to
+record whether parsing occurred and skip automatic selection when it did.
+Preserve the bool parameter type metadata. Automatic selection remains
+unchanged when the parameter is omitted.
 
-    218     STS disabled     unmasked
+On the affected system, the explicit false value reports N after this
+change. The HPET-emulated path completed 100 test runs without a failure
+while the ACPI RTC event counter remained at zero.
 
-rtc_handler() runs in the threaded ACPI SCI handler and calls
-cmos_interrupt(), which schedules rtc->irqwork. The work can run before
-rtc_handler() returns:
-
-    ACPI SCI thread          rtc->irqwork
-
-    cmos_interrupt()
-      schedule_work()
-                             __rtc_set_alarm()
-                               rtc_wake_on()
-    acpi_clear_event()
-    acpi_disable_event()
-
-The SCI thread then disables the event that the worker enabled for the
-next alarm. That alarm sets its status while delivery remains disabled,
-so no update interrupt reaches userspace.
-
-Clear and disable the current ACPI RTC event before cmos_interrupt()
-schedules the work. The worker can then enable the next event without
-the handler undoing it. With this ordering, 150 runs delivered all 750
-events without a stall.
-
-Fixes: 311ee9c151ad ("rtc: cmos: allow using ACPI for RTC alarm instead of HPET")
+Fixes: 36d91a4d401c ("rtc: cmos: introduce quirks to enable use_acpi_alarm mode")
 Cc: stable@vger.kernel.org
 Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261015173029.3091872-2-gourry@gourry.net
+Link: https://patch.msgid.link/20261015173029.3091872-3-gourry@gourry.net
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/rtc/rtc-cmos.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index fa04ece151b8b..fe514b1aa3433 100644
+index fe514b1aa3433..209aa4ec732c8 100644
 --- a/drivers/rtc/rtc-cmos.c
 +++ b/drivers/rtc/rtc-cmos.c
-@@ -758,7 +758,9 @@ static u32 rtc_handler(void *context)
- 	unsigned char rtc_intr;
- 	unsigned long flags;
+@@ -57,7 +57,28 @@
+  */
  
--
-+	/* Quiesce this event before rtc->irqwork can arm the next one. */
-+	acpi_clear_event(ACPI_EVENT_RTC);
-+	acpi_disable_event(ACPI_EVENT_RTC, 0);
- 	/*
- 	 * Always update rtc irq when ACPI is used as RTC Alarm.
- 	 * Or else, ACPI SCI is enabled during suspend/resume only,
-@@ -781,8 +783,6 @@ static u32 rtc_handler(void *context)
- 	}
+ static bool use_acpi_alarm;
+-module_param(use_acpi_alarm, bool, 0444);
++static bool use_acpi_alarm_explicit;
++
++static int set_use_acpi_alarm(const char *val, const struct kernel_param *kp)
++{
++	int ret;
++
++	ret = param_set_bool(val, kp);
++	if (!ret)
++		use_acpi_alarm_explicit = true;
++
++	return ret;
++}
++
++static const struct kernel_param_ops use_acpi_alarm_ops = {
++	.flags = KERNEL_PARAM_OPS_FL_NOARG,
++	.set = set_use_acpi_alarm,
++	.get = param_get_bool,
++};
++
++param_check_bool(use_acpi_alarm, &use_acpi_alarm);
++module_param_cb(use_acpi_alarm, &use_acpi_alarm_ops, &use_acpi_alarm, 0444);
++__MODULE_PARM_TYPE(use_acpi_alarm, "bool");
  
- 	pm_wakeup_hard_event(dev);
--	acpi_clear_event(ACPI_EVENT_RTC);
--	acpi_disable_event(ACPI_EVENT_RTC, 0);
- 	return ACPI_INTERRUPT_HANDLED;
- }
+ static inline int cmos_use_acpi_alarm(void)
+ {
+@@ -822,6 +843,9 @@ static void rtc_wake_off(struct device *dev)
+ #ifdef CONFIG_X86
+ static void use_acpi_alarm_quirks(void)
+ {
++	if (use_acpi_alarm_explicit)
++		return;
++
+ 	if (acpi_gbl_FADT.flags & ACPI_FADT_FIXED_RTC)
+ 		return;
  
 -- 
 2.53.0
