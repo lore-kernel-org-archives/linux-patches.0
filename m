@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065127;
-	b=akvhlI9PyRrWSFUzuABpCow0LfvCXCTGfPR0aRiSFw7Z/3IdNCuyfHEsrkhLZZvbmv5R
-	 hocFc/uMafOdXPB/sHCjKXZk7CJKr/HZeN0oqtl9Li/77gPUB0ITwNV++W8BMwCsw61r8
-	 8YN+km7oY0m3P1NQrFJkRZsyTezBqgmhy06q3akSUSOaYXaaZN/qFHvfehRbW2SadfnPQ
-	 k+vLa31zc/g+38KnIjcCWcuE9hovcS6LoXYhff1elmi7tJMLXHxwlLB9rjaO1Z8S6Nfe3
-	 tWt8nfm8mgN6IkISXJtiDDmDMzDz+Fv25UCcXbR1dBC4vXEBCO3t2Rtmk9j8OD4Z2+w==
+	t=1794065129;
+	b=FgOpSFw+lfliEy3OEHX7bC3BxO0CNAwNb0bm1xCbrEnxdLKdYh9kiCeOCU48+tIQTfqk
+	 p4RdXreZgBxzmJs11nHMRgK2A2X+tAIxPfUqLxXFl1SYQt/txxHdsretpYdN1rf1HZisT
+	 o9k7jfAKjHw/7caq50IMMc9CJRsFHO6MO7o/O/oUUn9hOHZ5uEIlCP/YyVk8RdXlQCvbp
+	 YhoSRgacJJukhgD7DLaQAeTdKJZDgyIr5AoqJ2YHTIM3PKu5WdCTLUdDEvAtfQQ0ahGon
+	 En7El3j32nVsAySVZUElZ6Uj3wyXJ4Bvpscs6/gSkEv+Roe5fetZhAomuDv1FQD+Mrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uk1yk6fKKO/ZJUOxvjL6JN4BdqI23E8HjmPPiUJsr7U=;
-	b=ooiwU+QatDOhkVaTBlqU6nllUsFKGlyHVSwHDQ1cHTc4dbZdkHJlNiqcuhR9TPjMIfZn
-	 d3Xlqy2PsdAFxjqY6ry8BS+r1+qqj92g4JpgrEe+ICnoegL0hNOSzBHakre9qumV+oLSA
-	 3A/yVNHdZ0aVvn6S+3q8W5T9C1+qJOu8lAyJwThW/wZV3NCSQe2WuDERzZV/XIdsV794L
-	 mLfPh3Aha8rR/FDG0nJae/Zz8XoLSktMoK59yOY4S7d/YK1IUhsYLTe/sNTzP++OdlXB2
-	 OT8PP4Sme6vI/KxoyEpGwKa9JedzY7Zq2Zm5RwQmqtzRcrbOWRNQ+6pLbDZtMWfrsQQ==
+	bh=OasLNe7+9tYZkhlY8ChDG7Uh2DezXYJNAct0EJAa2VY=;
+	b=lj+dJbGOiq60O7r6extzMLGuFVMnSglR7CYbG4ekqhHgfmuEXWnnlfn4sHxnpAlOEjse
+	 1ewOym6UHHGfQFNVgA/n+Q4aRVxz2umaLQubSchRf8NE4v1zlBRpNCPIWjL40jADXm1+A
+	 h48FjaDII7qHL6AK/WYO1sFFaYmgjN3aqcwVyO9FoUc9Y/9VVJttNdeOgyD4wv1z4e4Pe
+	 S5vtq9Ww3JxV9oddSWwETMsf4qb4IH9/SkwNriC2vI7SM78Ljs6H5bWD3aqWpeEffWtnl
+	 hurPwPS0CKzsQClX8VJSfTcikYww90WLUSH8EgJQqwz640HChjAe9K2QOjE7UoCO7ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hr2CPTrl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NHhRT19p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9A8606A32E;
-	Sat,  7 Nov 2026 15:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B644606A32E;
+	Sat,  7 Nov 2026 15:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hr2CPTrl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397D31F0089F;
-	Sat,  7 Nov 2026 15:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NHhRT19p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F581F0089F;
+	Sat,  7 Nov 2026 15:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065127;
-	bh=Uk1yk6fKKO/ZJUOxvjL6JN4BdqI23E8HjmPPiUJsr7U=;
+	s=korg; t=1794065128;
+	bh=OasLNe7+9tYZkhlY8ChDG7Uh2DezXYJNAct0EJAa2VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hr2CPTrlPye5sNsaBT63zTj7xCh/ea9acCrXOSczI07wPDLtYOT0E9XJtgHfkXL93
-	 eNfkRCRExG2JLfh+FAiNYyfTpgACubLYZKNWS0lnHdrZEfZNqrhCZuCWSzMG6EmhlQ
-	 cpo6OkvcSjikrZV4159jtrGTGOTy4DIaBX+d0lV4=
+	b=NHhRT19pJhZv5BH3bsMfDTiDev4QJZFasmeW7I7dAFPgLs8i1bhGw+RRHsJ9+hKDQ
+	 jw/e62EeG1+NJvHUF8n8j3hDbxNs24nLiNXFaKM49Aj/jR6wfa143t5ZY9Evn8Pg/r
+	 S3eZGO8mgrtGR0NB4YfpX7SruMB3gqci9a6+SuCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Nirmoy Das <nirmoyd@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0949/1257] gpio: pca953x: Handle direction register read errors in IRQ paths
-Date: Sat,  7 Nov 2026 08:54:05 -0500
-Message-ID: <20261107135005.557899667@linuxfoundation.org>
+Subject: [PATCH 7.3 0950/1257] blk-mq: clear stale inactive flag on hctx reuse
+Date: Sat,  7 Nov 2026 08:54:06 -0500
+Message-ID: <20261107135005.584888510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,86 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+From: Nirmoy Das <nirmoyd@nvidia.com>
 
-[ Upstream commit a0fe269293509acdd93b9cfb3f46636f7b91b33a ]
+[ Upstream commit afc1de47a7ab607ae6403c4bfda36b0bf3cd342f ]
 
-Three IRQ paths ignore the result of reading the direction registers
-and then use the destination bitmap. pca953x_read_regs() does not populate
-that bitmap when regmap_bulk_read() fails, leaving the callers to use
-uninitialized stack data.
+When the last CPU mapped to an hctx goes offline,
+blk_mq_hctx_notify_offline() sets BLK_MQ_S_INACTIVE. Updating the
+number of hardware queues exits every hctx and parks it on
+q->unused_hctx_list. A later update can reuse a parked hctx through
+blk_mq_alloc_and_init_hctx(), at any queue index, and nothing clears
+the flag.
 
-This can select incorrect GPIOs for direction changes during IRQ bus
-synchronization, corrupt the saved input state during IRQ setup, or
-produce incorrect pending interrupt decisions.
+If the reused hctx is mapped to an online CPU, blk_mq_get_tag() keeps
+returning BLK_MQ_NO_TAG for it. __blk_mq_alloc_requests() sleeps and
+retries, expecting CPU hotplug to move the task to another CPU, so a
+task that stays on that CPU never gets a tag. Onlining the original CPU
+doesn't recover it either, because blk_mq_hctx_notify_online() only
+clears the flag on the hctx that CPU now maps to.
 
-Check the read result at all three sites. Release irq_lock without
-changing GPIO directions on failure, leave the IRQ history untouched
-when pending detection fails, and propagate the error from IRQ setup.
-The read helper already logs the error.
+Clear BLK_MQ_S_INACTIVE in blk_mq_init_hctx() so a reused hctx starts
+like a freshly allocated one. A reused hctx has no cpuhp instances at
+that point, so the offline callback can't set the flag again before
+blk_mq_add_hw_queues_cpuhp() registers it. Clearing the flag in
+blk_mq_exit_hctx() is not enough, because a parked hctx keeps its cpuhp
+instances until blk_mq_remove_hw_queues_cpuhp(). Preserve the other
+hctx state flags.
 
-Fixes: 0f25fda840a9 ("gpio: pca953x: Zap ad-hoc reg_direction cache")
+Reproduced with null_blk on v7.3 in a four-vCPU arm64 QEMU/KVM guest:
+
+  modprobe null_blk nr_devices=0
+  mkdir /sys/kernel/config/nullb/nullb0
+  cd /sys/kernel/config/nullb/nullb0
+  echo 4 > submit_queues; echo 1 > memory_backed; echo 16 > size
+  echo 1 > power
+  echo 0 > /sys/devices/system/cpu/cpu3/online
+  echo 2 > submit_queues
+  echo 4 > submit_queues
+
+Offlining CPU3 marks hctx3 inactive. After the two updates it comes back
+as hctx1 and is mapped to CPU0:
+
+  # cat /sys/block/nullb0/mq/1/cpu_list
+  0
+  # cat /sys/kernel/debug/block/nullb0/hctx1/state
+  INACTIVE
+
+A 4K O_DIRECT read pinned to CPU0 hangs in D state, while the same read
+on CPU1 and CPU2 completes. Onlining CPU3 again leaves hctx1 inactive
+and the CPU0 read still hangs. With this change hctx1 state is empty and
+the reads on CPU0, CPU1 and CPU2 complete, before and after onlining
+CPU3.
+
+Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
-Link: https://patch.msgid.link/20261018165003.3372368-1-sahaj123.sc@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Assisted-by: LLM
+Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
+Link: https://patch.msgid.link/20261020125129.430600-1-nirmoyd@nvidia.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ block/blk-mq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 869ed4264d48a..afec5ec236968 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -867,6 +867,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	DECLARE_BITMAP(irq_mask, MAX_LINE);
- 	DECLARE_BITMAP(reg_direction, MAX_LINE);
- 	int level;
-+	int ret;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index e929f94b25c7f..5a5dc66fc3b15 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -4003,6 +4003,7 @@ static int blk_mq_init_hctx(struct request_queue *q,
+ 		goto fail;
  
- 	guard(mutex)(&chip->i2c_lock);
+ 	hctx->queue_num = hctx_idx;
++	clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
  
-@@ -885,7 +886,9 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	}
- 
- 	/* Switch direction to input if needed */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		goto out;
- 
- 	bitmap_or(irq_mask, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
- 	bitmap_or(irq_mask, irq_mask, chip->irq_trig_level_high, gc->ngpio);
-@@ -895,6 +898,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	for_each_andnot_bit(level, irq_mask, reg_direction, gc->ngpio)
- 		pca953x_gpio_direction_input_unlocked(&chip->gpio_chip, level);
- 
-+out:
- 	mutex_unlock(&chip->irq_lock);
- }
- 
-@@ -989,7 +993,9 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
- 	}
- 
- 	/* Remove output pins from the equation */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		return false;
- 
- 	bitmap_copy(old_stat, chip->irq_stat, gc->ngpio);
- 
-@@ -1089,7 +1095,9 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- 	 * interrupt.  We have to rely on the previous read for
- 	 * this purpose.
- 	 */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		return ret;
- 	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
- 	mutex_init(&chip->irq_lock);
+ 	hctx->tags = set->tags[hctx_idx];
  
 -- 
 2.53.0
