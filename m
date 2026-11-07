@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063221;
-	b=14BvXpkKQF9f3CmuYzt+slaqL0oJptMLw1Mra6TERjLedTN/2U2HiPArHEa5BLpPu1n5
-	 lPTnCLWsRXkSwZNkhpGFm2rJmklks/wLMGaIyc7AaoSJyRRFlGkDTEZX5BcOMV+p7nZRR
-	 PQH0XTtlzfJ3mgvFjzyldN56DqMC7quHxTOquueBDVkXpF2m3FYMnSqNURET75zqVmb5R
-	 z5tG04RgPA9FVFhM+kDUS+GZHdo1gwOdf0801R3ITR6VS+/6LMx/Q82Mc7ZNO5n267Yqi
-	 Tdx4xz+pq/KH3rFuI2gTKwM60FFrzeu0KQWdd/dmR+C2beXu9jZXgJEc56Y+6af+s9w==
+	t=1794063223;
+	b=0uwYcCk56i+U71J38ipLTUV9MfsROmwb+2CkMJ4BJdDJ6Nzs6hgDEei1KF1eToYqXbGi
+	 8nWfDEvIV2e0NU1i3lZR5KQhy/sFPTpCryPRHFVE6WonSVnFv2p1zXY2zij0oA7YvBzzS
+	 xxATiLc8JBB9RHtaO2UPJlLj/BMsd87DrChI52mLaAqV2L8Pnihsof2ZXoSWD2AMQzafT
+	 C+1m3/euRsl4DcW6np9ttOTtW/YrlE2Jp3hVomZx0Kb7UTDcwLZGz4FHPRO14dJehlfAS
+	 6M9RU9eN6UWuxP2gtXfLZJfreZWK1uTkM5yf773GxZ+pIS+wdQBCM+gqiEjnUnQ47JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063223;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uuPaAnFVhS4Rl+xaTJQ1WVaEcIe03pzrnbnSjj9WlJA=;
-	b=SyL6HCuuT43wLUvsc3gIrMWXN0lVB5O7cNv/Fj03R7GfsHjlbYOKuw0/19zb/S1y1f5v
-	 Cjax9ZdLAIU9BNo7n0F56/E1EVMClAfFK/edaHITeLEYN+f7syUJSQR3oJnMol1Is7MnB
-	 aMwjived9529a0tKCJZ+4pMekPF0pGT30u2znqcCwtf86kL5hFMIklooVHbK68wucqtXC
-	 lE/ddt1T0gD+/ON2BY2hgLgjMPbRGi07P8esV9teYOjCzJTGOWLFXlC2iTy7wsgnIMc23
-	 tBgOt4fptQVCPjA5LAJGqO/QmxatzyVE2Vcx4BZpdJE0/zkzENnMgPZXIPBJKy9Iavw==
+	bh=O5uzda+5KCgzQl3p11weeyLCSIg5RI6R7Ev5V7bcGWg=;
+	b=Ry0obtlvBUCClE3XXtpAKX9op6cCPdzU4lAVlOqmbGn8EtCNLmhUwdD0UXUouxXYRrlh
+	 E4JXUnUcSDuErmryZzK6NuAwgeLZL22zskeNXN9M91ALqUGnrnQORHQ8JFKBC4XWgBKpf
+	 yy5qdE/T5QS4vZJeKARgG1fJ5kxf2I3jQFStibW4YY/T7ou9blD5+h1rja7qfReupx94O
+	 3RFcZXP1NOakMIc9YOgicB+qZ0EveKDzyeg7kGjFOkU4bpeyyKZ6ea0yby8xxuzib+T4y
+	 6ZSha1C2tqQTBRK2iMmVuGr3TJWx5RMCyzPaDoM+HKVO5mlnTePt9KZ969SKLcAAffA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5gM8Z0J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUWFvtC+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8AA606A337;
-	Sat,  7 Nov 2026 14:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42FC606A326;
+	Sat,  7 Nov 2026 14:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5gM8Z0J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4741F008A1;
-	Sat,  7 Nov 2026 14:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUWFvtC+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3F71F0089F;
+	Sat,  7 Nov 2026 14:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063220;
-	bh=uuPaAnFVhS4Rl+xaTJQ1WVaEcIe03pzrnbnSjj9WlJA=;
+	s=korg; t=1794063222;
+	bh=O5uzda+5KCgzQl3p11weeyLCSIg5RI6R7Ev5V7bcGWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5gM8Z0JO4BZX2R/eCT4DvfWGOycOlTXW9gCbncM3fWFUl6L2YTQRowKWaxpN5L5n
-	 pIpSq2iLdP03ewMrhnnerldAZ4Fq/Bj9tfkcBg57sk+WHZOPyJNPfFg4pt/WAmrvt/
-	 BvqolTQokJ3SdQYqDc5HOkaMriCpyV0Ie1yVaX6s=
+	b=RUWFvtC+SQwfC4gC2QWJjORt+0MPRngSx8c8FBNoaPBsLEwD24AsUrqaiSbZR20Ol
+	 K1NJv1x+5L9A/Z0nbp4jDxDrD6KvRoG/1P1HQIgWVlqBKcop3dKrRO4Ta6cFP7ds4R
+	 nS8WeoHi2If7PiWZvK3ISCbpazUNCf/MVTP7A6JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinmeng Zhou <zhoujinmeng@bytedance.com>,
+	Longlong Xia <xialonglong@kylinos.cn>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Ackerley Tng <ackerleytng@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Oscar Salvador <osalvador@suse.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 429/869] mm/hugetlb: fix subpool minimum reservation rollback
-Date: Sat,  7 Nov 2026 08:51:51 -0500
-Message-ID: <20261107134908.383214387@linuxfoundation.org>
+Subject: [PATCH 6.18 430/869] mm/zswap: publish the initial pool with list_add_rcu()
+Date: Sat,  7 Nov 2026 08:51:52 -0500
+Message-ID: <20261107134908.410556587@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -73,82 +73,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinmeng Zhou <jinmengzhou22@gmail.com>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit e4949a80f3b07e52dca76c34ce353633927a28a5 ]
+[ Upstream commit c1dd5e24a82d19bff8eef50ba8205d4776584aff ]
 
-When a reservation request is partially covered by a subpool minimum and
-the remaining global reservation fails, the error path first calls
-hugepage_subpool_put_pages() for the subpool-backed portion.  It removes
-the failed global portion from used_hpages only afterwards.
+zswap_setup() publishes the pool on the zswap_pools list with a plain
+list_add(), but the list is walked by concurrent RCU readers holding
+nothing but rcu_read_lock() through zswap_total_pages(), e.g.
+/proc/meminfo and the shrinker count path.
 
-hugepage_subpool_put_pages() uses used_hpages to decide whether rsv_hpages
-should be restored.  Since used_hpages still includes the global portion,
-it can remain at or above min_hpages and prevent that restoration.  It
-then reports the subpool reservation as releasable, causing
-hugetlb_acct_memory() to incorrectly decrement h->resv_huge_pages.
+    CPU 0 (writer)                          CPU 1 (reader)
+    --------------                          --------------
+    zswap_pool_create():
+      pool->zs_pool = zs_create_pool(); (1)
+    list_add() -> __list_add():
+      WRITE_ONCE(zswap_pools.next,
+          &pool->list);                (2)   zswap_total_pages():
+                                                pool = READ_ONCE(     (a)
+                                                    zswap_pools.next);
+                                                zs_get_total_pages(   (b)
+                                                    pool->zs_pool);
 
-This was reproduced with four 2 MB huge pages and a hugetlbfs mount with
-size=10M,min_size=8M.  After a successful three-page reservation, a
-two-page reservation which needed one subpool page and one global page
-failed with -ENOMEM.  HugePages_Rsvd incorrectly dropped from four to
-three even though the subpool minimum was still four pages.
+If (2) becomes visible to CPU 1 before (1), CPU 1 finds the pool at (a)
+but dereferences a wild pointer at (b).  Publish the node with
+list_add_rcu().
 
-Roll back the failed global portion from used_hpages first, so that
-hugepage_subpool_put_pages() evaluates the minimum reservation against the
-current usage and returns the correct global adjustment.
-
-Link: https://lore.kernel.org/20260907132055.26696-1-zhoujinmeng@bytedance.com
-Fixes: a833a693a490 ("mm: hugetlb: fix incorrect fallback for subpool")
-Signed-off-by: Jinmeng Zhou <zhoujinmeng@bytedance.com>
+Link: https://lore.kernel.org/20260908012801.1864430-1-xialonglong2025@163.com
+Fixes: 91cdcd8d624b ("mm: zswap: optimize zswap pool size tracking")
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Tested-by: Ackerley Tng <ackerleytng@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Ma Wupeng <mawupeng1@huawei.com>
-Cc: Oscar Salvador <osalvador@suse.de>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260906133601.3563324-1-xialonglong2025%40163.com
+Acked-by: Yosry Ahmed <yosry@kernel.org>
+Acked-by: Nhat Pham <nphamcs@gmail.com>
+Assisted-by: Zcode:GLM-5.3
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ mm/zswap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index ebc78406335b3..8832923dfbcd8 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -7427,15 +7427,6 @@ long hugetlb_reserve_pages(struct inode *inode,
- 
- out_put_pages:
- 	spool_resv = chg - gbl_reserve;
--	if (spool_resv) {
--		/* put sub pool's reservation back, chg - gbl_reserve */
--		gbl_resv = hugepage_subpool_put_pages(spool, spool_resv);
--		/*
--		 * subpool's reserved pages can not be put back due to race,
--		 * return to hstate.
--		 */
--		hugetlb_acct_memory(h, -gbl_resv);
--	}
- 	/* Restore used_hpages for pages that failed global reservation */
- 	if (gbl_reserve && spool) {
- 		unsigned long flags;
-@@ -7445,6 +7436,15 @@ long hugetlb_reserve_pages(struct inode *inode,
- 			spool->used_hpages -= gbl_reserve;
- 		unlock_or_release_subpool(spool, flags);
- 	}
-+	if (spool_resv) {
-+		/* put sub pool's reservation back, chg - gbl_reserve */
-+		gbl_resv = hugepage_subpool_put_pages(spool, spool_resv);
-+		/*
-+		 * subpool's reserved pages can not be put back due to race,
-+		 * return to hstate.
-+		 */
-+		hugetlb_acct_memory(h, -gbl_resv);
-+	}
- out_uncharge_cgroup:
- 	hugetlb_cgroup_uncharge_cgroup_rsvd(hstate_index(h),
- 					    chg * pages_per_huge_page(h), h_cg);
+diff --git a/mm/zswap.c b/mm/zswap.c
+index 18249dd96ef86..e4b2f6abefafb 100644
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -1818,7 +1818,7 @@ static int zswap_setup(void)
+ 	pool = __zswap_pool_create_fallback();
+ 	if (pool) {
+ 		pr_info("loaded using pool %s\n", pool->tfm_name);
+-		list_add(&pool->list, &zswap_pools);
++		list_add_rcu(&pool->list, &zswap_pools);
+ 		zswap_has_pool = true;
+ 		static_branch_enable(&zswap_ever_enabled);
+ 	} else {
 -- 
 2.53.0
 
