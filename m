@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061087;
-	b=I2hPuTjiyEVZe5Hb/1mpoUM8YEpHsPvYLPamB41DbFsPIrdVtVoDMrqfHSZd0dXAd7lv
-	 HSqsPJRrBvCfxhmxEeLpSvFdrzwXHLcOZp4wwAStmelTvwnppOXQX4l6VUWoxYQ8HhU7u
-	 QT+Ra/OjkRs0q6H2XoSVtKBdG2FGbpZ5O9t+VTC0vcww8M+3NuchR6JkUoJCwNDjhtkh5
-	 0T//iJhjQor83KSuuBcZ9vgUL/H+iXwkZTnoTLlsSlIQwKsdLeDJQxutzZJuphSRKKhzw
-	 p2XvMRMBV256ltf2Rss/87kVbtzavs43/Li3CT/ME4LYG5TsOaGRdg737Nxzxd/qRcg==
+	t=1794061088;
+	b=zkp1HTXf+vLMrhiNidYoEErCIY2uuV/RTjQMC/CmySgiUw0SIXvR3SMNMtMB+jmG5doX
+	 kCgmOz54zbo26xrv6ONv6/IYUgSE9qpM6wn4zo4x5EHV8u+ylm6NYgJRuNBLG/X1hip5c
+	 Qgh9LBSy7bKbRQ5ctDKsB6c2F+mnpysNb1rRpN+mW1frwOPJJLQhHMLK+iCjsRZvAGSxG
+	 9lDnepbq5quCAbOuqHca6kVvNper3jBuvUnfXdEB+bsIBx0ThARsEBQ9qVR/UznhdmQhD
+	 5LaUfCqaEPCFs4VGNjoaT28lKCQv8qpAbi7mcFjj+ggBIifO2QXcdsAPr6NzPkc0ejg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061087;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w7jzJWpejuahZjkubuchdT5ws7WlLIqlltHUrltQlEI=;
-	b=INCG+A6Pk07DxXtsTB64AsfkLwBesBjJj0wVyfNeQH6V7Sx2FkXJJ2ZoSQTGaiBcnlBE
-	 hiiGU76WddSCe0jC2Pcao/M9ZwPfsjT5ue6RdjGmZYDaVYL5rvsvJUsPDywgLTD/l9I0E
-	 zRahr+qWkiepQxQL2h+l5RhYacBi2ZEcfBWBkDUNVziQf3slYxv64xwmL8iI570tKkf27
-	 ZHWK/ri6LDJHbT0Lo6uoQSE8Od99CqvL1IKn2z7kc3tfhbpKhCPUIHblomvFBv+5EuZIp
-	 9//T98qXEz4TdNn6AiYkX4YptpIwcYMUEh329H0szYnkRj9DjhUDbTQ3gYPSgIpgjjg==
+	bh=xEOneGOlyb8/AqHw+y1j+ZsRgewJipi2enDfXh5rp44=;
+	b=Fak6FY6Lwl07gxaDrsrddfD6s4VVhHZdW0oCWhd+f9FGVVNcL9ABAHUXSARTe3XgEmI5
+	 dWUatdP13ha6WLwgiUJRlKnApEUmYqD8Uzbw/eH2N/Ls8KtRw1Z0ZJ6PKDE3amzMAF7gy
+	 kzbOqX2NZINbXzgkGK1WkN8OgTxZ0yGuN7UCFKFlyIpzOHgZ/9ChsHzX5YQ2Ri8k7mhfy
+	 RMgxR3L9sxl+nip8VnNTK0rYVypiKoWDqtk/DBHtJXSCDuc6C4cX9+OJY5ac1Hu1yg0J2
+	 rNu5RGT/5GAnouepJzanFsoyx4PWA5VbFTP88yCWMVpvh/9GyKkTx3HvRmEQ9Tj8GUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gh+Ust1k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5LDtSmJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B1C606D833;
-	Sat,  7 Nov 2026 14:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61250606D833;
+	Sat,  7 Nov 2026 14:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gh+Ust1k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4E51F0089F;
-	Sat,  7 Nov 2026 14:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5LDtSmJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139081F0089F;
+	Sat,  7 Nov 2026 14:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061087;
-	bh=w7jzJWpejuahZjkubuchdT5ws7WlLIqlltHUrltQlEI=;
+	s=korg; t=1794061088;
+	bh=xEOneGOlyb8/AqHw+y1j+ZsRgewJipi2enDfXh5rp44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gh+Ust1kuGd8kgsweesTxUTw3ksPR9EWv1Jo1bKbB/64JsqjG0zZZMk+XI7J53MV6
-	 oZUJ/NGij/PKc12eTBmaoJrOTev+ArSWEBroy+ab1TjGOu2e+KC48TB1y8vwwLlQ1o
-	 l0d1z+D0w/ZsS9yDNsJTXzRAOd/d7Zen+K/1ypKk=
+	b=F5LDtSmJpu+rBfVfSH7f6PLI4V+1rRicvbzw4IMNwGvKF4wb+1CKvc4Ph24q0ELFe
+	 PK+9RbzB+Cuvz1ZB1+VZ8nXU6kMFhW1SFdNj4lFnCxukYLxUyun3gwePDV8pN+qcHi
+	 bsCobxxjLTWvF3YQnxzDqYE6cOdUNt7jCgZ29NIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andy Moreton <andy.moreton@amd.com>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Alejandro Lucero <alucerop@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0373/1536] rtc: brcmstb-waketimer: add missing MODULE_DEVICE_TABLE()
-Date: Sat,  7 Nov 2026 08:39:49 -0500
-Message-ID: <20261107135008.117136806@linuxfoundation.org>
+Subject: [PATCH 6.12 0409/1536] sfc: add X4D PF support
+Date: Sat,  7 Nov 2026 08:40:25 -0500
+Message-ID: <20261107135009.064741986@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,40 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Andy Moreton <andy.moreton@amd.com>
 
-[ Upstream commit 402c89d28fecd28652a4bfe997f08f6544836381 ]
+[ Upstream commit 24fedc7a569bce181728f0dd616504bef9f1513b ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+X4D is an X4 controller instance as an IP block in an SoC.
+It has the same feature set as X4.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
-
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704121734.54941-1-pengpeng@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Andy Moreton <andy.moreton@amd.com>
+Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Reviewed-by: Alejandro Lucero <alucerop@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260916125641.12238-1-alucerop@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-brcmstb-waketimer.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/sfc/efx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
-index b108e75042eb7..625702fc5eb3c 100644
---- a/drivers/rtc/rtc-brcmstb-waketimer.c
-+++ b/drivers/rtc/rtc-brcmstb-waketimer.c
-@@ -414,6 +414,7 @@ static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
- 	{ .compatible = "brcm,brcmstb-waketimer" },
- 	{ /* sentinel */ },
+diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
+index 36b3b57e20558..2784baa18b8c6 100644
+--- a/drivers/net/ethernet/sfc/efx.c
++++ b/drivers/net/ethernet/sfc/efx.c
+@@ -825,6 +825,10 @@ static const struct pci_device_id efx_pci_table[] = {
+ 	 .driver_data = (unsigned long)&efx_x4_nic_type},
+ 	{PCI_DEVICE(PCI_VENDOR_ID_SOLARFLARE, 0x2c03),  /* X4 PF (FF only) */
+ 	 .driver_data = (unsigned long)&efx_x4_nic_type},
++	{PCI_DEVICE(PCI_VENDOR_ID_SOLARFLARE, 0x8c03),  /* X4D PF (FF/LL) */
++	 .driver_data = (unsigned long)&efx_x4_nic_type},
++	{PCI_DEVICE(PCI_VENDOR_ID_SOLARFLARE, 0xac03),  /* X4D PF (FF only) */
++	 .driver_data = (unsigned long)&efx_x4_nic_type},
+ 	{0}			/* end of list */
  };
-+MODULE_DEVICE_TABLE(of, brcmstb_waketmr_of_match);
  
- static struct platform_driver brcmstb_waketmr_driver = {
- 	.probe			= brcmstb_waketmr_probe,
 -- 
 2.53.0
 
