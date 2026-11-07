@@ -1,59 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063630;
-	b=speD1s7JRuwIMuuAWAYxseBqex972IX28vDV4+5qv61dHEBUqwLhSAl5uBC4KghLSnbV
-	 d5rmss6pE2vbDLps0CMsY8WREQi+mweYOOI/08keyU53FnjZTi+4LFOWrZi/ZKddML2fo
-	 uo45gICtYMvJTuL7SVJDI/QglAGlIDRyDjrsHyjJaGt0ujM4vEe3Jh5/W++BSOOJ7BVT7
-	 Nqz9GppiId35JhRnUWyxu3wHVwT0TWA3p8r9tciyfLyoYaAIB6vkeX1q1PHsSKsu1Tm49
-	 VJUjXtoxcHfkjw869BfLKxrGYrIQ6y/bsHLSlCA7IRAjr7nxW5XVjMGx0yJrLrPHiTw==
+	t=1794063631;
+	b=c4LBYDYgZU3LAY7AeLFRjEjQpdq2aQl/oHlQn0EiN6BF8cFPC52UkX3W8iumQaGp6B+A
+	 35UhTj3gZb57iAdv+zDHcJTN8CofBNX3eoRPkgCZEBUxBJUSIQjeytUsaEjVuMkfZXrIV
+	 XCqesyj6DgK/vjSENOzz7TV3hWLmpMRHCKzuWMEgyGSZBIBq5eFlGpvotNLD/1RtDGB0K
+	 ABHLvjUdYp5YMsZEeXoQ7WjxtHhqxuboVFUu+rtEtqfUJV77qzeoHdoDRLs9dLoX/JBD4
+	 5y+keoP/xYvnpi+V1G3Djl5Zm/z62CPDXuab12cle3CNAhYUlmQfk8RBxBQPA5qr2aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063630;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Km32xR4l/KQrjMoDkWVHqjSeuhVtWc/PyxxeAuC4weg=;
-	b=k8ZnkHvLpPDdWVpn+cpZQQTMzRDEwWrBfYr/gCKZsu/2YyWj+tcGnhbBO/N6g1dznqcW
-	 BDX99YtXW3/IGbLyLGALwNWtHCcCfkl9o6aUXSufI7viSRH993YT+cXr20zZ1BeQOmqd8
-	 fNCwjk/Fib40QgnrEJKzxgRH44zSMCIA+rs6i2R4tw+7qMMduNi5Kr3YUhyNLF1lgqtxc
-	 ywPPVZG3NefQYnwkxg6NTZUOuRt44obHIJjNHJoQnTwQK6V6MtRg/yeCnQyiy0x3DKtR7
-	 M7pXw3BiktZeA45obvNjpKTWYbgtXRL2DcSP57yxcQn+enMxtThGn5XcXOjmIaUZToQ==
+	bh=V6NasyxHnHUKtNs3FM/+FLW/sF3/t9W95nTmI4JNy7Q=;
+	b=Xq8rdJappntSnV1qHz4dk/ltM8N4YPn7UwdrtWfRgD98rvupKmM8mdiSy6+wAg/G5Nr4
+	 eqJsLCW0VwmRMM6nLl9sfY1YnYN59DA4irxcMmAfUNoM2wmHCbEnaHy7bOynRbipnINIJ
+	 TAOArtV9wfrinO+ZJzcLH6FXzgBn8B5AM0WsrnUkzptC2yDXW5Tl//8hhvCEFbH3QyKME
+	 qJZrLYk2viHSG/12YmRiprF9QhY5pRM5cLHP5YX2EeJofDPNEiCFSzu9mTKakbbJj9Mgp
+	 Pvtr6W8YU+Rvb9ssV0GuJdB/EQtK+9JFJZ56NfA7wAxyXQjcSz1wiDywCV+2gM+uujA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5vygveO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PU0eDBc8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC6D606EEAB;
-	Sat,  7 Nov 2026 15:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0D2606A333;
+	Sat,  7 Nov 2026 15:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5vygveO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2971F0089F;
-	Sat,  7 Nov 2026 15:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PU0eDBc8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA761F0089F;
+	Sat,  7 Nov 2026 15:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063629;
-	bh=Km32xR4l/KQrjMoDkWVHqjSeuhVtWc/PyxxeAuC4weg=;
+	s=korg; t=1794063630;
+	bh=V6NasyxHnHUKtNs3FM/+FLW/sF3/t9W95nTmI4JNy7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j5vygveOSSXG7O3wy0ovFadQYavRsBMcLFp0u56Q+L03pgtxis8H+VNmbdYx+0LL1
-	 HtqxNPe3f60hANYnHDnvxmjPzLmGKSFl2NcJVZNAp/ZLsXxKw3z9pfUYWf1vwZOUoC
-	 C9iFtBOx/mT0P/aOX9N7YHSMbNezXvFhhWDPE1cI=
+	b=PU0eDBc8MhtzfG8VsxjL1N6cTlufmNVGyRV0bmww2mHOD1w4drQceRqoA4ZRVyfOT
+	 U1UB2w9LH8ZAMvf7ouRs+gUP42oxRZgpgnj8kyxpkHRpd+i4g+C74IcjG7GCUkyOML
+	 ywQrcgU/xY/l+FkBkdkL6//Tju1f+ahsjb2HsDx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	AutonomousCodeSecurity@microsoft.com,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Dennis Zhou <dennis@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Lameter <cl@gentwo.org>,
 	Suren Baghdasaryan <surenb@google.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	tgopinath@linux.microsoft.com,
+	Hao Ge <hao.ge@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 747/869] userfaultfd: fix UFFDIO_MOVE livelock on large folio with extra references
-Date: Sat,  7 Nov 2026 08:57:09 -0500
-Message-ID: <20261107134918.104374700@linuxfoundation.org>
+Subject: [PATCH 6.18 748/869] mm/percpu: account full object size for percpu memory allocations
+Date: Sat,  7 Nov 2026 08:57:10 -0500
+Message-ID: <20261107134918.132795730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -75,84 +74,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Harry Yoo (Meta) <harry@kernel.org>
 
-[ Upstream commit 454143aeb4c6c85ca7d50df36d1a66a64d88283e ]
+[ Upstream commit c7a467fbcbbc31e57a5077bfc9456d9f29cb1571 ]
 
-To move one page out of a large folio, move_pages_ptes() first has to
-split the folio.  __folio_split() refuses if the folio has any reference
-beyond its page table mappings and the caller's own, and it reports the
-refusal as -EAGAIN.  move_pages() treats returned -EAGAIN as a transient
-race and keeps retrying the same address, holding the VMA read locks the
-whole time.  This is incorrect since in some cases userspace can hold such
-a reference indefinitely, such as by registering the page as an io_uring
-buffer.
+When memory allocation profiling is enabled, the pages backing percpu
+memory chunks are attributed to func:pcpu_alloc_pages.  However, the
+accounting of individual percpu memory allocations via alloc_percpu()
+and friends record only the size of a single object rather than its
+full size across all CPUs.
 
-An unprivileged user can trigger this with three threads: first holds such
-a reference on a page of a THP, second calls UFFDIO_MOVE on another page
-of the same THP and spins in the kernel forever holding the VMA read
-locks, and third calls fork() or mprotect(), which takes mmap_lock for
-writing and then waits forever for those read locks.  From then on every
-mmap_lock user of that mm hangs, including other processes inspecting it
-through /proc/<pid>/, until the process is SIGKILLed.  The hung task
-detector reports the blocked tasks (third one), and with
-kernel.hung_task_panic=1 the machine panics:
+As a result, it is often not straightforward to identify which kernel code
+is actually responsible for percpu memory, because the size is
+under-accounted by a factor of num_possible_cpus().
 
-  INFO: task wedge:95 blocked for more than 122 seconds.
-  task:wedge  state:D stack:12528 pid:95 tgid:95 ppid:94
-  Call Trace:
-   __schedule+0x596/0x1110
-   schedule+0x36/0xf0
-   __vma_start_exclude_readers+0x100/0x170
-   __vma_start_write+0x51/0xd0
-   __split_vma+0x208/0x3d0
-   vma_modify+0x6a8/0x840
-   vma_modify_flags+0xce/0x110
-   mprotect_fixup+0xbe/0x480
-   do_mprotect_pkey+0x2d9/0x580
-   __x64_sys_mprotect+0x1a/0x30
+Account full object size with pcpu_obj_full_size(size) instead, which
+multiplies the object size by num_possible_cpus() and adds the objcg
+pointer overhead.  This is consistent with what memcg already does for
+charging percpu allocations.
 
-Fix by returning -EBUSY instead of -EAGAIN in move_pages_ptes(), the
-caller of split_folio(), when the split fails.  Thus, move_pages() does
-not retry -EBUSY and the ioctl drops its locks and returns to userspace
-instead of spinning.
+Verified with 64-CPU VM by spawning 400 processes in a memory cgroup and
+measuring mm_init()'s rss_stat counters.
 
-Link: https://lore.kernel.org/20261012201514.97015-1-cenzhang@linux.microsoft.com
-Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Delta of kernel/fork.c:1142 func:mm_init in /proc/allocinfo:
+
+                  bytes   calls   per allocation
+    unpatched      6320     395         16
+    patched      418176     396       1056
+
+'percpu' field in memory.stat: 422400 (1056 bytes per process)
+
+Memory allocation profiling now accounts the same amount of memory as
+what memcg charges.
+
+Link: https://lore.kernel.org/20261013-fix-alloc-percpu-accounting-v1-1-03e788a1e41f@kernel.org
+Fixes: 60fa4a9e2323 ("mm: percpu: add codetag reference into pcpuobj_ext")
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <AutonomousCodeSecurity@microsoft.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: LLM
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Assisted-by: LLM # Verification
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Christoph Lameter <cl@gentwo.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: <tgopinath@linux.microsoft.com>
+Cc: Hao Ge <hao.ge@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/userfaultfd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ mm/percpu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
-index 34798ce783e6c..579445bddf561 100644
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -1414,8 +1414,12 @@ static long move_pages_ptes(struct mm_struct *mm, pmd_t *dst_pmd, pmd_t *src_pmd
- 			pte_unmap(dst_pte);
- 			src_pte = dst_pte = NULL;
- 			ret = split_folio(src_folio);
--			if (ret)
-+			if (ret) {
-+				/* do not retry, extra refs may be held forever */
-+				if (ret == -EAGAIN)
-+					ret = -EBUSY;
- 				goto out;
-+			}
- 			/* have to reacquire the folio after it got split */
- 			folio_unlock(src_folio);
- 			folio_put(src_folio);
+diff --git a/mm/percpu.c b/mm/percpu.c
+index 81462ce5866e1..32519523845b3 100644
+--- a/mm/percpu.c
++++ b/mm/percpu.c
+@@ -1692,14 +1692,15 @@ static void pcpu_alloc_tag_alloc_hook(struct pcpu_chunk *chunk, int off,
+ {
+ 	if (mem_alloc_profiling_enabled() && likely(chunk->obj_exts)) {
+ 		alloc_tag_add(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag,
+-			      current->alloc_tag, size);
++			      current->alloc_tag, pcpu_obj_full_size(size));
+ 	}
+ }
+ 
+ static void pcpu_alloc_tag_free_hook(struct pcpu_chunk *chunk, int off, size_t size)
+ {
+ 	if (mem_alloc_profiling_enabled() && likely(chunk->obj_exts))
+-		alloc_tag_sub(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag, size);
++		alloc_tag_sub(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag,
++			      pcpu_obj_full_size(size));
+ }
+ #else
+ static void pcpu_alloc_tag_alloc_hook(struct pcpu_chunk *chunk, int off,
 -- 
 2.53.0
 
