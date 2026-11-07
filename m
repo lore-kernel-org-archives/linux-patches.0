@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064787;
-	b=nMM2j/qO/Rfgj3eeXQD8sugioa9LoTxf8QUHO26tJBnr0OanXAOI3UK8Z5zw6EZKq45Z
-	 21HGU2+jUfaSJ4RvDMC0iIMgPJ6zqBYQhpDwPom8MET4COjJm60sWfNap7qKoVr/QBLzG
-	 ZnkC4hUix60Cgw1fFwitsnGMknowGj/KWFx7z5Mjr+TIhlyDtWzvioga2CAoU3qGt3H6J
-	 HNCiY0DfEyzbWuR+EB9T4iqM4t20cFk1P/c+nceKUdGrAeDWIYSUFcLQSrzfO3RFU/K/i
-	 AexbuM4/N31qaFb6Y5GIsH+Lz/Vkn7qhQJq5mh43NB2C7Da5S5MgT8u+h0Nbn2MyjzQ==
+	t=1794064790;
+	b=EGi3x90HdbE5hq4ts1O4k/nR8vLv7kqXzdm8pG7SXm2lAvsNKc5CeWsRPjjBoQeH6qmb
+	 EarjEdmm9N9b9DwoOK0svyu+OSsC6jOzCm5mTNrzrInVjzsAue4DIYOkmDiv8uaZZy/yf
+	 MPW/26+Z4Ho5k7aYxgtr7bJa9kTKx5ZuPgaFIsKRIQ0kcJWayu9B6/4AJANMth5k66OF8
+	 j23b+zcqbFrjnoQY/PErCKDIH8ek46ad6gEiIdvqrEN04L5Ql6HTiSvVWX25tsp995foU
+	 XJ/vm5NTupXwRsD8h0HsxFuFUbsJRHwmHld51wl1J9FwJVgEf1ONMO0i0RLGhlu5RVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qdEZcoj+S1l7uzfssZZzck2g2BXWiPiSSO+oSqZpGn0=;
-	b=wZY5fQBlcev/hYmBkAvQEI5GXvfnliavAxYQTs8RxvGLcVxmtRcCd3TMnEjd6xjiNhRs
-	 ZGN4pbsW4w8TBO1zEZTKY/QkMO2/w5H3cuGSR+b/bakzvBdv6ZQ7dnqsQH0UMslbR3+NN
-	 kJVAvFe4mehfVswfKxEp9HGYezbvpp9b+ar56jXbdDJDAhgAe0MjQ5wBNAixI6nJWQ5FP
-	 4kZCmyUoY0eZfuQW4TKKsZ6v0UF5H4Hn922yBj8GgXX3dy8EjP7uoCkFslxdZMsYOb77c
-	 59FYxI+BY96GsifvbE2o+QsoJiao2xlG6M3TGCOI+6k5jQqJ8oWcRU/J2bpih1uKnrA==
+	bh=gYa7at57wf7YuryiFe5FHoX1YLGKbQt96ondebeGGO8=;
+	b=QGCDNcNoyiKUtyDgGsWAmxHx/z18eW/1E5FVZDKqIptLQpO0RmS0To2UInVZdOm0tHIl
+	 bruWyyssa1nlWNoJBzqbYAH2RS9V8TNguXsm379ROWaSJu7ZnI0k+eqWyW94HtzCT4EJM
+	 7yMajph9chqkoXE+n05/hE2A5Ne7U0DP+95VldBPXmGdpKdfFijEPghFzXdEYCte3paw2
+	 UtpQPN+vtQeqdTVC5ufJkAC8it+CG0293BxDRJzMI0Gd9rPTFoqpc8A3kvtC/CKR+gIdW
+	 jkKV0i7fBlLniEaGYUPMY8HFX9cizUa/YsGg+R4+W7vOV0CDUxqzEMnk/ds47r+Vtbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxEO+mN6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QY32sWYs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9982F606A9FB;
-	Sat,  7 Nov 2026 15:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5547A606A9FB;
+	Sat,  7 Nov 2026 15:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxEO+mN6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184E41F008A1;
-	Sat,  7 Nov 2026 15:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QY32sWYs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1554A1F0089F;
+	Sat,  7 Nov 2026 15:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064787;
-	bh=qdEZcoj+S1l7uzfssZZzck2g2BXWiPiSSO+oSqZpGn0=;
+	s=korg; t=1794064790;
+	bh=gYa7at57wf7YuryiFe5FHoX1YLGKbQt96ondebeGGO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cxEO+mN65NIVXuayHlxAdGT5HwXKa7QZOx7JnMIqWthBNrf5gqricZ0lwTB5Ifu/B
-	 /XjenVhyc3r4tbHDtJv48bwfFxjF+x6RtTvNSOGSs+ZnLhx9F8d/SoEY9d5lnX3DrF
-	 YNQhBmvjTumsotkA6b1OEt+O7eO3K9LMJ5t6Ki/0=
+	b=QY32sWYsEfDcsbgzY6ZIIFN3mlggysb/DFZryCnOBpdKUK2xcLjtwE8D0X8xXgfje
+	 t2/O9ry+AIiDMBtD7/N3lnKDTJGp77+otFIy0u96g7RXqWJ8IjV82f8+MPD+pdXUTM
+	 LXDn5+oBbtsveIAPbbHZnAREmeZ6Xxho7d7r/cRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bradley Morgan <brads@mainlining.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sashiko <sashiko-bot@kernel.org>,
 	Petr Mladek <pmladek@suse.com>,
 	Guenetr Roeck <linux@roeck-us.net>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Wang Jinchao <wangjinchao600@gmail.com>,
 	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0735/1257] panic: allow force_cpu redirect from an NMI
-Date: Sat,  7 Nov 2026 08:50:31 -0500
-Message-ID: <20261107134959.576832464@linuxfoundation.org>
+Subject: [PATCH 7.3 0736/1257] panic: kill the "buffer unavailable" redirect fallback
+Date: Sat,  7 Nov 2026 08:50:32 -0500
+Message-ID: <20261107134959.603518321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -75,99 +75,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Bradley Morgan <brads@mainlining.org>
 
-[ Upstream commit 36c55a9625bb9ab7eb428ff8facc6d3d0a743180 ]
+[ Upstream commit 68d956e9e235c2e125f77a9e98831e297b624a75 ]
 
-nmi_panic() claims panic_cpu via panic_try_start() before calling panic().
-When the panic later reaches panic_try_force_cpu(), the
-panic_in_progress() check sees panic_cpu set and refuses to redirect.  The
-crash kernel runs on the CPU that took the NMI instead of the CPU
-requested with panic_force_cpu=:
+The redirect buffer is a disgusting terrible hack.  panic_force_buf is
+kmalloc'ed in a late_initcall, and until then the redirect delivers this
+as the panic message:
 
-  nmi_panic()
-    panic_try_start()              wins, panic_cpu = X
-    panic("%s", msg)
-      vpanic()
-        panic_try_force_cpu()
-          panic_in_progress()      true, panic_cpu is X
-          return false             redirect bypassed
-        panic_try_start()          already won
-        __crash_kexec()            on X, not the requested CPU
+  Redirected panic (buffer unavailable)
 
-Try the redirect before claiming panic_cpu instead, as suggested by Petr
-Mladek.  nmi_panic() now calls panic_try_force_cpu() first and claims
-panic_cpu only when no redirect happened.  The requested CPU claims
-panic_cpu itself when it runs panic(), so panic_cpu does not need to be
-handed off.  panic_try_force_cpu() copies the arguments before formatting
-(patch 3), so nmi_panic() can pass them to vpanic() again when no redirect
-happens.
+The whole point of the redirect is to hand the panic message to the target
+CPU, so the crash kernel boots knowing it panicked and not why.  And that
+window is the entire boot, from the early_param to the late_initcall,
+which is exactly when you most want the message.
 
-The redirect IPI is sent with smp_call_function_single_async(), which is
-not guaranteed to work from NMI context.  Treat it as best effort.  It is
-worth the risk because the redirection is only used when the crash kernel
-would not work on the panicking CPU anyway.
+Make it a static 1KB buffer and kill the initcall.  The cost is 1KB of
+.bss in SMP crash dump builds, and it is only ever touched when
+panic_force_cpu= is set anyway.  The local msg variable is gone too, the
+buffer goes directly to panic_smp_redirect_cpu().
 
-Keep returning when the panic is already running on this CPU.  A nested
-NMI, for example with unknown_nmi_panic while this CPU is inside panic(),
-must return and let the interrupted panic() continue instead of parking
-the CPU in nmi_panic_self_stop().
-
-Mark the redirecting CPU offline before stopping it, like vpanic() does,
-so that panic_other_cpus_shutdown() on the target CPU does not wait for
-it.
-
-Link: https://lore.kernel.org/20260916182957.7788-6-brads@mainlining.org
-Fixes: 2e171ab29f91 ("panic: add panic_force_cpu= parameter to redirect panic to a specific CPU")
+Link: https://lore.kernel.org/20260916182957.7788-7-brads@mainlining.org
 Signed-off-by: Bradley Morgan <brads@mainlining.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260708164312.19044-1-include@grrlz.net
+Suggested-by: Petr Mladek <pmladek@suse.com>
 Reviewed-by: Petr Mladek <pmladek@suse.com>
 Cc: Guenetr Roeck <linux@roeck-us.net>
+Cc: Sashiko <sashiko-bot@kernel.org>
 Cc: Wang Jinchao <wangjinchao600@gmail.com>
 Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/panic.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ kernel/panic.c | 34 +++++++---------------------------
+ 1 file changed, 7 insertions(+), 27 deletions(-)
 
 diff --git a/kernel/panic.c b/kernel/panic.c
-index 43ac2b9b5e001..e5e9dd38627e0 100644
+index e5e9dd38627e0..cec2716019355 100644
 --- a/kernel/panic.c
 +++ b/kernel/panic.c
-@@ -513,10 +513,11 @@ bool panic_on_other_cpu(void)
- EXPORT_SYMBOL(panic_on_other_cpu);
+@@ -307,7 +307,7 @@ atomic_t panic_cpu = ATOMIC_INIT(PANIC_CPU_INVALID);
+ atomic_t panic_redirect_cpu = ATOMIC_INIT(PANIC_CPU_INVALID);
  
- /*
-- * A variant of panic() called from NMI context. We return if we've already
-- * panicked on this CPU. If another CPU already panicked, loop in
-- * nmi_panic_self_stop() which can provide architecture dependent code such
-- * as saving register state for crash dump.
-+ * A variant of panic() called from NMI context. The panic is first
-+ * redirected to the CPU requested via panic_force_cpu=, when configured.
-+ * We return if we've already panicked on this CPU. If another CPU already
-+ * panicked, loop in nmi_panic_self_stop() which can provide architecture
-+ * dependent code for saving register state for crash dump.
-  */
- void nmi_panic(struct pt_regs *regs, const char *fmt, ...)
+ #if defined(CONFIG_SMP) && defined(CONFIG_CRASH_DUMP)
+-static char *panic_force_buf;
++static char panic_force_buf[PANIC_MSG_BUFSZ];
+ 
+ static int __init panic_force_cpu_setup(char *str)
  {
-@@ -524,6 +525,16 @@ void nmi_panic(struct pt_regs *regs, const char *fmt, ...)
+@@ -326,17 +326,6 @@ static int __init panic_force_cpu_setup(char *str)
+ }
+ early_param("panic_force_cpu", panic_force_cpu_setup);
  
- 	va_start(args, fmt);
+-static int __init panic_force_cpu_late_init(void)
+-{
+-	if (panic_force_cpu < 0)
+-		return 0;
+-
+-	panic_force_buf = kmalloc(PANIC_MSG_BUFSZ, GFP_KERNEL);
+-
+-	return 0;
+-}
+-late_initcall(panic_force_cpu_late_init);
+-
+ static void do_panic_on_target_cpu(void *info)
+ {
+ 	panic("%s", (char *)info);
+@@ -380,7 +369,7 @@ static bool panic_try_force_cpu(const char *fmt, va_list args)
+ {
+ 	int this_cpu = raw_smp_processor_id();
+ 	int old_cpu = PANIC_CPU_INVALID;
+-	const char *msg;
++	va_list ap;
  
-+	/* Try to redirect to the requested CPU before claiming panic_cpu. */
-+	if (panic_try_force_cpu(fmt, args)) {
-+		/*
-+		 * Mark ourselves offline so panic_other_cpus_shutdown() won't
-+		 * wait for us on architectures that check num_online_cpus().
-+		 */
-+		set_cpu_online(raw_smp_processor_id(), false);
-+		nmi_panic_self_stop(regs);
-+	}
-+
- 	if (panic_try_start())
- 		vpanic(fmt, args);
+ 	/* Feature not enabled via boot parameter */
+ 	if (panic_force_cpu < 0)
+@@ -413,20 +402,11 @@ static bool panic_try_force_cpu(const char *fmt, va_list args)
+ 		return old_cpu != this_cpu;
  
+ 	/*
+-	 * Use dynamically allocated buffer if available, otherwise
+-	 * fall back to static message for early boot panics or allocation failure.
++	 * Do not consume args, the caller reuses them if we fail.
+ 	 */
+-	if (panic_force_buf) {
+-		va_list ap;
+-
+-		/* Do not consume args, the caller reuses it if we fail */
+-		va_copy(ap, args);
+-		vsnprintf(panic_force_buf, PANIC_MSG_BUFSZ, fmt, ap);
+-		va_end(ap);
+-		msg = panic_force_buf;
+-	} else {
+-		msg = "Redirected panic (buffer unavailable)";
+-	}
++	va_copy(ap, args);
++	vsnprintf(panic_force_buf, PANIC_MSG_BUFSZ, fmt, ap);
++	va_end(ap);
+ 
+ 	console_verbose();
+ 	bust_spinlocks(1);
+@@ -441,7 +421,7 @@ static bool panic_try_force_cpu(const char *fmt, va_list args)
+ 		dump_stack();
+ 	}
+ 
+-	if (panic_smp_redirect_cpu(panic_force_cpu, (void *)msg) != 0) {
++	if (panic_smp_redirect_cpu(panic_force_cpu, panic_force_buf) != 0) {
+ 		atomic_set(&panic_redirect_cpu, PANIC_CPU_INVALID);
+ 		pr_warn("panic: failed to redirect to CPU %d, continuing on CPU %d\n",
+ 			panic_force_cpu, this_cpu);
 -- 
 2.53.0
 
