@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060721;
-	b=WPkhY9A1FaCbG/AqKwBietdImWsDbFikxpCatgCnFTPER4HTPUI6NDHxN3gh/Cg1I4L3
-	 wUcLaEW3C3J6baVzwtewhBiP4v+jqXvtv2U06gEytqZRTnU3q+DYkIna0foq3z67nKoXx
-	 01TUDqVz2wPB9F1KRrfn9SgHFxH7vwQ1s7VEOWhLGye3eN2yXykOyiEjgfWWgK3A1hwWb
-	 W/ktoPWVJkbiezzIRn+xVSFREnBdAq4XBLKdwZiny6mUt9lS8RI8cA6FtzEmK1i5dB8V0
-	 0cpB4rDEjqAfpLYSPR9JLOL0b6ZI5GrZyLjtje1OPnAL64r1SjARh28K4j/vGTcGEJA==
+	t=1794060722;
+	b=bRRGKLYoFpb5YHI0tam8yZhmpWYxZ4nosV/Qe3LFTo0MKZL1YtRWDLEa39D4ockaH6XF
+	 /syYVAlYWZ4W7Lj0tZaSdlxZ7oSj7OyVLYa8VtSby124yo5loO+dzv0NpZxaBS3BpCTLB
+	 b9MpyDKt4cMe2HKZ833BJUf2Nbte5gY2fcDRBPiQbUSSi2E4JVDOHzoi0j9z/uGFQRfuo
+	 VQeKBjqaW/E0ZjiP1rqdhAomhwx2j2L6e7PnoMPzHwgHnFEXeLy59z3jBvx9TNBnkAWZc
+	 CM1KLD3GQVuhKNq+Pp3A8yI4vSjb4aoTnFqICfPenylo7ole2xn2agvffCHZhUSv+xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JPTByGW1F0XyU88RociSSR/gJqnBA0TzKo3BONDgKW8=;
-	b=K4Mtb52Rxg7n9UDvVlZDE4TMJxYx3M4fJXTk8ZsMNNHZw9Xt2yFMyWSkilgG+dDfkQJt
-	 MWlRmXM/c/B5Pu0gVIttxxAGCMzeUKbmTmd1iiYi6DGtOKgGb+f1lf74wCfD8H3DgYSCm
-	 7kS18bxXvdqb2RQhRGmiY11BEb5dEC0mjQjZI7BxjdeSsEw2R/1L2GUvZnZkigW9cWVZ4
-	 gGqHIPGvuIYZFKuU4XR6UObLKti8cWOAE4FnYvl4kfuQtWAhVe3ow+ehRIS1KZlEQhemL
-	 sZ4y7ziylVFqGBnemyf1Z0LLXYdcBOviI71KcI+dUtivHY+qCA/M7/pDfJvG0ELBwcQ==
+	bh=9I2ZCZmkiEqKlpOhSKqYOCxXCHFqlokKBEVrxqzf6PE=;
+	b=S/xyZfKeV4nxVlIQP/NnXWi6pf/YBFicj9hPi43ue3JANfDR67GWMvvpEpflt6Z5hy/K
+	 gOrD7i73+vPDicjMvhBal/DftezPLo/B+oVNWqT5KeQFCLo8UWEgzw61Kwm8FHLpZhYp9
+	 gqoa4jYCutbNVIyl1XSkXDQjTFZWJtV745x8d1tYhE/JVpJoH11g/QscjF5+w41LQyj3p
+	 iidvsL21Oqy9uaMJ3zN0zRhEyARB4D+FMVsYoMrls8U5I/V5RetOg1N20To+ScSaQQUAo
+	 6dPZmAqkGfoNgGVAujv0lsc6kLUIzBnOB/ROcgrZC2Yp99wPpvf5T3EPYMkadnAD1VQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FkW+GrdB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rzINfuTB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F50606A326;
-	Sat,  7 Nov 2026 14:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121E3606A326;
+	Sat,  7 Nov 2026 14:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FkW+GrdB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690201F0089F;
-	Sat,  7 Nov 2026 14:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rzINfuTB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4751F0089F;
+	Sat,  7 Nov 2026 14:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060720;
-	bh=JPTByGW1F0XyU88RociSSR/gJqnBA0TzKo3BONDgKW8=;
+	s=korg; t=1794060721;
+	bh=9I2ZCZmkiEqKlpOhSKqYOCxXCHFqlokKBEVrxqzf6PE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FkW+GrdBOxMYOPDQ3SGx7q6Qk9mD7QEsZ5uaV/4zeFQKDwA5GpQQ1xKpn52BiFBqi
-	 d8yRs6qb54fNGRjeXvoJvTm+BrwpJ8H8E2hkP6XCo05byfB4e+V7RSIcQk41UtyrtZ
-	 mgQKwd+O/9r0QTH5Bf8KC1HmHWyRvC02PULUQ4kg=
+	b=rzINfuTBcF1cKKI8oU/RXkXT+6s0rhzq9gWsSukw51duW4mgjY3FDdPDC5PXmpoG1
+	 EzLFZrZk6LKp1gih9Bfg7tT0YSaGJtzhj9z9lcWzDJIyLtaaK4Q2xzUUGWCHu6fVeD
+	 FFoNsefkzhisqUZZDlH7boOLgE+xDYKCEqyWexJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+56962eb32ba0136cd330@syzkaller.appspotmail.com,
-	Michail Tatas <michail.tatas@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0142/1536] USB: misc: uss720: Fix leak in get_1284_register
-Date: Sat,  7 Nov 2026 08:35:58 -0500
-Message-ID: <20261107135001.680008902@linuxfoundation.org>
+Subject: [PATCH 6.12 0143/1536] uio: sercos3: add missing MODULE_DEVICE_TABLE()
+Date: Sat,  7 Nov 2026 08:35:59 -0500
+Message-ID: <20261107135001.708030479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,37 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Tatas <michail.tatas@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 15902712b9e2a46649cba2f22002d05faec2a990 ]
+[ Upstream commit a432f68c51fc6761658445e80a798b8425fdb3dc ]
 
-if wait_for_completion_timeout() times out in get_1284_register()
-then we do not destroy the reference acquired via kref_get() in
-submit_async_request. Add the missing kref_put in the timeout path.
+The driver has a match table for the pci bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-link: https://syzkaller.appspot.com/bug?extid=56962eb32ba0136cd330
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Reported-by: syzbot+56962eb32ba0136cd330@syzkaller.appspotmail.com
-Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
-Link: https://patch.msgid.link/allaDTUua9n5DQ0a@michalis-linux
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704152642.54769-1-pengpeng@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/uss720.c | 1 +
+ drivers/uio/uio_sercos3.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/misc/uss720.c b/drivers/usb/misc/uss720.c
-index 6ebcfaf525989..a405a36d8d42f 100644
---- a/drivers/usb/misc/uss720.c
-+++ b/drivers/usb/misc/uss720.c
-@@ -223,6 +223,7 @@ static int get_1284_register(struct parport *pp, unsigned char reg, unsigned cha
- 	}
- 	printk(KERN_WARNING "get_1284_register timeout\n");
- 	kill_all_async_requests_priv(priv);
-+	kref_put(&rq->ref_count, destroy_async);
- 	return -EIO;
- }
+diff --git a/drivers/uio/uio_sercos3.c b/drivers/uio/uio_sercos3.c
+index b93a5f8f4cba2..20d8b5f9d0e97 100644
+--- a/drivers/uio/uio_sercos3.c
++++ b/drivers/uio/uio_sercos3.c
+@@ -212,6 +212,7 @@ static struct pci_device_id sercos3_pci_ids[] = {
+ 	},
+ 	{ 0, }
+ };
++MODULE_DEVICE_TABLE(pci, sercos3_pci_ids);
  
+ static struct pci_driver sercos3_pci_driver = {
+ 	.name = "sercos3",
 -- 
 2.53.0
 
