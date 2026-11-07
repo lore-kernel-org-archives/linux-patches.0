@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064867;
-	b=u3aWcdPT/Gk4AIlmq2hqCXbvPETinTNxAZn8qLyHXMb2VmfKW7p3U7gVtrq3E0yzVBa5
-	 ZL8u0jPA6WtpodnGi4KVOK5omq2nEoG0KiWT6a3RjVtr53/iJ+ldgHh4K2RzBNU7NP1rY
-	 lOCn3FjRYzfx+YsF7MlUM2u+hfZLK2dOzFgxigTaN/SWBOvqPa84lPO5kd6aMgrg98tbK
-	 3Mbq1ebrkkLL43vbxdj2kvSGJIDZ9mnF1oTov3yT1VYG8eU9uRRPd2UiP75DRDb2DzyCM
-	 QdUG+UmigXF+S0uv7nEJCoWOqsk5DUKh+srrB6mJcQs3I9Kw3eMSB5twMg+tuMccWgw==
+	t=1794064869;
+	b=sAFqsaN0XyB7TFZw24QSJckvHLj2AEl1GvYDrN2HbBrf4fP4DLHa03Y1XG5wXM4kHOzW
+	 Vs39Ou+9H5/9JvMmdRK+6wiSE9DbEbiFtC0OyS6aTNc6RsqT0P5PTHEW0OElMi1oNY2nZ
+	 pjglEpYanewRjmgxp4R5oRpzJwIjOLnUh5VAg/CeIr9xaMdSlA7zFSmdjKR49HRY+BEnX
+	 o9IH7KdnWlby23yAvXPmMWu49r1DOn4hBhdOiREW1x+3PSc5SnIB/FjGsvix/sTT6iz3/
+	 DhCOjWxmR0xBsaqu5Wq8qLK5//o0Y/jYQOgITc3gmkMxiYdPG6JNC9rVIbKKxCGTIRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6dl3sOrPSvSnMp63wks8QTqZnguj9F/IqGRvvsR+khQ=;
-	b=eilabkaPRAN+hNLnkqpdhlMTJI1espRwvApkxmyR+JDkING5csG+CT1fnAMurAu8I7Wl
-	 deNA3jNOiPtPOoqfwdks9mWimXnZkbzQ++ImLHy4kZZOaCZ2lTKGn8hegcjE9oFS/fcvI
-	 CZrjMlH1CraJ6LLgFR72qkenFxXasLw/hetkigGEkZWiYRJujAWUpf32nSLjKzBk0X2BG
-	 aOkUWFQUX40kjIgEnVJbZ2VRny+w0EBKTHjbv/4YDD0PH3HHZpiqmB4B70pbCNKpDnl2n
-	 kAIW99wXVYOCx1PzmshzodMU/8cIERZuuFPIfUvca1njWaiiH3IY1QzRf4oWvbft+Qg==
+	bh=G8N0bG2M+LfKZkEsM/p/+xoB3X4r/Gjq7DP9w6Q027Q=;
+	b=y9Md8nhk2NvbtFSSOmtumY9Vo38z7/kwrgIp8P5+bvOhx5HvU9q/HysmJtycTKjTeqTv
+	 cO49EEQGMmEdTy/t7FMMb2oj/jYRSGz6Uqzls6yKfp9+6+w2819HEXGNGprmYxdZvtywW
+	 scXz7tosDLmiL5l7xzsbGT4ezp/hJX6wVdsw1odwSLRqTVztiLMLmlb8/ljh9tZyuvR3e
+	 RutI5CSwREBidYNRURKo9JB5bNqUqZ3sDgBmGirlRZp3+TQ7eI7fmyo648fbkSu1ysky0
+	 9MqCPmQ+JK5NWV7Bxf+PUmAYFsAMNO0DrcpbtSwVDByKQgIST99kIidGjafXWe6fQKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bBPHGc9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oFWa2pPG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DECE606A9D2;
-	Sat,  7 Nov 2026 15:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC83606A9C1;
+	Sat,  7 Nov 2026 15:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bBPHGc9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0A01F0089F;
-	Sat,  7 Nov 2026 15:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oFWa2pPG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADBE1F0089F;
+	Sat,  7 Nov 2026 15:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064867;
-	bh=6dl3sOrPSvSnMp63wks8QTqZnguj9F/IqGRvvsR+khQ=;
+	s=korg; t=1794064868;
+	bh=G8N0bG2M+LfKZkEsM/p/+xoB3X4r/Gjq7DP9w6Q027Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bBPHGc9c8q+8IQ1nIi8yBYeSG6ce1I7RypuyQ5zndjpV+nEXkjbLZ1D3izzBsG4o
-	 UumATXWKTZQs3+M+cPv/NxOWV0h+y+mjCAehD2yuvAmObD2ftuy5DnOcClBoQW3szh
-	 0Y4pA2W5p703KGpdNlwvhZOYwQ3lvLggFRzFAK7g=
+	b=oFWa2pPGTpdySRlOTT9abUGrtgfqwU54hG0/pRbnzCE/WQmjd9xtQ298ERf9JLG3n
+	 cc2TBNq2szMyIg09oRURvsgmDFVvBTN6fTJGbyFC8bf06nydUV4+nDTYFqLfock1tg
+	 qbfSzUsyZZe6p5bG7RULME/EeKwTE1oregSKYtm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0784/1257] ALSA: hda/realtek: Fix quirk for HP Laptop 15-fc0xxx
-Date: Sat,  7 Nov 2026 08:51:20 -0500
-Message-ID: <20261107135000.971753938@linuxfoundation.org>
+Subject: [PATCH 7.3 0785/1257] crypto: qat - initialise state_lock on every path in adf_devmgr_add_dev()
+Date: Sat,  7 Nov 2026 08:51:21 -0500
+Message-ID: <20261107135000.998411925@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,70 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 044d41b43ee19aa29cb0c9b7b8e77fd113336522 ]
+[ Upstream commit 4ad7c1bd5f3dcd3fd6efbb068d6ee2a68dddfece ]
 
-The HP Laptop 15-fc0xxx is based on an AMD platform where the digital
-microphone is provided by the snd-soc-acp6x-mach driver, not by the
-HDA codec. The ALC236_FIXUP_HP_DMIC quirk configures pin 0x12 as an
-internal DMIC, which is a misconfiguration for this machine: the pin
-is not wired to a codec DMIC and the setting has no effect on the
-actual microphone path (which works via ACP6x).
+state_lock is initialised at the end of adf_devmgr_add_dev(), but the VF
+on host path whose id mapping already exists returns earlier via
+'goto unlock'. That mapping outlives the VF, so this path is taken every
+time a VF is recreated on a BDF that already hosted one, e.g.:
 
-Replace ALC236_FIXUP_HP_DMIC with
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_GPIO, the standard quirk used by the
-closely related HP Laptop 15-fd0xxx and other ALC236 HP machines. This
-removes the misleading DMIC pin config and adds proper mute LED and
-micmute LED support that was missing from the original quirk.
+	echo 0 > sriov_numvfs
+	echo 32 > sriov_numvfs
 
-Fixes: 720460722310 ("ALSA: hda/realtek: add quirk for HP Laptop 15-fc0xxx")
+accel_dev is freshly allocated on each probe, so state_lock is left zeroed
+and adf_dev_up() takes an uninitialised mutex. With CONFIG_DEBUG_MUTEXES
+this is reported on a dh895xcc with 32 host-bound VFs:
+
+  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+  WARNING: kernel/locking/mutex.c:159 at mutex_lock+0x171/0x1c0
+  Call Trace:
+   adf_dev_up+0x27/0xe0 [intel_qat]
+   adf_probe+0x700/0xa80 [qat_dh895xccvf]
+   local_pci_probe+0xd5/0x190
+
+The same happens on teardown when adf_dev_down() locks it again.
+
+Initialise the lock next to the other per-device state, before the tables
+are updated, so it is done on every path.
+
+Fixes: 1bdc85550a2b ("crypto: qat - fix concurrency issue when device state changes")
 Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221233
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222044
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20261015065640.377466-1-zhangheng@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 94593267a5b82..58948a3bbda04 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -4379,7 +4379,6 @@ enum {
- 	ALC245_FIXUP_BASS_HP_DAC,
- 	ALC245_FIXUP_ACER_MICMUTE_LED,
- 	ALC245_FIXUP_CS35L41_I2C_2_MUTE_LED,
--	ALC236_FIXUP_HP_DMIC,
- 	ALC256_FIXUP_HONOR_MRB_XXX_M1020_AUDIO,
- 	ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX,
- 	ALC287_FIXUP_ACER_MICMUTE_LED,
-@@ -7126,13 +7125,6 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC287_FIXUP_CS35L41_I2C_2,
- 	},
--	[ALC236_FIXUP_HP_DMIC] = {
--		.type = HDA_FIXUP_PINS,
--		.v.pins = (const struct hda_pintbl[]) {
--			{ 0x12, 0x90a60160 }, /* use as internal mic */
--			{ }
--		},
--	},
- 	[ALC256_FIXUP_HONOR_MRB_XXX_M1020_AUDIO] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -7775,7 +7767,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8da1, "HP 16 Clipper OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8da7, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8da8, "HP 16 Piston OmniBook X", ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX),
--	SND_PCI_QUIRK(0x103c, 0x8dc9, "HP Laptop 15-fc0xxx", ALC236_FIXUP_HP_DMIC),
-+	SND_PCI_QUIRK(0x103c, 0x8dc9, "HP Laptop 15-fc0xxx", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x8dd4, "HP EliteStudio 8 AIO", ALC274_FIXUP_HP_AIO_BIND_DACS),
- 	SND_PCI_QUIRK(0x103c, 0x8dd7, "HP Laptop 15-fd0xxx", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x8de8, "HP Gemtree", ALC245_FIXUP_TAS2781_SPI_2),
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c b/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c
+index 161863841a527..26b40dd599652 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_dev_mgr.c
+@@ -137,6 +137,7 @@ int adf_devmgr_add_dev(struct adf_accel_dev *accel_dev,
+ 
+ 	mutex_lock(&table_lock);
+ 	atomic_set(&accel_dev->ref_count, 0);
++	mutex_init(&accel_dev->state_lock);
+ 
+ 	/* PF on host or VF on guest - optimized to remove redundant is_vf */
+ 	if (!accel_dev->is_vf || !pf) {
+@@ -210,7 +211,6 @@ int adf_devmgr_add_dev(struct adf_accel_dev *accel_dev,
+ 		map->attached = true;
+ 		list_add_tail(&map->list, &vfs_table);
+ 	}
+-	mutex_init(&accel_dev->state_lock);
+ unlock:
+ 	mutex_unlock(&table_lock);
+ 	return ret;
 -- 
 2.53.0
 
