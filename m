@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062261;
-	b=xhTLNyM477dJdsliNY5IrUe3YrqzapDvo+jduwhWuh/b+DKgT4rvFGEz7TUrbwNWcUV9
-	 6YJqOVsxgbENOsNRMAUiySoMrEMdeCaoQhSs9W0Ni0vOug18Mz//KzLmi96X1ElRwBi70
-	 M9jMEzg9sHuxLz++d95ye0UhMB9vBHlWzQKGzu3ZW53zrAVZd9HjjjxG/bCEQwynlgGgF
-	 sBsP+axEKe1pb6++y0VVsn8RzDFdohwYTv6ZjSrOoJNQKS+YJ5RSj5tiwK0y3JRA/lleI
-	 maPlni9EeUnqVipftMqygGy1n2PaCpYe1WQJigiOqXb4eIWnpyIgd1kcXPbopuAYzDw==
+	t=1794062263;
+	b=16VVURPrMjZG036Li9A02Ir5MhJ8BUIg9GxE3IvMHtksIJTbUpW/PaElM2e0tT/1oqja
+	 AjbSemP0kzhx93ks4j38bQkrozQYvdY51a8LEGCRAPmCtW/LwRnXFTwMuP5kha1z2hzE8
+	 GyRnXIaPaPTUmmNBh6Ba7irW3fSST0PxBa8lFHmJnIVfFC8trXuEWhYnh6KZH6rN5nTB1
+	 ECjC/dWVHhVznlierXslw0svwdpSCKaMTZ1K13DOK6nEsUsjF8TylNaRGa4JYcdI/j7/m
+	 GGtrSRRPzjYUoX2O1wr5NMm/2M3T09OTdPuWdNpSLx6ptgKjIQveTTBvGTjlrJdT4zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062263;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t2dSpaopuMJsdGv18G9eXi0HynTpnOuvd1qbNXMIo1E=;
-	b=18AQTCIUbtNUzadjEZobQ2lTLXaRKLOYrUuhOUbbsmkgSb8zLFnYWtmGlXLyIGxpbh1j
-	 ClBs5OmNi1R3DaxhxKP46VpRbYQRlGEyTJ9JRxBnkSXnJh1SUc8lIHS0UerKIcZvffnn/
-	 CnirAtW+C/ejAZjPoxYGVU1ceq3PgYgvsZTlXUhw8zH7zpRaDDGC46aXgZG7PZJ7Vp2rF
-	 xEV6CCSQPJq1q/Hy6bIpRx7+CjmU8X6ulR0edtW3HWTQ9Zui8ihNs4rPnnpT+Hwf8FzcG
-	 AeT4Ckcpkjj502qKmxc6dEwTSxaNDbBglKUMTq3VJiqhg8ueWJkh6NYNNLcLapeRy+w==
+	bh=EXPrk9ssEhAVocRaxcjZlryc2GXuvbHWzoo315xZxuc=;
+	b=jXlHchcO6zHlA/hM9VhA/NI3hxnRDKuz7xqx67mFSUHrJB/Wx18MHcv2DVD2tiYlKFkW
+	 ysMMaqIzsySO2hxJyVbzLkX30WtcYvpSxaZh7+UMWyBbYxfBTQhyto6eZq/eC1WCyJlgP
+	 LJQt1qdLuGt3rG7MRO9mc+9pMwXXQtibrZkvdFrXjKyqCBteatIvqS24iiL9622iznrPr
+	 QVd7PQZG8oOQRAsF6AQNo2L32nklYd4B/b5BoOjNfGIhw+XXDfhjZ3XAyeuS42TOtvx+t
+	 Tx2kMKiOfzXmj32SVY++8j/2jgiKgbvQ3Xq8cyffBVekM7AtqAxnwrGHf1XJLmdrowg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whEYkn+n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GO433axR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BA1606A334;
-	Sat,  7 Nov 2026 14:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EBF60A262A;
+	Sat,  7 Nov 2026 14:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whEYkn+n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059DB1F0089F;
-	Sat,  7 Nov 2026 14:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GO433axR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4667F1F0089F;
+	Sat,  7 Nov 2026 14:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062261;
-	bh=t2dSpaopuMJsdGv18G9eXi0HynTpnOuvd1qbNXMIo1E=;
+	s=korg; t=1794062262;
+	bh=EXPrk9ssEhAVocRaxcjZlryc2GXuvbHWzoo315xZxuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=whEYkn+ntIRo8Je5WSjl2vt29CAXCad6H8P24XyfE8+3NzkutNGEWHqV4pAzN1r++
-	 OFvxUGNFd7roOuBhmo/ZiYNLLFMqjo9By3EcXWFDUgK7jEwEqbe/QoXF9ioA4+0m2l
-	 Qmw78OKDxZGyUmRoyspFv49BEIAR0hE/MqLzkO/M=
+	b=GO433axRJcEvXc/s3bv0erCuGPm1xAZ2ajPhrkt9nOuehpoH75GZU7aKoWDay8cAI
+	 C1k10OC9EL7+PziV6Sc8fOIjGmi2lc2nYIBC8jdpZLHgS0c8BhXzh5x78V7GlQsSjX
+	 Y7ixZgcMuJ+CjisANS0QsSsA6j9e22rztN5ARhaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Herve Codina <herve.codina@bootlin.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1205/1536] soc: fsl: cpm1: tsa: Fix clock leak in tsa_of_parse_tdms()
-Date: Sat,  7 Nov 2026 08:53:41 -0500
-Message-ID: <20261107135031.593228268@linuxfoundation.org>
+Subject: [PATCH 6.12 1206/1536] soc: fsl: dpio: Fix cleanup on IRQ registration failure
+Date: Sat,  7 Nov 2026 08:53:42 -0500
+Message-ID: <20261107135031.625315027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,67 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 46201d760c48e771fa2febfcb0787f22c3b71387 ]
+[ Upstream commit 45ecea8c55521d424513178fb612cefffb09a9f5 ]
 
-The error cleanup loop puts l1rsync_clk and l1rclk_clk a second time
-and never puts l1tsync_clk or l1tclk_clk, because the branches that
-guard the transmit clocks use the receive clock field names.
+IRQ registration happens after dpaa2_io_create(), but its failure path
+only releases the IRQ resources and the MC portal. The I/O object stays
+allocated and published in the service list and per-CPU lookup table,
+while devres unmaps its portal registers after probe fails.
 
-Use the matching field in each branch so every clock acquired by
-tsa_of_parse_tdms() is released exactly once.
+Call dpaa2_io_down() on IRQ registration failure to remove the object
+from those lookup structures and free it. Reorder the error labels so
+that a failed dpaa2_io_create() still skips this cleanup.
 
-Fixes: 1d4ba0b81c1c ("soc: fsl: cpm1: Add support for TSA")
+Remove unregister_dpio_irq_handlers() from the probe error path, since
+no IRQ handler or affinity hint has been installed when registration
+fails.
+
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: fe8fe7723a3a ("soc: fsl: dpio: register dpio irq handlers after dpio create")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/r/20260917152719.2160395-1-vulab@iscas.ac.cn
-[chleroy: Fixed the same in tsa_remove()]
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20261002194802.375497-2-mhun512@gmail.com
 Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qe/tsa.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/soc/fsl/dpio/dpio-driver.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/fsl/qe/tsa.c b/drivers/soc/fsl/qe/tsa.c
-index 515da9b45c2c3..38e9f02cffe48 100644
---- a/drivers/soc/fsl/qe/tsa.c
-+++ b/drivers/soc/fsl/qe/tsa.c
-@@ -885,12 +885,12 @@ static int tsa_of_parse_tdms(struct tsa *tsa, struct device_node *np)
- 			clk_put(tsa->tdm[i].l1rclk_clk);
- 		}
- 		if (tsa->tdm[i].l1tsync_clk) {
--			clk_disable_unprepare(tsa->tdm[i].l1rsync_clk);
--			clk_put(tsa->tdm[i].l1rsync_clk);
-+			clk_disable_unprepare(tsa->tdm[i].l1tsync_clk);
-+			clk_put(tsa->tdm[i].l1tsync_clk);
- 		}
- 		if (tsa->tdm[i].l1tclk_clk) {
--			clk_disable_unprepare(tsa->tdm[i].l1rclk_clk);
--			clk_put(tsa->tdm[i].l1rclk_clk);
-+			clk_disable_unprepare(tsa->tdm[i].l1tclk_clk);
-+			clk_put(tsa->tdm[i].l1tclk_clk);
- 		}
- 	}
- 	return ret;
-@@ -1059,12 +1059,12 @@ static void tsa_remove(struct platform_device *pdev)
- 			clk_put(tsa->tdm[i].l1rclk_clk);
- 		}
- 		if (tsa->tdm[i].l1tsync_clk) {
--			clk_disable_unprepare(tsa->tdm[i].l1rsync_clk);
--			clk_put(tsa->tdm[i].l1rsync_clk);
-+			clk_disable_unprepare(tsa->tdm[i].l1tsync_clk);
-+			clk_put(tsa->tdm[i].l1tsync_clk);
- 		}
- 		if (tsa->tdm[i].l1tclk_clk) {
--			clk_disable_unprepare(tsa->tdm[i].l1rclk_clk);
--			clk_put(tsa->tdm[i].l1rclk_clk);
-+			clk_disable_unprepare(tsa->tdm[i].l1tclk_clk);
-+			clk_put(tsa->tdm[i].l1tclk_clk);
- 		}
- 	}
- }
+diff --git a/drivers/soc/fsl/dpio/dpio-driver.c b/drivers/soc/fsl/dpio/dpio-driver.c
+index 9e3fddd8f5a91..7dc65f38d2fdb 100644
+--- a/drivers/soc/fsl/dpio/dpio-driver.c
++++ b/drivers/soc/fsl/dpio/dpio-driver.c
+@@ -248,9 +248,9 @@ static int dpaa2_dpio_probe(struct fsl_mc_device *dpio_dev)
+ 
+ 	return 0;
+ 
+-err_dpaa2_io_create:
+-	unregister_dpio_irq_handlers(dpio_dev);
+ err_register_dpio_irq:
++	dpaa2_io_down(priv->io);
++err_dpaa2_io_create:
+ 	fsl_mc_free_irqs(dpio_dev);
+ err_allocate_irqs:
+ 	dpio_disable(dpio_dev->mc_io, 0, dpio_dev->mc_handle);
 -- 
 2.53.0
 
