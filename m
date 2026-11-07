@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063452;
-	b=HfGjIKsKT+Zp1oz/illRBTbU1z2cGEsNOLYVNryQD5YOaK+FNlZOVxrzwtjgtModxZQy
-	 hijPIsWECrCKLLn9q/29z66PMShU4rHVK/g8IAh+kmlvUCuihzodWCNN5K8LQlkvRF41x
-	 +u9rpEV0jEhR2bdtPNpnyOTPwdoqqsOsMAjywleDbV22viAq5jDzSSHoVmNp7rBS7S2hb
-	 OpUVOGK5izJ7sJlNLImD54fdQeJORhgPFeb16Hj/fkQlOVXB0wnGbSy6WZGHyMvBuMLA8
-	 X5w6bbD9PrQbqA9YmbijltNOhr6ri44DyD0hLfB3zI69lzTkVSF4jIttCQOzIEIkKyA==
+	t=1794063453;
+	b=QCh2Z4cEZ4vlFEQgFneryIQFR4k/8+9OI+Ia/Fw14ejI/pZsvcq60KJ5+Yeu/zL9IrQ6
+	 Y3763UF/2K8LPxEF59TfN2jvUv1PmEKHciDwx0roEkGrNWClpq4f6QxQjltYRXe6F29S/
+	 0qtlxlHzUAIZXOHEjtcSb38KyCsgAc3GXbBAGxcT50eEoPf/RhkBUnjWhyAlUz5MZ37PK
+	 WjADyhuTNmtjHTk6fyy7ZW5Y2EbtUUUnejl07uurRBMTbIlI0AItFOIBBIhk+Le3k2TLz
+	 9qxrDLhJSvOzcVxiu8PoouwDh6IN1Zj5hwfSmku1/HVhWP/yv1GsIsVzQY+ufUwePPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063453;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lce1OrWrrGiMDGspFCHYwSISALXKeV8Rxmf8BTo5cBI=;
-	b=kByC+01EB7eBjyuSXQkJ2pe35IRUEXmdxjlDViF0MnQ3pBbO84SNLnv/kGQpDTonHIYa
-	 qDEOW9qWrnSwtDTsWPYCdu9kCmnXRcLNqdG92DVYFa9XJqCiOTSMxdXcJ2OqfEn/n/QL6
-	 w/4ZWhYa1wuB/rkdotlprU9c8pwjRuzF5bpmNoO2jZ6PqqFyylgNzos0mO9eDq8j4oZ5j
-	 TXywBEN6ZUEm4ztfMa3WY14obbPnotQp6GZOPcRqlw+ULZ7EIoNTnORG6t/8R9IhMKGHI
-	 4bIQF7V3HZnOUs306g9TYAMjttlGx4cOZHz4gpZSxZLyeiJzPrwpcuRxPihqZxBIuGg==
+	bh=0SsqOjEkfoxYEVF6jsUQJ0lnak9l0SVPk+h0wjdlxxQ=;
+	b=I3FM5fVCyZEKGB02lwvNo1qJjQ+0wL8poz+yIJx5HsKjU5yqP2L69TE1kRCoDqB8Ockx
+	 VI8MkfKhEfv6JjwdlM2hOkVyg1g2nS98XeHxOS0nbp1DiRthO7PPo1gtm/nronmPKkzUJ
+	 sDFuxL1KUprYQxY+c3TCIrE7hZ2pLgXbcUoJY01bN0CCE8rCF26+SfNZoqnYAIKN57vLT
+	 O7mp6oi2FWsqN6/EHDCgvS27ZY/KJVjKG9vMx2OU7TpenUh/ms/em3kA3CSGGX7QM/m8P
+	 8lLZj5f6HaGd9qFBK3rvo3IBwkWt7gy3aGXxK9uI7GZP64vRMFCcYvLjEOBMtfRMXSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIatNLqy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FMbB53hF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5998606D804;
-	Sat,  7 Nov 2026 14:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CE8606D825;
+	Sat,  7 Nov 2026 14:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIatNLqy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393D41F008A6;
-	Sat,  7 Nov 2026 14:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FMbB53hF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758541F0089F;
+	Sat,  7 Nov 2026 14:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063451;
-	bh=Lce1OrWrrGiMDGspFCHYwSISALXKeV8Rxmf8BTo5cBI=;
+	s=korg; t=1794063452;
+	bh=0SsqOjEkfoxYEVF6jsUQJ0lnak9l0SVPk+h0wjdlxxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bIatNLqyLvkm9L1tfEizlXSglryPRLSq7J1sWK6ojkXn/oF14HXE0yYnecj5u9G0A
-	 S1sROupsIFpUOqEh0IhiGyTbi86stNomcV5+ZFZ2IPxOZ5Cj5hpMn3CkShiFa/SQhN
-	 if7UHl0YxR39kTKz+Acwljc8uVYwKBH5sVYQpbrI=
+	b=FMbB53hFZr6fdK0EGSwPFbjgMPkmxeXRpDerRzb3K3Uahh/OXDSnQm2/wJHTH3EKD
+	 prCpWuG8pbvord2g2tP/gQB6DIP+ERyvvhnguDaelU18B/2Vjo4oG+Uzf50rGyqp2Y
+	 UCSEHJ82EXO0vcRGqUUkS3V/RnIqRajpKJC0QjIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongliang Wang <wanghongliang@loongson.cn>,
+	Xi Ruoyao <xry111@xry111.site>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 609/869] cpufreq: loongson3: Use global physical CPU ID in get/target callbacks
-Date: Sat,  7 Nov 2026 08:54:51 -0500
-Message-ID: <20261107134913.734419830@linuxfoundation.org>
+Subject: [PATCH 6.18 610/869] cpufreq: loongson3: Replace IOCSR read/write with MMIO ones
+Date: Sat,  7 Nov 2026 08:54:52 -0500
+Message-ID: <20261107134913.761771950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -72,95 +72,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit e38360d7c62c8fa530b58905f99a4557d4d6b352 ]
+[ Upstream commit 81792daacfb41ca07b04bd3956ea9e672080cc98 ]
 
-Our server productions (e.g. Loongson-3D6000/3E6000) can have discrete
-global physical CPU IDs while the core ID inside the packages are always
-continuous. In these cases we should use global physical CPU IDs to get
-and set frequencies.
+Our server productions (e.g. Loongson-3D6000/3E6000) can have multiple
+nodes in one package and SMC mailboxes are also per-node. However, IOCSR
+read/write can only perform on the current node, while sometimes we want
+to perform on other nodes (e.g. when switch governor, the get and target
+callbacks are not run on target core). So replace IOCSR read/write with
+MMIO ones.
 
 Cc: stable@vger.kernel.org
 Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
-Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
+Tested-by: Xi Ruoyao <xry111@xry111.site>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/loongson3_cpufreq.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ drivers/cpufreq/loongson3_cpufreq.c | 34 +++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
-index e3cd78a5ab187..1ae821e265fbf 100644
+index 1ae821e265fbf..aea7c31e155a4 100644
 --- a/drivers/cpufreq/loongson3_cpufreq.c
 +++ b/drivers/cpufreq/loongson3_cpufreq.c
-@@ -16,6 +16,7 @@
- #include <asm/idle.h>
+@@ -17,6 +17,7 @@
  #include <asm/loongarch.h>
  #include <asm/loongson.h>
-+#include <asm/smp.h>
+ #include <asm/smp.h>
++#include <asm/numa.h>
  
  /* Message */
  union smc_message {
-@@ -219,38 +220,40 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+@@ -165,6 +166,12 @@ union smc_message {
  
- static unsigned int loongson3_cpufreq_get(unsigned int cpu)
- {
--	int ret;
-+	int ret, core = cpu_logical_map(cpu);
+ #define FREQ_MAX_LEVEL			16
  
--	ret = do_service_request(cpu, FREQ_INFO_TYPE_FREQ, CMD_GET_FREQ_INFO, 0, 0);
-+	ret = do_service_request(core, FREQ_INFO_TYPE_FREQ, CMD_GET_FREQ_INFO, 0, 0);
- 
--	return ret * KILO;
-+	return (ret < 0) ? 0 : ret * KILO;
- }
- 
- static int loongson3_cpufreq_target(struct cpufreq_policy *policy, unsigned int index)
- {
--	int ret;
-+	int ret, core = cpu_logical_map(policy->cpu);
- 
--	ret = do_service_request(cpu_data[policy->cpu].core,
--				 FREQ_INFO_TYPE_LEVEL, CMD_SET_FREQ_INFO, index, 0);
-+	ret = do_service_request(core, FREQ_INFO_TYPE_LEVEL, CMD_SET_FREQ_INFO,
-+				 index, 0);
- 
- 	return (ret >= 0) ? 0 : ret;
- }
- 
- static int configure_freq_table(int cpu)
- {
--	int i, ret, boost_level, max_level, freq_level;
-+	int i, ret, core, boost_level, max_level, freq_level;
- 	struct platform_device *pdev = cpufreq_get_driver_data();
- 	struct loongson3_freq_data *data;
- 
- 	if (per_cpu(freq_data, cpu))
- 		return 0;
- 
--	ret = do_service_request(cpu, 0, CMD_GET_FREQ_LEVEL_NUM, 0, 0);
-+	core = cpu_logical_map(cpu);
++#define MMIO_SMCMBX(node) \
++	((void __iomem *)(nid_to_addrbase(node) | IO_BASE | LOONGSON_REG_BASE | LOONGARCH_IOCSR_SMCMBX))
 +
-+	ret = do_service_request(core, 0, CMD_GET_FREQ_LEVEL_NUM, 0, 0);
- 	if (ret < 0)
- 		return ret;
- 	max_level = ret;
++#define MMIO_MISC_FUNC(node) \
++	((void __iomem *)(nid_to_addrbase(node) | IO_BASE | LOONGSON_REG_BASE | LOONGARCH_IOCSR_MISC_FUNC))
++
+ struct loongson3_freq_data {
+ 	unsigned int def_freq_level;
+ 	struct cpufreq_frequency_table table[];
+@@ -177,13 +184,27 @@ static DEFINE_PER_CPU(struct loongson3_freq_data *, freq_data);
+ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 extra)
+ {
+ 	int retries;
+-	unsigned int cpu = raw_smp_processor_id();
+-	unsigned int nid = cpu_to_node(cpu);
++	unsigned int cpu = 0, nid;
+ 	union smc_message msg, last;
  
--	ret = do_service_request(cpu, 0, CMD_GET_FREQ_BOOST_LEVEL, 0, 0);
-+	ret = do_service_request(core, 0, CMD_GET_FREQ_BOOST_LEVEL, 0, 0);
- 	if (ret < 0)
- 		return ret;
- 	boost_level = ret;
-@@ -263,7 +266,7 @@ static int configure_freq_table(int cpu)
- 	data->def_freq_level = boost_level - 1;
++#ifdef CONFIG_SMP
++	switch (cmd) {
++	case CMD_GET_FREQ_INFO:
++	case CMD_SET_FREQ_INFO:
++	case CMD_GET_FREQ_LEVEL_NUM:
++	case CMD_GET_FREQ_LEVEL_INFO:
++	case CMD_GET_FREQ_BOOST_LEVEL:
++		cpu = cpu_number_map(id);
++		break;
++	default:
++		cpu = raw_smp_processor_id();
++	}
++#endif
++	nid = cpu_to_node(cpu);
++
+ 	mutex_lock(&cpufreq_mutex[nid]);
  
- 	for (i = 0; i < freq_level; i++) {
--		ret = do_service_request(cpu, FREQ_INFO_TYPE_FREQ, CMD_GET_FREQ_LEVEL_INFO, i, 0);
-+		ret = do_service_request(core, FREQ_INFO_TYPE_FREQ, CMD_GET_FREQ_LEVEL_INFO, i, 0);
- 		if (ret < 0) {
- 			devm_kfree(&pdev->dev, data);
- 			return ret;
+-	last.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
++	last.value = readl(MMIO_SMCMBX(nid));
+ 	if (!last.complete) {
+ 		mutex_unlock(&cpufreq_mutex[nid]);
+ 		return -EPERM;
+@@ -196,12 +217,11 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+ 	msg.extra	= extra;
+ 	msg.complete	= 0;
+ 
+-	iocsr_write32(msg.value, LOONGARCH_IOCSR_SMCMBX);
+-	iocsr_write32(iocsr_read32(LOONGARCH_IOCSR_MISC_FUNC) | IOCSR_MISC_FUNC_SOFT_INT,
+-		      LOONGARCH_IOCSR_MISC_FUNC);
++	writel(msg.value, MMIO_SMCMBX(nid));
++	writel(readl(MMIO_MISC_FUNC(nid)) | IOCSR_MISC_FUNC_SOFT_INT, MMIO_MISC_FUNC(nid));
+ 
+ 	for (retries = 0; retries < 10000; retries++) {
+-		msg.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
++		msg.value = readl(MMIO_SMCMBX(nid));
+ 		if (msg.complete)
+ 			break;
+ 
 -- 
 2.53.0
 
