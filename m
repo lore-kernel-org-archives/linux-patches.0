@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063381;
-	b=3+J5AfH5KQnP+2WAtUDflGv57n8ZP+X5Zeu1c73yXiOmc29/nCtPWjgTAaeINW2tsf86
-	 lwajXRH2kxYz3XZXizliyiXbb/HzXGzu9dFf41HdNULkVlzGq1M4RA7OhUQXrOyxDeJ0y
-	 vTfIzHWpeQVeZphajuzt8tMbIln3KXAzDG4aYiGcskKr4OD2TGdOojOLzhNUnmGPOq87t
-	 6ZZBF7QpXUd0nv5tsJ1ha/sRvWOk2fO+lAqt8ucfobQ2uHzsw+tvk1PhvAEN5zfvFCGas
-	 sqVypyuqJen64a4+zsJK0m835D8lcpTRQfgQXQtwclrvyhNLuckeKHIchfnnlW860eA==
+	t=1794063382;
+	b=1t9C35c0bpq3kIy7hGzGFtwfQycLPCWWGK9qJauNznsp/Pxgn54Ka8ekhJzpCylgfC4G
+	 dJVUdY52uGOaf5C9zQ44lHWCfmm9C0gVFTaaihlS42anji1wWU80D38R+Zx4Y1a3pEOVv
+	 7x+COCrAq+5SHXSsi119Gf1zdyYQ60NCA8BU7GTrnT93dpn0by5lbyTLIBSsHf/vYQEPS
+	 63E1TQV/i07taRYWNsRcjbazfW4hwhcSpdDmxCy/FNIijRxrm6LGkCBaFXNr6sIwoHa1n
+	 x4zvlBX65IWnvnwFUHMrGwiehQ6gO0yqGIRrKSkKnkM80gEX/5SS23VpzpaDiz4WcZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CHpPG5RUh7VtCncuUlhDcvhypdYlqamP2WD/dLK4p94=;
-	b=uBuofPGkMJ2f/7fZtjU7YFg82CMLXX0F6o3iusW/RjP7EllZjOVn7fxDiy/JCKI4KZSR
-	 QxeAlj6njPrWwhqIugJKNCtOxMRsW/iwi/UVv4EMJ9l6zMGidOlfyzD5VF4LykzdIf/95
-	 igllejE+wV6oo7SYP0dr5V5bDaObZz9zXG+RgW2gK6c+YISVtJ9iUspn/mWAUZU9LK3EB
-	 TJLxFhwfhWFxaqo4ly58iGAJ9VkR1vvY2dyxK+ck3nqr0Qw07dOi659qip9yqKYcwFpaf
-	 ZS/7K5gm9zoooJqmuCLYPyIqSRUyrA6tIo6emw9xVXqqv6LtDY7NkVmpVvY5MN5NFKA==
+	bh=Z11U8F7m4jv4/3Sl1t6vaGIcyJfMk8/8Iy9JiT6z3uc=;
+	b=esE43fdnX3vaXp0itSU5zG13+M58fLNEab9KuHoh+r+vd4lIhvuYYiuBkbke+2lmBqpo
+	 JBC/7PBltfeIDYXvR187Na7gloYiDDgru5gaCqJ4YI0Gc2pF4B4sEKUH95QZqsnR+903j
+	 PAt3/Wmr0TuvYz/pwivF8JSP5/o7G1OCrRZa/u8ZfD2ybgwK2/uC2nSdf8XuZ6/rzSJ/g
+	 12rtdJaSOZPeNSG+0tBY5/UYPqLyIsy1YnYfXLIQrYmEzLnatJp/OsJYxH/prx6ATpiZT
+	 UjRRfSO9+W6BCw2TjlIYTDZsEt4Z3TB69zRtnovx+WvziCLwMK/FzfLX5SarVu6gOkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YkaDCFEg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7rIXda0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AF0606D81C;
-	Sat,  7 Nov 2026 14:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D1A606D810;
+	Sat,  7 Nov 2026 14:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YkaDCFEg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B871F0089F;
-	Sat,  7 Nov 2026 14:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7rIXda0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA1C1F0089F;
+	Sat,  7 Nov 2026 14:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063380;
-	bh=CHpPG5RUh7VtCncuUlhDcvhypdYlqamP2WD/dLK4p94=;
+	s=korg; t=1794063381;
+	bh=Z11U8F7m4jv4/3Sl1t6vaGIcyJfMk8/8Iy9JiT6z3uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YkaDCFEgCqk9ZHb6Leta8TI9eLSdofIGzIjDh7nO+AEVeCmqLboFyG+S6Q9orz/6c
-	 L0NJZRBCtaj/3zlEp0o31YPq9LlxKm+x2iscK55JaTL7Gh/Foky+tGSTxUkw1UdDZB
-	 457tkkI3KoaEcCJJl/iq18IxGgPoAVX/OU4Z/jIY=
+	b=x7rIXda0iihaHGgxH3++YRW3tS1VxWao1fKRoz7+CZMFV3D68+lLByy37Bxw8TU8e
+	 4gTXgg4tPhxOXkgsCkmmVXg9njg4l2A9nDLhIN/AbjxW5/lPKP/Os7AP9qY7VMd0dN
+	 aOp2izX3XOIyxV+SpWLQsVW/o3dTvKLFHBMqyhYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Martin Belanger <martin.nvme.dev@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 554/869] nvme: make the DH-HMAC-CHAP secret attributes readable by root only
-Date: Sat,  7 Nov 2026 08:53:56 -0500
-Message-ID: <20261107134912.131936708@linuxfoundation.org>
+Subject: [PATCH 6.18 519/869] nvmet: require authentication before property set
+Date: Sat,  7 Nov 2026 08:53:21 -0500
+Message-ID: <20261107134911.125025295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,84 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Belanger <martin.nvme.dev@gmail.com>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit bbca7c312ab25efd0024eb87545c51a76ab2ea39 ]
+[ Upstream commit 44512543ff0413031516a02cde67323a55e0f769 ]
 
-The dhchap_secret and dhchap_ctrl_secret sysfs attributes have mode
-0644. Their show functions return the secret, so any local user can
-read the DH-HMAC-CHAP secrets of a connected controller.
+I/O queues do not perform independent DH-HMAC-CHAP authentication.  They
+instead rely on authentication of the controller's admin queue.  Fabrics
+property commands, however, are dispatched before the general admin command
+authentication check.
 
-Define them with DEVICE_ATTR_ADMIN_RW(), which sets mode 0600. The
-macro takes the show and store functions from the attribute name, so
-rename them. Writing the attributes was already limited to root and is
-not changed.
+An unauthenticated peer can consequently set CC.EN, connect an I/O queue,
+and access a namespace after admin CONNECT reported that authentication was
+required.  Reject PROPERTY_SET until the admin queue has authenticated.
+Targets without a configured authentication key are unchanged.
 
-Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
+This was found by source review with AI assistance.  A localhost NVMe/TCP
+wire reproducer retrieved a known 4 KiB namespace block in two independent
+boots without completing AUTH_SEND or AUTH_RECEIVE.  With this change,
+PROPERTY_SET returned NVME_SC_AUTH_REQUIRED and the namespace data was not
+returned; the no-authentication control continued to work.
+
+Fixes: c91a20129185 ("nvmet-auth: authenticate on admin queue only")
 Cc: stable@vger.kernel.org
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
 Assisted-by: LLM
-Signed-off-by: Martin Belanger <martin.nvme.dev@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/sysfs.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/nvme/target/fabrics-cmd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
-index 12478e0297356..2b6085359a950 100644
---- a/drivers/nvme/host/sysfs.c
-+++ b/drivers/nvme/host/sysfs.c
-@@ -626,7 +626,7 @@ static ssize_t quirks_show(struct device *dev, struct device_attribute *attr,
- static DEVICE_ATTR_RO(quirks);
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index bc837fbfada15..9aedab2603bdd 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -14,6 +14,10 @@ static void nvmet_execute_prop_set(struct nvmet_req *req)
  
- #ifdef CONFIG_NVME_HOST_AUTH
--static ssize_t nvme_ctrl_dhchap_secret_show(struct device *dev,
-+static ssize_t dhchap_secret_show(struct device *dev,
- 		struct device_attribute *attr, char *buf)
- {
- 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
-@@ -637,7 +637,7 @@ static ssize_t nvme_ctrl_dhchap_secret_show(struct device *dev,
- 	return sysfs_emit(buf, "%s\n", opts->dhchap_secret);
- }
+ 	if (!nvmet_check_transfer_len(req, 0))
+ 		return;
++	if (!nvmet_check_auth_status(req)) {
++		status = NVME_SC_AUTH_REQUIRED | NVME_STATUS_DNR;
++		goto out;
++	}
  
--static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
-+static ssize_t dhchap_secret_store(struct device *dev,
- 		struct device_attribute *attr, const char *buf, size_t count)
- {
- 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
-@@ -681,10 +681,9 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
- 	return count;
- }
- 
--static DEVICE_ATTR(dhchap_secret, S_IRUGO | S_IWUSR,
--	nvme_ctrl_dhchap_secret_show, nvme_ctrl_dhchap_secret_store);
-+static DEVICE_ATTR_ADMIN_RW(dhchap_secret);
- 
--static ssize_t nvme_ctrl_dhchap_ctrl_secret_show(struct device *dev,
-+static ssize_t dhchap_ctrl_secret_show(struct device *dev,
- 		struct device_attribute *attr, char *buf)
- {
- 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
-@@ -695,7 +694,7 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_show(struct device *dev,
- 	return sysfs_emit(buf, "%s\n", opts->dhchap_ctrl_secret);
- }
- 
--static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
-+static ssize_t dhchap_ctrl_secret_store(struct device *dev,
- 		struct device_attribute *attr, const char *buf, size_t count)
- {
- 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
-@@ -739,8 +738,7 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
- 	return count;
- }
- 
--static DEVICE_ATTR(dhchap_ctrl_secret, S_IRUGO | S_IWUSR,
--	nvme_ctrl_dhchap_ctrl_secret_show, nvme_ctrl_dhchap_ctrl_secret_store);
-+static DEVICE_ATTR_ADMIN_RW(dhchap_ctrl_secret);
- #endif
- 
- static struct attribute *nvme_dev_attrs[] = {
+ 	if (req->cmd->prop_set.attrib & 1) {
+ 		req->error_loc =
 -- 
 2.53.0
 
