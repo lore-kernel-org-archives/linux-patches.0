@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065447;
-	b=Awjzebw9edIhJ+kT4UtJNnTQpquSsHardct4XA2BrMlORP17WNnyDgUTs56Ed5272Fpv
-	 4qk8I+OPBfyYYR4Y8jOI01LGMzoiAemSygnwXAPGeYI/gCmjtHez4ZS58vGfwodSPgHpo
-	 qONlBbjMopjVTkgtFV4ZHRdaENferWKTSrEDxzb2vbZ5X5EqAQlFcz0j1rKkhFBLv1D7/
-	 J87FglCOtc6uEDnVhMFgKVzTooPypkTa9hGjhYralkvNrwJxOF8r4S7rOKdYy1vhUas+Q
-	 eCmH7q2vej/Ss8WoyWN3onj/0VcyLBnxMvBEuzN4TkRa94nEZMJNtumld5xHlJttYBw==
+	t=1794065448;
+	b=zqLpZJHhjLWh0BrNTYN897S4+2rWTPoEJYQ5XyT0aD/0fbH+QJD4/BK8rquQC8+eSWym
+	 J2Zyfuft5jF+hcifORjwzzDqS2dlImVRYWZcisAhMhTd87gX0/p3CH4/odLSJGBbvXyYw
+	 TH/YmmqQuoqJUr8Wq2xDC/xVNqLWBKl8lNJl7svYrnJy1CEMXeQ2hvl1f6y/ryi4jYZcP
+	 oCRa6n9PJTSPqBGiqknOQ5xWGyd0ISYw2zLHqnzv8d+p0YsPaXzvMyTtgHkltC6ReeZ51
+	 kQe3LnCOn/bIz/cxeT2idq1T8xbiSDrBTIVDuK2qdOEdR868GUTGxpT7Qt20uLQkLiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065447;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065448;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=toccCIS7T0/j2c+vjy+aOALVbs3EQ9xxdYqGwWTEQUY=;
-	b=2NtQ1++rZrNJh8RQ5GoI5ltmU8mRE3YnHUf9tMx9DKbZ0ZJVpcR2JsBtzvnYvVwrY6M/
-	 ubMK4vdGGicm2i4koDLK0PxylfmjganU7CsQIQzMQNkC0w1jKY5Vt9lOMvr9/Q4GEeby3
-	 /wUrM2QzoeD3GFMlZEHEpZJiN/ueSazo8kU18GkJkYs0SdGqn6Ilp8HkdTeyP8AR8zB3/
-	 DOmWNk16jcUqKi/hYQqIteo0qtpdH4z4s4UC5sm2PHM8aS9rnBLE7Mwm0eeRNdh6fdtoj
-	 QSMXpxS7krvDtvsIzIFbTX5lA8gdAJ0OI3+vWtDIW4ZghnHlGTs1MyZeV2r4qksC7GQ==
+	bh=/Ua5kAruTQOyt3j7sbuyeV8B9LeLq5OK7fEFJ92oxgU=;
+	b=DlPrCqyU0eECMTwNvG6uRBK8NMlUPfVjTWFQjcosVC7m3R8T9RcCBrPj4Adf2R+TWIDH
+	 E48QgxI4fqkWxMcdMsonyZ8qkBOyFuqsIes8JHeKOgOfec7fIWsvOkUQx9mM1jF6Vo+eI
+	 4PPlWzv8ecYNAEK+ytQV93serCX17IWVb9/VS/ec0cZ0BsdzPzuQQsjnLFVwghXbDwyk+
+	 BC8JRDCNWX62m+gXmVAyQYqsE2lvImmjnbpjKaK/5vFbCHsuzJrkhZkfSj+LQEG0b3CIW
+	 2ngZjKEEZM7A03bvq1uQURM2yH9TehWBh8O2l91y0H2p7FLNGhIzUGtnrPUWJ4RPpeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aGCVIT6a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSVoaSSZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68D6606A32C;
-	Sat,  7 Nov 2026 15:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38280606A32C;
+	Sat,  7 Nov 2026 15:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aGCVIT6a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DB71F0089F;
-	Sat,  7 Nov 2026 15:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSVoaSSZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76E31F0089F;
+	Sat,  7 Nov 2026 15:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065446;
-	bh=toccCIS7T0/j2c+vjy+aOALVbs3EQ9xxdYqGwWTEQUY=;
+	s=korg; t=1794065448;
+	bh=/Ua5kAruTQOyt3j7sbuyeV8B9LeLq5OK7fEFJ92oxgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aGCVIT6asQZMd1oPyD4Cj6z+dTKzlcfhhAasDsEc5vfZOsrtYOwYoBHp8rVYNMmw/
-	 6oWVs8MkdJOGMy6ijGPSqYE4US+OWEj5a+kFeEkT/rRCqZwB3uuhrymCtl76JU8O+G
-	 OcWINKMjwkgJw7chb6RxYp+6R0yiqaDOrDBis7dM=
+	b=iSVoaSSZFOQsHjD5f/sQ9lBNY2OCB+u0HIqEY4aeZYiNAVwNsDv3JtHRzkGkD9R3d
+	 2d7YNKvHiTCt0JE3S83VA53MXqsWpmY+tPwH7w5DG/IR42OFXhZHRpR3YYFj/iOcmc
+	 Op7GBET4IHPmDBcWIsJbFna0oGc4xneotES7lMF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+ecaada42f806f629@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Naman Gulati <namangulati@google.com>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1124/1257] ceph: fix integer overflow in the snap trace bounds check
-Date: Sat,  7 Nov 2026 08:57:00 -0500
-Message-ID: <20261107135010.280939125@linuxfoundation.org>
+Subject: [PATCH 7.3 1151/1257] ipmr: drop packets with unknown ingress VIF
+Date: Sat,  7 Nov 2026 08:57:27 -0500
+Message-ID: <20261107135010.999681737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,87 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit b3bf89767e3ca9506f1c7167cac97c41ec254d42 ]
+[ Upstream commit 09280680f2ea060514be2a39ea84209fb6d721d4 ]
 
-ceph_update_snap_trace() bounds the two encoded snapid arrays that follow a
-struct ceph_mds_snap_realm with sizeof(u64) * (num_snaps +
-num_prior_parent_snaps).  Both counts come straight off the wire as __le32,
-so the addition is evaluated in unsigned int and wraps before sizeof(u64)
-promotes it to size_t: an MDS sending num_snaps = 1 and
-num_prior_parent_snaps = 0xffffffff makes the sum zero and the check
-degenerates to ceph_decode_need(&p, e, 0, bad), which always passes.
-dup_array() then reads num_snaps * 8 bytes past the end of the message
-front, which ceph_msg_new2() allocates at exactly front_len bytes.  An
-unsolicited CEPH_MSG_CLIENT_SNAP reaches this from a malicious or
-compromised MDS with no client-side action, as do the snaptraces carried in
-an MDS reply and in a cap import.
+A packet can race with VIF publication and make ipmr_find_vif() return
+-1 even though the VIF device pointer is already visible. The parent VIF
+device check can then pass with an invalid ingress VIF. For (*,G)
+entries, this can also let the packet be forwarded back out its ingress
+VIF.
 
-Compute the length with size_add()/size_mul() so it saturates at SIZE_MAX
-instead of wrapping, in the style fs/ceph/mdsmap.c already uses for
-num_export_targets.
+Drop packets whose ingress VIF lookup fails in both IPv4 and IPv6
+forwarding, before checking the MFC parent device. This prevents
+forwarding with an unknown ingress VIF and avoids the (*,G) hairpin.
 
-  BUG: KASAN: slab-out-of-bounds in dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
-  Read of size 8 at addr ffff8880102a16c8 by task kworker/1:2/129
-  Workqueue: ceph-msgr ceph_con_workfn
-  Call Trace:
-   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-   kasan_report (mm/kasan/report.c:595)
-   dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
-   ceph_update_snap_trace (fs/ceph/snap.c:836)
-   ceph_handle_snap (fs/ceph/snap.c:1155)
-   mds_dispatch (fs/ceph/mds_client.c:7234)
-   ceph_con_process_message (net/ceph/messenger.c:1424)
-   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
-   ceph_con_workfn (net/ceph/messenger.c:1576)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  ...
-  The buggy address is located 0 bytes to the right of
-   allocated 72-byte region [ffff8880102a1680, ffff8880102a16c8)
+Without the early check, the negative index can reach the IPv4 offload
+lookup only for an skb marked for L3 forwarding offload, currently done
+by mlxsw. The race is rare; the supplied PoC reports only the UBSAN
+negative-index diagnostic.
 
+Fixes: 4eadb88244d1 ("ipmr: do not acquire mrt_lock while calling ip_mr_forward()")
+Fixes: 9b1c21d898fd ("ip6mr: do not acquire mrt_lock while calling ip6_mr_forward()")
 Cc: stable@vger.kernel.org
-Fixes: 963b61eb041e ("ceph: snapshot management")
-Reported-by: co+ecaada42f806f629@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Link: https://lore.kernel.org/netdev/b966eb102e98f299e45be59ada033a8766e4c6df.1791899747.git.zhilinz@nebusec.ai/
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Suggested-by: Naman Gulati <namangulati@google.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Naman Gulati <namangulati@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/5271fcb94a4d9e697ed64a348e92ea9e74faab1c.1792608753.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/snap.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ipv4/ipmr.c  | 3 ++-
+ net/ipv6/ip6mr.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
-index 9b79a5eaca939..5ba325aa147cf 100644
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -788,6 +788,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
- 	struct ceph_snap_realm *first_realm = NULL;
- 	struct ceph_snap_realm *realm_to_rebuild = NULL;
- 	struct ceph_client *client = mdsc->fsc->client;
-+	size_t snaps_len;
- 	int rebuild_snapcs;
- 	int err = -ENOMEM;
- 	int ret;
-@@ -802,8 +803,10 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
- 	ceph_decode_need(&p, e, sizeof(*ri), bad);
- 	ri = p;
- 	p += sizeof(*ri);
--	ceph_decode_need(&p, e, sizeof(u64)*(le32_to_cpu(ri->num_snaps) +
--			    le32_to_cpu(ri->num_prior_parent_snaps)), bad);
-+	snaps_len = size_mul(size_add(le32_to_cpu(ri->num_snaps),
-+				      le32_to_cpu(ri->num_prior_parent_snaps)),
-+			     sizeof(u64));
-+	ceph_decode_need(&p, e, snaps_len, bad);
- 	snaps = p;
- 	p += sizeof(u64) * le32_to_cpu(ri->num_snaps);
- 	prior_parent_snaps = p;
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index ac1ed8acde8fd..f51014b37178b 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -2078,7 +2078,8 @@ static void ip_mr_forward(struct net *net, struct mr_table *mrt,
+ 	}
+ 
+ 	/* Wrong interface: drop packet and (maybe) send PIM assert. */
+-	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
++	if (true_vifi < 0 ||
++	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
+ 		if (rt_is_output_route(skb_rtable(skb))) {
+ 			/* It is our own packet, looped back.
+ 			 * Very complicated situation...
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index c50e4b7c81844..ed9d786f1a423 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -2218,7 +2218,8 @@ static void ip6_mr_forward(struct net *net, struct mr_table *mrt,
+ 	/*
+ 	 * Wrong interface: drop packet and (maybe) send PIM assert.
+ 	 */
+-	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
++	if (true_vifi < 0 ||
++	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
+ 		atomic_long_inc(&c->_c.mfc_un.res.wrong_if);
+ 
+ 		if (true_vifi >= 0 && READ_ONCE(mrt->mroute_do_assert) &&
 -- 
 2.53.0
 
