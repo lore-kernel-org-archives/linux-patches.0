@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063406;
-	b=c3HmZ4NOzCGZW9qwbkdilcZknfx1dOEHG31AmK9K7A2NR1acTc+pa4D+ldwaCRHTLAjj
-	 xM1mvgEPMuxiWrHf4RZICbVAWmNHNLaRoHkQTm5rH7rJSLekCzxgce32FL8L5ZkwP+r5n
-	 v5eogo51x39MVI2pjwbAMI5pdg3oayRhFhpluVx7pOS/WyDTjP2tMD0chR+WAj0VCqgya
-	 rlW/gfNOdfxX1rBcl98w3qS03yoFZ6Z7mQmQ7NOVWuovdohLl6nPK+XLsW+OYsI+hIM+u
-	 4uQ7vLz+LYv40vYXRxE7VKjcJ6B3VBszu5aERTZdKPVmkZnFOWrDGDQRAvHrZAhQA8A==
+	t=1794063407;
+	b=NAsEhy+bCaEGsRPQjNgLFeKQcSlkL/+dLgEQQNDWT2ebnjHUEQgqJTzmRfe901K2ybsY
+	 TiVTnLrSPRSYWVIZS+1Flvn/17lvIb756RjQDxGzFAS3s5+RGibHqLGQQyFLLHOHel6Ag
+	 rB4bMSd4DGfTfmTS58mcpJF0ZYiLSCxoiM5yrwophWdnf+FzlyINt2PTC765naQZdrrcZ
+	 ISOnaNx43zsorppAhNqmqqidfrJQFDWol1D0Wj6r75H8C2flthMyloUhDIM1hpGQgSPBe
+	 jlGQcNwSmdKiC2ig+Uiu37ley9FJREDKv0sK6nVXKgATyTT2cUVi3lRZTi74bxTLUIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FDJ6nMImWKbuUMK7Ez0WGtoKDMRORAl8TjLm0x8H3gw=;
-	b=ffodMiTLghPXKEeOMthCc2j9WLgsG424qxXAefV0k64vQyrRVKV7x8BZslNWaAkLBnLh
-	 /NHj10Ukpurvo5aBXWMLwcAPnRNkPU0cPQEq3sNrf5287Qp3oIMx1w4GIcwYEnhvZibXe
-	 97psZjOa0cKgfkG8mQpjuZU8b21sxVz6e5Gb4RCXnPL4hf/JGH/f1T9F8K6/S7ybD+myU
-	 IRDIBvGYKC56z52v5t0jFw9ihGj/FAMXzu+ZNK4nL+zrueyNdL2mZM9Y3u4n7xVVoGeHk
-	 +IRPSvGkJuHEsmIVn6XertD4kMCG4w0vA832Nstfg2c/fgLKNEQmM5PTDAc7xZJk6bg==
+	bh=UWy500LfoopEJ1nkA9zr6dTnZ+jJjF7FVqbcVur6CSQ=;
+	b=mG0ku9VJodPQRlge6UhBwiA2kcP9i3kD9AzXX0NE0PksY2up4j9oTLC1EYP47wo1k7uH
+	 9actw0xBugEqSiAPFWAJERWKKN0QfOQKA14257Tw68+MJKwtWdpI3cmPGuFRFKDlAXmSB
+	 cAr7bsYlKc7Kj1OTDoQUIzWGqJUS5lHef929SWn11BgodkuNEfNQMYnYwlsVoOWun1UL/
+	 GdGgKnhvpKNvrQcCt48PBh17+oIhIXtpn1335QIM/yTNh/KPc97PPy2K26kHkHC8wrxRB
+	 pxANq+XdiAu+/bt7XCTn/f+hZ1omxbYLD78HiBAHWazAg17esx7WEEqCqEIAlkfT4hA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTZfXGn4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ai4jWFIW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBB8606EEA1;
-	Sat,  7 Nov 2026 14:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05959606A326;
+	Sat,  7 Nov 2026 14:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTZfXGn4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEA41F008A1;
-	Sat,  7 Nov 2026 14:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ai4jWFIW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72D31F008A1;
+	Sat,  7 Nov 2026 14:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063405;
-	bh=FDJ6nMImWKbuUMK7Ez0WGtoKDMRORAl8TjLm0x8H3gw=;
+	s=korg; t=1794063406;
+	bh=UWy500LfoopEJ1nkA9zr6dTnZ+jJjF7FVqbcVur6CSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qTZfXGn4FELlQL+Lzb+dGlekF35Bo53+nFhVc2oF4aMevGjonbUK/D7ySUQCYoYA5
-	 sqEaUOayMenoQxps1o7Rh1Pe6yO2MAbI7T7xUC8ulv+uA4lDIplAuwEtIwINMZD0mB
-	 y1XwcdGJjlTHyWd+2jMBbqnukgzks87V87HklPCc=
+	b=Ai4jWFIWECeHTA/Yx7o8HgajqrhJHgfUrDZtgy9Z3ah+D3qN0NjaNGjVnOx48LZDS
+	 Gbs0LifoE5azH+1frQkcf/pERRbAvsK1UNIoIxDWBRNz8I3wAuOnwZJBPD3F61zFxQ
+	 1RXH+L7c2UnIuPgZB1rSU+Hv2yvw2KdiAxwTYjxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Radu Rendec <radu@rendec.net>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 576/869] irqchip/gic-v3-its: Dont clamp nvecs to zero when id_bits is 32
-Date: Sat,  7 Nov 2026 08:54:18 -0500
-Message-ID: <20261107134912.738552554@linuxfoundation.org>
+Subject: [PATCH 6.18 559/869] ARM: 9521/1: cacheinfo: count external caches in early_cache_level()
+Date: Sat,  7 Nov 2026 08:54:01 -0500
+Message-ID: <20261107134912.270897376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,44 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 5a9d62555e7164ec79a5fe70153d79cf1fdfd614 ]
+[ Upstream commit 4fd69e8a9ebc42e292637ec2ebfb6bcf2d2f6c0e ]
 
-GITS_TYPER_IDBITS is five bits, so id_bits reaches 32 and
-min_t(unsigned int, ...) truncates BIT(32) to 0. nvecs becomes 0,
-its_lpi_alloc() rejects that, and its_msi_prepare() returns -ENOMEM.
-On 32-bit ARM the shift is undefined instead.
+early_cache_level() counts only caches described by CLIDR. An external
+PL310 is absent from CLIDR, and its arm,pl310-cache compatible is not
+accepted by init_of_cache_level(), so early allocation falls back to
+an incomplete count. init_cache_level() later adds the DT-described
+L2, forcing reallocation on the secondary CPU with interrupts disabled.
+This defeats early allocation on PREEMPT_RT.
 
-The clamp is correct for every value below the maximum, so only that
-one value is affected.
+Use init_cache_level() for early sizing too, so the initial allocation
+includes external caches described by the device tree.
 
-Fixes: ce9e40a9a5e5c ("irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Reviewed-by: Radu Rendec <radu@rendec.net>
+Assisted-by: LLM
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260908142632.2795308-3-fuad.tabba@linux.dev
+Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20260912195552.76673-3-kmehltretter@gmail.com/
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/kernel/cacheinfo.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 8607ed0d98841..4443bf46e390d 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3488,7 +3488,7 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
- 	 * Also honor the ITS's own EID limit.
- 	 */
- 	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
--	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
-+	nvecs = min_t(u64, nvecs, BIT_ULL(id_bits));
- 	nr_ites = max(2, nvecs);
- 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
- 	sz = max(sz, ITS_ITT_ALIGN);
+diff --git a/arch/arm/kernel/cacheinfo.c b/arch/arm/kernel/cacheinfo.c
+index 860eeb03cfe5d..31591c9472548 100644
+--- a/arch/arm/kernel/cacheinfo.c
++++ b/arch/arm/kernel/cacheinfo.c
+@@ -111,13 +111,6 @@ static int detect_cache_level(unsigned int *level_p, unsigned int *leaves_p)
+ 	return 0;
+ }
+ 
+-int early_cache_level(unsigned int cpu)
+-{
+-	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
+-
+-	return detect_cache_level(&this_cpu_ci->num_levels, &this_cpu_ci->num_leaves);
+-}
+-
+ int init_cache_level(unsigned int cpu)
+ {
+ 	unsigned int level, leaves;
+@@ -146,6 +139,11 @@ int init_cache_level(unsigned int cpu)
+ 	return 0;
+ }
+ 
++int early_cache_level(unsigned int cpu)
++{
++	return init_cache_level(cpu);
++}
++
+ int populate_cache_leaves(unsigned int cpu)
+ {
+ 	unsigned int level, idx;
 -- 
 2.53.0
 
