@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064969;
-	b=I3Dp5dTb3c1jLajoU2ktPCbyyH/deivxJE8TIYZNB/x4eRZVGZHsbOBeoASEPTCpVPju
-	 FdIhvUuhUhObdloA5ww3apED31d82tOwdpMLdU+IbPd159O6rJD04llVH7X+2hxmylt9e
-	 WE4W5IBmK+VRts4WWCISNPXzs4O2ZXcOZbfChSiY+uNZ/8d2tVColFWqRwvMevtHne8Ll
-	 rlMlLG4+Z6aqdAh8X1AJ6W/4ix+z1wBa3j47urlGSbA5lmKOoanLr8u6i/1XEtgTw8iO8
-	 TvUOynTh8sXCm0dcTGO4Thto4GjYj6n331CHE+sltVKzd2/dKslIUuXoyYLrXvcRJEg==
+	t=1794064971;
+	b=Wq9HmQFkVA0sSyywT+UIc/NycPsPRYiRohf2vstTuu/Mj9WGMx37Emq5X5eVLvImcei9
+	 4goYb+XBqCb5XyJrQ8Dl8eOgdBt94krcnpAbpQR22EvN6G43zkdVs5jn9pTNohKN8+YKb
+	 eRkP79N8FDsZ5tkrLSwdl2tOYx1cfeQhBnfLt8eQfZ5zUmFePgD/EUcc/JJubZjnu+IdX
+	 NrJXyiiMJeM7YhgVzqZwT1W+mHKJqmRUvOLA8PC/R55tyvDKMUuZqVKVQMkCSoF3ljrhC
+	 o+sL4FVNmtgcbWP30zTH1tRoS/LdEz8Lm0WQQx3O5KajX4BYNYO5WQvKOo8du2y+PQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064971;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pYYjqieUsx8Fyv0lbgWHcZ4lHmVvj/mhVJtowPdZeNM=;
-	b=yZXSVLkI0UrE9/CTDfgwIRmPaDkGMxCHyhiRjV2JD8tgneuYCm40Gy+bE+YCpCfp9TIL
-	 eekEidviNTV3ZIJnpmqkTxhvyVEp5B4/pGTMvc90B+tyBo0MSSFINDi+NoXcoy02N32ek
-	 9UBdiagO3nsJWO9tUG0Lc6f3jCDVxo74TDIr5gFscEa9yDzFt6MbGUBXoml/6XP5kaGqc
-	 xgGhlYAIJZbpZw9p/q3qdrHENR8vG6v4YCf24nWILCh5cfEaYLP8kQ1Dfqi114YzlzcrX
-	 LKbk3lIEAfzxJgUiPP9I2K/NOqnVJVxtvdPcgahPuY8MAWy3OMsmHMP1x3852zIMGFw==
+	bh=xP6ixjWKK0znxe7EO0vB0CCW3+GGWm+GUdwBICvhzow=;
+	b=iN8b9Q/xcUg5zJh9o+TwlxircmIKtB8oHaCPHnWukT3kASX3VcvblYZ5MbAnuE5p9SzD
+	 jQuRrNtdZcz8BjA+0QWNUp3gKLt/NvawDd3tvC+/QnQRusJ6CHvSwp0kAMC/tET1/M4Yp
+	 +LNq7njzbJC+RqeU+yXpFwKrxtWT9piQO/bsv+9TLBgS4JJJNp98i09PlhdqF8dIwoe4L
+	 Tyywo4kUroDaeQsXFPItuRgeJIuZGKR+TbT+uWHVwNuM5wAKw2LDrC1/VnSa+CcLGyPas
+	 MJhfScWteuZZwHySYlx5c7O/ZbQ1xW4H80qr4YcKBcvS4FDAQ2tAZHx3P2LWv3r4TJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Qo1uf3p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZkZBEeF/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553E0606A334;
-	Sat,  7 Nov 2026 15:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4B2606A334;
+	Sat,  7 Nov 2026 15:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Qo1uf3p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051461F0089F;
-	Sat,  7 Nov 2026 15:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZkZBEeF/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7990D1F0089F;
+	Sat,  7 Nov 2026 15:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064969;
-	bh=pYYjqieUsx8Fyv0lbgWHcZ4lHmVvj/mhVJtowPdZeNM=;
+	s=korg; t=1794064970;
+	bh=xP6ixjWKK0znxe7EO0vB0CCW3+GGWm+GUdwBICvhzow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Qo1uf3peucs33R+LPJy5DjwZllOAV4dQLeP882r0UbRPujqHOiA0UVa5yUwmAoU9
-	 WvzrVsa5GIfbTuXP14/twxXUBbXSRxebM/EBzDCMwtc3zY+GALLVvOXsa8z8nwvbnV
-	 25vvnBsQ046RBSbRa6uvrlSj9Z5gSpEW0KtPjadg=
+	b=ZkZBEeF/g7Kj4pRK4bMmZLXxs2hvqbjrjr57UfFUOIJG6HSEcIS18M6nA2C2Lyi+m
+	 Tou8hPQg7a0OZkVK5iRqojxzd9Y8oxqxHPMgjcQ6rLSAJbn9Ta/ReN/Fb4sYveSgUZ
+	 IDILS9oQNMMvQ2Vpsji1B/MxWhcmGxIgiOEl+apw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Hongliang Wang <wanghongliang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0851/1257] sched_ext: Dont leave balance callbacks queued across a pick retry
-Date: Sat,  7 Nov 2026 08:52:27 -0500
-Message-ID: <20261107135002.831593793@linuxfoundation.org>
+Subject: [PATCH 7.3 0834/1257] cpufreq: loongson3: Replace per-package mutex with per-node
+Date: Sat,  7 Nov 2026 08:52:10 -0500
+Message-ID: <20261107135002.365796734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,200 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit ff0545e0c263727b200f60af47d0364e4d041bde ]
+[ Upstream commit 5d7802ada30b3101f408706b7399b0e170d2febd ]
 
-The dispatch path can request deferred work to be run from a balance
-callback and pick_task_scx() queues rq->scx.deferred_bal_cb right after
-dispatching. However, a balance callback must be consumed before the rq
-lock is released and pick_task_scx() is not necessarily the end of the
-pick:
+Our server productions (e.g. Loongson-3D6000/3E6000) can have multiple
+nodes in one package and SMC mailboxes are also per-node. So replace the
+per-package mutex with per-node one.
 
- - it returns RETRY_TASK when a higher priority class task has been
-   enqueued while the dispatch had the rq lock released;
-
- - the dl_server pick can return NULL, in which case the lower classes
-   are picked next.
-
-In both cases the callback stays queued while the core keeps picking,
-and the rq lock can be released again, either by prev_balance() or by
-another dispatch. For example, with an RT task as prev:
-
-  __schedule()
-    __pick_next_task()
-      pick_task_scx()
-        dispatch_pick()
-          maybe_queue_balance_callback()    <- deferred_bal_cb queued
-        return RETRY_TASK
-      prev_balance()
-        balance_rt()
-          pull_rt_task()
-            double_lock_balance()           <- rq lock released
-
-Any CPU acquiring the rq lock in that window finds a pending balance
-callback and triggers the following warning in rq_pin_lock():
-
-  WARNING: kernel/sched/sched.h:1919 at rq_lock+0x7f/0xe0, CPU#10: stress-ng-sleep/533
-  CPU: 10 UID: 0 PID: 533 Comm: stress-ng-sleep Not tainted 7.2.0-rc6-virtme #61 PREEMPT(full)
-  Sched_ext: qmap (enabled+all)
-  Call Trace:
-   <IRQ>
-   try_to_wake_up+0x2c1/0x5c0
-   hrtimer_wakeup+0x22/0x30
-   __hrtimer_run_queues+0x1d5/0x350
-   hrtimer_interrupt+0x106/0x1e0
-   __sysvec_apic_timer_interrupt+0x6f/0x210
-   sysvec_apic_timer_interrupt+0x71/0x90
-   </IRQ>
-
-This can be reproduced running scx_qmap -I together with a SCHED_FIFO
-workload that frequently sleeps, e.g.:
-
-  $ vng -v --cpus 16 --memory 4G -- \
-      'tools/sched_ext/build/bin/scx_qmap -I >/dev/null & \
-       stress-ng --sleep 4 --sched fifo --sched-prio 1 -t 30 -q'
-
-Fix this by queueing the balance callbacks only when the pick is final.
-Otherwise, defer the pending work to the irq_work path, which doesn't
-depend on the current rq lock section, and leave the kick sync wait
-pending for the next pick.
-
-Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
-Cc: stable@vger.kernel.org # v6.19+
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
+Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/ext.c | 73 ++++++++++++++++++++++++++----------------
- 1 file changed, 45 insertions(+), 28 deletions(-)
+ drivers/cpufreq/loongson3_cpufreq.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 04167ed9b5803..8fc3f791c88f4 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -3335,7 +3335,8 @@ static struct task_struct *first_local_task(struct rq *rq)
- }
+diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
+index 630f679aa7395..e3cd78a5ab187 100644
+--- a/drivers/cpufreq/loongson3_cpufreq.c
++++ b/drivers/cpufreq/loongson3_cpufreq.c
+@@ -169,7 +169,7 @@ struct loongson3_freq_data {
+ 	struct cpufreq_frequency_table table[];
+ };
  
- /*
-- * Run dispatch and queue the follow-up work for a pick.
-+ * Run dispatch for a pick. The follow-up work is queued by do_pick_task_scx()
-+ * once the pick is final.
-  */
- static enum scx_dsp_verdict dispatch_pick(struct rq *rq, struct rq_flags *rf,
- 					  struct task_struct *prev)
-@@ -3345,18 +3346,6 @@ static enum scx_dsp_verdict dispatch_pick(struct rq *rq, struct rq_flags *rf,
- 	rq_unpin_lock(rq, rf);
- 	verdict = dispatch_one(rq, prev);
- 	rq_repin_lock(rq, rf);
--	maybe_queue_balance_callback(rq);
--
--	/*
--	 * Defer to a balance callback which can drop rq lock and enable IRQs.
--	 * Waiting directly in the pick path would deadlock against CPUs sending
--	 * us IPIs (e.g. TLB flushes) while we wait for them.
--	 */
--	if (unlikely(rq->scx.kick_sync_pending)) {
--		rq->scx.kick_sync_pending = false;
--		queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb,
--				       kick_sync_wait_bal_cb);
--	}
+-static struct mutex cpufreq_mutex[MAX_PACKAGES];
++static struct mutex cpufreq_mutex[MAX_NUMNODES];
+ static struct cpufreq_driver loongson3_cpufreq_driver;
+ static DEFINE_PER_CPU(struct loongson3_freq_data *, freq_data);
  
- 	return verdict;
- }
-@@ -3383,16 +3372,8 @@ static enum scx_dsp_verdict dispatch_core_pick(struct rq *rq, struct rq_flags *r
+@@ -177,14 +177,14 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+ {
+ 	int retries;
+ 	unsigned int cpu = raw_smp_processor_id();
+-	unsigned int package = cpu_data[cpu].package;
++	unsigned int nid = cpu_to_node(cpu);
+ 	union smc_message msg, last;
  
- 	verdict = dispatch_one(rq, prev);
+-	mutex_lock(&cpufreq_mutex[package]);
++	mutex_lock(&cpufreq_mutex[nid]);
  
--	if (cpu_of(rq) == smp_processor_id()) {
--		maybe_queue_balance_callback(rq);
--
--		/* see dispatch_pick() */
--		if (unlikely(rq->scx.kick_sync_pending)) {
--			rq->scx.kick_sync_pending = false;
--			queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb,
--					       kick_sync_wait_bal_cb);
--		}
--	} else if (unlikely(rq->scx.flags & SCX_RQ_BAL_CB_PENDING)) {
-+	if (cpu_of(rq) != smp_processor_id() &&
-+	    unlikely(rq->scx.flags & SCX_RQ_BAL_CB_PENDING)) {
- 		/*
- 		 * Balance callbacks must run in the context that queued them,
- 		 * so they can't be queued on another CPU's rq. Run the deferred
-@@ -3435,8 +3416,10 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- 	else
- 		verdict = dispatch_pick(rq, rf, prev);
- 
--	if (verdict == SCX_DSP_RETRY)
--		return RETRY_TASK;
-+	if (verdict == SCX_DSP_RETRY) {
-+		p = RETRY_TASK;
-+		goto out;
-+	}
- 
- 	/*
- 	 * If any higher-priority sched class enqueued a runnable task on this
-@@ -3446,8 +3429,10 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- 	 * If @force_scx is true, always try to pick a SCHED_EXT task,
- 	 * regardless of any higher-priority sched classes activity.
- 	 */
--	if (!force_scx && rq_modified_above(rq, &ext_sched_class))
--		return RETRY_TASK;
-+	if (!force_scx && rq_modified_above(rq, &ext_sched_class)) {
-+		p = RETRY_TASK;
-+		goto out;
-+	}
- 
- 	/*
- 	 * If we're keeping @prev, replenish slice if necessary and keep running
-@@ -3463,7 +3448,7 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- 	} else {
- 		p = first_local_task(rq);
- 		if (!p)
--			return NULL;
-+			goto out;
- 
- 		if (unlikely(!p->scx.slice) && scx_task_can_stay_on_cpu(rq, p)) {
- 			struct scx_sched *sch = scx_task_sched(p);
-@@ -3478,6 +3463,38 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- 		}
+ 	last.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
+ 	if (!last.complete) {
+-		mutex_unlock(&cpufreq_mutex[package]);
++		mutex_unlock(&cpufreq_mutex[nid]);
+ 		return -EPERM;
  	}
  
-+out:
-+	if (cpu_of(rq) != smp_processor_id())
-+		return p;
-+
-+	/*
-+	 * Balance callbacks must be consumed before the rq lock is released, so
-+	 * queue them only when the pick is final. On RETRY_TASK, or after a
-+	 * NULL pick from the dl_server, the core continues picking and can
-+	 * release the rq lock (e.g., prev_balance() or another dispatch). In
-+	 * that case, run the deferred work from irq_work, which doesn't depend
-+	 * on the current rq lock section, and leave the kick sync wait pending
-+	 * for the next pick.
-+	 */
-+	if (p != RETRY_TASK && (p || !force_scx)) {
-+		maybe_queue_balance_callback(rq);
-+
-+		/*
-+		 * Defer to a balance callback which can drop rq lock and enable
-+		 * IRQs. Waiting directly in the pick path would deadlock against
-+		 * CPUs sending us IPIs (e.g., TLB flushes) while we wait for
-+		 * them.
-+		 */
-+		if (unlikely(rq->scx.kick_sync_pending)) {
-+			rq->scx.kick_sync_pending = false;
-+			queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb,
-+					       kick_sync_wait_bal_cb);
-+		}
-+	} else if (rq->scx.flags & SCX_RQ_BAL_CB_PENDING) {
-+		rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
-+		schedule_deferred(rq);
-+	}
-+
- 	return p;
- }
+@@ -208,11 +208,11 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+ 	}
  
+ 	if (!msg.complete || msg.cmd != CMD_OK) {
+-		mutex_unlock(&cpufreq_mutex[package]);
++		mutex_unlock(&cpufreq_mutex[nid]);
+ 		return -EPERM;
+ 	}
+ 
+-	mutex_unlock(&cpufreq_mutex[package]);
++	mutex_unlock(&cpufreq_mutex[nid]);
+ 
+ 	return msg.val;
+ }
+@@ -337,7 +337,7 @@ static int loongson3_cpufreq_probe(struct platform_device *pdev)
+ {
+ 	int i, ret;
+ 
+-	for (i = 0; i < MAX_PACKAGES; i++) {
++	for (i = 0; i < MAX_NUMNODES; i++) {
+ 		ret = devm_mutex_init(&pdev->dev, &cpufreq_mutex[i]);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
