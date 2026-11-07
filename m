@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065214;
-	b=d1PdbtC4h0JkTPE8pwdeKSJeAZSJ8wRQclIdDxOuyrb4QGgLK7NOOASwgblYX1pXCBw4
-	 TjcuP6QxF+BnCJo9edg7jpT+/rvfdd3OrjyS5Y3nntlqHcQrrZej4jjalz1AXJjmLXM/Q
-	 2JrgdKDPqNIaCwwH6h8ujnt6gMrViSLPOP4sb1fGZzpbgUQyJ8oXQKfuA6gfcgHGA8qUA
-	 fS/dIqgrJyTHbVkCSCf2x8fGYbS2cu4ESZUbhbHC4xQS3zObicVvbPf9VjIh72d/c8M5S
-	 A7d83XbS5lQKX3bQsgQZoQsSa5issgqpUaf9yhV2RR7hNdIm/1vA7tQT8DMguiXkEMQ==
+	t=1794065215;
+	b=2XA3Rg04pnml4xsS57PfBL/9fl3nodVaq8yCe/8jXM51/8B4+T73ua4BLsu5u4qWwZ1M
+	 PL4xG1IHH9+arMDFDPUHKxcNfDk/zmdv3fi2iH4GPqsQy9vvsaLPOuFv+sgRLYAJS1Q1Z
+	 97wtvJ+CrUA8GHTn2PNUWiruYALyySYiXljZk26DjTI4NSX2xJgqL0EAt2ugLr/vvKdIV
+	 ZHeUCMPsIMtgxjWBGid6W6af1wNkuH13sAv1f3XMMW9K3cbyGorpgBhn+DMPSSy9jkWya
+	 fY1HnRGju+q819WpXZMHTvNJJ38MdNLjcVOTOG51Cfp6uGVHj8gGPukQBGSUabhPE/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065215;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dP4f3bQQjF1RFp/b97oHr3wq9jn1r8Pr05cGVF7UAUs=;
-	b=04WFDVKBAvFZXwbr4wxhb0PQSt+XD825fLsUvS8T2nT9sTO6h8vO+zeovdhIEapQPWLl
-	 XS2I2zvh53DLFpckvDyYUvgRFeoRKYPSc1AhpUoMj6P/cJ78Wz69Z5MEQnRJHCbRB6eX1
-	 v/pzvLgwsRHDWJGULV0iP+7C2gdHISeZInyROL4ptftNt+E+iGiCtLfQbfd8XG/yitYW4
-	 YQEsyl4AD0TSuz4CJhiGnXQfRuu55k5mddnIBfO86DzShoPybArmvJE9qBwxCXr4J+Bv0
-	 vBC/pSTDYrAP+2TaH435B61WqGwD+CMgXXEvNKGNoUsZkxXu5EYdC/AecplJY2bl6GQ==
+	bh=XrvjouC3ro/PLdrFPuzwsrHc5ppvStvYxI9xIBte2Fo=;
+	b=pY9pplOBvu9KagxPNfwlc3+VoIrv10zFt44Vd9NhL9vPF+uNd0IY9CJN+yXVb//WiRFT
+	 +3UMFghKM+Z28zxE6R1WwQz/9ER5YY6kX+1PkmiLpvryNMg2ZQXylkZFk0Erbu3G0F4oO
+	 7y1gjQhso5DdpfTT6spa3m3qpzloKFNkSdTo7jZGtqoMZPAfqix/NCjXW6ORrINPN3A40
+	 IyZklglNWkUpGcKvTz1NKc7MNyKsz3b0hS2KDCqcbIdl2HIN0324VyCV2hdkyNOdQXXZc
+	 fv4CJ1dR/DwsJMN0lsPDpCYt7DGyghWfJWuqPkhuNQWqbArBPBsritvy0s40n4aorig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+nr7aSC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WT7o8oO0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1592606A331;
-	Sat,  7 Nov 2026 15:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B889606A32E;
+	Sat,  7 Nov 2026 15:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+nr7aSC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B3F1F008A1;
-	Sat,  7 Nov 2026 15:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WT7o8oO0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF891F0089F;
+	Sat,  7 Nov 2026 15:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065213;
-	bh=dP4f3bQQjF1RFp/b97oHr3wq9jn1r8Pr05cGVF7UAUs=;
+	s=korg; t=1794065214;
+	bh=XrvjouC3ro/PLdrFPuzwsrHc5ppvStvYxI9xIBte2Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H+nr7aSCdVkCdXKgGZZmPBizXQ6b/v0ySiFJcu2GMHgNLwKdvWYeiVLOYJY9EM33M
-	 c44K6Hzatuh3NKU+nrb6szUm846PVb70x9WfwPaMUWZuybArIOwRFJa8GZetd9I0xC
-	 PAsZvRRu9Sh1j75/QfKXvpSP2mAcbIvNOKPIij4Q=
+	b=WT7o8oO0CB6oLrNakA81dYhOYf+KPSksfHrwj7B65CB7eOclQbiwwft+b/3MRheH1
+	 a9Hy3dO4zsIm2H6Eslj6ZYQoox+KuHzsMmKOj4U5dkuV1atnyBwlR8AyQeBD9dmozR
+	 rdFrnF2IK9wf+DuG3pCoPJFAazyow88tkRaWYSZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Charkov <alchark@flipper.net>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1008/1257] PCI/pwrctrl: generic: Fix leaking array from of_regulator_bulk_get_all()
-Date: Sat,  7 Nov 2026 08:55:04 -0500
-Message-ID: <20261107135007.181454072@linuxfoundation.org>
+Subject: [PATCH 7.3 1009/1257] PCI/pwrctrl: Only destroy devices created by pwrctrl core
+Date: Sat,  7 Nov 2026 08:55:05 -0500
+Message-ID: <20261107135007.208549858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,39 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit ee450e3a2d334c7e6383d8a55ad2d53b3822bacc ]
+[ Upstream commit 7bf2ebcb7ca1e8814d3d0e35214a8e4b2193a619 ]
 
-of_regulator_bulk_get_all() allocates the consumers array and returns it to
-the caller, who is expected to free it at an appropriate time.  PCI pwrctrl
-never did, leading to a memory leak.
+pci_pwrctrl_create_device() only creates platform devices for OF nodes
+that pci_pwrctrl_is_required() accepts, but pci_pwrctrl_destroy_device()
+unregisters the platform device of every available child node without
+that check.
 
-Add an explicit kfree() for the consumers array.
+Nodes under a PCI host controller that are not pwrctrl devices may have
+been populated by another mechanism.  Destroying them here would tear down
+devices owned by other code.
 
-Fixes: 75996c92f4de ("PCI/pwrctrl: Add pwrctrl driver for PCI slots")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
+Mirror the check done at creation time so that only devices created by the
+pwrctrl core are removed.
+
+Fixes: 4c4132489201 ("PCI/pwrctrl: Add APIs to create, destroy pwrctrl devices")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930-pci-pwrctrl-kfree-v1-1-f09bbffd8da3@flipper.net
+Link: https://patch.msgid.link/1791446700-100166-1-git-send-email-shawn.lin@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pwrctrl/generic.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/pwrctrl/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/pwrctrl/generic.c b/drivers/pci/pwrctrl/generic.c
-index d56171e0ee244..4b6cbbb522480 100644
---- a/drivers/pci/pwrctrl/generic.c
-+++ b/drivers/pci/pwrctrl/generic.c
-@@ -63,6 +63,7 @@ static void devm_slot_pwrctrl_release(void *data)
- 	struct slot_pwrctrl *slot = data;
+diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
+index 10d817aefb096..c14df117ece37 100644
+--- a/drivers/pci/pwrctrl/core.c
++++ b/drivers/pci/pwrctrl/core.c
+@@ -388,6 +388,9 @@ static void pci_pwrctrl_destroy_device(struct device_node *np)
+ 	for_each_available_child_of_node_scoped(np, child)
+ 		pci_pwrctrl_destroy_device(child);
  
- 	regulator_bulk_free(slot->num_supplies, slot->supplies);
-+	kfree(slot->supplies);
- }
- 
- static int slot_pwrctrl_probe(struct platform_device *pdev)
++	if (!pci_pwrctrl_is_required(np))
++		return;
++
+ 	pdev = of_find_device_by_node(np);
+ 	if (!pdev)
+ 		return;
 -- 
 2.53.0
 
