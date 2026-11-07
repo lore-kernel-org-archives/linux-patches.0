@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065432;
-	b=QUQ70Smw5OIVDVz87vrP1KRnyo3qhM20Kbyr7rkSLB9mJYEAV5WkjOl9COhxlkiVYaW9
-	 4VjO6CErDqTO3TuQQu7BhiQlQVe2Ry7BmJ7jCiaxEEPi9zlg7Uf+I4afqMW+/RH5GMGrN
-	 KIZwrBr+2mWbSdfBZ46YSNftRtOW0g2ZpyvqI+rgZzhA5J7e4nlQ3zLAgsjltZqH3p3VX
-	 eWwfeAAQW5zJ26X5wYM3eugDIfOtFj72DPpNLasog6kuGIUSO7lTnuf5NkmUyiVhxdkMD
-	 30CRqXepBWc7Ka9SIU+dE4Eq4Wioau4ReeBqnSirDEdzpFb31IBti/PJpDSsbhXD5+g==
+	t=1794065434;
+	b=u6gnUaXn8eiueCSq3FoYiaR/qcq/Yfz18/RWEndwUJ0PNzuFNzBxaRAkOcpRCgj/zdwi
+	 j2J9/MVN3NSuHdHXEIP4OWdiBMQSgTnnvRxRhYQVidgAtKDpC0S+AtOCWy1oFWZauDruJ
+	 dcdK47/m2twxv0w/s0vGIcYtb++/99N+jVIVHC4XKM5hu7Xgp2M4U+4Qru1/GPQWYrZu4
+	 p9f8gOWmU66QJat5oAylJPNvB9lmIcnP1I0VigXgJoiHezX1TJO5+xsbiH3m6kl60NfOf
+	 oZpohZLRYtn6Ca1jvZN1ZZ+ENSPQhOXJfpME/IV0nqLGOQ1Z3D7pz8WhsZYDg3E+xlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065432;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z6do+8KN395hdDC/qxl3/QjWJHsPx/jecnxC9qpanss=;
-	b=x4jSCeyw1kkMMOMGMGtoD2/RtKJvL7Kx6+a9CKUjdXxG02+I8Yu49MsPGiJY/uHpLb3y
-	 grctDYRwI/vB9rfdZJbYz28OZzcGx0yvuQ5KfRayPn6Q2Di2lqsfIffhzNWCDUz4B3TYn
-	 usehT5F2s9AKBvPkL8faM7vV7+OqjNfOcfQzixaRyEZETHr4D7esuCkg9DEHic2raDcnt
-	 aivygXiuFotXKLkUa0S0IbZn+nET/Sut4riA6A2/pdvSNUpkfa6AN3FK4wHQ2aLr3EKEe
-	 zSI3KHKgVMdgQ0i7QuJnQPSvCwPdtSSRiNQN7sNXsuJGRvjky4dmL013P6rlhiry+wQ==
+	bh=932IyNsNxdDNTkqRrRVoUzt4CxcFIaEmjkOIhEUCwj8=;
+	b=br85UygKWOHauGpHCeLMcirqSMAeNIncMh6xCRql2tY4HWp/+Vod6qxhBRG+P4Dbnybg
+	 kFsdQg93z1Og/8pYRhG01jUdTOqcIe0QsIXO2OwOxV+d1lxJ9pe62EOD+l8zMVW+ccIXH
+	 PpFWbE68oW1FYIYNJPPPLDY95Oo6Qbn1LWpeCAGEvHpYVfMER+IHqukbo80+CQ49W56Bp
+	 hxHX26+ZmXBYbTqowA0BKNQm2xNGbevtEF3Un6MPQaEiM7r2DNIbYq9fbOtiw+EncEg5Q
+	 m9oChJMVDwq66LTc5Vvkz/28K3VT/Xq+EjAuv19wFlG0tk5zxq0Qck/e3SSAvbdmkEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bU0nWsc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwYTsm6R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2787A606D80A;
-	Sat,  7 Nov 2026 15:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C27A606A33D;
+	Sat,  7 Nov 2026 15:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bU0nWsc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD84E1F0089F;
-	Sat,  7 Nov 2026 15:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwYTsm6R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0321F0089F;
+	Sat,  7 Nov 2026 15:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065432;
-	bh=Z6do+8KN395hdDC/qxl3/QjWJHsPx/jecnxC9qpanss=;
+	s=korg; t=1794065434;
+	bh=932IyNsNxdDNTkqRrRVoUzt4CxcFIaEmjkOIhEUCwj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bU0nWscCjdQYQ1+0ieKpUfI2pB/0DWL5vWXj1q3ZHtjFXR1PLM4Aghq8bnZUISCP
-	 2P8jHh6XCE7QYiGXGTF/zZOBLiioVOpFOpafttpICAlbkwImRoeo5UQ9bD3A+dfu8x
-	 ZSXaaE1r8HVy6ofxaZpf6YIT4QA4awFEXUwb9sjY=
+	b=AwYTsm6Rdl2cJmBEaVjajrskG2ZkwJmvNFDPA5aIAsO2qt+2R/ruLLTcm7AASRCnI
+	 EwFTklIOdZHgiJXfq1x38L+A9UtdyeE4na6GZ2D1mO+0oTIcKrUcPhqNtuY4mJyGMq
+	 E+A8+ZAlzBbaO5PjW8Y4d3Cc96m+Qv9IJHyY13aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ravi Hothi <ravi.hothi@oss.qualcomm.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1141/1257] ASoC: qcom: q6apm: Unmap DSP buffers before removing the topology
-Date: Sat,  7 Nov 2026 08:57:17 -0500
-Message-ID: <20261107135010.738609503@linuxfoundation.org>
+Subject: [PATCH 7.3 1142/1257] ASoC: qcom: audioreach: fix module cfg blob size handling
+Date: Sat,  7 Nov 2026 08:57:18 -0500
+Message-ID: <20261107135010.763825555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,100 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+From: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
 
-[ Upstream commit a51c5dd7f7fc7cdf4ae28fec4a013d8418d1cb53 ]
+[ Upstream commit e21fb64a8c4aecae31ec63f994423ac944705c3e ]
 
-Since buffers are mapped once in pcm_new() and unmapped in pcm_free(),
-the unmap relies on the graph info still being registered. During card
-teardown, however, soc_cleanup_card_resources() removes the components
-before it frees the PCM runtimes. q6apm-audio's remove callback unloads
-the topology, which frees every audioreach_graph_info, so by the time
-q6apm_dai_pcm_free() runs the idr lookup fails and the unmap silently
-returns -ENODEV. The DSP keeps the old mapping.
+audioreach_get_module_priv_data() passes mod_array->size, a byte count,
+as the element count of the __le32 data[] flex array. The allocation and
+the copy are four times too large, and the memcpy() can read past the end
+of the topology firmware buffer. The size is also never checked against
+the private data it must lie within, and a zero size makes the loop spin
+forever.
 
-When the card is bound again, for example after unbinding and binding
-any codec on it, pcm_new() maps the same buffer once more, the DSP
-rejects it and the front-end PCM is not created:
+Convert the size to a word count, bound the blob by the remaining private
+data and reject a zero size. Also check the returned pointer before
+storing it in mod->data, as an error pointer there is dereferenced when
+the graph is opened.
 
-  qcom-apm gprsvc:service:2:1: Error (1) Processing 0x0100100c cmd
-  qcom-apm gprsvc:service:2:1: DSP returned error[100100c] 1
-  q6apm-dai ...: Audio Start: Buffer Allocation failed rc = -22
-  snd-sc8280xp sound: ASoC: can't create pcm MultiMedia1 Playback :-22
-
-Release the circular and position buffer mappings of all graphs in
-q6apm_audio_remove() while the graph info still exists. The unmap
-helper now takes the q6apm instance directly, since it is called from
-the APM component rather than from a q6apm-dai child device.
-
-Fixes: 8ea6e25c8536 ("ASoC: qcom: q6apm: Add support for early buffer mapping on DSP")
+Fixes: c7ed4c2debfd ("ASoC: qcom: audioreach: add support for static calibration")
 Cc: stable@vger.kernel.org
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261021041044.2080369-4-shengchao.guo@oss.qualcomm.com
+Signed-off-by: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261023171316.819857-2-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ sound/soc/qcom/qdsp6/topology.c | 31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 1f8d915b5e699..a79bbb34c777e 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -320,11 +320,10 @@ int q6apm_alloc_fragments(struct q6apm_graph *graph, unsigned int dir, phys_addr
- }
- EXPORT_SYMBOL_GPL(q6apm_alloc_fragments);
+diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
+index faafbc5c0ad00..612d8f03e6e98 100644
+--- a/sound/soc/qcom/qdsp6/topology.c
++++ b/sound/soc/qcom/qdsp6/topology.c
+@@ -312,22 +312,37 @@ audioreach_get_module_priv_data(const struct snd_soc_tplg_private *private)
  
--static int __q6apm_unmap_memory_fixed_region(struct device *dev, unsigned int graph_id,
-+static int __q6apm_unmap_memory_fixed_region(struct q6apm *apm, unsigned int graph_id,
- 					     bool is_pos_buf)
- {
- 	struct apm_cmd_shared_mem_unmap_regions *cmd;
--	struct q6apm *apm = dev_get_drvdata(dev->parent);
- 	struct audioreach_graph_info *info;
- 	uint32_t mem_map_handle;
- 	uint32_t pos_mask = is_pos_buf ? APM_MMAP_TOKEN_MAP_TYPE_POS_BUF : 0;
-@@ -356,13 +355,15 @@ static int __q6apm_unmap_memory_fixed_region(struct device *dev, unsigned int gr
+ 	for (sz = 0; sz < le32_to_cpu(private->size); ) {
+ 		const struct snd_soc_tplg_vendor_array *mod_array;
++		u32 array_size;
  
- int q6apm_unmap_memory_fixed_region(struct device *dev, unsigned int graph_id)
- {
--	return __q6apm_unmap_memory_fixed_region(dev, graph_id, false);
-+	return __q6apm_unmap_memory_fixed_region(dev_get_drvdata(dev->parent),
-+						 graph_id, false);
- }
- EXPORT_SYMBOL_GPL(q6apm_unmap_memory_fixed_region);
- 
- int q6apm_unmap_pos_buffer(struct device *dev, unsigned int graph_id)
- {
--	return __q6apm_unmap_memory_fixed_region(dev, graph_id, true);
-+	return __q6apm_unmap_memory_fixed_region(dev_get_drvdata(dev->parent),
-+						 graph_id, true);
- }
- EXPORT_SYMBOL_GPL(q6apm_unmap_pos_buffer);
- 
-@@ -845,6 +846,21 @@ static int q6apm_audio_probe(struct snd_soc_component *component)
- 
- static void q6apm_audio_remove(struct snd_soc_component *component)
- {
-+	struct q6apm *apm = dev_get_drvdata(component->dev);
-+	struct audioreach_graph_info *info;
-+	int id;
+ 		mod_array = (struct snd_soc_tplg_vendor_array *)((u8 *)private->array + sz);
++		array_size = le32_to_cpu(mod_array->size);
 +
-+	/*
-+	 * The card core removes components before freeing the PCMs, so
-+	 * q6apm-dai's pcm_free() runs after the topology (and graph_info)
-+	 * is gone and can no longer unmap. Release the DSP mappings here,
-+	 * otherwise the next pcm_new() fails to map the same buffer again.
-+	 */
-+	idr_for_each_entry(&apm->graph_info_idr, info, id) {
-+		__q6apm_unmap_memory_fixed_region(apm, id, false);
-+		__q6apm_unmap_memory_fixed_region(apm, id, true);
+ 		if (le32_to_cpu(mod_array->type) == SND_SOC_AR_TPLG_MODULE_CFG_TYPE) {
+ 			struct audioreach_module_priv_data *pdata;
++			u32 nwords;
++
++			/* size is the byte count of the __le32 data[] */
++			nwords = array_size / sizeof(__le32);
++
++			/* the blob must lie within the private data */
++			if (sizeof(*pdata) + (u64)array_size >
++			    le32_to_cpu(private->size) - sz)
++				return ERR_PTR(-EINVAL);
+ 
+-			pdata = kzalloc_flex(*pdata, data,
+-					     le32_to_cpu(mod_array->size));
++			pdata = kzalloc_flex(*pdata, data, nwords);
+ 			if (!pdata)
+ 				return ERR_PTR(-ENOMEM);
+ 
+-			memcpy(pdata, ((u8 *)private->data + sz), struct_size(pdata, data,
+-						le32_to_cpu(mod_array->size)));
++			memcpy(pdata, ((u8 *)private->data + sz),
++			       struct_size(pdata, data, nwords));
+ 			return pdata;
+ 		}
+ 
+-		sz = sz + le32_to_cpu(mod_array->size);
++		/* a zero size would never advance the walk */
++		if (!array_size)
++			return ERR_PTR(-EINVAL);
++
++		sz = sz + array_size;
+ 	}
+ 
+ 	return NULL;
+@@ -611,6 +626,12 @@ static int audioreach_widget_load_module_common(struct snd_soc_component *compon
+ 		return mod ? PTR_ERR(mod) : -ENODEV;
+ 
+ 	mod->data = audioreach_get_module_priv_data(&tplg_w->priv);
++	if (IS_ERR(mod->data)) {
++		int rc = PTR_ERR(mod->data);
++
++		mod->data = NULL;
++		return rc;
 +	}
-+
- 	/* remove topology */
- 	snd_soc_tplg_component_remove(component);
- }
+ 
+ 	dobj = &w->dobj;
+ 	dobj->private = mod;
 -- 
 2.53.0
 
