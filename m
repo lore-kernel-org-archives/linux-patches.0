@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062535;
-	b=NDwi7Dd82Sg+hcY41NLc51p2g7g7QhRqxTb1YtQTIQ1zxswWntovY1N1NWr9JQoYMNM5
-	 +/aHJBU5Gznj3JcxpwxjOXzeg1CbQGNKRiYMXkBTPyHEQSiYP/Ung6BkjoM0XCOXJKMdb
-	 OF7dlaiNuql5PSVgzJC1NnW6YIbLbwzKo2sWC0zFFQxVpm91gs7rSJrAN1XCRU8zL8YWS
-	 oKRN4lWKwu08kHUg/eNiKtnmwFclhEiMtgM3Jsa9bhlJmihShsti4D70PEAZfGNMXIxnI
-	 oW0DCNN7dW1iGsG4kNnhPTil1UfQV6gywANiRizpew1EJCo8G5sZti0MnZt9PUIUMDQ==
+	t=1794062537;
+	b=oqfTY3XgAtZzQexQ8F5lSJsyNWH5fdKXYEOFqnlYsmCFL6JDDAglqsPV6yvOe4C/iQYA
+	 sMuNXgF8atQB34KBsjtThlnX5lqTjGV9nWKfZU2CKlMpJdbGLU/azZaCsDywRdVE6Izr/
+	 AC/qY8cVQc9oo7HU6g2Vpuz51Mr34wgnIitDKDkuUDvBl2E5b4bbvqtNAk2A52GczVbvN
+	 q7ma27gq9sD4vLXFO++K9LwkUPMBtpNDwBej8M9RDGF+PVaYhhl9uYC3VmY9ovlhNbK1l
+	 OlHB+wfGYJ+T/JvNgqRha7cSzXxfhkfg7uUrEgN+CmvfXa+e6i8JL0RWE/hJu71cfxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062537;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=1uXPQPGf14EO+Ii6gVkZHGcCdXopS9daMgTfL/hnlRc=;
-	b=xX+5s3plgRkHcuuri74RKsHqVBlfi+aYDZb2vkhpMRGpWJVvIUL9RG49NHMqwea4PNK3
-	 Dp7hj6N8H7FDa+B1FulSGbNBP0/TFB6dr6XKfjogMQ/1w903uIAnj/vJpOEsiZUtC0Yt0
-	 pcm50CGVQNq5lowxAYAtMNgSJ7A8UVsZVdhwlIzpidd9YIh1P2zCDN9y+cgqd21n/TGNI
-	 9yUzM13RTKkceFmek+GXAwUNrtzJUGOF3yWS0/J9+rzYF9Ac4o4i0kmkE/xWg1IRxGaDe
-	 bnWqtWlYHX/coEcSRE9Lc+TD/f0i/ImYr6Jyjgr5S2kTCEwBZl3FtQzaYeLtou0WT0w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=N/XVI2LOZHUdpKMvCUjvGL+7MhGjY7wTEOqOejel29w=;
+	b=Dpb5ICadMUGE06HtUthx/AXtPNaoGa1jIozCft5hCiejoUtvIXgWxvbkbpoYh9i2pss+
+	 3cfbYaZNau3vsmMuXhRVLoCKG5h1EnF3o83mubTs2oN3VPJE4Z1TtuE08BEWt9VO4Z7R5
+	 iOi36tOjXNyst3e/YuLVNri6Y7Tn/zexfy7qRNKBvBdjyk2nqmIsjzR4kExAWjSRLdstv
+	 Va3LtJgGGVNZGe1efuSA7mC93KvqqpNGezeK2+LKkmjnVk+GbmJfqzf6JDpGcTjIG33kS
+	 x2wLOwjY3HrKdH61pqKegbVzGcd7AmjC2SDElA3/JcEusc14ainYk5iHxfyYv3Csmxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKgAK7t+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yb5k/ujd";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C480606EE96;
-	Sat,  7 Nov 2026 14:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97B4606EE96;
+	Sat,  7 Nov 2026 14:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKgAK7t+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054C31F008A2;
-	Sat,  7 Nov 2026 14:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yb5k/ujd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366D51F008A1;
+	Sat,  7 Nov 2026 14:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062535;
-	bh=1uXPQPGf14EO+Ii6gVkZHGcCdXopS9daMgTfL/hnlRc=;
+	s=korg; t=1794062536;
+	bh=N/XVI2LOZHUdpKMvCUjvGL+7MhGjY7wTEOqOejel29w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YKgAK7t+95tE4HVLYpzHV7ZCmyycHduDeSejBusGDPoYZSuWdhEjpY8SIKIBD237R
-	 biBkIOOVwOlCpyufzZKvR3lK0fBTOw/1EQ581mmvdJs0FZJvXOJi8tEIQdBH5MhY6f
-	 ZOa4s+45v46gj0vEQxeqD4gI5uM7vm+E1DYs9vPk=
+	b=Yb5k/ujdlzP/S4S2LrrJWJsb2KK9nlT/0Z4mlPW4fhCIjA3rKh3kl948SQmS6HMik
+	 sVLnffsEkgdey4nLajck/SVKUDkajqqBcroetsWunk5DhfFqW+uQc5a/EbCQG0HLJg
+	 yV/qYLc5guFN8Q1zr4bmSpGe1XKysltTqioJ0jvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh=20 ?= <thomas.weissschuh@linutronix.de>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1426/1536] posix-cpu-timers: Fix pid refcount leak in do_cpu_nanosleep() signal path
-Date: Sat,  7 Nov 2026 08:57:22 -0500
-Message-ID: <20261107135037.882949855@linuxfoundation.org>
+Subject: [PATCH 6.12 1427/1536] timekeeping: Update offsets on sequence counter retry in ktime_get_update_offsets_now()
+Date: Sat,  7 Nov 2026 08:57:23 -0500
+Message-ID: <20261107135037.913015338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -63,62 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Thomas Weißschuh (Schneider Electric) <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 8ccd731b63a0183ca2b0e18f3ca15864b3f37eda ]
+[ Upstream commit 6541fbc942f3b63bb8bd44e34eee6223e0abe719 ]
 
-do_cpu_nanosleep() sleeps on a temporary k_itimer whose reference on the
-target's struct pid is taken by posix_cpu_timer_create() and dropped by
-posix_cpu_timer_del(). When a signal ends the sleep, the timer is
-disarmed with posix_cpu_timer_set(), but posix_cpu_timer_del() is only
-called for a result of 0 or TIMER_RETRY. If the target thread or process
-has exited in the meantime, timer_lock_sighand() finds no task,
-posix_cpu_timer_set() returns -ESRCH and the pid reference is leaked.
+The sequence counter of the cwsseq target is modified during the
+sequence counter loop. If the loop retries, cwsseq will now match
+but the offsets contain the values from the previous loop iteration.
+These are not guaranteed to be consistent in themselves or with the
+current loops "now.
 
-An unprivileged user can trigger this: sleep on the CPU clock of a
-thread, let that thread exit, then signal the sleeper. Each round leaks
-one struct pid. Repeating it exhausts unreclaimable slab memory
-within minutes:
+Save the target's original sequence counter value so that the update
+also happens on loop retries.
 
-  Out of memory: Killed process 150 (poc) total-vm:789292kB, anon-rss:484kB
-  Kernel panic - not syncing: System is deadlocked on memory
-
-Fix this by also calling posix_cpu_timer_del() on -ESRCH. With the
-target gone, the deletion is safe. It finds no task either and only
-drops the pid reference.
-
-Fixes: e26d70d271ee ("posix-timers: Cleanup reaped target handling")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Fixes: 868a3e915f7f ("hrtimer: Make offset update smarter")
+Signed-off-by: Thomas Weißschuh (Schneider Electric) <thomas.weissschuh@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261012235149.66531-1-cenzhang@linux.microsoft.com
+Link: https://patch.msgid.link/20261023-timekeeping-clock_was_set_seq-v1-1-61c4c53d031c@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-cpu-timers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/time/timekeeping.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/time/posix-cpu-timers.c b/kernel/time/posix-cpu-timers.c
-index f0471fbe87288..33211c78d02a5 100644
---- a/kernel/time/posix-cpu-timers.c
-+++ b/kernel/time/posix-cpu-timers.c
-@@ -1584,8 +1584,8 @@ static int do_cpu_nanosleep(const clockid_t which_clock, int flags,
- 		 */
- 		expires = cpu_timer_getexpires(&timer.it.cpu);
- 		error = posix_cpu_timer_set(&timer, 0, &zero_it, &it);
--		if (!error) {
--			/* Timer is now unarmed, deletion can not fail. */
-+		if (error != TIMER_RETRY) {
-+			/* Unarmed or target gone (-ESRCH), deletion can not fail. */
- 			posix_cpu_timer_del(&timer);
- 		} else {
- 			while (error == TIMER_RETRY) {
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index 626fbb2a1a8cf..cac3a0df3a780 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -2359,6 +2359,7 @@ ktime_t ktime_get_update_offsets_now(unsigned int *cwsseq, ktime_t *offs_real,
+ 				     ktime_t *offs_boot, ktime_t *offs_tai)
+ {
+ 	struct timekeeper *tk = &tk_core.timekeeper;
++	u32 cwsseq_orig = *cwsseq;
+ 	unsigned int seq;
+ 	ktime_t base;
+ 	u64 nsecs;
+@@ -2370,7 +2371,7 @@ ktime_t ktime_get_update_offsets_now(unsigned int *cwsseq, ktime_t *offs_real,
+ 		nsecs = timekeeping_get_ns(&tk->tkr_mono);
+ 		base = ktime_add_ns(base, nsecs);
+ 
+-		if (*cwsseq != tk->clock_was_set_seq) {
++		if (cwsseq_orig != tk->clock_was_set_seq) {
+ 			*cwsseq = tk->clock_was_set_seq;
+ 			*offs_real = tk->offs_real;
+ 			*offs_boot = tk->offs_boot;
 -- 
 2.53.0
 
