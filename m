@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065348;
-	b=EKapxTwcXmPxGwQORZSF/r1KgxDbyDgxoKrvJidive38TXCE6nEnDVVAL5ijYS/U+vX7
-	 WzXQkf0fGZhVsUcuVP4pnnrXh5GHCow9rWXvW7r1R0LK5J/pCNNYYNoJiU+JYvRdDGsnx
-	 7OJXnjQcEGHyIAhT8srGexRzsuhNJrAhF9yJqM5hLJac1hwZfsyVA1bfxhd7NQMIeMfwV
-	 jsEHpq6PHnuDOkzZ49SNybtWK47bfzJpBpgrgvq+FTOK8jbfmYBvFsKdeaTodEJjkPYBE
-	 HrREvxzL/hOHcZ2YY5B0GFRGo5+Jb1+YM/y3t3eJi85vBwCi/aNoNQne1cKi059muJg==
+	t=1794065349;
+	b=yHcR0HMdVcV1xLqruk9ncVp2gj6n34ASRJoO2mJyTwDJK+nuPSuuwNACF1pfWDEBmG5Y
+	 /heeFR/ucA0RsdeBNFvvj40Di41MACwE9gQxI4hOh3QLThxRlZ583FHRnpg1mlHRTQQt6
+	 MHnsK+pCdk0rQ0ND452c2j1u1D9TdbJygs8TGK6Dc9WFnSEwCsGq1h7bGeRpWsNzavuRv
+	 K3Xh54qEGzLBVJJXWQ6DiW/rDNqgPHoXunqE1ILoM6Mtm5FQhYytHuVadL31GbZupzve8
+	 JdlOvcHzCqHrwOASdlu1CtmcxsNYTP8Pj2jIAnlVBoyYuOKL15SfgMQb9phSJHPJtog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065349;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=66P8WI5AIOt7zZsK+Qz5E3B9ACY6k/BKMEOxw1uC7Fg=;
-	b=SJm4I3mb7TtpdjYDA1fDHlZNCT4PPzYQIPAV3JY562WD9Pt2UR01VarGz0qupGeq5vcV
-	 LjBm5Zcxab4/HsnZRsP7/NkPeZ2CNQ8FEQVV6u4Yj140E/805ALvQYjVQBdNfRuoID08s
-	 pa/UjRSucAyfMohPC4/3XWRUC6QyELKge0/q520MCcANmQyWgtRucD6/qvnffpidshevW
-	 vZ3iD/Tlar/ge9iGzQ5rl3BBCABHF4moZBm5aiNK3/INYEwcs2A+kUjgeYmq9YPMKhWW8
-	 Inh1XXL7ayQUV7qdY6eHzawsruiVyzxa4TMBMwkNzjxan4IUVlByulz9e2lvJp1V1Sw==
+	bh=qUTmN1YJF6hYPha3b9ycf9IiyCxf0e58RB8b5z/dWdw=;
+	b=I6IffFHgcYcF7ATJM3kRPJ5vNw6/CNBGtP5e3F7RZY2S0cJmUA8afeY3r1u9evoe3GYO
+	 v7NEy6l3DwBgl3NYsWbIOXbnSNbJTqhNPGdzm4aAj/ckE3iWJDkZYWjxWwvv35wYoKt8H
+	 nhmC+mqsdf2dlFqJm2EkbmDX/W0SD8sBJTGEhST2+dDL8Wp3IZ91CreTUaasTlUM5l+Rb
+	 D80vkDUSV+gwziLZ/liT8c0+natRmgAyj0GplWr2TJjJSOItrwwvESd55MPINfUg3sNVj
+	 sxk0eirUWM2BMdrI7UV61qlw9EYXDW8bazWKMJ9frPh8UvIdiL2QWSWF8Bjd9i+Mqug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+Se0gq2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgBs4gla;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF82606A326;
-	Sat,  7 Nov 2026 15:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D79B606A326;
+	Sat,  7 Nov 2026 15:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+Se0gq2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985051F0089F;
-	Sat,  7 Nov 2026 15:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgBs4gla
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17951F0089F;
+	Sat,  7 Nov 2026 15:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065347;
-	bh=66P8WI5AIOt7zZsK+Qz5E3B9ACY6k/BKMEOxw1uC7Fg=;
+	s=korg; t=1794065349;
+	bh=qUTmN1YJF6hYPha3b9ycf9IiyCxf0e58RB8b5z/dWdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+Se0gq2qomef/CHgWXCN+yM19Sr0UAaoCsBHkmw932vveeMCeJMsTGH+OGqy7zbJ
-	 w/3zZR8F612x9uspS1pxuiWRaSuBUAacUHWgYksps1uP/SRyVQ6wCMs3xtZ0kYSljX
-	 9cGSYgg96mwivXXPkRaTanYtUQ2oG5pf4ySUgvTI=
+	b=hgBs4glaBZiyQgVPXNTqfptGx0Z6GaxpYmXrfjPCuSM9aKZC6Qyd8UyQf25LXbiOF
+	 02SYHiqnYb1Z0bpEO2FEzxlNrHP8yPn1HAFvIjnszP62EHV7g27b1YolU994EYNPny
+	 yrBOebYloV1QHNlz9BNspo1kD/dItcXTtSxgouQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Kazinsky <a.kazinsky@ideco.ru>,
-	Mark Brown <broonie@kernel.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1035/1257] ASoC: tlv320aic32x4: Prevent division by zero in divider callbacks
-Date: Sat,  7 Nov 2026 08:55:31 -0500
-Message-ID: <20261107135007.906913177@linuxfoundation.org>
+Subject: [PATCH 7.3 1036/1257] i2c: mt7621: fix copying uninitialized kernel stack with reduced page_len
+Date: Sat,  7 Nov 2026 08:55:32 -0500
+Message-ID: <20261107135007.932249926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,73 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Kazinsky <a.kazinsky@ideco.ru>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 8cf9607d2d855629260fc78e6b54ea7a98525708 ]
+[ Upstream commit b7fd977fec0d3f2bdd4f13bb59949c817a365652 ]
 
-A zero rate requested through clk_set_rate() or clk_round_rate() reaches
-clk_aic32x4_div_determine_rate() when the minimum rate is zero. Clamping
-the requested rate to the allowed range leaves it unchanged, causing
-division by zero when calculating the divisor.
+When a page_len is less than 5 bytes in mtk_i2c_xfer, uninitialized kernel
+stack data is copied and written to REG_SM0D1_REG. Equally on the read
+part, an unnecessary read is done.
 
-A zero parent rate can also cause division by zero in determine_rate().
-For example, if reading a parent divider's register fails,
-clk_aic32x4_div_recalc_rate() returns zero, which the clock framework
-caches as the parent's rate. A subsequent rate request for a child
-divider receives this value in best_parent_rate. With a nonzero requested
-rate, the calculated divisor is zero. It passes the existing upper-bound
-check and causes division by zero in the resulting rate calculation.
+Guard these extra copy/write and read for the page_len to fix leaking
+uninitialized stack memory.
 
-The set_rate callback can receive a zero rate when an ancestor's rate
-changes. clk_calc_subtree() calculates descendant rates through
-recalc_rate() without calling their determine_rate callbacks. If reading
-a descendant divider's register fails, clk_aic32x4_div_recalc_rate()
-returns zero. This becomes the descendant's new_rate, which
-clk_change_rate() passes to clk_aic32x4_div_set_rate(), causing division
-by zero.
-
-Reject zero rates in both callbacks and reject a zero divisor in
-clk_aic32x4_div_determine_rate().
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: a51b50062091 ("ASoC: tlv320aic32x4: Model DAC/ADC dividers in CCF")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alex Kazinsky <a.kazinsky@ideco.ru>
-Link: https://patch.msgid.link/20261023130854.93639-1-a.kazinsky@ideco.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d04913ec5f89 ("i2c: mt7621: Add MediaTek MT7621/7628/7688 I2C driver")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20261022193853.670625-1-ansuelsmth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320aic32x4-clk.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-mt7621.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/tlv320aic32x4-clk.c b/sound/soc/codecs/tlv320aic32x4-clk.c
-index deed61650e09d..8fa8e69f1f729 100644
---- a/sound/soc/codecs/tlv320aic32x4-clk.c
-+++ b/sound/soc/codecs/tlv320aic32x4-clk.c
-@@ -318,6 +318,9 @@ static int clk_aic32x4_div_set_rate(struct clk_hw *hw, unsigned long rate,
- 	struct clk_aic32x4 *div = to_clk_aic32x4(hw);
- 	u8 divisor;
+diff --git a/drivers/i2c/busses/i2c-mt7621.c b/drivers/i2c/busses/i2c-mt7621.c
+index 0a288c998419b..9ea5e3f9a7632 100644
+--- a/drivers/i2c/busses/i2c-mt7621.c
++++ b/drivers/i2c/busses/i2c-mt7621.c
+@@ -144,7 +144,6 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 	u16 addr;
+ 	int i, j, ret, len, page_len;
+ 	u32 cmd;
+-	u32 data[2];
  
-+	if (!rate)
-+		return -EINVAL;
+ 	i2c = i2c_get_adapdata(adap);
+ 
+@@ -186,6 +185,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 
+ 		/* transfer data */
+ 		for (len = pmsg->len, j = 0; len > 0; len -= 8, j += 8) {
++			u32 data[2] = { };
 +
- 	divisor = DIV_ROUND_UP(parent_rate, rate);
- 	if (divisor > AIC32X4_DIV_MAX)
- 		return -EINVAL;
-@@ -331,8 +334,11 @@ static int clk_aic32x4_div_determine_rate(struct clk_hw *hw,
- {
- 	unsigned long divisor;
+ 			page_len = (len >= 8) ? 8 : len;
  
-+	if (!req->rate)
-+		return -EINVAL;
-+
- 	divisor = DIV_ROUND_UP(req->best_parent_rate, req->rate);
--	if (divisor > AIC32X4_DIV_MAX)
-+	if (!divisor || divisor > AIC32X4_DIV_MAX)
- 		return -EINVAL;
+ 			if (pmsg->flags & I2C_M_RD) {
+@@ -194,7 +195,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 			} else {
+ 				memcpy(data, &pmsg->buf[j], page_len);
+ 				iowrite32(data[0], i2c->base + REG_SM0D0_REG);
+-				iowrite32(data[1], i2c->base + REG_SM0D1_REG);
++				if (page_len > 4)
++					iowrite32(data[1], i2c->base + REG_SM0D1_REG);
+ 				cmd = SM0CTL1_WRITE;
+ 			}
  
- 	req->rate = DIV_ROUND_UP(req->best_parent_rate, divisor);
+@@ -204,7 +206,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 
+ 			if (pmsg->flags & I2C_M_RD) {
+ 				data[0] = ioread32(i2c->base + REG_SM0D0_REG);
+-				data[1] = ioread32(i2c->base + REG_SM0D1_REG);
++				if (page_len > 4)
++					data[1] = ioread32(i2c->base + REG_SM0D1_REG);
+ 				memcpy(&pmsg->buf[j], data, page_len);
+ 			} else {
+ 				if (!(pmsg->flags & I2C_M_IGNORE_NAK)) {
 -- 
 2.53.0
 
