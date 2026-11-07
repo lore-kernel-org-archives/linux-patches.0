@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060682;
-	b=Z4L3vxFi4pplzt2WbE1G9AP1Q87ZQ1a5GlRu1NkjNTtMBs2Gk7a8tczgIbRzikXPDv16
-	 970F2TR9Ko+YRLkzTW4emLtKP5OJhSyyA0Eje4kbUu67dwXBcVkZN6HaezOalX/x6lIC9
-	 IIygfdr/v8zPlsjxXwvYVs8laETPz/YclesUMV7sdaSK7S/Bwut/VaFuSEM8y3H2nP3Vs
-	 VtjRdHeJJfvuLVWc0vjiuaqz7pfAeBxxMMC0OTibvK3xClAX+Ax0IkdXSjTFY4s2WO9Np
-	 V+upR54V7A5IAljerIEIWHWFzCKFrnDQLfEv0mB36D5XYuakbARh3R03ofbLtmJZEHw==
+	t=1794060683;
+	b=bJBIyxVmF6p//Y6mybf5CjkTVSj0NYmLdo3fPW4lORNrv566GsC3ZXNUYL2SsD/37d0V
+	 Vw5+TPtOR/RPqpsPB7G61UNkG0vEX/THsPEk6+Pc4+/452Z5bKd4x6Tapfsq4tjRiie//
+	 VBeHQA513XPKiL07rkyZG0ET7DwS9Y63RkBmwC1WvEe6H6XGco9eL1v7qKaQ/PQYSQ3yS
+	 brSdfBoOX7ATOiGsE0kMfPnHWB6oh8iSzVilMlFoMQUckQ1iEJDbaceUvCpFN4+um05MI
+	 3wjgp7d5uveNYyxP799uGtQI02VJ6Wn0JiBHc0yobmJR7+swduYjhqE82ZYuYbnidiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060682;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s5DONlZ20fSArrdDCu5K3H/FtcpJIo+0zpRNm8xVr8Q=;
-	b=p18IwcKvcNr4hKKJ9UmAsrVrZhfRaHjzFcfjAI5R/2ro8e7tKrVRPUquVDyB7OG2Zb6D
-	 nlE0aO3isTX/yQRtXsGppNbR58i5HzzNqLQsbfzPakAPM4uaNpYKibDjjEigWi/zseG32
-	 rO3xQxObzWNcNgFCCgTza2F1dy8BNMfvUOsmFtd5nDnDtfyzMVzhdF5QELm24phxWPLCp
-	 1YR7oxIiZODSFKO2WQ9gdxJjE15b0vxvWsDW8Dcmo66yV0HOY/0PmrtzdkonVbCDnPrTQ
-	 NU3AS9tqybVLJJzEiV1y3J1bkFfd/wE+/LNs71o0fEKhMHE/frlT1z2m4odHqyf0/8A==
+	bh=7K7yZBw2bis2us9il336LAfULxNieqpD4/ehviwLXTo=;
+	b=5pOL5u1n5oduUfObQfoe6gEuz+ecqFtIalY8mvEuD0J4VpwdtzIV5j7qs1M6dYo5kByG
+	 eWgPvzsuMHZOI4oCG4JJH4al89LkEM0XG93mfagP7+M0pY8eJtkNghXsaNsq/JYTpDF72
+	 3JgFB1Neubj5xbYyASTVIMPdby+vQILum+c3wmV1ThEdQdRe1PFB9mKYp2rbgmihbqM6f
+	 4XSWlI23EENGOc40xk3euTR40KNk2p0VdtBB26td9Uww1DVqI9nka2NWX37jHEwSXBOam
+	 sYzlGWBdukGoJr8diWSjvL+qz62oZ25Zzw/YoNc6VyBNUZVhJcgEaxoURJsWHMhWz0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwGEMNdz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vy2WIWw7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD239606A32C;
-	Sat,  7 Nov 2026 14:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C8E606A32C;
+	Sat,  7 Nov 2026 14:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vwGEMNdz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883CF1F0089F;
-	Sat,  7 Nov 2026 14:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vy2WIWw7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAD51F0089F;
+	Sat,  7 Nov 2026 14:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060681;
-	bh=s5DONlZ20fSArrdDCu5K3H/FtcpJIo+0zpRNm8xVr8Q=;
+	s=korg; t=1794060683;
+	bh=7K7yZBw2bis2us9il336LAfULxNieqpD4/ehviwLXTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwGEMNdz0r/PY8hh6D6cr3KeniQ3U3N/35DQuTqCuPVNhp6ymlju3d0HYWxuB1rDi
-	 P4bapOYVOETiEJ8h5wOZqg5ISl9zK4GwauBgYWxaBVYmi2hmYjBFhaRvKa2L4kKV3t
-	 ng+VeYn7oVZfe54oSZjjkO5b39y0U9SgrVN2H2Us=
+	b=Vy2WIWw7zlnvfvQnikRdff5UCf9O4Kcvnk6VlCZpxShbJ+airWXXfuzyvs41z7jcy
+	 Rma/8R12uJu0czjkTHd5tDSmAcYRdgTREYYZqSanLSIA7zMfqOCbvq0BPJMgciRt5B
+	 xBlV0FRopH41/V0yGibRqg5emvidfB0iIFHzVWDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0114/1536] pinctrl: sx150x: add missing MODULE_DEVICE_TABLE()
-Date: Sat,  7 Nov 2026 08:35:30 -0500
-Message-ID: <20261107135000.876395651@linuxfoundation.org>
+Subject: [PATCH 6.12 0115/1536] crypto: keembay - add missing MODULE_DEVICE_TABLE()
+Date: Sat,  7 Nov 2026 08:35:31 -0500
+Message-ID: <20261107135000.912832723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,38 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 5fe4b12c087db3e565f53b87f1dafdf2f0d1ee0f ]
+[ Upstream commit b73b71df4cb4ca241165ad31218c82dfe489147c ]
 
-The driver has a match table for the i2c bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
 This is a source-level fix.  It does not claim dynamic hardware
 reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
+the platform driver, and the missing module alias publication.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-sx150x.c | 1 +
+ drivers/crypto/intel/keembay/keembay-ocs-ecc.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/pinctrl-sx150x.c b/drivers/pinctrl/pinctrl-sx150x.c
-index fd0331a87cda2..f7120fdf96e45 100644
---- a/drivers/pinctrl/pinctrl-sx150x.c
-+++ b/drivers/pinctrl/pinctrl-sx150x.c
-@@ -849,6 +849,7 @@ static const struct i2c_device_id sx150x_id[] = {
- 	{"sx1509q", (kernel_ulong_t) &sx1509q_device_data },
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-ecc.c b/drivers/crypto/intel/keembay/keembay-ocs-ecc.c
+index 5e24f2d8affc6..ab2b69e675a43 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-ecc.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-ecc.c
+@@ -987,6 +987,7 @@ static const struct of_device_id kmb_ocs_ecc_of_match[] = {
+ 	},
  	{}
  };
-+MODULE_DEVICE_TABLE(i2c, sx150x_id);
++MODULE_DEVICE_TABLE(of, kmb_ocs_ecc_of_match);
  
- static const struct of_device_id sx150x_of_match[] = {
- 	{ .compatible = "semtech,sx1501q", .data = &sx1501q_device_data },
+ /* The OCS driver is a platform device. */
+ static struct platform_driver kmb_ocs_ecc_driver = {
 -- 
 2.53.0
 
