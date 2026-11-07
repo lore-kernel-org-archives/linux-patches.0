@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064388;
-	b=bx9HlYg//toqZ+ULJorB8XqplHvvkaBEHrEu9jiBfuRJvsD8g/AT+DM/IRR/+DcVLhYQ
-	 6oQlo2kqlh/mMwWeQOCPyFXN0lcKuYri3EbPOkcZVTvuxI1oC3dWSg3Z3wPTrSKtB5ori
-	 M26iDDYRFJ8NguyGEMFosdVYFrLQFwCrwMOR6gDV1M7pM8seFyIxmpW+Hi8QG/rDP3Rgw
-	 GzShzDW2tfYBgRYtTl0zZDa6X8aN+9hc8uFMlkZr3RuY4LHCXx0tZLhD4J/jMwwwUmL5k
-	 Kbb5C6xi7hc17H/X787+1vKoSu436cHcTSEmJt2aQJXirc7tDdEIM0frNdJhkGCnoRg==
+	t=1794064416;
+	b=cF6FtrPtinVsalKztW10g7PdK4Uc2ZpjSukXXKng4N6hEApLWyZh2KfGX+3LuVTdF++n
+	 Z4rMi28qesRKnDcYF2LZrVvLmoFeFanfhaOnBv1pQXO+vSpXCkZRCkCKy5MpJ0sbIq6in
+	 7XIFaAEHDAuqBkgAb9vHZ9i11OK0wE4ylpMsIKTC4tz4czrhAnAtYn69omvfdvtBimJlx
+	 BQ50y4EOp+Q9DQE0W+XWW29lRQRP7QNlmwtCOCdD4oFTjqEZpYEbk+nLZQ4V6wMC9jYpB
+	 r2u55kbDoRYe4ZW2H88+Fb1yvPKl7dABlu0loqU26mb4rqWC7GsaHqrnbfCsAqLLGkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064388;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0uzsOzNxgz1AT2QOz6/BjOp2Rm5BTT4QCjr8LsCbNpU=;
-	b=I/xS0ga+YqP3BzVSnxslavn0gfTigxx8MDlNPpx256zWxVTfCuc/SWP+uu5Lncey1ENF
-	 2VQu+Utd1uTVjb4UoyIrp7evVIu2NngIfqx60M3cTrkjvcNzDAOL8omiyLmqPiQwDvcJc
-	 pks3qKu4CfO6zX393RXxpOv9RXOYXy3biyBxQ+s/2cBRsTw9jwJw/3rr48K47J7EjzgYN
-	 23pMtnchePHp+4DnNrkZN82wxe3K4Lj84N33PJtf+wumAcgqJApZMJpkwMAocXB2bf9Et
-	 rHdHIoluC1KahCG01eulDCkJtTWN02Y7+IbBL7Y42xs6qJDQQ85NcYi+BjpFK75BAQQ==
+	bh=Fy7y9EyJCa/MfK+azw/1fDtlCYuse1WnO9pUH1BusE8=;
+	b=Q38SC2y02DXfYreKhDLej19Xk+XYUqb+rGBnGEAUNNNv+LXIpi8izitIhxBxa1A7UuMY
+	 7xKn+FACMvaMdyWz9IuMc3GigXdemUaVIZrEKe7E1nV8JF3955B/ApqdLjS24yBFpqQ+R
+	 IJU+Xwqb/ktntnebmzTx6TEBF8tDJbsxscmTeQ2gJmxwv1Dq6Fb8Rn8xzA4MBkOHxCx5p
+	 c5R0Ui7Z6IG6YjHDvWezGEKVlY6/xtc56HOnsVPfYAV0tlD3R4vqcyOCTK36NUwQG8feW
+	 F4n4SvGuPORVkpUkalqoQruMubsz3EsGLT9J/iy0bNTpMxmPW/g/pyKb5gDFXFvI9Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHnkDMNE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYzuf0Lv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B1E606E8DD;
-	Sat,  7 Nov 2026 15:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDB5606A333;
+	Sat,  7 Nov 2026 15:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHnkDMNE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC2841F008A3;
-	Sat,  7 Nov 2026 15:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYzuf0Lv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5D51F0089F;
+	Sat,  7 Nov 2026 15:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064388;
-	bh=0uzsOzNxgz1AT2QOz6/BjOp2Rm5BTT4QCjr8LsCbNpU=;
+	s=korg; t=1794064415;
+	bh=Fy7y9EyJCa/MfK+azw/1fDtlCYuse1WnO9pUH1BusE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHnkDMNEYs6qevNFhRBxuyG4ouiT9zMft4HfYxhObp1fXm/kJKskOeOTBUn6zrCO/
-	 nB9VlTzIIXoTfQTK1Zduohkt++FG9WrmDi4343+yJwLIBx3SHhd1cgAkXHzJK7/B9z
-	 uYBZ398utvXC8GNVB2XeFGOoBwqYC8D5RZUBd4gk=
+	b=pYzuf0Lvr3ew+0K6t8IDeBRRmWPbQG7dHIwIY/kCZoiA24B+7Cyn7a4KnvZ8gnR5n
+	 aAQnqjks6uNf6M/lkU2CSrj02+TyYX2nnL8SnT3TKPQRUqs85C5pNOR//aFx/WcRu4
+	 NyuA/+HiQ96D0JY4vFAlJjLvwDhxzB7TpJB+iHfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Anandu Krishnan E <anandu.e@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0426/1257] arm64: dts: qcom: shikra: Remove cdsp compute-cb@9
-Date: Sat,  7 Nov 2026 08:45:22 -0500
-Message-ID: <20261107134951.257836176@linuxfoundation.org>
+Subject: [PATCH 7.3 0427/1257] PCI: Disable MSI for ULi M1575 EHCI controller
+Date: Sat,  7 Nov 2026 08:45:23 -0500
+Message-ID: <20261107134951.286465862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,44 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 90ae3eb55ad64dc05ab7ad4a667c921d0504ccc4 ]
+[ Upstream commit 5f30217ec296fb5742f6fd306586dbca5b81b4eb ]
 
-Remove the context bank compute-cb@9 as it is a secure context bank
-used for secure use cases. Secure use case support is not currently
-implemented upstream, and allowing other use cases to be offloaded
-onto this context bank results in an SMMU fault.
+With MSI, the ULi M1575 EHCI controller (10b9:5239) intermittently stops
+executing its asynchronous schedule. Control transfers time out ("device
+not accepting address", "device descriptor read/64"), the port is handed to
+the companion OHCI controller, and the device ends up at full speed. On a
+configured hub the stall shows up as hub descriptor and status read
+failures. Only re-initializing the controller recovers it.
 
-Fixes: 8b6f81f7801a ("arm64: dts: qcom: shikra: Add CDSP, LPAICP, MPSS remoteproc PAS nodes")
+On a Sun Ultra 45, 65 of 800 controller initializations stalled with MSI
+and none of 200 with INTx. Each initialization is an unbind and bind of
+ehci-pci on the EHCI function, with MSI or INTx selected through its
+msi_bus attribute; with this quirk, 0 of 100 cycles of the same loop
+stalled. The stall reproduces on a kernel that already contains commit
+0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
+edge-triggered MSI").
 
-Cc: stable@kernel.org
-Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260929-shikra-dts-cdsp-compute-cb-fix-v1-1-90e4abb873d6@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The OHCI functions (10b9:5237) keep MSI. They showed no stall, and the hub
+enumerated through them on MSI during the EHCI failures, so only the EHCI
+function is quirked.
+
+The illumos EHCI driver also disables MSI on this chip, in
+ehci_register_intrs_and_init_mutex() in
+usr/src/uts/common/io/usb/hcd/ehci/ehci_util.c.
+
+Until USB HCDs started trying MSI first in v5.9, the controller always used
+INTx. Disable MSI so it uses INTx again on this chipset.
+
+Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260930191100.6127-1-kaloz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/shikra.dtsi | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/pci/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/shikra.dtsi b/arch/arm64/boot/dts/qcom/shikra.dtsi
-index 92d22e3b6931c..65cc94b9a624b 100644
---- a/arch/arm64/boot/dts/qcom/shikra.dtsi
-+++ b/arch/arm64/boot/dts/qcom/shikra.dtsi
-@@ -1948,12 +1948,6 @@ compute-cb@6 {
- 						reg = <6>;
- 						iommus = <&apps_smmu 0x0206 0x0000>;
- 					};
--
--					compute-cb@9 {
--						compatible = "qcom,fastrpc-compute-cb";
--						reg = <9>;
--						iommus = <&apps_smmu 0x0209 0x0000>;
--					};
- 				};
- 			};
- 		};
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 866493aceef0c..edf035d251cc2 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -1945,6 +1945,8 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x4388, quirk_no_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x4389, quirk_no_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x438a, quirk_no_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x438b, quirk_no_msi);
++/* ULi M1575 EHCI (10b9:5239): MSI stalls the async schedule */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AL, 0x5239, quirk_no_msi);
+ 
+ static void quirk_pcie_mch(struct pci_dev *pdev)
+ {
 -- 
 2.53.0
 
