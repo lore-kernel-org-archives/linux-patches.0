@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064640;
-	b=Thd15tDT8HmCQ1X0dku2RrKYYoA+ThRxms4tKL3NGRj/JPZKBQFBOZ/w3XhqYIGjxNfp
-	 ttRMSagk9VdOTs1ffg5z+TFWwTrAsPpuXAaTP0ub2fcmtt95NLrkXfcde/RGSS8W0UYPG
-	 JUnYJuk7HjC3I07sYAFw8CME9wfa5k1gPJ3XfhVuH7FJNJuTRZ7z7uOkLireKTOQfGLLF
-	 I8XedCp1kBIoHC6j+Zuou4r6kcvJm3wQXKblvfAiJR/jsXA4L4aXj1L5hfshLCphPv08r
-	 43VpQ9HrNbItYSknPZsa1tAJlAqiVXPQoRvGl/Pe8yrFfoznhrBbrfDT0SyCfzxxRog==
+	t=1794064641;
+	b=sn05NTkOYLfD5VCptgRj5WZZvVf+BrReVViJQaMQKNb2VCWpkPy/K45Hr7Yo/21YvhPb
+	 z8tGf2aIsGPajBtltaNH69LEbiqcyRJ1qx5SFW4RZ3o0aUtgLtMb1O+wsvZQUwvVaGUZ+
+	 ksEz6ZcHwR51tztoODheHlmRTiNyxoPErzOKg637R64PcTKCi44jWmM77aR709ZO7eRxY
+	 955uicYaY1NuJAdwhSJQvq4TopLwYg9ms1nP+rdcQEmF0F0VlSVaOl49LA1S/Wp+G//Ic
+	 kWVLubJgVILZ07vFGNLyISxvh7fgYo/R5+v1TROJtHiohORotvEzFtyMAI4gkXuR0GQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064640;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=35xWo8dG0jFHdgttHRB/fPUf/heOWbKZjrACe6O2mkI=;
-	b=WeSOH7fCFVZCwHuka4mRK9oWYLamZzCSIpUAxyeEY9pYy5qzEdsQpB9NmnAHB04G6Lyx
-	 H6m9QiaetncxjpSvlz6QuUlo+SutSH77uiGAE57KWCdQyrikgOCK1DCVRrM1qV2iLpGOs
-	 hk1OL6aN5O2fQd2n/fHdA8CNq6o3VxxHJN2flP0Fb3og/G7kxGgcP7zX0mKTbwKRcXJcF
-	 EU0jZxaBO4MBw2eQclA9xOvD2MvuzqfU62yLR854o/+IiFMeRqDw5KqnQAn5TPD3QMfM9
-	 XuA+h6GHvP88twnOtXRnLIYfeDMRxit7Ixud4kJalSErj1ZC3i+kV7ta4NVUjQUFf/w==
+	bh=NVa5WlPvJ6GBIpNBSEj1L1hQhgHI2xygXh42mz44O4s=;
+	b=D0xUNh61FqavQkUgaH7ntfM70xyduPLdwjOXRepAjTtuBfcS41LbgtNVx97PY+Zi7G9L
+	 qfn5GFajM8Lhyd5Zf/6jx7MU9J2gFrDDegXymjoZRMYSNBC8KfEck1DmMquxoy6qfXF9i
+	 vC0CuVZ6HkqvOyfON9hJfdiGysx9WMsRQVyyID7rdVpO3o3toduHVwMmx4wFuUJTrh3XF
+	 SKT2zTv/JX2CK6YDDTfGNck2Dh3oRe57IAPx96IG53TonC4RSFhcD/H546gsp62GcOzL7
+	 0r/qKnfVCs9o9B+8qJaPSMYezuVHPh8lKIV+FbRESd5TI2gbkrBizDzDq3PNizD5uug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNUaS0Jh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x6DHXSQ0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67928606A33D;
-	Sat,  7 Nov 2026 15:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F21B606A9F5;
+	Sat,  7 Nov 2026 15:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNUaS0Jh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FC11F0089F;
-	Sat,  7 Nov 2026 15:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x6DHXSQ0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1C51F0089F;
+	Sat,  7 Nov 2026 15:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064640;
-	bh=35xWo8dG0jFHdgttHRB/fPUf/heOWbKZjrACe6O2mkI=;
+	s=korg; t=1794064641;
+	bh=NVa5WlPvJ6GBIpNBSEj1L1hQhgHI2xygXh42mz44O4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNUaS0Jh3fmj/TrOt8Z72Y2Hifc3kRZfJY/6ODy//eTyPuCPK+0XfOvrDSngsxvGN
-	 YwKqd+71TBeawz9A0ithC5UdtMxf/Gip0ejtd8JjBYfiNw3AockOccLteE3TcBxOeS
-	 UI+ra9Q15FPL8C0UCCm1dy/7UDXX21PR1KmWwqcY=
+	b=x6DHXSQ07Ep5/SveknVKAX3Lbx3Y7HKcMKz9ZaLvbz5JoFwpeXEgmveFf5V16wz7l
+	 B7yhqlPFszqVv5O+c+3VjbBIwXRDkixfkQ1vitPMiuhZLoUHNTeTIA+Ugm+Ev2vM8o
+	 2aBOwmsckFHf8b808+//UWtisk9G0z9Td2qjI0Mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0645/1257] mtd: rawnand: qcom: fix read location register usage in config_nand_cw_read()
-Date: Sat,  7 Nov 2026 08:49:01 -0500
-Message-ID: <20261107134957.085705634@linuxfoundation.org>
+Subject: [PATCH 7.3 0646/1257] mtd: parsers: qcom: fix offset/size overflow on large partitions
+Date: Sat,  7 Nov 2026 08:49:02 -0500
+Message-ID: <20261107134957.114082538@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,53 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 94623942a66e031826756f9c92dbde9a12e2b4d2 ]
+[ Upstream commit 2f7fa8d90694d21dce68ceabd8383252b111cfea ]
 
-On QPIC v2 controllers, when the last codeword is being read, the read
-location values must be programmed into the READ_LOCATION_LAST_CW_*
-registers. Prior to commit 8c52932da5e6 ("mtd: rawnand: qcom: cleanup
-qcom_nandc driver"), the config_nand_cw_read() function did it right,
-but since then it always writes the read location values to the
-READ_LOCATION_* registers even if the actual codeword is the last one.
+In parse_qcomsmem_part() the partition offset and size are computed as
 
-Change the function to always configure the registers corresponding to
-the actual codeword to restore the correct behaviour.
+	parts[j].offset = le32_to_cpu(pentry->offset) * mtd->erasesize;
+	parts[j].size   = le32_to_cpu(pentry->length) * mtd->erasesize;
 
+Both le32_to_cpu() and mtd->erasesize are 32-bit (u32). The multiply is
+therefore evaluated in 32-bit arithmetic and the product is truncated to
+32 bits before being widened and stored into the 64-bit (u64)
+parts[j].offset / parts[j].size fields, so the 64-bit destinations are
+never used at their full width.
+
+The SMEM partition table is firmware-provided and the per-entry offset
+and length are not bounds-checked against the device geometry (only
+numparts is capped). On a sufficiently large flash, a partition whose
+(offset|length) * erasesize is >= 2^32 gets a silently truncated
+offset/size and is mapped to the wrong region of the master MTD, which
+can overlap or extend into an unintended area.
+
+Cast one operand to u64 so the multiplication is performed in 64-bit and
+the result fits the 64-bit fields without truncation.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 803eb124e1a6 ("mtd: parsers: Add Qcom SMEM parser")
 Cc: stable@vger.kernel.org
-Fixes: 8c52932da5e6 ("mtd: rawnand: qcom: cleanup qcom_nandc driver")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mtd/parsers/qcomsmempart.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index d7642db2e2df1..170af9f26d471 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -328,14 +328,16 @@ config_nand_cw_read(struct nand_chip *chip, bool use_ecc, int cw)
- {
- 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
- 	struct nand_ecc_ctrl *ecc = &chip->ecc;
--
- 	__le32 *reg = &nandc->regs->read_location0;
-+	int reg_base = NAND_READ_LOCATION_0;
+diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qcomsmempart.c
+index d4fdc46a00730..1591aea48b280 100644
+--- a/drivers/mtd/parsers/qcomsmempart.c
++++ b/drivers/mtd/parsers/qcomsmempart.c
+@@ -143,9 +143,9 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
+ 			*c = tolower(*c);
  
--	if (nandc->props->qpic_version2 && qcom_nandc_is_last_cw(ecc, cw))
-+	if (nandc->props->qpic_version2 && qcom_nandc_is_last_cw(ecc, cw)) {
- 		reg = &nandc->regs->read_location_last0;
-+		reg_base = NAND_READ_LOCATION_LAST_CW_0;
-+	}
- 
- 	if (nandc->props->supports_bam)
--		qcom_write_reg_dma(nandc, reg, NAND_READ_LOCATION_0, 4, NAND_BAM_NEXT_SGL);
-+		qcom_write_reg_dma(nandc, reg, reg_base, 4, NAND_BAM_NEXT_SGL);
- 
- 	qcom_write_reg_dma(nandc, &nandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
- 	qcom_write_reg_dma(nandc, &nandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+ 		parts[j].name = name;
+-		parts[j].offset = le32_to_cpu(pentry->offset) * mtd->erasesize;
++		parts[j].offset = (u64)le32_to_cpu(pentry->offset) * mtd->erasesize;
+ 		parts[j].mask_flags = pentry->attr;
+-		parts[j].size = le32_to_cpu(pentry->length) * mtd->erasesize;
++		parts[j].size = (u64)le32_to_cpu(pentry->length) * mtd->erasesize;
+ 		pr_debug("%d: %s offs=0x%08x size=0x%08x attr:0x%08x\n",
+ 			 i, pentry->name, le32_to_cpu(pentry->offset),
+ 			 le32_to_cpu(pentry->length), pentry->attr);
 -- 
 2.53.0
 
