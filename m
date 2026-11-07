@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063709;
-	b=WYyTSzmmWGSrKtvuVDXV/bO+F2Tqy9UhJR2778QseFcDH2f0UV8Qnz+n2k+57kGfX4tI
-	 Bq1i4qOdWHQTC/pcben/qGDj1E6lNdf4YIZ3ehB4XGBLi3KgBjfX42hdu8TI+icC6Qwo2
-	 AUx3bW4MnjyjSbo2A0rznM+DW/Nu0VHlNACkd9h3t7TMnbq9oqMfStOLATcsxV9GW5XVg
-	 yknlmmUrqNW27zrNytme7xOeiSR8W/Hwp7pdCmeFi/9GmTq2lv5DIXCzi3x2l8ghq5mNm
-	 TOr/pF0vWuaqEQEuQZWdElmmJpqFm3W3tZnpTvWPNW8ygAGckoQjSaqwKKrfErmJCEw==
+	t=1794063711;
+	b=h13afZ2lIUy2YWjdSkW6XRq3Xo3T2bz6IbBPYzm+U3XcnJ7UO4UV6KeTxkupddkV4xCf
+	 8d9qiU8asCOTRqzkdKEyAbhaGxBehCYsWRTEYKzFsrhFVghrKkB9N5F13dyCao9o3Fzvt
+	 56D5Wi/o7q5Xwwq5352NuprDUYD/z1/z0Vz9jR/Pe/YdQsGSc8D+8nsmXeWKl6mdg/hjE
+	 6WDQKy63FJDFE1bbGfVbgKmSykxTCVz1jX8ugHePyb8t5UevUTQ0qB9AajtUJ3wRIr85H
+	 t9OHo67rGwndgH+aN9wwJ7XzFwGX0LQuDF6U9ytw/69sZF7Z3fdVHzdZZP695RPArbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063709;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063711;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=IgWh7Shg4Yxql7LlNJj6i2gM95h5j/U2gkPo9ZzO1cc=;
-	b=qY3m3DzAusx4iZcSVNlGxtOlXAf9CXXU6uod4p83UJYXxEXxDEULRXyraUnWjvZKpmNJ
-	 DkLsJC4VYFOyZxrUjgVRIBpuXdA88owSbWaSBV0DQFI6zJhghQg3w1sFVyNSfzwtTehAj
-	 EXmZ8VYJdU2eYIAWh+dJDHx7fxQsjFRXNAT9slAqEnhSJuTg5EHJm322eVQaL7I6nohzf
-	 vAd3hjbkTjweADR7d0Y/HJSPvl0S3rLml67+/d2ExDNKNAOUDYNW/vrUrr+UU+kn9ASZI
-	 3WY0E2jOxNLEmJzpffpK5cJQU/RNfnP/7XYcBvrXR+1zsRnNEfoogbE4v11MoUA3dBA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=zDHohq66J67P/NJ1bvaYWTh7a+f5o5eSQDCpTLiq09E=;
+	b=whaeYDr057KJUJvt6JK4mO+VDCFRkL47YcEQHZdym0YSIvkAFUoPvFdW/42hs+RER+Hc
+	 DHyN/dXU2Nx0eoWnkLRUqqUiqBwJxUAre7N68DTliK8cPNXbEdExFAF17dyFFZSuy81oE
+	 adyGQyC6N0+C1zGpoI+rsYEBdJWXquQ+pBTW1ovR3Vc75pdMOHTZzszhn74KdWx3ULrtK
+	 aXJrDCwArVIfWbs51tDmkd82SEtJBDvoFKh7jtRPvxqUjrpmp+5I6QdMo5TRBibwSRXvu
+	 z8wpPcr7nUy6QSfRTFVVo4MeBegrIDCzGbQ6lDUEWaj/vIdhKy2F7xI1UFjitOaV6Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UMzWaWyg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JizUWvZ3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24063606B8AF;
-	Sat,  7 Nov 2026 15:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B250E606B8AF;
+	Sat,  7 Nov 2026 15:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UMzWaWyg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FC31F0089F;
-	Sat,  7 Nov 2026 15:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JizUWvZ3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B66A1F0089F;
+	Sat,  7 Nov 2026 15:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063709;
-	bh=IgWh7Shg4Yxql7LlNJj6i2gM95h5j/U2gkPo9ZzO1cc=;
+	s=korg; t=1794063710;
+	bh=zDHohq66J67P/NJ1bvaYWTh7a+f5o5eSQDCpTLiq09E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UMzWaWyg4cYEFXUmFdt9pgzpxKLOeFfnRoEAhq7wkgXY/xXVzS1Fcs5CKYz5UNgbK
-	 aFoB8UtCocH2s7/i9aTzCC5pP//xSvxanDD9kHY3RzP2q2/PcbV5zYys9zpKWD0u/V
-	 VoVo5MJMeQzqcaLIJH8bOUpsMhvAYY3xgx9n2wJ8=
+	b=JizUWvZ3KJnFbHvOJremtEjAU00Yl9w+Z/P7YKX+IjPP3ViSaMucr+BVoIZlCZqnG
+	 jziBEvtK1DggoJjnCjLktLrDxN9q4dH91fxB2UbS7gmSk0vSnxiANqdtM44CXiYjy6
+	 XoSogud1CtQEGFlYyY/mwCezfV6DGWSHWx9jGHa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Haoran <haoranwangsec@gmail.com>,
-	Li Ximo <lixicaicai@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Vincent Li <vincent.mc.li@gmail.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 762/869] fbdev: atmel_lcdfb: fix list_first_entry() on possibly empty modelist in probe
-Date: Sat,  7 Nov 2026 08:57:24 -0500
-Message-ID: <20261107134918.554974435@linuxfoundation.org>
+Subject: [PATCH 6.18 804/869] LoongArch: Remove arch-specific __smp_mb__{before,after}_atomic()
+Date: Sat,  7 Nov 2026 08:58:06 -0500
+Message-ID: <20261107134920.183466995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -63,82 +64,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Haoran <haoranwangsec@gmail.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 01d1204582f16e8b7bfce29648e5cf77a585d962 ]
+[ Upstream commit 85cebdfee765e92e748e71b9b91889eef5988282 ]
 
-list_first_entry() does not return NULL on an empty list; it returns a
-bogus pointer computed by container_of() from the list head.
-atmel_lcdfb_probe() initializes info->modelist with INIT_LIST_HEAD()
-and later takes its first entry with list_first_entry(), assuming
-atmel_lcdfb_of_init() populated it. However, atmel_lcdfb_of_init()
-drops the return value of fb_add_videomode() — unlike every other
-fallible call in the same function — so if fb_add_videomode() fails
-(its internal kmalloc can return -ENOMEM under memory pressure or
-fault injection), the list stays empty while of_init() reports
-success. The probe path then dereferences the bogus pointer in
-fb_videomode_to_var(&info->var, &modelist->mode). Because the bogus
-pointer lands inside the contiguous fb_info allocation, this may not
-fault immediately; instead it silently reads adjacent memory as a
-struct fb_videomode and programs garbage timing parameters into the
-LCD controller. This was found by code audit; we do not have Atmel
-hardware to reproduce it.
+When running BPF selftest "test_progs -t timer_lockup" on a LoongArch
+machine, the kernel intermittently experiences soft lockups and panics
+in hrtimer_cancel().
 
-Fix this on two levels: check the return value of fb_add_videomode()
-in atmel_lcdfb_of_init() so the failure is propagated (root cause),
-and use list_first_entry_or_null() in atmel_lcdfb_probe() with a NULL
-check that fails probe gracefully with -EINVAL (defense in depth),
-consistent with the surrounding error handling which bails out to
-stop_clk.
+The root cause is that the bpf_timer_cancel() implementation relies on
+smp_mb__after_atomic() to provide a full data barrier after a relaxed
+atomic_inc() to ensure the proper store-load ordering before performing
+lockless dependency checks on weakly-ordered architectures, such as on
+LoongArch, but the current definition of smp_mb__after_atomic() is just
+a plain compiler barrier.
 
-Reported-by: Wang Haoran <haoranwangsec@gmail.com>
-Reported-by: Li Ximo <lixicaicai@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+This allows a subsequent read to bypass the prior write due to store-
+load reordering, enabling concurrent CPUs to simultaneously bypass the
+software deadlock detection, enter hrtimer_cancel(), and then trigger a
+severe ABBA deadlock in the hrtimer core.
+
+Moreover, there are hundreds of smp_mb__after_atomic() call sites across
+the core kernel (kernel/, drivers/, mm/, net/, fs/) that currently lack
+necessary full data barriers on LoongArch, which have potential risks.
+
+To comply with the LKMM specification, fix this by removing the arch-
+specific definition of __smp_mb__after_atomic(), so that this macro can
+automatically fall back to the generic definition in asm-generic that
+maps to __smp_mb() and emits the required hardware DBAR instruction.
+
+While at it, do the same thing for __smp_mb__before_atomic().
+
+With this patch the BPF timer_lockup selftest was stressed for millions
+consecutive loops on a physical LoongArch machine, without encountering
+any further lockups.
+
+Cc: stable@vger.kernel.org # 6.7+
+Fixes: affef66b65889a0e ("LoongArch: Relax memory ordering for atomic operations")
+Closes: https://lore.kernel.org/loongarch/CAK3+h2xOSEZUHhou7N2cRL-aGrZCNSm45g+P7thObMe+fpgYCA@mail.gmail.com/
+Reported-by: Vincent Li <vincent.mc.li@gmail.com>
+Reviewed-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/atmel_lcdfb.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ arch/loongarch/include/asm/barrier.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/atmel_lcdfb.c b/drivers/video/fbdev/atmel_lcdfb.c
-index 35862e83f7afa..2b602ad004dd9 100644
---- a/drivers/video/fbdev/atmel_lcdfb.c
-+++ b/drivers/video/fbdev/atmel_lcdfb.c
-@@ -1009,7 +1009,9 @@ static int atmel_lcdfb_of_init(struct atmel_lcdfb_info *sinfo)
- 	if (ret < 0)
- 		goto put_display_node;
+diff --git a/arch/loongarch/include/asm/barrier.h b/arch/loongarch/include/asm/barrier.h
+index 4b663f1977061..84c6d739119d1 100644
+--- a/arch/loongarch/include/asm/barrier.h
++++ b/arch/loongarch/include/asm/barrier.h
+@@ -57,9 +57,6 @@
+ #define __WEAK_LLSC_MB		"			\n"
+ #endif
  
--	fb_add_videomode(&fb_vm, &info->modelist);
-+	ret = fb_add_videomode(&fb_vm, &info->modelist);
-+	if (ret < 0)
-+		goto put_display_node;
- 
- put_display_node:
- 	of_node_put(display_np);
-@@ -1077,8 +1079,13 @@ static int atmel_lcdfb_probe(struct platform_device *pdev)
- 	}
- 	atmel_lcdfb_start_clock(sinfo);
- 
--	modelist = list_first_entry(&info->modelist,
--			struct fb_modelist, list);
-+	modelist = list_first_entry_or_null(&info->modelist,
-+					    struct fb_modelist, list);
-+	if (!modelist) {
-+		dev_err(dev, "no video mode available\n");
-+		ret = -EINVAL;
-+		goto stop_clk;
-+	}
- 	fb_videomode_to_var(&info->var, &modelist->mode);
- 
- 	atmel_lcdfb_check_var(&info->var, info);
+-#define __smp_mb__before_atomic()	barrier()
+-#define __smp_mb__after_atomic()	barrier()
+-
+ /**
+  * array_index_mask_nospec() - generate a ~0 mask when index < size, 0 otherwise
+  * @index: array element index
 -- 
 2.53.0
 
