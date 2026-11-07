@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065505;
-	b=Ru1dgiyPpaxX/bCSzwZA35Y23/rd6N9/KgkFV1h9jVwQjF59bn6WD/f6IwpaVJ+C0oxt
-	 CC/LQ5dXyRv9jh2MgepAkVpfIsziqJthsratdZILMEAQkPkO17dyf7YqDOU0E39IMU9s1
-	 k9d/uu6YEAlHRutdt/70AgV3KpUv+ckexXXQAwF9ILfis2F8j8Jvk2A2ozd5NqQyi8KDA
-	 W3o4uuRwczBs9kWdb1eEqKG9fAoO2igvWpj3EjuPqgVH69vOqSDYo43sZErixxG1ND7EB
-	 eQh3anCkifjZjAm1CedGcd5QRS7HmM8LOBAGfhsxzRtVdlGSl4cXbyqOey+aj1qt0Pg==
+	t=1794065506;
+	b=uRLyAqj61N3d5IvXLW9YcE4A+DXdlYLaRn9+91al7hxn1KnPQkRm2LRGAjFMg3mnJt7u
+	 wCg/fhrmWSNSM3RY1xLnYL6KDNcOHp7AgUa9kDIag3+no33gofUwBwtb6PH4jm80eHSXG
+	 s0OrV+/aZ3FOIJLkTGjr/t8V++EJ45x3NQJ5JWVFmAor6SMmscXSUSCMu+VnuQ9+9h61Y
+	 17x45Cw5jy3mGfs5FkJ+gy0eMVgP1vsaNv3o5CvrxrboNVcHFBll/+t6IbKcTBhmDH2Su
+	 dOP1InHKGf99ibFPDiEsDX1h3jmYbT5dsThdgjVjSvfK3EjR8Qaysxxc/ty1PXQ8HVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065506;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=znTt627akDosM1wO6GWhJm+ZIftBnXyRQdMlzEXd0GI=;
-	b=y0VinXrAZDZkn0j4SWEBKSbFCQoap/ROiGToY5/35YGMBVaIMbcUmAz/dnASd1dY5rb0
-	 FoQcNrYJYw7SL2BUggUxUPs47asvrTZ9F//9BdYmkUdvfYoKQkZ8lPcE52TFechaVXBn8
-	 DNgEg1j95g4uNSostEIL6TGiJbrLGjFT3goB2J2g7nh0bt3AQ4Bv9Zrao65Osfs/W8bOQ
-	 RMPKelxuBf47+kNflsJmgBn6UVAte4M9a4pOtVuqjt13usL+EVMQN5Xv7Nv8A8iCUYSAp
-	 uc1bouh+fY9Qia3IGTS1QbHYjCs8y2KsvTcLuRhJbmQ5yzMZ7He6d9XOsFIZgU0Mwzw==
+	bh=Wth5T4eKwVJQg/uOtKGgwkgeEdrIH+W1N0mfesP2RZA=;
+	b=vRpiZ3zCWnb7ho7xOgpaVb4Q0jyYo9rKop1zwnKo53W8DMsdqM2tub+bxBQ6Xq0AAVCO
+	 m6rmQTuuIp8qZheHPoRHrQeXuEuKgoQARbUnW5LXRcVedzXPk0eGG1quyphWgzhPg4JvV
+	 HC3NXbITvXsH0wHGHx2ySIOkjSt9B/zwkE4ksy5s99mS+Eb8KSoIB9idZVvpMFym65OnX
+	 9Tanvru/qdQDYipF6/+NDgLg+O+EO/BeIUmFC66W2/Ig3z91ZOo0gQGxx4JRrEn1ggoVt
+	 MFWcDSMfkUR2aOyixu07EkEuasWRPCt09o9gHYyGvzwBVEGByz9ae7FxpHHEGtgBv0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="irmsv/nS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ygj4VsB6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE10606A33A;
-	Sat,  7 Nov 2026 15:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8646F606A33A;
+	Sat,  7 Nov 2026 15:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irmsv/nS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42841F0089F;
-	Sat,  7 Nov 2026 15:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ygj4VsB6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F651F0089F;
+	Sat,  7 Nov 2026 15:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065505;
-	bh=znTt627akDosM1wO6GWhJm+ZIftBnXyRQdMlzEXd0GI=;
+	s=korg; t=1794065506;
+	bh=Wth5T4eKwVJQg/uOtKGgwkgeEdrIH+W1N0mfesP2RZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=irmsv/nSooiBjZ2Rh2Focu//JAUVLZcY2ybBDujNxH5Xgg4tTe5RXqT8qfvRHoiEE
-	 4wsTW76M7e6gB8U+u0W2p8bXs9OAfdKR4zeQLKrk/c8n/MyvoWmszBQAir7fC8Y5tL
-	 NXyNps5rYJDA5Aa24vLosFsb1KxU+iq87vxLE9wk=
+	b=Ygj4VsB60iKmjLfuo0xvf68BCP62VBJcvFfYC8mL19VIThInub7RdukSgnY3PlceP
+	 P2JnEvtU5tqsJUEyqtobW7C9Cqf4scB0K3gaDsJJ3DKlsJ26Kg6cX3L0+A+3CjJanr
+	 ZiEstGHZwKUYNFiaNGOSJyd27yt78G2o1lUGMtZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Kamil Sawicki <user148783812897@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vincent Li <vincent.mc.li@gmail.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1191/1257] net: limit priority VLAN untag depth
-Date: Sat,  7 Nov 2026 08:58:07 -0500
-Message-ID: <20261107135012.061179322@linuxfoundation.org>
+Subject: [PATCH 7.3 1165/1257] LoongArch: Remove arch-specific __smp_mb__{before,after}_atomic()
+Date: Sat,  7 Nov 2026 08:57:41 -0500
+Message-ID: <20261107135011.364540453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,72 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamil Sawicki <user148783812897@gmail.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit d3ff07f5acc573e5f72bf1c581bae5d05191ba61 ]
+[ Upstream commit 85cebdfee765e92e748e71b9b91889eef5988282 ]
 
-The priority VLAN receive path can repeatedly remove VID 0 tags and retry
-packet processing. Unlike the read-only VLAN protocol parser, this path has
-no limit on the number of nested tags it consumes.
+When running BPF selftest "test_progs -t timer_lockup" on a LoongArch
+machine, the kernel intermittently experiences soft lockups and panics
+in hrtimer_cancel().
 
-Each skb_vlan_untag() advances skb->data and resets header offsets. The
-offsets are stored in 16-bit fields. With enough nested tags, the network
-or transport offset can wrap. A later protocol handler can then derive a
-large pull length from the wrapped offsets and access memory outside the
-skb allocation.
+The root cause is that the bpf_timer_cancel() implementation relies on
+smp_mb__after_atomic() to provide a full data barrier after a relaxed
+atomic_inc() to ensure the proper store-load ordering before performing
+lockless dependency checks on weakly-ordered architectures, such as on
+LoongArch, but the current definition of smp_mb__after_atomic() is just
+a plain compiler barrier.
 
-Apply the existing VLAN_MAX_DEPTH limit to the exceptional VID 0 retry.
-Count the tag already stored in skb VLAN metadata as the first level, then
-stop before untagging a ninth level. Keep the accounting inside this
-uncommon branch so the regular VLAN receive path is unaffected.
+This allows a subsequent read to bypass the prior write due to store-
+load reordering, enabling concurrent CPUs to simultaneously bypass the
+software deadlock detection, enter hrtimer_cancel(), and then trigger a
+severe ABBA deadlock in the hrtimer core.
 
-A single VID 0 priority tag before a real VLAN tag is valid. No normal
-deployment was found that intentionally emits multiple consecutive VID 0
-tags; permitting eight levels is therefore conservative.
+Moreover, there are hundreds of smp_mb__after_atomic() call sites across
+the core kernel (kernel/, drivers/, mm/, net/, fs/) that currently lack
+necessary full data barriers on LoongArch, which have potential risks.
 
-The issue was found while researching the Linux network receive path for
-Google kvmCTF, with OpenAI Codex (gpt-5.6-sol) assisting the analysis. The
-affected path, reproducer and fix were manually reviewed and tested.
+To comply with the LKMM specification, fix this by removing the arch-
+specific definition of __smp_mb__after_atomic(), so that this macro can
+automatically fall back to the generic definition in asm-generic that
+maps to __smp_mb() and emits the required hardware DBAR instruction.
 
-Fixes: 36b2f61a42c2 ("net: handle 802.1P vlan 0 packets properly")
-Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261024004835.17862-1-user148783812897@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+While at it, do the same thing for __smp_mb__before_atomic().
+
+With this patch the BPF timer_lockup selftest was stressed for millions
+consecutive loops on a physical LoongArch machine, without encountering
+any further lockups.
+
+Cc: stable@vger.kernel.org # 6.7+
+Fixes: affef66b65889a0e ("LoongArch: Relax memory ordering for atomic operations")
+Closes: https://lore.kernel.org/loongarch/CAK3+h2xOSEZUHhou7N2cRL-aGrZCNSm45g+P7thObMe+fpgYCA@mail.gmail.com/
+Reported-by: Vincent Li <vincent.mc.li@gmail.com>
+Reviewed-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/loongarch/include/asm/barrier.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 3f39d953eb480..cc7b32ab56085 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -6201,6 +6201,8 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
- 	}
+diff --git a/arch/loongarch/include/asm/barrier.h b/arch/loongarch/include/asm/barrier.h
+index 4b663f1977061..84c6d739119d1 100644
+--- a/arch/loongarch/include/asm/barrier.h
++++ b/arch/loongarch/include/asm/barrier.h
+@@ -57,9 +57,6 @@
+ #define __WEAK_LLSC_MB		"			\n"
+ #endif
  
- 	if (unlikely(skb_vlan_tag_present(skb)) && !netdev_uses_dsa(skb->dev)) {
-+		unsigned int priority_tag_depth = 1;
-+
- check_vlan_id:
- 		if (skb_vlan_tag_get_id(skb)) {
- 			/* Vlan id is non 0 and vlan_do_receive() above couldn't
-@@ -6212,6 +6214,12 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
- 			 * 802.1Q or 802.1AD and vlan_do_receive() above could
- 			 * not find vlan dev for vlan id 0.
- 			 */
-+			if (unlikely(priority_tag_depth >= VLAN_MAX_DEPTH)) {
-+				drop_reason = SKB_DROP_REASON_RECURSION_LIMIT;
-+				goto drop;
-+			}
-+
-+			priority_tag_depth++;
- 			__vlan_hwaccel_clear_tag(skb);
- 			skb = skb_vlan_untag(skb);
- 			if (unlikely(!skb))
+-#define __smp_mb__before_atomic()	barrier()
+-#define __smp_mb__after_atomic()	barrier()
+-
+ /**
+  * array_index_mask_nospec() - generate a ~0 mask when index < size, 0 otherwise
+  * @index: array element index
 -- 
 2.53.0
 
