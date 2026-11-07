@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063492;
-	b=LdVYHaz6YssQNUcnlARj3MYj1rKMqET61ytgCjly+HyRGrHpjFERCMOk/F2DhfLqvUuh
-	 6EDiLY6+VTbxuarl00ONqdIADMk3jU6ka87FrPwdx5PzvU5MxhNM7HMChUX8t4niaoedE
-	 FyQw8UHk95NG2evvfj7J8CjLXdI0nJVSpnn+czyBNh6gx0qbz60kKSX32bj7S1XkaITgL
-	 F01KxPxHtiI2LjeOy92pWYZXpCAHT1Z38xVnfamlns92kuA2AHlIbQguf06hHor4BV9pe
-	 H+U4qDKzrAUDMdu/U3mQb1Prcv9mPHvK8gGtiYDdTOWIsgF6M6c6Ddtl+OS4ydwkfgg==
+	t=1794063493;
+	b=kMeu2sz8U9s87utEMfMCOGwCyWhUMs3MT8Pq6NkONz/hezyyQ05/DkcK1fm5y4ujggkh
+	 aNzC6a2T5wcDv9zJaLNmXTC6/E57vrQOkO3cWQM0iAN/Ognk9AOWihaeSw2EkMnIS2I5l
+	 MdVwgBxvuddEr6edrXJXtnP9j5nB5i/Q6mc/5CnxtNYhIZ2dMWQ/zrUvQGf3bCEXYbkwA
+	 jUocmCUusDVvxsytm/xbxuuyJ5DWxBO7JKwijsIIqK67hJartctczHlTIaKfju7aljEOV
+	 jG+SIXOu2LqORLvNShdkFWZ1ViVZ0uLZ+UyL0ouIHgcGFLLrKZeaADyZCy0upm6amzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SmoASWUlP2IZYly/Ey0rQt4s9QVcVq47cgYLvU8RShc=;
-	b=5OCnA83x/W3NFtBBlx6HIdZBRgmTyyoMC+D4bCegH8ppzS12jr6ueQYlxkel0tQD9nx/
-	 EbY82zYHbNzIVqxz/ks6v6qWdlBCUR58aw9Ab5DCaQK3xWLpe3wkQ+sU7E4eJyZlmkagN
-	 fQuMokUZj3q8ZdbFox/20yCefIfTWoeW3RdZMnNLiyyJ/6q6aQDBnezcUMqbMwOOdm1fG
-	 drm7V4gC5FH5X7cbeVm6tqP8wNRvrn0teJwLov/2eUgtnrx6LoWVLUUiD4dH8kBPSG5fG
-	 8KRpfk9uKhNcAYVo2OPMHLn6Rr/GRG/uJ1p0kZy4lUu6SpMqAq2qd3oKhkFMAC3fncA==
+	bh=FLDJK2QP7lgP1FTABZkZg8z7mOPcwMqIMrBfYmFf3dU=;
+	b=c4zBCilgzDiJCogFZRgiU0gquNWCavD7VScgwouPUmFQNlQb88XrKx5/DqL08Y1tYy4c
+	 PfO/d4vGkB2qLrkUU5+2AMjO1xK/YLVlXpV/jIEk6Kky+THOkFTxcg8UkXTBwtx7q683w
+	 hKhvLgFlvbb9XV9PFwbGECAI1MNwSZy3A/bB2CM1/yGziw9dUwd0wnrw+/fTAfCAnA9re
+	 tT7XaSxcsmUYbT126CTiueofLsMfKLdqU4eGoLGL2IUOgdknPx1csdUv2ItHqP3qOCnZb
+	 oCsjO6rONotVExz7EzNgcO+wQLI0ctiQF+AXcfiZTGfZOx3zYpsQ98NcobnB4e7jIYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vYNg37Uu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RflxIv8P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A4B606B884;
-	Sat,  7 Nov 2026 14:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFC7606A33A;
+	Sat,  7 Nov 2026 14:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vYNg37Uu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3D81F008A4;
-	Sat,  7 Nov 2026 14:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RflxIv8P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFCE1F008A2;
+	Sat,  7 Nov 2026 14:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063491;
-	bh=SmoASWUlP2IZYly/Ey0rQt4s9QVcVq47cgYLvU8RShc=;
+	s=korg; t=1794063493;
+	bh=FLDJK2QP7lgP1FTABZkZg8z7mOPcwMqIMrBfYmFf3dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vYNg37Uu45ueEwoKo1Zn/kIo3U0hMwddAPVjPEsOwF1XHaIZJbbgggnMzRodalq6/
-	 rBIIYWaSrAdv2NJEdOjrOptz54vUewdYvDIdXckXR9xb6/MJp2rfiBy+wAYt9k+dh9
-	 2U+A1VJp6aStLkIz9qZLe+gucGF2fqDjV5oLid0E=
+	b=RflxIv8PloxsNaIDsJr1dYG/d8FLwi96TKklr7S1Pqr8lbAg4pm0LSob2UD7vYqxs
+	 bRYstI9f2mcaXJHrRpJJGkk3f1BtCF97NumcevWyLnznE3fOMh5ObxqM0WEFcyqwFk
+	 9QgjrTKh2Sp+FAb6vVNfPgooFdorCNjBgMLKKRr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Verdonck <tom.verdonck@inspiral.be>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 637/869] hwmon: (sht4x) Fix jiffies wraparound in heater-ready check
-Date: Sat,  7 Nov 2026 08:55:19 -0500
-Message-ID: <20261107134914.536854356@linuxfoundation.org>
+Subject: [PATCH 6.18 602/869] net: skbuff: dont BUG() on a bad csum_start in skb_copy_and_csum_dev()
+Date: Sat,  7 Nov 2026 08:54:44 -0500
+Message-ID: <20261107134913.459829108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,113 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Verdonck <tom.verdonck@inspiral.be>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit ce3ff350c4a3b9466bd67bfe2adb2e3bea732b9e ]
+[ Upstream commit 56453199d28f0072a8196fba14b2d702632e2219 ]
 
-sht4x stores in ->heating_complete the jiffies deadline at which the
-current heater pulse finishes. It is set once at probe (to jiffies) and
-only updated when the heater is explicitly enabled via sysfs, so in the
-common case where the heater is never used it stays frozen at its probe
-value.
+skb_copy_and_csum_dev() copies everything up to the checksum start out
+of the linear area, and BUG()s if the checksum start is past the end of
+the linear area.  It misses the other direction: a CHECKSUM_PARTIAL skb
+that has been pulled past its csum_start gives a negative offset, which
+gets past the check and becomes a ~4GB copy.  It also trusts
+csum_offset when it stores the folded checksum.  So far
+skb_copy_and_csum_bits() BUG()ing on a short skb has covered for that,
+but once it returns instead, a bad csum_offset would write past the end
+of the caller's buffer.
 
-->heating_complete is an unsigned long compared with time_before(),
-whose signed difference is only meaningful while the two values are
-within LONG_MAX jiffies of each other. Because the deadline is frozen,
-jiffies keeps advancing away from it, and after 2^31 jiffies the
-difference flips sign. On a 32-bit HZ=100 kernel that happens ~248.5
-days after boot. time_before() in sht4x_read_values() then wrongly
-reports that heating is still in progress and the read path executes
+The function returns void and its callers are drivers copying a frame
+into a bounce buffer just before handing it to the hardware.  There's
+nothing for them to back out of, so check both ends of csum_start and
+that the checksum field fits in the frame, and if not, copy the whole
+frame with skb_copy_bits() without filling in the checksum, with a
+DEBUG_NET_WARN_ON_ONCE() for debug kernels.  The frame
+goes out with a bad checksum and is dropped by the receiver.  If even
+that copy fails, zero the buffer so the driver doesn't send stale bytes.
 
-	msleep(jiffies_to_msecs(data->heating_complete - curr_jiffies));
-
-with a bogus, huge delta, blocking the temperature read for a very long
-time instead of returning data. The heater_enable sysfs attributes are
-affected the same way (spurious -EBUSY and "1" readback).
-
-Store the deadline as a 64-bit jiffies value and compare it with
-get_jiffies_64()/time_before64(), which does not wrap in any practical
-uptime.
-
-Fixes: 0eed6fc3d2b9 ("hwmon: (sht4x): add heater support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
-Link: https://patch.msgid.link/7b2087ccb963e097cf3f6333efaec0c46549003b.1790358356.git.tom.verdonck@inspiral.be
-[groeck: Squashed 'Fix torn read' patch into this one]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Cc: stable? The trailers only have Assisted-by: and Signed-off-by:. No
+Link: https://patch.msgid.link/20261007-b4-skbuff-bug-on-v2-5-b9a5f732895b@toxicpanda.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht4x.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ net/core/skbuff.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/sht4x.c b/drivers/hwmon/sht4x.c
-index 5a76361bb1350..f757265a82a6d 100644
---- a/drivers/hwmon/sht4x.c
-+++ b/drivers/hwmon/sht4x.c
-@@ -67,7 +67,7 @@ DECLARE_CRC8_TABLE(sht4x_crc8_table);
-  */
- struct sht4x_data {
- 	struct i2c_client	*client;
--	unsigned long		heating_complete;	/* in jiffies */
-+	u64			heating_complete;	/* in jiffies */
- 	bool			data_pending;
- 	u32			heater_power;	/* in milli-watts */
- 	u32			heater_time;	/* in milli-seconds */
-@@ -92,14 +92,14 @@ static int sht4x_read_values(struct sht4x_data *data)
- 	u8 crc;
- 	u8 cmd[SHT4X_CMD_LEN] = {SHT4X_CMD_MEASURE_HPM};
- 	u8 raw_data[SHT4X_RESPONSE_LENGTH];
--	unsigned long curr_jiffies;
-+	u64 curr_jiffies;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 1808bed195af1..227c889fba578 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3899,7 +3899,18 @@ void skb_copy_and_csum_dev(const struct sk_buff *skb, u8 *to)
+ 	else
+ 		csstart = skb_headlen(skb);
  
--	curr_jiffies = jiffies;
--	if (time_before(curr_jiffies, data->heating_complete))
-+	curr_jiffies = get_jiffies_64();
-+	if (time_before64(curr_jiffies, data->heating_complete))
- 		msleep(jiffies_to_msecs(data->heating_complete - curr_jiffies));
+-	BUG_ON(csstart > skb_headlen(skb));
++	if (unlikely(csstart < 0 || csstart > skb_headlen(skb) ||
++		     (skb->ip_summed == CHECKSUM_PARTIAL &&
++		      csstart + skb->csum_offset + sizeof(__sum16) >
++		      skb->len))) {
++		DEBUG_NET_WARN_ON_ONCE(1);
++		/* Send the frame without the checksum filled in, or send
++		 * zeroes if we can't even copy it.
++		 */
++		if (skb_copy_bits(skb, 0, to, skb->len))
++			memset(to, 0, skb->len);
++		return;
++	}
  
- 	if (data->data_pending &&
--	    time_before(jiffies, data->heating_complete + data->update_interval)) {
-+	    time_before64(get_jiffies_64(), data->heating_complete + data->update_interval)) {
- 		data->data_pending = false;
- 	} else {
- 		next_update = data->last_updated +
-@@ -237,7 +237,9 @@ static ssize_t heater_enable_show(struct device *dev,
- {
- 	struct sht4x_data *data = dev_get_drvdata(dev);
- 
--	return sysfs_emit(buf, "%u\n", time_before(jiffies, data->heating_complete));
-+	guard(hwmon_lock)(dev);
-+
-+	return sysfs_emit(buf, "%u\n", time_before64(get_jiffies_64(), data->heating_complete));
- }
- 
- static ssize_t heater_enable_store(struct device *dev,
-@@ -279,14 +281,14 @@ static ssize_t heater_enable_store(struct device *dev,
- 
- 	guard(hwmon_lock)(dev);
- 
--	if (time_before(jiffies, data->heating_complete))
-+	if (time_before64(get_jiffies_64(), data->heating_complete))
- 		return -EBUSY;
- 
- 	ret = i2c_master_send(data->client, &cmd, SHT4X_CMD_LEN);
- 	if (ret < 0)
- 		return ret;
- 
--	data->heating_complete = jiffies + msecs_to_jiffies(heating_time_bound);
-+	data->heating_complete = get_jiffies_64() + msecs_to_jiffies(heating_time_bound);
- 	data->data_pending = true;
- 	return count;
- }
-@@ -410,7 +412,7 @@ static int sht4x_probe(struct i2c_client *client)
- 	data->client = client;
- 	data->heater_power = 200;
- 	data->heater_time = 1000;
--	data->heating_complete = jiffies;
-+	data->heating_complete = get_jiffies_64();
- 
- 	crc8_populate_msb(sht4x_crc8_table, SHT4X_CRC8_POLYNOMIAL);
+ 	skb_copy_from_linear_data(skb, to, csstart);
  
 -- 
 2.53.0
