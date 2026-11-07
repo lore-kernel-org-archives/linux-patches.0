@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060794;
-	b=j2kj95RzlCkHpDmlMVaOtGOblhaTSZGNGkT5R3uW9a7eVkzJBMtNuG52Ffi+dBgqGh4n
-	 GO/2+zO7gP4JhKMQ/V2r4kdYkoUjVr7F9RdX4nU0xnGEmKSWrBUBWjIT3u/4zwCgbismJ
-	 ASIQtYjq+jTdIyWp39/WiwCr/suWLusuNWtlxP6Qfp8/6SEof3qJYjDJNHdU8xgMGJFlr
-	 UhjuJisPXsTeP13f/4nGM6IYoMeWPDWwi7D4DTyKa/ffIlq+r1/Ow0Kze90n6I0H9pTw0
-	 mo/Fmm1qPJ+ZoQN3u2cSyscIBymLiC9bXUL9BLK/Yo0E1g1OqrHAEKByreo6WPjkBPg==
+	t=1794060795;
+	b=Jgidb+672q/8U6KOriuUR5WAN0MMSVUIJi/Z+eb12d2n5hcjB1IweQA8xOavKGVnwjUs
+	 Kd9XERckIAxAtMdyrhM3tLQ4FuZgimTapiUr4SjBZpodgV5Nagw5C7BqIFmiPIjqpH5CW
+	 gi7AQpYpSXjZsFHVRp7w0gb/ulgP2y6OxbHRHd6QnIKWjwhn4CE/2IC/nH9oab5nk06f+
+	 vIpOPDh1WOtW9DHNrAocpcOA87T+bJzfevwVsoJ4zhKey0wYRUaZb52yUOIpgQTFJupZh
+	 gNl78+ao9knWQ9BwkixjvrJhXxo2xACkkuURLEcZ7Lo5sju721iiOqoEkH22dFSnlsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060795;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6JCQhZtj0cLI3v+bK2xBu01QHmZbgm9eiOpH9oiJpt4=;
-	b=i8Bwa9ZbwcnJZVhrYjziGIOWFHUNMHeN+8Zr2+yYU0sZZTU2AmdKJPTNPGCWzQ4wpvBM
-	 hRUhc3ebXsB2bIPKLOGeQRp5lMQx5jDb++Ubt5DkJRmkP49oYrDU6N1diEDl+chw1FLFD
-	 9B5xCaKk5airKtWRyQC8Jf0yQDxuWFDVRXd/AzZKqeNkIVpAMArYl0vKeq6tEbqEMWBnp
-	 dlAw0A6kedw2C8RLSbUgnaFa+aDjfDYDleXFd818D6lIZgW1thbLl9yNWsAEcbVv1ASY0
-	 WfvRH7enXcf0aHofPFmrrahQ1IbZAcNU/CsO7HlKOkH2tFdw+MiJtRH0cbwsH8gBfzQ==
+	bh=9lwwY7X4WrqjopbugO7VbRggtto7pnUFlIZ71+RkkOg=;
+	b=uiAQybjtCAvbf/o6dNrxylYXuGvgsYDXHjzy9hPSX4vd3aJCyihcelDKRwwFqSMqB2q7
+	 S64Wqy2/K5ufXf9+PaHkJQ6JsnH7A6CsgBhBSNNchra33KY+K4h8dhlwHwDxtMipvMzR8
+	 O9oormjTnqysI5OhyDxh3USxOXXikYXHFxGiRugQVPnxij1JRpCAC3199JjYffRfrwWj5
+	 3IcCCf5QKWjGJbcryPuHhtYw/D1h2msJMB6/cYCXjIsDfKIff2OelCFEszLUnAWDL/XgW
+	 /jtz8MNi+XeRFA5FqbB+S3FHbKdANml2s0I6RdXFHkebgdPPQYknNZLIsYJbqamNtiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ARUKEuRJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDnvz9Ap;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4A7606A332;
-	Sat,  7 Nov 2026 14:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76541606A332;
+	Sat,  7 Nov 2026 14:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ARUKEuRJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C079A1F0089F;
-	Sat,  7 Nov 2026 14:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDnvz9Ap
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210DE1F0089F;
+	Sat,  7 Nov 2026 14:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060794;
-	bh=6JCQhZtj0cLI3v+bK2xBu01QHmZbgm9eiOpH9oiJpt4=;
+	s=korg; t=1794060795;
+	bh=9lwwY7X4WrqjopbugO7VbRggtto7pnUFlIZ71+RkkOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ARUKEuRJn7NBrkgl95q/76YDGwdWwLw1yfCLz0jef/aJ/qvk0YbAGfTv4dS1jK1iN
-	 Or902XqBYfSDUcs2Mzdc12wdJTqZG7DXnfoeUQaD8ALn6ZDLiL5oL3Jv4c8Qo1Iodx
-	 O2tjr2hL3EU12YWSLfdlPcvufaXQtyrEtQJNBCmA=
+	b=JDnvz9ApMwW6zepiPI2QZglzA2LzO43ko2rcXKhwao+zJ2Gwyx9rdkjCVXfxROZB/
+	 ornnpM//X6lpYb8G0q7kbZ6YsX32bjZ/qk7Df18eWW33ExHBv6QULKHhPZrHpU5Sya
+	 zuqvKULv1jUul9c2IVxSkYyJCsrDrvokQR0saET4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0196/1536] ext4: check return value of ext4_get_block() in ext4_load_tail_bh()
-Date: Sat,  7 Nov 2026 08:36:52 -0500
-Message-ID: <20261107135003.167139460@linuxfoundation.org>
+Subject: [PATCH 6.12 0197/1536] ext4: use FGP_WRITEBEGIN for tail block zeroing
+Date: Sat,  7 Nov 2026 08:36:53 -0500
+Message-ID: <20261107135003.194493055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,41 +71,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 705a3fd3bac167f1dabe3d3bba46cd484c5528dd ]
+[ Upstream commit e1cf7b5f5c8ad1e00d00c50c61c3e8fdc79cd422 ]
 
-ext4_load_tail_bh() ignores the return value of ext4_get_block(), so an
-I/O or allocation failure is silently discarded. buffer_mapped(bh) stays
-false and the function returns NULL, which callers such as
-ext4_block_do_zero_range() treat as "nothing to do" and return success.
-This can mask real failures during zero-range, truncate, or punch-hole
-operations, potentially exposing stale data if the block was not
-actually a hole and needed zeroing. So propagate the error to the
-callers.
+ext4_load_tail_bh() returns a locked folio that callers immediately
+mutate through folio_zero_range() and mark_buffer_dirty().  Use
+FGP_WRITEBEGIN so that, on backing devices that require stable writes,
+__filemap_get_folio() waits for writeback to finish before returning
+the folio; on regular devices the wait is a no-op.
 
 Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260714080044.4038124-4-yi.zhang@huaweicloud.com
+Link: https://patch.msgid.link/20260714080044.4038124-2-yi.zhang@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 1701dadf5fc65..dea85cff89457 100644
+index dea85cff89457..dcd67771f3a3b 100644
 --- a/fs/ext4/inode.c
 +++ b/fs/ext4/inode.c
-@@ -3715,7 +3715,9 @@ static int __ext4_block_zero_page_range(handle_t *handle,
- 	}
- 	if (!buffer_mapped(bh)) {
- 		BUFFER_TRACE(bh, "unmapped");
--		ext4_get_block(inode, iblock, bh, 0);
-+		err = ext4_get_block(inode, iblock, bh, 0);
-+		if (err < 0)
-+			goto unlock;
- 		/* unmapped? It's a hole - nothing to do */
- 		if (!buffer_mapped(bh)) {
- 			BUFFER_TRACE(bh, "still unmapped");
+@@ -3689,7 +3689,7 @@ static int __ext4_block_zero_page_range(handle_t *handle,
+ 	int err = 0;
+ 
+ 	folio = __filemap_get_folio(mapping, from >> PAGE_SHIFT,
+-				    FGP_LOCK | FGP_ACCESSED | FGP_CREAT,
++				    FGP_WRITEBEGIN | FGP_ACCESSED,
+ 				    mapping_gfp_constraint(mapping, ~__GFP_FS));
+ 	if (IS_ERR(folio))
+ 		return PTR_ERR(folio);
 -- 
 2.53.0
 
