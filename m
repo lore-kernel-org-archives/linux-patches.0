@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063893;
-	b=PoFlB3VYHACZBG+OGMuDt9uAiPGyflGeoUqWaqR+Yx3CaV5rLjCSXTcFW58Dlz0GlIol
-	 TrvqgRR7nx7ecDBdvOlc2srTdOW30Xo1Fb/e1UFCDC8j+eO/6YT53qHvKe6/8+nVcxTPG
-	 E5AMYZYAfI8uJTPgWf1euXPkNO8hJ/ZeYg8BLVNZmhcm1g53p0ZXZlbYlUqD5ZWwHjC2Y
-	 BPIr4miGSe/EqrFhAVPG82s8aUbADXIjU7Sl+cQMcU+bjrarpAPBU3imU0wafCV8tffXR
-	 68DoOHZMfdyetCAgYk5nyJbrlOeKvUsaEBpzLUIKU0BwvUbXSKcvPa3cGlNuKJoerOQ==
+	t=1794063894;
+	b=eUmZDToor2vaMHxylBg+FGsphSKnmmD1e0OGjOfP5KDQHhA++NQjcZQ9edVrgJ2sHx2Y
+	 ZGwcVSybk9ooIDs24tMf9sswc0UJCim8Tz0EibYJbV2SrYkMM5pgp318fCWSmjy1oh9Oj
+	 y+7sXUttVdD1s3USJG4g5bzR2uBAVfstg6vQS9/EcWcPxRhv7ILVOb4yBadHVPHi/e535
+	 Sg36yO3qnmBODpJ70TK+mlQ1yINTEOX1PbOK5yX9w7zwSvjSWQqMzI3r8MkqDCfB7tBqg
+	 6Da6Wk73XVWBLaq3KnaqPGV6K8AkljX9MhfDL9BmUlmeeD8Jh0cygbylbVqlq6MlS8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063893;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L1+mEVU/UtUFWqNdbQ/AHeIfxNWjgSfkzsHp6d1zqcQ=;
-	b=Cod8oXl+88yFqCFIXTujOI04HOh/3WryTsBRnYty0/cQQUVwzN3tU+LjOuAlSh6FGAXC
-	 LLuLyeV9drvDAATWMJYROuNUH2Dga4oZm3+U6urRIzaphwla73X9hqpsOnUXWoyfYbpFg
-	 yw0+ty8ntZAlB31aTFPoJvSJVJqIZVO0MvoTKMwLKfTxEknJrZOW436W4f7fyYcBIsgsR
-	 GKoXtkymlENR7N2TFUyBjM+D9Zm2ssK3/heCN2FEBb6OY6LOxVzg+TxYKORnf13REvA3a
-	 0OIOAr8/pbPsPqfFyIbMsQ7rzdt/E1wq82SWZJwTsatQ26qltU6f/UnxHWw46K8FAdA==
+	bh=+i6diQkpj9/Kn//JaXMDzpPF5iluBtQFpQ11p44usuk=;
+	b=jC2P2Y49GJIQVuPl6tTcxqdTxv1Bn8OCz3hX2+uYaaEBYSPKqVdPnfegFx310qz9OILt
+	 G+wIZW5N8UjBlcaL4zH4rnG9y0VYUBU3BDQN9wjtSVA5wIGxz/0cJ7a6Bic8wyBAlMftk
+	 Qi0dIdttj39+3licSYuTpCT7/5TEF5fRwg7hO0OWxbwBeUkZQM3ubi6PjMwkWUkR54i63
+	 8QsElIbCIv9kfVxMW32NeilOo+LmEfIpolSrdgBhhOwWdv6z2MfYgGu8xGya4nquLMrfh
+	 GwVrUhJBuJRtU2qv/VprZt0WNWptYrW4xgxXLm1NG4wKBAjJcdA3/Hq7Y/1jXCfYfGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRk9eRCx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1fR8taZJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB73606B8BF;
-	Sat,  7 Nov 2026 15:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07786606B8A6;
+	Sat,  7 Nov 2026 15:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRk9eRCx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B2C1F0089F;
-	Sat,  7 Nov 2026 15:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1fR8taZJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FE51F0089F;
+	Sat,  7 Nov 2026 15:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063892;
-	bh=L1+mEVU/UtUFWqNdbQ/AHeIfxNWjgSfkzsHp6d1zqcQ=;
+	s=korg; t=1794063893;
+	bh=+i6diQkpj9/Kn//JaXMDzpPF5iluBtQFpQ11p44usuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oRk9eRCxm2zolCvl+AoRYzykXXpcYD4BVsYlk9v1JB0SBo9FprfO30SmSpU5+rXfE
-	 Y5qTNVy2d5YuTYvFQjvTXAhk0wMXKA134NV1GqAmOkD8QQfT324PIV/+91zuh99QFz
-	 cFvhIbyQWgpTKH1p2UuufucwR4awIE/2KTaVuYhQ=
+	b=1fR8taZJtmirXdKVd/YdeHmSB5XGk1p++B7YtC9UPvuJTbLqPsUKxyo3MBCzI9Kao
+	 rjWU+3lo7VXZlVB+rFRSugmDB03/2wOHZCgJo+/4Wi5kxuNY3yILCov+wA5ch4c2gd
+	 7/5m4UBqTBUwpggRyc2hFsZPUtUQZbC5j6sBAGEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Younho Choi <gdool88@mju.ac.kr>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	kernel test robot <lkp@intel.com>,
+	Faizel K B <faizel.kb@gmail.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0095/1257] media: vim2m: keep transaction buffer count stable while streaming
-Date: Sat,  7 Nov 2026 08:39:51 -0500
-Message-ID: <20261107134941.984824573@linuxfoundation.org>
+Subject: [PATCH 7.3 0096/1257] media: vimc: sensor: fix pixel_rate type to resolve do_div() warning
+Date: Sat,  7 Nov 2026 08:39:52 -0500
+Message-ID: <20261107134942.010675427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,118 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Younho Choi <gdool88@mju.ac.kr>
+From: Faizel K B <faizel.kb@gmail.com>
 
-[ Upstream commit 50f5fed44d8e24081e8feed5154746fe193f11b8 ]
+[ Upstream commit bbc952491f5f05f2274c811d34174d5b88632103 ]
 
-V4L2_CID_TRANS_NUM_BUFS controls how many buffer pairs a vim2m
-mem2mem job processes before the job is completed. The driver stores
-the value in ctx->translen and device_work() uses it later to decide
-whether the current transaction should continue.
+vsensor->pixel_rate->val is a plain s32 field. Declaring the local
+"pixel_rate" variable as u64 misrepresented its actual range and made
+do_div()'s divisor look wider than the 32-bit division it actually
+performs, which is exactly what the do_div() coccinelle check warns.
+Revert pixel_rate back to its original s32 type to match
+vsensor->pixel_rate->val, resolving the warning correctly.
 
-Letting userspace change this control while streaming is active can
-make a queued job observe a different transaction length than the one
-it started with. That leaves the transaction state inconsistent with
-the buffers currently queued for the job.
-
-Grab the transaction buffer count control while either queue is
-streaming, and release it only after both queues have stopped
-streaming. The V4L2 control framework then rejects changes with
--EBUSY while the value is in use, while still allowing userspace to
-configure the value before streaming starts.
-
-Keep the control handler alive until after v4l2_m2m_ctx_release(),
-since releasing the mem2mem context can call stop_streaming(), which
-now ungrabs the control.
-
-Fixes: 96d8eab5d0a1 ("V4L/DVB: [v5,2/2] v4l: Add a mem-to-mem videobuf framework test device")
+Fixes: ec1e620b2454 ("media: vimc: sensor: Add pixel_rate,vblank and hblank configuration")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202604191731.10nxGZ92-lkp@intel.com/
+Link: https://lore.kernel.org/lkml/CANiDSCs9s03DUjKwcPgDtZt2QJ4i0FGwab4zpEP+wCawagSC2Q@mail.gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Younho Choi <gdool88@mju.ac.kr>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Faizel K B <faizel.kb@gmail.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vim2m.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ drivers/media/test-drivers/vimc/vimc-sensor.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
-index bb2dd11eef0e4..f4a2c40838292 100644
---- a/drivers/media/test-drivers/vim2m.c
-+++ b/drivers/media/test-drivers/vim2m.c
-@@ -205,6 +205,7 @@ struct vim2m_ctx {
- 	struct vim2m_dev	*dev;
- 
- 	struct v4l2_ctrl_handler hdl;
-+	struct v4l2_ctrl	*trans_num_bufs_ctrl;
- 
- 	/* Processed buffers in this transaction */
- 	u8			num_processed;
-@@ -1258,9 +1259,27 @@ static int vim2m_start_streaming(struct vb2_queue *q, unsigned int count)
- 		ctx->aborting = 0;
- 
- 	q_data->sequence = 0;
-+	v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, true);
-+
- 	return 0;
- }
- 
-+static bool vim2m_other_queue_is_streaming(struct vim2m_ctx *ctx,
-+					   struct vb2_queue *q)
-+{
-+	struct vb2_queue *other_vq;
-+
-+	if (!ctx->fh.m2m_ctx)
-+		return false;
-+
-+	if (V4L2_TYPE_IS_OUTPUT(q->type))
-+		other_vq = v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx);
-+	else
-+		other_vq = v4l2_m2m_get_src_vq(ctx->fh.m2m_ctx);
-+
-+	return vb2_is_streaming(other_vq);
-+}
-+
- static void vim2m_stop_streaming(struct vb2_queue *q)
+diff --git a/drivers/media/test-drivers/vimc/vimc-sensor.c b/drivers/media/test-drivers/vimc/vimc-sensor.c
+index 83dcc9d61ee05..7cb544fdfddbb 100644
+--- a/drivers/media/test-drivers/vimc/vimc-sensor.c
++++ b/drivers/media/test-drivers/vimc/vimc-sensor.c
+@@ -97,18 +97,14 @@ static void vimc_sensor_update_frame_timing(struct v4l2_subdev *sd,
  {
- 	struct vim2m_ctx *ctx = vb2_get_drv_priv(q);
-@@ -1274,11 +1293,14 @@ static void vim2m_stop_streaming(struct vb2_queue *q)
- 		else
- 			vbuf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
- 		if (!vbuf)
--			return;
-+			break;
- 		v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req,
- 					   &ctx->hdl);
- 		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
- 	}
-+
-+	if (!vim2m_other_queue_is_streaming(ctx, q))
-+		v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, false);
- }
+ 	struct vimc_sensor_device *vsensor =
+ 		container_of(sd, struct vimc_sensor_device, sd);
+-	u64 pixel_rate = vsensor->pixel_rate->val;
++	u32 pixel_rate = vsensor->pixel_rate->val;
+ 	u32 hts = width + vsensor->hblank->val;
+ 	u32 vts = height + vsensor->vblank->val;
+ 	u64 total_pixels = (u64)hts * vts;
+ 	u64 frame_interval_ns;
  
- static void vim2m_buf_request_complete(struct vb2_buffer *vb)
-@@ -1380,7 +1402,8 @@ static int vim2m_open(struct file *file)
- 
- 	vim2m_ctrl_trans_time_msec.def = default_transtime;
- 	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_time_msec, NULL);
--	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
-+	ctx->trans_num_bufs_ctrl =
-+		v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
- 	if (hdl->error) {
- 		rc = hdl->error;
- 		v4l2_ctrl_handler_free(hdl);
-@@ -1435,10 +1458,10 @@ static int vim2m_release(struct file *file)
- 
- 	v4l2_fh_del(&ctx->fh, file);
- 	v4l2_fh_exit(&ctx->fh);
--	v4l2_ctrl_handler_free(&ctx->hdl);
- 	mutex_lock(&dev->dev_mutex);
- 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
- 	mutex_unlock(&dev->dev_mutex);
-+	v4l2_ctrl_handler_free(&ctx->hdl);
- 	kfree(ctx);
- 
- 	atomic_dec(&dev->num_inst);
+-	/* Sanity check, pixel rate is fixed and fits in 32 bits. */
+-	if (WARN_ON(pixel_rate >= 0x100000000))
+-		return;
+-
+ 	frame_interval_ns = total_pixels * NSEC_PER_SEC;
+-	do_div(frame_interval_ns, (u32)pixel_rate);
++	do_div(frame_interval_ns, pixel_rate);
+ 	vsensor->hw.fps_jiffies = nsecs_to_jiffies(frame_interval_ns);
+ 	if (vsensor->hw.fps_jiffies == 0)
+ 		vsensor->hw.fps_jiffies = 1;
 -- 
 2.53.0
 
