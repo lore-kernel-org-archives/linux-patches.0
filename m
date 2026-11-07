@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062606;
-	b=JIOPmbU7IjEm8ARVXeGXFM94vKGUJSjdilZZO8QLRqClR5uU/0qiZ5fPjp6HK1YWJkqL
-	 /kUjYan5rE3MqOSEK5plJ4UvmUeY5X5U9Urup3vZrOzxh5bUeHIh7OJn+vrLLQkLMsw1z
-	 eVX8d+lNZioiael21FLfLXHrsZLKwfeAYEn3o4xAezFXaHFqUY3Y3Hc55UiS8RzWJyKfV
-	 gzzMGtBu17VK83stthYesfYDSDTn5i6xChXPgEjLaYQAER9OBGvfkRbOihj3qyjPaV0Rq
-	 zWUvwH0uPBP2vBpJmaDKFdTrSOO+HJxdU6Emj+IZKqtRHaQ1Z9u0ERjSLAWqRxz5vmw==
+	t=1794062607;
+	b=sC6HDPK/kYQfUsZsQPuC073AWZ/puzlRnwDf08fd/hxU3hIPQvSQsKySaApmkiX4Uwz9
+	 1mTWp6U/WN9yGhrAjkjU8fmK0RHEsoUDPPMvUAY6/Ps28cCM1cwA2QtZSl3eFEKIACzgY
+	 0tybJ1B22p2OXbQEjkI4q7z+7xw4z7CsC4ma0nBgpgI7LEhl/gj60sFXorAFXrvCcmaDt
+	 Twez0e8sReOIfA/CW5aCVlq920iqmWyVJ2Xxys0Uev7Fza9qL/rJPZ68MbGm0/vJjSChG
+	 VOQr1j3k6Yr7zhPK8nOXRALs2OLkxRNhKgqYoDGFmh6mfPNRM3P4f37fvH3kfdH8NZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wnHlo24Qu3y/jXpAqHDxpy14bO3jWPs2vXWc623i6RY=;
-	b=XukqJTMTDdY8Ndr8O/E5ULi99nAsC4DkI3x6W/GkxzMaNhWa1KztKIJl3mLnQCC/GBF2
-	 w/xeRbcgHw8WWtg/isuF8lLT39rA7MVTNtOrlHT5J2DgM2g5rGaDv4kgpNHFc/CsPgSQj
-	 NbDLyMTp89TPvo/B9gPsKD3nRskvKMyEu4AObmDR9mOLLSxfSsq0IJrXriUe2X3H7ra7g
-	 93qDipcyO8NrbG5cCTw1pUMZ1FeNptW7NRvwESV3eyXetvxMzp71Swj0wyFucldmzG8rl
-	 SVCBW1GGFXJvQn84zKfPH8K92Gfq27EP2Umz+VMWXAE8BqaloIVzGqh4kjE1KeVW67A==
+	bh=vk51C6TzxSMMSwTXKpnDt9RFHlG1txOAAn7EYwFPhBo=;
+	b=iyhHfW9AvIXaARTOx+vr/GXTcK3PnezlILvZWI4DZBYHA3AgpKocEnS4jZZHwwu52QiQ
+	 lmXoKM1q2yJ3sQEt12fs1M+dR4RzFtgp74Zlsb+GfvJye6GvYxAF+BRny+thMI8GKQDM5
+	 AV3GHHSc8vluQdJc3KANT/5INTU64zud8X+rv/PYyDVVPPqgGTXQxuQp7Wn1+ArEc79bc
+	 +pOXvmxtdjKDlzcCPVmTHGATl7Jz7yHtQ8MPh/MFhhSV32+aQay1pPUS5XEOy9G3EzRQc
+	 KQ+tY8RoNLP/kZLk00dmvJp+nWsJ02HWxsER/HrYBvk3iLOvW59DNxhhMrbabVd/CGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+ucT4MU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fpb2Wja6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83929606A334;
-	Sat,  7 Nov 2026 14:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E440606A334;
+	Sat,  7 Nov 2026 14:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+ucT4MU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053A41F008A1;
-	Sat,  7 Nov 2026 14:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fpb2Wja6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333191F008A1;
+	Sat,  7 Nov 2026 14:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062606;
-	bh=wnHlo24Qu3y/jXpAqHDxpy14bO3jWPs2vXWc623i6RY=;
+	s=korg; t=1794062607;
+	bh=vk51C6TzxSMMSwTXKpnDt9RFHlG1txOAAn7EYwFPhBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+ucT4MUEw68u9zBxi1AK9DSgHOkfcFustn605fkFsIohor5hkHFiRWiJHA1QxM3i
-	 +VouKEIHVOzQBYP42gIzmloR9TDkEF3lYlMh5vtnVyQhNaEVkAszhErQPOI2u/YDtD
-	 8+OCH3cnqtgudLehHnAJmdJMfOJ6vRmXG4omgaOs=
+	b=Fpb2Wja6oKCiuqCft0yDEuKaT6/Q1d3F52TV76Vu3nmY1GVSwOSAn2t66ZXsLEjJQ
+	 emeGmngW0aMJNcbLzcp1MTj0AQ5SeyrrdhKwf3mIRRkHLR+3dEpvQhrGj8qd5rwb6+
+	 zdDLZCKawbXDSNRRIKHpgKMrX3xrAAO3S5SNSyoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Yingjie Wang <1075151112@qq.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Neal Cardwell <ncardwell@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1479/1536] dt-bindings: clock: ma35d1: Document the missing crystal inputs
-Date: Sat,  7 Nov 2026 08:58:15 -0500
-Message-ID: <20261107135039.390542626@linuxfoundation.org>
+Subject: [PATCH 6.12 1480/1536] tcp: limit tcp_tso_rtt_log to a valid shift count
+Date: Sat,  7 Nov 2026 08:58:16 -0500
+Message-ID: <20261107135039.418374880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,69 +71,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit ea1f41802312e77b58113146a060fb0546b2234d ]
+[ Upstream commit 850a7225bc61cdfaf0c4b02ff341ae7cb54902f5 ]
 
-The MA35D1 clock controller takes two crystal oscillator inputs from
-the board:
-- HXT, a high-speed 24 MHz crystal for most of the system
-- LXT, a low-speed 32.768 kHz crytal for the RTC and low power modes
+tcp_tso_autosize() right-shifts the u32 returned by tcp_min_rtt() by
+sysctl_tcp_tso_rtt_log. The sysctl uses proc_dou8vec_minmax() without
+an upper bound, so it accepts values through 255. Values above 31 make
+the shift undefined.
 
-So far the binding was expecting a single crystal. The example named it
-HXT, but no real definition for it was given. LXT was not even
-described. In order to remain backward compatible, we will continue to
-allow either one (HXT) or two (HXT then LXT) input clocks. I propose to
-give those phandles a name to clarify what these entries expect, but I'm
-not listing the clock-names property in the required block, for backward
-compatibility. The rates are fixed by the TRM, so even if the second
-oscillator is not described, the OS can make an educated guess.
+A process with CAP_NET_ADMIN in the target network namespace can set the
+per-netns sysctl. With CONFIG_UBSAN_SHIFT=y, setting it to 32 and sending
+TCP data over loopback triggers:
 
-Fixes: 2f8b5eb589cb ("dt-bindings: clock: nuvoton: add binding for ma35d1 clock controller")
+  UBSAN: shift-out-of-bounds in net/ipv4/tcp_output.c:2264:30
+  shift exponent 32 is too large for 32-bit type 'unsigned int'
+  Call Trace:
+   __ubsan_handle_shift_out_of_bounds
+   tcp_tso_segs
+   tcp_write_xmit
+   __tcp_push_pending_frames
+   tcp_push
+   tcp_sendmsg_locked
+
+Limit the sysctl to 31, the largest valid shift count for a u32, and
+document the accepted range. Writes of larger values now fail with
+-EINVAL.
+
+On a UBSAN/KASAN build of the net tree, values 0 and 31 remained
+accepted, values 32 and 255 returned -EINVAL, and TCP traffic with the
+valid boundary values produced no sanitizer diagnostics.
+
+Fixes: 65466904b015 ("tcp: adjust TSO packet sizes based on min_rtt")
 Cc: stable@vger.kernel.org
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260930-perso-ma35d1-upstream-clk-v6-2-48937ee6c9bb@bootlin.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/tencent_31D2FFCCE76C50A695A1270151F825E90906@qq.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/clock/nuvoton,ma35d1-clk.yaml       | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ Documentation/networking/ip-sysctl.rst | 2 ++
+ net/ipv4/sysctl_net_ipv4.c             | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml b/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
-index 8f0c43683729b..9649feda8d7a5 100644
---- a/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
-+++ b/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
-@@ -29,7 +29,18 @@ properties:
-     const: 1
+diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
+index 9e3da2008c412..bc41d23a3376a 100644
+--- a/Documentation/networking/ip-sysctl.rst
++++ b/Documentation/networking/ip-sysctl.rst
+@@ -952,6 +952,8 @@ tcp_tso_rtt_log - INTEGER
  
-   clocks:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 2
-+    description:
-+      The controller takes 2 crystal oscillator inputs from the board.
-+      HXT is a 24 MHz crystal feeding the internal PLLs. LXT is a 32.768
-+      kHz crystal, for RTC and low power operations.
+ 	If you want to use the old autosizing, set this sysctl to 0.
+ 
++	Possible values are [0, 31], inclusive.
 +
-+  clock-names:
-+    minItems: 1
-+    items:
-+      - const: hxt
-+      - const: lxt
+ 	Default: 9  (2^9 = 512 usec)
  
-   nuvoton,pll-mode:
-     description:
-@@ -58,6 +69,7 @@ examples:
-         compatible = "nuvoton,ma35d1-clk";
-         reg = <0x40460200 0x100>;
-         #clock-cells = <1>;
--        clocks = <&clk_hxt>;
-+        clocks = <&clk_hxt>, <&clk_lxt>;
-+        clock-names = "hxt", "lxt";
-     };
- ...
+ tcp_pacing_ss_ratio - INTEGER
+diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
+index 00d3be968a53d..b0904a606f3b3 100644
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -26,6 +26,7 @@ static int ip_local_port_range_max[] = { 65535, 65535 };
+ static int tcp_adv_win_scale_min = -31;
+ static int tcp_adv_win_scale_max = 31;
+ static int tcp_app_win_max = 31;
++static int tcp_tso_rtt_log_max = 31;
+ static int tcp_min_snd_mss_min = TCP_MIN_SND_MSS;
+ static int tcp_min_snd_mss_max = 65535;
+ static int ip_privileged_port_min;
+@@ -1349,6 +1350,7 @@ static struct ctl_table ipv4_net_table[] = {
+ 		.maxlen		= sizeof(u8),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dou8vec_minmax,
++		.extra2		= &tcp_tso_rtt_log_max,
+ 	},
+ 	{
+ 		.procname	= "tcp_min_rtt_wlen",
 -- 
 2.53.0
 
