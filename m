@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061845;
-	b=acPe9xHCLF43E39RLdjnCwiTmJgYvvpURAbt2spuHesAvXV4THqws/RVkKzAS2KdC6iV
-	 OGVgEkGBtxcHNp70r7DZoMSyFqDeLts5KQG07+dx/Fn76os4pfdGAyMET7lcUUeg4GlUD
-	 eEM1RIhwWo1BxldUJMSnPJZ/BfFjPsmq2f0gPopK3xfLaP2U2xsOIsjbFWrr4VU8CvxII
-	 yfg/BsMA7AHGc0kCDzA3YPFt6aMqJ3LApDUepCVjgqH/mo1e1fUGP/lTmZSOM2pXHSbxq
-	 NZ+hzbSgVAKL4hyF56aF7CmXEfMb9jI17sTPFTHsOryviNZYKy9CdAV4koUoZMz74lQ==
+	t=1794061847;
+	b=IWRB1P+M6vfzLOWyGmIc+0Hm37vOv5tGWeXV2EFlogVpdQ3FNXpFTKcO/8lvlPoFsi6h
+	 +BIReM0VN4wU3fxbopzJA3Pdb7yDen7+lBwk0j1WFlNaDEdWaqkiIc71yVQZo2934zuyn
+	 S+CFyqIyLuefXpPiSeYeVrBqLaX4R6PRhlNbKBkANmc2NVYiqVlepAzJPGKixaapJ2iko
+	 Osoi+HS1dEmM1eEUMA4h4qIXKgs7H14EzhJBdEO7IB3Z0mxklGUquQn0QWAMor4rftQzT
+	 Fq+N7EvMyHbxmZo8JnUVcBIVFT99mP1x77CadmpQ+SepniR4DgwsrbVb2iqPSwz/eqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061845;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RX37w+9lj6lDBgewaE7GrNETzmio+7aPRS9dlXXwNPc=;
-	b=ZQdCFjZgXatRf03xwDjaCcx0CBIMol8x9FGGK6h2f/vm7sREqj8xl50tw4Sv4v7cWN+u
-	 eSEfxeuRRJOGHoVMnULvL/yQuAl2Wd+cTjuL90MyRKRGzrb3ynwY3FxCKCdrJ5DGP0VRa
-	 9KNpl9LddHkHYITAdu9GbgxTPNOoaG+RQW5o0fW8jYiEqZ2amq4Gq78j+0RQ99m0yz0wm
-	 qfkw14z0TYr7fSxpaVP341poL/xJfv5ufV/XoOLE8P4TrxGsznyYXwm8w5fx1Tgi4Owg9
-	 w8ig0JkBlhOfiwEqZZrqSeKoEmu1nUx/su9psn+B64YqiIWx6jogwn+wZWur+Xc8uLg==
+	bh=ST0p6GGsAef8MYuTQKFhua93lciTCtxoK/gIeIzQyk0=;
+	b=SQQRkGnRSaFHhGGP1P2pNgWh1QsbKGgvgWl3CmG1J2BneD1owwAbZaBr/vpmSSA2Ga5K
+	 BuXGUv+tUzxgTUN+/TgWYgEvA0RGc2VCRpIBf0Sx4e1pufyArdZd/zINyMxO9YDqatIHk
+	 Tu1pWMyzRFWwHt6ZVVtduhLg20yUqXyb5pL/Os1ftAbEruZYQjPwFU3ufVZ255sd23yhn
+	 awSpjbEe/d1LBza3EOXTPLcFJLC3n5OjGF9kWEk8v6k1rGHTp/bMW2TKqyx8sgpYnEjqe
+	 vPVNoMzjrAQ4C2dUC6S6VtP3dziRBntDvHncpuU/CtpDJ0A1xaR40i0IQWEh/OwkzMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OQUF8jDn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AiY4z+UG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F916606A326;
-	Sat,  7 Nov 2026 14:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB191606A326;
+	Sat,  7 Nov 2026 14:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OQUF8jDn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A91C1F0089F;
-	Sat,  7 Nov 2026 14:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AiY4z+UG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55ECC1F0089F;
+	Sat,  7 Nov 2026 14:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061845;
-	bh=RX37w+9lj6lDBgewaE7GrNETzmio+7aPRS9dlXXwNPc=;
+	s=korg; t=1794061846;
+	bh=ST0p6GGsAef8MYuTQKFhua93lciTCtxoK/gIeIzQyk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OQUF8jDnj5BOH8kzn8GTy2iDGPwiMVoZhadGRJlot0F6lrTvvIgZmk7rUxU8w1iDG
-	 dfTu7ZqtNWucBf+hx0Y9wNPoDuUpM/POz3jdyFOySalNOHbclSdxtklA3tXCfAQAlW
-	 mXbEhLdbjZjvBVvApXsXxXHsNL3laJjHDDJZY1o4=
+	b=AiY4z+UGCky4J6oap4Nym17YqOfh5129/cQTf7qzczaNGgzdkZ2hBq8Grkwgj9zAc
+	 ejCYvLih7C5o4YV9nLiy2dy2QbYGyoZevnd8K2Zp2o5wbL+eI6aypTOzHIB0dqNpdP
+	 xCL5b+ky3pzjllH4qxsd1d1RlerunLWMyGijkNQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0863/1536] ovl: do not copy up a dentry that was removed
-Date: Sat,  7 Nov 2026 08:47:59 -0500
-Message-ID: <20261107135021.789138431@linuxfoundation.org>
+	Yichong Chen <chenyichong@uniontech.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 0828/1536] io_uring/kbuf: advance head when a pickup empties the buffer ring
+Date: Sat,  7 Nov 2026 08:47:24 -0500
+Message-ID: <20261107135020.800714844@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,63 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-commit f635192ad223d2009ee640b63adf5ce3198aa338 upstream.
+Commit 8742f4b5a472c347fe568a73468a2d9e4d630b33 upstream.
 
-A change to a removed file through an open descriptor replaces whatever
-has its old name in the upper layer.
+io_ring_buffers_peek() flags the request with REQ_F_BL_EMPTY if the
+buffers it picked were the last ones available, comparing head to tail.
+When the loop breaks because max_len was exhausted the buffer was picked,
+but head is left pointing at it, so the flag isn't set if it was the last
+buffer. A bundle receive then retries, finds no buffer, and the request,
+which has received data, is marked as failed on account of the -ENOBUFS.
+That severs a link, and ends a multishot.
 
-Copy up must only create a name in the upper directory, never replace
-one. After an unlink, an rmdir or a rename over a lower dentry, a
-dentry that an open file keeps alive still has its old parent and name,
-but in the upper directory that name is now a whiteout or a new object.
-ovl_copy_up_workdir() renames the copy over it, which brings back the
-removed object and destroys whatever took its name.
-
-An unprivileged user opened a lower FIFO and unlinked it, root created
-a file at that name, and fchmod on the old descriptor replaced the file
-of root with the FIFO.
-
-Fix this by looking up the target name of the rename in
-ovl_copy_up_workdir() with LOOKUP_EXCL, so that copy up fails with
--EEXIST if the name is taken, as copy up with O_TMPFILE already does
-when it links the copy to the name.
-
-Fixes: e9be9d5e76e3 ("overlay filesystem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: use LOOKUP_EXCL instead of relying on d_unhashed()]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[backport: no start_renaming_dentry() and LOOKUP_EXCL, fail with -EEXIST if
- the target of ovl_lookup_upper() is positive]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20261023091711.83481-1-chenyichong@uniontech.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ io_uring/kbuf.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index db128e1f2eb05..913e8adc9ea4e 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -831,6 +831,13 @@ static int ovl_copy_up_workdir(struct ovl_copy_up_ctx *c)
- 	if (IS_ERR(upper))
- 		goto cleanup;
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -302,8 +302,10 @@ static int io_ring_buffers_peek(struct i
  
-+	/* The name may have been taken since lookup, never replace it */
-+	err = -EEXIST;
-+	if (d_is_positive(upper)) {
-+		dput(upper);
-+		goto cleanup;
-+	}
-+
- 	err = ovl_do_rename(ofs, wdir, temp, udir, upper, 0);
- 	dput(upper);
- 	if (err)
--- 
-2.53.0
-
+ 		arg->out_len += len;
+ 		arg->max_len -= len;
+-		if (!arg->max_len)
++		if (!arg->max_len) {
++			head++;
+ 			break;
++		}
+ 
+ 		buf = io_ring_head_to_buf(br, ++head, bl->mask);
+ 	} while (--nr_iovs);
 
 
