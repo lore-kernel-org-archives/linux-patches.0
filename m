@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062484;
-	b=tlU/+4g3jPDM4bEdNVfCInqRKcVWvCn7a7AxW9z+BL3mWJZHmermMSY5v35k6AH3NW6X
-	 8Ow7sRhecPLGyq7HPmIHVKUobMUsPZGBHRHiBW+BsCMR0HevPHln7iArpj8AL7xIf/crn
-	 k+I2f3Ozj1ypfvJEuMMj89zkkjXvVz8zb4tpblN0YSxIccFpDD6xcqz1MwXv2NBSjZlnS
-	 AAOeux8MqDKeLqHT/SIO/V43YLjWxYSn8YJxVgztV+C3h6AQCea5AqdQZUtXAKsqP2MEW
-	 jHFjxXe0LheMNPESGlweD5VGXFkIhGQnmdMzsoYQkG2jebyNkO+ekskZYyxBhdW0H0w==
+	t=1794062485;
+	b=jzQK6qaOY7Gl2/puFly22d64wiAyrCGTm4gMBRILd8ZjJJ9rvNK9yapFr0Nq8aJq6LfS
+	 sawnnUDiD/VndA6HRCla0HKwLezXsWuAC2cTcWnVgyby2MUEFZulQTdl+BixEehpC74Vp
+	 74qJ4Z8Uv7hi22A4d3QSBPf5xoTSOG8dxiiup/O0BFfPPtSx8oHgQxALqDdCGhGz6cOVQ
+	 HhL3Phsf4z/qGDq+WtKh7HxVQdbBURzLUoL4XWrjE9yffHxOW5brn6t6SaUWCgDYt13IW
+	 YuQ+KslwcLtL5yq5/swgPX9zpct2hx+Tv7aX6fxaIkjoLmVtA3F5tyBUrS+MHxuCgnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062484;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062485;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PnSujKeU9tbsEYMLCkIVf4UHPMo+L44w1X+SLV+H+Oc=;
-	b=VtiMV3SXJFM2yB54FGH3f4pzqMAnqH6ga8bB3eIvpFa9Oa6EKjYQohCQffNPsj25UFgu
-	 RTfx8Bj9ZEIvCx8kyzAxfSgZR0kzjcr1aOoBTwsvfZ9abDTdyISiMCHOQ3SiHeOT32xeZ
-	 pDV1cgYiEU+8cbro0H2YOSUKqYisUC7tlFh/7JosYtRl7noCf61RcA1H85X0c4nqvCjji
-	 6qdoBZcZ5Ef53wh8SWy436u1cdLdWIIG6RL0PnbyTtHZEB7KAvWFmudjyyzVXBnHrRb9O
-	 Q/B8M/5ZLN+edZ5l50kigkQBkrlRebQpnFOxzhnNhrL9e2iJFDEt0yjLJ89/woEQ3qA==
+	bh=B+yq857aJ9I7HYkLg+2t+m2PUGTz7OEi6Pw5nZhrgvg=;
+	b=ebVN3JeAr6lqIbWLcbVva3GxoOpQchm6tbgfhLc1Hm/AGJc2X6biACL9g/rqfDziVVII
+	 H6A20m/wwPKbVktOlzyhr2kMlKwLPEusR2IsWPf8tYKoDI/rJL1QLz8w9WXo0rJ2yLoa7
+	 6J7sNxAXzECHs90ezBWsC5uuOTvXmQEQKjcGbgq93hCLLN9Alj2hAp5HiZ3YTrsrenE/x
+	 XoV4WnwlGnuoO/NuEW/COPweah/LEA7eLnXEc0J7uweljCYEYOoRD5iabz6a7HCozgz46
+	 ilSzGxC8CP471/GBlXuxp6Y1ve4IFbNRAnPf3o8xefx7dv7flY5XKH8xD7GiR51R8oQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C/56KRBU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dDF2u6xn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155086082BC5;
-	Sat,  7 Nov 2026 14:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728CD6082BC3;
+	Sat,  7 Nov 2026 14:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C/56KRBU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D251F0089F;
-	Sat,  7 Nov 2026 14:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dDF2u6xn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213EA1F0089F;
+	Sat,  7 Nov 2026 14:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062483;
-	bh=PnSujKeU9tbsEYMLCkIVf4UHPMo+L44w1X+SLV+H+Oc=;
+	s=korg; t=1794062485;
+	bh=B+yq857aJ9I7HYkLg+2t+m2PUGTz7OEi6Pw5nZhrgvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C/56KRBUQ412wE82aYKpqlkHeBZAAdsSqqnJv0JHK/B/hkhjoBIWalGuCfzI7hGPJ
-	 2zWkXxtVYvxKjx6gogCQGjW38HPxPa9BTcvdFyWODGb9xMr8tGu8q3Uj+B9cxq6iHx
-	 dQz2iRlMVotQrpE0oIQLgQzOQ9VuJB+Mzstkppw8=
+	b=dDF2u6xn9y8EIlfWTRa8df5LKk55VPVaB6vlKjuiZeH1I9h1TEhhDFh7o+wty3LBc
+	 YulVOTs4yujyvefT8zuQDOTgkw/89LXZVjo/rFHE+Hjs10t98fxnsRwUo6vUzLSv/5
+	 35PDIiTV9PE8mq2t68g6yaYN6PDVv2rIcdZMXHDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	William Palacek <William.Palacek@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1385/1536] drm/amdkfd: wait for a GPU reset before freeing a BO
-Date: Sat,  7 Nov 2026 08:56:41 -0500
-Message-ID: <20261107135036.731435843@linuxfoundation.org>
+Subject: [PATCH 6.12 1386/1536] ipv6: remove ifaddr from hash during ifdown list cleanup
+Date: Sat,  7 Nov 2026 08:56:42 -0500
+Message-ID: <20261107135036.758286703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,95 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Palacek <William.Palacek@amd.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 47d799a718439764432d8ef3a0952af45f025f76 ]
+[ Upstream commit 6ace56ed7b13a9c6d4cb7ef0d82d3a3d53324a63 ]
 
-When a GPU reset takes the reset domain, KFD eviction cannot unmap
-user queues: execute_queues_cpsch() fails its trylock with -EIO, so
-the queues keep running until the ASIC is reset. The TLB flush is also
-skipped while the reset is in progress. If the process unmaps and frees
-a BO in that window, its pages are released while a queue can still
-access them through stale translations.
+addrconf_ifdown() clears the address hash before snapshotting the
+per-device address list. A concurrent ipv6_add_addr() can publish an
+address after the hash scan and before the list snapshot.
 
-On MI300X, munmap() then crashes in free_swap_cache() on a small bogus
-page pointer in its mmu_gather batch page:
+The ifdown path then removes the address from the device list and drops
+the list-owned reference while it is still linked in the hash. Once the
+remaining references are released, inet6_ifa_finish_destroy() warns, but
+a DEAD address continues to kfree_rcu(). The hash therefore points to
+freed memory that later RCU walkers can dereference.
 
-  BUG: unable to handle page fault for address: 0000000000002900
-  RIP: 0010:free_swap_cache+0x5/0xb0
-  Call Trace:
-   free_pages_and_swap_cache+0x3a/0x60
-   tlb_batch_pages_flush+0x43/0x80
-   tlb_flush_mmu+0x3d/0x110
-   zap_pte_range+0x80d/0xcd0
-   ...
-   do_vmi_align_munmap+0x3e8/0x5b0
-   do_vmi_munmap+0xdf/0x190
-   __vm_munmap+0xad/0x180
-   __x64_sys_munmap+0x1b/0x30
+This follow-on was found by source review and was not separately
+triggered at runtime.
 
-In a traced crash the bogus pointer was the read pointer value of an SDMA
-queue the process had just destroyed, at the read pointer's page offset:
-the queue's writeback landed in its freed rptr page after the page was
-reused as the batch page.
+Remove each non-kept address from the hash immediately before removing
+it from the per-device list. Keeping it hashed through the delete
+notification blocks same-address publication until NETDEV_DOWN has been
+delivered. hlist_del_init_rcu() is safe when the earlier hash scan
+already removed the address.
 
-commit f0b4440cdc18 ("drm/amdkfd: Fix mode1 reset crash issue") fixed
-this race on process exit by waiting for the reset to complete before
-freeing the process's BOs. Free through the ioctl has the same race.
-Wait for the reset there too, using the same helper.
+This handles a late publisher captured by the list snapshot. The next
+change serializes publication with teardown so an add cannot miss both
+observations. Both changes are required when backporting the complete fix.
 
-Fixes: 9c33e5fd4fb6 ("drm/amdgpu: fix locking scope when flushing tlb")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: William Palacek <William.Palacek@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 06ff8ce77726b15a98fcc285dd6005cb3f48558b)
+Fixes: 73a8bd74e261 ("ipv6: Revert 'administrative down' address handling changes.")
 Cc: stable@vger.kernel.org
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20261004135117.GA206930@shredder
+Link: https://lore.kernel.org/r/179161099539.434549.2238120015372268173@kernel.org
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261015050651.1841557-2-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 3 +++
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h    | 1 +
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 2 +-
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ net/ipv6/addrconf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index c556780fa6171..5224733a1de39 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1227,6 +1227,9 @@ static int kfd_ioctl_free_memory_of_gpu(struct file *filep,
- 		goto err_unlock;
- 	}
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 33439672b071b..d7865f915d25d 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -4025,6 +4025,10 @@ static int addrconf_ifdown(struct net_device *dev, bool unregister)
+ 		}
  
-+	/* Queues a reset could not stop may still access the buffer */
-+	kfd_process_wait_gpu_reset_complete(p);
+ 		if (!keep) {
++			spin_lock_bh(&net->ipv6.addrconf_hash_lock);
++			hlist_del_init_rcu(&ifa->addr_lst);
++			spin_unlock_bh(&net->ipv6.addrconf_hash_lock);
 +
- 	ret = amdgpu_amdkfd_gpuvm_free_memory_of_gpu(pdd->dev->adev,
- 				(struct kgd_mem *)mem, pdd->drm_priv, &size);
- 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index f8b880235e661..aaf5616bd8a4b 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -1077,6 +1077,7 @@ void kfd_unref_process(struct kfd_process *p);
- int kfd_process_evict_queues(struct kfd_process *p, uint32_t trigger);
- int kfd_process_restore_queues(struct kfd_process *p);
- void kfd_suspend_all_processes(void);
-+void kfd_process_wait_gpu_reset_complete(struct kfd_process *p);
- int kfd_resume_all_processes(void);
- 
- struct kfd_process_device *kfd_process_device_data_by_id(struct kfd_process *process,
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 9eca60c48483c..88d43e796fd32 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1147,7 +1147,7 @@ static void kfd_process_remove_sysfs(struct kfd_process *p)
- /*
-  * If any GPU is ongoing reset, wait for reset complete.
-  */
--static void kfd_process_wait_gpu_reset_complete(struct kfd_process *p)
-+void kfd_process_wait_gpu_reset_complete(struct kfd_process *p)
- {
- 	int i;
- 
+ 			write_lock_bh(&idev->lock);
+ 			list_del_rcu(&ifa->if_list);
+ 			write_unlock_bh(&idev->lock);
 -- 
 2.53.0
 
