@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061892;
-	b=48yJ+w1rNfugR69ZYESu6Sm47xUE1UO661Tb+fkNs/F2m4PPxAxDHpX5gfnUhyxeh4PQ
-	 oh5pBAWUGr1pncilmy8jo8g9DZdMRNyaJnnHfvzvOSwJorv606MXFaIAj2LkC5Wxy0wHz
-	 XpfyJ3YH/Dv1X+G9Q8LIzn3qeXcFvBo1qzWxd4OfdwCdnBGpTLGCpg1s56AaXeVNwx6Qm
-	 uegjmmBi8KpVo6KIHfeyNhDEqv+l94v/YvrPmtu/AqeruEp9c5uAzon2Ain60mELAlYPr
-	 tjeeqsDaZg1kATimje7bBY7j1IaYr88zFGa2t8tdFLqQirXnmQSmS6dsqBFy2F0uE5w==
+	t=1794061893;
+	b=gcBRqCCbD5O9+hBSGCzKb8+ZlpMm6x0Wl+jal87fX1SZm38pMgd2vRN41OH/pZpH4NOt
+	 Tuz4f51uj1O5/4ZivNJpWbM43XpF9YYo+r/tlTlUvG9W/zzbr4PmWC5XD9HXjIE23lC8E
+	 RZyf2Y+RNLr0lYRj6d4uUVyRB6xC/0AgLq/upRhD0orWSgdGOJsZa91LmymIE0N/0jWJb
+	 pNDcQzhGqJCv1vLf0mbhbI7GT19EI4Rjsvpa8b9oSl1tWg4Yq+WR6v8qdOkqr9ioF4e6+
+	 KuZ1NTkXMzBeKlb2+/5j3ndrb7EAH3imI6bIUSY0Qjn1JOLx5iWD2kBObp+1TYFhBHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061892;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061893;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lOPapeXmtXgUUygB8mP2L6EypOBtkGOthY2kqtbB8gk=;
-	b=Lm2g0Y8+OOtpL3HHlQ3FKiYzbpThPWWgfoGHNP9cC8cUvUkpSOVjKhkbnM94vwy/CFmZ
-	 0RcirqYBS0ZxKp2ntsukrnB9KHJSvY/ajPFKDoVWapmH5ERRGv24rlYrlGStfHR5GlLIn
-	 RYA+B48gvBibYYyovt/3VV0BuQPIgwGLDV+3OJaF1FqunMSlN1NqojqJcpj6V7oURWKly
-	 EEcVbJo0LstFZzLSV1aheKtYl3gmy8SD6VvjeEqbguCyrZM7NBsukD/ULGuijGl2o0b2F
-	 KekBhbhs15958BWCk0GEBURiiK4ne/k0iIKAQqWk3Ek4/hcLIXvpB5t7AUwB3vSNeAQ==
+	bh=vYTz4MVvQn1Wxt4C/X37zNSclKSJ3Ar58YJcYllMFLE=;
+	b=W1cfX1ZB0g+G9oj5Xx8pkW1WhaJ6drrLbfU2iiygEIXkknvTEZquoBbOBr/2x2Qx3M1t
+	 hEuOn+AZxgCesCLoxriKh5AFRNwIZW78b2EIh0xRnvHMOgjKkjW8IdgJbzC0xL7lZAyiw
+	 IT76Rmp0S1rlZ5MJWGXaeLqn9IA5cGqlxckdH24+UZLnnpfrc4/C3nqRTGofOmwQfd3wl
+	 fG27bFeGVQn9thjPgCnaiAH8EXmtd3l+0+/f1zIn145D4M1pH0JMdLLl0EhCAl1gHZ6P7
+	 O6vTM0TnjBa2uWKR616vXO9j2g91gie4A4r0l3AGCDXetxdxzuPFuexFb5sLqXXq30A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4vRsw7B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H6zJiXs/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AE9606A326;
-	Sat,  7 Nov 2026 14:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40244606A338;
+	Sat,  7 Nov 2026 14:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4vRsw7B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D521F008A2;
-	Sat,  7 Nov 2026 14:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H6zJiXs/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83061F008A1;
+	Sat,  7 Nov 2026 14:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061891;
-	bh=lOPapeXmtXgUUygB8mP2L6EypOBtkGOthY2kqtbB8gk=;
+	s=korg; t=1794061893;
+	bh=vYTz4MVvQn1Wxt4C/X37zNSclKSJ3Ar58YJcYllMFLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4vRsw7Br22erjPJvfQASZlTfQt9gQykLEQG7R9cJm5sTgDm0NnB+B7SnxBBr70Uj
-	 UE/nAbr6eatY8KdxeQ5eBzxcHee7V6cchhUNT0erdjzbXnl7uua58Cbmr3Dn038e9s
-	 X4Oop7cLxdqhY15ymVhyKOjsRN9jTfWqH0/iPqk4=
+	b=H6zJiXs/Li8kio1F67Kfb4JecyaIPjii/wnNEvfY/7ZdRmLICTHZb2O1DM3Dn0fra
+	 n+4lQFwe9LiwDHcq0owNTvglBDvQx0K9QBu1P+NUebYOjRAmIjDo6b1YR8Y0iVlCxk
+	 mTZVxruiWEYpqXB+n3jq/pHOZv7Yvyw3mbIIm8AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Michal Simek <monstr@monstr.eu>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0902/1536] microblaze: Fix MB_MANAGER build with older binutils
-Date: Sat,  7 Nov 2026 08:48:38 -0500
-Message-ID: <20261107135022.967005040@linuxfoundation.org>
+Subject: [PATCH 6.12 0903/1536] udf: Make sure theres enough space for LVID implementation use field
+Date: Sat,  7 Nov 2026 08:48:39 -0500
+Message-ID: <20261107135022.996663124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,49 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 79c8aa4da3d5453dd956d2170d1c9c716311ea06 ]
+[ Upstream commit a61fb39759d719a4f4966742b4d28387e33d81c4 ]
 
-Commit 88707ebe77e2 ("microblaze: Add custom break vector handler for mb
-manager") added the suspend mnemonic to the MB Manager break handler.
+udf_lvid_valid() verifies that the LVID has enough space for all the
+tables and the reported length of ImplementationUse field. However it
+doesn't make sure the reported length is large enough to contain
+logicalVolIntegrityDescImpUse structure which OSTA specification
+requires. This can thus lead to accesses beyond the end of LVID buffer
+for suitably corrupted UDF filesystem. Add the length check.
 
-GNU as only learned this mnemonic in binutils 2.42. Linux supports
-binutils 2.30, where enabling CONFIG_MB_MANAGER fails:
-
-  arch/microblaze/kernel/entry.S:946: Error: unknown opcode "suspend"
-
-The suspend mnemonic is an alias for mbar 24, and both encode as
-0xbb020004. Use the underlying instruction, which GNU as 2.30 already
-supports.
-
-Fixes: 88707ebe77e2 ("microblaze: Add custom break vector handler for mb manager")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310310151.UhB396Qs-lkp@intel.com/
-Suggested-by: Michal Simek <monstr@monstr.eu>
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260813024026.5402-1-kmehltretter@gmail.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: 781d2a9a2fc7 ("udf: Check LVID earlier")
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/entry.S | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/super.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
-index 582d7256d8154..ad44341a5dbc7 100644
---- a/arch/microblaze/kernel/entry.S
-+++ b/arch/microblaze/kernel/entry.S
-@@ -943,7 +943,7 @@ ret_from_break:
- 	mbar	1
- 	mbar	2
- 	bri	4
--	suspend
-+	mbar	24 /* suspend */
- 	nop
- #endif
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index f91b231b7d7bd..556540f2797ae 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1611,7 +1611,10 @@ static bool udf_lvid_valid(struct super_block *sb,
  
+ 	parts = le32_to_cpu(lvid->numOfPartitions);
+ 	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
+-	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
++	if (sizeof(struct logicalVolIntegrityDescImpUse) > impuselen ||
++	    impuselen >= sb->s_blocksize)
++		return false;
++	if (parts >= sb->s_blocksize ||
+ 	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
+ 	    2 * parts * sizeof(u32) > sb->s_blocksize)
+ 		return false;
 -- 
 2.53.0
 
