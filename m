@@ -1,52 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060578;
-	b=HW8+9IoaQyne3QCPWjBCFn9kqodg53WbpDRCiAKEWUvsSqRfF9y7wKl6uEKQU27vDvgy
-	 rdD4CMu+9/l/Q2wUflh4n7SnxcbC1a0ldjluwAwiGnapDluU4BFVC8Flfq5Z/Wgb5BoZE
-	 prZZLo7tbbfhQo/mMZjKEl++DuH2qYsNeGeaPUPcUe+f89wlNKh2w5fd7bPi84xi7TJfy
-	 cxIzNcKWUsOfFwzBMpmafIcXyF2nr3ve4CKf3aA4d/xHRBsQCzgXJEkOhQNAwApWUtK8S
-	 hGTOH9f82rD2UERr6rLJRxuJYuRtsqNUSOX5IipiruMwAFI2yBJPD/81VPDHAUgCX3g==
+	t=1794060580;
+	b=GGWTRnhl7WHJ5s0mwsGaZ9rMnq9pKwGqpUWApUG2cv7aETB+Tjspxs1SiWJ3mIvD/upM
+	 vlLjzy3EQDseyCJ4ieEBAJ/adoAvubCtHbhEd/16oSu1IpU31YwtsB5dqaK4lg8C0FltF
+	 hwF3AId7p1ONhAR1plWVU5tVF0XUfHDb+DB/uwp8nvGlSS3jxNJ8GYdoCIwNz1iszYAWY
+	 e/p9K6FNkvzzw0n5JLU+WRab9pUzCyxXe1+YDVv5XhfyVklIzoB+k2BXd1i5uSHs/bMdG
+	 siy3kEeo9gZy+NnuedcVklmrKl3XPnbieIL+xIl7oG2x5RGw53jbqB0ZmGIQJoI5eYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1QiqDcyBPmhxGUYG7TbMckKoDsM/3D7ESXteQXy0Ae0=;
-	b=Krx1VQ+qzj4UgdndOHX/qk5WYPvXzY3RFTDEoq+4sZle5hkQL7cEfVdGLd/7e0+TWBS8
-	 DtSwddDjsaJbzqRJ20dBczeZ5466m+VH143/rjcSSMuN8sDrvxzsZhRmWjiMZEvcRFpzM
-	 4IWS+lN2fYVWlcvT+qGbtqJmN/6iMCn3muLGuxJrRb+UhVhcxIFpX+yGRs3HbnIZbtX0g
-	 6TOgdNafyWE/jvojv9R7GOwNZCTcIDKBaPhnHJklmyzXIsSnGwBzlx5SHe61m9zrNivMj
-	 DoBxxuhxKUmrRdTquptlkNwqD65QdvyK+YdR/ZLAh5zH5LbV2mktCfNTZkyXZMms0uQ==
+	bh=mfa9PGPKX1CUoycw03Dyv789sQ9hgeXYN+fRJJ/grm4=;
+	b=Q6M7PA+2xgNIFwxdNNghYU729f1vrW6BhRvIZBysVzrDC2mGbVzj2dZ+yst038t+8UsA
+	 IFJ7CDAuODMlw3deT1TKnSWcm2pmrIBXbE8IyoCPR9xVPLh1mdvDfJZMDmuLnejFSZCKo
+	 Fwz6zjieaNOho0uQiQ8iDfEmINqSYU1Z299hqMSlrYrca0+qIojIjuEaF+F3iw3RhSXNz
+	 iPAOlIC+/PGop5l99kqnsjpUBWE0UDirHCcgoJFg8jg3+yD0mhFQhYODqJo9prU6ekJR5
+	 k1RG5AcmpPgZDZXi0rgkdxwHFoeI5gwrvAZc3trFb5k2DQnXX2vbCruRY7AAyDM2Fvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gpl2iFL8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tcAqlj1y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE03606A326;
-	Sat,  7 Nov 2026 14:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2823606A330;
+	Sat,  7 Nov 2026 14:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gpl2iFL8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454F91F008A1;
-	Sat,  7 Nov 2026 14:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tcAqlj1y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757FC1F0089F;
+	Sat,  7 Nov 2026 14:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060578;
-	bh=1QiqDcyBPmhxGUYG7TbMckKoDsM/3D7ESXteQXy0Ae0=;
+	s=korg; t=1794060579;
+	bh=mfa9PGPKX1CUoycw03Dyv789sQ9hgeXYN+fRJJ/grm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gpl2iFL8NXLQ7KmLw5udE0bnm1Fimk+LrANnsdAEKspiEiLFXq7bBZtZmVnv9ZiSA
-	 utpGroUcmI5WJbTErOhOyO2q9G0up0+chnYo4pvy1vQbvdeOqkt5NdXJYIznntfUvW
-	 d6aITz77fI2B1J48acbCHishDXv+Mg/6oVXCxBas=
+	b=tcAqlj1yLUFNMx3nbZsmkYiLysi041MVGGz2VSvDqaASA2pUTTo9eBPjSvcRTpCEb
+	 zv1qvHmRy5eoJwLEQp+656rMOjSuRPDOjL+EZFJ/XB+8xeK3RG4BW2incJdFgIoSVk
+	 Losun8IK5dUC/ZVR9n6g5wkaJfM0FxZEz3q/hHjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Leno Hou <lenohou@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0010/1536] mm/damon/core: error damos_commit_quota_goal() for zero target_value
-Date: Sat,  7 Nov 2026 08:33:46 -0500
-Message-ID: <20261107134957.961610507@linuxfoundation.org>
+Subject: [PATCH 6.12 0011/1536] mm: vmscan: fix dirty folios throttling on cgroup v1 for MGLRU
+Date: Sat,  7 Nov 2026 08:33:47 -0500
+Message-ID: <20261107134957.991413520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,161 +80,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-commit 610c4438fb66e06d9e693c0ad3b2c1be54c0d61f upstream.
+[ Upstream commit 13b6b620910436c29dea398382e83c9499fd13e4 ]
 
-Patch series "mm/damon: move zero damos quota target_value handling to the
-core layer".
+The balance_dirty_pages() won't do the dirty folios throttling on
+cgroupv1.  See commit 9badce000e2c ("cgroup, writeback: don't enable
+cgroup writeback on traditional hierarchies").
 
-Having zero DAMOS quota target value can cause division by zero.  DAMON
-API callers are checking the target value parameters to avoid that.  It is
-easy to make mistakes in some of the multiple API callers.  Move that to
-the core layer.
+Moreover, after commit 6b0dfabb3555 ("fs: Remove aops->writepage"), we no
+longer attempt to write back filesystem folios through reclaim.
 
-Patch 1 adds the corner case handling into the core layer DAMON parameters
-validation logic.  Patches 2 and 3 remove no more needed DAMON API callers
-side handling of the corner case in DAMON_LRU_SORT and DMON_SAMPLIE_MTIER,
-respectively.
+On large memory systems, the flusher may not be able to write back quickly
+enough.  Consequently, MGLRU will encounter many folios that are already
+under writeback.  Since we cannot reclaim these dirty folios, the system
+may run out of memory and trigger the OOM killer.
 
-This patch (of 3):
+Hence, for cgroup v1, let's throttle reclaim after waking up the flusher,
+which is similar to commit 81a70c21d917 ("mm/cgroup/reclaim: fix dirty
+pages throttling on cgroup v1"), to avoid unnecessary OOM.
 
-If a DAMOS scheme has a damos_quota_goal of zero target_value,
-damos_quota_goal() could trigger division-by-zero error.  Hence each DAMON
-API callers should do the zero target_value validation.  It is easy to
-make mistakes.  Actually such bugs in DAMON_LRU_SORT and
-DAMON_SAMPLE_MTIER were found and fixed [1].
+The following test program can easily reproduce the OOM issue.  With this
+patch applied, the test passes successfully.
 
-It is better to handle the corner case only once in the core layer,
-instead of multiple places in all DAMON API callers.  One straightforward
-option is using an alternative denominator for the corner case in the
-damos_quota_goal().  However, the zero target_value is meaningless.  In
-this case, the quota goal is always evaluated as achieved or
-over-achieved.  The quota will only keep being reduced.
+$mkdir /sys/fs/cgroup/memory/test
+$echo 256M > /sys/fs/cgroup/memory/test/memory.limit_in_bytes
+$echo $$ > /sys/fs/cgroup/memory/test/cgroup.procs
+$dd if=/dev/zero of=/mnt/data.bin bs=1M count=800
 
-Simply avoid using zero target_value by adding a check in the core layer
-DAMOS quota goal parameters validation/commit path,
-damos_commit_quota_goal().  Update it to return an error in the case.
-Also update its caller to propagate the error.
-
-Notes for stable kernel porting.  The upstream commit doesn't have
-Fixes: and therefore not ported to stable kernels.  It turned out it
-fixes commit 8b549a4fd3c5 ("mm/damon/sysfs-schemes: commit damos quota
-goals user input to DAMOS") which was merged into v6.8.  The user impact
-is a race condition that can result in divide-by-zero.  Hence backport.
-Reproducing the issue requires sysfs write permission, certain DAMON ABI
-usages that are supposed to be uncommon, and a rare race timing, though.
-The issue was discovered [2] by Sashiko as a part [3] of its bug report.
-
-Also, the upstream commit on this stable kernel can fix the issue for
-parameters commit paths but DAMON start path.  That's because DAMON
-start path does not invoke damon_commit_quota_goals().  To fix the path
-with minimum change, add a new small validation of quota goal target
-value before damon_start() call.
-
-[2] https://sashiko.dev/#/bug/linux-7f814c9a-986f-4103-a55a-ef9537dcf62b
-[3] https://lore.kernel.org/20261021005234.94107-1-sj@kernel.org
-
-Link: https://lore.kernel.org/20260903010722.94244-1-sj@kernel.org
-Link: https://lore.kernel.org/20260903010722.94244-2-sj@kernel.org
-Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org [1]
-Signed-off-by: SJ Park <sj@kernel.org>
+Link: https://lore.kernel.org/3445af0f09e8ca945492e052e82594f8c4f2e2f6.1774606060.git.baolin.wang@linux.alibaba.com
+Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Leno Hou <lenohou@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c  | 18 +++++++++++++-----
- mm/damon/sysfs.c | 19 +++++++++++++++++++
- 2 files changed, 32 insertions(+), 5 deletions(-)
+ mm/vmscan.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 81d44e41de210..ed32855c16ed8 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -698,14 +698,17 @@ static struct damos_quota_goal *damos_nth_quota_goal(
- 	return NULL;
- }
- 
--static void damos_commit_quota_goal(
-+static int damos_commit_quota_goal(
- 		struct damos_quota_goal *dst, struct damos_quota_goal *src)
- {
-+	if (!src->target_value)
-+		return  -EINVAL;
- 	dst->metric = src->metric;
- 	dst->target_value = src->target_value;
- 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
- 		dst->current_value = src->current_value;
- 	/* keep last_psi_total as is, since it will be updated in next cycle */
-+	return 0;
- }
- 
- /**
-@@ -723,18 +726,23 @@ static void damos_commit_quota_goal(
- int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
- {
- 	struct damos_quota_goal *dst_goal, *next, *src_goal, *new_goal;
--	int i = 0, j = 0;
-+	int i = 0, j = 0, err;
- 
- 	damos_for_each_quota_goal_safe(dst_goal, next, dst) {
- 		src_goal = damos_nth_quota_goal(i++, src);
--		if (src_goal)
--			damos_commit_quota_goal(dst_goal, src_goal);
--		else
-+		if (src_goal) {
-+			err = damos_commit_quota_goal(dst_goal, src_goal);
-+			if (err)
-+				return err;
-+		} else {
- 			damos_destroy_quota_goal(dst_goal);
-+		}
- 	}
- 	damos_for_each_quota_goal_safe(src_goal, next, src) {
- 		if (j++ < i)
- 			continue;
-+		if (!src_goal->target_value)
-+			return -EINVAL;
- 		new_goal = damos_new_quota_goal(
- 				src_goal->metric, src_goal->target_value);
- 		if (!new_goal)
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 5aa23c6545cb8..ad9fa8a86c9ef 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1497,6 +1497,20 @@ static struct damon_ctx *damon_sysfs_build_ctx(
- 	return ctx;
- }
- 
-+static bool damon_sysfs_valid_start_ctx(struct damon_ctx *ctx)
-+{
-+	struct damos *s;
-+	struct damos_quota_goal *g;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index f9b5fbd072db5..074e403ffd146 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4809,9 +4809,24 @@ static bool try_to_shrink_lruvec(struct lruvec *lruvec, struct scan_control *sc)
+ 	 * If too many file cache in the coldest generation can't be evicted
+ 	 * due to being dirty, wake up the flusher.
+ 	 */
+-	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken)
++	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken) {
++		struct pglist_data *pgdat = lruvec_pgdat(lruvec);
 +
-+	damon_for_each_scheme(s, ctx) {
-+		damos_for_each_quota_goal(g, (&s->quota)) {
-+			if (!g->target_value)
-+				return false;
-+		}
+ 		wakeup_flusher_threads(WB_REASON_VMSCAN);
+ 
++		/*
++		 * For cgroupv1 dirty throttling is achieved by waking up
++		 * the kernel flusher here and later waiting on folios
++		 * which are in writeback to finish (see shrink_folio_list()).
++		 *
++		 * Flusher may not be able to issue writeback quickly
++		 * enough for cgroupv1 writeback throttling to work
++		 * on a large system.
++		 */
++		if (!writeback_throttling_sane(sc))
++			reclaim_throttle(pgdat, VMSCAN_THROTTLE_WRITEBACK);
 +	}
-+	return true;
-+}
 +
- static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
- {
- 	struct damon_ctx *ctx;
-@@ -1517,6 +1531,11 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
- 	ctx = damon_sysfs_build_ctx(kdamond->contexts->contexts_arr[0]);
- 	if (IS_ERR(ctx))
- 		return PTR_ERR(ctx);
-+	if (!damon_sysfs_valid_start_ctx(ctx)) {
-+		damon_sysfs_destroy_targets(ctx);
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
- 	err = damon_start(&ctx, 1, false);
- 	if (err) {
- 		damon_destroy_ctx(ctx);
+ 	/* whether this lruvec should be rotated */
+ 	return nr_to_scan < 0;
+ }
 -- 
 2.53.0
 
