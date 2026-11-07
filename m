@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061819;
-	b=Ly46yXV7C6I2BD8F5dAPSmdwXkFjPyzpMmgPyIxQ/MXnssvj8DhU7jgQCgyrUCJtdEkT
-	 aIGBibJQ74DlH+AUw7dKhqMjCRCz6PSf3a3RXOtDmmzeCR6mhH4pI1ppCCH3QGQvLlc9j
-	 qf0E6Ct6Y4ssOkfi0bqrRCP+zdIR/ZHgSeo7WVL7tur1ZwO+J2NvTC4K8JOWNNRBIMXOM
-	 0C2S8r+cOeOq5UMysh2hzrUub/0OAnQeY0rRxP5JVy+BacGoHNTGt+IN7xszPX5HDQJnh
-	 09pL7cpMRbwkGdYPbX6IaJoP+ug/C6hTlxCAJAFjctR2XdURGYn4vcVhg/93o7iHw5Q==
+	t=1794061820;
+	b=JiV7Xzph3o9XpLPGaUlqVAPTZrFKe8zpSUhQTsdcNkjWNkq/SWk8++y+ORoNZRyoI4yc
+	 EA3oq07uXToaUfpP1AJ2tMaiZKpZ5nXIsecHHfqb3x5oU/ch+/JS8+ZxQuztAWF15FIAp
+	 7RsKAWmR3SXHd5FofHuPktR25IeZ2Z0q2YG1jAyZX2UPZL0I/QRvb1zKUuYj9DC88vXYF
+	 Ob+wMiH/8rEWySpUJfXS/6PUM/KBeEOzU3s2u6Qps0adbSHuoETBphDFPsRNPCX/ZQKkD
+	 yEdsjKNMIahQEGpcQkKJK8TNA9KSm5DvJMJd76VxLeAgteUBLtVneAwFuyECo8i11yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061819;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=30bYLqDb/KDC5zOawWSYM5zFk3pIrC7+YhbioiGWflg=;
-	b=yo9KSdqCcl6iNjsxgr6B+lh70sSF7o4iFKXdXF+gziI9bjHHmfUd1Zj7g5K2miXAMmUi
-	 OKScFBPfrJoSk0FS+CLme2T/1GZHyCgSehlOJsk8TL+S/riVSGUrFz6rCq/3gc4Q8N2+a
-	 GO8JPqOMLuUnqL+PZinOSg5N4zCpiiVDsX3GONlkI8d9EWacQYAtyPegh9Kw22m2Mh2Y+
-	 dAhVy7g4as2d4L4Oc6/8XUoAY4NprubsXDMTep/S1TA5zc3hQ80QwEAjRf+SXmePyXBvy
-	 2Runz721qLNcp77/EHNNRurnigOmGMfWaeuuBzujaJ3V3A+p4In1ZyhyI+eaERf9ReQ==
+	bh=s5wW+5Y3W1xDKrmw256ivWNMTRW+pvADvUOnpLc9gUM=;
+	b=we+/H9vwp5vtJ0CRz96XRB/sU7zc2f8I/kKuDKim30T6CI+nakeTRWdeBuL9CvrvWLAD
+	 cBjeDTnGrKZw6kCSdNRCC7xHxPt3SfvykhKRZUOOEi9qtwjb+svmT1UQJx3cq3yH6Q7lv
+	 2hjxR/WkXR9UL68rm7bGGfT6xZDniqHqxyFcSvdYgGgGb2aSznyAvV6zKkdPYzrZgHW0u
+	 Dalot5mMc/kv7ihh3aOIBV2BWRpvoLuewAZ8/wUgQYNnv6y8sIS421QIFaz8orvN2l53l
+	 1eNDbutJpVhPWHGTjGiyZwyyMPPJOntllA0t4c+5k1jIvYO9KNvFvcNA2KzMLBAJXIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LirEkqN2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jRGFVYJO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE54606A326;
-	Sat,  7 Nov 2026 14:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86363606A326;
+	Sat,  7 Nov 2026 14:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LirEkqN2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB8B1F008A1;
-	Sat,  7 Nov 2026 14:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jRGFVYJO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224DB1F0089F;
+	Sat,  7 Nov 2026 14:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061819;
-	bh=30bYLqDb/KDC5zOawWSYM5zFk3pIrC7+YhbioiGWflg=;
+	s=korg; t=1794061820;
+	bh=s5wW+5Y3W1xDKrmw256ivWNMTRW+pvADvUOnpLc9gUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LirEkqN2IxHc79enRI5C+ypksIHnh1vXYgvUKNtNfUKdbi0Rs0hWc0UqAW19GR3PP
-	 cUR0vENHfqYk5QZpnN8KoACNkN8wulV4mL/Mi106DydDny/YRR7DwuTMx1Rf152KfS
-	 Ygoqo5pGZ/J03CR/BrinKZjmSkeqD8Octt30mUEA=
+	b=jRGFVYJOacxszQSp6fjh2WkpfgqugU3nuOFNGX+eVYroxjHj5pvbMEkM2aaKOSDhJ
+	 R4pBA7m4ZlnTk0IFkjlHdNf98PI6E8WPINm9MKZ9lsuu+oktlCGh1E4+9zbZ6954RD
+	 XLXExdRJ/ofASrYaGiPodGzItf3W/bUJhfexas9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.12 0826/1536] HID: roccat: savu: reject short special reports
-Date: Sat,  7 Nov 2026 08:47:22 -0500
-Message-ID: <20261107135020.742947968@linuxfoundation.org>
+	Zikang Gao <2715417602@qq.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0844/1536] smb: client: do not pass a NULL buf to is_oplock_break()
+Date: Sat,  7 Nov 2026 08:47:40 -0500
+Message-ID: <20261107135021.255655459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,39 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Zikang Gao <2715417602@qq.com>
 
-commit 76c51fdc825a0486f8d88ff896d39acec8f377b4 upstream.
+[ Upstream commit 2225ab306575e424b3dad2ee1be2521c89249d15 ]
 
-The raw event callback runs before HID core validates and zero-pads the
-report.  It passes the buffer to a helper which inspects data[0] and, for a
-special report, reads the complete struct savu_mouse_report_special.  A
-truncated report can therefore cause an out-of-bounds read.
+receive_encrypted_read() sets *num_mids = 1 and never writes the
+caller's bufs[]. Offload returns -1 with *num_mids = 0, so the
+demultiplex thread skips the frame. The inline decrypt path
+returns 0 even when smb2_find_mid() fails.
 
-Require enough data for the special report before calling the helper.
-Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
-sequence") added the same kind of raw-event length validation to hid-asus.
+cifs_demultiplex_thread() then treats mids[i] == NULL as an
+oplock break and calls is_oplock_break(bufs[i], server) with
+bufs[i] still NULL. smb2_is_valid_oplock_break() reads
+hdr.Command at offset 12 and oopses.
 
-Fixes: 6a2a6390cf09 ("HID: roccat: add support for Roccat Savu")
+A large encrypted READ whose MessageId does not match is enough
+to panic cifsd.
+
+    Oops: general protection fault, probably for non-canonical address
+    0xdffffc0000000001: 0000 [#1] SMP KASAN PTI
+    KASAN: null-ptr-deref in range
+    [0x0000000000000008-0x000000000000000f]
+    CPU: 0 PID: 100 Comm: cifsd
+    RIP: smb2_is_valid_oplock_break+0xc8/0x2270 [cifs]
+    cifs_demultiplex_thread
+    Kernel panic - not syncing: Fatal exception
+
+Return -1 when inline decrypt finds no mid, and skip
+is_oplock_break() plus the unknown-frame dump when bufs[i]
+is NULL. receive_encrypted_standard() already assigns
+bufs[*num_mids].
+
+Fixes: c42a6abe3012 ("CIFS: Add capability to decrypt big read responses")
+Assisted-by: LLM
+Signed-off-by: Zikang Gao <2715417602@qq.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: adjusted context for direct MID callbacks and release_mid() without a server argument ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-roccat-savu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/client/connect.c | 4 +++-
+ fs/smb/client/smb2ops.c | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-roccat-savu.c
-+++ b/drivers/hid/hid-roccat-savu.c
-@@ -182,6 +182,9 @@ static int savu_raw_event(struct hid_dev
- 	if (savu == NULL)
- 		return 0;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 81961a54c9f1c..eace4d1a3dce7 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1318,12 +1318,14 @@ cifs_demultiplex_thread(void *p)
+ 					mids[i]->callback(mids[i]);
  
-+	if (size < sizeof(struct savu_mouse_report_special))
-+		return 0;
-+
- 	if (savu->roccat_claimed)
- 		savu_report_to_chrdev(savu, data);
- 
+ 				release_mid(mids[i]);
+-			} else if (server->ops->is_oplock_break &&
++			} else if (bufs[i] && server->ops->is_oplock_break &&
+ 				   server->ops->is_oplock_break(bufs[i],
+ 								server)) {
+ 				smb2_add_credits_from_hdr(bufs[i], server);
+ 				cifs_dbg(FYI, "Received oplock break\n");
+ 			} else {
++				if (!bufs[i])
++					continue;
+ 				cifs_server_dbg(VFS, "No task to wake, unknown frame received! NumMids %d\n",
+ 						atomic_read(&mid_count));
+ 				cifs_dump_mem("Received Data is: ", bufs[i],
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 914bee772f304..5c083c52dca01 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -5290,6 +5290,7 @@ receive_encrypted_read(struct TCP_Server_Info *server, struct mid_q_entry **mid,
+ 	*mid = smb2_find_mid(server, buf);
+ 	if (*mid == NULL) {
+ 		cifs_dbg(FYI, "mid not found\n");
++		rc = -1;
+ 	} else {
+ 		cifs_dbg(FYI, "mid found\n");
+ 		(*mid)->decrypted = true;
+-- 
+2.53.0
+
 
 
