@@ -1,61 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063645;
-	b=NYOCwqRXqQ1I0CFrdbjo0CvpMZDkDWhiqyCNfmFEzhVySZlGOlz44yFhfykBHhnlKCNa
-	 pU/ZAU/2QfvmRwf/b54cl/ubskemn6BlDhKEoE3vtJlKP5IDGWyVJZjD04psYAWDvdi/0
-	 63VZyp+ZIAMtdNsdKZ4FKKfoYWK3gsgBDDrYuBvFIgpx9+PvXE0FdSjk70IY1QQBhBqlO
-	 MMZdl62uRxA5z21EncWN5vF/uDY0tYuheKUNI95kDhXzlaNYLr+Hk71X/d7LlxJlqwzDt
-	 YXM+cyV77/gRXI6FdrUclmiUtYip2lUxp/W8sUtu9r2zaMy+6Q6556eeu3yfe7ooDRw==
+	t=1794063646;
+	b=cLBFx4mhuvuZR0wLEQ3LmH8KHNhgugsI21zaFzXm9itZnLyE5MeJxWyZuWbIvW58B3iS
+	 zPXpX2tB8+gmW/MF3gmm0EWRG4OOsy+O1kdF5AgsZkrMNS9Rh9N7MbJelYtWQt4JXMd+F
+	 PvuX7Gkg/Qunn7WvGR7sellOh5kh6nZ2RfQaW9EJUtJtxj5bIoT2JfeOB6MPtJaDDYsfP
+	 PaRz56jBp9w+WhZpRMXhwtQCHw/FGn8sY5HHutnRZRURY6xv6n/n5o1JhTbXKB1xrVr9F
+	 D/FyzhjJr0pVas3t3ahOpPTfVX+/hWaCFCY4p+EzjBiM2hibu9k6jDwAq8I1Pr9CWAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063646;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d0oTXjO+sntW4BBR+UFVmppO5AJ/OmsaursNnUyYTbQ=;
-	b=CXjP+86cC6OIU0aBDqXjRdTzzVK/Z1bnBEZkrU1N/UAJvpiolrCK/5LKDrRXHGuLpW2u
-	 KV3lMYdLO7x8RG1oidtkxjXz51D5sZouI0ps+GhDM+F+hKiD8R6O7sHXDofU/dQcjEHDN
-	 3AmpTPnmXRSBmQbAeiE9goJkEHHd+zqZ2Se/ewiaWAUERBjxgk2G9kMpcueNkwiKtsZTd
-	 +xVZHwFmcIhgJAsDuDo5oJbP58KzGmYqcsLwEupq4kyPzYlpUcz3HPcAFms3B0aJWsljc
-	 8kXamqYVzznkXTfA/bejdG7eV0KHyATHHeYxEURNqnxwLSiTLweR5DP31sxqCWMbGNg==
+	bh=/cVFRIPiR15X+CvdKG2xtPdIROGWaSfDLWjBSD3nzoE=;
+	b=QbKzj1n09qP3eUNFHG+vEj26dUtyusybtWBEMjHSjtbCxoHr6/79fF5fM3yTOApK4pNE
+	 NeLcmzxUB7/QAXL3gNy0kxpe4U5a8HtJxyjWLPbd9o66CdCL/twaD3TmW0pI4lAjwXSXV
+	 2DmFkPGoam1pZ7gTi0BHlBW/K4ZlAi8laQLDmON/qT66HP3j0kZgtAot2/6y9NocgwbYP
+	 PecrWzZ/NPD2Sa3XS1ghhTk6o/d4yiAjSZ37BRtQg6igkMtyfvcbXJpssjaGyTlaMcL0W
+	 LLvgvZIvS/RUP0BYZkto/SllqxATZ5ThMp96Ocr2zKmP5FNVoQE3yXqHrtRUv6lNKvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qUQrmZGc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnuUUZCM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB47E606D827;
-	Sat,  7 Nov 2026 15:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D6F606A9C1;
+	Sat,  7 Nov 2026 15:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qUQrmZGc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4D01F0089F;
-	Sat,  7 Nov 2026 15:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnuUUZCM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D851F0089F;
+	Sat,  7 Nov 2026 15:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063644;
-	bh=d0oTXjO+sntW4BBR+UFVmppO5AJ/OmsaursNnUyYTbQ=;
+	s=korg; t=1794063646;
+	bh=/cVFRIPiR15X+CvdKG2xtPdIROGWaSfDLWjBSD3nzoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qUQrmZGcLRVCsY/eLx8SvGFkuTCWziPg2qS8h4CN74y0O7bL4oo1wuquzhncD1m4f
-	 HfWcOKk24oP8hcl6ubhJDpSYb5DBWn52Qqd+0H7ckUVN/HYVBOk24rVhHvtpu0k0t0
-	 GetX67xr/05G7W+KtcXVRGjB+emqr7cuJASUKUkA=
+	b=hnuUUZCMcL29+ig/3e/vkeZpVLA4Rupav1KqqQRoRZKtdmgPq4LJWaUf8mSBhRKpH
+	 VZHjH6hEdK6ouOVl+SgC+DI1f+LInNV2mjto7ZNvelc7kLFKs5mnVbGEaz8ycjuwyd
+	 KjJGN3otOraWPyYQ8f3tXTsBlJAaPpqiJOSmXebc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
+	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
+	Hardik Garg <hargar@linux.microsoft.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	tongtiangen <tongtiangen@huawei.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Yaxing Guo <guoyaxing@bosc.ac.cn>,
+	Barry Song <baohua@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	David Hildenbrand <david@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Wei Xu <weixugc@google.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Yu Zhao <yuzhao@google.com>,
+	apais@microsoft.com,
+	rlmenge@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 759/869] riscv: mm: exclude invalid THP PMDs from page table check
-Date: Sat,  7 Nov 2026 08:57:21 -0500
-Message-ID: <20261107134918.442275481@linuxfoundation.org>
+Subject: [PATCH 6.18 760/869] mm: multi-gen LRU: fix NULL lruvec->pgdat deref with memcg disabled on cmdline
+Date: Sat,  7 Nov 2026 08:57:22 -0500
+Message-ID: <20261107134918.468918198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -77,76 +85,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunhui Cui <cuiyunhui@bytedance.com>
+From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
 
-[ Upstream commit bdda2887cbf3937c2d0f56589c2124c4167324e1 ]
+[ Upstream commit 183895979c441e52dbd651b388553b09eaa35cfa ]
 
-RISC-V THP splitting uses a temporary invalid PMD state where
-pmd_mkinvalid() clears _PAGE_PRESENT and _PAGE_PROT_NONE but leaves
-_PAGE_LEAF set so the MM code can still recognize the PMD as a THP split
-in-progress entry.
+When CONFIG_MEMCG=y, lruvec_pgdat() returns lruvec->pgdat, which for the
+per-node pgdat->__lruvec is left NULL by lruvec_init() and only filled in
+lazily by mem_cgroup_lruvec(). Normally that happens early, e.g. on the
+first folio_add_lru().
 
-That temporary state no longer describes a user-accessible mapping, but
-page_table_check currently treats it as one because the RISC-V PMD
-user-accessibility test only checks whether the PMD is a leaf and has user
-permissions.
+With cgroup_disable=memory, lru_gen_shrink_node() passes &pgdat->__lruvec
+directly to shrink_one(). If direct reclaim runs before anything has
+called mem_cgroup_lruvec() for the node, which can happen during early
+boot under memory pressure (e.g. a kdump kernel), get_swappiness() ends
+up dereferencing a NULL pgdat:
 
-As a result, when a PMD-sized anonymous THP is split during a COW fault,
-page_table_check can account the invalid intermediate PMD as a live PMD
-mapping, and then account the replacement PTE mappings again when the
-split installs the PTE table.  This leaves stale PMD accounting behind and
-later triggers page_table_check failures such as a non-zero anon_map_count
-when the folio is freed.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000005040
+  pc : get_swappiness+0x68/0xb0
+  lr : try_to_shrink_lruvec+0x54/0x2c0
+  Call trace:
+   get_swappiness+0x68/0xb0 (P)
+   try_to_shrink_lruvec+0x54/0x2c0
+   shrink_one+0x8c/0x240
+   shrink_node+0xc6c/0xe08
+   do_try_to_free_pages+0xdc/0x570
+   try_to_free_pages+0x124/0x278
+   __alloc_frozen_pages_noprof+0x6e8/0xf78
+   alloc_pages_mpol+0xc4/0x1c0
+   alloc_frozen_pages_noprof+0x54/0xe8
+   alloc_pages_noprof+0x1c/0x40
+   atomic_pool_expand+0x98/0x300
+   __dma_atomic_pool_init+0x58/0xd8
+   dma_atomic_pool_init+0x154/0x170
+   do_one_initcall+0x64/0x350
+   kernel_init_freeable+0x214/0x430
+   kernel_init+0x2c/0x208
+   ret_from_fork+0x10/0x20
 
-Fix this by tightening pmd_user_accessible_page() so PMD page-table-check
-accounting only considers leaf PMDs that still carry either _PAGE_PRESENT
-or _PAGE_PROT_NONE.  This preserves the THP split semantics required by
-the MM code while preventing page_table_check from treating invalid split
-PMDs as live user mappings.
+The classic LRU path and MGLRU before per-node lru_gen_folio lists
+obtained the lruvec through mem_cgroup_lruvec(), which sets
+lruvec->pgdat.
 
-With CONFIG_PAGE_TABLE_CHECK=y and CONFIG_PAGE_TABLE_CHECK_ENFORCED=y,
-tools/testing/selftests/mm/cow completes successfully on RISC-V after this
-change.
+The above was hit on an arm64 kdump kernel (6.18-based) booted with
+cgroup_disable=memory nr_cpus=4. It also reproduces on mainline on an
+arm64 VM with CONFIG_ARM64_64K_PAGES=y, CONFIG_MEMCG=y,
+CONFIG_LRU_GEN_ENABLED=y and:
 
-Link: https://lore.kernel.org/20260523042052.35476-1-cuiyunhui@bytedance.com
-Fixes: 3fee229a8eb9 ("riscv/mm: enable ARCH_SUPPORTS_PAGE_TABLE_CHECK")
-Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
+  mem=160M nr_cpus=4 coherent_pool=512M cgroup_disable=memory
+
+These options only serve to force direct reclaim early in boot; with
+160M the boot eventually ends in OOM regardless. On mainline the first
+LRU reclaim happens while unpacking the initramfs, and faults the same
+way:
+
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000005040
+  pc : get_swappiness+0xd4/0x150
+  Call trace:
+   get_swappiness+0xd4/0x150 (P)
+   try_to_shrink_lruvec+0x44/0x2b8
+   shrink_one+0x80/0x1a0
+   shrink_node+0xd98/0xea8
+   do_try_to_free_pages+0xf4/0x4b0
+   try_to_free_pages+0x110/0x360
+   __alloc_frozen_pages_noprof+0x8b0/0x1718
+   ...
+   __filemap_get_folio_mpol+0x2ac/0x548
+   simple_write_begin+0x44/0xf8
+   page_symlink+0x178/0x198
+   ...
+   do_populate_rootfs+0x13c/0x200
+
+Link: https://lore.kernel.org/20261017050928.128582-1-sidchintamaneni@gmail.com
+Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
+Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: tongtiangen <tongtiangen@huawei.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Yaxing Guo <guoyaxing@bosc.ac.cn>
-Cc: <stable@vger.kernel.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Qi Zheng <qi.zheng@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <apais@microsoft.com>
+Cc: <rlmenge@gmail.com>
+Cc: <stable@vger.kernel.org> # 6.3+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/pgtable.h | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ mm/vmscan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index 9b2e967c9fe08..420d402336d0b 100644
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -833,7 +833,14 @@ static inline bool pte_user_accessible_page(pte_t pte)
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 8fb0d79a00b9e..e72d50bab730a 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -5082,7 +5082,7 @@ static void lru_gen_shrink_node(struct pglist_data *pgdat, struct scan_control *
+ 		sc->nr_reclaimed = 0;
  
- static inline bool pmd_user_accessible_page(pmd_t pmd)
- {
--	return pmd_leaf(pmd) && pmd_user(pmd);
-+	/*
-+	 * page_table_check() must ignore THP split invalidation entries created by
-+	 * pmd_mkinvalid(). These retain _PAGE_LEAF so pmd_present()/pmd_leaf() stay
-+	 * true during the split, but they no longer describe a user-accessible
-+	 * mapping once both _PAGE_PRESENT and _PAGE_PROT_NONE are cleared.
-+	 */
-+	return (pmd_val(pmd) & (_PAGE_PRESENT | _PAGE_PROT_NONE)) &&
-+		(pmd_val(pmd) & _PAGE_LEAF) && pmd_user(pmd);
- }
+ 	if (mem_cgroup_disabled())
+-		shrink_one(&pgdat->__lruvec, sc);
++		shrink_one(mem_cgroup_lruvec(NULL, pgdat), sc);
+ 	else
+ 		shrink_many(pgdat, sc);
  
- static inline bool pud_user_accessible_page(pud_t pud)
 -- 
 2.53.0
 
