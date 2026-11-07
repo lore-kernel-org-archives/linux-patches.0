@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061062;
-	b=QrLAkYYpeKNYO68P66AtvKfGNSm90haqJepxXXzFYTn97TK2yAaESRunJgAb7hkAU6jL
-	 xpuo5LxF2oPKEcNrg5F8GR/4TgjASmViHThJFdHPTZ9juUlf5ZaonebI+LPt1kmh6av5o
-	 Pps8K+sPSoYvBnuaIJAQzu+Z+skpyjscKeqlrdU+Q/hRb76R3GPhVlSmhT9UrZ9ZbnLIC
-	 nt+SxQBtjTq/00YQKpxAAIDB6p7hGjS8FGBGN1yoXEQPoOqe9L5Cv5pPO+ZIKVtppyxT6
-	 NEIcrgh3IqxEoEvEvM76zkyJD53C67N8c50c9Q4srAo8ZsHB0mikqTKCp/SmqsvB9hg==
+	t=1794061063;
+	b=5Po54lsc51CDi9Tso1ZJjFa6vyWpK2Vr5f29O1J8ap8JT+g6/Mjaq13HT2dHZ/N0o1/r
+	 VdjOPiyLj0YIAMQ0KhWVDsY6HcGRelO3O1PDaI8mvyQe2msBGlYNaNpk0MTPZK8toA89D
+	 /cU5L9RdRpf/46rQfsd0TpChaLo45mRZCVu8CehL3/rHobZN/BbtSSdBC89VdIorD5BJp
+	 L3/vhNb/3l18TUqXSUXtJLgYOSe574YbXOUAmkCzg6XynFj5UUiJHpCuYrThW+wJUcfwm
+	 piTUFqefkdtFm7/t33X87Pyr9L5BrX1nRtAOGG75wxJblz2x5wVxCwPIUO0z+vHa7fA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061062;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0QUwiHKlb/VfCcFkB+YStlcJ39QfIksSeq+hg0wugAY=;
-	b=DvI5feXcrj7lQPmuNj+VmSLaDJkkfos6msrOn5Xh/RHxptJxIG6yRWKcN2WQXdqN89CW
-	 ThG84509MvDFGtLkrkOy7axOE2igyR3MDgK3IZ1ii6vy/mNtukSpfSA4HfEMnDkcOtdzd
-	 nNzisc2j2k6GtvgqdUFw0fJ+UWn2SI/PVyrKLl6aXZl6clgr9vJj3HytSa4KNO4E8szki
-	 lyQE3JfZufHSvDhszHAmsMc9hHKYevyTfegqj0inq18Ilw7Sg9cdkSyYLEMtewaXM/aiQ
-	 1Gy6mv+1EO6XqO80mmyQBO6BOaAX2RX+VWJdVCGXE5EySuGkr6tTpLdKSkAS+n27gzA==
+	bh=y28/09hsz825vtJT+kATa59jzpN+G9+YaTpt56BNb80=;
+	b=3I8c5pEPjK0y0x35kt/RoKPVVjBUzEx7G1FYFrcnAK6a3jojObzDBLOruZx60BtC04KH
+	 vUrWvw2PY93gEjl7YXyMf3jTQau1sR7ykwMCSZIMrDSLLxt3NJU7HAv+PB2YRPiwoGg5G
+	 3zZtaFHlx+5Ij47pQxUXH0MJFZp97vOQKjkF/lFqvoqr9iWnoqtsylpanSb24XplaFztp
+	 pmN8X8/qRY434203eqY7Wf1tQb/K3uA4juqqbGj/TgCoGgP3qypAjVD1RophMX9Vz80eK
+	 vo2RUC2F5tuO9DvXktiOq8AWFsBaAEBbAI4KkeDyEAO+QzIvfBpiSv4FzFQtD+DlgFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umJeVkXk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aF99r+eK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCA86082BC8;
-	Sat,  7 Nov 2026 14:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C126082BC8;
+	Sat,  7 Nov 2026 14:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umJeVkXk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC521F0089F;
-	Sat,  7 Nov 2026 14:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aF99r+eK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3463C1F0089F;
+	Sat,  7 Nov 2026 14:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061062;
-	bh=0QUwiHKlb/VfCcFkB+YStlcJ39QfIksSeq+hg0wugAY=;
+	s=korg; t=1794061063;
+	bh=y28/09hsz825vtJT+kATa59jzpN+G9+YaTpt56BNb80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=umJeVkXk4Cm/+F2grjFcXSA6Nir8EKvj0t6IxaQYOHCvUw3bjZim5Tmu3ucH9fJW2
-	 EbX/iKO5ab7z1bcjAtaiMoEAHEU0IwLl8LbYULbcnNYslOTJ2q5htfWhof7P+RceiS
-	 P84Wa5w9OSUxZ6/kdeyddtVEQofEPn+dZiKaMe3M=
+	b=aF99r+eKQiDnopO7+6JCeVEbDRvycwzMfblxKLKWpHeTEI9Q+LQSYbuOsiSQRvaNJ
+	 B1DMe6PGUZWJiJHwIZXTkr0C/hQldIS5QrkftpPvbX45I6BJCJAGizFo0/yiL48scO
+	 VeDlqWjiE9dEJA7gpXJNKdUoSjXqatDWgzYPFtuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Vadim Klishko <vadim@cirque.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0391/1536] ASoC: amd: yc: Add DMI entry for Alienware m18 R1 AMD
-Date: Sat,  7 Nov 2026 08:40:07 -0500
-Message-ID: <20261107135008.585830044@linuxfoundation.org>
+Subject: [PATCH 6.12 0392/1536] HID: i2c-hid: Add a quirk for a Cirque I2C device.
+Date: Sat,  7 Nov 2026 08:40:08 -0500
+Message-ID: <20261107135008.611421381@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,40 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Vadim Klishko <vadim@cirque.corp-partner.google.com>
 
-[ Upstream commit fd8ed52ecea6b93e23d52cb2758fb4fb4029067f ]
+[ Upstream commit 1c942462c3969b287a86ab6dbb143324289d564e ]
 
-Add DMI entry so the YC machine driver probes on this model and
-the internal DMIC works.
+Cirque touchpads with PID D0C1 generate an error when probed
+by the I2C HID driver, resulting in no hidraw device created.
+Adding I2C_HID_QUIRK_NO_IRQ_AFTER_RESET fixes the issue.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221485
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260824130302.553419-1-zhangheng@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Vadim Klishko <vadim@cirque.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/hid-ids.h              | 1 +
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index a21e85c09e1b0..3516844d99689 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -507,6 +507,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m17 R5 AMD"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Alienware"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m18 R1 AMD"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 7de3e011fe6cf..1fb68f393aa6e 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -329,6 +329,7 @@
+ 
+ #define I2C_VENDOR_ID_CIRQUE           0x0488
+ #define I2C_PRODUCT_ID_CIRQUE_1063     0x1063
++#define I2C_PRODUCT_ID_CIRQUE_D0C1     0xD0C1
+ 
+ #define USB_VENDOR_ID_CJTOUCH		0x24b8
+ #define USB_DEVICE_ID_CJTOUCH_MULTI_TOUCH_0020	0x0020
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 0e1adfa9b2931..be64e30bce9f0 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -135,6 +135,8 @@ static const struct i2c_hid_quirks {
+ 		I2C_HID_QUIRK_BAD_INPUT_SIZE },
+ 	{ I2C_VENDOR_ID_CIRQUE, I2C_PRODUCT_ID_CIRQUE_1063,
+ 		I2C_HID_QUIRK_NO_SLEEP_ON_SUSPEND },
++	{ I2C_VENDOR_ID_CIRQUE, I2C_PRODUCT_ID_CIRQUE_D0C1,
++		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
+ 	/*
+ 	 * Sending the wakeup after reset actually break ELAN touchscreen controller
+ 	 */
 -- 
 2.53.0
 
