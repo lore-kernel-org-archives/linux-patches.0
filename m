@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063251;
-	b=tj9Zbt2XkD86Kn0t5kZpNWPSXmISHTOo6inxqKs5Qn8n77Io+A+zC4NUBHEQMNdH5TId
-	 DXsL5Qbybln7rPyGZIpoJz+RSxEeXl0e9RaoJZwxO2ccILoTygAirKpzBk3ChG0EqhlgY
-	 B659cOBNpqExeEDmgqnoLYCS+IE8yoAxWASHBfpyVQTTYOFYPge4YtbMWo/mocdSpC8ue
-	 3gSx5okO2iOhMIwApg/NVZljvCbWw0iuKAVmV0sg27B7fOuC7O00kwMaCzSmAxYFRTCpE
-	 y37LXDNl0UCWmQnByEnKJ8T72Z2cUE7+hps/PYiolBFt6IjzFzj0fyW6xzr57V316rw==
+	t=1794063252;
+	b=ZR6Kx4bfayw/och9Z+KWp9eZu8y1pfFKI6AaWzxzx8rJxkfeVH5bFfMLvEWObuJ4Q0V7
+	 yt6NYipf9T977Tl5KLKZioC7+K/OytFsBgsnfS+hAZH4rJ656tJxcym3aXrR8B4u9Hqdr
+	 aeLJHUHUXmmrUFLCKgwaVojvxPTluA+6KixTUngaQc+F2coR2CX1H3hfOk+IaUW9RK2O2
+	 iX0I6KI8JWiOA45B2qWeLqiZNzEx5UNIrNNhtEr4Mc+QKxOzZqOFIUc/MysNz8J+WyK91
+	 wWYV3Up9VZ7/kAVJlodv+lWYdSiN1RssjXqbXJ/0VD/+sHFJRDIgU3F+LyurS0mGc3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063251;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xk3K44q0uynTd8J11SmcnXlBjd0mD916Yj1LFmAwjdo=;
-	b=ju3UPxlIjqLpxzT7zUTUI00GoJPA8W1R232r2EuDskVdFiT+pwEwHWB2G24SboWBCnUy
-	 CnnoOQm1EXEAtnBMhI1XIzJeaRJ8PT9H9EoxGXI3qwuudLzoDtjloC5A1zj3OfWRwViQv
-	 +PXidq6pKJGQYsfSUHUq1jP3bb3q2bCFwj1Vv1YzrXPqVObBUff5IwZ0QSxf0M19WEF4N
-	 h8rS8YgxIixdHiBGbbEWI+YHUBz/IKr7h/+N86NqGLjsbOrpXCI8rJ3b2CLFrNJxuaGHp
-	 vEgbCKX7kLUSvRnr3TmW9O8Ul1q/t2wL3Ye2AFlDrrhLNGJnJdNXSolC2o9JtLrOFSA==
+	bh=yFrERnuEbzvHZSEEYkL+xHJ5wqCs8WS1fVaOEE3PY2Y=;
+	b=zS4MwqEjqbmITi712VwH3EbPSZJtEyQ83GqERIKMKRBhw/hvAhdgUrhcpCYrOoVWSx//
+	 W8cYB54wAmSxj5rsK+3Lwm4pS05Fi81KIVm7RjpceLTA9K0Y6ZHb16y8v9OUA+eXarLsJ
+	 7oMvKVCGdD0xHqChU5aJ2NhmlbdU9TGJ+6LZcmB1/4bTdz2WuoPTilJb5Wf08OXi5be85
+	 PGBFAv/wI4U6n5kmISbsmqyl0DklaJ6z/aro4r3C3/+Qcn4l0nQnJKawjnVZpsK24b4Xz
+	 sqxXhEW2VXhAR2OmJBpXUByIjYgwUpCtyGUb+Nouhd0DXUDIDrUSgKci5tDsREp+KLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJcSOQKv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6G2fnQB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C8F606A336;
-	Sat,  7 Nov 2026 14:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7993B606D818;
+	Sat,  7 Nov 2026 14:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJcSOQKv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10431F0089F;
-	Sat,  7 Nov 2026 14:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6G2fnQB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271B71F0089F;
+	Sat,  7 Nov 2026 14:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063251;
-	bh=xk3K44q0uynTd8J11SmcnXlBjd0mD916Yj1LFmAwjdo=;
+	s=korg; t=1794063252;
+	bh=yFrERnuEbzvHZSEEYkL+xHJ5wqCs8WS1fVaOEE3PY2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJcSOQKv9z523N/IGTD4pJUyx7+FazqAW3p+Fba8XQqYEV+Yfv5nW09Q5gQCpyBq0
-	 q5GNejRJia1AczPjkU9BEIGYzxRP6Rbz5a/qKcQEDeCZQWDd/iu8UIgkn/KBk+et6k
-	 AnIjq6rWKcEshnhahc424+0JeONtx54dCN25RH2E=
+	b=t6G2fnQBqkOMBrjgfEijwdVyeXWZb8I53GY5b7igAFVTIyWRj5Tx24CXYyrzD2G3o
+	 Wa9GEcegzC8XO2w/B7StieQgq7RxShANWFU/EBFczNFZ4uOO+O34RVa96w9fuVDrE9
+	 DSCcXuiwlpassGKkvgtvlKA5ElvhuGIoYZ3g6ZzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Koichiro Den <den@valinux.co.jp>,
 	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 453/869] cxl/pci: Program the Port GPF timeouts before caching the DVSEC
-Date: Sat,  7 Nov 2026 08:52:15 -0500
-Message-ID: <20261107134909.074781252@linuxfoundation.org>
+Subject: [PATCH 6.18 454/869] cxl/port: Convert PCIe link latency to nanoseconds
+Date: Sat,  7 Nov 2026 08:52:16 -0500
+Message-ID: <20261107134909.100470097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,99 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit ec2e30a682945616d194d7999cf96606b7ee5a88 ]
+[ Upstream commit 16440d6e4bf1175cda83438d9f9a8ae84bfcf0ee ]
 
-cxl_gpf_port_setup() caches the Port GPF DVSEC offset in the dport
-before programming the phase timeouts, and ignores the return value
-of both update_gpf_port_dvsec() calls: the function always reports
-success.
+Commit 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
+converted CDAT latencies to nanoseconds and removed the conversion in
+cxl_region_perf_data_calculate(), but left PCIe link latencies in
+picoseconds.
 
-A failing config write is therefore not only silent, it is also
-permanent: the timeouts stay at the hardware defaults instead of the
-maximum flush window the kernel is asking for, and the cached offset
-keeps any later endpoint attach from retrying the update.
+This inflates the FlitLatency contribution to region and node latencies
+by a factor of 1000, exposing incorrect values in sysfs. The resulting
+abstract distances can incorrectly reverse the memory tier ordering of
+nodes.
 
-Propagate the errors and cache the offset only after both phases are
-programmed, so the next endpoint attach retries the setup.
+Convert the FlitLatency contribution to nanoseconds before adding it to
+the access coordinates, rounding up as cdat_normalize() does.
 
-Fixes: 6af941db6a60 ("cxl/pci: Update Port GPF timeout only when the first EP attaching")
+Fixes: 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20261008034619.28059-3-kanie@linux.alibaba.com
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20261009045452.1107921-2-den@valinux.co.jp
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/pci.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ drivers/cxl/core/port.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index 68859eba30db3..3e88c2e3304a3 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -860,7 +860,7 @@ static int update_gpf_port_dvsec(struct pci_dev *pdev, int dvsec, int phase)
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 8d2dc4b741781..599aa9d9eddca 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -2286,6 +2286,9 @@ EXPORT_SYMBOL_NS_GPL(schedule_cxl_memdev_detach, "CXL");
  
- 	rc = pci_read_config_word(pdev, dvsec + offset, &ctrl);
- 	if (rc)
--		return rc;
-+		return pcibios_err_to_errno(rc);
- 
- 	if (FIELD_GET(base, ctrl) == GPF_TIMEOUT_BASE_MAX &&
- 	    FIELD_GET(scale, ctrl) == GPF_TIMEOUT_SCALE_MAX)
-@@ -870,11 +870,17 @@ static int update_gpf_port_dvsec(struct pci_dev *pdev, int dvsec, int phase)
- 	ctrl |= FIELD_PREP(scale, GPF_TIMEOUT_SCALE_MAX);
- 
- 	rc = pci_write_config_word(pdev, dvsec + offset, ctrl);
--	if (!rc)
--		pci_dbg(pdev, "Port GPF phase %d timeout: %d0 secs\n",
--			phase, GPF_TIMEOUT_BASE_MAX);
-+	if (rc) {
-+		rc = pcibios_err_to_errno(rc);
-+		pci_warn(pdev, "Port GPF phase %d timeout write failed: %d\n",
-+			 phase, rc);
-+		return rc;
-+	}
+ static void add_latency(struct access_coordinate *c, long latency)
+ {
++	/* Convert link latency from picoseconds to nanoseconds. */
++	latency = DIV_ROUND_UP(latency, 1000);
 +
-+	pci_dbg(pdev, "Port GPF phase %d timeout: %d0 secs\n",
-+		phase, GPF_TIMEOUT_BASE_MAX);
- 
--	return rc;
-+	return 0;
- }
- 
- int cxl_gpf_port_setup(struct cxl_dport *dport)
-@@ -884,16 +890,22 @@ int cxl_gpf_port_setup(struct cxl_dport *dport)
- 
- 	if (!dport->gpf_dvsec) {
- 		struct pci_dev *pdev;
--		int dvsec;
-+		int dvsec, rc;
- 
- 		dvsec = cxl_gpf_get_dvsec(dport->dport_dev);
- 		if (!dvsec)
- 			return -EINVAL;
- 
--		dport->gpf_dvsec = dvsec;
- 		pdev = to_pci_dev(dport->dport_dev);
--		update_gpf_port_dvsec(pdev, dport->gpf_dvsec, 1);
--		update_gpf_port_dvsec(pdev, dport->gpf_dvsec, 2);
-+		rc = update_gpf_port_dvsec(pdev, dvsec, 1);
-+		if (rc)
-+			return rc;
-+
-+		rc = update_gpf_port_dvsec(pdev, dvsec, 2);
-+		if (rc)
-+			return rc;
-+
-+		dport->gpf_dvsec = dvsec;
- 	}
- 
- 	return 0;
+ 	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
+ 		c[i].write_latency += latency;
+ 		c[i].read_latency += latency;
 -- 
 2.53.0
 
