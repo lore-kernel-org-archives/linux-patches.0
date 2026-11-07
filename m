@@ -1,58 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061802;
-	b=IF8XGvaoxGA8vVhUbri8m/9/FzkY0lJ2fEK1+SfXphjQxrkyrkWavrMoWZ21nG2ecaYQ
-	 ZdUzvXLVDdTY/30KYgqSou4KGQIAhEtbhojPxix7u8D0Lu3go5wBn8jxjFT6TjIwdSJb4
-	 DQ3YC/+Gur46yGpO4j4/wwXrlwRfcqXSIQoEBqExaLVya0HHc1ijbGQygEOnTI96IPSP5
-	 RA1gpH8mppbOLg65PjOAI3DAZ1hvqkYKQv+NB8yXK/vOWpURVDpra7NvozLHipvXqfjO+
-	 Hrn13/SnakQxi06nItESfWqGcK52GywXEaJ3hmi4ptLckbRJoqMEVf3RpThN1vIyUWw==
+	t=1794061804;
+	b=QufF8WuEDbP7arWXCWTXb10Zc/I8rz8vG2JmG71swxuMP4BChIL1h4A/kgvdfWg3Cqyx
+	 +k8hCF1rbVEA+xTE77BgFB51eXyfL4hmf3MRUFqgJtNcEYeK99yxaxJ5tGIHVvwTkDkbA
+	 W212d6BlfBZSGeqjX01GkR/It02CpC8vyM3gaFfkyrw+6Et2C/eVnn24i4TJO/Xh50Ixo
+	 Q70twD8pyWBz2qnml64TbPtJ8o8n1W+YSLAGFvEW/zyPyBwN/XSJRfB8N/j+vlN58xEHF
+	 PScmGE/xS4BbtRLmw67ehf11Q5vNtIYNFU9or/9BVvvO72PDokJusjf8MaHrCiZZyiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0Z1J4X24jJUhKuvlCbtdv2svDKZaFIKky8EBlRiKy1Y=;
-	b=OPt0/9KP+mpq1gR3lszkXtMbFrZC6yOB8HxgiKPCxAYGnxmHiYwOKooXhllUa+2sR9rD
-	 yUiYRtzSHUQa7MUn/M9YJC3yhA4INehLqQuLN3pObtf0YO5kVyUsfY4Nh5q+fmdFGrTXw
-	 9RdUF/fqfKRiE2gyyAn0tHBGZyJ7gl0ZdHm7OhRpsPJHhRxCoxajeT7cNQFlQLKVK03OL
-	 lUsmCYybw5OUZQDcs5mI+sNWiQUrY4HmampWttKLppomcyCaZKGm0BYT2uZ06wCDMC9T8
-	 2rgtOFaff7jXec4mzkKM/tqL1Zont3VlJWdrF3qvmqkwEoGI1P8DQC+nXYhuYAaHR7A==
+	bh=vk9TipY78VzBICyWEBPNnhuznFFrXdnYwXD65cNCwUw=;
+	b=hopCGyG/7UHOSzPcDfzVCSWRyTSh3u1iMy6YW+an84lHKdXVXtylVW3umq9FilIwyyTy
+	 +D5CAIbmzwaLjwnQxvhOlBOLN5MjVlKCssOXE2zaE+cGmjvp8kc09NbQ7xphRdD05TH8s
+	 E9OFRS5AZnhb4CiPomXPRUYSLClBAVOp3hxS5p6CoiR+hQaFkwauu1uB+2iOwo0ZF0Ho9
+	 ghzak0fKKi/Mu+WQnRkTuVS/bMIDBoldubExsY8PxRBNlzZkRR85hBfv9+4z/qu/9sMOU
+	 mYdfcc2p4Buft7Vs3tlRt8mSId2z+mplbE6IltOoEOwJUhiPpRnNi4X9Esx7sKn0kpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VbC8XrUB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VBxdW+F2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BDA606A330;
-	Sat,  7 Nov 2026 14:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B694606A326;
+	Sat,  7 Nov 2026 14:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VbC8XrUB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27AFC1F008A3;
-	Sat,  7 Nov 2026 14:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VBxdW+F2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36AE1F008A4;
+	Sat,  7 Nov 2026 14:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061801;
-	bh=0Z1J4X24jJUhKuvlCbtdv2svDKZaFIKky8EBlRiKy1Y=;
+	s=korg; t=1794061803;
+	bh=vk9TipY78VzBICyWEBPNnhuznFFrXdnYwXD65cNCwUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VbC8XrUB/xAsWzc+S8CVD6BJdoUkvxz/nPc9jluHQJ3IAOp3zvWyUd6l8y/1MxYVD
-	 hCdB8nwwNNmjl05UQvX7MSznhlcvyWcGK7nG0u4bYd59/SZ3v2olsZUCBYuZhxcfXb
-	 1lrsFUB8e8qg7uZR79nlUszLwBzKCMt0nskmkEok=
+	b=VBxdW+F29FD+Suie3KbwBjXJeXeEdaba0QcX4tGlhrATEKv1X6pkdgplxKyZdLlBn
+	 JTJg6OfuWd/t+iuge1zE7ylIE8/xtmIuhWQpwEqVMwUm3ZsZsIaBqI2oMMz6h6RqBL
+	 1XZVFMOazZnQ/VdxMXnSRxiFHPn9xFHPsReU0xZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org
-Subject: [PATCH 6.12 0791/1536] rxrpc: Fix return in rxrpc_recvmsg_data() for service calls
-Date: Sat,  7 Nov 2026 08:46:47 -0500
-Message-ID: <20261107135019.758526894@linuxfoundation.org>
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	syzbot@syzkaller.appspotmail.com,
+	Atish Patra <atishp@meta.com>,
+	Nikunj A Dadhania <nikunj@amd.com>
+Subject: [PATCH 6.12 0792/1536] x86/mm/pat: Fix effective RW computation in lookup_address_in_pgd_attr()
+Date: Sat,  7 Nov 2026 08:46:48 -0500
+Message-ID: <20261107135019.786696968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -74,145 +72,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-commit 18a71e111c7505e16c2de91480561fc491f41341 upstream.
+commit ebaf7c9bbb1e16523d7036e7e1225ad2dfcc6482 upstream.
 
-When rxrpc_recvmsg_data() gets called on a service call that has received
-all of the request, RXRPC_CALL_RECVMSG_READ_ALL has been set, and this
-causes rxrpc_recvmsg_data() to jump straight out, indicating the end of the
-call (ie. rxrpc_kernel_recv_data() returns 1) without waiting for the call
-to be processed or the reply to be transmitted.
+lookup_address_in_pgd_attr() accumulates the effective NX and RW bits of
+the walked page table levels so that verify_rwx() can detect mappings that
+are both writable and executable.
 
-rxperf_deliver_to_call() also has to be altered to call
-rxrpc_kernel_recv_data() to collect the final ACK on a service call as does
-afs_deliver_to_call().
+The RW bits are folded into a bool with
 
-Fixes: d001648ec7cf ("rxrpc: Don't expose skbs to in-kernel users [ver #2]")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260914151340.3227501-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-10-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+	rw &= pXd_flags(*pXd) & _PAGE_RW;
+
+but _PAGE_RW is 0x2. So consider the accumulation line:
+
+        rw &= pXd_flags(*pXd) & _PAGE_RW;
+
+where rw=0x1 and the right side evaluates down to 0x2. It'll end up doing:
+
+        rw = 0x1 & 0x2
+
+and rw always ends up 0.
+
+This way rw becomes false at the first level walked, regardless of the
+actual permissions, and verify_rwx() treats every mapping as non-writable
+and never reports a W^X violation.
+
+Add double negation to the right side to normalize the _PAGE_RW flag to
+0 or 1.
+
+Assisted-by: Copilot:claude-opus-4.8
+Fixes: ceb647b4b529 ("x86/pat: Introduce lookup_address_in_pgd_attr()")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Tested-by: Atish Patra <atishp@meta.com>
+Tested-by: Nikunj A Dadhania <nikunj@amd.com>
+Cc:stable@vger.kernel.org
+Link: https://patch.msgid.link/20260813-cpa-fixes-v2-5-39b4ff90f91d@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/rxrpc.rst |   13 +++++++++----
- fs/afs/rxrpc.c                     |    4 ++--
- net/rxrpc/recvmsg.c                |   13 ++++++++++---
- net/rxrpc/rxperf.c                 |   16 ++++++++++++++--
- 4 files changed, 35 insertions(+), 11 deletions(-)
+ arch/x86/mm/pat/set_memory.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/Documentation/networking/rxrpc.rst
-+++ b/Documentation/networking/rxrpc.rst
-@@ -910,10 +910,15 @@ The kernel interface functions are as fo
-       want_more should be true if further data will be required after this is
-       satisfied and false if this is the last item of the receive phase.
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -682,7 +682,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
  
--      There are three normal returns: 0 if the buffer was filled and want_more
--      was true; 1 if the buffer was filled, the last DATA packet has been
--      emptied and want_more was false; and -EAGAIN if the function needs to be
--      called again.
-+      For client calls, there are three normal returns: 0 if the buffer was
-+      filled and want_more was true; 1 if the buffer was filled, the last DATA
-+      packet has been emptied and want_more was false; and -EAGAIN if the
-+      function needs to be called again.
-+
-+      For service calls, there are four normal returns: 0 and -EAGAIN are the
-+      same as for client calls; 2 indicates that the last DATA packet of the
-+      request has been received, want_more was false and the call is still in
-+      progress; and 1 indicates that the call is now successfully complete.
+ 	*level = PG_LEVEL_512G;
+ 	*nx |= pgd_flags(*pgd) & _PAGE_NX;
+-	*rw &= pgd_flags(*pgd) & _PAGE_RW;
++	*rw &= !!(pgd_flags(*pgd) & _PAGE_RW);
  
-       If the last DATA packet is processed but the buffer contains less than
-       the amount requested, EBADMSG is returned.  If want_more wasn't set, but
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -544,7 +544,7 @@ static void afs_deliver_to_call(struct a
- 						     &call->service_id);
- 			trace_afs_receive_data(call, &call->def_iter, false, ret);
+ 	p4d = p4d_offset(pgd, address);
+ 	if (p4d_none(*p4d))
+@@ -693,7 +693,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
  
--			if (ret == -EINPROGRESS || ret == -EAGAIN)
-+			if (ret == -EAGAIN || ret == 2)
- 				return;
- 			if (ret < 0 || ret == 1) {
- 				if (ret == 1)
-@@ -945,7 +945,7 @@ int afs_extract_data(struct afs_call *ca
- 		return ret;
+ 	*level = PG_LEVEL_1G;
+ 	*nx |= p4d_flags(*p4d) & _PAGE_NX;
+-	*rw &= p4d_flags(*p4d) & _PAGE_RW;
++	*rw &= !!(p4d_flags(*p4d) & _PAGE_RW);
  
- 	state = READ_ONCE(call->state);
--	if (ret == 1) {
-+	if (ret == 1 || ret == 2) {
- 		switch (state) {
- 		case AFS_CALL_CL_AWAIT_REPLY:
- 			afs_set_call_state(call, state, AFS_CALL_CL_PROC_REPLY);
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -552,9 +552,11 @@ wait_error:
-  * Note that we may return %-EAGAIN to drain empty packets at the end
-  * of the data, even if we've already copied over the requested data.
-  *
-- * Return: %0 if got what was asked for and there's more available, %1
-- * if we got what was asked for and we're at the end of the data and
-- * %-EAGAIN if we need more data.
-+ * Return: %0 if got what was asked for and there's more available, %1 if we
-+ * got what was asked for and we're at the end of the call, %2 if a service
-+ * call received all of the request but is still in progress and %-EAGAIN if we
-+ * need more data.  A variety of other errors can be returned if the call
-+ * completed with failure.
-  */
- int rxrpc_kernel_recv_data(struct socket *sock, struct rxrpc_call *call,
- 			   struct iov_iter *iter, size_t *_len,
-@@ -593,6 +595,11 @@ int rxrpc_kernel_recv_data(struct socket
+ 	pud = pud_offset(p4d, address);
+ 	if (pud_none(*pud))
+@@ -704,7 +704,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
  
- read_phase_complete:
- 	ret = 1;
-+	if (rxrpc_is_service_call(call)) {
-+		if (rxrpc_call_is_complete(call))
-+			goto call_failed;
-+		ret = 2;
-+	}
- out:
- 	if (_service)
- 		*_service = call->dest_srx.srx_service;
---- a/net/rxrpc/rxperf.c
-+++ b/net/rxrpc/rxperf.c
-@@ -292,8 +292,20 @@ static void rxperf_deliver_to_call(struc
- 	       state == RXPERF_CALL_SV_AWAIT_ACK
- 	       ) {
- 		if (state == RXPERF_CALL_SV_AWAIT_ACK) {
--			if (!rxrpc_kernel_check_life(rxperf_socket, call->rxcall))
-+			size_t len = 0;
-+			iov_iter_kvec(&call->iter, ITER_DEST, NULL, 0, 0);
-+			ret = rxrpc_kernel_recv_data(rxperf_socket,
-+						     call->rxcall, &call->iter,
-+						     &len, false, &remote_abort,
-+						     &call->service_id);
-+
-+			if (ret == -EAGAIN || ret == 2)
-+				return;
-+			if (ret < 0 || ret == 1) {
-+				if (ret == 1)
-+					ret = 0;
- 				goto call_complete;
-+			}
- 			return;
- 		}
+ 	*level = PG_LEVEL_2M;
+ 	*nx |= pud_flags(*pud) & _PAGE_NX;
+-	*rw &= pud_flags(*pud) & _PAGE_RW;
++	*rw &= !!(pud_flags(*pud) & _PAGE_RW);
  
-@@ -368,7 +380,7 @@ static int rxperf_extract_data(struct rx
- 	if (ret == 0 || ret == -EAGAIN)
- 		return ret;
+ 	pmd = pmd_offset(pud, address);
+ 	if (pmd_none(*pmd))
+@@ -715,7 +715,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t
  
--	if (ret == 1) {
-+	if (ret == 1 || ret == 2) {
- 		switch (call->state) {
- 		case RXPERF_CALL_SV_AWAIT_REQUEST:
- 			rxperf_set_call_state(call, RXPERF_CALL_SV_REPLYING);
+ 	*level = PG_LEVEL_4K;
+ 	*nx |= pmd_flags(*pmd) & _PAGE_NX;
+-	*rw &= pmd_flags(*pmd) & _PAGE_RW;
++	*rw &= !!(pmd_flags(*pmd) & _PAGE_RW);
+ 
+ 	return pte_offset_kernel(pmd, address);
+ }
 
 
