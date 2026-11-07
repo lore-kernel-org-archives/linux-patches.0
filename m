@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062074;
-	b=oPugvwbekY1zePnjB9kA4kJyMEVENXNXB1p5DZXTfifMlQkgl2ditA8hMRE7L9/QCdOT
-	 7pDtigFiCykQtqPIRXryq+1J6jvFFbAo7YkRB2hxCmA2f3EdiJOGbHQ50q35zBeMcl4X7
-	 AfO3yfEfuv21mCd4S+PQPD/hVjYCMDXCgR3Ktm0j+mG10IdlcPOQaOu7bou1JdpPmH9FQ
-	 6BzylD770WLqnzvioz2vZ54H6LHHXN/OL8wzkXOKODeJsPsq1PwMDRzRaUclQbHH2Pxe+
-	 WFracaa5YQMOMcfiydtKy6dsmbw+dUqszb0sUrvVT1zvhakEieTgFQmcb4Diqtdw+HQ==
+	t=1794062069;
+	b=cdXT2OKn/aT0O19dJs+9W2StyGqNvlcUH6VtGgKcXmPnuBgXTXFvIUrXfSFsN79zolNd
+	 XsDLp2G3+CUs+Yf8RyAngoLsMWfdNs7OfAryft52QY3zF8H9gZ386aYoknXe2sZqPTaHd
+	 8Hrx0zjUr62uW/ZkeUDVVQsgl1JP8sU5f9Bm7uDaPAH6Dn+JY3oabc7ugYFTqSu2K5CeE
+	 2WKTplPkgHXqIgLKzQpp8nKAK2+hILvlntqF1XJ4zwGVUOZPglwHKHPhmj5jRa4lI2o3L
+	 j8GTaXm94CGtUrd1y+VJkZC10m3eAChrXsJjVKeKru+iP56yrzhNTBJxfaeAchMd3oA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ufeiSyOOqHnURJh59AcJvHLR/VOTBuiv4ZeVCAU1Xbw=;
-	b=ANjH4ZW+dIuUwF9cFfXHlN1OmRHSVx8jV9imaUGPuXAEbXjnRPoIosylAjfemKdHRjcA
-	 lY7JqJAHMfinWSfW/n+2SRtuL6V489KY+14L53RDNpBnULlUEgrnYB1yyV8FwNKN9pdG+
-	 /13HXcXe8yS16XIPKWIR/aVQs2Hzy/S5Im35DmUDcqeGjHfuDAxCh4xiDPpmvNVP/7tFj
-	 5vYfv3z2QTYuO+MOnMInjWUjP5dIeQJ7lNoHrNxmoJwoOLnAJsL/8ab5i/t6aD5Y57VBA
-	 Xw/a2hfCWABvDVYeHoyPXMQGirpn0+BibOCbw6J4fDKFpIyMoVPbCeyuhRpSU2lnVIg==
+	bh=P8HJmLbahBKZdsCxbj+5shLris+oLC2rSEjo2zTSq1U=;
+	b=EN9UPKj7URYqw9Bsr7UwHRaoqkkzUyzXwwDkKPS3kRmXVJphzfA8BDLPWaqRPBpmyQAw
+	 0VnpkQroAJWj9jdzhGpXUtS+7923RglSSFRFklBfO+Pl6+dt1djGmu3DmOfhX5twrZlek
+	 cgzUFR5X6/ygM9IhDlsEWGlQRe3FePoXE3sOCIGfAh2eTIFfZI3cy/bkQxOVaETcnt0td
+	 HYArQqnGIZbPnXqSWGYhCxutLXV18DkSPwd63zDBAzouvIbYd3sdEqzmIGOhd8owvTC9i
+	 9ZA+oht6Ix8+ipQzUcLiKF4B8zXnipSSg1tPLK/8LdfYc/tW6ABwRs3Fx33gfksZIsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=az8goWyO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKvH4lrI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A98D606D80F;
-	Sat,  7 Nov 2026 14:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3442B606D820;
+	Sat,  7 Nov 2026 14:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=az8goWyO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEA81F0089F;
-	Sat,  7 Nov 2026 14:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKvH4lrI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE8B1F008A4;
+	Sat,  7 Nov 2026 14:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062073;
-	bh=ufeiSyOOqHnURJh59AcJvHLR/VOTBuiv4ZeVCAU1Xbw=;
+	s=korg; t=1794062068;
+	bh=P8HJmLbahBKZdsCxbj+5shLris+oLC2rSEjo2zTSq1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=az8goWyOa8oebhF8fU/0sDXDdOGvjvjqtJAhdMzCMc8U23JNOSrBexdOfsMrYcvmZ
-	 PAT7AEGfI8VtntwymWLvMGMGWJmwrbVq7imb+Jibz7e5UJmXp0AD/CnTiwH2JWJjs9
-	 Euq/SzlA8gXzKqqiKFn0us0K3IskJLw+6y+V7w2w=
+	b=eKvH4lrIEwCH9TdLAUcsu97rYuLXoZ87hrI9i3JxCme24mj5iQsxn0kv7AaZ/zh+w
+	 KIlWDm+ongN9eEebRdiDi+vSBIC0VpCVxKVODzZjb1NgZSlB/Yz7FTYPOPUWLoS4Yq
+	 KwOb+i7ASZkVdmmT6dJEXH9qTsTN+0goUPceAr6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1051/1536] arm64: dts: freescale: imx8mp-verdin-yavia: fix external GPIOs
-Date: Sat,  7 Nov 2026 08:51:07 -0500
-Message-ID: <20261107135027.198783290@linuxfoundation.org>
+Subject: [PATCH 6.12 1048/1536] media: vpif_capture: Fix i2c adapter reference leak in vpif_probe()
+Date: Sat,  7 Nov 2026 08:51:04 -0500
+Message-ID: <20261107135027.113328121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,49 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit f377ac5999a5d045168ddd25d204691c6653c06a ]
+[ Upstream commit b00fbdad64d4ea7d594bc67988c1722fe5b3be50 ]
 
-pinctrl_gpios_ext_yavia (SODIMM 64/66) is defined but never applied to
-gpio3, so those pins stay at their NAND reset function instead of GPIO.
+vpif_probe() takes a reference to the i2c adapter with
+i2c_get_adapter() and passes it to v4l2_i2c_new_subdev_board(),
+which does not consume it, but the reference is never released, so
+it is leaked both when the probe succeeds and when it fails after
+the adapter has been acquired.
 
-Fix SODIMM 64 to the correct pad, MX8MP_IOMUXC_NAND_READY_B (GPIO3_IO16).
+Release the reference with i2c_put_adapter() on the success path
+and in the probe_subdev_out cleanup, and initialise i2c_adap so
+that the cleanup is a no-op when the adapter was never acquired.
 
-Fixes: b694fbe2ff40 ("arm64: dts: imx8mp-verdin: Add yavia carrier board")
+Fixes: 6ffefff5a9e7 ("V4L/DVB (12906c): V4L : vpif capture driver for DM6467")
 Cc: stable@vger.kernel.org
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/platform/ti/davinci/vpif_capture.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
-index cc389cda2af2e..20d99012d4f32 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-yavia.dtsi
-@@ -117,6 +117,11 @@ &flexcan1 {
- 	status = "okay";
- };
+diff --git a/drivers/media/platform/ti/davinci/vpif_capture.c b/drivers/media/platform/ti/davinci/vpif_capture.c
+index fe44d3abe18e7..e71242026137d 100644
+--- a/drivers/media/platform/ti/davinci/vpif_capture.c
++++ b/drivers/media/platform/ti/davinci/vpif_capture.c
+@@ -1605,7 +1605,7 @@ vpif_capture_get_pdata(struct platform_device *pdev,
+ static int vpif_probe(struct platform_device *pdev)
+ {
+ 	struct vpif_subdev_info *subdevdata;
+-	struct i2c_adapter *i2c_adap;
++	struct i2c_adapter *i2c_adap = NULL;
+ 	int subdev_count;
+ 	int res_idx = 0;
+ 	int i, err;
+@@ -1695,9 +1695,12 @@ static int vpif_probe(struct platform_device *pdev)
+ 		}
+ 	}
  
-+&gpio3 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_gpios_ext_yavia>;
-+};
++	i2c_put_adapter(i2c_adap);
 +
- &gpio4 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_ctrl_sleep_moci>;
-@@ -262,7 +267,7 @@ MX8MP_IOMUXC_NAND_DATA03__GPIO3_IO09	0x106	/* SODIMM 62 */
+ 	return 0;
  
- 	pinctrl_gpios_ext_yavia: gpiosextyaviagrp {
- 		fsl,pins = <
--			MX8MP_IOMUXC_NAND_CE1_B__GPIO3_IO02	0x106	/* SODIMM 64 */
-+			MX8MP_IOMUXC_NAND_READY_B__GPIO3_IO16	0x106	/* SODIMM 64 */
- 			MX8MP_IOMUXC_NAND_DQS__GPIO3_IO14	0x106	/* SODIMM 66 */
- 		>;
- 	};
+ probe_subdev_out:
++	i2c_put_adapter(i2c_adap);
+ 	v4l2_async_nf_cleanup(&vpif_obj.notifier);
+ 	/* free sub devices memory */
+ 	kfree(vpif_obj.sd);
 -- 
 2.53.0
 
