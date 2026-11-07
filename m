@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064971;
-	b=Wq9HmQFkVA0sSyywT+UIc/NycPsPRYiRohf2vstTuu/Mj9WGMx37Emq5X5eVLvImcei9
-	 4goYb+XBqCb5XyJrQ8Dl8eOgdBt94krcnpAbpQR22EvN6G43zkdVs5jn9pTNohKN8+YKb
-	 eRkP79N8FDsZ5tkrLSwdl2tOYx1cfeQhBnfLt8eQfZ5zUmFePgD/EUcc/JJubZjnu+IdX
-	 NrJXyiiMJeM7YhgVzqZwT1W+mHKJqmRUvOLA8PC/R55tyvDKMUuZqVKVQMkCSoF3ljrhC
-	 o+sL4FVNmtgcbWP30zTH1tRoS/LdEz8Lm0WQQx3O5KajX4BYNYO5WQvKOo8du2y+PQA==
+	t=1794064972;
+	b=Q/+8/78ucy9kEVx8kz5cYoWrWoS+nCG/DILr5txAX6wTglzALv2eyGitXkQ0MVOohdgQ
+	 glsKGTkZrgOpXwZZKBdU18Zd+rxl3fH7FoTQzn/PNZ0DNub0DEhWnPBlewq2HXaiEHJZw
+	 yusvqh74l3yhWdSm8DrzpvwXCuqdUH6GB8jdRplqDOyAj9cYt3LSgKQeZ8ZGLFnKnFygP
+	 XkPJZxBG2ja3w/tJJPkiVFqVrFT7qYaKC/rwxg9+1p24PsxXiO692+5LT86snK9NBIevr
+	 lizsusuSlS7zUMPKYJqhX4vRtGYeASo0rrs2doWbXPVo7xgGOfxbC+r9URbC4icBTIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xP6ixjWKK0znxe7EO0vB0CCW3+GGWm+GUdwBICvhzow=;
-	b=iN8b9Q/xcUg5zJh9o+TwlxircmIKtB8oHaCPHnWukT3kASX3VcvblYZ5MbAnuE5p9SzD
-	 jQuRrNtdZcz8BjA+0QWNUp3gKLt/NvawDd3tvC+/QnQRusJ6CHvSwp0kAMC/tET1/M4Yp
-	 +LNq7njzbJC+RqeU+yXpFwKrxtWT9piQO/bsv+9TLBgS4JJJNp98i09PlhdqF8dIwoe4L
-	 Tyywo4kUroDaeQsXFPItuRgeJIuZGKR+TbT+uWHVwNuM5wAKw2LDrC1/VnSa+CcLGyPas
-	 MJhfScWteuZZwHySYlx5c7O/ZbQ1xW4H80qr4YcKBcvS4FDAQ2tAZHx3P2LWv3r4TJQ==
+	bh=FGxj7Ad9quHFEy/ZvktPodwDEJL4LCjh8YqX4qpolb0=;
+	b=mnkI8HeBevRK0xE5UX4nywnHaJzmBjPP09nR8quGfx560HS2suYllFCa0fo9cflwe4en
+	 w7KUPVQ5HuqRXUby9UmC+nHV0R0KGnSus8tUL44FFaPq7M2JLseqfePu43P1lwQ08+ILX
+	 VHWrFtsnCrb5e4k4J7JCcX0aqX7vx/minmF7mT/N0xW3ytmRNx9VQc6XhdijZc7Ncag1r
+	 n72qXsrteGpdmBk+y5HfihhAgxgnNWqrdYn2j4qaqIzOR60I44OyNrRzTk7iHtIF5DG2v
+	 cLuV4930rQ8v1iLvKi6C/ScauZvih06yZiD22wYpxHlVikmHjIXwaAPZhGwxjwE8eUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZkZBEeF/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NGtbUnLA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4B2606A334;
-	Sat,  7 Nov 2026 15:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40956606A334;
+	Sat,  7 Nov 2026 15:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZkZBEeF/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7990D1F0089F;
-	Sat,  7 Nov 2026 15:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NGtbUnLA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11161F0089F;
+	Sat,  7 Nov 2026 15:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064970;
-	bh=xP6ixjWKK0znxe7EO0vB0CCW3+GGWm+GUdwBICvhzow=;
+	s=korg; t=1794064972;
+	bh=FGxj7Ad9quHFEy/ZvktPodwDEJL4LCjh8YqX4qpolb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZkZBEeF/g7Kj4pRK4bMmZLXxs2hvqbjrjr57UfFUOIJG6HSEcIS18M6nA2C2Lyi+m
-	 Tou8hPQg7a0OZkVK5iRqojxzd9Y8oxqxHPMgjcQ6rLSAJbn9Ta/ReN/Fb4sYveSgUZ
-	 IDILS9oQNMMvQ2Vpsji1B/MxWhcmGxIgiOEl+apw=
+	b=NGtbUnLANHav9nKMhSzuWiZDUr02FJ8pWn6Bb6eUyaT5ZJk36NjtDhodMIccmnSs/
+	 OGvlaBMRsITa2qiBjgNmlB1kJu00K2C7HXZtIaz0ij9yAuknKGyp5Zxza3mV9Rrd9F
+	 DNeq/PzOGl6V35wWNTjuWwZ5fERV9cszVTnMZQrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongliang Wang <wanghongliang@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Fabricio Akio <fabricioakio@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0834/1257] cpufreq: loongson3: Replace per-package mutex with per-node
-Date: Sat,  7 Nov 2026 08:52:10 -0500
-Message-ID: <20261107135002.365796734@linuxfoundation.org>
+Subject: [PATCH 7.3 0852/1257] power: supply: qcom_smbx: set the charge enable after software control
+Date: Sat,  7 Nov 2026 08:52:28 -0500
+Message-ID: <20261107135002.860013005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,79 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Fabricio Akio <fabricioakio@gmail.com>
 
-[ Upstream commit 5d7802ada30b3101f408706b7399b0e170d2febd ]
+[ Upstream commit 1fba787142011145e1071cee9448b3677fb2323d ]
 
-Our server productions (e.g. Loongson-3D6000/3E6000) can have multiple
-nodes in one package and SMC mailboxes are also per-node. So replace the
-per-package mutex with per-node one.
+The init sequence sets CHARGING_ENABLE_CMD before CHGR_CFG2 selects
+software control of the charge enable.
 
+The Motorola Moto X4's bootloader leaves the charger watchdog armed to
+disable charging when it bites, which it does after a few minutes in
+fastboot. Charging then stays disabled in the next boot until the cable
+is replugged. Setting the command after CHGR_CFG2 re-enables it.
+
+Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
 Cc: stable@vger.kernel.org
-Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
-Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Fabricio Akio <fabricioakio@gmail.com>
+Link: https://patch.msgid.link/20261002-qcom-smbx-enable-order-v1-1-7df92bd809db@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/loongson3_cpufreq.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/power/supply/qcom_smbx.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
-index 630f679aa7395..e3cd78a5ab187 100644
---- a/drivers/cpufreq/loongson3_cpufreq.c
-+++ b/drivers/cpufreq/loongson3_cpufreq.c
-@@ -169,7 +169,7 @@ struct loongson3_freq_data {
- 	struct cpufreq_frequency_table table[];
- };
- 
--static struct mutex cpufreq_mutex[MAX_PACKAGES];
-+static struct mutex cpufreq_mutex[MAX_NUMNODES];
- static struct cpufreq_driver loongson3_cpufreq_driver;
- static DEFINE_PER_CPU(struct loongson3_freq_data *, freq_data);
- 
-@@ -177,14 +177,14 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
- {
- 	int retries;
- 	unsigned int cpu = raw_smp_processor_id();
--	unsigned int package = cpu_data[cpu].package;
-+	unsigned int nid = cpu_to_node(cpu);
- 	union smc_message msg, last;
- 
--	mutex_lock(&cpufreq_mutex[package]);
-+	mutex_lock(&cpufreq_mutex[nid]);
- 
- 	last.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
- 	if (!last.complete) {
--		mutex_unlock(&cpufreq_mutex[package]);
-+		mutex_unlock(&cpufreq_mutex[nid]);
- 		return -EPERM;
- 	}
- 
-@@ -208,11 +208,11 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
- 	}
- 
- 	if (!msg.complete || msg.cmd != CMD_OK) {
--		mutex_unlock(&cpufreq_mutex[package]);
-+		mutex_unlock(&cpufreq_mutex[nid]);
- 		return -EPERM;
- 	}
- 
--	mutex_unlock(&cpufreq_mutex[package]);
-+	mutex_unlock(&cpufreq_mutex[nid]);
- 
- 	return msg.val;
- }
-@@ -337,7 +337,7 @@ static int loongson3_cpufreq_probe(struct platform_device *pdev)
- {
- 	int i, ret;
- 
--	for (i = 0; i < MAX_PACKAGES; i++) {
-+	for (i = 0; i < MAX_NUMNODES; i++) {
- 		ret = devm_mutex_init(&pdev->dev, &cpufreq_mutex[i]);
- 		if (ret)
- 			return ret;
+diff --git a/drivers/power/supply/qcom_smbx.c b/drivers/power/supply/qcom_smbx.c
+index f5557b8cc92ae..8c6b7c46b85f0 100644
+--- a/drivers/power/supply/qcom_smbx.c
++++ b/drivers/power/supply/qcom_smbx.c
+@@ -819,11 +819,7 @@ static const struct smb_init_register smb_init_seq[] = {
+ 	  .mask = SOC_LT_CHG_RECHARGE_THRESH_SEL_BIT |
+ 		  VBT_LT_CHG_RECHARGE_THRESH_SEL_BIT,
+ 	  .val = VBT_LT_CHG_RECHARGE_THRESH_SEL_BIT },
+-	/* Enable charging */
+ 	{ .addr = USBIN_OPTIONS_1_CFG, .mask = HVDCP_EN_BIT, .val = 0 },
+-	{ .addr = CHARGING_ENABLE_CMD,
+-	  .mask = CHARGING_ENABLE_CMD_BIT,
+-	  .val = CHARGING_ENABLE_CMD_BIT },
+ 	/*
+ 	 * Match downstream defaults
+ 	 * CHG_EN_SRC_BIT - charger enable is controlled by software
+@@ -844,6 +840,13 @@ static const struct smb_init_register smb_init_seq[] = {
+ 		  AUTO_RECHG_BIT | EN_ANALOG_DROP_IN_VBATT_BIT |
+ 		  CHARGER_INHIBIT_BIT,
+ 	  .val = CHARGER_INHIBIT_BIT },
++	/*
++	 * Set the enable command only once CHGR_CFG2 has selected software
++	 * control, or a charger its watchdog has disabled stays disabled.
++	 */
++	{ .addr = CHARGING_ENABLE_CMD,
++	  .mask = CHARGING_ENABLE_CMD_BIT,
++	  .val = CHARGING_ENABLE_CMD_BIT },
+ 	/* STAT pin software override, match downstream. Parallel charging? */
+ 	{ .addr = STAT_CFG,
+ 	  .mask = STAT_SW_OVERRIDE_CFG_BIT,
 -- 
 2.53.0
 
