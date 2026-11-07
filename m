@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062524;
-	b=qKgjunYNkI6Ua5iqIc9Lg6+23qgCf9H5zHjHlkYM7eVmjFzvgnR4q7LDOxYNEmS7Zn+H
-	 SWLgE/42ABKK2hBCN2bhf64yvBhODfAncbxSGAC69felBb6ZxG3V8A6pWpbF6CaBC9vCN
-	 QK+N4NuJd7fUEsGD+91CZf630ESF0adZMBe8SUlYgOKw3gVql4FCXXAs9MLBVzcv3yZbz
-	 85lN3JKkEIapJNlWN9FGg+G1Lu05zAGCsb28BVD16YbOB1CM+RtKqO+1Ku5Idd4vAuIdV
-	 fb+1O4pvOnEzTF+/StzvaVUanVuyz0V1GCQwJHwtU3Oq/742G3aVxv9wElNGg8RCxQQ==
+	t=1794062526;
+	b=JADBqT4UZ3Cs7Sfg250f6U5sCMIdgNhyVc0uGt+DBeO0S+zmnHb9puw4Kb2nlsQhZGa3
+	 XPH5ZKtpFVTF1fIxeusaqXar3jwkhSdEqPOwzyWYLlmKY+g3Hq0e1rJq95zqzGS+Uck3g
+	 p9rVJCPUFGCGy9rBAz1+4eBS1jaSIgpVFYDler6ONg2sodX1XvnhbXIapzaUloIWvgu5w
+	 zPSVH+cv4d2lcI8l2KsGupyVczxZSuY7xJwsTHEgq98GR9L0Msf/LrCMzM7wengtP5fOh
+	 aKYyoqKCdWxrorK4MhY1ZYKWeU4qyInUd64he1FRfu8lxgqByIcItyZwNWf7fG5O+RQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062526;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iykjAiI5+EipGxM4jwhl/WOLIZ0BU5QxqdTQlvvmx8k=;
-	b=WRnHSRDtPQlMadDbZDyz/1g6ZS9/r3igXWmj4EoQ4LC/et836wFqUyI876XZS6n2m+fg
-	 4kRGuQ8BzZMqjn9PgY5jm90zCNUp3gBmoQguPT7PLPi/LjdCyXSEoiLhrZcwFbo4ds6Zr
-	 W35DPAr0TutLLRh9k4dl7qIdnvypmAA2h4DBLO6YsWRnbrDja/OtCnOH0kOuQ/DXW+PlQ
-	 lk1FRDhBbvtclaWFRwEX4bBSOo5efechNN8iPRWZ8TcGgCVKlOrsZEitIpz6YhA39OPuO
-	 6Wsyksgn8kPvA9YNMfuUpwPUnQuKmqP7Y1W/JwoDOEVBuAepoXkrUmNMdUCqCeY3FJg==
+	bh=2xyWFquSXpiLVzuXKQVu1X6jx87cj0LEgRETqqiQj5E=;
+	b=ReUmHYiBNELFLGu5U4MUYybPti9ftrfCeWn/mYVE7Sq7s53njS4VX8dnuDD1ZBebqDTk
+	 xk4UuqQCtvJdLGROKNCiBnqLBogdnSuF/oN4/wuWwC/yedFMnfLdkPIo+/IGdUoSzGiSu
+	 uNLNPiQCWwPWFFPSOXaqEQda2b2eQCPJ/rz9zt5lh0CitIOSK12l5tCNVnO20zgn0Gysg
+	 8+ACJIFrdPFxlLDcagRsWgIpjKCZqThj7rxNwoXug7ZBsvzuHXVHwYlPf+r4OHg8kcB1G
+	 gIXXrdenWqXRje6f7ZO+4N85uz1kDU7P2+4iaBFeUtnviQ+4/x7qYcJKaPTcxuN3Irw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KcXVaEG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uhO1CaGD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70BE36083615;
-	Sat,  7 Nov 2026 14:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E98606D80F;
+	Sat,  7 Nov 2026 14:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KcXVaEG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3991F008A3;
-	Sat,  7 Nov 2026 14:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uhO1CaGD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516A81F008A1;
+	Sat,  7 Nov 2026 14:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062524;
-	bh=iykjAiI5+EipGxM4jwhl/WOLIZ0BU5QxqdTQlvvmx8k=;
+	s=korg; t=1794062525;
+	bh=2xyWFquSXpiLVzuXKQVu1X6jx87cj0LEgRETqqiQj5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2KcXVaEG9NLHuyuXeEFf7AMNFNqWtT8974/REF60ckqJfkKf4epL+hHLEJsn+A9pt
-	 OWo6EwjmNkvuLU1q5K6+VWZ3lBSS01TPjypiUu3ZToiRzOxBsVMQXndc/kiWWDQXid
-	 OXDBrsKeoGidzdCB7Hz+wTR7NBMdx5dQ8j5jgIxc=
+	b=uhO1CaGDo5AnJ+f5sNN7pJ+hk0LAE0Z1Ri/ZwhM2pA2Tgk1MyXsdhDSr8dUzjNZp1
+	 9j47oi/RiuzEEnaCf1eO2MhZYn713a1D6dxuVD+UVaLyiPCQX+VtFsOV5j6LH918D6
+	 GeVKSEZO3m4U0amULrv9ljY3vP8Lj3eQDrwDbcFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pei Xiao <xiaopei01@kylinos.cn>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1418/1536] tpm: tpm_nsc: fix NULL pointer dereference on init failure
-Date: Sat,  7 Nov 2026 08:57:14 -0500
-Message-ID: <20261107135037.656218310@linuxfoundation.org>
+Subject: [PATCH 6.12 1419/1536] tpm: tpm_nsc: stop using the cleanup callback as dev.release
+Date: Sat,  7 Nov 2026 08:57:15 -0500
+Message-ID: <20261107135037.684695886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,46 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 1900449684cf71427a51e0bb1d7914c0c8b39152 ]
+[ Upstream commit df0ef271087623439a1e900f323ed2a57204706d ]
 
-tpm_nsc_remove() is used as the release callback of the hand-created
-platform device and dereferences the chip drvdata unconditionally.
-If init fails before tpmm_chip_alloc() (e.g. request_region() cannot
-claim the ports), the error path drops the last device reference and
-the release callback runs with chip == NULL, crashing module init.
+tpm_nsc_remove() is called explicitly from cleanup_nsc() and also
+runs as the platform device release callback on the final
+platform_device_put(), so the cleanup executes twice on module
+exit; the second invocation operates on a chip that has already
+been freed by the devm cleanup, and the I/O region is released
+twice.
 
-Return early when the chip has not been created yet.
+Overwriting the release callback installed by
+platform_device_alloc() also keeps platform_device_release() from
+running, leaking the platform object allocation.
+
+Leave the default release callback in place; the explicit call in
+cleanup_nsc() remains the single cleanup point.
 
 Cc: stable@vger.kernel.org
-Fixes: afb5abc262e9 ("tpm: two-phase chip management functions")
+Fixes: 570302a31149 ("[PATCH] tpm: move nsc driver off pci_dev")
 Assisted-by: GLM-5.3
 Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/d5f0b38d6d6c17c01519c879d26448dbae388b0e.1791015549.git.xiaopei01@kylinos.cn
+Link: https://lore.kernel.org/r/a6155310e6772f708b47291cc959e02c05b90eb7.1791015549.git.xiaopei01@kylinos.cn
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_nsc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/char/tpm/tpm_nsc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/char/tpm/tpm_nsc.c b/drivers/char/tpm/tpm_nsc.c
-index 0f62bbc940daa..b165b274680d6 100644
+index b165b274680d6..2f715c195b50e 100644
 --- a/drivers/char/tpm/tpm_nsc.c
 +++ b/drivers/char/tpm/tpm_nsc.c
-@@ -258,7 +258,12 @@ static struct platform_device *pdev = NULL;
- static void tpm_nsc_remove(struct device *dev)
- {
- 	struct tpm_chip *chip = dev_get_drvdata(dev);
--	struct tpm_nsc_priv *priv = dev_get_drvdata(&chip->dev);
-+	struct tpm_nsc_priv *priv;
-+
-+	if (!chip)
-+		return;
-+
-+	priv = dev_get_drvdata(&chip->dev);
+@@ -326,7 +326,6 @@ static int __init init_nsc(void)
  
- 	tpm_chip_unregister(chip);
- 	release_region(priv->base, 2);
+ 	pdev->num_resources = 0;
+ 	pdev->dev.driver = &nsc_drv.driver;
+-	pdev->dev.release = tpm_nsc_remove;
+ 
+ 	if ((rc = platform_device_add(pdev)) < 0)
+ 		goto err_put_dev;
 -- 
 2.53.0
 
