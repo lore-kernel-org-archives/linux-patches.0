@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065305;
-	b=ZhBhvtzYi9sPA1kWaVkBBP4hRw08o2qmMDK8A9bdt8GluhJOcknI96JeKLlHSxpIdA0z
-	 ET+CDVuELakmWPKcjf0miK1VXtzHRO6y5uRYIHnd30sKXnCeygAR8f77QaMcKhRCub+fV
-	 Sr2qJ1Svwp2+lYmczqJrnE/GCGhiM5FYHIyO4H4aNE2QfN+DmO0KoszXVR5FE+8AKBOBZ
-	 hinz7Oq+1WunIUPjSUL8O2w4IRa2HEjtqoiIiCJi8qa21HmdmOhMDJwwW44vuy71wuhEe
-	 ffM5UL1GQzyrpAcibBcj031lv9FiNNMznB6F51gsPOD0UA1x22xS3D+69Hx4JU+fi5g==
+	t=1794065306;
+	b=gQB98dr+TRu4dSfnjYkxq5Bo3JvPaVypuCw9LpM2i0GQDUqsx6T1aVwEOSK7C8xjPCo7
+	 q/jmm60yHNYxKCvW7FDWFHzeoHj3iStFZ5SqmstmDeeyJvnQN6KLOfWlwCiEvKyzWDkHK
+	 JSUqVhoQRw+ESMlTvG8dN3QpbF59BKCD9VU5t9LPApmdwRgEM11HGwahJrlr95H1pLEMZ
+	 k8yUQzYYsz3H8AdvNMEpjM5cOGlMmnk/839IrQqSnDplXzkoTpPQjDrXpTGu0n6rr/EPa
+	 36CXzMCz+KlGCz8vg1QUjABdcyKqKX/lUqlX7wAXUIAf3P4Eo8mvyK5U8bczT/YRicg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065305;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065306;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i1+uefz76+MzKsQScxV8ifZiuEQ0NXOvwdPhwolFx5Q=;
-	b=vKsr1v/jyP1cHVrK6BcyqUoN0ABXZputFxNn1LZvTOA54XAQYa6Z8hFK34DiZZYyELvP
-	 3msf8l3L8sW/qCUD1idXPeBomH1Ebh57rZRoJnvLqMmxqT10dk3+FtFNUoWMBlYbVTZQ1
-	 yVnUQRohEOBnd4k0mZMrprIXrHUOEXNuINko5C5ld2STx0giesEvHTh1vjcFwookz8Q/1
-	 ElV2GQs6ulNPpCVZcAVrQjJP7FGp1VPIjzpZPRg685Qd87QeJXuZ1KXUK6ebzovt4H7ul
-	 AL9nb2SW8A3EaDbPetue/KnYh8gHOQkJHqf21xkac0mRqLcXEOgib2vmwnDofBVA/ug==
+	bh=nEvzJ5omP51SX7WhBajFbW7rP1YFlxHeXCI1naWVqRk=;
+	b=m5/UrFQHVUMi8vmhwJ/UEEUtub1Os+f8z95+PGjwmECiqoUcs4pfC86gAEJlQ/6sLA/O
+	 XgI8imraghGgWJebW9KK+DTgHOYmd1d6BP+XJ/q1cexZqZoycklgnGanozGvcsNNNF+0O
+	 nQTF0OSYA6mnR0xCBo/zkaHZ5ZDji/5t0tphsq8DPH9eVzBO6k5k0FYak7BrZyuHlQwf0
+	 lDF6zNisiiqFgp5vB7tHVZ6G+C9ls03/BLzbIIGDw3mnjKZjvuCHgMf663uFSt1u7Ki4S
+	 h4uK4KCrMD5byNqMgNDeFjalU/41UvjgEFic+BqYs8YEk2d57NFK6L1NY6twjaYZ9uQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vh+lgoSQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdikMP7x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F76606A334;
-	Sat,  7 Nov 2026 15:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A9D606A32C;
+	Sat,  7 Nov 2026 15:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vh+lgoSQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A709F1F0089F;
-	Sat,  7 Nov 2026 15:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdikMP7x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2A21F0089F;
+	Sat,  7 Nov 2026 15:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065304;
-	bh=i1+uefz76+MzKsQScxV8ifZiuEQ0NXOvwdPhwolFx5Q=;
+	s=korg; t=1794065306;
+	bh=nEvzJ5omP51SX7WhBajFbW7rP1YFlxHeXCI1naWVqRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vh+lgoSQkRsFH5+AuRB2Zglg94r1YZpqR643g0bit2SwuC912WrA5LC/0bLkVw7j4
-	 c1IzR0jQynFiMMWNK88lC7xCiut0hnndvhP8/FlNt+tlw6472jcMbrl+SLhPN9m4Gt
-	 quACoRwqvZsNXe79fTzEQwALee7GxytsTLtV7xxk=
+	b=wdikMP7xS1IPXvegZbP3UBlcDm5lfMFitEjI4NcpGZyWRrF3TbLw/Yqn5cs+ZMmts
+	 CYKzLwKzoisbNTdMLLckRxYg8sc19l+LdtisbeyGiaXgsbVbHisfOeVzz5ODSya4Od
+	 IG4IRH++GLRDBL5PdyvBDM0Vh8d2ZIOskoO95aWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Bean Huo <beanhuo@micron.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1030/1257] tpm: tpm_nsc: fix NULL pointer dereference on init failure
-Date: Sat,  7 Nov 2026 08:55:26 -0500
-Message-ID: <20261107135007.770128493@linuxfoundation.org>
+Subject: [PATCH 7.3 1057/1257] scsi: ufs: core: Remove an always-false WARN_ONCE()
+Date: Sat,  7 Nov 2026 08:55:53 -0500
+Message-ID: <20261107135008.481455066@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,48 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit 1900449684cf71427a51e0bb1d7914c0c8b39152 ]
+[ Upstream commit cd37a69c367b6a5f685db0ac7d01f08545081a30 ]
 
-tpm_nsc_remove() is used as the release callback of the hand-created
-platform device and dereferences the chip drvdata unconditionally.
-If init fails before tpmm_chip_alloc() (e.g. request_region() cannot
-claim the ports), the error path drops the last device reference and
-the release callback runs with chip == NULL, crashing module init.
-
-Return early when the chip has not been created yet.
+The WARN_ONCE() in ufshcd_poll() can never fire. completed_reqs is set to
+~tr_doorbell & hba->outstanding_reqs on the line above, and
+hba->outstanding_reqs cannot change in between because ufshcd_poll() holds
+hba->outstanding_lock. So completed_reqs & ~hba->outstanding_reqs is always
+zero. Remove it. No functional change.
 
 Cc: stable@vger.kernel.org
-Fixes: afb5abc262e9 ("tpm: two-phase chip management functions")
-Assisted-by: GLM-5.3
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/d5f0b38d6d6c17c01519c879d26448dbae388b0e.1791015549.git.xiaopei01@kylinos.cn
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Link: https://patch.msgid.link/20261022034443.3034432-2-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_nsc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_nsc.c b/drivers/char/tpm/tpm_nsc.c
-index 879ac88f5783c..46a52dc99b148 100644
---- a/drivers/char/tpm/tpm_nsc.c
-+++ b/drivers/char/tpm/tpm_nsc.c
-@@ -259,7 +259,12 @@ static struct platform_device *pdev = NULL;
- static void tpm_nsc_remove(struct device *dev)
- {
- 	struct tpm_chip *chip = dev_get_drvdata(dev);
--	struct tpm_nsc_priv *priv = dev_get_drvdata(&chip->dev);
-+	struct tpm_nsc_priv *priv;
-+
-+	if (!chip)
-+		return;
-+
-+	priv = dev_get_drvdata(&chip->dev);
- 
- 	tpm_chip_unregister(chip);
- 	release_region(priv->base, 2);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 025a16c50ffe6..2c4fffd4b824f 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6022,9 +6022,6 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
+ 	spin_lock_irqsave(&hba->outstanding_lock, flags);
+ 	tr_doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
+ 	completed_reqs = ~tr_doorbell & hba->outstanding_reqs;
+-	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
+-		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
+-		  hba->outstanding_reqs);
+ 	if (queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
+ 		/* Do not complete polled requests from interrupt context. */
+ 		ufshcd_clear_polled(hba, &completed_reqs);
 -- 
 2.53.0
 
