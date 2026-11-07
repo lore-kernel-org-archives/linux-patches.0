@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064307;
-	b=l9NnWkBalWGReuajQwXHXkIdajFJxfWGJRWEvnOVzwZMiRpYvOhNxb7gr+mbb2ofeLvq
-	 vHoBQgfIbhfJS5htIW0TTLkDJi9vl780YTevgPsrwojqS9pWIRK/ccv6bCfSldUlUpief
-	 4Hjle39AP0ayADFtJq3FTsxSWR05dALHMr+25AtHcwwrsvBSG2kkoNhaIOgC/fsQeCWQf
-	 tR7hso4ogxmvTCyPO4PplhpVzzBQCzYsszK3s+No/qo6OzLSnJ/L1Qm0laL6dxGNrZ7qk
-	 K+7pLn15o61RPLsu8knQYp9THP+DW/2hoWh29b0Mg3d0eLdalSyhaKxHIbN37dePAJg==
+	t=1794064309;
+	b=DvoKBwRJ99McFK4zY1borTSeIQheTE379oo4nelIYKjlriwtSN2X0rGifa8t+rXkAa0w
+	 pJw8itcEuKYPa7z+tQTS3UlZCtADpvGhsxmLmzQAGyPa5zLv1sYTFjmcDmgKebd71p+WY
+	 J9lododUsMwLwcCqOcn6RWhFaqcyc7aNo0tu9IF8U9ZBxFbcXSPslLmyjWO/hsIcbzowX
+	 THVBkyq4m0NM9HEltsk+pmbuwIVgbRuvc/eyqPdH+T4rXdaPWC+PKrmBWb0EI0dp+eu/t
+	 7BT5UdPM9vqe39UaV5ShJ8nxBjmggZW7yVTsVR065kmADwJDHelte/PSgnGLSQPeHaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064307;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064309;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vC2N9aG8EBSm0d0fFqcY7V81n+E4n8iAbqpzmkyOX8s=;
-	b=Wssy75RJfegvZFigI+0myZbOWhTtkDM++3/b67JAjKTJewJXuFyWMV4GtK1E0fIbTRCm
-	 OK2iK+ECBHKtWZ/xl41tt1kiFMd3udhiWa247R4poDUPY4rw5hiqtiHL4A7jMwDBLxTvz
-	 kcnAf6+bSIdge9I2T+pCNj1bVOHctoMVsYsnQRi41JF7m3ND6l+b/6zVfyxLb/udbwr+/
-	 UUEWJ/IQoo6PeqJGcif7NI92rq9SIM/ZAFtNCa+Z9NRvcKxoIaoCBrOqv3AqrFUyji/4y
-	 /YilmKCCLJI4QBMI//kIFi4tCFc1ug/182rzJ2kqxjbZLikDzer4JlzjFkmns/6b14Q==
+	bh=4cxzjGvejxDxZaM4Hs69LerBX51PSjjvPLwL/ApoxyQ=;
+	b=Dk9rMIr4Odi6+i73MYpJJdkmKQKMmqQfoe2G/p4/egdjErdWInzmBraYEF81UaJAk/Kf
+	 lpUipxGW84XK6J3Ik9ydUWR5TkqGwQ5Svsw7HjDaVRbaAwdltwpDFgmtXz8Mz8JwZ936i
+	 yFx7LbiNHixo5p8uYeA0bjFtu4Lss4VzrXm+dfmqaTmMZTVnxhMODCsEVj0YyV9H3GnxQ
+	 uZhW7oWrCrzFGkDwMa5XeKkVICZv4lFCJB2ZdQUdUoTJRdQq7z1SPXUqRHLrl2RYZpJZD
+	 4eGvFRJ0L0DCy/i3x2Le0WjjUYaTylQMrmZYclZZqdneIpPbQ5LyFnGpltVYPqSIrfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Jz4US+J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1Icxybp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E769606C025;
-	Sat,  7 Nov 2026 15:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75291606C030;
+	Sat,  7 Nov 2026 15:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Jz4US+J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6B41F0089F;
-	Sat,  7 Nov 2026 15:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1Icxybp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209841F0089F;
+	Sat,  7 Nov 2026 15:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064306;
-	bh=vC2N9aG8EBSm0d0fFqcY7V81n+E4n8iAbqpzmkyOX8s=;
+	s=korg; t=1794064309;
+	bh=4cxzjGvejxDxZaM4Hs69LerBX51PSjjvPLwL/ApoxyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Jz4US+J+3Xa6fLxIQc9qzasAyCDuxaQ805DKudJAoUsPT9ML23UnAO8SSQRzY+oR
-	 AWxFrsDFFuHAcCTA0nt/V2zo6Fw3aWkY0HW7wGHw0eUCEskNmfYOgvg3EIekT91iae
-	 lEG6yR0C2Hk9JEIurHtpha0VjiQFUbc5C/zDinHY=
+	b=I1IcxybpyxaqYOHTQMnd9cmVq+ojYlUVu8D/q3zqk71J/mBWRR3vF3EF7qbFZ3NTN
+	 zGitxRTG2SgOxXmUyHzBbBIUPN626SpXkCRhlz3k2t/Nt7N8uB6dLiC6Ecco/Ck98P
+	 KtD4fFQx+hLTYydJ4zMwtNZ6M0ayjRRLfuVXhcVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0398/1257] drm/msm/hdmi_bridge: Correct poweroff/audio cleanup order in post_disable
-Date: Sat,  7 Nov 2026 08:44:54 -0500
-Message-ID: <20261107134950.532982853@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 7.3 0400/1257] staging: greybus: uart: fix racy TIOCMIWAIT implementation
+Date: Sat,  7 Nov 2026 08:44:56 -0500
+Message-ID: <20261107134950.583527540@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,47 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 0499f0576e4442d67c164119f9d7f75d3cc945e7 ]
+[ Upstream commit e94cda6551d4716b17353fc458baa9e85ddea9ff ]
 
-Turning off the power in msm_hdmi_bridge_atomic_post_disable() should
-follow reverse order of powering up, not only because it is logical, but
-also because msm_hdmi_audio_update() accesses registers thus block
-should still be powered on.
+Check the wakeup condition after adding the task to the waitqueue and
+updating the task state to avoid missing a racing modem status update or
+disconnect.
 
-Depending on specific timing, existing code could have accesses to MMIO
-of powered off block.
+Store the old icount on entry and do not update it in the completion
+handler to avoid missing events or reporting spurious ones (due to modem
+status changes before TIOCMIWAIT was called).
 
-Cc: stable@vger.kernel.org
-Fixes: c0c0d9eeeb8d ("drm/msm: hdmi audio support")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752655/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-3-87bdb9f1987f@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: e68453ed28c5 ("greybus: uart-gb: now builds, more framework added")
+Cc: stable@kernel.org	# 4.9
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260907095305.130762-1-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/greybus/uart.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index db85400e574e4..1860605850c9b 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -339,10 +339,10 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
- 	msm_hdmi_phy_powerdown(phy);
+diff --git a/drivers/staging/greybus/uart.c b/drivers/staging/greybus/uart.c
+index 172cf900eaf0b..2c47418a11ef8 100644
+--- a/drivers/staging/greybus/uart.c
++++ b/drivers/staging/greybus/uart.c
+@@ -53,7 +53,6 @@ struct gb_tty {
+ 	spinlock_t read_lock;
+ 	spinlock_t write_lock;
+ 	struct async_icount iocount;
+-	struct async_icount oldcount;
+ 	wait_queue_head_t wioctl;
+ 	struct mutex mutex;
+ 	u8 ctrlin;	/* input control lines */
+@@ -643,11 +642,16 @@ static int wait_serial_change(struct gb_tty *gb_tty, unsigned long arg)
+ 	if (!(arg & (TIOCM_DSR | TIOCM_RI | TIOCM_CD)))
+ 		return -EINVAL;
  
- 	if (hdmi->power_on) {
--		power_off(bridge);
- 		hdmi->power_on = false;
- 		if (hdmi->connector->display_info.is_hdmi)
- 			msm_hdmi_audio_update(hdmi);
-+		power_off(bridge);
- 		msm_hdmi_phy_resource_disable(phy);
- 	}
- 	mutex_unlock(&hdmi->state_mutex);
+-	do {
++	spin_lock_irq(&gb_tty->read_lock);
++	old = gb_tty->iocount;
++	spin_unlock_irq(&gb_tty->read_lock);
++
++	add_wait_queue(&gb_tty->wioctl, &wait);
++	for (;;) {
++		set_current_state(TASK_INTERRUPTIBLE);
++
+ 		spin_lock_irq(&gb_tty->read_lock);
+-		old = gb_tty->oldcount;
+ 		new = gb_tty->iocount;
+-		gb_tty->oldcount = new;
+ 		spin_unlock_irq(&gb_tty->read_lock);
+ 
+ 		if ((arg & TIOCM_DSR) && (old.dsr != new.dsr))
+@@ -657,18 +661,20 @@ static int wait_serial_change(struct gb_tty *gb_tty, unsigned long arg)
+ 		if ((arg & TIOCM_RI) && (old.rng != new.rng))
+ 			break;
+ 
+-		add_wait_queue(&gb_tty->wioctl, &wait);
+-		set_current_state(TASK_INTERRUPTIBLE);
+-		schedule();
+-		remove_wait_queue(&gb_tty->wioctl, &wait);
+ 		if (gb_tty->disconnected) {
+-			if (arg & TIOCM_CD)
+-				break;
+ 			retval = -ENODEV;
+-		} else if (signal_pending(current)) {
++			break;
++		}
++
++		schedule();
++
++		if (signal_pending(current)) {
+ 			retval = -ERESTARTSYS;
++			break;
+ 		}
+-	} while (!retval);
++	}
++	__set_current_state(TASK_RUNNING);
++	remove_wait_queue(&gb_tty->wioctl, &wait);
+ 
+ 	return retval;
+ }
 -- 
 2.53.0
 
