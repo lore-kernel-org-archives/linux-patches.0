@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064863;
-	b=xgFlGxxYP5hk/1hdnNL3JdrwMzinGOQ5fjm9kHOnn7maRYfdpW1mnK3DIxAHLk7mqMjK
-	 +6cBk2IJ2bk4LwoMRT+wrKU72e+Eom5U5XfRd80EcgbVmY+DTeVHSQan+96zN9gsmXo/h
-	 c/ysEG2guiqMpGFxdVzyGhZDPVrrB5dUk+i4eCjI+TZtEbiESsWCFFqE0DYvf65OHALh6
-	 TyFJ5Xc3eiOwCLpOANtH6nYtf5nXEINvJNqHawTr+TiN/wOenZ9omw65ntEnunD+Y7GdN
-	 k5y7hH0OH6Tjc894y6MO/N6sasoxQXEEJzqda0OGKlgRPLaY6te4EhNpsenVIbYmrcg==
+	t=1794064865;
+	b=vi1bwOgUnv1i/NmoE9m9M0njoOrEIpB5vLNI7qdFEXU9uB+aqRgh764jFyZzAGP2jitf
+	 wx3GcnEAmMh9KJic8scBUZNXcAQSJaT9zx64ir++1ugBzkRtYannCJcZAXlq9K7nsrJiC
+	 DSLtV1db4UZHyLuON2fmnp2vD3JLx0iqk3PaQZeh4pxy+jUbvBc89NX2uEwj01AvvhSpz
+	 FxXbLRqWodL0rWGjuGxyoHofarkJvgTvQneLdSj3xs3NEpX+MOSppRyNc2DKS1CkyvIOW
+	 an5eqGz6ZqQCsx67nTcnvnfSe0sbqDAlwAdbDEvstp6TkW8parE1y5aTeTt5N17Kt0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oY1lQqhBByLaQoBXbxQBGR68FSkM1+sar84ywbFzjdE=;
-	b=zjrHpx8Wi1G8QsajJyylIZ98JJrjErQjBuls0+cU6muvGcGZnph74v8sBV3bpBD4nlxz
-	 bbL1DDpBUqfoxm/5xEK4LIbpKoU5rx8c1yp45DDGldUiYoUPgB3xDQHf8DektMgTf8vXE
-	 js3xzMtoF4f+S5S242CH5vKVrF0E9/hRT+BLR7UFKMa3JWyh4KycHnLYIh+b3Bw3GLjqj
-	 VjFJQ8dsG3X1voOZyK3B4e/URlX4zHkwsuhOta76mhgH+g6+CQqKd2uvtmiwzlJ97P4Qp
-	 vbhGd5D/HX55We6c73GiwHUTIvDE/NgfV5J6HEhkqMT46+vMKvSTQbaH609SrqzDAmQ==
+	bh=Y4CJWef3yISEHLVtZk/10yilFRSNrGS62n0eIUZdKa4=;
+	b=dPssnGyYp2XB/fXq1pSfb1LjoHo5FmCkGk/CRxN7hMbbFehVNwvg4u87jtOsZfOF9KN2
+	 H+jsRNJDZGfdxQeUwTlMjzgVzeaN/GdnI8/TvZAcM2lJZ+Ctcp3tT33xHm4WQSs0AmRfd
+	 bMFLj8kztzMB5Fb5vdg+Qu9cAvjZGSMHELCp5EPvppem1dk04MuyqZtyBcFWSIgeYM7oE
+	 M56cETB8+GEWXSn1JD8FtaUPuqYGeL/BB8ejjctJidI4c4/bA4ANl6/6VFhLvY9S1YrXP
+	 3+hzvejugH0kdPR6qiJXe4LMRz6tvZ7rznP+dQIbu0lJt4yrEJ0HP6y1Nevp7yqRv7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4rNMBdW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RgGJZqZr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A98A606A9C1;
-	Sat,  7 Nov 2026 15:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB6A606A9D2;
+	Sat,  7 Nov 2026 15:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4rNMBdW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AFF1F0089F;
-	Sat,  7 Nov 2026 15:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RgGJZqZr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639221F0089F;
+	Sat,  7 Nov 2026 15:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064863;
-	bh=oY1lQqhBByLaQoBXbxQBGR68FSkM1+sar84ywbFzjdE=;
+	s=korg; t=1794064864;
+	bh=Y4CJWef3yISEHLVtZk/10yilFRSNrGS62n0eIUZdKa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I4rNMBdW8uLJnvvgulgeExUxnD03xN1hp0rpH9Zjg7d77osW/R7n9NuJVL7/Xi0IO
-	 bzjJsKUcbG7W0xhwOymeuuRQBdaL2Dj/SX83aE5tpvVH2zMJY5eSepl4hWnJe2t57B
-	 QWY+6wf7gjP7RWNaDRSOQ9iyCmhvqdMSWS1KimbU=
+	b=RgGJZqZrxhPr1ca+WpX3aPnCGrArauklZDQERxgsi9Bt0a4WoexA2K4bsdfNMCw3Y
+	 sXsWwN3bu6KVRzV1f2WqB2Tw00Y9RiSjfdrXIgd/as6aWlaE57WwqnqnuPicgWnpXE
+	 jjhzgfHMvdtjNvh+sROAjzJ9PsV+71ixuf0Xnph0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0781/1257] kbuild: AutoFDO: Update split machine function argument for upstream rename
-Date: Sat,  7 Nov 2026 08:51:17 -0500
-Message-ID: <20261107135000.878890495@linuxfoundation.org>
+Subject: [PATCH 7.3 0782/1257] iommufd: Keep dmabuf PFNs MMIO when filling another domain
+Date: Sat,  7 Nov 2026 08:51:18 -0500
+Message-ID: <20261107135000.912576235@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,43 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 2b358510d5cc56164f83110ca1499c95a5a352cd ]
+[ Upstream commit 769f2cd9226c96619d77fa16af84de74cae41b6b ]
 
-A recent LLVM commit [1] renamed the internal LLVM plugin option
-'-split-machine-functions' to '-function-splitting=all', breaking the
-AutoFDO + ThinLTO build with:
+A VFIO PCI dmabuf mapped into an IOAS is mapped with IOMMU_MMIO only in
+the domains present when it is mapped. A domain added later, or a copy
+of the area into another IOAS, maps the same BAR as cacheable CPU
+memory: IOMMU_CACHE set and IOMMU_MMIO clear.
 
-  ld.lld: error: -plugin-opt=-: ld.lld: Unknown command line argument '-split-machine-functions'.  Try: 'ld.lld --help'
+Once the area is in pages->domains_itree, pfn_reader_fill_span() reads
+its PFNs back from the storage domain through batch_from_domain(), which
+adds them with batch_add_pfn() as BATCH_CPU_MEMORY. Only a hole in the
+span reaches pfn_reader_fill_dmabuf() and gets BATCH_MMIO, so
+batch_to_domain() programs the later domain with the wrong prot.
 
-The plugin option is needed for in-process ThinLTO, so handle the rename
-accordingly using ld-option.
+The effect depends on the page table format. io-pgtable-arm maps the BAR
+as Normal cacheable instead of Device memory, the AMDv1 and x86_64
+generic_pt formats set the SME C-bit on it when the tables are encrypted,
+and the RISC-V format with Svpbmt maps it as normal memory instead of IO.
 
+Read dmabuf PFNs from the recorded phys for every span, before the
+xarray and domain paths. The phys range is always available, and the
+read-back from a domain only serves to avoid re-pinning user pages.
+
+Sashiko pointed this out while reviewing an RFC that plumbs the dma-buf
+memory type through pfn_reader_fill_dmabuf().
+
+Fixes: 74014a4b55f5 ("iommufd: Have pfn_reader process DMABUF iopt_pages")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/all/20260716154123.32DC01F000E9@smtp.kernel.org/
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2186
-Fixes: 2fd65f7afd5a ("AutoFDO: Enable machine function split optimization for AutoFDO")
-Link: https://github.com/llvm/llvm-project/commit/3e6acc87c58843e551d6e8e4bf06c26712b04622 [1]
-Link: https://patch.msgid.link/20261014-update-autofdo-split-machine-function-option-v1-1-5c71b3005e89@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20261008125206.11990-2-parri.andrea@gmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.autofdo | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommufd/pages.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/Makefile.autofdo b/scripts/Makefile.autofdo
-index 1442043da1391..57a3aba6ffc23 100644
---- a/scripts/Makefile.autofdo
-+++ b/scripts/Makefile.autofdo
-@@ -22,7 +22,7 @@ ifdef CONFIG_LTO_CLANG_THIN
-     KBUILD_LDFLAGS += --lto-sample-profile=$(CLANG_AUTOFDO_PROFILE)
-   endif
-   KBUILD_LDFLAGS += --mllvm=-enable-fs-discriminator=true --mllvm=-improved-fs-discriminator=true -plugin-opt=thinlto
--  KBUILD_LDFLAGS += -plugin-opt=-split-machine-functions
-+  KBUILD_LDFLAGS += $(call ld-option,-plugin-opt=-function-splitting=all,-plugin-opt=-split-machine-functions)
- endif
+diff --git a/drivers/iommu/iommufd/pages.c b/drivers/iommu/iommufd/pages.c
+index 404f31d8f7291..2f6153108add7 100644
+--- a/drivers/iommu/iommufd/pages.c
++++ b/drivers/iommu/iommufd/pages.c
+@@ -1178,6 +1178,15 @@ static int pfn_reader_fill_span(struct pfn_reader *pfns)
+ 	    WARN_ON(span->last_used < start_index))
+ 		return -EINVAL;
  
- export CFLAGS_AUTOFDO_CLANG RUSTFLAGS_AUTOFDO_CLANG
++	/*
++	 * Always read a dmabuf from its phys, even where a domain already
++	 * maps it: a domain can only report CPU memory PFNs, losing
++	 * BATCH_MMIO. last_hole aliases last_used, so this covers any span.
++	 */
++	if (iopt_is_dmabuf(pfns->pages))
++		return pfn_reader_fill_dmabuf(&pfns->dmabuf, &pfns->batch,
++					      start_index, span->last_hole);
++
+ 	if (span->is_used == 1) {
+ 		batch_from_xarray(&pfns->batch, &pfns->pages->pinned_pfns,
+ 				  start_index, span->last_used);
+@@ -1201,10 +1210,6 @@ static int pfn_reader_fill_span(struct pfn_reader *pfns)
+ 		return 0;
+ 	}
+ 
+-	if (iopt_is_dmabuf(pfns->pages))
+-		return pfn_reader_fill_dmabuf(&pfns->dmabuf, &pfns->batch,
+-					      start_index, span->last_hole);
+-
+ 	user = &pfns->user;
+ 	if (start_index >= user->upages_end) {
+ 		rc = pfn_reader_user_pin(user, pfns->pages, start_index,
 -- 
 2.53.0
 
