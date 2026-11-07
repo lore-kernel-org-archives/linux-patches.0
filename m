@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064695;
-	b=jkX6ifeUr+4FyLZGTP1zt8UfkSd88dhI+Sn4WPTXlI+sswvRHrG2lI5V/NCpQpkMpn/e
-	 BsaPtTCYaZJ/Hf+eL3587jjdzvWdwCA6JKYBKo0f/xJvfhj+ziDTFx3E998bmm+pckoyy
-	 K72jF0DiTl4iiScmdpXcVTO+6N1LosY3yQj2A15UYGa9asSGLm7YjJIvMYVCEDXMkypzL
-	 LylAhgPPPeBSYhntgG9kZ8dxBqG9hOTFfiTe2xvAy7kRttGD4TV5n68JZ2ZKAbygTRe5+
-	 gY83mfDISPC2r9nwGlekqTN2ZdYUqDIjFOweuMUsUQLljynY51aFnmbKYRbfsGPZSgw==
+	t=1794064697;
+	b=irWAM2bCLzU1QfaLiowWfDSA28iBhB03WZUzfAFfbUgbN6hT0f3D4ZDBtkj1BrU1p63G
+	 7rRtn+NqY7sY0s9cNENQgmn9G5M4/Q6qiFMsQad6PbBSXa4/KDtpNhMnUHQaF9z5gJm9f
+	 Emhn6W5FMGHuUKDKdlkhZl4lER5y++0WaQARipylaqrIIyxG43kHTiVEG3wUCmhQxK9Lh
+	 v8Hscou+qyPgfWR8/ZfSnMYkAjd5rlYo7jJH6uJ9LHfA7nJsbqmJ8W1Ru4TyThp7fGcCA
+	 amtOoimYzvXUO+OPvSKiS1lDO5XvKIpVMWBUjwrqorIT4D+VLM7Cl3pl49A9/tjqjGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064695;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064697;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3pEW26wILPBlMf9h/ptptyqLlt9Eof01j9MfV/J+y8w=;
-	b=AuaMHcmMIOlntW+VwOfdzaosBxPZ6ULG+K152ozMT1sdn2Cvu8zWSgC3+4qQ9QSxD6Rs
-	 AOYCTzqMDoyrsP28dyaSnn/KlG6wWniGSTQm0E0MAVckQeNviMa9lG6ptQQg2O9LIm/xo
-	 4NiJ/dwbfS4qrgvAu8lL31IIvg5KHjyCf8EZ+L3FQW+42b38ChJmLn99cCdcSa8fOQr+F
-	 GRLuALl5KuqBfUJX9e3xgLMN0UVtvsWdzqpzMKCPxOdglKKMqe6Yyu3EpyzZv+NnEISZV
-	 hbvvXGV4oOJbkowZ1bBmiLGH6Hno1av3rfemddgXAQnVqE3UJzM0T9+BKAb2JEYQrgQ==
+	bh=iszg5LnTzkXiCaby1yl+oBKxXIXcw9vhhWgvluIPYbs=;
+	b=XAy1CCKcbp3jYOTWgTZhGCqPgds/C0LbF+VBWTiFbcBU2VdvG7foUy8/YwId2jLl8RoY
+	 MY3iWqT8rCbs2iOiONV0rpWzOi7yXVVwsEBUc5QkCQ01K0R0taZEFdtasADMtrhnFHo6S
+	 N9rjo2sF4o98U1SaNL7aQD5rzTAs4HQYFTbw0qyM2eRTnn/OKEdwsm+LlmW7qYZcI0b8h
+	 Ooky6XqpznhIzXw5CwIdALHNCEhpV2+83QLqQ1+KFx4rF+w9bHymJ4+uoS4kcknPQj9Nc
+	 FCzmjrG4ia5gZ1RDy9Z8TfkIQhJItnAB0Bm1n78jq0NTwqJoFuzbwV1blthUPGqw3ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nyM2O3Yb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBqPrmVE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B425606B8B9;
-	Sat,  7 Nov 2026 15:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCBB606B8B9;
+	Sat,  7 Nov 2026 15:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nyM2O3Yb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B30A1F0089F;
-	Sat,  7 Nov 2026 15:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBqPrmVE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DCC1F0089F;
+	Sat,  7 Nov 2026 15:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064695;
-	bh=3pEW26wILPBlMf9h/ptptyqLlt9Eof01j9MfV/J+y8w=;
+	s=korg; t=1794064696;
+	bh=iszg5LnTzkXiCaby1yl+oBKxXIXcw9vhhWgvluIPYbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nyM2O3Yb7jYO/0x6gEBFXHeKB7bMXNGQASq+7sUDAW70/NcMooZAi+mb8PH9+L5Cq
-	 5wGIGM6ES4S7k0eld7tfifcsewfWhX+8PgZRQl1ZU5a1+kIroX9pV3sZ2RfzkyEpLx
-	 lq8i1nAWR2wPXk42b3ZsVCn1wMx0sGMmT1iEKEfs=
+	b=DBqPrmVElFOjfZzHCvXRirOsfwaKlvtTN1qPURPBHZgW8T9kgMLxUAUCWo0U4ZNsU
+	 IewylQYj6rpzCdD1bC5/bZzZcz4mUSKl/V8gNONxkFV19VW8KtYuwAl0o6k1TNOTpB
+	 2I+fF0hYwrpuqS29dmLdCDyV/tXaXzwtXVYzfXVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0686/1257] fbdev: smscufx: check for fb_deferred_io_init() error
-Date: Sat,  7 Nov 2026 08:49:42 -0500
-Message-ID: <20261107134958.214162988@linuxfoundation.org>
+Subject: [PATCH 7.3 0687/1257] fbdev: sh_mobile_lcdc: check for fb_deferred_io_init() error
+Date: Sat,  7 Nov 2026 08:49:43 -0500
+Message-ID: <20261107134958.241836740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,66 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 8ea6c6e77ccf887f3e68c64f4c261071a345da1e ]
+[ Upstream commit 5192201aaac2a923ff98306e3ccda58718ee395f ]
 
 fb_deferred_io_init() allocates deferred I/O state, populating
 info->fbdefio_state, or leaving it NULL if an error occurs.
 
-Currently ufx_ops_open() ignores its return value.
+Currently sh_mobile_lcdc_start() ignores its return value.
 
-Therefore if an error arises in fb_deferred_io_init() (for instance, due to
-an allocation failure) info->fbdefio_state is left NULL.
+Therefore if an error arises in fb_deferred_io_init() (for instance, due
+to an allocation failure) info->fbdefio_state is left NULL.
 
-fb_open() will then dereference a NULL pointer (calling
-fb_deferred_io_open()) as soon as ufx_ops_open() returns.
+When the file is subsequently opened, fb_open() will dereference a NULL
+pointer (calling fb_deferred_io_open()).
 
-Additionally, if the allocation of info->fbdefio itself fails,
-ufx_ops_open() sets info->fbdefio to NULL and invokes
-fb_deferred_io_init() regardless, hitting BUG_ON(!fbdefio).
+Fix this by checking for the error.
 
-Fix this by only invoking fb_deferred_io_init() if the allocation
-succeeded, and checking for the error.
+Also clear info->fbdefio in that case, so that sh_mobile_lcdc_stop() does
+not attempt to clean up deferred I/O state that was never initialised.
 
-The driver already supports operating without deferred I/O, so in either
-case fall back to that by setting info->fbdefio to NULL.
-
-The ignored return value was introduced in commit 56c134f7f1b5 ("fbdev:
-Track deferred-I/O pages in pageref struct").
-
-However, the BUG_ON() issue originates from the earlier
-commit 3c8a63e22a08 ("Add support for SMSC UFX6000/7000 USB display
-adapters"), so target that for the fix.
-
-Fixes: 3c8a63e22a08 ("Add support for SMSC UFX6000/7000 USB display adapters")
+Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
 Cc: stable@vger.kernel.org
 Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/smscufx.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/sh_mobile_lcdcfb.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/smscufx.c b/drivers/video/fbdev/smscufx.c
-index 5704f60e1741b..34d8abd5b3544 100644
---- a/drivers/video/fbdev/smscufx.c
-+++ b/drivers/video/fbdev/smscufx.c
-@@ -1041,10 +1041,13 @@ static int ufx_ops_open(struct fb_info *info, int user)
- 		if (fbdefio) {
- 			fbdefio->delay = UFX_DEFIO_WRITE_DELAY;
- 			fbdefio->deferred_io = ufx_dpy_deferred_io;
--		}
- 
--		info->fbdefio = fbdefio;
--		fb_deferred_io_init(info);
-+			info->fbdefio = fbdefio;
-+			if (fb_deferred_io_init(info)) {
-+				kfree(fbdefio);
-+				info->fbdefio = NULL;
+diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+index 5743c96d54814..a8ef7c5993919 100644
+--- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
++++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+@@ -1042,7 +1042,11 @@ static int sh_mobile_lcdc_start(struct sh_mobile_lcdc_priv *priv)
+ 			ch->defio.deferred_io = sh_mobile_lcdc_deferred_io;
+ 			ch->defio.delay = msecs_to_jiffies(tmp);
+ 			ch->info->fbdefio = &ch->defio;
+-			fb_deferred_io_init(ch->info);
++			ret = fb_deferred_io_init(ch->info);
++			if (ret) {
++				ch->info->fbdefio = NULL;
++				return ret;
 +			}
-+		}
- 	}
+ 		}
  
- 	pr_debug("open /dev/fb%d user=%d fb_info=%p count=%d",
+ 		sh_mobile_lcdc_display_on(ch);
 -- 
 2.53.0
 
