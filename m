@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065371;
-	b=XES5vlpoahkH+NNOcXcvDWoH+bj2kg1WT5029ONObZjGynVRiiI+Fzyk3vkSS5syl/Tj
-	 trLldumwmIQ+aXUKQDg/g2MzcEeKhUE21Hnc9Dv03ZdMKdY7UnibpPna8QYjmKatDW88N
-	 f7KWf37MRoqmyaXsU7OuoVvjBn/eaYdIY25S74JBF2e6ds37MLsOYZ2f3vD/upX9FHLin
-	 wKV2/L1VahpNKuNhdViYYRSTFZa2g9I9hc+Ndf8iu07+J/NTw5Pr0/zvf1QNYxaEJqrzB
-	 zBcvR6PdWNwrd/w0AXC53nLLiMQvBYX9hpm3SFpGfIdZB1JrNslZTTc2YW+eLfu0Q6A==
+	t=1794065372;
+	b=OtHQ2X4oXGnvFvpFhJ6Jf/pO98LGNLZTQwT+x4deEbje0uWnO5Ffbiz8+LHsFpgicohd
+	 mT0KuzI7uBrWu3cFUgz7zUS+miytAO6voKw7Y+xooSi59DrKN1Wn0l4uaE7sDpmUvmWcy
+	 deY/NehVglvRPkCel4M4CzWh91d5ac93koaNq6MQlgweKzt1fMi9QlgWHErBJmAuW5RI8
+	 LUCeHK1RdhTpPUol4DaOoIPIF3JtKRGWcAzv6ZhdF/BWY22rCOLcQEwrQrYDlZ9fMn1D+
+	 klMGxSe1O5I5Gsro7U95/7FKjURkKg7zDJTI625wU1GYRUeuTqHMOXU+gxIUrPmRU6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=B/y5s/20JKsYuYMLfEucvcJvdqAN84D1RT/UMAP5904=;
-	b=C58PmTHIwVHb6cwKTX/DmKGJMvG3i9BnTSiP+49dWy9/wKL8iASsnBIeNQ9q200D93g0
-	 jCy90GjwVYhGxVoT7/ZZP2HeAiRBpQua37QQ6LmNiD5Qrpy6c4JEbuEZOxDmHVrLifFHY
-	 MS+ZcsGOlKewUfvO8A3djuIGd69AqbKOPHtZU18N0GszRkTUYJI8KCHZIPf5K0V2VXEsp
-	 vlZk6boqPMKf9PaSzFge/yjVoVFiYTLVQkJIWQLsAVEnUxzSq1BY5gg3AjiC2aPNmPGrI
-	 Eo+j33fVbXQQJJlV+YBKlLLfVQemS8hsAE34m/1lDUZX8okwXz+YrXTJK+OXx8VlO9Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=0B9jCT1FXiD8ASjKVSdYcrWmCxTYK95o/LcdQTvmPHc=;
+	b=DrQyYoQ7e1f+fgJCYdhw2mc9Js8+iUzSsoy0nCMBFcMX/8rkxIl6dAdDqFa6eaD1ZfcQ
+	 0srh553+OZyKwoe3Zkp/st8dJCIcMnmhCSmTKwD/ak5UEmEcVv059+MDU5cyrt5Aa25qy
+	 vsdz0LLJIKTw6VhTX8Tbe8YZKSV0XbBK20sUfiVOsqs+KbkXxkuXVePKc1i1deljsdKd7
+	 u4/LZQ5GpG3MA9cW3Ly6UIDU3oZQ7RKcJtylI1kevJCBhKO0lZksLD5hsxvtTGQjXjWZN
+	 s0CvqC4zBlS0xavVxZLiHVNNpkY1LWD7vhKiEmA6mTsK6UyVpXTZcU8nEF/Qq3cfv1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OVlwZBlM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W96P7mQY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C93606A335;
-	Sat,  7 Nov 2026 15:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4AF606A335;
+	Sat,  7 Nov 2026 15:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OVlwZBlM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63C01F0089F;
-	Sat,  7 Nov 2026 15:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W96P7mQY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1161F0089F;
+	Sat,  7 Nov 2026 15:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065370;
-	bh=B/y5s/20JKsYuYMLfEucvcJvdqAN84D1RT/UMAP5904=;
+	s=korg; t=1794065372;
+	bh=0B9jCT1FXiD8ASjKVSdYcrWmCxTYK95o/LcdQTvmPHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OVlwZBlMhw9H6HzaXBN6a2D0ejtlqBMcmJU6LJrtXU1RWsIAhJqIhH/JTwWr3EZWE
-	 Jc3Jxp69Wj6IM3QgWvy8ToQXV/pOkMha2fm5d82Oqwy1FQAH97ujOKs0vj3BlUG9b2
-	 7kBcxGxMVO5DhOJnXoou1jlWFQU8L+L9TizB8TL0=
+	b=W96P7mQYB5bb3ZbB40d0YOMxowo81+3ph02E976w0dqF4TdkykQRsyM9FM6fgZtJp
+	 Yq46kBt9Xtv73u6U9JOLQPWY7POlj0ShL1/JeOgQqOGn6npFVBDlVWSPha2v2JeG0C
+	 ZqBHod8FamheS504Y2+e5RGjX9yB2UzjzHebQbrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
+	Alberto Garcia <berto@igalia.com>,
 	Baokun Li <libaokun@linux.alibaba.com>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1101/1257] fscrypt: Fix missing barrier in fscrypt_find_mode_key()
-Date: Sat,  7 Nov 2026 08:56:37 -0500
-Message-ID: <20261107135009.676925417@linuxfoundation.org>
+Subject: [PATCH 7.3 1102/1257] ext4: refuse encryption when block size > page size
+Date: Sat,  7 Nov 2026 08:56:38 -0500
+Message-ID: <20261107135009.700759823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,90 +63,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Alberto Garcia <berto@igalia.com>
 
-[ Upstream commit cf66375465b9ca531f5c294f468db1df293c178c ]
+[ Upstream commit 0e341d1d29db11c29211d2b8870a515c26589d5a ]
 
-fscrypt_find_mode_key() walks an RCU list and hands out a per-mode
-key without an acquire:
+Encryption is not supported when a filesystem's block size is larger
+than the page size, and commit 709f0f1f1bf5 ("ext4: add checks for
+large folio incompatibilities when BS > PS") added a check to refuse
+mounting such a filesystem.
 
-  setup task
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  setup_per_mode_enc_key()
-   ├─ fscrypt_prepare_key()
-   │  └─ fscrypt_prepare_inline_crypt_key()
-   │     └─ blk_crypto_start_using_key()
-   │        └─ blk_crypto_fallback_start_using_mode()
-   │           ├─ init profile, keyslots, tfms[]
-   │           └─ smp_store_release(tfms_inited[mode])  # init order
-   └─ list_add_tail_rcu(&new_node->link, ...)  # release -> finder
+However, it is also possible to enable the "encrypt" feature on a
+filesystem that is already mounted (with tune2fs -O encrypt). Once
+that happens it won't be possible to mount the filesystem again in
+the future, but there is nothing preventing the user from setting an
+encryption policy while the filesystem is still mounted.
 
-  finding task (later submits the I/O itself)
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  fscrypt_find_mode_key()
-   ├─ list_for_each_entry_rcu(node, ...)
-   └─ return &node->key                 # no acquire, chain breaks
-  ...
-  blk_crypto_fallback_bio_prep()        # WRITE path
-   ├─ tfms_inited[mode]                 # addr-dep, reads true
-   ├─ blk_crypto_fallback_profile       # no dependency
-   ├─ blk_crypto_keyslots               # no dependency
-   └─ slotp->tfms[mode]                 # no dependency
+Fix this by refusing to set an fscrypt context in ext4_set_context()
+when the block size is larger than the page size.
 
-RCU publishes the node and the key reachable from it, so
-tfms_inited[mode] reads true through the address dependency.  The
-independent fallback globals are not covered by it and can be read as
-uninitialized.
-
-On a weakly ordered machine, a WRITE bio can crash in
-blk_crypto_get_keyslot() or crypto_sync_skcipher_setkey().
-
-Other tasks reach the key through fscrypt_inode_info's
-cmpxchg_release()/smp_load_acquire(), which is already ordered after
-the list walk; only the finding task's own later I/O was not.
-
-Fix this by upgrading the control dependency to an acquire with
-smp_acquire__after_ctrl_dep() once a matching entry has been found.
-
-Fixes: dd015b566d50 ("fscrypt: Fix key setup in edge case with multiple data unit sizes")
-Cc: stable@vger.kernel.org
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://lore.kernel.org/r/20261014161153.GC322435@quark
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20261024104350.2257313-1-libaokun@linux.alibaba.com
+Fixes: 709f0f1f1bf5 ("ext4: add checks for large folio incompatibilities when BS > PS")
+Cc: stable@vger.kernel.org # v6.19+
+Signed-off-by: Alberto Garcia <berto@igalia.com>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/093b40e9df29fc102907092f4ff73461f4cfcbfd.1790343958.git.berto@igalia.com
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/crypto/keysetup.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/ext4/crypto.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/crypto/keysetup.c b/fs/crypto/keysetup.c
-index 892044ebcaca6..a77b889d7578c 100644
---- a/fs/crypto/keysetup.c
-+++ b/fs/crypto/keysetup.c
-@@ -205,8 +205,14 @@ fscrypt_find_mode_key(struct fscrypt_master_key *mk, u8 hkdf_context,
- 		if (node->hkdf_context == hkdf_context &&
- 		    node->mode_num == mode_num &&
- 		    node->data_unit_bits == ci->ci_data_unit_bits &&
--		    fscrypt_is_key_prepared(&node->key, ci))
-+		    fscrypt_is_key_prepared(&node->key, ci)) {
-+			/*
-+			 * Upgrade the RCU dereference to a full ACQUIRE, so
-+			 * that blk-crypto global state is seen as initialized.
-+			 */
-+			smp_acquire__after_ctrl_dep();
- 			return &node->key;
-+		}
- 	}
- 	return NULL;
- }
+diff --git a/fs/ext4/crypto.c b/fs/ext4/crypto.c
+index 1a0fccb084ef5..318b2eaea7412 100644
+--- a/fs/ext4/crypto.c
++++ b/fs/ext4/crypto.c
+@@ -156,6 +156,15 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
+ 		return -EOPNOTSUPP;
+ 
++	/*
++	 * Encryption is not supported when the block size is larger
++	 * than the page size.  This is rejected at mount time by
++	 * ext4_check_large_folio(), and this check here is for the case
++	 * when the 'encrypt' feature is enabled on a mounted filesystem.
++	 */
++	if (inode->i_sb->s_blocksize > PAGE_SIZE)
++		return -EOPNOTSUPP;
++
+ 	res = ext4_convert_inline_data(inode);
+ 	if (res)
+ 		return res;
 -- 
 2.53.0
 
