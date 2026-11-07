@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063790;
-	b=HHjJtig7ghXGgeM0hziLhNlduUuKEtkT53kccND29OoZ1CdTvQccKWdTFRyYtrXF4nRE
-	 sGka4pmqCyhLdqnVZRj33Mgkw1Tk83cTGmMxkh70SIVDW+0iOP8gv+UbydcQlOiwzG1ci
-	 gh2IaSJ6rJuak8zCoD1UX7KMIH58UqXLALzW44rypQP983emBRhe4PfqZ9y9FkSMYwkTO
-	 ApbmAJYRduEBqVr9lsHopEW7A+yY9C5uIV3FAVHAzQdJXqMZG5flgok6W/jyBDzE4O8MM
-	 +m/zaTjPkUKQW0E0aM/Yq5d0xS7nVj+N1GPxjvKh9+p7dkBxzz4RljxSLLlEV+FfckQ==
+	t=1794063791;
+	b=iewFCdNqxbASkfCbTJZ40YPR0QshcWcGU3PToE29tQYnzLzMWcxpTLqwC5pr3+opkYA9
+	 3kYUvZczCd6tsEk8OBnYzsIwX50icThIqCfKx9hrSm6wAh8eeVU55wXQYTHQsQO/Ovhig
+	 X5wP0sgkuMW+REOW08qa4OTMp7dWf4Fgl4UiQzKpPGRZgapaM6pshaCDO80nkX64EOpuR
+	 6NsUAf4R6s+tFPbZpqoufVPkuRKzGYZuXDYjz+38OsBVxzRvk9N1DQQbSSTncSvAzxDOj
+	 /SoSedV9kyBdQNqbafhPkh3Bm1yY06NeShQ+NY83wZBg8ZXdcqoi53FMRheuwA82nnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FDNgGLa+C89OpMOjFF0qOLbMqMRQT6mQuu8/FbqZ1og=;
-	b=me5bi1fJ45kMta9v7BFVLKkE3DbrrY0Cw4lCmwhA1FChH/jf4n1mgcC3SGJq7okhuZcr
-	 8NfvlJTBSi3T5hXsSs2z9kTiu/b7npY0ku8ya9psheu7vA17oZCyqqxecjW36jh4VSl8/
-	 6qyVPpiuwUnKpQuzx5FO39twPZO6qD6OagxQWpy9nGCP2KlxDHiS7p5TrVXzcDxMWOqnM
-	 B1e4YKhmhrAzOPxQhvKJyb0lkhslNo3WFyLlYTe9Y2au8NMLUWfxYEB6KQ0S/hyxX5udp
-	 ql1o8LONY7oJGIFYEfZ0ePTVPJlwattlOQDiAuYC1DGlHizGiWmY1IEipNJtQoCyBiQ==
+	bh=jcmJwjBXPNHN7c7z/WgvLcXNYPyCz3cT2PMLQDy5ChU=;
+	b=2iA9IFisvIdckXUbK8cwEPRhTYX+CM66OsrgQpNP7UhR5vgb2nG5B2C9pZb/9XlmaW13
+	 I2G/pTeg5tJaKgc/B/DIv6QyfM3xRVM/gH8nACAZr873rthzUCr5BHuPeb52EXaZScAbQ
+	 XCCVs+e4bkoFor/jQkrdnuzYpdn9SioqGHt9P3r8ZJePoR+Vza0POS973PbsnDaMX7Dti
+	 1R+KAMwZ+K52FNyXZ2i0ogM4qnuFVGgfB1PqLuCsogWW2P5h52hQ8aeO9y17szUYTqgi6
+	 Ck/vkHwMhbAXs9LJWrSoV59wkoBSwd4zvpznjgdek2FANkIyWhpuMkLRGD9ORhztaeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ewyYOq6u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zrKEG8gP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2328E60A3810;
-	Sat,  7 Nov 2026 15:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA6360A3824;
+	Sat,  7 Nov 2026 15:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ewyYOq6u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC14D1F0089F;
-	Sat,  7 Nov 2026 15:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zrKEG8gP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8ED1F0089F;
+	Sat,  7 Nov 2026 15:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063790;
-	bh=FDNgGLa+C89OpMOjFF0qOLbMqMRQT6mQuu8/FbqZ1og=;
+	s=korg; t=1794063791;
+	bh=jcmJwjBXPNHN7c7z/WgvLcXNYPyCz3cT2PMLQDy5ChU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ewyYOq6unyFLjv1/T3x+yZc6ZfCalFTsLfaTbxM1lp/o3rY8h50pxjLX7wVMkgRFm
-	 zwBjLMiDr/KeR6cj+/DICxxF0nauko6mW685jQ1ZqgtvBg/EyxYU4DgFt7DbDMBtYi
-	 GpcBlHJtZEBDBG7Oz06ibYx85XG8ay4hlWTkGJ2k=
+	b=zrKEG8gP/0rszS2YLvm0z+wY8r8SLdKKwHT22wKU1YkQcEtxB1Em4PC1ZusMuGZHB
+	 6hMAyzuRnRzYS+qnFdhQwfEqXBq6WaczFScGRczpABPtHTktr2Ds05zS+g0SjsxnoN
+	 RD3/0ZD8aU9hUE/a4MMhprAiftTEecwi1RWCRlQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 852/869] tcp: check congestion control restriction first
-Date: Sat,  7 Nov 2026 08:58:54 -0500
-Message-ID: <20261107134921.674950223@linuxfoundation.org>
+Subject: [PATCH 6.18 853/869] apparmor: fix refcount leak in aa_get_newest_profile()
+Date: Sat,  7 Nov 2026 08:58:55 -0500
+Message-ID: <20261107134921.702376118@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -72,59 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit dda51b73721684637ab8e9bd97c78228b99c4bd2 ]
+[ Upstream commit 33ed50716251d5b2875706c40d0c8082d46be0b1 ]
 
-tcp_set_default_congestion_control() takes a reference to an algorithm
-before checking whether a non-init network namespace may select it. A
-rejected request returns -EPERM without dropping the reference.
+The labels_profile() macro is evaluating its argument twice
 
-This affects module-backed algorithms too; BPF is not required. For
-example, after root loads tcp_bbr, a user with CAP_NET_ADMIN in a
-non-init network namespace can repeatedly request it as the default
-although it is not in tcp_allowed_congestion_control. Each rejected
-write leaks a module reference. Since module->refcnt is an atomic_t,
-2^31 such writes can make it negative; later module_put() calls warn,
-and rmmod can hit the BUG_ON() in try_release_module_ref().
+  #define labels_profile(X) ((X)->vec[(X)->size - 1])
 
-Check the namespace restriction before acquiring the reference, as
-tcp_set_congestion_control() already does.
+unfortunately aa_get_newest_profile() passes
+   aa_get_newest_label(&p->label)
+so every call to aa_get_newest_profile results in 2 refcounts
+being taken with one being leaked.
 
-Fixes: 8d432592f30f ("net: Only allow init netns to set default tcp cong to a restricted algo")
+There is no need for labels_profile() to be a macro. Convert it to
+an inline fn, which ensures all uses are passing the correct struct
+and removes the double evaluation.
+
+Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/71c142b2d45af6a2fe7fc6cd4a5ca52c53afbe23.1793075984.git.zhilinz@nebusec.ai
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_cong.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/apparmor/include/label.h | 6 +++++-
+ security/apparmor/label.c         | 1 -
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_cong.c b/net/ipv4/tcp_cong.c
-index 8e83ef81fc187..e3f462f161dd6 100644
---- a/net/ipv4/tcp_cong.c
-+++ b/net/ipv4/tcp_cong.c
-@@ -288,12 +288,12 @@ int tcp_set_default_congestion_control(struct net *net, const char *name)
- 	ca = tcp_ca_find_autoload(name);
- 	if (!ca) {
- 		ret = -ENOENT;
--	} else if (!bpf_try_module_get(ca, ca->owner)) {
--		ret = -EBUSY;
- 	} else if (!net_eq(net, &init_net) &&
- 			!(ca->flags & TCP_CONG_NON_RESTRICTED)) {
- 		/* Only init netns can set default to a restricted algorithm */
- 		ret = -EPERM;
-+	} else if (!bpf_try_module_get(ca, ca->owner)) {
-+		ret = -EBUSY;
- 	} else {
- 		prev = xchg(&net->ipv4.tcp_congestion_control, ca);
- 		if (prev)
+diff --git a/security/apparmor/include/label.h b/security/apparmor/include/label.h
+index 574be681f83e9..75c49e713a749 100644
+--- a/security/apparmor/include/label.h
++++ b/security/apparmor/include/label.h
+@@ -162,7 +162,11 @@ do {							\
+ #define labels_ns(X) (vec_ns(&((X)->vec[0]), (X)->size))
+ #define labels_set(X) (&labels_ns(X)->labels)
+ #define labels_view(X) labels_ns(X)
+-#define labels_profile(X) ((X)->vec[(X)->size - 1])
++
++static inline struct aa_profile *labels_profile(const struct aa_label *label)
++{
++	return label->vec[label->size - 1];
++}
+ 
+ 
+ int aa_label_next_confined(struct aa_label *l, int i);
+diff --git a/security/apparmor/label.c b/security/apparmor/label.c
+index 5c42cd01ea473..667f20363ebf1 100644
+--- a/security/apparmor/label.c
++++ b/security/apparmor/label.c
+@@ -386,7 +386,6 @@ void aa_label_kref(struct kref *kref)
+ 		label_free_switch(label);
+ 		return;
+ 	}
+-	/* TODO: update labels_profile macro so it works here */
+ 	AA_BUG(label_isprofile(label) &&
+ 	       on_list_rcu(&label->vec[0]->base.profiles));
+ 	AA_BUG(label_isprofile(label) &&
 -- 
 2.53.0
 
