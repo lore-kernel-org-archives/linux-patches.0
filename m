@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064277;
-	b=q9ItoXQIfHo/564T9HcEKtxU+CPyq/wPL3KV+nHW7cG2B03X9QIoVXkA3pER8jfqvPcJ
-	 Msf3bpz6O7WKtb6cRfC2sVE53SWxGURbTe9zP9IrDyPQOJ/qUvYtUZ5MGBWg1NUzsb3Jo
-	 YLqweunl1x1Z+Cr7VeENIsOmPnRIBRGM8wB2tYmeK0Zl0+z01Rh4aaa0LmtwIekDh+x3n
-	 MpipZplOO87SWNIlk4vOofsZ/+VbkR5BkWSBYc9C9Cxdxy+j+EcbqboZQfowo6W7e3ga/
-	 /iYutttK1XSl07MCMvQsApe9TfDm4YJErQxsR5VrgXlJvKTAirglqO/SDgLu8O/FmhA==
+	t=1794064279;
+	b=Jay8hW1huQZvvhJ6etdYT/uARcSNSSJ6RB6Hqab99VWV9GYUPB84/JNBtCeYKOvVguDp
+	 CJUjClbzvnj9rQh1W2nd0jQ8yPRZ9lsxTWpbjUeIWk0INj4fXBcry/7kmOwRDmL1C3dGH
+	 d+fBP6/0PhYIkAFZg3na8oTwmVG+30+ODMWWI97k3w4iLWJioG3qQs9YVo3VFtVDTREVu
+	 zAn7V3+x6B9FFw7M/jKgmK1wD9ZZ164hRcUXzalTQDdS6FaIy1BUvG1SVadiM0kIYttcN
+	 J/wUtgSyHnGgGXEHF8wD44dXISiQOhrDV3pLwVs8DfYLc4AiLXMp5DoLpkMs0gT3A1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mv0hxVy+DqAANsi5gukMHGdI84HBdKPrNc9k0jwOEiY=;
-	b=kdyULTF6z+LYe8ObhH8FBJ3x6a6vQpXI3LOc1EZ0gPfu4dPgHI9cRsAnlgB9mU7n3bpc
-	 CJ0UkEhUcKrZtjOs2OcBTrkc/2Spkvb2mokoFfrwxXB3acnn627zQpgu5DZ+TBnKGD1RJ
-	 SN6y1zkOoKU7Gyrgh/tg2eJqkOmcK5hIN6mwS1adVYQuk0hZ/8FDVRW7G1I5rW67qEIlY
-	 QNHlRqjGRxCGPt9DszsNAYdG/+My/dxROxE6eXTGPdLYOx6YKgIGyisR7K30vmR3YwvHo
-	 qoY5W7FTIHBLklEpJ8zImzTSF1CHxvUzcAahwBGVbwAw4gLj/I7HqxtJSwJAdcUIOPw==
+	bh=YaWv3v+utrm5dKoJ5Mj4VqBdGve4cNGNaFu+ADu3GSM=;
+	b=NCWBsBBnPLEZjyfF9N1BH5/zfgtQKPY8LZPmiFPFZPJqqwV/1NX6s03syYQk0gV6l8K2
+	 AD2M0V3foEhVYW2aZc0NLbPfLf4Wfw26aQXnYNKwu7WyzRnFBcW2XPoQ39sxoF6LjR3jS
+	 rQ5DSk2y9AxXYZcJNSbd+WRPbxBsCM7tr3MIIqZBQYGBVhaPQSY1GgFzvpGSjFS9SDldS
+	 w1lrFR7q3f3FoMW67CnJTKqatE5y7bH/GAd8Qlpx3+7cD6ThXUaeBbJOQq+y2K9+xSXbX
+	 Vs7NmIRZqAfuaN4ZpWeVbow3YgOcvo4mKFKELMisu/ZpCyQBHum1C9V8TSXZkE0N/HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HH3MIK2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gNLnIVYh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DF4606A9DE;
-	Sat,  7 Nov 2026 15:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F946082BDF;
+	Sat,  7 Nov 2026 15:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HH3MIK2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E347F1F0089F;
-	Sat,  7 Nov 2026 15:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gNLnIVYh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE371F008A5;
+	Sat,  7 Nov 2026 15:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064277;
-	bh=Mv0hxVy+DqAANsi5gukMHGdI84HBdKPrNc9k0jwOEiY=;
+	s=korg; t=1794064278;
+	bh=YaWv3v+utrm5dKoJ5Mj4VqBdGve4cNGNaFu+ADu3GSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2HH3MIK2PlwHPVnZH7GaaTuufEL4BDYzHwoSGHB4j8oPim9FdUoSBHVkUvwaQ+JO2
-	 DGt8LPDogHQ7n2BohVhDB/qZDFs+ONoYEDJhoE4AGH/jxS5p8+5eeWlqQs/Cp6e7Rp
-	 h9CPZf+qC+BcA4BkS1VejjYWfnXm72SZiIa3b38Y=
+	b=gNLnIVYh7NJsDPLTDk+ivuKXjepzbfSR8rOoH3MoOMpcln3BfeLrhomR5GqIzqbS8
+	 uefbqc4VVuXGAxJyhorD89GQy/iISME9DR04gl/DOSXJ348on7itM6HmQCRrA9ipj4
+	 SilNeOtV6mRXJXfXa5xOXCnGPZ99gMRr3EdrtxwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hal Feng <hal.feng@starfivetech.com>,
-	Brian Masney <bmasney@redhat.com>,
+	sashiko-bot@kernel.org,
+	Abhishek Dubey <adubey@linux.ibm.com>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0372/1257] clk: starfive: jh7110-isp: fix refcount leak in jh7110_ispcrg_probe()
-Date: Sat,  7 Nov 2026 08:44:28 -0500
-Message-ID: <20261107134949.832527531@linuxfoundation.org>
+Subject: [PATCH 7.3 0373/1257] powerpc64/bpf: fix percpu private stack leak on JIT failure
+Date: Sat,  7 Nov 2026 08:44:29 -0500
+Message-ID: <20261107134949.858570421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,45 +73,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Abhishek Dubey <adubey@linux.ibm.com>
 
-[ Upstream commit 1c4f9480473917558908c083d1293b4ebb3d50c5 ]
+[ Upstream commit 24affb84d98e6b37b276aa57e5dd25ad93458cea ]
 
-In jh7110_ispcrg_probe(), the error path for pm_runtime_get_sync()
-failure directly returns without releasing the runtime PM reference
-count. The call to __pm_runtime_resume() increments the usage count
-unconditionally before attempting to resume, and does not decrement it
-on failure. Thus the leaked reference makes it impossible to suspend
-the device later.
+The existing conditional statement in bpf_int_jit_compile() frees the
+percpu private stack at out_addrs only when the image buffer was never
+allocated.
 
-All other error paths correctly jump to err_exit and call
-pm_runtime_put_sync(). Fix this by replacing pm_runtime_get_sync()
-with pm_runtime_resume_and_get(), which properly balances the
-reference count on error.
+If bpf_jit_build_body() fails during a code-generation pass, the
+image buffer has already been allocated, so !image is false and the
+percpu stack is not freed.
 
+Because JIT compilation failed, fp->jited remains at 0. The subsequent
+bpf_jit_free() path only frees priv_stack_ptr when fp->jited is set, so
+freeing is skipped here too, leaking the percpu allocation.
+
+Fix implements freeing the private stack whenever fp->jited was not set,
+i.e. compilation did not succeed, instead of keying off !image. !fp->jited
+already covers the !image case, since image is only NULL on early-failure
+paths where fp->jited is likewise 0.
+
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/bpf/20260616135426.A06B71F000E9@smtp.kernel.org
+Fixes: 156d985123b6 ("powerpc64/bpf: Implement JIT support for private stack")
 Cc: stable@vger.kernel.org
-Fixes: 81279f5d0812 ("clk: starfive: Add StarFive JH7110 Image-Signal-Process clock driver")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Hal Feng <hal.feng@starfivetech.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Abhishek Dubey <adubey@linux.ibm.com>
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Tested-by: Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Acked-by: Hari Bathini <hbathini@linux.ibm.com>
+Link: https://lore.kernel.org/bpf/20260616135426.A06B71F000E9@smtp.kernel.org
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/a827e3ef81cd43f2aee7e9bdfe8683f2c77065da.1789982239.git.skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/starfive/clk-starfive-jh7110-isp.c | 2 +-
+ arch/powerpc/net/bpf_jit_comp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/starfive/clk-starfive-jh7110-isp.c b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
-index f3fa069db193e..c02c8b29a1230 100644
---- a/drivers/clk/starfive/clk-starfive-jh7110-isp.c
-+++ b/drivers/clk/starfive/clk-starfive-jh7110-isp.c
-@@ -130,7 +130,7 @@ static int jh7110_ispcrg_probe(struct platform_device *pdev)
+diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
+index 7a612688e7a20..ffee1a76e5302 100644
+--- a/arch/powerpc/net/bpf_jit_comp.c
++++ b/arch/powerpc/net/bpf_jit_comp.c
+@@ -357,7 +357,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_verifier_env *env, struct bpf_pr
+ 				(void *)fimage + FUNCTION_DESCR_SIZE);
  
- 	/* enable power domain and clocks */
- 	pm_runtime_enable(priv->dev);
--	ret = pm_runtime_get_sync(priv->dev);
-+	ret = pm_runtime_resume_and_get(priv->dev);
- 	if (ret < 0)
- 		return dev_err_probe(priv->dev, ret, "failed to turn on power\n");
- 
+ out_addrs:
+-		if (!image && priv_stack_ptr) {
++		if (!fp->jited && priv_stack_ptr) {
+ 			fp->aux->priv_stack_ptr = NULL;
+ 			free_percpu(priv_stack_ptr);
+ 		}
 -- 
 2.53.0
 
