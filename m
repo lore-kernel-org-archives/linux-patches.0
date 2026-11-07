@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063781;
-	b=ggo/lQ5d3eiQfBLTIM1R4okgYCM4babrxpFnsL6ukPfDPZ/krMRUXWfji7rSpzLDdL6X
-	 ZdYbm5EXaw10yi93BQZxILArvCMBUkOt54TNBH3s7Ve4xZtfrzvVD0+sXu4V53TSMrVLT
-	 evrHUnqRAQQbgGd765QDcsCwT7oWDLISmds4zNcChM8SUCcuCjJNwjPLgMIhLdBw/ooj2
-	 8U1GnsYazDqLIJIsTOjCeHMvDiRwJfgtGB5KZtRkSoMFcmfnxrgsFfxsATc60xG5HM4ym
-	 QoQPpjyEI/yTiEIZhTjtxYS8tvoVrhBS5/mLRA9zLabKmh5hqeH4+eJ9AIkno3l3K2Q==
+	t=1794063783;
+	b=LzJfPa4T0HhU99uUa5/2rvf+Gf4PfkLsv2sj28CjoDMM6NFz1YvAv5hOURqPKoWuYZFn
+	 3LaG06INM63Uy8TSzT/ld6SxL+Q8yVaGzJgzxjhtlKnO94geFRIwArbjuvisplwYApl1V
+	 h68K93PJ3+zjdxKJ/0kbIGUMiPc8BlQBLQedQ0Xatcg8bRZ8wLVqLlFN9ekh7ADIyGKMm
+	 N3M3NzaoNzH0Z+js13XGMUi3D7QNvnWgiSHCRuNwHxXGjwB5DQ1SlEmYj4/C3Vwo6wTC5
+	 9LFE7KzTnAwHsHXHOuc0GITqfYYi5//e8jjMIMB7Tdoabt2EraMIv76VHmiB5i0TSRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063781;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063783;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A38hx1y/EJwBoi7CMyp/7z5AvSLDkDNJ3f5cLoOk2WU=;
-	b=EoHivOa9F+R2GswFe4RaNShcaHeDzmc7IOYQJQZB/rm9YTIgz0LMbQOsbYz9lxlYAMZq
-	 LgDi3wvX2mRHUIeBrFZ3mnuWG4uGoUKPYceCPE6PVT3jbIh+m2+4ZokgG/eTVYsrwtIPL
-	 6A7M2/topGbaj6YGW6SNf0J1bPvMAGIWzZjpbowYtO5Hwj1TIabKgDDo+VkiAGaJPfZTD
-	 xXQDV33a/hiWeH6NsWPoFyQYpI172kWqsQ4yWmJhRBbReN0yA98v2t7yPQm1f2FNpWNm5
-	 8GlFC9zPhHupfkp5pxnzEN7yCCOoDr/d6AqyUEQh8duD0C94Ynnh1+YOw9hamHhQ2Pg==
+	bh=xxs7wWlR9DlzGydLb2Wr1YPiAzyKTjmaEpfc9q+LwHY=;
+	b=nBl2OR81RzjWPHXi3VGqZt/ZDK3nXEp/Mu5L3yZf4dHcF4uOOzT7Yoz2ZTOaohvTyzGZ
+	 wS7cWfiFCXyfQlxXVml/pGrUqsibOFoWgwhtvdEzSSCc0+xyTI0nKI89gqgy/gIE8Qi6W
+	 OfRiojHoAcBVMWCIPgUj3oQBaZNwXVyZ8POi/leRI09UUNjgZqlWiBceqtnsTGkU0bSzx
+	 M++OuoUuhraoXiSPE9VPUuNv6W0ZE+URTUrlkI/ckFIFFeq1MLHO965w54H8zJ/gkCnPA
+	 U7QFRJ1XY08mXEyoFJIAIAleDA+Ons2a0DB/ZjbSUfOOZ2vaqMquh0xj6JbJ6wcVyTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZzWgVvc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MzMZCc/x";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13975606EE98;
-	Sat,  7 Nov 2026 15:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A39A606EE98;
+	Sat,  7 Nov 2026 15:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZzWgVvc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC351F0089F;
-	Sat,  7 Nov 2026 15:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MzMZCc/x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35CC1F0089F;
+	Sat,  7 Nov 2026 15:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063780;
-	bh=A38hx1y/EJwBoi7CMyp/7z5AvSLDkDNJ3f5cLoOk2WU=;
+	s=korg; t=1794063783;
+	bh=xxs7wWlR9DlzGydLb2Wr1YPiAzyKTjmaEpfc9q+LwHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZzWgVvc6lUFLU2Oh65o9GUBoFowp++PYU9+AKdK8YwtQOtdkoqdYSyhKCugSWYyv
-	 3fEkBjH/ETdP0Fks/3ISezfLSwvPmbaJaao4XKHueSyBfpVbJU8MR5wekkPyAhue7l
-	 wGwAhOtVtXKVYXcx2M0ET603SmaKsC9ZcvtabAio=
+	b=MzMZCc/xh1oTzIDbRtTpR1kKgHgJt5B5TK+BilpF6Ag3D1fbgBJBv5U5b0UL30P+O
+	 D9VsSbmODcr9Yq3Vkp2WVEAwb3kUf3FjDVoDkLdbpQ6Zpyq5Yrfxh1e/hGVLOi2a8s
+	 ATeDvZYQYjm4NvlBAW5Z7x5C94lrWbDZv3zjXZss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 869/869] apparmor: on failed load ensure profile files are removed before parent
-Date: Sat,  7 Nov 2026 08:59:11 -0500
-Message-ID: <20261107134922.273242956@linuxfoundation.org>
+Subject: [PATCH 6.18 847/869] r8152: Use BMSR to detect the link state
+Date: Sat,  7 Nov 2026 08:58:49 -0500
+Message-ID: <20261107134921.538099396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -67,45 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
+[ Upstream commit 85b4bc79dde77aadda0929a22f3532b208a3e1f8 ]
 
-The load interface does not guarantee the order profiles are loaded.
-When a parent is loaded after its child, and the load fails, the
-current code will issue a warning, and leak a dentry.
+r8152 detects carrier from PLA_PHYSTATUS without reading BMSR, so
+BMSR_LSTATUS can remain latched low after link up. Since
+commit f6f2e946aa4d ("net: mii: Fix the Speed display when the network
+cable is not connected"), the first speed query can then report
+SPEED_UNKNOWN, which applications such as NetworkManager may cache
+until the next carrier change.
 
-For the loaded set of profiles, ensure that on failure list is ordered
-is traversed in reverse so any children processed after their parent
-is freed first. We do not need to deal with the cases where the
-children are processed before their parent, because either a parent
-outside the list already exists or a dummy parent outside of the list
-is created, and the list walk will not put those parents before their
-children.
+Use BMSR_LSTATUS in set_carrier() so a latched link down can turn
+carrier off after the link has recovered. If BMSR reports down but
+PLA_PHYSTATUS reports up, reschedule the link work to read the current
+state without waiting for another notification.
 
-Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Tested on an RTL8153B: NetworkManager reported 1000 Mb/s after 3 of 3
+rebinds, instead of an unknown speed.
+
+Fixes: f6f2e946aa4d ("net: mii: Fix the Speed display when the network cable is not connected")
+Cc: stable@vger.kernel.org
+Suggested-by: Hayes Wang <hayeswang@realtek.com>
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20261026012345.1902285-1-lilinmao@kylinos.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/usb/r8152.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index 14c91fc94b22e..230d8428b4d31 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1404,8 +1404,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	 * them yet, and leaving them behind would leak the new profiles
- 	 * (their dents pin the proxy) and make the next load at the same,
- 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
-+	 * ensure children (which are at the end of the list are removed
-+	 * before their parent
- 	 */
--	list_for_each_entry(tmp, &lh, list) {
-+	list_for_each_entry_reverse(tmp, &lh, list) {
- 		if (!tmp->old)
- 			__aafs_profile_rmdir(tmp->new);
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 8cf4e81f8f882..7b9923b6480e6 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -6785,11 +6785,8 @@ static void set_carrier(struct r8152 *tp)
+ {
+ 	struct net_device *netdev = tp->netdev;
+ 	struct napi_struct *napi = &tp->napi;
+-	u16 speed;
+-
+-	speed = rtl8152_get_speed(tp);
+ 
+-	if (speed & LINK_STATUS) {
++	if (r8152_mdio_read(tp, MII_BMSR) & BMSR_LSTATUS) {
+ 		if (!netif_carrier_ok(netdev)) {
+ 			tp->rtl_ops.enable(tp);
+ 			netif_stop_queue(netdev);
+@@ -6815,6 +6812,11 @@ static void set_carrier(struct r8152 *tp)
+ 			tasklet_enable(&tp->tx_tl);
+ 			netif_info(tp, link, netdev, "carrier off\n");
+ 		}
++
++		if (rtl8152_get_speed(tp) & LINK_STATUS) {
++			set_bit(RTL8152_LINK_CHG, &tp->flags);
++			schedule_delayed_work(&tp->schedule, 0);
++		}
  	}
+ }
+ 
 -- 
 2.53.0
 
