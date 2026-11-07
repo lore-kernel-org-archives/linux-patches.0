@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064302;
-	b=mP9kenfpEZEoblbQ8SG8p9lZHsKLJqqC39Y7K/5+V6Mr1TePCS+AcqR+kqcgFJNXjVDQ
-	 1d2Y6SwH5AmT9HU96LVpvGgeubpfyk11n4jMi5VCTmMFZc6SYea4GNSmBhfETcFhJfiI8
-	 iB17oH68jLbMq9uYQvUy4ZiBiSOTWge3VodgHHoT3ULKUv8q3mvOaiTq69GWEuu5P8tjG
-	 25HRYBttVoNPbKQiyMTCm8DAGVpKElE/Jx9TBNlWnGrUHFgf0Y1hlbMvP4Bj0xpY28vy8
-	 +P6NKHpCJSG2i29nQWmCyX7PwOnDQrNnDzhBLhKsxvNBqdPFfJwmxl3ujpcgEj9k6Mw==
+	t=1794064303;
+	b=sL6nZoUDTZwbFFPmAh5RuIqLQxZR7Wlclso1Ay+buhu+o4aLuKYrLmqFk1SP4csSsQdI
+	 rg/GKVyDgjAOqGTE6MKxR3UrbzpyJhbQiHAvUibcFIipiij7NRsiZYfiIdpbUMT5Ogwm1
+	 qaq/tBCtrxITw4A41EcBWlelWoe4K8+y2YEb2L7QOoUx4VKLgHauF0sg3fAQBZvdcuKAP
+	 dLCcnqGf8slYyaRLXmiwBKRN6fSSoG7b9AT9uoXOgZm0CSqsxXYa/u1gNCA0LmZeFUZW+
+	 sD50UN9ugq/q12akxcQERvB5tyExS7UjaKDwJZvf/oOiJAtmqhLQ0smSg95z9FIA/qA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064302;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hj25dSlCqOgbMA1eeXJ2z64ickT44YOZaM80DrdjDSg=;
-	b=SSBYvPcfoQbT7DfueIikYcvVHkagUFAalYmyby6ahjxH8gyWB32W29nBxDmGReGHNOKC
-	 pso+l5R+56ZT1NuZm94hIO8hwyWw8lPWUMuI79/m9IhxWoQthxMJSEza+gjfbAaX0LsyO
-	 OgqulSBM9/owFH2D3f1lXhYLd9zb1st9esCZp/I0kOLJ3qPPPe0DKR7woJ3ysTLNU3IIx
-	 WI4MVjFwXkKuZbzrTcz91BHI81RJdJ7AMzAKbDWQyW/WXy546tQPdprvI2+MsYbBKu0zo
-	 eqmhjztR6H7rqTD8DCJ0fZxRfV1IcXeb1ZMEHTb3zZq3jzoGGW3s/S/QXxPd1oWlyfg==
+	bh=JVqJ4+Nt/2zruGkdMVaWHy4kJ9lHGKlktJ7U0Dpg0uE=;
+	b=MaPOkTVGEwMPT6hlZFPNRiVm0W2DObQ3WtMmvTilVFiL2m8k9EHtltxJAMTb7l146MY9
+	 Ud/oOMomKGB/NkYSOTsoCcSlRK9gZKtw19NyAIsCi99fzTv0B2S6wPCIm3FXsz7sL3Uoe
+	 dc4uygnMJZQ7EgGDRHyO0uhE/9Qo32PP38qOEOHMpKnqBHpVZqHHGOhCoZXBTYw/Jb8uc
+	 aUvjY/50s8y5pvvY5LN2VjTGAM4YiQqrIuyLghvwDxHBfAwb5pkHOAvnaUu7r/K7TJEdL
+	 ELtoAXdFiJHJTr50EMhny2pZtT60KtxCfwQzKJatw4fiJ5paY5scyySwdNkrkijKZmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0da8qHPB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCTAYClc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37110606A9CC;
-	Sat,  7 Nov 2026 15:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2CC606A9CC;
+	Sat,  7 Nov 2026 15:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0da8qHPB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B751F0089F;
-	Sat,  7 Nov 2026 15:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCTAYClc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178EA1F0089F;
+	Sat,  7 Nov 2026 15:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064302;
-	bh=Hj25dSlCqOgbMA1eeXJ2z64ickT44YOZaM80DrdjDSg=;
+	s=korg; t=1794064303;
+	bh=JVqJ4+Nt/2zruGkdMVaWHy4kJ9lHGKlktJ7U0Dpg0uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0da8qHPBbboIE8uomIbfN7EYikpsQ5SISSa5RTboGu/xYFf5DwPzQgeojjggEQjP6
-	 4T4Ai8YKp6OlJBeJu5j7kMB07dhmyYTpdLou7+K4nGAsBhYU2cTnWJAyHOO2eG+s1X
-	 3KaOkocxNez55waud1fFImR2QxTqTfynUgMoWud0=
+	b=eCTAYClcLv0noAwzsuLGPqgr82hFBkBZWHQgbYKix72/aI7DBR/ZJkt9xv0jz1XOc
+	 RMBjVPGaHu2oWHpfae51jURKW15h0izw4krVW20pkpXol0LnW9VriYELuQqBXOA7Qf
+	 d5LaXu0MJ2aPasuVp5bWl5NCN8QuAw/1WVOjiwEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0395/1257] i3c: master: adi: free the IRQ before unregistering the master
-Date: Sat,  7 Nov 2026 08:44:51 -0500
-Message-ID: <20261107134950.452838992@linuxfoundation.org>
+Subject: [PATCH 7.3 0378/1257] pseries/plpks: validate input to plpks_signed_update_var()
+Date: Sat,  7 Nov 2026 08:44:34 -0500
+Message-ID: <20261107134949.990024870@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,64 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Srish Srinivasan <ssrish@linux.ibm.com>
 
-[ Upstream commit 1c1e2d90aa452764df66bb1dd774aa0d06d89cc8 ]
+[ Upstream commit b59ff2d50b817eeec1259f357aae821c7834007f ]
 
-adi_i3c_master_irq() is requested with devm_request_irq(), so it stays
-registered when adi_i3c_master_remove() runs, and the writes masking the
-controller IRQ sources do not synchronize with a handler that is already
-running on another CPU. i3c_master_unregister() then frees the
-struct i3c_dev_desc objects that master->ibi.slots[] still point to, so
-the IBI path in adi_i3c_master_handle_ibi() can dereference freed memory.
+plpks_signed_update_var() dereferences the supplied PLPKS variable pointer
+without validating it. A NULL argument could therefore result in a NULL
+pointer dereference.
 
-Fix this by storing the IRQ number in the private structure and calling
-devm_free_irq() after the IRQ sources are masked, so a running handler
-is finished before the master is torn down.
+Reject a NULL pointer argument with -EINVAL.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: a79ac2cdc91d ("i3c: master: Add driver for Analog Devices I3C Controller IP")
-Cc: stable@vger.kernel.org
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260923085340.490776-1-fanwu01@zju.edu.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 899d9b8fee66 ("powerpc/pseries: Implement signed update for PLPKS objects")
+Cc: stable@vger.kernel.org # 6.3
+Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260923182816.151451-4-ssrish@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/adi-i3c-master.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/powerpc/platforms/pseries/plpks.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/i3c/master/adi-i3c-master.c b/drivers/i3c/master/adi-i3c-master.c
-index b35386260350c..ad57b7500678d 100644
---- a/drivers/i3c/master/adi-i3c-master.c
-+++ b/drivers/i3c/master/adi-i3c-master.c
-@@ -115,6 +115,7 @@ struct adi_i3c_master {
- 		spinlock_t lock; /* Protect transfer */
- 	} xferqueue;
- 	void __iomem *regs;
-+	int irq;
- 	struct clk *clk;
- 	unsigned long i3c_scl_lim;
- 	struct {
-@@ -957,6 +958,7 @@ static int adi_i3c_master_probe(struct platform_device *pdev)
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0)
- 		return irq;
-+	master->irq = irq;
+diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
+index ccf5765a907bf..e3ae2cd78247a 100644
+--- a/arch/powerpc/platforms/pseries/plpks.c
++++ b/arch/powerpc/platforms/pseries/plpks.c
+@@ -637,6 +637,9 @@ int plpks_signed_update_var(struct plpks_var *var, u64 flags)
+ 	u64 continuetoken = 0;
+ 	u64 timeout = 0;
  
- 	version = readl(master->regs + ADI_AXI_REG_VERSION);
- 	if (ADI_AXI_PCORE_VER_MAJOR(version) != 1)
-@@ -1001,6 +1003,8 @@ static void adi_i3c_master_remove(struct platform_device *pdev)
- 	writel(0x00, master->regs + REG_IRQ_MASK);
- 	writel(0x01, master->regs + REG_ENABLE);
- 
-+	devm_free_irq(&pdev->dev, master->irq, master);
++	if (!var)
++		return -EINVAL;
 +
- 	i3c_master_unregister(&master->base);
- }
+ 	if (!var->data || var->datalen <= 0 || var->namelen > PLPKS_MAX_NAME_SIZE)
+ 		return -EINVAL;
  
 -- 
 2.53.0
