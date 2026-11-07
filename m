@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060999;
-	b=FOw3CvUGkyLjm/gWCE2UOobNqzJDWTepbZU3QdkTv+FVz+NrnzvofahNLE6Vz2dmUiIY
-	 TNtReieiUCoicN+fAwL1tPjAhjFipUmauwRfglKc5onmMegsRX+C86RspYVTGCcDoEliA
-	 /tQDxE5rrBhN8Q38bVUFicKs4vsY1oKM3/2WfdysqJUo2HMoID+nue8AN1JmchoDPmvMo
-	 tdNo+QQbu0H7r9Om6VCKf2x09J1AyJI6MzeydV1xOyMvklfvNnQxGlRq3Nz73wgz8Que7
-	 o04OrwlMaISjldOc2Q4mcltrCVRr3RfQCjNzGcs84jLfUfS9AYbClXiv0Ydi0IbyMWg==
+	t=1794061000;
+	b=BDcgGFNPUDfQXrjCZ/sKPHInHcBfa7eUPAzVbfUSukjyrWbCi0luLMrCCsf2DQNBUpK5
+	 Enupwx/0MsbRAzA33sSu7rzJcqX22/N5sonu98OqExqmtdSXiQ6geu1Oj01CT0RVx9C8Z
+	 N8RhDcIaXEqsN1Vs5pmjNsp3I0P5fEEa+nQeqEv7r53zQVQoAxmMEaBdRs/hwbhwvtHSF
+	 sq3Kz0Nh77C1vBK821PfIdgmrz5Lk3NFtr09heWW9Srd2qLLWMWRJ3hZrjRjR8hov2vlQ
+	 pn2cQ3Qan2fD3LtspX9IOsEYkwR3+oamH8m2EQtBYO66GQu0C27rwOs34w3MRh5u3HA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060999;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061000;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CxB0eyWAdOK1mzUzhCCy+eXIjfh/x4I+Mc+rZIXeJhI=;
-	b=DHN5iRdgh9ELA2zdhLehQjjnWq0kbb5iFI7r+fybyoRG1gvQ/FYPXiG21l+lrCqB9YJ3
-	 Xam4b0mbNYDUA9gnaNqz4zQjgWbxg4wYDq1+FtNF9+nf0qKnvn1FcI9xok1bN4wJBH3z+
-	 hi2jgmSbIOUKlA3bnIBIYdAjGeWQJYYmTHg0y38Qhnf/rYTW8zIfJ861IrfVfXFbOtTks
-	 ZKmk94CsnAlbSMLbrD6CXMXLl/xOMmSo85WF9edkW0yMuzUj/8wd+w/25HtjZcKMDqkCI
-	 fJUj3b+I5OO8dRMVZobLBDKuPnrfKZ2rNtNv4EnvvdovW4+7O0d9Am/YdTZ9WxTkt4w==
+	bh=B6JImH7DzNuGsxtMJ8UM/Vc9kpkbaqtZV5+HBVCYfU8=;
+	b=AyjegTkT379vr67x4IufJJsp2cK15CV72+HDC4UOaoafeaAn3QF7kUzKwvMjhmN25E6Q
+	 B0/i28b6/eo00LQ2DqFrMwrKVPJ+OLSgFElu8Q/BP4Kq67i+xuLULbvFGg/DEF+eg44A+
+	 jWU5JAPmjT1OO9whYU52B/80DgDdEL5vz0x1l0DZm6SoDGGw5HQTnoQLMkYBe6+MiRiKx
+	 d+HwylDbTEDikWTpkaOqm6MpCaMlh8QK6gi/+/y2nngeLESShiDZs9SKdqEbOgZ7NgiWj
+	 ySiwZwUqMNUced0trYqCPNhAKp3uviY4vwH0L488kCVmZhmCAqA5vpiVnFiczp4AqlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FX8QTqAc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXLJwU4G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BF5606D827;
-	Sat,  7 Nov 2026 14:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13880606A33B;
+	Sat,  7 Nov 2026 14:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FX8QTqAc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0A71F008A2;
-	Sat,  7 Nov 2026 14:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXLJwU4G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FF91F008A2;
+	Sat,  7 Nov 2026 14:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060998;
-	bh=CxB0eyWAdOK1mzUzhCCy+eXIjfh/x4I+Mc+rZIXeJhI=;
+	s=korg; t=1794060999;
+	bh=B6JImH7DzNuGsxtMJ8UM/Vc9kpkbaqtZV5+HBVCYfU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FX8QTqAcc/WsQM6JkmFfwhCr1ETZfwGd4+BPqFCaJxmcuQpWxKWDumJKKkUuIDojP
-	 0cd15MBaoe7ZGcMe6FwRObQo6BqkZEdKThrepbCXJT2gq2YJjYDWVcYwxhZsqxQYZA
-	 M99itFA2GbpBGbjPzB/fgrMKj19yWjjVA00A1mp8=
+	b=xXLJwU4GxTfrM+W8sFkyZ6x3dL41QOQySBTSK1eB/5By9SxGHdS5h2pqqSJHbJPv0
+	 zc0Tn3Co1tUryVZ+brA1KWEY9l/jmWkacJjmo804XnXzko/a81tkSst0us6QaUnhUj
+	 HDLS/u5J7Pg4wMGV1ovKhfGDu92ksdcYro71/Aqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0345/1536] ksmbd: honor byte-range locks for zero data
-Date: Sat,  7 Nov 2026 08:39:21 -0500
-Message-ID: <20261107135007.368695725@linuxfoundation.org>
+Subject: [PATCH 6.12 0346/1536] ksmbd: allow FSCTL_SET_SPARSE without input buffer
+Date: Sat,  7 Nov 2026 08:39:22 -0500
+Message-ID: <20261107135007.396545776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,65 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 8b57448a147d2378088e63cd473e7f2a967d6802 ]
+[ Upstream commit 86c84cc760080929b7be44bceebe5854957b99da ]
 
-FSCTL_SET_ZERO_DATA changes file allocation state and must respect
-byte-range locks over the affected part of the file. Check the requested
-range, clipped to EOF, before issuing the fallocate operation.
-
-Return STATUS_FILE_LOCK_CONFLICT when the range conflicts with an
-existing lock. Ranges starting past EOF are left untouched by the lock
-check so they continue to succeed.
+FSCTL_SET_SPARSE without an input buffer sets a file sparse.  Treat a
+zero-length input buffer as SetSparse=true and keep rejecting truncated
+non-empty buffers.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |  7 ++++++-
- fs/smb/server/vfs.c     | 12 ++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 2c74e0fd82b9a..f95487b25b664 100644
+index f95487b25b664..e0accc8565f70 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -8621,8 +8621,13 @@ int smb2_ioctl(struct ksmbd_work *work)
- 
- 			ret = ksmbd_vfs_zero_data(work, fp, off, len);
- 			ksmbd_fd_put(work, fp);
--			if (ret < 0)
-+			if (ret == -EAGAIN) {
-+				rsp->hdr.Status = STATUS_FILE_LOCK_CONFLICT;
-+				ret = 0;
- 				goto out;
-+			} else if (ret < 0) {
-+				goto out;
-+			}
- 		}
+@@ -8568,15 +8568,21 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 				rsp);
  		break;
- 	}
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 9b973d7064988..32ef9618a4af6 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1000,6 +1000,18 @@ int ksmbd_vfs_zero_data(struct ksmbd_work *work, struct ksmbd_file *fp,
- 	int err;
+ 	case FSCTL_SET_SPARSE:
+-		if (in_buf_len < sizeof(struct file_sparse)) {
++	{
++		struct file_sparse sparse = {0};
++
++		if (in_buf_len && in_buf_len < sizeof(struct file_sparse)) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
  
- 	smb_break_all_levII_oplock(work, fp, 1);
-+	if (!work->tcon->posix_extensions) {
-+		loff_t size = i_size_read(file_inode(fp->filp));
-+
-+		if (off < size) {
-+			err = check_lock_range(fp->filp, off,
-+					       min(off + len, size) - 1,
-+					       WRITE);
-+			if (err)
-+				return -EAGAIN;
-+		}
+-		ret = fsctl_set_sparse(work, id, (struct file_sparse *)buffer);
++		*(u8 *)&sparse = 1;
++		ret = fsctl_set_sparse(work, id, in_buf_len ?
++				       (struct file_sparse *)buffer : &sparse);
+ 		if (ret < 0)
+ 			goto out;
+ 		break;
 +	}
-+
- 	saved_cred = override_creds(fp->filp->f_cred);
- 	if (fp->f_ci->m_fattr & FILE_ATTRIBUTE_SPARSE_FILE_LE)
- 		err = vfs_fallocate(fp->filp,
+ 	case FSCTL_SET_ZERO_DATA:
+ 	{
+ 		struct file_zero_data_information *zero_data;
 -- 
 2.53.0
 
