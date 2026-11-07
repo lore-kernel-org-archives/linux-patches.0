@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063478;
-	b=sbyUewQoGBR02PKIxzyOnNwAzIl8DIX9rfduY+rfzcftP4buE8k416UkMU3werRNqsX8
-	 MWfmIk73LAYkpaSghi1hEBmXFo3G+nBCzMtO+uwT3tl7qeANfecd73DMM4ks87sjjBSv7
-	 HiPzJRkMvHFw19xepWWAGcxWTGlbEb9xRbnY/Pg3Xb+mGREsRcqCJD1wGo7rceg9V23al
-	 3os7HD4HnJ9F5g0Ve2iZrve3+cLDK9rVmo82Yz7lSI5yhhl7HShUtOB7d+UCOQRw8gnWa
-	 X6QBt6CnhH43ODbet7GfGZOd46NVhu0Ms2jiFLQs+Z0/QjF36k/NQXHEiZSGOYvF46A==
+	t=1794063479;
+	b=UTGIE+LxHZF07zGttQqGSDxDnd7sxcfCAFmjw3o0SnQ8PjwYeAqSQW5Ff+qCHUt4nazm
+	 E1OaeHnZIvDhRyObzDnpDxkItcciOoR9fa1/Sb5Tz77lpIrM//0rDyw73h8QsyXLp7HaS
+	 Qxe4iQKTTCoiOO7k7COKnfIdlB3+B4pdIAMombvQOvVPlofzOsbE5ejyntw+WycAOTuuX
+	 IsxAMtjVxO8w+ZlMRLf9NLdfqx3km0FF5scgxc/LjjrGTsCoGydk32GZ+/8Afm6k5br1x
+	 VF7jz5Utwa880U24keAvYRcwhC+G7CyV7EF+WsLO4sQwgwGYscWHay84jy3LNbNprTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063478;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IOj+9Pm1VHVQRenq1wjJmFKuuMTiZ1FvqNdLg0KMafE=;
-	b=2MNG5BvmlXqa31dW4VhLcf6qoef+0fipazgLecAkemBFxrEH9To8+Db/TDHm6NLd5BBh
-	 Uhmr0/XzIQRCL4RddDyNI0sAIoQg41H+gIeCTqFVuFq3t4aRxAAZjztZhbDEaXTBFkG0z
-	 yejLuss4I63SR2EDo9GNJQ5XFYL8uz3BcmmrlSSI+hhOmSU8MOs4FuNTxIChO2VCeHHI6
-	 LJ/c6U+lFEYDQX11eTvalbJKTfk0NNX6Zjr4njjE9IHqqvoO3o5naJp3gOLUjmlhXOp0a
-	 Ap4sbTeFdnf258xPhMnpgN3AXreiMBC57gAWYKjs1NyYWeGq30pRocOmPfoI5GQIrIw==
+	bh=psC1zAQwMTKazK2R2RMhLCutn1/cijFZuBw2lNikbXU=;
+	b=Toqxno4+76OgWZpnwK/KIWi079Cw2QVWpSHGUwEB/CkUoBukVSmiNobOKpnho3I5/A5O
+	 sJsf+abu9UXVc+60mr4hAE/zYyof8HUjhp5d/R/QsofPMentuPPvBG+rOSOlxQqEbY4l5
+	 y615eUb8dMkBZ0HOY+ab/767Ztvw9M1NiJh6k+b0kzOx8695NfPyKwakCpv9JBH31WvKz
+	 lfPJiaLkmucIBMiO/ElS1a1HZ3B4BKXHKvzWwnMlUXvPqj/2eVS6ovPf+8rqOaCKcxEvL
+	 OeBYHzbgS7ZmdczT5g0dwska/NZT0s2K+v9Ca2Vv35+vGX6QKm/qrLbIp96nafQV/fQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xzUpFNmy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hQWQos/v";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C266E606D834;
-	Sat,  7 Nov 2026 14:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834FE606D837;
+	Sat,  7 Nov 2026 14:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xzUpFNmy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4891F008A2;
-	Sat,  7 Nov 2026 14:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQWQos/v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2596C1F0089F;
+	Sat,  7 Nov 2026 14:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063477;
-	bh=IOj+9Pm1VHVQRenq1wjJmFKuuMTiZ1FvqNdLg0KMafE=;
+	s=korg; t=1794063479;
+	bh=psC1zAQwMTKazK2R2RMhLCutn1/cijFZuBw2lNikbXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xzUpFNmykTtoepJR3o4UvPqWoKak/H4yoHTggnBU6a7lj/+dAFRt4HQmxvxkzxRjv
-	 NLuh0J26iIGd6CBNjRw5Xug8OvODVmUJTDKMf0Bk5CvoUNBJ29CTsHRGvIuQbq1qAr
-	 FIhb52bhKlVhKV+bCWz2/lKpuumrMq8M2+cjNe2w=
+	b=hQWQos/voV9K2SwL/P/yOzaaq8X/ytJ4g7Jtd4DrIOVuzPs3owqJrcOfupTc9tVz1
+	 UYL0QHLW/6bYpCrupT7RycJWpVosGCcguKR2qEnSV5nHMsxcXQtQEGVba6q6fIsdUy
+	 mdBPJdRwPZj8Cc3KK3cJtT6SPwyqKjoppQOuPJWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 627/869] alpha: only use a targeted tbi() when the target mm is really current
-Date: Sat,  7 Nov 2026 08:55:09 -0500
-Message-ID: <20261107134914.259147712@linuxfoundation.org>
+Subject: [PATCH 6.18 601/869] ublk: reset the FETCH round under ub->mutex
+Date: Sat,  7 Nov 2026 08:54:43 -0500
+Message-ID: <20261107134913.432614624@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,53 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Ming Lei <tom.leiming@gmail.com>
 
-[ Upstream commit 0d92845ac5dbc79e4ac4810b33c673f4c1c227e3 ]
+[ Upstream commit 84824afdb5a4dc127fbd7036142d7611c5e53651 ]
 
-ipi_flush_tlb_page() gates a targeted tbi() on current->active_mm.
-tbi() acts on the address space context currently loaded on the CPU, so
-it is only guaranteed to reach an mm's translations when a thread of
-that mm is running there. current->active_mm is not sufficient: under
-lazy TLB an idle or kernel task keeps an mm as its active_mm while a
-different ASN is loaded, so the invalidate is issued against the wrong
-context and the stale entry can survive. Nothing retires the old ASN
-afterwards either, mm->context[cpu] still being valid, so the resuming
-thread can reuse it.
+The release work resets the FETCH round without ub->mutex, while
+START_DEV checks it under ub->mutex:
 
-Test current->mm instead and otherwise fall back to flush_tlb_other(),
-which clears mm->context[cpu] and forces a fresh ASN at the next switch
-whatever is loaded now.
+  START_DEV (ub->mutex)               release work
+  all queues ready? yes
+  ublksrv_tgid matches? yes
+                                      ublk_reset_ch_dev():
+                                        io->cmd = NULL, nr_queue_ready = 0
+  go live: a request then reaches ublk_queue_cmd() with a NULL io->cmd
 
-For an mm borrowed through kthread_use_mm(), patch 1 of this series
-installs the context before the task can take a shootdown IPI. The
-current->mm test therefore covers that case as well.
+Do the reset under ub->mutex. Then START_DEV sees the round either ready
+or reset. The work already takes ub->mutex when there is a disk, after
+it has aborted the requests; nothing holding ub->mutex waits for it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 728cbac5fe21 ("ublk: move device reset into ublk_ch_release()")
 Cc: stable@vger.kernel.org
-Reviewed-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010142533.974797-4-linmag7@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20261011063555.1142277-6-tom.leiming@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/smp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/ublk_drv.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/arch/alpha/kernel/smp.c b/arch/alpha/kernel/smp.c
-index ed06367ece574..1ad448105201f 100644
---- a/arch/alpha/kernel/smp.c
-+++ b/arch/alpha/kernel/smp.c
-@@ -669,7 +669,8 @@ ipi_flush_tlb_page(void *x)
- 	struct flush_tlb_page_struct *data = x;
- 	struct mm_struct * mm = data->mm;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index f85d66cee9c3a..c9109731d29ba 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1766,8 +1766,10 @@ static void ublk_ch_release_work_fn(struct work_struct *work)
+ 	 * reset, so that a new server can fetch and start the device.
+ 	 */
+ 	disk = ublk_get_disk(ub);
+-	if (!disk)
++	if (!disk) {
++		mutex_lock(&ub->mutex);
+ 		goto reset;
++	}
  
--	if (mm == current->active_mm && !asn_locked())
-+	/* A targeted tbi() needs a thread of MM to be current.  */
-+	if (mm == current->mm && !asn_locked())
- 		flush_tlb_current_page(mm, data->vma, data->addr);
- 	else
- 		flush_tlb_other(mm);
+ 	/*
+ 	 * All uring_cmd are done now, so abort any request outstanding to
+@@ -1799,7 +1801,7 @@ static void ublk_ch_release_work_fn(struct work_struct *work)
+ 
+ 	/* double check after grabbing lock */
+ 	if (!ub->ub_disk)
+-		goto unlock;
++		goto reset;
+ 
+ 	/*
+ 	 * Transition the device to the nosrv state. What exactly this
+@@ -1825,12 +1827,14 @@ static void ublk_ch_release_work_fn(struct work_struct *work)
+ 				WRITE_ONCE(ublk_get_queue(ub, i)->fail_io, true);
+ 		}
+ 	}
+-unlock:
+-	mutex_unlock(&ub->mutex);
+-	ublk_put_disk(disk);
+ reset:
+-	/* all uring_cmd has been done now, reset device & ubq */
++	/*
++	 * All uring_cmd has been done now, reset device & ubq. Under
++	 * ub->mutex, so START_DEV sees the round either ready or reset.
++	 */
+ 	ublk_reset_ch_dev(ub);
++	mutex_unlock(&ub->mutex);
++	ublk_put_disk(disk);
+ 	clear_bit(UB_STATE_OPEN, &ub->state);
+ 
+ 	/* put the reference grabbed in ublk_ch_release() */
 -- 
 2.53.0
 
