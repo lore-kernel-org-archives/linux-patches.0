@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063069;
-	b=G/QJ+2g2TStVg8bpgal4Csa+dBgoqJp0YLL5eBdjQkekRDyLrJWBmHWEysLGLV/5mfB0
-	 lQAfL+i8bzDdEfJLL3s1vrv80fNHtvsV2U/G9ZtOYUSqnWaVT2JoivJLjL4WJRN2rR/hk
-	 PAa0z/8o2GEUSWDXdphzzKh5CDz5L2WoJ+DAOg3BxS/qc3M8SXZpMY8ezswa92s7er1O1
-	 W5jlPB4uXLZuzu7ftW9jAw/5fwGW9807MQHika6+fzDbybFCw/303PVuj3czmB4CPVlUd
-	 nK5yd23ncrf0C5e/sBIKKZ2s2hAIjJKRP++aKYUfN1FnTVtHAFtql8hqjPUOAwApuzA==
+	t=1794063070;
+	b=vfKdo4kGaUlSiiGBODGPYUA2+Q3TYe+ASsnhMbzYcHaFII/dXgTdIWlOKrecO8vZWIr3
+	 tTEv3M+80U98syOCmmvv+pnyBm9wl2MF+trZQf5b6U2SylIyAzz1gyMBSDJl5bq3sMRhx
+	 NcvhXwC7K1KzdLzHVuLDLDJnvRj48b9EDlb76HycflqSyPmuKZsmyOVq+jRCdtaz1QzI6
+	 CCbajJsuGb4TbRcPGubEGgSZlG7CtiPZWrNoOsR3TUUMdrNYPwXWS7SjntDNcbezK2OmX
+	 QMfICaiA6rTwz1s0/ctGvZVuuzW1zjEL0y4QRJxluxnt9M5PSEwcWstKjUmIx54mjOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063069;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hcr9u6XVzhXsYum3Y8dLzQhjkm0Pgtlwpo/xzUKmF4s=;
-	b=y3H2Wtwuew2DMsOPy2Q6VUX0Od+VBCs0m5tqTshaRBFvDr1EiXnhRZcpBp6nta4wYlsf
-	 XSMrPXhZ4qloA820chCR29kRKMn1t1PGcxvN26oXfDMN5YS9r7BPCQ0a6xWisejpZo+/J
-	 52JZd8iGSf8dSYjP9DF7kFgMKbcvMjJ7R3U/JKAv1Ef9x6K7LZRcBi+lwv7UMGdXltUNx
-	 HWd+iELLqf11xQe3bsfI62+dWUIY1FuTdUa2OgKh6FcWySnKASmMJtCcBGuaiblUOYgUp
-	 5vKeCvtj8KYTF/wk96vQb1LFZE10zsjHhM+4h7Mo+ixJpVLChAJ7cW0TOApc9YT2AIw==
+	bh=cYgPnpzHrlvsbJVYC7cQki5KYySQSsnytgm1n8KAJHU=;
+	b=pNuuiK/Ic1zML0n6L4Jsofr4wc4TLZ2l6mpB6bHp52gTLiunSQ/SdxE9ga6ckRkU+vWc
+	 Zyig8RXRRsikxc+GUDl7JuKpmp4wym36F72YWxyuXL4XN7wlpGVwWXpxkXrgqG1WmcOXc
+	 bn644Eu3dJYhSaoYUgcVMJceQToZQprs/TNuGtZsFWEkECh949rgWbnkX7CVvilkthSZe
+	 AFBJF8nGsabPQJrKoMR7gvev62khfeGZDO3CQxj7Gc4WeISC347jpsrzhyFOMvSleuL/r
+	 P+1u0VIKLJNUp27TceAF89K76eUobt3RbPy1zYYmOrqg1ESzgk4X2xHBf5rRm+0/SFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xigO4g53;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XjbKwwCT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BC8606D80F;
-	Sat,  7 Nov 2026 14:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66895606D82F;
+	Sat,  7 Nov 2026 14:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xigO4g53
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01901F0089F;
-	Sat,  7 Nov 2026 14:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XjbKwwCT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1593B1F0089F;
+	Sat,  7 Nov 2026 14:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063069;
-	bh=Hcr9u6XVzhXsYum3Y8dLzQhjkm0Pgtlwpo/xzUKmF4s=;
+	s=korg; t=1794063070;
+	bh=cYgPnpzHrlvsbJVYC7cQki5KYySQSsnytgm1n8KAJHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xigO4g53MfEE9Ka3BvdXULlxbG/CttdZqaO0YBBiyWupTJGcSDPmFSf6dqQxRziAG
-	 KyTyZr+1s1Ov7JcX/L/m8EyR7bgIYd4QWBVs4bUUb4tQn+kycI5314GAVaXVvA48WH
-	 X2HH4oqyB5c02pTQA6G1l51aYJds6HwotbBGQdFc=
+	b=XjbKwwCTpst3VPerFUuVfvL4rBzk72tK95DH4Z/88KOnS8n+OL4XsIctY6U9f1Fgh
+	 BaqWsQNtBLScgFlzBK2le8TpLN8PmiIMKbQQJgHrmNLNDLa/GcjUgW6Ygb2RnzGD/Z
+	 ugQ7CMfZUSmylIy2r1LzEYx2dELOMvGbZ4xZ5oxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.18 308/869] staging: greybus: uart: fix racy TIOCMIWAIT implementation
-Date: Sat,  7 Nov 2026 08:49:50 -0500
-Message-ID: <20261107134902.973342695@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 273/869] iio: adc: max11205: reject devices without match data
+Date: Sat,  7 Nov 2026 08:49:15 -0500
+Message-ID: <20261107134900.923936938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,90 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit e94cda6551d4716b17353fc458baa9e85ddea9ff ]
+[ Upstream commit a07b5db685b2a3084240f9b4a9ee44f3b478c6e3 ]
 
-Check the wakeup condition after adding the task to the waitqueue and
-updating the task state to avoid missing a racing modem status update or
-disconnect.
+SPI driver_override allows a device to bind to this driver without
+matching either the OF or SPI device ID table. In that case,
+spi_get_device_match_data() returns NULL.
 
-Store the old icount on entry and do not update it in the completion
-handler to avoid missing events or reporting spurious ones (due to modem
-status changes before TIOCMIWAIT was called).
+max11205_probe() immediately dereferences the returned chip information
+to set the IIO device name, causing a NULL pointer dereference.
 
-Fixes: e68453ed28c5 ("greybus: uart-gb: now builds, more framework added")
-Cc: stable@kernel.org	# 4.9
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260907095305.130762-1-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
+data") fixed the same driver_override issue in another SPI driver.
+Reject devices without match data before using the chip information.
+
+Fixes: bf3c855be801 ("iio: adc: max11205: simplify with spi_get_device_match_data()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/uart.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/iio/adc/max11205.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/greybus/uart.c b/drivers/staging/greybus/uart.c
-index 78bf8c4031e93..7d2844d9bcd9e 100644
---- a/drivers/staging/greybus/uart.c
-+++ b/drivers/staging/greybus/uart.c
-@@ -53,7 +53,6 @@ struct gb_tty {
- 	spinlock_t read_lock;
- 	spinlock_t write_lock;
- 	struct async_icount iocount;
--	struct async_icount oldcount;
- 	wait_queue_head_t wioctl;
- 	struct mutex mutex;
- 	u8 ctrlin;	/* input control lines */
-@@ -643,11 +642,16 @@ static int wait_serial_change(struct gb_tty *gb_tty, unsigned long arg)
- 	if (!(arg & (TIOCM_DSR | TIOCM_RI | TIOCM_CD)))
- 		return -EINVAL;
+diff --git a/drivers/iio/adc/max11205.c b/drivers/iio/adc/max11205.c
+index 6c803df220b6e..e8404973b01a0 100644
+--- a/drivers/iio/adc/max11205.c
++++ b/drivers/iio/adc/max11205.c
+@@ -117,6 +117,8 @@ static int max11205_probe(struct spi_device *spi)
+ 	ad_sd_init(&st->sd, indio_dev, spi, &max11205_sigma_delta_info);
  
--	do {
-+	spin_lock_irq(&gb_tty->read_lock);
-+	old = gb_tty->iocount;
-+	spin_unlock_irq(&gb_tty->read_lock);
-+
-+	add_wait_queue(&gb_tty->wioctl, &wait);
-+	for (;;) {
-+		set_current_state(TASK_INTERRUPTIBLE);
-+
- 		spin_lock_irq(&gb_tty->read_lock);
--		old = gb_tty->oldcount;
- 		new = gb_tty->iocount;
--		gb_tty->oldcount = new;
- 		spin_unlock_irq(&gb_tty->read_lock);
+ 	st->chip_info = spi_get_device_match_data(spi);
++	if (!st->chip_info)
++		return -ENODATA;
  
- 		if ((arg & TIOCM_DSR) && (old.dsr != new.dsr))
-@@ -657,18 +661,20 @@ static int wait_serial_change(struct gb_tty *gb_tty, unsigned long arg)
- 		if ((arg & TIOCM_RI) && (old.rng != new.rng))
- 			break;
- 
--		add_wait_queue(&gb_tty->wioctl, &wait);
--		set_current_state(TASK_INTERRUPTIBLE);
--		schedule();
--		remove_wait_queue(&gb_tty->wioctl, &wait);
- 		if (gb_tty->disconnected) {
--			if (arg & TIOCM_CD)
--				break;
- 			retval = -ENODEV;
--		} else if (signal_pending(current)) {
-+			break;
-+		}
-+
-+		schedule();
-+
-+		if (signal_pending(current)) {
- 			retval = -ERESTARTSYS;
-+			break;
- 		}
--	} while (!retval);
-+	}
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&gb_tty->wioctl, &wait);
- 
- 	return retval;
- }
+ 	indio_dev->name = st->chip_info->name;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
 -- 
 2.53.0
 
