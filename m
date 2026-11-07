@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064014;
-	b=QO22KaktQgUV3C9aqiAt9Ii/l5Thdi3E8cXLH03fx7tKf0HVkiCC7I2D/SHvzZ0TXq3G
-	 NmzstT8jKj5a4OTt3ZgUaqz4fsZIIA0IUfd4AhgObzxlfw2Y6Zn/MwuXLH+79tnhN/2FT
-	 ouCuqOpPS9l5sk7alZT5FQR94bmRe/h668au7TqSS0vkP9Clw0sUpn+JTX7twHnujRyiH
-	 JjEDQQF9xm9st3H7FUXdvaCnTFpvFcwwTfJrDIDN/MFiCp8n/yDMiDCXL1PIwJIL+9mJ6
-	 LvuFvwnchgeZ3jEq8WQG4W4CZIB/JAnvNVRtIF29mLZ+MCOikTVu7JwLUaAp3y+zREg==
+	t=1794064015;
+	b=0IWN6kIgUBbACshJTj8LxN3KRjFIctMs5ws+ZagjfLNNOD2n2rsRwByN50NhdIDGvMDC
+	 W7dR5KBB+B1huMkXxQes1d4iISTk4khihjFjBObf4Bs1ZlnjAq9LP0NtraDCyQyMnKVeC
+	 67l15K5FBJgxgAWS2j9XdKnWq6M4dGDphYRx7h7Q1s+Ok7z9Rhb+YS++jgK/gDFPhbnYt
+	 dfmR1YDrlqcrZVf+InNC4qE8+w9QVdRTZ3eC4AmZlkNquOlBfjoRzHOH7nHu4u2fqCbMh
+	 U2caGtaAcvjx10u1z7M3yi23ayj6q7krRf8Kv7kWh2ZiKGbN6F6VLEKnvCMXjhVTclg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064015;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6C1Kp8y7W8wKjK5aPuI0X/dUuveXqMZjEuanX6W28d4=;
-	b=X82DVqSy/3h/d7S7JUqWfFJdrSp9/qROJoR0+hCeAEadCiX9ujPP0bcz2BPadxzekvGL
-	 PFnNsFEjMIgWzQr89pBge0fu1RM47vP8kSdnNBmblMGYlj5az9RzeYrD9HGho7bs9wTTr
-	 gV7tC8I+J55bjXnha/r59BA5y5NQfrR0WBD2iJZiD1KYT4JE4sXn4RwIXel/TfGTasSbq
-	 RjnjTTxfWbDDj8mJjG/LwDIIDxfwYrrDrkJcmo1ziXgTvkC7/R4oNAytRBLZDy8YtDqm5
-	 jeolY1/uAMBecIK+HGIJEyNG6vHp7ScillDt+7a9CjioFRLBsUkG382Y0Osnx/qHcpw==
+	bh=6aMS/ca+vTBvcr+VR5jSkiJyVJ9ZvgeMXTM449mDXpQ=;
+	b=QrBfJI7Xp4z5ESY4IMAgqvIOZR4bS/VvHU5MU+zJhN1WkImAfRVhUeYydSUSx8bEIrMv
+	 MrO3h29HAKIzuLJr/JUwn9dMNVbXgCsbJN440HfgrH987TaHXtCzc+/YKpaVOdYiplkGA
+	 eZU537UuLD2apbnDMD9e0G1NvgBVIDQhNjylrbsBKZNJ3jZQUrFYbiZPzrSJimOsWUkds
+	 Y8bD8mlM7TTDMXEw7G/BcA7aRh1k54xP0VJEw/+92iOPqV4W1gkDBP5Biu+Z2z4zt//v9
+	 Ju6eN9/ikyR/fLq+eRaBN4vmN1JnPJOz5nqUBcF/f/pHO8FgNsDUmA3jOuS0X1g7RFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yh2hB2+3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i7zsqpOY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD0A606A334;
-	Sat,  7 Nov 2026 15:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CA8606A334;
+	Sat,  7 Nov 2026 15:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yh2hB2+3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0E01F008A2;
-	Sat,  7 Nov 2026 15:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i7zsqpOY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0632F1F0089F;
+	Sat,  7 Nov 2026 15:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064014;
-	bh=6C1Kp8y7W8wKjK5aPuI0X/dUuveXqMZjEuanX6W28d4=;
+	s=korg; t=1794064015;
+	bh=6aMS/ca+vTBvcr+VR5jSkiJyVJ9ZvgeMXTM449mDXpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yh2hB2+3coqmkUL2oIWFD7HtQr7LwooH9YkMemZNrgu9F2Fnwi7nq1IZLZrXU6pR1
-	 fzN3yjaKr1wN/vmizfdt5pvALIGwTya8WKWwyRox6imdiRRDEQiXV0ezOuYIVl1j81
-	 b3ILzn9Tq2F4M7kt+Gq/7c+X7DEc20fL9kJmZ92k=
+	b=i7zsqpOY4jF9sNbBLERYsfKtVXta0bkSawOWGa/jQRGO77wXWDkrrNnJBmjJlh9PM
+	 HguzsgEnikcWiFzaT/3t9Gde9wKDfDRh/U6wzvByEWevxb9BZf1OeBVulLv0pKhzBA
+	 Y8+dEeldejVwqEoFoR3S0ETzoG6cJAuf2Zsh2J0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0192/1257] media: imx219: Account rate_factor in setting upper exposure limit
-Date: Sat,  7 Nov 2026 08:41:28 -0500
-Message-ID: <20261107134944.762344614@linuxfoundation.org>
+Subject: [PATCH 7.3 0193/1257] media: imx219: Account for rate_factor in control steps
+Date: Sat,  7 Nov 2026 08:41:29 -0500
+Message-ID: <20261107134944.787848353@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,12 +71,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit db111b66f2db7f3f79d9359f4a9762e832d6fde9 ]
+[ Upstream commit 57043aef0a04bd96d97881422590e71c1e4c45b1 ]
 
-The rate_factor multiplier is used to multiply a few values in the
-sensor's timing configuration and the exposure time is one of them. This
-also needs to be taken into account in exposure time margin: multiply it
-by rate_factor so that sensor's exposure time margin is respected.
+The controls that are divided by the rate_factor before writing them to
+the registers have the step of the value of the rate_factor. Take this
+into account when the control's range is modified. The controls are
+created in a configuration where rate_factor is always 1, hence there's no
+need to change the code adding new controls.
 
 Fixes: f513997119f4 ("media: i2c: imx219: Scale the pixel rate for analog binning")
 Cc: stable@vger.kernel.org
@@ -85,41 +86,69 @@ Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx219.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/i2c/imx219.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
-index 9571f3622d2d4..5184523de8bed 100644
+index 5184523de8bed..b1f29037af742 100644
 --- a/drivers/media/i2c/imx219.c
 +++ b/drivers/media/i2c/imx219.c
-@@ -466,7 +466,8 @@ static int imx219_set_ctrl(struct v4l2_ctrl *ctrl)
- 		int exposure_max, exposure_def;
+@@ -340,13 +340,13 @@ static const struct imx219_mode supported_modes[] = {
+ 		/* 2x2 binned 60fps mode */
+ 		.width = 1640,
+ 		.height = 1232,
+-		.fll_def = 1707,
++		.fll_def = 1706,
+ 	},
+ 	{
+ 		/* 640x480 60fps mode */
+ 		.width = 640,
+ 		.height = 480,
+-		.fll_def = 1707,
++		.fll_def = 1706,
+ 	},
+ };
  
- 		/* Update max exposure while meeting expected vblanking */
--		exposure_max = format->height + ctrl->val - IMX219_EXPOSURE_OFFSET;
-+		exposure_max = format->height + ctrl->val -
-+			IMX219_EXPOSURE_OFFSET * rate_factor;
- 		exposure_def = (exposure_max < IMX219_EXPOSURE_DEFAULT) ?
- 				exposure_max : IMX219_EXPOSURE_DEFAULT;
+@@ -473,8 +473,7 @@ static int imx219_set_ctrl(struct v4l2_ctrl *ctrl)
  		ret = __v4l2_ctrl_modify_range(imx219->exposure,
-@@ -893,6 +894,7 @@ static int imx219_set_pad_format(struct v4l2_subdev *sd,
- 	crop->top = (IMX219_NATIVE_HEIGHT - crop->height) / 2;
- 
- 	if (fmt->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
-+		int rate_factor = imx219_get_rate_factor(state);
- 		int exposure_max;
- 		int exposure_def;
- 		int llp_min;
-@@ -911,7 +913,8 @@ static int imx219_set_pad_format(struct v4l2_subdev *sd,
+ 					       imx219->exposure->minimum,
+ 					       exposure_max,
+-					       imx219->exposure->step,
+-					       exposure_def);
++					       rate_factor, exposure_def);
+ 		if (ret)
  			return ret;
  
- 		/* Update max exposure while meeting expected vblanking */
--		exposure_max = mode->fll_def - IMX219_EXPOSURE_OFFSET;
-+		exposure_max = mode->fll_def -
-+			IMX219_EXPOSURE_OFFSET * rate_factor;
- 		exposure_def = (exposure_max < IMX219_EXPOSURE_DEFAULT) ?
- 				exposure_max : IMX219_EXPOSURE_DEFAULT;
+@@ -902,7 +901,8 @@ static int imx219_set_pad_format(struct v4l2_subdev *sd,
+ 
+ 		/* Update limits and set FPS to default */
+ 		ret = __v4l2_ctrl_modify_range(imx219->vblank, IMX219_VBLANK_MIN,
+-					       IMX219_FLL_MAX - mode->height, 1,
++					       IMX219_FLL_MAX - mode->height,
++					       rate_factor,
+ 					       mode->fll_def - mode->height);
+ 		if (ret)
+ 			return ret;
+@@ -920,8 +920,7 @@ static int imx219_set_pad_format(struct v4l2_subdev *sd,
  		ret = __v4l2_ctrl_modify_range(imx219->exposure,
+ 					       imx219->exposure->minimum,
+ 					       exposure_max,
+-					       imx219->exposure->step,
+-					       exposure_def);
++					       rate_factor, exposure_def);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -946,8 +945,7 @@ static int imx219_set_pad_format(struct v4l2_subdev *sd,
+ 			return ret;
+ 
+ 		/* Scale the pixel rate based on the mode specific factor */
+-		pixel_rate = imx219_get_pixel_rate(imx219) *
+-			     imx219_get_rate_factor(state);
++		pixel_rate = imx219_get_pixel_rate(imx219) * rate_factor;
+ 		ret = __v4l2_ctrl_modify_range(imx219->pixel_rate, pixel_rate,
+ 					       pixel_rate, 1, pixel_rate);
+ 		if (ret)
 -- 
 2.53.0
 
