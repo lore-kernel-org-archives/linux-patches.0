@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794059978;
-	b=j+EaVDzAGjIKNknNoC02IYch6qJS2E1WYGHcPZs/NzOZXJIx0LmXF+O3xdi9tYzEGLPg
-	 PZMBU0pHTpzSkJXpnfnrs4cLlRbD2lkUhyWxipDp59MyiSrBUN0QEfWNJ/XVqKAarPSjG
-	 nxpXsxcpIQ2Su2KfgHA01SLxRP3D2wWCtzClOVYh7EqlfW5PKHjM69hKH7NPQp4g8lct0
-	 4NUkJwsDJ9FTWoWGsEsMFkth5oB3zp6XEoGrR/dhzlENX/jUJxmL4bl1gMOdhIcuzKANr
-	 ZvUic5GcUVFEBACaPeoBKfPE0VGC+ZOc1OTy4J1NSaGp08CQ6BgIxct2lgyFba0NmcQ==
+	t=1794059979;
+	b=CROuLeZhvxY1ol6Ns6xLMacXohcVrFIU8KpXX5ZRZ5PeDb4fEWapmeTC6sbgCevM30zV
+	 57ueAdiVKxWedqKVQUR3v5FSX5MERrBT1LTvx77L+eZMogUIQvDjwQ1besn51gIK8Svaf
+	 XyQ92sxLfp5o24ceBE+4MpOY4l2GJ2Em/hN5DNHpkeRUXHlUJ/D1J9eDdP68wdDgGr1DP
+	 rhhDWRyw3EPC3cOnKt/0SAP0q3rG005kkb01kmXUlYa7ggcAMpIauWcdyXOtxAJ3TIUzK
+	 eCIrTewb/4xpb+BU4kZPvEV1tk56tOFqegrhjkv87ODvl+ymQx0fDKjuax37T0xZSbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794059978;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794059979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1+vUQLoX1Nc6FLm4RcE3ZqSRYWE8i48CY7B4NPDBedM=;
-	b=JI790DrJqpvXvSv0+uauJhkUaZuDm9D442F0dn4X6yvaBwF404/gpq2U2Ghtkq9mHhLE
-	 RGEDCgHXsEaFWbTNBilfdBMMugnSHWu1rfIjWg+Gpxxm3r1yWTHcK1eKZyM7k66llM/mF
-	 p7oFBw97Hsjbn7T9R1lfh4xWJl5PensXY7F4EyRkW4sZOX7BGECnoVRH64604csyokfto
-	 EI/O7wt+uTXnx+NNUViKFmrL5s5vHxhitHYCaNAC6UbImnEPJn+YiDtgF1L+4NdUbjgYG
-	 p19n5BwPi72GiwIGI/WjBxBGWp08mFEMWEM+IrGTUkYtIeH+jur8NBAv9T7XXV5yt9A==
+	bh=QK7Oapz9fyd7fXvDtz3DX08NSuhE6+7v/fIvuH40g40=;
+	b=nnVvDhOHGHZDSN2RkEG3uaAqoU7/AmXLz3oUvqeQoOnpUh3FaDIFnhDkvQpIXRjjYB6X
+	 ozw/MO4xPn1Xhi7BWGq7ayCDSAtEWHEVhuoQNpFx7mwc+q1cweC8g95LE8czNwIYTxxQR
+	 ER0WzCTRYPhDB9xJ6otLWevFQ/0whs9vwPCdCDm22yjk1LgZRPeFcE0Cj3tycdOFgDIDg
+	 OP5qbGTJJoSMxcIoXOzaBrHxXuflgb3wU3i3OAgtT/YgHbjz28SL7pscb1IK3xhnGObi+
+	 /O4ZYkEcHgxblXqX1g6o84gS9/O+8w/OIjDrtEPhf9z1bWSPJVw3BVAtQCvm1V5sUZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJwo37kb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRS2oIMY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C74606A32C;
-	Sat,  7 Nov 2026 13:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACA2606A33C;
+	Sat,  7 Nov 2026 13:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJwo37kb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B711F008A1;
-	Sat,  7 Nov 2026 13:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRS2oIMY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0FD1F0089F;
+	Sat,  7 Nov 2026 13:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794059978;
-	bh=1+vUQLoX1Nc6FLm4RcE3ZqSRYWE8i48CY7B4NPDBedM=;
+	s=korg; t=1794059979;
+	bh=QK7Oapz9fyd7fXvDtz3DX08NSuhE6+7v/fIvuH40g40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJwo37kb4csKImEIFvw0TdTNldRU6QcHcFc79x+hUa+Nhu7a8PObEOfp4hilvCwc2
-	 yRrSXN9XnucZnhjSI7u5dRjOPqvuNZmqT1MnBIxxUY8WBfb2mu+Cpq7voFkH0Kt0Jq
-	 Hh9NUYO6Xmd8L6xuSHWrL6Ly3ZpLuzk1e+OQkmMU=
+	b=LRS2oIMYTASD44ojgzWZwEnUTviqdyI9j3MXF1+/Pl30GIPEAXbu4TozwyxAT6xze
+	 fl+vGrro+1v+gj//wHmy/4cHRHODijbYQ0nSKhOjuql0qJN5g1GDWfwCsQjJpQp2Tp
+	 DcEfhaaEr4+KeYBS5SMdIrOkXfgSqxH0IDp47ZcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Yan Zhao <yan.y.zhao@intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/869] x86/mm/pat: Use pr_warn() for early W^X warnings
-Date: Sat,  7 Nov 2026 08:44:44 -0500
-Message-ID: <20261107134852.147704185@linuxfoundation.org>
+Subject: [PATCH 6.18 001/869] KVM: VMX: Formally define KVMs "0xdead" exit reason used for failed VM-Enter
+Date: Sat,  7 Nov 2026 08:44:43 -0500
+Message-ID: <20261107134852.117656181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,69 +71,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit ea6fd393cb9e6811a748c7551de0dd3090f9dcde ]
+[ Upstream commit d85f7dc8cf3c91a131946dae4c3aa8d9c97322d7 ]
 
-Nathan Chancellor reports the following warning:
+Add EXIT_REASON_UNDEFINED to track KVM's magic "0xdead" value that's used
+to stuff the exit reason on a failed VM-Enter so that the magic can be
+reused by TDX, and to make it more obvious that it's an arbitrary, KVM-
+defined value (though the whole "dead" thing makes it pretty darn obvious).
 
-  CPA detected W^X violation: 8000000000000123 -> 0000000000000123 range: 0xffffffffc0400000 - 0xffffffffc0400fff PFN 100e00
+Opportunistically add a compile-time assert to ensure the KVM-defined exit
+reason never collides with a "real" exit reason.
 
-from its_alloc() doing set_memory_x() during early retpoline setup.
+No functional change intended.
 
-The warning is not factually wrong but it is unproductive. First, the RWX
-permission is temporary and fixed up by execmem_restore_rox(). Second,
-at the time of the warning, all kernel text is mapped RWX. So there is not
-even a transient actual security issue.
-
-The right way to fix this up is to relax RWX detection during boot but
-make a final verification pass over all kernel page tables before running
-userspace.  There is code to do that today (debug_checkwx()) but it
-must be enabled explicitly in Kconfig.
-
-For now, retain the warning even if it's unproductive, but make it
-scream less loudly: use pr_warn_once() rather than WARN_ONCE().
-
-Remove the warning once debug_checkwx() behavior becomes unconditional.
-
-Closes: https://lore.kernel.org/all/20260905044253.GA3816371@ax162
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://patch.msgid.link/20260913-fixes-verify-rwx-v3-1-5e1d6a08bd02@kernel.org
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Yan Zhao <yan.y.zhao@intel.com>
+Cc: Binbin Wu <binbin.wu@linux.intel.com>
+Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://patch.msgid.link/20260921235656.1107929-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pat/set_memory.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/x86/include/asm/vmx.h | 8 ++++++++
+ arch/x86/kvm/vmx/vmx.c     | 4 +++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-index 12b7de5f0957e..9fc18a091311f 100644
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -718,6 +718,21 @@ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long star
- 		return new;
+diff --git a/arch/x86/include/asm/vmx.h b/arch/x86/include/asm/vmx.h
+index c85c500195239..a9daddd84ad6c 100644
+--- a/arch/x86/include/asm/vmx.h
++++ b/arch/x86/include/asm/vmx.h
+@@ -20,6 +20,14 @@
+ #include <asm/trapnr.h>
+ #include <asm/vmxfeatures.h>
  
- 	end = start + npg * PAGE_SIZE - 1;
++/*
++ * UNDEFINED is a KVM-defined value used to indicate that the basic exit reason
++ * is undefined/invalid, e.g. on VM-Fail or if TDX never attempted VM-Enter.
++ * The value itself is arbitrary, it just needs to not collide with a real exit
++ * reason.
++ */
++#define EXIT_REASON_UNDEFINED			0xdead
 +
-+	/*
-+	 * If the kernel text is still RWX, gently complain, this could be a
-+	 * false positive.
-+	 * Once debug_checkwx() becomes mandatory for CONFIG_STRICT_KERNEL_RWX,
-+	 * the warning can be removed completely.
-+	 */
-+	if (!kernel_set_to_readonly) {
-+		pr_warn_once("CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
-+		  (unsigned long long)pgprot_val(old),
-+		  (unsigned long long)pgprot_val(new),
-+		  start, end, pfn);
-+		return new;
-+	}
+ #define VMCS_CONTROL_BIT(x)	BIT(VMX_FEATURE_##x & 0x1f)
+ 
+ /*
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 8da96a6c61773..ced20415a14f0 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6151,6 +6151,8 @@ static int (*kvm_vmx_exit_handlers[])(struct kvm_vcpu *vcpu) = {
+ static const int kvm_vmx_max_exit_handlers =
+ 	ARRAY_SIZE(kvm_vmx_exit_handlers);
+ 
++static_assert(EXIT_REASON_UNDEFINED >= ARRAY_SIZE(kvm_vmx_exit_handlers));
 +
- 	WARN_ONCE(1, "CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
- 		  (unsigned long long)pgprot_val(old),
- 		  (unsigned long long)pgprot_val(new),
+ void vmx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
+ 		       u64 *info1, u64 *info2, u32 *intr_info, u32 *error_code)
+ {
+@@ -7333,7 +7335,7 @@ static noinstr void vmx_vcpu_enter_exit(struct kvm_vcpu *vcpu,
+ 	vmx_enable_fb_clear(vmx);
+ 
+ 	if (unlikely(vmx->fail)) {
+-		vmx->vt.exit_reason.full = 0xdead;
++		vmx->vt.exit_reason.full = EXIT_REASON_UNDEFINED;
+ 		goto out;
+ 	}
+ 
 -- 
 2.53.0
 
