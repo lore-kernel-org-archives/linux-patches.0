@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061003;
-	b=f5krm9tm0oowJ3jTvh/+d9y7LqfWqCsZuBGd8P1BDTQyYGk0pz22PDW/aPlqH3iBpJoa
-	 T2VwNiZAlocsiWLPoGhqeDAsQ62IOPc5/fHyvtL06rB/dTHmCE4Ks5nkU9oNzsoMKLPZ3
-	 x2Juy6ES78yMzWQIu+p+bNlVhfteb7Giz0Te3fiRyg5WCYLJc470XmsyVbx6tyHuT9A3N
-	 Sv6fOlUN9cxfRHPq651QK01je1bKgXcBL4qejMlEcObArp51ayJxaL3bJA2EOnR19p7XW
-	 S7ncCqMG/j2bfRxcbPc3QeAG5YJ9suB/prlIJpHSK0/6ZysdflmdBLPAXPW+paHDEBA==
+	t=1794061004;
+	b=XHYheevQ8Q+lIqh9gCogXuXvlwZadAoFht9n575IyyQLhHQysprlpESTRQzPOhp7vMqe
+	 Dy2uGhLUm5T4UMNclureQ60xNg/N5/OMzrrHaV2NFyMgymlqjsEsP4qpAQuhLI5UyzOIu
+	 9H/qToQnxgCwnZhFse6IHT6uxiOLsF+NchFnQLQNOuR+zhnbeW94655AK8P/u0kRU6WFF
+	 Ynkg24zK3Un1GzlGtzl4ZD7ivWqVdmW0Pm4TJqTh2cYB15Ht7CLXAEiIU2J/vF2bcctwX
+	 6NjUv1qwTGfpvIncMS77P6LS0014Jxp7o8D4Lv7w+HkROBuyt5X5vKK5O+l4+rP9wLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vSAXvWyHtWwTrETQ4Shtf3gRiT4OF44MispfkVhKWU4=;
-	b=5stjFmFT86D5pDqIKcC9nN6Tu8Yn/HRkGOlfxuONrdKbrbMmUCUwBA/wS6/o7cQzfpD2
-	 Q9Y0dVZIAGTlXrZasKzUhIOY5qbl7elndcV2IFVBadwAFlIvPZmSMRSoSQKuvkhAld0km
-	 ky8RecA7uq5QJ/5vz/9txAcO/57BJFmHW7nCpnZtHxMlN+zqdcic5TT7V+Ls8gI9QAj9g
-	 SFMzyuAM7LiZIZyWJ/ImAan3SsCpXlr7Ud4NppvWORCI8zFQgfRftOBAa2PcgHIGb3Cai
-	 +s4mPvjcJnKOSsxZ7fyVVIoupN8gGNUC5xl3FDvyXR14QwusgmwLG6aNpL0sCzGoeBQ==
+	bh=vAbyLU+ToYZ+udCnNTLpuUMJCTsWL113rnbAj0zib8I=;
+	b=b3B3/a+IyKAiK9/OkynL2PVM47Nxg08uvZEHJPHa4yvntI9qYTNXABXjSTrG+v8HQ0tg
+	 AIUeq6w9tzyOxoH0pJyFnlHjSpF7csZYKI+P0ftIy6TcWqhi+POkHDV7evBgKxcdeWJhi
+	 u9+WAnQAwHaM9iWMdpW9u+YgKBfzPCG4XjldUbXmH+gjZetGkvDxV8zvHbsRNYrGU3Xq7
+	 g2bGGh47IcZLCyXJnqT3YVpAbso1mBm90pGd/Q3JIPighz8UR0bCxZ7PnQf/SJCmTdwNk
+	 gxzAL4+cPyu2qUl5ckHTa0IQhAvf7TkzH8xv2S+99wjTQNpKI44iW9wjqJlu+WM/IXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v9c/I35r";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljwJAeK1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF557606A33A;
-	Sat,  7 Nov 2026 14:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1093B606A33B;
+	Sat,  7 Nov 2026 14:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9c/I35r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FDB1F008A2;
-	Sat,  7 Nov 2026 14:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljwJAeK1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B108C1F008BE;
+	Sat,  7 Nov 2026 14:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061002;
-	bh=vSAXvWyHtWwTrETQ4Shtf3gRiT4OF44MispfkVhKWU4=;
+	s=korg; t=1794061003;
+	bh=vAbyLU+ToYZ+udCnNTLpuUMJCTsWL113rnbAj0zib8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9c/I35rslnxIy8jD20Y8NgCoaDzOeWU9+WuLGsSTswpmWRMkv0zNNXdHCaNclqqK
-	 MSQ20eaHv6wlJXsjoASeK8n8Q1IsQfSj1p5VOkXbOYHOXsuvfptyWB6d3EzPaN4s6h
-	 U7jAEAx1RVEFZTLHAvddvb6tmCExq3tWId6kNrps=
+	b=ljwJAeK1Y17xaky0/415N+EENzVnzOixye5ODC8ZovB7UklkdqyyzHhCRFeURB1rB
+	 rdPdPaya832SXp/W2s6oGL5lQ/nU2bY/NFUG5nq5+F7TArOtUI/qbReQm8fUOa3w2h
+	 gLSPGgOgG4AIfjumkQGNtp1MVxhIkHAvG+T+w/ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gael Blivet <gael.blivet@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0347/1536] ksmbd: skip fallocate for SMB2_CREATE_ALLOCATION_SIZE on a stream handle
-Date: Sat,  7 Nov 2026 08:39:23 -0500
-Message-ID: <20261107135007.424113929@linuxfoundation.org>
+Subject: [PATCH 6.12 0348/1536] ksmbd: report actual xattr value length in stream enumeration
+Date: Sat,  7 Nov 2026 08:39:24 -0500
+Message-ID: <20261107135007.451236758@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,60 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit bfdf81c62f4f52a3626ea62db0744def6778e83f ]
+[ Upstream commit 689f1eb3719d61700b58f984ac8602837f004f8c ]
 
-smb2_open() calls vfs_fallocate(fp->filp, ...) unconditionally when a
-client's CREATE request includes an AllocationSize create context.
-For a stream handle, fp->filp refers to the base file's data fork
-(streams are xattr-backed on the same underlying file, not separate
-files), so this pre-allocates storage on the base file's actual data
-instead of doing anything meaningful for the stream -- fallocate has
-no applicability to an xattr-backed stream at all.
+get_file_stream_info() (FileStreamInformation QUERY_INFO) reported
+each enumerated stream's StreamSize/StreamAllocationSize as
+stream_name_len -- the byte length of the stream's *name*, not its
+data. This is the same bug class already fixed for EndOfFile/
+AllocationSize on an open stream handle (ksmbd_stream_eof()), just
+missed at this second site: a client enumerating streams sees a size
+derived from the name string length instead of the stream's actual
+content length, inconsistent with what querying the same stream by
+handle reports.
 
-Skip the fallocate call for stream handles.
+Compute the real value length the same way ksmbd_stream_eof() does,
+via ksmbd_vfs_casexattr_len() on the already-known xattr key.
 
 Assisted-by: Claude:claude-sonnet-5
 Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ fs/smb/server/smb2pdu.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e0accc8565f70..b4bdd98bbbe0f 100644
+index b4bdd98bbbe0f..1df6c8a20b458 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -3633,13 +3633,22 @@ int smb2_open(struct ksmbd_work *work)
- 			ksmbd_debug(SMB,
- 				    "request smb2 create allocate size : %llu\n",
- 				    alloc_size);
--			smb_break_all_levII_oplock(work, fp, 1);
--			err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
--					    alloc_size);
--			if (err < 0)
--				ksmbd_debug(SMB,
--					    "vfs_fallocate is failed : %d\n",
--					    err);
-+			/*
-+			 * fp->filp is the base file's data fork for a stream
-+			 * handle (streams are xattr-backed on the same
-+			 * underlying file) -- fallocate has no meaning for a
-+			 * stream and would otherwise pre-allocate storage on
-+			 * the base file's data instead.
-+			 */
-+			if (!ksmbd_stream_fd(fp)) {
-+				smb_break_all_levII_oplock(work, fp, 1);
-+				err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
-+						    alloc_size);
-+				if (err < 0)
-+					ksmbd_debug(SMB,
-+						    "vfs_fallocate is failed : %d\n",
-+						    err);
-+			}
- 		}
+@@ -5166,6 +5166,8 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 	struct kstat stat;
+ 	const struct path *path = &fp->filp->f_path;
+ 	ssize_t xattr_list_len;
++	ssize_t slen;
++	loff_t ssize;
+ 	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
+ 	int buf_free_len;
+ 	int ret;
+@@ -5227,8 +5229,20 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 		streamlen *= 2;
+ 		kfree(stream_buf);
+ 		file_info->StreamNameLength = cpu_to_le32(streamlen);
+-		file_info->StreamSize = cpu_to_le64(stream_name_len);
+-		file_info->StreamAllocationSize = cpu_to_le64(stream_name_len);
++		/*
++		 * stream_name_len is the byte length of the xattr's *name*,
++		 * not its value -- same class of bug ksmbd_stream_eof()
++		 * (smb2pdu.c) already fixes for EndOfFile/AllocationSize on
++		 * a stream handle; this enumeration path needs the same
++		 * real xattr value length, not the name length reused as a
++		 * size.
++		 */
++		slen = ksmbd_vfs_casexattr_len(file_mnt_idmap(fp->filp),
++						path->dentry, stream_name,
++						strlen(stream_name) + 1);
++		ssize = slen < 0 ? 0 : (loff_t)slen;
++		file_info->StreamSize = cpu_to_le64(ssize);
++		file_info->StreamAllocationSize = cpu_to_le64(ssize);
  
- 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
+ 		nbytes += next;
+ 		buf_free_len -= next;
 -- 
 2.53.0
 
