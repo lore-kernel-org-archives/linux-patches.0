@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061774;
-	b=c7woqNwES1iU/fURMFFD4ROuYNWzqPLrHbQDLnb7xTZZ0t4/z+XDVsi0s0HZYwGnhhbE
-	 jefTa5veWnl7EcLT8zOHWIl9U1NCt2HUbYJMHaiwz5y5becKLZIsHngW3hjMuNhPlfuPC
-	 fLKCssofN7XCuyyLV/o2E+q0d6SptHDURwHj6A5Z72I+esy683BNFdWpK6YQAVS1En1vI
-	 DWoMRMbAiQi2SVniKbm6Bd4IE1iOqxjgA4lgVb+sSw/rlb0mZDMdTTlDNc3PBDc1uaVlF
-	 uPq9Oax0zu6L8NV5F5QlFVK8xhzdEhJlAwyMWCgkVJ/FRPcBV0UZAQ9Xk/cWGc6EApQ==
+	t=1794061775;
+	b=sL33phk+I1ia49GgYKvrYhIVtF96hRqJMDCFDi6FyQfGy6IxJ/aa6U7YGo3awuv3VMFA
+	 I1z3MwT4FUpxyuqm7GskUQHWH3b+HgcfIlI5GNbPcVscyWSDXdzyypXJo+xg55sW0uSZQ
+	 Pv/zUpJsCQML7MDeoPBoMSDY9bgqlg+xkLW14wiqd66TOCw6XYjSFv2iUabh3Vi775cEx
+	 JRoRXreusUgL9tqbrX7xCO550FCnK9Bl/UdL5e8IWXOzl48yNVNh801tdIBoXAJj5rqzb
+	 p2r3mwbnnr/Z3R8Kgp2EpxRztf3M8vy56Fm9ftiEErUNB004Dn3feRv7FDedyESb9Rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=63TLTRrkHUJvEf7htJtHj5bJdjTMvDa1RqcL5mwjh9U=;
-	b=d402d1NP8C1uh3SO/2sc1D8Oz27Zaf6+1nxqObBGATiMk2IityV04agjiJT9TrNC7fbF
-	 e6ZdD2bcMaXBv7bDP4nN0cSqro+ZT4DTGdcwDzuYKRb+/xWmY2ZFwIZoraqMO1pSH/sKB
-	 Hjy9wPD1ug5W4kgNW+8cMQA7Frg6P7+qTUIr65bPc6PynrAO+IeoVbvBNKJbulr1K7Jpa
-	 EtNffW3CWEQTjQlEOnBOiTB1jf6RLAAsxU+B9zapSIvaDDPha2N1dE3OcL90xiozmVUbx
-	 SHsxLTxqKjNEByd6V3p0SrDVEijxBVev7MTFtnxPSRh/ULUpXJQ382DWIZlwUvkJkIQ==
+	bh=g1knR6UOmHNfpuTHQLpd+irOSAk8F3rIfejxqGPLdk4=;
+	b=NuQ4mPLK7lLFYjK4xSFLBwCmrsIrJa9clXnoLsvtomUhi7uZKZraOOxw3wyQO9lwDiPy
+	 uVCJ9H0ixUdJqP/5ZMo6ZPBPh/zPIO6sq4a3VoNB9p8z7ZnN+gsJ/Jl76VKmL6VpQpY2c
+	 Ds59HpiF+e4k7DMC3GIzccP8TIA1GzknqKD/fzKGXlvKoVq4RmQEyjMc3XyTxhCynovcx
+	 O6SKWV9YpE/T8Qp9praJmfsXIAr9s22VjnbtQJSJzz11vU+DKCezoC3P3Q7bEyPb+qnX/
+	 sJLFeatnwVDXwgbybCikWRJduMu9rKxi/IiaVEsXT2KXVa/h3V78GojYDeuxIX+mY4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lq8TGaJQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rdN9/W84";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45EA8606A326;
-	Sat,  7 Nov 2026 14:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8835C606A326;
+	Sat,  7 Nov 2026 14:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lq8TGaJQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60D41F0089F;
-	Sat,  7 Nov 2026 14:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rdN9/W84
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DC71F0089F;
+	Sat,  7 Nov 2026 14:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061774;
-	bh=63TLTRrkHUJvEf7htJtHj5bJdjTMvDa1RqcL5mwjh9U=;
+	s=korg; t=1794061775;
+	bh=g1knR6UOmHNfpuTHQLpd+irOSAk8F3rIfejxqGPLdk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lq8TGaJQMaS2SIGHNZ7L+zocikuLbSe+c/tU4Fbto8NRKYXS8BSmm6O4oTScDSOFp
-	 J2RDKHl3bcoi8na2FMzWlJkYob4+AXwOSQJQHCVETlm3rEWNqIfgEPIF+3dD1OvFq8
-	 qDaiLalQsXCNj/QRQ8uByCEuZKkIWlsc9eOm7Lsk=
+	b=rdN9/W84B9y9pFwbnKbZi/jU5k9kokDrmFFx7tfG+3NdO5X/1O1a7pu8WhLlyxMan
+	 N2tIer5NuOOBLxPlWfnug1qUlL0qGl6/lH7GvYNdJvjjXca6/VoTDlX0pTSxGRpGSu
+	 XdpAWH7G0ZoexWpPf1/iDCMjgnVYHuq0FWVHZaT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Scek <scek.andrej@gmail.com>,
 	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 0807/1536] HID: amd_sfh: Remove unsupported motion-state field from accelerometer report
-Date: Sat,  7 Nov 2026 08:47:03 -0500
-Message-ID: <20261107135020.211251125@linuxfoundation.org>
+Subject: [PATCH 6.12 0808/1536] HID: amd_sfh: Use report type from request node
+Date: Sat,  7 Nov 2026 08:47:04 -0500
+Message-ID: <20261107135020.239075400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,64 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-commit 6ff86122906357687735dd379c6279e3b2fa26af upstream.
+commit 85f1bea97f1909f81577cfcf3e4db9017e7f5337 upstream.
 
-The accelerometer HID report descriptor declares a trailing motion-state
-field (usage 0x0451), but the Sensor Fusion Hub never reports this data,
-so each accelerometer input report is one byte shorter than the descriptor
-advertises.
-
-This was previously harmless because hid-core zero-padded short reports.
-Since commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
-bogus memset()") such reports are rejected instead:
-
-  hid-sensor-hub 0020:1022:0001.0003: Event data for report 1 was too short (15 vs 14)
-
-As a result the accelerometer input events are dropped and screen
-auto-rotation stops working on AMD SFH systems.
-
-Remove the motion-state field from the accelerometer report descriptor and
-drop the unused in_accel_shake_detection member, so the descriptor matches
-the report actually provided by the hardware.
+Use report type from request node while sending feature and input reports
+to HID core. The cli_data report type array is never assigned and
+feature reports are sent as input reports.
 
 Fixes: 1434f9fc0e47 ("SFH: Create HID report to Enable support of AMD sensor fusion Hub (SFH)")
-Reported-by: Andrej Scek <scek.andrej@gmail.com>
-Closes: https://lore.kernel.org/linux-input/CADrS85612m-Hh-G4BJmOhy-y6r3Ni3kD8_GM-2QRBeWWEEZWuA@mail.gmail.com/
+Closes: https://github.com/ublue-os/bazzite/issues/5796
 Cc: stable@vger.kernel.org
 Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h        |    2 --
- drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h |    7 -------
- 2 files changed, 9 deletions(-)
+ drivers/hid/amd-sfh-hid/amd_sfh_client.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h
-+++ b/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h
-@@ -48,8 +48,6 @@ struct accel3_input_report {
- 	int in_accel_x_value;
- 	int in_accel_y_value;
- 	int in_accel_z_value;
--	/* include if required to support the "shake" event */
--	u8 in_accel_shake_detection;
- } __packed;
- 
- struct gyro_feature_report {
---- a/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h
-+++ b/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h
-@@ -169,13 +169,6 @@ static const u8 accel3_report_descriptor
- 0x95, 1,		/* HID report count (1) */
- 0x55, 0x0E,		/* HID unit exponent(0x0E) */
- 0X81, 0x02,		/* HID Input (Data_Arr_Abs) */
--
--0x0A, 0x51, 0x04,	/* HID usage sensor data motion state */
--0x15, 0,		/* HID logical Min_8(0) False = Still*/
--0x25, 1,		/* HID logical Min_8(1) True = In motion */
--0x75, 8,		/* HID report size(8) */
--0x95, 1,		/* HID report count (1) */
--0X81, 0x02,		/* HID Input (Data_Arr_Abs) */
- 0xC0			/* HID end collection */
- };
- 
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
+@@ -95,7 +95,7 @@ void amd_sfh_work(struct work_struct *wo
+ 						    cli_data->feature_report[current_index]);
+ 		if (report_size)
+ 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
+-					 cli_data->report_type[current_index],
++					 node_type,
+ 					 cli_data->feature_report[current_index], report_size, 0);
+ 		else
+ 			pr_err("AMDSFH: Invalid report size\n");
+@@ -104,7 +104,7 @@ void amd_sfh_work(struct work_struct *wo
+ 		report_size = mp2_ops->get_in_rep(current_index, sensor_index, report_id, in_data);
+ 		if (report_size)
+ 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
+-					 cli_data->report_type[current_index],
++					 node_type,
+ 					 in_data->input_report[current_index], report_size, 0);
+ 		else
+ 			pr_err("AMDSFH: Invalid report size\n");
 
 
