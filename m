@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062912;
-	b=t51UMFRAxFlpl5AXmsp+Ally2jxVVpINa7tWdHD+owLqkKCnRJeRBdS0AVxWCr8D/903
-	 ypX6zLUG+Rps9fUfHncTA8kztQdFRzzRGtBqKLfNIwlTtukXl/D6n07+QGcUILWLr0+my
-	 Xjrhbzmvts7Up8YHr/5lhffpB5tdm2sL8N7IDSHYGDw1yyUD9MiHa2aYxe4OfiAHptTfr
-	 yzwrriEtoYLy5QN68AVOsSYMZJRfp1uMwU3kOpUdJ4g3uJ+bkaCYrCqumndg/IP7CiBnt
-	 DrqtqjlN6dP4zqHz0kbDfgnr5l0GYaFMm452WV/qdGj2QYEL8yd8sPa33QRosZO6GSQ==
+	t=1794062913;
+	b=tneJCGStgbWE0uVOX3Ow9E02onsHd3y4ZWStbu4gx+eL4IDCm/wPaEfwl2uo2UvPnSRE
+	 LPzG2j84iNgkCgUyLYhn1J66qzLx9h9gpQtSVmtEQWv5ly08eUwDwLfUAkqtw9M6w4ke0
+	 D/91wahNyCdOzF5ODfTzRiWI2mXnoQcORZsubsBEeBewauDrwb0fumwFZoJVr+I67xwrj
+	 STU/oK9+EZZlAipI7XsKQeUr4bPswuGDFAOzTwpLlqtJavgZC2SUluPyPhniHbipTBJYu
+	 /0uVoQkyonG7fmh8f0V/TOWzNLBxRCvbw+bNykRnExkAFh0USm2Mo61o8h3nxpGY9QQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062913;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OdAsuUWDHUNivUQI+XaIm6rsyRHZkq4rq8gBQl1hgY8=;
-	b=rfuQmywIQahj552xl+exgc38XWOIwi2RJS2E2izuha6Tm1K9mPyi77jy7Dhp9Et1T1+C
-	 4sVPn4QHwrxD2ocvsXtP7KwuUkmAu33bUbUFa4Uy+lNS5/Dc+NmPo+t1eoxntgGhyQZxg
-	 i5JjTb5MCZbn+HZRIcpW98atUoX8PEtTM3DpfJyyrxeoNiCTJVAYqAg3m0IdxiuYXBhpb
-	 XiRufsHCtG9DPUqa1p14bA+y98SfEuWmyFMUd3Teh8wAnvqq0Ylbtr205j/EmdJAL/7U8
-	 OcqzEtQrhR1cSYlsF0wSoGkcaKp1DmtXb/5ZaFfiX7+WZjPwiitY5d8lKkNOcv8HU8g==
+	bh=03SPRXFKR/Myd6c+QL2WSOzW2OoG2leMCg/Lcq4M0mk=;
+	b=Dqf00rz19goFdXo5Cn4BaessdrgBcIHwQP4LWRYLDWtSEaTTfKn+gpHPuiv+/fEZD7vh
+	 VJCrFDsy1EpbcY8s6rrjA4rSTRUMqpssAhu7Xee51BLdFV3RdWb1I4s6XagBNGorweoU0
+	 zTVkkA9/f9mRs5yYss9Tw3Cmw1aBFPqCEfDGGla2PDjJMNBIcD/C48cXWV5B/IYeIv9+u
+	 rORGinhctPgkw+7E1C3n8xe55aY4vILMpdCgnu0LrgrcZlxmb3NQGMB5NE4Sp7KDWIDB1
+	 IpwtFmZeo03tKEHWHitiPVOQRUEsztMlooNqgD8Qqjpr46+3DqZwwn4wEuXnAUxbDKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lopmidwd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yK1CgbUQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD48F606A32F;
-	Sat,  7 Nov 2026 14:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24BA606A326;
+	Sat,  7 Nov 2026 14:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lopmidwd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDE51F008A1;
-	Sat,  7 Nov 2026 14:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yK1CgbUQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670671F0089F;
+	Sat,  7 Nov 2026 14:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062911;
-	bh=OdAsuUWDHUNivUQI+XaIm6rsyRHZkq4rq8gBQl1hgY8=;
+	s=korg; t=1794062912;
+	bh=03SPRXFKR/Myd6c+QL2WSOzW2OoG2leMCg/Lcq4M0mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lopmidwdfw4bXREia9O4Lnl/WUNTryxawpqmXy4zgVXkBAWmn3O44CatPNW5oyae4
-	 qLSR0rmSuc6QF6eomnHbTxJQqZ/36is1ASCZM2EzVDXDsexhus7TR0r0KSg7rsNwM1
-	 gZUpz4JXx+w8lITHonz4A9RBI4UlOCQi6L9+8S1w=
+	b=yK1CgbUQRVLoxNFFJ8/RXbjGW5wGvjYRuiOniW2nnNWkF6/jGMgj3dixO8zZA3j32
+	 7aWYPBoJaZHL5neCXqxbg/KxSVAUfkuHbtAJqOz86QzPtfOQtoPlA6xSMzGkbQPkOb
+	 ee5Y+8kKJPW8F1fO6EZQCuUCJGHCGzLFnSk0CwSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Judith Mendez <jm@ti.com>,
+	Moteen Shah <m-shah@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 180/869] media: ene_ir: Ensure teardown is done in the correct order
-Date: Sat,  7 Nov 2026 08:47:42 -0500
-Message-ID: <20261107134858.252602639@linuxfoundation.org>
+Subject: [PATCH 6.18 189/869] arm64: dts: ti: k3-am62-lp-sk: Set eMMC clock pins as OUTPUT
+Date: Sat,  7 Nov 2026 08:47:51 -0500
+Message-ID: <20261107134858.503273997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,45 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit ae6cfbad7ca346b78f4cdac38438bbfaed8c18a0 ]
+[ Upstream commit 156f4c2208c8e5e04002402494de28c21c0afcbc ]
 
-The timer can be re-armed from the irq, so ensure that the timers are
-deleted after the irq and that we only free the rc device once we are
-sure that the irq has been silenced.
+MMC clock pins must be configured as OUTPUT-only per TRM [0] with
+receiver disabled (RXACTIVE bit = 0). Change MMC CLK pins from
+PIN_INPUT to PIN_OUTPUT to match documentation.
 
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+[0] https://www.ti.com/lit/pdf/spruiv7 Rev. C: Table 12-246. MMCSDi I/O Signals
+
+Fixes: e6a51ffabfc1 ("arm64: ti: dts: Add support for AM62x LP SK")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Young <sean@mess.org>
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Judith Mendez <jm@ti.com>
+Reviewed-by: Moteen Shah <m-shah@ti.com>
+Link: https://patch.msgid.link/20260909214743.899477-7-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/ene_ir.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/ene_ir.c b/drivers/media/rc/ene_ir.c
-index 136fc4192265d..7598b623e4e84 100644
---- a/drivers/media/rc/ene_ir.c
-+++ b/drivers/media/rc/ene_ir.c
-@@ -1103,15 +1103,15 @@ static void ene_remove(struct pnp_dev *pnp_dev)
- 	unsigned long flags;
- 
- 	rc_unregister_device(dev->rdev);
--	timer_delete_sync(&dev->tx_sim_timer);
- 	spin_lock_irqsave(&dev->hw_lock, flags);
- 	ene_rx_disable(dev);
- 	ene_rx_restore_hw_buffer(dev);
- 	spin_unlock_irqrestore(&dev->hw_lock, flags);
- 
--	rc_free_device(dev->rdev);
- 	free_irq(dev->irq, dev);
-+	timer_delete_sync(&dev->tx_sim_timer);
- 	release_region(dev->hw_io, ENE_IO_SIZE);
-+	rc_free_device(dev->rdev);
- 	kfree(dev);
- }
- 
+diff --git a/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts b/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
+index 5ed757c19db60..fc79641d7bb5f 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
+@@ -86,7 +86,7 @@ main_mmc0_pins_default: main-mmc0-default-pins {
+ 		bootph-all;
+ 		pinctrl-single,pins = <
+ 			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (V3) MMC0_CMD */
+-			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (Y1) MMC0_CLK */
++			AM62X_IOPAD(0x218, PIN_OUTPUT, 0) /* (Y1) MMC0_CLK */
+ 			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (V2) MMC0_DAT0 */
+ 			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (V1) MMC0_DAT1 */
+ 			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (W2) MMC0_DAT2 */
 -- 
 2.53.0
 
