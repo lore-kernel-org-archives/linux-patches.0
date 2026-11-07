@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063115;
-	b=NSjSZ4XQO6iKs0C0wXUqMPW+rF4r5mHwr/pxQDPquQyaIkldEhJiaTOIUAuBtix8op0Z
-	 YCU0L2nOZqsrZUyYWsCmC2vGq0IK9TrLtZabSyHNfiJyLRg8lfWyQgmPydxU+MMCqWORB
-	 XDtZxkS5rcR+AGPzxwJjHTHvroA84oDfy4ZpggD2SLqg7pdLvhDnUXZKPDvzDv0Su0uVx
-	 XtSFM8ZLt8VlJKW0zlqGEQJBXAm9JI/aF78F3D7npm0ktZFgU4CB3Drav3EA+19zMwOsr
-	 AWZwxQ+PBOWl/s64LoHXJP7BCpjUE0vWChscsU8vf2ld/t0q78xh8jPWUbT6dTuxjzg==
+	t=1794063117;
+	b=mdGkx4T0HoeBIqU2rgvq+UJQco3ITQ19YrGjRDtPw5pEAoFRTcNujG+lL0KcMhigLFp9
+	 HkfKZG9nczAyfFbK8m7LOBegC1F4kEzlcfGa94ynilBXO86EtRUULkOyavLVEfBr9dzSg
+	 Le0al+0AUNXWuBUiJIB6Ds7224OLxk5QHxC22WDU5fYXGOcvX2/XLbrSFc7MO2CGY1Vor
+	 L3eiG/9fN5yERUKTqcCiDbshukUwmh+9uWDzW9rJgXroafoAlT9NLChtESIry+U+mYTDa
+	 qb2qs/tlDjVsY1lET0PiVYi9T3mgqRdueHpiXXykSKJ8piXUjx7nghxnXutNY+pPAFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063117;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9OBOLn4eH4QxA0zs6RS+8zmGiLSo0PBlYxIYsdcFPOs=;
-	b=URbTq1jBUu0l6MxUoY4UJyOGLOJUdsM+YCI4nK+Lv1at708LXLCadQcJ9CDNY0nbWN1q
-	 oePUt4M1c9wjbEWkYK5n7aeMHXRGLLv6jMtRnzzrcRKI831WXwpvfsjZpy8drZ21rmKdM
-	 VIIsXQ7U3Lv8trhny9e8TF5GSXNIOmWdhJdwni+ArnLyLEpBpXOoKDIH+qeXfQVB8ajsV
-	 xxi0MZKlPIIFZJ5dV++qO3/wC2TeTQ74olwOifycy5V5i/JxmUuKs99+t+O5r3vg25dJ8
-	 MffMw0ceW+NukxjYMQdGhOiJJn1WLRC4dylR576Vv2lONJxhUfh+/hcZJjhZbbQ2SVw==
+	bh=P9iYgqpjnxaQW/ShoBVNX2ac5K6HURpJ4BFNnyTSMwg=;
+	b=5LTs90le1zWVNUgo0uHpVJecrQmJTOP277IYSz4Qhrhzof7F6Agnx78bngBxUJ5ZoD6U
+	 lPjogkLRviKN1qDHWn/KqfT70PkqY+Wu54K5HqetAXX6X3LGUoCDd3zjBy4y9JMqRSwpU
+	 A+bZUR13No8HBJt+aiSmvsMUmaowZBiAEU183JHzohsyf+asCW8epvAPHNWk9XUwWeFJG
+	 t6qtkApr4Xx/klSjJHSDOAbSYhGGkFnW3Lxk8kG9PbZaoCzGK7rVzfAlaezbuNNPC/BMW
+	 CZp6EL26PJfRgry8MHpGd/VgM3PM+KAoSARMlboMsoSN7QJGbx3Kn8aOGwNg0BhyT9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LsRHu8KA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwmrNoUn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646C6606A33B;
-	Sat,  7 Nov 2026 14:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FF0606A33B;
+	Sat,  7 Nov 2026 14:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LsRHu8KA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4201F0089F;
-	Sat,  7 Nov 2026 14:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwmrNoUn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8E61F0089F;
+	Sat,  7 Nov 2026 14:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063115;
-	bh=9OBOLn4eH4QxA0zs6RS+8zmGiLSo0PBlYxIYsdcFPOs=;
+	s=korg; t=1794063116;
+	bh=P9iYgqpjnxaQW/ShoBVNX2ac5K6HURpJ4BFNnyTSMwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LsRHu8KAFEWSBlooqbPC4L7orsZ16t7AggfmgL+fCmslrv8WlrCA3rwJqXQPt/YBT
-	 q5VxOT972xdFcSM9zZMzcjf6nn8yCFJVgQMxy+m+KoEgYXgCxRvvYqHBBwD4MY/gtP
-	 zcXFJfzShErUoSZJ7Iy8n+PKCP1wmEuTTwDjNJw0=
+	b=CwmrNoUnmgkeINGQLnV8IDeZ4/xcsnPXqdZWjhQB5DID8wqV5BqMBM559+g8fhX70
+	 OYM3bUfCjYbSrQPLIVnL9CpTPV/JNkeAtwun2wWqaMwmDg4qsy3aT9fhiLeHt/jdj0
+	 /AsB/+zOGoJpwLTVhRoXxx2kepCQTxRkOjbxKGAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ming Qian <ming.qian@oss.nxp.com>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 346/869] media: amphion: prevent unbind while video instances are open
-Date: Sat,  7 Nov 2026 08:50:28 -0500
-Message-ID: <20261107134904.121941268@linuxfoundation.org>
+Subject: [PATCH 6.18 347/869] media: mediatek: vpu: free IRQ before destroying watchdog workqueue
+Date: Sat,  7 Nov 2026 08:50:29 -0500
+Message-ID: <20261107134904.161032894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,66 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 96ea6bc6835f1b18b75303d536a7f9a3829c9bc1 ]
+[ Upstream commit 2c50b58d4105f6dbaa36d6306087954b9100e9ae ]
 
-An open video instance holds a plain pointer to its devm-allocated core.
-Unbinding the core or its parent through sysfs can release that memory
-while the instance remains open. A later ioctl or close then uses the
-stale pointer.
+mtk_vpu_remove() destroys the watchdog workqueue while the interrupt
+handler requested with devm_request_irq() is still registered: the
+devres core frees the interrupt only after remove() has returned. If
+the VPU watchdog fires in that window, vpu_irq_handler() queues
+vpu->wdt.ws on the already destroyed vpu->wdt.wq.
 
-The video file operations pin the module, but sysfs unbind bypasses that
-protection. Suppress manual bind and unbind for both platform drivers,
-and warn if core removal ever encounters a live instance.
+Fix this by calling devm_free_irq() before destroy_workqueue(), which
+releases the interrupt and waits for a running handler, so no new work
+can be queued while the workqueue is drained and freed.
 
-Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
+This issue was found by an in-house static analysis tool.
+
+Fixes: 3003a180ef6b ("[media] VPU: mediatek: support Mediatek VPU")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_core.c | 3 +++
- drivers/media/platform/amphion/vpu_drv.c  | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/media/platform/mediatek/vpu/mtk_vpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
-index 0501c2383ccf7..56f6888f101cb 100644
---- a/drivers/media/platform/amphion/vpu_core.c
-+++ b/drivers/media/platform/amphion/vpu_core.c
-@@ -719,6 +719,8 @@ static void vpu_core_remove(struct platform_device *pdev)
- 	struct vpu_core *core = platform_get_drvdata(pdev);
- 	int ret;
- 
-+	WARN_ON(!list_empty(&core->instances));
-+
- 	vpu_core_remove_dbgfs_file(core);
- 	ret = pm_runtime_resume_and_get(dev);
- 	WARN_ON(ret < 0);
-@@ -869,6 +871,7 @@ static struct platform_driver amphion_vpu_core_driver = {
- 	.remove = vpu_core_remove,
- 	.driver = {
- 		.name = "amphion-vpu-core",
-+		.suppress_bind_attrs = true,
- 		.of_match_table = vpu_core_dt_match,
- 		.pm = &vpu_core_pm_ops,
- 	},
-diff --git a/drivers/media/platform/amphion/vpu_drv.c b/drivers/media/platform/amphion/vpu_drv.c
-index efbfd2652721f..67d48c338fd11 100644
---- a/drivers/media/platform/amphion/vpu_drv.c
-+++ b/drivers/media/platform/amphion/vpu_drv.c
-@@ -230,6 +230,7 @@ static struct platform_driver amphion_vpu_driver = {
- 	.remove = vpu_remove,
- 	.driver = {
- 		.name = "amphion-vpu",
-+		.suppress_bind_attrs = true,
- 		.of_match_table = vpu_dt_match,
- 		.pm = &vpu_pm_ops,
- 	},
+diff --git a/drivers/media/platform/mediatek/vpu/mtk_vpu.c b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
+index 8d8319f0cd221..b6bd80b684459 100644
+--- a/drivers/media/platform/mediatek/vpu/mtk_vpu.c
++++ b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
+@@ -962,6 +962,7 @@ static void mtk_vpu_remove(struct platform_device *pdev)
+ #ifdef CONFIG_DEBUG_FS
+ 	debugfs_remove(vpu_debugfs);
+ #endif
++	devm_free_irq(&pdev->dev, vpu->reg.irq, vpu);
+ 	if (vpu->wdt.wq)
+ 		destroy_workqueue(vpu->wdt.wq);
+ 	vpu_free_ext_mem(vpu, P_FW);
 -- 
 2.53.0
 
