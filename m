@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063737;
-	b=2ndKT3L49WlUTvxfVG3dLgGIYIrnWGwCAa/N6KNlLTExcRzz0551wuQF/nlwy3XoqTFk
-	 FuZHeL3eEVl072gc1XuhaqY/R+8khYWzRO31a8Z+HH7MjMxGtIMCzjQzDdqqntgK9EfKc
-	 ElxKkZaAcOQDFrVllnamV5hUiL2l/nQAZYDiEB6oKnIr/e1P3nNVs1fyv5VGnMHQlsJFY
-	 uqw78tY3tr/nPwES/NHTw9ZBMsgZEDLCNPp8MG5VOxjHrQwp5CYPs/KkvBd7nrSwzTrHt
-	 Na/g49bML40PS0OkluCI0Rytm19OT8Cw0gRCF43LDuQcYZQz7hp0ptvOGLl5vdRXqIQ==
+	t=1794063738;
+	b=AvbmXhdUqntUGzj844AOiEma4o+g/JVQFEakj83cOU/3BC5ZWedw78hsz9Sdwi49Yp5p
+	 T0YzvW5aEbZsqt6WWFd9911BZARtIaqRcVgWLM+veAJlyx+ayXPdSBn5BphLPk8k4tS7W
+	 Qk7duZPqBgVjde2TepahtFJabDMjCfTb/FVfFWc36SZjqGUW+VvTspoyA0H64i4Fgk11l
+	 CN0fV6uQ+zRXWYh7YyVL1VQRDyF7qdU0nMn3BMOcfjk/8YOc/LSYycXVavkV1PY4dyKWe
+	 NBa8UWgb9SIJbjtM4RrzLKnWexvFiAPMIyaK0TKJXQt9kOE/KIXYhLuP6lkeEEsH6Wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063738;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f0Vx+ZV2fr3YdUZi1wSGOeS6YpQn7PXZ2CTfNwRBMM0=;
-	b=nSwTGajXo8DZxsi/iD0v/rNn8wREffTmGmffLc/ql0LdEqlxNxUaQFazyEgU/vZwXc7s
-	 ndbEEjDPRCg1rEEn2ANgllH7FpeXOT0Fgfq50sH1d0EiskO0C23in4Lnj4/Vyy+yfn9Mi
-	 q/3vef8hC1OyEGw+pL+eWOlr9rPfziHHpY8jotpbJppZ9krIFi3576d+tqAfHwxERXee+
-	 dzxZdbINQMF+fjceFuY2k0jTwTBURFM4MZ2f7MczyvJZGLUTs7OXN2OTA0TMSTTyhmO2a
-	 OMwGxfAXHX9HrZ8iEO0xTQL54Tchg+CXvs4DefPqDo+7KMIqSNSEwyttcITMIyOds8g==
+	bh=dzrt1DdHYBJA9Uz6xIxAn8F+L3KndsCjOl+YKY7mA9k=;
+	b=3EJjTsqdODkGi+B9heb7bd62QYjcbEd7JiVEAftUAW6Sht9WHRVTXmnvcgVQzl1+IRZf
+	 uvL1Dd8Yn0u5lKUZ3W66FLGSSWIIV9vCzySXhXDRI3FMZFsuveuUk4URXY7m+yCxN6cPJ
+	 9AkDe/3FBIZvflNBvaKtoXwlZ3XJSN1onbUnXWqyo7ZJgnBFdtS9ppM/6eJU6xMA5xJhw
+	 Ml2RYZfWl+nFD0xFGpbsIx61RAye8j2CD1PLlZW8eIK++G22VTgQUcA06hADvcN2OXIq7
+	 tAUj0h71fHJqg1RT2NQNb6v243cUuxsBWcFUNIT9gok+vb0oGlVGKyQeJCu04SLyQUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CrqtWwXe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q/4FblIb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7BB606A32D;
-	Sat,  7 Nov 2026 15:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0662B606A32D;
+	Sat,  7 Nov 2026 15:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CrqtWwXe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B691F0089F;
-	Sat,  7 Nov 2026 15:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q/4FblIb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DFD1F0089F;
+	Sat,  7 Nov 2026 15:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063736;
-	bh=f0Vx+ZV2fr3YdUZi1wSGOeS6YpQn7PXZ2CTfNwRBMM0=;
+	s=korg; t=1794063737;
+	bh=dzrt1DdHYBJA9Uz6xIxAn8F+L3KndsCjOl+YKY7mA9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CrqtWwXefBaBTkQ7qyz20tiSzezh4k/S9s38ww26gKEYa8QP8wU5BoSobxmVy9wGl
-	 sq5cZUhokz5chhCu1NtEFQSm4bFUIm9qul+oVV5L7IQlG3krasvd+bzLASPaH32fWG
-	 Yh4B7nn83oICyOu5KQr4f8x8LzWVLISz+lPBfHgs=
+	b=q/4FblIbxOJpr2VyqRIdShnzVsiemPppIFpqslBttu2vZKOE05bWKs6TVRcGIGvIP
+	 c2g6pktMPulXJjXQfNtGCsDlW8qUo85xfeymdjefafzXoKk21BphW++hdEz+drOIi9
+	 q+Fk6nwHyMbWqgFXgCG2XvEl3H+1ekAGmxIBKF/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Daniel Wagner <dwagner@suse.de>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 806/869] LoongArch: Fix bitmask corruption in update_bp_registers()
-Date: Sat,  7 Nov 2026 08:58:08 -0500
-Message-ID: <20261107134920.285488715@linuxfoundation.org>
+Subject: [PATCH 6.18 833/869] nvmet-fc: Tear down the association when the admin queue allocation fails
+Date: Sat,  7 Nov 2026 08:58:35 -0500
+Message-ID: <20261107134921.155972536@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,54 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 30c52672bf456decf675c11f3c65acd73a6bcca8 ]
+[ Upstream commit 11db8ab55e1a7533e9cfe57687ab142ba67d3c84 ]
 
-In update_bp_registers(), when disabling a LOAD or STORE watchpoint,
-the code attempts to clear the bit of LoadEn or StoreEn by using the
-standard bit-clearing pattern.
+When the initial admin queue allocation fails after a new association
+was created, nvmet_fc_ls_create_association() only drops the
+association reference, which frees the association.  By then the
+association is already on the target port's assoc_list, though, and
+removal from that list only happens in nvmet_fc_delete_target_assoc(),
+which this error path never calls.  The freed association stays on the
+list, where later lookups and the port teardown can access it, and the
+target port reference taken at allocation time leaks.
 
-However, due to the omission of parentheses, the bitwise NOT operator
-'~' takes higher precedence than the left shift operator '<<'. Then:
-(1) ~0x1 << MWPnCFG3_LoadEn evaluates to "(~0x1) << 8 = 0xFFFFFE00",
-(2) ~0x1 << MWPnCFG3_StoreEn evaluates to "(~0x1) << 9 = 0xFFFFFC00",
-that incorrectly clears all configuration fields in the lower 8 bits.
+A remote host can trigger this reliably with a Create Association LS
+requesting a queue too large to allocate.
 
-These fields in the lower 8 bits contain critical configurations such
-as DSOnly (bit 0), PLV0-PLV3 privilege levels (bits 1-4), and LCL (bit
-7). Writing back these corrupted values severely breaks configuration
-isolation and ruins the hardware watchpoint states.
+Schedule the regular association teardown instead of dropping the
+reference directly.  The teardown removes the association from the
+list and releases the target port reference before the final reference
+drop frees it.
 
-Add parentheses to ensure the correct evaluation order, so that only
-the targeted LoadEn/StoreEn bit is cleared while preserving the other
-crucial configuration bits in the lower 8 bits.
-
+Fixes: 0cab4404874f ("nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association")
 Cc: stable@vger.kernel.org
-Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/hw_breakpoint.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/target/fc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
-index deeb2f9795705..bd891b3808a6b 100644
---- a/arch/loongarch/kernel/hw_breakpoint.c
-+++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -468,9 +468,9 @@ static void update_bp_registers(struct pt_regs *regs, int enable, int type)
- 			} else {
- 				ctrl = read_wb_reg(CSR_CFG_CTRL, i, 1);
- 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_LOAD)
--					ctrl &= ~0x1 << MWPnCFG3_LoadEn;
-+					ctrl &= ~(0x1 << MWPnCFG3_LoadEn);
- 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_STORE)
--					ctrl &= ~0x1 << MWPnCFG3_StoreEn;
-+					ctrl &= ~(0x1 << MWPnCFG3_StoreEn);
- 				write_wb_reg(CSR_CFG_CTRL, i, 1, ctrl);
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index ec08992668b99..89edffeb10626 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1710,7 +1710,7 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
+ 					be16_to_cpu(rqst->assoc_cmd.sqsize));
+ 			if (!queue) {
+ 				ret = VERR_QUEUE_ALLOC_FAIL;
+-				nvmet_fc_tgt_a_put(iod->assoc);
++				nvmet_fc_schedule_delete_assoc(iod->assoc);
  			}
- 			regs->csr_prmd &= ~CSR_PRMD_PWE;
+ 		}
+ 	}
 -- 
 2.53.0
 
