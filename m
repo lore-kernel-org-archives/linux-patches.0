@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063689;
-	b=2BNRa2eDSF5gb5Rfy8jma77mpJgMwfUBqy+zCPgDzV5TPsmcJhOxnFm5Wbf4HGgkKtVs
-	 UnjK7saXQJJKiQHEcSJmvxKK4KR7w+YPL48LCjYM3dK6SpAgflUVEjDS7Kuq8RyUE+Vyx
-	 +QwWCrIat1T3zOJ6ZBbUnMl3L3iUyWRKI9c0vOOdFez0RWhgWXKtW+/BzdcOdWM4FXsnO
-	 5lXLWbSOhBuv9q5p8pMXYaKx9C0izBJL4fF1+TPxLkWk3T4rScC4tUg2g2VDgtjbHz1y3
-	 WBj9AQwBnmw728xV6rQZVofZ+TaafZ+q51AM+1reaTXdIi1mKi3gH1B6LwuaVmZDNsg==
+	t=1794063690;
+	b=0isDVZrqDYwykt9OqIcACggxvsLFNnFICRHYTeG6gJUw50J7p7EjwNTqopEWCuMTIxpS
+	 2fHfW1trQurXPt2+wfZamX+8cefHVBC5wGsRVPijC0FCj4kalNzEA8g78+0LUvnzIFV1z
+	 LNwNqjHDY8z0WdEsmyx5UNrfLHhWdCRpzDFj47o7IBRKbyS0Jx4OcSy3kJgtiLiVD8Rl4
+	 hJass4JrMUDQKUM//025vKApQEWH7pw07pQtipfKePk/xsZ2xPls7cz+ZJ2qbAl0zP4fO
+	 mhX4QrQR9RT1Yfj5LDz8cYceOibV8tHMt/KSkjMHvlVillRuN5/ICTTuKA8/x9+oIHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063689;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063690;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9dDheBSeyQtAjXh4rvFbZ+YCPsZM8lBH5sVPwy4VAEw=;
-	b=nFkyGm3aEPBrbC1k2oDbcrNQp+mIgjOy3qKKOd5XgTFLLKmxwM8/IA3MsuzL8jmkC4eH
-	 nk5juhP5K6QWkXE9tw3BpFbVWWem/U1zZkRiB11F4PBBkzWYTDBkfkepjpxFsSu6sRYoA
-	 ksODIVYWdOH+CY6yRyPsIcx7uYb1ZGzBcTmLbbJg/zpKJ57wawIUKRDYugkjs1eIP9CqA
-	 5+mF/xpIM/Am5sa2ETJkKmeaBr27F6LG9r+lD0LzIPZu/gEG3PYLHOzK1PWC1Ut6w7cFs
-	 a/K/z8v2EjixgTktDh7PSsM1s22ILEafi7n1XaSOfEw/+7eXzcrxNEYVAZygiVCiRmQ==
+	bh=v7SIfPB5FxgZl154tZhM2f42Kp0ixngKs2vxss8xD8A=;
+	b=tHiBSv+PCFUsu2gIkXXtQA5d4gF1XKbtzSxpl6o5+1NVJahAvEAxCf8f+CNhfgwwzB8l
+	 U6O8OuOSN7h9/NPw9Jyrv+QI1AqO+l1CPkD4DPg5qIGGhL4tRF0axn00xW0MwwZqUQl/p
+	 H2MRM8xcqrOZ6G3HxJMAVIpjnh80hgxvtePSaVjXWHVIX9uSSaoAqkoG0h7COm8ED1jze
+	 syRmo+w4J+j46lCirG89GuK7aPHYsWGlcV2NO/bPGR4IDABPkxXeDPpaHKvv1RbG5Cu/F
+	 LSZrkS6NWmsKzCmdVeo7jE/3j6VgL8DdzqpKlQ02bfy7A1gEYlGIUDUK1F2bEhgpZsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GRiTChW4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GjCnRYG5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF33606A33C;
-	Sat,  7 Nov 2026 15:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C35606B894;
+	Sat,  7 Nov 2026 15:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GRiTChW4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD05F1F008A2;
-	Sat,  7 Nov 2026 15:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GjCnRYG5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD791F0089F;
+	Sat,  7 Nov 2026 15:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063689;
-	bh=9dDheBSeyQtAjXh4rvFbZ+YCPsZM8lBH5sVPwy4VAEw=;
+	s=korg; t=1794063690;
+	bh=v7SIfPB5FxgZl154tZhM2f42Kp0ixngKs2vxss8xD8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GRiTChW4gSKLjm3x7UHiF90Fzhb2jJHcXHq8juxPsEzStCzjNZ533Kjoi4PwMVb08
-	 qJNXwnTPPEBhCZuh4LSsOm5sK+Quskc/9GfdINeswHitouR8R2Ys5bholqquRQaamr
-	 uurLMzyQchNxSGpzII0VHXmqjJn48Qh4pLf4Tfqg=
+	b=GjCnRYG515PI2U37V/4Ceq9VP/VwaGmSY8f72nubGij6ZQBudbMIC3pQv5QBVkmjo
+	 6iq9V6kZeNk2bm3yrkOBmuaJ39hbrI1BEi2w0c5kGDxUz1EDGwmf2j2s169dPOHH7p
+	 tYMmVnklVZ32MRdoO/PpC8Bh1qVl1IRldFPFfrTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Wang <1075151112@qq.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
+	Paul Moses <p@1g4.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 795/869] tcp: limit tcp_tso_rtt_log to a valid shift count
-Date: Sat,  7 Nov 2026 08:57:57 -0500
-Message-ID: <20261107134919.732006963@linuxfoundation.org>
+Subject: [PATCH 6.18 796/869] xsk: restore UMEM flags after failed pool assignment
+Date: Sat,  7 Nov 2026 08:57:58 -0500
+Message-ID: <20261107134919.779968616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,84 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Paul Moses <p@1g4.org>
 
-[ Upstream commit 850a7225bc61cdfaf0c4b02ff341ae7cb54902f5 ]
+[ Upstream commit b88b826ec54a06f48a42580c609ba81293ebec8e ]
 
-tcp_tso_autosize() right-shifts the u32 returned by tcp_min_rtt() by
-sysctl_tcp_tso_rtt_log. The sysctl uses proc_dou8vec_minmax() without
-an upper bound, so it accepts values through 255. Values above 31 make
-the shift undefined.
+xp_assign_dev() sets XDP_UMEM_SG_FLAG before checking whether the
+device supports multibuffer zero-copy. If assignment fails, xsk_bind()
+destroys the pool but retains the registered UMEM. A subsequent bind
+without XDP_USE_SG inherits the stale flag.
 
-A process with CAP_NET_ADMIN in the target network namespace can set the
-per-netns sysctl. With CONFIG_UBSAN_SHIFT=y, setting it to 32 and sending
-TCP data over loopback triggers:
+The flag also changes RX buffer sizing after DMA mapping. On igc, a
+failed SG bind followed by a non-SG retry with 4096-byte chunks and
+1792 bytes of headroom passes admission with 2048 bytes, but programs
+a 1024-byte RX buffer. On I225-V hardware, an ordinary 1514-byte frame
+is truncated to 1024 bytes or 1008 with RX timestamps enabled.
+Restoring the original flags eliminates the truncation in both cases.
 
-  UBSAN: shift-out-of-bounds in net/ipv4/tcp_output.c:2264:30
-  shift exponent 32 is too large for 32-bit type 'unsigned int'
-  Call Trace:
-   __ubsan_handle_shift_out_of_bounds
-   tcp_tso_segs
-   tcp_write_xmit
-   __tcp_push_pending_frames
-   tcp_push
-   tcp_sendmsg_locked
+Save the UMEM flags before assignment and restore them on failure.
 
-Limit the sysctl to 31, the largest valid shift count for a u32, and
-document the accepted range. Writes of larger values now fail with
--EINVAL.
+Discovered during development of AF_XDP changes for igc.
 
-On a UBSAN/KASAN build of the net tree, values 0 and 31 remained
-accepted, values 32 and 255 returned -EINVAL, and TCP traffic with the
-valid boundary values produced no sanitizer diagnostics.
-
-Fixes: 65466904b015 ("tcp: adjust TSO packet sizes based on min_rtt")
+Fixes: d609f3d228a8 ("xsk: add multi-buffer support for sockets sharing umem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/tencent_31D2FFCCE76C50A695A1270151F825E90906@qq.com
+Signed-off-by: Paul Moses <p@1g4.org>
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://patch.msgid.link/20261021224705.2078753-1-p@1g4.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/ip-sysctl.rst | 2 ++
- net/ipv4/sysctl_net_ipv4.c             | 2 ++
- 2 files changed, 4 insertions(+)
+ net/xdp/xsk_buff_pool.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
-index c2ca933f7bdbc..9b8a1980bb546 100644
---- a/Documentation/networking/ip-sysctl.rst
-+++ b/Documentation/networking/ip-sysctl.rst
-@@ -1088,6 +1088,8 @@ tcp_tso_rtt_log - INTEGER
- 
- 	If you want to use the old autosizing, set this sysctl to 0.
- 
-+	Possible values are [0, 31], inclusive.
-+
- 	Default: 9  (2^9 = 512 usec)
- 
- tcp_pacing_ss_ratio - INTEGER
-diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
-index 34a8a932402d8..bc3e5d6b8662c 100644
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -26,6 +26,7 @@ static int ip_local_port_range_max[] = { 65535, 65535 };
- static int tcp_adv_win_scale_min = -31;
- static int tcp_adv_win_scale_max = 31;
- static int tcp_app_win_max = 31;
-+static int tcp_tso_rtt_log_max = 31;
- static int tcp_min_snd_mss_min = TCP_MIN_SND_MSS;
- static int tcp_min_snd_mss_max = 65535;
- static int tcp_rto_max_max = TCP_RTO_MAX_SEC * MSEC_PER_SEC;
-@@ -1379,6 +1380,7 @@ static struct ctl_table ipv4_net_table[] = {
- 		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dou8vec_minmax,
-+		.extra2		= &tcp_tso_rtt_log_max,
- 	},
- 	{
- 		.procname	= "tcp_min_rtt_wlen",
+diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
+index 5ee0edaf075c0..9dc1ff31867a1 100644
+--- a/net/xdp/xsk_buff_pool.c
++++ b/net/xdp/xsk_buff_pool.c
+@@ -175,6 +175,7 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
+ {
+ 	u32 needed = netdev->mtu + ETH_PAD_LEN;
+ 	u32 segs = netdev->xdp_zc_max_segs;
++	u8 umem_flags = pool->umem->flags;
+ 	bool mbuf = flags & XDP_USE_SG;
+ 	bool force_zc, force_copy;
+ 	struct netdev_bpf bpf;
+@@ -270,6 +271,7 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
+ 	if (!force_zc)
+ 		err = 0; /* fallback to copy mode */
+ 	if (err) {
++		pool->umem->flags = umem_flags;
+ 		xsk_clear_pool_at_qid(netdev, queue_id);
+ 		dev_put(netdev);
+ 	}
 -- 
 2.53.0
 
