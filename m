@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065005;
-	b=JS+XWEN2/iOyUWQBO0SjeBObixamPK7uIkUqK4KEne5duLxU4lBLCFZTQpnx+IdMlo/o
-	 X5crHZ1CNtNEnJrnmKgQDxt6qNpKTzo7vNbp6iVhmZ4lQ8TpWXiLuzeb/ges662aUQg1X
-	 Omy4IG3OnqUyx+izc92CuyZryezptYd+g+EsoawkunOctJt17kXyxgTX8Hl8umzy9Q/Na
-	 Cr6lUEevYCcn/rxKOC7BX4JwNdnxjtqBB95lKFW+Fbb9hr/h7QSAMpHCJKnC4kCgo+yl+
-	 A/et8RV6YBaB04Y/oIIKhcYB/4GbJkF2nBirxpL+c16w+BvUhNl4RmG79uI6hAGTk0g==
+	t=1794065007;
+	b=QXjLQ1Ww23K67+tanVEYpOfktf4aFM7mUalLOYumgIWDng45Yhq7JOs3qPCxWR3qeaJp
+	 Jj51hAkB3K2E/VUKqT4541PMUbQf5Z0SM2EjPro267zUSuV2X9WuNqYWOAcqpSyrZPUv1
+	 CNglpddK07ot/sF6vcJmkzZySi9QxD+cBBiO5a+aUBdaf9ZBcVDV3MxBkNqCbF8YypJiK
+	 +9MixZPiJgVX0346kFccAK0UC14R0r6p4twipXnf99aNHaW9XZAXeVrAEGrRXtwfqX7kU
+	 w191m0zHXnQ7aJZrDz7eNOIKXi20X+hKaBkfFZO6IU+T64AyEc+c8cRUFuJCfW95eZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065005;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eWmcHRePCw3zy9prGrOUkHbXLQMyvvc/NcVk7J2aHnE=;
-	b=Iyybi81ICPSesc9sIifiDSuuPaMNKe8KN2p2ETP3Vb6ovus3GINqZ2IYY3Eyd8e/FopY
-	 Gx0wTN9pOLeYSlxL+MTPMWw2vvPKYyOmEQWlNQhfcJpHwRyVeFbWpJfBHDKjRCnS6toxX
-	 U+gmtjDUr6mkmYWehhb2feO6Ph/PaLbrUxQ2lkt+VpvswefQbNPcWVrN11+l+ow9maOyu
-	 a2vVdHqKUS9CImlV/jZ1S/JHZ58e6i1Vj6/4AOL62FX5SqvMfHYPAV195PDRF5q3RynNs
-	 /PnPFf41+ZyoBtQ3a1j5kR/NAriXPbtTBcIFMTwwZqJ3Th63i9tgC1a2Eypo3gWO6rA==
+	bh=hwthhbboLl3CxlGtVGevflHbZjp3xY5Pz6+Q3rMasLo=;
+	b=hjLrvmKpBHp4SvUMwVWTj8cy00Zi/GXEG3JCexPsBVps/cllWW7nzlS0ZEUryAFQyFRS
+	 rJ9w+hYBeXyamuGfqUq0qoBpuVt+9fmOagnvEOl/Uemg9/t78ImXeZUwHYCuuqOG91lR7
+	 CTJ2F0bOqvzfisC9t7bm6gTci+GTDz7irIW+WFUPD52R0f5CPto05B6brA2f1P6g7Ps2i
+	 Rb16/jopoUmBn1eOGjNNS68c6FY7BtrMUhgYyeNVpftjogGxpwe/tFWRJXT61dztT90gz
+	 0qIyGPAjUBGwEppCG7pNs8oHxJDWHH3iSmxCWFz8pyeav8xdp45wjKZFmDcBZkE8jrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUNpG0RM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMcTNiOd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE97606A333;
-	Sat,  7 Nov 2026 15:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA64606A333;
+	Sat,  7 Nov 2026 15:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUNpG0RM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7201F0089F;
-	Sat,  7 Nov 2026 15:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMcTNiOd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E011F0089F;
+	Sat,  7 Nov 2026 15:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065005;
-	bh=eWmcHRePCw3zy9prGrOUkHbXLQMyvvc/NcVk7J2aHnE=;
+	s=korg; t=1794065007;
+	bh=hwthhbboLl3CxlGtVGevflHbZjp3xY5Pz6+Q3rMasLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUNpG0RMMxXGmWoskCW1iNiWND7P4AStNOnvbasq7Aua/WrdccxsrDFxKuoemOXdN
-	 SktdAsOY9CDZ5G3WgK+SjviPXwJp+p7PKGluBd/I7A4wprIqP50yGs3jp6zzDe40UN
-	 cCErrymT8FjWn8flsJIfivFHdG+NFPT2wsTr9ue8=
+	b=gMcTNiOdw8Y7w1a3IjS2Bmmqr7AGPY88+QUe9UftXgIZpLdEe1sMr5QH/yLBR4yuH
+	 t6jeIdb67OZrga5kHUhvI+5E3amvSIDaSGUCxVdhlLtyxsFDgrQ8aMtQfM8y93x5rg
+	 XkJsUtucKpNlfbq7QiMEL5bT5dEUHX4UrxmTcHs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0836/1257] cpufreq: loongson3: Replace IOCSR read/write with MMIO ones
-Date: Sat,  7 Nov 2026 08:52:12 -0500
-Message-ID: <20261107135002.419867533@linuxfoundation.org>
+Subject: [PATCH 7.3 0872/1257] hwmon: (coretemp) Return -ENODATA for invalid temperature readings
+Date: Sat,  7 Nov 2026 08:52:48 -0500
+Message-ID: <20261107135003.412212825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,100 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit 81792daacfb41ca07b04bd3956ea9e672080cc98 ]
+[ Upstream commit f63aaa529cbc73146ff0d52235e5479042285cae ]
 
-Our server productions (e.g. Loongson-3D6000/3E6000) can have multiple
-nodes in one package and SMC mailboxes are also per-node. However, IOCSR
-read/write can only perform on the current node, while sometimes we want
-to perform on other nodes (e.g. when switch governor, the get and target
-callbacks are not run on target core). So replace IOCSR read/write with
-MMIO ones.
+IA32_THERM_STATUS and IA32_PACKAGE_THERM_STATUS have a valid bit, bit 31.
+The Intel SDM documents it only for the former, but the package register
+implements it too: x86_pkg_temp_thermal has required it since commit
+f1a18a105660 ("Thermal: CPU Package temperature thermal").
+
+This driver checked the bit for both registers as well, until
+commit bf6ea084ebb5 ("hwmon: (coretemp) Do not return -EAGAIN for low
+temperatures") made it ignore the bit because some CPUs clear it while
+the temperature is too low to be measured. Since then, temp%d_input
+reports such a reading as a real temperature. Userspace cannot tell it
+apart from a genuinely low one.
+
+Fail the read with -ENODATA while the CPU reports the reading as invalid.
+On a CPU that clears the bit, reading temp%d_input now fails where it
+used to return a low value. sensors(1) shows N/A in its place.
 
 Cc: stable@vger.kernel.org
-Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
-Tested-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/all/46f9f319-de71-412f-a424-6cb801478456@roeck-us.net/
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Link: https://patch.msgid.link/20261006-coretemp-enodata-v2-1-64e788acc7dc@linux.intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/loongson3_cpufreq.c | 34 +++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+ Documentation/hwmon/coretemp.rst |  3 +++
+ drivers/hwmon/coretemp.c         | 21 +++++++++++++++------
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
-index 1ae821e265fbf..aea7c31e155a4 100644
---- a/drivers/cpufreq/loongson3_cpufreq.c
-+++ b/drivers/cpufreq/loongson3_cpufreq.c
-@@ -17,6 +17,7 @@
- #include <asm/loongarch.h>
- #include <asm/loongson.h>
- #include <asm/smp.h>
-+#include <asm/numa.h>
+diff --git a/Documentation/hwmon/coretemp.rst b/Documentation/hwmon/coretemp.rst
+index 3493016833814..09f885a847e30 100644
+--- a/Documentation/hwmon/coretemp.rst
++++ b/Documentation/hwmon/coretemp.rst
+@@ -50,6 +50,9 @@ All sysfs entries are named with their core_id (represented here by 'X').
  
- /* Message */
- union smc_message {
-@@ -165,6 +166,12 @@ union smc_message {
+ ================= ========================================================
+ tempX_input	  Core temperature (in millidegrees Celsius).
++		  Reading fails with -ENODATA while the CPU reports the
++		  temperature as invalid. Some CPUs do this when the
++		  temperature is too low to be measured.
+ tempX_max	  Maximum recommended operating temperature (Tcontrol).
+ 		  All cooling devices should be turned on.
+ tempX_crit	  Maximum junction temperature (in millidegrees Celsius).
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index ace51e08e72dc..bee2c9896d4c5 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -60,6 +60,8 @@ enum coretemp_attr_index {
  
- #define FREQ_MAX_LEVEL			16
- 
-+#define MMIO_SMCMBX(node) \
-+	((void __iomem *)(nid_to_addrbase(node) | IO_BASE | LOONGSON_REG_BASE | LOONGARCH_IOCSR_SMCMBX))
-+
-+#define MMIO_MISC_FUNC(node) \
-+	((void __iomem *)(nid_to_addrbase(node) | IO_BASE | LOONGSON_REG_BASE | LOONGARCH_IOCSR_MISC_FUNC))
-+
- struct loongson3_freq_data {
- 	unsigned int def_freq_level;
- 	struct cpufreq_frequency_table table[];
-@@ -177,13 +184,27 @@ static DEFINE_PER_CPU(struct loongson3_freq_data *, freq_data);
- static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 extra)
+ /*
+  * Per-Core Temperature Data
++ * @temp_valid: Whether the CPU reported @temp as valid. @temp is not
++ *		reported when this is false.
+  * @tjmax: The static tjmax value when tjmax cannot be retrieved from
+  *		IA32_TEMPERATURE_TARGET MSR.
+  * @last_updated: The time when the current temperature value was updated
+@@ -72,6 +74,7 @@ enum coretemp_attr_index {
+  */
+ struct temp_data {
+ 	int temp;
++	bool temp_valid;
+ 	int tjmax;
+ 	unsigned long last_updated;
+ 	unsigned int cpu;
+@@ -398,7 +401,8 @@ static ssize_t show_temp(struct device *dev,
  {
- 	int retries;
--	unsigned int cpu = raw_smp_processor_id();
--	unsigned int nid = cpu_to_node(cpu);
-+	unsigned int cpu = 0, nid;
- 	union smc_message msg, last;
+ 	struct msr val;
+ 	struct temp_data *tdata = container_of(devattr, struct temp_data, sd_attrs[ATTR_TEMP]);
+-	int tjmax;
++	int tjmax, temp;
++	bool valid;
  
-+#ifdef CONFIG_SMP
-+	switch (cmd) {
-+	case CMD_GET_FREQ_INFO:
-+	case CMD_SET_FREQ_INFO:
-+	case CMD_GET_FREQ_LEVEL_NUM:
-+	case CMD_GET_FREQ_LEVEL_INFO:
-+	case CMD_GET_FREQ_BOOST_LEVEL:
-+		cpu = cpu_number_map(id);
-+		break;
-+	default:
-+		cpu = raw_smp_processor_id();
-+	}
-+#endif
-+	nid = cpu_to_node(cpu);
+ 	mutex_lock(&tdata->update_lock);
+ 
+@@ -407,17 +411,22 @@ static ssize_t show_temp(struct device *dev,
+ 	if (time_after(jiffies, tdata->last_updated + HZ)) {
+ 		rdmsrq_on_cpu(tdata->cpu, tdata->status_reg, &val.q);
+ 		/*
+-		 * Ignore the valid bit. In all observed cases the register
+-		 * value is either low or zero if the valid bit is 0.
+-		 * Return it instead of reporting an error which doesn't
+-		 * really help at all.
++		 * Bit 31 indicates whether the reading is valid. Some CPUs
++		 * clear it while the temperature is too low to be measured.
++		 * Such a reading is not a temperature. Do not report it.
+ 		 */
++		tdata->temp_valid = (val.l >> 31) & 1;
+ 		tdata->temp = tjmax - ((val.l >> 16) & 0xff) * 1000;
+ 		tdata->last_updated = jiffies;
+ 	}
+ 
++	valid = tdata->temp_valid;
++	temp = tdata->temp;
+ 	mutex_unlock(&tdata->update_lock);
+-	return sprintf(buf, "%d\n", tdata->temp);
 +
- 	mutex_lock(&cpufreq_mutex[nid]);
++	if (!valid)
++		return -ENODATA;
++	return sprintf(buf, "%d\n", temp);
+ }
  
--	last.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
-+	last.value = readl(MMIO_SMCMBX(nid));
- 	if (!last.complete) {
- 		mutex_unlock(&cpufreq_mutex[nid]);
- 		return -EPERM;
-@@ -196,12 +217,11 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
- 	msg.extra	= extra;
- 	msg.complete	= 0;
- 
--	iocsr_write32(msg.value, LOONGARCH_IOCSR_SMCMBX);
--	iocsr_write32(iocsr_read32(LOONGARCH_IOCSR_MISC_FUNC) | IOCSR_MISC_FUNC_SOFT_INT,
--		      LOONGARCH_IOCSR_MISC_FUNC);
-+	writel(msg.value, MMIO_SMCMBX(nid));
-+	writel(readl(MMIO_MISC_FUNC(nid)) | IOCSR_MISC_FUNC_SOFT_INT, MMIO_MISC_FUNC(nid));
- 
- 	for (retries = 0; retries < 10000; retries++) {
--		msg.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
-+		msg.value = readl(MMIO_SMCMBX(nid));
- 		if (msg.complete)
- 			break;
- 
+ static int create_core_attrs(struct temp_data *tdata, struct device *dev)
 -- 
 2.53.0
 
