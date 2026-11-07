@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063278;
-	b=Bnf6eAs+Qn73V/Vuq7707pepva4q2eNusSJ2vuidnLpOAQSyeYkpHYFs1GhsdD9ST95f
-	 hG5GdzZAnte0z1oV35AdAeJrmOrOKNmes3oVDOR7x0eXjovT9fJApXP9KOuB9kCyZqCkT
-	 qp7MIB3PO/mLZ27zauSldm3+75j/F0zJlp1ykxcIZhsLp0jSI6q7aD92stS0QW2nT9Ev1
-	 +fuQ7f0U5H8q5KmgVTYOSdEXZgjkWdxItqC1r56S4k4XCZjA16Cr1DDdUcLjUseOsHQBJ
-	 HCV+KtV5UNUpamAtdLRQMvJoQIRPcfKIq1oDL0xh+uerFMVQeOR4ulsRW8zLW2Tpp5A==
+	t=1794063279;
+	b=vUFstdVMhovF7ADMzKRIWFjAubnWuRxxfmD65hAXLDWgkI92Nd59BkRcBfL7LxaUwH2c
+	 tN29cDhSAoCrYK58yz5oRK3Q105kxlfoohuG72sFkM9dCV+eFPus+uTdw0J8avLSnxR50
+	 ZHnH3hTlhL7x9PBtIXal65X9niBNLA/JtSFfo2eG/8pWI4rO3kPJyZ6loKgZ9PAY8BpXE
+	 aZO0/fku87a7+SXTRSfN+MrYcEGkNf6c1ee/kLIKquvjsSIn/5cwewkyp9p87Cp8VJScz
+	 Q5DSSBd7hUjds41ezLqFluo4iZMeQOWWLTRoAdtUMqwV3rsLYXnRpRWonrmaONIFMOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063278;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j02t9I3+nxujIHcjrfj9aNe0CRVLpq6v/8a41MUiKo0=;
-	b=pyXr0v8mxt4flD0RfZIW2SRjnQloo/5D4Ija4/KIuUcE+C+Y9wS9RL3oAFkz3NcfRpyD
-	 qeszHpmM/YYUXDhJxZ0+ooa0rNmhIPMYejV+Gjb5Ejpq/Pg/D1/V5yevQEMjmybCobGTX
-	 9TbNBtNAG1dRkwJnFUc4I6vJ+zpOIIrGaDaJefnfPx7512YHGXY+JlqQaTYfNgOY8iRam
-	 FNQ8zc4hun851EVRKg9LHMFhFlZAibKo521pF/bOu4pmK/A4aKgJrIFxxYmi3Vh1wAg0Y
-	 U13343YnSbL287UOpHRSoHtMKkSOs/aajlirIXlHSBE3C56KmbrcnKnqkvKbgvnMGRA==
+	bh=qejeGeao8DxSDNTCWzD+FeaY1Q6A1tTSafBskxOXWVs=;
+	b=LkNBRXvlbYN52mXhvhncrOLyE0QTo8MJqVjF0LPjNIIg8O7giFF2KJi9w1EFslZB5EWh
+	 wQY4sqJjQxUHPeDNzbOoDZ65FsXksKYm5D0Kgnbiqhtsbo5kzwB3Bn8PklrmaSAQboPzF
+	 wkeqGUX0kZdklZ+9zXB+ANJ+jctAiWFqHfRswKOaIUV/2qfOthATihmsVQ3KV9XlF+Ivs
+	 5WFtX4KNX0MHM/OncHEGr6KenZp+wE1pXB4daAS1g6txzVC5bXH2wpIvKAHWKdqptbpCZ
+	 0ag2lAP4oaNX2J9LkhfEWYFFRDKYUHeDkH9X6yFlINopdvhdwLQkxKt2O1rI4XdkvKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Mstk/WYi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWkpEbMe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C520E606A32D;
-	Sat,  7 Nov 2026 14:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152D2606D803;
+	Sat,  7 Nov 2026 14:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mstk/WYi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F17C1F0089F;
-	Sat,  7 Nov 2026 14:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWkpEbMe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38C81F0089F;
+	Sat,  7 Nov 2026 14:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063277;
-	bh=j02t9I3+nxujIHcjrfj9aNe0CRVLpq6v/8a41MUiKo0=;
+	s=korg; t=1794063278;
+	bh=qejeGeao8DxSDNTCWzD+FeaY1Q6A1tTSafBskxOXWVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mstk/WYirx/1wA4n78+qSAQaIBBaPByd6dNALy11dVmngUBGmbp8zN8munJX9ZQqd
-	 76Kg/wYnC1+5qhsim3DF+lQUkbZolx5t2ux84afpXWf6Ii9NOeWS8rCrvd96n1zy6d
-	 1Z4jArJc7sjfudyVrVQ2Yo9z2vH7F0C0cJctJ5TI=
+	b=xWkpEbMeGiB+aOqPWeB84Hb2ByExJKEill/JLXaeAcfyyKPn0kulEU7JdxDIeAO2o
+	 gOa6JDh6NlXyVpDkLBE7+F3X441OG9/bkGxg8gkG+QSPvlliEB22IFNn2Rvf1cRhDq
+	 oGZO+Hs6wLFSJcXvmSTe1OhCwxmNYjTr+0ug3y/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 437/869] soc: fsl: dpio: Free the IRQ before releasing the I/O object
-Date: Sat,  7 Nov 2026 08:51:59 -0500
-Message-ID: <20261107134908.594779608@linuxfoundation.org>
+Subject: [PATCH 6.18 473/869] mtd: rawnand: qcom: fix read location register usage in config_nand_cw_read()
+Date: Sat,  7 Nov 2026 08:52:35 -0500
+Message-ID: <20261107134909.660719746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,64 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit a7831c657c90e8f9165f6bbe0cc56262fee075e8 ]
+[ Upstream commit 94623942a66e031826756f9c92dbde9a12e2b4d2 ]
 
-The DPIO interrupt handler accesses priv->io, but dpaa2_dpio_remove()
-releases that object before tearing down the interrupts. The IRQ was
-requested with devm_request_irq(), and unregister_dpio_irq_handlers()
-only clears its affinity hint. fsl_mc_free_irqs() returns IRQ resources
-to the MC resource pool without freeing the handler. An interrupt can
-therefore access the freed I/O object before devres releases the IRQ.
+On QPIC v2 controllers, when the last codeword is being read, the read
+location values must be programmed into the READ_LOCATION_LAST_CW_*
+registers. Prior to commit 8c52932da5e6 ("mtd: rawnand: qcom: cleanup
+qcom_nandc driver"), the config_nand_cw_read() function did it right,
+but since then it always writes the read location values to the
+READ_LOCATION_* registers even if the actual codeword is the last one.
 
-Explicitly free the managed IRQ in unregister_dpio_irq_handlers() before
-returning its resource to the pool, and perform IRQ teardown before
-releasing the I/O object. This also waits for an in-flight handler while
-the object is still valid.
+Change the function to always configure the registers corresponding to
+the actual codeword to restore the correct behaviour.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: 993fec7e11ca ("bus: fsl-mc: dpio: add the DPAA2 DPIO object driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20261002194802.375497-3-mhun512@gmail.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Fixes: 8c52932da5e6 ("mtd: rawnand: qcom: cleanup qcom_nandc driver")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/dpio/dpio-driver.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/qcom_nandc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/fsl/dpio/dpio-driver.c b/drivers/soc/fsl/dpio/dpio-driver.c
-index 7dc65f38d2fdb..2962e66e2e413 100644
---- a/drivers/soc/fsl/dpio/dpio-driver.c
-+++ b/drivers/soc/fsl/dpio/dpio-driver.c
-@@ -88,6 +88,7 @@ static void unregister_dpio_irq_handlers(struct fsl_mc_device *dpio_dev)
- 
- 	/* clear the affinity hint */
- 	irq_set_affinity_hint(irq->virq, NULL);
-+	devm_free_irq(&dpio_dev->dev, irq->virq, &dpio_dev->dev);
- }
- 
- static int register_dpio_irq_handlers(struct fsl_mc_device *dpio_dev, int cpu)
-@@ -280,10 +281,10 @@ static void dpaa2_dpio_remove(struct fsl_mc_device *dpio_dev)
- 	priv = dev_get_drvdata(dev);
- 	cpu = dpaa2_io_get_cpu(priv->io);
- 
--	dpaa2_io_down(priv->io);
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index 4dd6f1a4e7978..b469c01aacf97 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -328,14 +328,16 @@ config_nand_cw_read(struct nand_chip *chip, bool use_ecc, int cw)
+ {
+ 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+ 	struct nand_ecc_ctrl *ecc = &chip->ecc;
 -
- 	dpio_teardown_irqs(dpio_dev);
+ 	__le32 *reg = &nandc->regs->read_location0;
++	int reg_base = NAND_READ_LOCATION_0;
  
-+	dpaa2_io_down(priv->io);
-+
- 	cpumask_set_cpu(cpu, cpus_unused_mask);
+-	if (nandc->props->qpic_version2 && qcom_nandc_is_last_cw(ecc, cw))
++	if (nandc->props->qpic_version2 && qcom_nandc_is_last_cw(ecc, cw)) {
+ 		reg = &nandc->regs->read_location_last0;
++		reg_base = NAND_READ_LOCATION_LAST_CW_0;
++	}
  
- 	err = dpio_open(dpio_dev->mc_io, 0, dpio_dev->obj_desc.id,
+ 	if (nandc->props->supports_bam)
+-		qcom_write_reg_dma(nandc, reg, NAND_READ_LOCATION_0, 4, NAND_BAM_NEXT_SGL);
++		qcom_write_reg_dma(nandc, reg, reg_base, 4, NAND_BAM_NEXT_SGL);
+ 
+ 	qcom_write_reg_dma(nandc, &nandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
+ 	qcom_write_reg_dma(nandc, &nandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
 -- 
 2.53.0
 
