@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062586;
-	b=U1VhDfWQ2tFgt3gHkfp7rG1DObEL6Uw+VfLNPb5n8TGaAhnoMLzZNfTjZir3BElveqmA
-	 QifM9iFdcDSHpNAwZurAHwAMFfBHZOapJoO/juEMt1Ww1nIL9mhQv+6oyWDLhkp5nHpUy
-	 Ejs/KNbB4NdZUOu61UeN773rbps+0yzuK+N44RqAE28htQg5RuWihJWA8oQNXDhIlk07Q
-	 tIbqPQfw5pqBo2WZ3oS650mQ2ay56meNnDg0RLzu/JILfoLbjd+fO5PzHvfKgicChvp88
-	 8d3004Nd7vcJY1Fd8RvksHlNOg3QYoPnmI2xrZhDfKDomCg9vS7KNMupP+zy752tcrw==
+	t=1794062587;
+	b=QJLTwnOcMQJlhzLkLPguOXZ2S0SSxHhKnmEMgoTbqjQYHtbtQNMco13co6tWkDtfLfZ4
+	 DKl+Mzrh4BsYwUjCs3jdFgy6aDniwyVTX/hm75phapTY43PX7EruPgs3e+WrKOYk1570u
+	 nzBlLiX2hBpkFmDNCVGncQOraYMpMvJ+NiVNqak+ijJyGXvzcgID1WJYbltwKMYRgY5sS
+	 Wn5JLANuFqqWmBZC4Z07OmOY9szNDA/sCbMBzhVbb4tCUY19CSA5pmbkV+fPIdBk+CGkL
+	 Rh03tsWKF/3Yberhou5ephCKxG/iZMzCtMTwKCiw0F7xqG6avZimh8B1lL+6hXLstvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=I/Gemz3Z8AhAQaywv394xu7SdVYwHfpVQFoGlLypyco=;
-	b=IXEYxxBCldcBVogBkV+2uQMJodNq3g+4RPI1WUh/l+5pV0C+fDCQiFwL+fq9IwpcWoM/
-	 9Ni68UqqVLfinBdvuY70rHnOyMulnTYHZ3JfHLaCwleHBzQAi0o8xxThhgTe0HeiNAywR
-	 SFlyaYg3Xuy/oZJgqAL/mOzq7p/RbG7epBf29/VMGu3IZgVBCW7SfZre46v4VZLpyh+D1
-	 QOz29t0Ctwmon1WwDAFWdyRpFnqEtCZ+26j9139dNGPtw2718+hvQpZgxP3DBbCATSNNu
-	 U8slnqrB50bj3TP9tTw61YaRXG1TSbZsuIs9ynm3Nk5mIBLxBfM/nBb2TIqkxlzybrA==
+	bh=k6UHpei5WaCkoSNSr+aLeRvcCFtFDaolHfj3fBlEnzo=;
+	b=auQ66XfUdc7q6HX5Fq0gycj+tlgDAuhBQ7k8UrVyJDbCrpDchMP0FZkz/GzIZLodBgqE
+	 zNxEdU+rm0hJoJ/ptLd+qhup07Fmb9sznW/otvihYlsbRezn3XddQqIWDLFP8KF+rZPlx
+	 Rt8AILsSAzzJ1WwRd/d4nJHGTbK5w21U5QVYUykROLCAm2vPJ5ImVbdDqT5WOSJprkfoC
+	 AwMnxc5yjTJwqk5k2BvLK3y/2dZw7ged10T4iL48C/C6k6IeQWvOhVfUCgvuoIDY8MXhs
+	 +APsEO3IrWHWKbAyKyzt5CB7FZcrO+XQOmqY27C5xaSCZPSEf348Xthgk8pu0LGiWuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=La4Xpfnx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQykvE30;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22BA606A337;
-	Sat,  7 Nov 2026 14:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF91606A330;
+	Sat,  7 Nov 2026 14:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=La4Xpfnx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E141F008A1;
-	Sat,  7 Nov 2026 14:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQykvE30
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931031F0089F;
+	Sat,  7 Nov 2026 14:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062585;
-	bh=I/Gemz3Z8AhAQaywv394xu7SdVYwHfpVQFoGlLypyco=;
+	s=korg; t=1794062586;
+	bh=k6UHpei5WaCkoSNSr+aLeRvcCFtFDaolHfj3fBlEnzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=La4XpfnxtmgIDAlAgn66OjJp0ihIGd5Mc+e9GHHkAkFpZCbRGwWJRinxjNZTmEVxg
-	 NFDs/ZaFNQN8in0Q3bx/HpFuFlxk3Lc7vAZmo1FjCqyOzQN6yEvoSpdSTRrwMnBnL9
-	 zCxG5wA6CGAo0CjE8pJhrfGe4E/UlbYr7yjRn4S8=
+	b=hQykvE30U/dhgBHs0O1kTN5JFzS/kk+18ZIOB65dA2aNz4Y5l+NbqKPYrQOcwAfMN
+	 t9h7Bq5iZhnKB2p0JiNjeuMGK/MI7VMM3uKRirzoo6qX30xxFPvj6ZOYzbqewlbV9Q
+	 RGJzJKaYv8mVYjPXBB6jSCh1CpWAVfmbYBvkC6Mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1465/1536] ceph: fix 32-bit overflow in readdir reply count check
-Date: Sat,  7 Nov 2026 08:58:01 -0500
-Message-ID: <20261107135038.988925980@linuxfoundation.org>
+Subject: [PATCH 6.12 1466/1536] libceph: fix out-of-bounds reads from repeated CRUSH bucket entries
+Date: Sat,  7 Nov 2026 08:58:02 -0500
+Message-ID: <20261107135039.016878057@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,45 +72,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 52913831ba56efceaafd80b501d68fa00f79bde6 ]
+[ Upstream commit 569a9bb1e5615c2b88b8d76f03a4ab82e65a673e ]
 
-parse_reply_info_readdir() checks how many entries are in a readdir
-reply by computing the end pointer of the decoded array. That pointer
-addition can wrap on 32-bit kernels and let an oversized count pass the
-check. For example, a count of 0x40000000 with 156-byte entries wraps
-to a zero offset, so the decoder can write past the preallocated buffer.
+decode_choose_arg() assumes that its destination is zero-initialized.
+Although decode_choose_args() zeroes the argument array, it does not reject
+a repeated bucket_index and can decode into an already populated entry.
 
-Check the count against the number of entries that fit in the allocation
-before publishing dir_nr. Reject oversized replies through the existing
-error path.
+Repeating a bucket with weight_set_size=0 preserves its existing weight_set
+pointer but clears the count. Placement then reads weight_set[-1].weights
+and dereferences the resulting pointer.
+
+A malformed monitor OSDMap triggers this during RBD placement:
+
+  BUG: KASAN: slab-out-of-bounds in crush_bucket_choose+0xdd1/0xf90
+  Read of size 8 at addr ffff88800290df70 by task init/75
+
+Reject populated arguments before decoding another entry, so the error
+path can free their original allocations.
 
 Cc: stable@vger.kernel.org
-Fixes: 54008399dc0c ("ceph: preallocate buffer for readdir reply")
-Assisted-by: LLM
+Fixes: c7ed1a4bf4b4 ("crush: assume weight_set != null imples weight_set_size > 0")
+Assisted-by: Codex:gpt-5
 Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/ceph/osdmap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index a2870baa8ec8d..1e7c6d317f6fa 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -436,10 +436,8 @@ static int parse_reply_info_readdir(void **p, void *end,
- 		goto done;
+diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
+index e812b30778d57..803514a1bc7ce 100644
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -387,6 +387,8 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
+ 				goto e_inval;
  
- 	BUG_ON(!info->dir_entries);
--	if ((unsigned long)(info->dir_entries + num) >
--	    (unsigned long)info->dir_entries + info->dir_buf_size) {
-+	if (num > info->dir_buf_size / sizeof(*info->dir_entries)) {
- 		pr_err_client(cl, "dir contents are larger than expected\n");
--		WARN_ON(1);
- 		goto bad;
- 	}
- 
+ 			arg = &arg_map->args[bucket_index];
++			if (arg->ids || arg->weight_set)
++				goto e_inval;
+ 			ret = decode_choose_arg(p, end, arg);
+ 			if (ret)
+ 				goto fail;
 -- 
 2.53.0
 
