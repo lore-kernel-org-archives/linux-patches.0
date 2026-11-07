@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061162;
-	b=KMBs2bUZ8UMRwJlCayC17Q86Hn8x3O0PN8+gE41jnjqxr+trAh7xYOG4krH0ehlYFNgX
-	 LAi6HtIJktu4BLzIOEDE5gEx/RyibBdhb7xVRu1pOIiH+srexdtRVUP+cR7FqI4Sr9H8i
-	 Mz9dFA+o3AHrGswIIY1YG05uPJAVL6r7YaGT42GgVo3tqziqg82nhCRG4FRPqsdBEzfvh
-	 tNPFX1EuKjXEAGnfHyzV6AwwTd5WFi57HXHHv5FUARKj8z6vc9tA5DkQ9+hXTawoMvWjO
-	 5doQp6ufuxb2K70yFexav9GQg8Q2KgFG7cS2g9JoenCr1aX+LT1DkAljHRV5OsgfpKA==
+	t=1794061163;
+	b=sw5Tibda3mswYCLa0LEnDm8iJLCnqt+UNik15glEx+QawS5muEd5in8aoqvMXqWF4Dbv
+	 grhZMa8Gd1idJwZ6OROMXZgCvaz6w5zypEZJHDBIocY5HUdXza7pP9k5bxa5KCNUa0ToA
+	 gL24/fLwOmfEVv2mZq6IOdoVnqw8DFE4yMN4MJF4se3dQldkcWAQPyB/AdlcjERKBvShJ
+	 YUBoT8K+Ywh5CnQKszmbENCNTR8lQO/ysiASkN4+aDn63rOB5bA2MycV3P09ztbsjiHab
+	 xXIfmxTeGZFZM0aEAlL2CZFr+Lz/bFgK+r9Bl5v6t9N0VfbaCbmLBOV435ejzAwDD6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061163;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0NK4JLfeMF3r9AAbL48Ep00L1DfwBZtV+m2sxIvYHv0=;
-	b=r4XUmwtXqL6P1cOI3NfOwo30S7u1msBCUX8VOoZlw95T6V+fKp2xbs+ekOfRr23BGgYT
-	 7oWuWe2Se0XD9kEIYKdSc7izC6jbymMKQeDnPm997+ZCZp7W1brTcbFDHGP8BF/hNofrI
-	 IYwvRuz/N0k7sa7Oe4g3NKnWADeQ+xSC0NrRyNg0gJEeQEg7hAVgu+KM8/FvcXEDQi8JT
-	 jw+0MvJ+EPKoZ3W0hmMabN7buzJoYRtloNw2H+ybsEZWARllUahdIcj2s2mB+hkUvCPgU
-	 ZTOHu88Oz5Cjft+EoeJWtlfXSqTp3hRpIJp/2WupJuUpRZESIk7FBAXKO+wqHHEKWUA==
+	bh=okK54DtuOiaoi4Ak/OH5gZhbIs8YRHVUvCz/ZGN+NAc=;
+	b=fxiSpqJYOx5XLcqrMJJ9MSbg4n35j+zRQFu/9kTt81STWIVmQ87BkK7lEWzkO2JiJYIP
+	 Mukzt4af9WiLQb2rJVz7lBGALiiB54vNuePiDbJA2G0T8P0SzqkxK2jj/nlh3SJ67lUM6
+	 VsaIeC2mhqyuqXNJvsiWHKkA8VGtb3mY5iEIyjUn4aDh6v4+Ae1Jhm4EQ5K7Rz1+kzL4P
+	 m2Z5isQVnBzMo2LHY/mCwKqDtsxwaAButxKxj2+xyPByxJrPkQtpn0v2q8YBMv7es12aA
+	 7YwaK7OtbTx4bsXTkQ0cS7gooKXWyvXBY/4ui5cOuBW3ZCeNldxJc3pcz7aoau1NC7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I5xTZsYy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mo11pnhu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BE5606D805;
-	Sat,  7 Nov 2026 14:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C432606D805;
+	Sat,  7 Nov 2026 14:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I5xTZsYy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3F71F0089F;
-	Sat,  7 Nov 2026 14:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mo11pnhu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5C31F0089F;
+	Sat,  7 Nov 2026 14:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061162;
-	bh=0NK4JLfeMF3r9AAbL48Ep00L1DfwBZtV+m2sxIvYHv0=;
+	s=korg; t=1794061163;
+	bh=okK54DtuOiaoi4Ak/OH5gZhbIs8YRHVUvCz/ZGN+NAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I5xTZsYy6y47CyG3Wd4mGLnbBPjtQSWHoZrW2qtDveYeKZ+/16bpTBmb91Ujz5RnO
-	 uxq56ep981Z+t22BgZwI6o9YVxqG52dKnL/T5gED34sKJTX9wU7gr/20b8WYuw+IvV
-	 +xbEhmwhTucmbq6rVZWKeuJnD9nnJ9PCwKV6E/T0=
+	b=mo11pnhuFHOnrwxxa6hB/JPZ4RQtS/GHc3BAi35vgmnbP5mmW01f9toVUA4I6IhBd
+	 J4DdUGFWC20mDSVx8X3jBTmxQvbltcZ2i16TUg6bhuxO7tLthLM7djSbLipAKa/XA8
+	 Fa0ZXAgmS9F6uuwSZ/+LDJ+IQ92Y+X8mTS1sZ/1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0468/1536] module: Factor out elf_validity_cache_secstrings
-Date: Sat,  7 Nov 2026 08:41:24 -0500
-Message-ID: <20261107135010.659741602@linuxfoundation.org>
+Subject: [PATCH 6.12 0469/1536] module: Factor out elf_validity_cache_index_info
+Date: Sat,  7 Nov 2026 08:41:25 -0500
+Message-ID: <20261107135010.687730681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,22 +71,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Maurer <mmaurer@google.com>
 
-[ Upstream commit 3c5700aeabd87e81d9153a7666b28d0e405c6c88 ]
+[ Upstream commit fbc0e4e482aac7f2b0d20f0a11f6d5eeda346fda ]
 
-Factor out the validation of section names.
-
-There are two behavioral changes:
-
-1. Previously, we did not validate non-SHF_ALLOC sections.
-   This may have once been safe, as find_sec skips non-SHF_ALLOC
-   sections, but find_any_sec, which will be used to load BTF if that is
-   enabled, ignores the SHF_ALLOC flag. Since there's no need to support
-   invalid section names, validate all of them, not just SHF_ALLOC
-   sections.
-2. Section names were validated *after* accessing them for the purposes
-   of detecting ".modinfo" and ".gnu.linkonce.this_module". They are now
-   checked prior to the access, which could avoid bad accesses with
-   malformed modules.
+Centralize .modinfo detection and property validation.
 
 Signed-off-by: Matthew Maurer <mmaurer@google.com>
 Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
@@ -94,147 +81,134 @@ Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Stable-dep-of: 9a5ff4568932 ("module: validate string table section types")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 106 ++++++++++++++++++++++++++++---------------
- 1 file changed, 69 insertions(+), 37 deletions(-)
+ kernel/module/main.c | 82 ++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 68 insertions(+), 14 deletions(-)
 
 diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 4a458c36405ba..6314938422bc5 100644
+index 6314938422bc5..87ce807015b30 100644
 --- a/kernel/module/main.c
 +++ b/kernel/module/main.c
-@@ -1798,6 +1798,71 @@ static int elf_validity_cache_sechdrs(struct load_info *info)
+@@ -195,6 +195,38 @@ static unsigned int find_sec(const struct load_info *info, const char *name)
  	return 0;
  }
  
 +/**
-+ * elf_validity_cache_secstrings() - Caches section names if valid
-+ * @info: Load info to cache section names from. Must have valid sechdrs.
++ * find_any_unique_sec() - Find a unique section index by name
++ * @info: Load info for the module to scan
++ * @name: Name of the section we're looking for
 + *
-+ * Specifically checks:
++ * Locates a unique section by name. Ignores SHF_ALLOC.
 + *
-+ * * Section name table index is inbounds of section headers
-+ * * Section name table is not empty
-+ * * Section name table is NUL terminated
-+ * * All section name offsets are inbounds of the section
-+ *
-+ * Then updates @info with a &load_info->secstrings pointer if valid.
-+ *
-+ * Return: %0 if valid, negative error code if validation failed.
++ * Return: Section index if found uniquely, zero if absent, negative count
++ *         of total instances if multiple were found.
 + */
-+static int elf_validity_cache_secstrings(struct load_info *info)
++static int find_any_unique_sec(const struct load_info *info, const char *name)
 +{
-+	Elf_Shdr *strhdr, *shdr;
-+	char *secstrings;
++	unsigned int idx;
++	unsigned int count = 0;
 +	int i;
 +
-+	/*
-+	 * Verify if the section name table index is valid.
-+	 */
-+	if (info->hdr->e_shstrndx == SHN_UNDEF
-+	    || info->hdr->e_shstrndx >= info->hdr->e_shnum) {
-+		pr_err("Invalid ELF section name index: %d || e_shstrndx (%d) >= e_shnum (%d)\n",
-+		       info->hdr->e_shstrndx, info->hdr->e_shstrndx,
-+		       info->hdr->e_shnum);
-+		return -ENOEXEC;
-+	}
-+
-+	strhdr = &info->sechdrs[info->hdr->e_shstrndx];
-+
-+	/*
-+	 * The section name table must be NUL-terminated, as required
-+	 * by the spec. This makes strcmp and pr_* calls that access
-+	 * strings in the section safe.
-+	 */
-+	secstrings = (void *)info->hdr + strhdr->sh_offset;
-+	if (strhdr->sh_size == 0) {
-+		pr_err("empty section name table\n");
-+		return -ENOEXEC;
-+	}
-+	if (secstrings[strhdr->sh_size - 1] != '\0') {
-+		pr_err("ELF Spec violation: section name table isn't null terminated\n");
-+		return -ENOEXEC;
-+	}
-+
-+	for (i = 0; i < info->hdr->e_shnum; i++) {
-+		shdr = &info->sechdrs[i];
-+		/* SHT_NULL means sh_name has an undefined value */
-+		if (shdr->sh_type == SHT_NULL)
-+			continue;
-+		if (shdr->sh_name >= strhdr->sh_size) {
-+			pr_err("Invalid ELF section name in module (section %u type %u)\n",
-+			       i, shdr->sh_type);
-+			return -ENOEXEC;
++	for (i = 1; i < info->hdr->e_shnum; i++) {
++		if (strcmp(info->secstrings + info->sechdrs[i].sh_name,
++			   name) == 0) {
++			count++;
++			idx = i;
 +		}
 +	}
++	if (count == 1) {
++		return idx;
++	} else if (count == 0) {
++		return 0;
++	} else {
++		return -count;
++	}
++}
 +
-+	info->secstrings = secstrings;
+ /* Find a module section, or NULL. */
+ static void *section_addr(const struct load_info *info, const char *name)
+ {
+@@ -1863,6 +1895,39 @@ static int elf_validity_cache_secstrings(struct load_info *info)
+ 	return 0;
+ }
+ 
++/**
++ * elf_validity_cache_index_info() - Validate and cache modinfo section
++ * @info: Load info to populate the modinfo index on.
++ *        Must have &load_info->sechdrs and &load_info->secstrings populated
++ *
++ * Checks that if there is a .modinfo section, it is unique.
++ * Then, it caches its index in &load_info->index.info.
++ * Finally, it tries to populate the name to improve error messages.
++ *
++ * Return: %0 if valid, %-ENOEXEC if multiple modinfo sections were found.
++ */
++static int elf_validity_cache_index_info(struct load_info *info)
++{
++	int info_idx;
++
++	info_idx = find_any_unique_sec(info, ".modinfo");
++
++	if (info_idx == 0)
++		/* Early return, no .modinfo */
++		return 0;
++
++	if (info_idx < 0) {
++		pr_err("Only one .modinfo section must exist.\n");
++		return -ENOEXEC;
++	}
++
++	info->index.info = info_idx;
++	/* Try to find a name early so we can log errors with a module name */
++	info->name = get_modinfo(info, "name");
++
 +	return 0;
 +}
 +
  /*
   * Check userspace passed ELF module against our expectations, and cache
   * useful variables for further processing as we go.
-@@ -1821,7 +1886,7 @@ static int elf_validity_cache_sechdrs(struct load_info *info)
- static int elf_validity_cache_copy(struct load_info *info, int flags)
- {
- 	unsigned int i;
--	Elf_Shdr *shdr, *strhdr;
-+	Elf_Shdr *shdr;
+@@ -1889,13 +1954,15 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
+ 	Elf_Shdr *shdr;
  	int err;
  	unsigned int num_mod_secs = 0, mod_idx;
- 	unsigned int num_info_secs = 0, info_idx;
-@@ -1830,34 +1895,9 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
+-	unsigned int num_info_secs = 0, info_idx;
+ 	unsigned int num_sym_secs = 0, sym_idx;
+ 
  	err = elf_validity_cache_sechdrs(info);
  	if (err < 0)
  		return err;
--
--	/*
--	 * Verify if the section name table index is valid.
--	 */
--	if (info->hdr->e_shstrndx == SHN_UNDEF
--	    || info->hdr->e_shstrndx >= info->hdr->e_shnum) {
--		pr_err("Invalid ELF section name index: %d || e_shstrndx (%d) >= e_shnum (%d)\n",
--		       info->hdr->e_shstrndx, info->hdr->e_shstrndx,
--		       info->hdr->e_shnum);
--		goto no_exec;
--	}
--
--	strhdr = &info->sechdrs[info->hdr->e_shstrndx];
--
--	/*
--	 * The section name table must be NUL-terminated, as required
--	 * by the spec. This makes strcmp and pr_* calls that access
--	 * strings in the section safe.
--	 */
--	info->secstrings = (void *)info->hdr + strhdr->sh_offset;
--	if (strhdr->sh_size == 0) {
--		pr_err("empty section name table\n");
--		goto no_exec;
--	}
--	if (info->secstrings[strhdr->sh_size - 1] != '\0') {
--		pr_err("ELF Spec violation: section name table isn't null terminated\n");
--		goto no_exec;
--	}
-+	err = elf_validity_cache_secstrings(info);
+ 	err = elf_validity_cache_secstrings(info);
 +	if (err < 0)
 +		return err;
++	err = elf_validity_cache_index_info(info);
+ 	if (err < 0)
+ 		return err;
  
- 	for (i = 1; i < info->hdr->e_shnum; i++) {
- 		shdr = &info->sechdrs[i];
-@@ -1886,14 +1926,6 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
- 				num_info_secs++;
- 				info_idx = i;
+@@ -1921,24 +1988,11 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
+ 				   ".gnu.linkonce.this_module") == 0) {
+ 				num_mod_secs++;
+ 				mod_idx = i;
+-			} else if (strcmp(info->secstrings + shdr->sh_name,
+-				   ".modinfo") == 0) {
+-				num_info_secs++;
+-				info_idx = i;
  			}
--
--			if (shdr->sh_flags & SHF_ALLOC) {
--				if (shdr->sh_name >= strhdr->sh_size) {
--					pr_err("Invalid ELF section name in module (section %u type %u)\n",
--					       i, shdr->sh_type);
--					return -ENOEXEC;
--				}
--			}
  			break;
  		}
  	}
+ 
+-	if (num_info_secs > 1) {
+-		pr_err("Only one .modinfo section must exist.\n");
+-		goto no_exec;
+-	} else if (num_info_secs == 1) {
+-		/* Try to find a name early so we can log errors with a module name */
+-		info->index.info = info_idx;
+-		info->name = get_modinfo(info, "name");
+-	}
+-
+ 	if (num_sym_secs != 1) {
+ 		pr_warn("%s: module has no symbols (stripped?)\n",
+ 			info->name ?: "(missing .modinfo section or name field)");
 -- 
 2.53.0
 
