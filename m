@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064820;
-	b=VpVc2rlU+JOnzIqfVE3ISTJot4iPNd4afyEa9hmhpRgAOAbJbgV84iOPLaqH+HWNArHx
-	 91eWzOnVj88oquQ05shv85vMNI6iEysWUq1pYVW1oQVsBBiZJ1mJlyMjZR0tKWpsCrbar
-	 VSx6iLi4Ekqdaro6ZfNa1cR0qqkJ6wQ9OV6DKmxsvDexez+QgqU7WzoSHAhe5qcnSZlw/
-	 f7Vnh68y9cIX55r8XRqQ0+Hatzs0K4SDqemrybAqVahj7TY5/psp9NrqF5PwR4ciqY1oh
-	 szBHb1QZMrYweqy2xIb6ZKSUdUXfcd51WE9mIHsMoj8W940LHKUNPz9xpvmdrwd9OoA==
+	t=1794064821;
+	b=Au8Q9PiFinMO7ria9HBgqjCe4G65BMMn/n0MvJ+ox7oTwo8ld2Uqdj4dJywF9u6iamvo
+	 C774ZNugCCZ/br6tmp9laCpq6uTLGZBfjqoEq8SV6rr1J0vaLkYUPr9jCKxkDVWNM/46U
+	 bnR8bwaDYikgxgKM8T0OXBdkowV6RHeoapwS/aS4FP6cUwjhz95tDTLYvw89Jyxhk+7ye
+	 ixUOzPcfuhuDkG3Zi4dfN4leDLqSTRqZWjO18yL+Qkaz7uwLStpw2NgnR67FTxNEahvHQ
+	 tKWPlv7TEodr5TiKyc00B/EFURJCtq4jNn8Wn71ZUeqx/HfvU8Yvd7H7b/pszuevJ7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=g9cDC7ThrAFvvgOmwSVv/b6ukb7FGxZQkRn7UQvq3fM=;
-	b=YFeuFmrDpVGUOYZxdvkOUSCKdn/dOJLjIS4SIBBYqgCe9eReURTjeUA+IVQtR7AdsEAA
-	 Z53f1E1BJFCdEl4+3ljAB9XbEEUzYgzEw3EbtoJ3GjVCA+7gsN9DR8Ubf6I0I/ubKCa49
-	 gDqkXTwyKFlSSHlDFmTi4AiZOoHxouf6RzKrCKmIjOEs3UqBuUTO2iQ8Sl8smgdOHodd8
-	 +TigIrRGg3eq/gfzKY0D5bgVXSnWdW/DrHpEOt1iaaqI3jUePghG+pME6UqwKjxUkHuz8
-	 P3HFm+HyZOSiEiAEuOWdZYnWgo0/2mjLgw+iARAVsNvrLRdKcScFLQ49u2nlvzQh17g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=a+F47RL+g65tsX1zhZT/afuiT1Wg1ShuKgHcnwAdsUs=;
+	b=359pmLwcO8YG4t+zSJtsA/OWh1tevyBbHkW4JSBnP+7zleUOiKUp4wiYx+om4+X8jvUV
+	 xfV/dQvPBH7hVv8dsQKryqg7Zg7F3UXW5mrijBlss2thUOP/kDxD+w3qR1kXKjQlBoYJk
+	 jI0pcMUtljS05UrF5Fxjgx6Z6OKOYiq4IrGp8Jw+Go7hY7ooW12wWpbkrI1bEqEe/xPbL
+	 peM9fhki5Du/Lu8JLTZsO+7c2aONvys6lHZHChEN3d8nuAgdCZ/dAah9Io4v3Q2ADszvd
+	 dy9dgOLPe4lZrvIi6QpwVw8e1PSZM/XXtteOhs+YjQcoNWdhWrV+Pk1uZFNRqUiGgFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dKsouVo0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=goO5JtKR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE8C606B88F;
-	Sat,  7 Nov 2026 15:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B927606B88F;
+	Sat,  7 Nov 2026 15:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dKsouVo0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5111F0089F;
-	Sat,  7 Nov 2026 15:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=goO5JtKR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A501F0089F;
+	Sat,  7 Nov 2026 15:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064819;
-	bh=g9cDC7ThrAFvvgOmwSVv/b6ukb7FGxZQkRn7UQvq3fM=;
+	s=korg; t=1794064820;
+	bh=a+F47RL+g65tsX1zhZT/afuiT1Wg1ShuKgHcnwAdsUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dKsouVo0iTarivDCUBLwy02drAvDbCQvaRS88FRULIJ3X1lQEx86e164Xf0kwmhMB
-	 mt9XC07sJ1vp8AFqjVRWjdYyR6LVtkTsFmE3uYujANCw2RO0tKg++e2Cuj7dYICXRp
-	 z6hSpRhUieVWxME9oakvV9XS7w9+0kI3UPqPTEIg=
+	b=goO5JtKRMvq9YarnHq9IYzbn9CDjFQ1Nh+0Fx/5Ukx5cBoq42/G0ayu+Im08YayvT
+	 C04u5t+gErxsFZdzZ+MnTgHUpfAo/Uzzzc8IZtm403HLBVZF3ydeEDfxkUlDRChEfm
+	 YmrcZHBcb2V6YszSjHyeHs6xn/1VN9Ko5eN7NNNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0707/1257] nvme-rdma: dont complete a request after a bogus remote invalidation
-Date: Sat,  7 Nov 2026 08:50:03 -0500
-Message-ID: <20261107134958.781526971@linuxfoundation.org>
+Subject: [PATCH 7.3 0749/1257] platform/x86: hp-bioscfg: return -E2BIG from validate_password_input()
+Date: Sat,  7 Nov 2026 08:50:45 -0500
+Message-ID: <20261107134959.976484333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,50 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 909307cea08aff4e486cdb7491de5c76a2c31341 ]
+[ Upstream commit a4f19c589b21e18567d3c0ac7b9294f81e29b1de ]
 
-When a remote invalidation names an rkey that is not the one we handed out
-for this request, nvme_rdma_process_nvme_rsp() logs and schedules error
-recovery, then falls through to nvme_rdma_end_request().  The request is
-completed with req->mr never invalidated, and nvme_rdma_unmap_data() hands
-it back with ib_mr_pool_put(), which only puts it on a list.  The rkey
-stays valid and still maps the pages the completed read filled, so a
-controller that sent the bogus invalidation can write into those pages
-after pread() has returned.
+validate_password_input() returns the positive INVALID_BIOS_AUTH on
+rejection. store_password_instance() skips the store on nonzero ret,
+but its final "return ret < 0 ? ret : count" treats the positive value
+as success, so userspace sees count instead of an error.
 
-Return instead, the way the local invalidation path below already does,
-and leave the request for error recovery to cancel.
+Return -E2BIG for an invalid password length.
 
-Fixes: 3ef0279bb0031 ("nvme-rdma: Check remotely invalidated rkey matches our expected rkey")
+Tested on HP EliteBook 840 G2 (Fedora 44, Linux 7.2.7): writing 999
+bytes to current_password returned 999 before this change.
+
+Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
+Link: https://patch.msgid.link/20261007134711.473857-4-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/rdma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index 9cb811a2ce1f7..5b9b540693b51 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -1748,6 +1748,7 @@ static void nvme_rdma_process_nvme_rsp(struct nvme_rdma_queue *queue,
- 				"Bogus remote invalidation for rkey %#x\n",
- 				req->mr ? req->mr->rkey : 0);
- 			nvme_rdma_error_recovery(queue->ctrl);
-+			return;
- 		}
- 	} else if (req->mr) {
- 		int ret;
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+index a9e1786374162..3f4c45d9b9f95 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -70,12 +70,13 @@ static int validate_password_input(int instance_id, const char *buf)
+ 		length--;
+ 
+ 	if (length > MAX_PASSWD_SIZE)
+-		return INVALID_BIOS_AUTH;
++		return -E2BIG;
+ 
+ 	if (password_data->min_password_length > length ||
+ 	    password_data->max_password_length < length)
+-		return INVALID_BIOS_AUTH;
+-	return SUCCESS;
++		return -E2BIG;
++
++	return 0;
+ }
+ 
+ ATTRIBUTE_N_PROPERTY_SHOW(is_enabled, password);
 -- 
 2.53.0
 
