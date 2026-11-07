@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062624;
-	b=sLnDYSe5FEifj3OC1uK/gP8QewIU81iIQNpgT+6tx88upsdMine+gfrdB/KU0P6xEHF7
-	 lp+cIxtHO8rX6TMfKCnxaRJxUi8zRmx5P9EUCpg0fTgFStZc6DGNf21RyAMno5L4YEF8X
-	 51XpycnE+8GAa0jnKffC3QuIajiRllYPrlPv86z1+iXaIu/WKzHZQWO5kUec+SBZYiW9u
-	 zp/jEf9fCSpVvh/HxIRPlDEaflRyuJfsFA/if9mNqLaDjIvOwkxcgLHjHjr707N95xG1f
-	 ie2+q5Cweuj9o0gFU26/i2yBfTt/PMhOt3U9nj3+USpHy/HU7KlBOGK2W6WREPCTy5A==
+	t=1794062625;
+	b=oQnxAg6WnZ4emKxemglTUD0a0KjgDK3Ij3GgkC/jlOejhLeaE5uxf+1Crls0ZLiOTrId
+	 +qIWpew9xQqR24+7qAdfO+a1CuiCajr5RQAokB4oR15qfIrYtl+vZnByi4GCSvVi+eQc/
+	 flQ1gpXSgs+pqIDHm6lTJuCGblp3Ynqm6A6+LQbHVWc4ZdrFNuDpxQrt7QdVK2HSNPBWl
+	 oftrNGlYHiX10RLXmw7/w/+tJRLMTm6EWLkgd7+QfusVtn5z5+86vORZC3PdE/4S+A0Zu
+	 WTAAIDl2MsZu5ac7iVUY985zF+ZlEYQIrqe8+dC+7Wfv4U214v8THAhZpBK/cK4+kRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062624;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062625;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uBNsB5pNpejvqbxuuS+V3RxkATiSvTFXnp41Z+qkCps=;
-	b=Z5jZcIDiljuPpZCX2lfHa5gxBZq2AdxH/izSD/Ex3QkxZQsq+jP02wl7nVI3FrJMg7Ph
-	 BX69MAUOahCud1zKbYcVJasoGAX9ks7ku5E9/ZNbtm+f8SYO6PuukFw6JmmCJdtAaJrsV
-	 ne0EP1ueXxlVV47cSz6u8nz+uWd6I5tn/wHMR5FtFWOki8k62vihoM5SV/pLvQpMzWu0Q
-	 ncFT/eE/7jKjAtrdoxduUtBycxYzdj3mSlxzJ3kqmiH5UFhw98QPn5vfO5pkrDODX/j/J
-	 wNCLlPv1kpdy/nJuIaukwoU+S42jp7gaisgFkaA8YAUoD8jlZJk1KXzKYrw8Q5LWw6Q==
+	bh=1YvtD6jakMUgHB27/8PZXIjeYgDstzGGtVFManIZgsA=;
+	b=s5gM0aqMzhQRNuLQpBeXkC/LGRUh5h3O7u6yRyzshGneCwqt0olMTlJlPZVhDFOARabK
+	 CQuNyEfPEbAE3QEOL9oMJmRHbrVIFfxLdwy/GHCPgWcg7FkG9CHCm65OJD0+imJ3WQ397
+	 U5iEY3/z1c6u+x/kdmQW2p5Co5mraUZbzye4rg2Oac4bCTYUwfMn65/z+BGFW/VzRGo98
+	 yXcc8NOF1YoM2mUr1wD3svR13+K//THdlYmNY0uyzU0rqTh7GlHcOPeIdPh2ERVgefO87
+	 MjPG3JF1BOI3w9D8VEC5hVyUpsn88GYtqk0DmUF8GK5oab43eu22qRaJfziPnpdazOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wf2zOcra;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipH17NIC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA4E606A339;
-	Sat,  7 Nov 2026 14:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03BD606A337;
+	Sat,  7 Nov 2026 14:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wf2zOcra
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ECAC1F0089F;
-	Sat,  7 Nov 2026 14:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipH17NIC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E061F008A3;
+	Sat,  7 Nov 2026 14:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062623;
-	bh=uBNsB5pNpejvqbxuuS+V3RxkATiSvTFXnp41Z+qkCps=;
+	s=korg; t=1794062624;
+	bh=1YvtD6jakMUgHB27/8PZXIjeYgDstzGGtVFManIZgsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wf2zOcraRv2dU5vlsvo5CQnuBDlUyE7MgvMRUgtujcls9NNq931G6FymmV7QTd1Oh
-	 HsFWPGJiSmE01jxFVfGd/T5+4LFFwwRnZyEYuEPwMKuKQqg+oMo+LjNVIpUK+Y3Pky
-	 wwp/jwuEqIEfWpZtxt+4C1IbKOXUYXrpO5ybbTlM=
+	b=ipH17NICZGaiUgdOA1gXKpagicK/X4DBPXnozsehEx8wEgWADraulOsEmn9+wPtJN
+	 bYN3wcGocLUStuU21JkuHszkiC18RuJOz8Q1MSYBJX/PhLWQ6pCuIJwgyJ+PPsxYYH
+	 ESXxFAWXGkeYMk3pwFjPdWgjBgF12QaxvBFAobSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaogang Chen <xiaogang.chen@amd.com>,
-	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Luigi Lauro <luigi.lauro@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1495/1536] drm/amdkfd: stop restore retries on device unplug
-Date: Sat,  7 Nov 2026 08:58:31 -0500
-Message-ID: <20261107135039.851609807@linuxfoundation.org>
+Subject: [PATCH 6.12 1496/1536] drm/amd/display: take a runtime PM reference only when a CRTC turns on
+Date: Sat,  7 Nov 2026 08:58:32 -0500
+Message-ID: <20261107135039.879540944@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,118 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+From: Luigi Lauro <luigi.lauro@gmail.com>
 
-[ Upstream commit 3254ed0b15f2fe656c9cb36ccb59b92422440bf8 ]
+[ Upstream commit b456f591f925fbd6b33770d0eec1b51c2f9d41c1 ]
 
-amdgpu_amdkfd_restore_userptr_worker() and svm_range_restore_work()
-reschedule themselves when validation fails with evicted objects
-pending. After a surprise removal the restore paths fail with -ENODEV
-permanently, so rescheduling just spins the worker uselessly until
-cancel_delayed_work_sync() in fini finally stops it - which can take
-a while, since process teardown itself is delayed by the dead device.
+amdgpu_dm_commit_streams() takes a runtime PM reference for every
+active CRTC that needs a modeset and has a new stream, but
+amdgpu_dm_atomic_commit_tail() drops one only for each CRTC that goes
+from active to inactive. A modeset of a CRTC that is already active (a
+mode change, or anything else that needs a full modeset) therefore
+leaks one reference. Once that has happened, the usage count no longer
+returns to zero with every CRTC off, and the device cannot runtime
+suspend again until reboot. The two also disagree the other way when a
+CRTC turns on without a stream ("Failed to create new stream"): no
+reference is taken, but one is dropped when it turns off.
 
-Treat -ENODEV as terminal in both workers.
+Take the reference in the loop that counts the disabled CRTCs, on the
+mirror condition: when the CRTC goes from inactive to active, which is
+what the commit that added it intended ("every time we enable a
+previously disabled CRTC"). Each active CRTC then holds exactly one
+reference.
 
-Cc: Xiaogang Chen <xiaogang.chen@amd.com>
-Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Tested on an RX 9070 XT (Navi 48) over OCuLink, with the change
+backported to 7.2.9: an unplugged connector forced on, then mode A on a
+CRTC, mode B on the same active CRTC, and the CRTC off, three rounds in
+a row. The usage count rose by 3 with the stock module, by 0 with this
+patch, and by 3 again after reloading the stock module.
+
+Fixes: 97028037a38a ("drm/amdgpu: Grab/put runtime PM references in atomic_commit_tail()")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5951
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Luigi Lauro <luigi.lauro@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 266fab83139600e58db7e900e930c722e619b78c)
+(cherry picked from commit 59ef9a435499777b8e1c4e0eff52f813c64fb920)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c   | 18 +++++++++++++-----
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c           |  8 +++++---
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 6dabdf3fd30dc..bc284939cf66d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -2796,6 +2796,7 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
- 	struct task_struct *usertask;
- 	struct mm_struct *mm;
- 	uint32_t evicted_bos;
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index de992c58fb7f7..305a9fe006de4 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9768,8 +9768,6 @@ static void amdgpu_dm_commit_streams(struct drm_atomic_state *state,
+ 			if (dm_old_crtc_state->stream)
+ 				remove_stream(adev, acrtc, dm_old_crtc_state->stream);
  
- 	mutex_lock(&process_info->notifier_lock);
- 	evicted_bos = process_info->evicted_bos;
-@@ -2815,14 +2816,16 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+-			pm_runtime_get_noresume(dev->dev);
+-
+ 			acrtc->enabled = true;
+ 			acrtc->hw_mode = new_crtc_state->mode;
+ 			crtc->hwmode = new_crtc_state->mode;
+@@ -10234,8 +10232,13 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
+ #ifdef CONFIG_DEBUG_FS
+ 		enum amdgpu_dm_pipe_crc_source cur_crc_src;
+ #endif
+-		/* Count number of newly disabled CRTCs for dropping PM refs later. */
+-		if (old_crtc_state->active && !new_crtc_state->active)
++		/*
++		 * One runtime PM reference per active CRTC: take it when the
++		 * CRTC turns on, count it when it turns off for dropping later.
++		 */
++		if (!old_crtc_state->active && new_crtc_state->active)
++			pm_runtime_get_noresume(dev->dev);
++		else if (old_crtc_state->active && !new_crtc_state->active)
+ 			crtc_disable_count++;
  
- 	mutex_lock(&process_info->lock);
- 
--	if (update_invalid_user_pages(process_info, mm))
-+	ret = update_invalid_user_pages(process_info, mm);
-+	if (ret)
- 		goto unlock_out;
- 	/* userptr_inval_list can be empty if all evicted userptr BOs
- 	 * have been freed. In that case there is nothing to validate
- 	 * and we can just restart the queues.
- 	 */
- 	if (!list_empty(&process_info->userptr_inval_list)) {
--		if (validate_invalid_user_pages(process_info))
-+		ret = validate_invalid_user_pages(process_info);
-+		if (ret)
- 			goto unlock_out;
- 	}
- 	/* Final check for concurrent evicton and atomic update. If
-@@ -2831,11 +2834,14 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
- 	 * reference counting inside KFD will handle this case.
- 	 */
- 	mutex_lock(&process_info->notifier_lock);
--	if (process_info->evicted_bos != evicted_bos)
-+	if (process_info->evicted_bos != evicted_bos) {
-+		ret = -EAGAIN;
- 		goto unlock_notifier_out;
-+	}
- 
- 	if (confirm_valid_user_pages_locked(process_info)) {
- 		WARN(1, "User pages unexpectedly invalid");
-+		ret = -EINVAL;
- 		goto unlock_notifier_out;
- 	}
- 
-@@ -2853,8 +2859,10 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
- unlock_out:
- 	mutex_unlock(&process_info->lock);
- 
--	/* If validation failed, reschedule another attempt */
--	if (evicted_bos) {
-+	/* If validation failed, reschedule another attempt, unless the
-+	 * device is gone for good
-+	 */
-+	if (evicted_bos && ret != -ENODEV) {
- 		queue_delayed_work(system_freezable_wq,
- 			&process_info->restore_userptr_work,
- 			msecs_to_jiffies(AMDGPU_USERPTR_RESTORE_DELAY_MS));
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 0b86da7d7c502..27085694697a2 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -1844,7 +1844,7 @@ static void svm_range_restore_work(struct work_struct *work)
- 	struct mm_struct *mm;
- 	int evicted_ranges;
- 	int invalid;
--	int r;
-+	int r = 0;
- 
- 	svms = container_of(dwork, struct svm_range_list, restore_work);
- 	evicted_ranges = atomic_read(&svms->evicted_ranges);
-@@ -1918,8 +1918,10 @@ static void svm_range_restore_work(struct work_struct *work)
- 	mmap_write_unlock(mm);
- 	mutex_unlock(&process_info->lock);
- 
--	/* If validation failed, reschedule another attempt */
--	if (evicted_ranges) {
-+	/* If validation failed, reschedule another attempt, unless the
-+	 * device is gone for good
-+	 */
-+	if (evicted_ranges && r != -ENODEV) {
- 		pr_debug("reschedule to restore svm range\n");
- 		queue_delayed_work(system_freezable_wq, &svms->restore_work,
- 			msecs_to_jiffies(AMDGPU_SVM_RANGE_RESTORE_DELAY_MS));
+ 		dm_new_crtc_state = to_dm_crtc_state(new_crtc_state);
 -- 
 2.53.0
 
