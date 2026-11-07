@@ -1,58 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061600;
-	b=iOo9HwRryqVvzgrAWKExon+Z5L0jcE2lWElVYcyj4Ns5fYMGm8rBt8No8ZAnkJJLUqex
-	 J8FYvu0I9UYgskV6ZgAWYyJi9ulTq4gxQARy9UMm4SHKL6tMzOiEVfr3Zx0i7rYMw2Y4/
-	 3DAzc29XJyuGyCVY6qcsFHoQn+HD7IxCwdlaJwCoP1tQYpRHhwKo5KDRmMC9U/+gHpB6j
-	 pt12nm/rYxQvG5mPcjT54I4pBDxSlszBQR/8726qA9b6Woo8VWy9xfoYR5tIJUT9hzroR
-	 toz4ihNTgP3oCJoStylDYXhjMi6Pp3NQ6KNn3WT40ANu5VG1w6+FnOWUWJe6959KAwQ==
+	t=1794061601;
+	b=cR2F9EAf+nuLejoLdYqrL6ndLVBPKpNAJfiQIRCbEuJFoxjBkZ5uLJE/0PeLVkbwfZny
+	 8c16i4GkHZJ0o4M+vEbDJBLudj3awiR2YS84gTxGcDB0u3MGlhc6uUCburVbh+oe3KTuV
+	 LCe2twtU1VMxNx9jBllGjdfTuUTTRtVBIkH913VYPI/DWISuepZcEbWcbkCT+OJFQTLnS
+	 DAVVSLMpAHj4uXc75BhK08beRPFmZ/iBCfXGgFRg1KMcNKCRb2LS0anRpUMlUFuohuu1m
+	 GQ/hyI9f/w6UrOuYDpZXot0XY681dWQoOpN9WY8xcHXb/RbhoyuwzjaPpeOZfwVHMLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061600;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e7ZusSjPlezR/HpaSSzkihmZrVSVhg3XlnY/Q2rzFw8=;
-	b=1Q+QEw6Xwk7x7gODoIX+ELFW7g53zUTfwHQNS4rnoIJVS/VTZaa//cXlg+z8mIuaL4DX
-	 hiC3DPeLsmCUoaMBJh2O/0IJjpFlVNRYHLl1VZd4GLnIRzTg7WWVCjoMuipQ1zy8foCoh
-	 iVA0FL+GjAjFkuzk/YQFDs0ea20b6rhWiDviywSmv60BJmrTboTHmA0/f2gQp6CFIt00V
-	 ebGidKbnZfZFCGDUHlu/E4SZVf6V5/SZlleUgGYhHK/XLZhy0bzbJinAyH4Z7JXOEr5W7
-	 SG2E1Wp/G9L7DePOKQjF6VOl1/2vvi2Ed37QnFNR7jMrCT8VHtSrcmm8geYddCP+Vbg==
+	bh=L7yTk3hgLw4WyRklPAaEYLsbtqmW4kC+vYUuAaLl6bc=;
+	b=RqYIxhkv5egqWsNQMj8FHt6P+It/27nIcx3OMJGOvj3uLNZlBtTjitjfkLgwOcFR/FWD
+	 HqE3NJfFrW/sjG8umNELD8mLyyLXYBgq7tJTjVpL7+CLHEDHFq6oUg2eZ0jr7k6ocUk71
+	 ZJ8L2i0/x1FlZiF81ttOfZ6Hra6XIV5ILOQ9jPwZFG5PE0lij4jKPHJS00Rh1WYeZ85t2
+	 BFeCnGzy7iHhzG5mlHg8Nu7MFxgWMqMuPNhGh8x2bM2k7chEhNOnHPWLxpE7TqQc1VUPl
+	 WbLinHKBPjcnYAk+qKTMqieJQ8f1c7q2tvyVZs2r2ildmDqV9QoAXKf9d8aEyXVEbLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OsmZRTgj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14vFFgay;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC54606A326;
-	Sat,  7 Nov 2026 14:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D88606A326;
+	Sat,  7 Nov 2026 14:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OsmZRTgj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865CC1F0089F;
-	Sat,  7 Nov 2026 14:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14vFFgay
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3D51F0089F;
+	Sat,  7 Nov 2026 14:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061599;
-	bh=e7ZusSjPlezR/HpaSSzkihmZrVSVhg3XlnY/Q2rzFw8=;
+	s=korg; t=1794061600;
+	bh=L7yTk3hgLw4WyRklPAaEYLsbtqmW4kC+vYUuAaLl6bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OsmZRTgj/h66oo8dXLB6PMROgtvdCxbsRTjVRLbwQm+lY4qDkG7ctOPWjtEwHiVTi
-	 JrCu6+iI+ZXQPiFnG8EXrJ29PtHfl6mAavN39eaoCI2XJ7DUGVCaAxSgTAclPikJtH
-	 GiDLO8ATVIfi/RerpMSeSQ0GWALKTb7Tlpv6QRCc=
+	b=14vFFgayRXU3z4NlO0Y2msPLXlACFqMhql49M33ajdXwJhSmxgvbevFm00VyQdWsz
+	 wLQOmnw6lIZc/HtfBxKmqRtzps6REwJZE/Lb/0Ix5VKzjzI/OS8O5dj5EZvLq7nJQa
+	 cPctmTfuHp3SpQAM0cva+0++jc0nBegPomzyy3J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>
-Subject: [PATCH 6.12 0673/1536] ocfs2: fix chunk number of the first chunk in a local quota file
-Date: Sat,  7 Nov 2026 08:44:49 -0500
-Message-ID: <20261107135016.386749793@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Tao Ma <tao.ma@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 6.12 0674/1536] ocfs2: pin refcount trees before dropping the lookup lock
+Date: Sat,  7 Nov 2026 08:44:50 -0500
+Message-ID: <20261107135016.413490462@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -74,117 +74,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 4effccfd50baee4f325694964aeee997dca7bd96 upstream.
+commit 8c714a074074af7ae59233c1fa6ef9d7aa710462 upstream.
 
-Mounting a crafted OCFS2 image can corrupt kernel memory.  When the
-local quota file header of such an image claims zero chunks, the first
-quota entry allocated during the mount gets a chunk number taken from a
-kernel pointer, and releasing that entry clears a bit far outside the
-chunk bitmap.
+A refcount tree returned to ocfs2_lock_refcount_tree() must stay alive
+until that caller releases its operation reference. However,
+ocfs2_get_refcount_tree() returns the cached pointer after dropping
+osb_lock, and the caller only takes its kref afterwards. The registry
+reference does not protect this gap from concurrent removal.
 
-The write will corrupt the data stored at that address, and the
-corruption may lead to a system crash or damage unrelated data.
-Mounting requires CAP_SYS_ADMIN, so it takes an untrusted image, such
-as removable media or a loop mount of a file from elsewhere.
+This can happen when another node frees a refcount root and reuses its
+block with a different generation while this mount retains the old
+cached tree. Two local operations on different inodes sharing the new
+root, such as data CoW and an external xattr update, can then look up
+the same stale tree. Their inode locks are independent, and both the
+REFCOUNT DLM lock and rf_sem are acquired after the first operation
+reference.
 
-Since the chunk number comes from a kernel pointer, the address of the
-bit that gets cleared differs from boot to boot, and the issue has been
-reported under several titles:
+The following ordering is possible, with no other operation references:
 
-- BUG: unable to handle kernel paging request in ocfs2_local_release_dquot
-- KASAN: use-after-free Write in ocfs2_local_release_dquot
-- KASAN: slab-out-of-bounds Write in ocfs2_local_release_dquot
-- KASAN: slab-use-after-free Write in ocfs2_local_release_dquot
-- KFENCE: use-after-free write in ocfs2_local_release_dquot
+  Data CoW                         Xattr update
+  --------                         ------------
+  Look up the old tree under
+    osb_lock, then drop osb_lock
+                                   Look up the same tree and take a kref
+                                   Acquire the tree locks and read the
+                                     new on-disk generation
+                                   Erase the old tree under osb_lock
+                                   Unlock and drop the operation kref
+                                   Drop the registry kref, freeing tree
+  Take a kref through the
+    freed tree pointer
 
-Note that none of these is a use-after-free in the quota code: the
-chunk and its buffer head are alive.  The bit that gets cleared lies
-far outside the bitmap.  KASAN and KFENCE name each report based on the
-object occupying that address, which explains why the same issue is
-reported under so many different titles.  In the report I sent, the
-address fell in a free page, which KASAN labels use-after-free.
+The final kref_get() accesses freed rf_getcnt storage, and subsequent
+accesses in ocfs2_lock_refcount_tree() also use the freed allocation.
 
-There are known reproducers.  Both a syzkaller and a C reproducer are
-available from the Google Drive link [1] in my report thread.  The
-issue was found by our modified syzkaller, not a theoretical thing
-found by an LLM.  I have not seen it outside fuzzing, so it is not
-affecting me in the real world.
+Take the operation reference in ocfs2_get_refcount_tree() before
+releasing osb_lock, including when an insertion loses to another lookup.
+Removal must acquire the same lock, so it cannot drop the registry
+reference before the lookup has pinned the tree. Keep the existing
+unlock and error path puts. The two callers that already hold the
+refcount tree lock keep their borrowed lookup behavior and do not
+acquire an extra reference.
 
-The local quota file in OCFS2 is divided into chunks, and each chunk
-begins with a header block holding a bitmap of the quota entries that
-chunk has handed out.  Chunks are numbered from zero, and that number is
-used to convert the file offset of an entry back into a bit position in
-the bitmap.  ocfs2_local_quota_add_chunk() appends a new chunk to the
-in-memory list and numbers it one past the chunk that was last:
+KASAN report as below:
 
-	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
-	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
-				   struct ocfs2_quota_chunk,
-				   qc_chunk)->qc_num + 1;
+    BUG: KASAN: slab-use-after-free in ocfs2_lock_refcount_tree+0x94a/0x9b0
+    Read of size 4 at addr ffff888117212820 by task python3/497
 
-The predecessor is looked up after the new chunk is added to the list, so
-if the list was empty, the prev pointer is the list head itself.  The head
-is the dqi_chunk member of struct ocfs2_mem_dqinfo and is not a chunk, so
-reading qc_num through it lands 16 bytes past the start of the head, on
-the dqi_gqinode pointer that follows it.  The first chunk of the file is
-then numbered with the lower half of a kernel pointer instead of 0.
+[Kernel and hardware identification omitted.]
 
-The list is empty when the local quota file header claims the file has no
-chunks.  ocfs2_local_read_info() takes dqi_chunks from that header without
-validating it, so an image with dqi_chunks == 0 takes this path when the
-first quota entry is allocated.
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20e/0x420
+     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
+     kasan_report+0xe0/0x110
+     ? ocfs2_lock_refcount_tree+0x94a/0x9b0
+     ocfs2_lock_refcount_tree+0x94a/0x9b0
+     ? __pfx_ocfs2_lock_refcount_tree+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? ocfs2_refcount_cow+0x3b6/0xd90
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kmalloc_cache_noprof+0x28d/0x610
+     ? ocfs2_refcount_cow+0x3b6/0xd90
+     ocfs2_refcount_cow+0x410/0xd90
+     ? __pfx_ocfs2_refcount_cow+0x10/0x10
+     ? __pfx___might_resched+0x10/0x10
+     ? down_write+0x11a/0x1f0
+     ? __pfx_down_write+0x10/0x10
+     ? ocfs2_inode_unlock+0x1a9/0x260
+     ? __pfx_ocfs2_inode_unlock+0x10/0x10
+     ? ocfs2_file_write_iter+0x1413/0x1d30
+     ocfs2_file_write_iter+0x157b/0x1d30
+     ? __pfx_ocfs2_file_write_iter+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? __x64_sys_pwrite64+0x1b7/0x220
+     ? __pfx___might_resched+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? security_file_permission+0x26/0x80
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_is_held_type+0x8f/0x100
+     vfs_write+0x639/0x1010
+     ? __pfx_ocfs2_file_write_iter+0x10/0x10
+     ? lock_vma_under_rcu+0x154/0x4a0
+     ? __pfx_vfs_write+0x10/0x10
+     ? lock_release+0x121/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     __x64_sys_pwrite64+0x1b7/0x220
+     ? __pfx___x64_sys_pwrite64+0x10/0x10
+     ? irqentry_exit+0xbe/0x820
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on_prepare+0x11d/0x150
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-ocfs2_create_local_dquot() turns the bad number into a file offset with
-ol_dqblk_off(), which shifts a 32-bit block number left by the block size
-bits, so the top bits of such a large block number are lost.
-ocfs2_local_release_dquot() turns the offset back into a bit index with
-ol_dqblk_chunk_off(), using the full chunk number, so the lost bits push
-that index far outside the bitmap, and clearing it corrupts unrelated
-memory.
+[Register dump omitted.]
 
-Compute the chunk number before putting the chunk on the list, and use 0
-when the list is empty.
+     </TASK>
 
-Link: https://lore.kernel.org/20260914034940.4070970-1-r772577952@gmail.com
-Link: https://drive.google.com/drive/folders/1-LzPTgOALEc3eOjmgM6oOfRKkYXJ-bnO?usp=drive_link [1]
-Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+    Allocated by task 491:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x28d/0x610
+     ocfs2_allocate_refcount_tree+0x49/0x1a0
+     ocfs2_create_refcount_tree+0x5d7/0x1630
+     ocfs2_attach_refcount_tree+0x57d/0x1100
+     __ocfs2_reflink.isra.0+0x1c4/0x1940
+     ocfs2_reflink+0x501/0x9b0
+     ocfs2_reflink_ioctl+0x6b2/0x920
+     ocfs2_ioctl+0x538/0x640
+     __x64_sys_ioctl+0x163/0x1d0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 498:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x308/0x580
+     ocfs2_lock_refcount_tree+0x672/0x9b0
+     ocfs2_xattr_set+0x72c/0x2530
+     ocfs2_xattr_user_set+0xaf/0xf0
+     __vfs_setxattr+0x143/0x1b0
+     __vfs_setxattr_noperm+0x112/0x5b0
+     __vfs_setxattr_locked+0xfe/0x2b0
+     vfs_setxattr+0x13c/0x370
+     do_setxattr+0x128/0x170
+     filename_setxattr+0x147/0x190
+     path_setxattrat+0x1ac/0x260
+     __x64_sys_setxattr+0xcb/0x140
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff888117212800
+     which belongs to the cache kmalloc-1k of size 1024
+    The buggy address is located 32 bytes inside of
+     freed 1024-byte region [ffff888117212800, ffff888117212c00)
+
+[Page and memory dumps omitted.]
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0037-v4-9f1a261dfbc341721689@gmail.com
+Fixes: 374a263e790c ("ocfs2: Add refcount tree lock mechanism.")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://lore.kernel.org/lkml/CANypQFZ05tpth0Xc33gmP6jgPnkY4VuezyHcsajV-SqCsmN_gg@mail.gmail.com/
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: Claude Code:claude-opus-5
+Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
 Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Tao Ma <tao.ma@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/quota_local.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/ocfs2/refcounttree.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -1074,10 +1074,13 @@ static struct ocfs2_quota_chunk *ocfs2_l
+--- a/fs/ocfs2/refcounttree.c
++++ b/fs/ocfs2/refcounttree.c
+@@ -348,8 +348,10 @@ ocfs2_allocate_refcount_tree(struct ocfs
+ 	return new;
+ }
+ 
++/* Callers without the refcount tree lock must request a reference. */
+ static int ocfs2_get_refcount_tree(struct ocfs2_super *osb, u64 rf_blkno,
+-				   struct ocfs2_refcount_tree **ret_tree)
++				   struct ocfs2_refcount_tree **ret_tree,
++				   bool get_ref)
+ {
+ 	int ret = 0;
+ 	struct ocfs2_refcount_tree *tree, *new = NULL;
+@@ -406,6 +408,8 @@ static int ocfs2_get_refcount_tree(struc
+ 	new = NULL;
+ 
+ out:
++	if (get_ref)
++		ocfs2_refcount_tree_get(tree);
+ 	*ret_tree = tree;
+ 
+ 	osb->osb_ref_tree_lru = tree;
+@@ -479,14 +483,12 @@ int ocfs2_lock_refcount_tree(struct ocfs
+ 	struct ocfs2_refcount_block *rb;
+ 
+ again:
+-	ret = ocfs2_get_refcount_tree(osb, ref_blkno, &tree);
++	ret = ocfs2_get_refcount_tree(osb, ref_blkno, &tree, true);
+ 	if (ret) {
+ 		mlog_errno(ret);
+ 		return ret;
+ 	}
+ 
+-	ocfs2_refcount_tree_get(tree);
+-
+ 	ret = __ocfs2_lock_refcount_tree(osb, tree, rw);
+ 	if (ret) {
+ 		mlog_errno(ret);
+@@ -2323,7 +2325,8 @@ int ocfs2_decrease_refcount(struct inode
  		goto out;
  	}
  
-+	if (list_empty(&oinfo->dqi_chunk))
-+		chunk->qc_num = 0;
-+	else
-+		chunk->qc_num = list_entry(oinfo->dqi_chunk.prev,
-+					   struct ocfs2_quota_chunk,
-+					   qc_chunk)->qc_num + 1;
- 	list_add_tail(&chunk->qc_chunk, &oinfo->dqi_chunk);
--	chunk->qc_num = list_entry(chunk->qc_chunk.prev,
--				   struct ocfs2_quota_chunk,
--				   qc_chunk)->qc_num + 1;
- 	chunk->qc_headerbh = bh;
- 	*offset = 0;
- 	return chunk;
+-	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb), ref_blkno, &tree);
++	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb), ref_blkno,
++				      &tree, false);
+ 	if (ret) {
+ 		mlog_errno(ret);
+ 		goto out;
+@@ -2558,7 +2561,7 @@ int ocfs2_prepare_refcount_change_for_de
+ 	BUG_ON(!ocfs2_is_refcount_inode(inode));
+ 
+ 	ret = ocfs2_get_refcount_tree(OCFS2_SB(inode->i_sb),
+-				      refcount_loc, &tree);
++				      refcount_loc, &tree, false);
+ 	if (ret) {
+ 		mlog_errno(ret);
+ 		goto out;
 
 
