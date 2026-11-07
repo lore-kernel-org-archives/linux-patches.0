@@ -1,52 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062511;
-	b=p+1i8dm9uF+PqysMDB1Uxhjw52Zd/0PHnQTU4pDQsUktlcHZvdqt0MkzZBHzx1AiILm9
-	 FGcyskLlxADq3jBM/xbvZcqhRjyMv8zkL3iUW95IoJ3t0HBtWKsWRaZTirjg80cTVnnKV
-	 yCrRbI3inoyK4JAAXx2R9ccDyAVTgpc/p9jlVO0LWT68Cy5dTQm2q55MCIFpMvV5J/jgd
-	 nMIybRfcuu5OmgQ3xzvLDlkFLINFRzrp8j/icHRJ49mATvXcvMhP9d8xk4oaP9No5g9eI
-	 1x8yFQf6dBONgqUzNKflUL/QCS7bGlbAEBYH4UUm31fRlbYDcWRkujvUGfz3ppLBGmQ==
+	t=1794062512;
+	b=ntpxPyxU4LQgoscIH99HmkBLRqKEmnP2ggZ4pq5W+/2TISmpcHVK2Ei3X3keyW8YWqTM
+	 IbA72bWvlka79IIlgZ/hJOSJSiauDf7D+RY6CZO8086pI/yUjO8Ufpge+n1fP/3+3IRGZ
+	 yuaRaYHTEAf6PWMN5v8+CgklA1beeC7FcKdXvGz1BaZZLFsMCQgxdCcNKDpZ8yosBsyJP
+	 bq0TFJM6mTOsFkw5hQBeRuE9jd8GY0nHicLqY/GqP42g32OIsZOZNgGq5N578Uy+a1X8p
+	 +JtpG6ZaQmkDopbu3w6jMOtgwk6Lpp1IEr+O5Cg2U0eFuIH/XJ8cY5aaJ8ONiA7GuQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L3rK9DNKdFLYP82chq2rCKFTm2Va9tkcps14XVhk+IY=;
-	b=fYo4PQC26UtUYHK3O8vlYlRswoonmRT7u7ese5qfQxypQndeFIqrNnxJxC8GqSM8xW3b
-	 7R78uutrW3bnuaIpf7M29C6HeAs+HbcsZQ7WxgHZNnciddrzmtxLyOFFBbMuPeMOWgZWg
-	 LOfI5WiYA3WRvsi3elsvxnwleEa8+C65Zy+fzmvRHAWO6o2PKusRSJku+gAt4wwG830uq
-	 +BTN/3DfOgPi9pPov5qeleoEBflvE28n0O5K/ZlCYMMSiLmXAzb7DocArfQ0MRTyRsqEV
-	 XLUquoJA/GYoetv2ZZZFL+Jve8qV7cKN9E2lCUIrPo6LgfNk19WC4htG0P7iNN9nwDQ==
+	bh=QQpY0A5fe8mK+X+491VmU1xi+5SWoly+jwu7Jntr2xY=;
+	b=sWAVH/vWoXcOB4+fEhZqdJNhGBlQIqx/UC5gYTh3kFvrNskMqr4OomxDxitC6+Ixusfw
+	 U0U/CEgs3Ru/Z2P0ZCB48uOoB88O5+So4RBNiUP0SdwjPJ3Wvcooy6aOQRR0DLRjfQAYN
+	 UQK7E/aA2/EYtIu2qSmQJ42N5s0+iE16r6NdDdcn2rFWJiDh5+LhpUTxNYA61ZH8qzBME
+	 yM0APW85OF4RCgLFgc0Rw+QxYVedhOoeOacXwLhQOBvUcCpXaFUh7nzUcJu4vPesX8bDB
+	 P7TtKj0SYroQaKHYBrfydyik2AVGreBI8SEzHYD94+9coQDdJpLAEfQTjJ6ZXuDXl4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qV1HS9ZV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wep8Y0Wv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AE7606D838;
-	Sat,  7 Nov 2026 14:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEDB606A326;
+	Sat,  7 Nov 2026 14:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qV1HS9ZV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52461F0089F;
-	Sat,  7 Nov 2026 14:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wep8Y0Wv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BCE1F0089F;
+	Sat,  7 Nov 2026 14:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062511;
-	bh=L3rK9DNKdFLYP82chq2rCKFTm2Va9tkcps14XVhk+IY=;
+	s=korg; t=1794062512;
+	bh=QQpY0A5fe8mK+X+491VmU1xi+5SWoly+jwu7Jntr2xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qV1HS9ZVh/ChisCTt0MG0N9BSA/hqej2YZpdJrbmtTPYA7A70bNcpvnQ19Z3AP9jw
-	 oHY6jQ88qNTUjff9+vS+Wmw7D2C6Tp0AAOJddS23h7WdEn4Zdn3pNmqoXc/E5JKX2y
-	 2+Fhd/GOKnxgDIFqCH8sQiP5qPgdBktRP9gKzfZ4=
+	b=Wep8Y0Wv0TDZTulejVCGA8Dt8P9UR7FZvh1JvR6F+upzhnirjGIbzd/D4M8ggghzi
+	 ci0zHiamqC6EUOFK+W7QsvggBOPHEu9UMWG3x/IWkIKXh1tpLvD4FvlL+GyPdDzhY4
+	 Wl6CUd/ReGJxaVP7v/SYZBDd2mfbZmwslWcMUjn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Yufan Chen <ericterminal@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Kees Cook <kees@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sunil Mushran <sunil.mushran@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1359/1536] hwmon: (gigabyte_waterforce) reject short input reports
-Date: Sat,  7 Nov 2026 08:56:15 -0500
-Message-ID: <20261107135036.003231022@linuxfoundation.org>
+Subject: [PATCH 6.12 1401/1536] ocfs2/cluster: initialize heartbeat regions before publishing them
+Date: Sat,  7 Nov 2026 08:56:57 -0500
+Message-ID: <20261107135037.175160642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,53 +79,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 400be69515c327ced60082b27ede902a8d93cbdb ]
+[ Upstream commit c5b7a30a5172317e1e3cba61d8c9f9c588c497bb ]
 
-The HID raw_event callback runs before HID core validates the received
-report length. waterforce_raw_event() reads command bytes and then accesses
-fixed offsets for firmware or status data without any length checks. A
-truncated report can therefore cause out-of-bounds reads and update hwmon
-state with unrelated data.
+A region on o2hb_all_regions must have an initialized config item and
+name. o2hb_heartbeat_group_make_item() currently links the zeroed region
+under o2hb_live_lock, drops the lock, and only then initializes hr_item.
+The lock therefore protects the list without protecting initialization
+from readers of the published item.
 
-Require every report to contain the firmware response fields, which also
-covers both command bytes. After identifying a status response, require
-the byte at the highest status offset before accessing its payload.
+With global heartbeat enabled, a DLM_QUERY_REGION from the current
+joining node can pass the existing-domain and protocol checks while a
+configfs mkdir creates another region. The DLM locks are not taken by
+the constructor, and the network worker does not take the configfs
+subsystem mutex. The following ordering is possible:
 
-Fixes: 42ac68e3d4ba ("hwmon: Add driver for Gigabyte AORUS Waterforce AIO coolers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260927084959.893708-1-yaojiale02@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  Configfs mkdir                     O2net receive worker
+  --------------                     --------------------
+  Allocate reg
+  Lock o2hb_live_lock
+  Link into o2hb_all_regions
+  Unlock o2hb_live_lock
+                                     dlm_query_region_handler()
+                                       dlm_match_regions()
+                                         o2hb_get_all_regions()
+                                           Lock o2hb_live_lock
+                                           Copy 32 bytes from NULL name
+                                           Unlock o2hb_live_lock
+  config_item_init_type_name()
+
+The query thus dereferences NULL. Initialize hr_item before linking the
+region so the existing list lock also orders name initialization before
+any reader. Reject a failed name allocation, since the initialization
+helper does not propagate that error.
+
+Use config_item_put() on initialized constructor failures to release the
+name and respect references retained by o2hb_region_pin(). Initialize
+the list heads, mutex and delayed works needed by o2hb_region_release()
+before any such put, and leave the list node self-linked after rollback.
+Keep the existing handler drain before removing a failed published item.
+
+KASAN report as below:
+
+    ==================================================================
+    BUG: KASAN: null-ptr-deref in o2hb_get_all_regions+0xbb/0x1f0
+    Read of size 32 at addr 0000000000000000 by task kworker/u16:1/14
+
+    CPU: 2 UID: 0 PID: 14 Comm: kworker/u16:1 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: o2net o2net_rx_until_empty
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     kasan_report+0xe0/0x110
+     ? o2hb_get_all_regions+0xbb/0x1f0
+     kasan_check_range+0x105/0x1b0
+     __asan_memcpy+0x23/0x60
+     o2hb_get_all_regions+0xbb/0x1f0
+     dlm_query_region_handler+0x4c2/0xc20
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? kvm_clock_get_cycles+0x31/0x60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     o2net_rx_until_empty+0x1a50/0x3200
+     ? reacquire_held_locks+0xdd/0x200
+     ? __pfx_o2net_rx_until_empty+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    ==================================================================
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0079-v5-f931a29339cadc0a2a70@gmail.com
+Fixes: 536f0741f324 ("ocfs2/cluster: Track number of global heartbeat regions")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Yufan Chen <ericterminal@gmail.com>
+Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Sunil Mushran <sunil.mushran@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/gigabyte_waterforce.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ocfs2/cluster/heartbeat.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hwmon/gigabyte_waterforce.c b/drivers/hwmon/gigabyte_waterforce.c
-index 4eea05f8b569c..f4d0376dd68e0 100644
---- a/drivers/hwmon/gigabyte_waterforce.c
-+++ b/drivers/hwmon/gigabyte_waterforce.c
-@@ -257,6 +257,9 @@ static int waterforce_raw_event(struct hid_device *hdev, struct hid_report *repo
- {
- 	struct waterforce_data *priv = hid_get_drvdata(hdev);
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index ca8c99b1cec01..94743cef12f13 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -2124,6 +2124,18 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	}
+ 	reg->hr_node_num = O2NM_MAX_NODES;
  
-+	if (size <= FIRMWARE_VER_START_OFFSET_2)
-+		return 0;
++	INIT_LIST_HEAD(&reg->hr_all_item);
++	mutex_init(&reg->hr_arming_mutex);
++	reg->hr_stopping = true;
++	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
++	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
++	INIT_LIST_HEAD(&reg->hr_handler_list);
++	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
++	if (!config_item_name(&reg->hr_item)) {
++		ret = -ENOMEM;
++		goto put_item;
++	}
 +
- 	if (data[0] == get_firmware_ver_cmd[0] && data[1] == get_firmware_ver_cmd[1]) {
- 		/* Received a firmware version report */
- 		priv->firmware_version =
-@@ -269,6 +272,8 @@ static int waterforce_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 	spin_lock(&o2hb_live_lock);
+ 	reg->hr_region_num = 0;
+ 	if (o2hb_global_heartbeat_active()) {
+@@ -2132,26 +2144,19 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 		if (reg->hr_region_num >= O2NM_MAX_REGIONS) {
+ 			spin_unlock(&o2hb_live_lock);
+ 			ret = -EFBIG;
+-			goto free;
++			goto put_item;
+ 		}
+ 		set_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	}
+ 	list_add_tail(&reg->hr_all_item, &o2hb_all_regions);
+ 	spin_unlock(&o2hb_live_lock);
  
- 	if (data[0] != get_status_cmd[0] || data[1] != get_status_cmd[1])
- 		return 0;
-+	if (size <= WATERFORCE_TEMP_SENSOR)
-+		return 0;
- 
- 	priv->temp_input[0] = data[WATERFORCE_TEMP_SENSOR] * 1000;
- 	priv->speed_input[0] = get_unaligned_le16(data + WATERFORCE_FAN_SPEED);
+-	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
+-
+ 	/* this is the same way to generate msg key as dlm, for local heartbeat,
+ 	 * name is also the same, so make initial crc value different to avoid
+ 	 * message key conflict.
+ 	 */
+ 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
+ 		name, strlen(name));
+-	mutex_init(&reg->hr_arming_mutex);
+-	reg->hr_stopping = true;
+-	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
+-	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
+-	INIT_LIST_HEAD(&reg->hr_handler_list);
+ 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
+ 			sizeof(struct o2hb_nego_msg),
+ 			o2hb_nego_timeout_handler,
+@@ -2174,10 +2179,13 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
+ remove_item:
+ 	spin_lock(&o2hb_live_lock);
+-	list_del(&reg->hr_all_item);
++	list_del_init(&reg->hr_all_item);
+ 	if (o2hb_global_heartbeat_active())
+ 		clear_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	spin_unlock(&o2hb_live_lock);
++put_item:
++	config_item_put(&reg->hr_item);
++	return ERR_PTR(ret);
+ free:
+ 	kfree(reg);
+ 	return ERR_PTR(ret);
 -- 
 2.53.0
 
