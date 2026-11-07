@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062424;
-	b=2xTs38bF64AcM+TaLWlmEl8MGpFXdEN0fRz/vnlQDUV9fPRzkvIulhhMrWqYaPrOzux/
-	 NPfAFPv9CBU1nLN4/m3DW693JuMhGOhWtTWlkGXy002Zg9Nap3IYzMfqTWupaAmxpPKey
-	 Kz9ny135Oz1UccNXNJ2luBYP6VBNhu9ZHdN+79pQParPjw1G461tba2bOz0yYno+g4ena
-	 0qL39wLzgmj0Yald7W6ECTXyZwHfMWWmQLMJ3LDFEcGxzz++aVJdy/yQSZzPG8EALLfex
-	 FlXkUbf42RyPxUTG/mVSWB/D14DlPCrGLMGecK4LlVdMRtb5H2/OBdPxCfBKr2xjn7Q==
+	t=1794062425;
+	b=XXUYPTzqnnpE0bVyfNOmYPpOW8H4rSLvDfqz90fIluNi+jixGSO/+kHVr8ZwHJtxZBlC
+	 Wk59rjMBz5yhtmcOvCkXZyYHa401l+UHA3Fg1oaheNv/6cMzp82uwwBmAWahlHDWgL7dO
+	 CjNGu3f7qTmrPGMrf6lm3sqoJjbMkTWog+y1m6yNjhoRpTddNVL0FMS/fJpAM1RSTmRkV
+	 43b8ArNMvNs+6TXcBOOdhZKMrotRH7hB96VHRW3/Ktu2AsQG1aotYdUcKKMa6dAiAE0D4
+	 FB8Lc3AADCN0yE9KcprX0VYBg2No8qOxAHrNX9sB9OJa8HVZ60cGMG2N73UTYjXuSJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062424;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062425;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7/BQLCSaN2Wny9L8r8ApDvzh7C91Q8dNIPfBxBsKt8E=;
-	b=3wkn5VsI7PUByE/SjptT6fgdTIR/lG2kn/8+R4eNsyWd7bhMmuYeSgxaq7nP4C24ywiU
-	 goJKcKUCgT7MybZ8F+DoIHq/vmh0EV+PN2F6LDjLZXSpbhELyDtzOkyNAjAqDHYsifz+C
-	 iGELhehu5aXdO3yW4tGnOhpMv+1Un8ErDYmrHYlVeEtnkmPH8UAo6/Vhl2eDbHvdnf+PK
-	 G5iaBKBSxfcMIouKRpN1c1W4wdIrWngBNcmOj0vY8gNOHOmqKlK8RRzSX3+OyBGCOd4x9
-	 YCIQA1LuHuJcPWBXK4thn+lg11cNenOGq80iuOtUiF8fRQ11m/4+UCK4ZBoGdCJM8ZA==
+	bh=x0A7PqvCQTyFhiiiU0jKacmfXw/JBuN48MOqBYg4m5I=;
+	b=LhaCN0EPxeTOinji687RcVk2KuVdBkAk1eLOw12uqZO0ZjjRcpkPgMayh/FD2VWO6TSo
+	 njL+bA+Ck2iCocjju7m7JTYXwrBZwgk6RyWqK/pu1aS5hicMiHFtTeQYb+V+1tj3A6H7r
+	 q9Ed8K7L9/Wu0Xo4B/QCw3CzlYWw97tCfHqlPYH7KtqAL3oaF+5s0fGau8ivD0M9tFMWn
+	 yQM4y1nbsld5bblwLJj0GvgeqAHE78Ft3DJrQXv6ywynaEHTGG6Z8bVOmNIL07j4akiQQ
+	 HatMlOo9m5+qtU1m8mwsXx/H2fpReYgNo/pcxmE9NggI/nZgj+oXhZdRia3AnjkL41Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AcFzEh09;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B2IQTHH/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3972460A261B;
-	Sat,  7 Nov 2026 14:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6906760A261B;
+	Sat,  7 Nov 2026 14:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AcFzEh09
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB45E1F0089F;
-	Sat,  7 Nov 2026 14:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B2IQTHH/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180D61F0089F;
+	Sat,  7 Nov 2026 14:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062424;
-	bh=7/BQLCSaN2Wny9L8r8ApDvzh7C91Q8dNIPfBxBsKt8E=;
+	s=korg; t=1794062425;
+	bh=x0A7PqvCQTyFhiiiU0jKacmfXw/JBuN48MOqBYg4m5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AcFzEh094rofr71ZlBZ0erMBB+OnhQzRoTHum0oUPZxIPK7VBIsql0WiyNL5KqYaR
-	 bRAd+DQopsniOhdZToCOsXvEqbgrzN4ewGkjC0xQhgn/ZP7WQ61nZ+ERRpsmPK0XDJ
-	 Vk6D9nQPe2K2S/P+nYdtTuVz688V76eq+mcSPppc=
+	b=B2IQTHH/gZeCpsIKjmm2iIKHWeU1e/FhkLNs6M6XCooZv3b/Jitj7Z0pBRbKjH8hm
+	 +7y58i0RYlnqOWaiEOzqulAK9QEm+aeoNs0bvjp4x0ghCUilPii4gAnjw5Z5MUcmOR
+	 kduL0A3NGuHJeE/52iAFL/83fVsjk0TcouYyKAE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladyslav Tymoshchuk <tvlad744@gmail.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Quanye Yang <quanyeyang@proton.me>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1320/1536] ASoC: qcom: q6apm: reset the hw pointer with the fragment queue
-Date: Sat,  7 Nov 2026 08:55:36 -0500
-Message-ID: <20261107135034.882422555@linuxfoundation.org>
+Subject: [PATCH 6.12 1338/1536] mptcp: reset msk state on early connect failure
+Date: Sat,  7 Nov 2026 08:55:54 -0500
+Message-ID: <20261107135035.397502100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,49 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladyslav Tymoshchuk <tvlad744@gmail.com>
+From: Quanye Yang <quanyeyang@proton.me>
 
-[ Upstream commit 0337b8129cf676b8eb767b2a1f312955760a5460 ]
+[ Upstream commit 29afe67082b2d33ab2e90c56c337235d725f023f ]
 
-On every prepare in queue mode, q6apm_dai_prepare() frees and allocates
-the fragments again, and q6apm_alloc_fragments() resets dsp_buf, so the
-first buffer queued after it is the first one of the ring. The hw
-pointer that q6apm_dai_pointer() reports is left as it was.
+mptcp_connect() can fall back before the subflow SYN is sent, for
+example when the netns is in an MPTCP blackhole, token allocation fails,
+or MD5SIG is in use. If the subsequent subflow connect() fails
+immediately (EAFNOSUPPORT, ENETUNREACH, ...), __inet_stream_connect()
+returns while the socket is still SS_UNCONNECTED and never calls
+->disconnect(). This was reported by Clashiko [1].
 
-q6apm-dai used to keep its own position and cleared it in prepare.
-Since commit a93dad6f4e6a ("ASoC: q6apm-dai: make use of
-q6apm_get_hw_pointer") the position comes from the hw pointer, so a
-stream that is prepared again, e.g. to recover from an xrun, reports
-the position of the previous run until the DSP returns its first
-buffer, while ALSA has reset its own pointer to 0.
+The error path only dropped the token and moved the msk back to
+TCP_CLOSE. MPTCP_FALLBACK_DONE, allow_subflows and
+request_mptcp were left as after early fallback, so a later
+connect() on the same fd stayed TCP-only.
 
-Reset the hw pointer together with dsp_buf.
-
-Fixes: a93dad6f4e6a ("ASoC: q6apm-dai: make use of q6apm_get_hw_pointer")
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/633 [1]
+Fixes: 0235d075a592 ("mptcp: mark as fallback even early ones")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Vladyslav Tymoshchuk <tvlad744@gmail.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261014162703.10172-3-tvlad744@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Quanye Yang <quanyeyang@proton.me>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-1-932c9b182fc7@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/protocol.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 50a496e665f85..426c1429d01be 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -223,6 +223,7 @@ int q6apm_map_memory_regions(struct q6apm_graph *graph, unsigned int dir, phys_a
- 	mutex_lock(&graph->lock);
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 00997357d4bcb..ed41368392c95 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -4012,9 +4012,16 @@ static int mptcp_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * subflow_finish_connect()
+ 	 */
+ 	if (unlikely(err)) {
+-		/* avoid leaving a dangling token in an unconnected socket */
+ 		mptcp_token_destroy(msk);
+ 		mptcp_set_state(sk, TCP_CLOSE);
++
++		spin_lock_bh(&msk->fallback_lock);
++		msk->allow_subflows = true;
++		msk->allow_infinite_fallback = true;
++		clear_bit(MPTCP_FALLBACK_DONE, &msk->flags);
++		spin_unlock_bh(&msk->fallback_lock);
++
++		mptcp_subflow_ctx_reset(mptcp_subflow_ctx(ssk));
+ 		return err;
+ 	}
  
- 	data->dsp_buf = 0;
-+	atomic_set(&data->hw_ptr, 0);
- 
- 	if (data->buf) {
- 		mutex_unlock(&graph->lock);
 -- 
 2.53.0
 
