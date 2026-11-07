@@ -1,60 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064452;
-	b=oSN/0oRv8uW/wWXMilqzsglqp3R76PCnSxS3goB4h1FCjKp/y+eht3IDBiaBmJ6e/CtF
-	 5CYoRqaY8Vpg3GAXw5EdW+c76gFn21QwGmIvqAnkXIY6fYq9UMO+AHQ31ZHjvJnkR0L+u
-	 IPRrbJ9cJISFhGpoNvJSjJdyf8eM/yWB4whjMIU8dlFaAswNCmfz/Dch5hKRUmjrtk4rV
-	 hD7xTj8ze+zzF4WJE+JLfQxUlDDG15gWRaAsPgkF7D27oVtqitVLH5/acgoP8P6vuqr5q
-	 HEF0AEjxL8tL+QMZe9hXXBYoR8Wvd6A8zr23MpO4474SY2iXlD7ac+Uo3aRlJ3lhraw==
+	t=1794064453;
+	b=bEN9MqGK0cCicZYLID9CQRTZ0Pn3WcEio2sVx5FRwgBICBp1C52f7jFwgGkUFidyHEfw
+	 1Hn4iuhTD2RY7nw7tlRkPocBydPO67H8T8/CqQkmCLY4Mb+6TaOLDpx0U6VBs4EzwltOA
+	 YQo07R5wGKrlPCpeVZhhtpwXJHu5pYATAOqSucV0cHn6tHDWhhmMn/cN7WAb4mwNCw+rX
+	 09tMQGddHOkT80E8tHyH3ZzkTsXkWxlZd/HbbCsP5r0CT+5kg3qh0nUDDRbrVbIUklCn3
+	 IZsPvxGag3k7vCN579X7oglvC0m6RdtGlrWXfQ8h2iq3swj5vTpZUEaH40Dqi9ujJRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064453;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KHfWLVZuEZ9tbL1pFZX84Ol3km1Fjoh2YY4JKMp48R0=;
-	b=tDhrr4zQ1Hwx9G7UWT1j/ChhvsUsoiZchKU6EIcV7bzoVZWTd6DnsaKAS3ivqVe6LXCu
-	 1/fp603linx5eTmzSA8caPcBbDWPsAsEIXlfPz6nPPeAfLX1GwvJGJbXT5bqqkkU1gwLz
-	 0irohiwPmUIvjfjz9ZRo8crbtF0d4M7iOOPCf/mVCOTqOb7ZNZ2MrHLRbJWDHjnuchVVZ
-	 VYL2T2vrRzLmb1Zj8WWEEDSpTdhAfho+H/WSqyWdogo8XpZjaU/leW3MMoUGg98KB8sfy
-	 1eqBQbpGkhfRWASDkW8oBSyqBOVWhYkQksFd1EbJkKOFUfMAo2encUkFLZ+VX0CbDjA==
+	bh=rP/3nVExHH5ZCWxBLn5e2X/6zMYMOC1JMC8MBHxb5Lg=;
+	b=BYMxK+rWF6i1BVMZRR1usc/EC4g3PT2XbSmKKdnw48TNOm1rYwiL+y6stD85zKKsvkfs
+	 XDYl89I9GQlDgbYYK3RlBYLKqcOkbaFN6XCQNZnu5MjDJruDaFeBCbnLEYMmuPE3jjh1A
+	 P7J/zEt6t+5zhaboB51HaL5LJLM+4lJSMt/JLxg8dMv0ULui8dm1fUugdISgzB5omK0y4
+	 53ZMqHrQ5q5S3CunLbEMFP3a/sDvl6QrhFFhoBMDTEEEQL7alP0b5ltlv70J7LBrqq09i
+	 jdCGarb9/H1syKs8MIn1HcN9ilsWcuQgiVBl09u0q9+S0s/8z1mbfXBlKOntoufVTXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImKZtGCI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbsxUZKN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4968606EEB5;
-	Sat,  7 Nov 2026 15:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D2C606EEB5;
+	Sat,  7 Nov 2026 15:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImKZtGCI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E951F008AB;
-	Sat,  7 Nov 2026 15:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbsxUZKN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858BD1F008A5;
+	Sat,  7 Nov 2026 15:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064451;
-	bh=KHfWLVZuEZ9tbL1pFZX84Ol3km1Fjoh2YY4JKMp48R0=;
+	s=korg; t=1794064452;
+	bh=rP/3nVExHH5ZCWxBLn5e2X/6zMYMOC1JMC8MBHxb5Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ImKZtGCIXKcedhwTAKjsLAZXHaqZ3kbLxhxQfyUyg/vVpG58goxOXjhoRllkxldwi
-	 BD0cXsA9IpbMpTLkWV+8YE+LfMZzHm6z6twqk74b6h/TiSq+TGfuzgPWcGSNPa+MmC
-	 yGoWO+GxWGhDXWmadVTrxKws4mwWDuZprjry61x0=
+	b=JbsxUZKNF4tYHwbIrQDQ8lAq0L6prlECYoeGVlC6cjtUqUPfRKZ1Q7slgU6j4QAJi
+	 uHcs9hbbBpUoRieysDQoxhCXiFRBcKKSQ1zY4iXBROrGQVVca2MgDyqkxJfiuXZsTL
+	 ebPeW30YW3VTUNDtwccWfCdkq5dEf3snbkwFFeMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Xi <xiqi2@huawei.com>,
+	Hao Jia <jiahao1@lixiang.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Brian Geffon <bgeffon@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Minchan Kim <minchan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0494/1257] mm/page_isolation: guard compound_order() against racing
-Date: Sat,  7 Nov 2026 08:46:30 -0500
-Message-ID: <20261107134953.081927084@linuxfoundation.org>
+Subject: [PATCH 7.3 0495/1257] zram: fix idle age_sec underflow in idle_store()
+Date: Sat,  7 Nov 2026 08:46:31 -0500
+Message-ID: <20261107134953.107048709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -76,75 +72,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Xi <xiqi2@huawei.com>
+From: Hao Jia <jiahao1@lixiang.com>
 
-[ Upstream commit 4c767c5dd9bc3521fed11e6fe1d52621fe5abf7b ]
+[ Upstream commit 59042a88efe1d5ddc457f192f4c6368909693133 ]
 
-The PageCompound branch reads compound_head() without holding a reference.
-A racing split or free can cause compound_head() to return a stale
-pointer, and compound_nr() reads the order from that stale head, leading
-to out-of-range shifts and making the skip distance meaningless.
+After commit 2e8ff2f51dde ("zram: use u32 for entry ac_time tracking"),
+idle_store() computes the idle cutoff as:
 
-Read the order explicitly with compound_order() and validate it is within
-MAX_FOLIO_ORDER before shifting.  Also verify the derived head_pfn against
-the legitimate pfn: the head must not be past pfn, must be aligned to
-nr_pages, and pfn must fall within the compound page.  Bail out with
--EBUSY if any check fails.
+	cutoff = ktime_sub((u32)ktime_get_boottime_seconds(), age_sec);
 
-Link: https://lore.kernel.org/20260825120549.966271-3-xiqi2@huawei.com
-Fixes: b2c9e2fbba32 ("mm: make alloc_contig_range work at pageblock granularity")
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Because the left operand is cast to u32, when age_sec exceeds the current
+uptime the subtraction wraps modulo 2^32 and the huge result is
+zero-extended into the s64 cutoff.  mark_idle() then marks every entry as
+idle instead of matching nothing.  For instance, running
+
+	echo 86400 > /sys/block/zramX/idle
+
+on a machine up for only two minutes marks all newly written pages idle
+and hands them to idle writeback and recompression.
+
+No slot can have been accessed before the system booted, so an age_sec
+that reaches back past uptime cannot match any slot.  Return early in that
+case, without walking the table or taking any slot locks.
+
+Track the cutoff as time64_t rather than ktime_t.  Both cutoff and ac_time
+are boot-time values in seconds, so a plain arithmetic comparison against
+ac_time in mark_idle() is correct and no ktime helpers are needed.
+
+Link: https://lore.kernel.org/20260828083149.45760-1-jiahao.kernel@gmail.com
+Fixes: 2e8ff2f51dde ("zram: use u32 for entry ac_time tracking")
+Signed-off-by: Hao Jia <jiahao1@lixiang.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Minchan Kim <minchan@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_isolation.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/block/zram/zram_drv.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/mm/page_isolation.c b/mm/page_isolation.c
-index e4ee998c00f3b..5aaad037384e4 100644
---- a/mm/page_isolation.c
-+++ b/mm/page_isolation.c
-@@ -419,10 +419,28 @@ static int isolate_single_pageblock(unsigned long boundary_pfn,
- 		if (PageCompound(page)) {
- 			struct page *head = compound_head(page);
- 			unsigned long head_pfn = page_to_pfn(head);
--			unsigned long nr_pages = compound_nr(head);
-+			unsigned int order = compound_order(head);
-+			unsigned long nr_pages;
-+
-+			/* compound_order() is racy. Cap it at MAX_FOLIO_ORDER. */
-+			if (order > MAX_FOLIO_ORDER)
-+				goto failed;
-+
-+			nr_pages = 1UL << order;
-+
-+			/*
-+			 * compound_head() is also racy, so the derived head_pfn
-+			 * needs additional checks to make sure it is valid.
-+			 * Otherwise, just fail the check. pfn comes from
-+			 * __first_valid_page() as a legitimate PFN, so use it to
-+			 * check head_pfn.
-+			 */
-+			if (head_pfn > pfn || !IS_ALIGNED(head_pfn, nr_pages) ||
-+			    pfn - head_pfn >= nr_pages)
-+				goto failed;
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index a9b3bb1d3bef3..4ba0f77b2abd8 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -415,7 +415,7 @@ static ssize_t mem_used_max_store(struct device *dev,
+  * Mark all pages which are older than or equal to cutoff as IDLE.
+  * Callers should hold the zram init lock in read mode
+  */
+-static void mark_idle(struct zram *zram, ktime_t cutoff)
++static void mark_idle(struct zram *zram, time64_t cutoff)
+ {
+ 	int is_idle = 1;
+ 	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
+@@ -439,7 +439,7 @@ static void mark_idle(struct zram *zram, ktime_t cutoff)
  
- 			if (head_pfn + nr_pages <= boundary_pfn ||
--			    PageHuge(page)) {
-+			    PageHuge(head)) {
- 				pfn = head_pfn + nr_pages;
- 				continue;
- 			}
+ #ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
+ 		is_idle = !cutoff ||
+-			ktime_after(cutoff, zram->table[index].attr.ac_time);
++			cutoff > zram->table[index].attr.ac_time;
+ #endif
+ 		if (is_idle)
+ 			set_slot_flag(zram, index, ZRAM_IDLE);
+@@ -453,21 +453,26 @@ static ssize_t idle_store(struct device *dev, struct device_attribute *attr,
+ 			  const char *buf, size_t len)
+ {
+ 	struct zram *zram = dev_to_zram(dev);
+-	ktime_t cutoff = 0;
++	time64_t cutoff = 0;
+ 
+ 	if (!sysfs_streq(buf, "all")) {
+ 		/*
+ 		 * If it did not parse as 'all' try to treat it as an integer
+ 		 * when we have memory tracking enabled.
+ 		 */
++		time64_t uptime;
+ 		u32 age_sec;
+ 
+-		if (IS_ENABLED(CONFIG_ZRAM_TRACK_ENTRY_ACTIME) &&
+-		    !kstrtouint(buf, 0, &age_sec))
+-			cutoff = ktime_sub((u32)ktime_get_boottime_seconds(),
+-					   age_sec);
+-		else
++		if (!IS_ENABLED(CONFIG_ZRAM_TRACK_ENTRY_ACTIME) ||
++		    kstrtouint(buf, 0, &age_sec))
+ 			return -EINVAL;
++
++		/* No slot can be older than the system uptime */
++		uptime = ktime_get_boottime_seconds();
++		if (age_sec >= uptime)
++			return len;
++
++		cutoff = uptime - age_sec;
+ 	}
+ 
+ 	guard(rwsem_read)(&zram->dev_lock);
 -- 
 2.53.0
 
