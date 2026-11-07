@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063327;
-	b=reGhtouiggna/31qWc3Mne0eU3YXgW/1TJAY159ggotP4q/rNY5pXvybUBWqnXm7POXG
-	 JUkgk8sJTsUKkefeKfo5MaZiZKJ5bYU6FeG46/OvyBzXXRbQsyh11USEJ/wdKgeMFGvxX
-	 Niw2cKPspSyWHL2K6B41NgeacPyo0KwwqH8TLCYRrR6j5VZiPDy2bArqEaX/eqVy/Wmv1
-	 8QEh74ZlfuDyqXB0YDQhBtLe0DgMoXxFdL/Jc197bN0guys1TDMkJCOI567pQcMSdXCXm
-	 09/rAxmSbXE3hBisKFCL3uN2/f5MSEcEeqIVwX8zlVTsml+IpPAsD/1DzZcX2zaVo8Q==
+	t=1794063329;
+	b=w6wWrm5ZgDgNn99RUxvabJwvRk71jjVlvflklYROBuxgzEU/6SQ/RHxyibx/QSlmgEGJ
+	 AcbNIS93LxlzlNmOm7A2ispw46owe2bA/95HtR/QRezND3A70iZwPlA93H3hImkAWThSV
+	 Uu37kHx/rjN7XB9Y/0giMXBlCytpYrZB+P6cOQpTn0uLKMetLRLKtsOHINVlsMvT1DKQJ
+	 wFB9f58Udu057cnB6YG27HMAZlCJ1VjI48Y2lKKvRkrVBpKNBKsPWRKTwnMKDn52dVaVe
+	 TY+y2x+V90quVnGLWOkP1jCZtMmNvTUZHOdaiJfzMrDPgdD29+CSlGlUIgmfT66Ps4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063327;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SN/491jxQ6PxBRrIdy357ci/BrzC75P4R6mUKTK3ms8=;
-	b=eXYHEoeQNt88uvTPCw5KksbnMJdQSknC1cwAaaP/pbaPI7rfSbHc9d5pY+E6B7cCwnSz
-	 YQQjWq1IuMwMH8MTsaSy4ESJwLGW+09GhG1sRIkZaNoDoibqR5MsBlVlDjVaHBWvKgGbs
-	 e0lpaEJt5I7yCzhRMTeJIlje+zEdhDhvivDMWwguWNffRr2QZQlLZCTZb22OVlSEgdyNh
-	 ulcuR9hXp1HPY8lq8LMi020Td2uTHf2fdmT3kT6lL6MKGVv0nx4TRGcuOGbi1tKgL0lIT
-	 PBhagoClJZVkYCILzd4FJbE/mTquylCZK6Mdwmw7mtKyu1gtmsW/cIMj1X5B9tkBdvA==
+	bh=zbwnI6XoJHF+S4cPSGeHyWlDJdbF7wX3vQdmsikr3qQ=;
+	b=dG1iFm9mOB4TyXGUc8M2acQX5/GOOxl0v8lpqVm7vp6Iovg7bFmjQcZZJ6bPr7faIUex
+	 ca8tHUxXGO9Q0UreEPwX+J/O58q/QYFRvMmDLUntNpDwz7vHLcITg/bQEBUEzCRFFnX53
+	 kwQoy1PFyd1gpP2fonM2bZL84aoV3/8GHbyXa912rOaiprJDczJNSgB2/h1kSFwjxl9uv
+	 /45fW6aO9BWxE9PIFyGwKMr9Z5i8VrqSozkIKccUNojhe7J6KaxnIrRBdXmyPI2nyQAwx
+	 +JIL0U6O94/Up8UIOarClr0JnA9HISNQEBWGEMqABI45d7IzCEUXKqRqE9BOmvwm12Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x03IpBrG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YXjnFMG6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896C4606D810;
-	Sat,  7 Nov 2026 14:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF82E6082BCB;
+	Sat,  7 Nov 2026 14:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x03IpBrG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FE91F008A1;
-	Sat,  7 Nov 2026 14:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YXjnFMG6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D65F1F008A2;
+	Sat,  7 Nov 2026 14:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063327;
-	bh=SN/491jxQ6PxBRrIdy357ci/BrzC75P4R6mUKTK3ms8=;
+	s=korg; t=1794063328;
+	bh=zbwnI6XoJHF+S4cPSGeHyWlDJdbF7wX3vQdmsikr3qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x03IpBrGpjYaY7vqBdgO5IsPkhUo3RumBanSk5EO6EsHNGN3+z8hVoZ8oz1Fmvhrj
-	 2UMa9KrIlxbskTZYbmeZgkuRo2ACBExb+PUsIU4mJAI+lVlECdcTlo2PiCszCE4q5p
-	 4n7aojOSdRmlKc/f5JEELqpIVhD3Z8PMpxl1nH1o=
+	b=YXjnFMG6JnDOad/oypp/r21s46EEXPJ6VXB2RBdivREyYJy9xXxuG7gcHjoiUeirV
+	 rxSH6zVQwRrFY05vw6MoGtQnkKFa6lEuZzWqdW41aRgUYWW1cz9WrnLDNhXl0gDHNM
+	 YPwO03N8uu8FiN/LgXkUoN0u1B5EWmP+gC1d3yP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Luo Jie <jie.luo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
 	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 511/869] clk: qcom: ipq-cmn-pll: Assign .num before accessing .hws
-Date: Sat,  7 Nov 2026 08:53:13 -0500
-Message-ID: <20261107134910.900208286@linuxfoundation.org>
+Subject: [PATCH 6.18 512/869] clk: qcom: ipq5018: add 24MHz rate for USB UTMI clock
+Date: Sat,  7 Nov 2026 08:53:14 -0500
+Message-ID: <20261107134910.928235780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -72,55 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-[ Upstream commit 231bbd135772390522be3656b34b49ea3039eccf ]
+[ Upstream commit 75e893169fc5c9ec28d5f9dffde40ce29b59a5de ]
 
-hw_data->hws[] is annotated with __counted_by(num), so hw_data->num
-must hold the element count before the array is accessed.
-ipq_cmn_pll_register_clks() assigns it only after storing the fixed
-rate output clocks and the CMN PLL, and the unwind loop under
-unregister_fixed_clk reads .hws[] with .num still zero. Both are
-out-of-bounds accesses under CONFIG_UBSAN_BOUNDS.
+The USB UTMI reference clock must operate at 24 MHz, as recommended
+by the hardware team, for reliable USB operation.
 
-Move the assignment to right after the allocation.
+Validation showed that USB 3.2 hub enumeration with USB 2.0 devices
+fails when the UTMI reference clock is not configured to the required
+24 MHz rate. Configuring the UTMI reference clock to 24 MHz to resolve
+the enumeration failure and ensure successful device detection.
 
-Fixes: f81715a4c87c ("clk: qcom: Add CMN PLL clock controller driver for IPQ SoC")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Reviewed-by: Luo Jie <jie.luo@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/AS8P251MB000187BDFAD98A21F4C356E9C8BD2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Link: https://patch.msgid.link/20260921-ipq_clk_changes-v1-1-d242e3d49648@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/ipq-cmn-pll.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-ipq5018.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
-index 369798d1ce427..e01c8ccf17311 100644
---- a/drivers/clk/qcom/ipq-cmn-pll.c
-+++ b/drivers/clk/qcom/ipq-cmn-pll.c
-@@ -351,6 +351,8 @@ static int ipq_cmn_pll_register_clks(struct platform_device *pdev)
- 	if (!hw_data)
- 		return -ENOMEM;
+diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
+index e2d01cdc39c96..78ccd70199fc9 100644
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -1270,6 +1270,7 @@ static struct clk_rcg2 usb0_master_clk_src = {
+ };
  
-+	hw_data->num = num_clks + 1;
-+
- 	/*
- 	 * Register the CMN PLL clock, which is the parent clock of
- 	 * the fixed rate output clocks.
-@@ -377,7 +379,6 @@ static int ipq_cmn_pll_register_clks(struct platform_device *pdev)
- 	 * is configured to 12 GHZ by DT property assigned-clock-rates-u64.
- 	 */
- 	hw_data->hws[CMN_PLL_CLK] = cmn_pll_hw;
--	hw_data->num = num_clks + 1;
- 
- 	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, hw_data);
- 	if (ret)
+ static const struct freq_tbl ftbl_usb0_mock_utmi_clk_src[] = {
++	F(24000000, P_XO, 1, 0, 0),
+ 	F(60000000, P_GPLL4, 10, 1, 2),
+ 	{ }
+ };
 -- 
 2.53.0
 
