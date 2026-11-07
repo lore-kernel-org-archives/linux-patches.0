@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060921;
-	b=Lu9Gzr5RC6l3rDGcu5UZ7BLyxCgeG/Njun0UAGzchV0ms8+fRMk0nLnxOgC+rVqiMNf9
-	 zIhQpgo9DTj6UBkb/zFxBMGiAG/beq1tXAGYadXKjDqipb4ZrMn/JOW5Hde222BE/zWNv
-	 T3J8AvkadQwVyteM471JSDXC5fa+0Xs2BTCu3u68n/0JtroJd+7tpKzR7oTzqhaLmt7eR
-	 3S/rSDHOXh7CPGza4v8jz5KvtB4KF2NW3BSYCnbFNgjzBkONLTjlRXkFaI758LMOefYpu
-	 WUAAwtfTiAR1lppOcjjZ7fcaMY3A66HzlQ2o5wfdHEC3iI5RojpaFHdfLXuwMWktXTA==
+	t=1794060922;
+	b=5tlNUJcwSa00F6bp5Ehg/klba8+QDJk/X3/kvDF2AeFrVlRjUWlxuKTbZ8oO9hAn5zSD
+	 mmgxeKCag5keA6fQtzT5S1Y1yr6NdeWiYSRvf/bmU3ldV+y6ruEV+sQy1nJE6mPh8/t0f
+	 RZR6fzcTEbgxh8iriCsZ/bd9Zj2Ki18t2E4Yc3b15wtFJr09e7EFG1Azsv47x8FdY8bmX
+	 emwgNhtXTBWjCMkKUvCQJRxaNR2JGvMF2jpUdEVDi03l5ldEn6HpeBZ+OB90THgTrfd8T
+	 Ll9XCjo+BgXUivTNuuqVdCi+dd1CW2vre31NxQLnkN4gPr52r5PDpA932vh3cadpEVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d0D8rEQiaA41kiH/BPJtsUv6p/coTf5cjolRz3+02hE=;
-	b=XesGiFPxUerURUknWcpCqdl3Sx7pyN8tr57kXr8yXIiW6lN/gYuFc/DhzcIdnxOW5AQV
-	 kyk6RX2Lqgs4Gr0y3cno6MJv05FisQCCugJptN7/qTl1KNAgaZig7hJqu37BF+gE5Rk36
-	 af4tJlrpRbhxJq4cReblE6WT4zSDLi6CJilf2cvMlixnc/Ek7NBdKEid+BudSeVUkyyTW
-	 zrNe9ULZ9jiVmVqfyJCbKtL5VRChDaJXOhP5/+tCrrcheG9SIWOvIFMD4vKPt1y0ASXKk
-	 edOBn4hHy7aFf/IjzdEcUoFZ2N9BaFzK6sLVwNMICOc0nAG7HjdHS15yz9cR8gIzD2w==
+	bh=KB7Tr4InIJbQ9niXEKBl68M9RwHfau25/09eI/3w+Ls=;
+	b=KgKxynG/rA88b/IUFkV3+qdH6KXinoKoivZMRfn4cUNwrOwuFpHnKRcQEBEPX4DCzS0F
+	 g4ZsEglMebVOyGfMnAIasH2NYejXFE5paJeJ5UyLMopbPefwwgJAt7ggD5pOq7C3cESyc
+	 dRbPPVbeBREQIbweQ6rDPl2STRnnr8KDyIHMZBj7MjHSem7DsoxOtTkYKWJ+v8Z+2b9UJ
+	 E4tA9U90AjxenRGQBeg8wTMdT//cX0t58zIR15r7z+iPKNHh1tJ8Tu1UXhKN0SxeRgDs+
+	 eXs9r01Kpizcxbvtz4ykEobE7QQUletlUdOpj9+oamZPYVculZWq/uBu2zdfXiC495w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0kq/vw4W";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jIK36e9g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0F3606A33A;
-	Sat,  7 Nov 2026 14:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D061606A33A;
+	Sat,  7 Nov 2026 14:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0kq/vw4W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC191F0089F;
-	Sat,  7 Nov 2026 14:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jIK36e9g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272EB1F0089F;
+	Sat,  7 Nov 2026 14:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060921;
-	bh=d0D8rEQiaA41kiH/BPJtsUv6p/coTf5cjolRz3+02hE=;
+	s=korg; t=1794060922;
+	bh=KB7Tr4InIJbQ9niXEKBl68M9RwHfau25/09eI/3w+Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0kq/vw4WD02LUNSzwipTHmQiZZQIvJkWQ31dyWviLPtZQHgawwWW8ctcHa0xfARnu
-	 IH18uZUdnGljsnn1iLpppQlc5SJT8JasBdmmJ04es7A3zNCi0owZfwIyqarHuX1XS2
-	 WLZiDNY2cDdJd+fH4KqItRFfhC0oxO71FGmZZp5A=
+	b=jIK36e9g/JYWCYhSuy0GiE1jSR2Ltk7dbUbixdPkEGBVnZnO3kH8bXR4InYcaAN7K
+	 3jSSd8hlR3W2OVf6QRM1N/Hg1xf/cVX455y5L+ss8r3YAGsmpn8ywTdmGcJ8AuB4Vy
+	 RqyHiL31qh/ouwUPgWU4w6QMwF+RMk55KwbnFl1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chad Monroe <chad@monroe.io>,
-	Felix Fietkau <nbd@nbd.name>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0252/1536] wifi: mt76: mt7615: fix NULL deref in mt7615_mac_set_rates
-Date: Sat,  7 Nov 2026 08:37:48 -0500
-Message-ID: <20261107135004.763691552@linuxfoundation.org>
+Subject: [PATCH 6.12 0288/1536] btrfs: fix memory barrier order in reloc_root_is_dead()
+Date: Sat,  7 Nov 2026 08:38:24 -0500
+Message-ID: <20261107135005.746540600@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,72 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 98aff74779da9f417386c589c36848e9c568f0f9 ]
+[ Upstream commit 6f1c97695a6e230ee15c9e052e1933bdccfd5fa3 ]
 
-mt7615_tx() falls back to the vif BSS wcid when mac80211 hands a frame
-over without a station, e.g. while a station is being torn down, and to
-the global wcid when there is no vif either. Both tx_prepare_skb
-implementations derive a mt7615_sta from that wcid unconditionally and,
-if the rate control probe flag is set, pass it to mt7615_mac_set_rates(),
-which dereferences the NULL vif backpointer of the per-vif embedded sta:
+When we set a root's reloc_root to NULL, we do it like this:
 
-  Unable to handle kernel read from unreadable memory at virtual
-  address 0000000000000002
-  ...
-  pc : mt7615_mac_set_rates
-  lr : mt7615_tx_prepare_skb
+   static void clear_reloc_root(struct btrfs_root *root)
+   {
+       root->reloc_root = NULL;
+       /*
+        * Need barrier to ensure clear_bit() only happens after
+        * root->reloc_root = NULL. Pairs with have_reloc_root().
+        */
+        smp_wmb();
+        clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
+   }
 
-Neither entry is rate controlled by mac80211: the embedded sta has an
-empty rate set, and for the global wcid the container_of does not yield a
-valid mt7615_sta at all. Only resolve the sta for wcids that belong to a
-station.
+So that a NULL reloc_root is always seen before seeing that the bit
+BTRFS_ROOT_DEAD_RELOC_TREE was cleared.
 
-Reported-by: Chad Monroe <chad@monroe.io>
-Link: https://patch.msgid.link/20260724124813.3961474-23-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+But on the read side we have:
+
+   static bool reloc_root_is_dead(const struct btrfs_root *root)
+   {
+        smp_rmb();
+        if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
+            return true;
+        return false;
+   }
+
+And then callers of reloc_root_is_dead() access root->reloc_root.
+
+Because the read memory barrier is placed before testing the bit, the CPU
+is completely free to speculatively reorder those two loads. It can read
+root->reloc_root before it actually checks the dead tree bit.
+
+Sashiko reported this as an existing problem in another patch review, see
+the link in the Link tag below.
+
+Fix this by moving the read memory barrier to happen after testing the bit
+and update the comment to reflect current reality.
+
+Link: https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd7afd36c9427.1781194426.git.fdmanana%40suse.com
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c  | 5 +++--
- drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ fs/btrfs/relocation.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
-index fbb1181c58ff3..047bb86cfff35 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
-@@ -68,10 +68,11 @@ int mt7615_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	int pid, id;
- 	u8 *txwi = (u8 *)txwi_ptr;
- 	struct mt76_txwi_cache *t;
--	struct mt7615_sta *msta;
-+	struct mt7615_sta *msta = NULL;
- 	void *txp;
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index 785cb167b7b9d..7d0d3279231e2 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -234,14 +234,15 @@ static struct btrfs_backref_node *walk_down_backref(
  
--	msta = wcid ? container_of(wcid, struct mt7615_sta, wcid) : NULL;
-+	if (wcid && wcid->sta)
-+		msta = container_of(wcid, struct mt7615_sta, wcid);
- 	if (!wcid)
- 		wcid = &dev->mt76.global_wcid;
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c b/drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c
-index 820b395900275..01e79f37649c1 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/usb_sdio.c
-@@ -187,10 +187,11 @@ int mt7663_usb_sdio_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	struct sk_buff *skb = tx_info->skb;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
- 	struct ieee80211_key_conf *key = info->control.hw_key;
--	struct mt7615_sta *msta;
-+	struct mt7615_sta *msta = NULL;
- 	int pad, err, pktid;
- 
--	msta = wcid ? container_of(wcid, struct mt7615_sta, wcid) : NULL;
-+	if (wcid && wcid->sta)
-+		msta = container_of(wcid, struct mt7615_sta, wcid);
- 	if (!wcid)
- 		wcid = &dev->mt76.global_wcid;
+ static bool reloc_root_is_dead(const struct btrfs_root *root)
+ {
++	if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
++		return true;
+ 	/*
+-	 * Pair with set_bit/clear_bit in clean_dirty_subvols and
+-	 * btrfs_update_reloc_root. We need to see the updated bit before
+-	 * trying to access reloc_root
++	 * Pairs with set_bit/clear_bit in clear_reloc_root() and
++	 * btrfs_update_reloc_root(). We need to see the updated bit before
++	 * trying to access root->reloc_root in our callers.
+ 	 */
+ 	smp_rmb();
+-	if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
+-		return true;
++
+ 	return false;
+ }
  
 -- 
 2.53.0
