@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062181;
-	b=gBGtodIQG+jbwKlz32kI2sNmN1DtbOwyZal6+dKKlIg/7sTlFYpTjA4tdTFxvX4PHdn4
-	 kerHsoWHKumrp0tELi1TTlUcKjNQnKpmU31pn9R+wfkbWIgVWi5XTmSdA05MUCpkRn3qq
-	 tAoPQOeKiI+niKnmV1379hefjYjEnxVt5WVgBtaCtoHNmGrftoI18QbZM2toIDbtz1L4Y
-	 EvvwnRNu6AK9NbNpo9yGv5ANJddM33X1eFWO9lbSibQpFVs0ued3bgMp/NJh9KOl0YUS/
-	 JNQPjWTq4DCfKXT2f/TNnbSL2PXolOU/sszBNicGbbswNDCXgLPP+cQWI66qO4YJgpQ==
+	t=1794062182;
+	b=Dym7Yd3rMCQgKMtyALbBw8YDJSb3eC0hDol/gk8PEL8jaiFXMGVA0H74gaiRoi/CG3TH
+	 TXwNzbls+deZTxPhGsOvKSe3ambb3K5VOEDebE5UCYgfA9iKs5SH5xTghY2T4E86wK1JL
+	 zVz6vcdb2DCobFisHfCWFrW5r3YmkGkLLuA7OjqwzkuCNv2JjrRQ3YSakvgwpOvYSXbij
+	 Q1IqFW9ArYx/jmmfm/vxyTLs1LxUng1q+wyrfpAHJMwegTrmX4vx4VrlMBaw822mFVGDz
+	 1lL4QwG8ED9WgUlHYFTI9W1pu8a9i1a8RXtaAlRpsxosq2GkQjItqmBwA9o5KJB83hQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a3to0UkAgEp8NQ9tNweHkIBerGHhG3trNf85oAQ8R+4=;
-	b=PjZtFoNejjs/uH4ApcoiNmL6gxbMkyeGivg6wWEFkJ6jPp/a16gknhRp3KCo/m9IrGeH
-	 HwWPePeapBUGmArd0h8wGt/TGpz6RATI7sB+xSR9NABDd2jjW3ir77FjhknWrHM5pcR0v
-	 wUrR4y8cnuW02N89DBTqfbA71XyaRcfXMAbWcQ5Jt1f+Mz+WIjF0IOkIjJobhI/lrlh6E
-	 RfDwzWPw2Day1jAhNYdSdsfFIAB62F2nvySKkrA75tHPcq3ahbX2JL4tvw2dK3uFq+dYh
-	 1TSdVaavgKNdf6emT4hesfxQwzOmR+/is8gBCG2pW7ZZss+6wyJ6Hfnut1QfRm3qc8A==
+	bh=oP51uGYahEl1JtL0iTOXU3V62oofSPob7G1kFwK9oB0=;
+	b=tfxTQRYZfADm1YBQc8yKEKjw6CMpRJihaBMENzoQ28WDwKAPiZQgAHsDlxV0zcxS0PLg
+	 KgCkYviUigtYWRAgnOY9WkuuhxnZQ/by3T3KJ/zrf0fIMu89Aznpd6mnDLuc7HpjxZhwC
+	 YeqzqWoRxYF0eFxC4gxobzeuloH40O7s8tqCgcS8Zu7/d9M5cHiY2SATNihlQrTosyU6M
+	 vVUdqeW7bVT8r+C/O3/mHcb+g+EpLLEI7Ecq0bBYrcYoVd7RMayIlolevX/p99xUrvrie
+	 F5zWa9Up7Ki3GY3WTYkS24SrJirHUFTkrYKF5lRLckYC14jiePmctaH4JYHHGXDY2RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1sbJe8a/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NBXeulEF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A17606A326;
-	Sat,  7 Nov 2026 14:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53510606A326;
+	Sat,  7 Nov 2026 14:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1sbJe8a/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EA31F0089F;
-	Sat,  7 Nov 2026 14:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NBXeulEF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0195D1F0089F;
+	Sat,  7 Nov 2026 14:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062181;
-	bh=a3to0UkAgEp8NQ9tNweHkIBerGHhG3trNf85oAQ8R+4=;
+	s=korg; t=1794062182;
+	bh=oP51uGYahEl1JtL0iTOXU3V62oofSPob7G1kFwK9oB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1sbJe8a/fzwVY9w7ur8YeM2vw98DsNoHVF2D01QF6dPXAGA4hno+viRgWkuxLOYQ4
-	 KXHXl1gIuHyST9KGu1iJZdpjzUwTR+s9C9G711elkA+UM1IFJ2URcXHBJ02FAOL2Sw
-	 mMgzlp4bUX30rX+LUgnIDUhFgaqQfYtQSXoEvQfI=
+	b=NBXeulEFvLq7ptGiUDatnd1qE/EpNWvtr1jP8gpRz/GTyToTxnZKTK5Mdo0+83bBL
+	 6CI5OtNMyUxxlygxJeiJCCu3xWoXnTmTAebxAxgFMrqQZZ7KeaKOmYlqXTDG/6NZuO
+	 zZK9cSt7tCneHajr5IDf4lODJsaa76Avfe7/IsOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1140/1536] media: sti: delta: use unaligned accessors for MJPEG SOF fields
-Date: Sat,  7 Nov 2026 08:52:36 -0500
-Message-ID: <20261107135029.735715571@linuxfoundation.org>
+Subject: [PATCH 6.12 1114/1536] drm/msm/hdmi_bridge: Correct poweroff/audio cleanup order in post_disable
+Date: Sat,  7 Nov 2026 08:52:10 -0500
+Message-ID: <20261107135028.997300465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,68 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit fdc5bf02aeaef04e7d13895db9b6eaf8083953f9 ]
+[ Upstream commit 0499f0576e4442d67c164119f9d7f75d3cc945e7 ]
 
-delta_mjpeg_read_header() scans a compressed MJPEG access unit byte by
-byte and passes the bytes after an SOF marker to delta_mjpeg_read_sof().
-The SOF parser then reads 16-bit big-endian fields directly from that
-byte stream.
+Turning off the power in msm_hdmi_bridge_atomic_post_disable() should
+follow reverse order of powering up, not only because it is logical, but
+also because msm_hdmi_audio_update() accesses registers thus block
+should still be powered on.
 
-The SOF payload is not an aligned object. The marker scan can find the
-payload at any byte position, and the SOF layout also puts frame_height
-and frame_width after a one-byte sample_precision field. Those fields
-therefore sit at odd offsets within the payload even when the payload
-base happens to be 2-byte aligned.
+Depending on specific timing, existing code could have accesses to MMIO
+of powered off block.
 
-Avoid casting the byte stream to __be16 pointers and use
-get_unaligned_be16() for the SOF length, height, and width fields.
-
-This issue was detected by our static analysis tool and confirmed by
-manual audit. A focused UBSAN alignment validation of the same typed
-load shape reported a misaligned __be16 access in delta_mjpeg_read_sof().
-
-Fixes: 433ff5b4a29b ("[media] st-delta: add mjpeg support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: c0c0d9eeeb8d ("drm/msm: hdmi audio support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752655/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-3-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c b/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
-index 90e5b2f72c82b..849a5e118aec4 100644
---- a/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
-+++ b/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
-@@ -4,6 +4,7 @@
-  * Author: Hugues Fruchet <hugues.fruchet@st.com> for STMicroelectronics.
-  */
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+index 4a5b5112227f5..b4abac49f5d96 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+@@ -167,10 +167,10 @@ static void msm_hdmi_bridge_post_disable(struct drm_bridge *bridge)
+ 	msm_hdmi_phy_powerdown(phy);
  
-+#include <linux/unaligned.h>
- #include "delta.h"
- #include "delta-mjpeg.h"
- 
-@@ -48,13 +49,13 @@ static int delta_mjpeg_read_sof(struct delta_ctx *pctx,
- 		goto err_no_more;
- 
- 	memset(header, 0, sizeof(*header));
--	header->length           = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->length           = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
- 	header->sample_precision = *(u8 *)(data + offset);
- 	offset += sizeof(u8);
--	header->frame_height     = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->frame_height     = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
--	header->frame_width      = be16_to_cpu(*(__be16 *)(data + offset));
-+	header->frame_width      = get_unaligned_be16(data + offset);
- 	offset += sizeof(u16);
- 	header->nb_of_components = *(u8 *)(data + offset);
- 	offset += sizeof(u8);
+ 	if (hdmi->power_on) {
+-		power_off(bridge);
+ 		hdmi->power_on = false;
+ 		if (hdmi->hdmi_mode)
+ 			msm_hdmi_audio_update(hdmi);
++		power_off(bridge);
+ 		msm_hdmi_phy_resource_disable(phy);
+ 	}
+ }
 -- 
 2.53.0
 
