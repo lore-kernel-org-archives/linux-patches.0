@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063508;
-	b=eF1JDq68MVU9dODS+GLwLbNkhU88ZaCTEFdRfBqt+htPeXYC78v000TdtAQTdop/C7mV
-	 5Lmwny8sFCqmFeINmJejtgqFk/LTGaecY0MiGZ7Thqh6ErKDq5J+IoZudrrkwUNfNS/+Y
-	 VCMB7pDpBPXvjBZ0LTElwZa19TpapsdwRfCWholo/F2VwBzKodZZ+35YeVk7+uZJCjP04
-	 WJ5taYHFdb0aGhl4A83Elb7PecaGnUKWLgm4ANt+NGgVLOS9j1cfWYv5qKj4H8gsVtd1E
-	 MYaB2vyWRTl+Txcs1nUrgIyKyctcwgd6mkJZ8PsJKj++hi1QqGCUJthuAC7/dA0Q7pQ==
+	t=1794063509;
+	b=tLX01GX1wmorhDKfyLsg6GaZTklkhVSp+OpxaKjix5tJllI8k5enMHYOULoTrTJhyR5S
+	 Xp6hoaqKwxJTBpctiB3tv1w45TL4oEXMnCqG5HSf8GjisyiczmXwdSfdlLPDbtpCjUot8
+	 SiItZC4iFg2HZz+ZruRa+xlqWFxGM+xBPRPLR1JBttBBAI7rVdrW/9r2TRd69k4Gdbx1c
+	 hSleCUeUvKzANIbrPYxtd66RbrlWEtpkJYqcmS9tt8EaxwFhvs6mPTyuTwluu+eXmc9t4
+	 M6S4mlit0ybjRcA7sE0SrAz4xFiOEFT/CRYr2n+l0tOC6KXgp6/dY3AQ9P0JbBzfQ9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063508;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=30TS1Z7DvQxeeK4OuUmMjPHxK/WB7RdZFpkJFhgbidA=;
-	b=fgapN/TB0mTLb8kKLNKRNd2U9Q4PyKlevMJn3WL+Kv4/iyirznJ9+Mxw5myCB7J3ANQY
-	 Q6zHrgBYmBPKCQQPlhe9xZxYm/p9vgcMXXll5UbTwDMV88u82uvvQ/kFzhpONwUUd8xaM
-	 TbMaMC0PViKjhdZs9zsk6TqePhkwrwwE4DKWZRApiLg7MkcM4FadX2tWwrpK2lbxmF8os
-	 Rce9HzlropwkFrSqDGYD5XqtN0Ux+B/heTVKiqh65hiPt7PEB83UoSb0y5+jJi36FfJBr
-	 oGXLOisTubW525RyYtXfNMZCXiLyq8cScIguhcemGPIhcgEnbxD6Pt2Gb+yZeu05BcA==
+	bh=nQZujWiG/x43ba+/zquF2saJHYn7pinXF1lCeHDATJ8=;
+	b=ZzunOoUcNyxsSmO5pNpzty+PEm6OPzu+aUU1wngTzuDej/8x8a2j+pdPElYrpkgfB0IH
+	 M2xLn5LRC/LPSzO9L0aSaAdnLL3zd0c0RPgz9LmK6PTvM6hWp3IWZiozs8vqHehVX7zc7
+	 FPvlb3eX1Ida4YJWvq0FwpNyl+k9RIm/XMQ5Zr4G4I42gcrHZCB5eD9DndLp2/x1yRGaT
+	 Gv0vjjwPb6Fvpcr4PiwZ/G4QK31CQ86ZJYVzurL0ei3eGpNON4hbBv4QyFvHYesO5uFZU
+	 IjRAG3s4wILw+xW5LYF8od5zt0gK4f2bCTFbV8oL4HfmHRo3kZRTVP0bqrCNKwdaQ4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wyRLmdd+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7mq225K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F35B606B8AF;
-	Sat,  7 Nov 2026 14:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434B606B8AF;
+	Sat,  7 Nov 2026 14:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wyRLmdd+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC061F008A6;
-	Sat,  7 Nov 2026 14:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7mq225K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D1A1F008A4;
+	Sat,  7 Nov 2026 14:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063507;
-	bh=30TS1Z7DvQxeeK4OuUmMjPHxK/WB7RdZFpkJFhgbidA=;
+	s=korg; t=1794063509;
+	bh=nQZujWiG/x43ba+/zquF2saJHYn7pinXF1lCeHDATJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wyRLmdd+7bVkui3dlMyPAM2ESk6XgKH7POT6fiMq8pg1EHGFyyC97yWttcV6912nt
-	 PIjvZdXP+8pACnOtnNYfzY/U9NwcaGxtLTQDn7Z4iL4GXvt67glJIVZsgIv/RQu+AC
-	 3qBudsm4okVKMsnWw3tvQMN7rhzB078BnrVXXXrM=
+	b=d7mq225K806P28Sb3S/fKvRr39Sqi8wqdqhuWiS4rx+oqd012IXvhqvuyMoKQSa8R
+	 DaW4af7hRlIOyBG3TH+Z/4GMiPc6s2V2enFHiH2NjqYoHbSlV+2oFosukGrCxM9QAx
+	 ebRmb3HCZRgganeFffUzlvub2/Vh3Ir0qildVj7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Grant Slater <github@firefishy.com>,
+	Armin Wolf <W_Armin@gmx.de>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 652/869] hwmon: (sht3x) Return the consumed count for heater writes
-Date: Sat,  7 Nov 2026 08:55:34 -0500
-Message-ID: <20261107134915.159321943@linuxfoundation.org>
+Subject: [PATCH 6.18 653/869] hwmon: (acpi_power_meter) Fix 18.45 TW bug
+Date: Sat,  7 Nov 2026 08:55:35 -0500
+Message-ID: <20261107134915.200424701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,49 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 817ac527100c8e20684211eb919ffd6d875adc7a ]
+[ Upstream commit 0b6eda22f9ab67ddb2a872b0c3fc578ad9f4e27e ]
 
-heater_enable_store() returns the result of i2c_master_send(), which is
-the two-byte command length on success rather than the sysfs input
-count. This can report more bytes than were supplied, or a partial write
-for a fully processed input. For example, writing "on\n" returns two
-instead of three, so a caller retrying the remaining newline gets
--EINVAL even though the heater command succeeded. Retrying the remainder
-of "off\n" can also send the heater-off command twice.
+The ACPI specification says:
 
-Return count after a complete command transfer. Preserve negative I2C
-errors and return -EIO for nonnegative incomplete transfers, so a
-zero-message transfer is not reported as a successful zero-byte write.
-Keep the existing boolean parsing, command selection and locking.
+"If an error occurs while obtaining the meter reading or if the value
+is not available then an Integer with all bits set is returned"
 
-Fixes: 50c22cd154e5 ("hwmon: (sht3x) add humidity heater element control")
+This integer can also be 64-bit wide on ACPI 2.0 and later systems,
+so we have to check for that too.
+
+Compile-tested only.
+
+Reported-by: Grant Slater <github@firefishy.com>
+Closes: https://github.com/lm-sensors/lm-sensors/issues/460
+Fixes: 1fefca6c57fb ("hwmon: (acpi_power_meter) Fix 4.29 MW bug")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
-Link: https://patch.msgid.link/20261019154718.2328055-1-pocj8ur4in@gmail.com
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20261006234618.10943-1-W_Armin@gmx.de
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht3x.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hwmon/acpi_power_meter.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
-index 5d04013efb522..c3e68bde709df 100644
---- a/drivers/hwmon/sht3x.c
-+++ b/drivers/hwmon/sht3x.c
-@@ -543,7 +543,10 @@ static ssize_t heater_enable_store(struct device *dev,
+diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
+index de408df0c4d78..667dffde33015 100644
+--- a/drivers/hwmon/acpi_power_meter.c
++++ b/drivers/hwmon/acpi_power_meter.c
+@@ -10,6 +10,7 @@
+ #include <linux/hwmon.h>
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/jiffies.h>
++#include <linux/limits.h>
+ #include <linux/mutex.h>
+ #include <linux/dmi.h>
+ #include <linux/slab.h>
+@@ -31,7 +32,12 @@
+ #define POWER_METER_CAN_NOTIFY	(1 << 3)
+ #define POWER_METER_IS_BATTERY	(1 << 8)
+ #define UNKNOWN_HYSTERESIS	0xFFFFFFFF
+-#define UNKNOWN_POWER		0xFFFFFFFF
++/*
++ * ACPI integers can either be 32-bit or 64-bit wide, so
++ * we have to check for both values.
++ */
++#define UNKNOWN_POWER_32	U32_MAX
++#define UNKNOWN_POWER_64	U64_MAX
  
- 	mutex_unlock(&data->i2c_lock);
- 
--	return ret;
-+	if (ret != SHT3X_CMD_LENGTH)
-+		return ret < 0 ? ret : -EIO;
-+
-+	return count;
- }
- 
- static int update_interval_read(struct device *dev)
+ #define METER_NOTIFY_CONFIG	0x80
+ #define METER_NOTIFY_TRIP	0x81
+@@ -454,7 +460,7 @@ static int power_meter_read(struct device *dev, enum hwmon_sensor_types type,
+ 		ret = update_meter(res);
+ 		if (ret)
+ 			return ret;
+-		if (res->power == UNKNOWN_POWER)
++		if (res->power == UNKNOWN_POWER_32 || res->power == UNKNOWN_POWER_64)
+ 			return -ENODATA;
+ 		*val = res->power * 1000;
+ 		break;
 -- 
 2.53.0
 
