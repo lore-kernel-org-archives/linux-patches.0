@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064157;
-	b=mSmf6n9oxPUD/H0r5Z+F41HKPHBwur3xAv0NlcGdp1Dqp68hiisevohsY1s1WuYGJ9Iu
-	 9Wxsx3xZ96O5Mi1HpdfxznXlF7Wdk3rss23lena/r9Z0a+m6OJhcx3P/VSniC76F946w+
-	 4TCyV1HK8ZRLZ2LD0+OTF/pxR4oSAbzu8iI5HAY3Zc8UdDWaq9vXwlDzrAjwwAzR0EWHP
-	 50rfytQEOAbO84zo4zH9Mca0vbKUqMXKQLfk7751N/Gg2mbYcpCYmfHbUZmSodI2vC/+9
-	 2u3o7/VAsjUi+uMNT/5Aq7Cj8t/kIBgmD5jpuSYOs3/8q1aZD6RRtUcl/b2sR2nOxOg==
+	t=1794064159;
+	b=ApFEl8dyOR1rWsHTjRtoMbBDG8McnFrtGgvix9oesLQg3BGm/Ml4d/A2azHkQtE2vVmW
+	 Yg0UnZSaFzKuU9dNBKFg/DD9xpgOQmg080gloZidf/3oEfSf5LKAYztYradXUKRvAV73y
+	 7AExNhHjYWfIi/8U3PXXJJvJljKaqZ8Vn+gLi/uOG0FhPO7nlKygUT8rR0lO03Zas91QX
+	 oGDNLhTECctL9TKnDOcO3zbqrOqKkNpHsntACHK7paZPMdVNKCPIFkBcrH/Fo1oQVWFkR
+	 MkxA18jVhn1aO2Jx1GUPSP7SYidT29WlDHAfdlsiKBC41QLpxDJ6VmgbjR7ArydaGaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064157;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6m9LA4fEDn36SjK0p1z/jvA5dja+ZcScfSEjuyAp8Fo=;
-	b=ye63a3T/DB2GGCxjaEp+QcSZDAlaMMCT5cYeq9Xaal86kh3zgkejtlJrQZlGsoyyp6MW
-	 oEpDsWA5j9Y0sQRLB/KRkjgcQLIaz5ImQEZhTccpiaeYFvSg0SF2skH7wGWx6/3FpkPuT
-	 dbtFtusDYD9gg+TYNQOBJqrBn4LvX1epUyux3vGCo9K69UJOv4e9Mc3XXIFhlZBr8T6VX
-	 vA7RA0Tzeh0kcN3+vr2VICpkBFOaPD+6Lw/mG7/Jm3LXnPXyPVWJO8NBVrqPKrjozocHD
-	 jdyt+YSUAqU4HRRH1xDTm6gf4QP/iyURjzoLVYWIoFxocPa7xisi9cF6ktm4qr9OSvg==
+	bh=AohKuhi3NwRxLwpNLoS3Vh4OTyHpPEg2BoiT0fG4FDo=;
+	b=N+MYqBFCYI/lM6EeZz4tVVsu97fn0dlJzjRAhCExGf5u6lrU1KK7IbgNeibtAkwYllgs
+	 jcsnH/X69gtCAO52jHg/MKTOWz/2tvLr5dl9npui5yj58pYo4vKu1Q799MOmgEmEjZQ3u
+	 3mmoTk01zEEF/qyKp6R6Plcvasm5bRDQ+cqbv/r+wM8zip9UlGEZWt5k4IRDd8qFU4+TX
+	 Xa/RxTY6ZcjzsHDW3qjnLq5EKoD5cAWUCaVDpYCkjNA8fhafwyam1e9XwH2B2S6SZZKTy
+	 9voAsuw698s/GMGnjdUSIrHzQz9fldLP6wGw+vzz+JbKLixaFUemJ/RZEpSScSd30fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RKN3Mbk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZuY/rbhs";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FDF606A32E;
-	Sat,  7 Nov 2026 15:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C668B606A32E;
+	Sat,  7 Nov 2026 15:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RKN3Mbk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A371F008A6;
-	Sat,  7 Nov 2026 15:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZuY/rbhs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A6B1F008A3;
+	Sat,  7 Nov 2026 15:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064157;
-	bh=6m9LA4fEDn36SjK0p1z/jvA5dja+ZcScfSEjuyAp8Fo=;
+	s=korg; t=1794064158;
+	bh=AohKuhi3NwRxLwpNLoS3Vh4OTyHpPEg2BoiT0fG4FDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2RKN3MbkZmC1kTlFodg/Swr6zy+VlTxVbbJIjdNXKVsNhzrzj5znhZ5q7ueLqY1r/
-	 4UFS5HBtnaTxd+n7hsiIQtBsF0S7OuJ0bSb2JHIlVzAlOQVoIZTvAXWXGDu0qpio0m
-	 ylhDV/yXfzd/w6o91n638hS78ALRwXcngBnH2K04=
+	b=ZuY/rbhsQfypQxsWOJzQlcmW6+jx5gCVX4lQ99sEftVj1jeEBVICHeTERBvS9AZgt
+	 /HBEERSa5520LD7CPVD5/NH7sQLFiO7T3Uk/Ey8i/uyuxRl+9kfM+s/pG1G0ciHtHU
+	 7uWH+B2gC+9X/jU1i1b11NPVDtUWyjhTofwFmZb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0306/1257] mtd: amd76xrom: Fix PCI device reference leak in amd76xrom_init_one()
-Date: Sat,  7 Nov 2026 08:43:22 -0500
-Message-ID: <20261107134947.895519948@linuxfoundation.org>
+Subject: [PATCH 7.3 0307/1257] mtd: maps: l440gx: Fix double put of the ISA bridge in init_l440gx()
+Date: Sat,  7 Nov 2026 08:43:23 -0500
+Message-ID: <20261107134947.920813288@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,15 +70,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 1a122f5fecbabd47b81b1be3f0934f57b78aad42 ]
+[ Upstream commit 521ad948e04934b2d70ae899bc016bbb38802e90 ]
 
-init_amd76xrom() obtains the PCI device with pci_get_device() and
-hands the reference over to amd76xrom_init_one(), which stores it in
-window->pdev.  When reserving the ROM window fails, that function
-returns -EBUSY directly instead of going through amd76xrom_cleanup(),
-so the reference is neither released nor cleared.
+init_l440gx() takes a single reference on the PIIX4 ISA bridge with
+pci_get_device() and drops it again right after the lookups, before
+the flash window is set up.  The pci_assign_resource() failure path
+then calls pci_dev_put() on the same device a second time, releasing a
+reference that is no longer owned and underflowing the reference count.
 
-Drop the reference and clear window->pdev on that path.
+Remove the extra pci_dev_put().
 
 Fixes: dd8e9ed6ed54 ("[MTD] Switch to pci_get_device and do ref counting")
 Cc: stable@vger.kernel.org
@@ -86,22 +86,21 @@ Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/maps/amd76xrom.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/maps/l440gx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/mtd/maps/amd76xrom.c b/drivers/mtd/maps/amd76xrom.c
-index 457e6ab7f3fb1..0c3e0eb08b8d8 100644
---- a/drivers/mtd/maps/amd76xrom.c
-+++ b/drivers/mtd/maps/amd76xrom.c
-@@ -152,6 +152,8 @@ static int amd76xrom_init_one(struct pci_dev *pdev,
- 		printk(KERN_ERR MOD_NAME
- 		       " %s(): Unable to register resource %pR - kernel bug?\n",
- 		       __func__, &window->rsrc);
-+		pci_dev_put(window->pdev);
-+		window->pdev = NULL;
- 		return -EBUSY;
- 	}
+diff --git a/drivers/mtd/maps/l440gx.c b/drivers/mtd/maps/l440gx.c
+index 832b880d1aaf8..85cd273ce0654 100644
+--- a/drivers/mtd/maps/l440gx.c
++++ b/drivers/mtd/maps/l440gx.c
+@@ -110,7 +110,6 @@ static int __init init_l440gx(void)
  
+ 		/* Allocate the resource region */
+ 		if (pci_assign_resource(pm_dev, PIIXE_IOBASE_RESOURCE) != 0) {
+-			pci_dev_put(dev);
+ 			pci_dev_put(pm_dev);
+ 			printk(KERN_WARNING "Could not allocate pm iobase resource\n");
+ 			iounmap(l440gx_map.virt);
 -- 
 2.53.0
 
