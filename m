@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064506;
-	b=kMUCZx85/L3mpyRcePhlqFIj8qn/nGUPrUY5ZUYZDzs3GlJ+kKOz7GJkMy3Ibc9aZQkS
-	 JjxwYxWUZty81uEyIV8uLuKlHoRH/O8BP9adwE4Q0xwM8d0kGNYkPAvQmOtYmPKPo0W4w
-	 7fGXArgauOydWZ4XvlfAeCTIUs2MZmTOlmX26hKHALGHidzDv2/+zU3HOadey7T6wTska
-	 65u8/zqZGIhKlAJDdSHAzYh+bIs13SOADK3CH1hq5wtXGNsnhVML344trl+1yY2qUlmAl
-	 NYYPsjH+9F+eMxA9O7KHw6zkJs9FdNf+s/FVaBQkQqPghwTc4A5Pq2no4ZkHyydV9IA==
+	t=1794064507;
+	b=JbEBVYiucu5uXxJhq4ScXaxK3nJXiVsgJ3BuDJxAlCTCUAK2KxsqGf5JOoe8n9vtHcKw
+	 H47L0zCro3nwlhmhm+h1OeFPlOZGoiybwOrniLfek1h1WKh+xTsIa3ayBDskXG6k5vqgA
+	 63SYJm+TKXpFK0KeQhyq85a6Ahs8jAeru0vxqxFqF7HQj4zm78Vhc7K1egrWlpETbJDRG
+	 DlhZnwOdEHaKewNRYyYUVLl6F/fdBEuvAokiGOhjIk1H9UYzG9jd3WOroo900/wHBSeOY
+	 9o7Pmp1chxo75UejjyAH7x86gxSldBx4XwZHgPexU1VbdQFGXLgSVTaNZOkkBosn/2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x2l3EynidRlULUOi7yei87qn6uyYejWDxbtMGgfOasc=;
-	b=y+puNADQqOhpqkOLlY1lIxzj/6mHDtj2V3ybsgUWut8dUU/ETNN+4sthZLJHbmr10VkG
-	 50vvzI3SVIrhsXIR08RdY3Saoh7ztq5paY1Bl/iQlaj/3OUSu73mrf53xpaXshtECQ+eu
-	 /wKSxY18tUIKiOIxD9CgSaRQipHjlxYVgsRRdmt/U/bRPDexSpKamXdZZ+64wBC3/NpOU
-	 J2i3lrMR3HX3246yPLXtZFlVO9x2blHz/zRForPyq5qICFIdo4KnwOHPFAiPPIZJuYRm5
-	 a5jUHeOaOGNy5kDjoglYSYzdJf4bmv5pkZ8nipAbRCTO5wskhGF5BkrggrP6LodwpaA==
+	bh=373sRGXGrxkAkt25fQIHjzW/eJmFem5CQDBEuUMsVfA=;
+	b=WZNd6tVXJ17J4uhK7oQ0FzKqDdphhP9UQ56KXhJkLsAugSQVHMkZ5oy61Fsv50F6QwET
+	 WzNIsxCqOeD0yDc93zChYB8tHAoJvw1EvLkEc2wRtQQK0iOPuhPXQMTJVMEIP3XegXDiL
+	 tRESWNiLbwdbN8+oGgtFBY5jIUi28MEH5Oxu4R0PJ9xWo17enP1NpJlXEBQHqRi3LydUy
+	 cZFdukYqf41/jZnHFB/e/jEirkSBhh0g5cvSlIfNRg4tXIvS54EeG1lGaxntE9OR6Asg9
+	 RbNjuJFUIrAfAt5Q15Fa6Wwt1V/+XNBn0sMo4ws8/ZeB6V+toSBAROCtWuFgtuTKwKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sJnTbUMv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BMNHV0Tk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8648C606CE4F;
-	Sat,  7 Nov 2026 15:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4D5606CE50;
+	Sat,  7 Nov 2026 15:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sJnTbUMv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F791F008A2;
-	Sat,  7 Nov 2026 15:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BMNHV0Tk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CD81F0089F;
+	Sat,  7 Nov 2026 15:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064506;
-	bh=x2l3EynidRlULUOi7yei87qn6uyYejWDxbtMGgfOasc=;
+	s=korg; t=1794064507;
+	bh=373sRGXGrxkAkt25fQIHjzW/eJmFem5CQDBEuUMsVfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sJnTbUMvY3jZmCnoy/dmEkNPvhzNhKpex1uHx1t2MFaS73kGvT6faxJ+yzmu+xY/D
-	 KW32rf8qSG+E4Ly+hKrOra7LT01Q6EAI+ZQY4Y3ibxaZaxJux+7ZVCGwSSSdjXhkdy
-	 xUG0mOEswezNZ1p8M4FhXgh5lUNS1+MNNZujqoCM=
+	b=BMNHV0Tk4YFYZpqJOJs/CJncS5P103L9VqvbbvHODfD2C7wvD2HrH/E8Ep8FnoCxk
+	 yhbF1cTHNLsuAhjyPFScypA0dRnFL/7tzfZ+QIaCSKgEBhVq8Vvfd/gVjjFiRBgN8p
+	 90oJsBMbbzrYXqEVyLZP4uzrm53V+RHPM0DhNV2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Eason Lai <eason.lai@mediatek.com>,
-	Hans Buchheim <hbuchheim@gmail.com>,
-	Sergei Melnichenko <sergei.melnichenko@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0538/1257] wifi: mt76: fix memory leak in USB TX path
-Date: Sat,  7 Nov 2026 08:47:14 -0500
-Message-ID: <20261107134954.263379969@linuxfoundation.org>
+Subject: [PATCH 7.3 0539/1257] wifi: mt76: mt7615: restore DBDC state after ext PHY failure
+Date: Sat,  7 Nov 2026 08:47:15 -0500
+Message-ID: <20261107134954.290185755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,100 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eason Lai <eason.lai@mediatek.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 82856da2d3b6a30011f4db6ea5f34c13484e0ef8 ]
+[ Upstream commit 7907d5270dc5c13b6a95754c08a77d5b06bbc786 ]
 
-When errors occur in mt76u_tx_queue_skb(), the skb is not properly
-freed, leading to memory leaks. This happens when:
-- The queue is full
-- tx_prepare_skb() drops zero-length frames (such as WMM NULL frames)
-  to prevent hardware TX hangs
-- Buffer setup fails
+mt7615_register_ext_phy() limits the primary PHY to DBDC capabilities
+before allocating and registering the secondary PHY. If allocation,
+EEPROM override, or PHY registration fails, it returns without restoring
+the primary PHY capabilities. The EEPROM override failure also leaks the
+newly allocated ieee80211_hw.
 
-Fix by properly releasing the skb with ieee80211_tx_status_ext() when
-the queue is full or tx_prepare_skb() fails, and using
-mt76_tx_complete_skb() when mt76u_tx_setup_buffers() fails (since
-tx_prepare_skb() has already succeeded and may have allocated resources
-that need cleanup)
+Route all failures through common labels that free the secondary hardware
+when it was allocated and restore the primary PHY capabilities.
 
-Fixes: b40b15e1521f ("mt76: add usb support to mt76 layer")
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 0f2173f093b3 ("mt76: mt7615: add support for registering a second wiphy via debugfs")
 Cc: stable@vger.kernel.org
-Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Closes: https://github.com/morrownr/mt76/issues/83
-Signed-off-by: Eason Lai <eason.lai@mediatek.com>
-Tested-by: Hans Buchheim <hbuchheim@gmail.com>
-Reported-by: Sergei Melnichenko <sergei.melnichenko@gmail.com>
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260914021920.32246-3-eason.lai@mediatek.com
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260910215441.76683-1-mhun512@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/usb.c | 31 ++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7615/init.c    | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
-index a9af3aa6b80a9..dfc12f6944a74 100644
---- a/drivers/net/wireless/mediatek/mt76/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/usb.c
-@@ -893,6 +893,9 @@ mt76u_tx_queue_skb(struct mt76_phy *phy, struct mt76_queue *q,
- 		   enum mt76_txq_id qid, struct sk_buff *skb,
- 		   struct mt76_wcid *wcid, struct ieee80211_sta *sta)
- {
-+	struct ieee80211_tx_status status = {
-+		.sta = sta,
-+	};
- 	struct mt76_tx_info tx_info = {
- 		.skb = skb,
- 	};
-@@ -900,17 +903,27 @@ mt76u_tx_queue_skb(struct mt76_phy *phy, struct mt76_queue *q,
- 	u16 idx = q->head;
- 	int err;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+index e437e088b2e91..665b0f1e939f1 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+@@ -541,8 +541,10 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
  
--	if (q->queued == q->ndesc)
--		return -ENOSPC;
-+	if (q->queued == q->ndesc) {
-+		err = -ENOSPC;
-+		goto err_free_skb;
+ 	mt7615_cap_dbdc_enable(dev);
+ 	mphy = mt76_alloc_phy(&dev->mt76, sizeof(*phy), &mt7615_ops, MT_BAND1);
+-	if (!mphy)
+-		return -ENOMEM;
++	if (!mphy) {
++		ret = -ENOMEM;
++		goto error;
 +	}
  
- 	skb->prev = skb->next = NULL;
- 	err = dev->drv->tx_prepare_skb(dev, NULL, qid, wcid, sta, &tx_info);
- 	if (err < 0)
--		return err;
-+		goto err_free_skb;
+ 	phy = mphy->priv;
+ 	phy->dev = dev;
+@@ -572,7 +574,7 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
  
- 	err = mt76u_tx_setup_buffers(dev, tx_info.skb, q->entry[idx].urb);
--	if (err < 0)
--		return err;
-+	if (err < 0) {
-+		/*
-+		 * mt76_tx_status_skb_get() walks the idr and dereferences
-+		 * a freed skb. This SKB is not counted in non-AQL counter
-+		 * due to error return, so using 0xffff as wcid to keep
-+		 * balanced.
-+		 */
-+		mt76_tx_complete_skb(dev, 0xffff, tx_info.skb);
-+		goto err_ret;
-+	}
+ 	ret = mt76_eeprom_override(mphy);
+ 	if (ret)
+-		return ret;
++		goto error_free_hw;
  
- 	mt76u_fill_bulk_urb(dev, USB_DIR_OUT, q->ep, q->entry[idx].urb,
- 			    mt76u_complete_tx, &q->entry[idx]);
-@@ -921,6 +934,14 @@ mt76u_tx_queue_skb(struct mt76_phy *phy, struct mt76_queue *q,
- 	q->queued++;
- 
- 	return idx;
+ 	/* second phy can only handle 5 GHz */
+ 	mphy->cap.has_5ghz = true;
+@@ -590,7 +592,14 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
+ 	ret = mt76_register_phy(mphy, true, mt76_rates,
+ 				ARRAY_SIZE(mt76_rates));
+ 	if (ret)
+-		ieee80211_free_hw(mphy->hw);
++		goto error_free_hw;
 +
-+err_free_skb:
-+	status.skb = tx_info.skb;
-+	spin_lock_bh(&dev->rx_lock);
-+	ieee80211_tx_status_ext(dev->hw, &status);
-+	spin_unlock_bh(&dev->rx_lock);
-+err_ret:
-+	return err;
- }
++	return 0;
++
++error_free_hw:
++	ieee80211_free_hw(mphy->hw);
++error:
++	mt7615_cap_dbdc_disable(dev);
  
- static void mt76u_tx_kick(struct mt76_dev *dev, struct mt76_queue *q)
+ 	return ret;
+ }
 -- 
 2.53.0
 
