@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063958;
-	b=jdPif6ak7gYZnN7yG+K9nDx6QHMzDbt03M6J7A20ncGBQOq5qpRrdI5WCkh4ObuaDogK
-	 +zTXf1OwrTAM+goXactBnbFEKUN0ekAM0QYRazZmVD9ChlKOy8HBF1PaBKSP/AkdjFUQn
-	 sYZzabDCldNYOAvaBtJ4ppkKCPJEudAu211/rCTvx+P80BAYZcEUGSuK8gyoMGLorpryW
-	 pucjXtagIWupRMjM17wbk6VYe3pV0DkzTMAoZM6VUV/vtR78PruBvy79O7h2CFdt2XDmo
-	 LSRGWLlQNB5l7HLZbHLxgqDSV2wHB6CTxSgYQk0wHMHDtiGuCfNdTcRMVhI5tTYqzaw==
+	t=1794063959;
+	b=ikcg0KHmBlipCnhAxXI593OB0NLSoVNjcI/33U4c2nkg1qS1u4p5P/JeShJlabwcy04L
+	 RtGvJXeTZuivPHuBtK+W98BxixKD1UWNjnhu0jR2VsjD8Su4A1SdvzzokZ6h+1eevIJrv
+	 36n1/E6ACh2+PQxMCbzjK/jWGuOfq/JQxEtGzY8rRtnUCxa77Baud41sMHJlbHMuuXHMT
+	 5z3Sp85b/Y3X53twEZBfNCeUnXN3VtJeKUD09iRlcYxtniDO1ec8khBdlko5SgLN5n6rP
+	 m4EeZ8OX03B9TqxZIVQG1OWYru3i3JRhmisgpsJoH61vvsYm2K6t7h5ybDwoo5b8LFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tUL89zczg/+10RA+b9ON4Tn8dlRAumVcCfUHb4BlrOI=;
-	b=hgyiWI6v3BNXcSD6xOpaPAs/ltuMqAvuFRWQq+r8COpLWJHOaxx/rZ4v25/cNOf3kZNw
-	 h2qPWmT4hMcVzy7MWFWvM5PC1BNAMPBKHWsK+dQLzPQH49Nmpnc/ExMJhIwepAe6Wupqv
-	 VFdbEkjgY64WjQpdlyEYXFH73sxFHv0EOxWsm9pebzmbIDBM4Wj/usGN0fd5QE97JOGn2
-	 6vmk+wW8xMxO3MMuthFTUFRAUW+eVx7Ko0YVeWERn6dZm2Fbe27fHGYZzA7A85TJoEjmO
-	 lvWwV8LrFrQf4sQe7rTwsLCdUPKB4MU9sVoCMNTnavTox2lhJc0hiYeDA7+yEn4vaqA==
+	bh=+Yz5RYypp0+ypo4NNkOK5jEetxy/MtLxGYvlXPQShHc=;
+	b=XBCYgAQTnwQp7ZrA+21i21rAFo/VZpvpafq621GfSxznsGBwXupb9WO0I6jse6BlGfTD
+	 Ol1F7HSToIkrWqe2c2yFTcl/K8BujxykHQCkwpv/EF/ToQ4dXbV7TjXTAWrkvgWrJGTAk
+	 D13WMerHM5adskR/4hSL6PSuWgpy76CdBog0Qjf1HoEfxLFQ/InGaCZd6mAAUhM6kgUPu
+	 ACUEoGaCt/moNFCiQNQIDYASW486NdCVIQky7sB+ZULEz+Erjd6R3ASVi4DRwKM7yPGMw
+	 8G+P20KSRcR3m8LPzm1Usgznhe4BklnLwjLEDeyeFExfNV25Gg4lRpghTrPkcHFkdxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHh4Fses;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sVi1n++A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03B3608360F;
-	Sat,  7 Nov 2026 15:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B02C606EE97;
+	Sat,  7 Nov 2026 15:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHh4Fses
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498BD1F0089F;
-	Sat,  7 Nov 2026 15:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sVi1n++A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C815C1F008A1;
+	Sat,  7 Nov 2026 15:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063957;
-	bh=tUL89zczg/+10RA+b9ON4Tn8dlRAumVcCfUHb4BlrOI=;
+	s=korg; t=1794063959;
+	bh=+Yz5RYypp0+ypo4NNkOK5jEetxy/MtLxGYvlXPQShHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHh4Fses+YLQqExqS45vse9gBqf+TWKBTOCZlN2cStMsKYBJppMePyVgS5sOToHGr
-	 +SIydBWY75x+WwpW0aAO0aFT00stO8tA1hVKrkiYW0muqzdccqut1WEJLV5kVhz9Iq
-	 VzLqOrJRz+zrg/AhSkw7JSH983c8NayK1Cvpvfq4=
+	b=sVi1n++Am6rbPkQslGeMWMU4fL0JpjOVSZXrOqcdi0f3MbmBEXzJWjes9nzisDoDx
+	 7r9KGgCgVhClKn527cQfFhX32b70ly60ZMXUak/hDDwnl0PEuR/8nObOgboHeWuToY
+	 SkeAy6rpOTi5bMvCU32kmflsJ/OHMPNn4NB+FrY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thorsten Blum <blum@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0146/1257] crypto: atmel-tdes - zero-initialize device state
-Date: Sat,  7 Nov 2026 08:40:42 -0500
-Message-ID: <20261107134943.344658991@linuxfoundation.org>
+Subject: [PATCH 7.3 0147/1257] crypto: atmel-aes - fix AADLENR for standalone GHASH
+Date: Sat,  7 Nov 2026 08:40:43 -0500
+Message-ID: <20261107134943.372504440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,47 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit dbe70508d507acd677e67eaf029040f5e3a3b2b3 ]
+[ Upstream commit 0dd8cded0e6f8c9635fe1d79d60dc7b2599b099b ]
 
-Commit c659d07f11a3 ("crypto: atmel-tdes - Switch to managed version of
-kzalloc") accidentally replaced kzalloc() with devm_kmalloc(), so the
-device state is no longer zeroed.
+atmel_aes_gcm_ghash_init() writes dd->total, the request's text length,
+to AES_AADLENR.  But the GHASH it runs hashes the dd->datalen bytes passed
+in: the 16-byte length block, or the padded IV when the IV is not 96 bits.
+The data sheet requires AES_AADLENR to hold the length of that input.
 
-atmel_tdes_hw_init() tests dd->flags during probe: a stale TDES_FLAGS_INIT
-skips the hardware reset, and a stale TDES_FLAGS_BUSY makes
-atmel_tdes_handle_queue() treat the engine as permanently busy, leaving
-every request queued and never dispatched.
+With empty plaintext and empty AAD, dd->total is 0 and the tag comes out
+wrong.  Later requests only pass because dd->total still holds the
+previous request's length.
 
-Seen on a SAM9X75 Curiosity: the first TDES request after boot never
-completes and the TDES interrupt count stays at zero, while the AES and
-SHA engines on the same SoC work normally.
+This is testmgr's first gcm(aes) vector, so CONFIG_CRYPTO_SELFTESTS=y
+fails at boot:
 
-Switch to devm_kzalloc(), matching the Atmel AES and SHA drivers.
+  alg: aead: atmel-gcm-aes encryption test failed (wrong result) on test
+  vector 0, cfg="in-place (one sglist)"
 
-Fixes: c659d07f11a3 ("crypto: atmel-tdes - Switch to managed version of kzalloc")
+Without selftests the broken atmel-gcm-aes is preferred at priority 300.
+Seen on a SAM9X75 Curiosity with 6.18 and current mainline.
+
+Write dd->datalen instead.
+
+Fixes: d4419548dba9 ("crypto: atmel-aes - add support to GCM mode")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Thorsten Blum <blum@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-tdes.c | 2 +-
+ drivers/crypto/atmel-aes.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/atmel-tdes.c b/drivers/crypto/atmel-tdes.c
-index ffea1db74651d..2756dab3f4c7f 100644
---- a/drivers/crypto/atmel-tdes.c
-+++ b/drivers/crypto/atmel-tdes.c
-@@ -933,7 +933,7 @@ static int atmel_tdes_probe(struct platform_device *pdev)
- 	struct resource *tdes_res;
- 	int err;
+diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
+index 50d97cef75b89..8e4de859cadc0 100644
+--- a/drivers/crypto/atmel-aes.c
++++ b/drivers/crypto/atmel-aes.c
+@@ -1267,7 +1267,7 @@ static int atmel_aes_gcm_ghash_init(struct atmel_aes_dev *dd)
+ 	struct atmel_aes_gcm_ctx *ctx = atmel_aes_gcm_ctx_cast(dd->ctx);
  
--	tdes_dd = devm_kmalloc(&pdev->dev, sizeof(*tdes_dd), GFP_KERNEL);
-+	tdes_dd = devm_kzalloc(&pdev->dev, sizeof(*tdes_dd), GFP_KERNEL);
- 	if (!tdes_dd)
- 		return -ENOMEM;
+ 	/* Set the data length. */
+-	atmel_aes_write(dd, AES_AADLENR, dd->total);
++	atmel_aes_write(dd, AES_AADLENR, dd->datalen);
+ 	atmel_aes_write(dd, AES_CLENR, 0);
  
+ 	/* If needed, overwrite the GCM Intermediate Hash Word Registers */
 -- 
 2.53.0
 
