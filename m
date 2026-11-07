@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065107;
-	b=PmWp2M2+zHR8w74CIZg0QWeMQHg4ZcfwzSRuHmIv/CnnJ6Vtw5pqi7fgAzFgoLICGGVa
-	 onTHUnGXUrM9O7amUm1X5Uz1iE8f7NPT0d4sH+C432adzSNfhjVbrM03CuzMLwbxfekqG
-	 IAYb9M3qR3JSX5NZ+F4kDmlIQJwb8SUc1eOrn6s481fN1lYNWvVi7wt4zBQIjpaXYbVSh
-	 Ad+6bOncTYXrbrK3XfNQLudFiGwaaoRJYwRjTFPjKXeSRN/H1I31eHJoUyOdQTb6VAQqc
-	 NgNAY1GOG3IYIUQxfrw33KAC+/2JyemjffsZDvlVdp3UzxQxS/wIM6AiLAbZ58jjFTA==
+	t=1794065108;
+	b=nL4Q790x3onOx29GsiabUYP0YgF7H7zL660fEIHvNLS708UYwme80hOlX8oakQuyXr2f
+	 Hc+Kez6J9BIaUQHNi15O7qNKlAl0Qu03e+bARcjUttNexOR6xtWmtqNZ3Iwf6ibjGQ9xl
+	 6x4K2GmbkvSDOaVNMrE4diMHyUmj8KaKvqnP2G59O1uq3IMNt/C+Cyk5wv8JVB85i42E4
+	 NZ9zSj3Q8Lz/bWlxcs2e0Y5Mz78hGQnEE4QdV0IgKGzR8TwYAdk6Q/mYyITvFmwKoE4Qd
+	 U9kLU2GubiMZEfKdAGgGEuasbqiATeyRq9Ngy3nzzt7Wc/2YPHY6k0LPmCSMv0INxww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MaIaIf284Jzciuh2+HQCAqAfd8vgoAXDBSdCYTFuDrI=;
-	b=GmgGURtzxOvhMlDS/uNcZczB1BLZ21pXXm3Ay+1UCYrkP6Po3jdxU7CW/URMhiBGMtJ/
-	 rWye+Cqm6RyPyv49P/E30bA9CBZZTK02sddHmhz/MKfCqf6oDlDLxPkYc0OFK8MFZljMJ
-	 swcfJbzRSTFueTFc3LOIudV4aZ+NFmwFGJG1Jtag2dNAan00L3Zbuw+svtbOjo8L8UfKT
-	 1yWtOIpzLjcnzMeGQDtUCeyeWta3tVfs7PKehxU2MRUXdk7hpb41GOLL0mrRM/74YLjEJ
-	 88gZuCfnefgyba3xkTpV/3yhC8U+wWa25Dp5EVMIk4vJXkQMCG//jcz/pgn/G0jPJaA==
+	bh=TjbYnNqNsoljep+RU99gw5UHeD9VOT9D04uLMaORjeg=;
+	b=reHb5Lolzm339sMRZKiqkSwD5E5qYvZ/TljNpbi5l3V+qGKqZF7I1mCZzR/71hVGMH3u
+	 hzHFm9LlVGJ1mdK0Ga1gZZ+cZMzKyct3VRKYsHYKm1IMFWnDO3A08aC4ABO+OVgfB2q4n
+	 +4TD48KpeLuJ4O8k562cvkW8GZMc9Hq9tlPECR/HJ38zmj5ojopOGSqhdMKbarRNrRLXo
+	 Pd64llxmoduBE57kImxYRLW5/zbXXZPDWR8+EGh9ZlnvyZIyjekdDLaXEggI0NuvphQss
+	 DhLiFoxQNBJc67FTzmNVcdTP6In1xpfsr9x5797C29Qkeh2HQ8QUI6JgeyZEL6LkQuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mOcw3vMF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z5smpzwp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290EB606A32C;
-	Sat,  7 Nov 2026 15:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A66606A32C;
+	Sat,  7 Nov 2026 15:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mOcw3vMF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7901F0089F;
-	Sat,  7 Nov 2026 15:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z5smpzwp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DE51F008A1;
+	Sat,  7 Nov 2026 15:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065107;
-	bh=MaIaIf284Jzciuh2+HQCAqAfd8vgoAXDBSdCYTFuDrI=;
+	s=korg; t=1794065108;
+	bh=TjbYnNqNsoljep+RU99gw5UHeD9VOT9D04uLMaORjeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mOcw3vMFUV2TCNrWN0bcNbdjiad9NZzvGm+LHSXOaKwoavhu+hpzcxD6hksM2NQqg
-	 Lt89K6LuSqH5jYZAZN4ZtEs9xTRskdv7mfd3AglwKlmsCsh41GaeUCj4dUbv6a4X7v
-	 nX5kGnT7ogahqlFuLHfYtS8YWDuSOZ21wVlmrwg0=
+	b=Z5smpzwpCUEtz1uAqYgXlJ+iLXvRqiQ6vXOBl9UoWeNtTfbWLPivl3qk1Td8Bhion
+	 N4/AhjiqAUSdmlcWRCaTpbttMIBjpuYycWeXzJF4WSVLlt8oOGOEJLExnPC9cmO40Q
+	 cLZSP+RLfA0lqDTP9FeSbiQIEFOxmHnz+2ZmOGi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0936/1257] ntfs: balance the $MFT runlist lock in data extension error paths
-Date: Sat,  7 Nov 2026 08:53:52 -0500
-Message-ID: <20261107135005.209622630@linuxfoundation.org>
+Subject: [PATCH 7.3 0937/1257] ntfs: fix kunmap_local() of advanced pointers in check_mft_mirror()
+Date: Sat,  7 Nov 2026 08:53:53 -0500
+Message-ID: <20261107135005.238473569@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,167 +69,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 69ba74e8a5dfc6fd7ba3588e81d53e965566f3a4 ]
+[ Upstream commit 16fcb1c446f17c11c104bd4e631b841946d180aa ]
 
-ntfs_mft_data_extend_allocation_nolock() drops the $MFT runlist lock
-before allocating clusters, and every path into undo_alloc arrives
-without it, except a map_mft_record() failure, which takes it first.
-undo_alloc never releases it, so the lock leaks and the next $MFT
-extension and $MFT writeback hang.  The restore_undo_alloc failure
-path, on the other hand, releases the lock without holding it.  And
-undo_alloc frees the clusters with ntfs_cluster_free() and truncates
-the runlist without the lock, although both require it.
+check_mft_mirror() compares the mft records of a page with the mirror
+records by advancing kmft and kmirr by the record size for every record.
+It then passes the advanced pointers to kunmap_local(). After the last
+record of a page they point one page past the mapping.
 
-Enter undo_alloc without the lock on every path.  Merge the new clusters
-with ntfs_runlists_merge_keep_src() and keep the runlist that
-ntfs_cluster_alloc() returned until the extension is complete.  On
-failure, undo_alloc truncates $MFT's runlist under the lock and, after
-dropping it, frees the clusters from the kept runlist with
-ntfs_cluster_free_from_rl().  That keeps lcnbmp_lock outside the runlist
-lock, the order given by the comment before the cluster allocation.
-Unlike ntfs_cluster_free() on a volume mounted with -o discard, this
-does not issue discards for the clusters, which were never written; the
-runlist merge failure path already frees them the same way.  If the
-truncation fails, the runlist may still reference the clusters, so they
-stay allocated and the volume is marked for chkdsk; at this call site
-the truncation only shrinks the runlist and cannot fail today.
+With HIGHMEM kunmap_local() warns that the address does not match the
+top of the kmap_local stack. What it does next depends on how the
+architecture finds the page table entry:
 
-A shorter fix would keep calling ntfs_cluster_free() on the live
-runlist without the lock, relying on $MFT's runlist being fully mapped
-and changed only by this function under mrec_lock.  That breaks
-ntfs_cluster_free()'s documented locking rule on an argument about the
-rest of the driver, so this patch does not do that.
+- 32-bit ARM looks the entry up by that address. It clears the entry of
+  the neighbouring fixmap slot and leaves the real mapping in place.
+  The next kmap_local() on that CPU that reaches the slot hits the
+  BUG_ON(!pte_none()) in __kmap_local_pfn_prot().
+- x86-32 takes the entry from the stack index, so the wrong address
+  does not select a wrong entry. In QEMU the mount carried on after the
+  warning.
 
-Fixes: 115380f9a2f9 ("ntfs: update mft operations")
+With 4 KiB pages and 1 KiB mft records the four mirror records fill
+exactly one page, so every mount whose $MFT and $MFTMirr folios are in
+highmem hits it. A fresh mkntfs volume on 32-bit ARM
+(multi_v7_defconfig, 256 MiB of highmem) fails on the first mount:
+
+  WARNING: mm/highmem.c:623 at kunmap_local_indexed+0x254/0x26c, CPU#1: mount/85
+   kunmap_local_indexed from ntfs_fill_super+0x224c/0x35a0
+   ntfs_fill_super from get_tree_bdev_flags+0x1d8/0x2a4
+  ntfs: volume version 3.1, dev loop0, cluster size 4096
+  kernel BUG at mm/highmem.c:565!
+  PC is at __kmap_local_pfn_prot+0x210/0x214
+   __kmap_local_page_prot from ntfs_check_logfile+0x1fc/0x1210
+
+Found with syzkaller. Kernels without HIGHMEM do not show it.
+kmap_local_folio() returns the direct map address there and
+kunmap_local() has no mapping to remove.
+
+Keep the addresses returned by kmap_local_folio() and unmap with those.
+
+Fixes: 6251f0b0de7d ("ntfs: update super block operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/mft.c | 50 ++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 34 insertions(+), 16 deletions(-)
+ fs/ntfs/super.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ntfs/mft.c b/fs/ntfs/mft.c
-index 892d27db22a3e..482a216ade2cb 100644
---- a/fs/ntfs/mft.c
-+++ b/fs/ntfs/mft.c
-@@ -1771,7 +1771,7 @@ static int ntfs_mft_data_extend_allocation_nolock(struct ntfs_volume *vol)
- 	s64 min_nr, nr, ll;
- 	unsigned long flags;
- 	struct ntfs_inode *mft_ni;
--	struct runlist_element *rl, *rl2;
-+	struct runlist_element *rl, *rl2, *alloc_rl;
- 	struct ntfs_attr_search_ctx *ctx = NULL;
- 	struct mft_record *mrec;
- 	struct attr_record *a = NULL;
-@@ -1839,15 +1839,15 @@ static int ntfs_mft_data_extend_allocation_nolock(struct ntfs_volume *vol)
- 	up_write(&mft_ni->runlist.lock);
- 
- 	do {
--		rl2 = ntfs_cluster_alloc(vol, old_last_vcn, nr, lcn, MFT_ZONE,
--				true, false, false);
--		if (!IS_ERR(rl2))
-+		alloc_rl = ntfs_cluster_alloc(vol, old_last_vcn, nr, lcn,
-+				MFT_ZONE, true, false, false);
-+		if (!IS_ERR(alloc_rl))
- 			break;
--		if (PTR_ERR(rl2) != -ENOSPC || nr == min_nr) {
-+		if (PTR_ERR(alloc_rl) != -ENOSPC || nr == min_nr) {
- 			ntfs_error(vol->sb,
- 				"Failed to allocate the minimal number of clusters (%lli) for the mft data attribute.",
- 				nr);
--			return PTR_ERR(rl2);
-+			return PTR_ERR(alloc_rl);
+diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
+index 6d70352136b0c..0a1faa262c417 100644
+--- a/fs/ntfs/super.c
++++ b/fs/ntfs/super.c
+@@ -1132,7 +1132,7 @@ static bool check_mft_mirror(struct ntfs_volume *vol)
+ 	struct super_block *sb = vol->sb;
+ 	struct ntfs_inode *mirr_ni;
+ 	struct folio *mft_folio = NULL, *mirr_folio = NULL;
+-	u8 *kmft = NULL, *kmirr = NULL;
++	u8 *kmft = NULL, *kmirr = NULL, *kmft_base = NULL, *kmirr_base = NULL;
+ 	struct runlist_element *rl, rl2[2];
+ 	pgoff_t index;
+ 	int mrecs_per_page, i;
+@@ -1147,9 +1147,9 @@ static bool check_mft_mirror(struct ntfs_volume *vol)
+ 		/* Switch pages if necessary. */
+ 		if (!(i % mrecs_per_page)) {
+ 			if (index) {
+-				kunmap_local(kmirr);
++				kunmap_local(kmirr_base);
+ 				folio_put(mirr_folio);
+-				kunmap_local(kmft);
++				kunmap_local(kmft_base);
+ 				folio_put(mft_folio);
+ 			}
+ 			/* Get the $MFT page. */
+@@ -1159,7 +1159,8 @@ static bool check_mft_mirror(struct ntfs_volume *vol)
+ 				ntfs_error(sb, "Failed to read $MFT.");
+ 				return false;
+ 			}
+-			kmft = kmap_local_folio(mft_folio, 0);
++			kmft_base = kmap_local_folio(mft_folio, 0);
++			kmft = kmft_base;
+ 			/* Get the $MFTMirr page. */
+ 			mirr_folio = read_mapping_folio(vol->mftmirr_ino->i_mapping,
+ 					index, NULL);
+@@ -1167,7 +1168,8 @@ static bool check_mft_mirror(struct ntfs_volume *vol)
+ 				ntfs_error(sb, "Failed to read $MFTMirr.");
+ 				goto mft_unmap_out;
+ 			}
+-			kmirr = kmap_local_folio(mirr_folio, 0);
++			kmirr_base = kmap_local_folio(mirr_folio, 0);
++			kmirr = kmirr_base;
+ 			++index;
  		}
- 		/*
- 		 * There is not enough space to do the allocation, but there
-@@ -1858,17 +1858,22 @@ static int ntfs_mft_data_extend_allocation_nolock(struct ntfs_volume *vol)
- 		ntfs_debug("Retrying mft data allocation with minimal cluster count %lli.", nr);
- 	} while (1);
  
-+	/*
-+	 * Keep @alloc_rl until the extension is complete: it describes exactly
-+	 * the new clusters, which undo_alloc frees if a later step fails.
-+	 */
- 	down_write(&mft_ni->runlist.lock);
--	rl = ntfs_runlists_merge(&mft_ni->runlist, rl2, 0, &new_rl_count);
-+	rl = ntfs_runlists_merge_keep_src(&mft_ni->runlist, alloc_rl, 0,
-+			&new_rl_count);
- 	if (IS_ERR(rl)) {
- 		up_write(&mft_ni->runlist.lock);
- 		ntfs_error(vol->sb, "Failed to merge runlists for mft data attribute.");
--		if (ntfs_cluster_free_from_rl(vol, rl2)) {
-+		if (ntfs_cluster_free_from_rl(vol, alloc_rl)) {
- 			ntfs_error(vol->sb,
- 				"Failed to deallocate clusters from the mft data attribute.%s", es);
- 			NVolSetErrors(vol);
- 		}
--		kvfree(rl2);
-+		kvfree(alloc_rl);
- 		return PTR_ERR(rl);
- 	}
- 	mft_ni->runlist.rl = rl;
-@@ -1884,7 +1889,6 @@ static int ntfs_mft_data_extend_allocation_nolock(struct ntfs_volume *vol)
- 	if (IS_ERR(mrec)) {
- 		ntfs_error(vol->sb, "Failed to map mft record.");
- 		ret = PTR_ERR(mrec);
--		down_write(&mft_ni->runlist.lock);
- 		goto undo_alloc;
- 	}
- 	ctx = ntfs_attr_get_search_ctx(mft_ni, mrec);
-@@ -1982,6 +1986,7 @@ static int ntfs_mft_data_extend_allocation_nolock(struct ntfs_volume *vol)
- 	mark_mft_record_dirty(ctx->ntfs_ino);
- 	ntfs_attr_put_search_ctx(ctx);
- 	unmap_mft_record(mft_ni);
-+	kvfree(alloc_rl);
- 	ntfs_debug("Done.");
- 	return 0;
- restore_undo_alloc:
-@@ -1995,7 +2000,7 @@ static int ntfs_mft_data_extend_allocation_nolock(struct ntfs_volume *vol)
- 		write_unlock_irqrestore(&mft_ni->size_lock, flags);
- 		ntfs_attr_put_search_ctx(ctx);
- 		unmap_mft_record(mft_ni);
--		up_write(&mft_ni->runlist.lock);
-+		kvfree(alloc_rl);
- 		/*
- 		 * The only thing that is now wrong is ->allocated_size of the
- 		 * base attribute extent which chkdsk should be able to fix.
-@@ -2006,15 +2011,28 @@ static int ntfs_mft_data_extend_allocation_nolock(struct ntfs_volume *vol)
- 	ctx->attr->data.non_resident.highest_vcn =
- 			cpu_to_le64(old_last_vcn - 1);
- undo_alloc:
--	if (ntfs_cluster_free(mft_ni, old_last_vcn, -1, ctx) < 0) {
--		ntfs_error(vol->sb, "Failed to free clusters from mft data attribute.%s", es);
--		NVolSetErrors(vol);
--	}
--
-+	/*
-+	 * Entered without the runlist lock.  Take the new runs off the
-+	 * runlist under it, and free their clusters from @alloc_rl once it
-+	 * is dropped, as lcnbmp_lock nests outside it (see above).
-+	 */
-+	down_write(&mft_ni->runlist.lock);
- 	if (ntfs_rl_truncate_nolock(vol, &mft_ni->runlist, old_last_vcn)) {
- 		ntfs_error(vol->sb, "Failed to truncate mft data attribute runlist.%s", es);
- 		NVolSetErrors(vol);
-+		/*
-+		 * The runlist may still reference the clusters, so leave them
-+		 * allocated until chkdsk.
-+		 */
-+		kvfree(alloc_rl);
-+		alloc_rl = NULL;
-+	}
-+	up_write(&mft_ni->runlist.lock);
-+	if (ntfs_cluster_free_from_rl(vol, alloc_rl)) {
-+		ntfs_error(vol->sb, "Failed to free clusters from mft data attribute.%s", es);
-+		NVolSetErrors(vol);
- 	}
-+	kvfree(alloc_rl);
- 	if (mp_extended && ntfs_attr_update_mapping_pairs(mft_ni, 0)) {
- 		ntfs_error(vol->sb, "Failed to restore mapping pairs.%s",
- 			   es);
+@@ -1179,10 +1181,10 @@ static bool check_mft_mirror(struct ntfs_volume *vol)
+ 					"Incomplete multi sector transfer detected in mft record %i.",
+ 					i);
+ mm_unmap_out:
+-				kunmap_local(kmirr);
++				kunmap_local(kmirr_base);
+ 				folio_put(mirr_folio);
+ mft_unmap_out:
+-				kunmap_local(kmft);
++				kunmap_local(kmft_base);
+ 				folio_put(mft_folio);
+ 				return false;
+ 			}
+@@ -1218,9 +1220,9 @@ static bool check_mft_mirror(struct ntfs_volume *vol)
+ 		kmirr += vol->mft_record_size;
+ 	} while (++i < vol->mftmirr_size);
+ 	/* Release the last folios. */
+-	kunmap_local(kmirr);
++	kunmap_local(kmirr_base);
+ 	folio_put(mirr_folio);
+-	kunmap_local(kmft);
++	kunmap_local(kmft_base);
+ 	folio_put(mft_folio);
+ 
+ 	/* Construct the mft mirror runlist by hand. */
 -- 
 2.53.0
 
