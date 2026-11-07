@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065040;
-	b=rPrW5BsHaMcuFdkTVibq6dZ9Lc6XzYBi+2Qp17tVq3BLKLNCMKad6qHGOu4qXpg5QC2L
-	 SkoqR0vG9StdDeyf/bXqdvnfYDdmBisOkMKW+nOuu5wtxhofhqqikeBZcdtjSfz6c/Tll
-	 YcW5ChbXEmRZlO1h18ugX5S7p16ms53QFYLZw/SDWPSqsysfq/332iG5q4zI8BNgfsx/N
-	 Q+/e5470NO2IFkSwTJnznlmdSf82QO6epsmPwyxAf8MaEY/++e2WmeVDAsUy0Xu9aOxPG
-	 8dE+RstOmBNZYVUVAnEVdSExOaCszZ4EkkT9y95cy1jlYui5gc8Zea05HC0SIS+08Sg==
+	t=1794065041;
+	b=HjvbYzjRFmKqUv/z+E1ErgjUQsgais4ITSb8JIg0G8egrePZE//d5Ioud6q5+0juV3ms
+	 P9DFnBFl6xqK0FV/MPpEqV/K+FCy4SOW0onjur6vd0XwpPtgFeUHloO2tAfeeUgYBNPlk
+	 Lgf3hSNlIKAiTBRd08y4na3oaQDu8Wx3RvGw5wYh67blT5VkspllNyaHF1KoN4UlUmOc1
+	 BzP/Q+HyDTgEVD3GExM//ZCjN4x8j4mCB4g6OEP2zsVpsHcnMHcZz5byyO/4YV97Lb+kq
+	 tc1jOLXAwl0Dhe9/s6fXdNjs0zj3ND8xiZxbCEcVKaAJTIk67PnnPWfopY6DMNfwi9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065040;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=olex/Zqbn56TYLhqeXeSOcF4tIAAvl86Z4DnL5TqM7E=;
-	b=Et3WySSNbUMxmt4SdezcSKK9GnFQIUFMtBBJQjJUHtC93fJWyMfFTmjr+0h8CaOobF3s
-	 EaDzZxoOhp4FrWo5Rz0v7sYvz22gfVdAy209FQf6woQhbXtxGDiUPHz997Ca2LY0itXcL
-	 XMbx/WdDB0WC7JFdwLUImzDrihq2xCXT+hc/r/ZVFAxXsFAS+f7svYE8EmzIfcaZxHf4Q
-	 VHOqygMN7QyYZegokguWpSTEO6wUaR6CPQf5Ocrib/3DNNchgx3M8CsQfhKA8qZJ59Njg
-	 fcdw2EbOlRu38c9MlLFeo6a8OquZG11zeCm/MCopoVzIXNFfjJqPlxKMPsqPqJMiPQw==
+	bh=kDVoyueMGSZ+l13YfOt5JpBk/3vRVVogbf4jl695zd8=;
+	b=kiaTfcBhxhjvHPxkCwthlWHYN79LCTtSjwWb+EcqeOikIkFD7konMIow0dSQkFezGXcz
+	 yVIPdBlDfOKiz2T2V/Jrk9W6L3WLQeSEo40lZwsdNpcDz/FFEeSE0Z74/TxRJWylSnXJV
+	 duQEzo/Ohp+vwQBncgyofm6WYk2TXBH/pByS4x0WDP9xFMYUZz/BM78sZ8HbYd3j4f5YH
+	 eyWfrV8qR75jXUOF2QmPCtd69F2Ai5Y/i5SvavVciWjTLDuBcYcOMt1uocZ1qpcEhoFDv
+	 71GdDsHuQcZxL+0eBLdEWNSk2aYuC3OSd6iBKZ+XlwHAEbVMWcX1gidwgLgpSlyhKmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U34y2rFN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LxgEHBIV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C938A606A9C1;
-	Sat,  7 Nov 2026 15:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CB6606A9D3;
+	Sat,  7 Nov 2026 15:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U34y2rFN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708A51F0089F;
-	Sat,  7 Nov 2026 15:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LxgEHBIV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4DD1F0089F;
+	Sat,  7 Nov 2026 15:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065039;
-	bh=olex/Zqbn56TYLhqeXeSOcF4tIAAvl86Z4DnL5TqM7E=;
+	s=korg; t=1794065041;
+	bh=kDVoyueMGSZ+l13YfOt5JpBk/3vRVVogbf4jl695zd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U34y2rFN/BbJUIc7O+wQLExtUnjHwul0165UtMvM1X0aDAbFuxDhFvMOynYWOrO7D
-	 l1RPbYJ4jr5kUcNmiNqesWoGoq0PZ8ipIo4I17qI56gU1x7kzBQVjtaIO7H01mEAmt
-	 zbmYxKKJYUpmjzL3SPhoq5SqGZRcan1M2mf+aMao=
+	b=LxgEHBIVVHmaG8Y1vAbjhwZ09W2M5dwWMrjd2IvXRXCzbnxYxBoGfdv9Uw5cGAB4O
+	 PhrzkoZmuiZR13EeAkCcFDmcxXrwNav3iaHgeaLQSP9efnqJhMvo9MBBc7IeBJMnqG
+	 UEtzpnehQ6f8rDrWeolBsPVV3f0UR3+iFzuXCCq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Christidis <gxristidis@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Michal Blaszczyk <michalblk@google.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0877/1257] ALSA: hda/realtek: Fix headset mic on ASUS Zenbook 14 UX3402VA
-Date: Sat,  7 Nov 2026 08:52:53 -0500
-Message-ID: <20261107135003.547267695@linuxfoundation.org>
+Subject: [PATCH 7.3 0895/1257] sched_ext: Reset runnable_at when a task leaves its scheduler
+Date: Sat,  7 Nov 2026 08:53:11 -0500
+Message-ID: <20261107135004.044256124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,39 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Christidis <gxristidis@gmail.com>
+From: Michal Blaszczyk <michalblk@google.com>
 
-[ Upstream commit 40409fa23d32c8ed51e832031daa6decd9d6fd11 ]
+[ Upstream commit 993e8fbfecbbf284b9644c6f10741b28fb914094 ]
 
-The UX3402VA (1043:16a3) BIOS leaves pin 0x19 unconfigured, so the
-headset mic does not work. Use ALC294_FIXUP_ASUS_SPI_HEADSET_MIC like
-the UX3405MA, it sets up the mic and keeps the CS35L41 speaker fixup.
+The watchdog measures how long a task has been waiting from
+p->scx.runnable_at, which set_task_runnable() resets when the task becomes
+runnable after it last ran. ops_dequeue() never asks for a reset, as the
+dequeue of a waiting task is temporary, e.g. for a migration or an
+attribute change.
 
-Tested on a UX3402VA: headset mic, internal mic and speakers work.
+Leaving the scheduler isn't temporary. A task which is switched out of
+SCHED_EXT while it's waiting keeps its runnable_at. When it's switched back
+and becomes runnable, its wait appears to have started before it left, and
+the time it spent in another class counts towards the timeout. If the
+watchdog checks before the task runs, it aborts the scheduler:
 
-Fixes: 07058dceb038 ("ALSA: hda/realtek: Splitting the UX3402 into two separate models")
-Cc: stable@vger.kernel.org
-Signed-off-by: George Christidis <gxristidis@gmail.com>
-Link: https://patch.msgid.link/20261018-for-linus-v1-1-4d8e9ff27d89@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  sched_ext: class_switch_stall: runner[418] failed to run for 3.010s
+
+Here, the task waited for a few milliseconds before it was switched to
+SCHED_OTHER, slept outside of SCHED_EXT for three seconds, and was charged
+for all of it as soon as it woke up on SCHED_EXT again.
+
+The same happens when scx_sub_enable_workfn() hands a waiting task over to
+a new sub-scheduler, which can then be blamed for time the task waited
+under the parent. scx_rehome_task() isn't affected, as it moves the task
+through SCX_TASK_INIT, which resets runnable_at. The stale runnable_at also
+skews the default core-sched ordering in scx_prio_less().
+
+Reset runnable_at in scx_disable_task(), when the task leaves the control
+of its scheduler.
+
+Fixes: 8a010b81b3a5 ("sched_ext: Implement runnable task stall watchdog")
+Cc: stable@vger.kernel.org # v6.12+
+Assisted-by: LLM
+Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext/ext.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index e71f78b13a277..68650004ce0f9 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7907,7 +7907,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1664, "ASUS ExpertBook PM3406CHA", ALC256_FIXUP_ASUS_PM3406CHA),
- 	SND_PCI_QUIRK(0x1043, 0x1683, "ASUS UM3402YAR", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x1043, 0x16a3, "ASUS UX3402VA", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x16a3, "ASUS UX3402VA", ALC294_FIXUP_ASUS_SPI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x16b2, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
- 	SND_PCI_QUIRK(0x1043, 0x16d3, "ASUS UX5304VA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x16e3, "ASUS UX50", ALC269_FIXUP_STEREO_DMIC),
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 60e8bacc14bb9..84774147a1d5b 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2232,7 +2232,11 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
+ 	struct scx_sched *sch = scx_task_sched(p);
+ 	unsigned long opss;
+ 
+-	/* dequeue is always temporary, don't reset runnable_at */
++	/*
++	 * Don't reset runnable_at. If @p is waiting, the wait continues across
++	 * temporary dequeues, e.g. for a migration or an attribute change.
++	 * scx_disable_task() ends it if @p leaves its scheduler.
++	 */
+ 	clr_task_runnable(p, false);
+ 
+ retry:
+@@ -4102,6 +4106,14 @@ static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
+ 	scx_set_task_slice(p, 0);
+ 	p->scx.reenq_cnt = 0;
+ 
++	/*
++	 * If @p is runnable but not running, its wait started at runnable_at,
++	 * which ops_dequeue() didn't reset. Leaving @sch ends the wait. Reset
++	 * runnable_at the next time @p is enqueued on SCX, so that the watchdog
++	 * doesn't count the time @p spends elsewhere.
++	 */
++	p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
++
+ 	/*
+ 	 * Verify the task is not in BPF scheduler's custody. If flag
+ 	 * transitions are consistent, the flag should always be clear
 -- 
 2.53.0
 
