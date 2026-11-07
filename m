@@ -1,62 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064548;
-	b=LJDtpjAb+wUcgwsUR5pFgwy24tY9oJlpcFlMal6zrk1R7SYOo9uQGP5ZMyZM0KuOrSn/
-	 GomfKA2IRxj6KJZ1dfLFl8YPGCgp9K7BaH9MCjJzzxAVDNj5pv+JrpBrwOy0dyiBHUz8s
-	 Jov7i+ndcRuhIPun+s8XTfi8xpEHJcY5LkPcp8WNCJzi/sPDPF64IhNHcDDyCBcusBBAw
-	 eeozcJZBS5Mx4+x6ytYuJaJnzZWjjf6mdqeKK6/riiG7ACMxa7S2CcAM8ycDmWVDyiQcp
-	 3YLs1Y3nBvz5W2l3bvYAKzeVJ90QAmm5iy9ODJcqPAj7+RjpoCR0C1c+Au/Z5g6Lg9g==
+	t=1794064549;
+	b=nHClvHNVWqTfK1bIgLte/Z2QpIvcZK1h8UohtmutTxyz7EqZdOtftq67aNJDerHPtbL6
+	 OFsRQxuRmAkFKvMHacq/UXEFZGAwyCL2igzNNvhaKSKUhbSlSUjdueUMputKKrTQaVABx
+	 4OGwoLAq2ef/mcTYD9aNyB+zpXrzUaTrPqrPPzSClOZplMTg5BdoyF/8YRWjTCJ2qYyZK
+	 hpc88DP/QsW+W6nzvNwaXbT5Uf/QEiYX1lxS0CLr+xjK/bpFzF5v1KxDfu4M+F2tAChli
+	 4KUx4oYlGB6zaaBFiaLjR+/n/Sx7WjU0KYRUjfMeyYhs6uoE10zu5+UWoGP+wq+71Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064548;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nus3TZgKp4mJl8QUhGwn6iS+/fqVGYgL0KYRVx578yw=;
-	b=s7WTsN68EsrVwNSjaTGqEaOcEyL7FViRz7mVMXtNxVzqK0KHolkcD0N+NaGLdfziBZSk
-	 b2jVq293d6z7JREyDWosdB03h1hWd5g5HYxkPmDKC2rrTLduulFaD7xhwuRKHeNWUc8ob
-	 peWVnVQd8MNNMmkh8QDzg8iCMu6fumussXfXqKVGTdeTCljpxkYwUTKHEMF1LKSgfmczY
-	 hqCjftY5INXwH1rnHDtvZ+6V51JFqeS/4JuB5LP5jHhObSYYXOgQnHbQ3R6RFgbMA/lYB
-	 33jKgpPyDnlIqa4B3FmuDdYhVPSrBv+1t2NRm+ikBoI8dLw/ccsrwslA7KBe2ptY6lQ==
+	bh=nMTbUReAp+a2AF+d2UW8mkq+fNNOdYPFadpv8lCOGyU=;
+	b=i5iYbsuGffTyWeVL/eM7QD5yQqcakxD7/5Ks9ZXgRUq04XQk8GAFoThLYpG0eaIQU4M0
+	 uRWoAnv0+4s/nArcNnGrfStjoydqaHBVtDys5wWVvVxOBPNNfq3Fj6GvPeHFLLq5bgve6
+	 8b4xSj9Gke3GoFJfwKoVKSK9OEw8WwuUK8gtxaooOcMB7pbr2caidDlgscs8LYpnEMG24
+	 hZjRMDUKdTn1dymKlpwAZQ3VKBtjQRiX93xXzUqxzl3Vt6hE6kqrS0+5AWftEZOzpDbnN
+	 sBZiVDPbNIz7Q26/4I6twfLY0Bi/bpZyRGEjVvRtGu85OPLcuJ+PlT+oMyojCkECq8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QnE8/lAo";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N5c4iL99;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF384606CE78;
-	Sat,  7 Nov 2026 15:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A02606B8A6;
+	Sat,  7 Nov 2026 15:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QnE8/lAo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7345F1F0089F;
-	Sat,  7 Nov 2026 15:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N5c4iL99
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917381F0089F;
+	Sat,  7 Nov 2026 15:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064547;
-	bh=Nus3TZgKp4mJl8QUhGwn6iS+/fqVGYgL0KYRVx578yw=;
+	s=korg; t=1794064548;
+	bh=nMTbUReAp+a2AF+d2UW8mkq+fNNOdYPFadpv8lCOGyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QnE8/lAodiD69D2lQKMQfWXpIh0KFPy+rWgF/vo8X+SwXR/w6cx4aacx/kPa5UrMJ
-	 v28gP3DRpO6an/VFKGJobA/IVIS+DW/yIhMVjrpZ0Ps8BuFTWGI2bxnc99K+JupyiQ
-	 qe9Ldpy/LGSgK8P9FHnZA9psJkVz4PiaTJAnHzOk=
+	b=N5c4iL99htR/N6c4hXAkgAqWNVHJ4gLbFuAWVuF9xdARJAbEsnEt/UvObt9ofvc+P
+	 ODQ+GnyNjPpJ0ANuqX9KiB+37lI7MwDvpof9MhSRrqJUdTDo68N64ckuAQ4glkMMTU
+	 siKJ2Pjpnkw5KTLlHL2baUvibgT+sNMqp7O7V2R4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
+	Hui Zhu <zhuhui@kylinos.cn>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Vega <vega@nebusec.ai>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Barry Song <baohua@kernel.org>,
 	David Hildenbrand <david@kernel.org>,
-	Grazvydas Ignotas <notasas@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kairui Song <kasong@tencent.com>,
 	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0572/1257] mm/memory: constrain generic_access_phys() to page boundary
-Date: Sat,  7 Nov 2026 08:47:48 -0500
-Message-ID: <20261107134955.149803606@linuxfoundation.org>
+Subject: [PATCH 7.3 0573/1257] mm: memcg: redirect stats updates of dying memcgs for all hierarchies
+Date: Sat,  7 Nov 2026 08:47:49 -0500
+Message-ID: <20261107134955.176214508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -78,91 +80,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Hui Zhu <zhuhui@kylinos.cn>
 
-[ Upstream commit ae0298a5fbeff32951c0d31398ccec97ec6aa0ea ]
+[ Upstream commit 7ee68fff2ba6740558cab195925b3a7ff7a1480f ]
 
-This patch addresses an issue in generic_access_phys() where accessing
-memory across page boundaries in PFNMAP VMAs assumes physical pages are
-contiguous, which can lead to accessing unintended physical memory or
-exceeding VMA boundaries.
+Patch series "mm: workingset: fix the shadow node budget under MGLRU", v5.
 
-generic_access_phys() improperly validates the memory access range: it
-only validates the start address using follow_pfnmap_start() and passes
-PAGE_ALIGN(len + offset) to ioremap_prot().
+Commit 7404bd37cfbe ("mm: workingset: use lruvec_lru_size() to get the
+number of lru pages") broke the workingset shadow node budget under MGLRU:
+lruvec_lru_size() reads mz->lru_zone_size, which MGLRU never maintains, so
+count_shadow_nodes() sees the evictable LRU lists as empty and the shadow
+shrinker reclaims eviction tokens almost as fast as they are created,
+losing thrashing protection.
 
-This poses two problems:
-1. In PFNMAP VMAs, consecutive virtual pages are not guaranteed to be
-   physically contiguous, and individual PTEs may have different access
-   permissions or writability.
-2. The mapping may cross VMA boundaries if len extends beyond vma->vm_end.
+Patch 1 extends the dying-mcg stat redirection (previously cgroup v1 only)
+to all hierarchies, addressing the reparenting race that motivated
+7404bd37cfbe.
 
-Constrain the access in generic_access_phys() to at most the current page
-boundary (PAGE_SIZE - offset) and map only a single PAGE_SIZE via
-ioremap_prot().  Since the caller __access_remote_vm() already loops over
-the requested length and handles partial transfers, it will naturally
-iterate over the remaining pages.
+Patch 2 then switches count_shadow_nodes() back to
+lruvec_page_state_local(), which both classic LRU and MGLRU maintain.
 
-Also add a missing (resource_size_t) cast during PFN re-validation to
-avoid truncation on 32-bit PAE systems.
+Patch 3 recovers the performance.  Patch 1 added an unconditional
+rcu_read_lock() to the stat update fast path; patch 3 checks
+memcg_is_dying() first and takes the RCU lock only on the rare dying path.
 
-Link: https://lore.kernel.org/e06e28a46c2a176238f03b5740df0913e57c2861.1788842306.git.rakukuip@gmail.com
-Fixes: 9cb12d7b4cca ("mm/memory.c: actually remap enough memory")
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
+Patch 4 closes an accounting gap that patch 2 makes visible: on cgroup v2,
+reparent_state_local() never moves the dying memcg's non-hierarchical
+lruvec stats to the parent, so the parent receives the uncharges without
+the matching charges and its state_local underflows.  Patch 4 reparents
+those stats, mirroring cgroup v1.
+
+Performance testing
+===================
+
+The test script and the raw results are available at [1].
+
+Environment: 10-vCPU QEMU guest, 8 GiB RAM, cgroup v2; 7 runs per
+configuration, medians reported.  Workloads:
+
+  w1-anon-churn: single-threaded anon fault/charge loop in a memcg
+                 (MADV_DONTNEED + re-fault, no reclaim).  Every touch
+                 is a real fault with charge and memcg stat updates,
+                 so it stresses exactly the fast path patch 1 changes.
+                 This is the meaningful signal: it is not reclaim-bound,
+                 so the small fast-path overhead is not drowned out.
+  w2-file-churn: file read loop under memory.high pressure
+                 (reclaim-bound; the differences below are within
+                 run-to-run noise and are shown for completeness only).
+  w3-reparent:   reparent accounting sanity check.
+
+w1-anon-churn (pages/s):
+
+                 classic LRU          MGLRU
+base             4393028              4377122
+patches 1-2      4385996   (-0.2%)    4352887   (-0.6%)
+patches 1-3      4381832   (-0.3%)    4377053   (+0.0%)
+
+w2-file-churn (MB/s):
+
+                 classic LRU          MGLRU
+base             8277                 8226
+patches 1-2      8226      (-0.6%)    8123      (-1.3%)
+patches 1-3      8157      (-1.4%)    8294      (+0.8%)
+
+w3-reparent passed on all kernels.
+
+The small overhead visible with patches 1-2 comes from the redirection
+added by patch 1; patch 3 brings w1 back to the base level in both LRU
+configurations.  The w2-file-churn differences are within run-to-run
+noise: that workload is reclaim-bound and too noisy to expose the small
+fast-path overhead, so w1-anon-churn is the meaningful signal.  Patch 4
+only touches the memcg offline path and is not exercised by these
+workloads.
+
+This patch (of 4):
+
+get_non_dying_memcg_start() redirects the stat updates of a dying memcg to
+its closest non-dying ancestor, but only on cgroup v1; on cgroup v2 the
+stats keep being accounted to the dying memcg itself.
+
+A later patch in this series restores lruvec_page_state_local() in
+count_shadow_nodes() to fix the broken workingset shadow node budget under
+MGLRU.  count_shadow_nodes() is the only reader of those non-hierarchical
+state_locals on cgroup v2: when a memcg is offlined, its pages are
+reparented to the ancestor but their stat updates keep being accounted to
+the dying memcg, so count_shadow_nodes() computes a wrong shadow node
+budget and workingset thrashing protection is lost.  This is user visible
+as premature reclaim of hot page cache and degraded performance under
+memory pressure.  Apply the redirection to all hierarchies to fix this.
+
+Offlining is rare, so the added cost on the stat update fast path is
+limited to an rcu_read_lock() and a css_is_dying() check; the upward walk
+happens only while a memcg is dying.
+
+Link: https://lore.kernel.org/cover.1789096175.git.zhuhui@kylinos.cn
+Link: https://lore.kernel.org/c1ef4ef6a84cac479e573f4423b734dc8176f7d5.1789096175.git.zhuhui@kylinos.cn
+Link: https://gist.github.com/teawater/32f373ec41d185d840455eb167321a5a [1]
+Fixes: 7404bd37cfbe ("mm: workingset: use lruvec_lru_size() to get the number of lru pages")
+Signed-off-by: Hui Zhu <zhuhui@kylinos.cn>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: David Hildenbrand <david@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: LLM
-Cc: Grazvydas Ignotas <notasas@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kairui Song <kasong@tencent.com>
 Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/memcontrol.c | 30 +++++-------------------------
+ 1 file changed, 5 insertions(+), 25 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 8b0c2c735d3de..4f8199de44afb 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -7164,6 +7164,12 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	bool writable;
- 	struct follow_pfnmap_args args = { .vma = vma, .address = addr };
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 1f03f5e775554..af61dacf0d180 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -845,20 +845,14 @@ static long memcg_state_val_in_pages(int idx, long val)
+ 	return val < 0 ? -res : res;
+ }
  
-+	/*
-+	 * Limit access to one page at a time, as that's what follow_pfnmap_start()
-+	 * guarantees; expect the caller to retry to read larger ranges.
-+	 */
-+	len = min_t(int, len, PAGE_SIZE - offset);
-+
- retry:
- 	if (follow_pfnmap_start(&args))
- 		return -EINVAL;
-@@ -7175,7 +7181,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	if ((write & FOLL_WRITE) && !writable)
- 		return -EINVAL;
+-#ifdef CONFIG_MEMCG_V1
+ /*
+- * Used in mod_memcg_state() and mod_memcg_lruvec_state() to avoid race with
+- * reparenting of non-hierarchical state_locals.
++ * Used in mod_memcg_state() and mod_memcg_lruvec_state() to avoid race
++ * with reparenting of non-hierarchical state_locals.  Offlining a
++ * memcg is rare, so do the redirection for all cgroup hierarchies.
+  */
+-static inline struct mem_cgroup *get_non_dying_memcg_start(struct mem_cgroup *memcg,
+-							   bool *rcu_locked)
++static inline struct mem_cgroup *
++get_non_dying_memcg_start(struct mem_cgroup *memcg, bool *rcu_locked)
+ {
+-	/* Rebinding can cause this value to be changed at runtime */
+-	if (cgroup_subsys_on_dfl(memory_cgrp_subsys)) {
+-		*rcu_locked = false;
+-		return memcg;
+-	}
+-
+ 	rcu_read_lock();
+ 	*rcu_locked = true;
  
--	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
-+	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
- 	if (!maddr)
- 		return -ENOMEM;
+@@ -870,22 +864,8 @@ static inline struct mem_cgroup *get_non_dying_memcg_start(struct mem_cgroup *me
  
-@@ -7183,7 +7189,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 		goto out_unmap;
+ static inline void get_non_dying_memcg_end(bool rcu_locked)
+ {
+-	if (!rcu_locked)
+-		return;
+-
+ 	rcu_read_unlock();
+ }
+-#else
+-static inline struct mem_cgroup *get_non_dying_memcg_start(struct mem_cgroup *memcg,
+-							   bool *rcu_locked)
+-{
+-	return memcg;
+-}
+-
+-static inline void get_non_dying_memcg_end(bool rcu_locked)
+-{
+-}
+-#endif
  
- 	if ((pgprot_val(prot) != pgprot_val(args.pgprot)) ||
--	    (phys_addr != (args.pfn << PAGE_SHIFT)) ||
-+	    (phys_addr != ((resource_size_t)args.pfn << PAGE_SHIFT)) ||
- 	    (writable != args.writable)) {
- 		follow_pfnmap_end(&args);
- 		iounmap(maddr);
+ static void __mod_memcg_state(struct mem_cgroup *memcg,
+ 			      enum memcg_stat_item idx, long val)
 -- 
 2.53.0
 
