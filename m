@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060599;
-	b=p4LWEqTc9Iuu8nk6BUCEWVhd8aLEStgJySO55+5xBLxpC/ZmG+LeDdYVoG8dGbiD+kDw
-	 neizNgkwj0C0QlB4HuzI4Blak8zzXSmTSqgUeaNmkNpV0DwbRr0O17VvQAYNXBXPJuttG
-	 Z22MIvGtV/oViHidxxaW5kP8YIFGSBTZtfDC7TTKjEQv3bDjfOXu88VVE+qzkAwzgveNz
-	 1/21Q/sGb4P0TST3scbO+K75qnWEEHnRlR2NTAnecOGOkKkwlv87B9xF0lOTe+jsQfx61
-	 DbAY5Ole636iwmIW1ppmZ+Ko7mLFAPhkLrlH9FxSBZnY4ItRKyDk9o72JfGW6G+JBFA==
+	t=1794060600;
+	b=NX/42+/9LtE8wrNkOstBxePJ5Uz12Z4ujjbhW9drGgSxQozK+X3m4ACvdUENlMLaIQDG
+	 +/wCfOrzpAAyvGipe6YBJb//b6RvddfZCP1rf5mvjrdfhWKbAFgbvjCvv2NoJ0Kiu0L+g
+	 KJsq+vERsO+9h8qBBD3D08LcfzXoA8bxZS6Zytdrg01VwnTIxuYkIx7mdiQHDMHOqT8ol
+	 o7sjlzatP1f5O14hiWjIa8QAfSMJvRJZTZ62/3f89ZhgFLBw8ci2JID3KfnAx9Y4KotwZ
+	 nOJh9PWzQ7LtU7nWhcXmyBAYmHDVk+SR36yQUud2ay42ha5/WBfL7gJqgXXuiEH7YyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c8TwSdVLYXq7ITaWW3oz91CQHI5yiFIND1sybOMuPYg=;
-	b=wpOHoko8wXOGj+CkYM0G8VV9U7fxjxAMjPoajslqi8rE6TDjs7blafEGEz1+9NpXu1bJ
-	 HUBZsW39ZAdpjqwMoZV/zm8vGkrigTp3YJFusjf21Bg4WovlKOTdmi6TlTV9dBnmmt6vZ
-	 NRuWLFQxfMSAxjXvJe6LFo0of4TQ278fKpZgcEBuYvzgh7ubakfgiHGnYKpWiaFk825I7
-	 BtuKYe8kc9HkuYrsfyzfRaDelMaU/pCnlqU+SAbcvGUs/OW0u3uT0/s/ZbQph5QD9CC24
-	 eqB0hTyi+JEWW7v90QAQSZfu1DHwn+nQIzEMqcRcwEThqj43DE7JR0M2c/NzCqBpvOQ==
+	bh=JopUB3oMdwyskrDshWil864cbxJLXTMRhKiH51AUFJ8=;
+	b=CNz/0NbzCwp/uKVkb1S5TQjQngFNomcuLqDxok2a8Y7Ub7DZsWKj8RV6wSDlry0wLTLa
+	 dG8zmmA0Y04qJ5/2PpbkFiwTrvD8CSReCX2TyeJPs2zXnFDfCs0CqwGVsE5A+BGRPICgY
+	 E62A0k2URWwhWY+8X1017nFClWYw6Y56SmDvWt9DnJ3rS3rO2fLcGykO9tlIY4knNuBll
+	 u2nGqULX83kX/H5GXPaw1/92mphRIZIUqjMUQrKYh803Cdi0g7IbIKmKimG0nyk1yWEDV
+	 ptqOa3At7dKCWKl95yZ6KDI/MvJdgrvWaz2LXGMIpKA0koxJW/YJX0+NQY4L59ixAHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M8tRqvQD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Lh+Y/aie";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062E8606A326;
-	Sat,  7 Nov 2026 14:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C86C606A326;
+	Sat,  7 Nov 2026 14:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M8tRqvQD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27DC1F0089F;
-	Sat,  7 Nov 2026 14:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lh+Y/aie
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B9A1F0089F;
+	Sat,  7 Nov 2026 14:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060598;
-	bh=c8TwSdVLYXq7ITaWW3oz91CQHI5yiFIND1sybOMuPYg=;
+	s=korg; t=1794060600;
+	bh=JopUB3oMdwyskrDshWil864cbxJLXTMRhKiH51AUFJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8tRqvQDdTKVI7nd0oEnOYUL1lve20QHERdNjL+RBX7WUQE9mGTU5betoEsLUrdm2
-	 80pf+MOjCH6VjL8rEgidqLLzCKjtBt2EoLmVtxNak0a6555JfD8vuyDX9/uKM932hn
-	 5+ZvXPTgHneZ2xn/S2CWs1U0HeTe1lVMs9urOr30=
+	b=Lh+Y/aieQar0wDuFhE/ju2m5ZqetbmruMI6pZLLspwTBzsyy0FmzSEtXkF76GVVp+
+	 CstRaYsYR+kG7QD7mzdWsmXWyGfANVTFyr89CHcMc0jMmuyswPTzZ+IoJgV+MThHVy
+	 o9d3VwYmViFRxjVPB7p8qZuc5CfhAnUEftkcQ350=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0054/1536] drm/amdgpu: Validate ATIF buffer length before use
-Date: Sat,  7 Nov 2026 08:34:30 -0500
-Message-ID: <20261107134959.177704441@linuxfoundation.org>
+Subject: [PATCH 6.12 0055/1536] drm/amd/pm: validate vega10 profile mode inputs
+Date: Sat,  7 Nov 2026 08:34:31 -0500
+Message-ID: <20261107134959.207595482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,178 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit b978b7d43963bbb3e2d850288f7c21ac11c3b751 ]
+[ Upstream commit bf939f2a1687ef4ab815640096357f8ef5bd5fb6 ]
 
-Add a min_size parameter to amdgpu_atif_call() to validate that the
-returned ACPI buffer is of type ACPI_TYPE_BUFFER, holds at least a u16
-size field, does not claim more data than was actually returned, and
-meets the minimum size required by the calling function. Each caller
-passes its required minimum via sizeof() or offsetof() of the expected
-output struct and drops its own size check.
+Check for out of range profile modes and custom params that exceed 8 bits.
 
 Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Assisted-by: Claude Sonnet (Cursor AI)
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c | 68 ++++++++++++------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-index 442fd81f1cf62..b68c6ff90b843 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -138,13 +138,15 @@ static struct amdgpu_acpi_priv {
-  * @atif: atif structure
-  * @function: the ATIF function to execute
-  * @params: ATIF function params
-+ * @min_size: minimum size of the expected output buffer in bytes
-  *
-  * Executes the requested ATIF function (all asics).
-  * Returns a pointer to the acpi output buffer.
-  */
- static union acpi_object *amdgpu_atif_call(struct amdgpu_atif *atif,
- 					   int function,
--					   struct acpi_buffer *params)
-+					   struct acpi_buffer *params,
-+					   size_t min_size)
- {
- 	acpi_status status;
- 	union acpi_object *obj;
-@@ -187,6 +189,28 @@ static union acpi_object *amdgpu_atif_call(struct amdgpu_atif *atif,
- 		return NULL;
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+index d6aaba0b3613d..84c777fde62f5 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+@@ -5406,6 +5406,11 @@ static int vega10_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
+ 	uint8_t min_active_level;
+ 	uint32_t power_profile_mode = input[size];
  
-+	if (obj->buffer.length < sizeof(u16)) {
-+		DRM_DEBUG_DRIVER("ATIF buffer too small to hold size field: %u\n",
-+				 obj->buffer.length);
-+		kfree(obj);
-+		return NULL;
++	if (power_profile_mode > PP_SMC_POWER_PROFILE_CUSTOM) {
++		pr_err("Invalid power profile mode %u\n", power_profile_mode);
++		return -EINVAL;
 +	}
 +
-+	if (obj->buffer.length < *(u16 *)obj->buffer.pointer) {
-+		DRM_DEBUG_DRIVER("ATIF buffer length mismatch: reported %u, actual %u\n",
-+				 *(u16 *)obj->buffer.pointer,
-+				 obj->buffer.length);
-+		kfree(obj);
-+		return NULL;
-+	}
+ 	if (power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
+ 		if (size != 0 && size != 4)
+ 			return -EINVAL;
+@@ -5421,6 +5426,10 @@ static int vega10_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
+ 				return -EINVAL;
+ 		}
+ 
++		if ((input[0] & ~0xFF) || (input[1] & ~0xFF) ||
++		    (input[2] & ~0xFF) || (input[3] & ~0xFF))
++			return -EINVAL;
 +
-+	if (*(u16 *)obj->buffer.pointer < min_size) {
-+		DRM_DEBUG_DRIVER("ATIF buffer too small: expected %zu, got %u\n",
-+				 min_size, *(u16 *)obj->buffer.pointer);
-+		kfree(obj);
-+		return NULL;
-+	}
-+
- 	return obj;
- }
- 
-@@ -248,19 +272,14 @@ static int amdgpu_atif_verify_interface(struct amdgpu_atif *atif)
- 	size_t size;
- 	int err = 0;
- 
--	info = amdgpu_atif_call(atif, ATIF_FUNCTION_VERIFY_INTERFACE, NULL);
-+	info = amdgpu_atif_call(atif, ATIF_FUNCTION_VERIFY_INTERFACE, NULL,
-+				sizeof(output));
- 	if (!info)
- 		return -EIO;
- 
- 	memset(&output, 0, sizeof(output));
- 
--	size = *(u16 *) info->buffer.pointer;
--	if (size < 12) {
--		DRM_INFO("ATIF buffer is too small: %zu\n", size);
--		err = -EINVAL;
--		goto out;
--	}
--	size = min(sizeof(output), size);
-+	size = min(sizeof(output), (size_t)*(u16 *)info->buffer.pointer);
- 
- 	memcpy(&output, info->buffer.pointer, size);
- 
-@@ -270,7 +289,6 @@ static int amdgpu_atif_verify_interface(struct amdgpu_atif *atif)
- 	amdgpu_atif_parse_notification(&atif->notifications, output.notification_mask);
- 	amdgpu_atif_parse_functions(&atif->functions, output.function_bits);
- 
--out:
- 	kfree(info);
- 	return err;
- }
-@@ -295,20 +313,14 @@ static int amdgpu_atif_get_notification_params(struct amdgpu_atif *atif)
- 	int err = 0;
- 
- 	info = amdgpu_atif_call(atif, ATIF_FUNCTION_GET_SYSTEM_PARAMETERS,
--				NULL);
-+				NULL, offsetof(struct atif_system_params, command_code));
- 	if (!info) {
- 		err = -EIO;
- 		goto out;
- 	}
- 
--	size = *(u16 *) info->buffer.pointer;
--	if (size < 10) {
--		err = -EINVAL;
--		goto out;
--	}
--
- 	memset(&params, 0, sizeof(params));
--	size = min(sizeof(params), size);
-+	size = min(sizeof(params), (size_t)*(u16 *)info->buffer.pointer);
- 	memcpy(&params, info->buffer.pointer, size);
- 
- 	DRM_DEBUG_DRIVER("SYSTEM_PARAMS: mask = %#x, flags = %#x\n",
-@@ -371,20 +383,14 @@ static int amdgpu_atif_query_backlight_caps(struct amdgpu_atif *atif)
- 
- 	info = amdgpu_atif_call(atif,
- 		ATIF_FUNCTION_QUERY_BRIGHTNESS_TRANSFER_CHARACTERISTICS,
--		&params);
-+		&params, offsetof(struct atif_qbtc_output, data_points));
- 	if (!info) {
- 		err = -EIO;
- 		goto out;
- 	}
- 
--	size = *(u16 *) info->buffer.pointer;
--	if (size < 10) {
--		err = -EINVAL;
--		goto out;
--	}
--
- 	memset(&characteristics, 0, sizeof(characteristics));
--	size = min(sizeof(characteristics), size);
-+	size = min(sizeof(characteristics), (size_t)*(u16 *)info->buffer.pointer);
- 	memcpy(&characteristics, info->buffer.pointer, size);
- 
- 	atif->backlight_caps.caps_valid = true;
-@@ -418,24 +424,18 @@ static int amdgpu_atif_get_sbios_requests(struct amdgpu_atif *atif,
- 	int count = 0;
- 
- 	info = amdgpu_atif_call(atif, ATIF_FUNCTION_GET_SYSTEM_BIOS_REQUESTS,
--				NULL);
-+				NULL, sizeof(*req));
- 	if (!info)
- 		return -EIO;
- 
--	size = *(u16 *)info->buffer.pointer;
--	if (size < 0xd) {
--		count = -EINVAL;
--		goto out;
--	}
- 	memset(req, 0, sizeof(*req));
- 
--	size = min(sizeof(*req), size);
-+	size = min(sizeof(*req), (size_t)*(u16 *)info->buffer.pointer);
- 	memcpy(req, info->buffer.pointer, size);
- 	DRM_DEBUG_DRIVER("SBIOS pending requests: %#x\n", req->pending);
- 
- 	count = hweight32(req->pending);
- 
--out:
- 	kfree(info);
- 	return count;
- }
+ 		data->custom_profile_mode[0] = busy_set_point = input[0];
+ 		data->custom_profile_mode[1] = FPS = input[1];
+ 		data->custom_profile_mode[2] = use_rlc_busy = input[2];
 -- 
 2.53.0
 
