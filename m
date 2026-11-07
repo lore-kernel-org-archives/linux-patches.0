@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060596;
-	b=u7lsHk11fh6dz6EJi3UTQ8fYibp16saip22s0hNp5NAXT71KsGhDbE5GetAS7xbynT0M
-	 miY29wKpX+QFmR0l4D/oSPsvIu9Hd6jg+p/H+r7evos45hVGYccpfGDlfTE+MMmYcFlWS
-	 TqhmCJ2arp1LMLNdeSgDZjcniEELLvZo+VAUu1KchvHwrvw038EKYyRU2gXepj+H3ykfd
-	 VJKE6d+XcRCCrlxXiGZcmBU8pNdpJznJRpFncblgrBtlloecFHNMhho0rCgxb0Qo6uhhS
-	 l7Y9Z7yyXi6b6OFVQB/+1lCslgN+ASez5bNqr1kfhCUj3iUcA7Z2UScfJfWbUKN0yQw==
+	t=1794060598;
+	b=wPU8nWQUE8XSnxOQ6Jcfx7o1Wr2mJoI7aQFtDtPDbmUVyeUSjCZt/alGh2P0Mev1pACM
+	 1qftFf8w1hrppG7CoB+E44Dt0el+KjwC68z2G5o4VkdBBnZK60DT2eRlUmv1ASQMk9s0b
+	 J1U1L72i2/fji1mmGZ7ZrDWmn7v1Kby+2E/Tm44KVXJTwIIN1iqYmOfcByV5msQFwbeWp
+	 KzCN1f4L9H6LGc+qa4g1vfioU3469QTlfuWSePxky7q+OGBPZ7TKM2ytwlYipTgemhP2w
+	 9swCwidnlCSSYsLn5j6ZgBjI53JvYicAcuWR7lBXFAHN5AHXTbVwUc7jsQDH6Z5aJYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060596;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OhOH591EYH3vH0d9Hx+B5VUQQo7aNJbm+xzWKi6gZ0I=;
-	b=aqIi8ndDgvih3gsJsqFcb6Dq+7xOtk9C7v1EZtEwY4B4gdz7GPHCMJvVCcnYYHL9eeYI
-	 w8pD8Ebe4AtOGZByajIGCv1S++jGjsVQa6RjNUtpPAUuh3xFp07RDWOgNh2mlMgLkmHaB
-	 g9L4RThmHb4hBXcM1sB1X95RG21TkPxdvLsXuSBFzWdHSQTViQsgxVRkZpYwMCwdpag+7
-	 cSrxvFiFHkYCMVHrBX7XnNgDC4SB4dMA3hLmxk3chZeRvCrQ3WpcqvU6G84ueSykKx9hM
-	 Wj8MSg3w0kGsEOEw5XJ1eeY0eBZyCn3AP99T6Z97HPeGrtACOc2+4/rix39RiC2djng==
+	bh=HVETWmKdr9E0y8cGNbDcON7Ij4R0NqZUlOfAcK2+VCA=;
+	b=xlLT5AfyZH+7/O3F/3n4b5poOV0fzogd5USMvlkcsitp4bh8QO2ZuUXQaAKT2BqCNrYI
+	 zaophGT+yojMkGSTrTQtPpDNCcAlCKP9oGJbynZ7wQKI8ox4jy5fsvrk8hte6A9TEyuyj
+	 CR/QnvSuUecNKlOHy3wE6g+anPded8KlHpUhX84K/fNJXF7Uz1pQc9joIGbtYmH67Ub7g
+	 pwdlm6uZveIU3uV1NVUvFsFx6IW/tQQ0WSkWbGuIqC2snkkUAosu2GjMepwOuAi3neYj6
+	 e4OAzObM5V3cE1svLYsvtBOABDc37vNQOlvLn0pRWjxCDTZTcEnmgab3Ab83NNl4fig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bA87pC1M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nevzsgif;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DC6606A326;
-	Sat,  7 Nov 2026 14:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DAB606A326;
+	Sat,  7 Nov 2026 14:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bA87pC1M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2B01F0089F;
-	Sat,  7 Nov 2026 14:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nevzsgif
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630921F0089F;
+	Sat,  7 Nov 2026 14:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060596;
-	bh=OhOH591EYH3vH0d9Hx+B5VUQQo7aNJbm+xzWKi6gZ0I=;
+	s=korg; t=1794060597;
+	bh=HVETWmKdr9E0y8cGNbDcON7Ij4R0NqZUlOfAcK2+VCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bA87pC1MEzLKrROq5MXu83jZwBeFP3y4Kpk7thd0Ko+A7nkhb734ZLaGZwf+5E8SV
-	 ZaqW75BI/L4BMwlWBEy2JLQzrPDQprQA58SBrEbKP4asmuTfmSdIBFyiRO6zLlMVjx
-	 vN2n1prCSpQcO1gLT1JhsUAwpaYbO469d5AYjfV8=
+	b=nevzsgifao/zslDYSL2u5WunWhyZd9NAF3Q3RjyuM97n3xOP3X/effbcEFoeTDxOs
+	 VG6EcgNZaClMdjnr16yX+8c/8b9U0REQjB0Dn90ttIFz9oGveQw5q29iGZg7vdin+u
+	 F4sRgZkskEHNlP48hz4GoS9/p2Rnt3H9GxcZOEwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhijeeth Babu <babu.jeeth@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0052/1536] i2c: acpi: Force ELAN1300 touchpads to 100 kHz
-Date: Sat,  7 Nov 2026 08:34:28 -0500
-Message-ID: <20261107134959.120375163@linuxfoundation.org>
+Subject: [PATCH 6.12 0053/1536] drm/amdgpu: Add checks to vbios fetch through ATRM
+Date: Sat,  7 Nov 2026 08:34:29 -0500
+Message-ID: <20261107134959.147934676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,53 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhijeeth Babu <babu.jeeth@gmail.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 9e9762e578db7556bea644bb5a8a2435f63544d1 ]
+[ Upstream commit 8c3fcfc14fc1320a1155acb2dd7656fce7003bc0 ]
 
-The ELAN1300 touchpad with HID ID 04F3:3104 on the ASUS VivoBook
-X513UA_KM513UA exhibits severe pointer jumps and erratic movement when
-the I2C bus operates at 400 kHz.
+Check if a valid buffer object is returned after ATRM call. Also, match
+the buffer length against requested size before copying.
 
-The system DSDT describes the touchpad using an I2cSerialBusV2 resource
-with a speed of 0x00061A80, corresponding to 400 kHz, on the
-AMDI0010:03 controller.
-
-At this speed, libinput repeatedly reports:
-
-kernel bug: Touch jump detected and discarded
-
-Add ELAN1300 to i2c_acpi_force_100khz_device_ids so that it operates at
-100 kHz.
-
-Before the change, nine touch-jump events were recorded, with additional
-messages suppressed by libinput's rate limiter. With the bus forced to
-100 kHz, no touch-jump events have been observed and the touchpad operates
-normally.
-
-The affected system uses BIOS X513UA.319 dated 2023-05-09.
-
-Signed-off-by: Abhijeeth Babu <babu.jeeth@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260617192611.125513-1-babu.jeeth@gmail.com
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index f43067f6797e9..b74f41b9515ae 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -372,6 +372,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
- 	 */
- 	{ "DLL0945", 0 },
- 	{ "ELAN06FA", 0 },
-+	{ "ELAN1300", 0 },
- 	{}
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+index dec312b0f3b0a..f28dec3630de5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -280,8 +280,14 @@ static int amdgpu_atrm_call(acpi_handle atrm_handle, uint8_t *bios,
+ 	}
  
+ 	obj = (union acpi_object *)buffer.pointer;
+-	memcpy(bios+offset, obj->buffer.pointer, obj->buffer.length);
+-	len = obj->buffer.length;
++	if (!obj || obj->type != ACPI_TYPE_BUFFER) {
++		DRM_ERROR("ATRM returned an invalid object\n");
++		kfree(buffer.pointer);
++		return -EINVAL;
++	}
++
++	len = min_t(size_t, obj->buffer.length, len);
++	memcpy(bios+offset, obj->buffer.pointer, len);
+ 	kfree(buffer.pointer);
+ 	return len;
+ }
 -- 
 2.53.0
 
