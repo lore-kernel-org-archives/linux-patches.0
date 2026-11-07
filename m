@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062231;
-	b=sKyalSkqOz7j/UNvPBMtqE58lQi/uBR7iM/LLskoIgjSi07nPOVR1+Ogc2b8+W6dISVy
-	 3eQzmss0QQOgUB2vMfuy2foBckrwicLZXH+b+6XEO0HIstq/LaU6/JBiIDY6ukb1wYLES
-	 sFHdrMy6pK1USGQJOjmpPadg37+vqIwgYkM0EfOyRNLQzHkJZcgbUXrGyFxOorix0wWeJ
-	 dCX+AWyRrspm1XlOa4eERqMHFucv7gv5JMqkDhl6PR/1bGxoOR7wsHx2zf4zuEgEDDnrS
-	 uVxOBunZBfVhYMYmK6aTQaPTMLp7vvAMKre24AH3pgku44atwK+Z3AfZ93QQ1GXkNWw==
+	t=1794062233;
+	b=AeBVipIaxDteMAzHPbpfUocYKjvWhXE81FmG+OauleJ9OkWZPBHrelQR2HOYy1tPZc4l
+	 73I653h0NJinyNTicOj5KCIQAy+3IJgb4aBpQdZCEXB++ZXdczL4ju9q4b7rneLBo1G1C
+	 uDMSFBT/ufo+J0OD1FOqh79bohepialAm/KlI6eMfoRqd7OWdBsGETVOaeVPzv86mk2Wr
+	 qaSntyAkZOpgAKzmwJ9LLmn8LIXRgbGD9V2yzIw5PCOfm51n16GExZXir46VogQxBlWql
+	 LAdK1tgVf/QzqZ7Rt6EUkt4oj9UEaPcqUq55/PwemIB2Sp2Dbpzkv0o0uEWAj9m8w1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062233;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YvV16AKqXqytm0Ulm1uKvBvGtcp2uuvHV6hG4QGReXU=;
-	b=EmJdQPGPM94FJXWVaTXBU+a/apHNguoshj70tIc5YYBAti5aLSABy8ZsV6FXEU+YDKNJ
-	 mHeABrNlqLFjQQA9JM6oU76/NaCif0jEpY5+L03eqliLVtRBFLow7PfyHNfbR7Cv7m+c/
-	 CUONhIIFZMLJa2dZafLZM5ZZoQnew364yPOQ4qEN9LtFcYHaUBwBQOCI4C0oNP7OuJuxX
-	 hHHqsgxHX3RDgbmK/Lq6ykADjgHeFbDeRuUij0Ek+C3KyuWKFSwUy906jIL5SufJOD8+2
-	 I7dat2mJxjMgmJM8d7MbjXJBXV+Ig0E5KMlAo8ySuWJlG9tG06orFriKE1dX5Xegnbg==
+	bh=ZacSltHtUcVK0YYxmH9PX8Xxz9doB0D3MaIqOIGcAI0=;
+	b=Q0cJhbyXOdn/nSrIZEynRMwuwGfVb11OuAeNQGdsIjAyn4a7Ndum6Tr14ADXuFw7tziB
+	 +qzqG+3Z0dhvnKBB0LrI1Tv/SLt5J66AWmwvYEIHeNi0/BaHQ2lru9pmhINF9ReZtyCCj
+	 bNjcUTXOHlROW2Rfo3QyoaogsevwT4SY48WovwLq95GVTVjE3P3NUI+C2KMDdeYEFYHe2
+	 Dx4/QvgeMimjnuZOqj/DsjEcmdAaAA6UL6jA+uEPDtvy/RYy5+xeiU5PkrkyixX26z80T
+	 w4DL0F7/CpU288FtJT2d6AjAHJF7qow7mttzhImalIcyVO4oG3t59vAOxR0W7YE09Fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p176hV9V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFG8aedu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CF4606A332;
-	Sat,  7 Nov 2026 14:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9D0606D827;
+	Sat,  7 Nov 2026 14:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p176hV9V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325821F0089F;
-	Sat,  7 Nov 2026 14:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFG8aedu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F69B1F008A1;
+	Sat,  7 Nov 2026 14:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062231;
-	bh=YvV16AKqXqytm0Ulm1uKvBvGtcp2uuvHV6hG4QGReXU=;
+	s=korg; t=1794062232;
+	bh=ZacSltHtUcVK0YYxmH9PX8Xxz9doB0D3MaIqOIGcAI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p176hV9VlrDMSTwX4h9Oj5gcM7Rqmx2yURDRak7wY1A/qmEh642ga03XD7LRDqQKX
-	 CG5Wk5bHA0IA11VYAWZ4vaGHaNvkneBitJH28mNNhywU1C7pRqMx498jvvbY9cHvQq
-	 Ck3+iuwPjyE9qLt1EkRSadKp3kt4KTz3cHEXQZyw=
+	b=bFG8aeduKPHwZJGHivED9/tE/gkO2IiVAYG4+yhju3iRgZPkiCOpMsFYhTlNFlMH6
+	 sxiCoAn3WQKD1crpAA+jiElm0uyCq4mTKk9JgOr6tcMHzDR6JscJ8gWNTEmCBZ+DyM
+	 iXl8IGb54nH/Pg85z3/uL+ZXKN6V4PBkQXhd635o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1155/1536] media: hantro: disable runtime PM before hardware teardown
-Date: Sat,  7 Nov 2026 08:52:51 -0500
-Message-ID: <20261107135030.165360070@linuxfoundation.org>
+Subject: [PATCH 6.12 1182/1536] wifi: mt76: mt7615: restore DBDC state after ext PHY failure
+Date: Sat,  7 Nov 2026 08:53:18 -0500
+Message-ID: <20261107135030.939958018@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,96 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 8e26d4c20ed218db6c3123480a4a4e2545680566 ]
+[ Upstream commit 7907d5270dc5c13b6a95754c08a77d5b06bbc786 ]
 
-Removing the Hantro driver may trigger an SError on RK3588:
-	SError Interrupt on CPU6, code 0x00000000be000011 -- SError
-	...
-	do_serror+0x5c/0x74
-	el1h_64_error_handler+0x34/0x50
-	el1h_64_error+0x6c/0x70
-	regmap_mmio_read32le+0x10/0x20 (P)
-	_regmap_bus_reg_read+0x6c/0xb4
-	_regmap_read+0x60/0xdc
-	regmap_read+0x4c/0x80
-	rockchip_pd_power+0xe4/0x600
-	rockchip_pd_power_off+0x1c/0x60
-	_genpd_power_off+0x98/0x198
-	genpd_power_off.part.0+0x178/0x288
-	genpd_runtime_suspend+0x210/0x300
-	__rpm_callback+0x48/0x1e0
-	rpm_callback+0x74/0x80
-	rpm_suspend+0x10c/0x580
-	rpm_idle+0x134/0x1b8
-	update_autosuspend+0x30/0xc4
-	__pm_runtime_use_autosuspend+0x48/0x64
-	hantro_remove+0x8c/0xa8 [hantro_vpu]
-	...
+mt7615_register_ext_phy() limits the primary PHY to DBDC capabilities
+before allocating and registering the secondary PHY. If allocation,
+EEPROM override, or PHY registration fails, it returns without restoring
+the primary PHY capabilities. The EEPROM override failure also leaks the
+newly allocated ieee80211_hw.
 
-hantro_remove() currently asserts the device resets before disabling
-runtime PM.
+Route all failures through common labels that free the secondary hardware
+when it was allocated and restore the primary PHY capabilities.
 
-Calling pm_runtime_dont_use_autosuspend() causes an idle device to be
-runtime-suspended immediately. At that point the Hantro hardware has
-already been torn down, while the generic power-domain genpd code
-still performs the power-off sequence. genpd regmap_mmio_read causes panic
-subsequently because the reset lines were asserted.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Disable runtime PM before asserting the reset lines so that no runtime-PM
-transition can race with hardware teardown.
-
-Apply the same ordering to the probe error paths as well.
-
-Fixes: ea71631b7129 ("media: hantro: add support for reset lines")
+Fixes: 0f2173f093b3 ("mt76: mt7615: add support for registering a second wiphy via debugfs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260910215441.76683-1-mhun512@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_drv.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7615/init.c    | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index 01d6ab67a8bf3..9e5334ac3d0dc 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -1215,7 +1215,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	ret = clk_bulk_prepare(vpu->variant->num_clocks, vpu->clocks);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to prepare clocks\n");
--		goto err_rst_assert;
-+		goto err_pm_disable_assert_reset;
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+index d0d880f8c0aa4..e4677fa28c0a0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+@@ -542,8 +542,10 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
  
- 	ret = v4l2_device_register(&pdev->dev, &vpu->v4l2_dev);
-@@ -1269,8 +1269,11 @@ static int hantro_probe(struct platform_device *pdev)
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- err_clk_unprepare:
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
--err_rst_assert:
-+err_pm_disable_assert_reset:
-+	pm_runtime_dont_use_autosuspend(vpu->dev);
-+	pm_runtime_disable(vpu->dev);
- 	reset_control_assert(vpu->resets);
-+	return ret;
- err_pm_disable:
- 	pm_runtime_dont_use_autosuspend(vpu->dev);
- 	pm_runtime_disable(vpu->dev);
-@@ -1290,9 +1293,9 @@ static void hantro_remove(struct platform_device *pdev)
- 	v4l2_m2m_put(vpu->m2m_dev);
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
--	reset_control_assert(vpu->resets);
- 	pm_runtime_dont_use_autosuspend(vpu->dev);
- 	pm_runtime_disable(vpu->dev);
-+	reset_control_assert(vpu->resets);
+ 	mt7615_cap_dbdc_enable(dev);
+ 	mphy = mt76_alloc_phy(&dev->mt76, sizeof(*phy), &mt7615_ops, MT_BAND1);
+-	if (!mphy)
+-		return -ENOMEM;
++	if (!mphy) {
++		ret = -ENOMEM;
++		goto error;
++	}
+ 
+ 	phy = mphy->priv;
+ 	phy->dev = dev;
+@@ -573,7 +575,7 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
+ 
+ 	ret = mt76_eeprom_override(mphy);
+ 	if (ret)
+-		return ret;
++		goto error_free_hw;
+ 
+ 	/* second phy can only handle 5 GHz */
+ 	mphy->cap.has_5ghz = true;
+@@ -591,7 +593,14 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
+ 	ret = mt76_register_phy(mphy, true, mt76_rates,
+ 				ARRAY_SIZE(mt76_rates));
+ 	if (ret)
+-		ieee80211_free_hw(mphy->hw);
++		goto error_free_hw;
++
++	return 0;
++
++error_free_hw:
++	ieee80211_free_hw(mphy->hw);
++error:
++	mt7615_cap_dbdc_disable(dev);
+ 
+ 	return ret;
  }
- 
- #ifdef CONFIG_PM
 -- 
 2.53.0
 
