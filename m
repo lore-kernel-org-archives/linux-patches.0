@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061449;
-	b=Ct3/DYzAGkeOKTItldsBegP3hA8YCsPBMid7ENdWZU1+lhipdjN6T68QPcJpe+J9OkfE
-	 8qdWFOFwcd7EITl4P851K58bOqMtDfLQny9tjH9OKPsyeslYC78K/+NCS70hGsCvNYpz8
-	 MFMhljj5ndb+SFb29j7o0shX9LyueAWj419OIJnLUwuMjvCRPGlDpTsZIArHX3Lqni12N
-	 GGr2OmArJsgrlOCq1VolMzPl4eiHm+CvVdKLZmAwqUk6ke739XXoc0TkbhXZIldWZ50TT
-	 Go6waUwrgkxH6cS9pKL5QUV9EF/v7vjKaBXP0oBGW5y6Kox7bdNsjZXHjecFyD9tN7A==
+	t=1794061450;
+	b=ROuWCT2xmyETLuRPm6jTZ/z/p04viYA2U/3PowfsPJEsYHdqEZ4SfAC21wxhCDhVuti0
+	 2ofYYktw2jHdb5qlO7UY/ATD3HJYHDZyZ6L8WgHHAfhQYRz001QTIaTlNcZlCZb10D/IK
+	 q7FBeG+X3vF0tgzRrXYkd2SF/1UjTC82VajyWyyVQxcTgRaWqh5v1eLEKBmw87MpA6WFs
+	 0sm5uyYIA/6Yf880ghmg9k5VtIR4cnqiiWj4I20IMGrX3LM12R8QEmpRCHHuHAkR4xurw
+	 rfggeDfG6FBjdxjXmM20e226aXiLEtXeqI1QRKVS4SiaSX44gstA9EONBbK0Rq0/CPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061449;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fOsU8tu5KDmbiYYh1pPonQECGAa41ltSepe1nGG/v0s=;
-	b=39q0VwXGT7kn9HJlU4GyysEm7xP39xpQeFXyKOuQw5siBV6YrR0oDMeh1dU9sTQbsdaM
-	 eka+Q6Yr/jzCllQDaDQs/uO2N3XjMG7F0fS0p9+P/cIX4PYHrSynbhxVFTbwiRyCDdltn
-	 KQAi4BqvqLksar8zqTS5bbZq6JWUZLW+jgPDyOjsO2pdlBc+fPUufY2BAoomnD9tbxCKa
-	 ObYwF25bTFbMkb2jsyHerhCVoigcGOYFNwOObphbZ8PCtC3GDVpjPXJV4i4hYSLLiLG3B
-	 JAmeHzHSH/NqfiW6LICdL4l7Uwm/KDCjQAOc2FX0JvkD+OkezCxm39JK9/+LrqsswaA==
+	bh=Oh86IPqe5b7vDgCJfdp+k1EjqirV5Dme90wpxqx63Zw=;
+	b=oxnZfY86WicKWjGU3pcG3uE2i4ADPe8TUTAev8kaPX5JEUuBy3Uu73OUpuG2ivfUMHec
+	 rmhQrPMQKBO6y4fvZMH1MavFovIRW8Eij+D36O2g/nkZ9h2bRcs5TbL2PKiaB00o4LLmn
+	 vJV4/4yehBc5m28QLvlHthFdPe/OwaEP67H9PLtVoTdlBQqf2ZmV211ARkG4VvpXzcJ0D
+	 VW3fpYk4qXGUosJsux6SlHMGecaeDVh8Fze5ZDOwOYIfemhWdAv+zmeT2lPdHN0YWxAQS
+	 TYO8e5nuBpRT2KR9w+fJd8SoXAqZ79LYnIyIOjfAE13ss0LehHfokAB18YYGlyCiobg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qzSg2Es/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbzSZrFe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA322606A336;
-	Sat,  7 Nov 2026 14:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD205606A331;
+	Sat,  7 Nov 2026 14:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzSg2Es/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A731F0089F;
-	Sat,  7 Nov 2026 14:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbzSZrFe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA2C1F0089F;
+	Sat,  7 Nov 2026 14:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061448;
-	bh=fOsU8tu5KDmbiYYh1pPonQECGAa41ltSepe1nGG/v0s=;
+	s=korg; t=1794061449;
+	bh=Oh86IPqe5b7vDgCJfdp+k1EjqirV5Dme90wpxqx63Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qzSg2Es/1T7f0nCv0cyMsr5qAk8UAYRWSKwBX+hcNfnRX9KLpuy5GvqzvAcUKZGo9
-	 2JIIXizbN2itSIWThtK5EzTwwJ6UYeH+NeRdVujLbtzq7fGBVQHXhNR2B6IDfQqXys
-	 wZqABjIX5RaWW9LclmnhsQF5AR0lXpx3LmnWQ90g=
+	b=lbzSZrFe50idwHjPrAS+9Bh+wgTFr/MgjGcIEDn+aB2Z/KeDvLNSXNTN056pzRJ+x
+	 RZTERnFZt0aiKkpMTHza3ECV00pELX/DypF/55tzALamdRnr2y6D73dvDbX6Z9E1Tp
+	 dUIz1FVsApx/1lWEC4VuFqAwADxYla8jv/6icinM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bihaan Sen <stevewholikesthings@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Yu-Hsiang Tseng <asas1asas200@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0555/1536] Input: xpad - add support for 8BitDo Pro 2 Wired Controller for Xbox
-Date: Sat,  7 Nov 2026 08:42:51 -0500
-Message-ID: <20261107135013.180813993@linuxfoundation.org>
+Subject: [PATCH 6.12 0538/1536] ALSA: hda/realtek: Fix silent speaker on Higole F9B
+Date: Sat,  7 Nov 2026 08:42:34 -0500
+Message-ID: <20261107135012.708152596@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,41 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bihaan Sen <stevewholikesthings@gmail.com>
+From: Yu-Hsiang Tseng <asas1asas200@gmail.com>
 
-[ Upstream commit 41363c27b8509bd4efcba244803edac9ba25d1b5 ]
+[ Upstream commit 2a8ee6897302ca12ff39e8eb180503956797c60c ]
 
-The 8BitDo Pro 2 Wired Controller for Xbox is already matched by the
-vendor-wide XPAD_XBOXONE_VENDOR(0x2dc8) entry, but a later hardware
-revision reports product ID 0x201e, which has no entry in the
-xpad_device table. The device therefore binds and functions but is
-exposed to userspace as "Generic X-Box pad".
+The Higole F9B is an Alder Lake-N mini PC with a 7" touchscreen and an
+ALC269VC codec (subsystem ID 0x10ec111e). Its DMI strings are all
+"Default string", so the SSID is the only way to identify it.
 
-Add the VID/PID pair so the controller is named correctly, and set
-MAP_SHARE_BUTTON to expose the share button as KEY_RECORD.
+The internal speaker is silent out of the box. The generic parser
+assigns DAC 0x03 to the speaker pin 0x14 and DAC 0x02 to the headphone
+pin 0x15, but the speaker only reproduces what DAC 0x02 plays, whatever
+its connection selection says. Checked one path at a time, only the
+gain of DAC 0x02 and the mute of pin 0x14 change what comes out of the
+speaker. User space only knows the path it was told the speaker uses,
+so selecting the speaker turns the path that actually reaches it all
+the way down.
 
-Signed-off-by: Bihaan Sen <stevewholikesthings@gmail.com>
-Link: https://patch.msgid.link/20260925114459.110253-1-stevewholikesthings@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ sashal: Dropped the missing 8BitDo Ultimate 3-mode (0x200f) context line from the hunk, so the single new 0x201e device entry is added after the 0x2000 entry. ]
+Route both 0x14 and 0x15 through mixer 0x0c (DAC 0x02), which is what
+ALC290_FIXUP_MONO_SPEAKERS already does. Tested on the device: the
+speaker plays.
+
+Cc: <stable@vger.kernel.org>
+Assisted-by: LLM
+Signed-off-by: Yu-Hsiang Tseng <asas1asas200@gmail.com>
+Link: https://patch.msgid.link/20260923141344.1543158-1-asas1asas200@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c | 1 +
+ sound/pci/hda/patch_realtek.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index 80fb5ceb86475..3086fc4a0642f 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -406,6 +406,7 @@ static const struct xpad_device {
- 	{ 0x294b, 0x3404, "Snakebyte GAMEPAD RGB X", 0, XTYPE_XBOXONE },
- 	{ 0x2993, 0x2001, "TECNO Pocket Go", 0, XTYPE_XBOX360 },
- 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
-+	{ 0x2dc8, 0x201e, "8BitDo Pro 2 Wired Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x2dc8, 0x3106, "8BitDo Ultimate Wireless / Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
- 	{ 0x2dc8, 0x3109, "8BitDo Ultimate Wireless Bluetooth", 0, XTYPE_XBOX360 },
- 	{ 0x2dc8, 0x310a, "8BitDo Ultimate 2C Wireless Controller", 0, XTYPE_XBOX360 },
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 1a39c59a79ea5..fb79b82e2ea6e 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11408,6 +11408,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x10cf, 0x1757, "Lifebook E752", ALC269_FIXUP_LIFEBOOK_HP_PIN),
+ 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
++	SND_PCI_QUIRK(0x10ec, 0x111e, "Higole F9B", ALC290_FIXUP_MONO_SPEAKERS),
+ 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x10ec, 0x119e, "Positivo SU C1400", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
 -- 
 2.53.0
 
