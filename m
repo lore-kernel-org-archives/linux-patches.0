@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065437;
-	b=wvq9TJwAFgxtxB9tDNlpgy/WQbpwzRXkbag0imcxuKMTGJ6Ix0y23gVSqo+8AB2P+70i
-	 /cuDx4A2VyT9anYA+MitoF/95QfuKNcgnuuGRuVaUtG4fNqmCKbflEE6HHEO2WLh49MUd
-	 z2rvb31ydQpGhkmyX5wCgYHIVh6zu7eVJ/BSUGPNyeKhFI2QW9o6oxzEogU/ST9Cqgr9h
-	 I9jdDm5Aqm+qB41x2dCkD5RFpkIHWxav97fq76dm+rm581yF0O5nbe7H2R5WtLoEbfVxu
-	 xQUtLcc46QY196D82UTYpg1XukzGoJ0If32U33vvBeJR4SB1EdmCmAYZHQBlYUmNBhA==
+	t=1794065439;
+	b=ZXWMKJ/W3nSF/LvWg1kagrk3wO51F8xEuJweatPN8lg6ZZ0CfDre5DDeKYCqEbfc9pAr
+	 MtfTVt3j8Os2ZKWWDI+OqPZYFDDFpkK75mYa1ppmOOkXK4LwnL9nhweukhc1Ko/SLmlcV
+	 czfdUTNONO1YyIE5IvoKta38vkmMLuRsIcM5IIE2r0GYJfUsYjId3twUGShpwpqRYSsrs
+	 ivwB/SS5N2sA5bBC6sXd/S2+9BbACVtNd/5Gkd9GVIbxWp4eTJYALnjUNjH0iHl8qlit0
+	 PxQOO6RziuYuIKofFwO0/yhiQwKtJMf/hpC0gnj6I11FP1JKd9J7qAAEhB2eyFqbZzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CgdTxw75dsbBeE4ORcLaY1jRIFOhQg36N50GSGH5XBE=;
-	b=al2PmD8eEFx5GZke0+g15SNUfKM1f7V3IPXIMx0CMD63AvpwujGUO6lAGjQgALQEsEyk
-	 bJgmhiGQSU2y6xodERiMv7JHDW1a6OduOQj0eqTj/90pxJyGDqsRHXZZJzaorFLo8PHl5
-	 OXUjA6ZlgFVZqyNLxMoVVBXpmjr5eE3KpouVMWd4NCKPeq4YqAUJeGbI7tJ9ICF8DoNc2
-	 BlE4jrs1Er4/u4fzBLkhSZunUv9OJqLGMc+TmnPQVUpyPlUvFszUZwZMywVvQdPGe2d+g
-	 wKb4waYThLFVXWoxiXkUS1Eiol1erVewr/j/x6/fYVPiFET3UgijbJvXpP47FA77TsA==
+	bh=jkRWRY67t2tHX3wjp1T/UW4xVXJmhVjKm7FIIRIkGV8=;
+	b=KUxNTHZCzAdM8Juk7Xm0gGKkrHhpev/MvQLsHLIxw4yl8MmjjTyuI49JXR4XewMbUfVS
+	 bhxccHlL3hJJlK2ha/BgTp6yXQGNMXBpdV2Cb5OV+vl4muzq9wEOZyGuSPwZhU99PIfXB
+	 /2Gyb7QUn9DI5YswiaCNXyYJbDKr7gaVBfSAYsTu3sVY0O1+o3J9JeOgjFptIs0UVrUMF
+	 zsaD3amypZdMHdKBUNR4i+jGpxwtergZPx1WRrfd3AYWe0cxQ1Ypo2bbjjPwie+WHsgaR
+	 xWFw9KdH+1ay1SNUtALroiugay8AvP02ep3ufb4UMEZeu/0Mt6WjmMKNCH84Dkzfpkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxtumEOk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQOY5iUT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A75F606A330;
-	Sat,  7 Nov 2026 15:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC16606A330;
+	Sat,  7 Nov 2026 15:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxtumEOk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA03B1F0089F;
-	Sat,  7 Nov 2026 15:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQOY5iUT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D0B1F0089F;
+	Sat,  7 Nov 2026 15:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065437;
-	bh=CgdTxw75dsbBeE4ORcLaY1jRIFOhQg36N50GSGH5XBE=;
+	s=korg; t=1794065439;
+	bh=jkRWRY67t2tHX3wjp1T/UW4xVXJmhVjKm7FIIRIkGV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rxtumEOkmUxesE3qzdTtSQxOoLhStoSSuXVo7PNIx/uER27CfVLf5FSQ2qqrQ9Eh9
-	 9NX2NRRWJcnJind3TGwmFEP6fuFK31+ha6CSeYls/9HUAjvNnphVDx5EeK3EmBYSba
-	 HuCNbXjPEax2517N6poQrlYhfZilV9NP3UUmL8gY=
+	b=IQOY5iUTzU+Ns8opEvFiFJ2oXtfSeNl/aueR6FCpUZ0ZAP9VpW5u8NbJGaqJ/y0uA
+	 XB/HOb4Z2iUmdvX5uSQ1f19sIpJrm2Nawy83bF7rCYw8hzqDzAJr5qhbjTgRV47AHi
+	 g7GTXV64rkAgTgzzVONAQZT/0zZ/n+uI91IYNxeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1144/1257] ASoC: codecs: wsa883x: Accept temperatures across the full trim range
-Date: Sat,  7 Nov 2026 08:57:20 -0500
-Message-ID: <20261107135010.816901095@linuxfoundation.org>
+Subject: [PATCH 7.3 1145/1257] ASoC: SDCA: propagate sdw_slave_read_prop() failure in class_read_prop
+Date: Sat,  7 Nov 2026 08:57:21 -0500
+Message-ID: <20261107135010.842221179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,64 +71,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 6a55cf0d9dd2e2493a5030a4f7b0413d31165e45 ]
+[ Upstream commit 79cfb5aebbf0417418c2ac25669fade7f3e58ef2 ]
 
-wsa883x_get_temp() rejects any reading outside 5..45 degC with -EAGAIN,
-so a speaker that has been playing, or sits in a warm chassis, becomes
-unreadable above 45 degC.
+sdw_slave_read_prop() can fail with -ENOMEM; propagate the return
+instead of leaving slave->prop partially initialised.
 
-Bound the check by the -10..150 degC two-point trim range instead, and
-use inclusive comparisons, as in_range() excludes the upper bound.
-
-Fixes: a02c42d41af7 ("ASoC: codecs: wsa883x: Implement temperature reading and hwmon")
+Fixes: 2d877d0659cb ("ASoC: SDCA: Add basic SDCA class driver")
 Cc: stable@vger.kernel.org
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Assisted-by: LLM
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261023171316.819857-4-srinivas.kandagatla@oss.qualcomm.com
+Link: https://patch.msgid.link/20261020073856.1177749-2-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa883x.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ sound/soc/sdca/sdca_class.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-index 442cf9f3eaac7..ccd4404c1644e 100644
---- a/sound/soc/codecs/wsa883x.c
-+++ b/sound/soc/codecs/wsa883x.c
-@@ -456,10 +456,11 @@
- 
- /*
-  * Device will report senseless data in many cases, so discard any measurements
-- * outside of valid range.
-+ * outside of the two-point trim range. Do not narrow this to ambient: a
-+ * speaker that has been playing easily runs well above 45 degC.
-  */
--#define WSA883X_LOW_TEMP_THRESHOLD	5
--#define WSA883X_HIGH_TEMP_THRESHOLD	45
-+#define WSA883X_LOW_TEMP_THRESHOLD	WSA883X_T1_TEMP
-+#define WSA883X_HIGH_TEMP_THRESHOLD	WSA883X_T2_TEMP
- 
- struct wsa883x_priv {
- 	struct regmap *regmap;
-@@ -1430,7 +1431,7 @@ static int wsa883x_get_temp(struct wsa883x_priv *wsa883x, long *temp)
- 	unsigned int dmeas_msb = 0, dmeas_lsb = 0;
- 	int d1, d2, dmeas;
- 	unsigned int mask;
--	int ret, range;
+diff --git a/sound/soc/sdca/sdca_class.c b/sound/soc/sdca/sdca_class.c
+index d7444f442c71c..191973ae2508e 100644
+--- a/sound/soc/sdca/sdca_class.c
++++ b/sound/soc/sdca/sdca_class.c
+@@ -27,8 +27,11 @@
+ static int class_read_prop(struct sdw_slave *sdw)
+ {
+ 	struct sdw_slave_prop *prop = &sdw->prop;
 +	int ret;
- 	long val;
  
- 	guard(mutex)(&wsa883x->sp_lock);
-@@ -1493,8 +1494,8 @@ static int wsa883x_get_temp(struct wsa883x_priv *wsa883x, long *temp)
- 	}
+-	sdw_slave_read_prop(sdw);
++	ret = sdw_slave_read_prop(sdw);
++	if (ret)
++		return ret;
  
- 	val = WSA883X_T1_TEMP + (((dmeas - d1) * (WSA883X_T2_TEMP - WSA883X_T1_TEMP)) / (d2 - d1));
--	range = WSA883X_HIGH_TEMP_THRESHOLD - WSA883X_LOW_TEMP_THRESHOLD;
--	if (in_range(val, WSA883X_LOW_TEMP_THRESHOLD, range)) {
-+	if (val >= WSA883X_LOW_TEMP_THRESHOLD &&
-+	    val <= WSA883X_HIGH_TEMP_THRESHOLD) {
- 		wsa883x->temperature = val;
- 		*temp = val * 1000;
- 		ret = 0;
+ 	prop->use_domain_irq = true;
+ 	prop->scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY |
 -- 
 2.53.0
 
