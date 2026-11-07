@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062703;
-	b=blWrcQW+YWNFCFQEJ6xXVVZwzsgu+bZgG/c37xMn5dgCKSF2OnWmZhSXrHBHK4ZMt48s
-	 sV/kYHml78cFvpaBftdGLsMGlNXreaClvAw7R3lsp07CR5boeUPe5To53ydFO3sUwV0kS
-	 HcweBnIdD/3/xhMGOVsTdpqMF9GIFQNWwXt1JrU6nGTxumbcZMQ3BXT4LmNCDwa5rHifo
-	 wIjgCvZmIJ1P7C2+G8H5Ylw2npHNsYcKpG6m4O1ZGbAtsfI9NsspDDDv4clDnTIgRsamE
-	 y1gb9EYTqe0hXyK/+iIly7wMnvOP+fLf0i/OoBRQy+g2Zfeday0t7e90Nv7wPNS4bxw==
+	t=1794062705;
+	b=LPntqpm3HC9XQ4Tt5yVnPX6v0Ks7WjlOM5vUVvg3IXx52X9//g3Z1XqrecrO3tqbzmpb
+	 n1GnXhkzNlvA5Uy29Md0hJSvVld0ohrGFWw1PloI+m5FoxSy7iQapOQZHtaGhJw3vHGP7
+	 ChyopV1HmvPuOyoalFb+i1+oBba+VO4x93g3guUbIi/PHASSr9gnlFeZzoZcsZJ3AQLc/
+	 5fFapTITcr1ft3FXBp/4lsusz1xQr9mzReNNLKYlR9wK1ra3l5sg6MFXcHYcpyAWuHEjo
+	 ERuVHtf3AlbVoVs2aKFkqS3G/kMQHoEmMi1zl861AznC6rajSCgXL5ldwTnvjNN4Zpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=KWzoY05kij5YqUNbkP3U/HSLuHtxZq8TpaC3ItznjTA=;
-	b=tWOl9N9tIEPeVk8JYYxAXTb7LosesNlSNFPhWtOyDG3Y2J/MEROp1+/gwZ7Dkw9pF6dE
-	 svioM8Eq7nB2WSY0QZr8am6d/WeWbWHcmGK/TBgOrPeQAScUv9f+QVfKV90VefrQ5quid
-	 5naeVIidWCU/wTBkQI6P299P+3udVOEzI8JzRq8AkFwN0Q2dgLSgGfqirI2wFRH3/Uymy
-	 T+Q+a/IcdEcGVtz3P9Atv6lkbyiaAzj1XYtKif62xeQnVCrtN3ZY5tvemDy24M4KRwdpt
-	 blH7698Vk9974cnK9PAlODZ0R07tAq2NTRJc3+Upf4JL7NL3JXlYSaIzSysLzrs6uKA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=U3Fe+BxfCyHeUxqH7GPCjlqGwQ9Sqk77LAFSW+kaiJY=;
+	b=pCab758BMvyHrMu0B0ftNUO/wzhpnLzIZEtrQ5ki4iWMj6Vjhg2vQI6S7IOYXnuWyTuR
+	 JaHhx9Pq7AXSAr/mz3JUePyM87wMYGTwX0c8rt3PZ1PIVSAH9MKYUNZnWDwknLRyHaPlN
+	 53Ss+XYf0Cvn1UsLLaEqQ59amym8cIv4tEpbT+9QtTDfAO7qjBI0U0pVzryDrkFw9oKqL
+	 usQHN/1cX5b12VFlRNJjA/5Cz40E2L8kF9+Ma3zVolyctYXLyYq0AauID6x66GShNduoU
+	 SeUn4mWAkAP7FHaCl3k30Jm6IP9ToJETrknHEM2tcm8EDv5wu9soRgqgXmE6Xkmjt1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PPkvBkPP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9X+v1kI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF7A606A330;
-	Sat,  7 Nov 2026 14:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295F1606A333;
+	Sat,  7 Nov 2026 14:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PPkvBkPP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5D31F008A1;
-	Sat,  7 Nov 2026 14:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9X+v1kI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8721F0089F;
+	Sat,  7 Nov 2026 14:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062703;
-	bh=KWzoY05kij5YqUNbkP3U/HSLuHtxZq8TpaC3ItznjTA=;
+	s=korg; t=1794062704;
+	bh=U3Fe+BxfCyHeUxqH7GPCjlqGwQ9Sqk77LAFSW+kaiJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PPkvBkPPbSo7MERQVfLaKuA7o13lGtY0c1C/EG8ONRVN7vu0SlIRklfH4ubWLklWi
-	 GoOAfelpA9zoJS8mxbNq8u1IAGaoDypb7UYM8oDpTp2iY2yprAlqySqXD6ozLel3E+
-	 fbegpLLO2g/08LEQGXY+GiUo4EKELR2FMR3QoLTg=
+	b=O9X+v1kImkjGKdv7sr4qrhk7xawWncm32lMkV8aT4R3r5VJzgPf8OFjuaPCZ3zX4S
+	 bMigOxDNglPHBw1TuM2yELSsNGjseeAH8liB3IFrWcjC+URTbIBcl/g9Jix/F/fFcA
+	 xOf5tftrCD6t41drsleZfoohE/iwqsTT0iTL1PqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YuBiao Wang <YuBiao.Wang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Robert Mader <robert.mader@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/869] drm/amdgpu: recompute the dw estimate after allocating a new VM update job
-Date: Sat,  7 Nov 2026 08:45:09 -0500
-Message-ID: <20261107134853.021756572@linuxfoundation.org>
+Subject: [PATCH 6.18 028/869] drm/amd/display: Force GAMCOR for subsampled surfaces with PQ/Gamma22/HLG
+Date: Sat,  7 Nov 2026 08:45:10 -0500
+Message-ID: <20261107134853.058248421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -63,57 +63,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: YuBiao Wang <YuBiao.Wang@amd.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit a74c7832b11827907de560169c7d4ac94505fd87 ]
+[ Upstream commit 2ffaa7c4050605cb27756f5336f778d1b21268b9 ]
 
-amdgpu_vm_sdma_update() keeps the number of free dwords of the current
-job in a local variable. When the job runs out of room it is committed
-and a new one is allocated, but that local variable is not refreshed and
-still describes the job which was just submitted.
+The ROM early-return checks for PQ, Gamma 2.2, and HLG in
+mod_color_calculate_degamma_params() do not consider the map_user_ramp
+parameter. When map_user_ramp is true (indicating a subsampled surface
+that requires post-scaler degamma via GAMCOR), the function still takes
+the ROM path, programming PRE_DEGAM instead.
 
-The stale value is then used to decide how many PTEs fit into the new
-job. If it happens to be copy_pte_num_dw + 7, or one more than that, the
-result is zero. copy_pte() encodes the transfer size as count * 8 - 1,
-so a count of zero asks the engine for a 1GB copy starting inside the IB
-pool. That runs off the end of the pool, faults on the first unmapped
-GART page above it and hangs the ring.
+For subsampled formats the chroma channels must be upsampled by the
+scaler before degamma is applied. PRE_DEGAM sits before the scaler in
+the pipeline (CNVC domain), while GAMCOR sits after it (CM domain).
+Using the ROM for subsampled surfaces means degamma is applied to
+subsampled chroma before upsampling, producing incorrect results.
 
-Re-initialize the estimate from the newly allocated job, which is empty
-and therefore has its full budget available.
+Fix by gating the dcn_arch ROM capability checks on !map_user_ramp,
+forcing PQ/Gamma22/HLG through the GAMCOR LUT path when the surface
+is subsampled.
 
+Fixes: a8bf71649088 ("drm/amd/display: Internal refactoring to abstract color caps")
 Cc: stable@vger.kernel.org
-Signed-off-by: YuBiao Wang <YuBiao.Wang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Assisted-by: Copilot:claude-opus-4.6
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Robert Mader <robert.mader@collabora.com>
+Link: https://patch.msgid.link/20260814211816.1219597-11-harry.wentland@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/modules/color/color_gamma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
-index 36805dcfa1598..902d0a538e419 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
-@@ -254,6 +254,11 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
- 						     AMDGPU_KERNEL_JOB_ID_VM_UPDATE);
- 			if (r)
- 				return r;
-+
-+			/* The estimate above describes the job which was just
-+			 * submitted, take the budget of the newly allocated one.
-+			 */
-+			ndw = p->num_dw_left;
- 		}
+diff --git a/drivers/gpu/drm/amd/display/modules/color/color_gamma.c b/drivers/gpu/drm/amd/display/modules/color/color_gamma.c
+index a71df052cf252..7103d8cfb4799 100644
+--- a/drivers/gpu/drm/amd/display/modules/color/color_gamma.c
++++ b/drivers/gpu/drm/amd/display/modules/color/color_gamma.c
+@@ -1694,7 +1694,8 @@ bool mod_color_calculate_degamma_params(struct dc_color_caps *dc_caps,
+ 			return true;
  
- 		if (!p->pages_addr) {
+ 		if (dc_caps != NULL &&
+-			dc_caps->dpp.dcn_arch == 1) {
++			dc_caps->dpp.dcn_arch == 1 &&
++			!map_user_ramp) {
+ 
+ 			if (input_tf->tf == TRANSFER_FUNCTION_PQ &&
+ 					dc_caps->dpp.dgam_rom_caps.pq == 1)
 -- 
 2.53.0
 
