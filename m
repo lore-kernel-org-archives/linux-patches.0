@@ -1,55 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062691;
-	b=2jgsB/4cCbLXK7euWq57MUOyP+66dOc3fC5LH43Mq9qXVKg+1RV9FcwGZzuaRUYb35yy
-	 GQv5MnpDm62KWK8HDTc9045W8L+2d9Q7oYTA1j/ujYWc3x31avWiF85NByhLU1z6e1H+0
-	 Fy+9yx8/NHA3+j0TYZGXAgaVNYsFsfEuq60Q5/4E3eKER6sybPOnI8dUIIrpZ9TqYGcbU
-	 yFgV1CI6xykD3q9Tl99QxlW6h82Q9j2ahbsahYQdM+kdlBzBcY9pycXKmB14jGfCIVG+0
-	 UAjhL25N+vDG3D+F6egKsUAzZBhA1n0IXfKlj7fk+h8aENMRy6KjTbZzMLxrb0jQTKA==
+	t=1794062692;
+	b=bMAHJFo2KDxT71NYTzXOVuETxzQu3BIr/PzBy/7odFEEve9uqmzEc4LStI1593Pmgmyk
+	 7rAE0T2+8kkRVEENljnf0N/IEEz9e+WMYU/NvYmRKGciBjLhdAd2JKdg+vhlHjQTwI1jE
+	 9aD+Ri/UZvq/0otGYf6zkmlMOSvMl2WBwcjSghKADyS/qZd0U8cGbUPqDbvB/ER1LPNj7
+	 LupkyaP1caO704U+izz/fZkZpIuzXVSgJSL/z+g7ZMSbiAWT40zdFzPUI2GGvTMI/VB+E
+	 Ikg/gbT8PiDmIVSU4kLKmvbl6rwGaGzcvtimjPAcPbKeJNdYd4tEAZSU282KaoBrGKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062692;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/s72kLqAnwh8oqhhhnxEMwZQoLmlAHYe4nyP0RNCAL4=;
-	b=IOCp9H2/a1XCaCieqHReNtuqUYmxGJxpKX0k/VZn0zwY294IyQ7KCVHqOK2j3+uBCXEg
-	 YlT8Mgpcrc83glT7cRWJOFAzXTKFGxW1cjZpWf8Tm+nFgT6mRRqT68v+bf6pN7aEKqCdj
-	 JJKuncX5AhCx0nbXA/5hc48yt7b7xaNxPS3dNbKriFpivSfV/hvYAhAtzs1DeNEaAnnbW
-	 ZqadSJVIChkABF1qaRnmaHQ95na7SjN97jSq8hXO2hsHXlNBR4l4W4avNdq1Yo1l48bj4
-	 ZCmpn/l1LM/GKpXhAfNa2Txu3Ve3sUJjobkmj4ETxr1LruWX635Jm4tRm3yLoUek4UA==
+	bh=HScgrHLWCt3JRu7TiMBsJjOvQJ5DRV/F7J5Enmjve20=;
+	b=Kl7itI59t0dINaROOZzeShVPFRuQ0uO50src/CCKYak9hIOzhj4xJB81x+CB+lFi85sT
+	 kJfCjaOUgRrgQlkLv/ftazBORMBqjWV0ZSlyahtOcQYMqHLitW4OdFm+PoxFPGlO4KmR7
+	 w52DDI05OUruX8YiESNsC/OipHFpUVZUu+1fyto5g2j8stj/9oceIgt65CaaIlXTJ6PjI
+	 0IYSuGjcuKniB04CJEUzb+Cfu4S5RxtLoMQZnyb8sv/eX5IBnrnRg6FlRGO7IcdupIun5
+	 ST5LK4q5dLSV6uy6RErQCQ2Nnn9MaC2GP865cjooB9CwVFEdoI7gehSTm4ubJCh9UXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FFRZtXGx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVbKyMou;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC19606A32D;
-	Sat,  7 Nov 2026 14:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD29606A326;
+	Sat,  7 Nov 2026 14:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FFRZtXGx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5E21F0089F;
-	Sat,  7 Nov 2026 14:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVbKyMou
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E3D1F0089F;
+	Sat,  7 Nov 2026 14:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062691;
-	bh=/s72kLqAnwh8oqhhhnxEMwZQoLmlAHYe4nyP0RNCAL4=;
+	s=korg; t=1794062692;
+	bh=HScgrHLWCt3JRu7TiMBsJjOvQJ5DRV/F7J5Enmjve20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FFRZtXGx+Y1gKF/GLsOUNE4FKJFHJ/5MgFJBfEApRc/Cz7BPoE7djN4aNZWb6um1u
-	 Ovn6EcegCvnYwA6RS+LoUxosbTszgH4FZ6Dlhchkn15Mtxep6vSqLIYEnBKfKWFG3f
-	 ukMgL7wP9aZt/2KYpLEwcAAd+uwidQvceSN8OxwE=
+	b=wVbKyMouc31gHjtxdRw05A+NX8AEKeRwGou7cv6aOM5l2JfRXxfECfS8rKjzUHJbR
+	 jv9GryYHwgQjtWazTKpira0JfG94Y5PV/ACo30DqVAT++jCfLXCcrCiEOWHbxxqP/f
+	 0e7OnXHLDGos8bn3vep5UP7iNEoxPWZ0JK020UOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Vernon Yang <yanglincheng@kylinos.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Zach OKeefe <zokeefe@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 018/869] rust: dma: declare cfi_encoding for dma_data_direction
-Date: Sat,  7 Nov 2026 08:45:00 -0500
-Message-ID: <20261107134852.593799012@linuxfoundation.org>
+Subject: [PATCH 6.18 019/869] mm: khugepaged: fix swap entry value to folio_pfn()
+Date: Sat,  7 Nov 2026 08:45:01 -0500
+Message-ID: <20261107134852.737293187@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,121 +75,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: Vernon Yang <yanglincheng@kylinos.cn>
 
-commit 7d109178cd644268326cd31702ed46c7ac8bb300 upstream.
+[ Upstream commit 942c8ec27aa4ffc587511650718349964e1696e6 ]
 
-bindgen generates bindings::dma_data_direction as an integer by default,
-while C callback tables such as dma_buf_ops declare the parameter as
-enum dma_data_direction. kCFI encodes enum types by name even with
-integer normalization, so the type ids would not match when C calls into
-a Rust callback taking bindings::dma_data_direction.
+Patch series "mm: khugepaged: fix tracepoint UAF", v5.
 
-Generate dma_data_direction as a newtype with a cfi_encoding, as is done
-for lru_status, and convert DataDirection through the newtype's
-constants.
+The khugepaged tracepoints take a folio pointer and call folio_pfn(), but
+by then the folio may no longer be valid: freed after folio_put(),
+folio_unlock() or pte_unmap_unlock(), or not a folio at all but an
+xarray-encoded swap entry.  On classic SPARSEMEM, dereferencing it oopses
+khugepaged as soon as the trace event is enabled; on other memory models
+it merely prints a bogus pfn.
 
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: c2437c43cfb1 ("rust: dma: implement DataDirection")
-Link: https://patch.msgid.link/20261019-rust-cfi-fixes-v1-3-9503472ba738@google.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-[ Replaced bindgen's custom enum attribute option with sed
-  post-processing to support older bindgen. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Pass the pfn to the tracepoints directly, captured while the folio is
+still pinned, closing the use-after-free windows in
+mm_khugepaged_scan_file(), mm_khugepaged_scan_pmd() and
+mm_khugepaged_collapse_file().
+
+This patch (of 3):
+
+When the swap entries found exceed max_ptes_swap, the loop is left via
+break with folio still holding the xarray value that encodes the swap
+entry, not valid folio pointer.
+
+That value is passed to trace_mm_khugepaged_scan_file(), which feeds it to
+folio_pfn().  On FLATMEM and SPARSEMEM_VMEMMAP, the page_to_pfn() is plain
+pointer arithmetic, so the trace event merely prints bogus scan_pfn.  On
+classic SPARSEMEM, the page_to_pfn() reads page->flags, dereferencing the
+tiny encoded integer and oopsing khugepaged whenever the trace event is
+enabled.
+
+So when folio is the swap entry value, simply set pfn to -1, just like
+exhausted scan naturally.
+
+And the folio_put() has maybe dropped the last reference of folio.  The
+trace_mm_khugepaged_scan_file() is left with a dangling folio pointer.  so
+using the folio_pfn() before dropping the reference, closing
+use-after-free window.
+
+Link: https://lore.kernel.org/20260909025804.3233645-1-vernon2gm@gmail.com
+Link: https://lore.kernel.org/20260909025804.3233645-2-vernon2gm@gmail.com
+Fixes: d41fd2016ed0 ("mm/khugepaged: add tracepoint to hpage_collapse_scan_file()")
+Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Zach O'Keefe <zokeefe@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: Retained int result instead of enum scan_result in hpage_collapse_scan_file(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/Makefile           |  1 +
- rust/bindgen_parameters |  1 +
- rust/kernel/dma.rs      | 21 +++++++++++----------
- 3 files changed, 13 insertions(+), 10 deletions(-)
+ include/trace/events/huge_memory.h | 6 +++---
+ mm/khugepaged.c                    | 7 ++++++-
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 3f1abad648e66..d6429e68949fe 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -368,6 +368,7 @@ $(obj)/bindings/bindings_generated.rs: private bindgen_target_flags = \
-     $(shell grep -Ev '^#|^$$' $(src)/bindgen_parameters)
- $(obj)/bindings/bindings_generated.rs: private bindgen_target_extra = ; \
-     sed -Ei 's/pub const RUST_CONST_HELPER_([a-zA-Z0-9_]*)/pub const \1/g' $@; \
-+    sed -Ei 's/^pub struct dma_data_direction\(/#[cfi_encoding="18dma_data_direction"]\n&/' $@; \
-     sed -Ei 's/^pub struct hrtimer_restart\(/#[cfi_encoding="15hrtimer_restart"]\n&/' $@; \
-     sed -Ei 's/^pub struct irqreturn\(/#[cfi_encoding="9irqreturn"]\n&/' $@
- $(obj)/bindings/bindings_generated.rs: $(src)/bindings/bindings_helper.h \
-diff --git a/rust/bindgen_parameters b/rust/bindgen_parameters
-index 6f76fdcffd58d..a5d547dc8e8ea 100644
---- a/rust/bindgen_parameters
-+++ b/rust/bindgen_parameters
-@@ -24,6 +24,7 @@
- --opaque-type spinlock
+diff --git a/include/trace/events/huge_memory.h b/include/trace/events/huge_memory.h
+index 2276614691dfd..1464d45c90abf 100644
+--- a/include/trace/events/huge_memory.h
++++ b/include/trace/events/huge_memory.h
+@@ -167,10 +167,10 @@ TRACE_EVENT(mm_collapse_huge_page_swapin,
  
- # enums that appear in indirect function calls should specify a cfi type
-+--newtype-enum dma_data_direction
- --newtype-enum hrtimer_restart
- --newtype-enum irqreturn
+ TRACE_EVENT(mm_khugepaged_scan_file,
  
-diff --git a/rust/kernel/dma.rs b/rust/kernel/dma.rs
-index 4ce9e5d7f3dd0..b6c73db358ced 100644
---- a/rust/kernel/dma.rs
-+++ b/rust/kernel/dma.rs
-@@ -267,25 +267,25 @@ pub enum DataDirection {
-     ///
-     /// This is used when the buffer can be both read from and written to by the device.
-     /// The cache for the corresponding memory region is both flushed and invalidated.
--    Bidirectional = Self::const_cast(bindings::dma_data_direction_DMA_BIDIRECTIONAL),
-+    Bidirectional = Self::const_cast(bindings::dma_data_direction::DMA_BIDIRECTIONAL),
+-	TP_PROTO(struct mm_struct *mm, struct folio *folio, struct file *file,
++	TP_PROTO(struct mm_struct *mm, unsigned long pfn, struct file *file,
+ 		 int present, int swap, int result),
  
-     /// The DMA mapping is for data transfer from memory to the device (write).
-     ///
-     /// The CPU has prepared data in the buffer, and the device will read it.
-     /// The cache for the corresponding memory region is flushed before device access.
--    ToDevice = Self::const_cast(bindings::dma_data_direction_DMA_TO_DEVICE),
-+    ToDevice = Self::const_cast(bindings::dma_data_direction::DMA_TO_DEVICE),
+-	TP_ARGS(mm, folio, file, present, swap, result),
++	TP_ARGS(mm, pfn, file, present, swap, result),
  
-     /// The DMA mapping is for data transfer from the device to memory (read).
-     ///
-     /// The device will write data into the buffer for the CPU to read.
-     /// The cache for the corresponding memory region is invalidated before CPU access.
--    FromDevice = Self::const_cast(bindings::dma_data_direction_DMA_FROM_DEVICE),
-+    FromDevice = Self::const_cast(bindings::dma_data_direction::DMA_FROM_DEVICE),
+ 	TP_STRUCT__entry(
+ 		__field(struct mm_struct *, mm)
+@@ -183,7 +183,7 @@ TRACE_EVENT(mm_khugepaged_scan_file,
  
-     /// The DMA mapping is not for data transfer.
-     ///
-     /// This is primarily for debugging purposes. With this direction, the DMA mapping API
-     /// will not perform any cache coherency operations.
--    None = Self::const_cast(bindings::dma_data_direction_DMA_NONE),
-+    None = Self::const_cast(bindings::dma_data_direction::DMA_NONE),
- }
+ 	TP_fast_assign(
+ 		__entry->mm = mm;
+-		__entry->pfn = folio ? folio_pfn(folio) : -1;
++		__entry->pfn = pfn;
+ 		__assign_str(filename);
+ 		__entry->present = present;
+ 		__entry->swap = swap;
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index e2ac26c05064f..cc3a09a0c2596 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -2308,6 +2308,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
+ 	int present, swap;
+ 	int node = NUMA_NO_NODE;
+ 	int result = SCAN_SUCCEED;
++	unsigned long failed_pfn = -1;
  
- impl DataDirection {
-@@ -297,7 +297,7 @@ const fn const_cast(val: bindings::dma_data_direction) -> u32 {
-         // CAST: The C standard allows compilers to choose different integer types for enums.
-         // To safely check the value, we cast it to a wide signed integer type (`i128`)
-         // which can hold any standard C integer enum type without truncation.
--        let wide_val = val as i128;
-+        let wide_val = val.0 as i128;
+ 	present = 0;
+ 	swap = 0;
+@@ -2344,6 +2345,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
+ 		    folio->index == start) {
+ 			/* Maybe PMD-mapped */
+ 			result = SCAN_PTE_MAPPED_HUGEPAGE;
++			failed_pfn = folio_pfn(folio);
+ 			/*
+ 			 * For SCAN_PTE_MAPPED_HUGEPAGE, further processing
+ 			 * by the caller won't touch the page cache, and so
+@@ -2357,6 +2359,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
+ 		node = folio_nid(folio);
+ 		if (hpage_collapse_scan_abort(node, cc)) {
+ 			result = SCAN_SCAN_ABORT;
++			failed_pfn = folio_pfn(folio);
+ 			folio_put(folio);
+ 			break;
+ 		}
+@@ -2364,12 +2367,14 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
  
-         // Check if the value is outside the valid range for the target type `u32`.
-         // CAST: `u32::MAX` is cast to `i128` to match the type of `wide_val` for the comparison.
-@@ -315,11 +315,12 @@ const fn const_cast(val: bindings::dma_data_direction) -> u32 {
- impl From<DataDirection> for bindings::dma_data_direction {
-     /// Returns the raw representation of [`enum dma_data_direction`].
-     fn from(direction: DataDirection) -> Self {
--        // CAST: `direction as u32` gets the underlying representation of our `#[repr(u32)]` enum.
--        // The subsequent cast to `Self` (the bindgen type) assumes the C enum is compatible
--        // with the enum variants of `DataDirection`, which is a valid assumption given our
--        // compile-time checks.
--        direction as u32 as Self
-+        match direction {
-+            DataDirection::Bidirectional => Self::DMA_BIDIRECTIONAL,
-+            DataDirection::ToDevice => Self::DMA_TO_DEVICE,
-+            DataDirection::FromDevice => Self::DMA_FROM_DEVICE,
-+            DataDirection::None => Self::DMA_NONE,
-+        }
-     }
+ 		if (!folio_test_lru(folio)) {
+ 			result = SCAN_PAGE_LRU;
++			failed_pfn = folio_pfn(folio);
+ 			folio_put(folio);
+ 			break;
+ 		}
+ 
+ 		if (folio_expected_ref_count(folio) + 1 != folio_ref_count(folio)) {
+ 			result = SCAN_PAGE_COUNT;
++			failed_pfn = folio_pfn(folio);
+ 			folio_put(folio);
+ 			break;
+ 		}
+@@ -2401,7 +2406,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
+ 		}
+ 	}
+ 
+-	trace_mm_khugepaged_scan_file(mm, folio, file, present, swap, result);
++	trace_mm_khugepaged_scan_file(mm, failed_pfn, file, present, swap, result);
+ 	return result;
  }
  
 -- 
