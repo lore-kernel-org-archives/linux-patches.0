@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064128;
-	b=lb1DddE0cRWAT5X0ixzp6vE7KNl3f79RvQkRDi3iXKHYNYflxq/npPYfx5ogLxv9j8o5
-	 LNJp/uzPudCS/mye8yYRsjakzbw2bPY4XtuHOwnIJMAFdf6WIAPf4driozWdxlab702jK
-	 Nc9jbH4woZ4/M6XgOsTuFovTZ48yxTvg/Gyk0XwPkmKMyrUgj+3zKlfnWzovghKWpvZmt
-	 ImmsoXu8orAEYr+M+y6Oy6z081AQClWa6puHvFlsEL/0TtgSK4RzXqMk8hCnmH0NxiYwY
-	 M7EmuzSgMmBcC2sYPecMe3m5eSa4ThePKoOC+ui18I2YRp527oe1dEVnswRgQMhsJ9w==
+	t=1794064129;
+	b=XdAD0AwEbO8w3d15owQV0cJqgfu+Zk5AqFxeZTrGODGHcapgZx+LhEEgwQdco9747wsC
+	 2UbbtfKHaKd5oMLABL1szXg7HP4ChmbokjDjY8Qgd9oqSmF6Fv/Y5rYTB2qRFmg4lt12l
+	 cC46AcGBOMyucQttp6ZODDTl77o/zz90QSC4q2XIavHI8MiqpKmrEspeVNzCmZbL7A42Q
+	 eG4mcr/tgFfpQdcBsRuk8JkTAgrQHZgdLIG/uKchsVwLBXyWBjPaSSbrm9EPJRbJrpqoF
+	 EnEOCfQFg9l1JPuWfiEb0j8GxuJkU2ZJGYbtGM8FjkOG9z5+qdkoQq6L9XQLW04/g1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064128;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3zStns22S6JzQBhfdK2t6ySUV/TO61Upvj9/cTXtgdo=;
-	b=yn1xZrRmjwKGKLM2Jkc9xg7YsKu6Efs52R4jUDsaWHD4DUWztEgW82y2p/XxxHvOJzwK
-	 PD/1WB/EroPMrvxl4evGnuObCTacXCHTMp5LGIV5q5v3V7JbrLo5Y3nSuxExMZxdimCzZ
-	 tadeHhwQ1K9zN3QTKQERpNX4NepTXbL6zmNEQrPwEjJR5uc80DMEL45LHJyn8zZzu90MG
-	 9xHrTx20DnRYWNfG0/hr+xLF09HYwzsB4z4aFFjr1S55sQXVrd3nRFnuS3A9bi6RT/vZJ
-	 2tv+CXd+FqR9BOFzHYB4T+krYm/ra8Wreinbz21IS+bGo1NoQDuy6icYMhl9t4PCtnQ==
+	bh=4cW+wW7zpRulCRbNK/q7l+zCnUOZViYKRcl++sKthvU=;
+	b=lfmw8n4CPddO+dRjOYU80/TnwaIPK8PfenARq8UBkg1DjXLToHjRCaQYoa7LWtQXshAR
+	 HGR+nzzsH1KhGKDu37LOuw3bSSZfIke/kURuvnQE9CWrBcmLhhZa/vOh38pfpACVXx1Gr
+	 8fWTxKzLeTiBaMS/UAKPiTD1xPTlBMcGAKbv4p/6/xM8/yS2nr+/KCST7mMDTnFmB7SXC
+	 qpxNNFCiHd16dq56oPuXENfO2jI7wfom0TuPr95uCtSxXbXF1DSZqoJFsXgxUvc3t0xmv
+	 9JG8JYh1h4BbQvz6zu83Tcu3NpCCUUIyow8ESveszU0YH9pYLTlU0hi+DhIEhijlFug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDs4RSat;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UodayXkT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68CF606B88B;
-	Sat,  7 Nov 2026 15:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005CE606A9CF;
+	Sat,  7 Nov 2026 15:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDs4RSat
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5598B1F0089F;
-	Sat,  7 Nov 2026 15:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UodayXkT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77761F0089F;
+	Sat,  7 Nov 2026 15:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064127;
-	bh=3zStns22S6JzQBhfdK2t6ySUV/TO61Upvj9/cTXtgdo=;
+	s=korg; t=1794064128;
+	bh=4cW+wW7zpRulCRbNK/q7l+zCnUOZViYKRcl++sKthvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JDs4RSat0YqVCPM5CQwB7BGrCoQQh2k8hKo/LqsqHgnF38JwzrQYe0odONZq+b9Gv
-	 Th+Zh1lwkTDYA/PFFzNYkRwb57IBCx54H/hx2/Asms3cbhvHwwwgIOacwRCg3RWN+s
-	 zdg/hBj0BzyLyFPAkqpu4O8/UExQjvmn4OQEN9Xk=
+	b=UodayXkTvwTgkzPMDfGNqXC+JjwAEfBOjWZnKtvRBw2G1l2bB0TEL3TuHyx8b90LJ
+	 1Ufln0MKEgnFIKDVVtriDK0QNjE0L/JuV4y3rLYjpO0cvA7GZ4fwWKbFTYB2B16JjQ
+	 putwlLqJusmBia+AfQVKDJ5arX2Xhvc31Gp/E2gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Stanislaw Pal <kuncy7@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	Marco Mattiolo <marco.mattiolo@hotmail.it>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0280/1257] clk: qcom: gcc-ipq5018: mark gpll0_main clock as critical
-Date: Sat,  7 Nov 2026 08:42:56 -0500
-Message-ID: <20261107134947.208209941@linuxfoundation.org>
+Subject: [PATCH 7.3 0281/1257] drm/panel: ebbg-ft8719: Set prepare_prev_first
+Date: Sat,  7 Nov 2026 08:42:57 -0500
+Message-ID: <20261107134947.235403939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,65 +71,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Casey Connolly <casey.connolly@linaro.org>
 
-[ Upstream commit 33f9cb56cc28d002511e471be74f8ff241984178 ]
+[ Upstream commit 4eeeac9d7c3600a6cae75b2a7bc9c5b67530923c ]
 
-On IPQ5018, the APCS core clock feeds the CPUs. It can use
-different clocks as its parent, but during system boot it
-utilizes GPLL0.
-
-Under some cicumstances, the 'gpll0_main' clock is getting
-disabled during kernel start which results in a system hang
-then the hardware watchdog restarts the board after a while.
-
-This can happen when a driver gets a clock in its probe function,
-then releases it either directly or by devres cleanup on probe
-failure.
-
-For example, since v6.18 the kernel often fails to boot on the
-TP-Link Archer AX55 v1 board by using the in-tree dts. In the
-failing configuration, the 'ipq-cmn-pll' driver is built into
-the kernel and the problem is caused by the pm_runtim_put()
-call in the ipq_cmn_pll_clk_probe() function. Due to this call,
-runtime pm disables the 'gcc_cmn_blk_ahb_clk' clock asynchronously
-which results in disabling 'gpll0_main' as well.
-
-Mark the clock as critical in order to avoid such hangs.
+This corrects the host initialisation sequence so that we can send
+DSI/DCS commands in prepare().
 
 Cc: stable@vger.kernel.org
-Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Tested-by: Stanislaw Pal <kuncy7@gmail.com>
-Link: https://lore.kernel.org/r/20260918-ipq5018-mark-gpll0_main-critical-v1-1-fbe8f27a0106@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: b00de0e237da ("drm/panel: introduce ebbg,ft8719 panel")
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Tested-by: Marco Mattiolo <marco.mattiolo@hotmail.it>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260908-ebbg-ft8719-fixups-v2-1-5454ae1f5581@ixit.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq5018.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/panel/panel-ebbg-ft8719.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
-index 594dae3bac4c1..46da652956fb0 100644
---- a/drivers/clk/qcom/gcc-ipq5018.c
-+++ b/drivers/clk/qcom/gcc-ipq5018.c
-@@ -68,6 +68,15 @@ static struct clk_alpha_pll gpll0_main = {
- 			.parent_data = gcc_xo_data,
- 			.num_parents = ARRAY_SIZE(gcc_xo_data),
- 			.ops = &clk_alpha_pll_stromer_ops,
-+			/*
-+			 * During system boot, this PLL feeds the CPUs.
-+			 * Mark it as critical to ensure that CCF does
-+			 * not disable it, even if there are no active
-+			 * consumers. This is needed to avoid a system
-+			 * hang caused by turning off the clock driving
-+			 * the CPUs.
-+			 */
-+			.flags = CLK_IS_CRITICAL,
- 		},
- 	},
- };
+diff --git a/drivers/gpu/drm/panel/panel-ebbg-ft8719.c b/drivers/gpu/drm/panel/panel-ebbg-ft8719.c
+index fb9f9f42be4f2..1ab09c50a6306 100644
+--- a/drivers/gpu/drm/panel/panel-ebbg-ft8719.c
++++ b/drivers/gpu/drm/panel/panel-ebbg-ft8719.c
+@@ -198,6 +198,8 @@ static int ebbg_ft8719_probe(struct mipi_dsi_device *dsi)
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
+ 			  MIPI_DSI_CLOCK_NON_CONTINUOUS;
+ 
++	ctx->panel.prepare_prev_first = true;
++
+ 	ret = drm_panel_of_backlight(&ctx->panel);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
 -- 
 2.53.0
 
