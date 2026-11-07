@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063887;
-	b=oSPHxIXEdYaWdu4RyWeRENo+OiD9zekjn014wv/0CgMZzkEdoCbaa0F8jveyVDMBbiTY
-	 sx0AnaY2fOtBlkBdn5Buj5swUaA3h0Iim54c0Unk84aHXUgkDuAUYjoMHP3ynfP5B0Q0V
-	 PSae7JaJekZCByJAvlyKFltIYa12NHIba3LtG2KpVa9ySHb+9WfxZ682w9naMhmTQ+i34
-	 9i5FquVlXiQq/abrZdxSdMNKuSjxMwqasxEdLiupG05aequEaKDGIEiNMGjDjtOgge/1h
-	 5QNb4ulRkkXc7CJZgfz7q9JmLslfgWeuwwXAbtqreRnVYgjtoWKSXrhVokPaP75eXSA==
+	t=1794063889;
+	b=ZQj0VnLdkKh9GnV4+0hydvPuaTtfU76boK6BJc/ZRr0a/zpS/bhp7sH+Voesd6mEN8HP
+	 rTT3IZ6eY6dX6ftMeWHLW66kHP7eP29TY3iJUUwKjMVno4Ny1ZdjzmgHatB7G0xhkzK6v
+	 ezhN2jX7jAWwXN/dDgi63PIB1aJpuMMwFm8Dmd1oaX+tIThnttrdC+Or8/30J0qNTX6oU
+	 MF3JOakA24c4cdFcV+oezug+MUglgF1ttKAhfoW2x+QyUl8Zh3srZ4zw5Y0qSPqzvLabs
+	 DujBRIyLMss2qbxjn8RmumoUu7h2DUKRHsAXvn+dwtGM+kbHJD7k8wGsfxEJi4EEmAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063887;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WAmQ8UKfnfr1vj8JTJ7Sc+CkOi2y3Guzr+ft5sH6vIc=;
-	b=RZjylUZPsLi+mvh8VEMRNs6leO5wKwfq4816FfGXIF70b+7VHk4EWUnotA9Ik1a064Lm
-	 Ls0m3MeVkvwWEFQH53JfOF3Wd0bk1uuvW4Fk4LN2bfJa9TYdHO7x6AfYAoGyuSvOriE3L
-	 JZRT2fV6a1c+tbU9y7nh2FZsoLmX+6BsChqlOwbq3Mq3DXv3/3h6+inPZa6WPyp/1yjG6
-	 0m12onIYZDkYpHunbfTri1LXkFFdHPHGjGuv1rxOOkaR95Y9ACwBSfNoBmgpeDDQCgMHm
-	 LB73h1ILoiszL9c3AmYlyboR8pOC+djOaApmFsv+N/zXFg8kM7ZX1lOVGRJpMHTsnaQ==
+	bh=H+0fN6HAiA3ZHuD4LnMGyBWHNP2p8Rz+P25ARpFPfkI=;
+	b=t22wphcZauN8gxCcqCu/WwpHpEuMDDo+izNfHkQx4s+RvEsGB2ucseBBvjySgf84BK59
+	 lQxEfouJXm6Nu62cWji4Lp7ORO4RCNHKUrTVI9HMN2Gf/eyX/MnzdXzxq72zucVbq0bi4
+	 3GsJQOsH7mEEChFwKga2qap+FIlgk3nkZmctY9r2oSIO0wOMi/TGNfjc7hHRsRxuNyyf8
+	 tGC5swA8pKlSP9LPybVl9UCRwiFYYEvxiMnkCsrsOrEnhBPmnpJDMs+z8D9X+dkmda0Fp
+	 f0FSlRYgGbPqHCgJhkrG5YXex1ROMAZOnUj7O7IOlZkQvIv7I+Q2h1Z0SdsM2l9aFAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=La3FRfWg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="S/flTS9o";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C33606B8B8;
-	Sat,  7 Nov 2026 15:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1DA606B8B4;
+	Sat,  7 Nov 2026 15:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=La3FRfWg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3571F008A1;
-	Sat,  7 Nov 2026 15:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S/flTS9o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8F11F0089F;
+	Sat,  7 Nov 2026 15:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063887;
-	bh=WAmQ8UKfnfr1vj8JTJ7Sc+CkOi2y3Guzr+ft5sH6vIc=;
+	s=korg; t=1794063888;
+	bh=H+0fN6HAiA3ZHuD4LnMGyBWHNP2p8Rz+P25ARpFPfkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=La3FRfWg79Ws7MhD8mowqJD7f6OAVACmd7fuwUleRGVp8OkdiDyIAD18splpUo48g
-	 3c0lz/C3HviOZBYXbTMLgIowfQ5w2uKrnDJa1LQ6HgFVEro+RJK9w1GKXZm0xyyvLk
-	 KruInArFs3Er8c6/tHHQ29CfogKlBxFprrKyiFb0=
+	b=S/flTS9oIUhc1/GM5zIAzdl8eyJmKvgta2xuyhkKrmt0phVU/1PAy3PqpeetB+FLH
+	 SwXp3d0VjvBIB/QCaBBoVNdgUAZUJ545gC3ORJw6fD+FNS1OEHQ0YUkYhAqVRq7UxQ
+	 Zh2dyNUKn78BCbQ3fqB6q1JKbtWFLzcVykSbaspM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andrea Pesaresi <andreapesaresi82@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0042/1257] soc: qcom: geni-se: Fix endian conversion for serial_protocol comparison
-Date: Sat,  7 Nov 2026 08:38:58 -0500
-Message-ID: <20261107134940.569557188@linuxfoundation.org>
+Subject: [PATCH 7.3 0084/1257] arm64: dts: mediatek: mt7986: correct timer frequency
+Date: Sat,  7 Nov 2026 08:39:40 -0500
+Message-ID: <20261107134941.690148166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,41 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Andrea Pesaresi <andreapesaresi82@gmail.com>
 
-[ Upstream commit 0231382f070df26a8b267f9e68c5440928b87c89 ]
+[ Upstream commit 1cf18e4b9815beaf0439c5b57b65b45151c82ad7 ]
 
-serial_protocol is declared as __le16 in struct se_fw_hdr, but was
-decoded with le32_to_cpu(). On big-endian systems the extra byte swap
-causes the field to always compare unequal to the protocol argument,
-so no firmware segment is ever selected.
+The MT7986 architected timer runs at 12,986,200 Hz rather than 13 MHz.
+Firmware reports 13 MHz through CNTFRQ_EL0, causing the system clock to
+run slow by about 1062 ppm. This exceeds the kernel's 500 ppm NTP
+correction limit and leaves clock discipline saturated.
 
-Use le16_to_cpu() to match the field width.
+The corrected rate comes from MediaTek's downstream OpenWrt feed, where
+it is applied to both MT7986A and MT7986B. Since upstream mt7986b.dtsi
+includes mt7986a.dtsi, add it once to the common timer node so the
+architected timer driver uses the actual counter rate.
 
-Fixes: d4bf06592ad6 ("soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem")
+Fixes: 50137c150f5f ("arm64: dts: mediatek: add basic mt7986 support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260821-fix-write-to-read-only-firmware-buffer-v3-1-43e6a3abd651@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://github.com/mediatek/mtk-openwrt-feeds/commit/6a4c41c41410cd5042ad10c39da6593ba036283c
+Link: https://github.com/openwrt/openwrt/issues/24789
+Signed-off-by: Andrea Pesaresi <andreapesaresi82@gmail.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom-geni-se.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index 873bfbd6b2b7b..1d6e6611441d6 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -1298,7 +1298,7 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct
- 		if (le32_to_cpu(sefw->magic) != SE_MAGIC_NUM || le32_to_cpu(sefw->version) != 1)
- 			continue;
- 
--		if (le32_to_cpu(sefw->serial_protocol) != protocol)
-+		if (le16_to_cpu(sefw->serial_protocol) != protocol)
- 			continue;
- 
- 		if (fw_size % 2 != 0) {
+diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+index 9ebc196107e5a..318639a7c64e9 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+@@ -657,6 +657,7 @@ cpu_trip_active_low: active-low {
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupt-parent = <&gic>;
++		clock-frequency = <12986200>;
+ 		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+ 			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+ 			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
 -- 
 2.53.0
 
