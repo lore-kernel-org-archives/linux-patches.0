@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063767;
-	b=R7VKc+KlyDpS49ExBRGXO2KLmrb5m5KRUShoFZBVy0GqQK02fkudgq0XWj8beLlHKBWs
-	 KMuQZWz1f1nIWwwaD4TRSxlIHUf26RPerf/DrWYf5FXHk6kcUSwHbezubLm4/3ytEvE/y
-	 o9uAPTvGUr5uZS82Wn/COxUdJP+iuSlLR/ldSumyNiOi5nz0EsyMpeenzH6Ejpgyjy4/J
-	 wY12sGbqQJe7jmoCMu7x1eT+rUl9W3zQl/6tnQxN/QMkcWuXOZ0nswZ4EnZtfCieczNOr
-	 u8Mopg/iBily738xjCAwIQfAEl+qDzLFHJ0P9u10pPYW5Kn96O18jrocSJQKlKkamBw==
+	t=1794063768;
+	b=Z25gutJaHYaGh6hN3w2l4OKj2XrUAiFCd3k+v/r6fOU67HE+SBplUPfcrPoaEv1sL4TV
+	 Ta38zm9uYn2z8FcENTjmjK2YbzPqc5kAk5oa6ukoCqJQIHOAi5GuudogxC5K6QZSiLFif
+	 mRU5yfCu8RZ42ACmhTtYxwOpJwcWZZdjOKvTJujJ6IPSb9WsBeToFreXJ7BGPowWYz/UK
+	 e+wKejDZb6GKz37wVbpUReBH1ISQ3hlrY9BCmxdDVP3BctcKwuF2/CnTZkL3Lq5igGeCX
+	 uBWE3XKuqWbh/03qCGQWRaAIzrKEUCQBzwWzcyqmPFiSsWOYBimjYxVTagY99r98wdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063767;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063768;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ERU082DOYUcyc0ZcwNYfFo/FpbL1rwzFH7AZ6vrgA3A=;
-	b=OaTx66cReYOSh/B194rjnZyEXnnXvBzuwINUYsb+PRN3JINSh2m9v4m1t/dX8aHlmTpC
-	 HMwr7B/PjpH6cBL7y/o7x7MrprVcJ3A1IKPKVHK5Pk5QBFdP7RQDHR0ZxRyTT+Fg0mHfR
-	 s8j+y+DEbkhgRGlsGkFd/WavdDZO9dq8qT2TLH+2YRzZok9SX9kJ47jk9XYbOsjvQ0DED
-	 K3tD1UocRtVZh/rbA326feMZomYlTKl5iFltkblEOLkh/EEjRZuQZS+8E9oo1FtCOhuAo
-	 25NquMS0/sR8VxcwX8NBE3o3D+SvZgJYBcUBD6IDprMrc/qFvJ4m3wCQnSJugK4ST3A==
+	bh=DQxJKBX/xiz2XXfvJ3Bh49HyKFsgY1pgRVfqVpiNMA0=;
+	b=NBwmXwu03Oh3DpQPRiDOULt2KjEayrJag47Zp7L6C3ZFuVBCJf/jOFSfBHOFR/35Orbj
+	 Pb2URAmiVD76KfDf21oI/M1UKWGHbomsH9SfRz55rH8JMIyu6ZbNe/OHjVMMW9SOtq/LO
+	 bzcmkcJ0cVy1n33Vi4QzBI9F2LwPH5StdXjMHzGfHanbvJwq4/Q4VPmuuTXe4UJWMXh9g
+	 hrj7hMFG01JN9AMHAXH8DhIn7EUYCD+jgnVqnt13yymNoGI/UehfvormHai6byHn8SukR
+	 nRUSKIRA6BaeWwzqdX/xWUi5d08W2AjyO36uGT9XNvbU7O2fUPqbzdzV8ccnUXpC0zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B6osFwVP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cvm6cvls;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2592F608363D;
-	Sat,  7 Nov 2026 15:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4B960A2615;
+	Sat,  7 Nov 2026 15:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B6osFwVP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9C71F008A5;
-	Sat,  7 Nov 2026 15:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cvm6cvls
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31B71F008BD;
+	Sat,  7 Nov 2026 15:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063766;
-	bh=ERU082DOYUcyc0ZcwNYfFo/FpbL1rwzFH7AZ6vrgA3A=;
+	s=korg; t=1794063768;
+	bh=DQxJKBX/xiz2XXfvJ3Bh49HyKFsgY1pgRVfqVpiNMA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B6osFwVPuLSm060vpd1PahgR0q4g/wAHhr3WrdeUmHZ93VSgNQ8NqzpxwlMQdAH7+
-	 Ue9thMBCcA8FIxFQ82a8cALEvsMqbgz/5GGinJyz8zO8VogEDBj9nsQ6FefbwGWSJP
-	 jugwMUeAD+/LJgB0mKwez1vgE+lRoL1cjcgvrInY=
+	b=Cvm6cvlsZnFcRbp2ZqfsdrrevZe7QRZ+wZSPRsbHtlkufVRs9z1maMidPp+fQJUNM
+	 XSGFFkFrSmet+qa1HnCfNV5hGBARfwpuUIcxPuzoox2iBUHD7ZoB3aqhD8j7SpHOJf
+	 8KBDw7XA86IlVWP5sKE20n7KQRrBsNLYE7Qro+7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 859/869] aio: fix NULL deref when a fault races ring truncation
-Date: Sat,  7 Nov 2026 08:59:01 -0500
-Message-ID: <20261107134921.873470084@linuxfoundation.org>
+Subject: [PATCH 6.18 860/869] backing-file: enforce append-only and immutable backing inodes
+Date: Sat,  7 Nov 2026 08:59:02 -0500
+Message-ID: <20261107134921.907878101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,94 +69,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit d53b5aa5cfae27e4d236fc0ab9581085d27f7d33 ]
+[ Upstream commit 19b18e01d0361ce495be153ecce80b581086ab3f ]
 
-The aio ring lives in a file on the aio pseudo filesystem and the ring
-VMA uses filemap_fault(). aio_ctx_aops doesn't have a ->read_folio
-because aio_setup_ring() puts all folios of the ring into the page
-cache. So a fault on the ring only works as long as it finds its folio
-in the page cache. If it doesn't, filemap_fault() calls ->read_folio
-without checking and we jump to NULL.
+FUSE passthrough opens the backing file anew whenever the FUSE file is
+opened. fuse_passthrough_open() passes the flags of that open to
+backing_file_open() which opens the backing file with vfs_open() and the
+credentials of the server. But vfs_open() doesn't go through may_open().
+So the backing inode is never checked for S_APPEND and S_IMMUTABLE. The
+checks that did run were done on the FUSE inode and that one never has
+either flag.
 
-We already fixed this twice this year. A forked child could inherit the
-ring mapping, fixed by commit c03ce4173c7b ("fs: aio: set
-VMA_DONTCOPY_BIT in mmap to fix NULL-pointer-dereference error"). And a
-partial mremap() could leave part of the ring mapped, fixed by
-commit 3adf7ae18bf4 ("fs: aio: reject partial mremap to avoid
-Null-pointer-dereference error"). Both times a VMA outlived the ring and
-the ring file was truncated under it.
+So anyone who may open the FUSE file for writing can overwrite an
+append-only backing file anywhere or write to an immutable one. The
+server only has to register the file and a read-only or even an O_PATH
+file descriptor is enough for that. Registering requires CAP_SYS_ADMIN
+but the writer can be any user that the server lets open the file.
 
-There's a third way to get there. kill_ioctx() and the error path of
-ioctx_alloc() unmap the ring with vm_munmap() and ignore the return
-value. If vm_munmap() has to wait for mmap_lock and a fatal signal is
-pending it returns -EINTR and the VMA stays. free_ioctx() then calls
-put_aio_ring_file() which truncates the ring file to zero. A fault that
-passed the i_size check in filemap_fault() before that doesn't find its
-folio anymore, allocates a new one and calls ->read_folio:
+The FUSE inode is checked instead of the backing inode in a few more
+places:
 
-    fault on the ring                 io_destroy() with SIGKILL pending
-    =================                 =================================
-                                      vm_munmap() returns -EINTR
-    filemap_fault()
-      i_size check passes
-                                      free_ioctx()
-                                        put_aio_ring_file()
-                                          truncate_setsize(inode, 0)
-      no folio, allocate a new one
-      filemap_read_folio()
-        ->read_folio == NULL
+- do_mmap() refuses a shared mapping of an append-only file that was
+  opened for writing. A FUSE file opened with O_RDWR | O_APPEND passes
+  the open check and can then be mapped shared and written to at any
+  offset.
 
-All that's needed is a second process that shares the mm. If a CLONE_VM
-child calls io_destroy() and gets SIGKILLed while it waits for mmap_lock
-the ring stays mapped for the threads of the parent. Any user can do
-that.
+- fcntl(F_SETFL) and RWF_NOAPPEND refuse to take append mode away from a
+  file on an append-only inode. On the FUSE file both succeed. A
+  synchronous write still appends because the backing file was opened
+  with O_APPEND. But an asynchronous write is submitted with the flags
+  of the user's kiocb and lands at the given offset.
 
-Instead of plugging the routes one by one give the ring a ->read_folio
-that unlocks the folio and returns -EIO. All folios of a live ring are
-in the page cache so a fault can only end up there if the ring was
-truncated. The fault now gets SIGBUS. Nothing else reads the ring file
-and the aio filesystem uses noop_backing_dev_info so there's no
-readahead either.
+Do the checks on the backing inode. backing_file_open() refuses to open
+an immutable inode for writing and an append-only inode for writing
+without O_APPEND, just like may_open(). backing_file_mmap() refuses a
+shared mapping of an append-only inode, just like do_mmap(). And writes
+and splices to a backing file in append mode fail if append mode was
+taken away from the user file.
 
-Making vm_munmap() unkillable in those two places would only close this
-one route and bring back what commit ae7987835643 ("mm: make vm_munmap
-killable") fixed.
+A FUSE file that was opened before the backing file became append-only
+can still write anywhere. That's what happens on the native filesystem
+as well and the backing file of such a file isn't in append mode. Two
+differences remain. F_SETFL succeeds and the next write fails. And FUSE
+reports EIO for a refused open because it turns every error from opening
+the backing file into EIO.
 
-Fixes: 36bc08cc0170 ("fs/aio: Add support to aio ring pages migration")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-1-88f22792f6f7@kernel.org
+overlayfs uses the same helpers but it mirrors S_APPEND and S_IMMUTABLE
+in its own inode and a chattr through the overlay never sets them on the
+upper inode. So for overlayfs this only changes something if the upper
+inode is changed behind the overlay's back.
+
+Fixes: 4a90451bbc7f ("fuse: implement open in passthrough mode")
+Reported-by: Chris Mason <mason@kernel.org>
+Cc: stable@vger.kernel.org # v6.9+
+Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-2-88f22792f6f7@kernel.org
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/aio.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/backing-file.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/fs/aio.c b/fs/aio.c
-index bd92bd3e13408..e06fa57b05ca9 100644
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -474,7 +474,18 @@ static int aio_migrate_folio(struct address_space *mapping, struct folio *dst,
- #define aio_migrate_folio NULL
- #endif
+diff --git a/fs/backing-file.c b/fs/backing-file.c
+index 6f16e23f70461..5cca636207d1a 100644
+--- a/fs/backing-file.c
++++ b/fs/backing-file.c
+@@ -35,9 +35,21 @@ struct file *backing_file_open(const struct file *user_file, int flags,
+ 			       const struct cred *cred)
+ {
+ 	const struct path *user_path = file_user_path(user_file);
++	struct inode *real_inode = d_inode(real_path->dentry);
+ 	struct file *f;
+ 	int error;
  
-+/*
-+ * filemap_fault() reads a folio that it did not find in the page cache. All
-+ * folios of a live ring are there, so the ring was truncated under the fault.
-+ */
-+static int aio_read_folio(struct file *file, struct folio *folio)
-+{
-+	folio_unlock(folio);
-+	return -EIO;
-+}
++	/*
++	 * may_open() checked the inode of the user file, which need not carry
++	 * S_APPEND and S_IMMUTABLE of the backing inode.
++	 */
++	if ((flags & O_ACCMODE) != O_RDONLY) {
++		if (IS_IMMUTABLE(real_inode))
++			return ERR_PTR(-EPERM);
++		if (IS_APPEND(real_inode) && !(flags & O_APPEND))
++			return ERR_PTR(-EPERM);
++	}
 +
- static const struct address_space_operations aio_ctx_aops = {
-+	.read_folio	= aio_read_folio,
- 	.dirty_folio	= noop_dirty_folio,
- 	.migrate_folio	= aio_migrate_folio,
- };
+ 	f = alloc_empty_backing_file(flags, cred, user_file);
+ 	if (IS_ERR(f))
+ 		return f;
+@@ -222,6 +234,14 @@ ssize_t backing_file_write_iter(struct file *file, struct iov_iter *iter,
+ 	if (!iov_iter_count(iter))
+ 		return 0;
+ 
++	/*
++	 * F_SETFL and RWF_NOAPPEND can take append mode away from the user
++	 * file. They checked its inode, not the backing one.
++	 */
++	if ((file->f_flags & O_APPEND) && !(flags & IOCB_APPEND) &&
++	    IS_APPEND(file_inode(file)))
++		return -EPERM;
++
+ 	ret = file_remove_privs(iocb->ki_filp);
+ 	if (ret)
+ 		return ret;
+@@ -309,6 +329,10 @@ ssize_t backing_file_splice_write(struct pipe_inode_info *pipe,
+ 	if (!out->f_op->splice_write)
+ 		return -EINVAL;
+ 
++	/* splice refuses a user file in append mode, so F_SETFL cleared it */
++	if ((out->f_flags & O_APPEND) && IS_APPEND(file_inode(out)))
++		return -EPERM;
++
+ 	ret = file_remove_privs(iocb->ki_filp);
+ 	if (ret)
+ 		return ret;
+@@ -339,6 +363,10 @@ int backing_file_mmap(struct file *file, struct vm_area_struct *vma,
+ 	if (!can_mmap_file(file))
+ 		return -ENODEV;
+ 
++	/* do_mmap() checked the inode of the user file */
++	if ((vma->vm_flags & VM_SHARED) && IS_APPEND(file_inode(file)))
++		return -EACCES;
++
+ 	vma_set_file(vma, file);
+ 
+ 	old_cred = override_creds(ctx->cred);
 -- 
 2.53.0
 
