@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062556;
-	b=TFj8npe7CXlCV+B9h0PxIlV7t7DcCp2lgYO/YPRHinq+XacrRe9Ld3m6XDdL1ybAfTTu
-	 epZZzx3nd+wNf3lJcHFYVTF2eI7XXTUqbh+PQ5jEJWt5hMX0yqxBH4POgBpWcxao8H8nl
-	 r+w5bRKJL0jo7vWm77YFxxcHpagHIuYmjz6FttKIBfb71Io32RQTQkJ9DS5Ac49z3ROLa
-	 OBVcG1FIxe8iiygmi2lwq5sRwq7/rd+TZAojxOEC3+Ynp+SbrVOsjge576j1RSZlGMT6T
-	 aP86d0PbLFNH+yu/hh0+YDEK9ZXWutKCDa3ljHCpX790o4cOvbJ7oZ5Od1t73964tsA==
+	t=1794062557;
+	b=gErs1D24sUqMMoBCsCtChN/itgYeB8fddmFYVia9eHWqZqky3L8c4YnkWM+4ryK9UCJw
+	 ntGdBgxWcl0ciogANW1PER/TkyiErYladE+kSS37BRd38WU18PemlS8ugu5kjzMuRp5pm
+	 XGa+98r0V3Vq6X4vrae4+/Ga63/dRvXtJQze5xQgwhkEXlnm/d8iBLij2B5KDpjLxE32Z
+	 18aZDT4zcYbRPYFBGZ1nPF+7FQD8VJfLULc78TtQo0bPVliBacOQgZKaQ1CvDGRghgrDR
+	 3Oug+ph59ohiscOa13Ik75Eyn1E86My1PpZvBwFMSFyIp3qBUFuHpcYODLUyeRw9jgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T5F2VFIVPN3YxdpRWQyBXDylD1yy1/iRagEkV81zgyU=;
-	b=ybHkSen57nkEx2xIh6c/xHjnV7zHnKrhC5yZy7nhXwPgHUFjLXXKa3FC1iasdqdaNIHV
-	 8H8NuKD1klu47g+frdQFwZZ7uPyEZTwzcA8oANgy2oOiO4Wi5uakBTAT8vzKyfAR0PD3b
-	 KxxIr91Wj7gowPBc+xSfnZoiPJdvEVi63GGNWy4utLU6Q2BnFBGtLBOwWJp1gtNCe5n2/
-	 62tiAgCDqVkR43VeJRA7NZeeoEDEVd7WTN6Pwvq1SOfgk4c/YggvLeIENnMyYDnnCBJcI
-	 8d4OuIuWv07E058vETgHIVoz9o2zXKn+PXf0HoiH1lmUUyyUPpxsc5cEctH9J3MLOIw==
+	bh=z0hwJq5w6AUqqRnVCvL76dECX2KI0tOyzTfLZW83c1Y=;
+	b=xh8YqzxE3M3qHWm3wrp5/2iYgQkJA8RcnZUDqI3jYu9IKDl09TCl4Vw8QjU6RVFEdyD+
+	 0hCS/oN0zv7cX1P3s7Gns+7OSRsnsW30Uv3VeyGl6huypWul1ZjZwqg69aC7e6xMFQtbt
+	 hAm1VTzgXp145L4x/1Uc2lqT0MXHmspMmVo5bvz6cKplSeK0tUY922fiEUyS5DpPjvPUO
+	 1f0eAoYB5+naJtdNXAI1sOfNt0hEYFwvj/yGcb0BPWpT2Gct8aY97FY9asaPbqwZupTso
+	 i/WW1bLam5RPNkSg+dqu0EwdBFJLq2vAQKWOjd/zVNeK4+RQuk4uzz4tpt5nTwfYrlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iV14GUXY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tYYympk7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2A5606A645;
-	Sat,  7 Nov 2026 14:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAD8606A640;
+	Sat,  7 Nov 2026 14:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iV14GUXY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E8A1F008A1;
-	Sat,  7 Nov 2026 14:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tYYympk7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7A41F008A2;
+	Sat,  7 Nov 2026 14:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062555;
-	bh=T5F2VFIVPN3YxdpRWQyBXDylD1yy1/iRagEkV81zgyU=;
+	s=korg; t=1794062557;
+	bh=z0hwJq5w6AUqqRnVCvL76dECX2KI0tOyzTfLZW83c1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iV14GUXYgEodQr+CIG/twa//YcRJMnHb6VJlpqq84MnSA3iFmCbrh6UvwGh58nc0Q
-	 BTCXXjI6aB1sqUAs+g0RJapL2rBGRLsiTAqLvKw/kGLIeCMIjnuRMdQ0pkyimzHMOI
-	 Hwu5RFtNt6aNYfcQ+yCtidvVj2dGhRkCkFrr3ZM0=
+	b=tYYympk7MGEjkthfpordJry0ZlPss5bcCW4Z9LJ6SPspflLNxsbOSFHJnX33qVSoS
+	 km2SMgHOceNJ++LoYW2Olz1KhnmD4PkbomOlPWnhFDyYQl7+J/gh+d3AsF9uPLceGc
+	 Y3fJVcOMJC170hmD3BFIywpzVFeJnuuCglhbH37g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao@bytedance.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Wei Yang <albinwyang@tencent.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1404/1536] writeback: reset dirtied_when when switching wbs
-Date: Sat,  7 Nov 2026 08:57:00 -0500
-Message-ID: <20261107135037.259202493@linuxfoundation.org>
+Subject: [PATCH 6.12 1440/1536] mm/madvise: add cond_resched() in THP branch of madvise_cold_or_pageout_pte_range()
+Date: Sat,  7 Nov 2026 08:57:36 -0500
+Message-ID: <20261107135038.283201337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,72 +74,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao@bytedance.com>
+From: Wei Yang <albinwyang@tencent.com>
 
-[ Upstream commit 13b9a606dd0a6cf9bac12894c97b9546d22a7425 ]
+[ Upstream commit f5cfc8e3b20ad71949a1e5623ff45882c063a71b ]
 
-When switching a dirty inode to another wb, inode_do_switch_wbs() puts
-it at the newest end of the target b_dirty list instead of searching
-for its sorted position. This requires updating dirtied_when, which
-move_expired_inodes() uses to decide where to stop scanning.
+During stress testing with stress-ng on a 256-CPU system, a softlockup was
+observed when madvise(MADV_COLD) was called on a 31GB memory region backed
+by transparent hugepages.  The region contains 15935 THP PMD entries, and
+the softlockup was triggered after 14485 of them had been processed.
 
-However, the switch updates dirtied_time_when instead. This leaves
-b_dirty out of order and can make the scan stop before reaching older
-inodes. It also resets the lazytime expiration timestamp, potentially
-delaying timestamp writeback.
+The THP branch of madvise_cold_or_pageout_pte_range() has no scheduling
+point.  walk_pmd_range() invokes it once per 2MB PMD entry with no
+cond_resched() anywhere in the loop.  Each iteration calls
+pmdp_invalidate() which issues a synchronous TLB shootdown (dsb ish)
+waiting for all CPUs to acknowledge.  This operation can be time-consuming
+under heavy system load, causing the accumulated time across all PMD
+entries to exceed the softlockup threshold (20s) and panic when
+softlockup_panic=1.  On a CONFIG_PREEMPT_NONE=y kernel, there is no other
+opportunity to reschedule during this entire traversal.
 
-Update dirtied_when instead, preserving both the constant-time insertion
-and the lazytime expiration timestamp. Correct the field name in the
-comment and document the distinction between the two inode timestamps.
+The regular PTE path already has an unconditional cond_resched() at the
+function tail (introduced by commit 9c276cc65a58 ("mm: introduce
+MADV_COLD") and commit 1a4e58cce84e ("mm: introduce MADV_PAGEOUT") when
+MADV_COLD and MADV_PAGEOUT were first introduced) and a conditional one
+inside the loop (commit b2f557a21bc8 ("mm/madvise: add cond_resched() in
+madvise_cold_or_pageout_pte_range()")).  The THP branch never received
+equivalent treatment.
 
-Fixes: 9a6ebbdbd412 ("writeback: Avoid excessively long inode switching times")
-Cc: stable@vger.kernel.org
-Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Link: https://patch.msgid.link/20261016115230.3640770-2-sunjunchao@bytedance.com
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fix by adding cond_resched() at the huge_unlock exit path after
+spin_unlock(ptl) and reclaim_pages(), which is the single exit point for
+all goto paths in the THP branch.
+
+Crash log:
+  watchdog: BUG: soft lockup - CPU#63 stuck for 23s! [stress-ng-vm:1665914]
+  ...
+  Call trace:
+  pmdp_invalidate+0x48/0x68
+  madvise_cold_or_pageout_pte_range+0x84c/0xb00
+  walk_pmd_range.isra.0+0x1ac/0x3b0
+  walk_pud_range+0x120/0x190
+  walk_pgd_range+0x170/0x1b8
+  __walk_page_range+0x184/0x198
+  walk_page_range_vma+0x94/0x128
+  madvise_cold+0xd8/0x198
+  madvise_vma_behavior+0x234/0x638
+  madvise_walk_vmas.constprop.0+0xdc/0x210
+  madvise_do_behavior+0xa8/0x328
+  do_madvise+0xd8/0x140
+  __arm64_sys_madvise+0x2c/0xe0
+
+Link: https://lore.kernel.org/20261010024042.4070048-1-albin_yang@163.com
+Signed-off-by: Wei Yang <albinwyang@tencent.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c  | 6 +++---
- include/linux/fs.h | 4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ mm/madvise.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 48ac4f58605e7..925fc4a42c67d 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -455,12 +455,12 @@ static bool inode_do_switch_wbs(struct inode *inode,
- 		if (inode->i_state & I_DIRTY_ALL) {
- 			/*
- 			 * We need to keep b_dirty list sorted by
--			 * dirtied_time_when. However properly sorting the
-+			 * dirtied_when. However properly sorting the
- 			 * inode in the list gets too expensive when switching
- 			 * many inodes. So just attach inode at the end of the
--			 * dirty list and clobber the dirtied_time_when.
-+			 * dirty list and clobber the dirtied_when.
- 			 */
--			inode->dirtied_time_when = jiffies;
-+			inode->dirtied_when = jiffies;
- 			inode_io_list_move_locked(inode, new_wb,
- 						  &new_wb->b_dirty);
- 		} else {
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 19211eb49a8c0..67b57ce46b203 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -719,7 +719,9 @@ struct inode {
- 	/* 32-bit hole */
- 	struct rw_semaphore	i_rwsem;
+diff --git a/mm/madvise.c b/mm/madvise.c
+index dbbb777110358..e1470b35d43ae 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -432,6 +432,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 		spin_unlock(ptl);
+ 		if (pageout)
+ 			reclaim_pages(&folio_list);
++		cond_resched();
+ 		return 0;
+ 	}
  
--	unsigned long		dirtied_when;	/* jiffies of first dirtying */
-+	/* Timestamp for writeback list ordering and age checks (jiffies). */
-+	unsigned long		dirtied_when;
-+	/* Start time for deciding when lazytime updates need writeback (jiffies). */
- 	unsigned long		dirtied_time_when;
- 
- 	struct hlist_node	i_hash;
 -- 
 2.53.0
 
