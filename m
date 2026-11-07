@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064752;
-	b=WOnb0mjcIzwczc5xyAaWbjGdjT//pctTg5IgsJfcYORVWG8rx0Nw52Cx77uZqZVIn5xm
-	 xIXhV/DsYRPX43uRR88NnWpkbtGFg6TJqDaGDI65l13QlzFzMAakOClPJVlBIUfEOLzrf
-	 CF31La1+UoaUatFmeDyBbUudcLNuypJWdj0miO4Iai/ybKX2kULJV2bDRwsgLzwCU6JN4
-	 3tvj2GvCpMMF/3hNQWXcXPZZjU/LvEFQLRyyqPJW3vu0/jgsI2y+iC3+LYltYhVxQQ3AZ
-	 sYXpd1yAq3HKO+JvEVWwe1oOxyDoDBEbuLaECAaKf6P5HHHXqmjDDRkb1F3Tjkg2XUQ==
+	t=1794064753;
+	b=TcybtuK4/A7oEHZYdbBcKGJlMXAPmGyOFKEgCvwpQtHU6RW/QqmpOJLEWMOJcgSGrklT
+	 OI2JAEXDPu8QJtAel/9slz1yAUqUzL6WuDmMHaCx7e48snfHPK2xbqFDTyMSuQdbx2ido
+	 LtuGh+CEsDP4CQkHwg4ByHNE6ulGS9VF0OSOcLRbwDMGYLtZtf5Qk7rfO74k3lwOckO6X
+	 Gpj8ZI1kVhX4cm9AxpTnEraZfXJ9DYoRjw4rrj924Qey+A858sVneFb9Afro9LNImrZwe
+	 6J2zxRcreONhY/3VG/F0K3z0vhG8PnpcN9OozqgotkGT4FJA4ZvzoY9uR40MP66YOGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064752;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064753;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s9iAWRukTfci2j7hA3bGVh1UhCzlJBeDC8F3YqKFrIQ=;
-	b=rhtnq1LjLSRheQkC/XpYrX7ToZBbX1cP7wDXdaHfGa0do7RUlCVZ0/+JuReDiCUJu25v
-	 CEV7C5Q4jMjnaTV1qrMJEhTJbqVXQLaCDpHcEWdrgwJ8n/WwL6xrX57cT5iMlGQyMyfOu
-	 NxGTSlmBWXfJLgeXZsYmkwEk7HUSOV2qY+a8Pw8agxKgfwLBGMm9YB/7jMBElbYvnAf5r
-	 s1bVh+1qY2GQYyYwMcaCL6g1U+IRcxJByy4jNwkAKVuTk/ouMuUsJBUehK8ddh7pASpEy
-	 E1CcBUei+jsst8fCy+bzaP+mFQPoHtBzXlHk4e2VJPUmfYny0nv+803oQo1xn1ehfqg==
+	bh=BD2//g3ulO1XRe6+AotS4vtiSExoIk7vikd2dw2+DYU=;
+	b=TpCngUmv/hL1BExg/9Fzy48L+o8zdhIiE3PF0Bn/qtYA1F0WybTVlhUN4kVfY3nK5Xjr
+	 7Ev+REwR9VSVDiNEGXeOFVrUE4m7iQFlZ/BqtCmYP+ddVmRGw26mJvvc3wyleqpfPCgIY
+	 0Uxop/0pDTbzKyRGEh7m9HiVvPSBJH8jPK6I1PLSe/EJX88YYZgTT9stm/3PIolxtuKmJ
+	 NdwzbjCBTnF37IVWRkNTZGJrgqCi+88K3yUfLV4PiUCyDHJMQ5P8n+KBcQCQwu0/lBjUu
+	 k2ngV1swlqzkh4e/p2Rip5D3pLxCtxdr1SBMmtbJSgOUCDuoiVwMAAGvhEFWaC0ZJ6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbIES1Te;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WPXvXFy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79B5606A334;
-	Sat,  7 Nov 2026 15:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06BF606A334;
+	Sat,  7 Nov 2026 15:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbIES1Te
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548581F008A1;
-	Sat,  7 Nov 2026 15:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WPXvXFy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1A51F0089F;
+	Sat,  7 Nov 2026 15:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064751;
-	bh=s9iAWRukTfci2j7hA3bGVh1UhCzlJBeDC8F3YqKFrIQ=;
+	s=korg; t=1794064752;
+	bh=BD2//g3ulO1XRe6+AotS4vtiSExoIk7vikd2dw2+DYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbIES1TexXo5ZHLVykW4MAKNr8FyoqU5c3FKw5P4vbVuM7xB57BcNeuSL4/En/CKv
-	 LgSEWue2selInrbFLITtOfEnO6/iBLEGM6cqnMBXw4/8SO2SUmddjFHBSorEUB7Zi5
-	 p3lnDcNiG2ujJJUDGK6F1LTwXmYOzFifzwYnD6V0=
+	b=2WPXvXFy22lMVL6k4GEu8h+wnNqajtaVn1HQfT38BOqtuOV8/H2cW/krDi4zZnh/j
+	 Z6iBMBObwoTVbqPo2b3UtWPwnJkUduLe6bVdjkkeJ4veLxC/RmB5HEKTOyF5E9pRMR
+	 LAPbHu/+7lQ9EzOqJUSe1N8rZAk6OgNuB9DyX2jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Daeho Jeong <daehojeong@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0725/1257] f2fs: fix defragment writeback range truncation on 32-bit
-Date: Sat,  7 Nov 2026 08:50:21 -0500
-Message-ID: <20261107134959.287247667@linuxfoundation.org>
+Subject: [PATCH 7.3 0726/1257] f2fs: disallow mmap write and data-modifying fallocate on atomic files
+Date: Sat,  7 Nov 2026 08:50:22 -0500
+Message-ID: <20261107134959.314104627@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,60 +70,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 92154fe28c3701bebf75176dc5522bec62519a8f ]
+[ Upstream commit 06dfe4a7eb696d868b196c2a49873142f19bd862 ]
 
-f2fs_defragment_range() flushes the range it is about to defragment:
+Stores through a shared writable mapping and fallocate with
+FALLOC_FL_PUNCH_HOLE, FALLOC_FL_ZERO_RANGE, FALLOC_FL_COLLAPSE_RANGE or
+FALLOC_FL_INSERT_RANGE do not go through ->write_begin, so they bypass
+the COW inode and modify the original inode directly. Reject them while
+the file is in atomic write mode, as fallocate already does for pinned
+and compressed files. A write fault gets SIGBUS and fallocate gets
+-EOPNOTSUPP.
 
-	filemap_write_and_wait_range(inode->i_mapping,
-				pg_start << PAGE_SHIFT,
-				(pg_end << PAGE_SHIFT) - 1);
+fallocate without these flags only preallocates blocks and stays
+allowed.
 
-pg_start and pg_end are pgoff_t, 32 bits on 32-bit kernels, so both
-shifts are evaluated in 32 bits and truncated before they are widened to
-the loff_t parameters.  pg_end is only capped by the file's page count,
-so for a file larger than 4 GiB the shift wraps.
-
-For a 5 GiB file pg_end is 1310720 and the range collapses from
-[0, 5 GiB) to [0, 1 GiB), leaving the rest of the dirty pages unwritten
-before the blocks are moved.  For 8 GiB the shift yields 0, the minus one
-makes it (loff_t)-1, and the range becomes [0, LLONG_MAX].
-
-The matching call in f2fs_collapse_range() already casts:
-
-	filemap_write_and_wait_range(inode->i_mapping,
-				(loff_t)index << PAGE_SHIFT,
-				((loff_t)pg_end << PAGE_SHIFT) - 1);
-
-Do the same here.  On i386 the shift changes from "shl $0xc,%ecx" to
-"shld", i.e. from a 32-bit shift to a double-precision one.
+f2fs_vm_page_mkwrite() cannot take inode_lock, so check the flag under
+invalidate_lock, and hold invalidate_lock in
+f2fs_ioc_start_atomic_write() from the flush until the flag is set.
+Otherwise a fault could check the flag, then start_atomic_write could
+flush and set the flag, and the fault would dirty the folio afterwards.
 
 Cc: stable@kernel.org
-Fixes: d323d005ac4a ("f2fs: support file defragment")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/file.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 6843c2aa67444..da7564e4904f0 100644
+index da7564e4904f0..fd72eb4563de2 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -3029,8 +3029,8 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
+@@ -187,6 +187,17 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 	file_update_time(vmf->vma->vm_file);
+ 	filemap_invalidate_lock_shared(inode->i_mapping);
  
- 	/* writeback all dirty pages in the range */
- 	err = filemap_write_and_wait_range(inode->i_mapping,
--						pg_start << PAGE_SHIFT,
--						(pg_end << PAGE_SHIFT) - 1);
-+						(loff_t)pg_start << PAGE_SHIFT,
-+						((loff_t)pg_end << PAGE_SHIFT) - 1);
- 	if (err)
- 		goto out;
++	/*
++	 * mmap stores bypass the COW inode and would break atomicity. Check
++	 * under invalidate_lock: f2fs_ioc_start_atomic_write() holds it while
++	 * flushing dirty folios and setting FI_ATOMIC_FILE, so either it sees
++	 * our dirty folio and writes it back, or we see the flag.
++	 */
++	if (unlikely(f2fs_is_atomic_file(inode))) {
++		err = -EOPNOTSUPP;
++		goto out_sem;
++	}
++
+ 	folio_lock(folio);
+ 	/*
+ 	 * A concurrent buffered write can extend isize, so we store isize in a
+@@ -2107,9 +2118,11 @@ static long f2fs_fallocate(struct file *file, int mode,
  
+ 	/*
+ 	 * Pinned file should not support partial truncation since the block
+-	 * can be used by applications.
++	 * can be used by applications. Atomic files should not either, since
++	 * these modify the original inode directly and break atomicity.
+ 	 */
+-	if ((f2fs_compressed_file(inode) || f2fs_is_pinned_file(inode)) &&
++	if ((f2fs_compressed_file(inode) || f2fs_is_pinned_file(inode) ||
++	     f2fs_is_atomic_file(inode)) &&
+ 		(mode & (FALLOC_FL_PUNCH_HOLE | FALLOC_FL_COLLAPSE_RANGE |
+ 			FALLOC_FL_ZERO_RANGE | FALLOC_FL_INSERT_RANGE))) {
+ 		ret = -EOPNOTSUPP;
+@@ -2397,6 +2410,8 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 
+ 	f2fs_down_write(&fi->i_gc_rwsem[WRITE]);
+ 	f2fs_down_write(&fi->i_gc_rwsem[READ]);
++	/* serialize with f2fs_vm_page_mkwrite(), see the comment there */
++	filemap_invalidate_lock(inode->i_mapping);
+ 
+ 	/*
+ 	 * Should wait end_io to count F2FS_WB_CP_DATA correctly by
+@@ -2452,6 +2467,7 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 	f2fs_i_size_write(fi->cow_inode, isize);
+ 
+ out_unlock:
++	filemap_invalidate_unlock(inode->i_mapping);
+ 	f2fs_up_write(&fi->i_gc_rwsem[READ]);
+ 	f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
+ 	if (ret)
 -- 
 2.53.0
 
