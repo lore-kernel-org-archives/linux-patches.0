@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061571;
-	b=daGLzF4okhHMUWZZIV9nVYZNNou+4MCe9i1mxhn50rR9xHnXqf7u9r/3jxtJPupxmJd6
-	 MJsXFXlY9iTNWMjQx+rTSU8v6OyhPozP+p4sIMNYo7pWlE6OnicJzZr4SPqWPw5Ld4WKT
-	 TJQ009WEKuhJv9yB3xvGyfatF8q0abVdw8Iv20Og7zAY8GG33xdD9fmaLi9OF1U1ofHJi
-	 fans4JMFRJ6tbgA9+1d1YQdbYjnfwe5GcXHJbWhYLZ6j06d3rxyTRi3C3DuzbhKhTkAVD
-	 WOAckrfQFpD7xpwF1GyR35QaTRnaI1hpdexaRrYKqJzCdZ33ZwFBXDABcgNmB3/h7AQ==
+	t=1794061573;
+	b=BpIBBmtqIKIsd+Q7O+LSursjFKiV9lag+wasIb1SrI/Q/h0PxqM04lWsFgllETBVzcOM
+	 vN0rIoU05S9F4qTSzbt/UbhNdsHxun65SD2GVWcZ+GYsrCL/20X0toBoTaoK+qEZWxgDr
+	 /epO4wYxK1ygjHcnHNYgx/mixFRL+nkdXgjWYKN+vN/rxx7TjDuGVnDE2NM3D0UV0nFzZ
+	 xuvi351WOdxZsu2oYAJ1HIwpSA2HkcrnTEkDTCzBEjTJGD6nKPzAHzkrzqxPmhY2nixy2
+	 NBG+drf1v02UFbXWSTqo86BHfmM88IKJoBMxMNaZq3N+/62pH/bItVBsVF4/acTcyNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061573;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tfFb/lLIWqb9s+HBJrylwjTleWEdqtOCNssr6VOrN+8=;
-	b=udzh/rKf1Bmh2fQXv7zhYRgBN5AnrBu2yClbfgTPbUQyo7aJXgqQqDUK5HHnEEl1iFme
-	 5mYyl6Pa7QQf/xsxy6qnj49iNtU6iBW0dVK4D6bjWTwOUMv5Pp0iEi0Wl9srMkUisMISV
-	 X7D11Q+x214JJDWnBc9R9+aOvUIdw64cEx2R2ifsy7cTk2N3XS4UUQ2tmxF2wWamCew8Y
-	 pRHkQyBEhW+960IcsQELYYZvo5sCaRotXYlvlIOr0hB6SLWjdL9QHq6eE6qhKLAMFpgEt
-	 OwODiWaWXz8TveaGpV+k92PBPgu81sUYJ1HBEmvsWMTE5alDZIhN0SpRLOReFFpkxaw==
+	bh=awjgh4/Xyi0k7wmkSEbXURmtl4PrwMIQtd1RABh0UP4=;
+	b=2XBbLur6+E47BZGECDaTxbHnMRbB/vxxk5N+C5V8+86aqMD57y1sbESwN84RhlvyvNqk
+	 YO0VLHLgxj5JWCVy4jkLVwiQQBXgGxcrUNZFKL813DhUC4CnkhbTcQbXFuNk8HK5IXaYv
+	 3NdgrOHG3gDBi9JOExi0JZqAk4nUysejUmf9CwLoTbTcvoIN540F4eZqs+bbHZ3BqAVBN
+	 n8WZtfAsQp2ysi6mGmdm+GqMNj0GM0mAPigbysLCfAipiX8DAs4NYWl89nvXc2vWRw4Jb
+	 979saYQOpZmT9Hrz5jssTPRjUv2CIxB9sdMekXSf9iomZNFMaKU/91ZzeQgIGV0nCrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dN//zBzR";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IfNF+ZtL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A73606A326;
-	Sat,  7 Nov 2026 14:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEEF606A326;
+	Sat,  7 Nov 2026 14:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dN//zBzR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A761F0089F;
-	Sat,  7 Nov 2026 14:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IfNF+ZtL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855401F0089F;
+	Sat,  7 Nov 2026 14:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061571;
-	bh=tfFb/lLIWqb9s+HBJrylwjTleWEdqtOCNssr6VOrN+8=;
+	s=korg; t=1794061572;
+	bh=awjgh4/Xyi0k7wmkSEbXURmtl4PrwMIQtd1RABh0UP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dN//zBzRL1hOa8pwIG3HWhlplXHnFwlRtEsAJxjpnACfPM5Qv0HD3bxpnaf8fBb1Z
-	 Pwquzh9Q9Dks2A4y8WtYX/WNQV/5jWC70H0lV31E7oeWFROJcRmimE0lTels6dVkk0
-	 vhzwE1hpywDNGVQE52TDRCcbsx440fayIj9jleNM=
+	b=IfNF+ZtL9hR/nHarJ8SvA+wHOmwPbb++38wS7Qg8oHSrjuL8r2/yBHoL+DvUnq9xs
+	 v1ubYdvgCVU0mftQi+HnJ7ekmwLZSfA6iGpe2ySaFqtXK1eF1j6Im79hlwEVSlViQy
+	 U2AMThTbKiWALHMCbxhiK1PJABxe80kkLnfhhMTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com,
-	Rik van Riel <riel@surriel.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 6.12 0649/1536] media: redrat3: fix UAF in probe error path leaving rc device registered
-Date: Sat,  7 Nov 2026 08:44:25 -0500
-Message-ID: <20261107135015.756463801@linuxfoundation.org>
+	Imre Kaloz <kaloz@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 6.12 0650/1536] mm/slab: sample slab_state once in kmem_cache_destroy()
+Date: Sat,  7 Nov 2026 08:44:26 -0500
+Message-ID: <20261107135015.783357395@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,92 +69,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-commit af452b9e01331b5338a1e5141624f17607239207 upstream.
+commit 088bfdc0d7947d623f4899b9011c866e4445074d upstream.
 
-redrat3 stores its device name and phys path inside the main rr3
-structure, and the rc device's device_name and input_phys point into
-rr3. When the RC device is registered, it keeps those pointers.
+kmem_cache_release() tests slab_state >= FULL after kmem_cache_destroy()
+has dropped slab_mutex and unlinked the cache, and for a
+SLAB_TYPESAFE_BY_RCU cache after rcu_barrier(). If slab_late_init() runs
+before that test it sets slab_state to FULL but skips the unlinked cache,
+which never got a sysfs entry, so sysfs_slab_release() calls kobject_put()
+on a kobject that was never initialized:
 
-  KASAN: slab-use-after-free in string_nocheck lib/vsprintf.c:648
-  Read of size 1 at addr ffff888051fda758 by task udevd/7464
-  Call Trace:
-   string_nocheck lib/vsprintf.c:648 [inline]
-   string+0x216/0x2d0 lib/vsprintf.c:730
-   vsnprintf+0x74a/0xef0 lib/vsprintf.c:2945
-   vscnprintf+0x41/0x90 lib/vsprintf.c:3014
-   sysfs_emit+0x10e/0x180 fs/sysfs/file.c:761
-   input_dev_show_name+0x58/0x70 drivers/input/input.c:1282
+  WARNING: lib/kobject.c:734 at kobject_put+0x64/0x2c0, CPU#1: kworker/u8:3/55
+  kobject: '(null)' ((____ptrval____)): is not initialized, yet kobject_put() is being called.
+  refcount_t: underflow; use-after-free.
+  kobject_put+0x64/0x2c0
+  sysfs_slab_release+0xc/0x20
+  kmem_cache_destroy+0x104/0x1e0
+  bioset_exit+0x13c/0x1e0
+  disk_release+0x54/0x140
+  put_disk+0x18/0x40
+  floppy_async_init+0xbec/0xd10
 
-  Allocated by task 10:
-   redrat3_dev_probe+0x477/0x2570 drivers/media/rc/redrat3.c:1023
-  Freed by task 10:
-   redrat3_delete drivers/media/rc/redrat3.c:466 [inline]
-   redrat3_dev_probe+0x1bf4/0x2570 drivers/media/rc/redrat3.c:1124
+slab_state >= FULL asks whether the cache has a kobject, which cache
+creation skips while slab_state <= UP. UP is the state just below FULL,
+so a false sample cannot skip a kobject_put() that was owed.
 
-Syzkaller triggers this via usb probing. It probes the RedRat3 USB
-interface, which calls redrat3_dev_probe() in redrat3.c. That function
-allocates rr3, then builds an rc device whose name points into rr3 via
-redrat3_init_rc_dev() in redrat3.c, and registers it with
-rc_register_device().
+Seen on sparc64 at boot, where the asynchronous floppy init tears down
+its bio slab while the late initcalls are running.
 
-When the detector enable fails after the RC device is registered, the
-probe jumps to the led_free path. That path unregisters the LED but does
-not unregister the RC device before freeing rr3 via redrat3_delete() in
-redrat3.c. The RC device still holds device_name = rr3->name which is now
-freed.
+Sample slab_state once, under slab_mutex which slab_late_init() holds
+when it sets FULL, and use the result for both the unlink and the
+release.
 
-Later udevd reads /sys/.../input device name via sysfs_emit() in file.c,
-which calls input_dev_show_name() in input.c, which emits dev->name which
-is the freed rr3->name.
+The history of this problem dates back to v3.2:
 
-When the detector enable fails after the RC device is registered, the
-error path must not leave the RC device registered. Make the probe error
-path clean up the same way redrat3_dev_disconnect() does.
+  Commit 69cb8e6b7c29 ("slub: free slabs without holding locks") in
+  v3.2 moved sysfs_slab_remove() outside slub_lock and introduced
+  a race condition between kmem_cache_destroy() and slab_sysfs_init().
 
-This change should be safe because the RC device is fully registered at
-this point and its teardown via rc_unregister_device() is protected by
-the input device mutex, and rr3 is still alive during unregister so
-device_name remains valid until after unregister. The URBs are killed
-before rc_free, so no completion can run after rc is freed. No new lock
-ordering is introduced.
+  Commit 945cf2b6199be ("mm/sl[aou]b: Extract a common function for
+  kmem_cache_destroy") in v3.7 accidentally closed the race while
+  extracting a common implementation for kmem_cache_destroy().
 
-Reported-by: syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=302b9b575a06733ff60c
-Link: https://lore.kernel.org/all/6a74a76d.ec7c9571.3ac9bb.0056.GAE@google.com/
-Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
+  Commit 5413dfba88d6 ("slub: drop mutex before deleting sysfs entry")
+  in v3.8 re-opened the race by dropping slab_mutex around
+  sysfs_slab_remove() in __kmem_cache_shutdown(), to avoid a lockdep
+  splat between slab_mutex and the sysfs lock.
+
+  Commit 657dc2f97220 ("slab: remove synchronous rcu_barrier() call in
+  memcg cache release path") in v4.11 shifted from synchronous
+  rcu_barrier() to asynchronous RCU work for SLAB_TYPESAFE_BY_RCU caches.
+  That commit, again, accidentally closed the race by moving
+  sysfs_slab_release() to shutdown_cache(), but only for
+  !SLAB_TYPESAFE_BY_RCU caches because destruction of
+  SLAB_TYPESAFE_BY_RCU caches is done in an RCU work.
+
+  Commit 0495e337b703 ("mm/slab_common: Deleting kobject in
+  kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock") in
+  v6.0 re-introduced the race for !SLAB_TYPESAFE_BY_RCU caches.
+
+Fixes: 69cb8e6b7c29 ("slub: free slabs without holding locks")
+Fixes: 5413dfba88d6 ("slub: drop mutex before deleting sysfs entry")
+Fixes: 0495e337b703 ("mm/slab_common: Deleting kobject in kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock")
 Cc: stable@vger.kernel.org
-Assisted-by: Hermes:muse-spark-1.2 syzkaller
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://patch.msgid.link/20261014150844.8536-1-kaloz@kernel.org
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/redrat3.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ mm/slab_common.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/media/rc/redrat3.c
-+++ b/drivers/media/rc/redrat3.c
-@@ -977,6 +977,7 @@ static int redrat3_dev_probe(struct usb_
- 	struct device *dev = &intf->dev;
- 	struct usb_host_interface *uhi;
- 	struct redrat3_dev *rr3;
-+	struct rc_dev *rc;
- 	struct usb_endpoint_descriptor *ep;
- 	struct usb_endpoint_descriptor *ep_narrow = NULL;
- 	struct usb_endpoint_descriptor *ep_wide = NULL;
-@@ -1121,9 +1122,12 @@ static int redrat3_dev_probe(struct usb_
- 	return 0;
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -487,10 +487,10 @@ EXPORT_SYMBOL(kmem_buckets_create);
+  * and release of the kobject does not need slab_mutex or cpu_hotplug_lock
+  * protection. So they are now done without holding those locks.
+  */
+-static void kmem_cache_release(struct kmem_cache *s)
++static void kmem_cache_release(struct kmem_cache *s, bool sysfs_ready)
+ {
+ 	kfence_shutdown_cache(s);
+-	if (__is_defined(SLAB_SUPPORTS_SYSFS) && slab_state >= FULL)
++	if (__is_defined(SLAB_SUPPORTS_SYSFS) && sysfs_ready)
+ 		sysfs_slab_release(s);
+ 	else
+ 		slab_kmem_cache_release(s);
+@@ -505,6 +505,7 @@ void slab_kmem_cache_release(struct kmem
  
- led_free:
-+	rc_unregister_device(rr3->rc);
- 	led_classdev_unregister(&rr3->led);
- redrat_free:
-+	rc = rr3->rc;
- 	redrat3_delete(rr3, rr3->udev);
-+	rc_free_device(rc);
+ void kmem_cache_destroy(struct kmem_cache *s)
+ {
++	bool sysfs_ready;
+ 	int err;
  
- no_endpoints:
- 	return retval;
+ 	if (unlikely(!s) || !kasan_check_byte(s))
+@@ -549,10 +550,18 @@ void kmem_cache_destroy(struct kmem_cach
+ 
+ 	list_del(&s->list);
+ 
++	/*
++	 * slab_late_init() sets slab_state to FULL under slab_mutex and adds
++	 * sysfs entries only for caches still on the list. Sample the state
++	 * here, so that a cache unlinked before that point is not handed to
++	 * sysfs_slab_release() with an uninitialized kobject.
++	 */
++	sysfs_ready = slab_state >= FULL;
++
+ 	mutex_unlock(&slab_mutex);
+ 	cpus_read_unlock();
+ 
+-	if (slab_state >= FULL)
++	if (sysfs_ready)
+ 		sysfs_slab_unlink(s);
+ 	debugfs_slab_release(s);
+ 
+@@ -562,7 +571,7 @@ void kmem_cache_destroy(struct kmem_cach
+ 	if (s->flags & SLAB_TYPESAFE_BY_RCU)
+ 		rcu_barrier();
+ 
+-	kmem_cache_release(s);
++	kmem_cache_release(s, sysfs_ready);
+ }
+ EXPORT_SYMBOL(kmem_cache_destroy);
+ 
 
 
