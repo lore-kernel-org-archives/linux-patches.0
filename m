@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064883;
-	b=HYqDM4IcVlVMoz8Re7HtVEAfuMvfKdWLN5prxNB0U2pm9SJoGJMc8Ia40jvq978/QtHD
-	 KfKiMQC9DMR3q/R126yrLSq6yyZsHtVaSVT2bfBaaKL2c3J3CzjNRtGgUCYlLfJo+nCdj
-	 hrcNr+UNXC8a/uj8QJxmuOgQcCVvYYp9AmaOD45A8lzS8D9pyVYvxD8xrpY8dEkdEOh+j
-	 5P4GGSwzEZpRaJgiXAVVj8v5Tj851sFT/jLiTfvEXOEugCIQsiTRbEej551mGAAzIrSUe
-	 wx0ifMe9yzuMiDYURmHW/lIj+WzlUF3SGsgK6mev++DAV6z0UdpO2ZmneNa86uz6oWw==
+	t=1794064885;
+	b=PkhlE6POVI5e//LUeAMexlV3CorN2nAHjtMcelxBHDI7ETX0S50IhrjXxzFchCNAMYoO
+	 tt3jNa4gmnKPs4q/6H9WV5m2+XJcKortlyvQoIxUlscxgc4n44OyQVZQO+N8YOnujudLH
+	 CH+mBWZvL/NBO43l6a9aLOznQG2SdSCAWQ1pquhrHGiIWNd1puQyFeFDcsJ/FugOC7Bkd
+	 eu1QLeN0EduA9fWhZESBA6XXEHelRtY7QjliK+BC5WltECkd4Ms9nrxY+EY4xu226nf3k
+	 YzX8OyqKB3mHYzr/TTi73q9m6AlOsV0z7VzrAQTxh3GsdL2Kr7hszGbqlAck1k6hvJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ocNq6GBm0W7yOzCDNPHw7triwCzrfAVmpNcHNacpOfg=;
-	b=ebLQVMJ0jxzFA8JuFI3Rf6sWLlrXVCVP1ZLYa2azlWYj95CA7zW1ThcPsoX5iUVFQH6s
-	 f5aoB1bGI+5t0oZBT7UDnT1LIrQy1p8j4TJYGxeo9Wx08oPFqG/RzzduPLbqwWbT3IQYB
-	 z8/pTx990dgFSR93hiE39a2+QxpQT+B8jaLNXTb9yF1Wz/GyH7BtV7l+7CkmF5AfZ2zeG
-	 FSIhonqH6syDQkaGTX1BE3Ym/05U4v7P3XhpSireJhDgzcTV92Au18Wg5npZgXVf1FkcG
-	 Rk+WstSKaETrGr9gl1Rk6DJKO4q3Uxnaf4831UTQbpvHQoTtCVDPd+TJyFmvyIReAOg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=FqgmvNJ+qH/V//Qaq9QeJvzUdTVd0PyAAc48zspryn4=;
+	b=pqYs/ExlHLnmoZwlUzB1vXGCY1/7kQv02rHElZ+xdvAldUmvUOTXcRmi4dxdwdPIx41p
+	 WoXPgGnuRynLFYzmDVxZRCpbMnzGK4UQy4sDrMzl36dTvCaouMl05IZVv8mQ5G4vKzVaP
+	 pXHRr6SYi3VfS/mc9oeb75hMU9FiLRK8wJnjJL0Ny4D9OezEw8+8+ZpZ7oyDsWXX3+mtO
+	 ZIOZdYF46HuOUiaCweseBUxNNRsZ9t+BiyyA6BpieYlDlCYjrsE9MAciWNYi77GmnmxXi
+	 vFAE3tKneK0uI+UFnDpuZZhun2GZmfsr7I1oR6bT5H1XlJUMmljlGBHwZ1hBXuDFHjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncoB7wLb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPfrVWhZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FFA606CE5E;
-	Sat,  7 Nov 2026 15:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CAA606C000;
+	Sat,  7 Nov 2026 15:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncoB7wLb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77291F0089F;
-	Sat,  7 Nov 2026 15:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPfrVWhZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007321F0089F;
+	Sat,  7 Nov 2026 15:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064882;
-	bh=ocNq6GBm0W7yOzCDNPHw7triwCzrfAVmpNcHNacpOfg=;
+	s=korg; t=1794064885;
+	bh=FqgmvNJ+qH/V//Qaq9QeJvzUdTVd0PyAAc48zspryn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ncoB7wLbu/DujPIc1nEouWSfz3+jdtIPX/TYSHc62PTS4QsE1uEZuI7SKUKGZs80F
-	 lcavhf0kgJy/0N/YVB1kgFx0jAw62osS7UhSIWRwx9Gg/nIww/mls01oloLVNh19Dq
-	 xiYu4+J1VeenmLRxDooAnrFtve3iwq3bbrcz80OI=
+	b=jPfrVWhZgogdA8aROhjIsYGT8gKsvnr1CTjkjMX+zKmEspwzAnwdXAMFib4YdnKbI
+	 0nJao8XEU9JVLY29UnelRtFeHc+tjGqMotDPZEanQQI2ZGdn6QdChuv3ERFO19gEEZ
+	 r0OSU3fpCDaTnR9tPJinYCQxwFuzYmeTo/anTxUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Douglas <me@timdoug.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0757/1257] serial: pmac_zilog: push received data to the port that received it
-Date: Sat,  7 Nov 2026 08:50:53 -0500
-Message-ID: <20261107135000.194268897@linuxfoundation.org>
+Subject: [PATCH 7.3 0748/1257] platform/x86: hp-bioscfg: fix non-ASCII truncation in hp_get_string_from_buffer()
+Date: Sat,  7 Nov 2026 08:50:44 -0500
+Message-ID: <20261107134959.949983134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -61,56 +62,137 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tim Douglas <me@timdoug.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit f3dc727da3af64abc12b625bbf1eb68d55d882cc ]
+[ Upstream commit 6b8d2374b32c35efa2a431b3cd2fe346f8917dcc ]
 
-pmz_interrupt() drains both channels but, since commit 2e124b4a390c
-("TTY: switch tty_flip_buffer_push"), pushes the flip buffer of the
-port whose handler is running rather than the port that was drained.
-With both ports open, data received on the other port can be left in
-its flip buffer until something else pushes it, so its reader may not
-see it.
+utf16s_to_utf8s() writes into dst, but the loop that follows
+overwrites dst from the raw UTF-16 code units with truncating casts,
+so any character above U+007F is mangled. For example, U+00E9 is
+stored as 0xe9 instead of 0xc3 0xa9.
 
-Fixes: 2e124b4a390c ("TTY: switch tty_flip_buffer_push")
+Convert into a scratch buffer first, then escape '\\', '\r', '\n' and
+'\t' into dst with string_escape_mem(). Quotes are not escaped, so the
+existing strreplace() still handles them.
+
+Tested on HP EliteBook 840 G2 (Fedora 44, Linux 7.2.7).
+
+Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tim Douglas <me@timdoug.com>
-Link: https://patch.msgid.link/20261013013541.4535-2-me@timdoug.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
+Link: https://patch.msgid.link/20261007134711.473857-3-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pmac_zilog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 62 +++++---------------
+ 1 file changed, 14 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/tty/serial/pmac_zilog.c b/drivers/tty/serial/pmac_zilog.c
-index e3a9193286954..f49d6052d11be 100644
---- a/drivers/tty/serial/pmac_zilog.c
-+++ b/drivers/tty/serial/pmac_zilog.c
-@@ -444,7 +444,7 @@ static irqreturn_t pmz_interrupt(int irq, void *dev_id)
-  skip_a:
- 	uart_port_unlock(&uap_a->port);
- 	if (push)
--		tty_flip_buffer_push(&uap->port.state->port);
-+		tty_flip_buffer_push(&uap_a->port.state->port);
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+index 6b48faec2cea3..8ffdc737af4d2 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+@@ -11,7 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/kernel.h>
+ #include <linux/printk.h>
+-#include <linux/string.h>
++#include <linux/string_helpers.h>
+ #include <linux/wmi.h>
+ #include "bioscfg.h"
+ #include "../../firmware_attributes_class.h"
+@@ -53,12 +53,12 @@ int hp_get_integer_from_buffer(u8 **buffer, u32 *buffer_size, u32 *integer)
  
- 	if (!uap_b)
- 		goto out;
-@@ -469,7 +469,7 @@ static irqreturn_t pmz_interrupt(int irq, void *dev_id)
-  skip_b:
- 	uart_port_unlock(&uap_b->port);
- 	if (push)
--		tty_flip_buffer_push(&uap->port.state->port);
-+		tty_flip_buffer_push(&uap_b->port.state->port);
+ int hp_get_string_from_buffer(u8 **buffer, u32 *buffer_size, char *dst, u32 dst_size)
+ {
++	char utf8_buf[MAX_BUFF_SIZE];
+ 	u16 *src = (u16 *)*buffer;
++	int escaped_len;
+ 	u16 orig_size;
+ 	u16 src_size;
+-	u16 size;
+-	int i;
+-	int conv_dst_size;
++	int utf8_len;
  
-  out:
- 	return rc;
+ 	if (*buffer_size < sizeof(u16))
+ 		return -EINVAL;
+@@ -75,56 +75,22 @@ int hp_get_string_from_buffer(u8 **buffer, u32 *buffer_size, char *dst, u32 dst_
+ 	src++;
+ 	/* size value in u16 chars */
+ 	orig_size = src_size / sizeof(u16);
+-	size = orig_size;
+-
+-	for (i = 0; i < orig_size; i++)
+-		if (src[i] == '\\' ||
+-		    src[i] == '\r' ||
+-		    src[i] == '\n' ||
+-		    src[i] == '\t')
+-			size++;
+ 
+-	/*
+-	 * Conversion is limited to destination string max number of
+-	 * bytes.
+-	 */
+-	conv_dst_size = size;
+-	if (size >= dst_size)
+-		conv_dst_size = dst_size - 1;
++	utf8_len = utf16s_to_utf8s(src, orig_size, UTF16_HOST_ENDIAN,
++				   utf8_buf, sizeof(utf8_buf));
+ 
+-	/*
+-	 * convert from UTF-16 unicode to ASCII
+-	 */
+-	utf16s_to_utf8s(src, orig_size, UTF16_HOST_ENDIAN, dst, conv_dst_size);
+-	dst[conv_dst_size] = 0;
+-
+-	for (i = 0; i < conv_dst_size; i++) {
+-		if (*src == '\\' ||
+-		    *src == '\r' ||
+-		    *src == '\n' ||
+-		    *src == '\t') {
+-			dst[i++] = '\\';
+-			if (i == conv_dst_size)
+-				break;
+-		}
+-
+-		if (*src == '\r')
+-			dst[i] = 'r';
+-		else if (*src == '\n')
+-			dst[i] = 'n';
+-		else if (*src == '\t')
+-			dst[i] = 't';
+-		else if (*src == '"')
+-			dst[i] = '\'';
+-		else
+-			dst[i] = *src;
+-		src++;
+-	}
++	escaped_len = string_escape_mem(utf8_buf, utf8_len, dst, dst_size - 1,
++					ESCAPE_SPACE | ESCAPE_SPECIAL,
++					"\\\r\n\t");
++	if (escaped_len > dst_size - 1)
++		escaped_len = dst_size - 1;
++	dst[escaped_len] = '\0';
++	strreplace(dst, '"', '\'');
+ 
+ 	*buffer += sizeof(u16) + src_size;
+ 	*buffer_size -= sizeof(u16) + src_size;
+ 
+-	return size;
++	return escaped_len;
+ }
+ 
+ int hp_get_common_data_from_buffer(u8 **buffer_ptr, u32 *buffer_size,
 -- 
 2.53.0
 
