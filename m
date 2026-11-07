@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064570;
-	b=l9Mom3jo/62p0jfukJF5kq7QkcNy3+WnTWMRetIkjIwSuvfbS+IIxzh7NoT1bCPgJXfi
-	 bbFmqWb9FKmdbnId4lEDUAUqG33EoxJBUFSSzUSOPoZHFNJI0SDt1FkisAJte7LK2sR/j
-	 ltBik06nBBzxDQ/Jf8UZ8QEmbbXNZjFPsFlITsdJKqW8VPi0PQG9md1auaosw/ItFSkZu
-	 82hIkN7mzGMHiHMcItOXxfq7unINzVLRMWcvGxhqVL/Q6w97s4BLucGuGnW4ZhLQUntzO
-	 hgGKUZycljcC+qLevn37UMnrMoVmbb2UUTsaCGqs4BEz6hqHqo3JvstaqMvm6xHBryw==
+	t=1794064571;
+	b=A3jYIArWxT+zlx4jgFBzmqLgeBDaQ62cfZy7W2DYeOBzNkD45mPstvqNBnRWO+zVQnqZ
+	 Xo4cWCwiLAFxcaSTkYlh9ObP7kJsJ1CcKa8imRD/JasrrSPh/UeGPheD4ySe2yeq729dP
+	 H3NpXsoanATfuAXeLeeF3Ahn0Mtaj6rzGEQgYnEkedL1ImdndSBj86/JZdPp/6LxnmOR7
+	 wsincat9Vna7vu4w0owyWtBiGUnodfIWTdc43oksd4zxQ/zak78hV+S06KN2uakbLEP1x
+	 rC1yuw19HME9nC3UXWgaI65PgZkC0JRWgMmTwouwtBjSo2tAcRTroPzeU2jfs545A9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064570;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064571;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f/bsvz7d7bdcPsBeyPcSkzdcyub347TC5yvrkp3ez5A=;
-	b=VfyMfWVNW4uOjm9yf7cWW9XtqVmtOghjexFbBsjgJG1LpIEltMM2ZbTKM5vgFRCU3F+y
-	 VLCK+vPfxSE3O6SjULj5e725zH4nUmuBgp/EVW4RIVuv3NhHpJuzy5aSX4wa0M5yaULHQ
-	 aMbZC6569Vnv9UGB5d6nBIj1B/p80gl0eI1isJvONF+dG1bI2XrmyHxqr9H7a7m6AOXrp
-	 U12cWDwPoi0M87sw6LVayzQLMX7XvAhLGRnMEKBSg30DeB6SUEIy3OyMtd0QK4X1KMtU7
-	 Z22UxSYQf3QNxNXLzETkoxDlgPnjwfcVeBIkRuKsjQzTah0RzdQELGaRKRkJISnk4BQ==
+	bh=FyEPx9xAiAx8uRtK90S4fQNLnsHaHvHjyQ9ep6BuNfc=;
+	b=AmvXsyqA+Z6MutmzBti9BTdShkvhP8CAFMeDZOrORqm3+40nMUp7eflB70tajocrrFta
+	 hNt3FwUn7lGhcZP7LqXMzIRB8zOxavPNsqHke8BBwCQFbvuF2JYknufYrP+v7xdhukfVz
+	 leFy4ogVStr+CBi7w0i4B19TBOrSJJ4UItENmceaUUC8Su3ATDPFaMidWDtPJ5iqrAb95
+	 5bj+K5khES01nGu4amH6MgtD7FaIF+xI+ZhM8gYSc82PnMyUPSFGkeBBMVhECLg0PJ8+3
+	 5FKubbUAImhWXjn2DVrObwv2U/zenxz8C0z5nX9uIXRB42ZvgGUiO5cdo+k/pcvtJPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdBKGgIN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFXWVRq+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6BE606D809;
-	Sat,  7 Nov 2026 15:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844A5606D809;
+	Sat,  7 Nov 2026 15:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdBKGgIN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9261F0089F;
-	Sat,  7 Nov 2026 15:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFXWVRq+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390F31F0089F;
+	Sat,  7 Nov 2026 15:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064570;
-	bh=f/bsvz7d7bdcPsBeyPcSkzdcyub347TC5yvrkp3ez5A=;
+	s=korg; t=1794064571;
+	bh=FyEPx9xAiAx8uRtK90S4fQNLnsHaHvHjyQ9ep6BuNfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdBKGgINuXX0RaC40954Ea+t9hGhtsshDMO3L73YEIvVz7lGRQEZbQyBOArEd3MgC
-	 G0WrugasRP+Pt3rOYSPEO+v2l6nmJHqhBnQVir8V8DPEA8A3EXtjth/kV3jYR4pEPS
-	 Gnza8NoPwmdFPHmpxBsMWmBNuSBoPIkApQs435qI=
+	b=xFXWVRq+PV2JIErva0sHtRXhJDPdVyDFxyWwdP6niwV2pd16exunHtlJHfWBYLI4/
+	 j5O7tfWibS8XAoDJTKdU/FNy5g6Fxg2gwvRzsCoETFDSsA4F/fgVOjp7B2PmKbfsw8
+	 KPsxcG3SmdFcRufCkQ8tERTdvypvJqL+8O5O5ogk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris <hoopyfrood42@gmail.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	Longlong Xia <xialonglong@kylinos.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Nhat Pham <nphamcs@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0542/1257] wifi: mt76: move the channel survey when the channel changes
-Date: Sat,  7 Nov 2026 08:47:18 -0500
-Message-ID: <20261107134954.368398664@linuxfoundation.org>
+Subject: [PATCH 7.3 0584/1257] mm/zswap: enable zswap_ever_enabled in zswap_pool_create()
+Date: Sat,  7 Nov 2026 08:48:00 -0500
+Message-ID: <20261107134955.478779494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,126 +72,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit 68342a7bd7e5e273e2969e3c0f4c62ee3d006ce8 ]
+[ Upstream commit 91b4edb993e1549afdc3c2495216734b9f13f00e ]
 
-mt7921 and mt7925 report every survey counter against one channel and
-never mark the one in use. With firmware channel management, both use
-channel contexts and never call __mt76_set_channel(), so
-phy->chan_state, phy->chandef and phy->main_chandef keep the first
-channel of the band.
+If zswap is enabled by default at boot and pool creation fails, then a
+pool is later created by updating the compressor, data written to zswap is
+corrupted on swapin.
 
-Update them when a context is assigned or changed, after booking the
-time spent on the old channel. This also makes the legacy rate lookup
-in mt76_connac2_mac_fill_txs() and mt7925_mac_add_txs_skb() use the
-band of the current channel.
+Enable the static key in zswap_pool_create(), covering boot-time and
+runtime pool creation with a single site.
 
-With two channel contexts (multi-channel or MLO), the survey follows
-the context that was assigned or changed last, since the driver reads
-the band 0 counters only.
+Verified with fault injection on a stock kernel (compressor builtin,
+CONFIG_ZSWAP_DEFAULT_ON=n):
 
-Tested on MT7922 over PCIe, MT7921AU and MT7925 over USB.
+  1. Boot with zswap.enabled=1; pool creation fails, init completes
+     pool-less (static key off).
+  2. Echo an available compressor name to zswap.compressor.
+  3. Enable zswap.
+  4. madvise(MADV_PAGEOUT) a pattern-verified 512 MiB region, then
+     fault it back in and verify.
 
-Fixes: 41ac53c899bd ("wifi: mt76: mt7921: introduce chanctx support")
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Cc: stable@vger.kernel.org
-Reported-by: Chris <hoopyfrood42@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/CAHaeJsT8O8Nhq351hFp3NAL8e0iU85N-LBdYZ9nYHFHVy7t_hQ@mail.gmail.com/
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20261001003501.2425492-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Step 4 reads back 131072/131072 zeroed pages (zswpin=0, zswpout=131072)
+without this patch; all pages intact (zswpin=131072) with it.
+
+Link: https://lore.kernel.org/20260906135938.3568108-1-xialonglong2025@163.com
+Fixes: 2d4d2b1cfb85 ("mm: zswap: add zswap_never_enabled()")
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Yosry Ahmed <yosry@kernel.org>
+Acked-by: Yosry Ahmed <yosry@kernel.org>
+Assisted-by: Zcode:GLM-5.3
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c    | 14 ++++++++++++++
- drivers/net/wireless/mediatek/mt76/mt76.h        |  2 ++
- drivers/net/wireless/mediatek/mt76/mt7921/main.c |  1 +
- drivers/net/wireless/mediatek/mt76/mt7925/main.c |  2 ++
- drivers/net/wireless/mediatek/mt76/mt792x_core.c |  1 +
- 5 files changed, 20 insertions(+)
+ mm/zswap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index abbe65cbcd89e..3467eb6cea0b5 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1045,6 +1045,20 @@ void mt76_update_survey(struct mt76_phy *phy)
- }
- EXPORT_SYMBOL_GPL(mt76_update_survey);
+diff --git a/mm/zswap.c b/mm/zswap.c
+index cb5a0855fd2a7..e6e6377a62a0b 100644
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -324,6 +324,8 @@ static struct zswap_pool *zswap_pool_create(char *compressor)
  
-+void mt76_phy_chandef_set(struct mt76_phy *phy,
-+			  struct cfg80211_chan_def *chandef)
-+{
-+	if (!chandef->chan)
-+		return;
+ 	zswap_pool_debug("created", pool);
+ 
++	static_branch_enable(&zswap_ever_enabled);
 +
-+	mt76_update_survey(phy);
-+
-+	phy->chandef = *chandef;
-+	phy->main_chandef = *chandef;
-+	phy->chan_state = mt76_channel_state(phy, chandef->chan);
-+}
-+EXPORT_SYMBOL_GPL(mt76_phy_chandef_set);
-+
- int __mt76_set_channel(struct mt76_phy *phy, struct cfg80211_chan_def *chandef,
- 		       bool offchannel)
- {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 2ade848fe3bbb..e9bbec1269fac 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1555,6 +1555,8 @@ void mt76_sta_ps_transition(struct mt76_dev *dev, struct mt76_wcid *wcid,
- bool mt76_has_tx_pending(struct mt76_phy *phy);
- int mt76_update_channel(struct mt76_phy *phy);
- void mt76_update_survey(struct mt76_phy *phy);
-+void mt76_phy_chandef_set(struct mt76_phy *phy,
-+			  struct cfg80211_chan_def *chandef);
- void mt76_update_survey_active_time(struct mt76_phy *phy, ktime_t time);
- int mt76_get_survey(struct ieee80211_hw *hw, int idx,
- 		    struct survey_info *survey);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 68a059504e838..3577c4cebb2e0 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -1423,6 +1423,7 @@ mt7921_change_chanctx(struct ieee80211_hw *hw,
+ 	return pool;
+ 
+ ref_fail:
+@@ -1805,7 +1807,6 @@ static int zswap_setup(void)
+ 		pr_info("loaded using pool %s\n", pool->tfm_name);
+ 		list_add_rcu(&pool->list, &zswap_pools);
+ 		zswap_has_pool = true;
+-		static_branch_enable(&zswap_ever_enabled);
  	} else {
- 		mt76_connac_mcu_uni_set_chctx(mvif->phy->mt76, &mvif->bss_conf.mt76, ctx);
- 	}
-+	mt76_phy_chandef_set(mvif->phy->mt76, &ctx->def);
- 	mt792x_mutex_release(phy->dev);
- }
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 549f9c06b3636..e3e9e0be558e2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -2063,6 +2063,7 @@ mt7925_change_chanctx(struct ieee80211_hw *hw,
- 						      link_conf, ctx);
- 		}
- 	}
-+	mt76_phy_chandef_set(mvif->phy->mt76, &ctx->def);
- 
- 	mt792x_mutex_release(phy->dev);
- }
-@@ -2411,6 +2412,7 @@ static int mt7925_assign_vif_chanctx(struct ieee80211_hw *hw,
- 
- 	mconf->mt76.ctx = ctx;
- 	mctx->bss_conf = mconf;
-+	mt76_phy_chandef_set(mvif->phy->mt76, &ctx->def);
- 	mutex_unlock(&dev->mt76.mutex);
- 
- 	return 0;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-index 0ad33f74c2285..f56f03bfe3874 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-@@ -472,6 +472,7 @@ int mt792x_assign_vif_chanctx(struct ieee80211_hw *hw,
- 	mutex_lock(&dev->mt76.mutex);
- 	mvif->bss_conf.mt76.ctx = ctx;
- 	mctx->bss_conf = &mvif->bss_conf;
-+	mt76_phy_chandef_set(&dev->mphy, &ctx->def);
- 	mutex_unlock(&dev->mt76.mutex);
- 
- 	return 0;
+ 		pr_err("pool creation failed\n");
+ 		zswap_enabled = false;
 -- 
 2.53.0
 
