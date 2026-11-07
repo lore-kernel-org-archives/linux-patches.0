@@ -1,69 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063646;
-	b=cLBFx4mhuvuZR0wLEQ3LmH8KHNhgugsI21zaFzXm9itZnLyE5MeJxWyZuWbIvW58B3iS
-	 zPXpX2tB8+gmW/MF3gmm0EWRG4OOsy+O1kdF5AgsZkrMNS9Rh9N7MbJelYtWQt4JXMd+F
-	 PvuX7Gkg/Qunn7WvGR7sellOh5kh6nZ2RfQaW9EJUtJtxj5bIoT2JfeOB6MPtJaDDYsfP
-	 PaRz56jBp9w+WhZpRMXhwtQCHw/FGn8sY5HHutnRZRURY6xv6n/n5o1JhTbXKB1xrVr9F
-	 D/FyzhjJr0pVas3t3ahOpPTfVX+/hWaCFCY4p+EzjBiM2hibu9k6jDwAq8I1Pr9CWAw==
+	t=1794063647;
+	b=DUR+o/oOmPVexLYrmf1bLX6Zn8YFW9AlZHkNNJqZhrvPj8Wvd/R4OAfUtYNVYVJZWcKc
+	 ZhUk2XL4N/oQB1ez9bfQjCx5MMTZYchpNPLLxV/XrI1ei6qvYSazvup6TQXe9sYiUsRK4
+	 O+dhK+igxoGn3k/96lueQ6zqnj8csILKHoiqaymjAEtJxTLMD+o2maJeKTZURTaFMmgGp
+	 x1EAqf5LQLY8SMHICgAhGnaf7g9oXlcQpAj35W3yaTaiBJIMySg8szp65/S328/4AfB4M
+	 lpjKO5L+WKMbnp4maJBL0H54MzNRpoEsM9hjqD+wqZ1RV6QmpCkWyasXyZqaW1N9YwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063647;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/cVFRIPiR15X+CvdKG2xtPdIROGWaSfDLWjBSD3nzoE=;
-	b=QbKzj1n09qP3eUNFHG+vEj26dUtyusybtWBEMjHSjtbCxoHr6/79fF5fM3yTOApK4pNE
-	 NeLcmzxUB7/QAXL3gNy0kxpe4U5a8HtJxyjWLPbd9o66CdCL/twaD3TmW0pI4lAjwXSXV
-	 2DmFkPGoam1pZ7gTi0BHlBW/K4ZlAi8laQLDmON/qT66HP3j0kZgtAot2/6y9NocgwbYP
-	 PecrWzZ/NPD2Sa3XS1ghhTk6o/d4yiAjSZ37BRtQg6igkMtyfvcbXJpssjaGyTlaMcL0W
-	 LLvgvZIvS/RUP0BYZkto/SllqxATZ5ThMp96Ocr2zKmP5FNVoQE3yXqHrtRUv6lNKvw==
+	bh=8bPzx6U2ZOnOiQx1Uum16cuxkLoK7Vp9L7WNpXANYUg=;
+	b=sk7vXYDs6/NFF/Q8yJ2jymWQswwRJQ5oHvqe6lBCfocgDB1uCezZFKdEdmk2vV3TdmBg
+	 3pHS5mJCqsXnCCvFacehxs4UQgrldBRbs19ens+KU8YD9iyawIV3+deYI/JTBzBY3mxUA
+	 gZEoLsc8rC03C+rPEcSCag06fmhWa8at/VJEL+FX5V+ymHmsN+FaWKWAnQjGnk4t1IiXQ
+	 cnMzUCxXXKwSnAoqgjdrCgNGreREhWk+57FBZUaxMbnZtxagmmULtvfOSm25XahELdY+P
+	 2uGaJTXEVTAY7mCjXekypN8Sr1xbWEs95faWzTbREydCDgJ1DgmoWwrsMzQsHKk4EcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnuUUZCM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pGfueAVC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D6F606A9C1;
-	Sat,  7 Nov 2026 15:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BDA60A6F43;
+	Sat,  7 Nov 2026 15:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hnuUUZCM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D851F0089F;
-	Sat,  7 Nov 2026 15:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pGfueAVC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1165B1F008A6;
+	Sat,  7 Nov 2026 15:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063646;
-	bh=/cVFRIPiR15X+CvdKG2xtPdIROGWaSfDLWjBSD3nzoE=;
+	s=korg; t=1794063647;
+	bh=8bPzx6U2ZOnOiQx1Uum16cuxkLoK7Vp9L7WNpXANYUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hnuUUZCMcL29+ig/3e/vkeZpVLA4Rupav1KqqQRoRZKtdmgPq4LJWaUf8mSBhRKpH
-	 VZHjH6hEdK6ouOVl+SgC+DI1f+LInNV2mjto7ZNvelc7kLFKs5mnVbGEaz8ycjuwyd
-	 KjJGN3otOraWPyYQ8f3tXTsBlJAaPpqiJOSmXebc=
+	b=pGfueAVCQdCuOEPGrZL/2IRlU1fhHDVodUe54wgh/SNXUHkIl1syfmtRNbMYfpZO1
+	 wyt7Qvgoec9ydd4kgVk1Fj7aA+byVb5n6pe3wFCWoQ/Gt2SGilqhszbh2KCzQHwNNE
+	 QTFFRaXjL6IZl9iUHJHYgK1C1pzKICXxP5g6ok04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Barry Song <baohua@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	David Hildenbrand <david@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Kairui Song <kasong@tencent.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Wei Xu <weixugc@google.com>,
-	Baoquan He <baoquan.he@linux.dev>,
-	Yu Zhao <yuzhao@google.com>,
-	apais@microsoft.com,
-	rlmenge@gmail.com,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 760/869] mm: multi-gen LRU: fix NULL lruvec->pgdat deref with memcg disabled on cmdline
-Date: Sat,  7 Nov 2026 08:57:22 -0500
-Message-ID: <20261107134918.468918198@linuxfoundation.org>
+Subject: [PATCH 6.18 725/869] posix-cpu-timers: Fix pid refcount leak in do_cpu_nanosleep() signal path
+Date: Sat,  7 Nov 2026 08:56:47 -0500
+Message-ID: <20261107134917.387110667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -85,117 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit 183895979c441e52dbd651b388553b09eaa35cfa ]
+[ Upstream commit 8ccd731b63a0183ca2b0e18f3ca15864b3f37eda ]
 
-When CONFIG_MEMCG=y, lruvec_pgdat() returns lruvec->pgdat, which for the
-per-node pgdat->__lruvec is left NULL by lruvec_init() and only filled in
-lazily by mem_cgroup_lruvec(). Normally that happens early, e.g. on the
-first folio_add_lru().
+do_cpu_nanosleep() sleeps on a temporary k_itimer whose reference on the
+target's struct pid is taken by posix_cpu_timer_create() and dropped by
+posix_cpu_timer_del(). When a signal ends the sleep, the timer is
+disarmed with posix_cpu_timer_set(), but posix_cpu_timer_del() is only
+called for a result of 0 or TIMER_RETRY. If the target thread or process
+has exited in the meantime, timer_lock_sighand() finds no task,
+posix_cpu_timer_set() returns -ESRCH and the pid reference is leaked.
 
-With cgroup_disable=memory, lru_gen_shrink_node() passes &pgdat->__lruvec
-directly to shrink_one(). If direct reclaim runs before anything has
-called mem_cgroup_lruvec() for the node, which can happen during early
-boot under memory pressure (e.g. a kdump kernel), get_swappiness() ends
-up dereferencing a NULL pgdat:
+An unprivileged user can trigger this: sleep on the CPU clock of a
+thread, let that thread exit, then signal the sleeper. Each round leaks
+one struct pid. Repeating it exhausts unreclaimable slab memory
+within minutes:
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000005040
-  pc : get_swappiness+0x68/0xb0
-  lr : try_to_shrink_lruvec+0x54/0x2c0
-  Call trace:
-   get_swappiness+0x68/0xb0 (P)
-   try_to_shrink_lruvec+0x54/0x2c0
-   shrink_one+0x8c/0x240
-   shrink_node+0xc6c/0xe08
-   do_try_to_free_pages+0xdc/0x570
-   try_to_free_pages+0x124/0x278
-   __alloc_frozen_pages_noprof+0x6e8/0xf78
-   alloc_pages_mpol+0xc4/0x1c0
-   alloc_frozen_pages_noprof+0x54/0xe8
-   alloc_pages_noprof+0x1c/0x40
-   atomic_pool_expand+0x98/0x300
-   __dma_atomic_pool_init+0x58/0xd8
-   dma_atomic_pool_init+0x154/0x170
-   do_one_initcall+0x64/0x350
-   kernel_init_freeable+0x214/0x430
-   kernel_init+0x2c/0x208
-   ret_from_fork+0x10/0x20
+  Out of memory: Killed process 150 (poc) total-vm:789292kB, anon-rss:484kB
+  Kernel panic - not syncing: System is deadlocked on memory
 
-The classic LRU path and MGLRU before per-node lru_gen_folio lists
-obtained the lruvec through mem_cgroup_lruvec(), which sets
-lruvec->pgdat.
+Fix this by also calling posix_cpu_timer_del() on -ESRCH. With the
+target gone, the deletion is safe. It finds no task either and only
+drops the pid reference.
 
-The above was hit on an arm64 kdump kernel (6.18-based) booted with
-cgroup_disable=memory nr_cpus=4. It also reproduces on mainline on an
-arm64 VM with CONFIG_ARM64_64K_PAGES=y, CONFIG_MEMCG=y,
-CONFIG_LRU_GEN_ENABLED=y and:
-
-  mem=160M nr_cpus=4 coherent_pool=512M cgroup_disable=memory
-
-These options only serve to force direct reclaim early in boot; with
-160M the boot eventually ends in OOM regardless. On mainline the first
-LRU reclaim happens while unpacking the initramfs, and faults the same
-way:
-
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000005040
-  pc : get_swappiness+0xd4/0x150
-  Call trace:
-   get_swappiness+0xd4/0x150 (P)
-   try_to_shrink_lruvec+0x44/0x2b8
-   shrink_one+0x80/0x1a0
-   shrink_node+0xd98/0xea8
-   do_try_to_free_pages+0xf4/0x4b0
-   try_to_free_pages+0x110/0x360
-   __alloc_frozen_pages_noprof+0x8b0/0x1718
-   ...
-   __filemap_get_folio_mpol+0x2ac/0x548
-   simple_write_begin+0x44/0xf8
-   page_symlink+0x178/0x198
-   ...
-   do_populate_rootfs+0x13c/0x200
-
-Link: https://lore.kernel.org/20261017050928.128582-1-sidchintamaneni@gmail.com
-Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
-Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
-Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Qi Zheng <qi.zheng@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <apais@microsoft.com>
-Cc: <rlmenge@gmail.com>
-Cc: <stable@vger.kernel.org> # 6.3+
+Fixes: e26d70d271ee ("posix-timers: Cleanup reaped target handling")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261012235149.66531-1-cenzhang@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/posix-cpu-timers.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 8fb0d79a00b9e..e72d50bab730a 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -5082,7 +5082,7 @@ static void lru_gen_shrink_node(struct pglist_data *pgdat, struct scan_control *
- 		sc->nr_reclaimed = 0;
- 
- 	if (mem_cgroup_disabled())
--		shrink_one(&pgdat->__lruvec, sc);
-+		shrink_one(mem_cgroup_lruvec(NULL, pgdat), sc);
- 	else
- 		shrink_many(pgdat, sc);
- 
+diff --git a/kernel/time/posix-cpu-timers.c b/kernel/time/posix-cpu-timers.c
+index b3d4bae9ee3e0..fcb98cbb1219b 100644
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -1597,8 +1597,8 @@ static int do_cpu_nanosleep(const clockid_t which_clock, int flags,
+ 		 */
+ 		expires = cpu_timer_getexpires(&timer.it.cpu);
+ 		error = posix_cpu_timer_set(&timer, 0, &zero_it, &it);
+-		if (!error) {
+-			/* Timer is now unarmed, deletion can not fail. */
++		if (error != TIMER_RETRY) {
++			/* Unarmed or target gone (-ESRCH), deletion can not fail. */
+ 			posix_cpu_timer_del(&timer);
+ 		} else {
+ 			while (error == TIMER_RETRY) {
 -- 
 2.53.0
 
