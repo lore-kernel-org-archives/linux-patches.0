@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062553;
-	b=4PAZk5HBOUcXF/sKZRbEY5ipO1/oXA5U5ZgMlyEaNfGFLd8s4dED0tbCPDhbOOWyX+om
-	 OXBmmBo3JPpnWaBvw/gMyXcX+dpPG6XBt+fx50hu1eDLrFio9v0lr/s1uGgoLk1O+KV0K
-	 W40zuabV07aIzWEnMjfCuRHNokn+b9RrWCeZOuAurdFJ9WMfBqi3dDrQ6pdXVYlFFljpS
-	 dBwY6vzQZtLDVsfzyzRkAPnlp1uUiYE0sSqA/Kim04IzACCPhQUKXTXtYGMLQVShXhBne
-	 y6fRrW5WflqGKEFIglOsxdj//T5HIRuWh3gu8QxKwnyEZTDg+7CKGjh/pRq07purdQQ==
+	t=1794062556;
+	b=TFj8npe7CXlCV+B9h0PxIlV7t7DcCp2lgYO/YPRHinq+XacrRe9Ld3m6XDdL1ybAfTTu
+	 epZZzx3nd+wNf3lJcHFYVTF2eI7XXTUqbh+PQ5jEJWt5hMX0yqxBH4POgBpWcxao8H8nl
+	 r+w5bRKJL0jo7vWm77YFxxcHpagHIuYmjz6FttKIBfb71Io32RQTQkJ9DS5Ac49z3ROLa
+	 OBVcG1FIxe8iiygmi2lwq5sRwq7/rd+TZAojxOEC3+Ynp+SbrVOsjge576j1RSZlGMT6T
+	 aP86d0PbLFNH+yu/hh0+YDEK9ZXWutKCDa3ljHCpX790o4cOvbJ7oZ5Od1t73964tsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062553;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wB//MHsLr4fkKCxT6HLh8S+Dcige/6XK3o8FmpegHfE=;
-	b=F6gG/n9jf+53tdY/AkA9Gg/5vOSEkIDBKfFfHjnlEKgmDuFKFTGCFai8ux1bwtJEIM4P
-	 m4HxuunVibcvkzB2tDrg4HKd2DF8B1cm8cEwg5nE9Y6icymw86i3mPaIMl+i1VqReuAxi
-	 Sqh8udfuA0lMpdHW9y5Dy52TKReTaSsc1g1M2Vxd32qg+ZeUw/04f6p/emKAPHAg9NSmt
-	 osX4uzi7RQgYdSp/RkDGXIqKTns1Acr5YrKtvEnG7KbZAQeEkea+miCrA9JQCat0dr4ow
-	 wIX9UdDG21CBUboDSpEDI2bAtiniGjIFtKbioceci1nivQrKabyk+34ZXeQowlLFDCQ==
+	bh=T5F2VFIVPN3YxdpRWQyBXDylD1yy1/iRagEkV81zgyU=;
+	b=ybHkSen57nkEx2xIh6c/xHjnV7zHnKrhC5yZy7nhXwPgHUFjLXXKa3FC1iasdqdaNIHV
+	 8H8NuKD1klu47g+frdQFwZZ7uPyEZTwzcA8oANgy2oOiO4Wi5uakBTAT8vzKyfAR0PD3b
+	 KxxIr91Wj7gowPBc+xSfnZoiPJdvEVi63GGNWy4utLU6Q2BnFBGtLBOwWJp1gtNCe5n2/
+	 62tiAgCDqVkR43VeJRA7NZeeoEDEVd7WTN6Pwvq1SOfgk4c/YggvLeIENnMyYDnnCBJcI
+	 8d4OuIuWv07E058vETgHIVoz9o2zXKn+PXf0HoiH1lmUUyyUPpxsc5cEctH9J3MLOIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fI6MR467;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iV14GUXY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30B4606EE8D;
-	Sat,  7 Nov 2026 14:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2A5606A645;
+	Sat,  7 Nov 2026 14:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fI6MR467
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B861F0089F;
-	Sat,  7 Nov 2026 14:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iV14GUXY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E8A1F008A1;
+	Sat,  7 Nov 2026 14:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062553;
-	bh=wB//MHsLr4fkKCxT6HLh8S+Dcige/6XK3o8FmpegHfE=;
+	s=korg; t=1794062555;
+	bh=T5F2VFIVPN3YxdpRWQyBXDylD1yy1/iRagEkV81zgyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fI6MR467C4QXFMBpeDmHIvAUSVgh9DuKgNbdL/oNT2zJgnyWR0ql4HCucxEbFGlDq
-	 Qu077mtGC9/wdHhjI8Z+z20qaRHZa2M9C63xmcQBCm2tMYkOS2g6x8kwizb0n1C+Kx
-	 uXegNH+GnREXZ8K99W7T8XOECugJdUSrtZQMb3Og=
+	b=iV14GUXYgEodQr+CIG/twa//YcRJMnHb6VJlpqq84MnSA3iFmCbrh6UvwGh58nc0Q
+	 BTCXXjI6aB1sqUAs+g0RJapL2rBGRLsiTAqLvKw/kGLIeCMIjnuRMdQ0pkyimzHMOI
+	 Hwu5RFtNt6aNYfcQ+yCtidvVj2dGhRkCkFrr3ZM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1439/1536] ocfs2/cluster: remove zero-address nodes from IP tree on teardown
-Date: Sat,  7 Nov 2026 08:57:35 -0500
-Message-ID: <20261107135038.254817051@linuxfoundation.org>
+Subject: [PATCH 6.12 1404/1536] writeback: reset dirtied_when when switching wbs
+Date: Sat,  7 Nov 2026 08:57:00 -0500
+Message-ID: <20261107135037.259202493@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -74,61 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit 5dd57e77eff4ba3e85b3df126a55417c88245708 ]
+[ Upstream commit 13b9a606dd0a6cf9bac12894c97b9546d22a7425 ]
 
-o2nm_node_ipv4_address_store() accepts 0.0.0.0. It sets
-O2NM_NODE_ATTR_ADDRESS and links nd_ip_node into cl_node_ip_tree under
-cl_nodes_lock, but o2nm_node_group_drop_item() uses nd_ipv4_address as a
-membership test. A zero address therefore leaves the rbtree node linked
-when config_item_put() releases and frees struct o2nm_node. A later
-address store or IP lookup can then walk the stale node and dereference
-freed memory.
+When switching a dirty inode to another wb, inode_do_switch_wbs() puts
+it at the newest end of the target b_dirty list instead of searching
+for its sorted position. This requires updating dirtied_when, which
+move_expired_inodes() uses to decide where to stop scanning.
 
-During teardown, drop_item takes cl_nodes_lock, skips rb_erase()
-for the zero key, and then calls config_item_put(). A later
-o2nm_node_ipv4_address_store() duplicate check or o2nm_get_node_by_ip()
-lookup takes the same lock and walks the stale cl_node_ip_tree entry. Use
-O2NM_NODE_ATTR_ADDRESS for teardown so every published nd_ip_node is
-erased before configfs can release the node, without rejecting 0.0.0.0
-or changing lookup semantics.
+However, the switch updates dirtied_time_when instead. This leaves
+b_dirty out of order and can make the scan stop before reaching older
+inodes. It also resets the lazytime expiration timestamp, potentially
+delaying timestamp writeback.
 
-Link: https://lore.kernel.org/pm-ocfs2-node-ip-rbtree-zero-address-uaf-v5-e7f64be16b7c3b0988d1@gmail.com
-Fixes: 0c83ed8eeb28 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Update dirtied_when instead, preserving both the constant-time insertion
+and the lazytime expiration timestamp. Correct the field name in the
+comment and document the distinction between the two inode timestamps.
+
+Fixes: 9a6ebbdbd412 ("writeback: Avoid excessively long inode switching times")
+Cc: stable@vger.kernel.org
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Link: https://patch.msgid.link/20261016115230.3640770-2-sunjunchao@bytedance.com
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/nodemanager.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/fs-writeback.c  | 6 +++---
+ include/linux/fs.h | 4 +++-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
-index 87aeb1a7a90ae..bfc7c0fb2be05 100644
---- a/fs/ocfs2/cluster/nodemanager.c
-+++ b/fs/ocfs2/cluster/nodemanager.c
-@@ -626,8 +626,11 @@ static void o2nm_node_group_drop_item(struct config_group *group,
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 48ac4f58605e7..925fc4a42c67d 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -455,12 +455,12 @@ static bool inode_do_switch_wbs(struct inode *inode,
+ 		if (inode->i_state & I_DIRTY_ALL) {
+ 			/*
+ 			 * We need to keep b_dirty list sorted by
+-			 * dirtied_time_when. However properly sorting the
++			 * dirtied_when. However properly sorting the
+ 			 * inode in the list gets too expensive when switching
+ 			 * many inodes. So just attach inode at the end of the
+-			 * dirty list and clobber the dirtied_time_when.
++			 * dirty list and clobber the dirtied_when.
+ 			 */
+-			inode->dirtied_time_when = jiffies;
++			inode->dirtied_when = jiffies;
+ 			inode_io_list_move_locked(inode, new_wb,
+ 						  &new_wb->b_dirty);
+ 		} else {
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 19211eb49a8c0..67b57ce46b203 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -719,7 +719,9 @@ struct inode {
+ 	/* 32-bit hole */
+ 	struct rw_semaphore	i_rwsem;
  
- 	write_lock(&cluster->cl_nodes_lock);
+-	unsigned long		dirtied_when;	/* jiffies of first dirtying */
++	/* Timestamp for writeback list ordering and age checks (jiffies). */
++	unsigned long		dirtied_when;
++	/* Start time for deciding when lazytime updates need writeback (jiffies). */
+ 	unsigned long		dirtied_time_when;
  
--	/* XXX sloppy */
--	if (node->nd_ipv4_address)
-+	/*
-+	 * 0.0.0.0 is a valid configured address, so nd_ipv4_address does
-+	 * not tell us whether nd_ip_node was published in the IP tree.
-+	 */
-+	if (test_bit(O2NM_NODE_ATTR_ADDRESS, &node->nd_set_attributes))
- 		rb_erase(&node->nd_ip_node, &cluster->cl_node_ip_tree);
- 
- 	/* nd_num might be 0 if the node number hasn't been set.. */
+ 	struct hlist_node	i_hash;
 -- 
 2.53.0
 
