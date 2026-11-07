@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062622;
-	b=YTU6WNDCqBGSWYBCRS5vRhEuN6X+74DkoxCN0ofdwx/q92VttywuyaoyV1pnN9z0Lz3N
-	 084E1baSN21lyTjdKdp5o1vWDbf1MGP0fFCvD0B87+D3/WrYt13OrzH59Km7/gXaQZzol
-	 WJTBoJd4B5DigF5Q3VRkbJ34xlue7XajW7X+c/iXD/BIHYYQVfcbWs4eRiJr39fTzjFaa
-	 hnkZ+QZJpopajT4iohRKfOzxcCA6UwefdSZq1oiKbF5rl3FPuZLYFBQ8NK8X5kbGc8Pb4
-	 yU856IrcqFrU/Ond2z1+q9oD6CDJ8UTvaV98cJ3saqJHrIPvHtsDeMNH7rPTvty3s8A==
+	t=1794062624;
+	b=sLnDYSe5FEifj3OC1uK/gP8QewIU81iIQNpgT+6tx88upsdMine+gfrdB/KU0P6xEHF7
+	 lp+cIxtHO8rX6TMfKCnxaRJxUi8zRmx5P9EUCpg0fTgFStZc6DGNf21RyAMno5L4YEF8X
+	 51XpycnE+8GAa0jnKffC3QuIajiRllYPrlPv86z1+iXaIu/WKzHZQWO5kUec+SBZYiW9u
+	 zp/jEf9fCSpVvh/HxIRPlDEaflRyuJfsFA/if9mNqLaDjIvOwkxcgLHjHjr707N95xG1f
+	 ie2+q5Cweuj9o0gFU26/i2yBfTt/PMhOt3U9nj3+USpHy/HU7KlBOGK2W6WREPCTy5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062624;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C+uL7+GW3eupOLmL1NWuazW8iKCi6lsWUixHM0aDxCo=;
-	b=PfoplJqg4sipcLvfkCiuUJcjgCWoULjVKkcDDw9Dw6sBfu1uz09bJ4L228gh8y0rkgkW
-	 DFKu6/SZgPLql2kz41VQxcpvcY7nUSW1uayImKLO7eiKcG3TWRxwJbDrwZdL4QkQmUUro
-	 d1Mn18/mRJ1lFCdPyTqwbOXcKWjxd6yrHFkldY/h4B+8ngMbpChk4YaTuFKMW9ozJUgYQ
-	 90ud7ME1HCMF9WBuy+chVQuGY2B9Is3MqnXCBhNY4/mqx9dWnlx4aL7IJZujUAQn/z962
-	 4oUWCVWKnOlC/ygo/TLGQ8N5rjRi40OYThAZB0fNxSEk3eybqSmOxaLhAihBbMPckKw==
+	bh=uBNsB5pNpejvqbxuuS+V3RxkATiSvTFXnp41Z+qkCps=;
+	b=Z5jZcIDiljuPpZCX2lfHa5gxBZq2AdxH/izSD/Ex3QkxZQsq+jP02wl7nVI3FrJMg7Ph
+	 BX69MAUOahCud1zKbYcVJasoGAX9ks7ku5E9/ZNbtm+f8SYO6PuukFw6JmmCJdtAaJrsV
+	 ne0EP1ueXxlVV47cSz6u8nz+uWd6I5tn/wHMR5FtFWOki8k62vihoM5SV/pLvQpMzWu0Q
+	 ncFT/eE/7jKjAtrdoxduUtBycxYzdj3mSlxzJ3kqmiH5UFhw98QPn5vfO5pkrDODX/j/J
+	 wNCLlPv1kpdy/nJuIaukwoU+S42jp7gaisgFkaA8YAUoD8jlZJk1KXzKYrw8Q5LWw6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPgBBQfb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wf2zOcra;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8234A606A655;
-	Sat,  7 Nov 2026 14:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA4E606A339;
+	Sat,  7 Nov 2026 14:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPgBBQfb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E88A1F0089F;
-	Sat,  7 Nov 2026 14:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wf2zOcra
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ECAC1F0089F;
+	Sat,  7 Nov 2026 14:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062622;
-	bh=C+uL7+GW3eupOLmL1NWuazW8iKCi6lsWUixHM0aDxCo=;
+	s=korg; t=1794062623;
+	bh=uBNsB5pNpejvqbxuuS+V3RxkATiSvTFXnp41Z+qkCps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPgBBQfbZmPbR57sJLFs/YLR4i2AKOITWF5WW9KHOusxAMrSONWgGixFUaOFeCSCS
-	 +Vx3uWP8HJs8tW7qbzf7tqzcdX0KXUdgAL1e4SLmsyynFSaJdujEYgQtirQStm8gvf
-	 PbO/SIS/b3hpo1q7qnt1zkAc5kMxjvWQ/Dw195bI=
+	b=Wf2zOcraRv2dU5vlsvo5CQnuBDlUyE7MgvMRUgtujcls9NNq931G6FymmV7QTd1Oh
+	 HsFWPGJiSmE01jxFVfGd/T5+4LFFwwRnZyEYuEPwMKuKQqg+oMo+LjNVIpUK+Y3Pky
+	 wwp/jwuEqIEfWpZtxt+4C1IbKOXUYXrpO5ybbTlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Xiaogang Chen <xiaogang.chen@amd.com>,
+	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1494/1536] arm64/mm: restrict transparent contpte mappings to valid PTEs
-Date: Sat,  7 Nov 2026 08:58:30 -0500
-Message-ID: <20261107135039.822768750@linuxfoundation.org>
+Subject: [PATCH 6.12 1495/1536] drm/amdkfd: stop restore retries on device unplug
+Date: Sat,  7 Nov 2026 08:58:31 -0500
+Message-ID: <20261107135039.851609807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,111 +70,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 
-[ Upstream commit 486d396b19e93f6e56e0a0ba96c14a9ccc1a5977 ]
+[ Upstream commit 3254ed0b15f2fe656c9cb36ccb59b92422440bf8 ]
 
-The transparent contpte layer treats PTE_CONT as software grouping state.
-When a valid PTE has PTE_CONT set, the contpte helpers may align an
-operation to a CONT_PTE_SIZE block and operate on the whole block. The
-current single-PTE helpers use pte_valid_cont() to identify such groups;
-this is a helper contract, not an architectural restriction on using
-PTE_CONT with present-invalid descriptors. Explicit users such as hugetlb
-manage their contiguous encodings separately.
+amdgpu_amdkfd_restore_userptr_worker() and svm_range_restore_work()
+reschedule themselves when validation fails with evicted objects
+pending. After a surprise removal the restore paths fail with -ENODEV
+permanently, so rescheduling just spins the worker uselessly until
+cancel_delayed_work_sync() in fini finally stops it - which can take
+a while, since process teardown itself is delayed by the dead device.
 
-contpte_set_ptes() currently sets PTE_CONT from alignment alone. Batched
-set_ptes() users can therefore install present-invalid PTEs with
-PTE_CONT set, for example mprotect(PROT_NONE), NUMA hinting through
-modify_prot_commit_ptes(), fork() copying a PROT_NONE large folio, or a
-PMD split installing PAGE_NONE PTEs.
+Treat -ENODEV as terminal in both workers.
 
-This is not a hardware programming problem: invalid descriptors are not
-translated, so the hardware ignores descriptor bits such as PTE_CONT. It
-is a software-state problem. Some arm64 fast paths, such as
-test_and_clear_young_ptes(), test pte_cont() directly instead of
-pte_valid_cont().
-
-In the observed failure, mprotect(PROT_NONE) installed a full
-CONT_PTE_SIZE range of present-invalid PTEs with PTE_CONT set.
-MADV_GUARD_INSTALL then zapped one PTE. The nr == 1 clear_full_ptes()
-path only unfolds pte_valid_cont() entries, so the neighbouring
-present-invalid entries kept PTE_CONT while the target entry became a
-guard marker.
-
-clear_refs_pte_range() then reached the marker through:
-
-  ptep_test_and_clear_young()
-  test_and_clear_young_ptes()
-  contpte_test_and_clear_young_ptes()
-  contpte_align_addr_ptep()
-  __ptep_test_and_clear_young()
-
-The marker changed from old_pte=0x00000000000047c0 to
-new_pte=0x00000000000043c0 by clearing PTE_AF. For swap PTEs, bit 10 is
-part of the swap type field, bits 6-10: 0x47c0 is SWP_PTE_MARKER with
-offset 4, while 0x43c0 has type 15 and is decoded as an ordinary swap
-entry. Zap later warned in swap_put_entries_direct() with a bad swap
-entry.
-
-Present-invalid PTEs could retain PTE_CONT as software grouping state,
-but their single-PTE modification paths would then need to recognize
-and unfold those groups consistently. Since current helpers mostly use
-pte_valid_cont() for membership, avoid creating present-invalid
-transparent contpte groups in contpte_set_ptes(). They bring no hardware
-benefit while invalid, and eligible valid ranges can be grouped again
-when they are installed.
-
-The public set_ptes() wrapper already clears PTE_CONT before calling
-contpte_set_ptes(). Return invalid PTEs through __set_ptes() directly,
-and warn if a future direct caller unexpectedly passes an invalid PTE
-with PTE_CONT set.
-
-This is triggerable by a user process against its own address space. On
-systems running with panic_on_warn, the warning becomes a denial of
-service.
-
-Fixes: 4602e5757bcc ("arm64/mm: wire up PTE_CONT for user mappings")
+Cc: Xiaogang Chen <xiaogang.chen@amd.com>
+Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 266fab83139600e58db7e900e930c722e619b78c)
 Cc: stable@vger.kernel.org
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/pgtable.h | 3 +++
- arch/arm64/mm/contpte.c          | 4 +++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c   | 18 +++++++++++++-----
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c           |  8 +++++---
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
-index a66a474949c86..2356678be4daf 100644
---- a/arch/arm64/include/asm/pgtable.h
-+++ b/arch/arm64/include/asm/pgtable.h
-@@ -1541,6 +1541,9 @@ extern void ptep_modify_prot_commit(struct vm_area_struct *vma,
-  * The contpte APIs are used to transparently manage the contiguous bit in ptes
-  * where it is possible and makes sense to do so. The PTE_CONT bit is considered
-  * a private implementation detail of the public ptep API (see below).
-+ * Single-PTE transparent contpte helpers use pte_valid_cont() to identify
-+ * grouped PTEs; explicit contiguous-encoding users such as hugetlb manage
-+ * their entries separately.
-  */
- extern void __contpte_try_fold(struct mm_struct *mm, unsigned long addr,
- 				pte_t *ptep, pte_t pte);
-diff --git a/arch/arm64/mm/contpte.c b/arch/arm64/mm/contpte.c
-index 726c56aa2dfcc..03c3f01765910 100644
---- a/arch/arm64/mm/contpte.c
-+++ b/arch/arm64/mm/contpte.c
-@@ -253,8 +253,10 @@ void contpte_set_ptes(struct mm_struct *mm, unsigned long addr,
- 	 */
- 	VM_WARN_ON(nr == 1);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 6dabdf3fd30dc..bc284939cf66d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -2796,6 +2796,7 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 	struct task_struct *usertask;
+ 	struct mm_struct *mm;
+ 	uint32_t evicted_bos;
++	int ret;
  
--	if (!mm_is_user(mm))
-+	if (!mm_is_user(mm) || !pte_valid(pte)) {
-+		VM_WARN_ON_ONCE(!pte_valid(pte) && pte_cont(pte));
- 		return __set_ptes(mm, addr, ptep, pte, nr);
+ 	mutex_lock(&process_info->notifier_lock);
+ 	evicted_bos = process_info->evicted_bos;
+@@ -2815,14 +2816,16 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 
+ 	mutex_lock(&process_info->lock);
+ 
+-	if (update_invalid_user_pages(process_info, mm))
++	ret = update_invalid_user_pages(process_info, mm);
++	if (ret)
+ 		goto unlock_out;
+ 	/* userptr_inval_list can be empty if all evicted userptr BOs
+ 	 * have been freed. In that case there is nothing to validate
+ 	 * and we can just restart the queues.
+ 	 */
+ 	if (!list_empty(&process_info->userptr_inval_list)) {
+-		if (validate_invalid_user_pages(process_info))
++		ret = validate_invalid_user_pages(process_info);
++		if (ret)
+ 			goto unlock_out;
+ 	}
+ 	/* Final check for concurrent evicton and atomic update. If
+@@ -2831,11 +2834,14 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 	 * reference counting inside KFD will handle this case.
+ 	 */
+ 	mutex_lock(&process_info->notifier_lock);
+-	if (process_info->evicted_bos != evicted_bos)
++	if (process_info->evicted_bos != evicted_bos) {
++		ret = -EAGAIN;
+ 		goto unlock_notifier_out;
 +	}
  
- 	end = addr + (nr << PAGE_SHIFT);
- 	pfn = pte_pfn(pte);
+ 	if (confirm_valid_user_pages_locked(process_info)) {
+ 		WARN(1, "User pages unexpectedly invalid");
++		ret = -EINVAL;
+ 		goto unlock_notifier_out;
+ 	}
+ 
+@@ -2853,8 +2859,10 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ unlock_out:
+ 	mutex_unlock(&process_info->lock);
+ 
+-	/* If validation failed, reschedule another attempt */
+-	if (evicted_bos) {
++	/* If validation failed, reschedule another attempt, unless the
++	 * device is gone for good
++	 */
++	if (evicted_bos && ret != -ENODEV) {
+ 		queue_delayed_work(system_freezable_wq,
+ 			&process_info->restore_userptr_work,
+ 			msecs_to_jiffies(AMDGPU_USERPTR_RESTORE_DELAY_MS));
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 0b86da7d7c502..27085694697a2 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1844,7 +1844,7 @@ static void svm_range_restore_work(struct work_struct *work)
+ 	struct mm_struct *mm;
+ 	int evicted_ranges;
+ 	int invalid;
+-	int r;
++	int r = 0;
+ 
+ 	svms = container_of(dwork, struct svm_range_list, restore_work);
+ 	evicted_ranges = atomic_read(&svms->evicted_ranges);
+@@ -1918,8 +1918,10 @@ static void svm_range_restore_work(struct work_struct *work)
+ 	mmap_write_unlock(mm);
+ 	mutex_unlock(&process_info->lock);
+ 
+-	/* If validation failed, reschedule another attempt */
+-	if (evicted_ranges) {
++	/* If validation failed, reschedule another attempt, unless the
++	 * device is gone for good
++	 */
++	if (evicted_ranges && r != -ENODEV) {
+ 		pr_debug("reschedule to restore svm range\n");
+ 		queue_delayed_work(system_freezable_wq, &svms->restore_work,
+ 			msecs_to_jiffies(AMDGPU_SVM_RANGE_RESTORE_DELAY_MS));
 -- 
 2.53.0
 
