@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063807;
-	b=b5wM+HkhaJkoa1azJGrqRI0IpdyvG2//7WyJ5zuAiwU5VUB9SKu0eSSxG2zjtpmK1ObB
-	 VPX6FBDRJjD0gasRenhtKr1yXCYXXyJWWwoL7pMxcGHOQcNx0z8f6K/y4pRHzX1KBWZfy
-	 ICNzcQtAnCLJd4Rvm4JqG0fI/nLDxotlZwsr5C7tqwSgSCJMrBlio72sIzEOVKVa5mtb8
-	 PakSHlkodSSVIkvINJuzLPsTAEaqAiD12oZaMwAd9Lx8OZJ1TuN2L8LZrF4n7FEnIMgVq
-	 Ajbxrmo96edly4zx201CVYdHF9sTYHtOG00AiUMMxpyrrmqcnYYW2NFDFj27zvZgTzg==
+	t=1794063808;
+	b=a8f0j9L41Zy+R80NMQD2jwMsyfFKg0BsVqjYq7ec7OppVNVxCu26bpPxYTpw+zZxjUgo
+	 ap18QxfV97vtUCUlEQzRGcum5yZZwasUz6Wv/noHkXjaUCNr0Bf8jCVI7odP4m9eb1xZF
+	 Dn2WByNIpvC6mDjzmV3Gg1giW6RiMf1oIR1finHEvxdaTxgrWTI3AoMICTS/gTOw2nKwb
+	 fJbDMr9O0De8m9V6xTDsctRdNUGnHcK3dbkj5qpB3bhWxYCDoGT490wZAe7vq0kl+vOHI
+	 1JigF/FxkqAunhBKOXDUQSMtazyZv5iw2MmtxniPKiqnW0ozZF3RUghk4uWQOco8qsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063808;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=npIdTjGWtITuZqu+dwB/IuGt2ONz1z4dCPFZlQtyR5U=;
-	b=H+D9OaHTV5s4axI/+kWFZ/uG7QvsXuQOBde1S5Cs7oiXhVO0fDvGEKRRIk7dP2HqoSIQ
-	 PM3vx4H5KFaB0Ph9zzoae32qh0B9VZVIS5B48AQlnvs1A6PT4+Tlo72Bf40KaJUPhc38i
-	 g+v2uhbqdKEh3SS9wgSKOWc7sdsXNIDtGvjupcpzX6jd52Wqja6lF8eaTw0i5zZJDNf8m
-	 1PtaiGBk92TTBT8bgcn0yeGl8OLJfDLMbreGr9ONspTp47M5qNoQxZDGs26/u5E/sk7rX
-	 w7szuDCZ2E3lzomMSQ9TLMX+/AmttnyCHnJYze/tZENwZgOo8Cr7XGUHUEk/lZEW7WQ==
+	bh=G1JBU/bjgMW52qUtu+BB4C04q7nZWLzKBPQNemd3mpI=;
+	b=Tvkj7cw6zq08ONJ2UUT5Jex4lIkpW8V/aAArft+TUZp7Pqfac2JdYMMO+YKiJ9fGNQLo
+	 wMTOrKRjIRTnsMxkHFH0u3vEjqs+GQ+JVNfsGoucMmTkrtNFGQZltolMKqfEfX3Eb15Q+
+	 debE2mugG3JrvfjHB3CHihd/Jfsf8GTs3VhtYpjdun6QEEQJ1hZzkwI7ifrVUSveb5vyu
+	 IZZ3W7GX+qEeWTU/qFjWAY+EtmlCoJkTRstOviDF3K6X3n8ulUfrV1iMZqAbMJuWY18S8
+	 7i0Oh/JRE9S1nJxfpv7dcIV0qNJe3xBE3b0Z6oynSsxWXSUe1WNEkc5pXJ0ZFQogNzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iG5H9SJo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HIOH68eS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D7A606EE81;
-	Sat,  7 Nov 2026 15:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02F3606EE81;
+	Sat,  7 Nov 2026 15:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iG5H9SJo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680121F0089F;
-	Sat,  7 Nov 2026 15:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HIOH68eS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABD11F0089F;
+	Sat,  7 Nov 2026 15:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063806;
-	bh=npIdTjGWtITuZqu+dwB/IuGt2ONz1z4dCPFZlQtyR5U=;
+	s=korg; t=1794063807;
+	bh=G1JBU/bjgMW52qUtu+BB4C04q7nZWLzKBPQNemd3mpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iG5H9SJoKiIink6xsg2SyudfF2kDXiIt2P/deRM2pzIRzV7EmZALzO3KyGMYXnHap
-	 vikmo9PDbu3FCNRfIhMSrO9LpITcxUKh08yMG4qG+jK9lFdBKMK1N+K7cFPJ1TC/Ke
-	 8VVwwsFeXY7y+zkDjWpnvfKUH5vEyIAyH+2HTTA0=
+	b=HIOH68eSiG8A0rH1qUdkxwxwm5/vDW69fFX01mlPKi+InyMhKIqCe25Mn80fbzgnQ
+	 owuBQRRJen41WU7fZupGhLF+7xv8jqKa25KllRCKGwx/Gqv3cRzoGv+gMTuB7VNnNQ
+	 KrCwADYLC5Q3tDzfsU/GPJIX79plLmCvnrlw/CgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0008/1257] rust: hrtimer: declare cfi_encoding for hrtimer_restart
-Date: Sat,  7 Nov 2026 08:38:24 -0500
-Message-ID: <20261107134939.663072966@linuxfoundation.org>
+Subject: [PATCH 7.3 0026/1257] media: redrat3: Ensure we dont read beyond the end of the packet
+Date: Sat,  7 Nov 2026 08:38:42 -0500
+Message-ID: <20261107134940.128426542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -73,73 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: Sean Young <sean@mess.org>
 
-commit 39fe6892fd52faed6325ff7f13a92da01ab35727 upstream.
+[ Upstream commit cd49f62f4161c7340d9c9f53b67757575900c0bc ]
 
-The hrtimer callbacks return bindings::hrtimer_restart, which bindgen
-generates as c_uint. C calls them through hrtimer->function, which
-returns enum hrtimer_restart. kCFI encodes enum types by name even with
-integer normalization, so the type ids never match and every call fails
-the CFI check.
+The length and offset is provided by the usb device, so it should be
+validated.
 
-Generate hrtimer_restart as a newtype with a cfi_encoding, as is done
-for lru_status, and adapt HrTimerRestart to the newtype.
-
-Fixes: 8a8afe9349fb ("rust: hrtimer: introduce hrtimer support")
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Tested-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Acked-by: Andreas Hindborg <a.hindborg@kernel.org>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261019-rust-cfi-fixes-v1-2-9503472ba738@google.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-[ Adjusted insertion context. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/bindgen_parameters     | 2 ++
- rust/kernel/time/hrtimer.rs | 6 +++---
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/media/rc/redrat3.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/rust/bindgen_parameters b/rust/bindgen_parameters
-index cbc0a302647e5..45f6eb56a1f73 100644
---- a/rust/bindgen_parameters
-+++ b/rust/bindgen_parameters
-@@ -29,6 +29,8 @@
- # enums that appear in indirect function calls should specify a cfi type
- --newtype-enum fwctl_rpc_scope
- --with-attribute-custom-enum=fwctl_rpc_scope='#[cfi_encoding="15fwctl_rpc_scope"]'
-+--newtype-enum hrtimer_restart
-+--with-attribute-custom-enum=hrtimer_restart='#[cfi_encoding="15hrtimer_restart"]'
- --newtype-enum irqreturn
- --with-attribute-custom-enum=irqreturn='#[cfi_encoding="9irqreturn"]'
- --newtype-enum lru_status
-diff --git a/rust/kernel/time/hrtimer.rs b/rust/kernel/time/hrtimer.rs
-index 2d7f1131a8131..07344ed5fbd58 100644
---- a/rust/kernel/time/hrtimer.rs
-+++ b/rust/kernel/time/hrtimer.rs
-@@ -834,14 +834,14 @@ unsafe fn start(this: *const Self, expires: <Self::TimerMode as HrTimerMode>::Ex
- #[repr(u32)]
- pub enum HrTimerRestart {
-     /// Timer should not be restarted.
--    NoRestart = bindings::hrtimer_restart_HRTIMER_NORESTART,
-+    NoRestart = bindings::hrtimer_restart::HRTIMER_NORESTART.0,
-     /// Timer should be restarted.
--    Restart = bindings::hrtimer_restart_HRTIMER_RESTART,
-+    Restart = bindings::hrtimer_restart::HRTIMER_RESTART.0,
- }
+diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
+index 565c490b7051a..1200fb49d8879 100644
+--- a/drivers/media/rc/redrat3.c
++++ b/drivers/media/rc/redrat3.c
+@@ -358,8 +358,24 @@ static void redrat3_process_ir_data(struct redrat3_dev *rr3)
  
- impl HrTimerRestart {
-     fn into_c(self) -> bindings::hrtimer_restart {
--        self as bindings::hrtimer_restart
-+        bindings::hrtimer_restart(self as c_uint)
-     }
- }
+ 	/* process each rr3 encoded byte into an int */
+ 	sig_size = be16_to_cpu(rr3->irdata.sig_size);
++
++	/*
++	 * Note we are not checking if we are reading beyond the end of the
++	 * packet which was sent, and reading stale data. If the device
++	 * sends a packet which is short then we get garbage IR, but no
++	 * out of bounds read.
++	 */
++	if (sig_size > RR3_MAX_SIG_SIZE) {
++		dev_err(dev, "length %u is incorrect\n", sig_size);
++		return;
++	}
++
+ 	for (i = 0; i < sig_size; i++) {
+ 		offset = rr3->irdata.sigdata[i];
++		if (offset >= RR3_DRIVER_MAXLENS) {
++			dev_err(dev, "offset %u is incorrect\n", offset);
++			return;
++		}
+ 		val = get_unaligned_be16(&rr3->irdata.lens[offset]);
  
+ 		/* we should always get pulse/space/pulse/space samples */
 -- 
 2.53.0
 
