@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060955;
-	b=FzXpFJlaJ3a7Z7wFQQzEUIAPX4oaM7jcB9P2mp1psTc9sl/0GDDl24wl9lVUEJNcMxgU
-	 +sF1TCnTePjvQTp6okIMoeiV+QMheDkfjNhRXBfMfIRKRmSHaPYXE+D4TqZKfsOXjQqDa
-	 pMPsymyIEVFQqOQz5trHwh81HcbmG72fXxIFxZZqTN91sd63kKJYy9A3/Q7gLLqORa3oz
-	 7J11BhydYtxvJMuhMOiOvCXJ07nxA/kz7HaIa2TBWQbPm32taz2wYDXCqmFfJRtRlRJ2F
-	 gtJF2d9ib9QmVwnlYSwziECT1ZTohYfgYvRVIgnpjB1ka5wRbU6wTqz9vT7hfnXQaKA==
+	t=1794060957;
+	b=jmLzII2p/XyFt2WXEVDas1Nzz28pk8QzVMrQDIfi0F1mXSsbjiJx+X+o4/33+MjjE1wW
+	 M/XykjgO3Wm/fyHbM/nTZa97xCY7XRBDrlaZzkOEWHkNS67mfQzwo+VvpV1zd+0RStoWR
+	 HrK1B1QqzLPKyF4TtwV9TKUq6uRTn9zlssEyc9SeomExriPLOKfievUY956TzI8/frjZx
+	 wLXHRXpvDwlL/Dz7D0CFRIgYFySbVIoD6pbyS7wLFuP5yUxSe+GYdpoDbCpaMu9VTCfRW
+	 DEY6W3QVY9dQTouFgU25g8h1kK3l+uEoAQOsOJyCHKgznq2Unt6l1K3NLqenqdIE8fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060955;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y/JjkWVJMfqToQvSZAgUv6O89Fp87vUP/oCMPi9uFiA=;
-	b=IJx/oaoQJhqL9wn1jo/gU3d7xzH57hmHzO4GKYK599moBgoR5yWt+PWatmbnkCFiZfqW
-	 YG+1vdtacxUxloElAhryADE/eNvxYtGXnTgYLXf7VIlAKHCsH3MjZjIOjLZDuwNmvwmZq
-	 amf1++mP4RmY0Uni4U92kPNKA2b9yQpLRaVO1eHVeOtKGzRJbvcEYq2Dx5c+KNIjX5SAN
-	 vDErAuWTalkmupjEoSphQxYv5bl2OZ0Vhb+37QT8rSDrhu+XwLxmYhnirz+yWVy6BvAp3
-	 JepKx24g0JgFIHvLi7Szudmf/FJ3Tlua740Q3U91XSz7TJOMpuCWSdF5V6J7+D6+czw==
+	bh=iuWUAnBGjDIcNniP0MYzXnG5p9ecg/2zmapJ7UXkhhk=;
+	b=uwGoIOkc9+W/wfQhLaoSF+FRl27i8RL90SUXxBbrFF92iVt+aNLsx1kY76Z5M+hmlqmf
+	 8wXTrVFfc8/eIReg4cD+RRWyDJj1m+8Fdhzb6HBiTOasEvBdJi38+2M03NCv0vnYzqqCM
+	 kxeqz0OTZff76LRyJqLQ085s5EIa8qgcJYiIddohM6o5DX2B0p5nfi5HWBVgFnGXDJk1i
+	 m65RN8+5sMmlwCKp6/0LV7ESZ1GpjyYtkAso/Xj4teEizoACpB/YVnFDSvfm+G4y2+du7
+	 p7B1S9ZT4BRLC0reOHuC0X4J++FjDA6hEsg2Quq9DSRC6j+5bP9TQnUqZhwlkLXkg7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkIEKR8C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QNQAAbmP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B35A606D80C;
-	Sat,  7 Nov 2026 14:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CAA606D80C;
+	Sat,  7 Nov 2026 14:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkIEKR8C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489281F0089F;
-	Sat,  7 Nov 2026 14:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QNQAAbmP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBB71F0089F;
+	Sat,  7 Nov 2026 14:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060955;
-	bh=y/JjkWVJMfqToQvSZAgUv6O89Fp87vUP/oCMPi9uFiA=;
+	s=korg; t=1794060956;
+	bh=iuWUAnBGjDIcNniP0MYzXnG5p9ecg/2zmapJ7UXkhhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MkIEKR8CRsXmER79v8jIXtZviH2IIY6eCMoKYnLTU/o/brVelLl4bFZJIZeqbbdvk
-	 hgrt8ps2BL12feUmi5AYKCN27e3i0CUGM0njRYqzUR9I8FAzaVE7Ve2gb3+pD26vax
-	 t9xJT65kqtospTDEiODqogw1Cns01XGIWDZxiqGo=
+	b=QNQAAbmPL2UBhxsVUQQKj33KucboHAam9kWYOInKCaoLBM9d/cqkOCZNVEoIEnAO6
+	 mzvpzlhSmNPPYfD+0y122kTiQgGOw53Q27OA0vvIcRKYgc2DKBo+Jl9WvO2rG4o/4i
+	 N81B84vv7JF7eWNMqh6JI224qDMz0iwrTT6uPdv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rongguang Wei <weirongguang@kylinos.cn>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0313/1536] tap: fix incorrect variable used for USO check in set_offload()
-Date: Sat,  7 Nov 2026 08:38:49 -0500
-Message-ID: <20261107135006.512146806@linuxfoundation.org>
+Subject: [PATCH 6.12 0314/1536] apparmor: fix auditing of mount binary data
+Date: Sat,  7 Nov 2026 08:38:50 -0500
+Message-ID: <20261107135006.541018217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,57 +67,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rongguang Wei <weirongguang@kylinos.cn>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit fac7973f004de6dd51fb15a33e33ed37718e58bb ]
+[ Upstream commit b9f2181b90ec047488dcb4fb1c631d417aff07e0 ]
 
-The USO features in set_offload() incorrectly uses feature_mask and
-features argument.
+AppArmor only mediates non-binary mount data, and should only
+audit the mount data if it is non-binary.
 
-The USO feature was written to the local features variable instead of
-feature_mask. All other offload bits (TSO, TSO_ECN) are stored in
-feature_mask which becomes tap->tap_features and is used by
-tap_handle_frame() for GSO segmentation. Without NETIF_F_GSO_UDP_L4
-in tap->tap_features, making USO on tap effectively non-functional.
-
-Keeping the USO handling inside the TUN_F_CSUM block avoids enabling
-GRO/LRO when userspace requests USO without CSUM.
-
-This has not worked since the beginning, so
-commit 399e0827642f ("driver/net/tun: Added features for USO.")
-
-Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260807070914.112698-1-clementwei90@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ security/apparmor/mount.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index fcc9d135c5fc2..bc69e5b5ce46d 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -967,7 +967,7 @@ static int set_offload(struct tap_queue *q, unsigned long arg)
+diff --git a/security/apparmor/mount.c b/security/apparmor/mount.c
+index bf8863253e072..ae65923b90105 100644
+--- a/security/apparmor/mount.c
++++ b/security/apparmor/mount.c
+@@ -345,8 +345,8 @@ static int match_mnt_path_str(const struct cred *subj_cred,
  
- 		/* TODO: for now USO4 and USO6 should work simultaneously */
- 		if ((arg & (TUN_F_USO4 | TUN_F_USO6)) == (TUN_F_USO4 | TUN_F_USO6))
--			features |= NETIF_F_GSO_UDP_L4;
-+			feature_mask |= NETIF_F_GSO_UDP_L4;
- 	}
+ audit:
+ 	return audit_mount(subj_cred, profile, OP_MOUNT, mntpnt, devname,
+-			   type, NULL,
+-			   flags, data, AA_MAY_MOUNT, &perms, info, error);
++			   type, NULL, flags, !binary ? data : NULL,
++			   AA_MAY_MOUNT, &perms, info, error);
+ }
  
- 	/* tun/tap driver inverts the usage for TSO offloads, where
-@@ -978,8 +978,7 @@ static int set_offload(struct tap_queue *q, unsigned long arg)
- 	 * When user space turns off TSO, we turn off GSO/LRO so that
- 	 * user-space will not receive TSO frames.
- 	 */
--	if (feature_mask & (NETIF_F_TSO | NETIF_F_TSO6) ||
--	    (feature_mask & (TUN_F_USO4 | TUN_F_USO6)) == (TUN_F_USO4 | TUN_F_USO6))
-+	if (feature_mask & (NETIF_F_TSO | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4))
- 		features |= RX_OFFLOADS;
- 	else
- 		features &= ~RX_OFFLOADS;
+ /**
 -- 
 2.53.0
 
