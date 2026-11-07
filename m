@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062264;
-	b=MW2KkO5IviVWExexigez9pwk6tm/aW/DQqljTF67LmLrkVyo0Bj5/seXW3chb+gWOMUD
-	 D4T6nCw82r/5SaOOrDA/6GjXC4abwqniRwy6+rPiNxXajiy4yeO7+iY60CVQ403cwlIt3
-	 TIgYx5f2Jj1Qb87TNTNfTSJMn5+2tE8BLyVtHxIyfbhsBfkPSlBH7BtBheWJsu4notM9u
-	 NkGsSS6tLhlYnKdVRA5wX08xbigGF7SchhWQPCq+tX7RS4fmY8BE4Z7xkQo6zCScsTG6Q
-	 t6Eb5AJDEmroap7aDx8L5QUEkfGLZW/1ukf6kTDpvnVQV8LHbmn1WYidTvRvOVsB1XA==
+	t=1794062265;
+	b=VRw1xGGyAZGXor/qbKgs4eUFMppCuO5jn3Pu1XAIQ35s7y4Rw1YClvoRhPUpt+2/KRNT
+	 XL5nPfeeWaRs+YvEYmcOI6IzwaADFz3O/tQRAvKqiZ5owRRu4nKTN7QDjjchfMl7jp0MU
+	 KhauQEXm2NBV/5zJWwB8zIPNAgBITUShSfWHt8QiL4tReNwgfuQz1VmuEBzm4ACLzgCLM
+	 CSQ3QPFuQsBANJ15qJl2BARDmo9Yn1FX2MB9iiptSq7Xftf5ojMuk+a1uSt3MY2EVWaWF
+	 iTFU3GL+2YmPwk4RKe6ed5AXJJtrC5mWBEC7bVCQ47OYJua1zMVrN0ryoc0hEC9AR2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062264;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oOXrel/RqBr/iRPKe2j18hvL8nmX+0vExEjX+lLPqKk=;
-	b=pMiIN36TklX6iTI+YZX0VnHw2pRDf8+FGai/s6qHyQzMRHBf9ntglrmwgnUUD2xjSyar
-	 kZZ3YStmJP+S8w3T5aNcOq2bIRGunxeIVmKaJzTcrB3RR3QahD3FDxT0CnDTZn+u9WUuf
-	 FqMCOhwsdpN0UX29diWndO7j7TKIhXw8n8GCjoAS+5UFbet5ereo41WJkGNiW1OZGmTm0
-	 aRv9pwBQTiNx1CRjn95X7+b0ODVuLE5ukzynZ/qhDmNtoeKFJn7Sh4abN3D4jdUZy5kri
-	 FewoMUA+zIPCxQTZh9YMqcG2NTRCODr2l+eNg+7+O4UP6tJyIEVoIl6+DxNjUnpP3ug==
+	bh=7mkd0VTOGhj0ZqShrdcwysK0GuvMxvWiEBdrVgOROOk=;
+	b=Sa0fFsmWzAxaR690+6taSnTRdCRCubjoHF/moSyfPgsFeLUFqM1XRh0yUCz62+jJFjUg
+	 wieekbJaYH6DkSvMlk7Hjf1Fq+IRisr8bG5VfA+i3oeDIGVQTb5JgLE8sI4YBqwCeiTUR
+	 WYd5UmVIawAtnvzDFk7jMxzjg9KugDmQxnotFeCHQgD+KKd0pYvpW6zJN5od+Pb/IRcre
+	 q5pgp2j+hqXJFVbhhFTTrXQoE/J3nmdz4DdN9ECp9HvWJ3Sv+VmUvnSaInLU2XMMNJK9z
+	 uTRckuXFdYKECP7sa/6CNr8CoaZ2pA9VeFlrRvHMI5h7kEwdffhi+7CkedW5oRdU85g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhnIvMFg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGItANqt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DBB606A334;
-	Sat,  7 Nov 2026 14:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2E8606A334;
+	Sat,  7 Nov 2026 14:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhnIvMFg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628221F008A1;
-	Sat,  7 Nov 2026 14:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGItANqt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56F71F0089F;
+	Sat,  7 Nov 2026 14:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062263;
-	bh=oOXrel/RqBr/iRPKe2j18hvL8nmX+0vExEjX+lLPqKk=;
+	s=korg; t=1794062265;
+	bh=7mkd0VTOGhj0ZqShrdcwysK0GuvMxvWiEBdrVgOROOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhnIvMFgZX6QGkhF7JnJyOAzHoVBWigl/eMrNvW5WwWw39/SeZHOgFukxpAnOfq60
-	 2rlLjR9eoigG/VriWM1/pvn+bvaNqNpcdr994e8lDUlq1bi8EHLeBK7ZcmnMP21FW/
-	 ACuEiC8U3RbdmC+xxX6U/SL6YIOMgqURakPtjJRM=
+	b=eGItANqtiS+9arqvZslkkfIKf1Nzv7KRggqKfaWl1wg5qeyTT19sedWU2g5Ppy0fb
+	 QfleAH2SceKvh5qbT3r6Px0K/6hp8ft5OWw+ZK8ntyosMGX0irKEKnVWLyww3NQrQ8
+	 qtWy7NKhCgGLk/DSVTlchT5po7d4bBTSmSCdsTUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1207/1536] soc: fsl: dpio: Free the IRQ before releasing the I/O object
-Date: Sat,  7 Nov 2026 08:53:43 -0500
-Message-ID: <20261107135031.653282757@linuxfoundation.org>
+Subject: [PATCH 6.12 1208/1536] xen/privcmd: Only claim ioreqs matching an ioeventfd
+Date: Sat,  7 Nov 2026 08:53:44 -0500
+Message-ID: <20261107135031.682714955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,64 +68,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit a7831c657c90e8f9165f6bbe0cc56262fee075e8 ]
+[ Upstream commit 908019e5999161ca89da310c05ddbf7fc89c129e ]
 
-The DPIO interrupt handler accesses priv->io, but dpaa2_dpio_remove()
-releases that object before tearing down the interrupts. The IRQ was
-requested with devm_request_irq(), and unregister_dpio_irq_handlers()
-only clears its affinity hint. fsl_mc_free_irqs() returns IRQ resources
-to the MC resource pool without freeing the handler. An interrupt can
-therefore access the freed I/O object before devres releases the IRQ.
+The ioeventfd handler shares its event channel with the userspace device
+model. It must only claim requests that match a registered ioeventfd.
+Other requests are left for userspace.
 
-Explicitly free the managed IRQ in unregister_dpio_irq_handlers() before
-returning its resource to the pool, and perform IRQ teardown before
-releasing the I/O object. This also waits for an in-flight handler while
-the object is still valid.
+ioeventfd_interrupt() currently marks every MMIO write INPROCESS before
+looking for a match. For an unmatched request it drops the lock and
+restores READY. Userspace may see INPROCESS and skip it. Restoring READY
+does not send another notification. If userspace handles the request at
+the same time, the READY store may overwrite its state.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+Find a matching ioeventfd before changing the request state.
 
-Fixes: 993fec7e11ca ("bus: fsl-mc: dpio: add the DPAA2 DPIO object driver")
+The lock now protects only the ioeventfd list. Use explicit virt_*mb()
+barriers for the ioreq shared with Xen.
+
+Fixes: f0d7db7b3324 ("xen: privcmd: Add support for ioeventfd")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20261002194802.375497-3-mhun512@gmail.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260821084112.2374949-1-den@valinux.co.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/dpio/dpio-driver.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/xen/privcmd.c | 47 +++++++++++++++++--------------------------
+ 1 file changed, 18 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/soc/fsl/dpio/dpio-driver.c b/drivers/soc/fsl/dpio/dpio-driver.c
-index 7dc65f38d2fdb..2962e66e2e413 100644
---- a/drivers/soc/fsl/dpio/dpio-driver.c
-+++ b/drivers/soc/fsl/dpio/dpio-driver.c
-@@ -88,6 +88,7 @@ static void unregister_dpio_irq_handlers(struct fsl_mc_device *dpio_dev)
+diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
+index 115b54c3805b0..c562e6df49cc7 100644
+--- a/drivers/xen/privcmd.c
++++ b/drivers/xen/privcmd.c
+@@ -1179,51 +1179,40 @@ static irqreturn_t ioeventfd_interrupt(int irq, void *dev_id)
+ 	struct privcmd_kernel_ioreq *kioreq = port->kioreq;
+ 	struct ioreq *ioreq = &kioreq->ioreq[port->vcpu];
+ 	struct privcmd_kernel_ioeventfd *kioeventfd;
+-	unsigned int state = STATE_IOREQ_READY;
++	bool matched = false;
  
- 	/* clear the affinity hint */
- 	irq_set_affinity_hint(irq->virq, NULL);
-+	devm_free_irq(&dpio_dev->dev, irq->virq, &dpio_dev->dev);
+-	if (ioreq->state != STATE_IOREQ_READY ||
+-	    ioreq->type != IOREQ_TYPE_COPY || ioreq->dir != IOREQ_WRITE)
++	if (ioreq->state != STATE_IOREQ_READY)
+ 		return IRQ_NONE;
+ 
+-	/*
+-	 * We need a barrier, smp_mb(), here to ensure reads are finished before
+-	 * `state` is updated. Since the lock implementation ensures that
+-	 * appropriate barrier will be added anyway, we can avoid adding
+-	 * explicit barrier here.
+-	 *
+-	 * Ideally we don't need to update `state` within the locks, but we do
+-	 * that here to avoid adding explicit barrier.
+-	 */
++	/* Xen publishes the request before changing its state to READY. */
++	virt_rmb();
+ 
+-	spin_lock(&kioreq->lock);
+-	ioreq->state = STATE_IOREQ_INPROCESS;
++	if (ioreq->type != IOREQ_TYPE_COPY || ioreq->dir != IOREQ_WRITE)
++		return IRQ_NONE;
+ 
++	spin_lock(&kioreq->lock);
+ 	list_for_each_entry(kioeventfd, &kioreq->ioeventfds, list) {
+ 		if (ioreq->addr == kioeventfd->addr + VIRTIO_MMIO_QUEUE_NOTIFY &&
+ 		    ioreq->size == kioeventfd->addr_len &&
+ 		    (ioreq->data & QUEUE_NOTIFY_VQ_MASK) == kioeventfd->vq) {
++			/* Finish reading the request before claiming it. */
++			virt_mb();
++			ioreq->state = STATE_IOREQ_INPROCESS;
+ 			eventfd_signal(kioeventfd->eventfd);
+-			state = STATE_IORESP_READY;
++			matched = true;
+ 			break;
+ 		}
+ 	}
+ 	spin_unlock(&kioreq->lock);
+ 
+-	/*
+-	 * We need a barrier, smp_mb(), here to ensure writes are finished
+-	 * before `state` is updated. Since the lock implementation ensures that
+-	 * appropriate barrier will be added anyway, we can avoid adding
+-	 * explicit barrier here.
+-	 */
+-
+-	ioreq->state = state;
+-
+-	if (state == STATE_IORESP_READY) {
+-		notify_remote_via_evtchn(port->port);
+-		return IRQ_HANDLED;
+-	}
++	if (!matched)
++		return IRQ_NONE;
+ 
+-	return IRQ_NONE;
++	/* Publish the response only after signaling the eventfd. */
++	virt_wmb();
++	ioreq->state = STATE_IORESP_READY;
++	notify_remote_via_evtchn(port->port);
++	return IRQ_HANDLED;
  }
  
- static int register_dpio_irq_handlers(struct fsl_mc_device *dpio_dev, int cpu)
-@@ -280,10 +281,10 @@ static void dpaa2_dpio_remove(struct fsl_mc_device *dpio_dev)
- 	priv = dev_get_drvdata(dev);
- 	cpu = dpaa2_io_get_cpu(priv->io);
- 
--	dpaa2_io_down(priv->io);
--
- 	dpio_teardown_irqs(dpio_dev);
- 
-+	dpaa2_io_down(priv->io);
-+
- 	cpumask_set_cpu(cpu, cpus_unused_mask);
- 
- 	err = dpio_open(dpio_dev->mc_io, 0, dpio_dev->obj_desc.id,
+ static void ioreq_free(struct privcmd_kernel_ioreq *kioreq)
 -- 
 2.53.0
 
