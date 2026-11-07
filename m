@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061935;
-	b=tXmoFhVIn2/8zk9wB38Q7HjDF6I+ENVuE3EiLbc4swDGI6/CpUbUygI8e8dsiV8j/MIm
-	 vzFhDWS38jWQv1DF0Z2sK1AW31xPomlCdPTDB5Yjw4AIidlO9tiBC12gsFKWcIpoy/iKU
-	 IIIJMT8Ha5WsIj0+BntYElEIZBgWmLmauEswMUZ8WPQ3TgjFCn/GnqfQhbYtEjoXmlRPf
-	 /xAlpqU/yTFRrmYQVMV7eHj+kCUJKpZdzZzMZ25sGAulfCQ7t+13Gdn7iZn9x9t9hSRDe
-	 u2+eix4p/67SqW+1d8hOcZGYeLXy5i/Th2qiwoPwmt7Gt3awqN8WbNSWf1oVqFH5m5g==
+	t=1794061937;
+	b=2kyPxRF5IZ19pDKVOvU+6oEA8CJDjv7fisSUqFDbAQikQLfaBIRMGwsWC9nwSU4IbmJn
+	 t09PCBjMhZcJaQI9fK6UUPpmvwAOYfeXaDykyv7UqivD4m6M1xXBSEwyWKWK1VQDawEMP
+	 0wX4Phz5IPYarGtftb/VJPXUWAdYpjhP3crcwIrUkpDz7/iE16HWNqkL//7RPK/rCitLp
+	 QMO2+wPoIGARSB8CclQF2CtFhNsM54iw6txxsA05u60tQFAYNq/ZECpchm0/JsYc2UKBd
+	 EXL6XZSd8g78dT6jY961ZRuHlXhGQ00UaS4/TWFv9aTgJkYJFfd51dA4cdA3qX+rJNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061935;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061937;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OWe8KnLEo68xEQwclZ6VX7IuQadl21zNqh68Mq833gM=;
-	b=dJdAqkjnzW3IGYzwzGqG0djiYDKxP5o4uNj81BWG7UC+EBHGAXh9vkykvY6lD/awUCMM
-	 0CiFOLuSuQrFUzX+aTnoBiy9+QXZq0fesNl95Jm5B3oc+/41wdTKut7nrm3ps/39KXIBw
-	 xH81u0igIxBA9e0VjkPtotA+SlCdDJAmOU+utmU5v3D/tTD5bPe8JWnzzWlT+hdhhKdW4
-	 bD+lwGJQVD4lh6bsrg73ZEsxPu9Dhs1l3KfOz7ssW3wACvEHUG1mdz2lfY4s2GlYTc9Fc
-	 Wct+gBWNQZeIHlLWIcvouAkAryhGv5UCSp3p3aysdF6Xxuu2ej+UUFdi4W68+1vAZ6w==
+	bh=MV0c/gaDwh41Dd/PppcEjP5MVaVfIYDjWsxQa/vT7bM=;
+	b=KRT0Eqe7fTLiaJQEFzc4Aa6h/vE/ow0yjQrGLD0nAssvHMY2kKJGdDvpSpRc1QE67CmL
+	 hvF8FJI8h1eKmkFFHKO0IBc1699MZuOmMVqApKgitNP4VBRamL32LfD+90bhAH0cGcSww
+	 GvaZkOPeKG7QlaxUc35aj78jRf1hf2OBIKPaQrDRDyM1e5UuYqP+xowCiQi4fiMmfTPKl
+	 Gup7gsv+eGqV3+ZmpvIK0ahmDNigBHLlVgjx8DVNmthsyp4Zh5KfNW5tDn0BdrRInlF7r
+	 8sa4h6iowCgyA3CLVVEeN8FqNU66p3PmgXvKN/MWUtajNgG/K4BH6ldHg3hb2Yc/qfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wjSrss/p";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HG50cWa1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1AC606A32D;
-	Sat,  7 Nov 2026 14:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB714606A32D;
+	Sat,  7 Nov 2026 14:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjSrss/p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29ECC1F0089F;
-	Sat,  7 Nov 2026 14:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HG50cWa1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5890F1F0089F;
+	Sat,  7 Nov 2026 14:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061935;
-	bh=OWe8KnLEo68xEQwclZ6VX7IuQadl21zNqh68Mq833gM=;
+	s=korg; t=1794061936;
+	bh=MV0c/gaDwh41Dd/PppcEjP5MVaVfIYDjWsxQa/vT7bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjSrss/pbwL+YudlDi825OTNAKoGbGGpXwqJYjZgzVHrc+W8KVSGN3QeCBCLKZD/S
-	 iH1Q1d0b4OSbNZ0nVYOOVhLEufO9DUkhhy/wDsJFBvrXfIdrZCjc4I/5TR5OwDPxw7
-	 GXGab0kfwdZmoZ2X4nkC5gysHB2z/5q51qJlBCVw=
+	b=HG50cWa1gXD+5wNn9CiUXbDDJCt4dUbOvR6NX71lQHxkY4s4QEMX10GE6MymjTmx+
+	 rGM/0XE66CkTQL1ljd0XXPPjoORB2Wls/kE55fCWI1YbjVuXBMmnBr1Um72EPY65RV
+	 p4xaTe7T2aJH8nRJwCDD3okf3qIZmKwJv06npQ8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Younho Choi <gdool88@mju.ac.kr>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0938/1536] media: vim2m: keep transaction buffer count stable while streaming
-Date: Sat,  7 Nov 2026 08:49:14 -0500
-Message-ID: <20261107135023.996384993@linuxfoundation.org>
+Subject: [PATCH 6.12 0939/1536] media: vicodec: fix out-of-bounds write on under-rounded coded dimensions
+Date: Sat,  7 Nov 2026 08:49:15 -0500
+Message-ID: <20261107135024.025255902@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,118 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Younho Choi <gdool88@mju.ac.kr>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 50f5fed44d8e24081e8feed5154746fe193f11b8 ]
+[ Upstream commit 0183746ebca4c478027e2261b904f844f1443b19 ]
 
-V4L2_CID_TRANS_NUM_BUFS controls how many buffer pairs a vim2m
-mem2mem job processes before the job is completed. The driver stores
-the value in ctx->translen and device_work() uses it later to decide
-whether the current transaction should continue.
+A capture format whose width or height is one more than a multiple of 16
+makes the FWHT codec write one 8x8 block row, or column, past the end of
+the capture plane, and read the same block out of the reference frame for
+P-coded frames.
 
-Letting userspace change this control while streaming is active can
-make a queued job observe a different transaction length than the one
-it started with. That leaves the transaction state inconsistent with
-the buffers currently queued for the job.
+vic_round_dim() is documented to round a frame dimension up so that both
+the luma and the chroma plane end up a multiple of 8, but it only rounds
+the chroma plane:
 
-Grab the transaction buffer count control while either queue is
-streaming, and release it only after both queues have stopped
-streaming. The V4L2 control framework then rejects changes with
--EBUSY while the value is in use, while still allowing userspace to
-configure the value before streaming starts.
+	round_up((dim) / (div), 8) * (div)
 
-Keep the control handler alive until after v4l2_m2m_ctx_release(),
-since releasing the mem2mem context can call stop_streaming(), which
-now ungrabs the control.
+For div == 2 the result is a multiple of 16 in every case but one: when
+dim % 16 == 1, dim / div is already a multiple of 8 and the macro returns
+dim - 1. encode_plane() and decode_plane() round the same dimension with
+round_up(dim, 8), which yields dim + 7 -- one block more than the coded
+dimension that sized the buffer.
 
-Fixes: 96d8eab5d0a1 ("V4L/DVB: [v5,2/2] v4l: Add a mem-to-mem videobuf framework test device")
+On a KASAN-enabled kernel, a 641x360 YUYV P-frame triggers:
+
+  BUG: KASAN: slab-out-of-bounds in add_deltas+0x450/0xcc0
+  Read of size 1 at addr ffff888009070800 by task trigger_bin/70
+
+  Call Trace:
+   add_deltas+0x450/0xcc0
+   decode_plane+0x1916/0x3390
+   fwht_decode_frame+0x173/0x620
+   v4l2_fwht_decode+0x751/0x1120
+   device_run+0x6bb/0x1850
+
+Round the dimension itself up to a multiple of 8 * div. The rounding
+changes only for div == 2 and dim % 16 == 1, and MAX_WIDTH and MAX_HEIGHT
+are both multiples of 16, so the rounded value still fits the advertised
+limits.
+
+Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Younho Choi <gdool88@mju.ac.kr>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vim2m.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ drivers/media/test-drivers/vicodec/codec-fwht.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
-index 8ca6459286ba6..b686ebcfa7428 100644
---- a/drivers/media/test-drivers/vim2m.c
-+++ b/drivers/media/test-drivers/vim2m.c
-@@ -200,6 +200,7 @@ struct vim2m_ctx {
- 	struct vim2m_dev	*dev;
+diff --git a/drivers/media/test-drivers/vicodec/codec-fwht.h b/drivers/media/test-drivers/vicodec/codec-fwht.h
+index 0eab24020e9e6..4b4d390310899 100644
+--- a/drivers/media/test-drivers/vicodec/codec-fwht.h
++++ b/drivers/media/test-drivers/vicodec/codec-fwht.h
+@@ -61,7 +61,7 @@
+  * both luma and chroma components resolutions are rounded up to
+  * a multiple of 8
+  */
+-#define vic_round_dim(dim, div) (round_up((dim) / (div), 8) * (div))
++#define vic_round_dim(dim, div) round_up(dim, 8 * (div))
  
- 	struct v4l2_ctrl_handler hdl;
-+	struct v4l2_ctrl	*trans_num_bufs_ctrl;
- 
- 	/* Processed buffers in this transaction */
- 	u8			num_processed;
-@@ -1063,9 +1064,27 @@ static int vim2m_start_streaming(struct vb2_queue *q, unsigned int count)
- 		ctx->aborting = 0;
- 
- 	q_data->sequence = 0;
-+	v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, true);
-+
- 	return 0;
- }
- 
-+static bool vim2m_other_queue_is_streaming(struct vim2m_ctx *ctx,
-+					   struct vb2_queue *q)
-+{
-+	struct vb2_queue *other_vq;
-+
-+	if (!ctx->fh.m2m_ctx)
-+		return false;
-+
-+	if (V4L2_TYPE_IS_OUTPUT(q->type))
-+		other_vq = v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx);
-+	else
-+		other_vq = v4l2_m2m_get_src_vq(ctx->fh.m2m_ctx);
-+
-+	return vb2_is_streaming(other_vq);
-+}
-+
- static void vim2m_stop_streaming(struct vb2_queue *q)
- {
- 	struct vim2m_ctx *ctx = vb2_get_drv_priv(q);
-@@ -1079,11 +1098,14 @@ static void vim2m_stop_streaming(struct vb2_queue *q)
- 		else
- 			vbuf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
- 		if (!vbuf)
--			return;
-+			break;
- 		v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req,
- 					   &ctx->hdl);
- 		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
- 	}
-+
-+	if (!vim2m_other_queue_is_streaming(ctx, q))
-+		v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, false);
- }
- 
- static void vim2m_buf_request_complete(struct vb2_buffer *vb)
-@@ -1186,7 +1208,8 @@ static int vim2m_open(struct file *file)
- 
- 	vim2m_ctrl_trans_time_msec.def = default_transtime;
- 	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_time_msec, NULL);
--	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
-+	ctx->trans_num_bufs_ctrl =
-+		v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
- 	if (hdl->error) {
- 		rc = hdl->error;
- 		v4l2_ctrl_handler_free(hdl);
-@@ -1240,10 +1263,10 @@ static int vim2m_release(struct file *file)
- 
- 	v4l2_fh_del(&ctx->fh);
- 	v4l2_fh_exit(&ctx->fh);
--	v4l2_ctrl_handler_free(&ctx->hdl);
- 	mutex_lock(&dev->dev_mutex);
- 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
- 	mutex_unlock(&dev->dev_mutex);
-+	v4l2_ctrl_handler_free(&ctx->hdl);
- 	kfree(ctx);
- 
- 	atomic_dec(&dev->num_inst);
+ struct fwht_cframe_hdr {
+ 	u32 magic1;
 -- 
 2.53.0
 
