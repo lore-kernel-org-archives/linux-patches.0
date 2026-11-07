@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065555;
-	b=Gccgg3B61yOqaeaeu23XunHahtBtleWsfSnVoU0vX2X88duhr1Khzu+j0psCl3W1c39j
-	 M4AB1f9qVjMyhT7K20CVSnDPIpi+UOg7cmRgJ/d4PzeiVc0p/3KO0fHNxovYBvVWFMWSc
-	 3ETfs3C3YVOqyK4hMBbpEnz+aJlRf1mq1CnIVkwS9ta9PHFSQkw11U2NTU1HG8wDyimiN
-	 i8USS2uZCwiJXVcXgsZ1m3RbYKNmaXk/HAvdIe8S1Rta9I8T5aDLrDvTVEbyMCBcCfvvJ
-	 WwEecRquHVbcuD5bKsXN96quVcEA10BNANzgHiggYNPiLF43DfyN8OhvHjRL9SRRVfg==
+	t=1794065557;
+	b=0oigWWC31xFC5meg59icLaRxFikeglfz/y+g07agP0pUCZvgoCEXvFcW0D3pZi8cEkMk
+	 sVkA9FgNIFwECPPT0KUllwhp+LTAv3MdoD1j7diVTveD2zQDkyw6hte+0AQTjffV6HDZ2
+	 rwln1+6odR9OtPfRexqG3uoSyZ6aoXPK1Zepcg70ZGUlJFwtDAbcgsI+schbribwt3dG3
+	 Hq+y/2fMJIZKuap11xBCVKMN57evrK8OcK5lqNffQ8z+DGY71eKtp9hJEEZbWxBds/eIV
+	 gCy8NT8BAWkl3zl7GhcjVhZiSNGMM8t1WkCud0ptL6/aYIxOi8AE3jhbOyl8lD5bztQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0DfEc5JkyPzhdpHCFKtRgja+fdsTOJe4nbGwTqDzRE8=;
-	b=keiA5oupmrxBOWsc7atmm0LcgTfdiFoKT+T8/D9R3YGzsSuRd+nqt4tZnuARo/Tt2MRr
-	 j5MxLDTG7UVir9VWdUhL8bwY30AIDDWq4gee0+ZJO6cmZvMyW5e9+nK3aet8IkMtqsPiR
-	 MAh3sET03Cq4wJpz9TXk4zQMulpW5Lz40FWLTvFQCMv4lbxi1SNvmh9L9+yEDPwtQnULa
-	 Q3agweEhouqMfEUQSZPoaHVvzT4NHtnftJHgNmQdX4ON9CR9Ji5ih/BKEVPYXX04LGmGD
-	 YudTDibQahnpRk3orOrcIWXM2XyspHgJcfD1IfaX9UhADkJDxWoSqk1ooQh0mnXVY5A==
+	bh=vniFeLcO1lj6INhRxoIJULGCSdNxyWPHaW83b8U7A6I=;
+	b=5LPOeK/uZkfr4XHawvbxYIu4+uKakAn0eiyJxciBXbxcycrGzdSwGutj37g1hU+JD7Uv
+	 ZV5fU5ghrhPySNq9HW/f3eoWtVDHg9kHq4YYL3UALFWTjFhJim//uoWA3CTrL83fsEt6n
+	 cLOPmLN50FQw2ameEERz660+JAddkX+c3MfTt/eNTdfDBQfa9K5ccFxRj0C3vJz/546DJ
+	 IDHjyXdHPCO+7BIOTFrSdT8DG5sRyLG0IRzjlOTzasuSCPeLQ7eLJyZVHyX553pLRo3wV
+	 XyukTNcmR7c8oUGOf0AW7cMUJPFyMsep7NVAnp0/dP9vCEi9SOjazcl7xRndC6PsXhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzBeKwQp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYmsHVYd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7548A606D80B;
-	Sat,  7 Nov 2026 15:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3A5606D814;
+	Sat,  7 Nov 2026 15:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzBeKwQp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060591F008A2;
-	Sat,  7 Nov 2026 15:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYmsHVYd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743AF1F0089F;
+	Sat,  7 Nov 2026 15:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065555;
-	bh=0DfEc5JkyPzhdpHCFKtRgja+fdsTOJe4nbGwTqDzRE8=;
+	s=korg; t=1794065556;
+	bh=vniFeLcO1lj6INhRxoIJULGCSdNxyWPHaW83b8U7A6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wzBeKwQpSjolyst3aaMELACoE1xsEiPa0XkCvvQjQNKx7snGQDCS5Dzq3GEwsMuED
-	 Y10+VGgXhIszKYP7AlDq/CVMj9p2+F57pviQi29sPKVax4G/sHdJy1APagSKQoqGxy
-	 4bge8dElkCYY+90g/ql6w8u8qSZEZxM5vPAtODTo=
+	b=cYmsHVYds+kBn/GyLaBPud3CDuKGrdKGw25jDEhEkuvkI82wOxPirRL59+styyT6c
+	 /QTfaephbSW+BhffdgwhezpG7kiwX5aqGf+BLS1+jF2yDs41rBZr3Tzu9DA3y0HBcU
+	 DbTX7qObs0zsw3P5jWxYYNgSbv6URzhm8en7UbrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1227/1257] iomap: dont mark unwritten parts of a folio uptodate
-Date: Sat,  7 Nov 2026 08:58:43 -0500
-Message-ID: <20261107135013.233231410@linuxfoundation.org>
+Subject: [PATCH 7.3 1228/1257] iomap: keep large chunks from defeating the bio cap
+Date: Sat,  7 Nov 2026 08:58:44 -0500
+Message-ID: <20261107135013.259953725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,73 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit a4193b4af359db84b2cdf3a040752861984c636b ]
+[ Upstream commit eb8ab8c23e71c6ae77dedc45de2a57a61558e5d5 ]
 
-For a buffered write into a hole, an unwritten or new extent, or past
-EOF __iomap_write_begin() zeroes the parts of the blocks outside of the
-write and then marks the blocks uptodate. That includes the range of the
-write itself which still holds whatever was in the folio before. It only
-becomes valid once the copy from userspace has filled it in.
+For integrity I/O a bio must not grow beyond max_integrity_io_size()
+because the integrity buffer is a single allocation of at most 2 MiB.
+Writeback and buffered reads check that before adding to a bio:
 
-But the copy can come up short and __iomap_write_end() only rejects a
-short copy if the folio isn't uptodate. If the zeroed blocks were all
-that was missing the folio is uptodate by then, the short copy is
-accepted, and the rest of the range is exposed to readers and can end up
-on disk. A source buffer that ends in an unmapped page is enough:
+        bio->bi_iter.bi_size > iomap_max_bio_size(iomap) - len
 
-        ftruncate(fd, 4096);
-        pwrite(fd, p, 3000, 100);    /* 16 bytes at p, then PROT_NONE */
-        pread(fd, buf, 4096, 0);
+The subtraction is done in size_t and wraps if len alone is above the
+limit. The check then never fires and the bio grows until it runs out
+of bio_vecs.
 
-The write returns 16 and the read returns 2984 bytes of whatever was in
-that page before. If other blocks of the folio aren't uptodate the short
-copy is rejected but the zeroed blocks keep their uptodate bits and the
-retry with the copied length leaves the same bytes behind.
+That's easy to hit. The limit is also capped by the maximum segment size
+which is 64 KiB for SCSI hosts that don't set it, such as lpfc and
+qla2xxx, and XFS uses folios of up to 2 MiB. Writeback of a preallocated
+300 MiB file then builds a single bio that needs 4.7 MiB of PI with 512
+byte sectors and 8 byte tuples. That's more than kmalloc() can do, so
+bio_integrity_alloc_buf() falls back to a 2 MiB mempool element and
+generating the PI writes 2.7 MiB past its end.
 
-Only mark blocks uptodate in __iomap_write_begin() after reading them.
-__iomap_write_end() marks the zeroed blocks uptodate once the copy has
-succeeded and rejects a short copy.
+Check the length on its own first. A chunk above the limit still gets a
+bio of its own which is never larger than a folio.
 
-Willy reported this back in 2024 (cf. [1]) and Zhang Yi posted the same
-fix (cf. [2]) but it never got merged.
-
-[1]: https://lore.kernel.org/all/ZqsN5ouQTEc1KAzV@casper.infradead.org
-[2]: https://lore.kernel.org/all/20240812121159.3775074-6-yi.zhang@huaweicloud.com
-
-Fixes: 9dc55f1389f9 ("iomap: add support for sub-pagesize buffered I/O without buffer heads")
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261029-work-iomap-ai-fixes-v1-1-7eda63bc1b13@kernel.org
+Fixes: 0b10a370529c ("iomap: support T10 protection information")
+Cc: stable@vger.kernel.org # v7.1+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261029-work-iomap-ai-fixes-v1-2-7eda63bc1b13@kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/iomap/bio.c      | 2 +-
+ fs/iomap/internal.h | 9 +++++++++
+ fs/iomap/ioend.c    | 3 +--
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 0a5ebfda90f12..44f9a0e6f8fcb 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -920,6 +920,7 @@ static int __iomap_write_begin(const struct iomap_iter *iter,
- 		if (iomap_block_needs_zeroing(iter, block_start)) {
- 			if (WARN_ON_ONCE(iter->flags & IOMAP_UNSHARE))
- 				return -EIO;
-+			/* uptodate once copied, see __iomap_write_end() */
- 			folio_zero_segments(folio, poff, from, to, poff + plen);
- 		} else {
- 			const struct iomap *iomap = iomap_iter_srcmap(iter);
-@@ -943,8 +944,8 @@ static int __iomap_write_begin(const struct iomap_iter *iter,
+diff --git a/fs/iomap/bio.c b/fs/iomap/bio.c
+index 48100c614431c..ee85b009c5c13 100644
+--- a/fs/iomap/bio.c
++++ b/fs/iomap/bio.c
+@@ -151,7 +151,7 @@ int iomap_bio_read_folio_range(const struct iomap_iter *iter,
  
- 			if (iomap->flags & IOMAP_F_ZERO_TAIL)
- 				folio_zero_segment(folio, to, poff + plen);
-+			iomap_set_range_uptodate(folio, poff, plen);
- 		}
--		iomap_set_range_uptodate(folio, poff, plen);
- 	} while ((block_start += plen) < block_end);
- 
+ 	if (!bio ||
+ 	    bio_end_sector(bio) != iomap_sector(&iter->iomap, iter->pos) ||
+-	    bio->bi_iter.bi_size > iomap_max_bio_size(&iter->iomap) - plen ||
++	    !iomap_bio_has_room(&iter->iomap, bio, plen) ||
+ 	    !bio_add_folio(bio, folio, plen, offset_in_folio(folio, iter->pos)))
+ 		iomap_read_alloc_bio(iter, ctx, plen);
  	return 0;
+diff --git a/fs/iomap/internal.h b/fs/iomap/internal.h
+index 74e898b196dc1..e69b3ac02cc22 100644
+--- a/fs/iomap/internal.h
++++ b/fs/iomap/internal.h
+@@ -17,6 +17,15 @@ static inline size_t iomap_max_bio_size(const struct iomap *iomap)
+ 	return BIO_MAX_SIZE;
+ }
+ 
++/* Can @len more bytes go into @bio? */
++static inline bool iomap_bio_has_room(const struct iomap *iomap,
++		const struct bio *bio, size_t len)
++{
++	size_t max_size = iomap_max_bio_size(iomap);
++
++	return len <= max_size && bio->bi_iter.bi_size <= max_size - len;
++}
++
+ u32 iomap_finish_ioend_buffered_read(struct iomap_ioend *ioend);
+ u32 iomap_finish_ioend_direct(struct iomap_ioend *ioend);
+ 
+diff --git a/fs/iomap/ioend.c b/fs/iomap/ioend.c
+index 32ae292a84cbe..c2891d640e827 100644
+--- a/fs/iomap/ioend.c
++++ b/fs/iomap/ioend.c
+@@ -176,8 +176,7 @@ static bool iomap_can_add_to_ioend(struct iomap_writepage_ctx *wpc, loff_t pos,
+ {
+ 	struct iomap_ioend *ioend = wpc->wb_ctx;
+ 
+-	if (ioend->io_bio.bi_iter.bi_size >
+-	    iomap_max_bio_size(&wpc->iomap) - map_len)
++	if (!iomap_bio_has_room(&wpc->iomap, &ioend->io_bio, map_len))
+ 		return false;
+ 	if (ioend_flags & IOMAP_IOEND_BOUNDARY)
+ 		return false;
 -- 
 2.53.0
 
