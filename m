@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065381;
-	b=17l2RMU5swkxDdeaGBf2QrMZkaQCOpeXxY+HT8QzAh9u599lq2L5q09qIbYimbrI3slT
-	 CIaH9g8mc4t+NxRv6MFcASv+bU35y5/4cBn02va2YZj/TxKgY3rlzYWRdUF9hXoPUaCNx
-	 uDDLS3niUU5sZ1Nn6aA8QgPHFLJRvcDF5idG1ZNZ5Kqa0MxYgIvvpNKjIUupF1kN6rVSY
-	 Wem3bOEK/ovvb75z0AvQRmTiL7z151drCESItxjQD1eLMW5MguE31OMGOgg76onqdx3vC
-	 81Kd15Y0D6aLiqATtC3ittRIgXTNLCKUXOlKE+pIO1QfkQ4QUZkwMRrP/4UDhuMARIA==
+	t=1794065382;
+	b=duHWKpEK9akx0+dpzQi9d2q4EtmmD4I7SWqG1HE+UpOKK6vZCJop7bkWK8DbUZL0+XrW
+	 sehh48uhfIdXYfVgfj+0q4YXbWUKCepPL+Fc9Giub73wCt8pk7Al0UyWWL4LXGCBDdlTH
+	 TTppXYO8LQyyiZgHM3QiXtx9wsDO1o+onMBbUhywXBqY2DUjox6VjYCqWSqNuWTs23ylp
+	 alcHtYCP3kZ8nMqYeWm7mjeLKFb58NtOeY6N1iKQ80Wp7FbSH/q3Opg5OLNsMdf1qRFlY
+	 Jv8xnXqoBXYhN+DbQzYGzz42DavnS1yhwgSrbETDnzn7vI7pdtdUpljBmuFprSXkESg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kKJ0xUO+NMI6OGnY9qfTypZqPrKmzZXPJSanau9Vo+w=;
-	b=CS32NDWU4b+IHHY3VgGGORrMnXW5e2SH/zsdHSTWPXgNi1nKLPffkL8GakI5K162FqOa
-	 6yEgUAL7tmnmUUOtidoqP8xU26aSzE8bpssxtcG13IEypV/rLnwJiwBro+jNxUzQQUk2S
-	 YBaoGr9QO3Xcysd0vaJEMUbQalulJiAnmHsb0DOwRc6aegBffUwOWAZ1Q68OgXXhSMi6V
-	 OAnImlo+8VS0bMk9EHq6RbcjoVmigelmSqz/4Zv7QENWTZ3jbDVV7xPZHaKhK5tsY3ptw
-	 Rfg5BkiUUkTdtf/oAr+LgDeghJNcQyGt3RdIvk544u2bdRaxt1s16MSB72rA3UTwOcQ==
+	bh=alP1haX0OP+4JjcvwMKQoITi1GPvWHzNyvPMJrcBd6I=;
+	b=oj+PrB9Y68iTzeMBn+FisD71QzKqOegAaeIevh7yRXXN5iLvnFHcD2zYyg4DTxIR942c
+	 WLIcsAw2Qn8WaFTp/HEklxcFJhyTglP4jypEDfYa6WQ0yy8VSgDBlKRnYkQkfVOJ4ye9V
+	 j5ELgTE2G5xanEorC8f7wCNRGs0QtY73wgavW+tNhDqwwfXFozr7WOV7CrUn55PWHgx1F
+	 0VRaz5emC/nhBE8lg1eKXJbPE2OLtDXnJzLuIRGeN2r59DilMIHjhWxOaZY2/DmYkAACD
+	 c7u4eYPNbJ8jBbMnW8UF5GwbHnRUqpie7obhJ2d+VynkqRc0Zf7OSuh5q3giWuWOAww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eW/XYwJ9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEGOzCz9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FF5606A32C;
-	Sat,  7 Nov 2026 15:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1544B606A32C;
+	Sat,  7 Nov 2026 15:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eW/XYwJ9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C70E1F0089F;
-	Sat,  7 Nov 2026 15:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LEGOzCz9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDCE1F0089F;
+	Sat,  7 Nov 2026 15:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065380;
-	bh=kKJ0xUO+NMI6OGnY9qfTypZqPrKmzZXPJSanau9Vo+w=;
+	s=korg; t=1794065381;
+	bh=alP1haX0OP+4JjcvwMKQoITi1GPvWHzNyvPMJrcBd6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eW/XYwJ97kMy75Oc9bi8UyC6qj6efNV4f/qb/sQSZtuUXexHWoza810E0hTIbQ0I1
-	 SUVWz7JPKKsA2GZoH7mdmOtsqcxKE8KgVa/HnBPN6J+1Fp7lU3iT5kpoacgYv2I0yT
-	 rpsCBK5suffOEqF11OBMpz7kdHD3ulVIT/syNuuk=
+	b=LEGOzCz99rnC7fAgI8Nf8Rj344MrCloB9tjZLDbCuqiHSSDoMImjBbq+aTfa16a33
+	 hsQ6kQG6cDZBvGNQKUDPF3wdybsGWT2myb3dVJyPpaY1B5q3IG2pzb8yi2O//7QfnG
+	 VjqLfFBzluRL8Y9SHyPb0pGtnRBT/kht84Gt0xZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hungyu Lin <dennylin0707@gmail.com>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1107/1257] timers/itimer: Keep a nonzero value at CPU timer expiry
-Date: Sat,  7 Nov 2026 08:56:43 -0500
-Message-ID: <20261107135009.829908492@linuxfoundation.org>
+Subject: [PATCH 7.3 1108/1257] time/namespace: Fix overflow when converting absolute deadlines
+Date: Sat,  7 Nov 2026 08:56:44 -0500
+Message-ID: <20261107135009.855060117@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,39 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit ef60f61208a30eb5b941b707debdf04517271b4f ]
+[ Upstream commit d69cfd33b5a8d176124c564513b9ceb933595d93 ]
 
-get_cpu_itimer() returns a zero remaining time when the sampled CPU time
-is exactly equal to the nonzero expiry. This makes an armed ITIMER_VIRTUAL
-or ITIMER_PROF timer appear disarmed.
+do_timens_ktime_to_host() subtracts the namespace offset from an absolute
+deadline and clamps the result to [0, KTIME_MAX]. A negative offset can
+make a large deadline overflow to a negative value. Since ktime_t is
+signed and KTIME_MAX is its maximum value, the subsequent comparison
+against KTIME_MAX can never detect this overflow.
 
-The cputime cleanup replaced cputime_le(), which implements <=, with <.
-Restore the inclusive comparison so the equality case returns TICK_NSEC,
-like the overdue case and set_process_cpu_timer().
+For example, with a -1 second boottime offset, an absolute CLOCK_BOOTTIME
+timerfd deadline of KTIME_MAX can expire immediately. An absolute
+clock_nanosleep() using the same clock and deadline can also return
+immediately instead of waiting.
 
-Fixes: 648616343cdb ("[S390] cputime: add sparse checking and cleanup")
+The earlier tim < offset check already handles the lower bound. A
+negative subtraction result in the remaining branch therefore indicates
+overflow. Detect that result and clamp it to KTIME_MAX.
+
+Fixes: 89dd8eecfe961 ("time: Add do_timens_ktime_to_host() helper")
 Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020223957.87842-1-dennylin0707@gmail.com
+Link: https://patch.msgid.link/20261020233433.20997-1-dennylin0707@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/itimer.c | 2 +-
+ kernel/time/namespace.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/itimer.c b/kernel/time/itimer.c
-index 03a32dffc56cc..f7de39769095f 100644
---- a/kernel/time/itimer.c
-+++ b/kernel/time/itimer.c
-@@ -60,7 +60,7 @@ static void get_cpu_itimer(struct task_struct *tsk, unsigned int clock_id,
- 		thread_group_sample_cputime(tsk, samples);
- 		t = samples[clock_id];
+diff --git a/kernel/time/namespace.c b/kernel/time/namespace.c
+index 3aff27bb0a154..635f7e544bcc2 100644
+--- a/kernel/time/namespace.c
++++ b/kernel/time/namespace.c
+@@ -51,7 +51,7 @@ ktime_t do_timens_ktime_to_host(clockid_t clockid, ktime_t tim,
+ 		tim = 0;
+ 	} else {
+ 		tim = ktime_sub(tim, offset);
+-		if (unlikely(tim > KTIME_MAX))
++		if (unlikely(tim < 0))
+ 			tim = KTIME_MAX;
+ 	}
  
--		if (val < t)
-+		if (val <= t)
- 			/* about to fire */
- 			val = TICK_NSEC;
- 		else
 -- 
 2.53.0
 
