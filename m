@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062285;
-	b=Uwq9XmS5v6EyCZv2R1Cj+g/JDOhRQgAk4T+6LZe2needlI3Sv9V8RsNEhmxaoKma9QAE
-	 83qloQV6jwF8l+2JOFMKTaDhMXuWSEEGGlHH6C8ijowM1DKA/073+gstfSl/vBlcXzVbU
-	 qHttK4KIgUaiUTxOTkJvKFCe80msGioUwQDqOS9t05VKxrRAiu+MR5YgOC6XuAWnlpfV7
-	 GXaoAWSJb5Fg1IX8MFR7579qTn7HUF9/cTHuOUUZgTJiv+hP5P0vJDc4T5vcFhPr+E5OA
-	 /jh19DwWChD/hZdGo4KlqFEAcDS65IPbnzofTzhTx5lymDFpn0zTHg0AmDDok19P3WQ==
+	t=1794062286;
+	b=EuOWZ17ZTfISkL6TH8rCCgU2w9gfHSLfaHer5II254qHYNikXI5y23whxhOB2x2bn4vC
+	 0NUPVBISvNkI5gdZ2rF/bJeya5TV+hrsZ5SXQ65ktuul7+ZnBNIuVBVoUhtu9DkEfrTJw
+	 E7zIfuDgwuW1PIn6IXxGXDsOivE3PnpA891ZT9hnwq8ia4WtKnOzl9BmgTBlxWR9Licdd
+	 22ThMEdwpWp4v4RvyIQdbiV8iYrW1kAQckLd/ktWVedm4mWRInx8rIO9NzuThpRBkkbLV
+	 iN4hOy++hTAmHaZ4EFtSP5ZmYzTLnqwuFsIzSFgg8kTjrrMJy6NqcbwWLclLf+MaXxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062285;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CVpiYbeNWUBdTbcof9a6tHht52XgTDHeUR85yGA0EEA=;
-	b=Vzs3UN4qThs5JG8QT6Co5i2wRLeAW7lpjNOtxR3rVGsZR+rfhnYFTRRJShQ1HrWOvXtn
-	 AShDXVGH+vzdXeBub6nkpmd9XzJ7izcJVkOH6tFHFA10RWGZSQUO8aJQ25JVCVRHA+Zr2
-	 c6Ldsa1T0WT07Xhl3/3PdJw3bcSy+oigUbuQ3+7t1BaMBd5PdnUw0UUgP/iFdoqb3Z4Kt
-	 whmCLXrtMkpyxuF2petVFXVQ+SQjc/GJzwDUYcYEHOOy23mD8lvCTTuETPS4uMB8pB/dP
-	 leKKOklvfmd20OJ/iRH9VVPN9l3XZYL+5j6Wei61DY7Fjd5O5OCh96waXv1TBeAIayw==
+	bh=URHFUW1r0f+1/MHxdMlnrsvKlga26PfdqNoxgLQP7II=;
+	b=Gw5GQjsoY0CUN7KNErjSWNwG5vCmOaz/xoJAk93a5xCxfBHbtC9SHCb9qtrni0yosONj
+	 WO8IuNRaghTinMVqEVjiz6/qyJmedY2iyPWSSue9Ng2R2Qj4MDku+ilts05gxdK2rMnpk
+	 UM6kTbUDGnbjrUN7OeA83w204Bwc/X4XKZ9ndq6PJMkwxMp4xyJHrR/qSgmJLDHPvfCWl
+	 uf1JWU05NiqJ8JVH5+TsPUydjao3fdrefwQu+zrAQ8OxFTJChgUjITGxC4ZQsUmNKvXTI
+	 Jh7hTqbFsCGYwYxoaIFN8Q7840SCjtqpCUvLfCAWRAUIaD51HUNFDb+QndeSylPIPeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VmlLIWjv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2NRmpo/1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DCD606EEA0;
-	Sat,  7 Nov 2026 14:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0840606D816;
+	Sat,  7 Nov 2026 14:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VmlLIWjv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274071F0089F;
-	Sat,  7 Nov 2026 14:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2NRmpo/1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA1B1F0089F;
+	Sat,  7 Nov 2026 14:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062285;
-	bh=CVpiYbeNWUBdTbcof9a6tHht52XgTDHeUR85yGA0EEA=;
+	s=korg; t=1794062286;
+	bh=URHFUW1r0f+1/MHxdMlnrsvKlga26PfdqNoxgLQP7II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VmlLIWjvfVLsd/3fS4xD9n4N6ydCKlvicg3rWAhwdKZ1LrHuxBHVETTanHV5zfuQr
-	 Ekp2zEerL0pOSN/R7Vrp/aTXUXNiWT3XGoGqH2d6KfIoygSPBtFrOl8OxKjvlfNS70
-	 JgYC3eYSA6jueMOZpascfh8qDoxFWuyrRH/2k/Tc=
+	b=2NRmpo/1jyMRuo03fwTj/VnbofYUNd/q5BF2zKWvX78yLGXWA8dUFnlCGxQ3dXgiX
+	 IRlFpRnBz/oxihkQyhdU7NNb6gSKS/Bdf1Jfz/NBa3Dc+33khVwAgt8WQEZm83/wcm
+	 sObtQMc88rAf2I37epP6sg1qneRUn6hAp1qnm/68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Theodore Tso" <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Drobyshev Vladimir <enigma_137@icloud.com>,
+	stable <stable@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1197/1536] ext4: fix out-of-bounds read in ext4_get_group_info()
-Date: Sat,  7 Nov 2026 08:53:33 -0500
-Message-ID: <20261107135031.368754662@linuxfoundation.org>
+Subject: [PATCH 6.12 1224/1536] USB: cdc-acm: add VeriFone VX820 device ID
+Date: Sat,  7 Nov 2026 08:54:00 -0500
+Message-ID: <20261107135032.134539871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -74,79 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Drobyshev Vladimir <enigma_137@icloud.com>
 
-[ Upstream commit b067d3c1f90b536e9aa9f48b19580475a0b34f0f ]
+[ Upstream commit ddbddee6592ecf6cf6c24d888780f9ad45a3e30b ]
 
-A plain read of s_groups_count in ext4_get_group_info() allows CPU
-load-load reordering. On weak memory models, speculative prefetch of
-s_group_info prior to the boundary check could lead to an out-of-bounds
-read if a concurrent online resize expands the array and increments
-s_groups_count.
+Add USB ID 11ca:0219 for the VeriFone VX820 to the cdc-acm device
+table and apply the SINGLE_RX_URB quirk.
 
-The data race occurs between the ioctl configuration path (holding the
-resize lock via ext4_resize_begin) and the lockless metadata lookup path:
-
-   CPU 0 (Writer, Resize Lock)                CPU 1 (Reader, Lockless)
-   ---------------------------                ------------------------
-   ext4_ioctl()
-     [EXT4_IOC_GROUP_ADD]
-     ext4_ioctl_group_add()
-       ext4_resize_begin() // Takes lock
-       ext4_group_add()
-         ext4_mb_alloc_groupinfo()
-           // Publishes expanded array via RCU
-           rcu_assign_pointer(s_group_info, ...)
-
-         ext4_flex_group_add()
-           ext4_update_super()
-                                              ext4_get_group_info()
-                                                // Speculative / out-of-order read
-                                                [Loads old/smaller s_group_info pointer]
-             [Plain C store / smp_wmb()]
-             sbi->s_groups_count += ...;
-                                                // Reads new s_groups_count,
-                                                // boundary check passes
-                                                if (group >= s_groups_count)
-
-                                                // Out-of-bounds array access!
-                                                sbi_array_rcu_deref(..., s_group_info)
-
-Fix this by using ext4_get_groups_count() to enforce acquire semantics.
-
-Cc: stable@vger.kernel.org
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Baokun Li <libaokun@linux.alibaba.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Zhang Yi <yi.zhang@huawei.com>
-Fixes: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
-Link: https://sashiko.dev/#/patchset/20260825095422.3166067-1-ruanjinjie%40huawei.com
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20260902074805.398540-8-ruanjinjie@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Drobyshev Vladimir <enigma_137@icloud.com>
+Link: https://patch.msgid.link/20260929173833.105208-1-enigma_137@icloud.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/balloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/cdc-acm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
-index 0ba91e0fe7665..0e1be1885bac8 100644
---- a/fs/ext4/balloc.c
-+++ b/fs/ext4/balloc.c
-@@ -329,7 +329,7 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
- 	struct ext4_group_info **grp_info;
- 	long indexv, indexh;
- 
--	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
-+	if (unlikely(group >= ext4_get_groups_count(sb)))
- 		return NULL;
- 	if (unlikely(!EXT4_SB(sb)->s_group_info))
- 		return NULL;
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index 884dc80868ca9..990482982a28e 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1819,6 +1819,9 @@ static const struct usb_device_id acm_ids[] = {
+ 	{ USB_DEVICE(0x11ca, 0x0201), /* VeriFone Mx870 Gadget Serial */
+ 	.driver_info = SINGLE_RX_URB,
+ 	},
++	{ USB_DEVICE(0x11ca, 0x0219), /* VeriFone Vx820 Gadget Serial */
++	.driver_info = SINGLE_RX_URB,
++	},
+ 	{ USB_DEVICE(0x1901, 0x0006), /* GE Healthcare Patient Monitor UI Controller */
+ 	.driver_info = DISABLE_ECHO, /* DISABLE ECHO in termios flag */
+ 	},
 -- 
 2.53.0
 
