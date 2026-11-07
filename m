@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062175;
-	b=13MtYmGFpv3wTd4Zl8FJdwdyFaR2OMd8CO4VkXGelO6XS5UF6E6Cn+AesiMBoIpE3IUL
-	 ZPEBKYEiWo6YkwM5MiR/51Hza8ajNBzwt5bvFaCyJL4WxHAhKAc4Ze10WgHMlwVee7Epf
-	 HUwqEEv4dWSLytowJBnzZZJKh4MXxaNKIrndCmjJpia6v9JHoScPYOZRxr5mekllU8P0r
-	 x2dM70EyMcm2JmIK4HhNvxXXJA5jjFgs9MiLUisB+yU54Z1krwTcpnHF0KftX3WEFTmsu
-	 Q/2yYaVuQ7mBfmCl6eovKRGEmjKXf0Bqi8d83BEa0LntqYdUBMWc0q8170FUUE9VL4A==
+	t=1794062176;
+	b=DDKNzaG4k6Q/8dqGNxmHENjEHni9jVYFm99yk+Vj+E2pshkqQj5j90T3w/KHNySW52vU
+	 oCn0QMthsGhp5Cf734WXEl/AtORgnu8iV5eFr+/G+LZDpCpwZrQJ/ewm0pViYcjy3o+lX
+	 glQzWAr8dCHNsvStn+cYCylp1zCTNwP+Kgusfh9jbSiXjnAGLKeixLgXjsiXzSUA+LviB
+	 pFUsPv7Oh/zhyppFhqeUM3LdchY0rFuBaQ8RpS7pB7APe0VhzMzryPOdG376Izu47la4H
+	 MXBnxW4b917n5NNaJWiMMo+wGzyfxG3lnxlZcRKGOwgfQJnhsPLqM4X1vp36nEK/dMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062175;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062176;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=233q7nUD2kpfv9FiFB29OMB82raTCouKwHHR+asm1bM=;
-	b=xkHEfBg4qkCMeA78pHmgXFbRNlOmwY8+UpcYh33lblGjIQPA2u6DEKnE6bO0ro+Hr+p1
-	 PYxOC0EOHEgl7jRiu6a2V/Ej84bEkZQX1ykTW7xQAjFr9AUQV+XPB+9hdMzlJEbW5pt0G
-	 rSDZM/IWUlceWWYUs0OuKVdOal9n7nlG8cFhupkKYQI2qhhpJ8IqN/gVPyBh/j+iqP9RA
-	 5hQTD0bDmcEksEIvCvK1uOw9w/405tbIW25N6ql+rkQOLEKFQYdYGm9KaSqY9uqAcX+y1
-	 aenPf+YvuuMLaAM3BUBkUGrKfhKj0xtuPpP6em7h0HkjG8QX/c5OxfdywL9gVD2XfhA==
+	bh=dgca5XTcdUOkhk6/1/laT6ae51H/3SW6DIGV++YRlCQ=;
+	b=Z8kt3munCP3uX97qvxU0J/gZY+zgXbOsob7q/v3WlV+L1grvaw2tS/2qZlv7XjKJx3GH
+	 igDInsJyW+/v5GQHn7LkjOoZ01WsOzvCHQItU8rNA1OljpbB6n6RRQLI8AIN+zouVT3An
+	 YCRA71RJJ97IzypbfkwbMJM17BXtyu8GqSt5unEAHOJVaq3RYUB8GAo5zDNqNOtpOYmFr
+	 sijdCrgk349ZwZh/6oSMGm0/Wn1oO3oRbDHeeuBBQB2/RGcE0qZfYkWZV6rDqnASMFWh7
+	 Py+1wi08k0GPJG/+0Yi+vIVbUBIWnO6b3Z2O4lbxlcrrOfG0HglCVjLtusrubH4UIhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZDgX9HD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFSKxmZa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2464A606A326;
-	Sat,  7 Nov 2026 14:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA27606A326;
+	Sat,  7 Nov 2026 14:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZDgX9HD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03261F008A2;
-	Sat,  7 Nov 2026 14:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFSKxmZa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16A21F008A2;
+	Sat,  7 Nov 2026 14:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062175;
-	bh=233q7nUD2kpfv9FiFB29OMB82raTCouKwHHR+asm1bM=;
+	s=korg; t=1794062176;
+	bh=dgca5XTcdUOkhk6/1/laT6ae51H/3SW6DIGV++YRlCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JZDgX9HDaV9i2GzCZpxH6H1ajbHMAJvKVInqc2cb55xWkliy8Aw5SQKMlevbDHuH/
-	 ovyxC3MkVZX4uhZAzV1/usLGhI/THerZ+N34tUOxFcRATlu4TEkLkoYhSFP45ST9IU
-	 l7IVlUEFyIF11Z+zKRETWPlcS2wEnGn1Z7mWPlSw=
+	b=IFSKxmZasQvpiljBKyIboiITQKktc7vZcRE6fzhduVwFy4qY5VayfGGx21zqv90q1
+	 PS2awaFI4egrmPg5t4iL1is6Vo8kvMxDC1sQVzP83v0xtKiUkAJebtYA/tIcFjjS2C
+	 oC5IM3F8H87YYP6R+Ni2mLZZCvrDu4ho0iaFA8QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1135/1536] crypto: nx - validate ignore before subtracting in decompress
-Date: Sat,  7 Nov 2026 08:52:31 -0500
-Message-ID: <20261107135029.594068857@linuxfoundation.org>
+Subject: [PATCH 6.12 1136/1536] KVM: arm64: vgic-v3: Undo assignment on iodev registration failure
+Date: Sat,  7 Nov 2026 08:52:32 -0500
+Message-ID: <20261107135029.621099451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,43 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b5c2df42977390a71f1940def5be9bd5c69ac2e0 ]
+[ Upstream commit 8a88a46b86ca3dbbd24522760d29edfb3f24ac2a ]
 
-The decompress() function subtracts the header-supplied `ignore` value
-(a u16 from the compressed stream) from `dlen` (the number of bytes
-produced by the decompressor) without checking that ignore <= dlen.
+vgic_register_redist_iodev() assigns a redistributor region and base
+address to the vCPU before adding its iodev to the MMIO bus. However, the
+region's free_index is advanced only after registration succeeds.
 
-If a caller decompresses a crafted buffer where `hdr->ignore` exceeds
-the actual decompressed length, the subtraction wraps around to a
-near-UINT_MAX value.  The subsequent memcpy() then copies gigabytes of
-data past the destination buffer, causing an out-of-bounds kernel write.
+If kvm_io_bus_register_dev() fails, the vCPU retains the assignment while
+free_index still identifies the same slot as free. A later registration can
+therefore reuse a slot that remains assigned to the vCPU.
 
-Add a bounds check before the subtraction and return -EINVAL if the
-value is inconsistent.
+Reserve the slot before registering its iodev. The caller holds slots_lock,
+so a registration failure cannot race with a later assignment. Undo the
+reservation and clear the cached assignment on failure.
 
+Fixes: dbd9733ab674 ("KVM: arm/arm64: Replace the single rdist region by a list")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20260831081005.41346-2-kmehltretter@gmail.com
+[maz: moved helper into the sole caller]
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/nx/nx-842.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/crypto/nx/nx-842.c b/drivers/crypto/nx/nx-842.c
-index 3b82b6f67f8c4..fb30bdb55c009 100644
---- a/drivers/crypto/nx/nx-842.c
-+++ b/drivers/crypto/nx/nx-842.c
-@@ -418,6 +418,8 @@ static int decompress(struct nx842_crypto_ctx *ctx,
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index f143f2fabbcaf..eddc70e519290 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -791,16 +791,21 @@ int vgic_register_redist_iodev(struct kvm_vcpu *vcpu)
+ 	rd_dev->nr_regions = ARRAY_SIZE(vgic_v3_rd_registers);
+ 	rd_dev->redist_vcpu = vcpu;
  
- 	slen -= spadding;
++	/* Protected by slots_lock */
++	rdreg->free_index++;
++
+ 	mutex_unlock(&kvm->arch.config_lock);
  
-+	if (ignore > dlen)
-+		return -EINVAL;
- 	dlen -= ignore;
- 	if (ignore)
- 		pr_debug("ignoring last %x bytes\n", ignore);
+ 	ret = kvm_io_bus_register_dev(kvm, KVM_MMIO_BUS, rd_base,
+ 				      2 * SZ_64K, &rd_dev->dev);
+-	if (ret)
+-		return ret;
++	if (ret) {
++		guard(mutex)(&vcpu->kvm->arch.config_lock);
++		vgic_cpu->rdreg->free_index--;
++		vgic_cpu->rdreg = NULL;
++		vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
++	}
+ 
+-	/* Protected by slots_lock */
+-	rdreg->free_index++;
+-	return 0;
++	return ret;
+ 
+ out_unlock:
+ 	mutex_unlock(&kvm->arch.config_lock);
 -- 
 2.53.0
 
