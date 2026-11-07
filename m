@@ -1,53 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064666;
-	b=de07uDhXS3yrM7lrk+jgEO++ucSPyDdWPNeSLaVsmhuV1tuJuFL9PBI6ZXlQxGtMzw3+
-	 FZ93te6n385B/VZDApJ3OIfxcw9Ar00H+X3mOC6Xk1WZ6JScLCNET/LYSu913j6UVWjX5
-	 RJlrJfBp7Vt1QDQQtHc7mLuYMiETm3BETZmYTjb4vu5TLPSPlfo4QL0AU+nCyizy00uPw
-	 4Wb2IRrHB5L1CrRXUqCaj7Gcs2UEXxRRI1PfJv6noy2/Sy7ZVWP2mAdKjUqRIktwCbtEP
-	 ZoXZpi03cnFEob2K7BLvrqyqAKWhhhOrAyHk7GXrr1rIPv57MqO7ezzMJvVwFZtEGlQ==
+	t=1794064667;
+	b=uhlsGl/FOwL+LxvP5SZ3BgdcOo8mhXLLVdwgisKkDOShYlgVrH0EXA8SW/bT0VYfJndM
+	 N0mzdaHQFmSqZGwtbQi6l8tiU+jO81mSCWFOrEvF9B7ivkbwVbuLehoNkyE+ADE6NYWEn
+	 QN3dOescHq6g5ZgQu4KYKF4aRQ1b45bdzgk966XaW5VRZeijnC/4Nw5K8F9hnhUKSgGPV
+	 LeR9vLeWW2Vm//s4tzkP1/IZ7JD4ZsGL30YnRngqxzznSgcDB+85HPyBxHS5xnS0yhRIw
+	 tnuvPcHHSzdTzdgi6VWYBxybrnVIpKKBfhG1APD/FBQ97olpfR1uKzh/v9tGd+rQ8kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064667;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/QlCR8Zq/oq7kEBkKU6zdfMb4TMs8YrjZNFFFtfidD0=;
-	b=P816gK6djPbgLbQnU75AaV0WIZtA3CAVqhffSGoGUPqOOxgVZwFo3bAclR+dol5DwRhO
-	 1Up7dou5Vpy8P+56UJQ2qSYSED9MPYloPYw9JbCRET1hsnBKMDbEdKTOozuBfQFRQrulD
-	 njU+D+nlCcW3Yo+zyJLwIySEchKkL621IX/eknSElYyWA4YaRmviIphzhfwUfYrvWoRMN
-	 KXgsKIXAcYmtx0vHyWTtldrzM64gy9P06Kokqro6J45Lb2ALZ9PY6OEySuo4zcDf5VCdD
-	 ni60eCWrLWQ5otPViSnk1+HsW0e7b4VyTHl5Lg57HWJ/4ikfPWufKm8VgycQ9MZocEg==
+	bh=sBZZd5rCgrqTU5oTy5/5Mi6Ws/t01oqNPJIxoMXFteU=;
+	b=DNwfPul6J2vOOneCGR4kNpwyPjedyJyBo4jN9VXg7rUfzttaY9gCOUTcgmDZY8SfZ8VZ
+	 fiEFc2UDcxdb37tMxK76zlKYZLaUbQQCLRZwGeCCegznh0dMiU+KwB3a8ct83DUauIjBy
+	 rt6Uqj0pRDmScWJfeVkqIpRwof239WVccryto2s9qnX9+3JaZvqdC9EXD4Z9/yFQhGR+J
+	 stjFia5m8q485t4o3kXvAaAIWTZjWfFvd3Pjwm29ftv3orS3FHAHr3RBtlwGEu4IEaUMG
+	 rub/G+3O77/PmMrKnd1MXSODG1LTSLOCAetO0Aa1EFMqsnsFDAdmphAvRb8I3bh653w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZH/ktbX6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gptp+Nsj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6139E606A9CF;
-	Sat,  7 Nov 2026 15:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E658606A9CF;
+	Sat,  7 Nov 2026 15:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZH/ktbX6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8311F008A2;
-	Sat,  7 Nov 2026 15:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gptp+Nsj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A931F008A2;
+	Sat,  7 Nov 2026 15:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064666;
-	bh=/QlCR8Zq/oq7kEBkKU6zdfMb4TMs8YrjZNFFFtfidD0=;
+	s=korg; t=1794064667;
+	bh=sBZZd5rCgrqTU5oTy5/5Mi6Ws/t01oqNPJIxoMXFteU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZH/ktbX6DNJSf3ikm4Fi2mMZmXrjj13JVakNoISfEkk0iMrUhp9eJbzTuMVlY9d7W
-	 +BHVaMfPT0zdTfLZQxO8wvbIlpUZGxVSiTl8Xyrq4CVrnvIZezmurBWQY4tqMm3e1m
-	 vcNtQ66Th2CecuzpMCPlBaL/0U91nkrLUGpky2Ko=
+	b=gptp+Nsjvl/QJSqSdbeTEZm01PxHfERZ//WmqUKm2bwJllFo8XBa6ROR5OTJ0sr7d
+	 /sJDM9X2oH4OQNxa83DdhQlN3HvfFjXr+svJMLXzE7pAzjGnDw7cUC+TWzw6PLPoFn
+	 fIF/2hU+B0PR7tHMW1e7Xm6MymtOXRWhXU+sGHmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+fd80bc5967eb22c3@bugs.sh,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0628/1257] usb: xhci: Fix bounce buffer overflow
-Date: Sat,  7 Nov 2026 08:48:44 -0500
-Message-ID: <20261107134956.638446827@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+23b25ba3c6bf971f9c57@syzkaller.appspotmail.com,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Baoquan he <bhe@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Hugh Dickens <hughd@google.com>,
+	Kairui Song <kasong@tencent.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chis Li <chrisl@kernel.org>
+Subject: [PATCH 7.3 0664/1257] mm/shmem: dont release a swapin-error marker as a swap entry
+Date: Sat,  7 Nov 2026 08:49:20 -0500
+Message-ID: <20261107134957.593285384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,71 +77,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 68c5cb7574c567e83ba95258cb146db95e069a87 ]
+[ Upstream commit e4b92891aaca0d37b5973362dd14747a65406650 ]
 
-High-speed devices with out of spec 1024 byte bulk endpoints exist and
-are allowed by USB core, but xhci-hcd always sets packet size to 512.
-The exact nature of these devices isn't documented, commit fb5ee84ea72c
-("USB: Accept bulk endpoints with 1024-byte maxpacket") only states
-that they "don't work with xHCI host controllers", whatever it means.
+A failed shmem swapin (eg, EIO) frees the swap slot and leaves a
+PTE_MARKER_POISONED entry in the page cache.  On truncate or eviction
+shmem_free_swap() passes that marker to swap_put_entries_direct(), which
+warns because it is not a swap entry.  There is nothing left to release
+either way.
 
-But somebody (or a malicious device) can try, and then the driver will
-allocate a 512 byte bounce buffer for this endpoint and may write up to
-1024 bytes into it if particular scatter-gather URBs are used, because
-xhci_align_td() obtains packet size from the descriptor. Fix this.
+Skip the release for non-swap entries, as every other caller already does.
 
-As a side effect, TRBs will be aligned to the packet size chosen by the
-driver on all endpoints of all speeds. Alignment serves the xHC, not
-device, so this is fine. Only out of spec devices are affected anyway.
-
-Reported-by: co+fd80bc5967eb22c3@bugs.sh
-Link: https://lore.kernel.org/linux-usb/D4tcSGerkYkIV1DmaUo1t8TaR5qQElDLkidn@bugs.sh/
-Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261009151624.618967-11-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20260920155002.1030454-1-devnexen@gmail.com
+Fixes: ac2d3268284b ("mm/swapfile.c: remove the unneeded checking")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+23b25ba3c6bf971f9c57@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=23b25ba3c6bf971f9c57
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Baoquan he <bhe@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chis Li <chrisl@kernel.org> (Google)
+Cc: Hugh Dickens <hughd@google.com>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ mm/shmem.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index ec278a9f95404..fffd901b59e7f 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3544,15 +3544,13 @@ static u32 xhci_td_remainder(struct xhci_hcd *xhci, int transferred,
- 
- 
- static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
--			 u32 *trb_buff_len, struct xhci_segment *seg)
-+			 u32 *trb_buff_len, struct xhci_segment *seg, u32 max_pkt)
+diff --git a/mm/shmem.c b/mm/shmem.c
+index af531eea77b93..93714b47f414b 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -976,6 +976,7 @@ static long shmem_free_swap(struct address_space *mapping,
+ 			    pgoff_t index, pgoff_t end, void *radswap)
  {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	unsigned int unalign;
--	unsigned int max_pkt;
- 	u32 new_buff_len;
- 	size_t len;
+ 	XA_STATE(xas, &mapping->i_pages, index);
++	const softleaf_t swp = radix_to_swp_entry(radswap);
+ 	unsigned int nr_pages = 0;
+ 	pgoff_t base;
+ 	void *entry;
+@@ -992,8 +993,9 @@ static long shmem_free_swap(struct address_space *mapping,
+ 	}
+ 	xas_unlock_irq(&xas);
  
--	max_pkt = xhci_usb_endpoint_maxp(urb->dev, urb->ep);
- 	unalign = (enqd_len + *trb_buff_len) % max_pkt;
+-	if (nr_pages)
+-		swap_put_entries_direct(radix_to_swp_entry(radswap), nr_pages);
++	/* A swapin-error marker holds no swap slot, so just drop it. */
++	if (nr_pages && softleaf_is_swap(swp))
++		swap_put_entries_direct(swp, nr_pages);
  
- 	/* we got lucky, last normal TRB data on segment is packet aligned */
-@@ -3697,9 +3695,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
- 		if (enqd_len + trb_buff_len < full_len) {
- 			field |= TRB_CHAIN;
- 			if (trb_is_link(ring->enqueue + 1)) {
--				if (xhci_align_td(xhci, urb, enqd_len,
--						  &trb_buff_len,
--						  ring->enq_seg)) {
-+				if (xhci_align_td(xhci, urb, enqd_len, &trb_buff_len,
-+						ring->enq_seg, ring->bounce_buf_len)) {
- 					send_addr = ring->enq_seg->bounce_dma;
- 					/* TD bounced at least, and last on this seg */
- 					td->bounce_seg = ring->enq_seg;
+ 	return nr_pages;
+ }
 -- 
 2.53.0
 
