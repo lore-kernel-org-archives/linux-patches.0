@@ -1,62 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065368;
-	b=x31B71bHcXoj/EnGpnBecPXutibIgwuyqW65/Y50GrLx8YK5w+rH8gFzSPipOOOV+u66
-	 GKO37QZ4t5RChycCe7XCCyRFg48F0xx6sW8VYCwcTUdJMP8399cXmkIuDjZgmBZVf1CPG
-	 ZtEg1GzPcmBf3/JdA9gP7ewekthjMviB+IPyR/2RDOqeEXprOJ1Vr24eL0fx33mpNMhKc
-	 FrUkr9dZ7rdPy279ZkR63mJxXNS/aegzyIRGVs4LIwe5u+jWVePeJ1zNL1MuBLnoW639P
-	 6NyRo9lwSaPI335c+7o5ZD6zzl0B7tAbPjOic2pRU2K+PRKhDwGI1DjHyxarsTa2GjA==
+	t=1794065369;
+	b=IdvR2UIj5DLfsOPO1PRslcyM58YLbB8+BS0NcX1sXNn920zG5afQglT+nbGqPo0Zu2i/
+	 t20xcb7R+FskFZv/VVBzgEGcR6nyii+GjPhg82WYnrU33cTvpuxHbnBsmXNflKprrzbw9
+	 1Sj0k6IL4r/ui3/5F6XLQUlANHSirb26BMQaD38sqbJQ2MTF/gefusq0eDrZ6j6kEb3JN
+	 N6Bh3VhY/71YJZKkB7xxK4ldKK+Ih6AoATTopg7AyDbZjNMpb5cMl4wqpy43lCQpxSjIv
+	 4HG72lKgEmxJn0/+dIZ2+96Gp9hw22oyt3iYAvaqDG2CNh1+qIr6fZI1Rekbg+chtug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065369;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fqmB0itBI7qeE4pJXVf2PvnASumG+cK+w2jFUygBSow=;
-	b=ET1vHdbxW2z6hETkjnAdf0cm9x9wGVTe098K5UODViavVefT/uMrzd99ILJwBiMciyWl
-	 xqwK1hQ4mve4Ounu4PafeMa5Vp810iPWohiQ8m3U5HC/VCvC2J27AtL5t4jsBy5o533zD
-	 60WFBpZ7MOkgLZOaTOzxT6lgYkxthV/WId5wMoyePm96puEzAIAffLZGa4f7Ezv95a9yc
-	 ljFbxxuYO4F+6QUABjkv/qiSzaqsPDSzOcqaw9/hrEII1OmxIjLz0ZNRYkefOb/xD5ztG
-	 KIEZaai2rFnO7AdOAHq4qZcGgwjJOD4UGm3N4euyQm5+qKxxeb6I342ta4PPbLG61gA==
+	bh=KmMf+HMXTD+85jtdS1GLHbwKZgQowuIHcaKj1/ysGc4=;
+	b=rLvHg8Sco+XL8uYcIrFnwA7+TqQKTFGH67wV8NTEj9zEU7sUo3aeCwRabMocJgGi5DEW
+	 r9q0wcLUanVUOxEyvkj24ZFBhJVlJOr0pZwl2ribCthGV1LLfCreCn26Xxm5ZWbBsQlWa
+	 QBqnGlUP7RBg3iVe1v5/s1mPS5mGT2HBZpa/idxaDBWnn8uSuY+fpPDOrgAvNCpyHs2Jc
+	 UBN/U1ix5egipBZQIyguwKMeG+09/aXtJ18ba0gzMlu+GgajkSZI9y2A6+nGzW1B8ogVI
+	 WK5hmJznRfcJaavWUCalh4+hB6k4/E6Ky4SMjn4/KtldKYfoYUKIA80V+1fUP6uKhGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J3bnhP+2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bI769cnL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C239606A32C;
-	Sat,  7 Nov 2026 15:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E605606A335;
+	Sat,  7 Nov 2026 15:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J3bnhP+2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4431F0089F;
-	Sat,  7 Nov 2026 15:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bI769cnL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDF41F0089F;
+	Sat,  7 Nov 2026 15:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065368;
-	bh=fqmB0itBI7qeE4pJXVf2PvnASumG+cK+w2jFUygBSow=;
+	s=korg; t=1794065369;
+	bh=KmMf+HMXTD+85jtdS1GLHbwKZgQowuIHcaKj1/ysGc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3bnhP+2WY6XVvsPkgoKkPO76sdl/rPgLIDFAGYXT6XoG/50kIssPOF1PmJJGBF6L
-	 xPYm/A43uQ7+YLToFOrsW2x4caJwVWkVh2+OoncYzMeGOZQjuuWBUeNaJSVGxnG+KF
-	 wYrIRG5KpTjwVrhfwrPRRiCEjAJLFoLOK0yO9jPA=
+	b=bI769cnLdyBoSuonSnQThD/rIU898JiA3kjOHKzvMbx1U+OrlANZiI63INsjrsV5f
+	 NHNKGaZ+/Wxo3rRrPQT7oafb6K9Rsn8i//AvTlpoVb6+Yq4FoRcDhWKP0a8XAVmaKD
+	 u0REQKD3dQMjpGYq16fPp9wrWsekqGjJl0b3rsx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
+	Hardik Garg <hargar@linux.microsoft.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Johannes Weiner <hannes@cmpxchg.org>,
 	David Hildenbrand <david@kernel.org>,
-	Harry Yoo <harry@kernel.org>,
-	Usama Arif <usama.arif@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Wei Xu <weixugc@google.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Yu Zhao <yuzhao@google.com>,
+	apais@microsoft.com,
+	rlmenge@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1082/1257] mm: page_alloc: make defrag_mode retries follow the promoted order
-Date: Sat,  7 Nov 2026 08:56:18 -0500
-Message-ID: <20261107135009.145129531@linuxfoundation.org>
+Subject: [PATCH 7.3 1100/1257] mm: multi-gen LRU: fix NULL lruvec->pgdat deref with memcg disabled on cmdline
+Date: Sat,  7 Nov 2026 08:56:36 -0500
+Message-ID: <20261107135009.646304679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -78,235 +85,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
 
-[ Upstream commit 4cd78a2dcfbb13f049f841b98763896a3d1d7750 ]
+[ Upstream commit 183895979c441e52dbd651b388553b09eaa35cfa ]
 
-Since commit 7e8756d7ad22 ("mm: page_alloc: fix non-movable reclaim storm
-in defrag_mode"), direct reclaim and compaction for non-movable requests
-under defrag_mode run at pageblock_order, to produce the whole blocks that
-ALLOC_NOFRAGMENT needs.  The retry decisions that follow still use the
-request order.  An order-0 request can therefore retry indefinitely
-without ever reaching the ALLOC_NOFRAGMENT fallback:
+When CONFIG_MEMCG=y, lruvec_pgdat() returns lruvec->pgdat, which for the
+per-node pgdat->__lruvec is left NULL by lruvec_init() and only filled in
+lazily by mem_cgroup_lruvec(). Normally that happens early, e.g. on the
+first folio_add_lru().
 
-- Reclaim at pageblock_order gives up after one pass as soon as a zone
-  looks compaction_ready(), and do_try_to_free_pages() then returns 1
-  even though nothing was reclaimed. It returns before the retry that
-  would reclaim memory.low-protected cgroups, so when most memory is
-  protected, the pass that did run finds next to nothing.
+With cgroup_disable=memory, lru_gen_shrink_node() passes &pgdat->__lruvec
+directly to shrink_one(). If direct reclaim runs before anything has
+called mem_cgroup_lruvec() for the node, which can happen during early
+boot under memory pressure (e.g. a kdump kernel), get_swappiness() ends
+up dereferencing a NULL pgdat:
 
-- Compaction at pageblock_order fails or is deferred.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000005040
+  pc : get_swappiness+0x68/0xb0
+  lr : try_to_shrink_lruvec+0x54/0x2c0
+  Call trace:
+   get_swappiness+0x68/0xb0 (P)
+   try_to_shrink_lruvec+0x54/0x2c0
+   shrink_one+0x8c/0x240
+   shrink_node+0xc6c/0xe08
+   do_try_to_free_pages+0xdc/0x570
+   try_to_free_pages+0x124/0x278
+   __alloc_frozen_pages_noprof+0x6e8/0xf78
+   alloc_pages_mpol+0xc4/0x1c0
+   alloc_frozen_pages_noprof+0x54/0xe8
+   alloc_pages_noprof+0x1c/0x40
+   atomic_pool_expand+0x98/0x300
+   __dma_atomic_pool_init+0x58/0xd8
+   dma_atomic_pool_init+0x154/0x170
+   do_one_initcall+0x64/0x350
+   kernel_init_freeable+0x214/0x430
+   kernel_init+0x2c/0x208
+   ret_from_fork+0x10/0x20
 
-- should_reclaim_retry() takes the reported progress as progress for
-  the order-0 request and resets no_progress_loops. The request
-  retries.
+The classic LRU path and MGLRU before per-node lru_gen_folio lists
+obtained the lruvec through mem_cgroup_lruvec(), which sets
+lruvec->pgdat.
 
-Order 1-3 requests loop the same way, and should_compact_retry() also
-checks their pageblock_order compaction result against the request order.
+The above was hit on an arm64 kdump kernel (6.18-based) booted with
+cgroup_disable=memory nr_cpus=4. It also reproduces on mainline on an
+arm64 VM with CONFIG_ARM64_64K_PAGES=y, CONFIG_MEMCG=y,
+CONFIG_LRU_GEN_ENABLED=y and:
 
-On a production host (64G, defrag_mode, memory.low covering most of the
-workload), 95% of direct reclaim runs were order-9 runs that returned 1
-with nothing reclaimed, at up to 60k runs per second.  Across ~200M
-should_reclaim_retry() calls in a day, no_progress_loops never left 0.
-The spinning allocations were SLUB slab refills for inode and dentry
-caches.  The time spent registers as memory pressure, and pressure-based
-OOM killing takes down both workloads and system services.
+  mem=160M nr_cpus=4 coherent_pool=512M cgroup_disable=memory
 
-For promoted requests:
+These options only serve to force direct reclaim early in boot; with
+160M the boot eventually ends in OOM regardless. On mainline the first
+LRU reclaim happens while unpacking the initramfs, and faults the same
+way:
 
-- Reclaim progress does not reset no_progress_loops, as for costly
-  orders.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000005040
+  pc : get_swappiness+0xd4/0x150
+  Call trace:
+   get_swappiness+0xd4/0x150 (P)
+   try_to_shrink_lruvec+0x44/0x2b8
+   shrink_one+0x80/0x1a0
+   shrink_node+0xd98/0xea8
+   do_try_to_free_pages+0xf4/0x4b0
+   try_to_free_pages+0x110/0x360
+   __alloc_frozen_pages_noprof+0x8b0/0x1718
+   ...
+   __filemap_get_folio_mpol+0x2ac/0x548
+   simple_write_begin+0x44/0xf8
+   page_symlink+0x178/0x198
+   ...
+   do_populate_rootfs+0x13c/0x200
 
-- should_compact_retry() checks the compaction result at the promoted
-  order and does not retry COMPACT_SKIPPED, since the request can fall
-  back. The compaction priority floor and the COMPACT_SUCCESS retry
-  limit stay those of the request order, so a non-costly request still
-  gets its COMPACT_PRIO_SYNC_FULL pass before it falls back.
-
-When a promoted request takes the fallback, reset the retry counters, so
-that the fallback attempt gets a full retry budget before the OOM killer
-is considered.  A request whose reclaim was not promoted spent its budget
-on the request itself and keeps its counters, as Usama Arif pointed out.
-
-__alloc_pages_slowpath() computes the promoted order once per iteration
-and keeps it in alloc_context for direct reclaim, direct compaction and
-the two retry helpers, so no callee has to recompute it.  Harry Yoo asked
-for the promoted order to be explicit rather than derived in each callee,
-and Vlastimil Babka suggested alloc_context over new function parameters.
-
-In a VM reproducer (32G, defrag_mode, inode churn under memory.low):
-
-                                        before    after
-    should_reclaim_retry() calls           63M     293k
-    peak memory pressure (PSI some avg10)  99%      12%
-
-File creation runs 5.7x faster.
-
-[kas@kernel.org: s/order_nofrag_promoted/order_defrag_promoted/, per hannes]
-  Link: https://lore.kernel.org/atDL-nSFP2KVU7cI@thinkstation
-Link: https://lore.kernel.org/as5q14OsbK2CmOrh@thinkstation
-Fixes: 7e8756d7ad22 ("mm: page_alloc: fix non-movable reclaim storm in defrag_mode")
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Link: https://lore.kernel.org/20261017050928.128582-1-sidchintamaneni@gmail.com
+Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
+Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Assisted-by: LLM
 Cc: Johannes Weiner <hannes@cmpxchg.org>
 Cc: David Hildenbrand <david@kernel.org>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: Usama Arif <usama.arif@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Qi Zheng <qi.zheng@linux.dev>
 Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <apais@microsoft.com>
+Cc: <rlmenge@gmail.com>
+Cc: <stable@vger.kernel.org> # 6.3+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 65 +++++++++++++++++++++++++++++--------------------
- mm/page_alloc.h |  2 ++
- 2 files changed, 41 insertions(+), 26 deletions(-)
+ mm/vmscan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index f52ed7d2cd347..c1cc9c705d2c1 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4135,6 +4135,12 @@ __alloc_pages_may_oom(gfp_t gfp_mask, unsigned int order,
- 	return page;
- }
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 1d1ef7ea52c59..6a53762d55447 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -5258,7 +5258,7 @@ static void lru_gen_shrink_node(struct pglist_data *pgdat, struct scan_control *
+ 		sc->nr_reclaimed = 0;
  
-+static inline bool order_defrag_promoted(unsigned int order,
-+					 const struct alloc_context *ac)
-+{
-+	return ac->reclaim_compact_order != order;
-+}
-+
- /*
-  * Maximum number of compaction retries with a progress before OOM
-  * killer is consider as the only way to move forward.
-@@ -4157,22 +4163,7 @@ __alloc_pages_direct_compact(gfp_t gfp_mask, unsigned int order,
- 		.order = order,
- 		.page = NULL,
- 	};
--	int compact_order = order;
--
--	/*
--	 * If fallbacks are not permitted (defrag_mode), we either
--	 * need to reclaim space in a block of matching type, or clear
--	 * out an entire block to allow __rmqueue_claim() to convert.
--	 *
--	 * Reclaim by itself is primarily freeing space in movable
--	 * blocks, since that's where the LRU pages live. So this
--	 * works for movable requests, but not for others.
--	 *
--	 * For those, promote the order to help make blocks, instead
--	 * of spinning in reclaim alone unproductively.
--	 */
--	if ((alloc_flags & ALLOC_NOFRAGMENT) && ac->migratetype != MIGRATE_MOVABLE)
--		compact_order = max(order, pageblock_order);
-+	int compact_order = ac->reclaim_compact_order;
- 
- 	if (!compact_order)
- 		return NULL;
-@@ -4265,7 +4256,7 @@ should_compact_retry(gfp_t gfp_mask, struct alloc_context *ac, int order,
- 	int retries = *compaction_retries;
- 	enum compact_priority priority = *compact_priority;
- 
--	if (!order)
-+	if (!ac->reclaim_compact_order)
- 		return false;
- 
- 	if (fatal_signal_pending(current))
-@@ -4274,10 +4265,12 @@ should_compact_retry(gfp_t gfp_mask, struct alloc_context *ac, int order,
- 	/*
- 	 * Compaction was skipped due to a lack of free order-0
- 	 * migration targets. Continue if reclaim can help.
-+	 * Promoted requests fall back instead.
- 	 */
- 	if (compact_result == COMPACT_SKIPPED) {
--		ret = compaction_zonelist_suitable(ac, order, alloc_flags,
--						   gfp_mask);
-+		if (!order_defrag_promoted(order, ac))
-+			ret = compaction_zonelist_suitable(ac, order,
-+							   alloc_flags, gfp_mask);
- 		goto out;
- 	}
- 
-@@ -4476,11 +4469,7 @@ __alloc_pages_direct_reclaim(gfp_t gfp_mask, unsigned int order,
- 	struct page *page = NULL;
- 	unsigned long pflags;
- 	bool drained = false;
--	int reclaim_order = order;
--
--	/* Match the slowpath compaction promotion in __alloc_pages_direct_compact */
--	if ((alloc_flags & ALLOC_NOFRAGMENT) && ac->migratetype != MIGRATE_MOVABLE)
--		reclaim_order = max(order, pageblock_order);
-+	int reclaim_order = ac->reclaim_compact_order;
- 
- 	psi_memstall_enter(&pflags);
- 	*did_some_progress = __perform_reclaim(gfp_mask, reclaim_order, ac);
-@@ -4656,9 +4645,12 @@ should_reclaim_retry(gfp_t gfp_mask, unsigned order,
- 	/*
- 	 * Costly allocations might have made a progress but this doesn't mean
- 	 * their order will become available due to high fragmentation so
--	 * always increment the no progress counter for them
-+	 * always increment the no progress counter for them. The same goes for
-+	 * promoted requests: their reclaim reports progress when it backs off
-+	 * for compaction without freeing anything.
- 	 */
--	if (did_some_progress && order <= PAGE_ALLOC_COSTLY_ORDER)
-+	if (did_some_progress && order <= PAGE_ALLOC_COSTLY_ORDER &&
-+	    !order_defrag_promoted(order, ac))
- 		*no_progress_loops = 0;
+ 	if (mem_cgroup_disabled())
+-		shrink_one(&pgdat->__lruvec, sc);
++		shrink_one(mem_cgroup_lruvec(NULL, pgdat), sc);
  	else
- 		(*no_progress_loops)++;
-@@ -4942,6 +4934,22 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 	/* If allocation has taken excessively long, warn about it */
- 	check_alloc_stall_warn(gfp_mask, ac->nodemask, order, alloc_start_time);
+ 		shrink_many(pgdat, sc);
  
-+	/*
-+	 * If fallbacks are not permitted (defrag_mode), we either
-+	 * need to reclaim space in a block of matching type, or clear
-+	 * out an entire block to allow __rmqueue_claim() to convert.
-+	 *
-+	 * Reclaim by itself is primarily freeing space in movable
-+	 * blocks, since that's where the LRU pages live. So this
-+	 * works for movable requests, but not for others.
-+	 *
-+	 * For those, promote the order to help make blocks, instead
-+	 * of spinning in reclaim alone unproductively.
-+	 */
-+	ac->reclaim_compact_order = order;
-+	if ((alloc_flags & ALLOC_NOFRAGMENT) && ac->migratetype != MIGRATE_MOVABLE)
-+		ac->reclaim_compact_order = max(order, pageblock_order);
-+
- 	/* Try direct reclaim and then allocating */
- 	if (!compact_first) {
- 		page = __alloc_pages_direct_reclaim(gfp_mask, order, alloc_flags,
-@@ -5023,6 +5031,11 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 	/* Reclaim/compaction failed to prevent the fallback */
- 	if (defrag_mode && (alloc_flags & ALLOC_NOFRAGMENT)) {
- 		alloc_flags &= ~ALLOC_NOFRAGMENT;
-+		/* Retries went into making blocks, start the fallback afresh */
-+		if (order_defrag_promoted(order, ac)) {
-+			no_progress_loops = 0;
-+			compaction_retries = 0;
-+		}
- 		goto retry;
- 	}
- 
-diff --git a/mm/page_alloc.h b/mm/page_alloc.h
-index b9259deddb59d..2b1017a91928c 100644
---- a/mm/page_alloc.h
-+++ b/mm/page_alloc.h
-@@ -93,6 +93,8 @@ struct alloc_context {
- 	bool spread_dirty_pages;
- 	/* Only flags that are global to the whole allocation go here. */
- 	unsigned int alloc_flags;
-+	/* Set by __alloc_pages_slowpath() before reclaim and compaction */
-+	unsigned int reclaim_compact_order;
- };
- 
- /*
 -- 
 2.53.0
 
