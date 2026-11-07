@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063746;
-	b=1ku5wU8F6CWd7cThFF8CbNiUyqRxEWhd7kPYg0UQ4uPyriISNNVtmNL35IWx/ZWtxoRH
-	 ELKgDTJjdq6wkCoYQdgfT9JJrMOMxNygMhSM5IFCXHtY8r5Xzo3UIpHuK7GRandse+EFI
-	 jHafPRu4DxzEW5/OEVJ8ImASbqlsM2Q8FIrm374a36gJogcayr/gvuwSPP/6G0nUp//Bi
-	 xz0dBp38pQCQcmC3Z39vAGr02ZENmxcVcTzc+y/cNJKXomGwR+vxn4N0HjVlV9mWgwe79
-	 LuuQT8w+B+3cvT/kQK9q07YJYKA9rYoA9QKe/OPuvTC7qyGHKRV/aYL8Lni6tAbwy5w==
+	t=1794063747;
+	b=N7ubvGg5yGAHeBgqtCqf3RR3pdqyjaCr0aerM6aSfobXcIr8c+d69qECGzYcjt1lU+4X
+	 HBkjNI8oPBJ6mI0nmASuOy899fWOMtjuqKmh+lC9ca2twOTazpyjoeHTqVX0bgtSeo7vo
+	 LB1+bHG7cyd7ZSCIpa3nt2N2FclXbVMQ+trMqSvWPj0+VUn5xvtU8401scIo7MmRoBixk
+	 gspXTNuDrqcF+zGvaR7mqLGvmWxSplTcnLtmd+ikQCgWpLt+qZ5gaIRexK/t6TUoXi7qK
+	 tryL7Y0G2elFwYrcoSprwbMKlISPMxhk+Zf8Ceg0ZSJLmrIHatwbuhJtW2IAyH9o1LQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063747;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WytbI84MmeVRHwff3zkoswJT/GMi5Xb93m/TDd6/IK4=;
-	b=HWKPWHO8woLEvaPxu72OZNlTydo/6LvVlxec4CoGvY61a1XlmtPLpRTtsXrHM3mM3X9O
-	 zJAyIo3WIUJN3IWW7pEKwCqEeA0uV8KrUD2WY69c8txCEjyPrrf/d/q8ddCmfuxdzyUWP
-	 zfupZ1p4sG2J3jj6bkJzZDGKr020f+hMYb/MIuAfZzoCxYGOduT2rYRn7Cjz2VBIme3sc
-	 UEyym5xRMGxm3Tyzz7I3WXLuAmpHoZQJXGuH/73cbn1PneM3BD7lG3uNqtef+/7rPkzmC
-	 2u2EgTVv3REqWTcTRhksMykEq35BU2qPgkZSOBUPA9Bw5Lrva2iPikrGD3tZi67P9og==
+	bh=VaNxsV3X3g/NmrUi42tkB07D4/D8DF4fqtV78LKHkDI=;
+	b=Eh6uTfMgWRSQc07CB2CJ28tI+r+1YGFvFXa6pT7d6o6+HP09VxL0MUZ39wZsXZf/pzFs
+	 nNt4PYDP9x4/Lc65Q5l3HpdmbLLH2k6ruhF+YbAqd6/Yy1j5qoMRDbCcAWJsA0nCAaDWC
+	 10gsHx50G0sriI2m1uSV8VUqG//g5ExPSZ2quJp+lajm9pNCqkea33NMt69brhiXe1+kB
+	 Fc5RklVkaBBR3017SOhWPn7Z+WeIOZFSbwvy6V+fpSFw6KG2OHXxYzFAieyVavXmNHw3N
+	 Yo4qZ5VLi/88RZKV/aTIyzprB2FFt0xgqo2tsLN5QdPXEBMQZxDo8Watevlw1cM/LQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GqHIPEu5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4PuX5MZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B69606A32D;
-	Sat,  7 Nov 2026 15:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99190606D809;
+	Sat,  7 Nov 2026 15:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GqHIPEu5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBF61F0089F;
-	Sat,  7 Nov 2026 15:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4PuX5MZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488E11F008A1;
+	Sat,  7 Nov 2026 15:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063746;
-	bh=WytbI84MmeVRHwff3zkoswJT/GMi5Xb93m/TDd6/IK4=;
+	s=korg; t=1794063747;
+	bh=VaNxsV3X3g/NmrUi42tkB07D4/D8DF4fqtV78LKHkDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GqHIPEu55lZ0zOtCPwXCo+jRCyfYOojUVlbXWhMtTcbfTDBsZqYQltF238M23E5dQ
-	 UWwnCHEWaUIornXm/jA0XmqPmh0C3hpVghbs+GC7b9MXAfCwZostIcbT3bgS5S2X9h
-	 ig6qhqj9K39ZkyNcdtMf4zvVNG8BOkwcVfSc9zL8=
+	b=Z4PuX5MZvG8ExUvXAmMpKj5anwXeP2mm6dYsw4hILLJJPqmCBhRKiAxTPEBIIvGMe
+	 k3ONRtNdtDRTbPqVj/0+SSQ3eA4seXQYhrQagD6aySdt6+2w/y0atRNeUsCF9IEaHl
+	 PvLKKsnOyF5YJF66PYRNv9IrfZrZBGQKmMR4+n88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	Daniel Thompson <daniel@riscstar.com>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 840/869] kgdb: Fix buffer overflow in the qRcmd packet handler
-Date: Sat,  7 Nov 2026 08:58:42 -0500
-Message-ID: <20261107134921.346517372@linuxfoundation.org>
+Subject: [PATCH 6.18 841/869] fsverity: Be more careful with return value of ->get_verity_descriptor()
+Date: Sat,  7 Nov 2026 08:58:43 -0500
+Message-ID: <20261107134921.374171940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,72 +67,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 9ca9e8c857b55a081d5a1f8039b27cbb4d646b49 ]
+[ Upstream commit 8f8faec82aa902b1997ae578c46bcc84afbad811 ]
 
-gdb_cmd_query() decodes the hex payload of a qRcmd packet (the GDB
-"monitor" command passthrough to kdb) into remcom_out_buffer and hands
-it to kdb_parse(). It sizes the decode with strlen() of the payload:
+If fsverity_operations::get_verity_descriptor() returns that the verity
+descriptor has 0 size, then a zero-size buffer is allocated to hold it,
+and it's called again with bufsize=0.
 
-	int len = strlen(remcom_in_buffer + 6);
-	...
-	kgdb_hex2mem(remcom_in_buffer + 6,
-		     remcom_out_buffer, len);
-	len = len / 2;
+But bufsize=0 is a special case that says to return the actual size.  If
+in the meantime the filesystem has decided that the size is some
+actually valid size, it will return that size, and then
+validate_fsverity_descriptor() will read from ZERO_SIZE_PTR and crash.
 
-kgdb_hex2mem() takes count as the number of bytes to produce and
-decodes them in place at buf, reading and writing 2 * count bytes
-there. len here is the hex character count, twice the decoded size,
-so the decode runs over 2 * len bytes at remcom_in_buffer + 6, off
-the end of the buffer. On x86 BUFMAX is 1024, so a 256-byte monitor
-command (512 hex characters) overruns remcom_in_buffer during the
-in-place decode:
+Of course, for the filesystem to misbehave in that strange way, it
+generally would require direct writes to the block device.
 
-  BUG: KASAN: global-out-of-bounds in kgdb_hex2mem+0x131/0x160
-  Read of size 1 at addr ffffffff8765ef05 by task sh/1
-  ...
-  kgdb_hex2mem+0x131/0x160
-  gdb_serial_stub+0x16d4/0x3170
-  kgdb_cpu_enter+0xb68/0x1520
-  ...
-  The buggy address belongs to the variable:
-   remcom_in_buffer+0x405/0x420
+Regardless, fsverity_get_descriptor() might as well guard against it.
+Make it do so.  Specifically, validate that the first call to
+->get_verity_descriptor() returns at least the minimum descriptor size,
+and validate that the second call returns the same size as the first.
 
-Halve len before the call so kgdb_hex2mem() gets the decoded byte count.
-It then reads the len hex characters already in remcom_in_buffer and
-writes len / 2 bytes, all inside the buffer, and remcom_out_buffer holds
-the same command as before.
-
-Fixes: a0de055cf613 ("kgdb: gdb "monitor" -> kdb passthrough")
+Fixes: fd2d1acfcadf ("fs-verity: add the hook for file ->open()")
 Cc: stable@vger.kernel.org
-Suggested-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/all/CAD=FV=V1-gNZ8yTsC+D8inePWv=A+9H09hWJojQf5NRpcNvK+Q@mail.gmail.com/
-Assisted-by: Qoder:Qwen3.8-Max
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20260916151753.6722-1-fangxy@xiaopeng.com
-Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+Link: https://patch.msgid.link/20261025203831.120095-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/gdbstub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/verity/open.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/kernel/debug/gdbstub.c b/kernel/debug/gdbstub.c
-index dbe48bd53e533..1a917c5bdd1eb 100644
---- a/kernel/debug/gdbstub.c
-+++ b/kernel/debug/gdbstub.c
-@@ -816,9 +816,9 @@ static void gdb_cmd_query(struct kgdb_state *ks)
- 				strscpy(remcom_out_buffer, "E01");
- 				break;
- 			}
-+			len = len / 2;
- 			kgdb_hex2mem(remcom_in_buffer + 6,
- 				     remcom_out_buffer, len);
--			len = len / 2;
- 			remcom_out_buffer[len++] = 0;
+diff --git a/fs/verity/open.c b/fs/verity/open.c
+index 2aa5eae5a5403..02e2c14ab3ffb 100644
+--- a/fs/verity/open.c
++++ b/fs/verity/open.c
+@@ -273,12 +273,6 @@ static bool validate_fsverity_descriptor(struct inode *inode,
+ 					 const struct fsverity_descriptor *desc,
+ 					 size_t desc_size)
+ {
+-	if (desc_size < sizeof(*desc)) {
+-		fsverity_err(inode, "Unrecognized descriptor size: %zu bytes",
+-			     desc_size);
+-		return false;
+-	}
+-
+ 	if (desc->version != 1) {
+ 		fsverity_err(inode, "Unrecognized descriptor version: %u",
+ 			     desc->version);
+@@ -317,31 +311,37 @@ static bool validate_fsverity_descriptor(struct inode *inode,
+ int fsverity_get_descriptor(struct inode *inode,
+ 			    struct fsverity_descriptor **desc_ret)
+ {
+-	int res;
++	int size, res;
+ 	struct fsverity_descriptor *desc;
  
- 			kdb_common_init_state(ks);
+-	res = inode->i_sb->s_vop->get_verity_descriptor(inode, NULL, 0);
+-	if (res < 0) {
+-		fsverity_err(inode,
+-			     "Error %d getting verity descriptor size", res);
+-		return res;
++	size = inode->i_sb->s_vop->get_verity_descriptor(inode, NULL, 0);
++	if (size < 0) {
++		fsverity_err(inode, "Error %d getting verity descriptor size",
++			     size);
++		return size;
+ 	}
+-	if (res > FS_VERITY_MAX_DESCRIPTOR_SIZE) {
+-		fsverity_err(inode, "Verity descriptor is too large (%d bytes)",
+-			     res);
++	if (size < sizeof(*desc) || size > FS_VERITY_MAX_DESCRIPTOR_SIZE) {
++		fsverity_err(inode,
++			     "Verity descriptor has invalid size (%d bytes)",
++			     size);
+ 		return -EMSGSIZE;
+ 	}
+-	desc = kmalloc(res, GFP_KERNEL);
++	desc = kmalloc(size, GFP_KERNEL);
+ 	if (!desc)
+ 		return -ENOMEM;
+-	res = inode->i_sb->s_vop->get_verity_descriptor(inode, desc, res);
++	res = inode->i_sb->s_vop->get_verity_descriptor(inode, desc, size);
+ 	if (res < 0) {
+ 		fsverity_err(inode, "Error %d reading verity descriptor", res);
+ 		kfree(desc);
+ 		return res;
+ 	}
+-
+-	if (!validate_fsverity_descriptor(inode, desc, res)) {
++	if (res != size) {
++		fsverity_err(inode, "Verity descriptor size changed (%d => %d)",
++			     size, res);
++		kfree(desc);
++		return -EINVAL;
++	}
++	if (!validate_fsverity_descriptor(inode, desc, size)) {
+ 		kfree(desc);
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
