@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061055;
-	b=LQGBZM4bq7JOFq2leUYjkTJ7a/5UIBDolRdTCAbBVbPGsOUev+ZUVaTcRrzOVk7kH1Jb
-	 T6Or6wIz9yMKwdv5KLjC+J0PNYWLaN8cwrQSWkeBTDgSaQtSEY2ZEAatZUALqhMLe2HuG
-	 5UC9ztS46X2x60K1VagGg2BITiARehgqDUn64838yjFv9X/p7Vf7lgM1JPF3UoExvuKUM
-	 AAxTY30bu1Zct0S9nDHqFRaFI0RccwOJglQP0ofKhOnOk8DCZvUgbhc6QJUa/9ASJiFLQ
-	 HhwXsHqJ3J2R6UKnJrjLMaybJr0NCrYcgPnJHrozWTDoA7K+XsarW0mh4oY9NDeddXQ==
+	t=1794061056;
+	b=gloXenwzHR/x3uihoTb1Yo4G2bYJhJEC6WmlQHoIv5EX1NmOmBM4zr9OlRUoWcd8kgSH
+	 XSdVhiVm2VrywfR/Gd9rvNislltoUEyuTzI8gRdxHSJA3+zMDrTECNbqmsoVXhqlznRe/
+	 oVXaCXVfz5k9wGGd/pfZe632szOKghg8uib6eiAG3V8aCqY6BKFhciEEKplfiIZIA23zE
+	 LAsaFrZ4DsHGDwo5tn+/kt/697sa85CbyygxjoR69KpIA7fqLP5xt/krihWR8ODg7I8G+
+	 ZQxBcbK9YPfKG6l7Wl/W66pQoSIyVJxCVPzDbeVwo9gddCLRcsUK5vg5VMBHko3xpjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061055;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061056;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rX4Q91v41+czhTPbt4Mw8Gjkb0bz7K3VvM1cBcKSQzY=;
-	b=QJwmmdl4LrEXStVQrEUsFdg8iDBsF5TkbLL2voBW6TKut4wHHBhwJWjuymfe72qLRZdA
-	 Tpr6fQA56dS/6yIrNY2LPb6n2aTrbh4nQNZxdpSBzh9xCcSqI+94JqNFonVbVgddRNdjl
-	 skL0I8sy/QI4BPsIPyuvibpl7uc1qeRo2JCB4lwcw5YxV3J9O6hca5s/pF3N/w//RoZH2
-	 6cndY6jwRirMNGsEM63y1WXWa6KjBKOjzcM/0xfl5RhqhqBkhJC7sQ0ifDVh5bsRZuM3T
-	 +EyjlvmZTLJUqCrGX3+GQAOycmTo+o98Tv1qLFCXGQg3tTNZvfTyoSa41vjIbxAaIfw==
+	bh=h5dNXVhmyoN0papFR6Map1sLCB5H9TidQ/gg+0jtNyk=;
+	b=QmsOif+47BWQbIeC//gzQ62PHozSQkuDHUXTRwVGL3zmMv1Zu8e3kEOjYJkaimEYCGSO
+	 eLizeYJGSHsg8l1K3gR1cwIagu+HTq1sQ807tetOLb58YP9kDiTglLeWxLS0nDSRM53qO
+	 Rm/zSn92vn61P3T34APLKbDmMe7YgwBDrhpH74lh3M+NujQA8fVsqy6QQDl3cF3gSkMMF
+	 rsS1GrT+lKrUh6VfGBxm8erD7vTT8pp2vFr1+XZmzBL3AgtxL2CWAV+KWzresdpaIcfLT
+	 WHphGAFCq0vDrmQk9I+GEBlgAKkny4qp2n3c7oEW5iflXIcfxXQ5EY2CrMa0r1bpxWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lFP3p8GX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzCTq8px;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF4B606D813;
-	Sat,  7 Nov 2026 14:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACCC606A339;
+	Sat,  7 Nov 2026 14:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lFP3p8GX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2701F0089F;
-	Sat,  7 Nov 2026 14:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzCTq8px
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5461F0089F;
+	Sat,  7 Nov 2026 14:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061054;
-	bh=rX4Q91v41+czhTPbt4Mw8Gjkb0bz7K3VvM1cBcKSQzY=;
+	s=korg; t=1794061055;
+	bh=h5dNXVhmyoN0papFR6Map1sLCB5H9TidQ/gg+0jtNyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lFP3p8GXizXZq5kjptPpOJ4MmaZYsU2nUmugC8SE7m5Q6NN4CXxwqWMluoLkZlG2F
-	 +0xHGET17ZqnRG9iBTJzTFKi343WMqjCi1PXW6+3Vt6kycJzApej/WYLsOfC23KMpP
-	 4+aCRj5hXfmrlVXQugtaNU1LHlsILknymsVSGVLg=
+	b=VzCTq8pxwhSs0lrzdQvHRPi9X8zPTLcXg/yrNfxh86G7h7cfEbNoyS8sYvvXqMSn/
+	 slAKPgUQXVx8IoohdXnpZcsIGqhaBKMIlduA47/uccf2wHK+IYzaudFuCdQ3zWslBW
+	 c3x+WomHDAxNolGE6qBv1RSIv5/XyxeQa+NG3fOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c815b25cdb3678e7083@syzkaller.appspotmail.com,
-	Helge Deller <deller@gmx.de>,
+	Sumeet Pawnikar <sumeet4linux@gmail.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0386/1536] fbcon: Fix KASAN slab-out-of-bounds Read in fbcon_prepare_logo
-Date: Sat,  7 Nov 2026 08:40:02 -0500
-Message-ID: <20261107135008.455170824@linuxfoundation.org>
+Subject: [PATCH 6.12 0387/1536] powercap: intel_rapl: Fix kernel panic during PMU unbind
+Date: Sat,  7 Nov 2026 08:40:03 -0500
+Message-ID: <20261107135008.481746782@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,38 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Sumeet Pawnikar <sumeet4linux@gmail.com>
 
-[ Upstream commit 94e6a058b16820e02f25e1221a4c4e713ba23550 ]
+[ Upstream commit 916b61abba586d950a4d8264e2841cc5ccfa4df1 ]
 
-Ensure the logo will not exceed the screen size, which then should
-fix a reported KASAN: slab-out-of-bounds Read in fbcon_prepare_logo.
+rapl_package_add_pmu() fails internally at perf_pmu_register(),
+and rapl_pmu_update() leaves the global rapl_pmu.pmu structure
+zero-initialized via memset and returns an error. But any
+previously probed packages retain has_pmu = true.
 
-Reported-by: syzbot+0c815b25cdb3678e7083@syzkaller.appspotmail.com
-Signed-off-by: Helge Deller <deller@gmx.de>
+When the driver is subsequently unbound or removed,
+rapl_package_remove_pmu_locked() sees has_pmu == true and
+unconditionally calls perf_pmu_unregister(&rapl_pmu.pmu) on the
+zeroed-out structure. This attempts a list_del_rcu() on a NULL
+list head, immediately causing a kernel panic.
+
+Fix this by checking if the PMU is actually registered before
+attempting to unregister it.
+
+Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+[ rjw: Added empty line after the new conditional ]
+Link: https://patch.msgid.link/20260822094657.12489-1-sumeet4linux@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/powercap/intel_rapl_common.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 5ce1aba2e7615..e582314f1ccc3 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -596,6 +596,13 @@ static void fbcon_prepare_logo(struct vc_data *vc, struct fb_info *info,
- 		erase &= ~0x400;
- 	logo_height = fb_prepare_logo(info, par->rotate);
- 	logo_lines = DIV_ROUND_UP(logo_height, vc->vc_font.height);
-+	logo_lines = min(logo_lines, rows);
-+	logo_lines = min(logo_lines, new_rows - 1);
-+	if (logo_lines <= 0) {
-+		logo_lines = 0;
-+		logo_shown = FBCON_LOGO_DONTSHOW;
-+		return;
-+	}
- 	q = (unsigned short *) (vc->vc_origin +
- 				vc->vc_size_row * rows);
- 	step = logo_lines * cols;
+diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+index 4af20c36a8095..8a00e757f87d8 100644
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -2101,7 +2101,9 @@ void rapl_package_remove_pmu(struct rapl_package *rp)
+ 			return;
+ 	}
+ 
+-	perf_pmu_unregister(&rapl_pmu.pmu);
++	if (rapl_pmu.registered)
++		perf_pmu_unregister(&rapl_pmu.pmu);
++
+ 	memset(&rapl_pmu, 0, sizeof(struct rapl_pmu));
+ }
+ EXPORT_SYMBOL_GPL(rapl_package_remove_pmu);
 -- 
 2.53.0
 
