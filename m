@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063997;
-	b=o6f6rhpGoP067hNlQvWOWskUjVHUlYWvlole4IQlFjPWTd1lSnkZSWwlqXaTlLyd2BQB
-	 WJuG0ddjK0jgG1a2krqJXPZ9K/RiEOKnK1NE/gLREirtWpYzNh0nBb6x8WxVuRh492jwb
-	 DwD4W8kA8Yz1na3NQ59eHZpoIkPoetqHXSpjthR+8vG06ZfhYDy6T6fqb1aFBTAp56xZG
-	 SbFLIGz+ExobB61t3yQSolbwaOeAJl1yFKgQbCuJLKULEIUSdhXXWu5PVSsGy5/j375bN
-	 BvFZ9rPK7TR3KygfhHLFw5g9kUvZU8kjwsj/1BB8+qVVgK78A2odYLUI5hDFkJmr5PA==
+	t=1794063998;
+	b=rLM32XJuyPDvO0vJEvNZQ0lndzmE3DsZ83TQHBkXxgEX+0mi/eXTnTMGASWFuZLG5snR
+	 mcE7bn5ZmU61QDfK1LgZJCJRrBgJCX1+lrESr62Ky2Wrwk2Y/KRi3PlSF+qosSQBpxlTO
+	 TwGKsnLzjtLOGuUqDy0cYcpK+wT3INcRYtsvojNpUsCAhteZlUKvaMhKkUV/8pb+kODud
+	 eJ574c57M0lUZ3MOfhUg0LBE6+Jyx0FISXS1MiRXjFpLKBFAPMa9XBdKCCbeQ+/Twie1/
+	 RH5CDK9YO81xsNZnsDSUHMw75IJ0ojNXI1kyjzJw3D6PwWFvU4PKcfOfOFI3j3SCdVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063998;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NBiqgvI7ihWNzZ2MrGtJR5ngfR3gPcJIj1zAjTuwqRA=;
-	b=Vg61ydzBmfJQPiE1Z+NyLdS6qhUAp0R5BJdyXpV/Swt6av8cXmUWXojg8UrNn4k+mPWo
-	 EfBP42D6pHKiZm3zFlyY8NRVcH6H3H9C2/tWGLHwJikMTE090YZ3P2oOXyC32RW383Knp
-	 PEAncaU2+7c6n7zcXMOLzZotItPIBxgsgcpIBs6gKsC1X64Y4kTWP+Fb1/Db4RIm3d7ZA
-	 sAWbd/Mwqk2vKoCikB4mGHgtZlrQV1/LP92dqDtgswtuMMYezj5kWK/YX2D33IOyIvMhp
-	 Fxvi6lu4ejz6AY2NaeY4iQYk377gW2if9awemsx48m6+bKm/UzvI4feGCLJwbLY+sEw==
+	bh=DcmgNHkMiT7s6ZxGxuJG8zsbz4v6y2zpxhpWSlhQt5I=;
+	b=LEUm+uvpw7MWAC47rwxreo+ajFZR6fjU0YA1tKBy7Q1NOoXhml38a1blBgfz1yCJf4Je
+	 Ci/NH4Q0e3EYxQ4Ce+MnLinEOlzbHa51JtUBSklcJmlOZdS1WKEf9ae8dTY/z5dkprFGS
+	 +Y2HMZphTC4hlvTjguftyeD9Hflu2UFNOGtaLmU5n7AysKYZscIfwyKZZNi5MCjh6pqjH
+	 KTrsLy6Y7tY+NShLMBuTzXi8tM9eO/sd7bwbNJGT5RApCx+OQDn98fn5SB64tiuLRtPiU
+	 3CoyxCS/c79Q8l62Wpb4qYtg3PNRGfevaZkjWHPxVCmsoiTRnm+JJ4/X+1GDtt0CQ/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JR+e7I0S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qVHOXFIp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B993606A332;
-	Sat,  7 Nov 2026 15:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639D0606EEA6;
+	Sat,  7 Nov 2026 15:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JR+e7I0S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DDF1F008A1;
-	Sat,  7 Nov 2026 15:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qVHOXFIp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1257B1F008A1;
+	Sat,  7 Nov 2026 15:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063997;
-	bh=NBiqgvI7ihWNzZ2MrGtJR5ngfR3gPcJIj1zAjTuwqRA=;
+	s=korg; t=1794063998;
+	bh=DcmgNHkMiT7s6ZxGxuJG8zsbz4v6y2zpxhpWSlhQt5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JR+e7I0SLfq8d/0dpChM73KPs2m9Nb6aw4G4EIAZt7Ue096B4c/cW/T5AGw9yLV3c
-	 fSKu7plZIM4MhnomiwfgqoWVYQoVaLP80HC0z8wLNM/7vKcHp9eA5qHjcAh89ZSGq4
-	 BAHXzu5EtVzsUCz2PirGYAxvgRQ1zkeIDDRf8nhE=
+	b=qVHOXFIp1LknbSt9gcgjMa6Ar68z3BtITvqO0ShLrUG0jy3M8fvywOsHSNnPtZoiW
+	 yJXlbCEaznfK5xnGobVqBqogODLU+6LYSib+yXbGhLov46Fec6MkUwyjBJd0awDb1U
+	 6ZZP/VhBX/6gft154b7S3DK9R1npzuBEFbgoTwk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Chao <liuc63@xiaopeng.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0179/1257] usb: fotg210: validate endpoint index in ep0 handlers
-Date: Sat,  7 Nov 2026 08:41:15 -0500
-Message-ID: <20261107134944.397880865@linuxfoundation.org>
+Subject: [PATCH 7.3 0180/1257] ASoC: wm8994: Fix runtime PM imbalance in wm8994_component_probe()
+Date: Sat,  7 Nov 2026 08:41:16 -0500
+Message-ID: <20261107134944.422555446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,92 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Chao <liuc63@xiaopeng.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit bbddb219b00af0792242a0ad1dc7fb3344f38733 ]
+[ Upstream commit 480a5528cb6268d626632d45d4a1f29b4c0c11df ]
 
-fotg210_set_feature(), fotg210_clear_feature() and fotg210_get_status()
-use wIndex from the USB setup packet to index the fotg210->ep[] array
-without verifying that the endpoint number falls below
-FOTG210_MAX_NUM_EP (5).  USB_ENDPOINT_NUMBER_MASK is 0x0f, so a
-malicious host can issue a setup packet with wIndex 5..15, resulting in
-an out-of-bounds array read.  The resulting wild pointer is then
-dereferenced in fotg210_set_epnstall() or fotg210_is_epnstall(), which
-compute an MMIO register offset from ep->epnum and perform iowrite32
-through it.
+In wm8994_component_probe(), pm_runtime_get_sync() is invoked before
+reading the GPIO configuration registers. If either regmap_read() fails,
+the function jumps to err_irq without calling pm_runtime_put(), leaving
+the runtime PM usage count incremented and causing a leak.
 
-fotg210_clear_feature() is especially problematic: the out-of-bounds
-access occurs at function entry (source-level) regardless of which
-USB_RECIP_* case is taken, because the ep pointer is computed before the
-switch statement.
+Add pm_runtime_put() on both GPIO read failure paths before jumping to
+err_irq.
 
-Add upper-bound checks on the endpoint number derived from wIndex in
-all three functions.  Invalid endpoint numbers in clear_feature now
-trigger fotg210_request_error() (STALL) instead of silently falling
-through to fotg210_set_cxdone().  Also add the missing le16_to_cpu()
-conversion for ctrl->wIndex in fotg210_get_status() to fix a sparse
-endianness warning.
-
-Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
+Fixes: f5a2cda4f1db ("ASoC: wm8994: Ensure the device is resumed in wm89xx_mic_detect functions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260913120458.1608186-1-liuc63@xiaopeng.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260916072737.1970990-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/fotg210/fotg210-udc.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ sound/soc/codecs/wm8994.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/fotg210/fotg210-udc.c b/drivers/usb/fotg210/fotg210-udc.c
-index d9e024873a429..127a259c8d1ea 100644
---- a/drivers/usb/fotg210/fotg210-udc.c
-+++ b/drivers/usb/fotg210/fotg210-udc.c
-@@ -661,7 +661,7 @@ static void fotg210_set_feature(struct fotg210_udc *fotg210,
- 	case USB_RECIP_ENDPOINT: {
- 		u8 epnum;
- 		epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
--		if (epnum)
-+		if (epnum && epnum < FOTG210_MAX_NUM_EP)
- 			fotg210_set_epnstall(fotg210->ep[epnum]);
- 		else
- 			fotg210_set_cxstall(fotg210);
-@@ -677,8 +677,8 @@ static void fotg210_set_feature(struct fotg210_udc *fotg210,
- static void fotg210_clear_feature(struct fotg210_udc *fotg210,
- 				struct usb_ctrlrequest *ctrl)
- {
--	struct fotg210_ep *ep =
--		fotg210->ep[ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK];
-+	u8 epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
-+	struct fotg210_ep *ep;
- 
- 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
- 	case USB_RECIP_DEVICE:
-@@ -688,7 +688,12 @@ static void fotg210_clear_feature(struct fotg210_udc *fotg210,
- 		fotg210_set_cxdone(fotg210);
- 		break;
- 	case USB_RECIP_ENDPOINT:
--		if (ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK) {
-+		if (epnum >= FOTG210_MAX_NUM_EP) {
-+			fotg210_request_error(fotg210);
-+			break;
-+		}
-+		if (epnum) {
-+			ep = fotg210->ep[epnum];
- 			if (ep->wedged) {
- 				fotg210_set_cxdone(fotg210);
- 				break;
-@@ -744,8 +749,8 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
- 		fotg210->ep0_data = cpu_to_le16(0);
- 		break;
- 	case USB_RECIP_ENDPOINT:
--		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
--		if (epnum)
-+		epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
-+		if (epnum && epnum < FOTG210_MAX_NUM_EP)
- 			fotg210->ep0_data =
- 				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
- 					    << USB_ENDPOINT_HALT);
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index 8bf58a6a8af7c..0d1b4b1fcecda 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -4340,6 +4340,7 @@ static int wm8994_component_probe(struct snd_soc_component *component)
+ 	ret = regmap_read(control->regmap, WM8994_GPIO_1, &reg);
+ 	if (ret < 0) {
+ 		dev_err(component->dev, "Failed to read GPIO1 state: %d\n", ret);
++		pm_runtime_put(component->dev);
+ 		goto err_irq;
+ 	}
+ 	if ((reg & WM8994_GPN_FN_MASK) != WM8994_GP_FN_PIN_SPECIFIC) {
+@@ -4352,6 +4353,7 @@ static int wm8994_component_probe(struct snd_soc_component *component)
+ 	ret = regmap_read(control->regmap, WM8994_GPIO_6, &reg);
+ 	if (ret < 0) {
+ 		dev_err(component->dev, "Failed to read GPIO6 state: %d\n", ret);
++		pm_runtime_put(component->dev);
+ 		goto err_irq;
+ 	}
+ 	if ((reg & WM8994_GPN_FN_MASK) != WM8994_GP_FN_PIN_SPECIFIC) {
 -- 
 2.53.0
 
