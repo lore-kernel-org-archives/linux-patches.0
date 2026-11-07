@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061396;
-	b=Er72HQ4mDOcz7D3Wo53yGNfCyDF51wLvIkg6tjmmnmJ1dDLIqTlvCbZ+KXOUF70kw4hs
-	 g1v2XK/d7S7xbmvOnhrGX8fu+/mHcTzO+Brk/4sQq/+xF37MpcXOBkAXXZIk+TBokgpjZ
-	 4jtf2RGfONuMtHM3jwOEN3EN3qFjA7bvTAT+lfo/k0POmWQMHOSCPqMhS8F5hW752+InF
-	 vuyk53Hlldn7AtOvTvA3NgEWNvkrTkVWPtJiRTl5zVQ0fgN9f4v9miT+SaBkiC4ezhUow
-	 zODt+ynxBKgQRYulgXX62dhvFUh9zBCQHlDZMQyG6N86Pjg785VrH+iPR2z2yFw2WOg==
+	t=1794061397;
+	b=UZtYp7q6FJQgxxDbK00aucAKffzfWwNuA50E7WZhxw1i/B+q/H9c/oKcqEvP7jUIjxiv
+	 G3rKZWU2G/lxwQtqVr5Tvw+SFub6R6Gk/x+WzR1Y4b4Zrp1VDeJipN+TMgqDaqhSmkozn
+	 g9rKcRs+GsefBSc+qVQ7+uciOb8rhs7NHfMehVbOzEp3WYRs6owWFHhaFHk6gfbrOqqTf
+	 XzdB61ySX6C/Cbq2rHJn4vfib/Jca6/XddN9fzUfUlhaF8c+LVOHkOjFwrN+Tq0cvfDrM
+	 9a+IshpxC4eJLtnx4b8Kr0+UAB7bQyoTodPllT2RG4sWIbIAt/NjydZpl9zGt0Z+NFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=uNyAP0qSZzlXPelCFI88AJ45qjM60vHYpijqyQVE6YI=;
-	b=mlIIDtwFzlXPgiUSO3DPL7KSdNiv4rVm2F9Z6fv4VP78rOdSHEidQ+d9vKrTn9JTQuOD
-	 /oVHUycr3TLZsx7HrQjHiEZf47OVimXJhcxev1mQYRHpZNA+Jq8GpjyKE16kGylwNkL6Y
-	 0txaKTxxFeE1N7UAhHnpzh5s0+RQdYHp95MU+oOtEqrrUrn1z/siZ2I5VablQJs2MclO/
-	 +u90ksorFZezYgHV6w9hjE3+1Wfq4BNOAvw6wQ3ib+S86kfUk7Bi6gDoZB5//pJqWt9H8
-	 0OIXWoRGK3nmeD8ruJPzYdaSSl8MhH2MoX/Pzj883c4UW54+9+RRsJsBAiVuq1Xlszw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=v6dyew7uOT1S+y/HRFm/xHt0HMciB/eCx7yw0lBn+/4=;
+	b=zI0kdP7cZoM0JanxPHxYGuP8NzVsk+4sogPFwZb5uiszmmvYm1hA1Q84k6rtMDwyQ1GX
+	 mDf9xq+PczY5hJm3pTOR5nylyOaZ7Cq9eaVNItWyBAtH+AWvjReUQesNzbFzBHMfCGiCx
+	 nOHCl6pHvWmrdhZ1AgH84LDuX5rje5AD/wwjz5taTlKlAOmW+zaib9lDRlgT/RBrrApTG
+	 aaL8RBN9t/MeZ64ROccH83NrWJFxb9n1eRZeAspRjvK0x8Au+tvrgyanOnSdlVS3DAirQ
+	 Fqrj0yj8Ub/Yg1KUFLiS3H3G1ACuJKzB/k26fkVd9/dw189AjJbJH8PD5BfKX0YYLdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSmz5kcN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VEP43qiV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905C2606A33E;
-	Sat,  7 Nov 2026 14:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA9E606A33E;
+	Sat,  7 Nov 2026 14:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSmz5kcN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB8F1F0089F;
-	Sat,  7 Nov 2026 14:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VEP43qiV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B301F008A1;
+	Sat,  7 Nov 2026 14:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061396;
-	bh=uNyAP0qSZzlXPelCFI88AJ45qjM60vHYpijqyQVE6YI=;
+	s=korg; t=1794061397;
+	bh=v6dyew7uOT1S+y/HRFm/xHt0HMciB/eCx7yw0lBn+/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QSmz5kcN+dgMX99jnkORa+d2sZmyHUKpSdjcIUm41hwuaPIrsvlNzwanbZ2lv0yZp
-	 N9+AqMjQ6II9zxx8wlOkv41c+LfH9ESQIOsAZuFSCmILrYaSHZv1Mo9+eD0TARxloc
-	 0zQbEUGyEikAyw8CAJt1bfFXEcKcsWOs64/2ny14=
+	b=VEP43qiVxv6ltLXY2NwCtIwoytI9Sl4kOP4SCbJpCGSsVorX1f6ekiikXz5I6deIU
+	 ipwbTCROc2FEUG/pRs65NFaDehalH/+hkRPbGkA9rGhNXq6LEp4gnQLrzW01LQIS0w
+	 Jt9wlggCDEP8Gj/dh3o02Xc62NVk0s+xeoEX7GmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
+	Kevin Wang <kevin.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0515/1536] drm/amdgpu: skip gfx switch_power_profile during GPU reset
-Date: Sat,  7 Nov 2026 08:42:11 -0500
-Message-ID: <20261107135011.898575321@linuxfoundation.org>
+Subject: [PATCH 6.12 0516/1536] drm/amd/pm: fix gpu metrics energy accumulator for smu 13.0.0/13.0.7
+Date: Sat,  7 Nov 2026 08:42:12 -0500
+Message-ID: <20261107135011.923796726@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,75 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Kevin Wang <kevin.wang@amd.com>
 
-[ Upstream commit 1f1d43418d61c8511779e0f63a954a78b9433b43 ]
+[ Upstream commit 13ddcc7acb9adbed7627e952a61d1d62cd9546fc ]
 
-During resume from GPU reset, the gfx idle work may invoke switch_power_profile
-before the reset completes. This causes the following assert error because the
-register access occurs without first releasing the GPU reset semaphore:
+GPU metrics v1.3 defines energy_accumulator as a 64‑bit field.
+The unsupported‑firmware code path assigns UINT_MAX, which is neither the
+full‑width invalid value for this field nor its default value.
 
-[ 1576.768935] CR2: 0000559ea133ead0 CR3: 00000002e6c42000 CR4: 0000000000350ef0
-[ 1576.768940] Call Trace:
-[ 1576.768944]  <TASK>
-[ 1576.768953]  amdgpu_device_rreg+0x21/0x50 [amdgpu]
-[ 1576.769158]  smu_msg_v1_send_msg+0x1a4/0x6e0 [amdgpu]
-[ 1576.769437]  smu_cmn_send_smc_msg_with_params_ext+0xba/0x120 [amdgpu]
-[ 1576.769721]  smu_cmn_send_smc_msg_with_param+0x33/0x40 [amdgpu]
-[ 1576.769993]  smu_v13_0_0_set_power_profile_mode+0x192/0x2b0 [amdgpu]
-[ 1576.770267]  smu_bump_power_profile_mode+0x5d/0x80 [amdgpu]
-[ 1576.770538]  smu_switch_power_profile+0xa4/0xf0 [amdgpu]
-[ 1576.770839]  amdgpu_dpm_switch_power_profile+0x6f/0x90 [amdgpu]
-[ 1576.771210]  amdgpu_gfx_profile_idle_work_handler+0xe9/0x130 [amdgpu]
-[ 1576.771460]  process_one_work+0x23e/0x6f0
-[ 1576.771491]  worker_thread+0x1c4/0x380
-[ 1576.771506]  kthread+0x10c/0x150
-[ 1576.771512]  ? __pfx_worker_thread+0x10/0x10
-[ 1576.771518]  ? __pfx_kthread+0x10/0x10
-[ 1576.771530]  ret_from_fork+0x314/0x390
-[ 1576.771537]  ? __pfx_kthread+0x10/0x10
-[ 1576.771546]  ret_from_fork_asm+0x1a/0x30
-
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 8de9edb35976 ("drm/amd/pm: remove invalid gpu_metrics.energy_accumulator on smu v13.0.x")
+Signed-off-by: Kevin Wang <kevin.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d93b1ff538ce9750c01e0dd0aa62575579c0fc08)
+(cherry picked from commit c2b948c4fe16eb13d98ff5d1371956cb2f55cdc6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 2 --
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c | 4 ++--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-index 01ce378c36bca..0f37d5ccf246f 100644
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -327,7 +327,8 @@ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
- 	int ret = 0;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+index 7ecc7537ae2f3..6d178621ade16 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2093,8 +2093,6 @@ static ssize_t smu_v13_0_0_get_gpu_metrics(struct smu_context *smu,
+ 	if ((mp1_ver == IP_VERSION(13, 0, 0) && smu->smc_fw_version <= 0x004e1e00) ||
+ 	    (mp1_ver == IP_VERSION(13, 0, 10) && smu->smc_fw_version <= 0x00500800))
+ 		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
+-	else
+-		gpu_metrics->energy_accumulator = UINT_MAX;
  
--	if (amdgpu_sriov_vf(adev))
-+	if (amdgpu_sriov_vf(adev) ||
-+		amdgpu_in_reset(adev))
- 		return 0;
+ 	if (metrics->AverageGfxActivity <= SMU_13_0_0_BUSY_THRESHOLD)
+ 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+index 46368fc966435..7a0e82a96a1c1 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -2074,8 +2074,8 @@ static ssize_t smu_v13_0_7_get_gpu_metrics(struct smu_context *smu,
+ 					       metrics->Vcn1ActivityPercentage);
  
- 	if (pp_funcs && pp_funcs->switch_power_profile) {
-@@ -346,7 +347,8 @@ int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
- 	int ret = 0;
+ 	gpu_metrics->average_socket_power = metrics->AverageSocketPower;
+-	gpu_metrics->energy_accumulator = smu->smc_fw_version <= 0x00521400 ?
+-		metrics->EnergyAccumulator : UINT_MAX;
++	if (smu->smc_fw_version <= 0x00521400)
++		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
  
--	if (amdgpu_sriov_vf(adev))
-+	if (amdgpu_sriov_vf(adev) ||
-+		amdgpu_in_reset(adev))
- 		return 0;
- 
- 	if (pp_funcs && pp_funcs->pause_power_profile) {
+ 	if (metrics->AverageGfxActivity <= SMU_13_0_7_BUSY_THRESHOLD)
+ 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
 -- 
 2.53.0
 
