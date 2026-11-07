@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064368;
-	b=J7tRkBtmimTCndymt1dzBwy4IPgXvvUzd1EvA5s+T1BAlCWuuOL3TSqkMTfan1Or/ig+
-	 j6cnh1gDGmB04RR3SkNPgZvfIIIGd9hi9RqyTg0hN8mRejQfPDzUsXWZD0bDdVI7RPua2
-	 qX6Zdqw02pPRjuTcPto9aDzbenrGSBON6R8RSJsYuZtc7EliKHqBPMzuFXcLGOxltiGK1
-	 8IFQYH404PRBUlotLZSffLKqFBaC9Yi0Ju/KFf/svZwY/QGvhzdO5R+agHRqTsHP379C5
-	 r9dxrsRmTiMHbpL05ulCU3pHIimmyMSafQFOtUrflJO5Dd5i6Vw8Lvxd7dDwAo5PqnA==
+	t=1794064369;
+	b=0i7VngMCBFP7hPehI/W93817KyZH0xfSeh7Pj5GQpl7EsLQdmTAZBOu0RM/WAeu1+BHa
+	 18J2eFoG9waL0s5yrZGQt+r5gQc3xs9YNPATP/bnAzsU+fipbd0mcVy3x7DFm+YrU1VSs
+	 CcMmoBwkfXuXxNkGMdXIlWD4/EWO+l8MlISjOcFnluuylY0B7FulvKE1tuY2gSGwyAXMS
+	 tAuqD0bsJZOtjwmNnS7XUeIZPXoB8VQBB4rXAPZb8gfZLupl9Dv0rTwr44hFyV08ZCAnT
+	 TlzwNK9OgrGpHakY11kk013mV3k2BWKdR/7OiMaEDrp5ejwDuzi2no5/uajKO6tI+ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064369;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vNw+NP2NnofG5PCjpEpms16Y0Ky5bSpim2n85B9GoTE=;
-	b=aB63SkGTvyQ/XDOyspSe0mM8KuLGDrAB42yD5/qdtaFQaqvFNH2/YRQi8Q/w3p704OzY
-	 i+8kaXWFK7HFu+UcKX1jG0XsMwnkS6MG3RSdCilccnMmAuyBYc+VySOYV8ffiBmvytWdu
-	 Pps0bKra1yyb++qbpX+JSn7PpIAhH36Z8MTgCOUOHWuYdwrA6R5TLk83z+2LDgdm1oSyL
-	 BwWQB9nU/MpT623oI0ies6mNQdZU5E+KXdqoOAvvfp+DmiWK6ruIMRt/WjtGL8oDnGeut
-	 CEN+jw6iWdi3CNpC+x0X22ZSsn4GG0Yt6GUSU+MUS4YzMwPbJ/ZM2UgEo30KZgN1vJw==
+	bh=izAWCN4bOhlhEE9/yvaiEkvIMUXU4cqTG1q56P0ho5I=;
+	b=RgM8jgCHSoThLCETn/my1pb5LQerQ1Vnqkko8H2DzJ8x9qlLMUeOGJ6bpsf3vBWmfnyq
+	 jDASLuvUnN//HSlNvA1WnkcB0Yz0knpFmvmXYgu9yHglCheCSOGP2+JmrfJ7xnLzAB6EU
+	 WcksL+NaTBELMleDBv9NnLi+IQY8wL9dgBlRv19yBZEIQoNicMyyoz4bipsvHeYzpChRy
+	 Mctj+B0nn+Od4Np8ogJmg1twqIR4EjQg5jz6smA353Qx+HD6SPMA8RggCrv9/KHHMkLNI
+	 HuKYiPqzTbEnj+LVTeBTh0Jj9Nx58hBX1k0YmltDEL0yW3reHrghAaA7FKi9qEH0cgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JX5rRSrZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x+r0lMlM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB99C606B899;
-	Sat,  7 Nov 2026 15:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED79606B8AE;
+	Sat,  7 Nov 2026 15:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JX5rRSrZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69EFF1F0089F;
-	Sat,  7 Nov 2026 15:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x+r0lMlM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9AB1F008A4;
+	Sat,  7 Nov 2026 15:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064367;
-	bh=vNw+NP2NnofG5PCjpEpms16Y0Ky5bSpim2n85B9GoTE=;
+	s=korg; t=1794064368;
+	bh=izAWCN4bOhlhEE9/yvaiEkvIMUXU4cqTG1q56P0ho5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JX5rRSrZEZ6/QQmKxkL8YHwrdzxJIfEy50gyEk5d/sTvkQAXdpezbBQtQaUv4xWo6
-	 rTGfKL5NXh4dPDcxohAsgwvUdFVgy0L53jiijEdymJlEGf008InzaM1vlTkaCBTjJk
-	 jN3llEbrL50RE5xqbf7XKKhkCzA57AFPKorFDgCc=
+	b=x+r0lMlMcvTrzMsVNzodUPR11kks68CyV0Q0I/Y9biK32Lqn5vc+pj56Hqx7SFQNH
+	 /GYEI7kxUe+/ASYzn56ytJFPjIBBEnqi/jO2W4cPuNTEp4Z/dJfEAPqKh/jL0ZnOyi
+	 bsKMDm5qX6rskikItUjR85mz72kpXGoP8PWUvBO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0421/1257] dm-writecache: fix REQ_FUA processing
-Date: Sat,  7 Nov 2026 08:45:17 -0500
-Message-ID: <20261107134951.130874014@linuxfoundation.org>
+Subject: [PATCH 7.3 0448/1257] media: chips-media: wave5: Handle polling IRQ thread failure
+Date: Sat,  7 Nov 2026 08:45:44 -0500
+Message-ID: <20261107134951.853154217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,160 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit c0df022cb0fa2bbee74bd9b90c66790bcd4e3050 ]
+[ Upstream commit 1d563e3d718a1c7c16355843374fbdd4c798ac66 ]
 
-REQ_FUA did not flush metadata in SSD mode, this commit fixes it.
+When falling back to polling mode, wave5_vpu_probe() does not check the
+return value of kthread_run().  On failure, dev->irq_thread holds an
+error pointer instead of a valid task pointer.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Both the probe error path and the remove path only check
+dev->irq_thread against NULL before calling kthread_stop() on it, so an
+error pointer passes the check and kthread_stop() crashes on it.
+
+Check the kthread_run() result, clear dev->irq_thread and unwind the
+probe on failure.
+
+Fixes: e66ff2b08e4e ("media: chips-media: wave5: Fix Null reference while testing fluster")
 Cc: stable@vger.kernel.org
-Fixes: c1005322ff02 ("dm writecache: handle REQ_FUA")
-Assisted-by: Claude:claude-opus-5
-Assisted-by: Codex:gpt-6-sol
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 45 +++++++++++++++++++++++++++++---------
- 1 file changed, 35 insertions(+), 10 deletions(-)
+ drivers/media/platform/chips-media/wave5/wave5-vpu.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index 302ebed4e6ceb..75287f1667fdc 100644
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -194,6 +194,7 @@ struct dm_writecache {
- 	struct task_struct *endio_thread;
- 
- 	struct task_struct *flush_thread;
-+	spinlock_t flush_list_lock;
- 	struct bio_list flush_list;
- 
- 	struct dm_kcopyd_client *dm_kcopyd;
-@@ -1288,9 +1289,11 @@ static int writecache_flush_thread(void *data)
- 		struct bio *bio;
- 
- 		wc_lock(wc);
-+		spin_lock_irq(&wc->flush_list_lock);
- 		bio = bio_list_pop(&wc->flush_list);
- 		if (!bio) {
- 			set_current_state(TASK_INTERRUPTIBLE);
-+			spin_unlock_irq(&wc->flush_list_lock);
- 			wc_unlock(wc);
- 
- 			if (unlikely(kthread_should_stop())) {
-@@ -1301,6 +1304,7 @@ static int writecache_flush_thread(void *data)
- 			schedule();
- 			continue;
- 		}
-+		spin_unlock_irq(&wc->flush_list_lock);
- 
- 		if (bio_op(bio) == REQ_OP_DISCARD) {
- 			writecache_discard(wc, bio->bi_iter.bi_sector,
-@@ -1322,9 +1326,12 @@ static int writecache_flush_thread(void *data)
- 
- static void writecache_offload_bio(struct dm_writecache *wc, struct bio *bio)
- {
-+	unsigned long flags;
-+	spin_lock_irqsave(&wc->flush_list_lock, flags);
- 	if (bio_list_empty(&wc->flush_list))
- 		wake_up_process(wc->flush_thread);
- 	bio_list_add(&wc->flush_list, bio);
-+	spin_unlock_irqrestore(&wc->flush_list_lock, flags);
- }
- 
- enum wc_map_op {
-@@ -1436,6 +1443,8 @@ static void writecache_bio_copy_ssd(struct dm_writecache *wc, struct bio *bio,
- static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio *bio)
- {
- 	struct wc_entry *e;
-+	enum wc_map_op ret = WC_MAP_SUBMIT;
-+	bool need_flush = false;
- 
- 	do {
- 		bool found_entry = false;
-@@ -1472,7 +1481,8 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
- 				writecache_map_remap_origin(wc, bio, e);
- 				wc->stats.writes_around += bio->bi_iter.bi_size >> wc->block_size_bits;
- 				wc->stats.writes += bio->bi_iter.bi_size >> wc->block_size_bits;
--				return WC_MAP_REMAP_ORIGIN;
-+				ret = WC_MAP_REMAP_ORIGIN;
-+				goto flush_pmem_and_ret;
- 			}
- 			wc->stats.writes_blocked_on_freelist++;
- 			writecache_wait_on_freelist(wc);
-@@ -1486,21 +1496,25 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
- 		if (WC_MODE_PMEM(wc)) {
- 			bio_copy_block(wc, bio, memory_data(wc, e));
- 			wc->stats.writes++;
-+			need_flush = true;
- 		} else {
- 			writecache_bio_copy_ssd(wc, bio, e, search_used);
- 			return WC_MAP_REMAP;
- 		}
- 	} while (bio->bi_iter.bi_size);
- 
--	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
--		writecache_flush(wc);
--		if (writecache_has_error(wc))
--			bio->bi_status = BLK_STS_IOERR;
--	} else {
--		writecache_schedule_autocommit(wc);
-+flush_pmem_and_ret:
-+	if (need_flush) {
-+		if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
-+			writecache_flush(wc);
-+			if (writecache_has_error(wc))
-+				ret = WC_MAP_ERROR;
-+		} else {
-+			writecache_schedule_autocommit(wc);
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu.c b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+index 76d57c6b636a2..37df270b5f991 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu.c
+@@ -340,6 +340,13 @@ static int wave5_vpu_probe(struct platform_device *pdev)
+ 		dev_err(&pdev->dev, "failed to get irq resource, falling back to polling\n");
+ 		sema_init(&dev->irq_sem, 1);
+ 		dev->irq_thread = kthread_run(irq_thread, dev, "irq thread");
++		if (IS_ERR(dev->irq_thread)) {
++			ret = PTR_ERR(dev->irq_thread);
++			dev_err(&pdev->dev, "failed to create irq thread\n");
++			dev->irq_thread = NULL;
++			goto err_vdi_release;
 +		}
- 	}
- 
--	return WC_MAP_SUBMIT;
-+	return ret;
- }
- 
- static enum wc_map_op writecache_map_flush(struct dm_writecache *wc, struct bio *bio)
-@@ -1590,7 +1604,10 @@ static int writecache_map(struct dm_target *ti, struct bio *bio)
- 
- 	case WC_MAP_REMAP:
- 		/* make sure that writecache_end_io decrements bio_in_progress: */
--		bio->bi_private = (void *)1;
-+		if (unlikely(bio->bi_opf & REQ_FUA) && bio_op(bio) == REQ_OP_WRITE)
-+			bio->bi_private = (void *)3;
-+		else
-+			bio->bi_private = (void *)1;
- 		atomic_inc(&wc->bio_in_progress[bio_data_dir(bio)]);
- 		wc_unlock(wc);
- 		return DM_MAPIO_REMAPPED;
-@@ -1620,12 +1637,19 @@ static int writecache_end_io(struct dm_target *ti, struct bio *bio, blk_status_t
- {
- 	struct dm_writecache *wc = ti->private;
- 
--	if (bio->bi_private == (void *)1) {
-+	if (bio->bi_private == (void *)1 || bio->bi_private == (void *)3) {
- 		int dir = bio_data_dir(bio);
-+		bool fua = bio->bi_private == (void *)3;
- 
- 		if (atomic_dec_and_test(&wc->bio_in_progress[dir]))
- 			if (unlikely(waitqueue_active(&wc->bio_in_progress_wait[dir])))
- 				wake_up(&wc->bio_in_progress_wait[dir]);
 +
-+		if (fua && likely(*status == BLK_STS_OK)) {
-+			bio->bi_private = NULL;
-+			writecache_offload_bio(wc, bio);
-+			return DM_ENDIO_INCOMPLETE;
-+		}
- 	} else if (bio->bi_private == (void *)2) {
- 		dm_iot_io_end(&wc->iot, 1);
- 	}
-@@ -2522,6 +2546,7 @@ static int writecache_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 
- 		wc->memory_map_size -= (uint64_t)wc->start_sector << SECTOR_SHIFT;
- 
-+		spin_lock_init(&wc->flush_list_lock);
- 		bio_list_init(&wc->flush_list);
- 		wc->flush_thread = kthread_run(writecache_flush_thread, wc, "dm_writecache_flush");
- 		if (IS_ERR(wc->flush_thread)) {
+ 		hrtimer_setup(&dev->hrtimer, &wave5_vpu_timer_callback, CLOCK_MONOTONIC,
+ 			      HRTIMER_MODE_REL_PINNED);
+ 		dev->worker = kthread_run_worker(0, "vpu_irq_thread");
 -- 
 2.53.0
 
