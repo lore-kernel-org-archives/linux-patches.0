@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061090;
-	b=ryw4dYLCixnJ4t0DCFCOgOjZKEcYMG/MsJns7ZIVNnv3NgsBh3NrtM5oA/WVQMylekph
-	 f/CaX3/7xd5xe+bXzDiA3uvj+QO45MSnqR3KPLzTHVe1pHmrsRtY+7IbwwJLnu0+QeOC3
-	 zCL+/BZMTjXh8UV+a4g/XmgWsFr6zLhi0UuZ62b+5PvKyhCIqqdkWzG1zLj1E1mcHxsOl
-	 4C+wjWajnKnnRw5LXi/Qqtg0bi99EibIM2xL4K38xHdk+Reu2c3MzIoZtZ/M4dcN9psxi
-	 eDvr/6W+FFbfK9cfWwCpfgTQWIwcsQp4k2Sc26d2raiNsU/Icc9iz6PIIEQnj+1qhuA==
+	t=1794061091;
+	b=DOIzprKBZ3NjLNCDWHB6UUpUYiNT0szRqG9b9V9XVYrtmSZ8kHshgvoZ9/yJEELaa4Gl
+	 +DSu/bg0pMjTUuGTeS3wSWuNuTsdiuJ/tksvBDFtPbSW5GXeiYvRCRW/eqgQFgQajX8QB
+	 mF7+TUzv9Ze9vww8P3j9Z282oIWKqc1yPSPQ5ehfLk94h0LKUbCuFaAyvntpeBHYHKgUb
+	 uelSZ/oNfbmqB+f/e9nlOsk7ePM5Ryq+b0427HHokm0qWBXiZVcr7G2YrpYaCwvIglr3j
+	 PBtqw++RLcA+ZKzl+L7fNU8nlVTX8uGelaL/bogIOsDD3m5Y6OJ05MfOFx+0RbF51Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061090;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061091;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9eFIYja6QBjDraqqBmn0/Y2UJteFZY9nXvY/MaS2xlQ=;
-	b=zncyWk7Dg/HGVKLgHvtcQ0dPNsIaxnr2WgIQVH+DaTKL/cUqi+5uzK/OTSogZ4MTtsrh
-	 /1NDzBPZIrGMTCLUkMFwPc4j9XtJO4doMPQt81tR2rLEyb1clQsBP0bEtsbD9ntO+X6KO
-	 VknZ2DBImhtVWhG3CHds9sA0fHaH+DFq1PmfWNQLWZMWpCtO5pKEd1QDKjN4HTQV1zb/o
-	 t1N2T0eRwvs/jN350BN+BHmZBMTCUnmOf11Da/S6ILGkRdYcshjc6ECC60i1dmslsg9KS
-	 5gGXPoupSJDUUhwR+scmhNtEqKKPsVAqIcRzoLuJMPrjZ8cQ+4pQkCVQVxtsOhcADiA==
+	bh=HFW0JzSjz+107Bld7nHtDezCyuDAEo3FnLnJQ96+3g4=;
+	b=SxyePYQ2Hklz09SRMOFc1B7BKJeUP5jhj/S+r7MhtvcVoFkHD+LFoI1jdR9n8BfJZDEI
+	 +yE6Qk+rE/hm3gfr6J8YBTEewtD85j2iOAV/JjpNG1Km237ZrmIKJ5o2pJsSfjpR9T5g2
+	 a5M4llKAKT6ix7NW8p7tJMkFhMyBA42ZyvIA20ITxR7tVJFGKivKEsv/epSzNrxId0vk9
+	 vapG27I+2zoD67AOmJaV/5xZLeZobzh3mMoVdfe2SM3cR7dEEq2X7AtYmjEE1+rfhadq5
+	 ZBk5j0aOlBujucjTGG3Flq/3g1tpezi0CADpNGzwMVirVn1LCAEwa4r/twzLMIiIwIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kY8wPDAa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ofcbbF3e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F50606D833;
-	Sat,  7 Nov 2026 14:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EA7606D833;
+	Sat,  7 Nov 2026 14:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kY8wPDAa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D06A1F008A4;
-	Sat,  7 Nov 2026 14:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ofcbbF3e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742481F008A4;
+	Sat,  7 Nov 2026 14:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061089;
-	bh=9eFIYja6QBjDraqqBmn0/Y2UJteFZY9nXvY/MaS2xlQ=;
+	s=korg; t=1794061090;
+	bh=HFW0JzSjz+107Bld7nHtDezCyuDAEo3FnLnJQ96+3g4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kY8wPDAah3mg1IXAJ+SpZ08a6hh+dKUMd99/ErjVGdgBJxCpZY4bSTLrrxCEXIPDE
-	 0OWEc3DqOWDcY0lJ1fkwQ2iRRUJ8wHp2+n3mzMqZ8gT/DdQd//xKBWA3ttZGdTErIX
-	 QdX+bcPr+qmgHdjoKiJ/A8tpFAGQPehiR3d/An4c=
+	b=ofcbbF3e6aVM47XYaxmldkRVeR+vBWwTPuyFCsxyzSQcWtwILwgCDlDeonN4ab7WU
+	 Ak+KMfjgrBhWOZoTJSTw3ChxYJwH6BeSV4vA5i4YWGhmBsvntCs750D2P5tq5v52RU
+	 mMfQ17iFyhmVEJMwk7pE2nT9bR1AB/zGWI33hjKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Ortiz <letargopausado@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Carlos Song <carlos.song@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0410/1536] ASoC: amd: yc: Add DMI quirk for Lenovo V15 G6 ARP
-Date: Sat,  7 Nov 2026 08:40:26 -0500
-Message-ID: <20261107135009.091272289@linuxfoundation.org>
+Subject: [PATCH 6.12 0374/1536] i2c: imx-lpi2c: properly unwind resources on probe failure
+Date: Sat,  7 Nov 2026 08:39:50 -0500
+Message-ID: <20261107135008.144710343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,50 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Ortiz <letargopausado@gmail.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit d395e1b62d9694f2e4add9122f8d473eacd374aa ]
+[ Upstream commit cbd043b00ee3f542c115c8809c4d9a67465c07d5 ]
 
-The Lenovo V15 G6 ARP (product name 83UU) uses the ACP6x PDM interface
-for its internal digital microphone array. Its firmware exposes neither
-the AcpDmicConnected _DSD property nor the _WOV method, so acp6x_probe()
-falls through to the DMI check and returns -ENODEV, leaving
-acp_yc_mach.0 unbound and no capture device registered.
+When probe fails at devm_clk_rate_exclusive_get() or clk_get_rate(),
+which occur before runtime PM is initialized, the clocks enabled by
+clk_bulk_prepare_enable() are never disabled.
 
-Add a DMI quirk entry for this model. With it, the machine driver binds
-and the DMIC capture device is created:
+When probe fails after runtime PM is initialized, the previous error
+path called pm_runtime_put_sync(), which triggers the runtime suspend
+callback. However, due to different clock management strategies on
+different SoCs[1] (to avoid deadlocks between the global prepare_lock
+and runtime PM), the callback may only disable clocks without
+unpreparing them, causing an incomplete unwind.
 
-  acp_yc_mach acp_yc_mach.0: Enabling ACP DMIC support via DMI
-  card 2: acp6x [acp6x], device 0: DMIC capture dmic-hifi-0
+Introduce a new error label 'clk_disable' to explicitly invoke
+clk_bulk_disable_unprepare(). Replace pm_runtime_put_sync() with the
+sequence of pm_runtime_disable(), pm_runtime_set_suspended() and
+pm_runtime_put_noidle() to bypass the runtime suspend callback during
+error recovery. During the LPI2C driver probe phase, clock APIs are
+used exclusively to manage clocks. Once probing succeeds, clock
+management is handed over to the runtime PM core.
 
-Capture was verified working with arecord and PipeWire.
+[1] https://lore.kernel.org/all/20251125084718.2156168-1-carlos.song@nxp.com/
 
-Signed-off-by: Daniel Ortiz <letargopausado@gmail.com>
-Link: https://patch.msgid.link/20260920011920.2482786-1-letargopausado@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260716071957.2670263-2-carlos.song@oss.nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 1989929181045..1aedead0a9275 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -367,6 +367,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83UU"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index 86b41cd48ad4c..8103c14876d57 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -615,14 +615,18 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
+ 	 * each transfer
+ 	 */
+ 	ret = devm_clk_rate_exclusive_get(&pdev->dev, lpi2c_imx->clks[0].clk);
+-	if (ret)
+-		return dev_err_probe(&pdev->dev, ret,
+-				     "can't lock I2C peripheral clock rate\n");
++	if (ret) {
++		ret = dev_err_probe(&pdev->dev, ret,
++				    "can't lock I2C peripheral clock rate\n");
++		goto clk_disable;
++	}
+ 
+ 	lpi2c_imx->rate_per = clk_get_rate(lpi2c_imx->clks[0].clk);
+-	if (!lpi2c_imx->rate_per)
+-		return dev_err_probe(&pdev->dev, -EINVAL,
+-				     "can't get I2C peripheral clock rate\n");
++	if (!lpi2c_imx->rate_per) {
++		ret = dev_err_probe(&pdev->dev, -EINVAL,
++				    "can't get I2C peripheral clock rate\n");
++		goto clk_disable;
++	}
+ 
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, I2C_PM_TIMEOUT);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+@@ -653,8 +657,11 @@ static int lpi2c_imx_probe(struct platform_device *pdev)
+ 
+ rpm_disable:
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+-	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_set_suspended(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
++clk_disable:
++	clk_bulk_disable_unprepare(lpi2c_imx->num_clks, lpi2c_imx->clks);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
