@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061615;
-	b=ZQcLDE+eD/F3E/LhJKCey6wEOIXb3aPEx7LEFUQjWhJ80axigFS4OKr4yn5fz2IaFtma
-	 czahuP0xdehPu8syhf+nZQuCY3++vsdQYQOn7jw5dpo9v/L9wc/lwEN7ZY+otAaCt/+1W
-	 i+8k07tNPsOFnMg3N6ao2+amSClmw5taoD3iXrp5GccOX3lQkZ5vX85jrtE9wj/Ie7NEy
-	 KsX8oadbCgNzczKgveWKgm4N7R5HqoIW0VVxJC2IDlFCUxrm8Ykzv44itIIWIzSsvQzNE
-	 V1Bj6+IL2KPSeLjys2xq8IqDJfB+xM2eN4wvI2pdl4Wy78du/LwXQgf380F1ueC2GFA==
+	t=1794061616;
+	b=p0NG4rdX9+sbhmRii4uXwLd4C65OuO+hIS/ktgxWPFrlRnqv4fACBHZ08wgM1kEuX6vI
+	 SMhR+ys42j/zQ8NAtmxwsX6x3LuF6i6SfKU3IwgOhZi0OfT/Z0A2vSFs2u/83B5oQB2st
+	 BS5kt7sEWuj1ynRLhTiNPfIbalLfrwcfoWhjVeex/oaOJDuJZZVx7F8HoYpwHc/43e5PA
+	 JaxZiUAvGbRwb6BDG3jeM6BF8PsM4opTvuBBM1wP2p/j0IToqzM0KHPb+6YfkWCWIm4Op
+	 GDQkSG3vyQmK+iiL0V/Rr94k8kumY8jUyk+vraoo7cYdDMDmLwUvcmHcAeQZMfdKsGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CocZOVzvsRHsb3b7S4Fb7xln2KvHF194ofY/DLszagI=;
-	b=4iQDdh6eB9865CWiPkB7HrNhSzdS0TOibtAe2HEymFbs/MZZkXWzI8qXPVGrno0Avjwk
-	 bEsgGTellVmY91Du4WcqlcubxXafAiNybH6689fv973v4QLQmqDwiubiZMGkLwdgQ074M
-	 zNiHEwSL0cOunwsKpP1mRVCu+R0opmdB8UqjdWelyvPrRmyJQ17WjEkgJKyxrMaglx7i0
-	 epCm7p9xIXc6VUR3prgZ0Y4tEBUsQl1NUBJUKj3Qm6csR15KDi+YZwp5f7kIvSCjYpLNo
-	 8BC9snjEvdfJe09gxkCVMnmtw9zZX9C9lvDrmkef+9/v1+iBk4tNf1IJt6oPXVn88Cw==
+	bh=U6bpT/QeaGZtEiQyJl4e/XhoQwj4Stf/3hieM25Nms4=;
+	b=AOGUdaSEYUlVwPI5L3rZUQbE2v3YiCFy0K1UZogcu74stfCqTAYIPyuM9M2OCe6sFc57
+	 jWfZALdq1tpYgQDKIJVs308SgGyqi35loPfo+bIog+DUIQMKtSrNcnWlplowcpgzsqOSc
+	 8GM/vUkcREHs6BEzXvDYTsMmI+mXgkb9mHl2feDRiCyNNUPehxkDZu9TSUWy8vQhQAfc6
+	 qoTYtNPHXLcAoQ3JjtXin4H7LpR9zUquckZ3+3IH0jzvEN5tpTEsnLigylkESOa2BPvRX
+	 4eU3A5zAPrglBQT/p4gPWqnlr4HMv6tT1I/91eYwjzG3pxryR6RDcbmyaGmPzAt/5pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ffy2tItE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k0RZs3jT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D82606A32D;
-	Sat,  7 Nov 2026 14:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDD3606A326;
+	Sat,  7 Nov 2026 14:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ffy2tItE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C3A1F0089F;
-	Sat,  7 Nov 2026 14:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k0RZs3jT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0665B1F0089F;
+	Sat,  7 Nov 2026 14:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061614;
-	bh=CocZOVzvsRHsb3b7S4Fb7xln2KvHF194ofY/DLszagI=;
+	s=korg; t=1794061616;
+	bh=U6bpT/QeaGZtEiQyJl4e/XhoQwj4Stf/3hieM25Nms4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ffy2tItEX7fzgSNwmUejq7/kMO0xZV8ZiTAKH/nL/cLYC17hy7nNM+NheztoLug29
-	 BmPcawpzUFd+SJntwRa97Kw/Nt3KxxvXpMR1+DPz+ZJmq4JVDaYLhJ68Ab/pCWgwZ0
-	 EMgfWuwPSArhj/2Vh+7EE/L0HtBrRWM9SOFgFcpk=
+	b=k0RZs3jToZIWPC0pYnBUMe924pCw7wdQNeXMrPdztEr6nsqaLwAY2cylywlMO4Et2
+	 XSKM9hI3Ey9elt4Niwz8OVay7LMN86mKCTpUNWiwBnlu7z8sVQeMaIjzFXQL/73XC2
+	 zqIRyBid7SfnaKHqRRyegg48NEBx8fsvz8ziPDEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.12 0684/1536] ovl: read the nlink xattr of every indexed non-dir
-Date: Sat,  7 Nov 2026 08:45:00 -0500
-Message-ID: <20261107135016.696737924@linuxfoundation.org>
+Subject: [PATCH 6.12 0685/1536] ovl: set the revalidate flags after d_instantiate()
+Date: Sat,  7 Nov 2026 08:45:01 -0500
+Message-ID: <20261107135016.727323654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,146 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-commit eb644ed5c6d9afdb1554c41cef1f39d150fbc554 upstream.
+commit 75e89c0055c1d7f7eeb462995f11253ca5864f79 upstream.
 
-With nfs_export=on, data written through a file handle to a lower file,
-i.e. a file that exists only in a lower layer of the overlay, can be
-lost on the next mount. A lookup of the file by name then returns -EIO.
-Also, a file with one name reports st_nlink 2 once it has been copied to
-the upper layer. After such a file is removed, its file handle can still
-open it until the next mount.
+stat() of a file on an overlayfs mount triggers a kernel warning and
+fails with ECHILD if another task is creating that file at the same
+time. This happens on an overlay with a FUSE upper layer, which is the
+layer where overlayfs creates new files. Write access to a directory on
+such an overlay is all a user needs to run the two tasks.
 
-Before a lower file is changed for the first time, overlayfs copies it
-to the writable upper layer. This is called copy up.
+The revalidate flags are DCACHE_OP_REVALIDATE and
+DCACHE_OP_WEAK_REVALIDATE. They tell path walk to call ->d_revalidate()
+or ->d_weak_revalidate() on a dentry, so that the filesystem can check
+that the cached dentry is still valid. An overlay dentry only has one of
+these flags if a dentry in one of its layers has it. FUSE dentries have
+the first one.
 
-The index directory is $workdir/index, where $workdir is the directory
-given by the workdir= option. Each entry is named after the file handle
-of a lower inode, so that overlayfs can get from the handle to the
-copied up inode.
+When a flag is set on an overlay dentry, path walk calls
+ovl_dentry_revalidate_common(). That function only expects a dentry
+without an inode in RCU walk, while the dentry is being destroyed. For
+such a dentry outside of RCU walk, it hits a WARN_ON() and
+returns -ECHILD. So a negative overlay dentry must never have the flags
+set.
 
-With nfs_export=on, copy up indexes every non-directory: it copies the
-file to an entry in the index directory and then hard links that entry
-into the upper directory. The index entry is an extra link to the upper
-inode, so overlayfs stores the link count that users should see in the
-overlay.nlink xattr.
+ovl_instantiate() breaks this rule. When a task creates a file, the
+overlay dentry for the new name is hashed but still negative.
+ovl_instantiate() then works in this order:
 
-A file can also be opened by handle, either by an NFS client or by a
-process with CAP_DAC_READ_SEARCH calling open_by_handle_at(). If the
-file is not in the dcache, its overlay dentry is disconnected, i.e. it
-has no parent yet. Copy up then creates the index entry but no hard link
-in the upper directory. The index entry has i_nlink 1 and holds the only
-copy of the data written to the file.
+- It copies the flags from the new upper dentry to the overlay dentry.
+- It calls ovl_get_inode(), which can sleep in a getxattr request to the
+  FUSE server.
+- Only then does it call d_instantiate().
 
-ovl_get_nlink() reads the stored count. Its caller passes a default,
-which the function returns if there is no stored count. If the lower
-inode has i_nlink 1, the function returns the default without reading
-the xattr. That was correct as long as only lower files with multiple
-links were indexed.
+A second task that looks up the name between the first step and the last
+finds a negative dentry with the flags set and revalidates it.
 
-On the next mount, ovl_verify_index() looks for orphans, i.e. index
-entries of files whose last name was removed. For an index entry with
-i_nlink 1, it passes a default of 0 to ovl_get_nlink() and treats a
-result of 0 as an orphan. Here the lower inode also has i_nlink 1, so
-the result is the default. ovl_indexdir_cleanup() then replaces the
-entry with a whiteout, which in the index marks a file as deleted. The
-written data is lost.
+Reproduced with a FUSE server that delays its getxattr reply: stat() of
+a name that was being created hit the WARN_ON() and failed with ECHILD.
 
-A lookup by name then returns -EIO, because a whiteout as the index
-entry of a lower file that still exists is a bad index.
+Fix this by setting the flags after d_instantiate().
 
-ovl_get_inode() gets the wrong count the same way. Its default is the
-i_nlink of the upper inode, which includes the index entry, so a copied
-up file with one name reports st_nlink 2.
-
-When that name is removed, the count drops to 1 rather than 0.
-ovl_nlink_end() replaces the index entry with a whiteout only at a count
-of 0, so the entry stays, and the handle of the removed file still opens
-it.
-
-Reproduced by writing through open_by_handle_at() to an uncached lower
-file with one link. After a remount the data was lost, and the name
-returned EIO.
-
-Fix this by adding an argument to ovl_get_nlink() that says whether the
-caller found an index entry, and by skipping the xattr only if the
-caller found none.
-
-Known gaps:
-- An index entry that a kernel without this patch left behind for a
-  removed file now stays, and the handle of that file keeps working. The
-  entry has i_nlink 1 and a stored count of 1, just like the entry of a
-  file that was only written by handle. Without this patch, the next
-  mount treated it as an orphan.
-
-Fixes: fbd2d2074bde ("ovl: index all non-dir on copy up for NFS export")
+Fixes: bccece1ead36 ("ovl: allow remote upper")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/inode.c     |   14 +++++++++++---
- fs/overlayfs/namei.c     |    2 +-
- fs/overlayfs/overlayfs.h |    2 +-
- 3 files changed, 13 insertions(+), 5 deletions(-)
+ fs/overlayfs/dir.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/overlayfs/inode.c
-+++ b/fs/overlayfs/inode.c
-@@ -1000,7 +1000,7 @@ int ovl_set_nlink_lower(struct dentry *d
- }
+--- a/fs/overlayfs/dir.c
++++ b/fs/overlayfs/dir.c
+@@ -269,7 +269,6 @@ static int ovl_instantiate(struct dentry
+ 	};
  
- unsigned int ovl_get_nlink(struct ovl_fs *ofs, struct dentry *lowerdentry,
--			   struct dentry *upperdentry,
-+			   struct dentry *upperdentry, bool indexed,
- 			   unsigned int fallback)
- {
- 	int nlink_diff;
-@@ -1008,7 +1008,15 @@ unsigned int ovl_get_nlink(struct ovl_fs
- 	char buf[13];
- 	int err;
+ 	ovl_dentry_set_upper_alias(dentry);
+-	ovl_dentry_init_reval(dentry, newdentry, NULL);
  
--	if (!lowerdentry || !upperdentry || d_inode(lowerdentry)->i_nlink == 1)
-+	if (!lowerdentry || !upperdentry)
-+		return fallback;
-+
+ 	if (!hardlink) {
+ 		/*
+@@ -299,6 +298,13 @@ static int ovl_instantiate(struct dentry
+ 		d_mark_tmpfile(tmpfile, inode);
+ 
+ 	d_instantiate(dentry, inode);
 +	/*
-+	 * A lower inode with one link is not indexed on copy up, unless all
-+	 * files are indexed for NFS export.  If the caller found an index entry,
-+	 * then the xattr holds the union nlink, whatever the lower nlink is.
++	 * Unless it is a tmpfile, the dentry is hashed and a path walk can find
++	 * it at any time.  Set the revalidate flags only now, because
++	 * ovl_dentry_revalidate_common() does not expect them on a negative
++	 * dentry.
 +	 */
-+	if (!indexed && d_inode(lowerdentry)->i_nlink == 1)
- 		return fallback;
- 
- 	err = ovl_getxattr_upper(ofs, upperdentry, OVL_XATTR_NLINK,
-@@ -1265,7 +1273,7 @@ struct inode *ovl_get_inode(struct super
- 		/* Recalculate nlink for non-dir due to indexing */
- 		if (!is_dir)
- 			nlink = ovl_get_nlink(ofs, lowerdentry, upperdentry,
--					      nlink);
-+					      oip->index, nlink);
- 		set_nlink(inode, nlink);
- 		ino = key->i_ino;
- 	} else {
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -680,7 +680,7 @@ int ovl_verify_index(struct ovl_fs *ofs,
- 		if (err)
- 			goto fail;
- 
--		if (ovl_get_nlink(ofs, origin.dentry, index, 0) == 0)
-+		if (ovl_get_nlink(ofs, origin.dentry, index, true, 0) == 0)
- 			goto orphan;
- 	}
- 
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -774,7 +774,7 @@ static inline bool ovl_dir_is_real(struc
- int ovl_set_nlink_upper(struct dentry *dentry);
- int ovl_set_nlink_lower(struct dentry *dentry);
- unsigned int ovl_get_nlink(struct ovl_fs *ofs, struct dentry *lowerdentry,
--			   struct dentry *upperdentry,
-+			   struct dentry *upperdentry, bool indexed,
- 			   unsigned int fallback);
- int ovl_permission(struct mnt_idmap *idmap, struct inode *inode,
- 		   int mask);
++	ovl_dentry_init_reval(dentry, ovl_dentry_upper(dentry), NULL);
+ 	if (inode != oip.newinode) {
+ 		pr_warn_ratelimited("newly created inode found in cache (%pd2)\n",
+ 				    dentry);
 
 
