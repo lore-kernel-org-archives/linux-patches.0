@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060890;
-	b=v8gywJLhmT/Cc1YbgwyrBKBkQ5O5/fEfxkWmZ8fecHOiCjtbLRcrrtmpw1dykVpZEGx/
-	 N17iPXyp5N/522sE9VOxQSEffe0+ELMi92XJpa5EpuB2K6dXs+nI0rwPo8E/g7o8aw2uO
-	 3uoYz30nLBXFUTPDC1jr7Ey+uN2hieLpc6J3zH3g6iny+zMsX1P6HE4h000s06HcMVfST
-	 7kHvZmychyP0ila6nZajHRTwcytMKnMwyFFHFKisZWvU1N/qIKtzIT6TSrwr8EhTIaSyv
-	 0l7wRA2eCXFl3/c9bu+8RQDm/rd57woeIsq8HCgRkgggafJ/qNBk6nELxESIQ5/YTFg==
+	t=1794060891;
+	b=cfaetwY3/WIxY9fjgQ7IPU6tTzLCR+axPcV07+whlZYDMrClc/3Cvl3X2+bekVpfwixl
+	 uN3wjRH5k2n5wCiC8Si2y2u5FMBgSG3T0qAZ7im1B6Ywss3tgEzcblfSuTIgYV71Yt710
+	 r07g8YXzh9lxAYItWDhCnesFkFRQgw05rwY2xwdk17mTXlkQbTmk+SwGmA5hUF6z+fnqE
+	 2hy2OX9RxUhV1DnyOygmEl3OOq9ErOGLlzmxSWCW43mFdkLGhDQ/GVz+g2PPruZVj90tG
+	 nb7pePb4hB4Xqk1TONYyWjAPArde4IZ9AwcJKTcQfcl4C0mUykhF0PjFTUFw3OJt8Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060890;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N+xDVr5+oMoNzSqCUMKUj0OmAKob8uyJQGGUvpgBXEs=;
-	b=cK2M45v5pFXRLz1O23AFvJ5aqpFnBy18wDU/NV0w5pjaF7tYlaZK+UwDoda6k517dN+Z
-	 FP9C1sijd0K3AA1xeFIhxU5uVBk1WzKl7qEQgj+RpMHj3MT1acVGqPRXkSDpYurfAPxoU
-	 Qw6UJHKDACMMMvFL9yVQWAJi8sgRlpwOzbL0PUeOLikFgf7Bv5ZaFXtbIMuVXQBVNmEOX
-	 z1qzOVb5NL5Hna6GFOycovJ56l33XWV31XM2TrLAaU3/k6Bp38hq+9lGQ+JfbCrKj+9qG
-	 rvo/seo+8iTpeedV1Yc4vel7BOEPG8VVWTXQBN9V7p/f65Du86y93Xg51apZa+dLDqA==
+	bh=IohMyw7RsEjbEWJkmIM9J3pZU0uWI+mF0ZgZzFxKfpw=;
+	b=vilm9yCJWbsyaNBaiNiFoJxgaWPWpaTzB0YAKxIa7u1gsjGUHm6NxurNPq8WJumrvrXj
+	 +gkVLmG9ow86vaHsDx//APzQOPNrqsHNVfKdu+GF6OWOUSz5OlgjLS7ZcnbXQcq7tR0vJ
+	 oqQzOdQlgXyPWG12vKjEQwA6vWBGIo2M8BayhGunFp/1PTqVRE2BVLkFeBJF+xDOdfT3p
+	 6A33QagxPE2rXBtLD+u7o7CqFCDuxUd8v0AT4tc/Qlq6ArUYpNSAoP1Dufyd1YOm2yASr
+	 ahzQL800HC7Jz9noYzrF6qUgV0RhzNqjBghS0/ESpfOWrndcWGifgM2lXe+WwS3jk/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmzI2oYw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDjdOb+E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3BF606A336;
-	Sat,  7 Nov 2026 14:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B85606D836;
+	Sat,  7 Nov 2026 14:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmzI2oYw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49731F0089F;
-	Sat,  7 Nov 2026 14:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDjdOb+E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213FA1F0089F;
+	Sat,  7 Nov 2026 14:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060890;
-	bh=N+xDVr5+oMoNzSqCUMKUj0OmAKob8uyJQGGUvpgBXEs=;
+	s=korg; t=1794060891;
+	bh=IohMyw7RsEjbEWJkmIM9J3pZU0uWI+mF0ZgZzFxKfpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vmzI2oYwQmVF5k35dAcFIHBd9sYYFq1Nca9pkUBiXjIf8VzVm1ue7MRmlKXU22R7J
-	 Lb7IaSbBASBGA11a2gRDI0YXts3EMxuBjK8Hn55cw7NFI1jMHJdwX0fzXZtwHp8bkJ
-	 +6TBDDHV3cgxLIggN0tonxFfH1+3KJ/7LgE+Ue64=
+	b=JDjdOb+EAOnli7slMhxErCgn//w8Ozydr0UaIqu0dfzemhZG8HXo4Df3NtOD5sQhn
+	 imTO02MQI9ZUJzDSCp1Kz9+vegg5tKvu6tDVkaVpaSik06kLDkj5Y9qAIoTjTo3BqD
+	 ROVHQ6Y36q9pbcq/EUWRUzPIwgr/UGX4bMKvXnIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Glass <sjg@chromium.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	ZhaoJinming <zhaojinming@uniontech.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0267/1536] kconfig: abort rather than loop for ever on EOF
-Date: Sat,  7 Nov 2026 08:38:03 -0500
-Message-ID: <20261107135005.179871052@linuxfoundation.org>
+Subject: [PATCH 6.12 0250/1536] wifi: ath11k: fix resource leak on error in ext IRQ setup
+Date: Sat,  7 Nov 2026 08:37:46 -0500
+Message-ID: <20261107135004.700980072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,90 +70,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Glass <sjg@chromium.org>
+From: ZhaoJinming <zhaojinming@uniontech.com>
 
-[ Upstream commit f915149f5cfbd0d4406ec0b0f57b1d2c8685ae55 ]
+[ Upstream commit 8ab38bbac02298e3fb03008ed4a0227485c0fd62 ]
 
-When a non-interactive 'make oldconfig' or 'syncconfig' meets a new int
-or hex symbol whose default cannot be applied, conf_string() reads a
-value from stdin. At end of file fgets() returns NULL, no value is set
-and the loop asks again. The result is an endless loop which fills the
-output until it exhausts memory, rather than a clean failure.
+In ath11k_ahb_config_irq(), when a CE request_irq() fails, the function
+returns the error immediately without freeing the CE IRQs that were
+successfully registered in previous loop iterations. The probe error
+path does not call ath11k_ahb_free_irq() either, so the previously
+registered CE IRQ handlers remain attached to the interrupt lines and
+are never released.
 
-Detect this in conf_string(): if the value cannot be set and stdin is at
-end of file, stop with an error that names the symbol.
+In ath11k_ahb_config_ext_irq(), when an external request_irq() fails,
+the error is only logged and the loop continues. The function then
+returns 0 indicating success, leaving the device in a partially
+configured state where some external IRQs are not registered. This
+causes enable_irq()/disable_irq()/free_irq() to be called on
+unregistered IRQs during runtime and remove/shutdown, triggering
+WARN_ON(!desc->action), and missing interrupt handlers lead to data
+loss.
 
-Note that a symbol with no default doesn't trigger this, since
-sym_calc_value() falls back to 0, which is accepted at end of file. The
-loop is triggered by a broken Kconfig file, with a default whose text
-fails sym_string_valid().
+Additionally, if alloc_netdev_dummy() fails for a later IRQ group, the
+function returns -ENOMEM without freeing the ext IRQs and napi_ndev
+that were successfully set up for earlier groups.
 
-Such mistakes do creep in from time to time and are hard to debug, since
-the build fills the log with repeated prompts instead of pointing at the
-offending symbol. Some bad defaults draw a parse-time warning, but
-menu_validate_number() accepts a reference to any int or hex symbol, so
-a cross-type reference loops with no warning at all. For example, "0xff"
-is not a valid int value:
+Fix all three issues: propagate the error up to the caller and unwind
+all successfully registered IRQs and allocated resources on failure.
+Also move ab->irq_num[irq_idx] assignment after request_irq() succeeds
+in the ext IRQ path to match the CE IRQ path and avoid storing a stale
+IRQ number on failure.
 
-  config HEXSYM
-          hex
-          default 0xff
-
-  config VAL
-          int "Value"
-          default HEXSYM
-
-Interactive use is unaffected, since feof() only becomes true once a
-read actually hits end of file: an invalid answer at a terminal still
-re-prompts, while Ctrl-D at such a prompt exits with the error instead
-of looping. bool and tristate symbols and choices already accept the
-default on an empty line, so they still take their defaults in a
-non-interactive build.
-
-Tested with int and hex symbols carrying such defaults: with empty
-stdin, the code without this change produces around 190MB of repeated
-prompts within two seconds, while with the change it exits 1 naming the
-symbol. Piped and interactive (pty) sessions still re-prompt on an
-invalid answer and then accept a valid one. A new string symbol with no
-default still takes the empty string at end of file, since any text is
-valid for a string.
-
-Signed-off-by: Simon Glass <sjg@chromium.org>
-Link: https://patch.msgid.link/20260714133545.3294648-1-sjg@chromium.org
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260729020005.219253-1-zhaojinming@uniontech.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/conf.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/net/wireless/ath/ath11k/ahb.c | 79 +++++++++++++++++++--------
+ 1 file changed, 55 insertions(+), 24 deletions(-)
 
-diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
-index 7f4b371ef41f3..efc7ae166c8af 100644
---- a/scripts/kconfig/conf.c
-+++ b/scripts/kconfig/conf.c
-@@ -348,6 +348,23 @@ static int conf_string(struct menu *menu)
- 		}
- 		if (def && sym_set_string_value(sym, def))
- 			return 0;
-+
-+		/*
-+		 * A new int or hex symbol whose default fails validation
-+		 * cannot be set from an empty answer. When standard input is
-+		 * exhausted, as it is for a non-interactive oldconfig or
-+		 * syncconfig, re-asking would loop forever and grow the output
-+		 * until it exhausts memory. Stop with an error that names the
-+		 * symbol instead. String symbols accept any text, and bool and
-+		 * tristate symbols (conf_sym()) and choices (conf_choice())
-+		 * accept the default on an empty line, so they are unaffected.
-+		 */
-+		if (feof(stdin)) {
-+			fprintf(stderr,
-+				"\nerror: no value for new symbol '%s' at end of input\n",
-+				sym->name);
-+			exit(1);
-+		}
- 	}
+diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
+index 9389dc5f4a3da..ee40cd3be47e3 100644
+--- a/drivers/net/wireless/ath/ath11k/ahb.c
++++ b/drivers/net/wireless/ath/ath11k/ahb.c
+@@ -431,36 +431,44 @@ static void ath11k_ahb_init_qmi_ce_config(struct ath11k_base *ab)
+ 	ab->qmi.service_ins_id = ab->hw_params.qmi_service_ins_id;
  }
  
+-static void ath11k_ahb_free_ext_irq(struct ath11k_base *ab)
++static void ath11k_ahb_free_ext_irq_grp(struct ath11k_base *ab,
++					struct ath11k_ext_irq_grp *irq_grp)
+ {
+-	int i, j;
+-
+-	for (i = 0; i < ATH11K_EXT_IRQ_GRP_NUM_MAX; i++) {
+-		struct ath11k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
++	int j;
+ 
+-		for (j = 0; j < irq_grp->num_irq; j++)
+-			free_irq(ab->irq_num[irq_grp->irqs[j]], irq_grp);
++	for (j = 0; j < irq_grp->num_irq; j++)
++		free_irq(ab->irq_num[irq_grp->irqs[j]], irq_grp);
+ 
+-		netif_napi_del(&irq_grp->napi);
+-		free_netdev(irq_grp->napi_ndev);
+-	}
++	netif_napi_del(&irq_grp->napi);
++	free_netdev(irq_grp->napi_ndev);
+ }
+ 
+-static void ath11k_ahb_free_irq(struct ath11k_base *ab)
++static void ath11k_ahb_free_ext_irq(struct ath11k_base *ab)
+ {
+-	int irq_idx;
+ 	int i;
+ 
+-	if (ab->hw_params.hybrid_bus_type)
+-		return ath11k_pcic_free_irq(ab);
++	for (i = 0; i < ATH11K_EXT_IRQ_GRP_NUM_MAX; i++)
++		ath11k_ahb_free_ext_irq_grp(ab, &ab->ext_irq_grp[i]);
++}
+ 
+-	for (i = 0; i < ab->hw_params.ce_count; i++) {
++static void ath11k_ahb_free_ce_irqs(struct ath11k_base *ab, int max_idx)
++{
++	int irq_idx, i;
++
++	for (i = 0; i < max_idx; i++) {
+ 		if (ath11k_ce_get_attr_flags(ab, i) & CE_ATTR_DIS_INTR)
+ 			continue;
+ 		irq_idx = ATH11K_IRQ_CE0_OFFSET + i;
+ 		free_irq(ab->irq_num[irq_idx], &ab->ce.ce_pipe[i]);
+ 	}
++}
++
++static void ath11k_ahb_free_irq(struct ath11k_base *ab)
++{
++	if (ab->hw_params.hybrid_bus_type)
++		return ath11k_pcic_free_irq(ab);
+ 
++	ath11k_ahb_free_ce_irqs(ab, ab->hw_params.ce_count);
+ 	ath11k_ahb_free_ext_irq(ab);
+ }
+ 
+@@ -524,20 +532,25 @@ static irqreturn_t ath11k_ahb_ext_interrupt_handler(int irq, void *arg)
+ static int ath11k_ahb_config_ext_irq(struct ath11k_base *ab)
+ {
+ 	struct ath11k_hw_params *hw = &ab->hw_params;
++	struct ath11k_ext_irq_grp *irq_grp;
+ 	int i, j;
+ 	int irq;
+ 	int ret;
+ 
+ 	for (i = 0; i < ATH11K_EXT_IRQ_GRP_NUM_MAX; i++) {
+-		struct ath11k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
+ 		u32 num_irq = 0;
+ 
++		irq_grp = &ab->ext_irq_grp[i];
++
+ 		irq_grp->ab = ab;
+ 		irq_grp->grp_id = i;
+ 
+ 		irq_grp->napi_ndev = alloc_netdev_dummy(0);
+-		if (!irq_grp->napi_ndev)
+-			return -ENOMEM;
++		if (!irq_grp->napi_ndev) {
++			ret = -ENOMEM;
++			irq_grp->num_irq = 0;
++			goto err_request_irq;
++		}
+ 
+ 		netif_napi_add(irq_grp->napi_ndev, &irq_grp->napi,
+ 			       ath11k_ahb_ext_grp_napi_poll);
+@@ -585,14 +598,11 @@ static int ath11k_ahb_config_ext_irq(struct ath11k_base *ab)
+ 				}
+ 			}
+ 		}
+-		irq_grp->num_irq = num_irq;
+-
+-		for (j = 0; j < irq_grp->num_irq; j++) {
++		for (j = 0; j < num_irq; j++) {
+ 			int irq_idx = irq_grp->irqs[j];
+ 
+ 			irq = platform_get_irq_byname(ab->pdev,
+ 						      irq_name[irq_idx]);
+-			ab->irq_num[irq_idx] = irq;
+ 			irq_set_status_flags(irq, IRQ_NOAUTOEN | IRQ_DISABLE_UNLAZY);
+ 			ret = request_irq(irq, ath11k_ahb_ext_interrupt_handler,
+ 					  IRQF_TRIGGER_RISING,
+@@ -600,11 +610,24 @@ static int ath11k_ahb_config_ext_irq(struct ath11k_base *ab)
+ 			if (ret) {
+ 				ath11k_err(ab, "failed request_irq for %d\n",
+ 					   irq);
++				irq_grp->num_irq = j;
++				ath11k_ahb_free_ext_irq_grp(ab, irq_grp);
++				goto err_request_irq;
+ 			}
++			ab->irq_num[irq_idx] = irq;
+ 		}
++
++		irq_grp->num_irq = num_irq;
+ 	}
+ 
+ 	return 0;
++
++err_request_irq:
++	for (i--; i >= 0; i--) {
++		irq_grp = &ab->ext_irq_grp[i];
++		ath11k_ahb_free_ext_irq_grp(ab, irq_grp);
++	}
++	return ret;
+ }
+ 
+ static int ath11k_ahb_config_irq(struct ath11k_base *ab)
+@@ -629,16 +652,24 @@ static int ath11k_ahb_config_irq(struct ath11k_base *ab)
+ 		ret = request_irq(irq, ath11k_ahb_ce_interrupt_handler,
+ 				  IRQF_TRIGGER_RISING, irq_name[irq_idx],
+ 				  ce_pipe);
+-		if (ret)
++		if (ret) {
++			ath11k_err(ab, "failed request_irq for %d\n", irq);
++			ath11k_ahb_free_ce_irqs(ab, i);
+ 			return ret;
++		}
+ 
+ 		ab->irq_num[irq_idx] = irq;
+ 	}
+ 
+ 	/* Configure external interrupts */
+ 	ret = ath11k_ahb_config_ext_irq(ab);
++	if (ret) {
++		ath11k_err(ab, "failed to configure ext irq: %d\n", ret);
++		ath11k_ahb_free_ce_irqs(ab, ab->hw_params.ce_count);
++		return ret;
++	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int ath11k_ahb_map_service_to_pipe(struct ath11k_base *ab, u16 service_id,
 -- 
 2.53.0
 
