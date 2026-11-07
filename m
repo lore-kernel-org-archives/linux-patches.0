@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060778;
-	b=Dw7VOitmM4eB9zNWuUqA+bpHHPir2A24CgtzvCN8oidHDXcSPxH0thvBvS93q66MQ//J
-	 Rsf7v4FxELwKjwbmObmf2WXBgzBDQM3r4oFckRBD0j/PyYonMUpRJL22zJLt+ZnCR8G2D
-	 r2zYw0N3KTajlBn7S0KfP/YSBfE/tflZiXwgIIlhx+z6JjwHhdHPIauiognUtxEqIURJh
-	 tX7MbNlc6wSL6dQtti5A2SwwQTY2N6F9wYIirUzUNTz30ffTEkmA0TEw7ymGkSqBH5hf+
-	 /xI6ibYF82FkTYJSn42PM21Iju7Gl2H9i5/i1H1EV/+58iwGSq8Db8xTSusExcdtAdg==
+	t=1794060780;
+	b=RkAqRaY4RCNSXZ9PCJNfo3LcU1F24RgoRL6OdY+gdcUK9SNsmedefvTZ93pVMwNFlogO
+	 PwxdkvuIblnWB2eWrD5sg2mMp5xDIbwE0UGCLgns36NVbj366rOyN6iJMUSXiyqNRHtTC
+	 5F/E1o22CDBk+vMJ7h8FKu3w4WJTsqGOgv0ctL5GEQBQNS7NK/qZh1X0B4W4S0K7QhKm8
+	 R4+ziWfo/4uGWs+pp+d1zUTP4MuK0laOBoZfsetGTC0D1RPLCPEC8d2YdHXjCIFOWeERo
+	 9mbAX3WM0zI1sPgVLnbEqU586zjLmQdjkMejtjbBcy52llUwebPPA7ApiGUQg6zPAaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060778;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060780;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qy0z66iAc5WbdoXk+C3Q3jw7VB4CJ2LfHn3jeFPt6ZE=;
-	b=FXR36JvgOHlrrPv7I2AxOF4nA3YnTA1eERhuqzWb4Q0ZEAd241ppvxHO/AKp7E4+Xee1
-	 TNu3Mz16mUaqbu0tr0Mw4w6xP2LjdO/wZ5tn8bziBvZAfIHokaf7m5P+5HVj+LTQ8aEQd
-	 x+4rARSUL5uiuyA5TYHRKJbSZG2jU0hRUqMZh40u8YZ5PVrsjdvLqQCUHH8jPrLyljdph
-	 Fe509zE6iw52z8FwgX8TOXh/xgjTPttp4Q83U5M9GQiC9pS+CqSr+/Nmu4vr9Wh2LGQGN
-	 z6A+X/uifg7YirbkoK9+8nRuk1yVLWsR00BDXpjCskClqHVNFcYA9NGtt+jQrBiFsbg==
+	bh=BDTWTEDF9qjuI1fAvypZVt6ctpRL3RF8ZDclIIWGfHI=;
+	b=cfjA5LM47YGLI82XhErPNCrYXyZ68+1egJvmfCeGYeMjn1gPyGlbJ+8eN3eUCKTNHUTO
+	 YGu0NYXWUkNyCaDuy4G6mQdpY3soYzR/vGeL6VZK/dNmR4B2Eeag+tPJ/xVnfjDv4fSTB
+	 D+zSY/0wUO9cZLVZGEQ6UzOfpkMwNfPXTkMUOjZ1z/J0GobCoD17I6WbQd4nWHs0uXl54
+	 80bHMVeFHmEm4Or/ye4HQHnCvS+8lmNQxqH24KTTUJTsti/s5MvgZAo9aIfTtIekwnL7L
+	 bqII+r5zFtrwMd5MJc+SJO8x/j1afxGHM0VJuN7TjW+7SJWf+dJeF8aSUSLmNPOUH4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjPMgiNj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2IA3v/oJ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F735606A326;
-	Sat,  7 Nov 2026 14:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A00606A326;
+	Sat,  7 Nov 2026 14:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjPMgiNj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3708D1F0089F;
-	Sat,  7 Nov 2026 14:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2IA3v/oJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAE51F0089F;
+	Sat,  7 Nov 2026 14:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060778;
-	bh=Qy0z66iAc5WbdoXk+C3Q3jw7VB4CJ2LfHn3jeFPt6ZE=;
+	s=korg; t=1794060779;
+	bh=BDTWTEDF9qjuI1fAvypZVt6ctpRL3RF8ZDclIIWGfHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjPMgiNjmLE8OHTsr7i2nsz1cUrK6R5dVaFp6yFpiyACQVyOqWu/ANuKGsGu4mbf3
-	 Qpa8rOq7x8kx73Fs3qy0AEHe6UHiEHiums19JwhvMBEo/B7LNJtD3SyN/iyfirzorH
-	 qkde093gDDnVFY7E5rKGfdoBrEYTUE9KetJk3Ov4=
+	b=2IA3v/oJjyAMcrQ4fsJDyYddDJXal60BsC06rVI5DlurgzRdVj1LYLV6YsTsa3E40
+	 KyaLr6dCv6Q6wc3gh72MEkeTGgUDWVBVPfvsXTF/vxeEU7NTtFOlfuLt5n0b2/auD3
+	 A6+na+P+b9BVtkzkJqDtOVHiDF94h69d4A1A9HyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0185/1536] wifi: cfg80211: include cf1 offset when sending chandef
-Date: Sat,  7 Nov 2026 08:36:41 -0500
-Message-ID: <20261107135002.857323443@linuxfoundation.org>
+Subject: [PATCH 6.12 0186/1536] ext4: reject mount if clusters/inodes per group are not 8-aligned
+Date: Sat,  7 Nov 2026 08:36:42 -0500
+Message-ID: <20261107135002.884249996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,36 +71,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 5a69b8dffd2a1b06e4cc4c9003c639eb78bac4cd ]
+[ Upstream commit d42dc7726a003262b73ffef2b744ff57a5488799 ]
 
-The cf1 offset is not included when sending the chandef leading
-to incorrect channel resolution in usermode. Include it.
+The block and inode bitmap checksums are computed over a whole number of
+bytes: ext4_inode_bitmap_csum_*() use EXT4_INODES_PER_GROUP(sb) >> 3 and
+ext4_block_bitmap_csum_*() use EXT4_CLUSTERS_PER_GROUP(sb) / 8 as the
+length passed to ext4_chksum().
 
-Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Link: https://patch.msgid.link/20260721053958.227853-1-lachlan.hodges@morsemicro.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+If s_inodes_per_group or s_clusters_per_group is not a multiple of 8, the
+trailing fractional bits are excluded from the checksum.  Those bits are
+then unprotected, and any incremental csum update path that assumes a
+byte-aligned bitmap can compute a checksum inconsistent with the full
+recalculation, corrupting the on-disk bitmap checksum.
+
+Reject such filesystems at mount time by adding the missing " & 7"
+alignment checks alongside the existing range validation.
+
+Suggested-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://patch.msgid.link/h3n7jlfhyna64dn5o76qxcspnhxdddcs6crpxftmy7gnl7b3sx@jenszfpcsnit
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260508121539.4174601-1-libaokun%40linux.alibaba.com?part=10
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260608111150.827117-2-libaokun@linux.alibaba.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ext4/super.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index c5df80b547077..443ee72e58e0e 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -3934,6 +3934,10 @@ int nl80211_send_chandef(struct sk_buff *msg, const struct cfg80211_chan_def *ch
- 		return -ENOBUFS;
- 	if (nla_put_u32(msg, NL80211_ATTR_CENTER_FREQ1, chandef->center_freq1))
- 		return -ENOBUFS;
-+	if (chandef->freq1_offset &&
-+	    nla_put_u32(msg, NL80211_ATTR_CENTER_FREQ1_OFFSET,
-+			chandef->freq1_offset))
-+		return -ENOBUFS;
- 	if (chandef->center_freq2 &&
- 	    nla_put_u32(msg, NL80211_ATTR_CENTER_FREQ2, chandef->center_freq2))
- 		return -ENOBUFS;
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 25aae8165f070..f84502f3b8320 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -4439,8 +4439,9 @@ static int ext4_handle_clustersize(struct super_block *sb)
+ 		sbi->s_cluster_bits = 0;
+ 	}
+ 	sbi->s_clusters_per_group = le32_to_cpu(es->s_clusters_per_group);
+-	if (sbi->s_clusters_per_group > sb->s_blocksize * 8) {
+-		ext4_msg(sb, KERN_ERR, "#clusters per group too big: %lu",
++	if (sbi->s_clusters_per_group > sb->s_blocksize * 8 ||
++	    sbi->s_clusters_per_group & 7) {
++		ext4_msg(sb, KERN_ERR, "invalid #clusters per group: %lu",
+ 			 sbi->s_clusters_per_group);
+ 		return -EINVAL;
+ 	}
+@@ -5195,8 +5196,9 @@ static int ext4_block_group_meta_init(struct super_block *sb, int silent)
+ 		return -EINVAL;
+ 	}
+ 	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
+-	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
+-		ext4_msg(sb, KERN_ERR, "invalid inodes per group: %lu\n",
++	    sbi->s_inodes_per_group > sb->s_blocksize * 8 ||
++	    sbi->s_inodes_per_group & 7) {
++		ext4_msg(sb, KERN_ERR, "invalid inodes per group: %lu",
+ 			 sbi->s_inodes_per_group);
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
