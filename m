@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062557;
-	b=gErs1D24sUqMMoBCsCtChN/itgYeB8fddmFYVia9eHWqZqky3L8c4YnkWM+4ryK9UCJw
-	 ntGdBgxWcl0ciogANW1PER/TkyiErYladE+kSS37BRd38WU18PemlS8ugu5kjzMuRp5pm
-	 XGa+98r0V3Vq6X4vrae4+/Ga63/dRvXtJQze5xQgwhkEXlnm/d8iBLij2B5KDpjLxE32Z
-	 18aZDT4zcYbRPYFBGZ1nPF+7FQD8VJfLULc78TtQo0bPVliBacOQgZKaQ1CvDGRghgrDR
-	 3Oug+ph59ohiscOa13Ik75Eyn1E86My1PpZvBwFMSFyIp3qBUFuHpcYODLUyeRw9jgQ==
+	t=1794062559;
+	b=ICqZ/Xpq93HE2g5a7v+H66LuXvuqkB8ZqESSbWycUJT4Acq7HCc0plvP9+kG1nEhHCe5
+	 5sI8zCLYsVrLSUPa4bvVPFH60YDewE3y3ufXW5Cr9wThwalhUGmisVeP9BREpASatemc+
+	 bawIggTiLGZIOdWfC5TG62LgC5cqAJ3fC2xgKKfUhLPL/bE7rRqeUWD6WmRLvtJVFzOUJ
+	 oBwbxFJxgzx2ZM911pyOtsxLlmuQswKcDlk8E3RAAlKBxsBKBKc/Z22r1XWaQJmG8Q6PI
+	 rkNCleEqhCqq834ds1iqbK5zUgTVtljSqHJ7WmQqvtWufFJKsGPLGyFe2q1ehDHPl0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062557;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062559;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z0hwJq5w6AUqqRnVCvL76dECX2KI0tOyzTfLZW83c1Y=;
-	b=xh8YqzxE3M3qHWm3wrp5/2iYgQkJA8RcnZUDqI3jYu9IKDl09TCl4Vw8QjU6RVFEdyD+
-	 0hCS/oN0zv7cX1P3s7Gns+7OSRsnsW30Uv3VeyGl6huypWul1ZjZwqg69aC7e6xMFQtbt
-	 hAm1VTzgXp145L4x/1Uc2lqT0MXHmspMmVo5bvz6cKplSeK0tUY922fiEUyS5DpPjvPUO
-	 1f0eAoYB5+naJtdNXAI1sOfNt0hEYFwvj/yGcb0BPWpT2Gct8aY97FY9asaPbqwZupTso
-	 i/WW1bLam5RPNkSg+dqu0EwdBFJLq2vAQKWOjd/zVNeK4+RQuk4uzz4tpt5nTwfYrlA==
+	bh=mWI5BJnqp0q7fcTRupXz+RivCT7G7gkOhkAzc/eGrnI=;
+	b=I+Hg6Cuvm2Xrz14SNeWrdnPEjLsC2m5wf0vaF8TfmSIu3Z28dpn+gBglJyVllOsRUJFt
+	 K23nA+a+ygi4oMcfXCrbWcr+P9hJZS4melfR/pfrgXcvYA9blFmQ/wMqxwlN0H1FU8lvf
+	 +vSesBYrCAaY7jwNEKZCIeKA6haWMYPk4iWpEMoqZmMvAsIJ3G8lyPmbgxzAndkSCFgIc
+	 eHLKzx7lDu7ySlawasegpcForY1p5qdzy/HgIVm/7ZacNLa9XlQbspfxY0SD2o+uGEwN7
+	 8Wyv3/YPetwuZJ1E67N5DOdWQmjHFsRP9L1U1fY7F/6oQZbNNVPlZzKX7XJhbK0fyKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tYYympk7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fh+3M8um;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAD8606A640;
-	Sat,  7 Nov 2026 14:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94D2606A64A;
+	Sat,  7 Nov 2026 14:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tYYympk7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7A41F008A2;
-	Sat,  7 Nov 2026 14:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fh+3M8um
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768081F008A5;
+	Sat,  7 Nov 2026 14:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062557;
-	bh=z0hwJq5w6AUqqRnVCvL76dECX2KI0tOyzTfLZW83c1Y=;
+	s=korg; t=1794062558;
+	bh=mWI5BJnqp0q7fcTRupXz+RivCT7G7gkOhkAzc/eGrnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tYYympk7MGEjkthfpordJry0ZlPss5bcCW4Z9LJ6SPspflLNxsbOSFHJnX33qVSoS
-	 km2SMgHOceNJ++LoYW2Olz1KhnmD4PkbomOlPWnhFDyYQl7+J/gh+d3AsF9uPLceGc
-	 Y3fJVcOMJC170hmD3BFIywpzVFeJnuuCglhbH37g=
+	b=fh+3M8um3vu7d8k4fSLPlpY6H6dmCa38Imh5rbAO0m+85N483mANfMG987Muji6lh
+	 wQE4zy3umyWxbe9+OuuWJ+BFwO3paFZws+sB1GpH/PRfVzQ3Q3Jald3gxNxvklllqq
+	 GvjyShUPPW7SVAoGBmbYBGQrvv0Kem+xF4Wa5PJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <albinwyang@tencent.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1440/1536] mm/madvise: add cond_resched() in THP branch of madvise_cold_or_pageout_pte_range()
-Date: Sat,  7 Nov 2026 08:57:36 -0500
-Message-ID: <20261107135038.283201337@linuxfoundation.org>
+Subject: [PATCH 6.12 1405/1536] writeback: clear old wb dirty state after inode switches
+Date: Sat,  7 Nov 2026 08:57:01 -0500
+Message-ID: <20261107135037.287414893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -74,81 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <albinwyang@tencent.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit f5cfc8e3b20ad71949a1e5623ff45882c063a71b ]
+[ Upstream commit a396fe9f74ea367ae3fab2dcb70b24e83db9f0cb ]
 
-During stress testing with stress-ng on a 256-CPU system, a softlockup was
-observed when madvise(MADV_COLD) was called on a 31GB memory region backed
-by transparent hugepages.  The region contains 15935 THP PMD entries, and
-the softlockup was triggered after 14485 of them had been processed.
+Switching an inode to another wb updates the target wb's dirty-I/O state,
+but no longer checks whether the source wb's dirty-I/O lists became empty.
+The check was lost when inode_io_list_del_locked(inode, old_wb) was
+removed to support tracking clean attached inodes.
 
-The THP branch of madvise_cold_or_pageout_pte_range() has no scheduling
-point.  walk_pmd_range() invokes it once per 2MB PMD entry with no
-cond_resched() anywhere in the loop.  Each iteration calls
-pmdp_invalidate() which issues a synchronous TLB shootdown (dsb ish)
-waiting for all CPUs to acknowledge.  This operation can be time-consuming
-under heavy system load, causing the accumulated time across all PMD
-entries to exceed the softlockup threshold (20s) and panic when
-softlockup_panic=1.  On a CONFIG_PREEMPT_NONE=y kernel, there is no other
-opportunity to reschedule during this entire traversal.
+If the last dirty inode is moved, WB_has_dirty_io remains set on the old
+wb and its bandwidth contribution remains in bdi->tot_write_bandwidth.
+This can keep an empty wb scheduled for periodic writeback and overstate
+the total bandwidth used to distribute writeback work.
 
-The regular PTE path already has an unconditional cond_resched() at the
-function tail (introduced by commit 9c276cc65a58 ("mm: introduce
-MADV_COLD") and commit 1a4e58cce84e ("mm: introduce MADV_PAGEOUT") when
-MADV_COLD and MADV_PAGEOUT were first introduced) and a conditional one
-inside the loop (commit b2f557a21bc8 ("mm/madvise: add cond_resched() in
-madvise_cold_or_pageout_pte_range()")).  The THP branch never received
-equivalent treatment.
+Call wb_io_lists_depopulated() on the old wb after the batch of inode
+switches, while its list_lock is still held. This clears the flag and
+removes the bandwidth contribution if its dirty-I/O lists are empty.
 
-Fix by adding cond_resched() at the huge_unlock exit path after
-spin_unlock(ptl) and reclaim_pages(), which is the single exit point for
-all goto paths in the THP branch.
-
-Crash log:
-  watchdog: BUG: soft lockup - CPU#63 stuck for 23s! [stress-ng-vm:1665914]
-  ...
-  Call trace:
-  pmdp_invalidate+0x48/0x68
-  madvise_cold_or_pageout_pte_range+0x84c/0xb00
-  walk_pmd_range.isra.0+0x1ac/0x3b0
-  walk_pud_range+0x120/0x190
-  walk_pgd_range+0x170/0x1b8
-  __walk_page_range+0x184/0x198
-  walk_page_range_vma+0x94/0x128
-  madvise_cold+0xd8/0x198
-  madvise_vma_behavior+0x234/0x638
-  madvise_walk_vmas.constprop.0+0xdc/0x210
-  madvise_do_behavior+0xa8/0x328
-  do_madvise+0xd8/0x140
-  __arm64_sys_madvise+0x2c/0xe0
-
-Link: https://lore.kernel.org/20261010024042.4070048-1-albin_yang@163.com
-Signed-off-by: Wei Yang <albinwyang@tencent.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
+Fixes: f3b6a6df38aa ("writeback, cgroup: keep list of inodes attached to bdi_writeback")
+Cc: stable@vger.kernel.org
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Link: https://patch.msgid.link/20261016115230.3640770-3-sunjunchao@bytedance.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 1 +
+ fs/fs-writeback.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index dbbb777110358..e1470b35d43ae 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -432,6 +432,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		spin_unlock(ptl);
- 		if (pageout)
- 			reclaim_pages(&folio_list);
-+		cond_resched();
- 		return 0;
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 925fc4a42c67d..435f14b7e2cca 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -535,6 +535,7 @@ static void process_inode_switch_wbs(struct bdi_writeback *new_wb,
+ 		}
  	}
+ 
++	wb_io_lists_depopulated(old_wb);
+ 	spin_unlock(&new_wb->list_lock);
+ 	spin_unlock(&old_wb->list_lock);
  
 -- 
 2.53.0
