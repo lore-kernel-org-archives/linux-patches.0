@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064019;
-	b=b1ZYuRfQFFN0CnBPEUkNx8gkj7m0hexpIALRnIyzVEftWgiT851MZaYfMHf3TK2OZzS2
-	 6RFIBrmwfllrYhqPBOGAELqgSPEVvb9zaGwlwP/GIoN8biWRmU2XW2MPVR9hrkETq3xXH
-	 RHGsAlPSvVEy5w0KAIf931jfkqEwxqG6Tx0MSMwOkmCV6Tek7Kzdj5QJbheDYnmuwdUwd
-	 PyZRob/dS2aIT+Qx21/G+HONV+WOfA2d+oVaSZXi3fmkaTTAwGg1j/JgPZtOsrxLSqzxm
-	 +DoWsXVJzjukPcQdajZJPyXJErmHLz61fBnLruAtlPVLryHxDjTb0nK2IrAbD7ayuHQ==
+	t=1794064020;
+	b=nDJGaxM1ywJZMu2BAiJvr3VWAThxim5cyWegT2xsc9zqhnA0k3h2nmmlsx5znnULIhJX
+	 mZhSnhllupu2dtvFds2fNmqFttBpoN5IxC9zMzg8445zaCmZtOD3H0m1A5uGVvg7hHMFg
+	 aoCNkBodEi2ZaH6WAMnu32KIRjkcXwLTTwiJ4ND+MHaFV8RknI93bfQGvWGIOfbtV7tDj
+	 wnkbyAJRa7V8kiNzSBizpCXwUme8oKgPbyMSH2VQceYgiywRbcJ2ZLLDLEvT8rZe7jVoj
+	 d6qQE88n4HtMrIkXZ0PzHfissoXkcRCdIUqwP1W+yIYmHggdwufxrbbsCPCEwfJOSuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oTkFdmcciksRgbz3R/HH0yUVGA31uprseJki3JEIWhs=;
-	b=4H4CCWAL3ImobAWfdoKM9aOP4MyLmVK0zslSc7NyZmiwN3OtVoXPr/TcD8qvKO6XrMuo
-	 VKRPqYog2kMEuDw7Rq2BGyuu2zOh9v6d/SJE9yhFqkgjfTpBwDV+MlVO1sjOwiNAi2dvf
-	 auAp06bRLnMESf1yZj/LISpjSl0UptH0ycnTLMjId2kXeWhZOKZr0DUR4cGCvXa5AxFSB
-	 EUGdgbSDCgBaBmlKh1I5x42r3td24orYrlKQQ+mdRdSl+sWvfEEN0p9dcwJyiD+OoRS4G
-	 YsfbPKQU7TEJ9tejvUIRvKitajf5n2KE7DGRrnCxTuiSRR8lghQPlaZo1XvSkJMtFzw==
+	bh=nJbQQxog1sm9IMbHkzenoabhcCne/SaV5gp2Gl7d2Ko=;
+	b=Bgs3t1bGRdiBawWfAdfQ5rBupIDZflnWblLvrzwAbw2TWDklBvZthDlsTgUA/fUTz6yL
+	 Z0gDkrKne2WoZS5RTtqwOJc2DTW5JRNoNR5woUfJb3paJ4trkFXVMHJQy4sgDDQkTTinr
+	 N+Hj9znt2+iAnjGASZVAZpCo63HS1ayJZq3JU4UCC3vzQahssNQuoho1WsTSOkG2ppaYg
+	 tAlR2xxUcjXwp0w6NWEuEmgQYzNkq4c4eEkzh9dDqnFg7m3IdmZvTm3rVRMaJQoJWM6eR
+	 GEp1UmvZx5DIDP39fwjIXRcjw6T63bmrT2RNqp5n/DKRlpxEor/gCDGyTkmZ0D+C/SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eRGk5jkM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qVAbmM3m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86ED60A2620;
-	Sat,  7 Nov 2026 15:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B308606A334;
+	Sat,  7 Nov 2026 15:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eRGk5jkM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EC51F0089F;
-	Sat,  7 Nov 2026 15:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qVAbmM3m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13BA1F0089F;
+	Sat,  7 Nov 2026 15:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064018;
-	bh=oTkFdmcciksRgbz3R/HH0yUVGA31uprseJki3JEIWhs=;
+	s=korg; t=1794064020;
+	bh=nJbQQxog1sm9IMbHkzenoabhcCne/SaV5gp2Gl7d2Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eRGk5jkMCHGkLF+nZN7sNRAAebIa5IqPGz+w7Yg+LwPkYPUqOn+oqTBKixeFdMkjN
-	 x6YFvEcrVsoeeg/Eh+0iDyQtH6dXmrXMasFE8ozIRiyNKL0dG+UD7ZfvmtdHcIshSk
-	 BSBMROlgoGEFGji5aURG3FfqQy6Y18tNHqvkOHAo=
+	b=qVAbmM3mQo1WR3Z7ThQln4EL+W5kKXslrwR0Dh8/zNLKWSfaKU05IgkVmByvlliYP
+	 gH3nOjvryBzQ3G40gO4B1csaBgInxnsUwwSz9wQ9XoUnp9i9Rq42prm7ao/PwOFwIn
+	 sYjcUuSUvlZLVax2tVToV5xdS1ud7pfZ3pkeYHBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Luo Haiyang <luo.haiyang@zte.com.cn>,
+	Run Zhang <zhang.run@zte.com.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Shengming Hu <hu.shengming@zte.com.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0169/1257] ata: ahci_st: Assert the power down reset in the probe() error path
-Date: Sat,  7 Nov 2026 08:41:05 -0500
-Message-ID: <20261107134944.010901752@linuxfoundation.org>
+Subject: [PATCH 7.3 0196/1257] cpufreq: conservative: Restrict deferred downscaling to low load
+Date: Sat,  7 Nov 2026 08:41:32 -0500
+Message-ID: <20261107134944.867613704@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,130 +71,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Shengming Hu <hu.shengming@zte.com.cn>
 
-[ Upstream commit 91e0a7452d7a81e924a499b23f30f3bf85fddbd2 ]
+[ Upstream commit 0fa55c5539173bceaeb400c69b1974aaa0cdb8dc ]
 
-st_ahci_probe_resets() deasserts the "pwr-dwn" reset, but the probe()
-error path of st_ahci_probe() only releases the host resources, so the
-SATA IP is left powered up when probe() fails after
-st_ahci_probe_resets() has succeeded, e.g. when
-ahci_platform_enable_resources() fails.
+For a shared cpufreq policy, dbs_update() derives the load used for the
+frequency decision from the maximum load among its CPUs, but it may
+also record deferred idle periods accumulated by an idle CPU in the
+policy.
 
-The reset is asserted by st_ahci_host_stop(), however ->host_stop() is
-only called through the ata_host_stop() devres action registered by
-ata_host_start(), so it does not cover any failure happening before the
-host has been started.
+Consequently, a single update can contain both a high decision load
+from one CPU and multiple deferred idle periods from another CPU. The
+conservative governor applies the deferred down steps before evaluating
+the decision load. If that load subsequently triggers an up step, the
+deferred down steps can outweigh the single up step and produce a net
+frequency reduction.
 
-Factor the assert out into st_ahci_assert_pwrdwn() and call it when
-either ahci_platform_enable_resources() or ahci_platform_init_host()
-fails. The "pwr-dwn" reset control is an exclusive one, so asserting it
-once more from st_ahci_host_stop() is harmless.
+This was observed on a policy shared by CPUs 2 and 3. A CPU-bound
+SCHED_EXT task kept CPU 2 fully utilized while CPU 3 remained idle.
+On this system, SCHED_EXT generated update-util callbacks less
+frequently than CFS, resulting in sparse DBS updates such as:
 
-No functional change intended for ->host_stop() and st_ahci_suspend().
+ load=100 idle_periods=7 interval=59 ms
+ load=100 idle_periods=4 interval=39 ms
+ load=100 idle_periods=2 interval=19 ms
+ load=100 idle_periods=7 interval=59 ms
 
-Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
-Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-10-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+With the default 5% frequency step and a 2.6 GHz policy maximum, seven
+deferred periods reduce the requested frequency by seven 130 MHz steps
+before the high decision load adds only one step. Repeated updates
+therefore keep the policy near 530 MHz even though CPU 2 is fully
+utilized.
+
+There are two load values relevant to this behavior:
+
+  * sample_load is calculated from the busy and elapsed time of the
+    current sample.
+
+  * decision_load is returned by dbs_update() for the governor's
+    frequency decision. After a long idle interval, it may reuse
+    prev_load to improve the response to a waking task and can therefore
+    differ from sample_load.
+
+The problem is that idle_periods is derived from accumulated idle time
+and is applied independently of whether the current sample load is in
+the conservative governor's downscaling region. A high sample load and
+multiple deferred idle periods can therefore coexist, particularly
+when updates are sparse.
+
+As suggested by Zhongqiu Han, calculate the sample load separately from
+the decision load. If no time has elapsed, use prev_load for the sample
+load as the existing load calculation does, since no load can be
+calculated for that interval.
+
+Record the maximum sample load for the policy and apply deferred down
+steps only when it is below down_threshold. This makes deferred
+downscaling follow the same threshold that the conservative governor
+normally uses to determine whether the policy load is low enough to
+reduce the frequency.
+
+The existing code applies deferred down steps whenever idle_periods is
+valid, regardless of the sample load. When the decision load is in the
+hold region, the locally adjusted frequency is not submitted unless
+another frequency-update branch is taken. Thus, when the sample and
+decision loads are the same and both are in the hold region, this
+change does not alter the requested frequency.
+
+The difference becomes visible when the decision load causes a
+frequency update. In particular, if it exceeds up_threshold, the
+governor applies a single up step after the deferred down steps and
+submits the resulting request. Multiple deferred down steps can then
+outweigh that up step and cause a frequency reduction even when the
+sample load is above down_threshold.
+
+With this change, deferred down steps are skipped whenever the maximum
+sample load is at or above down_threshold, keeping deferred downscaling
+consistent with the conservative governor's threshold semantics. The
+requested frequency may therefore be higher than with the existing
+behavior when deferred idle periods are present and the decision load
+causes a frequency update. This is intentional, because the lower
+request previously resulted from applying deferred downscaling while
+the sampled policy load was outside the governor's downscaling region.
+Accelerated deferred downscaling remains available when the policy
+sample load is below down_threshold, including after a workload has
+completed and the policy has become idle.
+
+Fixes: 00bfe05889e9 ("cpufreq: conservative: Decrease frequency faster for deferred updates")
+Cc: All applicable <stable@vger.kernel.org>
+Reviewed-by: Luo Haiyang <luo.haiyang@zte.com.cn>
+Reviewed-by: Run Zhang <zhang.run@zte.com.cn>
+Suggested-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
+Link: https://patch.msgid.link/20260916140926740-DCokXh6dAgtqDn1EWdCh@zte.com.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci_st.c | 51 +++++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 21 deletions(-)
+ drivers/cpufreq/cpufreq_conservative.c |  8 ++++---
+ drivers/cpufreq/cpufreq_governor.c     | 29 +++++++++++++++++++-------
+ drivers/cpufreq/cpufreq_governor.h     |  2 ++
+ 3 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
-index 819269a022efd..eea75961038cf 100644
---- a/drivers/ata/ahci_st.c
-+++ b/drivers/ata/ahci_st.c
-@@ -83,18 +83,27 @@ static int st_ahci_deassert_resets(struct ahci_host_priv *hpriv,
- 	return 0;
+diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
+index 0b32ae28ec857..02bfd46543e99 100644
+--- a/drivers/cpufreq/cpufreq_conservative.c
++++ b/drivers/cpufreq/cpufreq_conservative.c
+@@ -85,10 +85,12 @@ static unsigned int cs_dbs_update(struct cpufreq_policy *policy)
+ 	freq_step = get_freq_step(cs_tuners, policy);
+ 
+ 	/*
+-	 * Decrease requested_freq one freq_step for each idle period that
+-	 * we didn't update the frequency.
++	 * Apply deferred down steps only when the policy sample load is
++	 * below down_threshold. Otherwise, multiple deferred down steps may
++	 * cause a net frequency decrease outside the downscaling region.
+ 	 */
+-	if (policy_dbs->idle_periods < UINT_MAX) {
++	if (policy_dbs->max_sample_load < cs_tuners->down_threshold &&
++	    policy_dbs->idle_periods < UINT_MAX) {
+ 		unsigned int freq_steps = policy_dbs->idle_periods * freq_step;
+ 
+ 		if (requested_freq > policy->min + freq_steps)
+diff --git a/drivers/cpufreq/cpufreq_governor.c b/drivers/cpufreq/cpufreq_governor.c
+index 710d93ec89b53..f3bd3dbe7c419 100644
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -124,7 +124,8 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 	struct policy_dbs_info *policy_dbs = policy->governor_data;
+ 	struct dbs_data *dbs_data = policy_dbs->dbs_data;
+ 	unsigned int ignore_nice = dbs_data->ignore_nice_load;
+-	unsigned int max_load = 0, idle_periods = UINT_MAX;
++	unsigned int max_load = 0, max_sample_load = 0;
++	unsigned int idle_periods = UINT_MAX;
+ 	unsigned int sampling_rate, io_busy, j;
+ 	u64 cur_nice;
+ 
+@@ -147,7 +148,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 		struct cpu_dbs_info *j_cdbs = &per_cpu(cpu_dbs, j);
+ 		u64 update_time, cur_idle_time;
+ 		unsigned int idle_time, time_elapsed;
+-		unsigned int load;
++		unsigned int load, sample_load;
+ 
+ 		cur_idle_time = get_cpu_idle_time(j, &update_time, io_busy);
+ 
+@@ -186,6 +187,20 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 
+ 		j_cdbs->prev_cpu_nice = cur_nice;
+ 
++		/*
++		 * Compute the sample load separately from the prev_load value
++		 * that may be reused after a long idle interval. The conservative
++		 * governor uses it to decide whether to apply deferred down steps.
++		 * If no time has elapsed, retain the existing behavior and use
++		 * prev_load.
++		 */
++		if (unlikely(!time_elapsed))
++			sample_load = j_cdbs->prev_load;
++		else if (time_elapsed > idle_time)
++			sample_load = 100 * (time_elapsed - idle_time) / time_elapsed;
++		else
++			sample_load = 0;
++
+ 		if (unlikely(!time_elapsed)) {
+ 			/*
+ 			 * That can only happen when this function is called
+@@ -220,11 +235,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			load = j_cdbs->prev_load;
+ 			j_cdbs->prev_load = 0;
+ 		} else {
+-			if (time_elapsed > idle_time)
+-				load = 100 * (time_elapsed - idle_time) / time_elapsed;
+-			else
+-				load = 0;
+-
++			load = sample_load;
+ 			j_cdbs->prev_load = load;
+ 		}
+ 
+@@ -237,9 +248,13 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 
+ 		if (load > max_load)
+ 			max_load = load;
++
++		if (sample_load > max_sample_load)
++			max_sample_load = sample_load;
+ 	}
+ 
+ 	policy_dbs->idle_periods = idle_periods;
++	policy_dbs->max_sample_load = max_sample_load;
+ 
+ 	return max_load;
  }
- 
--static void st_ahci_host_stop(struct ata_host *host)
-+static int st_ahci_assert_pwrdwn(struct ahci_host_priv *hpriv,
-+				 struct device *dev)
- {
--	struct ahci_host_priv *hpriv = host->private_data;
- 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
--	struct device *dev = host->dev;
- 	int err;
- 
--	if (drv_data->pwr) {
--		err = reset_control_assert(drv_data->pwr);
--		if (err)
--			dev_err(dev, "unable to pwrdwn\n");
--	}
-+	if (!drv_data->pwr)
-+		return 0;
-+
-+	err = reset_control_assert(drv_data->pwr);
-+	if (err)
-+		dev_err(dev, "unable to pwrdwn\n");
-+
-+	return err;
-+}
-+
-+static void st_ahci_host_stop(struct ata_host *host)
-+{
-+	struct ahci_host_priv *hpriv = host->private_data;
-+
-+	st_ahci_assert_pwrdwn(hpriv, host->dev);
- 
- 	ahci_platform_disable_resources(hpriv);
- }
-@@ -159,38 +168,38 @@ static int st_ahci_probe(struct platform_device *pdev)
- 
- 	err = ahci_platform_enable_resources(hpriv);
- 	if (err)
--		return err;
-+		goto assert_pwrdwn;
- 
- 	st_ahci_configure_oob(hpriv->mmio);
- 
- 	err = ahci_platform_init_host(pdev, hpriv, &st_ahci_port_info,
- 				      &ahci_platform_sht);
--	if (err) {
--		ahci_platform_disable_resources(hpriv);
--		return err;
--	}
-+	if (err)
-+		goto disable_resources;
- 
- 	return 0;
-+
-+disable_resources:
-+	ahci_platform_disable_resources(hpriv);
-+assert_pwrdwn:
-+	st_ahci_assert_pwrdwn(hpriv, &pdev->dev);
-+
-+	return err;
- }
- 
- static int st_ahci_suspend(struct device *dev)
- {
- 	struct ata_host *host = dev_get_drvdata(dev);
- 	struct ahci_host_priv *hpriv = host->private_data;
--	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
- 	int err;
- 
- 	err = ahci_platform_suspend_host(dev);
- 	if (err)
- 		return err;
- 
--	if (drv_data->pwr) {
--		err = reset_control_assert(drv_data->pwr);
--		if (err) {
--			dev_err(dev, "unable to pwrdwn");
--			return err;
--		}
--	}
-+	err = st_ahci_assert_pwrdwn(hpriv, dev);
-+	if (err)
-+		return err;
- 
- 	ahci_platform_disable_resources(hpriv);
- 
+diff --git a/drivers/cpufreq/cpufreq_governor.h b/drivers/cpufreq/cpufreq_governor.h
+index 73b8ed7cfaae7..806d8fb4dff1d 100644
+--- a/drivers/cpufreq/cpufreq_governor.h
++++ b/drivers/cpufreq/cpufreq_governor.h
+@@ -95,6 +95,8 @@ struct policy_dbs_info {
+ 	/* Multiplier for increasing sample delay temporarily. */
+ 	unsigned int rate_mult;
+ 	unsigned int idle_periods;	/* For conservative */
++	/* Maximum load from the current policy sample. */
++	unsigned int max_sample_load;
+ 	/* Status indicators */
+ 	bool is_shared;		/* This object is used by multiple CPUs */
+ 	bool work_in_progress;	/* Work is being queued up or in progress */
 -- 
 2.53.0
 
