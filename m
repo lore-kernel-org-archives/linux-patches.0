@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060846;
-	b=uImGaTfTPwZfMcBzAKUDlZrGga+G1dJFBAR4IvJHRHW2gmQhYQi9MtInpVwjH0vaj1Wg
-	 LUoJl2SJbCqtVHzq1oJQExVZFyXr0gynfdm+Lacuk/wGV2ljnNZDwG3SRRgHBSLXmvWCQ
-	 mKbjhrNI3cY0ZdBgvIgeBSttl3uEhNf/PSuq/qZisfOKn29QHKCli+saTsbAZ85kp4oUA
-	 au0CK4LNlmhf3UpE4c8mTseQef7/ZR7AMmQ05EfLP8dmhTgkLorAg+Xi8gV5q08fvFtwo
-	 fzXRSqPc4qwRGdqJEBTfKl0MaiDnS/ZjPj0PrxUVmRrwB1AapKsTXA9NMkKBnO15eFg==
+	t=1794060847;
+	b=WojqTjo+5W0o2XiM9XOSI0vgUeJN0DekFWy88umQY8YB4OYwa459nTC5bGFRVv1CUL5w
+	 Dnj42uabrCuRvmeKZWY+23+m8p8VKDVkypMg/sJ0PLAx0kO6wNs3f/Ar53EBwqxQgIU+h
+	 sjhwjuJ4sqmC8+Yaz4heQ7SQbPaUboO/sqrZCVO1+LgoekDU0lvy2OT8I48BoLD11n+ty
+	 ws83P10xPJwlGPTCm6XWz5fZgO8ACphgiSPyGsrEeVM3UJYxxPsJ5hq79MNulR8a12y2M
+	 S9PIl3BiuY3kT2vr2lmygH1XIsvK5rJRpbDa65lTjup59D3H1sS2Kk4d7rsAQz574yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=hBOUuQ/arzCDXnql907aePnn9QWnLXc3M5YZjIpqFl0=;
-	b=uM+wbphjtOFB+pKxY3q3auggMJHQLnhSHlBNQ13eckDStRlN+aT4Wu1RRgfoFXVHS60j
-	 TYjhLBoVgnE3p1kc2medOSAC/Mirgp/PNrNcKCEPutOyGgvHdsysyMEPyyo+OH/s6Fzvd
-	 HwI2aI04IifzBMXQJmMKRztuPBr2xcpO8uk5URVLui9H4twFlar4gz15bQV+oB7UX5Kda
-	 pbbMvCdUfUAhUEU9lCTVfMaWi2qfJEtKJSCwkHBEdjF2Ff8tNATfkbuAIj70ZP98MG7mu
-	 +p4baeIN7HyIdnfedXVy1w56XsApFnMBR7vIJ/dmqbX69wGkNFMo8Yb1JB5/uLO2nog==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ocEAMYaHYeX4+EudoR3s9ajgEKI27kUAaqLXvYobiJA=;
+	b=AnAP4mDJMWBj9WZaN16b1U2EhB3a6UbXNClWs3KEEuSJAk/h1o23Tuy858UPL6lpQyWr
+	 G5idCiR9Yp06uRUxZWX7Dph2JLSmDZbThVfvBfyWf5YjbfJ3BGFuAo0/0qSatA8BJUJ5w
+	 xIz+ibwiPWD3hEDFCmjqu+dGG5rRB1nnLxTc2lpEcoBQyn9Ad3iXNvbwtL7Db/5/6k25T
+	 8Whopks1QYd2BUOx+9Ah3bkqrCDPTYZm9eBBwuEhCzCoAvJnxHgzu5a7QnF8FxkfGQycc
+	 w/I4Wg3d91YupNLbFrQXnZY/xjf96VvVeFQg+53Q0IGJOGM8WHXFyetikwQHtHZNs7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+RqJr6Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1CHxwXu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49C6606A330;
-	Sat,  7 Nov 2026 14:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD08606A330;
+	Sat,  7 Nov 2026 14:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+RqJr6Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3EA1F0089F;
-	Sat,  7 Nov 2026 14:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1CHxwXu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC041F0089F;
+	Sat,  7 Nov 2026 14:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060845;
-	bh=hBOUuQ/arzCDXnql907aePnn9QWnLXc3M5YZjIpqFl0=;
+	s=korg; t=1794060847;
+	bh=ocEAMYaHYeX4+EudoR3s9ajgEKI27kUAaqLXvYobiJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+RqJr6QKEGLa/KELRP1b5tq8ERQIhnCUDKXf3VvgIfAFOo9RHhCMzhqa+GrZ+Ey9
-	 3PUkjU85HRJFGGdopU6sZjdIaMABdO6YKeXTMpXGw/bOYtGWn6sy77jUPlh4R/aIwZ
-	 jP42+EWA3zP/Zbqm0VwJ/E+5996S/8m2rLzoI5VA=
+	b=H1CHxwXu8PgmKXiDY2YlQ4Z5sR7jWuNKkVt9v+eWB9pRpltd2qaX4LMIvs/YWb+z3
+	 RIbk2rMDdqgEVjcSuVXwjmpmxQB0wkWAqq8i9tcIQ9Fb3Q91p+KbNEI5vYGB3Miymf
+	 iSA6UB1Lt382IL3zW4zYKeyjfzhIMbYtYyY8t5Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0234/1536] mfd: ipaq-micro: Fix out-of-bounds stack read in ipaq_micro_str
-Date: Sat,  7 Nov 2026 08:37:30 -0500
-Message-ID: <20261107135004.246099685@linuxfoundation.org>
+Subject: [PATCH 6.12 0208/1536] platform/x86: int1092: Fix info leak in parse_package()
+Date: Sat,  7 Nov 2026 08:37:04 -0500
+Message-ID: <20261107135003.503458316@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -63,47 +63,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit da3a98c941753255418616d249e5b40db0927c26 ]
+[ Upstream commit f5eb833730c071b68a68de5d1df442aae4ae7e6e ]
 
-ipaq_micro_str() decodes a UTF-16LE string into an ASCII string.
-It copies characters to a stack buffer retstr, but fails to
-null-terminate it. When kstrdup() is called on retstr, it can read past
-the buffer into uninitialized stack memory, potentially leaking stack
-contents.
+Sashiko reports a possible information leak that can occur as follows:
 
-Fix this by initializing retstr to zero.
+1. In parse_package(), memory allocated for data->device_mode_info is not
+   zerozed initially as it is allocated with devm_kmalloc_array().
 
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://patch.msgid.link/aintJF4X5tWDW-Ej@google.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+2. In the for loop after the allocation, a malformed ACPI package
+   provided by firmware can cause some fields in data->device_mode_info
+   to remain uninitialized.
+
+3. Later in update_sar_data(), the uninitialized fields gets copied to
+   the fields of context->sar_data, which can be exposed to userspace
+   through sysfs attribute read (intc_data_show()).
+
+Fix the leak by switching to use devm_kcalloc() for allocation.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260710052806.100107-1-nihaal%40cse.iitm.ac.in
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20260723-platx86-v4-2-93b4a178b595@cse.iitm.ac.in
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/ipaq-micro.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel/int1092/intel_sar.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/ipaq-micro.c b/drivers/mfd/ipaq-micro.c
-index c964ea6539aa6..9ac26a17b6202 100644
---- a/drivers/mfd/ipaq-micro.c
-+++ b/drivers/mfd/ipaq-micro.c
-@@ -219,7 +219,7 @@ static void ipaq_micro_eeprom_read(struct ipaq_micro *micro,
+diff --git a/drivers/platform/x86/intel/int1092/intel_sar.c b/drivers/platform/x86/intel/int1092/intel_sar.c
+index 1cfb268f6b71f..6795b97460c99 100644
+--- a/drivers/platform/x86/intel/int1092/intel_sar.c
++++ b/drivers/platform/x86/intel/int1092/intel_sar.c
+@@ -91,10 +91,10 @@ static acpi_status parse_package(struct wwan_sar_context *context, union acpi_ob
+ 	    item->package.count <= data->total_dev_mode)
+ 		return AE_ERROR;
  
- static char *ipaq_micro_str(u8 *wchar, u8 len)
- {
--	char retstr[256];
-+	char retstr[256] = { 0 };
- 	u8 i;
+-	data->device_mode_info = devm_kmalloc_array(&context->sar_device->dev,
+-						    data->total_dev_mode,
+-						    sizeof(*data->device_mode_info),
+-						    GFP_KERNEL);
++	data->device_mode_info = devm_kcalloc(&context->sar_device->dev,
++					      data->total_dev_mode,
++					      sizeof(*data->device_mode_info),
++					      GFP_KERNEL);
+ 	if (!data->device_mode_info)
+ 		return AE_ERROR;
  
- 	for (i = 0; i < len / 2; i++)
 -- 
 2.53.0
 
