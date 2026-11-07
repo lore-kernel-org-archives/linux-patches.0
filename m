@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063954;
-	b=EmFDHz0rWN8hg1BAxIYC6JrMgl7f3dGyciQtg2rqfOn9n+FzDGVjqCSZgpxFfYormXrg
-	 GNLJpXdnWNoW/QkDAmAXkyR5ZacBmYp4yu4D4lu1ISlMCTnlGwZo7dK+vz4poYR64ferr
-	 j4PNg8DH9DDrzjmpdYH7Wsj323zWTuP6S/3RLvefWrRQi1tFq/DTgHefN0R4nGr1Rexpk
-	 e5mvPI31yLtXsic8OtnBVcskx9E/6pIvnjRKCniDV6JTuyEY/mn0EMIN6mzq07L21Ljdt
-	 92nPUAACoUIVEyQQxIuhORLpQadWJdKg4LWjAh5j4x4DL5JbGjlKguunh2Z+VrDX83Q==
+	t=1794063955;
+	b=xmozNwDC1aIg56d0+69PP2U1CTMTMgvNvPW5EtJ5e5nF8Nf1B9dP5zHJTH4P2sV2vjIG
+	 3jEZXLBB4IvOkUdgOGQHyZNovVW0KxM3lJVHgD7+Om2WlDG6KF9R9njXyCiv4rVNIMmzs
+	 YjbwvQzLLA2+8E3kx1Lh4UdfvcjTzw4R/8VHD8vIEZWczDqBHqKCC+gniqBAPSf5bRGlf
+	 q3E8LQfwdA49Nb1aM5eRTNPlSTx2IpdLJ6SIprN4zN4HoGL5kJBkoFjObGdVNil5uuMKH
+	 C/omhl6jOoLIXw58DURhjl8eJ+jjOABZUvrvZe54Ux2MWuQQTuVpw8LOpBKeOFi5cjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063955;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I+qWEh8iAIpA6DwS9kKuD5g167hM9lQYierjcAiMtq0=;
-	b=wAUQh724cyw1sk7lZNGRuK/EcS31EqwdRuRIHWZA3PGgIxUomtPQiHn012tcZbsswmuX
-	 yBWFwg4ZU9NAxSHYNc7cqRsbpBIawPQQLH1g7LCvpDr7HpIQd5nUb3ScFx1UebhSAOKtt
-	 wo6wImxXSs/0NH5LEZiDcZAb+JgRJ2tWCt/gTYNK3rQpQZbwtQLgypK4NmIdCeyv0+Odh
-	 M6xELF23jIBUmEUN/FnGgYx0UmH3gTFjyx76w93++volTgrGizT7ZkI6CAP549/trvyfo
-	 NZcKx19l13JJ3ethbvdVbAAVXmNPwhTZFcJfE+KhhX9wHiAR7SM/V+5S/u/ev7fanIw==
+	bh=mbr7nzieq95pMgSXGsxfFNGgpKySEgengTRH1CI7g7w=;
+	b=cmiyVYekeJiImCU2SYLPxb3BGOPTy18qv2VfhxTvJ1LtjmvsoqVUOZMt7xiwdD7tpi/+
+	 5jq0PN4LiuO1XtVbUU59/TWRlDHCpw6IdXwMTDBiIC3cMWbVTOw9aDs+ruq+Z/PSDbzh7
+	 p7rusWeajpRhg5FqYhNJKjjXn/5Y87m3Fvc4YeYmhZnfeeXQXSn5qB1tFgPKeu17mjHWH
+	 aCHWDD8Uw12J5ySFB7hFm04qDhuSeQEypXf9H86rZQ3drdbL9ngNzffmBWbIJcDktdhiE
+	 0ZDfzXrR6nAOAvibfDnQk056iFxvqx+yEa4pYKrCOf9GYnQo6VOiV1mf1VbzPov3eUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSoRgOZP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xrxg9lQG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42EE606D829;
-	Sat,  7 Nov 2026 15:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DB76082BFF;
+	Sat,  7 Nov 2026 15:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSoRgOZP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C321F008A1;
-	Sat,  7 Nov 2026 15:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xrxg9lQG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993491F008A6;
+	Sat,  7 Nov 2026 15:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063953;
-	bh=I+qWEh8iAIpA6DwS9kKuD5g167hM9lQYierjcAiMtq0=;
+	s=korg; t=1794063954;
+	bh=mbr7nzieq95pMgSXGsxfFNGgpKySEgengTRH1CI7g7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSoRgOZPKXdAbJ/lE7nDBvHILQcwcyRywSMsNZ6OI6gAxrG2g7U7TWrGXc9WJqski
-	 199znphC0xw3EfduLFDXDFkUbCfKESDTRxuZtgUPTJ5fqO+bSvFxFDyXXpcp409OfH
-	 B4IpVYbDNwqYuamXwjogOxzikDh96vQw4dHT/dPM=
+	b=Xrxg9lQGZwZE7ZPA9KqrSlH1P1hdwukOwx1Q53Amf8J56VX4gPZmua+FvQcEF8639
+	 1p2TAuq6Ea+PV+34iVULg/uqGc2x3ye9uJ4jC1aG50b41FO+P2vbudwLqKo8IJ3cbK
+	 MV/wv1x3XqUPfMuo3wzjheHNUVMEMknMjeaGEJ+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0144/1257] media: vivid: cancel svid ctrl work on release
-Date: Sat,  7 Nov 2026 08:40:40 -0500
-Message-ID: <20261107134943.287390444@linuxfoundation.org>
+Subject: [PATCH 7.3 0127/1257] dmaengine: altera-msgdma: initialize state before requesting IRQ
+Date: Sat,  7 Nov 2026 08:40:23 -0500
+Message-ID: <20261107134942.833288058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,51 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 1adaefca7111235ff0a2219dd4899ac24601d6e8 ]
+[ Upstream commit a5f8e3471fc20567df888267885dec3eb340eb37 ]
 
-vivid_dev_release() cancels update_hdmi_ctrl_work but not its sibling
-update_svid_ctrl_work, which vivid_vid_cap_s_ctrl() queues on
-update_svid_ctrls_workqueue when a VIVID_CID_SVID_IS_CONNECTED_TO_OUTPUT
-control is changed. The two work items were added together, but only
-one of them is cancelled on release.
+msgdma_probe() registers the IRQ before initializing the tasklet, lock,
+and descriptor lists used by the interrupt handler. A pending interrupt
+can access incomplete state during probe.
 
-If the svid work is still pending or running when the last v4l2_device
-reference is dropped, update_svid_ctrls_work_handler() runs after
-kfree(dev): the handler iterates the global vivid_devs[] array and
-calls v4l2_ctrl_modify_range() on every vivid_dev instance, including
-this one after it has been freed.
+Initialize the handler state before requesting the IRQ so the interrupt
+path observes ready software state.
 
-Add the missing cancel_work_sync() next to the hdmi sibling, before
-vivid_free_controls() releases the control handlers the work uses.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: d7c969f37515 ("media: vivid: Add 'Is Connected To' menu controls")
+Fixes: a85c6f1b2921 ("dmaengine: Add driver for Altera / Intel mSGDMA IP core")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260830053308.2190597-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/altera-msgdma.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-core.c b/drivers/media/test-drivers/vivid/vivid-core.c
-index 62cfb5feb2cf5..c042d92db175d 100644
---- a/drivers/media/test-drivers/vivid/vivid-core.c
-+++ b/drivers/media/test-drivers/vivid/vivid-core.c
-@@ -854,6 +854,7 @@ static void vivid_dev_release(struct v4l2_device *v4l2_dev)
- 	struct vivid_dev *dev = container_of(v4l2_dev, struct vivid_dev, v4l2_dev);
+diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
+index e23e5b441a24e..412f4bce1d4aa 100644
+--- a/drivers/dma/altera-msgdma.c
++++ b/drivers/dma/altera-msgdma.c
+@@ -847,11 +847,6 @@ static int msgdma_probe(struct platform_device *pdev)
+ 	if (mdev->irq < 0)
+ 		return -ENXIO;
  
- 	cancel_work_sync(&dev->update_hdmi_ctrl_work);
-+	cancel_work_sync(&dev->update_svid_ctrl_work);
- 	vivid_free_controls(dev);
- 	v4l2_device_unregister(&dev->v4l2_dev);
- #ifdef CONFIG_MEDIA_CONTROLLER
+-	ret = devm_request_irq(&pdev->dev, mdev->irq, msgdma_irq_handler,
+-			       0, dev_name(&pdev->dev), mdev);
+-	if (ret)
+-		return ret;
+-
+ 	tasklet_setup(&mdev->irq_tasklet, msgdma_tasklet);
+ 
+ 	dma_cookie_init(&mdev->dmachan);
+@@ -863,6 +858,11 @@ static int msgdma_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&mdev->done_list);
+ 	INIT_LIST_HEAD(&mdev->free_list);
+ 
++	ret = devm_request_irq(&pdev->dev, mdev->irq, msgdma_irq_handler,
++			       0, dev_name(&pdev->dev), mdev);
++	if (ret)
++		return ret;
++
+ 	dma_dev = &mdev->dmadev;
+ 
+ 	/* Set DMA capabilities */
 -- 
 2.53.0
 
