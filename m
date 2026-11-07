@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062502;
-	b=hJ8QI+wY1CvEhqVkxVXuqO7D+NWrjmQBZY+9orsyXUmbOcOv0Csurrhvd3a9atXNk3Q2
-	 U5ymNAYRUNcTgbOCfwtVeGw74OEZRMOSmrByDSZ4d8xzFwOS0IAmiS0jquqSD/teq7K5T
-	 fMla+lZzQGpG1FBgew4qCPlxskaUTr3hF4xTqnqwVLy8EZi8gby3svUT5wyZjIThUdElI
-	 N5Dei2nXWW6bI/9AMHtHP2HgbGTvN+e+/VhltQwzt+Eqk86OTyHVW1hpdwOVwgMYZ5+94
-	 yYL5VcCa9pDcy0l7Tg8fi9lEQArPHZIdBAE8wth+dVezixgWh377kg5FUoCcsWBMbQQ==
+	t=1794062504;
+	b=Y+bpiM1QWTvCc8vFxDW1SPGjSEtSTAUTlclwqaZosRrNxpx/jMt8/iLkwDrV1KeEaFF0
+	 Ur5nguZjNvIYyCAg6Bcu5NJdqvCzsf+XheLB6fsrfVtDOWASree1EgbKy2NGBt/Dqom4q
+	 JuSBcMZRi2kD6igKCZ2O/mwokyVSQqlduAgX7SKXnO2eXFinOwRPziRMG2NZS8i3cnJbL
+	 RgRVy4gnC0rr8shvGctHK8DwC8sT+VdUZKWM40X7Q6yGxVN/nGBr/HyzkH6vQ3bA0LVHx
+	 Jr/BpAYwDPYKyi1z6t6BCKth+UoO/kJz7Q9+QJS6BvPy0H3BWW3VnnNX/Umod+fZwHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062502;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062504;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4ZLYM2evAH74y9rlKZGtl5+Bhh6rkNqkxBwNhFx2DvE=;
-	b=YfS1i8qnWPorrCBVCToVCpJyrq6FjXqdEPF4UYfI3ze/Hk90KhUy7d5ys9wWxT7VKVcn
-	 V+IPnqbavXerI9nV4GbVGYWB+Bt2GrnvyvAj0mF1nTmCM/vGxZASBnxhr1L9P8adf2SBX
-	 VPZ0dSWcskPpWquKjHEtJ0JDyvZ9L2Ya/HJRzs+oHHZFl3GCtpymtr1nTnMr1T9kefnBJ
-	 gx4JTlzbBwUWg5DmUbjOfgi0SqGBBK9hTJsAcRMRIzxuZzVXpofScBJxwMtL7Xbs+STvA
-	 vpzOjlYkBEHtRmQMWBooM9VXPTFxBg2q+nv7j+Gn7UqjcmC7OPiF6avRaEPMdfxt7FQ==
+	bh=YpAgwViQKlieUuORNdLFOYylvgJTqhghj4uk+eSAblU=;
+	b=bkGJMl330Co+Qr8AsMlulYwlF/i7xBlbn5aJuqHLR83TT93mHL3ZluyQRFx47hhsSSFx
+	 PhnAcvJQJ238A4CtwCczDnl0ijNfqMrknpeTHva/4ZQNgiVoETo9YRiVK6Kt9CkgV6K1D
+	 AdF1ZLtV6mbrDvs5Waf00PcbSpCZLj7MZ7IKcYgXfFMxQJGzPzO/C/slYRwJIqL2o0doL
+	 +xZblNWWlTVcJ5EW+Zxh0Z0Zh+eisni6eqV6ddFupHts1NHUslR2OKHaxMYJTDN37w1GQ
+	 zudJDPP4C5BPI06xzBoU31yDcrkR7fuEBBEVYTdc0bIZGEjwUIW5NpQ5wHFjuB2CwoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVvVqHcr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PUD/5p7Z";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E0E606A331;
-	Sat,  7 Nov 2026 14:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3231606A330;
+	Sat,  7 Nov 2026 14:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVvVqHcr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8711F0089F;
-	Sat,  7 Nov 2026 14:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PUD/5p7Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5285C1F0089F;
+	Sat,  7 Nov 2026 14:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062502;
-	bh=4ZLYM2evAH74y9rlKZGtl5+Bhh6rkNqkxBwNhFx2DvE=;
+	s=korg; t=1794062503;
+	bh=YpAgwViQKlieUuORNdLFOYylvgJTqhghj4uk+eSAblU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tVvVqHcrXDAQdwViAgjuXsrPXAgp+kINjIPnMa+TiuROZZX50RgeV1c8WJ4+20v8Q
-	 idF0N4qLlbWMffT2G5jP6z0g7j9EPuu93JqjzParliVuR6UlhwOF+v2gmeMzGcqEfU
-	 7+5eC3aWOZFQkYCTYdpfVK3WXjDimH+TZxRBn5Z8=
+	b=PUD/5p7Zbpc4an3djzIO83cKhW3YwKEIU1NDSlTrOtBnR77xvfuXPlJZO8yY0vV4e
+	 tAD9uBWI1gKsp++rN1q7F6wZQ1z/POj76x6+Tr/y8mfaFsVQsRTCpaTsUPzouk2Msp
+	 KJ+jEBlgBS/pzUvkb5mdc1mMD9rwCHg/PwMKuceY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Anderson Ferneda <anderson.ferneda@braza.com.br>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1363/1536] platform/x86/amd/pmc: Fix RTC reference leak in amd_pmc_verify_czn_rtc()
-Date: Sat,  7 Nov 2026 08:56:19 -0500
-Message-ID: <20261107135036.118339415@linuxfoundation.org>
+Subject: [PATCH 6.12 1399/1536] ocfs2: use the stored hash when checking xattr bucket collision
+Date: Sat,  7 Nov 2026 08:56:55 -0500
+Message-ID: <20261107135037.115762059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,88 +72,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 22b9306f1fcf86f80b55f05f08d10a9951ba970a ]
+[ Upstream commit e39baff18b85cf8956aee138d7944b6581e8ba36 ]
 
-amd_pmc_verify_czn_rtc() opens the RTC with rtc_class_open(), which
-takes both a device reference and a module reference on the RTC
-driver. The matching release is rtc_class_close(), and it is never
-called. Every return path after the device has been opened, the ones
-that return 0 as well as the ones that report an error, leaves both
-references behind, so each S0i3 suspend leaks them.
+ocfs2_check_xattr_bucket_collision() decides whether splitting a full
+bucket can make room for the entry being set by recomputing the hash of
+the name:
 
-Release the reference with a __free() cleanup on the declaration,
-which covers every return path without adding labels.
+	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
 
-rtc_class_close() does not accept a NULL argument, so the cleanup
-helper has to guard against one: rtc_class_open() may fail and the
-declaration still has to be cleaned up.
+	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
+		return 0;
 
-Found by code review.
+For a new entry that is the hash it will be stored under, so comparing it
+is correct.  An existing entry keeps the hash it already has: an update
+never rewrites xe_name_hash, since ocfs2_xa_add_entry() is the only
+writer of that field for a real entry and ocfs2_xa_prepare_entry() calls
+it only when loc->xl_entry is NULL.
 
-Fixes: 59348401ebed ("platform/x86: amd-pmc: Add special handling for timer based S0i3 wakeup")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20261011121759.3267678-1-make_ruc2021@163.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+An entry stored by a kernel that sign-extended the name bytes when
+hashing can still be updated, because ocfs2_xattr_find_entry() searches
+a non-indexed xattr block by memcmp on the name and never looks at
+xe_name_hash.  Growing it past the space left in the block converts the
+block into a tree, ocfs2_cp_xattr_block_to_bucket() fills the bucket in
+stored hash order, and the update runs out of room in the bucket too.
+The collision check then compares the unsigned hash against the legacy
+hashes in the bucket and reports no collision.
+
+ocfs2_xattr_set_entry_index_block() goes on to allocate a bucket that
+ocfs2_divide_xattr_bucket() cannot fill: a bucket whose entries all share
+one hash has no divide position, so all it does is append an empty bucket
+with a sentinel hash one above the last entry's.
+
+The re-search that follows depends on where the unsigned hash sorts.
+Below the legacy ones, it comes back to the full bucket and the set fails
+with -ENOSPC, having grown the tree for nothing.  Above them, it lands on
+the new empty bucket, which ocfs2_xattr_bucket_find() handles explicitly
+and ocfs2_find_xe_in_bucket() scans zero times, so the set stores a second
+copy of the entry under the unsigned hash and returns success.  The
+original stays in the full bucket, listxattr reports the name twice and
+getxattr returns the new copy.
+
+Pass the hash the entry is stored under instead: the stored one for an
+existing entry, the unsigned one for a new entry.  A tree whose entries
+are all stored under the unsigned hash sees no change, since there the
+two are the same value.
+
+Link: https://lore.kernel.org/20261009083002.2621201-3-joseph.qi@linux.alibaba.com
+Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Anderson Ferneda <anderson.ferneda@braza.com.br>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: <stable@vger.kernel.org> # 6.2+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c | 5 +++--
- include/linux/rtc.h                | 2 ++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ fs/ocfs2/xattr.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
-index 44e6bd91af4ac..821a2f4dc554a 100644
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -14,6 +14,7 @@
- #include <linux/acpi.h>
- #include <linux/bitfield.h>
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/debugfs.h>
- #include <linux/delay.h>
- #include <linux/dmi.h>
-@@ -617,7 +618,6 @@ static int amd_pmc_wa_irq1(struct amd_pmc_dev *pdev)
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index de87adb1ea976..8689a1ba0e43a 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -5746,16 +5746,14 @@ static int ocfs2_rm_xattr_cluster(struct inode *inode,
  
- static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
+ /*
+  * check whether the xattr bucket is filled up with the same hash value.
+- * If we want to insert the xattr with the same hash, return -ENOSPC.
+- * If we want to insert a xattr with different hash value, go ahead
+- * and ocfs2_divide_xattr_bucket will handle this.
++ * If the entry being set carries that same hash, return -ENOSPC, since
++ * ocfs2_divide_xattr_bucket() has no divide position to work with.
++ * Otherwise go ahead and ocfs2_divide_xattr_bucket() will handle this.
+  */
+-static int ocfs2_check_xattr_bucket_collision(struct inode *inode,
+-					      struct ocfs2_xattr_bucket *bucket,
+-					      const char *name)
++static int ocfs2_check_xattr_bucket_collision(struct ocfs2_xattr_bucket *bucket,
++					      u32 name_hash)
  {
--	struct rtc_device *rtc_device;
- 	time64_t then, now, duration;
- 	struct rtc_wkalrm alarm;
- 	struct rtc_time tm;
-@@ -633,7 +633,8 @@ static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
- 	if (pdev->major < 64 || (pdev->major == 64 && pdev->minor < 53))
+ 	struct ocfs2_xattr_header *xh = bucket_xh(bucket);
+-	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
+ 
+ 	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
  		return 0;
+@@ -5824,6 +5822,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
+ 					     struct ocfs2_xattr_search *xs,
+ 					     struct ocfs2_xattr_set_ctxt *ctxt)
+ {
++	u32 name_hash;
+ 	int ret;
  
--	rtc_device = rtc_class_open("rtc0");
-+	struct rtc_device *rtc_device __free(rtc_class_close) =
-+		rtc_class_open("rtc0");
- 	if (!rtc_device)
- 		return 0;
- 	rc = rtc_read_alarm(rtc_device, &alarm);
-diff --git a/include/linux/rtc.h b/include/linux/rtc.h
-index 3f4d315aaec9e..ca30c0c5a1acd 100644
---- a/include/linux/rtc.h
-+++ b/include/linux/rtc.h
-@@ -13,6 +13,7 @@
- #define _LINUX_RTC_H_
- 
- 
-+#include <linux/cleanup.h>
- #include <linux/types.h>
- #include <linux/interrupt.h>
- #include <linux/nvmem-provider.h>
-@@ -198,6 +199,7 @@ extern void rtc_update_irq(struct rtc_device *rtc,
- 
- extern struct rtc_device *rtc_class_open(const char *name);
- extern void rtc_class_close(struct rtc_device *rtc);
-+DEFINE_FREE(rtc_class_close, struct rtc_device *, if (_T) rtc_class_close(_T));
- 
- extern int rtc_irq_set_state(struct rtc_device *rtc, int enabled);
- extern int rtc_irq_set_freq(struct rtc_device *rtc, int freq);
+ 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
+@@ -5843,10 +5842,18 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
+ 	 * the maximum number of collisions we will allow for then is
+ 	 * one bucket's worth, so check it here whether we need to
+ 	 * add a new bucket for the insert.
++	 *
++	 * An existing entry keeps the hash it was stored under, and that is
++	 * the hash a split has to work with.  A new entry is stored under the
++	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
+ 	 */
+-	ret = ocfs2_check_xattr_bucket_collision(inode,
+-						 xs->bucket,
+-						 xi->xi_name);
++	if (xs->not_found)
++		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
++						  xi->xi_name_len);
++	else
++		name_hash = le32_to_cpu(xs->here->xe_name_hash);
++
++	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
+ 	if (ret) {
+ 		mlog_errno(ret);
+ 		goto out;
 -- 
 2.53.0
 
