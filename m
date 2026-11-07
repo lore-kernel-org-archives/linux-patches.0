@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065448;
-	b=zqLpZJHhjLWh0BrNTYN897S4+2rWTPoEJYQ5XyT0aD/0fbH+QJD4/BK8rquQC8+eSWym
-	 J2Zyfuft5jF+hcifORjwzzDqS2dlImVRYWZcisAhMhTd87gX0/p3CH4/odLSJGBbvXyYw
-	 TH/YmmqQuoqJUr8Wq2xDC/xVNqLWBKl8lNJl7svYrnJy1CEMXeQ2hvl1f6y/ryi4jYZcP
-	 oCRa6n9PJTSPqBGiqknOQ5xWGyd0ISYw2zLHqnzv8d+p0YsPaXzvMyTtgHkltC6ReeZ51
-	 kQe3LnCOn/bIz/cxeT2idq1T8xbiSDrBTIVDuK2qdOEdR868GUTGxpT7Qt20uLQkLiQ==
+	t=1794065449;
+	b=C2lN6t3BzaOljven8p6D8huhJELfM9pZ+Te0Mv1pO/mf9kV2n/BlCV5LY8zg/in2XRHp
+	 0GRwy2buxJbIOSQmb+hL5tswruw0N6Me17z5Ec1359C/W7aeZW/P/720rD/Al8S7PSEk5
+	 23E/4B1K+8MZXpzv++tXE5o0xE3pR7Z1ISBRh/uGMZcaVtxdTqo1KSvCWr+mW/58j5Dhx
+	 Ap5voVnmeOMW4Z7XFYQDwOXwvBVt1ADpmApFJSjOc3dEjrdY3rDM11vjsul9XQQmciGKd
+	 c0mgHw5KuOau2I5jcFLCPw5y21elW6G4fntdv4n9kqafsOz9YlNoU24PnaFskAz5hYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065448;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/Ua5kAruTQOyt3j7sbuyeV8B9LeLq5OK7fEFJ92oxgU=;
-	b=DlPrCqyU0eECMTwNvG6uRBK8NMlUPfVjTWFQjcosVC7m3R8T9RcCBrPj4Adf2R+TWIDH
-	 E48QgxI4fqkWxMcdMsonyZ8qkBOyFuqsIes8JHeKOgOfec7fIWsvOkUQx9mM1jF6Vo+eI
-	 4PPlWzv8ecYNAEK+ytQV93serCX17IWVb9/VS/ec0cZ0BsdzPzuQQsjnLFVwghXbDwyk+
-	 BC8JRDCNWX62m+gXmVAyQYqsE2lvImmjnbpjKaK/5vFbCHsuzJrkhZkfSj+LQEG0b3CIW
-	 2ngZjKEEZM7A03bvq1uQURM2yH9TehWBh8O2l91y0H2p7FLNGhIzUGtnrPUWJ4RPpeA==
+	bh=vUDD95VYK5/bjJjFKtvPSfYPZBGryG/pee/IgQAYMZg=;
+	b=mxjn8hYV5hrTG3i44XTsCRuHFn4LAVIy7lTyw73652hIITvCX8Kj5HOFUwwYxdoOVDRC
+	 gJ6uQdYuFvPBR45m8E4oiTsBE6ZDB2+1jdEtV6EeMQ0/ZfJHPh87Eq4zE7dJkua7+mAd3
+	 O608c05j4evftvC1gvZ/S7IQnkX7RNxBoPvZ3pRHOmzlP0F9iwrAGfJZl5Vsizkl82lsl
+	 DXBYXYD06dsI1vCJvSOHMtbbt7DOb9tTByDodU2Xb34Jj8GP8EaavMIauGypkpAJzvCAM
+	 uz3VQftQ2+Jf2Zwh5deHBsfXRX5dewTNr8K8odLRZbtfYQws18nANaGbUVYFnWWNmkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSVoaSSZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vsQgMxGi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38280606A32C;
-	Sat,  7 Nov 2026 15:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC65606D804;
+	Sat,  7 Nov 2026 15:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSVoaSSZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76E31F0089F;
-	Sat,  7 Nov 2026 15:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vsQgMxGi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3986C1F0089F;
+	Sat,  7 Nov 2026 15:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065448;
-	bh=/Ua5kAruTQOyt3j7sbuyeV8B9LeLq5OK7fEFJ92oxgU=;
+	s=korg; t=1794065449;
+	bh=vUDD95VYK5/bjJjFKtvPSfYPZBGryG/pee/IgQAYMZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iSVoaSSZFOQsHjD5f/sQ9lBNY2OCB+u0HIqEY4aeZYiNAVwNsDv3JtHRzkGkD9R3d
-	 2d7YNKvHiTCt0JE3S83VA53MXqsWpmY+tPwH7w5DG/IR42OFXhZHRpR3YYFj/iOcmc
-	 Op7GBET4IHPmDBcWIsJbFna0oGc4xneotES7lMF4=
+	b=vsQgMxGi6FFh17nP7euTacRC19gHrF7sbIATeqd+ix6Nz2jk6Mjm6v+9bqn2b7rzO
+	 ytsQIPUKHgqWpvxNtwMazOhoXwc1dJbWXbXwKb7hvcQOHp8TRGZl1sWmfsfQaRQwJf
+	 MHgwh8uiXu8F5CpLlu2aShrEbrcirEDB7vdpTsnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Naman Gulati <namangulati@google.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1151/1257] ipmr: drop packets with unknown ingress VIF
-Date: Sat,  7 Nov 2026 08:57:27 -0500
-Message-ID: <20261107135010.999681737@linuxfoundation.org>
+Subject: [PATCH 7.3 1152/1257] dt-bindings: clock: ma35d1: Document the missing crystal inputs
+Date: Sat,  7 Nov 2026 08:57:28 -0500
+Message-ID: <20261107135011.026521947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,71 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 09280680f2ea060514be2a39ea84209fb6d721d4 ]
+[ Upstream commit ea1f41802312e77b58113146a060fb0546b2234d ]
 
-A packet can race with VIF publication and make ipmr_find_vif() return
--1 even though the VIF device pointer is already visible. The parent VIF
-device check can then pass with an invalid ingress VIF. For (*,G)
-entries, this can also let the packet be forwarded back out its ingress
-VIF.
+The MA35D1 clock controller takes two crystal oscillator inputs from
+the board:
+- HXT, a high-speed 24 MHz crystal for most of the system
+- LXT, a low-speed 32.768 kHz crytal for the RTC and low power modes
 
-Drop packets whose ingress VIF lookup fails in both IPv4 and IPv6
-forwarding, before checking the MFC parent device. This prevents
-forwarding with an unknown ingress VIF and avoids the (*,G) hairpin.
+So far the binding was expecting a single crystal. The example named it
+HXT, but no real definition for it was given. LXT was not even
+described. In order to remain backward compatible, we will continue to
+allow either one (HXT) or two (HXT then LXT) input clocks. I propose to
+give those phandles a name to clarify what these entries expect, but I'm
+not listing the clock-names property in the required block, for backward
+compatibility. The rates are fixed by the TRM, so even if the second
+oscillator is not described, the OS can make an educated guess.
 
-Without the early check, the negative index can reach the IPv4 offload
-lookup only for an skb marked for L3 forwarding offload, currently done
-by mlxsw. The race is rare; the supplied PoC reports only the UBSAN
-negative-index diagnostic.
-
-Fixes: 4eadb88244d1 ("ipmr: do not acquire mrt_lock while calling ip_mr_forward()")
-Fixes: 9b1c21d898fd ("ip6mr: do not acquire mrt_lock while calling ip6_mr_forward()")
+Fixes: 2f8b5eb589cb ("dt-bindings: clock: nuvoton: add binding for ma35d1 clock controller")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Link: https://lore.kernel.org/netdev/b966eb102e98f299e45be59ada033a8766e4c6df.1791899747.git.zhilinz@nebusec.ai/
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Suggested-by: Naman Gulati <namangulati@google.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Naman Gulati <namangulati@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/5271fcb94a4d9e697ed64a348e92ea9e74faab1c.1792608753.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260930-perso-ma35d1-upstream-clk-v6-2-48937ee6c9bb@bootlin.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c  | 3 ++-
- net/ipv6/ip6mr.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ .../bindings/clock/nuvoton,ma35d1-clk.yaml       | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index ac1ed8acde8fd..f51014b37178b 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -2078,7 +2078,8 @@ static void ip_mr_forward(struct net *net, struct mr_table *mrt,
- 	}
+diff --git a/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml b/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
+index 8f0c43683729b..9649feda8d7a5 100644
+--- a/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
++++ b/Documentation/devicetree/bindings/clock/nuvoton,ma35d1-clk.yaml
+@@ -29,7 +29,18 @@ properties:
+     const: 1
  
- 	/* Wrong interface: drop packet and (maybe) send PIM assert. */
--	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
-+	if (true_vifi < 0 ||
-+	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
- 		if (rt_is_output_route(skb_rtable(skb))) {
- 			/* It is our own packet, looped back.
- 			 * Very complicated situation...
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index c50e4b7c81844..ed9d786f1a423 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -2218,7 +2218,8 @@ static void ip6_mr_forward(struct net *net, struct mr_table *mrt,
- 	/*
- 	 * Wrong interface: drop packet and (maybe) send PIM assert.
- 	 */
--	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
-+	if (true_vifi < 0 ||
-+	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
- 		atomic_long_inc(&c->_c.mfc_un.res.wrong_if);
+   clocks:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
++    description:
++      The controller takes 2 crystal oscillator inputs from the board.
++      HXT is a 24 MHz crystal feeding the internal PLLs. LXT is a 32.768
++      kHz crystal, for RTC and low power operations.
++
++  clock-names:
++    minItems: 1
++    items:
++      - const: hxt
++      - const: lxt
  
- 		if (true_vifi >= 0 && READ_ONCE(mrt->mroute_do_assert) &&
+   nuvoton,pll-mode:
+     description:
+@@ -58,6 +69,7 @@ examples:
+         compatible = "nuvoton,ma35d1-clk";
+         reg = <0x40460200 0x100>;
+         #clock-cells = <1>;
+-        clocks = <&clk_hxt>;
++        clocks = <&clk_hxt>, <&clk_lxt>;
++        clock-names = "hxt", "lxt";
+     };
+ ...
 -- 
 2.53.0
 
