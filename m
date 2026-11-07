@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061153;
-	b=lRZ5aFT9hwCDSeEbPc7kGpIT94lhXKsXr0M15C2uR1kMpPHRV9+IvpmcberKX7a/BvAV
-	 F2K14vV4ACNLFb6K7dr2QIKN0AnY8jw5AuzN89cVNHZuUMw73n/nBIsH7QPtNHlebFdT7
-	 XOBe3xO/AnwNplh/DdjqeYwA4fOipknp68r5/fHIGWANchGVCd6aySyVvBUlg+m65qJAQ
-	 /X1ZH4A6Z8HuSNwbhN/lL04/MD8nC13wmrDhRDuJJfzct3FXEO7o0YeDWTCG7X/HqJqFj
-	 Cdc8PDa4KkXIU6UlJoIdGNuRkCXLR0X1nWdCU47tcLHwciLU2tnv1pkkGs0NOHE0Edg==
+	t=1794061155;
+	b=Ew7kYHd98g8b+vRzl6opl2wlx1epEIKDMwyt2J5fOE2UZVVPb+JRx5YVg5m5Gpwreqot
+	 aIYpsqqUwK+TtBBDfbrZYSV+TXkrJftT4gRdBxfzsK0pPgX/pzXLPzw4FsMblklRw+vjy
+	 5kS//ZrDP82UnFd0oNsXa4je2yskAScW32/DyWMuTpecctftggU7Ou9LmeUlfGvfi1lcv
+	 j3szMZ8fM6B74uckyhLYbi0/K3bO4Vd/qstP06GhIjZWZw+066OjBaFhvoPpcR4XWXTha
+	 Rb4+SBzHQwQ/2O9RL2WIztog+WKWlw80L6290cNaFlki7TMKTR+qHI/kgkZB2QwveLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061153;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061155;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ccLKGg9gYhFY8GNslR4nt4wDHXCuSMs4ipYHznSs9q0=;
-	b=Z1IusNDq/TRwIx849dd/xYgCqreP9AahBMm3Kd3hedDI25Wdy7FccwI9af+sKYWbPDQx
-	 OmjjLFgz7LpigFzW4xNU3Rba0xMTBgS2fk7uyISbaXdX9kAlXsCdeIudVuoIb/EafcyrA
-	 mg+8jj0TxPzJhNS4ByeYxmQldOGSxHPoXpP9Re8ELOkdS5UC1dLIY5cwES4btjFQ0qxpD
-	 2J0gGBa6PjKXL7t0HMsWA6rX81Jh/tTR86xbfKrKfC+2c838HRTUyett/rLE6iAANKdPh
-	 EMyISjtH61IcKoLcCN/HG4TL5nkrEc8IMIBTPedRyLWsAXjr3+SBN6q3F8+41XQ1v3Q==
+	bh=j7MogKYhcj/Gl9RpswZBUlejpBR1ep7oY1XzSJDD/jo=;
+	b=C7llDwC0ASC/yms5mzBZVwvxp11xTKu/I7YJ737xZ13RQAX4VeoEziQJuTAEVWSyBOlv
+	 8mrGelbNY+74wH/jSuVPoBtv95owfVtSnUMbsLiSl1iJDBmTI2zANcNf2AluI0S5xrXD9
+	 jIyLOIFYbb6U9lrXn8zMejnQqVV8r5Fk0gtoYJCMyQzqrY4SYpqqRcv2L2bDGgoZrKYca
+	 FKRCw2dTBvA2M8yZBYIIdWj03XR2yd/lFpxINhiK2BosI0idpTn8Gn7rVOLz7RLJWHKiQ
+	 OOtGyEfxzJQLMwjKZ9y+vR3z9bKTHOi8qMUk2ut4kH1uWh58he8+rlTsO2yDpQoVxXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myfT0RZz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SyPpN0qb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5F7606D805;
-	Sat,  7 Nov 2026 14:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C009A606D805;
+	Sat,  7 Nov 2026 14:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myfT0RZz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EC01F0089F;
-	Sat,  7 Nov 2026 14:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SyPpN0qb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF0E1F0089F;
+	Sat,  7 Nov 2026 14:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061153;
-	bh=ccLKGg9gYhFY8GNslR4nt4wDHXCuSMs4ipYHznSs9q0=;
+	s=korg; t=1794061154;
+	bh=j7MogKYhcj/Gl9RpswZBUlejpBR1ep7oY1XzSJDD/jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=myfT0RZz+0w6b3qKTtJSXo4gF1GdrJNcxyVfiWCq6kaUVsL+i74eAVWIjO2Dsh5lr
-	 vuPCwtAq7SECjhr1fwoatJ2OtwlPqR8euyDyEykPqQklwCtOoP6jvqhsRAWuVC5NhB
-	 dCdTLbSpx6L1BJawYq/1ut3noCBQn6s/6pvqzBBM=
+	b=SyPpN0qbqxFKlbDV6JrWfaX2qjW4voHWiaH5uKLGcvCPiYGU1lTjyxccgK+j+WaLy
+	 I/X9neAMGV7xf+lVcB0ReKu3PTr1G+CBqy/7PWPUmGcACnRn08hJ84GsLA/yrkbXRf
+	 EZwYYdDdA7B2mZoZ4b8/iZEPpvPmS3Op4gxzHYNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jasper Firth <jasper.m.f@hotmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0411/1536] ASoC: Intel: bytcr_rt5651: Add quirk for Chuwi Hi8 with generic DMI strings
-Date: Sat,  7 Nov 2026 08:40:27 -0500
-Message-ID: <20261107135009.117687468@linuxfoundation.org>
+Subject: [PATCH 6.12 0454/1536] KVM: x86/mmu: Use split "zap all fast" helpers when invalidating memslot
+Date: Sat,  7 Nov 2026 08:41:10 -0500
+Message-ID: <20261107135010.282922378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,84 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jasper Firth <jasper.m.f@hotmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit c5a8fc2abe05cf6db71f57ff0177fddc59861a1a ]
+[ Upstream commit db095727ff5739f4f46ee641ee6ef450032886db ]
 
-Some Chuwi Hi8 tablets with model number CWI513 ship with a BIOS
-(American Megatrends 5.11, dated 05/21/2016) whose DMI sys_vendor and
-product_name are both "Default string". The tested unit is labelled
-just "Hi8", but its model number is the same as the existing "Chuwi Hi8
-Pro (CWI513)" entry, and it needs the same quirks. That entry matches on
-sys_vendor "Hampoo" and product_name "X1D3_C806N", so it never applies
-to these units.
+Manually invoke the front half and back half of the "zap all fast" flow
+when invalidating a memslot so that mmu_lock is acquired at function scope
+in kvm_arch_flush_shadow_memslot().   This will allow putting more code
+inside the critical section without having to take mmu_lock twice in quick
+succession.
 
-Without its quirks the internal speaker, whose amplifier has a
-differential input wired across LOUT left and right, cancels to a faint
-distorted residual for any centred (L == R) content, and the headphone
-channels are swapped.
+Opportunistically open code checking whether or not to do the fast zap, to
+discourage removing the local "zap_all" in a future cleanup, i.e. to ensure
+the SLOT_ZAP_ALL quirk is queried exactly once.  Processing the front half
+but not the back half of the fast zap (if SLOT_ZAP_ALL were disabled
+concurrently) would result in KVM unnecessarily keeping invalid TDP MMU
+roots until the VM is destroyed.
 
-Add an entry matching board_vendor "Hampoo" and board_name "Cherry Trail
-CR", plus the BIOS date since those two are too generic on their own.
-drivers/platform/x86/touchscreen_dmi.c already matches the Chuwi HiBook
-the same way.
+No functional change intended.
 
-The quirks are those of the existing Hi8 Pro entry, except for the
-over-current detection scale factor: 1.0 instead of the 0.75 from
-BYT_RT5651_DEFAULT_QUIRKS. With 0.75 and a CTIA headset (inline mic and
-one button), loud speech into the mic, and headphone playback coupling
-onto the mic line, were reported as spurious KEY_PLAYPAUSE presses, one
-of them held for a whole 8 second speech window. With 1.0 the same test
-gave no spurious events, and 3 real button presses were reported as
-exactly 3 press/release pairs.
-
-Tested on a unit with the generic DMI strings, with a module built from
-this patch and no quirk module parameter. The quirks were applied via
-the new entry, the card components read "cfg-spk:1 cfg-mic:in2
-cfg-hp:lrswap", and the following all work: speaker, headphone left/right
-order, jack and headset-mic detection, headset button, and the internal
-and headset mics.
-
-The problem was diagnosed with the help of an AI coding assistant, which
-also drafted this changelog.
-
-Assisted-by: Claude Opus 5.5
-Signed-off-by: Jasper Firth <jasper.m.f@hotmail.com>
-Link: https://patch.msgid.link/20260925-hi8-quirk-v1-1-ffd00b0447f9@hotmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org # 6.12.x
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Link: https://patch.msgid.link/20260709204948.1988414-10-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5651.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ arch/x86/kvm/mmu/mmu.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index 6860ac41e6b32..eb66f22461047 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -409,6 +409,23 @@ static const struct dmi_system_id byt_rt5651_quirk_table[] = {
- 					BYT_RT5651_HP_LR_SWAPPED |
- 					BYT_RT5651_MONO_SPEAKER),
- 	},
-+	{
-+		/* Chuwi Hi8 (CWI513) with a BIOS using generic DMI strings */
-+		.callback = byt_rt5651_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Cherry Trail CR"),
-+			/* Above matches are too generic, add bios-date match */
-+			DMI_MATCH(DMI_BIOS_DATE, "05/21/2016"),
-+		},
-+		.driver_data = (void *)(BYT_RT5651_MCLK_EN |
-+					BYT_RT5651_JD1_1 |
-+					BYT_RT5651_OVCD_TH_2000UA |
-+					BYT_RT5651_OVCD_SF_1P0 |
-+					BYT_RT5651_IN2_MAP |
-+					BYT_RT5651_HP_LR_SWAPPED |
-+					BYT_RT5651_MONO_SPEAKER),
-+	},
- 	{
- 		/* Chuwi Vi8 Plus (CWI519) */
- 		.callback = byt_rt5651_quirk_cb,
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 1dfc568631e29..2ff392fa15518 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -7149,12 +7149,6 @@ static void kvm_mmu_zap_memslot_pages_and_flush(struct kvm *kvm,
+ 	kvm_mmu_remote_flush_or_zap(kvm, &invalid_list, flush);
+ }
+ 
+-static inline bool kvm_memslot_flush_zap_all(struct kvm *kvm)
+-{
+-	return kvm->arch.vm_type == KVM_X86_DEFAULT_VM &&
+-	       kvm_check_has_quirk(kvm, KVM_X86_QUIRK_SLOT_ZAP_ALL);
+-}
+-
+ void kvm_arch_flush_shadow_memslot(struct kvm *kvm,
+ 				   struct kvm_memory_slot *slot)
+ {
+@@ -7164,16 +7158,23 @@ void kvm_arch_flush_shadow_memslot(struct kvm *kvm,
+ 		.end = slot->base_gfn + slot->npages,
+ 		.may_block = true,
+ 	};
++	bool zap_all = kvm->arch.vm_type == KVM_X86_DEFAULT_VM &&
++		       kvm_check_has_quirk(kvm, KVM_X86_QUIRK_SLOT_ZAP_ALL);
+ 	bool flush;
+ 
+-	if (kvm_memslot_flush_zap_all(kvm)) {
+-		kvm_mmu_zap_all_fast(kvm);
++	write_lock(&kvm->mmu_lock);
++
++	if (zap_all) {
++		__kvm_mmu_zap_all_fast_front_half(kvm);
+ 	} else {
+-		write_lock(&kvm->mmu_lock);
+ 		flush = kvm_unmap_gfn_range(kvm, &range);
+ 		kvm_mmu_zap_memslot_pages_and_flush(kvm, slot, flush);
+-		write_unlock(&kvm->mmu_lock);
+ 	}
++
++	write_unlock(&kvm->mmu_lock);
++
++	if (zap_all)
++		__kvm_mmu_zap_all_fast_back_half(kvm);
+ }
+ 
+ void kvm_mmu_invalidate_mmio_sptes(struct kvm *kvm, u64 gen)
 -- 
 2.53.0
 
