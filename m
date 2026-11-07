@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060665;
-	b=c/KK1YQDqIwXr4JWYLvOgjXGk7k5kEII46vfsHVRN22OflGPaPtyHfgMw/9b5N3uj9Cb
-	 WlbJnKMYrYg6BfYSvC+PLSlLUM/jY9xlhBwqTxsYq4UP2eTiuZBI+RJiweIMumHRvNmDv
-	 cQd2ayzG+jF1/1pI6+4Ke52gu0+aBOBzTFS3sq8a72itNkKdSPCdbQ/H7JAram5fyI52t
-	 1phD4r5akA0sxDxtAhkrR3lM0EMXDQo+5qEiY4j/Ai/by67hvdnQSLF2o+h3EUACAELel
-	 oqFW4xGUeZyAWJdgSHhlPm4qfpSNnenJnb2QCUfHMLgVRS7yc7kafm0oOYMniCAOhgQ==
+	t=1794060666;
+	b=tFTQVeeYHU2xWcgoe6vZf+NoE2a2WFPBh5JPiUwtNQzGbTofDnDgKeyQjFUD4Md29enc
+	 wxttha2rhbQ/PaQJkVJ8/VkPrGSjpoyb4qiPqOXUFFTD2WFKcgcTTmBo9fnoFIPp7k68w
+	 lzpnPWrjWdTHH6SIAjTKFAu1YVrITsWQmxI++pKUPpo9C4p6UvGex4EhmJoNa4Yr+3V2k
+	 U8CgmskLAms1HMYiMq20bgzfjc5yjKOwaiZDWsY5A+TyGZ3TcHtNHb2rO8VCFH3CNY1SQ
+	 7huOXEgaqimVh9JBgQDafTdI/kjfHrLu3EOpWV9gjC/OpSBMU7U3Ar4ZclJdofff12A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060665;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7wuWj8GYCCYn2VPd2lsbYfemS1MLlYzkgO5ajpKPIws=;
-	b=UMARdSzrmTx26kQlEXNAxeDt068wG7SIgCSqYoOunauLUiotc0RCJznpOU0z9o5eKI/s
-	 cGtWWTGB5mBILZJBnCBjjkbQqllRARX2nuY3I5QF+b4H/Vmg4ENsqwxs4DiuGon+9srGo
-	 40+7EyHfPCKmVHCo/hOCl/3XQzSCUNVUzFFV9bIimlAzhGeQAKc6EmbZLRx5BxJVenm4t
-	 jnD/92uxunz3XqGEhYL2f2aIXUEaPJtv/sQ6teaibKRrt3fiJYJNqJVara+601+/Pp4gB
-	 yDraw4Mdei0z9BlXKyDppKPjUs9hU+Wu4yM4oBd/+P+82Yk0uASPY2HY8QfqowgfWuw==
+	bh=3ojj3vFJApv7aDOmjJdkjihm9x6pVXkDbFXwD+zOwi4=;
+	b=nDExK99hDEVMB8YAUZxBQudjUHA4agL6sdGEtPAeFJ3cQUJuyIsycqqAhDG8O5fSkYfE
+	 fOafJvHbi9zQw35+XOFjMQIim2cCrypL7yujfiXXEhlc5FaKE10DYpEnku9JLnczAIy0L
+	 Znb22XZg3GJiZ9FYyXyke0G0WDg1R9mdEnnGP/Ye1hhGIhMsu9zA6DFPU5DIgMhL2ghM+
+	 jYgSoCTjEKS2LTHCs9l5otlqqRnBBgNSFKXmBFXty9ylMzaT00BWObNlQQDM54H6YCbu3
+	 rkMY8D139yaPtyvE13phvRByLLnLj0DMvIQAi+PUtzWbrG/bkBak1Ep2zlQd/IA8gyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHlkOBLh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VScoSIaP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD34606A326;
-	Sat,  7 Nov 2026 14:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94134606A326;
+	Sat,  7 Nov 2026 14:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHlkOBLh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2971F0089F;
-	Sat,  7 Nov 2026 14:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VScoSIaP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7251F0089F;
+	Sat,  7 Nov 2026 14:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060665;
-	bh=7wuWj8GYCCYn2VPd2lsbYfemS1MLlYzkgO5ajpKPIws=;
+	s=korg; t=1794060666;
+	bh=3ojj3vFJApv7aDOmjJdkjihm9x6pVXkDbFXwD+zOwi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHlkOBLhV/8ReLFS1MUJokizbRu+SgN23m+qPLdXmkc1n7uCpL5Tn0Uq/KbNcgXpA
-	 IXG5KfQlOCHCG8nWOuw79oCIP/ymjyCYN91sWiMGCyGft7xLkPLBuGSdGCwhxEPGxZ
-	 OjaOtsPy6TSAQPn4ks79WlsoxlHFSy75CiI4TqdE=
+	b=VScoSIaPKe+++BZ77KUT+io90OjDBiTUQnYgbS59Me33cytmfL+L072OLmi77kvid
+	 0VwS5+sbj9kBDqwj9FuRBi2RYZaDBOyfx+VPyYRhhpFJlo8Cx/W26aRS4ByKV7pYZq
+	 JqvtXp8cZ+VHF66dz6M74tbP3qNUY/gD0eZb6w7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Chris Lew <christopher.lew@oss.qualcomm.com>,
+	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0102/1536] PCI/ATS: Ensure pci_ats_supported() is PF-aware for VFs
-Date: Sat,  7 Nov 2026 08:35:18 -0500
-Message-ID: <20261107135000.535509112@linuxfoundation.org>
+Subject: [PATCH 6.12 0103/1536] rpmsg: char: Check for ongoing chrdev destroy
+Date: Sat,  7 Nov 2026 08:35:19 -0500
+Message-ID: <20261107135000.564435453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -74,49 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pranjal Shrivastava <praan@google.com>
+From: Chris Lew <christopher.lew@oss.qualcomm.com>
 
-[ Upstream commit 4f2cd6091ac41566a7300f5a4590d20a99aaa8bc ]
+[ Upstream commit 1f9c2897afb0fe86c1fdf4f5e23c5fb8f7442f6d ]
 
-Update pci_ats_supported() to additionally check the associated PF's
-status when called on a VF. This ensures that PF-level quirks and
-untrusted status are correctly propagated to VFs, providing a robust
-support check that aligns with the kernel's PF-centric ATS configuration
-model and is immune to the timing of VF-specific fixups.
+A null pointer panic is observed when stopping a remoteproc and closing
+a character device using the RPMSG_DESTROY_EPT_IOCTL. There is a race
+where each context calls rpmsg_chrdev_eptdev_destroy(). The thread that
+runs second will call cdev_device_del() for a second time, which fails
+because the first call already removed the device from sysfs. Add a
+check at the beginning of destroy and exit early if the destroy call
+has already been done.
 
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+[ 26.654130] Call trace
+[ 26.656658] kernfs_find_and_get_ns+0x28/0x8
+[ 26.661140] sysfs_unmerge_group+0x2c/0x7
+[ 26.665357] dpm_sysfs_remove+0x38/0x8
+[ 26.669305] device_del+0xa4/0x3e
+[ 26.672811] cdev_device_del+0x28/0x7
+[ 26.676675] rpmsg_chrdev_eptdev_destroy+0x68/0x98
+[ 26.682765] rpmsg_eptdev_ioctl+0x130/0x11c8
+[ 26.688318] __arm64_sys_ioctl+0xb4/0x10
+[ 26.692448] invoke_syscall+0x50/0x12
+[ 26.696312] el0_svc_common.constprop.0+0xc8/0xf
+[ 26.701151] do_el0_svc+0x24/0x3
+[ 26.704570] el0_svc+0x40/0x17
+[ 26.707810] el0t_64_sync_handler+0x120/0x13
+[ 26.712288] el0t_64_sync+0x1a0/0x1a
+
+Signed-off-by: Chris Lew <christopher.lew@oss.qualcomm.com>
+Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260406-rpmsg-char-fix-chrdev-destroy-race-v1-1-7317434fa246@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/ats.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/rpmsg/rpmsg_char.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
-index c331b108e71de..0d67ab98e0537 100644
---- a/drivers/pci/ats.c
-+++ b/drivers/pci/ats.c
-@@ -40,10 +40,13 @@ void pci_ats_init(struct pci_dev *dev)
-  */
- bool pci_ats_supported(struct pci_dev *dev)
- {
--	if (!dev->ats_cap)
-+	if (!dev->ats_cap || dev->untrusted)
- 		return false;
+diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+index d918cb30db9b0..3edc95f48967b 100644
+--- a/drivers/rpmsg/rpmsg_char.c
++++ b/drivers/rpmsg/rpmsg_char.c
+@@ -79,6 +79,11 @@ int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
+ 	struct rpmsg_eptdev *eptdev = dev_to_eptdev(dev);
  
--	return (dev->untrusted == 0);
-+	if (dev->is_virtfn)
-+		return pci_ats_supported(pci_physfn(dev));
+ 	mutex_lock(&eptdev->ept_lock);
++	if (!eptdev->rpdev) {
++		mutex_unlock(&eptdev->ept_lock);
++		return 0;
++	}
 +
-+	return true;
- }
- EXPORT_SYMBOL_GPL(pci_ats_supported);
- 
+ 	eptdev->rpdev = NULL;
+ 	if (eptdev->ept) {
+ 		/* The default endpoint is released by the rpmsg core */
 -- 
 2.53.0
 
