@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065362;
-	b=IXkT262Nqcvey7fkykkt2snV1ietm6Xt11BHT6w/op4jLH0V8HgaoGimWRHk6RaXqPqw
-	 md46qGiZdn9ifVc0R2+ZBv6nZEYeLhweT1N7J4ajJJBOzDXuha/lzMS/flmkNwxGKFfIv
-	 HwLXf9rsYEdu+2LhKF9OmLlYWgbxIsuhIwQC0eYi+Y05Aq5PZTP8uZOaR+99P9cRFxg0G
-	 S7IfLqXK9/EDt0WbkyuYkORVwW6YbwbrD+XLdc7bUgNfJKjF2YxTnHaQkKAXHNxmB8Tnf
-	 Y6/EwtCHMsNGt3diM1eLCeYezzJ0G7OLvKFAC9f31SeEE/8M2yDT0oSu5OITH/KtOrQ==
+	t=1794065364;
+	b=feOwUYPbztdDSQo2yMpJCID5aeDa9LwsNGXsHjVr1MePAloPQBGvmtfT0hezFnYOK6LT
+	 sGOrOVyxV5qywqOS7w7eIPI5kzlI9y56VcST3rn6hndoTK89bPiiOUMRqF5QM9Su7R33K
+	 rb6y9qyizFvujK8H+iLAL6ug9K5U+YuvhbMZmU/lWhGGTRQW818tiltgKq3wfPdG/Czab
+	 SNgspz3BnWIcduxrZah+8tujWxHFZXaieZy9T00KNSeGcoHUOJrNVD04d1Ov8EmtUlMmN
+	 GiKrsc26aflHxZUGo1E1y2EN0RFR+N36nX6KQEPjL8qYPkbSkrMLtU6G3CgGu15WzFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IDamCkZBVARrIcoDziVZ03UbHyWnprdhGaq2ygDMC+M=;
-	b=bl+VbWoyxwitbjhgiUpvEXZxMX6MHEQa8M7z38fSJwg6g/D6oEQTz4o4tMesQKzbK09W
-	 bfevlbsaO0mDmRy6YH1aDeTwJFZiZSdLpfPzytEFlSvW+6wE5b3xvcXiCKvo7VuWxuINU
-	 e23fS7O5GxSnbpvbpLqRi8ay201YNJpyWxi2cFONwwZYMt1bwBaL1HymSkOcvFbYaCONF
-	 FWf7EUumfXfUk9Y6jYG/SkOkI6pmYb23254oQhpnRr8N89GDe0UbHc9oEcWmH6OLHdcN/
-	 KMvPmfPpV/j3mRS8YwnHvotewIJ/bpNkKFD7FRkWedgGyvEjtM/WPASBtcOX2ft4vRg==
+	bh=MED196m+5UjfTWYtBEINGHOGCD8mKHxDQ4Of2561g78=;
+	b=HLeLANz/vOOiHxNiKGyeH6A3jikBy7VptDQho0hp9wG0K0hbMKRJ6Xhkb4IFML5NlAe8
+	 8CxSoXcq5OdTmvG1f5o+GAzQsx39qZcO1cqasGhQMgmMaAoQJjkIzLBvRsSUw+/wuOMWR
+	 CMHccZEsbhr5CS7setodgRheoelDmanG+QXgHiGeaDIRJi9GQcI1XQixwlDObJbDcvMQX
+	 2q6r7zOJQbn1uVhijri8JG+f8XbFdVjGWmdcGS2jUCavdRr6A/hIV9oHsLifkbWET98kc
+	 HruwDv3uI/fZGVh8L5+GmOgSS8EcAuAoWrmBeV89AOzCtwCuU0fsnozH23yO4k+tFDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eZuMEWDk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gZsW/5EK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8B4606A326;
-	Sat,  7 Nov 2026 15:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AED606A330;
+	Sat,  7 Nov 2026 15:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eZuMEWDk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCECC1F0089F;
-	Sat,  7 Nov 2026 15:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZsW/5EK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EECD1F0089F;
+	Sat,  7 Nov 2026 15:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065362;
-	bh=IDamCkZBVARrIcoDziVZ03UbHyWnprdhGaq2ygDMC+M=;
+	s=korg; t=1794065363;
+	bh=MED196m+5UjfTWYtBEINGHOGCD8mKHxDQ4Of2561g78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eZuMEWDkrSiXbjQiqppWKAQz3QFkRZK+tJaRdFYLwgfz9tEIvhQNS7Xle3Ace+dz2
-	 snIGUP8K0SrPXEgjo/gYDVuZ7cxbRTa21FJwpWuoolWvPDTeMJhY8P4lHnMujX82kR
-	 5wqRsWctesfAcinQSrqnP9fX1F3rOpoxpYqjNqWg=
+	b=gZsW/5EK5F21pX2BQPTUePnIrgJCZ83k+Tce5ePWtB8lu8jxBJ50KWR6OiDw9q7HD
+	 DgErLF0hCopxeIcrwfszl21RJfSu8txnseqqSRzUsNVetKEcTgLV/9MSdgXtisEpHG
+	 POJpVxv1nf5gg7ax3yrnUt73ptyTMfMBA0sj/8P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	David Hildenbrand <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Michal Hocko <mhocko@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1096/1257] mm/mempolicy: apply bind policies against the scoped allocation zone
-Date: Sat,  7 Nov 2026 08:56:32 -0500
-Message-ID: <20261107135009.530572119@linuxfoundation.org>
+Subject: [PATCH 7.3 1097/1257] mm/damon/core: filter out damos address filter-split failed region
+Date: Sat,  7 Nov 2026 08:56:33 -0500
+Message-ID: <20261107135009.560188796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -75,88 +68,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit d4ea410ce4b8aa46a316476ea2624a357bf31fa9 ]
+[ Upstream commit bbeec2d8324d7aac438bb12dd2d22b184e0a8d43 ]
 
-QEMU fails to start a guest with a VFIO device when guest RAM comes
-from a memory backend bound to a movable-only node:
+When an address type DAMOS filter is configured, DAMOS tries to split the
+region for the filter range, and apply DAMOS action to the filter-in
+region.  The split operation (damon_split_region_at()) could fail from
+allocation failure under extreme memory pressure.  In the case, DAMOS
+action could be applied more or less than expected, ignoring the address
+filter.
 
-  vfio_container_dma_map(0x55b1b1317800, 0x0, 0x10000000,
-                         0x7f39a2200000)
-    = -12 (Cannot allocate memory)
+The issue only rarely happens under extreme memory pressure.  No crash or
+leak happens.  Occasionally not applying the action to a few regions
+shouldn't be a real problem.  But applying the action to a region that the
+user has excluded via address filter could be a surprise depending on the
+use case.  It is only theoretical.  No such real case is found yet.
 
-VFIO pins guest RAM when the device is realized, and the pin faults
-the pages in. io_uring fixed buffers fail the same way. Faulting the
-range in before pinning lets the same pin succeed, since resident
-pages are migrated off the node instead.
+Filter out the entire region if the split is failed.  Update
+damos_filter_match() signature to receive the error from split.  Also
+update kunit tests for the updated signature.
 
-A long-term pin faults under memalloc_pin_save(). PF_MEMALLOC_PIN makes
-current_gfp_context() clear __GFP_MOVABLE, but policy_nodemask() tests
-apply_policy_zone() against the caller's gfp.
+The issue was discovered [1] by sashiko.
 
-The bind keeps its movable-only nodemask, and the allocation finds no
-usable zone:
-
-  page allocation failure:
-      order:0,
-      mode:0x140dc2(GFP_HIGHUSER|__GFP_ZERO|__GFP_COMP),
-      nodemask=1,cpuset=/,mems_allowed=0-1
-
-  Call Trace:
-   warn_alloc+0x136/0x150
-   __alloc_frozen_pages_noprof+0xed8/0x1720
-   alloc_pages_mpol+0xaa/0x170
-   vma_alloc_folio_noprof+0x65/0xd0
-   __handle_mm_fault+0x137b/0x1ac0
-   handle_mm_fault+0xa0/0x270
-   __get_user_pages+0x250/0xfd0
-   __gup_longterm_locked+0x116/0x870
-   gup_fast_fallback+0xcfc/0xdf0
-   pin_user_pages_fast+0x47/0x60
-   io_pin_pages+0x9a/0x110
-
-Base page faults fail with -ENOMEM.
-hugetlb faults fail with -EFAULT.
-
-Check the policy zone against current_gfp_context(gfp), so a pin-scoped
-fault falls back off the movable-only nodemask, like any other
-non-movable allocation under the same bind.
-
-Tested in qemu with a dax/kmem movable-only node 1. io_uring and VFIO
-pins of unfaulted base pages and 2MB hugetlb pages now succeed and land
-on node 0 (correct). QEMU now starts with the same backend binding.
-
-Link: https://lore.kernel.org/20261018023349.1697434-1-gourry@gourry.net
-Fixes: 8e3560d963d2 ("mm: honor PF_MEMALLOC_PIN for all movable pages")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://lore.kernel.org/20261020004119.106690-1-sj@kernel.org
+Link: https://lore.kernel.org/20260801203121.117449-1-sj@kernel.org [1]
+Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: <stable@vger.kernel.org>
+Cc: <stable@vger.kernel.org> # 6.6.x
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/core.c             | 16 ++++++++++++----
+ mm/damon/tests/core-kunit.h | 11 ++++++-----
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index b63d7f410d145..839c3fe985a0c 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -2276,7 +2276,7 @@ static nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *pol,
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 1b05b4809522d..39102c3a93b43 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2423,13 +2423,14 @@ static void damos_update_stat(struct damos *s,
+ 
+ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
+ 		struct damon_region *r, struct damos_filter *filter,
+-		unsigned long min_region_sz)
++		unsigned long min_region_sz, int *err)
+ {
+ 	bool matched = false;
+ 	struct damon_target *ti;
+ 	int target_idx = 0;
+ 	unsigned long start, end;
+ 
++	*err = 0;
+ 	switch (filter->type) {
+ 	case DAMOS_FILTER_TYPE_TARGET:
+ 		damon_for_each_target(ti, ctx) {
+@@ -2455,12 +2456,13 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
+ 		}
+ 		/* start before the range and overlap */
+ 		if (r->ar.start < start) {
+-			damon_split_region_at(t, r, start - r->ar.start);
++			*err = damon_split_region_at(t, r,
++					start - r->ar.start);
+ 			matched = false;
+ 			break;
+ 		}
+ 		/* start inside the range */
+-		damon_split_region_at(t, r, end - r->ar.start);
++		*err = damon_split_region_at(t, r, end - r->ar.start);
+ 		matched = true;
  		break;
- 	case MPOL_BIND:
- 		/* Restrict to nodemask (but not on lower zones) */
--		if (apply_policy_zone(pol, gfp_zone(gfp)) &&
-+		if (apply_policy_zone(pol, gfp_zone(current_gfp_context(gfp))) &&
- 		    cpuset_nodemask_valid_mems_allowed(&pol->nodes))
- 			nodemask = &pol->nodes;
- 		if (pol->home_node != NUMA_NO_NODE)
+ 	default:
+@@ -2474,10 +2476,16 @@ static bool damos_core_filter_out(struct damon_ctx *ctx, struct damon_target *t,
+ 		struct damon_region *r, struct damos *s)
+ {
+ 	struct damos_filter *filter;
++	bool matching;
++	int err;
+ 
+ 	s->core_filters_allowed = false;
+ 	damos_for_each_core_filter(filter, s) {
+-		if (damos_filter_match(ctx, t, r, filter, ctx->min_region_sz)) {
++		matching = damos_filter_match(ctx, t, r, filter,
++				ctx->min_region_sz, &err);
++		if (err)
++			return true;
++		if (matching) {
+ 			if (filter->allow)
+ 				s->core_filters_allowed = true;
+ 			return !filter->allow;
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 0f29da862951e..6ebc3a157148c 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -1360,6 +1360,7 @@ static void damos_test_filter_out(struct kunit *test)
+ 	struct damon_target *t;
+ 	struct damon_region *r, *r2;
+ 	struct damos_filter *f;
++	int err;
+ 
+ 	f = damos_new_filter(DAMOS_FILTER_TYPE_ADDR, true, false);
+ 	if (!f)
+@@ -1380,27 +1381,27 @@ static void damos_test_filter_out(struct kunit *test)
+ 	damon_add_region(r, t);
+ 
+ 	/* region in the range */
+-	KUNIT_EXPECT_TRUE(test, damos_filter_match(NULL, t, r, f, 1));
++	KUNIT_EXPECT_TRUE(test, damos_filter_match(NULL, t, r, f, 1, &err));
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
+ 
+ 	/* region before the range */
+ 	r->ar.start = 1;
+ 	r->ar.end = 2;
+ 	KUNIT_EXPECT_FALSE(test,
+-			damos_filter_match(NULL, t, r, f, 1));
++			damos_filter_match(NULL, t, r, f, 1, &err));
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
+ 
+ 	/* region after the range */
+ 	r->ar.start = 6;
+ 	r->ar.end = 8;
+ 	KUNIT_EXPECT_FALSE(test,
+-			damos_filter_match(NULL, t, r, f, 1));
++			damos_filter_match(NULL, t, r, f, 1, &err));
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
+ 
+ 	/* region started before the range */
+ 	r->ar.start = 1;
+ 	r->ar.end = 4;
+-	KUNIT_EXPECT_FALSE(test, damos_filter_match(NULL, t, r, f, 1));
++	KUNIT_EXPECT_FALSE(test, damos_filter_match(NULL, t, r, f, 1, &err));
+ 	/* filter should have split the region */
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, 1);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, 2);
+@@ -1416,7 +1417,7 @@ static void damos_test_filter_out(struct kunit *test)
+ 	r->ar.start = 2;
+ 	r->ar.end = 8;
+ 	KUNIT_EXPECT_TRUE(test,
+-			damos_filter_match(NULL, t, r, f, 1));
++			damos_filter_match(NULL, t, r, f, 1, &err));
+ 	/* filter should have split the region */
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, 2);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, 6);
 -- 
 2.53.0
 
