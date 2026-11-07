@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062716;
-	b=NtlH7qf5IENl1h5TdA4IzjpVL61waUuK3TN3LBpELXY+scDTR/A3k+JGIxsdQ0nmMEZX
-	 hkny5wGwSb6xIxY3aPlXeTRAZZbV71XKq2brYZSjMB4HRe+hCznLf1CWc5+WlnvEs+MhK
-	 pwn7zEUUPm8o3/qP8Ox/cqBKaFk+nobrhIBzLSNYDqYMrnWwuAVpVUU7oifFyy6GMv6g6
-	 iAgJxIU6eXaPrI/sKTxxggb5MzzzIGlwFRNIn1U/ENCPaC5WU05UUmRpsp8LaqdIQ7J/1
-	 d5HlGMEQTpeIkbsToKmFWbtIBzDv+2QH9sYDlni28O0UZBTT+5UJnwcJOW5DtV3WqEw==
+	t=1794062718;
+	b=3qcJp+K5M2AOUH5F+K5wDj2UIDvTmQuGYs8Im96BZ5rAXE7FCHGBaFSqw6eX02jfpZ8R
+	 MNsPXLv8G/ynMSi9b3Bjd0YI/qm1I5cFGR2qgJHT0iF/erBvfSspnlXL3xHOguWN5Kras
+	 YkWMZZb/sdO9exI+jmWgg29ELNbvY2NtUHiI5rpaS40mDxmxL89BS+cxoOB6+vnJKf1ds
+	 eILiLRS4++I7plAXkJdVV+6iIPR6GtakWDgAmh5n9M1QZBy82PK0aejXY9OnT6ODL17i5
+	 00jx3GNYMdn40lT/CAm5Jy7bLczsfJFgej+v7dNsgcHE8jl/Wsokg8R9WayQuAAnPEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z6468zWWBZbbbvcrz7j6Ji8T843eLmaA09Ez+7OrY9o=;
-	b=tU/E3oe2vteqeZbNxrbYNMzsw3U+qFs/3BdNVL4IBokkdjdnjPUN5sJELl9qZlV5a1Tj
-	 INF2hA1Hb+k8SXUatTfqaSSptl1DkHcSpDvSARPigsCQVkWTVappRFux/1UWXevANuOCU
-	 ynS+grJbbfXMDLCAOCTy0yWX2vbBP+QnPh7PraAkobvw8JcOfDpXIyD79JkwLFlBxgmEL
-	 h3EYfKZJBrtMnlJJDAy5yE/fu41Dk1IlEP8W5wND8h/yXcI3nQ69tgkx/9hZiQ3fjmfWG
-	 sbEEZ1it3LBTyDZnmLiZbQvspTbMZpOkSEmxymn9DB0sf+bwJZfouVz907HnGyGGkxA==
+	bh=TN4FoPE8Uh+X9twiBE/AbpCjx2M26uyzHingDMFClz8=;
+	b=o9VNYHhC6VZM9jTiacnFVisHWJHu6t6YHxY78nxdbB+qE5PrKbnlA65UJAlqK61OK2BI
+	 3kM+zRFl5awhi/oSNN6EMbsWy8ngBi31zgBX/d8BdBLGa4Ski5QdShzJNEx3+QhUhjJ6/
+	 2JKQXlJBdgazDsBzvdKK5PUnrP55v3+80A4O9EEhk2ZbK8I305whvpjdSsty5pnN++Nfd
+	 MsuZ/QhNPb1RjsOCGr5X4XdH6ZKcWFzCmH0ceGF4mwRRkfHYiC/5+YEh49xtcE2rA7BfX
+	 NX2tUPrs34iYmkVORwmiSPpbA5zqfwLTTVwdw7BryrYAuPIrvEyesd4GbI9BD4c/ACg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i89DcmTY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U6w2cDGB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC2D606A336;
-	Sat,  7 Nov 2026 14:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEEF606A330;
+	Sat,  7 Nov 2026 14:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i89DcmTY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242601F0089F;
-	Sat,  7 Nov 2026 14:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U6w2cDGB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589761F0089F;
+	Sat,  7 Nov 2026 14:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062716;
-	bh=z6468zWWBZbbbvcrz7j6Ji8T843eLmaA09Ez+7OrY9o=;
+	s=korg; t=1794062717;
+	bh=TN4FoPE8Uh+X9twiBE/AbpCjx2M26uyzHingDMFClz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i89DcmTYbk4lW1v6qqbn0Z0D0/ySDGhOFSVCWLK9vtpH+gSkunNo6tA5Wty1e1YNz
-	 CLPl97+qQyVhDKgyd69prGL8vmYCk3ja6FCTqjOkNcNY7mDIk8Vcy3cysF18Yn2TZw
-	 E4WIAEEGcvN1qaHVFzlvma309Pc2WwVqLxpfWMFs=
+	b=U6w2cDGBRiYPOYG51H3wDi4q8A8ITnF+3DdilEMH7wDvsPNTSxd3okNWlzH9vJTxr
+	 /DDz6z+iNF7m9YMQ3AIOzEXDeiMZPaliA1Ty0kNzrwDmx/oZ1D/XJdEvRMZbtk8b9n
+	 rJhlZGZsTzTtbHiU1WM/Qo8t3rbxmKCDtqWITZ6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/869] media: meson-ir-tx: Ensure rc_free_device() is called on unbind
-Date: Sat,  7 Nov 2026 08:45:18 -0500
-Message-ID: <20261107134853.403998122@linuxfoundation.org>
+Subject: [PATCH 6.18 037/869] media: meson-ir-tx: Ensure probe error is propagated
+Date: Sat,  7 Nov 2026 08:45:19 -0500
+Message-ID: <20261107134853.431626535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -72,11 +72,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-[ Upstream commit 32999b8a9d5c4f497c9739e70ac4ee390cd650a7 ]
+[ Upstream commit 2eb8a4cba70f521a8217021e227cfa28ba17724b ]
 
-Make rc_dev devm managed.
+devm_clk_get_enabled() may return -EPROBE_DEFER which needs to be
+propagated else the probe will not be deferred, it will fail instead.
 
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Fixes: 49be1c78d575 ("media: rc: introduce Meson IR TX driver")
 Signed-off-by: Sean Young <sean@mess.org>
 Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
@@ -84,34 +85,31 @@ Cc: stable@vger.kernel.org
 Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/meson-ir-tx.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/media/rc/meson-ir-tx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/rc/meson-ir-tx.c b/drivers/media/rc/meson-ir-tx.c
-index 6beb9e97453dd..e8e3c1a303279 100644
+index e8e3c1a303279..1ab898069e67f 100644
 --- a/drivers/media/rc/meson-ir-tx.c
 +++ b/drivers/media/rc/meson-ir-tx.c
-@@ -346,7 +346,7 @@ static int meson_irtx_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "irq request failed\n");
+@@ -292,7 +292,7 @@ static int meson_irtx_mod_clock_probe(struct meson_irtx *ir,
  
--	rc = rc_allocate_device(RC_DRIVER_IR_RAW_TX);
-+	rc = devm_rc_allocate_device(dev, RC_DRIVER_IR_RAW_TX);
- 	if (!rc)
- 		return -ENOMEM;
+ 	clock = devm_clk_get_enabled(ir->dev, "xtal");
+ 	if (IS_ERR(clock))
+-		return -ENODEV;
++		return PTR_ERR(clock);
  
-@@ -359,10 +359,8 @@ static int meson_irtx_probe(struct platform_device *pdev)
- 	rc->s_tx_duty_cycle = meson_irtx_set_duty_cycle;
+ 	ir->clk_rate = clk_get_rate(clock) / 3;
  
- 	ret = devm_rc_register_device(dev, rc);
--	if (ret < 0) {
--		rc_free_device(rc);
-+	if (ret < 0)
- 		return dev_err_probe(dev, ret, "rc_dev registration failed\n");
--	}
+@@ -325,7 +325,7 @@ static int meson_irtx_probe(struct platform_device *pdev)
  
- 	return 0;
- }
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+-		return -ENODEV;
++		return irq;
+ 
+ 	ir->dev = dev;
+ 	ir->carrier = MIRTX_DEFAULT_CARRIER;
 -- 
 2.53.0
 
