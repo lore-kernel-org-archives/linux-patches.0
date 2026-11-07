@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064372;
-	b=B87Dp6L7F/F/KPmXRPiYLu3/Df6lhZzt6W23Pb7f5JACzVF5rf4/FC8IILnu+bnrlBO+
-	 lapYpSDAkPl11rXzl3mgmmzn1PuQysrTyBpwclUzuthQRCeyZR9x7fnlQuS8VQpUOtIRk
-	 0b0MMRVms1E4Eo+zgdWQulOXazf6KshWw13IihOYuPjvXYkHjLoVJr62SxjMgkquwMZZT
-	 F8xgXasUqcMtCCEfCygXtwdIL4fBWYkbdshE4NV4VB99zbAaWCkdFV7RjD9rPkEBT9l1y
-	 iizF6Soua3mTJcfykA3k6eNU5KN8OhjkxYIWGEcGJu0MTmkNOUhv2K6x15EgrY5jciQ==
+	t=1794064374;
+	b=LrZPPRs+VKaav4ix+tz0yTD/gIquIoqOu5YDIeNV/mYCwSH0eljm3OruVKCGG29Eogjm
+	 y9CKZI+0bzUEKmr6mNex3dQiE+9cXOvNJLw7/xlW5FfBMBUqFCtIsiW3Vq41/t0YLZliH
+	 5siuU0w8Uo+6FASBsUBV95khFqWWGQBH2YQCOCJ799jodEU/0skKAIMSYxPynSCU/t/H3
+	 MPRNP0klwAhYi1X26lq66D7L3KtDqUM4TmcDXgv2ZuJzL8qPLPdSH5cYDMzzuS26TVxOi
+	 uQFabp8tCO4bK9zNEjT8octP/TXf6MMd7i2f1+fBSEclOcVWR/G51UwWcTUWYHPJkeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=odA/nzmKZeS25Gn8HhTd3l1ldzV1FTD4L0o0nqBumAU=;
-	b=CJXnvvvbsJW777YdWR5gBktiBz4cxT3IcMpiuu4v2Tfp1J3EbBdE8QyylmBFIB6O0GMe
-	 0S4/V/CHslEPOG+968RAuzjZJAnbA6mphszw14GK1WjBjVB/ocNtKIGWxehjRjfmEvX9j
-	 de1dOawy/xJhAD9QtOHrvm8eFjp62I/ScLq6nsLjXTmfG+C3Ay3NNbWSNSEekvNlCMvw5
-	 smC+mvBA/HWKoMYJe1Hq6XQSg6Yu1+ax229A70EscTFoF8v2VwJ3p84qVawgZ2m6TmjQf
-	 8FMamaOV89HiCx75O6yglClWfwih7gtRrZYgjVNOdxkBcfpaV5aHmvvmYMbEH0bCQPA==
+	bh=tb6Wttob8AKazP4dDXysXG9TWYmd+PRTIYfCGiL1L8w=;
+	b=v/17IBVKpdpESZhIdK9A0itkYyBs/7mTSr9N2cHS8oODgL0f+F4i0kDsFkxwjCjHS7lM
+	 mhqiSQzq1jSnOpkwvg2UmGbczZnlJCSDWFfDDav4n4g+cUQ1dpR99NDA50g1NurWYt5N1
+	 jzy7jPfAF/sCDYqALY/2OwSC5K+Xk1vOx87/bCSsKkXmRe70Z+oxStOmRqn6BtU/L1tM6
+	 JW8J+Uk3Ah8+ii4MCPGJN51OAjLGSjGPGsOR0+H3TGMY1W/OUDZAeWEbD0BRuifhSDSvy
+	 /UHEr2yGBMsgZMAQqTIKP9GNxXW/JyAbidkmzUfACeH/YUoEK42XZfng5/SqM0IP3fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JL3M52pO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2e18xsuT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A29F606B8B8;
-	Sat,  7 Nov 2026 15:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57AC606B8B8;
+	Sat,  7 Nov 2026 15:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JL3M52pO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AC71F008A2;
-	Sat,  7 Nov 2026 15:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2e18xsuT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636821F008A2;
+	Sat,  7 Nov 2026 15:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064372;
-	bh=odA/nzmKZeS25Gn8HhTd3l1ldzV1FTD4L0o0nqBumAU=;
+	s=korg; t=1794064373;
+	bh=tb6Wttob8AKazP4dDXysXG9TWYmd+PRTIYfCGiL1L8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JL3M52pO2TpwzrdLM4DShVDti+vmz7Rxd2q58FBqkc95aYoStYMoClIIOOz0yDD0A
-	 G6l+ezZ5QKHz5wspJbBgdFDPWHgO+YntOn+WJzZ9g+8uD/0TbGd+4IEry0AB8J+urv
-	 NgmNOiTuMXFtImE6rPd0dcwgWiHw/s2bKeHoUkL8=
+	b=2e18xsuTM0sL59xB+ZUUBskoxEqgsNMchQDnKXvrXvO8RwxxUTYg4Z1eYpUeVPl05
+	 Hz9t72kGf+WsV1nOtKVFmU/ao7T9Wtlwg/9sCvMdcVXxg88V1W4S+BsUzssc7/9cEx
+	 d7b+J5FRgUkySZOHGYhI+mLDsGpAVzRBXtG0G9Lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Freidkin <freidkin@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
+	John Keeping <jkeeping@inmusicbrands.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0451/1257] media: meson: vdec: size capture planes from the aligned canvas
-Date: Sat,  7 Nov 2026 08:45:47 -0500
-Message-ID: <20261107134951.933704786@linuxfoundation.org>
+Subject: [PATCH 7.3 0452/1257] media: rockchip: rga: fix rotation on rev0 hardware
+Date: Sat,  7 Nov 2026 08:45:48 -0500
+Message-ID: <20261107134951.959485424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,51 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Freidkin <freidkin@gmail.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit b3a805dd5a83ba8c85e2085d3411eb9975e0aea4 ]
+[ Upstream commit a67578c0179850e80cf08b1e0b8b1eb857f0fc46 ]
 
-The decoder writes a whole canvas of ALIGN(width, 32) x ALIGN(height, 32)
-(amvdec_set_canvases()) and reports bytesperline = ALIGN(width, 32), but
-get_output_size() derives sizeimage from the raw width x height.
+On RK3288 where the RGA reports version zero [1], rotating a buffer
+gives corrupt output where one edge will be truncated.  This is a result
+of some adjustment done specifically for hardware revision zero.  But it
+seems this is not necessary and there is no evidence for why this
+adjustment should be applied on these hardware revisions.
 
-When the width is not a multiple of 32 the planes are too small for the
-advertised stride: for 720x360 NV12M the luma plane is 262144 bytes while
-736 * 360 = 264960 are needed (282624 for the canvas the firmware fills).
-The decoder writes past the buffer, and importing the capture dma-buf
-into DRM fails: drmModeAddFB2() returns -EINVAL, so e.g. Kodi plays the
-sound over a black screen. 1280x720 and 1920x1080 are not affected.
+Comparing the TRMs between RK3288 with revision zero and RK3588 with
+revision 3.2 there is evidence of new features supported by later
+hardware, but nothing indicating any difference in behaviour for
+rotation which is supported by all hardware revisions.
 
-Size the planes from the aligned canvas the hardware actually uses.
+The logic here looks wrong anyway, since it's bizarre that minor
+revision zero would need the adjustment for _all_ major revisions.  This
+was added with the initial version of the driver in commit f7e7b48e6d796
+("[media] rockchip/rga: v4l2 m2m support") so there is no detail in the
+Git history to indicate why this special-case might be needed.
 
-Tested on an S905X (GXL p212) board with LibreELEC 12 (6.16.0-rc3):
-720x360 and 1920x1080 H.264 play through V4L2 m2m + DRM PRIME with no
-AddFB2 errors.
+[1] Comparing with the vendor code, it seems this is actually 1.3 with
+    the hardware reporting zero more by coincidence than design since the
+    version register is not defined for RK3288.
 
-Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
+Fixes: f7e7b48e6d796 ("[media] rockchip/rga: v4l2 m2m support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Freidkin <freidkin@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/meson/vdec/vdec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/rockchip/rga/rga-hw.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/staging/media/meson/vdec/vdec.c b/drivers/staging/media/meson/vdec/vdec.c
-index c18bf352b1996..be29d5a11c2e6 100644
---- a/drivers/staging/media/meson/vdec/vdec.c
-+++ b/drivers/staging/media/meson/vdec/vdec.c
-@@ -34,7 +34,7 @@ struct dummy_buf {
+diff --git a/drivers/media/platform/rockchip/rga/rga-hw.c b/drivers/media/platform/rockchip/rga/rga-hw.c
+index be1bc8ddbd03b..2e7ec8b7c20f7 100644
+--- a/drivers/media/platform/rockchip/rga/rga-hw.c
++++ b/drivers/media/platform/rockchip/rga/rga-hw.c
+@@ -158,7 +158,6 @@ static void rga_cmd_set_dst_addr(struct rga_ctx *ctx, dma_addr_t dma_addr)
  
- static u32 get_output_size(u32 width, u32 height)
+ static void rga_cmd_set_trans_info(struct rga_ctx *ctx)
  {
--	return ALIGN(width * height, SZ_64K);
-+	return ALIGN(ALIGN(width, 32) * ALIGN(height, 32), SZ_64K);
- }
- 
- u32 amvdec_get_output_size(struct amvdec_session *sess)
+-	struct rockchip_rga *rga = ctx->rga;
+ 	u32 *dest = ctx->cmdbuf_virt;
+ 	unsigned int scale_dst_w, scale_dst_h;
+ 	unsigned int src_h, src_w, dst_h, dst_w;
+@@ -251,13 +250,6 @@ static void rga_cmd_set_trans_info(struct rga_ctx *ctx)
+ 	 */
+ 	if (src_info.data.rot_mode == RGA_SRC_ROT_MODE_90_DEGREE ||
+ 	    src_info.data.rot_mode == RGA_SRC_ROT_MODE_270_DEGREE) {
+-		if (rga->version.major == 0 || rga->version.minor == 0) {
+-			if (dst_w == src_h)
+-				src_h -= 8;
+-			if (abs(src_w - dst_h) < 16)
+-				src_w -= 16;
+-		}
+-
+ 		scale_dst_h = dst_w;
+ 		scale_dst_w = dst_h;
+ 	} else {
 -- 
 2.53.0
 
