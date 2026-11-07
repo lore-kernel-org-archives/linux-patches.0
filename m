@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063441;
-	b=LXV0sgKpV1O5Rakie81WW+EtPf6kRFe96nKy8gN23NQscIO1IeZRAfWIF1Dpg39Pagct
-	 yTFevzrKsEg70wBIxRWWRtMxosHfbuiYzk+tz1mYE/GmTVrp0Qx0n7o0V8UX2v+4waTLA
-	 LpxUZmLqq000Riavj10D+rYfxAJ8ATB4gFUvmgnxa+MM8erV4kG+kO94yPOLoUD4JmNZG
-	 qc1+kvGCGE30a/1K+wDhnq+hEHbl+yXB3TSzYcXkjF4wVr5M23/0/X4XMHNizSjkyrCdI
-	 WaGD+F/WKvtCtEs7C3MVyzmRLP8+GWrs9fwoyCuIdo4UBMhkXzR5SQygnq3zAAcETiA==
+	t=1794063443;
+	b=kITYmlSMK8ageKCyV69btHs+9zpUNIx18OTcxUquLMdAoZ9rMgI7jOSHbWhEV3Y4TN7D
+	 kzJpSNJvh/SvmfClZPk7/yGcfCDJK3EoEmCXXgd7/y8Dh9BHCwngaikmQKdslQck3G0Y+
+	 DBV4CBNzrDmqOO82jSpBiZng1n03sSxGT/ppKdqfHsmWg3bLM6S+oErbZ3r7LSoebGeFA
+	 TvMl1vbzzYLE7PcIcDr+lVFnjQmdbIAxmmb8kR40oXl4sRK08lD2QCljP1ekqWjZHl5Rb
+	 UfXHkNuKtUVsuug240I5yReB608gvtVuD/Fc1hJS3AVzBiA28102KzIza4D2jGWDonQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063443;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uU6Y5sE72yo2llXj4degy/lF5GVoIjE445YGhf3IOW4=;
-	b=Q3kMvHcY9XgQVquZ2knWAdsaqOMO50PWbwYpp66XLhAd6WLo38PEg3PUwsop3wb3TcKC
-	 6mn8yuLbjRLSn1fPuiGgTuisWpte5f/TxquQ5lj0OA6GGRrAx7yjfDIQ8Zz4mzGQe4EjE
-	 wpA2gRww7GmncfndhaBrl5JpUJel7XERrDDOyXEARMT40D+m+F4ujycrpzsp2iYoSReQU
-	 H/dDchBTklqu+2jQqTv0+/1zxZBFS8kBRliGvhNavPZr9eh6YN21oLfWOy9Tb2EqJJnxL
-	 l2R+imhXQSP/W7k67nmO0U/3S50T+OPJbBsi2mNpVLBKAIEAKkikFmIpNV3bDuPdHBg==
+	bh=hASc/Cybq/UUSktcvk3gwrEE5yWkw3H3cu5c/DVAb+M=;
+	b=EHJIXgS/kqlxidmu6iGhsG1RRA+GYPmDni7UxnT2XsMWZVYCjTZj/6KDABVmGmYror97
+	 ZAK7DnxeIUxtR9GYTC6VCwxCjwOKT+Ql8/x4/ApBZgMf2oK5viH/1lLyO0Vm9lpdN0lpD
+	 H6AFCMz933La3qZ62vCuhnW9s4uN6y6j6LB8FMpQek+nFbd/7rO6PHy7w+NtkRl26rRyV
+	 MY1Y2AFiuErd7fQ2Tsa9I1LdUvD2fnP3bEvo1W1+YknOy/ncncEM66qf245S8bZvMU1nP
+	 Ekbg6jjtv3UFOIvJvinCXka4z69ddWxpOpOIXLAtKu6JTjC0rJg9Vik0kXkKz4EnlIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lwJGv9LJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iilUQVUZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBEC606A337;
-	Sat,  7 Nov 2026 14:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E90606A337;
+	Sat,  7 Nov 2026 14:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lwJGv9LJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2D21F0089F;
-	Sat,  7 Nov 2026 14:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iilUQVUZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754821F008A5;
+	Sat,  7 Nov 2026 14:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063441;
-	bh=uU6Y5sE72yo2llXj4degy/lF5GVoIjE445YGhf3IOW4=;
+	s=korg; t=1794063442;
+	bh=hASc/Cybq/UUSktcvk3gwrEE5yWkw3H3cu5c/DVAb+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lwJGv9LJjH96zMXK3taQrtKqZTwcyZHG63sR+6sIBoKgbDdMF156TxKCD5Krtzdc3
-	 JbD02x1Pq2wxeGlPlYOsI2BOA1Dw6IGE4VdGV75zv/5/1CEInQPdm3CueVpEQHVIrJ
-	 pbW3a90wlDa4Ss9YYaQJX19uWCGeg74sYLT0G4AQ=
+	b=iilUQVUZ4j+b/H45I2RTOCfOCwGnv/p0rv0ZjFlh8i/VOTI1xiAM7TJD26/E20lEZ
+	 7BotzMExxTI9N+z+o3UISQeO6cdtb5dQ1p4w1C778zHfS7Inrxo7Ves8cWbjouUZa+
+	 6BmT4pb4+wdG04+0V/f2NE+U7B6E3sEK6sZJr1/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Viet Dung <dungvn2345@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 566/869] Bluetooth: hci_debugfs: Pin module for debugfs file operations
-Date: Sat,  7 Nov 2026 08:54:08 -0500
-Message-ID: <20261107134912.463171324@linuxfoundation.org>
+Subject: [PATCH 6.18 557/869] ARM: 9491/1: alignment: restore uaccess state on emulation fault
+Date: Sat,  7 Nov 2026 08:53:59 -0500
+Message-ID: <20261107134912.216599210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,133 +69,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Viet Dung <dungvn2345@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 2a3e2287877b1ee40ffb80b7d769b633866533f3 ]
+[ Upstream commit 80dafbcb705cead6d25cb821cf29c47da8860c8c ]
 
-An open debugfs file retains its file_operations pointer in the
-debugfs proxy state. However, the file_operations defined in
-hci_debugfs.c (use_debug_keys_fops, sc_only_mode_fops,
-ssp_debug_mode_fops, force_bredr_smp_fops, force_static_address_fops,
-force_no_mitm_fops, dut_mode_fops, vendor_diag_fops, and the
-DEFINE_QUIRK_ATTRIBUTE macro) have no .owner set to THIS_MODULE.
+The alignment handlers enable access to user memory while emulating
+unaligned instructions. If a checked access faults, its exception table
+fixup jumps to the handler's fault label and bypasses uaccess_restore().
+This leaves DOMAIN_USER as DOMAIN_CLIENT with SW domain PAN, or leaves
+TTBR0 page table walks enabled with TTBR0 PAN, while the fault is handled.
 
-As a result, full_proxy_open_regular() calls fops_get() which succeeds
-without taking a reference to the bluetooth module. When a userspace
-process opens any of these debugfs files, a subsequent controller removal
-and module unload (rmmod bluetooth) can succeed while the file descriptor
-remains open.
+An ARM926 QEMU test using LDMIA across an unmapped page boundary reports
+DOMAIN_USER=1 at TYPE_FAULT before this change and DOMAIN_USER=0 after it.
+SW domain PAN is the default on ARMv5, ARMv6, and non-LPAE ARMv7 builds.
 
-When the userspace process subsequently closes the descriptor,
-full_proxy_release() accesses the already unmapped file_operations
-structure, triggering a kernel oops in full_proxy_release():
+Keep the saved uaccess state at function scope and track whether it was
+saved. Restore it at the fault label only when needed. Paths that did not
+enable user access continue to skip the restore.
 
-  BUG: unable to handle page fault for address: fffffbfff8056f03
-  #PF: supervisor read access in kernel mode
-  Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:full_proxy_release+0x8e/0x140
-  Call Trace:
-   <TASK>
-   __fput+0x39f/0xa60
-   fput_close_sync+0xff/0x200
-   __x64_sys_close+0x8c/0xf0
-   do_syscall_64+0x115/0x6a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+Assisted-by: Codex:gpt-5.6-sol
 
-The issue was discovered via manual code audit of
-net/bluetooth/hci_debugfs.c and verified on a Linux 7.3-rc6 test VM
-with CONFIG_BT=m.
-
-Set .owner = THIS_MODULE on all debugfs file_operations tables in
-hci_debugfs.c so that debugfs keeps the module loaded until close has
-finished.
-
-Fixes: 0886aea6acd2 ("Bluetooth: Expose debug keys usage setting via debugfs")
+Fixes: 274e91b81ed2 ("ARM: alignment: fix alignment handling for uaccess changes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_debugfs.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm/mm/alignment.c | 51 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/net/bluetooth/hci_debugfs.c b/net/bluetooth/hci_debugfs.c
-index 9ae6d9224c3b7..807c9e0e212c9 100644
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -68,6 +68,7 @@ static ssize_t __name ## _write(struct file *file,			      \
- }									      \
- 									      \
- static const struct file_operations __name ## _fops = {			      \
-+	.owner		= THIS_MODULE,					      \
- 	.open		= simple_open,					      \
- 	.read		= __name ## _read,				      \
- 	.write		= __name ## _write,				      \
-@@ -286,6 +287,7 @@ static ssize_t use_debug_keys_read(struct file *file, char __user *user_buf,
+diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
+index 812380f30ae36..2b470a419dda3 100644
+--- a/arch/arm/mm/alignment.c
++++ b/arch/arm/mm/alignment.c
+@@ -341,6 +341,8 @@ static int
+ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+ 	unsigned int rd = RD_BITS(instr);
++	unsigned int ua_flags;
++	bool ua_saved = false;
+ 
+ 	ai_half += 1;
+ 
+@@ -364,10 +366,11 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
+  user:
+ 	if (LDST_L_BIT(instr)) {
+ 		unsigned long val;
+-		unsigned int __ua_flags = uaccess_save_and_enable();
+ 
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		get16t_unaligned_check(val, addr);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 
+ 		/* signed half-word? */
+ 		if (instr & 0x40)
+@@ -375,14 +378,17 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
+ 
+ 		regs->uregs[rd] = val;
+ 	} else {
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		put16t_unaligned_check(regs->uregs[rd], addr);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 	}
+ 
+ 	return TYPE_LDST;
+ 
+  fault:
++	if (ua_saved)
++		uaccess_restore(ua_flags);
+ 	return TYPE_FAULT;
  }
  
- static const struct file_operations use_debug_keys_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= use_debug_keys_read,
- 	.llseek		= default_llseek,
-@@ -304,6 +306,7 @@ static ssize_t sc_only_mode_read(struct file *file, char __user *user_buf,
+@@ -391,6 +397,8 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+ 	unsigned int rd = RD_BITS(instr);
+ 	unsigned int rd2;
++	unsigned int ua_flags;
++	bool ua_saved = false;
+ 	int load;
+ 
+ 	if ((instr & 0xfe000000) == 0xe8000000) {
+@@ -425,26 +433,30 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
+  user:
+ 	if (load) {
+ 		unsigned long val, val2;
+-		unsigned int __ua_flags = uaccess_save_and_enable();
+ 
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		get32t_unaligned_check(val, addr);
+ 		get32t_unaligned_check(val2, addr + 4);
+ 
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 
+ 		regs->uregs[rd] = val;
+ 		regs->uregs[rd2] = val2;
+ 	} else {
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		put32t_unaligned_check(regs->uregs[rd], addr);
+ 		put32t_unaligned_check(regs->uregs[rd2], addr + 4);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 	}
+ 
+ 	return TYPE_LDST;
+  bad:
+ 	return TYPE_ERROR;
+  fault:
++	if (ua_saved)
++		uaccess_restore(ua_flags);
+ 	return TYPE_FAULT;
  }
  
- static const struct file_operations sc_only_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= sc_only_mode_read,
- 	.llseek		= default_llseek,
-@@ -440,6 +443,7 @@ static ssize_t ssp_debug_mode_read(struct file *file, char __user *user_buf,
+@@ -452,6 +464,8 @@ static int
+ do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+ 	unsigned int rd = RD_BITS(instr);
++	unsigned int ua_flags;
++	bool ua_saved = false;
+ 
+ 	ai_word += 1;
+ 
+@@ -469,18 +483,22 @@ do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
+  trans:
+ 	if (LDST_L_BIT(instr)) {
+ 		unsigned int val;
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		get32t_unaligned_check(val, addr);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 		regs->uregs[rd] = val;
+ 	} else {
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		put32t_unaligned_check(regs->uregs[rd], addr);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 	}
+ 	return TYPE_LDST;
+ 
+  fault:
++	if (ua_saved)
++		uaccess_restore(ua_flags);
+ 	return TYPE_FAULT;
  }
  
- static const struct file_operations ssp_debug_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= ssp_debug_mode_read,
- 	.llseek		= default_llseek,
-@@ -532,6 +536,7 @@ static ssize_t force_bredr_smp_write(struct file *file,
- }
+@@ -502,6 +520,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+ 	unsigned int rd, rn, correction, nr_regs, regbits;
+ 	unsigned long eaddr, newaddr;
++	unsigned int ua_flags;
++	bool ua_saved = false;
  
- static const struct file_operations force_bredr_smp_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_bredr_smp_read,
- 	.write		= force_bredr_smp_write,
-@@ -781,6 +786,7 @@ static ssize_t force_static_address_write(struct file *file,
- }
+ 	if (LDM_S_BIT(instr))
+ 		goto bad;
+@@ -547,7 +567,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ #endif
  
- static const struct file_operations force_static_address_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_static_address_read,
- 	.write		= force_static_address_write,
-@@ -1184,6 +1190,7 @@ static ssize_t force_no_mitm_write(struct file *file,
- }
+ 	if (user_mode(regs)) {
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
+ 		     regbits >>= 1, rd += 1)
+ 			if (regbits & 1) {
+@@ -559,7 +580,7 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ 					put32t_unaligned_check(regs->uregs[rd], eaddr);
+ 				eaddr += 4;
+ 			}
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 	} else {
+ 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
+ 		     regbits >>= 1, rd += 1)
+@@ -581,6 +602,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ 	return TYPE_DONE;
  
- static const struct file_operations force_no_mitm_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_no_mitm_read,
- 	.write		= force_no_mitm_write,
-@@ -1322,6 +1329,7 @@ static ssize_t dut_mode_write(struct file *file, const char __user *user_buf,
- }
+ fault:
++	if (ua_saved)
++		uaccess_restore(ua_flags);
+ 	regs->ARM_pc -= correction;
+ 	return TYPE_FAULT;
  
- static const struct file_operations dut_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= dut_mode_read,
- 	.write		= dut_mode_write,
-@@ -1378,6 +1386,7 @@ static ssize_t vendor_diag_write(struct file *file, const char __user *user_buf,
- }
- 
- static const struct file_operations vendor_diag_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= vendor_diag_read,
- 	.write		= vendor_diag_write,
 -- 
 2.53.0
 
