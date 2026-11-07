@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062326;
-	b=hu7mPgQ4UcCGXN4J0JU7/WTo8cKORw4hrptLd1Xy3BdYAssTI95zf1uzIp1Fq1E2KGjc
-	 MBuK3zJq8ShVxJGmuflphNqKjzmHff/5uvzGol0MHvFwTU3MxssRRCay4PbkOexo/HUFi
-	 bZkB+f6LZPotVAFqfD7h0qVPDsUDgUpYs4ttpfY+HgIc8he/lW5Ui2zHk3znEtzZVVQQU
-	 fk0U4FkAabLP41uhKCgv+i4GnxzVeOIC5oPasWGH5M3TpmqKTd9NwxzR4yksQiYXC8Q2I
-	 su8ogRZGRucUvmmhYwWnLLSp9f87O3RpDOvbAKxYlqSMIOZoMkdQT2DJQd150Oc11uQ==
+	t=1794062328;
+	b=gmb4Qdqci5Tpr6Ii4VX7/CZVv4DwgcwiCVuS9zCfHYiC6z3FGZLI1LS6ZdYBAPrY7ch9
+	 LgvEQXV/9dmBfUgUn+P9frFN5tWsRp2eLIabJO57HRjFmPgfZEoORj248EPxDUwTIP5SD
+	 4HxhCGxxjWYQX24wczkkH1f2xvO6xOXJeuQGHKoCX2zemWJnD49xsIzl3MwtCASD0sScR
+	 0e17yr/QEBZVXeRevKsUOBy5i/BrDnyhE2dYUTPKm+mm7bB24aYkmwbvjxVANjCfAEFHN
+	 P76A4d3+zhKvFApq/R+7vbwTHwp1gqFtZI8bsqkriQSboA+9iUtuAxpG1LpXLb2tNfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=95nNhbys92qY8KTQj+xr7BFCEiwS894MfakBkm29Kog=;
-	b=AdZVNWxkoKE9vdUw4EOCom+1dUjy+X6pHBBiqgVDNdn9LD7WYd2MgSC9O1eCJVuLSgnH
-	 V5njhR7xQgbKLCptIfy4xkcZBsH1V/JBcjoRcFR+HkBc43d0aXiIRvp6LP2cvakfCtuFd
-	 8+s3hsiqKTCj1c1fTDmuQOMnRe562pM7+QYWjHkqsctA55hSIPiExvfC05InNgFRTvS9+
-	 /Kvin802LQoi2+/1oPkS4eFfpE9nMqW7uBzRqgqf3tg54Hjtw9Q+gwhBPBUnivOF2AsuQ
-	 xJ+a//vhuoyo+3JawVhIAWxSyzt1Mk69vp4y0M3DN+JTvD0A5w74Oa4X5DsqEYSe6FQ==
+	bh=QosH4TKcB8Q0fGZGDAQ+fexmYGfLnigaczvdONRhxgU=;
+	b=wa2clM/SNlvbvJA0fS8mpmvthHuK2RFgxa3kHm99WD4nOTEPdH994S8sjnX+y3p+tgx6
+	 NS7Fqe5WrDmQXwQ3a1dRHL5KRWEKV0FMUXTdD/u1ut73gNRGFCbRv4wIs2Ykl3cFlTPQm
+	 +K32CTYO04hAz8z1mh2yBvaf7ZGykzBPL+8BCna9LX9nwrI/phIUcbfw6JQd6Cp9+/VqG
+	 ud5zNWsxb1pd1NsOs1DokBripi+7e4DS1bP1MEA91e041TrU/OZkRHDL+346+ivHCAwB8
+	 vQZkWCZHYHaQPLxeKzRFzfy0JZnqGYaTZ5Qr/miqHoRxZpw6uNL46pzND6yz45NSHIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MaB/B1wx";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cfnk4bxc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9FE606A666;
-	Sat,  7 Nov 2026 14:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA717606A660;
+	Sat,  7 Nov 2026 14:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MaB/B1wx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E54B1F0089F;
-	Sat,  7 Nov 2026 14:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cfnk4bxc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D3E1F0089F;
+	Sat,  7 Nov 2026 14:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062326;
-	bh=95nNhbys92qY8KTQj+xr7BFCEiwS894MfakBkm29Kog=;
+	s=korg; t=1794062327;
+	bh=QosH4TKcB8Q0fGZGDAQ+fexmYGfLnigaczvdONRhxgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MaB/B1wxJQ7q3Eopj5pdYz4u5n12jyH4i9O8ReDMpb4Pb6NcSMBfDdU9InO+SRBMb
-	 EkPXnFe7eKjqeTmU7TD+ntqinm8y8fuDb72nLi//lOAKba7x5MU12Zpwfw+2wydyIg
-	 54k5EP/Z3/K+E8OQjd2cU74Ir9sbIuU/VpIKgDFU=
+	b=cfnk4bxc6DDEdEUzmEbwBnfIK3s5MPNkb8i5sq4yf9lWNJqh615swNihjQe0PGyjt
+	 Ze602cf2rCLckyxUP33964fgIOkneLL06gwdsPMTZ/qraWozZTHjfu1rDcbIO1AKaI
+	 2ZAs0d8+elv/lg7yztIGkXfB9JBe55bgIhYNY1P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Helge Deller <deller@gmx.de>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1258/1536] fbdev: sh_mobile_lcdc: check for fb_deferred_io_init() error
-Date: Sat,  7 Nov 2026 08:54:34 -0500
-Message-ID: <20261107135033.103235704@linuxfoundation.org>
+Subject: [PATCH 6.12 1259/1536] serial: 8250_exar: store the GPIO platform device in struct exar8250
+Date: Sat,  7 Nov 2026 08:54:35 -0500
+Message-ID: <20261107135033.130750378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,52 +67,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 5192201aaac2a923ff98306e3ccda58718ee395f ]
+[ Upstream commit 33d337816e00994daaf670243186d9e537ee090d ]
 
-fb_deferred_io_init() allocates deferred I/O state, populating
-info->fbdefio_state, or leaving it NULL if an error occurs.
+The GPIO platform device is registered via platform->register_gpio()
+when port 0 is being set up. It is stored to port->port.private_data of
+the on-stack uart template (and from there it is copied into every
+registered port). pci_xr17v35x_exit() then fetches it back by
+serial8250_get_port(priv->line[0]).
 
-Currently sh_mobile_lcdc_start() ignores its return value.
+But port 0 does not have to exist at that point. If
+serial8250_register_8250_port() fails for port 0, priv->line[0] holds a
+negative error code. The probe still succeeds (it only breaks the loop),
+so on unbind, priv->line[0] (a negative value) is passed to
+serial8250_get_port(). The GPIO device is never unregistered and a
+bogus port is accessed.
 
-Therefore if an error arises in fb_deferred_io_init() (for instance, due
-to an allocation failure) info->fbdefio_state is left NULL.
+The same problem would also occur after the planned conversion of
+serial8250_register_8250_port() to return a uart port instead of a
+line. As Sashiko pointed out in that case:
+  If board->setup() fails for the first port (i=0) in exar_pci_probe(),
+  priv->uport[0] remains NULL. If serial8250_register_8250_port() fails,
+  it returns an ERR_PTR. In either case, the loop breaks and probe
+  returns success. When the device is later unbound,
+  pci_xr17v35x_exit() unconditionally passes priv->uport[0] to
+  platform->unregister_gpio(), which will dereference it without
+  checking for validity.
 
-When the file is subsequently opened, fb_open() will dereference a NULL
-pointer (calling fb_deferred_io_open()).
+The GPIO device belongs to the PCI device, not to any particular port.
+So store it in a new struct exar8250::gpio member. Pass priv to both
+->register_gpio() and ->unregister_gpio(), so that pci_xr17v35x_exit()
+does not need to look up any port at all.
 
-Fix this by checking for the error.
-
-Also clear info->fbdefio in that case, so that sh_mobile_lcdc_stop() does
-not attempt to clean up deferred I/O state that was never initialised.
-
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Fixes: d0aeaa83f0b0 ("serial: exar: split out the exar code from 8250_pci")
+Link: https://lore.kernel.org/all/sashiko-outbox-166269@kernel.org/
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://patch.msgid.link/03a8b5c71614fc672fef1e55c083bda6c73b5bf3.1791873876.git.jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sh_mobile_lcdcfb.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_exar.c | 36 ++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-index 84aa2086d5ae2..59cf785c35445 100644
---- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
-+++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-@@ -1042,7 +1042,11 @@ static int sh_mobile_lcdc_start(struct sh_mobile_lcdc_priv *priv)
- 			ch->defio.deferred_io = sh_mobile_lcdc_deferred_io;
- 			ch->defio.delay = msecs_to_jiffies(tmp);
- 			ch->info->fbdefio = &ch->defio;
--			fb_deferred_io_init(ch->info);
-+			ret = fb_deferred_io_init(ch->info);
-+			if (ret) {
-+				ch->info->fbdefio = NULL;
-+				return ret;
-+			}
- 		}
+diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
+index 5ed6514ec88aa..2fbefc2228d61 100644
+--- a/drivers/tty/serial/8250/8250_exar.c
++++ b/drivers/tty/serial/8250/8250_exar.c
+@@ -231,8 +231,9 @@ struct exar8250_platform {
+ 	int (*rs485_config)(struct uart_port *port, struct ktermios *termios,
+ 			    struct serial_rs485 *rs485);
+ 	const struct serial_rs485 *rs485_supported;
+-	int (*register_gpio)(struct pci_dev *pcidev, struct uart_8250_port *port);
+-	void (*unregister_gpio)(struct uart_8250_port *port);
++	int (*register_gpio)(struct exar8250 *priv, struct pci_dev *pcidev,
++			     struct uart_8250_port *port);
++	void (*unregister_gpio)(struct exar8250 *priv);
+ };
  
- 		sh_mobile_lcdc_display_on(ch);
+ /**
+@@ -255,6 +256,7 @@ struct exar8250 {
+ 	unsigned int		osc_freq;
+ 	struct exar8250_board	*board;
+ 	void __iomem		*virt;
++	struct platform_device	*gpio;
+ 	int			line[];
+ };
+ 
+@@ -1232,22 +1234,21 @@ static const struct software_node exar_gpio_node = {
+ 	.properties = exar_gpio_properties,
+ };
+ 
+-static int xr17v35x_register_gpio(struct pci_dev *pcidev, struct uart_8250_port *port)
++static int xr17v35x_register_gpio(struct exar8250 *priv, struct pci_dev *pcidev,
++				  struct uart_8250_port *port)
+ {
+ 	if (pcidev->vendor == PCI_VENDOR_ID_EXAR)
+-		port->port.private_data =
+-			__xr17v35x_register_gpio(pcidev, &exar_gpio_node);
++		priv->gpio = __xr17v35x_register_gpio(pcidev, &exar_gpio_node);
+ 
+ 	return 0;
+ }
+ 
+-static void xr17v35x_unregister_gpio(struct uart_8250_port *port)
++static void xr17v35x_unregister_gpio(struct exar8250 *priv)
+ {
+-	if (!port->port.private_data)
+-		return;
+-
+-	__xr17v35x_unregister_gpio(port->port.private_data);
+-	port->port.private_data = NULL;
++	if (priv->gpio) {
++		__xr17v35x_unregister_gpio(priv->gpio);
++		priv->gpio = NULL;
++	}
+ }
+ 
+ static int sealevel_rs485_config(struct uart_port *port, struct ktermios *termios,
+@@ -1344,8 +1345,9 @@ static const struct software_node iot2040_gpio_node = {
+ 	.properties = iot2040_gpio_properties,
+ };
+ 
+-static int iot2040_register_gpio(struct pci_dev *pcidev,
+-			      struct uart_8250_port *port)
++static int iot2040_register_gpio(struct exar8250 *priv,
++				 struct pci_dev *pcidev,
++				 struct uart_8250_port *port)
+ {
+ 	u8 __iomem *p = port->port.membase;
+ 
+@@ -1354,8 +1356,7 @@ static int iot2040_register_gpio(struct pci_dev *pcidev,
+ 	writeb(IOT2040_UARTS_ENABLE, p + UART_EXAR_MPIOLVL_15_8);
+ 	writeb(IOT2040_UARTS_GPIO_HI_MODE, p + UART_EXAR_MPIOSEL_15_8);
+ 
+-	port->port.private_data =
+-		__xr17v35x_register_gpio(pcidev, &iot2040_gpio_node);
++	priv->gpio = __xr17v35x_register_gpio(pcidev, &iot2040_gpio_node);
+ 
+ 	return 0;
+ }
+@@ -1432,7 +1433,7 @@ pci_xr17v35x_setup(struct exar8250 *priv, struct pci_dev *pcidev,
+ 		/* Setup Multipurpose Input/Output pins. */
+ 		setup_gpio(pcidev, p);
+ 
+-		ret = platform->register_gpio(pcidev, port);
++		ret = platform->register_gpio(priv, pcidev, port);
+ 	}
+ 
+ 	return ret;
+@@ -1442,9 +1443,8 @@ static void pci_xr17v35x_exit(struct pci_dev *pcidev)
+ {
+ 	const struct exar8250_platform *platform = exar_get_platform();
+ 	struct exar8250 *priv = pci_get_drvdata(pcidev);
+-	struct uart_8250_port *port = serial8250_get_port(priv->line[0]);
+ 
+-	platform->unregister_gpio(port);
++	platform->unregister_gpio(priv);
+ }
+ 
+ static inline void exar_misc_clear(struct exar8250 *priv)
 -- 
 2.53.0
 
