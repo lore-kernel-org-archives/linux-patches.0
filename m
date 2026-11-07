@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060555;
-	b=rcNqd2xGat4EOWKOyGnPryqPkyqvbxio+fjHYUgOJE11yBsXA1TS62IYNfyEZjZEJJKV
-	 KFvPeiVC9mLfg4hm1utjoyy9b5jkybdQMynFi8w2pK75sy58j0OHo2a6tXMkZx029eEoN
-	 2ZP50vL4zbZo58fw9Bo+u3fhInSQhQlAThNNK/vIChi1OmcFoyno3G51SiP58zH+mJ5hA
-	 n85sr3AUerh6091lCnmOslOdzt3Kj0HPs1GqtnysdggSvoc3QPxhkRIxgoH7e8KqXsx/X
-	 KjaQul+y0cf6AdSOuJc76eEu6zfjORKh0ndJuKTXEtiC7mkBv0bauRIez8b5Tlujc/w==
+	t=1794060556;
+	b=QnzoJA+W3DtKaf35OYO1nzA4QJPdlZA5JLoNb0S4L6GHYTCsPdtgPM1iLdyXR7LVEY6y
+	 lKndaNHuLYijfX2c3Rmnnc6OT4gfbfKZx6Sg+x08iLFjcHFh4PSIN2nbA7NcdTWO+w8Pz
+	 u+WO+6sGrzxVUBHZpqjss4PZOe66ENeZYZI5Yy2FFuU5k2JHtknRmlrGatfmn17XUoKKx
+	 w9YmUR63+/naNMAvEX11mvY0zd/ifDIBl02xR80DyH2ff4lrgTzOhVy3ip1J6veneuabv
+	 Ow1ZLn04mZlfiReVvygAidkC1py2UEbMnROi8TD9Balj1ZLsLXxTm/qz+oOloEu5EHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=zsYA+m1r5URt2JiuDRq+95sId5vE3f4kZtxWW2k0s5A=;
-	b=EG01i6yxX6feh6LjxADelts5/Yk10jLei9ncJHtf7dJuQUeo2o9zsBAVRhKA3qakWbV6
-	 dz2R8gzBcJxoiJT/EL6an0puMC67+xaJtk7duBfLu7ob92ax4nE9pc3DscIuM/IZb1JzY
-	 acMSAH0TFQC5BPgyve8jTQqzOnCbRJwVf+Ia2PjQjyzsjZptj109Q0ucZjJ8n8u9IdTF1
-	 YdyIOaZMbumzkWMZSXTZ2ck+7/WxxmHfD6/OgpYN0ntudsD1NxAK6mo3DHGOSihiaAgOM
-	 E75Ij02r2IWVmsZ460SmuooBl70+1WaMQqYXsMLY9eRWKg4YA3zaHFoSIV4xi61hgiA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=1lcRIlXYms9GbVp7bIuG+yY9esNGAcIdoz17ETtvynI=;
+	b=xJw9shRcZQpfUFF+QrG4ojozuUr6Dssx8+rccWDG5Z3vUF578cH8a5uXEllgirk3DTrF
+	 rQkXVEM0KaUAp9kIKnwnMC1t1mYKMe3cV5A5jYDhdmbLS+cYBKcx/k1R+kyLcFl5kZu2r
+	 HV1xCRzp3hmkFy2nU44fS3zE4vh+gnap30VDcc5sHf8KBuG521SDLAp3TLai1t3X4bgLT
+	 zbOAoeitznFt5XweHQOSHQG7Ew5CT1GGN5T9W5smO/QYQU8eV3yJkE43fyxUsOh0mNSot
+	 obSdeSYlHjrRrLPK8d7wJQkpelhWbz5p/vVB3B6Gjo7Ty2BSJnKgOPZ1HMZ3N+5PkTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ltm5jq/r";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Gl/UD/lT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D295606A332;
-	Sat,  7 Nov 2026 14:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A4F606A32C;
+	Sat,  7 Nov 2026 14:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ltm5jq/r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEDB1F0089F;
-	Sat,  7 Nov 2026 14:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gl/UD/lT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042231F0089F;
+	Sat,  7 Nov 2026 14:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060555;
-	bh=zsYA+m1r5URt2JiuDRq+95sId5vE3f4kZtxWW2k0s5A=;
+	s=korg; t=1794060556;
+	bh=1lcRIlXYms9GbVp7bIuG+yY9esNGAcIdoz17ETtvynI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ltm5jq/rQOpMvONmUhA4pi5RIO84XGBWcBC8qCbI8DxQg3i7P8hkAPoK2Q0RKEXpw
-	 rKofuuZLsWBTyAAscJ2bJJoQf7KvY4mN8iQE3MkpB/zJI04zliEMzKYQ8Pt7AI9OV0
-	 XmMRZQpD6lyJkv/D3q2OTWPL2deh6sogBw3xxoG0=
+	b=Gl/UD/lTGP4OUceual5vgcvI1UTcd5K8023cWooElhowMYVx4HZXPWEQobCnzNznB
+	 kMV79U6BZQpCLE64iEYuR3Nm8dHNLdpYQRTlRz+d8PM2EKhfiRsoNPnFwc2elACEYj
+	 pOR4r1bAupt63wKD2m9iN3XVOMxgblqfu7H6+pUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.12 0020/1536] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
-Date: Sat,  7 Nov 2026 08:33:56 -0500
-Message-ID: <20261107134958.246669873@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Ting-Han Hou <ue081723@gmail.com>
+Subject: [PATCH 6.12 0021/1536] net: gso: limit recursive IP-in-IP segmentation
+Date: Sat,  7 Nov 2026 08:33:57 -0500
+Message-ID: <20261107134958.275392912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,87 +65,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 24f07e8c07a0c0dd275331cbb41c79a78741eef9 upstream.
+commit 006c8b834aed8b02bd8fb9fb05e9e7ead37d1763 upstream.
 
-When poly1305_blocks_neon() resumes from a base 2^26 accumulator and the
-next update contains an odd number of full 16-byte blocks, it processes
-one leading block through poly1305_mult() so that the remaining NEON
-work has an even block count.  That requires converting the accumulator
-to the base 2^64 form used by poly1305_mult().  The final ADC of that
-conversion stores the carry into d2, but the following accumulation and
-poly1305_mult() use h2.  If the conversion carries across bit 128, the
-carry is dropped and the emitted tag is wrong.
+IP-in-IP GSO can re-enter inet_gso_segment() or ipv6_gso_segment()
+for each nested IP header. encap_level tracks header bytes, not callback
+depth, so a deep chain can exhaust the kernel stack. Making
+inet_gso_segment() stackable introduced unbounded IPv4 nesting; IPIP
+GSO/TSO later made the path reachable. The IPv6 stackable path was
+introduced separately and uses the same guard.
 
-This was introduced by Cryptogams commit 03dc4adf91c8
-("arm/poly1305-armv*.pl: optimize branches."), which removed the
-reduction that consumed d2 shortly before Linux imported the code.
-OpenSSL's copy did not take that change.
+Count IPv4 and IPv6 GSO handler entries in skb_gso_cb, initialized once
+per top-level GSO operation and preserved across GRE/UDP context changes.
+Use the existing IP_TUNNEL_RECURSION_LIMIT for both handlers. The first
+five entries pass, and the sixth returns -EINVAL before dispatching
+another GSO callback.
 
-The carry is possible because the NEON code stores the accumulator [h0,
-h1, h2, h3, h4] in a lazily reduced, redundant base 2^26 form: its final
-carry chain leaves h0, h2, h3 < 2^26, but h1 and h4 may slightly exceed
-2^26 - 1.  For example, the reachable state
-
-  h0 = 4
-  h1 = 2^26
-  h2 = 2^26 - 1
-  h3 = 2^26 - 1
-  h4 = 2^24 - 1
-
-represents 4 + 2^26*2^26 + (2^26-1)*2^52 + (2^26-1)*2^78 +
-(2^24-1)*2^104 = 2^128 + 4, despite the bit representing the 2^128 term
-(bit 24 of h4) not being set; the extra comes from the h1 limb being
-above the normal base 2^26 range.  When this value is converted into the
-non-redundant base 2^64 form, a carry into the new 2^128 bit (in bit 0
-of h2) is necessary to preserve the value.
-
-Given the above bounds, a carry into bit 128 happens exactly when
-h1 >= 2^26, h2 = h3 = 2^26 - 1, and h4 mod 2^24 = 2^24 - 1.
-
-Store the carry into h2, matching the other base 2^26 to base 2^64
-conversions in poly1305_blocks() and poly1305_emit().
-
-This bug causes an incorrect tag to be emitted.  However, this is
-unlikely to happen in practice where Poly1305 is used with a random key,
-since the random key tends to distribute the accumulator values
-throughout their valid range.  There isn't an obvious way for an
-attacker without knowledge of the r_key to cause [h0, h1, h2, h3, h4] to
-land on the precise values where this bug occurs.
-
-[EB: Rewrote the commit message to more clearly describe the bug and
- its impact, and simplified explanation about why there's a carry bit.]
-
-Fixes: f569ca164751 ("crypto: arm64/poly1305 - incorporate OpenSSL/CRYPTOGAMS NEON implementation")
+Fixes: 3347c9602955 ("ipv4: gso: make inet_gso_segment() stackable")
 Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/all/cover.1790157745.git.zihanx@nebusec.ai/
 Assisted-by: LLM
-Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20261009125354.315476-2-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260924051521.32568-2-zihanx@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Ting-Han: ipv6_gso_segment() still calls ipv6_hopopt_jumbo_remove()
+  right after skb_reset_network_header() in this version; keep the new
+  recursion check directly after skb_reset_network_header() as upstream
+  does, before the jumbo removal ]
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/crypto/poly1305-armv8.pl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/gso.h      |    8 ++++++++
+ net/core/gso.c         |    1 +
+ net/ipv4/af_inet.c     |    3 +++
+ net/ipv6/ip6_offload.c |    4 ++++
+ 4 files changed, 16 insertions(+)
 
---- a/arch/arm64/crypto/poly1305-armv8.pl
-+++ b/arch/arm64/crypto/poly1305-armv8.pl
-@@ -372,7 +372,7 @@ poly1305_blocks_neon:
- 	adc	$h1,$h1,xzr
- 	lsr	$h2,x14,#24
- 	adds	$h1,$h1,x14,lsl#40
--	adc	$d2,$h2,xzr		// can be partially reduced...
-+	adc	$h2,$h2,xzr		// preserve carry into top limb
+--- a/include/net/gso.h
++++ b/include/net/gso.h
+@@ -19,10 +19,18 @@ struct skb_gso_cb {
+ 	int	encap_level;
+ 	__wsum	csum;
+ 	__u16	csum_start;
++	/* Number of IPv4/IPv6 GSO handler entries for this packet. */
++	u8	recursion_counter;
+ };
+ #define SKB_GSO_CB_OFFSET	32
+ #define SKB_GSO_CB(skb) ((struct skb_gso_cb *)((skb)->cb + SKB_GSO_CB_OFFSET))
  
- 	ldp	$d0,$d1,[$inp],#16	// load input
- 	sub	$len,$len,#16
++static inline bool gso_recursion_inc_test(struct sk_buff *skb,
++					  unsigned int limit)
++{
++	return ++SKB_GSO_CB(skb)->recursion_counter > limit;
++}
++
+ static inline int skb_tnl_header_len(const struct sk_buff *inner_skb)
+ {
+ 	return (skb_mac_header(inner_skb) - inner_skb->head) -
+--- a/net/core/gso.c
++++ b/net/core/gso.c
+@@ -117,6 +117,7 @@ struct sk_buff *__skb_gso_segment(struct
+ 
+ 	SKB_GSO_CB(skb)->mac_offset = skb_headroom(skb);
+ 	SKB_GSO_CB(skb)->encap_level = 0;
++	SKB_GSO_CB(skb)->recursion_counter = 0;
+ 
+ 	skb_reset_mac_header(skb);
+ 	skb_reset_mac_len(skb);
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1380,6 +1380,9 @@ struct sk_buff *inet_gso_segment(struct
+ 	int id;
+ 
+ 	skb_reset_network_header(skb);
++	if (unlikely(gso_recursion_inc_test(skb,
++					   IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
+ 	nhoff = skb_network_header(skb) - skb_mac_header(skb);
+ 	if (unlikely(!pskb_may_pull(skb, sizeof(*iph))))
+ 		goto out;
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -17,6 +17,7 @@
+ #include <net/udp.h>
+ #include <net/gro.h>
+ #include <net/gso.h>
++#include <net/ip_tunnels.h>
+ 
+ #include "ip6_offload.h"
+ 
+@@ -120,6 +121,9 @@ static struct sk_buff *ipv6_gso_segment(
+ 	bool gso_partial;
+ 
+ 	skb_reset_network_header(skb);
++	if (unlikely(gso_recursion_inc_test(skb,
++					   IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
+ 	err = ipv6_hopopt_jumbo_remove(skb);
+ 	if (err)
+ 		return ERR_PTR(err);
 
 
