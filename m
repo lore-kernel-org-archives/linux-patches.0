@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062491;
-	b=Sl2ar8bRX3xARZjg9WXSGnEzVS4YiCp/HRfyzIzirKodkKH7ecuWT7rdve7E0ABHVqan
-	 o69OHUkKyq9EdNwTodxRFITuEv3Qr4xfYiTYxeUvfmx/DqjPZj6aj3n9OT4ddJOZGK1o/
-	 kKu63O97hxpcsxZGpyR/H9ILKXpyzqRgfNVK4Vl0ismawOFF/rzoWtGDSNJhfwipuAo28
-	 Z5y4ZNsdWZ/S6gVp+2jVCc+tpYbGJl0bDnQvxi6Yr+dUz/N69C3chRw5ht92RvxhRwDUB
-	 esQsqz9hCeLI7tVyxYZlT3IFVVRvMd4A2TO8qD/6vp4NvJBoHdhm6qM8ctPqPoYrQqA==
+	t=1794062493;
+	b=Gelbqkt57ui/xs4hQGDpAIz3iaMOeEVNPEQ33fdkrA5nLRMzRtq2cYsq755OX6TiX/kW
+	 AbDrcxtHEjdciQ2eB2hzGUyUyzxjX/4MpgpDE/QvdXLB+p+u75NYT/Muvgq9SIB+mdf2o
+	 K0QLElhujEyS/vjd6Ty1Oj0fEePiffn8RgIyENy58sX52jofPNTllwg4sHon2r7I+9Geq
+	 ji35kqa2Lt+6CupkJvWILm75rV1OTWobvCOKfmxJCAmJr6zYw4nF9YzAekQoPsKD5cEoP
+	 ee6tun7gywp13oe3Udd1MnMokc3iSUpYkaQgAjtVF5i3SpROtOgFjUukeRHB8/XdtlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062491;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JSFsh426pYTQDop1jVuAfJNMF2Dl1342hF2kRs1/KwA=;
-	b=gK4ItAa9meI1L6RG+dnOXEwByyreeVWvX+KpPZEpkAqOdGmR0aEWq9u6Ajy4i9W8e546
-	 1NybBDkZNKSJNaz5Q32tVp6zOMA7MTaVlJF88jPUi4qXUBSvDawVxoooL13mpAP3uNqVU
-	 4+4J1yQ+bFJ/kP3pthhKRXiCWf21qp8gM1BR/eCjnHGbMt0/ltnAEjpI8jn45k9s5hhAY
-	 19yCUWa9n7TPR/RDvXIIWoKp5tIBh7ZjVPNuxh/Jtt5n41yfNAgNJJTstT8khRLDdws06
-	 NIvFdW/CEPPcODNVRir3kmo4w+UBq3l7I0qn+4dCV7uWZaXxIZvuV47Xv79OVGOJmgw==
+	bh=WrplOB0Fons03gZSoryOrueOIIEBBFvQKoi3h8c671o=;
+	b=K5609JixKUPCekFqKY9UxQnpzpuAgbJ0ctm5Xvc7TZWwtC50BrVIxE5FsUtmzhbV2jgB
+	 kwZvQz90LvONQX5ngtmj82X/RKPEIpjZLM0HsIY3oyc/COgFYs1OVN0EkIW2cXCkqmnu9
+	 PmbnoNFc8jjnDMl/8rSqwNw9xILef5gWMQ7I4TeUbwQIcAebq8eOdHOaJ+oDvyf0pdl3n
+	 EkILtaTjHNX0T1y7oJSCJdO8vXJOI3bdb1GydMGD1qJSA+vu6LdsNfYd4s0Y1WPBiEW3G
+	 U+Y6ShSbeymEgQGf/gy45h71K+sK1ikLet1+5oN76DQ4AN8ZKbtcmLXIO+zmlCF+hxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vBJ5vHgw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yc1H1il7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787EE606D82E;
-	Sat,  7 Nov 2026 14:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90B9606A33E;
+	Sat,  7 Nov 2026 14:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vBJ5vHgw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279721F0089F;
-	Sat,  7 Nov 2026 14:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yc1H1il7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F211F0089F;
+	Sat,  7 Nov 2026 14:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062491;
-	bh=JSFsh426pYTQDop1jVuAfJNMF2Dl1342hF2kRs1/KwA=;
+	s=korg; t=1794062492;
+	bh=WrplOB0Fons03gZSoryOrueOIIEBBFvQKoi3h8c671o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vBJ5vHgwuJgEz4ar9wtZzAJxkomFl3GXqVQyB06L7jgsUb65FwvHReUmXIzZvfmrh
-	 wUjEDiLC22TZcDJCpe/mi8Dlrf8aEwp/fru2Z5c7wBA6vppMSTK60vM2Ze5AkvQ4wC
-	 oNGOCktkVn0KfZuQOueoN2pk0GUgjwwicP5u6Src=
+	b=Yc1H1il78amnCePZ3Z5KXSm8IJXOGfr6vtTn3baAT2KjEfz7y3CSkiPwjzIPFDT6H
+	 bRk9Y9euccfeqzzzpStCrnPrz3VXo6E35iD5VgrPfwZASJQNpQRhh0wpXIRBbQzo2t
+	 INVCVzpY/SBi1VjonxekfOJA/fdeghTmc1pQctzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tingjie Zhong <catme0w@live.cn>,
-	Helge Deller <deller@gmx.de>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1390/1536] fbdev: bitblit: Fix glyph clipping when fbcon pans
-Date: Sat,  7 Nov 2026 08:56:46 -0500
-Message-ID: <20261107135036.870014260@linuxfoundation.org>
+Subject: [PATCH 6.12 1391/1536] PCI: qcom-ep: Deinitialize endpoint on remove
+Date: Sat,  7 Nov 2026 08:56:47 -0500
+Message-ID: <20261107135036.898174567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,71 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tingjie Zhong <catme0w@live.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 06fccf840640d8f6b0e08a1756f8d2f0435b4cbe ]
+[ Upstream commit ed1d71e41c7b2e755e0ef8e9af9cab9b6b185c4b ]
 
-Commit 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix
-vmalloc-out-of-bounds") made bit_putcs() clip glyphs to var.yres. When
-fbcon scrolls by panning, it draws text rows up to var.yres_virtual,
-so after the first pan most new text is not drawn until the next full
-redraw. This affects fbdev drivers that set FBINFO_HWACCEL_YPAN or
-FBINFO_HWACCEL_YWRAP, such as vesafb with the ypan option, when
-CONFIG_FRAMEBUFFER_CONSOLE_LEGACY_ACCELERATION=y.
+qcom_pcie_ep_probe() initializes the DesignWare PCIe endpoint with
+dw_pcie_ep_init(). The probe failure paths call dw_pcie_ep_deinit() to
+release the corresponding endpoint resources, but the remove path does
+not perform the matching teardown after a successful probe.
 
-Clip to GETVYRES() instead, which fbcon_ud.c and fbcon_ccw.c already
-use as the drawing area height. When fbcon does not pan, GETVYRES()
-returns var.yres, keeping the existing bound. When fbcon pans, it
-returns var.yres_virtual, which the framebuffer memory must cover
-anyway for panning to work.
+As a result, resources initialized by the DesignWare endpoint core can
+remain allocated when the endpoint controller is removed.
 
-Fixes: 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds")
-Reported-by: Thomas Zimmermann <tzimmermann@suse.de>
-Closes: https://lore.kernel.org/linux-fbdev/b8b52ffd-ecec-4fba-b432-ba32135c2f99@suse.de/
-Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
+Notify endpoint functions about EPC deinitialization and call
+dw_pcie_ep_deinit() before disabling the controller resources. Keep the
+existing early return when the link is already disabled since Qualcomm
+endpoint controllers depend on the host refclk for hardware cleanup.
+
+This issue was found by manual code inspection.
+
+Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Tingjie Zhong <catme0w@live.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://patch.msgid.link/20260916090126.2963064-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/bitblit.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
-index 8f6a2d1736d39..86ae7a7252d21 100644
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -18,6 +18,7 @@
- #include <linux/console.h>
- #include <asm/types.h>
- #include "fbcon.h"
-+#include "fbcon_rotate.h"
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index b5ca5260f9049..413198e5e1dfd 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -919,6 +919,8 @@ static void qcom_pcie_ep_remove(struct platform_device *pdev)
  
- /*
-  * Accelerated handlers.
-@@ -151,7 +152,9 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 		      const unsigned short *s, int count, int yy, int xx,
- 		      int fg, int bg)
- {
-+	struct fbcon_par *par = info->fbcon_par;
- 	struct fb_image image;
-+	u32 vyres = GETVYRES(par->p, info);
- 	u32 width = DIV_ROUND_UP(vc->vc_font.width, 8);
- 	u32 cellsize = width * vc->vc_font.height;
- 	u32 maxcnt = info->pixmap.size/cellsize;
-@@ -168,10 +171,10 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 	image.height = vc->vc_font.height;
- 	image.depth = 1;
- 
--	if (image.dy >= info->var.yres)
-+	if (image.dy >= vyres)
+ 	if (pcie_ep->link_status == QCOM_PCIE_EP_LINK_DISABLED)
  		return;
++	pci_epc_deinit_notify(pcie_ep->pci.ep.epc);
++	dw_pcie_ep_deinit(&pcie_ep->pci.ep);
  
--	image.height = min(image.height, info->var.yres - image.dy);
-+	image.height = min(image.height, vyres - image.dy);
- 
- 	if (attribute) {
- 		buf = kmalloc(cellsize, GFP_ATOMIC);
+ 	qcom_pcie_disable_resources(pcie_ep);
+ }
 -- 
 2.53.0
 
