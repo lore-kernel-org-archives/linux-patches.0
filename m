@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064039;
-	b=IJPHzEvq49pRlRs9/tOSkfs0fh4hXse0H+dBN45rXo5KYcDIJfHoCVOhe+cpaoeuPb/p
-	 NIJV00EgxstmBF/tXU+FGq7IQVkTjAvZ69WqJiNN9E8Usca3TzBuBhXYrbcFXzftLpbQt
-	 fsOrFceWrVVLqfshSNz3Twq6uST0BWECE/Pc1tiOZ9wseT58Ol7kSAMn8pudIMLmWclgj
-	 rficQEfoJB/ryKu6Cq0UTxRzzqRanhzVHPTi3AWhHbTFgfH64CPnf6m3Q86hfgk7pjCRP
-	 /YMoM0rPo08NE3TqCCiyk0BHYk1Uq8UtFPl0XQ+rb1gPQbWGhBRVD8P4uJnMs0TOSEg==
+	t=1794064040;
+	b=LI4BT6byRru/ulgnwfqOldNYXrAQlOkwAW1JyZ/HPiOhNfvAdwnMEWfxbSkRYvBn5vMM
+	 5oNnNT3kSC97mSx+D+9Ti/6asG1I7niFzk+znHAdORJLdlFAgrKsfL5+tcKaZkL9BvJep
+	 DFt8pFYAgNfmkEc/0FWBt9tlqcIjFKGLJ/fvY5XMHMi6ZRQ0rlbn4W3RH72m75Uzah1pe
+	 E9QkE3X9HE5vPUasFR+ZhHeZ+HKOW1YiNifYsASo/1+1ryy1+rA6RS2fhCX9O4uFzMwvG
+	 2oBcacUIC/jSBQIaIu5KMV+pusdaCnmZ17+SaOH0hRE2vJAPlHFf11VDI7CYXAQH2PA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064040;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=4fb3jaVYNZ1Frrc3fLjODjQBl4pKMh2uSRsVEkGFj1w=;
-	b=lRCYphVsDTt8nbI6Ye+2mSx5ivxRGUpbKsZ66r9D+8cPDANpPaMgNN3+tyiClcnq7NDu
-	 6heErN9DReC28cBMfHXpSQGJ2o9gkRy7V9YuEpIvEs44MOi2kjjTZakaFJcAYkPjM65Yk
-	 iZH7NkpS6abZS6BIGa0PVwihjWXcO0qOzdLM7cIj47ctzJqU0pvuE25408NQ+uHItYUwO
-	 IOVPGMl09kWE8VOO8/z70Z79q3a82CLopCifbEvw8bUHc1ABV/dQiBlvPhOeX0ZtBmv6I
-	 0N5HjGgm62iwpMwe3HFX0rRutjL8OY2Fhf6GBuaLFF9O+Nh1+rq1w5zrvvGqx7tA2ug==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=DfyPRQbQ/T2H71eZRvA3Ou8xNr72XfNODhFYlOKxj0w=;
+	b=DD4MXiOzAYWDdVRtK5oY7orgOljMC1K3JM7oGiM3SR+ypuK6HVhinN3km6xPjLqAMDBQ
+	 eAXz2XElf83m7oG8Lh5M0TlrnYy8kOZvYoagNq+678OHzb12DIhmD8hUSfSg03dgia/Eq
+	 AgHka4OJLJU4wSgiKCVRVi0uVvx9m/T+zoUSlx7Se9YHjil/7GkGXHVgQ+gdKOC70m4M8
+	 VV6dKj2fd2/GulXZBm3ef9tsgnXxQCQN0HT1/hxhmGGEWdc3pLnessbmmJJwAEMe4pHk0
+	 MnbMk5qRZDyL0CeV8+MlTt+RFiBLrKFQYbmWW8bVH0FYQqvGvYqaptEBzoj4WXM1klg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GnpTQUmD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Me5h2L0w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D45606A9CB;
-	Sat,  7 Nov 2026 15:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A1B606A9E0;
+	Sat,  7 Nov 2026 15:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GnpTQUmD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048F21F0089F;
-	Sat,  7 Nov 2026 15:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Me5h2L0w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33EFB1F008A1;
+	Sat,  7 Nov 2026 15:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064039;
-	bh=4fb3jaVYNZ1Frrc3fLjODjQBl4pKMh2uSRsVEkGFj1w=;
+	s=korg; t=1794064040;
+	bh=DfyPRQbQ/T2H71eZRvA3Ou8xNr72XfNODhFYlOKxj0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GnpTQUmDom6l9dEbufoOVeIOB9q8zJbRRicimfDgNLHozdsDgfixRfoQQqrGbqgKc
-	 qLXi7grqEKRN24pYLZQQT/SU+prC4XkkLNybFfwzY2Vq38L7+EfMtA3Z/tey9YuGJq
-	 EbSvyDWHskmc6RgQAOa9aCiBJsIwI+GN3/tZpLxY=
+	b=Me5h2L0w6PMueJuN2bVDc4K38LzR9HXZQkuDhdgjBaE77Yo4pSdumFxLzocJFQMsn
+	 pcP4Dcqnc4DVh+ubu6BnZYfwr4MmAqIBbLJFvS6kZiIi+UB1V3GldnzLQ9fGwq2PXg
+	 VpMzEQ+DgJFByEnT8Ipo9sPOtXkVVWDGTgI5YEFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	stable@kernel.org,
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0175/1257] platform/x86: hp-bioscfg: fix slab-out-of-bounds write in hp_convert_hexstr_to_str()
-Date: Sat,  7 Nov 2026 08:41:11 -0500
-Message-ID: <20261107134944.299942974@linuxfoundation.org>
+Subject: [PATCH 7.3 0166/1257] pinctrl: renesas: rzt2h: Setup IRQ in .irq_{request,release}_resources()
+Date: Sat,  7 Nov 2026 08:41:02 -0500
+Message-ID: <20261107134943.922050436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,73 +63,177 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-[ Upstream commit 6a6f3051e705b5c8facb0bf5984d5b981509e0b7 ]
+[ Upstream commit d9980f93cef0f90a11f26296c68ed16b61a95ced ]
 
-hp_convert_hexstr_to_str() decodes an ACPI string made up of
-space-separated ASCII hex-byte tokens of the form "0xHH". For
-example, the four-byte input "0x41" decodes to the single
-character 'A', and the nine-byte input "0x09 0x41" decodes to
-"\tA": each token is read in a five-byte step (four characters for
-the token, one for the trailing delimiter), and produces one output
-byte, or two if that byte is '\\', '\r', '\n', or '\t', which are
-written back out as a backslash followed by the matching letter.
+When exporting a GPIO using the deprecated sysfs GPIO API,
+gpio_is_visible() calls gpiod_to_irq() to determine whether a GPIO is
+IRQ-capable, which ends up using
+struct gpio_irq_chip::child_to_parent_hwirq().
 
-The output buffer is sized with kmalloc(input_len, GFP_KERNEL), the
-raw encoded length of the input, not the decoded length. For
-well-formed input this is generous, since five input bytes never
-decode to more than two output bytes. But input_len comes directly
-from the ACPI string length reported by firmware and isn't
-guaranteed to respect the five-byte encoding, so a short input_len
-can undersize the allocation. With input_len == 1, only one byte is
-allocated, yet decoding still produces at least one output byte
-plus the NUL terminator written unconditionally afterwards, so two
-bytes are needed. That terminator write then lands one byte past
-the end of the allocation.
+When using the GPIO character device, it is possible to request a line
+and to dynamically switch between using it as an IRQ or as a GPIO, by
+updating the edge detector.
 
-KASAN caught exactly this during BIOS attribute enumeration on
-boot, triggered by a one-byte encoded input value:
+The current struct gpio_irq_chip::child_to_parent_hwirq() implementation
+makes the assumption that it will only be called with the intention of
+setting up the IRQ permanently, and that it will only be released when
+the IRQ domain is freed.
 
-BUG: KASAN: slab-out-of-bounds in hp_convert_hexstr_to_str+0x6d8/0x710 [hp_bioscfg]
-Write of size 1 at addr ffff8881032e5d81 by task (udev-worker)/520
-The buggy address is located 0 bytes to the right of
-allocated 1-byte region [ffff8881032e5d80, ffff8881032e5d81)
+Since we now know that this is not the case, take the following steps in
+order to properly handle that case.
 
-Size the allocation to the worst-case decoded length instead of the
-raw input length: two output bytes for every five-byte input chunk
-(DIV_ROUND_UP(input_len, 5)), plus one byte for the terminator.
+Implement struct irq_chip::irq_{request,release}_resources() based on
+the default GPIOCHIP_IRQ_RESOURCE_HELPERS implementations.
 
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
-Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260915174615.63924-1-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Move the IRQ setup and release logic inside them.
+
+Keep the mapping logic inside ::child_to_parent_hwirq() to be able to
+provide a proper HW IRQ number, but do not actually setup the IRQ.
+
+Remove rzt2h_gpio_irq_domain_free() as its only purpose was to free the
+acquired IRQs. irq_domain_free_irqs_common() will still be set up as
+struct gpio_irq_chip::child_irq_domain_ops::free by
+gpiochip_hierarchy_setup_domain_ops().
+
+Cc: stable@kernel.org
+Fixes: 829dde3369a9 ("pinctrl: renesas: rzt2h: Add GPIO IRQ chip to handle interrupts")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260913195654.3371385-3-cosmin-gabriel.tanislav.xa@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl-rzt2h.c | 79 +++++++++++++++----------
+ 1 file changed, 49 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-index 309634c1cc20e..ff28db7ced008 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -442,7 +442,7 @@ int hp_convert_hexstr_to_str(const char *input, u32 input_len, char **str, int *
- 	*len = 0;
- 	*str = NULL;
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzt2h.c b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
+index 7b44db3d0470a..f8e64c3a015cd 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzt2h.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
+@@ -1021,32 +1021,17 @@ static int rzt2h_gpio_irq_set_wake(struct irq_data *d, unsigned int on)
+ 	return 0;
+ }
  
--	new_str = kmalloc(input_len, GFP_KERNEL);
-+	new_str = kmalloc(2 * DIV_ROUND_UP(input_len, 5) + 1, GFP_KERNEL);
- 	if (!new_str)
- 		return -ENOMEM;
+-static const struct irq_chip rzt2h_gpio_irqchip = {
+-	.name = "rzt2h-gpio",
+-	.irq_disable = rzt2h_gpio_irq_disable,
+-	.irq_enable = rzt2h_gpio_irq_enable,
+-	.irq_mask = irq_chip_mask_parent,
+-	.irq_unmask = irq_chip_unmask_parent,
+-	.irq_set_type = irq_chip_set_type_parent,
+-	.irq_set_wake = rzt2h_gpio_irq_set_wake,
+-	.irq_eoi = irq_chip_eoi_parent,
+-	.irq_set_affinity = irq_chip_set_affinity_parent,
+-	.flags = IRQCHIP_IMMUTABLE,
+-	GPIOCHIP_IRQ_RESOURCE_HELPERS,
+-};
+-
+-static int rzt2h_gpio_child_to_parent_hwirq(struct gpio_chip *gc,
+-					    unsigned int child,
+-					    unsigned int child_type,
+-					    unsigned int *parent,
+-					    unsigned int *parent_type)
++static int rzt2h_gpio_irq_request_resources(struct irq_data *d)
+ {
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct rzt2h_pinctrl *pctrl = gpiochip_get_data(gc);
+-	u8 port = RZT2H_PIN_ID_TO_PORT(child);
+-	u8 pin = RZT2H_PIN_ID_TO_PIN(child);
++	irq_hw_number_t hwirq = irqd_to_hwirq(d);
++	u8 port = RZT2H_PIN_ID_TO_PORT(hwirq);
++	u8 pin = RZT2H_PIN_ID_TO_PIN(hwirq);
+ 	u8 parent_irq, irq_idx;
++	int ret;
+ 
+-	parent_irq = rzt2h_gpio_irq_map[child];
++	parent_irq = rzt2h_gpio_irq_map[hwirq];
+ 	if (parent_irq < RZT2H_INTERRUPTS_START)
+ 		return -EINVAL;
+ 
+@@ -1063,18 +1048,21 @@ static int rzt2h_gpio_child_to_parent_hwirq(struct gpio_chip *gc,
+ 
+ 	rzt2h_pinctrl_set_pfc_mode(pctrl, port, pin, PFC_FUNC_INTERRUPT);
+ 
+-	*parent = parent_irq;
+-	*parent_type = child_type;
++	ret = gpiochip_lock_as_irq(gc, hwirq);
++	if (ret) {
++		clear_bit(irq_idx, pctrl->used_irqs);
++		rzt2h_pin_write_pm(pctrl, port, pin, pctrl->saved_pm[irq_idx]);
++		rzt2h_pinctrl_set_gpio_en(pctrl, port, pin, true);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
+ 
+-static void rzt2h_gpio_irq_domain_free(struct irq_domain *domain, unsigned int virq,
+-				       unsigned int nr_irqs)
++static void rzt2h_gpio_irq_release_resources(struct irq_data *d)
+ {
+-	struct irq_data *d = irq_domain_get_irq_data(domain, virq);
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+-	struct rzt2h_pinctrl *pctrl = container_of(gc, struct rzt2h_pinctrl, gpio_chip);
++	struct rzt2h_pinctrl *pctrl = gpiochip_get_data(gc);
+ 	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+ 	u8 port = RZT2H_PIN_ID_TO_PORT(hwirq);
+ 	u8 pin = RZT2H_PIN_ID_TO_PIN(hwirq);
+@@ -1090,7 +1078,39 @@ static void rzt2h_gpio_irq_domain_free(struct irq_domain *domain, unsigned int v
+ 		rzt2h_pinctrl_set_gpio_en(pctrl, port, pin, true);
+ 	}
+ 
+-	irq_domain_free_irqs_common(domain, virq, nr_irqs);
++	gpiochip_unlock_as_irq(gc, hwirq);
++}
++
++static const struct irq_chip rzt2h_gpio_irqchip = {
++	.name = "rzt2h-gpio",
++	.irq_disable = rzt2h_gpio_irq_disable,
++	.irq_enable = rzt2h_gpio_irq_enable,
++	.irq_mask = irq_chip_mask_parent,
++	.irq_unmask = irq_chip_unmask_parent,
++	.irq_set_type = irq_chip_set_type_parent,
++	.irq_set_wake = rzt2h_gpio_irq_set_wake,
++	.irq_eoi = irq_chip_eoi_parent,
++	.irq_request_resources = rzt2h_gpio_irq_request_resources,
++	.irq_release_resources = rzt2h_gpio_irq_release_resources,
++	.irq_set_affinity = irq_chip_set_affinity_parent,
++	.flags = IRQCHIP_IMMUTABLE,
++};
++
++static int rzt2h_gpio_child_to_parent_hwirq(struct gpio_chip *gc,
++					    unsigned int child,
++					    unsigned int child_type,
++					    unsigned int *parent,
++					    unsigned int *parent_type)
++{
++	u8 parent_irq = rzt2h_gpio_irq_map[child];
++
++	if (parent_irq < RZT2H_INTERRUPTS_START)
++		return -EINVAL;
++
++	*parent = parent_irq;
++	*parent_type = child_type;
++
++	return 0;
+ }
+ 
+ static void rzt2h_gpio_init_irq_valid_mask(struct gpio_chip *gc,
+@@ -1158,7 +1178,6 @@ static int rzt2h_gpio_register(struct rzt2h_pinctrl *pctrl)
+ 		girq->parent_domain = parent_domain;
+ 		girq->child_to_parent_hwirq = rzt2h_gpio_child_to_parent_hwirq;
+ 		girq->populate_parent_alloc_arg = gpiochip_populate_parent_fwspec_twocell;
+-		girq->child_irq_domain_ops.free = rzt2h_gpio_irq_domain_free;
+ 		girq->init_valid_mask = rzt2h_gpio_init_irq_valid_mask;
+ 	}
  
 -- 
 2.53.0
