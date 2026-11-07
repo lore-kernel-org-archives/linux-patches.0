@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061036;
-	b=HNgq98C3cIJjXnAdInxVN5GPGf4SnTew0Kj32omARIE8oZWivYwr2dH6ef7GaHvicObk
-	 XjWyGftj9OeR84AfPtM4B+ESI8IPI5T3UlcL5aQJxsiPfC2eMhAkuh8j/iUAyxBd2dp4x
-	 24OQIr5Y/fh5oNg1RcwOLPzY3HO7/H77v1Tn+67TIJYj5k0hUxcyHv19Y7VGnA9dZA6Es
-	 baL2qr3IvyRzmP2EjgYEgx5Wht3Ke0TXBFAENGPfZaDAJa2fYc16GxsEEPE9wH2RMaOZc
-	 jdIkGcmT907GgwkKLnwmbwcLbUwWWh4ebdfaFAbpDceGJFcIuJ5BUL+Fv6OsEkPg+/A==
+	t=1794061037;
+	b=WWesir6mMM5rAnp+Rzt9RWXE01+ZWq/zA+I+um6Eyj/8iXFSbuLebp+vyu5mmPgSMGep
+	 wck9hX6fnO9qorXlSHehxnkvfvOgXWjlQ4IeLBIfnjw9N+Gmli4ZBKfhdl3RWpYyrZTXs
+	 QM6OwGS1nf5jygxntLfpbVcP8E4SsxN1VnC9Wu/Ik2rK2MiNZDRRlCSsGQvUr6F13yjiz
+	 ULV4e2FTjhYbzB2C8RWIxSYb9VxZ3Zs/xxV0a/Vx2LaUDYrIbDu3pCYiJr1A1kHckLpNj
+	 hVzWYYVgaLpBjBrcbf4g+6XSVWc9jsRpqswNMyG9ajNNtmYzag4e7hbdFgzFfAmEhvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061037;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TFchFz5gWgf24OTJ3hkytvTT8xN3uhlwQAqr+ByVAj0=;
-	b=ycBXrVX5LoCwIuiw03xrWTwQUQmLMi0Nm0wpQYtX3Ig42XBMT+3uCm2kh5kQDleLwnb0
-	 WLMShYuN1316v9b8EZ+CSvuXTlfof/Fe87maDuyg/f/jooCMH0isN5FbEtHYJQwlW1kIw
-	 y2IvEC2rlVQvfpUPvDNzQtXbwqQACTYPA1M5ujNJngXelSG63mEivLJvAAHD6/6npT/Cd
-	 G8+8CZxB8wVx8RWhdsvVjhdY9pUy9FH5dLNuVoTPo300iY+qW+qANJok0f3tqN9NlDBk8
-	 oMmcChXJRAGemO04Zfuw95GIZwHl8Nf+zrq8L/YNQh+bKRNExqBDNMELU0F3Q746wNw==
+	bh=wja4XIJ7JAwcQgerbVHLNDqRysphczCnLqysw5XmB6k=;
+	b=3PB7ssbl8sHUM6Ob60WMG1L77xbLyPJgsBl2tjhwIx8B8SPfmyVxsSPrPSs1deuUTY4D
+	 3utPpHykG4ozx8cCcD3nYiw2QjK7/sJ9+7qgS8VqeBBwTlSFsPI0/8qUsexYQ5yypmm1X
+	 FNHitPYWRNTgKceHg0eO5MpXwWn8i9V0RZE1S0f87KGto+NMJLQoe1uK87HhFP0/vW06u
+	 AR+My+1GZ062NttCflHHUGB/guZ6mQ4tFDfEdX/JDjwMW4M7qV9myEIw7y44QzZLf+IzI
+	 BIP2Qzv24JyepFcZuzpmqXvdVhxK9ou4+sSFB0SvNh8MnXdE35SuhWSusEnDSXOS05A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pMZG8qmf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G9dIj1LG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5158E606D816;
-	Sat,  7 Nov 2026 14:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A92606D825;
+	Sat,  7 Nov 2026 14:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pMZG8qmf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF2B1F0089F;
-	Sat,  7 Nov 2026 14:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G9dIj1LG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EF81F008A2;
+	Sat,  7 Nov 2026 14:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061036;
-	bh=TFchFz5gWgf24OTJ3hkytvTT8xN3uhlwQAqr+ByVAj0=;
+	s=korg; t=1794061037;
+	bh=wja4XIJ7JAwcQgerbVHLNDqRysphczCnLqysw5XmB6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pMZG8qmfaGgld+fc3hIfBrYum1sxCSwHsH02V8CwYiCPhc/+rP4deZcZmwIG83XBt
-	 VLWpzjSfX+SnVYugXdMZygV1qy8HoVvLUxf7/KJMrCT01KoB3R/7x0qs6lw4fsSUJe
-	 /lT3P50icH40zUlrqvk4Ln/uxAB47tk9gvsLz/Co=
+	b=G9dIj1LGFsYD2555lTO6Qe/IgtjrY2pUYkCInmUzZwde0MVvoF8Mx5zurq4xAyBDg
+	 tyHutzS9LtvIrK21jgkgdRsZCQtUlXZN0irRw5ubRQf/K+34dxQ8ngUriUyjNF4pbj
+	 d6m2n3Aow2VtM/DfmeY/tntkp6kOe8VROMasb6yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David C.C.M. Gall" <david.ccm.gall@googlemail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0332/1536] gre: fix ERSPAN o_flags race/corruption in xmit and fill_info
-Date: Sat,  7 Nov 2026 08:39:08 -0500
-Message-ID: <20261107135007.024376916@linuxfoundation.org>
+Subject: [PATCH 6.12 0333/1536] crypto: keembay - use crypto_memneq() to compare GCM AEAD tags
+Date: Sat,  7 Nov 2026 08:39:09 -0500
+Message-ID: <20261107135007.050102530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,213 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: David C.C.M. Gall <david.ccm.gall@googlemail.com>
 
-[ Upstream commit 9958e69b98930834a576e156f6458166d1db1c02 ]
+[ Upstream commit 353b3a85136f2a0cf3e872acf8ad6c1dec0b7a8e ]
 
-For IPv4 ERSPAN:
-In erspan_xmit(), the driver clears IP_TUNNEL_SEQ_BIT (for version 0)
-and IP_TUNNEL_KEY_BIT directly in the shared tunnel->parms.o_flags
-structure. Since transmit paths can run locklessly and concurrently,
-this leads to a data race.
+Use crypto_memneq() for constant-time comparison.
 
-Furthermore, modifying tunnel->parms.o_flags permanently alters the
-tunnel configuration. To work around this, erspan_fill_info() (which
-reports config to userspace) was setting IP_TUNNEL_KEY_BIT back. If
-erspan_fill_info (running under RTNL) and erspan_xmit (running locklessly)
-race, erspan_xmit might see IP_TUNNEL_KEY_BIT set when it shouldn't,
-leading to GRE header corruption (injecting a key field into the ERSPAN
-GRE header).
+The GCM path in keembay-ocs-aes-core.c verifes the received
+authentication tag with memcmp(), which returns early on the first
+mismatched byte. This leaks valid-prefix length and allows for valid
+tag forgery which violates the INT-CTXT guarantee of AEAD.
 
-Fix this by:
-1) Passing flags as an argument to __gre_xmit().
-2) Using local stack flags in ipgre_xmit(), gre_tap_xmit(), and erspan_xmit()
-   to prevent TOCTOU data races with concurrent configuration updates,
-   and passing them to __gre_xmit().
-3) Removing the racy modification of t->parms.o_flags in erspan_fill_info().
-4) Forcing IP_TUNNEL_KEY_BIT in the reported flags for ERSPAN locally
-   in ipgre_fill_info().
-
-For IPv6 ERSPAN:
-ip6erspan_tunnel_xmit() was locklessly clearing IP_TUNNEL_KEY_BIT in
-t->parms.o_flags even though it does not use these flags for building
-the GRE header (it uses local flags). This permanently corrupts the
-configuration and races with ip6gre_fill_info() which reads it.
-
-Remove the redundant and racy modification.
-This should remove false sharing in a fast path.
-
-Add const qualifiers in ipgre_fill_info(), erspan_fill_info()
-and ip6gre_fill_info() to clarify that these methods are not
-supposed to write any live parameters.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260812142257.21283-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: David C.C.M. Gall <david.ccm.gall@googlemail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c  | 42 +++++++++++++++++++++++-------------------
- net/ipv6/ip6_gre.c |  5 ++---
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 5c5ea36584bf9..5bf6c6777c348 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -472,12 +472,9 @@ static int gre_rcv(struct sk_buff *skb)
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+index 9ef6a6d58c68e..f27b0044c561a 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+@@ -11,6 +11,7 @@
+ #include <crypto/internal/aead.h>
+ #include <crypto/internal/skcipher.h>
+ #include <crypto/scatterwalk.h>
++#include <crypto/utils.h>
+ #include <linux/clk.h>
+ #include <linux/completion.h>
+ #include <linux/dma-mapping.h>
+@@ -919,7 +920,7 @@ static int kmb_ocs_aead_run(struct aead_request *req)
  
- static void __gre_xmit(struct sk_buff *skb, struct net_device *dev,
- 		       const struct iphdr *tnl_params,
--		       __be16 proto)
-+		       __be16 proto, const unsigned long *flags)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
--	IP_TUNNEL_DECLARE_FLAGS(flags);
--
--	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
- 
- 	/* Push GRE header. */
- 	gre_build_header(skb, tunnel->tun_hlen,
-@@ -650,6 +647,7 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 			      struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 	const struct iphdr *tnl_params;
- 
- 	if (!pskb_inet_may_pull(skb))
-@@ -685,11 +683,12 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 		tnl_params = &tunnel->parms.iph;
+ 	/* For GCM decrypt, we have to compare in_tag with out_tag. */
+ 	if (rctx->instruction == OCS_DECRYPT) {
+-		rc = memcmp(rctx->in_tag, rctx->out_tag, tag_size) ?
++		rc = crypto_memneq(rctx->in_tag, rctx->out_tag, tag_size) ?
+ 		     -EBADMSG : 0;
+ 		goto exit;
  	}
- 
--	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT,
--					      tunnel->parms.o_flags)))
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
-+
-+	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT, flags)))
- 		goto free_skb;
- 
--	__gre_xmit(skb, dev, tnl_params, skb->protocol);
-+	__gre_xmit(skb, dev, tnl_params, skb->protocol, flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -702,6 +701,7 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 			       struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 	bool truncate = false;
- 	__be16 proto;
- 
-@@ -725,10 +725,12 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 		truncate = true;
- 	}
- 
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
-+
- 	/* Push ERSPAN header */
- 	if (tunnel->erspan_ver == 0) {
- 		proto = htons(ETH_P_ERSPAN);
--		__clear_bit(IP_TUNNEL_SEQ_BIT, tunnel->parms.o_flags);
-+		__clear_bit(IP_TUNNEL_SEQ_BIT, flags);
- 	} else if (tunnel->erspan_ver == 1) {
- 		erspan_build_header(skb, ntohl(tunnel->parms.o_key),
- 				    tunnel->index,
-@@ -743,8 +745,8 @@ static netdev_tx_t erspan_xmit(struct sk_buff *skb,
- 		goto free_skb;
- 	}
- 
--	__clear_bit(IP_TUNNEL_KEY_BIT, tunnel->parms.o_flags);
--	__gre_xmit(skb, dev, &tunnel->parms.iph, proto);
-+	__clear_bit(IP_TUNNEL_KEY_BIT, flags);
-+	__gre_xmit(skb, dev, &tunnel->parms.iph, proto, flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -757,6 +759,7 @@ static netdev_tx_t gre_tap_xmit(struct sk_buff *skb,
- 				struct net_device *dev)
- {
- 	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	IP_TUNNEL_DECLARE_FLAGS(flags);
- 
- 	if (!pskb_inet_may_pull(skb))
- 		goto free_skb;
-@@ -766,14 +769,15 @@ static netdev_tx_t gre_tap_xmit(struct sk_buff *skb,
- 		return NETDEV_TX_OK;
- 	}
- 
--	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT,
--					      tunnel->parms.o_flags)))
-+	ip_tunnel_flags_copy(flags, tunnel->parms.o_flags);
-+
-+	if (gre_handle_offloads(skb, test_bit(IP_TUNNEL_CSUM_BIT, flags)))
- 		goto free_skb;
- 
- 	if (skb_cow_head(skb, dev->needed_headroom))
- 		goto free_skb;
- 
--	__gre_xmit(skb, dev, &tunnel->parms.iph, htons(ETH_P_TEB));
-+	__gre_xmit(skb, dev, &tunnel->parms.iph, htons(ETH_P_TEB), flags);
- 	return NETDEV_TX_OK;
- 
- free_skb:
-@@ -1561,12 +1565,15 @@ static size_t ipgre_get_size(const struct net_device *dev)
- 
- static int ipgre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
--	struct ip_tunnel *t = netdev_priv(dev);
--	struct ip_tunnel_parm_kern *p = &t->parms;
-+	const struct ip_tunnel *t = netdev_priv(dev);
-+	const struct ip_tunnel_parm_kern *p = &t->parms;
- 	IP_TUNNEL_DECLARE_FLAGS(o_flags);
- 
- 	ip_tunnel_flags_copy(o_flags, p->o_flags);
- 
-+	if (t->erspan_ver != 0 && !t->collect_md)
-+		__set_bit(IP_TUNNEL_KEY_BIT, o_flags);
-+
- 	if (nla_put_u32(skb, IFLA_GRE_LINK, p->link) ||
- 	    nla_put_be16(skb, IFLA_GRE_IFLAGS,
- 			 gre_tnl_flags_to_gre_flags(p->i_flags)) ||
-@@ -1609,12 +1616,9 @@ static int ipgre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- 
- static int erspan_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
--	struct ip_tunnel *t = netdev_priv(dev);
-+	const struct ip_tunnel *t = netdev_priv(dev);
- 
- 	if (t->erspan_ver <= 2) {
--		if (t->erspan_ver != 0 && !t->collect_md)
--			__set_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags);
--
- 		if (nla_put_u8(skb, IFLA_GRE_ERSPAN_VER, t->erspan_ver))
- 			goto nla_put_failure;
- 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index b737731dbcba4..7cf429f11a1d0 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -995,7 +995,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 	if (skb_cow_head(skb, dev->needed_headroom ?: t->hlen))
- 		goto tx_err;
- 
--	__clear_bit(IP_TUNNEL_KEY_BIT, t->parms.o_flags);
- 	IPCB(skb)->flags = 0;
- 
- 	/* For collect_md mode, derive fl6 from the tunnel key,
-@@ -2146,8 +2145,8 @@ static size_t ip6gre_get_size(const struct net_device *dev)
- 
- static int ip6gre_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
--	struct ip6_tnl *t = netdev_priv(dev);
--	struct __ip6_tnl_parm *p = &t->parms;
-+	const struct ip6_tnl *t = netdev_priv(dev);
-+	const struct __ip6_tnl_parm *p = &t->parms;
- 	IP_TUNNEL_DECLARE_FLAGS(o_flags);
- 
- 	ip_tunnel_flags_copy(o_flags, p->o_flags);
 -- 
 2.53.0
 
