@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061447;
-	b=e5fLph9qf8BKdwVGxmL3hnPAfGXyFdcgc0E5pwNFzan8I8u8tmPLXBKfrqBU5KIG2QcT
-	 biiSAULm/Qz07ONSUpEijcDtffNOSChyEXaWEdhPXBiPy06jJaAd5pXet9mpPDz8uAeBZ
-	 y6xCpBe/IuM0vE/0OA0ItIxi9LKPKMVAQxcky+ooahpSsNzVQLrkdo746hSMfwXQFChrR
-	 ddg4YIdGvB9P9wK7thxGoKkiVxcSYUV5JfbYaiJyyV+haO/spAe+jhXN0+NSJlrEZd3bq
-	 uNQOJoIj9Gl/LrY7NA8bvau3JDteUO7Mlp4haSFy94jXvmakdR+e8hWbmI91f/4GWPg==
+	t=1794061449;
+	b=Ct3/DYzAGkeOKTItldsBegP3hA8YCsPBMid7ENdWZU1+lhipdjN6T68QPcJpe+J9OkfE
+	 8qdWFOFwcd7EITl4P851K58bOqMtDfLQny9tjH9OKPsyeslYC78K/+NCS70hGsCvNYpz8
+	 MFMhljj5ndb+SFb29j7o0shX9LyueAWj419OIJnLUwuMjvCRPGlDpTsZIArHX3Lqni12N
+	 GGr2OmArJsgrlOCq1VolMzPl4eiHm+CvVdKLZmAwqUk6ke739XXoc0TkbhXZIldWZ50TT
+	 Go6waUwrgkxH6cS9pKL5QUV9EF/v7vjKaBXP0oBGW5y6Kox7bdNsjZXHjecFyD9tN7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061447;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uoORuVwO5GTtkJkEo1uZlgac7Cbn29Mi/ubeCbJzUJk=;
-	b=aMjvM/hhRjPb8wqLIm5V1DRkmqBkQHQX8b8voHdEvO8VB00baLQBenX3xKI0qjUAMePs
-	 vi4WuxiFog8i96i/urPSC4aU4B+lLC5Z+M3DdWcPctfxMAWirmTQMAwgp1WMwtpQD3rmF
-	 SEKku0sf38Rdz5YQmbuyJ4cyPuCA3OAAAUJw26OUf6gA5Hr4pizlnPIeiJ9cxIngVZ8eR
-	 EQt6tMxY7gRpZjdKkn26lwgtx1mmAUGiWrQrM+fBgcN/zMKUvpGqlmmYIi+TxRyCT+NY5
-	 QyU7AKe3A1u1VlAVC0SOUAmz+kgFHgWLlG+MFHd8fUnjS/D1ns/sxecL++SiGOIVKQw==
+	bh=fOsU8tu5KDmbiYYh1pPonQECGAa41ltSepe1nGG/v0s=;
+	b=39q0VwXGT7kn9HJlU4GyysEm7xP39xpQeFXyKOuQw5siBV6YrR0oDMeh1dU9sTQbsdaM
+	 eka+Q6Yr/jzCllQDaDQs/uO2N3XjMG7F0fS0p9+P/cIX4PYHrSynbhxVFTbwiRyCDdltn
+	 KQAi4BqvqLksar8zqTS5bbZq6JWUZLW+jgPDyOjsO2pdlBc+fPUufY2BAoomnD9tbxCKa
+	 ObYwF25bTFbMkb2jsyHerhCVoigcGOYFNwOObphbZ8PCtC3GDVpjPXJV4i4hYSLLiLG3B
+	 JAmeHzHSH/NqfiW6LICdL4l7Uwm/KDCjQAOc2FX0JvkD+OkezCxm39JK9/+LrqsswaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u0e/I69z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qzSg2Es/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA6E606A333;
-	Sat,  7 Nov 2026 14:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA322606A336;
+	Sat,  7 Nov 2026 14:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u0e/I69z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6791F0089F;
-	Sat,  7 Nov 2026 14:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzSg2Es/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A731F0089F;
+	Sat,  7 Nov 2026 14:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061447;
-	bh=uoORuVwO5GTtkJkEo1uZlgac7Cbn29Mi/ubeCbJzUJk=;
+	s=korg; t=1794061448;
+	bh=fOsU8tu5KDmbiYYh1pPonQECGAa41ltSepe1nGG/v0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u0e/I69zwB0NfG7yGxUErasLE3U7mU5sUO+9x6/uAKXTZT7jThfj0RyWVxhu/VNk7
-	 W74kXqBTNRIAwUXz6DuLBuv/8I8gAl3tadYsn8d5uLESVkEVaTWVYlXTTGH+6qx84o
-	 OrBeDzQj27Vo7nbih2n8qTZ9hwU5IVNLO3SqR2yY=
+	b=qzSg2Es/1T7f0nCv0cyMsr5qAk8UAYRWSKwBX+hcNfnRX9KLpuy5GvqzvAcUKZGo9
+	 2JIIXizbN2itSIWThtK5EzTwwJ6UYeH+NeRdVujLbtzq7fGBVQHXhNR2B6IDfQqXys
+	 wZqABjIX5RaWW9LclmnhsQF5AR0lXpx3LmnWQ90g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bihaan Sen <stevewholikesthings@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0554/1536] net: team: free skb when broadcast has no txable port
-Date: Sat,  7 Nov 2026 08:42:50 -0500
-Message-ID: <20261107135013.155964355@linuxfoundation.org>
+Subject: [PATCH 6.12 0555/1536] Input: xpad - add support for 8BitDo Pro 2 Wired Controller for Xbox
+Date: Sat,  7 Nov 2026 08:42:51 -0500
+Message-ID: <20261107135013.180813993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,45 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Bihaan Sen <stevewholikesthings@gmail.com>
 
-[ Upstream commit 489114c9ecae44e523361a4b3e610ee5ebd9189c ]
+[ Upstream commit 41363c27b8509bd4efcba244803edac9ba25d1b5 ]
 
-bc_transmit() sends the original skb through the last txable port.
-When no port is txable, it returns false without consuming the skb, but
-team_xmit() still returns NETDEV_TX_OK. AF_PACKET sends then retain the
-skb and its socket write-memory charge.
+The 8BitDo Pro 2 Wired Controller for Xbox is already matched by the
+vendor-wide XPAD_XBOXONE_VENDOR(0x2dc8) entry, but a later hardware
+revision reports product ID 0x201e, which has no entry in the
+xpad_device table. The device therefore binds and functions but is
+exposed to userspace as "Generic X-Box pad".
 
-A TX-enabled, link-down port keeps the broadcast transmit op installed.
-Carrier can stay up through a second link-up, TX-disabled port or be
-forced on by userspace. Free the original skb on the no-port path while
-leaving the existing drop accounting intact.
+Add the VID/PID pair so the controller is named correctly, and set
+MAP_SHARE_BUTTON to expose the share button as KEY_RECORD.
 
-Discovered by Sashiko during review of previous commit.
-
+Signed-off-by: Bihaan Sen <stevewholikesthings@gmail.com>
+Link: https://patch.msgid.link/20260925114459.110253-1-stevewholikesthings@gmail.com
 Cc: stable@vger.kernel.org
-Fixes: 5fc889911a99 ("team: add broadcast mode")
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20261001182326.572045-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[ sashal: Dropped the missing 8BitDo Ultimate 3-mode (0x200f) context line from the hunk, so the single new 0x201e device entry is added after the 0x2000 entry. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_mode_broadcast.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/joystick/xpad.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/team/team_mode_broadcast.c b/drivers/net/team/team_mode_broadcast.c
-index 61d7d79f0c363..69dc25a5847a1 100644
---- a/drivers/net/team/team_mode_broadcast.c
-+++ b/drivers/net/team/team_mode_broadcast.c
-@@ -37,6 +37,8 @@ static bool bc_transmit(struct team *team, struct sk_buff *skb)
- 		ret = !team_dev_queue_xmit(team, last, skb);
- 		if (!sum_ret)
- 			sum_ret = ret;
-+	} else {
-+		dev_kfree_skb_any(skb);
- 	}
- 	return sum_ret;
- }
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index 80fb5ceb86475..3086fc4a0642f 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -406,6 +406,7 @@ static const struct xpad_device {
+ 	{ 0x294b, 0x3404, "Snakebyte GAMEPAD RGB X", 0, XTYPE_XBOXONE },
+ 	{ 0x2993, 0x2001, "TECNO Pocket Go", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
++	{ 0x2dc8, 0x201e, "8BitDo Pro 2 Wired Controller for Xbox", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x2dc8, 0x3106, "8BitDo Ultimate Wireless / Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x3109, "8BitDo Ultimate Wireless Bluetooth", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x310a, "8BitDo Ultimate 2C Wireless Controller", 0, XTYPE_XBOX360 },
 -- 
 2.53.0
 
