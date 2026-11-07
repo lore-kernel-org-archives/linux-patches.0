@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062078;
-	b=MnIRo0rpL5I6+1nOguKW3PK0cRKZptV+gLviRlEPUkuOwWatxDuNDBbyWMvto97crmHj
-	 AvKkhtqY2z9c1OoNfvQf+ieqvA38MW1UdWege7fuYVlsxahgynJZjcjpdzVSFr+DNKYwu
-	 Kzx2BVdZwQ9LPAXnGZaP70o/Mk4wB0dGoDnpW6FZCiCae7SzdEDEMmNH0amgc8kwgJmBu
-	 64RIuArDjSvMjuPqQfH485wbh7/Q3f+wFzSQcP2FF/dsgBSDTkg45ZRaZmh7xdWgjFI8t
-	 rByAkgCizq6bbqCswu7Zr3OlAThza1jvVEva/FcdNoNYvwo9N3KgsdPnbxdPyzoXZ3w==
+	t=1794062080;
+	b=FzeuGKGGw30xHQr+rpfAd6QAqGpysQQNeJ1Tp4VYrzLAHt/qwgJtq2x1ubUxCJLJrkBH
+	 7MIKQUYJN+6OZwaoyXuafRWeOa9Y1gcwFEAW2sHx6N/xlDKkUFYUYiGmCQXB9BmbFRRZU
+	 0HjIAuOLGfyTdnsKjT7d3EHhUbrC/dpbDUJa8/Sl6nUaWSxHyEzh/PZl02KMhQXbbrAi9
+	 hahi874Qe1FOLwcqMX4rd48/YE7PRFhmOmvSzKhsTQSwmJGhqllPSWt4PFpysBz/kehzS
+	 g0iu6+kqePlIef5hWVmFbAIKsTf7P4PSdxOL15zyqiv/szW38sCKKDYupzxAluYRnDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062078;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062080;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uWs8SMV+N2H3n8GHZ836wAIIMpx5WdVwI58BQBIhHh0=;
-	b=o9zo1TrzzWDy+RNTx0qnscfumwwJC8Tsns1H7JHQRt1Wa1nkRE2OV+yoQtZy2lGjkSFh
-	 GKiQc3QTYibbBHZ/Liv65dB7R7CaW5pJ4DCzjd8u1wcIe+YuCgcwIKKei608u49Ew0Wxf
-	 9szvcb9wHSTzJukHyiOSRH4zYG0tj/sbFQOUtoj1ZwTo1/gFFUIXum6rYKVJ4noeB+z0X
-	 zEnbEXWNB56aFRGuH2j3lUN7vJwETdFrf9Qsdo97N2MpG2jvLUHcUdUXn55VwBOlyhvR+
-	 bofo1vwAFDVcOY5/8qv+9TM8mXfPWgqHCgWLz8OHbUkVOgYv30bS6YsQei76Z0p++RQ==
+	bh=hTzenzh/VyZQfbv650oSSHN5yiQFmAMhKCTRzqOwnoA=;
+	b=AM8GhkT0FEtj1lKjyYyxJ7dyng1XJ7LgFvM1jBbbPV+iGi3TVwftAg3UZ8EWASUfPkhO
+	 DRyf85FrizLSOAg4ri+sogH3W4JsbkQFYaZTVcW/8fSglbjy9z5WIlPyxwJlyWdDNKs8g
+	 E2Ad1y50/0mIOU6a/SyrhV5X5koavCYIJ8SyFjdcExrSPJGOO8lsApZa/1ZnPwwZ7w40p
+	 VKEWKGxoDKAblk5/CdK9bwpJLDFM5BTKPIjFQd9FVbI6XlWN084JWk0VaEeeMxI5ykFDr
+	 pYQwYwHyy3V1VBdfFygpDqznlOPFYBmRLWgAhoRKKCQtqjlVTVVJ7KHKg4cillpVscg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VAXyMav1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WT11Y/oC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930D2606EE9A;
-	Sat,  7 Nov 2026 14:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7717606EEA9;
+	Sat,  7 Nov 2026 14:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VAXyMav1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0D11F008A1;
-	Sat,  7 Nov 2026 14:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WT11Y/oC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671391F008A2;
+	Sat,  7 Nov 2026 14:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062078;
-	bh=uWs8SMV+N2H3n8GHZ836wAIIMpx5WdVwI58BQBIhHh0=;
+	s=korg; t=1794062079;
+	bh=hTzenzh/VyZQfbv650oSSHN5yiQFmAMhKCTRzqOwnoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VAXyMav1WhC0mBe7ZBqcRHXF3biHP6nNn2tW4qamLznU9eUESKTD5AlJ1PeBniYZy
-	 COES3LzSaEwkss7dUEJnbXyTBhnOG5drwEZoflp/iucQr34P6x9ZpZPl52DKbZ5Xzz
-	 FRhv/afmEkR88IwRpaoic6o98YJKpylTrt73UUIc=
+	b=WT11Y/oCv0UPRDipRRyg5mGEiFfUX6+8CMiI0ZopqqhgPuEmb0UA0OKxT9sccKcdJ
+	 wbffbiceGjf6SdN9kzuwcLgrFs1anR0G4fHinaZ9eDfiJDfS6KloS4klmD+djerqC4
+	 r7AJLJBdx2RXHyPAHAlqGFANfqIp/21gjSwlg3+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
-	Lee Jones <lee@kernel.org>,
+	Lin Wang <wanglin@open-hieco.net>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1055/1536] mfd: wcd934x: Fix NULL pointer dereference on IRQ probe deferral
-Date: Sat,  7 Nov 2026 08:51:11 -0500
-Message-ID: <20261107135027.313240732@linuxfoundation.org>
+Subject: [PATCH 6.12 1056/1536] hwmon: (k10temp) Stop matching Hygon devices
+Date: Sat,  7 Nov 2026 08:51:12 -0500
+Message-ID: <20261107135027.343898282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,45 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Lin Wang <wanglin@open-hieco.net>
 
-[ Upstream commit dcf0e640b553d33512fbcaedb909c32ba9636a64 ]
+[ Upstream commit 08e6615c909b2504a5862764f3a7fca00c7ab066 ]
 
-ddata->dev is only assigned at the end of wcd934x_slim_probe(), but the
-of_irq_get() error path has passed it to the error print since the
-driver was added, while it is still NULL.
+k10temp matches the Hygon F3 device, but derives the node passed to
+amd_smn_read() from the F3 PCI slot using the AMD fixed-slot mapping
+(slot - 0x18). Hygon PCI slots do not encode DF node identity, and
+their SMN roots are grouped by socket.
 
-This used to be harmless with dev_err(), which copes with a NULL device
-and was skipped on -EPROBE_DEFER. Since the switch to dev_err_probe(), a
-deferred IRQ reaches device_set_deferred_probe_reason() ->
-dev_driver_string(), which dereferences the NULL pointer and crashes
-during probe. Use dev, which is already valid at this point.
+The derived node number therefore cannot identify a valid Hygon SMN
+target or provide usable temperature monitoring. Removing the match
+does not disable a working monitoring path.
 
+Remove the Hygon PCI match and Family 0x18 branch. Hygon temperature
+monitoring will use the Hygon node and SMN interfaces in a separate
+series.
+
+Fixes: d93217d84c6c ("hwmon: (k10temp) Add Hygon Dhyana support")
 Cc: stable@vger.kernel.org
-Fixes: 0f1b1b899521 ("mfd: wcd934x: Simplify with dev_err_probe()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/mfd/20260903145651.AC1311F00ACA@smtp.kernel.org/
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20260903-wcd-dma-v3-1-d3920c6563c4@ixit.cz
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Lin Wang <wanglin@open-hieco.net>
+Link: https://patch.msgid.link/20260921055603.25112-6-wanglin@open-hieco.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/wcd934x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/hwmon/k10temp.rst | 8 +++-----
+ drivers/hwmon/k10temp.c         | 5 ++---
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
-index 6f9e8e5fb20b8..c539030215b7f 100644
---- a/drivers/mfd/wcd934x.c
-+++ b/drivers/mfd/wcd934x.c
-@@ -229,7 +229,7 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
+diff --git a/Documentation/hwmon/k10temp.rst b/Documentation/hwmon/k10temp.rst
+index 91b99adc6c487..9680c4f3383c3 100644
+--- a/Documentation/hwmon/k10temp.rst
++++ b/Documentation/hwmon/k10temp.rst
+@@ -28,8 +28,6 @@ Supported chips:
  
- 	ddata->irq = of_irq_get(np, 0);
- 	if (ddata->irq < 0)
--		return dev_err_probe(ddata->dev, ddata->irq,
-+		return dev_err_probe(dev, ddata->irq,
- 				     "Failed to get IRQ\n");
+ * AMD Family 17h processors: "Zen", "Zen 2"
  
- 	ddata->extclk = devm_clk_get(dev, "extclk");
+-* AMD Family 18h processors: "Hygon Dhyana"
+-
+ * AMD Family 19h processors: "Zen 3"
+ 
+   Prefix: 'k10temp'
+@@ -128,7 +126,7 @@ it.
+ Models from 17h family report relative temperature, the driver aims to
+ compensate and report the real temperature.
+ 
+-On Family 17h and Family 18h CPUs, additional temperature sensors may report
+-Core Complex Die (CCD) temperatures. Up to 8 such temperatures are reported
+-as temp{3..10}_input, labeled Tccd{1..8}. Actual support depends on the CPU
++On Family 17h CPUs, additional temperature sensors may report Core Complex
++Die (CCD) temperatures. Up to 8 such temperatures are reported as
++temp{3..10}_input, labeled Tccd{1..8}. Actual support depends on the CPU
+ variant.
+diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
+index ccf0e9e853acd..bd063442e4e8b 100644
+--- a/drivers/hwmon/k10temp.c
++++ b/drivers/hwmon/k10temp.c
+@@ -65,7 +65,7 @@ static DEFINE_MUTEX(nb_smu_ind_mutex);
+ #define F15H_M60H_HARDWARE_TEMP_CTRL_OFFSET	0xd8200c64
+ #define F15H_M60H_REPORTED_TEMP_CTRL_OFFSET	0xd8200ca4
+ 
+-/* Common for Zen CPU families (Family 17h and 18h and 19h and 1Ah) */
++/* Common for Zen CPU families (Family 17h, 19h and 1Ah) */
+ #define ZEN_REPORTED_TEMP_CTRL_BASE		0x00059800
+ 
+ #define ZEN_CCD_TEMP(offset, x)			(ZEN_REPORTED_TEMP_CTRL_BASE + \
+@@ -459,7 +459,7 @@ static int k10temp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		data->read_tempreg = read_tempreg_pci;
+ 	}
+ 
+-	if (boot_cpu_data.x86 == 0x17 || boot_cpu_data.x86 == 0x18) {
++	if (boot_cpu_data.x86 == 0x17) {
+ 		switch (boot_cpu_data.x86_model) {
+ 		case 0x1:	/* Zen */
+ 		case 0x8:	/* Zen+ */
+@@ -553,7 +553,6 @@ static const struct pci_device_id k10temp_id_table[] = {
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M60H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M70H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3) },
+-	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(pci, k10temp_id_table);
 -- 
 2.53.0
 
