@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061991;
-	b=IE8607HoxqzelsBuvTTbK0xVNZMyTmhyR6zRbiZ0Esp2qWst4POAh7LWUPmayLUa5lI4
-	 xjHFX/oV4ENGYYZmQXYdQnHioXbQNMz7oIXaoK6OU/Kp8iTgaYYk4daGxby6HIo0s/jAW
-	 pgIZRjxq2yexkpnSFuTTONUBi9yMs7grWNe6vKhO52EyOvd2gzFDdb+aN4Vs3FEtSVH8U
-	 vxZbCIUtP2lvdnskUFpSROQQ0G6g9qE3FRbq2cWkkuhla71t2B1GeF3kOC9QvNr3kzf2L
-	 57rE429ToUFuzZwodjrcrfmqvgUGWZLhuxpt+PD1pZJuC2GBQuTuAa3/Lwc9ZLxCFdQ==
+	t=1794061993;
+	b=mE+2Q3ZbdzTcnCCHOpu4mKTJKTCwYvr5nARxVoNA9oRyNkgRJDNdcWgaP3wytXEmIY2v
+	 oEfUkkPYpzXrR227OGae4gTKTNK+Xqn1Ja5jyyTZF257Cu2mnQgdvP+jwsoxqd+N6yWHG
+	 m5zlMtapIzsmxmG+ZAeRjPy+x85NLwWngcbqkxmel6AP0TZiOuqS7HKOvBLBPOY3Wegqb
+	 t0g1xVXhZex3aA5VNvTutEmjI2fhWfZ7oZUomISpqab5Skf808RcBFw8IVfqQL1J08flY
+	 2smncBH6AZ7RyzhKQ4Ktn+9AYyRbJTyvOQopPfwKQ/T0YVa+wNRP8mRiwxvRcrz68Gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+el2guYJT4k5QXNAZQV2IwmsZ5QC8D7iXdl4jUZTqd0=;
-	b=2VKbjNGkAfH8T6fQHIo6e5otNR91b598JzFPln8aKet5Vdeh62p/p/M7Ic1xQzKE5hrm
-	 RNU2AQQoJgE6TVuuBZAu9zZuUnm7n+U/pqfkF7e4gsluhi5Jqc7f2frG4+9ypHAUNlahq
-	 sZg4xKXFsYqjtrk2hmuEBFmoT+YdrwJodIyjTa3Md6a66R2vs/ZAyrPSldOYX5a1adtsb
-	 cme5q2uG/Mo8uzk5VUyXUU4KrZgu33l5BXXF8vgOQR+UjH+qbMVwL0uGHV7d+xH2yanl5
-	 RavmgoJ45lnGkPSifbLLKEBFiMpiWr4zlRE61d/B0YEN/ltljZtrCPuLJ/gICZD1yrg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=qC2sSAv+sd2QSF/zXxCER2QPAt2eiIy6jbAUNi6rRzY=;
+	b=xG+RpV+UZhn0P5y9YDMzhZGSyRemxEQrAmbt+pkRN9ih/yGsMmaE1nsahmutZybMMSyH
+	 ai/6AzkQifviYVBNgbxTXyjh4+XXb3so4cE9CYJGluqFRiL5UTYxOZBkZVpWnSW51oaSh
+	 JplkVDBdLpzQnHzbvhAYx4NOMc1wYDkZuG1LHs+nY0vLyFG3MRKbCjUn/aALm21IW6crc
+	 WkKNqYnUcFV3oSyulpGNjJaUeRMNXpbd6K2tGkMVdduLOrVzS+SDpc5lIagrR4igcsIla
+	 KFPnpcp6Y8zIh15uqpEJztnzIX/w0TilWomV29sbD2fjMFDrSYaLdgtHa5LyTEJ9/bA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cl2LMFBn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nmWTsQu2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7527C606A32E;
-	Sat,  7 Nov 2026 14:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5477606A32E;
+	Sat,  7 Nov 2026 14:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cl2LMFBn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C811F0089F;
-	Sat,  7 Nov 2026 14:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nmWTsQu2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53EBC1F0089F;
+	Sat,  7 Nov 2026 14:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061991;
-	bh=+el2guYJT4k5QXNAZQV2IwmsZ5QC8D7iXdl4jUZTqd0=;
+	s=korg; t=1794061992;
+	bh=qC2sSAv+sd2QSF/zXxCER2QPAt2eiIy6jbAUNi6rRzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cl2LMFBn/kv80FPFaQk8/lTc3Fym4MwapG7spmS0JVb+rK4SH4H72wP8cs45X2ULZ
-	 V5Zz9oA6/yIJQlh9zIWNM245OmbX3hho12m/TXNsWfJAXqx3NgvurqJv31MYwN2iug
-	 +VlzYMHAldrkw7dKB3A961lM4MaVYyBd/UcbCFHU=
+	b=nmWTsQu2fOD6EHorq1sAu7M39Khmd/MTFm56iAL6nsTUYkEir2A/ySWSVNnQq2IBM
+	 xOulGwS+NfOK6+K+QmbALpEPxmHIOyyvY7P1EB4i/Rbp3mT9yhCJ/MpfQNxO84bNNC
+	 nFB+2U1Boo976cENLhGj6op+59O2yKPuyGROIqOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0982/1536] f2fs: force out-place update for all writes on compressed file
-Date: Sat,  7 Nov 2026 08:49:58 -0500
-Message-ID: <20261107135025.234466363@linuxfoundation.org>
+Subject: [PATCH 6.12 0983/1536] f2fs: compress: fix to handle race between truncate and writeback
+Date: Sat,  7 Nov 2026 08:49:59 -0500
+Message-ID: <20261107135025.262361999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -64,73 +64,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiucheng Xu <jiucheng.xu@amlogic.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4 ]
+[ Upstream commit c0337e331b065074ce20e4258a578e07dd7e4083 ]
 
-For compressed file, compressed write may fail and fall back to raw
-write.
+fsstress reports a kernel BUG in f2fs_truncate_partial_cluster():
 
--Thread A                                         - Thread B
-  - f2fs_write_multi_pages                          - f2fs_down_write(&sbi->cp_rwsem);
-   - f2fs_write_compressed_pages                    - ...
-    - f2fs_trylock_op                               - ...
-     - f2fs_down_read_trylock(&sbi->cp_rwsem);      - ...
-   - f2fs_write_raw_pages                           - ...
+kernel BUG at fs/f2fs/compress.c:1238!
+RIP: 0010:f2fs_truncate_partial_cluster+0x292/0x2a0
+Call Trace:
+ <TASK>
+ f2fs_truncate+0xf6/0x210
+ f2fs_setattr+0x6b7/0x770
+ notify_change+0x33b/0x520
+ do_truncate+0xc2/0xf0
+ vfs_truncate+0x153/0x1d0
+ ksys_truncate+0x78/0xd0
+ __x64_sys_truncate+0x16/0x20
+ do_syscall_64+0xbe/0x540
 
-Thread B acquires the lock first, which causes Thread A to fail lock
-acquisition and fall back to raw-data write.
-IPU_FORCE is enabled on small-capacity storage devices (< 16GB),
-so f2fs_write_raw_pages() overwrites the original compressed data
-in-place.
+The root cause is that Thread A (truncate) and Thread B (background
+writeback or fsync) can race as follows:
 
-The in-memory node has been updated with raw-data addresses, while the
-node metadata stored on eMMC still remains in compressed state.
-If a power-cut occurs before the node is flushed to disk, on-disk
-inconsistency arises: disk data is raw, yet metadata treats it as a
-compressed cluster, leading to decompression failure.
+Thread A                             Thread B
+- f2fs_setattr
+ - f2fs_truncate
+  - f2fs_truncate_blocks
+   - f2fs_truncate_partial_cluster
+    - f2fs_is_compressed_cluster
+      return 1
+                                     - f2fs_write_cache_pages
+                                      - f2fs_write_multi_pages
+                                       - f2fs_write_raw_pages
+                                        - f2fs_write_single_data_page
+                                          dn.data_blkaddr != COMPRESS_ADDR
+                                          (cluster converted to normal)
+    - f2fs_prepare_compress_overwrite
+     - f2fs_is_compressed_cluster
+       return 0
+     - return 0
+    - f2fs_bug_on(sbi, err == 0): BUG!
 
-To eliminate this risk completely, force out-place update for all
-write operations on compressed file.
+Writeback path does not acquire i_gc_rwsem or filemap_invalidate_lock.
+When a compressed cluster fails compression during writeback, it is
+overwritten with raw data blocks. If Thread A checked
+f2fs_is_compressed_cluster() before the conversion, but calls
+f2fs_prepare_compress_overwrite() after the conversion,
+f2fs_prepare_compress_overwrite() returns 0 because the cluster is no
+longer a compressed cluster.
+
+To fix this, remove the f2fs_bug_on() and retry checking the cluster status
+when f2fs_prepare_compress_overwrite() returns 0, so that it can fall back
+to f2fs_do_truncate_blocks() to handle it as a normal cluster.
 
 Cc: stable@kernel.org
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Fixes: 3265d3db1f16 ("f2fs: support partial truncation on compressed inode")
+Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/f2fs/compress.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 4bbaae47b184e..3bf6820130010 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2669,10 +2669,12 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
- 		return true;
- 	if (f2fs_used_in_atomic_write(inode))
- 		return true;
--	/* rewrite low ratio compress data w/ OPU mode to avoid fragmentation */
--	if (f2fs_compressed_file(inode) &&
--		F2FS_OPTION(sbi).compress_mode == COMPR_MODE_USER &&
--		is_inode_flag_set(inode, FI_ENABLE_COMPRESS))
-+	/*
-+	 * rewrite low ratio compress data w/ OPU mode to avoid fragmentation.
-+	 * If IO comes from compressed write path and fallback to raw write,
-+	 * force out‑place to prevent metadata‑data inconsistency.
-+	 */
-+	if (f2fs_compressed_file(inode))
- 		return true;
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index 9e7fb8d883099..c4f3a4e698eea 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1209,6 +1209,7 @@ int f2fs_truncate_partial_cluster(struct inode *inode, u64 from, bool lock)
+ 							log_cluster_size;
+ 	int err;
  
- 	/* swap file is migrating in aligned write mode */
++repeat:
+ 	err = f2fs_is_compressed_cluster(inode, start_idx);
+ 	if (err < 0)
+ 		return err;
+@@ -1220,12 +1221,11 @@ int f2fs_truncate_partial_cluster(struct inode *inode, u64 from, bool lock)
+ 	/* truncate compressed cluster */
+ 	err = f2fs_prepare_compress_overwrite(inode, &pagep,
+ 						start_idx, &fsdata);
+-
+-	/* should not be a normal cluster */
+-	f2fs_bug_on(F2FS_I_SB(inode), err == 0);
+-
+-	if (err <= 0)
++	if (err < 0)
+ 		return err;
++	else if (err == 0)
++		/* the cluster became non-compressed one due to race case */
++		goto repeat;
+ 
+ 	if (err > 0) {
+ 		struct page **rpages = fsdata;
 -- 
 2.53.0
 
