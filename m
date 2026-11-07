@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062260;
-	b=sBNIlZF1A9TD08ouJ5clcU4qKqRMJCCmAecC22fZ9xm9SLUrZYPGmOJqPHAXsWHuQkJE
-	 NUNz+b7wioL6hvkBqZJrLfF5JckZlsivyBxOoQ4l6iAb6xuFJ9Qwm1GUWXf4wFSyHW9V0
-	 iYXbFMxyyjSUCSH0DUyKJytdlCserqrqGtvD38SceiUR5ku85yJtyMxe9vCBvtQB2WX4W
-	 +pZG7UfYcWtVtCI8+IM6cl5O38hDHE/Br0zhGb5wZ4p/fD+FksUSKubSEMO/1/xfZxjXS
-	 P6IYCCRQG+wpTFD3Ot4e9ROwLN05FPbbN5hcOGb3zDZESNWuU8gKkYstkq/TjBI36nA==
+	t=1794062261;
+	b=xhTLNyM477dJdsliNY5IrUe3YrqzapDvo+jduwhWuh/b+DKgT4rvFGEz7TUrbwNWcUV9
+	 6YJqOVsxgbENOsNRMAUiySoMrEMdeCaoQhSs9W0Ni0vOug18Mz//KzLmi96X1ElRwBi70
+	 M9jMEzg9sHuxLz++d95ye0UhMB9vBHlWzQKGzu3ZW53zrAVZd9HjjjxG/bCEQwynlgGgF
+	 sBsP+axEKe1pb6++y0VVsn8RzDFdohwYTv6ZjSrOoJNQKS+YJ5RSj5tiwK0y3JRA/lleI
+	 maPlni9EeUnqVipftMqygGy1n2PaCpYe1WQJigiOqXb4eIWnpyIgd1kcXPbopuAYzDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RzkHUaAEfzns9VrCQd3La2g/XQGwzgvHNff14zMHTsU=;
-	b=pYSCz3OwPtjDpX5RpVOkvTW/tGEAPASFrv8jE7PDtJQOggng9hgzbsTP5SGTm+gPezwr
-	 LTccPmt611pIgXiIdF+fmQq3ziGIGUny1ecUm0lZwjl1OA8MDVxXQQlMiGmZzPQuHFUEm
-	 b3DOFa9GU/CgyG/eNzL4HvzTZSG0UEeh8RzHNaWOtrbiteKq2aHKBkJYg/TA8ydwKVDDP
-	 0SY7KHCYDeR7rfqk4+XGd1Lmb0XcScWB8JgUOR5VSwbNlYgqVvxgtJB+w0W3UguSAI8Ge
-	 DaRpB8Wsb+X+p8kvXCR00f0WefMtNsqF9ub6BXisArj/nS0il3xOlGMwh6dZuWD339w==
+	bh=t2dSpaopuMJsdGv18G9eXi0HynTpnOuvd1qbNXMIo1E=;
+	b=18AQTCIUbtNUzadjEZobQ2lTLXaRKLOYrUuhOUbbsmkgSb8zLFnYWtmGlXLyIGxpbh1j
+	 ClBs5OmNi1R3DaxhxKP46VpRbYQRlGEyTJ9JRxBnkSXnJh1SUc8lIHS0UerKIcZvffnn/
+	 CnirAtW+C/ejAZjPoxYGVU1ceq3PgYgvsZTlXUhw8zH7zpRaDDGC46aXgZG7PZJ7Vp2rF
+	 xEV6CCSQPJq1q/Hy6bIpRx7+CjmU8X6ulR0edtW3HWTQ9Zui8ihNs4rPnnpT+Hwf8FzcG
+	 AeT4Ckcpkjj502qKmxc6dEwTSxaNDbBglKUMTq3VJiqhg8ueWJkh6NYNNLcLapeRy+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thwJunEv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whEYkn+n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271F4606EE82;
-	Sat,  7 Nov 2026 14:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BA1606A334;
+	Sat,  7 Nov 2026 14:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thwJunEv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BAD1F0089F;
-	Sat,  7 Nov 2026 14:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=whEYkn+n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059DB1F0089F;
+	Sat,  7 Nov 2026 14:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062260;
-	bh=RzkHUaAEfzns9VrCQd3La2g/XQGwzgvHNff14zMHTsU=;
+	s=korg; t=1794062261;
+	bh=t2dSpaopuMJsdGv18G9eXi0HynTpnOuvd1qbNXMIo1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=thwJunEvVHciNrQEi6VBVSRpHR7kWGl/r+qEZZ/6i4XhMOrN1XPZnkJUi39GWeX2I
-	 A3OUcPgvTuy4+JvHY8/+ZwOJYkNaFpny9rZSCDuDNwsTZ5OJoEUB2/JLoox0S4kFcH
-	 +NCfYkfCZWWV+xEHa+taiv2A/L0etVoov65lw5Es=
+	b=whEYkn+ntIRo8Je5WSjl2vt29CAXCad6H8P24XyfE8+3NzkutNGEWHqV4pAzN1r++
+	 OFvxUGNFd7roOuBhmo/ZiYNLLFMqjo9By3EcXWFDUgK7jEwEqbe/QoXF9ioA4+0m2l
+	 Qmw78OKDxZGyUmRoyspFv49BEIAR0hE/MqLzkO/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Herve Codina <herve.codina@bootlin.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1204/1536] xen/gntdev: prevent private mappings from becoming writable
-Date: Sat,  7 Nov 2026 08:53:40 -0500
-Message-ID: <20261107135031.566729444@linuxfoundation.org>
+Subject: [PATCH 6.12 1205/1536] soc: fsl: cpm1: tsa: Fix clock leak in tsa_of_parse_tdms()
+Date: Sat,  7 Nov 2026 08:53:41 -0500
+Message-ID: <20261107135031.593228268@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,52 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdifatah Suruur <suruurism@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 2176dea8d8c19cb43a9b3651bfa1cb21eab1b31a ]
+[ Upstream commit 46201d760c48e771fa2febfcb0787f22c3b71387 ]
 
-gntdev_mmap() rejects writable private (non-shared) mappings of foreign
-grant pages, because a private writable mapping takes the COW path on
-pages that have no proper struct-page backing.  However, VM_MAYWRITE is
-left set, so userspace can map the grant read-only and then upgrade the
-mapping to writable with mprotect(), hitting the same COW path the
-check was written to prevent.
+The error cleanup loop puts l1rsync_clk and l1rclk_clk a second time
+and never puts l1tsync_clk or l1tclk_clk, because the branches that
+guard the transmit clocks use the receive clock field names.
 
-Clear VM_MAYWRITE for private mappings, as i915 does for its read-only
-objects and as fixed in drm/vc4 (CVE-2026-68445) and drm/panthor
-(CVE-2024-53071) and ptp: vmclock (commit
-a5edadbae57e2298a56cf7a4e774a027905a331f).
+Use the matching field in each branch so every clock acquired by
+tsa_of_parse_tdms() is released exactly once.
 
-Fixes: ab31523c2fcac ("xen/gntdev: allow usermode to map granted pages")
+Fixes: 1d4ba0b81c1c ("soc: fsl: cpm1: Add support for TSA")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-
-Message-ID: <20260819084217.1577-1-suruurism@gmail.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://lore.kernel.org/r/20260917152719.2160395-1-vulab@iscas.ac.cn
+[chleroy: Fixed the same in tsa_remove()]
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntdev.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/soc/fsl/qe/tsa.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
-index 16af955c5ea59..97ac558f26fda 100644
---- a/drivers/xen/gntdev.c
-+++ b/drivers/xen/gntdev.c
-@@ -1074,6 +1074,13 @@ static int gntdev_mmap(struct file *flip, struct vm_area_struct *vma)
- 	if ((vma->vm_flags & VM_WRITE) && !(vma->vm_flags & VM_SHARED))
- 		return -EINVAL;
- 
-+	/*
-+	 * Private mappings of foreign grant pages must never become
-+	 * writable: they would take the COW path on granted pages.
-+	 */
-+	if (!(vma->vm_flags & VM_SHARED))
-+		vm_flags_clear(vma, VM_MAYWRITE);
-+
- 	pr_debug("map %d+%d at %lx (pgoff %lx)\n",
- 		 index, count, vma->vm_start, vma->vm_pgoff);
- 
+diff --git a/drivers/soc/fsl/qe/tsa.c b/drivers/soc/fsl/qe/tsa.c
+index 515da9b45c2c3..38e9f02cffe48 100644
+--- a/drivers/soc/fsl/qe/tsa.c
++++ b/drivers/soc/fsl/qe/tsa.c
+@@ -885,12 +885,12 @@ static int tsa_of_parse_tdms(struct tsa *tsa, struct device_node *np)
+ 			clk_put(tsa->tdm[i].l1rclk_clk);
+ 		}
+ 		if (tsa->tdm[i].l1tsync_clk) {
+-			clk_disable_unprepare(tsa->tdm[i].l1rsync_clk);
+-			clk_put(tsa->tdm[i].l1rsync_clk);
++			clk_disable_unprepare(tsa->tdm[i].l1tsync_clk);
++			clk_put(tsa->tdm[i].l1tsync_clk);
+ 		}
+ 		if (tsa->tdm[i].l1tclk_clk) {
+-			clk_disable_unprepare(tsa->tdm[i].l1rclk_clk);
+-			clk_put(tsa->tdm[i].l1rclk_clk);
++			clk_disable_unprepare(tsa->tdm[i].l1tclk_clk);
++			clk_put(tsa->tdm[i].l1tclk_clk);
+ 		}
+ 	}
+ 	return ret;
+@@ -1059,12 +1059,12 @@ static void tsa_remove(struct platform_device *pdev)
+ 			clk_put(tsa->tdm[i].l1rclk_clk);
+ 		}
+ 		if (tsa->tdm[i].l1tsync_clk) {
+-			clk_disable_unprepare(tsa->tdm[i].l1rsync_clk);
+-			clk_put(tsa->tdm[i].l1rsync_clk);
++			clk_disable_unprepare(tsa->tdm[i].l1tsync_clk);
++			clk_put(tsa->tdm[i].l1tsync_clk);
+ 		}
+ 		if (tsa->tdm[i].l1tclk_clk) {
+-			clk_disable_unprepare(tsa->tdm[i].l1rclk_clk);
+-			clk_put(tsa->tdm[i].l1rclk_clk);
++			clk_disable_unprepare(tsa->tdm[i].l1tclk_clk);
++			clk_put(tsa->tdm[i].l1tclk_clk);
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
