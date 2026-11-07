@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062784;
-	b=EcARyulClJePtljxaUmfIbFqlofIM7lhrIYX5ME2X3+xp5PvUGQSni6DG1ahxMgsLNC1
-	 ebhKpBvZoNgJGKqhR2Mv009zMEcRSZsYczZ9R20WGwBae5x91wEA6rowb5zjxN283wAzF
-	 9MSsMBRa1av2OztzFctQqlRgZx/ciSPMi+5NFsC8zg5+RpelYIEQxEc7g5EINTqPp76ru
-	 4wCWtY36HWM7wIoUoKySjmFUk0lZKwEl1Becr7h2fzkZHkQe+H3GFnGu1RIFJPJ7LFmDZ
-	 t1WWJTaFv88wEdKetPBwpRVuA9gGb2Z1dtPL7+MNv1ciwm/7O/9P+6FGNL7c671Ex2w==
+	t=1794062785;
+	b=RSn85Ma4QNsrsrbCRW9a8+4uAI5tuN3fs55fT93U39PjBBeNRt2gBXc4gPMNAVFthAAV
+	 y9Nu4MhHb/QBY5sFYedJRyZCWFgNubtOPT4SpwIjGErU1IRUZQ++LMxVmmT/HVe+XMYGe
+	 l7MPabynxbohiWuIQNZDKuQjh22dpCZGC6BG8c9V+HI1j7/gx9EW/4mJ1I1FixylXsBro
+	 niqlcDfe8C7GVSmdq8GEKetgDnJxAEXzreEZ5FSlI24YRafjo+8MU/3Qb4HDEwOzlSM94
+	 jHxdPDT34dpTM9MKVlGSfQF8NN7ISpeeEE/ILBCKhGh2JxzrfABnteKCtVR1ydx/W8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EJpqWIu8sxxEnzY+PjJeyS3KSwuQquJbtIiKIWjnA+U=;
-	b=Vhpfg87/91p3Y2Ub22NAuqHh+z2uAK1B/pLMDwItvjXHTDtvEl/KF9PNh9v5IY3nfIMr
-	 v/088rylXOScuezEG77GGv+Slo1J3f1I4fDZpfWyClJLe/Eudk1WIknLtFFEHGfKzUQqY
-	 Ct9xjwEWP8j5LcEz7sCKNA5olhAcGKq2Iu+rO+Jb1OuaWTXpwPETUPwFpyP/O8pJB2uQl
-	 KU6/djleOZi7XffjVIHgdFAE9vTZxRWybewGdV++dYTFrU4lMMdX0Y8MnjMEjvS0p7tx2
-	 OylF7uRHrj80oS8f2FZ4P+HudR+NkDtACgrvXK1lP2R4tnkVm8rj2cHU+2Wt2Ou4cyQ==
+	bh=OmAPLmRmyIW448tSDZwr9jBLwDaS9wDSASpVQUbiJe8=;
+	b=J/thaegQqQGnrlod0ujql8oLZ/68+K/+anmSLgToL846IpwzRcUcMPrZrONKFxjrUxw5
+	 ee1DEu9nmZj+wF6Y2cIU9wBPGe/0Ai+MT9ziYhHAyEKXFSvYYlWwUWpBfVKA6fywyh1st
+	 czr/UL8MZQhZo66Cg+PomVrueRPNiR8Mc9nfdSp0RJDEJLP7yaBNQ1q8wOkv5ERSg4CTO
+	 capjpI7B//J4ErgXcRRS1FYDn9PaBEfR8ySChZYxw533ZdL/WegDQX8SdNyFL7DJ3iaeT
+	 z7XT4bXqycB0CZ5JGCACyjhKb881vlfE0FPEacmuctuVLyrEUfpP2c/6V77gCivMrag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuXvqbkW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bj6WlEgo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADB8606A32F;
-	Sat,  7 Nov 2026 14:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A304606A326;
+	Sat,  7 Nov 2026 14:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuXvqbkW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B901F0089F;
-	Sat,  7 Nov 2026 14:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bj6WlEgo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD761F0089F;
+	Sat,  7 Nov 2026 14:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062783;
-	bh=EJpqWIu8sxxEnzY+PjJeyS3KSwuQquJbtIiKIWjnA+U=;
+	s=korg; t=1794062784;
+	bh=OmAPLmRmyIW448tSDZwr9jBLwDaS9wDSASpVQUbiJe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zuXvqbkWWajQnjtNHD+bVycCdfBf/9D96EB54pp6XdSU4e+XU/c5II76ftOb2HRjB
-	 rjpjPz8HnYqbT/kcsBwQVlqSzQLx4tDmNYv2hO1A2IZu4Q+js3S1kSKcnS7ijc0/y3
-	 bkZge6nqmJVAj/0hrsqkCHgW/j/ENXw96FMXMlXk=
+	b=bj6WlEgoOmAnahJKL5dDb7zgaCBm8/TLick+RFu1dF4Kn6jRJrXlF+irdIkUVxdNt
+	 uyMDn2p4Gsg3TjXy7l0qGNBb3+Eh55MyAIXkHjRG1F6wds60E7Zemz9ipr4N86ShCB
+	 yNz3/k+CFIy0UyfTvztLluSumYFfrLFVoCHmBZiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Punnay Sharma <punnaysharma805@gmail.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 091/869] staging: media: av7110: fix sp8870 initialization failure state
-Date: Sat,  7 Nov 2026 08:46:13 -0500
-Message-ID: <20261107134855.797942326@linuxfoundation.org>
+Subject: [PATCH 6.18 092/869] media: m2m-deinterlace: fix default capture field
+Date: Sat,  7 Nov 2026 08:46:14 -0500
+Message-ID: <20261107134855.825204031@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,57 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Punnay Sharma <punnaysharma805@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 30684fa98394bc0eb4362282908612aab7d4dad9 ]
+[ Upstream commit 4ee3ebede5d01efdcdd88c94f9df271d2eb237de ]
 
-The SP8870 DVB frontend driver prematurely flags the device as
-initialized at the very beginning of the sp8870_init() routine, prior
-to requesting the firmware (dvb-fe-sp8870.fw) and executing the I2C
-upload sequence.
+queue_init() initializes default formats for both the source and capture
+queues.  It first sets the source field to V4L2_FIELD_SEQ_TB, but then
+stores the capture default, V4L2_FIELD_INTERLACED_TB, in the source queue
+again while initializing the capture queue.
 
-If request_firmware() times out or sp8870_firmware_upload() encounters
-an I2C bus error, the function aborts and returns -EIO. However,
-because `state->initialised` is already set to 1, all subsequent
-invocations of `fe->ops.init()` by the DVB core will immediately return
-0 (success) without attempting to load the firmware again. This leaves
-the demodulator microcontroller halted and the frontend permanently dead
-until the module is forcibly reloaded.
+This overwrites the valid source default and leaves the capture field at
+its zero-initialized value, V4L2_FIELD_ANY.  vidioc_streamon() accepts
+only V4L2_FIELD_SEQ_TB or V4L2_FIELD_SEQ_BT on the source queue, and
+requires the capture queue to use a compatible interlaced or NONE field.
+Userspace that relies on the default formats can therefore get -EINVAL
+when starting streaming.
 
-Relocate the `state->initialised = 1` assignment to the end of
-sp8870_init(), ensuring the flag is only set after the firmware is
-successfully uploaded and the system controller is actually restarted.
+Initialize the capture field instead.  The bug is usually hidden because
+mem2mem applications commonly call S_FMT on both queues before streaming;
+the TRY_FMT paths normalize the fields and S_FMT overwrites q_data[].field.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 8f0755c06b90 ("[media] media: Add mem2mem deinterlacing driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Punnay Sharma <punnaysharma805@gmail.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/av7110/sp8870.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/m2m-deinterlace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/av7110/sp8870.c b/drivers/staging/media/av7110/sp8870.c
-index 96fd738777744..b5b49f1ef5e7b 100644
---- a/drivers/staging/media/av7110/sp8870.c
-+++ b/drivers/staging/media/av7110/sp8870.c
-@@ -315,7 +315,6 @@ static int sp8870_init(struct dvb_frontend *fe)
- 	sp8870_wake_up(state);
- 	if (state->initialised)
- 		return 0;
--	state->initialised = 1;
+diff --git a/drivers/media/platform/m2m-deinterlace.c b/drivers/media/platform/m2m-deinterlace.c
+index e07e57d4206ba..83d6c54f015db 100644
+--- a/drivers/media/platform/m2m-deinterlace.c
++++ b/drivers/media/platform/m2m-deinterlace.c
+@@ -829,7 +829,7 @@ static int queue_init(void *priv, struct vb2_queue *src_vq,
+ 	q_data[V4L2_M2M_DST].width = 640;
+ 	q_data[V4L2_M2M_DST].height = 480;
+ 	q_data[V4L2_M2M_DST].sizeimage = (640 * 480 * 3) / 2;
+-	q_data[V4L2_M2M_SRC].field = V4L2_FIELD_INTERLACED_TB;
++	q_data[V4L2_M2M_DST].field = V4L2_FIELD_INTERLACED_TB;
  
- 	dprintk("initialising frontend...\n");
- 
-@@ -353,6 +352,8 @@ static int sp8870_init(struct dvb_frontend *fe)
- 	sp8870_writereg(state, 0x0D00, 0x010);
- 	sp8870_writereg(state, 0x0D01, 0x000);
- 
-+	state->initialised = 1;
-+
- 	return 0;
+ 	return vb2_queue_init(dst_vq);
  }
- 
 -- 
 2.53.0
 
