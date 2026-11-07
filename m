@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063041;
-	b=Vjdi7f0fNin+qMJF68PlaWoRvx0700rA2tJMAfRdcmNgMD5+07uBJwOR2L8UbtOoB/j1
-	 tNVcgxnZLRrOfszFLphZu06H5VzRfuM5k6oZcxNkEevvaWyoV5KDHXpwffNMuCvnvDQaf
-	 cthGAWV9JwpZo26hcNbSkX/3kbpOggs9modDHP/YIlhQzvMPNxjxsQCKDAJeN4fA1neO9
-	 XPDWknj5TxhhYotrBmZJAD9DxjT8uqiJfAIonh2GQT9Zha8WIXQIgfM6KyN1mIR312dFk
-	 m51DEA2U3av/wDfyJnKcULq73SP7f6apaBDF8BcZDYzqfNVIuoRP5FAm/L2YBuotGBA==
+	t=1794063042;
+	b=AMkWefjYw7APSJVlWNEvHGZWRe3poEBbMjZM4DgW7qPsfAueuFweB4K1WaAqA+5sPStK
+	 TF4Y13n7r8CXM33gi7Pp5OT9fsg4ifmsJtoeKDVHpFHUXpQEsJVEWUbOavkXDBVrxeTLJ
+	 DIY7ixQh1rMdB8/6CQu7DCDGEyEDJD/+zpif9tCJAzkQIGMV4grlzLYyM6ySnzFV9Vl85
+	 NXejlzEZs3YQ46OOXlgKrH7RgY8jPOc8k/hrJ+gfUaAhLm+vpBBF8PO6oR4LqqGBB+Igj
+	 LbAat1Dw7CeV3OzNFxvo/CglxVV94+SfNWkcqgoQ3hLjTrdkViksQ0ztDY5Fm51hvGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063041;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wu5Sf4N2ANt2frUPCaRWXZCVeV0eQcRnA1EUqrhigN0=;
-	b=ohEMq/Q5oXBosmADAJqcTtkX4od2M6G7jy9hms3FiWNdyGuqPISUkbQMTGXzFMfFMqof
-	 S1hGVcV2060Sn+YIKOc2ocksqtJe+FePd+7i5+lR/LZzZuDLGXkLYr+/PniG8asBIUwRJ
-	 1iI46amiDU2PqNghvLh4cz2WIsxp6OE9xxnvSKJK4171tyr3W81cS/NlM3Q/GxFIPzpCh
-	 kDUaQqomSlylBlKMpIB/PAoYdHMiORhwmF8llE5Abla8BIup54052ZGyyGz0R6PwNdJkm
-	 iiGKYMxZDZyyW6yZ8xpLSTCe3G+dRbXqT3ccJziiDYSeRXNdQEe6qWDoPTv2KYsr4LA==
+	bh=B4+3flQhngaf6/GbsHnNByUWAT+DlpN2Pm/BYCZqgjY=;
+	b=g8CqmHMSo05bEJCbfDdT0b1g6OrAk1ZdMYpsTzhOKRmeBq5lf7wxV19LW8aIYAqFJAKx
+	 qY84M8/51P8bzsAacX/sBDx1Ni5vZVud/p8IBMfn2rYadHrecHsnWWzCmYGO6clwknhzz
+	 vsB+b1nMOG5VKUnWRV4UnybLoFEJhaGlrSSAzLAt6zuPvJ+1GURqPJF4Z4FIPDxooN9A4
+	 VturK/AsxBLfLWa0dS3i/yocthaKBGpRQjzaU8koeBoz5LECcEMtHSOqOsmFjNPxsXnWQ
+	 s0q8Xd4AtYVCntPu9tEHsoyCmJaoXMbYNICgbJL6d2Z7YByRWsGLC0iG3mabqxGM2pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpGiEsDY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lWeY/DFc";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D71C606D81A;
-	Sat,  7 Nov 2026 14:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4A5606D805;
+	Sat,  7 Nov 2026 14:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpGiEsDY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0871F008A1;
-	Sat,  7 Nov 2026 14:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lWeY/DFc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565BA1F008A1;
+	Sat,  7 Nov 2026 14:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063041;
-	bh=wu5Sf4N2ANt2frUPCaRWXZCVeV0eQcRnA1EUqrhigN0=;
+	s=korg; t=1794063042;
+	bh=B4+3flQhngaf6/GbsHnNByUWAT+DlpN2Pm/BYCZqgjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NpGiEsDYtvOC9+bUKjlPI3pCmkr2+fIpYDj8cQSKj/1spzkf9roBbbOj9uwfy/fL6
-	 pWyZRvnEYyCuHp0sgvdOfyg9cFTkwrDCfXRaxa2J8bPDZpzSjbMLmzClEFZQXq/2xD
-	 2FE9V1oQ+BihwKVCi0HT0WFCTFYjUiTiNBQbSDiE=
+	b=lWeY/DFcdRB/QFp8r6ZwHu6irol/NFYX7yFM+45DcYOGBzPmj5Xz9Hs60M+v5JMBi
+	 FDQCZ3Q4/RtP7bFmOIA1Qs1OfZf6Yy2nkreHOmCa5Jz1CxRJNwCH0loTbbwuJwz4tp
+	 kuf65S3Q0BD4PzC/4cptyEZ/L9ER+cj9D0G6y9fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 288/869] media: iris: Fix frame interval enumeration for non-divisor framerates
-Date: Sat,  7 Nov 2026 08:49:30 -0500
-Message-ID: <20261107134901.580385206@linuxfoundation.org>
+Subject: [PATCH 6.18 289/869] ALSA: sgio2audio: Only free successfully requested IRQs
+Date: Sat,  7 Nov 2026 08:49:31 -0500
+Message-ID: <20261107134901.640756599@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,60 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 3ad393b701dd99274f09403185f71ec7a93135bd ]
+[ Upstream commit af3d225b639c6f9fb8fd5e1e27f11672d56724b6 ]
 
-iris_enum_frameintervals() advertised frame intervals using
-V4L2_FRMIVAL_TYPE_STEPWISE with step=1/MAXIMUM_FPS where MAXIMUM_FPS
-is 480. This caused client to enumerate only framerates of the form
-MAXIMUM_FPS/n (where n is a positive integer), restricting support to
-exact divisors of MAXIMUM_FPS (e.g., 480, 240, 160, 120, 96, 80, 60,
-30, 24, 1).
+snd_sgio2audio_create() calls snd_sgio2audio_free() when an IRQ
+request fails. The cleanup helper currently walks the complete IRQ table,
+including entries whose request_irq() calls have not been attempted yet.
+free_irq() then receives an IRQ and dev_id pair that was never registered.
 
-Framerates that are not exact divisors of MAXIMUM_FPS, such as 29 fps,
-25 fps, were excluded from the enumerated list. There is no hardware
-restriction to framerates that are exact divisors of MAXIMUM_FPS. This
-caused GStreamer caps negotiation to fail with an "internal data
-stream error" when encoding content at such framerates.
+Pass the number of successfully requested IRQs to the cleanup helper on
+the request failure path, while retaining the full-table cleanup for
+teardown after all requests have succeeded.
 
-Fix this by using V4L2_FRMIVAL_TYPE_CONTINUOUS. With CONTINUOUS type,
-GStreamer creates a continuous framerate range [1, max_fps], allowing
-any integer framerate within the range to pass caps negotiation. The
-step field is set to 1/1 as required by the V4L2 specification for
-continuous frame intervals.
-
-Fixes: a6882431a138 ("media: iris: Add support for ENUM_FRAMESIZES/FRAMEINTERVALS for encoder")
+Fixes: 862c2c0a61c5 ("ALSA: ALSA driver for SGI O2 audio board")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260929084540.2065213-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_vidc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/mips/sgio2audio.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
-index d6db5ae85990b..b916e8c8a6456 100644
---- a/drivers/media/platform/qcom/iris/iris_vidc.c
-+++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-@@ -434,14 +434,14 @@ static int iris_enum_frameintervals(struct file *filp, void *fh,
- 	mbpf = NUM_MBS_PER_FRAME(fival->height, fival->width);
- 	fps = DIV_ROUND_UP(core->iris_platform_data->max_core_mbps, mbpf);
+diff --git a/sound/mips/sgio2audio.c b/sound/mips/sgio2audio.c
+index 077fdf2181c15..e3480f23f7f3c 100644
+--- a/sound/mips/sgio2audio.c
++++ b/sound/mips/sgio2audio.c
+@@ -742,7 +742,8 @@ static struct {
  
--	fival->type = V4L2_FRMIVAL_TYPE_STEPWISE;
-+	fival->type = V4L2_FRMIVAL_TYPE_CONTINUOUS;
- 	fival->stepwise.min.numerator = 1;
- 	fival->stepwise.min.denominator =
- 			min_t(u32, fps, MAXIMUM_FPS);
- 	fival->stepwise.max.numerator = 1;
- 	fival->stepwise.max.denominator = 1;
- 	fival->stepwise.step.numerator = 1;
--	fival->stepwise.step.denominator = MAXIMUM_FPS;
-+	fival->stepwise.step.denominator = 1;
+ /* ALSA driver */
  
- 	return 0;
+-static int snd_sgio2audio_free(struct snd_sgio2audio *chip)
++static int snd_sgio2audio_free(struct snd_sgio2audio *chip,
++			       unsigned int irq_count)
+ {
+ 	int i;
+ 
+@@ -752,7 +753,7 @@ static int snd_sgio2audio_free(struct snd_sgio2audio *chip)
+ 	writeq(0, &mace->perif.audio.control);
+ 
+ 	/* release IRQ's */
+-	for (i = 0; i < ARRAY_SIZE(snd_sgio2_isr_table); i++)
++	for (i = 0; i < irq_count; i++)
+ 		free_irq(snd_sgio2_isr_table[i].irq,
+ 			 &chip->channel[snd_sgio2_isr_table[i].idx]);
+ 
+@@ -768,7 +769,7 @@ static int snd_sgio2audio_dev_free(struct snd_device *device)
+ {
+ 	struct snd_sgio2audio *chip = device->device_data;
+ 
+-	return snd_sgio2audio_free(chip);
++	return snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
  }
+ 
+ static const struct snd_device_ops ops = {
+@@ -819,7 +820,7 @@ static int snd_sgio2audio_create(struct snd_card *card,
+ 				0,
+ 				snd_sgio2_isr_table[i].desc,
+ 				&chip->channel[snd_sgio2_isr_table[i].idx])) {
+-			snd_sgio2audio_free(chip);
++			snd_sgio2audio_free(chip, i);
+ 			printk(KERN_ERR "sgio2audio: cannot allocate irq %d\n",
+ 			       snd_sgio2_isr_table[i].irq);
+ 			return -EBUSY;
+@@ -843,13 +844,13 @@ static int snd_sgio2audio_create(struct snd_card *card,
+ 	/* initialize the AD1843 codec */
+ 	err = ad1843_init(&chip->ad1843);
+ 	if (err < 0) {
+-		snd_sgio2audio_free(chip);
++		snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
+ 		return err;
+ 	}
+ 
+ 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+ 	if (err < 0) {
+-		snd_sgio2audio_free(chip);
++		snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
+ 		return err;
+ 	}
+ 	*rchip = chip;
 -- 
 2.53.0
 
