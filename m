@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063401;
-	b=TUUMFbMUSI7oZFv1Q7lOgyMLJg/45/aL4fcg9dpuk/XQWSIneQMEgIQQd0YrXtjKLWF4
-	 1nHZJnBfOWGErQMSBWo1OwYeX9pS3tgx3YEtpNYBM22/gOHMp6aanuAn/pU4qlIpjsrZT
-	 94XGDcekaYlU5SRjPt1KNzfVpalD2oSCtsW5Kqc0ISv81glS+jlHUw/emCDysoeCuCDp0
-	 LoyUhJBMSanTGZ7rwk2RYFy06ybm69l3UyUGtlS4X4oGFjE90tY0YRdw4q+VfAtcoQt2s
-	 bQP8/VUzqo09cICla51Yjz5cLQ27WcR6xrdCiFjXTlDJLKeIrrzeTYITEXgGdeRB8UQ==
+	t=1794063402;
+	b=J7bMJZyEDtyMQZIGDNK+IWvkC6wN0+jYLr0KEmg3fWaNaBGlb6YaTGsTdARomYPY9NVF
+	 +nQeZeDa9YPMo7HImhED0K3+B1j5Ik8ji7HUUXrZcQkh6MN/xYytOPYhI3ii4LdgLvwWV
+	 HKzLOmbEnMTZ0WI5yhOspsg64/uLVIhnrAqbQnjlCoN+09oqatH+03V6JPGp9m3MD6nQ1
+	 6GUgi5Z5y9FvEsXInZ0ARhn8nIOU5laCVbkEainq8KiZCjfWZtxbhWF7jK57Xlx6HwbKr
+	 ABCTXIWnygEXMesP+2pVU74kinkbdfyOMKkgbo0AZQhb63hOBmaqAGjp7CMw9rxQ6kQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063401;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FC8WQvGRewIibp/GFS8im38WQdXiz86qS17N20aQZ2Y=;
-	b=rOnLSHWtQSsDajnMGX1Stpl4TdNsxWSGMQre0lTFBaHfMoWjAM6shLLMQgKS3Gh4vsqE
-	 Dqk/R1yQh4aN8dfK1NJUyPT5hLumPxOWR2zzYv4pPTAdM2thXSL0Om3GRY2UFrYkGdXbe
-	 ZkR7ZPaJndt2U0x+vmgaXi4oPSNjk/oGOSLFWpcqLpdL+oRtzd6uTb4tYHGd/tb8X6HVv
-	 KOWYSZVzHmNSbsPloJxuTD8IdVcbs81TLPjm3zV3qM8qsJrdQFM5g2HOyQVhahZZy5HLf
-	 BpBDc2nFi7CWkRzv3ztXpTTxIOTqPuLNQf4wPuv8jjgb8VgtvZoGUq2SO8a7VzhFdsg==
+	bh=Saq5lLQx21YORjT2QPStU1WDYbtF6RoRG83Tt40005I=;
+	b=WsVghxZwDrIxxcFrNqD1UMZ4jGIJWFFAtMD9S/Jvr7oK60byu8SC8wm7A4aqk3rg3t6J
+	 fCDf6zOCfEoT/m8YuCzwL3wR3r/nD8JGBB3JIECM3jZWLqa2Zns4JNB7agPBr+1/E4t2Z
+	 CcxSrkX0w/X+froXes77hFPFqsoBSQMRr+gmUgrHeDw2lx3uZyGinxXD58WXJCABIwkGB
+	 R1J/KhhbHJqX/bXSls0xgAQEPbt/oku3KaN7FawkXEEyY02JOI9uFF9ZochtrB5Y/e+Jg
+	 VmqVrTfdt4NNSQiE9JRjUt8XmcJQw3ey96M+XllrbPBg7XO2Jxif6U1D4uYLXAvMcsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DD2pSlKt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zgyvmo7F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C42606EEA1;
-	Sat,  7 Nov 2026 14:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47E86082BE3;
+	Sat,  7 Nov 2026 14:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DD2pSlKt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550F51F008A5;
-	Sat,  7 Nov 2026 14:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zgyvmo7F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8130B1F008A6;
+	Sat,  7 Nov 2026 14:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063400;
-	bh=FC8WQvGRewIibp/GFS8im38WQdXiz86qS17N20aQZ2Y=;
+	s=korg; t=1794063401;
+	bh=Saq5lLQx21YORjT2QPStU1WDYbtF6RoRG83Tt40005I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DD2pSlKtruRSP0/2q/KRztShCgI60AzEVLURatSyreR7zK9bOhXTr9LaEtEfKBN9t
-	 aRz+cXWDPJDwl2y+H/uatWoh9HI3Nu9XfvIxQBQHQ+a8fTxiKfamispVyMidlBWk89
-	 wRIfJX1ktejXR8lmqdrXtM4N+U3oRCXX7PjX2zVg=
+	b=zgyvmo7FbuNzZ8CQc8rL/1P+qkTvZzfBZ9QXnrdctIKf+RfraZ9Dzz+snwUlXFc0c
+	 HTmBpi1iCugnqk06o+jm44YijIhaEr7wHob/LnrBzvt4kiwyllZUIaYLKcK89f/Pgk
+	 cr+S845EqLHqwKP5h1yUPPHbT0mc0ZUx7syp7+90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 572/869] kbuild: AutoFDO: Update split machine function argument for upstream rename
-Date: Sat,  7 Nov 2026 08:54:14 -0500
-Message-ID: <20261107134912.629423120@linuxfoundation.org>
+Subject: [PATCH 6.18 573/869] iommufd: Reject a zero-length dirty bitmap request
+Date: Sat,  7 Nov 2026 08:54:15 -0500
+Message-ID: <20261107134912.657131706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -67,43 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 2b358510d5cc56164f83110ca1499c95a5a352cd ]
+[ Upstream commit f6b3fd8f573e801066c21b2aec3d2e949e61e48e ]
 
-A recent LLVM commit [1] renamed the internal LLVM plugin option
-'-split-machine-functions' to '-function-splitting=all', breaking the
-AutoFDO + ThinLTO build with:
+iommufd_check_iova_range() subtracts one from bitmap->length before it
+checks the length, so a zero-length request wraps to SIZE_MAX.  With
+iova = 0 the wrapped value passes the overflow and alignment checks, and
+the request reaches iova_bitmap_alloc() with length 0.
 
-  ld.lld: error: -plugin-opt=-: ld.lld: Unknown command line argument '-split-machine-functions'.  Try: 'ld.lld --help'
+iova_bitmap_alloc() then sizes the bitmap from a length - 1 of SIZE_MAX,
+so mapped_total_index is effectively unbounded.  The scan uses
+last_iova = ULONG_MAX, which spans the whole IOAS when an area is mapped
+at IOVA 0.  Reject a zero length before the subtraction.
 
-The plugin option is needed for in-process ThinLTO, so handle the rename
-accordingly using ld-option.
-
+Fixes: b9a60d6f850e ("iommufd: Add IOMMU_HWPT_GET_DIRTY_BITMAP")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2186
-Fixes: 2fd65f7afd5a ("AutoFDO: Enable machine function split optimization for AutoFDO")
-Link: https://github.com/llvm/llvm-project/commit/3e6acc87c58843e551d6e8e4bf06c26712b04622 [1]
-Link: https://patch.msgid.link/20261014-update-autofdo-split-machine-function-option-v1-1-5c71b3005e89@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260925161142.189813-4-parri.andrea@gmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.autofdo | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommufd/io_pagetable.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/scripts/Makefile.autofdo b/scripts/Makefile.autofdo
-index 1caf2457e585c..0b14a05726ada 100644
---- a/scripts/Makefile.autofdo
-+++ b/scripts/Makefile.autofdo
-@@ -18,7 +18,7 @@ ifdef CONFIG_LTO_CLANG_THIN
-     KBUILD_LDFLAGS += --lto-sample-profile=$(CLANG_AUTOFDO_PROFILE)
-   endif
-   KBUILD_LDFLAGS += --mllvm=-enable-fs-discriminator=true --mllvm=-improved-fs-discriminator=true -plugin-opt=thinlto
--  KBUILD_LDFLAGS += -plugin-opt=-split-machine-functions
-+  KBUILD_LDFLAGS += $(call ld-option,-plugin-opt=-function-splitting=all,-plugin-opt=-split-machine-functions)
- endif
+diff --git a/drivers/iommu/iommufd/io_pagetable.c b/drivers/iommu/iommufd/io_pagetable.c
+index a4d7a9d435603..77891d4d65fb1 100644
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -568,6 +568,9 @@ int iommufd_check_iova_range(struct io_pagetable *iopt,
+ 	size_t iommu_pgsize = iopt->iova_alignment;
+ 	u64 last_iova;
  
- export CFLAGS_AUTOFDO_CLANG
++	if (!bitmap->length)
++		return -EINVAL;
++
+ 	if (check_add_overflow(bitmap->iova, bitmap->length - 1, &last_iova))
+ 		return -EOVERFLOW;
+ 
 -- 
 2.53.0
 
