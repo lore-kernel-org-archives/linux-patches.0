@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061766;
-	b=MtghPlUHxGUs9Y59PDvrQsRffXuYvfhhFFWvTlFlQhGquCFTsmc8mm22poFqCHEIT1Pq
-	 +Y1NpvDqRLm9ohyWrE8YgTETp9JFowyFhv2RlLCVzl9GbSk7VLYqL6FPR5wj95Fm4BiK8
-	 DZaJgc23WyxnYbItbBZrqmqdg6LFGI48xkqutZgzFq59jxM5xROOyS2eWSTprbu2UKVpq
-	 4mUv+IC0m4ia5j0+C0pwuT676U9Zho6GD9l3JHhMxvsxMfoLjjSnMT/S/xn5nwDPxZgyM
-	 6Xy+mof6IQ17sFxitMZzoCJcbUbIJETWUhC3/2JGwPhKObGDTUy88v+JjhQyJjOAwyA==
+	t=1794061768;
+	b=t2c+a/pOu7nbLASEJWXuSYJXJ3TmSSn+17/EsvGDHMxHRpZeqPs5eoMtJ3D/im7cR/qP
+	 cqMDJQXYHGIjF7gOxqK8CnLdZkHrH9ZLI5OjLOz7V1dyy1+1DZ/X+WS793d3Umc+OTwo2
+	 0cPINmToinU81VnylgGc8qKKKwxoN1XPD4q0OrfP7/bNG1vowzfRdvR0JR7k8jcZ4pDk4
+	 b9Uyy5mLj7dlBb0+GVJ/eP2+gs0/HkZ7KknSdKCNwYoye+lEww50XTDnctn6fzLxDXxO/
+	 XDggfWMDejUKhZInpY4/GfRo35k3GqiodVrsKUR76L2C/CoW7QW0pUjoIE8H93NELCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061768;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nnmflxyDcp+Hgfpx/HOgsaiuqKhznERafhVYCfDTsF0=;
-	b=5a4+vmfHMqcYbfWGLBfxEI1TnILWaf7G6UnzSY5Ep+SBEvqIE0mQYxm/5O5HRXLClrim
-	 Gz1b0iriYGBSCQ5a+WEzL/oB9E3eyMkn0M1tXdhKcYRTfGE/DrhbZ4G1qM+ufs1LeO/PK
-	 iGsQ+4UlQAUvKFW6H4ImtJax47EvjNDePjWM6VBBXuKeDl//BVfhkxcm1e0PMsgHdwWdv
-	 Hi8daUF60coEIqvLTjiVkUXFmAZOrM9UluRBvJ0Uh4ecBpSchbLp71biA8nIuABfI87Jt
-	 Mo7LxXM/fiPe3AxvWxEpQU83KgCjiAzhiwng75iZuTcWpAxvNsw4IDSKDcs227JUXAA==
+	bh=wMtKGt+iu89XTTm9/mgXJ1+cKk6HzODIGjK/U9QY+00=;
+	b=zlE4jAp7csDvN4jsFqTHMiIF3fvpeEnCaaUpU9dVnQzfrkxX+nq89XlQwvHNmRTco+f+
+	 8ndMuCI+xQea76qdlKW070QtZkSCWoBk40wwTo7ugtcflI9QyWQaKPNskddiaQrkPgKpk
+	 gzxRHjbzxc6tV220Is/hb53e2jkF8z5eSfRdSNOYNL5gTscYE/LLLy7F7IknZCcPJ5QNa
+	 JG4sGfOo15X9aNiGz88SFz8bs3e7p9+iLc/Odois/NRwDagmsVkljyPFQvjorEhwed3a+
+	 mtSHRhZj1mCHFu/LRjVX8qclf1uQ3CUuHHkTqG9E6gkej5+Lnbn2AOXQW82YXjP2t1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OYVtyD0k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPgIifNk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29645606A326;
-	Sat,  7 Nov 2026 14:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C4E606A32C;
+	Sat,  7 Nov 2026 14:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OYVtyD0k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C532D1F0089F;
-	Sat,  7 Nov 2026 14:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPgIifNk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A911F0089F;
+	Sat,  7 Nov 2026 14:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061766;
-	bh=nnmflxyDcp+Hgfpx/HOgsaiuqKhznERafhVYCfDTsF0=;
+	s=korg; t=1794061767;
+	bh=wMtKGt+iu89XTTm9/mgXJ1+cKk6HzODIGjK/U9QY+00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OYVtyD0kVAH49FYpHMthbpLDQvSWI3BTD1GnFTG2S1cUqP7z2WO2/mtz/mzDwI2VO
-	 Uwilgpt8mZEamYRmh08BYtfDYgQsjZFnahN/yMtJSw1KPh/iV141h5XL8Ihp9kpmyI
-	 ZF8TYP46cXoOh/IyXA8nuZLu+ueGLqVg5r4gC1mA=
+	b=jPgIifNkIbL3xyVTklomuq/hUHouiOJv8142PMK131XvW3s2H1TKxl2OUNY1AB659
+	 Y+DFLBZ58h4hbm6evCJWAqNTfH36NYkSOFXeqWUCvjwSbUJfqB14/eiN0EGCDrpjI6
+	 GehtYiCRF/SVVAN+FMkE+bEcbu3hsErxzYHEep2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 0802/1536] KVM: x86: Take SRCU in kvm_zap_gfn_range()
-Date: Sat,  7 Nov 2026 08:46:58 -0500
-Message-ID: <20261107135020.072429163@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 0785/1536] SUNRPC: Reject a TLS alert record that is not two octets
+Date: Sat,  7 Nov 2026 08:46:41 -0500
+Message-ID: <20261107135019.589037526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,68 +66,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit b59a87c1ba3c347e8aec5f932eb7abf13064fd62 upstream.
+commit d16bebe45272ced4f962d27b9efd8b32a3876bd9 upstream.
 
-kvm_zap_gfn_range() walks memslots and rmaps and may drop mmu_lock to
-reschedule. Callers that do not already hold kvm->srcu (or slots_lock)
-can race with memslot deletion: synchronize_srcu_expedited() does not
-wait, kvm_free_memslot() frees the old slot and its rmap, and the zap
-resumes on freed memory.
+tls_alert_recv() reads two octets from the kvec it is handed and does
+not check the length (net/handshake/alert.c). svc_tcp_sock_recv_cmsg()
+calls it for any positive receive, and the alert[] buffer it supplies
+carries no initializer. A one-octet alert body leaves the description
+read from uninitialized stack and reported through
+trace_tls_alert_recv().
 
-The VFIO noncoherent-DMA path hits this by zapping the entire GPA
-space without SRCU. KASAN reported:
+The peer controls that length. Neither tls_rx_msg_size() nor
+tls_rx_one_record() enforces the two-octet Alert payload. A TLS 1.3
+record carrying only the inner content-type octet decrypts to a
+zero-length payload. RFC 8446 Section 5.1 requires a record with an
+Alert type to carry exactly one message, so any other length is
+malformed.
 
-  BUG: KASAN: vmalloc-out-of-bounds in slot_rmap_walk_next+0x82/0x1c0
-  Read of size 8 at addr ffffc900005c1008
-  Call Trace:
-   slot_rmap_walk_next+0x82/0x1c0
-   __kvm_rmap_zap_gfn_range+0x17a/0x280
-   kvm_zap_gfn_range+0x2a6/0x6a0
-   kvm_vfio_set_attr+0x576/0x770
-   kvm_device_ioctl+0x1ff/0x3b0
+Require exactly two octets before parsing and return -EBADMSG
+otherwise. That closes the transport rather than acting on a partly
+uninitialized alert. Gate the path on a control message rather than a
+positive count so that a zero-length record reaches the check.
 
-Take SRCU inside kvm_zap_gfn_range() so every caller is covered.
-Nesting with an existing kvm->srcu critical section is fine; the
-helper uses a local index. Drop the now-redundant SRCU pair from
-__kvm_set_or_clear_apicv_inhibit().
-
-Fixes: 362ff6dca541 ("KVM: x86/mmu: Zap KVM TDP when noncoherent DMA assignment starts/stops")
+Fixes: bee47cb026e7 ("sunrpc: fix handling of server side tls alerts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://patch.msgid.link/20260825183924.237727-1-nicoyip.dev@gmail.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260808-svcsock-cmsg-fixes-v3-2-62d9a631c880@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |    2 ++
- arch/x86/kvm/x86.c     |    2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/sunrpc/svcsock.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -6664,6 +6664,8 @@ void kvm_zap_gfn_range(struct kvm *kvm,
- 	if (WARN_ON_ONCE(gfn_end <= gfn_start))
- 		return;
- 
-+	guard(srcu)(&kvm->srcu);
-+
- 	write_lock(&kvm->mmu_lock);
- 
- 	kvm_mmu_invalidate_begin(kvm);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10207,10 +10207,8 @@ void __kvm_set_or_clear_apicv_inhibit(st
- 		kvm->arch.apicv_inhibit_reasons = new;
- 		if (new) {
- 			unsigned long gfn = gpa_to_gfn(APIC_DEFAULT_PHYS_BASE);
--			int idx = srcu_read_lock(&kvm->srcu);
- 
- 			kvm_zap_gfn_range(kvm, gfn, gfn+1);
--			srcu_read_unlock(&kvm->srcu, idx);
- 		}
- 	} else {
- 		kvm->arch.apicv_inhibit_reasons = new;
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -289,13 +289,23 @@ svc_tcp_sock_recv_cmsg(struct socket *so
+ 	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
+ 		      alert_kvec.iov_len);
+ 	ret = sock_recvmsg(sock, &msg, MSG_DONTWAIT);
+-	if (ret > 0) {
++	/* put_cmsg() shrinks msg_controllen, so a short one means
++	 * kTLS filled in u.cmsg.
++	 */
++	if (ret >= 0 && msg.msg_controllen < sizeof(u)) {
+ 		/* Returning the count would credit the RPC stream with
+ 		 * octets that never reached the caller's buffer.
+ 		 */
+ 		if (tls_get_record_type(sock->sk, &u.cmsg) !=
+ 		    TLS_RECORD_TYPE_ALERT)
+ 			return -EAGAIN;
++		/* An Alert record carries exactly one two-octet message
++		 * (RFC 8446 Section 5.1). alert_kvec caps the receive at two,
++		 * so a longer record produces the same count. MSG_EOR appears
++		 * only once kTLS has drained the whole record.
++		 */
++		if (ret != sizeof(alert) || !(msg.msg_flags & MSG_EOR))
++			return -EBADMSG;
+ 		iov_iter_revert(&msg.msg_iter, ret);
+ 		ret = svc_tcp_sock_process_cmsg(sock, &msg, &u.cmsg, -EAGAIN);
+ 	}
 
 
