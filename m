@@ -1,68 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061528;
-	b=4TfXBrmLOXUMDnT+SYiCFZcnZejbcouHQJ5AGy6BLLuRqwjZql0peIJY+pRmpSu7Vq9G
-	 fq4EZ2yBtqphaFd/P7WCCHt0GSl8vWzVcSc8H/Tdh+utux8qXZ1hb0bsgOm5Q5r1zOZL5
-	 t7dVt2KynLd6zGw9Mc1wB9LhGWpq6/34/LzjFvQ4jxj0xqDuNhrZNbhiim4sWGSMwYZai
-	 SB9Z5e5qNO+tVH4Pavx3/Ie3rQaz4d0K1RLqL5lC2FsBEa8MoXWnGL9sk3ROYvVvoETZ/
-	 e3CjK7YVJPy8FMgC4Dca0niAyc+6mD/XHPh516cPgzNm6Rzu1gsN/LoVQpdN5Pbzuqg==
+	t=1794061529;
+	b=P3g3YIFvwPcgs0x70QC7e+rg1nk5DdWu/viKWYcNqmx95c/DHpZOAjAGbXA50jenJF3/
+	 eX2ga/CSMpgpEE3LSpJVLlABPgKGEBH3bUSYH7aLKfEDk8eJSshhSoKZJnmTAIUAz9ugD
+	 oksntU4WCaGfRr1w2w+nwIlCs955PlvTs4P5W4IOk8pktKNhm3P8Towj7RUTLhOX9546T
+	 Fc2QjzcEAkfZOYdkmyVtJwCc0nZ8mDmg18sZ0H55/evpSkTCunQUQAEzDgh8KmFCXwVc2
+	 BqZn4mq2x4lcm7wVzf1mcCkOQtM4np3KFom4ziIEWO4Q1PlswHSjFXKhbcSNiOyj7Aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FPMm80OxOMb5+atii+OGhfxNSiUb6xi2BrFQR2/IgJI=;
-	b=funON5IsrhgSWbMBLXojSY7xNzPb7fRQ0Fkyu0F5c70N9hEw1TMYsy71iAMcRAdPo6Vs
-	 0zUPxgz+4VfmRihTxGmojBSSRui9mZAsFBHHGs9aUAp3NYAwIK7+37nagzvnPmCqOsipN
-	 KTfrOoqp3VMbnd0HPIpbqY9AehTHgACFFFggemnr/DGCNxGnlbw6Zs/RhbS+d6jQEYzKT
-	 NdF4I0DqvGU8GQOXjuc6i5hU7c1kgNapEiqHkolZDoqDYtpj2ZPD0/7+ysLapLgM1Er2l
-	 9XgN7XP41DDoMvWimW4MFsqEHPcVHYtyBcYDLB1A9hWvOqKFzZRFbHv0jhVECGkbJtg==
+	bh=GHy3193gcYeq6t1VLvQxvUy5YJrpA/9nBQotdGe/ShM=;
+	b=abc510RYT0EO94PUBoR4NlKNa2Gxh6NfoGLK3DS+6t9anycTNPGlWCj7iF+UGi0m8QNp
+	 phSBIKwZNrIk0DOfYbI7u2ptJZ078rnNAWSf2UOosrk44YOwpUVuFT0Cw/zQSQ1KhOJeG
+	 jwEjhO2tN5rxge3xfjHfsxb/ipD6hS3uF/xb9XVh/ZvmtI2MmBSPsOHhTcOL5ZlzZkOXd
+	 flcux4gXj2/RMD2ekY4Muq1C0nPmn4KwzJ0XYiEnsRFKItEPIkw+WlJ8LifZeicCHkGSC
+	 7Vud3bpxZfeZwi2F6W0ZU8qXmq0FxEQ4fYTYefTvWJGgkFcpATz5EO3rn9FxGNMdKaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UT1PDRfR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cLabEE/m";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34CA606A326;
-	Sat,  7 Nov 2026 14:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564D5606A326;
+	Sat,  7 Nov 2026 14:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UT1PDRfR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B111F008A1;
-	Sat,  7 Nov 2026 14:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLabEE/m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22D31F0089F;
+	Sat,  7 Nov 2026 14:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061527;
-	bh=FPMm80OxOMb5+atii+OGhfxNSiUb6xi2BrFQR2/IgJI=;
+	s=korg; t=1794061529;
+	bh=GHy3193gcYeq6t1VLvQxvUy5YJrpA/9nBQotdGe/ShM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UT1PDRfReCbJQMusU1SFvymHCIXfxCnEEKOOavW0r+ilhxJxWESW5afxrp/um0K1+
-	 Z8vpbdUEnvWzhMB5ls1gTHHW8klXvKQYnsWdidNMhhJqq0He326IXRjO8Pw7+MeYfQ
-	 Kf8RXhy795bHNOj9mFd7ojfYW+RJz17cjO2j89rA=
+	b=cLabEE/maTPyddJ2fArgccUVqznZaLO5YXLVTs30Kkgb/g5pPxHRp2GiSitJWLDK4
+	 KvLcn2JVHlChdaAu+cxO+ndW66CYkabG7P+FcfLMR0LOlxaeRUpKuKpAeU7hJF3uVU
+	 PnZhhqaJYIbaxOvn8BQRcUrgIOtKKpKc+UYrgE5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 6.12 0614/1536] mm/hugetlb: fix use-after-free in hugetlb_mfill_atomic_pte()
-Date: Sat,  7 Nov 2026 08:43:50 -0500
-Message-ID: <20261107135014.782401504@linuxfoundation.org>
+	Binbin Deng <18983559317@163.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 6.12 0615/1536] apparmor: fix a use-after-free in aa_lookupn_ns()
+Date: Sat,  7 Nov 2026 08:43:51 -0500
+Message-ID: <20261107135014.809605919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -84,62 +67,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Binbin Deng <18983559317@163.com>
 
-commit d8a9cd7fd2fb01211430c933932da58839b8ca65 upstream.
+commit f292873ceb4bd3a1a0f75f884361cd556e457692 upstream.
 
-Let's fix another instance where we use a folio after dropping the PTL,
-where someone else could e.g., MADV_DONTNEED it once we drop the PTL,
-making us trigger a use-after-free on the folio.
+aa_lookupn_ns() takes a reference on the namespace it finds with
+aa_get_ns(), which is kref_get() on the reference count that the
+namespace is released through, without checking whether the namespace
+is still in use.  A concurrent removal of a ":"-prefixed namespace
+looks the same namespace up and only then takes the parent lock to
+remove it, so the last reference can be dropped between the lookup and
+the aa_get_ns() call: the reference count then reports the increment on
+a zero count and the kernel classifies the following use of the object
+as a use-after-free.  A user with CAP_MAC_ADMIN can trigger this by
+writing a ":<name>" removal and a ":<name>/<profile>" removal to
+/sys/kernel/security/apparmor/.remove concurrently.
 
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-3-42796911043b@kernel.org
-Fixes: cb6acd01e2e4 ("hugetlbfs: fix races and page leaks during migration")
-Fixes: 1c9e8def43a3 ("userfaultfd: hugetlbfs: add UFFDIO_COPY support for shared mappings")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: <stable@vger.kernel.org>
+refcount_t: addition on 0; use-after-free.
+WARNING: lib/refcount.c:25 at refcount_warn_saturate+0xc0/0xe0, CPU#6
+Call Trace:
+ <TASK>
+ aa_lookupn_ns+0xa9/0xc0
+ aa_remove_profiles+0x4fb/0x730
+ ? __kvmalloc_node_noprof+0x219/0x5c0
+ ? __pfx_aa_remove_profiles+0x10/0x10
+ ? aa_loaddata_alloc+0x65/0x1f0
+ ? _copy_from_user+0x2d/0x80
+ ? aa_loaddata_alloc+0x111/0x1f0
+ profile_remove+0x2ee/0x4a0
+ vfs_write+0x21e/0xcf0
+ ? rcu_core+0x29c/0x1740
+ ? timerqueue_linked_add+0x1f4/0x3d0
+ ? __pfx_vfs_write+0x10/0x10
+ ? mutex_lock+0x81/0xe0
+ ? __pfx_mutex_lock+0x10/0x10
+ ? __pfx_rcu_core+0x10/0x10
+ ? __pfx_hrtimer_update_next_event+0x10/0x10
+ ? mutex_unlock+0x7b/0xd0
+ ? fdget_pos+0x24d/0x4b0
+ ksys_write+0xf7/0x1c0
+ ? __pfx_ksys_write+0x10/0x10
+ ? restore_fpregs_from_fpstate+0x37/0xc0
+ do_syscall_64+0xf9/0x540
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+
+Fix by rejecting a namespace whose reference count is zero.
+
+Fixes: 3664268f19ea0 ("apparmor: add namespace lookup fns()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ security/apparmor/include/policy_ns.h |   16 ++++++++++++++++
+ security/apparmor/policy_ns.c         |    2 +-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -6772,11 +6772,16 @@ int hugetlb_mfill_atomic_pte(pte_t *dst_
- 	/* No need to invalidate - it was non-present before */
- 	update_mmu_cache(dst_vma, dst_addr, dst_pte);
+--- a/security/apparmor/include/policy_ns.h
++++ b/security/apparmor/include/policy_ns.h
+@@ -118,6 +118,22 @@ static inline struct aa_ns *aa_get_ns(st
+ }
  
--	spin_unlock(ptl);
- 	if (!is_continue)
- 		folio_set_hugetlb_migratable(folio);
- 	if (vm_shared || is_continue)
- 		folio_unlock(folio);
+ /**
++ * aa_get_ns_not0 - increment references count on @ns found via lookup
++ * @ns: namespace to increment reference count of (MAYBE NULL)
++ *
++ * Returns: pointer to @ns, if @ns is NULL returns NULL,
++ *          NULL if @ns is being freed
++ * Requires: @ns must be held with valid refcount when called
++ */
++static inline struct aa_ns *aa_get_ns_not0(struct aa_ns *ns)
++{
++	if (ns && aa_get_profile_not0(ns->unconfined))
++		return ns;
 +
-+	/*
-+	 * Hold the PTL until we're done with the folio: the page table owns the
-+	 * folio reference now.
-+	 */
-+	spin_unlock(ptl);
- 	ret = 0;
- out:
- 	return ret;
++	return NULL;
++}
++
++/**
+  * aa_put_ns - decrement refcount on @ns
+  * @ns: namespace to put reference of
+  *
+--- a/security/apparmor/policy_ns.c
++++ b/security/apparmor/policy_ns.c
+@@ -207,7 +207,7 @@ struct aa_ns *aa_lookupn_ns(struct aa_ns
+ 	struct aa_ns *ns = NULL;
+ 
+ 	rcu_read_lock();
+-	ns = aa_get_ns(__aa_lookupn_ns(view, name, n));
++	ns = aa_get_ns_not0(__aa_lookupn_ns(view, name, n));
+ 	rcu_read_unlock();
+ 
+ 	return ns;
 
 
