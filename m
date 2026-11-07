@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064916;
-	b=QlaKJ9Tp2UsQmaivfCb+gjh4bMfqjlz0Ce/3pvwyT7u5T28yw5A69rltyIlbwnNu1o76
-	 rZ6uwAE0rFoT1Sqan4rKOVYgDiJ4EyUDFWm01sdVnqO2zJxN1xJaMgmt8PR1YSmpcmb9s
-	 JXkfsCcud7bUP1jQG/70rs3iI7zjvH7Fqjz+3Mc18KDSbu1NhFbHVWirROuprPnvnibXP
-	 JDXRdaolE0sqiN/NKjIAKiyY2X5v1AFJkTLBeZIjPTfX5QcO7GYpJeL8eJK3XPF2mB5s1
-	 rsDz8o2hUDi578TCSSg3FAFH+MPPnzlz9xt4DocjTf6yKM7qFLyUe457B1WQHOhMRDQ==
+	t=1794064918;
+	b=lUocbVAT6RCk2hMIDZMoM4dQoDXIdhN1p/khrX2/qt7vDow1u6uc69zMhiUUdJ31QGkP
+	 w5I94QOwL+j6u1/lN9xdK5ULHnnhUa/sZtJpVq2XCm/GDXM2AlRkD1IqKRaDU0ydZvTaZ
+	 sMcJW82VDxQ6ZUzO7M4p26SnNjrc9jYBWTsAfr6xDzS6WDbEFABgv5toQGf2MF1mnac2d
+	 6m+G7C6ZrqfViBPuFU10jNPCyLcgCy169H6bfHq9Sl+z/H1P3/vG3Z6Hu+V5oounpG1ps
+	 EiZtxoj3OiSPaB6pr3sLSM6r2SyEMx9YRsaWu6E9ydYXQv/2Fgf/Om+mo0LfE3XY/gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064916;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064918;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=53nyKm7NVyOdq4amIZQsWQv3Nxwesumf1d7nbN2mZY4=;
-	b=2rKfDf3BxtGEJNB385UGaBA2l5qQuvwNNQlERfEUv+Ym+J5osdeJV2veFIdgFMcUzA8M
-	 YIBXMhNALsN6VZbo0AGtGnVZliIU7NKPPrni0QURkCGypNdO1TAPr1gLRCVwAyB9BXh1I
-	 jZKgAlYhoe/NBq5AZP+MjVOAf7q9YYzbgEIGRp5x6oan+5M6xQasErmVQRC//OuXGZNhz
-	 EgmQEt74cTNKnTW6GNR4Z06W1AXv9DNfXdXh89D3cAAJCS/sEtldc2TIWYtP9Cc3d9/WS
-	 Nem3JYjHqqtfoObPBq8skMIrc86CsvK/BlocW+v5h5cPqZ2vXrwizZwh9rfhv9svxmA==
+	bh=9WUGMSN4eurK0FXC5F2UXsh/PQemfTRfI1MmmhK4yLM=;
+	b=k93x/AW278izq/Z5Tj1G+hOdAzu/RU4BkFrkMyXcHdjv0WIMvFo1Kdv9nL4vP3piHxGj
+	 9A4h7m71+iU52VxQToHAmhhlBOi7NESu5UCiH+2qnssk06v0+MFVJnJI1VDxOWYtChOVW
+	 pywzaEujrO7h4nM1zaz2u6k+mFAhN6BPvknZjqlJea9xEOhY6KmHw5QPlCC+peQQZQbrX
+	 O/7wBOT3ucFANpsp4p3HyRmor//YhVUrWqBqjCm9mV2yWoKqD0Avsc8ICzXN2QgrjhXEK
+	 mKJcRNX+7ixZeqh0AFCK6TPOe290lrLAjxl++QSwMic0abUDg+tYbet0wpbJDVdYmdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KwebzYic;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5mAXaOp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DF9606A9FE;
-	Sat,  7 Nov 2026 15:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBA0606A33E;
+	Sat,  7 Nov 2026 15:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KwebzYic
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C091F008A1;
-	Sat,  7 Nov 2026 15:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5mAXaOp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929DC1F0089F;
+	Sat,  7 Nov 2026 15:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064916;
-	bh=53nyKm7NVyOdq4amIZQsWQv3Nxwesumf1d7nbN2mZY4=;
+	s=korg; t=1794064917;
+	bh=9WUGMSN4eurK0FXC5F2UXsh/PQemfTRfI1MmmhK4yLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KwebzYicnYhNoP1DucNt6a5MSbtQtY+kH2Czrfil934935kYVaakwAY8K4UWaQ3yl
-	 ghim/nlnkcFmZOvDf+g/WP/7E45uyk2x63XagujbXF0qFG27hKlFrn0zbWmvNnnKsI
-	 CBkfX5rcwkp4QwqM7udmtKZMQaOChv5538OeMfD8=
+	b=S5mAXaOpsmG59IPB74eQF8B/N6zkE0IOIUk3E0iLWLVok0Lg83vovm4cCZjmellj/
+	 HO4Sfgjjm2izxWNoYr6hKZTl3N0PE+XECtPjwlIx1cDM6t6n2g/tzfOLI6grWMQiXo
+	 nZughOhPgx9siuZ/YWacqYmr2/A6dv5toQ0ElEQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyokhan Kochmarla <gyokhan@amazon.de>,
-	Gao Xiang <xiang@kernel.org>,
+	David Carlier <devnexen@gmail.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0815/1257] erofs: use on-disk blkszbits for lz4 max pcluster bound
-Date: Sat,  7 Nov 2026 08:51:51 -0500
-Message-ID: <20261107135001.854691806@linuxfoundation.org>
+Subject: [PATCH 7.3 0816/1257] ring-buffer: Take cpus_read_lock() when changing the subbuf order
+Date: Sat,  7 Nov 2026 08:51:52 -0500
+Message-ID: <20261107135001.882491202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,65 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gyokhan Kochmarla <gyokhan@amazon.de>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 90b7e4a7a16443d9f6807b5c1dde52074d9f74c0 ]
+[ Upstream commit 453d0f47b174cac387af48d303c503b84f82212e ]
 
-z_erofs_load_lz4_config() rejects a valid LZ4 image when the kernel's
-page size differs from the image's block size. It bounds the on-disk
-max_pclusterblks with erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE), which
-expands to Z_EROFS_PCLUSTER_MAX_SIZE >> sb->s_blocksize_bits.
+A CPU coming online for the first time gets its per CPU buffer allocated
+by trace_rb_cpu_prepare(), which then adds it to buffer->cpumask. If that
+happens while ring_buffer_subbuf_order_set() is running, the CPU shows up
+after the allocation loop and the install loop walks it with an empty
+new_pages list, corrupting the buffer.
 
-At the point this runs, sb->s_blocksize_bits still holds PAGE_SHIFT:
-erofs_fc_fill_super() seeds s_blocksize_bits to PAGE_SHIFT before
-reading the superblock, and only corrects it down to the on-disk
-blkszbits after erofs_read_superblock() returns. The LZ4 config is
-parsed inside erofs_read_superblock(), before that correction, so the
-bound is computed with the wrong shift.
+Take cpus_read_lock() as ring_buffer_resize() does.
 
-On a 64K-page kernel mounting a 4K-block image (e.g. one built with
-mkfs.erofs -C 262144 on a 4K-page host), the bound evaluates to
-1 MiB >> 16 = 16 blocks instead of the correct 1 MiB >> 12 = 256
-blocks. The image's legitimate max_pclusterblks of 64 then fails the
-check, mount returns -EINVAL, and booting from such an image as the
-root filesystem panics:
-
-  erofs (device dm-0): too large lz4 pclusterblks 64
-  Kernel panic - not syncing: VFS: Unable to mount root fs
-
-sbi->blkszbits already holds the on-disk block size at this point, so
-compute the bound from it directly. This makes the check independent of
-the host page size and of superblock-parse ordering.
-
-commit 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block
-support") already handled the same ordering hazard for the superblock
-checksum path by using sbi->blkszbits in erofs_superblock_csum_verify();
-the lz4 config path was missed.
-
-Fixes: 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block support")
 Cc: stable@vger.kernel.org
-Assisted-by: Kirocrew:gpt-5.6-sol
-Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
+Link: https://patch.msgid.link/20260916192628.274136-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/decompressor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
-index d387b27c4ee21..771d862afc2ed 100644
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -23,7 +23,7 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
- 		if (!sbi->lz4.max_pclusterblks) {
- 			sbi->lz4.max_pclusterblks = 1;	/* reserved case */
- 		} else if (sbi->lz4.max_pclusterblks >
--			   erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE)) {
-+			   Z_EROFS_PCLUSTER_MAX_SIZE >> sbi->blkszbits) {
- 			erofs_err(sb, "too large lz4 pclusterblks %u",
- 				  sbi->lz4.max_pclusterblks);
- 			return -EINVAL;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 9c4e40847e430..1a1219b6d0fc0 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -7466,6 +7466,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
+ 	if (psize > RB_WRITE_MASK + 1)
+ 		return -EINVAL;
+ 
++	guard(cpus_read_lock)();
++
+ 	/* prevent another thread from changing buffer sizes */
+ 	guard(mutex)(&buffer->mutex);
+ 
 -- 
 2.53.0
 
