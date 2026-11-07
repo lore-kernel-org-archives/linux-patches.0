@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063677;
-	b=JU3pO2Ya9PRJ6/1Wdu9I8vwsz1qaE+qHZBmkiDNinJJifRpRhNRJHrMhKI1cvz84ZUKa
-	 1CSSOtA/PMV/i/yWaSBqf1bVZJ9fDbKIWwL5d2UUep3huNZDBw05uQOiFOYhUtUiXk65A
-	 SSOtPJ626RmM9Cpq6Y460vY2CZ1NtW6PQlo9pbIXG3rdPoQYvaBX97cPQCMahDT+oH4Oa
-	 pHGhQ8Cp/Qknprv+b89t/xlqA5Fo6yfJwuQIjghzFNMOojucZQk16qbf9AZPdIRQendgi
-	 QBp1FiM6ksTCR9712nN9Tu9+smmW+zrNg9VjvKrE+gTTJkZRkF/H6NwKRJfemlmJv3w==
+	t=1794063679;
+	b=BGMy4zUPj+qMsgHVbxqQ8GOua+Pk/olAiU6vNEcfHJHnvShkGQ/XCpEPWQplYrUOItFT
+	 AoNQbKjwvC3FF5aliPtkS1PelRRDiV4aH/haSNMzlRpq6XNB3hCNrW7fKSa01EvYgH8CY
+	 5DgVu+e+6JiayqJOpsLs2jyRn6j3U7WFrh//fKurV3kdxvoNfLUzJ9u2IWwNnc17v6tLw
+	 qY626KwtD2BTZCnjcjOE3GSPds9qCdcWPqex2F28zo06cN6dlTBkQaIRVZayFmq7AzgnB
+	 k5U4ww+9Wamhyc7EVuuFDCtrF9Hy7t1BpTLWK+stI15UWDMGxWkvp59AyM2YhiPQitg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063679;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N/R+aOVANEgpgBMzIx+9gr7YJsANL3+oHSFhZV+lXKw=;
-	b=kM7waABoOVVjciDawV/a0g6ViyGJjP/2g6GOdfj/WsR/56a9uM7lcGQD+bcZKvjClVkR
-	 4gFhAiLL0M1EZ/NvfjWKN3oODH9fItRf6IjN2GVAWQcW+8qgq1jpOOwFhR4NpFY5xX756
-	 J8UowgKkopBo1mLWs2VoCrtn0pc9qD0URiXjFsCCy6kvvVRYbItU96ovJs/h5Mn3lp7sE
-	 ptIRmGJlw1rsV1iM1CLYvdVutnh0FmrAWbNMp3pJOnOf/Y20m8IDH4nQ/vNsH03TFWqg5
-	 GQcr8Zs36be7Byw7XYo9ua4E4eYj+PbnLgNw9hFE9CPU8Oxp023PluhB+RPUUGRc2eA==
+	bh=+aDcpwiELvT+q/JHwoFJq+Lq/zjuAZM1I02LgpE00xo=;
+	b=SIxWXjM4iXTz0blENI0L4rLgYA2stPMqUnGAAvMm2IZrAplhND/OLNCUZTEng8FCiwIt
+	 5yJWYAglWQ/2nsVmQCKLUZu4rIUexww3T2hd+20LekOevghXXAy6z97jEDJo6HwJ9FnOa
+	 pgM8pldu9++LfbTfGcUAB57kjSvHRlBvNK3GFezPu1O3HZbcvmtg34mXbj9sAzqJDSnMe
+	 ufBR886aGMeHZmQ6ZM5Kuf6puWwHI3Wy2cxP5O6rO7XKUXtPI9ZzVs0CWRUyDh8y5sKVx
+	 v7ZpSsKQbjXwgjIZHEv7OXaN553sKeedTgPvXWSnLs2qB+Dsqm9xMl7e2+E01AhvR6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r6hDOeF7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vF3XV5vg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF0A6082BF9;
-	Sat,  7 Nov 2026 15:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEE8606B881;
+	Sat,  7 Nov 2026 15:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r6hDOeF7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D491F0089F;
-	Sat,  7 Nov 2026 15:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vF3XV5vg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D74A1F0089F;
+	Sat,  7 Nov 2026 15:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063677;
-	bh=N/R+aOVANEgpgBMzIx+9gr7YJsANL3+oHSFhZV+lXKw=;
+	s=korg; t=1794063678;
+	bh=+aDcpwiELvT+q/JHwoFJq+Lq/zjuAZM1I02LgpE00xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r6hDOeF7qx3F2whqzwiaEwBD1D/9KAro76GfbRk7p4WXUI6J5/NnRoJou7NywqJB8
-	 OprXO9OWmPcuwO83JnlUabC0cknB2Ez78Xr6N5orqTfRXJ4qWk1tFMTNb/wADPjxup
-	 tNerjrIUwEPasFV7448W01PsNaFU7+AXvcKF6JaQ=
+	b=vF3XV5vg+/8fcZ4LaFVcpZab7vcuVQRFPJkzhgCcywOo6ao+wNBDLZe9xMQrMuGSB
+	 BE/ltwbGSOQ0YtcYkl1hOAJ43GvOyCVzjtIOJWJ+z+G1EMgGR2SxBdCCAQGA3x4f2m
+	 2FwZNbxn6Ba1A9XqCDH7r9vx4x+fK8ca0GJaeIyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Val Packett <val@packett.cool>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 787/869] f2fs: fix to update superblock crc in sanity_check_area_boundary()
-Date: Sat,  7 Nov 2026 08:57:49 -0500
-Message-ID: <20261107134919.412152507@linuxfoundation.org>
+Subject: [PATCH 6.18 788/869] ASoC: qcom: qdsp6: q6afe: fix clk vote response type mismatch
+Date: Sat,  7 Nov 2026 08:57:50 -0500
+Message-ID: <20261107134919.447126671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,41 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit f8f956c7ec8c0285d7a80bed497d2f7adcbded15 ]
+[ Upstream commit f3c7bee984aa0ba2b48a44e16a6f3ec2c27f851e ]
 
-This patch fixes the bug reported by Sashiko:
+The response sent by the firmware when requesting a clock vote (opcode
+AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST) does not actually have
+the same opcode + status payload as APR_BASIC_RSP_RESULT. Rather, it
+returns one single u32 which is the client_handle that must be used in
+future unvote requests for the same clock.
 
-We should update superblock crc along w/ raw_super->segment_count in
-sanity_check_area_boundary() if sb_checksum feature is enabled.
+As a result of this type confusion, the status returned by the callback
+to q6afe_vote_lpass_core_hw was actually an out-of-bounds read. It was
+only interpreted as success (0) most of the time due to luck, but there
+are some reports of random errors such as:
 
-Cc: stable@kernel.org
-Fixes: d440c52d3151 ("f2fs: support superblock checksum")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[   20.961100] qcom-q6afe aprsvc:service:4:4: AFE failed to vote (3)
+[   20.961131] Failed to prepare clk 'core': -110
+
+Fix by correctly interpreting the response as a single u32, and actually
+store it as the client_handle to ensure unvote would work correctly.
+
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/5976946.DvuYhMxLoT@antlia/
+Fixes: 55e07531d922 ("ASoC: q6dsp: q6afe: add lpass hw voting support")
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Signed-off-by: Val Packett <val@packett.cool>
+Link: https://patch.msgid.link/20261016063536.598610-1-val@packett.cool
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/qcom/qdsp6/q6afe.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 11d218b415b0d..69d36e1a301bf 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3920,6 +3920,12 @@ static inline bool sanity_check_area_boundary(struct f2fs_sb_info *sbi,
- 		/* fix in-memory information all the time */
- 		raw_super->segment_count = cpu_to_le32((main_end_blkaddr -
- 				segment0_blkaddr) >> log_blocks_per_seg);
-+		if (__F2FS_HAS_FEATURE(raw_super, F2FS_FEATURE_SB_CHKSUM)) {
-+			__u32 crc = f2fs_crc32(raw_super,
-+					offsetof(struct f2fs_super_block, crc));
-+
-+			raw_super->crc = cpu_to_le32(crc);
-+		}
+diff --git a/sound/soc/qcom/qdsp6/q6afe.c b/sound/soc/qcom/qdsp6/q6afe.c
+index 7b59d514b432a..d2cb0ccd34562 100644
+--- a/sound/soc/qcom/qdsp6/q6afe.c
++++ b/sound/soc/qcom/qdsp6/q6afe.c
+@@ -377,6 +377,7 @@ struct q6afe {
+ 	struct q6core_svc_api_info ainfo;
+ 	struct mutex lock;
+ 	struct aprv2_ibasic_rsp_result_t result;
++	uint32_t vote_result;
+ 	wait_queue_head_t wait;
+ 	struct list_head port_list;
+ 	spinlock_t port_list_lock;
+@@ -966,13 +967,14 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
+ 	struct aprv2_ibasic_rsp_result_t *res;
+ 	struct apr_hdr *hdr = &data->hdr;
+ 	struct q6afe_port *port;
++	uint32_t *vote_res;
  
- 		if (f2fs_readonly(sb) || f2fs_hw_is_readonly(sbi)) {
- 			set_sbi_flag(sbi, SBI_NEED_SB_WRITE);
+ 	if (!data->payload_size)
+ 		return 0;
+ 
+-	res = data->payload;
+ 	switch (hdr->opcode) {
+ 	case APR_BASIC_RSP_RESULT: {
++		res = data->payload;
+ 		if (res->status) {
+ 			dev_err(afe->dev, "cmd = 0x%x returned error = 0x%x\n",
+ 				res->opcode, res->status);
+@@ -999,8 +1001,10 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
+ 	}
+ 		break;
+ 	case AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST:
++		vote_res = data->payload;
+ 		afe->result.opcode = hdr->opcode;
+-		afe->result.status = res->status;
++		afe->result.status = 0;
++		afe->vote_result = *vote_res;
+ 		wake_up(&afe->wait);
+ 		break;
+ 	default:
+@@ -1910,6 +1914,8 @@ int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
+ 			       AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST);
+ 	if (ret)
+ 		dev_err(afe->dev, "AFE failed to vote (%d)\n", hw_block_id);
++	else
++		*client_handle = afe->vote_result;
+ 
+ 
+ 	kfree(pkt);
 -- 
 2.53.0
 
