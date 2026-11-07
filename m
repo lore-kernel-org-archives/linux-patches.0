@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064807;
-	b=hYoiA/Ol47wbQIQJEqnngFo7AH3FnAz30KXAzsi+h9P+XulXutQJs3a3Xc4mihYCU1C7
-	 WJcgIlvfLxbG3HsRpgPxNvW9L8P9plNbrFN2BZT3UJgKiH5o6PTcicMkB6gyNBa80SMVc
-	 ao4H4Ok/lqJhjBl6D+PEUxG/U4FYoHw3iEha6wQsIL1iukoBLi+UVPDpqYnO+YoAzKt3M
-	 FIWkdwI3rIqHYQuxuxyCDBq85Z9ACYwLlY2Z9+NJvHIwtSB3p4owYhugsmrXib3flzLNr
-	 RqcsZmY3Bc+zXnKNCnenZHNqRax4m5bj9+wOCcceCHYxNz3w5BdWQwEfvsIZ9k27bPQ==
+	t=1794064809;
+	b=mN0+934fb9A5GZSTG0VcCfuYiKPz+i9F5xyF8J7JXf43gep2SF//x4QxJHM7DaLEzj06
+	 Vi/cXkj1+Ac8LwkTRNmuUZ3frEzmJSmbSywdXg0gfsXxjk6DZ+Jv90eg71+IIgwlxOTe2
+	 Yus0n8dYVSsHlPItmjPzYnWr78DwSmHQC9/+yJnMSQK65LWFzaIkeYhLik6IltpVfmKnp
+	 C/+ekFN5B05fE0YYE1AzylJTxUtolZZpQV/N2pEk52pLOztAkfJLmKStNds2eK1aDxMfL
+	 PBJ1kQL8irWMLhr9kI0BCfX/mU/YKwDUe7NpXeRkUQAUTGaImYdC5kU9P1ExAji+eDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064807;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064809;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AjHuqYrpktNza/tahbS4Heg6hTjThT3nQp+PtjSNY10=;
-	b=UT8ItQ304Gca/P15YzpDwhsyVZE/04r7nL9qB/LUKuznw1fn2JooJJx2flIQjnxmzAhc
-	 Ny9KkH0OKSmktXvOBmHka/dOmGybLjnHqvMl3+UJH9PYM0ZZXYIxM/dE0UuMJsPU2Z+1O
-	 mRkEGUft+hCu3y9KkPIR64TUkG9bzydlJBjWj81QiTnrv+83YZvdjyvoHFc5yV4yb2EuZ
-	 jZB0peV6uzG17Klvm5xiSvU9qNsrIMOaypwT9PZHQGuHXQhll/JJKpqR7WTSYJYC65dHw
-	 G/HmGCHSLX1V7XnWdDvT07GYs6ahGUgNKfoFNP34vymHguZZinETA9XtUKUTHR9MdgQ==
+	bh=eIrGxGqIHQSEds8M1LC+IAsktQk0JS2G4brVCwMvXyE=;
+	b=cIHzA4FJJjwOfg0VnZkRyITv4N3ZqZPnFGmCOlipGsk4+co9c4k/ido5EU2t5Aa8jaXi
+	 J0b/U9/u1oNhhpFVpg+YSKeHesmQn+R3Y04qAy7ixocEc6p+qH12z+BCkeqlKyi9+bLop
+	 44DVTMYW43yERAand7Rkz/Qymx6qX5WUdCMMHB9DTDXN3M3Z1KsUsHZbKVOFvOdD3I0Py
+	 N3P09XxnuIq2A3Q2StSdE9tLnJy4+di+OJ8X2BPE1H6A+N8Mq7xefkcG3iCVAlvPW0nX5
+	 ph6iARKCZIMb6MPMfbcWbroICMUVobYwxMgI5dPJAD1VXUcWX9Xz6T4LrsNOV2sVdBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AVIy5mXB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uoEOakc/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A15606C02A;
-	Sat,  7 Nov 2026 15:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF54606C02A;
+	Sat,  7 Nov 2026 15:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AVIy5mXB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3251F008A3;
-	Sat,  7 Nov 2026 15:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uoEOakc/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7351F008A6;
+	Sat,  7 Nov 2026 15:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064807;
-	bh=AjHuqYrpktNza/tahbS4Heg6hTjThT3nQp+PtjSNY10=;
+	s=korg; t=1794064809;
+	bh=eIrGxGqIHQSEds8M1LC+IAsktQk0JS2G4brVCwMvXyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AVIy5mXBPbnCSkVWv3gh2wMHXkLV1a7j2+zg1dvRWMbikvAuwNBJuobMQ4Rm6gLKL
-	 tnwvQuQfVfKVjfcMvnE9WXdTIwqT4QHNbwLjOu6yQ4KEST/3ORsP7jWrxPyv1BPp7F
-	 m+wfqYvO2UQkJ6cheYe/zMEUoZ0Lc2kl0RfVHO0E=
+	b=uoEOakc/iBeLRBxAePcksXcGKFAZZ0DohizVzCudYf8IQJ3AXVUrpoPJIX8wsxe76
+	 bnSyrzn1/zse/5ATWPMSvZignyatsRLIO9OvX9/MXKudC0bJ6FLBqjtAHpmH0Hn084
+	 tx90yW1h59YWCsY1QMrefMR6BNdSidXTLFjaMaTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Takashi Iwai <tiwai@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0746/1257] ALSA: cs46xx: fix unit mismatch in DSP code area bounds check
-Date: Sat,  7 Nov 2026 08:50:42 -0500
-Message-ID: <20261107134959.895363536@linuxfoundation.org>
+Subject: [PATCH 7.3 0711/1257] nvmet: require authentication before property set
+Date: Sat,  7 Nov 2026 08:50:07 -0500
+Message-ID: <20261107134958.892081969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,51 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit fd65108f5001ffb416dc9bd37ec1893f55cff24a ]
+[ Upstream commit 44512543ff0413031516a02cde67323a55e0f769 ]
 
-ins->code.offset and code->size are measured in 32-bit words, while
-DSP_CODE_BYTE_SIZE is the size of the DSP code area in bytes. The
-check ins->code.offset + code->size > DSP_CODE_BYTE_SIZE in
-cs46xx_dsp_load_module() therefore allowed up to four times more code
-than the code area can hold.
+I/O queues do not perform independent DH-HMAC-CHAP authentication.  They
+instead rely on authentication of the controller's admin queue.  Fabrics
+property commands, however, are dispatched before the general admin command
+authentication check.
 
-The shadow buffer ins->code.data is allocated with
-kmalloc(DSP_CODE_BYTE_SIZE), i.e. it holds DSP_CODE_BYTE_SIZE/4
-words. A firmware file with a code segment larger than
-DSP_CODE_BYTE_SIZE/4 words (28 KiB) passed the check and caused an
-out-of-bounds write in shadow_and_reallocate_code() and an
-out-of-bounds read in snd_cs46xx_download().
+An unauthenticated peer can consequently set CC.EN, connect an I/O queue,
+and access a namespace after admin CONNECT reported that authentication was
+required.  Reject PROPERTY_SET until the admin queue has authenticated.
+Targets without a configured authentication key are unchanged.
 
-Compare the sum in words against DSP_CODE_BYTE_SIZE/4 and cast it to
-u64 so that the sum cannot wrap for large code->size values.
+This was found by source review with AI assistance.  A localhost NVMe/TCP
+wire reproducer retrieved a known 4 KiB namespace block in two independent
+boots without completing AUTH_SEND or AUTH_RECEIVE.  With this change,
+PROPERTY_SET returned NVME_SC_AUTH_REQUIRED and the namespace data was not
+returned; the no-authentication control continued to work.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: c91a20129185 ("nvmet-auth: authenticate on admin queue only")
 Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Link: https://patch.msgid.link/20261014102619.16415-1-arefev@swemel.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/cs46xx/dsp_spos.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/fabrics-cmd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/pci/cs46xx/dsp_spos.c b/sound/pci/cs46xx/dsp_spos.c
-index 6fd4f629d1d57..a77e6f5a14ada 100644
---- a/sound/pci/cs46xx/dsp_spos.c
-+++ b/sound/pci/cs46xx/dsp_spos.c
-@@ -393,7 +393,7 @@ int cs46xx_dsp_load_module (struct snd_cs46xx * chip, struct dsp_module_desc * m
- 		dev_dbg(chip->card->dev,
- 			"dsp_spos: module got no code segment\n");
- 	} else {
--		if (ins->code.offset + code->size > DSP_CODE_BYTE_SIZE) {
-+		if ((u64)ins->code.offset + code->size > DSP_CODE_BYTE_SIZE / 4) {
- 			dev_err(chip->card->dev,
- 				"dsp_spos: no space available in DSP\n");
- 			return -ENOMEM;
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index 42d1d18116715..b451029ab8f49 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -14,6 +14,10 @@ static void nvmet_execute_prop_set(struct nvmet_req *req)
+ 
+ 	if (!nvmet_check_transfer_len(req, 0))
+ 		return;
++	if (!nvmet_check_auth_status(req)) {
++		status = NVME_SC_AUTH_REQUIRED | NVME_STATUS_DNR;
++		goto out;
++	}
+ 
+ 	if (req->cmd->prop_set.attrib & 1) {
+ 		req->error_loc =
 -- 
 2.53.0
 
