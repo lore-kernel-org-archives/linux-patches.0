@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063260;
-	b=gi7ajinZYLm28QaNT9C+K5u+XBsFZ6nYwL589IZPya8svAkhjsVG8xQ9NiW9nb1/MsGt
-	 qtg9fIGaX7v5+YYJP50D3F0+ITMgPolJ5GU0ZLKonXG1Mu7DnEfiCgOe0tH3c+P882yHg
-	 Dc0G5FbZENvK2eO7YQ/ccQoj3cWkqSEk7mBUzwaD5/rD+O+D4KpnwzBZAbIRrbNiV+bgO
-	 N5E8F4RuMgqmtinsMSZdoLT3f+jqdq6KVyvQ7mXnGeAYVKoLSzxRNf4w7gpv3NeAelijl
-	 RLlzpdd6eLelyUH1pH81vlyfqX3Q8zsyYPBy2j4lQm2nUcwTnLDr5Y6SuhUErvUwFwQ==
+	t=1794063261;
+	b=Lndd+oQZTfTGJvnc9/8il4aOBAIL8N0YGgHEDcrsZMbaJNXdga9OkKqoa1fKWEA1wkiB
+	 WbtzBdEql9XqrpWGhMvuntRGApeakEW2XCBLCK18Df/jpWprBl8WTPqj+yanHdJs8SpUy
+	 3uDe+gvZbZHN+mI8WmkEuWmz9gx/uhuiBWwth068h01SNAC2jck4d0NWOKZfhT21ncHIt
+	 +0vaP2dvuqg3qBajtJQk1kuOz///LRom5mbNqcQHe5o9uGmmUHlovoWTRlHJgGKzxzB89
+	 gzw3KdjSrGI3KdYp6XN13tVz5YfrRrwgMo3tH1FXOnT0+Vv3fSvUFv9QzI1sbKoTEzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Oez1XYfl6F+k0FWfTkgVHRG13rsZsDZwG6VhqyoAUnA=;
-	b=XaEMfHaUU1VfwwPkv0pEPavw9KnZ74Y/+OYajjeJ7JSR2qNTsAGfbOqxIhTLfJjCZrCD
-	 xp+/y8cQccY4fkWe6deCbVxmWZ84k0KDIvxLAQHU3pqH6jCuP2lw2ySOUIO4JevmD44KK
-	 wdcW3HPRftvvac/jR5Mhkfa5+bR0FSU5UOtwAdIXlD6XMKAPJ9dEBW8hjqza935salURH
-	 uMR4gRsVP1aybFRNyK03FVcYmVsVoIpDMG3FsRsO6YHurWa3i6xrOSKLThKDjI5axNiYH
-	 XkQpuRbH8POwL95aPu1SFwbmgLCDg8WoWRmHCEUbzJQdDrMnoGMElOVHQojTgo3SVAA==
+	bh=ay4SnrDerLx5rHXMG8sQIrsJSbskjy3aPwNTXEV+J/M=;
+	b=qiJa29uaeUrtmYNNJ289SHSy5Qpud1UIX4aG98aMmzGKGmldsEXHzYYqzvyjxbYkOyIv
+	 4R/h9ZJ+ThZS8P+aKFFE+Gd+Nt9m8p/1Qi1aW/ks9jjAkPQdUDcnldE2hQ245/1HAJZiL
+	 cwNybcU2ozMO3ICCa+0ZlSl4MDdIvw2RQMU6ipWIHcX9sgFr22gAPJ8zXyP18irBart54
+	 O2t3XWQkhU4kZLaK2aWgaA95Z7BiaIWuFWBgvpuMjwT6u9sbd/jQf8HDH7Ov1Mhe3w7Y1
+	 K57PnvQdL/UbHwmMvw9Qwzm/LeVcrwtY2YDXq6dpg7M7+Fh6KsYtnj7g6CkPmJ2JN6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQ4XWWuW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3ZoGT0T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FFD606A331;
-	Sat,  7 Nov 2026 14:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E2C606A331;
+	Sat,  7 Nov 2026 14:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qQ4XWWuW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BFD1F0089F;
-	Sat,  7 Nov 2026 14:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3ZoGT0T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054BD1F0089F;
+	Sat,  7 Nov 2026 14:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063259;
-	bh=Oez1XYfl6F+k0FWfTkgVHRG13rsZsDZwG6VhqyoAUnA=;
+	s=korg; t=1794063261;
+	bh=ay4SnrDerLx5rHXMG8sQIrsJSbskjy3aPwNTXEV+J/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qQ4XWWuW4OYLIO4EnXZqb7BCTqa0zoOrozK+tx0bt9aDwAbmDVhmZB3hB+JlLf3Bj
-	 OhP5Jvp1Mj4f0nM/IUbfXTTAXzxDwjNo4bLsJK4+kx7gobzcEgP61I5bnjAOcmghw5
-	 7+B9LEYCbPaY/2QKXpGpSB+ynWWYHVf5nZ4/ga6s=
+	b=O3ZoGT0TWrbbz8LIxMJu/pVkxyAlM50ZKNRJoKR1No8Q392gt5ooD3CagmoDHFley
+	 zFchqlVTu0baKbQqYnflus0FXnquqe3OaeQARjzaKTvXHRacc6iyzn7hhkSoPeudj6
+	 mhTvRLy8WFZHATaajcOT1XEDoP1EUjiErOSkBExI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>,
-	Seungjin Bae <eeodqql09@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	co+fd80bc5967eb22c3@bugs.sh,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 460/869] usb: typec: ucsi: ccg: Validate altmode index in GET_CURRENT_CAM response
-Date: Sat,  7 Nov 2026 08:52:22 -0500
-Message-ID: <20261107134909.277381611@linuxfoundation.org>
+Subject: [PATCH 6.18 461/869] usb: xhci: Fix bounce buffer overflow
+Date: Sat,  7 Nov 2026 08:52:23 -0500
+Message-ID: <20261107134909.307877236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,104 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 02ee864e8d2142c5648998944c3306ea6a763c26 ]
+[ Upstream commit 68c5cb7574c567e83ba95258cb146db95e069a87 ]
 
-When the PPM reports more than one DisplayPort alternate mode for a
-connector, ucsi_ccg_update_altmodes() merges them into a single entry
-in uc->updated[] and sets uc->has_multiple_dp. In that case,
-ucsi_ccg_update_get_current_cam_cmd() rewrites the response of the
-GET_CURRENT_CAM command. The response is a single byte holding the
-index of the currently active alternate mode, and it is provided by
-the PPM firmware.
+High-speed devices with out of spec 1024 byte bulk endpoints exist and
+are allowed by USB core, but xhci-hcd always sets packet size to 512.
+The exact nature of these devices isn't documented, commit fb5ee84ea72c
+("USB: Accept bulk endpoints with 1024-byte maxpacket") only states
+that they "don't work with xHCI host controllers", whatever it means.
 
-The function uses this byte directly as an index into uc->orig[], and
-then uses the linked_idx read from that entry as the translated index
-into uc->updated[]. Both arrays have UCSI_MAX_ALTMODES entries, but
-neither index is checked against that size.
+But somebody (or a malicious device) can try, and then the driver will
+allocate a 512 byte bounce buffer for this endpoint and may write up to
+1024 bytes into it if particular scatter-gather URBs are used, because
+xhci_align_td() obtains packet size from the descriptor. Fix this.
 
-If a malicious or buggy PPM reports a value of UCSI_MAX_ALTMODES or
-larger, e.g. 0xFF, uc->orig[cam].linked_idx reads over the end of
-uc->orig[]. The byte read from there is then used as the index for
-writing cam into uc->updated[new_cam].active_idx, so the out-of-bounds
-read is followed by an out-of-bounds write. This happens without any
-userspace action, since the UCSI core issues GET_CURRENT_CAM on its own
-when handling connector changes.
+As a side effect, TRBs will be aligned to the packet size chosen by the
+driver on all endpoints of all speeds. Alignment serves the xHC, not
+device, so this is fine. Only out of spec devices are affected anyway.
 
-Fix this by rejecting responses whose index is out of range, printing an
-error and returning -EPROTO, so that the caller cannot accept this.
-Also check linked_idx before using it as an index, so that the write into
-uc->updated[] is always within bounds.
-
-The response is now only processed when the command completed without
-an error. ucsi_sync_control_common() only reads the response when the
-CCI reports command completion, so otherwise the buffer is not filled
-and must not be mistaken for an invalid index.
-
-This bug was found with a Python script that traces where firmware input
-is used.
-
-Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
-Cc: stable <stable@kernel.org>
-Reported-by: Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>
-Assisted-by: LLM
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20261003215520.611083-2-eeodqql09@gmail.com
+Reported-by: co+fd80bc5967eb22c3@bugs.sh
+Link: https://lore.kernel.org/linux-usb/D4tcSGerkYkIV1DmaUo1t8TaR5qQElDLkidn@bugs.sh/
+Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20261009151624.618967-11-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-ring.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index 6c1f62c78ac25..18236d5c30922 100644
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -383,14 +383,28 @@ static int ucsi_ccg_init(struct ucsi_ccg *uc)
- 	return -ETIMEDOUT;
- }
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index dc18da8385a21..071a0310d6100 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -3600,15 +3600,13 @@ static u32 xhci_td_remainder(struct xhci_hcd *xhci, int transferred,
  
--static void ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
-+static int ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
+ 
+ static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
+-			 u32 *trb_buff_len, struct xhci_segment *seg)
++			 u32 *trb_buff_len, struct xhci_segment *seg, u32 max_pkt)
  {
- 	u8 cam, new_cam;
+ 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	unsigned int unalign;
+-	unsigned int max_pkt;
+ 	u32 new_buff_len;
+ 	size_t len;
  
- 	cam = data[0];
-+	if (cam >= UCSI_MAX_ALTMODES) {
-+		dev_err(uc->dev, "PPM returned invalid alternate mode index %u\n",
-+			cam);
-+		return -EPROTO;
-+	}
-+
- 	new_cam = uc->orig[cam].linked_idx;
-+	if (new_cam >= UCSI_MAX_ALTMODES) {
-+		dev_err(uc->dev, "invalid linked alternate mode index %u for %u\n",
-+			new_cam, cam);
-+		return -EPROTO;
-+	}
-+
- 	uc->updated[new_cam].active_idx = cam;
- 	data[0] = new_cam;
-+
-+	return 0;
- }
+-	max_pkt = xhci_usb_endpoint_maxp(urb->dev, urb->ep);
+ 	unalign = (enqd_len + *trb_buff_len) % max_pkt;
  
- static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
-@@ -633,8 +647,10 @@ static int ucsi_ccg_sync_control(struct ucsi *ucsi, u64 command, u32 *cci,
- 
- 	switch (UCSI_COMMAND(command)) {
- 	case UCSI_GET_CURRENT_CAM:
--		if (uc->has_multiple_dp)
--			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)data);
-+		if (!ret && uc->has_multiple_dp &&
-+		    (*cci & UCSI_CCI_COMMAND_COMPLETE) &&
-+		    !(*cci & UCSI_CCI_ERROR))
-+			ret = ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)data);
- 		break;
- 	case UCSI_GET_ALTERNATE_MODES:
- 		if (UCSI_ALTMODE_RECIPIENT(command) == UCSI_RECIPIENT_SOP) {
+ 	/* we got lucky, last normal TRB data on segment is packet aligned */
+@@ -3753,9 +3751,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
+ 		if (enqd_len + trb_buff_len < full_len) {
+ 			field |= TRB_CHAIN;
+ 			if (trb_is_link(ring->enqueue + 1)) {
+-				if (xhci_align_td(xhci, urb, enqd_len,
+-						  &trb_buff_len,
+-						  ring->enq_seg)) {
++				if (xhci_align_td(xhci, urb, enqd_len, &trb_buff_len,
++						ring->enq_seg, ring->bounce_buf_len)) {
+ 					send_addr = ring->enq_seg->bounce_dma;
+ 					/* TD bounced at least, and last on this seg */
+ 					td->bounce_seg = ring->enq_seg;
 -- 
 2.53.0
 
