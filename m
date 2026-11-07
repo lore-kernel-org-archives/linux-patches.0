@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061677;
-	b=x8LGQSZm6wxevVl0QaLSwuvvvvkaVQvb4I1muM84ngDurZ6YADbljBsfElO982acd/U/
-	 VrW0qoKN577+CV6vI/iqrJlEHr2nerpEfIs9/2yPTa9tRl4srJwmaEgUseAJp6SJjkiag
-	 mOk8m9DhbfmQAkOX9fnc2bGSDb7K/z0Qvd0jxIc7Rmc1/NhKPTkYQ51wURhRlvLZKpTpp
-	 041AhVoLQMbGhX8tCxriK3bvF0JIvPV9s+hPDFMlODIIZ61CeLYXnx3iFliWjmH7Qxr73
-	 qFrfJqoADCydgQ9cz0I7Tk9xaY8nJWCJnJcSWx7hd8znzPjZXEjvADJTrJXAdFcY+PQ==
+	t=1794061678;
+	b=pfhTbZ59I0BZXmIxaSp65PsMvsoiv7dtDNqnKNxwLyMQRinhp0LHEbJNVGA1a58o6joG
+	 50m4M+WQ6SNWUMhKctGCZbSD9JNWXed5RZ/+87D6vEV/3B8kL90NB0QEY/nkK2aR7jSTs
+	 qBCXkfwHWVhGAHtHuw7WiuRkNFgTOE9ZqAgCViRLoz55MCSThlu22gYRHuGmeCPc2h0Jn
+	 a+zYpaLxT7WvpTq4MoYwrDQ0T/9AempjNR5xl+JFj/ngWhWCYhb4QwgMstWPu56rF/7X5
+	 jfVqiK1l8dibNYTu/+GYaGfECC6MMjUp7Ctfv2MdpMSiujgXIpccIgYTAkH4/FISQyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061678;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oYQIMKr332yZW2u1Itg59dj2CYrtaeRwcI4F40FclOI=;
-	b=jW60IOf41rKFxB+y2o2SdGuDLYYrh0q5mt0OWn6jcO9UWhHZjxzeQ1Lr94JeDdd8YvHg
-	 BAI2yxwehQUECvJ0y5PFSINyJtR2g/6cutGbrb/NjjoJd16TuMWYzwID5tA6ZdJMe67MC
-	 fZYkQGTo0YpzoLo/nGuJ0EJQ+9LUTk82sf0R36LI9a5qFiz80aKgx5nqLPsyV+krpJQ+G
-	 E5HgDdlHD4CF27IGeRGIKDhjPGBOmxEriQPAOtOnqTseccW7ybNXow5nXQPfFwjsJLJns
-	 hJNrM0yzYeQOz/UQU7LFufTruKo0NajBYxtK36dnHRRWeJsuzGxBVhWW1JMz4Xu5tfw==
+	bh=j2ix68Cu7u6X2fi+tjV7Cae3JF3rSblqv6+Zv6yDtnk=;
+	b=OUpgSh2SZ4PXay5eI6lKxxTmWiVR3QJFGqxtbiGXqY6Rq1Qdr59piw3beysyoag1GrHZ
+	 2Kh4Sy6f7Q+zcxuj6SmfMtphFukz8rynAri/lHBAYAq+qCjRswsbLqwZIZA2UUW0v0OZO
+	 wz2ApyWmh+OuLupCkL3j6EhcdX8/du7vC0hDD5FSXMb7+S+81uxeoQe79Uu7JUtLG2VTF
+	 JMgr/w4negvhhDpeSMpSxJNEHJoRveUz3ZxAJVc7mA7yckbxzQcWS+gPJztoI1Czt8Pwk
+	 k0zYO0glJMDPCuzBJ4eSKXsWsrx240j7L5eB1zzGexOqSZwB6HLdjIDqCvgFQ45Uf1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xBit50pW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6688b7X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA4B606A32D;
-	Sat,  7 Nov 2026 14:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00963606A330;
+	Sat,  7 Nov 2026 14:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xBit50pW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682BE1F008A1;
-	Sat,  7 Nov 2026 14:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6688b7X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A339F1F0089F;
+	Sat,  7 Nov 2026 14:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061676;
-	bh=oYQIMKr332yZW2u1Itg59dj2CYrtaeRwcI4F40FclOI=;
+	s=korg; t=1794061677;
+	bh=j2ix68Cu7u6X2fi+tjV7Cae3JF3rSblqv6+Zv6yDtnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xBit50pWijbSxKSfg+EvgKMieRoBjfgtZ5xRwZYhK3PaNh7e8KMSbBWRRzXukr08I
-	 Emln4RbV3AiisUm3GybrJJ0DCNgSgM44nYnK/QELSGObGz8SgKbaQ0J5w5etuv55Zs
-	 oSdFLduDqBbuHt6it3ThNMnCosyh9xtoTf99f+sM=
+	b=t6688b7Xdo+0SR0nyCfBiXrfIhHAAqUW9tx2ZRxw70vOoXtMny+VNlK+5+luaKHiT
+	 LIksNBMXMTNJckJon6R5CuexVt3RJjEvPkJxBH1Rr3Ol+sPsV4RYknZ34Tef6XAePT
+	 WKr7D8eYnruP7RXhAorKc4XkooTtSNLpnxlNXUMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0730/1536] xfs: bound da-node entry count against the correct geometry
-Date: Sat,  7 Nov 2026 08:45:46 -0500
-Message-ID: <20261107135018.007297386@linuxfoundation.org>
+Subject: [PATCH 6.12 0704/1536] xfs: fix lost errno returned from xfarray_foliosort
+Date: Sat,  7 Nov 2026 08:45:20 -0500
+Message-ID: <20261107135017.265967225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,62 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 3df5e5aaa3bc0913236c48ab29b7df3a785aa29f upstream.
+commit 8c4f172c246717b1420f138a159ed15c315a58bd upstream.
 
-xfs_da3_node_verify() bounds the node entry count against the larger of
-the directory and attribute geometries because, as a buffer verifier, it
-cannot tell whether the block belongs to the directory or the attribute
-tree. When the directory block size exceeds the fs block size (e.g.
-mkfs.xfs -n size=64k -b size=4k), an attribute node buffer is a single fs
-block that holds only m_attr_geo->node_ents entries, yet a crafted attr
-node may claim a count up to m_dir_geo->node_ents and still pass the
-verifier.
+LOLLM noticed that we stop the sort early but don't actually pass along
+the error code, which could enable repair code to continue running with
+an unsorted array.  Fix that.
 
-xfs_da3_node_lookup_int() then indexes btree[] up to that count during
-its binary search -- an out-of-bounds read via getxattr/listxattr on a
-mounted crafted image.
-
-The buffer verifier is the wrong place to tighten this: it has no fork
-context, and the transaction-less read path used by getxattr does not run
-xfs_da3_node_set_type() either. xfs_da3_node_lookup_int(), on the other
-hand, always runs on that path and holds args->geo, the geometry of the
-fork actually being searched. Bound the entry count against
-args->geo->node_ents there, before walking the entries.
-
-Fixes: 7ab610f9e0f1 ("xfs: move node entry counts to xfs_da_geometry")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: stable@vger.kernel.org # v6.9
+Fixes: ee13fc67205b98 ("xfs: convert xfarray_pagesort to deal with large folios")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_da_btree.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/xfs/scrub/xfarray.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_da_btree.c
-+++ b/fs/xfs/libxfs/xfs_da_btree.c
-@@ -1787,6 +1787,20 @@ xfs_da3_node_lookup_int(
- 		} else
- 			expected_level--;
- 
-+		/*
-+		 * The node verifier cannot tell whether this block belongs to
-+		 * the directory or the attribute tree, so it only bounds the
-+		 * entry count against the larger of the two geometries.  Here
-+		 * args->geo is the geometry of the fork we are actually
-+		 * searching, so reject a count that would walk btree[] off the
-+		 * end of this node buffer.
-+		 */
-+		if (nodehdr.count > args->geo->node_ents) {
-+			xfs_buf_mark_corrupt(blk->bp);
-+			xfs_da_mark_sick(args);
-+			return -EFSCORRUPTED;
+--- a/fs/xfs/scrub/xfarray.c
++++ b/fs/xfs/scrub/xfarray.c
+@@ -943,8 +943,10 @@ xfarray_sort(
+ 		 * problems, we're done.
+ 		 */
+ 		ret = xfarray_foliosort(si, lo, hi);
+-		if (ret < 0)
++		if (ret < 0) {
++			error = ret;
+ 			goto out_free;
 +		}
-+
- 		max = nodehdr.count;
- 		blk->hashval = be32_to_cpu(btree[max - 1].hashval);
- 
+ 		if (ret == 1) {
+ 			si->stack_depth--;
+ 			continue;
 
 
