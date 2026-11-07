@@ -1,64 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062580;
-	b=u6XK2wPd4AsHIdAv2LRtzPM0MX3Fm8XBqGax765Dw4DHD59deqXhLWDNG+/r5pH1GdNm
-	 h+JLZLa0xQAI1tyVmsh3S8I1NvQsUe6aL0AIJKpHWnx7YDtbXjR6I0E52Yd0z8rWiKT+j
-	 +ZdqPqnNAh+lhy5aE92Mw2u91rntxF8fRHEfdVLHNodxMCTKN6aqr7wH2de5ExvV88c50
-	 vvDeLyWr8TMYJRTlbb26yOx2pri4nXKH5R9sWRvC9avs0Z5lx7CsdAoAOpICt4GLelnPc
-	 e8qr6syyIxFuJB0K31w4723RLfppSujxPzHGh43J6YEjRUYlDGDGhAZTsgJGRyTWyNw==
+	t=1794062581;
+	b=Mddb53fO9ZL/dLsu2FYdTc+H36nqGcZbZvX4WM3Of+z2JvpeWnxDiD09zgHpnX7UkgTR
+	 It7U3coRxUpS5Bmyy2/4vFGXL+dprWLCbPOqEurKF3Q8ur4XCcIaKvXIxjFFGNoHYmows
+	 5JVrXa3xcTb28R7jz3nANdqFZbPSvJRu8QiqtglSVC0dNzbfxRsv2wkoP4Seg/hhRz3hE
+	 G38utD/UHrg4aMoqJlqBm9v+kTdTn1H/RME8t0t+w+53HzEkBWXicw51tTo7cwiw6dLSO
+	 M9xAyPq6UAdoV5AUOXf9wDf7zwiXO+l51TyrGWQfAofgyn1zEgUfD0sxqR9ZhjqEmDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JiT+25BzF8lErBGfDBwLaqBZb4ufxjux7fN+h4OQjTM=;
-	b=F27X8BHE8OaEE4RGamwXqU9I027xENqeCDTfqXrjovlgrzIMZeyQk/ZJa9o5wG2YXNzV
-	 CLyWxYcbUm3bltHbyQKNJBrqxn+iBcLwqw+okkbEn6UE0RSmTOYFkG0sw8z3lUEEY97ew
-	 N9MCw+aXpkjnYcupa1txdseMrz+ZZ7EGP4rOMU7zM3krAlXOT2pXRroWdfnqsKQGgQgEj
-	 oXvGY1Av8HJMBRa4JxkyKmhoXiMVq7EhWGgyMVt+iUeTY5FRqTnLADbS1zm5oypXCI8hK
-	 JoeXusfFAtl0tS3i3pS4S9uA5fKwsKaaMJNNyJg2dviIDwLyvTY3fD+SNFvjgeolNXA==
+	bh=Ovgna7U07Fv7N/jnm7HR7IOAPx3rWCDo6j4taNUaESk=;
+	b=jGzjXatTOV6AJSlB4VtMJ+KC1j+WrNCz8AgYO90dN+GfvHsbn2HpXE0K1YK1c5lsTFk3
+	 j20pT//5bmbc/TZtnkCiXrlP2nnAvTP+0u/eGZW5iQxZ8tnOmQwBwef+wp01DNBgkisH/
+	 FrmoGZpM5dIGkevfuGjFvUr20GR4x50f3wuu8vWEsE43AQnd0P9EFoaGEUrkuedKYVxo6
+	 NpW3PKQFxTxdyBVsWhlYNrhqjcL8VKJycF8TTdmA9hjz8slsQ22Lx/aa4SD4SdGklCvmS
+	 kRYn4G1XxfS5hY25kkoVCgLvvoJ2nlSILoAIfzT28f5gA2mL6oTMjUKGfMUuS71Q5DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfsaC21U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0RTjrUC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE064606A66B;
-	Sat,  7 Nov 2026 14:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFE1606A672;
+	Sat,  7 Nov 2026 14:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfsaC21U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388E31F0089F;
-	Sat,  7 Nov 2026 14:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0RTjrUC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8349C1F008A1;
+	Sat,  7 Nov 2026 14:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062579;
-	bh=JiT+25BzF8lErBGfDBwLaqBZb4ufxjux7fN+h4OQjTM=;
+	s=korg; t=1794062580;
+	bh=Ovgna7U07Fv7N/jnm7HR7IOAPx3rWCDo6j4taNUaESk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TfsaC21U7wIZC2AlqvnXLu6PUcZ44i/E5y/0sU0T4L2Nwp8qy67M92GdvxxKZQqj0
-	 l6E/NV6Xlwcq9hVOG3NhX6eJzJrpiOUADcu/Nfi4wmMniHvDMGHspcLoXvAwmbc8g2
-	 QxtRjJDtB97lWIPiKJr0ZVSMwnfdHT12e8mxKRL8=
+	b=l0RTjrUCd39Txy+LACYw2rAuv3rO3Sxsw/ktC1TMCMabbOnGt6fSge8xX2KuvjtAm
+	 03XrC+g4JjHbRhjdsJVqfDCOPHGECVPOcAcRhN8IAh9ZZUUAzaOzjGjThVZUgKFNWq
+	 C34KbhsiGORjf4qazeV2fFuMbf+J1tmT5ZiUDLRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Samarth Narang <samarth.colleges@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1443/1536] mm/madvise: atomically clear the young bit on THP MADV_COLD
-Date: Sat,  7 Nov 2026 08:57:39 -0500
-Message-ID: <20261107135038.365679494@linuxfoundation.org>
+Subject: [PATCH 6.12 1461/1536] libceph: reject an initial monmap with no monitors
+Date: Sat,  7 Nov 2026 08:57:57 -0500
+Message-ID: <20261107135038.876577978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -80,81 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 246c8cc33438a71c28f9b86baa492d9a0a130316 ]
+[ Upstream commit 94dbce2ae4fdb57bdb53ffa3456da777a5cfb981 ]
 
-As-is, madvise_cold_or_pageout_pte_range() discards the hardware young bit
-by invalidating the PMD, doing pmd_mkold() and subsequently writing to the
-pmd again.  However, it does so in a racy manner, looking at a
-possibly-stale snapshot.  It's entirely possible that a write elsewhere
-set the hardware D bit, which this logic now loses.
+build_initial_monmap() takes the monitor count straight from
+ceph_options::num_mon and builds a monmap with that many entries without
+checking that there is at least one. ceph_parse_ips() writes *count only
+after it has parsed an address successfully, so a ceph_options that went
+through a failed parse still has num_mon == 0 and the resulting monmap
+has no monitors in it at all.
 
-Fix it by using pmdp_test_and_clear_young().  This is an atomic
-modification of the PMD entry, and thus safe against any possible racing
-writes.  As a (nice) side-effect, this elides one non-required TLB flush
-in pmdp_invalidate().
+The first thing the client does with that monmap is open a session, and
+pick_new_mon() asserts the invariant that it is non-empty:
 
-This bug can interact with the swapping system in complicated ways,
-leading to data loss.  For instance, if a folio is marked lazyfree, but
-was later read from, and then MADV_COLD'd while racing a write to that
-same THP, dropping the dirty bit may lead to data loss as
-reclaim/MADV_PAGEOUT drops the "clean" anon folio:
+  kernel BUG at net/ceph/mon_client.c:211!
+  RIP: 0010:pick_new_mon net/ceph/mon_client.c:211 [inline]
+  RIP: 0010:__open_session+0x60f/0x740 net/ceph/mon_client.c:245
+  Call Trace:
+   ceph_monc_open_session+0x46/0x60 net/ceph/mon_client.c:534
+   __ceph_open_session+0x135/0x590 net/ceph/ceph_common.c:798
+   ceph_real_mount fs/ceph/super.c:1173 [inline]
+   ceph_get_tree+0xd98/0x1fd0 fs/ceph/super.c:1362
+   vfs_get_tree+0x92/0x320 fs/super.c:1947
+   vfs_cmd_create+0xd7/0x2a0 fs/fsopen.c:231
+   __do_sys_fsconfig+0x55a/0xcb0 fs/fsopen.c:463
 
-T0                                T1
-================================================================
-MADV_FREE(thp)			|
-  folio marked lazyfree		|
-read(thp)			|
-  PMD marked young by hardware	|
-				| MADV_COLD(thp)
-write(thp)			|   if (pmd_young(pmd)) {
-  PMD marked dirty by hardware	|     set(pmdp, pmd_mkold(pmd));
-MADV_PAGEOUT/reclaim		|
-  dirty bit may or may not be   |
-  set				|
-    reclaim/pageout may drop    |
-    the folio			|
+The reproducer gets there through the new device syntax: an fsconfig()
+mon_addr= that does not resolve ("libceph: resolve '127.0.0.' (ret=-3):
+failed") leaves fsopt->mon_addr set but num_mon at 0, so the "No monitor
+address" check in ceph_get_tree() passes and the mount proceeds with an
+empty monmap. The next patch stops that string from being kept, but the
+assertion should not be reachable from a mount option in the first place.
 
-Link: https://lore.kernel.org/20261013191719.95502-1-pfalcato@suse.de
-Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Samarth Narang <samarth.colleges@gmail.com>
-Closes: https://lore.kernel.org/linux-mm/20261011132227.413217-1-samarth.colleges@gmail.com/
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: <stable@vger.kernel.org>
+Commit 40480eee361e ("libceph: Reject monmaps advertising zero monitors")
+made the same BUG_ON() unreachable from the wire by rejecting
+num_mon == 0 in ceph_monmap_decode(). Apply the same rule to the initial
+monmap, which is the only other way one gets built, and fail the mount
+with -EINVAL rather than assert afterwards.
+
+Cc: stable@vger.kernel.org
+Fixes: 7b19b4db5add ("ceph: new device mount syntax")
+Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
+Assisted-by: Cursor
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/ceph/mon_client.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index e1470b35d43ae..ea966d402f073 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -408,10 +408,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		}
+diff --git a/net/ceph/mon_client.c b/net/ceph/mon_client.c
+index 11398503113ac..25eed9bc73495 100644
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -1141,6 +1141,9 @@ static int build_initial_monmap(struct ceph_mon_client *monc)
+ 	int num_mon = opt->num_mon;
+ 	int i;
  
- 		if (!pageout && pmd_young(orig_pmd)) {
--			pmdp_invalidate(vma, addr, pmd);
--			orig_pmd = pmd_mkold(orig_pmd);
--
--			set_pmd_at(mm, addr, pmd, orig_pmd);
-+			pmdp_test_and_clear_young(vma, addr, pmd);
- 			tlb_remove_pmd_tlb_entry(tlb, pmd, addr);
- 		}
- 
++	if (num_mon < 1 || num_mon > CEPH_MAX_MON)
++		return -EINVAL;
++
+ 	/* build initial monmap */
+ 	monc->monmap = kzalloc(struct_size(monc->monmap, mon_inst, num_mon),
+ 			       GFP_KERNEL);
 -- 
 2.53.0
 
