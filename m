@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061107;
-	b=IrBlI8EHpCj462phsZk7J/2W9Phrbg6dAtWJgxRAY4XvnSksVfDz6CS2PJsGWjSmMBYK
-	 oQNdQoOEhT74E7nfo8CoBt33jfWYmA0Jzx25CeWOFc6+lzRsYpPYI95+T9ciPuRWemyn8
-	 bNSFAmF9hmSEdDBgrrYd66ovC/AWBRLfxyGfkpcTtA1e5nnq3fNbx+aDRnktUgjEPjQuJ
-	 cN1qOoWiO6P0wjRXIKS0bal2sOOZ1lBZBtvYiOnvs/SwMlLaFa/p6yoFR41p7p4CLMmTq
-	 a19+2AovtPS9BCAZl0U240KKsp4QQ3WF529LjC5Q7uAnbjls/4YUm1xDx2DqvN1sddw==
+	t=1794061108;
+	b=CebLgGMNZyT3xKgPJU6XzyEilDGG9O0pT/3w0mKLv1jS/Cw7fghIVLEXlgKGiLfbHuVg
+	 lCta/8JyWje+FQh9bdZTGVYo8szC/qk39tZL13x/aEx81rzZZr/Md8tizuOidRmIxzvwp
+	 yEUDEXHnWlfI97FYMunRdi/9FFbtdgfVid3h8Zocwdn+66bxoLHyw69yq3Ml9EgHSx6/k
+	 aKmj3eGmYI3eiT1whVsZjAURIeuy/ocgWTZMeasNp/V5QJ7yXpVfTOu9vSlLOnRVGWG2U
+	 f7s838AHQ15LE7+TUFB0ML39ZTMIisX7oafTjHBYhF4cS1PeDuZXBMhdTByW8vHxiEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8x21az0ireercYzfpATwsRktAgtAiMtmEgweaYfBnNI=;
-	b=2dfdkfiWjQLpjoQ4G4bfgVDFXMExuH7+MS9l/J0U204W1xHSdD/A7+6cjMm6Ios7P99W
-	 eeM1H2V80YXQIHEmaJNjLvzyBaFx/oXbkLw6WADpIwA9rNMGgk4PkTnzW5JDW6VURono8
-	 AgOsdDI69daen2SxQ85AowRxmsd0eKsrFMsWq8eZBIOIjUAXskv57D5tKM26tPfEPN5DK
-	 XdklLY90BSHwWJpXApnFGRrj11zmj+h1TLqQS/RAmZHmwiTdA5U+LGNvYSFEft/2K7l9K
-	 Sg+GFI0vvlfxdEGf3q+drOQeysH7ER/CYVWzz2zHFmwyrxVgPGGRt/Gptym27Xe90Vg==
+	bh=VbOQu3e12HGlWXQTpQuQt6QmpuMlVeJ/VubWfhLCo8o=;
+	b=ajRKpRaeKONFg+Y3h02nFhSpfYGDQlDdaC8OtKdcyyyRQWUjFPUh20diiJTdJt7eSd0x
+	 iEv5A197uQOKaEFrdxkEQdBZNxq4TTl1weGCvjtLN79kskeVY8WfQ7aM/oF9rWC1ZcN34
+	 Z8utLytST3j7t5jh2SDCE11qpzAYXW0Y5zethap4OCmfLl6ZVlsvbzSJpcpyf46Dv9pYI
+	 bvTQ2PUsRUGJdULTmsypDf1EaVyKwRe8Ob5PG05tUPtKIV9RvtWaNiKc9ETzZn8DdAFD0
+	 FHAOeZRESllpEaKEfJb1uS52S/OLlHJc2njQ/CG6Ewp1jBkcaJXxFStEcyje9qPWSJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHoE9gJy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1pqE4fU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F1B606A32E;
-	Sat,  7 Nov 2026 14:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D43606A332;
+	Sat,  7 Nov 2026 14:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHoE9gJy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947F31F0089F;
-	Sat,  7 Nov 2026 14:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1pqE4fU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C822A1F008A2;
+	Sat,  7 Nov 2026 14:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061106;
-	bh=8x21az0ireercYzfpATwsRktAgtAiMtmEgweaYfBnNI=;
+	s=korg; t=1794061108;
+	bh=VbOQu3e12HGlWXQTpQuQt6QmpuMlVeJ/VubWfhLCo8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KHoE9gJywHbUEvoIAuZxYDXd4gEMujO6tku4B6CDIsiHy2pf6yHwDlmpeKn+NJrvJ
-	 yYxjNKtohI1ybo+S3X6XQoPkFCaLBH7hTgDkjCEhsdAu1L92Knazs0ln+ctG2g8Kbg
-	 M9s6UPUOd1P+v3FsxIuHMCoTSpVsgqttjxp2ocmg=
+	b=a1pqE4fUMURJnZOkJdRoIqzMBk6wYJkRu5ralLD1DTp0VOQgVq3gMLMOEqC35ovau
+	 rCMj6+2E84WcAXyFR03b6q9dpaUBhXs4Vd02zrnj7ARq3/LXpPEPHdynf/HSC2jZ2C
+	 RhsvjH8YPV9kib7hP9IkN6noytWCfMcY7RpkVve0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaidheer Sirigineedi <jaidheer7@gmail.com>,
+	Matus Gajdos <matuszpd@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0425/1536] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 15-eg3xxx (103c:8bfd)
-Date: Sat,  7 Nov 2026 08:40:41 -0500
-Message-ID: <20261107135009.506338698@linuxfoundation.org>
+Subject: [PATCH 6.12 0426/1536] ALSA: usb-audio: Add native DSD support for Cambridge Audio streamers
+Date: Sat,  7 Nov 2026 08:40:42 -0500
+Message-ID: <20261107135009.531220909@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,47 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaidheer Sirigineedi <jaidheer7@gmail.com>
+From: Matus Gajdos <matuszpd@gmail.com>
 
-[ Upstream commit 13dffca9043500ed6033d770b491a043fb952bc5 ]
+[ Upstream commit 4e1462e7cd6a9b920f441842726cc2b9d232673e ]
 
-The mute LED on the HP Pavilion Laptop 15-eg3xxx (PCI SSID 103c:8bfd,
-Realtek ALC287) does not work because the machine has no entry in the
-quirk table. No fixup is applied, so the mute LED is never driven, even
-though the mute function itself works.
+The Cambridge Audio streamer advertises the UAC2 RAW_DATA format on
+altsetting 2 of its playback interface, but without the DSD_RAW quirk
+flag the driver exposes it only as a SPECIAL format that cannot be
+used.
 
-The LED is controlled via GPIO pin 4 (mask 0x10), which is exactly what
-ALC287_FIXUP_HP_GPIO_LED configures. This was verified on the hardware
-with hda-verb: setting the GPIO data bit lights the mute LED, and
-clearing it turns the LED off.
+Add QUIRK_FLAG_DSD_RAW for the device (USB ID 22e8:ca10), so the
+altsetting is exposed as DSD_U32_BE, enabling native DSD64/128/256
+playback.
 
-  hda-verb /dev/snd/hwC0D0 0x01 SET_GPIO_MASK 0x10
-  hda-verb /dev/snd/hwC0D0 0x01 SET_GPIO_DIRECTION 0x10
-  hda-verb /dev/snd/hwC0D0 0x01 SET_GPIO_DATA 0x10   # LED on
-  hda-verb /dev/snd/hwC0D0 0x01 SET_GPIO_DATA 0x00   # LED off
+Tested with: gst-launch-1.0 filesrc location=file.dsf ! \
+                            avdemux_dsf ! dsdconvert ! \
+                            alsasink device=hw:2,0
 
-Add a quirk entry for 103c:8bfd using ALC287_FIXUP_HP_GPIO_LED.
-
-Signed-off-by: Jaidheer Sirigineedi <jaidheer7@gmail.com>
-Link: https://patch.msgid.link/20261002185951.33855-1-jaidheer7@gmail.com
+Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
+Link: https://patch.msgid.link/20261002125237.82188-1-matuszpd@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 4a471dd67662a..ca556753f0661 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11137,6 +11137,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8be8, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be9, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8bfd, "HP Pavilion 15-eg3xxx", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c15, "HP Spectre x360 2-in-1 Laptop 14-eu0xxx", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index cc8d755256f2e..f224e41209e86 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2367,6 +2367,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	DEVICE_FLG(0x21b4, 0x0232, /* Ayre QX-5 Twenty */
+ 		   QUIRK_FLAG_DSD_RAW),
++	DEVICE_FLG(0x22e8, 0xca10, /* Cambridge Audio streamers */
++		   QUIRK_FLAG_DSD_RAW),
+ 	DEVICE_FLG(0x2522, 0x0007, /* LH Labs Geek Out HD Audio 1V5 */
+ 		   QUIRK_FLAG_SET_IFACE_FIRST),
+ 	DEVICE_FLG(0x262a, 0x9302, /* ddHiFi TC44C */
 -- 
 2.53.0
 
