@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064899;
-	b=dL13tXrxdIh76YwfJAmQl/17Aa5ELkIxsVes/sQsqIxxPEqEJ/hPiHw0LFysUJcBMWad
-	 xzPXPyUZDBEqrhWQ0lhTZMltoYFmXd4LDbUyK5fzr/XBsbYq56bqDlI18/lCr7LsGQbtL
-	 ClOhZfv1JY/H/1OIPDDmhoCpI9aG0TTl0UHckrZL7N+VNLfyAL+9IlKkR3/dM+CC8Y1r4
-	 yLTZbe7Qgw0sZy1hf8LoX/2XXmZudbOqotTm2lNfD6o+zte7z/PeaU+/8plT2Ll3Go1oM
-	 0XgsPA3JGqRsOugEoKRVy99w5UIa8okC0tBsjctAt27+QeACz185cqe/DrIGWpZas+g==
+	t=1794064901;
+	b=YMdRqXE655Y3wPZ0/52UwSIkjTf5QS0ottQfexKsbcbJdAUK06kBPyHE6H9B1hva446m
+	 9BPyjhOxuXSPM/AF/IwqQ+qUD1IiSbww44zirndKnAC2HvBPmPJmzm7EKOyfH9nl3+V9B
+	 4EtUO8rnL53H0xIeYMK8Izqi64pOWPowGLmu2ji95tXTtyl0YB+ZkuId0cvBxNb2a0Iw7
+	 w0eaK59b6jSzh0FpGRsxjuX/+4optGQEJPhI0OAglTpbblbTI5dqav4duILqOBjiDeWZG
+	 Wt678Np/gwq3npiB+qNiO38LTSR37jsTOMa/aKsS38YwobNmcxYDwsGjEj1QRz9R7YQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064901;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VlNaDXLY48m8PrALolV0lp0jIOIaRd0s/zNkYq7dMU4=;
-	b=5KnV58nyyBd81T7t/mQC68+rf903hVqnAC6xqGoUXzN9rb8S9+Z+v9FWtAATwt/pogEG
-	 XEqRrmar5DHnNnpMRHbNVgCHdz8xxb3KgCmq949KVQC/tVXNpUioa8nxclDflBTGc/aQb
-	 wJadrf0SVLs8uZehZOYBycxh2eHFVYCJ9dobRZBHwVUw287mFyUok6V8f+rxjzXtCfGjy
-	 35GDTuGrP06cj3emzsZpmTps4Ph33FLE6RHOHUXzjfecHmr79q/wa4ziBAaAEuJ1IJ0AG
-	 RRfQ7dQ9eQzNODYcQPZ5JpMuTFdynwcLIbtiAHJpb/JnJRkfzwPay8jtFSuctYVIHcQ==
+	bh=wO1ErzqQQSGorw+q/pEQ00ThJCffR97y78CaZV15G9k=;
+	b=U3U9vFdhSvIZGf+8tttwrIeMHIJJmL7r/PvFEKInikFmWYvz3tnivOvlJHsz+p8+aX3E
+	 lclphGBXVaHyGw1hqW/9vyvcyncgXwGdjsWCDUKSYcGLClPJv9h6GQcJkBkmh175iWxXq
+	 ZDlsMc8BKCzTwQzvJk61kCI8hbw/h3fpdVq4ozDIXPfYCrgvWPbThP5IjFFOwsSYfRhAp
+	 PePDehmbDAfVybT2ExP8JlOhjvESSqf0QwXuhI0GASuydDd2AYZc57ydUb6fysVRfsiTo
+	 1jacLYHZMUfenqYxHoEekB5R6+D0z4FkYL43AzZH4koG+qZebuM3TBGyjc9ivj7c/rA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EQYMhtWu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSlDSdYW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B51E606A9D4;
-	Sat,  7 Nov 2026 15:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9FE606A9D4;
+	Sat,  7 Nov 2026 15:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EQYMhtWu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75511F0089F;
-	Sat,  7 Nov 2026 15:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSlDSdYW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C401F008A1;
+	Sat,  7 Nov 2026 15:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064899;
-	bh=VlNaDXLY48m8PrALolV0lp0jIOIaRd0s/zNkYq7dMU4=;
+	s=korg; t=1794064900;
+	bh=wO1ErzqQQSGorw+q/pEQ00ThJCffR97y78CaZV15G9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EQYMhtWulKeKEPXKVTa78faIdCKc0YQgIQ+1vPfXxW7c8P6coIJtoP4+GcDTmAc1Q
-	 BH7QQ9pr4tQHHSCIEnbD0VGPJJ/ni2yfAZ+64niK59e2KWDZyu5QbUvj/Vs4jUtzkR
-	 sQu42Exn0o+IPKtE7EV9mmfVz9gUdXq8DRpR3bjE=
+	b=QSlDSdYWkKc5zgXtNvxj06WmTVCWt3Pj+ShCGQMbCSTVr6wXJz7x25VWudGEUJOvr
+	 8heSVHMx63AW6FykMVgApub9EeMtcGJ3rkkBjMsehMdUf8mJL/XFJ3sJRyHK1dSBYi
+	 NfrHVDQTozIo2C/AZxf3dB2uiC0FajhDBlPSQDp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0804/1257] cxl/events: Test CME counter expiry with equality, not bitwise AND
-Date: Sat,  7 Nov 2026 08:51:40 -0500
-Message-ID: <20261107135001.540976818@linuxfoundation.org>
+Subject: [PATCH 7.3 0805/1257] mfd: tps65217: Fix NULL pointer dereference on IRQ init failure
+Date: Sat,  7 Nov 2026 08:51:41 -0500
+Message-ID: <20261107135001.568842412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,69 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
 
-[ Upstream commit b94ba9a1f2d5c57f2eec67d502bb8fdd1e53c87a ]
+[ Upstream commit 0473a5b0663663b75573bf284beb77459e07c461 ]
 
-The Memory Event Type field in the General Media and DRAM event records
-is an enumeration, not a bitmask. The validity checks for the advanced
-programmable CME counter expiration event (05h) test the field with a
-bitwise AND, so types 01h, 03h, 04h and 06h match it as well.
+tps65217_probe() ignores the return value of tps65217_irq_init(), so
+when the irq domain creation fails the probe still completes and the
+driver ends up bound with a NULL tps->irq_domain. Unloading the
+module then makes tps65217_remove() call irq_domain_remove() on the
+NULL pointer and oops the kernel. On top of that, irq_find_mapping()
+may fall back to the default irq domain and dispose of mappings that
+belong to other interrupt controllers.
 
-A device reporting one of those types trips WARN_ON_ONCE once the
-general media or DRAM tracepoint is enabled, which is the case anywhere
-rasdaemon collects CXL events. Under panic_on_warn=1 that kills the
-machine.
+Check the return value and abort the probe on failure so the error
+is reported and no inconsistent state is left for removal.
 
-Compare the type field for equality instead. Type 05h records that do
-violate the spec conditions still warn.
-
-Fixes: cd3b36cfc659 ("cxl/events: Add extra validity checks for corrected memory error count in General Media Event Record")
-Fixes: d8145bb8af5c ("cxl/events: Add extra validity checks for CVME count in DRAM Event Record")
+Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260922082214.3526355-1-kanie@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
+Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20261002113624.178588-2-r.zhambakiev@prosoftsystems.ru
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/mbox.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mfd/tps65217.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 55828a836c01a..01341f524a937 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -942,11 +942,11 @@ void cxl_event_trace_record(struct cxl_memdev *cxlmd,
+diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
+index c240fac0ede76..2d04d9e0ae29c 100644
+--- a/drivers/mfd/tps65217.c
++++ b/drivers/mfd/tps65217.c
+@@ -333,7 +333,9 @@ static int tps65217_probe(struct i2c_client *client)
+ 	}
  
- 			if (evt->gen_media.media_hdr.descriptor &
- 			    CXL_GMER_EVT_DESC_THRESHOLD_EVENT)
--				WARN_ON_ONCE((evt->gen_media.media_hdr.type &
-+				WARN_ON_ONCE((evt->gen_media.media_hdr.type ==
- 					      CXL_GMER_MEM_EVT_TYPE_AP_CME_COUNTER_EXPIRE) &&
- 					     !get_unaligned_le24(evt->gen_media.cme_count));
- 			else
--				WARN_ON_ONCE(evt->gen_media.media_hdr.type &
-+				WARN_ON_ONCE(evt->gen_media.media_hdr.type ==
- 					     CXL_GMER_MEM_EVT_TYPE_AP_CME_COUNTER_EXPIRE);
+ 	if (client->irq) {
+-		tps65217_irq_init(tps, client->irq);
++		ret = tps65217_irq_init(tps, client->irq);
++		if (ret)
++			return ret;
+ 	} else {
+ 		int i;
  
- 			trace_cxl_general_media(cxlmd, type, cxlr, hpa,
-@@ -957,11 +957,11 @@ void cxl_event_trace_record(struct cxl_memdev *cxlmd,
- 
- 			if (evt->dram.media_hdr.descriptor &
- 			    CXL_GMER_EVT_DESC_THRESHOLD_EVENT)
--				WARN_ON_ONCE((evt->dram.media_hdr.type &
-+				WARN_ON_ONCE((evt->dram.media_hdr.type ==
- 					      CXL_DER_MEM_EVT_TYPE_AP_CME_COUNTER_EXPIRE) &&
- 					     !get_unaligned_le24(evt->dram.cvme_count));
- 			else
--				WARN_ON_ONCE(evt->dram.media_hdr.type &
-+				WARN_ON_ONCE(evt->dram.media_hdr.type ==
- 					     CXL_DER_MEM_EVT_TYPE_AP_CME_COUNTER_EXPIRE);
- 
- 			trace_cxl_dram(cxlmd, type, cxlr, hpa, hpa_alias,
 -- 
 2.53.0
 
