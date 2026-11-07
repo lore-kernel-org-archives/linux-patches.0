@@ -1,60 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065317;
-	b=OSEIQQtTzEiJEcVFlN02hLmk8v9QPfNyXflLgtDgxTkBRJ+RU5BjOVMLjcN/IIGsOLlU
-	 gRw1gycVXYRq7kkccS0/6ll6lPfkz5yT4tkFxCbUzgVMoyFYWmR7L7UGJ2UYrZnW7jBRH
-	 lpjFJwM8IYiukjkNFjD+KNyEybX+AHPaPxtIA2PcAoYLWUan76fzCiXa54xxhlqZ7NwE6
-	 foSKbatFKw7cxYqK1a/kndEDaRR99kJHDAaHCBxehRJ4YIK6VLG/iOoGUyEx4buBQDn+y
-	 JaFrIJMC35eTRGbi5zBjuEpo91fW7waoT//ES0KjaujOSEdBs6IeRC/q/zK6RHoEDIQ==
+	t=1794065319;
+	b=2q08Uka2I/RLg+4L6CbIUQnUgRCkYzhti6BzccukBMs1Hlw3Evy2umCWlICyDG+2ZJSU
+	 IgaAQ7j53T8wdatMtimBoJRQ1nPiyuCXQpZNDqRME5BpMwfrJ8sga3biD8w5r9CC7SzqF
+	 pEnDyjKrPnrosLkxAT69FAOBDiDVNS1Ws/Oqjl2GdGWpcnw8KV/+eDRnws1J1u+1e2E24
+	 jdtW8ssDt0vD7puM3pFx1KRknCxuGY4fF/Ya3izL6FDtK+xcvqE1ZEqoRSQQsLf4c7/wg
+	 XDe+qSyrksNZHO+8YlEpisA8yffLMNnsuJ4g8701DeJyuyEI1bvpniTCRHE2MFSo8ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iQL8DFigNGINWv5P0/uIJp4jcu6jIAnBMcrk/Qo+J5s=;
-	b=gFJWPBYPLCeHgMov6UaArfZEMQ5pT5+aw0oc5/Wyj73XjQM07k2xGOwSjFAB0vupiihx
-	 KXmjj2lwpSjKsUAwzIfzgYc9xnjJDoAl8O3RjqsRyr3dIIHu1ahXzjY1EthUz+sZRmeJC
-	 01tHct+XCTmc8m+GYo9ySTF8r+zbH38Q5Q4pOw3kh1Zo+YbJkQLfz47NnFS6m8cfUtesi
-	 pXiUKQbli0n3zjIthWWZtEmSHyD5N12H81IvnSQ1sc75Xfv6mOqxr/hoWeNYFdfEESsZn
-	 kIOPKvjled8UfbChvlftis63U92m/uN+MtLPDVkX0oASTZhJdYTIrh8tH5tcX8SI4BQ==
+	bh=VYsq57mT+k1WMCXXwE9VcuaXLdO36yE0NPTS+3R6evc=;
+	b=0+KxUdR+J6/agnMBzdB53PWp2S6RqPHnT42n9pywn1MHkSbOsGlnl+uPCctEwGagliry
+	 nIb1MYZV6L2Mn8SDdiibBn7gbsDNsbDR+DtnTivu7Rek3jpmnBMBCYwehK06Hp2i+MNTV
+	 NbE6URKzqkOtJ7b59HerwDLLhEDiy2MFfchl1qLv5Ens40Mg/na/Re7OgN+LcXtUajTI5
+	 jjc8MvKoGPOeoXDsSERgTK83kEUKfzYuqjMyWf5KXBP5vxHPGZ4xeavVCgWKXs8GMMoK/
+	 I7qNGHUUik8dD1kkasXhD6NCqTIHGf0J/Bb7WU2TRlENRzCZcCmG2iNlvn56z/IjElQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhLeVdaZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYtP9IRk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082BF606A32D;
-	Sat,  7 Nov 2026 15:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548B0606A326;
+	Sat,  7 Nov 2026 15:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhLeVdaZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE491F0089F;
-	Sat,  7 Nov 2026 15:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYtP9IRk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E940D1F0089F;
+	Sat,  7 Nov 2026 15:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065316;
-	bh=iQL8DFigNGINWv5P0/uIJp4jcu6jIAnBMcrk/Qo+J5s=;
+	s=korg; t=1794065319;
+	bh=VYsq57mT+k1WMCXXwE9VcuaXLdO36yE0NPTS+3R6evc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhLeVdaZ1/fJ4sFChyweVJpdUMiDkZMGfjkduW+lLtDN2Z0cDCpAdFGoVSmxmlTlM
-	 Py+Kl0p3uGXKPCdCOU1lt2fO0hXhBJ0Co9m62wXfA7Yjm3OsP7Tt5TUfo/3WREEXSd
-	 k9xloqWiQTlduBnLu+sgSdfFPIPO8XOXV6Ykt9+Y=
+	b=NYtP9IRkxQD+ZsioMzzFeoOw5JoZBUAWKYmHgQOaE3bdLTb9lZbgH9+cYNHHEpHYI
+	 faAR9JC7qFBMWIWx07jF6wDkhwrrmluSK0HBWVCbvTR1uo490p2m+7OCs5KeTipRIF
+	 OGFXCOqQzuFgpa1o+SZYNFq79faW/w8vIL554WPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Kan <ckan@cloudflare.com>,
-	Matt Fleming <mfleming@cloudflare.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Caleb Kan <calebkan1106@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1064/1257] stackdepot: stop preallocating after the final pool
-Date: Sat,  7 Nov 2026 08:56:00 -0500
-Message-ID: <20261107135008.663764697@linuxfoundation.org>
+Subject: [PATCH 7.3 1065/1257] ocfs2: snapshot the dentry name while tracing file release
+Date: Sat,  7 Nov 2026 08:56:01 -0500
+Message-ID: <20261107135008.690983595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -76,58 +74,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Kan <ckan@cloudflare.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 8f56ea8e0706d92774603260779c7032f03ef3ac ]
+[ Upstream commit 5898987d4a92b70ae73fd8355cc3a388b4dfa4e6 ]
 
-depot_init_pool() decides whether another pool is needed before it
-increments pools_num. When it registers the last allowed pool, pools_num
-is still one below stack_max_pools, so the existing comparison clears
-new_pool.
+ocfs2_file_release() passes the live dentry name and length to a trace
+event while holding oi->ip_lock. This lock protects the open count and
+delays RCU reclamation of external names, but it does not serialize name
+changes during rename. The dentry can switch between inline and external
+names, and a separately loaded length can describe a different name.
 
-With new_pool cleared, stack_depot_save_flags() can allocate another
-order-2 pool after a lookup miss. depot_keep_new_pool() retains its pointer
-in the global new_pool, so the allocation is not lost. However, pools_num
-has already reached stack_max_pools, and depot_init_pool() rejects every
-attempt to register the pool. It remains allocated and unusable until
-reboot. The non-NULL pointer prevents later saves from allocating more
-spare pools.
+The ocfs2__file_ops event sizes and copies its __string separately.
+A concurrently rewritten inline name need not remain consistent between
+those operations. External names can also be selected at this call site;
+the existing spinlock critical section protects their allocation lifetime,
+while a snapshot additionally pairs a stable name with its length.
 
-Account for the pool being registered in the limit check so registering
-the final pool installs STACK_DEPOT_POISON and prevents the extra
-allocation.
+Take a name snapshot before acquiring oi->ip_lock and release it after
+dropping the lock. Keep the trace call and open-count argument inside
+the original critical section. Cache the event-enabled check so the
+snapshot stays paired even if tracing is toggled meanwhile.
 
-Link: https://lore.kernel.org/20261022083330.3159793-1-matt@readmodwrite.com
-Fixes: 31639fd6cebd ("stackdepot: use variable size records for non-evictable entries")
-Signed-off-by: Caleb Kan <ckan@cloudflare.com>
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-2@gmail.com
+Fixes: 468eedde23d6 ("ocfs2: Remove mlog(0) from fs/ocfs2/file.c")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Cc: Caleb Kan <calebkan1106@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/stackdepot.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/file.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/lib/stackdepot.c b/lib/stackdepot.c
-index dd2717ff94bff..90c52f2e0d3f4 100644
---- a/lib/stackdepot.c
-+++ b/lib/stackdepot.c
-@@ -323,7 +323,7 @@ static bool depot_init_pool(void **prealloc)
- 	 * NULL; do not reset to NULL if we have reached the maximum number of
- 	 * pools.
- 	 */
--	if (pools_num < stack_max_pools)
-+	if (pools_num + 1 < stack_max_pools)
- 		WRITE_ONCE(new_pool, NULL);
- 	else
- 		WRITE_ONCE(new_pool, STACK_DEPOT_POISON);
+diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+index c6e7606ff9e1f..b3a37b9d259a0 100644
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -141,18 +141,26 @@ static int ocfs2_file_open(struct inode *inode, struct file *file)
+ static int ocfs2_file_release(struct inode *inode, struct file *file)
+ {
+ 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
++	struct dentry *dentry = file->f_path.dentry;
++	struct name_snapshot name;
++	bool trace_enabled = trace_ocfs2_file_release_enabled();
++
++	if (trace_enabled)
++		take_dentry_name_snapshot(&name, dentry);
+ 
+ 	spin_lock(&oi->ip_lock);
+ 	if (!--oi->ip_open_count)
+ 		oi->ip_flags &= ~OCFS2_INODE_OPEN_DIRECT;
+ 
+-	trace_ocfs2_file_release(inode, file, file->f_path.dentry,
+-				 oi->ip_blkno,
+-				 file->f_path.dentry->d_name.len,
+-				 file->f_path.dentry->d_name.name,
+-				 oi->ip_open_count);
++	if (trace_enabled)
++		trace_ocfs2_file_release(inode, file, dentry,
++					 oi->ip_blkno, name.name.len,
++					 name.name.name, oi->ip_open_count);
+ 	spin_unlock(&oi->ip_lock);
+ 
++	if (trace_enabled)
++		release_dentry_name_snapshot(&name);
++
+ 	ocfs2_free_file_private(inode, file);
+ 
+ 	return 0;
 -- 
 2.53.0
 
