@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063884;
-	b=Ms6jlKnJhGv/9MS9gA9BjoNQbysCbfyTVNzJRTP+8tVC7keaTxnsu32hKwvdPIZ3I1Fe
-	 Jr1PRnjgiw2SmEfYDTRmw+LoCAo4UR4pUsrtBEjgJ+86pCnnUE66NA99gkKyd3Qq/CWSw
-	 iv7PD3OTCAMIQMpWwS1fFSyb+FHNKIHmioemHY+Xvg+v4fP8SE0TARFSou8y0kqffIxYD
-	 /WGK0MKHfD3A9hNtnmNQz6eq3lt9yVlhrZXrFjBQD5fEkhXL2dpbOFtOiOAsQVkYsDzpR
-	 1rngLpEzFojvhjg//24iwThiLoUinZIXtESrjbx0lOKeKnXFElgz358Rm6cMLQylw3A==
+	t=1794063885;
+	b=3aFWTZjDKSWZZcfNybVo2RrO3qwm4HU1i8xpfEGrzog54Hl6qnXDWOeS6fCpu0PUBkzS
+	 JIqfyL9NAZYCvrq2NaqXHC4h4cML8WE5ftsVuay+00hVc9lWxqYih8UFjr/rsWLTdpIHw
+	 ef0lOoUDsuiRWFNfQSFfkinaef37Lib/Jx6p799GTL8aJrxaNcVo7KYB+IIgqg6dwGuhF
+	 T2iSJgIDO3aOK6wJm4XlkSGmAc6E9PlgabkVnnfCrcXn0ooPjl5A4J5y4FQVgAIG2juxS
+	 i9/uV5VHyPb7iIUqTp/rc8ZT4SxHamNiEgv0RqzFl1mKytHPmfBy7O7t0OtzlyNl03w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063884;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OChwD5mv3wJQvQhIJBDsG1OKQzy1ahKxD+a7c9DByHc=;
-	b=hyW+HA66Ig/B0U0N4wV7I7Efyo01yuISgkuzS/kKL9wCb8b3BDaOclChYbZ4mStrv8wk
-	 cb4uNFFaqH2BgDSkYHB4nxiIDPhsxJYw1Q5X8JjnctWVvny0ZqXMt1zrOWxgmWdJGnYyY
-	 +S+C1XpNdb5aujUX1kGlbT29adwNW2U25+p2jgXVdFLj5YD3QtkLPmmEZTWolcjNk1Hal
-	 o0cUE4KFtHZ2idnqmVLuQqsy7InS/+4JRTLLp4Tr2BEbzxFXfd6KPsxWO4NA0OzTudIZF
-	 ryYfdMLouw/zhwvZl1LgXH4XtX9HpzBLYgQ++R897j650ujK7JTG6E5/XttS0K9HxWQ==
+	bh=c3+tTFkrJSS9FNNsXrZchim3W+oN2qtdobtTNeZUAps=;
+	b=OSGBypASfQRdEvEqlsahw9X3XOXkFKcRocwPg9Ri3KzA968QjG+b4VjtisIJrVleuVxv
+	 x09yS/c5rz+6kZv+jYJZWUkVau5etFfmWCq9Bb+2Rf4syvY6s9aHc0gkALcs0eNhcoLtl
+	 1jlTfXesnZbl+tgeaS1LLtlwUKtwRuqmPJtTANLuZcVaVPRcXWsfBu+8sEZA2SGsp5POY
+	 R8AAgbXJ330Rfb4U4GQNitfXnwzX1VLz1JGaXqSYBuTk2TM9CrOhxwlYFUCxO8RVpcqva
+	 s8E1AK4qpnzJVOR5OccWwSerBv2NoB4cMRSkCnYzhGrlAFKUzPAjBPFg3SCg5VEdnkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ifxn/wTm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yYLxUR4e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EC4606A32F;
-	Sat,  7 Nov 2026 15:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387AC606A32F;
+	Sat,  7 Nov 2026 15:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ifxn/wTm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7B51F008A1;
-	Sat,  7 Nov 2026 15:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yYLxUR4e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0931F008A1;
+	Sat,  7 Nov 2026 15:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063883;
-	bh=OChwD5mv3wJQvQhIJBDsG1OKQzy1ahKxD+a7c9DByHc=;
+	s=korg; t=1794063885;
+	bh=c3+tTFkrJSS9FNNsXrZchim3W+oN2qtdobtTNeZUAps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ifxn/wTmgXPy8UkqQH9e43H247mztCAEaRTwkYthjFaRmqIO9MHdOV/k7mtGGtxej
-	 j1jepyEII7L40ABWPpkGPGQpdzEeUGaN+GrKjVXloWEqQ3o0IPh57kdqAB76Cu7mdH
-	 pxoZT/fIyln8lS+A34qq7NrRlH+9uZsIY1B+Jn9g=
+	b=yYLxUR4eZOEpsF8CU6PjqBPChN3ip6ixNKRW/hlfK5TFDPq4MQFkxNCfSYi2oc4iT
+	 uBQ9LQGcmBzxvypBgJMzTwuoGalA9/Ot0FiXRPJjSz/4WiKEPqcyvANY9QU6rXyDp4
+	 dOu1OZ4eHYnyGsu71dRp5kvpfuUXv2d7tQnDygY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Waldemar Brodkorb <wbx@openadk.org>,
 	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0049/1257] microblaze: reserve the ABI argument-home area in the signal frame
-Date: Sat,  7 Nov 2026 08:39:05 -0500
-Message-ID: <20261107134940.765084567@linuxfoundation.org>
+Subject: [PATCH 7.3 0050/1257] microblaze: dont clobber r3/r4 restored by rt_sigreturn
+Date: Sat,  7 Nov 2026 08:39:06 -0500
+Message-ID: <20261107134940.792012166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,59 +71,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Ramin Moussavi <ramin.moussavi@yacoub.de>
 
-[ Upstream commit c5947d28c20955de897eeb98430f96db0494f7d7 ]
+[ Upstream commit da6829138a39fa3b9ec318ca54ff89af9d94d350 ]
 
-The MicroBlaze procedure call standard reserves [r1+0] for the return
-address and lets a callee store its incoming register arguments r5..r10
-into the caller-provided home slots at [r1+4]..[r1+24].  When the kernel
-enters a signal handler it sets r1 to point at struct rt_sigframe, whose
-leading member is the siginfo prepared for the handler.  A handler that
-homes its arguments - which an unoptimised (-O0) build always does -
-therefore overwrites the first 24 bytes of that siginfo, so an
-SA_SIGINFO handler reads corrupted values.  The stores stay within
-siginfo (128 bytes) and do not reach the ucontext behind it.
+ret_from_trap begins by storing the system call return values r3 and r4
+back into the saved user pt_regs.  That is right for an ordinary system
+call, but sys_rt_sigreturn() returns through the same path and has to be
+transparent: restore_sigcontext() has just filled pt_regs from the signal
+frame, and every register must reach userspace exactly as saved.  The two
+stores overwrite the restored r3/r4 with whatever the C function left in
+those registers.
 
-Reserve the home area by making a seven-word gap -- the return-address
-slot plus the six argument slots, 28 bytes -- the first member of struct
-rt_sigframe, so the handler's argument stores land in scratch space
-instead of clobbering siginfo.
+Only r4 is actually lost, and that follows from how sigreturn is written
+everywhere rather than from chance.  Architectures have sys_rt_sigreturn()
+return the restored return-value register precisely so that this writeback
+stores the restored value -- arm returns regs->ARM_r0, riscv and csky
+regs->a0, arc regs->r0 -- and microblaze does the same through
+*rval_p = regs->r3 in restore_sigcontext().  But the entry macros treat r3
+and r4 as a pair, so ret_from_trap writes back two registers while a C
+function has only one return value; nothing carries the restored r4.
 
-Tested on qemu-system-microblazeel (petalogix-s3adsp1800) with the
-uClibc-ng NPTL test suite: tst-timer4, tst-timer5, tst-mqueue5 and
-tst-signal6 pass; before this change they failed because the handler
-clobbered the signal frame.
+Commit 791d0a169b91 ("microblaze: Fix sys_rt_sigreturn_wrapper") introduced
+this in v2.6.37.  The old wrapper saved r3/r4 before the call and reloaded
+them from pt_regs afterwards; switching brlid to brid removed the only
+point where they were reloaded, and the stores have been overwriting them
+ever since.
 
-Fixes: 2148daa9c45f ("microblaze_v8: Signal support")
+Fix it the way the sibling paths already behave: ret_from_irq and
+ret_from_exc restore the full register set and do not perform these stores
+at all.  Label the instruction after the stores ret_from_trap_no_rval and
+enter there, biasing r15 by -8 so that the ABI return "rtsd r15, 8" lands
+on it; naming the entry rather than computing ret_from_trap + 8 keeps it
+correct if the number of stores ever changes.  Restoring the old
+save/reload would work too, but costs four memory accesses and a branch to
+undo damage that is better not done.
+
+Any value the compiler keeps in r4 across a signal is lost.  The tightest
+windows are the lwx/swx compare-and-swap retry loops gcc emits for atomics:
+in uClibc-ng's libc.so alone, 50 of 364 such loops hold the address in r4.
+This is not specific to one libc -- musl passes the address as "r"(p), and
+glibc has no microblaze atomic-machine.h and so uses gcc's __atomic
+builtins, which expand the same way.  Triggering it needs threads plus a
+signal storm, which is why it survived 15 years.
+
+Reproduced on qemu-system-microblazeel (petalogix-s3adsp1800) by running
+the uClibc-ng NPTL test tst-eintr1 40 times against an unchanged userspace:
+on v7.2 built with gcc 16.2.0, 23 of 40 iterations died with SIGSEGV
+without this patch and 0 of 40 with it; on v7.0 built with gcc 12.5.0 the
+same comparison gave 6 of 40 against 0 of 40.  The register dump of a
+failing iteration shows the signature: a zero r4 and a fault at address 0,
+while r3 came back intact.
+
+Fixes: 791d0a169b91 ("microblaze: Fix sys_rt_sigreturn_wrapper")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5
 Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
 Tested-by: Waldemar Brodkorb <wbx@openadk.org>
-Link: https://patch.msgid.link/20260821151809.1233057-3-ramin.moussavi@yacoub.de
+Link: https://patch.msgid.link/20260821151809.1233057-4-ramin.moussavi@yacoub.de
 Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/signal.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/microblaze/kernel/entry.S | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
-index c78a0ff480660..4956014a99379 100644
---- a/arch/microblaze/kernel/signal.c
-+++ b/arch/microblaze/kernel/signal.c
-@@ -49,6 +49,14 @@ struct sigframe {
- };
+diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
+index ad44341a5dbc7..efa4ab056fb5f 100644
+--- a/arch/microblaze/kernel/entry.S
++++ b/arch/microblaze/kernel/entry.S
+@@ -434,7 +434,13 @@ C_ENTRY(_user_exception):
+ C_ENTRY(ret_from_trap):
+ 	swi	r3, r1, PT_R3
+ 	swi	r4, r1, PT_R4
+-
++/*
++ * Entry point for returns that must not store r3/r4 back into pt_regs,
++ * i.e. rt_sigreturn, which has already restored them from the signal
++ * context.  Reached as "rtsd r15, 8" with r15 set to this label minus 8,
++ * so it stays correct if the number of stores above ever changes.
++ */
++ret_from_trap_no_rval:
+ 	lwi	r11, r1, PT_MODE;
+ /* See if returning to kernel mode, if so, skip resched &c.  */
+ 	bnei	r11, 2f;
+@@ -518,6 +524,15 @@ C_ENTRY(ret_from_kernel_thread):
  
- struct rt_sigframe {
+ C_ENTRY(sys_rt_sigreturn_wrapper):
+ 	addik	r30, r0, 0		/* no restarts */
 +	/*
-+	 * Home area for the handler's register arguments: the MicroBlaze
-+	 * ABI reserves [r1+0] for the return address and lets the callee
-+	 * store r5..r10 at [r1+4]..[r1+24], and r1 points at this frame
-+	 * when the handler is entered.  Without the gap those stores
-+	 * corrupt frame->info.
++	 * rt_sigreturn restores the full register set from the signal
++	 * context, so it must skip the r3/r4 syscall-return stores at the
++	 * head of ret_from_trap which would otherwise overwrite the
++	 * just-restored r3/r4.  Every C function returns with "rtsd r15, 8"
++	 * -- the ABI return, where the 8 skips the caller's branch and its
++	 * delay slot -- so bias r15 by -8 to land on ret_from_trap_no_rval.
 +	 */
-+	unsigned long abi_gap[7];
- 	struct siginfo info;
- 	struct ucontext uc;
- 	unsigned long tramp[2];	/* signal trampoline */
++	addik	r15, r0, ret_from_trap_no_rval - 8
+ 	brid	sys_rt_sigreturn	/* Do real work */
+ 	addik	r5, r1, 0;		/* add user context as 1st arg */
+ 
 -- 
 2.53.0
 
