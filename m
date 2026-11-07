@@ -1,86 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794070646;
-	b=gOhtq7jtpvXsg/dvZKMLnF3SspNTkk0t0bDPBmpvmu5AMTCdTAbUKBOc7c9PELmNFwLL
-	 jqTguDmyncJAcw7kR1+vH/alZS9AAP7E3T7eRYiVtAsGNVDOplReMKRSF8xax3QxYsxJf
-	 I+UQr3nTNOv1uORYZ5E9KrkMZghogNMWeWj+vQcoyiSPPM8/S20UC5lCbjgSFhsxBur5x
-	 nklvVCcCFSV0i4gwH4s+pZwv5e783OOk6OzXgFqhN94H0qlmfYb4KTyxyM0pTRJDs2gTJ
-	 Ht+Q+czefNgvfxXUq0ldiGb63bigLPQYcILkTihMARuy7hOTK/lt6CjFwvfJHXlHQnQ==
+	t=1794072469;
+	b=E/q0JbUJ3Grxve0C1SdDUMjTbGbTCRMZ/mZ4u0wu9Lf6533TE1UGHckbEuvB5GLASnkX
+	 /8B1YvYure/5HfMdNIvs48lcQz53n3kwoOQw3DYGGoEvFyhWMCH+VFED+LfykzVCfoF3N
+	 rGQ9XLkgn5JEdNX2QccVIwFc79wya65Lqw4fwjUId0s1//Dd58WP9bpKjtJtfBzBgO4FR
+	 cUpKhXwVwj3Ob0wXbGqbWO9GMr0b0xaBrxrWnqsoxShxwHxS1u2YsloVCwYhsbSxkz6EG
+	 k/T+OT5j5cqVLHcpexIYpyLcjPlkw95YrsZQptG80XPeqP/dGPOZkyvHtU6vMQUhQFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794070646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794072469;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=dZ/CQYskRN0JeHdAleff1h6SJqJJZnuoROXlSHd1Wv8=;
-	b=jy7ZyJpQ02vSySfDfUUVOmeTRubAjrOlgEcLIVSEmuvTdYtkyBoWQoQey8qk/E5NiaJ/
-	 fWbmC4iYRY+ZaQLQPtBfBPvkn//resrUSKnWGVWSnl8trr+iW2YhynmRqRj5phv+HiO0R
-	 2ioqBl3PLgXN9MSa8HCwJ0mL9IbkLk9mgMcW+wzAucDuQ2h2mAir4s+FdygdrDzwPO3Hi
-	 ZqOo0c1xWj9OSW29zFMeiAIQcEzGPDlrSyIq+jftAT7Ndxkr4feiyiJVWi3H1S/y+wcI4
-	 4hnNdqDGPny21reoobJaFEbIFaHZrEBaL+aiWcF9P4iZiADblXSFX/y47vsEnn0xnig==
+	bh=2owh4YFvS9EUc9o02yTBqgiJn10dXj2haaCLbozm9sU=;
+	b=NEHOfCliajxB7YLncq7+01YZIOxR+GZ4/IQte0FcvLY8H6vrAw++sZnHJM6p/QL6/o+k
+	 Txkd8GTQNaMO4T3MO1o+knSC/F3FxaxMHQbUfpsOZjXLmF1if/NHFONaIkmSqNMCDMakj
+	 8WRO6wJBjlqW9n1vzyBzRyH1PYzoCVsMsDgHkeScyU3PhYGGP6fupCdwmQSWLzBYKszoZ
+	 aS9jv3ZMRHI53s2BWyhu5yigFMxaJEY3b1zJ5zlY+tGOOU79TDQD/3Zthtr+pcV28wQEj
+	 ojXl5q9paBgeP+bD+99yydUBkvpBUo6PGt4Zi49Nxq+or4nU0dt7rcZM0YndFcdJ8sA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=googlemail.com;
 	spf=pass smtp.mailfrom=googlemail.com;
-	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=LBcnEPia;
-	arc=none smtp.remote-ip=209.85.221.45
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b="JD/un577";
+	arc=none smtp.remote-ip=209.85.128.47
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3239B606A33E
-	for <patches@lists.linux.dev>; Sat,  7 Nov 2026 16:57:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3239B606A33E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3284F606A326
+	for <patches@lists.linux.dev>; Sat,  7 Nov 2026 17:27:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3284F606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=LBcnEPia
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-491971ac844so1423318f8f.2
-        for <patches@lists.linux.dev>; Sat, 07 Nov 2026 08:57:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=JD/un577
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a20bdaf39cso17907545e9.1
+        for <patches@lists.linux.dev>; Sat, 07 Nov 2026 09:27:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20260707; t=1794070644; x=1794675444; darn=lists.linux.dev;
+        d=googlemail.com; s=20260707; t=1794072468; x=1794677268; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dZ/CQYskRN0JeHdAleff1h6SJqJJZnuoROXlSHd1Wv8=;
-        b=LBcnEPiaQlzCsjdDIWA2GTs8f/BqRXzfkrxlvfSemQZtZ5Z6ZntqDlx+85gcueiU5k
-         oorBka0z/dokN/UQ7T5H0Ogll454ukqsdVJHYOyPf2o5Xj2RBSKK71hzm9aszorqwyD/
-         sRRvfDXdzZH1tiMIVksiJrZ9KqIYMkqo9qLjtpa8oXFH5slzQCx5KT3IJfJxNuvkV/iF
-         DZTBWxdwSJ7QpPYPYSuY8mVjelKbjHojRu8LXHXgggrF3Q89spqfaAJSihss+c0UVuc0
-         qk4KzKxClOYQciR4p0PqjnW+N6qupRWHg5baWu3i95EmxfgGybrBdIOJgV89TTyZcpgQ
-         ODKg==
+        bh=2owh4YFvS9EUc9o02yTBqgiJn10dXj2haaCLbozm9sU=;
+        b=JD/un577wbTxIRxdzo8FrqXZaYeAu84B2g/LAjHc/FRxH9RA0Z15zRqYKMyrjScmFM
+         VJtoFRs2kh2OnWIdG3RQANNRiO2nj1V09Q4V6hx/LIRmG8sUBImPf+wyBywV6p5poMoE
+         ZnABIWAfhlukQWW5KhxB2idHfkpErJ2XEUG/ko1GpEJ0OH8o8O/3AAR3+3BS8tPVyZTk
+         S0XyFGNjuPlnbUT5aJnsDIHdykMh+Z3iOwrXlLFK766RuAKryy5VyuNOCGgi2mwBtYVr
+         S2EgzzyT1MRl5pQwgyd5hVxaboa1fL1Ngn/T+ALYIOE7ba0KwTS9dkzF3zu8PLYJx0tw
+         BwKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794070644; x=1794675444;
+        d=1e100.net; s=20260707; t=1794072468; x=1794677268;
         h=content-transfer-encoding:content-type:in-reply-to:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=dZ/CQYskRN0JeHdAleff1h6SJqJJZnuoROXlSHd1Wv8=;
-        b=0guC7AxpU4S9l/Wja/rB716JgR3CrmAqhpgzlhRpbWskyce2Wq6O75ojH+7t9MQXx7
-         zB2XJs8FHLbpoVPMMv0JkJnwgNZzz00SlBxCGdO5qGIUvoBxUGDQPBNGb4J7u9YZsDvP
-         phcSvgvDsvkZxZ4zWvVN8DltoW846ytWhe7zid2QX0rOmTpFSQCIMLLEgzW5byMVSFmH
-         tcj9RIlJVT1abK52TKdmsz2Qpend9a5Ft3QBadxAIrDjsJKKzruFTNcSSvA5i2Gfc9CR
-         KvKVE80Wym0APL35P/W4BuhhAyz07IW121PkmtZQxSwiPM9VbFooOby885XtcQBt+/Ux
-         BWFA==
-X-Gm-Message-State: APuU4Z/+aX9MqlWQf8KzmfrLXL8MaNaxONBDsXtAQVk5opK5l7jJ084R
-	98qH59+A5nU7FBYrLOQhVXCSmmB7EaAQI16db3SAEzneyqLxn6L4kgc=
-X-Gm-Gg: AYBFou2xD7C5hv96xbgmY3zvUdpxh4mj+rg9/He8OvRo+JDlK9I7VPFuTWiHu7lT/tY
-	AZPKq8USUBrKptP9Ldp2RA6Jh+t/rwCeS92mv0Cy8uOBdYw0VeABhIAgW+V5G/0Raz3zEk01lcR
-	zFdjgsgzEsdeV1IQ1nJwg5jfg/zn6dPTjTcWpG1dzG0wZO0I1X9NTo3Uhu0DeCKXl7J5LrEc3HH
-	IjJYjaCDTQijVwjZpGKjo9tm7YNYQh7S2mHSoUb4ZSJYV7PnYfnyx+p/+Xq6Mxzkj/mX/eVNGll
-	koSN6L9DpXj83GdVwln2DiT+rnn6dmvx6mjQa3RK2Ehpt/A1tVp5741MwXE5A11ZvCrmeHbM+/T
-	Ba2BkyJcQ/q46o4hVgcWKO5xcCJ/R8CTPym8XTeuMgRywmiqL0sRNL+gRIMHLO+YexFe8+LbvDk
-	lFP+Ovxwaak2T68hqXDcMLvC2vSAJpNbm32HdbdeJs7I2lsqXmzcC7C/gA5oU8eAfgefjENDExW
-	CdPLrFt0Mh2DzcakZFjgWs9oVyHmWNxsK+2x34BIBKE3GobgKFWWCLvOn/remdfqLtxH/t3j3Pe
-	SnTnygQTButoXpeMZOogpekRuujub9qzQ1O2YN4n0V/4HfY6Ao7KQ2cxTYaXb1nTJCBaW2/wQDo
-	bflk=
-X-Received: by 2002:a05:600c:530f:b0:4a2:133:45e1 with SMTP id 5b1f17b1804b1-4b6dfbabcf9mr95721785e9.24.1794070644434;
-        Sat, 07 Nov 2026 08:57:24 -0800 (PST)
+        bh=2owh4YFvS9EUc9o02yTBqgiJn10dXj2haaCLbozm9sU=;
+        b=HWfWT7qLvsrpIDTqVLY6cbP0L5KkauHu+nMNu7keYdHCERx75uX1rpcGKwNTVxqTuU
+         0QPgtHT9TTTc6JiVGR8cg2X6VDOc8eqJAzorlUU3p0IELSRHcwJR8qcceYIdsDl2O5ld
+         Qf1JoDQbuGkwBdfLmL/18NM03Uu8HNaAziz6p6ZyApPuAMiOuDArEAv1LW+2OOAIqIEd
+         GVsISHumgfttvAemehl8UW+5r4Bj+TNFbqB3ZCDPkRWSjnx0zIpMSowBYQU7mZBtKxAP
+         t0xA3NnGQZr5hTGnOh8Xc2x0S7/gc+KUAPKeOSxoXfFWOXS9QSwB06ZhR7G7VEBKfqhx
+         vt0Q==
+X-Gm-Message-State: APuU4Z8F5tT4wMAle1h5AilIjmTV7Z/QhTA3vAa1tAGsvL93MG+v1K1U
+	hC2pM8ejZw/l8Yn5d410Acifoti52tjekhob3PfncDMWLppStytpnAg=
+X-Gm-Gg: AYBFou2SDbWwW8axZpV5hOLE/aOztD9MORHgCnhPXKOjfshYQU8xYfztogI7qJDGO0Z
+	nen/LDaK3gGLj1kD5B2S9M/ZQaUgm77azXOhrx8lTA9+0Xc6QJzdaVn3R5gVnmvPz5kOE2v+4kq
+	qN1CmNBZMM3c1QPMx7d0HYJY6yDxo1rvMH+v2vsL8OyZUdd6blW9FAq42tIgmspglWvO/v6jn+T
+	Mv9KKsCA/Sc/ZjKVYsNF0DBUYpd78vPfEahGdREUQaDHWJ7RVtkfR2qeo4TXAvgCCjWJXvM3SU+
+	FB2ZcpuWOP8jQjzNoE5vcmnr8XFQrZ2cc3Kbl2Bm/4f5gV01nZVZuGI8q9IMqOX6r1U8Z64eTP1
+	QfR73n0m/OIbZ5dfEnCg5nhNXt8A4BxZEZwaRgUctiMUzanlVShx+/IO4+yhHMIUnFQ0j8oqQrt
+	bvhJg3u+wBQCoQ5yJlDultjIJMWXN6tmNXlAdIRcmMD2zyv0NDuGzz2E714ovPhq8Qfy9395Yyb
+	2ULkneVunHMDor4Di2abuwVcHgNzypOXf+K7Owuk3zphe3HCSuO/D2E1OWSHgNJ9dbC4aBFEcq+
+	4a4FclhDYGhCkqkw+cl/23Ew2ghZa8sLwqbbm554FYUr0tibUOw7IPKAM2aUtaAlyGGHwg8hFc9
+	zIbU=
+X-Received: by 2002:a05:600c:310f:b0:4b6:bb67:bb9 with SMTP id 5b1f17b1804b1-4b6ded4a3b0mr105329935e9.29.1794072467520;
+        Sat, 07 Nov 2026 09:27:47 -0800 (PST)
 Received: from [192.168.1.3] (p5b2acf48.dip0.t-ipconnect.de. [91.42.207.72])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b7efb1547fsm144188195e9.11.2026.11.07.08.57.23
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b7e32b46a3sm88407715e9.6.2026.11.07.09.27.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Nov 2026 08:57:24 -0800 (PST)
-Message-ID: <2401f130-7358-4797-a872-592674a1888f@googlemail.com>
-Date: Sat, 7 Nov 2026 17:57:23 +0100
+        Sat, 07 Nov 2026 09:27:47 -0800 (PST)
+Message-ID: <0e21a66d-5f93-40e0-8991-aac8a464b7c4@googlemail.com>
+Date: Sat, 7 Nov 2026 18:27:46 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -91,31 +91,52 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.18 000/869] 6.18.63-rc1 review
+Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
 Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+To: Ronald Warsow <rwarsow@gmx.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261107134852.069646174@linuxfoundation.org>
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20261107134939.434104957@linuxfoundation.org>
+ <68c2efb8-e54f-40bc-9c36-76c719a590d5@gmx.de>
 From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
+In-Reply-To: <68c2efb8-e54f-40bc-9c36-76c719a590d5@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Am 07.11.2026 um 14:44 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.18.63 release.
-> There are 869 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Am 07.11.2026 um 16:34 schrieb Ronald Warsow:
+> Hi
+> 
+> kernel build / boot test on x86_64 (Intel).
+> 
+> I need to revert (here)
+> 
+> 1564da6afd7ce5297ba24f2d1e61d6a79a9ff6db
+> 
+> 
+> otherwise I get:
+> 
+> In file included from kernel/sched/build_policy.c:71:
+> kernel/sched/ext/ext.c: In function ‘check_rq_for_timeouts’:
+> kernel/sched/ext/ext.c:3852:41: error: implicit declaration of function ‘scx_exec_sched’; did you mean ‘scx_prog_sched’? 
+> [-Wimplicit-function-declaration]
+>   3852 |                 struct scx_sched *sch = scx_exec_sched(scx_task_sched(p), cpu_of(rq));
+>        |                                         ^~~~~~~~~~~~~~
+>        |                                         scx_prog_sched
+> kernel/sched/ext/ext.c:3852:41: error: initialization of ‘struct scx_sched *’ from ‘int’ makes pointer from integer 
+> without a cast [-Wint-conversion]
+> make[4]: *** [scripts/Makefile.build:290: kernel/sched/build_policy.o] Error 1
+> make[3]: *** [scripts/Makefile.build:551: kernel/sched] Error 2
+> make[2]: *** [scripts/Makefile.build:551: kernel] Error 2
+> make[2]: *** Waiting for unfinished jobs....
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+I do see the same build error on my machine (2-socket Ivy Bridge Xeon E5-2697v2 server), and the same revert helps.
 
 
 Beste Grüße,
