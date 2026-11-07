@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062725;
-	b=g0tOAPhWTbJh7o3Se62YpHQ2RANgFElPZIa6cC0rKw9OMtcKDKgvmUz2ST2aoiuaiM9j
-	 y3t8RE4eMGCdsjyW19NlKr6+HQkXyBRWxBAKhIc+6rXJJ6ny5O22++Km5M3BDg3VufpTy
-	 /xOygzwxA7STGr9Nncej0QhmaBLXZYT3krFzV1j5OqU8OXBHWzwrm32M3EMCJAv0hzoIJ
-	 +MLuErIX1UdzmJbnA9mos3hr0t2r155FyGeTbXaIO88ATm/picHkBARaKtmCxTpV27mgm
-	 IHdFmNk/1ZPmK+XaMaFNV+DuKkdK0N0cantqw+V9p6zenPnAKHyveQnO9i1jts1WLCQ==
+	t=1794062727;
+	b=Zwb+U4DL6N9xhyMxVW9GQhURLZLVLMO+4RL9rLj9cbsNw8KddrLRvdk6w6WBYw0wW7yU
+	 XWRR1Tt/rcXz14LFK9VgHFEitrdhFOdvOkfaVeYkc8Gpr5ZsFrQwCVGZFVnRl2kWPwJVR
+	 vexzEDmrUQCE+dA9eUegGm2ybr7TtXv1/cuzvviC2BjgF/5OI6mv4wzf8+cRmyPsDRP4o
+	 5SU/TkIpSThH1XX68I2fdZ2y52ah8QrEVG48gLCj4k2YiXqkiSLgdhDjCNCUdzsT52ON+
+	 GTg1wBG58Ojkse3xlF7t00VGFmJag3rhK44GuR+RDZUlto2uawbTw0WOk0PpvU9jhrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062727;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SJqyqhDJEzR6bPC1LsdC6JQUaS5/Y3Y5IbqE6xMNmj8=;
-	b=ZQyyHGfxuOvB4FAaBCtTm3o81tcLw9FcYxAM9D0i775Akig7pi3tAyGfrXy+nz8H/bjd
-	 GF1QtH31QONytRtqibfTECi5Ss1SghAFyAfyu9OhTzsisVSLerBV9qeyQfAFFDW0w/X18
-	 7/28uq8xZTYCNX1pFTBAbJv9Ksj4AOyIcQFhQmjI1tOLVivVzHqg9j9o9mml3LWdGcy2G
-	 kzlLCM0xRY09rgal3Ey8hQUtndeINtNTmqNbJZ6nd6mOaKc3GQg3C8nqzIsm+Y3L9K9wk
-	 8EYXOCEJjPaadLMu/+/Ahl34R4bUjCLaJY3J4DeRsgUsRYYnZd55ePY2TCqZ4NJXZ1A==
+	bh=vBDJ/A6NqCVMtxUZ2mr0OPVqIcd55ZdXcVjipQiBkWM=;
+	b=lVmnF/xZ5Ru2jAfQifSa4W7Nran1l2f/FP6VnT9PEibnwf95qzJjUdzQO8dQiYOvwzYJ
+	 HNSD4adpflqe90/Ty2MNzwN3zNu0Tx719Nh5Ps+bFC4i9/pf325+lHtOLOL0zGIaYbXvm
+	 6gcvHR8BQP+YvGLKS8F3i8xe0asLx1T4Gc7LExIgWRfziASd12qbd8eOGho9EW6tfq3C6
+	 My4VqroPXt5IGhd8GLXAt8WsYBJ9vKCOus+Kg3TCfkXTPLLmO72sa75hssgWGefDY9Pqu
+	 QYFfKcMR4uDIuHQKzc6LMG9dE4pIxBYOABm/czN/xZDpUEEhKFOh8GnqZJ5mi+PhHcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQ0IrVGI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjHWeihL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A98606A326;
-	Sat,  7 Nov 2026 14:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB57606A32C;
+	Sat,  7 Nov 2026 14:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQ0IrVGI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4310A1F0089F;
-	Sat,  7 Nov 2026 14:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjHWeihL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8EE1F0089F;
+	Sat,  7 Nov 2026 14:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062725;
-	bh=SJqyqhDJEzR6bPC1LsdC6JQUaS5/Y3Y5IbqE6xMNmj8=;
+	s=korg; t=1794062726;
+	bh=vBDJ/A6NqCVMtxUZ2mr0OPVqIcd55ZdXcVjipQiBkWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AQ0IrVGIHif3cbv1ITlE/T4WkNupn2FKn2m9go0xq+ho68Je96wHFWpIPs9UHn7ie
-	 LkTJjvtKnt7cJAeNM58t9WtN9x3BbNe/stMXbANulMn32S1bSoYjjgcRDTsM0sdouy
-	 OgfEKm67xd6Y1SKkRpabYx2WSYUd9l7HWqxpPMrk=
+	b=ZjHWeihLpxNO4/Q9FFstwjwr3SQb8aMb4vhIDQgV18dqlUvhEE4d8KnXc6nT1rOHJ
+	 rNIJFT7IWDqXTr64zBtLztLx9ZFig/eElN0sVhatwq0TD5XcgOfYzkg6upJvx/5pNA
+	 E7wH8oYWVARkBah+59YvB9bajkgCsHXoTHQIFWyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 013/869] pps: generators: dont use the drivers info after unregister
-Date: Sat,  7 Nov 2026 08:44:55 -0500
-Message-ID: <20261107134852.453475383@linuxfoundation.org>
+Subject: [PATCH 6.18 014/869] nvmet: replace use of system_wq with system_percpu_wq
+Date: Sat,  7 Nov 2026 08:44:56 -0500
+Message-ID: <20261107134852.480685674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,147 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-[ Upstream commit 4e8063cae337cb7328e6856235cf4de5d165516e ]
+[ Upstream commit 3d553be6d295b6cca8fd35cb673fd13934ac4cbc ]
 
-A file that was opened before pps_gen_unregister_source() keeps
-pps_gen, and with it the pointer to the driver's pps_gen_source_info.
-PPS_GEN_SETENABLE and PPS_GEN_USESYSTEMCLOCK keep using that pointer
-after the driver has gone:
+This patch continues the effort to refactor workqueue APIs, which has begun
+with the changes introducing new workqueues and a new alloc_workqueue flag:
 
- - pps_gen_tio allocates its info with devm_kzalloc(), so after an
-   unbind both ioctls read freed memory, and SETENABLE calls the
-   driver's enable() with its freed private data.
+   commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
+   commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
 
- - pps_gen-dummy does not set info->owner, so it can be unloaded while
-   the file is open, and the ioctls then read the unloaded module's
-   data and call its code.
+The point of the refactoring is to eventually alter the default behavior of
+workqueues to become unbound by default so that their workload placement is
+optimized by the scheduler.
 
-TIO can't probe in a VM, as it needs ART. A test driver that registers
-its info in devm memory like TIO does, unbound while /dev/pps-gen0 is
-open, gives:
+Before that to happen, workqueue users must be converted to the better named
+new workqueues with no intended behaviour changes:
 
-  BUG: KASAN: slab-use-after-free in pps_gen_cdev_ioctl+0x4c1/0x580
-  Read of size 1 at addr ffff88800e647f38 by task ppsgen64/145
-  ...
-  Freed by task 146:
-   kfree+0x25a/0x6d0
-   release_nodes+0xd1/0x140
-   devres_release_all+0x10e/0x1a0
-   device_unbind_cleanup+0x71/0x250
-   device_release_driver_internal+0x41b/0x570
-   unbind_store+0xd9/0x100
+   system_wq -> system_percpu_wq
+   system_unbound_wq -> system_dfl_wq
 
-and unloading pps_gen-dummy while its file is open oopses:
+This way the old obsolete workqueues (system_wq, system_unbound_wq) can be
+removed in the future.
 
-  BUG: unable to handle page fault for address: ffffffffa0203040
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:pps_gen_cdev_ioctl+0x372/0x580
-
-Protect info in the ioctl handler with a mutex, and clear it under the
-mutex on unregister, so that unregister waits for the ioctls using it
-and later ones fail with -ENODEV. PPS_KC_BIND does the same for a
-removed PPS device since commit 3649f9a6b897 ("pps: don't allow
-PPS_KC_BIND on removed devices"). The sysfs attributes need nothing
-new: they are removed, and their callbacks drained, before info is
-cleared.
-
-Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://patch.msgid.link/20260929124937.51114-3-danishkhateeb03@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/20250221112003.1dSuoGyc@linutronix.de/
+Suggested-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 53f6efe00cea ("nvmet-auth: serialize access to DH-HMAC-CHAP state to fix UAF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/generators/pps_gen.c | 31 ++++++++++++++++++++++++++-----
- include/linux/pps_gen_kernel.h   |  2 ++
- 2 files changed, 28 insertions(+), 5 deletions(-)
+ drivers/nvme/target/admin-cmd.c        | 2 +-
+ drivers/nvme/target/fabrics-cmd-auth.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pps/generators/pps_gen.c b/drivers/pps/generators/pps_gen.c
-index 69a470fa164d6..630a8804d63e7 100644
---- a/drivers/pps/generators/pps_gen.c
-+++ b/drivers/pps/generators/pps_gen.c
-@@ -69,17 +69,28 @@ static long pps_gen_cdev_ioctl(struct file *file,
- 		if (ret)
- 			return -EFAULT;
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index fa9920787a8ff..623b5303de2aa 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -1606,7 +1606,7 @@ void nvmet_execute_keep_alive(struct nvmet_req *req)
  
--		ret = pps_gen->info->enable(pps_gen, status);
--		if (ret)
--			return ret;
--		pps_gen->enabled = status;
-+		scoped_guard(mutex, &pps_gen->info_lock) {
-+			if (!pps_gen->info)
-+				return -ENODEV;
-+
-+			ret = pps_gen->info->enable(pps_gen, status);
-+			if (ret)
-+				return ret;
-+			pps_gen->enabled = status;
-+		}
- 
- 		break;
- 
- 	case PPS_GEN_USESYSTEMCLOCK:
- 		dev_dbg(&pps_gen->dev, "PPS_GEN_USESYSTEMCLOCK\n");
- 
--		ret = put_user(pps_gen->info->use_system_clock, uiuarg);
-+		scoped_guard(mutex, &pps_gen->info_lock) {
-+			if (!pps_gen->info)
-+				return -ENODEV;
-+			status = pps_gen->info->use_system_clock;
-+		}
-+
-+		ret = put_user(status, uiuarg);
- 		if (ret)
- 			return -EFAULT;
- 
-@@ -212,6 +223,15 @@ static void pps_gen_unregister_cdev(struct pps_gen_device *pps_gen)
- {
- 	pr_debug("unregistering pps-gen%d\n", pps_gen->id);
- 	cdev_device_del(&pps_gen->cdev, &pps_gen->dev);
-+
-+	/*
-+	 * An open file keeps pps_gen around, but the driver may free info as
-+	 * soon as we return. The sysfs files are gone now, so wait for the
-+	 * ioctls using info and make later ones fail.
-+	 */
-+	scoped_guard(mutex, &pps_gen->info_lock)
-+		pps_gen->info = NULL;
-+
- 	put_device(&pps_gen->dev);
+ 	pr_debug("ctrl %d update keep-alive timer for %d secs\n",
+ 		ctrl->cntlid, ctrl->kato);
+-	mod_delayed_work(system_wq, &ctrl->ka_work, ctrl->kato * HZ);
++	mod_delayed_work(system_percpu_wq, &ctrl->ka_work, ctrl->kato * HZ);
+ out:
+ 	nvmet_req_complete(req, status);
  }
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index 5b010318286e4..af712c6624b36 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -410,7 +410,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
+ 		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
  
-@@ -243,6 +263,7 @@ struct pps_gen_device *pps_gen_register_source(const struct pps_gen_source_info
- 	pps_gen->info = info;
- 	pps_gen->enabled = false;
- 
-+	mutex_init(&pps_gen->info_lock);
- 	init_waitqueue_head(&pps_gen->queue);
- 	spin_lock_init(&pps_gen->lock);
- 
-diff --git a/include/linux/pps_gen_kernel.h b/include/linux/pps_gen_kernel.h
-index f26f6aac000dc..c4d22b1af1186 100644
---- a/include/linux/pps_gen_kernel.h
-+++ b/include/linux/pps_gen_kernel.h
-@@ -11,6 +11,7 @@
- #include <linux/pps_gen.h>
- #include <linux/cdev.h>
- #include <linux/device.h>
-+#include <linux/mutex.h>
- 
- /*
-  * Global defines
-@@ -44,6 +45,7 @@ struct pps_gen_source_info {
- /* The main struct */
- struct pps_gen_device {
- 	const struct pps_gen_source_info *info;	/* PSS generator info */
-+	struct mutex info_lock;			/* protects info */
- 	bool enabled;				/* PSS generator status */
- 
- 	unsigned int event;
+-		mod_delayed_work(system_wq, &req->sq->auth_expired_work,
++		mod_delayed_work(system_percpu_wq, &req->sq->auth_expired_work,
+ 				 auth_expire_secs * HZ);
+ 		goto complete;
+ 	}
 -- 
 2.53.0
 
