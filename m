@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064919;
-	b=15UEt5ypj/W+UL/BQ9/gwSJ2Moa+rJ1dHlvAuYa1IKI+8K3jihyI7/0buKM5pTMNZM9l
-	 6j5nbHN/j8aowRtPlfCUt/rri68/8QA350F3dscINjiQW74UlBH9FGTz8aS8V+MSqU1R7
-	 SRspSH2C0A/jJvynWu04ll5ZteNDZnkUzoYiRhXD/b8iSIKHClpx9fnjOGSg9NOgwmAU3
-	 hCwflrau4aXadx+RfMzIsLvsltE/iusZvCrtK1ZZErRLL9bPycAIJpuj5INUY1Exc9dwz
-	 NvaiC6IKs8djcMphcEzzKwH8h+jvY1kn8vMxb81mJtGtO2AkwQLj4ihXncMZHbagp1Q==
+	t=1794064921;
+	b=I4fVxTww/B4Vvtro5GfNsFGLFu/LVeF7wTEnvgIG33L2BWTSN6Cf+LvycMehGj/pY0mT
+	 DcAcluT4z5gqVR2hJ7/R9nOmx+XpxrraCz8x8ojZyipMylOC5LUvTlsnUnyVRs5SS0i0V
+	 2/fEWjcPUkYGftHYcZ52qFuHCf4Jl7yRyNCVfYWTcAUCpck+xkk/+HNJl6uVwcSB6r+wP
+	 37GwtHdb/IA+ixyq9viXp2Jt9/51rBLUS8UV+f7HTkvAQ+t6NVwSAhWlJBb8UfcYlJu0q
+	 +iG4y7Py8pErp4AiQkYFdHDyOIuSDOj2c5z/KmPnGSLR/Hryss1RqEFvLUpJVVp0Shg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vJoE2FdICEKQoBrWHw0nx6CX5IW7VdkN/AmUNli2V8c=;
-	b=Dcfmx6AquQIVQYuhuVb2J/pYihU6mzyioD5653HxMivq81aVSpH/K7ceq+FlWyCuw7a/
-	 3JvNwj7bv0hRHlIVorFLgZAJqJjCcEk2ZtbyXTRKWUF326AGviNIag9lxPCxj3+rlwBOn
-	 H7r7nYa3PtmbjMhF4QiPJkF97rR1a+sfpFNir5qCJq+L84ZY4gwTYAdcn5s70YUKRYEH0
-	 q0lraV61j7t+6Khyle/IJMujpLynRV4xOI/G0xJAQcxdAU6IF8Rgpuf2QQht/S2q34FkO
-	 afvW1xi8nDqdWYO/Rzdk2WHQ43xaJSOfTxNgYY32xt+eJiKtYGk2OIwAceLvJrAqCjA==
+	bh=R2YbCtpvdtXoZ7RTjN5MahljVO6p6M8od2TY62KlNm0=;
+	b=gV6ueVfgq2p8unmhzpIBG4fxt4Njp0eKwysA92HZuRl+noqtkkO8gYZhsL6ci3W0CJFx
+	 gwJ6h2PE7oKCii0jC0f+AgVpFcjBeoiBF3dp3JL6yq7zt03lMUeLi2r4gEGKyvQTzA+9F
+	 neD0vdKFzPxxBqOeXnWZxoxZknudf2H5RtEDi7UZnQrAVt+ig7HC6vtoyKGMY4Yhhfiax
+	 Ns7oy96ivLPS7SehRJPaVEqoOJBnJEEWlw78Mm3OVnPtKZj1HLV2iveVS4w08klFqGguw
+	 44+tQ/frGCX3sVG6znAUYHVZAwvSpzch9Aon9XF4HeZCkS/W6Si/1f/klvGPJKrhMWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JiHS8Php;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H5c5n/KR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68378606A33E;
-	Sat,  7 Nov 2026 15:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13262606A33E;
+	Sat,  7 Nov 2026 15:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JiHS8Php
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104881F0089F;
-	Sat,  7 Nov 2026 15:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H5c5n/KR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9215A1F0089F;
+	Sat,  7 Nov 2026 15:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064919;
-	bh=vJoE2FdICEKQoBrWHw0nx6CX5IW7VdkN/AmUNli2V8c=;
+	s=korg; t=1794064920;
+	bh=R2YbCtpvdtXoZ7RTjN5MahljVO6p6M8od2TY62KlNm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JiHS8PhpbHKbmJ7XlcJppqTzE1cfxshPKyuX1BKfXFcwA25bORfnxIPjiXVklNgm8
-	 HniYDNp96zWDIUbrPiOKEyA6AjT6l8b5n0KjsE/ShWu2gik+ijEGyAbmIAeDoVjuN2
-	 Fqx3iDEKz338QdgM94YBbwONuSEtupXRsyOc4YPc=
+	b=H5c5n/KRoIc7DOEE8Llu7Lti0Qtg4TpoIxKHk0UgY1qHV5PKXHufNIQZFk7X5z5Nk
+	 9SKt3mjztE1bOgDMHl7+0hmoOYsbp0cnbWtdLRL8yfpABlaAAH6gceExnXhtBZi2dX
+	 xeawR708DqNtDeNNSDmbDQtb6MQ27MA8dKv+ps44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jianyun Gao <jianyungao89@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Jan Kara <jack@suse.cz>,
 	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0817/1257] dax: Return errors from dax_core_init()
-Date: Sat,  7 Nov 2026 08:51:53 -0500
-Message-ID: <20261107135001.909162436@linuxfoundation.org>
+Subject: [PATCH 7.3 0818/1257] dax: fix dax_range_compare_iter() to use correct size and address offset
+Date: Sat,  7 Nov 2026 08:51:54 -0500
+Message-ID: <20261107135001.936124436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,45 +71,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Jianyun Gao <jianyungao89@gmail.com>
 
-[ Upstream commit 4da700e2cadf84a6e858391d5be51d64dcba080f ]
+[ Upstream commit a4bfbfb4e98a62b589ac7ca9e73e9612bfe8cab7 ]
 
-dax_core_init() returns success when either the character device
-number allocation or DAX bus registration fails, even though the
-error paths have already released the initialized resources.
+dax_range_compare_iter() has two bugs in how it calls
+dax_iomap_direct_access() and uses the returned addresses:
 
-For modular DAX, this allows the module to remain loaded despite
-failed initialization, leaving subsequent users and module removal
-to access resources that have already been released.
+1. The size argument passed to dax_iomap_direct_access() is
+   ALIGN(pos + len, PAGE_SIZE), which is an absolute file offset
+   rather than a length. This causes the underlying dax_direct_access()
+   to request a massively inflated nr_pages via PHYS_PFN(size).
 
-Return the error code from the failed operation so that module
-loading fails rather than reporting successful initialization
-after the resources have been released.
+2. The addresses returned by dax_iomap_direct_access() are page-aligned
+   starting addresses, but memcmp() compares from saddr/daddr directly
+   without adding the page-in-page offset of pos1/pos2. When pos1/pos2
+   are not page-aligned, this compares the wrong data.
 
-Fixes: 9567da0b408a ("device-dax: Introduce bus + driver model")
+Fix the size by computing ALIGN(len + offset_in_page(pos), PAGE_SIZE),
+matching the pattern used in dax_iomap_copy_around(). Fix the address
+by adding offset_in_page(pos1)/offset_in_page(pos2) to saddr/daddr in
+the memcmp() call.
+
+Fixes: 6f7db3894ae2 ("fsdax: dedup file range to use a compare function")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20261012151857.22534-1-jianyungao89@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20261011064840.1296-1-jianyungao89@gmail.com
 Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dax.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dax/super.c b/drivers/dax/super.c
-index 45f84b0eb909a..210f4af479f0e 100644
---- a/drivers/dax/super.c
-+++ b/drivers/dax/super.c
-@@ -738,7 +738,7 @@ static int __init dax_core_init(void)
- 	unregister_chrdev_region(dax_devt, MINORMASK+1);
- err_chrdev:
- 	dax_fs_exit();
--	return 0;
-+	return rc;
- }
+diff --git a/fs/dax.c b/fs/dax.c
+index 1fbba0d21c13d..dbb58692efecf 100644
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -2200,6 +2200,7 @@ static int dax_range_compare_iter(struct iomap_iter *it_src,
+ 	const struct iomap *dmap = &it_dest->iomap;
+ 	loff_t pos1 = it_src->pos, pos2 = it_dest->pos;
+ 	void *saddr, *daddr;
++	size_t size1, size2;
+ 	int id, ret;
  
- static void __exit dax_core_exit(void)
+ 	len = min(len, min(smap->length, dmap->length));
+@@ -2215,17 +2216,18 @@ static int dax_range_compare_iter(struct iomap_iter *it_src,
+ 	}
+ 
+ 	id = dax_read_lock();
+-	ret = dax_iomap_direct_access(smap, pos1, ALIGN(pos1 + len, PAGE_SIZE),
+-				      &saddr, NULL);
++	size1 = ALIGN(len + offset_in_page(pos1), PAGE_SIZE);
++	ret = dax_iomap_direct_access(smap, pos1, size1, &saddr, NULL);
+ 	if (ret < 0)
+ 		goto out_unlock;
+ 
+-	ret = dax_iomap_direct_access(dmap, pos2, ALIGN(pos2 + len, PAGE_SIZE),
+-				      &daddr, NULL);
++	size2 = ALIGN(len + offset_in_page(pos2), PAGE_SIZE);
++	ret = dax_iomap_direct_access(dmap, pos2, size2, &daddr, NULL);
+ 	if (ret < 0)
+ 		goto out_unlock;
+ 
+-	*same = !memcmp(saddr, daddr, len);
++	*same = !memcmp(saddr + offset_in_page(pos1),
++			daddr + offset_in_page(pos2), len);
+ 	if (!*same)
+ 		len = 0;
+ 	dax_read_unlock(id);
 -- 
 2.53.0
 
