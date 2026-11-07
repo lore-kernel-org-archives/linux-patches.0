@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060663;
-	b=3A2yCSTRbbjiMrkE6bp/Ek13s9NtXjs//YGErFJsqnRJIaX+C4xJsQEp7ikm08U4zUKY
-	 ikEylwKCDQBWgzwMcmHlR+61DjaS/9vMvTpq1097ilJb/0c9h0sK/zTdfQt6g1AXGE4yO
-	 WBVHQ425zEG3H7g92/R0j/iaLvoCuegOSBmzLgets53UgDwvgbXO3EhKWqORSHOdWKEJE
-	 Y9vff0XjV2P2sXLaJdcl77gmkhgB1lsbck2C2gB7h1Z0vwA23rlW4MBnWhQdynEHBFs78
-	 clvHIjqcjMM07A9JDAt0Fq/yAlriEPe0lbKXxn45X1Pzkq64UR5kRZqZ7k2CFqwWGqQ==
+	t=1794060664;
+	b=h4U4Eoxztx/roCIc6FE6f1X0SXHftbtpvnL4oX2DmiuftQsdj7y+xPm8Q/ZqPEaFbIV5
+	 cgPb6YKjAfIrLnKtRX6oSJOHRtjek3BWXVPjOPOpJQy3/kNR9TSZaQ+7UKMDOWGEYoxmj
+	 Xr48n/VR696czElTaIFZ5V6hjBoTqsXo+YVavnY87kdPsCDlE3DGB5cHPA/w9ULZUhpxp
+	 zZdWkiRi7DqBwT+TFz55DpvtwNwaYdLVKaCP01iJgmyySLEtHUiAQXxUvCHOwJNCm2m84
+	 NFklO5oLaSPyOmoD57QYdcXqguMiUqizeV6FOYgAYG2HMoWuKjSHnZDE9xBi964ag8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060663;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4zzakTDm590q7EY29tAIrIMvSOis9RcmeESQgwJ8BKM=;
-	b=CuCb8LCMEfhAzo+c670n9g/SIpcvvS9nFAxu40aqWKpXtk8h0TVWH4QOVXZi2It3tbOR
-	 pDIWDq+Rv/OPA/HiPVn1e61qXc0k0uHlXTVz7ZLUWwV4rh7paBSQBkORKOJ+E/6H245Up
-	 XA0S4ygFPt4oJxrZrP1LDWR+zf2U6KQVGtPdSeFzP46uYnv5wAs7MuyFSxiZ3A0X4ifo3
-	 hR5KT19zVrZFZB5hgVvr2VsbLN+zo8JXqO0JB84mKHLFcsqcjXvkkMu2oRRjI46mHYN9v
-	 3acwXOK2G6pyeC41kCehig6gti6CSDey24/KfCTNCFIQhNcbL+k+b9sMsY4ZesUGcwg==
+	bh=PYPAV2bXUNCiU/hvN0UdlWcL2Z/28JFO1Tf4qfKb0Gk=;
+	b=NNn9N/jSbZQ5lg5vkGwfrEFXLBv6/xbvwrGJvjZ8S6QagHGY/L0VkhSUyh7R2ER2rSNN
+	 ID8sLE30ceLKyFB4YZKgQ2YWnxdCXgmfkiQ127j6qHQpVwpkbx76tyP8CzQdOxFXthEmr
+	 T0jiko/IqQIipQuHW3TXDSJs529LMq4egRcLaf/rG1pmCHubBh/gHM9iJ+Zt32AMp08kD
+	 F1rPWOkwzMe+nhRFB5FNo0YwR+O4YQgVOOVAWkzJNmL9tv7uPbLFt33TAuhYIJ2jbgLbb
+	 xQcbOmQP9AzZ2+LJO0/GH3IsVHMzqPTIdCAPNdahVKmqdCIwyDMg6936NordrPmXIOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OoB4ArfP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQZRQLm5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01829606A32D;
-	Sat,  7 Nov 2026 14:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E119D606A32D;
+	Sat,  7 Nov 2026 14:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OoB4ArfP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FC31F0089F;
-	Sat,  7 Nov 2026 14:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQZRQLm5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB9A1F0089F;
+	Sat,  7 Nov 2026 14:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060662;
-	bh=4zzakTDm590q7EY29tAIrIMvSOis9RcmeESQgwJ8BKM=;
+	s=korg; t=1794060663;
+	bh=PYPAV2bXUNCiU/hvN0UdlWcL2Z/28JFO1Tf4qfKb0Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OoB4ArfPOE+zY/2JaY82tYUW5Uiec8J0kVUGUXcqxg9PiYBMHd1E1fHHT1sbMPwyN
-	 HQxMeqPK4fzmIg4OhMIY3LIwIlgTtwOluugOF6bqpMQzYg5g/a/b7+Yrs/pvrJuZVF
-	 KitAgv6dw+PV8ZY17M6wfYLoKHReUNGJmb7DM23I=
+	b=zQZRQLm5y/Eri+WeIRHW4j6x7fcuy3Zfv6Z+F4FrWZBwMbo7xoZYmbTNNnLYBaRV5
+	 +Ml1OHbPiJFRap35TZRCmj/Qc2BZSkA+zwBufk1ut9M7hF+zacZZv5q4bNZN1E8WdV
+	 9AAoNBffw6xGjgTrykjwDxywqbOVaN2obwcUAIOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingtao Cao <qingtao.cao.au@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0100/1536] bus: mhi: core: Fix sys error transition latency
-Date: Sat,  7 Nov 2026 08:35:16 -0500
-Message-ID: <20261107135000.478323176@linuxfoundation.org>
+Subject: [PATCH 6.12 0101/1536] ASoC: codecs: max98396: Unwind supplies on resume failure
+Date: Sat,  7 Nov 2026 08:35:17 -0500
+Message-ID: <20261107135000.506464192@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,58 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingtao Cao <qingtao.cao.au@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 22568e8f13a42ab69b7d624741768cbf15dded74 ]
+[ Upstream commit d20de7409dfa8e3341af7f157cd42130bd4ba3a7 ]
 
-Bring forward the idea to fix the power down latency in
-mhi_pm_disable_transition() further to mhi_pm_sys_error_transition()
-so that the transition into system error (triggered by AT!RESET) in the
-modems won't have to return only after the timeout of up to 24 seconds.
+max98396_resume() enables the core, pvdd, and vbat supplies before
+leaving cache-only mode, resetting the device, and replaying cached
+register state. The function currently ignores regcache_sync() failures,
+and the optional pvdd/vbat enable failures return without unwinding
+supplies that were already enabled in this resume attempt.
 
-Once the device gets reset, there is no guarantee that it will send an
-interrupt to indicate the state transition. So polling is the sensible
-option here.
+Rework the function to use common error labels. This propagates sync
+failures, restores cache-only/dirty state on failed cache replay, and
+disables each supply acquired by this resume path before returning the
+error.
 
-Signed-off-by: Qingtao Cao <qingtao.cao.au@gmail.com>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260603011333.3306102-2-qingtao.cao.au@gmail.com
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704040651.47558-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pm.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ sound/soc/codecs/max98396.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 8f32dd0a2f218..9c86f29a29486 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -648,21 +648,13 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
+diff --git a/sound/soc/codecs/max98396.c b/sound/soc/codecs/max98396.c
+index e52bb2266fa16..d4a739273861f 100644
+--- a/sound/soc/codecs/max98396.c
++++ b/sound/soc/codecs/max98396.c
+@@ -1602,19 +1602,37 @@ static int max98396_resume(struct device *dev)
+ 	if (max98396->pvdd) {
+ 		ret = regulator_enable(max98396->pvdd);
+ 		if (ret < 0)
+-			return ret;
++			goto err_core_supplies;
+ 	}
  
- 	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (reset_device) {
--		u32 in_reset = -1;
--		unsigned long timeout = msecs_to_jiffies(mhi_cntrl->timeout_ms);
--
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+ 	if (max98396->vbat) {
+ 		ret = regulator_enable(max98396->vbat);
+ 		if (ret < 0)
+-			return ret;
++			goto err_pvdd;
+ 	}
  
- 		/* Wait for the reset bit to be cleared by the device */
--		ret = wait_event_timeout(mhi_cntrl->state_event,
--					 mhi_read_reg_field(mhi_cntrl,
--							    mhi_cntrl->regs,
--							    MHICTRL,
--							    MHICTRL_RESET_MASK,
--							    &in_reset) ||
--					!in_reset, timeout);
--		if (!ret || in_reset) {
-+		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
-+				 MHICTRL_RESET_MASK, 0, 25000, mhi_cntrl->timeout_ms);
-+		if (ret) {
- 			dev_err(dev, "Device failed to exit MHI Reset state\n");
- 			write_lock_irq(&mhi_cntrl->pm_lock);
- 			cur_state = mhi_tryset_pm_state(mhi_cntrl,
+ 	regcache_cache_only(max98396->regmap, false);
+ 	max98396_reset(max98396, dev);
+-	regcache_sync(max98396->regmap);
++	ret = regcache_sync(max98396->regmap);
++	if (ret < 0) {
++		regcache_cache_only(max98396->regmap, true);
++		regcache_mark_dirty(max98396->regmap);
++		goto err_vbat;
++	}
++
+ 	return 0;
++
++err_vbat:
++	if (max98396->vbat)
++		regulator_disable(max98396->vbat);
++err_pvdd:
++	if (max98396->pvdd)
++		regulator_disable(max98396->pvdd);
++err_core_supplies:
++	regulator_bulk_disable(MAX98396_NUM_CORE_SUPPLIES,
++			       max98396->core_supplies);
++
++	return ret;
+ }
+ #endif
+ 
 -- 
 2.53.0
 
