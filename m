@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062625;
-	b=oQnxAg6WnZ4emKxemglTUD0a0KjgDK3Ij3GgkC/jlOejhLeaE5uxf+1Crls0ZLiOTrId
-	 +qIWpew9xQqR24+7qAdfO+a1CuiCajr5RQAokB4oR15qfIrYtl+vZnByi4GCSvVi+eQc/
-	 flQ1gpXSgs+pqIDHm6lTJuCGblp3Ynqm6A6+LQbHVWc4ZdrFNuDpxQrt7QdVK2HSNPBWl
-	 oftrNGlYHiX10RLXmw7/w/+tJRLMTm6EWLkgd7+QfusVtn5z5+86vORZC3PdE/4S+A0Zu
-	 WTAAIDl2MsZu5ac7iVUY985zF+ZlEYQIrqe8+dC+7Wfv4U214v8THAhZpBK/cK4+kRQ==
+	t=1794062626;
+	b=cW0r8JHZRGQxb1BQ96xevzhMJqgEakHprcJ0/8MUJcI7r6RKUNeXxGR8y8sctpuelpy7
+	 5Rd3Vvugcff5hELdX+ReDwY66WE0DMjmnW2GscwNC488i+k1f4Z8uEfWttRePH7AsCvjA
+	 5U/zCfEHl7e4F7GgGzP/63eae1zuqXOUThR3XYvaGX4r3BPeA0ZMVaYQkD8RgTIFz2XeI
+	 cl61y4anqxH2HUN+BOezxM33j2Nh9dXzAIj9raw6R4nJ1Nz/hH+NNFSg3JUZIU7MFv2lp
+	 bIwy54fF28XOw5jPbbuZZMaJQf5rvvSqVA6e24vt7rvfwDYrFER36cr1CEHzq7UJrDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1YvtD6jakMUgHB27/8PZXIjeYgDstzGGtVFManIZgsA=;
-	b=s5gM0aqMzhQRNuLQpBeXkC/LGRUh5h3O7u6yRyzshGneCwqt0olMTlJlPZVhDFOARabK
-	 CQuNyEfPEbAE3QEOL9oMJmRHbrVIFfxLdwy/GHCPgWcg7FkG9CHCm65OJD0+imJ3WQ397
-	 U5iEY3/z1c6u+x/kdmQW2p5Co5mraUZbzye4rg2Oac4bCTYUwfMn65/z+BGFW/VzRGo98
-	 yXcc8NOF1YoM2mUr1wD3svR13+K//THdlYmNY0uyzU0rqTh7GlHcOPeIdPh2ERVgefO87
-	 MjPG3JF1BOI3w9D8VEC5hVyUpsn88GYtqk0DmUF8GK5oab43eu22qRaJfziPnpdazOg==
+	bh=wZ7zQN4CoKPeK/2wp2hy0Yxn6MZtvHFq5zDqoT1n6EA=;
+	b=4+h5Tyu/HqzP/iUSwVtch9e4eqav6/PEUcWym6wdIUvLnSwVw1OVHSRsW2CXIHOyFFfD
+	 +ddDQLpG5PFRzLyMYH23PkkTU9ppimpKdREaNO2c/yoO6w3V8WJMnIC4+kmuko8Si1pfE
+	 7zLi2YMHxll4ffC72M9HOA65/F0MwrW7fAUYMlGdjv/dL2AnKg3w9rOigb0ztsLp+vgdQ
+	 COQPaUB6sP59tvD5pdVElIe/op1Uk2kH0D6j/mKkt8TKxZK5LuJTkCgWBU/iEffgiebtj
+	 dwYRBSlr4rLjjShG3liZpnBPbDRf6DmuYI9cvROXkfIJftpDrKTLC3sOtQrb/pZEJkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipH17NIC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=soN2UstY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03BD606A337;
-	Sat,  7 Nov 2026 14:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245FD606A659;
+	Sat,  7 Nov 2026 14:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipH17NIC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E061F008A3;
-	Sat,  7 Nov 2026 14:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=soN2UstY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48ED1F0089F;
+	Sat,  7 Nov 2026 14:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062624;
-	bh=1YvtD6jakMUgHB27/8PZXIjeYgDstzGGtVFManIZgsA=;
+	s=korg; t=1794062626;
+	bh=wZ7zQN4CoKPeK/2wp2hy0Yxn6MZtvHFq5zDqoT1n6EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ipH17NICZGaiUgdOA1gXKpagicK/X4DBPXnozsehEx8wEgWADraulOsEmn9+wPtJN
-	 bYN3wcGocLUStuU21JkuHszkiC18RuJOz8Q1MSYBJX/PhLWQ6pCuIJwgyJ+PPsxYYH
-	 ESXxFAWXGkeYMk3pwFjPdWgjBgF12QaxvBFAobSE=
+	b=soN2UstYhqZa/C3E5ZnH4aizWOeEQEE9xa8LjBiMW9Mx1KRywJNSGSSWd+AM7i3ki
+	 lSyy/Gv1fmIa4eKZ+AKKarWrbk0e6Luyuo7DS7ziN/jo8BhEPTh2fU4se14+TjHsgk
+	 OAnql93BhHiX9YG5kpkSniZjmHd8yowuM+PNB9a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Philip Yang <philip.yang@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Luigi Lauro <luigi.lauro@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1496/1536] drm/amd/display: take a runtime PM reference only when a CRTC turns on
-Date: Sat,  7 Nov 2026 08:58:32 -0500
-Message-ID: <20261107135039.879540944@linuxfoundation.org>
+Subject: [PATCH 6.12 1497/1536] drm/amdkfd: split vram_pages of SVM ranges prefetched without a GPU mapping
+Date: Sat,  7 Nov 2026 08:58:33 -0500
+Message-ID: <20261107135039.910062550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,75 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luigi Lauro <luigi.lauro@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit b456f591f925fbd6b33770d0eec1b51c2f9d41c1 ]
+[ Upstream commit 52957e813f2f025c86e4aa6e86cb4963ef94fd00 ]
 
-amdgpu_dm_commit_streams() takes a runtime PM reference for every
-active CRTC that needs a modeset and has a new stream, but
-amdgpu_dm_atomic_commit_tail() drops one only for each CRTC that goes
-from active to inactive. A modeset of a CRTC that is already active (a
-mode change, or anything else that needs a full modeset) therefore
-leaks one reference. Once that has happened, the usage count no longer
-returns to zero with every CRTC off, and the device cannot runtime
-suspend again until reboot. The two also disagree the other way when a
-CRTC turns on without a stream ("Failed to create new stream"): no
-reference is taken, but one is dropped when it turns off.
+When an SVM range is split, svm_range_split_pages() gives the new range
+the number of VRAM pages counted in its part of the dma_addr arrays and
+subtracts it from the old range. Pages migrated to VRAM by a prefetch
+have no dma_addr entries until the range is mapped on a GPU, e.g. with
+no ACCESS attribute, or with XNACK off before the delayed restore worker
+mapped it, so the new range gets 0 and the old one keeps the count for
+both.
 
-Take the reference in the loop that counts the disabled CRTCs, on the
-mirror condition: when the CRTC goes from inactive to active, which is
-what the commit that added it intended ("every time we enable a
-previously disabled CRTC"). Each active CRTC then holds exactly one
-reference.
+Migrating the parts back to system memory then gets the accounting
+wrong: the old part keeps a VRAM page count after all its pages are
+gone, so its svm_bo is never freed, and the new part underflows. On
+navi31, as an unprivileged process: prefetch 4 MiB to the GPU, prefetch
+the upper 2 MiB and then the lower 2 MiB back to system memory:
 
-Tested on an RX 9070 XT (Navi 48) over OCuLink, with the change
-backported to 7.2.9: an unplugged connector forced on, then mode A on a
-CRTC, mode B on the same active CRTC, and the CRTC off, three rounds in
-a row. The usage count rose by 3 with the stock module, by 0 with this
-patch, and by 3 again after reloading the stock module.
+  Recorded vram pages(0x0) should not be less than migration pages(0x200).
+  WARNING: ../amdkfd/kfd_migrate.c:922 at svm_migrate_vram_to_ram+0xbdc/0xcd0 [amdgpu]
 
-Fixes: 97028037a38a ("drm/amdgpu: Grab/put runtime PM references in atomic_commit_tail()")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5951
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Luigi Lauro <luigi.lauro@gmail.com>
+and /sys/class/kfd/kfd/proc/<pid>/vram_<gpu_id> stays at 4194304 until
+the process exits.
+
+Without dma_addr arrays, the split is still exact when the old range is
+completely in VRAM, which is what a prefetch of the whole range leaves.
+Give the new range all its pages in that case. The warning is gone and
+the VRAM usage drops back to 0.
+
+This doesn't cover a range that is only partly in VRAM without dma_addr
+arrays, e.g. after a partial migration, since svm_migrate_ram_to_vram()
+only counts the pages it actually migrated. That would need VRAM
+residency to be tracked per page independently of dma_addr.
+
+v2:
+- Rename counted to has_dma_addr and compare against old->npages (Philip)
+- Mention the XNACK off case and the partial migration limitation (Philip)
+
+Fixes: 006ad514a50c ("drm/amdkfd: Use partial hmm page walk during buffer validation in SVM")
+Reviewed-by: Philip Yang <philip.yang@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 59ef9a435499777b8e1c4e0eff52f813c64fb920)
+(cherry picked from commit 7ca6f3359b557a267c7b07a2fd748b1473395e10)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index de992c58fb7f7..305a9fe006de4 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -9768,8 +9768,6 @@ static void amdgpu_dm_commit_streams(struct drm_atomic_state *state,
- 			if (dm_old_crtc_state->stream)
- 				remove_stream(adev, acrtc, dm_old_crtc_state->stream);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 27085694697a2..7bbeb9768a56f 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -986,9 +986,12 @@ svm_range_split_pages(struct svm_range *new, struct svm_range *old,
+ 		      uint64_t start, uint64_t last)
+ {
+ 	uint64_t npages = last - start + 1;
++	bool has_dma_addr = false;
+ 	int i, r;
  
--			pm_runtime_get_noresume(dev->dev);
--
- 			acrtc->enabled = true;
- 			acrtc->hw_mode = new_crtc_state->mode;
- 			crtc->hwmode = new_crtc_state->mode;
-@@ -10234,8 +10232,13 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
- #ifdef CONFIG_DEBUG_FS
- 		enum amdgpu_dm_pipe_crc_source cur_crc_src;
- #endif
--		/* Count number of newly disabled CRTCs for dropping PM refs later. */
--		if (old_crtc_state->active && !new_crtc_state->active)
+ 	for (i = 0; i < MAX_GPU_INSTANCE; i++) {
++		if (old->dma_addr[i])
++			has_dma_addr = true;
+ 		r = svm_range_split_array(&new->dma_addr[i], &old->dma_addr[i],
+ 					  sizeof(*old->dma_addr[i]), old->start,
+ 					  npages, new->start, new->npages,
+@@ -996,8 +999,16 @@ svm_range_split_pages(struct svm_range *new, struct svm_range *old,
+ 		if (r)
+ 			return r;
+ 	}
+-	if (old->actual_loc)
++	if (old->actual_loc) {
 +		/*
-+		 * One runtime PM reference per active CRTC: take it when the
-+		 * CRTC turns on, count it when it turns off for dropping later.
++		 * Pages migrated by prefetch have no dma_addr until they are
++		 * mapped on a GPU. A fully resident range still splits exactly,
++		 * old->npages isn't adjusted yet here.
 +		 */
-+		if (!old_crtc_state->active && new_crtc_state->active)
-+			pm_runtime_get_noresume(dev->dev);
-+		else if (old_crtc_state->active && !new_crtc_state->active)
- 			crtc_disable_count++;
++		if (!has_dma_addr && old->vram_pages == old->npages)
++			new->vram_pages = new->npages;
+ 		old->vram_pages -= new->vram_pages;
++	}
  
- 		dm_new_crtc_state = to_dm_crtc_state(new_crtc_state);
+ 	return 0;
+ }
 -- 
 2.53.0
 
