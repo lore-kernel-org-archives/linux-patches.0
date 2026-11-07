@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064999;
-	b=nhpnFFIoLk7Rkal4E4XANDIDuAXYefz/ewWN7VkMleGfzrArTDTCwxyYxVTGGhrN25NS
-	 xAUovRmzA5FJxImxFIUoI/OwxpAzTgrBoCz0AuoGq6Alr5bpkQKeu1UKxehhldyYuEA0g
-	 EM9AGUJ2IcFA5UZoKK96gq7EGWwzaWfZg4qSx49cWN0CcbwMrjZ//S8QrKbaibN821F8t
-	 VmesP0ITccRTJLOJQ3HnMdIct9JyVk4wnZS8fHF1qJWplASypsU6R6Yh+b8Q8qPeOyUcl
-	 B0h6s5OI2rZGYnw26prChCSdhX7N+yY0iznz/8e8DMyZi5fTVtGrS2szdAUFmSHWfaA==
+	t=1794065001;
+	b=mT2AEo4J5efFnAuKqVP3bB7MQ4IfgdC6v7AlXOgAUoV5Dv9PM8KEoFIfQvT4If4qGCCi
+	 beZz7BViO54zo57G4tinIokh/kmL5bsdK+ZeGQr8h1rlpZICIHO/Me7AsvjU3jlowyoxj
+	 c2uIdBw+3ND4lT/P18ydLaXEwmEwvRzr0vslEOLWaIX5iy9ZD6L3gaVOro7YFOQde7aTL
+	 47Y+2GcTTpCvBTKQHnXPwrEcUVBUhjTBHkMZ2GnFhmYxwxEVKxRJxPcDfXqFWE6Io8rPR
+	 YpdVVst4EWQjoS831EED2HQrk/SA0tSKVbMzjaWTKtjb0bj6Lguk1O/qOsmQu3RSDuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064999;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065001;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v+zHzRLK8m0TyWNBE2KXLCbXxv7/+EdC/dUdFH+nFNw=;
-	b=1Ox5cC7Q/pixJhPyXuRUhNp5FCQVevnzyzPMmowQC3m7yn/unwqFwdEDlZrwzh3LXRW7
-	 nj7CI2j7P5Wkf95uS/8Xr1uw35hCyHhob3ftTAXkGiFtgJTNl6vXOn8fqm3ai4TF3KfUr
-	 bInNkWqaJFADuQwbkJ+rxRj4+6iJU2UTRdDgsZdlrvoZgjwlJVhcEgEVVAL5yU0w46No8
-	 pj6/AK6bg+2dHbDV7KLAF6YYoBZAlZN0i/2mBcTOj7lUzOBtGpg7AY35ZrPD77h70YpR2
-	 hDY94HclEnyr3ceF40r50wM5geaIxnnsuuqb56+yI+iad0ygPXBgU6/n/84MsdaRxYA==
+	bh=6Ta/zYbXdpzaIIDQcTbTTA2KhTtgt295s5fupNTWQuA=;
+	b=UjbTTGYIfovaZ7YXpl2L0GePSfRCUzMeIc0pIDplBiXN4rXCO+bYIlXTgOCEEL5PW2uC
+	 avtjh/+dlK12LNfEGhibq1+fgAYxdBauZnhfBR5swIpHUq8rMurLTMebFgp9PmVlsnSOR
+	 /sNQH+pi4Z7I59JuACc9JH2VWgrq/RwlfL5lEGgG30oXAXsJOtEvfHdN4ATc48CgHxN+t
+	 l0bCnzkX8BBwdBlfIchkvZaLWnbgQQ/wZFBOLjfJS/T6uP6fJ0ND6fEobxK27+omArIIu
+	 Z3ZulzA3SiaH2JqF7kMukBW0GF/WeH1KGBkI0426wVpqe+Lt9WIP50uTUQQRRaNj6TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XlanMBYM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EduE87H+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7F4606A333;
-	Sat,  7 Nov 2026 15:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8066606A333;
+	Sat,  7 Nov 2026 15:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XlanMBYM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA4D1F0089F;
-	Sat,  7 Nov 2026 15:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EduE87H+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4AB1F0089F;
+	Sat,  7 Nov 2026 15:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064998;
-	bh=v+zHzRLK8m0TyWNBE2KXLCbXxv7/+EdC/dUdFH+nFNw=;
+	s=korg; t=1794065000;
+	bh=6Ta/zYbXdpzaIIDQcTbTTA2KhTtgt295s5fupNTWQuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XlanMBYMxqraitqhrq8fh4oe8XzpU4NoCTOm9eI39ciP00LHRowmBZFyj4Tgg34ib
-	 HK7Ya6SiJPNmPtFGUcSM6CKPT2Vl6REBABfrwD2Jg04VCxCAJFtK5kikYvA6OqMqRf
-	 LaxTGXrfNvvYtgtCzRx24NggTbryDVMSqe6FDwY0=
+	b=EduE87H+nw8LAokPZgMfzGu9tPbXRa1TT/M6PXxu9S5EU1/e9nKHz/TYbgD2cK5P2
+	 pWnOpYgrSaRDQSOef1jKhjjfr0Vli5QaHHleRit8o3aFs+o8kvJ5+vy67GxMQ7aeZf
+	 myAty2WfvRXJU3QVcxfTOiNeolprRX79NkFLjasc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Maksimov <nickstogramm@yandex.ru>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Deep Shah <deepshah146@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0868/1257] ALSA: hda/via: Apply runtime PM workaround for ASUS X55A
-Date: Sat,  7 Nov 2026 08:52:44 -0500
-Message-ID: <20261107135003.300504028@linuxfoundation.org>
+Subject: [PATCH 7.3 0869/1257] RDMA/uverbs: Fix uobject leak in DMABUF release
+Date: Sat,  7 Nov 2026 08:52:45 -0500
+Message-ID: <20261107135003.326465710@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,37 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Deep Shah <deepshah146@gmail.com>
 
-[ Upstream commit f6e8d5ebde5ceb7d3c0eef6e9e4d82862b503ade ]
+[ Upstream commit 4a953ee228f5544a3e5515eed88bf09d1a5adb94 ]
 
-ASUS X55A requires the same workaround like other machines with
-VT1802, otherwise it loses the codec power on a few nodes and the
-sound stays silent.
+uverbs_dmabuf_release() treats a NULL uobj->context as an aborted
+allocation, but normal ufile cleanup also clears it. Closing the uverbs
+FD before the dma-buf FD therefore skips uverbs_uobject_release() and
+leaks the uobject and ufile references.
 
-Link: https://bugzilla.altlinux.org/45606
-Cc: <stable@vger.kernel.org>
-Tested-by: Nikita Maksimov <nickstogramm@yandex.ru>
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://patch.msgid.link/20261017101257.215166-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Clear dmabuf->priv before dma_buf_put() on allocation failure and use
+that NULL pointer to identify an abort. Otherwise, always call
+uverbs_uobject_release(). This also avoids reading a freed uobject if
+release is deferred until after the allocation has been aborted.
+
+Fixes: 0ac6f4056c4a ("RDMA/uverbs: Add DMABUF object type and operations")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Deep Shah <deepshah146@gmail.com>
+Link: https://patch.msgid.link/20261015083637.200958-2-deepshah146@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/via.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/uverbs_std_types_dmabuf.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/hda/codecs/via.c b/sound/hda/codecs/via.c
-index 807312cffd358..0641fc14b346c 100644
---- a/sound/hda/codecs/via.c
-+++ b/sound/hda/codecs/via.c
-@@ -933,6 +933,7 @@ static const struct hda_fixup via_fixups[] = {
- static const struct hda_quirk vt2002p_fixups[] = {
- 	SND_PCI_QUIRK(0x1043, 0x13f7, "Asus B23E", VIA_FIXUP_POWER_SAVE),
- 	SND_PCI_QUIRK(0x1043, 0x1487, "Asus G75", VIA_FIXUP_ASUS_G75),
-+	SND_PCI_QUIRK(0x1043, 0x1c33, "Asus X55A", VIA_FIXUP_POWER_SAVE),
- 	SND_PCI_QUIRK(0x1043, 0x8532, "Asus X202E", VIA_FIXUP_INTMIC_BOOST),
- 	SND_PCI_QUIRK_VENDOR(0x1558, "Clevo", VIA_FIXUP_POWER_SAVE),
- 	{}
+diff --git a/drivers/infiniband/core/uverbs_std_types_dmabuf.c b/drivers/infiniband/core/uverbs_std_types_dmabuf.c
+index 33bafadc695df..8d8c997a48834 100644
+--- a/drivers/infiniband/core/uverbs_std_types_dmabuf.c
++++ b/drivers/infiniband/core/uverbs_std_types_dmabuf.c
+@@ -68,9 +68,10 @@ static void uverbs_dmabuf_release(struct dma_buf *dmabuf)
+ 	struct ib_uverbs_dmabuf_file *priv = dmabuf->priv;
+ 
+ 	/*
+-	 * This can only happen if the fput came from alloc_abort_fd_uobject()
++	 * This can only happen if the fput came from the error unwind of
++	 * UVERBS_METHOD_DMABUF_ALLOC. The abort cleans up the uobject.
+ 	 */
+-	if (!priv->uobj.context)
++	if (!priv)
+ 		return;
+ 
+ 	/*
+@@ -161,6 +162,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_DMABUF_ALLOC)(
+ 	return 0;
+ 
+ err_revoked:
++	/* Tell uverbs_dmabuf_release() that the uobject is being aborted */
++	uverbs_dmabuf->dmabuf->priv = NULL;
+ 	dma_buf_put(uverbs_dmabuf->dmabuf);
+ err:
+ 	rdma_user_mmap_entry_put(mmap_entry);
 -- 
 2.53.0
 
