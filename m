@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060783;
-	b=vrnIlGcazYdaGj9r88B1KlhnPjsvDrnfv0ZulnCRHXHga6Yj2Q6rdyd/Sm8+A51Kl3+T
-	 GbvFPuY3S3q0oR42U2LxFsJdMWApBT84pKm8Sb+6s40LIBca7tmCfifCt/FIbtmsrf2c1
-	 1ADkRtZ2/FlBKpLC1bBB7uSDGbBtMWlxJ0z9IUvShIPJNDtOuoAlSrx7QtPBxM4SwCkWm
-	 NppqXj5p/x7kVxQK6FTLwxkTTVpOxUTrnVHVFlNsY6e/B1t+YLlj3uaLvAgz2kX59xjcD
-	 7+OZSu2zS4sLzfzuWCFOudx/xj1FnJgI8RnHxtCJ6tNPK62feyubk1Wb7e3FL3lD2zg==
+	t=1794060785;
+	b=39hT2jnou2ZAspsBrrnLZu4A4bJGBMVJTsyyeYT6+LZ5uxQkFnWXBT/hbj0DvclUhMN1
+	 xYo3s1lkWZOPZ29O+gZxj7kFO5zAA6yXuz9YCgK8qk6rx+gRNQMgPP9jJdw63h8DCucRp
+	 nq4/zoyy8yuh++TC8xiGkZzxnsVROtYBrDKgwp4MdhlJJIKGmP7PWTufn/lV2F2taRsdw
+	 mq7D0S6JXj/QcW10BTlrBUoCb9IADoSsmO4e6hIQhheWgxOOareNbQ8AQmRiwR26X87g3
+	 6uiML63z4YrD529/n9HJiRnI93gRamOepjuGrA1g30mjsa+6PG8QC6/YoDCLHM7JcHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r5dJcr+bytVoYEDiicrx+XxdjN2ELRJZWSxai4+h4DA=;
-	b=I39JPEXHLQNEjBGKtyIyiOi1FFui15kDHw3BU5P33VAtjMtVC+GWjo3GHXQhzuv2qYW+
-	 NrRLhdEGN5rCVyYMslWkPEbxy5CONCmtQhf7GiSPNXvXEaRlwFWE8/LGa/LHQYE0v68U1
-	 x3Xiaxg078JcAwyM3Er1tfQ12WfMidJy73K9wBQqNxLoPmI2EJIoM6x4kk3wkGXK+czu9
-	 +5/yHTqf2Sxnfhl+IEwZYSS+1qe98Qv4wxPBLQrnpTO8tNDJFHsL+dvpHMpBdJOsdXSlQ
-	 mWjfv72/APDXgWGHiz0mkkmJRgZKgLyrLGGbw/Iqi2lthXa9D2dnTh89/OVymgDm/5w==
+	bh=LawUtFBm1nLfTy9YZkC1icCHTnamaVHIGWRnmvrrjv4=;
+	b=EuyLm3tPOW4GXdvD943bG6HhSv1/4jjxhy+GD8Ln0csKRpHQMO6XYomOK2bwtwFMDNmi
+	 awOOdVU4TOB55tzirrnav04aE5NFchOeQYwSNYhbPjXBrWxraztobEwe14jdjNBNMU/ma
+	 asK1SPk6pg5OjI8oPyu1+J8kKUgpwu87WkPXjM1cyxZDgNzcctP3XS/Ud71KJKbkVUtz5
+	 nEu03/5F6idt/ILjj8adnz27qvYwuWipVY8mjTUM3IEZ0VkHv/C8jgnKWZSl2pmcYLkc+
+	 sz3MBiKjyVtxGPE9PcldACXtmg4X4QxIiM1wgWnmAE/qAVQNGw7JMkU1GONz9KjWcrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POGJnyui;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Le71tc8I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D26B606A326;
-	Sat,  7 Nov 2026 14:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB347606A326;
+	Sat,  7 Nov 2026 14:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POGJnyui
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A70A1F0089F;
-	Sat,  7 Nov 2026 14:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Le71tc8I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A8A1F0089F;
+	Sat,  7 Nov 2026 14:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060783;
-	bh=r5dJcr+bytVoYEDiicrx+XxdjN2ELRJZWSxai4+h4DA=;
+	s=korg; t=1794060784;
+	bh=LawUtFBm1nLfTy9YZkC1icCHTnamaVHIGWRnmvrrjv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=POGJnyuixZLJJdu0coMWizXi/5MFaOBgDcjXEs8WT76IgA7eQAmFvt1QKvzraoF+B
-	 Vhc6jO00ayKwjyLXTGo62kxy9CPvXPymUi80C/K3bape/ff6IPrj36C64THUQlkBGc
-	 tRLxPYPFTdKecYldVH9v2LOsfJH8E33WdlbdNwXk=
+	b=Le71tc8IdDOdC6//ohxtxkTJWj9M9wWB2jtCR+GkCf72AW8vhMziE8Guixxfu8q8W
+	 mBotKQLu2+9939EkEnXdX3XUJeWckyvaC5acPa5jtIfNwdXpkSOQltJipwFYkcacl5
+	 GMHXVqfeNc5ulm+V6r8sxZNBTXPpwixWr+Bb2Jqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0189/1536] iommu/qcom: Check pm_runtime_resume_and_get() return in probe
-Date: Sat,  7 Nov 2026 08:36:45 -0500
-Message-ID: <20261107135002.970312373@linuxfoundation.org>
+Subject: [PATCH 6.12 0190/1536] iommu/qcom: Enable clocks before hardware access in qcom_iommu_ctx_probe()
+Date: Sat,  7 Nov 2026 08:36:46 -0500
+Message-ID: <20261107135002.997519502@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,48 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit e910315ae08a23bc953daed10b1c518abac1df49 ]
+[ Upstream commit cb776a03a53429aa59e25a8cbc3d1a48bd11afdb ]
 
-The SMMU_INTR_SEL_NS register write in qcom_iommu_device_probe() uses
-pm_runtime_get_sync() without checking the return value. If runtime
-resume fails the subsequent writel_relaxed() would access hardware with
-clocks potentially disabled.
+qcom_iommu_ctx_probe() reads and writes the CB_FSR register to clear any
+stale IRQ left by the bootloader. This happens during
+devm_of_platform_populate() which is called from the parent device's
+probe before any pm_runtime_get(). The parent's clocks (iface, bus, tbu)
+are therefore not guaranteed to be on, making the register access
+unreliable on rebind or after a suspend cycle.
 
-Switch to pm_runtime_resume_and_get() which handles the usage-count
-cleanup on failure, check the return value, and unwind the already
-registered iommu device on error.
+Use pm_runtime_resume_and_get() on the parent device to ensure clocks
+are enabled before the register access, and release the reference
+immediately after.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 09d847666a68e..45bfb0f1b4b6a 100644
+index 45bfb0f1b4b6a..fff2771958363 100644
 --- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
 +++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -864,13 +864,17 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	}
- 
- 	if (qcom_iommu->local_base) {
--		pm_runtime_get_sync(dev);
-+		ret = pm_runtime_resume_and_get(dev);
+@@ -705,8 +705,13 @@ static int qcom_iommu_ctx_probe(struct platform_device *pdev)
+ 	/* clear IRQs before registering fault handler, just in case the
+ 	 * boot-loader left us a surprise:
+ 	 */
+-	if (!ctx->secured_ctx)
++	if (!ctx->secured_ctx) {
++		ret = pm_runtime_resume_and_get(dev->parent);
 +		if (ret)
-+			goto err_iommu_unregister;
- 		writel_relaxed(0xffffffff, qcom_iommu->local_base + SMMU_INTR_SEL_NS);
- 		pm_runtime_put_sync(dev);
- 	}
++			return ret;
+ 		iommu_writel(ctx, ARM_SMMU_CB_FSR, iommu_readl(ctx, ARM_SMMU_CB_FSR));
++		pm_runtime_put_sync(dev->parent);
++	}
  
- 	return 0;
- 
-+err_iommu_unregister:
-+	iommu_device_unregister(&qcom_iommu->iommu);
- err_sysfs_remove:
- 	iommu_device_sysfs_remove(&qcom_iommu->iommu);
- err_pm_disable:
+ 	ret = devm_request_irq(dev, irq,
+ 			       qcom_iommu_fault,
 -- 
 2.53.0
 
