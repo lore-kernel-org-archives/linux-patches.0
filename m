@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060718;
-	b=Ry52M7Qak0bI8oByS9fgGTRdgYU8yep8sBIa6bNTibwflviNMdKGrq/Kc7j4GMBhDj7d
-	 bL+Y6D950dBFzbaCR/PTTCMa9+Hs13DFZoVjfPrMYIyEQBVTgnTQKrO/8iyvjjcM7LiGt
-	 I82S5kM3DGEwQaCvj14KMn7lsZcLq5YY4HakFoxN/x/SaXdqUV2mOrQN2qrU1O6edsGZ0
-	 G9VWhBOa1LB4OleELbsjIWXsU9drOh7nMb1AtWsF2tNmrXEgjJ0Faze3gJKL/kA3Xq/IU
-	 9nVlJCltMKuXeFDpjdK4FBIYaHot7adNZEbJlYL8FDzCy5YCPPJhCFwE2wRJOGmFCtA==
+	t=1794060719;
+	b=rGZodDvxmYf9FnubA708grE/OV04O8it2pmXA+4nEho3Mn44l+toZ8wcbPvHpEosMMIH
+	 Jngd2veQzzjReK+Eo3srmMTdMDKgu8GOZoE5OTfqLrUq9mgYbue/WeLQUAjZnVGn3v20g
+	 993Fr4Y7j/2xtdinrgSt8MGkTphSQFyc+VVuu5uML5OTAs00XWORig83lh7YCGaosacbB
+	 X2r3LK0JaKJIiU34WQT/dAwFU3AqtoBd8lFEXnQX1LFblf4gNT5xpXCQ/cMhUqBk84kMV
+	 vJR9gqzZeCJCPEM4YHXPBVLT2wOb1uRjmacIkk+ifxnlon49/DgsUOGq97GPaAuyVlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060718;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lKpK6rkbrGV1lxXLgnssqa6xAefY5WJbT0Q0AtIsPB8=;
-	b=Cpae+AwgaLAy5SXSDtj7x6CjDyBv/fgfSgxaQkj60CDmZsC9s3UdHKq8c15QFHE9XE6O
-	 8JWnMRRCkTyUv/e0jahx1HzvV7T6l2cgnjdib3JXOwxwldplsqHfRnfR0z8lKQXCMBKUP
-	 MnFdHjVhg6XJaR4n1swjlN5KwZS/9bE1OkDumtpfJ67giaNJTmoXjTSjBObt/zb2rQsKw
-	 4icTFTgwcNmU1ppk1ZU3rJUsToFiNY3aPrtHV6DteLTuudMG+4FSgR/ixoCZxQfpwjJIv
-	 +/HpkOx+jIh+3ej1+7EReKsP/cUl6leA5QowUNqJajjyPQxyn1WuGs9Zte9J21h4wSw==
+	bh=+pC7goQamOoHK5/e7aIuzmOVvXWSFS2Gj1+BfuJbwKo=;
+	b=C3C5xnnoX9zC1hrAku6027qcvjhHkGYtnBfGwk0qYB1jWjvBUrbQpTI56GhjY9BmTsA7
+	 3mENm856iQk6TzzZ8cPU9OxEGUxrwHsOcr7BJIA9PV0Su4jTsGtXoNwul9ahvEDYZTqJ+
+	 BLtTgdT1+k0BLN/kkwhF4P+94JGgg3U4NOwxJT50HorES4d8j56OIWDtLkGfffY683C+q
+	 DUaP4QljU5w9hu3Hw5/LhFa33vWQGD3nrULI5OWCN/62Lc85ydSywx8y7or64Ckb7sWa5
+	 KAbhqbeQbG9uNv0+vFsSLOSksIoXQByt3g1yiTLE7FfVTfL8TM0Ir22g3lFt2jdAauw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2wrxw2O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e1VFBZ/t";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594FA606A326;
-	Sat,  7 Nov 2026 14:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C260606A326;
+	Sat,  7 Nov 2026 14:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2wrxw2O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2A51F0089F;
-	Sat,  7 Nov 2026 14:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1VFBZ/t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8D21F008A1;
+	Sat,  7 Nov 2026 14:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060717;
-	bh=lKpK6rkbrGV1lxXLgnssqa6xAefY5WJbT0Q0AtIsPB8=;
+	s=korg; t=1794060719;
+	bh=+pC7goQamOoHK5/e7aIuzmOVvXWSFS2Gj1+BfuJbwKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2wrxw2O9BEsBVw+p6JXEowrdhnSzGByzul45tEp2b3wAwFeOu4GH0YIBLgewsaeQ
-	 5D0mpvKGhzdX6tehSjfEg4l+eMnCVPZ+Rlhc19VCIAZtbpO2dvnveNtUYHVMzU8CmA
-	 UzE2ELWQO2CJkqXEfw8ROYUY90F3wJIOBIW4cCOg=
+	b=e1VFBZ/tAJIIsltI2Xne+ERaumYbYPL17IJtu2G3P80r0WTwxxDy31XUYkaIsd/UG
+	 Za1NQmJGHe7K0YJEDRAwqpkIea9frvFOIr/B7v9NpDVxRejbtMR865qTFN5gAueYlM
+	 ktQXGze5kxZuWIrgAkQqaG5NWfhZvWvXE97OOUG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0123/1536] soundwire: intel_auxdevice: Add cs42l44 to wake_capable_list
-Date: Sat,  7 Nov 2026 08:35:39 -0500
-Message-ID: <20261107135001.139131706@linuxfoundation.org>
+Subject: [PATCH 6.12 0141/1536] usb: misc: cypress_cy7c63: check result of IO
+Date: Sat,  7 Nov 2026 08:35:57 -0500
+Message-ID: <20261107135001.647697236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,33 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit d08e4d9197396ceb906715d976b63aed0c5cc8e5 ]
+[ Upstream commit 0673b919e0933541ae56bb3f0253853f696d3773 ]
 
-Add cs42l44 to the wake_capable_list because it can generate
-jack events whilst the bus is stopped.
+If the device returns a bogus short read, treat it as EIO.
+Actually check for IO errors.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260708122948.1502227-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel_auxdevice.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/misc/cypress_cy7c63.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index ae1dfce163e25..d444ca477064f 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -50,6 +50,7 @@ static struct wake_capable_part wake_capable_list[] = {
- 	{0x01fa, 0x2A30},
- 	{0x01fa, 0x2A3B},
- 	{0x01fa, 0x4243},
-+	{0x01fa, 0x4244},
- 	{0x01fa, 0x4245},
- 	{0x025d, 0x5682},
- 	{0x025d, 0x700},
+diff --git a/drivers/usb/misc/cypress_cy7c63.c b/drivers/usb/misc/cypress_cy7c63.c
+index 75f5a740cba39..e1a0c1ae93f2b 100644
+--- a/drivers/usb/misc/cypress_cy7c63.c
++++ b/drivers/usb/misc/cypress_cy7c63.c
+@@ -89,8 +89,11 @@ static int vendor_command(struct cypress *dev, unsigned char request,
+ 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
+ 				 USB_CTRL_GET_TIMEOUT);
+ 	/* we must not process garbage */
+-	if (retval < 2)
++	if (retval < 2) {
++		if (retval >= 0)
++			retval = -EIO;
+ 		goto err_buf;
++	}
+ 
+ 	/* store returned data (more READs to be added) */
+ 	switch (request) {
+@@ -175,8 +178,9 @@ static ssize_t read_port(struct device *dev, struct device_attribute *attr,
+ 	dev_dbg(&cyp->udev->dev, "READ_PORT%d called\n", port_num);
+ 
+ 	result = vendor_command(cyp, CYPRESS_READ_PORT, read_id, 0);
+-
+ 	dev_dbg(&cyp->udev->dev, "Result of vendor_command: %d\n\n", result);
++	if (result < 0)
++		return result;
+ 
+ 	return sprintf(buf, "%d", cyp->port[port_num]);
+ }
 -- 
 2.53.0
 
