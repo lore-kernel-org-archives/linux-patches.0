@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064532;
-	b=v121GqSXZE+QNvl5fVel3N+ErfozYwg11oIgS3LO8KVtxoMv5MVpPTUYJR4krDRHEaRB
-	 EzosblwJNl+/WVt2b6vHsW2C4l2AUKY/ihOhfXQ64R8V1jieG8u4X2robSMqpsrdEXta5
-	 cUMvUrRRXFrReMWuXYGEEub737J0ejSmkreVqE9w6d7YRTQDRrZY4ya8GB3RqIud4QMfw
-	 eS7lrbrIe5xVsE5LazQIwnZE1u8Z6sAvrwgFeKvKtfJAZCNzN9qIrpjX5Lf4DkPFbmANG
-	 DVii3qPxzUQav2iLp6P30+J0BIA7BtxylLFyfoANVZj0pWOKly0ziOqOmP5jYOyTLhg==
+	t=1794064533;
+	b=d2VEqctnx9abanzTudrMBEEm4pYYo/ipUE7FoJBkn0UHzyFLfcZkiD0fdhFl71hzwjCy
+	 oaOalE0vNWaScAMcKjFOU2UzEBhuZAGy65uUALTU3uW5ZoxMHUN6YsJfD/xirhLX9RwE/
+	 6V2n2kWXXAGAvPzE2AgE2/2w14djcRjcupXrw00UzXftnx/0sMpR9ymDcW+YdT/z+8Nfy
+	 UqWMiaz/+HkXTVUdxlb/wjzp+vzHfh7z0zqdfgLbNyHJdHtREtsumfHq1vtCF8TAp5F1V
+	 wWUcv7IBFwrcQvsCCVAS97XWmA4AHKlvFfjzzYW06SXtW4XoySEPec7rzwseQOIDUVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064533;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m9r0viRq+dfmF1HaWA4+oB59ns87Je60x5aQL29ONDA=;
-	b=YFk+/aK30Wekonbd1+jIsoWz4WrnDuMErENi9/C5gkN41LtMAyPPkwWfz1E+l8MSYZ3d
-	 YA+763e3Q9CnSz/QyVoeRLyEgK+jK3Eqdf7Sd+XwqVOqSReYa1XyGWrVoZEwzCANVvHpl
-	 sMiDB6eOAtunXlg0xMAuByaoJnbUBan0ZFd6kNWiaZY5+ixnDHUqEzNyJKU7neZn+sT02
-	 TzVKHT+Y82Fb7eAOIS4DG11vpBgRcaFPHFwXiOv5vPUMffSSieqz5hhRkxmcJjV3vWLub
-	 F8ToU/8PPTxF4Lg4VofwdvphjIv5EOHwee/TIj5bpV8bwnCAbOQ69Ho5aJgHiWyldEA==
+	bh=mooySoqAJWllapwduXzFKUmwAuuwkV7qP+6je6loD9A=;
+	b=WbaxY2jlHcCKP/P5eAbomA4FKcsvuVMZyD/fL9wWqlKseE7mSkHtBcBQO9sIkH0AefF7
+	 KVRMllEy6rmhuNzAkQ2XZEhUdrwojEN3xD0zch+J1fNPjs880u7B3zWSSarDaGc90Z5r4
+	 qe6zetMBnYLomFgKKgGsB25bRTnKqt8j6p4bBMvpQAng4CzpaTy9UFNbxkvTF9hvT490j
+	 3HpnHgYoY8nUM3cxwYhxb0UPvba58i1KYYxtb7GW0OJ6QUjhonS6gPbS31gCaJLfTmhdq
+	 /7EHc42rMqXtJzsw3pkJaf+awoysbpXb/KsqW+LoUDVRKbY2CX2BksPs1vxIy7BULBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQR3HFuc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EeuCcjwe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF45606B89A;
-	Sat,  7 Nov 2026 15:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E2B606B8BB;
+	Sat,  7 Nov 2026 15:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQR3HFuc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5F61F0089F;
-	Sat,  7 Nov 2026 15:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EeuCcjwe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BE41F0089F;
+	Sat,  7 Nov 2026 15:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064531;
-	bh=m9r0viRq+dfmF1HaWA4+oB59ns87Je60x5aQL29ONDA=;
+	s=korg; t=1794064532;
+	bh=mooySoqAJWllapwduXzFKUmwAuuwkV7qP+6je6loD9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rQR3HFuc/dnzA3DSXA66JHOi/07gKriSdLcxF+97vMFJhbjQ2ceL2myeLvxJVUZm8
-	 wNRusByhM5jCQkiMkdS9rzia0OnkAfMMW0KyfIbndUzANAgsT3oWLSGlixD9vFa+xq
-	 sQYCfQBB2cgL/TkzVsd3r7zXtBaZJAqkXkU0wA08=
+	b=EeuCcjwe1bS7huREogzBRWAZRMd00HOyaNheMqCrw2fvQUfRDqEMhhn0DXg0ghrs1
+	 4yR120Q0nHj5oOjhbLFlscmKsgZfnOeecGMxGGAON+m8Tx7fPRAStsThkfzqcUBCYP
+	 lb6OJLrsn83XqfPPy8lkeA09RqQug4zhrJr+gR6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	guzebing <guzebing1612@gmail.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0561/1257] ext4: reject delalloc to nodelalloc before applying remount options
-Date: Sat,  7 Nov 2026 08:47:37 -0500
-Message-ID: <20261107134954.868223297@linuxfoundation.org>
+Subject: [PATCH 7.3 0544/1257] wifi: mt76: Fix of_node reference leak in mt76_get_rate_power_limits()
+Date: Sat,  7 Nov 2026 08:47:20 -0500
+Message-ID: <20261107134954.425743872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,97 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guzebing <guzebing1612@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 26a3ff309c91986dbedb05d0e0f0050ea0aa629c ]
+[ Upstream commit 8d604c899f7bd1a76a2eb21c0b706c02878abd36 ]
 
-Commit 97f5ec3b166d ("ext4: prevent delalloc to nodelalloc on
-remount") rejects switching a mounted filesystem from delalloc to
-nodelalloc.  However, it performs the check after ext4_apply_options()
-has already cleared EXT4_MOUNT_DELALLOC in the live superblock.  The
-failure path eventually restores the bit, but leaves a window where
-other CPUs can observe nodelalloc.
+mt76_find_power_limits_node() and mt76_find_channel_node() return nodes
+with the reference held, but mt76_get_rate_power_limits() overwrites the
+"txpower-<band>" node reference and never releases the channel node
+reference, leaking both.
 
-test_opt() reads s_mount_opt directly without a lock shared with
-remount.  If a concurrent truncate's __es_remove_extent() hits this
-window and observes nodelalloc, it sets count_reserved to false.
-Delayed extent status entries are then removed without calculating
-their cluster reservations, leaving reserved at zero.
-ext4_es_remove_extent() therefore calls ext4_da_release_space() with
-zero, leaving i_reserved_data_blocks and s_dirtyclusters_counter
-elevated.  When the inode is later evicted after unlink,
-ext4_destroy_inode() reports:
+Drop the intermediate and the channel node reference on every exit path,
+and take a reference on the fallback node returned by
+mt76_find_power_limits_node() so the caller's of_node_put() is balanced.
 
-  i_reserved_data_blocks (...) not cleared!
-
-CPU 0                             CPU 1
-                                  ksys_truncate()
-                                    ...
-                                    ext4_es_remove_extent()
-ext4_reconfigure()
-  ext4_check_opt_consistency()
-  __ext4_remount()
-    ext4_apply_options()
-      clear EXT4_MOUNT_DELALLOC
-                                      __es_remove_extent()
-                                        test_opt() sees !DELALLOC
-                                        count_reserved = false
-    reject delalloc -> nodelalloc
-    restore EXT4_MOUNT_DELALLOC
-                                        remove delayed ES
-                                    ext4_da_release_space(0)
-
-Follow the pre-apply validation approach used by
-ext4_check_quota_consistency() and reject the transition in
-ext4_check_opt_consistency(), before ext4_apply_options() changes live
-state.  Use mask_s_mount_opt to determine whether delalloc/nodelalloc
-was specified and ctx_test_mount_opt() to check the final parsed value.
-
-Fixes: 97f5ec3b166d ("ext4: prevent delalloc to nodelalloc on remount")
+Fixes: 22b980badc0f ("mt76: add functions for parsing rate power limits from DT")
 Cc: stable@vger.kernel.org
-Signed-off-by: guzebing <guzebing1612@gmail.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260814034855.1573759-1-guzebing1612@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917121944.2150737-1-vulab@iscas.ac.cn
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/mediatek/mt76/eeprom.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index e790a71475011..a8c4a227edf16 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2840,6 +2840,14 @@ static int ext4_check_opt_consistency(struct fs_context *fc,
+diff --git a/drivers/net/wireless/mediatek/mt76/eeprom.c b/drivers/net/wireless/mediatek/mt76/eeprom.c
+index afdb73661866e..93552f6f7f340 100644
+--- a/drivers/net/wireless/mediatek/mt76/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
+@@ -231,12 +231,14 @@ mt76_find_power_limits_node(struct mt76_dev *dev)
+ 		struct property *regd = of_find_property(cur, "regdomain", NULL);
+ 
+ 		if (!country && !regd) {
+-			fallback = cur;
++			of_node_put(fallback);
++			fallback = of_node_get(cur);
+ 			continue;
+ 		}
+ 
+ 		if (mt76_string_prop_find(country, dev->alpha2) ||
+ 		    mt76_string_prop_find(regd, region_name)) {
++			of_node_put(fallback);
+ 			of_node_put(np);
+ 			return cur;
+ 		}
+@@ -429,7 +431,7 @@ s8 mt76_get_rate_power_limits(struct mt76_phy *phy,
+ 			      s8 target_power)
+ {
+ 	struct mt76_dev *dev = phy->dev;
+-	struct device_node *np;
++	struct device_node *np, *band_np;
+ 	const s8 *val;
+ 	char name[16];
+ 	char band;
+@@ -459,15 +461,18 @@ s8 mt76_get_rate_power_limits(struct mt76_phy *phy,
+ 		band = '6';
+ 		break;
+ 	default:
++		of_node_put(np);
+ 		return target_power;
  	}
  
- 	if (is_remount) {
-+		if (test_opt(sb, DELALLOC) &&
-+		    (ctx->mask_s_mount_opt & EXT4_MOUNT_DELALLOC) &&
-+		    !ctx_test_mount_opt(ctx, EXT4_MOUNT_DELALLOC)) {
-+			ext4_msg(sb, KERN_ERR,
-+				 "can't disable delalloc during remount");
-+			return -EINVAL;
-+		}
+ 	snprintf(name, sizeof(name), "txpower-%cg", band);
+-	np = of_get_child_by_name(np, name);
+-	if (!np)
++	band_np = of_get_child_by_name(np, name);
++	of_node_put(np);
++	if (!band_np)
+ 		return target_power;
+ 
+-	np = mt76_find_channel_node(np, chan);
++	np = mt76_find_channel_node(band_np, chan);
++	of_node_put(band_np);
+ 	if (!np)
+ 		return target_power;
+ 
+@@ -514,6 +519,8 @@ s8 mt76_get_rate_power_limits(struct mt76_phy *phy,
+ 				     ARRAY_SIZE(dest->path.ru_bf), val, len, target_power,
+ 				     txs_delta, &max_power, n_chains, MT76_SKU_BACKOFF);
+ 
++	of_node_put(np);
 +
- 		if (!sbi->s_journal &&
- 		    ctx_test_mount_opt(ctx, EXT4_MOUNT_DATA_ERR_ABORT)) {
- 			ext4_msg(NULL, KERN_WARNING,
-@@ -6712,13 +6720,6 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
- 		goto restore_opts;
- 	}
- 
--	if ((old_opts.s_mount_opt & EXT4_MOUNT_DELALLOC) &&
--	    !test_opt(sb, DELALLOC)) {
--		ext4_msg(sb, KERN_ERR, "can't disable delalloc during remount");
--		err = -EINVAL;
--		goto restore_opts;
--	}
--
- 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
- 		(test_opt(sb, POSIX_ACL) ? SB_POSIXACL : 0);
- 
+ 	return max_power;
+ }
+ EXPORT_SYMBOL_GPL(mt76_get_rate_power_limits);
 -- 
 2.53.0
 
