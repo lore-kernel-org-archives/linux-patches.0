@@ -1,58 +1,74 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065359;
-	b=I3mNaYy62kqGCaYf8WDFNNZrYOFpyhL8dXSg+J6Bu+1YpfsjxQ9SsIDn7Y9EFBP/WM5i
-	 2XR9bwq1zcUe5mW+T8RcKzd6KHwGUgI2+XoIETnE59tOjbovkeaVBB1TWVhZs54lPGxFi
-	 vOpv6CUIL/cxW7BvLp3mA3102/qiWhNfZ9rcsQqUVWL6EXSdqlVlIDaiXqJT94Ffx4N7J
-	 TiPgFMC0gaKyZDcGopQ0tdrFNEl6eWrz9JY7h1A7wrgfUz6+2yUn6AdII0LYt37PL4kLo
-	 OFOJNoyly3Nb1bCQ4IkreErOShn49NZQIH2LY0qVBem3M9AGAPU/IeKq5YOznGK+6SA==
+	t=1794065360;
+	b=UukhjubeKcF+ZukDCpt+b2UBm+Q3HpEjGQbmhaDtWw2kCFajUWLzLQ6hUSi3yvmVK2Mi
+	 dvCIZhSGfahRYKK38TqpoNcgRzDrJPIKBKjBAZY+wa22Xty6GacWXq94lBVLfS3zdLPJS
+	 bLsnPi8tfAjH4P6aatXfNzBF8EQRmqdjejnlTUPucFT+xZGrNoJ7xxCn0P2BpzUTc/kff
+	 XYyrJQxIjWwesLF5rXmIwPmm/gB8IBmjQEsqiKRb9sc1ert/7yt3ADMnyJMULOHLJqkCX
+	 IVHOQGceEvVSy3lkSN8bL3WRBRQ6v5kTDBWXXFPXwzw16UtKkefrB40zhchSRJxHccQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JQGJ/IIIPCm9+dqikFXGvgQeqHkNx0+k32gprIzgA9Q=;
-	b=PwB0mBEcxjNbz7bRty4ssk2E13e1JqIsLAAUl0WvH7xG/xubxlwyNx3RSEZX6hA7FQ8V
-	 zzWCkbzT95LPkHu0RNbpnppqZcz645rHA0XICi2IhrzFIaW7uKFNrggIgbMF8eQc7qRTv
-	 RX1xcgV35W1sB09aOi47/K9jfe9FWDHMNICYq5MZHV8bsA3toIeP9B6+EjLTWGl/svn4Z
-	 NOF+ztlI2JHCJdqTL4ph6KAhEiCTmXbeI8wEnfRXGFRsMykNruN6P+8bhz/iS+hbDNQAM
-	 H5pxF8NGpdqMiwMeMgGflRPhe5KAm1KnIw2GRWVrT6BGOy4vAQW5K5K6sBUsFFvVQXg==
+	bh=3khf0gsWbQSbgn7J/+OysoFmPjwwajRWFPEvEWQZkN8=;
+	b=tp/D1um3eqbVXJbBmZKGK4icgL63l3T9wUCvb3g2KenDr01Ndd8H1AUzj/ANh/j6Ke91
+	 6s4vtqhq7V7vCa2ib84TfORocUTWOflCoMXTxJpzfMjSaponPNxXPkgOG19y6ekPjTeTr
+	 6IGq3DHOVnJe6KCrEt3a0iBb0ejvu5hmYvoAkBQfFp0pnm7QQ/O1xh8atjSsRheEAUxpF
+	 l/mTSolzAHFS2GewQSaVWQOi/y5ebl1fQ4BupzIwHfFKyIE9dVtgyYbqOXYuGWzsOyOy0
+	 GtQt7sWFvAyA90DbD+IiO+pgs+1AJTZn6Dw+7k9xy3RFpvLSvs53Nl6bL55Vvp4hj5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMoXELPZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z0iuGUMF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E565F606A32C;
-	Sat,  7 Nov 2026 15:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936E1606A32C;
+	Sat,  7 Nov 2026 15:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMoXELPZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9572D1F0089F;
-	Sat,  7 Nov 2026 15:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z0iuGUMF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9581F0089F;
+	Sat,  7 Nov 2026 15:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065358;
-	bh=JQGJ/IIIPCm9+dqikFXGvgQeqHkNx0+k32gprIzgA9Q=;
+	s=korg; t=1794065360;
+	bh=3khf0gsWbQSbgn7J/+OysoFmPjwwajRWFPEvEWQZkN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMoXELPZlZTR+qiGEYCYgB0ohJnpz/OCXgTpvWMcGwTsuo8tte6+rbC56NLxl2tY0
-	 agIl20Er5zg41iLnW6UfwFB2XeA4kKnxyhp4ncRp110hQJ6ZwOT3Eo2SNiol098Juh
-	 3vBInYa7Nm+R/Pdof6gIdkclYBA+wtJ02EkuupwQ=
+	b=Z0iuGUMFfENOKqBb/xocY2+M1ZKMOaAZK9p95qX/q0+C+k8uQL+9lJPPGMhMo4opo
+	 AJ4gdYXhv/Q17u+koe3PK8RlAdurB76R5OuxX5bcdtC6jSOI+cIcJEJHXwuiMrBtov
+	 fkF98o0DFptD2NJENowGBRo/DDc+v1sMkEkX7vNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Brian Geffon <bgeffon@google.com>,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Barry Song <baohua@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Yosry Ahmed <yosry@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Michal Hocko <mhocko@suse.com>,
+	Xueyuan Chen <xueyuan.chen21@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Vishal Moola (Fractile)" <vishal.moola@gmail.com>,
+	Kairui Song <kasong@tencent.com>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Wei Xu <weixugc@google.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	David Hildenbrand <david@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1094/1257] mm/mremap: correctly uncharge accountable VMAs in error path
-Date: Sat,  7 Nov 2026 08:56:30 -0500
-Message-ID: <20261107135009.479087865@linuxfoundation.org>
+Subject: [PATCH 7.3 1095/1257] mm/vmscan: reclaim every zone in per-node proactive reclaim
+Date: Sat,  7 Nov 2026 08:56:31 -0500
+Message-ID: <20261107135009.504943478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -74,69 +90,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Gregory Price (Meta) <gourry@gourry.net>
 
-[ Upstream commit 65e722a74df992719676ead85a9e93fb2b5a0983 ]
+[ Upstream commit d0a12d80d2f7e9f4ed2030b6f04c8a897956bf84 ]
 
-The mremap error path is a fragile and unwieldy beast - it reverses the
-page table move then updates vma_remap_struct state to swap VMA, length and
-address between old and new VMAs in copy_vma_and_data().
+user_proactive_reclaim() limits per-node reclaim to
+gfp_zone(GFP_KERNEL), which is ZONE_NORMAL. Proactive reclaim serves no
+allocation, but that limit makes shrink_node() skip every ZONE_MOVABLE
+folio, so writing to /sys/devices/system/node/nodeN/reclaim never
+reclaims a node's movable memory. A movable-only node, such as dax/kmem
+or hotplugged memory onlined movable, reclaims nothing and fails with
+-EAGAIN.
 
-If the mremap() operation didn't specify MREMAP_DONTUNMAP then its caller,
-move_vma(), invokes unmap_source_vma(), which unmaps the new VMA rather
-than the old one.
+To reproduce, fill a movable-only node with clean page cache and write
+200M to its nodeN/reclaim: the write fails with -EAGAIN and the page
+cache stays. The same write to a ZONE_NORMAL node frees 200MB.
 
-For accountable VMAs when MREMAP_DONTUNMAP is not specified,
-unmap_source_vma() unsets VMA_ACCOUNT_BIT during this unmap in order that
-only the delta of a VMA expansion is charged (performed by
-vrm_calc_charge() earlier).
+Scan every zone, as memory.reclaim does.
 
-Therefore nothing uncharges the expanded VMA size, and there is a permanent
-leak in global Committed_AS.
-
-Resolve the issue by uncharging when MREMAP_DONTUNMAP is not specified.
-
-Link: https://lore.kernel.org/20261019-other-mremap-charge-leak-v1-1-d94477fe6545@kernel.org
-Fixes: fdbef6149135 ("mm/mremap: don't account pages in vma_to_resize()")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Link: https://lore.kernel.org/20261019185002.3428594-1-gourry@gourry.net
+Fixes: b980077899ea ("mm: introduce per-node proactive reclaim interface")
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Dmitry Safonov <0x7f454c46@gmail.com>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reviewed-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: SJ Park <sj@kernel.org>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Acked-by: Davidlohr Bueso <dave@stgolabs.net>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Reviewed-by: Xueyuan Chen <xueyuan.chen21@gmail.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Vishal Moola (Fractile) <vishal.moola@gmail.com>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Qi Zheng <qi.zheng@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mm/vmscan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index d5f34e87c518a..d404e4b1b6cbd 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -1339,6 +1339,20 @@ static int copy_vma_and_data(struct vma_remap_struct *vrm,
- 		pmc_revert.need_rmap_locks = true;
- 		move_page_tables(&pmc_revert);
- 
-+		/*
-+		 * When copy_vma_and_data() returns, the new VMA will be
-+		 * unmapped rather than the old one.
-+		 *
-+		 * When an accountable move is being performed, this unmapping
-+		 * will not uncharge any expansion, so do that now.
-+		 *
-+		 * A move is accountable if the VMA is accountable and
-+		 * MREMAP_DONTUNMAP is not specified, so only do so if the
-+		 * latter is true.
-+		 */
-+		if (!(vrm->flags & MREMAP_DONTUNMAP))
-+			vrm_uncharge(vrm);
-+
- 		vrm->vma = new_vma;
- 		vrm->old_len = vrm->new_len;
- 		vrm->addr = vrm->new_addr;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 6a14e42ea9ed6..1d1ef7ea52c59 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -8041,7 +8041,7 @@ int user_proactive_reclaim(char *buf,
+ 		} else {
+ 			struct scan_control sc = {
+ 				.gfp_mask = current_gfp_context(gfp_mask),
+-				.reclaim_idx = gfp_zone(gfp_mask),
++				.reclaim_idx = MAX_NR_ZONES - 1,
+ 				.proactive_swappiness = swappiness == -1 ? NULL : &swappiness,
+ 				.priority = DEF_PRIORITY,
+ 				.may_writepage = 1,
 -- 
 2.53.0
 
