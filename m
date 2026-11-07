@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062662;
-	b=rNo/2eUkN5gFx1aO6KV1D/WlvLBTqiMsSlJtB2tyimrYewBp53KLfMHZN8p/0vyeBaHR
-	 zNWOqLNaaq73f+0KesRHN3LJwolw+2jlwnq+ppj4yvDXA6V8FKRUzHFZcFL+RTgYTjWlA
-	 xpTFRrIfKdw5XoBI8vyvtfrVki54PwEupDRt+4TPxdWzNsAbpCwNwzo2/hlI24lE3F26K
-	 mFGWwIbQzZk2nEdEstf3fH5G84IbHpWyLcsEYbH09hfb/hCt84edLyZg8CuzkHqs6gRMk
-	 3MLSa4FxWjA7Z4gJ8FXCKb8oNgrMkjOvZIJidfJYoYKdn1JvaErPz2pXMaT3QkTwyig==
+	t=1794062663;
+	b=LETy4xssByHWWFLqBTGXuO8pdgeWzgpRNdYrC66TNhSkToXqez0XBEPOZiVAJaVN00yG
+	 fHhXGWi0UbbZsMYlrWHHbsY1C6cB+5l9w7Uu+V8vMbPaHMF3Gu3mKnBMULNRSyz7RH9qy
+	 dV2bbbiX2Pek9q8ITU1i97XeFC4kzJW6Ye/W4oXp+FqEqFTDgU0JwobZAk7qmOzcLp+jC
+	 rqSGalHyfauXsQXUeY15I41t3MzfZr2UKup9++8wBxqa+M8epszavEezRIR8TCEzchmkR
+	 HAdCG5D1oesz4svO+XnqDcoL6S4MfMxDZN8ivB317Y4wBQiUgedbfkodtZWek/ZWa/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n8u9q3zxj6T89hO4TXmnVJBtkwHOT196HrhzG6mSjww=;
-	b=QxqT+i3yQk8kos3ldlPlwcBLUjTVM92dGY/KJT6bPzsJkLSAwCYqFOknohh/R15eO8cQ
-	 jh+OmIYTAwSp9jkPESPQ3qFxmqBfwmbENijYttV0j91DU5yoUX7zI0ThFOi8pHz0MWLM5
-	 5Qhm/oMfZiY44j3xbOTD/x2KON0mpP6240TE6q1P5m2sJM3LoD4rj+/vDizJOeOjGUf3o
-	 QAdgibkuseufJmMh7w21SzXTbovmZVqiqiqHYmRcH+CGqm0fm/jgKjpb/EEGLg4XPl/rn
-	 /Wdn65WtPxjMgz9gm9RbekeZHEqJfO5smqLobagvz61toBTMJCgCuoww5ZNXUKfstkg==
+	bh=x3q56H2R1fXSR/R40NDzWZWzfJuhw3PQpxbC/09z6EE=;
+	b=zxbMe1hQO0DV54/dXZDwSP5xPCeGRzPpfjQOsxeRiUGs0egXGd2WEqwaSiTb1tes85yI
+	 /AAQmfaW3WaYk2cUE2uBM/NTA9R51lyDMrsHxNgp9PKLAefDUJNc4iVcMH2Borb2gFNHl
+	 fCrYqGuB1lK6Aus8urU/jR9xbaxY4MyTnV4Zh3N9fyPhY4oju+jW18xaMuvmPqjmXe7Hr
+	 uH1V1b48B437dwKWO5Pvy7ColB4AgYteHfLkqJ8yaoXQp8FJro/7KzVr0rRa05P+R87zR
+	 a8xXaEbdYtB59y/kwtFJd/NjojoPCUlX3U96tFuhGP7YEK2ZMpHcSFX8CVGOrNP2TdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZwXC7eV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kkDQmoZQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DDA606A331;
-	Sat,  7 Nov 2026 14:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E29606A331;
+	Sat,  7 Nov 2026 14:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NZwXC7eV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D20B1F0089F;
-	Sat,  7 Nov 2026 14:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kkDQmoZQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834321F0089F;
+	Sat,  7 Nov 2026 14:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062661;
-	bh=n8u9q3zxj6T89hO4TXmnVJBtkwHOT196HrhzG6mSjww=;
+	s=korg; t=1794062662;
+	bh=x3q56H2R1fXSR/R40NDzWZWzfJuhw3PQpxbC/09z6EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NZwXC7eVroLVVeb0WKWvNNBG6Czaz7SEA4ADumOrb+3BNnjcp2YctUJBHl5uwPdnA
-	 gHvClWGKZfOm2BqfLljVatPgRjNFf8MZtrmErMNZrEdcqR4nbXDf164Z69DAQpBMVR
-	 x51p/l1lniTfHv5eqETFx0JMhZsP3djtsAG7kYdo=
+	b=kkDQmoZQCFI4bNMRefLWKuK/g0pyG+IWE61DaZtVddpLSPYqx9UAGTwyOEqcVWj0V
+	 s8nTV8/UZjaZvfvZOdEkDugBHVtIgkoB1nYYBKdpyhNVBjU5CISVfB5+lnE8hYGnud
+	 K9A04rsfr0MGpKCTp+mhwX1CTVnyvHZojA178wGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1523/1536] tcp: check congestion control restriction first
-Date: Sat,  7 Nov 2026 08:58:59 -0500
-Message-ID: <20261107135040.655000409@linuxfoundation.org>
+Subject: [PATCH 6.12 1488/1536] LoongArch: Remove redundant call in update_bp_registers()
+Date: Sat,  7 Nov 2026 08:58:24 -0500
+Message-ID: <20261107135039.650019397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,59 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit dda51b73721684637ab8e9bd97c78228b99c4bd2 ]
+[ Upstream commit 23534c6efeb718e8a4d9107fa7d6707b5b1f5859 ]
 
-tcp_set_default_congestion_control() takes a reference to an algorithm
-before checking whether a non-init network namespace may select it. A
-rejected request returns -EPERM without dropping the reference.
+In update_bp_registers(), there is a duplicate call to write_wb_reg()
+when enabling an execute breakpoint:
 
-This affects module-backed algorithms too; BPF is not required. For
-example, after root loads tcp_bbr, a user with CAP_NET_ADMIN in a
-non-init network namespace can repeatedly request it as the default
-although it is not in tcp_allowed_congestion_control. Each rejected
-write leaks a module reference. Since module->refcnt is an atomic_t,
-2^31 such writes can make it negative; later module_put() calls warn,
-and rmmod can hit the BUG_ON() in try_release_module_ref().
+    write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
+    write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
 
-Check the namespace restriction before acquiring the reference, as
-tcp_set_congestion_control() already does.
+The two lines are completely identical. Remove the redundant call to
+clean up the code and eliminate unnecessary register writes.
 
-Fixes: 8d432592f30f ("net: Only allow init netns to set default tcp cong to a restricted algo")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/71c142b2d45af6a2fe7fc6cd4a5ca52c53afbe23.1793075984.git.zhilinz@nebusec.ai
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_cong.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/loongarch/kernel/hw_breakpoint.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_cong.c b/net/ipv4/tcp_cong.c
-index f3c516da0a942..cfef6dbac6421 100644
---- a/net/ipv4/tcp_cong.c
-+++ b/net/ipv4/tcp_cong.c
-@@ -286,12 +286,12 @@ int tcp_set_default_congestion_control(struct net *net, const char *name)
- 	ca = tcp_ca_find_autoload(name);
- 	if (!ca) {
- 		ret = -ENOENT;
--	} else if (!bpf_try_module_get(ca, ca->owner)) {
--		ret = -EBUSY;
- 	} else if (!net_eq(net, &init_net) &&
- 			!(ca->flags & TCP_CONG_NON_RESTRICTED)) {
- 		/* Only init netns can set default to a restricted algorithm */
- 		ret = -EPERM;
-+	} else if (!bpf_try_module_get(ca, ca->owner)) {
-+		ret = -EBUSY;
- 	} else {
- 		prev = xchg(&net->ipv4.tcp_congestion_control, ca);
- 		if (prev)
+diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
+index c35f9bf380334..deeb2f9795705 100644
+--- a/arch/loongarch/kernel/hw_breakpoint.c
++++ b/arch/loongarch/kernel/hw_breakpoint.c
+@@ -453,7 +453,6 @@ static void update_bp_registers(struct pt_regs *regs, int enable, int type)
+ 		if (enable) {
+ 			if ((info->ctrl.type == LOONGARCH_BREAKPOINT_EXECUTE) && (type == 0)) {
+ 				write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
+-				write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
+ 			} else {
+ 				ctrl = read_wb_reg(CSR_CFG_CTRL, i, 1);
+ 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_LOAD)
 -- 
 2.53.0
 
