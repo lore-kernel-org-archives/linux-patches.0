@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063106;
-	b=hmwLofURW0CMXOD8Usw/QZlYwYX5Hzd6cAnVkNcVUJZzTK0q0ceq+vcp6p05pCExnPvo
-	 D0bK7f6AksUtzpGToF03uodPmCZo4MQ3ozlGEw4eu6vKXszqrZ2d8DKWpOKnVK0a8+vUV
-	 HDE3CL723PGD9d6hegKXLEoxVaBy8zeW55S0RVvdiCi1FQIUj4IM+Q/IxsGtcZn5Joh+u
-	 uVDMm1pX7lqqaWsXyRjg34iWeRaIzejEPgZwEQOrXaVA4MjDUw+a24EX2vLnABTnPtrX3
-	 iM3O5zWYJNDZldD/g7wFI2st+1Jcn0urdsSjo5jQUl6kXP0S/TlvBGWOUNn5rcUXepg==
+	t=1794063107;
+	b=wlzBFYvtlkz8HKkPlSDYq6nVLnXRwtdG/yJvCNUS9zuXxJjjge4DaNIfSIyl6HEny8yC
+	 K42t4AJpl7+1tIccUU2HTSU1z7TkRmZSy1r2hMTbn4k6IiBDWUu/6xkw4qDq2voWwaOdz
+	 EdMlmle3TdtVlU1f0xdeMxrQF7u85Fq+TgrOXiWBbF9qtR98vXRVnYAW8fv7gvtEh1v2K
+	 1lLVTovtnapMQlcHLU0m4uUSXic/JC3IDeuC3zQyUWF7EF1hITOMXTGSL6tu9PkYRPMr5
+	 /aCJItAvKjSrS5d0mc9/JxxrI5F4mHSEMIM92IJVg5c2++FTkny7sOZ2uTEpCemdHvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063106;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w1pQ9l9HgumiSIpNRvrf5S4MMAs0fn2jY2858sGuzAo=;
-	b=1iWKMpRCEFBhfm1RyJRnkX2U4tUxpVRfAUjtsLJIlRq8VGUTGzSgEvoqk0IGjahJBfkD
-	 wsGCruO5V/O/AoB7uNz/Jw8iRFQMti2AebbyA2JiGBGUuU++QIRrDCKIDU2Daz/f4RdeU
-	 qxg7VdoZeIk0ayiFik8sRbo425v5AY12/kMhLit5N9nx2GaiSAyusmV6Wqk2Z98HRf+Hv
-	 KqVmWLshcsgfELILzlvmO95E/qYv2Cc/L+yCiL/kcK4PjdX+m5HQTJCc5PtEbRsnaPuBh
-	 LBtrY80UfdoRfYvpXYl9NciYXSp09XTRoRUH/G93bQTxRd0h8ke/6TPocjpgHk226Xg==
+	bh=D4NV2anmyJzzJQvtGW4Q0GOFBdJ5O6vkbVoQRvhqFAg=;
+	b=qoYmw86IAk6dn9lJp/djnWPTlgsG0ouMO8VYpraeOJS1AIB/UDXW/4LYsFoRHhyz67de
+	 jLgCSQml6cfdLq3gMGaJTBaNUWT/sBT1CsG1Q0gfen2QxDZBfOEtzAGCbzC2pNwipohb3
+	 F/8V6tubYTpqQmbVIS8pCPaf9/lWol/lGWYZbsyaw/oY3Vq7Xk1PVc2nvJBpukfAedFGT
+	 rhvlQtzhDxRG5aaTbJAy5yagUN0dr+g1ubWm6ILtlS+++atPWiAppPyu+geYom/kynv5o
+	 H4uebZbbvV06dJ72K1PFA7R1N5cuDtEgbyZjZ9+CzFeEw34K38RL3Amj3SU5E0jbJQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNuMC197;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A1cxXv2Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33B7606A33B;
-	Sat,  7 Nov 2026 14:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4C6606EE8A;
+	Sat,  7 Nov 2026 14:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNuMC197
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB571F008A1;
-	Sat,  7 Nov 2026 14:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A1cxXv2Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6251E1F008A1;
+	Sat,  7 Nov 2026 14:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063105;
-	bh=w1pQ9l9HgumiSIpNRvrf5S4MMAs0fn2jY2858sGuzAo=;
+	s=korg; t=1794063106;
+	bh=D4NV2anmyJzzJQvtGW4Q0GOFBdJ5O6vkbVoQRvhqFAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tNuMC197mOUrsMY8VVXkud6+7Cn2fbAsdRXGOnTgvQEwK1Fv8nys4XTz++TqqqNeD
-	 Q4O/ts1bj0M6Ikq6Qo/iQk+ZyhF3NGR7fjLnG6j/v0XaoTY9XWFw5ShQWdnzVfxzfL
-	 xaoiSMF7BaeMEBvy3j/mhKK0zlPlb2IU0q7zKs2Y=
+	b=A1cxXv2QNgLnDacY8ulo8d+VD/WIzPDMTpsjz7N32hRrOrLgHFRKUjsJGY4kH6KaD
+	 3WuifrGXRSLQsJz/t7f3fxAg51G+5dpZbRDpcouCdIkv5ooCYaATUxsUIXcq3e1gST
+	 s7bsmJ/Nf/dg8T14K9OPot6dy15tBDfVwhID8KNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 312/869] media: rtl28xxu: fix SDR platform device leak
-Date: Sat,  7 Nov 2026 08:49:54 -0500
-Message-ID: <20261107134903.088827688@linuxfoundation.org>
+Subject: [PATCH 6.18 339/869] media: v4l2-common: Fix P010 format info
+Date: Sat,  7 Nov 2026 08:50:21 -0500
+Message-ID: <20261107134903.890792345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,64 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Nas Chung <nas.chung@chipsnmedia.com>
 
-[ Upstream commit 083a92996598a5080965f1baa84175082e14a45b ]
+[ Upstream commit 8761a87aff8259eab0add8a9428cee2c280fb6eb ]
 
-rtl2832u_tuner_attach() registers an rtl2832_sdr platform device, but
-does not unregister it if no driver is bound. It also does not take a
-reference on the bound driver module.
+V4L2_PIX_FMT_P010 is a 10-bit 4:2:0 semi-planar format, but its
+v4l2_format_info() entry described a 4:2:2 layout with a half-width
+chroma plane. Correct bpp and vdiv to match P010's real layout,
+consistent with the other semi-planar formats.
 
-Unregister the platform device when no driver is bound or the module
-reference cannot be acquired. Drop the module reference in
-rtl28xxu_tuner_detach() before unregistering the device.
-
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fixes: a2f7f220df5e ("[media] rtl28xxu: switch SDR module to platform driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: 5374d8fb75f3 ("media: Add P010 video format")
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/rtl28xxu.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/media/v4l2-core/v4l2-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
-index 487c6ab784abd..d2957e4bf0173 100644
---- a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
-+++ b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
-@@ -1391,8 +1391,16 @@ static int rtl2832u_tuner_attach(struct dvb_usb_adapter *adap)
- 						     "rtl2832_sdr",
- 						     PLATFORM_DEVID_AUTO,
- 						     &pdata, sizeof(pdata));
--		if (IS_ERR(pdev) || pdev->dev.driver == NULL)
-+		if (IS_ERR(pdev))
- 			break;
-+		if (!pdev->dev.driver) {
-+			platform_device_unregister(pdev);
-+			break;
-+		}
-+		if (!try_module_get(pdev->dev.driver->owner)) {
-+			platform_device_unregister(pdev);
-+			break;
-+		}
- 		dev->platform_device_sdr = pdev;
- 		break;
- 	default:
-@@ -1426,8 +1434,10 @@ static int rtl28xxu_tuner_detach(struct dvb_usb_adapter *adap)
+diff --git a/drivers/media/v4l2-core/v4l2-common.c b/drivers/media/v4l2-core/v4l2-common.c
+index 524c11e92aec5..0ca98df9e60b5 100644
+--- a/drivers/media/v4l2-core/v4l2-common.c
++++ b/drivers/media/v4l2-core/v4l2-common.c
+@@ -296,7 +296,7 @@ const struct v4l2_format_info *v4l2_format_info(u32 format)
+ 		{ .format = V4L2_PIX_FMT_NV20,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 5, 10, 0, 0 }, .bpp_div = { 4, 4, 1, 1 }, .hdiv = 2, .vdiv = 1 },
+ 		{ .format = V4L2_PIX_FMT_NV24,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 1, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 1, .vdiv = 1 },
+ 		{ .format = V4L2_PIX_FMT_NV42,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 1, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 1, .vdiv = 1 },
+-		{ .format = V4L2_PIX_FMT_P010,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 1 },
++		{ .format = V4L2_PIX_FMT_P010,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 4, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 2 },
+ 		{ .format = V4L2_PIX_FMT_P012,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 4, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 2 },
  
- 	/* remove platform SDR */
- 	pdev = dev->platform_device_sdr;
--	if (pdev)
-+	if (pdev) {
-+		module_put(pdev->dev.driver->owner);
- 		platform_device_unregister(pdev);
-+	}
- 
- 	/* remove I2C tuner */
- 	client = dev->i2c_client_tuner;
+ 		{ .format = V4L2_PIX_FMT_YUV410,  .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 3, .bpp = { 1, 1, 1, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 4, .vdiv = 4 },
 -- 
 2.53.0
 
