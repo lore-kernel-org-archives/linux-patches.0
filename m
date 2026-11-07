@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064133;
-	b=dRXMlslnaV6rWnBesOr0N1mOkBsxCut6wxaZoLlC1DvL979GItxOxxAT3vpvbzYkR7sw
-	 zSCWMRn4klmc7jrpJkVLIl2lxokPh76uuKFkzJSJ3joGBzb8TX/essuiph7NnLFFaz209
-	 wbNyRSgXBlAs3itiGD1GmpWL5+R5Db6rYBi7xd81mek0myU1TqtuMX5ByhmzdyZvMeWC/
-	 6PmveuoHpSWrGDsoVnwd+aT8nuwhpMWUXbKFN9Pq5AV6pxPEA5VoEf2CgViUoeDrfGqy1
-	 UbTCvesTrRSAOJ8RtEMHWyAqqrumEXmL008CRGccxCTniChtcyOTNUAZBBL6JzDol9Q==
+	t=1794064134;
+	b=a0ihjP1IYVrUrS9R+K0MrK0XaBHmVnA9aShBY3D/rLJ4WXVD9KBPkOhob+fBLOdD5G4J
+	 FDc7ngBYs436YhKbAizpM4dwgNemOXWradWGjjh1lBGAhkIqXq396eTr22bghyKgViMFR
+	 xG8Ahu3NMEqngNa+wztEqCEfVGj89LYZ2N1/RhbdDeJLgBIRCz2aRzS8Q0oW8SgUno3uy
+	 Z7erjWCrCC1/f33LQFxscgfkfBYwy9n1BGebTpjNUzNEXZo/LiD5H9GRW/rQXpRn50JpQ
+	 2Q8eyHjdOsSo8XGUFabJecDeGfXXOR7Du4DMu94JHzW2ZhfO3JV7RdhHyLTGVZbFb3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064133;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064134;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JrQpNco3kMuGNQtHYiBj9bT9iBvnUwQnIny6b0lgFQI=;
-	b=z/NDw8HAa9hLeby5nRU1b3VoFbYbK011lNsAAUATODZRXAHsk3rvSW3kxv73+6tHb7wZ
-	 hMIUQgN7noioOuqmPl+EqFmiqiJqI/NVmMafqZ1PLV314VEYjJTwzN8ft4p2D4scjwhBG
-	 qAbdWFmZUGMQ6X/PSqWh4+Sl2VE2hZ4+cxUiG5XIr0+ESjioXahY8jvNy3iiGofTbczpH
-	 X9ot+FUYFUUNToKDt44Vh58xl84/sn9U2wBHdbsib14Gtd+nfiJAVB9drJT4NCuBGEH+Q
-	 UTRUucgJuJS+ojg4S2t7wcaWcv6eqsbMwII1v/g52ebBLYYPGWvMpCVBWnWyR67B+Rw==
+	bh=mNp3esfsGyPi2Ao+g/DLroXg/7KobtNedejW6kUCB70=;
+	b=E06kwY4FOSF9IM8liyJ7s8KeYenNMosWE2mYvBw9mEMmy5GCZXeUS8DJUhYk8FFC3k6M
+	 T+hna0XbBQubZBqHe0vXm4hP0lgeMetYv8UMsciaeMzjxlCor3mGjX37JXjgb4FbbKi9C
+	 KzJvhw8GNhrPg8Y6KWJ5vpgmPXQpKubtKnjvfLXEDkntDEt6cqWs5VvSTWsa4o97MT78E
+	 YWHkqZ5CIZOEuY2sMXILpD9M8cFKAOEDMQnjWBGo2Hrk+8ITn4otC91cZJPn2JNwwNCM2
+	 hWC3b897+vscvCQwLYcLIWgy/XJkLcKzha8pQIf4c0EC9WcOoZMk58GxqEIr2pCIM8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1j7PjpuZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="V7p7dTb/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CA7606A33B;
-	Sat,  7 Nov 2026 15:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0D4606A33B;
+	Sat,  7 Nov 2026 15:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1j7PjpuZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B354D1F0089F;
-	Sat,  7 Nov 2026 15:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7p7dTb/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06951F0089F;
+	Sat,  7 Nov 2026 15:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064132;
-	bh=JrQpNco3kMuGNQtHYiBj9bT9iBvnUwQnIny6b0lgFQI=;
+	s=korg; t=1794064134;
+	bh=mNp3esfsGyPi2Ao+g/DLroXg/7KobtNedejW6kUCB70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1j7PjpuZT3EZzF/WJhOKwn3OCncn0YphjUymUWWgeG8YTVpOLtdV7FKm1XzxBTprl
-	 B4+DzBkFJJrV3dnGYuH8D21ol6axSpX9aHNxKe9aHgwKPzzSPL6e9VKC3mq8zQ+va3
-	 f0KZcaA2YtQlOvH7KbkLZ9i0vpyfG/iKksfzxPzM=
+	b=V7p7dTb/hO2dgWFYf0SwZI1ZmG1mhH8MwroUmOqlq27zpK2bu/D08+k+J7IdLLi/e
+	 oIl6LjaHzvC20knePtD0Lqkk4umHB2mSc0SVN+ELEbZJDV+LAyG81eRvarCI8sHhoh
+	 jsKJeRWf+iZJUrhvtsk3Ckd9Wb7ckLCOHAx4961s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	David Heidelberg <david@ixit.cz>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0284/1257] mfd: wcd934x: set DMA mask on parent to silence "DMA mask not set"
-Date: Sat,  7 Nov 2026 08:43:00 -0500
-Message-ID: <20261107134947.320242570@linuxfoundation.org>
+Subject: [PATCH 7.3 0285/1257] mfd: wcd934x: Fix NULL pointer dereference on IRQ probe deferral
+Date: Sat,  7 Nov 2026 08:43:01 -0500
+Message-ID: <20261107134947.345581790@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,48 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit b296be1dc008fe3a536341afae01f66bb302e67f ]
+[ Upstream commit dcf0e640b553d33512fbcaedb909c32ba9636a64 ]
 
-The wcd934x MFD parent (a slim_device) never initializes its
-dma_mask/coherent_dma_mask. When the DT-aware children pass through
-of_dma_configure() this triggers the "DMA mask not set" warning for
-each child.
+ddata->dev is only assigned at the end of wcd934x_slim_probe(), but the
+of_irq_get() error path has passed it to the error print since the
+driver was added, while it is still NULL.
+
+This used to be harmless with dev_err(), which copes with a NULL device
+and was skipped on -EPROBE_DEFER. Since the switch to dev_err_probe(), a
+deferred IRQ reaches device_set_deferred_probe_reason() ->
+dev_driver_string(), which dereferences the NULL pointer and crashes
+during probe. Use dev, which is already valid at this point.
 
 Cc: stable@vger.kernel.org
-Fixes: f959dcd6ddfd ("dma-direct: Fix potential NULL pointer dereference")
-Assisted-by: tencent:hy3
+Fixes: 0f1b1b899521 ("mfd: wcd934x: Simplify with dev_err_probe()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/mfd/20260903145651.AC1311F00ACA@smtp.kernel.org/
 Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20260903-wcd-dma-v2-1-189cff560a28@ixit.cz
+Link: https://patch.msgid.link/20260903-wcd-dma-v3-1-d3920c6563c4@ixit.cz
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/wcd934x.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mfd/wcd934x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
-index 3c3080e8c8cf7..7bea64fc09562 100644
+index 7bea64fc09562..d57796933d873 100644
 --- a/drivers/mfd/wcd934x.c
 +++ b/drivers/mfd/wcd934x.c
-@@ -2,6 +2,7 @@
- // Copyright (c) 2019, Linaro Limited
+@@ -229,7 +229,7 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
  
- #include <linux/clk.h>
-+#include <linux/dma-mapping.h>
- #include <linux/gpio/consumer.h>
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
-@@ -217,6 +218,11 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
- 	struct gpio_desc *reset_gpio;
- 	int ret;
+ 	ddata->irq = of_irq_get(np, 0);
+ 	if (ddata->irq < 0)
+-		return dev_err_probe(ddata->dev, ddata->irq,
++		return dev_err_probe(dev, ddata->irq,
+ 				     "Failed to get IRQ\n");
  
-+	ret = dma_coerce_mask_and_coherent(dev, DMA_BIT_MASK(32));
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to set DMA mask\n");
-+
- 	ddata = devm_kzalloc(dev, sizeof(*ddata), GFP_KERNEL);
- 	if (!ddata)
- 		return	-ENOMEM;
+ 	ddata->extclk = devm_clk_get(dev, "extclk");
 -- 
 2.53.0
 
